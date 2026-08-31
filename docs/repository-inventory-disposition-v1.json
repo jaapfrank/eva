@@ -1,0 +1,205 @@
+{
+  "schema": "EvaRepositoryInventoryDisposition/v1",
+  "recordedAt": "2026-08-31T15:34:00+02:00",
+  "scope": {
+    "inventory": "docs/eva-repository-inventory.generated.json",
+    "policyErrorsSha256": "b6345d13de7993540d1b6101f481f1ed74d9acfe38a6577e050293896d27fdf7",
+    "policyErrorCount": 88,
+    "untrackedCount": 79,
+    "trackedUnresolvedCount": 9
+  },
+  "decisionVocabulary": {
+    "track": "Keep as a versioned repository input, but only after every listed prerequisite is green.",
+    "quarantine": "Preserve unchanged outside release inputs until provenance, privacy and current relevance are decided.",
+    "remove": "Delete only in a separately reviewed destructive change after consumer and replacement proof.",
+    "legacy-excluded": "Keep as explicitly historical or dormant material outside current runtime and release claims."
+  },
+  "globalSafety": {
+    "destructiveActionAuthorized": false,
+    "originalFilesChanged": false,
+    "highConfidenceCredentialPatternHits": 0,
+    "credentialScanLimit": "Pattern scan only; not a semantic privacy review.",
+    "releaseClaim": "None of the 79 untracked files is a release input while it remains untracked."
+  },
+  "groups": [
+    {
+      "id": "untracked-verification-fixtures",
+      "currentPolicyCode": "UNTRACKED_REPOSITORY_FILE",
+      "selector": {
+        "kind": "path-prefix",
+        "value": "eva2/evidence/living-core/fixtures/"
+      },
+      "count": 13,
+      "proposedDisposition": "track",
+      "promotionState": "blocked",
+      "reason": "These are small deterministic workspaces consumed by repository-improvement and validated-edit tests; losing them makes historical I02/X04 evidence harder to replay.",
+      "prerequisites": [
+        "Bind each fixture directory to its consuming test in the inventory edge graph.",
+        "Run the repository-improvement and validated-edit test suites against the exact bytes.",
+        "Confirm that fixture text is synthetic and contains no user or runtime data."
+      ],
+      "risk": "low-after-prerequisites"
+    },
+    {
+      "id": "untracked-cited-historical-receipts",
+      "currentPolicyCode": "UNTRACKED_REPOSITORY_FILE",
+      "selector": {
+        "kind": "directory-basename-list",
+        "directory": "eva2/evidence/living-core",
+        "basenames": [
+          "lab36-c04-blind-2026-08-24.json",
+          "lab36-core-live-evidence-index-v39-2026-08-24.json",
+          "lab36-eva2-openclaw-hermes-agent-zero-live-2026-08-23.json",
+          "lab36-eva2-openclaw-hermes-live-2026-08-23.json",
+          "lab36-eva2-openclaw-live-2026-08-23.json",
+          "live-b-commerce-publication-2026-08-24.json",
+          "live-b-conversation-intent-2026-08-23.json",
+          "live-b-home-assistant-conversation-2026-08-23.json",
+          "live-b-home-assistant-current-state-2026-08-24.json",
+          "live-b-home-assistant-history-2026-08-24.json",
+          "live-b-lab36-c02-trusted-identity-isolation-2026-08-24.json",
+          "live-b-lab36-c03-r03-bound-observation-corrections-2026-08-24.json",
+          "live-b-lab36-hidden-humanity-v39-2026-08-24.json",
+          "live-b-lab36-m02-memory-isolation-2026-08-24.json",
+          "live-b-lab36-m03-direct-task-continuation-2026-08-24.json",
+          "live-b-lab36-m04-person-project-memory-2026-08-24.json",
+          "live-b-lab36-p02-file-batch-partial-success-2026-08-24.json",
+          "live-b-lab36-r02-mid-task-scope-change-2026-08-24.json",
+          "live-b-lab36-t03-group-history-2026-08-24.json",
+          "live-b-lab36-t04-current-research-2026-08-24.json",
+          "live-b-lab36-x02-mid-work-restart-2026-08-24.json",
+          "live-b-lab36-x03-bounded-transient-recovery-2026-08-24.json",
+          "live-b-lab36-x04-validated-edit-rollback-2026-08-24.json",
+          "live-b-native-a01-a02-durable-goals-v50-2026-08-24.json",
+          "live-b-native-a03-f03-goal-pivot-blocker-v50-2026-08-24.json",
+          "live-b-native-f04-terminal-goals-v50-2026-08-24.json",
+          "live-b-native-i02-self-chosen-repository-improvement-v52-2026-08-24.json",
+          "live-b-native-m01-cross-channel-continuity-v53-2026-08-24.json",
+          "live-b-native-p03-fanout-v43-2026-08-24.json",
+          "live-b-native-telegram-ingress-2026-08-24.json",
+          "live-b-native-x01-crash-recovery-v43-2026-08-24.json",
+          "live-b-natural-action-expression-2026-08-23.json",
+          "live-b-paid-fulfillment-2026-08-24.json",
+          "live-fresh-install-gate-2026-08-23.json",
+          "resident-long-run-v1-2026-08-24.json"
+        ]
+      },
+      "count": 35,
+      "proposedDisposition": "track",
+      "promotionState": "blocked",
+      "reason": "Current tracked architecture, gate or comparison documents cite these receipts by basename. Keeping the claims while discarding their evidence would be dishonest.",
+      "prerequisites": [
+        "Validate every receipt against a declared schema or record a legacy schema waiver.",
+        "Verify referenced source and image hashes where the historical artifact still exists.",
+        "Perform semantic privacy review for chat identifiers, entity names, transcripts, hosts and URLs.",
+        "Label every receipt historical and non-release unless a current gate explicitly promotes it.",
+        "Repair or remove any tracked claim whose receipt fails validation."
+      ],
+      "risk": "high-until-provenance-and-privacy-review"
+    },
+    {
+      "id": "untracked-uncited-historical-receipts",
+      "currentPolicyCode": "UNTRACKED_REPOSITORY_FILE",
+      "selector": {
+        "kind": "untracked-direct-json-remainder",
+        "directory": "eva2/evidence/living-core",
+        "excludeGroup": "untracked-cited-historical-receipts"
+      },
+      "count": 31,
+      "proposedDisposition": "quarantine",
+      "promotionState": "preserve-unmodified",
+      "reason": "These receipts are not cited outside the generated inventory. Versioning them now would increase claim and privacy surface without a demonstrated consumer.",
+      "prerequisites": [
+        "Identify the authoritative claim or replay consumer for each receipt.",
+        "Validate schema, provenance and semantic privacy before any file becomes tracked.",
+        "If no consumer exists, propose a separately reviewed archive or removal change."
+      ],
+      "risk": "medium-preservation-risk-high-claim-risk"
+    },
+    {
+      "id": "tracked-historical-documents",
+      "currentPolicyCode": "UNRESOLVED_DISPOSITION_ARCHIVE",
+      "paths": [
+        "docs/eva-runtime-map.md",
+        "docs/live-acceptance-2026-08-04.md"
+      ],
+      "count": 2,
+      "proposedDisposition": "legacy-excluded",
+      "reason": "Both documents are dated and superseded. They may remain as history but must not be treated as current architecture or acceptance authority.",
+      "requiredAction": "Move to an explicit historical documentation namespace and repair incoming links in a separately reviewed change.",
+      "risk": "medium-stale-authority"
+    },
+    {
+      "id": "tracked-dormant-source",
+      "currentPolicyCode": "UNRESOLVED_DISPOSITION_ISOLATE",
+      "paths": [
+        "src/mind/artifactcollections.js",
+        "src/mind/materiallifecycle.js",
+        "src/mind/workcompletion.js"
+      ],
+      "count": 3,
+      "proposedDisposition": "legacy-excluded",
+      "reason": "The inventory already identifies these unfinished modules as dormant; leaving them under production source overstates active capability.",
+      "requiredAction": "Move them to an experimental or historical namespace only after import and consumer checks.",
+      "risk": "medium-accidental-runtime-use"
+    },
+    {
+      "id": "tracked-effectful-history-sanitizer",
+      "currentPolicyCode": "UNRESOLVED_DISPOSITION_QUARANTINE",
+      "paths": [
+        "scripts/sanitize-secret-history.mjs"
+      ],
+      "count": 1,
+      "proposedDisposition": "quarantine",
+      "reason": "The script performs an offline database rewrite without the attested operator boundary required for destructive data operations.",
+      "requiredAction": "Keep non-runnable from normal package scripts; add explicit target validation, backup and recovery proof before reconsidering.",
+      "risk": "high-data-loss"
+    },
+    {
+      "id": "tracked-redundant-voice-reexport",
+      "currentPolicyCode": "UNRESOLVED_DISPOSITION_DELETE",
+      "paths": [
+        "src/mind/voiceingress.js"
+      ],
+      "count": 1,
+      "proposedDisposition": "remove",
+      "reason": "The inventory marks this as a redundant re-export without a production consumer.",
+      "requiredAction": "Prove zero runtime, test and documentation consumers, then delete in a separately reviewed change.",
+      "risk": "low-after-consumer-proof"
+    },
+    {
+      "id": "tracked-native-writer-broker",
+      "currentPolicyCode": "UNRESOLVED_DISPOSITION_INTEGRATE",
+      "paths": [
+        "native/workspace_writer_broker.c"
+      ],
+      "count": 1,
+      "proposedDisposition": "track",
+      "reason": "The file is already tracked and is intended to provide the OS-exclusive write boundary, but no production integration evidence exists yet.",
+      "requiredAction": "Either integrate with tests and an attested entry point or reclassify it as experimental; tracked presence alone is not capability proof.",
+      "risk": "medium-unproved-native-boundary"
+    },
+    {
+      "id": "tracked-ungated-brain-test",
+      "currentPolicyCode": "UNGATED_TEST",
+      "paths": [
+        "eva_brain/test_service.py"
+      ],
+      "count": 1,
+      "proposedDisposition": "track",
+      "reason": "The test is valid repository verification only when a normal root gate actually runs it.",
+      "requiredAction": "Add it to the isolated root test gate or deliberately remove the obsolete test in a separately reviewed change.",
+      "risk": "medium-false-green"
+    }
+  ],
+  "totalsByProposedDisposition": {
+    "track": 50,
+    "quarantine": 32,
+    "remove": 1,
+    "legacy-excluded": 5
+  },
+  "expectedCurrentRedState": {
+    "policyErrors": 88,
+    "reason": "This proposal records decisions but deliberately does not suppress, track, move or delete any target. Red remains truthful until each prerequisite is completed."
+  }
+}

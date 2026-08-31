@@ -6,17 +6,24 @@ from pathlib import Path
 import pytest
 import sqlalchemy as sa
 
+import eva.providers.home_assistant as home_assistant_provider
 import eva.providers.runtime as provider_runtime
+from eva.providers.agentmail import AgentMailProviderSettings
+from eva.providers.home_assistant import HomeAssistantProviderSettings
 from eva.providers.runtime import (
-    EmailProviderSettings,
     ExternalProviderSettings,
-    HomeAutomationProviderSettings,
     LoadedProvider,
     ProviderContribution,
     build_external_provider_bundle,
     load_external_provider_settings,
 )
 from eva.application.conversation import ConversationToolDescriptor
+
+
+def test_generic_provider_compositor_contains_no_provider_specific_identifiers() -> None:
+    source = Path(provider_runtime.__file__).read_text()
+    forbidden = ("agentmail", "home_assistant", "homeassistant", "tuya")
+    assert not {item for item in forbidden if item in source.casefold()}
 
 
 def test_provider_settings_stay_outside_core_and_fail_closed(
@@ -31,12 +38,14 @@ def test_provider_settings_stay_outside_core_and_fail_closed(
     assert load_external_provider_settings() is None
 
     monkeypatch.setenv("EVA_HOME_ASSISTANT_URL", "http://provider:8123")
-    monkeypatch.setattr(provider_runtime, "environment_secret", lambda *_: "token")
+    monkeypatch.setattr(
+        home_assistant_provider, "environment_secret", lambda *_: "token"
+    )
     settings = load_external_provider_settings()
     assert settings is not None
     assert len(settings.providers) == 1
     home = settings.providers[0].settings
-    assert isinstance(home, HomeAutomationProviderSettings)
+    assert isinstance(home, HomeAssistantProviderSettings)
     assert home.endpoint_url == "http://provider:8123"
     assert home.effects_enabled is False
 
@@ -66,7 +75,7 @@ def test_email_provider_settings_are_file_only_and_live_outside_core(
     assert settings is not None
     assert len(settings.providers) == 1
     assert settings.providers[0].provider_id == "agentmail"
-    assert settings.providers[0].settings == EmailProviderSettings(
+    assert settings.providers[0].settings == AgentMailProviderSettings(
         inbox_id="eva@example.invalid",
         credential="private-test-key",
     )
@@ -85,24 +94,26 @@ def test_provider_bundle_registers_tools_without_core_branch(
         if name.startswith("EVA_MCP_GATEWAY_"):
             monkeypatch.delenv(name, raising=False)
     monkeypatch.setattr(
-        provider_runtime,
-        "_load_home_automation_settings",
-        lambda: HomeAutomationProviderSettings(
+        home_assistant_provider.HomeAssistantProviderFactory,
+        "load_settings",
+        staticmethod(lambda: HomeAssistantProviderSettings(
             endpoint_url="http://provider:8123",
             credential="token",
             effects_enabled=True,
             effect_allowlist=("light.desk:turn_off",),
             effect_principal_sha256_allowlist=(principal,),
             event_domains=("light",),
-        ),
+        )),
     )
+    from eva.providers.agentmail import AgentMailProviderFactory
+
     monkeypatch.setattr(
-        provider_runtime,
-        "_load_email_settings",
-        lambda: EmailProviderSettings(
+        AgentMailProviderFactory,
+        "load_settings",
+        staticmethod(lambda: AgentMailProviderSettings(
             inbox_id="eva@example.invalid",
             credential="secret",
-        ),
+        )),
     )
     settings = load_external_provider_settings()
     bundle = build_external_provider_bundle(settings, sa.create_engine("sqlite://"))

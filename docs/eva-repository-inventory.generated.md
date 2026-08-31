@@ -3,13 +3,13 @@
 Deze kaart is mechanisch gegenereerd. Zij staat naast de semantische runtimegraaf en
 classificeert ieder gevolgd, verwijderd of niet-genegeerd nieuw repositorypad.
 
-Schema: `EvaRepositoryInventory/v1`. Brondigest: `57364bafd836a6bfc0372c3aba3bc3f58fe79bba6be9defc8992943921a146e7`.
+Schema: `EvaRepositoryInventory/v1`. Brondigest: `69f8129f531fab2ae66af6996535116b0860c3a644fc25e71eb6e8d04b4dda37`.
 
 ## Samenvatting
 
 | Bestanden | Aanwezig | Tracked | Untracked | Tombstones | Policyfouten |
 | ---: | ---: | ---: | ---: | ---: | ---: |
-| 1944 | 1944 | 1865 | 79 | 0 | 88 |
+| 1950 | 1950 | 1871 | 79 | 0 | 88 |
 
 ## Policyfouten
 
@@ -130,10 +130,10 @@ Schema: `EvaRepositoryInventory/v1`. Brondigest: `57364bafd836a6bfc0372c3aba3bc3
 | `eva2-deployment` | `deployment` | 48 |
 | `eva2-experimental` | `experimental` | 117 |
 | `eva2-verification-runtime` | `verification-runtime` | 77 |
-| `eva2-runtime` | `product-runtime` | 236 |
+| `eva2-runtime` | `product-runtime` | 240 |
 | `eva2-build-contract` | `repository-config` | 240 |
 | `generated-doc` | `generated` | 4 |
-| `documentation` | `documentation` | 17 |
+| `documentation` | `documentation` | 18 |
 | `python-test` | `verification` | 1 |
 | `python-runtime` | `separate-service` | 4 |
 | `native-prototype` | `experimental` | 1 |
@@ -143,7 +143,7 @@ Schema: `EvaRepositoryInventory/v1`. Brondigest: `57364bafd836a6bfc0372c3aba3bc3
 | `operator-script` | `operation` | 17 |
 | `browser-asset` | `browser` | 3 |
 | `source-runtime` | `product-runtime` | 75 |
-| `test-entry` | `verification` | 133 |
+| `test-entry` | `verification` | 134 |
 | `test-helper` | `verification-fixture` | 23 |
 
 ## Bestanden
@@ -235,8 +235,8 @@ Schema: `EvaRepositoryInventory/v1`. Brondigest: `57364bafd836a6bfc0372c3aba3bc3
 | `docs/eva-agent-benchmark-v1.md` | tracked | documentation | included-tracked-noncritical | keep | 18462 |
 | `docs/eva-endbeeld-roadmap.md` | tracked | documentation | included-tracked-noncritical | keep | 16956 |
 | `docs/eva-rebuild-plan-2026-08-20.md` | tracked | documentation | included-tracked-noncritical | keep | 29009 |
-| `docs/eva-repository-inventory.generated.json` | tracked | generated | included-tracked-critical | keep | 2265924 |
-| `docs/eva-repository-inventory.generated.md` | tracked | generated | included-tracked-critical | keep | 351734 |
+| `docs/eva-repository-inventory.generated.json` | tracked | generated | included-tracked-critical | keep | 2272065 |
+| `docs/eva-repository-inventory.generated.md` | tracked | generated | included-tracked-critical | keep | 352516 |
 | `docs/eva-runtime-contract-map.generated.json` | tracked | generated | included-tracked-critical | keep | 246207 |
 | `docs/eva-runtime-contract-map.generated.md` | tracked | generated | included-tracked-critical | keep | 120103 |
 | `docs/eva-runtime-contracts.md` | tracked | documentation | included-tracked-critical | keep | 80976 |
@@ -251,6 +251,7 @@ Schema: `EvaRepositoryInventory/v1`. Brondigest: `57364bafd836a6bfc0372c3aba3bc3
 | `docs/house-entity-v1.md` | tracked | documentation | included-tracked-noncritical | keep | 4397 |
 | `docs/incident-2026-08-13-ledger-test-import.md` | tracked | documentation | included-tracked-noncritical | keep | 12016 |
 | `docs/live-acceptance-2026-08-04.md` | tracked | documentation | blocked-unresolved-disposition | archive | 5727 |
+| `docs/repository-inventory-disposition-v1.json` | tracked | documentation | included-tracked-noncritical | keep | 10233 |
 | `eslint.complexity.config.js` | tracked | repository-config | included-tracked-critical | keep | 858 |
 | `eslint.config.js` | tracked | repository-config | included-tracked-critical | keep | 1430 |
 | `eva2/CONCURRENTIE_EN_HERGEBRUIK.md` | tracked | documentation | included-tracked-noncritical | keep | 21722 |
@@ -260,7 +261,7 @@ Schema: `EvaRepositoryInventory/v1`. Brondigest: `57364bafd836a6bfc0372c3aba3bc3
 | `eva2/OPEN_SOURCE_EN_DEPENDENCYKEUZES.md` | tracked | documentation | included-tracked-noncritical | keep | 36132 |
 | `eva2/OUDE_EVA_VS_EVA2.md` | tracked | documentation | included-tracked-noncritical | keep | 5434 |
 | `eva2/PROJECTEN_EN_PLANNING.md` | tracked | documentation | included-tracked-noncritical | keep | 22263 |
-| `eva2/PROJECT_STATUS.md` | tracked | documentation | included-tracked-noncritical | keep | 38153 |
+| `eva2/PROJECT_STATUS.md` | tracked | documentation | included-tracked-noncritical | keep | 39324 |
 | `eva2/README.md` | tracked | documentation | included-tracked-noncritical | keep | 10625 |
 | `eva2/TEAM_WERKWIJZE.md` | tracked | documentation | included-tracked-noncritical | keep | 7129 |
 | `eva2/TECHNISCHE_MOGELIJKHEDEN_EN_GATEN.md` | tracked | documentation | included-tracked-noncritical | keep | 20072 |
@@ -923,7 +924,7 @@ Schema: `EvaRepositoryInventory/v1`. Brondigest: `57364bafd836a6bfc0372c3aba3bc3
 | `eva2/release/gate-toolchain.lock.json` | tracked | repository-config | included-tracked-critical | keep | 3856 |
 | `eva2/release/gate-toolchain.requirements.lock` | tracked | repository-config | included-tracked-critical | keep | 14551 |
 | `eva2/release/license-inventory.json` | tracked | repository-config | included-tracked-critical | keep | 10821 |
-| `eva2/release/managed-b-release-input-authority-v1.json` | tracked | repository-config | included-tracked-critical | keep | 63001 |
+| `eva2/release/managed-b-release-input-authority-v1.json` | tracked | repository-config | included-tracked-critical | keep | 63476 |
 | `eva2/release/managed-b-wheel-coverage-4d-amd64-v1.json` | tracked | repository-config | included-tracked-critical | keep | 6948 |
 | `eva2/release/managed-b-wheelhouse-amd64-v1.json` | tracked | repository-config | included-tracked-critical | keep | 431 |
 | `eva2/release/managed-b-wheelhouse-amd64-v2.json` | tracked | repository-config | included-tracked-critical | keep | 904 |
@@ -1414,9 +1415,13 @@ Schema: `EvaRepositoryInventory/v1`. Brondigest: `57364bafd836a6bfc0372c3aba3bc3
 | `eva2/src/eva/operations/portable_restore_authority.py` | tracked | product-runtime | included-tracked-critical | keep | 19588 |
 | `eva2/src/eva/operations/release_verifier.py` | tracked | product-runtime | included-tracked-critical | keep | 13328 |
 | `eva2/src/eva/providers/__init__.py` | tracked | product-runtime | included-tracked-critical | keep | 58 |
+| `eva2/src/eva/providers/agentmail.py` | tracked | product-runtime | included-tracked-critical | keep | 2372 |
+| `eva2/src/eva/providers/bundled.py` | tracked | product-runtime | included-tracked-critical | keep | 777 |
+| `eva2/src/eva/providers/contracts.py` | tracked | product-runtime | included-tracked-critical | keep | 1530 |
+| `eva2/src/eva/providers/home_assistant.py` | tracked | product-runtime | included-tracked-critical | keep | 9699 |
 | `eva2/src/eva/providers/home_assistant_advanced_store.py` | tracked | product-runtime | included-tracked-critical | keep | 36638 |
-| `eva2/src/eva/providers/mcp_gateway.py` | tracked | product-runtime | included-tracked-critical | keep | 7845 |
-| `eva2/src/eva/providers/runtime.py` | tracked | product-runtime | included-tracked-critical | keep | 17654 |
+| `eva2/src/eva/providers/mcp_gateway.py` | tracked | product-runtime | included-tracked-critical | keep | 7847 |
+| `eva2/src/eva/providers/runtime.py` | tracked | product-runtime | included-tracked-critical | keep | 6229 |
 | `eva2/tests/__init__.py` | tracked | verification | included-tracked-critical | keep | 59 |
 | `eva2/tests/api/test_dashboard_status.py` | tracked | verification | included-tracked-critical | keep | 30333 |
 | `eva2/tests/api/test_installer_provider_api.py` | tracked | verification | included-tracked-critical | keep | 22069 |
@@ -1502,7 +1507,7 @@ Schema: `EvaRepositoryInventory/v1`. Brondigest: `57364bafd836a6bfc0372c3aba3bc3
 | `eva2/tests/connectors/test_playwright_mcp.py` | tracked | verification | included-tracked-critical | keep | 14663 |
 | `eva2/tests/connectors/test_playwright_mcp_action.py` | tracked | verification | included-tracked-critical | keep | 8094 |
 | `eva2/tests/connectors/test_process.py` | tracked | verification | included-tracked-critical | keep | 16560 |
-| `eva2/tests/connectors/test_provider_runtime.py` | tracked | verification | included-tracked-critical | keep | 9618 |
+| `eva2/tests/connectors/test_provider_runtime.py` | tracked | verification | included-tracked-critical | keep | 10187 |
 | `eva2/tests/connectors/test_repository_improvements.py` | tracked | verification | included-tracked-critical | keep | 3774 |
 | `eva2/tests/connectors/test_stripe.py` | tracked | verification | included-tracked-critical | keep | 8394 |
 | `eva2/tests/connectors/test_stripe_webhook.py` | tracked | verification | included-tracked-critical | keep | 4395 |
@@ -2050,6 +2055,7 @@ Schema: `EvaRepositoryInventory/v1`. Brondigest: `57364bafd836a6bfc0372c3aba3bc3
 | `test/recovery-runtime-startup.test.js` | tracked | verification | included-tracked-critical | keep | 7642 |
 | `test/recovery-runtime-tool-policy.test.js` | tracked | verification | included-tracked-critical | keep | 3258 |
 | `test/relationship-feedback-ingress.test.js` | tracked | verification | included-tracked-critical | keep | 5132 |
+| `test/repository-inventory-disposition.test.js` | tracked | verification | included-tracked-critical | keep | 3446 |
 | `test/repository-inventory.test.js` | tracked | verification | included-tracked-critical | keep | 41042 |
 | `test/requester-owned-home-target.test.js` | tracked | verification | included-tracked-critical | keep | 8613 |
 | `test/runtime-self-repair.test.js` | tracked | verification | included-tracked-critical | keep | 95245 |
@@ -3081,6 +3087,7 @@ Schema: `EvaRepositoryInventory/v1`. Brondigest: `57364bafd836a6bfc0372c3aba3bc3
 | package-test-glob | `package.json` | `test/recovery-runtime-startup.test.js` |
 | package-test-glob | `package.json` | `test/recovery-runtime-tool-policy.test.js` |
 | package-test-glob | `package.json` | `test/relationship-feedback-ingress.test.js` |
+| package-test-glob | `package.json` | `test/repository-inventory-disposition.test.js` |
 | package-test-glob | `package.json` | `test/repository-inventory.test.js` |
 | package-test-glob | `package.json` | `test/requester-owned-home-target.test.js` |
 | package-test-glob | `package.json` | `test/runtime-self-repair.test.js` |

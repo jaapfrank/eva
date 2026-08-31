@@ -22,7 +22,7 @@ from eva.adapters.postgres.external_conversation_tools import (
 from eva.application.conversation import ConversationToolDescriptor
 from eva.adapters.credentials.runtime_files import read_runtime_secret_file
 from eva.contracts.base import validate_json_value
-from eva.providers.runtime import ProviderContribution
+from eva.providers.contracts import ProviderContribution
 
 
 _CONTRACT = "EvaMcpGatewayProvider/v1"

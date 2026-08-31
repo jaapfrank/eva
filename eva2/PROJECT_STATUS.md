@@ -1,6 +1,6 @@
 # Eva 2 — projectbord en vergelijking
 
-Laatst bijgewerkt: 31 augustus 2026, 15:29 CEST
+Laatst bijgewerkt: 31 augustus 2026, 16:02 CEST
 
 ## Zo lees je dit bord
 
@@ -32,14 +32,15 @@ dezelfde sessie wel, maar gaf na ruim drie minuten nog geen eindantwoord.
 
 | Controle | Eerlijke stand nu |
 |---|---|
-| Is alles per bestand inhoudelijk beoordeeld? | ❌ Nee. De inventaris is opnieuw gegenereerd en bevat 1.944 bestanden. De vier eerder losse Eva2-tools hebben nu een eigenaar, doel, bronhash, risicoklasse en tests. Nog open zijn 88 historische, niet gevolgde bewijs-/fixture- en rootpaden. Zij zijn zichtbaar als beleidsfout en zijn niet stil als productcode toegelaten |
+| Is alles per bestand inhoudelijk beoordeeld? | ❌ Nee. De inventaris bevat nu 1.950 bestanden. De 88 resterende beleidsfouten zijn wel allemaal eerlijk ingedeeld: 50 mogen pas na controle worden gevolgd, 32 blijven in quarantaine, 5 zijn oude/dode bron of documentatie en 1 redundant bestand is kandidaat voor latere verwijdering. Niets is stil verwijderd of als release-input toegelaten |
 | Heeft ieder gevolgd bestand een duidelijke plek en eigenaar? | ✅ Alle gevolgde product-, deploy-, migratie- en testpaden vallen nu onder exact één semantische component. De checker weigert ontbrekend, dubbel of dood eigenaarschap |
 | Is daarmee bewezen dat iedere afzonderlijke regel nuttig is? | 🟡 Nee. De catalogus legt per component doel, noodzaak, upstreamkeuze, vervanging en tests vast. Dode-codeanalyse, grenscontrole en echte tests moeten daarna bewijzen dat de regels binnen die component hun taak nog werkelijk uitvoeren |
 | Zijn alle dependencies en open-sourcealternatieven aantoonbaar de beste actuele keuze? | 🟡 De live kern en worker zijn exact geïnventariseerd. Van 38 live distributies zijn 30 actueel en 8 hebben een nieuwere kandidaat. De veilige upgradevolgorde en bewuste `HOLD`-keuzes liggen vast. Functionele vergelijking en echte A/B-proeven moeten per batch nog bewijzen wat voor Eva werkelijk beter is |
 | Worden nieuwe releases automatisch gevolgd? | 🟡 De actuele releasewatch is exact aan een receipt gebonden en controleerde 34 van 34 gevolgde projecten via hun officiële releases. Dit dekt alle 11 directe runtime-dependencies, belangrijke kandidaten, bouw-/securitytools, vier base images en drie concurrenten. Een echte Renovate-voorstelbot draait nog niet |
 | Heeft iedere dependency of eigen regel een eigen taak? | 🟡 Iedere gevolgde component heeft nu exact één eigenaar en doel; dit is nog geen regel-voor-regelaudit. Bekende overlap is expliciet geblokkeerd: de Pydantic/MCP-kandidaat voegt 46 distributies en een tweede HTTP-stack toe terwijl de oude route nog bestaat. Zij mag pas live wanneer de oude verantwoordelijkheid in dezelfde wijziging verdwijnt |
 | Is er nu wel iets echt verwijderd? | ✅ Een ongebruikte LocalTuya-adapter van 357 productregels en zijn 212-regelige geïsoleerde test zijn verwijderd. De algemene providerroute blijft; 92 gerichte regressies en Ruff zijn groen |
-| Is de architectuurcontrole groen? | ✅ Ja. Alle 62 gevonden pakketschendingen zijn structureel opgelost zonder het beleid te versoepelen. HTTP-adapters gebruiken neutrale poorten, cryptografie zit achter een adapter, secretbestands-I/O zit in de credentialsadapter en pure resultaatlogica staat in de applicatielaag. De checker vond 818 Pythonbestanden, controleert de 299 bestanden binnen haar vastgelegde architectuurscope — nu inclusief actieve beheertools — en meldt 0 overtredingen |
+| Is de providercode al beheersbaar en verwisselbaar? | 🟡 De algemene runtimecompositor ging reproduceerbaar van 491 naar 162 fysieke regels en bevat geen Home Assistant-, Tuya- of AgentMail-kennis meer. Neutrale contracten en concrete providers staan nu in afzonderlijke modules zonder importcirkel en gebruiken dezelfde ene uitvoerroute. De extra modulegrenzen en tests laten het totale bronvolume bewust iets groeien; dit is dus alleen modularisatie, geen codevermindering. De nog aanwezige duizenden regels directe providerlogica moeten tegen runtime-MCP en onderhouden upstreamsoftware worden bewezen of verwijderd |
+| Is de architectuurcontrole groen? | ✅ Ja. Alle 62 gevonden pakketschendingen zijn structureel opgelost zonder het beleid te versoepelen. HTTP-adapters gebruiken neutrale poorten, cryptografie zit achter een adapter, secretbestands-I/O zit in de credentialsadapter en pure resultaatlogica staat in de applicatielaag. De checker vond 822 Pythonbestanden, controleert de 303 bestanden binnen haar vastgelegde architectuurscope — nu inclusief actieve beheertools — en meldt 0 overtredingen |
 
 Het aantal regels is geen doel en geen maximum. Ook 100 miljoen regels mogen
 als iedere regel aantoonbaar een producttaak heeft en beheersbaar blijft. De
@@ -48,7 +49,9 @@ bewijs, onderhouden dependencies en geen dode of onverklaard dubbele route.
 De machineleesbare componentcatalogus en exact-één-ownerchecker zijn groen
 voor alle gevolgde product-, deploy-, migratie- en testpaden. Regels, packages
 en imageomvang blijven zichtbaar zodat groei verklaard moet worden, maar groei
-op zichzelf is niet fout.
+op zichzelf is niet fout. De 88 nog open inventarisbesluiten staan afzonderlijk
+en controleerbaar in
+[repository-inventory-disposition-v1.json](../docs/repository-inventory-disposition-v1.json).
 
 ## Praten met Eva
 
@@ -337,7 +340,7 @@ gebruikersroute draait én de dubbele Eva-code daarna verdwijnt.
 
 | Stap | Status |
 |---|---|
-| Actuele releases en commits vastgezet | ✅ OpenClaw, Hermes en Agent Zero |
+| Actuele releases en commits vastgezet | 🟡 Hermes en Agent Zero staan exact vast. OpenClaw `v2026.8.1` is inmiddels nieuwer dan de laatst uitgevoerde vergelijking en moet eerst vanaf zijn exacte commit worden gebouwd |
 | Dezelfde vraag, hetzelfde `gpt-5.4-mini`, medium reasoning, nul toolcalls | ✅ Alle vier uitgevoerd; alle drie inhoudsgates groen |
 | Antwoorden zonder productnaam laten beoordelen | ✅ C01: Hermes, OpenClaw, Eva2, Agent Zero. Oude C04: OpenClaw, Hermes, Agent Zero, Eva2. Gecorrigeerde live Eva2 C04: bij vier labelwisselingen 1e, 1e, 1e en 2e. Geen algemene ranglijst |
 | Hetzelfde gesprek na een nieuw proces hervatten | ✅ CONT01: Eva2, OpenClaw en Hermes exact groen; Agent Zero zonder eindantwoord na ruim drie minuten |
@@ -353,8 +356,11 @@ gebruikersroute draait én de dubbele Eva-code daarna verdwijnt.
 2. Daarna dezelfde route met twee echte verwisselbare diensten bewijzen en de
    resterende Home Assistant-, e-mail- en handgeschreven dispatchfuncties
    verwijderen.
-3. De actuele vierwegvergelijking uitbreiden met geheugen, herstart, toolactie,
-   zelfstandig werk en beheer; pas herhaalde praktijkwinst telt als voordeel.
+3. Daarna TOOL01 viermaal per product uitvoeren: alle vier krijgen dezelfde
+   twee externe MCP-tools, dezelfde impliciete koudevraag en een nieuwe
+   processtart. Alleen exact één verandering, aparte readback en nul tweede
+   mutaties kan winnen. OpenClaw `v2026.8.1` moet hiervoor eerst opnieuw exact
+   worden gebouwd; pas herhaalde praktijkwinst telt als voordeel.
 4. De geselecteerde React-admin-kandidaat uit dezelfde gesaneerde API serveren,
    de oude cockpitpresentatie verwijderen en haar via image-scan en A/B live
    bewijzen; daarna pas configuratie, geheugen, kosten en bediening toevoegen.
