@@ -1,0 +1,84 @@
+{
+  "build": {
+    "buildContextTreeSha256": "255fb2811c8c63e0217794cf3166b6059f3f67b5f8aaf80ff7327942fbde9a84",
+    "buildImageArchiveSha256": "6c41fc2512fc76b1e736f98a73745c32a81c4d29e3661a007c20bbd2f52190f3",
+    "buildImageDigest": "sha256:a116514e19457bcb7af7efe9c3dd0b9b71e85b317694e7882a1c52aa15a78134",
+    "dockerNetwork": "none",
+    "runtimeImageArchiveSha256": "ebe8f63c9b7d4e753dfe4d36a0da994a916439b50a51d7fac9d235ab9868561b",
+    "runtimeImageDigest": "sha256:9b615fff20e1a4fad29c2b30562580b212c7dd5e2225236735cca0070ed11c78",
+    "runtimeLibrariesImageArchiveSha256": "1d20ae0dce8f1c747ececf8bc554eb5e656fa334c27c6c4437fc7f5b1f9fb3ad",
+    "runtimeLibrariesImageDigest": "sha256:09f7da3bc104798d0afb40bc08d23ab2da20a76130cec1f2ef170848f5d85217",
+    "wheelCount": 38,
+    "wheelhouseTreeSha256": "b7b7daa58c350f55204f6863b1153a4b8058ce85186069c4183fcbb6b6918c6c"
+  },
+  "candidate": {
+    "architecture": "amd64",
+    "imageId": "sha256:dec43d3d11f31667fdfde96e5e4aafb173ca680ad830ca9d70e1cd6cca8b55e8",
+    "imageSizeBytes": 84541607,
+    "os": "linux",
+    "runtimeUser": "65532:65532",
+    "tagged": false
+  },
+  "contract": "Eva2PydanticAI236DistrolessOfflineCandidate/v1",
+  "gates": {
+    "designGate": "passed",
+    "diffCheck": "passed",
+    "focusedTestsFailed": 0,
+    "focusedTestsPassed": 83,
+    "ruff": "passed"
+  },
+  "issuedAt": "2026-08-31T22:03:07+02:00",
+  "nonclaims": [
+    "The candidate has not been tagged, signed, pushed, attached to Compose, deployed, or promoted.",
+    "The runtime smoke used no network, mounts, secrets, database, model access, or live service input.",
+    "The clean scan and import smoke do not prove conversation, tool, crash, database-migration, or A/B parity.",
+    "The active Eva1 and Eva2 routes, databases, volumes, secrets, and containers were not opened or changed by this build and analysis."
+  ],
+  "rejectedPredecessor": {
+    "criticalFindings": 5,
+    "highFindings": 29,
+    "imageId": "sha256:b698fa3126cba2a023c590e1166e41da15faf502682ed5b09652174b2024d12e",
+    "promoted": false,
+    "reason": "The single-stage Debian Bookworm builder left vulnerable operating-system packages in the runtime image."
+  },
+  "runtimeSmoke": {
+    "contract": "EvaManagedBCandidateRuntimeSmokeReceipt/v2",
+    "imports": [
+      "cffi",
+      "cryptography",
+      "eva.bootstrap.runtime",
+      "greenlet",
+      "jiter",
+      "psycopg",
+      "pydantic_ai",
+      "pydantic_core",
+      "ssl",
+      "zlib"
+    ],
+    "networkUsed": false,
+    "opensslVersion": "OpenSSL 3.5.7 9 Jun 2026",
+    "readOnlyFilesystem": true,
+    "status": "runtime_imported_nonroot"
+  },
+  "security": {
+    "artifactAnalysisContract": "EvaManagedBCandidateArtifactAnalysis/v1",
+    "candidateReceiptSha256": "c5174835c81eabd8edd1ae0e2c7828ee28cc8d98d121b37dcda82f3904ea17de",
+    "criticalFindings": 0,
+    "highFindings": 0,
+    "imageArchiveSha256": "20b9dd465a9ef9d18dfedb75e4140ee306a810f216883ea15e3c602d60e15316",
+    "sbomFormat": "SPDX-2.3-json",
+    "sbomSha256": "d621c4efca9e876d6a82f0829c2c46c2318fee1a9853eb3deb1bae14213adcec",
+    "scannerDatabaseUpdatedAt": "2026-08-31T07:08:27.708070973Z",
+    "scannerImage": "aquasec/trivy@sha256:62b1e65e8869bc4b4c6aa4fa2b21595256c7c2f6018a9d9ad61caf87187c1969",
+    "scannerVersion": "0.74.0",
+    "status": "passed_candidate_artifacts",
+    "trivyRawSha256": "89c067ef08557cf03f4303c51da30b10793544326443b666cd3341f31c530d85"
+  },
+  "source": {
+    "archiveSha256": "2aef3f1ba0ac8f331d8f97f487d2903362c4dda34f3a2fb70b19aba486fead34",
+    "commit": "0c469ee513b1843253dc170eba08161101d5a70d",
+    "dockerfileSha256": "0b30c906b15e84458e585393569d8a653a2a2d147f243bbf0e9d8d00c2d874f1",
+    "requirementsLockSha256": "204fefe5052a2f457b8a12aece51ca675520bb250bf97771a69a7e22e14c81c5"
+  },
+  "status": "passed_offline_candidate_only"
+}

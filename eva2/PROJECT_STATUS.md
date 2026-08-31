@@ -1,6 +1,6 @@
 # Eva 2 — projectbord en vergelijking
 
-Laatst bijgewerkt: 31 augustus 2026, 20:37 CEST
+Laatst bijgewerkt: 31 augustus 2026, 22:03 CEST
 
 ## Zo lees je dit bord
 
@@ -80,8 +80,8 @@ de bestaande productgrens. 124 gerichte model-, usage-, journal- en
 probecontroles zijn groen. De exacte schone broncommit doorliep daarna met
 Eva's echte korte Codex-toegang alle drie fasen: streaming, uitgestelde
 toolkeuze zonder uitvoering en hervatten vanuit een synthetische receipt met
-nul aangeboden tools. Dit is nog geen liveclaim: offline image, scan en
-veilige A/B-promotie ontbreken nog.
+nul aangeboden tools. Dit is nog geen liveclaim: de offline image en scan zijn
+inmiddels groen; echte runtimepariteit en veilige A/B-promotie ontbreken nog.
 
 De actuele Pydantic-versie heeft nu ook met Eva's echte korte Codex-toegang
 gepraat. De vaste, gesaneerde bronproef is volledig groen: het antwoord kwam in
@@ -358,7 +358,7 @@ herstelbaar.
 
 | Algemeen probleem | Gekozen onderhouden bouwsteen | Werkelijkheid nu |
 |---|---|---|
-| Modelverkeer | `pydantic-ai-slim` met alleen de gekozen officiële provider-SDK | 🟡 Pydantic AI `2.36.0` is nu de enige gewone gesprekseigenaar in de bron. De oude transportklasse is verwijderd; streaming, uitgestelde tools, hervatten en veilige pre-outputretry zijn gericht én met de echte Codex-provider groen. De lock blijft 38 pakketten; offline image, scan en A/B-livegang ontbreken nog |
+| Modelverkeer | `pydantic-ai-slim` met alleen de gekozen officiële provider-SDK | 🟡 `slim` is dezelfde Pydantic AI-kern zonder ongebruikte providerextra's; Eva gebruikt de officiële OpenAI-SDK apart. Pydantic AI `2.36.0` is de enige gewone gesprekseigenaar in de bron. De exacte 38-packagecommit is offline gebouwd in een minimale Distroless-image, draait als niet-root en scant 0 hoog/0 kritisch. Echte gesprek-, tool- en crashpariteit op die image en A/B-livegang ontbreken nog |
 | Langetermijngeheugen | Hindsight | ✅ Live; 🟡 Eva's adapter moet nog kleiner |
 | Externe gereedschappen | Pydantic AI met runtime-ontdekte tools; ContextForge alleen als optionele gateway | 🟡 De gewone bronroute gebruikt nu Pydantic AI en houdt Eva's duurzame ledger/readback buiten het framework. De brede 69-wheelroute is afgewezen. Uitgestelde cataloguslading en de echte Codex-bronproef zijn groen; twee verwisselbare providers moeten nog op de exacte image worden bewezen |
 | Subagents | Pydantic AI/Harness voor modelruns; onderhouden workflowmotor voor duurzaam werk | 🟡 Modelrun werkt; workflowkeuze nog niet gewonnen door een dependency |
@@ -388,9 +388,8 @@ gebruikersroute draait én de dubbele Eva-code daarna verdwijnt.
 
 ## Eerstvolgende zichtbare verbeteringen
 
-1. De nieuwe commitgebonden probe met echte Codex-toegang uitvoeren: streaming,
-   uitgestelde toolkeuze en hervatten na een synthetische toolreceipt. Daarna
-   pas offline bouwen, scannen en via A/B promoveren.
+1. Op de scan-schone commitgebonden image echte gesprek-, tool-, usage- en
+   crashpariteit bewijzen; pas daarna via A/B promoveren.
 2. Daarna dezelfde route met twee echte verwisselbare diensten bewijzen en de
    resterende Home Assistant-, e-mail- en handgeschreven dispatchfuncties
    verwijderen.
@@ -446,6 +445,8 @@ fail-closed vervangingspoort staan in
 en [TOOL01](experiments/tool01-replacement-acceptance-v1/README.md).
 De echte gesaneerde bronproef staat in
 [het Codex-compatibiliteitsbewijs](evidence/product/pydantic-ai-2.36-source-codex-compatibility-2026-08-31.json).
+De exacte offline Distroless-build, niet-rootimports, SBOM en 0/0-scan staan in
+[het Pydantic AI-kandidaatbewijs](evidence/product/pydantic-ai-2.36-distroless-offline-candidate-2026-08-31.json).
 De vastgestelde Telegramverwarring, historische classificatie, live correctie
 en de nog open menselijke eindproef staan in
 [het Eva1/Eva2-dialooggrensbewijs](evidence/living-core/eva1-eva2-telegram-dialogue-isolation-2026-08-31.json).
