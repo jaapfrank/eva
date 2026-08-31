@@ -1,0 +1,218 @@
+{
+  "contract": "EvaProviderNeutralMCPProof/v1",
+  "createdAt": "2026-08-31T10:47:00Z",
+  "status": "passed_candidate_image_green_replacement_diff_open",
+  "allPassed": true,
+  "model": {
+    "name": "gpt-5.4-mini",
+    "reasoningEffort": "medium",
+    "credentialKind": "read_only_access_only_lease",
+    "credentialBytesInReceipt": false
+  },
+  "dependencies": {
+    "pydantic-ai-slim": "2.36.0",
+    "fastmcp-slim": "3.4.7",
+    "mcp": "1.29.1",
+    "openai": "3.6.0",
+    "currentReleaseCheckedViaPyPI": true,
+    "discardedEarlierPydanticProof": "2.34.0"
+  },
+  "executionBoundary": {
+    "baseImageId": "sha256:e0e06066e3ed6a71f36859ece3d10fb587dd7bfbfe844eb1adb41b97509cbf9e",
+    "containerUser": "65532:65532",
+    "readOnlyRootFilesystem": true,
+    "modelLeaseMount": "read_only",
+    "fixtureEffects": "in_memory_only",
+    "externalEffects": false,
+    "lanDiscoveryPerformed": false,
+    "physicalProviderCalled": false,
+    "egressNetworkIsolated": false,
+    "sourceConfiguredNetworkTargets": [
+      "https://chatgpt.com/backend-api/codex/"
+    ]
+  },
+  "candidateImage": {
+    "image": "eva2/pydantic-mcp-client-candidate@sha256:bebcd2cdfcbcf4ce77d719b104aa9c76f97d1fc548877caf18c85d52101411ca",
+    "imageId": "sha256:bebcd2cdfcbcf4ce77d719b104aa9c76f97d1fc548877caf18c85d52101411ca",
+    "baseImageId": "sha256:e0e06066e3ed6a71f36859ece3d10fb587dd7bfbfe844eb1adb41b97509cbf9e",
+    "baseImageSizeBytes": 81669236,
+    "candidateImageSizeBytes": 114760217,
+    "imageSizeIncreaseBytes": 33090981,
+    "baseLayers": 31,
+    "candidateLayers": 32,
+    "runtimeUser": "65532:65532",
+    "buildNetwork": "none",
+    "buildProvenanceManifest": false,
+    "hashedWheelCount": 69,
+    "wheelhouseManifestSha256": "aca218cf57387ebe0e51e4f48b8e7b0e2d5d41a39b73406dd23f9fa78a9a744b",
+    "imageArchiveSha256": "aa0b4dd5aca2dcc6faba376f95497dcdb76f15591cc4f8d7b96915ef8eba79b7",
+    "sbom": {
+      "generator": "anchore/syft@sha256:bed2c55fa33e08660f992154ca10234f1948bfc66729aa7da938dcfdf30b7d18",
+      "format": "CycloneDX JSON",
+      "componentCount": 1705,
+      "pythonComponentCountIncludingBaseAndOverlay": 119,
+      "sha256": "5d1e30b8b713bfc2b65d23b4da8550fdae66b69195c7ff17ee661cf6c60983e7",
+      "network": "none"
+    },
+    "vulnerabilityScan": {
+      "scanner": "aquasec/trivy@sha256:62b1e65e8869bc4b4c6aa4fa2b21595256c7c2f6018a9d9ad61caf87187c1969",
+      "databaseUpdatedAt": "2026-08-31T07:08:27.708070973Z",
+      "databaseDownloadedAt": "2026-08-31T11:11:31.349014119Z",
+      "databaseSha256": "81fa5a3c02b6979490e15efba814f30a377681b95c8bb3b3c326a7d50a7cee46",
+      "metadataSha256": "c6c3d5d59010af656570825be76d476af698be2b939d929924754306d6c19e8f",
+      "resultSha256": "8581425f6e522a06903b1530840a849bc7e44a113e9169c004a357eafc962c5a",
+      "network": "none during candidate scan",
+      "high": 0,
+      "critical": 0
+    },
+    "externalClientBoundary": {
+      "internalOnlyDockerNetwork": true,
+      "separateProviderProcess": true,
+      "discoveredToolNames": [
+        "observe_external_capability"
+      ],
+      "toolCallResultPresent": true,
+      "providerChangedState": false,
+      "fastMcpServerExtraInClientImage": false
+    }
+  },
+  "agent": {
+    "frameworkOwnsToolLoop": true,
+    "toolsetsLoadedAtRuntime": 2,
+    "providerSpecificDispatchInAgent": false,
+    "instructionsSha256": "dee53f7497ef83e963c9056836148e56915c6e7e4f6e8a76ccd61fe3a40e90f0"
+  },
+  "cases": [
+    {
+      "case": "implicit_current_comfort",
+      "passed": true,
+      "durationMs": 11353,
+      "calls": [
+        "environment.observe_space",
+        "environment.adjust_space_comfort",
+        "environment.observe_space"
+      ],
+      "successfulMutations": 1,
+      "independentReadbackAfterMutation": true,
+      "otherProviderMutations": 0,
+      "outputSha256": "c1f8c039eb33a4cf6fda0aeb706c28958964b4af6f777dab7df8d95593a5e4f5",
+      "usage": {
+        "requests": 4,
+        "toolCalls": 3,
+        "inputTokens": 3203,
+        "outputTokens": 395
+      }
+    },
+    {
+      "case": "historical_observation",
+      "passed": true,
+      "durationMs": 3298,
+      "calls": [],
+      "successfulMutations": 0,
+      "outputSha256": "6d986636446f96870541aefc6d2d617a7030f37402c07da0dd35a54c606db26b",
+      "usage": {
+        "requests": 1,
+        "toolCalls": 0,
+        "inputTokens": 506,
+        "outputTokens": 142
+      }
+    },
+    {
+      "case": "general_preference",
+      "passed": true,
+      "durationMs": 5969,
+      "calls": [],
+      "successfulMutations": 0,
+      "outputSha256": "814d2c9821da1f3123e822d875e91c43009241041c091090c0857363437d253b",
+      "usage": {
+        "requests": 1,
+        "toolCalls": 0,
+        "inputTokens": 502,
+        "outputTokens": 141
+      }
+    },
+    {
+      "case": "ambiguous_current_need",
+      "passed": true,
+      "durationMs": 4762,
+      "calls": [
+        "environment.observe_space"
+      ],
+      "successfulMutations": 0,
+      "askedClarifyingQuestion": true,
+      "outputSha256": "4e83272405f27fbf9b97ae635958b5e420284e68d03f7c415dcbcfee01c37b8e",
+      "usage": {
+        "requests": 2,
+        "toolCalls": 1,
+        "inputTokens": 1137,
+        "outputTokens": 163
+      }
+    },
+    {
+      "case": "implicit_focus_request",
+      "passed": true,
+      "durationMs": 9452,
+      "calls": [
+        "focus.find_focus_windows",
+        "focus.reserve_focus_window",
+        "focus.read_focus_reservation"
+      ],
+      "successfulMutations": 1,
+      "independentReadbackAfterMutation": true,
+      "otherProviderMutations": 0,
+      "outputSha256": "94174ddc87d9f87bba0761c01d1a977a51c51490a3391a6c4b8601034ac85be5",
+      "usage": {
+        "requests": 4,
+        "toolCalls": 3,
+        "inputTokens": 2770,
+        "outputTokens": 284
+      }
+    }
+  ],
+  "verification": {
+    "localTestsPassed": 5,
+    "providerSmokePassed": true,
+    "externalClientBoundaryPassed": true,
+    "processToolCallInterceptedBeforeProviderIo": true,
+    "cleanPythonVersion": "3.12",
+    "experimentLockDistributionCount": 82,
+    "cleanHashRequiredInstallPassed": true,
+    "cleanPipCheckPassed": true,
+    "clientOnlyDistributionCount": 69,
+    "repositoryLockDistributionCount": 38,
+    "clientOnlyAddedDistributions": 46,
+    "clientOnlyChangedDistributions": 8
+  },
+  "replacementBoundary": {
+    "measuredOverlappingProductFiles": {
+      "src/eva/adapters/model/conversation.py": 1985,
+      "src/eva/adapters/model/openai_responses_transport.py": 678,
+      "src/eva/adapters/connectors/mcp_gateway.py": 458,
+      "src/eva/providers/mcp_gateway.py": 221
+    },
+    "measuredOverlappingProductLines": 3342,
+    "linesProvenSafeToDeleteNow": 0,
+    "promotionRule": "Pydantic AI may replace these paths only through one parity-tested diff that removes the superseded model and MCP loop; installing it beside both existing loops is a failed result.",
+    "durableBoundaryFit": "The public process_tool_call callback intercepted a selected MCP tool before provider I/O, so Eva's existing grant, durable ledger and readback can remain authoritative.",
+    "nextGate": "Implement the replacement diff, prove conversation, tool, crash and readback parity, then measure the actual net product-line reduction before any A/B deployment."
+  },
+  "source": {
+    "Dockerfile.client": "ec5327e414dff5c5d628fc2f687b423c953b56207eb55b4fe42575829d290c99",
+    "README.md": "288b891d120d24ff17c7a62df982a3e5133f2b522df46fbc80c31d770e834319",
+    "candidate.py": "d6911853e0f0373122a9c740b0c2fbc55c1d3b7e9e3cad5043159d6f51b6a29a",
+    "client-requirements.in": "e75f04df2f820d7e72ecfe98ae3618a3bb65ef097ddfc764446f47c62667fb3b",
+    "client-requirements.lock": "b72c670c4c119232c5c3c82396e8db39275b605b793530659c7fc396f316a151",
+    "client_smoke.py": "223d27ac48e36dbba06e0fc26bcd801789f08216abcc8d86c8a0c47304671011",
+    "mcp_fixture_server.py": "f42368fe0aaac4e3e722baf775a188e0a67fb6b449b12faeff662a81c0cdad88",
+    "requirements.in": "e05eb058d62e385dcc7bd7a83134828319306003dc59a0a29ebf706f044a034c",
+    "requirements.lock": "86d65a0717cea46652d48fa4981dbccf392231938ee6ae55c3eb9e521392cef2",
+    "test_candidate.py": "5a9fe43a450b449784d4c052f9473d719e44de0e517314a95696d6c4a55a9dea"
+  },
+  "nonClaims": [
+    "No production dependency, image, service, route or database changed.",
+    "No LAN discovery or physical provider action was performed.",
+    "The providers and all their effects were in-memory fixtures.",
+    "The client-only dependency surface passed image build, SBOM and a fresh vulnerability scan, but no overlapping production source has been removed yet.",
+    "This does not yet prove crash-safe durable tool execution or A/B promotion."
+  ]
+}

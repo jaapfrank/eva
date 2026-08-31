@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Fail-closed PC01 source, dependency and OCI baseline budget gate."""
+"""Fail-closed PC01 source, dependency and OCI inventory gate."""
 
 from __future__ import annotations
 
@@ -66,7 +66,9 @@ def _string_list(value: object, *, label: str) -> list[str]:
 
 def _git_paths(repo: Path, project: Path) -> list[str]:
     prefix = project.relative_to(repo).as_posix()
-    raw = _run(["git", "ls-tree", "-r", "--name-only", "-z", "HEAD", "--", prefix], cwd=repo)
+    raw = _run(
+        ["git", "ls-tree", "-r", "--name-only", "-z", "HEAD", "--", prefix], cwd=repo
+    )
     result: list[str] = []
     for item in raw.split(b"\0"):
         if not item:
@@ -91,9 +93,7 @@ def _manifest(rows: list[tuple[str, bytes]]) -> dict[str, object]:
         lines = len(raw.splitlines())
         line_count += lines
         byte_count += len(raw)
-        entries.append(
-            f"{path}\t{len(raw)}\t{lines}\t{_sha256(raw)}\n".encode("utf-8")
-        )
+        entries.append(f"{path}\t{len(raw)}\t{lines}\t{_sha256(raw)}\n".encode("utf-8"))
     return {
         "bytes": byte_count,
         "fileCount": len(rows),
@@ -110,8 +110,6 @@ def _measure_sources(
         "extensions",
         "generatedExactPaths",
         "livingCoreRoot",
-        "maximumProductPhysicalLines",
-        "preferredLivingCorePhysicalLines",
         "productRoots",
     }
     if set(source) != required:
@@ -169,8 +167,6 @@ def _measure_sources(
     violations: list[str] = []
     if unclassified:
         violations.append("unclassified_source_root")
-    if measurement["product"]["physicalLines"] > source["maximumProductPhysicalLines"]:
-        violations.append("product_physical_lines_budget_exceeded")
     return measurement, violations
 
 
@@ -184,11 +180,7 @@ def _dependency_name(requirement: str) -> str:
 def _measure_dependencies(
     repo: Path, project: Path, authority: dict[str, Any]
 ) -> tuple[dict[str, object], list[str]]:
-    if set(authority) != {
-        "expected",
-        "maximumDirectRuntimeDependencies",
-        "source",
-    }:
+    if set(authority) != {"expected", "source"}:
         raise Pc01Error("PC01 dependency authority fields differ")
     expected = _string_list(authority["expected"], label="expected dependencies")
     source = authority["source"]
@@ -208,11 +200,8 @@ def _measure_dependencies(
     violations: list[str] = []
     if names != expected:
         violations.append("direct_runtime_dependency_set_differs")
-    if len(names) > authority["maximumDirectRuntimeDependencies"]:
-        violations.append("direct_runtime_dependency_count_exceeded")
     return {
         "count": len(names),
-        "maximum": authority["maximumDirectRuntimeDependencies"],
         "names": names,
         "sourceSha256": _sha256(raw),
     }, violations
@@ -255,6 +244,7 @@ def _measure_image(
     if container_raw.returncode != 0:
         raise Pc01Error("PC01 active core container is unavailable")
     container = json.loads(container_raw.stdout)[0]
+
     def content(digest: str) -> dict[str, Any]:
         result = subprocess.run(
             ["ctr", "-n", "moby", "content", "get", digest],
@@ -274,7 +264,9 @@ def _measure_image(
             if descriptor.get("platform", {}).get("os") == operating_system
             and descriptor.get("platform", {}).get("architecture") == architecture
         ]
-        if len(candidates) != 1 or not _DIGEST.fullmatch(candidates[0].get("digest", "")):
+        if len(candidates) != 1 or not _DIGEST.fullmatch(
+            candidates[0].get("digest", "")
+        ):
             raise Pc01Error("PC01 OCI platform manifest differs")
         manifest = content(candidates[0]["digest"])
     compressed = sum(layer["size"] for layer in manifest["layers"])
@@ -337,11 +329,15 @@ def _parser() -> argparse.ArgumentParser:
 def main() -> int:
     args = _parser().parse_args()
     try:
-        receipt = check(args.repo.resolve(), args.project.resolve(), args.authority.resolve())
+        receipt = check(
+            args.repo.resolve(), args.project.resolve(), args.authority.resolve()
+        )
     except (OSError, Pc01Error, json.JSONDecodeError) as exc:
         print(f"performance-complexity-pc01: {exc}", file=sys.stderr)
         return 1
-    print(json.dumps(receipt, ensure_ascii=False, separators=(",", ":"), sort_keys=True))
+    print(
+        json.dumps(receipt, ensure_ascii=False, separators=(",", ":"), sort_keys=True)
+    )
     return 0 if receipt["status"] == "passed" else 2
 
 

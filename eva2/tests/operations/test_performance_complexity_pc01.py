@@ -22,7 +22,7 @@ def _run(*args: str, cwd: Path) -> None:
     subprocess.run(args, cwd=cwd, check=True, capture_output=True)
 
 
-def _authority(*, maximum_lines: int = 10) -> dict[str, object]:
+def _authority() -> dict[str, object]:
     return {
         "contract": pc01.CONTRACT,
         "source": {
@@ -30,13 +30,10 @@ def _authority(*, maximum_lines: int = 10) -> dict[str, object]:
             "productRoots": ["src/eva"],
             "classifiedNonProductRoots": ["tests"],
             "generatedExactPaths": ["src/eva/generated.py"],
-            "maximumProductPhysicalLines": maximum_lines,
-            "preferredLivingCorePhysicalLines": 8,
             "livingCoreRoot": "src/eva",
         },
         "dependencies": {
             "source": "pyproject.toml",
-            "maximumDirectRuntimeDependencies": 12,
             "expected": ["alpha"],
         },
         "preVoiceBrowserCoreImageBaseline": {
@@ -53,14 +50,18 @@ def _authority(*, maximum_lines: int = 10) -> dict[str, object]:
     }
 
 
-def _repository(tmp_path: Path, *, maximum_lines: int = 10) -> tuple[Path, Path, Path]:
+def _repository(tmp_path: Path) -> tuple[Path, Path, Path]:
     repo = tmp_path / "repo"
     project = repo / "eva2"
     (project / "src/eva").mkdir(parents=True)
     (project / "tests").mkdir()
     (project / "src/eva/core.py").write_text("one = 1\ntwo = 2\n", encoding="utf-8")
-    (project / "src/eva/generated.py").write_text("generated = True\n", encoding="utf-8")
-    (project / "tests/test_core.py").write_text("def test_ok():\n    pass\n", encoding="utf-8")
+    (project / "src/eva/generated.py").write_text(
+        "generated = True\n", encoding="utf-8"
+    )
+    (project / "tests/test_core.py").write_text(
+        "def test_ok():\n    pass\n", encoding="utf-8"
+    )
     (project / "pyproject.toml").write_text(
         '[project]\nname="fixture"\nversion="0"\ndependencies=["alpha==1"]\n',
         encoding="utf-8",
@@ -71,9 +72,9 @@ def _repository(tmp_path: Path, *, maximum_lines: int = 10) -> tuple[Path, Path,
     }
     evidence_raw = json.dumps(evidence).encode()
     (project / "evidence.json").write_bytes(evidence_raw)
-    authority = _authority(maximum_lines=maximum_lines)
-    authority["preVoiceBrowserCoreImageBaseline"]["sourceEvidenceSha256"] = pc01._sha256(
-        evidence_raw
+    authority = _authority()
+    authority["preVoiceBrowserCoreImageBaseline"]["sourceEvidenceSha256"] = (
+        pc01._sha256(evidence_raw)
     )
     authority_path = project / "authority.json"
     authority_path.write_text(json.dumps(authority), encoding="utf-8")
@@ -103,16 +104,23 @@ def test_pc01_passes_a_closed_small_source_tree(
     assert receipt["dependencies"]["names"] == ["alpha"]
 
 
-def test_pc01_fails_the_real_product_line_budget(
+def test_pc01_measures_a_large_source_tree_without_an_arbitrary_line_failure(
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
-    repo, project, authority = _repository(tmp_path, maximum_lines=1)
+    repo, project, authority = _repository(tmp_path)
+    (project / "src/eva/core.py").write_text(
+        "\n".join(f"value_{index} = {index}" for index in range(10_000)) + "\n",
+        encoding="utf-8",
+    )
+    _run("git", "add", ".", cwd=repo)
+    _run("git", "commit", "-qm", "large but classified", cwd=repo)
     monkeypatch.setattr(pc01, "_measure_image", _image_ok)
 
     receipt = pc01.check(repo, project, authority)
 
-    assert receipt["status"] == "failed"
-    assert receipt["violations"] == ["product_physical_lines_budget_exceeded"]
+    assert receipt["status"] == "passed"
+    assert receipt["source"]["product"]["physicalLines"] == 10_000
+    assert receipt["violations"] == []
 
 
 def test_pc01_refuses_an_unclassified_source_root(
@@ -162,7 +170,9 @@ def test_pc01_measures_exact_oci_descriptors(
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
     _repo, project, authority_path = _repository(tmp_path)
-    authority = json.loads(authority_path.read_text())["preVoiceBrowserCoreImageBaseline"]
+    authority = json.loads(authority_path.read_text())[
+        "preVoiceBrowserCoreImageBaseline"
+    ]
 
     def fake_run(arguments: list[str], **_kwargs: object) -> SimpleNamespace:
         if arguments[:2] == ["docker", "inspect"]:
@@ -186,7 +196,9 @@ def test_pc01_detects_changed_oci_layer_bytes(
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
     _repo, project, authority_path = _repository(tmp_path)
-    authority = json.loads(authority_path.read_text())["preVoiceBrowserCoreImageBaseline"]
+    authority = json.loads(authority_path.read_text())[
+        "preVoiceBrowserCoreImageBaseline"
+    ]
 
     def fake_run(arguments: list[str], **_kwargs: object) -> SimpleNamespace:
         if arguments[:2] == ["docker", "inspect"]:
@@ -209,7 +221,9 @@ def test_pc01_resolves_one_exact_platform_manifest_from_an_oci_index(
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
     _repo, project, authority_path = _repository(tmp_path)
-    authority = json.loads(authority_path.read_text())["preVoiceBrowserCoreImageBaseline"]
+    authority = json.loads(authority_path.read_text())[
+        "preVoiceBrowserCoreImageBaseline"
+    ]
     platform_manifest = "sha256:" + "3" * 64
 
     def fake_run(arguments: list[str], **_kwargs: object) -> SimpleNamespace:

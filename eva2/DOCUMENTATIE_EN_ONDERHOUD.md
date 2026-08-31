@@ -104,17 +104,24 @@ verdwenen autoriteit blijft wijzen.
   in Eva's antwoordroute komt. Ook een geheugendashboard blijft een projectie:
   het mag geen providerkeuze afdwingen of Eva's correctie- en
   verwijderautoriteit omzeilen.
-- Er bestaat nog geen volledig, commitgebonden semantisch componentregister dat
-  ieder productie-, deployment-, migration- en testpad dekt. Ook is
-  optimalisatiestatus nog niet voor iedere component gemeten.
+- `design/architecture/component-catalog-v1.json` koppelt nu ieder door de
+  actuele inventaris gevolgd productie-, deployment-, migration- en testpad
+  aan exact één semantische component. Per component staan doel, noodzaak,
+  eigenaar, verboden scope, upstreamkeuze, vervangingsstatus en verificatie.
+  `tools/check_component_catalog.py` weigert ontbrekend, dubbel of dood
+  eigenaarschap. Dit is lokaal getest, maar nog niet commitgebonden of
+  onafhankelijk gereviewd. Optimalisatiestatus is bovendien nog niet voor
+  iedere component gemeten.
 
 ## Kleine documentatiegates
 
-- [ ] DG01 — Eén gesloten `EvaComponentCatalog/v1`-schema en catalogus met
-  stabiele component-ID's, doel, eigenaar, paden, contracten en verboden scope.
-- [ ] DG02 — Checker bewijst dat ieder gevolgd productie-, deployment- en
-  migrationpad precies één componentowner heeft; test- en bewijsbestanden mogen
-  expliciet meerdere componenten verifiëren maar hebben één primaire rol.
+- [x] DG01 — Eén gesloten `EvaComponentCatalog/v1`-contract en catalogus met
+  stabiele component-ID's, doel, noodzaak, eigenaar, paden, verboden scope,
+  upstream- en vervangingsstatus. De actuele kandidaat is lokaal getest; haar
+  checkpoint en onafhankelijke review vallen onder DG04.
+- [x] DG02 — De checker bewijst voor de actuele inventaris dat ieder gevolgd
+  productie-, deployment-, migration- en testpad precies één componentowner
+  heeft en weigert ontbrekende, overlappende of dode ownerpatronen.
 - [ ] DG03 — Iedere capability/non-goal en iedere open checkbox heeft één unieke
   gate-ID, primaire productspecificatie, status en geldige bewijssoort.
 - [ ] DG04 — Iedere afgeronde gate bindt exact Git-checkpoint, gerichte tests,

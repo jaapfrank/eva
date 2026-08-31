@@ -20,14 +20,22 @@ const ACTIVE_LEDGER_EVIDENCE = Object.freeze([
 const EXPECTED_GITIGNORE_PATTERNS = Object.freeze([
   'node_modules/', 'dist/', 'coverage/', '.nyc_output/', 'data/',
   '*.db', '*.db-*', '*.sqlite', '*.sqlite-*', '*.log', '*.pid',
-  '__pycache__/', '*.py[cod]', '.venv/', 'venv/',
+  '__pycache__/', '*.py[cod]', '.ruff_cache/', '.pytest_cache/', '.venv/', 'venv/',
   '.env', '.env.*', '*.env', '*.env.*',
   '!.env.example', '!**/.env.example',
+  '!eva2/deploy/living-core/runtime.env.example',
+  '!eva2/deploy/living-core/hindsight.env.example',
+  'eva2/deploy/living-core/secrets/', 'eva2/deploy/living-core/secrets/**',
   '*.key', '*.pem', '*.ppk', '*.p12', '*.pfx', '*.jks', '*.keystore',
   'id_rsa', 'id_rsa.*', '*_rsa', '*_rsa.*', '*_ed25519', '*_ed25519.*',
   '*.swp', '*.swo', '*~', '*:Zone.Identifier', '.DS_Store', 'Thumbs.db',
   '/scratch_*', '/_*.cjs',
   '/eva_brain/replay/LOCK_*.md', '/eva_brain/replay/out_*.txt',
+  '/eva2/experiments/distroless-core-v1/wheelhouse/*.whl',
+  '/eva2/experiments/distroless-hindsight-api-v1/offline-artifacts/*.apk',
+  '/eva2/experiments/distroless-hindsight-api-v1/offline-artifacts/*.tar',
+  '/eva2/experiments/distroless-hindsight-api-v1/wheelhouse/*.whl',
+  '/eva2/build/',
 ]);
 const EXPECTED_EXCLUSIONS = Object.freeze(
   EXPECTED_GITIGNORE_PATTERNS.filter((pattern) => !pattern.startsWith('!')),
@@ -132,12 +140,21 @@ function createRepository(t) {
     'install -m 0550 "$SCRIPT_DIR/eva-runtime-maintainer.mjs" /usr/local/libexec/eva-runtime-maintainer.mjs',
     '',
   ].join('\n'));
+  write(root, 'design/contract.json', '{}\n');
   write(root, 'docs/design.md');
   write(root, 'docs/eva-runtime-map.md', 'historische runtimekaart\n');
   write(root, 'docs/live-acceptance-2026-08-04.md', 'historisch live-acceptatiebewijs\n');
   write(root, 'eva_brain/service.py', 'def health(): return True\n');
   write(root, 'eva_brain/test_service.py', 'def test_health(): assert True\n');
   write(root, 'eva_brain/ingest.py', 'print("offline")\n');
+  write(root, 'eva2/README.md', 'Eva2 fixture\n');
+  write(root, 'eva2/deploy/Dockerfile', 'FROM scratch\n');
+  write(root, 'eva2/experiments/README.md', 'experiment\n');
+  write(root, 'eva2/release/policy.json', '{}\n');
+  write(root, 'eva2/src/eva/__init__.py', '"""fixture"""\n');
+  write(root, 'eva2/tests/test_sample.py', 'def test_sample(): assert True\n');
+  write(root, 'eva2/tools/check.py', 'print("check")\n');
+  write(root, 'experiments/README.md', 'experiment fixture\n');
   write(root, 'native/workspace_writer_broker.c', 'int main(void) { return 0; }\n');
   for (const file of ACTIVE_LEDGER_EVIDENCE) write(root, file, 'export {};\n');
   write(root, 'scripts/generate-runtime-contract-map.mjs', 'export {};\n');
@@ -174,6 +191,7 @@ function createRepository(t) {
     "const inertSpawnText = \"spawn('scripts/eva-backup.mjs')\";",
     '',
   ].join('\n'));
+  write(root, 'transition/README.md', 'transition fixture\n');
   write(root, 'src/retired.js', 'export const retired = true;\n');
 
   git(root, ['add', '.']);
@@ -260,9 +278,11 @@ function fullyTrackedResolvedRepository(t) {
 
 test('project-.gitignore-contract is exact en drift faalt gewoon en sealed gesloten', (t) => {
   assert.deepEqual(gitignorePatterns(projectGitignore), EXPECTED_GITIGNORE_PATTERNS);
-  assert.equal(EXPECTED_EXCLUSIONS.length, 42);
+  assert.equal(EXPECTED_EXCLUSIONS.length, 51);
   assert.deepEqual(EXPECTED_GITIGNORE_PATTERNS.filter((pattern) => pattern.startsWith('!')), [
     '!.env.example', '!**/.env.example',
+    '!eva2/deploy/living-core/runtime.env.example',
+    '!eva2/deploy/living-core/hindsight.env.example',
   ]);
 
   const ordinaryRoot = createRepository(t);

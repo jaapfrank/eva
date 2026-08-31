@@ -1,0 +1,24 @@
+FROM docker.io/library/python@sha256:a116514e19457bcb7af7efe9c3dd0b9b71e85b317694e7882a1c52aa15a78134 AS dependency_builder
+
+ENV PIP_DISABLE_PIP_VERSION_CHECK=1 \
+    PYTHONDONTWRITEBYTECODE=1
+
+WORKDIR /candidate
+COPY client-requirements.lock ./client-requirements.lock
+COPY client-wheelhouse ./client-wheelhouse
+RUN python -m pip install \
+    --no-cache-dir \
+    --no-index \
+    --only-binary=:all: \
+    --find-links=./client-wheelhouse \
+    --require-hashes \
+    --target=/candidate-site \
+    -r client-requirements.lock \
+    && python -c "import sys; sys.path.insert(0, '/candidate-site'); from pydantic_ai.mcp import MCPToolset; assert MCPToolset"
+
+FROM eva2/situational-humour-release@sha256:e0e06066e3ed6a71f36859ece3d10fb587dd7bfbfe844eb1adb41b97509cbf9e
+
+COPY --from=dependency_builder /candidate-site /opt/pydantic-mcp-client
+ENV PYTHONPATH=/opt/pydantic-mcp-client:/opt/eva/src:/opt/eva
+
+USER 65532:65532

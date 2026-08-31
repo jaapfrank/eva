@@ -1,6 +1,6 @@
 # Eva 2 — eerst hergebruiken, pas daarna zelf bouwen
 
-Bijgewerkt: 26 augustus 2026.
+Bijgewerkt: 31 augustus 2026.
 
 ## Het eerlijke antwoord
 
@@ -10,8 +10,8 @@ dependency of sidecar al beter en sneller kan leveren.
 
 Het duidelijkste voorbeeld staat al in de repository:
 `pydantic-ai-slim==2.32.1` is exact vastgezet, maar wordt in Eva's productiecode
-nog niet als agentframework gebruikt. De actuele officiële release `2.34.0`
-levert al realtime voice, webinterfaces, MCP en duurzame uitvoering. Het aparte
+nog niet als agentframework gebruikt. De actuele officiële release `2.36.0`
+levert al de algemene agent- en MCP-toolloop. Het aparte
 Harness `0.25.0` levert subagents, planning, browsergebruik, skills en
 contextbeheer.
 Tegelijk telt een kleine selectie van Eva's eigen action-chain-, API- en
@@ -44,8 +44,8 @@ chattransport, dashboards en update-scanners zijn hulpmiddelen rond die kern.
 
 | Onderdeel | Eerste hergebruikkeuze | Wat Eva nog toevoegt | Besluit |
 |---|---|---|---|
-| Modeltransport en gestructureerde antwoorden | Eerst de officiële OpenAI-SDK; daarna alleen lagere Pydantic AI-primitives die extra code verwijderen | Identiteit, persoonscontext, agentloop, grants, tooluitvoering en antwoordbeleid | De OpenAI-SDK-kandidaat is gereviewd en behoudt Eva's grenzen; echte provider- en releasepromotie staan nog open |
-| MCP-koppeling | Pas een onderhouden adapter kiezen wanneer een echte productconnector MCP nodig heeft | Toegelaten tool/resource, byte- en tijdslimieten, schemahash en receipt | De oude begrensde client had nul productgebruikers en staat alleen nog als testfixture; de runtime bevat nu geen ongebruikte MCP-client |
+| Modeltransport en gestructureerde antwoorden | Officiële OpenAI-SDK; Pydantic AI neemt alleen over wanneer de oude loop verdwijnt | Identiteit, persoonscontext, grants, duurzaam bewijs en antwoordbeleid | OpenAI SDK `3.6.0` draait live. Pydantic AI `2.36.0` is als toolloop en scan-schone image groen, maar nog geen productdependency omdat de vervangingsdiff ontbreekt |
+| MCP-koppeling | Pydantic AI's native `MCPToolset`; ContextForge alleen als optionele gateway | Toegelaten persoon/scope, byte- en tijdslimieten, duurzame poging en readback | Een afzonderlijke providercontainer werd door de minimale client ontdekt en aangeroepen. `process_tool_call` onderschepte de call vóór provider-I/O; promotie wacht op verwijdering van de oude client/loop |
 | Home Assistant-skill | Eerst Home Assistants ingebouwde MCP Server voor basiscontext; voor historie/configuratie de community-sidecar `homeassistant-ai/ha-mcp` | Persoonsmandaat, toolallowlist, één duurzame poging en onafhankelijke controle achteraf | `ha-mcp` `v8.3.0` is exact gepind en lokaal read-only gestart; promotie vereist minimaal 300 regels eigen HA-code weg tegen hoogstens 180 regels integratie |
 | Duurzame workflows en wachtrijen | DBOS blijft de bestaande workflowdependency; `2.31.0+eva.1` wordt de volgende proef | Eva-ledger voor intent, call-start, ambigu resultaat en readback | Stock `2.31.0` kan de kleine Eva-patch en workerledger niet veilig vervangen; rebase wel, blind upgraden niet |
 | Subagents | Harness `0.25.0` voor korte parentgestuurde fork/join; publieke Pydantic AI `Agent.run()` voor één reeds duurzaam gekozen child | Exacte taak-, context-, tool-, tijd- en token-grant plus duurzame handoff | Harness retourneert publiek alleen tekst en verliest voor een databaseworker getypeerde output/usage/cancellation; geen eigen spawn-, model-, budget-, time-out- of child-contextengine bouwen |
@@ -66,10 +66,11 @@ chattransport, dashboards en update-scanners zijn hulpmiddelen rond die kern.
 
 Hergebruik betekent niet blind `latest` installeren.
 
-- Eva pinnt nu `pydantic-ai-slim==2.32.1`. De actuele officiële release is
-  `2.34.0` van 24 augustus 2026. Die wordt niet stil geïnstalleerd, maar is nu
-  de gezamenlijke proefbasis voor realtime voice en de officiële
-  Harness-koppeling. De voicekandidaat
+- Eva pinnt in de huidige productlock nog `pydantic-ai-slim==2.32.1`. De
+  actuele officiële release `2.36.0` is niet stil geïnstalleerd: zij doorliep
+  afzonderlijk vijf echte model-/toolcases, een 69-wheel netwerkloze build,
+  CycloneDX-SBOM, verse 0/0-scan en een externe MCP-clientproef. De
+  voicekandidaat
   `experiments/pydantic-realtime-v1/` installeerde 47 hashgepinde packages en
   bevestigde de publieke sessie-/onderbrekingsinterface. De extra vereist
   `websockets>=14`; de kandidaat behoudt daarom compatibel
@@ -104,7 +105,7 @@ Hergebruik betekent niet blind `latest` installeren.
   release, commit, image-digest en licentie vastgezet voordat zij secrets of
   echte accounts zien.
 
-De actuele eerste proefpins zijn: OpenAI Python `3.3.1`, Pydantic AI `2.34.0`,
+De actuele hoofdproefpins zijn: OpenAI Python `3.6.0`, Pydantic AI `2.36.0`,
 MCP Python SDK `2.1.1`, HA-MCP `v8.3.0` op OCI-index
 `sha256:38b3a0b6b6b69d3fd074f958fbf9653ae2d50c8727b4c0dcde640cfa3a638176`,
 Playwright MCP `0.0.79`, Harness `0.25.0`, React Admin
@@ -130,11 +131,13 @@ is wie spreekt, wat privé is, welk token/accountpaar actueel is, of een tool ma
 worden uitgevoerd, wanneer opnieuw geprobeerd mag worden en wat Eva uiteindelijk
 zegt.
 
-De SDK staat nog niet in productie. Een echte providercall, snelheidsvergelijking,
-beide processorarchitecturen, licentie/SBOM/scan, offline image en rollback zijn
-nog open. De productie blijft daarom standaard de oude route gebruiken. Zie
-`experiments/openai-sdk-v1/` en
-`reviews/openai-sdk-transport-candidate-8526314.md`.
+Dit was de eerste kandidaat. De latere actuele SDK `3.6.0` draait inmiddels
+werkelijk op `/eva2`: een gehashte wheelhouse, netwerkloze minimale image,
+SBOM/0-0-scan, echte providercall, datakopie en volledige nieuw→oud→nieuw-
+terugrolcyclus zijn groen. Een multi-architectuurrelease is daarmee nog niet
+bewezen. Zie `experiments/openai-sdk-v1/`,
+`reviews/openai-sdk-transport-candidate-8526314.md` en
+`evidence/product/openai-sdk-3.6.0-live-ab-cycle-2026-08-30.json`.
 
 ### Officiële MCP-SDK: gemeten `NO-GO` voor de smalle client
 
@@ -264,12 +267,13 @@ een concreet gat laat zien.
 
 | Project | Oordeel | Feitelijke onderhoudssignalen | Voorbehoud |
 |---|---|---|---|
+| Pydantic AI `2.36.0` + FastMCP Slim `3.4.7` | `GO: vervangingskandidaat, niet live` | 5/5 echte gedragsgevallen, gehashte locks, netwerkloze niet-rootimage, SBOM, verse 0 hoog/0 kritisch-scan en een afzonderlijke MCP-providercall | 46 extra en 8 gewijzigde distributies plus 33 MB. Alleen promoveren wanneer iedere nieuwe en blijvende laag een afzonderlijk doel heeft en de overlappende oude model-/MCP-loop verdwijnt |
 | Pydantic AI Slim `2.32.1` + OpenAI SDK `3.3.1` | `GO: geïsoleerde duurzame workerkandidaat` | De officiële-SDK-worker gebruikt PostgreSQL-handoff, lease, eenmalige call-start, resultaat, actieve stop, aparte kandidaatimage en read-only Kanban | Dit is geen product-GO. Portable-v2-release, eigenaar-authenticatie, harde processkill, eigenaar-goedgekeurde externe provider via Telegram/B en productpromotie staan open |
 | Pydantic AI `2.34.0` + Harness `0.25.0` | `GO: geïsoleerde fork/join-kandidaat` | Harness voert de interactieve toolvrije en effectvrije fork/join-engine uit met gesloten context, calls, tokens en time-out | Nog niet de duurzame worker of productroute; koppeling aan Eva's identiteit, live provider, Telegram/B en productpromotie blijven afzonderlijk open |
 | DBOS Transact `2.31.0` | `NO-GO stock / GO rebaseproef` | MIT, actuele officiële release met de belangrijke duplicate-loserfix #823 en nul nieuwe basispackages | Stock behoudt onbegrensde transactieretry en kan na verloren commitbevestiging de body herhalen; Eva's smalle patch moet op 2.31 worden gerebased |
 | Officiële MCP Python SDK `2.1.1` | `NO-GO: smalle V1-client` | MIT, Tier-1 SDK, snelle releases en expliciet versiebeleid; exacte 48-package-lock is compatibel | Volledige SDK voegt tien packages en onnodig sessiegedrag toe; types-only gaf +87 productregels en verwijderde niets |
 | Home Assistant MCP Server | `PROEF: basis` | Onderdeel van Home Assistant Core; officiële Streamable HTTP-/OAuth-route, tools en live contextsnapshot | Geschikt voor blootgestelde Assist-entiteiten en context; nog geen bewijs voor Eva's historie- en configuratiegevallen |
-| `homeassistant-ai/ha-mcp` `v8.3.0` | `PROEF: optionele HA-sidecar` | MIT, vier maintainers, recente onveranderlijke release, 88 tools, multi-arch images en 483 `test_*.py`-modules | Directe transportswap haalt met circa 174–192 verwijderbare regels de 300-regelgrens niet; alleen een semantische state/service-proef gaat door |
+| `homeassistant-ai/ha-mcp` `v8.3.0` | `PROEF: optionele HA-sidecar` | MIT, vier maintainers, recente onveranderlijke release, 88 tools, multi-arch images en 483 `test_*.py`-modules | Een directe transportswap nam de bestaande semantische verantwoordelijkheid niet volledig over. Alleen een state/service/readbackproef zonder dubbele route gaat door |
 | Microsoft Playwright MCP `0.0.79` | `PROEF: lokale read + vaste actie groen` | Apache-2.0, signed release, 36.500 sterren, 573 commits en onderhoud binnen Microsoft; checkpoint `72625e0` is onafhankelijk herhaald | Nog `0.x`; alleen een credentialvrije lokale fixture is getest. Publieke sites, accounts en productisolatie blijven open; upstream zegt zelf dat originfilters geen securitygrens zijn |
 | Vercel `agent-browser` `0.35.1` | `PROEF: functioneel groen, niet toegelaten` | Apache-2.0, compacte native CLI/MCP-provider met actuele release; dezelfde gesloten read→één klik→onafhankelijke readbackproef slaagde als niet-root zonder host-mount, poort of internetroute | De standaard MCP-core bevat ook JavaScript-evaluatie, plugins en statefuncties; een toekomstige Eva-adapter moet daarom veel smaller zijn. De verse gelijke scan vond 8 CRITICAL + 55 HIGH, dus deze kandidaat is niet geïnstalleerd of gepromoveerd. Receipt: `evidence/living-core/agent-browser-sidecar-evaluation-2026-08-26.json` |
 | Browser Use | `NO-GO V1` | MIT en een eigen securityroute | Tweede modelgedreven planner, extra calls en overlap; alleen heropenen als een benoemde taak Playwright MCP niet haalt |
@@ -291,13 +295,13 @@ een concreet gat laat zien.
 - Na de huidige actieketen komen er geen nieuwe handgeschreven generieke
   workerloops bij. DBOS mag scheduling en wake-up leveren, maar vervangt Eva's
   grants, externe-actiestatus, ambiguïteit en readback niet.
-- MCP blijft de normale skill- en providerdraad, maar de volledige officiële
-  clientdependency komt niet in de smalle V1-route. De huidige begrensde client
-  blijft zolang een dependency aantoonbaar geen code verwijdert.
+- MCP blijft de normale skill- en providerdraad. Een volledige clientdependency
+  komt alleen in de route wanneer zij een eigen benoemde verantwoordelijkheid
+  heeft of de overlappende huidige client werkelijk vervangt.
 - Home Assistant gaat niet per functie verder groeien in Eva. HA-MCP wordt niet
-  blind ingevoerd: de eerste diepere audit komt onder de 300-regelgrens. Alleen
-  één kleine state→service→aparte-stateproef mag nog aantonen of de semantische
-  laag werkelijk kan krimpen.
+  blind ingevoerd: één state→service→aparte-stateproef moet aantonen welke
+  verantwoordelijkheid upstream overneemt en welke providerneutrale Eva-grens
+  noodzakelijk blijft.
 - Voice en subagents beginnen op de actuele Pydantic AI/Harness-basis. De
   subagentengine werkt al in een onafhankelijk gereviewde providerloze proef;
   een eigen generieke runner vervalt. Voor de browser heeft Microsoft
@@ -345,17 +349,15 @@ een lijst GitHub-links.
 
 - [ ] `DF01` — iedere hoofdcomponent heeft `reuse`, `thin Eva layer` of
   `Eva-owned` plus kandidaat, licentie, pin en onderhoudsbewijs.
-- [ ] `DF02a` — de synchrone OpenAI Python SDK `3.3.1` vervangt eerst één
-  gewone handgeschreven request-/SSE-route met Eva's bestaande identiteit,
-  actuele lease en usage-receipt. De hashgebonden kandidaat, streaming- en
-  foutproeven en onafhankelijke review zijn groen (`8526314`). Echte
-  providerpariteit, latency, beide wheelhouses, SBOM/scan, offline image en
-  rollback staan nog open; daarom blijft de productiegate onafgevinkt.
-- [ ] `DF02b` — Pydantic AI `2.34.0` krijgt daarna alleen modelmapping of een
-  andere aantoonbaar verwijderende lagere primitive. Een Pydantic `Agent` wordt
-  geen tweede tool-, geheugen- of antwoordloop naast Eva. Een eventuele lagere
-  primitive moet nul eigen retries, begrensde aanvragen/tooluitvoer en geen
-  toolcallback vóór Eva's grant en ledger bewijzen.
+- [x] `DF02a` — OpenAI Python SDK `3.6.0` verving de live Responses-transport-
+  route met Eva's identiteit, access-only lease en usage. De exacte offline
+  image, SBOM/scan, echte providerbeurt, data-upgrade en volledige
+  nieuw→oud→nieuw A/B-cyclus zijn groen.
+- [ ] `DF02b` — Pydantic AI `2.36.0` mag de model- en MCP-toolloop alleen in één
+  aantoonbaar verwijderende diff overnemen. De 5/5 modelproef, minimale image,
+  SBOM, verse 0/0-scan, externe providercall en callback vóór provider-I/O zijn
+  groen. Er zijn 3.342 overlappende productregels gemeten, maar nog nul regels
+  veilig verwijderd; een tweede loop naast Eva blijft verboden.
 - [x] `DF02c` — de officiële MCP SDK `2.1.1` en de kleinere
   `mcp-types==2.1.1`-route zijn met exacte hashlocks en productprototype
   vergeleken. Beide zijn voor Eva's smalle V1-client `NO-GO`: de volledige SDK

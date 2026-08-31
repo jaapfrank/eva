@@ -4,9 +4,12 @@ Bijgewerkt: 25 augustus 2026.
 
 ## Doel
 
-Eva moet als één samenhangend product snel en reactief voelen zonder uit te
-groeien tot een verzameling frameworks, tweede orchestrators en honderdduizenden
-regels eigen code. Lang werk mag tijd kosten; erkennen, eerste inhoud en
+Eva moet als één samenhangend product snel, reactief en beheersbaar blijven.
+Het aantal regels is een meetwaarde, geen kwaliteitsgrens: tien nuttige,
+beheerde modules zijn beter dan één onleesbaar bestand, en honderdduizend
+aantoonbaar noodzakelijke regels zijn toegestaan. Dubbele routes, dode code,
+onbekend eigenaarschap en frameworks zonder eigen verantwoordelijkheid zijn
+wel releaseblokkers. Lang werk mag tijd kosten; erkennen, eerste inhoud en
 voortgang mogen niet levenloos stilvallen.
 
 ## Commitgebonden baseline en actuele observatie
@@ -26,28 +29,28 @@ De productstack is nu Python 3.12 met negen directe runtime-dependencies in
 `pyproject.toml`. Er is geen Rust-crate. Een nieuwe taal of framework telt dus
 als kostenpost die een gemeten productuitkomst moet rechtvaardigen.
 
-## Omvang- en afhankelijkheidsbudget
+## Omvang- en afhankelijkheidsbeheer
 
-- De V1-release faalt boven **75.000 handgeschreven productregels** samen voor
-  Python, TypeScript en Rust. `physical LOC` telt iedere blanke, comment- en
-  coderegel als één record, ook zonder laatste newline. PC01 bevat een gesloten
-  manifest van productroots en exacte generated/vendor-uitzonderingen. Een
-  nieuwe bronroot of uitzondering vereist eerst een gereviewde manifestrevision.
-  Tests, fixtures, migraties, generated en vendor tellen daarnaast afzonderlijk
-  in bestanden/bytes en mogen deze grens niet verbergen.
-- De Python Living Core blijft bij voorkeur onder 60.000 regels. Browser- en
-  media-dataplanes leven in afzonderlijke processen en mogen geen tweede
-  identiteit, planner, geheugen- of policylaag meebrengen.
-- Nieuwe handgeschreven bestanden blijven maximaal 800 regels. Bestaande
-  grotere bestanden mogen niet netto groeien; een wijziging eraan bevat een
-  extractie of een expliciet, tijdelijk budgetrecord.
-- Een kleine verticale slice voegt normaal maximaal 600 productregels toe.
-  Grotere slices worden gesplitst of motiveren aantoonbaar waarom hergebruik
-  meer complexiteit of risico oplevert.
-- De Living Core houdt maximaal twaalf directe runtime-dependencies. Zware
-  browser-, WebRTC-, STT- en TTS-dependencies horen in vervangbare sidecars en
-  worden afzonderlijk op imagebytes, CVE's, startup en resident geheugen
-  gemeten.
+- PC01 telt `physical LOC`, bestanden en bytes voor Python, TypeScript en Rust,
+  maar keurt niet af op een willekeurig totaal. Het gesloten manifest van
+  productroots en generated/vendor-uitzonderingen voorkomt dat code buiten de
+  meting wordt verstopt.
+- Ieder productpad valt onder exact één component met een eigenaar, concrete
+  producttaak, noodzaakstatus, vervangingsbesluit en actuele test- of
+  bewijsverwijzing. `keep` zonder uitleg is geen geldige status.
+- Iedere directe dependency staat exact in de verzegelde set en heeft een
+  eigenaar, updatebron, onderhoudsstatus en benoemde verantwoordelijkheid.
+  Het aantal dependencies wordt gemeten, maar niet op zichzelf afgekeurd.
+- Een framework mag code toevoegen als het een nieuwe, duidelijk afgebakende
+  verantwoordelijkheid draagt. Neemt het bestaand werk over, dan moet de oude
+  route in dezelfde vervangingslijn verdwijnen; blijvende overlap zonder
+  afzonderlijk doel is rood.
+- Grote bestanden en componenten zijn toegestaan, maar moeten intern
+  samenhangend zijn en een begrijpelijk wijzigingsoppervlak hebben. De
+  componentchecker en package-boundarychecker bewaken eigenaarschap en
+  grensschendingen; een regelteller doet dat niet.
+- Browser- en media-dataplanes leven in afzonderlijke processen en mogen geen
+  tweede identiteit, planner, geheugen- of policylaag meebrengen.
 - Iedere capability heeft één eigenaar en één contract. Geen provider mag een
   tweede plan-act-loop, persona, Hindsight-bank of antwoordroute toevoegen.
 - De bevroren core-image mag maximaal 15% groter zijn dan de nog te verzegelen
@@ -88,7 +91,9 @@ first-token, first-visible/first-playout, final, toolprepare, provider en
 readback. Minimaal 200 gewone tekstbeurten en de V07-voicesamples draaien op de
 bevroren image. Time-outs, reconnects en fouten blijven in de noemer;
 onvoldoende samples is rood. P50, p95, maximum, resident RSS, cold/warm startup,
-imagebytes, dependencyaantal en handgeschreven LOC komen in één receipt.
+imagebytes, dependencyaantal en handgeschreven LOC komen als meetwaarden in één
+receipt. Alleen concrete resource-, classificatie-, eigenaarschap- en
+architectuurovertredingen maken de release rood; omvang alleen niet.
 
 Het corpusmanifest bindt vóór de proef vraagbytes/categorieën, route, model en
 reasoningstand, IdentityPack, Hindsight/contextbudget, toolfixtures, device,
@@ -107,12 +112,12 @@ effect blijft exact nul.
 
 ## Kleine opleverslices
 
-- [x] PC00 — Productdoel, exacte Git-baseline, manifesthash en harde
-  V1-bovengrens vastgelegd; dit is nog geen image-/latency-/releaseacceptatie.
-- [x] PC01 — Commitgebonden teller en fail-closed CI-gate voor LOC, bestanden,
-  directe dependencies en imagebytes; generated/vendor-uitzonderingen staan in
-  een gesloten allowlist. De actuele bron- en imagepoort is zonder overtredingen
-  vastgelegd in `performance-complexity-pc01-passed-2026-08-29.json`.
+- [x] PC00 — Productdoel, exacte Git-baseline en manifesthash vastgelegd; de
+  oude numerieke bovengrens is ingetrokken omdat omvang geen kwaliteit bewijst.
+- [x] PC01 — Commitgebonden inventaris voor LOC, bestanden, exacte directe
+  dependencies en imagebytes; generated/vendor-uitzonderingen staan in een
+  gesloten allowlist. De historische receipt blijft bewijs van die toenmalige
+  meting, niet van een blijvende regelgrens.
 - [x] PC02 — De grootste hot-pathbestanden begrenzen: niet verder laten groeien
   en bij aanraking gericht per eigenaar/contract splitsen, zonder massarewrite.
   Negen bestaande uitzonderingen hebben nu ieder een eigenaar, contract en vaste

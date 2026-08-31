@@ -37,7 +37,8 @@ const ACTIVE_LEDGER_INCIDENT_EVIDENCE = new Set([
   'scripts/execution-ledger-quiescent-snapshot.test.mjs',
 ]);
 const ROOT_FILES = new Set([
-  '.c8rc.json', '.env.example', '.gitignore', 'README.md',
+  '.c8rc.json', '.env.example', '.gitignore', 'OPEN_SOURCE_COMPONENTEN.md', 'README.md',
+  'component-watch.json', 'renovate.json',
   'eslint.complexity.config.js', 'eslint.config.js', 'package-lock.json', 'package.json',
   'quality-baseline.json', 'tsconfig.json', 'typescript-diagnostic-debt.json',
 ]);
@@ -63,6 +64,8 @@ const EXCLUSIONS = Object.freeze([
   { path: '.env.*', readPolicy: 'never-read', reason: 'private environment configuration' },
   { path: '*.env', readPolicy: 'never-read', reason: 'private environment configuration' },
   { path: '*.env.*', readPolicy: 'never-read', reason: 'private environment configuration' },
+  { path: 'eva2/deploy/living-core/secrets/', readPolicy: 'never-read', reason: 'private managed runtime secrets' },
+  { path: 'eva2/deploy/living-core/secrets/**', readPolicy: 'never-read', reason: 'private managed runtime secrets' },
   { path: '*.key', readPolicy: 'never-read', reason: 'private credential material' },
   { path: '*.pem', readPolicy: 'never-read', reason: 'private credential material' },
   { path: '*.ppk', readPolicy: 'never-read', reason: 'private credential material' },
@@ -86,14 +89,25 @@ const EXCLUSIONS = Object.freeze([
   { path: '/_*.cjs', readPolicy: 'never-read', reason: 'repository-root scratch output' },
   { path: '/eva_brain/replay/LOCK_*.md', readPolicy: 'never-read', reason: 'brain replay coordination state' },
   { path: '/eva_brain/replay/out_*.txt', readPolicy: 'never-read', reason: 'brain replay output' },
+  { path: '/eva2/experiments/distroless-core-v1/wheelhouse/*.whl', readPolicy: 'never-read', reason: 'locally materialized sealed wheelhouse' },
+  { path: '/eva2/experiments/distroless-hindsight-api-v1/offline-artifacts/*.apk', readPolicy: 'never-read', reason: 'locally materialized sealed package artifact' },
+  { path: '/eva2/experiments/distroless-hindsight-api-v1/offline-artifacts/*.tar', readPolicy: 'never-read', reason: 'locally materialized sealed source artifact' },
+  { path: '/eva2/experiments/distroless-hindsight-api-v1/wheelhouse/*.whl', readPolicy: 'never-read', reason: 'locally materialized sealed wheelhouse' },
+  { path: '/eva2/build/', readPolicy: 'never-read', reason: 'generated Python build output' },
 ]);
 const GITIGNORE_NEGATIONS = Object.freeze([
   '!.env.example',
   '!**/.env.example',
+  '!eva2/deploy/living-core/runtime.env.example',
+  '!eva2/deploy/living-core/hindsight.env.example',
 ]);
 const GITIGNORE_PATTERNS = Object.freeze(EXCLUSIONS.flatMap(({ path: pattern }) => (
   pattern === '*.env.*' ? [pattern, ...GITIGNORE_NEGATIONS] : [pattern]
 )));
+const SAFE_ENV_TEMPLATE_PATHS = new Set([
+  'eva2/deploy/living-core/runtime.env.example',
+  'eva2/deploy/living-core/hindsight.env.example',
+]);
 
 function sha256(value) {
   return createHash('sha256').update(value).digest('hex');
@@ -190,7 +204,9 @@ function sensitivePath(relative) {
   ].includes(segment));
   const sqliteOrRuntime = /\.(?:db|sqlite)(?:-.*)?$/u.test(basename)
     || /\.(?:log|pid)$/u.test(basename);
-  const environment = basename !== '.env.example' && (
+  const environmentTemplate = basename === '.env.example'
+    || SAFE_ENV_TEMPLATE_PATHS.has(normalized);
+  const environment = !environmentTemplate && (
     basename === '.env' || basename.startsWith('.env.')
     || basename.endsWith('.env') || basename.includes('.env.')
   );
@@ -224,11 +240,17 @@ const ROLE_RULES = Object.freeze([
   },
   {
     id: 'eva2-documentation', role: 'documentation',
-    test: (file) => file === 'eva2/README.md' || file.startsWith('eva2/design/'),
+    test: (file) => /^eva2\/[^/]+\.md$/u.test(file)
+      || ['eva2/design/', 'eva2/identity-proposals/', 'eva2/reviews/']
+        .some((prefix) => file.startsWith(prefix)),
   },
   {
     id: 'eva2-deployment', role: 'deployment',
     test: (file) => file.startsWith('eva2/deploy/') || file.startsWith('eva2/migrations/'),
+  },
+  {
+    id: 'eva2-experimental', role: 'experimental',
+    test: (file) => file.startsWith('eva2/experiments/') || file.startsWith('eva2/benchmark/'),
   },
   {
     id: 'eva2-verification-runtime', role: 'verification-runtime',
@@ -245,7 +267,7 @@ const ROLE_RULES = Object.freeze([
       'eva2/forge/', 'eva2/release/', 'eva2/schemas/', 'eva2/vendor/',
     ].some((prefix) => file.startsWith(prefix)) || [
       'eva2/alembic.ini', 'eva2/pyproject.toml', 'eva2/requirements-4d.lock',
-      'eva2/requirements.lock',
+      'eva2/requirements-delegated-work.lock', 'eva2/requirements.lock',
     ].includes(file),
   },
   {

@@ -1,4 +1,0 @@
-*.apk
-*.tar
-!manifest.json
-!.gitignore

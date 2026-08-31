@@ -57,3 +57,10 @@ Thumbs.db
 /_*.cjs
 /eva_brain/replay/LOCK_*.md
 /eva_brain/replay/out_*.txt
+
+# Sealed experiment artifacts are materialized locally from checked manifests.
+/eva2/experiments/distroless-core-v1/wheelhouse/*.whl
+/eva2/experiments/distroless-hindsight-api-v1/offline-artifacts/*.apk
+/eva2/experiments/distroless-hindsight-api-v1/offline-artifacts/*.tar
+/eva2/experiments/distroless-hindsight-api-v1/wheelhouse/*.whl
+/eva2/build/

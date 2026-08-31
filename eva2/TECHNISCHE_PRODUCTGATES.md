@@ -509,10 +509,12 @@ langdurige verzamelaanpassing telt niet als voortgang.
   `design/product/conversational-voice-v1.md`.
 - [x] Performance/complexiteit PC00: Git-checkpoint `35e2c0d…` exact gebonden
   aan 51.928 productregels en bronmanifesthash `58627232…`; een latere dirty
-  observatie telde 53.428 niet-gegenereerde regels. Harde V1-grens 75.000 handgeschreven
-  productregels, twaalf directe coredependencies en p95-reactiviteitsdoelen.
-  PC01-PC06 sluiten teller, hot-path, sidecars, eindmeting en residentdegradatie;
-  zie `design/product/performance-and-complexity-v1.md`.
+  observatie telde 53.428 niet-gegenereerde regels. De oude harde regel- en
+  dependencyaantallimieten zijn ingetrokken: PC01 meet omvang, maar
+  releasekwaliteit vereist exact eigenaarschap, nut, onderhoud, bewijs en
+  afwezigheid van onverklaarde overlap. PC01-PC06 sluiten inventaris, hot-path,
+  sidecars, eindmeting en residentdegradatie; zie
+  `design/product/performance-and-complexity-v1.md`.
 - [x] Meerstapsplanning MC01: het bestaande `ModelDecision/v1` kan nu
   voorbereidende reads en effecten in één topologische keten voorstellen; de
   host maakt daar alleen na exacte episode/generation-, policy-, budget-,

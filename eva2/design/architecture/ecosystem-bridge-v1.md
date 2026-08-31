@@ -147,8 +147,16 @@ Assistant- en e-mailtools. Die code telt als te verwijderen migratieschuld.
   begrensde poortcontrole zonder exploitgedrag.
 - [ ] CD03 — Dienstherkenning plus actuele officiële documentatie- en
   endpointvergelijking, zonder uitvoer of secret.
-- [ ] CD04 — Runtime toolontdekking via het gekozen agent-/MCP-framework, met
-  twee onbekende synthetische providers en nul nieuwe Eva-dispatchcode.
+- [x] CD04 — Runtime toolontdekking via het gekozen agent-/MCP-framework, met
+  twee onbekende synthetische providers en nul nieuwe Eva-dispatchcode. De
+  actuele Pydantic AI `2.36.0`-proef is 5/5 groen: impliciet actueel doel,
+  afzonderlijke readback, historisch en voorkeur zonder effect, dubbelzinnig
+  doel met vervolgvraag en een tweede providersoort met dezelfde agentcode. De
+  minimale client is daarnaast uit 69 gehashte wheels zonder bouwnetwerk
+  gemaakt, heeft een CycloneDX-SBOM, scant met de database van 31 augustus 0
+  hoog/0 kritisch en ontdekte een tool uit een afzonderlijk providerproces.
+  Pydantic AI's publieke `process_tool_call`-grens onderschepte een tool vóór
+  provider-I/O; Eva's duurzame ledger kan dus de uitvoerende autoriteit blijven.
 - [ ] CD05 — Eén echte lokale dienst koppelen via minimale authenticatie,
   effect, onafhankelijke readback en herstart zonder dubbel uitvoeren.
 - [ ] CD06 — Dezelfde image koppelt een tweede dienst van een andere soort;
@@ -247,18 +255,23 @@ Na drie herstartfouten op hetzelfde checkpoint gaat het checkpoint naar
 
 ## Bouw- en testvolgorde
 
-1. Eva's bestaande Pydantic AI-pin in één gestructureerde toolbeurt werkelijk
-   gebruiken en usage plus identiteit door Eva laten controleren.
-2. Algemene MCP-adapter met één read-only server en dezelfde ledgergrens.
-3. Read-only officiële Gatewaytool in een geïsoleerde B-sidecar, gevolgd door
+1. De groene actuele Pydantic AI/MCP-client in één vervangingsdiff achter
+   dezelfde duurzame ledger-, identiteit- en readbackgrens zetten. De 3.342
+   gemeten overlappende regels zijn onderzoeksscope, geen automatische
+   verwijderclaim; pas de werkelijke nettodiff beslist over promotie.
+2. De native MCP-toolset met één echte dienst uitvoeren, zonder de oude model-
+   of MCP-loop ernaast te behouden.
+3. Een tweede echte providersoort met dezelfde image uitvoeren; daarna de
+   overlappende providerspecifieke adapters verwijderen.
+4. Read-only officiële Gatewaytool in een geïsoleerde B-sidecar, gevolgd door
    denial-, timeout-, restart- en identiteitsscheidingstest.
-4. AC01-AC04 tegen een credentialvrije lokale kanaalcontractprovider.
-5. ClawHub-importer die exact één optionele externe skill alleen in quarantaine
+5. AC01-AC04 tegen een credentialvrije lokale kanaalcontractprovider.
+6. ClawHub-importer die exact één optionele externe skill alleen in quarantaine
    plaatst; Eva's eigen skillcreatie blijft hiervan onafhankelijk.
-6. Eén read-only companion-nodefunctie.
-7. Eén automation als Eva-PostgreSQL-projectie.
-8. Eén browser/desktoptaak na native productbenchmark.
-9. AC05-AC06 voor één echt extra chatkanaal; pas daarna bredere muterende
+7. Eén read-only companion-nodefunctie.
+8. Eén automation als Eva-PostgreSQL-projectie.
+9. Eén browser/desktoptaak na native productbenchmark.
+10. AC05-AC06 voor één echt extra chatkanaal; pas daarna bredere muterende
    plugins, camera, locatie of commerce.
 
 Iedere stap krijgt eerst architectuurreview, daarna implementatie en daarna een

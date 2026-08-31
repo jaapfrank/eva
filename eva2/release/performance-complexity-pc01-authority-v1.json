@@ -22,18 +22,16 @@
     "generatedExactPaths": [
       "src/eva/adapters/postgres/catalog_generated.py"
     ],
-    "maximumProductPhysicalLines": 75000,
-    "preferredLivingCorePhysicalLines": 60000,
     "livingCoreRoot": "src/eva"
   },
   "dependencies": {
     "source": "pyproject.toml",
-    "maximumDirectRuntimeDependencies": 12,
     "expected": [
       "alembic",
       "cryptography",
       "fastapi",
       "psycopg",
+      "openai",
       "pydantic",
       "pydantic-ai-slim",
       "pynacl",

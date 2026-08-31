@@ -1,6 +1,6 @@
 # Eva 2 — projectbord en vergelijking
 
-Laatst bijgewerkt: 31 augustus 2026, 12:17 CEST
+Laatst bijgewerkt: 31 augustus 2026, 14:01 CEST
 
 ## Zo lees je dit bord
 
@@ -26,6 +26,29 @@ eerste en eenmaal tweede. Die correctie draait nu live, maar één verbeterde
 vraag is nog geen algemene overwinning. In de herstarttest gaven Eva2,
 OpenClaw en Hermes het vorige controlewoord exact terug. Agent Zero laadde
 dezelfde sessie wel, maar gaf na ruim drie minuten nog geen eindantwoord.
+
+## Code, open source en opruimen
+
+| Controle | Eerlijke stand nu |
+|---|---|
+| Is alle code per bestand inhoudelijk beoordeeld? | ❌ Nee. De oude inventaris liep 579 commits achter en miste 1.308 huidige paden. De mechanische inventaris is nu opnieuw gegenereerd met 1.936 zichtbare bestanden, maar meldt nog 92 policyfouten, waaronder bestaande untracked bestanden en onbesliste oude paden |
+| Heeft ieder gevolgd bestand een duidelijke plek en eigenaar? | ✅ Alle gevolgde product-, deploy-, migratie- en testpaden vallen nu onder exact één semantische component. De checker weigert ontbrekend, dubbel of dood eigenaarschap |
+| Is daarmee bewezen dat iedere afzonderlijke regel nuttig is? | 🟡 Nee. De catalogus legt per component doel, noodzaak, upstreamkeuze, vervanging en tests vast. Dode-codeanalyse, grenscontrole en echte tests moeten daarna bewijzen dat de regels binnen die component hun taak nog werkelijk uitvoeren |
+| Zijn alle dependencies en open-sourcealternatieven aantoonbaar de beste actuele keuze? | ❌ Nee. Er zijn goede deelvergelijkingen, maar geen volledige audit. De live Pythonlock heeft 38 distributies; acht liepen bij de actuele controle achter op de nieuwste release. Nieuwste is bovendien niet automatisch beste: iedere upgrade moet de echte Eva-proef winnen |
+| Worden nieuwe releases automatisch gevolgd? | 🟡 Renovate vond lokaal 99 dependencies, maar er draait nog geen echte voorstelbot. Ook bindt de laatste releasewatchreceipt niet aan de huidige componentenlijst |
+| Heeft iedere dependency of eigen regel een eigen taak? | ❌ Nog niet aantoonbaar. De nieuwe Pydantic/MCP-kandidaat voegt 46 distributies en circa 33 MB toe terwijl de oude route nog bestaat. Zolang hun verantwoordelijkheden overlappen wordt zij niet live gezet |
+| Is er nu wel iets echt verwijderd? | ✅ Een ongebruikte LocalTuya-adapter van 357 productregels en zijn 212-regelige geïsoleerde test zijn verwijderd. De algemene providerroute blijft; 92 gerichte regressies en Ruff zijn groen |
+| Is de architectuurcontrole groen? | ❌ Nee. De bestaande packagechecker vindt 62 al aanwezige grensschendingen. Die schuld wordt niet als groen verstopt |
+
+De actuele productscope daalt door de eerste veilige verwijdering van 74.766
+naar 74.409 regels. Dat getal is geen doel en geen maximum. Ook 100 miljoen
+regels mogen als iedere regel aantoonbaar een producttaak heeft en beheersbaar
+blijft. De echte poort is: exact één eigenaar en doel per component, actuele
+tests en bewijs, onderhouden dependencies en geen dode of onverklaard dubbele
+route. De eerste machineleesbare componentcatalogus en exact-één-ownerchecker
+zijn nu groen voor alle gevolgde product-, deploy-, migratie- en testpaden.
+Regels, packages en imageomvang blijven zichtbaar zodat groei verklaard moet
+worden, maar groei op zichzelf is niet fout.
 
 ## Praten met Eva
 
@@ -103,13 +126,13 @@ adapter vragen, maar geen nieuwe Eva-kernlogica.
 
 | Wat moet dit kunnen? | Eva2 nu | OpenClaw | Hermes | Agent Zero |
 |---|---|---|---|---|
-| Zelf de passende beschikbare tool kiezen | 🟡 Expliciete opdrachten worden gekozen, maar `het is koud in de overkapping` werd niet zelfstandig als verwarmingsdoel begrepen | 📘 Algemene toolkeuze | 📘 Algemene toolkeuze | 📘 Algemene toolkeuze |
-| Nieuwe tools gebruiken zonder vooraf Eva-code per soort of dienst | ❌ De generieke MCP-proef bestaat, maar de live huisroute gebruikt nog eigen vooraf gemaakte providerfuncties | 📘 MCP en plug-ins | 📘 Tools en skills | 📘 MCP en plug-ins |
+| Zelf de passende beschikbare tool kiezen | 🟡 De actuele Pydantic AI `2.36.0` koos in een geïsoleerde echte modelproef zelf de juiste runtime-MCP-tool voor `het is koud in de overkapping`, voerde één effect uit en las apart terug. De minimale image is scan-schoon, maar dit is nog niet live | 📘 Algemene toolkeuze | 📘 Algemene toolkeuze | 📘 Algemene toolkeuze |
+| Nieuwe tools gebruiken zonder vooraf Eva-code per soort of dienst | 🟡 Dezelfde ongewijzigde agent gebruikte twee providercatalogi. De exacte clientimage ontdekte daarna ook een tool uit een afzonderlijk providerproces. Alle gedrags- en grensproeven zijn groen; de live route gebruikt nog de oude functies | 📘 MCP en plug-ins | 📘 Tools en skills | 📘 MCP en plug-ins |
 | Bij een onduidelijk doel eerst doorvragen | ✅ Eva gokt niet bij een dubbele apparaatnaam | ⚪ Niet gelijk getest | ⚪ Niet gelijk getest | ⚪ Niet gelijk getest |
 | Controleren of een toolopdracht echt gelukt is | ✅ De algemene route doet uitvoering en observatie apart en herstart zonder dubbel uitvoeren. Een echte toestandcontrole is met Home Assistant als verwisselbare praktijkprovider bewezen | ⚪ Niet gelijk met een echt effect getest | ⚪ Niet gelijk met een echt effect getest | ⚪ Niet gelijk met een echt effect getest |
 | Zelf documentatie lezen en een onbekende beheertaak plannen | 🟡 Bouwstenen bestaan; nog niet als één algemene route bewezen | 📘 Via agenttools mogelijk | 📘 Via agenttools mogelijk | 📘 Via agenttools/code mogelijk |
 | Risico, toestemming, uitvoering en terugrol per tool regelen | 🟡 Eva's algemene grenzen bestaan, maar zijn nog niet voor meerdere toolproviders end-to-end getest | ⚪ Niet gelijk getest | ⚪ Niet gelijk getest | ⚪ Niet gelijk getest |
-| Een toolprovider vervangen zonder nieuwe Eva-logica te schrijven | 🟡 Een tijdprovider bewees dit in een proef; Home Assistant en e-mail voldoen nog niet aan die eindgrens | 📘 Plug-inarchitectuur | 📘 Tool-/skillarchitectuur | 📘 Plug-inarchitectuur |
+| Een toolprovider vervangen zonder nieuwe Eva-logica te schrijven | 🟡 Twee synthetische MCP-providers werkten nu met exact dezelfde agentcode. Een echte tweede dienst en verwijdering van de oude adapters ontbreken nog | 📘 Plug-inarchitectuur | 📘 Tool-/skillarchitectuur | 📘 Plug-inarchitectuur |
 
 Tuya, LocalTuya, Matter, automatiseringen en Home Assistant-updates zijn geen
 Eva-onderdelen. Het zijn alleen praktijktests voor algemene toolvaardigheid:
@@ -294,9 +317,9 @@ herstelbaar.
 
 | Algemeen probleem | Gekozen onderhouden bouwsteen | Werkelijkheid nu |
 |---|---|---|
-| Modelverkeer | Officiële OpenAI SDK; Pydantic AI voor de toekomstige algemene toolloop | ✅ SDK `3.6.0` live; 🟡 Pydantic AI neemt de hele toolloop nog niet over |
+| Modelverkeer | Officiële OpenAI SDK; Pydantic AI voor de algemene toolloop | ✅ SDK `3.6.0` live; 🟡 actuele Pydantic AI `2.36.0` deed de volledige toolloop in een 5/5-proef en heeft een scan-schone clientimage, maar is nog niet live |
 | Langetermijngeheugen | Hindsight | ✅ Live; 🟡 Eva's adapter moet nog kleiner |
-| Externe gereedschappen | Pydantic AI met runtime-ontdekte MCP-tools; ContextForge alleen als optionele gateway | ❌ Eindroute nog niet live. De algemene proef is groen, maar de actieve huisroute bevat nog vooraf gemaakte providerfuncties die daarna verwijderd moeten worden |
+| Externe gereedschappen | Pydantic AI met runtime-ontdekte MCP-tools; ContextForge alleen als optionele gateway | 🟡 Runtime discovery, impliciete intentie, twee providers en negatieve controles zijn 5/5 groen. De 69-wheelimage is netwerkloos gebouwd, heeft een SBOM en scant met de actuele database 0 hoog/0 kritisch. Zij is 33 MB groter en voegt 46 distributies toe; de echte vervangingsdiff en nettokrimp ontbreken nog |
 | Subagents | Pydantic AI/Harness voor modelruns; onderhouden workflowmotor voor duurzaam werk | 🟡 Modelrun werkt; workflowkeuze nog niet gewonnen door een dependency |
 | Voice | Pipecat als eerste complete pipeline; Wyoming als lokale fallback | 🟡 Bake-off en fysieke proef ontbreken |
 | Browser | Playwright MCP tegenover Browser Use; daarna één winnaar | 🟡 Functioneel beproefd; nog geen releaseveilige winnaar |
@@ -324,13 +347,12 @@ gebruikersroute draait én de dubbele Eva-code daarna verdwijnt.
 
 ## Eerstvolgende zichtbare verbeteringen
 
-1. Pydantic AI's onderhouden MCP-toolset in een geïsoleerde proef rechtstreeks
-   tools laten ontdekken en de bedoeling `het is koud in de overkapping`
-   zelfstandig laten uitvoeren tegen een synthetische provider, met negatieve
-   voorbeelden tegen ongewenste acties. Er komt geen heater- of switchregel in
-   Eva.
-2. Daarna dezelfde route met Home Assistant en een tweede provider zoals UniFi
-   bewijzen en de overlappende eigen providerfuncties verwijderen.
+1. Pydantic AI in één vervangingsdiff de bestaande model- en MCP-loop laten
+   overnemen. De kandidaat mag niet naast beide oude loops worden toegevoegd;
+   alleen werkelijk verwijderde productcode en behouden ledger/readback tellen.
+2. Daarna dezelfde route met twee echte verwisselbare diensten bewijzen en de
+   resterende Home Assistant-, e-mail- en handgeschreven dispatchfuncties
+   verwijderen.
 3. De actuele vierwegvergelijking uitbreiden met geheugen, herstart, toolactie,
    zelfstandig werk en beheer; pas herhaalde praktijkwinst telt als voordeel.
 4. De geselecteerde React-admin-kandidaat uit dezelfde gesaneerde API serveren,
@@ -370,6 +392,9 @@ De echte niet-huisgebonden model-/tijdtoolproef staat in
 De providerneutrale image, verliesloze A/B-omschakeling, modelherstart en echte
 externe live read staan in
 [het live toolgrensbewijs](evidence/product/generic-tool-boundary-live-ab-2026-08-30.json).
+De actuele Pydantic-AI/MCP-proef met twee runtimeproviders, impliciete intentie,
+negatieve controles, readback en dependencygrens staat in
+[het providerneutrale MCP-kandidaatbewijs](evidence/product/pydantic-native-mcp-discovery-candidate-2026-08-31.json).
 De vastgestelde Telegramverwarring, historische classificatie, live correctie
 en de nog open menselijke eindproef staan in
 [het Eva1/Eva2-dialooggrensbewijs](evidence/living-core/eva1-eva2-telegram-dialogue-isolation-2026-08-31.json).

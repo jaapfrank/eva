@@ -1,0 +1,2 @@
+pydantic-ai-slim[mcp,openai]==2.36.0
+fastmcp-slim==3.4.7

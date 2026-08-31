@@ -1,6 +1,6 @@
 # Eva 2 — open-source componentenbord
 
-Bijgewerkt: 30 augustus 2026.
+Bijgewerkt: 31 augustus 2026.
 
 Dit bord beantwoordt maar één vraag: gebruikt Eva voor ieder algemeen probleem
 de beste onderhouden bouwsteen, of onderhoudt zij onnodig eigen code?
@@ -24,11 +24,11 @@ overlappende Eva-code is verwijderd.
 
 | Onderdeel | Gekozen route | Werkelijkheid nu | Besluit |
 |---|---|---|---|
-| Denken, tools en modelproviders | [Pydantic AI](https://github.com/pydantic/pydantic-ai) met de officiële provider-SDK's | OpenAI SDK `3.6.0` draait nu op de echte `/eva2`-route. De verzegelde image is uit 38 vaste wheels zonder bouwnetwerk gebouwd, scant 0/0 en is met gekopieerde data en een vooraf uitgevoerde schemamigratie via A/B gepromoveerd. Jaaps echte binding, modelantwoord en geheugen na een coreherstart zijn groen | **SDK live; nu Pydantic de toolloop laten overnemen en dubbele transportcode verwijderen** |
+| Denken, tools en modelproviders | [Pydantic AI](https://github.com/pydantic/pydantic-ai) met de officiële provider-SDK's | OpenAI SDK `3.6.0` draait live. Pydantic AI `2.36.0` voerde de native MCP-toolloop 5/5 uit. De minimale image is netwerkloos gebouwd, heeft een SBOM en scant met de verse database 0/0. De callback hield provider-I/O aantoonbaar achter Eva's ledger | **Kandidaat technisch groen; pas promoveren in één diff die de dubbele model-/dispatchcode werkelijk verwijdert** |
 | Werk hervatten na een crash | PostgreSQL met een onderhouden workflowmotor zodra die Eva's ambiguïteitsgrens bewaart | Stock DBOS `2.31.0` kan na een onduidelijke commit dubbel uitvoeren; de lokale rebase voegt 306 regels toe en verwijdert nul veilige workerregels | **DBOS voor deze worker `NO-GO`; Restate/Temporal/andere actuele kandidaten alleen promoveren als zij netto code verwijderen en de crashproef winnen** |
 | Langetermijngeheugen | [Hindsight](https://github.com/vectorize-io/hindsight) | Hindsight draait echt, maar Eva heeft daarnaast ongeveer 1.485 regels projectiecode | **Houden; adapter sterk verkleinen via officiële client/MCP** |
 | Telegram | [aiogram](https://github.com/aiogram/aiogram) blijft de gevolgde kandidaat | De actuele teksttransportlaag is klein en synchroon; de aiogram-proef voegt 12 distributies, een async-bridge en een Pydantic-upgrade toe zonder Eva's ledger te vervangen | **Nu `NO-GO`; heropenen voor media, webhooks of async-native ingress** |
-| Externe gereedschappen | Pydantic AI met runtime-ontdekte MCP-tools; [IBM ContextForge](https://github.com/IBM/mcp-context-forge) alleen als optionele gateway; officiële API's/SDK's als ontdekte fallback | De generieke gatewayproef en een niet-huisgebonden tijdtool zijn groen, maar de actieve providerlaag bevat nog vooraf gemaakte Home Assistant- en e-mailfuncties. De smalle kernchecker telde die migratieschuld ten onrechte niet mee | **Eindroute rood: eerst discovery en toolkeuze met twee onbekende providers bewijzen, daarna de eigen providerfuncties verwijderen** |
+| Externe gereedschappen | Pydantic AI met runtime-ontdekte MCP-tools; [IBM ContextForge](https://github.com/IBM/mcp-context-forge) alleen als optionele gateway; officiële API's/SDK's als ontdekte fallback | Twee providergepubliceerde toolsets werkten met dezelfde agentcode. Een aparte providercontainer werd ook echt ontdekt en aangeroepen. De clientimage is 33 MB groter en telt 69 distributies: 46 erbij en 8 gewijzigd tegenover de huidige lock | **Gedrag en image groen, promotie nog rood: de werkelijke vervangingsdiff moet eerst nettokrimp bewijzen** |
 | Voice | [Pipecat](https://github.com/pipecat-ai/pipecat) als eerste media-pipeline; [LiveKit Agents](https://github.com/livekit/agents) alleen als transportvergelijking; Wyoming blijft lokale STT/TTS-fallback | Losse voicebouwstenen werken, maar vormen nog geen product | **Pipecat-bake-off; eigen streaming/interruptlijm daarna verwijderen** |
 | Browser en computer | [Playwright MCP](https://github.com/microsoft/playwright-mcp) tegenover [Browser Use](https://github.com/browser-use/browser-use); daarna precies één motor | Functionele proeven bestaan, maar de geteste images voldeden niet aan de releasepoort | **Eén veilige brongebouwde winnaar kiezen; geen eigen browserengine** |
 | Subagents en onderzoek | Pydantic AI voor agentruns; een bewezen workflowmotor voor duurzame uitvoering | De actuele kandidaat heeft een grote eigen databaseworker en commandolaag; DBOS won de gemeten vervanging niet | **Bevroren tot een actuele kandidaat netto code verwijdert en de eenmalige-call/crashproef wint** |
@@ -57,15 +57,20 @@ regels die blind weg mogen:
 | Telegram Bot API-adapter plus polleroperatie | 504 | De aiogram-bake-off is nu `NO-GO`: twaalf nieuwe distributies en async-lijm leveren voor tekst geen nettowinst. Dit wordt heropend zodra media/webhooks de vergelijking veranderen |
 | Duurzame subagentstore, worker en service | 1.794 | queue, lease, retry, hervatten en workerlevenscyclus; grants en ambiguïteitsbewijs blijven |
 | Hindsight-projectieadapter | 1.485 | opslag, recall, clientprotocol en retries; persoon-/groep-/consentbinding blijft |
-| Modelgesprek plus eigen Responses-transport | 2.835 | providertransport, streaming, toolloop en usage; identiteit, mandaat en eindantwoordbeleid blijven |
+| Modelgesprek plus eigen Responses-transport | 2.663 | providertransport, streaming, toolloop en usage; identiteit, mandaat en eindantwoordbeleid blijven |
+| Eigen MCP-client plus gatewayconfiguratie | 679 | catalogusontdekking, protocolsession en toolcall; Eva's grant, duurzame ledger en onafhankelijke readback blijven |
 
-Een vervanging is pas geslaagd als deze meting netto daalt. Een extra framework
-naast dezelfde eigen laag is juist een mislukte vervanging.
+Een vervanging is pas geslaagd als de oude verantwoordelijkheid werkelijk is
+overgenomen en de dubbele route verdwijnt. Het totaal aantal regels hoeft niet
+te dalen wanneer de nieuwe bouwsteen aantoonbaar nieuwe kwaliteit of
+functionaliteit toevoegt. Een extra framework naast dezelfde eigen laag zonder
+apart doel is wel een mislukte vervanging.
 
 Voor iedere vervanging geldt voortaan dezelfde eindvoorwaarde:
 
 - dezelfde of betere gebruikersuitkomst;
-- minder eigen productregels;
+- geen dode of onverklaard dubbele code en een duidelijke eigenaar voor iedere
+  blijvende laag;
 - recente release, meerdere onderhouders, duidelijke licentie en securityroute;
 - exacte versie/digest, SBOM en nul hoge of kritieke scanbevindingen;
 - upgrade én terugrol op gekopieerde data;
