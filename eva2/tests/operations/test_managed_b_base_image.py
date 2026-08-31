@@ -130,6 +130,29 @@ def test_validates_and_materializes_a_local_pinned_oci_export(tmp_path: Path) ->
         assert validate_materialized_base_image(result)["status"] == "local_export_validated"
 
 
+def test_materializes_a_non_dockerhub_runtime_repository_by_full_authority(
+    tmp_path: Path,
+) -> None:
+    source = tmp_path / "runtime-source.tar"
+    digest, inspection = _archive(source)
+    repository = "gcr.io/distroless/cc-debian13"
+    inspection["RepoDigests"] = [f"{repository}@{digest}"]
+    with tempfile.TemporaryDirectory(prefix="eva2-runtime-base-test-", dir="/tmp") as path:
+        result = materialize_pinned_base_image(
+            digest,
+            Path(path),
+            repository=repository,
+            inspector=lambda reference: inspection,
+            exporter=lambda reference, destination: destination.write_bytes(
+                source.read_bytes()
+            ),
+        )
+
+        receipt = validate_materialized_base_image(result)
+        assert receipt["base_image_repository"] == repository
+        assert receipt["local_repo_digest"] == f"{repository}@{digest}"
+
+
 def test_refuses_missing_repo_digest_or_wrong_config_platform(tmp_path: Path) -> None:
     archive = tmp_path / "source.tar"
     digest, inspection = _archive(archive)

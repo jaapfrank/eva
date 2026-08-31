@@ -85,7 +85,7 @@ def _inspect(reference: str, runner: Runner) -> dict[str, Any]:
 
 def _verify_current_base(base: dict[str, object], runner: Runner) -> None:
     digest = str(base["base_image_digest"])
-    reference = f"docker.io/library/python@{digest}"
+    reference = f"{base['base_image_repository']}@{digest}"
     current = _inspect(reference, runner)
     if (
         current.get("Id") != base["local_image_id"]
@@ -146,6 +146,39 @@ def _source_identity(receipt: dict[str, object]) -> tuple[str, int]:
     return source_commit, source_date_epoch
 
 
+def _image_binding(receipt: dict[str, object], role: str) -> tuple[str, str]:
+    digest = receipt.get(f"{role}_image_digest")
+    archive = receipt.get(f"{role}_image_archive_sha256")
+    reference = receipt.get(f"{role}_image_reference")
+    if (
+        not isinstance(digest, str)
+        or len(digest) != 71
+        or not digest.startswith(_IMAGE_PREFIX)
+        or any(character not in "0123456789abcdef" for character in digest[7:])
+        or not isinstance(archive, str)
+        or len(archive) != 64
+        or any(character not in "0123456789abcdef" for character in archive)
+        or not isinstance(reference, str)
+        or not reference.endswith(f"@{digest}")
+    ):
+        raise RuntimeError(f"managed B {role} image binding is invalid")
+    return digest, reference
+
+
+def _require_context_base(
+    context: dict[str, object], base: dict[str, object], role: str
+) -> None:
+    if (
+        context.get(f"{role}_image_digest") != base.get("base_image_digest")
+        or context.get(f"{role}_image_archive_sha256") != base.get("archive_sha256")
+        or context.get(f"{role}_image_repository")
+        != base.get("base_image_repository")
+    ):
+        raise RuntimeError(
+            f"managed B context {role} image differs from the sealed local export"
+        )
+
+
 def _verify_untagged_candidate(
     image_id: str,
     runner: Runner,
@@ -176,7 +209,9 @@ def _verify_untagged_candidate(
 
 def build_offline_candidate_image(
     context: MaterializedBuildContext,
-    base_image: MaterializedBaseImage,
+    build_image: MaterializedBaseImage,
+    runtime_libraries_image: MaterializedBaseImage,
+    runtime_image: MaterializedBaseImage,
     output_parent: Path,
     *,
     runner: Runner = _run,
@@ -184,13 +219,21 @@ def build_offline_candidate_image(
     """Build and load one untagged image with network disabled throughout RUN steps."""
 
     context_receipt = validate_materialized_build_context(context)
-    base_receipt = validate_materialized_base_image(base_image)
-    if context_receipt["base_image_digest"] != base_receipt["base_image_digest"]:
-        raise RuntimeError("managed B context base digest differs from the sealed local export")
-    if context_receipt["base_image_archive_sha256"] != base_receipt["archive_sha256"]:
-        raise RuntimeError("managed B context base archive differs from the sealed local export")
+    build_receipt = validate_materialized_base_image(build_image)
+    runtime_libraries_receipt = validate_materialized_base_image(
+        runtime_libraries_image
+    )
+    runtime_receipt = validate_materialized_base_image(runtime_image)
+    bases = {
+        "build": build_receipt,
+        "runtime_libraries": runtime_libraries_receipt,
+        "runtime": runtime_receipt,
+    }
+    for role, receipt in bases.items():
+        _require_context_base(context_receipt, receipt, role)
     source_commit, source_date_epoch = _source_identity(context_receipt)
-    _verify_current_base(base_receipt, runner)
+    for receipt in bases.values():
+        _verify_current_base(receipt, runner)
     _private_parent(output_parent)
     temporary_root = Path(tempfile.mkdtemp(prefix="eva2-candidate-image-", dir=output_parent))
     temporary_root.chmod(0o700)
@@ -224,26 +267,46 @@ def build_offline_candidate_image(
             source_commit=source_commit,
             source_date_epoch=source_date_epoch,
         )
+        for receipt in bases.values():
+            _verify_current_base(receipt, runner)
     finally:
         temporary_root.chmod(0o700)
         if iidfile.exists() or iidfile.is_symlink():
             iidfile.unlink()
         temporary_root.rmdir()
     receipt = {
-        "base_image_archive_sha256": base_receipt["archive_sha256"],
-        "base_image_digest": base_receipt["base_image_digest"],
+        "build_image_archive_sha256": build_receipt["archive_sha256"],
+        "build_image_digest": build_receipt["base_image_digest"],
+        "build_image_reference": (
+            f"{build_receipt['base_image_repository']}@{build_receipt['base_image_digest']}"
+        ),
         "candidate_image_id": image_id,
         "candidate_image_size": candidate_inspection["Size"],
         "candidate_source_commit": source_commit,
         "candidate_source_date_epoch": source_date_epoch,
         "context_tree_sha256": context_receipt["context_tree_sha256"],
-        "contract": "EvaManagedBOfflineCandidateImageReceipt/v1",
+        "contract": "EvaManagedBOfflineCandidateImageReceipt/v2",
         "network_used": False,
         "nonclaims": [
             "The candidate image is untagged and was not pushed, signed, released, or attached to Compose.",
             "No B configuration, container, volume, secret, or live service was opened.",
         ],
         "status": "built_local_candidate",
+        "runtime_image_archive_sha256": runtime_receipt["archive_sha256"],
+        "runtime_image_digest": runtime_receipt["base_image_digest"],
+        "runtime_image_reference": (
+            f"{runtime_receipt['base_image_repository']}@{runtime_receipt['base_image_digest']}"
+        ),
+        "runtime_libraries_image_archive_sha256": runtime_libraries_receipt[
+            "archive_sha256"
+        ],
+        "runtime_libraries_image_digest": runtime_libraries_receipt[
+            "base_image_digest"
+        ],
+        "runtime_libraries_image_reference": (
+            f"{runtime_libraries_receipt['base_image_repository']}@"
+            f"{runtime_libraries_receipt['base_image_digest']}"
+        ),
     }
     return CandidateImage(image_id, receipt)
 
@@ -255,12 +318,14 @@ def validate_offline_candidate_image(
         raise RuntimeError("managed B candidate image must be materialized")
     receipt = candidate.receipt
     if (
-        receipt.get("contract") != "EvaManagedBOfflineCandidateImageReceipt/v1"
+        receipt.get("contract") != "EvaManagedBOfflineCandidateImageReceipt/v2"
         or receipt.get("status") != "built_local_candidate"
         or receipt.get("network_used") is not False
         or receipt.get("candidate_image_id") != candidate.image_id
     ):
         raise RuntimeError("managed B candidate image receipt differs")
+    for role in ("build", "runtime_libraries", "runtime"):
+        _image_binding(receipt, role)
     source_commit, source_date_epoch = _source_identity(receipt)
     inspection = _verify_untagged_candidate(
         candidate.image_id,

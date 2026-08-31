@@ -36,6 +36,25 @@ class MaterializedBuildContext:
     receipt: dict[str, object]
 
 
+def _valid_image_binding(receipt: dict[str, object], role: str) -> bool:
+    digest = receipt.get(f"{role}_image_digest")
+    archive = receipt.get(f"{role}_image_archive_sha256")
+    repository = receipt.get(f"{role}_image_repository")
+    return (
+        isinstance(digest, str)
+        and len(digest) == 71
+        and digest.startswith("sha256:")
+        and all(character in "0123456789abcdef" for character in digest[7:])
+        and isinstance(archive, str)
+        and len(archive) == 64
+        and all(character in "0123456789abcdef" for character in archive)
+        and isinstance(repository, str)
+        and bool(repository)
+        and "@" not in repository
+        and receipt.get(f"{role}_image_platform") == "linux/amd64"
+    )
+
+
 def _tree_hash(entries: list[dict[str, object]]) -> str:
     raw = json.dumps(entries, separators=(",", ":"), sort_keys=True).encode("utf-8")
     return hashlib.sha256(raw).hexdigest()
@@ -226,7 +245,9 @@ def materialize_build_context(
     wheelhouse_manifest_raw: bytes,
     wheel_coverage_raw: bytes,
     wheelhouse: MaterializedWheelhouse,
-    base_image: MaterializedBaseImage,
+    build_image: MaterializedBaseImage,
+    runtime_libraries_image: MaterializedBaseImage,
+    runtime_image: MaterializedBaseImage,
     output_parent: Path,
 ) -> MaterializedBuildContext:
     """Materialize exact B01+B02b bytes and bind B03c without using Docker."""
@@ -245,7 +266,30 @@ def materialize_build_context(
         wheel_coverage_raw,
         lock,
     )
-    base_receipt = validate_materialized_base_image(base_image)
+    build_receipt = validate_materialized_base_image(build_image)
+    runtime_libraries_receipt = validate_materialized_base_image(
+        runtime_libraries_image
+    )
+    runtime_receipt = validate_materialized_base_image(runtime_image)
+    if (
+        build_receipt["base_image_digest"] != candidate.base_image_digest
+        or f"{build_receipt['base_image_repository']}@{build_receipt['base_image_digest']}"
+        != candidate.build_image_reference
+    ):
+        raise RuntimeError("managed B build image differs from candidate source")
+    if (
+        runtime_libraries_receipt["base_image_digest"]
+        != candidate.runtime_libraries_image_digest
+        or f"{runtime_libraries_receipt['base_image_repository']}@{runtime_libraries_receipt['base_image_digest']}"
+        != candidate.runtime_libraries_image_reference
+    ):
+        raise RuntimeError("managed B runtime libraries image differs from candidate source")
+    if (
+        runtime_receipt["base_image_digest"] != candidate.runtime_image_digest
+        or f"{runtime_receipt['base_image_repository']}@{runtime_receipt['base_image_digest']}"
+        != candidate.runtime_image_reference
+    ):
+        raise RuntimeError("managed B runtime image differs from candidate source")
     _regular_private_parent(output_parent)
     root = Path(tempfile.mkdtemp(prefix="eva2-build-context-", dir=output_parent))
     root.chmod(0o700)
@@ -281,16 +325,17 @@ def materialize_build_context(
         _remove_unfinished_context(root)
         raise
     receipt = {
-        "base_image_archive_sha256": base_receipt["archive_sha256"],
-        "base_image_digest": base_receipt["base_image_digest"],
-        "base_image_platform": base_receipt["platform"],
+        "build_image_archive_sha256": build_receipt["archive_sha256"],
+        "build_image_digest": build_receipt["base_image_digest"],
+        "build_image_platform": build_receipt["platform"],
+        "build_image_repository": build_receipt["base_image_repository"],
         "candidate_dockerfile_sha256": candidate.dockerfile_sha256,
         "candidate_source_archive_sha256": candidate.source_archive_sha256,
         "candidate_source_commit": candidate.source_commit,
         "candidate_source_date_epoch": candidate.source_date_epoch,
         "context_files": entries,
         "context_tree_sha256": expected_hash,
-        "contract": "EvaManagedBBuildContextReceipt/v1",
+        "contract": "EvaManagedBBuildContextReceipt/v2",
         "network_used": False,
         "nonclaims": [
             "No Docker context was sent to a builder and no image was built, loaded, tagged, pushed, signed, or released.",
@@ -299,6 +344,20 @@ def materialize_build_context(
         ],
         "requirements_lock_sha256": candidate.requirements_lock_sha256,
         "requirements_lock_path": RUNTIME_REQUIREMENTS_LOCK,
+        "runtime_image_archive_sha256": runtime_receipt["archive_sha256"],
+        "runtime_image_digest": runtime_receipt["base_image_digest"],
+        "runtime_image_platform": runtime_receipt["platform"],
+        "runtime_image_repository": runtime_receipt["base_image_repository"],
+        "runtime_libraries_image_archive_sha256": runtime_libraries_receipt[
+            "archive_sha256"
+        ],
+        "runtime_libraries_image_digest": runtime_libraries_receipt[
+            "base_image_digest"
+        ],
+        "runtime_libraries_image_platform": runtime_libraries_receipt["platform"],
+        "runtime_libraries_image_repository": runtime_libraries_receipt[
+            "base_image_repository"
+        ],
         "status": "materialized",
         "wheelhouse_tree_sha256": wheel_receipt["wheelhouse_tree_sha256"],
     }
@@ -311,7 +370,7 @@ def validate_materialized_build_context(context: MaterializedBuildContext) -> di
     receipt = context.receipt
     expected = receipt.get("context_files")
     if (
-        receipt.get("contract") != "EvaManagedBBuildContextReceipt/v1"
+        receipt.get("contract") != "EvaManagedBBuildContextReceipt/v2"
         or receipt.get("status") != "materialized"
         or receipt.get("network_used") is not False
         or not isinstance(receipt.get("candidate_source_commit"), str)
@@ -323,6 +382,9 @@ def validate_materialized_build_context(context: MaterializedBuildContext) -> di
         or isinstance(receipt.get("candidate_source_date_epoch"), bool)
         or not isinstance(receipt.get("candidate_source_date_epoch"), int)
         or receipt["candidate_source_date_epoch"] <= 0
+        or not _valid_image_binding(receipt, "build")
+        or not _valid_image_binding(receipt, "runtime_libraries")
+        or not _valid_image_binding(receipt, "runtime")
         or not isinstance(expected, list)
         or not all(isinstance(item, dict) for item in expected)
     ):

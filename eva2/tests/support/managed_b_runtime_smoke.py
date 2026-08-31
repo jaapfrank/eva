@@ -10,8 +10,11 @@ from tools.managed_b_candidate.candidate_image import CandidateImage, validate_o
 
 
 _PROGRAM = (
+    "import cffi, cryptography, greenlet, jiter, psycopg, pydantic_ai, "
+    "pydantic_core, ssl, zlib; "
     "from eva.bootstrap.runtime import create_runtime_app; "
-    "assert callable(create_runtime_app); print('runtime-import-ok')"
+    "assert callable(create_runtime_app); "
+    "print('runtime-import-ok:' + ssl.OPENSSL_VERSION)"
 )
 
 
@@ -36,15 +39,17 @@ def run_candidate_runtime_smoke(
     command = [
         "docker", "run", "--pull=never", "--rm", "--network=none", "--read-only",
         "--user=65532:65532", "--cap-drop=ALL", "--security-opt=no-new-privileges",
-        "--entrypoint", "python", candidate.image_id, "-c", _PROGRAM,
+        "--entrypoint", "/usr/local/bin/python", candidate.image_id, "-c", _PROGRAM,
     ]
     result = runner(command, 30)
-    if result.stdout.strip() != "runtime-import-ok" or result.stderr:
+    output = result.stdout.strip()
+    if not output.startswith("runtime-import-ok:OpenSSL ") or result.stderr:
         raise RuntimeError("managed B candidate runtime smoke differs")
     return RuntimeSmoke({
         "candidate_image_id": candidate.image_id,
-        "contract": "EvaManagedBCandidateRuntimeSmokeReceipt/v1",
+        "contract": "EvaManagedBCandidateRuntimeSmokeReceipt/v2",
         "network_used": False,
+        "openssl_version": output.removeprefix("runtime-import-ok:"),
         "status": "runtime_imported_nonroot",
         "nonclaims": [
             "The temporary container used no mounts, secrets, B configuration, or B runtime input.",

@@ -130,7 +130,7 @@ def _candidate() -> CandidateImage:
         {
             "candidate_image_id": IMAGE_ID,
             "candidate_image_size": 123,
-            "contract": "EvaManagedBOfflineCandidateImageReceipt/v1",
+            "contract": "EvaManagedBOfflineCandidateImageReceipt/v2",
             "network_used": False,
             "status": "built_local_candidate",
         },

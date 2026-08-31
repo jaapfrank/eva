@@ -28,8 +28,15 @@ MAX_ARCHIVE_BYTES = 64 * 1024 * 1024
 COMMIT_PATTERN = re.compile(r"[0-9a-f]{40}")
 RUNTIME_REQUIREMENTS_LOCK = "requirements-4d.lock"
 BASE_IMAGE_PATTERN = re.compile(
-    r"FROM\s+docker\.io/library/python@(?P<digest>sha256:[0-9a-f]{64})"
+    r"FROM\s+(?P<reference>docker\.io/library/python@(?P<digest>sha256:[0-9a-f]{64}))\s+AS\s+build"
 )
+RUNTIME_LIBRARIES_IMAGE_PATTERN = re.compile(
+    r"FROM\s+(?P<reference>docker\.io/library/python@(?P<digest>sha256:[0-9a-f]{64}))\s+AS\s+runtime_libs"
+)
+RUNTIME_IMAGE_PATTERN = re.compile(
+    r"FROM\s+(?P<reference>gcr\.io/distroless/cc-debian13@(?P<digest>sha256:[0-9a-f]{64}))"
+)
+FROM_PATTERN = re.compile(r"FROM\s+\S+(?:\s+AS\s+\S+)?")
 EXPECTED_COPY_SOURCES = frozenset(
     {
         RUNTIME_REQUIREMENTS_LOCK,
@@ -42,6 +49,22 @@ EXPECTED_COPY_SOURCES = frozenset(
     }
 )
 EXTERNAL_COPY_SOURCES = frozenset({"wheelhouse"})
+EXPECTED_STAGE_COPIES = frozenset(
+    {
+        ("--from=build", "/usr/local", "/usr/local"),
+        ("--from=build", "/opt/eva", "/opt/eva"),
+        (
+            "--from=runtime_libs",
+            "/usr/lib/x86_64-linux-gnu/libffi.so.8*",
+            "/usr/lib/x86_64-linux-gnu/",
+        ),
+        (
+            "--from=runtime_libs",
+            "/usr/lib/x86_64-linux-gnu/libz.so.1*",
+            "/usr/lib/x86_64-linux-gnu/",
+        ),
+    }
+)
 EXPECTED_OFFLINE_PIP_INSTALL = (
     "RUN python -m pip install --no-cache-dir --no-index --only-binary=:all: "
     f"--find-links=./wheelhouse --require-hashes -r {RUNTIME_REQUIREMENTS_LOCK} "
@@ -63,6 +86,11 @@ class CandidateBuildInputs:
 
     archive_bytes: bytes
     base_image_digest: str
+    build_image_reference: str
+    runtime_libraries_image_digest: str
+    runtime_libraries_image_reference: str
+    runtime_image_digest: str
+    runtime_image_reference: str
     dockerfile_sha256: str
     requirements_lock_sha256: str
     source_archive_sha256: str
@@ -71,8 +99,13 @@ class CandidateBuildInputs:
 
     def receipt(self) -> dict[str, object]:
         return {
-            "contract": "EvaManagedBCandidateBuildInputsReceipt/v1",
+            "contract": "EvaManagedBCandidateBuildInputsReceipt/v2",
             "base_image_digest": self.base_image_digest,
+            "build_image_reference": self.build_image_reference,
+            "runtime_libraries_image_digest": self.runtime_libraries_image_digest,
+            "runtime_libraries_image_reference": self.runtime_libraries_image_reference,
+            "runtime_image_digest": self.runtime_image_digest,
+            "runtime_image_reference": self.runtime_image_reference,
             "dockerfile_path": "deploy/living-core/Dockerfile",
             "dockerfile_sha256": self.dockerfile_sha256,
             "external_inputs_required": ["wheelhouse"],
@@ -114,8 +147,18 @@ def validate_candidate_build_inputs(
         raise RuntimeError("candidate Dockerfile digest differs")
     if _sha256(requirements_lock) != inputs.requirements_lock_sha256:
         raise RuntimeError("candidate requirements lock digest differs")
-    if _base_image_digest(dockerfile) != inputs.base_image_digest:
-        raise RuntimeError("candidate base image digest differs")
+    images = _images(dockerfile)
+    if (
+        images["build"] != (inputs.build_image_reference, inputs.base_image_digest)
+        or images["runtime_libraries"]
+        != (
+            inputs.runtime_libraries_image_reference,
+            inputs.runtime_libraries_image_digest,
+        )
+        or images["runtime"]
+        != (inputs.runtime_image_reference, inputs.runtime_image_digest)
+    ):
+        raise RuntimeError("candidate image stages differ")
     _require_copy_inputs(files, _copy_sources(dockerfile))
     _require_offline_pip_install(dockerfile)
     return files
@@ -223,6 +266,7 @@ def _copy_sources(dockerfile: bytes) -> frozenset[str]:
     except UnicodeDecodeError as error:
         raise RuntimeError("candidate Dockerfile must be UTF-8") from error
     sources: set[str] = set()
+    stage_copies: set[tuple[str, str, str]] = set()
     for line in lines:
         stripped = line.strip()
         if not stripped or stripped.startswith("#"):
@@ -230,6 +274,9 @@ def _copy_sources(dockerfile: bytes) -> frozenset[str]:
         if not stripped.startswith("COPY "):
             continue
         parts = stripped.split()
+        if len(parts) == 4 and parts[1].startswith("--from="):
+            stage_copies.add((parts[1], parts[2], parts[3]))
+            continue
         if len(parts) != 3 or parts[1].startswith("--"):
             raise RuntimeError("candidate Dockerfile has an unsupported COPY instruction")
         source, destination = parts[1:]
@@ -240,6 +287,8 @@ def _copy_sources(dockerfile: bytes) -> frozenset[str]:
         sources.add(source)
     if sources != EXPECTED_COPY_SOURCES | EXTERNAL_COPY_SOURCES:
         raise RuntimeError("candidate Dockerfile COPY inputs differ from the sealed set")
+    if stage_copies != EXPECTED_STAGE_COPIES:
+        raise RuntimeError("candidate Dockerfile stage copies differ from the sealed set")
     return frozenset(sources)
 
 
@@ -265,16 +314,27 @@ def _require_offline_pip_install(dockerfile: bytes) -> None:
         raise RuntimeError("candidate Dockerfile must have the exact offline pip install")
 
 
-def _base_image_digest(dockerfile: bytes) -> str:
+def _images(dockerfile: bytes) -> dict[str, tuple[str, str]]:
     try:
         lines = dockerfile.decode("utf-8").splitlines()
     except UnicodeDecodeError as error:
         raise RuntimeError("candidate Dockerfile must be UTF-8") from error
-    matches = [BASE_IMAGE_PATTERN.fullmatch(line.strip()) for line in lines]
-    digests = [match.group("digest") for match in matches if match is not None]
-    if len(digests) != 1:
-        raise RuntimeError("candidate Dockerfile must pin exactly one Python base digest")
-    return digests[0]
+    from_lines = [line.strip() for line in lines if line.strip().startswith("FROM ")]
+    if len(from_lines) != 3 or not all(FROM_PATTERN.fullmatch(line) for line in from_lines):
+        raise RuntimeError("candidate Dockerfile must contain exactly three pinned image stages")
+    patterns = {
+        "build": BASE_IMAGE_PATTERN,
+        "runtime_libraries": RUNTIME_LIBRARIES_IMAGE_PATTERN,
+        "runtime": RUNTIME_IMAGE_PATTERN,
+    }
+    values: dict[str, tuple[str, str]] = {}
+    for role, pattern in patterns.items():
+        matches = [pattern.fullmatch(line) for line in from_lines]
+        selected = [match for match in matches if match is not None]
+        if len(selected) != 1:
+            raise RuntimeError(f"candidate Dockerfile {role} image differs")
+        values[role] = (selected[0].group("reference"), selected[0].group("digest"))
+    return values
 
 
 def _require_copy_inputs(
@@ -326,9 +386,15 @@ def prepare_candidate_build_inputs(
     _require_copy_inputs(files, _copy_sources(dockerfile))
     _require_offline_pip_install(dockerfile)
     archive = _canonical_archive(files, source_date_epoch=source_date_epoch)
+    images = _images(dockerfile)
     prepared = CandidateBuildInputs(
         archive_bytes=archive,
-        base_image_digest=_base_image_digest(dockerfile),
+        base_image_digest=images["build"][1],
+        build_image_reference=images["build"][0],
+        runtime_libraries_image_digest=images["runtime_libraries"][1],
+        runtime_libraries_image_reference=images["runtime_libraries"][0],
+        runtime_image_digest=images["runtime"][1],
+        runtime_image_reference=images["runtime"][0],
         dockerfile_sha256=_sha256(dockerfile),
         requirements_lock_sha256=_sha256(requirements_lock),
         source_archive_sha256=_sha256(archive),

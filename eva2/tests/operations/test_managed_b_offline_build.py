@@ -20,6 +20,11 @@ from tools.prepare_managed_b_candidate_context import (
 )
 
 
+BUILD_REFERENCE = "docker.io/library/python@sha256:" + "1" * 64
+RUNTIME_LIBRARIES_REFERENCE = "docker.io/library/python@sha256:" + "2" * 64
+RUNTIME_REFERENCE = "gcr.io/distroless/cc-debian13@sha256:" + "3" * 64
+
+
 def _canonical(value: object) -> bytes:
     return json.dumps(value, separators=(",", ":"), sort_keys=True).encode()
 
@@ -28,7 +33,7 @@ def _candidate(lock: bytes) -> CandidateBuildInputs:
     files = {
         "deploy/living-core/Dockerfile": b"\n".join(
             (
-                b"FROM docker.io/library/python@sha256:" + b"1" * 64,
+                b"FROM " + BUILD_REFERENCE.encode() + b" AS build",
                 b"COPY requirements-4d.lock ./requirements-4d.lock",
                 b"COPY wheelhouse ./wheelhouse",
                 b"COPY pyproject.toml ./pyproject.toml",
@@ -38,6 +43,12 @@ def _candidate(lock: bytes) -> CandidateBuildInputs:
                 b"COPY alembic.ini ./alembic.ini",
                 b"COPY migrations ./migrations",
                 b"COPY schemas ./schemas",
+                b"FROM " + RUNTIME_LIBRARIES_REFERENCE.encode() + b" AS runtime_libs",
+                b"FROM " + RUNTIME_REFERENCE.encode(),
+                b"COPY --from=build /usr/local /usr/local",
+                b"COPY --from=build /opt/eva /opt/eva",
+                b"COPY --from=runtime_libs /usr/lib/x86_64-linux-gnu/libffi.so.8* /usr/lib/x86_64-linux-gnu/",
+                b"COPY --from=runtime_libs /usr/lib/x86_64-linux-gnu/libz.so.1* /usr/lib/x86_64-linux-gnu/",
             )
         ),
         "requirements-4d.lock": lock,
@@ -63,6 +74,11 @@ def _candidate(lock: bytes) -> CandidateBuildInputs:
     return CandidateBuildInputs(
         archive_bytes=raw,
         base_image_digest="sha256:" + "1" * 64,
+        build_image_reference=BUILD_REFERENCE,
+        runtime_libraries_image_digest="sha256:" + "2" * 64,
+        runtime_libraries_image_reference=RUNTIME_LIBRARIES_REFERENCE,
+        runtime_image_digest="sha256:" + "3" * 64,
+        runtime_image_reference=RUNTIME_REFERENCE,
         dockerfile_sha256=hashlib.sha256(dockerfile).hexdigest(),
         requirements_lock_sha256=hashlib.sha256(lock).hexdigest(),
         source_archive_sha256=hashlib.sha256(raw).hexdigest(),
@@ -175,6 +191,11 @@ def test_preflight_revalidates_the_candidate_archive_before_wheel_bytes(
     candidate = CandidateBuildInputs(
         archive_bytes=candidate.archive_bytes + b"tampered",
         base_image_digest=candidate.base_image_digest,
+        build_image_reference=candidate.build_image_reference,
+        runtime_libraries_image_digest=candidate.runtime_libraries_image_digest,
+        runtime_libraries_image_reference=candidate.runtime_libraries_image_reference,
+        runtime_image_digest=candidate.runtime_image_digest,
+        runtime_image_reference=candidate.runtime_image_reference,
         dockerfile_sha256=candidate.dockerfile_sha256,
         requirements_lock_sha256=candidate.requirements_lock_sha256,
         source_archive_sha256=candidate.source_archive_sha256,

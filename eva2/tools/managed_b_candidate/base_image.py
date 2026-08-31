@@ -24,6 +24,7 @@ _MAX_ARCHIVE_BYTES = 4 * 1024 * 1024 * 1024
 _MAX_JSON_BYTES = 1024 * 1024
 _OCI_INDEX_MEDIA_TYPE = "application/vnd.oci.image.index.v1+json"
 _OCI_MANIFEST_MEDIA_TYPE = "application/vnd.oci.image.manifest.v1+json"
+_DEFAULT_REPOSITORY = "docker.io/library/python"
 
 
 @dataclass(frozen=True, slots=True)
@@ -45,8 +46,16 @@ def _digest(value: object, *, label: str) -> str:
     return value
 
 
-def _reference(digest: str) -> str:
-    return f"docker.io/library/python@{_digest(digest, label='base image digest')}"
+def _reference(digest: str, repository: str = _DEFAULT_REPOSITORY) -> str:
+    if (
+        not repository
+        or "@" in repository
+        or repository.startswith("/")
+        or repository.endswith("/")
+        or any(character.isspace() for character in repository)
+    ):
+        raise RuntimeError("base image repository is invalid")
+    return f"{repository}@{_digest(digest, label='base image digest')}"
 
 
 def _hash_file(path: Path) -> str:
@@ -185,11 +194,15 @@ def _required_blob(
 
 
 def validate_pinned_base_image_archive(
-    archive_path: Path, base_image_digest: str, inspection: Mapping[str, object]
+    archive_path: Path,
+    base_image_digest: str,
+    inspection: Mapping[str, object],
+    *,
+    repository: str = _DEFAULT_REPOSITORY,
 ) -> dict[str, object]:
     """Validate an existing local OCI archive without Docker or network access."""
 
-    expected = _reference(base_image_digest)
+    expected = _reference(base_image_digest, repository)
     image_id, observed_repo_digest = _validate_inspection(expected, inspection)
     try:
         metadata = archive_path.lstat()
@@ -264,10 +277,11 @@ def validate_pinned_base_image_archive(
     finally:
         archive.close()
     return {
-        "contract": "EvaPinnedBaseImageExport/v1",
+        "contract": "EvaPinnedBaseImageExport/v2",
         "archive_sha256": _hash_file(archive_path),
         "archive_size": metadata.st_size,
         "base_image_digest": base_image_digest,
+        "base_image_repository": repository,
         "local_image_id": image_id,
         "local_repo_digest": observed_repo_digest,
         "network_used": False,
@@ -312,12 +326,13 @@ def materialize_pinned_base_image(
     base_image_digest: str,
     output_parent: Path,
     *,
+    repository: str = _DEFAULT_REPOSITORY,
     inspector: Callable[[str], Mapping[str, object]] = _docker_inspect,
     exporter: Callable[[str, Path], None] = _docker_export,
 ) -> MaterializedBaseImage:
     """Export and validate one already-local image; this never pulls or builds."""
 
-    reference = _reference(base_image_digest)
+    reference = _reference(base_image_digest, repository)
     inspection = inspector(reference)
     _validate_inspection(reference, inspection)
     try:
@@ -330,7 +345,12 @@ def materialize_pinned_base_image(
     archive_path = destination_root / "base.oci.tar"
     try:
         exporter(reference, archive_path)
-        receipt = validate_pinned_base_image_archive(archive_path, base_image_digest, inspection)
+        receipt = validate_pinned_base_image_archive(
+            archive_path,
+            base_image_digest,
+            inspection,
+            repository=repository,
+        )
         archive_path.chmod(0o444)
         destination_root.chmod(0o500)
         if archive_path.lstat().st_mode & 0o222 or destination_root.lstat().st_mode & 0o222:
@@ -354,6 +374,7 @@ def validate_materialized_base_image(
         "archive_sha256",
         "archive_size",
         "base_image_digest",
+        "base_image_repository",
         "contract",
         "local_image_id",
         "local_repo_digest",
@@ -366,7 +387,7 @@ def validate_materialized_base_image(
     }
     if (
         not required.issubset(receipt)
-        or receipt.get("contract") != "EvaPinnedBaseImageExport/v1"
+        or receipt.get("contract") != "EvaPinnedBaseImageExport/v2"
         or receipt.get("status") != "local_export_validated"
         or receipt.get("network_used") is not False
         or receipt.get("platform") != "linux/amd64"
@@ -393,12 +414,16 @@ def validate_materialized_base_image(
         "RepoDigests": [receipt["local_repo_digest"]],
     }
     validated = validate_pinned_base_image_archive(
-        materialized.path, str(receipt["base_image_digest"]), inspection
+        materialized.path,
+        str(receipt["base_image_digest"]),
+        inspection,
+        repository=str(receipt["base_image_repository"]),
     )
     for key in (
         "archive_sha256",
         "archive_size",
         "base_image_digest",
+        "base_image_repository",
         "local_image_id",
         "local_repo_digest",
         "oci_config_digest",

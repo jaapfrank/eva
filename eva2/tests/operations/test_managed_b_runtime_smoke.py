@@ -26,17 +26,21 @@ def test_runs_only_an_ephemeral_networkless_nonroot_container(
 
     def runner(command: list[str], _timeout: int) -> subprocess.CompletedProcess[str]:
         commands.append(command)
-        return subprocess.CompletedProcess(command, 0, stdout="runtime-import-ok\n", stderr="")
+        return subprocess.CompletedProcess(
+            command, 0, stdout="runtime-import-ok:OpenSSL 3.5.7\n", stderr=""
+        )
 
     receipt = run_candidate_runtime_smoke(_candidate(), runner=runner).receipt
 
     assert receipt["status"] == "runtime_imported_nonroot"
+    assert receipt["openssl_version"] == "OpenSSL 3.5.7"
     command = commands[0]
     assert command[:4] == ["docker", "run", "--pull=never", "--rm"]
     assert "--network=none" in command and "--read-only" in command
     assert "--user=65532:65532" in command
     assert "--cap-drop=ALL" in command
     assert "--security-opt=no-new-privileges" in command
+    assert command[command.index("--entrypoint") + 1] == "/usr/local/bin/python"
     assert "--mount" not in command and "--env" not in command
 
 

@@ -18,9 +18,15 @@ from tools.managed_b_candidate.candidate_image import (
 
 BASE_DIGEST = "sha256:" + "1" * 64
 BASE_ID = "sha256:" + "2" * 64
+LIBS_DIGEST = "sha256:" + "5" * 64
+LIBS_ID = "sha256:" + "6" * 64
+RUNTIME_DIGEST = "sha256:" + "7" * 64
+RUNTIME_ID = "sha256:" + "8" * 64
 IMAGE_ID = "sha256:" + "3" * 64
 ARCHIVE_SHA = "4" * 64
 REPO_DIGEST = f"docker.io/library/python@{BASE_DIGEST}"
+LIBS_REPO_DIGEST = f"docker.io/library/python@{LIBS_DIGEST}"
+RUNTIME_REPO_DIGEST = f"gcr.io/distroless/cc-debian13@{RUNTIME_DIGEST}"
 SOURCE_COMMIT = "a" * 40
 SOURCE_DATE_EPOCH = 1787480000
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
@@ -52,40 +58,75 @@ def native_tmp_path() -> Path:
         yield Path(path)
 
 
-def _inputs(native_tmp_path: Path) -> tuple[MaterializedBuildContext, MaterializedBaseImage]:
+def _inputs(native_tmp_path: Path) -> tuple[
+    MaterializedBuildContext,
+    MaterializedBaseImage,
+    MaterializedBaseImage,
+    MaterializedBaseImage,
+]:
     return (
         MaterializedBuildContext(native_tmp_path / "context", {}),
-        MaterializedBaseImage(native_tmp_path / "base.oci.tar", {}),
+        MaterializedBaseImage(native_tmp_path / "build.oci.tar", {}),
+        MaterializedBaseImage(native_tmp_path / "runtime-libraries.oci.tar", {}),
+        MaterializedBaseImage(native_tmp_path / "runtime.oci.tar", {}),
     )
 
 
-def _receipts() -> tuple[dict[str, object], dict[str, object]]:
+def _receipts() -> tuple[dict[str, object], list[dict[str, object]]]:
     return (
         {
-            "base_image_archive_sha256": ARCHIVE_SHA,
-            "base_image_digest": BASE_DIGEST,
+            "build_image_archive_sha256": ARCHIVE_SHA,
+            "build_image_digest": BASE_DIGEST,
+            "build_image_repository": "docker.io/library/python",
+            "runtime_libraries_image_archive_sha256": "9" * 64,
+            "runtime_libraries_image_digest": LIBS_DIGEST,
+            "runtime_libraries_image_repository": "docker.io/library/python",
+            "runtime_image_archive_sha256": "a" * 64,
+            "runtime_image_digest": RUNTIME_DIGEST,
+            "runtime_image_repository": "gcr.io/distroless/cc-debian13",
             "context_tree_sha256": "5" * 64,
             "candidate_source_commit": SOURCE_COMMIT,
             "candidate_source_date_epoch": SOURCE_DATE_EPOCH,
         },
-        {
-            "archive_sha256": ARCHIVE_SHA,
-            "base_image_digest": BASE_DIGEST,
-            "local_image_id": BASE_ID,
-            "local_repo_digest": REPO_DIGEST,
-        },
+        [
+            {
+                "archive_sha256": ARCHIVE_SHA,
+                "base_image_digest": BASE_DIGEST,
+                "base_image_repository": "docker.io/library/python",
+                "local_image_id": BASE_ID,
+                "local_repo_digest": REPO_DIGEST,
+            },
+            {
+                "archive_sha256": "9" * 64,
+                "base_image_digest": LIBS_DIGEST,
+                "base_image_repository": "docker.io/library/python",
+                "local_image_id": LIBS_ID,
+                "local_repo_digest": LIBS_REPO_DIGEST,
+            },
+            {
+                "archive_sha256": "a" * 64,
+                "base_image_digest": RUNTIME_DIGEST,
+                "base_image_repository": "gcr.io/distroless/cc-debian13",
+                "local_image_id": RUNTIME_ID,
+                "local_repo_digest": RUNTIME_REPO_DIGEST,
+            },
+        ],
     )
 
 
 def _stub_validators(monkeypatch: pytest.MonkeyPatch) -> None:
-    context, base = _receipts()
+    context, bases = _receipts()
     monkeypatch.setattr(
         "tools.managed_b_candidate.candidate_image.validate_materialized_build_context",
         lambda _context: context,
     )
     monkeypatch.setattr(
         "tools.managed_b_candidate.candidate_image.validate_materialized_base_image",
-        lambda _base: base,
+        lambda value: bases[
+            {"build.oci.tar": 0, "runtime-libraries.oci.tar": 1, "runtime.oci.tar": 2}[
+                value.path.name
+            ]
+        ],
     )
 
 
@@ -98,6 +139,10 @@ def _runner(*, candidate_tags: object = None, candidate_labels: object = None):
             reference = command[3]
             if reference == REPO_DIGEST:
                 value = [{"Architecture": "amd64", "Id": BASE_ID, "Os": "linux", "RepoDigests": [REPO_DIGEST]}]
+            elif reference == LIBS_REPO_DIGEST:
+                value = [{"Architecture": "amd64", "Id": LIBS_ID, "Os": "linux", "RepoDigests": [LIBS_REPO_DIGEST]}]
+            elif reference == RUNTIME_REPO_DIGEST:
+                value = [{"Architecture": "amd64", "Id": RUNTIME_ID, "Os": "linux", "RepoDigests": [RUNTIME_REPO_DIGEST]}]
             elif reference == IMAGE_ID:
                 labels = candidate_labels if candidate_labels is not None else {
                     "io.eva2.source-commit": SOURCE_COMMIT,
@@ -125,12 +170,14 @@ def test_builds_an_untagged_networkless_candidate_without_b(
     monkeypatch: pytest.MonkeyPatch, native_tmp_path: Path
 ) -> None:
     _stub_validators(monkeypatch)
-    context, base = _inputs(native_tmp_path)
+    context, build, runtime_libraries, runtime = _inputs(native_tmp_path)
     output = native_tmp_path / "output"
     output.mkdir(mode=0o700)
     commands, runner = _runner()
 
-    candidate = build_offline_candidate_image(context, base, output, runner=runner)
+    candidate = build_offline_candidate_image(
+        context, build, runtime_libraries, runtime, output, runner=runner
+    )
 
     assert candidate.image_id == IMAGE_ID
     assert candidate.receipt["network_used"] is False
@@ -146,6 +193,14 @@ def test_builds_an_untagged_networkless_candidate_without_b(
     assert build[second_build_arg + 1] == f"SOURCE_DATE_EPOCH={SOURCE_DATE_EPOCH}"
     assert build[build.index("--file") + 1].endswith("deploy/living-core/Dockerfile")
     assert "--tag" not in build and "--push" not in build
+    inspected = [
+        command[3]
+        for command in commands
+        if command[:3] == ["docker", "image", "inspect"]
+    ]
+    assert inspected.count(REPO_DIGEST) == 2
+    assert inspected.count(LIBS_REPO_DIGEST) == 2
+    assert inspected.count(RUNTIME_REPO_DIGEST) == 2
     assert list(output.iterdir()) == []
 
 
@@ -153,7 +208,7 @@ def test_refuses_when_current_docker_base_differs(
     monkeypatch: pytest.MonkeyPatch, native_tmp_path: Path
 ) -> None:
     _stub_validators(monkeypatch)
-    context, base = _inputs(native_tmp_path)
+    context, build, runtime_libraries, runtime = _inputs(native_tmp_path)
     output = native_tmp_path / "output"
     output.mkdir(mode=0o700)
 
@@ -167,7 +222,9 @@ def test_refuses_when_current_docker_base_differs(
         )
 
     with pytest.raises(RuntimeError, match="Docker base image differs"):
-        build_offline_candidate_image(context, base, output, runner=runner)
+        build_offline_candidate_image(
+            context, build, runtime_libraries, runtime, output, runner=runner
+        )
 
     assert list(output.iterdir()) == []
 
@@ -176,13 +233,15 @@ def test_refuses_a_candidate_that_receives_a_tag(
     monkeypatch: pytest.MonkeyPatch, native_tmp_path: Path
 ) -> None:
     _stub_validators(monkeypatch)
-    context, base = _inputs(native_tmp_path)
+    context, build, runtime_libraries, runtime = _inputs(native_tmp_path)
     output = native_tmp_path / "output"
     output.mkdir(mode=0o700)
     _commands, runner = _runner(candidate_tags=["unexpected:latest"])
 
     with pytest.raises(RuntimeError, match="must not receive a tag"):
-        build_offline_candidate_image(context, base, output, runner=runner)
+        build_offline_candidate_image(
+            context, build, runtime_libraries, runtime, output, runner=runner
+        )
 
     assert list(output.iterdir()) == []
 
@@ -191,7 +250,7 @@ def test_refuses_a_candidate_with_different_source_identity(
     monkeypatch: pytest.MonkeyPatch, native_tmp_path: Path
 ) -> None:
     _stub_validators(monkeypatch)
-    context, base = _inputs(native_tmp_path)
+    context, build, runtime_libraries, runtime = _inputs(native_tmp_path)
     output = native_tmp_path / "output"
     output.mkdir(mode=0o700)
     _commands, runner = _runner(candidate_labels={
@@ -201,7 +260,9 @@ def test_refuses_a_candidate_with_different_source_identity(
     })
 
     with pytest.raises(RuntimeError, match="source identity differs"):
-        build_offline_candidate_image(context, base, output, runner=runner)
+        build_offline_candidate_image(
+            context, build, runtime_libraries, runtime, output, runner=runner
+        )
 
     assert list(output.iterdir()) == []
 

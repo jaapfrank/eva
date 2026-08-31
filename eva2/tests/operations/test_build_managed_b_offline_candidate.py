@@ -47,6 +47,15 @@ def _stub_pipeline(
     calls: list[str] = []
     candidate = SimpleNamespace(
         base_image_digest="sha256:" + "1" * 64,
+        build_image_reference="docker.io/library/python@sha256:" + "1" * 64,
+        runtime_libraries_image_digest="sha256:" + "2" * 64,
+        runtime_libraries_image_reference=(
+            "docker.io/library/python@sha256:" + "2" * 64
+        ),
+        runtime_image_digest="sha256:" + "3" * 64,
+        runtime_image_reference=(
+            "gcr.io/distroless/cc-debian13@sha256:" + "3" * 64
+        ),
         dockerfile_sha256="2" * 64,
         requirements_lock_sha256="3" * 64,
         source_archive_sha256="4" * 64,
@@ -62,14 +71,21 @@ def _stub_pipeline(
         path=tmp_path / "materialized-wheelhouse",
         receipt={"expected_wheel_count": 38, "wheelhouse_tree_sha256": "5" * 64},
     )
-    base = SimpleNamespace(
-        path=tmp_path / "base" / "base.oci.tar",
-        receipt={
-            "archive_sha256": "6" * 64,
-            "base_image_digest": candidate.base_image_digest,
-            "local_image_id": candidate.base_image_digest,
-        },
+    def materialized_base(name: str, digest: str, archive: str):
+        return SimpleNamespace(
+            path=tmp_path / name / "base.oci.tar",
+            receipt={
+                "archive_sha256": archive * 64,
+                "base_image_digest": digest,
+                "local_image_id": digest,
+            },
+        )
+
+    build = materialized_base("build", candidate.base_image_digest, "6")
+    runtime_libraries = materialized_base(
+        "runtime-libraries", candidate.runtime_libraries_image_digest, "9"
     )
+    runtime = materialized_base("runtime", candidate.runtime_image_digest, "a")
     context = SimpleNamespace(
         path=tmp_path / "context",
         receipt={"context_tree_sha256": "7" * 64},
@@ -77,17 +93,24 @@ def _stub_pipeline(
     image = SimpleNamespace(
         image_id="sha256:" + "8" * 64,
         receipt={
-            "base_image_archive_sha256": "6" * 64,
-            "base_image_digest": candidate.base_image_digest,
+            "build_image_archive_sha256": "6" * 64,
+            "build_image_digest": candidate.base_image_digest,
+            "build_image_reference": candidate.build_image_reference,
             "candidate_image_id": "sha256:" + "8" * 64,
             "candidate_image_size": 123456,
             "candidate_source_commit": COMMIT,
             "candidate_source_date_epoch": candidate.source_date_epoch,
             "context_tree_sha256": "7" * 64,
-            "contract": "EvaManagedBOfflineCandidateImageReceipt/v1",
+            "contract": "EvaManagedBOfflineCandidateImageReceipt/v2",
             "network_used": False,
             "nonclaims": [],
             "status": "built_local_candidate",
+            "runtime_libraries_image_archive_sha256": "9" * 64,
+            "runtime_libraries_image_digest": candidate.runtime_libraries_image_digest,
+            "runtime_libraries_image_reference": candidate.runtime_libraries_image_reference,
+            "runtime_image_archive_sha256": "a" * 64,
+            "runtime_image_digest": candidate.runtime_image_digest,
+            "runtime_image_reference": candidate.runtime_image_reference,
         },
     )
 
@@ -113,11 +136,14 @@ def _stub_pipeline(
         assert output_parent == tmp_path / "output"
         return wheelhouse
 
-    def base_image(digest, output_parent):
-        calls.append("materialize_base")
-        assert digest == candidate.base_image_digest
+    def base_image(digest, output_parent, *, repository="docker.io/library/python"):
+        calls.append(f"materialize_base:{repository}")
         assert output_parent == tmp_path / "output"
-        return base
+        return {
+            candidate.base_image_digest: build,
+            candidate.runtime_libraries_image_digest: runtime_libraries,
+            candidate.runtime_image_digest: runtime,
+        }[digest]
 
     def build_context(*args):
         calls.append("materialize_context")
@@ -126,14 +152,22 @@ def _stub_pipeline(
             b"manifest",
             b"coverage",
             wheelhouse,
-            base,
+            build,
+            runtime_libraries,
+            runtime,
             tmp_path / "output",
         )
         return context
 
     def build_image(*args):
         calls.append("build_image")
-        assert args == (context, base, tmp_path / "output")
+        assert args == (
+            context,
+            build,
+            runtime_libraries,
+            runtime,
+            tmp_path / "output",
+        )
         return image
 
     module = "tools.build_managed_b_offline_candidate"
@@ -161,7 +195,9 @@ def test_sequences_only_the_existing_offline_candidate_stages(
         "validate",
         "inspect_manifest",
         "materialize_wheelhouse",
-        "materialize_base",
+        "materialize_base:docker.io/library/python",
+        "materialize_base:docker.io/library/python",
+        "materialize_base:gcr.io/distroless/cc-debian13",
         "materialize_context",
         "build_image",
     ]
@@ -169,13 +205,17 @@ def test_sequences_only_the_existing_offline_candidate_stages(
     assert receipt["network_used"] is False
     assert receipt["candidate"]["image_id"] == "sha256:" + "8" * 64
     assert receipt["candidate"]["receipt"]["contract"] == (
-        "EvaManagedBOfflineCandidateImageReceipt/v1"
+        "EvaManagedBOfflineCandidateImageReceipt/v2"
     )
     assert receipt["source"]["commit"] == COMMIT
     assert receipt["stages"]["wheelhouse"]["count"] == 38
     assert receipt["materialized"] == {
-        "base_image_archive_path": str(native_tmp_path / "base" / "base.oci.tar"),
+        "build_image_archive_path": str(native_tmp_path / "build" / "base.oci.tar"),
         "build_context_path": str(native_tmp_path / "context"),
+        "runtime_image_archive_path": str(native_tmp_path / "runtime" / "base.oci.tar"),
+        "runtime_libraries_image_archive_path": str(
+            native_tmp_path / "runtime-libraries" / "base.oci.tar"
+        ),
         "wheelhouse_path": str(native_tmp_path / "materialized-wheelhouse"),
     }
 

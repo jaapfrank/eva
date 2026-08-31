@@ -100,21 +100,36 @@ def build_managed_b_offline_candidate(
         output_parent,
         requirements_lock_raw,
     )
-    base_image = materialize_pinned_base_image(
+    build_image = materialize_pinned_base_image(
         candidate.base_image_digest,
         output_parent,
+        repository=candidate.build_image_reference.rsplit("@", 1)[0],
+    )
+    runtime_libraries_image = materialize_pinned_base_image(
+        candidate.runtime_libraries_image_digest,
+        output_parent,
+        repository=candidate.runtime_libraries_image_reference.rsplit("@", 1)[0],
+    )
+    runtime_image = materialize_pinned_base_image(
+        candidate.runtime_image_digest,
+        output_parent,
+        repository=candidate.runtime_image_reference.rsplit("@", 1)[0],
     )
     context = materialize_build_context(
         candidate,
         manifest_raw,
         coverage_raw,
         wheelhouse,
-        base_image,
+        build_image,
+        runtime_libraries_image,
+        runtime_image,
         output_parent,
     )
     image = build_offline_candidate_image(
         context,
-        base_image,
+        build_image,
+        runtime_libraries_image,
+        runtime_image,
         output_parent,
     )
 
@@ -123,7 +138,7 @@ def build_managed_b_offline_candidate(
             "image_id": image.image_id,
             "receipt": image.receipt,
         },
-        "contract": "EvaManagedBOfflineCandidateBuildReceipt/v1",
+        "contract": "EvaManagedBOfflineCandidateBuildReceipt/v2",
         "inputs": {
             "output_parent": str(output_parent),
             "wheel_artifact_root": str(wheel_artifact_root),
@@ -133,7 +148,11 @@ def build_managed_b_offline_candidate(
             "wheelhouse_manifest_sha256": _sha256(manifest_raw),
         },
         "materialized": {
-            "base_image_archive_path": str(base_image.path),
+            "build_image_archive_path": str(build_image.path),
+            "runtime_libraries_image_archive_path": str(
+                runtime_libraries_image.path
+            ),
+            "runtime_image_archive_path": str(runtime_image.path),
             "build_context_path": str(context.path),
             "wheelhouse_path": str(wheelhouse.path),
         },
@@ -152,10 +171,20 @@ def build_managed_b_offline_candidate(
             "requirements_lock_sha256": candidate.requirements_lock_sha256,
         },
         "stages": {
-            "base_image": {
-                "archive_sha256": base_image.receipt["archive_sha256"],
-                "digest": base_image.receipt["base_image_digest"],
-                "local_image_id": base_image.receipt["local_image_id"],
+            "build_image": {
+                "archive_sha256": build_image.receipt["archive_sha256"],
+                "digest": build_image.receipt["base_image_digest"],
+                "local_image_id": build_image.receipt["local_image_id"],
+            },
+            "runtime_image": {
+                "archive_sha256": runtime_image.receipt["archive_sha256"],
+                "digest": runtime_image.receipt["base_image_digest"],
+                "local_image_id": runtime_image.receipt["local_image_id"],
+            },
+            "runtime_libraries_image": {
+                "archive_sha256": runtime_libraries_image.receipt["archive_sha256"],
+                "digest": runtime_libraries_image.receipt["base_image_digest"],
+                "local_image_id": runtime_libraries_image.receipt["local_image_id"],
             },
             "build_context": {
                 "tree_sha256": context.receipt["context_tree_sha256"],

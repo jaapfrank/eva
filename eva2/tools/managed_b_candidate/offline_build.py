@@ -90,8 +90,13 @@ def validate_offline_candidate_inputs(
         requirements_lock_raw,
     )
     return {
-        "contract": "EvaManagedBOfflineCandidatePreflightReceipt/v1",
+        "contract": "EvaManagedBOfflineCandidatePreflightReceipt/v2",
         "base_image_digest": candidate.base_image_digest,
+        "build_image_reference": candidate.build_image_reference,
+        "runtime_libraries_image_digest": candidate.runtime_libraries_image_digest,
+        "runtime_libraries_image_reference": candidate.runtime_libraries_image_reference,
+        "runtime_image_digest": candidate.runtime_image_digest,
+        "runtime_image_reference": candidate.runtime_image_reference,
         "candidate_dockerfile_sha256": candidate.dockerfile_sha256,
         "candidate_source_archive_sha256": candidate.source_archive_sha256,
         "candidate_source_commit": candidate.source_commit,

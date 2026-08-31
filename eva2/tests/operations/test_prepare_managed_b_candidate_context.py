@@ -16,6 +16,32 @@ from tools.prepare_managed_b_candidate_context import (
 
 
 COMMIT = "a" * 40
+RUNTIME_LIBRARIES_REFERENCE = "docker.io/library/python@sha256:" + "2" * 64
+RUNTIME_REFERENCE = "gcr.io/distroless/cc-debian13@sha256:" + "3" * 64
+
+
+def _dockerfile(*, build_from: bytes | None = None, install: bytes | None = None) -> bytes:
+    return b"\n".join(
+        (
+            build_from
+            or b"FROM docker.io/library/python@sha256:" + b"1" * 64 + b" AS build",
+            b"COPY requirements-4d.lock ./requirements-4d.lock",
+            b"COPY wheelhouse ./wheelhouse",
+            b"COPY pyproject.toml ./pyproject.toml",
+            b"COPY src ./src",
+            b"COPY connector_sdk ./connector_sdk",
+            install or EXPECTED_OFFLINE_PIP_INSTALL.encode(),
+            b"COPY alembic.ini ./alembic.ini",
+            b"COPY migrations ./migrations",
+            b"COPY schemas ./schemas",
+            b"FROM " + RUNTIME_LIBRARIES_REFERENCE.encode() + b" AS runtime_libs",
+            b"FROM " + RUNTIME_REFERENCE.encode(),
+            b"COPY --from=build /usr/local /usr/local",
+            b"COPY --from=build /opt/eva /opt/eva",
+            b"COPY --from=runtime_libs /usr/lib/x86_64-linux-gnu/libffi.so.8* /usr/lib/x86_64-linux-gnu/",
+            b"COPY --from=runtime_libs /usr/lib/x86_64-linux-gnu/libz.so.1* /usr/lib/x86_64-linux-gnu/",
+        )
+    )
 
 
 def _archive(
@@ -28,20 +54,7 @@ def _archive(
 ) -> bytes:
     entries = {
         "eva2/deploy/living-core/Dockerfile": dockerfile
-        or b"\n".join(
-            (
-                b"FROM docker.io/library/python@sha256:" + b"1" * 64,
-                b"COPY requirements-4d.lock ./requirements-4d.lock",
-                b"COPY wheelhouse ./wheelhouse",
-                b"COPY pyproject.toml ./pyproject.toml",
-                b"COPY src ./src",
-                b"COPY connector_sdk ./connector_sdk",
-                EXPECTED_OFFLINE_PIP_INSTALL.encode(),
-                b"COPY alembic.ini ./alembic.ini",
-                b"COPY migrations ./migrations",
-                b"COPY schemas ./schemas",
-            )
-        ),
+        or _dockerfile(),
         "eva2/requirements-4d.lock": b"package==1 --hash=sha256:" + b"2" * 64,
         "eva2/pyproject.toml": b"[project]\nname='eva2-living-core'\n",
         "eva2/src/eva/__init__.py": b"",
@@ -99,6 +112,11 @@ def test_preparation_binds_one_commit_to_only_its_archive_inputs() -> None:
             "src/eva/__init__.py",
         ]
     assert prepared.base_image_digest == "sha256:" + "1" * 64
+    assert prepared.build_image_reference == "docker.io/library/python@sha256:" + "1" * 64
+    assert prepared.runtime_libraries_image_digest == "sha256:" + "2" * 64
+    assert prepared.runtime_libraries_image_reference == RUNTIME_LIBRARIES_REFERENCE
+    assert prepared.runtime_image_digest == "sha256:" + "3" * 64
+    assert prepared.runtime_image_reference == RUNTIME_REFERENCE
     assert prepared.source_archive_sha256 == hashlib.sha256(prepared.archive_bytes).hexdigest()
     assert prepared.source_date_epoch == 1787480000
     assert calls == [
@@ -158,19 +176,8 @@ def test_preparation_refuses_changed_copy_contract() -> None:
 
 
 def test_preparation_refuses_online_or_unsealed_package_install() -> None:
-    dockerfile = b"\n".join(
-        (
-            b"FROM docker.io/library/python@sha256:" + b"1" * 64,
-            b"COPY requirements-4d.lock ./requirements-4d.lock",
-            b"COPY wheelhouse ./wheelhouse",
-            b"COPY pyproject.toml ./pyproject.toml",
-            b"COPY src ./src",
-            b"COPY connector_sdk ./connector_sdk",
-            b"RUN python -m pip install --require-hashes -r requirements-4d.lock",
-            b"COPY alembic.ini ./alembic.ini",
-            b"COPY migrations ./migrations",
-            b"COPY schemas ./schemas",
-        )
+    dockerfile = _dockerfile(
+        install=b"RUN python -m pip install --require-hashes -r requirements-4d.lock"
     )
     run, _ = _runner(_archive(dockerfile=dockerfile))
 
@@ -206,23 +213,29 @@ def test_preparation_refuses_a_wheelhouse_from_the_source_archive() -> None:
 
 
 def test_preparation_refuses_an_unpinned_or_ambiguous_base_image() -> None:
-    dockerfile = b"\n".join(
-        (
-                b"FROM python:3.12",
-                b"COPY requirements-4d.lock ./requirements-4d.lock",
-                b"COPY wheelhouse ./wheelhouse",
-                b"COPY pyproject.toml ./pyproject.toml",
-                b"COPY src ./src",
-                b"COPY connector_sdk ./connector_sdk",
-                EXPECTED_OFFLINE_PIP_INSTALL.encode(),
-            b"COPY alembic.ini ./alembic.ini",
-            b"COPY migrations ./migrations",
-            b"COPY schemas ./schemas",
-        )
+    dockerfile = _dockerfile(build_from=b"FROM python:3.12 AS build")
+    run, _ = _runner(_archive(dockerfile=dockerfile))
+
+    with pytest.raises(RuntimeError, match="build image differs"):
+        prepare_candidate_build_inputs(COMMIT, runner=run)
+
+
+def test_preparation_refuses_an_unpinned_runtime_image() -> None:
+    dockerfile = _dockerfile().replace(
+        b"FROM " + RUNTIME_REFERENCE.encode(),
+        b"FROM gcr.io/distroless/cc-debian13:latest",
     )
     run, _ = _runner(_archive(dockerfile=dockerfile))
 
-    with pytest.raises(RuntimeError, match="exactly one Python base digest"):
+    with pytest.raises(RuntimeError, match="runtime image differs"):
+        prepare_candidate_build_inputs(COMMIT, runner=run)
+
+
+def test_preparation_refuses_an_extra_from_stage() -> None:
+    dockerfile = _dockerfile() + b"\nFROM scratch AS hidden"
+    run, _ = _runner(_archive(dockerfile=dockerfile))
+
+    with pytest.raises(RuntimeError, match="exactly three pinned image stages"):
         prepare_candidate_build_inputs(COMMIT, runner=run)
 
 

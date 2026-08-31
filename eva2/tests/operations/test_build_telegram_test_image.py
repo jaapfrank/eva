@@ -54,6 +54,15 @@ def _inputs(*, dockerfile: bytes, lock_sha256: str = EXPECTED_REQUIREMENTS_LOCK_
     return CandidateBuildInputs(
         archive_bytes=value,
         base_image_digest="sha256:" + "1" * 64,
+        build_image_reference="docker.io/library/python@sha256:" + "1" * 64,
+        runtime_libraries_image_digest="sha256:" + "2" * 64,
+        runtime_libraries_image_reference=(
+            "docker.io/library/python@sha256:" + "2" * 64
+        ),
+        runtime_image_digest="sha256:" + "3" * 64,
+        runtime_image_reference=(
+            "gcr.io/distroless/cc-debian13@sha256:" + "3" * 64
+        ),
         dockerfile_sha256="",
         requirements_lock_sha256=lock_sha256,
         source_archive_sha256="",
