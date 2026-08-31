@@ -103,9 +103,19 @@ test('Eva1-context en beide gesprekzoekroutes sluiten nieuwe én oude Eva2-regel
     chatId: 42, messageId: 105, sender: 'Jaap', role: 'user', kind: 'text',
     content: 'EVA1_ZICHTBAAR gesprek', meta: { dialogueRoute: 'eva1' },
   });
+  archiveTelegramMessage({
+    chatId: 42, messageId: 106, sender: 'Jaap', role: 'user', kind: 'text',
+    content: 'OUD_GEWOON_VERVOLG_DAT_EVA2_KREEG',
+  });
+  archiveTelegramMessage({
+    chatId: 42, messageId: 107, sender: 'Eva', role: 'assistant', kind: 'text',
+    content: 'oude Eva2-fout zonder zichtbaar label',
+    meta: { deliveryKey: 'eva2-canary-error:turn:telegram:42:106' },
+  });
 
   const recent = recentTelegramMessages({ chatId: 42, limit: 20, dialogueRoute: 'eva1' });
   assert.equal(recent.some((row) => row.content.includes('EVA2')), false);
+  assert.equal(recent.some((row) => row.content.includes('OUD_GEWOON_VERVOLG')), false);
   assert.equal(recent.some((row) => row.content.includes('EVA1_ZICHTBAAR')), true);
 
   const modelContext = __projectRouteTest.telegramConversationRows({

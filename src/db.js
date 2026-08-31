@@ -19,6 +19,7 @@ import {
 import { redactSecrets, redactSensitiveText } from './security/redaction.js';
 import {
   archivedTelegramDialogueRoute,
+  legacyEva2TelegramTurnKeys,
   telegramDialogueRoute,
 } from './telegramdialogue.js';
 import {
@@ -2617,8 +2618,9 @@ export function recentTelegramMessages({
     ORDER BY id DESC LIMIT ?`;
   params.push(queryLimit);
   const rows = db.prepare(sql).all(...params).reverse().map(parseTelegramMessage);
+  const legacyEva2TurnKeys = legacyEva2TelegramTurnKeys(rows);
   return (route
-    ? rows.filter((row) => archivedTelegramDialogueRoute(row) === route)
+    ? rows.filter((row) => archivedTelegramDialogueRoute(row, { legacyEva2TurnKeys }) === route)
     : rows).slice(-boundedLimit);
 }
 
@@ -2652,9 +2654,12 @@ export function searchTelegramMessages(query, {
   const route = telegramDialogueRoute(dialogueRoute);
   const candidates = db.prepare(`SELECT * FROM telegram_messages
     WHERE ${where.join(' AND ')}
-    ORDER BY id DESC LIMIT 5000`).all(...params).map(parseTelegramMessage)
-    .filter((row) => !route || archivedTelegramDialogueRoute(row) === route);
-  const scored = candidates.map((row) => {
+    ORDER BY id DESC LIMIT 5000`).all(...params).map(parseTelegramMessage);
+  const legacyEva2TurnKeys = legacyEva2TelegramTurnKeys(candidates);
+  const routedCandidates = candidates
+    .filter((row) => !route
+      || archivedTelegramDialogueRoute(row, { legacyEva2TurnKeys }) === route);
+  const scored = routedCandidates.map((row) => {
     const kindWords = {
       photo: 'foto afbeelding beeld plaatje',
       video: 'video filmpje beeld',
@@ -2782,11 +2787,14 @@ export function searchTelegramConversationOpportunity(searchSpec, { now = Date.n
   }
   const candidates = db.prepare(`SELECT * FROM telegram_messages
     WHERE ${where.join(' AND ')}
-    ORDER BY id DESC LIMIT 5000`).all(...params).map(parseTelegramMessage)
-    .filter((row) => archivedTelegramDialogueRoute(row) === 'eva1');
+    ORDER BY id DESC LIMIT 5000`).all(...params).map(parseTelegramMessage);
+  const legacyEva2TurnKeys = legacyEva2TelegramTurnKeys(candidates);
+  const routedCandidates = candidates.filter((row) => archivedTelegramDialogueRoute(
+    row, { legacyEva2TurnKeys },
+  ) === 'eva1');
   const boundedLimit = spec.limit;
-  const recencyRanks = new Map(candidates.map((row, index) => [Number(row.id), index + 1]));
-  const lexical = candidates.map((row) => {
+  const recencyRanks = new Map(routedCandidates.map((row, index) => [Number(row.id), index + 1]));
+  const lexical = routedCandidates.map((row) => {
     const kindWords = {
       photo: 'foto afbeelding beeld plaatje',
       video: 'video filmpje beeld',
@@ -2807,12 +2815,12 @@ export function searchTelegramConversationOpportunity(searchSpec, { now = Date.n
     const age = Number(now) - observed;
     return Number.isFinite(age) && age >= 0 && age <= TELEGRAM_RECENT_RESIDENT_MS;
   };
-  const openResident = candidates.filter((row) => (
+  const openResident = routedCandidates.filter((row) => (
     row.role === 'user'
     && TELEGRAM_OPEN_LOOP_STATUSES.has(String(row.processing_status || ''))
     && recentlyObserved(row)
   ));
-  const recentResident = candidates.filter((row) => {
+  const recentResident = routedCandidates.filter((row) => {
     if (row.role !== 'user' || TELEGRAM_OPEN_LOOP_STATUSES.has(String(row.processing_status || ''))) {
       return false;
     }
