@@ -5,7 +5,7 @@ secret-hardening wordt gepresenteerd.
 
 ## Binnen deze vertical gehard
 
-- `bootstrap/secrets.py`: één generieke, niet-blokkerende file-snapshot met
+- `adapters/credentials/runtime_files.py`: één generieke, niet-blokkerende file-snapshot met
   absolute-pathcontrole, `lstat`, `O_NOFOLLOW`, `O_NONBLOCK`, fd-identiteit,
   exacte owner, owner-readbit, nul group/other-bits, 64 KiB-limiet en een
   post-readvergelijking van device/inode/uid/mode/size/ctime.
@@ -17,7 +17,7 @@ secret-hardening wordt gepresenteerd.
 - AgentMail in de Living Core leest zijn API-key nu via dezelfde harde
   fileloader. De huidige Compose-set bevat echter nog geen complete
   AgentMail-secretmount; dat deploymentdeel blijft dus open.
-- `operations/telegram_ingress.py`: database-DSN, bot-token,
+- `bootstrap/telegram_ingress.py`: database-DSN, bot-token,
   principal-bindings en koppelsecret gaan nu elk door dezelfde harde fileloader. Het
   telegram-native Compose-profiel bindt alleen expliciete, read-only hostfiles
   met `create_host_path: false`; Docker Compose `secrets:file` wordt daar niet

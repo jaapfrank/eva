@@ -4,7 +4,7 @@ from eva.application.telegram_ingress import (
     TelegramPrincipalBinding,
     TelegramPrincipalBindings,
 )
-from eva.operations import telegram_ingress
+from eva.bootstrap import telegram_ingress
 
 
 def test_v2_binding_file_carries_exact_database_binding(

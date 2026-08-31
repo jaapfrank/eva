@@ -54,7 +54,7 @@ def test_worker_and_engine_release_bind_real_source_and_lock_bytes() -> None:
             "bootstrap/__init__.py",
             "bootstrap/delegated_work_provider.py",
             "bootstrap/delegated_work_service.py",
-            "bootstrap/secrets.py",
+            "adapters/credentials/runtime_files.py",
             "contracts/delegated_work.py",
             "operations/delegated_work_worker.py",
         )

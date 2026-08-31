@@ -191,11 +191,13 @@ gate-ID's, checkpoints en bewijsgrenzen staan.
   lage-latency audioworker of sandbox wanneer de V02-metingen aantonen dat de
   gekozen standaardcomponenten de p95-budgetten niet halen.
 - Git-baseline `35e2c0d…` bevat 51.928 productregels; een latere dirty
-  werkboomobservatie bevatte 53.428 niet-gegenereerde regels. Dat is niet
-  “klein”, maar ook geen pakket van honderdduizenden regels. PC00 zet daarom V1
-  hard op maximaal 75.000 handgeschreven productregels, maximaal twaalf directe
-  coredependencies en gemeten p95-reactiviteit. De commitgebonden checker en
-  eindmeting PC01-PC06 zijn nog open; zie
+  werkboomobservatie bevatte 53.428 niet-gegenereerde regels. Het aantal regels
+  blijft zichtbaar, maar is geen kwaliteitsgrens. PC00/PC01 eisen in plaats
+  daarvan exact eigenaarschap, doel, onderhoudsroute en bewijs per component,
+  plus een gesloten set directe coredependencies en gemeten p95-reactiviteit.
+  Onverklaarde groei, dode code en dubbele routes maken de poort rood; nuttige
+  omvang niet. De commitgebonden checker en eindmeting PC01-PC06 zijn nog open;
+  zie
   `design/product/performance-and-complexity-v1.md` en de exacte baseline in
   `evidence/product/performance-complexity-pc00-2026-08-25.json`.
 - De eerste residentperiode is na onafhankelijke review een shakedown geworden,

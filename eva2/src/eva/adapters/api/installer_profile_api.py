@@ -9,11 +9,11 @@ from typing import Callable, Mapping
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import JSONResponse
 
-from eva.operations.installer_profile_workflow import (
-    InstallerProfileInputError,
-    InstallerProfileStatus,
-    InstallerProfileWorkflow,
-    InstallerProfileWorkflowError,
+from eva.application.installer import (
+    InstallerProfilePort,
+    InstallerProfileStatusView,
+    InstallerUseCaseError,
+    InstallerUserInputError,
 )
 
 
@@ -120,7 +120,7 @@ INSTALLER_PROFILE_SCRIPT = r"""
 
 
 def _payload(
-    status: InstallerProfileStatus | None, *, enabled: bool
+    status: InstallerProfileStatusView | None, *, enabled: bool
 ) -> dict[str, object]:
     profile = None
     if status is not None and status.profile is not None:
@@ -148,23 +148,23 @@ def _payload(
 def register_installer_profile_routes(
     app: FastAPI,
     *,
-    workflow: InstallerProfileWorkflow | None,
+    workflow: InstallerProfilePort | None,
     enabled: bool,
     require_read: Callable[[Request], None],
     require_write: Callable[[Request], None],
     security_headers: Mapping[str, str],
 ) -> None:
-    def current_status() -> InstallerProfileStatus | None:
+    def current_status() -> InstallerProfileStatusView | None:
         if workflow is None:
             return None
         try:
             return workflow.status()
-        except InstallerProfileWorkflowError as exc:
+        except InstallerUseCaseError as exc:
             raise HTTPException(
                 status_code=503, detail="installer profile workflow unavailable"
             ) from exc
 
-    def writable() -> InstallerProfileWorkflow:
+    def writable() -> InstallerProfilePort:
         if workflow is None or not enabled:
             raise HTTPException(
                 status_code=409, detail="installer profile changes are not enabled"
@@ -191,11 +191,11 @@ def register_installer_profile_routes(
             raise HTTPException(status_code=422, detail="installer profile is invalid")
         try:
             transition = target.stage(**body)
-        except InstallerProfileInputError as exc:
+        except InstallerUserInputError as exc:
             raise HTTPException(
                 status_code=422, detail="installer profile is invalid"
             ) from exc
-        except InstallerProfileWorkflowError as exc:
+        except InstallerUseCaseError as exc:
             raise HTTPException(
                 status_code=409, detail="installer profile could not be staged"
             ) from exc
@@ -237,7 +237,7 @@ def register_installer_profile_routes(
             transition = target.confirm(
                 expected_profile_sha256=body.get("profile_sha256")
             )
-        except InstallerProfileWorkflowError as exc:
+        except InstallerUseCaseError as exc:
             raise HTTPException(
                 status_code=409, detail="installer profile could not be confirmed"
             ) from exc

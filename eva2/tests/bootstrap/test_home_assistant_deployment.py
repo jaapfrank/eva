@@ -49,7 +49,7 @@ def test_secret_boundary_inventory_keeps_unhardened_processes_as_blockers() -> N
         assert loose_reader in inventory
     for hardened_reader in (
         "operations/durable_goal_worker.py",
-        "operations/telegram_ingress.py",
+        "bootstrap/telegram_ingress.py",
     ):
         assert hardened_reader not in inventory.split(
             "## Niet door deze vertical gedekt en dus deploymentblocker", 1

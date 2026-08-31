@@ -40,7 +40,7 @@ from eva.operations.action_chain_read_dispatcher import (
 from eva.operations.action_chain_read_executor import (
     PostgresActionChainReadExecutor,
 )
-from eva.operations.action_chain_read_results import (
+from eva.application.action_chain_read_results import (
     project_action_chain_read_result,
 )
 

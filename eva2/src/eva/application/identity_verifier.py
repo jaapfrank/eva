@@ -8,9 +8,7 @@ import hashlib
 import hmac
 from pathlib import Path
 import re
-
-from cryptography.exceptions import InvalidSignature
-from cryptography.hazmat.primitives.asymmetric.ed25519 import Ed25519PublicKey
+from typing import Protocol
 
 from eva.contracts.canonical_json import canonical_json_bytes, require_canonical_bytes
 from eva.contracts.identity import IdentityPack
@@ -27,6 +25,14 @@ _TRUST_KEYS = {
     "public_key_sha256",
     "schema_version",
 }
+
+
+class IdentitySignatureVerifier(Protocol):
+    """Verify one detached identity signature without owning crypto details."""
+
+    def __call__(
+        self, *, public_key_bytes: bytes, signature: bytes, message: bytes
+    ) -> None: ...
 
 
 @dataclass(frozen=True, slots=True)
@@ -106,7 +112,12 @@ def load_default_identity_pack_trust_binding() -> IdentityPackTrustBinding:
     )
 
 
-def verify_identity_pack_bytes(raw: bytes, *, trust: IdentityPackTrustBinding) -> IdentityPack:
+def verify_identity_pack_bytes(
+    raw: bytes,
+    *,
+    trust: IdentityPackTrustBinding,
+    signature_verifier: IdentitySignatureVerifier,
+) -> IdentityPack:
     """Verify canonical bytes, source hash, trust binding and Ed25519 signature."""
 
     try:
@@ -135,10 +146,12 @@ def verify_identity_pack_bytes(raw: bytes, *, trust: IdentityPackTrustBinding) -
     signing_payload = dict(payload)
     signing_payload.pop("signature")
     try:
-        Ed25519PublicKey.from_public_bytes(trust.public_key_bytes).verify(
-            signature, canonical_json_bytes(signing_payload)
+        signature_verifier(
+            public_key_bytes=trust.public_key_bytes,
+            signature=signature,
+            message=canonical_json_bytes(signing_payload),
         )
-    except InvalidSignature as exc:
+    except ValueError as exc:
         raise ValueError("IdentityPack signature is invalid") from exc
     if pack.state != "current":
         raise ValueError("IdentityPack is not current")

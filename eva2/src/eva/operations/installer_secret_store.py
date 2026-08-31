@@ -16,6 +16,7 @@ from pathlib import Path
 import stat
 from typing import Callable, Literal
 
+from eva.application.installer import InstallerUseCaseError, InstallerUserInputError
 from eva.contracts.canonical_json import canonical_json_bytes, require_canonical_bytes
 from eva.operations.identity_pack_lifecycle import IdentityPackLifecycleError
 from eva.operations.installer_identity_storage import (
@@ -36,11 +37,11 @@ _MIN_SECRET_BYTES = 16
 _MAX_SECRET_BYTES = 8192
 
 
-class InstallerSecretStoreError(ValueError):
+class InstallerSecretStoreError(InstallerUseCaseError):
     """Raised when a private installer secret bundle cannot be trusted."""
 
 
-class InstallerSecretInputError(InstallerSecretStoreError):
+class InstallerSecretInputError(InstallerUserInputError, InstallerSecretStoreError):
     """Raised when a browser-supplied opaque secret is invalid."""
 
 

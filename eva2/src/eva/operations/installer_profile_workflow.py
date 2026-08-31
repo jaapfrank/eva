@@ -17,6 +17,7 @@ from typing import Callable, Literal
 import unicodedata
 from zoneinfo import ZoneInfo, ZoneInfoNotFoundError
 
+from eva.application.installer import InstallerUseCaseError, InstallerUserInputError
 from eva.contracts.canonical_json import canonical_json_bytes
 from eva.operations.installer_safety import (
     InstallerTwoPhaseJournal,
@@ -30,11 +31,11 @@ from eva.operations.installer_safety import (
 _LANGUAGE_RE = re.compile(r"[a-z]{2,3}(?:-[A-Z][a-z]{3})?(?:-(?:[A-Z]{2}|[0-9]{3}))?")
 
 
-class InstallerProfileWorkflowError(ValueError):
+class InstallerProfileWorkflowError(InstallerUseCaseError):
     """Raised when the private installer profile cannot be trusted."""
 
 
-class InstallerProfileInputError(InstallerProfileWorkflowError):
+class InstallerProfileInputError(InstallerUserInputError, InstallerProfileWorkflowError):
     """Raised when a human-supplied profile field is invalid."""
 
 

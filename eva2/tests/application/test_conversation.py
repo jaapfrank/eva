@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import pytest
 
+from eva.adapters.objects.identity_verifier import load_current_identity_pack
 from eva.application.conversation import (
     ConversationActionCall,
     ConversationActionReceipt,
@@ -13,7 +14,6 @@ from eva.application.conversation import (
     IdentityProfile,
     LivingConversation,
     MEMORY_SEARCH_ACTION,
-    load_current_identity_pack,
     stream_conversation_text,
 )
 from eva.application.memory import PresenceMemory, RecallCurrentFacts

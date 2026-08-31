@@ -5,7 +5,7 @@ from pathlib import Path
 
 import pytest
 
-from eva.application.conversation import load_current_identity_pack
+from eva.adapters.objects.identity_verifier import load_current_identity_pack
 from eva.application.identity_verifier import load_identity_pack_trust_binding
 from eva.application.soul_markdown import soul_markdown_to_draft
 from eva.contracts.canonical_json import canonical_sha256

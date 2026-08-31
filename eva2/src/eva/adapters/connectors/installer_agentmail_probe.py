@@ -8,7 +8,7 @@ import json
 import re
 from urllib.parse import quote, urlsplit
 
-from eva.operations.installer_provider_verification import (
+from eva.application.installer import (
     InstallerProviderProbeError,
     InstallerProviderProbeObservation,
 )

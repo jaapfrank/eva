@@ -36,11 +36,8 @@ from eva.contracts.canonical_json import canonical_sha256
 from eva.contracts.connector import ConnectorManifest
 from eva.contracts.evidence import EvidenceEnvelopeV2
 from eva.contracts.execution import ReadAttempt, ReadObservation
-from eva.operations.action_chain_read_dispatcher import ClaimedActionChainReadCall
-from eva.operations.action_chain_effect_readback_dispatcher import (
-    ClaimedActionChainEffectReadbackCall,
-)
-from eva.operations.action_chain_read_results import (
+from eva.application.action_chain_provider_claims import ActionChainReadClaim
+from eva.application.action_chain_read_results import (
     ProjectedActionChainReadResult,
     ProviderReadResult,
     project_action_chain_read_result,
@@ -114,7 +111,7 @@ class PostgresActionChainReadResultStore(PostgresActionChainResultStore):
 
     def record(
         self,
-        claim: ClaimedActionChainReadCall | ClaimedActionChainEffectReadbackCall,
+        claim: ActionChainReadClaim,
         *,
         result: ProviderReadResult,
         observed_at: datetime,

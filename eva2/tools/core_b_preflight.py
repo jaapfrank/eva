@@ -13,12 +13,12 @@ import subprocess
 from typing import NoReturn
 from uuid import UUID
 
-from eva.application.conversation import load_current_identity_pack
-from eva.application.identity_verifier import load_identity_pack_trust_binding
-from eva.bootstrap.secrets import (
+from eva.adapters.credentials.runtime_files import (
     MAX_RUNTIME_SECRET_BYTES,
     read_private_runtime_file_bytes,
 )
+from eva.adapters.objects.identity_verifier import load_current_identity_pack
+from eva.application.identity_verifier import load_identity_pack_trust_binding
 from eva.contracts.runtime_budget import (
     RuntimeResourceBudget,
     RuntimeResourceBudgetError,

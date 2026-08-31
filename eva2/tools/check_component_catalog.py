@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 from dataclasses import asdict, dataclass
+import hashlib
 import json
 from pathlib import Path, PurePosixPath
 import re
@@ -14,6 +15,7 @@ from typing import Any
 
 CONTRACT = "EvaComponentCatalog/v1"
 INVENTORY_CONTRACT = "EvaRepositoryInventory/v1"
+MANAGED_TOOL_REGISTRY_CONTRACT = "EvaManagedEvidenceToolRegistry/v1"
 MAX_JSON_BYTES = 4 * 1024 * 1024
 SCOPE_PREFIXES = (
     "eva2/src/eva/",
@@ -49,11 +51,25 @@ TOP_LEVEL_FIELDS = {
     "components",
     "contract",
     "inventory",
+    "managedToolRegistry",
     "schemaVersion",
     "scopePrefixes",
     "status",
 }
 INVENTORY_FIELDS = {"contract", "path"}
+MANAGED_TOOL_BINDING_FIELDS = {"contract", "path", "requiredTools"}
+MANAGED_TOOL_REGISTRY_FIELDS = {"contract", "schemaVersion", "status", "tools"}
+MANAGED_TOOL_FIELDS = {
+    "invocationPolicy",
+    "lifecycleStatus",
+    "owner",
+    "path",
+    "purpose",
+    "riskClass",
+    "sideEffects",
+    "sourceSha256",
+    "verification",
+}
 COMPONENT_FIELDS = {
     "blockers",
     "disposition",
@@ -73,6 +89,14 @@ REPLACEMENT_FIELDS = {"reason", "status", "target"}
 VERIFICATION_FIELDS = {"evidencePaths", "testPaths"}
 COMPONENT_ID = re.compile(r"[a-z][a-z0-9]*(?:-[a-z0-9]+)*")
 DATE = re.compile(r"20[0-9]{2}-[0-9]{2}-[0-9]{2}")
+SHA256 = re.compile(r"[0-9a-f]{64}")
+MANAGED_TOOL_RISK_POLICIES = {
+    "repository_read_only": "ci_or_read_only_operator",
+    "live_read_only": "explicit_read_only_operator",
+    "isolated_development_write": "isolated_disposable_only",
+    "external_migration_write": "quarantined_explicit_operator_only",
+}
+MANAGED_TOOL_LIFECYCLE_STATUSES = {"managed", "quarantined"}
 
 
 @dataclass(frozen=True, slots=True, order=True)
@@ -127,6 +151,238 @@ def _nullable_string(value: object) -> bool:
     return value is None or _nonempty_string(value)
 
 
+def _sha256(path: Path) -> str:
+    digest = hashlib.sha256()
+    with path.open("rb") as handle:
+        for chunk in iter(lambda: handle.read(131_072), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
+
+
+def _repository_file(root: Path, value: object, *, prefix: str) -> Path | None:
+    if not _nonempty_string(value) or "\\" in value:
+        return None
+    assert isinstance(value, str)
+    relative = PurePosixPath(value)
+    if (
+        relative.is_absolute()
+        or relative.as_posix() != value
+        or any(part in {"", ".", ".."} for part in relative.parts)
+        or not value.startswith(prefix)
+    ):
+        return None
+    path = root.joinpath(*relative.parts)
+    try:
+        metadata = path.lstat()
+        resolved = path.resolve(strict=True)
+    except OSError:
+        return None
+    if (
+        resolved != path
+        or not resolved.is_relative_to(root)
+        or path.is_symlink()
+        or not stat.S_ISREG(metadata.st_mode)
+    ):
+        return None
+    return path
+
+
+def _check_managed_tool_registry(
+    root: Path,
+    binding: object,
+    registry: dict[str, Any],
+    violations: list[Violation],
+) -> None:
+    required_tools: list[str] = []
+    if _closed_fields(
+        binding,
+        MANAGED_TOOL_BINDING_FIELDS,
+        code="managed_tool_binding_fields",
+        path="$.managedToolRegistry",
+        violations=violations,
+    ):
+        assert isinstance(binding, dict)
+        if binding["contract"] != MANAGED_TOOL_REGISTRY_CONTRACT:
+            violations.append(
+                Violation(
+                    "managed_tool_binding_contract",
+                    "$.managedToolRegistry.contract",
+                    "invalid",
+                )
+            )
+        if binding["path"] != (
+            "eva2/design/architecture/evidence-tool-registry-v1.json"
+        ):
+            violations.append(
+                Violation(
+                    "managed_tool_binding_path",
+                    "$.managedToolRegistry.path",
+                    "invalid",
+                )
+            )
+        raw_required_tools = binding["requiredTools"]
+        if not _string_list(raw_required_tools, allow_empty=False):
+            violations.append(
+                Violation(
+                    "managed_tool_required_paths",
+                    "$.managedToolRegistry.requiredTools",
+                    "invalid",
+                )
+            )
+        else:
+            required_tools = list(raw_required_tools)
+            for tool_path in required_tools:
+                if _repository_file(root, tool_path, prefix="eva2/tools/") is None:
+                    violations.append(
+                        Violation(
+                            "managed_tool_required_path",
+                            "$.managedToolRegistry.requiredTools",
+                            tool_path,
+                        )
+                    )
+
+    if not _closed_fields(
+        registry,
+        MANAGED_TOOL_REGISTRY_FIELDS,
+        code="managed_tool_registry_fields",
+        path="toolRegistry",
+        violations=violations,
+    ):
+        return
+    if registry["contract"] != MANAGED_TOOL_REGISTRY_CONTRACT:
+        violations.append(
+            Violation(
+                "managed_tool_registry_contract", "toolRegistry.contract", "invalid"
+            )
+        )
+    if registry["schemaVersion"] != 1:
+        violations.append(
+            Violation(
+                "managed_tool_registry_schema", "toolRegistry.schemaVersion", "invalid"
+            )
+        )
+    if registry["status"] != "implemented":
+        violations.append(
+            Violation("managed_tool_registry_status", "toolRegistry.status", "invalid")
+        )
+    raw_tools = registry["tools"]
+    if not isinstance(raw_tools, list) or not raw_tools:
+        violations.append(
+            Violation("managed_tools", "toolRegistry.tools", "must be non-empty")
+        )
+        return
+
+    registered_paths: list[str] = []
+    for index, raw_tool in enumerate(raw_tools):
+        location = f"toolRegistry.tools[{index}]"
+        if not _closed_fields(
+            raw_tool,
+            MANAGED_TOOL_FIELDS,
+            code="managed_tool_fields",
+            path=location,
+            violations=violations,
+        ):
+            continue
+        assert isinstance(raw_tool, dict)
+        tool_path = raw_tool["path"]
+        path = _repository_file(root, tool_path, prefix="eva2/tools/")
+        if path is None:
+            violations.append(Violation("managed_tool_path", location, str(tool_path)))
+        else:
+            assert isinstance(tool_path, str)
+            registered_paths.append(tool_path)
+            source_sha256 = raw_tool["sourceSha256"]
+            if (
+                not isinstance(source_sha256, str)
+                or SHA256.fullmatch(source_sha256) is None
+                or _sha256(path) != source_sha256
+            ):
+                violations.append(
+                    Violation("managed_tool_hash", tool_path, "source hash differs")
+                )
+        for field in ("owner", "purpose"):
+            if not _nonempty_string(raw_tool[field]):
+                violations.append(
+                    Violation("managed_tool_text", f"{location}.{field}", "invalid")
+                )
+        if not _string_list(raw_tool["sideEffects"], allow_empty=False):
+            violations.append(
+                Violation(
+                    "managed_tool_side_effects",
+                    f"{location}.sideEffects",
+                    "invalid",
+                )
+            )
+        risk = raw_tool["riskClass"]
+        expected_policy = MANAGED_TOOL_RISK_POLICIES.get(risk)
+        if expected_policy is None or raw_tool["invocationPolicy"] != expected_policy:
+            violations.append(
+                Violation("managed_tool_risk_policy", location, "risk/policy mismatch")
+            )
+        lifecycle = raw_tool["lifecycleStatus"]
+        if lifecycle not in MANAGED_TOOL_LIFECYCLE_STATUSES:
+            violations.append(Violation("managed_tool_lifecycle", location, "invalid"))
+        if risk == "external_migration_write" and lifecycle != "quarantined":
+            violations.append(
+                Violation(
+                    "managed_tool_quarantine",
+                    location,
+                    "external migration write must remain quarantined",
+                )
+            )
+
+        verification = raw_tool["verification"]
+        if _closed_fields(
+            verification,
+            VERIFICATION_FIELDS,
+            code="managed_tool_verification_fields",
+            path=f"{location}.verification",
+            violations=violations,
+        ):
+            assert isinstance(verification, dict)
+            test_paths = verification["testPaths"]
+            evidence_paths = verification["evidencePaths"]
+            if not _string_list(test_paths, allow_empty=False):
+                violations.append(
+                    Violation(
+                        "managed_tool_tests",
+                        f"{location}.verification.testPaths",
+                        "invalid",
+                    )
+                )
+            else:
+                for test_path in test_paths:
+                    if _repository_file(root, test_path, prefix="eva2/tests/") is None:
+                        violations.append(
+                            Violation(
+                                "managed_tool_test_path", str(tool_path), test_path
+                            )
+                        )
+            if not _string_list(evidence_paths, allow_empty=True):
+                violations.append(
+                    Violation(
+                        "managed_tool_evidence",
+                        f"{location}.verification.evidencePaths",
+                        "invalid",
+                    )
+                )
+
+    if len(registered_paths) != len(set(registered_paths)):
+        violations.append(
+            Violation("managed_tool_duplicate", "toolRegistry.tools", "duplicate path")
+        )
+    missing = sorted(set(required_tools) - set(registered_paths))
+    extra = sorted(set(registered_paths) - set(required_tools))
+    if missing or extra:
+        violations.append(
+            Violation(
+                "managed_tool_coverage",
+                "toolRegistry.tools",
+                f"missing={missing!r}; extra={extra!r}",
+            )
+        )
+
+
 def _valid_owner_path(value: object) -> bool:
     if not _nonempty_string(value) or "\\" in value:
         return False
@@ -164,6 +420,7 @@ def check(
     root: Path,
     catalog_path: Path | None = None,
     inventory_path: Path | None = None,
+    tool_registry_path: Path | None = None,
 ) -> list[Violation]:
     root = root.resolve()
     catalog_path = catalog_path or (
@@ -172,8 +429,12 @@ def check(
     inventory_path = inventory_path or (
         root / "docs/eva-repository-inventory.generated.json"
     )
+    tool_registry_path = tool_registry_path or (
+        root / "eva2/design/architecture/evidence-tool-registry-v1.json"
+    )
     catalog = _load_object(catalog_path, label="component catalog")
     inventory = _load_object(inventory_path, label="repository inventory")
+    tool_registry = _load_object(tool_registry_path, label="managed tool registry")
     violations: list[Violation] = []
 
     _closed_fields(
@@ -195,6 +456,13 @@ def check(
         violations.append(
             Violation("catalog_scope", "$.scopePrefixes", "must equal the closed scope")
         )
+
+    _check_managed_tool_registry(
+        root,
+        catalog.get("managedToolRegistry"),
+        tool_registry,
+        violations,
+    )
 
     inventory_binding = catalog.get("inventory")
     if _closed_fields(
@@ -505,8 +773,14 @@ def main() -> int:
     )
     parser.add_argument("--catalog", type=Path)
     parser.add_argument("--inventory", type=Path)
+    parser.add_argument("--tool-registry", type=Path)
     arguments = parser.parse_args()
-    violations = check(arguments.root, arguments.catalog, arguments.inventory)
+    violations = check(
+        arguments.root,
+        arguments.catalog,
+        arguments.inventory,
+        arguments.tool_registry,
+    )
     result = {
         "contract": "EvaComponentCatalogCheck/v1",
         "ok": not violations,

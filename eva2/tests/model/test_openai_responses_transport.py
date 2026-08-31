@@ -19,6 +19,7 @@ pytest.importorskip("openai", reason="DF02a candidate dependency is not in produ
 
 import eva.bootstrap  # noqa: F401  # Load root before its model submodule.
 import eva.adapters.model.conversation as conversation_module
+from eva.adapters.objects.identity_verifier import load_current_identity_pack
 from eva.adapters.model.conversation import (
     CodexConversationModel,
     ConversationModelError,
@@ -34,7 +35,6 @@ from eva.application.conversation import (
     ConversationModelUsage,
     ConversationTurn,
     IdentityProfile,
-    load_current_identity_pack,
     stream_conversation_text,
 )
 from eva.application.memory import PresenceMemory

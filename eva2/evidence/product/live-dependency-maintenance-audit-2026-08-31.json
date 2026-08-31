@@ -1,0 +1,82 @@
+{
+  "contract": "Eva2LiveDependencyMaintenanceAudit/v1",
+  "issuedAt": "2026-08-31T15:10:00+02:00",
+  "status": "passed_inventory_with_explicit_holds",
+  "scope": {
+    "liveRuntimeDirectDependencies": 11,
+    "runtimeSidecars": 1,
+    "candidateAndBuildTools": 9,
+    "productCodeChanged": false,
+    "dependencyLocksChanged": false,
+    "liveStateChanged": false
+  },
+  "sourceBindings": {
+    "componentWatchPath": "component-watch.json",
+    "componentWatchSha256": "de55bc8f473d7158d67952829a2762d4ae674c94ad1927e0f6a8edf0150b2335",
+    "liveRuntimeLockPath": "eva2/requirements-4d.lock",
+    "liveRuntimeLockSha256": "ce92ff9385c0b708ea0596b4cbfdfe5473379a744d1eb3dc6c1080959d17334f",
+    "pydanticMcpCandidateLockPath": "eva2/experiments/pydantic-mcp-discovery-v1/requirements.lock",
+    "pydanticMcpCandidateLockSha256": "86d65a0717cea46652d48fa4981dbccf392231938ee6ae55c3eb9e521392cef2",
+    "pydanticMcpClientLockPath": "eva2/experiments/pydantic-mcp-discovery-v1/client-requirements.lock",
+    "pydanticMcpClientLockSha256": "b72c670c4c119232c5c3c82396e8db39275b605b793530659c7fc396f316a151",
+    "harnessCandidateLockPath": "eva2/experiments/harness-subagents-v1/requirements.lock",
+    "harnessCandidateLockSha256": "f083fb1af5811aee9c866c957387e4638b5a5b43fa72efa888975b00f604a00d",
+    "wyomingCandidateLockPath": "eva2/experiments/wyoming-local-voice-v1/requirements.lock",
+    "wyomingCandidateLockSha256": "1547d30b9eb441e4027aaf91663ce668385e6eec58f64648990e37422bcda97b",
+    "gateToolchainLockPath": "eva2/release/gate-toolchain.requirements.lock",
+    "gateToolchainLockSha256": "c49a78134f19175106d1f4e956583c47532293446454ceeeeed8cc512b83dd5f"
+  },
+  "directRuntimeDependencies": [
+    {"name": "alembic", "responsibility": "database schema migrations", "liveVersion": "1.19.1", "currentUpstream": "1.19.1", "currentTag": "rel_1_19_1", "posture": "current_observe", "upgradeBatch": null},
+    {"name": "cryptography", "responsibility": "cryptographic primitives", "liveVersion": "50.0.1", "currentUpstream": "50.0.1", "currentTag": "50.0.1", "posture": "current_observe", "upgradeBatch": null},
+    {"name": "fastapi", "responsibility": "HTTP API framework", "liveVersion": "0.141.1", "currentUpstream": "0.141.1", "currentTag": "0.141.1", "posture": "current_observe", "upgradeBatch": null},
+    {"name": "openai", "responsibility": "model provider transport", "liveVersion": "3.6.0", "currentUpstream": "3.6.0", "currentTag": "v3.6.0", "posture": "current_observe", "upgradeBatch": null},
+    {"name": "psycopg", "responsibility": "PostgreSQL driver", "liveVersion": "3.3.4", "currentUpstream": "3.3.4", "currentTag": "3.3.4", "posture": "current_observe", "upgradeBatch": null},
+    {"name": "pynacl", "responsibility": "Ed25519 compatibility and signatures", "liveVersion": "1.6.2", "currentUpstream": "1.6.2", "currentTag": "1.6.2", "posture": "current_observe", "upgradeBatch": null},
+    {"name": "pydantic", "responsibility": "runtime contract validation", "liveVersion": "2.12.5", "currentUpstream": "2.13.5", "currentTag": "v2.13.5", "posture": "hold_isolated_upgrade_required", "upgradeBatch": "runtime-validation-pydantic"},
+    {"name": "sqlalchemy", "responsibility": "database toolkit and ORM", "liveVersion": "2.0.52", "currentUpstream": "2.0.52", "currentTag": "rel_2_0_52", "posture": "current_observe", "upgradeBatch": null},
+    {"name": "uvicorn", "responsibility": "ASGI server", "liveVersion": "0.41.0", "currentUpstream": "0.52.4", "currentTag": "0.52.4", "posture": "hold_transport_batch_required", "upgradeBatch": "runtime-asgi-transport"},
+    {"name": "websockets", "responsibility": "WebSocket transport", "liveVersion": "17.0.1", "currentUpstream": "17.1", "currentTag": "17.1", "posture": "hold_transport_batch_required", "upgradeBatch": "runtime-asgi-transport"},
+    {"name": "setuptools", "responsibility": "runtime package metadata compatibility", "liveVersion": "84.0.0", "currentUpstream": "84.0.0", "currentTag": "v84.0.0", "posture": "current_observe", "upgradeBatch": null}
+  ],
+  "runtimeSidecars": [
+    {"name": "hindsight", "responsibility": "replaceable long-term-memory sidecar", "liveVersion": "0.9.1", "currentUpstream": "0.9.2", "currentTag": "v0.9.2", "posture": "hold_sidecar_data_copy_and_rollback_required", "upgradeBatch": "hindsight-sidecar"}
+  ],
+  "candidateAndBuildTooling": [
+    {"name": "pydantic-ai-slim", "repository": "pydantic/pydantic-ai", "usedVersion": "2.32.1", "currentUpstream": "2.36.0", "currentTag": "v2.36.0", "classification": "agent_runtime_candidate", "posture": "hold_replacement_only"},
+    {"name": "mcp", "repository": "modelcontextprotocol/python-sdk", "usedVersion": "1.29.1", "currentUpstream": "2.1.1", "currentTag": "v2.1.1", "classification": "protocol_sdk_candidate", "posture": "hold_major_and_overlap"},
+    {"name": "fastmcp-slim", "repository": "PrefectHQ/fastmcp", "usedVersion": "3.4.7", "currentUpstream": "3.4.7", "currentTag": "v3.4.7", "classification": "mcp_server_framework_candidate", "posture": "hold_not_product_runtime"},
+    {"name": "pydantic-ai-harness", "repository": "pydantic/pydantic-ai-harness", "usedVersion": "0.25.0", "currentUpstream": "0.27.0", "currentTag": "v0.27.0", "classification": "subagent_candidate", "posture": "hold_with_agent_stack"},
+    {"name": "wyoming", "repository": "rhasspy/wyoming", "usedVersion": "1.10.0", "currentUpstream": "unverified", "currentTag": null, "classification": "voice_protocol_candidate", "posture": "hold_until_official_release_identity_and_voice_bakeoff"},
+    {"name": "pyinstaller", "repository": "pyinstaller/pyinstaller", "usedVersion": "6.20.0", "currentUpstream": "6.20.0", "currentTag": "v6.20.0", "classification": "installer_packaging_candidate", "posture": "candidate_only"},
+    {"name": "trivy", "repository": "aquasecurity/trivy", "usedVersion": "0.74.0", "usedPin": "aquasec/trivy@sha256:62b1e65e8869bc4b4c6aa4fa2b21595256c7c2f6018a9d9ad61caf87187c1969", "currentUpstream": "0.74.0", "currentTag": "v0.74.0", "classification": "security_scanner", "posture": "current_digest_pinned"},
+    {"name": "syft", "repository": "anchore/syft", "usedVersion": "digest-only", "usedPin": "anchore/syft@sha256:bed2c55fa33e08660f992154ca10234f1948bfc66729aa7da938dcfdf30b7d18", "currentUpstream": "1.51.0", "currentTag": "v1.51.0", "classification": "sbom_generator", "posture": "hold_until_digest_to_release_identity_is_attested"},
+    {"name": "cosign", "repository": "sigstore/cosign", "usedVersion": null, "usedPin": null, "currentUpstream": "3.1.2", "currentTag": "v3.1.2", "classification": "artifact_signing_candidate", "posture": "hold_until_binary_or_image_is_reproducibly_pinned"}
+  ],
+  "baseImages": [
+    {"role": "core-runtime-libraries", "usedPin": "python@sha256:09f7da3bc104798d0afb40bc08d23ab2da20a76130cec1f2ef170848f5d85217", "currentUpstream": "unverified", "posture": "digest_pinned_refresh_requires_rebuild_scan_and_ab"},
+    {"role": "core-final-runtime", "usedPin": "gcr.io/distroless/cc-debian13@sha256:9b615fff20e1a4fad29c2b30562580b212c7dd5e2225236735cca0070ed11c78", "currentUpstream": "unverified", "posture": "digest_pinned_refresh_requires_rebuild_scan_and_ab"},
+    {"role": "delegated-worker-builder", "usedPin": "docker.io/library/python@sha256:a116514e19457bcb7af7efe9c3dd0b9b71e85b317694e7882a1c52aa15a78134", "currentUpstream": "unverified", "posture": "digest_pinned_refresh_requires_offline_wheelhouse_rebuild"},
+    {"role": "delegated-worker-runtime", "usedPin": "cgr.dev/chainguard/python@sha256:ee37f5e4fb445732409626797dccb6f2a6337872def2bab48729ee61b335fa77", "currentUpstream": "unverified", "posture": "digest_pinned_refresh_requires_processkill_and_scan_regression"}
+  ],
+  "safeUpgradeBatches": [
+    {"id": "runtime-validation-pydantic", "dependencies": ["pydantic"], "targetVersions": ["2.13.5"], "status": "hold", "promotionRequirements": ["new exact hashlock and wheelhouse", "contract and schema regression", "model and provider regression", "0 high and 0 critical image scan", "data-copy A/B and rollback"]},
+    {"id": "runtime-asgi-transport", "dependencies": ["uvicorn", "websockets"], "targetVersions": ["0.52.4", "17.1"], "status": "hold", "promotionRequirements": ["new exact hashlock and wheelhouse", "streaming and disconnect regression", "200-turn latency and provider-stall regression", "0 high and 0 critical image scan", "A/B and rollback"]},
+    {"id": "hindsight-sidecar", "dependencies": ["hindsight"], "targetVersions": ["0.9.2"], "status": "hold", "promotionRequirements": ["immutable image and SBOM", "memory database copy", "cross-person isolation", "joint restart recall", "A/B and rollback"]},
+    {"id": "agent-stack-replacement", "dependencies": ["pydantic-ai-slim", "mcp", "fastmcp-slim", "pydantic-ai-harness"], "targetVersions": ["2.36.0", "2.1.1", "3.4.7", "0.27.0"], "status": "hold", "promotionRequirements": ["one responsibility owner per capability", "no second HTTP stack without a measured reason", "old model and MCP path deleted in the same promotion", "equal-condition behavior and cost regression", "A/B and rollback"]},
+    {"id": "build-security-toolchain", "dependencies": ["pyinstaller", "trivy", "syft", "cosign", "base images"], "targetVersions": ["6.20.0", "0.74.0", "1.51.0", "3.1.2"], "status": "partially_pinned", "promotionRequirements": ["every binary or image bound to version and digest", "source and provenance recorded", "tool self-check", "reproducible release receipt"]}
+  ],
+  "overlapHolds": [
+    {"id": "pydantic-mcp-overlay", "status": "hold", "reason": "The current Pydantic AI and MCP experiment adds 46 distributions and another HTTP dependency family while the existing model and MCP routes still remain."},
+    {"id": "mcp-major-split", "status": "hold", "reason": "The experiment uses MCP 1.29.1 while upstream stable is 2.1.1; a major transition may not be hidden inside another runtime upgrade."},
+    {"id": "harness-version-drift", "status": "hold", "reason": "Harness 0.25.0 was tested, but 0.27.0 is current and its 0.x policy permits breaking minor changes; it must move only with its agent stack."},
+    {"id": "unattested-build-tool-identities", "status": "hold", "reason": "Syft is digest-only, Cosign has no repository pin, and base-image current tags are unverified; those identities must close before a release toolchain can be called complete."}
+  ],
+  "nonClaims": [
+    "No package or image upgrade was performed.",
+    "A latest upstream version is not automatically the best version for Eva.",
+    "The Pydantic AI and MCP candidate is not approved for product promotion.",
+    "Home Assistant is not a core dependency; it remains one replaceable external tool provider.",
+    "This audit does not prove that every transitive dependency is current or necessary."
+  ]
+}

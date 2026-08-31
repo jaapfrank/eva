@@ -9,21 +9,14 @@ from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import JSONResponse
 
 from eva.adapters.api.installer_request_json import read_small_json_request
-from eva.operations.installer_capability_workflow import (
-    InstallerCapabilityWorkflow,
-    InstallerCapabilityWorkflowError,
-)
-from eva.operations.installer_secret_store import (
-    SECRET_SLOTS,
-    InstallerSecretInputError,
-    InstallerSecretSlotStatus,
-    InstallerSecretStore,
-    InstallerSecretStoreError,
-)
-from eva.operations.installer_secret_lifecycle import (
-    InstallerSecretLifecycle,
-    InstallerSecretLifecycleError,
-    InstallerSecretLifecycleResult,
+from eva.application.installer import (
+    InstallerCapabilityPort,
+    InstallerSecretLifecyclePort,
+    InstallerSecretLifecycleResultView,
+    InstallerSecretSlotView,
+    InstallerSecretStorePort,
+    InstallerUseCaseError,
+    InstallerUserInputError,
 )
 
 
@@ -34,6 +27,7 @@ _LABELS = {
     "home_assistant": "Home Assistant",
     "email": "E-mail",
 }
+_SECRET_SLOTS = tuple(_LABELS)
 
 INSTALLER_SECRET_SECTION = """<section><h2>Eenmalige toegang invoeren</h2><p>Alleen een eerder gekozen koppeling verschijnt hier. De waarde wordt niet teruggestuurd en niet in de browser bewaard.</p><label>Koppeling <select id="secret-slot" disabled></select></label><label>Toegangscode <input id="secret-value" type="password" minlength="16" maxlength="8192" autocomplete="new-password" spellcheck="false" disabled></label><button type="button" id="secret-store" disabled>Veilig bewaren</button><div id="secret-list"><p>De secretstatus wordt veilig geladen…</p></div><p id="secret-result" role="status"></p></section>"""
 
@@ -163,10 +157,10 @@ async def _small_json(request: Request) -> object:
 
 
 def _payload(
-    slots: tuple[InstallerSecretSlotStatus, ...] | None,
+    slots: tuple[InstallerSecretSlotView, ...] | None,
     *,
-    capability_workflow: InstallerCapabilityWorkflow | None,
-    lifecycle: InstallerSecretLifecycle | None,
+    capability_workflow: InstallerCapabilityPort | None,
+    lifecycle: InstallerSecretLifecyclePort | None,
     enabled: bool,
 ) -> dict[str, object]:
     capability_states: dict[str, str] = {}
@@ -175,13 +169,13 @@ def _payload(
             capability_states = {
                 item.step_id: item.state for item in capability_workflow.status().steps
             }
-        except InstallerCapabilityWorkflowError as exc:
+        except InstallerUseCaseError as exc:
             raise HTTPException(
                 status_code=503, detail="installer capability status unavailable"
             ) from exc
     by_id = {item.slot_id: item for item in slots or ()}
     rows = []
-    for slot_id in SECRET_SLOTS:
+    for slot_id in _SECRET_SLOTS:
         item = by_id.get(slot_id)
         state = item.state if item is not None else "unavailable"
         rows.append(
@@ -210,22 +204,22 @@ def _payload(
 def register_installer_secret_routes(
     app: FastAPI,
     *,
-    store: InstallerSecretStore | None,
-    capability_workflow: InstallerCapabilityWorkflow | None,
-    lifecycle: InstallerSecretLifecycle | None,
+    store: InstallerSecretStorePort | None,
+    capability_workflow: InstallerCapabilityPort | None,
+    lifecycle: InstallerSecretLifecyclePort | None,
     enabled: bool,
     require_read: Callable[[Request], None],
     require_write: Callable[[Request], None],
     security_headers: Mapping[str, str],
 ) -> None:
-    locks = {slot_id: Lock() for slot_id in SECRET_SLOTS}
+    locks = {slot_id: Lock() for slot_id in _SECRET_SLOTS}
 
-    def statuses() -> tuple[InstallerSecretSlotStatus, ...] | None:
+    def statuses() -> tuple[InstallerSecretSlotView, ...] | None:
         if store is None:
             return None
         try:
             return store.status()
-        except InstallerSecretStoreError as exc:
+        except InstallerUseCaseError as exc:
             raise HTTPException(
                 status_code=503, detail="installer secret status unavailable"
             ) from exc
@@ -250,13 +244,13 @@ def register_installer_secret_routes(
             raise HTTPException(
                 status_code=409, detail="installer secret intake is not enabled"
             )
-        if slot_id not in SECRET_SLOTS:
+        if slot_id not in _SECRET_SLOTS:
             raise HTTPException(
                 status_code=422, detail="installer secret slot is invalid"
             )
         try:
             capability = capability_workflow.status().step(slot_id)
-        except InstallerCapabilityWorkflowError as exc:
+        except InstallerUseCaseError as exc:
             raise HTTPException(
                 status_code=503, detail="installer capability status unavailable"
             ) from exc
@@ -269,11 +263,11 @@ def register_installer_secret_routes(
             raise HTTPException(status_code=422, detail="secret request is invalid")
         try:
             retained = store.store(slot_id=slot_id, secret=body.get("secret"))
-        except InstallerSecretInputError as exc:
+        except InstallerUserInputError as exc:
             raise HTTPException(
                 status_code=422, detail="secret value is invalid"
             ) from exc
-        except InstallerSecretStoreError as exc:
+        except InstallerUseCaseError as exc:
             raise HTTPException(
                 status_code=409, detail="secret could not be stored"
             ) from exc
@@ -290,14 +284,14 @@ def register_installer_secret_routes(
             headers=security_headers,
         )
 
-    def lifecycle_target(slot_id: str) -> InstallerSecretLifecycle:
-        if lifecycle is None or not enabled or slot_id not in SECRET_SLOTS:
+    def lifecycle_target(slot_id: str) -> InstallerSecretLifecyclePort:
+        if lifecycle is None or not enabled or slot_id not in _SECRET_SLOTS:
             raise HTTPException(
                 status_code=409, detail="installer secret lifecycle is not enabled"
             )
         return lifecycle
 
-    def lifecycle_response(result: InstallerSecretLifecycleResult) -> JSONResponse:
+    def lifecycle_response(result: InstallerSecretLifecycleResultView) -> JSONResponse:
         return JSONResponse(
             {
                 "capability_head_sha256": result.capability_head_sha256,
@@ -336,7 +330,7 @@ def register_installer_secret_routes(
         try:
             try:
                 result = target.rotate(slot_id=slot_id, secret=body.get("secret"))
-            except InstallerSecretLifecycleError as exc:
+            except InstallerUseCaseError as exc:
                 raise HTTPException(
                     status_code=409, detail="secret rotation could not be completed"
                 ) from exc
@@ -361,7 +355,7 @@ def register_installer_secret_routes(
         try:
             try:
                 result = target.remove(slot_id=slot_id)
-            except InstallerSecretLifecycleError as exc:
+            except InstallerUseCaseError as exc:
                 raise HTTPException(
                     status_code=409, detail="secret removal could not be completed"
                 ) from exc
@@ -386,7 +380,7 @@ def register_installer_secret_routes(
         try:
             try:
                 result = target.recover(slot_id=slot_id)
-            except InstallerSecretLifecycleError as exc:
+            except InstallerUseCaseError as exc:
                 raise HTTPException(
                     status_code=409, detail="secret recovery could not be completed"
                 ) from exc

@@ -28,7 +28,7 @@ from eva.bootstrap.delegated_work_service import (
     run_delegated_work_service,
     serve_delegated_work_service,
 )
-from eva.bootstrap.secrets import read_runtime_secret_file
+from eva.adapters.credentials.runtime_files import read_runtime_secret_file
 from eva.operations.delegated_work_worker import DelegatedWorkWorker
 from pydantic_ai.messages import ModelMessage, ModelResponse, TextPart
 from pydantic_ai.models import ModelRequestParameters

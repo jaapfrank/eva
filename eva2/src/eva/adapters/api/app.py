@@ -6,7 +6,7 @@ from contextlib import asynccontextmanager
 from dataclasses import dataclass
 from datetime import UTC, datetime
 import hashlib
-from typing import Any, Protocol
+from typing import Any, Callable, Protocol
 from uuid import UUID
 
 from fastapi import BackgroundTasks, FastAPI, HTTPException, Request, Response
@@ -27,7 +27,6 @@ from eva.application.conversation import (
     ConversationTurn,
     GroundedReply,
     RecentConversationMessage,
-    load_current_identity_pack,
 )
 from eva.application.identity_drafts import identity_presentation_diff
 from eva.application.soul_markdown import (
@@ -36,7 +35,7 @@ from eva.application.soul_markdown import (
     soul_markdown_to_draft,
 )
 from eva.contracts.canonical_json import canonical_sha256
-from eva.contracts.identity import IdentityPackDraft
+from eva.contracts.identity import IdentityPack, IdentityPackDraft
 from eva.application.memory import (
     ConversationMemoryDocument,
     MemoryRetentionReceipt,
@@ -563,7 +562,10 @@ def _bounded_string_fields(
 
 
 def create_app(
-    runtime: MemoryRecallRuntime, *, dashboard_access_token: str | None = None
+    runtime: MemoryRecallRuntime,
+    *,
+    dashboard_access_token: str | None = None,
+    dashboard_identity_loader: Callable[[], IdentityPack] | None = None,
 ) -> FastAPI:
     start_background = getattr(runtime, "start_background_work", None)
     stop_background = getattr(runtime, "stop_background_work", None)
@@ -586,8 +588,10 @@ def create_app(
         return {"status": "alive"}
 
     def current_dashboard_identity():
+        if dashboard_identity_loader is None:
+            raise HTTPException(status_code=503, detail="active identity unavailable")
         try:
-            identity = load_current_identity_pack()
+            identity = dashboard_identity_loader()
         except ValueError:
             raise HTTPException(status_code=503, detail="active identity unavailable")
         if identity.state != "current":

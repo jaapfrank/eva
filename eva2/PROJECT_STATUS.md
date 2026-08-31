@@ -1,6 +1,6 @@
 # Eva 2 — projectbord en vergelijking
 
-Laatst bijgewerkt: 31 augustus 2026, 14:39 CEST
+Laatst bijgewerkt: 31 augustus 2026, 15:29 CEST
 
 ## Zo lees je dit bord
 
@@ -32,24 +32,23 @@ dezelfde sessie wel, maar gaf na ruim drie minuten nog geen eindantwoord.
 
 | Controle | Eerlijke stand nu |
 |---|---|
-| Is alle code per bestand inhoudelijk beoordeeld? | ❌ Nee. De mechanische inventaris ziet nu 1.937 bestanden en meldt 92 open punten: 79 ongeordende Eva2-bewijsbestanden, 4 Eva2-tools buiten versiebeheer en 9 oude Eva1/root-restanten. Dit zijn dus niet 92 even ernstige codefouten |
+| Is alles per bestand inhoudelijk beoordeeld? | ❌ Nee. De inventaris is opnieuw gegenereerd en bevat 1.944 bestanden. De vier eerder losse Eva2-tools hebben nu een eigenaar, doel, bronhash, risicoklasse en tests. Nog open zijn 88 historische, niet gevolgde bewijs-/fixture- en rootpaden. Zij zijn zichtbaar als beleidsfout en zijn niet stil als productcode toegelaten |
 | Heeft ieder gevolgd bestand een duidelijke plek en eigenaar? | ✅ Alle gevolgde product-, deploy-, migratie- en testpaden vallen nu onder exact één semantische component. De checker weigert ontbrekend, dubbel of dood eigenaarschap |
 | Is daarmee bewezen dat iedere afzonderlijke regel nuttig is? | 🟡 Nee. De catalogus legt per component doel, noodzaak, upstreamkeuze, vervanging en tests vast. Dode-codeanalyse, grenscontrole en echte tests moeten daarna bewijzen dat de regels binnen die component hun taak nog werkelijk uitvoeren |
-| Zijn alle dependencies en open-sourcealternatieven aantoonbaar de beste actuele keuze? | ❌ Nee. Er zijn goede deelvergelijkingen, maar geen volledige audit. De live Pythonlock heeft 38 distributies; acht liepen bij de actuele controle achter op de nieuwste release. Nieuwste is bovendien niet automatisch beste: iedere upgrade moet de echte Eva-proef winnen |
-| Worden nieuwe releases automatisch gevolgd? | 🟡 De actuele releasewatch is nu exact aan een receipt gebonden en controleerde 17 van 17 gevolgde projecten via hun officiële GitHub-releases. Daardoor werden Renovate `44.52.1` en OpenClaw `v2026.8.1` gevonden. Een echte Renovate-voorstelbot draait nog niet |
-| Heeft iedere dependency of eigen regel een eigen taak? | ❌ Nog niet aantoonbaar. De nieuwe Pydantic/MCP-kandidaat voegt 46 distributies en circa 33 MB toe terwijl de oude route nog bestaat. Zolang hun verantwoordelijkheden overlappen wordt zij niet live gezet |
+| Zijn alle dependencies en open-sourcealternatieven aantoonbaar de beste actuele keuze? | 🟡 De live kern en worker zijn exact geïnventariseerd. Van 38 live distributies zijn 30 actueel en 8 hebben een nieuwere kandidaat. De veilige upgradevolgorde en bewuste `HOLD`-keuzes liggen vast. Functionele vergelijking en echte A/B-proeven moeten per batch nog bewijzen wat voor Eva werkelijk beter is |
+| Worden nieuwe releases automatisch gevolgd? | 🟡 De actuele releasewatch is exact aan een receipt gebonden en controleerde 34 van 34 gevolgde projecten via hun officiële releases. Dit dekt alle 11 directe runtime-dependencies, belangrijke kandidaten, bouw-/securitytools, vier base images en drie concurrenten. Een echte Renovate-voorstelbot draait nog niet |
+| Heeft iedere dependency of eigen regel een eigen taak? | 🟡 Iedere gevolgde component heeft nu exact één eigenaar en doel; dit is nog geen regel-voor-regelaudit. Bekende overlap is expliciet geblokkeerd: de Pydantic/MCP-kandidaat voegt 46 distributies en een tweede HTTP-stack toe terwijl de oude route nog bestaat. Zij mag pas live wanneer de oude verantwoordelijkheid in dezelfde wijziging verdwijnt |
 | Is er nu wel iets echt verwijderd? | ✅ Een ongebruikte LocalTuya-adapter van 357 productregels en zijn 212-regelige geïsoleerde test zijn verwijderd. De algemene providerroute blijft; 92 gerichte regressies en Ruff zijn groen |
-| Is de architectuurcontrole groen? | ❌ Nee. De installer-CLI stond verkeerd tussen de HTTP-adapters; zij is naar de compositielaag verplaatst. Dat verwijderde 14 grensschendingen zonder beleid te versoepelen. Er staan nog 48 echte pakketgrensschendingen open |
+| Is de architectuurcontrole groen? | ✅ Ja. Alle 62 gevonden pakketschendingen zijn structureel opgelost zonder het beleid te versoepelen. HTTP-adapters gebruiken neutrale poorten, cryptografie zit achter een adapter, secretbestands-I/O zit in de credentialsadapter en pure resultaatlogica staat in de applicatielaag. De checker vond 818 Pythonbestanden, controleert de 299 bestanden binnen haar vastgelegde architectuurscope — nu inclusief actieve beheertools — en meldt 0 overtredingen |
 
-De actuele productscope daalt door de eerste veilige verwijdering van 74.766
-naar 74.409 regels. Dat getal is geen doel en geen maximum. Ook 100 miljoen
-regels mogen als iedere regel aantoonbaar een producttaak heeft en beheersbaar
-blijft. De echte poort is: exact één eigenaar en doel per component, actuele
-tests en bewijs, onderhouden dependencies en geen dode of onverklaard dubbele
-route. De eerste machineleesbare componentcatalogus en exact-één-ownerchecker
-zijn nu groen voor alle gevolgde product-, deploy-, migratie- en testpaden.
-Regels, packages en imageomvang blijven zichtbaar zodat groei verklaard moet
-worden, maar groei op zichzelf is niet fout.
+Het aantal regels is geen doel en geen maximum. Ook 100 miljoen regels mogen
+als iedere regel aantoonbaar een producttaak heeft en beheersbaar blijft. De
+echte poort is: exact één eigenaar en doel per component, actuele tests en
+bewijs, onderhouden dependencies en geen dode of onverklaard dubbele route.
+De machineleesbare componentcatalogus en exact-één-ownerchecker zijn groen
+voor alle gevolgde product-, deploy-, migratie- en testpaden. Regels, packages
+en imageomvang blijven zichtbaar zodat groei verklaard moet worden, maar groei
+op zichzelf is niet fout.
 
 ## Praten met Eva
 

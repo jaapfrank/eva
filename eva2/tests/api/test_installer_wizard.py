@@ -10,10 +10,13 @@ from eva.adapters.api.installer_wizard import (
     InstallerBootstrap,
     create_installer_wizard,
 )
-from eva.application.conversation import load_current_identity_pack
+from eva.adapters.objects.identity_verifier import load_current_identity_pack
 from eva.application.soul_markdown import soul_markdown_to_draft
 from eva.operations.identity_pack_lifecycle import bootstrap_identity_authority
 from eva.operations.installer_identity_lifecycle import InstallerIdentityLifecycle
+from eva.operations.installer_installation_plan import (
+    build_installer_installation_plan,
+)
 from eva.operations.installer_budget_workflow import InstallerBudgetWorkflow
 from eva.operations.installer_capability_workflow import InstallerCapabilityWorkflow
 from eva.operations.installer_profile_workflow import InstallerProfileWorkflow
@@ -59,12 +62,16 @@ def _client(
         create_installer_wizard(
             receipt or _receipt(),
             bootstrap,
+            identity=(
+                None if identity_lifecycle is not None else load_current_identity_pack()
+            ),
             identity_lifecycle=identity_lifecycle,
             profile_workflow=profile_workflow,
             capability_workflow=capability_workflow,
             secret_store=secret_store,
             secret_lifecycle=secret_lifecycle,
             budget_workflow=budget_workflow,
+            installation_plan_builder=build_installer_installation_plan,
         ),
         headers={"host": "127.0.0.1"},
         client=("127.0.0.1", 40000),
@@ -207,7 +214,9 @@ def test_wizard_session_expires_on_the_server() -> None:
 
 def test_wizard_refuses_non_loopback_host_or_client() -> None:
     bootstrap = InstallerBootstrap(token="v" * 43, created_at=1.0, clock=lambda: 1.0)
-    app = create_installer_wizard(_receipt(), bootstrap)
+    app = create_installer_wizard(
+        _receipt(), bootstrap, identity=load_current_identity_pack()
+    )
     wrong_host = TestClient(
         app, headers={"host": "example.invalid"}, client=("127.0.0.1", 40000)
     )
@@ -222,7 +231,9 @@ def test_wizard_refuses_non_loopback_host_or_client() -> None:
 def test_wizard_accepts_ipv6_loopback() -> None:
     bootstrap = InstallerBootstrap(token="i" * 43, created_at=1.0, clock=lambda: 1.0)
     client = TestClient(
-        create_installer_wizard(_receipt(), bootstrap),
+        create_installer_wizard(
+            _receipt(), bootstrap, identity=load_current_identity_pack()
+        ),
         headers={"host": "[::1]"},
         client=("::1", 40000),
     )

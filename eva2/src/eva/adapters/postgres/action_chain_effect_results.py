@@ -31,10 +31,8 @@ from eva.contracts.canonical_json import canonical_sha256
 from eva.contracts.connector import ConnectorManifest
 from eva.contracts.evidence import EvidenceEnvelopeV2
 from eva.contracts.execution import EffectAttempt, EffectIntent, EffectReceipt
-from eva.operations.action_chain_effect_dispatcher import (
-    ClaimedActionChainEffectCall,
-)
-from eva.operations.action_chain_effect_results import (
+from eva.application.action_chain_provider_claims import ActionChainEffectClaim
+from eva.application.action_chain_effect_results import (
     ProjectedActionChainEffectResult,
     ProviderEffectResult,
     project_action_chain_effect_result,
@@ -89,7 +87,7 @@ class PostgresActionChainEffectResultStore(PostgresActionChainResultStore):
 
     def record(
         self,
-        claim: ClaimedActionChainEffectCall,
+        claim: ActionChainEffectClaim,
         *,
         result: ProviderEffectResult,
         observed_at: datetime,

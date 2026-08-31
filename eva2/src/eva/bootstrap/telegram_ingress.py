@@ -1,4 +1,8 @@
-"""Run the opt-in B-native Telegram polling connector."""
+"""Compose and run the opt-in B-native Telegram polling connector.
+
+This executable wiring belongs at the composition root: it selects concrete
+transport and persistence adapters but adds no Telegram rules to Eva's core.
+"""
 
 from __future__ import annotations
 
@@ -29,8 +33,10 @@ from eva.application.telegram_ingress import (
 )
 from eva.application.telegram_group_consent import TelegramGroupConsentResponder
 from eva.application.telegram_pairing import TelegramPairingResponder
-from eva.bootstrap.secrets import read_runtime_secret_file
-from eva.bootstrap.secrets import required_environment as _required_environment
+from eva.adapters.credentials.runtime_files import read_runtime_secret_file
+from eva.adapters.credentials.runtime_files import (
+    required_environment as _required_environment,
+)
 from eva.bootstrap.delegated_work_commands import DelegatedWorkConversationCommands
 
 

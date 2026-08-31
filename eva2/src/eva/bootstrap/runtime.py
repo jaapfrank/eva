@@ -71,6 +71,7 @@ from eva.adapters.projection.hindsight import (
     HindsightMemoryEngine,
     HindsightProjectionConfig,
 )
+from eva.adapters.objects.identity_verifier import load_current_identity_pack
 
 if TYPE_CHECKING:
     from eva.adapters.model.conversation import CodexConversationModel
@@ -79,7 +80,6 @@ from eva.application.conversation import (
     ConversationTurn,
     GroundedReply,
     IdentityProfile,
-    load_current_identity_pack,
     LivingConversation,
     RecentConversationMessage,
 )
@@ -138,12 +138,12 @@ from eva.application.free_will import (
     SensoryDecisionWorker,
 )
 from eva.application.sensory import SensoryIngestionWorker
-from eva.bootstrap.secrets import (
+from eva.adapters.credentials.runtime_files import (
     environment_secret,
     read_private_runtime_file_bytes,
 )
 from eva.bootstrap.delegated_work_commands import DelegatedWorkConversationCommands
-from eva.operations.telegram_ingress import load_principal_bindings
+from eva.bootstrap.telegram_ingress import load_principal_bindings
 from eva.adapters.api.dashboard_access import validate_dashboard_access_token
 from eva.operations.portable_restore_authority import PrivateRestoreAuthorityStore
 
@@ -1647,6 +1647,7 @@ def create_runtime_app() -> FastAPI:
             memory_storage_budget=storage_budget,
         ),
         dashboard_access_token=settings.dashboard_access_token,
+        dashboard_identity_loader=load_current_identity_pack,
     )
 
 

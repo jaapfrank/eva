@@ -90,6 +90,27 @@ def test_domain_cannot_import_an_adapter(tmp_path: Path) -> None:
     ]
 
 
+def test_tools_are_checked_as_an_outer_architecture_package(tmp_path: Path) -> None:
+    checker = _checker()
+    policy = json.loads(
+        (ROOT / "design/architecture/package-boundaries-v1.json").read_text(
+            encoding="utf-8"
+        )
+    )
+    _seed_policy_tree(tmp_path, policy)
+    (tmp_path / "tools/unreviewed.py").write_text(
+        "import requests\n", encoding="utf-8"
+    )
+    policy_path = tmp_path / "policy.json"
+    policy_path.write_text(json.dumps(policy), encoding="utf-8")
+
+    violations = checker.check(tmp_path, policy_path)
+
+    assert [(item.code, item.detail) for item in violations] == [
+        ("external_import_boundary", "requests")
+    ]
+
+
 def test_relative_import_cannot_cross_a_boundary(tmp_path: Path) -> None:
     checker = _checker()
     policy = json.loads(

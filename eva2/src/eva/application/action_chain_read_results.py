@@ -1,4 +1,4 @@
-"""Project one sealed connector result into durable action-chain contracts."""
+"""Purely project one sealed connector result into durable action-chain contracts."""
 
 from __future__ import annotations
 from eva.contracts.timestamps import format_utc_timestamp as _format_timestamp

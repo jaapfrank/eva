@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import pytest
 
-from eva.application.conversation import load_current_identity_pack
+from eva.adapters.objects.identity_verifier import load_current_identity_pack
 from eva.application.identity_drafts import identity_presentation_diff
 from eva.application.soul_markdown import (
     SoulMarkdownError,

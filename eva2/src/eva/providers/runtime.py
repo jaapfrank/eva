@@ -40,7 +40,10 @@ from eva.application.conversation import (
     ConversationToolDescriptor,
 )
 from eva.application.sensory import SensoryEventSourcePort
-from eva.bootstrap.secrets import environment_secret, read_runtime_secret_file
+from eva.adapters.credentials.runtime_files import (
+    environment_secret,
+    read_runtime_secret_file,
+)
 
 
 def _value(name: str, default: str = "") -> str:

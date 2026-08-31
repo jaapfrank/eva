@@ -1,4 +1,4 @@
-"""Project one effect-provider result without claiming physical success."""
+"""Purely project one effect-provider result without claiming physical success."""
 
 from __future__ import annotations
 from eva.contracts.timestamps import format_utc_timestamp as _format_timestamp

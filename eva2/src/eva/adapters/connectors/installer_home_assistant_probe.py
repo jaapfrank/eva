@@ -10,7 +10,7 @@ import socket
 import ssl
 from urllib.parse import urlsplit
 
-from eva.operations.installer_provider_verification import (
+from eva.application.installer import (
     InstallerProviderProbeError,
     InstallerProviderProbeObservation,
 )

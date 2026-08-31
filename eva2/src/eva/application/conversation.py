@@ -8,7 +8,6 @@ from dataclasses import dataclass, field
 from datetime import datetime
 import hashlib
 import json
-from pathlib import Path
 import re
 from typing import Callable, Iterator, Literal, Protocol
 
@@ -16,11 +15,6 @@ from eva.application.memory import PresenceMemory, RecallCurrentFacts
 from eva.application.memory_audience import MemoryAudience
 from eva.contracts.base import JsonValue, validate_json_value
 from eva.contracts.identity import IdentityPack
-from eva.application.identity_verifier import (
-    IdentityPackTrustBinding,
-    load_default_identity_pack_trust_binding,
-    verify_identity_pack_bytes,
-)
 
 MEMORY_SEARCH_ACTION = "search_personal_memory"
 
@@ -291,26 +285,6 @@ class IdentityProfile:
             or self.identity_pack.display_name != self.name
         ):
             raise ValueError("current IdentityPack does not match the active identity")
-
-
-def load_current_identity_pack(
-    path: Path | None = None, *, trust: IdentityPackTrustBinding | None = None
-) -> IdentityPack:
-    """Load the versioned procedural identity used by the Living Core."""
-
-    selected = path or Path(__file__).with_name("default_identity_pack.json")
-    if selected.is_symlink() or not selected.is_file():
-        raise ValueError("IdentityPack must be a regular non-symlink file")
-    if selected.stat().st_size > 65_536:
-        raise ValueError("IdentityPack is too large")
-    try:
-        raw = selected.read_bytes()
-        pack = verify_identity_pack_bytes(
-            raw, trust=trust or load_default_identity_pack_trust_binding()
-        )
-    except (OSError, ValueError) as error:
-        raise ValueError("IdentityPack is invalid") from error
-    return pack
 
 
 @dataclass(frozen=True, slots=True)
@@ -886,7 +860,6 @@ __all__ = [
     "LivingConversation",
     "MEMORY_SEARCH_ACTION",
     "RecentConversationMessage",
-    "load_current_identity_pack",
     "publish_conversation_text",
     "stream_conversation_text",
 ]

@@ -9,7 +9,6 @@ from datetime import datetime
 from typing import Literal
 from uuid import UUID, uuid5
 
-from pydantic import ValidationError
 import sqlalchemy as sa
 
 from eva.adapters.postgres.action_chain_leases import (
@@ -183,7 +182,7 @@ class PostgresActionChainReadPreparer(PostgresActionChainStore):
                 ).one()
                 try:
                     intent = ReadIntent.model_validate(intent_row.payload)
-                except ValidationError as error:
+                except ValueError as error:
                     raise ActionChainReadConflict(
                         "prepared read payload is invalid"
                     ) from error
@@ -410,7 +409,7 @@ class PostgresActionChainReadPreparer(PostgresActionChainStore):
             binding = ConnectorBinding.model_validate(
                 None if binding_row is None else binding_row.payload
             )
-        except ValidationError as error:
+        except ValueError as error:
             raise ActionChainReadConflict(
                 "read capability payload is invalid"
             ) from error

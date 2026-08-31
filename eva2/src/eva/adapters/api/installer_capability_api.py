@@ -8,11 +8,10 @@ from typing import Callable, Mapping
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import JSONResponse
 
-from eva.operations.installer_capability_workflow import (
-    CAPABILITY_SPECS,
-    InstallerCapabilityStatus,
-    InstallerCapabilityWorkflow,
-    InstallerCapabilityWorkflowError,
+from eva.application.installer import (
+    InstallerCapabilityPort,
+    InstallerCapabilityStatusView,
+    InstallerUseCaseError,
 )
 
 
@@ -23,6 +22,14 @@ _LABELS = {
     "email": "E-mail",
     "adaptive_connector": "Ander kanaal of dienst",
     "budgets": "Geheugen-, token- en kostenlimieten",
+}
+_CAPABILITY_REQUIRED = {
+    "model_provider": True,
+    "telegram": False,
+    "home_assistant": False,
+    "email": False,
+    "adaptive_connector": False,
+    "budgets": True,
 }
 
 INSTALLER_CAPABILITY_SECTION = """<section><h2>Wat wil je koppelen?</h2><p>Kiezen is nog niet koppelen. Alleen een echte controle kan later groen geven.</p><div id="capability-list"><p>De koppelstatus wordt veilig geladen…</p></div><p id="capability-result" role="status"></p></section>"""
@@ -97,19 +104,19 @@ INSTALLER_CAPABILITY_SCRIPT = r"""
 
 
 def _payload(
-    status: InstallerCapabilityStatus | None, *, enabled: bool
+    status: InstallerCapabilityStatusView | None, *, enabled: bool
 ) -> dict[str, object]:
     if status is None:
         steps = [
             {
-                "step_id": spec.step_id,
-                "label": _LABELS[spec.step_id],
-                "required": spec.required,
+                "step_id": step_id,
+                "label": _LABELS[step_id],
+                "required": required,
                 "state": "unavailable",
                 "evidence_sha256": None,
                 "updated_at": None,
             }
-            for spec in CAPABILITY_SPECS
+            for step_id, required in _CAPABILITY_REQUIRED.items()
         ]
         revision = 0
         head_sha256 = None
@@ -144,23 +151,23 @@ def _payload(
 def register_installer_capability_routes(
     app: FastAPI,
     *,
-    workflow: InstallerCapabilityWorkflow | None,
+    workflow: InstallerCapabilityPort | None,
     enabled: bool,
     require_read: Callable[[Request], None],
     require_write: Callable[[Request], None],
     security_headers: Mapping[str, str],
 ) -> None:
-    def current_status() -> InstallerCapabilityStatus | None:
+    def current_status() -> InstallerCapabilityStatusView | None:
         if workflow is None:
             return None
         try:
             return workflow.status()
-        except InstallerCapabilityWorkflowError as exc:
+        except InstallerUseCaseError as exc:
             raise HTTPException(
                 status_code=503, detail="installer capability status unavailable"
             ) from exc
 
-    def writable() -> InstallerCapabilityWorkflow:
+    def writable() -> InstallerCapabilityPort:
         if workflow is None or not enabled:
             raise HTTPException(
                 status_code=409, detail="installer capability choices are not enabled"
@@ -188,7 +195,7 @@ def register_installer_capability_routes(
             transition = target.select(
                 step_id=body.get("step_id"), wanted=body.get("wanted")
             )
-        except InstallerCapabilityWorkflowError as exc:
+        except InstallerUseCaseError as exc:
             raise HTTPException(
                 status_code=409, detail="capability choice could not be retained"
             ) from exc

@@ -12,7 +12,7 @@ import stat
 import sys
 import time
 
-from eva.bootstrap.secrets import (
+from eva.adapters.credentials.runtime_files import (
     read_private_runtime_file_bytes,
     read_shared_runtime_file_bytes,
 )

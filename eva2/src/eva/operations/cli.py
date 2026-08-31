@@ -8,7 +8,7 @@ from pathlib import Path
 import stat
 import sys
 
-from eva.application.conversation import load_current_identity_pack
+from eva.adapters.objects.identity_verifier import load_current_identity_pack
 from eva.application.identity_verifier import load_identity_pack_trust_binding
 from eva.contracts.canonical_json import require_canonical_bytes
 from eva.contracts.identity import IdentityPackDraft

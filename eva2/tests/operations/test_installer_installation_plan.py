@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from eva.application.conversation import load_current_identity_pack
+from eva.adapters.objects.identity_verifier import load_current_identity_pack
 from eva.contracts.canonical_json import canonical_sha256
 from eva.operations.installer_budget_workflow import InstallerBudget, InstallerBudgetStatus
 from eva.operations.installer_capability_workflow import (

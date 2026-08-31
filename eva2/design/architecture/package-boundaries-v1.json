@@ -35,7 +35,7 @@
     },
     "adapters.model": {
       "path": "src/eva/adapters/model",
-      "allowedLocalImports": ["eva.adapters.model", "eva.application", "eva.contracts"],
+      "allowedLocalImports": ["eva.adapters.credentials.runtime_files", "eva.adapters.model", "eva.application", "eva.contracts"],
       "allowedExternalImports": ["httpx2", "openai", "pydantic_ai"]
     },
     "adapters.subagents": {
@@ -85,8 +85,13 @@
     },
     "providers": {
       "path": "src/eva/providers",
-      "allowedLocalImports": ["eva.adapters", "eva.application", "eva.bootstrap.secrets", "eva.contracts", "eva.providers"],
+      "allowedLocalImports": ["eva.adapters", "eva.application", "eva.contracts", "eva.providers"],
       "allowedExternalImports": ["sqlalchemy"]
+    },
+    "tools": {
+      "path": "tools",
+      "allowedLocalImports": ["eva"],
+      "allowedExternalImports": ["cryptography", "postgres_memory_repository", "run_gate", "sqlalchemy", "tools", "uvicorn", "verify_source_bindings"]
     }
   },
   "isolatedRoots": {
@@ -130,6 +135,10 @@
   },
   "forbiddenImportPrefixes": [
     "<dynamic-import>",
+    "eva.bootstrap.secrets",
+    "eva.operations.action_chain_effect_results",
+    "eva.operations.action_chain_read_results",
+    "eva.operations.telegram_ingress",
     "mind",
     "src.mind",
     "src.integrations",

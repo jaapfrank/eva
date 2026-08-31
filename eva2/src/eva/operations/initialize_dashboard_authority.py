@@ -21,8 +21,10 @@ import sqlalchemy as sa
 
 from eva.adapters.postgres.connection import sqlalchemy_postgres_dsn
 from eva.adapters.postgres.current_catalog import metadata
-from eva.bootstrap.secrets import read_runtime_secret_file
-from eva.bootstrap.secrets import required_environment as _required_environment
+from eva.adapters.credentials.runtime_files import read_runtime_secret_file
+from eva.adapters.credentials.runtime_files import (
+    required_environment as _required_environment,
+)
 from eva.contracts.canonical_json import canonical_sha256
 from eva.contracts.evidence import EvidenceEnvelopeV2
 

@@ -10,12 +10,16 @@ import pytest
 from cryptography.hazmat.primitives import serialization
 from cryptography.hazmat.primitives.asymmetric.ed25519 import Ed25519PrivateKey
 
-from eva.application.conversation import load_current_identity_pack
+from eva.adapters.objects.identity_verifier import (
+    load_current_identity_pack,
+    verify_ed25519_signature,
+    verify_identity_pack_bytes,
+)
 from eva.application.identity_verifier import (
     IdentityPackTrustBinding,
     load_default_identity_pack_trust_binding,
     parse_identity_pack_trust_binding,
-    verify_identity_pack_bytes,
+    verify_identity_pack_bytes as verify_identity_pack_payload,
 )
 from eva.contracts.canonical_json import canonical_json_bytes, require_canonical_bytes
 
@@ -139,4 +143,32 @@ def test_trust_binding_is_closed_and_verifier_accepts_no_signing_authority() -> 
             public_key_bytes=b"x" * 32,
             public_key_sha256="not-a-hash",
         )
-    assert "private" not in inspect.signature(verify_identity_pack_bytes).parameters
+    signature = inspect.signature(verify_identity_pack_payload)
+    assert "private" not in signature.parameters
+    assert "signature_verifier" in signature.parameters
+
+
+def test_application_verifier_delegates_only_detached_signature_material() -> None:
+    raw, trust = _signed_pack()
+    observed: dict[str, bytes] = {}
+
+    def verifier(*, public_key_bytes: bytes, signature: bytes, message: bytes) -> None:
+        observed.update(
+            public_key_bytes=public_key_bytes,
+            signature=signature,
+            message=message,
+        )
+        verify_ed25519_signature(
+            public_key_bytes=public_key_bytes,
+            signature=signature,
+            message=message,
+        )
+
+    pack = verify_identity_pack_payload(
+        raw, trust=trust, signature_verifier=verifier
+    )
+
+    assert pack.identity_id == trust.expected_identity_id
+    assert observed["public_key_bytes"] == trust.public_key_bytes
+    assert len(observed["signature"]) == 64
+    assert b'"signature"' not in observed["message"]

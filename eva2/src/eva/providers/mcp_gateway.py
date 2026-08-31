@@ -20,7 +20,7 @@ from eva.adapters.postgres.external_conversation_tools import (
     PostgresExternalConversationTools,
 )
 from eva.application.conversation import ConversationToolDescriptor
-from eva.bootstrap.secrets import read_runtime_secret_file
+from eva.adapters.credentials.runtime_files import read_runtime_secret_file
 from eva.contracts.base import validate_json_value
 from eva.providers.runtime import ProviderContribution
 

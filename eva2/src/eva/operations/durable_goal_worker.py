@@ -14,8 +14,10 @@ from eva.adapters.connectors.durable_goal_http import HttpDurableGoalConnector
 from eva.adapters.postgres.durable_goals import PostgresDurableGoalStore
 from eva.adapters.postgres.connection import sqlalchemy_postgres_dsn
 from eva.application.durable_goals import DurableGoalWorker
-from eva.bootstrap.secrets import read_runtime_secret_file
-from eva.bootstrap.secrets import required_environment as _required_environment
+from eva.adapters.credentials.runtime_files import read_runtime_secret_file
+from eva.adapters.credentials.runtime_files import (
+    required_environment as _required_environment,
+)
 
 
 def _database_dsn() -> str:

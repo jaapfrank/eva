@@ -11,29 +11,13 @@ from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import JSONResponse
 
 from eva.adapters.api.installer_request_json import read_small_json_request
-from eva.adapters.connectors.installer_agentmail_probe import (
-    AgentMailInstallerReadOnlyProbe,
-)
-from eva.adapters.connectors.installer_home_assistant_probe import (
-    HomeAssistantInstallerReadOnlyProbe,
-)
-from eva.operations.installer_capability_workflow import (
-    InstallerCapabilityWorkflowError,
-)
-from eva.operations.installer_provider_verification import (
+from eva.application.installer import (
+    InstallerProviderConfigurationPort,
     InstallerProviderProbe,
+    InstallerProviderVerifierPort,
+    InstallerUseCaseError,
     InstallerProviderVerificationError,
-    InstallerProviderVerifier,
-    installer_provider_scope_manifest,
-    installer_provider_scope_manifest_sha256,
 )
-from eva.operations.installer_provider_configuration import (
-    PROVIDER_CONFIGURATION_SLOTS,
-    InstallerProviderConfigurationError,
-    InstallerProviderConfigurationInputError,
-    InstallerProviderConfigurationStore,
-)
-from eva.operations.installer_secret_store import InstallerSecretStoreError
 
 
 _MAX_JSON_BYTES = 2_048
@@ -48,6 +32,15 @@ _CONFIRMATIONS = {
     "telegram": "VERBINDING CONTROLEREN",
     "home_assistant": "VERBINDING CONTROLEREN",
     "email": "VERBINDING CONTROLEREN",
+}
+_PROVIDER_CONFIGURATION_SLOTS = ("home_assistant", "email")
+_PROVIDER_SCOPE_DESCRIPTIONS = {
+    "model_provider": ("Eén kleine modelcontrole zonder tools of opslag",),
+    "telegram": ("Alleen de identiteit van de testbot lezen",),
+    "home_assistant": ("Alleen controleren of de Home Assistant-API bereikbaar is",),
+    "email": (
+        "Alleen de gekozen inboxidentiteit controleren; geen berichten lezen",
+    ),
 }
 
 
@@ -173,14 +166,6 @@ INSTALLER_PROVIDER_SCRIPT = r"""
 """
 
 
-def _configured_probe(slot_id: str, value: str) -> InstallerProviderProbe:
-    if slot_id == "home_assistant":
-        return HomeAssistantInstallerReadOnlyProbe(base_url=value)
-    if slot_id == "email":
-        return AgentMailInstallerReadOnlyProbe(inbox_id=value)
-    raise ValueError("provider configuration slot is invalid")
-
-
 async def _small_json(request: Request) -> object:
     return await read_small_json_request(
         request, _MAX_JSON_BYTES, "provider verification"
@@ -188,8 +173,8 @@ async def _small_json(request: Request) -> object:
 
 
 def _payload(
-    verifier: InstallerProviderVerifier | None,
-    configuration_store: InstallerProviderConfigurationStore | None,
+    verifier: InstallerProviderVerifierPort | None,
+    configuration_store: InstallerProviderConfigurationPort | None,
     *,
     enabled: bool,
 ) -> dict[str, object]:
@@ -206,10 +191,7 @@ def _payload(
             secrets = {
                 item.slot_id: item for item in verifier.secret_store.status()
             }
-        except (
-            InstallerCapabilityWorkflowError,
-            InstallerSecretStoreError,
-        ) as exc:
+        except InstallerUseCaseError as exc:
             raise HTTPException(
                 status_code=503, detail="provider verification status unavailable"
             ) from exc
@@ -219,11 +201,11 @@ def _payload(
             configurations = {
                 item.slot_id: item for item in configuration_store.status()
             }
-        except InstallerProviderConfigurationError as exc:
+        except InstallerUseCaseError as exc:
             raise HTTPException(
                 status_code=503, detail="provider configuration status unavailable"
             ) from exc
-        available = frozenset({*available, *PROVIDER_CONFIGURATION_SLOTS})
+        available = frozenset({*available, *_PROVIDER_CONFIGURATION_SLOTS})
     rows = []
     for slot_id, label in _LABELS.items():
         capability = capabilities.get(slot_id)
@@ -231,12 +213,21 @@ def _payload(
         state = getattr(capability, "state", "unavailable")
         secret_present = getattr(secret, "state", None) == "present"
         is_available = slot_id in available
-        configuration_required = slot_id in PROVIDER_CONFIGURATION_SLOTS
+        configuration_required = slot_id in _PROVIDER_CONFIGURATION_SLOTS
         configuration = configurations.get(slot_id)
         configuration_present = (
             getattr(configuration, "state", None) == "configured"
         )
-        scope_manifest = installer_provider_scope_manifest(slot_id)
+        scope_manifest = (
+            verifier.scope_manifest(slot_id)
+            if verifier
+            else {
+                "provider_scopes": [
+                    {"description": description}
+                    for description in _PROVIDER_SCOPE_DESCRIPTIONS[slot_id]
+                ]
+            }
+        )
         rows.append(
             {
                 "available": is_available,
@@ -263,7 +254,7 @@ def _payload(
                 "evidence_sha256": getattr(capability, "evidence_sha256", None),
                 "label": label,
                 "provider_scope_manifest_sha256": (
-                    installer_provider_scope_manifest_sha256(slot_id)
+                    verifier.scope_manifest_sha256(slot_id) if verifier else None
                 ),
                 "provider_scopes": scope_manifest["provider_scopes"],
                 "secret_present": secret_present,
@@ -288,15 +279,15 @@ def _payload(
 def register_installer_provider_routes(
     app: FastAPI,
     *,
-    verifier: InstallerProviderVerifier | None,
-    configuration_store: InstallerProviderConfigurationStore | None,
+    verifier: InstallerProviderVerifierPort | None,
+    configuration_store: InstallerProviderConfigurationPort | None,
     enabled: bool,
     require_read: Callable[[Request], None],
     require_write: Callable[[Request], None],
     security_headers: Mapping[str, str],
     configured_probe_factory: Callable[[str, str], InstallerProviderProbe] | None = None,
 ) -> None:
-    probe_factory = configured_probe_factory or _configured_probe
+    probe_factory = configured_probe_factory
     locks = {slot_id: Lock() for slot_id in _LABELS}
 
     @app.get("/internal/v1/onboarding/providers/status")
@@ -316,7 +307,8 @@ def register_installer_provider_routes(
             verifier is None
             or configuration_store is None
             or not enabled
-            or slot_id not in PROVIDER_CONFIGURATION_SLOTS
+            or probe_factory is None
+            or slot_id not in _PROVIDER_CONFIGURATION_SLOTS
         ):
             raise HTTPException(
                 status_code=409, detail="provider configuration is not enabled"
@@ -335,7 +327,7 @@ def register_installer_provider_routes(
         try:
             try:
                 capability = verifier.capability_workflow.status().step(slot_id)
-            except InstallerCapabilityWorkflowError as exc:
+            except InstallerUseCaseError as exc:
                 raise HTTPException(
                     status_code=503,
                     detail="provider configuration status unavailable",
@@ -352,11 +344,11 @@ def register_installer_provider_routes(
                 retained = configuration_store.configure(
                     slot_id=slot_id, value=value
                 )
-            except (ValueError, InstallerProviderConfigurationInputError) as exc:
+            except ValueError as exc:
                 raise HTTPException(
                     status_code=422, detail="provider configuration is invalid"
                 ) from exc
-            except InstallerProviderConfigurationError as exc:
+            except InstallerUseCaseError as exc:
                 raise HTTPException(
                     status_code=409,
                     detail="provider configuration could not be stored",
@@ -383,7 +375,7 @@ def register_installer_provider_routes(
                 status_code=409, detail="provider verification is not enabled"
             )
         if (
-            slot_id not in PROVIDER_CONFIGURATION_SLOTS
+            slot_id not in _PROVIDER_CONFIGURATION_SLOTS
             and slot_id not in verifier.probes
         ):
             raise HTTPException(
@@ -410,25 +402,19 @@ def register_installer_provider_routes(
         try:
             try:
                 target_verifier = verifier
-                if slot_id in PROVIDER_CONFIGURATION_SLOTS:
-                    if configuration_store is None:
-                        raise InstallerProviderConfigurationError(
+                if slot_id in _PROVIDER_CONFIGURATION_SLOTS:
+                    if configuration_store is None or probe_factory is None:
+                        raise InstallerUseCaseError(
                             "provider configuration is unavailable"
                         )
                     configuration = configuration_store.read(slot_id=slot_id)
                     probe = probe_factory(slot_id, configuration.value)
-                    target_verifier = InstallerProviderVerifier(
-                        capability_workflow=verifier.capability_workflow,
-                        secret_store=verifier.secret_store,
-                        evidence_workspace=verifier.evidence_workspace,
-                        probes={slot_id: probe},
-                        configuration_sha256_by_slot={
-                            slot_id: configuration.configuration_sha256
-                        },
-                        clock=verifier.clock,
-                        monotonic=verifier.monotonic,
+                    target_verifier = verifier.for_configured_probe(
+                        slot_id=slot_id,
+                        probe=probe,
+                        configuration_sha256=configuration.configuration_sha256,
                     )
-            except (ValueError, InstallerProviderConfigurationError) as exc:
+            except (ValueError, InstallerUseCaseError) as exc:
                 raise HTTPException(
                     status_code=409,
                     detail="provider verification configuration is unavailable",

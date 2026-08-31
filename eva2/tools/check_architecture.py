@@ -194,6 +194,41 @@ def _module_name(root: Path, path: Path) -> str:
     return ".".join(parts)
 
 
+def _scoped_python_files(root: Path, policy: dict[str, Any]) -> set[Path]:
+    """Return the exact Python files whose imports or source debt are checked."""
+
+    scoped: set[Path] = set()
+    for section in ("packages", "isolatedRoots"):
+        raw_specs = policy.get(section, {})
+        if not isinstance(raw_specs, dict):
+            continue
+        for raw_spec in raw_specs.values():
+            if not isinstance(raw_spec, dict):
+                continue
+            directory = root / str(raw_spec.get("path", ""))
+            if directory.is_dir():
+                scoped.update(directory.rglob("*.py"))
+    boundary_files = policy.get("boundaryFiles", [])
+    if isinstance(boundary_files, list):
+        for relative_path in boundary_files:
+            if not isinstance(relative_path, str):
+                continue
+            candidate = root / relative_path
+            if candidate.is_file() and candidate.suffix == ".py":
+                scoped.add(candidate)
+    provider_debt = policy.get("providerSpecificCoreDebt", {})
+    if isinstance(provider_debt, dict):
+        scoped_paths = provider_debt.get("scopedPaths", [])
+        if isinstance(scoped_paths, list):
+            for relative_path in scoped_paths:
+                if not isinstance(relative_path, str):
+                    continue
+                directory = root / relative_path
+                if directory.is_dir():
+                    scoped.update(directory.rglob("*.py"))
+    return scoped
+
+
 def check(root: Path, policy_path: Path) -> list[Violation]:
     policy = _load_json_exact(policy_path)
     violations: list[Violation] = []
@@ -437,6 +472,7 @@ def main() -> int:
         args.policy or root / "design/architecture/package-boundaries-v1.json"
     ).resolve()
     try:
+        raw_policy = _load_json_exact(policy)
         violations = check(root, policy)
     except (OSError, ValueError) as exc:
         print(
@@ -453,7 +489,8 @@ def main() -> int:
         "contract": "Eva2ArchitectureGateResult/v1",
         "ok": not violations,
         "policy": str(policy.relative_to(root)),
-        "pythonFilesChecked": sum(1 for _ in root.rglob("*.py")),
+        "pythonFilesChecked": len(_scoped_python_files(root, raw_policy)),
+        "pythonFilesDiscovered": sum(1 for _ in root.rglob("*.py")),
         "violations": [violation.__dict__ for violation in violations],
     }
     print(json.dumps(result, ensure_ascii=False, separators=(",", ":"), sort_keys=True))

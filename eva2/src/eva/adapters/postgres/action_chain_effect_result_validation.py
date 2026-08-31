@@ -41,7 +41,7 @@ from eva.contracts.execution import (
 )
 from eva.contracts.planning import ValidatedPlan
 from eva.application.effect_verification import EffectVerificationProjection
-from eva.operations.action_chain_effect_results import (
+from eva.application.action_chain_effect_results import (
     ProjectedActionChainEffectResult,
     project_action_chain_effect_result,
 )

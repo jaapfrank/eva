@@ -5,7 +5,7 @@ from pathlib import Path
 
 import pytest
 
-from eva.bootstrap.secrets import (
+from eva.adapters.credentials.runtime_files import (
     MAX_RUNTIME_SECRET_BYTES,
     environment_secret,
     read_runtime_secret_file,

@@ -5,7 +5,7 @@ from pathlib import Path
 
 import pytest
 
-from eva.operations.telegram_ingress import load_principal_bindings
+from eva.bootstrap.telegram_ingress import load_principal_bindings
 
 
 def test_binding_file_is_strict_and_person_isolated(private_tmp_path: Path) -> None:

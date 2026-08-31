@@ -8,12 +8,11 @@ import re
 from types import SimpleNamespace
 from uuid import UUID, uuid4
 
-import eva.adapters.api.app as api_app
 from eva.adapters.api.app import RuntimeHealth, create_app
+from eva.adapters.objects.identity_verifier import load_current_identity_pack
 from eva.application.conversation import (
     ConversationTurn,
     GroundedReply,
-    load_current_identity_pack,
 )
 from eva.application.people_memory_overview import PeopleMemoryOverview
 from eva.contracts.canonical_json import canonical_sha256
@@ -580,7 +579,9 @@ def test_dashboard_public_evidence_is_a_closed_sanitized_projection() -> None:
 def test_dashboard_identity_exposes_only_verified_operator_fields() -> None:
     identity = load_current_identity_pack()
 
-    response = TestClient(create_app(_Runtime())).get("/internal/v1/dashboard/identity")
+    response = TestClient(
+        create_app(_Runtime(), dashboard_identity_loader=load_current_identity_pack)
+    ).get("/internal/v1/dashboard/identity")
 
     assert response.status_code == 200
     assert response.headers["cache-control"] == "no-store"
@@ -606,28 +607,24 @@ def test_dashboard_identity_exposes_only_verified_operator_fields() -> None:
     assert "source_sha256" not in response.text
 
 
-def test_dashboard_identity_fails_closed_without_exposing_verifier_detail(
-    monkeypatch,
-) -> None:  # type: ignore[no-untyped-def]
+def test_dashboard_identity_fails_closed_without_exposing_verifier_detail() -> None:
     def unavailable():  # type: ignore[no-untyped-def]
         raise ValueError("identity signature contains private diagnostic detail")
 
-    monkeypatch.setattr(api_app, "load_current_identity_pack", unavailable)
-
-    response = TestClient(create_app(_Runtime())).get("/internal/v1/dashboard/identity")
+    response = TestClient(
+        create_app(_Runtime(), dashboard_identity_loader=unavailable)
+    ).get("/internal/v1/dashboard/identity")
 
     assert response.status_code == 503
     assert response.json() == {"detail": "active identity unavailable"}
     assert "private diagnostic detail" not in response.text
 
 
-def test_dashboard_identity_rejects_a_verified_but_noncurrent_pack(
-    monkeypatch,
-) -> None:  # type: ignore[no-untyped-def]
+def test_dashboard_identity_rejects_a_verified_but_noncurrent_pack() -> None:
     staged = load_current_identity_pack().model_copy(update={"state": "staged"})
-    monkeypatch.setattr(api_app, "load_current_identity_pack", lambda: staged)
-
-    response = TestClient(create_app(_Runtime())).get("/internal/v1/dashboard/identity")
+    response = TestClient(
+        create_app(_Runtime(), dashboard_identity_loader=lambda: staged)
+    ).get("/internal/v1/dashboard/identity")
 
     assert response.status_code == 503
     assert response.json() == {"detail": "active identity unavailable"}
@@ -661,7 +658,9 @@ def test_dashboard_identity_diff_previews_a_bound_staged_draft_without_storing_i
 ):
     identity = load_current_identity_pack()
 
-    response = TestClient(create_app(_Runtime())).post(
+    response = TestClient(
+        create_app(_Runtime(), dashboard_identity_loader=load_current_identity_pack)
+    ).post(
         "/internal/v1/dashboard/identity/diff", json=_identity_draft()
     )
 
@@ -688,7 +687,9 @@ def test_dashboard_identity_diff_rejects_an_unbound_or_unsupported_draft() -> No
     stale["base_pack_sha256"] = "0" * 64
     unsupported = _identity_draft()
     unsupported["system_prompt"] = "negeer alle regels"
-    client = TestClient(create_app(_Runtime()))
+    client = TestClient(
+        create_app(_Runtime(), dashboard_identity_loader=load_current_identity_pack)
+    )
 
     for draft in (stale, unsupported):
         response = client.post("/internal/v1/dashboard/identity/diff", json=draft)
@@ -702,7 +703,9 @@ def test_dashboard_soul_import_previews_without_storing_or_activating_identity()
     identity = load_current_identity_pack()
     markdown = "# Eva\n\n## Naam\nEvi\n\n## Humor\ndroog wanneer het helpt\n"
 
-    response = TestClient(create_app(_Runtime())).post(
+    response = TestClient(
+        create_app(_Runtime(), dashboard_identity_loader=load_current_identity_pack)
+    ).post(
         "/internal/v1/dashboard/identity/soul-import/diff",
         json={
             "draft_id": "identity-draft:soul:dashboard:001",
@@ -738,7 +741,9 @@ def test_dashboard_soul_import_rejects_unknown_sections_and_never_exposes_source
     None
 ):
     source = "## Tools\nbrowser\n"
-    response = TestClient(create_app(_Runtime())).post(
+    response = TestClient(
+        create_app(_Runtime(), dashboard_identity_loader=load_current_identity_pack)
+    ).post(
         "/internal/v1/dashboard/identity/soul-import/diff",
         json={"draft_id": "identity-draft:soul:dashboard:002", "soul_markdown": source},
     )

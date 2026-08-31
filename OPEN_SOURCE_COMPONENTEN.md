@@ -126,11 +126,44 @@ runner zelf stil zou zijn gevallen. Een nieuwe concurrentversie maakt bovendien
 de oude 22-categorievergelijking direct ongeldig totdat alle gehashte resultaten
 opnieuw aan die exacte tag en commit zijn gebonden.
 
-Op 30 augustus 2026 zijn eerst elf en na de gatewayvergelijking dertien gevolgde
-componentreleases plus OpenClaw, Hermes en Agent Zero rechtstreeks met GitHubs
-actuele releasegegevens vergeleken. Alle zestien tags kwamen overeen. Dat bewijst dat
-de vergelijking actueel is voorbereid; het bewijst nog niet dat Eva de drie
-concurrenten verslaat.
+Op 31 augustus 2026 volgt het manifest 31 upstreamcomponenten plus OpenClaw,
+Hermes en Agent Zero. Alle 34 tags zijn aan een exact receipt gebonden. De
+dekking bevat nu niet alleen de grote frameworks, maar ook alle elf directe
+packages uit de live kern en de gebruikte build-, scan-, SBOM- en
+ondertekenkandidaten. Dat bewijst dat de onderhoudsblik compleet is voorbereid;
+het bewijst niet dat iedere nieuwste versie al veilig kan worden gepromoveerd of
+dat Eva de drie concurrenten verslaat.
+
+### Live dependencies en veilige upgradegroepen
+
+De actuele live kern heeft elf directe runtimeafhankelijkheden. Acht staan al op
+de gemelde actuele upstreamversie: OpenAI SDK, Alembic, Cryptography, FastAPI,
+Psycopg, PyNaCl, SQLAlchemy en Setuptools. Drie blijven bewust op hun bewezen
+live versie totdat een kleine, afzonderlijke kandidaat groen is:
+
+| Upgradegroep | Huidig | Kandidaat | Waarom afzonderlijk? |
+|---|---|---|---|
+| Contractvalidatie | Pydantic `2.12.5` | `2.13.5` | Geen stil meeliften met Pydantic AI of MCP; eerst alle Eva-contracten en providers apart controleren |
+| ASGI-transport | Uvicorn `0.41.0`, WebSockets `17.0.1` | `0.52.4`, `17.1` | Streaming, disconnects, time-outs en 200-beurtenlatency horen bij één transportproef |
+| Geheugensidecar | Hindsight `0.9.1` | `0.9.2` | Een kopie van de geheugendatabase, persoonsisolatie, gezamenlijke herstart en terugrol zijn verplicht |
+
+De Pydantic AI/MCP-lijn is geen vierde routine-update. De huidige proef legt 46
+extra distributies en een tweede HTTP-familie naast bestaande routes. Zij blijft
+daarom `HOLD` totdat één dependency per verantwoordelijkheid wint en de oude
+route in dezelfde promotie verdwijnt. Harness beweegt alleen met die agentstack:
+de geteste `0.25.0` loopt inmiddels achter op `0.27.0`, en upstream staat bij de
+0.x-lijn expliciet brekende wijzigingen tussen minorversies toe.
+
+Build- en securitymiddelen tellen eveneens als beheerde dependencies. Trivy
+`0.74.0` is versie- en digestgebonden. Syft heeft nu alleen een digestbinding en
+moet nog aan release `1.51.0` worden geattesteerd. Cosign `3.1.2` heeft nog geen
+reproduceerbare lokale binary- of imagepin. De Python-, Distroless- en
+Chainguard-basisimages zijn wel digestgebonden, maar hun actuele upstreamtag is
+bewust `unverified`: geen gok wordt als actuele versie opgeschreven.
+
+De volledige machineleesbare tabel, bronhashes, veilige batches en expliciete
+`HOLD`-redenen staan in
+[`live-dependency-maintenance-audit-2026-08-31.json`](eva2/evidence/product/live-dependency-maintenance-audit-2026-08-31.json).
 
 ## Altijd voorop blijven
 

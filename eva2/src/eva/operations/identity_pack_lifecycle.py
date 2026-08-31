@@ -25,10 +25,8 @@ from eva.application.identity_drafts import (
     identity_presentation_diff,
     validate_identity_draft_base,
 )
-from eva.application.identity_verifier import (
-    IdentityPackTrustBinding,
-    verify_identity_pack_bytes,
-)
+from eva.adapters.objects.identity_verifier import verify_identity_pack_bytes
+from eva.application.identity_verifier import IdentityPackTrustBinding
 from eva.contracts.canonical_json import canonical_json_bytes, canonical_sha256
 from eva.contracts.identity import IdentityPack, IdentityPackDraft
 

@@ -9,12 +9,10 @@ from pathlib import Path
 
 import uvicorn
 
-from eva.adapters.connectors.installer_agentmail_probe import (
-    AgentMailInstallerReadOnlyProbe,
-)
+from eva.adapters.objects.identity_verifier import load_current_identity_pack
 from eva.adapters.connectors.installer_codex_model_probe import CodexInstallerModelProbe
-from eva.adapters.connectors.installer_home_assistant_probe import (
-    HomeAssistantInstallerReadOnlyProbe,
+from eva.adapters.connectors.installer_configured_probe_factory import (
+    configured_installer_probe,
 )
 from eva.adapters.connectors.installer_telegram_probe import (
     TelegramInstallerReadOnlyProbe,
@@ -25,6 +23,9 @@ from eva.operations.installer_capability_workflow import (
     InstallerCapabilityWorkflowError,
 )
 from eva.operations.installer_identity_lifecycle import InstallerIdentityLifecycle
+from eva.operations.installer_installation_plan import (
+    build_installer_installation_plan,
+)
 from eva.operations.installer_preflight import (
     InstallerPreflightError,
     inspect_host,
@@ -193,12 +194,14 @@ def run_installer_wizard(argv: list[str] | None = None) -> int:
                 workspace=_private_workspace(args.provider_configuration_workspace)
             )
             if args.home_assistant_url is not None:
-                HomeAssistantInstallerReadOnlyProbe(base_url=args.home_assistant_url)
+                configured_installer_probe(
+                    "home_assistant", args.home_assistant_url
+                )
                 provider_configuration_store.configure(
                     slot_id="home_assistant", value=args.home_assistant_url
                 )
             if args.agentmail_inbox_id is not None:
-                AgentMailInstallerReadOnlyProbe(inbox_id=args.agentmail_inbox_id)
+                configured_installer_probe("email", args.agentmail_inbox_id)
                 provider_configuration_store.configure(
                     slot_id="email", value=args.agentmail_inbox_id
                 )
@@ -225,13 +228,18 @@ def run_installer_wizard(argv: list[str] | None = None) -> int:
         create_installer_wizard(
             receipt,
             bootstrap,
+            identity=(
+                load_current_identity_pack() if identity_lifecycle is None else None
+            ),
             identity_lifecycle=identity_lifecycle,
             profile_workflow=profile_workflow,
             capability_workflow=capability_workflow,
             secret_store=secret_store,
             provider_verifier=provider_verifier,
             provider_configuration_store=provider_configuration_store,
+            configured_probe_factory=configured_installer_probe,
             secret_lifecycle=secret_lifecycle,
+            installation_plan_builder=build_installer_installation_plan,
         ),
         host=args.host,
         port=args.port,

@@ -1,4 +1,9 @@
-"""Fail-closed loading for runtime secrets supplied by environment or file."""
+"""Fail-closed runtime-file loading shared by concrete infrastructure adapters.
+
+This module belongs to the credentials adapter.  Bootstrap composes it, but lower
+layers no longer depend on the application's composition root merely to read an
+already-authorized runtime file.
+"""
 
 from __future__ import annotations
 

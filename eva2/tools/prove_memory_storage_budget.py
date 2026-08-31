@@ -21,7 +21,7 @@ from eva.application.memory_audience import (
     MemoryAudience,
     TelegramGroupConsentReference,
 )
-from eva.bootstrap.secrets import read_runtime_secret_file
+from eva.adapters.credentials.runtime_files import read_runtime_secret_file
 from eva.contracts.canonical_json import canonical_json_bytes
 from eva.contracts.runtime_budget import RuntimeResourceBudget
 

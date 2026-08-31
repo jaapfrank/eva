@@ -45,8 +45,20 @@ from eva.adapters.api.installer_secret_api import (
     INSTALLER_SECRET_SECTION,
     register_installer_secret_routes,
 )
-from eva.application.conversation import load_current_identity_pack
 from eva.application.identity_drafts import identity_presentation_diff
+from eva.application.installer import (
+    InstallerBudgetPort,
+    InstallerCapabilityPort,
+    InstallerIdentityPort,
+    InstallerIdentityWorkflowStatusView,
+    InstallerInstallationPlanBuilder,
+    InstallerProfilePort,
+    InstallerProviderConfigurationPort,
+    InstallerProviderProbe,
+    InstallerProviderVerifierPort,
+    InstallerSecretLifecyclePort,
+    InstallerSecretStorePort,
+)
 from eva.application.soul_markdown import (
     SoulMarkdownError,
     identity_to_soul_markdown,
@@ -55,26 +67,6 @@ from eva.application.soul_markdown import (
 )
 from eva.contracts.canonical_json import canonical_sha256
 from eva.contracts.identity import IdentityPack
-from eva.operations.identity_pack_lifecycle import IdentityPackLifecycleError
-from eva.operations.installer_identity_lifecycle import (
-    InstallerIdentityLifecycle,
-    InstallerIdentityWorkflowStatus,
-)
-from eva.operations.installer_installation_plan import (
-    build_installer_installation_plan,
-)
-from eva.operations.installer_budget_workflow import InstallerBudgetWorkflow
-from eva.operations.installer_capability_workflow import InstallerCapabilityWorkflow
-from eva.operations.installer_profile_workflow import InstallerProfileWorkflow
-from eva.operations.installer_provider_configuration import (
-    InstallerProviderConfigurationStore,
-)
-from eva.operations.installer_provider_verification import (
-    InstallerProviderProbe,
-    InstallerProviderVerifier,
-)
-from eva.operations.installer_secret_store import InstallerSecretStore
-from eva.operations.installer_secret_lifecycle import InstallerSecretLifecycle
 
 
 _COOKIE = "eva_installer_session"
@@ -191,7 +183,7 @@ def _page(
     identity: IdentityPack,
     *,
     identity_writable: bool,
-    identity_workflow: InstallerIdentityWorkflowStatus | None = None,
+    identity_workflow: InstallerIdentityWorkflowStatusView | None = None,
     profile_enabled: bool = False,
     capability_enabled: bool = False,
     secret_enabled: bool = False,
@@ -278,15 +270,16 @@ def create_installer_wizard(
     receipt: dict[str, object],
     bootstrap: InstallerBootstrap,
     identity: IdentityPack | None = None,
-    identity_lifecycle: InstallerIdentityLifecycle | None = None,
-    profile_workflow: InstallerProfileWorkflow | None = None,
-    capability_workflow: InstallerCapabilityWorkflow | None = None,
-    secret_store: InstallerSecretStore | None = None,
-    provider_verifier: InstallerProviderVerifier | None = None,
-    provider_configuration_store: InstallerProviderConfigurationStore | None = None,
+    identity_lifecycle: InstallerIdentityPort | None = None,
+    profile_workflow: InstallerProfilePort | None = None,
+    capability_workflow: InstallerCapabilityPort | None = None,
+    secret_store: InstallerSecretStorePort | None = None,
+    provider_verifier: InstallerProviderVerifierPort | None = None,
+    provider_configuration_store: InstallerProviderConfigurationPort | None = None,
     configured_probe_factory: Callable[[str, str], InstallerProviderProbe] | None = None,
-    secret_lifecycle: InstallerSecretLifecycle | None = None,
-    budget_workflow: InstallerBudgetWorkflow | None = None,
+    secret_lifecycle: InstallerSecretLifecyclePort | None = None,
+    budget_workflow: InstallerBudgetPort | None = None,
+    installation_plan_builder: InstallerInstallationPlanBuilder | None = None,
 ) -> FastAPI:
     receipt = _safe_receipt(receipt)
     if identity_lifecycle is not None:
@@ -297,7 +290,8 @@ def create_installer_wizard(
             raise ValueError("installer identity differs from configured authority")
         identity = configured_identity
     else:
-        identity = identity or load_current_identity_pack()
+        if identity is None:
+            raise ValueError("installer identity is required")
     identity_writable = identity_lifecycle is not None and receipt["status"] == "ready"
     profile_enabled = profile_workflow is not None and receipt["status"] == "ready"
     capability_enabled = (
@@ -344,24 +338,24 @@ def create_installer_wizard(
             return identity
         try:
             return identity_lifecycle.current_identity()
-        except IdentityPackLifecycleError as error:
+        except RuntimeError as error:
             raise HTTPException(
                 status_code=503, detail="installer identity authority unavailable"
             ) from error
 
-    def writable_identity_lifecycle() -> InstallerIdentityLifecycle:
+    def writable_identity_lifecycle() -> InstallerIdentityPort:
         if not identity_writable or identity_lifecycle is None:
             raise HTTPException(
                 status_code=409, detail="installer identity changes are not enabled"
             )
         return identity_lifecycle
 
-    def identity_workflow_status() -> InstallerIdentityWorkflowStatus | None:
+    def identity_workflow_status() -> InstallerIdentityWorkflowStatusView | None:
         if identity_lifecycle is None:
             return None
         try:
             return identity_lifecycle.status()
-        except IdentityPackLifecycleError as error:
+        except RuntimeError as error:
             raise HTTPException(
                 status_code=503, detail="installer identity workflow unavailable"
             ) from error
@@ -480,9 +474,10 @@ def create_installer_wizard(
         require_write=require_installer_write,
         security_headers=_SECURITY_HEADERS,
     )
-    register_installer_installation_plan_routes(
-        app,
-        build_plan=lambda: build_installer_installation_plan(
+    def build_installation_plan() -> dict[str, object]:
+        if installation_plan_builder is None:
+            raise RuntimeError("installer installation plan builder is unavailable")
+        return installation_plan_builder(
             preflight=receipt,
             identity=current_identity(),
             profile=profile_workflow.status() if profile_workflow is not None else None,
@@ -493,7 +488,11 @@ def create_installer_wizard(
             ),
             secrets=secret_store.status() if secret_store is not None else None,
             budgets=budget_workflow.status() if budget_workflow is not None else None,
-        ),
+        )
+
+    register_installer_installation_plan_routes(
+        app,
+        build_plan=build_installation_plan,
         require_read=require_installer_read,
         security_headers=_SECURITY_HEADERS,
     )
@@ -625,7 +624,7 @@ def create_installer_wizard(
             )
         except SoulMarkdownError:
             raise HTTPException(status_code=422, detail="SOUL.md staging is invalid")
-        except IdentityPackLifecycleError as error:
+        except RuntimeError as error:
             raise HTTPException(
                 status_code=409, detail="identity proposal could not be staged"
             ) from error
@@ -672,7 +671,7 @@ def create_installer_wizard(
                 draft_sha256=payload["draft_sha256"],
                 expected_base_sha256=payload["expected_base_sha256"],
             )
-        except IdentityPackLifecycleError as error:
+        except RuntimeError as error:
             raise HTTPException(
                 status_code=409, detail="identity proposal could not be signed"
             ) from error
@@ -723,7 +722,7 @@ def create_installer_wizard(
                 candidate_sha256=payload["candidate_sha256"],
                 expected_current_sha256=payload["expected_current_sha256"],
             )
-        except IdentityPackLifecycleError as error:
+        except RuntimeError as error:
             raise HTTPException(
                 status_code=409, detail="identity proposal could not be activated"
             ) from error
@@ -766,7 +765,7 @@ def create_installer_wizard(
             transition = lifecycle.rollback(
                 expected_current_sha256=payload["expected_current_sha256"]
             )
-        except IdentityPackLifecycleError as error:
+        except RuntimeError as error:
             raise HTTPException(
                 status_code=409, detail="identity could not be rolled back"
             ) from error

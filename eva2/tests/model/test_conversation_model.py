@@ -15,6 +15,7 @@ from typing import Any, Iterator
 import pytest
 
 import eva.adapters.model.conversation as conversation_module
+from eva.adapters.objects.identity_verifier import load_current_identity_pack
 from eva.adapters.connectors.home_assistant import HomeAssistantToolAdapter
 from eva.adapters.connectors.home_assistant_automations import (
     HomeAssistantConversationAutomationPlanner,
@@ -41,7 +42,6 @@ from eva.application.conversation import (
     ConversationTurn,
     IdentityProfile,
     RecentConversationMessage,
-    load_current_identity_pack,
     stream_conversation_text,
 )
 from eva.application.memory import PresenceMemory

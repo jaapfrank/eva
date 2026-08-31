@@ -9,7 +9,6 @@ from datetime import datetime
 from typing import Literal
 from uuid import UUID, uuid5
 
-from pydantic import ValidationError
 import sqlalchemy as sa
 
 from eva.adapters.postgres.action_chain_leases import (
@@ -186,7 +185,7 @@ class PostgresActionChainEffectPreparer(PostgresActionChainStore):
                 ).one()
                 try:
                     intent = EffectIntent.model_validate(intent_row.payload)
-                except ValidationError as error:
+                except ValueError as error:
                     raise ActionChainEffectConflict(
                         "prepared effect payload is invalid"
                     ) from error
@@ -422,7 +421,7 @@ class PostgresActionChainEffectPreparer(PostgresActionChainStore):
             binding = ConnectorBinding.model_validate(
                 None if binding_row is None else binding_row.payload
             )
-        except ValidationError as error:
+        except ValueError as error:
             raise ActionChainEffectConflict(
                 "effect capability payload is invalid"
             ) from error

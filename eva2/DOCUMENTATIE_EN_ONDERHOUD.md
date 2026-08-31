@@ -112,6 +112,14 @@ verdwenen autoriteit blijft wijzen.
   eigenaarschap. Dit is lokaal getest, maar nog niet commitgebonden of
   onafhankelijk gereviewd. Optimalisatiestatus is bovendien nog niet voor
   iedere component gemeten.
+- Vier historische bewijs- en preflighttools staan daarnaast gesloten in
+  `design/architecture/evidence-tool-registry-v1.json`. Voor ieder bestand zijn
+  eigenaar, doel, side effects, risicoklasse, uitvoerbeleid, bronhash en tests
+  verplicht. De LAB-36-checker en B-preflight zijn alleen-lezen. De
+  betaalproef mag uitsluitend een wegwerpdatabase en lokale contractprovider
+  gebruiken. `migrate_hindsight_provenance.py` blijft wegens zijn externe
+  geheugenwrites expliciet `quarantined`; de cataloguschecker weigert die tool
+  als een gewone beheerde of automatisch uitvoerbare handeling te registreren.
 
 ## Kleine documentatiegates
 

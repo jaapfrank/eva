@@ -17,8 +17,14 @@ from pathlib import Path
 import re
 import time
 from types import MappingProxyType
-from typing import Callable, Literal, Mapping, Protocol
+from typing import Callable, Literal, Mapping
 
+from eva.application.installer import (
+    InstallerProviderProbe,
+    InstallerProviderProbeError,
+    InstallerProviderProbeObservation,
+    InstallerProviderVerificationError,
+)
 from eva.contracts.canonical_json import canonical_json_bytes
 from eva.operations.identity_pack_lifecycle import IdentityPackLifecycleError
 from eva.operations.installer_capability_workflow import (
@@ -88,56 +94,6 @@ _PROVIDER_SCOPES = MappingProxyType(
 )
 _MIN_TIMEOUT_SECONDS = 1.0
 _MAX_TIMEOUT_SECONDS = 30.0
-
-
-class InstallerProviderVerificationError(ValueError):
-    """Raised when a provider verification cannot be trusted or completed."""
-
-
-class InstallerProviderProbeError(RuntimeError):
-    """A sanitized, expected provider failure with one closed reason code."""
-
-    def __init__(
-        self,
-        reason_code: VerificationReason,
-        *,
-        provider_operation: ProviderOperation = "read_only_identity",
-        usage_measurement: UsageMeasurement = "not_applicable",
-        billable_request_attempted: bool = False,
-    ) -> None:
-        if reason_code not in _BLOCKED_REASONS:
-            raise ValueError("provider probe reason is invalid")
-        if provider_operation not in {"read_only_identity", "bounded_generation"}:
-            raise ValueError("provider probe operation is invalid")
-        if usage_measurement not in {"not_applicable", "unmeasured"}:
-            raise ValueError("failed provider probe usage is invalid")
-        if not isinstance(billable_request_attempted, bool) or (
-            billable_request_attempted and provider_operation != "bounded_generation"
-        ):
-            raise ValueError("provider probe billing attempt is invalid")
-        super().__init__("provider verification did not succeed")
-        self.reason_code = reason_code
-        self.provider_operation = provider_operation
-        self.usage_measurement = usage_measurement
-        self.billable_request_attempted = billable_request_attempted
-
-
-@dataclass(frozen=True, slots=True)
-class InstallerProviderProbeObservation:
-    check_id: str
-    outcome: VerificationOutcome
-    reason_code: VerificationReason
-    provider_operation: ProviderOperation = "read_only_identity"
-    usage_measurement: UsageMeasurement = "not_applicable"
-    input_tokens: int | None = None
-    output_tokens: int | None = None
-    billable_request_attempted: bool = False
-
-
-class InstallerProviderProbe(Protocol):
-    def read_only_probe(
-        self, *, secret: memoryview, timeout_seconds: float
-    ) -> InstallerProviderProbeObservation: ...
 
 
 @dataclass(frozen=True, slots=True)
@@ -305,6 +261,31 @@ class InstallerProviderVerifier:
     configuration_sha256_by_slot: Mapping[str, str] = field(default_factory=dict)
     clock: Callable[[], str] = _utc_now
     monotonic: Callable[[], float] = time.monotonic
+
+    @staticmethod
+    def scope_manifest(slot_id: object) -> dict[str, object]:
+        return installer_provider_scope_manifest(slot_id)
+
+    @staticmethod
+    def scope_manifest_sha256(slot_id: object) -> str:
+        return installer_provider_scope_manifest_sha256(slot_id)
+
+    def for_configured_probe(
+        self,
+        *,
+        slot_id: str,
+        probe: InstallerProviderProbe,
+        configuration_sha256: str,
+    ) -> "InstallerProviderVerifier":
+        return InstallerProviderVerifier(
+            capability_workflow=self.capability_workflow,
+            secret_store=self.secret_store,
+            evidence_workspace=self.evidence_workspace,
+            probes={slot_id: probe},
+            configuration_sha256_by_slot={slot_id: configuration_sha256},
+            clock=self.clock,
+            monotonic=self.monotonic,
+        )
 
     def __post_init__(self) -> None:
         _private_directory(self.evidence_workspace)

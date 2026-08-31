@@ -85,7 +85,7 @@ from uuid import NAMESPACE_URL, uuid5
 import sqlalchemy as sa
 
 from eva.adapters.postgres.operational_timeline import PostgresOperationalTimeline, TimelineScope
-from eva.bootstrap.secrets import read_runtime_secret_file
+from eva.adapters.credentials.runtime_files import read_runtime_secret_file
 
 dsn = read_runtime_secret_file(
     os.environ["EVA_DATABASE_DSN_FILE"], setting_name="EVA_DATABASE_DSN_FILE"

@@ -8,6 +8,7 @@ import hashlib
 from pathlib import Path
 from typing import Callable, Literal
 
+from eva.application.installer import InstallerUseCaseError, InstallerUserInputError
 from eva.contracts.canonical_json import canonical_json_bytes
 from eva.operations.installer_capability_workflow import (
     InstallerCapabilityWorkflow,
@@ -24,11 +25,11 @@ from eva.operations.installer_safety import (
 BudgetPhase = Literal["empty", "staged", "ready"]
 
 
-class InstallerBudgetWorkflowError(ValueError):
+class InstallerBudgetWorkflowError(InstallerUseCaseError):
     """Raised when retained installer budgets cannot be trusted."""
 
 
-class InstallerBudgetInputError(InstallerBudgetWorkflowError):
+class InstallerBudgetInputError(InstallerUserInputError, InstallerBudgetWorkflowError):
     """Raised when a human-supplied budget lies outside Eva's safe bounds."""
 
 

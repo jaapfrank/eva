@@ -8,6 +8,7 @@ import hashlib
 from pathlib import Path
 from typing import Callable, Literal
 
+from eva.application.installer import InstallerUseCaseError, InstallerUserInputError
 from eva.contracts.canonical_json import canonical_json_bytes, require_canonical_bytes
 from eva.operations.identity_pack_lifecycle import IdentityPackLifecycleError
 from eva.operations.installer_identity_storage import (
@@ -27,11 +28,13 @@ _SLOT_SET = frozenset(PROVIDER_CONFIGURATION_SLOTS)
 _MAX_VALUE_LENGTH = 1_024
 
 
-class InstallerProviderConfigurationError(ValueError):
+class InstallerProviderConfigurationError(InstallerUseCaseError):
     """Raised when retained provider configuration cannot be trusted."""
 
 
-class InstallerProviderConfigurationInputError(InstallerProviderConfigurationError):
+class InstallerProviderConfigurationInputError(
+    InstallerUserInputError, InstallerProviderConfigurationError
+):
     """Raised when browser-supplied provider configuration is invalid."""
 
 

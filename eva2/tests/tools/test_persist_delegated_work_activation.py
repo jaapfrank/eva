@@ -74,7 +74,7 @@ def test_activation_is_atomic_exact_and_idempotent(tmp_path: Path) -> None:
     assert f"EVA_DASHBOARD_RELEASE_SHA256={'1' * 64}\n" in raw
     assert (
         "EVA_B_MANAGED_MANIFEST_SHA256="
-        "75a7f9f8574bd2a8ada3300ca796ee0fd073a583900a1e7383828f8f727f5afd\n"
+        "f2c12cbc07a0d965ec4dc32c7f2f75b4166125c8ee5bcc294df05b834f2a92d9\n"
     ) in raw
     assert f"EVA_DELEGATED_WORK_IMAGE={WORKER}\n" in raw
     assert f"EVA_DELEGATED_WORK_OWNER_PRINCIPAL_ID={PRINCIPAL}\n" in raw

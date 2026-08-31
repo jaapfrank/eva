@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import importlib.util
+import hashlib
 import json
 from pathlib import Path
 import sys
@@ -16,6 +17,9 @@ SCOPE_PREFIXES = [
     "eva2/migrations/",
     "eva2/tests/",
 ]
+FIXTURE_TOOL_PATH = "eva2/tools/fixture_evidence_tool.py"
+FIXTURE_TEST_PATH = "eva2/tests/application/test_a.py"
+FIXTURE_TOOL_SOURCE = b"def check():\n    return True\n"
 
 
 def _checker():
@@ -92,6 +96,11 @@ def _fixture_documents() -> tuple[dict[str, object], dict[str, object]]:
             "contract": "EvaRepositoryInventory/v1",
             "path": "docs/eva-repository-inventory.generated.json",
         },
+        "managedToolRegistry": {
+            "contract": "EvaManagedEvidenceToolRegistry/v1",
+            "path": "eva2/design/architecture/evidence-tool-registry-v1.json",
+            "requiredTools": [FIXTURE_TOOL_PATH],
+        },
         "scopePrefixes": SCOPE_PREFIXES,
         "components": [
             _component(
@@ -109,16 +118,56 @@ def _fixture_documents() -> tuple[dict[str, object], dict[str, object]]:
     return catalog, inventory
 
 
+def _fixture_tool_registry() -> dict[str, object]:
+    return {
+        "contract": "EvaManagedEvidenceToolRegistry/v1",
+        "schemaVersion": 1,
+        "status": "implemented",
+        "tools": [
+            {
+                "path": FIXTURE_TOOL_PATH,
+                "owner": "verification",
+                "purpose": "Controleert de tijdelijke testfixture.",
+                "riskClass": "repository_read_only",
+                "sideEffects": ["Leest uitsluitend tijdelijke fixturedata."],
+                "lifecycleStatus": "managed",
+                "invocationPolicy": "ci_or_read_only_operator",
+                "sourceSha256": hashlib.sha256(FIXTURE_TOOL_SOURCE).hexdigest(),
+                "verification": {
+                    "testPaths": [FIXTURE_TEST_PATH],
+                    "evidencePaths": [],
+                },
+            }
+        ],
+    }
+
+
 def _run(
     tmp_path: Path,
     catalog: dict[str, object],
     inventory: dict[str, object],
+    tool_registry: dict[str, object] | None = None,
 ):
     catalog_path = tmp_path / "catalog.json"
     inventory_path = tmp_path / "inventory.json"
+    tool_registry_path = tmp_path / "tool-registry.json"
+    tool_path = tmp_path / FIXTURE_TOOL_PATH
+    test_path = tmp_path / FIXTURE_TEST_PATH
+    tool_path.parent.mkdir(parents=True, exist_ok=True)
+    test_path.parent.mkdir(parents=True, exist_ok=True)
+    tool_path.write_bytes(FIXTURE_TOOL_SOURCE)
+    test_path.write_text("def test_a():\n    assert True\n", encoding="utf-8")
     catalog_path.write_text(json.dumps(catalog), encoding="utf-8")
     inventory_path.write_text(json.dumps(inventory), encoding="utf-8")
-    return _checker().check(tmp_path, catalog_path, inventory_path)
+    tool_registry_path.write_text(
+        json.dumps(tool_registry or _fixture_tool_registry()), encoding="utf-8"
+    )
+    return _checker().check(
+        tmp_path,
+        catalog_path,
+        inventory_path,
+        tool_registry_path,
+    )
 
 
 def _codes(violations) -> set[str]:
@@ -226,3 +275,39 @@ def test_inventory_contract_mismatch_is_rejected(tmp_path: Path) -> None:
     violations = _run(tmp_path, catalog, inventory)
 
     assert "inventory_binding_contract" in _codes(violations)
+
+
+def test_external_migration_tool_must_remain_quarantined(tmp_path: Path) -> None:
+    catalog, inventory = _fixture_documents()
+    registry = _fixture_tool_registry()
+    tool = registry["tools"][0]  # type: ignore[index]
+    assert isinstance(tool, dict)
+    tool["riskClass"] = "external_migration_write"
+    tool["invocationPolicy"] = "quarantined_explicit_operator_only"
+    tool["lifecycleStatus"] = "managed"
+
+    violations = _run(tmp_path, catalog, inventory, registry)
+
+    assert "managed_tool_quarantine" in _codes(violations)
+
+
+def test_required_managed_tool_cannot_disappear_from_registry(tmp_path: Path) -> None:
+    catalog, inventory = _fixture_documents()
+    registry = _fixture_tool_registry()
+    registry["tools"] = []
+
+    violations = _run(tmp_path, catalog, inventory, registry)
+
+    assert "managed_tools" in _codes(violations)
+
+
+def test_managed_tool_source_hash_is_sealed(tmp_path: Path) -> None:
+    catalog, inventory = _fixture_documents()
+    registry = _fixture_tool_registry()
+    tool = registry["tools"][0]  # type: ignore[index]
+    assert isinstance(tool, dict)
+    tool["sourceSha256"] = "0" * 64
+
+    violations = _run(tmp_path, catalog, inventory, registry)
+
+    assert "managed_tool_hash" in _codes(violations)

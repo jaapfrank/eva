@@ -9,11 +9,11 @@ from typing import Callable, Mapping
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import JSONResponse
 
-from eva.operations.installer_budget_workflow import (
-    InstallerBudgetInputError,
-    InstallerBudgetStatus,
-    InstallerBudgetWorkflow,
-    InstallerBudgetWorkflowError,
+from eva.application.installer import (
+    InstallerBudgetPort,
+    InstallerBudgetStatusView,
+    InstallerUseCaseError,
+    InstallerUserInputError,
 )
 
 
@@ -75,7 +75,7 @@ INSTALLER_BUDGET_SCRIPT = r"""
 
 
 def _payload(
-    status: InstallerBudgetStatus | None,
+    status: InstallerBudgetStatusView | None,
     *,
     enabled: bool,
     capability_bound: bool,
@@ -100,23 +100,23 @@ def _payload(
 def register_installer_budget_routes(
     app: FastAPI,
     *,
-    workflow: InstallerBudgetWorkflow | None,
+    workflow: InstallerBudgetPort | None,
     enabled: bool,
     require_read: Callable[[Request], None],
     require_write: Callable[[Request], None],
     security_headers: Mapping[str, str],
 ) -> None:
-    def current() -> InstallerBudgetStatus | None:
+    def current() -> InstallerBudgetStatusView | None:
         if workflow is None:
             return None
         try:
             return workflow.status()
-        except InstallerBudgetWorkflowError as exc:
+        except InstallerUseCaseError as exc:
             raise HTTPException(
                 status_code=503, detail="installer budget status unavailable"
             ) from exc
 
-    def writable() -> InstallerBudgetWorkflow:
+    def writable() -> InstallerBudgetPort:
         if workflow is None or not enabled:
             raise HTTPException(
                 status_code=409, detail="installer budgets are not enabled"
@@ -129,7 +129,7 @@ def register_installer_budget_routes(
         if workflow is not None and status is not None and status.budget_sha256:
             try:
                 step = workflow.capability_workflow.status().step("budgets")
-            except Exception as exc:
+            except InstallerUseCaseError as exc:
                 raise HTTPException(
                     status_code=503, detail="installer budget binding unavailable"
                 ) from exc
@@ -156,11 +156,11 @@ def register_installer_budget_routes(
             raise HTTPException(status_code=422, detail="installer budgets are invalid")
         try:
             transition = writable().stage(**body)
-        except InstallerBudgetInputError as exc:
+        except InstallerUserInputError as exc:
             raise HTTPException(
                 status_code=422, detail="installer budgets are invalid"
             ) from exc
-        except InstallerBudgetWorkflowError as exc:
+        except InstallerUseCaseError as exc:
             raise HTTPException(
                 status_code=409, detail="installer budgets could not be staged"
             ) from exc
@@ -200,7 +200,7 @@ def register_installer_budget_routes(
             transition = writable().confirm(
                 expected_budget_sha256=body.get("budget_sha256")
             )
-        except InstallerBudgetWorkflowError as exc:
+        except InstallerUseCaseError as exc:
             raise HTTPException(
                 status_code=409, detail="installer budgets could not be confirmed"
             ) from exc

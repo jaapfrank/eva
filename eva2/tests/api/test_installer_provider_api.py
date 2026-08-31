@@ -11,6 +11,10 @@ from eva.adapters.api.installer_wizard import (
     InstallerBootstrap,
     create_installer_wizard,
 )
+from eva.adapters.connectors.installer_configured_probe_factory import (
+    configured_installer_probe,
+)
+from eva.adapters.objects.identity_verifier import load_current_identity_pack
 from eva.bootstrap.installer_wizard_cli import run_installer_wizard
 from eva.operations.installer_capability_workflow import InstallerCapabilityWorkflow
 from eva.operations.installer_provider_configuration import (
@@ -116,6 +120,7 @@ def _client(
         create_installer_wizard(
             _receipt(status=status),
             bootstrap,
+            identity=load_current_identity_pack(),
             capability_workflow=workflow,
             secret_store=store,
             provider_verifier=verifier,
@@ -256,6 +261,7 @@ def test_default_home_assistant_configuration_rejects_public_literal(
         configuration_store=InstallerProviderConfigurationStore(
             workspace=configuration_workspace
         ),
+        configured_probe_factory=configured_installer_probe,
     )
     rejected = client.post(
         "/internal/v1/onboarding/providers/home_assistant/configure",
@@ -532,6 +538,7 @@ def test_wizard_rejects_provider_verifier_from_different_workspaces(
         create_installer_wizard(
             _receipt(),
             InstallerBootstrap(token="t" * 43, created_at=1.0, clock=lambda: 1.0),
+            identity=load_current_identity_pack(),
             capability_workflow=InstallerCapabilityWorkflow(workspace=other),
             secret_store=store,
             provider_verifier=verifier,

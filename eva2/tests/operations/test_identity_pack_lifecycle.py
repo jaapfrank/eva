@@ -9,10 +9,10 @@ import pytest
 from cryptography.hazmat.primitives import serialization
 from cryptography.hazmat.primitives.asymmetric.ed25519 import Ed25519PrivateKey
 
+from eva.adapters.objects.identity_verifier import verify_identity_pack_bytes
 from eva.application.identity_verifier import (
     IdentityPackTrustBinding,
     load_identity_pack_trust_binding,
-    verify_identity_pack_bytes,
 )
 from eva.contracts.canonical_json import canonical_json_bytes, canonical_sha256
 from eva.contracts.identity import IdentityPack, IdentityPackDraft

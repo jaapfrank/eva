@@ -20,8 +20,6 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Callable, Literal
 
-from pydantic import ValidationError
-
 from eva.contracts.platform import PlatformLock, PlatformTarget
 
 
@@ -73,7 +71,7 @@ def load_platform_lock(path: Path) -> PlatformLock:
     try:
         value = json.loads(raw)
         return PlatformLock.model_validate(value)
-    except (json.JSONDecodeError, ValidationError) as error:
+    except ValueError as error:
         raise InstallerPreflightError("platform lock is invalid") from error
 
 

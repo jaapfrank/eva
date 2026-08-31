@@ -7,7 +7,7 @@ from pathlib import Path
 import pytest
 from pydantic import ValidationError
 
-from eva.application.conversation import load_current_identity_pack
+from eva.adapters.objects.identity_verifier import load_current_identity_pack
 from eva.application.identity_drafts import identity_presentation_diff
 from eva.contracts.canonical_json import canonical_sha256
 from eva.contracts.identity import IdentityPackDraft

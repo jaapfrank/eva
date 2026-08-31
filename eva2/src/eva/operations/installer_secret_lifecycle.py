@@ -8,6 +8,7 @@ import hashlib
 from pathlib import Path
 from typing import Callable, Literal
 
+from eva.application.installer import InstallerUseCaseError
 from eva.contracts.canonical_json import canonical_json_bytes
 from eva.operations.identity_pack_lifecycle import IdentityPackLifecycleError
 from eva.operations.installer_capability_workflow import (
@@ -29,7 +30,7 @@ from eva.operations.installer_safety import (
 SecretLifecycleOperation = Literal["rotate", "remove", "recover"]
 
 
-class InstallerSecretLifecycleError(ValueError):
+class InstallerSecretLifecycleError(InstallerUseCaseError):
     """Raised when secret authority and retained bytes cannot move together."""
 
 

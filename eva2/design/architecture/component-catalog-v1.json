@@ -6,6 +6,16 @@
     "contract": "EvaRepositoryInventory/v1",
     "path": "docs/eva-repository-inventory.generated.json"
   },
+  "managedToolRegistry": {
+    "contract": "EvaManagedEvidenceToolRegistry/v1",
+    "path": "eva2/design/architecture/evidence-tool-registry-v1.json",
+    "requiredTools": [
+      "eva2/tools/check_lab36_core_live_evidence.py",
+      "eva2/tools/check_living_b_candidate.py",
+      "eva2/tools/live_paid_fulfillment_gate.py",
+      "eva2/tools/migrate_hindsight_provenance.py"
+    ]
+  },
   "scopePrefixes": [
     "eva2/src/eva/",
     "eva2/connector_sdk/",

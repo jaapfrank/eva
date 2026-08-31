@@ -19,7 +19,7 @@ from eva.contracts.connector_rpc import (
     ConnectorInvokeRequest,
 )
 from eva.contracts.execution import ReadAttempt, ReadObservation
-from eva.operations.action_chain_read_results import (
+from eva.application.action_chain_read_results import (
     ProjectedActionChainReadResult,
     project_action_chain_read_result,
 )

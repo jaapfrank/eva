@@ -27,7 +27,7 @@ from eva.adapters.postgres.operational_timeline import (
     TimelineScope,
     external_timeline_scope,
 )
-from eva.bootstrap.secrets import read_runtime_secret_file
+from eva.adapters.credentials.runtime_files import read_runtime_secret_file
 from eva.operations.delegated_work_worker import ChildRunner, DelegatedWorkWorker
 
 _SCHEMA_HEAD = "4e_0007_delegated_private"

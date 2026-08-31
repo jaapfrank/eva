@@ -10,7 +10,7 @@ services:
     security_opt: ["no-new-privileges:true"]
     tmpfs:
       - /tmp:rw,nosuid,nodev,noexec,size=8m
-    command: ["python", "-m", "eva.operations.telegram_ingress"]
+    command: ["python", "-m", "eva.bootstrap.telegram_ingress"]
     environment:
       EVA_DATABASE_DSN_FILE: /run/secrets/database_dsn
       EVA_LIVING_CORE_URL: http://core:8080

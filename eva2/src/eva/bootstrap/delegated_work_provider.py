@@ -22,7 +22,7 @@ from eva.adapters.subagents.tool_free_child import (
     ToolFreeChildProfile,
 )
 from eva.contracts.canonical_json import canonical_sha256
-from eva.bootstrap.secrets import read_shared_runtime_file_bytes
+from eva.adapters.credentials.runtime_files import read_shared_runtime_file_bytes
 from eva.contracts.delegated_work import DelegatedWorkGrant, DelegatedWorkSpec
 
 _MODEL_LEASE_OWNER_UID = 1000
@@ -86,10 +86,10 @@ def _source_hashes() -> dict[str, str]:
         "adapters/model/openai_child_provider.py",
         "adapters/postgres/delegated_work.py",
         "adapters/subagents/tool_free_child.py",
+        "adapters/credentials/runtime_files.py",
         "bootstrap/__init__.py",
         "bootstrap/delegated_work_provider.py",
         "bootstrap/delegated_work_service.py",
-        "bootstrap/secrets.py",
         "contracts/delegated_work.py",
         "operations/delegated_work_worker.py",
     )

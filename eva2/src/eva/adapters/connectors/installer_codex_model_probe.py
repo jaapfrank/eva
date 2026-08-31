@@ -12,7 +12,7 @@ from urllib.parse import urlsplit
 from uuid import uuid4
 
 from eva.contracts.canonical_json import canonical_json_bytes
-from eva.operations.installer_provider_verification import (
+from eva.application.installer import (
     InstallerProviderProbeError,
     InstallerProviderProbeObservation,
 )

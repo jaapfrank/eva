@@ -59,7 +59,7 @@ _SCHEMA_DOWNGRADE_SCRIPT = (
     "from alembic import command; "
     "from alembic.config import Config; "
     "from eva.adapters.postgres.connection import sqlalchemy_postgres_dsn; "
-    "from eva.bootstrap.secrets import read_runtime_secret_file; "
+    "from eva.adapters.credentials.runtime_files import read_runtime_secret_file; "
     "dsn=sqlalchemy_postgres_dsn(read_runtime_secret_file("
     "'/run/secrets/database_dsn',setting_name='EVA_DATABASE_DSN_FILE')); "
     "config=Config('/opt/eva/alembic.ini'); "

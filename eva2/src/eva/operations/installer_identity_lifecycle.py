@@ -20,10 +20,10 @@ from eva.application.identity_drafts import (
     identity_presentation_diff,
     validate_identity_draft_base,
 )
+from eva.adapters.objects.identity_verifier import verify_identity_pack_bytes
 from eva.application.identity_verifier import (
     IdentityPackTrustBinding,
     load_identity_pack_trust_binding,
-    verify_identity_pack_bytes,
 )
 from eva.application.soul_markdown import soul_markdown_sha256, soul_markdown_to_draft
 from eva.contracts.canonical_json import (

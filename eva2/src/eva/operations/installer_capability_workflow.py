@@ -16,6 +16,7 @@ from pathlib import Path
 import re
 from typing import Callable, Literal
 
+from eva.application.installer import InstallerUseCaseError
 from eva.contracts.canonical_json import canonical_json_bytes, require_canonical_bytes
 from eva.operations.identity_pack_lifecycle import IdentityPackLifecycleError
 from eva.operations.installer_identity_storage import (
@@ -35,7 +36,7 @@ _SHA256_RE = re.compile(r"[0-9a-f]{64}")
 _MAX_EVENTS = 256
 
 
-class InstallerCapabilityWorkflowError(ValueError):
+class InstallerCapabilityWorkflowError(InstallerUseCaseError):
     """Raised when connector onboarding state cannot be trusted."""
 
 
@@ -53,6 +54,8 @@ CAPABILITY_SPECS = (
     CapabilitySpec("adaptive_connector", False),
     CapabilitySpec("budgets", True),
 )
+
+
 _SPEC_BY_ID = {item.step_id: item for item in CAPABILITY_SPECS}
 _UNSET = object()
 

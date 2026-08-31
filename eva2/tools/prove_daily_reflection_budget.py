@@ -21,7 +21,7 @@ from eva.adapters.postgres.operational_timeline import (
 from eva.adapters.postgres.runtime_resource_usage import (
     PostgresDailyReflectionBudget,
 )
-from eva.bootstrap.secrets import read_runtime_secret_file
+from eva.adapters.credentials.runtime_files import read_runtime_secret_file
 from eva.contracts.canonical_json import canonical_json_bytes
 from eva.contracts.runtime_budget import RuntimeResourceBudget
 

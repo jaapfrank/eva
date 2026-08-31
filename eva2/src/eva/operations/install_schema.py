@@ -27,7 +27,7 @@ from eva.adapters.postgres.connection import sqlalchemy_postgres_dsn
 from eva.adapters.postgres.foreign_key_catalog import (
     require_current_foreign_key_catalog,
 )
-from eva.bootstrap.secrets import read_runtime_secret_file
+from eva.adapters.credentials.runtime_files import read_runtime_secret_file
 from eva.operations.logical_restore_authority import (
     _LOGICAL_RESTORE_ROLES,
     _LOGICAL_RESTORE_ROLE_SQL,  # noqa: F401 - compatibility re-export
