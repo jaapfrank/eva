@@ -358,9 +358,9 @@ herstelbaar.
 
 | Algemeen probleem | Gekozen onderhouden bouwsteen | Werkelijkheid nu |
 |---|---|---|
-| Modelverkeer | `pydantic-ai-slim` met alleen de gekozen officiële provider-SDK | 🟡 `slim` is dezelfde Pydantic AI-kern zonder ongebruikte providerextra's; Eva gebruikt de officiële OpenAI-SDK apart. Pydantic AI `2.36.0` is de enige gewone gesprekseigenaar in de bron. De exacte 38-packagecommit is offline gebouwd in een minimale Distroless-image, draait als niet-root en scant 0 hoog/0 kritisch. Echte gesprek-, tool- en crashpariteit op die image en A/B-livegang ontbreken nog |
+| Modelverkeer | `pydantic-ai-slim` met alleen de gekozen officiële provider-SDK | 🟡 `slim` is dezelfde Pydantic AI-agentkern zonder ongebruikte provider-, CLI- en UI-extra's; het maakt Eva dus niet minder slim. De exacte minimale image streamde via echte Codex, koos een uitgestelde tool en vervolgde uit een receipt. Zij scant 0 hoog/0 kritisch. Een fysieke kill tijdens een echte toolactie en A/B-livegang ontbreken nog |
 | Langetermijngeheugen | Hindsight | ✅ Live; 🟡 Eva's adapter moet nog kleiner |
-| Externe gereedschappen | Pydantic AI met runtime-ontdekte tools; ContextForge alleen als optionele gateway | 🟡 De gewone bronroute gebruikt nu Pydantic AI en houdt Eva's duurzame ledger/readback buiten het framework. De brede 69-wheelroute is afgewezen. Uitgestelde cataloguslading en de echte Codex-bronproef zijn groen; twee verwisselbare providers moeten nog op de exacte image worden bewezen |
+| Externe gereedschappen | Pydantic AI met runtime-ontdekte tools; ContextForge alleen als optionele gateway | 🟡 De gewone bronroute gebruikt Pydantic AI en houdt Eva's duurzame ledger/readback buiten het framework. De exacte image doorliep de PostgreSQL-uitvoering, readback en replay zonder dubbelen. Een echte externe provideractie met fysieke crash en twee verwisselbare providers op dezelfde image blijven open |
 | Subagents | Pydantic AI/Harness voor modelruns; onderhouden workflowmotor voor duurzaam werk | 🟡 Modelrun werkt; workflowkeuze nog niet gewonnen door een dependency |
 | Voice | Pipecat als eerste complete pipeline; Wyoming als lokale fallback | 🟡 Bake-off en fysieke proef ontbreken |
 | Browser | Playwright MCP tegenover Browser Use; daarna één winnaar | 🟡 Functioneel beproefd; nog geen releaseveilige winnaar |
@@ -447,6 +447,9 @@ De echte gesaneerde bronproef staat in
 [het Codex-compatibiliteitsbewijs](evidence/product/pydantic-ai-2.36-source-codex-compatibility-2026-08-31.json).
 De exacte offline Distroless-build, niet-rootimports, SBOM en 0/0-scan staan in
 [het Pydantic AI-kandidaatbewijs](evidence/product/pydantic-ai-2.36-distroless-offline-candidate-2026-08-31.json).
+De echte Codex-stream, uitgestelde toolkeuze, receiptvervolg en duurzame
+PostgreSQL-replay op exact die image staan in
+[het runtimepariteitsbewijs](evidence/product/pydantic-ai-2.36-distroless-runtime-parity-2026-08-31.json).
 De vastgestelde Telegramverwarring, historische classificatie, live correctie
 en de nog open menselijke eindproef staan in
 [het Eva1/Eva2-dialooggrensbewijs](evidence/living-core/eva1-eva2-telegram-dialogue-isolation-2026-08-31.json).

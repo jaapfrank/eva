@@ -1,0 +1,112 @@
+{
+  "contract": "Eva2PydanticAI236DistrolessRuntimeParity/v1",
+  "issuedAt": "2026-08-31T22:23:54+02:00",
+  "status": "passed_with_physical_crash_gate_open",
+  "candidate": {
+    "imageId": "sha256:dec43d3d11f31667fdfde96e5e4aafb173ca680ad830ca9d70e1cd6cca8b55e8",
+    "sourceCommit": "0c469ee513b1843253dc170eba08161101d5a70d",
+    "runtimeUser": "65532:65532",
+    "readOnlyFilesystem": true,
+    "highFindings": 0,
+    "criticalFindings": 0
+  },
+  "realCodexProbe": {
+    "modelAttemptCount": 3,
+    "accessOnlyLease": true,
+    "databaseMounted": false,
+    "dockerSocketMounted": false,
+    "homeProviderMounted": false,
+    "workDirectoryMounted": false,
+    "phases": {
+      "streamingText": {
+        "answerSha256": "7b3c05415af6eaf1f0af0d18c54168ebca79dd9c7b8f5380a35a06391c281e88",
+        "deltaCount": 4,
+        "status": "exact",
+        "usage": {
+          "inputTokens": 28,
+          "outputTokens": 39,
+          "modelAttempts": 1,
+          "toolCalls": 0
+        }
+      },
+      "deferredTool": {
+        "callIdSha256": "94291b2ddaf488f323acb7bd527fa92fa74ddbed303288566f33cc77de9e4cd7",
+        "status": "selected_not_executed",
+        "toolName": "probe_candidate_capability",
+        "validatedArguments": {
+          "capability": "streaming-deferred-tools"
+        },
+        "usage": {
+          "inputTokens": 1588,
+          "outputTokens": 204,
+          "modelAttempts": 1,
+          "toolCalls": 1
+        }
+      },
+      "receiptContinuation": {
+        "answerSha256": "43f2b98e3e6f55b9cab4190e25498b5a1d0114b262f50667d38560e2c7387b19",
+        "offeredToolCount": 0,
+        "status": "synthetic_receipt_continued",
+        "usage": {
+          "inputTokens": 789,
+          "outputTokens": 61,
+          "modelAttempts": 1,
+          "toolCalls": 0
+        }
+      }
+    },
+    "resourceBudget": {
+      "maxInputTokens": 9000,
+      "maxOutputTokens": 500,
+      "unknownCostStatus": "blocked"
+    }
+  },
+  "durableActionChainProbe": {
+    "postgresVersion": "16.13",
+    "migrationHead": "4e_0007_delegated_private",
+    "test": "tests/postgres/test_action_chain_effect_advances.py::test_committed_effect_recovers_across_every_readback_process_boundary",
+    "testFileSha256": "bc1e0779385af2e39e7b9384be478b814a6e16b5336e290b74bfb1c2ff169676",
+    "designFixtureSha256": "f492d746779ec5276478893ff22720c84926912371d19175dd7508a18734b91d",
+    "passed": 1,
+    "failed": 0,
+    "durationSeconds": 8.07,
+    "expectedFinalCounts": {
+      "effectAttempts": 1,
+      "effectReceipts": 1,
+      "effectCallStarts": 1,
+      "readbackAttempts": 1,
+      "physicalReadbacks": 1,
+      "readbackCallStarts": 1,
+      "stateVerified": 1,
+      "dependencyReleases": 1
+    },
+    "replay": {
+      "extraEffectProviderCalls": 0,
+      "extraReadbackProviderCalls": 0,
+      "extraDependencyReleases": 0
+    },
+    "harness": {
+      "testsMountedReadOnly": true,
+      "designFixturesMountedReadOnly": true,
+      "pytestMountedAsTestOnlyDependency": true,
+      "runtimePackagesCameFromCandidateImage": true
+    },
+    "cleanup": {
+      "disposableDatabaseContainerRemoved": true,
+      "disposableNetworkRemoved": true
+    }
+  },
+  "privacy": {
+    "accountIdRecorded": false,
+    "answerTextRecorded": false,
+    "promptTextRecorded": false,
+    "tokenRecorded": false
+  },
+  "nonClaims": [
+    "The real Codex probe selected a deferred tool but did not execute an external provider effect; its continuation used a synthetic receipt.",
+    "The PostgreSQL probe used the production action-chain code with a synthetic provider fixture and fresh database engines; it was not an operating-system process kill or container SIGKILL.",
+    "Read-only pytest and design fixtures were mounted only as a test harness and are not runtime dependencies in the candidate image.",
+    "This candidate has not been attached to managed Compose, deployed, promoted through A/B, or made live.",
+    "A real external provider effect interrupted by a physical process kill and safely resumed remains an open release gate."
+  ]
+}
