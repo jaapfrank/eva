@@ -1,6 +1,6 @@
 # Eva 2 — projectbord en vergelijking
 
-Laatst bijgewerkt: 31 augustus 2026, 11:27 CEST
+Laatst bijgewerkt: 31 augustus 2026, 11:31 CEST
 
 ## Zo lees je dit bord
 
@@ -275,8 +275,9 @@ groen resultaat en is uitgezet. De vervanger moet altijd het werkelijk actieve
 slot vastleggen en de Windows-controle uitvoeren vanuit een omgeving waarin
 WSL-interoperabiliteit beschikbaar is. Buiten de actieve route bleek ook een
 oude v53-onderzoeksworker te blijven herstarten doordat zijn oude databasenaam
-niet meer bestaat. Eva1 en `/eva2` gebruiken die container niet; hij is nog
-niet gewijzigd of gestopt.
+niet meer bestaat. Eva1 en `/eva2` gebruiken die container niet. Na die
+controle is alleen deze oude worker gestopt; hij is niet verwijderd en blijft
+herstelbaar.
 
 ## Welke open-source onderdelen dragen Eva werkelijk?
 

@@ -72,8 +72,13 @@
     "image": "eva2-living-core:cross-channel-v53-20260824",
     "restartLoopObserved": true,
     "restartCountAtAudit": 51,
+    "restartCountBeforeStop": 75,
     "cause": "Its obsolete postgres-b hostname no longer resolves.",
-    "changedByThisAudit": false
+    "changedByThisAudit": true,
+    "action": "Stopped after confirming that it is outside the active Eva1 and Eva2 routes.",
+    "finalStatus": "exited",
+    "removed": false,
+    "recoverable": true
   },
   "privacy": {
     "externalTelegramMessageSent": false,
@@ -85,6 +90,6 @@
     "The old automatic systemd verifier did not pass and is not presented as passing.",
     "The still-open human Telegram alternation test was not completed by this local post-restart audit.",
     "This does not prove seven days of stability.",
-    "The unrelated legacy worker restart loop is not part of the active Eva2 route and was not repaired or stopped by this audit."
+    "The unrelated legacy worker was stopped only after confirming that it is not part of the active Eva1 or Eva2 route; it was not removed."
   ]
 }
