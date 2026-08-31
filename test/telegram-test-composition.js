@@ -12,6 +12,7 @@ export const __telegramMediaTest = Object.freeze({
 });
 export const __telegramTransportTest = Object.freeze({
   TelegramDeliveryError,
+  archiveTelegramEnvelope,
   authenticatedTelegramMessageContext,
   async prepareAuthenticatedTelegramTurnForTest({
     ctx, sender, text, agentText = text, extras = {}, replyTo = null, replyEvidence = null,

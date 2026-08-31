@@ -1,11 +1,10 @@
-const CANARY_PREFIX = /^\/eva2(?:@\w+)?(?:\s+|$)/iu;
+import { eva2TelegramPrompt } from '../telegramdialogue.js';
+
 const DRAFT_MIN_GROWTH = 32;
 const DRAFT_MAX_INTERVAL_MS = 300;
 
 export function eva2CanaryPrompt(text) {
-  const value = String(text || '');
-  if (!CANARY_PREFIX.test(value)) return null;
-  return value.replace(CANARY_PREFIX, '').trim();
+  return eva2TelegramPrompt(text);
 }
 
 export function createEva2DraftSink({ chatId, draftId, sendDraft, clock = Date.now }) {

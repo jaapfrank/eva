@@ -36,6 +36,7 @@ export const __projectRouteTest = Object.freeze({
   syntheticToolAllowed: testToolSyntheticAllowed,
   syntheticReplyNeedsPersistentState,
   styleCorrectionPolicyFeedback,
+  telegramConversationRows,
   explicitlyIncompleteAction,
   shouldAutoBindDurableTool,
   boundExplorationToolError,

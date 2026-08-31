@@ -18,6 +18,10 @@ import {
 } from './util.js';
 import { redactSecrets, redactSensitiveText } from './security/redaction.js';
 import {
+  archivedTelegramDialogueRoute,
+  telegramDialogueRoute,
+} from './telegramdialogue.js';
+import {
   EXECUTION_LEDGER_TRIGGER_SQL,
   EXECUTION_RECORD_CONTRACT_V1,
   EXECUTION_RECORD_CONTRACT_V2,
@@ -2573,6 +2577,7 @@ export function recentTelegramMessages({
   kind = null,
   role = null,
   includeDeleted = false,
+  dialogueRoute = null,
 } = {}) {
   const where = [];
   const params = [];
@@ -2603,10 +2608,18 @@ export function recentTelegramMessages({
   }
   if (!includeDeleted) where.push('deleted=0');
   const boundedLimit = Math.max(1, Math.min(500, Number(limit) || 30));
+  const route = telegramDialogueRoute(dialogueRoute);
+  // Routefiltering gebeurt na parse zodat ook historische regels zonder de
+  // nieuwe expliciete meta met veldarme, deterministische provenance worden
+  // geclassificeerd. Meer ophalen mag context verkorten, nooit routes mengen.
+  const queryLimit = route ? 500 : boundedLimit;
   const sql = `SELECT * FROM telegram_messages${where.length ? ` WHERE ${where.join(' AND ')}` : ''}
     ORDER BY id DESC LIMIT ?`;
-  params.push(boundedLimit);
-  return db.prepare(sql).all(...params).reverse().map(parseTelegramMessage);
+  params.push(queryLimit);
+  const rows = db.prepare(sql).all(...params).reverse().map(parseTelegramMessage);
+  return (route
+    ? rows.filter((row) => archivedTelegramDialogueRoute(row) === route)
+    : rows).slice(-boundedLimit);
 }
 
 const TELEGRAM_SEARCH_STOPWORDS = new Set([
@@ -2619,6 +2632,7 @@ export function searchTelegramMessages(query, {
   chatId = null,
   sender = null,
   limit = 12,
+  dialogueRoute = null,
 } = {}) {
   const terms = [...new Set(String(query || '').toLocaleLowerCase('nl-NL')
     .replace(/[^\p{L}\p{N}]+/gu, ' ')
@@ -2635,9 +2649,11 @@ export function searchTelegramMessages(query, {
     where.push('lower(sender)=lower(?)');
     params.push(String(sender));
   }
+  const route = telegramDialogueRoute(dialogueRoute);
   const candidates = db.prepare(`SELECT * FROM telegram_messages
     WHERE ${where.join(' AND ')}
-    ORDER BY id DESC LIMIT 5000`).all(...params).map(parseTelegramMessage);
+    ORDER BY id DESC LIMIT 5000`).all(...params).map(parseTelegramMessage)
+    .filter((row) => !route || archivedTelegramDialogueRoute(row) === route);
   const scored = candidates.map((row) => {
     const kindWords = {
       photo: 'foto afbeelding beeld plaatje',
@@ -2766,7 +2782,8 @@ export function searchTelegramConversationOpportunity(searchSpec, { now = Date.n
   }
   const candidates = db.prepare(`SELECT * FROM telegram_messages
     WHERE ${where.join(' AND ')}
-    ORDER BY id DESC LIMIT 5000`).all(...params).map(parseTelegramMessage);
+    ORDER BY id DESC LIMIT 5000`).all(...params).map(parseTelegramMessage)
+    .filter((row) => archivedTelegramDialogueRoute(row) === 'eva1');
   const boundedLimit = spec.limit;
   const recencyRanks = new Map(candidates.map((row, index) => [Number(row.id), index + 1]));
   const lexical = candidates.map((row) => {

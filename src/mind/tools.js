@@ -4014,6 +4014,7 @@ async function handleZoekGesprek(args, context, mode) {
   const chronological = /\b(?:nieuwste|laatste|recent(?:e|ste)?|afgelopen)\b/i.test(question);
   const messages = searchTelegramMessages(chronological ? '' : question, {
     chatId, sender: args.persoon || null, limit: args.limiet || 12,
+    dialogueRoute: 'eva1',
   });
   return clean(JSON.stringify({ ok: true, changed: false, verified: true, count: messages.length, messages }));
 }

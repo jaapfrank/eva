@@ -32,6 +32,7 @@ import {
   db,
 } from '../db.js';
 import { config } from '../config.js';
+import { archivedTelegramDialogueRoute } from '../telegramdialogue.js';
 import { chatComplete, executionModelFailureText, msg, runExecutionDriver } from '../brain/llm.js';
 import { applyInteractionFeedback, interactionFeedback, moodActionGuidance } from './emotions.js';
 import { buildRedactedInstructions, renderHouseActionResult, semanticFailurePresentation, semanticFailureReplyFeedback } from './persona.js';
@@ -2075,14 +2076,19 @@ function telegramConversationRows(messageContext, limit) {
   const messageId = String(messageContext?.messageId || '').trim();
   if (!chatId) return [];
   const boundedLimit = Math.max(1, Math.min(40, Number(limit) || 8));
-  if (!messageId) return recentTelegramMessages({ chatId, limit: boundedLimit });
+  if (!messageId) return recentTelegramMessages({
+    chatId, limit: boundedLimit, dialogueRoute: 'eva1',
+  });
   const prior = recentTelegramMessages({
     chatId,
     beforeMessageId: messageId,
     limit: Math.max(1, boundedLimit - 1),
+    dialogueRoute: 'eva1',
   });
   const current = telegramMessage(chatId, messageId);
-  return (current ? [...prior, current] : prior).slice(-boundedLimit);
+  return (current ? [...prior, current] : prior)
+    .filter((row) => archivedTelegramDialogueRoute(row) === 'eva1')
+    .slice(-boundedLimit);
 }
 
 function telegramConversationText(row, sender, { includeDeliveryEvidence = false } = {}) {

@@ -64,6 +64,10 @@ import { registerRuntimePrincipalValidator } from '../mind/runtimecontroller.js'
 import { householdMembers } from '../mind/household.js';
 import { turnUnderstandingAuthorityRecord } from '../turnauthority.js';
 import {
+  archivedTelegramDialogueRoute,
+  telegramDialogueRoute,
+} from '../telegramdialogue.js';
+import {
   askEva2Canary,
   createEva2DraftSink,
   eva2CanaryPrompt,
@@ -149,6 +153,16 @@ function archiveTelegramPayload({
       ? resolveName(message.from)
       : 'huisgenoot');
   const resolvedRole = role || (message.from?.is_bot ? 'assistant' : 'user');
+  const routeMeta = meta && typeof meta === 'object' ? meta : {};
+  const dialogueRoute = telegramDialogueRoute(
+    routeMeta.dialogueRoute,
+    archivedTelegramDialogueRoute({
+      role: resolvedRole,
+      kind: telegramMessageKind(message),
+      content: telegramMessageContent(message),
+      meta: routeMeta,
+    }),
+  );
   return archiveTelegramMessage({
     chatId,
     messageId: message.message_id,
@@ -168,7 +182,8 @@ function archiveTelegramPayload({
       ...(message.media_group_id ? { mediaGroupId: String(message.media_group_id) } : {}),
       ...(file?.file_unique_id ? { fileUniqueId: String(file.file_unique_id) } : {}),
       ...(file?.mime_type ? { mimeType: String(file.mime_type) } : {}),
-      ...(meta && typeof meta === 'object' ? meta : {}),
+      ...routeMeta,
+      dialogueRoute,
     },
   });
 }
@@ -425,7 +440,19 @@ function reconcileAcceptedTelegramArchive(receipt, intent, payload) {
         ? 'Het eerder geaccepteerde Telegram-bericht is ingetrokken en geldt niet als bewijs.'
         : 'Telegram message-id is lokaal al aan andere inhoud gebonden.',
       { operationKey: receipt.operationKey, collision: true, transportAccepted: true });
-    return existing;
+    return existing.meta?.dialogueRoute
+      ? existing
+      : archiveTelegramMessage({
+          chatId: response.chatId,
+          messageId: response.messageId,
+          meta: {
+            dialogueRoute: archivedTelegramDialogueRoute({
+              role: 'assistant', kind: intent.kind,
+              content: intent.kind === 'text' ? payload.text : payload.caption,
+              meta: { deliveryKey: intent.deliveryKey, dedupeKey: intent.chunkKey },
+            }),
+          },
+        });
   }
   const archived = archiveTelegramPayload({
     chatId: response.chatId,

@@ -145,6 +145,14 @@ test('onderbroken verwerking wordt bij herstart opnieuw claimbaar', () => {
 
 test('Eva kan haar lokale Telegram-gesprek als kernvaardigheid teruglezen', async () => {
   upsertPerson('Jaap', { telegram_id: 42 });
+  archiveTelegramMessage({
+    chatId: 42,
+    messageId: 102,
+    sender: 'Jaap',
+    role: 'user',
+    content: '/eva2 EVA2_FOTO_MAG_NIET_LEKKEN',
+    meta: { dialogueRoute: 'eva2' },
+  });
   const available = toolsForTurn({ mode: 'chat' });
   assert.equal(available.some((tool) => tool.name === 'zoek_gesprek'), true);
 
@@ -161,4 +169,5 @@ test('Eva kan haar lokale Telegram-gesprek als kernvaardigheid teruglezen', asyn
   });
   assert.match(result, /Telegram|oude opslag/i);
   assert.match(result, /Ken jij deze persoon/i);
+  assert.doesNotMatch(result, /EVA2_FOTO_MAG_NIET_LEKKEN/u);
 });
