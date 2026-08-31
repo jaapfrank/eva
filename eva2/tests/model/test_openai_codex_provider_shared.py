@@ -134,7 +134,10 @@ def _settings(**overrides: Any) -> OpenAICodexProviderSettings:
     )
 
 
-def test_true_stream_has_one_raw_usage_attestation_and_rotates_access_token() -> None:
+@pytest.mark.parametrize("content_type", ["text/event-stream", None])
+def test_true_stream_has_one_raw_usage_attestation_and_rotates_access_token(
+    content_type: str | None,
+) -> None:
     requests: list[httpx2.Request] = []
     lease_reads = 0
 
@@ -145,9 +148,10 @@ def test_true_stream_has_one_raw_usage_attestation_and_rotates_access_token() ->
 
     async def respond(request: httpx2.Request) -> httpx2.Response:
         requests.append(request)
+        headers = {"content-type": content_type} if content_type is not None else {}
         return httpx2.Response(
             200,
-            headers={"content-type": "text/event-stream"},
+            headers=headers,
             stream=_Chunks(_sse("STROOM")),
             request=request,
         )

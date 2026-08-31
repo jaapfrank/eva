@@ -310,12 +310,11 @@ class _CodexTransport(httpx2.AsyncBaseTransport):
             if declared_bytes > self._maximum_response_bytes:
                 await response.aclose()
                 raise CodexProviderError("response_too_large")
-        content_type = response.headers.get("content-type", "").lower()
-        attest = (
-            is_model_request
-            and 200 <= response.status_code < 300
-            and content_type.startswith("text/event-stream")
-        )
+        # Codex can omit Content-Type even though the requested streaming
+        # Responses body is valid SSE. The already-admitted model request has
+        # ``stream=true``; status plus the strict terminal SSE attestor are the
+        # authority, not an optional response header.
+        attest = is_model_request and 200 <= response.status_code < 300
         return httpx2.Response(
             response.status_code,
             headers=response.headers,

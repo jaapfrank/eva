@@ -3,7 +3,7 @@
 Deze kaart is mechanisch gegenereerd. Zij staat naast de semantische runtimegraaf en
 classificeert ieder gevolgd, verwijderd of niet-genegeerd nieuw repositorypad.
 
-Schema: `EvaRepositoryInventory/v1`. Brondigest: `3cd638a21cbb8bc678ab10787e407ae6fa7b2b94a7cae36cfbc3a3826bf2514a`.
+Schema: `EvaRepositoryInventory/v1`. Brondigest: `9783bdbc9d4a1d5c65a996b9bec68008d871a542786349ca93054aa6b7ae9a0c`.
 
 ## Samenvatting
 
@@ -1271,7 +1271,7 @@ Schema: `EvaRepositoryInventory/v1`. Brondigest: `3cd638a21cbb8bc678ab10787e407a
 | `eva2/src/eva/adapters/model/__init__.py` | tracked | product-runtime | included-tracked-critical | keep | 523 |
 | `eva2/src/eva/adapters/model/contracts.py` | tracked | product-runtime | included-tracked-critical | keep | 668 |
 | `eva2/src/eva/adapters/model/openai_child_provider.py` | tracked | product-runtime | included-tracked-critical | keep | 20927 |
-| `eva2/src/eva/adapters/model/openai_codex_provider.py` | tracked | product-runtime | included-tracked-critical | keep | 26008 |
+| `eva2/src/eva/adapters/model/openai_codex_provider.py` | tracked | product-runtime | included-tracked-critical | keep | 26125 |
 | `eva2/src/eva/adapters/model/openai_endpoint.py` | tracked | product-runtime | included-tracked-critical | keep | 947 |
 | `eva2/src/eva/adapters/model/pydantic_conversation.py` | tracked | product-runtime | included-tracked-critical | keep | 98707 |
 | `eva2/src/eva/adapters/objects/__init__.py` | tracked | product-runtime | included-tracked-critical | keep | 77 |
@@ -1573,7 +1573,7 @@ Schema: `EvaRepositoryInventory/v1`. Brondigest: `3cd638a21cbb8bc678ab10787e407a
 | `eva2/tests/model/test_conversation_model.py` | tracked | verification | included-tracked-critical | keep | 72866 |
 | `eva2/tests/model/test_fixture_adapter.py` | tracked | verification | included-tracked-critical | keep | 11686 |
 | `eva2/tests/model/test_fixture_program.py` | tracked | verification | included-tracked-critical | keep | 2171 |
-| `eva2/tests/model/test_openai_codex_provider_shared.py` | tracked | verification | included-tracked-critical | keep | 12364 |
+| `eva2/tests/model/test_openai_codex_provider_shared.py` | tracked | verification | included-tracked-critical | keep | 12520 |
 | `eva2/tests/model/test_pydantic_conversation_model.py` | tracked | verification | included-tracked-critical | keep | 28509 |
 | `eva2/tests/objects/test_cas.py` | tracked | verification | included-tracked-critical | keep | 21494 |
 | `eva2/tests/objects/test_envelope.py` | tracked | verification | included-tracked-critical | keep | 7256 |

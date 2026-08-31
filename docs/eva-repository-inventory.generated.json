@@ -34864,7 +34864,7 @@
       "gitState": "tracked",
       "present": true,
       "bytes": 64616,
-      "contentSha256": "1b205a40d3eb81fad67c7b2ff8716feb1378df13eacc10f68b3992d87632d02a",
+      "contentSha256": "299f262ee3adfb11b3257f9afb2a82c6761c87fdb2e70da7791d1e31c6a863e9",
       "hashMode": "exact-bytes",
       "role": "repository-config",
       "roleRuleId": "eva2-build-contract",
@@ -45595,8 +45595,8 @@
       "path": "eva2/src/eva/adapters/model/openai_codex_provider.py",
       "gitState": "tracked",
       "present": true,
-      "bytes": 26008,
-      "contentSha256": "ab124567d5c4bbfbefa780ddbcda16b82cf55bd18b752132758d8982845eaca8",
+      "bytes": 26125,
+      "contentSha256": "6f80e421344aa2cf08ac86bc42eb06cd9f3070b71b2500f82b787b1235287b17",
       "hashMode": "exact-bytes",
       "role": "product-runtime",
       "roleRuleId": "eva2-runtime",
@@ -56165,8 +56165,8 @@
       "path": "eva2/tests/model/test_openai_codex_provider_shared.py",
       "gitState": "tracked",
       "present": true,
-      "bytes": 12364,
-      "contentSha256": "27a0b81dc471b142865fa03ebf65b27f28841e2141dd87a4b4c5c6a877cdccc9",
+      "bytes": 12520,
+      "contentSha256": "b50fe821ebdb9b41194a7dbded52c99706d4f902dec32c53bcea146db6c6b058",
       "hashMode": "exact-bytes",
       "role": "verification",
       "roleRuleId": "eva2-verification",
@@ -80251,5 +80251,5 @@
       }
     }
   ],
-  "sourceDigest": "3cd638a21cbb8bc678ab10787e407ae6fa7b2b94a7cae36cfbc3a3826bf2514a"
+  "sourceDigest": "9783bdbc9d4a1d5c65a996b9bec68008d871a542786349ca93054aa6b7ae9a0c"
 }
