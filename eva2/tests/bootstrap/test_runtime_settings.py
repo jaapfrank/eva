@@ -7,7 +7,7 @@ from pathlib import Path
 from uuid import UUID
 
 import pytest
-from eva.adapters.model.conversation import ConversationCredentialStatus
+from eva.adapters.model.contracts import ConversationCredentialStatus
 from eva.application.people_memory_overview import PeopleMemoryOverview
 from eva.bootstrap.runtime import PostgresHindsightMemoryRuntime, RuntimeSettings
 from eva.contracts.workboard import WorkBoard
@@ -155,12 +155,8 @@ def test_runtime_reads_database_and_home_assistant_secrets_from_files(
     assert provider is not None
     home = provider.providers[0].settings
     assert home.effects_enabled is True
-    assert home.effect_allowlist == (
-        "light.dimmable_light_1:turn_off",
-    )
-    assert home.effect_principal_sha256_allowlist == (
-        principal_sha256,
-    )
+    assert home.effect_allowlist == ("light.dimmable_light_1:turn_off",)
+    assert home.effect_principal_sha256_allowlist == (principal_sha256,)
 
     monkeypatch.setenv("EVA_HOME_ASSISTANT_EFFECTS_ENABLED", "yes")
     with pytest.raises(RuntimeError, match="EFFECTS_ENABLED"):

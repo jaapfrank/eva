@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 import base64
-from dataclasses import dataclass
 from datetime import UTC, datetime
 import hashlib
 import json
@@ -49,6 +48,10 @@ from eva.application.repository_improvements import (
     RepositorySnapshot,
 )
 from eva.adapters.credentials.runtime_files import read_shared_runtime_file_bytes
+from eva.adapters.model.contracts import (
+    ConversationCredentialStatus,
+    ConversationModelError,
+)
 from eva.contracts.canonical_json import canonical_json_bytes
 from eva.contracts.runtime_budget import RuntimeResourceBudget
 from eva.adapters.model.openai_responses_transport import (
@@ -374,19 +377,6 @@ _FREE_WILL_TOOL: dict[str, Any] = _tool(
 )
 
 
-class ConversationModelError(RuntimeError):
-    """The direct conversation model did not return a usable answer."""
-
-
-@dataclass(frozen=True, slots=True)
-class ConversationCredentialStatus:
-    """Non-secret readiness state for the current model access lease."""
-
-    ready: bool
-    state: Literal["ready", "expired", "rejected", "invalid", "unavailable"]
-    expires_at: datetime | None = None
-
-
 class CodexConversationModel:
     """One stateless Eva generation after Hindsight has recalled context."""
 
@@ -440,7 +430,9 @@ class CodexConversationModel:
         self._openai_transport = (
             OpenAIResponsesTransport(
                 endpoint=endpoint,
-                timeout_seconds=min(timeout_seconds, _ORDINARY_PROVIDER_TIMEOUT_SECONDS),
+                timeout_seconds=min(
+                    timeout_seconds, _ORDINARY_PROVIDER_TIMEOUT_SECONDS
+                ),
                 maximum_request_bytes=_MAX_STREAM_BYTES,
                 maximum_response_bytes=_MAX_STREAM_BYTES,
             )

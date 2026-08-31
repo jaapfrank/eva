@@ -20,10 +20,8 @@ pytest.importorskip("openai", reason="DF02a candidate dependency is not in produ
 import eva.bootstrap  # noqa: F401  # Load root before its model submodule.
 import eva.adapters.model.conversation as conversation_module
 from eva.adapters.objects.identity_verifier import load_current_identity_pack
-from eva.adapters.model.conversation import (
-    CodexConversationModel,
-    ConversationModelError,
-)
+from eva.adapters.model.contracts import ConversationModelError
+from eva.adapters.model.conversation import CodexConversationModel
 from eva.adapters.model.openai_responses_transport import (
     OpenAIResponsesResult,
     OpenAIResponsesTransport,
@@ -73,9 +71,7 @@ def _completion(
             "output_tokens": output_tokens,
             "output_tokens_details": {"reasoning_tokens": 0},
             "total_tokens": (
-                input_tokens + output_tokens
-                if total_tokens is None
-                else total_tokens
+                input_tokens + output_tokens if total_tokens is None else total_tokens
             ),
         }
         if usage
@@ -158,7 +154,9 @@ def _server(
             captured.append(
                 {
                     "body": json.loads(raw),
-                    "headers": {key.lower(): value for key, value in self.headers.items()},
+                    "headers": {
+                        key.lower(): value for key, value in self.headers.items()
+                    },
                     "path": self.path,
                 }
             )
@@ -189,9 +187,7 @@ def _outcome(events: tuple[dict[str, Any], ...]) -> tuple[int, bytes, dict[str, 
 
 
 @contextmanager
-def _slow_server(
-    *, header_delay: float, body_delay: float
-) -> Iterator[str]:
+def _slow_server(*, header_delay: float, body_delay: float) -> Iterator[str]:
     body = _sse(_text_events())
 
     class Handler(BaseHTTPRequestHandler):
@@ -306,7 +302,9 @@ def _transport_body() -> dict[str, Any]:
     }
 
 
-def test_sdk_route_preserves_headers_body_text_and_reported_usage(tmp_path: Path) -> None:
+def test_sdk_route_preserves_headers_body_text_and_reported_usage(
+    tmp_path: Path,
+) -> None:
     with _server([_outcome(_text_events())]) as (endpoint, captured):
         lease = tmp_path / "lease.json"
         _write_lease(lease, token="access-one")
@@ -334,7 +332,9 @@ def test_sdk_route_preserves_headers_body_text_and_reported_usage(tmp_path: Path
     assert request["headers"]["session_id"]
 
 
-def test_sdk_route_returns_one_tool_request_without_executing_it(tmp_path: Path) -> None:
+def test_sdk_route_returns_one_tool_request_without_executing_it(
+    tmp_path: Path,
+) -> None:
     with _server([_outcome(_function_events())]) as (endpoint, _captured):
         lease = tmp_path / "lease.json"
         _write_lease(lease, token="access-one")
@@ -609,9 +609,9 @@ def test_terminal_event_and_usage_fail_closed(
 def test_missing_reported_usage_stays_explicitly_unmeasured() -> None:
     events = (_text_events()[0], _completion(usage=False))
     with _server([_outcome(events)]) as (endpoint, _calls):
-        result = OpenAIResponsesTransport(
-            endpoint=endpoint, timeout_seconds=5
-        ).request(_transport_body(), access_token="access", account_id="account")
+        result = OpenAIResponsesTransport(endpoint=endpoint, timeout_seconds=5).request(
+            _transport_body(), access_token="access", account_id="account"
+        )
 
     assert result.usage == ConversationModelUsage.unmeasured()
 
@@ -641,7 +641,9 @@ def test_language_retry_aggregates_both_successful_sdk_usages(
         )
     )
     assert model._openai_transport is not None
-    monkeypatch.setattr(model._openai_transport, "request", lambda *_a, **_k: next(results))
+    monkeypatch.setattr(
+        model._openai_transport, "request", lambda *_a, **_k: next(results)
+    )
 
     result = model.generate(
         ConversationTurn.private(
@@ -713,7 +715,9 @@ def test_byte_deadline_proxy_and_error_redaction_are_bounded(
             )
     assert len(calls) == 1
     rendered = "".join(
-        traceback.format_exception(type(failure.value), failure.value, failure.value.__traceback__)
+        traceback.format_exception(
+            type(failure.value), failure.value, failure.value.__traceback__
+        )
     )
     assert failure.value.__cause__ is None
     assert failure.value.__context__ is None
@@ -762,7 +766,8 @@ def test_cold_process_request_uses_one_absolute_wall_clock_deadline() -> None:
     script = """
 import json, sys
 from time import monotonic
-from eva.adapters.model.conversation import CodexConversationModel, ConversationModelError
+from eva.adapters.model.contracts import ConversationModelError
+from eva.adapters.model.conversation import CodexConversationModel
 body = {
     'include': [], 'input': [{'content': 'Hoi', 'role': 'user', 'type': 'message'}],
     'instructions': 'Antwoord kort.', 'model': 'gpt-5.4-mini',
@@ -808,9 +813,7 @@ def test_repeated_timeouts_do_not_accumulate_threads_or_descriptors() -> None:
     baseline_descriptors = len(tuple(descriptor_root.iterdir()))
 
     for header_delay, body_delay in ((1.2, 0.0), (0.0, 1.2)):
-        with _slow_server(
-            header_delay=header_delay, body_delay=body_delay
-        ) as endpoint:
+        with _slow_server(header_delay=header_delay, body_delay=body_delay) as endpoint:
             for _ in range(2):
                 with pytest.raises(OpenAIResponsesUnavailable, match="total deadline"):
                     OpenAIResponsesTransport(
@@ -822,8 +825,10 @@ def test_repeated_timeouts_do_not_accumulate_threads_or_descriptors() -> None:
     cleanup_deadline = wall_monotonic() + 1
     while wall_monotonic() < cleanup_deadline:
         candidate_threads = tuple(
-            thread for thread in threading.enumerate()
-            if thread.name in {
+            thread
+            for thread in threading.enumerate()
+            if thread.name
+            in {
                 "eva-openai-close",
                 "eva-openai-request",
                 "eva-openai-response",

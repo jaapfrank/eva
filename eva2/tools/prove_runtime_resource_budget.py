@@ -20,10 +20,8 @@ from uuid import UUID
 
 import sqlalchemy as sa
 
-from eva.adapters.model.conversation import (
-    CodexConversationModel,
-    ConversationModelError,
-)
+from eva.adapters.model.contracts import ConversationModelError
+from eva.adapters.model.conversation import CodexConversationModel
 from eva.adapters.postgres.conversation_journal import PostgresConversationJournal
 from eva.adapters.postgres.operational_timeline import TimelineScope
 from eva.application.conversation import (
@@ -77,9 +75,10 @@ def _stream(*, text: str, input_tokens: int, output_tokens: int) -> bytes:
             "type": "response.completed",
         },
     )
-    return b"".join(
-        b"data: " + canonical_json_bytes(event) + b"\n\n" for event in events
-    ) + b"data: [DONE]\n\n"
+    return (
+        b"".join(b"data: " + canonical_json_bytes(event) + b"\n\n" for event in events)
+        + b"data: [DONE]\n\n"
+    )
 
 
 class _ProviderHandler(BaseHTTPRequestHandler):
@@ -352,7 +351,9 @@ def prove(
                 except ConversationModelError as error:
                     oversized_reason = str(error)
                 else:
-                    raise RuntimeError("oversized request unexpectedly reached provider")
+                    raise RuntimeError(
+                        "oversized request unexpectedly reached provider"
+                    )
                 if (
                     len(handler.requests) != before_oversized
                     or journal.committed_reply(oversized_turn) is not None
@@ -360,7 +361,9 @@ def prove(
                 ):
                     raise RuntimeError("oversized input was not closed before provider")
 
-                output_turn = _turn("message:output-over", "Geef nog een kort antwoord.")
+                output_turn = _turn(
+                    "message:output-over", "Geef nog een kort antwoord."
+                )
                 journal.admit(output_turn)
                 before_output = len(handler.requests)
                 try:

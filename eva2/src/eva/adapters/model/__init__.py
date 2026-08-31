@@ -2,18 +2,16 @@
 
 from typing import Any
 
-__all__ = [
-    "CodexConversationModel",
-    "ConversationModelError",
-]
+__all__ = ["CodexConversationModel", "ConversationModelError"]
 
 
 def __getattr__(name: str) -> Any:
-    if name in {"CodexConversationModel", "ConversationModelError"}:
-        from .conversation import CodexConversationModel, ConversationModelError
+    if name == "ConversationModelError":
+        from .contracts import ConversationModelError
 
-        return {
-            "CodexConversationModel": CodexConversationModel,
-            "ConversationModelError": ConversationModelError,
-        }[name]
+        return ConversationModelError
+    if name == "CodexConversationModel":
+        from .conversation import CodexConversationModel
+
+        return CodexConversationModel
     raise AttributeError(name)

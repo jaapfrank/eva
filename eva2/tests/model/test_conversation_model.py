@@ -24,10 +24,8 @@ from eva.adapters.connectors.home_assistant_management import (
     HomeAssistantConversationHacsPlanner,
     HomeAssistantConversationMigrationPlanner,
 )
-from eva.adapters.model.conversation import (
-    CodexConversationModel,
-    ConversationModelError,
-)
+from eva.adapters.model.contracts import ConversationModelError
+from eva.adapters.model.conversation import CodexConversationModel
 from eva.adapters.model.openai_responses_transport import (
     OpenAIResponsesResult,
     OpenAIResponsesUnavailable,
