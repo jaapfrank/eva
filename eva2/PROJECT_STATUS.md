@@ -1,6 +1,6 @@
 # Eva 2 — projectbord en vergelijking
 
-Laatst bijgewerkt: 31 augustus 2026, 02:04 CEST
+Laatst bijgewerkt: 31 augustus 2026, 02:08 CEST
 
 ## Zo lees je dit bord
 
@@ -47,7 +47,7 @@ oude Eva2-regels nog wel uit het gedeelde Telegramarchief als context of
 zoekresultaat teruglezen. Ook dat tweede lek is nu gesloten: nieuwe regels
 krijgen duurzaam `eva1` of `eva2`, oude regels worden veilig herkend en Eva1
 filtert Eva2 uit gewone context, gesprekzoeken en spontane terugblik. De
-service draait sinds 02:03 met deze correctie. 44 gerichte routerings-,
+service draait sinds 02:08 met deze correctie. 44 gerichte routerings-,
 archief- en transporttests zijn groen. Er is geen Telegrambericht namens Jaap
 of Lola verstuurd; een echte `/eva2`-beurt gevolgd door een gewoon bericht
 moet de zichtbare mensproef nog afronden.
@@ -340,6 +340,9 @@ De echte niet-huisgebonden model-/tijdtoolproef staat in
 De providerneutrale image, verliesloze A/B-omschakeling, modelherstart en echte
 externe live read staan in
 [het live toolgrensbewijs](evidence/product/generic-tool-boundary-live-ab-2026-08-30.json).
+De vastgestelde Telegramverwarring, historische classificatie, live correctie
+en de nog open menselijke eindproef staan in
+[het Eva1/Eva2-dialooggrensbewijs](evidence/living-core/eva1-eva2-telegram-dialogue-isolation-2026-08-31.json).
 De gevonden Telegramverwarring, verwijderde automatische sessie en live
 scheidingscontrole staan in
 [het Eva1/Eva2-routerbewijs](evidence/living-core/eva1-eva2-explicit-telegram-boundary-live-2026-08-30.json).

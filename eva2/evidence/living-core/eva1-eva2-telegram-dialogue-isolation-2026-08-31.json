@@ -1,0 +1,52 @@
+{
+  "contract": "Eva1Eva2TelegramDialogueIsolationReceipt/v1",
+  "issuedAt": "2026-08-31T02:08:27+02:00",
+  "observedFailure": {
+    "confirmed": true,
+    "description": "Na expliciete /eva2-beurten gingen een gewone vervolgzin en letterlijk Eva1? door de oude tijdelijke vervolgrouter naar Eva2.",
+    "historicalUserMessageIds": ["4554", "4556"],
+    "historicalReplyMessageIds": ["4555", "4557"],
+    "replyEvidence": "De duurzame eva2-canary delivery keys verwijzen naar de twee gewone gebruikersbeurten.",
+    "secretOrChatIdIncluded": false
+  },
+  "correction": {
+    "eva1SourceCommit": "888f91d72efa7cf98b428ea83670cd8cbf2114cf",
+    "explicitEva2CommandOnly": true,
+    "newInboundRowsPersistDialogueRoute": true,
+    "newOutboundRowsPersistDialogueRoute": true,
+    "legacyExplicitEva2RowsRecognized": true,
+    "legacyUnlabelledContinuationRowsLinkedFromDurableReplyEvidence": true,
+    "eva1RecentContextExcludesEva2": true,
+    "eva1ExplicitConversationSearchExcludesEva2": true,
+    "eva1AutonomousConversationSearchExcludesEva2": true,
+    "eva2UsesOwnPostgreSQLConversationJournal": true
+  },
+  "verification": {
+    "targetedTestsPassed": 44,
+    "targetedTestsFailed": 0,
+    "eslintWarnings": 0,
+    "eslintErrors": 0,
+    "diffCheck": "ok",
+    "historicalMessage4554ClassifiedAs": "eva2",
+    "historicalMessage4556ClassifiedAs": "eva2"
+  },
+  "live": {
+    "eva1Active": true,
+    "eva1MainPid": 468547,
+    "eva1RestartCount": 2,
+    "eva1ActiveSince": "2026-08-31T02:08:03+02:00",
+    "eva1CodeMatchesDisk": true,
+    "eva1LoadedCodeSha256": "12a5066075c187068d8316a85f07d6d3c44af9481d4e50afb452c3004a83f278",
+    "eva1Health": "green",
+    "eva2Ready": true,
+    "eva2Port": 44711
+  },
+  "scope": {
+    "externalTelegramMessageSent": false,
+    "humanAlternatingRouteProofComplete": false,
+    "remainingHumanProof": "Stuur één expliciete /eva2-beurt en daarna één gewoon bericht; controleer zichtbaar label en duurzame routevelden.",
+    "dataMigrationPerformed": false,
+    "eva2DatabaseModified": false,
+    "homeAssistantActionPerformed": false
+  }
+}
