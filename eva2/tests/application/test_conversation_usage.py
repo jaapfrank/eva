@@ -152,6 +152,50 @@ def test_an_unreported_call_keeps_the_whole_reply_usage_unmeasured() -> None:
     )
 
 
+def test_partial_retry_usage_keeps_known_totals_and_partial_measurement() -> None:
+    partial = ConversationModelUsage.partial(
+        model_attempts=2,
+        tool_calls=0,
+        input_tokens=21,
+        output_tokens=5,
+    )
+
+    assert ConversationModelUsage.aggregate(
+        (partial, _usage(tools=1, input_tokens=8, output_tokens=2))
+    ) == ConversationModelUsage.partial(
+        model_attempts=3,
+        tool_calls=1,
+        input_tokens=29,
+        output_tokens=7,
+    )
+
+
+def test_partial_usage_round_trips_without_zeroing_unknown_attempt_cost() -> None:
+    partial = ConversationModelUsage.partial(
+        model_attempts=2,
+        tool_calls=0,
+        input_tokens=21,
+        output_tokens=5,
+    )
+
+    assert partial.to_wire() == {
+        "input_tokens": 21,
+        "measurement": "partial",
+        "model_attempts": 2,
+        "output_tokens": 5,
+        "tool_calls": 0,
+    }
+    assert ConversationModelUsage.from_wire(partial.to_wire()) == partial
+
+    unknown_only_attempt = ConversationModelUsage.partial(
+        model_attempts=1,
+        tool_calls=0,
+        input_tokens=0,
+        output_tokens=0,
+    )
+    assert unknown_only_attempt.measurement == "partial"
+
+
 def test_unmeasured_timing_keeps_the_whole_reply_timing_unmeasured() -> None:
     assert ConversationModelTiming.aggregate(
         (ConversationModelTiming(4, 9), ConversationModelTiming.unmeasured())
@@ -178,6 +222,20 @@ def test_unmeasured_timing_keeps_the_whole_reply_timing_unmeasured() -> None:
             "measurement": "measured",
             "model_attempts": True,
             "tool_calls": 0,
+            "input_tokens": 1,
+            "output_tokens": 1,
+        },
+        {
+            "measurement": "partial",
+            "model_attempts": 0,
+            "tool_calls": 0,
+            "input_tokens": 0,
+            "output_tokens": 0,
+        },
+        {
+            "measurement": "partial",
+            "model_attempts": 2,
+            "tool_calls": None,
             "input_tokens": 1,
             "output_tokens": 1,
         },

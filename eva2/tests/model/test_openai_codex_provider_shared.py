@@ -10,7 +10,7 @@ from typing import Any
 
 import httpx2
 import pytest
-from pydantic_ai import Agent
+from pydantic_ai import Agent, UnexpectedModelBehavior
 from pydantic_ai.messages import (
     PartDeltaEvent,
     PartStartEvent,
@@ -22,11 +22,18 @@ from pydantic_ai.usage import UsageLimits
 
 from eva.adapters.model.openai_codex_provider import (
     _CodexStreamingModel,
+    _sanitized,
     CodexProviderError,
     OpenAICodexProvider,
     OpenAICodexProviderSettings,
     RawUsageAttestation,
 )
+
+
+class _StatusFailure(RuntimeError):
+    def __init__(self, status_code: int) -> None:
+        self.status_code = status_code
+        super().__init__("unsafe upstream detail")
 
 
 class _Chunks(httpx2.AsyncByteStream):
@@ -309,3 +316,68 @@ def test_cancellation_is_not_relabelled_as_provider_unavailable() -> None:
                     pass
 
     asyncio.run(run())
+
+
+@pytest.mark.parametrize("status_code", [401, 403])
+def test_sanitization_marks_only_authentication_statuses_as_rejected(
+    status_code: int,
+) -> None:
+    assert _sanitized(_StatusFailure(status_code)).category == "credentials_rejected"
+
+
+@pytest.mark.parametrize("status_code", [408, 429, 500, 503, 599])
+def test_sanitization_marks_retryable_http_statuses_as_unavailable(
+    status_code: int,
+) -> None:
+    assert _sanitized(_StatusFailure(status_code)).category == "unavailable"
+
+
+@pytest.mark.parametrize("status_code", [400, 404, 409, 422, 600])
+def test_sanitization_marks_other_http_statuses_as_protocol_failures(
+    status_code: int,
+) -> None:
+    assert _sanitized(_StatusFailure(status_code)).category == "protocol"
+
+
+@pytest.mark.parametrize(
+    "error",
+    [
+        TimeoutError("deadline"),
+        ConnectionError("connection lost"),
+        httpx2.ConnectError("connection lost"),
+        httpx2.ReadTimeout("read stalled"),
+    ],
+)
+def test_sanitization_marks_explicit_transport_failures_as_unavailable(
+    error: BaseException,
+) -> None:
+    assert _sanitized(error).category == "unavailable"
+
+
+@pytest.mark.parametrize(
+    "error",
+    [
+        RuntimeError("unknown internal failure"),
+        OSError("non-network operating-system failure"),
+        UnexpectedModelBehavior("malformed provider response"),
+        httpx2.RemoteProtocolError("malformed wire response"),
+    ],
+)
+def test_sanitization_marks_unknown_and_protocol_failures_as_protocol(
+    error: BaseException,
+) -> None:
+    assert _sanitized(error).category == "protocol"
+
+
+def test_sanitization_inspects_wrapped_transport_failure() -> None:
+    transport = httpx2.ConnectError("connection lost")
+    wrapper = RuntimeError("unsafe wrapper")
+    wrapper.__cause__ = transport
+
+    assert _sanitized(wrapper).category == "unavailable"
+
+
+def test_sanitization_preserves_existing_provider_category() -> None:
+    error = CodexProviderError("deadline")
+
+    assert _sanitized(error) is error

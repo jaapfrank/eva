@@ -58,9 +58,9 @@ def publish_conversation_text(delta: str, *, tools_disabled: bool) -> None:
 
 @dataclass(frozen=True, slots=True)
 class ConversationModelUsage:
-    """Provider-neutral reported usage or an explicit legacy unknown value."""
+    """Provider-neutral usage, including honest partially measured retries."""
 
-    measurement: Literal["measured", "unmeasured"]
+    measurement: Literal["measured", "partial", "unmeasured"]
     model_attempts: int | None
     tool_calls: int | None
     input_tokens: int | None
@@ -77,7 +77,9 @@ class ConversationModelUsage:
             if any(value is not None for value in values):
                 raise ValueError("unmeasured model usage cannot carry values")
             return
-        if self.measurement != "measured" or any(value is None for value in values):
+        if self.measurement not in {"measured", "partial"} or any(
+            value is None for value in values
+        ):
             raise ValueError("measured model usage is incomplete")
         if any(
             not isinstance(value, int) or isinstance(value, bool) for value in values
@@ -103,16 +105,40 @@ class ConversationModelUsage:
         return cls("unmeasured", None, None, None, None)
 
     @classmethod
+    def partial(
+        cls,
+        *,
+        model_attempts: int,
+        tool_calls: int,
+        input_tokens: int,
+        output_tokens: int,
+    ) -> "ConversationModelUsage":
+        """Keep known totals while admitting that some attempts lack usage."""
+
+        return cls("partial", model_attempts, tool_calls, input_tokens, output_tokens)
+
+    @classmethod
     def aggregate(
         cls, usages: tuple["ConversationModelUsage", ...]
     ) -> "ConversationModelUsage":
         if not usages or any(usage.measurement == "unmeasured" for usage in usages):
             return cls.unmeasured()
+        model_attempts = sum(usage.model_attempts or 0 for usage in usages)
+        tool_calls = sum(usage.tool_calls or 0 for usage in usages)
+        input_tokens = sum(usage.input_tokens or 0 for usage in usages)
+        output_tokens = sum(usage.output_tokens or 0 for usage in usages)
+        if any(usage.measurement == "partial" for usage in usages):
+            return cls.partial(
+                model_attempts=model_attempts,
+                tool_calls=tool_calls,
+                input_tokens=input_tokens,
+                output_tokens=output_tokens,
+            )
         return cls.measured(
-            model_attempts=sum(usage.model_attempts or 0 for usage in usages),
-            tool_calls=sum(usage.tool_calls or 0 for usage in usages),
-            input_tokens=sum(usage.input_tokens or 0 for usage in usages),
-            output_tokens=sum(usage.output_tokens or 0 for usage in usages),
+            model_attempts=model_attempts,
+            tool_calls=tool_calls,
+            input_tokens=input_tokens,
+            output_tokens=output_tokens,
         )
 
     def to_wire(self) -> dict[str, str | int | None]:
@@ -142,7 +168,7 @@ class ConversationModelUsage:
             value["input_tokens"],
             value["output_tokens"],
         )
-        if measurement not in {"measured", "unmeasured"} or any(
+        if measurement not in {"measured", "partial", "unmeasured"} or any(
             item is not None and (not isinstance(item, int) or isinstance(item, bool))
             for item in numeric
         ):

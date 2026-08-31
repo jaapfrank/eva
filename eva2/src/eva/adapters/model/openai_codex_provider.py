@@ -687,16 +687,25 @@ def _sanitized(error: BaseException) -> CodexProviderError:
         status_code = getattr(current, "status_code", None)
         if status_code in {401, 403}:
             return CodexProviderError("credentials_rejected")
-        if status_code in {408, 409, 429} or (
-            isinstance(status_code, int) and status_code >= 500
+        if status_code in {408, 429} or (
+            type(status_code) is int and 500 <= status_code <= 599
         ):
             return CodexProviderError("unavailable")
+        if type(status_code) is int:
+            return CodexProviderError("protocol")
+        if isinstance(current, UnexpectedModelBehavior):
+            return CodexProviderError("protocol")
+        if isinstance(current, httpx2.ProtocolError):
+            return CodexProviderError("protocol")
+        if isinstance(
+            current,
+            (httpx2.TimeoutException, httpx2.TransportError, TimeoutError),
+        ):
+            return CodexProviderError("unavailable")
+        if isinstance(current, ConnectionError):
+            return CodexProviderError("unavailable")
         current = current.__cause__ or current.__context__
-    if isinstance(error, (TimeoutError, ConnectionError, OSError)):
-        return CodexProviderError("unavailable")
-    if isinstance(error, UnexpectedModelBehavior):
-        return CodexProviderError("protocol")
-    return CodexProviderError("unavailable")
+    return CodexProviderError("protocol")
 
 
 __all__ = [

@@ -96,12 +96,14 @@ def _adapter(
     scripted: ScriptedPydanticConversation,
     *,
     timeout_seconds: float = 30.0,
+    resource_budget: RuntimeResourceBudget | None = None,
 ) -> Any:
     return _adapter_type()(
         auth_file=tmp_path / "unused-providerless-lease.json",
         model_backend=scripted.model,
         timeout_seconds=timeout_seconds,
         conversation_tools=(TOOL,),
+        resource_budget=resource_budget,
     )
 
 
@@ -309,7 +311,9 @@ def test_scripted_external_tool_returns_deferred_call_without_execution_or_delta
     assert result.action_call == CALL
     assert deltas == []
     assert len(scripted.captures) == 1
-    assert TOOL.name in scripted.captures[0].offered_tool_names
+    first_request = scripted.captures[0]
+    assert first_request.offered_tool_names == ()
+    assert first_request.native_tool_kinds == ("tool_search",)
     assert result.usage.tool_calls == 1
 
     multiple = ScriptedPydanticConversation(
@@ -429,6 +433,151 @@ def test_scripted_post_delta_stall_is_not_retried(tmp_path: Path) -> None:
     assert scripted.cancelled_requests == 1
 
 
+def test_unavailable_before_output_retries_once_and_reports_partial_usage(
+    tmp_path: Path,
+) -> None:
+    scripted = ScriptedPydanticConversation(
+        (
+            ScriptedPhase.failure(CodexProviderError("unavailable")),
+            ScriptedPhase.text("hersteld"),
+        )
+    )
+    model = _adapter(
+        tmp_path,
+        scripted,
+        resource_budget=_runtime_budget(max_input_tokens=16_000),
+    )
+
+    result = _generate(
+        model,
+        available_actions=(TOOL.name,),
+    )
+
+    assert result.text == "hersteld"
+    assert result.usage.measurement == "partial"
+    assert result.usage.model_attempts == 2
+    assert result.usage.tool_calls == 0
+    assert (result.usage.input_tokens or 0) > 0
+    assert (result.usage.output_tokens or 0) > 0
+    assert len(scripted.captures) == 2
+    assert scripted.remaining_phases == 0
+    assert scripted.captures[0].native_tool_kinds == ("tool_search",)
+    with pytest.raises(ConversationModelError, match="unmeasured"):
+        model._enforce_reported_usage(
+            ConversationModelUsage.partial(
+                model_attempts=3,
+                tool_calls=0,
+                input_tokens=1,
+                output_tokens=1,
+            )
+        )
+
+
+def test_unavailable_after_visible_text_is_not_retried(tmp_path: Path) -> None:
+    scripted = ScriptedPydanticConversation(
+        (
+            ScriptedPhase.text(
+                "zichtbaar",
+                exception_after_output=CodexProviderError("unavailable"),
+            ),
+            ScriptedPhase.text("mag niet worden gebruikt"),
+        )
+    )
+    deltas: list[str] = []
+
+    with stream_conversation_text(deltas.append):
+        with pytest.raises(ConversationModelError, match="unavailable"):
+            _generate(_adapter(tmp_path, scripted), completed_action=RECEIPT)
+
+    assert deltas == ["zichtbaar"]
+    assert len(scripted.captures) == 1
+    assert scripted.remaining_phases == 1
+
+
+def test_unavailable_after_tool_call_start_is_not_retried(tmp_path: Path) -> None:
+    scripted = ScriptedPydanticConversation(
+        (
+            ScriptedPhase.deferred(
+                ScriptedCall(CALL.call_id, CALL.name, dict(CALL.arguments)),
+                exception_after_output=CodexProviderError("unavailable"),
+            ),
+            ScriptedPhase.text("mag niet worden gebruikt"),
+        )
+    )
+
+    with pytest.raises(ConversationModelError, match="unavailable"):
+        _generate(_adapter(tmp_path, scripted), available_actions=(TOOL.name,))
+
+    assert len(scripted.captures) == 1
+    assert scripted.remaining_phases == 1
+
+
+def test_second_pre_output_unavailable_is_not_retried_again(tmp_path: Path) -> None:
+    scripted = ScriptedPydanticConversation(
+        (
+            ScriptedPhase.failure(CodexProviderError("unavailable")),
+            ScriptedPhase.failure(CodexProviderError("unavailable")),
+            ScriptedPhase.text("derde poging mag niet bestaan"),
+        )
+    )
+
+    with pytest.raises(ConversationModelError, match="unavailable"):
+        _generate(_adapter(tmp_path, scripted), completed_action=RECEIPT)
+
+    assert len(scripted.captures) == 2
+    assert scripted.remaining_phases == 1
+
+
+@pytest.mark.parametrize(
+    "failure",
+    [
+        CodexProviderError("credentials_rejected"),
+        CodexProviderError("deadline"),
+        CodexProviderError("protocol"),
+        CodexProviderError("configuration"),
+        CodexProviderError("request_too_large"),
+        CodexProviderError("response_too_large"),
+        RuntimeError("unknown provider failure"),
+    ],
+)
+def test_non_transient_or_unknown_failure_is_never_retried(
+    tmp_path: Path, failure: Exception
+) -> None:
+    scripted = ScriptedPydanticConversation(
+        (
+            ScriptedPhase.failure(failure),
+            ScriptedPhase.text("mag niet worden gebruikt"),
+        )
+    )
+
+    with pytest.raises(ConversationModelError):
+        _generate(_adapter(tmp_path, scripted), completed_action=RECEIPT)
+
+    assert len(scripted.captures) == 1
+    assert scripted.remaining_phases == 1
+
+
+def test_retry_attempts_share_one_absolute_phase_deadline(tmp_path: Path) -> None:
+    scripted = ScriptedPydanticConversation(
+        (
+            ScriptedPhase.failure(CodexProviderError("unavailable"), delay_seconds=0.6),
+            ScriptedPhase.stall(),
+        )
+    )
+    started = monotonic()
+
+    with pytest.raises(ConversationModelError, match="deadline"):
+        _generate(
+            _adapter(tmp_path, scripted, timeout_seconds=1.0),
+            completed_action=RECEIPT,
+        )
+    elapsed = monotonic() - started
+
+    assert 0.8 <= elapsed < 1.4
+    assert len(scripted.captures) == 2
+    assert scripted.cancelled_requests == 1
+
+
 def test_real_provider_seam_streams_and_matches_raw_usage_without_network(
     tmp_path: Path,
     monkeypatch: pytest.MonkeyPatch,
@@ -478,6 +627,80 @@ def test_real_provider_seam_streams_and_matches_raw_usage_without_network(
     assert fake_provider.exited == 1
     assert fake_provider.usage_reads == 1
     assert len(scripted.captures) == 1
+
+
+def test_real_provider_retry_rotates_credentials_and_keeps_only_known_usage(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    scripted = ScriptedPydanticConversation(
+        (
+            ScriptedPhase.failure(CodexProviderError("unavailable")),
+            ScriptedPhase.text(
+                "Tweede ",
+                "provider ",
+                "geeft ",
+                "nu ",
+                "veilig ",
+                "antwoord ",
+                "terug",
+            ),
+        )
+    )
+
+    class RetryingProvider:
+        constructed = 0
+        entered = 0
+        exited = 0
+        usage_reads = 0
+        access_tokens: list[str] = []
+
+        def __init__(self, settings: Any, *, credential_loader: Any) -> None:
+            type(self).constructed += 1
+            self.settings = settings
+            self.credential_loader = credential_loader
+            self.access_token_sha256: str | None = None
+            self.model = _ExactStreamUsageModel(scripted.model, input_tokens=17)
+
+        async def __aenter__(self) -> "RetryingProvider":
+            type(self).entered += 1
+            access_token, _account_id = self.credential_loader()
+            type(self).access_tokens.append(access_token)
+            self.access_token_sha256 = hashlib.sha256(access_token.encode()).hexdigest()
+            return self
+
+        async def __aexit__(self, *_error: object) -> None:
+            type(self).exited += 1
+
+        def consume_raw_usage(self) -> RawUsageAttestation:
+            type(self).usage_reads += 1
+            return RawUsageAttestation(17, 7, 24)
+
+    leases = iter(("access-first", "access-second"))
+    module = import_module("eva.adapters.model.pydantic_conversation")
+    monkeypatch.setattr(module, "OpenAICodexProvider", RetryingProvider)
+    model = _adapter_type()(
+        auth_file=tmp_path / "must-not-be-read.json",
+        conversation_tools=(TOOL,),
+        resource_budget=_runtime_budget(),
+    )
+    monkeypatch.setattr(model, "_load_auth", lambda: (next(leases), "account-a"))
+
+    result = _generate(model, completed_action=RECEIPT)
+
+    assert result.text == "Tweede provider geeft nu veilig antwoord terug"
+    assert result.usage == ConversationModelUsage.partial(
+        model_attempts=2,
+        tool_calls=0,
+        input_tokens=17,
+        output_tokens=7,
+    )
+    assert RetryingProvider.access_tokens == ["access-first", "access-second"]
+    assert RetryingProvider.constructed == 2
+    assert RetryingProvider.entered == 2
+    assert RetryingProvider.exited == 2
+    assert RetryingProvider.usage_reads == 1
+    assert len(scripted.captures) == 2
 
 
 def test_real_provider_seam_rejects_raw_usage_mismatch_without_network(

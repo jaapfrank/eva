@@ -18,6 +18,8 @@ from pydantic_ai.messages import (
     ModelMessage,
     ModelRequest,
     ModelResponse,
+    NativeToolSearchCallPart,
+    NativeToolSearchReturnPart,
     TextPart,
     ToolCallPart,
     ToolReturnPart,
@@ -41,6 +43,9 @@ class ScriptedPhase:
     usage: RequestUsage | None = None
     stall_after_output: bool = False
     error_message: str = "scripted provider error"
+    exception: Exception | None = None
+    exception_after_output: Exception | None = None
+    delay_seconds: float = 0.0
 
     @classmethod
     def text(
@@ -48,6 +53,7 @@ class ScriptedPhase:
         *deltas: str,
         usage: RequestUsage | None = None,
         stall_after_output: bool = False,
+        exception_after_output: Exception | None = None,
     ) -> "ScriptedPhase":
         if not deltas or any(not delta for delta in deltas):
             raise ValueError("scripted text phase needs non-empty deltas")
@@ -56,6 +62,7 @@ class ScriptedPhase:
             tuple(deltas),
             usage=usage,
             stall_after_output=stall_after_output,
+            exception_after_output=exception_after_output,
         )
 
     @classmethod
@@ -63,14 +70,26 @@ class ScriptedPhase:
         cls,
         *calls: ScriptedCall,
         usage: RequestUsage | None = None,
+        exception_after_output: Exception | None = None,
     ) -> "ScriptedPhase":
         if not calls:
             raise ValueError("scripted deferred phase needs at least one call")
-        return cls("deferred", calls=tuple(calls), usage=usage)
+        return cls(
+            "deferred",
+            calls=tuple(calls),
+            usage=usage,
+            exception_after_output=exception_after_output,
+        )
 
     @classmethod
     def stall(cls) -> "ScriptedPhase":
         return cls("stall")
+
+    @classmethod
+    def failure(
+        cls, exception: Exception, *, delay_seconds: float = 0.0
+    ) -> "ScriptedPhase":
+        return cls("error", exception=exception, delay_seconds=delay_seconds)
 
 
 @dataclass(frozen=True, slots=True)
@@ -79,6 +98,7 @@ class CapturedPydanticRequest:
     offered_tool_names: tuple[str, ...]
     instructions: str | None
     model_settings: dict[str, object]
+    native_tool_kinds: tuple[str, ...]
 
 
 def tool_returns(messages: tuple[ModelMessage, ...]) -> tuple[ToolReturnPart, ...]:
@@ -132,6 +152,7 @@ class ScriptedPydanticConversation:
                 tuple(tool.name for tool in info.function_tools),
                 info.instructions,
                 dict(info.model_settings or {}),
+                tuple(tool.kind for tool in info.model_request_parameters.native_tools),
             )
         )
         return self._phases.popleft()
@@ -147,11 +168,13 @@ class ScriptedPydanticConversation:
         self, messages: list[ModelMessage], info: AgentInfo
     ) -> ModelResponse:
         phase = self._capture(messages, info)
+        if phase.delay_seconds:
+            await asyncio.sleep(phase.delay_seconds)
         if phase.kind == "stall":
             await self._stall()
             raise AssertionError("unreachable stalled response")
         if phase.kind == "error":
-            raise RuntimeError(phase.error_message)
+            raise phase.exception or RuntimeError(phase.error_message)
         if phase.kind == "text":
             parts = [TextPart("".join(phase.text_deltas))]
         else:
@@ -165,20 +188,41 @@ class ScriptedPydanticConversation:
         self, messages: list[ModelMessage], info: AgentInfo
     ) -> AsyncIterator[str | dict[int, DeltaToolCall]]:
         phase = self._capture(messages, info)
+        if phase.delay_seconds:
+            await asyncio.sleep(phase.delay_seconds)
         if phase.kind == "stall":
             await self._stall()
             return
         if phase.kind == "error":
-            raise RuntimeError(phase.error_message)
+            raise phase.exception or RuntimeError(phase.error_message)
         if phase.kind == "text":
             for delta in phase.text_deltas:
                 yield delta
+            if phase.exception_after_output is not None:
+                raise phase.exception_after_output
             if phase.stall_after_output:
                 await self._stall()
             return
+        # Model the OpenAI Responses server-side search: discovery evidence and
+        # the selected deferred call arrive in one streamed model response.
+        search_call_id = "scripted-native-tool-search"
+        yield {
+            0: NativeToolSearchCallPart(
+                args={"queries": [call.name for call in phase.calls]},
+                tool_call_id=search_call_id,
+                provider_name="function",
+            ),
+            1: NativeToolSearchReturnPart(
+                tool_call_id=search_call_id,
+                content={
+                    "discovered_tools": [{"name": call.name} for call in phase.calls]
+                },
+                provider_name="function",
+            ),
+        }
         for index, call in enumerate(phase.calls):
             yield {
-                index: DeltaToolCall(
+                index + 2: DeltaToolCall(
                     name=call.name,
                     json_args=json.dumps(
                         call.arguments,
@@ -189,6 +233,8 @@ class ScriptedPydanticConversation:
                     tool_call_id=call.call_id,
                 )
             }
+        if phase.exception_after_output is not None:
+            raise phase.exception_after_output
 
 
 __all__ = [

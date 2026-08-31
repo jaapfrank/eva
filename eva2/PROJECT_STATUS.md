@@ -1,6 +1,6 @@
 # Eva 2 — projectbord en vergelijking
 
-Laatst bijgewerkt: 31 augustus 2026, 19:34 CEST
+Laatst bijgewerkt: 31 augustus 2026, 20:12 CEST
 
 ## Zo lees je dit bord
 
@@ -69,10 +69,14 @@ De minimale dependency-overlay verandert uitsluitend `pydantic-ai-slim` en
 blijven buiten de kandidaat. De gewone gesprekbootstrap gebruikt in de bron nu
 één `PydanticConversationModel`; de oude `OpenAIResponsesTransport` en zijn
 testbestand zijn verwijderd. De publieke Pydantic-route doet streaming,
-toolkeuze, vervolgfase, usage- en budgetbewaking. 58 gerichte modelcontroles en
-27 statische release-inputcontroles zijn groen. Dit is nog geen liveclaim: een
-offline image, scan, echte providerpariteitsproef en veilige A/B-promotie
-ontbreken nog.
+uitgestelde toolkeuze, vervolgfase, usage- en budgetbewaking. Een korte
+providerstoring wordt alleen vóór tekst of een begonnen toolcall eenmaal
+hersteld; onbekend verbruik blijft daarbij zichtbaar als gedeeltelijk gemeten.
+Een ingecheckte, commitgebonden providerprobe begrenst drie fasen op 9.000
+input- en 100 outputtokens en schrijft alleen hashes, tellers en veilige
+statusvelden. 124 gerichte model-, usage-, journal- en probecontroles zijn
+groen. Dit is nog geen liveclaim: de echte probe, offline image, scan en veilige
+A/B-promotie ontbreken nog.
 
 De actuele Pydantic-versie heeft nu ook met Eva's echte korte Codex-toegang
 gepraat. De verplichte streamingroute gaf exact `PAI236` terug en koos uit de
@@ -348,9 +352,9 @@ herstelbaar.
 
 | Algemeen probleem | Gekozen onderhouden bouwsteen | Werkelijkheid nu |
 |---|---|---|
-| Modelverkeer | `pydantic-ai-slim` met alleen de gekozen officiële provider-SDK | 🟡 Pydantic AI `2.36.0` is nu de enige gewone gesprekseigenaar in de bron. De oude transportklasse is verwijderd en de lock blijft 38 pakketten; offline image, scan, echte providerpariteit en A/B-livegang ontbreken nog |
+| Modelverkeer | `pydantic-ai-slim` met alleen de gekozen officiële provider-SDK | 🟡 Pydantic AI `2.36.0` is nu de enige gewone gesprekseigenaar in de bron. De oude transportklasse is verwijderd; streaming, uitgestelde tools, hervatten en veilige pre-outputretry zijn gericht groen. De lock blijft 38 pakketten; echte providerpariteit, offline image, scan en A/B-livegang ontbreken nog |
 | Langetermijngeheugen | Hindsight | ✅ Live; 🟡 Eva's adapter moet nog kleiner |
-| Externe gereedschappen | Pydantic AI met runtime-ontdekte tools; ContextForge alleen als optionele gateway | 🟡 De gewone bronroute gebruikt nu Pydantic AI en houdt Eva's duurzame ledger/readback buiten het framework. De brede 69-wheelroute is afgewezen. Uitgestelde cataloguslading en twee echte verwisselbare providers moeten nog op deze exacte kandidaat worden bewezen |
+| Externe gereedschappen | Pydantic AI met runtime-ontdekte tools; ContextForge alleen als optionele gateway | 🟡 De gewone bronroute gebruikt nu Pydantic AI en houdt Eva's duurzame ledger/readback buiten het framework. De brede 69-wheelroute is afgewezen. Uitgestelde cataloguslading is in de bron groen; de echte Codex-probe en twee verwisselbare providers moeten nog op de exacte image worden bewezen |
 | Subagents | Pydantic AI/Harness voor modelruns; onderhouden workflowmotor voor duurzaam werk | 🟡 Modelrun werkt; workflowkeuze nog niet gewonnen door een dependency |
 | Voice | Pipecat als eerste complete pipeline; Wyoming als lokale fallback | 🟡 Bake-off en fysieke proef ontbreken |
 | Browser | Playwright MCP tegenover Browser Use; daarna één winnaar | 🟡 Functioneel beproefd; nog geen releaseveilige winnaar |
@@ -378,9 +382,9 @@ gebruikersroute draait én de dubbele Eva-code daarna verdwijnt.
 
 ## Eerstvolgende zichtbare verbeteringen
 
-1. De Pydantic-bronkandidaat met een echte Codex-beurt, uitgestelde
-   toolcatalogus, hervatten na toolreceipt en veilige korte retry bewijzen;
-   daarna pas offline bouwen, scannen en via A/B promoveren.
+1. De nieuwe commitgebonden probe met echte Codex-toegang uitvoeren: streaming,
+   uitgestelde toolkeuze en hervatten na een synthetische toolreceipt. Daarna
+   pas offline bouwen, scannen en via A/B promoveren.
 2. Daarna dezelfde route met twee echte verwisselbare diensten bewijzen en de
    resterende Home Assistant-, e-mail- en handgeschreven dispatchfuncties
    verwijderen.

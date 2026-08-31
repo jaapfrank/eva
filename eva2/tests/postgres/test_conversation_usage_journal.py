@@ -82,6 +82,30 @@ def test_reported_usage_round_trips_through_the_durable_reply_payload() -> None:
     assert canonical_json_bytes(replay_data) == canonical_json_bytes(data)
 
 
+def test_partial_retry_usage_round_trips_through_durable_reply_payload() -> None:
+    turn = _turn()
+    reply = _reply(
+        ConversationModelUsage.partial(
+            model_attempts=2,
+            tool_calls=0,
+            input_tokens=31,
+            output_tokens=7,
+        )
+    )
+    data = PostgresConversationJournal._reply_data(turn, reply)  # noqa: SLF001
+
+    restored = _journal_with_reply_data(data).committed_reply(turn)
+
+    assert restored == reply
+    assert restored is not None
+    assert restored.model_usage.measurement == "partial"
+    assert restored.model_usage.model_attempts == 2
+    assert restored.model_usage.input_tokens == 31
+    assert canonical_json_bytes(
+        PostgresConversationJournal._reply_data(turn, restored)  # noqa: SLF001
+    ) == canonical_json_bytes(data)
+
+
 def test_legacy_reply_without_usage_replays_as_unmeasured_not_zero() -> None:
     turn = _turn()
     reply = _reply(ConversationModelUsage.unmeasured())
@@ -123,6 +147,13 @@ def test_measured_timing_round_trips_and_legacy_timing_stays_unmeasured() -> Non
             "measurement": "unmeasured",
             "model_attempts": 0,
             "output_tokens": 0,
+            "tool_calls": 0,
+        },
+        {
+            "input_tokens": None,
+            "measurement": "partial",
+            "model_attempts": 2,
+            "output_tokens": 1,
             "tool_calls": 0,
         },
     ],

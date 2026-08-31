@@ -28,9 +28,11 @@ from pydantic_ai import (
     PartStartEvent,
     TextPart,
     TextPartDelta,
+    ToolCallPartDelta,
     ToolDefinition,
 )
 from pydantic_ai.messages import (
+    BaseToolCallPart,
     ModelRequest,
     ModelResponse,
     ToolCallPart,
@@ -584,21 +586,27 @@ class PydanticConversationModel:
                 "input": admission_input,
                 "instructions": instructions,
                 "store": False,
-                "tools": [{**tool, "defer_loading": False} for tool in tools],
+                "tools": (
+                    [{"execution": "server", "type": "tool_search"}]
+                    + [{**tool, "defer_loading": True} for tool in tools]
+                    if tools
+                    else []
+                ),
             },
             autonomous=False,
         )
         injected_backend = self._model_backend
+        phase_started_at = monotonic()
 
         async def run(
             model_backend: Model,
+            output_started: list[bool],
         ) -> tuple[
             str,
             ConversationActionCall | None,
             ConversationModelUsage,
             ConversationModelTiming,
         ]:
-            started_at = monotonic()
             first_content_ms: int | None = None
             publish_text = not tools
 
@@ -606,17 +614,22 @@ class PydanticConversationModel:
                 nonlocal first_content_ms
                 async for event in events:
                     delta = ""
-                    if isinstance(event, PartStartEvent) and isinstance(
-                        event.part, TextPart
-                    ):
-                        delta = event.part.content
-                    elif isinstance(event, PartDeltaEvent) and isinstance(
-                        event.delta, TextPartDelta
-                    ):
-                        delta = event.delta.content_delta
+                    if isinstance(event, PartStartEvent):
+                        if isinstance(event.part, TextPart):
+                            delta = event.part.content
+                        elif isinstance(event.part, BaseToolCallPart):
+                            output_started[0] = True
+                    elif isinstance(event, PartDeltaEvent):
+                        if isinstance(event.delta, TextPartDelta):
+                            delta = event.delta.content_delta
+                        elif isinstance(event.delta, ToolCallPartDelta):
+                            output_started[0] = True
                     if delta:
+                        output_started[0] = True
                         if first_content_ms is None:
-                            first_content_ms = round((monotonic() - started_at) * 1000)
+                            first_content_ms = round(
+                                (monotonic() - phase_started_at) * 1000
+                            )
                         publish_conversation_text(delta, tools_disabled=publish_text)
 
             definitions = [
@@ -625,7 +638,7 @@ class PydanticConversationModel:
                     description=tool["description"],
                     parameters_json_schema=tool["parameters"],
                     strict=True,
-                    defer_loading=False,
+                    defer_loading=True,
                 )
                 for tool in tools
             ]
@@ -652,38 +665,33 @@ class PydanticConversationModel:
                 user_prompt = None
             agent = Agent(model_backend, instructions=instructions, retries=0)
             try:
-                async with asyncio.timeout(self._timeout_seconds):
-                    result = await agent.run(
-                        user_prompt,
-                        message_history=message_history,
-                        deferred_tool_results=deferred_results,
-                        output_type=output_type,
-                        toolsets=toolsets,
-                        model_settings=(
-                            {"openai_prompt_cache_key": cache_key}
-                            if cache_key is not None
+                result = await agent.run(
+                    user_prompt,
+                    message_history=message_history,
+                    deferred_tool_results=deferred_results,
+                    output_type=output_type,
+                    toolsets=toolsets,
+                    model_settings=(
+                        {"openai_prompt_cache_key": cache_key}
+                        if cache_key is not None
+                        else None
+                    ),
+                    usage_limits=UsageLimits(
+                        request_limit=1,
+                        tool_calls_limit=1 if tools else None,
+                        input_tokens_limit=(
+                            self._resource_budget.max_input_tokens
+                            if self._resource_budget is not None
                             else None
                         ),
-                        usage_limits=UsageLimits(
-                            request_limit=1,
-                            tool_calls_limit=1 if tools else None,
-                            input_tokens_limit=(
-                                self._resource_budget.max_input_tokens
-                                if self._resource_budget is not None
-                                else None
-                            ),
-                            output_tokens_limit=(
-                                self._resource_budget.max_output_tokens
-                                if self._resource_budget is not None
-                                else None
-                            ),
+                        output_tokens_limit=(
+                            self._resource_budget.max_output_tokens
+                            if self._resource_budget is not None
+                            else None
                         ),
-                        event_stream_handler=capture_events,
-                    )
-            except TimeoutError as error:
-                raise ConversationModelError(
-                    "conversation provider deadline exceeded"
-                ) from error
+                    ),
+                    event_stream_handler=capture_events,
+                )
             except CodexProviderError:
                 raise
             except ConversationModelError:
@@ -729,7 +737,7 @@ class PydanticConversationModel:
                 input_tokens=reported.input_tokens,
                 output_tokens=reported.output_tokens,
             )
-            completed_ms = max(0, round((monotonic() - started_at) * 1000))
+            completed_ms = max(0, round((monotonic() - phase_started_at) * 1000))
             if text and first_content_ms is None:
                 first_content_ms = completed_ms
             return (
@@ -745,60 +753,104 @@ class PydanticConversationModel:
             ConversationModelUsage,
             ConversationModelTiming,
         ]:
-            if injected_backend is not None:
-                return await run(injected_backend)
-            provider = OpenAICodexProvider(
-                OpenAICodexProviderSettings(
-                    endpoint=self._endpoint,
-                    model_name=self._model,
-                    timeout_seconds=min(
-                        self._timeout_seconds, _ORDINARY_PROVIDER_TIMEOUT_SECONDS
-                    ),
-                    reasoning_effort=self._reasoning_effort,
-                    maximum_request_bytes=_MAX_STREAM_BYTES,
-                    maximum_response_bytes=_MAX_STREAM_BYTES,
-                ),
-                credential_loader=self._load_auth,
-            )
-            session = None
-            try:
-                async with provider as session:
-                    phase = await run(session.model)
-                    raw_usage = session.consume_raw_usage()
-            except CodexProviderError as error:
-                if (
-                    error.category == "credentials_rejected"
-                    and session is not None
-                    and session.access_token_sha256 is not None
-                ):
-                    with self._credential_lock:
-                        self._rejected_token_sha256 = session.access_token_sha256
-                if error.category == "deadline":
-                    message = "conversation provider deadline exceeded"
-                elif error.category == "credentials_rejected":
-                    message = "conversation credentials were rejected"
-                elif error.category == "unavailable":
-                    message = "conversation provider is unavailable"
-                else:
-                    message = "conversation provider returned an invalid response"
-                raise ConversationModelError(message) from error
-            usage = phase[2]
-            if (
-                usage.measurement != "measured"
-                or usage.input_tokens != raw_usage.input_tokens
-                or usage.output_tokens != raw_usage.output_tokens
-            ):
-                raise ConversationModelError(
-                    "conversation provider usage attestation differs"
-                )
-            with self._credential_lock:
-                self._rejected_token_sha256 = None
-            return phase
+            dispatched_attempts = 0
+            for attempt in range(2):
+                output_started = [False]
+                session = None
+                try:
+                    if injected_backend is not None:
+                        dispatched_attempts += 1
+                        phase = await run(injected_backend, output_started)
+                    else:
+                        provider = OpenAICodexProvider(
+                            OpenAICodexProviderSettings(
+                                endpoint=self._endpoint,
+                                model_name=self._model,
+                                timeout_seconds=min(
+                                    self._timeout_seconds,
+                                    _ORDINARY_PROVIDER_TIMEOUT_SECONDS,
+                                ),
+                                reasoning_effort=self._reasoning_effort,
+                                maximum_request_bytes=_MAX_STREAM_BYTES,
+                                maximum_response_bytes=_MAX_STREAM_BYTES,
+                            ),
+                            credential_loader=self._load_auth,
+                        )
+                        async with provider as session:
+                            dispatched_attempts += 1
+                            phase = await run(session.model, output_started)
+                            raw_usage = session.consume_raw_usage()
+                        usage = phase[2]
+                        if (
+                            usage.measurement != "measured"
+                            or usage.input_tokens != raw_usage.input_tokens
+                            or usage.output_tokens != raw_usage.output_tokens
+                        ):
+                            raise ConversationModelError(
+                                "conversation provider usage attestation differs"
+                            )
+                except CodexProviderError as error:
+                    if (
+                        error.category == "credentials_rejected"
+                        and session is not None
+                        and session.access_token_sha256 is not None
+                    ):
+                        with self._credential_lock:
+                            self._rejected_token_sha256 = session.access_token_sha256
+                    if (
+                        attempt == 0
+                        and error.category == "unavailable"
+                        and not output_started[0]
+                    ):
+                        continue
+                    if error.category == "deadline":
+                        message = "conversation provider deadline exceeded"
+                    elif error.category == "credentials_rejected":
+                        message = "conversation credentials were rejected"
+                    elif error.category == "unavailable":
+                        message = "conversation provider is unavailable"
+                    else:
+                        message = "conversation provider returned an invalid response"
+                    raise ConversationModelError(message) from error
+                if dispatched_attempts == 2:
+                    usage = phase[2]
+                    assert usage.input_tokens is not None
+                    assert usage.output_tokens is not None
+                    assert usage.tool_calls is not None
+                    phase = (
+                        phase[0],
+                        phase[1],
+                        ConversationModelUsage.partial(
+                            model_attempts=2,
+                            tool_calls=usage.tool_calls,
+                            input_tokens=usage.input_tokens,
+                            output_tokens=usage.output_tokens,
+                        ),
+                        phase[3],
+                    )
+                with self._credential_lock:
+                    self._rejected_token_sha256 = None
+                return phase
+            raise AssertionError("conversation retry loop exhausted")
+
+        async def bounded_execute() -> tuple[
+            str,
+            ConversationActionCall | None,
+            ConversationModelUsage,
+            ConversationModelTiming,
+        ]:
+            async with asyncio.timeout(self._timeout_seconds):
+                return await execute()
 
         try:
             asyncio.get_running_loop()
         except RuntimeError:
-            return asyncio.run(execute())
+            try:
+                return asyncio.run(bounded_execute())
+            except TimeoutError as error:
+                raise ConversationModelError(
+                    "conversation provider deadline exceeded"
+                ) from error
         raise ConversationModelError(
             "synchronous conversation port cannot run inside an event loop"
         )
@@ -922,7 +974,10 @@ class PydanticConversationModel:
                 "conversation model returned no text or action"
             )
         aggregate_usage = ConversationModelUsage.aggregate(tuple(usages))
-        self._enforce_reported_usage(aggregate_usage)
+        self._enforce_reported_usage(
+            aggregate_usage,
+            maximum_model_attempts=2 * len(usages),
+        )
         return ConversationModelResult(
             text=text.strip() or None,
             provider=f"chatgpt-codex:{self._model}",
@@ -1575,12 +1630,19 @@ class PydanticConversationModel:
                 "conversation request exceeds the runtime input budget"
             )
 
-    def _enforce_reported_usage(self, usage: ConversationModelUsage) -> None:
+    def _enforce_reported_usage(
+        self,
+        usage: ConversationModelUsage,
+        *,
+        maximum_model_attempts: int = 2,
+    ) -> None:
         budget = self._resource_budget
         if budget is None:
             return
         if (
-            usage.measurement != "measured"
+            usage.measurement not in {"measured", "partial"}
+            or usage.model_attempts is None
+            or usage.model_attempts > maximum_model_attempts
             or usage.input_tokens is None
             or usage.output_tokens is None
         ):
