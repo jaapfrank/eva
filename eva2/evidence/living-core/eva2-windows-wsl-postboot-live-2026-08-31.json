@@ -1,0 +1,90 @@
+{
+  "contract": "Eva2WindowsWslPostbootLiveEvidence/v1",
+  "issuedAt": "2026-08-31T11:26:35+02:00",
+  "status": "runtime_passed_automatic_probe_defect",
+  "restart": {
+    "windowsBootBeforeUtc": "2026-08-11T22:19:44.2659200Z",
+    "windowsBootAfterUtc": "2026-08-31T08:24:01.5000000Z",
+    "windowsHostRestartObserved": true,
+    "wslKernelBootIdBefore": "e88b5184-48fa-4503-8bf5-c1f0146f3011",
+    "wslKernelBootIdAfter": "7fa9e9d6-b397-4580-973e-e23a287587fd",
+    "wslKernelRestartObserved": true,
+    "currentWslStartedAt": "2026-08-31T11:14:07+02:00"
+  },
+  "preRestartBinding": {
+    "evidencePath": "evidence/product/situational-humour-live-ab-2026-08-31.json",
+    "evidenceSha256": "6b0a1840461ef7c5ea8cab30f20ac0b22f94a64fe73816ddbab8163de4a4e54a",
+    "issuedAt": "2026-08-31T01:21:02+02:00",
+    "activeSlot": 4,
+    "activePort": 44711,
+    "image": "eva2/situational-humour-release@sha256:e0e06066e3ed6a71f36859ece3d10fb587dd7bfbfe844eb1adb41b97509cbf9e",
+    "imageCreatedBeforeRestart": true,
+    "routeConfiguredBeforeRestart": true
+  },
+  "postRestartRuntime": {
+    "activeSlot": 4,
+    "activePort": 44711,
+    "routeDropinSha256": "697494ce129c08b712d2e5ef7e62f5e1a6a81931280c32465bc0db0ad76d15c8",
+    "ready": true,
+    "managedContainerCount": 6,
+    "allManagedContainersReturned": true,
+    "allHealthCheckedContainersHealthy": true,
+    "maximumRestartCount": 0,
+    "restartPolicy": "unless-stopped",
+    "eva1Active": true,
+    "eva1RestartCount": 0,
+    "eva1HttpStatuses": {
+      "/": 200,
+      "/api/overview": 200,
+      "/api/workstatus": 200,
+      "/api/capabilities": 200,
+      "/api/health": 200
+    }
+  },
+  "durability": {
+    "preRestartReply": "HUMORLIVE",
+    "preRestartReplySha256": "fcd31a70c67aa189a34d45c2244c876ebf9f77060228a74ababb2b45e1688910",
+    "exactReplayAfterRestart": "HUMORLIVE",
+    "exactReplayEventCounts": {
+      "INGRESS_COMMITTED": 1,
+      "REPLY_COMMITTED": 1
+    },
+    "secondModelCallForReplay": false,
+    "newOwnerRecallAfterRestart": "granaatappelster",
+    "newOwnerRecallSha256": "0886cfe8894fc2bf3406f47e4d1983a16e5e132b3f6ece2bb9282199156263d9",
+    "hindsightMemoryUnits": 437,
+    "hindsightMentalModels": 65
+  },
+  "automaticProbe": {
+    "unit": "eva2-managed-b-postboot-proof.service",
+    "result": "failed_before_runtime_checks",
+    "defects": [
+      "The sandboxed systemd service could not execute powershell.exe, so it could not read the Windows boot identity.",
+      "The retained private arm state still targeted slot 3 on port 44710, while slot 4 on port 44711 had been promoted before this restart."
+    ],
+    "falsePassPrevented": true,
+    "disabledAfterAudit": true,
+    "replacementRequired": "Bind the pre-restart state to the currently active managed slot and collect the Windows boot identity from a WSL-interoperable context."
+  },
+  "observationsOutsideTheActiveRoute": {
+    "legacyContainer": "eva2-durable-goal-worker-b",
+    "activeRouteDependency": false,
+    "image": "eva2-living-core:cross-channel-v53-20260824",
+    "restartLoopObserved": true,
+    "restartCountAtAudit": 51,
+    "cause": "Its obsolete postgres-b hostname no longer resolves.",
+    "changedByThisAudit": false
+  },
+  "privacy": {
+    "externalTelegramMessageSent": false,
+    "homeAssistantActionPerformed": false,
+    "secretIncluded": false,
+    "privateSyntheticIdentifiersIncluded": false
+  },
+  "nonClaims": [
+    "The old automatic systemd verifier did not pass and is not presented as passing.",
+    "The still-open human Telegram alternation test was not completed by this local post-restart audit.",
+    "This does not prove seven days of stability.",
+    "The unrelated legacy worker restart loop is not part of the active Eva2 route and was not repaired or stopped by this audit."
+  ]
+}

@@ -1,6 +1,6 @@
 # Eva 2 — projectbord en vergelijking
 
-Laatst bijgewerkt: 31 augustus 2026, 02:12 CEST
+Laatst bijgewerkt: 31 augustus 2026, 11:27 CEST
 
 ## Zo lees je dit bord
 
@@ -266,7 +266,17 @@ personen, privacy, bewijs, toolacties en terugrol.
 | Geen hoge of kritieke imagebevindingen | ✅ Huidige Eva-runtime 0 hoog / 0 kritisch | ⚪ Niet met dezelfde scanpoort getest | ⚪ Niet met dezelfde scanpoort getest | ⚪ Niet met dezelfde scanpoort getest |
 | Secrets niet in logs of gewone containerinstellingen zetten | ✅ Access-only modellease; secrets als private bestanden | ⚪ Niet gelijk geïnspecteerd | ⚪ Niet gelijk geïnspecteerd | ⚪ Niet gelijk geïnspecteerd |
 | Zeven dagen stabiel blijven | ❌ Eindproef nog niet gestart | ⚪ Niet op onze taak getest | ⚪ Niet op onze taak getest | ⚪ Niet op onze taak getest |
-| Een volledige Windows/WSL-herstart overleven | 🟡 Proef staat klaar; pc-herstart ontbreekt | Niet van toepassing | Niet van toepassing | Niet van toepassing |
+| Een volledige Windows/WSL-herstart overleven | ✅ De pc is echt herstart. Eva1, Eva2, Hindsight en beide actieve databases kwamen vanzelf terug. Een oud antwoord kwam zonder tweede modelcall exact terug en Eva herinnerde daarna exact `granaatappelster` | Niet van toepassing | Niet van toepassing | Niet van toepassing |
+
+De herstart zelf is groen, maar de oude automatische bewijsservice bleek niet
+goed ontworpen. Vanuit zijn afgeschermde systemd-omgeving kon hij Windows niet
+uitlezen en hij wees nog naar het vorige A/B-slot. Hij gaf terecht geen vals
+groen resultaat en is uitgezet. De vervanger moet altijd het werkelijk actieve
+slot vastleggen en de Windows-controle uitvoeren vanuit een omgeving waarin
+WSL-interoperabiliteit beschikbaar is. Buiten de actieve route bleek ook een
+oude v53-onderzoeksworker te blijven herstarten doordat zijn oude databasenaam
+niet meer bestaat. Eva1 en `/eva2` gebruiken die container niet; hij is nog
+niet gewijzigd of gestopt.
 
 ## Welke open-source onderdelen dragen Eva werkelijk?
 
@@ -313,8 +323,9 @@ gebruikersroute draait én de dubbele Eva-code daarna verdwijnt.
    test, SBOM, scan, data-upgrade, A/B en terugrol sturen.
 5. De beste voice- en browsermotor kiezen, in de echte route zetten en daarna
    de overlappende eigen lijm verwijderen.
-6. De pc-herstart, fysieke voiceproef en zeven dagen praktijktest uitvoeren op
-   één bevroren eindkandidaat.
+6. De automatische herstartverifier aan het actieve A/B-slot binden, daarna de
+   fysieke voiceproef en zeven dagen praktijktest uitvoeren op één bevroren
+   eindkandidaat.
 
 Technische details en bewijs staan in
 [OPEN_SOURCE_COMPONENTEN.md](../OPEN_SOURCE_COMPONENTEN.md),
@@ -356,3 +367,7 @@ kandidaat, echte modelproeven en volledige heen→terug→heen-cyclus staan in
 [het kandidaatbewijs](evidence/product/situational-humour-release-candidate-2026-08-31.json)
 en
 [het live A/B-bewijs](evidence/product/situational-humour-live-ab-2026-08-31.json).
+De echte Windows/WSL-herstart, teruggekomen diensten, exacte replay,
+geheugencontrole en de eerlijk vastgelegde fout in de oude automatische probe
+staan in
+[het post-rebootbewijs](evidence/living-core/eva2-windows-wsl-postboot-live-2026-08-31.json).
