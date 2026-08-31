@@ -74,9 +74,11 @@ providerstoring wordt alleen vóór tekst of een begonnen toolcall eenmaal
 hersteld; onbekend verbruik blijft daarbij zichtbaar als gedeeltelijk gemeten.
 Een ingecheckte, commitgebonden providerprobe begrenst drie fasen op 9.000
 input- en 100 outputtokens en schrijft alleen hashes, tellers en veilige
-statusvelden. 124 gerichte model-, usage-, journal- en probecontroles zijn
-groen. Dit is nog geen liveclaim: de echte probe, offline image, scan en veilige
-A/B-promotie ontbreken nog.
+statusvelden. De echte proef leerde dat 100 outputtokens ook interne
+redeneertokens telt en te krap was; de vaste proefgrens is daarom 500, binnen
+de bestaande productgrens. 124 gerichte model-, usage-, journal- en
+probecontroles zijn groen. Dit is nog geen liveclaim: de echte probe, offline
+image, scan en veilige A/B-promotie ontbreken nog.
 
 De actuele Pydantic-versie heeft nu ook met Eva's echte korte Codex-toegang
 gepraat. De verplichte streamingroute gaf exact `PAI236` terug en koos uit de

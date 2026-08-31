@@ -113,7 +113,7 @@ def test_probe_runs_exactly_three_providerless_phases_without_action_execution(
     assert len(budgets) == 2
     assert budgets[0] is budgets[1]
     assert receipt["resource_budget"]["max_input_tokens"] == 9_000
-    assert receipt["resource_budget"]["max_output_tokens"] == 100
+    assert receipt["resource_budget"]["max_output_tokens"] == 500
     assert receipt["resource_budget"]["unknown_cost_status"] == "blocked"
     assert len(scripted.captures) == 3
     assert scripted.remaining_phases == 0
@@ -154,7 +154,7 @@ def test_probe_stops_after_provider_reports_over_budget_usage(
     scripted = ScriptedPydanticConversation(
         (
             ScriptedPhase.text(
-                "oversized " * 200,
+                "oversized " * 1_000,
             ),
             ScriptedPhase.deferred(
                 ScriptedCall(
