@@ -21,7 +21,7 @@ from uuid import UUID
 import sqlalchemy as sa
 
 from eva.adapters.model.contracts import ConversationModelError
-from eva.adapters.model.conversation import CodexConversationModel
+from eva.adapters.model.pydantic_conversation import PydanticConversationModel
 from eva.adapters.postgres.conversation_journal import PostgresConversationJournal
 from eva.adapters.postgres.operational_timeline import TimelineScope
 from eva.application.conversation import (
@@ -47,7 +47,8 @@ ACCESS_TOKEN = "synthetic-runtime-budget-access-token"
 ACCOUNT_ID = "synthetic-runtime-budget-account"
 NOW = "2026-08-29T05:30:00Z"
 SOURCE_PATHS = (
-    "src/eva/adapters/model/conversation.py",
+    "src/eva/adapters/model/openai_codex_provider.py",
+    "src/eva/adapters/model/pydantic_conversation.py",
     "src/eva/bootstrap/runtime.py",
     "src/eva/contracts/runtime_budget.py",
     "src/eva/operations/installer_runtime_budget.py",
@@ -310,7 +311,7 @@ def prove(
                     connection.execute(sa.text("SELECT version()")).scalar_one()
                 )
             with _provider() as (endpoint, handler):
-                model = CodexConversationModel(
+                model = PydanticConversationModel(
                     auth_file=model_auth_file,
                     endpoint=endpoint,
                     resource_budget=policy,

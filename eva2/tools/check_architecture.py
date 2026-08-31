@@ -96,6 +96,21 @@ def _provider_specific_debt_violations(
         re.IGNORECASE,
     )
     violations: list[Violation] = []
+    for relative_file in sorted(ceilings):
+        ceiling_path = root / relative_file
+        if (
+            not ceiling_path.is_file()
+            or ceiling_path.is_symlink()
+            or ceiling_path.suffix != ".py"
+        ):
+            violations.append(
+                Violation(
+                    str(ceiling_path),
+                    1,
+                    "stale_provider_debt_ceiling",
+                    relative_file,
+                )
+            )
     checked: set[Path] = set()
     for relative_scope in scoped_paths:
         scope = root / relative_scope

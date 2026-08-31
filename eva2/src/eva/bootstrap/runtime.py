@@ -74,7 +74,7 @@ from eva.adapters.projection.hindsight import (
 from eva.adapters.objects.identity_verifier import load_current_identity_pack
 
 if TYPE_CHECKING:
-    from eva.adapters.model.conversation import CodexConversationModel
+    from eva.adapters.model.pydantic_conversation import PydanticConversationModel
 from eva.application.conversation import (
     ConversationConflict,
     ConversationTurn,
@@ -552,7 +552,7 @@ class PostgresHindsightMemoryRuntime:
         conversation_actions: PostgresConversationActions,
         sensory_worker: SensoryIngestionWorker | None = None,
         sensory_store: PostgresSensoryEventStore | None = None,
-        conversation_model: CodexConversationModel | None = None,
+        conversation_model: PydanticConversationModel | None = None,
         stripe_publication: StripePublicationAdapter | None = None,
         stripe_webhook: StripeWebhookVerifier | None = None,
         commerce_tenant_id: str | None = None,
@@ -1256,7 +1256,7 @@ class PostgresHindsightMemoryRuntime:
 
 
 def create_runtime_app() -> FastAPI:
-    from eva.adapters.model.conversation import CodexConversationModel
+    from eva.adapters.model.pydantic_conversation import PydanticConversationModel
 
     settings = RuntimeSettings.from_environment()
     engine = sa.create_engine(
@@ -1325,11 +1325,10 @@ def create_runtime_app() -> FastAPI:
         identity_pack=identity_pack,
     )
     provider_bundle = build_external_provider_bundle(settings.external_provider, engine)
-    model = CodexConversationModel(
+    model = PydanticConversationModel(
         auth_file=Path(settings.conversation_auth_file),
         model=settings.conversation_model,
         reasoning_effort=settings.conversation_reasoning_effort,  # type: ignore[arg-type]
-        transport_kind="openai_sdk",
         resource_budget=settings.runtime_resource_budget,
         conversation_tools=(
             () if provider_bundle is None else provider_bundle.conversation_tools

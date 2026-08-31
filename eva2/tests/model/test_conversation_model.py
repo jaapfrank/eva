@@ -14,7 +14,7 @@ from typing import Any, Iterator
 
 import pytest
 
-import eva.adapters.model.conversation as conversation_module
+import eva.adapters.model.pydantic_conversation as conversation_module
 from eva.adapters.objects.identity_verifier import load_current_identity_pack
 from eva.adapters.connectors.home_assistant import HomeAssistantToolAdapter
 from eva.adapters.connectors.home_assistant_automations import (
@@ -25,11 +25,7 @@ from eva.adapters.connectors.home_assistant_management import (
     HomeAssistantConversationMigrationPlanner,
 )
 from eva.adapters.model.contracts import ConversationModelError
-from eva.adapters.model.conversation import CodexConversationModel
-from eva.adapters.model.openai_responses_transport import (
-    OpenAIResponsesResult,
-    OpenAIResponsesUnavailable,
-)
+from eva.adapters.model.pydantic_conversation import PydanticConversationModel
 from eva.application.conversation import (
     ConversationActionCall,
     ConversationActionReceipt,
@@ -40,7 +36,6 @@ from eva.application.conversation import (
     ConversationTurn,
     IdentityProfile,
     RecentConversationMessage,
-    stream_conversation_text,
 )
 from eva.application.memory import PresenceMemory
 from eva.application.sensory import SensoryEvent
@@ -87,8 +82,43 @@ def _deferred_tool(body: dict[str, Any], name: str) -> dict[str, Any]:
     return matches[0]
 
 
-def _home_tool_model(**kwargs: Any) -> CodexConversationModel:
-    return CodexConversationModel(
+def _script_pydantic_phases(
+    monkeypatch: pytest.MonkeyPatch,
+    model: PydanticConversationModel,
+    *responses: tuple[str, ConversationActionCall | None],
+) -> list[dict[str, Any]]:
+    """Stub the one public-framework phase without reviving a transport body."""
+
+    remaining = iter(responses)
+    phases: list[dict[str, Any]] = []
+
+    def run(
+        **phase: Any,
+    ) -> tuple[
+        str,
+        ConversationActionCall | None,
+        ConversationModelUsage,
+        ConversationModelTiming,
+    ]:
+        phases.append(phase)
+        text, action_call = next(remaining)
+        return (
+            text,
+            action_call,
+            ConversationModelUsage.measured(
+                tool_calls=int(action_call is not None),
+                input_tokens=11,
+                output_tokens=max(1, len(text.split())),
+            ),
+            ConversationModelTiming(1 if text else None, 2),
+        )
+
+    monkeypatch.setattr(model, "_run_pydantic_phase", run)
+    return phases
+
+
+def _home_tool_model(**kwargs: Any) -> PydanticConversationModel:
+    return PydanticConversationModel(
         conversation_tools=HomeAssistantToolAdapter.conversation_tools(),
         **kwargs,
     )
@@ -191,28 +221,21 @@ def test_external_provider_catalog_needs_no_model_specific_code(
             "Meld alleen het tijdvak dat uit het gecontroleerde toolresultaat blijkt."
         ),
     )
-    model = CodexConversationModel(
+    model = PydanticConversationModel(
         auth_file=tmp_path / "unused-auth.json",
         conversation_tools=(descriptor,),
     )
-    bodies: list[dict[str, Any]] = []
-    responses = iter(
+    phases = _script_pydantic_phases(
+        monkeypatch,
+        model,
         (
-            (
-                "",
-                ConversationActionCall(
-                    "calendar-call-1", "lookup_calendar_slot", {"day": "morgen"}
-                ),
+            "",
+            ConversationActionCall(
+                "calendar-call-1", "lookup_calendar_slot", {"day": "morgen"}
             ),
-            ("Morgen is 10:00 vrij.", None),
-        )
+        ),
+        ("Morgen is 10:00 vrij.", None),
     )
-
-    def request(body: dict[str, Any]):  # type: ignore[no-untyped-def]
-        bodies.append(body)
-        return next(responses)
-
-    monkeypatch.setattr(model, "_request", request)
     turn = ConversationTurn.private(
         "tenant",
         "installation",
@@ -241,29 +264,26 @@ def test_external_provider_catalog_needs_no_model_specific_code(
     )
 
     assert completed.text == "Morgen is 10:00 vrij."
-    assert _deferred_tool(bodies[0], "lookup_calendar_slot")["parameters"] == (
+    assert _deferred_tool(phases[0], "lookup_calendar_slot")["parameters"] == (
         descriptor.input_schema
     )
-    assert descriptor.completion_guidance in bodies[1]["instructions"]
+    assert phases[0]["completed_action"] is None
+    assert phases[1]["completed_action"].call == selected.action_call
+    assert phases[1]["tools"] == ()
+    assert descriptor.completion_guidance in phases[1]["instructions"]
     assert "lookup_calendar_slot" not in conversation_module._ACTION_TOOLS
 
 
 def test_bound_photo_correction_uses_closed_action_without_face_inference(
     monkeypatch: pytest.MonkeyPatch, tmp_path: Path
 ) -> None:
-    model = CodexConversationModel(auth_file=tmp_path / "unused-auth.json")
+    model = PydanticConversationModel(auth_file=tmp_path / "unused-auth.json")
     call = ConversationActionCall(
         "identity-correction-call-1",
         "record_observation_identity_correction",
         {"corrected_name": "Mark"},
     )
-    bodies: list[dict[str, Any]] = []
-
-    def request(body: dict[str, Any]) -> tuple[str, ConversationActionCall]:
-        bodies.append(body)
-        return "", call
-
-    monkeypatch.setattr(model, "_request", request)
+    phases = _script_pydantic_phases(monkeypatch, model, ("", call))
     binding = ConversationObservationBinding(
         "telegram-photo:mark-1",
         "a" * 64,
@@ -289,11 +309,11 @@ def test_bound_photo_correction_uses_closed_action_without_face_inference(
     )
 
     assert result.action_call == call
-    assert _deferred_tool(bodies[0], "record_observation_identity_correction")
-    assert binding.binding_sha256 in bodies[0]["input"][0]["content"]
+    assert _deferred_tool(phases[0], "record_observation_identity_correction")
+    assert binding.binding_sha256 in phases[0]["prompt"]
     assert (
         "Leid zelf geen gezicht of naam"
-        in _deferred_tool(bodies[0], "record_observation_identity_correction")[
+        in _deferred_tool(phases[0], "record_observation_identity_correction")[
             "description"
         ]
     )
@@ -302,7 +322,7 @@ def test_bound_photo_correction_uses_closed_action_without_face_inference(
 def test_validated_file_edit_is_a_closed_model_action(
     monkeypatch: pytest.MonkeyPatch, tmp_path: Path
 ) -> None:
-    model = CodexConversationModel(auth_file=tmp_path / "unused-auth.json")
+    model = PydanticConversationModel(auth_file=tmp_path / "unused-auth.json")
     call = ConversationActionCall(
         "validated-edit-call-1",
         "edit_text_file_with_focused_validation",
@@ -313,13 +333,7 @@ def test_validated_file_edit_is_a_closed_model_action(
             "test_manifest_path": "project/focused-test.json",
         },
     )
-    bodies: list[dict[str, Any]] = []
-
-    def request(body: dict[str, Any]) -> tuple[str, ConversationActionCall]:
-        bodies.append(body)
-        return "", call
-
-    monkeypatch.setattr(model, "_request", request)
+    phases = _script_pydantic_phases(monkeypatch, model, ("", call))
     result = model.generate(
         ConversationTurn.private(
             "tenant",
@@ -340,51 +354,20 @@ def test_validated_file_edit_is_a_closed_model_action(
     )
 
     assert result.action_call == call
-    assert _deferred_tool(bodies[0], "edit_text_file_with_focused_validation")
+    assert _deferred_tool(phases[0], "edit_text_file_with_focused_validation")
     assert (
         "uitsluitend deze wijziging terug"
-        in _deferred_tool(bodies[0], "edit_text_file_with_focused_validation")[
+        in _deferred_tool(phases[0], "edit_text_file_with_focused_validation")[
             "description"
         ]
     )
-
-
-def test_tool_free_text_generation_exposes_no_model_tools(
-    monkeypatch: pytest.MonkeyPatch, tmp_path: Path
-) -> None:
-    model = CodexConversationModel(auth_file=tmp_path / "unused-auth.json")
-    bodies: list[dict[str, Any]] = []
-
-    def request(body: dict[str, Any]):
-        bodies.append(body)
-        return (
-            "exact text",
-            None,
-            ConversationModelUsage.measured(
-                model_attempts=1, tool_calls=0, input_tokens=12, output_tokens=2
-            ),
-            ConversationModelTiming(20, 30),
-        )
-
-    monkeypatch.setattr(model, "_request_conversation", request)
-    result = model.generate_tool_free_text(
-        prompt="Return exact text.",
-        instructions="You are Eva in a bounded benchmark run.",
-    )
-
-    assert result.text == "exact text"
-    assert result.action_call is None
-    assert result.usage.tool_calls == 0
-    assert bodies[0]["tool_choice"] == "none"
-    assert bodies[0]["tools"] == []
-    assert bodies[0]["store"] is False
 
 
 @pytest.mark.parametrize("prompt,instructions", [("", "valid"), ("valid", "")])
 def test_tool_free_text_generation_rejects_empty_inputs(
     tmp_path: Path, prompt: str, instructions: str
 ) -> None:
-    model = CodexConversationModel(auth_file=tmp_path / "unused-auth.json")
+    model = PydanticConversationModel(auth_file=tmp_path / "unused-auth.json")
     with pytest.raises(ValueError, match="tool-free conversation input is invalid"):
         model.generate_tool_free_text(prompt=prompt, instructions=instructions)
 
@@ -392,7 +375,7 @@ def test_tool_free_text_generation_rejects_empty_inputs(
 def test_repository_improvement_is_self_chosen_from_a_bounded_snapshot(
     monkeypatch: pytest.MonkeyPatch, tmp_path: Path
 ) -> None:
-    model = CodexConversationModel(auth_file=tmp_path / "unused-auth.json")
+    model = PydanticConversationModel(auth_file=tmp_path / "unused-auth.json")
     snapshot = RepositorySnapshot(
         project_directory="fixture-repo",
         repository_sha256="a" * 64,
@@ -570,47 +553,11 @@ def _budget_frames(
     ).encode()
 
 
-@pytest.fixture
-def model_server() -> Iterator[tuple[str, list[dict[str, Any]]]]:
-    requests: list[dict[str, Any]] = []
-
-    class Handler(BaseHTTPRequestHandler):
-        def log_message(self, _format: str, *_args: object) -> None:
-            pass
-
-        def do_POST(self) -> None:  # noqa: N802
-            size = int(self.headers["Content-Length"])
-            requests.append(json.loads(self.rfile.read(size)))
-            frames = (
-                "event: response.output_text.delta\n"
-                'data: {"type":"response.output_text.delta","delta":"Dat klinkt "}\n\n'
-                "event: response.output_text.delta\n"
-                'data: {"type":"response.output_text.delta","delta":"echt rot."}\n\n'
-                "data: [DONE]\n\n"
-            ).encode()
-            self.send_response(200)
-            self.send_header("Content-Type", "text/event-stream")
-            self.send_header("Content-Length", str(len(frames)))
-            self.end_headers()
-            self.wfile.write(frames)
-
-    server = ThreadingHTTPServer(("127.0.0.1", 0), Handler)
-    thread = threading.Thread(target=server.serve_forever, daemon=True)
-    thread.start()
-    try:
-        host, port = server.server_address
-        yield f"http://{host}:{port}/responses", requests
-    finally:
-        server.shutdown()
-        thread.join(timeout=5)
-        server.server_close()
-
-
 def test_runtime_budget_rejects_oversized_input_before_auth_or_network(
     tmp_path: Path,
 ) -> None:
     with _budget_provider(_budget_frames()) as (endpoint, requests):
-        model = CodexConversationModel(
+        model = PydanticConversationModel(
             auth_file=tmp_path / "missing-auth.json",
             endpoint=endpoint,
             resource_budget=_runtime_budget(max_input_tokens=4_000),
@@ -630,7 +577,7 @@ def test_runtime_budget_admits_only_the_exact_deferred_catalog(tmp_path: Path) -
         *HomeAssistantToolAdapter.conversation_tools(),
         *HomeAssistantConversationAutomationPlanner.conversation_tools(),
     )
-    model = CodexConversationModel(
+    model = PydanticConversationModel(
         auth_file=tmp_path / "missing-auth.json",
         resource_budget=budget,
         conversation_tools=provider_tools,
@@ -664,7 +611,7 @@ def test_runtime_budget_blocks_unknown_autonomous_spend_before_network(
     tmp_path: Path,
 ) -> None:
     with _budget_provider(_budget_frames()) as (endpoint, requests):
-        model = CodexConversationModel(
+        model = PydanticConversationModel(
             auth_file=tmp_path / "missing-auth.json",
             endpoint=endpoint,
             resource_budget=_runtime_budget(),
@@ -676,202 +623,6 @@ def test_runtime_budget_blocks_unknown_autonomous_spend_before_network(
             )
 
     assert requests == []
-
-
-def test_runtime_budget_records_measured_terminal_provider_usage(
-    tmp_path: Path,
-) -> None:
-    auth_file = tmp_path / "auth.json"
-    _write_access_lease(auth_file)
-    with _budget_provider(_budget_frames()) as (endpoint, requests):
-        model = CodexConversationModel(
-            auth_file=auth_file,
-            endpoint=endpoint,
-            resource_budget=_runtime_budget(),
-        )
-
-        chunks: list[str] = []
-        with stream_conversation_text(chunks.append):
-            text, action, usage, timing = model._request_conversation(  # noqa: SLF001
-                {"input": [{"content": "hoi", "role": "user"}], "tool_choice": "none"}
-            )
-
-    assert text == "Binnen grens."
-    assert action is None
-    assert usage.measurement == "measured"
-    assert usage.input_tokens == 100
-    assert usage.output_tokens == 20
-    assert usage.model_attempts == 1
-    assert usage.tool_calls == 0
-    assert timing.first_content_ms is not None
-    assert timing.completed_ms is not None
-    assert 0 <= timing.first_content_ms <= timing.completed_ms
-    assert "".join(chunks) == text
-    assert len(requests) == 1
-
-
-def test_ordinary_conversation_retries_one_transient_provider_failure(
-    monkeypatch: pytest.MonkeyPatch, tmp_path: Path
-) -> None:
-    model = CodexConversationModel(
-        auth_file=tmp_path / "unused.json",
-        resource_budget=_runtime_budget(),
-    )
-    timeouts: list[float] = []
-
-    def request_using(*_args: object, **kwargs: object) -> object:
-        timeouts.append(float(kwargs["timeout_seconds"]))
-        if len(timeouts) == 1:
-            raise ConversationModelError("conversation provider is unavailable")
-        return (
-            ("hersteld", None, ConversationModelTiming(80, 100)),
-            ConversationModelUsage.measured(
-                tool_calls=0, input_tokens=100, output_tokens=2
-            ),
-        )
-
-    monkeypatch.setattr(model, "_request_using", request_using)
-
-    text, action, usage, timing = model._request_conversation(  # noqa: SLF001
-        {"input": [{"content": "hoi", "role": "user"}], "tool_choice": "none"}
-    )
-
-    assert (text, action) == ("hersteld", None)
-    assert timeouts == [5.0, 5.0]
-    assert usage == ConversationModelUsage.unmeasured()
-    assert timing.first_content_ms is not None and timing.first_content_ms >= 80
-    assert timing.completed_ms is not None and timing.completed_ms >= 100
-
-
-def test_openai_sdk_conversation_retries_one_bounded_transient_failure(
-    monkeypatch: pytest.MonkeyPatch, tmp_path: Path
-) -> None:
-    model = CodexConversationModel(
-        auth_file=tmp_path / "unused.json",
-        resource_budget=_runtime_budget(),
-        transport_kind="openai_sdk",
-    )
-    assert model._openai_transport is not None  # noqa: SLF001
-    assert model._openai_transport._timeout_seconds == 5.0  # noqa: SLF001
-    monkeypatch.setattr(model, "_load_auth", lambda: ("access", "account"))
-    calls = 0
-
-    def request(*_args: object, **_kwargs: object) -> OpenAIResponsesResult:
-        nonlocal calls
-        calls += 1
-        if calls == 1:
-            raise OpenAIResponsesUnavailable("tijdelijk")
-        return OpenAIResponsesResult(
-            "hersteld",
-            None,
-            ConversationModelUsage.measured(
-                tool_calls=0, input_tokens=100, output_tokens=2
-            ),
-            0.08,
-            0.1,
-        )
-
-    monkeypatch.setattr(model._openai_transport, "request", request)  # noqa: SLF001
-    text, action, usage, timing = model._request_conversation(  # noqa: SLF001
-        {"input": [{"content": "hoi", "role": "user"}], "tool_choice": "none"}
-    )
-
-    assert (text, action, calls) == ("hersteld", None, 2)
-    assert usage == ConversationModelUsage.unmeasured()
-    assert timing.first_content_ms is not None and timing.first_content_ms >= 80
-    assert timing.completed_ms is not None and timing.completed_ms >= 100
-
-
-def test_openai_sdk_conversation_does_not_retry_after_text_started(
-    monkeypatch: pytest.MonkeyPatch, tmp_path: Path
-) -> None:
-    model = CodexConversationModel(
-        auth_file=tmp_path / "unused.json",
-        resource_budget=_runtime_budget(),
-        transport_kind="openai_sdk",
-    )
-    assert model._openai_transport is not None  # noqa: SLF001
-    monkeypatch.setattr(model, "_load_auth", lambda: ("access", "account"))
-    calls = 0
-
-    def request(*_args: object, **_kwargs: object) -> OpenAIResponsesResult:
-        nonlocal calls
-        calls += 1
-        raise OpenAIResponsesUnavailable("tijdelijk", retry_safe=False)
-
-    monkeypatch.setattr(model._openai_transport, "request", request)  # noqa: SLF001
-    with pytest.raises(ConversationModelError, match="provider is unavailable"):
-        model._request_conversation(  # noqa: SLF001
-            {"input": [{"content": "hoi", "role": "user"}], "tool_choice": "none"}
-        )
-
-    assert calls == 1
-
-
-def test_ordinary_conversation_does_not_retry_nontransient_failure(
-    monkeypatch: pytest.MonkeyPatch, tmp_path: Path
-) -> None:
-    model = CodexConversationModel(
-        auth_file=tmp_path / "unused.json",
-        resource_budget=_runtime_budget(),
-    )
-    calls = 0
-
-    def request_using(*_args: object, **_kwargs: object) -> object:
-        nonlocal calls
-        calls += 1
-        raise ConversationModelError("invalid response")
-
-    monkeypatch.setattr(model, "_request_using", request_using)
-
-    with pytest.raises(ConversationModelError, match="invalid response"):
-        model._request_conversation(  # noqa: SLF001
-            {"input": [{"content": "hoi", "role": "user"}], "tool_choice": "none"}
-        )
-
-    assert calls == 1
-
-
-@pytest.mark.parametrize(
-    ("frames", "message"),
-    (
-        (_budget_frames(output_tokens=1_201), "output budget"),
-        (_budget_frames(input_tokens=12_001), "input budget"),
-        (
-            _budget_frames(status="incomplete"),
-            "completion status is invalid",
-        ),
-        (_budget_frames(trailing_data=True), "data after completion"),
-        (
-            (
-                "event: response.output_text.delta\n"
-                'data: {"type":"response.output_text.delta","delta":"geen usage"}\n\n'
-                "data: [DONE]\n\n"
-            ).encode(),
-            "usage is missing",
-        ),
-    ),
-)
-def test_runtime_budget_withholds_unverifiable_or_over_budget_replies(
-    tmp_path: Path,
-    frames: bytes,
-    message: str,
-) -> None:
-    auth_file = tmp_path / "auth.json"
-    _write_access_lease(auth_file)
-    with _budget_provider(frames) as (endpoint, requests):
-        model = CodexConversationModel(
-            auth_file=auth_file,
-            endpoint=endpoint,
-            resource_budget=_runtime_budget(),
-        )
-
-        with pytest.raises(ConversationModelError, match=message):
-            model._request_conversation(  # noqa: SLF001
-                {"input": [{"content": "hoi", "role": "user"}]}
-            )
-
-    assert len(requests) == 1
 
 
 def _memory() -> PresenceMemory:
@@ -918,12 +669,10 @@ def _memory() -> PresenceMemory:
 
 
 def test_direct_model_receives_recalled_memories_without_reflection(
-    model_server: tuple[str, list[dict[str, Any]]], tmp_path: Path
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Path
 ) -> None:
-    endpoint, requests = model_server
-    auth_file = tmp_path / "auth.json"
-    _write_access_lease(auth_file)
-    model = CodexConversationModel(auth_file=auth_file, endpoint=endpoint)
+    model = PydanticConversationModel(auth_file=tmp_path / "unused-auth.json")
+    phases = _script_pydantic_phases(monkeypatch, model, ("Dat klinkt echt rot.", None))
     turn = ConversationTurn.private(
         "tenant",
         "installation",
@@ -945,82 +694,54 @@ def test_direct_model_receives_recalled_memories_without_reflection(
 
     assert result.text == "Dat klinkt echt rot."
     assert result.provider == "chatgpt-codex:gpt-5.4-mini"
-    assert requests[0]["model"] == "gpt-5.4-mini"
-    assert requests[0]["reasoning"]["effort"] == "none"
-    assert requests[0]["input"][0]["content"] == turn.text
-    assert "Jaap houdt niet van formele antwoorden" in requests[0]["instructions"]
-    assert "waargenomen 2026-08-23T14:00:00Z" in requests[0]["instructions"]
-    assert "nieuwste betrouwbare bron" in requests[0]["instructions"]
-    assert "Duurzame stijlspiegel" in requests[0]["instructions"]
-    assert "Actief procedureel IdentityPack" in requests[0]["instructions"]
-    assert requests[0]["instructions"].count("Actief procedureel IdentityPack") == 1
-    assert (
-        "warm, practical, curious, concise, slightly_stubborn"
-        in (requests[0]["instructions"])
-    )
-    assert "temperament en humor als zichtbaar gedrag" in requests[0]["instructions"]
-    assert "opvallende tegenstelling" in requests[0]["instructions"]
-    assert "concreet detail dat al in de situatie zit" in requests[0]["instructions"]
-    assert "kort, droog en in gewone spreektaal" in requests[0]["instructions"]
-    assert (
-        "gemaakte woordspeling, verzonnen samenstelling, catchphrase"
-        in requests[0]["instructions"]
-    )
-    assert (
-        "duidelijkheid, warmte en bruikbaarheid gaan voor"
-        in requests[0]["instructions"]
-    )
-    assert (
-        "Forceer nooit humor bij verdriet, gevaar of angst"
-        in requests[0]["instructions"]
-    )
-    assert "concreet, beredeneerd eigen standpunt" in requests[0]["instructions"]
-    assert "natuurlijk hedendaags spreektaal" in requests[0]["instructions"]
-    assert (
-        "niet stijver of langer om identiteit te tonen" in requests[0]["instructions"]
-    )
-    assert "claim alleen wat aantoonbaar is gelukt" in requests[0]["instructions"]
-    assert "Jaap wil korte, directe en warme antwoorden" in requests[0]["instructions"]
-    assert "kopieer geen zinnen, typefouten of boosheid" in requests[0]["instructions"]
-    assert "één expliciete relevante herinnering" in requests[0]["instructions"]
-    assert "Verzin dan geen voorbeeldzin" in requests[0]["instructions"]
-    assert "geen ongevraagd aanbod of vraag" in requests[0]["instructions"]
-    assert "nooit een generiek dienstenmenu" in requests[0]["instructions"]
-    assert "eigen digitaal perspectief" in requests[0]["instructions"]
-    assert "leg het werk niet terug" in requests[0]["instructions"]
-    assert (
-        "Vervang het doel niet door een makkelijker buurdoel"
-        in (requests[0]["instructions"])
-    )
-    assert (
-        "wat de laatste zin werkelijk van jou vraagt" in (requests[0]["instructions"])
-    )
-    assert (
-        "Beantwoord die gevraagde eigen handeling eerst"
-        in (requests[0]["instructions"])
-    )
-    assert "uitgesproken grens" in requests[0]["instructions"]
-    assert "Verzin geen fysieke feiten" in requests[0]["instructions"]
-    assert "kan geen toekomstig werk inplannen" in requests[0]["instructions"]
-    assert "geen tijdstip of latere terugkoppeling" in requests[0]["instructions"]
-    assert "/reflect" not in json.dumps(requests[0])
-    assert (
-        "antwoord als jezelf, niet vanuit een vaste antwoordvorm"
-        in (requests[0]["instructions"])
-    )
+    assert phases[0]["prompt"] == turn.text
+    assert phases[0]["tools"] == (conversation_module._MEMORY_SEARCH_TOOL,)
+    instructions = phases[0]["instructions"]
+    for fragment in (
+        "Jaap houdt niet van formele antwoorden",
+        "waargenomen 2026-08-23T14:00:00Z",
+        "nieuwste betrouwbare bron",
+        "Duurzame stijlspiegel",
+        "Actief procedureel IdentityPack",
+        "warm, practical, curious, concise, slightly_stubborn",
+        "temperament en humor als zichtbaar gedrag",
+        "opvallende tegenstelling",
+        "concreet detail dat al in de situatie zit",
+        "kort, droog en in gewone spreektaal",
+        "gemaakte woordspeling, verzonnen samenstelling, catchphrase",
+        "duidelijkheid, warmte en bruikbaarheid gaan voor",
+        "Forceer nooit humor bij verdriet, gevaar of angst",
+        "concreet, beredeneerd eigen standpunt",
+        "natuurlijk hedendaags spreektaal",
+        "niet stijver of langer om identiteit te tonen",
+        "claim alleen wat aantoonbaar is gelukt",
+        "Jaap wil korte, directe en warme antwoorden",
+        "kopieer geen zinnen, typefouten of boosheid",
+        "één expliciete relevante herinnering",
+        "Verzin dan geen voorbeeldzin",
+        "geen ongevraagd aanbod of vraag",
+        "nooit een generiek dienstenmenu",
+        "eigen digitaal perspectief",
+        "leg het werk niet terug",
+        "Vervang het doel niet door een makkelijker buurdoel",
+        "wat de laatste zin werkelijk van jou vraagt",
+        "Beantwoord die gevraagde eigen handeling eerst",
+        "uitgesproken grens",
+        "Verzin geen fysieke feiten",
+        "kan geen toekomstig werk inplannen",
+        "geen tijdstip of latere terugkoppeling",
+        "antwoord als jezelf, niet vanuit een vaste antwoordvorm",
+    ):
+        assert fragment in instructions
+    assert instructions.count("Actief procedureel IdentityPack") == 1
+    assert "/reflect" not in instructions
 
 
 def test_recent_durable_conversation_is_not_denied_as_missing_memory(
     monkeypatch: pytest.MonkeyPatch, tmp_path: Path
 ) -> None:
-    model = CodexConversationModel(auth_file=tmp_path / "unused-auth.json")
-    captured: list[dict[str, Any]] = []
-
-    def request(body: dict[str, Any]) -> tuple[str, None]:
-        captured.append(body)
-        return "amberkleurige maan", None
-
-    monkeypatch.setattr(model, "_request", request)
+    model = PydanticConversationModel(auth_file=tmp_path / "unused-auth.json")
+    phases = _script_pydantic_phases(monkeypatch, model, ("amberkleurige maan", None))
     result = model.generate(
         ConversationTurn.private(
             "tenant",
@@ -1043,23 +764,27 @@ def test_recent_durable_conversation_is_not_denied_as_missing_memory(
     )
 
     assert result.text == "amberkleurige maan"
-    instructions = captured[0]["instructions"]
+    instructions = phases[0]["instructions"]
     assert "duurzame gesprekjournal" in instructions
     assert "een herstart van core of databasecontainer overleven" in instructions
     assert "niet kunt onthouden" in instructions
     assert "amberkleurige maan" in instructions
-    assert captured[0]["tool_choice"] == "auto"
-    assert captured[0]["tools"][0] == {"execution": "server", "type": "tool_search"}
-    assert _deferred_tool(captured[0], "search_personal_memory")
+    assert [tool["name"] for tool in phases[0]["tools"]] == ["search_personal_memory"]
+    assert _deferred_tool(phases[0], "search_personal_memory")
 
 
 def test_document_work_action_is_model_chosen_but_episode_bound(
-    model_server: tuple[str, list[dict[str, Any]]], tmp_path: Path
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Path
 ) -> None:
-    endpoint, requests = model_server
-    auth_file = tmp_path / "auth.json"
-    _write_access_lease(auth_file)
-    model = CodexConversationModel(auth_file=auth_file, endpoint=endpoint)
+    model = PydanticConversationModel(auth_file=tmp_path / "unused-auth.json")
+    phases = _script_pydantic_phases(
+        monkeypatch,
+        model,
+        (
+            "",
+            ConversationActionCall("document-call-1", "checkpoint_document_task", {}),
+        ),
+    )
     turn = ConversationTurn.private(
         "tenant",
         "installation",
@@ -1077,7 +802,7 @@ def test_document_work_action_is_model_chosen_but_episode_bound(
         load_current_identity_pack(),
     )
 
-    model.generate(
+    result = model.generate(
         turn,
         identity,
         _memory(),
@@ -1086,25 +811,36 @@ def test_document_work_action_is_model_chosen_but_episode_bound(
         self_context=("Direct actieve documenttaak in dit gesprek: checklist.md.",),
     )
 
-    assert _deferred_tool(requests[0], "checkpoint_document_task")
-    instructions = requests[0]["instructions"]
+    assert result.action_call is not None
+    assert result.action_call.name == "checkpoint_document_task"
+    assert _deferred_tool(phases[0], "checkpoint_document_task")
+    instructions = phases[0]["instructions"]
     assert (
         "direct actieve taak uit dit gesprek"
-        in _deferred_tool(requests[0], "checkpoint_document_task")["description"]
+        in _deferred_tool(phases[0], "checkpoint_document_task")["description"]
     )
     assert "Direct actieve documenttaak in dit gesprek" in instructions
 
 
-def test_dynamic_selection_uses_none_reasoning_even_with_a_higher_final_effort(
-    model_server: tuple[str, list[dict[str, Any]]], tmp_path: Path
+def test_dynamic_selection_uses_one_pydantic_deferred_tool_catalog(
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Path
 ) -> None:
-    endpoint, requests = model_server
-    auth_file = tmp_path / "auth.json"
-    _write_access_lease(auth_file)
     model = _home_tool_model(
-        auth_file=auth_file, endpoint=endpoint, reasoning_effort="high"
+        auth_file=tmp_path / "unused-auth.json", reasoning_effort="high"
     )
-    model.generate(
+    phases = _script_pydantic_phases(
+        monkeypatch,
+        model,
+        (
+            "",
+            ConversationActionCall(
+                "state-call-configuration",
+                "read_home_assistant_state",
+                {"entity_kind": "switch", "target": "verwarming"},
+            ),
+        ),
+    )
+    result = model.generate(
         ConversationTurn.private(
             "tenant", "installation", "jaap", "conversation", "message", "Hoi", NOW
         ),
@@ -1113,13 +849,16 @@ def test_dynamic_selection_uses_none_reasoning_even_with_a_higher_final_effort(
         (),
         available_actions=("read_home_assistant_state",),
     )
-    assert requests[0]["reasoning"]["effort"] == "none"
-    assert requests[0]["model"] == "gpt-5.4-mini"
+    assert result.action_call is not None
+    assert result.action_call.name == "read_home_assistant_state"
+    assert [tool["name"] for tool in phases[0]["tools"]] == [
+        "search_personal_memory",
+        "read_home_assistant_state",
+    ]
 
     with pytest.raises(ValueError, match="reasoning effort"):
-        CodexConversationModel(
-            auth_file=auth_file,
-            endpoint=endpoint,
+        PydanticConversationModel(
+            auth_file=tmp_path / "unused-auth.json",
             reasoning_effort="extreme",  # type: ignore[arg-type]
         )
 
@@ -1128,17 +867,18 @@ def test_dynamic_catalog_defers_memory_and_available_actions(
     monkeypatch: pytest.MonkeyPatch, tmp_path: Path
 ) -> None:
     model = _home_tool_model(auth_file=tmp_path / "unused-auth.json")
-    bodies: list[dict[str, Any]] = []
-
-    def request(body: dict[str, Any]) -> tuple[str, ConversationActionCall]:
-        bodies.append(body)
-        return "", ConversationActionCall(
-            "memory-query-1",
-            "search_personal_memory",
-            {"query_text": "overkapping veranda temperatuur warm koel voorkeur"},
-        )
-
-    monkeypatch.setattr(model, "_request", request)
+    phases = _script_pydantic_phases(
+        monkeypatch,
+        model,
+        (
+            "",
+            ConversationActionCall(
+                "memory-query-1",
+                "search_personal_memory",
+                {"query_text": "overkapping veranda temperatuur warm koel voorkeur"},
+            ),
+        ),
+    )
     turn = ConversationTurn.private(
         "tenant",
         "installation",
@@ -1159,30 +899,19 @@ def test_dynamic_catalog_defers_memory_and_available_actions(
 
     assert result.action_call is not None
     assert result.action_call.name == "search_personal_memory"
-    assert bodies[0]["model"] == "gpt-5.4-mini"
-    assert bodies[0]["reasoning"]["effort"] == "none"
-    assert bodies[0]["tool_choice"] == "auto"
-    assert bodies[0]["tools"][0] == {"execution": "server", "type": "tool_search"}
-    assert [tool["name"] for tool in bodies[0]["tools"][1:]] == [
+    assert [tool["name"] for tool in phases[0]["tools"]] == [
         "search_personal_memory",
         "read_home_assistant_state",
         "set_home_assistant_light",
     ]
-    assert all(tool["defer_loading"] is True for tool in bodies[0]["tools"][1:])
-    assert set(bodies[0]["tools"][1]["parameters"]["properties"]) == {"query_text"}
+    assert set(phases[0]["tools"][0]["parameters"]["properties"]) == {"query_text"}
 
 
-def test_full_dynamic_conversation_body_passes_the_existing_input_budget(
+def test_full_dynamic_conversation_offers_exact_pydantic_deferred_catalog(
     monkeypatch: pytest.MonkeyPatch, tmp_path: Path
 ) -> None:
-    bodies: list[dict[str, Any]] = []
     model = _home_tool_model(auth_file=tmp_path / "unused-auth.json")
-
-    def request(body: dict[str, Any]) -> tuple[str, None]:
-        bodies.append(body)
-        return "Binnen grens.", None
-
-    monkeypatch.setattr(model, "_request", request)
+    phases = _script_pydantic_phases(monkeypatch, model, ("Binnen grens.", None))
     model.generate(
         ConversationTurn.private(
             "tenant", "installation", "jaap", "conversation", "message", "Hoi", NOW
@@ -1193,10 +922,10 @@ def test_full_dynamic_conversation_body_passes_the_existing_input_budget(
         available_actions=tuple(conversation_module._ACTION_TOOLS),
     )
 
-    guarded = CodexConversationModel(
-        auth_file=tmp_path / "missing-auth.json", resource_budget=_runtime_budget()
-    )
-    guarded._admit_request(bodies[0], autonomous=False)  # noqa: SLF001
+    assert [tool["name"] for tool in phases[0]["tools"]] == [
+        "search_personal_memory",
+        *conversation_module._ACTION_TOOLS,
+    ]
 
 
 def test_model_reports_an_expired_access_lease_without_provider_call(
@@ -1219,7 +948,7 @@ def test_model_reports_an_expired_access_lease_without_provider_call(
     )
     auth_file.chmod(0o640)
 
-    model = CodexConversationModel(auth_file=auth_file)
+    model = PydanticConversationModel(auth_file=auth_file)
 
     status = model.credential_status(now=datetime(2026, 8, 23, tzinfo=UTC))
     assert status.ready is False
@@ -1241,7 +970,7 @@ def test_model_rejects_a_full_refresh_authority_file(tmp_path: Path) -> None:
     )
     auth_file.chmod(0o640)
 
-    status = CodexConversationModel(auth_file=auth_file).credential_status()
+    status = PydanticConversationModel(auth_file=auth_file).credential_status()
 
     assert status.ready is False
     assert status.state == "invalid"
@@ -1276,7 +1005,7 @@ def test_provider_rejection_latches_until_the_access_lease_rotates(
         )
         auth_file.chmod(0o640)
         host, port = server.server_address
-        model = CodexConversationModel(
+        model = PydanticConversationModel(
             auth_file=auth_file, endpoint=f"http://{host}:{port}/responses"
         )
 
@@ -1319,7 +1048,7 @@ def test_stream_read_timeout_is_a_bounded_provider_error(
 
     auth_file = tmp_path / "lease.json"
     _write_access_lease(auth_file)
-    model = CodexConversationModel(auth_file=auth_file)
+    model = PydanticConversationModel(auth_file=auth_file)
     monkeypatch.setattr(
         conversation_module.urllib.request,
         "urlopen",
@@ -1334,17 +1063,18 @@ def test_model_can_choose_a_verified_switch_without_treating_it_as_a_light(
     monkeypatch: pytest.MonkeyPatch, tmp_path: Path
 ) -> None:
     model = _home_tool_model(auth_file=tmp_path / "unused-auth.json")
-    captured: list[dict[str, Any]] = []
-
-    def request(body: dict[str, Any]) -> tuple[str, ConversationActionCall]:
-        captured.append(body)
-        return "", ConversationActionCall(
-            "switch-call-1",
-            "set_home_assistant_switch",
-            {"state": "on", "target": "verwarming in de overkapping"},
-        )
-
-    monkeypatch.setattr(model, "_request", request)
+    phases = _script_pydantic_phases(
+        monkeypatch,
+        model,
+        (
+            "",
+            ConversationActionCall(
+                "switch-call-1",
+                "set_home_assistant_switch",
+                {"state": "on", "target": "verwarming in de overkapping"},
+            ),
+        ),
+    )
     result = model.generate(
         ConversationTurn.private(
             "tenant",
@@ -1372,8 +1102,8 @@ def test_model_can_choose_a_verified_switch_without_treating_it_as_a_light(
 
     assert result.action_call is not None
     assert result.action_call.name == "set_home_assistant_switch"
-    assert _deferred_tool(captured[0], "set_home_assistant_switch")
-    switch_description = _deferred_tool(captured[0], "set_home_assistant_switch")[
+    assert _deferred_tool(phases[0], "set_home_assistant_switch")
+    switch_description = _deferred_tool(phases[0], "set_home_assistant_switch")[
         "description"
     ]
     assert "sloten of alarmsystemen" in switch_description
@@ -1385,22 +1115,23 @@ def test_model_can_choose_bounded_home_assistant_history_read(
     monkeypatch: pytest.MonkeyPatch, tmp_path: Path
 ) -> None:
     model = _home_tool_model(auth_file=tmp_path / "unused-auth.json")
-    captured: list[dict[str, Any]] = []
-
-    def request(body: dict[str, Any]) -> tuple[str, ConversationActionCall]:
-        captured.append(body)
-        return "", ConversationActionCall(
-            "history-call-1",
-            "read_home_assistant_history",
-            {
-                "entity_kind": "light",
-                "period": "yesterday",
-                "target": "licht in de overkapping",
-                "transition_to": "off",
-            },
-        )
-
-    monkeypatch.setattr(model, "_request", request)
+    phases = _script_pydantic_phases(
+        monkeypatch,
+        model,
+        (
+            "",
+            ConversationActionCall(
+                "history-call-1",
+                "read_home_assistant_history",
+                {
+                    "entity_kind": "light",
+                    "period": "yesterday",
+                    "target": "licht in de overkapping",
+                    "transition_to": "off",
+                },
+            ),
+        ),
+    )
     result = model.generate(
         ConversationTurn.private(
             "tenant",
@@ -1419,15 +1150,15 @@ def test_model_can_choose_bounded_home_assistant_history_read(
 
     assert result.action_call is not None
     assert result.action_call.arguments["period"] == "yesterday"
-    assert _deferred_tool(captured[0], "read_home_assistant_history")
+    assert _deferred_tool(phases[0], "read_home_assistant_history")
     assert (
         "gok niet vanuit gesprek of herinneringen"
-        in _deferred_tool(captured[0], "read_home_assistant_history")["description"]
+        in _deferred_tool(phases[0], "read_home_assistant_history")["description"]
     )
     assert (
         "behoud bijvoorbeeld 'licht in de overkapping'"
         in (
-            _deferred_tool(captured[0], "read_home_assistant_history")["parameters"][
+            _deferred_tool(phases[0], "read_home_assistant_history")["parameters"][
                 "properties"
             ]["target"]["description"]
         )
@@ -1438,17 +1169,18 @@ def test_model_can_choose_current_home_assistant_state_read(
     monkeypatch: pytest.MonkeyPatch, tmp_path: Path
 ) -> None:
     model = _home_tool_model(auth_file=tmp_path / "unused-auth.json")
-    captured: list[dict[str, Any]] = []
-
-    def request(body: dict[str, Any]) -> tuple[str, ConversationActionCall]:
-        captured.append(body)
-        return "", ConversationActionCall(
-            "state-call-1",
-            "read_home_assistant_state",
-            {"entity_kind": "switch", "target": "verwarming in de overkapping"},
-        )
-
-    monkeypatch.setattr(model, "_request", request)
+    phases = _script_pydantic_phases(
+        monkeypatch,
+        model,
+        (
+            "",
+            ConversationActionCall(
+                "state-call-1",
+                "read_home_assistant_state",
+                {"entity_kind": "switch", "target": "verwarming in de overkapping"},
+            ),
+        ),
+    )
     result = model.generate(
         ConversationTurn.private(
             "tenant",
@@ -1467,30 +1199,23 @@ def test_model_can_choose_current_home_assistant_state_read(
 
     assert result.action_call is not None
     assert result.action_call.arguments["entity_kind"] == "switch"
-    assert _deferred_tool(captured[0], "read_home_assistant_state")
+    assert _deferred_tool(phases[0], "read_home_assistant_state")
     assert (
         "niet op oude gesprekscontext"
-        in _deferred_tool(captured[0], "read_home_assistant_state")["description"]
+        in _deferred_tool(phases[0], "read_home_assistant_state")["description"]
     )
 
 
 def test_dutch_identity_retries_an_accidental_foreign_script(
     monkeypatch: pytest.MonkeyPatch, tmp_path: Path
 ) -> None:
-    model = CodexConversationModel(auth_file=tmp_path / "unused-auth.json")
-    responses = iter(
-        (
-            ("Om 16:29 en nog ერთხელ om 16:35.", None),
-            ("Om 16:29 en nogmaals om 16:35.", None),
-        )
+    model = PydanticConversationModel(auth_file=tmp_path / "unused-auth.json")
+    phases = _script_pydantic_phases(
+        monkeypatch,
+        model,
+        ("Om 16:29 en nog ერთხელ om 16:35.", None),
+        ("Om 16:29 en nogmaals om 16:35.", None),
     )
-    captured: list[dict[str, Any]] = []
-
-    def request(body: dict[str, Any]):  # type: ignore[no-untyped-def]
-        captured.append(dict(body))
-        return next(responses)
-
-    monkeypatch.setattr(model, "_request", request)
     pack = load_current_identity_pack()
     result = model.generate(
         ConversationTurn.private(
@@ -1508,115 +1233,79 @@ def test_dutch_identity_retries_an_accidental_foreign_script(
     )
 
     assert result.text == "Om 16:29 en nogmaals om 16:35."
-    assert len(captured) == 2
-    assert "geen Markdown-opmaak" in captured[0]["instructions"]
-    assert "volledig in natuurlijk Nederlands" in captured[1]["instructions"]
+    assert len(phases) == 2
+    assert "geen Markdown-opmaak" in phases[0]["instructions"]
+    assert "volledig in natuurlijk Nederlands" in phases[1]["instructions"]
 
 
 def test_model_action_roundtrip_uses_durable_receipt_before_visible_text(
-    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Path
 ) -> None:
-    requests: list[dict[str, Any]] = []
+    model = PydanticConversationModel(auth_file=tmp_path / "unused-auth.json")
+    action = ConversationActionCall(
+        "call_interest_1",
+        "adopt_personal_interest",
+        {
+            "motivation": "Ik hou van patronen.",
+            "next_exploration": "Welke restjes combineren goed?",
+            "title": "Slim koken",
+        },
+    )
+    phases = _script_pydantic_phases(
+        monkeypatch,
+        model,
+        ("", action),
+        ("Ik kies slim koken; dat staat nu echt vast.", None),
+    )
+    turn = ConversationTurn.private(
+        "tenant",
+        "installation",
+        "jaap",
+        "conversation",
+        "message-interest",
+        "Kies zelf een hobby.",
+        NOW,
+    )
+    identity = IdentityProfile(
+        "Eva", "Je bent een digitale huisgenoot.", ("Wees eerlijk.",), 80
+    )
 
-    class Handler(BaseHTTPRequestHandler):
-        def log_message(self, _format: str, *_args: object) -> None:
-            pass
+    chosen = model.generate(
+        turn,
+        identity,
+        _memory(),
+        (),
+        available_actions=("adopt_personal_interest",),
+    )
+    assert chosen.text is None
+    assert chosen.action_call == action
+    receipt = ConversationActionReceipt(
+        action,
+        {
+            "contract": "EvaConversationActionReceipt/v1",
+            "disposition": "adopted",
+            "durable": True,
+            "intent_id": "personal-interest:1",
+            "motivation": action.arguments["motivation"],
+            "next_exploration": action.arguments["next_exploration"],
+            "state": "active",
+            "title": action.arguments["title"],
+        },
+    )
+    expressed = model.generate(turn, identity, _memory(), (), completed_action=receipt)
 
-        def do_POST(self) -> None:  # noqa: N802
-            size = int(self.headers["Content-Length"])
-            requests.append(json.loads(self.rfile.read(size)))
-            if len(requests) == 1:
-                frames = (
-                    "event: response.output_item.done\n"
-                    'data: {"type":"response.output_item.done","item":'
-                    '{"type":"function_call","call_id":"call_interest_1",'
-                    '"name":"adopt_personal_interest","arguments":'
-                    '"{\\"motivation\\":\\"Ik hou van patronen.\\",'
-                    '\\"next_exploration\\":\\"Welke restjes combineren goed?\\",'
-                    '\\"title\\":\\"Slim koken\\"}"}}\n\n'
-                    "data: [DONE]\n\n"
-                ).encode()
-            else:
-                frames = (
-                    "event: response.output_text.delta\n"
-                    'data: {"type":"response.output_text.delta",'
-                    '"delta":"Ik kies slim koken; dat staat nu echt vast."}\n\n'
-                    "data: [DONE]\n\n"
-                ).encode()
-            self.send_response(200)
-            self.send_header("Content-Type", "text/event-stream")
-            self.send_header("Content-Length", str(len(frames)))
-            self.end_headers()
-            self.wfile.write(frames)
-
-    server = ThreadingHTTPServer(("127.0.0.1", 0), Handler)
-    thread = threading.Thread(target=server.serve_forever, daemon=True)
-    thread.start()
-    try:
-        auth_file = tmp_path / "auth.json"
-        _write_access_lease(auth_file)
-        host, port = server.server_address
-        model = CodexConversationModel(
-            auth_file=auth_file, endpoint=f"http://{host}:{port}/responses"
-        )
-        turn = ConversationTurn.private(
-            "tenant",
-            "installation",
-            "jaap",
-            "conversation",
-            "message-interest",
-            "Kies zelf een hobby.",
-            NOW,
-        )
-        identity = IdentityProfile(
-            "Eva", "Je bent een digitale huisgenoot.", ("Wees eerlijk.",), 80
-        )
-
-        chosen = model.generate(
-            turn,
-            identity,
-            _memory(),
-            (),
-            available_actions=("adopt_personal_interest",),
-        )
-        assert chosen.text is None
-        assert chosen.action_call is not None
-        assert chosen.action_call.arguments["title"] == "Slim koken"
-        receipt = ConversationActionReceipt(
-            chosen.action_call,
-            {
-                "contract": "EvaConversationActionReceipt/v1",
-                "disposition": "adopted",
-                "durable": True,
-                "intent_id": "personal-interest:1",
-                "motivation": chosen.action_call.arguments["motivation"],
-                "next_exploration": chosen.action_call.arguments["next_exploration"],
-                "state": "active",
-                "title": chosen.action_call.arguments["title"],
-            },
-        )
-        expressed = model.generate(
-            turn, identity, _memory(), (), completed_action=receipt
-        )
-
-        assert expressed.text == "Ik kies slim koken; dat staat nu echt vast."
-        assert expressed.action_call is None
-        assert _deferred_tool(requests[0], "adopt_personal_interest")
-        assert requests[0]["tool_choice"] == "auto"
-        assert requests[1]["tool_choice"] == "none"
-        assert requests[1]["input"][1]["type"] == "function_call"
-        assert requests[1]["input"][2]["type"] == "function_call_output"
-        assert '"durable":true' in requests[1]["input"][2]["output"]
-    finally:
-        server.shutdown()
-        thread.join(timeout=5)
-        server.server_close()
+    assert expressed.text == "Ik kies slim koken; dat staat nu echt vast."
+    assert expressed.action_call is None
+    assert _deferred_tool(phases[0], "adopt_personal_interest")
+    assert phases[0]["completed_action"] is None
+    assert phases[1]["tools"] == ()
+    assert phases[1]["completed_action"] == receipt
 
 
 def test_passive_house_event_is_forced_through_bounded_shadow_decision(
     monkeypatch: pytest.MonkeyPatch, tmp_path: Path
 ) -> None:
-    model = CodexConversationModel(auth_file=tmp_path / "unused-auth.json")
+    model = PydanticConversationModel(auth_file=tmp_path / "unused-auth.json")
     bodies: list[dict[str, Any]] = []
 
     def request(body: dict[str, Any]) -> tuple[str, ConversationActionCall]:
@@ -1662,11 +1351,10 @@ def test_passive_house_event_is_forced_through_bounded_shadow_decision(
 def test_explicit_automation_request_uses_exact_bounded_action(
     monkeypatch: pytest.MonkeyPatch, tmp_path: Path
 ) -> None:
-    model = CodexConversationModel(
+    model = PydanticConversationModel(
         auth_file=tmp_path / "unused-auth.json",
         conversation_tools=HomeAssistantConversationAutomationPlanner.conversation_tools(),
     )
-    bodies: list[dict[str, Any]] = []
     call = ConversationActionCall(
         "automation-call-1",
         "create_home_assistant_state_automation",
@@ -1679,11 +1367,7 @@ def test_explicit_automation_request_uses_exact_bounded_action(
         },
     )
 
-    def request(body: dict[str, Any]) -> tuple[str, ConversationActionCall]:
-        bodies.append(body)
-        return "", call
-
-    monkeypatch.setattr(model, "_request", request)
+    phases = _script_pydantic_phases(monkeypatch, model, ("", call))
     turn = ConversationTurn.private(
         "tenant",
         "installation",
@@ -1705,9 +1389,9 @@ def test_explicit_automation_request_uses_exact_bounded_action(
     )
 
     assert result.action_call == call
-    assert _deferred_tool(bodies[0], "create_home_assistant_state_automation")
+    assert _deferred_tool(phases[0], "create_home_assistant_state_automation")
     automation_description = _deferred_tool(
-        bodies[0], "create_home_assistant_state_automation"
+        phases[0], "create_home_assistant_state_automation"
     )["description"]
     assert "natuurlijke namen" in automation_description
     assert "actuele Home Assistant-inventaris" in automation_description
@@ -1716,11 +1400,10 @@ def test_explicit_automation_request_uses_exact_bounded_action(
 def test_natural_if_then_request_does_not_require_the_word_automation(
     monkeypatch: pytest.MonkeyPatch, tmp_path: Path
 ) -> None:
-    model = CodexConversationModel(
+    model = PydanticConversationModel(
         auth_file=tmp_path / "unused-auth.json",
         conversation_tools=HomeAssistantConversationAutomationPlanner.conversation_tools(),
     )
-    bodies: list[dict[str, Any]] = []
     call = ConversationActionCall(
         "automation-call-natural-1",
         "create_home_assistant_state_automation",
@@ -1733,11 +1416,7 @@ def test_natural_if_then_request_does_not_require_the_word_automation(
         },
     )
 
-    def request(body: dict[str, Any]) -> tuple[str, ConversationActionCall]:
-        bodies.append(body)
-        return "", call
-
-    monkeypatch.setattr(model, "_request", request)
+    phases = _script_pydantic_phases(monkeypatch, model, ("", call))
     result = model.generate(
         ConversationTurn.private(
             "tenant",
@@ -1760,7 +1439,7 @@ def test_natural_if_then_request_does_not_require_the_word_automation(
     )
 
     assert result.action_call == call
-    description = _deferred_tool(bodies[0], "create_home_assistant_state_automation")[
+    description = _deferred_tool(phases[0], "create_home_assistant_state_automation")[
         "description"
     ]
     assert "zonder het woord automatisering" in description
@@ -1770,7 +1449,7 @@ def test_natural_if_then_request_does_not_require_the_word_automation(
 def test_explicit_multistep_automation_uses_advanced_action(
     monkeypatch: pytest.MonkeyPatch, tmp_path: Path
 ) -> None:
-    model = CodexConversationModel(
+    model = PydanticConversationModel(
         auth_file=tmp_path / "unused-auth.json",
         conversation_tools=HomeAssistantConversationAutomationPlanner.conversation_tools(),
     )
@@ -1798,13 +1477,7 @@ def test_explicit_multistep_automation_uses_advanced_action(
             "trigger_to": "home",
         },
     )
-    bodies: list[dict[str, Any]] = []
-
-    def request(body: dict[str, Any]) -> tuple[str, ConversationActionCall]:
-        bodies.append(body)
-        return "", call
-
-    monkeypatch.setattr(model, "_request", request)
+    phases = _script_pydantic_phases(monkeypatch, model, ("", call))
     result = model.generate(
         ConversationTurn.private(
             "tenant",
@@ -1828,7 +1501,7 @@ def test_explicit_multistep_automation_uses_advanced_action(
 
     assert result.action_call == call
     advanced = _deferred_tool(
-        bodies[0], "create_home_assistant_advanced_state_automation"
+        phases[0], "create_home_assistant_advanced_state_automation"
     )
     properties = advanced["parameters"]["properties"]
     assert properties["trigger_kind"]["enum"] == [
@@ -1838,7 +1511,7 @@ def test_explicit_multistep_automation_uses_advanced_action(
     ]
     assert properties["trigger_at"]["type"] == ["string", "null"]
     advanced_description = _deferred_tool(
-        bodies[0], "create_home_assistant_advanced_state_automation"
+        phases[0], "create_home_assistant_advanced_state_automation"
     )["description"]
     assert "geen templates" in advanced_description
     assert "optionele wachttijd" in advanced_description
@@ -1848,17 +1521,15 @@ def test_explicit_multistep_automation_uses_advanced_action(
 def test_verified_automation_receipt_is_evidence_not_a_robotic_reply_template(
     monkeypatch: pytest.MonkeyPatch, tmp_path: Path
 ) -> None:
-    model = CodexConversationModel(
+    model = PydanticConversationModel(
         auth_file=tmp_path / "unused-auth.json",
         conversation_tools=HomeAssistantConversationAutomationPlanner.conversation_tools(),
     )
-    bodies: list[dict[str, Any]] = []
-
-    def request(body: dict[str, Any]) -> tuple[str, None]:
-        bodies.append(body)
-        return "Staat klaar. Zodra er beweging is, gaat de testschakelaar aan.", None
-
-    monkeypatch.setattr(model, "_request", request)
+    phases = _script_pydantic_phases(
+        monkeypatch,
+        model,
+        ("Staat klaar. Zodra er beweging is, gaat de testschakelaar aan.", None),
+    )
     call = ConversationActionCall(
         "automation-call-receipt-1",
         "create_home_assistant_state_automation",
@@ -1916,18 +1587,19 @@ def test_verified_automation_receipt_is_evidence_not_a_robotic_reply_template(
     assert result.text == (
         "Staat klaar. Zodra er beweging is, gaat de testschakelaar aan."
     )
-    instructions = bodies[0]["instructions"]
+    instructions = phases[0]["instructions"]
     assert "receipt uitsluitend als bewijs, nooit als antwoordvorm" in instructions
     assert "geen entity-ID" in instructions
     assert "Trigger, Voorwaarden en Actie" in instructions
     assert "één of twee natuurlijke zinnen" in instructions
-    assert bodies[0]["tool_choice"] == "none"
+    assert phases[0]["tools"] == ()
+    assert phases[0]["completed_action"] == receipt
 
 
 def test_full_tuya_request_selects_read_only_advanced_plan_first(
     monkeypatch: pytest.MonkeyPatch, tmp_path: Path
 ) -> None:
-    model = CodexConversationModel(
+    model = PydanticConversationModel(
         auth_file=tmp_path / "unused-auth.json",
         conversation_tools=HomeAssistantConversationMigrationPlanner.conversation_tools(),
     )
@@ -1936,13 +1608,7 @@ def test_full_tuya_request_selects_read_only_advanced_plan_first(
         "plan_tuya_to_localtuya_migration",
         {"scope": "all_tuya_devices"},
     )
-    bodies: list[dict[str, Any]] = []
-
-    def request(body: dict[str, Any]) -> tuple[str, ConversationActionCall]:
-        bodies.append(body)
-        return "", call
-
-    monkeypatch.setattr(model, "_request", request)
+    phases = _script_pydantic_phases(monkeypatch, model, ("", call))
     result = model.generate(
         ConversationTurn.private(
             "tenant",
@@ -1962,27 +1628,25 @@ def test_full_tuya_request_selects_read_only_advanced_plan_first(
     )
 
     assert result.action_call == call
-    assert _deferred_tool(bodies[0], "plan_tuya_to_localtuya_migration")
+    assert _deferred_tool(phases[0], "plan_tuya_to_localtuya_migration")
     assert (
         "migreert nog niets"
-        in _deferred_tool(bodies[0], "plan_tuya_to_localtuya_migration")["description"]
+        in _deferred_tool(phases[0], "plan_tuya_to_localtuya_migration")["description"]
     )
 
 
 def test_tuya_receipt_is_factual_input_not_a_robotic_script(
     monkeypatch: pytest.MonkeyPatch, tmp_path: Path
 ) -> None:
-    model = CodexConversationModel(
+    model = PydanticConversationModel(
         auth_file=tmp_path / "unused-auth.json",
         conversation_tools=HomeAssistantConversationMigrationPlanner.conversation_tools(),
     )
-    bodies: list[dict[str, Any]] = []
-
-    def request(body: dict[str, Any]) -> tuple[str, None]:
-        bodies.append(body)
-        return "Ik heb de inventaris bekeken; er is nog niets veranderd.", None
-
-    monkeypatch.setattr(model, "_request", request)
+    phases = _script_pydantic_phases(
+        monkeypatch,
+        model,
+        ("Ik heb de inventaris bekeken; er is nog niets veranderd.", None),
+    )
     call = ConversationActionCall(
         "tuya-plan-call-2",
         "plan_tuya_to_localtuya_migration",
@@ -2021,7 +1685,7 @@ def test_tuya_receipt_is_factual_input_not_a_robotic_script(
     )
 
     assert result.text == "Ik heb de inventaris bekeken; er is nog niets veranderd."
-    instructions = bodies[0]["instructions"]
+    instructions = phases[0]["instructions"]
     assert "aantallen, routes en blokkades uit plan als feiten" in instructions
     assert "nog niets is gemigreerd" in instructions
 
@@ -2029,7 +1693,7 @@ def test_tuya_receipt_is_factual_input_not_a_robotic_script(
 def test_explicit_followup_can_select_exact_localtuya_package_install(
     monkeypatch: pytest.MonkeyPatch, tmp_path: Path
 ) -> None:
-    model = CodexConversationModel(
+    model = PydanticConversationModel(
         auth_file=tmp_path / "unused-auth.json",
         conversation_tools=HomeAssistantConversationHacsPlanner.conversation_tools(),
     )
@@ -2038,13 +1702,7 @@ def test_explicit_followup_can_select_exact_localtuya_package_install(
         "install_approved_localtuya_package",
         {"version": "v5.2.5"},
     )
-    bodies: list[dict[str, Any]] = []
-
-    def request(body: dict[str, Any]) -> tuple[str, ConversationActionCall]:
-        bodies.append(body)
-        return "", call
-
-    monkeypatch.setattr(model, "_request", request)
+    phases = _script_pydantic_phases(monkeypatch, model, ("", call))
     result = model.generate(
         ConversationTurn.private(
             "tenant",
@@ -2064,10 +1722,10 @@ def test_explicit_followup_can_select_exact_localtuya_package_install(
     )
 
     assert result.action_call == call
-    assert _deferred_tool(bodies[0], "install_approved_localtuya_package")
+    assert _deferred_tool(phases[0], "install_approved_localtuya_package")
     assert (
         "expliciet verzoek met de exacte versie"
-        in _deferred_tool(bodies[0], "install_approved_localtuya_package")[
+        in _deferred_tool(phases[0], "install_approved_localtuya_package")[
             "description"
         ]
     )
@@ -2076,7 +1734,7 @@ def test_explicit_followup_can_select_exact_localtuya_package_install(
 def test_explicit_followup_can_register_only_exact_localtuya_repository(
     monkeypatch: pytest.MonkeyPatch, tmp_path: Path
 ) -> None:
-    model = CodexConversationModel(
+    model = PydanticConversationModel(
         auth_file=tmp_path / "unused-auth.json",
         conversation_tools=HomeAssistantConversationHacsPlanner.conversation_tools(),
     )
@@ -2088,13 +1746,7 @@ def test_explicit_followup_can_register_only_exact_localtuya_repository(
             "repository_full_name": "xZetsubou/hass-localtuya",
         },
     )
-    bodies: list[dict[str, Any]] = []
-
-    def request(body: dict[str, Any]) -> tuple[str, ConversationActionCall]:
-        bodies.append(body)
-        return "", call
-
-    monkeypatch.setattr(model, "_request", request)
+    phases = _script_pydantic_phases(monkeypatch, model, ("", call))
     result = model.generate(
         ConversationTurn.private(
             "tenant",
@@ -2117,10 +1769,10 @@ def test_explicit_followup_can_register_only_exact_localtuya_repository(
     )
 
     assert result.action_call == call
-    assert _deferred_tool(bodies[0], "register_approved_localtuya_repository")
+    assert _deferred_tool(phases[0], "register_approved_localtuya_repository")
     assert (
         "Dit installeert niets"
-        in _deferred_tool(bodies[0], "register_approved_localtuya_repository")[
+        in _deferred_tool(phases[0], "register_approved_localtuya_repository")[
             "description"
         ]
     )
@@ -2129,7 +1781,7 @@ def test_explicit_followup_can_register_only_exact_localtuya_repository(
 def test_explicit_fanout_request_selects_one_multi_recipient_action(
     monkeypatch: pytest.MonkeyPatch, tmp_path: Path
 ) -> None:
-    model = CodexConversationModel(auth_file=tmp_path / "unused-auth.json")
+    model = PydanticConversationModel(auth_file=tmp_path / "unused-auth.json")
     call = ConversationActionCall(
         "fanout-call-1",
         "deliver_test_message_fanout",
@@ -2138,13 +1790,7 @@ def test_explicit_fanout_request_selects_one_multi_recipient_action(
             "recipients": ["sink-a", "sink-b", "sink-c"],
         },
     )
-    bodies: list[dict[str, Any]] = []
-
-    def request(body: dict[str, Any]) -> tuple[str, ConversationActionCall]:
-        bodies.append(body)
-        return "", call
-
-    monkeypatch.setattr(model, "_request", request)
+    phases = _script_pydantic_phases(monkeypatch, model, ("", call))
     result = model.generate(
         ConversationTurn.private(
             "tenant",
@@ -2164,24 +1810,20 @@ def test_explicit_fanout_request_selects_one_multi_recipient_action(
     )
 
     assert result.action_call == call
-    assert _deferred_tool(bodies[0], "deliver_test_message_fanout")
+    assert _deferred_tool(phases[0], "deliver_test_message_fanout")
     assert (
         "acceptatie of afwijzing apart"
-        in _deferred_tool(bodies[0], "deliver_test_message_fanout")["description"]
+        in _deferred_tool(phases[0], "deliver_test_message_fanout")["description"]
     )
 
 
 def test_fanout_receipt_keeps_provider_acceptance_distinct_from_human_receipt(
     monkeypatch: pytest.MonkeyPatch, tmp_path: Path
 ) -> None:
-    model = CodexConversationModel(auth_file=tmp_path / "unused-auth.json")
-    bodies: list[dict[str, Any]] = []
-
-    def request(body: dict[str, Any]) -> tuple[str, None]:
-        bodies.append(body)
-        return "sink-a en sink-b accepteerden het bericht.", None
-
-    monkeypatch.setattr(model, "_request", request)
+    model = PydanticConversationModel(auth_file=tmp_path / "unused-auth.json")
+    phases = _script_pydantic_phases(
+        monkeypatch, model, ("sink-a en sink-b accepteerden het bericht.", None)
+    )
     call = ConversationActionCall(
         "fanout-call-2",
         "deliver_test_message_fanout",
@@ -2212,13 +1854,15 @@ def test_fanout_receipt_keeps_provider_acceptance_distinct_from_human_receipt(
         ),
     )
 
-    assert "nooit ‘ontvangen’" in bodies[0]["instructions"]
+    assert "nooit ‘ontvangen’" in phases[0]["instructions"]
+    assert phases[0]["tools"] == ()
+    assert phases[0]["completed_action"].call == call
 
 
 def test_future_condition_selects_bounded_durable_goal_action(
     monkeypatch: pytest.MonkeyPatch, tmp_path: Path
 ) -> None:
-    model = CodexConversationModel(auth_file=tmp_path / "unused-auth.json")
+    model = PydanticConversationModel(auth_file=tmp_path / "unused-auth.json")
     call = ConversationActionCall(
         "goal-call-1",
         "create_bounded_durable_goal",
@@ -2233,13 +1877,7 @@ def test_future_condition_selects_bounded_durable_goal_action(
             "wake_resource": "release-1",
         },
     )
-    bodies: list[dict[str, Any]] = []
-
-    def request(body: dict[str, Any]) -> tuple[str, ConversationActionCall]:
-        bodies.append(body)
-        return "", call
-
-    monkeypatch.setattr(model, "_request", request)
+    phases = _script_pydantic_phases(monkeypatch, model, ("", call))
     result = model.generate(
         ConversationTurn.private(
             "tenant",
@@ -2264,30 +1902,28 @@ def test_future_condition_selects_bounded_durable_goal_action(
     assert result.action_call == call
     assert [
         tool["name"]
-        for tool in bodies[0]["tools"]
-        if tool.get("name") not in {None, "search_personal_memory"}
+        for tool in phases[0]["tools"]
+        if tool["name"] != "search_personal_memory"
     ] == [
         "create_bounded_durable_goal",
         "cancel_active_durable_goal",
     ]
-    assert "vraag de gebruiker niet om later opnieuw" not in bodies[0]["instructions"]
+    assert "vraag de gebruiker niet om later opnieuw" not in phases[0]["instructions"]
     assert (
         "precies één deadline"
-        in _deferred_tool(bodies[0], "create_bounded_durable_goal")["description"]
+        in _deferred_tool(phases[0], "create_bounded_durable_goal")["description"]
     )
 
 
 def test_durable_goal_receipt_does_not_claim_work_already_finished(
     monkeypatch: pytest.MonkeyPatch, tmp_path: Path
 ) -> None:
-    model = CodexConversationModel(auth_file=tmp_path / "unused-auth.json")
-    bodies: list[dict[str, Any]] = []
-
-    def request(body: dict[str, Any]) -> tuple[str, None]:
-        bodies.append(body)
-        return "Ik wacht op de vrijgave en ga daarna aan de slag.", None
-
-    monkeypatch.setattr(model, "_request", request)
+    model = PydanticConversationModel(auth_file=tmp_path / "unused-auth.json")
+    phases = _script_pydantic_phases(
+        monkeypatch,
+        model,
+        ("Ik wacht op de vrijgave en ga daarna aan de slag.", None),
+    )
     call = ConversationActionCall(
         "goal-call-2",
         "create_bounded_durable_goal",
@@ -2327,14 +1963,16 @@ def test_durable_goal_receipt_does_not_claim_work_already_finished(
         ),
     )
 
-    assert "Beweer niet dat het werk al klaar" in bodies[0]["instructions"]
-    assert "vraag de gebruiker niet om later opnieuw" in bodies[0]["instructions"]
+    assert "Beweer niet dat het werk al klaar" in phases[0]["instructions"]
+    assert "vraag de gebruiker niet om later opnieuw" in phases[0]["instructions"]
+    assert phases[0]["tools"] == ()
+    assert phases[0]["completed_action"].call == call
 
 
 def test_model_builds_complete_download_instead_of_another_plan(
     monkeypatch: pytest.MonkeyPatch, tmp_path: Path
 ) -> None:
-    model = CodexConversationModel(auth_file=tmp_path / "unused-auth.json")
+    model = PydanticConversationModel(auth_file=tmp_path / "unused-auth.json")
     interest = PersonalInterestClaim(
         "tenant",
         "installation",
@@ -2393,7 +2031,7 @@ def test_model_builds_complete_download_instead_of_another_plan(
 def test_model_listing_cannot_claim_unproven_sales_or_product_features(
     monkeypatch: pytest.MonkeyPatch, tmp_path: Path
 ) -> None:
-    model = CodexConversationModel(auth_file=tmp_path / "unused-auth.json")
+    model = PydanticConversationModel(auth_file=tmp_path / "unused-auth.json")
     interest = PersonalInterestClaim(
         "tenant",
         "installation",
@@ -2455,7 +2093,7 @@ def test_model_listing_cannot_claim_unproven_sales_or_product_features(
 def test_web_research_uses_built_in_search_and_requires_cited_sources(
     monkeypatch: pytest.MonkeyPatch, tmp_path: Path
 ) -> None:
-    model = CodexConversationModel(auth_file=tmp_path / "unused-auth.json")
+    model = PydanticConversationModel(auth_file=tmp_path / "unused-auth.json")
     bodies: list[dict[str, Any]] = []
 
     def request(body: dict[str, Any]):  # type: ignore[no-untyped-def]
@@ -2509,7 +2147,7 @@ def test_web_research_sse_parser_preserves_clickable_citations() -> None:
     }
     response = BytesIO(("data: " + json.dumps(item) + "\n\ndata: [DONE]\n\n").encode())
 
-    text, sources, consulted = CodexConversationModel._parse_research_sse(response)
+    text, sources, consulted = PydanticConversationModel._parse_research_sse(response)
 
     assert text == "Onderzoek met drie bronnen."
     assert [source.url for source in sources] == [

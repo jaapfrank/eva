@@ -1,6 +1,6 @@
 # Eva 2 — projectbord en vergelijking
 
-Laatst bijgewerkt: 31 augustus 2026, 18:17 CEST
+Laatst bijgewerkt: 31 augustus 2026, 19:34 CEST
 
 ## Zo lees je dit bord
 
@@ -38,7 +38,7 @@ dezelfde sessie wel, maar gaf na ruim drie minuten nog geen eindantwoord.
 | Is daarmee bewezen dat iedere afzonderlijke regel nuttig is? | 🟡 Nee. De catalogus legt per component doel, noodzaak, upstreamkeuze, vervanging en tests vast. Dode-codeanalyse, grenscontrole en echte tests moeten daarna bewijzen dat de regels binnen die component hun taak nog werkelijk uitvoeren |
 | Zijn alle dependencies en open-sourcealternatieven aantoonbaar de beste actuele keuze? | 🟡 De live kern en worker zijn exact geïnventariseerd. Van 38 live distributies zijn 30 actueel en 8 hebben een nieuwere kandidaat. De veilige upgradevolgorde en bewuste `HOLD`-keuzes liggen vast. Functionele vergelijking en echte A/B-proeven moeten per batch nog bewijzen wat voor Eva werkelijk beter is |
 | Worden nieuwe releases automatisch gevolgd? | 🟡 De actuele releasewatch is exact aan een receipt gebonden en controleerde 34 van 34 gevolgde projecten via hun officiële releases. Dit dekt alle 11 directe runtime-dependencies, belangrijke kandidaten, bouw-/securitytools, vier base images en drie concurrenten. Een echte Renovate-voorstelbot draait nog niet |
-| Heeft iedere dependency of eigen regel een eigen taak? | 🟡 Iedere gevolgde component heeft nu exact één eigenaar en doel; dit is nog geen regel-voor-regelaudit. De brede Pydantic/MCP-kandidaat met 46 extra distributies en een tweede HTTP-stack is afgewezen. De minimale kandidaat vervangt nu alleen twee al aanwezige Pydantic-packages en houdt het totaal op 38. Zij mag pas live wanneer de oude verantwoordelijkheid in dezelfde wijziging verdwijnt |
+| Heeft iedere dependency of eigen regel een eigen taak? | 🟡 Iedere gevolgde component heeft nu exact één eigenaar en doel; dit is nog geen regel-voor-regelaudit. De brede Pydantic/MCP-kandidaat met 46 extra distributies en een tweede HTTP-stack is afgewezen. De minimale bronkandidaat vervangt alleen twee al aanwezige Pydantic-packages en houdt het totaal op 38. De oude gewone modeltransportlaag is in dezelfde wijziging verwijderd. Vier koude achtergrondpaden gebruiken nog de oudere HTTP-helper en blijven open opruimwerk |
 | Is er nu wel iets echt verwijderd? | ✅ Eén ongebruikte LocalTuya-route en haar uitsluitend daarbij horende test zijn verwijderd; de algemene providerroute bleef eigenaar van die verantwoordelijkheid en 92 gerichte regressies plus Ruff zijn groen. De gemeten omvang was 357 productregels en 212 testregels, maar dat getal was niet de reden voor verwijdering |
 | Is de providercode al beheersbaar en verwisselbaar? | 🟡 De algemene runtimecompositor ging reproduceerbaar van 491 naar 162 fysieke regels en bevat geen Home Assistant-, Tuya- of AgentMail-kennis meer. Neutrale contracten en concrete providers staan nu in afzonderlijke modules zonder importcirkel en gebruiken dezelfde ene uitvoerroute. De extra modulegrenzen en tests laten het totale bronvolume bewust iets groeien; dit is dus alleen modularisatie, geen codevermindering. De nog aanwezige duizenden regels directe providerlogica moeten tegen runtime-MCP en onderhouden upstreamsoftware worden bewezen of verwijderd |
 | Is de architectuurcontrole groen? | 🟡 De packagegrenscontrole zelf meldt 0 overtredingen over haar vastgelegde scope. De bredere beheersbaarheidsclaim is nog niet groen: inventarisversheid, Python-reachability, echte testdekking per component en bewijsbinding zitten nog niet samen in één verplichte releasepoort |
@@ -66,16 +66,13 @@ uitgestelde toolcall en deed zelf nul provider-I/O. Eva kan de tweede modelfase
 na een procesbreuk opbouwen uit alleen haar duurzaam bewaarde call en receipt.
 De minimale dependency-overlay verandert uitsluitend `pydantic-ai-slim` en
 `pydantic-graph`; MCP-extra's, een tweede HTTP-stack en nieuwe distributies
-blijven buiten de kandidaat; haar acht grenscontroles zijn groen. De productlock
-en live bootstrap zijn bewust nog niet gewijzigd. De TOOL01-checker geeft
-daarom pas groen voor vervanging als de oude model-/toolloop werkelijk
-verwijderd is en er exact één runtime-eigenaar overblijft.
-
-Een tijdelijk door het team gebouwde tweede adapter onder `src/eva` is daarom
-niet opgenomen: hij was wel getest, maar nog niet de runtime-eigenaar en
-verwijderde geen oude route. De bruikbare kennis blijft in het afgebakende
-experiment; productcode landt pas als zij in dezelfde wijziging echt werk
-overneemt en de vervangen code verdwijnt.
+blijven buiten de kandidaat. De gewone gesprekbootstrap gebruikt in de bron nu
+één `PydanticConversationModel`; de oude `OpenAIResponsesTransport` en zijn
+testbestand zijn verwijderd. De publieke Pydantic-route doet streaming,
+toolkeuze, vervolgfase, usage- en budgetbewaking. 58 gerichte modelcontroles en
+27 statische release-inputcontroles zijn groen. Dit is nog geen liveclaim: een
+offline image, scan, echte providerpariteitsproef en veilige A/B-promotie
+ontbreken nog.
 
 De actuele Pydantic-versie heeft nu ook met Eva's echte korte Codex-toegang
 gepraat. De verplichte streamingroute gaf exact `PAI236` terug en koos uit de
@@ -351,9 +348,9 @@ herstelbaar.
 
 | Algemeen probleem | Gekozen onderhouden bouwsteen | Werkelijkheid nu |
 |---|---|---|
-| Modelverkeer | Officiële OpenAI SDK; Pydantic AI voor de algemene toolloop | ✅ SDK `3.6.0` live; 🟡 actuele Pydantic AI `2.36.0` deed de volledige toolloop in een 5/5-proef en heeft een scan-schone clientimage, maar is nog niet live |
+| Modelverkeer | `pydantic-ai-slim` met alleen de gekozen officiële provider-SDK | 🟡 Pydantic AI `2.36.0` is nu de enige gewone gesprekseigenaar in de bron. De oude transportklasse is verwijderd en de lock blijft 38 pakketten; offline image, scan, echte providerpariteit en A/B-livegang ontbreken nog |
 | Langetermijngeheugen | Hindsight | ✅ Live; 🟡 Eva's adapter moet nog kleiner |
-| Externe gereedschappen | Pydantic AI met runtime-ontdekte MCP-tools; ContextForge alleen als optionele gateway | 🟡 Runtime discovery, impliciete intentie, twee providers en negatieve controles zijn 5/5 groen. De brede 69-wheelroute is afgewezen. De minimale overlay houdt 38 distributies en voegt geen MCP- of HTTP-stack toe. De publieke deferred-toolgrens is 6/6 groen en de toekomstige vervangingspoort 10/10; productintegratie en verwijdering van de oude loop ontbreken nog |
+| Externe gereedschappen | Pydantic AI met runtime-ontdekte tools; ContextForge alleen als optionele gateway | 🟡 De gewone bronroute gebruikt nu Pydantic AI en houdt Eva's duurzame ledger/readback buiten het framework. De brede 69-wheelroute is afgewezen. Uitgestelde cataloguslading en twee echte verwisselbare providers moeten nog op deze exacte kandidaat worden bewezen |
 | Subagents | Pydantic AI/Harness voor modelruns; onderhouden workflowmotor voor duurzaam werk | 🟡 Modelrun werkt; workflowkeuze nog niet gewonnen door een dependency |
 | Voice | Pipecat als eerste complete pipeline; Wyoming als lokale fallback | 🟡 Bake-off en fysieke proef ontbreken |
 | Browser | Playwright MCP tegenover Browser Use; daarna één winnaar | 🟡 Functioneel beproefd; nog geen releaseveilige winnaar |
@@ -381,9 +378,9 @@ gebruikersroute draait én de dubbele Eva-code daarna verdwijnt.
 
 ## Eerstvolgende zichtbare verbeteringen
 
-1. Pydantic AI in één vervangingsdiff de bestaande model- en MCP-loop laten
-   overnemen. De kandidaat mag niet naast beide oude loops worden toegevoegd;
-   alleen werkelijk verwijderde productcode en behouden ledger/readback tellen.
+1. De Pydantic-bronkandidaat met een echte Codex-beurt, uitgestelde
+   toolcatalogus, hervatten na toolreceipt en veilige korte retry bewijzen;
+   daarna pas offline bouwen, scannen en via A/B promoveren.
 2. Daarna dezelfde route met twee echte verwisselbare diensten bewijzen en de
    resterende Home Assistant-, e-mail- en handgeschreven dispatchfuncties
    verwijderen.

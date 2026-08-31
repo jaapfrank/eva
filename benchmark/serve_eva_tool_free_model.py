@@ -16,8 +16,8 @@ import os
 from pathlib import Path
 from typing import Any
 
-from eva.adapters.model.conversation import (
-    CodexConversationModel,
+from eva.adapters.model.pydantic_conversation import (
+    PydanticConversationModel,
     ConversationModelError,
 )
 
@@ -56,7 +56,7 @@ def _decode_request(raw: bytes) -> str:
     return payload["prompt"]
 
 
-def _reply(model: CodexConversationModel, prompt: str) -> dict[str, object]:
+def _reply(model: PydanticConversationModel, prompt: str) -> dict[str, object]:
     result = model.generate_tool_free_text(
         prompt=prompt,
         instructions=INSTRUCTIONS,
@@ -72,7 +72,7 @@ def _reply(model: CodexConversationModel, prompt: str) -> dict[str, object]:
     }
 
 
-def _handler(model: CodexConversationModel) -> type[BaseHTTPRequestHandler]:
+def _handler(model: PydanticConversationModel) -> type[BaseHTTPRequestHandler]:
     class Handler(BaseHTTPRequestHandler):
         server_version = "EvaToolFreeModel/1"
 
@@ -115,7 +115,7 @@ def _handler(model: CodexConversationModel) -> type[BaseHTTPRequestHandler]:
 def main() -> int:
     if os.environ.get("EVA_TOOL_FREE_AUTH_FILE", str(AUTH_FILE)) != str(AUTH_FILE):
         raise SystemExit("tool-free model auth path is fixed")
-    model = CodexConversationModel(
+    model = PydanticConversationModel(
         auth_file=AUTH_FILE,
         model=os.environ.get("EVA_TOOL_FREE_MODEL", "gpt-5.4-mini"),
         reasoning_effort="medium",

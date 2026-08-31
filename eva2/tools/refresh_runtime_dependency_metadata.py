@@ -117,7 +117,9 @@ def _wheel_rows(
     if seen != set(pins):
         missing = sorted(set(pins) - seen)
         extra = sorted(seen - set(pins))
-        raise RuntimeError(f"wheelhouse closure differs; missing={missing}, extra={extra}")
+        raise RuntimeError(
+            f"wheelhouse closure differs; missing={missing}, extra={extra}"
+        )
     return artifacts, licenses
 
 
@@ -148,13 +150,34 @@ def refresh(*, root: Path, wheelhouse: Path) -> dict[str, object]:
     dependencies = binding["dependencies"]
     if not isinstance(dependencies, dict):
         raise RuntimeError("runtime dependency binding has no dependency map")
-    openai_artifact = next(row for row in artifacts if row["filename"].startswith("openai-"))
+    openai_artifact = next(
+        row for row in artifacts if row["filename"].startswith("openai-")
+    )
+    pydantic_ai_artifact = next(
+        row for row in artifacts if row["filename"].startswith("pydantic_ai_slim-")
+    )
+    pydantic_graph_artifact = next(
+        row for row in artifacts if row["filename"].startswith("pydantic_graph-")
+    )
     dependencies["openai"] = {
         "reason": "official model-provider transport",
         "selectedWheel": openai_artifact,
         "version": pins["openai"],
     }
-    binding["licenseAndSbomRequirements"]["status"] = f"must_match_{count}_selected_distributions"  # type: ignore[index]
+    dependencies["pydantic-ai-slim"] = {
+        "reason": "maintained typed model and agent runtime",
+        "selectedWheel": pydantic_ai_artifact,
+        "version": pins["pydantic-ai-slim"],
+    }
+    dependencies["pydantic-graph"] = {
+        "reason": "transitive typed graph runtime required by pydantic-ai-slim",
+        "selectedWheel": pydantic_graph_artifact,
+        "version": pins["pydantic-graph"],
+    }
+    binding["decisionDate"] = "2026-08-31"
+    binding["licenseAndSbomRequirements"]["status"] = (
+        f"must_match_{count}_selected_distributions"  # type: ignore[index]
+    )
     adoption = binding["pyprojectAdoption"]
     if not isinstance(adoption, dict):
         raise RuntimeError("runtime dependency binding has no pyproject adoption")
@@ -162,6 +185,12 @@ def refresh(*, root: Path, wheelhouse: Path) -> dict[str, object]:
     if not isinstance(additions, list):
         raise RuntimeError("runtime dependency additions are invalid")
     additions[:] = sorted(set(additions) | {f"openai=={pins['openai']}"})
+    updates = adoption.get("directRuntimeUpdated")
+    if not isinstance(updates, list):
+        raise RuntimeError("runtime dependency updates are invalid")
+    updates[:] = sorted(
+        set(updates) | {"pydantic-ai-slim==2.32.1 -> pydantic-ai-slim==2.36.0"}
+    )
     adoption["sha256"] = _sha256(pyproject_path.read_bytes())
     standalone = binding["standaloneLock"]
     protocol = binding["wheelhouseInstallProtocol"]
@@ -183,11 +212,15 @@ def refresh(*, root: Path, wheelhouse: Path) -> dict[str, object]:
         {
             "dependencySourceBindingSha256": binding_sha,
             "requirementsLockSha256": lock_sha,
-            "status": "derived_from_hash_pinned_baseline_minus_unused_dbos_transitives_plus_pynacl_and_openai_sdk_no_install_or_execution",
+            "status": "derived_from_hash_pinned_baseline_with_sealed_runtime_dependency_delta_no_install_or_execution",
         }
     )
     targets = coverage.get("targets")
-    if not isinstance(targets, list) or len(targets) != 1 or not isinstance(targets[0], dict):
+    if (
+        not isinstance(targets, list)
+        or len(targets) != 1
+        or not isinstance(targets[0], dict)
+    ):
         raise RuntimeError("runtime wheel coverage target differs")
     targets[0].update(
         {
@@ -234,7 +267,9 @@ def refresh(*, root: Path, wheelhouse: Path) -> dict[str, object]:
                 "dependencyClass": (
                     "build_direct"
                     if name == "setuptools"
-                    else "runtime_direct" if name in direct else "runtime_transitive"
+                    else "runtime_direct"
+                    if name in direct
+                    else "runtime_transitive"
                 ),
                 "metadataSource": f"https://pypi.org/pypi/{name}/{version}/json",
                 "name": name,
@@ -243,7 +278,11 @@ def refresh(*, root: Path, wheelhouse: Path) -> dict[str, object]:
         )
         rows.append(row)
     old_inventory.update(
-        {"dependencyLock": "eva2/requirements-4d.lock", "packageCount": count, "packages": rows}
+        {
+            "dependencyLock": "eva2/requirements-4d.lock",
+            "packageCount": count,
+            "packages": rows,
+        }
     )
     _write(inventory_path, old_inventory)
 
@@ -251,13 +290,15 @@ def refresh(*, root: Path, wheelhouse: Path) -> dict[str, object]:
     tool_pins = toolchain.get("requiredDistributions")
     if not isinstance(tool_pins, dict):
         raise RuntimeError("gate toolchain distribution map differs")
-    gate_only = {
-        name: version for name, version in tool_pins.items() if name not in _pins(root / "eva2/release/gate-toolchain.requirements.lock")
-    }
     gate_pins = _pins(root / "eva2/release/gate-toolchain.requirements.lock")
-    union = dict(pins)
+    gate_only = {
+        name: version
+        for name, version in tool_pins.items()
+        if name not in pins and name not in gate_pins
+    }
+    union = dict(gate_only)
+    union.update(pins)
     union.update(gate_pins)
-    union.update(gate_only)
     toolchain["requiredDistributions"] = dict(sorted(union.items()))
     toolchain["requiredDistributionCount"] = len(union)
     requirement_locks = toolchain.get("requirementLocks")
@@ -280,7 +321,12 @@ def main() -> int:
     parser.add_argument("--root", type=Path, required=True)
     parser.add_argument("--wheelhouse", type=Path, required=True)
     arguments = parser.parse_args()
-    print(json.dumps(refresh(root=arguments.root, wheelhouse=arguments.wheelhouse), sort_keys=True))
+    print(
+        json.dumps(
+            refresh(root=arguments.root, wheelhouse=arguments.wheelhouse),
+            sort_keys=True,
+        )
+    )
     return 0
 
 

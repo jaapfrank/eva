@@ -50,7 +50,7 @@ DIRECT_PINS = {
     "openai": "3.6.0",
     "psycopg": "3.3.4",
     "pydantic": "2.12.5",
-    "pydantic-ai-slim": "2.32.1",
+    "pydantic-ai-slim": "2.36.0",
     "pynacl": "1.6.2",
     "setuptools": "84.0.0",
     "sqlalchemy": "2.0.52",
@@ -108,9 +108,9 @@ LOCKED_PINS = {
     "psycopg-binary": "3.3.4",
     "pycparser": "3.0",
     "pydantic": "2.12.5",
-    "pydantic-ai-slim": "2.32.1",
+    "pydantic-ai-slim": "2.36.0",
     "pydantic-core": "2.41.5",
-    "pydantic-graph": "2.32.1",
+    "pydantic-graph": "2.36.0",
     "pynacl": "1.6.2",
     "sniffio": "1.3.1",
     "setuptools": "84.0.0",
@@ -300,7 +300,7 @@ def platform_gate(root: Path) -> dict[str, Any]:
         "postgres_version": "16.13",
         "dbos_version": "2.30.0",
         "pydantic_version": "2.12.5",
-        "pydantic_ai_slim_version": "2.32.1",
+        "pydantic_ai_slim_version": "2.36.0",
     }
     for field, expected in expected_versions.items():
         if platform.get(field) != expected:
@@ -1303,7 +1303,7 @@ def supply_gate(root: Path) -> dict[str, Any]:
         != hashlib.sha256(lock_text.encode("utf-8")).hexdigest()
         or wheels.get("onlyBinary") is not True
         or wheels.get("status")
-        != "derived_from_hash_pinned_baseline_minus_unused_dbos_transitives_plus_pynacl_and_openai_sdk_no_install_or_execution"
+        != "derived_from_hash_pinned_baseline_with_sealed_runtime_dependency_delta_no_install_or_execution"
     ):
         issue(
             errors,

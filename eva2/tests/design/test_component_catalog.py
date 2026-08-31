@@ -20,6 +20,8 @@ SCOPE_PREFIXES = [
 FIXTURE_TOOL_PATH = "eva2/tools/fixture_evidence_tool.py"
 FIXTURE_TEST_PATH = "eva2/tests/application/test_a.py"
 FIXTURE_TOOL_SOURCE = b"def check():\n    return True\n"
+FIXTURE_APP_SOURCE = b"VALUE = 1\n"
+FIXTURE_TEST_SOURCE = b"def test_a():\n    assert True\n"
 
 
 def _checker():
@@ -77,10 +79,14 @@ def _fixture_documents() -> tuple[dict[str, object], dict[str, object]]:
             {
                 "path": "eva2/src/eva/application/a.py",
                 "gitState": "tracked",
+                "present": True,
+                "contentSha256": hashlib.sha256(FIXTURE_APP_SOURCE).hexdigest(),
             },
             {
                 "path": "eva2/tests/application/test_a.py",
                 "gitState": "tracked",
+                "present": True,
+                "contentSha256": hashlib.sha256(FIXTURE_TEST_SOURCE).hexdigest(),
             },
             {
                 "path": "eva2/src/eva/application/scratch.py",
@@ -152,11 +158,14 @@ def _run(
     inventory_path = tmp_path / "inventory.json"
     tool_registry_path = tmp_path / "tool-registry.json"
     tool_path = tmp_path / FIXTURE_TOOL_PATH
+    app_path = tmp_path / "eva2/src/eva/application/a.py"
     test_path = tmp_path / FIXTURE_TEST_PATH
     tool_path.parent.mkdir(parents=True, exist_ok=True)
+    app_path.parent.mkdir(parents=True, exist_ok=True)
     test_path.parent.mkdir(parents=True, exist_ok=True)
     tool_path.write_bytes(FIXTURE_TOOL_SOURCE)
-    test_path.write_text("def test_a():\n    assert True\n", encoding="utf-8")
+    app_path.write_bytes(FIXTURE_APP_SOURCE)
+    test_path.write_bytes(FIXTURE_TEST_SOURCE)
     catalog_path.write_text(json.dumps(catalog), encoding="utf-8")
     inventory_path.write_text(json.dumps(inventory), encoding="utf-8")
     tool_registry_path.write_text(
@@ -186,6 +195,19 @@ def test_valid_closed_fixture_passes_and_untracked_path_is_not_required(
     catalog, inventory = _fixture_documents()
 
     assert _run(tmp_path, catalog, inventory) == []
+
+
+def test_inventory_cannot_keep_stale_tracked_bytes(tmp_path: Path) -> None:
+    catalog, inventory = _fixture_documents()
+    files = inventory["files"]
+    assert isinstance(files, list)
+    app = files[0]
+    assert isinstance(app, dict)
+    app["contentSha256"] = "b" * 64
+
+    violations = _run(tmp_path, catalog, inventory)
+
+    assert "inventory_current_drift" in _codes(violations)
 
 
 def test_missing_primary_owner_is_rejected(tmp_path: Path) -> None:

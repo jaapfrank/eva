@@ -13,7 +13,7 @@ from alembic.config import Config as AlembicConfig
 import sqlalchemy as sa
 
 from eva.adapters.connectors.mcp_gateway import mcp_gateway_catalog_binding
-from eva.adapters.model.conversation import CodexConversationModel
+from eva.adapters.model.pydantic_conversation import PydanticConversationModel
 from eva.application.conversation import ConversationTurn, IdentityProfile
 from eva.application.memory import PresenceMemory
 from eva.contracts.canonical_json import canonical_sha256
@@ -257,9 +257,8 @@ def main() -> int:
     bundle = build_external_provider_bundle(settings, engine)
     if bundle is None or [item.name for item in bundle.conversation_tools] != [EVA_TOOL_NAME]:
         raise RuntimeError("MCP provider did not contribute the sealed tool")
-    model = CodexConversationModel(
+    model = PydanticConversationModel(
         auth_file=Path("/run/eva/model-lease/auth.json"),
-        transport_kind="openai_sdk",
         conversation_tools=bundle.conversation_tools,
     )
     turn = ConversationTurn.private(

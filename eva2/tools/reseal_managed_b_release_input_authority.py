@@ -58,6 +58,10 @@ def _arguments() -> argparse.Namespace:
         help="explicitly replace OLD_PATH=NEW_PATH in the reviewed input set",
     )
     parser.add_argument(
+        "--replace-test",
+        help="explicitly replace OLD_PATH=NEW_PATH in the reviewed test set",
+    )
+    parser.add_argument(
         "--admit-test",
         action="append",
         default=[],
@@ -81,9 +85,14 @@ def main() -> int:
     arguments = _arguments()
     authority_file = ROOT / AUTHORITY_PATH
     authority = json.loads(authority_file.read_bytes())
-    if arguments.replace_input is not None:
-        old_path, separator, new_path = arguments.replace_input.partition("=")
-        rows = authority["requiredInputs"]
+    for field, replacement in (
+        ("requiredInputs", arguments.replace_input),
+        ("requiredTests", arguments.replace_test),
+    ):
+        if replacement is None:
+            continue
+        old_path, separator, new_path = replacement.partition("=")
+        rows = authority[field]
         known = {row["path"] for row in rows}
         if (
             not separator
@@ -93,10 +102,10 @@ def main() -> int:
             or new_path.startswith("/")
             or ".." in Path(new_path).parts
         ):
-            raise RuntimeError("replacement managed-B input path is invalid")
+            raise RuntimeError("replacement managed-B authority path is invalid")
         matching = [row for row in rows if row["path"] == old_path]
         if len(matching) != 1:
-            raise RuntimeError("replacement managed-B input path is ambiguous")
+            raise RuntimeError("replacement managed-B authority path is ambiguous")
         matching[0]["path"] = new_path
         matching[0]["sha256"] = _sha256(new_path)
         rows.sort(key=lambda row: row["path"])
@@ -200,6 +209,17 @@ def main() -> int:
         for revision, down_revision, path in _EXPECTED_MIGRATIONS
     ]
     authority["migrationAuthority"]["head"] = _EXPECTED_MIGRATIONS[-1][0]
+    manifest = json.loads((ROOT / "schemas/contracts/manifest.json").read_bytes())
+    authority["contractRegistry"]["currentContractCount"] = manifest["contractCount"]
+    authority["contractRegistry"]["currentManifestSha256"] = _sha256(
+        "schemas/contracts/manifest.json"
+    )
+    authority["contractRegistry"]["currentCorpusSha256"] = _sha256(
+        "schemas/contracts/contract-corpus-v1.json"
+    )
+    authority["contractRegistry"]["currentProfileSha256"] = _sha256(
+        "schemas/contracts/canonical-json-profile-v1.json"
+    )
     authority["nonClaims"] = list(_NONCLAIMS)
     payload = (
         json.dumps(

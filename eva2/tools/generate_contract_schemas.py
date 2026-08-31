@@ -1491,6 +1491,7 @@ def valid_examples() -> dict[str, dict[str, Any]]:
         "postgres_version": "16.13",
         "dbos_version": "2.30.0",
         "pydantic_version": "2.12.5",
+        # Historical contract fixture: dependency truth lives in platform-lock.json.
         "pydantic_ai_slim_version": "2.32.1",
         "tier1_targets": [
             platform_target,

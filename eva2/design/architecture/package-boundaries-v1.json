@@ -126,7 +126,7 @@
       "src/eva/bootstrap"
     ],
     "fileCeilings": {
-      "src/eva/adapters/model/conversation.py": 0,
+      "src/eva/adapters/model/pydantic_conversation.py": 0,
       "src/eva/adapters/postgres/conversation_actions.py": 0,
       "src/eva/bootstrap/installer_wizard_cli.py": 16,
       "src/eva/bootstrap/runtime.py": 0,

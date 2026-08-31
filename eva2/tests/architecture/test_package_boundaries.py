@@ -40,6 +40,14 @@ def _seed_policy_tree(root: Path, policy: dict[str, object]) -> None:
         path = root / str(relative_path)
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_text("", encoding="utf-8")
+    debt = policy["providerSpecificCoreDebt"]
+    assert isinstance(debt, dict)
+    ceilings = debt["fileCeilings"]
+    assert isinstance(ceilings, dict)
+    for relative_path in ceilings:
+        path = root / str(relative_path)
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text("", encoding="utf-8")
 
 
 def test_repository_package_boundaries_are_closed() -> None:
@@ -98,9 +106,7 @@ def test_tools_are_checked_as_an_outer_architecture_package(tmp_path: Path) -> N
         )
     )
     _seed_policy_tree(tmp_path, policy)
-    (tmp_path / "tools/unreviewed.py").write_text(
-        "import requests\n", encoding="utf-8"
-    )
+    (tmp_path / "tools/unreviewed.py").write_text("import requests\n", encoding="utf-8")
     policy_path = tmp_path / "policy.json"
     policy_path.write_text(json.dumps(policy), encoding="utf-8")
 
@@ -301,4 +307,30 @@ def test_provider_specific_core_debt_can_only_decrease(tmp_path: Path) -> None:
 
     assert [(item.code, item.detail) for item in violations] == [
         ("provider_specific_core_debt_increase", "2>1 provider-specific identifiers")
+    ]
+
+
+def test_provider_specific_core_debt_rejects_a_removed_registered_file(
+    tmp_path: Path,
+) -> None:
+    checker = _checker()
+    policy = json.loads(
+        (ROOT / "design/architecture/package-boundaries-v1.json").read_text(
+            encoding="utf-8"
+        )
+    )
+    _seed_policy_tree(tmp_path, policy)
+    debt = policy["providerSpecificCoreDebt"]
+    assert isinstance(debt, dict)
+    ceilings = debt["fileCeilings"]
+    assert isinstance(ceilings, dict)
+    stale_path = next(iter(ceilings))
+    (tmp_path / stale_path).unlink()
+    policy_path = tmp_path / "policy.json"
+    policy_path.write_text(json.dumps(policy), encoding="utf-8")
+
+    violations = checker.check(tmp_path, policy_path)
+
+    assert [(item.code, item.detail) for item in violations] == [
+        ("stale_provider_debt_ceiling", stale_path)
     ]

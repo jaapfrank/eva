@@ -44,7 +44,7 @@ def test_secret_boundary_inventory_keeps_unhardened_processes_as_blockers() -> N
     for loose_reader in (
         "operations/install_schema.py",
         "operations/model_credentials.py",
-        "adapters/model/conversation.py",
+        "adapters/model/pydantic_conversation.py",
     ):
         assert loose_reader in inventory
     for hardened_reader in (

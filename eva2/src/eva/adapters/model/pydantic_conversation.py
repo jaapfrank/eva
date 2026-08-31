@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import asyncio
 import base64
 from datetime import UTC, datetime
 import hashlib
@@ -15,8 +16,28 @@ import unicodedata
 import urllib.error
 import urllib.request
 from urllib.parse import urlparse
-from typing import Any, Iterator, Literal
+from typing import Any, AsyncIterator, Iterator, Literal
 from uuid import uuid4
+
+from pydantic_ai import (
+    Agent,
+    DeferredToolRequests,
+    DeferredToolResults,
+    ExternalToolset,
+    PartDeltaEvent,
+    PartStartEvent,
+    TextPart,
+    TextPartDelta,
+    ToolDefinition,
+)
+from pydantic_ai.messages import (
+    ModelRequest,
+    ModelResponse,
+    ToolCallPart,
+    UserPromptPart,
+)
+from pydantic_ai.models import Model
+from pydantic_ai.usage import UsageLimits
 
 from eva.application.conversation import (
     ConversationActionCall,
@@ -29,6 +50,7 @@ from eva.application.conversation import (
     IdentityProfile,
     MEMORY_SEARCH_ACTION,
     RecentConversationMessage,
+    publish_conversation_text,
 )
 from eva.application.memory import PresenceMemory
 from eva.application.free_will import FreeWillDecision
@@ -52,23 +74,19 @@ from eva.adapters.model.contracts import (
     ConversationCredentialStatus,
     ConversationModelError,
 )
+from eva.adapters.model.openai_codex_provider import (
+    CodexProviderError,
+    OpenAICodexProvider,
+    OpenAICodexProviderSettings,
+)
 from eva.contracts.canonical_json import canonical_json_bytes
 from eva.contracts.runtime_budget import RuntimeResourceBudget
-from eva.adapters.model.openai_responses_transport import (
-    ConversationSseError,
-    OpenAIResponsesCredentialRejected,
-    OpenAIResponsesTransport,
-    OpenAIResponsesTransportError,
-    OpenAIResponsesUnavailable,
-    parse_conversation_sse,
-)
 
 
 _MAX_STREAM_BYTES = 8 * 1024 * 1024
 _MODEL_LEASE_OWNER_UID = 1000
 _MODEL_LEASE_READER_GID = 65532
 _MODEL_LEASE_FILE_MODE = 0o640
-_ORDINARY_PROVIDER_ATTEMPTS = 2
 _ORDINARY_PROVIDER_TIMEOUT_SECONDS = 5.0
 _PERSONAL_INTEREST_ACTION = "adopt_personal_interest"
 _FANOUT_DELIVERY_ACTION = "deliver_test_message_fanout"
@@ -130,6 +148,78 @@ def _descriptor_tool(descriptor: ConversationToolDescriptor) -> dict[str, Any]:
         "strict": True,
         "type": "function",
     }
+
+
+def _parse_legacy_conversation_events(
+    events: Iterator[tuple[str, dict[str, Any]]],
+    *,
+    started_at: float | None = None,
+    tools_disabled: bool = False,
+) -> Any:
+    """Parse only the remaining cold-path urllib stream until it is retired."""
+
+    deltas: list[str] = []
+    completed_parts: list[str] = []
+    action_call: ConversationActionCall | None = None
+    first_content_ms: int | None = None
+    for kind, data in events:
+        if kind in {"response.output_text.delta", "response.text.delta"}:
+            delta = data.get("delta")
+            if not isinstance(delta, str):
+                raise ConversationModelError("conversation text delta is invalid")
+            if delta and started_at is not None and first_content_ms is None:
+                first_content_ms = round((monotonic() - started_at) * 1000)
+            publish_conversation_text(delta, tools_disabled=tools_disabled)
+            deltas.append(delta)
+            continue
+        if kind == "response.output_item.done":
+            item = data.get("item")
+            if not isinstance(item, dict):
+                continue
+            if item.get("type") == "function_call":
+                if action_call is not None:
+                    raise ConversationModelError(
+                        "conversation model returned multiple actions"
+                    )
+                call_id = item.get("call_id")
+                name = item.get("name")
+                encoded = item.get("arguments")
+                if not all(
+                    isinstance(value, str) for value in (call_id, name, encoded)
+                ):
+                    raise ConversationModelError("conversation action frame is invalid")
+                try:
+                    arguments = json.loads(encoded)
+                except json.JSONDecodeError as error:
+                    raise ConversationModelError(
+                        "conversation action arguments are invalid JSON"
+                    ) from error
+                if not isinstance(arguments, dict):
+                    raise ConversationModelError(
+                        "conversation action arguments are not an object"
+                    )
+                try:
+                    action_call = ConversationActionCall(call_id, name, arguments)
+                except ValueError as error:
+                    raise ConversationModelError(
+                        "conversation action arguments are invalid"
+                    ) from error
+                continue
+            content = item.get("content")
+            if isinstance(content, list):
+                completed_parts.extend(
+                    part["text"]
+                    for part in content
+                    if isinstance(part, dict) and isinstance(part.get("text"), str)
+                )
+        elif kind == "response.failed":
+            raise ConversationModelError("conversation provider reported failure")
+    text = "".join(deltas) if deltas else "".join(completed_parts)
+    if started_at is None:
+        return text, action_call
+    completed_ms = max(0, round((monotonic() - started_at) * 1000))
+    first = completed_ms if first_content_ms is None and text else first_content_ms
+    return text, action_call, ConversationModelTiming(first, completed_ms)
 
 
 _MEMORY_SEARCH_TOOL: dict[str, Any] = _tool(
@@ -377,7 +467,7 @@ _FREE_WILL_TOOL: dict[str, Any] = _tool(
 )
 
 
-class CodexConversationModel:
+class PydanticConversationModel:
     """One stateless Eva generation after Hindsight has recalled context."""
 
     def __init__(
@@ -389,9 +479,9 @@ class CodexConversationModel:
         timeout_seconds: float = 30.0,
         research_timeout_seconds: float = 90.0,
         reasoning_effort: Literal["low", "medium", "high"] = "medium",
-        transport_kind: Literal["legacy_urllib", "openai_sdk"] = "legacy_urllib",
         resource_budget: RuntimeResourceBudget | None = None,
         conversation_tools: tuple[ConversationToolDescriptor, ...] = (),
+        model_backend: Model | None = None,
     ) -> None:
         if not model.strip():
             raise ValueError("conversation model is required")
@@ -403,8 +493,6 @@ class CodexConversationModel:
             raise ValueError("research timeout must be 10..180 seconds")
         if reasoning_effort not in {"low", "medium", "high"}:
             raise ValueError("conversation reasoning effort is invalid")
-        if transport_kind not in {"legacy_urllib", "openai_sdk"}:
-            raise ValueError("conversation model transport is invalid")
         external_names = [descriptor.name for descriptor in conversation_tools]
         if (
             len(set(external_names)) != len(external_names)
@@ -418,8 +506,8 @@ class CodexConversationModel:
         self._timeout_seconds = timeout_seconds
         self._research_timeout_seconds = research_timeout_seconds
         self._reasoning_effort = reasoning_effort
-        self._transport_kind = transport_kind
         self._resource_budget = resource_budget
+        self._model_backend = model_backend
         self._conversation_tool_descriptors = {
             descriptor.name: descriptor for descriptor in conversation_tools
         }
@@ -427,18 +515,6 @@ class CodexConversationModel:
             descriptor.name: _descriptor_tool(descriptor)
             for descriptor in conversation_tools
         }
-        self._openai_transport = (
-            OpenAIResponsesTransport(
-                endpoint=endpoint,
-                timeout_seconds=min(
-                    timeout_seconds, _ORDINARY_PROVIDER_TIMEOUT_SECONDS
-                ),
-                maximum_request_bytes=_MAX_STREAM_BYTES,
-                maximum_response_bytes=_MAX_STREAM_BYTES,
-            )
-            if transport_kind == "openai_sdk"
-            else None
-        )
         self._credential_lock = threading.Lock()
         self._rejected_token_sha256: str | None = None
 
@@ -462,6 +538,271 @@ class CodexConversationModel:
             return ConversationCredentialStatus(False, "expired", expires_at)
         return ConversationCredentialStatus(True, "ready", expires_at)
 
+    def _run_pydantic_phase(
+        self,
+        *,
+        prompt: str,
+        instructions: str,
+        tools: tuple[dict[str, Any], ...] = (),
+        completed_action: ConversationActionReceipt | None = None,
+        cache_key: str | None = None,
+    ) -> tuple[
+        str,
+        ConversationActionCall | None,
+        ConversationModelUsage,
+        ConversationModelTiming,
+    ]:
+        """Run one framework-owned phase and stop before external execution."""
+
+        admission_input: list[dict[str, Any]] = [
+            {"content": prompt, "role": "user", "type": "message"}
+        ]
+        if completed_action is not None:
+            admission_input.extend(
+                (
+                    {
+                        "arguments": canonical_json_bytes(
+                            completed_action.call.arguments
+                        )
+                        .decode("utf-8")
+                        .rstrip("\n"),
+                        "call_id": completed_action.call.call_id,
+                        "name": completed_action.call.name,
+                        "type": "function_call",
+                    },
+                    {
+                        "call_id": completed_action.call.call_id,
+                        "output": canonical_json_bytes(completed_action.output)
+                        .decode("utf-8")
+                        .rstrip("\n"),
+                        "type": "function_call_output",
+                    },
+                )
+            )
+        self._admit_request(
+            {
+                "input": admission_input,
+                "instructions": instructions,
+                "store": False,
+                "tools": [{**tool, "defer_loading": False} for tool in tools],
+            },
+            autonomous=False,
+        )
+        injected_backend = self._model_backend
+
+        async def run(
+            model_backend: Model,
+        ) -> tuple[
+            str,
+            ConversationActionCall | None,
+            ConversationModelUsage,
+            ConversationModelTiming,
+        ]:
+            started_at = monotonic()
+            first_content_ms: int | None = None
+            publish_text = not tools
+
+            async def capture_events(_context: Any, events: AsyncIterator[Any]) -> None:
+                nonlocal first_content_ms
+                async for event in events:
+                    delta = ""
+                    if isinstance(event, PartStartEvent) and isinstance(
+                        event.part, TextPart
+                    ):
+                        delta = event.part.content
+                    elif isinstance(event, PartDeltaEvent) and isinstance(
+                        event.delta, TextPartDelta
+                    ):
+                        delta = event.delta.content_delta
+                    if delta:
+                        if first_content_ms is None:
+                            first_content_ms = round((monotonic() - started_at) * 1000)
+                        publish_conversation_text(delta, tools_disabled=publish_text)
+
+            definitions = [
+                ToolDefinition(
+                    name=tool["name"],
+                    description=tool["description"],
+                    parameters_json_schema=tool["parameters"],
+                    strict=True,
+                    defer_loading=False,
+                )
+                for tool in tools
+            ]
+            toolsets = (
+                [ExternalToolset(definitions, id="eva-durable-actions")]
+                if definitions
+                else []
+            )
+            output_type: Any = [str, DeferredToolRequests] if tools else str
+            message_history = None
+            deferred_results = None
+            user_prompt: str | None = prompt
+            if completed_action is not None:
+                call = completed_action.call
+                message_history = [
+                    ModelRequest(parts=[UserPromptPart(prompt)]),
+                    ModelResponse(
+                        parts=[ToolCallPart(call.name, call.arguments, call.call_id)]
+                    ),
+                ]
+                deferred_results = DeferredToolResults(
+                    calls={call.call_id: completed_action.output}
+                )
+                user_prompt = None
+            agent = Agent(model_backend, instructions=instructions, retries=0)
+            try:
+                async with asyncio.timeout(self._timeout_seconds):
+                    result = await agent.run(
+                        user_prompt,
+                        message_history=message_history,
+                        deferred_tool_results=deferred_results,
+                        output_type=output_type,
+                        toolsets=toolsets,
+                        model_settings=(
+                            {"openai_prompt_cache_key": cache_key}
+                            if cache_key is not None
+                            else None
+                        ),
+                        usage_limits=UsageLimits(
+                            request_limit=1,
+                            tool_calls_limit=1 if tools else None,
+                            input_tokens_limit=(
+                                self._resource_budget.max_input_tokens
+                                if self._resource_budget is not None
+                                else None
+                            ),
+                            output_tokens_limit=(
+                                self._resource_budget.max_output_tokens
+                                if self._resource_budget is not None
+                                else None
+                            ),
+                        ),
+                        event_stream_handler=capture_events,
+                    )
+            except TimeoutError as error:
+                raise ConversationModelError(
+                    "conversation provider deadline exceeded"
+                ) from error
+            except CodexProviderError:
+                raise
+            except ConversationModelError:
+                raise
+            except Exception as error:
+                raise ConversationModelError(
+                    "conversation provider returned an invalid response"
+                ) from error
+
+            output = result.output
+            action_call: ConversationActionCall | None = None
+            text = ""
+            if isinstance(output, str):
+                text = output
+            elif isinstance(output, DeferredToolRequests):
+                if output.approvals or len(output.calls) != 1:
+                    raise ConversationModelError(
+                        "conversation model must return exactly one deferred action"
+                    )
+                selected = output.calls[0]
+                try:
+                    arguments = selected.args_as_dict(raise_if_invalid=True)
+                    action_call = ConversationActionCall(
+                        selected.tool_call_id,
+                        selected.tool_name,
+                        arguments,
+                    )
+                except (AssertionError, TypeError, ValueError) as error:
+                    raise ConversationModelError(
+                        "conversation deferred action is invalid"
+                    ) from error
+            else:
+                raise ConversationModelError("conversation output type is invalid")
+
+            reported = result.usage
+            if reported.requests != 1:
+                raise ConversationModelError(
+                    "conversation provider request count is invalid"
+                )
+            usage = ConversationModelUsage.measured(
+                model_attempts=reported.requests,
+                tool_calls=int(action_call is not None),
+                input_tokens=reported.input_tokens,
+                output_tokens=reported.output_tokens,
+            )
+            completed_ms = max(0, round((monotonic() - started_at) * 1000))
+            if text and first_content_ms is None:
+                first_content_ms = completed_ms
+            return (
+                text,
+                action_call,
+                usage,
+                ConversationModelTiming(first_content_ms, completed_ms),
+            )
+
+        async def execute() -> tuple[
+            str,
+            ConversationActionCall | None,
+            ConversationModelUsage,
+            ConversationModelTiming,
+        ]:
+            if injected_backend is not None:
+                return await run(injected_backend)
+            provider = OpenAICodexProvider(
+                OpenAICodexProviderSettings(
+                    endpoint=self._endpoint,
+                    model_name=self._model,
+                    timeout_seconds=min(
+                        self._timeout_seconds, _ORDINARY_PROVIDER_TIMEOUT_SECONDS
+                    ),
+                    reasoning_effort=self._reasoning_effort,
+                    maximum_request_bytes=_MAX_STREAM_BYTES,
+                    maximum_response_bytes=_MAX_STREAM_BYTES,
+                ),
+                credential_loader=self._load_auth,
+            )
+            session = None
+            try:
+                async with provider as session:
+                    phase = await run(session.model)
+                    raw_usage = session.consume_raw_usage()
+            except CodexProviderError as error:
+                if (
+                    error.category == "credentials_rejected"
+                    and session is not None
+                    and session.access_token_sha256 is not None
+                ):
+                    with self._credential_lock:
+                        self._rejected_token_sha256 = session.access_token_sha256
+                if error.category == "deadline":
+                    message = "conversation provider deadline exceeded"
+                elif error.category == "credentials_rejected":
+                    message = "conversation credentials were rejected"
+                elif error.category == "unavailable":
+                    message = "conversation provider is unavailable"
+                else:
+                    message = "conversation provider returned an invalid response"
+                raise ConversationModelError(message) from error
+            usage = phase[2]
+            if (
+                usage.measurement != "measured"
+                or usage.input_tokens != raw_usage.input_tokens
+                or usage.output_tokens != raw_usage.output_tokens
+            ):
+                raise ConversationModelError(
+                    "conversation provider usage attestation differs"
+                )
+            with self._credential_lock:
+                self._rejected_token_sha256 = None
+            return phase
+
+        try:
+            asyncio.get_running_loop()
+        except RuntimeError:
+            return asyncio.run(execute())
+        raise ConversationModelError(
+            "synchronous conversation port cannot run inside an event loop"
+        )
+
     def generate_tool_free_text(
         self, *, prompt: str, instructions: str
     ) -> ConversationModelResult:
@@ -479,24 +820,16 @@ class CodexConversationModel:
         cache_seed = hashlib.sha256(
             f"{instructions}\n{prompt}".encode("utf-8")
         ).hexdigest()[:32]
-        body = {
-            "include": ["reasoning.encrypted_content"],
-            "input": [{"content": prompt, "role": "user", "type": "message"}],
-            "instructions": instructions,
-            "model": self._model,
-            "parallel_tool_calls": False,
-            "prompt_cache_key": f"eva-tool-free-{cache_seed}",
-            "reasoning": {"effort": self._reasoning_effort, "summary": "auto"},
-            "store": False,
-            "stream": True,
-            "tool_choice": "none",
-            "tools": [],
-        }
-        text, action_call, usage, timing = self._request_conversation(body)
+        text, action_call, usage, timing = self._run_pydantic_phase(
+            prompt=prompt,
+            instructions=instructions,
+            cache_key=f"eva-tool-free-{cache_seed}",
+        )
         if action_call is not None or not text.strip():
             raise ConversationModelError(
                 "tool-free conversation returned invalid output"
             )
+        self._enforce_reported_usage(usage)
         return ConversationModelResult(
             text=text.strip(),
             provider=f"chatgpt-codex:{self._model}",
@@ -536,67 +869,23 @@ class CodexConversationModel:
             completed_action=completed_action,
             self_context=self_context,
         )
-        input_items: list[dict[str, Any]] = [
-            {
-                "content": turn.grounded_text,
-                "role": "user",
-                "type": "message",
-            }
-        ]
-        if completed_action is not None:
-            input_items.extend(
-                [
-                    {
-                        "arguments": json.dumps(
-                            completed_action.call.arguments,
-                            ensure_ascii=False,
-                            separators=(",", ":"),
-                            sort_keys=True,
-                        ),
-                        "call_id": completed_action.call.call_id,
-                        "name": completed_action.call.name,
-                        "type": "function_call",
-                    },
-                    {
-                        "call_id": completed_action.call.call_id,
-                        "output": json.dumps(
-                            completed_action.output,
-                            ensure_ascii=False,
-                            separators=(",", ":"),
-                            sort_keys=True,
-                        ),
-                        "type": "function_call_output",
-                    },
-                ]
+        pydantic_catalog = (
+            tuple(
+                ([] if memory_completed else [_MEMORY_SEARCH_TOOL])
+                + [action_tools[name] for name in available_actions]
             )
-        dynamic_tools = []
-        if offer_tools:
-            catalog = ([] if memory_completed else [_MEMORY_SEARCH_TOOL]) + [
-                action_tools[name] for name in available_actions
-            ]
-            dynamic_tools = [
-                {"type": "tool_search", "execution": "server"},
-                *[{**tool, "defer_loading": True} for tool in catalog],
-            ]
-        body = {
-            "include": ["reasoning.encrypted_content"],
-            "input": input_items,
-            "instructions": instructions,
-            "model": self._model,
-            "parallel_tool_calls": False,
-            "prompt_cache_key": self._cache_key(turn),
-            "reasoning": {
-                "effort": "none" if offer_tools else self._reasoning_effort,
-                "summary": "auto",
-            },
-            "store": False,
-            "stream": True,
-            "tool_choice": "auto" if offer_tools else "none",
-            "tools": dynamic_tools,
-        }
+            if offer_tools
+            else ()
+        )
         usages: list[ConversationModelUsage] = []
         timings: list[ConversationModelTiming] = []
-        text, action_call, usage, timing = self._request_conversation(body)
+        text, action_call, usage, timing = self._run_pydantic_phase(
+            prompt=turn.grounded_text,
+            instructions=instructions,
+            tools=pydantic_catalog,
+            completed_action=completed_action,
+            cache_key=self._cache_key(turn),
+        )
         usages.append(usage)
         timings.append(timing)
         if (
@@ -606,12 +895,19 @@ class CodexConversationModel:
             and identity.identity_pack.language.startswith("nl")
             and _contains_foreign_script(text)
         ):
-            body["instructions"] += (
-                "\n\nJe vorige formulering bevatte onverwacht tekens uit een andere "
-                "schrifttaal. Formuleer het antwoord opnieuw, volledig in natuurlijk "
-                "Nederlands en zonder de inhoud of bewijsgrenzen te veranderen."
+            text, action_call, usage, timing = self._run_pydantic_phase(
+                prompt=turn.grounded_text,
+                instructions=(
+                    instructions
+                    + "\n\nJe vorige formulering bevatte onverwacht tekens uit een "
+                    "andere schrifttaal. Formuleer het antwoord opnieuw, volledig "
+                    "in natuurlijk Nederlands en zonder de inhoud of bewijsgrenzen "
+                    "te veranderen."
+                ),
+                tools=pydantic_catalog,
+                completed_action=completed_action,
+                cache_key=self._cache_key(turn),
             )
-            text, action_call, usage, timing = self._request_conversation(body)
             usages.append(usage)
             timings.append(timing)
         allowed_actions = set(available_actions)
@@ -625,11 +921,13 @@ class CodexConversationModel:
             raise ConversationModelError(
                 "conversation model returned no text or action"
             )
+        aggregate_usage = ConversationModelUsage.aggregate(tuple(usages))
+        self._enforce_reported_usage(aggregate_usage)
         return ConversationModelResult(
             text=text.strip() or None,
-            provider=f"chatgpt-codex:{body['model']}",
+            provider=f"chatgpt-codex:{self._model}",
             action_call=action_call,
-            usage=ConversationModelUsage.aggregate(tuple(usages)),
+            usage=aggregate_usage,
             timing=ConversationModelTiming.aggregate(tuple(timings)),
         )
 
@@ -1109,125 +1407,6 @@ class CodexConversationModel:
         self._admit_request(body, autonomous=True)
         return self._request(body)
 
-    def _request_conversation(
-        self, body: dict[str, Any]
-    ) -> tuple[
-        str,
-        ConversationActionCall | None,
-        ConversationModelUsage,
-        ConversationModelTiming,
-    ]:
-        """Use the explicit candidate only for the ordinary conversation route."""
-
-        if self._transport_kind == "legacy_urllib":
-            if self._resource_budget is None:
-                text, action_call = self._request(body)
-                return (
-                    text,
-                    action_call,
-                    ConversationModelUsage.unmeasured(),
-                    ConversationModelTiming.unmeasured(),
-                )
-            started_at = monotonic()
-            for transient_attempt in range(_ORDINARY_PROVIDER_ATTEMPTS):
-                offset_ms = round((monotonic() - started_at) * 1000)
-                try:
-                    parsed, usage = self._request_using(
-                        body,
-                        self._parse_sse,
-                        timeout_seconds=min(
-                            self._timeout_seconds, _ORDINARY_PROVIDER_TIMEOUT_SECONDS
-                        ),
-                        include_usage=True,
-                        include_timing=True,
-                    )
-                except ConversationModelError as error:
-                    if (
-                        str(error) != "conversation provider is unavailable"
-                        or transient_attempt
-                    ):
-                        raise
-                    continue
-                text, action_call, timing = parsed
-                if transient_attempt:
-                    usage = ConversationModelUsage.unmeasured()
-                    timing = ConversationModelTiming(
-                        None
-                        if timing.first_content_ms is None
-                        else offset_ms + timing.first_content_ms,
-                        None
-                        if timing.completed_ms is None
-                        else offset_ms + timing.completed_ms,
-                    )
-                return text, action_call, usage, timing
-            raise AssertionError("ordinary provider attempts exhausted")
-        assert self._openai_transport is not None
-        self._admit_request(body, autonomous=False)
-        last_auth: tuple[str, str] | None = None
-        started_at = monotonic()
-        provider_attempts = 0
-        transient_retried = retry_same_auth = False
-        for attempt in range(3):
-            auth = self._load_auth()
-            expires_at = self._jwt_expiry(auth[0])
-            if expires_at is not None and expires_at <= datetime.now(tz=UTC):
-                raise ConversationModelError("conversation access token is expired")
-            if attempt and auth == last_auth and not retry_same_auth:
-                break
-            last_auth = auth
-            retry_same_auth = False
-            provider_attempts += 1
-            offset_ms = round((monotonic() - started_at) * 1000)
-            try:
-                result = self._openai_transport.request(
-                    body,
-                    access_token=auth[0],
-                    account_id=auth[1],
-                )
-            except OpenAIResponsesCredentialRejected:
-                continue
-            except OpenAIResponsesUnavailable as error:
-                if transient_retried or not error.retry_safe:
-                    raise ConversationModelError(
-                        "conversation provider is unavailable"
-                    ) from error
-                transient_retried = retry_same_auth = True
-                continue
-            except OpenAIResponsesTransportError as error:
-                raise ConversationModelError(str(error)) from error
-            with self._credential_lock:
-                self._rejected_token_sha256 = None
-            usage = result.usage
-            if transient_retried:
-                usage = ConversationModelUsage.unmeasured()
-            elif usage.measurement == "measured":
-                assert usage.tool_calls is not None
-                assert usage.input_tokens is not None
-                assert usage.output_tokens is not None
-                usage = ConversationModelUsage.measured(
-                    model_attempts=provider_attempts,
-                    tool_calls=usage.tool_calls,
-                    input_tokens=usage.input_tokens,
-                    output_tokens=usage.output_tokens,
-                )
-            if not transient_retried:
-                self._enforce_reported_usage(usage)
-            timing = ConversationModelTiming(
-                None
-                if result.first_text_delta_seconds is None
-                else offset_ms + round(result.first_text_delta_seconds * 1000),
-                None
-                if result.completed_seconds is None
-                else offset_ms + round(result.completed_seconds * 1000),
-            )
-            return result.text, result.action_call, usage, timing
-        if last_auth is not None:
-            with self._credential_lock:
-                self._rejected_token_sha256 = hashlib.sha256(
-                    last_auth[0].encode()
-                ).hexdigest()
-        raise ConversationModelError("conversation credentials were rejected")
-
     def _request_research(
         self, body: dict[str, Any]
     ) -> tuple[str, tuple[ResearchSource, ...], tuple[ResearchSource, ...]]:
@@ -1581,13 +1760,10 @@ class CodexConversationModel:
     def _parse_sse(
         response: Any, *, started_at: float | None = None, tools_disabled: bool = False
     ) -> Any:
-        events = CodexConversationModel._iter_sse_events(response, "conversation")
-        try:
-            return parse_conversation_sse(
-                events, started_at=started_at, tools_disabled=tools_disabled
-            )
-        except ConversationSseError as error:
-            raise ConversationModelError(str(error)) from error
+        events = PydanticConversationModel._iter_sse_events(response, "conversation")
+        return _parse_legacy_conversation_events(
+            events, started_at=started_at, tools_disabled=tools_disabled
+        )
 
     @staticmethod
     def _parse_research_sse(
@@ -1597,7 +1773,9 @@ class CodexConversationModel:
         completed_parts: list[str] = []
         cited: dict[str, str] = {}
         consulted: dict[str, str] = {}
-        for kind, data in CodexConversationModel._iter_sse_events(response, "research"):
+        for kind, data in PydanticConversationModel._iter_sse_events(
+            response, "research"
+        ):
             if kind in {"response.output_text.delta", "response.text.delta"}:
                 delta = data.get("delta")
                 if not isinstance(delta, str):
@@ -1971,7 +2149,7 @@ def _contains_foreign_script(text: str) -> bool:
 
 
 __all__ = [
-    "CodexConversationModel",
+    "PydanticConversationModel",
     "ConversationCredentialStatus",
     "ConversationModelError",
 ]

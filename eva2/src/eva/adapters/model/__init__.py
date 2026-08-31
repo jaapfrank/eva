@@ -2,7 +2,7 @@
 
 from typing import Any
 
-__all__ = ["CodexConversationModel", "ConversationModelError"]
+__all__ = ["PydanticConversationModel", "ConversationModelError"]
 
 
 def __getattr__(name: str) -> Any:
@@ -10,8 +10,8 @@ def __getattr__(name: str) -> Any:
         from .contracts import ConversationModelError
 
         return ConversationModelError
-    if name == "CodexConversationModel":
-        from .conversation import CodexConversationModel
+    if name == "PydanticConversationModel":
+        from .pydantic_conversation import PydanticConversationModel
 
-        return CodexConversationModel
+        return PydanticConversationModel
     raise AttributeError(name)

@@ -7,7 +7,7 @@
   "postgres_version": "16.13",
   "dbos_version": "2.30.0",
   "pydantic_version": "2.12.5",
-  "pydantic_ai_slim_version": "2.32.1",
+  "pydantic_ai_slim_version": "2.36.0",
   "tier1_targets": [
     {
       "operating_system": "Ubuntu Server 24.04.4 LTS",

@@ -32,7 +32,7 @@ secret-hardening wordt gepresenteerd.
 - `operations/model_credentials.py`: leest de private credentialauthority via
   de harde loader en publiceert alleen atomair naar vooraf-geprovisioneerde
   directories met een vast owner/group/modecontract.
-- `adapters/model/conversation.py`: accepteert uitsluitend de gedeelde
+- `adapters/model/pydantic_conversation.py`: accepteert uitsluitend de gedeelde
   access-lease met contract `1000:65532`/`0640`; refreshauthority wordt niet
   gelezen door de gesprekservice.
 

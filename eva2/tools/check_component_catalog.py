@@ -10,6 +10,7 @@ import json
 from pathlib import Path, PurePosixPath
 import re
 import stat
+import subprocess
 from typing import Any
 
 
@@ -497,6 +498,7 @@ def check(
         )
         return sorted(set(violations))
     scoped_paths: list[str] = []
+    inventory_tracked_paths: set[str] = set()
     for index, row in enumerate(raw_files):
         if not isinstance(row, dict):
             violations.append(
@@ -520,11 +522,67 @@ def check(
             continue
         if state == "tracked" and path.startswith(SCOPE_PREFIXES):
             scoped_paths.append(path)
+            inventory_tracked_paths.add(path)
+            present = row.get("present")
+            content_sha256 = row.get("contentSha256")
+            if present is not None or content_sha256 is not None:
+                candidate = root / path
+                if (
+                    present is not True
+                    or not isinstance(content_sha256, str)
+                    or SHA256.fullmatch(content_sha256) is None
+                    or not candidate.is_file()
+                    or candidate.is_symlink()
+                    or _sha256(candidate) != content_sha256
+                ):
+                    violations.append(
+                        Violation("inventory_current_drift", path, "bytes differ")
+                    )
     if len(scoped_paths) != len(set(scoped_paths)):
         violations.append(
             Violation("inventory_duplicate_path", "inventory.files", "duplicate")
         )
     scoped_paths = sorted(set(scoped_paths))
+    try:
+        visible = (
+            subprocess.run(
+                [
+                    "git",
+                    "-C",
+                    str(root),
+                    "ls-files",
+                    "--cached",
+                    "--others",
+                    "--exclude-standard",
+                    "-z",
+                ],
+                check=True,
+                capture_output=True,
+                timeout=20,
+            )
+            .stdout.decode("utf-8")
+            .split("\0")
+        )
+    except (OSError, subprocess.CalledProcessError, subprocess.TimeoutExpired):
+        visible = []
+    current_tracked_paths = {
+        path
+        for path in visible
+        if path
+        and path.startswith(SCOPE_PREFIXES)
+        and (root / path).is_file()
+        and not (root / path).is_symlink()
+    }
+    if current_tracked_paths and current_tracked_paths != inventory_tracked_paths:
+        missing = sorted(current_tracked_paths - inventory_tracked_paths)
+        stale = sorted(inventory_tracked_paths - current_tracked_paths)
+        violations.append(
+            Violation(
+                "inventory_current_paths",
+                "inventory.files",
+                f"missing={missing!r}; stale={stale!r}",
+            )
+        )
 
     raw_components = catalog.get("components")
     if not isinstance(raw_components, list) or not raw_components:

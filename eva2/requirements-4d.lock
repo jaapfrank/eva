@@ -589,9 +589,8 @@ pydantic==2.12.5 \
     #   openai
     #   pydantic-ai-slim
     #   pydantic-graph
-pydantic-ai-slim==2.32.1 \
-    --hash=sha256:0a2565e2dab5f3dab7c6627b749016c4af52a8c7ba4eccaba4a43d8f91bf5e6b \
-    --hash=sha256:1bf26deaa6ac0ca038b9e23d76cd9683a47b5cd3bc56b666f5900fdc5547cf53
+pydantic-ai-slim==2.36.0 \
+    --hash=sha256:90957c37c99d3bfbfab4be632b733bf50d563686fbfbf8a2e42b6c91a4fca877
     # via -r eva2/release/dependency-roots.in
 pydantic-core==2.41.5 \
     --hash=sha256:0177272f88ab8312479336e1d777f6b124537d47f2123f89cb37e0accea97f90 \
@@ -716,9 +715,8 @@ pydantic-core==2.41.5 \
     --hash=sha256:f41eb9797986d6ebac5e8edff36d5cef9de40def462311b3eb3eeded1431e425 \
     --hash=sha256:f547144f2966e1e16ae626d8ce72b4cfa0caedc7fa28052001c94fb2fcaa1c52
     # via pydantic
-pydantic-graph==2.32.1 \
-    --hash=sha256:29a0cd70914db95b7b1f8a2ab19888f17757784e8b41ac100b894de2eed27993 \
-    --hash=sha256:881ef6e5115cceedfbc03befa9ec127c32c5d41d6b8b8aa4a950459fb913d848
+pydantic-graph==2.36.0 \
+    --hash=sha256:c0c7cddb87038298b367036d799b4b605b2a23858869b2b661706df6e1b811f2
     # via pydantic-ai-slim
 pynacl==1.6.2 \
     --hash=sha256:46065496ab748469cdd999246d17e301b2c24ae2fdf739132e580a0e94c94a87 \

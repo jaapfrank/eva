@@ -70,7 +70,7 @@
       "name": "Model- en toolkeuzeadapter",
       "purpose": "Verbindt Eva's gesprek met modelproviders en beschikbare gereedschappen.",
       "necessity": "Er blijft alleen dunne Eva-specifieke aansluiting nodig; algemene model- en MCP-loops horen bij een onderhouden dependency.",
-      "disposition": "replacement_pending",
+      "disposition": "dependency_adapter",
       "lifecycleStatus": "tested",
       "ownerPaths": [
         "eva2/src/eva/adapters/model/**"
@@ -79,16 +79,16 @@
         "Geen eigen algemene agentloop behouden wanneer Pydantic AI dezelfde route aantoonbaar overneemt."
       ],
       "upstream": {
-        "status": "candidate",
+        "status": "adopted",
         "name": "Pydantic AI",
         "version": "2.36.0",
         "url": "https://github.com/pydantic/pydantic-ai",
         "reviewedOn": "2026-08-31"
       },
       "replacement": {
-        "status": "replacement_pending",
-        "target": "Pydantic AI Agent en MCPToolset met een dunne Eva-policycallback",
-        "reason": "De kandidaat werkt, maar de bestaande loop draagt nog dezelfde verantwoordelijkheid en veroorzaakt dus onverklaarde overlap."
+        "status": "retained",
+        "target": null,
+        "reason": "Pydantic AI bestuurt nu de gewone gesprek- en uitgestelde toolfase; alleen Eva's identiteit, budget, credential- en durable-actiongrenzen blijven in de adapter."
       },
       "verification": {
         "testPaths": [
@@ -99,8 +99,8 @@
         ]
       },
       "blockers": [
-        "Bewijs één vervangende diff met behoud van identiteit, ledger en readback.",
-        "Verwijder daarna de vervangen model- en MCP-loop in dezelfde wijziging."
+        "De bronkandidaat is nog niet als offline gebouwde en scan-schone image via A/B live gezet.",
+        "Research, persoonsinteresses en productlisting gebruiken nog een tijdelijke directe urllib-cold-path en moeten dezelfde gedeelde provider krijgen."
       ]
     },
     {

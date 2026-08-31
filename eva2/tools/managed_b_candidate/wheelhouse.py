@@ -30,15 +30,10 @@ REMOVED_DBOS_WHEELS = (
     "manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl",
     "six-1.17.0-py2.py3-none-any.whl",
 )
-STOCK_CRYPTOGRAPHY_WHEEL = (
-    "cryptography-46.0.5-cp311-abi3-manylinux_2_28_x86_64.whl"
-)
-CRYPTOGRAPHY50_AMD64_WHEEL = (
-    "cryptography-50.0.1-cp311-abi3-manylinux_2_34_x86_64.whl"
-)
+STOCK_CRYPTOGRAPHY_WHEEL = "cryptography-46.0.5-cp311-abi3-manylinux_2_28_x86_64.whl"
+CRYPTOGRAPHY50_AMD64_WHEEL = "cryptography-50.0.1-cp311-abi3-manylinux_2_34_x86_64.whl"
 PYNACL_AMD64_WHEEL = (
-    "pynacl-1.6.2-cp38-abi3-manylinux_2_26_x86_64."
-    "manylinux_2_28_x86_64.whl"
+    "pynacl-1.6.2-cp38-abi3-manylinux_2_26_x86_64.manylinux_2_28_x86_64.whl"
 )
 PYNACL_AMD64_ARTIFACT = (
     "8a66d6fb6ae7661c58995f9c6435bda2b1e68b54b598a6a10247bfcdadac996c",
@@ -56,6 +51,20 @@ OPENAI_SDK_WHEELS = {
     "sniffio-1.3.1-py3-none-any.whl": (
         "2f6da418d1f1e0fddd844478f41680e794e6051915791a034ff65e5f100525a2",
         10235,
+    ),
+}
+STOCK_PYDANTIC_AGENT_WHEELS = (
+    "pydantic_ai_slim-2.32.1-py3-none-any.whl",
+    "pydantic_graph-2.32.1-py3-none-any.whl",
+)
+PYDANTIC_AGENT_WHEELS = {
+    "pydantic_ai_slim-2.36.0-py3-none-any.whl": (
+        "90957c37c99d3bfbfab4be632b733bf50d563686fbfbf8a2e42b6c91a4fca877",
+        1548738,
+    ),
+    "pydantic_graph-2.36.0-py3-none-any.whl": (
+        "c0c7cddb87038298b367036d799b4b605b2a23858869b2b661706df6e1b811f2",
+        52700,
     ),
 }
 CRYPTOGRAPHY50_AMD64_ARTIFACT = (
@@ -78,7 +87,11 @@ def _sha256(value: bytes) -> str:
 
 def _canonical_json(value: object) -> bytes:
     return json.dumps(
-        value, allow_nan=False, ensure_ascii=False, separators=(",", ":"), sort_keys=True
+        value,
+        allow_nan=False,
+        ensure_ascii=False,
+        separators=(",", ":"),
+        sort_keys=True,
     ).encode("utf-8")
 
 
@@ -101,8 +114,10 @@ def _json_object(raw: bytes, *, label: str) -> dict[str, Any]:
 
 
 def _require_sha256(value: object, *, label: str) -> str:
-    if not isinstance(value, str) or len(value) != 64 or any(
-        character not in "0123456789abcdef" for character in value
+    if (
+        not isinstance(value, str)
+        or len(value) != 64
+        or any(character not in "0123456789abcdef" for character in value)
     ):
         raise RuntimeError(f"{label} must be a lowercase sha256")
     return value
@@ -176,12 +191,17 @@ def _manifest(raw: bytes) -> dict[str, Any]:
     if isinstance(count, bool) or not isinstance(count, int) or not 1 <= count <= 256:
         raise RuntimeError("managed B wheelhouse expected count is invalid")
     target = value.get("target")
-    if not isinstance(target, dict) or set(target) != {
-        "architecture",
-        "os",
-        "pythonAbi",
-        "pythonVersion",
-    } or not all(isinstance(item, str) and item for item in target.values()):
+    if (
+        not isinstance(target, dict)
+        or set(target)
+        != {
+            "architecture",
+            "os",
+            "pythonAbi",
+            "pythonVersion",
+        }
+        or not all(isinstance(item, str) and item for item in target.values())
+    ):
         raise RuntimeError("managed B wheelhouse target is invalid")
     if contract == ACTIVE_MANIFEST_CONTRACT and target != {
         "architecture": "amd64",
@@ -230,7 +250,7 @@ def _expected_wheels(
             or coverage.get("requirementsLockSha256")
             != manifest["requirementsLockSha256"]
             or coverage.get("status")
-            != "derived_from_hash_pinned_baseline_minus_unused_dbos_transitives_plus_pynacl_and_openai_sdk_no_install_or_execution"
+            != "derived_from_hash_pinned_baseline_with_sealed_runtime_dependency_delta_no_install_or_execution"
         ):
             raise RuntimeError("managed B aligned wheel coverage authority differs")
         _require_sha256(
@@ -250,7 +270,8 @@ def _expected_wheels(
         (
             item
             for item in targets
-            if isinstance(item, dict) and item.get("architecture") == manifest["target"]["architecture"]
+            if isinstance(item, dict)
+            and item.get("architecture") == manifest["target"]["architecture"]
             and item.get("os") == manifest["target"]["os"]
             and item.get("pythonAbi") == manifest["target"]["pythonAbi"]
             and item.get("pythonVersion") == manifest["target"]["pythonVersion"]
@@ -292,7 +313,9 @@ def _expected_wheels(
     try:
         lock_lines = lock_raw.decode("utf-8", "strict").splitlines()
     except UnicodeDecodeError as error:
-        raise RuntimeError("managed B wheelhouse requirements lock is not UTF-8") from error
+        raise RuntimeError(
+            "managed B wheelhouse requirements lock is not UTF-8"
+        ) from error
     lock_hashes = set()
     for line in lock_lines:
         marker = "--hash=sha256:"
@@ -324,19 +347,27 @@ def _expected_wheels(
             raise RuntimeError("managed B wheelhouse artifact is not sealed")
         expected[filename] = (digest, length)
     if list(expected) != sorted(expected):
-        raise RuntimeError("managed B wheelhouse artifacts are not lexicographically ordered")
+        raise RuntimeError(
+            "managed B wheelhouse artifacts are not lexicographically ordered"
+        )
     selected_manifest_sha256 = _sha256(
-        _canonical_json([[filename, digest] for filename, (digest, _length) in expected.items()])
+        _canonical_json(
+            [[filename, digest] for filename, (digest, _length) in expected.items()]
+        )
     )
     if (
         manifest["contract"] == ACTIVE_MANIFEST_CONTRACT
         and selected_manifest_sha256 != manifest["selectedManifestSha256"]
     ):
         raise RuntimeError("managed B wheelhouse selected manifest differs")
-    return expected, _sha256(_canonical_json([
-        {"byteLength": length, "filename": filename, "sha256": digest}
-        for filename, (digest, length) in expected.items()
-    ]))
+    return expected, _sha256(
+        _canonical_json(
+            [
+                {"byteLength": length, "filename": filename, "sha256": digest}
+                for filename, (digest, length) in expected.items()
+            ]
+        )
+    )
 
 
 def inspect_runtime_dependency_alignment(
@@ -348,7 +379,7 @@ def inspect_runtime_dependency_alignment(
     baseline_lock_raw: bytes,
     dependency_binding_raw: bytes,
 ) -> dict[str, object]:
-    """Prove the exact DBOS-free SDK dependency transformation without wheel I/O."""
+    """Prove the exact sealed runtime dependency transformation without wheel I/O."""
 
     active_manifest = _manifest(active_manifest_raw)
     if active_manifest["contract"] != ACTIVE_MANIFEST_CONTRACT:
@@ -369,8 +400,7 @@ def inspect_runtime_dependency_alignment(
     coverage = _json_object(aligned_coverage_raw, label="aligned wheel coverage")
     if (
         _sha256(baseline_coverage_raw) != coverage["baselineCoverageSha256"]
-        or _sha256(dependency_binding_raw)
-        != coverage["dependencySourceBindingSha256"]
+        or _sha256(dependency_binding_raw) != coverage["dependencySourceBindingSha256"]
     ):
         raise RuntimeError("managed B aligned wheel coverage provenance differs")
     expected_active = dict(baseline)
@@ -382,9 +412,17 @@ def inspect_runtime_dependency_alignment(
     expected_active[CRYPTOGRAPHY50_AMD64_WHEEL] = CRYPTOGRAPHY50_AMD64_ARTIFACT
     expected_active[PYNACL_AMD64_WHEEL] = PYNACL_AMD64_ARTIFACT
     expected_active.update(OPENAI_SDK_WHEELS)
+    for filename in STOCK_PYDANTIC_AGENT_WHEELS:
+        if expected_active.pop(filename, None) is None:
+            raise RuntimeError(
+                "managed B historical wheel set omits a Pydantic agent input"
+            )
+    expected_active.update(PYDANTIC_AGENT_WHEELS)
     expected_active = dict(sorted(expected_active.items()))
     if len(baseline) != 38 or len(active) != 38 or active != expected_active:
-        raise RuntimeError("managed B aligned wheel set is not the exact sealed SDK delta")
+        raise RuntimeError(
+            "managed B aligned wheel set is not the exact sealed runtime dependency delta"
+        )
     binding = _json_object(dependency_binding_raw, label="runtime dependency binding")
     standalone = binding.get("standaloneLock")
     dependencies = binding.get("dependencies")
@@ -402,12 +440,25 @@ def inspect_runtime_dependency_alignment(
     pynacl = dependencies.get("pynacl")
     websockets = dependencies.get("websockets")
     openai = dependencies.get("openai")
+    pydantic_ai = dependencies.get("pydantic-ai-slim")
+    pydantic_graph = dependencies.get("pydantic-graph")
     if (
-        set(dependencies) != {"openai", "pynacl", "websockets"}
+        set(dependencies)
+        != {
+            "openai",
+            "pydantic-ai-slim",
+            "pydantic-graph",
+            "pynacl",
+            "websockets",
+        }
         or not isinstance(openai, dict)
+        or not isinstance(pydantic_ai, dict)
+        or not isinstance(pydantic_graph, dict)
         or not isinstance(pynacl, dict)
         or not isinstance(websockets, dict)
         or openai.get("version") != "3.6.0"
+        or pydantic_ai.get("version") != "2.36.0"
+        or pydantic_graph.get("version") != "2.36.0"
         or pynacl.get("version") != "1.6.2"
         or websockets.get("version") != "17.0.1"
         or binding.get("removedDistributions")
@@ -471,7 +522,9 @@ def _sealed_source_entries(
         raise RuntimeError("managed B wheel artifact root must be a regular directory")
     entries = list(os.scandir(root))
     if {entry.name for entry in entries} != set(expected):
-        raise RuntimeError("managed B wheel artifact root file set differs from its manifest")
+        raise RuntimeError(
+            "managed B wheel artifact root file set differs from its manifest"
+        )
     result: dict[str, Path] = {}
     for entry in entries:
         source = Path(entry.path)
@@ -489,13 +542,17 @@ def _sealed_source_entries(
     return result
 
 
-def _copy_wheel(source: Path, destination: Path, *, expected_digest: str, expected_size: int) -> None:
+def _copy_wheel(
+    source: Path, destination: Path, *, expected_digest: str, expected_size: int
+) -> None:
     source_before = source.lstat()
     flags = os.O_RDONLY | getattr(os, "O_CLOEXEC", 0) | getattr(os, "O_NOFOLLOW", 0)
     try:
         source_fd = os.open(source, flags)
     except OSError as error:
-        raise RuntimeError("managed B wheel artifact cannot be opened safely") from error
+        raise RuntimeError(
+            "managed B wheel artifact cannot be opened safely"
+        ) from error
     try:
         opened = os.fstat(source_fd)
         if (
@@ -521,7 +578,9 @@ def _copy_wheel(source: Path, destination: Path, *, expected_digest: str, expect
                 while view:
                     written = os.write(destination_fd, view)
                     if written <= 0:
-                        raise RuntimeError("managed B wheel copy could not make progress")
+                        raise RuntimeError(
+                            "managed B wheel copy could not make progress"
+                        )
                     view = view[written:]
             os.fsync(destination_fd)
         finally:
@@ -570,10 +629,18 @@ def materialize_wheelhouse(
     try:
         parent_metadata = output_parent.lstat()
     except OSError as error:
-        raise RuntimeError("managed B wheelhouse output parent is inaccessible") from error
-    if not stat.S_ISDIR(parent_metadata.st_mode) or stat.S_ISLNK(parent_metadata.st_mode):
-        raise RuntimeError("managed B wheelhouse output parent must be a regular directory")
-    destination_root = Path(tempfile.mkdtemp(prefix="eva2-wheelhouse-", dir=output_parent))
+        raise RuntimeError(
+            "managed B wheelhouse output parent is inaccessible"
+        ) from error
+    if not stat.S_ISDIR(parent_metadata.st_mode) or stat.S_ISLNK(
+        parent_metadata.st_mode
+    ):
+        raise RuntimeError(
+            "managed B wheelhouse output parent must be a regular directory"
+        )
+    destination_root = Path(
+        tempfile.mkdtemp(prefix="eva2-wheelhouse-", dir=output_parent)
+    )
     destination_root.chmod(0o700)
     try:
         for filename in sorted(expected):
@@ -631,7 +698,9 @@ def validate_wheelhouse(
     entries = list(os.scandir(root))
     actual_names = {entry.name for entry in entries}
     if actual_names != set(expected):
-        raise RuntimeError("managed B wheelhouse file set differs from its sealed manifest")
+        raise RuntimeError(
+            "managed B wheelhouse file set differs from its sealed manifest"
+        )
     for entry in entries:
         if not entry.is_file(follow_symlinks=False):
             raise RuntimeError("managed B wheelhouse contains a non-regular entry")

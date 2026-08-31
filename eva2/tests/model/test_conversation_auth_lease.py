@@ -3,7 +3,7 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-from eva.adapters.model.conversation import CodexConversationModel
+from eva.adapters.model.pydantic_conversation import PydanticConversationModel
 
 
 def test_conversation_loads_only_the_expected_shared_lease_contract(
@@ -24,9 +24,10 @@ def test_conversation_loads_only_the_expected_shared_lease_contract(
         ).encode("utf-8")
 
     monkeypatch.setattr(
-        "eva.adapters.model.conversation.read_shared_runtime_file_bytes", read_lease
+        "eva.adapters.model.pydantic_conversation.read_shared_runtime_file_bytes",
+        read_lease,
     )
-    model = CodexConversationModel(auth_file=Path("/run/eva/model-lease/auth.json"))
+    model = PydanticConversationModel(auth_file=Path("/run/eva/model-lease/auth.json"))
 
     assert model._load_auth() == ("access-token", "account-id")
     assert observed == {
