@@ -1,0 +1,196 @@
+#!/usr/bin/env python3
+"""Build one untagged managed-B candidate from existing sealed local inputs.
+
+This operator only sequences the existing offline candidate APIs.  It does not
+download, tag, scan, persist, configure Compose, or touch a live service.
+"""
+
+from __future__ import annotations
+
+import argparse
+import hashlib
+import json
+import os
+from pathlib import Path
+import stat
+
+from tools.managed_b_candidate.base_image import materialize_pinned_base_image
+from tools.managed_b_candidate.build_context import materialize_build_context
+from tools.managed_b_candidate.candidate_image import build_offline_candidate_image
+from tools.managed_b_candidate.wheelhouse import (
+    ACTIVE_COVERAGE_PATH,
+    inspect_wheelhouse_manifest,
+    materialize_wheelhouse,
+)
+from tools.prepare_managed_b_candidate_context import (
+    RUNTIME_REQUIREMENTS_LOCK,
+    prepare_candidate_build_inputs,
+    validate_candidate_build_inputs,
+)
+
+
+WHEELHOUSE_MANIFEST_PATH = "release/managed-b-wheelhouse-amd64-v2.json"
+EXPECTED_WHEEL_COUNT = 38
+
+
+def _sha256(value: bytes) -> str:
+    return hashlib.sha256(value).hexdigest()
+
+
+def _private_output_parent(path: Path) -> None:
+    if not path.is_absolute() or ".." in path.parts:
+        raise RuntimeError("managed B offline output parent must be an absolute path")
+    try:
+        metadata = path.lstat()
+    except OSError as error:
+        raise RuntimeError("managed B offline output parent is inaccessible") from error
+    if (
+        stat.S_ISLNK(metadata.st_mode)
+        or not stat.S_ISDIR(metadata.st_mode)
+        or metadata.st_uid != os.geteuid()
+        or stat.S_IMODE(metadata.st_mode) & 0o077
+    ):
+        raise RuntimeError("managed B offline output parent must be private")
+
+
+def _absolute_artifact_root(path: Path) -> None:
+    if not path.is_absolute() or ".." in path.parts:
+        raise RuntimeError("managed B wheel artifact root must be an explicit absolute path")
+
+
+def _archived_bytes(
+    files: dict[str, tuple[bytes, int]], path: str, *, label: str
+) -> bytes:
+    value = files.get(path)
+    if value is None:
+        raise RuntimeError(f"managed B candidate archive omits {label}")
+    return value[0]
+
+
+def build_managed_b_offline_candidate(
+    source_commit: str,
+    wheel_artifact_root: Path,
+    output_parent: Path,
+) -> dict[str, object]:
+    """Materialize and build exactly one local, untagged candidate image."""
+
+    _absolute_artifact_root(wheel_artifact_root)
+    _private_output_parent(output_parent)
+    candidate = prepare_candidate_build_inputs(source_commit)
+    files = validate_candidate_build_inputs(candidate)
+    manifest_raw = _archived_bytes(
+        files, WHEELHOUSE_MANIFEST_PATH, label="the active wheelhouse manifest"
+    )
+    coverage_raw = _archived_bytes(
+        files, ACTIVE_COVERAGE_PATH, label="the active wheel coverage"
+    )
+    requirements_lock_raw = _archived_bytes(
+        files, RUNTIME_REQUIREMENTS_LOCK, label="the runtime requirements lock"
+    )
+    manifest_receipt = inspect_wheelhouse_manifest(
+        manifest_raw, coverage_raw, requirements_lock_raw
+    )
+    if manifest_receipt.get("expected_wheel_count") != EXPECTED_WHEEL_COUNT:
+        raise RuntimeError("managed B candidate must use the exact 38-wheel manifest")
+
+    wheelhouse = materialize_wheelhouse(
+        manifest_raw,
+        coverage_raw,
+        wheel_artifact_root,
+        output_parent,
+        requirements_lock_raw,
+    )
+    base_image = materialize_pinned_base_image(
+        candidate.base_image_digest,
+        output_parent,
+    )
+    context = materialize_build_context(
+        candidate,
+        manifest_raw,
+        coverage_raw,
+        wheelhouse,
+        base_image,
+        output_parent,
+    )
+    image = build_offline_candidate_image(
+        context,
+        base_image,
+        output_parent,
+    )
+
+    return {
+        "candidate": {
+            "image_id": image.image_id,
+            "receipt": image.receipt,
+        },
+        "contract": "EvaManagedBOfflineCandidateBuildReceipt/v1",
+        "inputs": {
+            "output_parent": str(output_parent),
+            "wheel_artifact_root": str(wheel_artifact_root),
+            "wheel_coverage_path": ACTIVE_COVERAGE_PATH,
+            "wheel_coverage_sha256": _sha256(coverage_raw),
+            "wheelhouse_manifest_path": WHEELHOUSE_MANIFEST_PATH,
+            "wheelhouse_manifest_sha256": _sha256(manifest_raw),
+        },
+        "materialized": {
+            "base_image_archive_path": str(base_image.path),
+            "build_context_path": str(context.path),
+            "wheelhouse_path": str(wheelhouse.path),
+        },
+        "network_used": False,
+        "nonclaims": [
+            "No wheel or base image was downloaded.",
+            "The candidate was not tagged, scanned, persisted, signed, pushed, attached to Compose, or deployed.",
+            "No live configuration, container, volume, database, secret, route, or service was opened or changed.",
+        ],
+        "source": {
+            "archive_sha256": candidate.source_archive_sha256,
+            "commit": candidate.source_commit,
+            "date_epoch": candidate.source_date_epoch,
+            "dockerfile_sha256": candidate.dockerfile_sha256,
+            "requirements_lock_path": RUNTIME_REQUIREMENTS_LOCK,
+            "requirements_lock_sha256": candidate.requirements_lock_sha256,
+        },
+        "stages": {
+            "base_image": {
+                "archive_sha256": base_image.receipt["archive_sha256"],
+                "digest": base_image.receipt["base_image_digest"],
+                "local_image_id": base_image.receipt["local_image_id"],
+            },
+            "build_context": {
+                "tree_sha256": context.receipt["context_tree_sha256"],
+            },
+            "wheelhouse": {
+                "count": wheelhouse.receipt["expected_wheel_count"],
+                "tree_sha256": wheelhouse.receipt["wheelhouse_tree_sha256"],
+            },
+        },
+        "status": "built_local_untagged_candidate",
+    }
+
+
+def _parser() -> argparse.ArgumentParser:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("source_commit")
+    parser.add_argument("--wheel-artifact-root", required=True, type=Path)
+    parser.add_argument("--output-parent", required=True, type=Path)
+    return parser
+
+
+def main(argv: list[str] | None = None) -> int:
+    arguments = _parser().parse_args(argv)
+    try:
+        receipt = build_managed_b_offline_candidate(
+            arguments.source_commit,
+            arguments.wheel_artifact_root,
+            arguments.output_parent,
+        )
+    except RuntimeError as error:
+        print(json.dumps({"error": str(error), "status": "failed"}, sort_keys=True))
+        return 2
+    print(json.dumps(receipt, sort_keys=True))
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

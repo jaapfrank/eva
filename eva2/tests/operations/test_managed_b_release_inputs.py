@@ -9,7 +9,13 @@ import pytest
 
 from tools.managed_b_candidate.release_inputs import (
     AUTHORITY_PATH,
+    _BUILD_PROVENANCE_INPUTS,
+    _BUILD_PROVENANCE_TESTS,
+    _CONNECTOR_SDK_COPY_PATHS,
+    _TOOL01_SOURCE_GATE_INPUTS,
+    _TOOL01_SOURCE_GATE_TESTS,
     _pin_rows,
+    _validate_release_path_closure,
     _validate_static_archive_inputs,
     prepare_managed_b_release_inputs,
 )
@@ -76,6 +82,65 @@ def test_release_pin_rows_bind_bytes_and_the_complete_sorted_path_set() -> None:
             expected_paths_sha256=expected_paths_sha256,
             label="test",
         )
+
+
+def _release_closure_fixture() -> tuple[
+    dict[str, tuple[bytes, int]],
+    tuple[tuple[str, str], ...],
+    tuple[tuple[str, str], ...],
+]:
+    input_paths = _BUILD_PROVENANCE_INPUTS | _CONNECTOR_SDK_COPY_PATHS | (
+        _TOOL01_SOURCE_GATE_INPUTS
+    )
+    test_paths = _BUILD_PROVENANCE_TESTS | _TOOL01_SOURCE_GATE_TESTS
+    files = {path: (b"bound\n", 0o644) for path in _CONNECTOR_SDK_COPY_PATHS}
+    inputs = tuple((path, "0" * 64) for path in sorted(input_paths))
+    tests = tuple((path, "0" * 64) for path in sorted(test_paths))
+    return files, inputs, tests
+
+
+@pytest.mark.parametrize(
+    ("kind", "removed", "error"),
+    (
+        ("input", "tools/managed_b_candidate/base_image.py", "build provenance input"),
+        ("test", "tests/support/managed_b_runtime_smoke.py", "build provenance test"),
+        ("input", "connector_sdk/fixture_runner.py", "connector SDK release input"),
+        (
+            "input",
+            "experiments/tool01-replacement-acceptance-v1/check_acceptance.py",
+            "TOOL01 source gate input",
+        ),
+        (
+            "test",
+            "experiments/tool01-replacement-acceptance-v1/test_acceptance.py",
+            "TOOL01 source gate test",
+        ),
+    ),
+)
+def test_release_path_closure_refuses_a_missing_reviewed_path(
+    kind: str, removed: str, error: str
+) -> None:
+    files, inputs, tests = _release_closure_fixture()
+    if kind == "input":
+        inputs = tuple(row for row in inputs if row[0] != removed)
+    else:
+        tests = tuple(row for row in tests if row[0] != removed)
+
+    with pytest.raises(RuntimeError, match=error):
+        _validate_release_path_closure(files, inputs, tests)
+
+
+def test_release_path_closure_binds_the_exact_connector_sdk_copy_set() -> None:
+    files, inputs, tests = _release_closure_fixture()
+    receipt = _validate_release_path_closure(files, inputs, tests)
+
+    assert receipt["connector_sdk_file_count"] == 4
+    assert receipt["tool01_source_gate_inputs_bound"] is True
+    assert receipt["tool01_source_gate_executed"] is False
+
+    files["connector_sdk/unreviewed.py"] = (b"unreviewed\n", 0o644)
+    with pytest.raises(RuntimeError, match="connector SDK archive file set differs"):
+        _validate_release_path_closure(files, inputs, tests)
 
 
 def _authority() -> tuple[dict[str, object], bytes]:

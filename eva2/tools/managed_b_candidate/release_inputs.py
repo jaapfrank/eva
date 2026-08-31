@@ -26,7 +26,7 @@ from tools.prepare_managed_b_candidate_context import (
 
 AUTHORITY_PATH = "release/managed-b-release-input-authority-v1.json"
 _SHA256 = re.compile(r"[0-9a-f]{64}")
-_MAX_AUTHORITY_BYTES = 64 * 1024
+_MAX_AUTHORITY_BYTES = 80 * 1024
 _MANIFEST_PATH = "schemas/contracts/manifest.json"
 _CORPUS_PATH = "schemas/contracts/contract-corpus-v1.json"
 _PROFILE_PATH = "schemas/contracts/canonical-json-profile-v1.json"
@@ -39,11 +39,51 @@ _PORTABLE_V1_PROFILE_PATH = (
     f"{_PORTABLE_V1_CONTRACT_ROOT}/canonical-json-profile-v1.json"
 )
 _EXPECTED_INPUT_PATHS_SHA256 = (
-    "33171c23ec664f2ede6c62bb734b0cb6db9ae8262b730c690500135b304dfa85"
+    "5bb1aefa77a114b55b3f5458025bf45ac3366abe9e2bdba0ab9ddfe93f9cf80c"
 )
 _EXPECTED_TEST_PATHS_SHA256 = (
-    "90379973c8c1a5998d04cce61a695067af8253aca19e95c2d3cd4593d8de7eef"
+    "40c053fe92b2dd730b4f76a374d5f535785bfab23ded013ccf1c7c0deadd5e7a"
 )
+_BUILD_PROVENANCE_INPUTS = {
+    "deploy/living-core/Dockerfile",
+    "release/candidate-artifact-tool-authority-v1.json",
+    "tools/build_managed_b_offline_candidate.py",
+    "tools/managed_b_candidate/__init__.py",
+    "tools/managed_b_candidate/artifact_analysis.py",
+    "tools/managed_b_candidate/base_image.py",
+    "tools/managed_b_candidate/build_context.py",
+    "tools/managed_b_candidate/candidate_image.py",
+    "tools/managed_b_candidate/offline_build.py",
+    "tools/managed_b_candidate/wheelhouse.py",
+    "tools/prepare_managed_b_candidate_context.py",
+}
+_BUILD_PROVENANCE_TESTS = {
+    "tests/operations/test_build_managed_b_offline_candidate.py",
+    "tests/operations/test_managed_b_artifact_analysis.py",
+    "tests/operations/test_managed_b_base_image.py",
+    "tests/operations/test_managed_b_build_context.py",
+    "tests/operations/test_managed_b_candidate_image.py",
+    "tests/operations/test_managed_b_offline_build.py",
+    "tests/operations/test_managed_b_release_inputs.py",
+    "tests/operations/test_managed_b_runtime_smoke.py",
+    "tests/operations/test_managed_b_wheelhouse.py",
+    "tests/operations/test_prepare_managed_b_candidate_context.py",
+    "tests/support/managed_b_runtime_smoke.py",
+}
+_CONNECTOR_SDK_COPY_PATHS = {
+    "connector_sdk/__init__.py",
+    "connector_sdk/conformance/README.md",
+    "connector_sdk/contracts/README.md",
+    "connector_sdk/fixture_runner.py",
+}
+_TOOL01_SOURCE_GATE_INPUTS = {
+    "experiments/tool01-replacement-acceptance-v1/README.md",
+    "experiments/tool01-replacement-acceptance-v1/check_acceptance.py",
+    "experiments/tool01-replacement-acceptance-v1/generate_source_authority.py",
+}
+_TOOL01_SOURCE_GATE_TESTS = {
+    "experiments/tool01-replacement-acceptance-v1/test_acceptance.py",
+}
 _NONCLAIMS = (
     "No image, container, Compose graph, database, volume, network, secret, A service, or B service was opened.",
     "This static authority does not prove a build, deploy, release, B adoption, live Telegram, live Home Assistant, another capability provider, or production readiness.",
@@ -322,6 +362,39 @@ def _pin_rows(
     if paths_sha256 != expected_paths_sha256:
         raise RuntimeError(f"managed B {label} path set differs")
     return tuple(rows)
+
+
+def _validate_release_path_closure(
+    files: ArchiveFiles,
+    inputs: tuple[tuple[str, str], ...],
+    tests: tuple[tuple[str, str], ...],
+) -> dict[str, object]:
+    """Require the reviewed build and source-gate closure, not just any path set."""
+
+    input_paths = {path for path, _ in inputs}
+    test_paths = {path for path, _ in tests}
+    if not _BUILD_PROVENANCE_INPUTS <= input_paths:
+        raise RuntimeError("managed B build provenance input set is incomplete")
+    if not _BUILD_PROVENANCE_TESTS <= test_paths:
+        raise RuntimeError("managed B build provenance test set is incomplete")
+    if not _CONNECTOR_SDK_COPY_PATHS <= input_paths:
+        raise RuntimeError("managed B connector SDK release input set is incomplete")
+    actual_connector_paths = {
+        path for path in files if path.startswith("connector_sdk/")
+    }
+    if actual_connector_paths != _CONNECTOR_SDK_COPY_PATHS:
+        raise RuntimeError("managed B connector SDK archive file set differs")
+    if not _TOOL01_SOURCE_GATE_INPUTS <= input_paths:
+        raise RuntimeError("managed B TOOL01 source gate input set is incomplete")
+    if not _TOOL01_SOURCE_GATE_TESTS <= test_paths:
+        raise RuntimeError("managed B TOOL01 source gate test set is incomplete")
+    return {
+        "build_provenance_input_count": len(_BUILD_PROVENANCE_INPUTS),
+        "build_provenance_test_count": len(_BUILD_PROVENANCE_TESTS),
+        "connector_sdk_file_count": len(_CONNECTOR_SDK_COPY_PATHS),
+        "tool01_source_gate_inputs_bound": True,
+        "tool01_source_gate_executed": False,
+    }
 
 
 def _projected_json(value: Mapping[str, Any]) -> bytes:
@@ -886,6 +959,7 @@ def _validate_static_archive_inputs(
         expected_paths_sha256=_EXPECTED_TEST_PATHS_SHA256,
         label="release test",
     )
+    release_path_closure = _validate_release_path_closure(files, inputs, tests)
     alignment = inspect_runtime_dependency_alignment(
         _file(
             files,
@@ -928,6 +1002,7 @@ def _validate_static_archive_inputs(
         "dependency_alignment": alignment,
         **registry_receipt,
         **portable_v1_receipt,
+        **release_path_closure,
         **cockpit_evidence,
         "migration_head": migration_head,
         "network_used": False,

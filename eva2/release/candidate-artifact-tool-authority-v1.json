@@ -1,0 +1,17 @@
+{
+  "contract": "EvaCandidateArtifactToolAuthority/v1",
+  "network": "none",
+  "status": "candidate_only_pinned_tools",
+  "syft": {
+    "checkForAppUpdate": false,
+    "format": "spdx-json",
+    "image": "ghcr.io/anchore/syft@sha256:678bfa565b60f747aac0f8e964fe5588a24445b8d0a480e91f6efd70020dfbb0",
+    "version": "1.51.0"
+  },
+  "trivy": {
+    "cacheBackend": "memory",
+    "image": "aquasec/trivy@sha256:62b1e65e8869bc4b4c6aa4fa2b21595256c7c2f6018a9d9ad61caf87187c1969",
+    "skipDatabaseUpdate": true,
+    "version": "0.74.0"
+  }
+}
