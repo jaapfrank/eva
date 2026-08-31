@@ -125,6 +125,16 @@ de vooraf gemaakte Home Assistant- en e-mailfuncties moeten nog worden vervangen
 door runtime-ontdekking uit het gekozen open-source agent-/MCP-framework. Pas
 nadat die dubbele code is verwijderd, mag deze grens groen heten.
 
+## Zelfstandig mogen leven en handelen
+
+| Wat moet dit kunnen? | Eva2 nu | OpenClaw | Hermes | Agent Zero |
+|---|---|---|---|---|
+| Tijdens installatie één blijvend breed mandaat krijgen | ❌ Ontwerp is nu gecorrigeerd; de installer activeert dit nog niet | 📘 Brede agentrechten configureerbaar | 📘 Autonome agentconfiguratie | 📘 Brede agentprofielen |
+| Daarna handelen zonder bevestiging per apparaat of tool | ❌ De huidige route heeft nog losse allowlists en toelatingsgrenzen | 📘 Autonome tooluitvoering | 📘 Autonome tooluitvoering | 📘 Autonome tooluitvoering |
+| Zelf nieuwe diensten op het netwerk ontdekken en koppelen | ❌ Nog niet; capability-discoverygates CD01-CD06 zijn open | ⚪ Niet gelijk getest | ⚪ Niet gelijk getest | ⚪ Niet gelijk getest |
+| Alleen hulp vragen bij een technisch verplichte menselijke stap | ❌ Nog niet als algemene route | ⚪ Niet gelijk getest | ⚪ Niet gelijk getest | ⚪ Niet gelijk getest |
+| Informeren, bewijs bewaren en direct gestopt kunnen worden | 🟡 Ledger, readback en stopbouwstenen bestaan; complete Eigenaarmodus ontbreekt | ⚪ Niet gelijk getest | ⚪ Niet gelijk getest | ⚪ Niet gelijk getest |
+
 Ook het samenvoegen van providers is nu algemeen. Eva loopt over provider-
 bijdragen en heeft daar geen `als Home Assistant`- of `als AgentMail`-tak meer.
 De algemene MCP-grens zit nu als kleine, brongebouwde transportaansluiting in

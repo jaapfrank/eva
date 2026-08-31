@@ -97,20 +97,23 @@ een gesloten of automatisering-verbiedend platform kan forceren.
 
 ## Zelf diensten en mogelijkheden ontdekken
 
-Een dienst hoeft niet vooraf bij naam in Eva te staan. Na één expliciet
-eigenaarsmandaat voor een begrensd lokaal netwerk mag Eva zelf:
+Een dienst hoeft niet vooraf bij naam in Eva te staan. Het blijvende brede
+Eigenaarsmandaat uit de installatie geeft Eva hiervoor doorlopende bevoegdheid
+binnen het huishouden, het lokale netwerk en bewust gekoppelde accounts. Zij mag
+zonder nieuwe bevestiging per vondst of actie zelf:
 
 1. met bestaande onderhoudbare discoveryprotocollen zoals mDNS/DNS-SD en SSDP
    inventariseren welke diensten zichzelf publiceren;
-2. alleen wanneer dat mandaat het toestaat een begrensde host-/poortcontrole
-   doen, zonder exploit-, wachtwoord- of kwetsbaarheidsscan;
+2. zo nodig een beheerste host-/poortcontrole doen, zonder exploit-,
+   wachtwoord- of kwetsbaarheidsscan;
 3. product, versie en gepubliceerde endpoints herkennen en actuele officiële
    documentatie raadplegen;
 4. de werkelijk beschikbare MCP-, OpenAPI-, SDK- en HTTP-routes vergelijken;
 5. de kleinste route kiezen die het doel kan uitvoeren; MCP heeft voorkeur als
    het voldoende bereik en bewijs levert, maar is geen hardgecodeerde winnaar;
-6. ontbrekende authenticatie of extra rechten in gewone taal aan de eigenaar
-   vragen en via de lokale secretinvoer koppelen;
+6. alleen wanneer een dienst menselijke authenticatie afdwingt in gewone taal
+   om die login-, 2FA-, CAPTCHA- of secretstap vragen en daarna zelfstandig
+   doorgaan;
 7. de gevonden tools tijdens runtime aan het agentframework aanbieden, zonder
    nieuwe Eva-kerncode of een herbouw van de core-image;
 8. een actie uitvoeren en via een onafhankelijk gevonden readpad controleren.
@@ -122,10 +125,12 @@ geen Eva-regel met `koud`, `heater`, `switch`, Home Assistant of UniFi. Bij
 meerdere aannemelijke doelen, ontbrekende rechten of een risicovolle actie
 vraagt Eva wel door.
 
-Netwerkzichtbaarheid is geen bedieningsrecht. Discovery mag nooit automatisch
-een credential, mutatiemandaat of brede netwerktoegang opleveren. Het eenmalige
-mandaat bevat subnetten, protocollen, tempo, looptijd en een stopmogelijkheid;
-iedere gevonden dienst krijgt daarna zijn eigen least-privilege binding.
+Het brede installatiemandaat is wél de blijvende toestemming om gevonden
+diensten binnen de leefomgeving te gebruiken. Eva hoeft daarvoor niet per tool
+of effect terug naar de eigenaar. Intern houdt zij credentials gescheiden en
+geeft zij een provider of subagent niet méér technisch bereik dan nodig; dat is
+implementatie-isolatie, geen menselijke bevestigingsstap. De eigenaar behoudt
+één directe pauze-/stop- en intrekkingsmogelijkheid.
 
 De huidige runtime voldoet hier nog niet aan. Hij heeft een generieke
 MCP-proefgrens, maar de live providerlaag bevat nog vooraf gemaakte Home
@@ -133,8 +138,9 @@ Assistant- en e-mailtools. Die code telt als te verwijderen migratieschuld.
 
 ### Capability-discoverygates
 
-- [ ] CD01 — Eenmalig eigenaarsmandaat voor exacte lokale scopes, protocollen,
-  tempo, looptijd, privacy en directe stop.
+- [ ] CD01 — Eén blijvend breed Eigenaarsmandaat tijdens installatie voor het
+  huishouden, lokale netwerk en gekoppelde accounts, met meldbeleid en directe
+  stop maar zonder bevestiging per tool of actie.
 - [ ] CD02 — mDNS/DNS-SD/SSDP-discovery via onderhouden dependencies; optionele
   begrensde poortcontrole zonder exploitgedrag.
 - [ ] CD03 — Dienstherkenning plus actuele officiële documentatie- en

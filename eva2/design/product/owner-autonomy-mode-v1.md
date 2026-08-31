@@ -1,6 +1,6 @@
 # Eva 2 — Eigenaarmodus voor vergaande autonomie
 
-Bijgewerkt: 25 augustus 2026.
+Bijgewerkt: 31 augustus 2026.
 
 ## Begripsverwarring rond Hermes Godmode
 
@@ -10,14 +10,16 @@ van veiligheidsfilters. Dat bewijst niet dat Hermes zelfstandig accounts,
 computertaken, huisacties of langdurige doelen veiliger of beter uitvoert.
 
 Eva kopieert daarom geen permanente safety-bypass in haar productiepersona. De
-productmogelijkheid die de eigenaar bedoelt heet **Eigenaarmodus**: Eva mag
-binnen één vooraf besproken mandaat alle werkelijk gekoppelde capabilities
-zelfstandig combineren, waarschuwt vooraf voor de gevolgen en vraagt niet voor
-iedere tussenstap opnieuw toestemming.
+productmogelijkheid die de eigenaar bedoelt heet **Eigenaarmodus**: tijdens de
+installatie geeft de eigenaar Eva één blijvend mandaat om binnen het huishouden,
+het lokale netwerk en de gekoppelde accounts zelfstandig te leven en handelen.
+Eva mag daarna alle werkelijk bereikbare capabilities zelfstandig ontdekken en
+combineren. Zij informeert volgens de afgesproken cadans en vraagt niet per
+apparaat, provider, tool, planstap of gewone handeling opnieuw toestemming.
 
 ## Productbelofte
 
-Na activatie in een geverifieerd privégesprek kan Eva binnen het mandaat:
+Na activatie tijdens de eigenaargebonden installatie kan Eva binnen het mandaat:
 
 - zelf onderzoeken, plannen, observeren, handelen, herplannen en wachten;
 - browser, terminal/sandbox, bestanden, Home Assistant, communicatiekanalen,
@@ -25,34 +27,48 @@ Na activatie in een geverifieerd privégesprek kan Eva binnen het mandaat:
 - binnen expliciet toegelaten scope ook accountcreatie, voorwaarden, betaling,
   KYC en echte orders uitvoeren zodra hun afzonderlijke providerproef groen is;
 - doorgaan na een crash zonder blind een mogelijk uitgevoerd effect te herhalen;
-- de eigenaar tussentijds informeren zonder voor iedere gewone stap te pauzeren.
+- de eigenaar tussentijds informeren zonder voor iedere gewone stap te pauzeren;
+- zelf lokale diensten ontdekken, actuele documentatie raadplegen, MCP/API/SDK
+  kiezen, een koppeling voorbereiden en beschikbare rechten gebruiken;
+- nieuwe apparaten, providers en gereedschappen gebruiken zonder dat hun naam
+  of soort vooraf in Eva's code stond.
 
 Een waarschuwing is informatie, geen vermomde verplichte bevestiging per actie.
-De activering van het mandaat is de toestemming voor de daarin beschreven
-handelingen. Buiten de exacte scope, looptijd, middelen of limieten stopt Eva en
-vraagt zij om een nieuw of gewijzigd mandaat.
+De activering van het mandaat is de toestemming voor alle handelingen binnen de
+gekozen brede leefomgeving en blijft geldig tot de eigenaar het wijzigt of
+intrekt. Eva vraagt alleen menselijke hulp wanneer de buitenwereld die technisch
+vereist, bijvoorbeeld voor een nog ontbrekende login, 2FA, CAPTCHA, fysiek
+contact of wettelijk vereiste persoonlijke verklaring. Dat is geen nieuwe
+Eva-toestemming: na die menselijke stap gaat zij binnen hetzelfde mandaat door.
 
 ## Wat het mandaat minimaal bindt
 
-- geverifieerde eigenaar, doel en begin-/eindtijd;
-- accounts, personen, groepen, apparaten, markten en data die in scope zijn;
-- toegelaten capabilities, providers, netwerkdoelen en subagentparalleliteit;
+- geverifieerde eigenaar, installatie en ingangsdatum; standaard geen eindtijd,
+  maar geldig tot intrekking;
+- één begrijpelijke brede leefscope, bijvoorbeeld alle apparaten en diensten op
+  het eigen lokale netwerk plus alle bewust gekoppelde accounts;
+- alle huidige en later ontdekte capabilities en providers binnen die leefscope,
+  zonder losse gebruikersgoedkeuring per tool;
 - budget, ordergrootte, verlieslimiet, betaalmaximum en eventuele opnamegrens;
 - welke voorwaarden/KYC-flow Eva mag accepteren en welke bewijsstukken zij mag
   gebruiken;
-- waarschuwing en samenvatting van verwachte onomkeerbare gevolgen;
+- welke uitzonderlijke gevolgen Eva direct moet melden of voor zover mogelijk
+  zelf moet terugdraaien;
 - rapportagecadans, stiltebeleid en omstandigheden voor `needs_help`;
 - directe pauze-/stopknop, intrekking, expiry en herstel-/rollbackroute.
 
-Geen enkele skill, subagent of provider kan dit mandaat verruimen. De bestaande
+Geen enkele skill, subagent of provider kan het installatiemandaat buiten de
+gekozen leefomgeving verruimen. De bestaande
 identity-, privacy-, consent-, secret-, policy-, ledger- en readbackcontracten
-blijven leidend. Een externe provider of toepasselijke wet kan een actie alsnog
-onmogelijk maken; Eva meldt dat als blocker en verzint geen succes.
+blijven intern leidend, maar veroorzaken geen bevestigingsvraag per handeling.
+Een externe provider of toepasselijke wet kan een actie alsnog onmogelijk
+maken; Eva meldt dat als blocker en verzint geen succes.
 
 ## Bedieningsvorm
 
-- Activeren, aanpassen en stoppen kan via dezelfde Eva-chat en later via het
-  dashboard; beide schrijven hetzelfde append-only mandatevent.
+- Het eerste brede mandaat wordt tijdens installatie zichtbaar geactiveerd.
+  Aanpassen en stoppen kan via dezelfde Eva-chat en later via het dashboard;
+  beide schrijven hetzelfde append-only mandatevent.
 - Het dashboard toont scope, resterende tijd/budgetten, actief plan, workers,
   waarschuwingen, providerattempts, receipts en een prominente stopknop.
 - De eigenaar kan live meekijken of tijdelijk overnemen zonder dat een tweede
@@ -72,12 +88,14 @@ core of parallelle geheugenautoriteit.
 
 - [x] OM00 — Hermes' actuele Godmode op officiële bron afgebakend als optionele
   jailbreakskill; Eva's gewenste autonome uitkomst en nonclaim zijn beschreven.
-- [ ] OM01 — Versieerbaar `OwnerAutonomyMandate/v1` met alle bovengenoemde
-  grenzen, waarschuwing, expiry, intrekking en append-only receipt.
+- [ ] OM01 — Versieerbaar `OwnerAutonomyMandate/v1` met brede blijvende
+  leefscope, meldbeleid, intrekking en append-only receipt; geen verplichte
+  expiry of tool-permission per handeling.
 - [ ] OM02 — Eén geverifieerde privéchat- en dashboardroute voor preview,
   activatie, status, wijziging en stop; secretwaarden blijven write-only.
 - [ ] OM03 — De algemene runner accepteert hetzelfde actieve mandaat bij iedere
-  call zonder herbevestiging binnen scope en stopt fail-closed erbuiten.
+  call zonder herbevestiging binnen scope. Alleen een technisch noodzakelijke
+  menselijke providerstap mag `needs_help` veroorzaken.
 - [ ] OM04 — Skills en subagents krijgen alleen afgeleide grants; poging tot
   privilege-, budget-, context- of recursion-escalatie wordt duurzaam geweigerd.
 - [ ] OM05 — Crash, intrekking en stop midden in een actie leveren readback en

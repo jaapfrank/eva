@@ -171,19 +171,23 @@ permissions aanmaken.
 
 ## Vragen in de lokale wizard
 
-1. Installatienaam, eigenaar, taal, tijdzone en ondersteund platform.
+1. Installatienaam, eigenaar, taal, tijdzone en ondersteund platform. De
+   eigenaar activeert hier één blijvend breed Eigenaarsmandaat voor het
+   huishouden, lokale netwerk en bewust gekoppelde accounts. Dit is één
+   begrijpelijke installatiekeuze, geen lijst met bevestigingen per apparaat,
+   provider of toekomstige actie.
 2. Eva's naam, toon, waarden, initiatief en grenzen; optioneel een bestaande
    `SOUL.md` als staged draft importeren.
 3. Modelprovider en authenticatieroute, met een bereik-/kostenproef zonder het
    secret te tonen of loggen.
 4. Telegram optioneel koppelen: BotFather-token via eenmalige lokale invoer,
    privéaccount pairen, testbericht, daarna optioneel extra personen en groepen.
-5. Eenmalig toestemming vragen om alleen de gekozen lokale netwerkscope via
-   mDNS/DNS-SD/SSDP en eventueel een begrensde poortcontrole te inventariseren.
-   Eva toont gevonden diensten zonder ze al te bedienen, kiest zelf de beste
-   actuele MCP-/API-route en vraagt daarna alleen de ontbrekende minimale
-   authenticatie en effectenrechten. Home Assistant is één mogelijke gevonden
-   dienst, geen vooraf vereiste productstap.
+5. Binnen dat mandaat inventariseert Eva zelfstandig het lokale netwerk via
+   mDNS/DNS-SD/SSDP en eventueel een beheerste poortcontrole. Zij kiest zelf de
+   beste actuele MCP-/API-route en vraagt alleen om een login-, 2FA-, CAPTCHA-
+   of secretstap wanneer de gevonden dienst die technisch van een mens vereist.
+   Home Assistant is één mogelijke gevonden dienst, geen vooraf vereiste
+   productstap.
 6. E-mail optioneel koppelen: in v1 eerst één gepinde providerroute en read-only
    mailboxproef. Lezen, verzenden, verwijderen en bijlagen zijn afzonderlijke
    capabilities; “e-mail gekoppeld” betekent niet automatisch verzendrecht.
