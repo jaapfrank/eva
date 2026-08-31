@@ -5,6 +5,7 @@ import {
   askEva2Canary,
   createEva2DraftSink,
   eva2CanaryPrompt,
+  labelEva1TelegramReply,
   labelEva2TelegramFailure,
   labelEva2TelegramReply,
 } from '../src/integrations/eva2canary.js';
@@ -49,8 +50,11 @@ test('een gewone vervolgzin gaat ook na een /eva2-beurt nooit naar B', async () 
   assert.equal(calls, 0);
 });
 
-test('ieder zichtbaar Eva2-antwoord en iedere fout hebben een ondubbelzinnig label', () => {
+test('ieder zichtbaar canary-antwoord en iedere fout hebben een ondubbelzinnig label', () => {
+  assert.equal(labelEva1TelegramReply('Hoi Jaap.'), 'Eva1: Hoi Jaap.');
+  assert.equal(labelEva1TelegramReply('Eva1: Hoi Jaap.'), 'Eva1: Hoi Jaap.');
   assert.equal(labelEva2TelegramReply('Hoi Jaap.'), 'Eva2: Hoi Jaap.');
+  assert.equal(labelEva2TelegramReply('Eva2: Hoi Jaap.'), 'Eva2: Hoi Jaap.');
   assert.equal(
     labelEva2TelegramFailure('tijdelijk niet beschikbaar'),
     'Eva2-fout: tijdelijk niet beschikbaar. Eva1 heeft dit bericht niet verwerkt.',

@@ -71,6 +71,7 @@ import {
   askEva2Canary,
   createEva2DraftSink,
   eva2CanaryPrompt,
+  labelEva1TelegramReply,
   labelEva2TelegramFailure,
   labelEva2TelegramReply,
 } from './eva2canary.js';
@@ -1621,13 +1622,21 @@ function preparedToolEvidence(tools) {
   })));
 }
 
+function directTelegramReplyText(reply) {
+  const value = canonicalTelegramText(reply);
+  return config.eva2CanaryUrl ? labelEva1TelegramReply(value) : value;
+}
+
 function preparedReplyBinding(ctx, handled) {
   const identity = directTurnIdentity(ctx);
   const auth = authenticatedTelegramPrincipal(ctx);
   const expectedTurnId = `telegram:${identity.chatId}:${identity.messageId}`;
   const conversationId = `telegram:${identity.chatId}`;
   const payload = {
-    reply: canonicalTelegramText(handled?.reply),
+    // Tijdens de aparte Eva2-canary moet ook de gewone route zichtbaar en
+    // duurzaam haar naam dragen. Alleen directe bewonersantwoorden lopen door
+    // deze binding; proactieve meldingen zoals de deurbel blijven ongewijzigd.
+    reply: directTelegramReplyText(handled?.reply),
     replyToMessageId: identity.messageId,
     messageThreadId: positiveTelegramInteger(ctx?.message?.message_thread_id),
     caption: redactSensitiveText(String(handled?.caption || '')).slice(0, 1_024),

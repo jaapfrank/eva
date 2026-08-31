@@ -50,6 +50,7 @@ export const __telegramTransportTest = Object.freeze({
   failTelegramMessageAndRecover,
   resolveTelegramTargets,
   directTurnIdentity,
+  directTelegramReplyText,
   publishDirectTelegramReply,
   resumePreparedTelegramTurn,
   settleTelegramTextTurn,

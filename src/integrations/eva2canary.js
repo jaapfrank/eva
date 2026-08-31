@@ -31,7 +31,13 @@ export function createEva2DraftSink({ chatId, draftId, sendDraft, clock = Date.n
 export function labelEva2TelegramReply(text) {
   const value = String(text || '').trim();
   if (!value) throw new Error('Eva2 gaf een leeg antwoord');
-  return `Eva2: ${value}`;
+  return /^Eva2:/iu.test(value) ? value : `Eva2: ${value}`;
+}
+
+export function labelEva1TelegramReply(text) {
+  const value = String(text || '').trim();
+  if (!value) throw new Error('Eva1 gaf een leeg antwoord');
+  return /^Eva1:/iu.test(value) ? value : `Eva1: ${value}`;
 }
 
 export function labelEva2TelegramFailure(reason) {

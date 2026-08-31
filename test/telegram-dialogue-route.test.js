@@ -7,6 +7,7 @@ const dataDir = fs.mkdtempSync(path.join('/tmp', 'eva-telegram-dialogue-route-')
 process.env.EVA_DATA_DIR = dataDir;
 process.env.TELEGRAM_BOT_TOKEN = '';
 process.env.TELEGRAM_ALLOWED_IDS = '42';
+process.env.EVA2_CANARY_URL = 'http://127.0.0.1:44711';
 process.env.EVA_RUNTIME_DISABLE_INFERENCE = 'true';
 process.env.EVA_RUNTIME_DISABLE_WORLD_LEARNING = 'true';
 await import('./telegram-test-composition.js');
@@ -53,6 +54,7 @@ test('dezelfde strikte commandogrens bepaalt routering en historische provenance
   assert.equal(archivedTelegramDialogueRoute({
     role: 'user', content: 'gewoon Eva1-bericht', meta: {},
   }), 'eva1');
+  assert.equal(__telegramTransportTest.directTelegramReplyText('route één'), 'Eva1: route één');
 });
 
 test('de echte Telegram-envelop krijgt vóór verwerking een duurzame dialoogroute', () => {
