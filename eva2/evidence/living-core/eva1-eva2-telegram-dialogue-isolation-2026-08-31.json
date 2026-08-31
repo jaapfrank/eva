@@ -1,6 +1,7 @@
 {
   "contract": "Eva1Eva2TelegramDialogueIsolationReceipt/v1",
   "issuedAt": "2026-08-31T02:08:27+02:00",
+  "updatedAt": "2026-08-31T02:12:14+02:00",
   "observedFailure": {
     "confirmed": true,
     "description": "Na expliciete /eva2-beurten gingen een gewone vervolgzin en letterlijk Eva1? door de oude tijdelijke vervolgrouter naar Eva2.",
@@ -10,7 +11,7 @@
     "secretOrChatIdIncluded": false
   },
   "correction": {
-    "eva1SourceCommit": "888f91d72efa7cf98b428ea83670cd8cbf2114cf",
+    "eva1SourceCommit": "909bff513d7d7fd653d6a7f270d9e73facce430d",
     "explicitEva2CommandOnly": true,
     "newInboundRowsPersistDialogueRoute": true,
     "newOutboundRowsPersistDialogueRoute": true,
@@ -19,7 +20,10 @@
     "eva1RecentContextExcludesEva2": true,
     "eva1ExplicitConversationSearchExcludesEva2": true,
     "eva1AutonomousConversationSearchExcludesEva2": true,
-    "eva2UsesOwnPostgreSQLConversationJournal": true
+    "eva2UsesOwnPostgreSQLConversationJournal": true,
+    "directEva1RepliesHaveVisibleEva1LabelDuringCanary": true,
+    "eva2RepliesHaveVisibleEva2Label": true,
+    "proactiveNotificationsUnchanged": true
   },
   "verification": {
     "targetedTestsPassed": 44,
@@ -32,11 +36,11 @@
   },
   "live": {
     "eva1Active": true,
-    "eva1MainPid": 468547,
-    "eva1RestartCount": 2,
-    "eva1ActiveSince": "2026-08-31T02:08:03+02:00",
+    "eva1MainPid": 901376,
+    "eva1RestartCount": 3,
+    "eva1ActiveSince": "2026-08-31T02:12:06+02:00",
     "eva1CodeMatchesDisk": true,
-    "eva1LoadedCodeSha256": "12a5066075c187068d8316a85f07d6d3c44af9481d4e50afb452c3004a83f278",
+    "eva1LoadedCodeSha256": "ea86c14f3c7012a14136049f56fc28f6ffdc115a4d0d82a43629098a2113494e",
     "eva1Health": "green",
     "eva2Ready": true,
     "eva2Port": 44711

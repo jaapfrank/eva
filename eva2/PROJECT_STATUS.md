@@ -1,6 +1,6 @@
 # Eva 2 — projectbord en vergelijking
 
-Laatst bijgewerkt: 31 augustus 2026, 02:08 CEST
+Laatst bijgewerkt: 31 augustus 2026, 02:12 CEST
 
 ## Zo lees je dit bord
 
@@ -32,7 +32,7 @@ dezelfde sessie wel, maar gaf na ruim drie minuten nog geen eindantwoord.
 | Wat moet dit kunnen? | Eva2 nu | OpenClaw | Hermes | Agent Zero |
 |---|---|---|---|---|
 | Gewoon privé praten | ✅ Via `/eva2` op Telegram met een echt model | 📘 Meerdere chatkanalen | 📘 Meerdere chatkanalen | 📘 Eigen chat en webinterface |
-| Zeker weten welke Eva antwoordt | 🟡 Alleen een letterlijk `/eva2`-bericht gaat naar Eva2. Haar antwoorden beginnen met `Eva2:` en fouten met `Eva2-fout:`. Ook hun teruggelezen Telegramgeschiedenis is nu gescheiden. De code draait live; de laatste zichtbare proef met twee menselijke berichten ontbreekt nog | ⚪ Niet van toepassing op onze A/B-route | ⚪ Niet van toepassing op onze A/B-route | ⚪ Niet van toepassing op onze A/B-route |
+| Zeker weten welke Eva antwoordt | 🟡 Alleen een letterlijk `/eva2`-bericht gaat naar Eva2. Tijdens deze canary beginnen directe antwoorden zichtbaar met `Eva1:` of `Eva2:`; fouten met `Eva2-fout:`. Ook hun teruggelezen Telegramgeschiedenis is gescheiden. De code draait live; de laatste zichtbare proef met twee menselijke berichten ontbreekt nog | ⚪ Niet van toepassing op onze A/B-route | ⚪ Niet van toepassing op onze A/B-route | ⚪ Niet van toepassing op onze A/B-route |
 | Een herkenbare, menselijke persoonlijkheid hebben | 🟡 De warmere, directere correctie draait live. In vier blinde labelwisselingen werd zij driemaal eerste en eenmaal tweede. Lichte humor verscheen alleen waar die natuurlijk paste; een echte Telegrambeoordeling door mensen ontbreekt nog | 📘 Instelbare agentidentiteit | 📘 Instelbare identiteit en gedrag | 📘 Instelbare agentprofielen |
 | Het gesprek na een herstart voortzetten | ✅ Na een volledige coreherstart kwam het vorige controlewoord exact terug | ✅ Nieuwe CLI startte en gaf het woord exact terug | ✅ Nieuwe CLI startte en gaf het woord exact terug | 🟡 Dezelfde sessie werd na een containerherstart geladen, maar er kwam binnen ruim drie minuten geen eindantwoord |
 | Antwoord direct stukje voor stukje tonen | 🟡 De kern streamt; Telegram toont nog geen echte live tekststroom | 📘 Streamingroutes aanwezig | 📘 Streamingroutes aanwezig | 📘 Streaming-webinterface aanwezig |
@@ -47,7 +47,9 @@ oude Eva2-regels nog wel uit het gedeelde Telegramarchief als context of
 zoekresultaat teruglezen. Ook dat tweede lek is nu gesloten: nieuwe regels
 krijgen duurzaam `eva1` of `eva2`, oude regels worden veilig herkend en Eva1
 filtert Eva2 uit gewone context, gesprekzoeken en spontane terugblik. De
-service draait sinds 02:08 met deze correctie. 44 gerichte routerings-,
+service draait sinds 02:12 met deze correctie. Directe bewonersantwoorden
+dragen tijdens de canary nu bovendien altijd zichtbaar `Eva1:` of `Eva2:`;
+proactieve meldingen zoals de deurbel veranderen niet. 44 gerichte routerings-,
 archief- en transporttests zijn groen. Er is geen Telegrambericht namens Jaap
 of Lola verstuurd; een echte `/eva2`-beurt gevolgd door een gewoon bericht
 moet de zichtbare mensproef nog afronden.
