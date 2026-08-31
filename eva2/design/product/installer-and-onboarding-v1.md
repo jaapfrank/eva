@@ -178,17 +178,21 @@ permissions aanmaken.
    secret te tonen of loggen.
 4. Telegram optioneel koppelen: BotFather-token via eenmalige lokale invoer,
    privéaccount pairen, testbericht, daarna optioneel extra personen en groepen.
-5. Home Assistant optioneel koppelen: interne URL, apart token, eerst
-   alleen-lezen inventaris, expliciete entiteiten/domeinen en pas daarna
-   afzonderlijke effectrechten.
+5. Eenmalig toestemming vragen om alleen de gekozen lokale netwerkscope via
+   mDNS/DNS-SD/SSDP en eventueel een begrensde poortcontrole te inventariseren.
+   Eva toont gevonden diensten zonder ze al te bedienen, kiest zelf de beste
+   actuele MCP-/API-route en vraagt daarna alleen de ontbrekende minimale
+   authenticatie en effectenrechten. Home Assistant is één mogelijke gevonden
+   dienst, geen vooraf vereiste productstap.
 6. E-mail optioneel koppelen: in v1 eerst één gepinde providerroute en read-only
    mailboxproef. Lezen, verzenden, verwijderen en bijlagen zijn afzonderlijke
    capabilities; “e-mail gekoppeld” betekent niet automatisch verzendrecht.
 7. Voice, speaker/deurbel en browsercomputer alleen tonen wanneer de
    bijbehorende V-/P-/AU-gates in die release bestaan.
 8. `Ander kanaal of dienst` laat de gebruiker het doel beschrijven en start na
-   onboarding de adaptieve-connectorgate; de wizard doet niet alsof iedere
-   externe provider bij installatie al ondersteund is.
+   onboarding de adaptieve-connectorgate. De gebruiker kan daarnaast een
+   gevonden lokale dienst kiezen; de wizard vereist geen vooraf ingebakken
+   providernaam of Eva-adapter.
 9. Geheugen-, token-, kosten- en achtergrondbudgetten, bewaartermijnen,
    back-uplocatie en een directe stop-/herstelroute bevestigen.
 

@@ -95,6 +95,57 @@ mogelijk” betekent hier: iedere dienst met een legitieme browser-, API-,
 webhook-, MCP- of Gatewayroute kan kandidaat worden; het is geen belofte dat Eva
 een gesloten of automatisering-verbiedend platform kan forceren.
 
+## Zelf diensten en mogelijkheden ontdekken
+
+Een dienst hoeft niet vooraf bij naam in Eva te staan. Na één expliciet
+eigenaarsmandaat voor een begrensd lokaal netwerk mag Eva zelf:
+
+1. met bestaande onderhoudbare discoveryprotocollen zoals mDNS/DNS-SD en SSDP
+   inventariseren welke diensten zichzelf publiceren;
+2. alleen wanneer dat mandaat het toestaat een begrensde host-/poortcontrole
+   doen, zonder exploit-, wachtwoord- of kwetsbaarheidsscan;
+3. product, versie en gepubliceerde endpoints herkennen en actuele officiële
+   documentatie raadplegen;
+4. de werkelijk beschikbare MCP-, OpenAPI-, SDK- en HTTP-routes vergelijken;
+5. de kleinste route kiezen die het doel kan uitvoeren; MCP heeft voorkeur als
+   het voldoende bereik en bewijs levert, maar is geen hardgecodeerde winnaar;
+6. ontbrekende authenticatie of extra rechten in gewone taal aan de eigenaar
+   vragen en via de lokale secretinvoer koppelen;
+7. de gevonden tools tijdens runtime aan het agentframework aanbieden, zonder
+   nieuwe Eva-kerncode of een herbouw van de core-image;
+8. een actie uitvoeren en via een onafhankelijk gevonden readpad controleren.
+
+Voorbeeld: bij `het is koud in de overkapping` leidt Eva zelf het gewenste
+resultaat af, ontdekt zij via de gekoppelde dienst welke actuele mogelijkheden
+en apparaten bestaan en kiest zij de unieke passende verwarming. Er bestaat
+geen Eva-regel met `koud`, `heater`, `switch`, Home Assistant of UniFi. Bij
+meerdere aannemelijke doelen, ontbrekende rechten of een risicovolle actie
+vraagt Eva wel door.
+
+Netwerkzichtbaarheid is geen bedieningsrecht. Discovery mag nooit automatisch
+een credential, mutatiemandaat of brede netwerktoegang opleveren. Het eenmalige
+mandaat bevat subnetten, protocollen, tempo, looptijd en een stopmogelijkheid;
+iedere gevonden dienst krijgt daarna zijn eigen least-privilege binding.
+
+De huidige runtime voldoet hier nog niet aan. Hij heeft een generieke
+MCP-proefgrens, maar de live providerlaag bevat nog vooraf gemaakte Home
+Assistant- en e-mailtools. Die code telt als te verwijderen migratieschuld.
+
+### Capability-discoverygates
+
+- [ ] CD01 — Eenmalig eigenaarsmandaat voor exacte lokale scopes, protocollen,
+  tempo, looptijd, privacy en directe stop.
+- [ ] CD02 — mDNS/DNS-SD/SSDP-discovery via onderhouden dependencies; optionele
+  begrensde poortcontrole zonder exploitgedrag.
+- [ ] CD03 — Dienstherkenning plus actuele officiële documentatie- en
+  endpointvergelijking, zonder uitvoer of secret.
+- [ ] CD04 — Runtime toolontdekking via het gekozen agent-/MCP-framework, met
+  twee onbekende synthetische providers en nul nieuwe Eva-dispatchcode.
+- [ ] CD05 — Eén echte lokale dienst koppelen via minimale authenticatie,
+  effect, onafhankelijke readback en herstart zonder dubbel uitvoeren.
+- [ ] CD06 — Dezelfde image koppelt een tweede dienst van een andere soort;
+  daarna zijn overlappende providerspecifieke Eva-adapters verwijderd.
+
 ### Adaptieve-connectorgates
 
 - [ ] AC01 — Chatmandaat en kanaalcontract met eigenaar, personen/groepen,

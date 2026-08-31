@@ -1,6 +1,6 @@
 # Eva 2 — projectbord en vergelijking
 
-Laatst bijgewerkt: 31 augustus 2026, 11:31 CEST
+Laatst bijgewerkt: 31 augustus 2026, 12:08 CEST
 
 ## Zo lees je dit bord
 
@@ -81,11 +81,20 @@ dit bord maakt van de tijden bewust geen snelheidsranglijst.
 
 ## Externe tools gebruiken
 
-Eva's kern kent geen Home Assistant, Tuya, e-maildienst of browsermerk. Zij
-kent alleen beschikbare tools met een beschrijving, invoerschema, rechten,
-risico, uitvoering en controle achteraf. Home Assistant is slechts de eerste
-echte proefprovider voor die algemene route, geen productonderdeel of unique
-selling point.
+### Belangrijke correctie
+
+De huidige route is hier nog niet goed genoeg. De smalle kern kent weliswaar
+geen Home Assistant, maar in de providerlaag staan nog vooraf gemaakte functies
+voor lampen, schakelaars, automatiseringen, Tuya en HACS. Er staan zelfs
+handgemaakte synoniemen zoals `heater`, `kachel` en `verwarming`. Dat is precies
+de gereedschapstas die Eva volgens het productdoel niet moet worden.
+
+Het gewenste ontwerp is eenvoudiger: een onderhouden agentframework ontdekt de
+actuele tools rechtstreeks uit MCP of een algemene API-brug. Eva begrijpt zelf
+de bedoeling, kiest zelf de passende gepubliceerde mogelijkheid en gebruikt
+dezelfde route voor Home Assistant, UniFi, agenda, e-mail en volgende
+providers. Eva houdt alleen haar unieke grenzen voor persoon, toestemming,
+risico, duurzaam bewijs en herstel.
 
 De scheiding is hard: **Eva beslist en bewaakt**, de algemene **MCP-/toolroute
 verbindt**, en Home Assistant, e-mail, agenda of browser **voeren als
@@ -94,13 +103,13 @@ adapter vragen, maar geen nieuwe Eva-kernlogica.
 
 | Wat moet dit kunnen? | Eva2 nu | OpenClaw | Hermes | Agent Zero |
 |---|---|---|---|---|
-| Zelf de passende beschikbare tool kiezen | ✅ De actieve Eva kiest uit een algemene toolcatalogus. Zij koos live Home Assistant als externe read-tool en in een aparte echte proef een niet-huisgebonden tijdtool | 📘 Algemene toolkeuze | 📘 Algemene toolkeuze | 📘 Algemene toolkeuze |
-| Nieuwe tools gebruiken zonder kerncode per apparaat of dienst | 🟡 De algemene MCP-grens draait nu live. ContextForge `v1.0.8` leverde in de releaseproef een echte tijdtool uit runtimeconfiguratie, maar die gateway is in het beheerde slot nog niet aangezet | 📘 MCP en plug-ins | 📘 Tools en skills | 📘 MCP en plug-ins |
+| Zelf de passende beschikbare tool kiezen | 🟡 Expliciete opdrachten worden gekozen, maar `het is koud in de overkapping` werd niet zelfstandig als verwarmingsdoel begrepen | 📘 Algemene toolkeuze | 📘 Algemene toolkeuze | 📘 Algemene toolkeuze |
+| Nieuwe tools gebruiken zonder vooraf Eva-code per soort of dienst | ❌ De generieke MCP-proef bestaat, maar de live huisroute gebruikt nog eigen vooraf gemaakte providerfuncties | 📘 MCP en plug-ins | 📘 Tools en skills | 📘 MCP en plug-ins |
 | Bij een onduidelijk doel eerst doorvragen | ✅ Eva gokt niet bij een dubbele apparaatnaam | ⚪ Niet gelijk getest | ⚪ Niet gelijk getest | ⚪ Niet gelijk getest |
 | Controleren of een toolopdracht echt gelukt is | ✅ De algemene route doet uitvoering en observatie apart en herstart zonder dubbel uitvoeren. Een echte toestandcontrole is met Home Assistant als verwisselbare praktijkprovider bewezen | ⚪ Niet gelijk met een echt effect getest | ⚪ Niet gelijk met een echt effect getest | ⚪ Niet gelijk met een echt effect getest |
 | Zelf documentatie lezen en een onbekende beheertaak plannen | 🟡 Bouwstenen bestaan; nog niet als één algemene route bewezen | 📘 Via agenttools mogelijk | 📘 Via agenttools mogelijk | 📘 Via agenttools/code mogelijk |
 | Risico, toestemming, uitvoering en terugrol per tool regelen | 🟡 Eva's algemene grenzen bestaan, maar zijn nog niet voor meerdere toolproviders end-to-end getest | ⚪ Niet gelijk getest | ⚪ Niet gelijk getest | ⚪ Niet gelijk getest |
-| Een toolprovider vervangen zonder Eva's kern te wijzigen | ✅ Dezelfde verzegelde kern laadde Home Assistant live en een externe tijdprovider in de releaseproef; alleen runtimeconfiguratie en de provider wisselden | 📘 Plug-inarchitectuur | 📘 Tool-/skillarchitectuur | 📘 Plug-inarchitectuur |
+| Een toolprovider vervangen zonder nieuwe Eva-logica te schrijven | 🟡 Een tijdprovider bewees dit in een proef; Home Assistant en e-mail voldoen nog niet aan die eindgrens | 📘 Plug-inarchitectuur | 📘 Tool-/skillarchitectuur | 📘 Plug-inarchitectuur |
 
 Tuya, LocalTuya, Matter, automatiseringen en Home Assistant-updates zijn geen
 Eva-onderdelen. Het zijn alleen praktijktests voor algemene toolvaardigheid:
@@ -108,22 +117,13 @@ Eva leest de beschikbare documentatie, kiest een onderhouden provider of
 officiële API, maakt zo nodig een voorstel en terugrol, vraagt toestemming op
 basis van risico, voert uit en controleert het resultaat.
 
-De codegrens is nu mechanisch groen. De verbeterde controle vindt nul Home
-Assistant-/Tuya-/AgentMail-specifieke identifiers in Eva's applicatie, contracten,
-modeladapter, gesprekspersistence en runtime. Dat zijn er 957 minder dan bij de
-eerste meting. Gewone reads, aan/uit-acties,
-automatiseringen, het Tuya-migratieplan en de aparte HACS-repository- en
-pakketacties leveren hun schema, uitleg, validatie en providercommando vanuit
-tooladapters. Zij gebruiken dezelfde generieke PostgreSQL-route voor toelating,
-uitvoering, bewijs en hervatten. Drie echte wegwerp-PostgreSQL-proeven bewezen
-planopslag, repositoryregistratie en pakketinstallatie; een nieuwe
-procesinstantie herhaalde geen provideractie. Ook actuele toestand en historie
-liepen daarna door hetzelfde algemene toolpad en bleven na een nieuwe
-procesinstantie enkelvoudig. De oude directe effect-API en alle aparte Home
-Assistant-PostgreSQL-routes zijn verwijderd. Ook de volledige migratieplanning,
-validatie, opslag, configuratie en runtime-opbouw staan nu bij de
-provideradapter. De oude losse beheer-API en de aparte mail-API in de kern zijn
-verwijderd.
+De eerdere groene codegrens was te smal geformuleerd. Zij bewees alleen dat
+providerspecifieke namen uit applicatie, contracten, modeladapter en
+gesprekspersistence waren verdwenen. Zij telde de omvangrijke providerlaag niet
+als schuld. Technisch is de duurzame generieke PostgreSQL-route bruikbaar, maar
+de vooraf gemaakte Home Assistant- en e-mailfuncties moeten nog worden vervangen
+door runtime-ontdekking uit het gekozen open-source agent-/MCP-framework. Pas
+nadat die dubbele code is verwijderd, mag deze grens groen heten.
 
 Ook het samenvoegen van providers is nu algemeen. Eva loopt over provider-
 bijdragen en heeft daar geen `als Home Assistant`- of `als AgentMail`-tak meer.
@@ -285,7 +285,7 @@ herstelbaar.
 |---|---|---|
 | Modelverkeer | Officiële OpenAI SDK; Pydantic AI voor de toekomstige algemene toolloop | ✅ SDK `3.6.0` live; 🟡 Pydantic AI neemt de hele toolloop nog niet over |
 | Langetermijngeheugen | Hindsight | ✅ Live; 🟡 Eva's adapter moet nog kleiner |
-| Externe gereedschappen | Een algemene MCP-/toolgrens; ContextForge als optionele gateway; officiële provider-API's/SDK's achter toolservers | ✅ De 0/0-image met de algemene grens draait live en doorliep ook terug→heen. Model, herstartgeheugen en één externe read met aparte controle zijn groen. ContextForge en de niet-huisgebonden tijdtool zijn releasebewijs, maar nog geen geactiveerde live gateway. Home Assistant blijft slechts één verwisselbare provider |
+| Externe gereedschappen | Pydantic AI met runtime-ontdekte MCP-tools; ContextForge alleen als optionele gateway | ❌ Eindroute nog niet live. De algemene proef is groen, maar de actieve huisroute bevat nog vooraf gemaakte providerfuncties die daarna verwijderd moeten worden |
 | Subagents | Pydantic AI/Harness voor modelruns; onderhouden workflowmotor voor duurzaam werk | 🟡 Modelrun werkt; workflowkeuze nog niet gewonnen door een dependency |
 | Voice | Pipecat als eerste complete pipeline; Wyoming als lokale fallback | 🟡 Bake-off en fysieke proef ontbreken |
 | Browser | Playwright MCP tegenover Browser Use; daarna één winnaar | 🟡 Functioneel beproefd; nog geen releaseveilige winnaar |
@@ -313,18 +313,23 @@ gebruikersroute draait én de dubbele Eva-code daarna verdwijnt.
 
 ## Eerstvolgende zichtbare verbeteringen
 
-1. De actuele vierwegvergelijking uitbreiden met geheugen, herstart, toolactie,
+1. Pydantic AI's onderhouden MCP-toolset in een geïsoleerde proef rechtstreeks
+   tools laten ontdekken en de bedoeling `het is koud in de overkapping`
+   zelfstandig laten uitvoeren tegen een synthetische provider, met negatieve
+   voorbeelden tegen ongewenste acties. Er komt geen heater- of switchregel in
+   Eva.
+2. Daarna dezelfde route met Home Assistant en een tweede provider zoals UniFi
+   bewijzen en de overlappende eigen providerfuncties verwijderen.
+3. De actuele vierwegvergelijking uitbreiden met geheugen, herstart, toolactie,
    zelfstandig werk en beheer; pas herhaalde praktijkwinst telt als voordeel.
-2. De geselecteerde React-admin-kandidaat uit dezelfde gesaneerde API serveren,
+4. De geselecteerde React-admin-kandidaat uit dezelfde gesaneerde API serveren,
    de oude cockpitpresentatie verwijderen en haar via image-scan en A/B live
    bewijzen; daarna pas configuratie, geheugen, kosten en bediening toevoegen.
-3. ContextForge als optionele beheerde gateway configureren en daarna per
-   provider aantonen welke resterende directe lijm werkelijk weg kan.
-4. Renovate echt laten voorstellen maken en iedere kandidaat automatisch door
+5. Renovate echt laten voorstellen maken en iedere kandidaat automatisch door
    test, SBOM, scan, data-upgrade, A/B en terugrol sturen.
-5. De beste voice- en browsermotor kiezen, in de echte route zetten en daarna
+6. De beste voice- en browsermotor kiezen, in de echte route zetten en daarna
    de overlappende eigen lijm verwijderen.
-6. De automatische herstartverifier aan het actieve A/B-slot binden, daarna de
+7. De automatische herstartverifier aan het actieve A/B-slot binden, daarna de
    fysieke voiceproef en zeven dagen praktijktest uitvoeren op één bevroren
    eindkandidaat.
 
