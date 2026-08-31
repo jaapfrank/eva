@@ -174,7 +174,9 @@ productrelease en iedere grote vervanging moet daarom opnieuw bewijzen:
 2. dezelfde modelklasse, gereedschappen, tijd- en kostenlimieten;
 3. ruwe trajecten en de officiële scorer, zodat een uitslag controleerbaar is;
 4. winst of gelijkspel op betrouwbaarheid, privacy, herstel en gebruikerswerk;
-5. geen achteruitgang in snelheid, kosten, geheugenkwaliteit of eigen codeomvang.
+5. geen achteruitgang in snelheid, kosten, geheugenkwaliteit of
+   beheersbaarheid; groei zonder eigenaar, functie of verwijderde overlap is
+   een verlies, omvang op zichzelf niet.
 
 Eva hoeft niet ieder nichecijfer te winnen. Zij mag wel pas “beter” heten als
 zij de afgesproken gezinsassistenttaken over de hele linie wint en op geen

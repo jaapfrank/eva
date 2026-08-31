@@ -9,11 +9,13 @@ twee direct gekoppelde productie-adapters van samen **1.023 regels** voor
 zoeken, toestand, historie, services en automatiseringsbeheer. De exact gepinde
 `v8.3.0`-image heeft zeven kandidaattools voor dat technische oppervlak.
 
-Deze gate bindt de exacte Eva-bronbaseline, vervangingsmapping en relevante
-toolbeschrijvingen. Hij stopt op input-, output-, annotatie-, versie- en
-baseline-drift. De upstream outputschema's zijn echter open objecten; deze gate
-bewijst daarom nog geen semantische resultaatpariteit. Hij maakt geen echte
-Home Assistant-call en verwijdert geen productcode.
+Deze historische gate bindt de toenmalige Eva-bronbaseline,
+vervangingsmapping en relevante toolbeschrijvingen. Hij stopt op input-,
+output-, annotatie-, versie- en baselinedrift. De actuele algemene
+providerroute heeft deze directe productieopzet inmiddels opgevolgd; dit
+experiment is dus geen promotie-authority meer. De upstream outputschema's zijn
+bovendien open objecten. De gate bewijst geen semantische resultaatpariteit,
+maakt geen echte Home Assistant-call en verwijdert geen productcode.
 
 ## Wat mag worden vervangen
 
@@ -39,13 +41,13 @@ ook door HA-MCP worden gedragen, maar alleen na een eigen pariteitsproef.
 ## Harde vervolggrens
 
 De eerste audit schat dat alleen het vervangen van HTTP-transport ongeveer
-174–192 regels verwijdert. Dat is minder dan de toelatingsgrens. Een
-productkandidaat mag hoogstens 180 regels dunne integratie toevoegen en moet
-minimaal 300 regels bestaande productiecode verwijderen. Daarvoor moet eerst
-ook zoek- en historiesemantiek werkelijk gelijk blijken. Daarna volgen dezelfde
-state-, historie-, service-, automation-, crash- en readbacktests met een apart
-least-privilege Home Assistant-testtoken. Zonder echte nettokrimp blijft de
-directe adapter staan.
+174–192 regels zou verwijderen. Dat getal is uitsluitend een meting en geen
+toelatingsgrens. Een productkandidaat moet de oude verantwoordelijkheid echt
+overnemen, de oude uitvoerroute in dezelfde vervangingslijn verwijderen en één
+runtime-eigenaar overhouden. Daarvoor moet ook zoek- en historiesemantiek
+werkelijk gelijk blijken. Daarna volgen dezelfde state-, historie-, service-,
+automation-, crash- en readbacktests met een apart least-privilege Home
+Assistant-testtoken. Omvang alleen beslist nooit over promotie.
 
 Herhalen:
 

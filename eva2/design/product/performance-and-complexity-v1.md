@@ -118,17 +118,17 @@ effect blijft exact nul.
   dependencies en imagebytes; generated/vendor-uitzonderingen staan in een
   gesloten allowlist. De historische receipt blijft bewijs van die toenmalige
   meting, niet van een blijvende regelgrens.
-- [x] PC02 — De grootste hot-pathbestanden begrenzen: niet verder laten groeien
-  en bij aanraking gericht per eigenaar/contract splitsen, zonder massarewrite.
-  Negen bestaande uitzonderingen hebben nu ieder een eigenaar, contract en vaste
-  bovengrens; ieder nieuw niet-geregistreerd productbestand boven 1.000 regels
-  maakt de controle rood.
+- [x] PC02 — De grootste productbestanden zichtbaar en beheersbaar houden.
+  Een bestand boven de classificatiedrempel moet een expliciete eigenaar en
+  contract hebben; daarna is er geen numeriek regelplafond. Groei blijft in het
+  receipt zichtbaar en moet via tests, eigenaarschap en samenhang worden
+  gerechtvaardigd, maar omvang alleen maakt de release nooit rood.
 - [ ] PC03 — Teksthot-path streamen en instrumenteren; cold recall, retain,
   reflectie en evaluatie aantoonbaar buiten tijd tot eerste inhoud houden.
 - [ ] PC04 — Browser- en voice-sidecars afzonderlijk budgetteren op code,
   dependencies, image, startup, RSS en IPC-latency.
 - [ ] PC05 — Op de bevroren image minimaal 200 tekstbeurten plus V07 draaien;
-  alle p95-, foutnoemer- en omvanggrenzen zijn groen.
+  alle p95- en foutnoemergates zijn groen en de omvangsmetingen zijn verklaard.
 - [ ] PC06 — De zevendaagse residentrun toont geen latencydegradatie,
   geheugenlek, queuegroei of steeds tragere context; eigenaar accepteert de
   snelheid en natuurlijkheid expliciet.

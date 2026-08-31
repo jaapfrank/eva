@@ -22,7 +22,7 @@ WRITE_TOOLS = {
     "ha_config_set_automation",
 }
 EXPECTED_CANDIDATE = "DF02e-ha-mcp-parity-v1"
-EXPECTED_CONTRACT = "EvaHomeAssistantMcpParity/v1"
+EXPECTED_CONTRACT = "EvaHomeAssistantMcpParity/v2"
 EXPECTED_BASELINE = "1e780ca4ecd433d230ea18c3d58213fc6baebe26"
 EXPECTED_IMAGE = (
     "ghcr.io/homeassistant-ai/ha-mcp@"
@@ -92,11 +92,11 @@ EXPECTED_NONCLAIMS = {
     "provedProductionPromotion": False,
 }
 EXPECTED_PROMOTION = {
-    "maximumNewIntegrationLines": 180,
-    "minimumRemovedProductionLines": 300,
     "requiresIndependentReadback": True,
     "requiresLeastPrivilegeTestToken": True,
+    "requiresOldRouteRemoved": True,
     "requiresRollbackByExactDigest": True,
+    "requiresSingleRuntimeOwner": True,
 }
 EXPECTED_EXCLUDED_METHODS = {
     "health": "Separate sidecar and Home Assistant readiness check has no admitted tool mapping yet."
@@ -124,15 +124,6 @@ def load_smoke() -> Any:
     return module
 
 
-def line_count(relative: str) -> int:
-    with (REPOSITORY / relative).open(encoding="utf-8") as source:
-        return sum(1 for _line in source)
-
-
-def source_sha256(relative: str) -> str:
-    return hashlib.sha256((REPOSITORY / relative).read_bytes()).hexdigest()
-
-
 def baseline_sha256(commit: str, relative: str) -> str:
     result = subprocess.run(
         ["git", "show", f"{commit}:{relative}"],
@@ -157,21 +148,23 @@ def descriptor_sha256(tool: dict[str, Any]) -> str:
 def validate_contract(contract: dict[str, Any]) -> None:
     require(contract["candidateId"] == EXPECTED_CANDIDATE, "candidate ID drifted")
     require(contract["contract"] == EXPECTED_CONTRACT, "contract name drifted")
+    require(contract["status"] == "historical_superseded", "status drifted")
     require(contract["image"] == EXPECTED_IMAGE, "sidecar image binding drifted")
-    current = contract["currentDirectProduction"]
+    current = contract["historicalDirectProductionBaseline"]
     require(current["baselineGitCommit"] == EXPECTED_BASELINE, "source baseline drifted")
     require(current["files"] == EXPECTED_FILES, "direct source binding drifted")
     require(contract["excludedFromReplacement"] == EXPECTED_EXCLUSIONS, "exclusions drifted")
     require(contract["excludedMethods"] == EXPECTED_EXCLUDED_METHODS, "method exclusions drifted")
     require(contract["mapping"] == EXPECTED_MAPPING, "Eva-to-MCP mapping drifted")
     require(contract["nonclaims"] == EXPECTED_NONCLAIMS, "nonclaims drifted")
-    require(contract["promotion"] == EXPECTED_PROMOTION, "promotion requirements drifted")
+    require(
+        contract["historicalReplacementRequirements"] == EXPECTED_PROMOTION,
+        "historical replacement requirements drifted",
+    )
     require(contract["toolInputSchemaSha256"] == EXPECTED_INPUT_HASHES, "input bindings drifted")
     require(contract["toolDescriptorSha256"] == EXPECTED_DESCRIPTOR_HASHES, "descriptor bindings drifted")
 
     for relative, expected in EXPECTED_FILES.items():
-        require(line_count(relative) == expected["lines"], f"direct source size drifted: {relative}")
-        require(source_sha256(relative) == expected["sha256"], f"direct source hash drifted: {relative}")
         require(
             baseline_sha256(EXPECTED_BASELINE, relative) == expected["sha256"],
             f"Git baseline differs: {relative}",
@@ -188,7 +181,7 @@ def main() -> None:
     validate_contract(contract)
     smoke = load_smoke()
     require(smoke.IMAGE == EXPECTED_IMAGE, "sidecar smoke image binding drifted")
-    current = contract["currentDirectProduction"]
+    current = contract["historicalDirectProductionBaseline"]
 
     command = [
         "docker", "run", "--rm", "-i", "--pull=never", "--network=none",
@@ -260,10 +253,14 @@ def main() -> None:
             json.dumps(
                 {
                     "candidateId": EXPECTED_CANDIDATE,
-                    "decision": "ready_for_thin_adapter_candidate",
-                    "directProductionLines": current["lines"],
-                    "maximumNewIntegrationLines": EXPECTED_PROMOTION["maximumNewIntegrationLines"],
-                    "minimumRemovedProductionLines": EXPECTED_PROMOTION["minimumRemovedProductionLines"],
+                    "decision": "historical_contract_only",
+                    "historicalDirectProductionLines": current["lines"],
+                    "requiresOldRouteRemoved": EXPECTED_PROMOTION[
+                        "requiresOldRouteRemoved"
+                    ],
+                    "requiresSingleRuntimeOwner": EXPECTED_PROMOTION[
+                        "requiresSingleRuntimeOwner"
+                    ],
                     "requiredTools": sorted(required),
                 },
                 separators=(",", ":"),

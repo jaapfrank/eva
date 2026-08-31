@@ -46,7 +46,7 @@ chattransport, dashboards en update-scanners zijn hulpmiddelen rond die kern.
 |---|---|---|---|
 | Modeltransport en gestructureerde antwoorden | Officiële OpenAI-SDK; Pydantic AI neemt alleen over wanneer de oude loop verdwijnt | Identiteit, persoonscontext, grants, duurzaam bewijs en antwoordbeleid | OpenAI SDK `3.6.0` draait live. Pydantic AI `2.36.0` is als toolloop en scan-schone image groen, maar nog geen productdependency omdat de vervangingsdiff ontbreekt |
 | MCP-koppeling | Pydantic AI's native `MCPToolset`; ContextForge alleen als optionele gateway | Toegelaten persoon/scope, byte- en tijdslimieten, duurzame poging en readback | Een afzonderlijke providercontainer werd door de minimale client ontdekt en aangeroepen. `process_tool_call` onderschepte de call vóór provider-I/O; promotie wacht op verwijdering van de oude client/loop |
-| Home Assistant-skill | Eerst Home Assistants ingebouwde MCP Server voor basiscontext; voor historie/configuratie de community-sidecar `homeassistant-ai/ha-mcp` | Persoonsmandaat, toolallowlist, één duurzame poging en onafhankelijke controle achteraf | `ha-mcp` `v8.3.0` is exact gepind en lokaal read-only gestart; promotie vereist minimaal 300 regels eigen HA-code weg tegen hoogstens 180 regels integratie |
+| Home Assistant-skill | Eerst Home Assistants ingebouwde MCP Server voor basiscontext; voor historie/configuratie de community-sidecar `homeassistant-ai/ha-mcp` | Persoonsmandaat, toolallowlist, één duurzame poging en onafhankelijke controle achteraf | `ha-mcp` `v8.3.0` is exact gepind en lokaal read-only gestart; promotie vereist semantische pariteit, verwijdering van de oude uitvoerroute en precies één runtime-eigenaar |
 | Duurzame workflows en wachtrijen | DBOS blijft de bestaande workflowdependency; `2.31.0+eva.1` wordt de volgende proef | Eva-ledger voor intent, call-start, ambigu resultaat en readback | Stock `2.31.0` kan de kleine Eva-patch en workerledger niet veilig vervangen; rebase wel, blind upgraden niet |
 | Subagents | Harness `0.25.0` voor korte parentgestuurde fork/join; publieke Pydantic AI `Agent.run()` voor één reeds duurzaam gekozen child | Exacte taak-, context-, tool-, tijd- en token-grant plus duurzame handoff | Harness retourneert publiek alleen tekst en verliest voor een databaseworker getypeerde output/usage/cancellation; geen eigen spawn-, model-, budget-, time-out- of child-contextengine bouwen |
 | Voice | Pydantic AI Realtime `2.34.0` met upstream-extra `openai-realtime` | Persoonsbinding, privacy, barge-in naar Eva-stop, memory en toolreadback | De aparte 47-package kandidaat is hashgeïnstalleerd en exposeert `interrupt(played_ms)` met `websockets==17.0.1`; geen eigen WebRTC-, STT-, TTS- of jitterbufferstack bouwen. Echte audio/providercall en promotie blijven open |
@@ -171,11 +171,12 @@ backup- en beheeradapters voorkomen. Daarom blijft het een serieuze optionele
 capabilityprovider.
 
 Het is nog geen productieonderdeel en heeft het echte huis niet benaderd. De
-harde toelatingseis is minimaal 300 regels bestaande Home Assistant-productcode
-verwijderen tegen hoogstens 180 regels dunne Eva-integratie, met dezelfde
-state-, historie-, service-, automation-, crash- en readbackgevallen. De
-verdiepende audit laat zien dat een veilige transportswap nu slechts circa
-174–192 regels verwijdert. Bovendien zijn alle zeven outputschema's open
+harde toelatingseis is dat de dependency de verantwoordelijkheid werkelijk
+overneemt, de oude uitvoerroute verdwijnt en precies één runtime-eigenaar
+overblijft, met dezelfde state-, historie-, service-, automation-, crash- en
+readbackgevallen. De verdiepende audit mat dat een veilige transportswap circa
+174–192 regels zou verwijderen; dat is context en geen promotiegrens.
+Bovendien zijn alle zeven outputschema's open
 objecten; zoek-, historie- en resultaatsbetekenis moeten dus nog door Eva
 worden gecontroleerd. Een simpele productieomschakeling is daarom nu `NO-GO`.
 
@@ -334,7 +335,7 @@ upstream proef moet aantonen hoeveel eigen code werkelijk overbodig wordt.
 |---|---:|---|---|
 | `adapters/model/conversation.py` | 2.378 regels | OpenAI-SDK voor providertransport en typed streaming; pas later lagere Pydantic-mapping | IdentityPack, audience, agentloop, budgetbesluit, tooluitvoering, actiebewijs en eindantwoord |
 | `tests/fixtures/mcp.py` | 415 bewijsregels, niet in het productbudget | Volledige SDK en `mcp-types` zijn beproefd en afgewezen voor de oude smalle route | Alleen de testfixture blijft; opnieuw een productadapter kiezen als een echte provider MCP vereist |
-| `adapters/connectors/home_assistant.py` plus automationtransport | 1.023 regels | `homeassistant-ai/ha-mcp v8.3.0`; eerste audit vindt slechts circa 174–192 transportregels direct vervangbaar | Least-privilege binding, één duurzame poging en onafhankelijke readback; alleen verder bij echte semantische pariteit en minimaal 300 regels weg |
+| `adapters/connectors/home_assistant.py` plus automationtransport | 1.023 regels | `homeassistant-ai/ha-mcp v8.3.0`; eerste audit vindt circa 174–192 transportregels direct vervangbaar | Least-privilege binding, één duurzame poging en onafhankelijke readback; alleen verder bij echte semantische pariteit, verwijdering van de oude route en één runtime-eigenaar |
 | Zeven application-workerbestanden | meerdere losse loops | Alleen gedeelde polling/scheduling tegen DBOS `2.31.0+eva.1` meten | De 2.31-audit vond nul veilig verwijderbare workerregels; taakbetekenis, mandaat, idempotency, externe ambiguïteit en gebruikersstatus blijven Eva-eigen |
 | HTML/JavaScript in `adapters/api/app.py` | onderdeel van 1.536 regels | React-Admin of Pydantic web/AG-UI als presentatielaag | Gesaneerde Eva-API, authenticatie, writes via commands en audit |
 
@@ -365,12 +366,12 @@ een lijst GitHub-links.
   groei. Replay, bestaande regressies en onafhankelijke review zijn groen
   (`c5b7d88`, `c83d395`).
 - [ ] `DF02d` — `homeassistant-ai/ha-mcp v8.3.0` draait exact gepind als
-  geïsoleerde sidecar en vervangt na echte least-privilege HA-pariteit minimaal
-  300 regels bestaande productcode met hoogstens 180 integratieregels. De
+  geïsoleerde sidecar en vervangt na echte least-privilege HA-pariteit de oude
+  uitvoerroute zonder een tweede runtime-eigenaar achter te laten. De
   netwerkloze read-only image-smoke en onafhankelijke review zijn groen
   (`86c7247`, `3896f17`). De gesloten bron-/toolgrens en twaalf mutatietests
   zijn onafhankelijk groen (`c03942d`). De huidige directe vervangingsraming
-  van 174–192 regels haalt de promotiegrens niet; echt huis, semantische
+  van 174–192 regels is alleen een omvangsmeting; echt huis, semantische
   pariteit, latency, crash, upgrade en rollback staan open.
 - [ ] `DF03` — stock DBOS `2.31.0` is brongebonden vergeleken en afgewezen als
   drop-in: het bevat de gewenste upstream duplicate-loserfix, maar niet Eva's

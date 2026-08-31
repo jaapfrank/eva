@@ -75,10 +75,11 @@ taakdatabase.
 
 De kandidaat wordt alleen productonderdeel wanneer één gecontroleerde diff:
 
-1. minimaal 300 handgeschreven productregels uit de Home Assistant-route
-   verwijdert;
-2. hoogstens 180 nieuwe regels dunne Eva-integratie toevoegt;
-3. geen nieuwe Pythonpackage aan Eva's core-lock toevoegt;
+1. de oude Home Assistant-uitvoerroute volledig verwijdert wanneer de
+   dependency die verantwoordelijkheid overneemt;
+2. precies één runtime-eigenaar voor die verantwoordelijkheid overlaat;
+3. iedere nieuwe Pythonpackage in Eva's core-lock aan een unieke, geteste
+   verantwoordelijkheid bindt;
 4. dezelfde huidige-state-, historie-, service-, automation- en
    readbackgevallen haalt;
 5. met een least-privilege testtoken draait en alleen de benodigde tools aan

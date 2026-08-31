@@ -46,6 +46,10 @@ Het aantal regels is geen doel en geen maximum. Ook 100 miljoen regels mogen
 als iedere regel aantoonbaar een producttaak heeft en beheersbaar blijft. De
 echte poort is: exact één eigenaar en doel per component, actuele tests en
 bewijs, onderhouden dependencies en geen dode of onverklaard dubbele route.
+Ook het laatste oude plafond in de PC02-checker is verwijderd: grote bestanden
+moeten nu worden geclassificeerd met eigenaar en contract, maar mogen daarna
+groeien wanneer die groei aantoonbaar iets toevoegt. De checker meet de groei
+wel en keurt ontbrekende classificatie af; hij keurt geen getal meer af.
 De machineleesbare componentcatalogus en exact-één-ownerchecker zijn groen
 voor alle gevolgde product-, deploy-, migratie- en testpaden. Regels, packages
 en imageomvang blijven zichtbaar zodat groei verklaard moet worden, maar groei

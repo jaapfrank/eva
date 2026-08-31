@@ -34,11 +34,10 @@ def _fixture(tmp_path: Path) -> tuple[Path, Path, Path]:
                 "baselineSha256": pc02._sha256(hot.read_bytes()),
                 "componentOwner": "fixture owner",
                 "contract": "Fixture/v1",
-                "maximumPhysicalLines": 120,
                 "path": "src/eva/hot.py",
             }
         ],
-        "maximumUnclassifiedPhysicalLines": 100,
+        "classificationThresholdPhysicalLines": 100,
         "productRoots": ["src/eva"],
     }
     authority_path = project / "authority.json"
@@ -62,15 +61,18 @@ def test_pc02_passes_closed_owned_hot_paths(tmp_path: Path) -> None:
     assert receipt["violations"] == []
 
 
-def test_pc02_rejects_growth_of_registered_hot_path(tmp_path: Path) -> None:
+def test_pc02_measures_growth_without_treating_it_as_a_quality_failure(
+    tmp_path: Path,
+) -> None:
     repo, project, authority = _fixture(tmp_path)
     with (project / "src/eva/hot.py").open("a", encoding="utf-8") as handle:
         handle.write("x = 2\n")
 
     receipt = pc02.check(repo, project, authority)
 
-    assert receipt["status"] == "failed"
-    assert receipt["violations"] == ["registered_hot_path_grew:src/eva/hot.py"]
+    assert receipt["status"] == "passed"
+    assert receipt["hotPaths"][0]["physicalLines"] == 121
+    assert receipt["violations"] == []
 
 
 def test_pc02_rejects_new_unclassified_hot_path(tmp_path: Path) -> None:

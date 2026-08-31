@@ -1,7 +1,7 @@
 {
   "candidateId": "DF02e-ha-mcp-parity-v1",
-  "contract": "EvaHomeAssistantMcpParity/v1",
-  "currentDirectProduction": {
+  "contract": "EvaHomeAssistantMcpParity/v2",
+  "historicalDirectProductionBaseline": {
     "baselineGitCommit": "1e780ca4ecd433d230ea18c3d58213fc6baebe26",
     "files": {
       "eva2/src/eva/adapters/connectors/home_assistant.py": {
@@ -54,14 +54,15 @@
     "provedLatencyWin": false,
     "provedProductionPromotion": false
   },
-  "promotion": {
-    "maximumNewIntegrationLines": 180,
-    "minimumRemovedProductionLines": 300,
+  "historicalReplacementRequirements": {
     "requiresIndependentReadback": true,
     "requiresLeastPrivilegeTestToken": true,
-    "requiresRollbackByExactDigest": true
+    "requiresOldRouteRemoved": true,
+    "requiresRollbackByExactDigest": true,
+    "requiresSingleRuntimeOwner": true
   },
   "protocolVersion": "2025-06-18",
+  "status": "historical_superseded",
   "toolInputSchemaSha256": {
     "ha_call_service": "9104b318256ff10e0e3edce620fe43981c01a3c4405a93cefcc92b2ef98c9c88",
     "ha_config_get_automation": "bae748eb90c04a6f51aaa606d7b2b20afa76ede3bc0b40d4d8e0da847a581200",

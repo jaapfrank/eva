@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Fail closed when Eva's largest runtime files grow or escape ownership."""
+"""Fail closed when Eva's largest runtime files escape classification."""
 
 from __future__ import annotations
 
@@ -12,14 +12,13 @@ import subprocess
 from typing import Any
 
 
-CONTRACT = "EvaPerformanceComplexityPc02Receipt/v1"
-AUTHORITY_CONTRACT = "EvaPerformanceComplexityPc02Authority/v1"
+CONTRACT = "EvaPerformanceComplexityPc02Receipt/v2"
+AUTHORITY_CONTRACT = "EvaPerformanceComplexityPc02Authority/v2"
 _DIGEST = re.compile(r"^[0-9a-f]{64}$")
 _HOT_KEYS = {
     "baselineSha256",
     "componentOwner",
     "contract",
-    "maximumPhysicalLines",
     "path",
 }
 
@@ -56,7 +55,7 @@ def _load_authority(path: Path) -> tuple[dict[str, Any], str]:
         "extensions",
         "generatedExactPaths",
         "hotPaths",
-        "maximumUnclassifiedPhysicalLines",
+        "classificationThresholdPhysicalLines",
         "productRoots",
     }
     if not isinstance(value, dict) or set(value) != required:
@@ -76,9 +75,9 @@ def _load_authority(path: Path) -> tuple[dict[str, Any], str]:
     )
     if tuple(sorted(set(generated))) != generated:
         raise Pc02Error("PC02 generated paths must be unique and sorted")
-    maximum = value["maximumUnclassifiedPhysicalLines"]
-    if not isinstance(maximum, int) or maximum < 100:
-        raise Pc02Error("PC02 unclassified maximum is invalid")
+    threshold = value["classificationThresholdPhysicalLines"]
+    if not isinstance(threshold, int) or threshold < 100:
+        raise Pc02Error("PC02 classification threshold is invalid")
     hot_paths = value["hotPaths"]
     if not isinstance(hot_paths, list) or not hot_paths:
         raise Pc02Error("PC02 hot-path authority is empty")
@@ -92,8 +91,6 @@ def _load_authority(path: Path) -> tuple[dict[str, Any], str]:
         previous = current
         if not _DIGEST.fullmatch(str(row["baselineSha256"])):
             raise Pc02Error("PC02 baseline digest is invalid")
-        if not isinstance(row["maximumPhysicalLines"], int) or row["maximumPhysicalLines"] <= maximum:
-            raise Pc02Error("PC02 hot-path maximum is invalid")
         for label in ("componentOwner", "contract"):
             if not isinstance(row[label], str) or not row[label].strip():
                 raise Pc02Error(f"PC02 {label} is invalid")
@@ -123,8 +120,6 @@ def check(repo: Path, project: Path, authority_path: Path) -> dict[str, object]:
             violations.append(f"registered_hot_path_missing:{path}")
             continue
         physical_lines, current_sha256 = observed[path]
-        if physical_lines > row["maximumPhysicalLines"]:
-            violations.append(f"registered_hot_path_grew:{path}")
         hot_receipts.append(
             {
                 **row,
@@ -136,7 +131,7 @@ def check(repo: Path, project: Path, authority_path: Path) -> dict[str, object]:
         path
         for path, (physical_lines, _) in observed.items()
         if path not in hot_authority
-        and physical_lines > authority["maximumUnclassifiedPhysicalLines"]
+        and physical_lines > authority["classificationThresholdPhysicalLines"]
     )
     violations.extend(f"unclassified_hot_path:{path}" for path in unclassified)
     commit = subprocess.run(
@@ -147,7 +142,9 @@ def check(repo: Path, project: Path, authority_path: Path) -> dict[str, object]:
         "contract": CONTRACT,
         "gitCommit": commit,
         "hotPaths": hot_receipts,
-        "maximumUnclassifiedPhysicalLines": authority["maximumUnclassifiedPhysicalLines"],
+        "classificationThresholdPhysicalLines": authority[
+            "classificationThresholdPhysicalLines"
+        ],
         "observedProductFiles": len(observed),
         "status": "passed" if not violations else "failed",
         "unclassifiedHotPaths": unclassified,
