@@ -269,9 +269,9 @@
     }
   ],
   "summary": {
-    "files": 1976,
-    "present": 1976,
-    "tracked": 1897,
+    "files": 1977,
+    "present": 1977,
+    "tracked": 1898,
     "untracked": 79,
     "tombstones": 0,
     "policyErrors": 88
@@ -310,7 +310,7 @@
     {
       "id": "eva2-verification",
       "role": "verification",
-      "matchCount": 715
+      "matchCount": 716
     },
     {
       "id": "eva2-documentation",
@@ -10264,7 +10264,7 @@
       "path": "docs/eva-repository-inventory.generated.json",
       "gitState": "tracked",
       "present": true,
-      "bytes": 2298265,
+      "bytes": 2299298,
       "contentSha256": "32591e23fa2eb53a038d95e726ba09edd0405306f38c5283a36a2b6d3010254d",
       "hashMode": "canonical-self-reference-redacted",
       "role": "generated",
@@ -10297,7 +10297,7 @@
       "path": "docs/eva-repository-inventory.generated.md",
       "gitState": "tracked",
       "present": true,
-      "bytes": 356176,
+      "bytes": 356331,
       "contentSha256": "2f4f8486464cbb9713b749dc898f265093d0853699f1da1b4eb3dd1625c1b2d2",
       "hashMode": "canonical-self-reference-redacted",
       "role": "generated",
@@ -11082,8 +11082,8 @@
       "path": "eva2/PROJECT_STATUS.md",
       "gitState": "tracked",
       "present": true,
-      "bytes": 42666,
-      "contentSha256": "2f45cf14f593e9193ff84f72df8f73f334fb3e9f5810c752fb917e3f937fbb5b",
+      "bytes": 43112,
+      "contentSha256": "5e89d440ff7cc672bd8eed8c06709f86cece433b04a65306c6695b5ce6148710",
       "hashMode": "exact-bytes",
       "role": "documentation",
       "roleRuleId": "eva2-documentation",
@@ -28297,6 +28297,41 @@
       "present": true,
       "bytes": 2909,
       "contentSha256": "372612b9ab7d420fea46a462a9eba7bd0cf596b14e5d1f4a81b4dfe221891c06",
+      "hashMode": "exact-bytes",
+      "role": "verification",
+      "roleRuleId": "eva2-verification",
+      "matchingRuleIds": [
+        "eva2-verification"
+      ],
+      "owner": "verification",
+      "inputs": [
+        "production or fixture contract"
+      ],
+      "outputs": [
+        "test decision"
+      ],
+      "state": [
+        "temporary isolated test state"
+      ],
+      "effects": [
+        "may execute only inside its declared gate"
+      ],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": true,
+        "runtimeCritical": true,
+        "status": "included-tracked-critical"
+      }
+    },
+    {
+      "path": "eva2/evidence/product/pydantic-ai-2.36-source-codex-compatibility-2026-08-31.json",
+      "gitState": "tracked",
+      "present": true,
+      "bytes": 2341,
+      "contentSha256": "7f89d1b1c77db0f1f84571b9847e4615f2b95e2d684f0100585fdb36f2801d67",
       "hashMode": "exact-bytes",
       "role": "verification",
       "roleRuleId": "eva2-verification",
@@ -80251,5 +80286,5 @@
       }
     }
   ],
-  "sourceDigest": "175405e67d29583d95ecbfaba95d1216880abe34bb1166de0eb458d19f298679"
+  "sourceDigest": "b7546cd097a53e92a94d804a3eefcc6e0e95aea2153f8d46a4883c3eba22bb41"
 }

@@ -1,6 +1,6 @@
 # Eva 2 — projectbord en vergelijking
 
-Laatst bijgewerkt: 31 augustus 2026, 20:12 CEST
+Laatst bijgewerkt: 31 augustus 2026, 20:37 CEST
 
 ## Zo lees je dit bord
 
@@ -77,15 +77,19 @@ input- en 100 outputtokens en schrijft alleen hashes, tellers en veilige
 statusvelden. De echte proef leerde dat 100 outputtokens ook interne
 redeneertokens telt en te krap was; de vaste proefgrens is daarom 500, binnen
 de bestaande productgrens. 124 gerichte model-, usage-, journal- en
-probecontroles zijn groen. Dit is nog geen liveclaim: de echte probe, offline
-image, scan en veilige A/B-promotie ontbreken nog.
+probecontroles zijn groen. De exacte schone broncommit doorliep daarna met
+Eva's echte korte Codex-toegang alle drie fasen: streaming, uitgestelde
+toolkeuze zonder uitvoering en hervatten vanuit een synthetische receipt met
+nul aangeboden tools. Dit is nog geen liveclaim: offline image, scan en
+veilige A/B-promotie ontbreken nog.
 
 De actuele Pydantic-versie heeft nu ook met Eva's echte korte Codex-toegang
-gepraat. De verplichte streamingroute gaf exact `PAI236` terug en koos uit de
-zin “Het is koud in de overkapping” zelfstandig één algemene comforttool met
-`warmer` en `overkapping`. De vervolgstap met een nagebootst resultaat kreeg
-een tijdelijke verbindingsfout en is dus nog niet groen. Er is geen echte tool
-uitgevoerd en de productroute is niet gewijzigd.
+gepraat. De vaste, gesaneerde bronproef is volledig groen: het antwoord kwam in
+vier echte tekststukken, Codex koos één uitgestelde compatibiliteitstool met
+geldige argumenten en een verse adapter maakte daarna uit de synthetische
+receipt het gevraagde eindantwoord met nul aangeboden tools. Alle drie calls
+hebben gemeten usage en bleven binnen 9.000 input- en 500 outputtokens. Er is
+geen echte tool uitgevoerd en de productroute is niet gewijzigd.
 
 ## Praten met Eva
 
@@ -354,9 +358,9 @@ herstelbaar.
 
 | Algemeen probleem | Gekozen onderhouden bouwsteen | Werkelijkheid nu |
 |---|---|---|
-| Modelverkeer | `pydantic-ai-slim` met alleen de gekozen officiële provider-SDK | 🟡 Pydantic AI `2.36.0` is nu de enige gewone gesprekseigenaar in de bron. De oude transportklasse is verwijderd; streaming, uitgestelde tools, hervatten en veilige pre-outputretry zijn gericht groen. De lock blijft 38 pakketten; echte providerpariteit, offline image, scan en A/B-livegang ontbreken nog |
+| Modelverkeer | `pydantic-ai-slim` met alleen de gekozen officiële provider-SDK | 🟡 Pydantic AI `2.36.0` is nu de enige gewone gesprekseigenaar in de bron. De oude transportklasse is verwijderd; streaming, uitgestelde tools, hervatten en veilige pre-outputretry zijn gericht én met de echte Codex-provider groen. De lock blijft 38 pakketten; offline image, scan en A/B-livegang ontbreken nog |
 | Langetermijngeheugen | Hindsight | ✅ Live; 🟡 Eva's adapter moet nog kleiner |
-| Externe gereedschappen | Pydantic AI met runtime-ontdekte tools; ContextForge alleen als optionele gateway | 🟡 De gewone bronroute gebruikt nu Pydantic AI en houdt Eva's duurzame ledger/readback buiten het framework. De brede 69-wheelroute is afgewezen. Uitgestelde cataloguslading is in de bron groen; de echte Codex-probe en twee verwisselbare providers moeten nog op de exacte image worden bewezen |
+| Externe gereedschappen | Pydantic AI met runtime-ontdekte tools; ContextForge alleen als optionele gateway | 🟡 De gewone bronroute gebruikt nu Pydantic AI en houdt Eva's duurzame ledger/readback buiten het framework. De brede 69-wheelroute is afgewezen. Uitgestelde cataloguslading en de echte Codex-bronproef zijn groen; twee verwisselbare providers moeten nog op de exacte image worden bewezen |
 | Subagents | Pydantic AI/Harness voor modelruns; onderhouden workflowmotor voor duurzaam werk | 🟡 Modelrun werkt; workflowkeuze nog niet gewonnen door een dependency |
 | Voice | Pipecat als eerste complete pipeline; Wyoming als lokale fallback | 🟡 Bake-off en fysieke proef ontbreken |
 | Browser | Playwright MCP tegenover Browser Use; daarna één winnaar | 🟡 Functioneel beproefd; nog geen releaseveilige winnaar |
@@ -440,6 +444,8 @@ fail-closed vervangingspoort staan in
 [de deferred-toolproef](experiments/pydantic-external-deferred-v1/README.md),
 [de minimale dependency-overlay](experiments/pydantic-agent-overlay-v1/README.md)
 en [TOOL01](experiments/tool01-replacement-acceptance-v1/README.md).
+De echte gesaneerde bronproef staat in
+[het Codex-compatibiliteitsbewijs](evidence/product/pydantic-ai-2.36-source-codex-compatibility-2026-08-31.json).
 De vastgestelde Telegramverwarring, historische classificatie, live correctie
 en de nog open menselijke eindproef staan in
 [het Eva1/Eva2-dialooggrensbewijs](evidence/living-core/eva1-eva2-telegram-dialogue-isolation-2026-08-31.json).

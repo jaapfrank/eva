@@ -1,0 +1,54 @@
+{
+  "contract": "EvaCodexSourceCompatibilityEvidence/v1",
+  "recordedAt": "2026-08-31T20:37:15+02:00",
+  "status": "passed",
+  "candidate": {
+    "commit": "eb5846b743eb6cb2f19060790df0ff3527c64a3e",
+    "sourceSha256": "327ca6033bd0a35892ac72966014af3011f13cb22eb5e7abd3539544741a2626",
+    "pydanticAiSlimVersion": "2.36.0"
+  },
+  "probe": {
+    "contract": "EvaCodexSourceCompatibilityProbe/v1",
+    "modelAttemptCount": 3,
+    "phaseCount": 3,
+    "phases": {
+      "streamingText": {
+        "answerSha256": "7b3c05415af6eaf1f0af0d18c54168ebca79dd9c7b8f5380a35a06391c281e88",
+        "deltaCount": 4,
+        "status": "exact",
+        "usage": {"inputTokens": 28, "measurement": "measured", "modelAttempts": 1, "outputTokens": 24, "toolCalls": 0}
+      },
+      "deferredTool": {
+        "callIdSha256": "ea89a37d9b28308233d77ea3cc9c8d71d3d5c09f69063bcc3a099be43b776340",
+        "status": "selected_not_executed",
+        "toolName": "probe_candidate_capability",
+        "usage": {"inputTokens": 1576, "measurement": "measured", "modelAttempts": 1, "outputTokens": 159, "toolCalls": 1},
+        "validatedArguments": {"capability": "streaming-deferred-tools"}
+      },
+      "receiptContinuation": {
+        "answerSha256": "43f2b98e3e6f55b9cab4190e25498b5a1d0114b262f50667d38560e2c7387b19",
+        "offeredToolCount": 0,
+        "status": "synthetic_receipt_continued",
+        "usage": {"inputTokens": 789, "measurement": "measured", "modelAttempts": 1, "outputTokens": 78, "toolCalls": 0}
+      }
+    },
+    "resourceBudget": {
+      "maxInputTokens": 9000,
+      "maxOutputTokens": 500,
+      "sourceSha256": "2633492f67e1cdfd80cde67446fac8a7c2951d0e4c65951dfaae5062bdd0f085",
+      "unknownCostStatus": "blocked"
+    }
+  },
+  "privacy": {
+    "accessOnlyLease": true,
+    "accountIdRecorded": false,
+    "answerTextRecorded": false,
+    "promptTextRecorded": false,
+    "tokenRecorded": false
+  },
+  "nonClaims": [
+    "This proves the exact clean source candidate against the real Codex provider; it is not an image, vulnerability-scan, deployment or live-route claim.",
+    "The deferred tool was selected but not executed; the continuation used a synthetic receipt and caused no external provider effect.",
+    "No refresh token, access token, account identifier, raw prompt or raw answer is stored in this evidence."
+  ]
+}
