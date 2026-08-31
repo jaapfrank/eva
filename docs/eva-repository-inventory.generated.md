@@ -3,13 +3,13 @@
 Deze kaart is mechanisch gegenereerd. Zij staat naast de semantische runtimegraaf en
 classificeert ieder gevolgd, verwijderd of niet-genegeerd nieuw repositorypad.
 
-Schema: `EvaRepositoryInventory/v1`. Brondigest: `c8f7789cad12048b3e8612f88b287d6352e6625d14c10511e7523987b00991dd`.
+Schema: `EvaRepositoryInventory/v1`. Brondigest: `2f90374bf360590708b0172ef7f53bbbb86032b6a13187b69bfd0ccd3c45f9e5`.
 
 ## Samenvatting
 
 | Bestanden | Aanwezig | Tracked | Untracked | Tombstones | Policyfouten |
 | ---: | ---: | ---: | ---: | ---: | ---: |
-| 1962 | 1962 | 1883 | 79 | 0 | 88 |
+| 1967 | 1967 | 1888 | 79 | 0 | 88 |
 
 ## Policyfouten
 
@@ -128,7 +128,7 @@ Schema: `EvaRepositoryInventory/v1`. Brondigest: `c8f7789cad12048b3e8612f88b287d
 | `eva2-verification` | `verification` | 711 |
 | `eva2-documentation` | `documentation` | 102 |
 | `eva2-deployment` | `deployment` | 48 |
-| `eva2-experimental` | `experimental` | 129 |
+| `eva2-experimental` | `experimental` | 134 |
 | `eva2-verification-runtime` | `verification-runtime` | 77 |
 | `eva2-runtime` | `product-runtime` | 240 |
 | `eva2-build-contract` | `repository-config` | 240 |
@@ -235,8 +235,8 @@ Schema: `EvaRepositoryInventory/v1`. Brondigest: `c8f7789cad12048b3e8612f88b287d
 | `docs/eva-agent-benchmark-v1.md` | tracked | documentation | included-tracked-noncritical | keep | 18462 |
 | `docs/eva-endbeeld-roadmap.md` | tracked | documentation | included-tracked-noncritical | keep | 16956 |
 | `docs/eva-rebuild-plan-2026-08-20.md` | tracked | documentation | included-tracked-noncritical | keep | 29009 |
-| `docs/eva-repository-inventory.generated.json` | tracked | generated | included-tracked-critical | keep | 2284062 |
-| `docs/eva-repository-inventory.generated.md` | tracked | generated | included-tracked-critical | keep | 354181 |
+| `docs/eva-repository-inventory.generated.json` | tracked | generated | included-tracked-critical | keep | 2289110 |
+| `docs/eva-repository-inventory.generated.md` | tracked | generated | included-tracked-critical | keep | 354924 |
 | `docs/eva-runtime-contract-map.generated.json` | tracked | generated | included-tracked-critical | keep | 246207 |
 | `docs/eva-runtime-contract-map.generated.md` | tracked | generated | included-tracked-critical | keep | 120103 |
 | `docs/eva-runtime-contracts.md` | tracked | documentation | included-tracked-critical | keep | 80976 |
@@ -261,7 +261,7 @@ Schema: `EvaRepositoryInventory/v1`. Brondigest: `c8f7789cad12048b3e8612f88b287d
 | `eva2/OPEN_SOURCE_EN_DEPENDENCYKEUZES.md` | tracked | documentation | included-tracked-noncritical | keep | 36216 |
 | `eva2/OUDE_EVA_VS_EVA2.md` | tracked | documentation | included-tracked-noncritical | keep | 5434 |
 | `eva2/PROJECTEN_EN_PLANNING.md` | tracked | documentation | included-tracked-noncritical | keep | 22263 |
-| `eva2/PROJECT_STATUS.md` | tracked | documentation | included-tracked-noncritical | keep | 40825 |
+| `eva2/PROJECT_STATUS.md` | tracked | documentation | included-tracked-noncritical | keep | 41168 |
 | `eva2/README.md` | tracked | documentation | included-tracked-noncritical | keep | 10625 |
 | `eva2/TEAM_WERKWIJZE.md` | tracked | documentation | included-tracked-noncritical | keep | 7129 |
 | `eva2/TECHNISCHE_MOGELIJKHEDEN_EN_GATEN.md` | tracked | documentation | included-tracked-noncritical | keep | 20072 |
@@ -844,6 +844,10 @@ Schema: `EvaRepositoryInventory/v1`. Brondigest: `c8f7789cad12048b3e8612f88b287d
 | `eva2/experiments/playwright-mcp-sidecar-v1/smoke_client.py` | tracked | experimental | included-tracked-noncritical | keep | 2204 |
 | `eva2/experiments/playwright-mcp-system-refresh-v1/Dockerfile` | tracked | experimental | included-tracked-noncritical | keep | 645 |
 | `eva2/experiments/playwright-mcp-system-refresh-v1/README.md` | tracked | experimental | included-tracked-noncritical | keep | 1355 |
+| `eva2/experiments/pydantic-agent-merged-lock-v1/check_candidate.py` | tracked | experimental | included-tracked-noncritical | keep | 8254 |
+| `eva2/experiments/pydantic-agent-merged-lock-v1/requirements-4d-candidate.lock` | tracked | experimental | included-tracked-noncritical | keep | 72071 |
+| `eva2/experiments/pydantic-agent-merged-lock-v1/test_candidate.py` | tracked | experimental | included-tracked-noncritical | keep | 4914 |
+| `eva2/experiments/pydantic-agent-merged-lock-v1/wheelhouse-authority.json` | tracked | experimental | included-tracked-noncritical | keep | 2220 |
 | `eva2/experiments/pydantic-agent-overlay-v1/README.md` | tracked | experimental | included-tracked-noncritical | keep | 1155 |
 | `eva2/experiments/pydantic-agent-overlay-v1/check_overlay.py` | tracked | experimental | included-tracked-noncritical | keep | 9265 |
 | `eva2/experiments/pydantic-agent-overlay-v1/requirements-overlay.lock` | tracked | experimental | included-tracked-noncritical | keep | 445 |
@@ -877,9 +881,10 @@ Schema: `EvaRepositoryInventory/v1`. Brondigest: `c8f7789cad12048b3e8612f88b287d
 | `eva2/experiments/react-admin-dashboard-v1/src/style.css` | tracked | experimental | included-tracked-noncritical | keep | 1002 |
 | `eva2/experiments/react-admin-dashboard-v1/verify-browser.cjs` | tracked | experimental | included-tracked-noncritical | keep | 7525 |
 | `eva2/experiments/react-admin-dashboard-v1/vite.config.mjs` | tracked | experimental | included-tracked-noncritical | keep | 235 |
-| `eva2/experiments/tool01-replacement-acceptance-v1/README.md` | tracked | experimental | included-tracked-noncritical | keep | 1957 |
-| `eva2/experiments/tool01-replacement-acceptance-v1/check_acceptance.py` | tracked | experimental | included-tracked-noncritical | keep | 22913 |
-| `eva2/experiments/tool01-replacement-acceptance-v1/test_acceptance.py` | tracked | experimental | included-tracked-noncritical | keep | 13096 |
+| `eva2/experiments/tool01-replacement-acceptance-v1/README.md` | tracked | experimental | included-tracked-noncritical | keep | 2792 |
+| `eva2/experiments/tool01-replacement-acceptance-v1/check_acceptance.py` | tracked | experimental | included-tracked-noncritical | keep | 23523 |
+| `eva2/experiments/tool01-replacement-acceptance-v1/generate_source_authority.py` | tracked | experimental | included-tracked-noncritical | keep | 10545 |
+| `eva2/experiments/tool01-replacement-acceptance-v1/test_acceptance.py` | tracked | experimental | included-tracked-noncritical | keep | 17860 |
 | `eva2/experiments/wyoming-local-voice-v1/Dockerfile.controller` | tracked | experimental | included-tracked-noncritical | keep | 1069 |
 | `eva2/experiments/wyoming-local-voice-v1/README.md` | tracked | experimental | included-tracked-noncritical | keep | 3672 |
 | `eva2/experiments/wyoming-local-voice-v1/capture_offline_isolation.py` | tracked | experimental | included-tracked-noncritical | keep | 7897 |

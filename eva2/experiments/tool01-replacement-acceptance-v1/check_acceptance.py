@@ -10,6 +10,15 @@ from pathlib import Path, PurePosixPath
 import re
 from typing import Any
 
+from generate_source_authority import (
+    ENTRYPOINT,
+    REQUIRED_RETIRED_PATHS,
+    REQUIRED_RETIRED_SYMBOLS,
+    SOURCE_CONTRACT,
+    SourceAuthorityError,
+    verify_source_authority,
+)
+
 
 BUNDLE_CONTRACT = "EvaTool01AcceptanceBundle/v1"
 CATALOG_CONTRACT = "EvaTool01RuntimeCatalog/v1"
@@ -17,7 +26,6 @@ TRAJECTORY_CONTRACT = "EvaTool01FrameworkTrajectory/v1"
 LEDGER_CONTRACT = "EvaTool01DurableLedger/v1"
 PROVIDER_CONTRACT = "EvaTool01ProviderAudit/v1"
 RESTART_CONTRACT = "EvaTool01RestartAudit/v1"
-SOURCE_CONTRACT = "EvaTool01SourceAuthority/v1"
 RESULT_CONTRACT = "EvaTool01AcceptanceResult/v1"
 
 PROMPT = "Ik zit nu in de overkapping en het is hier koud."
@@ -30,19 +38,6 @@ BUDGET = {
     "totalTokens": 8_000,
     "wallSeconds": 120,
 }
-ENTRYPOINT = {
-    "path": "src/eva/adapters/model/pydantic_conversation.py",
-    "symbol": "PydanticConversationModel",
-}
-REQUIRED_RETIRED_PATHS = {
-    "src/eva/adapters/model/openai_responses_transport.py",
-}
-REQUIRED_RETIRED_SYMBOLS = {
-    "eva.adapters.model.conversation:CodexConversationModel",
-    "eva.adapters.model.openai_responses_transport:OpenAIResponsesTransport",
-    "eva.adapters.model.openai_responses_transport:parse_conversation_sse",
-}
-
 _DIGEST = re.compile(r"^[0-9a-f]{64}$")
 _GIT_COMMIT = re.compile(r"^[0-9a-f]{40}$")
 _IDENTIFIER = re.compile(r"^[A-Za-z][A-Za-z0-9_.:-]{0,159}$")
@@ -460,12 +455,16 @@ def _source_violations(value: dict[str, Any], run_id: str) -> list[str]:
     row = _exact(
         value,
         {
+            "blockers",
             "contract",
             "gitCommit",
+            "manifest",
             "retiredPaths",
             "retiredSymbols",
             "runId",
             "scan",
+            "sourceTreeSha256",
+            "status",
             "toolLoopEntrypoint",
         },
         label="source authority",
@@ -477,6 +476,8 @@ def _source_violations(value: dict[str, Any], run_id: str) -> list[str]:
         or _GIT_COMMIT.fullmatch(row["gitCommit"]) is None
     ):
         raise Tool01Error("source git commit is invalid")
+    if row["status"] != "complete" or row["blockers"] != []:
+        violations.append("source_authority_is_not_complete")
     entrypoint = _exact(
         row["toolLoopEntrypoint"],
         {"path", "sha256", "symbol"},
@@ -526,7 +527,7 @@ def _source_violations(value: dict[str, Any], run_id: str) -> list[str]:
     return sorted(set(violations))
 
 
-def check(bundle_path: Path) -> dict[str, Any]:
+def check(bundle_path: Path, *, source_root: Path | None = None) -> dict[str, Any]:
     bundle, _ = _read_json(bundle_path, label="bundle")
     row = _exact(
         bundle,
@@ -564,14 +565,25 @@ def check(bundle_path: Path) -> dict[str, Any]:
     source_violations: list[str] = []
     if source["status"] == "pending" and source["artifact"] is None:
         source_status = "source_authority_pending"
-    elif source["status"] == "complete" and source["artifact"] is not None:
+    elif source["status"] in {"pending", "complete"} and source["artifact"] is not None:
+        if source_root is None:
+            raise Tool01Error("source root is required for source authority")
         source_value = _artifact(root, source["artifact"], label="sourceAuthority")
-        source_violations = _source_violations(source_value, run_id)
-        source_status = (
-            "source_authority_passed"
-            if not source_violations
-            else "source_authority_failed"
-        )
+        try:
+            verified_source = verify_source_authority(source_value, source_root)
+        except SourceAuthorityError as error:
+            raise Tool01Error(str(error)) from error
+        if verified_source["status"] != source["status"]:
+            raise Tool01Error("source authority status differs")
+        if source["status"] == "pending":
+            source_status = "source_authority_pending"
+        else:
+            source_violations = _source_violations(verified_source, run_id)
+            source_status = (
+                "source_authority_passed"
+                if not source_violations
+                else "source_authority_failed"
+            )
     else:
         raise Tool01Error("source authority state is invalid")
 
@@ -595,9 +607,10 @@ def check(bundle_path: Path) -> dict[str, Any]:
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("bundle", type=Path)
+    parser.add_argument("--source-root", type=Path)
     arguments = parser.parse_args()
     try:
-        result = check(arguments.bundle)
+        result = check(arguments.bundle, source_root=arguments.source_root)
     except (OSError, ValueError, Tool01Error) as error:
         print(
             json.dumps(

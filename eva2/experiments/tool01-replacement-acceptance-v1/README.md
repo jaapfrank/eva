@@ -27,11 +27,18 @@ provider. De checker vereist vervolgens:
 - een exacte replay zonder providercall;
 - een eindantwoord gevoed met `DeferredToolResults` en dezelfde frameworkhistory.
 
-`sourceAuthority.status=pending` kan alleen
-`source_authority_pending` opleveren, ook wanneer de runtime groen is. De
-eindstatus `replacement_passed` vereist daarnaast een gehashte bronauthority
-met exact één `PydanticConversationModel`-toolloop en zonder de opgegeven oude
-paden of symbolen.
+`generate_source_authority.py` scant daarvoor alle Pythonbron onder `src/eva`,
+bindt pad, bytegrootte en SHA-256 in één bronmanifest en leidt de runtime-
+eigenaar af uit de werkelijk geconstrueerde conversation-modelklasse in
+`bootstrap/runtime.py`. De checker scant de aangewezen worktree opnieuw; een
+artifact kan verwijderde code dus niet alleen beweren.
+
+`sourceAuthority.status=pending` kan alleen `source_authority_pending`
+opleveren, ook wanneer de runtime groen is. De eindstatus
+`replacement_passed` vereist daarnaast exact één
+`PydanticConversationModel`-toolloop en runtime-eigenaar, plus werkelijke
+afwezigheid van de opgegeven oude paden en symbolen. Een verplaatst of hernoemd
+entrypoint, tweede eigenaar of vervalste verwijderingsclaim faalt gesloten.
 
 Een `passed`- of `allPassed`-veld is overal verboden. De checker leidt zijn
 uitkomst af uit de gehashte catalogus-, traject-, ledger-, provider-, restart-
@@ -43,7 +50,14 @@ Lokaal uitvoeren:
 python3 -m pytest -q \
   eva2/experiments/tool01-replacement-acceptance-v1/test_acceptance.py
 python3 eva2/experiments/tool01-replacement-acceptance-v1/check_acceptance.py \
-  /pad/naar/bundle.json
+  /pad/naar/bundle.json --source-root /pad/naar/eva2
+
+python3 \
+  eva2/experiments/tool01-replacement-acceptance-v1/generate_source_authority.py \
+  eva2 --run-id tool01-review-001 --output /pad/naar/source-authority.json
 ```
+
+De generator geeft exitcode `0` bij een complete authority, `1` zolang eerlijke
+vervangingsblokkers bestaan en `2` bij ongeldige invoer of een onleesbare bron.
 
 Dit is geen live bewijs, geen productintegratie en geen vierwegscore.
