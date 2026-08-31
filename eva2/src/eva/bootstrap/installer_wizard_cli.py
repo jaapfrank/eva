@@ -1,4 +1,4 @@
-"""Command-line launcher for Eva's loopback installer wizard."""
+"""Composition root for Eva's loopback installer wizard."""
 
 from __future__ import annotations
 

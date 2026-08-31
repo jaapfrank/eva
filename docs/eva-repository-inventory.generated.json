@@ -269,9 +269,9 @@
     }
   ],
   "summary": {
-    "files": 1936,
-    "present": 1936,
-    "tracked": 1853,
+    "files": 1937,
+    "present": 1937,
+    "tracked": 1854,
     "untracked": 83,
     "tombstones": 0,
     "policyErrors": 92
@@ -310,7 +310,7 @@
     {
       "id": "eva2-verification",
       "role": "verification",
-      "matchCount": 708
+      "matchCount": 709
     },
     {
       "id": "eva2-documentation",
@@ -9493,8 +9493,8 @@
       "path": "component-watch.json",
       "gitState": "tracked",
       "present": true,
-      "bytes": 1933,
-      "contentSha256": "b78c490f5726225ac240781eee1a536129c6af7b11e13b72b6929259cdc422bc",
+      "bytes": 1931,
+      "contentSha256": "09659854cf540c6f9e50b40aca8cb47be3217d811cde7d1d16d4bea7dcd251ec",
       "hashMode": "exact-bytes",
       "role": "repository-config",
       "roleRuleId": "root-config",
@@ -10274,7 +10274,7 @@
       "path": "docs/eva-repository-inventory.generated.json",
       "gitState": "tracked",
       "present": true,
-      "bytes": 2258321,
+      "bytes": 2259335,
       "contentSha256": "32591e23fa2eb53a038d95e726ba09edd0405306f38c5283a36a2b6d3010254d",
       "hashMode": "canonical-self-reference-redacted",
       "role": "generated",
@@ -10307,7 +10307,7 @@
       "path": "docs/eva-repository-inventory.generated.md",
       "gitState": "tracked",
       "present": true,
-      "bytes": 350932,
+      "bytes": 351068,
       "contentSha256": "2f4f8486464cbb9713b749dc898f265093d0853699f1da1b4eb3dd1625c1b2d2",
       "hashMode": "canonical-self-reference-redacted",
       "role": "generated",
@@ -11061,8 +11061,8 @@
       "path": "eva2/PROJECT_STATUS.md",
       "gitState": "tracked",
       "present": true,
-      "bytes": 37446,
-      "contentSha256": "e8e74a7dfdf6c3b3e5a1528881071286e98a3dfb8f351949cb57bd740a3f40c5",
+      "bytes": 37700,
+      "contentSha256": "fb80145aa84207769756997f4d17e92ad14822210124cbdaff2dc24575545b62",
       "hashMode": "exact-bytes",
       "role": "documentation",
       "roleRuleId": "eva2-documentation",
@@ -12888,8 +12888,8 @@
       "path": "eva2/design/architecture/living-core-v1.md",
       "gitState": "tracked",
       "present": true,
-      "bytes": 132361,
-      "contentSha256": "e5c0278acaf7f5f9386aaf4ea7edf9cd17fe189cb5c3893181a5d2215c269b25",
+      "bytes": 132677,
+      "contentSha256": "6d4e5b72214d75b1db8e796506400994d8d014c158ca7bd0234e79c0f109c6e5",
       "hashMode": "exact-bytes",
       "role": "documentation",
       "roleRuleId": "eva2-documentation",
@@ -12919,8 +12919,8 @@
       "path": "eva2/design/architecture/package-boundaries-v1.json",
       "gitState": "tracked",
       "present": true,
-      "bytes": 4667,
-      "contentSha256": "866ad327cca2f4e221aa32bb567ca2ab39310356d5072697c79f088d540aaaea",
+      "bytes": 4733,
+      "contentSha256": "88ac00ed04bdac764447f39bc08138aca1782b986776ced3bbd97d929b2e306f",
       "hashMode": "exact-bytes",
       "role": "documentation",
       "roleRuleId": "eva2-documentation",
@@ -28415,6 +28415,41 @@
       }
     },
     {
+      "path": "eva2/evidence/product/upstream-release-watch-live-2026-08-31.json",
+      "gitState": "tracked",
+      "present": true,
+      "bytes": 4620,
+      "contentSha256": "e2eb81bd56d647c418f4f271c4b992240349cf20b895fdce4d8699fa0e7eafc1",
+      "hashMode": "exact-bytes",
+      "role": "verification",
+      "roleRuleId": "eva2-verification",
+      "matchingRuleIds": [
+        "eva2-verification"
+      ],
+      "owner": "verification",
+      "inputs": [
+        "production or fixture contract"
+      ],
+      "outputs": [
+        "test decision"
+      ],
+      "state": [
+        "temporary isolated test state"
+      ],
+      "effects": [
+        "may execute only inside its declared gate"
+      ],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": true,
+        "runtimeCritical": true,
+        "status": "included-tracked-critical"
+      }
+    },
+    {
       "path": "eva2/evidence/public/eva-cockpit-sanitized-evidence-v1.json",
       "gitState": "tracked",
       "present": true,
@@ -33577,8 +33612,8 @@
       "path": "eva2/release/eva-cockpit-evidence-index-v1.json",
       "gitState": "tracked",
       "present": true,
-      "bytes": 37784,
-      "contentSha256": "b2f2c2f8bc0248b3abd859f763aa300ce0ab1da77ab0f8e29f9d6581c21554e6",
+      "bytes": 37781,
+      "contentSha256": "f77762977d8f6cbe5152382da4c297328b61c90dc656f097a8d21ca0a63a5c2b",
       "hashMode": "exact-bytes",
       "role": "repository-config",
       "roleRuleId": "eva2-build-contract",
@@ -34006,8 +34041,8 @@
       "path": "eva2/release/managed-b-release-input-authority-v1.json",
       "gitState": "tracked",
       "present": true,
-      "bytes": 63005,
-      "contentSha256": "275b1a3a9a16e2df24da47da67d86f0cde4e8eded3fc0e6a2d28752d5d029413",
+      "bytes": 63002,
+      "contentSha256": "52ab1018c915a4568d5f2f3b7b1a5a63f64f79c0173d1a48bc3add655aafff6c",
       "hashMode": "exact-bytes",
       "role": "repository-config",
       "roleRuleId": "eva2-build-contract",
@@ -43583,43 +43618,8 @@
       "path": "eva2/src/eva/adapters/api/installer_wizard.py",
       "gitState": "tracked",
       "present": true,
-      "bytes": 33731,
-      "contentSha256": "07b5926fc962338cdb25945b1360da9b05cc9e3198e8aac38253290245ba2e6d",
-      "hashMode": "exact-bytes",
-      "role": "product-runtime",
-      "roleRuleId": "eva2-runtime",
-      "matchingRuleIds": [
-        "eva2-runtime"
-      ],
-      "owner": "eva-runtime",
-      "inputs": [
-        "issued runtime input and dependencies"
-      ],
-      "outputs": [
-        "runtime result or capability"
-      ],
-      "state": [
-        "runtime-owned durable or process state"
-      ],
-      "effects": [
-        "module-specific runtime effects"
-      ],
-      "decision": "keep",
-      "decisionReason": "active repository input or evidence",
-      "consumers": [],
-      "entrypointEvidence": [],
-      "release": {
-        "includedInTrackedRelease": true,
-        "runtimeCritical": true,
-        "status": "included-tracked-critical"
-      }
-    },
-    {
-      "path": "eva2/src/eva/adapters/api/installer_wizard_cli.py",
-      "gitState": "tracked",
-      "present": true,
-      "bytes": 9166,
-      "contentSha256": "d5953a4cb8f75571eacdc9ed8587e12d8acebbff65b82332d7bc05a6386ee8f1",
+      "bytes": 33509,
+      "contentSha256": "554854511bc5f19573f607ac104425c5b43cc0ff0e117613c430fa77d2a1cd05",
       "hashMode": "exact-bytes",
       "role": "product-runtime",
       "roleRuleId": "eva2-runtime",
@@ -48025,6 +48025,41 @@
       }
     },
     {
+      "path": "eva2/src/eva/bootstrap/installer_wizard_cli.py",
+      "gitState": "tracked",
+      "present": true,
+      "bytes": 9161,
+      "contentSha256": "f69b4785009153712bde80d3facc2e20267349b7119d1f1c0d1fe9ef438fdc70",
+      "hashMode": "exact-bytes",
+      "role": "product-runtime",
+      "roleRuleId": "eva2-runtime",
+      "matchingRuleIds": [
+        "eva2-runtime"
+      ],
+      "owner": "eva-runtime",
+      "inputs": [
+        "issued runtime input and dependencies"
+      ],
+      "outputs": [
+        "runtime result or capability"
+      ],
+      "state": [
+        "runtime-owned durable or process state"
+      ],
+      "effects": [
+        "module-specific runtime effects"
+      ],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": true,
+        "runtimeCritical": true,
+        "status": "included-tracked-critical"
+      }
+    },
+    {
       "path": "eva2/src/eva/bootstrap/runtime.py",
       "gitState": "tracked",
       "present": true,
@@ -50548,8 +50583,8 @@
       "path": "eva2/tests/api/test_installer_provider_api.py",
       "gitState": "tracked",
       "present": true,
-      "bytes": 21736,
-      "contentSha256": "e5567d7ea514b3f60dac74f95c74c614f88e6721fd9244ded89aa37a5d60cbee",
+      "bytes": 21721,
+      "contentSha256": "1a298ebe9c8ab1fcb462654eadded23f58dc9843852ea9edc60b7a8c84f49a68",
       "hashMode": "exact-bytes",
       "role": "verification",
       "roleRuleId": "eva2-verification",
@@ -55448,8 +55483,8 @@
       "path": "eva2/tests/operations/test_dependency_update_posture.py",
       "gitState": "tracked",
       "present": true,
-      "bytes": 5067,
-      "contentSha256": "412c0b0594eb2eb6f4850ffc7aa25554beb20c67ffeb75cac6998f2e7977008f",
+      "bytes": 5023,
+      "contentSha256": "00a131ce1d09dc548c4cb7e8c940ba1e3860d94c221fcf861f89e9a88cc2f605",
       "hashMode": "exact-bytes",
       "role": "verification",
       "roleRuleId": "eva2-verification",
@@ -61399,7 +61434,7 @@
       "gitState": "tracked",
       "present": true,
       "bytes": 37862,
-      "contentSha256": "034c0ed4002b6151c0dfe0369b904ae84df61d86ac082dbb4b6aedb5ce1e67f6",
+      "contentSha256": "f301816c2e6aff1e7269f15d193f4843fc6a69b73fed5293137a4ae8541b2a86",
       "hashMode": "exact-bytes",
       "role": "verification-runtime",
       "roleRuleId": "eva2-verification-runtime",
@@ -62238,8 +62273,8 @@
       "path": "eva2/tools/prove_installer_endpoint_wizard.py",
       "gitState": "tracked",
       "present": true,
-      "bytes": 21258,
-      "contentSha256": "1bdf339e4a69c8bd677ac29f235147ee0121ed4a0c2586a855f329c696839a0c",
+      "bytes": 21255,
+      "contentSha256": "86c4729bafa3c8d529601e38beb6b667618683b0f4b67a3c464c42e545658919",
       "hashMode": "exact-bytes",
       "role": "verification-runtime",
       "roleRuleId": "eva2-verification-runtime",
@@ -62308,8 +62343,8 @@
       "path": "eva2/tools/prove_installer_provider_wizard.py",
       "gitState": "tracked",
       "present": true,
-      "bytes": 17969,
-      "contentSha256": "e619864a4d4230be6adfa29095aee7bd200bf556e328d6bfcd6f75723860e1bc",
+      "bytes": 17966,
+      "contentSha256": "0fb4641786a7789dbc49f34da993b1e71040fa20f76204533cc71576c1700303",
       "hashMode": "exact-bytes",
       "role": "verification-runtime",
       "roleRuleId": "eva2-verification-runtime",
@@ -62378,8 +62413,8 @@
       "path": "eva2/tools/prove_installer_secret_lifecycle_wizard.py",
       "gitState": "tracked",
       "present": true,
-      "bytes": 27098,
-      "contentSha256": "b9ee03c7464763cd69c2243ccca5ffacdd026d6986cd29b20739f8cf5940fbc8",
+      "bytes": 27095,
+      "contentSha256": "f24d1fe758941e353d8fd544bc221452aeb17ffb49b1fdc623b47ea0b44cd16c",
       "hashMode": "exact-bytes",
       "role": "verification-runtime",
       "roleRuleId": "eva2-verification-runtime",
@@ -62588,8 +62623,8 @@
       "path": "eva2/tools/reseal_managed_b_release_input_authority.py",
       "gitState": "tracked",
       "present": true,
-      "bytes": 7506,
-      "contentSha256": "492f29dfb302d9d1a4a618c65b3379fce1bf4e1a0b78d93eea5e886a15098486",
+      "bytes": 8480,
+      "contentSha256": "706b5534e2cac3f7762d9af1230033dde9e9fff8e3914331f505779524fd4c8a",
       "hashMode": "exact-bytes",
       "role": "verification-runtime",
       "roleRuleId": "eva2-verification-runtime",
@@ -78864,5 +78899,5 @@
       }
     }
   ],
-  "sourceDigest": "c15e1948dc2a02c5a7ee0a98b4815b5eb21972c14c7138da84c67bdbebcfa4e5"
+  "sourceDigest": "47b5a7eea4e7d4f5c31ee8ed9ecb98bc348470ee468d1a543af78a9241c152d1"
 }

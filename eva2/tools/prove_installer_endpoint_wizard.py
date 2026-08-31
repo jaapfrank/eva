@@ -48,7 +48,7 @@ POD_ID = "synthetic-pod-1"
 SOURCE_PATHS = (
     "src/eva/adapters/api/installer_provider_api.py",
     "src/eva/adapters/api/installer_wizard.py",
-    "src/eva/adapters/api/installer_wizard_cli.py",
+    "src/eva/bootstrap/installer_wizard_cli.py",
     "src/eva/adapters/connectors/installer_agentmail_probe.py",
     "src/eva/adapters/connectors/installer_home_assistant_probe.py",
     "src/eva/operations/installer_provider_configuration.py",

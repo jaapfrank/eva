@@ -75,10 +75,14 @@ pointgroep blijft alleen een aanvullende compatibiliteitsroute voor reeds
 geïnstalleerde providerpakketten. ContextForge is in deze fase eigenaar-only;
 zijn eigen RBAC vervangt Eva's persoonsautoriteit niet.
 
-De structurele codegrens is nu groen. Applicatie, contracten, modeladapter,
-gesprekspersistence en runtime bevatten nul Home Assistant-/Tuya-/AgentMail-specifieke
-identifiers. De teller herkent ook spaties en CamelCase; sinds de eerste meting
-zijn alle 957 identifiers uit die kernscope verwijderd.
+De smalle providerspecifieke kerncontrole is groen: applicatie, contracten,
+modeladapter en gesprekspersistence bevatten nul Home Assistant-/Tuya-/AgentMail-
+specifieke identifiers. Dat maakt de volledige architectuur nog niet groen.
+Na het verplaatsen van de installer-compositieroot meldt de packagechecker nog
+48 bestaande importgrensschendingen; die blijven open totdat de verantwoordelijkheden
+werkelijk zijn verplaatst, niet doordat het beleid ruimer wordt gemaakt. De
+providernaam-teller herkent ook spaties en CamelCase; sinds de eerste meting zijn
+alle 957 identifiers uit de eerdere kernscope verwijderd.
 Gewone lees-/aan-uittools, automatiseringen, migratieplanning en HACS-repository-
 en pakketacties leveren schema, antwoordinstructie, validatie en
 providercommando nu vanuit adapters. Zij registreren via

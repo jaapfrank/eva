@@ -1,7 +1,7 @@
 {
   "contract": "Eva2UpstreamReleaseWatch/v1",
-  "checkedAt": "2026-08-30T21:20:00+02:00",
-  "reviewValidUntil": "2026-09-29T21:20:00+02:00",
+  "checkedAt": "2026-08-31T14:18:00+02:00",
+  "reviewValidUntil": "2026-09-30T14:18:00+02:00",
   "components": [
     {"repository": "openai/openai-python", "currentRelease": "v3.6.0", "role": "model-provider-sdk"},
     {"repository": "pydantic/pydantic-ai", "currentRelease": "v2.36.0", "role": "agent-runtime"},
@@ -16,10 +16,10 @@
     {"repository": "IBM/mcp-context-forge", "currentRelease": "v1.0.8", "role": "mcp-gateway-candidate"},
     {"repository": "docker/mcp-gateway", "currentRelease": "v0.43.3", "role": "mcp-gateway-reserve"},
     {"repository": "marmelab/react-admin", "currentRelease": "v5.15.1", "role": "dashboard-candidate"},
-    {"repository": "renovatebot/renovate", "currentRelease": "44.52.0", "role": "dependency-updates"}
+    {"repository": "renovatebot/renovate", "currentRelease": "44.52.1", "role": "dependency-updates"}
   ],
   "competitors": [
-    {"repository": "openclaw/openclaw", "currentRelease": "v2026.7.1-2", "role": "competitor"},
+    {"repository": "openclaw/openclaw", "currentRelease": "v2026.8.1", "role": "competitor"},
     {"repository": "NousResearch/hermes-agent", "currentRelease": "v2026.8.27", "role": "competitor"},
     {"repository": "agent0ai/agent-zero", "currentRelease": "v2.11", "role": "competitor"}
   ]

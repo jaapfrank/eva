@@ -11,7 +11,7 @@ from eva.adapters.api.installer_wizard import (
     InstallerBootstrap,
     create_installer_wizard,
 )
-from eva.adapters.api.installer_wizard_cli import run_installer_wizard
+from eva.bootstrap.installer_wizard_cli import run_installer_wizard
 from eva.operations.installer_capability_workflow import InstallerCapabilityWorkflow
 from eva.operations.installer_provider_configuration import (
     InstallerProviderConfigurationStore,
@@ -558,13 +558,13 @@ def test_launcher_opens_model_and_telegram_verification_without_manual_config(
         lambda: fixed_bootstrap,
     )
     monkeypatch.setattr(
-        "eva.adapters.api.installer_wizard_cli.load_platform_lock", lambda _path: object()
+        "eva.bootstrap.installer_wizard_cli.load_platform_lock", lambda _path: object()
     )
     monkeypatch.setattr(
-        "eva.adapters.api.installer_wizard_cli.inspect_host", lambda: object()
+        "eva.bootstrap.installer_wizard_cli.inspect_host", lambda: object()
     )
     monkeypatch.setattr(
-        "eva.adapters.api.installer_wizard_cli.preflight",
+        "eva.bootstrap.installer_wizard_cli.preflight",
         lambda _lock, _host: _receipt(),
     )
 
@@ -572,7 +572,7 @@ def test_launcher_opens_model_and_telegram_verification_without_manual_config(
         captured["app"] = app
         captured["kwargs"] = kwargs
 
-    monkeypatch.setattr("eva.adapters.api.installer_wizard_cli.uvicorn.run", capture)
+    monkeypatch.setattr("eva.bootstrap.installer_wizard_cli.uvicorn.run", capture)
     assert (
         run_installer_wizard(
             [

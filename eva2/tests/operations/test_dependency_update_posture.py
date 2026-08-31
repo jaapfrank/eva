@@ -129,7 +129,7 @@ def test_release_watch_receipt_rejects_missing_component(tmp_path: Path) -> None
         validate_release_watch_receipt(watch_raw, watch, [receipt_path])
 
 
-def test_dependency_update_posture_checker_rejects_unbound_current_receipt() -> None:
+def test_dependency_update_posture_checker_accepts_bound_current_receipt() -> None:
     completed = subprocess.run(
         [sys.executable, "tools/check_dependency_update_posture.py"],
         cwd=ROOT,
@@ -138,7 +138,6 @@ def test_dependency_update_posture_checker_rejects_unbound_current_receipt() -> 
         text=True,
     )
 
-    assert completed.returncode != 0
-    assert completed.stderr.strip() == (
-        "current component watch has no unique exact release-watch receipt"
-    )
+    assert completed.returncode == 0
+    assert "receipt-bound" in completed.stdout
+    assert completed.stderr == ""

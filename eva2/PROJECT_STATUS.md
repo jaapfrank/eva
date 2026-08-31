@@ -1,6 +1,6 @@
 # Eva 2 — projectbord en vergelijking
 
-Laatst bijgewerkt: 31 augustus 2026, 14:01 CEST
+Laatst bijgewerkt: 31 augustus 2026, 14:39 CEST
 
 ## Zo lees je dit bord
 
@@ -13,9 +13,10 @@ Laatst bijgewerkt: 31 augustus 2026, 14:01 CEST
 - ⚪ Nog geen eerlijk bewijs. Dit betekent niet automatisch dat het product het
   niet kan.
 
-De huidige vergelijkingen zijn gebonden aan OpenClaw `v2026.7.1-2`, Hermes
-`v2026.8.27` en Agent Zero `v2.11`. Een nieuwe release maakt de bijbehorende
-vergelijking opnieuw geel.
+De laatst uitgevoerde vergelijkingen zijn gebonden aan OpenClaw
+`v2026.7.1-2`, Hermes `v2026.8.27` en Agent Zero `v2.11`. OpenClaw bracht
+daarna `v2026.8.1` uit. De OpenClaw-kolom is daarom weer geel totdat die nieuwe
+versie dezelfde proeven heeft doorlopen.
 
 **Eerlijke conclusie nu:** Eva2 is al een bruikbare, veilige kandidaat naast
 Eva1. Zij is nog niet aantoonbaar beter dan alle drie de concurrenten. In de
@@ -31,14 +32,14 @@ dezelfde sessie wel, maar gaf na ruim drie minuten nog geen eindantwoord.
 
 | Controle | Eerlijke stand nu |
 |---|---|
-| Is alle code per bestand inhoudelijk beoordeeld? | ❌ Nee. De oude inventaris liep 579 commits achter en miste 1.308 huidige paden. De mechanische inventaris is nu opnieuw gegenereerd met 1.936 zichtbare bestanden, maar meldt nog 92 policyfouten, waaronder bestaande untracked bestanden en onbesliste oude paden |
+| Is alle code per bestand inhoudelijk beoordeeld? | ❌ Nee. De mechanische inventaris ziet nu 1.937 bestanden en meldt 92 open punten: 79 ongeordende Eva2-bewijsbestanden, 4 Eva2-tools buiten versiebeheer en 9 oude Eva1/root-restanten. Dit zijn dus niet 92 even ernstige codefouten |
 | Heeft ieder gevolgd bestand een duidelijke plek en eigenaar? | ✅ Alle gevolgde product-, deploy-, migratie- en testpaden vallen nu onder exact één semantische component. De checker weigert ontbrekend, dubbel of dood eigenaarschap |
 | Is daarmee bewezen dat iedere afzonderlijke regel nuttig is? | 🟡 Nee. De catalogus legt per component doel, noodzaak, upstreamkeuze, vervanging en tests vast. Dode-codeanalyse, grenscontrole en echte tests moeten daarna bewijzen dat de regels binnen die component hun taak nog werkelijk uitvoeren |
 | Zijn alle dependencies en open-sourcealternatieven aantoonbaar de beste actuele keuze? | ❌ Nee. Er zijn goede deelvergelijkingen, maar geen volledige audit. De live Pythonlock heeft 38 distributies; acht liepen bij de actuele controle achter op de nieuwste release. Nieuwste is bovendien niet automatisch beste: iedere upgrade moet de echte Eva-proef winnen |
-| Worden nieuwe releases automatisch gevolgd? | 🟡 Renovate vond lokaal 99 dependencies, maar er draait nog geen echte voorstelbot. Ook bindt de laatste releasewatchreceipt niet aan de huidige componentenlijst |
+| Worden nieuwe releases automatisch gevolgd? | 🟡 De actuele releasewatch is nu exact aan een receipt gebonden en controleerde 17 van 17 gevolgde projecten via hun officiële GitHub-releases. Daardoor werden Renovate `44.52.1` en OpenClaw `v2026.8.1` gevonden. Een echte Renovate-voorstelbot draait nog niet |
 | Heeft iedere dependency of eigen regel een eigen taak? | ❌ Nog niet aantoonbaar. De nieuwe Pydantic/MCP-kandidaat voegt 46 distributies en circa 33 MB toe terwijl de oude route nog bestaat. Zolang hun verantwoordelijkheden overlappen wordt zij niet live gezet |
 | Is er nu wel iets echt verwijderd? | ✅ Een ongebruikte LocalTuya-adapter van 357 productregels en zijn 212-regelige geïsoleerde test zijn verwijderd. De algemene providerroute blijft; 92 gerichte regressies en Ruff zijn groen |
-| Is de architectuurcontrole groen? | ❌ Nee. De bestaande packagechecker vindt 62 al aanwezige grensschendingen. Die schuld wordt niet als groen verstopt |
+| Is de architectuurcontrole groen? | ❌ Nee. De installer-CLI stond verkeerd tussen de HTTP-adapters; zij is naar de compositielaag verplaatst. Dat verwijderde 14 grensschendingen zonder beleid te versoepelen. Er staan nog 48 echte pakketgrensschendingen open |
 
 De actuele productscope daalt door de eerste veilige verwijdering van 74.766
 naar 74.409 regels. Dat getal is geen doel en geen maximum. Ook 100 miljoen

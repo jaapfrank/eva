@@ -76,7 +76,7 @@
     "bootstrap": {
       "path": "src/eva/bootstrap",
       "allowedLocalImports": ["eva"],
-      "allowedExternalImports": ["dbos", "fastapi", "pydantic_ai", "sqlalchemy"]
+      "allowedExternalImports": ["dbos", "fastapi", "pydantic_ai", "sqlalchemy", "uvicorn"]
     },
     "operations": {
       "path": "src/eva/operations",
@@ -123,6 +123,7 @@
     "fileCeilings": {
       "src/eva/adapters/model/conversation.py": 0,
       "src/eva/adapters/postgres/conversation_actions.py": 0,
+      "src/eva/bootstrap/installer_wizard_cli.py": 16,
       "src/eva/bootstrap/runtime.py": 0,
       "src/eva/contracts/voice.py": 0
     }

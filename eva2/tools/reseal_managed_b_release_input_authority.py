@@ -54,6 +54,10 @@ def _arguments() -> argparse.Namespace:
         help="explicitly add one reviewed static release input path",
     )
     parser.add_argument(
+        "--replace-input",
+        help="explicitly replace OLD_PATH=NEW_PATH in the reviewed input set",
+    )
+    parser.add_argument(
         "--admit-test",
         action="append",
         default=[],
@@ -77,6 +81,25 @@ def main() -> int:
     arguments = _arguments()
     authority_file = ROOT / AUTHORITY_PATH
     authority = json.loads(authority_file.read_bytes())
+    if arguments.replace_input is not None:
+        old_path, separator, new_path = arguments.replace_input.partition("=")
+        rows = authority["requiredInputs"]
+        known = {row["path"] for row in rows}
+        if (
+            not separator
+            or old_path not in known
+            or new_path in known
+            or not new_path
+            or new_path.startswith("/")
+            or ".." in Path(new_path).parts
+        ):
+            raise RuntimeError("replacement managed-B input path is invalid")
+        matching = [row for row in rows if row["path"] == old_path]
+        if len(matching) != 1:
+            raise RuntimeError("replacement managed-B input path is ambiguous")
+        matching[0]["path"] = new_path
+        matching[0]["sha256"] = _sha256(new_path)
+        rows.sort(key=lambda row: row["path"])
     for field, admitted in (
         ("requiredInputs", arguments.admit_input),
         ("requiredTests", arguments.admit_test),

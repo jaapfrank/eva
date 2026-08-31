@@ -42,7 +42,7 @@ SOURCE_PATHS = (
     "src/eva/adapters/api/installer_provider_api.py",
     "src/eva/adapters/api/installer_secret_api.py",
     "src/eva/adapters/api/installer_wizard.py",
-    "src/eva/adapters/api/installer_wizard_cli.py",
+    "src/eva/bootstrap/installer_wizard_cli.py",
     "src/eva/operations/installer_provider_verification.py",
     "tests/api/test_installer_provider_api.py",
     "tests/api/test_installer_wizard.py",

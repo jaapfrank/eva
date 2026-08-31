@@ -783,13 +783,3 @@ def create_installer_wizard(
         )
 
     return app
-
-
-def main(argv: list[str] | None = None) -> int:
-    from eva.adapters.api.installer_wizard_cli import run_installer_wizard
-
-    return run_installer_wizard(argv)
-
-
-if __name__ == "__main__":
-    raise SystemExit(main())
