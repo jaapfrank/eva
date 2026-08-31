@@ -32,9 +32,19 @@ const fixtures = {
     contract: 'EvaWorkBoard/v1', schema_version: 1, read_only: true,
     status: 'ready', truncated: false, message: 'Actueel',
     cards: [{
+      contract: 'EvaWorkBoardCard/v1', schema_version: 1,
       column: 'doing', title: 'Echte taak',
       summary: 'Veilige kandidaat vergelijken',
+      worker_name: 'onderzoeker', worker_role: 'dashboard vergelijken',
       worker_health: 'active', result_status: 'not_received',
+      attempt: 1, maximum_attempts: 2,
+      deadline: '2026-08-31T12:00:00Z', duration_seconds: 12, overdue: false,
+      usage: {
+        contract: 'EvaWorkBoardUsage/v1', schema_version: 1,
+        measurement: 'measured', input_tokens: 100, output_tokens: 20,
+        total_tokens: 120, cost_usd_micros: 15,
+      },
+      reason: 'wordt uitgevoerd', changed: 'just_now',
     }],
   },
 };
@@ -43,6 +53,19 @@ function serverFor(authorized, seen) {
   return http.createServer((request, response) => {
     const pathname = new URL(request.url, 'http://127.0.0.1').pathname;
     seen.push({ pathname, authorization: request.headers.authorization || null });
+    if (pathname.startsWith('/internal/v1/dashboard/assets/')) {
+      const name = pathname.slice('/internal/v1/dashboard/'.length);
+      const file = path.resolve(dist, name);
+      assert.ok(file.startsWith(`${path.resolve(dist, 'assets')}${path.sep}`));
+      if (!fs.existsSync(file) || !fs.statSync(file).isFile()) {
+        response.statusCode = 404;
+        response.end();
+        return;
+      }
+      response.setHeader('Content-Type', file.endsWith('.js') ? 'text/javascript' : 'text/css');
+      response.end(fs.readFileSync(file));
+      return;
+    }
     if (pathname.startsWith('/internal/v1/dashboard/')) {
       response.setHeader('Cache-Control', 'no-store');
       response.setHeader('Content-Type', 'application/json');

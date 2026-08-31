@@ -32,6 +32,14 @@ package-dir = {"" = "src"}
 where = ["src"]
 include = ["eva*"]
 
+[tool.setuptools.package-data]
+"eva.adapters.api" = [
+  "dashboard_static/*.html",
+  "dashboard_static/*.json",
+  "dashboard_static/assets/*.css",
+  "dashboard_static/assets/*.js",
+]
+
 [tool.eva2]
 target-python = "3.12.14"
 dependency-lock = "requirements.lock"

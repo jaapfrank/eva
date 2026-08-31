@@ -12,7 +12,8 @@ from uuid import UUID
 from fastapi import BackgroundTasks, FastAPI, HTTPException, Request, Response
 from fastapi.responses import HTMLResponse, JSONResponse
 
-from eva.adapters.api.cockpit import COCKPIT_HTML, cockpit_progress
+from eva.adapters.api.cockpit import cockpit_progress
+from eva.adapters.api.dashboard_assets import DASHBOARD_ASSETS, DASHBOARD_ENTRY
 from eva.adapters.api.dashboard_conversation import (
     DASHBOARD_CONVERSATION_HTML,
     conversation_stream_response,
@@ -719,15 +720,35 @@ def create_app(
         )
 
     @app.get("/internal/v1/dashboard", response_class=HTMLResponse)
-    def dashboard(request: Request) -> HTMLResponse:
-        """Serve Eva's central local, read-only operator cockpit."""
+    def dashboard(request: Request) -> Response:
+        """Serve the packaged React-admin owner dashboard."""
 
         dashboard_access.require(request)
-        return HTMLResponse(
-            COCKPIT_HTML,
+        asset = DASHBOARD_ASSETS[DASHBOARD_ENTRY]
+        return Response(
+            content=asset.content,
             headers={
                 "Cache-Control": "no-store",
-                "Content-Security-Policy": "default-src 'none'; style-src 'unsafe-inline'; script-src 'unsafe-inline'; connect-src 'self'; base-uri 'none'; frame-ancestors 'none'",
+                "Content-Security-Policy": "default-src 'none'; style-src 'self' 'unsafe-inline'; script-src 'self'; connect-src 'self'; img-src 'self' data:; font-src 'self'; base-uri 'none'; frame-ancestors 'none'; form-action 'self'",
+                "Content-Type": asset.content_type,
+                "X-Content-Type-Options": "nosniff",
+            },
+        )
+
+    @app.get("/internal/v1/dashboard/assets/{asset_name}")
+    def dashboard_asset(request: Request, asset_name: str) -> Response:
+        """Serve one exact hashed dashboard asset behind the owner gate."""
+
+        dashboard_access.require(request)
+        asset = DASHBOARD_ASSETS.get(f"assets/{asset_name}")
+        if asset is None:
+            raise HTTPException(status_code=404, detail="dashboard asset unavailable")
+        return Response(
+            content=asset.content,
+            headers={
+                "Cache-Control": "private, max-age=31536000, immutable",
+                "Content-Security-Policy": "default-src 'none'",
+                "Content-Type": asset.content_type,
                 "X-Content-Type-Options": "nosniff",
             },
         )

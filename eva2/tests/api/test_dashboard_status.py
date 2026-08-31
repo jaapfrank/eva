@@ -4,6 +4,7 @@ import base64
 import hashlib
 import json
 from pathlib import Path
+import re
 from types import SimpleNamespace
 from uuid import UUID, uuid4
 
@@ -286,69 +287,60 @@ def test_owner_conversation_page_and_turn_are_token_gated() -> None:
     assert invalid_erasure.status_code == 422
 
 
-def test_dashboard_page_is_one_read_only_cockpit_without_external_assets() -> None:
-    response = TestClient(create_app(_Runtime())).get("/internal/v1/dashboard")
+def test_dashboard_page_serves_the_packaged_react_admin_candidate() -> None:
+    client = TestClient(create_app(_Runtime()))
+    response = client.get("/internal/v1/dashboard")
 
     assert response.status_code == 200
-    assert "dashboard/status" in response.text
-    assert "dashboard/identity" in response.text
-    assert "dashboard/progress" in response.text
-    assert "dashboard/people-memory" in response.text
-    assert "dashboard/workboard" in response.text
-    for visible_module in (
-        "Vandaag opgeleverd",
-        "Echte voortgang",
-        "Werkbord",
-        "Skills & bouwstenen",
-        "Gesprekken",
-        "Personen & geheugen",
-        "Workers & subagents",
-        "Voice & huis",
-        "Kosten & budget",
-        "Bewijs & benchmarks",
-        "Updates & herstel",
-    ):
-        assert visible_module in response.text
+    assert '<div id="root"></div>' in response.text
+    assert 'type="module"' in response.text
+    assert "LIVING COCKPIT" not in response.text
     assert "<form" not in response.text
     assert "https://" not in response.text
     assert "/readyz" not in response.text
-    assert "response.ok" in response.text
-    assert "async function loadStatus" in response.text
-    assert "async function loadIdentity" in response.text
-    assert "async function loadProgress" in response.text
-    assert "async function loadPeopleMemory" in response.text
-    assert "async function loadWorkboard" in response.text
-    assert "Veilige actuele status aangesloten" in response.text
-    assert "Veilige live status aangesloten" not in response.text
-    assert "statusPayload" in response.text
-    assert "identityPayload" in response.text
-    assert "pack.state!=='current'" in response.text
-    assert "progressPayload" in response.text
-    assert "peopleMemoryPayload" in response.text
-    assert "workboardPayload" in response.text
-    assert "allowed={not_received:['todo','doing']" in response.text
-    assert "!allowed[card.result_status].includes(card.column)" in response.text
-    assert "finished:'klaar met uitvoeren'" in response.text
-    assert "result-approved" in response.text
-    assert "result-stopped" in response.text
-    assert "lokale route · authenticatie nog open" in response.text
-    assert "Vandaag kreeg Eva haar eerste echte onderzoeker" in response.text
-    assert "Eva klikte één keer en controleerde zelf het resultaat" in response.text
-    assert "Af · Eerste browser-read" in response.text
-    assert "Af · Eerste lokale browseractie" in response.text
-    assert "Precies 1×" in response.text
-    assert "40 + 28" in response.text
-    assert "86,6 MB" in response.text
-    assert "Maximaal 1×" in response.text
-    assert "Af · Subagentkandidaat" in response.text
-    assert "Volgende · Publieke testroute" in response.text
-    assert "Nog niet live:" in response.text
-    assert "Echte taken · geen demo-kaarten" not in response.text
-    assert "Object.keys(value).sort()" in response.text
-    assert "prefers-reduced-motion" in response.text
     assert response.headers["cache-control"] == "no-store"
     assert "connect-src 'self'" in response.headers["content-security-policy"]
+    assert "script-src 'self'" in response.headers["content-security-policy"]
+    assert "script-src 'unsafe-inline'" not in response.headers["content-security-policy"]
     assert response.headers["x-content-type-options"] == "nosniff"
+
+    asset_urls = re.findall(r'(?:src|href)="([^"]+)"', response.text)
+    assert len(asset_urls) == 2
+    assert all(url.startswith("/internal/v1/dashboard/assets/") for url in asset_urls)
+    assets = [client.get(url) for url in asset_urls]
+    assert all(asset.status_code == 200 for asset in assets)
+    assert all("immutable" in asset.headers["cache-control"] for asset in assets)
+    javascript = next(asset.text for asset in assets if "javascript" in asset.headers["content-type"])
+    assert "/internal/v1/dashboard/status" in javascript
+    assert "/internal/v1/dashboard/identity" in javascript
+    assert "/internal/v1/dashboard/workboard" in javascript
+    assert "EvaDashboardStatus/v1" in javascript
+    assert "EvaDashboardIdentity/v1" in javascript
+    assert "EvaWorkBoard/v1" in javascript
+    assert "Te doen" in javascript
+    assert "Vandaag kreeg Eva haar eerste echte onderzoeker" not in javascript
+
+
+def test_dashboard_assets_are_exact_and_owner_gated() -> None:
+    token = "t" * 32
+    public_client = TestClient(create_app(_Runtime()))
+    page = public_client.get("/internal/v1/dashboard")
+    asset_url = re.findall(r'src="([^"]+\.js)"', page.text)[0]
+
+    client = TestClient(create_app(_Runtime(), dashboard_access_token=token))
+    denied = client.get(asset_url)
+    assert denied.status_code == 401
+    assert denied.headers["cache-control"] == "no-store"
+
+    allowed = client.get(asset_url, headers={"authorization": f"Bearer {token}"})
+    assert allowed.status_code == 200
+    assert allowed.headers["x-content-type-options"] == "nosniff"
+    assert allowed.headers["content-security-policy"] == "default-src 'none'"
+    assert token not in allowed.text
+    assert client.get(
+        "/internal/v1/dashboard/assets/not-sealed.js",
+        headers={"authorization": f"Bearer {token}"},
+    ).status_code == 404
 
 
 def test_dashboard_people_memory_is_closed_read_only_and_non_identifying() -> None:

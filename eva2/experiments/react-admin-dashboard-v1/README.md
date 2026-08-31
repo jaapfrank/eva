@@ -1,7 +1,9 @@
 # React-admin dashboard candidate
 
-This is an isolated, read-only candidate for replacing Eva's hand-written
-cockpit presentation. It does not run in the managed Eva route.
+This is the source and browser fixture for Eva's packaged, read-only
+React-admin dashboard candidate. The hand-written cockpit presentation has
+been removed from the source candidate, but this build is not yet live in the
+managed Eva route.
 
 The candidate uses React-admin's data and authentication providers above Eva's
 existing owner-only API. Eva remains the authority for people, privacy,
@@ -28,12 +30,16 @@ slices.
 npm ci --ignore-scripts
 npm audit --json
 npm run build
+cd ../..
+python3 tools/build_dashboard_assets.py --materialize
+python3 tools/build_dashboard_assets.py --check
 EVA_DASHBOARD_PLAYWRIGHT_PACKAGE=/absolute/path/to/playwright \
 EVA_DASHBOARD_CHROMIUM=/absolute/path/to/chromium \
-npm run verify:browser
+  npm --prefix experiments/react-admin-dashboard-v1 run verify:browser
 ```
 
 The browser proof uses only a synthetic same-origin server. It requires no Eva
-secret and performs no live mutation. Promotion requires a separate static
-asset route, CSP tests, image build/scan, removal of the old embedded
-presentation and the normal managed A/B cycle.
+secret and performs no live mutation. The packaged static route, CSP tests and
+removal of the old presentation are now part of the source candidate.
+Promotion still requires the normal immutable image build, scan and managed
+A/B cycle.
