@@ -3,7 +3,7 @@
 Deze kaart is mechanisch gegenereerd. Zij staat naast de semantische runtimegraaf en
 classificeert ieder gevolgd, verwijderd of niet-genegeerd nieuw repositorypad.
 
-Schema: `EvaRepositoryInventory/v1`. Brondigest: `a967d8c18c572b36762a6775050aae6f563f37dc127b644b19c473f3b7f34301`.
+Schema: `EvaRepositoryInventory/v1`. Brondigest: `175405e67d29583d95ecbfaba95d1216880abe34bb1166de0eb458d19f298679`.
 
 ## Samenvatting
 
@@ -1633,7 +1633,7 @@ Schema: `EvaRepositoryInventory/v1`. Brondigest: `a967d8c18c572b36762a6775050aae
 | `eva2/tests/operations/test_prepare_managed_b_candidate_context.py` | tracked | verification | included-tracked-critical | keep | 9262 |
 | `eva2/tests/operations/test_prepare_telegram_conversation_test.py` | tracked | verification | included-tracked-critical | keep | 5129 |
 | `eva2/tests/operations/test_prepare_telegram_test_config.py` | tracked | verification | included-tracked-critical | keep | 5767 |
-| `eva2/tests/operations/test_probe_codex_source_compatibility.py` | tracked | verification | included-tracked-critical | keep | 10253 |
+| `eva2/tests/operations/test_probe_codex_source_compatibility.py` | tracked | verification | included-tracked-critical | keep | 10355 |
 | `eva2/tests/operations/test_release_verifier.py` | tracked | verification | included-tracked-critical | keep | 5156 |
 | `eva2/tests/operations/test_telegram_binding_loader.py` | tracked | verification | included-tracked-critical | keep | 3471 |
 | `eva2/tests/operations/test_telegram_ingress_wiring.py` | tracked | verification | included-tracked-critical | keep | 4184 |
@@ -1781,7 +1781,7 @@ Schema: `EvaRepositoryInventory/v1`. Brondigest: `a967d8c18c572b36762a6775050aae
 | `eva2/tools/prepare_managed_b_candidate_context.py` | tracked | verification-runtime | included-tracked-critical | keep | 14877 |
 | `eva2/tools/prepare_telegram_conversation_test.py` | tracked | verification-runtime | included-tracked-critical | keep | 11017 |
 | `eva2/tools/prepare_telegram_test_config.py` | tracked | verification-runtime | included-tracked-critical | keep | 11902 |
-| `eva2/tools/probe_codex_source_compatibility.py` | tracked | verification-runtime | included-tracked-critical | keep | 13307 |
+| `eva2/tools/probe_codex_source_compatibility.py` | tracked | verification-runtime | included-tracked-critical | keep | 13534 |
 | `eva2/tools/prove_daily_reflection_budget.py` | tracked | verification-runtime | included-tracked-critical | keep | 8344 |
 | `eva2/tools/prove_installer_agentmail_verification.py` | tracked | verification-runtime | included-tracked-critical | keep | 12394 |
 | `eva2/tools/prove_installer_codex_model_verification.py` | tracked | verification-runtime | included-tracked-critical | keep | 13103 |

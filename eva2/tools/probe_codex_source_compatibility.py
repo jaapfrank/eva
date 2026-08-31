@@ -294,7 +294,10 @@ def run_probe(
     )
     fresh_model = PydanticConversationModel(
         auth_file=auth_file,
-        conversation_tools=(),
+        # Keep the immutable descriptor so the fresh process can recover the
+        # receipt-specific completion guidance.  No action is admitted below,
+        # so Pydantic still offers exactly zero executable tools.
+        conversation_tools=(_TOOL,),
         model_backend=model_backend,
         resource_budget=resource_budget,
     )

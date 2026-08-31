@@ -127,6 +127,9 @@ def test_probe_runs_exactly_three_providerless_phases_without_action_execution(
     assert scripted.captures[1].native_tool_kinds == ("tool_search",)
     assert scripted.captures[2].offered_tool_names == ()
     assert scripted.captures[2].native_tool_kinds == ()
+    assert probe._TOOL.completion_guidance in (
+        scripted.captures[2].instructions or ""
+    )
     assert len(tool_calls(scripted.captures[2].messages)) == 1
     assert len(tool_returns(scripted.captures[2].messages)) == 1
     assert tool_returns(scripted.captures[2].messages)[0].content == {
