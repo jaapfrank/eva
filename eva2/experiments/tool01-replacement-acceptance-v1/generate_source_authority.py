@@ -200,6 +200,8 @@ def generate_source_authority(
         raise SourceAuthorityError("run id is invalid")
     if _COMMIT.fullmatch(git_commit) is None:
         raise SourceAuthorityError("git commit is invalid")
+    if current_commit(root) != git_commit:
+        raise SourceAuthorityError("git commit differs from source worktree HEAD")
     inspected = _inspect(root)
     return {
         "blockers": inspected["blockers"],
@@ -232,7 +234,7 @@ def verify_source_authority(value: object, root: Path) -> dict[str, Any]:
     return expected
 
 
-def _current_commit(root: Path) -> str:
+def current_commit(root: Path) -> str:
     result = subprocess.run(
         ["git", "-C", str(root), "rev-parse", "--verify", "HEAD"],
         check=False,
@@ -254,7 +256,7 @@ def main() -> int:
     parser.add_argument("--output", type=Path)
     arguments = parser.parse_args()
     try:
-        commit = arguments.git_commit or _current_commit(arguments.source_root)
+        commit = arguments.git_commit or current_commit(arguments.source_root)
         result = generate_source_authority(
             arguments.source_root,
             run_id=arguments.run_id,

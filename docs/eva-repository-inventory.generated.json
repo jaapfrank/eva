@@ -269,9 +269,9 @@
     }
   ],
   "summary": {
-    "files": 1967,
-    "present": 1967,
-    "tracked": 1888,
+    "files": 1971,
+    "present": 1971,
+    "tracked": 1892,
     "untracked": 79,
     "tombstones": 0,
     "policyErrors": 88
@@ -310,7 +310,7 @@
     {
       "id": "eva2-verification",
       "role": "verification",
-      "matchCount": 711
+      "matchCount": 712
     },
     {
       "id": "eva2-documentation",
@@ -325,7 +325,7 @@
     {
       "id": "eva2-experimental",
       "role": "experimental",
-      "matchCount": 134
+      "matchCount": 137
     },
     {
       "id": "eva2-verification-runtime",
@@ -10264,7 +10264,7 @@
       "path": "docs/eva-repository-inventory.generated.json",
       "gitState": "tracked",
       "present": true,
-      "bytes": 2289110,
+      "bytes": 2293182,
       "contentSha256": "32591e23fa2eb53a038d95e726ba09edd0405306f38c5283a36a2b6d3010254d",
       "hashMode": "canonical-self-reference-redacted",
       "role": "generated",
@@ -10297,7 +10297,7 @@
       "path": "docs/eva-repository-inventory.generated.md",
       "gitState": "tracked",
       "present": true,
-      "bytes": 354924,
+      "bytes": 355535,
       "contentSha256": "2f4f8486464cbb9713b749dc898f265093d0853699f1da1b4eb3dd1625c1b2d2",
       "hashMode": "canonical-self-reference-redacted",
       "role": "generated",
@@ -11082,8 +11082,8 @@
       "path": "eva2/PROJECT_STATUS.md",
       "gitState": "tracked",
       "present": true,
-      "bytes": 41168,
-      "contentSha256": "8bf61c2bd5b6c0f82c6afdc15999d4671af86fbfb7a6d4ed453710239ff55339",
+      "bytes": 41611,
+      "contentSha256": "bcaf2dd6cb459bf4567e92c4e6a6a7353ad6d379c393c45bf64821eb4a37ce21",
       "hashMode": "exact-bytes",
       "role": "documentation",
       "roleRuleId": "eva2-documentation",
@@ -28292,6 +28292,41 @@
       }
     },
     {
+      "path": "eva2/evidence/product/pydantic-ai-2.36-real-codex-compatibility-2026-08-31.json",
+      "gitState": "tracked",
+      "present": true,
+      "bytes": 2909,
+      "contentSha256": "372612b9ab7d420fea46a462a9eba7bd0cf596b14e5d1f4a81b4dfe221891c06",
+      "hashMode": "exact-bytes",
+      "role": "verification",
+      "roleRuleId": "eva2-verification",
+      "matchingRuleIds": [
+        "eva2-verification"
+      ],
+      "owner": "verification",
+      "inputs": [
+        "production or fixture contract"
+      ],
+      "outputs": [
+        "test decision"
+      ],
+      "state": [
+        "temporary isolated test state"
+      ],
+      "effects": [
+        "may execute only inside its declared gate"
+      ],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": true,
+        "runtimeCritical": true,
+        "status": "included-tracked-critical"
+      }
+    },
+    {
       "path": "eva2/evidence/product/pydantic-native-mcp-discovery-candidate-2026-08-31.json",
       "gitState": "tracked",
       "present": true,
@@ -31407,6 +31442,76 @@
       }
     },
     {
+      "path": "eva2/experiments/pydantic-agent-merged-lock-v1/check_release_readiness.py",
+      "gitState": "tracked",
+      "present": true,
+      "bytes": 8476,
+      "contentSha256": "4f4c07946e569ba6a6d56c2c3291e871b4625bb5c277071b88a8defc07bbca16",
+      "hashMode": "exact-bytes",
+      "role": "experimental",
+      "roleRuleId": "eva2-experimental",
+      "matchingRuleIds": [
+        "eva2-experimental"
+      ],
+      "owner": "experimental",
+      "inputs": [
+        "prototype request"
+      ],
+      "outputs": [
+        "prototype receipt"
+      ],
+      "state": [
+        "prototype-local state"
+      ],
+      "effects": [
+        "not authorized for production"
+      ],
+      "decision": "keep",
+      "decisionReason": "explicitly classified non-production prototype",
+      "consumers": [],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": true,
+        "runtimeCritical": false,
+        "status": "included-tracked-noncritical"
+      }
+    },
+    {
+      "path": "eva2/experiments/pydantic-agent-merged-lock-v1/release-readiness-requirements.json",
+      "gitState": "tracked",
+      "present": true,
+      "bytes": 6820,
+      "contentSha256": "ab26c5d7c4d7e4eb9654cd1a147f276a1f33210d5754258fdd486975f84960ce",
+      "hashMode": "exact-bytes",
+      "role": "experimental",
+      "roleRuleId": "eva2-experimental",
+      "matchingRuleIds": [
+        "eva2-experimental"
+      ],
+      "owner": "experimental",
+      "inputs": [
+        "prototype request"
+      ],
+      "outputs": [
+        "prototype receipt"
+      ],
+      "state": [
+        "prototype-local state"
+      ],
+      "effects": [
+        "not authorized for production"
+      ],
+      "decision": "keep",
+      "decisionReason": "explicitly classified non-production prototype",
+      "consumers": [],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": true,
+        "runtimeCritical": false,
+        "status": "included-tracked-noncritical"
+      }
+    },
+    {
       "path": "eva2/experiments/pydantic-agent-merged-lock-v1/requirements-4d-candidate.lock",
       "gitState": "tracked",
       "present": true,
@@ -31447,6 +31552,41 @@
       "present": true,
       "bytes": 4914,
       "contentSha256": "769ad838919eac393ea1e8a590f1f151b172c818681ea8451a58233bbe81167f",
+      "hashMode": "exact-bytes",
+      "role": "experimental",
+      "roleRuleId": "eva2-experimental",
+      "matchingRuleIds": [
+        "eva2-experimental"
+      ],
+      "owner": "experimental",
+      "inputs": [
+        "prototype request"
+      ],
+      "outputs": [
+        "prototype receipt"
+      ],
+      "state": [
+        "prototype-local state"
+      ],
+      "effects": [
+        "not authorized for production"
+      ],
+      "decision": "keep",
+      "decisionReason": "explicitly classified non-production prototype",
+      "consumers": [],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": true,
+        "runtimeCritical": false,
+        "status": "included-tracked-noncritical"
+      }
+    },
+    {
+      "path": "eva2/experiments/pydantic-agent-merged-lock-v1/test_release_readiness.py",
+      "gitState": "tracked",
+      "present": true,
+      "bytes": 3098,
+      "contentSha256": "c5656142b6df09b97c7aff82923d24c50c21ce30f386bfe61a677fd4df0a3b04",
       "hashMode": "exact-bytes",
       "role": "experimental",
       "roleRuleId": "eva2-experimental",
@@ -32675,8 +32815,8 @@
       "path": "eva2/experiments/tool01-replacement-acceptance-v1/README.md",
       "gitState": "tracked",
       "present": true,
-      "bytes": 2792,
-      "contentSha256": "fe5f6c1959229ebefcd6c220bc84b007412841a20c7cb931a2696a7d86dbdc2f",
+      "bytes": 2887,
+      "contentSha256": "3a8325d91d738ded40751c3c9478055bcd8e08e763484f6e8902c491473e2a19",
       "hashMode": "exact-bytes",
       "role": "experimental",
       "roleRuleId": "eva2-experimental",
@@ -32745,8 +32885,8 @@
       "path": "eva2/experiments/tool01-replacement-acceptance-v1/generate_source_authority.py",
       "gitState": "tracked",
       "present": true,
-      "bytes": 10545,
-      "contentSha256": "e7735313ce2c942bd5ff6d473d635134e51d5e9fdfd6c56efa1cc6226520ea73",
+      "bytes": 10669,
+      "contentSha256": "e16452f76d0b685e521a4d6bcdebdb7f09c65ea9fcde6755bd0ff5156d8a1e53",
       "hashMode": "exact-bytes",
       "role": "experimental",
       "roleRuleId": "eva2-experimental",
@@ -32780,8 +32920,8 @@
       "path": "eva2/experiments/tool01-replacement-acceptance-v1/test_acceptance.py",
       "gitState": "tracked",
       "present": true,
-      "bytes": 17860,
-      "contentSha256": "f0a6e94cb75e3b58f57a5d8bcfec7660092bdfdbff2708e6573ffcb4e5c0d2db",
+      "bytes": 18784,
+      "contentSha256": "f3fcd5a09ad3715294963ae00e4bbb3da1b13c6daf9fb84d55168dd993ce649b",
       "hashMode": "exact-bytes",
       "role": "experimental",
       "roleRuleId": "eva2-experimental",
@@ -79936,5 +80076,5 @@
       }
     }
   ],
-  "sourceDigest": "2f90374bf360590708b0172ef7f53bbbb86032b6a13187b69bfd0ccd3c45f9e5"
+  "sourceDigest": "cbfbf2cdd184e9aafcb514efd0282888ec4f7778149a81b2ea569187adcfb57e"
 }

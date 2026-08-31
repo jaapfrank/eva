@@ -1,0 +1,77 @@
+{
+  "contract": "EvaPydanticAiRealCodexCompatibility/v1",
+  "recordedAt": "2026-08-31T17:39:00+02:00",
+  "status": "stream_and_deferred_selection_passed_receipt_continuation_incomplete",
+  "repositoryHeadAtProbe": "e5d64b2e5af7a76eb66041bf87f1db7f148e2da6",
+  "candidate": {
+    "image": "eva2/pydantic-mcp-client-candidate:20260831-single",
+    "imageId": "sha256:bebcd2cdfcbcf4ce77d719b104aa9c76f97d1fc548877caf18c85d52101411ca",
+    "pydanticAiSlim": "2.36.0",
+    "openaiSdk": "3.6.0",
+    "model": "gpt-5.4-mini",
+    "rootFilesystem": "read-only",
+    "modelLeaseMount": "read-only",
+    "credentialContract": "EvaModelAccessLease/v1",
+    "refreshTokenAvailable": false
+  },
+  "cases": [
+    {
+      "case": "non_streaming_agent_run",
+      "status": "expected_rejection",
+      "providerHttpStatus": 400,
+      "sanitizedReason": "Codex Responses endpoint requires stream=true",
+      "conclusion": "The replacement must use Pydantic AI run_stream; a later streaming retrofit is not valid."
+    },
+    {
+      "case": "streaming_text",
+      "status": "passed",
+      "promptExpectedExact": "PAI236",
+      "output": "PAI236",
+      "modelRequests": 1,
+      "inputTokens": 17,
+      "outputTokens": 7
+    },
+    {
+      "case": "implicit_comfort_deferred_selection",
+      "status": "passed",
+      "input": "Het is koud in de overkapping.",
+      "selectedTool": "adjust_space_comfort",
+      "selectedArguments": {
+        "direction": "warmer",
+        "space": "overkapping"
+      },
+      "modelRequests": 1,
+      "approvalRequests": 0,
+      "externalProviderAttached": false,
+      "externalMutationPossible": false
+    },
+    {
+      "case": "deferred_receipt_continuation",
+      "status": "not_proved",
+      "sanitizedFailure": "transient connection read failure before a completed receipt answer",
+      "externalProviderAttached": false,
+      "externalMutationPossible": false,
+      "blindSuccessClaim": false
+    }
+  ],
+  "releaseBoundary": {
+    "productLockChanged": false,
+    "productRuntimeChanged": false,
+    "liveRouteChanged": false,
+    "minimal38PackageImageProved": false,
+    "promotionAllowed": false,
+    "nextRequiredProof": "Run the same streaming text, deferred selection and receipt continuation through the exact 38-package candidate with bounded transport and safe pre-visible-output retry semantics."
+  },
+  "privacy": {
+    "accessTokenInReceipt": false,
+    "accountIdInReceipt": false,
+    "sourceLeaseHashInReceipt": false,
+    "responseHeadersInReceipt": false
+  },
+  "nonClaims": [
+    "This is compatibility evidence from an isolated candidate image, not a product replacement.",
+    "The receipt continuation is still red and no end-to-end tool action was performed.",
+    "The tested image has a broader dependency surface than the sealed 38-package candidate lock.",
+    "No live Eva service, database, provider state or A/B route was changed."
+  ]
+}

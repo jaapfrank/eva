@@ -30,8 +30,9 @@ provider. De checker vereist vervolgens:
 `generate_source_authority.py` scant daarvoor alle Pythonbron onder `src/eva`,
 bindt pad, bytegrootte en SHA-256 in één bronmanifest en leidt de runtime-
 eigenaar af uit de werkelijk geconstrueerde conversation-modelklasse in
-`bootstrap/runtime.py`. De checker scant de aangewezen worktree opnieuw; een
-artifact kan verwijderde code dus niet alleen beweren.
+`bootstrap/runtime.py`. Het commit-ID moet gelijk zijn aan de werkelijke
+`HEAD` van die worktree. De checker scant de aangewezen worktree opnieuw; een
+artifact kan verwijderde code of een andere commit dus niet alleen beweren.
 
 `sourceAuthority.status=pending` kan alleen `source_authority_pending`
 opleveren, ook wanneer de runtime groen is. De eindstatus

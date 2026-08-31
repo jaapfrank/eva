@@ -5,6 +5,7 @@ import hashlib
 import importlib.util
 import json
 from pathlib import Path
+import subprocess
 import sys
 from typing import Any
 
@@ -283,6 +284,23 @@ def _source_tree(
             ]
         )
     runtime_path.write_text("\n".join(runtime_lines) + "\n", encoding="utf-8")
+    subprocess.run(["git", "init", "-q", str(root)], check=True)
+    subprocess.run(["git", "-C", str(root), "add", "src"], check=True)
+    subprocess.run(
+        [
+            "git",
+            "-C",
+            str(root),
+            "-c",
+            "user.name=TOOL01 Fixture",
+            "-c",
+            "user.email=tool01@example.invalid",
+            "commit",
+            "-qm",
+            "fixture",
+        ],
+        check=True,
+    )
     return root
 
 
@@ -290,7 +308,7 @@ def _source(root: Path) -> dict[str, Any]:
     return source_generator.generate_source_authority(
         root,
         run_id=RUN_ID,
-        git_commit="a" * 40,
+        git_commit=source_generator.current_commit(root),
     )
 
 
@@ -499,6 +517,19 @@ def test_forged_legacy_removal_is_rejected_against_worktree(tmp_path: Path) -> N
         match="differs from inspected worktree",
     ):
         source_generator.verify_source_authority(forged, source_root)
+
+
+def test_forged_git_commit_is_rejected_against_worktree_head(tmp_path: Path) -> None:
+    source_root = _source_tree(tmp_path / "source-worktree")
+    with pytest.raises(
+        source_generator.SourceAuthorityError,
+        match="differs from source worktree HEAD",
+    ):
+        source_generator.generate_source_authority(
+            source_root,
+            run_id=RUN_ID,
+            git_commit="a" * 40,
+        )
 
 
 def test_acceptance_rejects_forged_source_artifact(tmp_path: Path) -> None:

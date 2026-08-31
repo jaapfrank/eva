@@ -1,6 +1,6 @@
 # Eva 2 — projectbord en vergelijking
 
-Laatst bijgewerkt: 31 augustus 2026, 17:20 CEST
+Laatst bijgewerkt: 31 augustus 2026, 17:39 CEST
 
 ## Zo lees je dit bord
 
@@ -32,7 +32,7 @@ dezelfde sessie wel, maar gaf na ruim drie minuten nog geen eindantwoord.
 
 | Controle | Eerlijke stand nu |
 |---|---|
-| Is alles per bestand inhoudelijk beoordeeld? | ❌ Nee. De inventaris bevat nu 1.967 bestanden. De 88 resterende beleidsfouten zijn wel allemaal eerlijk ingedeeld: 50 mogen pas na controle worden gevolgd, 32 blijven in quarantaine, 5 zijn oude/dode bron of documentatie en 1 redundant bestand is kandidaat voor latere verwijdering. Niets is stil verwijderd of als release-input toegelaten |
+| Is alles per bestand inhoudelijk beoordeeld? | ❌ Nee. De inventaris bevat nu 1.971 bestanden. De 88 resterende beleidsfouten zijn wel allemaal eerlijk ingedeeld: 50 mogen pas na controle worden gevolgd, 32 blijven in quarantaine, 5 zijn oude/dode bron of documentatie en 1 redundant bestand is kandidaat voor latere verwijdering. Niets is stil verwijderd of als release-input toegelaten |
 | Heeft ieder gevolgd bestand een duidelijke plek en eigenaar? | ✅ Alle gevolgde product-, deploy-, migratie- en testpaden vallen nu onder exact één semantische component. De checker weigert ontbrekend, dubbel of dood eigenaarschap |
 | Is daarmee bewezen dat iedere afzonderlijke regel nuttig is? | 🟡 Nee. De catalogus legt per component doel, noodzaak, upstreamkeuze, vervanging en tests vast. Dode-codeanalyse, grenscontrole en echte tests moeten daarna bewijzen dat de regels binnen die component hun taak nog werkelijk uitvoeren |
 | Zijn alle dependencies en open-sourcealternatieven aantoonbaar de beste actuele keuze? | 🟡 De live kern en worker zijn exact geïnventariseerd. Van 38 live distributies zijn 30 actueel en 8 hebben een nieuwere kandidaat. De veilige upgradevolgorde en bewuste `HOLD`-keuzes liggen vast. Functionele vergelijking en echte A/B-proeven moeten per batch nog bewijzen wat voor Eva werkelijk beter is |
@@ -73,6 +73,13 @@ niet opgenomen: hij was wel getest, maar nog niet de runtime-eigenaar en
 verwijderde geen oude route. De bruikbare kennis blijft in het afgebakende
 experiment; productcode landt pas als zij in dezelfde wijziging echt werk
 overneemt en de vervangen code verdwijnt.
+
+De actuele Pydantic-versie heeft nu ook met Eva's echte korte Codex-toegang
+gepraat. De verplichte streamingroute gaf exact `PAI236` terug en koos uit de
+zin “Het is koud in de overkapping” zelfstandig één algemene comforttool met
+`warmer` en `overkapping`. De vervolgstap met een nagebootst resultaat kreeg
+een tijdelijke verbindingsfout en is dus nog niet groen. Er is geen echte tool
+uitgevoerd en de productroute is niet gewijzigd.
 
 ## Praten met Eva
 
