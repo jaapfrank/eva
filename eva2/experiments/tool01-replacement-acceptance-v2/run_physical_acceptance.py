@@ -513,6 +513,7 @@ for name, row in payload['files'].items():
     command = [
         "docker",
         "run",
+        "--interactive",
         "--rm",
         "--name",
         container_name,
@@ -571,6 +572,7 @@ print('metadata-ok')
         [
             "docker",
             "run",
+            "--interactive",
             "--rm",
             "--name",
             container_name,
@@ -1027,6 +1029,7 @@ os.chmod(target,0o400)
     command = [
         "docker",
         "run",
+        "--interactive",
         "--rm",
         "--name",
         container_name,

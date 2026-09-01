@@ -17,6 +17,7 @@ HERE = Path(__file__).resolve().parent
 PRODUCER = (
     HERE.parent / "contextforge-gateway-v1" / "prove_filesystem_provider_sigkill_v2.py"
 )
+RUNNER = HERE / "run_physical_acceptance.py"
 SPEC = importlib.util.spec_from_file_location(
     "tool01_v2_acceptance", HERE / "check_acceptance.py"
 )
@@ -74,6 +75,29 @@ def test_proof_producer_is_one_self_contained_hashed_file() -> None:
     }
     functions = {node.name for node in tree.body if isinstance(node, ast.FunctionDef)}
     assert {"_json_request", "_login", "_migrate", "_write_private"} <= functions
+
+
+def test_host_helpers_keep_stdin_attached_for_private_payloads() -> None:
+    tree = ast.parse(RUNNER.read_text(encoding="utf-8"))
+    helpers = {
+        node.name: node
+        for node in tree.body
+        if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef))
+        and node.name
+        in {"_assert_volume_metadata", "_init_volume", "_populate_secret_volume"}
+    }
+    assert set(helpers) == {
+        "_assert_volume_metadata",
+        "_init_volume",
+        "_populate_secret_volume",
+    }
+    for helper in helpers.values():
+        literals = {
+            node.value
+            for node in ast.walk(helper)
+            if isinstance(node, ast.Constant) and isinstance(node.value, str)
+        }
+        assert "--interactive" in literals
 
 
 def _file_reference(path: Path, value: dict[str, Any]) -> dict[str, Any]:
