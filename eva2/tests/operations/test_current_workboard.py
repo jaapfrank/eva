@@ -40,34 +40,47 @@ def _validate_paths(paths: tuple[Path, Path]) -> dict[str, object]:
     return validate(ROOT, paths[0], CATALOG, paths[1])
 
 
-def test_current_workboard_is_valid_and_has_only_two_executable_cards() -> None:
+def _primary(value: dict[str, object]) -> dict[str, object]:
+    return next(
+        task
+        for task in value["executionTasks"]
+        if task["status"] in {"in_progress", "review", "blocked"}
+    )
+
+
+def _next(value: dict[str, object]) -> dict[str, object]:
+    primary_index = value["executionTasks"].index(_primary(value))
+    return value["executionTasks"][primary_index + 1]
+
+
+def test_current_workboard_is_valid_with_history_and_two_open_cards() -> None:
+    board = json.loads(BOARD.read_text(encoding="utf-8"))
     result = validate(ROOT, BOARD, CATALOG, HUMAN)
     assert result == {
-        "activeTaskId": "GOV-001",
+        "activeTaskId": _primary(board)["id"],
         "contract": "EvaExecutionWorkboard/v1",
-        "executionTaskCount": 2,
-        "milestoneCount": 38,
+        "executionTaskCount": len(board["executionTasks"]),
+        "milestoneCount": len(board["milestones"]),
         "status": "valid",
     }
+    assert len([task for task in board["executionTasks"] if task["status"] != "done"]) == 2
 
 
 def test_workboard_refuses_two_primary_cards(tmp_path: Path) -> None:
-    paths = _board(
-        tmp_path,
-        lambda value: value["executionTasks"][1].update({"status": "in_progress"}),
-    )
+    paths = _board(tmp_path, lambda value: _next(value).update({"status": "in_progress"}))
     with pytest.raises(RuntimeError, match="exactly one primary"):
         _validate_paths(paths)
 
 
 def test_workboard_refuses_more_than_one_open_card_after_primary(tmp_path: Path) -> None:
     def mutation(value: dict[str, object]) -> None:
-        third = deepcopy(value["executionTasks"][1])
+        next_task = _next(value)
+        third = deepcopy(next_task)
         third.update(
             {
-                "id": "RB-002",
-                "order": 20,
-                "dependsOn": ["RB-001"],
+                "id": "ZZ-999",
+                "order": next_task["order"] + 1,
+                "dependsOn": [next_task["id"]],
                 "title": "te vroeg uitvoerbaar",
             }
         )
@@ -80,9 +93,11 @@ def test_workboard_refuses_more_than_one_open_card_after_primary(tmp_path: Path)
 
 def test_workboard_refuses_skipping_the_first_card(tmp_path: Path) -> None:
     def mutation(value: dict[str, object]) -> None:
-        value["executionTasks"][0]["status"] = "queued"
-        value["executionTasks"][1]["status"] = "in_progress"
-        value["activeTaskId"] = "RB-001"
+        primary = _primary(value)
+        next_task = _next(value)
+        primary["status"] = "queued"
+        next_task["status"] = "in_progress"
+        value["activeTaskId"] = next_task["id"]
 
     paths = _board(tmp_path, mutation)
     with pytest.raises(RuntimeError, match="done, then one primary"):
@@ -100,9 +115,11 @@ def test_workboard_refuses_future_done_milestone(tmp_path: Path) -> None:
 
 def test_workboard_refuses_done_without_completion(tmp_path: Path) -> None:
     def mutation(value: dict[str, object]) -> None:
-        value["executionTasks"][0]["status"] = "done"
-        value["executionTasks"][1]["status"] = "in_progress"
-        value["activeTaskId"] = "RB-001"
+        primary = _primary(value)
+        next_task = _next(value)
+        primary["status"] = "done"
+        next_task["status"] = "in_progress"
+        value["activeTaskId"] = next_task["id"]
 
     paths = _board(tmp_path, mutation)
     with pytest.raises(RuntimeError, match="completion fields differ"):
@@ -135,7 +152,7 @@ def test_workboard_refuses_done_without_completion(tmp_path: Path) -> None:
 def test_workboard_refuses_non_verifying_commands(tmp_path: Path, command: str) -> None:
     paths = _board(
         tmp_path,
-        lambda value: value["executionTasks"][0].update({"testCommands": [command]}),
+        lambda value: _primary(value).update({"testCommands": [command]}),
     )
     with pytest.raises(RuntimeError, match="test command"):
         _validate_paths(paths)
@@ -144,7 +161,7 @@ def test_workboard_refuses_non_verifying_commands(tmp_path: Path, command: str) 
 def test_workboard_refuses_directory_as_change_path(tmp_path: Path) -> None:
     paths = _board(
         tmp_path,
-        lambda value: value["executionTasks"][0].update({"changePaths": ["eva2/tools"]}),
+        lambda value: _primary(value).update({"changePaths": ["eva2/tools"]}),
     )
     with pytest.raises(RuntimeError, match="exact regular repository file"):
         _validate_paths(paths)
@@ -153,9 +170,7 @@ def test_workboard_refuses_directory_as_change_path(tmp_path: Path) -> None:
 def test_workboard_refuses_unrelated_inventory_owner(tmp_path: Path) -> None:
     paths = _board(
         tmp_path,
-        lambda value: value["executionTasks"][1].update(
-            {"changePaths": ["eva2/PROJECT_STATUS.md"]}
-        ),
+        lambda value: _next(value).update({"changePaths": ["eva2/PROJECT_STATUS.md"]}),
     )
     with pytest.raises(RuntimeError, match="inventory ownership differs"):
         _validate_paths(paths)
@@ -164,9 +179,7 @@ def test_workboard_refuses_unrelated_inventory_owner(tmp_path: Path) -> None:
 def test_workboard_refuses_wrong_component_owner(tmp_path: Path) -> None:
     paths = _board(
         tmp_path,
-        lambda value: value["executionTasks"][0].update(
-            {"componentIds": ["core-semantics"]}
-        ),
+        lambda value: _primary(value).update({"componentIds": ["core-semantics"]}),
     )
     with pytest.raises(RuntimeError, match="componentIds must match exact"):
         _validate_paths(paths)
@@ -183,7 +196,7 @@ def test_workboard_refuses_surplus_ownership_claims(
     tmp_path: Path, field: str, extra: str, message: str
 ) -> None:
     def mutation(value: dict[str, object]) -> None:
-        value["executionTasks"][0][field].append(extra)
+        _primary(value)[field].append(extra)
 
     paths = _board(tmp_path, mutation)
     with pytest.raises(RuntimeError, match=message):
@@ -193,7 +206,7 @@ def test_workboard_refuses_surplus_ownership_claims(
 def test_workboard_refuses_review_without_bound_implementation(tmp_path: Path) -> None:
     paths = _board(
         tmp_path,
-        lambda value: value["executionTasks"][0].update({"status": "review"}),
+        lambda value: _primary(value).update({"status": "review"}),
     )
     with pytest.raises(RuntimeError, match="baseCommit|implementationCommit"):
         _validate_paths(paths)
@@ -202,7 +215,7 @@ def test_workboard_refuses_review_without_bound_implementation(tmp_path: Path) -
 def test_workboard_refuses_blocked_without_concrete_reason(tmp_path: Path) -> None:
     paths = _board(
         tmp_path,
-        lambda value: value["executionTasks"][0].update({"status": "blocked"}),
+        lambda value: _primary(value).update({"status": "blocked"}),
     )
     with pytest.raises(RuntimeError, match="concrete blocker reason"):
         _validate_paths(paths)
@@ -212,12 +225,12 @@ def test_workboard_refuses_blocked_without_concrete_reason(tmp_path: Path) -> No
     "mutation,message",
     [
         (
-            lambda value: value["executionTasks"][0].update({"ownerRole": "chief"}),
+            lambda value: _primary(value).update({"ownerRole": "chief"}),
             "unknown team role",
         ),
         (
-            lambda value: value["executionTasks"][0].update(
-                {"reviewerRole": value["executionTasks"][0]["ownerRole"]}
+            lambda value: _primary(value).update(
+                {"reviewerRole": _primary(value)["ownerRole"]}
             ),
             "review its own work",
         ),
@@ -260,7 +273,10 @@ def test_workboard_refuses_out_of_order_execution_cards(tmp_path: Path) -> None:
         value["executionTasks"] = tasks
 
     paths = _board(tmp_path, mutation)
-    with pytest.raises(RuntimeError, match="done, then one primary|identity, order or status"):
+    with pytest.raises(
+        RuntimeError,
+        match="done, then one primary|identity, order or status|missing or forward dependency",
+    ):
         _validate_paths(paths)
 
 
@@ -287,9 +303,6 @@ def test_workboard_refuses_completion_by_the_implementer(tmp_path: Path) -> None
     ).stdout.strip()
 
     def mutation(value: dict[str, object]) -> None:
-        value["executionTasks"][0]["status"] = "done"
-        value["executionTasks"][1]["status"] = "in_progress"
-        value["activeTaskId"] = "RB-001"
         value["completions"]["GOV-001"] = {
             "baseCommit": base,
             "commit": head,
@@ -324,7 +337,6 @@ def test_workboard_refuses_completion_from_an_unrelated_commit_diff(
     review_commit, implementation_commit, base_commit = commits
 
     def mutation(value: dict[str, object]) -> None:
-        value["executionTasks"][0]["status"] = "done"
         value["executionTasks"][0]["stateDetails"] = {
             "baseCommit": base_commit,
             "implementationCommit": implementation_commit,
@@ -334,8 +346,6 @@ def test_workboard_refuses_completion_from_an_unrelated_commit_diff(
             ],
             "blockerReason": None,
         }
-        value["executionTasks"][1]["status"] = "in_progress"
-        value["activeTaskId"] = "RB-001"
         value["completions"]["GOV-001"] = {
             "baseCommit": base_commit,
             "commit": implementation_commit,

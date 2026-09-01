@@ -6,7 +6,7 @@
   "commandWorkingDirectory": "eva2",
   "inventoryPath": "docs/eva-repository-inventory.generated.json",
   "humanBoardPath": "eva2/WERKBORD.md",
-  "activeTaskId": "GOV-001",
+  "activeTaskId": "GOV-002",
   "maxActiveImplementationTasks": 1,
   "statusValues": ["queued", "in_progress", "review", "done", "blocked"],
   "rules": [
@@ -31,8 +31,8 @@
       "area": "Werkbesturing",
       "title": "Klein en controleerbaar werkbord afdwingen",
       "outcome": "Iedereen ziet exact wat nu gebeurt, wat direct volgt, welke bestanden veranderen en welke echte controles klaar bepalen.",
-      "status": "in_progress",
-      "stateDetails": {"baseCommit": null, "implementationCommit": null, "evidenceCommit": null, "reviewEvidencePaths": [], "blockerReason": null},
+      "status": "done",
+      "stateDetails": {"baseCommit": "e171f68f40a17c52b03683e1eb3d2aa47317d7a0", "implementationCommit": "fc1e67f03739e038563ac5e4124f61d6b0a40000", "evidenceCommit": "7dba33ac936f8939adf20b1c113d3e815e9fb233", "reviewEvidencePaths": ["eva2/evidence/product/GOV-001-execution-workboard-tests-2026-09-01.json"], "blockerReason": null},
       "ownerRole": "architecturelead",
       "reviewerRole": "workboardreviewer",
       "dependsOn": [],
@@ -65,6 +65,44 @@
         "De checker weigert iedere bekende manier om werk over te slaan of schijnbaar af te ronden.",
         "WERKBORD.md is exact en mechanisch uit deze JSON afgeleid.",
         "De onafhankelijke reviewer geeft GO."
+      ]
+    },
+    {
+      "id": "GOV-002",
+      "order": 2,
+      "area": "Werkbesturing",
+      "title": "Bordovergangen statusvast maken",
+      "outcome": "Dezelfde aanvalstests blijven werken wanneer afgeronde kaarten groeien en de primaire kaart opschuift.",
+      "status": "in_progress",
+      "stateDetails": {"baseCommit": null, "implementationCommit": null, "evidenceCommit": null, "reviewEvidencePaths": [], "blockerReason": null},
+      "ownerRole": "architecturelead",
+      "reviewerRole": "workboardreviewer",
+      "dependsOn": ["GOV-001"],
+      "componentIds": ["operations-and-release-tests"],
+      "inventoryOwners": ["architecture", "documentation", "verification"],
+      "changePaths": [
+        "docs/eva-repository-inventory.generated.json",
+        "docs/eva-repository-inventory.generated.md",
+        "eva2/WERKBORD.md",
+        "eva2/design/product/execution-workboard-v1.json",
+        "eva2/tests/operations/test_current_workboard.py"
+      ],
+      "testCommands": [
+        "TMPDIR=/tmp TEMP=/tmp TMP=/tmp pytest -q tests/operations/test_current_workboard.py",
+        "python3 tools/check_current_workboard.py",
+        "python3 tools/check_component_catalog.py",
+        "node ../test/repository-inventory.test.js",
+        "node ../test/repository-inventory-disposition.test.js",
+        "ruff check tests/operations/test_current_workboard.py"
+      ],
+      "evidenceRequired": [
+        "Een positieve overgangstest met groeiende done-historie en verschuivende primary/next-indices.",
+        "Onafhankelijke controle dat latere normale bordovergangen geen testcode meer vragen."
+      ],
+      "doneWhen": [
+        "De tests leiden afgeronde, primaire en volgende kaarten uit status af in plaats van vaste indices.",
+        "GOV-001 blijft met dezelfde commitketen als done valide.",
+        "Een onafhankelijke reviewer geeft GO."
       ]
     },
     {
@@ -143,5 +181,17 @@
     {"id": "FN-002", "order": 380, "area": "Eindacceptatie", "title": "Computerherstart bewijzen", "outcome": "Alles komt zonder handmatige reparatie correct terug."},
     {"id": "FN-003", "order": 390, "area": "Eindacceptatie", "title": "Zeven dagen praktijk bewijzen", "outcome": "Een ongewijzigde kandidaat doorstaat de praktijkproef en vervangbeslissing."}
   ],
-  "completions": {}
+  "completions": {
+    "GOV-001": {
+      "baseCommit": "e171f68f40a17c52b03683e1eb3d2aa47317d7a0",
+      "commit": "fc1e67f03739e038563ac5e4124f61d6b0a40000",
+      "decision": "GO",
+      "evidenceCommit": "7dba33ac936f8939adf20b1c113d3e815e9fb233",
+      "evidencePaths": ["eva2/reviews/GOV-001-execution-workboard-fc1e67f.md"],
+      "implementedBy": "/root",
+      "reviewCommit": "f904d10c1dd19e5e97ccac356584a80ff28ceef2",
+      "reviewedBy": "/root/workboard_review",
+      "testReceiptPaths": ["eva2/evidence/product/GOV-001-execution-workboard-tests-2026-09-01.json"]
+    }
+  }
 }
