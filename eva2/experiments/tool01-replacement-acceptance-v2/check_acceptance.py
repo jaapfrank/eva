@@ -35,7 +35,14 @@ PROVIDER_CONTRACT = "EvaTool01ExternalProviderCounters/v2"
 CRASH_CONTRACT = "EvaTool01ContainerCrashAudit/v2"
 RESULT_CONTRACT = "EvaTool01AcceptanceResult/v2"
 
-PROMPT = "Ik zit nu in de overkapping en het is hier koud."
+PROMPT = (
+    'Schrijf exact "warme kopermaan" naar "tool01-proof.txt" in de beschikbare '
+    "proefwerkmap en controleer daarna of het bestand exact zo is opgeslagen."
+)
+EXPECTED_FILESYSTEM_ARGUMENTS = {
+    "content": "warme kopermaan",
+    "path": "tool01-proof.txt",
+}
 MODEL = "gpt-5.4-mini"
 REASONING = "medium"
 BUDGET = {
@@ -141,6 +148,8 @@ def _filesystem_projection(
     except Tool01V2Error:
         return None
     execute = {"content": content, "path": path}
+    if execute != EXPECTED_FILESYSTEM_ARGUMENTS:
+        return None
     observe = {"path": path}
     expected = {"content": content}
     return execute, observe, expected

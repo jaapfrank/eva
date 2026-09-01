@@ -34,10 +34,10 @@ OPERATION_ID = "operation-001"
 HISTORY_SHA = "4" * 64
 RECEIPT_SHA = "5" * 64
 PROVIDER_INSTANCE = "provider-instance-001"
-ARGUMENTS = {"content": "tool01-warm-marker", "path": "tool01-proof.txt"}
+ARGUMENTS = copy.deepcopy(checker.EXPECTED_FILESYSTEM_ARGUMENTS)
 EXECUTE_ARGUMENTS = copy.deepcopy(ARGUMENTS)
 OBSERVE_ARGUMENTS = {"path": "tool01-proof.txt"}
-EXPECTED = {"content": "tool01-warm-marker"}
+EXPECTED = {"content": ARGUMENTS["content"]}
 TOOL_CONFIGURATION_SHA = "7" * 64
 
 
@@ -622,6 +622,48 @@ def test_coordinated_provider_rewrite_cannot_detach_from_model(tmp_path: Path) -
             )
         calls = artifacts["providerCounters"]["calls"]
         calls[0]["argumentsSha256"] = checker._sha256(changed_execute)
+        calls[1]["argumentsSha256"] = checker._sha256(changed_observe)
+
+    result = _check(_bundle(tmp_path, mutate=mutate))
+    assert "model_filesystem_projection_differs" in result["runtimeViolations"]
+
+
+@pytest.mark.parametrize(
+    ("field", "value"),
+    [
+        ("content", "verkeerde kopermaan"),
+        ("path", "verkeerd-bestand.txt"),
+    ],
+)
+def test_coordinated_rewrite_cannot_change_the_prompt_result(
+    tmp_path: Path, field: str, value: str
+) -> None:
+    changed = copy.deepcopy(ARGUMENTS)
+    changed[field] = value
+    changed_observe = {"path": changed["path"]}
+    changed_expected = {"content": changed["content"]}
+
+    def mutate(artifacts):
+        events = artifacts["durableTimeline"]["events"]
+        admission = events[0]["payload"]["data"]
+        admission["action_arguments"] = copy.deepcopy(changed)
+        admission["request_arguments"] = copy.deepcopy(changed)
+        admission["request_observation_arguments"] = copy.deepcopy(changed_observe)
+        prepared = events[1]["payload"]["data"]
+        prepared["arguments"] = copy.deepcopy(changed)
+        prepared["observation_arguments"] = copy.deepcopy(changed_observe)
+        prepared["expected_proof"] = copy.deepcopy(changed_expected)
+        proof = events[2]["payload"]["data"]["proof"]
+        proof["expected"] = copy.deepcopy(changed_expected)
+        proof["observed"] = copy.deepcopy(changed_expected)
+        for event in events:
+            event["payloadSha256"] = checker._sha256(event["payload"])
+        for snapshot in artifacts["durableTimeline"]["snapshots"].values():
+            snapshot["eventsSha256"] = checker._sha256(
+                events[: snapshot["eventCount"]]
+            )
+        calls = artifacts["providerCounters"]["calls"]
+        calls[0]["argumentsSha256"] = checker._sha256(changed)
         calls[1]["argumentsSha256"] = checker._sha256(changed_observe)
 
     result = _check(_bundle(tmp_path, mutate=mutate))

@@ -4,6 +4,14 @@ TOOL01 v2 controleert één echte, providerneutrale toolactie over drie nieuwe
 Eva-containers. De checker start zelf geen model, database, container of
 provider en vertrouwt geen `passed`-veld.
 
+De modelopdracht is bewust een echte bestandstaak. Een eerdere kandidaat
+koppelde de zin “ik heb het koud” aan een kale bestandsschrijftool; dat zou een
+model juist belonen voor een semantisch verkeerde toolkeuze. De afzonderlijke
+comfortproef moet een werkelijk passende, dynamisch ontdekte apparaattool
+gebruiken. Deze poort bewijst alleen dat Eva een onbekende passende tool kiest,
+duurzaam uitvoert, onafhankelijk terugleest en na een crash niet dubbel
+uitvoert.
+
 V2 gebruikt uitsluitend de gebeurtenissen die de huidige algemene toolroute
 werkelijk duurzaam schrijft:
 
