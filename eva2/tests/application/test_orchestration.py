@@ -133,6 +133,25 @@ def _request() -> ToolRequest:
     )
 
 
+def test_tool_request_keeps_historical_positional_timeout_order() -> None:
+    request = ToolRequest(
+        "thread:positional",
+        "operation:positional",
+        "checkpoint:positional",
+        "tool.positional",
+        {},
+        {},
+        3,
+        4,
+        25,
+    )
+
+    assert request.verification_timeout_seconds == 3
+    assert request.execution_timeout_seconds == 4
+    assert request.poll_interval_milliseconds == 25
+    assert request.observation_tool_name is None
+
+
 def test_delayed_proof_does_not_block_event_loop_and_success_follows_proof() -> None:
     async def scenario() -> None:
         timeline = Timeline()

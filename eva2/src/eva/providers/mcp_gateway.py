@@ -11,6 +11,7 @@ from typing import Any
 import sqlalchemy as sa
 
 from eva.adapters.connectors.mcp_gateway import (
+    McpGatewayArgumentBinding,
     McpGatewayConfig,
     McpGatewayProofBinding,
     McpGatewayToolAdapter,
@@ -25,8 +26,9 @@ from eva.contracts.base import validate_json_value
 from eva.providers.contracts import ProviderContribution
 
 
-_CONTRACT = "EvaMcpGatewayProvider/v1"
-_TOOL_FIELDS = {
+_CONTRACT_V1 = "EvaMcpGatewayProvider/v1"
+_CONTRACT_V2 = "EvaMcpGatewayProvider/v2"
+_TOOL_FIELDS_V1 = {
     "completion_guidance",
     "description",
     "eva_name",
@@ -38,6 +40,10 @@ _TOOL_FIELDS = {
     "observe_catalog_sha256",
     "observe_tool_name",
     "proof_bindings",
+}
+_TOOL_FIELDS_V2 = _TOOL_FIELDS_V1 | {
+    "execute_argument_bindings",
+    "observe_argument_bindings",
 }
 
 
@@ -64,8 +70,43 @@ def _required_text(payload: dict[str, Any], name: str, limit: int) -> str:
     return value
 
 
-def _tool_spec(payload: object) -> McpGatewayToolSpec:
-    if not isinstance(payload, dict) or set(payload) != _TOOL_FIELDS:
+def _argument_bindings(
+    payload: object,
+    *,
+    schema: dict[str, Any],
+    identity_default: bool,
+) -> tuple[McpGatewayArgumentBinding, ...]:
+    if identity_default:
+        properties = schema.get("properties")
+        if not isinstance(properties, dict):
+            raise RuntimeError("MCP gateway argument bindings are invalid")
+        payload = [
+            {"argument_name": name, "provider_name": name} for name in properties
+        ]
+    if not isinstance(payload, list) or len(payload) > 128:
+        raise RuntimeError("MCP gateway argument bindings are invalid")
+    bindings: list[McpGatewayArgumentBinding] = []
+    for binding in payload:
+        if not isinstance(binding, dict) or set(binding) != {
+            "argument_name",
+            "provider_name",
+        }:
+            raise RuntimeError("MCP gateway argument bindings are invalid")
+        try:
+            bindings.append(
+                McpGatewayArgumentBinding(
+                    _required_text(binding, "argument_name", 80),
+                    _required_text(binding, "provider_name", 80),
+                )
+            )
+        except ValueError as exc:
+            raise RuntimeError("MCP gateway argument bindings are invalid") from exc
+    return tuple(bindings)
+
+
+def _tool_spec(payload: object, *, contract: str) -> McpGatewayToolSpec:
+    expected_fields = _TOOL_FIELDS_V1 if contract == _CONTRACT_V1 else _TOOL_FIELDS_V2
+    if not isinstance(payload, dict) or set(payload) != expected_fields:
         raise RuntimeError("MCP gateway tool configuration is invalid")
     schema = payload.get("input_schema")
     try:
@@ -105,6 +146,7 @@ def _tool_spec(payload: object) -> McpGatewayToolSpec:
             completion_guidance=_required_text(payload, "completion_guidance", 4_096),
         )
         return McpGatewayToolSpec(
+            contract=contract,
             descriptor=descriptor,
             execute_tool_name=_required_text(payload, "execute_tool_name", 240),
             observe_tool_name=_required_text(payload, "observe_tool_name", 240),
@@ -115,6 +157,16 @@ def _tool_spec(payload: object) -> McpGatewayToolSpec:
             ),
             observe_catalog_sha256=_required_text(
                 payload, "observe_catalog_sha256", 64
+            ),
+            execute_argument_bindings=_argument_bindings(
+                payload.get("execute_argument_bindings"),
+                schema=schema,
+                identity_default=contract == _CONTRACT_V1,
+            ),
+            observe_argument_bindings=_argument_bindings(
+                payload.get("observe_argument_bindings"),
+                schema=schema,
+                identity_default=contract == _CONTRACT_V1,
             ),
             proof_bindings=tuple(bindings),
         )
@@ -130,12 +182,13 @@ def parse_mcp_gateway_catalog(raw: str) -> tuple[McpGatewayToolSpec, ...]:
     if (
         not isinstance(payload, dict)
         or set(payload) != {"contract", "tools"}
-        or payload.get("contract") != _CONTRACT
+        or payload.get("contract") not in {_CONTRACT_V1, _CONTRACT_V2}
         or not isinstance(payload.get("tools"), list)
         or not 1 <= len(payload["tools"]) <= 128
     ):
         raise RuntimeError("MCP gateway catalog is invalid")
-    specs = tuple(_tool_spec(item) for item in payload["tools"])
+    contract = payload["contract"]
+    specs = tuple(_tool_spec(item, contract=contract) for item in payload["tools"])
     names = [item.descriptor.name for item in specs]
     if len(names) != len(set(names)):
         raise RuntimeError("MCP gateway catalog contains duplicate Eva tools")

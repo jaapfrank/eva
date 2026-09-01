@@ -158,3 +158,67 @@ def test_gateway_catalog_is_closed_and_proof_inputs_must_be_required() -> None:
         parse_mcp_gateway_catalog(
             _provider_catalog(extra={"input_schema": optional_schema})
         )
+
+
+def test_v2_catalog_requires_and_hashes_explicit_argument_projections() -> None:
+    payload = json.loads(_provider_catalog())
+    payload["contract"] = "EvaMcpGatewayProvider/v2"
+    tool = payload["tools"][0]
+    tool["execute_argument_bindings"] = [
+        {"argument_name": "message", "provider_name": "input"}
+    ]
+    tool["observe_argument_bindings"] = [
+        {"argument_name": "message", "provider_name": "lookup"}
+    ]
+
+    spec = parse_mcp_gateway_catalog(json.dumps(payload))[0]
+
+    assert spec.execute_argument_bindings[0].provider_name == "input"
+    assert spec.observe_argument_bindings[0].provider_name == "lookup"
+    v1 = parse_mcp_gateway_catalog(_provider_catalog())[0]
+    assert v1.execute_argument_bindings[0].provider_name == "message"
+    assert v1.configuration_sha256 == (
+        "f71f3643ec67f9f8623484e7924058624e3dd9a6a6a9171970c92f7721f79f3b"
+    )
+    assert spec.configuration_sha256 != v1.configuration_sha256
+
+
+def test_v1_catalog_binding_ignores_new_output_schema_but_v2_binds_it() -> None:
+    row = {
+        **CATALOG_ROW,
+        "output_schema": {
+            "additionalProperties": False,
+            "properties": {"text": {"type": "string"}},
+            "required": ["text"],
+            "type": "object",
+        },
+    }
+
+    historical = mcp_gateway_catalog_binding(CATALOG_ROW)
+    v1_with_new_wire_field = mcp_gateway_catalog_binding(
+        row, contract="EvaMcpGatewayProvider/v1"
+    )
+    v2_with_new_wire_field = mcp_gateway_catalog_binding(
+        row, contract="EvaMcpGatewayProvider/v2"
+    )
+
+    assert canonical_sha256(v1_with_new_wire_field) == canonical_sha256(historical)
+    assert canonical_sha256(v2_with_new_wire_field) != canonical_sha256(historical)
+    assert "output_schema" in v2_with_new_wire_field
+
+
+def test_v2_catalog_rejects_missing_or_unknown_argument_projections() -> None:
+    payload = json.loads(_provider_catalog())
+    payload["contract"] = "EvaMcpGatewayProvider/v2"
+    payload["tools"][0]["execute_argument_bindings"] = [
+        {"argument_name": "missing", "provider_name": "message"}
+    ]
+    payload["tools"][0]["observe_argument_bindings"] = []
+    with pytest.raises(RuntimeError, match="configuration"):
+        parse_mcp_gateway_catalog(json.dumps(payload))
+
+    payload = json.loads(_provider_catalog())
+    payload["contract"] = "EvaMcpGatewayProvider/v2"
+    payload["tools"][0]["execute_argument_bindings"] = []
+    with pytest.raises(RuntimeError, match="configuration"):
+        parse_mcp_gateway_catalog(json.dumps(payload))

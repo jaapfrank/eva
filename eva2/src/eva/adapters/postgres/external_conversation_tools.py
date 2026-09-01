@@ -72,9 +72,8 @@ class PostgresExternalConversationTools:
         if provider_context is None:
             return ()
         context = provider_context(turn)
-        if (
-            not isinstance(context, tuple)
-            or any(not isinstance(value, str) or not value.strip() for value in context)
+        if not isinstance(context, tuple) or any(
+            not isinstance(value, str) or not value.strip() for value in context
         ):
             raise ConversationConflict("external tool context is malformed")
         return context
@@ -114,6 +113,15 @@ class PostgresExternalConversationTools:
             ),
             "source_message_id": turn.message_id,
         }
+        if request.observation_tool_name is not None:
+            admission["request_observation_tool_name"] = request.observation_tool_name
+            admission["request_observation_arguments"] = (
+                request.observation_arguments or {}
+            )
+        if request.tool_configuration_sha256 is not None:
+            admission["request_tool_configuration_sha256"] = (
+                request.tool_configuration_sha256
+            )
         if preparation.observation_output_key is not None:
             admission["observation_output_key"] = preparation.observation_output_key
         timeline = self._timeline(turn)
@@ -199,8 +207,7 @@ class PostgresExternalConversationTools:
                 or not observation_output_key.isidentifier()
                 or len(observation_output_key) > 80
                 or observation_output_key in receipt_output
-                or observation_output_key
-                in {"contract", "durable", "proof", "status"}
+                or observation_output_key in {"contract", "durable", "proof", "status"}
             ):
                 raise ConversationConflict(
                     "external tool observation output key is malformed"
@@ -236,15 +243,46 @@ class PostgresExternalConversationTools:
         tool_name = admission.get("request_tool_name")
         arguments = admission.get("request_arguments")
         expected_proof = admission.get("request_expected_proof")
-        execution_timeout = admission.get("request_execution_timeout_seconds", 10)
-        verification_timeout = admission.get(
-            "request_verification_timeout_seconds", 10
+        observation_tool_name = admission.get("request_observation_tool_name")
+        observation_arguments = admission.get("request_observation_arguments")
+        tool_configuration_sha256 = admission.get("request_tool_configuration_sha256")
+        receipt_output = admission.get("receipt_output")
+        legacy_configuration_sha256 = (
+            receipt_output.get("tool_configuration_sha256")
+            if isinstance(receipt_output, dict)
+            else None
         )
+        if (
+            tool_configuration_sha256 is None
+            and legacy_configuration_sha256 is not None
+        ):
+            tool_configuration_sha256 = legacy_configuration_sha256
+        execution_timeout = admission.get("request_execution_timeout_seconds", 10)
+        verification_timeout = admission.get("request_verification_timeout_seconds", 10)
         if (
             admission.get("action_name") != action_name
             or not isinstance(tool_name, str)
             or not isinstance(arguments, dict)
             or not isinstance(expected_proof, dict)
+            or (observation_tool_name is None) != (observation_arguments is None)
+            or (
+                observation_tool_name is not None
+                and not isinstance(observation_tool_name, str)
+            )
+            or (
+                observation_arguments is not None
+                and not isinstance(observation_arguments, dict)
+            )
+            or (
+                tool_configuration_sha256 is not None
+                and not isinstance(tool_configuration_sha256, str)
+            )
+            or (
+                admission.get("request_tool_configuration_sha256") is not None
+                and legacy_configuration_sha256 is not None
+                and admission.get("request_tool_configuration_sha256")
+                != legacy_configuration_sha256
+            )
             or not isinstance(execution_timeout, int)
             or isinstance(execution_timeout, bool)
             or not isinstance(verification_timeout, int)
@@ -261,6 +299,9 @@ class PostgresExternalConversationTools:
             tool_name=tool_name,
             arguments=arguments,
             expected_proof=expected_proof,
+            observation_tool_name=observation_tool_name,
+            observation_arguments=observation_arguments,
+            tool_configuration_sha256=tool_configuration_sha256,
             execution_timeout_seconds=execution_timeout,
             verification_timeout_seconds=verification_timeout,
         )
@@ -278,6 +319,9 @@ class PostgresExternalConversationTools:
             tool_name=preparation.tool_name,
             arguments=preparation.arguments,
             expected_proof=preparation.expected_proof,
+            observation_tool_name=preparation.observation_tool_name,
+            observation_arguments=preparation.observation_arguments,
+            tool_configuration_sha256=preparation.tool_configuration_sha256,
             execution_timeout_seconds=preparation.execution_timeout_seconds,
             verification_timeout_seconds=preparation.verification_timeout_seconds,
         )

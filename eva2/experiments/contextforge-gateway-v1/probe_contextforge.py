@@ -16,6 +16,7 @@ from alembic.config import Config as AlembicConfig
 import sqlalchemy as sa
 
 from eva.adapters.connectors.mcp_gateway import (
+    McpGatewayArgumentBinding,
     McpGatewayConfig,
     McpGatewayProofBinding,
     McpGatewayToolAdapter,
@@ -373,6 +374,7 @@ def main() -> int:
     invocation_name = tool_name
 
     spec = McpGatewayToolSpec(
+        contract="EvaMcpGatewayProvider/v1",
         descriptor=ConversationToolDescriptor(
             name="echo_proof",
             description="Echo one fixed proof phrase through the generic MCP route.",
@@ -384,6 +386,8 @@ def main() -> int:
         observe_catalog_name=tool_name,
         execute_catalog_sha256=catalog_sha256,
         observe_catalog_sha256=catalog_sha256,
+        execute_argument_bindings=(McpGatewayArgumentBinding("message", "message"),),
+        observe_argument_bindings=(McpGatewayArgumentBinding("message", "message"),),
         proof_bindings=(McpGatewayProofBinding("message", "text"),),
     )
     gateway_config = McpGatewayConfig(arguments.base_url, token, allow_plain_http=True)

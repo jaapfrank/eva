@@ -71,9 +71,27 @@ class McpGatewayProofBinding:
 
 
 @dataclass(frozen=True, slots=True)
+class McpGatewayArgumentBinding:
+    """Map one Eva-facing argument to one provider-facing argument."""
+
+    argument_name: str
+    provider_name: str
+
+    def __post_init__(self) -> None:
+        if (
+            not self.argument_name.isidentifier()
+            or not self.provider_name.isidentifier()
+            or len(self.argument_name) > 80
+            or len(self.provider_name) > 80
+        ):
+            raise ValueError("MCP gateway argument binding is invalid")
+
+
+@dataclass(frozen=True, slots=True)
 class McpGatewayToolSpec:
     """Sealed Eva-facing tool plus its independent gateway readback."""
 
+    contract: str
     descriptor: ConversationToolDescriptor
     execute_tool_name: str
     observe_tool_name: str
@@ -81,11 +99,15 @@ class McpGatewayToolSpec:
     observe_catalog_name: str
     execute_catalog_sha256: str
     observe_catalog_sha256: str
+    execute_argument_bindings: tuple[McpGatewayArgumentBinding, ...]
+    observe_argument_bindings: tuple[McpGatewayArgumentBinding, ...]
     proof_bindings: tuple[McpGatewayProofBinding, ...]
 
     def __post_init__(self) -> None:
         if (
-            _GATEWAY_TOOL_NAME.fullmatch(self.execute_tool_name) is None
+            self.contract
+            not in {"EvaMcpGatewayProvider/v1", "EvaMcpGatewayProvider/v2"}
+            or _GATEWAY_TOOL_NAME.fullmatch(self.execute_tool_name) is None
             or _GATEWAY_TOOL_NAME.fullmatch(self.observe_tool_name) is None
             or _GATEWAY_TOOL_NAME.fullmatch(self.execute_catalog_name) is None
             or _GATEWAY_TOOL_NAME.fullmatch(self.observe_catalog_name) is None
@@ -103,6 +125,16 @@ class McpGatewayToolSpec:
             raise ValueError("MCP gateway tool specification is invalid")
         properties = self.descriptor.input_schema["properties"]
         required = self.descriptor.input_schema["required"]
+        for bindings in (
+            self.execute_argument_bindings,
+            self.observe_argument_bindings,
+        ):
+            if (
+                len({item.argument_name for item in bindings}) != len(bindings)
+                or len({item.provider_name for item in bindings}) != len(bindings)
+                or any(item.argument_name not in properties for item in bindings)
+            ):
+                raise ValueError("MCP gateway argument projection is invalid")
         if any(item.argument_name not in properties for item in self.proof_bindings):
             raise ValueError("MCP gateway proof input is absent from the tool schema")
         if any(item.argument_name not in required for item in self.proof_bindings):
@@ -110,36 +142,56 @@ class McpGatewayToolSpec:
 
     @property
     def configuration_sha256(self) -> str:
-        return canonical_sha256(
-            {
-                "completion_guidance": self.descriptor.completion_guidance,
-                "description": self.descriptor.description,
-                "eva_name": self.descriptor.name,
-                "execute_catalog_name": self.execute_catalog_name,
-                "execute_catalog_sha256": self.execute_catalog_sha256,
-                "execute_tool_name": self.execute_tool_name,
-                "input_schema": self.descriptor.input_schema,
-                "observe_catalog_name": self.observe_catalog_name,
-                "observe_catalog_sha256": self.observe_catalog_sha256,
-                "observe_tool_name": self.observe_tool_name,
-                "proof_bindings": [
-                    {
-                        "argument_name": item.argument_name,
-                        "observed_name": item.observed_name,
-                    }
-                    for item in self.proof_bindings
-                ],
-            }
-        )
+        payload: dict[str, JsonValue] = {
+            "completion_guidance": self.descriptor.completion_guidance,
+            "description": self.descriptor.description,
+            "eva_name": self.descriptor.name,
+            "execute_catalog_name": self.execute_catalog_name,
+            "execute_catalog_sha256": self.execute_catalog_sha256,
+            "execute_tool_name": self.execute_tool_name,
+            "input_schema": self.descriptor.input_schema,
+            "observe_catalog_name": self.observe_catalog_name,
+            "observe_catalog_sha256": self.observe_catalog_sha256,
+            "observe_tool_name": self.observe_tool_name,
+            "proof_bindings": [
+                {
+                    "argument_name": item.argument_name,
+                    "observed_name": item.observed_name,
+                }
+                for item in self.proof_bindings
+            ],
+        }
+        if self.contract == "EvaMcpGatewayProvider/v2":
+            payload["contract"] = self.contract
+            payload["execute_argument_bindings"] = [
+                {
+                    "argument_name": item.argument_name,
+                    "provider_name": item.provider_name,
+                }
+                for item in self.execute_argument_bindings
+            ]
+            payload["observe_argument_bindings"] = [
+                {
+                    "argument_name": item.argument_name,
+                    "provider_name": item.provider_name,
+                }
+                for item in self.observe_argument_bindings
+            ]
+        return canonical_sha256(payload)
 
 
 class McpGatewayToolPlanner:
     """Validate a model call and bind its expected proof without provider logic."""
 
-    def __init__(self, specs: tuple[McpGatewayToolSpec, ...]) -> None:
+    def __init__(
+        self,
+        specs: tuple[McpGatewayToolSpec, ...],
+        provider_input_schemas: dict[tuple[str, str], dict[str, JsonValue]],
+    ) -> None:
         if not specs or len({item.descriptor.name for item in specs}) != len(specs):
             raise ValueError("MCP gateway action catalog is invalid")
         self._specs = {item.descriptor.name: item for item in specs}
+        self._provider_input_schemas = provider_input_schemas
         self.action_names = tuple(self._specs)
 
     async def prepare(
@@ -152,14 +204,33 @@ class McpGatewayToolPlanner:
         _validate_schema_value(
             call.arguments, spec.descriptor.input_schema, "arguments"
         )
+        execute_arguments = _project_arguments(
+            call.arguments, spec.execute_argument_bindings
+        )
+        observe_arguments = _project_arguments(
+            call.arguments, spec.observe_argument_bindings
+        )
+        execute_schema = self._provider_input_schemas.get(
+            (spec.execute_tool_name, "execute")
+        )
+        observe_schema = self._provider_input_schemas.get(
+            (spec.observe_tool_name, "observe")
+        )
+        if execute_schema is None or observe_schema is None:
+            raise ConversationConflict("MCP gateway catalog was not verified")
+        _validate_schema_value(execute_arguments, execute_schema, "execute_arguments")
+        _validate_schema_value(observe_arguments, observe_schema, "observe_arguments")
         expected: dict[str, JsonValue] = {
             item.observed_name: call.arguments[item.argument_name]
             for item in spec.proof_bindings
         }
         return ConversationToolPreparation(
             tool_name=spec.execute_tool_name,
-            arguments=call.arguments,
+            arguments=execute_arguments,
             expected_proof=expected,
+            observation_tool_name=spec.observe_tool_name,
+            observation_arguments=observe_arguments,
+            tool_configuration_sha256=spec.configuration_sha256,
             receipt_output={
                 "catalog_sha256": spec.execute_catalog_sha256,
                 "tool_configuration_sha256": spec.configuration_sha256,
@@ -183,6 +254,8 @@ class McpGatewayToolAdapter:
             raise ValueError("MCP gateway execute route is duplicated")
         self._config = config
         self._by_execute_name = {item.execute_tool_name: item for item in specs}
+        self._verified_input_schemas: dict[tuple[str, str], dict[str, JsonValue]] = {}
+        self._verified_output_schemas: dict[str, dict[str, JsonValue]] = {}
 
     @staticmethod
     def conversation_tools(
@@ -191,7 +264,12 @@ class McpGatewayToolAdapter:
         return tuple(item.descriptor for item in specs)
 
     def planner(self) -> McpGatewayToolPlanner:
-        return McpGatewayToolPlanner(tuple(self._by_execute_name.values()))
+        if not self._verified_input_schemas:
+            raise RuntimeError("MCP gateway catalog must be verified before use")
+        return McpGatewayToolPlanner(
+            tuple(self._by_execute_name.values()),
+            dict(self._verified_input_schemas),
+        )
 
     async def verify_catalog(self) -> dict[str, str]:
         rows = await asyncio.to_thread(self._request_json, "GET", "/tools", None)
@@ -206,29 +284,69 @@ class McpGatewayToolAdapter:
                 raise RuntimeError("MCP gateway catalog contains duplicate tools")
             by_name[name] = row
         verified: dict[str, str] = {}
+        input_schemas: dict[tuple[str, str], dict[str, JsonValue]] = {}
+        output_schemas: dict[str, dict[str, JsonValue]] = {}
         for spec in self._by_execute_name.values():
-            for catalog_name, expected_hash in (
-                (spec.execute_catalog_name, spec.execute_catalog_sha256),
-                (spec.observe_catalog_name, spec.observe_catalog_sha256),
+            for phase, tool_name, catalog_name, expected_hash, bindings in (
+                (
+                    "execute",
+                    spec.execute_tool_name,
+                    spec.execute_catalog_name,
+                    spec.execute_catalog_sha256,
+                    spec.execute_argument_bindings,
+                ),
+                (
+                    "observe",
+                    spec.observe_tool_name,
+                    spec.observe_catalog_name,
+                    spec.observe_catalog_sha256,
+                    spec.observe_argument_bindings,
+                ),
             ):
                 row = by_name.get(catalog_name)
                 if row is None:
                     raise RuntimeError("MCP gateway required tool is absent")
-                selected = mcp_gateway_catalog_binding(row)
+                selected = mcp_gateway_catalog_binding(row, contract=spec.contract)
                 actual_hash = canonical_sha256(selected)
                 if actual_hash != expected_hash:
                     raise RuntimeError(
                         "MCP gateway tool differs from the sealed catalog"
                     )
                 verified[catalog_name] = actual_hash
+                input_schema = selected["input_schema"]
+                if not isinstance(input_schema, dict):
+                    raise RuntimeError("MCP gateway input schema is invalid")
+                _validate_projection_contract(
+                    spec.descriptor.input_schema,
+                    input_schema,
+                    bindings,
+                )
+                input_schemas[(tool_name, phase)] = input_schema
+                output_schema = selected.get("output_schema")
+                if output_schema is not None:
+                    if not isinstance(output_schema, dict):
+                        raise RuntimeError("MCP gateway output schema is invalid")
+                    output_schemas[tool_name] = output_schema
+        self._verified_input_schemas = input_schemas
+        self._verified_output_schemas = output_schemas
         return verified
 
     async def execute(self, command: ToolRequest) -> ToolDispatchResult:
         spec = self._by_execute_name.get(command.tool_name)
         if spec is None:
             raise ValueError("MCP gateway command is unsupported")
+        self._validate_request_binding(command, spec)
+        execute_schema = self._verified_input_schemas.get(
+            (spec.execute_tool_name, "execute")
+        )
+        if execute_schema is None:
+            raise RuntimeError("MCP gateway execute catalog is not verified")
+        _validate_schema_value(command.arguments, execute_schema, "execute_arguments")
         output = await asyncio.to_thread(
-            self._call_tool, spec.execute_tool_name, command.arguments
+            self._call_tool,
+            spec.execute_tool_name,
+            command.arguments,
+            _rpc_id(command, "execute", spec.execute_tool_name, command.arguments),
         )
         return ToolDispatchResult(
             accepted=True,
@@ -245,15 +363,33 @@ class McpGatewayToolAdapter:
         spec = self._by_execute_name.get(command.tool_name)
         if spec is None:
             raise ValueError("MCP gateway command is unsupported")
-        output = await asyncio.to_thread(
-            self._call_tool, spec.observe_tool_name, command.arguments
+        self._validate_request_binding(command, spec)
+        observe_tool_name = command.observation_tool_name or spec.observe_tool_name
+        observe_arguments = (
+            command.observation_arguments
+            if command.observation_arguments is not None
+            else command.arguments
         )
+        observe_schema = self._verified_input_schemas.get(
+            (spec.observe_tool_name, "observe")
+        )
+        if observe_schema is None:
+            raise RuntimeError("MCP gateway observe catalog is not verified")
+        _validate_schema_value(observe_arguments, observe_schema, "observe_arguments")
+        output = await asyncio.to_thread(
+            self._call_tool,
+            observe_tool_name,
+            observe_arguments,
+            _rpc_id(command, "observe", observe_tool_name, observe_arguments),
+        )
+        output_schema = self._verified_output_schemas.get(observe_tool_name)
+        if output_schema is not None:
+            _validate_schema_value(output, output_schema, "observe_output")
         observed: dict[str, JsonValue] = {}
         for binding in spec.proof_bindings:
-            value = output.get(binding.observed_name)
-            if value is None:
+            if binding.observed_name not in output:
                 raise RuntimeError("MCP gateway readback omitted required proof")
-            observed[binding.observed_name] = value
+            observed[binding.observed_name] = output[binding.observed_name]
         return ToolProofObservation(
             "verified",
             observed,
@@ -263,22 +399,45 @@ class McpGatewayToolAdapter:
             },
         )
 
+    @staticmethod
+    def _validate_request_binding(
+        command: ToolRequest, spec: McpGatewayToolSpec
+    ) -> None:
+        if command.tool_configuration_sha256 != spec.configuration_sha256:
+            raise RuntimeError("MCP gateway durable tool binding differs")
+        if (
+            command.observation_tool_name is None
+            and command.observation_arguments is None
+            and spec.contract == "EvaMcpGatewayProvider/v1"
+        ):
+            return
+        if (
+            command.observation_tool_name != spec.observe_tool_name
+            or command.observation_arguments is None
+        ):
+            raise RuntimeError("MCP gateway durable tool binding differs")
+
     def _call_tool(
-        self, tool_name: str, arguments: dict[str, JsonValue]
+        self,
+        tool_name: str,
+        arguments: dict[str, JsonValue],
+        rpc_id: str,
     ) -> dict[str, JsonValue]:
         response = self._request_json(
             "POST",
             "/rpc",
             {
-                "id": canonical_sha256(
-                    {"arguments": arguments, "tool_name": tool_name}
-                )[:24],
+                "id": rpc_id,
                 "jsonrpc": "2.0",
                 "method": "tools/call",
                 "params": {"arguments": arguments, "name": tool_name},
             },
         )
-        if not isinstance(response, dict) or response.get("jsonrpc") != "2.0":
+        if (
+            not isinstance(response, dict)
+            or response.get("jsonrpc") != "2.0"
+            or response.get("id") != rpc_id
+        ):
             raise RuntimeError("MCP gateway returned an invalid RPC envelope")
         if response.get("error") is not None:
             raise ToolExecutionRejected("MCP gateway rejected the tool call")
@@ -345,10 +504,17 @@ class McpGatewayToolAdapter:
             raise RuntimeError("MCP gateway returned invalid JSON") from exc
 
 
-def mcp_gateway_catalog_binding(row: dict[str, Any]) -> dict[str, JsonValue]:
+def mcp_gateway_catalog_binding(
+    row: dict[str, Any],
+    *,
+    contract: str = "EvaMcpGatewayProvider/v1",
+) -> dict[str, JsonValue]:
+    if contract not in {"EvaMcpGatewayProvider/v1", "EvaMcpGatewayProvider/v2"}:
+        raise RuntimeError("MCP gateway catalog contract is invalid")
     input_schema = row.get("input_schema", row.get("inputSchema"))
     integration_type = row.get("integration_type", row.get("integrationType"))
     request_type = row.get("request_type", row.get("requestType"))
+    output_schema = row.get("output_schema", row.get("outputSchema"))
     selected: dict[str, JsonValue] = {
         "annotations": row.get("annotations") or {},
         "deprecated": row.get("deprecated") is True,
@@ -360,6 +526,8 @@ def mcp_gateway_catalog_binding(row: dict[str, Any]) -> dict[str, JsonValue]:
         "request_type": request_type,
         "visibility": row.get("visibility"),
     }
+    if contract == "EvaMcpGatewayProvider/v2" and output_schema is not None:
+        selected["output_schema"] = output_schema
     validate_json_value(selected)
     if (
         selected["integration_type"] != "MCP"
@@ -371,6 +539,64 @@ def mcp_gateway_catalog_binding(row: dict[str, Any]) -> dict[str, JsonValue]:
     ):
         raise RuntimeError("MCP gateway tool is not safely executable")
     return selected
+
+
+def _validate_projection_contract(
+    eva_schema: dict[str, JsonValue],
+    provider_schema: dict[str, JsonValue],
+    bindings: tuple[McpGatewayArgumentBinding, ...],
+) -> None:
+    eva_properties = eva_schema.get("properties")
+    eva_required = eva_schema.get("required")
+    provider_properties = provider_schema.get("properties")
+    provider_required = provider_schema.get("required")
+    if (
+        not isinstance(eva_properties, dict)
+        or not isinstance(eva_required, list)
+        or not isinstance(provider_properties, dict)
+        or not isinstance(provider_required, list)
+        or provider_schema.get("type") != "object"
+        or provider_schema.get("additionalProperties") is not False
+        or any(not isinstance(item, str) for item in provider_required)
+    ):
+        raise RuntimeError("MCP gateway provider input schema is unsupported")
+    by_provider_name = {item.provider_name: item.argument_name for item in bindings}
+    if (
+        not set(by_provider_name).issubset(provider_properties)
+        or not set(provider_required).issubset(by_provider_name)
+        or any(by_provider_name[name] not in eva_required for name in provider_required)
+    ):
+        raise RuntimeError("MCP gateway argument projection is incomplete")
+
+
+def _rpc_id(
+    request: ToolRequest,
+    phase: str,
+    tool_name: str,
+    arguments: dict[str, JsonValue],
+) -> str:
+    return canonical_sha256(
+        {
+            "arguments": arguments,
+            "operation_id": request.operation_id,
+            "phase": phase,
+            "tool_configuration_sha256": request.tool_configuration_sha256,
+            "tool_name": tool_name,
+        }
+    )[:32]
+
+
+def _project_arguments(
+    arguments: dict[str, JsonValue],
+    bindings: tuple[McpGatewayArgumentBinding, ...],
+) -> dict[str, JsonValue]:
+    projected = {
+        binding.provider_name: arguments[binding.argument_name]
+        for binding in bindings
+        if binding.argument_name in arguments
+    }
+    validate_json_value(projected)
+    return projected
 
 
 def _validate_schema_value(value: JsonValue, schema: object, path: str) -> None:
@@ -449,6 +675,7 @@ def _validate_schema_value(value: JsonValue, schema: object, path: str) -> None:
 
 
 __all__ = [
+    "McpGatewayArgumentBinding",
     "McpGatewayConfig",
     "McpGatewayProofBinding",
     "McpGatewayToolAdapter",

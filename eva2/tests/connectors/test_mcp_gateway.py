@@ -9,10 +9,12 @@ from threading import Thread
 import pytest
 
 from eva.adapters.connectors.mcp_gateway import (
+    McpGatewayArgumentBinding,
     McpGatewayConfig,
     McpGatewayProofBinding,
     McpGatewayToolAdapter,
     McpGatewayToolSpec,
+    mcp_gateway_catalog_binding,
 )
 from eva.application.conversation import (
     ConversationActionCall,
@@ -33,12 +35,17 @@ SCHEMA = {
 }
 
 
-def _catalog_row(name: str = "proof-echo") -> dict[str, object]:
+def _catalog_row(
+    name: str = "proof-echo",
+    *,
+    schema: dict[str, object] = SCHEMA,
+    read_only: bool = True,
+) -> dict[str, object]:
     return {
-        "annotations": {"readOnlyHint": True},
+        "annotations": {"readOnlyHint": read_only},
         "deprecated": False,
         "enabled": True,
-        "input_schema": SCHEMA,
+        "input_schema": schema,
         "integration_type": "MCP",
         "name": name,
         "reachable": True,
@@ -48,12 +55,15 @@ def _catalog_row(name: str = "proof-echo") -> dict[str, object]:
 
 
 def _catalog_hash(row: dict[str, object]) -> str:
-    return canonical_sha256(row)  # selected test row already has only bound fields
+    return canonical_sha256(
+        mcp_gateway_catalog_binding(row, contract="EvaMcpGatewayProvider/v2")
+    )
 
 
 def _spec(*, catalog_hash: str | None = None) -> McpGatewayToolSpec:
     digest = catalog_hash or _catalog_hash(_catalog_row())
     return McpGatewayToolSpec(
+        contract="EvaMcpGatewayProvider/v2",
         descriptor=ConversationToolDescriptor(
             name="echo_proof",
             description="Echo one short message through the configured generic tool.",
@@ -65,7 +75,30 @@ def _spec(*, catalog_hash: str | None = None) -> McpGatewayToolSpec:
         observe_catalog_name="proof-echo",
         execute_catalog_sha256=digest,
         observe_catalog_sha256=digest,
+        execute_argument_bindings=(McpGatewayArgumentBinding("message", "message"),),
+        observe_argument_bindings=(McpGatewayArgumentBinding("message", "message"),),
         proof_bindings=(McpGatewayProofBinding("message", "text"),),
+    )
+
+
+def _v1_spec(*, description: str | None = None) -> McpGatewayToolSpec:
+    base = _spec()
+    return McpGatewayToolSpec(
+        contract="EvaMcpGatewayProvider/v1",
+        descriptor=ConversationToolDescriptor(
+            name=base.descriptor.name,
+            description=description or base.descriptor.description,
+            input_schema=base.descriptor.input_schema,
+        ),
+        execute_tool_name=base.execute_tool_name,
+        observe_tool_name=base.observe_tool_name,
+        execute_catalog_name=base.execute_catalog_name,
+        observe_catalog_name=base.observe_catalog_name,
+        execute_catalog_sha256=base.execute_catalog_sha256,
+        observe_catalog_sha256=base.observe_catalog_sha256,
+        execute_argument_bindings=base.execute_argument_bindings,
+        observe_argument_bindings=base.observe_argument_bindings,
+        proof_bindings=base.proof_bindings,
     )
 
 
@@ -90,6 +123,7 @@ class _GatewayHandler(BaseHTTPRequestHandler):
     calls: list[dict[str, object]] = []
     catalog: list[dict[str, object]] = [_catalog_row()]
     reject = False
+    wrong_id = False
 
     def do_GET(self) -> None:  # noqa: N802
         if self.path != "/tools":
@@ -115,7 +149,7 @@ class _GatewayHandler(BaseHTTPRequestHandler):
             return
         self._json(
             {
-                "id": body["id"],
+                "id": "wrong-id" if self.wrong_id else body["id"],
                 "jsonrpc": "2.0",
                 "result": {
                     "content": [
@@ -143,6 +177,7 @@ def _gateway() -> tuple[str, type[_GatewayHandler]]:
     _GatewayHandler.calls = []
     _GatewayHandler.catalog = [_catalog_row()]
     _GatewayHandler.reject = False
+    _GatewayHandler.wrong_id = False
     server = ThreadingHTTPServer(("127.0.0.1", 0), _GatewayHandler)
     thread = Thread(target=server.serve_forever, daemon=True)
     thread.start()
@@ -204,15 +239,21 @@ def test_catalog_accepts_contextforge_wire_aliases_but_hashes_one_shape() -> Non
 
 
 def test_planner_validates_closed_arguments_and_binds_expected_proof() -> None:
-    planner = McpGatewayToolAdapter(
-        McpGatewayConfig("https://gateway.example", "token"), (_spec(),)
-    ).planner()
-    preparation = asyncio.run(
-        planner.prepare(
-            _turn(), ConversationActionCall("call-1", "echo_proof", {"message": "hoi"})
+    with _gateway() as (base_url, _handler):
+        adapter = _adapter(base_url)
+        asyncio.run(adapter.verify_catalog())
+        planner = adapter.planner()
+        preparation = asyncio.run(
+            planner.prepare(
+                _turn(),
+                ConversationActionCall("call-1", "echo_proof", {"message": "hoi"}),
+            )
         )
-    )
     assert preparation.tool_name == "proof-echo"
+    assert preparation.arguments == {"message": "hoi"}
+    assert preparation.observation_tool_name == "proof-echo"
+    assert preparation.observation_arguments == {"message": "hoi"}
+    assert preparation.tool_configuration_sha256 == _spec().configuration_sha256
     assert preparation.expected_proof == {"text": "hoi"}
     assert preparation.receipt_output == {
         "catalog_sha256": _spec().execute_catalog_sha256,
@@ -221,27 +262,38 @@ def test_planner_validates_closed_arguments_and_binds_expected_proof() -> None:
     }
 
     with pytest.raises(ConversationConflict, match="fields"):
-        asyncio.run(
-            planner.prepare(
-                _turn(),
-                ConversationActionCall(
-                    "call-2", "echo_proof", {"message": "hoi", "extra": True}
-                ),
+        with _gateway() as (base_url, _handler):
+            adapter = _adapter(base_url)
+            asyncio.run(adapter.verify_catalog())
+            asyncio.run(
+                adapter.planner().prepare(
+                    _turn(),
+                    ConversationActionCall(
+                        "call-2", "echo_proof", {"message": "hoi", "extra": True}
+                    ),
+                )
             )
-        )
+
+
+def _echo_request(spec: McpGatewayToolSpec, message: str) -> ToolRequest:
+    return ToolRequest(
+        thread_id="thread-1",
+        operation_id="operation-1",
+        checkpoint_prefix="checkpoint-1",
+        tool_name="proof-echo",
+        arguments={"message": message},
+        expected_proof={"text": message},
+        observation_tool_name="proof-echo",
+        observation_arguments={"message": message},
+        tool_configuration_sha256=spec.configuration_sha256,
+    )
 
 
 def test_execute_and_independent_observe_use_gateway_rpc_twice() -> None:
     with _gateway() as (base_url, handler):
         adapter = _adapter(base_url)
-        request = ToolRequest(
-            thread_id="thread-1",
-            operation_id="operation-1",
-            checkpoint_prefix="checkpoint-1",
-            tool_name="proof-echo",
-            arguments={"message": "koperen maan"},
-            expected_proof={"text": "koperen maan"},
-        )
+        asyncio.run(adapter.verify_catalog())
+        request = _echo_request(_spec(), "koperen maan")
         dispatch = asyncio.run(adapter.execute(request))
         observation = asyncio.run(adapter.observe(request, dispatch))
 
@@ -251,19 +303,312 @@ def test_execute_and_independent_observe_use_gateway_rpc_twice() -> None:
         assert len(handler.calls) == 2
         assert all(call["method"] == "tools/call" for call in handler.calls)
         assert all(call["params"]["name"] == "proof-echo" for call in handler.calls)
+        assert handler.calls[0]["id"] != handler.calls[1]["id"]
+
+
+def test_execute_and_observe_project_different_provider_arguments(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    schema = {
+        "additionalProperties": False,
+        "properties": {
+            "content": {"minLength": 1, "type": "string"},
+            "path": {"minLength": 1, "type": "string"},
+        },
+        "required": ["content", "path"],
+        "type": "object",
+    }
+    write_schema = schema
+    read_schema = {
+        "additionalProperties": False,
+        "properties": {"path": {"minLength": 1, "type": "string"}},
+        "required": ["path"],
+        "type": "object",
+    }
+    write_row = _catalog_row("write_file", schema=write_schema, read_only=False)
+    read_row = _catalog_row("read_text_file", schema=read_schema)
+    spec = McpGatewayToolSpec(
+        contract="EvaMcpGatewayProvider/v2",
+        descriptor=ConversationToolDescriptor(
+            name="write_document",
+            description="Write and independently read one document.",
+            input_schema=schema,
+        ),
+        execute_tool_name="write_file",
+        observe_tool_name="read_text_file",
+        execute_catalog_name="write_file",
+        observe_catalog_name="read_text_file",
+        execute_catalog_sha256=_catalog_hash(write_row),
+        observe_catalog_sha256=_catalog_hash(read_row),
+        execute_argument_bindings=(
+            McpGatewayArgumentBinding("path", "path"),
+            McpGatewayArgumentBinding("content", "content"),
+        ),
+        observe_argument_bindings=(McpGatewayArgumentBinding("path", "path"),),
+        proof_bindings=(McpGatewayProofBinding("content", "text"),),
+    )
+    calls: list[tuple[str, dict[str, object], str]] = []
+
+    def call_tool(
+        name: str, arguments: dict[str, object], rpc_id: str
+    ) -> dict[str, object]:
+        calls.append((name, arguments, rpc_id))
+        return {"text": "koperen maan"}
+
+    with _gateway() as (base_url, handler):
+        handler.catalog = [write_row, read_row]
+        adapter = McpGatewayToolAdapter(
+            McpGatewayConfig(base_url, "token", allow_plain_http=True), (spec,)
+        )
+        asyncio.run(adapter.verify_catalog())
+        monkeypatch.setattr(adapter, "_call_tool", call_tool)
+        request = ToolRequest(
+            thread_id="thread-1",
+            operation_id="operation-1",
+            checkpoint_prefix="checkpoint-1",
+            tool_name="write_file",
+            arguments={"path": "proof.txt", "content": "koperen maan"},
+            expected_proof={"text": "koperen maan"},
+            observation_tool_name="read_text_file",
+            observation_arguments={"path": "proof.txt"},
+            tool_configuration_sha256=spec.configuration_sha256,
+        )
+
+        dispatch = asyncio.run(adapter.execute(request))
+        observation = asyncio.run(adapter.observe(request, dispatch))
+
+    assert observation.observed == {"text": "koperen maan"}
+    assert calls == [
+        (
+            "write_file",
+            {"path": "proof.txt", "content": "koperen maan"},
+            calls[0][2],
+        ),
+        ("read_text_file", {"path": "proof.txt"}, calls[1][2]),
+    ]
+    assert calls[0][2] != calls[1][2]
+
+
+def test_empty_durable_observation_arguments_stay_empty(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    empty_schema = {
+        "additionalProperties": False,
+        "properties": {},
+        "required": [],
+        "type": "object",
+    }
+    execute_row = _catalog_row("write_value", read_only=False)
+    observe_row = _catalog_row("read_value", schema=empty_schema)
+    base = _spec()
+    spec = McpGatewayToolSpec(
+        contract=base.contract,
+        descriptor=base.descriptor,
+        execute_tool_name="write_value",
+        observe_tool_name="read_value",
+        execute_catalog_name="write_value",
+        observe_catalog_name="read_value",
+        execute_catalog_sha256=_catalog_hash(execute_row),
+        observe_catalog_sha256=_catalog_hash(observe_row),
+        execute_argument_bindings=base.execute_argument_bindings,
+        observe_argument_bindings=(),
+        proof_bindings=base.proof_bindings,
+    )
+    calls: list[tuple[str, dict[str, object]]] = []
+
+    def call_tool(
+        name: str, arguments: dict[str, object], _rpc_id: str
+    ) -> dict[str, object]:
+        calls.append((name, arguments))
+        return {"text": "stil"}
+
+    with _gateway() as (base_url, handler):
+        handler.catalog = [execute_row, observe_row]
+        adapter = McpGatewayToolAdapter(
+            McpGatewayConfig(base_url, "token", allow_plain_http=True), (spec,)
+        )
+        asyncio.run(adapter.verify_catalog())
+        monkeypatch.setattr(adapter, "_call_tool", call_tool)
+        request = ToolRequest(
+            "thread-1",
+            "operation-1",
+            "checkpoint-1",
+            "write_value",
+            {"message": "stil"},
+            {"text": "stil"},
+            observation_tool_name="read_value",
+            observation_arguments={},
+            tool_configuration_sha256=spec.configuration_sha256,
+        )
+        dispatch = asyncio.run(adapter.execute(request))
+        asyncio.run(adapter.observe(request, dispatch))
+
+    assert calls == [
+        ("write_value", {"message": "stil"}),
+        ("read_value", {}),
+    ]
+
+
+def test_legacy_v1_request_requires_its_historical_configuration_hash() -> None:
+    original = _v1_spec()
+    changed = _v1_spec(description="Changed provider meaning.")
+    request = ToolRequest(
+        "thread-1",
+        "operation-1",
+        "checkpoint-1",
+        "proof-echo",
+        {"message": "legacy"},
+        {"text": "legacy"},
+        tool_configuration_sha256=original.configuration_sha256,
+    )
+    with _gateway() as (base_url, _handler):
+        adapter = McpGatewayToolAdapter(
+            McpGatewayConfig(base_url, "token", allow_plain_http=True), (changed,)
+        )
+        asyncio.run(adapter.verify_catalog())
+        with pytest.raises(RuntimeError, match="binding differs"):
+            asyncio.run(adapter.execute(request))
+
+        matching = McpGatewayToolAdapter(
+            McpGatewayConfig(base_url, "token", allow_plain_http=True), (original,)
+        )
+        asyncio.run(matching.verify_catalog())
+        dispatch = asyncio.run(matching.execute(request))
+        observation = asyncio.run(matching.observe(request, dispatch))
+        assert observation.observed == {"text": "legacy"}
+
+
+def test_argument_projection_rejects_unknown_or_duplicate_bindings() -> None:
+    base = _spec()
+    with pytest.raises(ValueError, match="projection"):
+        McpGatewayToolSpec(
+            contract=base.contract,
+            descriptor=base.descriptor,
+            execute_tool_name=base.execute_tool_name,
+            observe_tool_name=base.observe_tool_name,
+            execute_catalog_name=base.execute_catalog_name,
+            observe_catalog_name=base.observe_catalog_name,
+            execute_catalog_sha256=base.execute_catalog_sha256,
+            observe_catalog_sha256=base.observe_catalog_sha256,
+            execute_argument_bindings=(
+                McpGatewayArgumentBinding("missing", "message"),
+            ),
+            observe_argument_bindings=base.observe_argument_bindings,
+            proof_bindings=base.proof_bindings,
+        )
+    with pytest.raises(ValueError, match="projection"):
+        McpGatewayToolSpec(
+            contract=base.contract,
+            descriptor=base.descriptor,
+            execute_tool_name=base.execute_tool_name,
+            observe_tool_name=base.observe_tool_name,
+            execute_catalog_name=base.execute_catalog_name,
+            observe_catalog_name=base.observe_catalog_name,
+            execute_catalog_sha256=base.execute_catalog_sha256,
+            observe_catalog_sha256=base.observe_catalog_sha256,
+            execute_argument_bindings=(
+                McpGatewayArgumentBinding("message", "same"),
+                McpGatewayArgumentBinding("message", "other"),
+            ),
+            observe_argument_bindings=base.observe_argument_bindings,
+            proof_bindings=base.proof_bindings,
+        )
+
+
+def test_catalog_rejects_projection_that_does_not_cover_provider_schema() -> None:
+    provider_schema = {
+        "additionalProperties": False,
+        "properties": {
+            "destination": {"type": "string"},
+            "payload": {"type": "string"},
+        },
+        "required": ["destination", "payload"],
+        "type": "object",
+    }
+    row = _catalog_row("provider-write", schema=provider_schema, read_only=False)
+    base = _spec(catalog_hash=_catalog_hash(row))
+    spec = McpGatewayToolSpec(
+        contract=base.contract,
+        descriptor=base.descriptor,
+        execute_tool_name=base.execute_tool_name,
+        observe_tool_name=base.observe_tool_name,
+        execute_catalog_name="provider-write",
+        observe_catalog_name="provider-write",
+        execute_catalog_sha256=_catalog_hash(row),
+        observe_catalog_sha256=_catalog_hash(row),
+        execute_argument_bindings=(
+            McpGatewayArgumentBinding("message", "misspelled_payload"),
+        ),
+        observe_argument_bindings=(McpGatewayArgumentBinding("message", "payload"),),
+        proof_bindings=base.proof_bindings,
+    )
+    with _gateway() as (base_url, handler):
+        handler.catalog = [row]
+        adapter = McpGatewayToolAdapter(
+            McpGatewayConfig(base_url, "token", allow_plain_http=True), (spec,)
+        )
+        with pytest.raises(RuntimeError, match="projection is incomplete"):
+            asyncio.run(adapter.verify_catalog())
+
+
+def test_required_provider_field_must_come_from_required_eva_input() -> None:
+    eva_schema = {
+        "additionalProperties": False,
+        "properties": {
+            "expected": {"type": "string"},
+            "message": {"type": "string"},
+        },
+        "required": ["expected"],
+        "type": "object",
+    }
+    provider_schema = {
+        "additionalProperties": False,
+        "properties": {"payload": {"type": "string"}},
+        "required": ["payload"],
+        "type": "object",
+    }
+    row = _catalog_row("provider-write", schema=provider_schema, read_only=False)
+    spec = McpGatewayToolSpec(
+        contract="EvaMcpGatewayProvider/v2",
+        descriptor=ConversationToolDescriptor(
+            name="optional_message",
+            description="Fixture with an optional Eva input.",
+            input_schema=eva_schema,
+        ),
+        execute_tool_name="provider-write",
+        observe_tool_name="provider-write",
+        execute_catalog_name="provider-write",
+        observe_catalog_name="provider-write",
+        execute_catalog_sha256=_catalog_hash(row),
+        observe_catalog_sha256=_catalog_hash(row),
+        execute_argument_bindings=(McpGatewayArgumentBinding("message", "payload"),),
+        observe_argument_bindings=(McpGatewayArgumentBinding("message", "payload"),),
+        proof_bindings=(McpGatewayProofBinding("expected", "text"),),
+    )
+    with _gateway() as (base_url, handler):
+        handler.catalog = [row]
+        adapter = McpGatewayToolAdapter(
+            McpGatewayConfig(base_url, "token", allow_plain_http=True), (spec,)
+        )
+        with pytest.raises(RuntimeError, match="projection is incomplete"):
+            asyncio.run(adapter.verify_catalog())
 
 
 def test_gateway_tool_error_is_a_definitive_rejection() -> None:
     with _gateway() as (base_url, handler):
         handler.reject = True
-        request = ToolRequest(
-            thread_id="thread-1",
-            operation_id="operation-1",
-            checkpoint_prefix="checkpoint-1",
-            tool_name="proof-echo",
-            arguments={"message": "weigeren"},
-            expected_proof={"text": "weigeren"},
-        )
+        adapter = _adapter(base_url)
+        asyncio.run(adapter.verify_catalog())
+        request = _echo_request(_spec(), "weigeren")
         with pytest.raises(Exception, match="rejected") as raised:
-            asyncio.run(_adapter(base_url).execute(request))
+            asyncio.run(adapter.execute(request))
         assert raised.type.__name__ == "ToolExecutionRejected"
+
+
+def test_gateway_rejects_response_for_another_rpc_id() -> None:
+    with _gateway() as (base_url, handler):
+        handler.wrong_id = True
+        adapter = _adapter(base_url)
+        asyncio.run(adapter.verify_catalog())
+        with pytest.raises(RuntimeError, match="invalid RPC envelope"):
+            asyncio.run(adapter.execute(_echo_request(_spec(), "gebonden")))

@@ -52,6 +52,23 @@ def test_external_tool_observation_output_key_is_fail_closed() -> None:
             )
 
 
+def test_external_tool_preparation_keeps_historical_positional_timeout_order() -> None:
+    preparation = ConversationToolPreparation(
+        "calendar.read",
+        {"day": "tomorrow"},
+        {"day": "tomorrow"},
+        {"calendar": "personal"},
+        11,
+        12,
+        "appointments",
+    )
+
+    assert preparation.execution_timeout_seconds == 11
+    assert preparation.verification_timeout_seconds == 12
+    assert preparation.observation_output_key == "appointments"
+    assert preparation.observation_tool_name is None
+
+
 def test_bundled_procedural_identity_is_the_exact_current_eva_pack() -> None:
     pack = load_current_identity_pack()
 
@@ -416,9 +433,7 @@ def test_model_requested_memory_search_recalls_then_answers() -> None:
             self.queries: list[str] = []
             self.fast_queries: list[str] = []
 
-        def recall_for_presence_fast(
-            self, query: RecallCurrentFacts
-        ) -> PresenceMemory:
+        def recall_for_presence_fast(self, query: RecallCurrentFacts) -> PresenceMemory:
             self.fast_queries.append(query.query_text)
             return _Memory.recall_for_presence(self, query)
 
@@ -444,9 +459,7 @@ def test_model_requested_memory_search_recalls_then_answers() -> None:
                     ),
                 )
             assert completed_action.call.name == MEMORY_SEARCH_ACTION
-            return super().generate(
-                *args, completed_action=completed_action, **kwargs
-            )
+            return super().generate(*args, completed_action=completed_action, **kwargs)
 
     memory = SearchMemory()
     model = SearchModel()
@@ -458,8 +471,13 @@ def test_model_requested_memory_search_recalls_then_answers() -> None:
     text = "Zeg nog eens hoe warm ik het bij de veranda wilde"
     conversation.respond(
         ConversationTurn.private(
-            "tenant", "installation", "jaap", "telegram:jaap",
-            "telegram:memory:no-punctuation", text, NOW,
+            "tenant",
+            "installation",
+            "jaap",
+            "telegram:jaap",
+            "telegram:memory:no-punctuation",
+            text,
+            NOW,
         )
     )
 
@@ -547,8 +565,13 @@ def test_direct_answer_uses_one_model_call_and_is_published() -> None:
     with stream_conversation_text(deltas.append):
         reply = conversation.respond(
             ConversationTurn.private(
-                "tenant", "installation", "jaap", "conversation",
-                "message:dynamic", "Hoi Eva", NOW,
+                "tenant",
+                "installation",
+                "jaap",
+                "conversation",
+                "message:dynamic",
+                "Hoi Eva",
+                NOW,
             )
         )
 
@@ -584,19 +607,25 @@ def test_memory_search_can_be_followed_by_one_available_action() -> None:
             if self.calls == 1:
                 assert set(available_actions) == set(Actions.action_names)
                 return ConversationModelResult(
-                    None, "model", ConversationActionCall(
-                        "memory-call", MEMORY_SEARCH_ACTION,
+                    None,
+                    "model",
+                    ConversationActionCall(
+                        "memory-call",
+                        MEMORY_SEARCH_ACTION,
                         {"query_text": "favoriete lamp overkapping veranda"},
-                    )
+                    ),
                 )
             if self.calls == 2:
                 assert completed_action.call.name == MEMORY_SEARCH_ACTION
                 assert set(available_actions) == set(Actions.action_names)
                 return ConversationModelResult(
-                    None, "model", ConversationActionCall(
-                        "home-call", "read_home_assistant_state",
+                    None,
+                    "model",
+                    ConversationActionCall(
+                        "home-call",
+                        "read_home_assistant_state",
                         {"target_name": "spotjes overkapping"},
-                    )
+                    ),
                 )
             assert completed_action.call.name == "read_home_assistant_state"
             assert available_actions == ()
@@ -611,8 +640,13 @@ def test_memory_search_can_be_followed_by_one_available_action() -> None:
     )
     reply = conversation.respond(
         ConversationTurn.private(
-            "tenant", "installation", "jaap", "conversation",
-            "message:memory-then-action", "Staat mijn favoriete lamp uit?", NOW,
+            "tenant",
+            "installation",
+            "jaap",
+            "conversation",
+            "message:memory-then-action",
+            "Staat mijn favoriete lamp uit?",
+            NOW,
         )
     )
 
@@ -625,9 +659,11 @@ def test_invalid_model_requested_memory_query_is_rejected() -> None:
     class InvalidModel(_Model):
         def generate(self, *args, **kwargs):  # type: ignore[no-untyped-def]
             return ConversationModelResult(
-                None, "model", ConversationActionCall(
+                None,
+                "model",
+                ConversationActionCall(
                     "memory-call", MEMORY_SEARCH_ACTION, {"query_text": ""}
-                )
+                ),
             )
 
     conversation = LivingConversation(
@@ -638,8 +674,13 @@ def test_invalid_model_requested_memory_query_is_rejected() -> None:
     with pytest.raises(RuntimeError, match="memory search request"):
         conversation.respond(
             ConversationTurn.private(
-                "tenant", "installation", "jaap", "conversation",
-                "message:invalid-memory", "Wat weet je nog?", NOW,
+                "tenant",
+                "installation",
+                "jaap",
+                "conversation",
+                "message:invalid-memory",
+                "Wat weet je nog?",
+                NOW,
             )
         )
 

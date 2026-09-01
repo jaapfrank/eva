@@ -110,6 +110,57 @@ EVA2_ROOT = Path(__file__).resolve().parents[2]
 NOW = datetime(2026, 8, 23, 12, 0, tzinfo=UTC)
 
 
+def test_legacy_external_tool_admission_recovers_and_checks_receipt_hash() -> None:
+    class Planner:
+        action_names = ("legacy_tool",)
+
+    class Provider:
+        pass
+
+    engine = sa.create_engine("sqlite://")
+    tools = PostgresExternalConversationTools(engine, Planner(), Provider())  # type: ignore[arg-type]
+    turn = ConversationTurn.private(
+        "legacy-tool-admission",
+        "installation",
+        "jaap",
+        "conversation",
+        "message:legacy-tool",
+        "Voer de oude opdracht uit",
+        "2026-09-01T10:00:00Z",
+    )
+    configuration_sha256 = "8" * 64
+    admission = {
+        "action_call_id": "call:legacy",
+        "action_name": "legacy_tool",
+        "action_arguments": {"message": "legacy"},
+        "conversation_id": turn.conversation_id,
+        "principal_id": turn.principal_id,
+        "receipt_output": {
+            "tool_configuration_sha256": configuration_sha256,
+        },
+        "request_arguments": {"message": "legacy"},
+        "request_expected_proof": {"text": "legacy"},
+        "request_tool_name": "proof-echo",
+        "source_message_id": turn.message_id,
+    }
+
+    request = tools._request_from_admission(  # noqa: SLF001
+        turn, "legacy_tool", admission
+    )
+
+    assert request.tool_configuration_sha256 == configuration_sha256
+    assert request.observation_tool_name is None
+    conflicting = {
+        **admission,
+        "request_tool_configuration_sha256": "9" * 64,
+    }
+    with pytest.raises(ConversationConflict, match="resume command is malformed"):
+        tools._request_from_admission(  # noqa: SLF001
+            turn, "legacy_tool", conflicting
+        )
+    engine.dispose()
+
+
 def test_external_timeline_scope_preserves_existing_ids_and_error() -> None:
     scope = external_timeline_scope(
         "tenant-a",
@@ -1467,6 +1518,122 @@ def test_external_effect_provider_is_durable_and_not_repeated_after_restart(
     assert len(calls) == 1
 
 
+def test_external_tool_restart_uses_durable_separate_observation_command(
+    timeline_engine: Engine,
+) -> None:
+    execution_calls: list[dict[str, object]] = []
+    observation_calls: list[dict[str, object]] = []
+    configuration_sha256 = "7" * 64
+
+    class Planner:
+        action_names = ("write_document",)
+
+        async def prepare(self, turn, call):  # type: ignore[no-untyped-def]
+            del turn
+            assert call.arguments == {
+                "content": "duurzaam",
+                "path": "proof.txt",
+            }
+            return ConversationToolPreparation(
+                tool_name="write_file",
+                arguments={"content": "duurzaam", "path": "proof.txt"},
+                expected_proof={"text": "duurzaam"},
+                receipt_output={"provider": "fixture"},
+                observation_tool_name="read_text_file",
+                observation_arguments={"path": "proof.txt"},
+                tool_configuration_sha256=configuration_sha256,
+            )
+
+    class KilledProvider:
+        async def execute(self, request):  # type: ignore[no-untyped-def]
+            execution_calls.append(
+                {
+                    "arguments": request.arguments,
+                    "configuration": request.tool_configuration_sha256,
+                    "tool": request.tool_name,
+                }
+            )
+            raise SystemExit(137)
+
+        async def observe(self, request, dispatch):  # type: ignore[no-untyped-def]
+            raise AssertionError("first process must not reach observation")
+
+    class RestartedProvider:
+        async def execute(self, request):  # type: ignore[no-untyped-def]
+            raise AssertionError("restart must observe before any second execution")
+
+        async def observe(self, request, dispatch):  # type: ignore[no-untyped-def]
+            assert dispatch is None
+            observation_calls.append(
+                {
+                    "arguments": request.observation_arguments,
+                    "configuration": request.tool_configuration_sha256,
+                    "tool": request.observation_tool_name,
+                }
+            )
+            return ToolProofObservation(
+                "verified",
+                {"text": "duurzaam"},
+                {"source": "separate_readback"},
+            )
+
+    turn = ConversationTurn.private(
+        "external-tool-separate-observation",
+        "installation",
+        "jaap",
+        "conversation",
+        "message:separate-observation",
+        "Schrijf het bewijsbestand",
+        "2026-09-01T10:00:00Z",
+    )
+    call = ConversationActionCall(
+        "call:separate-observation",
+        "write_document",
+        {"content": "duurzaam", "path": "proof.txt"},
+    )
+    first = PostgresExternalConversationTools(
+        timeline_engine, Planner(), KilledProvider()
+    )
+    with pytest.raises(SystemExit, match="137"):
+        first.execute(turn, call)
+
+    restarted = PostgresExternalConversationTools(
+        timeline_engine, Planner(), RestartedProvider()
+    )
+    receipt = restarted.pending(turn)
+
+    assert receipt is not None and receipt.output["status"] == "verified"
+    assert execution_calls == [
+        {
+            "arguments": {"content": "duurzaam", "path": "proof.txt"},
+            "configuration": configuration_sha256,
+            "tool": "write_file",
+        }
+    ]
+    assert observation_calls == [
+        {
+            "arguments": {"path": "proof.txt"},
+            "configuration": configuration_sha256,
+            "tool": "read_text_file",
+        }
+    ]
+    scope = TimelineScope(
+        tenant_id=uuid5(NAMESPACE_URL, f"eva2:{turn.tenant_id}"),
+        installation_id=uuid5(
+            NAMESPACE_URL, f"eva2:{turn.tenant_id}:{turn.installation_id}"
+        ),
+    )
+    timeline = PostgresOperationalTimeline(timeline_engine, scope)
+    events = timeline.events(
+        PostgresExternalConversationTools._thread_id(turn, "write_document")
+    )
+    assert [event.event_type for event in events] == [
+        "TOOL_REQUEST_ADMITTED",
+        "TOOL_PREPARED",
+        "STATE_VERIFIED",
+    ]
+
+
 def test_provider_owned_automation_is_durable_and_not_repeated_after_restart(
     timeline_engine: Engine,
 ) -> None:
@@ -1516,7 +1683,9 @@ def test_provider_owned_automation_is_durable_and_not_repeated_after_restart(
     provider = Provider()
     planner = HomeAssistantConversationAutomationPlanner(Resolver())
     tools = PostgresExternalConversationTools(
-        timeline_engine, planner, provider  # type: ignore[arg-type]
+        timeline_engine,
+        planner,
+        provider,  # type: ignore[arg-type]
     )
     actions = PostgresConversationActions(timeline_engine, external_tools=(tools,))
 
@@ -1529,7 +1698,9 @@ def test_provider_owned_automation_is_durable_and_not_repeated_after_restart(
     ]
     assert len(calls) == 1
     restarted_tools = PostgresExternalConversationTools(
-        timeline_engine, planner, provider  # type: ignore[arg-type]
+        timeline_engine,
+        planner,
+        provider,  # type: ignore[arg-type]
     )
     restarted = PostgresConversationActions(
         timeline_engine, external_tools=(restarted_tools,)
@@ -1549,16 +1720,8 @@ def test_provider_owned_tuya_plan_is_durable_and_not_repeated_after_restart(
             inventory_calls += 1
             return HomeAssistantInventory(
                 (HomeAssistantIntegration("tuya", "cloud", "loaded", "Tuya"),),
-                (
-                    HomeAssistantDevice(
-                        "device", "Schuur", "Tuya", "Lamp", ("cloud",)
-                    ),
-                ),
-                (
-                    HomeAssistantEntity(
-                        "light.schuur", "tuya", "cloud", "device", None
-                    ),
-                ),
+                (HomeAssistantDevice("device", "Schuur", "Tuya", "Lamp", ("cloud",)),),
+                (HomeAssistantEntity("light.schuur", "tuya", "cloud", "device", None),),
                 datetime(2026, 8, 30, 19, 0, tzinfo=UTC),
                 (),
                 True,

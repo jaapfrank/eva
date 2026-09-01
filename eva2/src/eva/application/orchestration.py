@@ -77,6 +77,9 @@ class ToolRequest:
     verification_timeout_seconds: int = 10
     execution_timeout_seconds: int = 10
     poll_interval_milliseconds: int = 250
+    observation_tool_name: str | None = None
+    observation_arguments: dict[str, JsonValue] | None = None
+    tool_configuration_sha256: str | None = None
 
     def __post_init__(self) -> None:
         for value, field in (
@@ -89,6 +92,23 @@ class ToolRequest:
                 raise ValueError(f"{field} must contain 1..240 characters")
         validate_json_value(self.arguments)
         validate_json_value(self.expected_proof)
+        if (self.observation_tool_name is None) != (self.observation_arguments is None):
+            raise ValueError("observation command is incomplete")
+        if self.observation_tool_name is not None and (
+            not self.observation_tool_name.strip()
+            or len(self.observation_tool_name) > 240
+        ):
+            raise ValueError("observation tool name is invalid")
+        if self.observation_arguments is not None:
+            validate_json_value(self.observation_arguments)
+        if self.tool_configuration_sha256 is not None and (
+            len(self.tool_configuration_sha256) != 64
+            or any(
+                character not in "0123456789abcdef"
+                for character in self.tool_configuration_sha256
+            )
+        ):
+            raise ValueError("tool configuration hash is invalid")
         if not 1 <= self.verification_timeout_seconds <= 60:
             raise ValueError("verification timeout must be within 1..60 seconds")
         if not 1 <= self.execution_timeout_seconds <= 60:
@@ -194,6 +214,20 @@ class VerifiedToolOrchestrator:
             deadline = self._clock() + timedelta(
                 seconds=request.verification_timeout_seconds
             )
+            prepared_data: dict[str, JsonValue] = {
+                "arguments": request.arguments,
+                "expected_proof": request.expected_proof,
+                "tool_name": request.tool_name,
+            }
+            if request.observation_tool_name is not None:
+                prepared_data["observation_tool_name"] = request.observation_tool_name
+                prepared_data["observation_arguments"] = (
+                    request.observation_arguments or {}
+                )
+            if request.tool_configuration_sha256 is not None:
+                prepared_data["tool_configuration_sha256"] = (
+                    request.tool_configuration_sha256
+                )
             state = await self._transition(
                 state,
                 request,
@@ -201,11 +235,7 @@ class VerifiedToolOrchestrator:
                 phase="tool_prepared",
                 status="waiting_for_proof",
                 event_type="TOOL_PREPARED",
-                data={
-                    "arguments": request.arguments,
-                    "expected_proof": request.expected_proof,
-                    "tool_name": request.tool_name,
-                },
+                data=prepared_data,
                 deadline=deadline,
             )
             dispatch_result = await self._dispatch(request, state)

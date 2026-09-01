@@ -486,6 +486,9 @@ class ConversationToolPreparation:
     execution_timeout_seconds: int = 10
     verification_timeout_seconds: int = 10
     observation_output_key: str | None = None
+    observation_tool_name: str | None = None
+    observation_arguments: dict[str, JsonValue] | None = None
+    tool_configuration_sha256: str | None = None
 
     def __post_init__(self) -> None:
         if not self.tool_name.strip() or len(self.tool_name) > 240:
@@ -493,6 +496,23 @@ class ConversationToolPreparation:
         validate_json_value(self.arguments)
         validate_json_value(self.expected_proof)
         validate_json_value(self.receipt_output)
+        if (self.observation_tool_name is None) != (self.observation_arguments is None):
+            raise ValueError("prepared conversation observation command is incomplete")
+        if self.observation_tool_name is not None and (
+            not self.observation_tool_name.strip()
+            or len(self.observation_tool_name) > 240
+        ):
+            raise ValueError("prepared conversation observation tool is invalid")
+        if self.observation_arguments is not None:
+            validate_json_value(self.observation_arguments)
+        if self.tool_configuration_sha256 is not None and (
+            len(self.tool_configuration_sha256) != 64
+            or any(
+                character not in "0123456789abcdef"
+                for character in self.tool_configuration_sha256
+            )
+        ):
+            raise ValueError("prepared conversation tool configuration is invalid")
         if set(self.receipt_output) & {"contract", "durable", "proof", "status"}:
             raise ValueError("prepared conversation receipt uses reserved fields")
         if not 1 <= self.execution_timeout_seconds <= 60:
@@ -503,8 +523,7 @@ class ConversationToolPreparation:
             not self.observation_output_key.isidentifier()
             or len(self.observation_output_key) > 80
             or self.observation_output_key in self.receipt_output
-            or self.observation_output_key
-            in {"contract", "durable", "proof", "status"}
+            or self.observation_output_key in {"contract", "durable", "proof", "status"}
         ):
             raise ValueError("prepared conversation observation output is invalid")
 
