@@ -12,16 +12,19 @@ import hashlib
 import json
 import os
 from pathlib import Path, PurePosixPath
+import re
 import shutil
 import stat
 import subprocess
 import tempfile
-from typing import Any, Callable
+from types import MappingProxyType
+from typing import Any, Callable, Mapping
 from urllib.parse import urlparse
 
 from tools.check_container_vulnerabilities import TRIVY_IMAGE, finding_counts
 
 from .candidate_image import CandidateImage, validate_offline_candidate_image
+from .private_receipt import canonical_json, write_new_private_json
 
 
 SYFT_VERSION = "1.51.0"
@@ -31,9 +34,44 @@ SYFT_IMAGE = (
 )
 TRIVY_VERSION = "0.74.0"
 TOOL_AUTHORITY_PATH = "release/candidate-artifact-tool-authority-v1.json"
+RB005_ANCHORS: Mapping[str, str] = MappingProxyType(
+    {
+        "archive_sha256": "108406414bf56d0d99c436a19387c39902605ab8df0820e304ac1e486a459acc",
+        "candidate_receipt_sha256": "3de27f483266c1d7fb63e209eb0f9facaface8dfb7fca7403302397c3c3c3c1b",
+        "image_id": "sha256:3a4f65544be8b0b4e543ba5148b73775b35c40ee5ab4a49dd55eec9b724899f1",
+        "input_authority_sha256": "d9e51cc588a21a186bff68afc48e71978319761cbe9814c5b6a5a3da4d2f4a74",
+        "private_receipt_sha256": "848c236c76abe66e4c2db1d00324aa3df6987a98d4cfc41e9198de0a59261a4f",
+        "public_evidence_path": "eva2/evidence/product/RB-005-two-builder-reproducibility-2026-09-01.json",
+        "public_evidence_sha256": "77ad4553ce10e20fdfc1e80c92219b61528d23c6e2d641f3771e962a465c4ed3",
+        "release_authority_sha256": "20323cc166d5b7055c43dc94a0d5e09c47ab729036e479c166768a2a6e841020",
+        "source_commit": "45d2ff6d61793809a514c01b3a3c000ce1632da6",
+    }
+)
+LICENSE_INVENTORY_SHA256 = (
+    "0608e0bb2f59f3d05433a17b2275822987020b2d8ae2d8c36af71c02a39007aa"
+)
+SBOM_POLICY_SHA256 = (
+    "1b954e5d4bfaef341b1e2f0611f622b98bdae16e81194453ea6223e6b7d408bd"
+)
+TRIVY_CACHE_AUTHORITY_SHA256 = (
+    "a2c300c5a1d85b95be4a3eaed51004b3f2e8d7f232b9bc0226844e45b1ae8585"
+)
+TOOL_AUTHORITY_SHA256 = (
+    "a981113931a6a243f112319f819c8f1974f5679a20944cf5652c4c90fd387297"
+)
 _MAX_JSON_BYTES = 256 * 1024 * 1024
 _SHA256 = frozenset("0123456789abcdef")
 _TRIVY_CACHE_FILES = frozenset({"db/metadata.json", "db/trivy.db"})
+_REQUIRED_PACKAGE_FIELDS = (
+    "name",
+    "versionInfo",
+    "downloadLocation",
+    "licenseDeclared",
+    "licenseConcluded",
+)
+_REQUIRED_RELATIONSHIPS = ("DESCRIBES", "CONTAINS", "DEPENDENCY_OF")
+_SPDX_ID = re.compile(r"SPDXRef-[A-Za-z0-9.-]+\Z")
+_CHECKSUM = re.compile(r"[0-9A-Fa-f]{64}\Z")
 
 
 Runner = Callable[[list[str], int], subprocess.CompletedProcess[str]]
@@ -64,10 +102,7 @@ def _run(command: list[str], timeout: int) -> subprocess.CompletedProcess[str]:
 
 
 def _canonical(value: object) -> bytes:
-    return (
-        json.dumps(value, ensure_ascii=False, separators=(",", ":"), sort_keys=True)
-        + "\n"
-    ).encode("utf-8")
+    return canonical_json(value)
 
 
 def _sha256(raw: bytes) -> str:
@@ -96,12 +131,120 @@ def _json(raw: bytes, *, label: str) -> dict[str, Any]:
     if not raw or len(raw) > _MAX_JSON_BYTES:
         raise RuntimeError(f"{label} size is invalid")
     try:
-        value = json.loads(raw.decode("utf-8"))
-    except (UnicodeDecodeError, json.JSONDecodeError) as error:
+        def unique_object(pairs: list[tuple[str, Any]]) -> dict[str, Any]:
+            value: dict[str, Any] = {}
+            for key, item in pairs:
+                if key in value:
+                    raise ValueError("duplicate JSON key")
+                value[key] = item
+            return value
+
+        value = json.loads(raw.decode("utf-8"), object_pairs_hook=unique_object)
+    except (UnicodeDecodeError, json.JSONDecodeError, ValueError) as error:
         raise RuntimeError(f"{label} is not valid JSON") from error
     if not isinstance(value, dict):
         raise RuntimeError(f"{label} must be a JSON object")
     return value
+
+
+def _object(value: object, *, label: str) -> dict[str, Any]:
+    if not isinstance(value, dict):
+        raise RuntimeError(f"{label} must be a JSON object")
+    return value
+
+
+def _safe_evidence_file(
+    path: Path, *, label: str, private: bool, expected_suffix: str | None = None
+) -> bytes:
+    if not path.is_absolute() or ".." in path.parts:
+        raise RuntimeError(f"{label} path must be explicit and absolute")
+    if expected_suffix is not None:
+        suffix = Path(expected_suffix).parts
+        if len(path.parts) < len(suffix) or path.parts[-len(suffix) :] != suffix:
+            raise RuntimeError(f"{label} path differs")
+    try:
+        metadata = path.lstat()
+        resolved = path.resolve(strict=True)
+    except OSError as error:
+        raise RuntimeError(f"{label} is inaccessible") from error
+    mode = stat.S_IMODE(metadata.st_mode)
+    if (
+        resolved != path
+        or stat.S_ISLNK(metadata.st_mode)
+        or not stat.S_ISREG(metadata.st_mode)
+        or metadata.st_nlink != 1
+        or metadata.st_size <= 0
+        or metadata.st_size > _MAX_JSON_BYTES
+        or metadata.st_uid != os.geteuid()
+        or (mode != 0o600 if private else bool(mode & 0o022))
+    ):
+        raise RuntimeError(f"{label} is not one safe immutable input")
+    return path.read_bytes()
+
+
+def validate_rb005_candidate(
+    candidate_receipt: dict[str, object],
+    *,
+    public_evidence_path: Path,
+    private_receipt_path: Path,
+) -> dict[str, str]:
+    """Bind one validated local candidate to the exact reviewed RB-005 proof."""
+
+    public_raw = _safe_evidence_file(
+        public_evidence_path,
+        label="public RB-005 evidence",
+        private=False,
+        expected_suffix=RB005_ANCHORS["public_evidence_path"],
+    )
+    public = _json(public_raw, label="public RB-005 evidence")
+    physical = _object(public.get("physicalRun"), label="public RB-005 physical run")
+    public_candidate = _object(
+        public.get("candidate"), label="public RB-005 candidate"
+    )
+    builder_b = _object(physical.get("builderB"), label="public RB-005 builder B")
+    private_raw = _safe_evidence_file(
+        private_receipt_path, label="private RB-005 receipt", private=True
+    )
+    private = _json(private_raw, label="private RB-005 receipt")
+    if (
+        public.get("contract") != "EvaWorkboardTaskEvidence/v1"
+        or public.get("taskId") != "RB-005"
+        or public.get("networkUsed") is not False
+        or physical.get("resultContract") != "EvaTwoBuilderReproducibilityReceipt/v2"
+        or physical.get("status") != "passed"
+        or physical.get("resultReceiptSha256")
+        != RB005_ANCHORS["private_receipt_sha256"]
+        or builder_b.get("taskId") != "RB-004"
+        or private.get("contract") != "EvaTwoBuilderReproducibilityReceipt/v2"
+        or private.get("status") != "passed"
+    ):
+        raise RuntimeError("public RB-005 evidence is not the passed builder-B proof")
+    observed = {
+        "archive_sha256": public_candidate.get("archiveSha256"),
+        "candidate_receipt_sha256": builder_b.get("candidateReceiptSha256"),
+        "image_id": public_candidate.get("imageId"),
+        "input_authority_sha256": public.get("inputAuthoritySha256"),
+        "private_receipt_sha256": _sha256(private_raw),
+        "public_evidence_path": RB005_ANCHORS["public_evidence_path"],
+        "public_evidence_sha256": _sha256(public_raw),
+        "release_authority_sha256": public.get("releaseAuthoritySha256"),
+        "source_commit": public.get("sourceCommit"),
+    }
+    if observed != RB005_ANCHORS:
+        raise RuntimeError("RB-005 evidence anchors differ")
+    if {
+        "archive_sha256": candidate_receipt.get("candidate_image_archive_sha256"),
+        "candidate_receipt_sha256": _sha256(_canonical(candidate_receipt)),
+        "image_id": candidate_receipt.get("candidate_image_id"),
+        "source_commit": candidate_receipt.get("candidate_source_commit"),
+    } != {key: RB005_ANCHORS[key] for key in (
+        "archive_sha256",
+        "candidate_receipt_sha256",
+        "image_id",
+        "source_commit",
+    )}:
+        raise RuntimeError("local candidate differs from passed RB-005 evidence")
+    return dict(RB005_ANCHORS)
 
 
 def _private_parent(path: Path) -> None:
@@ -116,6 +259,35 @@ def _private_parent(path: Path) -> None:
         or stat.S_IMODE(metadata.st_mode) & 0o077
     ):
         raise RuntimeError("candidate artifact output parent must be private")
+
+
+def _safe_mount_path(path: Path, *, label: str) -> Path:
+    try:
+        resolved = path.resolve(strict=True)
+    except OSError as error:
+        raise RuntimeError(f"{label} mount path is inaccessible") from error
+    text = str(resolved)
+    if (
+        not resolved.is_absolute()
+        or "," in text
+        or any(ord(character) < 32 or ord(character) == 127 for character in text)
+    ):
+        raise RuntimeError(f"{label} mount path is unsafe")
+    return resolved
+
+
+def _local_docker_socket() -> None:
+    host = os.environ.get("DOCKER_HOST")
+    if host is None:
+        return
+    socket_path = host.removeprefix("unix://")
+    if (
+        not host.startswith("unix://")
+        or not socket_path.startswith("/")
+        or "," in socket_path
+        or any(ord(character) < 32 or ord(character) == 127 for character in host)
+    ):
+        raise RuntimeError("candidate analysis requires a local Unix Docker socket")
 
 
 def _safe_relative(value: object) -> str:
@@ -202,6 +374,9 @@ def validate_trivy_cache(
     """Bind one immutable two-file Trivy database cache to its authority."""
 
     _tool_authority(tool_authority_raw)
+    if _sha256(authority_raw) != TRIVY_CACHE_AUTHORITY_SHA256:
+        raise RuntimeError("Trivy cache authority is not the pinned authority")
+    _safe_mount_path(cache, label="Trivy cache")
     authority = _json(authority_raw, label="Trivy cache authority")
     if set(authority) != {
         "contract",
@@ -241,6 +416,11 @@ def validate_trivy_cache(
     actual = _cache_entries(cache)
     if actual != expected:
         raise RuntimeError("Trivy cache bytes differ from authority")
+    metadata = _json(
+        (cache / "db/metadata.json").read_bytes(), label="Trivy cache metadata"
+    )
+    if metadata.get("UpdatedAt") != authority["databaseUpdatedAt"]:
+        raise RuntimeError("Trivy cache update time differs from authority")
     tree = [
         {"path": path, "sha256": digest, "size": size}
         for path, (digest, size) in sorted(actual.items())
@@ -254,6 +434,8 @@ def validate_trivy_cache(
 
 
 def _container_prefix(*, archive: Path) -> list[str]:
+    _local_docker_socket()
+    archive_parent = _safe_mount_path(archive.parent, label="candidate archive")
     return [
         "docker",
         "run",
@@ -276,7 +458,7 @@ def _container_prefix(*, archive: Path) -> list[str]:
         "--cpus",
         "1",
         "--mount",
-        f"type=bind,src={archive.parent},dst=/archive,readonly",
+        f"type=bind,src={archive_parent},dst=/archive,readonly",
     ]
 
 
@@ -296,12 +478,13 @@ def syft_command(*, archive: Path) -> list[str]:
 
 
 def trivy_command_for_archive(*, archive: Path, cache: VerifiedTrivyCache) -> list[str]:
+    cache_path = _safe_mount_path(cache.path, label="Trivy cache")
     return [
         *_container_prefix(archive=archive),
         "--env",
         "TRIVY_CACHE_DIR=/cache",
         "--mount",
-        f"type=bind,src={cache.path},dst=/cache,readonly",
+        f"type=bind,src={cache_path},dst=/cache,readonly",
         "--entrypoint",
         "trivy",
         TRIVY_IMAGE,
@@ -322,24 +505,7 @@ def trivy_command_for_archive(*, archive: Path, cache: VerifiedTrivyCache) -> li
     ]
 
 
-def validate_spdx(raw: bytes, policy_raw: bytes) -> dict[str, Any]:
-    """Validate the release-selected SPDX subset before hashing it."""
-
-    policy = _json(policy_raw, label="SBOM policy")
-    required_fields = policy.get("requiredPackageFields")
-    required_relationships = policy.get("requiredRelationships")
-    if (
-        policy.get("contract") != "Eva2SbomPolicy/v1"
-        or policy.get("authoritativeFormat") != "SPDX-2.3-json"
-        or policy.get("requiredHashes") != ["SHA256"]
-        or policy.get("packageChecksumPolicy")
-        != "optional_per_SPDX_2.3_validate_when_present_never_fabricate"
-        or not isinstance(required_fields, list)
-        or not all(isinstance(field, str) for field in required_fields)
-        or not isinstance(required_relationships, list)
-        or not all(isinstance(kind, str) for kind in required_relationships)
-    ):
-        raise RuntimeError("SBOM policy differs")
+def _validate_spdx_document(raw: bytes) -> dict[str, Any]:
     document = _json(raw, label="Syft SPDX document")
     namespace = document.get("documentNamespace")
     parsed = urlparse(namespace) if isinstance(namespace, str) else None
@@ -357,18 +523,24 @@ def validate_spdx(raw: bytes, policy_raw: bytes) -> dict[str, Any]:
         raise RuntimeError("Syft SPDX document identity differs")
     packages = document.get("packages")
     if not isinstance(packages, list) or not packages:
-        raise RuntimeError("Syft SPDX package set is empty")
+        raise RuntimeError("Syft SPDX package set is empty or invalid")
+    known_ids = {"SPDXRef-DOCUMENT"}
     for package in packages:
-        if not isinstance(package, dict) or any(
-            field not in package for field in required_fields
+        if not isinstance(package, dict):
+            raise RuntimeError("Syft SPDX package is invalid")
+        package_id = package.get("SPDXID")
+        if (
+            not isinstance(package_id, str)
+            or _SPDX_ID.fullmatch(package_id) is None
+            or package_id in known_ids
+            or any(
+                not isinstance(package.get(field), str)
+                or not package[field].strip()
+                for field in _REQUIRED_PACKAGE_FIELDS
+            )
         ):
-            raise RuntimeError("Syft SPDX package fields are incomplete")
-        if any(
-            not isinstance(package[field], str) or not package[field]
-            for field in required_fields
-            if field != "checksums"
-        ):
-            raise RuntimeError("Syft SPDX package field is invalid")
+            raise RuntimeError("Syft SPDX package identity or fields are invalid")
+        known_ids.add(package_id)
         checksums = package.get("checksums")
         if checksums is not None and (
             not isinstance(checksums, list)
@@ -377,24 +549,95 @@ def validate_spdx(raw: bytes, policy_raw: bytes) -> dict[str, Any]:
                 not isinstance(checksum, dict)
                 or checksum.get("algorithm") != "SHA256"
                 or not isinstance(checksum.get("checksumValue"), str)
-                or len(checksum["checksumValue"]) != 64
-                or any(
-                    character not in _SHA256
-                    for character in checksum["checksumValue"]
-                )
+                or _CHECKSUM.fullmatch(checksum["checksumValue"]) is None
                 for checksum in checksums
             )
         ):
             raise RuntimeError("Syft SPDX package checksum is invalid")
+    for collection_name in ("files", "snippets"):
+        if collection_name not in document:
+            continue
+        elements = document[collection_name]
+        if not isinstance(elements, list):
+            raise RuntimeError(f"Syft SPDX {collection_name} are invalid")
+        for element in elements:
+            element_id = element.get("SPDXID") if isinstance(element, dict) else None
+            if (
+                not isinstance(element_id, str)
+                or _SPDX_ID.fullmatch(element_id) is None
+                or element_id in known_ids
+            ):
+                raise RuntimeError(f"Syft SPDX {collection_name} ID is invalid")
+            known_ids.add(element_id)
     relationships = document.get("relationships")
     if not isinstance(relationships, list):
-        raise RuntimeError("Syft SPDX relationships are absent")
-    actual_relationships = {
-        row.get("relationshipType") for row in relationships if isinstance(row, dict)
-    }
-    if not set(required_relationships).issubset(actual_relationships):
+        raise RuntimeError("Syft SPDX relationships are invalid")
+    relationship_types: set[str] = set()
+    for relationship in relationships:
+        if not isinstance(relationship, dict):
+            raise RuntimeError("Syft SPDX relationship is invalid")
+        source = relationship.get("spdxElementId")
+        target = relationship.get("relatedSpdxElement")
+        kind = relationship.get("relationshipType")
+        if (
+            not isinstance(source, str)
+            or not isinstance(target, str)
+            or not isinstance(kind, str)
+            or not kind.strip()
+            or source not in known_ids
+            or target not in known_ids
+        ):
+            raise RuntimeError("Syft SPDX relationship is invalid")
+        relationship_types.add(kind)
+    if not set(_REQUIRED_RELATIONSHIPS).issubset(relationship_types):
         raise RuntimeError("Syft SPDX required relationships are absent")
     return document
+
+
+def validate_spdx(raw: bytes, policy_raw: bytes) -> dict[str, Any]:
+    """Validate the release-selected SPDX subset before hashing it."""
+
+    if _sha256(policy_raw) != SBOM_POLICY_SHA256:
+        raise RuntimeError("SBOM policy is not the pinned policy")
+    policy = _json(policy_raw, label="SBOM policy")
+    if (
+        policy.get("contract") != "Eva2SbomPolicy/v1"
+        or policy.get("authoritativeFormat") != "SPDX-2.3-json"
+        or policy.get("requiredPackageFields") != list(_REQUIRED_PACKAGE_FIELDS)
+        or policy.get("requiredRelationships") != list(_REQUIRED_RELATIONSHIPS)
+        or policy.get("requiredHashes") != ["SHA256"]
+        or policy.get("packageChecksumPolicy")
+        != "optional_per_SPDX_2.3_validate_when_present_never_fabricate"
+    ):
+        raise RuntimeError("SBOM policy differs")
+    return _validate_spdx_document(raw)
+
+
+def _trivy_finding_counts(payload: dict[str, Any]) -> dict[str, int]:
+    results = payload.get("Results")
+    if not isinstance(results, list) or not results:
+        raise RuntimeError("raw Trivy results are empty or invalid")
+    for result in results:
+        if not isinstance(result, dict) or any(
+            not isinstance(result.get(field), str) or not result[field].strip()
+            for field in ("Target", "Class", "Type")
+        ):
+            raise RuntimeError("raw Trivy result item is invalid")
+        vulnerabilities = result.get("Vulnerabilities")
+        if vulnerabilities is None:
+            continue
+        if not isinstance(vulnerabilities, list):
+            raise RuntimeError("raw Trivy vulnerabilities are invalid")
+        for vulnerability in vulnerabilities:
+            if (
+                not isinstance(vulnerability, dict)
+                or vulnerability.get("Severity") not in {"HIGH", "CRITICAL"}
+            ):
+                raise RuntimeError("raw Trivy vulnerability severity is invalid")
+    try:
+        return finding_counts(payload)
+    except ValueError as error:
+        raise RuntimeError("raw Trivy result is invalid") from error
 
 
 def _write(path: Path, raw: bytes) -> None:
@@ -444,6 +687,8 @@ def _remove_fresh_tree(root: Path) -> None:
 def analyze_candidate_image(
     candidate: CandidateImage,
     *,
+    rb005_public_evidence_path: Path,
+    rb005_private_receipt_path: Path,
     output_parent: Path,
     trivy_cache: Path,
     trivy_cache_authority_raw: bytes,
@@ -454,7 +699,21 @@ def analyze_candidate_image(
 ) -> CandidateArtifactAnalysis:
     """Export once, run both pinned tools, and retain immutable raw evidence."""
 
+    rb005 = validate_rb005_candidate(
+        candidate.receipt,
+        public_evidence_path=rb005_public_evidence_path,
+        private_receipt_path=rb005_private_receipt_path,
+    )
+    if candidate.image_id != rb005["image_id"]:
+        raise RuntimeError("candidate image object differs from passed RB-005 evidence")
+    _local_docker_socket()
     candidate_receipt = validate_offline_candidate_image(candidate, runner=runner)
+    if (
+        candidate_receipt != candidate.receipt
+        or _sha256(_canonical(candidate_receipt))
+        != rb005["candidate_receipt_sha256"]
+    ):
+        raise RuntimeError("validated candidate receipt differs from RB-005")
     _tool_authority(tool_authority_raw)
     cache = validate_trivy_cache(
         trivy_cache, trivy_cache_authority_raw, tool_authority_raw
@@ -462,12 +721,14 @@ def analyze_candidate_image(
     inventory = _json(license_inventory_raw, label="license inventory")
     inventory_claims = inventory.get("claims")
     if (
-        inventory.get("contract") != "Eva2PythonLicenseInventory/v1"
+        _sha256(license_inventory_raw) != LICENSE_INVENTORY_SHA256
+        or inventory.get("contract") != "Eva2PythonLicenseInventory/v1"
         or not isinstance(inventory_claims, dict)
         or inventory_claims.get("everyLockedPackageInventoried") is not True
     ):
         raise RuntimeError("license inventory differs")
     _private_parent(output_parent)
+    _safe_mount_path(output_parent, label="candidate artifact output")
     root = Path(tempfile.mkdtemp(prefix="eva2-candidate-artifacts-", dir=output_parent))
     root.chmod(0o700)
     image_directory = root / "image"
@@ -506,7 +767,7 @@ def analyze_candidate_image(
             raise RuntimeError("pinned Trivy analysis failed")
         trivy_raw = trivy.stdout.encode("utf-8")
         trivy_payload = _json(trivy_raw, label="raw Trivy result")
-        counts = finding_counts(trivy_payload)
+        counts = _trivy_finding_counts(trivy_payload)
         if _file_sha256(archive) != archive_sha256:
             raise RuntimeError("candidate image archive changed during Trivy analysis")
         verified_after = validate_trivy_cache(
@@ -538,7 +799,7 @@ def analyze_candidate_image(
         _write(binding_path, binding_raw)
         receipt = {
             "candidate_image_id": candidate.image_id,
-            "candidate_receipt_sha256": _sha256(_canonical(candidate_receipt)),
+            "candidate_receipt_sha256": rb005["candidate_receipt_sha256"],
             "contract": "EvaManagedBCandidateArtifactAnalysis/v1",
             "files": {
                 "image/image.tar": archive_sha256,
@@ -557,7 +818,9 @@ def analyze_candidate_image(
                 "format": "SPDX-2.3-json",
                 "generator_image": SYFT_IMAGE,
                 "generator_version": SYFT_VERSION,
+                "policy_sha256": _sha256(sbom_policy_raw),
             },
+            "rb005": rb005,
             "status": (
                 "passed_candidate_artifacts"
                 if counts == {"HIGH": 0, "CRITICAL": 0}
@@ -572,8 +835,11 @@ def analyze_candidate_image(
                 "scanner_version": TRIVY_VERSION,
             },
         }
-        receipt_raw = _canonical(receipt)
-        _write(reports / "analysis-receipt.json", receipt_raw)
+        receipt_path = reports / "analysis-receipt.json"
+        write_new_private_json(
+            receipt_path, receipt, label="candidate artifact analysis receipt"
+        )
+        receipt_path.chmod(0o444)
         reports.chmod(0o555)
         root.chmod(0o500)
         return CandidateArtifactAnalysis(root, receipt)
@@ -589,52 +855,200 @@ def validate_candidate_artifact_analysis(
 
     if not isinstance(analysis, CandidateArtifactAnalysis):
         raise RuntimeError("candidate artifact analysis is invalid")
-    receipt = analysis.receipt
+    root = analysis.path
+    try:
+        metadata = root.lstat()
+        resolved = root.resolve(strict=True)
+    except OSError as error:
+        raise RuntimeError("candidate artifact analysis is inaccessible") from error
+    if (
+        not root.is_absolute()
+        or ".." in root.parts
+        or resolved != root
+        or stat.S_ISLNK(metadata.st_mode)
+        or not stat.S_ISDIR(metadata.st_mode)
+        or metadata.st_mode & 0o222
+    ):
+        raise RuntimeError("candidate artifact analysis directory is unsafe")
+
+    expected_directories = {".", "image", "reports"}
+    expected_files = {
+        "image/image.tar",
+        "reports/analysis-receipt.json",
+        "reports/sbom-binding.json",
+        "reports/sbom.spdx.json",
+        "reports/trivy.raw.json",
+    }
+    actual_directories: set[str] = set()
+    actual_files: set[str] = set()
+    for directory, subdirectories, files in os.walk(root, followlinks=False):
+        directory_path = Path(directory)
+        relative_directory = directory_path.relative_to(root).as_posix()
+        actual_directories.add(relative_directory)
+        directory_metadata = directory_path.lstat()
+        if (
+            stat.S_ISLNK(directory_metadata.st_mode)
+            or not stat.S_ISDIR(directory_metadata.st_mode)
+            or directory_metadata.st_mode & 0o222
+        ):
+            raise RuntimeError("candidate artifact analysis directory is unsafe")
+        for name in subdirectories:
+            nested = directory_path / name
+            nested_metadata = nested.lstat()
+            if stat.S_ISLNK(nested_metadata.st_mode) or not stat.S_ISDIR(
+                nested_metadata.st_mode
+            ):
+                raise RuntimeError("candidate artifact analysis tree is unsafe")
+        for name in files:
+            path = directory_path / name
+            _readonly_file(
+                path,
+                maximum=(
+                    4 * 1024 * 1024 * 1024
+                    if path == root / "image/image.tar"
+                    else _MAX_JSON_BYTES
+                ),
+            )
+            actual_files.add(path.relative_to(root).as_posix())
+    if actual_directories != expected_directories or actual_files != expected_files:
+        raise RuntimeError("candidate artifact analysis file set differs")
+
+    retained_raw = _regular_readonly(root / "reports/analysis-receipt.json")
+    retained = _json(retained_raw, label="candidate artifact receipt")
+    if retained_raw != _canonical(retained) or retained != analysis.receipt:
+        raise RuntimeError("candidate artifact retained receipt differs")
+    receipt = retained
+    if set(receipt) != {
+        "candidate_image_id",
+        "candidate_receipt_sha256",
+        "contract",
+        "files",
+        "findings",
+        "license_inventory_sha256",
+        "network_used",
+        "nonclaims",
+        "rb005",
+        "sbom",
+        "status",
+        "tool_authority_sha256",
+        "trivy",
+    }:
+        raise RuntimeError("candidate artifact receipt fields differ")
+    files = _object(receipt.get("files"), label="candidate artifact files")
+    expected_receipt_files = expected_files - {"reports/analysis-receipt.json"}
+    if set(files) != expected_receipt_files:
+        raise RuntimeError("candidate artifact receipt file set differs")
     if (
         receipt.get("contract") != "EvaManagedBCandidateArtifactAnalysis/v1"
         or receipt.get("status") != "passed_candidate_artifacts"
         or receipt.get("network_used") is not False
         or receipt.get("findings") != {"HIGH": 0, "CRITICAL": 0}
-        or not isinstance(receipt.get("files"), dict)
+        or receipt.get("license_inventory_sha256") != LICENSE_INVENTORY_SHA256
+        or receipt.get("tool_authority_sha256") != TOOL_AUTHORITY_SHA256
     ):
         raise RuntimeError("candidate artifact analysis is not release-clean")
-    root = analysis.path
-    metadata = root.lstat()
+    image_id = receipt.get("candidate_image_id")
     if (
-        stat.S_ISLNK(metadata.st_mode)
-        or not stat.S_ISDIR(metadata.st_mode)
-        or metadata.st_mode & 0o222
+        image_id != RB005_ANCHORS["image_id"]
+        or receipt.get("candidate_receipt_sha256")
+        != RB005_ANCHORS["candidate_receipt_sha256"]
     ):
-        raise RuntimeError("candidate artifact analysis directory is unsafe")
-    for relative, digest in receipt["files"].items():
+        raise RuntimeError("candidate identity differs from RB-005")
+    for relative, digest_value in files.items():
+        digest = _digest(digest_value, label="candidate artifact file digest")
         path = root / relative
         if relative == "image/image.tar":
-            _readonly_file(path, maximum=4 * 1024 * 1024 * 1024)
             actual_digest = _file_sha256(path)
         else:
             actual_digest = _sha256(_regular_readonly(path))
         if actual_digest != digest:
             raise RuntimeError("candidate artifact analysis file differs")
-    retained = _json(
-        _regular_readonly(root / "reports/analysis-receipt.json"),
-        label="candidate artifact receipt",
+
+    rb005 = _object(receipt.get("rb005"), label="candidate RB-005 binding")
+    if rb005 != RB005_ANCHORS:
+        raise RuntimeError("candidate RB-005 binding differs")
+
+    sbom_summary = _object(receipt.get("sbom"), label="candidate SBOM summary")
+    if sbom_summary != {
+        "format": "SPDX-2.3-json",
+        "generator_image": SYFT_IMAGE,
+        "generator_version": SYFT_VERSION,
+        "policy_sha256": SBOM_POLICY_SHA256,
+    }:
+        raise RuntimeError("candidate SBOM summary differs")
+    sbom_raw = _regular_readonly(root / "reports/sbom.spdx.json")
+    sbom = _validate_spdx_document(sbom_raw)
+    trivy_raw = _regular_readonly(root / "reports/trivy.raw.json")
+    trivy_payload = _json(trivy_raw, label="raw Trivy result")
+    if _trivy_finding_counts(trivy_payload) != receipt["findings"]:
+        raise RuntimeError("raw Trivy findings differ from analysis receipt")
+
+    trivy_summary = _object(receipt.get("trivy"), label="candidate Trivy summary")
+    if set(trivy_summary) != {
+        "cache_authority_sha256",
+        "cache_tree_sha256",
+        "database_updated_at",
+        "scanner_image",
+        "scanner_version",
+    } or (
+        trivy_summary.get("cache_authority_sha256")
+        != TRIVY_CACHE_AUTHORITY_SHA256
+        or trivy_summary.get("scanner_image") != TRIVY_IMAGE
+        or trivy_summary.get("scanner_version") != TRIVY_VERSION
+        or not isinstance(trivy_summary.get("database_updated_at"), str)
+        or not trivy_summary["database_updated_at"]
+    ):
+        raise RuntimeError("candidate Trivy summary differs")
+    _digest(trivy_summary.get("cache_tree_sha256"), label="Trivy cache tree")
+
+    binding = _json(
+        _regular_readonly(root / "reports/sbom-binding.json"),
+        label="candidate SBOM binding",
     )
-    if retained != receipt:
-        raise RuntimeError("candidate artifact retained receipt differs")
+    if set(binding) != {
+        "artifact",
+        "contract",
+        "documentNamespace",
+        "documentSha256",
+        "format",
+        "generator",
+        "licenseInventorySha256",
+        "vulnerabilityScanSha256",
+    } or binding != {
+        "artifact": {
+            "id": image_id,
+            "sha256": image_id.removeprefix("sha256:"),
+            "type": "image",
+        },
+        "contract": "Eva2SbomBinding/v1",
+        "documentNamespace": sbom["documentNamespace"],
+        "documentSha256": _sha256(sbom_raw),
+        "format": "SPDX-2.3-json",
+        "generator": SYFT_IMAGE,
+        "licenseInventorySha256": LICENSE_INVENTORY_SHA256,
+        "vulnerabilityScanSha256": _sha256(trivy_raw),
+    }:
+        raise RuntimeError("candidate SBOM binding differs")
     return receipt
 
 
 __all__ = [
     "CandidateArtifactAnalysis",
+    "LICENSE_INVENTORY_SHA256",
+    "RB005_ANCHORS",
+    "SBOM_POLICY_SHA256",
     "SYFT_IMAGE",
     "SYFT_VERSION",
     "TOOL_AUTHORITY_PATH",
+    "TOOL_AUTHORITY_SHA256",
     "TRIVY_VERSION",
+    "TRIVY_CACHE_AUTHORITY_SHA256",
     "VerifiedTrivyCache",
     "analyze_candidate_image",
     "syft_command",
     "trivy_command_for_archive",
     "validate_candidate_artifact_analysis",
+    "validate_rb005_candidate",
     "validate_spdx",
     "validate_trivy_cache",
 ]
