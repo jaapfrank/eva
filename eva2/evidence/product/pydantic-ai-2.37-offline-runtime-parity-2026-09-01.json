@@ -1,0 +1,110 @@
+{
+  "build": {
+    "buildContextTreeSha256": "96e741e91947d53a9aa219823bedd656cb4d343d333473fc225d5124468ca0ac",
+    "buildImageArchiveSha256": "6c41fc2512fc76b1e736f98a73745c32a81c4d29e3661a007c20bbd2f52190f3",
+    "buildImageDigest": "sha256:a116514e19457bcb7af7efe9c3dd0b9b71e85b317694e7882a1c52aa15a78134",
+    "dockerNetwork": "none",
+    "runtimeImageArchiveSha256": "ebe8f63c9b7d4e753dfe4d36a0da994a916439b50a51d7fac9d235ab9868561b",
+    "runtimeImageDigest": "sha256:9b615fff20e1a4fad29c2b30562580b212c7dd5e2225236735cca0070ed11c78",
+    "runtimeLibrariesImageArchiveSha256": "1d20ae0dce8f1c747ececf8bc554eb5e656fa334c27c6c4437fc7f5b1f9fb3ad",
+    "runtimeLibrariesImageDigest": "sha256:09f7da3bc104798d0afb40bc08d23ab2da20a76130cec1f2ef170848f5d85217",
+    "wheelCount": 38,
+    "wheelhouseTreeSha256": "0f2a6e34de884571f2968080df3ae86fd64e49836e391d2d54f4d50dace911d8"
+  },
+  "candidate": {
+    "architecture": "amd64",
+    "imageId": "sha256:0cfbac16aa3e8a81fddb5661085138e6873fdb23c1b58e32c4ccebd663c00b4b",
+    "imageSizeBytes": 84635778,
+    "os": "linux",
+    "pydanticAiSlimVersion": "2.37.0",
+    "runtimeUser": "65532:65532",
+    "tagged": false
+  },
+  "contract": "Eva2PydanticAI237OfflineRuntimeParityEvidence/v1",
+  "issuedAt": "2026-09-01T08:19:48+02:00",
+  "nonclaims": [
+    "The candidate has not been tagged, signed, pushed, attached to Compose, deployed, promoted or connected to the live Eva2 route.",
+    "The compatibility probe proves three direct model-adapter phases, not Telegram, the complete managed service graph or credential rotation after a provider 401.",
+    "TOOL01 proves one observable disposable filesystem mutation, not universal exactly-once execution for effects without independent readback.",
+    "The scan reports known HIGH and CRITICAL findings for the named scanner and database; it does not prove that the image has no vulnerability.",
+    "This is amd64-only evidence. Arm64, an independent second build, all 161 release-authority tests and the full managed disposable stack remain open."
+  ],
+  "providerCompatibility": {
+    "contract": "EvaCodexSourceCompatibilityProbe/v1",
+    "imageBoundExternally": true,
+    "modelAttemptCount": 3,
+    "phaseCount": 3,
+    "phases": {
+      "deferredTool": {
+        "inputTokens": 1587,
+        "measurement": "measured",
+        "outputTokens": 180,
+        "status": "selected_not_executed",
+        "toolCalls": 1
+      },
+      "receiptContinuation": {
+        "inputTokens": 789,
+        "measurement": "measured",
+        "offeredToolCount": 0,
+        "outputTokens": 78,
+        "status": "synthetic_receipt_continued"
+      },
+      "streamingText": {
+        "deltaCount": 4,
+        "inputTokens": 28,
+        "measurement": "measured",
+        "outputTokens": 26,
+        "status": "exact"
+      }
+    },
+    "sourceCandidateSha256": "b6bef14f9d3b9d802923bd40e189f786cfb82ec71934f5a12b40f865bb2bbdf2",
+    "status": "passed"
+  },
+  "runtimeSmoke": {
+    "contract": "EvaManagedBCandidateRuntimeSmokeReceipt/v2",
+    "networkUsed": false,
+    "opensslVersion": "OpenSSL 3.5.7 9 Jun 2026",
+    "readOnlyFilesystem": true,
+    "status": "runtime_imported_nonroot"
+  },
+  "security": {
+    "analysisReceiptFileSha256": "4c9e81b2b524d3c1a874eb19199758f9259d9f87728c0d569a2827700830749a",
+    "artifactAnalysisContract": "EvaManagedBCandidateArtifactAnalysis/v1",
+    "candidateReceiptSha256": "e0f978d21b5f756e1597b72efc3f913884fcabd3c40e632f5faa1b0ea255756a",
+    "criticalFindings": 0,
+    "highFindings": 0,
+    "imageArchiveSha256": "7899e92ad8976ee6761905911083097bfcc750a70b76859f6b37f3a05e60649e",
+    "sbomFormat": "SPDX-2.3-json",
+    "sbomSha256": "73589cbdc9edb2664ec1373e90549ee15ba793253f7538182aa083194bee95bb",
+    "scannerDatabaseUpdatedAt": "2026-08-31T07:08:27.708070973Z",
+    "scannerVersion": "0.74.0",
+    "status": "passed_candidate_artifacts",
+    "trivyRawSha256": "67d157bf1606cc469918e11ff562a2458da791b90e541b578ded49b3d0b57486"
+  },
+  "source": {
+    "archiveSha256": "21c4ccdc1acd958fe8ba9c00b5b68e616766ca718135efc0ccef4d451be9279a",
+    "commit": "f6a3ae095f7bbef39ed164d5709391755663b8cd",
+    "dockerfileSha256": "871ec5f7e884afa1e0d918358cc50ad7e6cc9e62ae0ec99c997c8ec921d12f95",
+    "requirementsLockSha256": "88b5095e87596b80a84c591682723647665c49cbde924fe7931207455fa4b2f2"
+  },
+  "status": "passed_offline_runtime_parity_candidate_only",
+  "tool01": {
+    "bundleSha256": "5ff46f70618ba9084bef1d27d1e8fcd762e13dca93fdf7df4960cb1f3596830e",
+    "checkerResultSha256": "21839275d07d9c5914fb9f5df3eca0d4a806bae3121f166db31238c3cc52fc02",
+    "contract": "EvaTool01AcceptanceResult/v2",
+    "externalKillExitCode": 137,
+    "externalKillOom": false,
+    "providerCalls": {
+      "afterExecuteBeforeKill": {"execute": 1, "observe": 0},
+      "afterResume": {"execute": 1, "observe": 1},
+      "afterThirdProcessReplay": {"execute": 1, "observe": 1},
+      "beforeExecute": {"execute": 0, "observe": 0}
+    },
+    "providerCountersSha256": "987268fcbd220e89d899a21a77e619d6b1db0704226a008340bec75c233dab19",
+    "replacementStatus": "replacement_passed",
+    "runId": "tool01-v2-1f978c5413c9",
+    "runtimeStatus": "runtime_passed",
+    "sourceAuthorityStatus": "source_authority_passed",
+    "violations": []
+  }
+}

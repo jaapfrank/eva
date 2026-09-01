@@ -269,9 +269,9 @@
     }
   ],
   "summary": {
-    "files": 2007,
-    "present": 2007,
-    "tracked": 1928,
+    "files": 2008,
+    "present": 2008,
+    "tracked": 1929,
     "untracked": 79,
     "tombstones": 0,
     "policyErrors": 88
@@ -310,7 +310,7 @@
     {
       "id": "eva2-verification",
       "role": "verification",
-      "matchCount": 723
+      "matchCount": 724
     },
     {
       "id": "eva2-documentation",
@@ -10264,7 +10264,7 @@
       "path": "docs/eva-repository-inventory.generated.json",
       "gitState": "tracked",
       "present": true,
-      "bytes": 2329625,
+      "bytes": 2330654,
       "contentSha256": "32591e23fa2eb53a038d95e726ba09edd0405306f38c5283a36a2b6d3010254d",
       "hashMode": "canonical-self-reference-redacted",
       "role": "generated",
@@ -10297,7 +10297,7 @@
       "path": "docs/eva-repository-inventory.generated.md",
       "gitState": "tracked",
       "present": true,
-      "bytes": 360615,
+      "bytes": 360766,
       "contentSha256": "2f4f8486464cbb9713b749dc898f265093d0853699f1da1b4eb3dd1625c1b2d2",
       "hashMode": "canonical-self-reference-redacted",
       "role": "generated",
@@ -10989,8 +10989,8 @@
       "path": "eva2/OPEN_SOURCE_EN_DEPENDENCYKEUZES.md",
       "gitState": "tracked",
       "present": true,
-      "bytes": 37110,
-      "contentSha256": "03dd1d6a42db31d816af293d9eec8f2dc4fe46780f23e35cac10bd94e811ec96",
+      "bytes": 37254,
+      "contentSha256": "de5e5124d7f8ba48f3e07b751ba15f10a52c0e9ddce3805da2fb885bfc7c9aea",
       "hashMode": "exact-bytes",
       "role": "documentation",
       "roleRuleId": "eva2-documentation",
@@ -11082,8 +11082,8 @@
       "path": "eva2/PROJECT_STATUS.md",
       "gitState": "tracked",
       "present": true,
-      "bytes": 44687,
-      "contentSha256": "c11b5fb9aaef5937db952ef3a3dc4c8b0e1ba1bffc5ba0f4af8bd5b5860e19f0",
+      "bytes": 45052,
+      "contentSha256": "37d421bb9da3eb1852ddfe33178f2d5ac378808f9caeeb4bf52b90af28f2e0a7",
       "hashMode": "exact-bytes",
       "role": "documentation",
       "roleRuleId": "eva2-documentation",
@@ -28437,6 +28437,41 @@
       "present": true,
       "bytes": 2341,
       "contentSha256": "7f89d1b1c77db0f1f84571b9847e4615f2b95e2d684f0100585fdb36f2801d67",
+      "hashMode": "exact-bytes",
+      "role": "verification",
+      "roleRuleId": "eva2-verification",
+      "matchingRuleIds": [
+        "eva2-verification"
+      ],
+      "owner": "verification",
+      "inputs": [
+        "production or fixture contract"
+      ],
+      "outputs": [
+        "test decision"
+      ],
+      "state": [
+        "temporary isolated test state"
+      ],
+      "effects": [
+        "may execute only inside its declared gate"
+      ],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": true,
+        "runtimeCritical": true,
+        "status": "included-tracked-critical"
+      }
+    },
+    {
+      "path": "eva2/evidence/product/pydantic-ai-2.37-offline-runtime-parity-2026-09-01.json",
+      "gitState": "tracked",
+      "present": true,
+      "bytes": 5256,
+      "contentSha256": "7299183ee51266edc95694cbd6b36e21f722ddb3ef4e57b69e10bba127427aa5",
       "hashMode": "exact-bytes",
       "role": "verification",
       "roleRuleId": "eva2-verification",
@@ -81330,5 +81365,5 @@
       }
     }
   ],
-  "sourceDigest": "864ffb95fb17188a273341113005ad1263554a93a5c9e0d79ef00d6132907147"
+  "sourceDigest": "039922f417e6455698105c56feeb036fbec003b9f87831fe02bad7ecd88bfa4a"
 }

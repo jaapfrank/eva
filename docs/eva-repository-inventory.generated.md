@@ -3,13 +3,13 @@
 Deze kaart is mechanisch gegenereerd. Zij staat naast de semantische runtimegraaf en
 classificeert ieder gevolgd, verwijderd of niet-genegeerd nieuw repositorypad.
 
-Schema: `EvaRepositoryInventory/v1`. Brondigest: `864ffb95fb17188a273341113005ad1263554a93a5c9e0d79ef00d6132907147`.
+Schema: `EvaRepositoryInventory/v1`. Brondigest: `039922f417e6455698105c56feeb036fbec003b9f87831fe02bad7ecd88bfa4a`.
 
 ## Samenvatting
 
 | Bestanden | Aanwezig | Tracked | Untracked | Tombstones | Policyfouten |
 | ---: | ---: | ---: | ---: | ---: | ---: |
-| 2007 | 2007 | 1928 | 79 | 0 | 88 |
+| 2008 | 2008 | 1929 | 79 | 0 | 88 |
 
 ## Policyfouten
 
@@ -125,7 +125,7 @@ Schema: `EvaRepositoryInventory/v1`. Brondigest: `864ffb95fb17188a273341113005ad
 | `design` | `documentation` | 3 |
 | `experiments` | `experimental` | 36 |
 | `transition` | `documentation` | 2 |
-| `eva2-verification` | `verification` | 723 |
+| `eva2-verification` | `verification` | 724 |
 | `eva2-documentation` | `documentation` | 102 |
 | `eva2-deployment` | `deployment` | 48 |
 | `eva2-experimental` | `experimental` | 155 |
@@ -235,8 +235,8 @@ Schema: `EvaRepositoryInventory/v1`. Brondigest: `864ffb95fb17188a273341113005ad
 | `docs/eva-agent-benchmark-v1.md` | tracked | documentation | included-tracked-noncritical | keep | 18462 |
 | `docs/eva-endbeeld-roadmap.md` | tracked | documentation | included-tracked-noncritical | keep | 16956 |
 | `docs/eva-rebuild-plan-2026-08-20.md` | tracked | documentation | included-tracked-noncritical | keep | 29009 |
-| `docs/eva-repository-inventory.generated.json` | tracked | generated | included-tracked-critical | keep | 2329625 |
-| `docs/eva-repository-inventory.generated.md` | tracked | generated | included-tracked-critical | keep | 360615 |
+| `docs/eva-repository-inventory.generated.json` | tracked | generated | included-tracked-critical | keep | 2330654 |
+| `docs/eva-repository-inventory.generated.md` | tracked | generated | included-tracked-critical | keep | 360766 |
 | `docs/eva-runtime-contract-map.generated.json` | tracked | generated | included-tracked-critical | keep | 246207 |
 | `docs/eva-runtime-contract-map.generated.md` | tracked | generated | included-tracked-critical | keep | 120103 |
 | `docs/eva-runtime-contracts.md` | tracked | documentation | included-tracked-critical | keep | 80976 |
@@ -258,10 +258,10 @@ Schema: `EvaRepositoryInventory/v1`. Brondigest: `864ffb95fb17188a273341113005ad
 | `eva2/DOCUMENTATIE_EN_ONDERHOUD.md` | tracked | documentation | included-tracked-noncritical | keep | 10268 |
 | `eva2/EVA2_MOGELIJKHEDEN_EN_GATEN.md` | tracked | documentation | included-tracked-noncritical | keep | 8118 |
 | `eva2/OPENBOT_VERGELIJKING.md` | tracked | documentation | included-tracked-noncritical | keep | 8258 |
-| `eva2/OPEN_SOURCE_EN_DEPENDENCYKEUZES.md` | tracked | documentation | included-tracked-noncritical | keep | 37110 |
+| `eva2/OPEN_SOURCE_EN_DEPENDENCYKEUZES.md` | tracked | documentation | included-tracked-noncritical | keep | 37254 |
 | `eva2/OUDE_EVA_VS_EVA2.md` | tracked | documentation | included-tracked-noncritical | keep | 5434 |
 | `eva2/PROJECTEN_EN_PLANNING.md` | tracked | documentation | included-tracked-noncritical | keep | 22347 |
-| `eva2/PROJECT_STATUS.md` | tracked | documentation | included-tracked-noncritical | keep | 44687 |
+| `eva2/PROJECT_STATUS.md` | tracked | documentation | included-tracked-noncritical | keep | 45052 |
 | `eva2/README.md` | tracked | documentation | included-tracked-noncritical | keep | 10625 |
 | `eva2/TEAM_WERKWIJZE.md` | tracked | documentation | included-tracked-noncritical | keep | 7129 |
 | `eva2/TECHNISCHE_MOGELIJKHEDEN_EN_GATEN.md` | tracked | documentation | included-tracked-noncritical | keep | 20072 |
@@ -761,6 +761,7 @@ Schema: `EvaRepositoryInventory/v1`. Brondigest: `864ffb95fb17188a273341113005ad
 | `eva2/evidence/product/pydantic-ai-2.36-real-codex-compatibility-2026-08-31.json` | tracked | verification | included-tracked-critical | keep | 2909 |
 | `eva2/evidence/product/pydantic-ai-2.36-real-provider-sigkill-2026-09-01.json` | tracked | verification | included-tracked-critical | keep | 6030 |
 | `eva2/evidence/product/pydantic-ai-2.36-source-codex-compatibility-2026-08-31.json` | tracked | verification | included-tracked-critical | keep | 2341 |
+| `eva2/evidence/product/pydantic-ai-2.37-offline-runtime-parity-2026-09-01.json` | tracked | verification | included-tracked-critical | keep | 5256 |
 | `eva2/evidence/product/pydantic-native-mcp-discovery-candidate-2026-08-31.json` | tracked | verification | included-tracked-critical | keep | 8668 |
 | `eva2/evidence/product/renovate-44.52.0-local-dry-run-2026-08-30.json` | tracked | verification | included-tracked-critical | keep | 1977 |
 | `eva2/evidence/product/situational-humour-live-ab-2026-08-31.json` | tracked | verification | included-tracked-critical | keep | 4254 |

@@ -1,6 +1,6 @@
 # Eva 2 — projectbord en vergelijking
 
-Laatst bijgewerkt: 1 september 2026, 07:19 CEST
+Laatst bijgewerkt: 1 september 2026, 08:19 CEST
 
 ## Zo lees je dit bord
 
@@ -33,7 +33,7 @@ dezelfde sessie wel, maar gaf na ruim drie minuten nog geen eindantwoord.
 | Controle | Eerlijke stand nu |
 |---|---|
 | Is er een maximum aantal regels code? | ✅ Nee. Omvang wordt gemeten om veranderingen te begrijpen, maar een groot getal is nooit op zichzelf fout. Ook 100 miljoen regels zijn toegestaan als het product die aantoonbaar nodig heeft en de onderdelen beheersbaar blijven |
-| Is alles per bestand inhoudelijk beoordeeld? | ❌ Nee. De inventaris bevat nu 1.972 bestanden. De 88 resterende beleidsfouten zijn wel allemaal eerlijk ingedeeld: 50 mogen pas na controle worden gevolgd, 32 blijven in quarantaine, 5 zijn oude/dode bron of documentatie en 1 redundant bestand is kandidaat voor latere verwijdering. Niets is stil verwijderd of als release-input toegelaten |
+| Is alles per bestand inhoudelijk beoordeeld? | ❌ Nee. De inventaris bevat nu 2.008 bestanden. De 88 resterende beleidsfouten zijn wel allemaal eerlijk ingedeeld: 50 mogen pas na controle worden gevolgd, 32 blijven in quarantaine, 5 zijn oude/dode bron of documentatie en 1 redundant bestand is kandidaat voor latere verwijdering. Niets is stil verwijderd of als release-input toegelaten |
 | Heeft ieder gevolgd bestand een duidelijke plek en eigenaar? | 🟡 De huidige gevolgde product-, deploy-, migratie- en testpaden vallen in de laatst gegenereerde inventaris onder exact één semantische component. De checker weigert ontbrekend, dubbel of dood eigenaarschap, maar vertrouwt nog op die momentopname en analyseert Python-gebruik niet volledig. Inventarisversheid en runtimebereikbaarheid moeten nog onderdeel van dezelfde poort worden |
 | Is daarmee bewezen dat iedere afzonderlijke regel nuttig is? | 🟡 Nee. De catalogus legt per component doel, noodzaak, upstreamkeuze, vervanging en tests vast. Dode-codeanalyse, grenscontrole en echte tests moeten daarna bewijzen dat de regels binnen die component hun taak nog werkelijk uitvoeren |
 | Zijn alle dependencies en open-sourcealternatieven aantoonbaar de beste actuele keuze? | 🟡 De live kern en worker zijn exact geïnventariseerd. Van 38 live distributies zijn 30 actueel en 8 hebben een nieuwere kandidaat. De veilige upgradevolgorde en bewuste `HOLD`-keuzes liggen vast. Functionele vergelijking en echte A/B-proeven moeten per batch nog bewijzen wat voor Eva werkelijk beter is |
@@ -61,7 +61,7 @@ afzonderlijk en controleerbaar in
 [repository-inventory-disposition-v1.json](../docs/repository-inventory-disposition-v1.json).
 
 De eerste vervangingsgrens is nu ook onafhankelijk uitvoerbaar. Pydantic AI
-`2.36.0` retourneerde met zijn publieke `ExternalToolset` precies één
+`2.37.0` retourneerde met zijn publieke `ExternalToolset` precies één
 uitgestelde toolcall en deed zelf nul provider-I/O. Eva kan de tweede modelfase
 na een procesbreuk opbouwen uit alleen haar duurzaam bewaarde call en receipt.
 De minimale dependency-overlay verandert uitsluitend `pydantic-ai-slim` en
@@ -74,16 +74,18 @@ providerstoring wordt alleen vóór tekst of een begonnen toolcall eenmaal
 hersteld; onbekend verbruik blijft daarbij zichtbaar als gedeeltelijk gemeten.
 Een ingecheckte, commitgebonden providerprobe begrenst drie fasen op 9.000
 input- en 100 outputtokens en schrijft alleen hashes, tellers en veilige
-statusvelden. De echte proef leerde dat 100 outputtokens ook interne
+statusvelden. De eerste echte proef leerde dat 100 outputtokens ook interne
 redeneertokens telt en te krap was; de vaste proefgrens is daarom 500, binnen
 de bestaande productgrens. 124 gerichte model-, usage-, journal- en
-probecontroles zijn groen. De exacte schone broncommit doorliep daarna met
+probecontroles zijn groen. De actuele exacte schone broncommit doorliep daarna met
 Eva's echte korte Codex-toegang alle drie fasen: streaming, uitgestelde
 toolkeuze zonder uitvoering en hervatten vanuit een synthetische receipt met
-nul aangeboden tools. Dit is nog geen liveclaim: de offline image en scan zijn
-inmiddels groen. Ook de echte runtimepariteit en een fysieke crash tijdens een
-externe providercall zijn groen. De toestandwijzigende TOOL01-v2-proef is nu
-eveneens kandidaat-groen; veilige A/B-promotie ontbreekt nog.
+nul aangeboden tools. Dit is nog geen liveclaim: de 2.37-image, SBOM en 0/0-
+scan zijn inmiddels groen. Ook echte runtimepariteit en een fysieke crash
+tijdens een externe providercall zijn op exact die image groen. De
+toestandwijzigende TOOL01-v2-proef is eveneens kandidaat-groen; de volledige
+beheerde wegwerpstack, onafhankelijke herbouw en veilige A/B-promotie ontbreken
+nog.
 
 De actuele Pydantic-versie heeft nu ook met Eva's echte korte Codex-toegang
 gepraat. De vaste, gesaneerde bronproef is volledig groen: het antwoord kwam in
@@ -467,6 +469,9 @@ zonder extra providercall staan in
 De toestandwijzigende bestandsproef met dezelfde crashgrens staat in
 [TOOL01 v2](experiments/tool01-replacement-acceptance-v2/README.md) en
 [de gesaneerde receipt](evidence/product/tool01-filesystem-provider-sigkill-2026-09-01.json).
+De actuele 2.37-lock, offline image, SBOM, 0/0-scan, echte Codex-stream,
+usage, uitgestelde toolkeuze en nieuwe TOOL01-crashproef staan samen in
+[het actuele Pydantic AI 2.37-kandidaatbewijs](evidence/product/pydantic-ai-2.37-offline-runtime-parity-2026-09-01.json).
 De vastgestelde Telegramverwarring, historische classificatie, live correctie
 en de nog open menselijke eindproef staan in
 [het Eva1/Eva2-dialooggrensbewijs](evidence/living-core/eva1-eva2-telegram-dialogue-isolation-2026-08-31.json).
