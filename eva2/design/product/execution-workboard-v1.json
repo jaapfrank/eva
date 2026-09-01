@@ -6,7 +6,7 @@
   "commandWorkingDirectory": "eva2",
   "inventoryPath": "docs/eva-repository-inventory.generated.json",
   "humanBoardPath": "eva2/WERKBORD.md",
-  "activeTaskId": "RB-004",
+  "activeTaskId": "RB-005",
   "maxActiveImplementationTasks": 1,
   "statusValues": ["queued", "in_progress", "review", "done", "blocked"],
   "rules": [
@@ -209,8 +209,8 @@
       "area": "Releasebasis",
       "title": "Kandidaat op bouwer B maken",
       "outcome": "Een tweede onafhankelijke verse daemon bouwt dezelfde verzegelde commit offline en levert eigen bewijs.",
-      "status": "blocked",
-      "stateDetails": {"baseCommit": null, "implementationCommit": null, "evidenceCommit": null, "reviewEvidencePaths": [], "blockerReason": "NO-GO in review ef9bd63341f85f1f9b8ea3ffdeddd734f51dc9b0: the public evidence makes build-call-count and failed-readiness cleanup claims that are not independently supported by the private receipt chain. No new build or implementation work may start before those claims are withdrawn and the literal RB-004 evidence scope is independently approved."},
+      "status": "done",
+      "stateDetails": {"baseCommit": "26753817bacef13cdbd52eb5169417f4d83df8a9", "implementationCommit": "f89d3d72c01fa8d7917d44a5a79395f0301393a9", "evidenceCommit": "e6d7b5fb838831ff8a589b241f4050523c333278", "reviewEvidencePaths": ["eva2/evidence/product/RB-004-builder-b-offline-admission-2026-09-01.json"], "blockerReason": null},
       "ownerRole": "releaselead",
       "reviewerRole": "proofreviewer",
       "dependsOn": ["RB-003"],
@@ -240,7 +240,7 @@
       "area": "Releasebasis",
       "title": "Beide builds vergelijken",
       "outcome": "Config, lagen en runtime-inhoud zijn gelijk; bewijshergebruik faalt.",
-      "status": "queued",
+      "status": "in_progress",
       "stateDetails": {"baseCommit": null, "implementationCommit": null, "evidenceCommit": null, "reviewEvidencePaths": [], "blockerReason": null},
       "ownerRole": "releaselead",
       "reviewerRole": "proofreviewer",
@@ -264,10 +264,40 @@
         "OCI-config, ongecomprimeerde lagen en runtime-inhoud zijn bytegelijk terwijl de builderidentiteiten en bewijsuitdagingen verschillend blijven.",
         "Een onafhankelijke reviewer geeft GO."
       ]
+    },
+    {
+      "id": "RB-006",
+      "order": 60,
+      "area": "Releasebasis",
+      "title": "SBOM en kwetsbaarheden controleren",
+      "outcome": "De exact door RB-005 gekozen kandidaat heeft een gebonden, niet-lege SBOM en nul hoge of kritieke kwetsbaarheden.",
+      "status": "queued",
+      "stateDetails": {"baseCommit": null, "implementationCommit": null, "evidenceCommit": null, "reviewEvidencePaths": [], "blockerReason": null},
+      "ownerRole": "releaselead",
+      "reviewerRole": "proofreviewer",
+      "dependsOn": ["RB-005"],
+      "componentIds": ["operations-and-release-tests"],
+      "inventoryOwners": ["verification"],
+      "changePaths": [
+        "eva2/tools/managed_b_candidate/artifact_analysis.py",
+        "eva2/tests/operations/test_managed_b_artifact_analysis.py"
+      ],
+      "testCommands": [
+        "TMPDIR=/tmp TEMP=/tmp TMP=/tmp pytest -q tests/operations/test_managed_b_artifact_analysis.py tests/operations/test_container_vulnerability_gate.py",
+        "ruff check tools/managed_b_candidate/artifact_analysis.py tests/operations/test_managed_b_artifact_analysis.py"
+      ],
+      "evidenceRequired": [
+        "Een onveranderlijk analysebewijs bindt de hash, broncommit, inputauthority, kandidaatidentiteit en kandidaatreceipthash van het geslaagde RB-005-bewijs aan exact dezelfde gevalideerde kandidaat.",
+        "Het eenmaal geëxporteerde imagearchief, SPDX-document, de ruwe Trivy-uitvoer, SBOM-binding en analysereceipt zijn samen gebonden aan gepinde tools, een onveranderlijke cacheauthority, nul netwerkgebruik en negatieve tests voor verkeerde receipts, gewijzigde bytes en hoge of kritieke bevindingen."
+      ],
+      "doneWhen": [
+        "Alleen een geslaagd RB-005-bewijs wordt geaccepteerd; image-ID en kandidaatreceipthash moeten vóór export of scan overeenkomen.",
+        "De kandidaat wordt eenmaal geëxporteerd en hetzelfde alleen-lezen archief wordt zonder netwerk of pulls door gepinde Syft en Trivy gelezen; SPDX en scan zijn onveranderlijk hashgebonden.",
+        "Hoge en kritieke bevindingen zijn beide exact nul; iedere mismatch, misvormde uitvoer of bevinding faalt gesloten en een onafhankelijke reviewer geeft GO."
+      ]
     }
   ],
   "milestones": [
-    {"id": "RB-006", "order": 60, "area": "Releasebasis", "title": "SBOM en kwetsbaarheden controleren", "outcome": "De exacte kandidaat heeft een gebonden SBOM en nul hoog/kritiek."},
     {"id": "RB-007", "order": 70, "area": "Releasebasis", "title": "Alle verplichte testgroepen uitvoeren", "outcome": "Iedere verzegelde testgroep slaagt op dezelfde commit."},
     {"id": "RB-008", "order": 80, "area": "Releasebasis", "title": "Volledige wegwerpstack testen", "outcome": "De stack migreert, antwoordt, onthoudt, herstart en ruimt op."},
     {"id": "RB-009", "order": 90, "area": "Releasebasis", "title": "Fysieke bewijsset beoordelen", "outcome": "Een onafhankelijke reviewer controleert de volledige releaseketen."},
@@ -357,6 +387,17 @@
       "reviewCommit": "66d05dbe9b9cbab0448d5835800756c7cdbe898b",
       "reviewedBy": "/root/proof_review",
       "testReceiptPaths": ["eva2/evidence/product/RB-003-builder-a-offline-admission-2026-09-01.json"]
+    },
+    "RB-004": {
+      "baseCommit": "26753817bacef13cdbd52eb5169417f4d83df8a9",
+      "commit": "f89d3d72c01fa8d7917d44a5a79395f0301393a9",
+      "decision": "GO",
+      "evidenceCommit": "e6d7b5fb838831ff8a589b241f4050523c333278",
+      "evidencePaths": ["eva2/reviews/RB-004-builder-b-offline-admission-e6d7b5f.md"],
+      "implementedBy": "/root/release_authority",
+      "reviewCommit": "14d33a94557bf0b0bdba497658b1c10eb660f8aa",
+      "reviewedBy": "/root/proof_review",
+      "testReceiptPaths": ["eva2/evidence/product/RB-004-builder-b-offline-admission-2026-09-01.json"]
     }
   }
 }

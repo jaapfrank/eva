@@ -10,18 +10,18 @@ de volgende begint.
 
 | Volgorde | Kaart | Resultaat | Status |
 |---:|---|---|---|
-| 40 | `RB-004` — Kandidaat op bouwer B maken | Een tweede onafhankelijke verse daemon bouwt dezelfde verzegelde commit offline en levert eigen bewijs. | 🔴 GEBLOKKEERD |
-| 50 | `RB-005` — Beide builds vergelijken | Config, lagen en runtime-inhoud zijn gelijk; bewijshergebruik faalt. | ⚪ HIERNA |
+| 50 | `RB-005` — Beide builds vergelijken | Config, lagen en runtime-inhoud zijn gelijk; bewijshergebruik faalt. | 🟡 BEZIG |
+| 60 | `RB-006` — SBOM en kwetsbaarheden controleren | De exact door RB-005 gekozen kandidaat heeft een gebonden, niet-lege SBOM en nul hoge of kritieke kwetsbaarheden. | ⚪ HIERNA |
 
-### Exact werk voor `RB-004`
+### Exact werk voor `RB-005`
 
 - `eva2/tools/check_two_builder_reproducibility.py`
 - `eva2/tests/operations/test_two_builder_reproducibility.py`
 
 Klaar betekent:
 
-- Bouwer B heeft een andere daemon-, socket-, state-root-, namespace- en BuildKit-identiteit dan A.
-- Bouwer B produceert offline één kandidaat met een eigen volledig gebonden bewijsset.
+- Beide toegelaten builds verwijzen naar exact dezelfde verzegelde productbron en release-inputset.
+- OCI-config, ongecomprimeerde lagen en runtime-inhoud zijn bytegelijk terwijl de builderidentiteiten en bewijsuitdagingen verschillend blijven.
 - Een onafhankelijke reviewer geeft GO.
 
 Echte controles:
@@ -29,15 +29,15 @@ Echte controles:
 - `TMPDIR=/tmp TEMP=/tmp TMP=/tmp pytest -q tests/operations/test_two_builder_reproducibility.py`
 - `ruff check tools/check_two_builder_reproducibility.py tests/operations/test_two_builder_reproducibility.py`
 
-### Daarna voorbereid: `RB-005`
+### Daarna voorbereid: `RB-006`
 
-- `eva2/tools/check_two_builder_reproducibility.py`
-- `eva2/tests/operations/test_two_builder_reproducibility.py`
+- `eva2/tools/managed_b_candidate/artifact_analysis.py`
+- `eva2/tests/operations/test_managed_b_artifact_analysis.py`
 
 Vooraf vastgelegde controles:
 
-- `TMPDIR=/tmp TEMP=/tmp TMP=/tmp pytest -q tests/operations/test_two_builder_reproducibility.py`
-- `ruff check tools/check_two_builder_reproducibility.py tests/operations/test_two_builder_reproducibility.py`
+- `TMPDIR=/tmp TEMP=/tmp TMP=/tmp pytest -q tests/operations/test_managed_b_artifact_analysis.py tests/operations/test_container_vulnerability_gate.py`
+- `ruff check tools/managed_b_candidate/artifact_analysis.py tests/operations/test_managed_b_artifact_analysis.py`
 
 ## Daarna
 
@@ -46,7 +46,6 @@ nadat zij als eerstvolgende kleine kaart exacte bestanden en tests heeft.
 
 | Nr. | Onderdeel | Begrijpelijk eindresultaat |
 |---:|---|---|
-| 60 | `RB-006` — SBOM en kwetsbaarheden controleren | De exacte kandidaat heeft een gebonden SBOM en nul hoog/kritiek. |
 | 70 | `RB-007` — Alle verplichte testgroepen uitvoeren | Iedere verzegelde testgroep slaagt op dezelfde commit. |
 | 80 | `RB-008` — Volledige wegwerpstack testen | De stack migreert, antwoordt, onthoudt, herstart en ruimt op. |
 | 90 | `RB-009` — Fysieke bewijsset beoordelen | Een onafhankelijke reviewer controleert de volledige releaseketen. |
