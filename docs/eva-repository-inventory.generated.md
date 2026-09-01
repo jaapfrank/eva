@@ -3,7 +3,7 @@
 Deze kaart is mechanisch gegenereerd. Zij staat naast de semantische runtimegraaf en
 classificeert ieder gevolgd, verwijderd of niet-genegeerd nieuw repositorypad.
 
-Schema: `EvaRepositoryInventory/v1`. Brondigest: `59f455e15480c8642a1d171a256741253e06e42291ede01820f5b793a52270ad`.
+Schema: `EvaRepositoryInventory/v1`. Brondigest: `3d93300ea156a5032fec4ba5c2673924413b98d8fce88fac8f63d1c13b3f65d7`.
 
 ## Samenvatting
 
@@ -1612,7 +1612,7 @@ Schema: `EvaRepositoryInventory/v1`. Brondigest: `59f455e15480c8642a1d171a256741
 | `eva2/tests/objects/test_p256.py` | tracked | verification | included-tracked-critical | keep | 4106 |
 | `eva2/tests/operations/test_ab_slots.py` | tracked | verification | included-tracked-critical | keep | 6390 |
 | `eva2/tests/operations/test_admit_telegram_test_group.py` | tracked | verification | included-tracked-critical | keep | 7950 |
-| `eva2/tests/operations/test_build_managed_b_offline_candidate.py` | tracked | verification | included-tracked-critical | keep | 11205 |
+| `eva2/tests/operations/test_build_managed_b_offline_candidate.py` | tracked | verification | included-tracked-critical | keep | 11498 |
 | `eva2/tests/operations/test_build_telegram_test_image.py` | tracked | verification | included-tracked-critical | keep | 4765 |
 | `eva2/tests/operations/test_capture_telegram_test_receipt.py` | tracked | verification | included-tracked-critical | keep | 5692 |
 | `eva2/tests/operations/test_container_vulnerability_gate.py` | tracked | verification | included-tracked-critical | keep | 2897 |
@@ -1644,10 +1644,10 @@ Schema: `EvaRepositoryInventory/v1`. Brondigest: `59f455e15480c8642a1d171a256741
 | `eva2/tests/operations/test_installer_secret_lifecycle_cli.py` | tracked | verification | included-tracked-critical | keep | 4481 |
 | `eva2/tests/operations/test_installer_secret_store.py` | tracked | verification | included-tracked-critical | keep | 5957 |
 | `eva2/tests/operations/test_living_core_source_provenance.py` | tracked | verification | included-tracked-critical | keep | 7591 |
-| `eva2/tests/operations/test_managed_b_artifact_analysis.py` | tracked | verification | included-tracked-critical | keep | 11947 |
+| `eva2/tests/operations/test_managed_b_artifact_analysis.py` | tracked | verification | included-tracked-critical | keep | 12424 |
 | `eva2/tests/operations/test_managed_b_base_image.py` | tracked | verification | included-tracked-critical | keep | 8434 |
 | `eva2/tests/operations/test_managed_b_build_context.py` | tracked | verification | included-tracked-critical | keep | 14091 |
-| `eva2/tests/operations/test_managed_b_candidate_image.py` | tracked | verification | included-tracked-critical | keep | 13512 |
+| `eva2/tests/operations/test_managed_b_candidate_image.py` | tracked | verification | included-tracked-critical | keep | 16294 |
 | `eva2/tests/operations/test_managed_b_offline_build.py` | tracked | verification | included-tracked-critical | keep | 8819 |
 | `eva2/tests/operations/test_managed_b_reboot_deployment.py` | tracked | verification | included-tracked-critical | keep | 1326 |
 | `eva2/tests/operations/test_managed_b_reboot_probe.py` | tracked | verification | included-tracked-critical | keep | 10508 |
@@ -1796,7 +1796,7 @@ Schema: `EvaRepositoryInventory/v1`. Brondigest: `59f455e15480c8642a1d171a256741
 | `eva2/tools/managed_b_candidate/artifact_analysis.py` | tracked | verification-runtime | included-tracked-critical | keep | 22895 |
 | `eva2/tools/managed_b_candidate/base_image.py` | tracked | verification-runtime | included-tracked-critical | keep | 18314 |
 | `eva2/tools/managed_b_candidate/build_context.py` | tracked | verification-runtime | included-tracked-critical | keep | 16247 |
-| `eva2/tools/managed_b_candidate/candidate_image.py` | tracked | verification-runtime | included-tracked-critical | keep | 13434 |
+| `eva2/tools/managed_b_candidate/candidate_image.py` | tracked | verification-runtime | included-tracked-critical | keep | 17280 |
 | `eva2/tools/managed_b_candidate/offline_build.py` | tracked | verification-runtime | included-tracked-critical | keep | 4730 |
 | `eva2/tools/managed_b_candidate/release_inputs.py` | tracked | verification-runtime | included-tracked-critical | keep | 43255 |
 | `eva2/tools/managed_b_candidate/wheelhouse.py` | tracked | verification-runtime | included-tracked-critical | keep | 30039 |
