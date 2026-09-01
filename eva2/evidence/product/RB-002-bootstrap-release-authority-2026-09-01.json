@@ -1,0 +1,57 @@
+{
+  "baseCommit": "5f0df55da7eb84c1c0575943bd21e2e26aa891a6",
+  "changePaths": [
+    "eva2/release/managed-b-release-input-authority-v1.json",
+    "eva2/tests/operations/test_managed_b_release_inputs.py",
+    "eva2/tools/managed_b_candidate/release_inputs.py"
+  ],
+  "contract": "EvaWorkboardTaskEvidence/v1",
+  "implementationCommit": "45d2ff6d61793809a514c01b3a3c000ce1632da6",
+  "networkUsed": false,
+  "nonClaims": [
+    "This receipt proves static release-input closure, not a new image build, deployment, route change, or production release.",
+    "The physical builder-A run remains RB-003."
+  ],
+  "rb001Bootstrap": {
+    "authorityPinsBindBytes": true,
+    "implementationCommit": "d54dd0af97514acf6189ef7a1c0f66dafbb86086",
+    "inputs": [
+      "tools/build_managed_b_offline_candidate.py",
+      "tools/managed_b_candidate/base_image.py",
+      "tools/managed_b_candidate/candidate_image.py"
+    ],
+    "tests": [
+      "tests/operations/test_build_managed_b_offline_candidate.py",
+      "tests/operations/test_managed_b_base_image.py",
+      "tests/operations/test_managed_b_candidate_image.py"
+    ]
+  },
+  "releaseInputReceipt": {
+    "authoritySha256": "20323cc166d5b7055c43dc94a0d5e09c47ab729036e479c166768a2a6e841020",
+    "requiredInputCount": 316,
+    "requiredTestCount": 147,
+    "requiredTestSupportInputCount": 19,
+    "sourceArchiveSha256": "79dd7faeab1e7f334e4612b2dd7b5f34d0e173f8764881bac7e299c0183b5b92",
+    "sourceCommit": "45d2ff6d61793809a514c01b3a3c000ce1632da6",
+    "status": "version_matched_runtime_dependency_inputs_bound_not_built_or_deployed"
+  },
+  "status": "tested_pending_independent_review",
+  "taskId": "RB-002",
+  "tests": [
+    {
+      "command": "TMPDIR=/tmp TEMP=/tmp TMP=/tmp pytest -q tests/operations/test_managed_b_release_inputs.py",
+      "result": "48 passed",
+      "status": "passed"
+    },
+    {
+      "command": "ruff check tools/managed_b_candidate/release_inputs.py tests/operations/test_managed_b_release_inputs.py",
+      "result": "All checks passed!",
+      "status": "passed"
+    },
+    {
+      "command": "PYTHONPATH=. python3 -m tools.managed_b_candidate.release_inputs 45d2ff6d61793809a514c01b3a3c000ce1632da6",
+      "result": "release input receipt emitted for exact source commit and archive",
+      "status": "passed"
+    }
+  ]
+}
