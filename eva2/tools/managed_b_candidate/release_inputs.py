@@ -39,10 +39,13 @@ _PORTABLE_V1_PROFILE_PATH = (
     f"{_PORTABLE_V1_CONTRACT_ROOT}/canonical-json-profile-v1.json"
 )
 _EXPECTED_INPUT_PATHS_SHA256 = (
-    "51e905edfe440e6b85662996d368e05d6c51165134c589a5a2c6be323ebc6f7d"
+    "552a1de1a452441d8831c5fe293c4712e02e1f768a3c93337d3f092f5fee435d"
 )
 _EXPECTED_TEST_PATHS_SHA256 = (
-    "2351cecbdff89af0d9e5c0f9181ed860a6b316da1fc765ef82916e34931932ba"
+    "d00aa3e04d6f5197b43b5b924a535d20df25a7ee2d821c0e4c7c9c6223f3d142"
+)
+_EXPECTED_TEST_SUPPORT_PATHS_SHA256 = (
+    "7abafec28306ece2b646b44d1b42db7562ccfbc1e473f765cdd085f0ace95ba0"
 )
 _BUILD_PROVENANCE_INPUTS = {
     "deploy/living-core/Dockerfile",
@@ -955,6 +958,7 @@ def _validate_static_archive_inputs(
             "migrationAuthority",
             "nonClaims",
             "requiredInputs",
+            "requiredTestSupportInputs",
             "requiredTests",
             "schemaVersion",
             "status",
@@ -980,7 +984,15 @@ def _validate_static_archive_inputs(
         expected_paths_sha256=_EXPECTED_TEST_PATHS_SHA256,
         label="release test",
     )
-    release_path_closure = _validate_release_path_closure(files, inputs, tests)
+    test_support = _pin_rows(
+        files,
+        authority["requiredTestSupportInputs"],
+        expected_paths_sha256=_EXPECTED_TEST_SUPPORT_PATHS_SHA256,
+        label="release test support input",
+    )
+    release_path_closure = _validate_release_path_closure(
+        files, inputs, (*tests, *test_support)
+    )
     alignment = inspect_runtime_dependency_alignment(
         _file(
             files,
@@ -1029,6 +1041,7 @@ def _validate_static_archive_inputs(
         "network_used": False,
         "nonclaims": list(_NONCLAIMS),
         "required_input_count": len(inputs),
+        "required_test_support_input_count": len(test_support),
         "required_test_count": len(tests),
         "status": "version_matched_dependency_inputs_bound",
     }

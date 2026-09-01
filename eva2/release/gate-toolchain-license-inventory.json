@@ -1,9 +1,9 @@
 {
   "contract": "Eva2GateToolchainLicenseInventory/v1",
   "status": "complete_metadata_inventory_not_legal_clearance",
-  "metadataAsOf": "2026-08-21",
+  "metadataAsOf": "2026-09-01",
   "toolchainLock": "eva2/release/gate-toolchain.requirements.lock",
-  "packageCount": 18,
+  "packageCount": 19,
   "packages": [
     {
       "name": "attrs",
@@ -106,6 +106,14 @@
       "version": "8.4.2",
       "licenseExpression": "MIT",
       "metadataSource": "https://pypi.org/pypi/pytest/8.4.2/json",
+      "metadataLicenseSource": "reviewed_pypi_classifier_or_legacy_field",
+      "reviewStatus": "metadata_recorded_not_legal_opinion"
+    },
+    {
+      "name": "pyyaml",
+      "version": "6.0.3",
+      "licenseExpression": "MIT",
+      "metadataSource": "https://pypi.org/pypi/pyyaml/6.0.3/json",
       "metadataLicenseSource": "reviewed_pypi_classifier_or_legacy_field",
       "reviewStatus": "metadata_recorded_not_legal_opinion"
     },

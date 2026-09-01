@@ -4,6 +4,8 @@ from typing import TYPE_CHECKING
 
 import sqlalchemy as sa
 from alembic import command
+from eva.adapters.postgres.current_catalog import metadata as current_metadata
+from eva.adapters.postgres.operational_timeline import living_metadata
 
 if TYPE_CHECKING:
     from conftest import PostgresGate
@@ -12,7 +14,6 @@ if TYPE_CHECKING:
 def test_fresh_create_upgrade_and_pretraffic_downgrade_are_proven(
     postgres_gate: PostgresGate,
 ) -> None:
-    assert postgres_gate.preserved_scope_anchor is True
     assert postgres_gate.migrated_as_eva_migrator is True
 
     with postgres_gate.engine.connect() as connection:
@@ -28,11 +29,21 @@ def test_fresh_create_upgrade_and_pretraffic_downgrade_are_proven(
             sa.text("SELECT version_num FROM public.eva_alembic_version")
         )
 
-    assert tables == {"episode_events", "episodes", "installations", "tenants"}
-    assert revision == "4b_0002_episode_atomicity"
+    expected_core_tables = {
+        table.name
+        for table in (
+            *current_metadata.tables.values(),
+            *living_metadata.tables.values(),
+        )
+        if table.schema == "eva_core"
+    }
+    assert len(current_metadata.tables) == 45
+    assert len(living_metadata.tables) == 2
+    assert tables == expected_core_tables
+    assert revision == "4e_0007_delegated_private"
 
 
-def test_catalog_has_only_the_sealed_4b_objects_and_owners(
+def test_catalog_has_exactly_the_current_metadata_and_owners(
     postgres_gate: PostgresGate,
 ) -> None:
     with postgres_gate.engine.connect() as connection:
@@ -50,7 +61,7 @@ def test_catalog_has_only_the_sealed_4b_objects_and_owners(
                     "SELECT n.nspname, c.relname, pg_get_userbyid(c.relowner) AS owner "
                     "FROM pg_class c "
                     "JOIN pg_namespace n ON n.oid = c.relnamespace "
-                    "WHERE (n.nspname = 'eva_core' OR "
+                    "WHERE (left(n.nspname, 4) = 'eva_' OR "
                     "(n.nspname = 'public' AND c.relname = 'eva_alembic_version')) "
                     "AND c.relkind IN ('r', 'p') "
                     "ORDER BY n.nspname, c.relname"
@@ -60,14 +71,24 @@ def test_catalog_has_only_the_sealed_4b_objects_and_owners(
             .all()
         )
 
-    assert eva_schemas == {"eva_core"}
-    assert {(row["nspname"], row["relname"], row["owner"]) for row in relations} == {
-        ("eva_core", "episode_events", "eva_migrator"),
-        ("eva_core", "episodes", "eva_migrator"),
-        ("eva_core", "installations", "eva_migrator"),
-        ("eva_core", "tenants", "eva_migrator"),
-        ("public", "eva_alembic_version", "eva_migrator"),
+    expected = {
+        (table.schema, table.name, "eva_migrator")
+        for table in (
+            *current_metadata.tables.values(),
+            *living_metadata.tables.values(),
+        )
+    } | {("public", "eva_alembic_version", "eva_migrator")}
+    assert eva_schemas == {
+        table.schema
+        for table in (
+            *current_metadata.tables.values(),
+            *living_metadata.tables.values(),
+        )
     }
+    assert len(expected) == 48
+    assert {
+        (row["nspname"], row["relname"], row["owner"]) for row in relations
+    } == expected
 
 
 def test_alembic_ledger_has_no_nonowner_acl(postgres_gate: PostgresGate) -> None:
@@ -126,7 +147,9 @@ def test_runtime_roles_have_no_ddl_or_rls_bypass(postgres_gate: PostgresGate) ->
     )
 
 
-def test_event_rows_are_immutable_to_runtime_roles(postgres_gate: PostgresGate) -> None:
+def test_episode_event_rows_are_append_only_except_policy_bound_delete(
+    postgres_gate: PostgresGate,
+) -> None:
     with postgres_gate.engine.connect() as connection:
         privileges = (
             connection.execute(
@@ -143,5 +166,5 @@ def test_event_rows_are_immutable_to_runtime_roles(postgres_gate: PostgresGate) 
             .all()
         )
 
-    assert all(row["can_insert"] for row in privileges)
-    assert all(not row["can_update"] and not row["can_delete"] for row in privileges)
+    assert all(row["can_insert"] and row["can_delete"] for row in privileges)
+    assert all(not row["can_update"] for row in privileges)

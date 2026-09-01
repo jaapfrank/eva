@@ -27,6 +27,7 @@ from .build_context import (
 
 
 _IMAGE_PREFIX = "sha256:"
+_RUNTIME_LIBRARY_PATH = "LD_LIBRARY_PATH=/usr/local/lib"
 
 
 @dataclass(frozen=True, slots=True)
@@ -62,7 +63,9 @@ def _private_parent(path: Path) -> None:
     try:
         metadata = path.lstat()
     except OSError as error:
-        raise RuntimeError("managed B candidate image output parent is inaccessible") from error
+        raise RuntimeError(
+            "managed B candidate image output parent is inaccessible"
+        ) from error
     if (
         stat.S_ISLNK(metadata.st_mode)
         or not stat.S_ISDIR(metadata.st_mode)
@@ -94,14 +97,18 @@ def _verify_current_base(base: dict[str, object], runner: Runner) -> None:
         or not isinstance(current.get("RepoDigests"), list)
         or base["local_repo_digest"] not in current["RepoDigests"]
     ):
-        raise RuntimeError("managed B Docker base image differs from the sealed local export")
+        raise RuntimeError(
+            "managed B Docker base image differs from the sealed local export"
+        )
 
 
 def _read_iid(path: Path) -> str:
     try:
         metadata = path.lstat()
     except OSError as error:
-        raise RuntimeError("managed B candidate image ID file is inaccessible") from error
+        raise RuntimeError(
+            "managed B candidate image ID file is inaccessible"
+        ) from error
     if (
         stat.S_ISLNK(metadata.st_mode)
         or not stat.S_ISREG(metadata.st_mode)
@@ -121,7 +128,9 @@ def _read_iid(path: Path) -> str:
             or (opened.st_dev, opened.st_ino, opened.st_size)
             != (metadata.st_dev, metadata.st_ino, metadata.st_size)
         ):
-            raise RuntimeError("managed B candidate image ID file changed before reading")
+            raise RuntimeError(
+                "managed B candidate image ID file changed before reading"
+            )
         raw = os.read(descriptor, 81)
     finally:
         os.close(descriptor)
@@ -171,8 +180,7 @@ def _require_context_base(
     if (
         context.get(f"{role}_image_digest") != base.get("base_image_digest")
         or context.get(f"{role}_image_archive_sha256") != base.get("archive_sha256")
-        or context.get(f"{role}_image_repository")
-        != base.get("base_image_repository")
+        or context.get(f"{role}_image_repository") != base.get("base_image_repository")
     ):
         raise RuntimeError(
             f"managed B context {role} image differs from the sealed local export"
@@ -197,6 +205,16 @@ def _verify_untagged_candidate(
         raise RuntimeError("managed B candidate image size is invalid")
     config = inspection.get("Config")
     labels = config.get("Labels") if isinstance(config, dict) else None
+    environment = config.get("Env") if isinstance(config, dict) else None
+    runtime_library_paths = (
+        [
+            item
+            for item in environment
+            if isinstance(item, str) and item.startswith("LD_LIBRARY_PATH=")
+        ]
+        if isinstance(environment, list)
+        else []
+    )
     if (
         not isinstance(labels, dict)
         or labels.get("io.eva2.source-commit") != source_commit
@@ -204,6 +222,8 @@ def _verify_untagged_candidate(
         or labels.get("io.eva2.source-refresh") != "git-archive-v1"
     ):
         raise RuntimeError("managed B candidate image source identity differs")
+    if runtime_library_paths != [_RUNTIME_LIBRARY_PATH]:
+        raise RuntimeError("managed B candidate runtime library path differs")
     return inspection
 
 
@@ -235,7 +255,9 @@ def build_offline_candidate_image(
     for receipt in bases.values():
         _verify_current_base(receipt, runner)
     _private_parent(output_parent)
-    temporary_root = Path(tempfile.mkdtemp(prefix="eva2-candidate-image-", dir=output_parent))
+    temporary_root = Path(
+        tempfile.mkdtemp(prefix="eva2-candidate-image-", dir=output_parent)
+    )
     temporary_root.chmod(0o700)
     iidfile = temporary_root / "image.iid"
     try:
@@ -282,6 +304,7 @@ def build_offline_candidate_image(
         ),
         "candidate_image_id": image_id,
         "candidate_image_size": candidate_inspection["Size"],
+        "candidate_runtime_library_path": _RUNTIME_LIBRARY_PATH,
         "candidate_source_commit": source_commit,
         "candidate_source_date_epoch": source_date_epoch,
         "context_tree_sha256": context_receipt["context_tree_sha256"],
@@ -322,6 +345,7 @@ def validate_offline_candidate_image(
         or receipt.get("status") != "built_local_candidate"
         or receipt.get("network_used") is not False
         or receipt.get("candidate_image_id") != candidate.image_id
+        or receipt.get("candidate_runtime_library_path") != _RUNTIME_LIBRARY_PATH
     ):
         raise RuntimeError("managed B candidate image receipt differs")
     for role in ("build", "runtime_libraries", "runtime"):

@@ -60,6 +60,20 @@ EXPECTED_SERVICES = {
     "schema-installer",
     "telegram-ingress",
 }
+CORE_IMAGE_SERVICES = {
+    "core",
+    "durable-goal-worker",
+    "hindsight-access-lease",
+    "model-access-lease",
+    "schema-installer",
+    "telegram-ingress",
+}
+STARTED_CORE_IMAGE_SERVICES = {
+    "core",
+    "hindsight-access-lease",
+    "model-access-lease",
+}
+EXPECTED_RUNTIME_LIBRARY_PATH = "LD_LIBRARY_PATH=/usr/local/lib"
 CURRENT_ROUTE_CORE = "eva2-managed-b-slot4-core"
 CURRENT_ROUTE_POSTGRES = "eva2-managed-b-slot4-postgres-1"
 CURRENT_ROUTE_POSTGRES_VOLUME = "eva2-managed-b-slot4-operational"
@@ -102,6 +116,20 @@ _PRESERVED_HINDSIGHT_TABLES = {
 
 class ProbeError(RuntimeError):
     pass
+
+
+def _require_runtime_library_path(config: object) -> str:
+    if not isinstance(config, dict):
+        raise ProbeError("runtime configuration is invalid")
+    environment = config.get("Env")
+    if not isinstance(environment, list) or not all(
+        isinstance(item, str) for item in environment
+    ):
+        raise ProbeError("runtime environment is invalid")
+    assignments = [item for item in environment if item.startswith("LD_LIBRARY_PATH=")]
+    if assignments != [EXPECTED_RUNTIME_LIBRARY_PATH]:
+        raise ProbeError("runtime library path differs")
+    return "/usr/local/lib"
 
 
 def _sanitize_diagnostic(value: str) -> str:
@@ -614,21 +642,259 @@ def _immutable_core_image(value: str) -> str:
     return value
 
 
+def _immutable_local_candidate_image_id(value: str) -> str:
+    if not re.fullmatch(r"sha256:[0-9a-f]{64}", value):
+        raise ProbeError("local candidate image must be one complete sha256 image ID")
+    return value
+
+
+def _sha256_file(path: Path) -> str:
+    digest = hashlib.sha256()
+    try:
+        with path.open("rb") as source:
+            while chunk := source.read(1024 * 1024):
+                digest.update(chunk)
+    except OSError as exc:
+        raise ProbeError("candidate authority could not be read") from exc
+    return digest.hexdigest()
+
+
+def _candidate_authority(
+    path: Path,
+    *,
+    expected_sha256: str,
+    image_id: str,
+) -> dict[str, Any]:
+    if not re.fullmatch(r"[0-9a-f]{64}", expected_sha256):
+        raise ProbeError("candidate authority SHA-256 is invalid")
+    if not path.is_file() or path.is_symlink():
+        raise ProbeError("candidate authority must be one regular file")
+    if path.stat().st_size > 1024 * 1024:
+        raise ProbeError("candidate authority is too large")
+    actual_sha256 = _sha256_file(path)
+    if not secrets.compare_digest(actual_sha256, expected_sha256):
+        raise ProbeError("candidate authority SHA-256 differs")
+    try:
+        document = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, UnicodeError, json.JSONDecodeError) as exc:
+        raise ProbeError("candidate authority is not valid JSON") from exc
+    if not isinstance(document, dict):
+        raise ProbeError("candidate authority root is invalid")
+
+    files = document.get("files")
+    findings = document.get("findings")
+    nonclaims = document.get("nonclaims")
+    sbom = document.get("sbom")
+    trivy = document.get("trivy")
+    if (
+        document.get("contract") != "EvaManagedBCandidateArtifactAnalysis/v1"
+        or document.get("status") != "passed_candidate_artifacts"
+        or document.get("candidate_image_id") != image_id
+        or document.get("network_used") is not False
+        or findings != {"HIGH": 0, "CRITICAL": 0}
+        or not isinstance(files, dict)
+        or not re.fullmatch(r"[0-9a-f]{64}", str(files.get("image/image.tar", "")))
+        or not re.fullmatch(
+            r"[0-9a-f]{64}", str(document.get("candidate_receipt_sha256", ""))
+        )
+        or not re.fullmatch(
+            r"[0-9a-f]{64}", str(document.get("tool_authority_sha256", ""))
+        )
+        or not isinstance(sbom, dict)
+        or sbom.get("format") != "SPDX-2.3-json"
+        or not isinstance(trivy, dict)
+        or not isinstance(trivy.get("scanner_version"), str)
+        or not isinstance(trivy.get("database_updated_at"), str)
+        or not isinstance(nonclaims, list)
+        or not all(isinstance(item, str) for item in nonclaims)
+        or not any("not tagged" in item for item in nonclaims)
+    ):
+        raise ProbeError("candidate authority does not admit this disposable run")
+    return {
+        "contract": document["contract"],
+        "candidateReceiptSha256": document["candidate_receipt_sha256"],
+        "fileSha256": actual_sha256,
+        "findings": {"CRITICAL": 0, "HIGH": 0},
+        "imageArchiveSha256": files["image/image.tar"],
+        "networkUsed": False,
+        "sbomFormat": "SPDX-2.3-json",
+        "scannerDatabaseUpdatedAt": trivy["database_updated_at"],
+        "scannerVersion": trivy["scanner_version"],
+        "status": document["status"],
+        "toolAuthoritySha256": document["tool_authority_sha256"],
+    }
+
+
+def _inspect_local_candidate_image(
+    image_id: str, *, expected_source_commit: str
+) -> dict[str, Any]:
+    try:
+        payload = json.loads(
+            _run(["/usr/bin/docker", "image", "inspect", image_id], timeout=30)
+        )
+    except (json.JSONDecodeError, TypeError) as exc:
+        raise ProbeError("local candidate image inspection is invalid") from exc
+    if not isinstance(payload, list) or len(payload) != 1:
+        raise ProbeError("local candidate image inspection is ambiguous")
+    inspected = payload[0]
+    if not isinstance(inspected, dict):
+        raise ProbeError("local candidate image inspection is invalid")
+    config = inspected.get("Config")
+    labels = config.get("Labels") if isinstance(config, dict) else None
+    runtime_library_path = _require_runtime_library_path(config)
+    if (
+        inspected.get("Id") != image_id
+        or inspected.get("Os") != "linux"
+        or inspected.get("Architecture") != "amd64"
+        or inspected.get("RepoTags") not in (None, [])
+        or inspected.get("RepoDigests") not in (None, [])
+        or not isinstance(labels, dict)
+        or labels.get("io.eva2.source-commit") != expected_source_commit
+        or labels.get("io.eva2.source-refresh") != "git-archive-v1"
+        or not re.fullmatch(r"[0-9]+", str(labels.get("io.eva2.source-date-epoch", "")))
+    ):
+        raise ProbeError("local candidate image identity or provenance differs")
+    return {
+        "architecture": "amd64",
+        "id": image_id,
+        "os": "linux",
+        "runtimeLibraryPath": runtime_library_path,
+        "sourceCommit": expected_source_commit,
+        "sourceDateEpoch": labels["io.eva2.source-date-epoch"],
+        "sourceRefresh": "git-archive-v1",
+    }
+
+
+def _validate_local_candidate_render(
+    rendered: dict[str, Any], *, image_id: str
+) -> dict[str, dict[str, str]]:
+    services = rendered.get("services")
+    if not isinstance(services, dict):
+        raise ProbeError("rendered service graph is invalid")
+    bindings: dict[str, dict[str, str]] = {}
+    for name in CORE_IMAGE_SERVICES:
+        service = services.get(name)
+        if (
+            not isinstance(service, dict)
+            or service.get("image") != image_id
+            or service.get("pull_policy") != "never"
+        ):
+            raise ProbeError("local candidate render binding differs")
+        bindings[name] = {"image": image_id, "pullPolicy": "never"}
+    for name, service in services.items():
+        if (
+            name not in CORE_IMAGE_SERVICES
+            and isinstance(service, dict)
+            and service.get("image") == image_id
+        ):
+            raise ProbeError("local candidate image escaped its service set")
+    return dict(sorted(bindings.items()))
+
+
+def _inspect_started_local_candidate_services(
+    project: str, environment: Path, *, image_id: str, expected_source_commit: str
+) -> dict[str, dict[str, str]]:
+    bindings: dict[str, dict[str, str]] = {}
+    for service in sorted(STARTED_CORE_IMAGE_SERVICES):
+        container_id = _run(
+            _compose(project, environment, "ps", "-q", service), timeout=30
+        ).strip()
+        if not re.fullmatch(r"[0-9a-f]{12,64}", container_id):
+            raise ProbeError("local candidate service container is missing")
+        try:
+            inspected = json.loads(
+                _run(["/usr/bin/docker", "inspect", container_id], timeout=30)
+            )
+        except (json.JSONDecodeError, TypeError) as exc:
+            raise ProbeError("local candidate container inspection is invalid") from exc
+        if not isinstance(inspected, list) or len(inspected) != 1:
+            raise ProbeError("local candidate container inspection is ambiguous")
+        container = inspected[0]
+        config = container.get("Config") if isinstance(container, dict) else None
+        labels = config.get("Labels") if isinstance(config, dict) else None
+        runtime_library_path = _require_runtime_library_path(config)
+        if (
+            not isinstance(container, dict)
+            or container.get("Image") != image_id
+            or not isinstance(config, dict)
+            or config.get("Image") != image_id
+            or not isinstance(labels, dict)
+            or labels.get("io.eva2.source-commit") != expected_source_commit
+            or labels.get("com.docker.compose.project") != project
+            or labels.get("com.docker.compose.service") != service
+        ):
+            raise ProbeError("started local candidate binding differs")
+        bindings[service] = {
+            "containerId": container_id,
+            "image": image_id,
+            "runtimeLibraryPath": runtime_library_path,
+        }
+    return bindings
+
+
 def main(
     *,
     clone_current_route: bool = False,
-    core_image: str = CORE_IMAGE,
+    core_image: str | None = None,
+    candidate_local_image_id: str | None = None,
+    candidate_authority: Path | None = None,
+    expected_candidate_authority_sha256: str | None = None,
+    expected_source_commit: str | None = None,
     retain_slot: bool = False,
     retained_slot_number: int = 2,
 ) -> int:
     if os.geteuid() != 0:
         print(json.dumps({"error": "probe requires root", "status": "failed"}))
         return 2
+    local_candidate = candidate_local_image_id is not None
+    local_candidate_authority: dict[str, Any] | None = None
+    local_candidate_inspection: dict[str, Any] | None = None
     try:
-        core_image = _immutable_core_image(core_image)
-    except ProbeError as exc:
+        if local_candidate:
+            if core_image is not None:
+                raise ProbeError(
+                    "--core-image and --candidate-local-image-id are mutually exclusive"
+                )
+            if clone_current_route or retain_slot:
+                raise ProbeError(
+                    "local candidate image is allowed only with fresh disposable state"
+                )
+            if (
+                candidate_authority is None
+                or expected_candidate_authority_sha256 is None
+                or expected_source_commit is None
+            ):
+                raise ProbeError(
+                    "local candidate image requires authority SHA-256 and source commit"
+                )
+            if not re.fullmatch(r"[0-9a-f]{40}", expected_source_commit):
+                raise ProbeError("candidate source commit is invalid")
+            core_image = _immutable_local_candidate_image_id(candidate_local_image_id)
+            local_candidate_authority = _candidate_authority(
+                candidate_authority,
+                expected_sha256=expected_candidate_authority_sha256,
+                image_id=core_image,
+            )
+            local_candidate_inspection = _inspect_local_candidate_image(
+                core_image, expected_source_commit=expected_source_commit
+            )
+        else:
+            if any(
+                value is not None
+                for value in (
+                    candidate_authority,
+                    expected_candidate_authority_sha256,
+                    expected_source_commit,
+                )
+            ):
+                raise ProbeError(
+                    "candidate authority options require --candidate-local-image-id"
+                )
+            core_image = _immutable_core_image(core_image or CORE_IMAGE)
+    except (OSError, ProbeError) as exc:
         print(json.dumps({"error": str(exc), "status": "failed"}, sort_keys=True))
         return 2
+    assert core_image is not None
     if retain_slot and not clone_current_route:
         print(
             json.dumps(
@@ -682,8 +948,24 @@ def main(
         "issuedAt": datetime.now(UTC).isoformat(),
         "manifestSha256": hashlib.sha256(MANIFEST.read_bytes()).hexdigest(),
         "coreImage": core_image,
+        "coreImageMode": (
+            "local_image_id_disposable_candidate"
+            if local_candidate
+            else "repository_digest"
+        ),
         "status": "failed",
     }
+    if local_candidate:
+        assert local_candidate_authority is not None
+        assert local_candidate_inspection is not None
+        result["candidateAuthority"] = local_candidate_authority
+        result["candidateImageInspectionBeforeResources"] = local_candidate_inspection
+        result["nonclaims"] = [
+            "This daemon-local candidate run is not a tag, push, signature, pullable release, deployment, promotion or retained slot.",
+            "This run does not satisfy the repository-digest release boundary.",
+            "The nine-service manifest is rendered; only the support, schema and core lifecycle is executed.",
+            "This fresh disposable run does not clone or write live Eva2 data and does not route candidate traffic through the live route; only existing safety health endpoints are read.",
+        ]
     initial_live = {
         "eva1": _live_status("http://127.0.0.1:3210/api/health"),
         "currentEva2": _live_status(f"http://127.0.0.1:{CURRENT_ROUTE_PORT}/readyz"),
@@ -1010,6 +1292,18 @@ def main(
         hindsight_environment = rendered["services"]["hindsight"]["environment"]
         if "HINDSIGHT_API_DATABASE_URL" in hindsight_environment:
             raise ProbeError("render exposed an inline Hindsight DSN")
+        if local_candidate:
+            result["candidateRenderedBindings"] = _validate_local_candidate_render(
+                rendered, image_id=core_image
+            )
+            assert expected_source_commit is not None
+            phase = "local-candidate-reinspect-before-start"
+            repeated_inspection = _inspect_local_candidate_image(
+                core_image, expected_source_commit=expected_source_commit
+            )
+            if repeated_inspection != local_candidate_inspection:
+                raise ProbeError("local candidate image changed before start")
+            result["candidateImageInspectionBeforeStart"] = repeated_inspection
 
         phase = "support-start"
         support_services = [
@@ -1092,6 +1386,16 @@ def main(
         _run(_compose(project, environment_file, "up", "-d", "core"))
         phase = "core-ready-before-restart"
         _wait_ready(port)
+        if local_candidate:
+            assert expected_source_commit is not None
+            result["candidateStartedBindings"] = (
+                _inspect_started_local_candidate_services(
+                    project,
+                    environment_file,
+                    image_id=core_image,
+                    expected_source_commit=expected_source_commit,
+                )
+            )
         phase = "dashboard-authority-readback"
         _verify_dashboard_access(port, secrets_dir / "dashboard-token")
 
@@ -1349,7 +1653,12 @@ def main(
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--clone-current-route", action="store_true")
-    parser.add_argument("--core-image", default=CORE_IMAGE)
+    image_group = parser.add_mutually_exclusive_group()
+    image_group.add_argument("--core-image")
+    image_group.add_argument("--candidate-local-image-id")
+    parser.add_argument("--candidate-authority", type=Path)
+    parser.add_argument("--expected-candidate-authority-sha256")
+    parser.add_argument("--expected-source-commit")
     parser.add_argument("--retain-slot", action="store_true")
     parser.add_argument(
         "--retained-slot-number", type=int, choices=(2, 3, 4), default=2
@@ -1359,6 +1668,12 @@ if __name__ == "__main__":
         main(
             clone_current_route=arguments.clone_current_route,
             core_image=arguments.core_image,
+            candidate_local_image_id=arguments.candidate_local_image_id,
+            candidate_authority=arguments.candidate_authority,
+            expected_candidate_authority_sha256=(
+                arguments.expected_candidate_authority_sha256
+            ),
+            expected_source_commit=arguments.expected_source_commit,
             retain_slot=arguments.retain_slot,
             retained_slot_number=arguments.retained_slot_number,
         )

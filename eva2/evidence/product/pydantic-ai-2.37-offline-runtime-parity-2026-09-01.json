@@ -21,24 +21,27 @@
     "tagged": false
   },
   "contract": "Eva2PydanticAI237OfflineRuntimeParityEvidence/v1",
-  "issuedAt": "2026-09-01T08:19:48+02:00",
+  "issuedAt": "2026-09-01T08:48:00+02:00",
   "nonclaims": [
     "The candidate has not been tagged, signed, pushed, attached to Compose, deployed, promoted or connected to the live Eva2 route.",
     "The compatibility probe proves three direct model-adapter phases, not Telegram, the complete managed service graph or credential rotation after a provider 401.",
     "TOOL01 proves one observable disposable filesystem mutation, not universal exactly-once execution for effects without independent readback.",
     "The scan reports known HIGH and CRITICAL findings for the named scanner and database; it does not prove that the image has no vulnerability.",
-    "This is amd64-only evidence. Arm64, an independent second build, all 161 release-authority tests and the full managed disposable stack remain open."
+    "The original temporary source archive was not retained; this record binds the retained read-only build-context tree and does not claim that the earlier archive hash can be independently reproduced.",
+    "This is amd64-only evidence. Arm64, an independent second build, the complete mandatory release test set and the full managed disposable stack remain open."
   ],
   "providerCompatibility": {
     "contract": "EvaCodexSourceCompatibilityProbe/v1",
     "imageBoundExternally": true,
     "modelAttemptCount": 3,
     "phaseCount": 3,
+    "rawReceiptPath": "evidence/product/pydantic-ai-2.37-provider-compatibility-raw-2026-09-01.json",
+    "rawReceiptSha256": "bc74257ed9a1070c670550ffc0e40dcebd3b85a58e34c057d052feda07f513ac",
     "phases": {
       "deferredTool": {
-        "inputTokens": 1587,
+        "inputTokens": 1596,
         "measurement": "measured",
-        "outputTokens": 180,
+        "outputTokens": 158,
         "status": "selected_not_executed",
         "toolCalls": 1
       },
@@ -46,14 +49,14 @@
         "inputTokens": 789,
         "measurement": "measured",
         "offeredToolCount": 0,
-        "outputTokens": 78,
+        "outputTokens": 65,
         "status": "synthetic_receipt_continued"
       },
       "streamingText": {
         "deltaCount": 4,
         "inputTokens": 28,
         "measurement": "measured",
-        "outputTokens": 26,
+        "outputTokens": 41,
         "status": "exact"
       }
     },
@@ -64,6 +67,8 @@
     "contract": "EvaManagedBCandidateRuntimeSmokeReceipt/v2",
     "networkUsed": false,
     "opensslVersion": "OpenSSL 3.5.7 9 Jun 2026",
+    "rawReceiptPath": "evidence/product/pydantic-ai-2.37-runtime-smoke-raw-2026-09-01.json",
+    "rawReceiptSha256": "25ad0c63a15f2e43742a20b68b4cc659a1e5914c82928c58a09fd59d074ad2cf",
     "readOnlyFilesystem": true,
     "status": "runtime_imported_nonroot"
   },
@@ -82,7 +87,9 @@
     "trivyRawSha256": "67d157bf1606cc469918e11ff562a2458da791b90e541b578ded49b3d0b57486"
   },
   "source": {
-    "archiveSha256": "21c4ccdc1acd958fe8ba9c00b5b68e616766ca718135efc0ccef4d451be9279a",
+    "archiveRetained": false,
+    "archiveSha256": null,
+    "buildContextTreeSha256": "96e741e91947d53a9aa219823bedd656cb4d343d333473fc225d5124468ca0ac",
     "commit": "f6a3ae095f7bbef39ed164d5709391755663b8cd",
     "dockerfileSha256": "871ec5f7e884afa1e0d918358cc50ad7e6cc9e62ae0ec99c997c8ec921d12f95",
     "requirementsLockSha256": "88b5095e87596b80a84c591682723647665c49cbde924fe7931207455fa4b2f2"

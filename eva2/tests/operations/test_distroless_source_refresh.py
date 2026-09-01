@@ -30,6 +30,7 @@ def test_source_refresh_only_replaces_reviewed_git_archive_inputs() -> None:
     assert "COPY --from=proven_core /opt/eva /opt/eva" in lines
     assert any("libffi.so.8" in line for line in lines)
     assert any("libz.so.1" in line for line in lines)
+    assert "LD_LIBRARY_PATH=/usr/local/lib \\" in lines
     text = "\n".join(lines).casefold()
     for forbidden in ("curl", "wget", "apt", "apk", "pip", "npm", "git clone"):
         assert forbidden not in text
@@ -41,6 +42,6 @@ def test_source_refresh_binds_exact_base_commit_and_epoch_labels() -> None:
     assert "ARG SOURCE_DATE_EPOCH" in text
     assert "io.eva2.source-commit=${SOURCE_COMMIT}" in text
     assert "io.eva2.source-date-epoch=${SOURCE_DATE_EPOCH}" in text
-    assert "io.eva2.source-refresh=\"git-archive-v1\"" in text
+    assert 'io.eva2.source-refresh="git-archive-v1"' in text
     assert "gcr.io/distroless/cc-debian13@sha256:" in text
     assert "python@sha256:" in text

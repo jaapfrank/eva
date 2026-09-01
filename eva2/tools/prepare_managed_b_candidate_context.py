@@ -78,6 +78,7 @@ EXPECTED_OFFLINE_PIP_INSTALL = (
     "assert importlib.util.find_spec('pip') is None; "
     "assert importlib.util.find_spec('wheel') is None\""
 )
+EXPECTED_RUNTIME_LIBRARY_PATH = "LD_LIBRARY_PATH=/usr/local/lib"
 
 
 @dataclass(frozen=True, slots=True)
@@ -136,17 +137,23 @@ def validate_candidate_build_inputs(
     if inputs.source_date_epoch <= 0:
         raise RuntimeError("candidate source archive epoch is invalid")
     files = _archive_files(inputs.archive_bytes, require_context_root=False)
-    if _canonical_archive(files, source_date_epoch=inputs.source_date_epoch) != inputs.archive_bytes:
+    if (
+        _canonical_archive(files, source_date_epoch=inputs.source_date_epoch)
+        != inputs.archive_bytes
+    ):
         raise RuntimeError("candidate source archive is not canonical")
     dockerfile_entry = files.get("deploy/living-core/Dockerfile")
     requirements_lock_entry = files.get(RUNTIME_REQUIREMENTS_LOCK)
     if dockerfile_entry is None or requirements_lock_entry is None:
-        raise RuntimeError("candidate archive omits its Dockerfile or requirements lock")
+        raise RuntimeError(
+            "candidate archive omits its Dockerfile or requirements lock"
+        )
     dockerfile, requirements_lock = dockerfile_entry[0], requirements_lock_entry[0]
     if _sha256(dockerfile) != inputs.dockerfile_sha256:
         raise RuntimeError("candidate Dockerfile digest differs")
     if _sha256(requirements_lock) != inputs.requirements_lock_sha256:
         raise RuntimeError("candidate requirements lock digest differs")
+    _require_runtime_library_path(dockerfile, inputs.runtime_image_reference)
     images = _images(dockerfile)
     if (
         images["build"] != (inputs.build_image_reference, inputs.base_image_digest)
@@ -169,6 +176,44 @@ Runner = Callable[[Sequence[str]], bytes]
 
 def _sha256(value: bytes) -> str:
     return hashlib.sha256(value).hexdigest()
+
+
+def _require_runtime_library_path(dockerfile: bytes, runtime_reference: str) -> None:
+    try:
+        lines = dockerfile.decode("utf-8").splitlines()
+    except UnicodeDecodeError as error:
+        raise RuntimeError("candidate Dockerfile must be UTF-8") from error
+    instructions: list[str] = []
+    pending = ""
+    for raw_line in lines:
+        stripped = raw_line.strip()
+        if not stripped or (not pending and stripped.startswith("#")):
+            continue
+        pending += (" " if pending else "") + stripped
+        if pending.endswith("\\"):
+            pending = pending[:-1].rstrip()
+            continue
+        instructions.append(pending)
+        pending = ""
+    if pending:
+        raise RuntimeError("candidate Dockerfile has an incomplete instruction")
+    runtime_from = f"FROM {runtime_reference}"
+    from_indexes = [
+        index
+        for index, instruction in enumerate(instructions)
+        if instruction.startswith("FROM ")
+    ]
+    if not from_indexes or instructions[from_indexes[-1]] != runtime_from:
+        raise RuntimeError("candidate runtime library path differs")
+    assignments = [
+        token
+        for instruction in instructions[from_indexes[-1] + 1 :]
+        if instruction.startswith("ENV ")
+        for token in instruction.removeprefix("ENV ").split()
+        if token.startswith("LD_LIBRARY_PATH=")
+    ]
+    if assignments != [EXPECTED_RUNTIME_LIBRARY_PATH]:
+        raise RuntimeError("candidate runtime library path differs")
 
 
 def _run(command: Sequence[str]) -> bytes:
@@ -210,15 +255,21 @@ def _archive_files(
                 if require_context_root:
                     if name == CONTEXT_TREE:
                         if not member.isdir():
-                            raise RuntimeError("candidate archive has an invalid context root")
+                            raise RuntimeError(
+                                "candidate archive has an invalid context root"
+                            )
                         continue
                     prefix = f"{CONTEXT_TREE}/"
                     if not name.startswith(prefix):
-                        raise RuntimeError("candidate archive escapes its sealed context root")
+                        raise RuntimeError(
+                            "candidate archive escapes its sealed context root"
+                        )
                     name = name.removeprefix(prefix)
                 if member.isdir():
                     if not require_context_root:
-                        raise RuntimeError("canonical candidate archive has an unexpected directory")
+                        raise RuntimeError(
+                            "canonical candidate archive has an unexpected directory"
+                        )
                     continue
                 if not member.isfile() or member.issym() or member.islnk():
                     raise RuntimeError("candidate archive contains a non-regular input")
@@ -244,7 +295,9 @@ def _canonical_archive(
 ) -> bytes:
     output = io.BytesIO()
     try:
-        with tarfile.open(fileobj=output, mode="w", format=tarfile.PAX_FORMAT) as bundle:
+        with tarfile.open(
+            fileobj=output, mode="w", format=tarfile.PAX_FORMAT
+        ) as bundle:
             for name, (content, mode) in sorted(files.items()):
                 member = tarfile.TarInfo(name)
                 member.gid = 0
@@ -278,7 +331,9 @@ def _copy_sources(dockerfile: bytes) -> frozenset[str]:
             stage_copies.add((parts[1], parts[2], parts[3]))
             continue
         if len(parts) != 3 or parts[1].startswith("--"):
-            raise RuntimeError("candidate Dockerfile has an unsupported COPY instruction")
+            raise RuntimeError(
+                "candidate Dockerfile has an unsupported COPY instruction"
+            )
         source, destination = parts[1:]
         if not destination.startswith("./"):
             raise RuntimeError("candidate Dockerfile COPY destination is unsupported")
@@ -286,9 +341,13 @@ def _copy_sources(dockerfile: bytes) -> frozenset[str]:
             raise RuntimeError("candidate Dockerfile COPY source is unsafe")
         sources.add(source)
     if sources != EXPECTED_COPY_SOURCES | EXTERNAL_COPY_SOURCES:
-        raise RuntimeError("candidate Dockerfile COPY inputs differ from the sealed set")
+        raise RuntimeError(
+            "candidate Dockerfile COPY inputs differ from the sealed set"
+        )
     if stage_copies != EXPECTED_STAGE_COPIES:
-        raise RuntimeError("candidate Dockerfile stage copies differ from the sealed set")
+        raise RuntimeError(
+            "candidate Dockerfile stage copies differ from the sealed set"
+        )
     return frozenset(sources)
 
 
@@ -311,7 +370,9 @@ def _require_offline_pip_install(dockerfile: bytes) -> None:
     if pending:
         raise RuntimeError("candidate Dockerfile has an unfinished RUN command")
     if commands != [EXPECTED_OFFLINE_PIP_INSTALL]:
-        raise RuntimeError("candidate Dockerfile must have the exact offline pip install")
+        raise RuntimeError(
+            "candidate Dockerfile must have the exact offline pip install"
+        )
 
 
 def _images(dockerfile: bytes) -> dict[str, tuple[str, str]]:
@@ -320,8 +381,12 @@ def _images(dockerfile: bytes) -> dict[str, tuple[str, str]]:
     except UnicodeDecodeError as error:
         raise RuntimeError("candidate Dockerfile must be UTF-8") from error
     from_lines = [line.strip() for line in lines if line.strip().startswith("FROM ")]
-    if len(from_lines) != 3 or not all(FROM_PATTERN.fullmatch(line) for line in from_lines):
-        raise RuntimeError("candidate Dockerfile must contain exactly three pinned image stages")
+    if len(from_lines) != 3 or not all(
+        FROM_PATTERN.fullmatch(line) for line in from_lines
+    ):
+        raise RuntimeError(
+            "candidate Dockerfile must contain exactly three pinned image stages"
+        )
     patterns = {
         "build": BASE_IMAGE_PATTERN,
         "runtime_libraries": RUNTIME_LIBRARIES_IMAGE_PATTERN,
@@ -345,10 +410,14 @@ def _require_copy_inputs(
             continue
         prefix = f"{source}/"
         if not any(path.startswith(prefix) for path in files):
-            raise RuntimeError(f"candidate archive omits Dockerfile COPY input: {source}")
+            raise RuntimeError(
+                f"candidate archive omits Dockerfile COPY input: {source}"
+            )
     for source in EXTERNAL_COPY_SOURCES:
         if source in files or any(path.startswith(f"{source}/") for path in files):
-            raise RuntimeError(f"candidate archive must not contain external input: {source}")
+            raise RuntimeError(
+                f"candidate archive must not contain external input: {source}"
+            )
 
 
 def prepare_candidate_build_inputs(
@@ -359,7 +428,9 @@ def prepare_candidate_build_inputs(
     """Archive exactly one immutable eva2 commit, never the worktree."""
 
     if not COMMIT_PATTERN.fullmatch(commit):
-        raise RuntimeError("candidate source must be an explicit lowercase 40-character commit")
+        raise RuntimeError(
+            "candidate source must be an explicit lowercase 40-character commit"
+        )
     resolved = runner((GIT_BINARY, "rev-parse", "--verify", f"{commit}^{{commit}}"))
     resolved_commit = resolved.decode("ascii", "strict").strip()
     if resolved_commit != commit:
@@ -368,7 +439,9 @@ def prepare_candidate_build_inputs(
     try:
         source_date_epoch = int(timestamp.decode("ascii", "strict").strip())
     except ValueError as error:
-        raise RuntimeError("candidate source commit has an invalid timestamp") from error
+        raise RuntimeError(
+            "candidate source commit has an invalid timestamp"
+        ) from error
     if source_date_epoch <= 0:
         raise RuntimeError("candidate source commit timestamp must be positive")
     raw_archive = runner(
@@ -382,7 +455,9 @@ def prepare_candidate_build_inputs(
         requirements_lock_entry[0] if requirements_lock_entry is not None else None
     )
     if dockerfile is None or requirements_lock is None:
-        raise RuntimeError("candidate archive omits its Dockerfile or requirements lock")
+        raise RuntimeError(
+            "candidate archive omits its Dockerfile or requirements lock"
+        )
     _require_copy_inputs(files, _copy_sources(dockerfile))
     _require_offline_pip_install(dockerfile)
     archive = _canonical_archive(files, source_date_epoch=source_date_epoch)

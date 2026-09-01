@@ -89,6 +89,20 @@ class GateFailClosedTests(unittest.TestCase):
             gates.SUPPORTED_GATES,
         )
 
+    def test_current_requirement_locks_are_declared_gate_inputs(self) -> None:
+        toolchain = json.loads(
+            (REPOSITORY_ROOT / "eva2/release/gate-toolchain.lock.json").read_text(
+                encoding="utf-8"
+            )
+        )
+
+        self.assertIn("eva2/requirements-4d.lock", gates.LOCK_INPUTS)
+        self.assertTrue(
+            {row["path"] for row in toolchain["requirementLocks"]}.issubset(
+                gates.LOCK_INPUTS
+            )
+        )
+
     def test_unknown_gate_is_rejected_before_evidence(self) -> None:
         temporary, root = self._root()
         self.addCleanup(temporary.cleanup)

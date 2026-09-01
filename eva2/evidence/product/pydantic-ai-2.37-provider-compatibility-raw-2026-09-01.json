@@ -1,0 +1,75 @@
+{
+  "candidateImageId": "sha256:0cfbac16aa3e8a81fddb5661085138e6873fdb23c1b58e32c4ccebd663c00b4b",
+  "contract": "EvaCodexImageCompatibilityEvidence/v1",
+  "executionBoundary": {
+    "capabilitiesDropped": "all",
+    "containerRemoved": true,
+    "filesystem": "read_only",
+    "modelCredential": "existing_access_only_lease_read_only",
+    "runtimeUser": "65532:65532",
+    "sourceMount": "read_only"
+  },
+  "nonclaims": [
+    "The source verifier used the independently checked image label and the four source-file hashes because the minimal runtime image intentionally contains no Git executable or repository metadata.",
+    "The deferred tool was selected but not executed; the continuation used a synthetic receipt and caused no external provider effect.",
+    "No refresh token, access token, account identifier, raw prompt or raw answer is stored in this evidence.",
+    "This is an isolated candidate-image probe, not a deployment or live-route claim."
+  ],
+  "probe": {
+    "contract": "EvaCodexSourceCompatibilityProbe/v1",
+    "model_attempt_count": 3,
+    "phase_count": 3,
+    "phases": {
+      "deferred_tool": {
+        "call_id_sha256": "dc40da3598d72fbd10b822add7f1ab2e861e1683cd6aa228b5a38c9b2b2339cd",
+        "status": "selected_not_executed",
+        "tool_name": "probe_candidate_capability",
+        "usage": {
+          "input_tokens": 1596,
+          "measurement": "measured",
+          "model_attempts": 1,
+          "output_tokens": 158,
+          "tool_calls": 1
+        },
+        "validated_arguments": {
+          "capability": "streaming-deferred-tools"
+        }
+      },
+      "receipt_continuation": {
+        "answer_sha256": "43f2b98e3e6f55b9cab4190e25498b5a1d0114b262f50667d38560e2c7387b19",
+        "offered_tool_count": 0,
+        "status": "synthetic_receipt_continued",
+        "usage": {
+          "input_tokens": 789,
+          "measurement": "measured",
+          "model_attempts": 1,
+          "output_tokens": 65,
+          "tool_calls": 0
+        }
+      },
+      "streaming_text": {
+        "answer_sha256": "7b3c05415af6eaf1f0af0d18c54168ebca79dd9c7b8f5380a35a06391c281e88",
+        "delta_count": 4,
+        "status": "exact",
+        "usage": {
+          "input_tokens": 28,
+          "measurement": "measured",
+          "model_attempts": 1,
+          "output_tokens": 41,
+          "tool_calls": 0
+        }
+      }
+    },
+    "resource_budget": {
+      "max_input_tokens": 9000,
+      "max_output_tokens": 500,
+      "source_sha256": "2633492f67e1cdfd80cde67446fac8a7c2951d0e4c65951dfaae5062bdd0f085",
+      "unknown_cost_status": "blocked"
+    },
+    "source_candidate_sha256": "b6bef14f9d3b9d802923bd40e189f786cfb82ec71934f5a12b40f865bb2bbdf2",
+    "source_commit": "f6a3ae095f7bbef39ed164d5709391755663b8cd",
+    "status": "passed"
+  },
+  "recordedAt": "2026-09-01T08:48:00+02:00",
+  "status": "passed"
+}

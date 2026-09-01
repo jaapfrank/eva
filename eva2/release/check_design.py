@@ -70,6 +70,7 @@ TOOLCHAIN_DIRECT_PINS = {
     "pygments": "2.17.2",
     "pyproject-hooks": "1.2.0",
     "pytest": "8.4.2",
+    "pyyaml": "6.0.3",
     "setuptools": "84.0.0",
     "wheel": "0.48.0",
 }
@@ -891,7 +892,7 @@ def supply_gate(root: Path) -> dict[str, Any]:
                 errors,
                 "gate_toolchain_pin_set",
                 Path("eva2/release/gate-toolchain.requirements.lock"),
-                "exact 18-package gate/build/schema-consumer closure differs",
+                "exact 19-package gate/build/schema-consumer closure differs",
             )
     except OSError as exc:
         issue(
@@ -944,7 +945,7 @@ def supply_gate(root: Path) -> dict[str, Any]:
                 "role": "design_gate_build_frontend_and_independent_schema_consumer",
                 "path": "eva2/release/gate-toolchain.requirements.lock",
                 "sha256": sha256_file(gate_lock_path),
-                "packageCount": 18,
+                "packageCount": 19,
             },
         ]
         if lock_path.is_file() and gate_lock_path.is_file()
@@ -954,7 +955,7 @@ def supply_gate(root: Path) -> dict[str, Any]:
     policy = toolchain.get("environmentPolicy", {})
     if (
         toolchain.get("contract") != "Eva2GateToolchainLock/v1"
-        or toolchain.get("scope") != "current_runtime_design_gates_only"
+        or toolchain.get("scope") != "current_runtime_release_and_design_gates"
         or declared_locks != expected_lock_rows
         or toolchain.get("requiredDistributionCount") != len(expected_union)
         or toolchain.get("requiredDistributions") != expected_union
@@ -971,7 +972,10 @@ def supply_gate(root: Path) -> dict[str, Any]:
         or policy.get("ambientUserSiteAllowed") is not False
         or policy.get("systemSitePackagesAllowed") is not False
         or policy.get("exactDistributionSetRequired") is not True
-        or policy.get("networkAllowedDuringGateExecution") is not False
+        or policy.get("externalNetworkAllowedDuringGateExecution") is not False
+        or policy.get("loopbackAllowedDuringGateExecution") is not True
+        or policy.get("disposablePostgresAllowedDuringGateExecution") is not True
+        or policy.get("disposablePostgresDatabaseCount") != 12
         or not _claims_are_false(toolchain)
     ):
         issue(
@@ -1005,7 +1009,7 @@ def supply_gate(root: Path) -> dict[str, Any]:
                 )
     if (
         tool_licenses.get("contract") != "Eva2GateToolchainLicenseInventory/v1"
-        or tool_licenses.get("packageCount") != 18
+        or tool_licenses.get("packageCount") != 19
         or tool_license_pins != TOOLCHAIN_PINS
         or tool_licenses.get("claims", {}).get("legalApprovalComplete") is not False
     ):
@@ -1013,7 +1017,7 @@ def supply_gate(root: Path) -> dict[str, Any]:
             errors,
             "gate_toolchain_license_inventory",
             Path("eva2/release/gate-toolchain-license-inventory.json"),
-            "inventory must cover all 18 gate/build/schema-consumer packages without legal-release claim",
+            "inventory must cover all 19 gate/build/schema-consumer packages without legal-release claim",
         )
 
     inventory = safe_load(root, "eva2/release/license-inventory.json", errors, checked)

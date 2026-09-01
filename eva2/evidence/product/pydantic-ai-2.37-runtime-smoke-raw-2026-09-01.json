@@ -1,0 +1,27 @@
+{
+  "candidate": {
+    "architecture": "amd64",
+    "imageId": "sha256:0cfbac16aa3e8a81fddb5661085138e6873fdb23c1b58e32c4ccebd663c00b4b",
+    "os": "linux",
+    "runtimeUser": "65532:65532",
+    "sourceCommitLabel": "f6a3ae095f7bbef39ed164d5709391755663b8cd",
+    "sourceDateEpochLabel": "1788242803",
+    "sourceRefreshLabel": "git-archive-v1"
+  },
+  "contract": "EvaManagedBCandidateRuntimeSmokeReceipt/v2",
+  "execution": {
+    "capabilitiesDropped": "all",
+    "containerRemoved": true,
+    "mountCount": 0,
+    "networkUsed": false,
+    "readOnlyFilesystem": true,
+    "secretCount": 0
+  },
+  "nonclaims": [
+    "The temporary container used no mounts, secrets, B configuration or B runtime input.",
+    "No B service was started or replaced."
+  ],
+  "opensslVersion": "OpenSSL 3.5.7 9 Jun 2026",
+  "recordedAt": "2026-09-01T08:48:00+02:00",
+  "status": "runtime_imported_nonroot"
+}

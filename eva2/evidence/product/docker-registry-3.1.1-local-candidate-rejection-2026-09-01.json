@@ -1,0 +1,54 @@
+{
+  "contract": "EvaEphemeralRegistryCandidateDecision/v1",
+  "issuedAt": "2026-09-01T06:53:34Z",
+  "candidate": {
+    "architecture": "amd64",
+    "imageId": "sha256:7518da9b12dd746278282a729dee2e65eabdeb449db4d0b28d46ef6e90308f58",
+    "reference": "docker.io/library/registry@sha256:7518da9b12dd746278282a729dee2e65eabdeb449db4d0b28d46ef6e90308f58",
+    "upstreamRelease": "v3.1.1"
+  },
+  "materializedArtifact": {
+    "archiveByteLength": 20137472,
+    "archiveSha256": "846cd84f3b15d2d51cf3c13e8ead880436e6d509007371f80d2d7f26dffd7de3",
+    "sbomByteLength": 355262,
+    "sbomSha256": "947352d3a7ff73a64496b2e407f1be5090e2e54c5faad65a7499fb54bbdb7846",
+    "trivyRawByteLength": 297073,
+    "trivyRawSha256": "627368a9e3d4878bd09a14957faad5b202ee57149376782821d5edf9dac7b2e8"
+  },
+  "sbom": {
+    "format": "SPDX-2.3-json",
+    "goModuleInventoryPresent": true,
+    "packageCount": 126,
+    "selectedApplicationPackage": "github.com/distribution/distribution/v3@v3.1.1"
+  },
+  "scan": {
+    "cacheAuthoritySha256": "a2c300c5a1d85b95be4a3eaed51004b3f2e8d7f232b9bc0226844e45b1ae8585",
+    "cacheDatabaseUpdatedAt": "2026-08-31T07:08:27.708070973Z",
+    "cacheTreeSha256": "2de2a6fb28f1ad42c24e6d22127f01f02f2ba3948b01887e6c6b3382a4b50ae8",
+    "critical": 0,
+    "high": 33,
+    "highByScannerClass": {
+      "gobinary": 31,
+      "os-pkgs": 2
+    },
+    "networkUsed": false,
+    "scannerImage": "aquasec/trivy@sha256:62b1e65e8869bc4b4c6aa4fa2b21595256c7c2f6018a9d9ad61caf87187c1969",
+    "scannerVersion": "0.74.0",
+    "toolAuthoritySha256": "a981113931a6a243f112319f819c8f1974f5679a20944cf5652c4c90fd387297"
+  },
+  "syft": {
+    "image": "ghcr.io/anchore/syft@sha256:678bfa565b60f747aac0f8e964fe5588a24445b8d0a480e91f6efd70020dfbb0",
+    "networkUsed": false,
+    "version": "1.51.0"
+  },
+  "decision": {
+    "candidateStarted": false,
+    "reason": "The candidate violates Eva's zero-HIGH and zero-CRITICAL image gate.",
+    "status": "rejected_before_runtime"
+  },
+  "nonClaims": [
+    "A zero count for one severity would not prove that no vulnerability exists.",
+    "The upstream project and release were not rejected; only this exact OCI image was rejected for Eva's temporary registry role.",
+    "No registry container, push, pull, managed stack, A/B transition or live-route change was performed."
+  ]
+}

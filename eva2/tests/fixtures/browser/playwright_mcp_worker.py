@@ -12,8 +12,13 @@ from pathlib import Path
 
 candidate_root = Path.cwd()
 candidate_source = candidate_root / "src"
-if candidate_source.is_dir() and (candidate_root / "connector_sdk").is_dir():
-    sys.path[:0] = [str(candidate_source), str(candidate_root)]
+gate_root = Path("/gate")
+if candidate_source.is_dir():
+    sys.path.insert(0, str(candidate_source))
+if (candidate_root / "connector_sdk").is_dir():
+    sys.path.insert(1, str(candidate_root))
+if (gate_root / "tests").is_dir():
+    sys.path.insert(0, str(gate_root))
 
 from tests.fixtures.browser.playwright_mcp_action import (  # noqa: E402
     PlaywrightFixtureStateAdapter,
@@ -51,9 +56,7 @@ def main() -> int:
         )
         if profile_payload["contract"] != "EvaPlaywrightMcpActionWorkerProfile/v1":
             return 65
-        action_profile = PlaywrightMcpActionProfile(
-            **profile_payload["actionProfile"]
-        )
+        action_profile = PlaywrightMcpActionProfile(**profile_payload["actionProfile"])
         incoming = sys.stdin.buffer.read(MAX_CONNECTOR_EXCHANGE_BYTES + 1)
         if len(incoming) > MAX_CONNECTOR_EXCHANGE_BYTES:
             return 65
@@ -75,7 +78,9 @@ def main() -> int:
         times = profile_payload["logicalTimes"]
         initialized_at = times["initializedAt"]
         completed_at = times[
-            "effectCompletedAt" if invoke.method == "effect.execute" else "readbackCompletedAt"
+            "effectCompletedAt"
+            if invoke.method == "effect.execute"
+            else "readbackCompletedAt"
         ]
         initialize_success = ConnectorInitializeSuccess.model_validate(
             {
@@ -162,10 +167,14 @@ def _invoke(
     completed_at: str,
 ) -> dict[str, object]:
     if invoke.method == "effect.execute":
-        if invoke.params.operation != "browser.fixture.click" or invoke.params.request_payload != {
-            "state": "committed",
-            "target": action_profile.provider_resource_id,
-        }:
+        if (
+            invoke.params.operation != "browser.fixture.click"
+            or invoke.params.request_payload
+            != {
+                "state": "committed",
+                "target": action_profile.provider_resource_id,
+            }
+        ):
             raise ValueError("browser click payload differs")
         clicked = PlaywrightMcpClickAdapter(action_profile).click_once(
             effect_key=invoke.id,
@@ -183,7 +192,10 @@ def _invoke(
             ),
             "provider_time": completed_at,
         }
-    if invoke.method != "effect.readback" or invoke.params.operation != "effect.readback":
+    if (
+        invoke.method != "effect.readback"
+        or invoke.params.operation != "effect.readback"
+    ):
         raise ValueError("browser worker operation differs")
     payload = invoke.params.request_payload
     _require_keys(
@@ -197,7 +209,9 @@ def _invoke(
         effect_key=payload["idempotencyKey"],
         request_sha256=payload["requestSha256"],
     )
-    operation = next(item for item in manifest.operations if item.operation == "effect.readback")
+    operation = next(
+        item for item in manifest.operations if item.operation == "effect.readback"
+    )
     return {
         "kind": "readback",
         "provider_resource_id": state.provider_resource_id,

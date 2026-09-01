@@ -20,7 +20,9 @@ RUNTIME_LIBRARIES_REFERENCE = "docker.io/library/python@sha256:" + "2" * 64
 RUNTIME_REFERENCE = "gcr.io/distroless/cc-debian13@sha256:" + "3" * 64
 
 
-def _dockerfile(*, build_from: bytes | None = None, install: bytes | None = None) -> bytes:
+def _dockerfile(
+    *, build_from: bytes | None = None, install: bytes | None = None
+) -> bytes:
     return b"\n".join(
         (
             build_from
@@ -36,6 +38,7 @@ def _dockerfile(*, build_from: bytes | None = None, install: bytes | None = None
             b"COPY schemas ./schemas",
             b"FROM " + RUNTIME_LIBRARIES_REFERENCE.encode() + b" AS runtime_libs",
             b"FROM " + RUNTIME_REFERENCE.encode(),
+            b"ENV LD_LIBRARY_PATH=/usr/local/lib",
             b"COPY --from=build /usr/local /usr/local",
             b"COPY --from=build /opt/eva /opt/eva",
             b"COPY --from=runtime_libs /usr/lib/x86_64-linux-gnu/libffi.so.8* /usr/lib/x86_64-linux-gnu/",
@@ -53,8 +56,7 @@ def _archive(
     mode: int = 0o644,
 ) -> bytes:
     entries = {
-        "eva2/deploy/living-core/Dockerfile": dockerfile
-        or _dockerfile(),
+        "eva2/deploy/living-core/Dockerfile": dockerfile or _dockerfile(),
         "eva2/requirements-4d.lock": b"package==1 --hash=sha256:" + b"2" * 64,
         "eva2/pyproject.toml": b"[project]\nname='eva2-living-core'\n",
         "eva2/src/eva/__init__.py": b"",
@@ -112,12 +114,17 @@ def test_preparation_binds_one_commit_to_only_its_archive_inputs() -> None:
             "src/eva/__init__.py",
         ]
     assert prepared.base_image_digest == "sha256:" + "1" * 64
-    assert prepared.build_image_reference == "docker.io/library/python@sha256:" + "1" * 64
+    assert (
+        prepared.build_image_reference == "docker.io/library/python@sha256:" + "1" * 64
+    )
     assert prepared.runtime_libraries_image_digest == "sha256:" + "2" * 64
     assert prepared.runtime_libraries_image_reference == RUNTIME_LIBRARIES_REFERENCE
     assert prepared.runtime_image_digest == "sha256:" + "3" * 64
     assert prepared.runtime_image_reference == RUNTIME_REFERENCE
-    assert prepared.source_archive_sha256 == hashlib.sha256(prepared.archive_bytes).hexdigest()
+    assert (
+        prepared.source_archive_sha256
+        == hashlib.sha256(prepared.archive_bytes).hexdigest()
+    )
     assert prepared.source_date_epoch == 1787480000
     assert calls == [
         (GIT_BINARY, "rev-parse", "--verify", f"{COMMIT}^{{commit}}"),
@@ -134,7 +141,9 @@ def test_preparation_binds_one_commit_to_only_its_archive_inputs() -> None:
 
 def test_preparation_refuses_nonimmutable_refs_before_git_is_opened() -> None:
     with pytest.raises(RuntimeError, match="explicit lowercase"):
-        prepare_candidate_build_inputs("HEAD", runner=lambda _: (_ for _ in ()).throw(AssertionError()))
+        prepare_candidate_build_inputs(
+            "HEAD", runner=lambda _: (_ for _ in ()).throw(AssertionError())
+        )
 
 
 def test_preparation_normalizes_archive_metadata_from_the_same_commit() -> None:
@@ -182,6 +191,45 @@ def test_preparation_refuses_online_or_unsealed_package_install() -> None:
     run, _ = _runner(_archive(dockerfile=dockerfile))
 
     with pytest.raises(RuntimeError, match="exact offline pip install"):
+        prepare_candidate_build_inputs(COMMIT, runner=run)
+
+
+def test_preparation_refuses_runtime_without_the_pinned_python_library_path() -> None:
+    dockerfile = _dockerfile().replace(b"ENV LD_LIBRARY_PATH=/usr/local/lib\n", b"")
+    run, _ = _runner(_archive(dockerfile=dockerfile))
+
+    with pytest.raises(RuntimeError, match="runtime library path differs"):
+        prepare_candidate_build_inputs(COMMIT, runner=run)
+
+
+def test_preparation_refuses_library_path_only_in_the_build_stage() -> None:
+    dockerfile = _dockerfile().replace(b"ENV LD_LIBRARY_PATH=/usr/local/lib\n", b"")
+    dockerfile = dockerfile.replace(
+        b" AS build\n", b" AS build\nENV LD_LIBRARY_PATH=/usr/local/lib\n", 1
+    )
+    run, _ = _runner(_archive(dockerfile=dockerfile))
+
+    with pytest.raises(RuntimeError, match="runtime library path differs"):
+        prepare_candidate_build_inputs(COMMIT, runner=run)
+
+
+@pytest.mark.parametrize(
+    "replacement",
+    (
+        b"# LD_LIBRARY_PATH=/usr/local/lib\n",
+        b"ENV LD_LIBRARY_PATH=/tmp\n",
+        (b"ENV LD_LIBRARY_PATH=/usr/local/lib\nENV LD_LIBRARY_PATH=/tmp\n"),
+    ),
+)
+def test_preparation_refuses_comment_wrong_or_duplicate_runtime_library_path(
+    replacement: bytes,
+) -> None:
+    dockerfile = _dockerfile().replace(
+        b"ENV LD_LIBRARY_PATH=/usr/local/lib\n", replacement
+    )
+    run, _ = _runner(_archive(dockerfile=dockerfile))
+
+    with pytest.raises(RuntimeError, match="runtime library path differs"):
         prepare_candidate_build_inputs(COMMIT, runner=run)
 
 

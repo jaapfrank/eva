@@ -113,7 +113,20 @@ def _fixture(tmp_path: Path) -> tuple[Path, Path, tuple[Path, ...]]:
             "generationRecord": {"applicationLock": {"frontend": "pip 24.0"}},
             "requiredDistributionCount": 2,
             "requiredDistributions": {"legacy-gate-only": "1.0", "pytest": "8.4.2"},
-            "requirementLocks": [{"packageCount": 0, "sha256": "old"}],
+            "requirementLocks": [
+                {
+                    "packageCount": 0,
+                    "role": "application_and_contract_runtime",
+                    "sha256": "old-runtime",
+                },
+                {
+                    "packageCount": 0,
+                    "role": (
+                        "design_gate_build_frontend_and_independent_schema_consumer"
+                    ),
+                    "sha256": "old-gate",
+                },
+            ],
         },
     )
     return root, wheelhouse, (binding, coverage, manifest, inventory, toolchain)
@@ -131,6 +144,15 @@ def test_refresh_stages_and_commits_the_complete_metadata_set(
     toolchain = json.loads(outputs[4].read_bytes())
     assert toolchain["generationRecord"]["applicationLock"]["frontend"] == "pip 24.0"
     assert toolchain["requiredDistributions"]["pydantic-ai-slim"] == "2.37.0"
+    rows = {row["role"]: row for row in toolchain["requirementLocks"]}
+    assert rows["application_and_contract_runtime"]["packageCount"] == len(_PACKAGES)
+    assert rows["design_gate_build_frontend_and_independent_schema_consumer"] == {
+        "packageCount": 1,
+        "role": "design_gate_build_frontend_and_independent_schema_consumer",
+        "sha256": hashlib.sha256(
+            (root / "eva2/release/gate-toolchain.requirements.lock").read_bytes()
+        ).hexdigest(),
+    }
     assert not list(outputs[0].parent.glob(f"*{refresh_tool._OUTPUT_SUFFIX}"))
 
 

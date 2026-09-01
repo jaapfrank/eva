@@ -33,8 +33,14 @@ DISPOSABLE_DATABASE_PREFIX = "eva2_4b_disposable_"
 class PostgresGate:
     engine: Engine
     alembic_config: Config
-    preserved_scope_anchor: bool
     migrated_as_eva_migrator: bool
+
+
+@dataclass(frozen=True)
+class HistoricalPostgresGate:
+    engine: Engine
+    alembic_config: Config
+    revision: str
 
 
 @dataclass(frozen=True)
@@ -70,8 +76,7 @@ def _upgrade_as_eva_migrator(engine: Engine, config: Config, target: str) -> boo
     return bool(current_role)
 
 
-@pytest.fixture(scope="session")
-def postgres_gate() -> Iterator[PostgresGate]:
+def _empty_disposable_database() -> tuple[Engine, Config]:
     dsn = os.environ.get("EVA2_TEST_POSTGRES_DSN", "").strip()
     if not dsn:
         pytest.fail(
@@ -124,50 +129,44 @@ def postgres_gate() -> Iterator[PostgresGate]:
                 "EVA2_TEST_POSTGRES_DSN must point at an empty disposable database; "
                 f"schemas={sorted(user_schemas)}, relations={sorted(user_relations)}"
             )
+    return engine, config
 
-    preserved_scope_anchor = False
+
+@pytest.fixture(scope="session")
+def postgres_gate() -> Iterator[PostgresGate]:
+    engine, config = _empty_disposable_database()
+
     migrated_as_eva_migrator = False
     try:
         command.upgrade(config, "4b_0000_core_namespace")
-        migrated_as_eva_migrator = _upgrade_as_eva_migrator(
-            engine, config, "4b_0001_tenant_scope"
-        )
-        anchor_tenant = uuid5(NAMESPACE_URL, "eva2-4b-upgrade-tenant")
-        anchor_installation = uuid5(NAMESPACE_URL, "eva2-4b-upgrade-installation")
-        anchor_time = datetime(2026, 8, 20, 12, 0, tzinfo=timezone.utc)
-        with engine.begin() as connection:
-            connection.execute(
-                tenants.insert().values(tenant_id=anchor_tenant, created_at=anchor_time)
-            )
-            connection.execute(
-                installations.insert().values(
-                    tenant_id=anchor_tenant,
-                    installation_id=anchor_installation,
-                    created_at=anchor_time,
-                )
-            )
-        migrated_as_eva_migrator = (
-            _upgrade_as_eva_migrator(engine, config, "head")
-            and migrated_as_eva_migrator
-        )
-        with engine.connect() as connection:
-            preserved_scope_anchor = (
-                connection.scalar(
-                    sa.select(sa.func.count())
-                    .select_from(installations)
-                    .where(
-                        installations.c.tenant_id == anchor_tenant,
-                        installations.c.installation_id == anchor_installation,
-                    )
-                )
-                == 1
-            )
+        migrated_as_eva_migrator = _upgrade_as_eva_migrator(engine, config, "head")
         command.downgrade(config, "base")
         with engine.connect() as connection:
-            if connection.scalar(
-                sa.text("SELECT to_regnamespace('eva_core') IS NOT NULL")
-            ):
-                pytest.fail("pre-traffic downgrade left eva_core behind")
+            eva_schemas = set(
+                connection.scalars(
+                    sa.text(
+                        "SELECT nspname FROM pg_namespace "
+                        "WHERE left(nspname, 4) = 'eva_'"
+                    )
+                )
+            )
+            ledger = connection.scalar(
+                sa.text("SELECT to_regclass('public.eva_alembic_version')")
+            )
+            ledger_rows = (
+                int(
+                    connection.scalar(
+                        sa.text("SELECT count(*) FROM public.eva_alembic_version")
+                    )
+                )
+                if ledger is not None
+                else 0
+            )
+            if eva_schemas or ledger_rows:
+                pytest.fail(
+                    "pre-traffic downgrade did not restore an empty catalog; "
+                    f"schemas={sorted(eva_schemas)}, ledger_rows={ledger_rows}"
+                )
         command.upgrade(config, "4b_0000_core_namespace")
         migrated_as_eva_migrator = (
             _upgrade_as_eva_migrator(engine, config, "head")
@@ -176,7 +175,6 @@ def postgres_gate() -> Iterator[PostgresGate]:
         yield PostgresGate(
             engine=engine,
             alembic_config=config,
-            preserved_scope_anchor=preserved_scope_anchor,
             migrated_as_eva_migrator=migrated_as_eva_migrator,
         )
     finally:
@@ -184,6 +182,30 @@ def postgres_gate() -> Iterator[PostgresGate]:
             command.downgrade(config, "base")
         finally:
             engine.dispose()
+
+
+@pytest.fixture(scope="session")
+def postgres_schema_gate() -> Iterator[HistoricalPostgresGate]:
+    engine, config = _empty_disposable_database()
+    try:
+        command.upgrade(config, "4b_0000_core_namespace")
+        if not _upgrade_as_eva_migrator(engine, config, "4b_0002_episode_atomicity"):
+            pytest.fail("historical schema did not migrate as eva_migrator")
+        yield HistoricalPostgresGate(
+            engine=engine,
+            alembic_config=config,
+            revision="4b_0002_episode_atomicity",
+        )
+    finally:
+        # These tests deliberately commit schema-valid rows. Current initial
+        # admission must reject downgrading that populated historical catalog;
+        # the operator owns deletion of the explicit disposable database.
+        engine.dispose()
+
+
+@pytest.fixture(scope="session")
+def postgres_schema_engine(postgres_schema_gate: HistoricalPostgresGate) -> Engine:
+    return postgres_schema_gate.engine
 
 
 @pytest.fixture(scope="session")
@@ -298,5 +320,15 @@ def seed_episode(
                 occurred_at="2026-08-20T12:00:01Z",
             ),
         )
+
+    return seed
+
+
+@pytest.fixture
+def seed_schema_episode(
+    postgres_schema_engine: Engine,
+) -> Callable[[str], SeededEpisode]:
+    def seed(label: str) -> SeededEpisode:
+        return seed_episode.__wrapped__(postgres_schema_engine)(label)
 
     return seed

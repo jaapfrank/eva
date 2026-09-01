@@ -132,7 +132,7 @@ BASE_FACTS = (
 )
 
 
-@pytest.fixture(scope="module")
+@pytest.fixture
 def memory_engine() -> Iterator[Engine]:
     dsn = os.environ.get("EVA2_TEST_POSTGRES_DSN", "").strip()
     if not dsn:

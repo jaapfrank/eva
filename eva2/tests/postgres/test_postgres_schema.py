@@ -96,16 +96,16 @@ def _corrupt_snapshot(values: dict[str, object], case: str) -> None:
     ),
 )
 def test_episode_snapshots_reject_unknown_missing_extra_and_wrong_types(
-    postgres_engine,
-    seed_episode,
+    postgres_schema_engine,
+    seed_schema_episode,
     case: str,
 ) -> None:
-    seeded: SeededEpisode = seed_episode(f"snapshot-{case}")
+    seeded: SeededEpisode = seed_schema_episode(f"snapshot-{case}")
     values = _transition_event_values(seeded)
     _corrupt_snapshot(values, case)
 
     with pytest.raises(sa.exc.DBAPIError):
-        with postgres_engine.begin() as connection:
+        with postgres_schema_engine.begin() as connection:
             connection.execute(sa.text("SET LOCAL ROLE eva_dbos"))
             set_local_scope(
                 connection,
@@ -115,8 +115,9 @@ def test_episode_snapshots_reject_unknown_missing_extra_and_wrong_types(
             connection.execute(episode_events.insert().values(**values))
 
 
-def test_episode_event_cycle_is_deferred_no_action(postgres_gate) -> None:
-    with postgres_gate.engine.connect() as connection:
+def test_episode_event_cycle_is_deferred_no_action(postgres_schema_gate) -> None:
+    assert postgres_schema_gate.revision == "4b_0002_episode_atomicity"
+    with postgres_schema_gate.engine.connect() as connection:
         rows = (
             connection.execute(
                 sa.text(
@@ -140,12 +141,12 @@ def test_episode_event_cycle_is_deferred_no_action(postgres_gate) -> None:
 
 
 def test_episode_and_immutable_events_can_be_deleted_atomically(
-    postgres_engine,
-    seed_episode,
+    postgres_schema_engine,
+    seed_schema_episode,
 ) -> None:
-    seeded: SeededEpisode = seed_episode("atomic-delete")
+    seeded: SeededEpisode = seed_schema_episode("atomic-delete")
 
-    with postgres_engine.begin() as connection:
+    with postgres_schema_engine.begin() as connection:
         connection.execute(
             sa.delete(episode_events).where(
                 episode_events.c.tenant_id == seeded.tenant_id,
@@ -161,7 +162,7 @@ def test_episode_and_immutable_events_can_be_deleted_atomically(
             )
         )
 
-    with postgres_engine.connect() as connection:
+    with postgres_schema_engine.connect() as connection:
         head_count = connection.scalar(
             sa.select(sa.func.count())
             .select_from(episodes)

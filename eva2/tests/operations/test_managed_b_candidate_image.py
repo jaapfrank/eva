@@ -37,7 +37,9 @@ def test_runtime_image_installs_eva_package_before_removing_pip() -> None:
         encoding="utf-8"
     )
     install = "python -m pip install --no-cache-dir --no-index --no-deps --no-build-isolation ."
-    provider_check = "bundled_provider_factories(); assert any(factory.provider_id == 'mcp_gateway'"
+    provider_check = (
+        "bundled_provider_factories(); assert any(factory.provider_id == 'mcp_gateway'"
+    )
     dependency_check = "python -m pip check"
     remove_pip = "python -m pip uninstall -y pip wheel"
 
@@ -54,11 +56,15 @@ def test_runtime_image_installs_eva_package_before_removing_pip() -> None:
 
 @pytest.fixture
 def native_tmp_path() -> Path:
-    with tempfile.TemporaryDirectory(prefix="eva2-candidate-image-test-", dir="/tmp") as path:
+    with tempfile.TemporaryDirectory(
+        prefix="eva2-candidate-image-test-", dir="/tmp"
+    ) as path:
         yield Path(path)
 
 
-def _inputs(native_tmp_path: Path) -> tuple[
+def _inputs(
+    native_tmp_path: Path,
+) -> tuple[
     MaterializedBuildContext,
     MaterializedBaseImage,
     MaterializedBaseImage,
@@ -130,7 +136,12 @@ def _stub_validators(monkeypatch: pytest.MonkeyPatch) -> None:
     )
 
 
-def _runner(*, candidate_tags: object = None, candidate_labels: object = None):
+def _runner(
+    *,
+    candidate_tags: object = None,
+    candidate_labels: object = None,
+    candidate_environment: object = None,
+):
     commands: list[list[str]] = []
 
     def run(command: list[str], _timeout: int) -> subprocess.CompletedProcess[str]:
@@ -138,26 +149,65 @@ def _runner(*, candidate_tags: object = None, candidate_labels: object = None):
         if command[:3] == ["docker", "image", "inspect"]:
             reference = command[3]
             if reference == REPO_DIGEST:
-                value = [{"Architecture": "amd64", "Id": BASE_ID, "Os": "linux", "RepoDigests": [REPO_DIGEST]}]
+                value = [
+                    {
+                        "Architecture": "amd64",
+                        "Id": BASE_ID,
+                        "Os": "linux",
+                        "RepoDigests": [REPO_DIGEST],
+                    }
+                ]
             elif reference == LIBS_REPO_DIGEST:
-                value = [{"Architecture": "amd64", "Id": LIBS_ID, "Os": "linux", "RepoDigests": [LIBS_REPO_DIGEST]}]
+                value = [
+                    {
+                        "Architecture": "amd64",
+                        "Id": LIBS_ID,
+                        "Os": "linux",
+                        "RepoDigests": [LIBS_REPO_DIGEST],
+                    }
+                ]
             elif reference == RUNTIME_REPO_DIGEST:
-                value = [{"Architecture": "amd64", "Id": RUNTIME_ID, "Os": "linux", "RepoDigests": [RUNTIME_REPO_DIGEST]}]
+                value = [
+                    {
+                        "Architecture": "amd64",
+                        "Id": RUNTIME_ID,
+                        "Os": "linux",
+                        "RepoDigests": [RUNTIME_REPO_DIGEST],
+                    }
+                ]
             elif reference == IMAGE_ID:
-                labels = candidate_labels if candidate_labels is not None else {
-                    "io.eva2.source-commit": SOURCE_COMMIT,
-                    "io.eva2.source-date-epoch": str(SOURCE_DATE_EPOCH),
-                    "io.eva2.source-refresh": "git-archive-v1",
-                }
-                value = [{
-                    "Config": {"Labels": labels},
-                    "Id": IMAGE_ID,
-                    "RepoTags": candidate_tags,
-                    "Size": 123,
-                }]
+                labels = (
+                    candidate_labels
+                    if candidate_labels is not None
+                    else {
+                        "io.eva2.source-commit": SOURCE_COMMIT,
+                        "io.eva2.source-date-epoch": str(SOURCE_DATE_EPOCH),
+                        "io.eva2.source-refresh": "git-archive-v1",
+                    }
+                )
+                value = [
+                    {
+                        "Config": {
+                            "Env": (
+                                [
+                                    "PATH=/usr/local/bin",
+                                    "LD_LIBRARY_PATH=/usr/local/lib",
+                                ]
+                                if candidate_environment is None
+                                else candidate_environment
+                            ),
+                            "Labels": labels,
+                        },
+                        "Id": IMAGE_ID,
+                        "RepoTags": candidate_tags,
+                        "Size": 123,
+                    }
+                ]
             else:
                 raise AssertionError(f"unexpected inspected image: {reference}")
-            return subprocess.CompletedProcess(command, 0, stdout=json.dumps(value), stderr="")
+            return subprocess.CompletedProcess(
+                command, 0, stdout=json.dumps(value), stderr=""
+            )
         assert command[:2] == ["docker", "build"]
         iidfile = Path(command[command.index("--iidfile") + 1])
         iidfile.write_text(f"{IMAGE_ID}\n", encoding="ascii")
@@ -181,7 +231,13 @@ def test_builds_an_untagged_networkless_candidate_without_b(
 
     assert candidate.image_id == IMAGE_ID
     assert candidate.receipt["network_used"] is False
-    assert validate_offline_candidate_image(candidate, runner=runner)["status"] == "built_local_candidate"
+    assert candidate.receipt["candidate_runtime_library_path"] == (
+        "LD_LIBRARY_PATH=/usr/local/lib"
+    )
+    assert (
+        validate_offline_candidate_image(candidate, runner=runner)["status"]
+        == "built_local_candidate"
+    )
     build = next(command for command in commands if command[:2] == ["docker", "build"])
     assert "--network=none" in build
     assert "--platform=linux/amd64" in build
@@ -217,7 +273,16 @@ def test_refuses_when_current_docker_base_differs(
         return subprocess.CompletedProcess(
             command,
             0,
-            stdout=json.dumps([{"Architecture": "amd64", "Id": IMAGE_ID, "Os": "linux", "RepoDigests": [REPO_DIGEST]}]),
+            stdout=json.dumps(
+                [
+                    {
+                        "Architecture": "amd64",
+                        "Id": IMAGE_ID,
+                        "Os": "linux",
+                        "RepoDigests": [REPO_DIGEST],
+                    }
+                ]
+            ),
             stderr="",
         )
 
@@ -253,13 +318,45 @@ def test_refuses_a_candidate_with_different_source_identity(
     context, build, runtime_libraries, runtime = _inputs(native_tmp_path)
     output = native_tmp_path / "output"
     output.mkdir(mode=0o700)
-    _commands, runner = _runner(candidate_labels={
-        "io.eva2.source-commit": "b" * 40,
-        "io.eva2.source-date-epoch": str(SOURCE_DATE_EPOCH),
-        "io.eva2.source-refresh": "git-archive-v1",
-    })
+    _commands, runner = _runner(
+        candidate_labels={
+            "io.eva2.source-commit": "b" * 40,
+            "io.eva2.source-date-epoch": str(SOURCE_DATE_EPOCH),
+            "io.eva2.source-refresh": "git-archive-v1",
+        }
+    )
 
     with pytest.raises(RuntimeError, match="source identity differs"):
+        build_offline_candidate_image(
+            context, build, runtime_libraries, runtime, output, runner=runner
+        )
+
+    assert list(output.iterdir()) == []
+
+
+@pytest.mark.parametrize(
+    "environment",
+    (
+        [],
+        ["LD_LIBRARY_PATH=/tmp"],
+        [
+            "LD_LIBRARY_PATH=/usr/local/lib",
+            "LD_LIBRARY_PATH=/tmp",
+        ],
+    ),
+)
+def test_refuses_a_candidate_without_one_exact_runtime_library_path(
+    monkeypatch: pytest.MonkeyPatch,
+    native_tmp_path: Path,
+    environment: list[str],
+) -> None:
+    _stub_validators(monkeypatch)
+    context, build, runtime_libraries, runtime = _inputs(native_tmp_path)
+    output = native_tmp_path / "output"
+    output.mkdir(mode=0o700)
+    _commands, runner = _runner(candidate_environment=environment)
+
+    with pytest.raises(RuntimeError, match="runtime library path differs"):
         build_offline_candidate_image(
             context, build, runtime_libraries, runtime, output, runner=runner
         )

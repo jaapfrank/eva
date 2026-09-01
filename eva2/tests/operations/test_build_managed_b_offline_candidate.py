@@ -53,9 +53,7 @@ def _stub_pipeline(
             "docker.io/library/python@sha256:" + "2" * 64
         ),
         runtime_image_digest="sha256:" + "3" * 64,
-        runtime_image_reference=(
-            "gcr.io/distroless/cc-debian13@sha256:" + "3" * 64
-        ),
+        runtime_image_reference=("gcr.io/distroless/cc-debian13@sha256:" + "3" * 64),
         dockerfile_sha256="2" * 64,
         requirements_lock_sha256="3" * 64,
         source_archive_sha256="4" * 64,
@@ -71,6 +69,7 @@ def _stub_pipeline(
         path=tmp_path / "materialized-wheelhouse",
         receipt={"expected_wheel_count": 38, "wheelhouse_tree_sha256": "5" * 64},
     )
+
     def materialized_base(name: str, digest: str, archive: str):
         return SimpleNamespace(
             path=tmp_path / name / "base.oci.tar",
@@ -98,6 +97,7 @@ def _stub_pipeline(
             "build_image_reference": candidate.build_image_reference,
             "candidate_image_id": "sha256:" + "8" * 64,
             "candidate_image_size": 123456,
+            "candidate_runtime_library_path": "LD_LIBRARY_PATH=/usr/local/lib",
             "candidate_source_commit": COMMIT,
             "candidate_source_date_epoch": candidate.source_date_epoch,
             "context_tree_sha256": "7" * 64,
@@ -229,23 +229,29 @@ def test_sequences_only_the_existing_offline_candidate_stages(
         command: list[str], _timeout: int
     ) -> subprocess.CompletedProcess[str]:
         assert command == ["docker", "image", "inspect", reconstructed.image_id]
-        inspection = [{
-            "Config": {"Labels": {
-                "io.eva2.source-commit": COMMIT,
-                "io.eva2.source-date-epoch": "1787480000",
-                "io.eva2.source-refresh": "git-archive-v1",
-            }},
-            "Id": reconstructed.image_id,
-            "RepoTags": None,
-            "Size": 123456,
-        }]
+        inspection = [
+            {
+                "Config": {
+                    "Env": ["LD_LIBRARY_PATH=/usr/local/lib"],
+                    "Labels": {
+                        "io.eva2.source-commit": COMMIT,
+                        "io.eva2.source-date-epoch": "1787480000",
+                        "io.eva2.source-refresh": "git-archive-v1",
+                    },
+                },
+                "Id": reconstructed.image_id,
+                "RepoTags": None,
+                "Size": 123456,
+            }
+        ]
         return subprocess.CompletedProcess(
             command, 0, stdout=json.dumps(inspection), stderr=""
         )
 
-    assert validate_offline_candidate_image(
-        reconstructed, runner=inspect_runner
-    ) == decoded["candidate"]["receipt"]
+    assert (
+        validate_offline_candidate_image(reconstructed, runner=inspect_runner)
+        == decoded["candidate"]["receipt"]
+    )
 
 
 def test_refuses_a_relative_artifact_root_before_opening_source(
@@ -265,9 +271,7 @@ def test_refuses_a_nonprivate_output_parent(native_tmp_path: Path) -> None:
     output.mkdir(mode=0o755)
 
     with pytest.raises(RuntimeError, match="must be private"):
-        build_managed_b_offline_candidate(
-            COMMIT, native_tmp_path / "artifacts", output
-        )
+        build_managed_b_offline_candidate(COMMIT, native_tmp_path / "artifacts", output)
 
 
 def test_refuses_a_non_38_wheel_authority_before_copy_or_docker(

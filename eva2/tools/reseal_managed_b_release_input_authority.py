@@ -19,6 +19,7 @@ from tools.managed_b_candidate.release_inputs import (
     _EXPECTED_INPUT_PATHS_SHA256,
     _EXPECTED_MIGRATIONS,
     _EXPECTED_TEST_PATHS_SHA256,
+    _EXPECTED_TEST_SUPPORT_PATHS_SHA256,
     _NONCLAIMS,
 )
 
@@ -66,6 +67,12 @@ def _arguments() -> argparse.Namespace:
         action="append",
         default=[],
         help="explicitly add one reviewed static release test path",
+    )
+    parser.add_argument(
+        "--admit-test-support",
+        action="append",
+        default=[],
+        help="explicitly add one reviewed test support or conftest input path",
     )
     parser.add_argument(
         "--admit-contract",
@@ -169,6 +176,7 @@ def main() -> int:
     for field, admitted in (
         ("requiredInputs", arguments.admit_input),
         ("requiredTests", arguments.admit_test),
+        ("requiredTestSupportInputs", arguments.admit_test_support),
     ):
         rows = authority[field]
         known = {row["path"] for row in rows}
@@ -185,10 +193,15 @@ def main() -> int:
         rows.sort(key=lambda row: row["path"])
     input_paths = tuple(row["path"] for row in authority["requiredInputs"])
     test_paths = tuple(row["path"] for row in authority["requiredTests"])
+    test_support_paths = tuple(
+        row["path"] for row in authority["requiredTestSupportInputs"]
+    )
     if _path_set_sha256(input_paths) != _EXPECTED_INPUT_PATHS_SHA256:
         raise RuntimeError("managed-B required input path set differs")
     if _path_set_sha256(test_paths) != _EXPECTED_TEST_PATHS_SHA256:
         raise RuntimeError("managed-B required test path set differs")
+    if _path_set_sha256(test_support_paths) != _EXPECTED_TEST_SUPPORT_PATHS_SHA256:
+        raise RuntimeError("managed-B required test support path set differs")
     cockpit_file = ROOT / _COCKPIT_EVIDENCE_PATH
     cockpit = json.loads(cockpit_file.read_bytes())
     if arguments.replace_cockpit_source is not None:
@@ -248,6 +261,9 @@ def main() -> int:
     ]
     authority["requiredTests"] = [
         {"path": path, "sha256": _sha256(path)} for path in test_paths
+    ]
+    authority["requiredTestSupportInputs"] = [
+        {"path": path, "sha256": _sha256(path)} for path in test_support_paths
     ]
     revisions = {
         row["revision"]: row for row in authority["migrationAuthority"]["revisions"]
@@ -309,6 +325,7 @@ def main() -> int:
                 "inputCount": len(authority["requiredInputs"]),
                 "status": "resealed",
                 "testCount": len(authority["requiredTests"]),
+                "testSupportInputCount": len(authority["requiredTestSupportInputs"]),
             },
             sort_keys=True,
         )

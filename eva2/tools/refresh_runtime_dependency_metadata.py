@@ -553,9 +553,19 @@ def refresh(*, root: Path, wheelhouse: Path) -> dict[str, object]:
     toolchain["requiredDistributions"] = dict(sorted(union.items()))
     toolchain["requiredDistributionCount"] = len(union)
     requirement_locks = toolchain.get("requirementLocks")
-    if not isinstance(requirement_locks, list) or not requirement_locks:
+    if not isinstance(requirement_locks, list) or len(requirement_locks) != 2:
         raise RuntimeError("gate toolchain requirement lock rows differ")
-    requirement_locks[0].update({"packageCount": count, "sha256": lock_sha})
+    lock_rows = {
+        str(row.get("role")): row for row in requirement_locks if isinstance(row, dict)
+    }
+    application_row = lock_rows.get("application_and_contract_runtime")
+    gate_row = lock_rows.get(
+        "design_gate_build_frontend_and_independent_schema_consumer"
+    )
+    if application_row is None or gate_row is None:
+        raise RuntimeError("gate toolchain requirement lock roles differ")
+    application_row.update({"packageCount": count, "sha256": lock_sha})
+    gate_row.update({"packageCount": len(gate_pins), "sha256": _sha256(gate_lock_raw)})
     toolchain_raw = _canonical(toolchain)
 
     _replace_outputs(

@@ -247,7 +247,7 @@ def _authority() -> tuple[dict[str, object], bytes]:
 
 def _files(authority: dict[str, object]) -> dict[str, tuple[bytes, int]]:
     paths = {AUTHORITY_PATH}
-    for key in ("requiredInputs", "requiredTests"):
+    for key in ("requiredInputs", "requiredTests", "requiredTestSupportInputs"):
         paths.update(row["path"] for row in authority[key])
     migration_authority = authority["migrationAuthority"]
     paths.update(row["path"] for row in migration_authority["revisions"])
@@ -328,6 +328,8 @@ def test_release_inputs_bind_current_registry_runtime_dependencies_and_migration
         "fcf6655ccc61f9258b132620b02d51492c7eb19ce762b4e1728548b6fa2d53a5"
     )
     assert receipt["migration_head"] == "4e_0007_delegated_private"
+    assert receipt["required_test_count"] == 146
+    assert receipt["required_test_support_input_count"] == 19
     assert "source_commit" not in receipt
     assert "source_archive_sha256" not in receipt
     assert receipt["authority_sha256"] == hashlib.sha256(raw).hexdigest()
@@ -589,7 +591,9 @@ def test_release_inputs_require_authority_from_same_archive_and_real_git_commit(
         prepare_managed_b_release_inputs("c" * 40)
 
 
-@pytest.mark.parametrize("key", ["requiredInputs", "requiredTests"])
+@pytest.mark.parametrize(
+    "key", ["requiredInputs", "requiredTests", "requiredTestSupportInputs"]
+)
 def test_release_inputs_refuse_a_removed_or_extra_authority_pin(key: str) -> None:
     authority, _ = _authority()
     files = _files(authority)

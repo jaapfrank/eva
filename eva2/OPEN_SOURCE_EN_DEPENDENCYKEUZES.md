@@ -45,7 +45,7 @@ chattransport, dashboards en update-scanners zijn hulpmiddelen rond die kern.
 
 | Onderdeel | Eerste hergebruikkeuze | Wat Eva nog toevoegt | Besluit |
 |---|---|---|---|
-| Modeltransport en gestructureerde antwoorden | Officiële OpenAI-SDK onder Pydantic AI Slim | Identiteit, persoonscontext, grants, duurzaam bewijs en antwoordbeleid | OpenAI SDK `3.6.0` draait live. De actuele `2.37.0`-kandidaat is offline gebouwd, streamde via echte Codex, koos een tool, hervatte uit een receipt, overleefde een fysieke toolcrash en scant 0/0. De oude transportklasse is verwijderd; volledige wegwerpstack en A/B-livegang ontbreken nog |
+| Modeltransport en gestructureerde antwoorden | Officiële OpenAI-SDK onder Pydantic AI Slim | Identiteit, persoonscontext, grants, duurzaam bewijs en antwoordbeleid | OpenAI SDK `3.6.0` draait live. De eerste `2.37.0`-image streamde via echte Codex, koos een tool en herstelde zonder dubbele call, maar een bredere fysieke subgate vond een ontbrekend runtime-librarypad. Die image is `NO-GO`. De minimale broncorrectie doorliep diagnostisch 4/4 browsergevallen; een nieuw bronimage, volledige wegwerpstack en A/B-livegang ontbreken nog |
 | MCP-koppeling | Pydantic AI's native `MCPToolset`; ContextForge alleen als optionele gateway | Toegelaten persoon/scope, byte- en tijdslimieten, duurzame poging en readback | Een afzonderlijke providercontainer werd door de minimale client ontdekt en aangeroepen. `process_tool_call` onderschepte de call vóór provider-I/O; promotie wacht op verwijdering van de oude client/loop |
 | Home Assistant-skill | Eerst Home Assistants ingebouwde MCP Server voor basiscontext; voor historie/configuratie de community-sidecar `homeassistant-ai/ha-mcp` | Persoonsmandaat, toolallowlist, één duurzame poging en onafhankelijke controle achteraf | `ha-mcp` `v8.3.0` is exact gepind en lokaal read-only gestart; promotie vereist semantische pariteit, verwijdering van de oude uitvoerroute en precies één runtime-eigenaar |
 | Duurzame workflows en wachtrijen | DBOS blijft de bestaande workflowdependency; `2.31.0+eva.1` wordt de volgende proef | Eva-ledger voor intent, call-start, ambigu resultaat en readback | Stock `2.31.0` kan de kleine Eva-patch en workerledger niet veilig vervangen; rebase wel, blind upgraden niet |
@@ -269,7 +269,7 @@ is geen geldige reden.
 
 ## Onderhouden projecten die nu serieus meetellen
 
-Dit is een momentopname van 26 augustus 2026. Zij geeft kandidaten, geen
+Dit is een actuele kandidaatmomentopname. Zij geeft kandidaten, geen
 automatische productgoedkeuring.
 
 `GO` geldt alleen voor de genoemde smalle rol. `PROEF` betekent nog geen
@@ -278,7 +278,7 @@ een concreet gat laat zien.
 
 | Project | Oordeel | Feitelijke onderhoudssignalen | Voorbehoud |
 |---|---|---|---|
-| Pydantic AI Slim `2.37.0` + OpenAI SDK `3.6.0` | `PROEF: volledige lokale amd64-kandidaat, niet live` | De bestaande 38 distributies blijven 38; exacte lock/wheels, offline image, SBOM, 0/0-scan, echte streaming/usage/toolkeuze en TOOL01-crashherstel zijn groen | Volledige beheerde wegwerpstack, alle 161 release-tests, onafhankelijke herbouw, arm64-keuze en A/B-livegang ontbreken nog |
+| Pydantic AI Slim `2.37.0` + OpenAI SDK `3.6.0` | `PROEF: gecorrigeerde bron, nog geen nieuwe kandidaat` | De bestaande 38 distributies blijven 38; exacte lock/wheels, echte streaming/usage/toolkeuze en TOOL01-crashherstel zijn groen. De eerste 0/0-image is afgekeurd; de loadercorrectie is fysiek diagnostisch bewezen | Nieuw offline bronimage, SBOM/scan, volledige release-testset, beheerde wegwerpstack, onafhankelijke herbouw, arm64-keuze en A/B-livegang ontbreken nog |
 | Pydantic AI Slim `2.32.1` + OpenAI SDK `3.6.0` | `GO: geïsoleerde bestaande delegated-work-worker` | De worker gebruikt PostgreSQL-handoff, lease, eenmalige call-start, resultaat, actieve stop, aparte kandidaatimage en read-only Kanban | Dit is een afzonderlijke legacy pin, niet de hoofd-runtime. Upgrade en productpromotie blijven apart |
 | Pydantic AI `2.34.0` + Harness `0.25.0` | `GO: geïsoleerde fork/join-kandidaat` | Harness voert de interactieve toolvrije en effectvrije fork/join-engine uit met gesloten context, calls, tokens en time-out | Nog niet de duurzame worker of productroute; koppeling aan Eva's identiteit, live provider, Telegram/B en productpromotie blijven afzonderlijk open |
 | DBOS Transact `2.31.0` | `NO-GO stock / GO rebaseproef` | MIT, actuele officiële release met de belangrijke duplicate-loserfix #823 en nul nieuwe basispackages | Stock behoudt onbegrensde transactieretry en kan na verloren commitbevestiging de body herhalen; Eva's smalle patch moet op 2.31 worden gerebased |

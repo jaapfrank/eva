@@ -76,12 +76,18 @@ ROOT = Path(__file__).resolve().parents[2]
 PROFILE_PATH = ROOT / "tests/fixtures/browser/worker-profile.json"
 WORKER_PATH = ROOT / "tests/fixtures/browser/playwright_mcp_worker.py"
 EFFECT_INPUT_SHA256 = "74cf02212aa6a14edc59279827695ccbc7ce87fe4622fde034d69676e8785db0"
-EFFECT_OUTPUT_SHA256 = "6a8f6d037c157dc18a7bc44608f0b79ccb574e4099c3804a7b232d25ae62c691"
-READBACK_INPUT_SHA256 = "7300325716eea0c03f68384fe15bcf91aad459bb93a5b3f68b3cb8ae2b955cb3"
-READBACK_OUTPUT_SHA256 = "c332825e9e133dcea610e33ea881587bad6f2248ab40e2dcd2abb47415997fa9"
+EFFECT_OUTPUT_SHA256 = (
+    "6a8f6d037c157dc18a7bc44608f0b79ccb574e4099c3804a7b232d25ae62c691"
+)
+READBACK_INPUT_SHA256 = (
+    "7300325716eea0c03f68384fe15bcf91aad459bb93a5b3f68b3cb8ae2b955cb3"
+)
+READBACK_OUTPUT_SHA256 = (
+    "c332825e9e133dcea610e33ea881587bad6f2248ab40e2dcd2abb47415997fa9"
+)
 SANDBOX_SHA256 = "f3e99ea7a5bc6691771f2d0b4f50d41fa838d47ed7c35c3f8d98959bd453dd9c"
 RESOURCE_ID = "browser_fixture.eva_action_a02"
-WORKER_SHA256 = "bf70068762a8ccf6e512f2b390d78cdbe8ff9c0921bb8940524c5f177c6f6b1b"
+WORKER_SHA256 = "85252cf1a110c4bc9b9b516798d325e17ca1aff3dc2387a9305251a643e1044b"
 _ORIGINAL_EFFECT_AUTHORITY = effect_fixtures._effect_authority
 
 
@@ -194,9 +200,7 @@ def _seed_browser_effect_authority(engine: Engine, scope):
             installation_id=str(scope.installation_id),
         )
         binding_row = connection.execute(
-            sa.select(bindings).where(
-                bindings.c.binding_id == old.connector_binding_id
-            )
+            sa.select(bindings).where(bindings.c.binding_id == old.connector_binding_id)
         ).one()
         binding = ConnectorBinding.model_validate(binding_row.payload).model_copy(
             update={
@@ -268,9 +272,7 @@ def _seed_browser_effect_authority(engine: Engine, scope):
                 required_provider_scopes=manifest.required_provider_scopes,
                 proof_floor=manifest.proof_floor,
                 executable_sha256=bytes.fromhex(manifest.executable_sha256),
-                sandbox_profile_sha256=bytes.fromhex(
-                    manifest.sandbox_profile_sha256
-                ),
+                sandbox_profile_sha256=bytes.fromhex(manifest.sandbox_profile_sha256),
                 payload=manifest.model_dump(mode="json"),
                 payload_sha256=bytes.fromhex(canonical_sha256(manifest)),
             )
@@ -284,9 +286,7 @@ def _seed_browser_effect_authority(engine: Engine, scope):
                 scope=authority.resource_scope.model_dump(mode="json"),
                 scope_sha256=bytes.fromhex(authority.resource_scope.scope_sha256),
                 executable_sha256=bytes.fromhex(manifest.executable_sha256),
-                sandbox_profile_sha256=bytes.fromhex(
-                    manifest.sandbox_profile_sha256
-                ),
+                sandbox_profile_sha256=bytes.fromhex(manifest.sandbox_profile_sha256),
             )
         )
     return authority
@@ -340,9 +340,7 @@ def _seed_browser_readback_authority(
                 proof_floor=manifest.proof_floor,
                 maximum_freshness_ms=0,
                 executable_sha256=bytes.fromhex(manifest.executable_sha256),
-                sandbox_profile_sha256=bytes.fromhex(
-                    manifest.sandbox_profile_sha256
-                ),
+                sandbox_profile_sha256=bytes.fromhex(manifest.sandbox_profile_sha256),
                 release_signature_sha256=bytes.fromhex("5" * 64),
                 state="active",
                 payload=manifest.model_dump(mode="json"),
@@ -369,9 +367,7 @@ def _seed_browser_readback_authority(
                 policy_pack_version=policy["policy_version"],
                 policy_pack_sha256=bytes.fromhex(POLICY_SHA256),
                 executable_sha256=bytes.fromhex(manifest.executable_sha256),
-                sandbox_profile_sha256=bytes.fromhex(
-                    manifest.sandbox_profile_sha256
-                ),
+                sandbox_profile_sha256=bytes.fromhex(manifest.sandbox_profile_sha256),
                 state="active",
                 revision=1,
                 retention_policy_id="retention:noor-document:30d",
@@ -428,9 +424,7 @@ def _registry(
             "release_id": f"fixture:browser-a02:{operation}",
             "profiles": [
                 {
-                    "capability_manifest_id": str(
-                        activation.capability_manifest_id
-                    ),
+                    "capability_manifest_id": str(activation.capability_manifest_id),
                     "revision": 1,
                     "connector_manifest": profile_payload["connectorManifests"][
                         operation
@@ -566,9 +560,13 @@ def test_owner_stop_after_browser_authorization_prevents_the_real_click(
             now=NOW + timedelta(seconds=11),
             timeout_seconds=10,
         )
-    assert PostgresActionChainLedger(action_chain_engine, scope).load(
-        chain.plan_id
-    ).steps[1].state == "cancelled"
+    assert (
+        PostgresActionChainLedger(action_chain_engine, scope)
+        .load(chain.plan_id)
+        .steps[1]
+        .state
+        == "cancelled"
+    )
     oracle = _oracle(prepared.intent.idempotency_key)
     assert oracle["post_requests"] == oracle["transitions"] == 0
     with action_chain_engine.connect() as connection:
@@ -682,9 +680,9 @@ def test_real_browser_click_crosses_durable_ledger_and_server_readback(
         action_chain_engine, scope
     ).record(readback_id)
     assert stored_readback.readback.match_status == "matches"
-    advanced = PostgresActionChainEffectAdvancer(
-        action_chain_engine, scope
-    ).advance(effect_id, now=NOW + timedelta(seconds=17))
+    advanced = PostgresActionChainEffectAdvancer(action_chain_engine, scope).advance(
+        effect_id, now=NOW + timedelta(seconds=17)
+    )
     assert advanced.disposition == "advanced"
     loaded = PostgresActionChainLedger(action_chain_engine, scope).load(chain.plan_id)
     assert loaded.steps[1].state == "succeeded"

@@ -17,13 +17,22 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Callable, Mapping, Sequence
 
-from verify_source_bindings import (
-    VERIFICATION_CONTRACT,
-    canonical_json_bytes,
-    load_json_exact,
-    sha256_file,
-    verify as verify_source_bindings,
-)
+if __package__:
+    from tools.verify_source_bindings import (
+        VERIFICATION_CONTRACT,
+        canonical_json_bytes,
+        load_json_exact,
+        sha256_file,
+        verify as verify_source_bindings,
+    )
+else:  # Direct execution from eva2/tools.
+    from verify_source_bindings import (
+        VERIFICATION_CONTRACT,
+        canonical_json_bytes,
+        load_json_exact,
+        sha256_file,
+        verify as verify_source_bindings,
+    )
 
 
 RESULT_CONTRACT = "Eva24AGateResult/v1"
@@ -51,7 +60,7 @@ EXECUTION_BOUNDARY = {
 }
 LOCK_INPUTS = (
     "eva2/pyproject.toml",
-    "eva2/requirements.lock",
+    "eva2/requirements-4d.lock",
     "eva2/release/dependency-roots.in",
     "eva2/release/gate-toolchain.lock.json",
     "eva2/release/gate-toolchain.requirements.lock",
@@ -277,8 +286,8 @@ def execution_environment(root: Path) -> dict[str, Any]:
     if (
         toolchain.get("contract") != "Eva2GateToolchainLock/v1"
         or toolchain.get("status")
-        != "exact_design_gate_environment_target_runtime_unproven"
-        or toolchain.get("scope") != "tranche_4a_design_gates_only"
+        != "exact_current_runtime_release_and_design_gate_environment_target_runtime_unproven"
+        or toolchain.get("scope") != "current_runtime_release_and_design_gates"
     ):
         raise GateError("gate toolchain lock contract, status, or scope is invalid")
 
@@ -403,7 +412,10 @@ def execution_environment(root: Path) -> dict[str, Any]:
         "ambientUserSiteAllowed": False,
         "systemSitePackagesAllowed": False,
         "exactDistributionSetRequired": True,
-        "networkAllowedDuringGateExecution": False,
+        "externalNetworkAllowedDuringGateExecution": False,
+        "loopbackAllowedDuringGateExecution": True,
+        "disposablePostgresAllowedDuringGateExecution": True,
+        "disposablePostgresDatabaseCount": 12,
         "dependenciesInstalledByGateRunner": False,
     }
     if policy != expected_policy:

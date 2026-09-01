@@ -1,6 +1,6 @@
 # Eva 2 — projectbord en vergelijking
 
-Laatst bijgewerkt: 1 september 2026, 08:19 CEST
+Laatst bijgewerkt: 1 september 2026, 10:58 CEST
 
 ## Zo lees je dit bord
 
@@ -33,7 +33,7 @@ dezelfde sessie wel, maar gaf na ruim drie minuten nog geen eindantwoord.
 | Controle | Eerlijke stand nu |
 |---|---|
 | Is er een maximum aantal regels code? | ✅ Nee. Omvang wordt gemeten om veranderingen te begrijpen, maar een groot getal is nooit op zichzelf fout. Ook 100 miljoen regels zijn toegestaan als het product die aantoonbaar nodig heeft en de onderdelen beheersbaar blijven |
-| Is alles per bestand inhoudelijk beoordeeld? | ❌ Nee. De inventaris bevat nu 2.008 bestanden. De 88 resterende beleidsfouten zijn wel allemaal eerlijk ingedeeld: 50 mogen pas na controle worden gevolgd, 32 blijven in quarantaine, 5 zijn oude/dode bron of documentatie en 1 redundant bestand is kandidaat voor latere verwijdering. Niets is stil verwijderd of als release-input toegelaten |
+| Is alles per bestand inhoudelijk beoordeeld? | ❌ Nee. De inventaris bevat nu 2.016 bestanden. De 88 resterende beleidsfouten zijn wel allemaal eerlijk ingedeeld: 50 mogen pas na controle worden gevolgd, 32 blijven in quarantaine, 5 zijn oude/dode bron of documentatie en 1 redundant bestand is kandidaat voor latere verwijdering. Niets is stil verwijderd of als release-input toegelaten |
 | Heeft ieder gevolgd bestand een duidelijke plek en eigenaar? | 🟡 De huidige gevolgde product-, deploy-, migratie- en testpaden vallen in de laatst gegenereerde inventaris onder exact één semantische component. De checker weigert ontbrekend, dubbel of dood eigenaarschap, maar vertrouwt nog op die momentopname en analyseert Python-gebruik niet volledig. Inventarisversheid en runtimebereikbaarheid moeten nog onderdeel van dezelfde poort worden |
 | Is daarmee bewezen dat iedere afzonderlijke regel nuttig is? | 🟡 Nee. De catalogus legt per component doel, noodzaak, upstreamkeuze, vervanging en tests vast. Dode-codeanalyse, grenscontrole en echte tests moeten daarna bewijzen dat de regels binnen die component hun taak nog werkelijk uitvoeren |
 | Zijn alle dependencies en open-sourcealternatieven aantoonbaar de beste actuele keuze? | 🟡 De live kern en worker zijn exact geïnventariseerd. Van 38 live distributies zijn 30 actueel en 8 hebben een nieuwere kandidaat. De veilige upgradevolgorde en bewuste `HOLD`-keuzes liggen vast. Functionele vergelijking en echte A/B-proeven moeten per batch nog bewijzen wat voor Eva werkelijk beter is |
@@ -73,16 +73,15 @@ uitgestelde toolkeuze, vervolgfase, usage- en budgetbewaking. Een korte
 providerstoring wordt alleen vóór tekst of een begonnen toolcall eenmaal
 hersteld; onbekend verbruik blijft daarbij zichtbaar als gedeeltelijk gemeten.
 Een ingecheckte, commitgebonden providerprobe begrenst drie fasen op 9.000
-input- en 100 outputtokens en schrijft alleen hashes, tellers en veilige
-statusvelden. De eerste echte proef leerde dat 100 outputtokens ook interne
-redeneertokens telt en te krap was; de vaste proefgrens is daarom 500, binnen
-de bestaande productgrens. 124 gerichte model-, usage-, journal- en
+input- en 500 outputtokens en schrijft alleen hashes, tellers en veilige
+statusvelden. 124 gerichte model-, usage-, journal- en
 probecontroles zijn groen. De actuele exacte schone broncommit doorliep daarna met
 Eva's echte korte Codex-toegang alle drie fasen: streaming, uitgestelde
 toolkeuze zonder uitvoering en hervatten vanuit een synthetische receipt met
 nul aangeboden tools. Dit is nog geen liveclaim: de 2.37-image, SBOM en 0/0-
-scan zijn inmiddels groen. Ook echte runtimepariteit en een fysieke crash
-tijdens een externe providercall zijn op exact die image groen. De
+scan zijn inmiddels groen. Ook echte runtimepariteit en een harde stop van
+Eva's proces na het externe tool-effect maar vóór duurzame voltooiing zijn op
+exact die image groen. De
 toestandwijzigende TOOL01-v2-proef is eveneens kandidaat-groen; de volledige
 beheerde wegwerpstack, onafhankelijke herbouw en veilige A/B-promotie ontbreken
 nog.
@@ -103,6 +102,15 @@ eenmaal apart terug; een derde proces gebruikte alleen het duurzame resultaat.
 De tellers bleven exact één mutatie en één readback, de afleider kreeg nul
 calls en TOOL01 v2 is groen. Dit is kandidaatbewijs in een wegwerpwerkmap; de
 image is nog niet via A/B live gezet.
+
+De bredere fysieke browserpoort vond daarna een echte fout in die image: een
+verzegeld Python-subproces kon de gedeelde Python-library niet vinden. Die
+oude kandidaat is daarom `NO-GO`. De minimale broncorrectie zet uitsluitend
+het bestaande `/usr/local/lib` expliciet voor de runtime. Een diagnostisch
+image doorliep daarmee 4/4 echte browsergevallen, inclusief stoppen, klikken,
+aparte controle, crashherstel zonder dubbele actie en volledige opruiming. Een
+nieuw image uit exact de gecorrigeerde bron, de volledige releasepoort en A/B
+blijven nog open.
 
 ## Praten met Eva
 
@@ -180,7 +188,7 @@ adapter vragen, maar geen nieuwe Eva-kernlogica.
 
 | Wat moet dit kunnen? | Eva2 nu | OpenClaw | Hermes | Agent Zero |
 |---|---|---|---|---|
-| Zelf de passende beschikbare tool kiezen | 🟡 De actuele Pydantic AI `2.36.0` koos in een geïsoleerde echte modelproef zelf de juiste runtime-MCP-tool voor `het is koud in de overkapping`, voerde één effect uit en las apart terug. De minimale image is scan-schoon, maar dit is nog niet live | 📘 Algemene toolkeuze | 📘 Algemene toolkeuze | 📘 Algemene toolkeuze |
+| Zelf de passende beschikbare tool kiezen | 🟡 De eerdere 2.36-proef begreep `het is koud in de overkapping`, koos zelf de juiste tool, voerde één effect uit en las apart terug. Deze praktijktest is nog niet op de 2.37-kandidaat herhaald en is niet live | 📘 Algemene toolkeuze | 📘 Algemene toolkeuze | 📘 Algemene toolkeuze |
 | Nieuwe tools gebruiken zonder vooraf Eva-code per soort of dienst | 🟡 Dezelfde ongewijzigde agent gebruikte twee providercatalogi. De exacte clientimage ontdekte daarna ook een tool uit een afzonderlijk providerproces. Alle gedrags- en grensproeven zijn groen; de live route gebruikt nog de oude functies | 📘 MCP en plug-ins | 📘 Tools en skills | 📘 MCP en plug-ins |
 | Bij een onduidelijk doel eerst doorvragen | ✅ Eva gokt niet bij een dubbele apparaatnaam | ⚪ Niet gelijk getest | ⚪ Niet gelijk getest | ⚪ Niet gelijk getest |
 | Controleren of een toolopdracht echt gelukt is | ✅ De algemene route doet uitvoering en observatie apart en herstart zonder dubbel uitvoeren. Een echte toestandcontrole is met Home Assistant als verwisselbare praktijkprovider bewezen | ⚪ Niet gelijk met een echt effect getest | ⚪ Niet gelijk met een echt effect getest | ⚪ Niet gelijk met een echt effect getest |
@@ -371,9 +379,9 @@ herstelbaar.
 
 | Algemeen probleem | Gekozen onderhouden bouwsteen | Werkelijkheid nu |
 |---|---|---|
-| Modelverkeer | `pydantic-ai-slim` met alleen de gekozen officiële provider-SDK | 🟡 `slim` is dezelfde Pydantic AI-agentkern zonder ongebruikte provider-, CLI- en UI-extra's; het maakt Eva dus niet minder slim. De exacte minimale image streamde via echte Codex, koos een uitgestelde tool, vervolgde uit een receipt en herstelde na een fysieke kill tijdens een echte externe providercall. Zij scant 0 hoog/0 kritisch. A/B-livegang ontbreekt nog |
+| Modelverkeer | `pydantic-ai-slim` met alleen de gekozen officiële provider-SDK | 🟡 `slim` is niet een minder slim model. Het is dezelfde Pydantic AI-agentbibliotheek, maar zonder optionele koppelingen die Eva niet gebruikt. Codex en Eva's eigen logica blijven gelijk; benodigde koppelingen installeren we apart. Dat houdt updates en beveiliging eenvoudiger. De eerste 2.37-image is afgekeurd door een runtime-loaderfout; de broncorrectie werkt fysiek, maar een nieuw bronimage, de volledige releasepoort en A/B-livegang zijn nog open |
 | Langetermijngeheugen | Hindsight | ✅ Live; 🟡 Eva's adapter moet nog kleiner |
-| Externe gereedschappen | Pydantic AI met runtime-ontdekte tools; ContextForge alleen als optionele gateway | 🟡 De exacte kandidaat koos zelf een nieuwe bestandsprovider, muteerde eenmaal, overleefde daarna `SIGKILL`, deed in een nieuw proces precies één aparte readback en bij replay nul extra calls. TOOL01 v2 is kandidaat-groen; A/B-livegang en verwijdering van oude providerlijm ontbreken nog |
+| Externe gereedschappen | Pydantic AI met runtime-ontdekte tools; ContextForge alleen als optionele gateway | 🟡 De exacte kandidaat koos zelf een nieuwe bestandsprovider en schreef één testbestand. Na een harde processtop herstelde Eva zonder de actie opnieuw uit te voeren en controleerde zij het resultaat apart. TOOL01 v2 is kandidaat-groen; A/B-livegang en verwijdering van oude providerlijm ontbreken nog |
 | Subagents | Pydantic AI/Harness voor modelruns; onderhouden workflowmotor voor duurzaam werk | 🟡 Modelrun werkt; workflowkeuze nog niet gewonnen door een dependency |
 | Voice | Pipecat als eerste complete pipeline; Wyoming als lokale fallback | 🟡 Bake-off en fysieke proef ontbreken |
 | Browser | Playwright MCP tegenover Browser Use; daarna één winnaar | 🟡 Functioneel beproefd; nog geen releaseveilige winnaar |
@@ -401,8 +409,9 @@ gebruikersroute draait én de dubbele Eva-code daarna verdwijnt.
 
 ## Eerstvolgende zichtbare verbeteringen
 
-1. De TOOL01-v2-kandidaat met een gekopieerde database door de veilige A/B-
-   releasepoort sturen; pas na terugrolbewijs mag zij live worden.
+1. Eerst de volledige verplichte release-testset en de beheerde wegwerpstack
+   afronden; pas daarna de TOOL01-v2-kandidaat via de veilige A/B-route
+   promoveren en terugrollen.
 2. Dezelfde route met twee echte verwisselbare diensten bewijzen en de
    resterende Home Assistant-, e-mail- en handgeschreven dispatchfuncties
    verwijderen.
