@@ -246,8 +246,18 @@ class McpGatewayToolPlanner:
         )
         if execute_schema is None or observe_schema is None:
             raise ConversationConflict("MCP gateway catalog was not verified")
-        _validate_schema_value(execute_arguments, execute_schema, "execute_arguments")
-        _validate_schema_value(observe_arguments, observe_schema, "observe_arguments")
+        _validate_schema_value(
+            execute_arguments,
+            execute_schema,
+            "execute_arguments",
+            provider_schema=True,
+        )
+        _validate_schema_value(
+            observe_arguments,
+            observe_schema,
+            "observe_arguments",
+            provider_schema=True,
+        )
         expected: dict[str, JsonValue] = {
             item.observed_name: call.arguments[item.argument_name]
             for item in spec.proof_bindings
@@ -369,7 +379,12 @@ class McpGatewayToolAdapter:
         )
         if execute_schema is None:
             raise RuntimeError("MCP gateway execute catalog is not verified")
-        _validate_schema_value(command.arguments, execute_schema, "execute_arguments")
+        _validate_schema_value(
+            command.arguments,
+            execute_schema,
+            "execute_arguments",
+            provider_schema=True,
+        )
         output = await asyncio.to_thread(
             self._call_tool,
             spec.execute_tool_name,
@@ -403,7 +418,12 @@ class McpGatewayToolAdapter:
         )
         if observe_schema is None:
             raise RuntimeError("MCP gateway observe catalog is not verified")
-        _validate_schema_value(observe_arguments, observe_schema, "observe_arguments")
+        _validate_schema_value(
+            observe_arguments,
+            observe_schema,
+            "observe_arguments",
+            provider_schema=True,
+        )
         output = await asyncio.to_thread(
             self._call_tool,
             observe_tool_name,
@@ -577,15 +597,18 @@ def _validate_projection_contract(
     eva_properties = eva_schema.get("properties")
     eva_required = eva_schema.get("required")
     provider_properties = provider_schema.get("properties")
-    provider_required = provider_schema.get("required")
+    provider_required = provider_schema.get("required", [])
+    provider_additional = provider_schema.get("additionalProperties", True)
     if (
         not isinstance(eva_properties, dict)
         or not isinstance(eva_required, list)
         or not isinstance(provider_properties, dict)
         or not isinstance(provider_required, list)
         or provider_schema.get("type") != "object"
-        or provider_schema.get("additionalProperties") is not False
+        or not isinstance(provider_additional, (bool, dict))
         or any(not isinstance(item, str) for item in provider_required)
+        or len(provider_required) != len(set(provider_required))
+        or not set(provider_required).issubset(provider_properties)
     ):
         raise RuntimeError("MCP gateway provider input schema is unsupported")
     by_provider_name = {item.provider_name: item.argument_name for item in bindings}
@@ -627,7 +650,13 @@ def _project_arguments(
     return projected
 
 
-def _validate_schema_value(value: JsonValue, schema: object, path: str) -> None:
+def _validate_schema_value(
+    value: JsonValue,
+    schema: object,
+    path: str,
+    *,
+    provider_schema: bool = False,
+) -> None:
     if not isinstance(schema, dict):
         raise ConversationConflict(f"{path} schema is invalid")
     if "const" in schema and value != schema["const"]:
@@ -641,18 +670,28 @@ def _validate_schema_value(value: JsonValue, schema: object, path: str) -> None:
         if not isinstance(value, dict):
             raise ConversationConflict(f"{path} must be an object")
         properties = schema.get("properties")
-        required = schema.get("required")
+        required = schema.get("required", [] if provider_schema else None)
+        additional = schema.get("additionalProperties", True)
         if (
             not isinstance(properties, dict)
             or not isinstance(required, list)
             or any(not isinstance(item, str) for item in required)
-            or schema.get("additionalProperties") is not False
+            or (provider_schema and not isinstance(additional, (bool, dict)))
+            or (
+                not provider_schema
+                and additional is not False
+            )
             or not set(required).issubset(value)
             or not set(value).issubset(properties)
         ):
             raise ConversationConflict(f"{path} fields are invalid")
         for name, item in value.items():
-            _validate_schema_value(item, properties[name], f"{path}.{name}")
+            _validate_schema_value(
+                item,
+                properties[name],
+                f"{path}.{name}",
+                provider_schema=provider_schema,
+            )
         return
     if kind == "array":
         items = schema.get("items")
@@ -667,7 +706,12 @@ def _validate_schema_value(value: JsonValue, schema: object, path: str) -> None:
         ):
             raise ConversationConflict(f"{path} array length is invalid")
         for index, item in enumerate(value):
-            _validate_schema_value(item, items, f"{path}[{index}]")
+            _validate_schema_value(
+                item,
+                items,
+                f"{path}[{index}]",
+                provider_schema=provider_schema,
+            )
         return
     expected_type = {
         "boolean": bool,

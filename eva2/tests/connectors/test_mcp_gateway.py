@@ -8,6 +8,7 @@ from threading import Thread
 
 import pytest
 
+from eva.adapters.connectors import mcp_gateway as mcp_gateway_module
 from eva.adapters.connectors.mcp_gateway import (
     McpGatewayArgumentBinding,
     McpGatewayConfig,
@@ -317,6 +318,142 @@ def test_catalog_accepts_contextforge_wire_aliases_but_hashes_one_shape() -> Non
         assert asyncio.run(_adapter(base_url).verify_catalog()) == {
             "proof-echo": _catalog_hash(_catalog_row())
         }
+
+
+@pytest.mark.parametrize("additional_properties", [None, True])
+def test_standard_open_provider_schema_is_safe_through_explicit_projection(
+    additional_properties: bool | None,
+) -> None:
+    provider_schema: dict[str, object] = {
+        "$schema": "https://json-schema.org/draft/2020-12/schema",
+        "properties": {
+            "delay": {"minimum": 0, "type": ["integer", "null"]},
+            "message": {"type": "string"},
+        },
+        "required": ["message"],
+        "type": "object",
+    }
+    if additional_properties is not None:
+        provider_schema["additionalProperties"] = additional_properties
+    row = _catalog_row(schema=provider_schema)
+    spec = _spec(catalog_hash=_catalog_hash(row))
+
+    with _gateway() as (base_url, handler):
+        handler.catalog = [row]
+        adapter = McpGatewayToolAdapter(
+            McpGatewayConfig(base_url, "token", allow_plain_http=True), (spec,)
+        )
+        asyncio.run(adapter.verify_catalog())
+        prepared = asyncio.run(
+            adapter.planner().prepare(
+                _turn(),
+                ConversationActionCall(
+                    "open-schema-call", "echo_proof", {"message": "alleen gebonden"}
+                ),
+            )
+        )
+        request = _echo_request(spec, "alleen gebonden")
+        dispatch = asyncio.run(adapter.execute(request))
+        observation = asyncio.run(adapter.observe(request, dispatch))
+
+    assert prepared.arguments == {"message": "alleen gebonden"}
+    assert dispatch.accepted is True
+    assert observation.observed == {"text": "alleen gebonden"}
+    assert [call["params"]["arguments"] for call in handler.calls] == [
+        {"message": "alleen gebonden"},
+        {"message": "alleen gebonden"},
+    ]
+
+
+def test_open_provider_schema_still_rejects_unbound_required_field() -> None:
+    provider_schema = {
+        "properties": {
+            "destination": {"type": "string"},
+            "message": {"type": "string"},
+        },
+        "required": ["destination", "message"],
+        "type": "object",
+    }
+    row = _catalog_row(schema=provider_schema)
+    spec = _spec(catalog_hash=_catalog_hash(row))
+
+    with _gateway() as (base_url, handler):
+        handler.catalog = [row]
+        adapter = McpGatewayToolAdapter(
+            McpGatewayConfig(base_url, "token", allow_plain_http=True), (spec,)
+        )
+        with pytest.raises(RuntimeError, match="projection is incomplete"):
+            asyncio.run(adapter.verify_catalog())
+
+
+def test_provider_schema_rejects_invalid_additional_properties_keyword() -> None:
+    provider_schema = {
+        "additionalProperties": "open",
+        "properties": {"message": {"type": "string"}},
+        "required": ["message"],
+        "type": "object",
+    }
+    row = _catalog_row(schema=provider_schema)
+    spec = _spec(catalog_hash=_catalog_hash(row))
+
+    with _gateway() as (base_url, handler):
+        handler.catalog = [row]
+        adapter = McpGatewayToolAdapter(
+            McpGatewayConfig(base_url, "token", allow_plain_http=True), (spec,)
+        )
+        with pytest.raises(RuntimeError, match="input schema is unsupported"):
+            asyncio.run(adapter.verify_catalog())
+
+
+@pytest.mark.parametrize("additional_properties", [True, False, {}])
+def test_nested_provider_object_accepts_valid_additional_properties_keyword(
+    additional_properties: bool | dict[str, object],
+) -> None:
+    schema = {
+        "properties": {
+            "nested": {
+                "additionalProperties": additional_properties,
+                "properties": {"value": {"type": "string"}},
+                "required": ["value"],
+                "type": "object",
+            }
+        },
+        "required": ["nested"],
+        "type": "object",
+    }
+
+    mcp_gateway_module._validate_schema_value(
+        {"nested": {"value": "begrensd"}},
+        schema,
+        "provider_arguments",
+        provider_schema=True,
+    )
+
+
+@pytest.mark.parametrize("additional_properties", ["open", 1, None])
+def test_nested_provider_object_rejects_invalid_additional_properties_keyword(
+    additional_properties: object,
+) -> None:
+    schema = {
+        "properties": {
+            "nested": {
+                "additionalProperties": additional_properties,
+                "properties": {"value": {"type": "string"}},
+                "required": ["value"],
+                "type": "object",
+            }
+        },
+        "required": ["nested"],
+        "type": "object",
+    }
+
+    with pytest.raises(ConversationConflict, match="fields are invalid"):
+        mcp_gateway_module._validate_schema_value(
+            {"nested": {"value": "begrensd"}},
+            schema,
+            "provider_arguments",
+            provider_schema=True,
+        )
 
 
 def test_planner_validates_closed_arguments_and_binds_expected_proof() -> None:
