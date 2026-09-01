@@ -10,33 +10,10 @@ de volgende begint.
 
 | Volgorde | Kaart | Resultaat | Status |
 |---:|---|---|---|
-| 2 | `GOV-002` — Bordovergangen statusvast maken | Dezelfde aanvalstests blijven werken wanneer afgeronde kaarten groeien en de primaire kaart opschuift. | 🟡 BEZIG |
-| 10 | `RB-001` — Verzegelde basisimages offline bruikbaar maken op een verse bouwer | Een lege Docker-bouwer gebruikt de drie gepinde OCI-bases zonder registry, pull of verloren digestbinding. | ⚪ HIERNA |
+| 10 | `RB-001` — Verzegelde basisimages offline bruikbaar maken op een verse bouwer | Een lege Docker-bouwer gebruikt de drie gepinde OCI-bases zonder registry, pull of verloren digestbinding. | 🟡 BEZIG |
+| 20 | `RB-002` — Nieuwe bootstrapcode verzegelen | Release-inputauthority en tests nemen exact de na RB-001 bewezen bootstrapbestanden op. | ⚪ HIERNA |
 
-### Exact werk voor `GOV-002`
-
-- `docs/eva-repository-inventory.generated.json`
-- `docs/eva-repository-inventory.generated.md`
-- `eva2/WERKBORD.md`
-- `eva2/design/product/execution-workboard-v1.json`
-- `eva2/tests/operations/test_current_workboard.py`
-
-Klaar betekent:
-
-- De tests leiden afgeronde, primaire en volgende kaarten uit status af in plaats van vaste indices.
-- GOV-001 blijft met dezelfde commitketen als done valide.
-- Een onafhankelijke reviewer geeft GO.
-
-Echte controles:
-
-- `TMPDIR=/tmp TEMP=/tmp TMP=/tmp pytest -q tests/operations/test_current_workboard.py`
-- `python3 tools/check_current_workboard.py`
-- `python3 tools/check_component_catalog.py`
-- `node ../test/repository-inventory.test.js`
-- `node ../test/repository-inventory-disposition.test.js`
-- `ruff check tests/operations/test_current_workboard.py`
-
-### Daarna voorbereid: `RB-001`
+### Exact werk voor `RB-001`
 
 - `eva2/tools/managed_b_candidate/base_image.py`
 - `eva2/tools/managed_b_candidate/candidate_image.py`
@@ -45,10 +22,26 @@ Echte controles:
 - `eva2/tests/operations/test_managed_b_candidate_image.py`
 - `eva2/tests/operations/test_build_managed_b_offline_candidate.py`
 
-Vooraf vastgelegde controles:
+Klaar betekent:
+
+- Verkeerde digest, rol, platform, archivebyte of netwerkfallback stopt vóór de build.
+- De echte Dockerfile bereikt alle drie lokale bases met netwerk en pulls uitgeschakeld.
+- Een onafhankelijke reviewer geeft GO.
+
+Echte controles:
 
 - `TMPDIR=/tmp TEMP=/tmp TMP=/tmp pytest -q tests/operations/test_managed_b_base_image.py tests/operations/test_managed_b_candidate_image.py tests/operations/test_build_managed_b_offline_candidate.py`
 - `ruff check tools/managed_b_candidate/base_image.py tools/managed_b_candidate/candidate_image.py tools/build_managed_b_offline_candidate.py tests/operations/test_managed_b_base_image.py tests/operations/test_managed_b_candidate_image.py tests/operations/test_build_managed_b_offline_candidate.py`
+
+### Daarna voorbereid: `RB-002`
+
+- `eva2/tools/managed_b_candidate/release_inputs.py`
+- `eva2/tests/operations/test_managed_b_release_inputs.py`
+
+Vooraf vastgelegde controles:
+
+- `TMPDIR=/tmp TEMP=/tmp TMP=/tmp pytest -q tests/operations/test_managed_b_release_inputs.py`
+- `ruff check tools/managed_b_candidate/release_inputs.py tests/operations/test_managed_b_release_inputs.py`
 
 ## Daarna
 
@@ -57,7 +50,6 @@ nadat zij als eerstvolgende kleine kaart exacte bestanden en tests heeft.
 
 | Nr. | Onderdeel | Begrijpelijk eindresultaat |
 |---:|---|---|
-| 20 | `RB-002` — Nieuwe bootstrapcode verzegelen | Authority, catalogus en inventaris wijzen naar dezelfde commit. |
 | 30 | `RB-003` — Kandidaat op bouwer A maken | Een verse daemon bouwt de verzegelde commit offline. |
 | 40 | `RB-004` — Kandidaat op bouwer B maken | Een onafhankelijke verse daemon bouwt dezelfde commit offline. |
 | 50 | `RB-005` — Beide builds vergelijken | Config, lagen en runtime-inhoud zijn gelijk; bewijshergebruik faalt. |

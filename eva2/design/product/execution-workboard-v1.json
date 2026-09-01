@@ -6,7 +6,7 @@
   "commandWorkingDirectory": "eva2",
   "inventoryPath": "docs/eva-repository-inventory.generated.json",
   "humanBoardPath": "eva2/WERKBORD.md",
-  "activeTaskId": "GOV-002",
+  "activeTaskId": "RB-001",
   "maxActiveImplementationTasks": 1,
   "statusValues": ["queued", "in_progress", "review", "done", "blocked"],
   "rules": [
@@ -73,8 +73,8 @@
       "area": "Werkbesturing",
       "title": "Bordovergangen statusvast maken",
       "outcome": "Dezelfde aanvalstests blijven werken wanneer afgeronde kaarten groeien en de primaire kaart opschuift.",
-      "status": "in_progress",
-      "stateDetails": {"baseCommit": null, "implementationCommit": null, "evidenceCommit": null, "reviewEvidencePaths": [], "blockerReason": null},
+      "status": "done",
+      "stateDetails": {"baseCommit": "f904d10c1dd19e5e97ccac356584a80ff28ceef2", "implementationCommit": "ef981d7d58bc1d1dfe6560344a6798a8e1954d2c", "evidenceCommit": "497b767ab6dac497e8220d2f57c09c712a7a981a", "reviewEvidencePaths": ["eva2/evidence/product/GOV-002-status-stable-workboard-tests-2026-09-01.json"], "blockerReason": null},
       "ownerRole": "architecturelead",
       "reviewerRole": "workboardreviewer",
       "dependsOn": ["GOV-001"],
@@ -111,7 +111,7 @@
       "area": "Releasebasis",
       "title": "Verzegelde basisimages offline bruikbaar maken op een verse bouwer",
       "outcome": "Een lege Docker-bouwer gebruikt de drie gepinde OCI-bases zonder registry, pull of verloren digestbinding.",
-      "status": "queued",
+      "status": "in_progress",
       "stateDetails": {"baseCommit": null, "implementationCommit": null, "evidenceCommit": null, "reviewEvidencePaths": [], "blockerReason": null},
       "ownerRole": "releaselead",
       "reviewerRole": "proofreviewer",
@@ -139,10 +139,40 @@
         "De echte Dockerfile bereikt alle drie lokale bases met netwerk en pulls uitgeschakeld.",
         "Een onafhankelijke reviewer geeft GO."
       ]
+    },
+    {
+      "id": "RB-002",
+      "order": 20,
+      "area": "Releasebasis",
+      "title": "Nieuwe bootstrapcode verzegelen",
+      "outcome": "Release-inputauthority en tests nemen exact de na RB-001 bewezen bootstrapbestanden op.",
+      "status": "queued",
+      "stateDetails": {"baseCommit": null, "implementationCommit": null, "evidenceCommit": null, "reviewEvidencePaths": [], "blockerReason": null},
+      "ownerRole": "releaselead",
+      "reviewerRole": "proofreviewer",
+      "dependsOn": ["RB-001"],
+      "componentIds": ["operations-and-release-tests"],
+      "inventoryOwners": ["verification"],
+      "changePaths": [
+        "eva2/tools/managed_b_candidate/release_inputs.py",
+        "eva2/tests/operations/test_managed_b_release_inputs.py"
+      ],
+      "testCommands": [
+        "TMPDIR=/tmp TEMP=/tmp TMP=/tmp pytest -q tests/operations/test_managed_b_release_inputs.py",
+        "ruff check tools/managed_b_candidate/release_inputs.py tests/operations/test_managed_b_release_inputs.py"
+      ],
+      "evidenceRequired": [
+        "Release-inputreceipt die exact de RB-001-bootstrapbestanden en implementatiecommit bindt.",
+        "Onafhankelijke controle dat geen nieuw of gewijzigd runtimepad buiten de verzegeling valt."
+      ],
+      "doneWhen": [
+        "Iedere nieuwe bootstrapbron en aanvalstest is door de release-inputauthority gedekt.",
+        "Een ontbrekend, extra of gewijzigd pad stopt de releasecontrole.",
+        "Een onafhankelijke reviewer geeft GO."
+      ]
     }
   ],
   "milestones": [
-    {"id": "RB-002", "order": 20, "area": "Releasebasis", "title": "Nieuwe bootstrapcode verzegelen", "outcome": "Authority, catalogus en inventaris wijzen naar dezelfde commit."},
     {"id": "RB-003", "order": 30, "area": "Releasebasis", "title": "Kandidaat op bouwer A maken", "outcome": "Een verse daemon bouwt de verzegelde commit offline."},
     {"id": "RB-004", "order": 40, "area": "Releasebasis", "title": "Kandidaat op bouwer B maken", "outcome": "Een onafhankelijke verse daemon bouwt dezelfde commit offline."},
     {"id": "RB-005", "order": 50, "area": "Releasebasis", "title": "Beide builds vergelijken", "outcome": "Config, lagen en runtime-inhoud zijn gelijk; bewijshergebruik faalt."},
@@ -192,6 +222,17 @@
       "reviewCommit": "f904d10c1dd19e5e97ccac356584a80ff28ceef2",
       "reviewedBy": "/root/workboard_review",
       "testReceiptPaths": ["eva2/evidence/product/GOV-001-execution-workboard-tests-2026-09-01.json"]
+    },
+    "GOV-002": {
+      "baseCommit": "f904d10c1dd19e5e97ccac356584a80ff28ceef2",
+      "commit": "ef981d7d58bc1d1dfe6560344a6798a8e1954d2c",
+      "decision": "GO",
+      "evidenceCommit": "497b767ab6dac497e8220d2f57c09c712a7a981a",
+      "evidencePaths": ["eva2/reviews/GOV-002-status-stable-workboard-ef981d7.md"],
+      "implementedBy": "/root",
+      "reviewCommit": "cb56245f1859ea6cdadb92d7f58b0a1d8969aab6",
+      "reviewedBy": "/root/workboard_review",
+      "testReceiptPaths": ["eva2/evidence/product/GOV-002-status-stable-workboard-tests-2026-09-01.json"]
     }
   }
 }
