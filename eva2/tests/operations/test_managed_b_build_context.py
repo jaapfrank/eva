@@ -31,12 +31,16 @@ def _digest(value: bytes) -> str:
 
 @pytest.fixture
 def native_tmp_path() -> Path:
-    with tempfile.TemporaryDirectory(prefix="eva2-build-context-test-", dir="/tmp") as path:
+    with tempfile.TemporaryDirectory(
+        prefix="eva2-build-context-test-", dir="/tmp"
+    ) as path:
         yield Path(path)
 
 
 def _candidate(lock: bytes, build, runtime_libraries, runtime) -> CandidateBuildInputs:
-    build_reference = f"{build.receipt['base_image_repository']}@{build.receipt['base_image_digest']}"
+    build_reference = (
+        f"{build.receipt['base_image_repository']}@{build.receipt['base_image_digest']}"
+    )
     runtime_libraries_reference = (
         f"{runtime_libraries.receipt['base_image_repository']}@"
         f"{runtime_libraries.receipt['base_image_digest']}"
@@ -57,6 +61,7 @@ def _candidate(lock: bytes, build, runtime_libraries, runtime) -> CandidateBuild
                 b"COPY schemas ./schemas",
                 f"FROM {runtime_libraries_reference} AS runtime_libs".encode(),
                 f"FROM {runtime_reference}".encode(),
+                b"ENV LD_LIBRARY_PATH=/usr/local/lib",
                 b"COPY --from=build /usr/local /usr/local",
                 b"COPY --from=build /opt/eva /opt/eva",
                 b"COPY --from=runtime_libs /usr/lib/x86_64-linux-gnu/libffi.so.8* /usr/lib/x86_64-linux-gnu/",
@@ -99,7 +104,9 @@ def _candidate(lock: bytes, build, runtime_libraries, runtime) -> CandidateBuild
     )
 
 
-def _wheelhouse(tmp_path: Path, native_tmp_path: Path, lock: bytes) -> tuple[bytes, bytes, object]:
+def _wheelhouse(
+    tmp_path: Path, native_tmp_path: Path, lock: bytes
+) -> tuple[bytes, bytes, object]:
     content = b"one-wheel"
     digest = hashlib.sha256(content).hexdigest()
     artifacts = tmp_path / "artifacts"
@@ -109,20 +116,24 @@ def _wheelhouse(tmp_path: Path, native_tmp_path: Path, lock: bytes) -> tuple[byt
         {
             "contract": "Eva2PythonWheelCoverage/v1",
             "onlyBinary": True,
-            "targets": [{
-                "allArtifactsMatchedRequirementsLockHashes": True,
-                "architecture": "amd64",
-                "artifacts": [{
-                    "byteLength": len(content),
-                    "filename": "one-1.0-py3-none-any.whl",
-                    "sha256": digest,
-                }],
-                "lockedPackageCount": 1,
-                "os": "Ubuntu",
-                "pythonAbi": "cp312",
-                "pythonVersion": "3.12.14",
-                "resolvedWheelCount": 1,
-            }],
+            "targets": [
+                {
+                    "allArtifactsMatchedRequirementsLockHashes": True,
+                    "architecture": "amd64",
+                    "artifacts": [
+                        {
+                            "byteLength": len(content),
+                            "filename": "one-1.0-py3-none-any.whl",
+                            "sha256": digest,
+                        }
+                    ],
+                    "lockedPackageCount": 1,
+                    "os": "Ubuntu",
+                    "pythonAbi": "cp312",
+                    "pythonVersion": "3.12.14",
+                    "resolvedWheelCount": 1,
+                }
+            ],
         }
     )
     manifest = _canonical(
@@ -143,7 +154,11 @@ def _wheelhouse(tmp_path: Path, native_tmp_path: Path, lock: bytes) -> tuple[byt
     )
     output = native_tmp_path / "wheelhouse-output"
     output.mkdir(mode=0o700)
-    return manifest, coverage, materialize_wheelhouse(manifest, coverage, artifacts, output, lock)
+    return (
+        manifest,
+        coverage,
+        materialize_wheelhouse(manifest, coverage, artifacts, output, lock),
+    )
 
 
 def _base_archive(
@@ -154,20 +169,64 @@ def _base_archive(
     layer_digest = _digest(layer)
     config_digest = _digest(config)
     manifest = _canonical(
-        {"config": {"digest": config_digest, "mediaType": "application/vnd.oci.image.config.v1+json", "size": len(config)}, "layers": [{"digest": layer_digest, "mediaType": "application/vnd.oci.image.layer.v1.tar", "size": len(layer)}], "mediaType": "application/vnd.oci.image.manifest.v1+json", "schemaVersion": 2}
+        {
+            "config": {
+                "digest": config_digest,
+                "mediaType": "application/vnd.oci.image.config.v1+json",
+                "size": len(config),
+            },
+            "layers": [
+                {
+                    "digest": layer_digest,
+                    "mediaType": "application/vnd.oci.image.layer.v1.tar",
+                    "size": len(layer),
+                }
+            ],
+            "mediaType": "application/vnd.oci.image.manifest.v1+json",
+            "schemaVersion": 2,
+        }
     )
     manifest_digest = _digest(manifest)
     nested = _canonical(
-        {"manifests": [{"digest": manifest_digest, "mediaType": "application/vnd.oci.image.manifest.v1+json", "platform": {"architecture": "amd64", "os": "linux"}, "size": len(manifest)}], "mediaType": "application/vnd.oci.image.index.v1+json", "schemaVersion": 2}
+        {
+            "manifests": [
+                {
+                    "digest": manifest_digest,
+                    "mediaType": "application/vnd.oci.image.manifest.v1+json",
+                    "platform": {"architecture": "amd64", "os": "linux"},
+                    "size": len(manifest),
+                }
+            ],
+            "mediaType": "application/vnd.oci.image.index.v1+json",
+            "schemaVersion": 2,
+        }
     )
     root_digest = _digest(nested)
     index = _canonical(
-        {"manifests": [{"digest": root_digest, "mediaType": "application/vnd.oci.image.index.v1+json", "size": len(nested)}], "mediaType": "application/vnd.oci.image.index.v1+json", "schemaVersion": 2}
+        {
+            "manifests": [
+                {
+                    "digest": root_digest,
+                    "mediaType": "application/vnd.oci.image.index.v1+json",
+                    "size": len(nested),
+                }
+            ],
+            "mediaType": "application/vnd.oci.image.index.v1+json",
+            "schemaVersion": 2,
+        }
     )
     files = {
         "oci-layout": _canonical({"imageLayoutVersion": "1.0.0"}),
         "index.json": index,
-        "manifest.json": _canonical([{"Config": f"blobs/sha256/{config_digest[7:]}", "Layers": [f"blobs/sha256/{layer_digest[7:]}"], "RepoTags": None}]),
+        "manifest.json": _canonical(
+            [
+                {
+                    "Config": f"blobs/sha256/{config_digest[7:]}",
+                    "Layers": [f"blobs/sha256/{layer_digest[7:]}"],
+                    "RepoTags": None,
+                }
+            ]
+        ),
         f"blobs/sha256/{root_digest[7:]}": nested,
         f"blobs/sha256/{manifest_digest[7:]}": manifest,
         f"blobs/sha256/{config_digest[7:]}": config,
@@ -179,7 +238,12 @@ def _base_archive(
             member.mode = 0o644
             member.size = len(content)
             bundle.addfile(member, io.BytesIO(content))
-    return root_digest, {"Architecture": "amd64", "Id": root_digest, "Os": "linux", "RepoDigests": [f"{repository}@{root_digest}"]}
+    return root_digest, {
+        "Architecture": "amd64",
+        "Id": root_digest,
+        "Os": "linux",
+        "RepoDigests": [f"{repository}@{root_digest}"],
+    }
 
 
 def _base_image(native_tmp_path: Path, *, name: str, repository: str):
@@ -194,7 +258,9 @@ def _base_image(native_tmp_path: Path, *, name: str, repository: str):
         output,
         repository=repository,
         inspector=lambda _reference: inspection,
-        exporter=lambda _reference, destination: destination.write_bytes(source.read_bytes()),
+        exporter=lambda _reference, destination: destination.write_bytes(
+            source.read_bytes()
+        ),
     )
 
 
@@ -223,13 +289,24 @@ def _inputs(tmp_path: Path, native_tmp_path: Path):
     )
 
 
-def test_materializes_only_sealed_source_and_wheels(tmp_path: Path, native_tmp_path: Path) -> None:
-    candidate, manifest, coverage, wheelhouse, build, runtime_libraries, runtime = _inputs(tmp_path, native_tmp_path)
+def test_materializes_only_sealed_source_and_wheels(
+    tmp_path: Path, native_tmp_path: Path
+) -> None:
+    candidate, manifest, coverage, wheelhouse, build, runtime_libraries, runtime = (
+        _inputs(tmp_path, native_tmp_path)
+    )
     output = native_tmp_path / "context-output"
     output.mkdir(mode=0o700)
 
     context = materialize_build_context(
-        candidate, manifest, coverage, wheelhouse, build, runtime_libraries, runtime, output
+        candidate,
+        manifest,
+        coverage,
+        wheelhouse,
+        build,
+        runtime_libraries,
+        runtime,
+        output,
     )
 
     receipt = validate_materialized_build_context(context)
@@ -238,17 +315,30 @@ def test_materializes_only_sealed_source_and_wheels(tmp_path: Path, native_tmp_p
     assert receipt["candidate_source_commit"] == "a" * 40
     assert receipt["candidate_source_date_epoch"] == 1
     assert not (context.path / "base.oci.tar").exists()
-    assert (context.path / "wheelhouse" / "one-1.0-py3-none-any.whl").read_bytes() == b"one-wheel"
+    assert (
+        context.path / "wheelhouse" / "one-1.0-py3-none-any.whl"
+    ).read_bytes() == b"one-wheel"
     assert context.path.stat().st_mode & 0o222 == 0
     assert (context.path / "wheelhouse").stat().st_mode & 0o222 == 0
 
 
-def test_revalidation_refuses_writable_nested_directory(tmp_path: Path, native_tmp_path: Path) -> None:
-    candidate, manifest, coverage, wheelhouse, build, runtime_libraries, runtime = _inputs(tmp_path, native_tmp_path)
+def test_revalidation_refuses_writable_nested_directory(
+    tmp_path: Path, native_tmp_path: Path
+) -> None:
+    candidate, manifest, coverage, wheelhouse, build, runtime_libraries, runtime = (
+        _inputs(tmp_path, native_tmp_path)
+    )
     output = native_tmp_path / "context-output"
     output.mkdir(mode=0o700)
     context = materialize_build_context(
-        candidate, manifest, coverage, wheelhouse, build, runtime_libraries, runtime, output
+        candidate,
+        manifest,
+        coverage,
+        wheelhouse,
+        build,
+        runtime_libraries,
+        runtime,
+        output,
     )
     (context.path / "src").chmod(0o755)
 
@@ -259,7 +349,9 @@ def test_revalidation_refuses_writable_nested_directory(tmp_path: Path, native_t
 def test_refuses_a_wheel_added_between_preflight_and_context_copy(
     monkeypatch: pytest.MonkeyPatch, tmp_path: Path, native_tmp_path: Path
 ) -> None:
-    candidate, manifest, coverage, wheelhouse, build, runtime_libraries, runtime = _inputs(tmp_path, native_tmp_path)
+    candidate, manifest, coverage, wheelhouse, build, runtime_libraries, runtime = (
+        _inputs(tmp_path, native_tmp_path)
+    )
     output = native_tmp_path / "context-output"
     output.mkdir(mode=0o700)
 
@@ -283,7 +375,14 @@ def test_refuses_a_wheel_added_between_preflight_and_context_copy(
 
     with pytest.raises(RuntimeError, match="file set differs before context copy"):
         materialize_build_context(
-            candidate, manifest, coverage, wheelhouse, build, runtime_libraries, runtime, output
+            candidate,
+            manifest,
+            coverage,
+            wheelhouse,
+            build,
+            runtime_libraries,
+            runtime,
+            output,
         )
 
     assert list(output.iterdir()) == []
@@ -292,7 +391,9 @@ def test_refuses_a_wheel_added_between_preflight_and_context_copy(
 def test_failed_post_seal_validation_removes_only_its_fresh_context(
     monkeypatch: pytest.MonkeyPatch, tmp_path: Path, native_tmp_path: Path
 ) -> None:
-    candidate, manifest, coverage, wheelhouse, build, runtime_libraries, runtime = _inputs(tmp_path, native_tmp_path)
+    candidate, manifest, coverage, wheelhouse, build, runtime_libraries, runtime = (
+        _inputs(tmp_path, native_tmp_path)
+    )
     output = native_tmp_path / "context-output"
     output.mkdir(mode=0o700)
     monkeypatch.setattr(
@@ -302,7 +403,14 @@ def test_failed_post_seal_validation_removes_only_its_fresh_context(
 
     with pytest.raises(RuntimeError, match="tree differs after sealing"):
         materialize_build_context(
-            candidate, manifest, coverage, wheelhouse, build, runtime_libraries, runtime, output
+            candidate,
+            manifest,
+            coverage,
+            wheelhouse,
+            build,
+            runtime_libraries,
+            runtime,
+            output,
         )
 
     assert list(output.iterdir()) == []
