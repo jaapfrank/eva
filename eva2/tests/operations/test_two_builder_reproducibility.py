@@ -5,6 +5,8 @@ import gzip
 import io
 import json
 from pathlib import Path
+import subprocess
+import sys
 import tarfile
 
 import pytest
@@ -19,6 +21,7 @@ from tools.check_two_builder_reproducibility import (
 
 
 COMMIT = "a" * 40
+EVA2_ROOT = Path(__file__).resolve().parents[2]
 
 
 def _canonical(value: object) -> bytes:
@@ -830,7 +833,7 @@ def test_accepts_same_image_semantics_with_different_tar_envelopes(
 
     assert result["status"] == "passed"
     assert result["candidate"]["imageId"].startswith("sha256:")
-    assert result["candidate"]["runtimeContentSha256"]
+    assert result["candidate"]["runtimeLayerSequenceSha256"]
     assert result["candidate"]["ociManifestSha256"] == result["candidate"][
         "imageId"
     ].removeprefix("sha256:")
@@ -848,6 +851,25 @@ def test_accepts_same_image_semantics_with_different_tar_envelopes(
         "RB-004",
     ]
     assert "one host" in result["nonclaims"][0]
+    assert "expected admission" in result["nonclaims"][1]
+
+
+def test_direct_cli_help_starts_without_package_import_failure() -> None:
+    completed = subprocess.run(
+        [
+            sys.executable,
+            str(EVA2_ROOT / "tools/check_two_builder_reproducibility.py"),
+            "--help",
+        ],
+        cwd=EVA2_ROOT,
+        check=False,
+        capture_output=True,
+        text=True,
+    )
+
+    assert completed.returncode == 0, completed.stderr
+    assert "--expected-admission-a-sha256" in completed.stdout
+    assert "ModuleNotFoundError" not in completed.stderr
 
 
 def test_rejects_reused_admission_evidence(tmp_path: Path) -> None:

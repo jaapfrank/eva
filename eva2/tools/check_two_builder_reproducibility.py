@@ -14,11 +14,18 @@ import stat
 import tarfile
 from typing import Any
 
-from tools.managed_b_candidate.private_receipt import (
-    PrivateReceiptError,
-    canonical_json,
-    write_new_private_json,
-)
+if __package__:
+    from tools.managed_b_candidate.private_receipt import (
+        PrivateReceiptError,
+        canonical_json,
+        write_new_private_json,
+    )
+else:  # Direct execution from eva2/tools.
+    from managed_b_candidate.private_receipt import (
+        PrivateReceiptError,
+        canonical_json,
+        write_new_private_json,
+    )
 
 
 BUILDER_CONTRACT = "EvaMeasuredDockerBuilder/v2"
@@ -499,10 +506,10 @@ def _image_semantics(
         "diffIds": diff_ids,
         **oci_binding,
         "runtimeConfigSha256": _sha256(_canonical(runtime)),
-        # Ordered DiffIDs authenticate every byte of every uncompressed layer.
-        # Equal ordered values therefore bind the exact filesystem operation
-        # stream from which the runtime rootfs is deterministically assembled.
-        "runtimeContentSha256": _sha256(
+        # Ordered DiffIDs authenticate every byte and position of every
+        # uncompressed layer.  This compact hash names that layer sequence; it
+        # does not claim to be a separately materialised rootfs-tree hash.
+        "runtimeLayerSequenceSha256": _sha256(
             _canonical({"orderedUncompressedLayerDiffIds": diff_ids})
         ),
     }
@@ -1243,7 +1250,6 @@ def verify_two_builds(
             raise TwoBuilderError("archive BuildKit result differs from build receipt")
     semantic_comparisons = {
         "diffIds": "candidate uncompressed layers differ",
-        "runtimeContentSha256": "candidate runtime content differs",
         "configSha256": "candidate OCI config differs",
         "runtimeConfigSha256": "candidate runtime config differs",
         "buildkitResultDigest": "candidate BuildKit results differ",
@@ -1339,6 +1345,11 @@ def verify_two_builds(
         "inputAuthoritySha256": _sha256(_canonical(builds[0]["authority"])),
         "nonclaims": [
             "Two daemon and cache states on one host do not prove independence from the shared host, kernel, or operator.",
+            (
+                "Passed status is meaningful only when the expected admission, "
+                "release-authority, and source anchors are independently matched "
+                "to the accepted RB-003 and RB-004 public evidence."
+            ),
             "Reproducibility and a clean runtime scan do not prove that the candidate is vulnerability-free or ready for promotion.",
         ],
         "releaseAuthoritySha256": expected_authority_sha256,
