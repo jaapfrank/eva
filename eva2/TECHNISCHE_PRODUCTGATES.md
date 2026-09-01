@@ -754,8 +754,10 @@ autonomiegates staan eerder in dit bewijsbord.
    self-improvement af.
 6. Sluit P01-P04 voor behoud van de bestaande minimale spontane
    deurbel-/speakerpresence.
-7. Sluit PC01-PC04 voor harde omvang/dependency/imagegrenzen, een meetbare
-   streaming teksthot-path en afzonderlijk gebudgetteerde sidecars.
+7. Sluit PC01-PC04 voor een complete bron-, dependency- en image-inventaris,
+   aantoonbaar eigenaarschap en nut, een meetbare streaming teksthot-path en
+   afzonderlijk beheerde sidecars. Omvang blijft zichtbaar, maar is nooit op
+   zichzelf een afkeurgrond.
 8. Sluit V01-V06 voor conversationele streaming voice, onderbreken,
    privacy/crashherstel en dezelfde Eva-context; algemene video/media blijft
    een latere producttrack.
