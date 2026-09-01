@@ -24,17 +24,6 @@ export default [
     rules: {
       complexity: ['warn', 45],
       'max-depth': ['warn', 7],
-      'max-lines': ['warn', {
-        max: 4500,
-        skipBlankLines: true,
-        skipComments: true,
-      }],
-      'max-lines-per-function': ['warn', {
-        max: 1700,
-        skipBlankLines: true,
-        skipComments: true,
-        IIFEs: true,
-      }],
       'max-params': ['warn', 10],
     },
   },

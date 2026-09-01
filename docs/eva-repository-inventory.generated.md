@@ -3,7 +3,7 @@
 Deze kaart is mechanisch gegenereerd. Zij staat naast de semantische runtimegraaf en
 classificeert ieder gevolgd, verwijderd of niet-genegeerd nieuw repositorypad.
 
-Schema: `EvaRepositoryInventory/v1`. Brondigest: `87d7f06149b9a3ace53ae96b2dc961979f2636e8de6cc0916900a88db5ca6feb`.
+Schema: `EvaRepositoryInventory/v1`. Brondigest: `59f455e15480c8642a1d171a256741253e06e42291ede01820f5b793a52270ad`.
 
 ## Samenvatting
 
@@ -235,8 +235,8 @@ Schema: `EvaRepositoryInventory/v1`. Brondigest: `87d7f06149b9a3ace53ae96b2dc961
 | `docs/eva-agent-benchmark-v1.md` | tracked | documentation | included-tracked-noncritical | keep | 18462 |
 | `docs/eva-endbeeld-roadmap.md` | tracked | documentation | included-tracked-noncritical | keep | 16956 |
 | `docs/eva-rebuild-plan-2026-08-20.md` | tracked | documentation | included-tracked-noncritical | keep | 29009 |
-| `docs/eva-repository-inventory.generated.json` | tracked | generated | included-tracked-critical | keep | 2338892 |
-| `docs/eva-repository-inventory.generated.md` | tracked | generated | included-tracked-critical | keep | 361896 |
+| `docs/eva-repository-inventory.generated.json` | tracked | generated | included-tracked-critical | keep | 2339199 |
+| `docs/eva-repository-inventory.generated.md` | tracked | generated | included-tracked-critical | keep | 361985 |
 | `docs/eva-runtime-contract-map.generated.json` | tracked | generated | included-tracked-critical | keep | 246207 |
 | `docs/eva-runtime-contract-map.generated.md` | tracked | generated | included-tracked-critical | keep | 120103 |
 | `docs/eva-runtime-contracts.md` | tracked | documentation | included-tracked-critical | keep | 80976 |
@@ -252,7 +252,7 @@ Schema: `EvaRepositoryInventory/v1`. Brondigest: `87d7f06149b9a3ace53ae96b2dc961
 | `docs/incident-2026-08-13-ledger-test-import.md` | tracked | documentation | included-tracked-noncritical | keep | 12016 |
 | `docs/live-acceptance-2026-08-04.md` | tracked | documentation | blocked-unresolved-disposition | archive | 5727 |
 | `docs/repository-inventory-disposition-v1.json` | tracked | documentation | included-tracked-noncritical | keep | 10233 |
-| `eslint.complexity.config.js` | tracked | repository-config | included-tracked-critical | keep | 858 |
+| `eslint.complexity.config.js` | tracked | repository-config | included-tracked-critical | keep | 590 |
 | `eslint.config.js` | tracked | repository-config | included-tracked-critical | keep | 1430 |
 | `eva2/CONCURRENTIE_EN_HERGEBRUIK.md` | tracked | documentation | included-tracked-noncritical | keep | 21881 |
 | `eva2/DOCUMENTATIE_EN_ONDERHOUD.md` | tracked | documentation | included-tracked-noncritical | keep | 10268 |
@@ -261,7 +261,7 @@ Schema: `EvaRepositoryInventory/v1`. Brondigest: `87d7f06149b9a3ace53ae96b2dc961
 | `eva2/OPEN_SOURCE_EN_DEPENDENCYKEUZES.md` | tracked | documentation | included-tracked-noncritical | keep | 37416 |
 | `eva2/OUDE_EVA_VS_EVA2.md` | tracked | documentation | included-tracked-noncritical | keep | 5434 |
 | `eva2/PROJECTEN_EN_PLANNING.md` | tracked | documentation | included-tracked-noncritical | keep | 22347 |
-| `eva2/PROJECT_STATUS.md` | tracked | documentation | included-tracked-noncritical | keep | 45583 |
+| `eva2/PROJECT_STATUS.md` | tracked | documentation | included-tracked-noncritical | keep | 45646 |
 | `eva2/README.md` | tracked | documentation | included-tracked-noncritical | keep | 10625 |
 | `eva2/TEAM_WERKWIJZE.md` | tracked | documentation | included-tracked-noncritical | keep | 7129 |
 | `eva2/TECHNISCHE_MOGELIJKHEDEN_EN_GATEN.md` | tracked | documentation | included-tracked-noncritical | keep | 20072 |
@@ -2116,7 +2116,7 @@ Schema: `EvaRepositoryInventory/v1`. Brondigest: `87d7f06149b9a3ace53ae96b2dc961
 | `test/perception-scheduler-liveness.test.js` | tracked | verification | included-tracked-critical | keep | 13539 |
 | `test/perception-web-privacy.test.js` | tracked | verification | included-tracked-critical | keep | 1183 |
 | `test/portfolio-continuity.test.js` | tracked | verification | included-tracked-critical | keep | 29967 |
-| `test/quality-gate-diagnostic-debt.test.js` | tracked | verification | included-tracked-critical | keep | 84293 |
+| `test/quality-gate-diagnostic-debt.test.js` | tracked | verification | included-tracked-critical | keep | 84787 |
 | `test/recovery-runtime-config.test.js` | tracked | verification | included-tracked-critical | keep | 2438 |
 | `test/recovery-runtime-startup.test.js` | tracked | verification | included-tracked-critical | keep | 7642 |
 | `test/recovery-runtime-tool-policy.test.js` | tracked | verification | included-tracked-critical | keep | 3258 |
@@ -2867,6 +2867,7 @@ Schema: `EvaRepositoryInventory/v1`. Brondigest: `87d7f06149b9a3ace53ae96b2dc961
 | import | `test/portfolio-continuity.test.js` | `src/mind/portfolio.js` |
 | import | `test/portfolio-continuity.test.js` | `src/mind/work.js` |
 | import | `test/portfolio-continuity.test.js` | `test/telegram-test-composition.js` |
+| import | `test/quality-gate-diagnostic-debt.test.js` | `eslint.complexity.config.js` |
 | import | `test/quality-gate-diagnostic-debt.test.js` | `scripts/quality-gate.mjs` |
 | import | `test/recovery-runtime-tool-policy.test.js` | `src/config.js` |
 | import | `test/recovery-runtime-tool-policy.test.js` | `src/db.js` |

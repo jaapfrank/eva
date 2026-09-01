@@ -13,8 +13,19 @@ import {
   validateTypeScriptDebtManifest,
   validateTypeScriptEvidence,
 } from '../scripts/quality-gate.mjs';
+import complexityConfig from '../eslint.complexity.config.js';
 
 const projectRoot = process.cwd();
+
+test('complexiteitsgate meet geen regel- of functielengteplafond', () => {
+  const configuredRules = Object.assign({}, ...complexityConfig
+    .map((entry) => entry.rules || {}));
+  assert.equal(configuredRules['max-lines'], undefined);
+  assert.equal(configuredRules['max-lines-per-function'], undefined);
+  assert.notEqual(configuredRules.complexity, undefined);
+  assert.notEqual(configuredRules['max-depth'], undefined);
+});
+
 const sha256 = (value) => createHash('sha256').update(value).digest('hex');
 const canonicalJsonValue = (value) => {
   if (Array.isArray(value)) return value.map(canonicalJsonValue);

@@ -1,6 +1,6 @@
 # Eva 2 — projectbord en vergelijking
 
-Laatst bijgewerkt: 1 september 2026, 10:58 CEST
+Laatst bijgewerkt: 1 september 2026, 12:28 CEST
 
 ## Zo lees je dit bord
 
@@ -47,7 +47,8 @@ Het aantal regels is geen doel en geen maximum. Ook 100 miljoen regels mogen
 als iedere regel aantoonbaar een producttaak heeft en beheersbaar blijft. De
 echte poort is: exact één eigenaar en doel per component, actuele tests en
 bewijs, onderhouden dependencies en geen dode of onverklaard dubbele route.
-Ook het laatste oude plafond in de PC02-checker is verwijderd: grote bestanden
+Ook de laatste indirecte regelafkeur in de JavaScript-kwaliteitspoort en het
+oude plafond in de PC02-checker zijn verwijderd: grote bestanden
 moeten nu worden geclassificeerd met eigenaar en contract, maar mogen daarna
 groeien wanneer die groei aantoonbaar iets toevoegt. De checker meet de groei
 wel en keurt ontbrekende classificatie af; hij keurt geen getal meer af.

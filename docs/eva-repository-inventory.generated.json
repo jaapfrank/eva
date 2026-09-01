@@ -4942,6 +4942,12 @@
     {
       "kind": "import",
       "from": "test/quality-gate-diagnostic-debt.test.js",
+      "to": "eslint.complexity.config.js",
+      "evidence": "../eslint.complexity.config.js"
+    },
+    {
+      "kind": "import",
+      "from": "test/quality-gate-diagnostic-debt.test.js",
       "to": "scripts/quality-gate.mjs",
       "evidence": "../scripts/quality-gate.mjs"
     },
@@ -10264,7 +10270,7 @@
       "path": "docs/eva-repository-inventory.generated.json",
       "gitState": "tracked",
       "present": true,
-      "bytes": 2338892,
+      "bytes": 2339199,
       "contentSha256": "32591e23fa2eb53a038d95e726ba09edd0405306f38c5283a36a2b6d3010254d",
       "hashMode": "canonical-self-reference-redacted",
       "role": "generated",
@@ -10297,7 +10303,7 @@
       "path": "docs/eva-repository-inventory.generated.md",
       "gitState": "tracked",
       "present": true,
-      "bytes": 361896,
+      "bytes": 361985,
       "contentSha256": "2f4f8486464cbb9713b749dc898f265093d0853699f1da1b4eb3dd1625c1b2d2",
       "hashMode": "canonical-self-reference-redacted",
       "role": "generated",
@@ -10799,8 +10805,8 @@
       "path": "eslint.complexity.config.js",
       "gitState": "tracked",
       "present": true,
-      "bytes": 858,
-      "contentSha256": "3156a251dcff6741bfb3dfb901d0e5d03844568ceffa7d11b39b95df3ffc0497",
+      "bytes": 590,
+      "contentSha256": "63f380a66366303eedbc4c57e42d2c81e01fe677b4a7de779fb7e42b49db034e",
       "hashMode": "exact-bytes",
       "role": "repository-config",
       "roleRuleId": "root-config",
@@ -10820,7 +10826,12 @@
       ],
       "decision": "keep",
       "decisionReason": "active repository input or evidence",
-      "consumers": [],
+      "consumers": [
+        {
+          "kind": "import",
+          "from": "test/quality-gate-diagnostic-debt.test.js"
+        }
+      ],
       "entrypointEvidence": [],
       "release": {
         "includedInTrackedRelease": true,
@@ -11082,8 +11093,8 @@
       "path": "eva2/PROJECT_STATUS.md",
       "gitState": "tracked",
       "present": true,
-      "bytes": 45583,
-      "contentSha256": "2cf30ba5d59c2ded91d6b1c49c90d5459fe3ed98c43061beeec0909fd4c63725",
+      "bytes": 45646,
+      "contentSha256": "50209b123210e685c8842946ed776f5c1d10e547565f998903be28d144c17efa",
       "hashMode": "exact-bytes",
       "role": "documentation",
       "roleRuleId": "eva2-documentation",
@@ -79425,8 +79436,8 @@
       "path": "test/quality-gate-diagnostic-debt.test.js",
       "gitState": "tracked",
       "present": true,
-      "bytes": 84293,
-      "contentSha256": "39fd30be924fd72c333daddbce7c5fdc924f817ee8c41d718623202d0cbfc797",
+      "bytes": 84787,
+      "contentSha256": "b5b8fe27c027fa57d33357e7dc5f9d1bd91476f3126bc057dad8e74e6626133f",
       "hashMode": "exact-bytes",
       "role": "verification",
       "roleRuleId": "test-entry",
@@ -81645,5 +81656,5 @@
       }
     }
   ],
-  "sourceDigest": "87d7f06149b9a3ace53ae96b2dc961979f2636e8de6cc0916900a88db5ca6feb"
+  "sourceDigest": "59f455e15480c8642a1d171a256741253e06e42291ede01820f5b793a52270ad"
 }
