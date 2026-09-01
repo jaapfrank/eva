@@ -99,6 +99,41 @@ def test_host_helpers_keep_stdin_attached_for_private_payloads() -> None:
         }
         assert "--interactive" in literals
 
+    init_program = next(
+        node.value
+        for node in ast.walk(helpers["_init_volume"])
+        if isinstance(node, ast.Constant)
+        and isinstance(node.value, str)
+        and "directory_owner=payload.get" in node.value
+    )
+    assert init_program.index("os.chmod(root,mode)") < init_program.index(
+        "os.chown(root,uid,gid)"
+    )
+    assert init_program.index("os.chmod(target,int(row['mode']))") < init_program.index(
+        "os.chown(target,int(row['uid']),int(row['gid']))"
+    )
+    assert init_program.index(
+        "os.chown(target,int(row['uid']),int(row['gid']))"
+    ) < init_program.index("os.chmod(root,mode)")
+    populate_program = next(
+        node.value
+        for node in ast.walk(helpers["_populate_secret_volume"])
+        if isinstance(node, ast.Constant)
+        and isinstance(node.value, str)
+        and "target='/state/'+name" in node.value
+    )
+    assert populate_program.index("os.chmod(target,0o400)") < populate_program.index(
+        "os.chown(target,uid,uid)"
+    )
+    metadata_helper = helpers["_assert_volume_metadata"]
+    metadata_literals = {
+        node.value
+        for node in ast.walk(metadata_helper)
+        if isinstance(node, ast.Constant) and isinstance(node.value, str)
+    }
+    assert "0:0" not in metadata_literals
+    assert any(isinstance(node, ast.JoinedStr) for node in ast.walk(metadata_helper))
+
 
 def _file_reference(path: Path, value: dict[str, Any]) -> dict[str, Any]:
     raw = (json.dumps(value, sort_keys=True, separators=(",", ":")) + "\n").encode()

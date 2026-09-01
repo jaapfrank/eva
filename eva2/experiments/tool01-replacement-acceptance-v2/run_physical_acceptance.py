@@ -493,10 +493,6 @@ import json, os, sys
 payload=json.load(sys.stdin)
 root='/state'
 directory_owner=payload.get('directoryOwner')
-if directory_owner is not None:
-    uid,gid,mode=(int(value) for value in directory_owner)
-    os.chown(root,uid,gid)
-    os.chmod(root,mode)
 for name, row in payload['files'].items():
     if '/' in name or name in {'', '.', '..'}:
         raise SystemExit('unsafe secret name')
@@ -507,8 +503,12 @@ for name, row in payload['files'].items():
         os.fsync(descriptor)
     finally:
         os.close(descriptor)
-    os.chown(target,int(row['uid']),int(row['gid']))
     os.chmod(target,int(row['mode']))
+    os.chown(target,int(row['uid']),int(row['gid']))
+if directory_owner is not None:
+    uid,gid,mode=(int(value) for value in directory_owner)
+    os.chmod(root,mode)
+    os.chown(root,uid,gid)
 """
     command = [
         "docker",
@@ -581,7 +581,7 @@ print('metadata-ok')
             "--network",
             "none",
             "--user",
-            "0:0",
+            f"{directory_owner[0]}:{directory_owner[1]}",
             "--read-only",
             "--cap-drop",
             "ALL",
@@ -1023,8 +1023,8 @@ try:
 finally:
     os.close(descriptor)
 uid=int(row['uid'])
-os.chown(target,uid,uid)
 os.chmod(target,0o400)
+os.chown(target,uid,uid)
 """
     command = [
         "docker",
