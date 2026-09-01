@@ -10,38 +10,34 @@ de volgende begint.
 
 | Volgorde | Kaart | Resultaat | Status |
 |---:|---|---|---|
-| 10 | `RB-001` — Verzegelde basisimages offline bruikbaar maken op een verse bouwer | Een lege Docker-bouwer gebruikt de drie gepinde OCI-bases zonder registry, pull of verloren digestbinding. | 🟡 BEZIG |
-| 20 | `RB-002` — Nieuwe bootstrapcode verzegelen | Release-inputauthority en tests nemen exact de na RB-001 bewezen bootstrapbestanden op. | ⚪ HIERNA |
+| 20 | `RB-002` — Nieuwe bootstrapcode verzegelen | Release-inputauthority en tests nemen exact de na RB-001 bewezen bootstrapbestanden op. | 🟡 BEZIG |
+| 30 | `RB-003` — Kandidaat op bouwer A maken | Een verse daemon bouwt de door RB-002 verzegelde commit offline en levert herleidbaar bewijs. | ⚪ HIERNA |
 
-### Exact werk voor `RB-001`
-
-- `eva2/tools/managed_b_candidate/base_image.py`
-- `eva2/tools/managed_b_candidate/candidate_image.py`
-- `eva2/tools/build_managed_b_offline_candidate.py`
-- `eva2/tests/operations/test_managed_b_base_image.py`
-- `eva2/tests/operations/test_managed_b_candidate_image.py`
-- `eva2/tests/operations/test_build_managed_b_offline_candidate.py`
-
-Klaar betekent:
-
-- Verkeerde digest, rol, platform, archivebyte of netwerkfallback stopt vóór de build.
-- De echte Dockerfile bereikt alle drie lokale bases met netwerk en pulls uitgeschakeld.
-- Een onafhankelijke reviewer geeft GO.
-
-Echte controles:
-
-- `TMPDIR=/tmp TEMP=/tmp TMP=/tmp pytest -q tests/operations/test_managed_b_base_image.py tests/operations/test_managed_b_candidate_image.py tests/operations/test_build_managed_b_offline_candidate.py`
-- `ruff check tools/managed_b_candidate/base_image.py tools/managed_b_candidate/candidate_image.py tools/build_managed_b_offline_candidate.py tests/operations/test_managed_b_base_image.py tests/operations/test_managed_b_candidate_image.py tests/operations/test_build_managed_b_offline_candidate.py`
-
-### Daarna voorbereid: `RB-002`
+### Exact werk voor `RB-002`
 
 - `eva2/tools/managed_b_candidate/release_inputs.py`
 - `eva2/tests/operations/test_managed_b_release_inputs.py`
 
-Vooraf vastgelegde controles:
+Klaar betekent:
+
+- Iedere nieuwe bootstrapbron en aanvalstest is door de release-inputauthority gedekt.
+- Een ontbrekend, extra of gewijzigd pad stopt de releasecontrole.
+- Een onafhankelijke reviewer geeft GO.
+
+Echte controles:
 
 - `TMPDIR=/tmp TEMP=/tmp TMP=/tmp pytest -q tests/operations/test_managed_b_release_inputs.py`
 - `ruff check tools/managed_b_candidate/release_inputs.py tests/operations/test_managed_b_release_inputs.py`
+
+### Daarna voorbereid: `RB-003`
+
+- `eva2/tools/check_two_builder_reproducibility.py`
+- `eva2/tests/operations/test_two_builder_reproducibility.py`
+
+Vooraf vastgelegde controles:
+
+- `TMPDIR=/tmp TEMP=/tmp TMP=/tmp pytest -q tests/operations/test_two_builder_reproducibility.py`
+- `ruff check tools/check_two_builder_reproducibility.py tests/operations/test_two_builder_reproducibility.py`
 
 ## Daarna
 
@@ -50,7 +46,6 @@ nadat zij als eerstvolgende kleine kaart exacte bestanden en tests heeft.
 
 | Nr. | Onderdeel | Begrijpelijk eindresultaat |
 |---:|---|---|
-| 30 | `RB-003` — Kandidaat op bouwer A maken | Een verse daemon bouwt de verzegelde commit offline. |
 | 40 | `RB-004` — Kandidaat op bouwer B maken | Een onafhankelijke verse daemon bouwt dezelfde commit offline. |
 | 50 | `RB-005` — Beide builds vergelijken | Config, lagen en runtime-inhoud zijn gelijk; bewijshergebruik faalt. |
 | 60 | `RB-006` — SBOM en kwetsbaarheden controleren | De exacte kandidaat heeft een gebonden SBOM en nul hoog/kritiek. |
