@@ -6,7 +6,7 @@
   "commandWorkingDirectory": "eva2",
   "inventoryPath": "docs/eva-repository-inventory.generated.json",
   "humanBoardPath": "eva2/WERKBORD.md",
-  "activeTaskId": "RB-006",
+  "activeTaskId": "RB-007",
   "maxActiveImplementationTasks": 1,
   "statusValues": ["queued", "in_progress", "review", "done", "blocked"],
   "rules": [
@@ -271,8 +271,8 @@
       "area": "Releasebasis",
       "title": "SBOM en kwetsbaarheden controleren",
       "outcome": "De exact door RB-005 gekozen kandidaat heeft een gebonden, niet-lege SBOM en nul hoge of kritieke kwetsbaarheden.",
-      "status": "in_progress",
-      "stateDetails": {"baseCommit": null, "implementationCommit": null, "evidenceCommit": null, "reviewEvidencePaths": [], "blockerReason": null},
+      "status": "done",
+      "stateDetails": {"baseCommit": "eaaaa09a9d7955cec97bc3d8ad3bee266774b624", "implementationCommit": "ffbff302cf3f5a35bb381fd6b53d17b14a65860b", "evidenceCommit": "4bf1a958ca4e2c43ce0fb8539b52daa689fdc5dc", "reviewEvidencePaths": ["eva2/evidence/product/RB-006-candidate-artifact-analysis-2026-09-01.json"], "blockerReason": null},
       "ownerRole": "releaselead",
       "reviewerRole": "proofreviewer",
       "dependsOn": ["RB-005"],
@@ -302,7 +302,7 @@
       "area": "Releasebasis",
       "title": "Alle verplichte testgroepen uitvoeren",
       "outcome": "Iedere verzegelde testgroep slaagt op dezelfde commit.",
-      "status": "queued",
+      "status": "in_progress",
       "stateDetails": {"baseCommit": null, "implementationCommit": null, "evidenceCommit": null, "reviewEvidencePaths": [], "blockerReason": null},
       "ownerRole": "releaselead",
       "reviewerRole": "proofreviewer",
@@ -326,10 +326,41 @@
         "Collectie en uitvoering dekken exact alle verzegelde modules in zeven niet-overlappende groepen, inclusief de fysieke browsersubgate en de vereiste afzonderlijke wegwerpdatabases, en iedere failure, error, skip, xfail, ontbrekende of extra test faalt gesloten zonder passing receipt.",
         "Het passing receipt bindt kandidaatimage, sourceCommit, authorityhash, onveranderlijke source-snapshot, toolchains, wheelhouses, groepsresultaten en het RB-006-bewijs; een onafhankelijke reviewer geeft GO."
       ]
+    },
+    {
+      "id": "RB-008",
+      "order": 80,
+      "area": "Releasebasis",
+      "title": "Volledige wegwerpstack testen",
+      "outcome": "De stack migreert, antwoordt, onthoudt, herstart en ruimt op.",
+      "status": "queued",
+      "stateDetails": {"baseCommit": null, "implementationCommit": null, "evidenceCommit": null, "reviewEvidencePaths": [], "blockerReason": null},
+      "ownerRole": "releaselead",
+      "reviewerRole": "proofreviewer",
+      "dependsOn": ["RB-007"],
+      "componentIds": ["operations-and-release-tests"],
+      "inventoryOwners": ["verification"],
+      "changePaths": [
+        "eva2/tests/support/managed_b_runtime_smoke.py",
+        "eva2/tests/operations/test_managed_b_runtime_smoke.py"
+      ],
+      "testCommands": [
+        "TMPDIR=/tmp TEMP=/tmp TMP=/tmp pytest -q tests/operations/test_managed_b_runtime_smoke.py",
+        "ruff check tests/support/managed_b_runtime_smoke.py tests/operations/test_managed_b_runtime_smoke.py"
+      ],
+      "evidenceRequired": [
+        "Een private, canonieke en commitgebonden uitvoerreceipt bindt de exact door RB-005 gekozen kandidaat, het geslaagde RB-006-analysebewijs, het geslaagde RB-007-testreceipt, de gebruikte Compose-bytes, alle lokale image-ID's en één unieke Docker-project- en resource-namespace voordat een container, netwerk of volume wordt gemaakt.",
+        "De fysieke proef begint met nieuwe operationele, geheugen- en werkvolumes; bereikt de exacte schemahead; voltooit een echte kandidaatroute met een unieke geheugentoken; stopt en start dezelfde wegwerpstack met behoud van uitsluitend die volumes; bewijst daarna via een tweede antwoord dat dezelfde persoonsgebonden token is teruggevonden; en verwijdert tenslotte alle nonce-containers, netwerken, volumes en tijdelijke secret- of leasebestanden.",
+        "Aanvalstests bewijzen dat een verkeerde kandidaat of receipt, remote Docker-daemon, pull of build, bestaande of verwisselde resource, mislukte migratie, schijnantwoord, geheugenverlies, ontbrekende echte stop/start en onvolledige cleanup nooit een passing receipt opleveren."
+      ],
+      "doneWhen": [
+        "Vóór de eerste Docker-mutatie zijn kandidaat, RB-006-bewijs, RB-007-receipt, lokale daemon, Compose-inputs en alle image-identiteiten exact toegelaten; bouwen, pullen, taggen, pushen en gebruik van bestaande B- of productieresources zijn verboden.",
+        "Op volledig nieuwe wegwerpdata bereikt de schema-installer exact de verzegelde head, geeft de echte kandidaatroute antwoord, wordt een unieke persoonsgebonden geheugentoken aantoonbaar opgeslagen, worden alle voor deze proef vereiste langlopende services werkelijk gestopt en opnieuw gestart, en gebruikt een tweede antwoord aantoonbaar dezelfde teruggevonden token.",
+        "Cleanup draait bij succes én bij iedere fout; een passing receipt wordt pas na een onafhankelijke inventarisatie geschreven en is onmogelijk zolang ook maar één nonce-container, netwerk, volume of tijdelijk bestand resteert; een onafhankelijke reviewer geeft GO."
+      ]
     }
   ],
   "milestones": [
-    {"id": "RB-008", "order": 80, "area": "Releasebasis", "title": "Volledige wegwerpstack testen", "outcome": "De stack migreert, antwoordt, onthoudt, herstart en ruimt op."},
     {"id": "RB-009", "order": 90, "area": "Releasebasis", "title": "Fysieke bewijsset beoordelen", "outcome": "Een onafhankelijke reviewer controleert de volledige releaseketen."},
     {"id": "RB-010", "order": 100, "area": "Releasebasis", "title": "A/B-besluit nemen", "outcome": "Alleen volledig groen mag naar het niet-actieve slot."},
     {"id": "OS-001", "order": 110, "area": "Open source en codebeheer", "title": "Inventaris en bereikbaarheid afdwingen", "outcome": "Elk gevolgd bestand heeft één eigenaar en aantoonbare noodzaak."},
@@ -439,6 +470,17 @@
       "reviewCommit": "fe18fbb8e9bf9c5b96bc8937afcd3ff873f2604f",
       "reviewedBy": "/root/proof_review",
       "testReceiptPaths": ["eva2/evidence/product/RB-005-two-builder-reproducibility-2026-09-01.json"]
+    },
+    "RB-006": {
+      "baseCommit": "eaaaa09a9d7955cec97bc3d8ad3bee266774b624",
+      "commit": "ffbff302cf3f5a35bb381fd6b53d17b14a65860b",
+      "decision": "GO",
+      "evidenceCommit": "4bf1a958ca4e2c43ce0fb8539b52daa689fdc5dc",
+      "evidencePaths": ["eva2/reviews/RB-006-candidate-artifact-analysis-ffbff30.md"],
+      "implementedBy": "/root/release_authority",
+      "reviewCommit": "3b685ab0dbe91519013c32b87a1ca867a7a6a6f3",
+      "reviewedBy": "/root/proof_review",
+      "testReceiptPaths": ["eva2/evidence/product/RB-006-candidate-artifact-analysis-2026-09-01.json"]
     }
   }
 }
