@@ -1,7 +1,7 @@
 {
-  "schema_version": 1,
-  "contract": "PlatformLock/v1",
-  "lock_id": "eva2.platform.selected.2026-08-21",
+  "schema_version": 2,
+  "contract": "PlatformLock/v2",
+  "lock_id": "eva2.platform.selected.2026-09-01",
   "claim_state": "selected_for_validation",
   "python_version": "3.12.14",
   "postgres_version": "16.13",

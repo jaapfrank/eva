@@ -286,14 +286,14 @@ def platform_gate(root: Path) -> dict[str, Any]:
 
     platform = safe_load(root, "eva2/release/platform-lock.json", errors, checked)
     if (
-        platform.get("contract") != "PlatformLock/v1"
-        or platform.get("schema_version") != 1
+        platform.get("contract") != "PlatformLock/v2"
+        or platform.get("schema_version") != 2
     ):
         issue(
             errors,
             "platform_contract",
             Path("eva2/release/platform-lock.json"),
-            "must be PlatformLock/v1 schema_version 1",
+            "must be PlatformLock/v2 schema_version 2",
         )
     expected_versions = {
         "python_version": "3.12.14",

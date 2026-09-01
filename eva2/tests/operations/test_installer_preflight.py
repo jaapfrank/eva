@@ -5,7 +5,7 @@ from pathlib import Path
 
 import pytest
 
-from eva.contracts.platform import PlatformLock
+from eva.contracts.platform import PlatformLock, PlatformLockV2
 from eva.operations.installer_preflight import (
     HostFacts,
     InstallerPreflightError,
@@ -18,8 +18,8 @@ from eva.operations.installer_preflight import (
 ROOT = Path(__file__).resolve().parents[2]
 
 
-def _lock() -> PlatformLock:
-    return PlatformLock.model_validate_json(
+def _lock() -> PlatformLockV2:
+    return PlatformLockV2.model_validate_json(
         (ROOT / "release/platform-lock.json").read_bytes()
     )
 
@@ -86,7 +86,7 @@ def test_preflight_can_only_be_ready_for_a_validated_release_target() -> None:
         image["image_digest"] = "sha256:" + "b" * 64
         image["sbom_sha256"] = "c" * 64
 
-    receipt = preflight(PlatformLock.model_validate(value), _facts())
+    receipt = preflight(PlatformLockV2.model_validate(value), _facts())
 
     assert receipt["status"] == "ready"
     assert receipt["next"] == "De lokale wizard mag starten."
@@ -100,6 +100,25 @@ def test_platform_lock_loader_refuses_a_link(tmp_path: Path) -> None:
 
     with pytest.raises(InstallerPreflightError, match="regular private input"):
         load_platform_lock(link)
+
+
+def test_platform_lock_loader_refuses_the_historical_v1_contract(
+    tmp_path: Path,
+) -> None:
+    value = json.loads((ROOT / "release/platform-lock.json").read_text())
+    value.update(
+        {
+            "contract": "PlatformLock/v1",
+            "schema_version": 1,
+            "pydantic_ai_slim_version": "2.32.1",
+        }
+    )
+    PlatformLock.model_validate(value)
+    path = tmp_path / "platform-lock-v1.json"
+    path.write_text(json.dumps(value))
+
+    with pytest.raises(InstallerPreflightError, match="platform lock is invalid"):
+        load_platform_lock(path)
 
 
 def test_host_metadata_uses_a_regular_system_copy_when_etc_is_a_link(

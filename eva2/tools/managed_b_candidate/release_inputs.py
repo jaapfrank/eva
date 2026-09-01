@@ -39,7 +39,7 @@ _PORTABLE_V1_PROFILE_PATH = (
     f"{_PORTABLE_V1_CONTRACT_ROOT}/canonical-json-profile-v1.json"
 )
 _EXPECTED_INPUT_PATHS_SHA256 = (
-    "41505acebd5a02bb0abccdd926d0c7293154c4b3fd861f822fa2d0a85e534f31"
+    "bb99efb3e2ea6dc4e7b3a53fa1f58c517a83e3247bf5d49576ec82614865967d"
 )
 _EXPECTED_TEST_PATHS_SHA256 = (
     "3d93b7497e6e6d951e50a751b6ebf29e00f6c9989287739336fdc932f8c93be0"
@@ -107,7 +107,7 @@ _NONCLAIMS = (
     "The Pydantic AI conversation and provider inputs are a static source candidate only; no offline image, vulnerability scan, real-provider parity run, A/B deployment, or live-route promotion has been performed for this change.",
     "Four cold background model paths still use the older direct HTTP helper and remain explicit removal debt; this authority does not claim that every handwritten model transport has been removed.",
     "The exact offline installer command, post-install attestations, physical 38-wheel wheelhouse, and runtime import remain separate open gates.",
-    "The historical 4D authority remains a 64-contract compatibility baseline; this authority does not reseal it as the current 71-contract registry.",
+    "The historical 4D authority remains a 64-contract compatibility baseline; this authority does not reseal it as the current 72-contract registry.",
     "An immutable 0/0-scanned core serves the explicit /eva2 route from one retained managed slot after a lossless two-database cutover; the slot identity is live state and is not claimed by this static authority, while resident acceptance remains open.",
 )
 _COCKPIT_EVIDENCE_NONCLAIMS = (

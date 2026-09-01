@@ -27,7 +27,7 @@ from eva.contracts.planning import (
     PresenceContext,
     PresenceReply,
 )
-from eva.contracts.platform import EvaPortableArchive, PlatformLock
+from eva.contracts.platform import EvaPortableArchive, PlatformLock, PlatformLockV2
 
 H = "0" * 64
 NOW = "2026-08-20T12:00:00Z"
@@ -595,6 +595,8 @@ def test_presence_reply_is_candidate_or_host_fallback_and_forbids_long_dash() ->
 def test_platform_and_export_contracts_forbid_claim_inflation() -> None:
     platform_schema = PlatformLock.model_json_schema()
     assert platform_schema["additionalProperties"] is False
+    platform_v2_schema = PlatformLockV2.model_json_schema()
+    assert platform_v2_schema["additionalProperties"] is False
     archive_schema = EvaPortableArchive.model_json_schema()
     false_only = archive_schema["properties"]["credentials_included"]
     assert false_only["const"] is False
@@ -613,6 +615,7 @@ def test_4a_platform_fixture_is_design_only_and_contains_no_receipts_or_images()
     payload = json.loads(case["wireUtf8"])
     lock = PlatformLock.model_validate(payload)
     assert lock.claim_state == "selected_for_validation"
+    assert lock.pydantic_ai_slim_version == "2.32.1"
     assert all(
         target.support_status == "unsupported"
         for target in lock.tier1_targets + lock.compatibility_targets
@@ -628,3 +631,25 @@ def test_4a_platform_fixture_is_design_only_and_contains_no_receipts_or_images()
     payload["tier1_targets"][0]["validation_receipt_sha256"] = H
     with pytest.raises(ValidationError):
         PlatformLock.model_validate(payload)
+    future_dependency = deepcopy(payload)
+    future_dependency["tier1_targets"][0]["support_status"] = "unsupported"
+    future_dependency["tier1_targets"][0]["validation_receipt_sha256"] = None
+    future_dependency["pydantic_ai_slim_version"] = "2.36.0"
+    with pytest.raises(ValidationError):
+        PlatformLock.model_validate(future_dependency)
+
+
+def test_platform_lock_v2_binds_the_current_main_runtime_dependency() -> None:
+    corpus = json.loads(
+        (EVA2_ROOT / "schemas" / "contracts" / "contract-corpus-v1.json").read_bytes()
+    )
+    case = next(
+        item for item in corpus["cases"] if item["caseId"] == "valid-platform-lock-v2"
+    )
+    payload = json.loads(case["wireUtf8"])
+    lock = PlatformLockV2.model_validate(payload)
+    assert lock.pydantic_ai_slim_version == "2.36.0"
+    stale_dependency = deepcopy(payload)
+    stale_dependency["pydantic_ai_slim_version"] = "2.32.1"
+    with pytest.raises(ValidationError):
+        PlatformLockV2.model_validate(stale_dependency)

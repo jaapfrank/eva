@@ -481,7 +481,9 @@ def test_dashboard_progress_separates_live_tested_selected_and_open_work() -> No
     assert "zonder score" in capability_by_id["benchmarks"]["proof"]
     dependency_by_name = {item["name"]: item for item in payload["dependencies"]}
     assert dependency_by_name["Pydantic AI"]["state"] == "tested"
-    assert dependency_by_name["Pydantic AI"]["version"] == ("2.32.1 + OpenAI SDK 3.6.0")
+    assert dependency_by_name["Pydantic AI"]["version"] == (
+        "hoofdbron 2.36.0; live/worker 2.32.1; OpenAI SDK 3.6.0"
+    )
     assert dependency_by_name["Pydantic AI Harness"]["version"] == "0.25.0 kandidaat"
     assert dependency_by_name["Microsoft Playwright MCP"]["state"] == "tested"
     assert dependency_by_name["Microsoft Playwright MCP"]["version"] == "0.0.79"

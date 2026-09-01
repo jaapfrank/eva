@@ -83,6 +83,7 @@ from .platform import (
     InstallationRemap,
     InstallationManifest,
     PlatformLock,
+    PlatformLockV2,
     PromotionDecision,
     ReleaseManifest,
 )
@@ -147,6 +148,7 @@ _CONTRACT_TYPES: dict[str, type[ContractModel]] = {
     "OutcomeView/v1": OutcomeView,
     "PlannerRequest/v1": PlannerRequest,
     "PlatformLock/v1": PlatformLock,
+    "PlatformLock/v2": PlatformLockV2,
     "PolicyPack/v1": PolicyPack,
     "PresenceContext/v1": PresenceContext,
     "PresenceReply/v1": PresenceReply,

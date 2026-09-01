@@ -243,7 +243,7 @@ def test_release_inputs_bind_current_registry_runtime_dependencies_and_migration
         "version_matched_runtime_dependency_inputs"
     )
     assert receipt["dependency_alignment"]["expected_wheel_count"] == 38
-    assert receipt["current_contract_count"] == 71
+    assert receipt["current_contract_count"] == 72
     assert receipt["historical_4d_contract_count"] == 64
     assert receipt["portable_v1_contract_count"] == 64
     assert receipt["cockpit_evidence_claim_count"] == 16
@@ -362,6 +362,7 @@ def test_release_inputs_bind_exact_current_additions_without_resealing_v1() -> N
         "DelegatedWorkUsage/v1",
         "IdentityPackDraft/v1",
         "McpReadOnlyToolImport/v1",
+        "PlatformLock/v2",
     }
     files = _files(authority)
     assert (

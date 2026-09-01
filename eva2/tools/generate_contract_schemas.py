@@ -1491,7 +1491,6 @@ def valid_examples() -> dict[str, dict[str, Any]]:
         "postgres_version": "16.13",
         "dbos_version": "2.30.0",
         "pydantic_version": "2.12.5",
-        # Historical contract fixture: dependency truth lives in platform-lock.json.
         "pydantic_ai_slim_version": "2.32.1",
         "tier1_targets": [
             platform_target,
@@ -1539,6 +1538,15 @@ def valid_examples() -> dict[str, dict[str, Any]]:
         "generated_at": NOW,
     }
     add("valid-platform-lock", platform_lock)
+    platform_lock_v2 = deepcopy(platform_lock)
+    platform_lock_v2.update(
+        {
+            **_meta("PlatformLock/v2"),
+            "lock_id": "platform-lock:4a:002",
+            "pydantic_ai_slim_version": "2.36.0",
+        }
+    )
+    add("valid-platform-lock-v2", platform_lock_v2)
     add("valid-policy-pack", policy)
     add("valid-presence-context", presence_context)
     add(
@@ -3267,6 +3275,7 @@ def _apply_schema_cross_field_rules(
 
     if contract_name not in {
         "PlatformLock/v1",
+        "PlatformLock/v2",
         "InstallationManifest/v1",
         "PromotionDecision/v1",
     }:
@@ -3443,6 +3452,7 @@ HOST_CONFORMANCE_RULES = {
         "context selection hash equals the complete embedded PresenceContext"
     ],
     "PlatformLock/v1": ["target set equals the sealed platform matrix"],
+    "PlatformLock/v2": ["target set equals the sealed platform matrix"],
     "PresenceContext/v1": [
         "embedded IdentityPack hash and relationship/consent scope equal the enclosing context"
     ],

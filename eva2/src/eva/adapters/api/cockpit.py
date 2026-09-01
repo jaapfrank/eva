@@ -159,10 +159,10 @@ def cockpit_progress() -> dict[str, Any]:
             },
             {
                 "name": "Pydantic AI",
-                "version": "2.32.1 + OpenAI SDK 3.6.0",
-                "role": "Model- en realtimebasis",
+                "version": "hoofdbron 2.36.0; live/worker 2.32.1; OpenAI SDK 3.6.0",
+                "role": "Algemene agentkern en afzonderlijke duurzame hulpagent",
                 "state": "tested",
-                "decision": "De duurzame subagentworker gebruikt deze gepinde communityroute; 2.34.0 blijft de apart geteste voicekandidaat.",
+                "decision": "De actuele bron gebruikt de minimale 2.36.0-kern en heeft de oude modeltransportlaag verwijderd; de scan- en crashproeven zijn groen, maar live en de afzonderlijke worker draaien nog 2.32.1.",
                 "evidence": _evidence("dependency/pydantic-ai"),
             },
             {

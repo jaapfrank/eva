@@ -15,6 +15,7 @@ from .base import (
     ShortText,
     Timestamp,
     Version1Contract,
+    Version2Contract,
 )
 
 
@@ -90,70 +91,104 @@ class PlatformLock(Version1Contract):
 
     @model_validator(mode="after")
     def _validate_claims(self) -> "PlatformLock":
-        expected_tier1 = {
-            (
-                "Ubuntu Server 24.04.4 LTS",
-                "amd64",
-                "containerized",
-                "Docker Engine 29.7.2",
-            ),
-            (
-                "Ubuntu Server 24.04.4 LTS",
-                "arm64",
-                "containerized",
-                "Docker Engine 29.7.2",
-            ),
-        }
-        actual_tier1 = {
-            (
-                target.operating_system,
-                target.architecture,
-                target.execution_mode,
-                target.container_engine,
-            )
-            for target in self.tier1_targets
-            if target.target_class == "tier1_release_gate"
-        }
-        if actual_tier1 != expected_tier1:
+        _check_platform_lock_claims(self)
+        return self
+
+
+class PlatformLockV2(Version2Contract):
+    """Current platform lock without rewriting the sealed v1 dependency set."""
+
+    contract: Literal["PlatformLock/v2"]
+    lock_id: Identifier
+    claim_state: Literal["selected_for_validation", "validated"]
+    python_version: str = Field(pattern=r"^3\.12\.14$", min_length=7, max_length=7)
+    postgres_version: str = Field(pattern=r"^16\.13$", min_length=5, max_length=5)
+    dbos_version: str = Field(pattern=r"^2\.30\.0$", min_length=6, max_length=6)
+    pydantic_version: str = Field(pattern=r"^2\.12\.5$", min_length=6, max_length=6)
+    pydantic_ai_slim_version: str = Field(
+        pattern=r"^2\.36\.0$", min_length=6, max_length=6
+    )
+    tier1_targets: list[PlatformTarget] = Field(min_length=2, max_length=2)
+    compatibility_targets: list[PlatformTarget] = Field(min_length=3, max_length=3)
+    oci_images: list[OciImageLock] = Field(min_length=1, max_length=64)
+    mutable_image_tags_allowed: Literal[False]
+    generated_at: Timestamp
+
+    @model_validator(mode="after")
+    def _validate_claims(self) -> "PlatformLockV2":
+        _check_platform_lock_claims(self)
+        return self
+
+
+def _check_platform_lock_claims(lock: PlatformLock | PlatformLockV2) -> None:
+    expected_tier1 = {
+        (
+            "Ubuntu Server 24.04.4 LTS",
+            "amd64",
+            "containerized",
+            "Docker Engine 29.7.2",
+        ),
+        (
+            "Ubuntu Server 24.04.4 LTS",
+            "arm64",
+            "containerized",
+            "Docker Engine 29.7.2",
+        ),
+    }
+    actual_tier1 = {
+        (
+            target.operating_system,
+            target.architecture,
+            target.execution_mode,
+            target.container_engine,
+        )
+        for target in lock.tier1_targets
+        if target.target_class == "tier1_release_gate"
+    }
+    if actual_tier1 != expected_tier1:
+        raise ValueError(
+            "Tier 1 release gates are exactly the two sealed Ubuntu/Docker targets"
+        )
+    if any(
+        target.target_class != "compatibility_target"
+        for target in lock.compatibility_targets
+    ):
+        raise ValueError("other hosts must remain compatibility targets")
+    all_targets = lock.tier1_targets + lock.compatibility_targets
+    if lock.claim_state == "selected_for_validation":
+        if any(target.validation_state != "unvalidated" for target in all_targets):
+            raise ValueError("selected lock cannot claim target validation")
+        if any(
+            target.support_status != "unsupported"
+            or target.validation_receipt_sha256 is not None
+            for target in all_targets
+        ):
             raise ValueError(
-                "Tier 1 release gates are exactly the two sealed Ubuntu/Docker targets"
+                "selected lock cannot claim support or carry fictional receipts"
             )
         if any(
-            t.target_class != "compatibility_target" for t in self.compatibility_targets
+            image.validation_state != "selected_for_validation"
+            for image in lock.oci_images
         ):
-            raise ValueError("other hosts must remain compatibility targets")
-        all_targets = self.tier1_targets + self.compatibility_targets
-        if self.claim_state == "selected_for_validation":
-            if any(t.validation_state != "unvalidated" for t in all_targets):
-                raise ValueError("selected lock cannot claim target validation")
-            if any(
-                t.support_status != "unsupported"
-                or t.validation_receipt_sha256 is not None
-                for t in all_targets
-            ):
-                raise ValueError(
-                    "selected lock cannot claim support or carry fictional receipts"
-                )
-            if any(
-                image.validation_state != "selected_for_validation"
-                for image in self.oci_images
-            ):
-                raise ValueError("selected lock cannot contain validated OCI images")
-        else:
-            if any(
-                t.validation_state != "validated"
-                or t.support_status != "tier1"
-                or t.validation_receipt_sha256 is None
-                for t in self.tier1_targets
-            ):
-                raise ValueError("validated release lock requires both Tier 1 receipts")
-            if any(
-                t.support_status != "unsupported" for t in self.compatibility_targets
-            ):
-                raise ValueError("v1 makes no compatibility-target support claim")
-            if any(image.validation_state != "validated" for image in self.oci_images):
-                raise ValueError("validated release lock requires resolved OCI images")
-        return self
+            raise ValueError("selected lock cannot contain validated OCI images")
+        return
+    if any(
+        target.validation_state != "validated"
+        or target.support_status != "tier1"
+        or target.validation_receipt_sha256 is None
+        for target in lock.tier1_targets
+    ):
+        raise ValueError("validated release lock requires both Tier 1 receipts")
+    if any(
+        target.support_status != "unsupported"
+        for target in lock.compatibility_targets
+    ):
+        raise ValueError(
+            f"{lock.contract.removeprefix('PlatformLock/')} makes no "
+            "compatibility-target support claim"
+        )
+    if any(image.validation_state != "validated" for image in lock.oci_images):
+        raise ValueError("validated release lock requires resolved OCI images")
 
 
 class ReleaseArtifact(ContractModel):

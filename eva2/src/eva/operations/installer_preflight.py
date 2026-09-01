@@ -20,7 +20,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Callable, Literal
 
-from eva.contracts.platform import PlatformLock, PlatformTarget
+from eva.contracts.platform import PlatformLockV2, PlatformTarget
 
 
 class InstallerPreflightError(RuntimeError):
@@ -64,13 +64,13 @@ def _regular_read(path: Path, *, label: str, maximum: int) -> bytes:
     return raw
 
 
-def load_platform_lock(path: Path) -> PlatformLock:
+def load_platform_lock(path: Path) -> PlatformLockV2:
     """Load one local, small, non-linked platform lock."""
 
     raw = _regular_read(path, label="platform lock", maximum=_MAX_PLATFORM_LOCK_BYTES)
     try:
         value = json.loads(raw)
-        return PlatformLock.model_validate(value)
+        return PlatformLockV2.model_validate(value)
     except ValueError as error:
         raise InstallerPreflightError("platform lock is invalid") from error
 
@@ -142,7 +142,7 @@ def inspect_host(
     )
 
 
-def _target(lock: PlatformLock, facts: HostFacts) -> PlatformTarget | None:
+def _target(lock: PlatformLockV2, facts: HostFacts) -> PlatformTarget | None:
     if facts.operating_system is None or facts.architecture is None:
         return None
     for candidate in lock.tier1_targets + lock.compatibility_targets:
@@ -155,9 +155,7 @@ def _target(lock: PlatformLock, facts: HostFacts) -> PlatformTarget | None:
     return None
 
 
-def preflight(
-    lock: PlatformLock, facts: HostFacts
-) -> dict[str, object]:
+def preflight(lock: PlatformLockV2, facts: HostFacts) -> dict[str, object]:
     """Return a sanitized, fail-closed decision without making any change."""
 
     checks: list[dict[str, str]] = []
