@@ -236,6 +236,49 @@ def test_virtual_server_rejects_a_nonpublic_create_response(monkeypatch) -> None
         )
 
 
+def test_stopped_p1_reports_only_a_sanitized_failure_category(
+    monkeypatch, tmp_path: Path
+) -> None:
+    failure_path = tmp_path / "failure.json"
+
+    monkeypatch.setattr(
+        physical_runner,
+        "_container_state",
+        lambda container: {"Running": False},
+    )
+
+    def run(command, *, check=True, input_bytes=None, timeout=120):
+        del check, input_bytes, timeout
+        assert command[:2] == ["docker", "cp"]
+        failure_path.write_text(
+            json.dumps(
+                {
+                    "category": "model_selection_differs",
+                    "contract": "EvaTool01CandidateFailure/v1",
+                    "phase": "start",
+                    "stage": "model_selection",
+                }
+            ),
+            encoding="utf-8",
+        )
+        return subprocess.CompletedProcess(command, 0, b"", b"")
+
+    monkeypatch.setattr(physical_runner, "_run", run)
+    with pytest.raises(
+        physical_runner.PhysicalAcceptanceError,
+        match=r"\(model_selection_differs\)$",
+    ):
+        physical_runner._wait_marker(
+            "p1", "effect-returned.json", failure_path=failure_path
+        )
+    assert set(json.loads(failure_path.read_text(encoding="utf-8"))) == {
+        "category",
+        "contract",
+        "phase",
+        "stage",
+    }
+
+
 def _file_reference(path: Path, value: dict[str, Any]) -> dict[str, Any]:
     raw = (json.dumps(value, sort_keys=True, separators=(",", ":")) + "\n").encode()
     path.write_bytes(raw)

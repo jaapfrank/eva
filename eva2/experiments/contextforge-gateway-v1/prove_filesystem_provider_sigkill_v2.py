@@ -1034,6 +1034,30 @@ def _start() -> int:
     raise RuntimeError("p1 returned instead of being killed")
 
 
+def _failure_category(error: Exception) -> str:
+    return {
+        "filesystem provider counters did not start at zero": "provider_baseline_differs",
+        "model did not select the exact filesystem comfort action": (
+            "model_selection_differs"
+        ),
+        "filesystem execute counter differs": "provider_execute_count_differs",
+        "filesystem SIGKILL timeline differs": "durable_timeline_differs",
+        "filesystem SIGKILL window is not sealed": "durable_window_not_sealed",
+        "provider call binding is incomplete": "provider_binding_incomplete",
+        "captured MCP provider call differs from admission": (
+            "provider_call_differs"
+        ),
+    }.get(str(error), "unexpected_runtime_error")
+
+
+def _failure_stage() -> str:
+    if (STATE_ROOT / "p1-start.json").is_file():
+        return "after_model_selection"
+    if (STATE_ROOT / "catalog.json").is_file():
+        return "model_selection"
+    return "setup"
+
+
 def _resume() -> int:
     _state_root(require_empty=False)
     run_id = _run_id()
@@ -1328,11 +1352,25 @@ def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("phase", choices=("start", "resume", "replay"))
     arguments = parser.parse_args()
-    if arguments.phase == "start":
-        return _start()
-    if arguments.phase == "resume":
-        return _resume()
-    return _replay()
+    try:
+        if arguments.phase == "start":
+            return _start()
+        if arguments.phase == "resume":
+            return _resume()
+        return _replay()
+    except Exception as error:
+        failure = {
+            "category": _failure_category(error),
+            "contract": "EvaTool01CandidateFailure/v1",
+            "phase": arguments.phase,
+            "stage": _failure_stage(),
+        }
+        try:
+            _write_once("failure.json", failure)
+        except Exception:
+            pass
+        print(json.dumps(failure, sort_keys=True), flush=True)
+        return 2
 
 
 if __name__ == "__main__":

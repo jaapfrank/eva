@@ -1184,11 +1184,40 @@ def _start_attached(name: str, log_path: Path) -> None:
         raise PhysicalAcceptanceError(f"{name} exited unsuccessfully")
 
 
-def _wait_marker(container: str, marker: str) -> None:
+def _candidate_failure_category(container: str, destination: Path) -> str:
+    result = _run(
+        ["docker", "cp", f"{container}:/run/proof-state/failure.json", str(destination)],
+        check=False,
+        timeout=30,
+    )
+    if result.returncode != 0:
+        return "unavailable"
+    value = _read_json(destination, label="candidate failure receipt")
+    if set(value) != {"category", "contract", "phase", "stage"} or value.get(
+        "contract"
+    ) != "EvaTool01CandidateFailure/v1":
+        return "invalid"
+    category = value.get("category")
+    phase = value.get("phase")
+    stage = value.get("stage")
+    if (
+        not isinstance(category, str)
+        or re.fullmatch(r"[a-z_]{3,64}", category) is None
+        or phase != "start"
+        or stage not in {"setup", "model_selection", "after_model_selection"}
+    ):
+        return "invalid"
+    return category
+
+
+def _wait_marker(container: str, marker: str, *, failure_path: Path) -> None:
     for _ in range(120):
         state = _container_state(container)
         if state.get("Running") is not True:
-            raise PhysicalAcceptanceError("p1 exited before the post-provider marker")
+            category = _candidate_failure_category(container, failure_path)
+            raise PhysicalAcceptanceError(
+                "p1 exited before the post-provider marker " f"({category})"
+            )
         result = _run(
             ["docker", "exec", container, "test", "-f", f"/run/proof-state/{marker}"],
             check=False,
@@ -1781,7 +1810,11 @@ def main() -> int:
             containers["p1"],
         )
         _docker("start", containers["p1"])
-        _wait_marker(containers["p1"], "effect-returned.json")
+        _wait_marker(
+            containers["p1"],
+            "effect-returned.json",
+            failure_path=output_root / "p1-failure.json",
+        )
         _wait_metrics(
             containers["contextforge"],
             token,
