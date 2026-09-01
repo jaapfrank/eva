@@ -271,10 +271,10 @@
   "summary": {
     "files": 2007,
     "present": 2007,
-    "tracked": 1922,
-    "untracked": 85,
+    "tracked": 1928,
+    "untracked": 79,
     "tombstones": 0,
-    "policyErrors": 94
+    "policyErrors": 88
   },
   "classificationRules": [
     {
@@ -760,30 +760,6 @@
     {
       "code": "UNTRACKED_REPOSITORY_FILE",
       "path": "eva2/evidence/living-core/wyoming-local-voice-rebuild-2026-08-26.json"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "eva2/experiments/pydantic-agent-merged-lock-v1/managed-b-wheel-coverage-2.32-amd64.json"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "eva2/experiments/pydantic-agent-merged-lock-v1/README.md"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "eva2/experiments/pydantic-agent-merged-lock-v1/requirements-4d-baseline-2.32.lock"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "eva2/experiments/pydantic-agent-overlay-v1/requirements-4d-baseline-2.36.lock"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "eva2/schemas/contracts/PlatformLock-v3.schema.json"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "eva2/tests/tools/test_refresh_runtime_dependency_metadata.py"
     }
   ],
   "edges": [
@@ -10288,7 +10264,7 @@
       "path": "docs/eva-repository-inventory.generated.json",
       "gitState": "tracked",
       "present": true,
-      "bytes": 2330432,
+      "bytes": 2329625,
       "contentSha256": "32591e23fa2eb53a038d95e726ba09edd0405306f38c5283a36a2b6d3010254d",
       "hashMode": "canonical-self-reference-redacted",
       "role": "generated",
@@ -10321,7 +10297,7 @@
       "path": "docs/eva-repository-inventory.generated.md",
       "gitState": "tracked",
       "present": true,
-      "bytes": 361182,
+      "bytes": 360615,
       "contentSha256": "2f4f8486464cbb9713b749dc898f265093d0853699f1da1b4eb3dd1625c1b2d2",
       "hashMode": "canonical-self-reference-redacted",
       "role": "generated",
@@ -31957,7 +31933,7 @@
     },
     {
       "path": "eva2/experiments/pydantic-agent-merged-lock-v1/README.md",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
       "bytes": 1375,
       "contentSha256": "3fbb2c97894d8f5670cf36f0f6c64ad0f5d78a05669f666e529185106aaa5a06",
@@ -31985,9 +31961,9 @@
       "consumers": [],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": false,
-        "status": "blocked-untracked"
+        "status": "included-tracked-noncritical"
       }
     },
     {
@@ -32062,7 +32038,7 @@
     },
     {
       "path": "eva2/experiments/pydantic-agent-merged-lock-v1/managed-b-wheel-coverage-2.32-amd64.json",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
       "bytes": 6948,
       "contentSha256": "0eceb7bce89a847680cccf8c0a12a82fc6a3cbe3701f1dc0d1ea09c413ac382c",
@@ -32090,9 +32066,9 @@
       "consumers": [],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": false,
-        "status": "blocked-untracked"
+        "status": "included-tracked-noncritical"
       }
     },
     {
@@ -32132,7 +32108,7 @@
     },
     {
       "path": "eva2/experiments/pydantic-agent-merged-lock-v1/requirements-4d-baseline-2.32.lock",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
       "bytes": 72241,
       "contentSha256": "ce92ff9385c0b708ea0596b4cbfdfe5473379a744d1eb3dc6c1080959d17334f",
@@ -32160,9 +32136,9 @@
       "consumers": [],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": false,
-        "status": "blocked-untracked"
+        "status": "included-tracked-noncritical"
       }
     },
     {
@@ -32377,7 +32353,7 @@
     },
     {
       "path": "eva2/experiments/pydantic-agent-overlay-v1/requirements-4d-baseline-2.36.lock",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
       "bytes": 72071,
       "contentSha256": "204fefe5052a2f457b8a12aece51ca675520bb250bf97771a69a7e22e14c81c5",
@@ -32405,9 +32381,9 @@
       "consumers": [],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": false,
-        "status": "blocked-untracked"
+        "status": "included-tracked-noncritical"
       }
     },
     {
@@ -35297,7 +35273,7 @@
       "gitState": "tracked",
       "present": true,
       "bytes": 37790,
-      "contentSha256": "fdbaf90503c5c38df917bdc056ccd3c9feb02f22b651096d442e3c676b809658",
+      "contentSha256": "0553469d687a98c7d3a719295d05c4d98dfc59300649e2b4e0a84d6a4effcaa7",
       "hashMode": "exact-bytes",
       "role": "repository-config",
       "roleRuleId": "eva2-build-contract",
@@ -35726,7 +35702,7 @@
       "gitState": "tracked",
       "present": true,
       "bytes": 68993,
-      "contentSha256": "b532b0446c413dedf8624e269b20c14ecd810ea93c823bdea3835b22c5f9b600",
+      "contentSha256": "4bc5cea684879d3b45ac33fd6d3e6522edf4d31992c8d50666dea08964b5682b",
       "hashMode": "exact-bytes",
       "role": "repository-config",
       "roleRuleId": "eva2-build-contract",
@@ -40277,7 +40253,7 @@
     },
     {
       "path": "eva2/schemas/contracts/PlatformLock-v3.schema.json",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
       "bytes": 6213,
       "contentSha256": "0e534212bc28ba1a5bc6b19e45d7e1dea981dcb15a71193e376678900f3271bd",
@@ -40303,9 +40279,9 @@
       "consumers": [],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
@@ -50653,8 +50629,8 @@
       "path": "eva2/src/eva/contracts/platform.py",
       "gitState": "tracked",
       "present": true,
-      "bytes": 15328,
-      "contentSha256": "fd9ae86df2528b580fac74efd68c55ff7e825713051b3a9d447a0a9633d51391",
+      "bytes": 15320,
+      "contentSha256": "1eb578699ffdff66850c73f936583828175dae957652f5d9ae9fb0736ce87005",
       "hashMode": "exact-bytes",
       "role": "product-runtime",
       "roleRuleId": "eva2-runtime",
@@ -51808,8 +51784,8 @@
       "path": "eva2/src/eva/operations/installer_preflight.py",
       "gitState": "tracked",
       "present": true,
-      "bytes": 9392,
-      "contentSha256": "088691b12e0e638f817ff59c109e0da005fc51629b96749d71ec103d5942b71a",
+      "bytes": 9452,
+      "contentSha256": "d7f234528dc3e5961576e0d36ff5fb8f28bf4e8bf72508dcb999f2da9cd141ff",
       "hashMode": "exact-bytes",
       "role": "product-runtime",
       "roleRuleId": "eva2-runtime",
@@ -52613,8 +52589,8 @@
       "path": "eva2/tests/api/test_dashboard_status.py",
       "gitState": "tracked",
       "present": true,
-      "bytes": 30667,
-      "contentSha256": "90e876f9ffc9e1e122dc7b2621d628696d02a3a83a8610787d3912cdb636d521",
+      "bytes": 30719,
+      "contentSha256": "132e45ba9eb4dfbea14f4778806eecf15e50e0d73d2f4faab57829801294d0c0",
       "hashMode": "exact-bytes",
       "role": "verification",
       "roleRuleId": "eva2-verification",
@@ -58143,8 +58119,8 @@
       "path": "eva2/tests/operations/test_installer_preflight.py",
       "gitState": "tracked",
       "present": true,
-      "bytes": 4997,
-      "contentSha256": "537bdbf7d2e212b477b0dc274996dfcc18d9c34990336649ceb7c7d0e93118e6",
+      "bytes": 5078,
+      "contentSha256": "eb6313ff76f7a90dd0bc99619e0102eb3a1843bbdab3d0ec41a64f2df827566b",
       "hashMode": "exact-bytes",
       "role": "verification",
       "roleRuleId": "eva2-verification",
@@ -58843,8 +58819,8 @@
       "path": "eva2/tests/operations/test_managed_b_wheelhouse.py",
       "gitState": "tracked",
       "present": true,
-      "bytes": 24359,
-      "contentSha256": "1244cf72edc4b45452f0de5bba7398f04f9f136230cbcb00e870852f72de855b",
+      "bytes": 24367,
+      "contentSha256": "fa0e21e02e9824284ea8204971fc4c6802b123dfe31ed1e4e1125c798f374b66",
       "hashMode": "exact-bytes",
       "role": "verification",
       "roleRuleId": "eva2-verification",
@@ -62551,10 +62527,10 @@
     },
     {
       "path": "eva2/tests/tools/test_refresh_runtime_dependency_metadata.py",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
-      "bytes": 10602,
-      "contentSha256": "4c3f4482580045802659e33c33460cf30ad41ec811ba9437a6ae362c8fdb1ad5",
+      "bytes": 10612,
+      "contentSha256": "b598eaa791389fec127d60434bc7e6a15d591aeec0ec929060a19aca3af53c99",
       "hashMode": "exact-bytes",
       "role": "verification",
       "roleRuleId": "eva2-verification",
@@ -62579,9 +62555,9 @@
       "consumers": [],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
@@ -65003,8 +64979,8 @@
       "path": "eva2/tools/refresh_runtime_dependency_metadata.py",
       "gitState": "tracked",
       "present": true,
-      "bytes": 21991,
-      "contentSha256": "22f1a4438dbb557d338532f2e09b16a0a00081bef82f1d1faa2c8a089ac5f2ee",
+      "bytes": 22003,
+      "contentSha256": "8e1698218dcbc9042e1354db594cd94822eaa98a0a18133715a9bc0a63ca5178",
       "hashMode": "exact-bytes",
       "role": "verification-runtime",
       "roleRuleId": "eva2-verification-runtime",
@@ -81354,5 +81330,5 @@
       }
     }
   ],
-  "sourceDigest": "0a86793b34ac84810bf133082a99c9532fb6fc9a9c082575a859cf58074e0b9e"
+  "sourceDigest": "864ffb95fb17188a273341113005ad1263554a93a5c9e0d79ef00d6132907147"
 }
