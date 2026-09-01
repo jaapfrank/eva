@@ -483,6 +483,44 @@ def test_stopped_p1_reports_only_a_sanitized_failure_category(
     }
 
 
+def test_running_p1_marker_probe_uses_the_candidate_python_runtime(
+    monkeypatch, tmp_path: Path
+) -> None:
+    commands: list[list[str]] = []
+    monkeypatch.setattr(
+        physical_runner,
+        "_container_state",
+        lambda container: {"Running": True},
+    )
+
+    def run(command, *, check=True, input_bytes=None, timeout=120):
+        del check, input_bytes, timeout
+        commands.append(command)
+        return subprocess.CompletedProcess(command, 0, b"", b"")
+
+    monkeypatch.setattr(physical_runner, "_run", run)
+    physical_runner._wait_marker(
+        "p1",
+        "effect-returned.json",
+        failure_path=tmp_path / "failure.json",
+    )
+
+    assert commands == [
+        [
+            "docker",
+            "exec",
+            "p1",
+            "/usr/local/bin/python",
+            "-c",
+            (
+                "import os,sys; raise SystemExit("
+                "0 if os.path.isfile(sys.argv[1]) else 1)"
+            ),
+            "/run/proof-state/effect-returned.json",
+        ]
+    ]
+
+
 def test_setup_failure_categories_cover_the_generic_provider_boundary() -> None:
     tree = ast.parse(PRODUCER.read_text(encoding="utf-8"))
     function = next(

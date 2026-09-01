@@ -1230,7 +1230,18 @@ def _wait_marker(container: str, marker: str, *, failure_path: Path) -> None:
                 "p1 exited before the post-provider marker " f"({category})"
             )
         result = _run(
-            ["docker", "exec", container, "test", "-f", f"/run/proof-state/{marker}"],
+            [
+                "docker",
+                "exec",
+                container,
+                "/usr/local/bin/python",
+                "-c",
+                (
+                    "import os,sys; raise SystemExit("
+                    "0 if os.path.isfile(sys.argv[1]) else 1)"
+                ),
+                f"/run/proof-state/{marker}",
+            ],
             check=False,
             timeout=10,
         )
