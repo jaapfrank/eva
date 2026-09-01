@@ -13,6 +13,7 @@ from eva.adapters.connectors.mcp_gateway import (
     McpGatewayConfig,
     McpGatewayProofBinding,
     McpGatewayToolAdapter,
+    McpGatewayToolPlanner,
     McpGatewayToolSpec,
     mcp_gateway_catalog_binding,
 )
@@ -117,6 +118,86 @@ def _turn() -> ConversationTurn:
             principal_id="principal-test",
         ),
     )
+
+
+def test_legacy_exported_constructors_keep_identity_projection() -> None:
+    descriptor = ConversationToolDescriptor(
+        name="echo_proof",
+        description="Echo one short message through the configured generic tool.",
+        input_schema=SCHEMA,
+    )
+    digest = canonical_sha256(mcp_gateway_catalog_binding(_catalog_row()))
+    spec = McpGatewayToolSpec(
+        descriptor,
+        "proof-echo",
+        "proof-echo",
+        "proof-echo",
+        "proof-echo",
+        digest,
+        digest,
+        (McpGatewayProofBinding("message", "text"),),
+    )
+
+    assert spec.contract == "EvaMcpGatewayProvider/v1"
+    assert spec.execute_argument_bindings == (
+        McpGatewayArgumentBinding("message", "message"),
+    )
+    assert spec.observe_argument_bindings == spec.execute_argument_bindings
+
+    prepared = asyncio.run(
+        McpGatewayToolPlanner((spec,)).prepare(
+            _turn(),
+            ConversationActionCall(
+                call_id="legacy-call",
+                name="echo_proof",
+                arguments={"message": "hallo"},
+            ),
+        )
+    )
+    assert prepared.arguments == {"message": "hallo"}
+    assert prepared.observation_arguments == {"message": "hallo"}
+
+
+@pytest.mark.parametrize(
+    "bindings",
+    [
+        (McpGatewayArgumentBinding("message", "renamed"),),
+        (McpGatewayArgumentBinding("message", "message"),),
+    ],
+)
+def test_v1_rejects_unhashed_non_identity_projection(
+    bindings: tuple[McpGatewayArgumentBinding, ...],
+) -> None:
+    descriptor = ConversationToolDescriptor(
+        name="two_fields",
+        description="Bind two fields without changing historical v1 behavior.",
+        input_schema={
+            "additionalProperties": False,
+            "properties": {
+                "message": {"type": "string"},
+                "target": {"type": "string"},
+            },
+            "required": ["message", "target"],
+            "type": "object",
+        },
+    )
+    digest = "a" * 64
+    with pytest.raises(ValueError, match="v1 requires identity argument projection"):
+        McpGatewayToolSpec(
+            descriptor,
+            "proof-echo",
+            "proof-echo",
+            "proof-echo",
+            "proof-echo",
+            digest,
+            digest,
+            (McpGatewayProofBinding("message", "text"),),
+            execute_argument_bindings=bindings,
+            observe_argument_bindings=(
+                McpGatewayArgumentBinding("message", "message"),
+                McpGatewayArgumentBinding("target", "target"),
+            ),
+        )
 
 
 class _GatewayHandler(BaseHTTPRequestHandler):

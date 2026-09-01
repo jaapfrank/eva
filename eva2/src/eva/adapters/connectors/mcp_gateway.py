@@ -91,7 +91,6 @@ class McpGatewayArgumentBinding:
 class McpGatewayToolSpec:
     """Sealed Eva-facing tool plus its independent gateway readback."""
 
-    contract: str
     descriptor: ConversationToolDescriptor
     execute_tool_name: str
     observe_tool_name: str
@@ -99,9 +98,10 @@ class McpGatewayToolSpec:
     observe_catalog_name: str
     execute_catalog_sha256: str
     observe_catalog_sha256: str
-    execute_argument_bindings: tuple[McpGatewayArgumentBinding, ...]
-    observe_argument_bindings: tuple[McpGatewayArgumentBinding, ...]
     proof_bindings: tuple[McpGatewayProofBinding, ...]
+    contract: str = "EvaMcpGatewayProvider/v1"
+    execute_argument_bindings: tuple[McpGatewayArgumentBinding, ...] = ()
+    observe_argument_bindings: tuple[McpGatewayArgumentBinding, ...] = ()
 
     def __post_init__(self) -> None:
         if (
@@ -125,6 +125,21 @@ class McpGatewayToolSpec:
             raise ValueError("MCP gateway tool specification is invalid")
         properties = self.descriptor.input_schema["properties"]
         required = self.descriptor.input_schema["required"]
+        if self.contract == "EvaMcpGatewayProvider/v1":
+            identity = tuple(
+                McpGatewayArgumentBinding(name, name) for name in properties
+            )
+            for field_name in (
+                "execute_argument_bindings",
+                "observe_argument_bindings",
+            ):
+                bindings = getattr(self, field_name)
+                if not bindings:
+                    object.__setattr__(self, field_name, identity)
+                elif bindings != identity:
+                    raise ValueError(
+                        "MCP gateway v1 requires identity argument projection"
+                    )
         for bindings in (
             self.execute_argument_bindings,
             self.observe_argument_bindings,
@@ -186,10 +201,23 @@ class McpGatewayToolPlanner:
     def __init__(
         self,
         specs: tuple[McpGatewayToolSpec, ...],
-        provider_input_schemas: dict[tuple[str, str], dict[str, JsonValue]],
+        provider_input_schemas: (
+            dict[tuple[str, str], dict[str, JsonValue]] | None
+        ) = None,
     ) -> None:
         if not specs or len({item.descriptor.name for item in specs}) != len(specs):
             raise ValueError("MCP gateway action catalog is invalid")
+        if provider_input_schemas is None:
+            if any(item.contract != "EvaMcpGatewayProvider/v1" for item in specs):
+                raise ValueError("MCP gateway v2 planner requires verified schemas")
+            provider_input_schemas = {
+                (tool_name, phase): item.descriptor.input_schema
+                for item in specs
+                for tool_name, phase in (
+                    (item.execute_tool_name, "execute"),
+                    (item.observe_tool_name, "observe"),
+                )
+            }
         self._specs = {item.descriptor.name: item for item in specs}
         self._provider_input_schemas = provider_input_schemas
         self.action_names = tuple(self._specs)
