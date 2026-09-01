@@ -9,6 +9,7 @@ import importlib.util
 import json
 from pathlib import Path, PurePosixPath
 import re
+import subprocess
 from typing import Any
 
 
@@ -28,6 +29,7 @@ _SOURCE_SPEC.loader.exec_module(source_authority)
 
 BUNDLE_CONTRACT = "EvaTool01AcceptanceBundle/v2"
 CANDIDATE_CONTRACT = "EvaTool01CandidateAuthority/v2"
+HOST_CONTRACT = "EvaTool01PhysicalHostAuthority/v1"
 CATALOG_CONTRACT = "EvaTool01RuntimeCatalog/v2"
 TRAJECTORY_CONTRACT = "EvaTool01FrameworkTrajectory/v2"
 TIMELINE_CONTRACT = "EvaTool01DurableTimeline/v2"
@@ -60,6 +62,10 @@ _IDENTIFIER = re.compile(r"^[A-Za-z][A-Za-z0-9_.:-]{0,159}$")
 _IMAGE_ID = re.compile(r"^sha256:[0-9a-f]{64}$")
 _NONCE = re.compile(r"^[0-9a-f]{12}$")
 _MAX_ARTIFACT_BYTES = 1_000_000
+_AUXILIARY_IMAGE_ROLES = {"contextforge", "filesystem", "postgres", "time"}
+_CONTEXTFORGE_START_PATH = (
+    "eva2/experiments/contextforge-gateway-v1/start-contextforge.sh"
+)
 
 
 class Tool01V2Error(RuntimeError):
@@ -219,6 +225,7 @@ def _candidate(
     run_id: str,
     *,
     expected_image_id: str,
+    expected_proof_harness_sha256: str,
     expected_source_commit: str,
 ) -> dict[str, str]:
     row = _exact(
@@ -229,12 +236,157 @@ def _candidate(
     _header(row, CANDIDATE_CONTRACT, run_id, label="candidate authority")
     image_id = _text(row["imageId"], label="candidate image id", limit=71)
     commit = _text(row["sourceCommitLabel"], label="candidate source commit", limit=40)
-    _digest(row["proofHarnessSha256"], label="proof harness sha256")
+    harness_sha256 = _digest(row["proofHarnessSha256"], label="proof harness sha256")
     if _IMAGE_ID.fullmatch(image_id) is None or image_id != expected_image_id:
         raise Tool01V2Error("candidate image differs from external authority")
     if _GIT_COMMIT.fullmatch(commit) is None or commit != expected_source_commit:
         raise Tool01V2Error("candidate source commit differs from external authority")
-    return {"imageId": image_id, "sourceCommit": commit}
+    if harness_sha256 != expected_proof_harness_sha256:
+        raise Tool01V2Error("candidate proof harness differs from external authority")
+    return {
+        "imageId": image_id,
+        "proofHarnessSha256": harness_sha256,
+        "sourceCommit": commit,
+    }
+
+
+def _contextforge_start_sha256(
+    source_root: Path | None, expected_source_commit: str
+) -> str | None:
+    if source_root is None:
+        return None
+    resolved = source_root.resolve(strict=True)
+
+    def git(*arguments: str) -> bytes:
+        result = subprocess.run(
+            ["git", "-C", str(resolved), *arguments],
+            check=False,
+            capture_output=True,
+            timeout=30,
+        )
+        if result.returncode != 0:
+            raise Tool01V2Error("candidate source checkout authority failed")
+        return result.stdout
+
+    try:
+        git_root = Path(
+            git("rev-parse", "--show-toplevel").decode("utf-8", errors="strict").strip()
+        ).resolve(strict=True)
+        head = (
+            git("rev-parse", "--verify", "HEAD")
+            .decode("ascii", errors="strict")
+            .strip()
+        )
+    except (OSError, subprocess.TimeoutExpired, UnicodeError) as error:
+        raise Tool01V2Error("candidate source checkout authority failed") from error
+    if head != expected_source_commit or git(
+        "status", "--porcelain", "--untracked-files=no"
+    ):
+        raise Tool01V2Error("candidate source checkout is not clean and commit-bound")
+    git("ls-files", "--error-unmatch", _CONTEXTFORGE_START_PATH)
+    path = git_root / _CONTEXTFORGE_START_PATH
+    try:
+        raw = path.read_bytes()
+    except OSError as error:
+        raise Tool01V2Error("ContextForge start script is unavailable") from error
+    if (
+        path.is_symlink()
+        or not path.is_file()
+        or not raw
+        or len(raw) > 100_000
+        or git("show", f"{expected_source_commit}:{_CONTEXTFORGE_START_PATH}") != raw
+    ):
+        raise Tool01V2Error("ContextForge start script differs from candidate source")
+    return hashlib.sha256(raw).hexdigest()
+
+
+def _host_authority(
+    value: dict[str, Any],
+    run_id: str,
+    candidate: dict[str, str],
+    *,
+    expected_auxiliary_image_ids: dict[str, str],
+    expected_image_id: str,
+    expected_proof_harness_sha256: str,
+    expected_proof_source_commit: str,
+    expected_source_commit: str,
+    source_root: Path | None,
+) -> list[str]:
+    row = _exact(
+        value,
+        {
+            "contextforgeStartSha256",
+            "contract",
+            "imageIds",
+            "modelLease",
+            "proofHarnessSha256",
+            "proofSourceCommit",
+            "runId",
+            "sourceCommit",
+        },
+        label="host authority",
+    )
+    _header(row, HOST_CONTRACT, run_id, label="host")
+    images = _exact(
+        row["imageIds"],
+        {"candidate", *_AUXILIARY_IMAGE_ROLES},
+        label="host image authority",
+    )
+    for role, image_id in images.items():
+        if not isinstance(image_id, str) or _IMAGE_ID.fullmatch(image_id) is None:
+            raise Tool01V2Error(f"host {role} image id is invalid")
+    auxiliary = {role: images[role] for role in _AUXILIARY_IMAGE_ROLES}
+    if len(set(auxiliary.values())) != 4 or expected_image_id in auxiliary.values():
+        raise Tool01V2Error("host auxiliary image identities are not distinct")
+    lease = _exact(
+        row["modelLease"],
+        {"accessOnly", "leaseSha256", "sourceSha256"},
+        label="host model lease authority",
+    )
+    if (
+        lease["accessOnly"] is not True
+        or not isinstance(lease["leaseSha256"], str)
+        or _DIGEST.fullmatch(lease["leaseSha256"]) is None
+        or not isinstance(lease["sourceSha256"], str)
+        or _DIGEST.fullmatch(lease["sourceSha256"]) is None
+    ):
+        raise Tool01V2Error("host model lease authority is invalid")
+    if (
+        images["candidate"] != expected_image_id
+        or images["candidate"] != candidate["imageId"]
+    ):
+        raise Tool01V2Error("host candidate image differs from external authority")
+    if auxiliary != expected_auxiliary_image_ids:
+        raise Tool01V2Error("host auxiliary image differs from external authority")
+    if (
+        row["sourceCommit"] != expected_source_commit
+        or row["sourceCommit"] != candidate["sourceCommit"]
+    ):
+        raise Tool01V2Error("host source commit differs from external authority")
+    if (
+        row["proofHarnessSha256"] != expected_proof_harness_sha256
+        or row["proofHarnessSha256"] != candidate["proofHarnessSha256"]
+    ):
+        raise Tool01V2Error("host proof harness differs from external authority")
+    proof_source_commit = row["proofSourceCommit"]
+    if (
+        not isinstance(proof_source_commit, str)
+        or _GIT_COMMIT.fullmatch(proof_source_commit) is None
+        or proof_source_commit != expected_proof_source_commit
+    ):
+        raise Tool01V2Error("host proof source commit differs from external authority")
+    contextforge_start = row["contextforgeStartSha256"]
+    if (
+        not isinstance(contextforge_start, str)
+        or _DIGEST.fullmatch(contextforge_start) is None
+    ):
+        raise Tool01V2Error("host ContextForge start hash is invalid")
+    actual_start = _contextforge_start_sha256(source_root, expected_source_commit)
+    if actual_start is None:
+        return ["contextforge_start_source_unavailable"]
+    if contextforge_start != actual_start:
+        raise Tool01V2Error("host ContextForge start differs from candidate source")
+    return []
 
 
 def _crash_audit(
@@ -804,7 +956,10 @@ def _source_status(
 def check(
     bundle_path: Path,
     *,
+    expected_auxiliary_image_ids: dict[str, str],
     expected_image_id: str,
+    expected_proof_harness_sha256: str,
+    expected_proof_source_commit: str,
     expected_source_commit: str,
     source_root: Path | None = None,
 ) -> dict[str, Any]:
@@ -812,6 +967,20 @@ def check(
         raise Tool01V2Error("external expected image id is invalid")
     if _GIT_COMMIT.fullmatch(expected_source_commit) is None:
         raise Tool01V2Error("external expected source commit is invalid")
+    if _DIGEST.fullmatch(expected_proof_harness_sha256) is None:
+        raise Tool01V2Error("external expected proof harness sha256 is invalid")
+    if _GIT_COMMIT.fullmatch(expected_proof_source_commit) is None:
+        raise Tool01V2Error("external expected proof source commit is invalid")
+    if (
+        set(expected_auxiliary_image_ids) != _AUXILIARY_IMAGE_ROLES
+        or any(
+            not isinstance(image_id, str) or _IMAGE_ID.fullmatch(image_id) is None
+            for image_id in expected_auxiliary_image_ids.values()
+        )
+        or len(set(expected_auxiliary_image_ids.values())) != 4
+        or expected_image_id in expected_auxiliary_image_ids.values()
+    ):
+        raise Tool01V2Error("external auxiliary image authority is invalid")
     bundle, _ = _read_json(bundle_path, label="bundle")
     row = _exact(
         bundle,
@@ -829,6 +998,7 @@ def check(
             "containerCrashAudit",
             "durableTimeline",
             "frameworkTrajectory",
+            "hostAuthority",
             "providerCounters",
         },
         label="artifact set",
@@ -842,7 +1012,19 @@ def check(
         artifacts["candidateAuthority"],
         run_id,
         expected_image_id=expected_image_id,
+        expected_proof_harness_sha256=expected_proof_harness_sha256,
         expected_source_commit=expected_source_commit,
+    )
+    host_violations = _host_authority(
+        artifacts["hostAuthority"],
+        run_id,
+        candidate,
+        expected_auxiliary_image_ids=expected_auxiliary_image_ids,
+        expected_image_id=expected_image_id,
+        expected_proof_harness_sha256=expected_proof_harness_sha256,
+        expected_proof_source_commit=expected_proof_source_commit,
+        expected_source_commit=expected_source_commit,
+        source_root=source_root,
     )
     containers = _crash_audit(artifacts["containerCrashAudit"], run_id, candidate)
     catalog = _catalog(artifacts["catalog"], run_id, containers)
@@ -861,7 +1043,12 @@ def check(
         timeline_binding,
     )
     runtime_violations = sorted(
-        set(trajectory_violations + timeline_violations + provider_violations)
+        set(
+            host_violations
+            + trajectory_violations
+            + timeline_violations
+            + provider_violations
+        )
     )
     runtime_status = "runtime_passed" if not runtime_violations else "runtime_failed"
     source_status, source_violations = _source_status(
@@ -887,14 +1074,28 @@ def check(
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("bundle", type=Path)
+    parser.add_argument("--expected-contextforge-image-id", required=True)
+    parser.add_argument("--expected-filesystem-image-id", required=True)
     parser.add_argument("--expected-image-id", required=True)
+    parser.add_argument("--expected-postgres-image-id", required=True)
+    parser.add_argument("--expected-proof-harness-sha256", required=True)
+    parser.add_argument("--expected-proof-source-commit", required=True)
     parser.add_argument("--expected-source-commit", required=True)
+    parser.add_argument("--expected-time-image-id", required=True)
     parser.add_argument("--source-root", type=Path)
     arguments = parser.parse_args()
     try:
         result = check(
             arguments.bundle,
+            expected_auxiliary_image_ids={
+                "contextforge": arguments.expected_contextforge_image_id,
+                "filesystem": arguments.expected_filesystem_image_id,
+                "postgres": arguments.expected_postgres_image_id,
+                "time": arguments.expected_time_image_id,
+            },
             expected_image_id=arguments.expected_image_id,
+            expected_proof_harness_sha256=arguments.expected_proof_harness_sha256,
+            expected_proof_source_commit=arguments.expected_proof_source_commit,
             expected_source_commit=arguments.expected_source_commit,
             source_root=arguments.source_root,
         )

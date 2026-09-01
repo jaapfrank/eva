@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import ast
 import copy
 import hashlib
 import importlib.util
@@ -13,6 +14,9 @@ import pytest
 
 
 HERE = Path(__file__).resolve().parent
+PRODUCER = (
+    HERE.parent / "contextforge-gateway-v1" / "prove_filesystem_provider_sigkill_v2.py"
+)
 SPEC = importlib.util.spec_from_file_location(
     "tool01_v2_acceptance", HERE / "check_acceptance.py"
 )
@@ -24,7 +28,17 @@ SPEC.loader.exec_module(checker)
 RUN_ID = "tool01-v2-fixture-001"
 NONCE = "a1b2c3d4e5f6"
 IMAGE_ID = "sha256:" + "a" * 64
+PROOF_HARNESS_SHA256 = "f" * 64
+PROOF_SOURCE_COMMIT = "c" * 40
 SOURCE_COMMIT = "b" * 40
+AUXILIARY_IMAGE_IDS = {
+    "contextforge": "sha256:" + "c" * 64,
+    "filesystem": "sha256:" + "d" * 64,
+    "postgres": "sha256:" + "e" * 64,
+    "time": "sha256:" + "f" * 64,
+}
+CONTEXTFORGE_START = b"#!/bin/sh\nset -eu\n"
+CONTEXTFORGE_START_SHA256 = hashlib.sha256(CONTEXTFORGE_START).hexdigest()
 P1 = "1" * 64
 P2 = "2" * 64
 P3 = "3" * 64
@@ -39,6 +53,27 @@ EXECUTE_ARGUMENTS = copy.deepcopy(ARGUMENTS)
 OBSERVE_ARGUMENTS = {"path": "tool01-proof.txt"}
 EXPECTED = {"content": ARGUMENTS["content"]}
 TOOL_CONFIGURATION_SHA = "7" * 64
+
+
+def test_proof_producer_is_one_self_contained_hashed_file() -> None:
+    tree = ast.parse(PRODUCER.read_text(encoding="utf-8"))
+    imported_modules = {
+        alias.name
+        for node in ast.walk(tree)
+        if isinstance(node, ast.Import)
+        for alias in node.names
+    } | {
+        node.module
+        for node in ast.walk(tree)
+        if isinstance(node, ast.ImportFrom) and node.module is not None
+    }
+    assert not {
+        module
+        for module in imported_modules
+        if module.startswith("prove_") or module.startswith("experiments.")
+    }
+    functions = {node.name for node in tree.body if isinstance(node, ast.FunctionDef)}
+    assert {"_json_request", "_login", "_migrate", "_write_private"} <= functions
 
 
 def _file_reference(path: Path, value: dict[str, Any]) -> dict[str, Any]:
@@ -92,9 +127,23 @@ def _artifacts(
     candidate = {
         "contract": checker.CANDIDATE_CONTRACT,
         "imageId": image_id,
-        "proofHarnessSha256": "f" * 64,
+        "proofHarnessSha256": PROOF_HARNESS_SHA256,
         "runId": RUN_ID,
         "sourceCommitLabel": source_commit,
+    }
+    host = {
+        "contextforgeStartSha256": CONTEXTFORGE_START_SHA256,
+        "contract": checker.HOST_CONTRACT,
+        "imageIds": {"candidate": image_id, **AUXILIARY_IMAGE_IDS},
+        "modelLease": {
+            "accessOnly": True,
+            "leaseSha256": "9" * 64,
+            "sourceSha256": "0" * 64,
+        },
+        "proofHarnessSha256": PROOF_HARNESS_SHA256,
+        "proofSourceCommit": PROOF_SOURCE_COMMIT,
+        "runId": RUN_ID,
+        "sourceCommit": source_commit,
     }
     crash = {
         "containers": [
@@ -367,6 +416,7 @@ def _artifacts(
         "containerCrashAudit": crash,
         "durableTimeline": timeline,
         "frameworkTrajectory": trajectory,
+        "hostAuthority": host,
         "providerCounters": provider,
     }
 
@@ -385,8 +435,17 @@ def _source_tree(root: Path) -> tuple[Path, str]:
         "model = PydanticConversationModel()\n",
         encoding="utf-8",
     )
+    contextforge_start = (
+        root
+        / "eva2"
+        / "experiments"
+        / "contextforge-gateway-v1"
+        / "start-contextforge.sh"
+    )
+    contextforge_start.parent.mkdir(parents=True)
+    contextforge_start.write_bytes(CONTEXTFORGE_START)
     subprocess.run(["git", "init", "-q", str(root)], check=True)
-    subprocess.run(["git", "-C", str(root), "add", "src"], check=True)
+    subprocess.run(["git", "-C", str(root), "add", "src", "eva2"], check=True)
     subprocess.run(
         [
             "git",
@@ -450,14 +509,22 @@ def _check(
 ) -> dict[str, Any]:
     return checker.check(
         bundle,
+        expected_auxiliary_image_ids=AUXILIARY_IMAGE_IDS,
         expected_image_id=IMAGE_ID,
+        expected_proof_harness_sha256=PROOF_HARNESS_SHA256,
+        expected_proof_source_commit=PROOF_SOURCE_COMMIT,
         expected_source_commit=source_commit,
         source_root=source_root,
     )
 
 
 def test_runtime_passes_without_promoting_pending_source(tmp_path: Path) -> None:
-    result = _check(_bundle(tmp_path))
+    source_root, commit = _source_tree(tmp_path / "source")
+    result = _check(
+        _bundle(tmp_path, source_commit=commit),
+        source_commit=commit,
+        source_root=source_root,
+    )
     assert result["runtimeStatus"] == "runtime_passed"
     assert result["replacementStatus"] == "source_authority_pending"
 
@@ -474,11 +541,11 @@ def test_complete_source_for_same_image_commit_promotes(tmp_path: Path) -> None:
 
 def test_source_commit_must_match_candidate_image_label(tmp_path: Path) -> None:
     source_root, _ = _source_tree(tmp_path / "source")
-    result = _check(_bundle(tmp_path, source_root=source_root), source_root=source_root)
-    assert result["sourceAuthorityViolations"] == [
-        "source_commit_differs_from_candidate"
-    ]
-    assert result["replacementStatus"] == "failed"
+    with pytest.raises(
+        checker.Tool01V2Error,
+        match="candidate source checkout is not clean and commit-bound",
+    ):
+        _check(_bundle(tmp_path, source_root=source_root), source_root=source_root)
 
 
 @pytest.mark.parametrize(
@@ -496,6 +563,130 @@ def test_candidate_requires_external_authority(
 
     with pytest.raises(checker.Tool01V2Error, match=message):
         _check(_bundle(tmp_path, mutate=mutate))
+
+
+def test_candidate_requires_external_proof_harness_authority(
+    tmp_path: Path,
+) -> None:
+    def mutate(artifacts):
+        artifacts["candidateAuthority"]["proofHarnessSha256"] = "e" * 64
+
+    with pytest.raises(
+        checker.Tool01V2Error,
+        match="candidate proof harness differs from external authority",
+    ):
+        _check(_bundle(tmp_path, mutate=mutate))
+
+
+def test_host_authority_artifact_is_required(tmp_path: Path) -> None:
+    def mutate(artifacts):
+        artifacts.pop("hostAuthority")
+
+    with pytest.raises(checker.Tool01V2Error, match="artifact set fields differ"):
+        _check(_bundle(tmp_path, mutate=mutate))
+
+
+@pytest.mark.parametrize(
+    "field",
+    [
+        "contextforgeStartSha256",
+        "contract",
+        "imageIds",
+        "modelLease",
+        "proofHarnessSha256",
+        "proofSourceCommit",
+        "runId",
+        "sourceCommit",
+    ],
+)
+def test_host_authority_trust_fields_are_required(tmp_path: Path, field: str) -> None:
+    def mutate(artifacts):
+        artifacts["hostAuthority"].pop(field)
+
+    with pytest.raises(checker.Tool01V2Error, match="host authority fields differ"):
+        _check(_bundle(tmp_path, mutate=mutate))
+
+
+@pytest.mark.parametrize(
+    ("field", "value"),
+    [
+        ("contract", "EvaTool01PhysicalHostAuthority/v9"),
+        ("runId", "different-valid-run-id"),
+    ],
+)
+def test_host_authority_header_is_exact(tmp_path: Path, field: str, value: str) -> None:
+    def mutate(artifacts):
+        artifacts["hostAuthority"][field] = value
+
+    with pytest.raises(checker.Tool01V2Error, match="host authority differs"):
+        _check(_bundle(tmp_path, mutate=mutate))
+
+
+@pytest.mark.parametrize("role", sorted(AUXILIARY_IMAGE_IDS))
+def test_every_auxiliary_image_role_is_required(tmp_path: Path, role: str) -> None:
+    def mutate(artifacts):
+        artifacts["hostAuthority"]["imageIds"].pop(role)
+
+    with pytest.raises(
+        checker.Tool01V2Error, match="host image authority fields differ"
+    ):
+        _check(_bundle(tmp_path, mutate=mutate))
+
+
+@pytest.mark.parametrize(
+    ("field", "value", "message"),
+    [
+        ("sourceCommit", "1" * 40, "host source commit differs"),
+        ("proofHarnessSha256", "1" * 64, "host proof harness differs"),
+        ("proofSourceCommit", "1" * 40, "host proof source commit differs"),
+    ],
+)
+def test_host_authority_valid_alternative_trust_values_are_rejected(
+    tmp_path: Path, field: str, value: str, message: str
+) -> None:
+    def mutate(artifacts):
+        artifacts["hostAuthority"][field] = value
+
+    with pytest.raises(checker.Tool01V2Error, match=message):
+        _check(_bundle(tmp_path, mutate=mutate))
+
+
+def test_host_candidate_valid_alternative_image_is_rejected(tmp_path: Path) -> None:
+    def mutate(artifacts):
+        artifacts["hostAuthority"]["imageIds"]["candidate"] = "sha256:" + "1" * 64
+
+    with pytest.raises(checker.Tool01V2Error, match="host candidate image differs"):
+        _check(_bundle(tmp_path, mutate=mutate))
+
+
+@pytest.mark.parametrize("role", sorted(AUXILIARY_IMAGE_IDS))
+def test_auxiliary_valid_alternative_image_is_rejected(
+    tmp_path: Path, role: str
+) -> None:
+    def mutate(artifacts):
+        artifacts["hostAuthority"]["imageIds"][role] = "sha256:" + "1" * 64
+
+    with pytest.raises(checker.Tool01V2Error, match="host auxiliary image differs"):
+        _check(_bundle(tmp_path, mutate=mutate))
+
+
+def test_contextforge_start_valid_alternative_hash_is_rejected(tmp_path: Path) -> None:
+    source_root, commit = _source_tree(tmp_path / "source")
+
+    def mutate(artifacts):
+        artifacts["hostAuthority"]["contextforgeStartSha256"] = "1" * 64
+
+    with pytest.raises(checker.Tool01V2Error, match="ContextForge start differs"):
+        _check(
+            _bundle(
+                tmp_path,
+                mutate=mutate,
+                source_root=source_root,
+                source_commit=commit,
+            ),
+            source_commit=commit,
+            source_root=source_root,
+        )
 
 
 def test_all_three_containers_must_use_exact_candidate_image(tmp_path: Path) -> None:
@@ -617,9 +808,7 @@ def test_coordinated_provider_rewrite_cannot_detach_from_model(tmp_path: Path) -
         for event in events:
             event["payloadSha256"] = checker._sha256(event["payload"])
         for snapshot in artifacts["durableTimeline"]["snapshots"].values():
-            snapshot["eventsSha256"] = checker._sha256(
-                events[: snapshot["eventCount"]]
-            )
+            snapshot["eventsSha256"] = checker._sha256(events[: snapshot["eventCount"]])
         calls = artifacts["providerCounters"]["calls"]
         calls[0]["argumentsSha256"] = checker._sha256(changed_execute)
         calls[1]["argumentsSha256"] = checker._sha256(changed_observe)
@@ -659,9 +848,7 @@ def test_coordinated_rewrite_cannot_change_the_prompt_result(
         for event in events:
             event["payloadSha256"] = checker._sha256(event["payload"])
         for snapshot in artifacts["durableTimeline"]["snapshots"].values():
-            snapshot["eventsSha256"] = checker._sha256(
-                events[: snapshot["eventCount"]]
-            )
+            snapshot["eventsSha256"] = checker._sha256(events[: snapshot["eventCount"]])
         calls = artifacts["providerCounters"]["calls"]
         calls[0]["argumentsSha256"] = checker._sha256(changed)
         calls[1]["argumentsSha256"] = checker._sha256(changed_observe)

@@ -42,13 +42,34 @@ extern opgegeven content-image-ID en broncommitlabel gebruiken. Voor
 tegen een echte checkout berekend en moet haar commit gelijk zijn aan het
 bronlabel van het geteste image.
 
+Ook de SHA-256 van het container-interne proefprogramma is een externe
+checkerinput. Bereken die buiten de kandidaatcontainer uit exact
+`prove_filesystem_provider_sigkill_v2.py`. De hash die de kandidaat zelf in
+`candidateAuthority.json` schrijft is alleen een te vergelijken claim en kan
+deze externe authority niet vervangen.
+
+`hostAuthority.json` is eveneens verplicht. De checker bindt daarin de
+kandidaatimage, kandidaatcommit, proefprogrammacommit en proefprogrammahash aan
+de externe CLI-waarden. De lokale image-ID's voor filesystem, tijdprovider,
+ContextForge en PostgreSQL worden elk afzonderlijk extern opgegeven. Ook wordt
+`contextforgeStartSha256` opnieuw berekend uit het schone kandidaatcheckout:
+het bestand moet op exact
+`eva2/experiments/contextforge-gateway-v1/start-contextforge.sh` door dezelfde
+commit worden gevolgd en bytegelijk aan `git show` zijn.
+
 De checker wordt zo uitgevoerd:
 
 ```bash
 python3 experiments/tool01-replacement-acceptance-v2/check_acceptance.py \
   /pad/naar/bundle.json \
+  --expected-contextforge-image-id sha256:<64-hex> \
+  --expected-filesystem-image-id sha256:<64-hex> \
   --expected-image-id sha256:<64-hex> \
+  --expected-postgres-image-id sha256:<64-hex> \
+  --expected-proof-harness-sha256 <64-hex> \
+  --expected-proof-source-commit <40-hex> \
   --expected-source-commit <40-hex> \
+  --expected-time-image-id sha256:<64-hex> \
   --source-root /pad/naar/exacte-checkout
 ```
 
