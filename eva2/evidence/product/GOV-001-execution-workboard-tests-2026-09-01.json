@@ -1,0 +1,43 @@
+{
+  "contract": "EvaWorkboardTestReceipt/v1",
+  "taskId": "GOV-001",
+  "baseCommit": "e171f68f40a17c52b03683e1eb3d2aa47317d7a0",
+  "implementationCommit": "fc1e67f03739e038563ac5e4124f61d6b0a40000",
+  "recordedOn": "2026-09-01",
+  "result": "GO",
+  "checks": [
+    {
+      "command": "TMPDIR=/tmp TEMP=/tmp TMP=/tmp pytest -q tests/operations/test_current_workboard.py",
+      "result": "41 passed"
+    },
+    {
+      "command": "python3 tools/check_current_workboard.py",
+      "result": "valid; GOV-001 active; 2 execution cards; 38 milestones"
+    },
+    {
+      "command": "python3 tools/check_component_catalog.py",
+      "result": "ok; zero violations"
+    },
+    {
+      "command": "ruff check tools/check_current_workboard.py tests/operations/test_current_workboard.py",
+      "result": "all checks passed"
+    },
+    {
+      "command": "node test/repository-inventory.test.js",
+      "result": "11 passed"
+    },
+    {
+      "command": "node test/repository-inventory-disposition.test.js",
+      "result": "1 passed"
+    },
+    {
+      "command": "git diff --cached --check && git diff --check",
+      "result": "passed before implementation commit"
+    }
+  ],
+  "nonClaims": [
+    "This receipt completes only the execution-workboard implementation checks.",
+    "RB-001 and all later milestones remain open.",
+    "No live Eva route, container, database, secret or external provider was changed."
+  ]
+}
