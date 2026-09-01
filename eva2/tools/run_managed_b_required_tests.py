@@ -571,7 +571,7 @@ def _run(
             text=True,
             check=False,
             timeout=timeout,
-            umask=0o077,
+            umask=0o022,
         )
     except (OSError, subprocess.TimeoutExpired) as exc:
         raise RequiredTestsError("pytest process could not complete") from exc

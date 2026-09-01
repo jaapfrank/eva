@@ -155,7 +155,9 @@ def test_cli_requires_all_external_browser_authorities() -> None:
         )
 
 
-def test_real_command_runner_enforces_a_private_umask(private_tmp_path: Path) -> None:
+def test_real_command_runner_enforces_a_stable_non_group_writable_umask(
+    private_tmp_path: Path,
+) -> None:
     result = runner._run(
         [
             sys.executable,
@@ -173,7 +175,7 @@ def test_real_command_runner_enforces_a_private_umask(private_tmp_path: Path) ->
 
     assert result.returncode == 0
     assert result.stderr == ""
-    assert result.stdout.strip() == "0o700"
+    assert result.stdout.strip() == "0o755"
 
 
 def test_gate_lock_is_exact_and_adds_pyyaml_only_to_gate_toolchain() -> None:

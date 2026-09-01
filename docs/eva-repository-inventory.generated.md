@@ -3,7 +3,7 @@
 Deze kaart is mechanisch gegenereerd. Zij staat naast de semantische runtimegraaf en
 classificeert ieder gevolgd, verwijderd of niet-genegeerd nieuw repositorypad.
 
-Schema: `EvaRepositoryInventory/v1`. Brondigest: `9b826bbc08340f8b50a9a7ddf0d9469c4aa96d033af1e9dec07626b88f09f068`.
+Schema: `EvaRepositoryInventory/v1`. Brondigest: `0fd1301217949c6ad86bf496c5354a9ccb045c0cd137586296327da0c2929b8d`.
 
 ## Samenvatting
 
@@ -1669,7 +1669,7 @@ Schema: `EvaRepositoryInventory/v1`. Brondigest: `9b826bbc08340f8b50a9a7ddf0d946
 | `eva2/tests/operations/test_probe_codex_source_compatibility.py` | tracked | verification | included-tracked-critical | keep | 10355 |
 | `eva2/tests/operations/test_release_verifier.py` | tracked | verification | included-tracked-critical | keep | 5156 |
 | `eva2/tests/operations/test_run_managed_b_browser_release_subgate.py` | tracked | verification | included-tracked-critical | keep | 13728 |
-| `eva2/tests/operations/test_run_managed_b_required_tests.py` | tracked | verification | included-tracked-critical | keep | 17857 |
+| `eva2/tests/operations/test_run_managed_b_required_tests.py` | tracked | verification | included-tracked-critical | keep | 17882 |
 | `eva2/tests/operations/test_telegram_binding_loader.py` | tracked | verification | included-tracked-critical | keep | 3471 |
 | `eva2/tests/operations/test_telegram_ingress_wiring.py` | tracked | verification | included-tracked-critical | keep | 4184 |
 | `eva2/tests/platform/test_design_gates.py` | tracked | verification | included-tracked-critical | keep | 5720 |
