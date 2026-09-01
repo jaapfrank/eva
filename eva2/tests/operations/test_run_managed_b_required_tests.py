@@ -74,27 +74,27 @@ def _browser_runner(**arguments: object) -> dict[str, object]:
 
 def _environment(monkeypatch: pytest.MonkeyPatch) -> dict[str, str]:
     values = {
-        "EVA2_GATE_PORTABLE_EFFECT_DSN": "postgresql://test/eva2_4b_disposable_effect",
-        "EVA2_GATE_PORTABLE_MODEL_DSN": "postgresql://test/eva2_4b_disposable_model",
-        "EVA2_GATE_PORTABLE_OBJECT_DSN": "postgresql://test/eva2_4b_disposable_object",
-        "EVA2_GATE_PORTABLE_READ_DSN": "postgresql://test/eva2_4b_disposable_read",
-        "EVA2_GATE_PORTABLE_FULL_DSN": "postgresql://test/eva2_4b_disposable_full",
-        "EVA2_GATE_PORTABLE_SOURCE_DSN": "postgresql://test/eva2_4b_disposable_source",
-        "EVA2_GATE_PORTABLE_TARGET_DSN": "postgresql://test/eva2_4b_disposable_target",
+        "EVA2_GATE_PORTABLE_EFFECT_DSN": "postgresql+psycopg://test/eva2_4b_disposable_effect",
+        "EVA2_GATE_PORTABLE_MODEL_DSN": "postgresql+psycopg://test/eva2_4b_disposable_model",
+        "EVA2_GATE_PORTABLE_OBJECT_DSN": "postgresql+psycopg://test/eva2_4b_disposable_object",
+        "EVA2_GATE_PORTABLE_READ_DSN": "postgresql+psycopg://test/eva2_4b_disposable_read",
+        "EVA2_GATE_PORTABLE_FULL_DSN": "postgresql+psycopg://test/eva2_4b_disposable_full",
+        "EVA2_GATE_PORTABLE_SOURCE_DSN": "postgresql+psycopg://test/eva2_4b_disposable_source",
+        "EVA2_GATE_PORTABLE_TARGET_DSN": "postgresql+psycopg://test/eva2_4b_disposable_target",
         "EVA2_GATE_POSTGRES_ACTION_CHAIN_DSN": (
-            "postgresql://test/eva2_action_chain_disposable_gate"
+            "postgresql+psycopg://test/eva2_action_chain_disposable_gate"
         ),
         "EVA2_GATE_POSTGRES_LIVING_DSN": (
-            "postgresql://test/eva2_living_disposable_gate"
+            "postgresql+psycopg://test/eva2_living_disposable_gate"
         ),
         "EVA2_GATE_POSTGRES_4B_STORE_DSN": (
-            "postgresql://test/eva2_4b_disposable_store"
+            "postgresql+psycopg://test/eva2_4b_disposable_store"
         ),
         "EVA2_GATE_POSTGRES_4B_CURRENT_DSN": (
-            "postgresql://test/eva2_4b_disposable_current"
+            "postgresql+psycopg://test/eva2_4b_disposable_current"
         ),
         "EVA2_GATE_POSTGRES_4B_HISTORICAL_DSN": (
-            "postgresql://test/eva2_4b_disposable_historical"
+            "postgresql+psycopg://test/eva2_4b_disposable_historical"
         ),
     }
     for name, value in values.items():
@@ -235,6 +235,20 @@ def test_local_psycopg_socket_is_an_explicit_database_destination() -> None:
 
     assert value.endswith("?host=%2Ftmp%2Feva2-gate-socket")
     assert destination == ("/tmp/eva2-gate-socket", 5432, "eva2_4b_disposable_gate")
+
+
+def test_unqualified_postgresql_scheme_is_rejected_before_execution() -> None:
+    with pytest.raises(runner.RequiredTestsError, match="explicit disposable"):
+        runner._dsn_destination(
+            "EVA2_GATE_POSTGRES_DSN",
+            {
+                "EVA2_GATE_POSTGRES_DSN": (
+                    "postgresql://gate@/eva2_4b_disposable_gate"
+                    "?host=%2Ftmp%2Feva2-gate-socket"
+                )
+            },
+            prefix="eva2_4b_disposable_",
+        )
 
 
 @pytest.mark.parametrize(

@@ -442,7 +442,12 @@ def _dsn_destination(
             raise RequiredTestsError(
                 f"{name} must select an explicit disposable database"
             )
-    if parsed.scheme not in {"postgresql", "postgresql+psycopg"} or (
+    # The sealed gate environment contains Psycopg 3 only.  SQLAlchemy treats
+    # the unqualified ``postgresql://`` scheme as its legacy psycopg2 dialect,
+    # so accepting it would defer a deterministic configuration error until a
+    # database-backed test happens to create an engine.  Reject that ambiguity
+    # during admission instead.
+    if parsed.scheme != "postgresql+psycopg" or (
         parsed.hostname is not None and "," in parsed.hostname
     ):
         raise RequiredTestsError(f"{name} must select an explicit disposable database")
