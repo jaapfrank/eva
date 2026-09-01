@@ -1308,6 +1308,7 @@ def main() -> int:
     filesystem_volume = f"{prefix}-filesystem"
     state_volume = f"{prefix}-state"
     contextforge_secret_volume = f"{prefix}-contextforge-secrets"
+    filesystem_secret_volume = f"{prefix}-filesystem-secrets"
     postgres_secret_volume = f"{prefix}-postgres-secret"
     candidate_secret_volume = f"{prefix}-candidate-secrets"
     model_secret_volume = f"{prefix}-model-secret"
@@ -1326,6 +1327,7 @@ def main() -> int:
         filesystem_volume,
         state_volume,
         contextforge_secret_volume,
+        filesystem_secret_volume,
         postgres_secret_volume,
         candidate_secret_volume,
         model_secret_volume,
@@ -1333,6 +1335,7 @@ def main() -> int:
     all_containers = (
         *containers.values(),
         f"{prefix}-contextforge-secret-init",
+        f"{prefix}-filesystem-secret-init",
         f"{prefix}-postgres-secret-init",
         f"{prefix}-candidate-secret-init",
         f"{prefix}-model-secret-init",
@@ -1387,6 +1390,9 @@ def main() -> int:
         jwt = secrets.token_urlsafe(48).encode()
         encryption = secrets.token_urlsafe(48).encode()
         admin_password = secrets.token_urlsafe(32)
+        filesystem_jwt = secrets.token_urlsafe(48).encode()
+        filesystem_encryption = secrets.token_urlsafe(48).encode()
+        filesystem_admin_password = secrets.token_urlsafe(32).encode()
         postgres_password = secrets.token_urlsafe(32).encode()
         _init_volume(
             helper_image=arguments.contextforge_image,
@@ -1398,6 +1404,27 @@ def main() -> int:
                 "contextforge-encryption": (encryption, 10001, 10001, 0o400),
                 "contextforge-admin-password": (
                     admin_password.encode(),
+                    10001,
+                    10001,
+                    0o400,
+                ),
+            },
+        )
+        _init_volume(
+            helper_image=arguments.contextforge_image,
+            volume=filesystem_secret_volume,
+            container_name=f"{prefix}-filesystem-secret-init",
+            run_id=run_id,
+            files={
+                "filesystem-jwt": (filesystem_jwt, 10001, 10001, 0o400),
+                "filesystem-encryption": (
+                    filesystem_encryption,
+                    10001,
+                    10001,
+                    0o400,
+                ),
+                "filesystem-admin-password": (
+                    filesystem_admin_password,
                     10001,
                     10001,
                     0o400,
@@ -1522,11 +1549,19 @@ def main() -> int:
             "no-new-privileges",
             "--pids-limit",
             "256",
+            "--env",
+            "EVA_CONTEXTFORGE_JWT_SECRET_FILE=/run/secrets/filesystem-jwt",
+            "--env",
+            "EVA_CONTEXTFORGE_ENCRYPTION_SECRET_FILE=/run/secrets/filesystem-encryption",
+            "--env",
+            "EVA_CONTEXTFORGE_ADMIN_PASSWORD_FILE=/run/secrets/filesystem-admin-password",
             "--tmpfs",
             "/tmp:rw,noexec,nosuid,nodev,size=128m,uid=10001,gid=10001,mode=0700",
             *_resource_arguments(run_id),
             "--mount",
             f"type=volume,src={filesystem_volume},dst=/proof-state",
+            "--mount",
+            f"type=volume,src={filesystem_secret_volume},dst=/run/secrets,readonly",
             arguments.filesystem_image,
         )
         _wait_filesystem_mcp(containers["filesystem"])

@@ -135,6 +135,29 @@ def test_host_helpers_keep_stdin_attached_for_private_payloads() -> None:
     assert any(isinstance(node, ast.JoinedStr) for node in ast.walk(metadata_helper))
 
 
+def test_filesystem_provider_has_a_distinct_private_start_secret_volume() -> None:
+    source = RUNNER.read_text(encoding="utf-8")
+
+    assert 'filesystem_secret_volume = f"{prefix}-filesystem-secrets"' in source
+    assert (
+        'f"type=volume,src={filesystem_secret_volume},dst=/run/secrets,readonly"'
+        in source
+    )
+    assert "EVA_CONTEXTFORGE_JWT_SECRET_FILE=/run/secrets/filesystem-jwt" in source
+    assert (
+        "EVA_CONTEXTFORGE_ENCRYPTION_SECRET_FILE=/run/secrets/filesystem-encryption"
+        in source
+    )
+    assert (
+        "EVA_CONTEXTFORGE_ADMIN_PASSWORD_FILE=/run/secrets/filesystem-admin-password"
+        in source
+    )
+    assert (
+        'f"type=volume,src={contextforge_secret_volume},dst=/run/secrets,readonly"'
+        in source
+    )
+
+
 def _file_reference(path: Path, value: dict[str, Any]) -> dict[str, Any]:
     raw = (json.dumps(value, sort_keys=True, separators=(",", ":")) + "\n").encode()
     path.write_bytes(raw)

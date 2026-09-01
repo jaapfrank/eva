@@ -12,6 +12,10 @@ gebruiken. Deze poort bewijst alleen dat Eva een onbekende passende tool kiest,
 duurzaam uitvoert, onafhankelijk terugleest en na een crash niet dubbel
 uitvoert.
 
+De filesystem-provider krijgt daarbij een eigen kortlevende, private
+opstartsleutelset. De beheersleutels van de centrale ContextForge-gateway
+worden niet met deze verwisselbare provider gedeeld.
+
 V2 gebruikt uitsluitend de gebeurtenissen die de huidige algemene toolroute
 werkelijk duurzaam schrijft:
 
