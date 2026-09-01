@@ -13,6 +13,7 @@ from tools.check_two_builder_reproducibility import (
     TwoBuilderError,
     _image_semantics,
     verify_single_builder_a,
+    verify_single_builder_b,
     verify_two_builds,
 )
 
@@ -198,17 +199,31 @@ def _fixture(
     return builds, archives
 
 
-def _single_builder_fixture(tmp_path: Path) -> dict[str, object]:
+def _single_builder_fixture(
+    tmp_path: Path, *, side: str = "a"
+) -> dict[str, object]:
     tmp_path.mkdir(mode=0o700, parents=True, exist_ok=True)
     builds, archives = _fixture(tmp_path)
-    build_path = builds[0]
-    archive_path = archives[0]
+    index = 0 if side == "a" else 1
+    build_path = builds[index]
+    archive_path = archives[index]
     build = json.loads(build_path.read_bytes())
     builder = build["candidate"]["receipt"]["builder"]
     identity = builder["before"]
-    observation_challenge = "c" * 64
-    admission_challenge = "d" * 64
-    run_id = "rb003-builder-a-fixture"
+    observation_challenge = ("c" if side == "a" else "f") * 64
+    admission_challenge = ("d" if side == "a" else "0") * 64
+    task_id = "RB-003" if side == "a" else "RB-004"
+    run_id = f"rb00{3 if side == 'a' else 4}-builder-{side}-fixture"
+    preflight_contract = (
+        "EvaRB003PrivateEmptyBuilderPreflight/v1"
+        if side == "a"
+        else "EvaRB004PrivateEmptyBuilderPreflight/v1"
+    )
+    postflight_contract = (
+        "EvaRB003PrivateEmptyBuilderPostflight/v1"
+        if side == "a"
+        else "EvaRB004PrivateEmptyBuilderPostflight/v1"
+    )
     authority_sha256 = "e" * 64
     release_path = tmp_path / "release-authority.json"
     _write(
@@ -233,7 +248,7 @@ def _single_builder_fixture(tmp_path: Path) -> dict[str, object]:
         "builderIdentity": identity,
         "buildkitDiskUsageRaw": "Reclaimable:\t0B\nTotal:\t\t0B\n",
         "containerdImages": [],
-        "contract": "EvaRB003PrivateEmptyBuilderPreflight/v1",
+        "contract": preflight_contract,
         "dockerImages": [],
         "dockerInfo": {
             "containerCount": 0,
@@ -257,7 +272,7 @@ def _single_builder_fixture(tmp_path: Path) -> dict[str, object]:
         "runId": run_id,
         "sourceCommit": COMMIT,
         "status": "empty_offline_builder_observed",
-        "taskId": "RB-003",
+        "taskId": task_id,
     }
     _write(preflight_path, preflight)
     postflight_path = tmp_path / "postflight.json"
@@ -276,7 +291,7 @@ def _single_builder_fixture(tmp_path: Path) -> dict[str, object]:
         "candidateArchiveSha256": archive_sha256,
         "candidateImageId": image_id,
         "containerdImages": [f"moby-dangling@{image_id}"],
-        "contract": "EvaRB003PrivateEmptyBuilderPostflight/v1",
+        "contract": postflight_contract,
         "dockerImages": [f"{image_id} <none>:<none>"],
         "dockerInfo": {"containerCount": 0, "imageCount": 1},
         "networkNamespace": {"links": [loopback], "routes": []},
@@ -295,7 +310,7 @@ def _single_builder_fixture(tmp_path: Path) -> dict[str, object]:
         "sealedBaseImagesLoadedIntoDocker": 0,
         "sourceCommit": COMMIT,
         "status": "candidate_only_offline_postflight_observed",
-        "taskId": "RB-003",
+        "taskId": task_id,
     }
     _write(postflight_path, postflight)
     return {
@@ -308,6 +323,7 @@ def _single_builder_fixture(tmp_path: Path) -> dict[str, object]:
         "postflight": postflight_path,
         "preflight": preflight_path,
         "release": release_path,
+        "side": side,
     }
 
 
@@ -325,7 +341,119 @@ def _verify_single(fixture: dict[str, object], **overrides: object) -> dict[str,
         "admission_challenge": fixture["admissionChallenge"],
     }
     values.update(overrides)
-    return verify_single_builder_a(**values)  # type: ignore[arg-type]
+    if fixture["side"] == "a":
+        return verify_single_builder_a(**values)  # type: ignore[arg-type]
+    return verify_single_builder_b(**values)  # type: ignore[arg-type]
+
+
+def _admit_builder_a(tmp_path: Path) -> tuple[dict[str, object], Path]:
+    fixture = _single_builder_fixture(tmp_path / "builder-a", side="a")
+    admission = _verify_single(fixture)
+    builder = admission["builder"]
+    assert isinstance(builder, dict)
+    admission["builder"] = {
+        key: builder[key]
+        for key in (
+            "backend",
+            "buildkitNodeId",
+            "buildkitVersion",
+            "daemonId",
+            "dockerServerVersion",
+        )
+    }
+    admission.pop("taskId")
+    path = tmp_path / "builder-a-admission.json"
+    _write(path, admission)
+    return fixture, path
+
+
+def _verify_builder_b(
+    fixture: dict[str, object],
+    builder_a_admission_path: Path,
+    builder_a_preflight_path: Path,
+    **overrides: object,
+) -> dict[str, object]:
+    return _verify_single(
+        fixture,
+        builder_a_admission_path=builder_a_admission_path,
+        builder_a_preflight_path=builder_a_preflight_path,
+        **overrides,
+    )
+
+
+def _replace_builder_identity(
+    fixture: dict[str, object], *, field: str, value: object
+) -> None:
+    preflight_path = fixture["preflight"]
+    build_path = fixture["build"]
+    postflight_path = fixture["postflight"]
+    archive_path = fixture["archive"]
+    assert isinstance(preflight_path, Path)
+    assert isinstance(build_path, Path)
+    assert isinstance(postflight_path, Path)
+    assert isinstance(archive_path, Path)
+    preflight = json.loads(preflight_path.read_bytes())
+    build = json.loads(build_path.read_bytes())
+    postflight = json.loads(postflight_path.read_bytes())
+    preflight["builderIdentity"][field] = value
+    postflight["builderIdentity"][field] = value
+    binding = build["candidate"]["receipt"]["builder"]
+    binding["before"][field] = value
+    binding["after"][field] = value
+    if field == "daemonId":
+        preflight["dockerInfo"]["daemonId"] = value
+    elif field == "containerdContainersNamespace":
+        preflight["dockerInfo"]["containerd"]["Namespaces"]["Containers"] = value
+    elif field == "containerdPluginsNamespace":
+        preflight["dockerInfo"]["containerd"]["Namespaces"]["Plugins"] = value
+    _write(preflight_path, preflight)
+    _write_build(build_path, archive_path, build)
+    postflight["preflightReceiptSha256"] = hashlib.sha256(
+        preflight_path.read_bytes()
+    ).hexdigest()
+    postflight["buildReceiptSha256"] = hashlib.sha256(
+        build_path.read_bytes()
+    ).hexdigest()
+    _write(postflight_path, postflight)
+
+
+def _replace_challenge(
+    fixture: dict[str, object], *, field: str, value: str
+) -> dict[str, object]:
+    preflight_path = fixture["preflight"]
+    build_path = fixture["build"]
+    postflight_path = fixture["postflight"]
+    archive_path = fixture["archive"]
+    assert isinstance(preflight_path, Path)
+    assert isinstance(build_path, Path)
+    assert isinstance(postflight_path, Path)
+    assert isinstance(archive_path, Path)
+    preflight = json.loads(preflight_path.read_bytes())
+    build = json.loads(build_path.read_bytes())
+    postflight = json.loads(postflight_path.read_bytes())
+    overrides: dict[str, object] = {}
+    if field == "admissionChallenge":
+        preflight[field] = value
+        postflight[field] = value
+        overrides["admission_challenge"] = value
+    elif field == "observationChallenge":
+        preflight[field] = value
+        postflight[field] = value
+        overrides["expected_observation_challenge"] = value
+    else:
+        build["candidate"]["receipt"]["builder"]["runChallenge"] = value
+        postflight["buildRunChallenge"] = value
+        overrides["expected_build_run_challenge"] = value
+    _write(preflight_path, preflight)
+    _write_build(build_path, archive_path, build)
+    postflight["preflightReceiptSha256"] = hashlib.sha256(
+        preflight_path.read_bytes()
+    ).hexdigest()
+    postflight["buildReceiptSha256"] = hashlib.sha256(
+        build_path.read_bytes()
+    ).hexdigest()
+    _write(postflight_path, postflight)
+    return overrides
 
 
 def test_admits_one_fresh_empty_builder_a_chain(tmp_path: Path) -> None:
@@ -340,6 +468,114 @@ def test_admits_one_fresh_empty_builder_a_chain(tmp_path: Path) -> None:
     assert result["chain"]["preflightReceiptSha256"] == hashlib.sha256(
         fixture["preflight"].read_bytes()
     ).hexdigest()
+
+
+def test_admits_independent_builder_b_against_full_builder_a_admission(
+    tmp_path: Path,
+) -> None:
+    builder_a, admission_path = _admit_builder_a(tmp_path)
+    builder_b = _single_builder_fixture(tmp_path / "builder-b", side="b")
+
+    result = _verify_builder_b(
+        builder_b,
+        admission_path,
+        builder_a["preflight"],
+    )
+
+    assert result["status"] == "passed"
+    assert result["taskId"] == "RB-004"
+    assert result["sourceCommit"] == COMMIT
+    assert result["releaseAuthoritySha256"] == "e" * 64
+    assert result["builder"]["daemonId"] == "daemon-b"
+
+
+def test_rejects_builder_a_proof_reused_as_builder_b(tmp_path: Path) -> None:
+    builder_a, admission_path = _admit_builder_a(tmp_path)
+
+    with pytest.raises(TwoBuilderError, match="builder-B preflight"):
+        verify_single_builder_b(
+            preflight_path=builder_a["preflight"],
+            build_path=builder_a["build"],
+            postflight_path=builder_a["postflight"],
+            archive_path=builder_a["archive"],
+            release_authority_path=builder_a["release"],
+            builder_a_admission_path=admission_path,
+            builder_a_preflight_path=builder_a["preflight"],
+            expected_source_commit=COMMIT,
+            expected_authority_sha256=builder_a["authoritySha256"],
+            expected_observation_challenge=builder_a["observationChallenge"],
+            expected_build_run_challenge=builder_a["buildRunChallenge"],
+            admission_challenge=builder_a["admissionChallenge"],
+        )
+
+
+def test_rejects_spliced_builder_a_preflight(tmp_path: Path) -> None:
+    builder_a, admission_path = _admit_builder_a(tmp_path)
+    builder_b = _single_builder_fixture(tmp_path / "builder-b", side="b")
+    preflight_path = builder_a["preflight"]
+    assert isinstance(preflight_path, Path)
+    preflight = json.loads(preflight_path.read_bytes())
+    preflight["builderIdentity"]["daemonId"] = "spliced-daemon"
+    _write(preflight_path, preflight)
+
+    with pytest.raises(TwoBuilderError, match="differs from its admission"):
+        _verify_builder_b(builder_b, admission_path, preflight_path)
+
+
+@pytest.mark.parametrize(
+    "field",
+    [
+        "buildkitNodeId",
+        "containerdContainersNamespace",
+        "containerdPluginsNamespace",
+        "containerdSocketIdentitySha256",
+        "daemonId",
+        "socketIdentitySha256",
+        "stateRootIdentitySha256",
+    ],
+)
+def test_rejects_builder_b_sharing_any_required_builder_a_identity(
+    tmp_path: Path, field: str
+) -> None:
+    builder_a, admission_path = _admit_builder_a(tmp_path)
+    builder_b = _single_builder_fixture(tmp_path / "builder-b", side="b")
+    preflight_path = builder_a["preflight"]
+    assert isinstance(preflight_path, Path)
+    builder_a_preflight = json.loads(preflight_path.read_bytes())
+    _replace_builder_identity(
+        builder_b,
+        field=field,
+        value=builder_a_preflight["builderIdentity"][field],
+    )
+
+    with pytest.raises(TwoBuilderError, match="not independent from builder-A"):
+        _verify_builder_b(builder_b, admission_path, preflight_path)
+
+
+@pytest.mark.parametrize(
+    "field",
+    ["admissionChallenge", "observationChallenge", "buildRunChallenge"],
+)
+def test_rejects_builder_b_reusing_any_builder_a_challenge(
+    tmp_path: Path, field: str
+) -> None:
+    builder_a, admission_path = _admit_builder_a(tmp_path)
+    builder_b = _single_builder_fixture(tmp_path / "builder-b", side="b")
+    preflight_path = builder_a["preflight"]
+    assert isinstance(preflight_path, Path)
+    overrides = _replace_challenge(
+        builder_b,
+        field=field,
+        value=str(builder_a[field]),
+    )
+
+    with pytest.raises(TwoBuilderError, match="was reused"):
+        _verify_builder_b(
+            builder_b,
+            admission_path,
+            preflight_path,
+            **overrides,
+        )
 
 
 def test_reads_oci_compressed_layers_using_their_diff_ids(tmp_path: Path) -> None:

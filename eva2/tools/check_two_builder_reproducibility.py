@@ -25,8 +25,10 @@ BUILDER_CONTRACT = "EvaMeasuredDockerBuilder/v2"
 BUILD_CONTRACT = "EvaManagedBOfflineCandidateBuildReceipt/v2"
 RESULT_CONTRACT = "EvaTwoBuilderReproducibilityReceipt/v2"
 SINGLE_BUILDER_CONTRACT = "EvaSingleBuilderAdmissionReceipt/v1"
-PREFLIGHT_CONTRACT = "EvaRB003PrivateEmptyBuilderPreflight/v1"
-POSTFLIGHT_CONTRACT = "EvaRB003PrivateEmptyBuilderPostflight/v1"
+BUILDER_A_PREFLIGHT_CONTRACT = "EvaRB003PrivateEmptyBuilderPreflight/v1"
+BUILDER_A_POSTFLIGHT_CONTRACT = "EvaRB003PrivateEmptyBuilderPostflight/v1"
+BUILDER_B_PREFLIGHT_CONTRACT = "EvaRB004PrivateEmptyBuilderPreflight/v1"
+BUILDER_B_POSTFLIGHT_CONTRACT = "EvaRB004PrivateEmptyBuilderPostflight/v1"
 RELEASE_AUTHORITY_CONTRACT = "EvaManagedBReleaseInputReceipt/v1"
 _SHA256 = re.compile(r"[0-9a-f]{64}\Z")
 _IMAGE_ID = re.compile(r"sha256:[0-9a-f]{64}\Z")
@@ -397,7 +399,7 @@ def _image_semantics(path: Path, *, expected_archive_sha256: str) -> dict[str, o
     }
 
 
-def verify_single_builder_a(
+def _verify_single_builder(
     *,
     preflight_path: Path,
     build_path: Path,
@@ -409,9 +411,15 @@ def verify_single_builder_a(
     expected_observation_challenge: str,
     expected_build_run_challenge: str,
     admission_challenge: str,
+    expected_task_id: str,
+    expected_preflight_contract: str,
+    expected_postflight_contract: str,
+    expected_run_prefix: str,
+    builder_label: str,
+    required_independent_builder_identity: dict[str, object] | None = None,
     prior_admission_paths: tuple[Path, ...] = (),
 ) -> dict[str, object]:
-    """Admit one fresh, empty, offline builder-A chain exactly once."""
+    """Admit one fresh, empty, offline single-builder chain exactly once."""
 
     if _COMMIT.fullmatch(expected_source_commit) is None:
         raise TwoBuilderError("expected source commit is invalid")
@@ -446,9 +454,9 @@ def verify_single_builder_a(
     if len(set(paths)) != len(paths):
         raise TwoBuilderError("single-builder artifacts require distinct paths")
     documents = {
-        "preflight": _json_file(preflight_path, label="builder-A preflight"),
-        "build": _json_file(build_path, label="builder-A build receipt"),
-        "postflight": _json_file(postflight_path, label="builder-A postflight"),
+        "preflight": _json_file(preflight_path, label=f"{builder_label} preflight"),
+        "build": _json_file(build_path, label=f"{builder_label} build receipt"),
+        "postflight": _json_file(postflight_path, label=f"{builder_label} postflight"),
         "releaseAuthority": _json_file(
             release_authority_path, label="release authority receipt"
         ),
@@ -487,11 +495,11 @@ def verify_single_builder_a(
             "status",
             "taskId",
         },
-        label="builder-A preflight",
+        label=f"{builder_label} preflight",
     )
     if (
-        preflight.get("contract") != PREFLIGHT_CONTRACT
-        or preflight.get("taskId") != "RB-003"
+        preflight.get("contract") != expected_preflight_contract
+        or preflight.get("taskId") != expected_task_id
         or preflight.get("status") != "empty_offline_builder_observed"
         or preflight.get("sourceCommit") != expected_source_commit
         or preflight.get("releaseAuthoritySha256") != expected_authority_sha256
@@ -503,17 +511,31 @@ def verify_single_builder_a(
         or preflight.get("buildkitDiskUsageRaw")
         != "Reclaimable:\t0B\nTotal:\t\t0B\n"
     ):
-        raise TwoBuilderError("builder-A preflight is not fresh and empty")
+        raise TwoBuilderError(f"{builder_label} preflight is not fresh and empty")
     run_id = preflight.get("runId")
-    if not isinstance(run_id, str) or not run_id.startswith("rb003-builder-a-"):
-        raise TwoBuilderError("builder-A run ID is invalid")
+    if not isinstance(run_id, str) or not run_id.startswith(expected_run_prefix):
+        raise TwoBuilderError(f"{builder_label} run ID is invalid")
     preflight_builder = _builder_measurement(preflight.get("builderIdentity"))
     if (
         preflight_builder.get("backend") != "docker-buildx/docker"
         or preflight_builder.get("containerdImageStore")
         != "io.containerd.snapshotter.v1"
     ):
-        raise TwoBuilderError("builder-A backend is not sealed OCI capable")
+        raise TwoBuilderError(f"{builder_label} backend is not sealed OCI capable")
+    if required_independent_builder_identity is not None:
+        for key in (
+            "buildkitNodeId",
+            "containerdContainersNamespace",
+            "containerdPluginsNamespace",
+            "containerdSocketIdentitySha256",
+            "daemonId",
+            "socketIdentitySha256",
+            "stateRootIdentitySha256",
+        ):
+            if preflight_builder[key] == required_independent_builder_identity[key]:
+                raise TwoBuilderError(
+                    f"{builder_label} identity is not independent from builder-A"
+                )
     docker_info = _object(preflight.get("dockerInfo"), label="preflight Docker info")
     if (
         docker_info.get("imageCount") != 0
@@ -524,7 +546,9 @@ def verify_single_builder_a(
         or ["driver-type", "io.containerd.snapshotter.v1"]
         not in docker_info.get("driverStatus", [])
     ):
-        raise TwoBuilderError("builder-A Docker store was not empty or offline")
+        raise TwoBuilderError(
+            f"{builder_label} Docker store was not empty or offline"
+        )
     containerd = _object(
         docker_info.get("containerd"), label="preflight containerd binding"
     )
@@ -539,7 +563,7 @@ def verify_single_builder_a(
         or namespaces.get("Plugins")
         != preflight_builder["containerdPluginsNamespace"]
     ):
-        raise TwoBuilderError("builder-A containerd binding differs")
+        raise TwoBuilderError(f"{builder_label} containerd binding differs")
     _offline_namespace(preflight.get("networkNamespace"), label="preflight network")
 
     build_builder = _object(build["builder"], label="build builder")
@@ -547,7 +571,7 @@ def verify_single_builder_a(
         build_builder["identity"] != preflight_builder
         or build_builder["runChallenge"] != expected_build_run_challenge
     ):
-        raise TwoBuilderError("builder-A build binding differs from preflight")
+        raise TwoBuilderError(f"{builder_label} build binding differs from preflight")
     semantics = _image_semantics(
         archive_path, expected_archive_sha256=str(build["archiveSha256"])
     )
@@ -588,12 +612,12 @@ def verify_single_builder_a(
             "status",
             "taskId",
         },
-        label="builder-A postflight",
+        label=f"{builder_label} postflight",
     )
     postflight_builder = _builder_measurement(postflight.get("builderIdentity"))
     if (
-        postflight.get("contract") != POSTFLIGHT_CONTRACT
-        or postflight.get("taskId") != "RB-003"
+        postflight.get("contract") != expected_postflight_contract
+        or postflight.get("taskId") != expected_task_id
         or postflight.get("status") != "candidate_only_offline_postflight_observed"
         or postflight.get("runId") != run_id
         or postflight.get("sourceCommit") != expected_source_commit
@@ -613,11 +637,13 @@ def verify_single_builder_a(
         or postflight.get("postflightBuilderMatchesBuildAfter") is not True
         or postflight.get("sealedBaseImagesLoadedIntoDocker") != 0
     ):
-        raise TwoBuilderError("builder-A postflight chain differs")
+        raise TwoBuilderError(f"{builder_label} postflight chain differs")
     _offline_namespace(postflight.get("networkNamespace"), label="postflight network")
     post_docker = _object(postflight.get("dockerInfo"), label="postflight Docker info")
     if post_docker.get("imageCount") != 1 or post_docker.get("containerCount") != 0:
-        raise TwoBuilderError("builder-A postflight contains unexpected Docker state")
+        raise TwoBuilderError(
+            f"{builder_label} postflight contains unexpected Docker state"
+        )
     docker_images = postflight.get("dockerImages")
     containerd_images = postflight.get("containerdImages")
     if (
@@ -628,7 +654,9 @@ def verify_single_builder_a(
         or len(containerd_images) != 1
         or not containerd_images[0].endswith(str(build["imageId"]))
     ):
-        raise TwoBuilderError("builder-A postflight does not contain only the candidate")
+        raise TwoBuilderError(
+            f"{builder_label} postflight does not contain only the candidate"
+        )
     base_exit_codes = _object(
         postflight.get("sealedBaseImageInspectExitCodes"),
         label="sealed base image inspect results",
@@ -656,27 +684,42 @@ def verify_single_builder_a(
     replay_keys = {
         "admissionChallenge": admission_challenge,
         "buildRunChallenge": expected_build_run_challenge,
+        "buildkitNodeId": str(preflight_builder["buildkitNodeId"]),
+        "containerdContainersNamespace": str(
+            preflight_builder["containerdContainersNamespace"]
+        ),
+        "containerdPluginsNamespace": str(
+            preflight_builder["containerdPluginsNamespace"]
+        ),
+        "containerdSocketIdentitySha256": str(
+            preflight_builder["containerdSocketIdentitySha256"]
+        ),
         "daemonId": str(preflight_builder["daemonId"]),
         "observationChallenge": expected_observation_challenge,
+        "socketIdentitySha256": str(preflight_builder["socketIdentitySha256"]),
         "stateRootIdentitySha256": str(preflight_builder["stateRootIdentitySha256"]),
-        **chain_hashes,
+        "buildReceiptSha256": hashes["build"],
+        "candidateReceiptSha256": _sha256(candidate_receipt_raw),
+        "postflightReceiptSha256": hashes["postflight"],
+        "preflightReceiptSha256": hashes["preflight"],
     }
     for path in prior_admission_paths:
         prior, _raw = _json_file(path, label="prior builder admission")
-        if prior.get("contract") != SINGLE_BUILDER_CONTRACT:
+        if (
+            prior.get("contract") != SINGLE_BUILDER_CONTRACT
+            or prior.get("status") != "passed"
+            or prior.get("sourceCommit") != expected_source_commit
+            or prior.get("releaseAuthoritySha256") != expected_authority_sha256
+        ):
             raise TwoBuilderError("prior builder admission contract differs")
         prior_replay = _object(prior.get("replayKeys"), label="prior replay keys")
         if any(prior_replay.get(key) == value for key, value in replay_keys.items()):
-            raise TwoBuilderError("builder-A receipt, challenge, or identity was reused")
+            raise TwoBuilderError(
+                f"{builder_label} receipt, challenge, or identity was reused"
+            )
 
     return {
-        "builder": {
-            "backend": preflight_builder["backend"],
-            "buildkitNodeId": preflight_builder["buildkitNodeId"],
-            "buildkitVersion": preflight_builder["buildkitVersion"],
-            "daemonId": preflight_builder["daemonId"],
-            "dockerServerVersion": preflight_builder["dockerServerVersion"],
-        },
+        "builder": preflight_builder,
         "candidate": {**semantics, "imageId": build["imageId"]},
         "chain": chain_hashes,
         "contract": SINGLE_BUILDER_CONTRACT,
@@ -685,7 +728,174 @@ def verify_single_builder_a(
         "runId": run_id,
         "sourceCommit": expected_source_commit,
         "status": "passed",
+        "taskId": expected_task_id,
     }
+
+
+def verify_single_builder_a(
+    *,
+    preflight_path: Path,
+    build_path: Path,
+    postflight_path: Path,
+    archive_path: Path,
+    release_authority_path: Path,
+    expected_source_commit: str,
+    expected_authority_sha256: str,
+    expected_observation_challenge: str,
+    expected_build_run_challenge: str,
+    admission_challenge: str,
+    prior_admission_paths: tuple[Path, ...] = (),
+) -> dict[str, object]:
+    """Admit one fresh, empty, offline builder-A chain exactly once."""
+
+    return _verify_single_builder(
+        preflight_path=preflight_path,
+        build_path=build_path,
+        postflight_path=postflight_path,
+        archive_path=archive_path,
+        release_authority_path=release_authority_path,
+        expected_source_commit=expected_source_commit,
+        expected_authority_sha256=expected_authority_sha256,
+        expected_observation_challenge=expected_observation_challenge,
+        expected_build_run_challenge=expected_build_run_challenge,
+        admission_challenge=admission_challenge,
+        expected_task_id="RB-003",
+        expected_preflight_contract=BUILDER_A_PREFLIGHT_CONTRACT,
+        expected_postflight_contract=BUILDER_A_POSTFLIGHT_CONTRACT,
+        expected_run_prefix="rb003-builder-a-",
+        builder_label="builder-A",
+        prior_admission_paths=prior_admission_paths,
+    )
+
+
+def _builder_a_prior_identity(
+    *,
+    admission_path: Path,
+    preflight_path: Path,
+    expected_source_commit: str,
+    expected_authority_sha256: str,
+) -> dict[str, object]:
+    if admission_path == preflight_path:
+        raise TwoBuilderError("builder-A admission and preflight paths must differ")
+    admission, _admission_raw = _json_file(
+        admission_path, label="builder-A admission"
+    )
+    if (
+        admission.get("contract") != SINGLE_BUILDER_CONTRACT
+        or admission.get("status") != "passed"
+        or admission.get("sourceCommit") != expected_source_commit
+        or admission.get("releaseAuthoritySha256") != expected_authority_sha256
+        or not isinstance(admission.get("runId"), str)
+        or not admission["runId"].startswith("rb003-builder-a-")
+    ):
+        raise TwoBuilderError("builder-A prior admission contract differs")
+    chain = _object(admission.get("chain"), label="builder-A prior chain")
+    preflight, preflight_raw = _json_file(
+        preflight_path, label="builder-A prior preflight"
+    )
+    if chain.get("preflightReceiptSha256") != _sha256(preflight_raw):
+        raise TwoBuilderError("builder-A preflight differs from its admission")
+    if (
+        preflight.get("contract") != BUILDER_A_PREFLIGHT_CONTRACT
+        or preflight.get("taskId") != "RB-003"
+        or preflight.get("status") != "empty_offline_builder_observed"
+        or preflight.get("sourceCommit") != expected_source_commit
+        or preflight.get("releaseAuthoritySha256") != expected_authority_sha256
+        or preflight.get("runId") != admission["runId"]
+    ):
+        raise TwoBuilderError("builder-A prior preflight contract differs")
+    identity = _builder_measurement(preflight.get("builderIdentity"))
+    summary = _object(admission.get("builder"), label="builder-A prior summary")
+    for key in (
+        "backend",
+        "buildkitNodeId",
+        "buildkitVersion",
+        "daemonId",
+        "dockerServerVersion",
+    ):
+        if summary.get(key) != identity[key]:
+            raise TwoBuilderError("builder-A admission summary differs from preflight")
+    replay = _object(admission.get("replayKeys"), label="builder-A prior replay keys")
+    required_replay = {
+        "admissionChallenge",
+        "buildReceiptSha256",
+        "buildRunChallenge",
+        "candidateReceiptSha256",
+        "daemonId",
+        "observationChallenge",
+        "postflightReceiptSha256",
+        "preflightReceiptSha256",
+        "stateRootIdentitySha256",
+    }
+    if not required_replay.issubset(replay):
+        raise TwoBuilderError("builder-A prior replay keys differ")
+    for key in ("admissionChallenge", "buildRunChallenge", "observationChallenge"):
+        _challenge(replay.get(key), label=f"builder-A prior {key}")
+    for key in (
+        "buildReceiptSha256",
+        "candidateReceiptSha256",
+        "postflightReceiptSha256",
+        "preflightReceiptSha256",
+    ):
+        if replay.get(key) != chain.get(key):
+            raise TwoBuilderError("builder-A replay evidence differs from its chain")
+    for key in (
+        "buildkitNodeId",
+        "containerdContainersNamespace",
+        "containerdPluginsNamespace",
+        "containerdSocketIdentitySha256",
+        "daemonId",
+        "socketIdentitySha256",
+        "stateRootIdentitySha256",
+    ):
+        if key in replay and replay[key] != identity[key]:
+            raise TwoBuilderError("builder-A replay identity differs from preflight")
+    return identity
+
+
+def verify_single_builder_b(
+    *,
+    preflight_path: Path,
+    build_path: Path,
+    postflight_path: Path,
+    archive_path: Path,
+    release_authority_path: Path,
+    builder_a_admission_path: Path,
+    builder_a_preflight_path: Path,
+    expected_source_commit: str,
+    expected_authority_sha256: str,
+    expected_observation_challenge: str,
+    expected_build_run_challenge: str,
+    admission_challenge: str,
+) -> dict[str, object]:
+    """Admit builder B only when its full chain is independent of admitted A."""
+
+    builder_a_identity = _builder_a_prior_identity(
+        admission_path=builder_a_admission_path,
+        preflight_path=builder_a_preflight_path,
+        expected_source_commit=expected_source_commit,
+        expected_authority_sha256=expected_authority_sha256,
+    )
+
+    return _verify_single_builder(
+        preflight_path=preflight_path,
+        build_path=build_path,
+        postflight_path=postflight_path,
+        archive_path=archive_path,
+        release_authority_path=release_authority_path,
+        expected_source_commit=expected_source_commit,
+        expected_authority_sha256=expected_authority_sha256,
+        expected_observation_challenge=expected_observation_challenge,
+        expected_build_run_challenge=expected_build_run_challenge,
+        admission_challenge=admission_challenge,
+        expected_task_id="RB-004",
+        expected_preflight_contract=BUILDER_B_PREFLIGHT_CONTRACT,
+        expected_postflight_contract=BUILDER_B_POSTFLIGHT_CONTRACT,
+        expected_run_prefix="rb004-builder-b-",
+        builder_label="builder-B",
+        required_independent_builder_identity=builder_a_identity,
+        prior_admission_paths=(builder_a_admission_path,),
+    )
 
 
 def verify_two_builds(
