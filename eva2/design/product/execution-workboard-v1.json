@@ -1,7 +1,7 @@
 {
   "contract": "EvaExecutionWorkboard/v1",
   "schemaVersion": 1,
-  "lastUpdated": "2026-09-01",
+  "lastUpdated": "2026-09-02",
   "sequencePolicy": "done_then_one_primary_then_queued",
   "commandWorkingDirectory": "eva2",
   "inventoryPath": "docs/eva-repository-inventory.generated.json",
@@ -363,6 +363,7 @@
   "milestones": [
     {"id": "RB-009", "order": 90, "area": "Releasebasis", "title": "Fysieke bewijsset beoordelen", "outcome": "Een onafhankelijke reviewer controleert de volledige releaseketen."},
     {"id": "RB-010", "order": 100, "area": "Releasebasis", "title": "A/B-besluit nemen", "outcome": "Alleen volledig groen mag naar het niet-actieve slot."},
+    {"id": "CP-000", "order": 105, "area": "Continue kwaliteitsvergelijking", "title": "Vergelijking per productkaart afdwingen", "outcome": "Vóór iedere productfunctie blokkeert de checker zonder actuele open-source- en concurrentnulmeting; klaar vereist dezelfde praktijktest en hetzelfde budget, een gelijk-of-beter resultaat en bewijs dat dubbele Eva-code is verwijderd."},
     {"id": "OS-001", "order": 110, "area": "Open source en codebeheer", "title": "Inventaris en bereikbaarheid afdwingen", "outcome": "Elk gevolgd bestand heeft één eigenaar en aantoonbare noodzaak."},
     {"id": "OS-002", "order": 120, "area": "Open source en codebeheer", "title": "Pydantic-wrapper consolideren", "outcome": "Pydantic doet generiek modelwerk; Eva houdt alleen unieke grenzen."},
     {"id": "OS-003", "order": 130, "area": "Open source en codebeheer", "title": "Child-provider consolideren", "outcome": "Hoofd- en hulpagent delen één provideradapter."},
@@ -386,8 +387,8 @@
     {"id": "IN-001", "order": 310, "area": "Installatie", "title": "Fresh install voor gebruikers", "outcome": "Een gewone gebruiker installeert Eva zonder terminal of configuratiebestanden."},
     {"id": "IN-002", "order": 320, "area": "Installatie", "title": "Naar andere computer verplaatsen", "outcome": "Identiteit en data herstellen; connectoren veilig opnieuw koppelen."},
     {"id": "IN-003", "order": 330, "area": "Installatie", "title": "Consumentenupdates leveren", "outcome": "Updates doorlopen dezelfde poort en rollen verliesloos terug."},
-    {"id": "CP-001", "order": 340, "area": "Vergelijking", "title": "Gelijke productmatrix uitvoeren", "outcome": "Actuele concurrenten krijgen hetzelfde model, budget en opdrachten."},
-    {"id": "CP-002", "order": 350, "area": "Vergelijking", "title": "Cross-domainproef uitvoeren", "outcome": "Gesprek, geheugen, tools, browser, subagents en beheer zijn eerlijk vergeleken."},
+    {"id": "CP-001", "order": 340, "area": "Eindvergelijking", "title": "Volledige productmatrix opnieuw uitvoeren", "outcome": "De tussentijdse gelijke proeven worden op de gezamenlijke releasekandidaat en actuele concurrenten als één geheel herhaald."},
+    {"id": "CP-002", "order": 350, "area": "Eindvergelijking", "title": "Cross-domainwinst opnieuw controleren", "outcome": "Gesprek, geheugen, tools, browser, subagents en beheer bevestigen samen de eerder gemeten voordelen."},
     {"id": "CP-003", "order": 360, "area": "Vergelijking", "title": "Officiële benchmarks uitvoeren", "outcome": "AgentBench, GAIA en OSWorld gebruiken officiële scorers en trajecten."},
     {"id": "FN-001", "order": 370, "area": "Eindacceptatie", "title": "Eindkandidaat bevriezen", "outcome": "Image, configuratie en bewijsset zijn onveranderlijk gebonden."},
     {"id": "FN-002", "order": 380, "area": "Eindacceptatie", "title": "Computerherstart bewijzen", "outcome": "Alles komt zonder handmatige reparatie correct terug."},

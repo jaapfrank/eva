@@ -1,6 +1,6 @@
 # Eva 2 — uitvoerbaar werkbord
 
-Laatst bijgewerkt: 2026-09-01.
+Laatst bijgewerkt: 2026-09-02.
 
 Dit bord is automatisch uit de machineleesbare werklijst gemaakt. Handmatige
 afwijkingen worden geweigerd. We ronden één kleine kaart volledig af voordat
@@ -48,6 +48,7 @@ nadat zij als eerstvolgende kleine kaart exacte bestanden en tests heeft.
 |---:|---|---|
 | 90 | `RB-009` — Fysieke bewijsset beoordelen | Een onafhankelijke reviewer controleert de volledige releaseketen. |
 | 100 | `RB-010` — A/B-besluit nemen | Alleen volledig groen mag naar het niet-actieve slot. |
+| 105 | `CP-000` — Vergelijking per productkaart afdwingen | Vóór iedere productfunctie blokkeert de checker zonder actuele open-source- en concurrentnulmeting; klaar vereist dezelfde praktijktest en hetzelfde budget, een gelijk-of-beter resultaat en bewijs dat dubbele Eva-code is verwijderd. |
 | 110 | `OS-001` — Inventaris en bereikbaarheid afdwingen | Elk gevolgd bestand heeft één eigenaar en aantoonbare noodzaak. |
 | 120 | `OS-002` — Pydantic-wrapper consolideren | Pydantic doet generiek modelwerk; Eva houdt alleen unieke grenzen. |
 | 130 | `OS-003` — Child-provider consolideren | Hoofd- en hulpagent delen één provideradapter. |
@@ -71,8 +72,8 @@ nadat zij als eerstvolgende kleine kaart exacte bestanden en tests heeft.
 | 310 | `IN-001` — Fresh install voor gebruikers | Een gewone gebruiker installeert Eva zonder terminal of configuratiebestanden. |
 | 320 | `IN-002` — Naar andere computer verplaatsen | Identiteit en data herstellen; connectoren veilig opnieuw koppelen. |
 | 330 | `IN-003` — Consumentenupdates leveren | Updates doorlopen dezelfde poort en rollen verliesloos terug. |
-| 340 | `CP-001` — Gelijke productmatrix uitvoeren | Actuele concurrenten krijgen hetzelfde model, budget en opdrachten. |
-| 350 | `CP-002` — Cross-domainproef uitvoeren | Gesprek, geheugen, tools, browser, subagents en beheer zijn eerlijk vergeleken. |
+| 340 | `CP-001` — Volledige productmatrix opnieuw uitvoeren | De tussentijdse gelijke proeven worden op de gezamenlijke releasekandidaat en actuele concurrenten als één geheel herhaald. |
+| 350 | `CP-002` — Cross-domainwinst opnieuw controleren | Gesprek, geheugen, tools, browser, subagents en beheer bevestigen samen de eerder gemeten voordelen. |
 | 360 | `CP-003` — Officiële benchmarks uitvoeren | AgentBench, GAIA en OSWorld gebruiken officiële scorers en trajecten. |
 | 370 | `FN-001` — Eindkandidaat bevriezen | Image, configuratie en bewijsset zijn onveranderlijk gebonden. |
 | 380 | `FN-002` — Computerherstart bewijzen | Alles komt zonder handmatige reparatie correct terug. |
