@@ -14,6 +14,9 @@ from tools.managed_b_candidate.release_inputs import (
     _CONNECTOR_SDK_COPY_PATHS,
     _DURABLE_TOOL_PROJECTION_INPUTS,
     _DURABLE_TOOL_PROJECTION_TESTS,
+    _RB001_BOOTSTRAP_INPUTS,
+    _RB001_BOOTSTRAP_TESTS,
+    _RB001_IMPLEMENTATION_COMMIT,
     _TOOL01_SOURCE_GATE_INPUTS,
     _TOOL01_SOURCE_GATE_TESTS,
     _pin_rows,
@@ -234,9 +237,57 @@ def test_release_path_closure_binds_the_exact_connector_sdk_copy_set() -> None:
     assert receipt["durable_tool_projection_tests_bound"] is True
     assert receipt["tool01_source_gate_inputs_bound"] is True
     assert receipt["tool01_source_gate_executed"] is False
+    assert receipt["rb001_bootstrap"] == {
+        "authority_pins_bind_bytes": True,
+        "implementation_commit": "d54dd0af97514acf6189ef7a1c0f66dafbb86086",
+        "inputs": [
+            "tools/build_managed_b_offline_candidate.py",
+            "tools/managed_b_candidate/base_image.py",
+            "tools/managed_b_candidate/candidate_image.py",
+        ],
+        "tests": [
+            "tests/operations/test_build_managed_b_offline_candidate.py",
+            "tests/operations/test_managed_b_base_image.py",
+            "tests/operations/test_managed_b_candidate_image.py",
+        ],
+    }
 
     files["connector_sdk/unreviewed.py"] = (b"unreviewed\n", 0o644)
     with pytest.raises(RuntimeError, match="connector SDK archive file set differs"):
+        _validate_release_path_closure(files, inputs, tests)
+
+
+def test_rb001_bootstrap_binding_is_exact_and_commit_bound() -> None:
+    assert _RB001_IMPLEMENTATION_COMMIT == (
+        "d54dd0af97514acf6189ef7a1c0f66dafbb86086"
+    )
+    assert _RB001_BOOTSTRAP_INPUTS == {
+        "tools/build_managed_b_offline_candidate.py",
+        "tools/managed_b_candidate/base_image.py",
+        "tools/managed_b_candidate/candidate_image.py",
+    }
+    assert _RB001_BOOTSTRAP_TESTS == {
+        "tests/operations/test_build_managed_b_offline_candidate.py",
+        "tests/operations/test_managed_b_base_image.py",
+        "tests/operations/test_managed_b_candidate_image.py",
+    }
+
+
+@pytest.mark.parametrize(
+    ("kind", "removed"),
+    tuple(("input", path) for path in sorted(_RB001_BOOTSTRAP_INPUTS))
+    + tuple(("test", path) for path in sorted(_RB001_BOOTSTRAP_TESTS)),
+)
+def test_rb001_bootstrap_closure_refuses_each_missing_path(
+    kind: str, removed: str
+) -> None:
+    files, inputs, tests = _release_closure_fixture()
+    if kind == "input":
+        inputs = tuple(row for row in inputs if row[0] != removed)
+    else:
+        tests = tuple(row for row in tests if row[0] != removed)
+
+    with pytest.raises(RuntimeError, match="RB-001 bootstrap|build provenance"):
         _validate_release_path_closure(files, inputs, tests)
 
 

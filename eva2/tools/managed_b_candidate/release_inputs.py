@@ -76,6 +76,17 @@ _BUILD_PROVENANCE_TESTS = {
     "tests/operations/test_two_builder_reproducibility.py",
     "tests/support/managed_b_runtime_smoke.py",
 }
+_RB001_IMPLEMENTATION_COMMIT = "d54dd0af97514acf6189ef7a1c0f66dafbb86086"
+_RB001_BOOTSTRAP_INPUTS = {
+    "tools/build_managed_b_offline_candidate.py",
+    "tools/managed_b_candidate/base_image.py",
+    "tools/managed_b_candidate/candidate_image.py",
+}
+_RB001_BOOTSTRAP_TESTS = {
+    "tests/operations/test_build_managed_b_offline_candidate.py",
+    "tests/operations/test_managed_b_base_image.py",
+    "tests/operations/test_managed_b_candidate_image.py",
+}
 _CONNECTOR_SDK_COPY_PATHS = {
     "connector_sdk/__init__.py",
     "connector_sdk/conformance/README.md",
@@ -398,6 +409,10 @@ def _validate_release_path_closure(
         raise RuntimeError("managed B build provenance input set is incomplete")
     if not _BUILD_PROVENANCE_TESTS <= test_paths:
         raise RuntimeError("managed B build provenance test set is incomplete")
+    if not _RB001_BOOTSTRAP_INPUTS <= input_paths:
+        raise RuntimeError("managed B RB-001 bootstrap input set is incomplete")
+    if not _RB001_BOOTSTRAP_TESTS <= test_paths:
+        raise RuntimeError("managed B RB-001 bootstrap test set is incomplete")
     if not _CONNECTOR_SDK_COPY_PATHS <= input_paths:
         raise RuntimeError("managed B connector SDK release input set is incomplete")
     actual_connector_paths = {
@@ -421,6 +436,12 @@ def _validate_release_path_closure(
         "durable_tool_projection_tests_bound": True,
         "tool01_source_gate_inputs_bound": True,
         "tool01_source_gate_executed": False,
+        "rb001_bootstrap": {
+            "authority_pins_bind_bytes": True,
+            "implementation_commit": _RB001_IMPLEMENTATION_COMMIT,
+            "inputs": sorted(_RB001_BOOTSTRAP_INPUTS),
+            "tests": sorted(_RB001_BOOTSTRAP_TESTS),
+        },
     }
 
 
