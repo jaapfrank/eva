@@ -1,7 +1,9 @@
-# Experimental two-wheel overlay for the sealed requirements-4d.lock baseline.
+# Experimental three-wheel overlay for the sealed requirements-4d.lock baseline.
 # Install only with the authority's --no-deps protocol. This is not a complete
 # environment lock and must never replace eva2/requirements-4d.lock.
-pydantic-ai-slim==2.36.0 \
-    --hash=sha256:90957c37c99d3bfbfab4be632b733bf50d563686fbfbf8a2e42b6c91a4fca877
-pydantic-graph==2.36.0 \
-    --hash=sha256:c0c7cddb87038298b367036d799b4b605b2a23858869b2b661706df6e1b811f2
+genai-prices==0.1.5 \
+    --hash=sha256:5215706950decd833ce3527a9e1e745ad0dbdd35ce1b33ac1f7167699640b82a
+pydantic-ai-slim==2.37.0 \
+    --hash=sha256:439973ce2dae1e64631b05b803743fe44b3b1791514b16488c005b1ca4f2b3e7
+pydantic-graph==2.37.0 \
+    --hash=sha256:7b07237264b92f57aa06b1686315005e320099106534fc20da4081873f68c31f

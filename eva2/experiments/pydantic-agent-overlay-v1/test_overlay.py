@@ -6,6 +6,7 @@ import importlib.util
 import json
 from pathlib import Path
 import sys
+import zipfile
 
 import pytest
 
@@ -36,17 +37,18 @@ def _requirement(name: str, version: str, digest: str) -> str:
     return f"{name}=={version} {chr(92)}\n    --hash=sha256:{digest}"
 
 
-def test_committed_overlay_is_exactly_two_replacements_over_live_lock() -> None:
+def test_committed_overlay_is_exactly_three_replacements_over_live_lock() -> None:
     receipt = checker.inspect_overlay(*_inputs())
     assert receipt == {
         "contract": "Eva2PydanticAgentOverlayInspection/v1",
         "status": "passed",
         "basePackageCount": 38,
-        "overlayWheelCount": 2,
+        "overlayWheelCount": 3,
         "mergedPackageCount": 38,
         "changedDistributions": {
-            "pydantic-ai-slim": {"from": "2.32.1", "to": "2.36.0"},
-            "pydantic-graph": {"from": "2.32.1", "to": "2.36.0"},
+            "genai-prices": {"from": "0.1.4", "to": "0.1.5"},
+            "pydantic-ai-slim": {"from": "2.36.0", "to": "2.37.0"},
+            "pydantic-graph": {"from": "2.36.0", "to": "2.37.0"},
         },
         "mcpExtraPresent": False,
         "secondHttpStackPresent": False,
@@ -68,7 +70,7 @@ def test_overlay_refuses_mcp_and_second_http_stack(extra: str) -> None:
     candidate = overlay + b"\n" + extra.encode()
     authority = json.loads(authority_raw)
     authority["overlayLock"]["sha256"] = hashlib.sha256(candidate).hexdigest()
-    with pytest.raises(checker.OverlayError, match="exactly the two approved"):
+    with pytest.raises(checker.OverlayError, match="exactly the three approved"):
         checker.inspect_overlay(base, candidate, _canonical(authority))
 
 
@@ -98,49 +100,93 @@ def test_overlay_refuses_authority_or_lock_drift() -> None:
     value = json.loads(authority)
     changed = copy.deepcopy(value)
     changed["mergedResult"]["packageCount"] = 69
-    with pytest.raises(checker.OverlayError, match="distribution set"):
+    with pytest.raises(checker.OverlayError, match="merged result authority"):
         checker.inspect_overlay(base, overlay, _canonical(changed))
     with pytest.raises(checker.OverlayError, match="overlay requirements lock digest"):
         checker.inspect_overlay(base, overlay + b"\n", authority)
 
 
-def test_exact_two_wheelhouse_bytes_are_optional_but_fail_closed(
+@pytest.mark.parametrize(
+    "case",
+    (
+        "install_with_deps",
+        "external_index",
+        "wrong_wheel_count",
+        "wrong_filename",
+        "wrong_size",
+        "invented_distribution",
+        "extra_top_level_key",
+    ),
+)
+def test_authority_safety_and_claim_fields_are_all_fail_closed(case: str) -> None:
+    base, overlay, authority_raw = _inputs()
+    authority = json.loads(authority_raw)
+    if case == "install_with_deps":
+        authority["overlayLock"]["installWithNoDeps"] = False
+    elif case == "external_index":
+        authority["installProtocol"]["commandShape"] = [
+            "python",
+            "-m",
+            "pip",
+            "install",
+            "--index-url=https://example.invalid/simple",
+        ]
+    elif case == "wrong_wheel_count":
+        authority["wheelhouse"]["expectedWheelCount"] = 99
+    elif case == "wrong_filename":
+        authority["wheelhouse"]["artifacts"][0]["filename"] = "other.whl"
+    elif case == "wrong_size":
+        authority["wheelhouse"]["artifacts"][0]["byteLength"] += 1
+    elif case == "invented_distribution":
+        authority["mergedResult"]["newDistributions"] = ["evil"]
+    elif case == "extra_top_level_key":
+        authority["unvalidated"] = True
+    else:  # pragma: no cover - parametrization is closed above
+        raise AssertionError(case)
+    with pytest.raises(checker.OverlayError):
+        checker.inspect_overlay(base, overlay, _canonical(authority))
+
+
+def test_physical_three_wheelhouse_bytes_are_fail_closed(
     tmp_path: Path,
 ) -> None:
-    base, _, authority_raw = _inputs()
+    _, _, authority_raw = _inputs()
     authority = json.loads(authority_raw)
     wheelhouse = tmp_path / "wheelhouse"
     wheelhouse.mkdir()
-    # Fixture bytes get a fixture-local authority. Production authority remains
-    # bound to the two real PyPI wheel digests and lengths.
+    # Fixture wheels exercise the physical validator without weakening the
+    # committed authority's binding to the three real PyPI wheel bytes.
     for artifact in authority["wheelhouse"]["artifacts"]:
-        raw = artifact["filename"].encode()
+        wheel_path = wheelhouse / artifact["filename"]
+        dist_info = artifact["filename"].split("-py3-none-any.whl", 1)[0]
+        metadata = [
+            "Metadata-Version: 2.4",
+            f"Name: {artifact['distribution']}",
+            f"Version: {artifact['version']}",
+        ]
+        metadata.extend(
+            f"Requires-Dist: {requirement}"
+            for requirement in checker.EXPECTED_CORE_REQUIRES_DIST[
+                artifact["distribution"]
+            ]
+        )
+        with zipfile.ZipFile(wheel_path, "w") as archive:
+            archive.writestr(
+                f"{dist_info}.dist-info/METADATA", "\n".join(metadata) + "\n"
+            )
+        raw = wheel_path.read_bytes()
         artifact["byteLength"] = len(raw)
         artifact["sha256"] = hashlib.sha256(raw).hexdigest()
-        (wheelhouse / artifact["filename"]).write_bytes(raw)
-    fixture_overlay = "\n".join(
-        _requirement(
-            artifact["distribution"],
-            artifact["version"],
-            artifact["sha256"],
-        )
-        for artifact in authority["wheelhouse"]["artifacts"]
-    ).encode()
-    authority["overlayLock"]["sha256"] = hashlib.sha256(fixture_overlay).hexdigest()
-    receipt = checker.inspect_overlay(
-        base,
-        fixture_overlay,
-        _canonical(authority),
-        wheelhouse=wheelhouse,
-    )
-    assert receipt["wheelBytesValidated"] is True
+    checker._validate_wheelhouse(wheelhouse, authority["wheelhouse"]["artifacts"])
     (wheelhouse / authority["wheelhouse"]["artifacts"][0]["filename"]).write_bytes(
         b"tampered"
     )
     with pytest.raises(checker.OverlayError, match="wheel (size|digest) differs"):
-        checker.inspect_overlay(
-            base,
-            fixture_overlay,
-            _canonical(authority),
-            wheelhouse=wheelhouse,
-        )
+        checker._validate_wheelhouse(wheelhouse, authority["wheelhouse"]["artifacts"])
+
+
+def test_cli_requires_a_physical_wheelhouse(monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.setattr(sys, "argv", ["check_overlay.py"])
+    with pytest.raises(SystemExit) as error:
+        checker.main()
+    assert error.value.code == 2
