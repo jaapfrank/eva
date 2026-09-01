@@ -1,0 +1,105 @@
+{
+  "candidate": {
+    "buildNetworkUsed": false,
+    "imageArchiveSha256": "ef9f368e1129f63305cbe6fb1d7f0bd9ad92832e5e720ea9e58d27e5c3ede4bc",
+    "imageId": "sha256:fa451b174e4620619d358911603b024300605410e881521cf96044b4d0dfd557",
+    "imageSizeBytes": 84565186,
+    "runtimeUser": "65532:65532",
+    "scan": {
+      "critical": 0,
+      "databaseUpdatedAt": "2026-08-31T07:08:27.708070973Z",
+      "high": 0,
+      "rawResultSha256": "d1d43ec0ff924aa4b153b4a6017e40024328abacae10c56805de6785dd2b834b",
+      "scanner": "Trivy 0.74.0"
+    },
+    "sbomSha256": "3a478a4d76623d28dfcbbeb940afae3c1dc3afaca108244a4f828d54514983b4",
+    "sourceCommit": "038ef233428ce6504a0654b993312498e4f493c6"
+  },
+  "contract": "Eva2Tool01FilesystemProviderSigkillEvidence/v1",
+  "durableOutcome": {
+    "alembicHead": "4e_0007_delegated_private",
+    "checkpoint": {
+      "phase": "state_verified",
+      "revision": 3,
+      "status": "completed"
+    },
+    "eventTypes": [
+      "TOOL_REQUEST_ADMITTED",
+      "TOOL_PREPARED",
+      "STATE_VERIFIED"
+    ],
+    "executionTimeoutSeconds": 20,
+    "postgresVersionNumber": 160013,
+    "receiptSha256": "880c6b8b21a7a6eecb3a0c0178d44bae74ddfa65f09e8a05f9bd61200107e6b6",
+    "verificationTimeoutSeconds": 20
+  },
+  "issuedAt": "2026-09-01T07:19:50+02:00",
+  "model": {
+    "name": "gpt-5.4-mini",
+    "reasoning": "medium",
+    "selectedTool": "filesystem_24ae77c65343_write_file",
+    "selectionWasRuntimeDiscovered": true
+  },
+  "nonclaims": [
+    "This is candidate-only proof and does not promote or change the live Eva1 or Eva2 route.",
+    "The mutation was confined to a disposable filesystem-provider workspace and did not touch user files or live data.",
+    "This proves recovery for a mutation with an independently observable result, not universal exactly-once execution for non-observable effects.",
+    "One filesystem provider does not prove every future MCP provider, browser action, network discovery task or external service.",
+    "The proof did not grant Eva a general host filesystem, Docker socket, live database or live Home Assistant capability."
+  ],
+  "phases": [
+    {
+      "exitCode": 137,
+      "name": "select_execute_then_physical_sigkill",
+      "oomKilled": false,
+      "providerExecuteCallsAfterPhase": 1,
+      "providerObserveCallsAfterPhase": 0
+    },
+    {
+      "exitCode": 0,
+      "name": "fresh_process_independent_readback",
+      "providerExecuteCallsAfterPhase": 1,
+      "providerObserveCallsAfterPhase": 1
+    },
+    {
+      "exitCode": 0,
+      "name": "third_fresh_process_durable_replay",
+      "providerExecuteCallsAfterPhase": 1,
+      "providerObserveCallsAfterPhase": 1
+    }
+  ],
+  "proof": {
+    "acceptanceContract": "EvaTool01AcceptanceBundle/v2",
+    "bundleSha256": "d80e32963a8e5ca0edda5ae34da7211c59530def7eac6375340ade33994eabdf",
+    "distractorProviderCalls": 0,
+    "expectedAndObservedContent": "warme kopermaan",
+    "proofHarnessSha256": "a357be90292974dc1811c23d4d837b946d5cac6a0c8ea3d9ed8a71a11dd12e03",
+    "proofSourceCommit": "34c5b5f6b491236a2d9e85fb5c359055b3a33565",
+    "replacementStatus": "replacement_passed",
+    "runId": "tool01-v2-24ae77c65343",
+    "runtimeStatus": "runtime_passed",
+    "runtimeViolations": [],
+    "sourceAuthority": {
+      "blockers": [],
+      "pythonFiles": 220,
+      "soleToolLoopOwner": "eva.adapters.model.pydantic_conversation:PydanticConversationModel",
+      "status": "source_authority_passed",
+      "violations": []
+    }
+  },
+  "providerStack": {
+    "contextForgeImageId": "sha256:daf923c247fd569df5f8c9ee418cbc259fade564f78e0a0852937139a181c4dd",
+    "filesystemImageId": "sha256:bd31ea2dde76561fe662a551756f939e9007048956c300e54ad49a8c18ddfdc4",
+    "hostPortsPublished": false,
+    "postgresImageId": "sha256:5d143123fdf80462d1778cd4f24b9f7ca13c87174bca19141fb194c5a1ebca59",
+    "timeDistractorImageId": "sha256:2f095509d535a0769449f3b9417858f5c233dc74b1e09de335b48b7591d995a1"
+  },
+  "resourceCleanup": {
+    "candidateImageRetained": true,
+    "disposableContainersRemaining": 0,
+    "disposableNetworksRemaining": 0,
+    "disposableVolumesRemaining": 0,
+    "status": "completed_and_verified"
+  },
+  "status": "passed_tool01_v2_mutating_provider_candidate_only"
+}

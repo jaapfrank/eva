@@ -1,6 +1,6 @@
 # Eva 2 — projectbord en vergelijking
 
-Laatst bijgewerkt: 1 september 2026, 02:47 CEST
+Laatst bijgewerkt: 1 september 2026, 07:19 CEST
 
 ## Zo lees je dit bord
 
@@ -82,8 +82,8 @@ Eva's echte korte Codex-toegang alle drie fasen: streaming, uitgestelde
 toolkeuze zonder uitvoering en hervatten vanuit een synthetische receipt met
 nul aangeboden tools. Dit is nog geen liveclaim: de offline image en scan zijn
 inmiddels groen. Ook de echte runtimepariteit en een fysieke crash tijdens een
-externe providercall zijn nu groen; veilige A/B-promotie en een werkelijk
-toestandwijzigende providerproef ontbreken nog.
+externe providercall zijn groen. De toestandwijzigende TOOL01-v2-proef is nu
+eveneens kandidaat-groen; veilige A/B-promotie ontbreekt nog.
 
 De actuele Pydantic-versie heeft nu ook met Eva's echte korte Codex-toegang
 gepraat. De vaste, gesaneerde bronproef is volledig groen: het antwoord kwam in
@@ -94,14 +94,13 @@ hebben gemeten usage en bleven binnen 9.000 input- en 500 outputtokens. Er is
 in deze compatibiliteitsproef geen echte tool uitgevoerd en de productroute is
 niet gewijzigd.
 
-Exact dezelfde minimale image koos daarna via ContextForge een echte IBM-
-tijdtool. Nadat de provider had geantwoord maar vóór Eva haar resultaat had
-vastgelegd, is alleen Eva fysiek met `SIGKILL` gestopt. Een nieuw proces deed
-één aparte readback, voltooide dezelfde receipt en een derde vers proces deed
-nul extra providercalls. De externe teller bleef exact twee: één uitvoering en
-één controle. Dit bewijst veilig herstel voor een provider met betrouwbare
-readback. De tijdtool verandert niets; een fysieke mutatie en TOOL01 v2 blijven
-dus terecht open.
+De nieuwste exacte kandidaat koos daarna zelf een runtime-ontdekte
+bestandsprovider, schreef eenmaal `warme kopermaan` en werd na die mutatie maar
+vóór voltooiing fysiek met `SIGKILL` gestopt. Een nieuw proces las het bestand
+eenmaal apart terug; een derde proces gebruikte alleen het duurzame resultaat.
+De tellers bleven exact één mutatie en één readback, de afleider kreeg nul
+calls en TOOL01 v2 is groen. Dit is kandidaatbewijs in een wegwerpwerkmap; de
+image is nog niet via A/B live gezet.
 
 ## Praten met Eva
 
@@ -372,7 +371,7 @@ herstelbaar.
 |---|---|---|
 | Modelverkeer | `pydantic-ai-slim` met alleen de gekozen officiële provider-SDK | 🟡 `slim` is dezelfde Pydantic AI-agentkern zonder ongebruikte provider-, CLI- en UI-extra's; het maakt Eva dus niet minder slim. De exacte minimale image streamde via echte Codex, koos een uitgestelde tool, vervolgde uit een receipt en herstelde na een fysieke kill tijdens een echte externe providercall. Zij scant 0 hoog/0 kritisch. A/B-livegang ontbreekt nog |
 | Langetermijngeheugen | Hindsight | ✅ Live; 🟡 Eva's adapter moet nog kleiner |
-| Externe gereedschappen | Pydantic AI met runtime-ontdekte tools; ContextForge alleen als optionele gateway | 🟡 De gewone bronroute gebruikt Pydantic AI en houdt Eva's duurzame ledger/readback buiten het framework. Op de exacte image doorliep een echte IBM-provider uitvoering, fysieke `SIGKILL`, aparte readback en verse replay zonder dubbelen. Een toestandwijzigende provider met afzonderlijke observatie en een tweede echte dienst blijven open |
+| Externe gereedschappen | Pydantic AI met runtime-ontdekte tools; ContextForge alleen als optionele gateway | 🟡 De exacte kandidaat koos zelf een nieuwe bestandsprovider, muteerde eenmaal, overleefde daarna `SIGKILL`, deed in een nieuw proces precies één aparte readback en bij replay nul extra calls. TOOL01 v2 is kandidaat-groen; A/B-livegang en verwijdering van oude providerlijm ontbreken nog |
 | Subagents | Pydantic AI/Harness voor modelruns; onderhouden workflowmotor voor duurzaam werk | 🟡 Modelrun werkt; workflowkeuze nog niet gewonnen door een dependency |
 | Voice | Pipecat als eerste complete pipeline; Wyoming als lokale fallback | 🟡 Bake-off en fysieke proef ontbreken |
 | Browser | Playwright MCP tegenover Browser Use; daarna één winnaar | 🟡 Functioneel beproefd; nog geen releaseveilige winnaar |
@@ -400,9 +399,8 @@ gebruikersroute draait én de dubbele Eva-code daarna verdwijnt.
 
 ## Eerstvolgende zichtbare verbeteringen
 
-1. Op de scan-schone commitgebonden image één werkelijk toestandwijzigende
-   provider met afzonderlijke observatie en TOOL01 v2 bewijzen; pas daarna via
-   A/B promoveren.
+1. De TOOL01-v2-kandidaat met een gekopieerde database door de veilige A/B-
+   releasepoort sturen; pas na terugrolbewijs mag zij live worden.
 2. Dezelfde route met twee echte verwisselbare diensten bewijzen en de
    resterende Home Assistant-, e-mail- en handgeschreven dispatchfuncties
    verwijderen.
@@ -466,6 +464,9 @@ PostgreSQL-replay op exact die image staan in
 De echte IBM-providercall, fysieke `SIGKILL`, aparte readback en verse replay
 zonder extra providercall staan in
 [het externe-providercrashbewijs](evidence/product/pydantic-ai-2.36-real-provider-sigkill-2026-09-01.json).
+De toestandwijzigende bestandsproef met dezelfde crashgrens staat in
+[TOOL01 v2](experiments/tool01-replacement-acceptance-v2/README.md) en
+[de gesaneerde receipt](evidence/product/tool01-filesystem-provider-sigkill-2026-09-01.json).
 De vastgestelde Telegramverwarring, historische classificatie, live correctie
 en de nog open menselijke eindproef staan in
 [het Eva1/Eva2-dialooggrensbewijs](evidence/living-core/eva1-eva2-telegram-dialogue-isolation-2026-08-31.json).
