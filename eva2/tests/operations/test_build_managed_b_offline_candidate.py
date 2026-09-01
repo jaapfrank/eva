@@ -96,12 +96,17 @@ def _stub_pipeline(
             "build_image_digest": candidate.base_image_digest,
             "build_image_reference": candidate.build_image_reference,
             "candidate_image_id": "sha256:" + "8" * 64,
+            "candidate_image_archive_sha256": "b" * 64,
+            "candidate_image_config_digest": "sha256:" + "c" * 64,
+            "candidate_image_exporter": "docker",
             "candidate_image_size": 123456,
+            "candidate_provenance_attestation_enabled": False,
             "candidate_runtime_library_path": "LD_LIBRARY_PATH=/usr/local/lib",
             "candidate_source_commit": COMMIT,
             "candidate_source_date_epoch": candidate.source_date_epoch,
             "context_tree_sha256": "7" * 64,
-            "contract": "EvaManagedBOfflineCandidateImageReceipt/v2",
+            "candidate_timestamp_rewrite_enabled": True,
+            "contract": "EvaManagedBOfflineCandidateImageReceipt/v3",
             "network_used": False,
             "nonclaims": [],
             "status": "built_local_candidate",
@@ -205,7 +210,7 @@ def test_sequences_only_the_existing_offline_candidate_stages(
     assert receipt["network_used"] is False
     assert receipt["candidate"]["image_id"] == "sha256:" + "8" * 64
     assert receipt["candidate"]["receipt"]["contract"] == (
-        "EvaManagedBOfflineCandidateImageReceipt/v2"
+        "EvaManagedBOfflineCandidateImageReceipt/v3"
     )
     assert receipt["source"]["commit"] == COMMIT
     assert receipt["stages"]["wheelhouse"]["count"] == 38

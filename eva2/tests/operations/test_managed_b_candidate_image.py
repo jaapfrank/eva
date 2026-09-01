@@ -10,6 +10,8 @@ import pytest
 from tools.managed_b_candidate.base_image import MaterializedBaseImage
 from tools.managed_b_candidate.build_context import MaterializedBuildContext
 from tools.managed_b_candidate.candidate_image import (
+    _hash_image_archive,
+    _loaded_image_id,
     _read_iid,
     build_offline_candidate_image,
     validate_offline_candidate_image,
@@ -208,10 +210,20 @@ def _runner(
             return subprocess.CompletedProcess(
                 command, 0, stdout=json.dumps(value), stderr=""
             )
-        assert command[:2] == ["docker", "build"]
-        iidfile = Path(command[command.index("--iidfile") + 1])
-        iidfile.write_text(f"{IMAGE_ID}\n", encoding="ascii")
-        return subprocess.CompletedProcess(command, 0, stdout="", stderr="")
+        if command[:3] == ["docker", "buildx", "build"]:
+            iidfile = Path(command[command.index("--iidfile") + 1])
+            iidfile.write_text(f"{IMAGE_ID}\n", encoding="ascii")
+            output = command[command.index("--output") + 1]
+            destination = Path(output.split(",dest=", 1)[1].split(",", 1)[0])
+            destination.write_bytes(b"deterministic candidate archive")
+            return subprocess.CompletedProcess(command, 0, stdout="", stderr="")
+        assert command[:4] == ["docker", "image", "load", "--input"]
+        return subprocess.CompletedProcess(
+            command,
+            0,
+            stdout=f"Loaded image ID: {IMAGE_ID}\n",
+            stderr="",
+        )
 
     return commands, run
 
@@ -238,17 +250,30 @@ def test_builds_an_untagged_networkless_candidate_without_b(
         validate_offline_candidate_image(candidate, runner=runner)["status"]
         == "built_local_candidate"
     )
-    build = next(command for command in commands if command[:2] == ["docker", "build"])
+    build = next(
+        command for command in commands if command[:3] == ["docker", "buildx", "build"]
+    )
     assert "--network=none" in build
     assert "--platform=linux/amd64" in build
     assert "--pull=false" in build
     assert "--no-cache" in build
-    assert "--load" in build
+    assert "--load" not in build
+    assert build[build.index("--provenance=false")] == "--provenance=false"
+    exporter = build[build.index("--output") + 1]
+    assert exporter.endswith(",rewrite-timestamp=true")
+    assert exporter.startswith("type=docker,dest=")
     assert build[build.index("--build-arg") + 1] == f"SOURCE_COMMIT={SOURCE_COMMIT}"
     second_build_arg = build.index("--build-arg", build.index("--build-arg") + 1)
     assert build[second_build_arg + 1] == f"SOURCE_DATE_EPOCH={SOURCE_DATE_EPOCH}"
     assert build[build.index("--file") + 1].endswith("deploy/living-core/Dockerfile")
     assert "--tag" not in build and "--push" not in build
+    assert candidate.receipt["candidate_image_archive_sha256"] == (
+        "b149322f319af29425d045ed3d9b5e94a44129bc5b5dabf045fb139fad802a3f"
+    )
+    assert candidate.receipt["candidate_image_config_digest"] == IMAGE_ID
+    assert candidate.receipt["candidate_timestamp_rewrite_enabled"] is True
+    assert candidate.receipt["candidate_provenance_attestation_enabled"] is False
+    assert candidate.receipt["candidate_image_exporter"] == "docker"
     inspected = [
         command[3]
         for command in commands
@@ -309,6 +334,21 @@ def test_refuses_a_candidate_that_receives_a_tag(
         )
 
     assert list(output.iterdir()) == []
+
+
+def test_refuses_an_exporter_option_injected_output_path(
+    monkeypatch: pytest.MonkeyPatch, native_tmp_path: Path
+) -> None:
+    _stub_validators(monkeypatch)
+    context, build, runtime_libraries, runtime = _inputs(native_tmp_path)
+    output = native_tmp_path / "output,rewrite-timestamp=false"
+    output.mkdir(mode=0o700)
+    _commands, runner = _runner()
+
+    with pytest.raises(RuntimeError, match="explicit safe path"):
+        build_offline_candidate_image(
+            context, build, runtime_libraries, runtime, output, runner=runner
+        )
 
 
 def test_refuses_a_candidate_with_different_source_identity(
@@ -372,3 +412,34 @@ def test_refuses_a_symlinked_candidate_id_file(native_tmp_path: Path) -> None:
 
     with pytest.raises(RuntimeError, match="ID file is unsafe"):
         _read_iid(iidfile)
+
+
+def test_hashes_only_one_safe_regular_candidate_archive(native_tmp_path: Path) -> None:
+    archive = native_tmp_path / "candidate.tar"
+    archive.write_bytes(b"deterministic candidate archive")
+
+    assert _hash_image_archive(archive) == (
+        "b149322f319af29425d045ed3d9b5e94a44129bc5b5dabf045fb139fad802a3f"
+    )
+
+    unsafe = native_tmp_path / "unsafe.tar"
+    unsafe.write_bytes(b"archive")
+    unsafe.chmod(0o666)
+    with pytest.raises(RuntimeError, match="archive is unsafe"):
+        _hash_image_archive(unsafe)
+
+
+@pytest.mark.parametrize(
+    "stdout",
+    (
+        "",
+        "Loaded image: candidate:latest\n",
+        f"Loaded image ID: {IMAGE_ID}\nLoaded image ID: {IMAGE_ID}\n",
+        "Loaded image ID: sha256:not-a-digest\n",
+    ),
+)
+def test_refuses_ambiguous_or_invalid_docker_load_output(stdout: str) -> None:
+    result = subprocess.CompletedProcess(["docker", "image", "load"], 0, stdout, "")
+
+    with pytest.raises(RuntimeError):
+        _loaded_image_id(result)

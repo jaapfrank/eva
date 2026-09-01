@@ -8,6 +8,7 @@ destination.
 from __future__ import annotations
 
 from dataclasses import dataclass
+import hashlib
 import json
 import os
 from pathlib import Path
@@ -27,6 +28,7 @@ from .build_context import (
 
 
 _IMAGE_PREFIX = "sha256:"
+_MAX_IMAGE_ARCHIVE_BYTES = 2 * 1024 * 1024 * 1024
 _RUNTIME_LIBRARY_PATH = "LD_LIBRARY_PATH=/usr/local/lib"
 
 
@@ -60,6 +62,16 @@ def _image_id(value: str, *, label: str) -> str:
 
 
 def _private_parent(path: Path) -> None:
+    rendered = os.fspath(path)
+    if (
+        not path.is_absolute()
+        or ".." in path.parts
+        or "," in rendered
+        or any(ord(character) < 32 for character in rendered)
+    ):
+        raise RuntimeError(
+            "managed B candidate image output parent must be an explicit safe path"
+        )
     try:
         metadata = path.lstat()
     except OSError as error:
@@ -138,6 +150,61 @@ def _read_iid(path: Path) -> str:
         return _image_id(raw.decode("ascii", "strict").strip(), label="candidate")
     except UnicodeDecodeError as error:
         raise RuntimeError("managed B candidate image ID file is not ASCII") from error
+
+
+def _hash_image_archive(path: Path) -> str:
+    try:
+        metadata = path.lstat()
+    except OSError as error:
+        raise RuntimeError("managed B candidate image archive is inaccessible") from error
+    if (
+        stat.S_ISLNK(metadata.st_mode)
+        or not stat.S_ISREG(metadata.st_mode)
+        or metadata.st_nlink != 1
+        or metadata.st_uid != os.geteuid()
+        or metadata.st_mode & 0o022
+        or metadata.st_size <= 0
+        or metadata.st_size > _MAX_IMAGE_ARCHIVE_BYTES
+    ):
+        raise RuntimeError("managed B candidate image archive is unsafe")
+    descriptor = os.open(
+        path,
+        os.O_RDONLY | getattr(os, "O_CLOEXEC", 0) | getattr(os, "O_NOFOLLOW", 0),
+    )
+    digest = hashlib.sha256()
+    try:
+        opened = os.fstat(descriptor)
+        if (
+            not stat.S_ISREG(opened.st_mode)
+            or opened.st_nlink != 1
+            or (opened.st_dev, opened.st_ino, opened.st_size)
+            != (metadata.st_dev, metadata.st_ino, metadata.st_size)
+        ):
+            raise RuntimeError(
+                "managed B candidate image archive changed before hashing"
+            )
+        while chunk := os.read(descriptor, 1024 * 1024):
+            digest.update(chunk)
+        final = os.fstat(descriptor)
+        if (final.st_dev, final.st_ino, final.st_size) != (
+            opened.st_dev,
+            opened.st_ino,
+            opened.st_size,
+        ):
+            raise RuntimeError(
+                "managed B candidate image archive changed while hashing"
+            )
+    finally:
+        os.close(descriptor)
+    return digest.hexdigest()
+
+
+def _loaded_image_id(result: subprocess.CompletedProcess[str]) -> str:
+    lines = [line.strip() for line in result.stdout.splitlines() if line.strip()]
+    prefix = "Loaded image ID: "
+    if len(lines) != 1 or not lines[0].startswith(prefix):
+        raise RuntimeError("managed B Docker image load result is invalid")
+    return _image_id(lines[0][len(prefix) :], label="loaded candidate")
 
 
 def _source_identity(receipt: dict[str, object]) -> tuple[str, int]:
@@ -260,16 +327,20 @@ def build_offline_candidate_image(
     )
     temporary_root.chmod(0o700)
     iidfile = temporary_root / "image.iid"
+    image_archive = temporary_root / "candidate.tar"
     try:
         runner(
             [
                 "docker",
+                "buildx",
                 "build",
                 "--network=none",
                 "--platform=linux/amd64",
                 "--pull=false",
                 "--no-cache",
-                "--load",
+                "--provenance=false",
+                "--output",
+                f"type=docker,dest={image_archive},rewrite-timestamp=true",
                 "--build-arg",
                 f"SOURCE_COMMIT={source_commit}",
                 "--build-arg",
@@ -282,7 +353,14 @@ def build_offline_candidate_image(
             ],
             600,
         )
-        image_id = _read_iid(iidfile)
+        config_digest = _read_iid(iidfile)
+        image_archive_sha256 = _hash_image_archive(image_archive)
+        image_id = _loaded_image_id(
+            runner(
+                ["docker", "image", "load", "--input", str(image_archive)],
+                300,
+            )
+        )
         candidate_inspection = _verify_untagged_candidate(
             image_id,
             runner,
@@ -295,6 +373,8 @@ def build_offline_candidate_image(
         temporary_root.chmod(0o700)
         if iidfile.exists() or iidfile.is_symlink():
             iidfile.unlink()
+        if image_archive.exists() or image_archive.is_symlink():
+            image_archive.unlink()
         temporary_root.rmdir()
     receipt = {
         "build_image_archive_sha256": build_receipt["archive_sha256"],
@@ -303,12 +383,17 @@ def build_offline_candidate_image(
             f"{build_receipt['base_image_repository']}@{build_receipt['base_image_digest']}"
         ),
         "candidate_image_id": image_id,
+        "candidate_image_archive_sha256": image_archive_sha256,
+        "candidate_image_config_digest": config_digest,
         "candidate_image_size": candidate_inspection["Size"],
+        "candidate_image_exporter": "docker",
+        "candidate_provenance_attestation_enabled": False,
         "candidate_runtime_library_path": _RUNTIME_LIBRARY_PATH,
         "candidate_source_commit": source_commit,
         "candidate_source_date_epoch": source_date_epoch,
+        "candidate_timestamp_rewrite_enabled": True,
         "context_tree_sha256": context_receipt["context_tree_sha256"],
-        "contract": "EvaManagedBOfflineCandidateImageReceipt/v2",
+        "contract": "EvaManagedBOfflineCandidateImageReceipt/v3",
         "network_used": False,
         "nonclaims": [
             "The candidate image is untagged and was not pushed, signed, released, or attached to Compose.",
@@ -341,13 +426,24 @@ def validate_offline_candidate_image(
         raise RuntimeError("managed B candidate image must be materialized")
     receipt = candidate.receipt
     if (
-        receipt.get("contract") != "EvaManagedBOfflineCandidateImageReceipt/v2"
+        receipt.get("contract") != "EvaManagedBOfflineCandidateImageReceipt/v3"
         or receipt.get("status") != "built_local_candidate"
         or receipt.get("network_used") is not False
         or receipt.get("candidate_image_id") != candidate.image_id
+        or receipt.get("candidate_image_exporter") != "docker"
+        or receipt.get("candidate_provenance_attestation_enabled") is not False
         or receipt.get("candidate_runtime_library_path") != _RUNTIME_LIBRARY_PATH
+        or receipt.get("candidate_timestamp_rewrite_enabled") is not True
     ):
         raise RuntimeError("managed B candidate image receipt differs")
+    _image_id(str(receipt.get("candidate_image_config_digest", "")), label="config")
+    archive_sha256 = receipt.get("candidate_image_archive_sha256")
+    if (
+        not isinstance(archive_sha256, str)
+        or len(archive_sha256) != 64
+        or any(character not in "0123456789abcdef" for character in archive_sha256)
+    ):
+        raise RuntimeError("managed B candidate image archive digest differs")
     for role in ("build", "runtime_libraries", "runtime"):
         _image_binding(receipt, role)
     source_commit, source_date_epoch = _source_identity(receipt)

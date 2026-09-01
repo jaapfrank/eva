@@ -128,9 +128,17 @@ def _candidate() -> CandidateImage:
     return CandidateImage(
         IMAGE_ID,
         {
+            "candidate_image_archive_sha256": "c" * 64,
+            "candidate_image_config_digest": "sha256:" + "d" * 64,
+            "candidate_image_exporter": "docker",
             "candidate_image_id": IMAGE_ID,
             "candidate_image_size": 123,
-            "contract": "EvaManagedBOfflineCandidateImageReceipt/v2",
+            "candidate_provenance_attestation_enabled": False,
+            "candidate_runtime_library_path": "LD_LIBRARY_PATH=/usr/local/lib",
+            "candidate_source_commit": "e" * 40,
+            "candidate_source_date_epoch": 1788257221,
+            "candidate_timestamp_rewrite_enabled": True,
+            "contract": "EvaManagedBOfflineCandidateImageReceipt/v3",
             "network_used": False,
             "status": "built_local_candidate",
         },
