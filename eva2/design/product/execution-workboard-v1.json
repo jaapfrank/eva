@@ -1,0 +1,147 @@
+{
+  "contract": "EvaExecutionWorkboard/v1",
+  "schemaVersion": 1,
+  "lastUpdated": "2026-09-01",
+  "sequencePolicy": "done_then_one_primary_then_queued",
+  "commandWorkingDirectory": "eva2",
+  "inventoryPath": "docs/eva-repository-inventory.generated.json",
+  "humanBoardPath": "eva2/WERKBORD.md",
+  "activeTaskId": "GOV-001",
+  "maxActiveImplementationTasks": 1,
+  "statusValues": ["queued", "in_progress", "review", "done", "blocked"],
+  "rules": [
+    "Afgeronde uitvoerkaarten staan eerst, daarna exact één primaire kaart, daarna alleen wachtrijkaarten.",
+    "Alleen de primaire kaart en de direct volgende kaart zijn uitvoerbaar; latere wensen blijven mijlpalen.",
+    "Een uitvoerkaart noemt vóór start exacte bestanden, eigenaren en echte testcommando's.",
+    "Een bouwer keurt zijn eigen taak niet goed.",
+    "Klaar vereist commitgebonden tests, bewijs en onafhankelijke beoordeling.",
+    "Een gebruikersvoorbeeld test een bestaande capability en maakt geen providerspecifieke kernroute."
+  ],
+  "team": {
+    "architecturelead": "/root",
+    "releaselead": "/root/release_authority",
+    "dependencyreviewer": "/root/pydantic_dedup",
+    "proofreviewer": "/root/proof_review",
+    "workboardreviewer": "/root/workboard_review"
+  },
+  "executionTasks": [
+    {
+      "id": "GOV-001",
+      "order": 1,
+      "area": "Werkbesturing",
+      "title": "Klein en controleerbaar werkbord afdwingen",
+      "outcome": "Iedereen ziet exact wat nu gebeurt, wat direct volgt, welke bestanden veranderen en welke echte controles klaar bepalen.",
+      "status": "in_progress",
+      "stateDetails": {"baseCommit": null, "implementationCommit": null, "evidenceCommit": null, "reviewEvidencePaths": [], "blockerReason": null},
+      "ownerRole": "architecturelead",
+      "reviewerRole": "workboardreviewer",
+      "dependsOn": [],
+      "componentIds": ["operations-and-release-tests"],
+      "inventoryOwners": ["architecture", "documentation", "verification"],
+      "changePaths": [
+        "docs/eva-repository-inventory.generated.json",
+        "docs/eva-repository-inventory.generated.md",
+        "eva2/DOCUMENTATIE_EN_ONDERHOUD.md",
+        "eva2/PROJECT_STATUS.md",
+        "eva2/TEAM_WERKWIJZE.md",
+        "eva2/WERKBORD.md",
+        "eva2/design/product/execution-workboard-v1.json",
+        "eva2/tests/operations/test_current_workboard.py",
+        "eva2/tools/check_current_workboard.py"
+      ],
+      "testCommands": [
+        "TMPDIR=/tmp TEMP=/tmp TMP=/tmp pytest -q tests/operations/test_current_workboard.py",
+        "python3 tools/check_current_workboard.py",
+        "python3 tools/check_component_catalog.py",
+        "node ../test/repository-inventory.test.js",
+        "node ../test/repository-inventory-disposition.test.js",
+        "ruff check tools/check_current_workboard.py tests/operations/test_current_workboard.py"
+      ],
+      "evidenceRequired": [
+        "Aanvalstests voor volgorde, schijncommando's, eigendom, rollen, bewijs en Markdown-drift.",
+        "Onafhankelijke GO op exact de beoordeelde commit."
+      ],
+      "doneWhen": [
+        "De checker weigert iedere bekende manier om werk over te slaan of schijnbaar af te ronden.",
+        "WERKBORD.md is exact en mechanisch uit deze JSON afgeleid.",
+        "De onafhankelijke reviewer geeft GO."
+      ]
+    },
+    {
+      "id": "RB-001",
+      "order": 10,
+      "area": "Releasebasis",
+      "title": "Verzegelde basisimages offline bruikbaar maken op een verse bouwer",
+      "outcome": "Een lege Docker-bouwer gebruikt de drie gepinde OCI-bases zonder registry, pull of verloren digestbinding.",
+      "status": "queued",
+      "stateDetails": {"baseCommit": null, "implementationCommit": null, "evidenceCommit": null, "reviewEvidencePaths": [], "blockerReason": null},
+      "ownerRole": "releaselead",
+      "reviewerRole": "proofreviewer",
+      "dependsOn": ["GOV-001"],
+      "componentIds": ["operations-and-release-tests"],
+      "inventoryOwners": ["verification"],
+      "changePaths": [
+        "eva2/tools/managed_b_candidate/base_image.py",
+        "eva2/tools/managed_b_candidate/candidate_image.py",
+        "eva2/tools/build_managed_b_offline_candidate.py",
+        "eva2/tests/operations/test_managed_b_base_image.py",
+        "eva2/tests/operations/test_managed_b_candidate_image.py",
+        "eva2/tests/operations/test_build_managed_b_offline_candidate.py"
+      ],
+      "testCommands": [
+        "TMPDIR=/tmp TEMP=/tmp TMP=/tmp pytest -q tests/operations/test_managed_b_base_image.py tests/operations/test_managed_b_candidate_image.py tests/operations/test_build_managed_b_offline_candidate.py",
+        "ruff check tools/managed_b_candidate/base_image.py tools/managed_b_candidate/candidate_image.py tools/build_managed_b_offline_candidate.py tests/operations/test_managed_b_base_image.py tests/operations/test_managed_b_candidate_image.py tests/operations/test_build_managed_b_offline_candidate.py"
+      ],
+      "evidenceRequired": [
+        "Twee verse geïsoleerde daemons gebruiken uitsluitend verzegelde lokale OCI-bytes.",
+        "Onafhankelijke aanvalstest op digest-, platform-, rol- en netwerkverwisseling."
+      ],
+      "doneWhen": [
+        "Verkeerde digest, rol, platform, archivebyte of netwerkfallback stopt vóór de build.",
+        "De echte Dockerfile bereikt alle drie lokale bases met netwerk en pulls uitgeschakeld.",
+        "Een onafhankelijke reviewer geeft GO."
+      ]
+    }
+  ],
+  "milestones": [
+    {"id": "RB-002", "order": 20, "area": "Releasebasis", "title": "Nieuwe bootstrapcode verzegelen", "outcome": "Authority, catalogus en inventaris wijzen naar dezelfde commit."},
+    {"id": "RB-003", "order": 30, "area": "Releasebasis", "title": "Kandidaat op bouwer A maken", "outcome": "Een verse daemon bouwt de verzegelde commit offline."},
+    {"id": "RB-004", "order": 40, "area": "Releasebasis", "title": "Kandidaat op bouwer B maken", "outcome": "Een onafhankelijke verse daemon bouwt dezelfde commit offline."},
+    {"id": "RB-005", "order": 50, "area": "Releasebasis", "title": "Beide builds vergelijken", "outcome": "Config, lagen en runtime-inhoud zijn gelijk; bewijshergebruik faalt."},
+    {"id": "RB-006", "order": 60, "area": "Releasebasis", "title": "SBOM en kwetsbaarheden controleren", "outcome": "De exacte kandidaat heeft een gebonden SBOM en nul hoog/kritiek."},
+    {"id": "RB-007", "order": 70, "area": "Releasebasis", "title": "Alle verplichte testgroepen uitvoeren", "outcome": "Iedere verzegelde testgroep slaagt op dezelfde commit."},
+    {"id": "RB-008", "order": 80, "area": "Releasebasis", "title": "Volledige wegwerpstack testen", "outcome": "De stack migreert, antwoordt, onthoudt, herstart en ruimt op."},
+    {"id": "RB-009", "order": 90, "area": "Releasebasis", "title": "Fysieke bewijsset beoordelen", "outcome": "Een onafhankelijke reviewer controleert de volledige releaseketen."},
+    {"id": "RB-010", "order": 100, "area": "Releasebasis", "title": "A/B-besluit nemen", "outcome": "Alleen volledig groen mag naar het niet-actieve slot."},
+    {"id": "OS-001", "order": 110, "area": "Open source en codebeheer", "title": "Inventaris en bereikbaarheid afdwingen", "outcome": "Elk gevolgd bestand heeft één eigenaar en aantoonbare noodzaak."},
+    {"id": "OS-002", "order": 120, "area": "Open source en codebeheer", "title": "Pydantic-wrapper consolideren", "outcome": "Pydantic doet generiek modelwerk; Eva houdt alleen unieke grenzen."},
+    {"id": "OS-003", "order": 130, "area": "Open source en codebeheer", "title": "Child-provider consolideren", "outcome": "Hoofd- en hulpagent delen één provideradapter."},
+    {"id": "OS-004", "order": 140, "area": "Open source en codebeheer", "title": "Oude modelpaden verwijderen", "outcome": "Alle modelverkeer gebruikt de gekozen onderhouden route."},
+    {"id": "OS-005", "order": 150, "area": "Open source en codebeheer", "title": "Updatevoorstellen automatiseren", "outcome": "Renovate stelt voor; de releasepoort beslist en kan terugrollen."},
+    {"id": "CO-001", "order": 160, "area": "Gesprek", "title": "Telegram live laten streamen", "outcome": "Tekst verschijnt live en eindigt exact in het duurzame antwoord."},
+    {"id": "CO-002", "order": 170, "area": "Gesprek", "title": "Menselijke identiteit bewijzen", "outcome": "Eva blijft warm, geestig en zelfstandig herkenbaar."},
+    {"id": "CO-003", "order": 180, "area": "Mensen en geheugen", "title": "Persoonsbeheer afmaken", "outcome": "Mensen blijven privé en kunnen geheugen zien, corrigeren en wissen."},
+    {"id": "TL-001", "order": 190, "area": "Gereedschappen", "title": "Algemene toolontdekking afmaken", "outcome": "Providers laden via configuratie of MCP zonder merklogica in de kern."},
+    {"id": "TL-002", "order": 200, "area": "Gereedschappen", "title": "Actie en readback generaliseren", "outcome": "Twee echte providers gebruiken dezelfde precies-eenmaalroute."},
+    {"id": "TL-003", "order": 210, "area": "Gereedschappen", "title": "Onbekende connector zelfstandig toevoegen", "outcome": "Eva kiest onderhouden software uit documentatie en bewijst de adapter."},
+    {"id": "AU-001", "order": 220, "area": "Zelfstandigheid", "title": "Eigenaarmandaat uitvoeren", "outcome": "Eva handelt binnen het afgesproken mandaat zonder steeds opnieuw te vragen."},
+    {"id": "AU-002", "order": 230, "area": "Zelfstandigheid", "title": "Duurzame hulpagent bedienen", "outcome": "Starten, volgen, stoppen en hervatten werken via de gebruikersroute."},
+    {"id": "AU-003", "order": 240, "area": "Zelfstandigheid", "title": "Zelfverbetering begrenzen", "outcome": "Alleen gemeten winst mag uit quarantaine promoveren."},
+    {"id": "UX-001", "order": 250, "area": "Bediening", "title": "Eigenaar-dashboard leveren", "outcome": "Een onderhouden adminframework toont status, mensen, geheugen, kosten en bewijs."},
+    {"id": "UX-002", "order": 260, "area": "Bediening", "title": "Kanban bedienbaar maken", "outcome": "Taken zijn te starten, volgen en stoppen met bewijs per kaart."},
+    {"id": "VB-001", "order": 270, "area": "Voice", "title": "Full-duplex voice leveren", "outcome": "Microfoon en speaker werken tegelijk met snelle onderbreking."},
+    {"id": "VB-002", "order": 280, "area": "Voice", "title": "Passende aanwezigheid leveren", "outcome": "Eva spreekt passend in huis met stilte, cooldown en stop."},
+    {"id": "VB-003", "order": 290, "area": "Browser", "title": "Veilige browsercomputer kiezen", "outcome": "Eén onderhouden browsermotor ondersteunt accounts, meekijken en overname."},
+    {"id": "VB-004", "order": 300, "area": "Browser", "title": "Browserherstel bewijzen", "outcome": "Een crash herhaalt geen externe mutatie blind."},
+    {"id": "IN-001", "order": 310, "area": "Installatie", "title": "Fresh install voor gebruikers", "outcome": "Een gewone gebruiker installeert Eva zonder terminal of configuratiebestanden."},
+    {"id": "IN-002", "order": 320, "area": "Installatie", "title": "Naar andere computer verplaatsen", "outcome": "Identiteit en data herstellen; connectoren veilig opnieuw koppelen."},
+    {"id": "IN-003", "order": 330, "area": "Installatie", "title": "Consumentenupdates leveren", "outcome": "Updates doorlopen dezelfde poort en rollen verliesloos terug."},
+    {"id": "CP-001", "order": 340, "area": "Vergelijking", "title": "Gelijke productmatrix uitvoeren", "outcome": "Actuele concurrenten krijgen hetzelfde model, budget en opdrachten."},
+    {"id": "CP-002", "order": 350, "area": "Vergelijking", "title": "Cross-domainproef uitvoeren", "outcome": "Gesprek, geheugen, tools, browser, subagents en beheer zijn eerlijk vergeleken."},
+    {"id": "CP-003", "order": 360, "area": "Vergelijking", "title": "Officiële benchmarks uitvoeren", "outcome": "AgentBench, GAIA en OSWorld gebruiken officiële scorers en trajecten."},
+    {"id": "FN-001", "order": 370, "area": "Eindacceptatie", "title": "Eindkandidaat bevriezen", "outcome": "Image, configuratie en bewijsset zijn onveranderlijk gebonden."},
+    {"id": "FN-002", "order": 380, "area": "Eindacceptatie", "title": "Computerherstart bewijzen", "outcome": "Alles komt zonder handmatige reparatie correct terug."},
+    {"id": "FN-003", "order": 390, "area": "Eindacceptatie", "title": "Zeven dagen praktijk bewijzen", "outcome": "Een ongewijzigde kandidaat doorstaat de praktijkproef en vervangbeslissing."}
+  ],
+  "completions": {}
+}

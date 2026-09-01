@@ -24,6 +24,7 @@ ook een eigen README, moduletekst of ontwerpbesluit nodig.
 | Wat kan Eva nu, wat is nodig voor de overgang en wat is het einddoel? | `EVA2_MOGELIJKHEDEN_EN_GATEN.md` | Leesbaar overzicht in drie duidelijk gescheiden momenten |
 | Welke hoofdprojecten zijn af, wat resteert en hoe lang duurt dat? | `PROJECTEN_EN_PLANNING.md` | Primair projectbord met gebruikersuitkomst, status, raming, praktijktijd en eindproef |
 | Waar werken we technisch nu aan? | `PROJECT_STATUS.md` | Korte actuele werkstatus en laatste checkpoint |
+| Welke kleine taak is nu actief en wat komt exact daarna? | `WERKBORD.md` plus `design/product/execution-workboard-v1.json` | Menselijk bord en machineleesbare vaste volgorde met één actieve implementatietaak, eigenaar, bestanden, tests, bewijs en definitie van klaar |
 | Hoe blijft het team van begin tot eind betrokken? | `TEAM_WERKWIJZE.md` | Vaste projectrollen, vroege verificatie, gescheiden werkbomen, integratie en acceptatie |
 | Waarom bouwen we iets zelf in plaats van een dependency te gebruiken? | `OPEN_SOURCE_EN_DEPENDENCYKEUZES.md` | Dependency-first selectie, exacte pins, onderhoud/licentie, proef, update, rollback en expliciete afwijzingsreden |
 | Hoe hangt de runtime technisch samen? | `design/architecture/living-core-v1.md` | Componenten, primaire bestanden, verantwoordelijkheid, status en bewijsgrenzen |

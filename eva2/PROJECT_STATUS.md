@@ -2,6 +2,11 @@
 
 Laatst bijgewerkt: 1 september 2026, 12:28 CEST
 
+> **Waar wordt nu echt aan gewerkt?** Het korte, afvinkbare bord staat in
+> [WERKBORD.md](WERKBORD.md). Daar staat maximaal één primaire taak op `BEZIG`,
+> met exacte bestanden, tests, bewijs en definitie van klaar. Dit document
+> vergelijkt productmogelijkheden en is niet langer de uitvoerwachtrij.
+
 ## Zo lees je dit bord
 
 - ✅ Werkt echt in de huidige route of is met de genoemde actuele concurrent

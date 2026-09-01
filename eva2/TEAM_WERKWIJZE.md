@@ -1,6 +1,6 @@
 # Eva 2 — vaste teamwerkwijze
 
-Bijgewerkt: 25 augustus 2026.
+Bijgewerkt: 1 september 2026.
 
 ## Waarom deze werkwijze verandert
 
@@ -21,20 +21,21 @@ Ieder actief hoofdproject heeft vanaf de start vier blijvende rollen:
 | Rol | Vaste bezetting | Verantwoordelijkheid van begin tot eind |
 |---|---|---|
 | Product- en integratielead | Codex-hoofdagent | Bewaakt gebruikersuitkomst, architectuur, afhankelijkheden, planning en samenvoeging met de rest van Eva |
-| Core- en reliabilitylead | Fermat the 2nd | Bewaakt PostgreSQL-authority, effecten, crashherstel, secrets, A/B en releaseveiligheid |
-| Experience- en capabilitylead | Chandrasekhar the 2nd | Bouwt het zichtbare domein, zoals chat/voice/presence/installer of browser/leren/workers/dashboard |
-| Onafhankelijke verificatie- en releaselead | Curie the 2nd | Schrijft vóór de bouw mee aan de eindproef, controleert tussentijds ontwerp en risico's en geeft onafhankelijk stop/go op het geïntegreerde checkpoint |
+| Core- en reliabilitylead | Volta the 2nd | Bewaakt PostgreSQL-authority, effecten, crashherstel, secrets, A/B en releaseveiligheid |
+| Experience- en capabilitylead | Mill the 2nd | Bouwt en vereenvoudigt het zichtbare domein, zoals chat/voice/presence/installer of browser/leren/workers/dashboard |
+| Onafhankelijke verificatie- en releaselead | Godel the 2nd | Schrijft vóór de bouw mee aan de eindproef, controleert tussentijds ontwerp en risico's en geeft onafhankelijk stop/go op het geïntegreerde checkpoint |
 
-De actuele canonieke agentmapping is:
+De actuele opnieuw activeerbare agentmapping is:
 
-- Fermat the 2nd: `/root/continuous_team_model`;
-- Chandrasekhar the 2nd: `/root/delivery_estimates`;
-- Curie the 2nd: `/root/project_status_audit`.
+- Volta the 2nd: `/root/release_authority`;
+- Mill the 2nd: `/root/pydantic_dedup`;
+- Godel the 2nd: `/root/proof_review`.
 
-Deze bestaande agents zijn op 25 augustus 2026 expliciet opnieuw geactiveerd
-en aan hun vaste rol gekoppeld. Continu betekent hier blijvend
-projecteigenaarschap en heractivering bij iedere relevante stap, niet dat drie
-processen tussen werkmomenten nutteloos blijven draaien.
+De rolnamen en projectkaarten zijn blijvend; een technische agentsessie kan
+worden vervangen. Bij vervanging wordt op het werkbord eerst eigenaar, scope,
+laatste groene checkpoint en open review overgedragen. Continu betekent dus
+blijvend projecteigenaarschap, niet dat een proces zonder taak CPU blijft
+gebruiken.
 
 De concrete bouwer kan per kleine stap wisselen, maar de vier projecteigenaren
 blijven. Niemand keurt zijn eigen werk goed. Wanneer een vaste lead zelf code
@@ -64,6 +65,27 @@ Voor ieder project bestaat één kaart in `PROJECTEN_EN_PLANNING.md` met:
 Een groen technisch checkpoint verandert de projectstatus alleen wanneer het
 een vooraf afgesproken deeluitkomst sluit. Aantallen commits of regels code
 zijn nooit projectvoortgang op zichzelf.
+
+## Het uitvoerbord
+
+`PROJECTEN_EN_PLANNING.md` blijft de brede productkaart. De concrete
+uitvoerwachtrij staat uitsluitend in `WERKBORD.md`; de machineleesbare bron is
+`design/product/execution-workboard-v1.json`.
+
+- Er staat maximaal één primaire implementatietaak op `in_progress`.
+- We werken op oplopend volgnummer. Een nieuwe wens of praktijksituatie wordt
+  eerst als test bij een bestaande capability geplaatst en onderbreekt de
+  actieve kaart niet.
+- Vóór een kaart start, staan exacte wijzigingspaden, concrete testcommando's,
+  vereiste evidence, eigenaar, onafhankelijke reviewer en `doneWhen` vast.
+- Een kaart gaat na implementatie naar `review`; tijdens die controle start de
+  integratielead geen nieuwe primaire implementatiekaart.
+- `done` betekent dat code, tests, vereist echt bewijs en documentatie aan één
+  implementatiecommit zijn gebonden en de onafhankelijke review aan een daarop
+  volgende reviewcommit. Een groene losse unit-test is niet genoeg.
+- De workboardchecker weigert meerdere actieve kaarten, vooruitwijzende
+  afhankelijkheden, onbekende componenten, ontbrekende bestanden en een
+  actieve kaart zonder exacte bestandsscope.
 
 ## Vaste projectcyclus
 
