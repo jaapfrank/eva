@@ -27,7 +27,7 @@
     "sameSourceCommit": true
   },
   "contract": "EvaWorkboardTaskEvidence/v1",
-  "implementationCommit": "ab511734bc2e6843a26c86ae762c4a901e8073ae",
+  "implementationCommit": "72de385d2759c64db01b3e3d53dc54629f0a846f",
   "inputAuthoritySha256": "d9e51cc588a21a186bff68afc48e71978319761cbe9814c5b6a5a3da4d2f4a74",
   "networkUsed": false,
   "nonClaims": [
@@ -65,6 +65,15 @@
   "releaseAuthoritySha256": "20323cc166d5b7055c43dc94a0d5e09c47ab729036e479c166768a2a6e841020",
   "sourceCommit": "45d2ff6d61793809a514c01b3a3c000ce1632da6",
   "status": "tested_pending_independent_evidence_review",
+  "supersedes": {
+    "historicalEvidenceCommit": "95e285411647344701f4bfc3e73e8af4c2864d80",
+    "historicalImplementationCommits": [
+      "e6d909454a03c5b7e85fe7056796a8f65e131a2c",
+      "ab511734bc2e6843a26c86ae762c4a901e8073ae"
+    ],
+    "historicalReviewCommit": "b98b24bb1bc3b3c4c275d20bf58fe364cd584899",
+    "reason": "The workboard requires one direct base-to-implementation-to-evidence-to-review chain. The verifier bytes and physical result are unchanged; the historical commits remain preserved in Git."
+  },
   "taskId": "RB-005",
   "tests": [
     {

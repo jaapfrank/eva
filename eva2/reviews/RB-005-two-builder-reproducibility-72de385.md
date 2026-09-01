@@ -1,20 +1,19 @@
-# RB-005 — onafhankelijke review twee-builderreproduceerbaarheid
+# RB-005 — onafhankelijke review gecorrigeerde twee-builderketen
 
 Besluit: **GO**
 
-Beoordeelde keten:
+Beoordeelde directe keten:
 
 - basis: `172c9b487ec1184082837ad9734e6361f48698b4`
-- eerste implementatie: `e6d909454a03c5b7e85fe7056796a8f65e131a2c`
-- geïntegreerde correctie: `ab511734bc2e6843a26c86ae762c4a901e8073ae`
-- evidence: `95e285411647344701f4bfc3e73e8af4c2864d80`
+- implementatie: `72de385d2759c64db01b3e3d53dc54629f0a846f`
+- evidence: `1b56ac38adc252e53f5c26a847d4bd5c94f477fe`
 - verzegelde productbron: `45d2ff6d61793809a514c01b3a3c000ce1632da6`
 - release-inputauthority: `20323cc166d5b7055c43dc94a0d5e09c47ab729036e479c166768a2a6e841020`
 
-De cumulatieve implementatiediff raakt uitsluitend
+De implementatie is het directe kind van de basis en wijzigt uitsluitend
 `eva2/tools/check_two_builder_reproducibility.py` en
 `eva2/tests/operations/test_two_builder_reproducibility.py`. Het evidencecommit
-is het directe kind van de geïntegreerde implementatie en voegt uitsluitend
+is het directe kind van de implementatie en voegt uitsluitend
 `eva2/evidence/product/RB-005-two-builder-reproducibility-2026-09-01.json`
 toe. Beide commitgrenzen zijn schoon volgens `git diff --check`.
 
@@ -24,7 +23,7 @@ toe. Beide commitgrenzen zijn schoon volgens `git diff --check`.
   SHA-256
   `848c236c76abe66e4c2db1d00324aa3df6987a98d4cfc41e9198de0a59261a4f`.
   Een volledig nieuwe, alleen-lezen aanroep van `verify_two_builds()` op de
-  bewaarde artifacts leverde exact hetzelfde JSON-object op.
+  bewaarde artefacten leverde exact hetzelfde JSON-object op.
 - De openbare RB-003- en RB-004-ankers hebben respectievelijk SHA-256
   `2c7122fa031779f2ab3463becac4c5906687853ab482fa016a991a34bf729ad5`
   en
@@ -68,7 +67,7 @@ toe. Beide commitgrenzen zijn schoon volgens `git diff --check`.
 
 ```text
 TMPDIR=/tmp TEMP=/tmp TMP=/tmp pytest -q tests/operations/test_two_builder_reproducibility.py
-45 passed in 0.48s
+45 passed in 0.54s
 
 ruff check tools/check_two_builder_reproducibility.py tests/operations/test_two_builder_reproducibility.py
 All checks passed!
@@ -78,6 +77,9 @@ exit 0
 
 python3 -m tools.check_two_builder_reproducibility --help
 exit 0; uitvoer bytegelijk aan de directe helpvorm
+
+cmp -s <builder-a-candidate.tar> <builder-b-candidate.tar>
+exit 0
 ```
 
 Vier extra read-only negatieve controles met een verkeerde A-admissionhash,
