@@ -1,0 +1,96 @@
+{
+  "baseCommit": "172c9b487ec1184082837ad9734e6361f48698b4",
+  "candidate": {
+    "archiveByteIdentical": true,
+    "archiveSha256": "108406414bf56d0d99c436a19387c39902605ab8df0820e304ac1e486a459acc",
+    "configSha256": "0d6bbb33c715067ecececf07fa6d8f137bcbb5aca5062c0175896fd4c22df00b",
+    "diffIdCount": 26,
+    "diffIdsCanonicalSha256": "1440971670373d57874d75d8810bbb75d88a2759355b7eeb09327dc0d6ac1385",
+    "imageId": "sha256:3a4f65544be8b0b4e543ba5148b73775b35c40ee5ab4a49dd55eec9b724899f1",
+    "ociManifestSha256": "3a4f65544be8b0b4e543ba5148b73775b35c40ee5ab4a49dd55eec9b724899f1",
+    "runtimeLayerSequenceSha256": "0d42de733e3c2c32d04b97f7ff4f573e2a78cb539d1de9f8ca0fa7d09e7b9178"
+  },
+  "changePaths": [
+    "eva2/tools/check_two_builder_reproducibility.py",
+    "eva2/tests/operations/test_two_builder_reproducibility.py"
+  ],
+  "comparison": {
+    "allSevenBuilderIdentitiesDiffer": true,
+    "allSixAdmissionBuildObservationChallengesDiffer": true,
+    "builderRoles": [
+      "RB-003",
+      "RB-004"
+    ],
+    "fullOciIndexManifestConfigAndLayerBinding": true,
+    "sameInputAuthority": true,
+    "sameReleaseAuthority": true,
+    "sameSourceCommit": true
+  },
+  "contract": "EvaWorkboardTaskEvidence/v1",
+  "implementationCommit": "ab511734bc2e6843a26c86ae762c4a901e8073ae",
+  "inputAuthoritySha256": "d9e51cc588a21a186bff68afc48e71978319761cbe9814c5b6a5a3da4d2f4a74",
+  "networkUsed": false,
+  "nonClaims": [
+    "This compares two admitted builder states on one host; it does not prove independence from the shared host, kernel, or operator.",
+    "The ordered uncompressed layer sequence is bound; no separately materialized flattened rootfs-tree hash is claimed.",
+    "No new image was built and no container, live route, database, volume, service, or secret was opened or changed.",
+    "The candidate was not scanned, given an SBOM, signed, pushed, attached to Compose, deployed, or promoted.",
+    "Reproducibility does not by itself prove that the candidate is vulnerability-free or ready for release."
+  ],
+  "physicalRun": {
+    "builderA": {
+      "admissionReceiptSha256": "b60b16fe4065b1deef7a207ef05d98e259608f436e1b7bd6a07ca62f4271de70",
+      "buildReceiptSha256": "2bd6a7f8d8a9737acb08a0d95cf1fad9797ef66a5d22d220ad68ff3404661afa",
+      "candidateReceiptSha256": "7a5f0109df2c48132dd56c68e87573c4d1304a3a86499e991a3cb8936f0b0588",
+      "taskId": "RB-003"
+    },
+    "builderB": {
+      "admissionReceiptSha256": "20f7e8e6b4add92fa5f19d30a1fb8e5f8337e8c415ebbd8c5aaead7fc7eeee49",
+      "buildReceiptSha256": "fb0dab00d43d00e6252b6e65ca60d48cdcfc9a715e8fc15e6e247b5de657877a",
+      "candidateReceiptSha256": "3de27f483266c1d7fb63e209eb0f9facaface8dfb7fca7403302397c3c3c3c1b",
+      "taskId": "RB-004"
+    },
+    "newBuildPerformed": false,
+    "privateReceiptMode": "0600",
+    "resultContract": "EvaTwoBuilderReproducibilityReceipt/v2",
+    "resultReceiptSha256": "848c236c76abe66e4c2db1d00324aa3df6987a98d4cfc41e9198de0a59261a4f",
+    "status": "passed"
+  },
+  "publicAnchors": {
+    "builderAEvidencePath": "eva2/evidence/product/RB-003-builder-a-offline-admission-2026-09-01.json",
+    "builderAEvidenceSha256": "2c7122fa031779f2ab3463becac4c5906687853ab482fa016a991a34bf729ad5",
+    "builderBEvidencePath": "eva2/evidence/product/RB-004-builder-b-offline-admission-2026-09-01.json",
+    "builderBEvidenceSha256": "66c570f4acd15c4ff446d8e9a860ab68c3bbf6193618e272185d98da85781d0e"
+  },
+  "releaseAuthoritySha256": "20323cc166d5b7055c43dc94a0d5e09c47ab729036e479c166768a2a6e841020",
+  "sourceCommit": "45d2ff6d61793809a514c01b3a3c000ce1632da6",
+  "status": "tested_pending_independent_evidence_review",
+  "taskId": "RB-005",
+  "tests": [
+    {
+      "command": "TMPDIR=/tmp TEMP=/tmp TMP=/tmp pytest -q tests/operations/test_two_builder_reproducibility.py",
+      "result": "45 passed",
+      "status": "passed"
+    },
+    {
+      "command": "ruff check tools/check_two_builder_reproducibility.py tests/operations/test_two_builder_reproducibility.py",
+      "result": "All checks passed!",
+      "status": "passed"
+    },
+    {
+      "command": "python3 tools/check_two_builder_reproducibility.py --help",
+      "result": "exit 0",
+      "status": "passed"
+    },
+    {
+      "command": "python3 -m tools.check_two_builder_reproducibility --help",
+      "result": "exit 0",
+      "status": "passed"
+    },
+    {
+      "command": "cmp -s <builder-a-candidate.tar> <builder-b-candidate.tar>",
+      "result": "exit 0",
+      "status": "passed"
+    }
+  ]
+}
