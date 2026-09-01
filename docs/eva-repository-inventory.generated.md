@@ -3,7 +3,7 @@
 Deze kaart is mechanisch gegenereerd. Zij staat naast de semantische runtimegraaf en
 classificeert ieder gevolgd, verwijderd of niet-genegeerd nieuw repositorypad.
 
-Schema: `EvaRepositoryInventory/v1`. Brondigest: `f4f1a6911c24029a6dba85952039a23e4277b978173c6b1e3356466c0ea92287`.
+Schema: `EvaRepositoryInventory/v1`. Brondigest: `9e77281e88505ccc43a2cec8665ca6914ab025f85bfc547ca45061253ec8736d`.
 
 ## Samenvatting
 
@@ -759,7 +759,7 @@ Schema: `EvaRepositoryInventory/v1`. Brondigest: `f4f1a6911c24029a6dba85952039a2
 | `eva2/evidence/product/pydantic-ai-2.36-distroless-offline-candidate-2026-08-31.json` | tracked | verification | included-tracked-critical | keep | 3836 |
 | `eva2/evidence/product/pydantic-ai-2.36-distroless-runtime-parity-2026-08-31.json` | tracked | verification | included-tracked-critical | keep | 4051 |
 | `eva2/evidence/product/pydantic-ai-2.36-real-codex-compatibility-2026-08-31.json` | tracked | verification | included-tracked-critical | keep | 2909 |
-| `eva2/evidence/product/pydantic-ai-2.36-real-provider-sigkill-2026-09-01.json` | tracked | verification | included-tracked-critical | keep | 5804 |
+| `eva2/evidence/product/pydantic-ai-2.36-real-provider-sigkill-2026-09-01.json` | tracked | verification | included-tracked-critical | keep | 6030 |
 | `eva2/evidence/product/pydantic-ai-2.36-source-codex-compatibility-2026-08-31.json` | tracked | verification | included-tracked-critical | keep | 2341 |
 | `eva2/evidence/product/pydantic-native-mcp-discovery-candidate-2026-08-31.json` | tracked | verification | included-tracked-critical | keep | 8668 |
 | `eva2/evidence/product/renovate-44.52.0-local-dry-run-2026-08-30.json` | tracked | verification | included-tracked-critical | keep | 1977 |

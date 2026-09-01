@@ -125,8 +125,15 @@
     }
   },
   "resourceCleanup": {
+    "candidateImageRetained": true,
+    "cleanedAt": "2026-09-01T02:58:14+02:00",
+    "containersRemoved": 6,
     "disposableProofResourcesRetainedUntilEvidenceCommit": true,
-    "status": "pending_after_evidence_commit"
+    "networksRemoved": 2,
+    "privateSanitizedStateRetained": true,
+    "secretFilesRemoved": 6,
+    "status": "completed_and_verified",
+    "volumesRemoved": 1
   },
   "status": "passed_real_provider_sigkill_candidate_only"
 }

@@ -28400,8 +28400,8 @@
       "path": "eva2/evidence/product/pydantic-ai-2.36-real-provider-sigkill-2026-09-01.json",
       "gitState": "tracked",
       "present": true,
-      "bytes": 5804,
-      "contentSha256": "6d9a820ed0d22f9931badde79df94a42ef35acc5299a748f596f43e740562aff",
+      "bytes": 6030,
+      "contentSha256": "0b1cca62ff41253336086b073f2c0fa5c6e36a8c06df49030e1cb3af2234bbf7",
       "hashMode": "exact-bytes",
       "role": "verification",
       "roleRuleId": "eva2-verification",
@@ -80599,5 +80599,5 @@
       }
     }
   ],
-  "sourceDigest": "f4f1a6911c24029a6dba85952039a23e4277b978173c6b1e3356466c0ea92287"
+  "sourceDigest": "9e77281e88505ccc43a2cec8665ca6914ab025f85bfc547ca45061253ec8736d"
 }
