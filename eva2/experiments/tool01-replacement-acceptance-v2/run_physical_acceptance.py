@@ -374,6 +374,21 @@ def _require_clean_source(source_root: Path, expected_commit: str) -> Path:
     return root
 
 
+def _eva_source_root(repository_root: Path) -> Path:
+    root = repository_root / "eva2"
+    try:
+        metadata = root.lstat()
+    except OSError as error:
+        raise PhysicalAcceptanceError("Eva source package root is inaccessible") from error
+    if (
+        stat.S_ISLNK(metadata.st_mode)
+        or not stat.S_ISDIR(metadata.st_mode)
+        or not (root / "src" / "eva").is_dir()
+    ):
+        raise PhysicalAcceptanceError("Eva source package root is invalid")
+    return root
+
+
 def _require_commit_bound_file(
     source_root: Path,
     relative_path: str,
@@ -1335,6 +1350,7 @@ def main() -> int:
     _require_declared_uid(contextforge_image, 10001, label="ContextForge image")
     source_commit = _source_commit(candidate)
     source_root = _require_clean_source(arguments.source_root, source_commit)
+    eva_source_root = _eva_source_root(source_root)
     if _HEX_SHA256.fullmatch(arguments.expected_runtime_script_sha256) is None:
         raise PhysicalAcceptanceError(
             "expected runtime proof harness SHA-256 is invalid"
@@ -1981,7 +1997,7 @@ def main() -> int:
             [
                 sys.executable,
                 str(SOURCE_GENERATOR),
-                str(source_root),
+                str(eva_source_root),
                 "--git-commit",
                 source_commit,
                 "--run-id",
@@ -2035,7 +2051,7 @@ def main() -> int:
                 "--expected-time-image-id",
                 time_image["Id"],
                 "--source-root",
-                str(source_root),
+                str(eva_source_root),
             ],
             check=False,
             timeout=180,

@@ -521,6 +521,27 @@ def test_running_p1_marker_probe_uses_the_candidate_python_runtime(
     ]
 
 
+def test_physical_runner_selects_the_nested_eva_source_package(tmp_path: Path) -> None:
+    repository = tmp_path / "repository"
+    package = repository / "eva2"
+    (package / "src" / "eva").mkdir(parents=True)
+
+    assert physical_runner._eva_source_root(repository) == package
+
+
+def test_physical_runner_rejects_an_invalid_eva_source_package(
+    tmp_path: Path,
+) -> None:
+    repository = tmp_path / "repository"
+    repository.mkdir()
+
+    with pytest.raises(
+        physical_runner.PhysicalAcceptanceError,
+        match="Eva source package root is inaccessible",
+    ):
+        physical_runner._eva_source_root(repository)
+
+
 def test_setup_failure_categories_cover_the_generic_provider_boundary() -> None:
     tree = ast.parse(PRODUCER.read_text(encoding="utf-8"))
     function = next(
