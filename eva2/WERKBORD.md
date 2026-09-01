@@ -15,6 +15,7 @@ de volgende begint.
 
 ### Exact werk voor `RB-002`
 
+- `eva2/release/managed-b-release-input-authority-v1.json`
 - `eva2/tools/managed_b_candidate/release_inputs.py`
 - `eva2/tests/operations/test_managed_b_release_inputs.py`
 
