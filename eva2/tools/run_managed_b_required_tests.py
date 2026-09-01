@@ -416,28 +416,46 @@ def _dsn_destination(
         "username",
     }
     try:
-        query_keys = {
-            key.casefold()
-            for key, _value in parse_qsl(
-                parsed.query, keep_blank_values=True, strict_parsing=True
-            )
-        }
+        query_pairs = parse_qsl(
+            parsed.query, keep_blank_values=True, strict_parsing=True
+        )
+        query_keys = {key.casefold() for key, _value in query_pairs}
         port = parsed.port or 5432
     except ValueError as exc:
         raise RequiredTestsError(
             f"{name} must select an explicit disposable database"
         ) from exc
+    socket_path = ""
     if (
-        parsed.scheme not in {"postgresql", "postgresql+psycopg"}
-        or not parsed.hostname
-        or "," in parsed.hostname
+        parsed.hostname is None
+        and parsed.port is None
+        and len(query_pairs) == 1
+        and query_pairs[0][0].casefold() == "host"
+    ):
+        socket_path = query_pairs[0][1]
+        socket = PurePosixPath(socket_path)
+        if (
+            not socket.is_absolute()
+            or any(part in {"", ".", ".."} for part in socket.parts)
+            or socket.as_posix() != socket_path
+        ):
+            raise RequiredTestsError(
+                f"{name} must select an explicit disposable database"
+            )
+    if parsed.scheme not in {"postgresql", "postgresql+psycopg"} or (
+        parsed.hostname is not None and "," in parsed.hostname
+    ):
+        raise RequiredTestsError(f"{name} must select an explicit disposable database")
+    if (
+        (parsed.hostname is None and not socket_path)
+        or (parsed.hostname is not None and bool(query_keys & destination_overrides))
+        or (socket_path and query_keys != {"host"})
         or not database.startswith(prefix)
         or "/" in database
         or bool(parsed.fragment)
-        or bool(query_keys & destination_overrides)
     ):
         raise RequiredTestsError(f"{name} must select an explicit disposable database")
-    host = parsed.hostname.casefold().rstrip(".")
+    host = socket_path or parsed.hostname.casefold().rstrip(".")
     if host in {"localhost", "127.0.0.1", "::1"}:
         host = "loopback"
     return value, (host, port, database)

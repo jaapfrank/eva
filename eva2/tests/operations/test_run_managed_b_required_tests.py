@@ -221,6 +221,22 @@ def test_disposable_database_name_cannot_be_spoofed_in_query() -> None:
         )
 
 
+def test_local_psycopg_socket_is_an_explicit_database_destination() -> None:
+    value, destination = runner._dsn_destination(
+        "EVA2_GATE_POSTGRES_DSN",
+        {
+            "EVA2_GATE_POSTGRES_DSN": (
+                "postgresql+psycopg://gate@/eva2_4b_disposable_gate"
+                "?host=%2Ftmp%2Feva2-gate-socket"
+            )
+        },
+        prefix="eva2_4b_disposable_",
+    )
+
+    assert value.endswith("?host=%2Ftmp%2Feva2-gate-socket")
+    assert destination == ("/tmp/eva2-gate-socket", 5432, "eva2_4b_disposable_gate")
+
+
 @pytest.mark.parametrize(
     "suffix",
     (
