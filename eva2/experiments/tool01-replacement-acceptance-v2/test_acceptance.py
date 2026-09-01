@@ -106,6 +106,7 @@ def test_proof_runtime_budget_satisfies_the_product_contract() -> None:
     budget = namespace["_runtime_budget"]()
 
     assert isinstance(budget, RuntimeResourceBudget)
+    assert budget.max_input_tokens == 12_000
     assert budget.max_output_tokens == 1_200
     assert budget.source_budget_sha256 == hashlib.sha256(
         canonical_json_bytes(budget.budget_payload())
