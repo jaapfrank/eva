@@ -27,6 +27,7 @@ from eva.contracts.canonical_json import canonical_sha256
 
 
 _GATEWAY_TOOL_NAME = re.compile(r"[A-Za-z0-9][A-Za-z0-9_.:-]{0,239}")
+_ORCHESTRATOR_TIMEOUT_MARGIN_SECONDS = 5
 
 
 @dataclass(frozen=True, slots=True)
@@ -204,8 +205,16 @@ class McpGatewayToolPlanner:
         provider_input_schemas: (
             dict[tuple[str, str], dict[str, JsonValue]] | None
         ) = None,
+        *,
+        execution_timeout_seconds: int = 10,
+        verification_timeout_seconds: int = 10,
     ) -> None:
-        if not specs or len({item.descriptor.name for item in specs}) != len(specs):
+        if (
+            not specs
+            or len({item.descriptor.name for item in specs}) != len(specs)
+            or not 1 <= execution_timeout_seconds <= 60
+            or not 1 <= verification_timeout_seconds <= 60
+        ):
             raise ValueError("MCP gateway action catalog is invalid")
         if provider_input_schemas is None:
             if any(item.contract != "EvaMcpGatewayProvider/v1" for item in specs):
@@ -220,6 +229,8 @@ class McpGatewayToolPlanner:
             }
         self._specs = {item.descriptor.name: item for item in specs}
         self._provider_input_schemas = provider_input_schemas
+        self._execution_timeout_seconds = execution_timeout_seconds
+        self._verification_timeout_seconds = verification_timeout_seconds
         self.action_names = tuple(self._specs)
 
     async def prepare(
@@ -274,6 +285,8 @@ class McpGatewayToolPlanner:
                 "tool_configuration_sha256": spec.configuration_sha256,
                 "transport": "mcp_gateway",
             },
+            execution_timeout_seconds=self._execution_timeout_seconds,
+            verification_timeout_seconds=self._verification_timeout_seconds,
         )
 
 
@@ -304,9 +317,15 @@ class McpGatewayToolAdapter:
     def planner(self) -> McpGatewayToolPlanner:
         if not self._verified_input_schemas:
             raise RuntimeError("MCP gateway catalog must be verified before use")
+        operation_timeout = (
+            self._config.request_timeout_seconds
+            + _ORCHESTRATOR_TIMEOUT_MARGIN_SECONDS
+        )
         return McpGatewayToolPlanner(
             tuple(self._by_execute_name.values()),
             dict(self._verified_input_schemas),
+            execution_timeout_seconds=operation_timeout,
+            verification_timeout_seconds=operation_timeout,
         )
 
     async def verify_catalog(self) -> dict[str, str]:

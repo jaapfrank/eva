@@ -185,6 +185,106 @@ def test_delayed_proof_does_not_block_event_loop_and_success_follows_proof() -> 
     asyncio.run(scenario())
 
 
+def test_slow_execute_does_not_consume_the_independent_readback_window() -> None:
+    class SlowTool(DelayedThermostat):
+        async def execute(self, request: ToolRequest) -> ToolDispatchResult:
+            self.execute_calls += 1
+            await asyncio.sleep(0.8)
+            return ToolDispatchResult(True, "provider:slow", {"accepted": True})
+
+        async def observe(
+            self, request: ToolRequest, dispatch: ToolDispatchResult | None
+        ) -> ToolProofObservation:
+            self.observe_calls += 1
+            await asyncio.sleep(0.8)
+            return ToolProofObservation(
+                "verified",
+                request.expected_proof,
+                {"source": "slow-provider"},
+            )
+
+    async def scenario() -> None:
+        timeline = Timeline()
+        tool = SlowTool()
+        request = replace(
+            _request(),
+            execution_timeout_seconds=1,
+            verification_timeout_seconds=1,
+        )
+
+        result = await VerifiedToolOrchestrator(
+            timeline,
+            tool,
+            clock=lambda: NOW,
+        ).run(request)
+
+        assert result.status == "verified"
+        assert tool.execute_calls == 1
+        assert tool.observe_calls == 1
+
+    asyncio.run(scenario())
+
+
+def test_restart_after_prepare_keeps_remaining_execute_and_readback_envelope() -> None:
+    class CancelledBeforeProvider(DelayedThermostat):
+        async def execute(self, request: ToolRequest) -> ToolDispatchResult:
+            raise asyncio.CancelledError
+
+    class RecoveredTool(DelayedThermostat):
+        async def observe(
+            self, request: ToolRequest, dispatch: ToolDispatchResult | None
+        ) -> ToolProofObservation:
+            self.observe_calls += 1
+            if dispatch is None:
+                return ToolProofObservation(
+                    "safe_to_execute",
+                    {},
+                    {"source": "recovery-readback"},
+                )
+            return ToolProofObservation(
+                "verified",
+                request.expected_proof,
+                {"source": "recovery-readback"},
+            )
+
+    async def scenario() -> None:
+        timeline = Timeline()
+        request = replace(
+            _request(),
+            execution_timeout_seconds=1,
+            verification_timeout_seconds=2,
+        )
+        first = VerifiedToolOrchestrator(
+            timeline,
+            CancelledBeforeProvider(),
+            clock=lambda: NOW,
+        )
+
+        task = asyncio.create_task(first.run(request))
+        try:
+            await task
+        except asyncio.CancelledError:
+            pass
+        else:
+            raise AssertionError("the simulated process stop must propagate")
+
+        assert timeline.state.phase == "tool_prepared"
+        assert timeline.state.deadline == NOW.replace(second=3)
+
+        tool = RecoveredTool()
+        result = await VerifiedToolOrchestrator(
+            timeline,
+            tool,
+            clock=lambda: NOW.replace(second=1),
+        ).run(request)
+
+        assert result.status == "verified"
+        assert tool.execute_calls == 1
+        assert tool.observe_calls == 2
+
+    asyncio.run(scenario())
+
+
 def test_adapter_cannot_claim_verified_for_different_observed_state() -> None:
     class LyingTool(DelayedThermostat):
         async def observe(

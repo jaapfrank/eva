@@ -157,6 +157,8 @@ def test_legacy_exported_constructors_keep_identity_projection() -> None:
     )
     assert prepared.arguments == {"message": "hallo"}
     assert prepared.observation_arguments == {"message": "hallo"}
+    assert prepared.execution_timeout_seconds == 10
+    assert prepared.verification_timeout_seconds == 10
 
 
 @pytest.mark.parametrize(
@@ -473,6 +475,8 @@ def test_planner_validates_closed_arguments_and_binds_expected_proof() -> None:
     assert preparation.observation_arguments == {"message": "hoi"}
     assert preparation.tool_configuration_sha256 == _spec().configuration_sha256
     assert preparation.expected_proof == {"text": "hoi"}
+    assert preparation.execution_timeout_seconds == 20
+    assert preparation.verification_timeout_seconds == 20
     assert preparation.receipt_output == {
         "catalog_sha256": _spec().execute_catalog_sha256,
         "tool_configuration_sha256": _spec().configuration_sha256,
@@ -491,6 +495,31 @@ def test_planner_validates_closed_arguments_and_binds_expected_proof() -> None:
                     ),
                 )
             )
+
+
+def test_gateway_operation_deadlines_outlive_the_transport_deadline() -> None:
+    with _gateway() as (base_url, _handler):
+        adapter = McpGatewayToolAdapter(
+            McpGatewayConfig(
+                base_url,
+                "private-token",
+                request_timeout_seconds=30,
+                allow_plain_http=True,
+            ),
+            (_spec(),),
+        )
+        asyncio.run(adapter.verify_catalog())
+        preparation = asyncio.run(
+            adapter.planner().prepare(
+                _turn(),
+                ConversationActionCall(
+                    "deadline-call", "echo_proof", {"message": "hoi"}
+                ),
+            )
+        )
+
+    assert preparation.execution_timeout_seconds == 35
+    assert preparation.verification_timeout_seconds == 35
 
 
 def _echo_request(spec: McpGatewayToolSpec, message: str) -> ToolRequest:

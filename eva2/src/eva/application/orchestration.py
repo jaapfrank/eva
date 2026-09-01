@@ -212,7 +212,10 @@ class VerifiedToolOrchestrator:
         dispatch: ToolDispatchResult | None = None
         if state.phase == "admitted":
             deadline = self._clock() + timedelta(
-                seconds=request.verification_timeout_seconds
+                seconds=(
+                    request.execution_timeout_seconds
+                    + request.verification_timeout_seconds
+                )
             )
             prepared_data: dict[str, JsonValue] = {
                 "arguments": request.arguments,
