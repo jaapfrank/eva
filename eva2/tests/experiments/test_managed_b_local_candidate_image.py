@@ -6,6 +6,7 @@ import hashlib
 import importlib.util
 import json
 from pathlib import Path
+import tempfile
 
 import pytest
 
@@ -213,6 +214,51 @@ def test_local_candidate_image_inspection_fails_before_probe_resources(
 def test_local_candidate_image_id_rejects_names_tags_and_short_ids(value: str) -> None:
     with pytest.raises(probe.ProbeError):
         probe._immutable_local_candidate_image_id(value)
+
+
+def test_probe_receipt_writer_persists_one_private_bound_receipt() -> None:
+    with tempfile.TemporaryDirectory(prefix="eva2-probe-receipt-", dir="/tmp") as root:
+        private = Path(root)
+        private.chmod(0o700)
+        receipt = private / "probe-receipt.json"
+        value = {"candidate": IMAGE_ID, "sourceCommit": SOURCE_COMMIT}
+
+        probe._write_new_private_receipt(receipt, value)
+
+        assert json.loads(receipt.read_bytes()) == value
+        assert receipt.stat().st_mode & 0o777 == 0o600
+        with pytest.raises(probe.ProbeError, match="one new file"):
+            probe._write_new_private_receipt(receipt, value)
+
+
+def test_probe_main_persists_final_result_after_cleanup_boundary(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    with tempfile.TemporaryDirectory(prefix="eva2-probe-main-", dir="/tmp") as root:
+        private = Path(root)
+        private.chmod(0o700)
+        staging_parent = private / "staging"
+        staging_parent.mkdir(mode=0o700)
+        receipt = private / "final-receipt.json"
+        original_mkdir = Path.mkdir
+
+        def fail_probe_staging(path: Path, *args: object, **kwargs: object) -> None:
+            if path.parent == staging_parent and path.name.startswith(
+                "managed-b-clean-probe-"
+            ):
+                raise probe.ProbeError("synthetic pre-resource failure")
+            original_mkdir(path, *args, **kwargs)
+
+        monkeypatch.setattr(probe, "STAGING_PARENT", staging_parent)
+        monkeypatch.setattr(probe.os, "geteuid", lambda: 0)
+        monkeypatch.setattr(probe, "_live_status", lambda *_args: False)
+        monkeypatch.setattr(Path, "mkdir", fail_probe_staging)
+
+        assert probe.main(receipt_path=receipt) == 2
+        persisted = json.loads(receipt.read_bytes())
+        assert persisted["status"] == "failed"
+        assert persisted["temporaryResourcesRemoved"] is True
+        assert persisted["error"] == "synthetic pre-resource failure"
 
 
 def test_local_candidate_image_rejects_tag_or_provenance_drift(

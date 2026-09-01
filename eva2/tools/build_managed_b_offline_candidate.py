@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
 """Build one untagged managed-B candidate from existing sealed local inputs.
 
-This operator only sequences the existing offline candidate APIs.  It does not
-download, tag, scan, persist, configure Compose, or touch a live service.
+This operator sequences the existing offline candidate APIs and persists only
+private verification artifacts. It does not download, tag, scan, configure
+Compose, or touch a live service.
 """
 
 from __future__ import annotations
@@ -17,6 +18,10 @@ import stat
 from tools.managed_b_candidate.base_image import materialize_pinned_base_image
 from tools.managed_b_candidate.build_context import materialize_build_context
 from tools.managed_b_candidate.candidate_image import build_offline_candidate_image
+from tools.managed_b_candidate.private_receipt import (
+    PrivateReceiptError,
+    write_new_private_json,
+)
 from tools.managed_b_candidate.wheelhouse import (
     ACTIVE_COVERAGE_PATH,
     inspect_wheelhouse_manifest,
@@ -55,7 +60,9 @@ def _private_output_parent(path: Path) -> None:
 
 def _absolute_artifact_root(path: Path) -> None:
     if not path.is_absolute() or ".." in path.parts:
-        raise RuntimeError("managed B wheel artifact root must be an explicit absolute path")
+        raise RuntimeError(
+            "managed B wheel artifact root must be an explicit absolute path"
+        )
 
 
 def _archived_bytes(
@@ -132,6 +139,8 @@ def build_managed_b_offline_candidate(
         runtime_image,
         output_parent,
     )
+    if image.artifact_path is None:
+        raise RuntimeError("managed B candidate artifacts were not persisted")
 
     return {
         "candidate": {
@@ -149,17 +158,16 @@ def build_managed_b_offline_candidate(
         },
         "materialized": {
             "build_image_archive_path": str(build_image.path),
-            "runtime_libraries_image_archive_path": str(
-                runtime_libraries_image.path
-            ),
+            "runtime_libraries_image_archive_path": str(runtime_libraries_image.path),
             "runtime_image_archive_path": str(runtime_image.path),
             "build_context_path": str(context.path),
             "wheelhouse_path": str(wheelhouse.path),
+            "candidate_artifact_path": str(image.artifact_path),
         },
         "network_used": False,
         "nonclaims": [
             "No wheel or base image was downloaded.",
-            "The candidate was not tagged, scanned, persisted, signed, pushed, attached to Compose, or deployed.",
+            "The candidate archive and receipts were persisted privately for verification; the image was not tagged, scanned, signed, pushed, attached to Compose, or deployed.",
             "No live configuration, container, volume, database, secret, route, or service was opened or changed.",
         ],
         "source": {
@@ -203,6 +211,7 @@ def _parser() -> argparse.ArgumentParser:
     parser.add_argument("source_commit")
     parser.add_argument("--wheel-artifact-root", required=True, type=Path)
     parser.add_argument("--output-parent", required=True, type=Path)
+    parser.add_argument("--receipt", required=True, type=Path)
     return parser
 
 
@@ -215,6 +224,13 @@ def main(argv: list[str] | None = None) -> int:
             arguments.output_parent,
         )
     except RuntimeError as error:
+        print(json.dumps({"error": str(error), "status": "failed"}, sort_keys=True))
+        return 2
+    try:
+        write_new_private_json(
+            arguments.receipt, receipt, label="managed B build receipt"
+        )
+    except (PrivateReceiptError, OSError) as error:
         print(json.dumps({"error": str(error), "status": "failed"}, sort_keys=True))
         return 2
     print(json.dumps(receipt, sort_keys=True))

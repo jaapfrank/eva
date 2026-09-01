@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Execute the exact managed-B release tests and emit one closed receipt.
 
-The current authority distinguishes 146 executable test modules from 19 bound
+The current authority distinguishes 147 executable test modules from 19 bound
 support inputs. Thirteen physically distinct disposable databases include six
 PostgreSQL execution slices inside one receipt group. Twelve databases remain
 operator inputs; the isolated browser subgate creates and removes its own
@@ -27,6 +27,11 @@ import sys
 import tempfile
 from urllib.parse import parse_qsl, unquote, urlsplit
 import xml.etree.ElementTree as ET
+
+from tools.managed_b_candidate.private_receipt import (
+    PrivateReceiptError,
+    write_new_private_json,
+)
 import zipfile
 
 from tools.run_gate import execution_environment
@@ -41,7 +46,7 @@ from tools.run_managed_b_browser_release_subgate import (
 
 RECEIPT_CONTRACT = "EvaManagedBRequiredTestsExecution/v1"
 AUTHORITY_CONTRACT = "EvaManagedBReleaseInputAuthority/v1"
-EXPECTED_EXECUTABLE_COUNT = 146
+EXPECTED_EXECUTABLE_COUNT = 147
 EXPECTED_SUPPORT_COUNT = 19
 EXPECTED_GROUP_COUNT = 7
 _SHA256 = re.compile(r"[0-9a-f]{64}\Z")
@@ -620,21 +625,6 @@ def _junit_counts(path: Path) -> dict[str, int]:
     return result
 
 
-def _write_new_private(path: Path, value: object) -> None:
-    if not path.is_absolute() or path.exists():
-        raise RequiredTestsError("receipt path must be one new absolute path")
-    parent = path.parent.resolve(strict=True)
-    metadata = parent.stat()
-    if metadata.st_uid != os.geteuid() or metadata.st_mode & 0o077:
-        raise RequiredTestsError("receipt parent must be private and owned")
-    descriptor = os.open(path, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600)
-    try:
-        os.write(descriptor, _canonical(value))
-        os.fsync(descriptor)
-    finally:
-        os.close(descriptor)
-
-
 def run_required_tests(
     *,
     repository_root: Path,
@@ -764,6 +754,7 @@ def run_required_tests(
                             "executableModuleCount": len(batch_paths),
                             "junitSha256": execution["junitSha256"],
                             "name": subgroup,
+                            "physicalReceipt": physical,
                             "physicalReceiptSha256": _sha256(physical_raw),
                             "result": counts,
                             "stderrSha256": execution["stderrSha256"],
@@ -892,6 +883,11 @@ def run_required_tests(
             "snapshotSha256": inputs_before.snapshot_sha256,
         },
         "contract": RECEIPT_CONTRACT,
+        "candidate": {
+            "imageId": candidate_image_id,
+            "scope": ["postgres-browser-physical"],
+            "sourceCommit": expected_candidate_source_commit,
+        },
         "groups": group_receipts,
         "networkPolicy": {
             "externalNetworkAllowedDuringGateExecution": False,
@@ -906,10 +902,19 @@ def run_required_tests(
             "serverVersionNum": 160013,
         },
         "status": "passed",
+        "nonclaims": [
+            "Only the postgres-browser-physical subgroup starts and inspects the candidate image; every other subgroup tests the sealed source and wheelhouse inputs.",
+            "The sourceCommit field is physically verified by the browser subgroup and is not a claim that every test executes inside the candidate image.",
+        ],
         "toolchain": toolchain,
         "wheelhouses": {"gate": gate_receipt, "runtime": runtime_receipt},
     }
-    _write_new_private(receipt_path, receipt)
+    try:
+        write_new_private_json(
+            receipt_path, receipt, label="managed B required-tests receipt"
+        )
+    except PrivateReceiptError as error:
+        raise RequiredTestsError(str(error)) from error
     return receipt
 
 

@@ -91,7 +91,33 @@ def _stub_pipeline(
     )
     image = SimpleNamespace(
         image_id="sha256:" + "8" * 64,
+        artifact_path=tmp_path / "candidate-artifact",
         receipt={
+            "builder": {
+                "after": {
+                    "backend": "docker-buildx/docker",
+                    "buildkitNodeId": "node-a",
+                    "buildkitVersion": "v0.26.2",
+                    "daemonId": "daemon-a",
+                    "dockerExecutableSha256": "d" * 64,
+                    "dockerServerVersion": "29.1.3",
+                    "socketIdentitySha256": "e" * 64,
+                    "stateRootIdentitySha256": "f" * 64,
+                },
+                "before": {
+                    "backend": "docker-buildx/docker",
+                    "buildkitNodeId": "node-a",
+                    "buildkitVersion": "v0.26.2",
+                    "daemonId": "daemon-a",
+                    "dockerExecutableSha256": "d" * 64,
+                    "dockerServerVersion": "29.1.3",
+                    "socketIdentitySha256": "e" * 64,
+                    "stateRootIdentitySha256": "f" * 64,
+                },
+                "contract": "EvaMeasuredDockerBuilder/v2",
+                "runChallenge": "a" * 64,
+                "singleHost": True,
+            },
             "build_image_archive_sha256": "6" * 64,
             "build_image_digest": candidate.base_image_digest,
             "build_image_reference": candidate.build_image_reference,
@@ -222,6 +248,7 @@ def test_sequences_only_the_existing_offline_candidate_stages(
             native_tmp_path / "runtime-libraries" / "base.oci.tar"
         ),
         "wheelhouse_path": str(native_tmp_path / "materialized-wheelhouse"),
+        "candidate_artifact_path": str(native_tmp_path / "candidate-artifact"),
     }
 
     decoded = json.loads(json.dumps(receipt))
@@ -312,6 +339,8 @@ def test_cli_emits_one_json_failure_without_starting_a_build(
             str(native_tmp_path / "artifacts"),
             "--output-parent",
             str(private_output),
+            "--receipt",
+            str(private_output / "must-not-exist.json"),
         ]
     )
 
@@ -319,3 +348,33 @@ def test_cli_emits_one_json_failure_without_starting_a_build(
     assert capsys.readouterr().out == (
         '{"error": "sealed input differs", "status": "failed"}\n'
     )
+
+
+def test_cli_persists_exact_private_build_receipt(
+    monkeypatch: pytest.MonkeyPatch,
+    private_output: Path,
+    capsys: pytest.CaptureFixture[str],
+) -> None:
+    value = {"contract": "EvaManagedBOfflineCandidateBuildReceipt/v2", "status": "ok"}
+    monkeypatch.setattr(
+        "tools.build_managed_b_offline_candidate.build_managed_b_offline_candidate",
+        lambda *_args: value,
+    )
+    receipt = private_output / "build-receipt.json"
+
+    result = main(
+        [
+            COMMIT,
+            "--wheel-artifact-root",
+            str(private_output),
+            "--output-parent",
+            str(private_output),
+            "--receipt",
+            str(receipt),
+        ]
+    )
+
+    assert result == 0
+    assert json.loads(receipt.read_bytes()) == value
+    assert receipt.stat().st_mode & 0o777 == 0o600
+    assert json.loads(capsys.readouterr().out) == value

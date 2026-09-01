@@ -109,7 +109,8 @@ def test_authority_distinguishes_executable_tests_from_bound_support() -> None:
     )
     required_inputs = {row["path"] for row in authority["requiredInputs"]}
 
-    assert len(inputs.executable) == 146
+    assert len(inputs.executable) == 147
+    assert "tests/operations/test_two_builder_reproducibility.py" in inputs.executable
     assert len(inputs.support) == 19
     assert all(Path(path).name.startswith("test_") for path in inputs.executable)
     assert (
@@ -357,6 +358,12 @@ def test_runner_executes_seven_closed_groups_and_redacts_dsns(
     )
 
     assert receipt["status"] == "passed"
+    assert receipt["candidate"] == {
+        "imageId": _CANDIDATE,
+        "scope": ["postgres-browser-physical"],
+        "sourceCommit": _COMMIT,
+    }
+    assert "Only the postgres-browser-physical subgroup" in receipt["nonclaims"][0]
     assert receipt["networkPolicy"] == {
         "externalNetworkAllowedDuringGateExecution": False,
         "isolationEnforcementClaim": False,
@@ -364,7 +371,7 @@ def test_runner_executes_seven_closed_groups_and_redacts_dsns(
     }
     assert len(receipt["groups"]) == 7
     assert len(calls) == 22
-    assert sum(group["executableModuleCount"] for group in receipt["groups"]) == 146
+    assert sum(group["executableModuleCount"] for group in receipt["groups"]) == 147
     postgres = next(
         group for group in receipt["groups"] if group["group"] == "postgres"
     )
@@ -377,6 +384,16 @@ def test_runner_executes_seven_closed_groups_and_redacts_dsns(
         "postgres-4b-historical",
     ]
     assert postgres["executableModuleCount"] == 23
+    physical = next(
+        subgroup
+        for subgroup in postgres["subgroups"]
+        if subgroup["name"] == "postgres-browser-physical"
+    )
+    assert physical["physicalReceipt"]["candidate"] == {
+        "imageId": receipt["candidate"]["imageId"],
+        "sourceCommit": receipt["candidate"]["sourceCommit"],
+    }
+    assert physical["physicalReceipt"]["cleanup"] == {"allNonceResourcesRemoved": True}
     assert receipt["postgres"]["disposableDatabasesRequired"] == 13
     assert receipt["postgres"]["physicalBrowserSubgateDatabaseCount"] == 1
     assert set(receipt["postgres"]["databaseEnvironmentVariables"]) == set(environment)

@@ -39,10 +39,10 @@ _PORTABLE_V1_PROFILE_PATH = (
     f"{_PORTABLE_V1_CONTRACT_ROOT}/canonical-json-profile-v1.json"
 )
 _EXPECTED_INPUT_PATHS_SHA256 = (
-    "552a1de1a452441d8831c5fe293c4712e02e1f768a3c93337d3f092f5fee435d"
+    "d20711bb818519ffe3e77cfd1816f42b29ea85a9cd858fd217a5ef6a16acd96a"
 )
 _EXPECTED_TEST_PATHS_SHA256 = (
-    "d00aa3e04d6f5197b43b5b924a535d20df25a7ee2d821c0e4c7c9c6223f3d142"
+    "119aa9c61d95758b182dfd1dabefd22c3c417742f18ecc148cc9ebb594280836"
 )
 _EXPECTED_TEST_SUPPORT_PATHS_SHA256 = (
     "7abafec28306ece2b646b44d1b42db7562ccfbc1e473f765cdd085f0ace95ba0"
@@ -51,12 +51,14 @@ _BUILD_PROVENANCE_INPUTS = {
     "deploy/living-core/Dockerfile",
     "release/candidate-artifact-tool-authority-v1.json",
     "tools/build_managed_b_offline_candidate.py",
+    "tools/check_two_builder_reproducibility.py",
     "tools/managed_b_candidate/__init__.py",
     "tools/managed_b_candidate/artifact_analysis.py",
     "tools/managed_b_candidate/base_image.py",
     "tools/managed_b_candidate/build_context.py",
     "tools/managed_b_candidate/candidate_image.py",
     "tools/managed_b_candidate/offline_build.py",
+    "tools/managed_b_candidate/private_receipt.py",
     "tools/managed_b_candidate/wheelhouse.py",
     "tools/prepare_managed_b_candidate_context.py",
 }
@@ -71,6 +73,7 @@ _BUILD_PROVENANCE_TESTS = {
     "tests/operations/test_managed_b_runtime_smoke.py",
     "tests/operations/test_managed_b_wheelhouse.py",
     "tests/operations/test_prepare_managed_b_candidate_context.py",
+    "tests/operations/test_two_builder_reproducibility.py",
     "tests/support/managed_b_runtime_smoke.py",
 }
 _CONNECTOR_SDK_COPY_PATHS = {

@@ -25,6 +25,11 @@ import subprocess
 import sys
 import time
 from typing import Any
+
+from tools.managed_b_candidate.private_receipt import (
+    PrivateReceiptError,
+    write_new_private_json,
+)
 from urllib import error, parse, request
 from uuid import uuid4
 
@@ -832,6 +837,13 @@ def _inspect_started_local_candidate_services(
     return bindings
 
 
+def _write_new_private_receipt(path: Path, value: object) -> None:
+    try:
+        write_new_private_json(path, value, label="clean-graph probe receipt")
+    except PrivateReceiptError as error:
+        raise ProbeError(str(error)) from error
+
+
 def main(
     *,
     clone_current_route: bool = False,
@@ -842,6 +854,7 @@ def main(
     expected_source_commit: str | None = None,
     retain_slot: bool = False,
     retained_slot_number: int = 2,
+    receipt_path: Path | None = None,
 ) -> int:
     if os.geteuid() != 0:
         print(json.dumps({"error": "probe requires root", "status": "failed"}))
@@ -1572,10 +1585,11 @@ def main(
                     "status": "ready_not_active",
                 }
     except Exception as exc:
+        diagnostic = _sanitize_diagnostic(str(exc))
         result["error"] = (
-            str(exc)
+            diagnostic
             if isinstance(exc, ProbeError)
-            else f"unexpected {type(exc).__name__}: {_sanitize_diagnostic(str(exc))}"
+            else f"unexpected {type(exc).__name__}: {diagnostic}"
         )
         result["failedPhase"] = phase
         if environment_file.exists() and not keep_retained:
@@ -1629,7 +1643,9 @@ def main(
         ):
             shutil.rmtree(staging, ignore_errors=True)
         result["temporaryResourcesRemoved"] = (
-            False if keep_retained else cleaned and not staging.exists()
+            False
+            if keep_retained
+            else (not staging_created or cleaned) and not staging.exists()
         )
         result["retainedSlotReady"] = keep_retained
         result["liveSafetyAfter"] = {
@@ -1640,6 +1656,13 @@ def main(
         }
         operational_password = ""
         memory_password = ""
+
+    if receipt_path is not None:
+        try:
+            _write_new_private_receipt(receipt_path, result)
+        except (OSError, ProbeError) as exc:
+            result["error"] = f"receipt persistence failed: {exc}"
+            result["status"] = "failed"
 
     print(json.dumps(result, ensure_ascii=False, sort_keys=True))
     completed = result["status"] == "passed" and (
@@ -1663,6 +1686,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "--retained-slot-number", type=int, choices=(2, 3, 4), default=2
     )
+    parser.add_argument("--receipt", type=Path, required=True)
     arguments = parser.parse_args()
     sys.exit(
         main(
@@ -1676,5 +1700,6 @@ if __name__ == "__main__":
             expected_source_commit=arguments.expected_source_commit,
             retain_slot=arguments.retain_slot,
             retained_slot_number=arguments.retained_slot_number,
+            receipt_path=arguments.receipt,
         )
     )

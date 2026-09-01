@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import os
 from pathlib import Path
 import subprocess
 import tempfile
@@ -10,11 +11,16 @@ import pytest
 from tools.managed_b_candidate.base_image import MaterializedBaseImage
 from tools.managed_b_candidate.build_context import MaterializedBuildContext
 from tools.managed_b_candidate.candidate_image import (
+    _builder_measurement,
     _hash_image_archive,
     _loaded_image_id,
     _read_iid,
     build_offline_candidate_image,
     validate_offline_candidate_image,
+)
+from tools.managed_b_candidate.private_receipt import (
+    PrivateReceiptError,
+    write_new_private_json,
 )
 
 
@@ -32,6 +38,16 @@ RUNTIME_REPO_DIGEST = f"gcr.io/distroless/cc-debian13@{RUNTIME_DIGEST}"
 SOURCE_COMMIT = "a" * 40
 SOURCE_DATE_EPOCH = 1787480000
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
+BUILDER_IDENTITY = {
+    "backend": "docker-buildx/docker",
+    "buildkitNodeId": "buildkit-node-a",
+    "buildkitVersion": "v0.26.2",
+    "daemonId": "daemon-a",
+    "dockerExecutableSha256": "d" * 64,
+    "dockerServerVersion": "29.1.3",
+    "socketIdentitySha256": "e" * 64,
+    "stateRootIdentitySha256": "f" * 64,
+}
 
 
 def test_runtime_image_installs_eva_package_before_removing_pip() -> None:
@@ -136,6 +152,10 @@ def _stub_validators(monkeypatch: pytest.MonkeyPatch) -> None:
             ]
         ],
     )
+    monkeypatch.setattr(
+        "tools.managed_b_candidate.candidate_image._builder_measurement",
+        lambda _runner: dict(BUILDER_IDENTITY),
+    )
 
 
 def _runner(
@@ -228,6 +248,88 @@ def _runner(
     return commands, run
 
 
+def test_measures_real_docker_and_buildkit_fields(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    monkeypatch.setattr(
+        "tools.managed_b_candidate.candidate_image._identity_sha256",
+        lambda _path, *, socket, label: ("a" if socket else "b") * 64,
+    )
+    monkeypatch.setattr(
+        "tools.managed_b_candidate.candidate_image._docker_executable_sha256",
+        lambda: "c" * 64,
+    )
+
+    def runner(command: list[str], _timeout: int) -> subprocess.CompletedProcess[str]:
+        if command[:2] == ["docker", "info"]:
+            value = {
+                "Architecture": "x86_64",
+                "DockerRootDir": "/private/builder-a",
+                "ID": "daemon-a",
+                "OSType": "linux",
+            }
+            return subprocess.CompletedProcess(command, 0, json.dumps(value), "")
+        if command[:2] == ["docker", "version"]:
+            value = {"Arch": "amd64", "Os": "linux", "Version": "29.1.3"}
+            return subprocess.CompletedProcess(command, 0, json.dumps(value), "")
+        if command[:3] == ["docker", "buildx", "ls"]:
+            value = {
+                "Driver": "docker",
+                "Name": "default",
+                "Nodes": [
+                    {
+                        "Endpoint": "default",
+                        "IDs": ["node-a"],
+                        "Status": "running",
+                        "Version": "v0.26.2",
+                    }
+                ],
+            }
+            raw = json.dumps(value)
+            return subprocess.CompletedProcess(command, 0, f"{raw}\n{raw}\n", "")
+        raise AssertionError(command)
+
+    assert _builder_measurement(runner) == {
+        "backend": "docker-buildx/docker",
+        "buildkitNodeId": "node-a",
+        "buildkitVersion": "v0.26.2",
+        "daemonId": "daemon-a",
+        "dockerExecutableSha256": "c" * 64,
+        "dockerServerVersion": "29.1.3",
+        "socketIdentitySha256": "a" * 64,
+        "stateRootIdentitySha256": "b" * 64,
+    }
+
+
+def test_private_receipt_handles_partial_writes_and_rejects_linked_parent(
+    native_tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    parent = native_tmp_path / "private"
+    parent.mkdir(mode=0o700)
+    target = parent / "receipt.json"
+    real_write = os.write
+
+    def partial_write(descriptor: int, raw: object) -> int:
+        view = memoryview(raw)[:3]
+        return real_write(descriptor, view)
+
+    monkeypatch.setattr(
+        "tools.managed_b_candidate.private_receipt._write", partial_write
+    )
+    write_new_private_json(target, {"status": "passed"}, label="test receipt")
+    assert json.loads(target.read_bytes()) == {"status": "passed"}
+    assert target.stat().st_mode & 0o777 == 0o600
+    with pytest.raises(PrivateReceiptError, match="one new file"):
+        write_new_private_json(target, {}, label="test receipt")
+
+    actual = native_tmp_path / "actual"
+    actual.mkdir(mode=0o700)
+    linked = native_tmp_path / "linked"
+    linked.symlink_to(actual, target_is_directory=True)
+    with pytest.raises(PrivateReceiptError, match="must not use links"):
+        write_new_private_json(linked / "receipt.json", {}, label="linked test receipt")
+
+
 def test_builds_an_untagged_networkless_candidate_without_b(
     monkeypatch: pytest.MonkeyPatch, native_tmp_path: Path
 ) -> None:
@@ -243,6 +345,10 @@ def test_builds_an_untagged_networkless_candidate_without_b(
 
     assert candidate.image_id == IMAGE_ID
     assert candidate.receipt["network_used"] is False
+    builder_binding = candidate.receipt["builder"]
+    assert builder_binding["before"] == BUILDER_IDENTITY
+    assert builder_binding["after"] == BUILDER_IDENTITY
+    assert len(builder_binding["runChallenge"]) == 64
     assert candidate.receipt["candidate_runtime_library_path"] == (
         "LD_LIBRARY_PATH=/usr/local/lib"
     )
@@ -254,6 +360,7 @@ def test_builds_an_untagged_networkless_candidate_without_b(
         command for command in commands if command[:3] == ["docker", "buildx", "build"]
     )
     assert "--network=none" in build
+    assert build[build.index("--builder") + 1] == "default"
     assert "--platform=linux/amd64" in build
     assert "--pull=false" in build
     assert "--no-cache" in build
@@ -282,7 +389,19 @@ def test_builds_an_untagged_networkless_candidate_without_b(
     assert inspected.count(REPO_DIGEST) == 2
     assert inspected.count(LIBS_REPO_DIGEST) == 2
     assert inspected.count(RUNTIME_REPO_DIGEST) == 2
-    assert list(output.iterdir()) == []
+    assert candidate.artifact_path is not None
+    assert candidate.artifact_path.parent == output
+    assert (candidate.artifact_path / "candidate.tar").read_bytes() == (
+        b"deterministic candidate archive"
+    )
+    persisted_receipt = json.loads(
+        (candidate.artifact_path / "candidate-image-receipt.json").read_bytes()
+    )
+    assert persisted_receipt == candidate.receipt
+    assert (candidate.artifact_path / "candidate.tar").stat().st_mode & 0o777 == 0o600
+    assert (
+        candidate.artifact_path / "candidate-image-receipt.json"
+    ).stat().st_mode & 0o777 == 0o600
 
 
 def test_refuses_when_current_docker_base_differs(
@@ -329,6 +448,30 @@ def test_refuses_a_candidate_that_receives_a_tag(
     _commands, runner = _runner(candidate_tags=["unexpected:latest"])
 
     with pytest.raises(RuntimeError, match="must not receive a tag"):
+        build_offline_candidate_image(
+            context, build, runtime_libraries, runtime, output, runner=runner
+        )
+
+    assert list(output.iterdir()) == []
+
+
+def test_refuses_builder_identity_change_during_build(
+    monkeypatch: pytest.MonkeyPatch, native_tmp_path: Path
+) -> None:
+    _stub_validators(monkeypatch)
+    context, build, runtime_libraries, runtime = _inputs(native_tmp_path)
+    output = native_tmp_path / "output"
+    output.mkdir(mode=0o700)
+    changed = dict(BUILDER_IDENTITY)
+    changed["daemonId"] = "daemon-b"
+    measurements = iter((dict(BUILDER_IDENTITY), changed))
+    monkeypatch.setattr(
+        "tools.managed_b_candidate.candidate_image._builder_measurement",
+        lambda _runner: next(measurements),
+    )
+    _commands, runner = _runner()
+
+    with pytest.raises(RuntimeError, match="identity changed during build"):
         build_offline_candidate_image(
             context, build, runtime_libraries, runtime, output, runner=runner
         )

@@ -12,6 +12,8 @@ import hashlib
 import json
 import os
 from pathlib import Path
+import secrets
+import shutil
 import stat
 import subprocess
 import tempfile
@@ -25,17 +27,20 @@ from .build_context import (
     MaterializedBuildContext,
     validate_materialized_build_context,
 )
+from .private_receipt import write_new_private_json
 
 
 _IMAGE_PREFIX = "sha256:"
 _MAX_IMAGE_ARCHIVE_BYTES = 2 * 1024 * 1024 * 1024
 _RUNTIME_LIBRARY_PATH = "LD_LIBRARY_PATH=/usr/local/lib"
+_BUILDER_CONTRACT = "EvaMeasuredDockerBuilder/v2"
 
 
 @dataclass(frozen=True, slots=True)
 class CandidateImage:
     image_id: str
     receipt: dict[str, object]
+    artifact_path: Path | None = None
 
 
 Runner = Callable[[list[str], int], subprocess.CompletedProcess[str]]
@@ -98,6 +103,195 @@ def _inspect(reference: str, runner: Runner) -> dict[str, Any]:
     return value[0]
 
 
+def _json_command(command: list[str], runner: Runner, *, label: str) -> dict[str, Any]:
+    result = runner(command, 30)
+    try:
+        value = json.loads(result.stdout)
+    except json.JSONDecodeError as error:
+        raise RuntimeError(f"managed B {label} is invalid") from error
+    if not isinstance(value, dict):
+        raise RuntimeError(f"managed B {label} is invalid")
+    return value
+
+
+def _identity_sha256(path: Path, *, socket: bool, label: str) -> str:
+    try:
+        resolved = path.resolve(strict=True)
+        metadata = resolved.lstat()
+    except OSError as error:
+        raise RuntimeError(f"managed B {label} is inaccessible") from error
+    expected = stat.S_ISSOCK if socket else stat.S_ISDIR
+    if not path.is_absolute() or resolved != path or not expected(metadata.st_mode):
+        raise RuntimeError(f"managed B {label} is invalid")
+    value = {
+        "device": metadata.st_dev,
+        "inode": metadata.st_ino,
+        "mode": stat.S_IMODE(metadata.st_mode),
+        "path": str(path),
+        "uid": metadata.st_uid,
+    }
+    return hashlib.sha256(
+        json.dumps(value, separators=(",", ":"), sort_keys=True).encode("utf-8")
+    ).hexdigest()
+
+
+def _docker_socket() -> Path:
+    endpoint = os.environ.get("DOCKER_HOST", "unix:///run/docker.sock")
+    prefix = "unix://"
+    if not endpoint.startswith(prefix):
+        raise RuntimeError("managed B build requires one local Docker socket")
+    path = Path(endpoint[len(prefix) :])
+    if not path.is_absolute() or ".." in path.parts:
+        raise RuntimeError("managed B Docker socket path is invalid")
+    return path
+
+
+def _docker_executable_sha256() -> str:
+    executable = shutil.which("docker")
+    if executable is None:
+        raise RuntimeError("managed B Docker executable is unavailable")
+    try:
+        path = Path(executable).resolve(strict=True)
+        metadata = path.lstat()
+        raw = path.read_bytes()
+    except OSError as error:
+        raise RuntimeError("managed B Docker executable is inaccessible") from error
+    if not stat.S_ISREG(metadata.st_mode) or metadata.st_mode & 0o022:
+        raise RuntimeError("managed B Docker executable is unsafe")
+    return hashlib.sha256(raw).hexdigest()
+
+
+def _builder_measurement(runner: Runner) -> dict[str, object]:
+    info = _json_command(
+        ["docker", "info", "--format", "{{json .}}"],
+        runner,
+        label="Docker builder info",
+    )
+    version = _json_command(
+        ["docker", "version", "--format", "{{json .Server}}"],
+        runner,
+        label="Docker builder version",
+    )
+    buildx_result = runner(["docker", "buildx", "ls", "--format", "{{json .}}"], 30)
+    try:
+        builders = [
+            json.loads(line)
+            for line in buildx_result.stdout.splitlines()
+            if line.strip()
+        ]
+    except json.JSONDecodeError as error:
+        raise RuntimeError("managed B BuildKit builder list is invalid") from error
+    selected = [
+        value
+        for value in builders
+        if isinstance(value, dict)
+        and value.get("Name") == "default"
+        and not value.get("Err")
+    ]
+    unique_selected = {
+        json.dumps(value, separators=(",", ":"), sort_keys=True): value
+        for value in selected
+    }
+    selected = list(unique_selected.values())
+    if len(selected) != 1 or selected[0].get("Driver") != "docker":
+        raise RuntimeError("managed B default BuildKit builder differs")
+    nodes = selected[0].get("Nodes")
+    if not isinstance(nodes, list) or len(nodes) != 1 or not isinstance(nodes[0], dict):
+        raise RuntimeError("managed B BuildKit node is invalid")
+    node = nodes[0]
+    node_ids = node.get("IDs")
+    root = info.get("DockerRootDir")
+    if (
+        not isinstance(info.get("ID"), str)
+        or not info["ID"]
+        or info.get("OSType") != "linux"
+        or info.get("Architecture") not in {"x86_64", "amd64"}
+        or not isinstance(root, str)
+        or not isinstance(version.get("Version"), str)
+        or version.get("Os") != "linux"
+        or version.get("Arch") != "amd64"
+        or node.get("Endpoint") != "default"
+        or node.get("Status") != "running"
+        or not isinstance(node.get("Version"), str)
+        or not isinstance(node_ids, list)
+        or len(node_ids) != 1
+        or not isinstance(node_ids[0], str)
+        or not node_ids[0]
+    ):
+        raise RuntimeError("managed B Docker/BuildKit identity differs")
+    return {
+        "backend": "docker-buildx/docker",
+        "buildkitNodeId": node_ids[0],
+        "buildkitVersion": node["Version"],
+        "daemonId": info["ID"],
+        "dockerExecutableSha256": _docker_executable_sha256(),
+        "dockerServerVersion": version["Version"],
+        "socketIdentitySha256": _identity_sha256(
+            _docker_socket(), socket=True, label="Docker socket"
+        ),
+        "stateRootIdentitySha256": _identity_sha256(
+            Path(root), socket=False, label="Docker state root"
+        ),
+    }
+
+
+def _validate_builder_binding(value: object) -> dict[str, object]:
+    if not isinstance(value, dict) or set(value) != {
+        "after",
+        "before",
+        "contract",
+        "runChallenge",
+        "singleHost",
+    }:
+        raise RuntimeError("managed B builder binding differs")
+    challenge = value.get("runChallenge")
+    before = value.get("before")
+    after = value.get("after")
+    fields = {
+        "backend",
+        "buildkitNodeId",
+        "buildkitVersion",
+        "daemonId",
+        "dockerExecutableSha256",
+        "dockerServerVersion",
+        "socketIdentitySha256",
+        "stateRootIdentitySha256",
+    }
+    if (
+        value.get("contract") != _BUILDER_CONTRACT
+        or value.get("singleHost") is not True
+        or not isinstance(challenge, str)
+        or len(challenge) != 64
+        or any(character not in "0123456789abcdef" for character in challenge)
+        or not isinstance(before, dict)
+        or set(before) != fields
+        or before != after
+    ):
+        raise RuntimeError("managed B builder binding differs")
+    for key in (
+        "backend",
+        "buildkitNodeId",
+        "buildkitVersion",
+        "daemonId",
+        "dockerServerVersion",
+    ):
+        if not isinstance(before[key], str) or not before[key]:
+            raise RuntimeError("managed B builder identity differs")
+    for key in (
+        "dockerExecutableSha256",
+        "socketIdentitySha256",
+        "stateRootIdentitySha256",
+    ):
+        field = before[key]
+        if (
+            not isinstance(field, str)
+            or len(field) != 64
+            or any(character not in "0123456789abcdef" for character in field)
+        ):
+            raise RuntimeError("managed B builder identity differs")
+    return value
+
+
 def _verify_current_base(base: dict[str, object], runner: Runner) -> None:
     digest = str(base["base_image_digest"])
     reference = f"{base['base_image_repository']}@{digest}"
@@ -156,7 +350,9 @@ def _hash_image_archive(path: Path) -> str:
     try:
         metadata = path.lstat()
     except OSError as error:
-        raise RuntimeError("managed B candidate image archive is inaccessible") from error
+        raise RuntimeError(
+            "managed B candidate image archive is inaccessible"
+        ) from error
     if (
         stat.S_ISLNK(metadata.st_mode)
         or not stat.S_ISREG(metadata.st_mode)
@@ -319,6 +515,8 @@ def build_offline_candidate_image(
     for role, receipt in bases.items():
         _require_context_base(context_receipt, receipt, role)
     source_commit, source_date_epoch = _source_identity(context_receipt)
+    run_challenge = secrets.token_hex(32)
+    builder_before = _builder_measurement(runner)
     for receipt in bases.values():
         _verify_current_base(receipt, runner)
     _private_parent(output_parent)
@@ -328,12 +526,15 @@ def build_offline_candidate_image(
     temporary_root.chmod(0o700)
     iidfile = temporary_root / "image.iid"
     image_archive = temporary_root / "candidate.tar"
+    completed = False
     try:
         runner(
             [
                 "docker",
                 "buildx",
                 "build",
+                "--builder",
+                "default",
                 "--network=none",
                 "--platform=linux/amd64",
                 "--pull=false",
@@ -369,13 +570,18 @@ def build_offline_candidate_image(
         )
         for receipt in bases.values():
             _verify_current_base(receipt, runner)
+        builder_after = _builder_measurement(runner)
+        if builder_after != builder_before:
+            raise RuntimeError("managed B builder identity changed during build")
+        completed = True
     finally:
-        temporary_root.chmod(0o700)
         if iidfile.exists() or iidfile.is_symlink():
             iidfile.unlink()
-        if image_archive.exists() or image_archive.is_symlink():
-            image_archive.unlink()
-        temporary_root.rmdir()
+        if not completed:
+            temporary_root.chmod(0o700)
+            if image_archive.exists() or image_archive.is_symlink():
+                image_archive.unlink()
+            temporary_root.rmdir()
     receipt = {
         "build_image_archive_sha256": build_receipt["archive_sha256"],
         "build_image_digest": build_receipt["base_image_digest"],
@@ -392,6 +598,13 @@ def build_offline_candidate_image(
         "candidate_source_commit": source_commit,
         "candidate_source_date_epoch": source_date_epoch,
         "candidate_timestamp_rewrite_enabled": True,
+        "builder": {
+            "after": builder_after,
+            "before": builder_before,
+            "contract": _BUILDER_CONTRACT,
+            "runChallenge": run_challenge,
+            "singleHost": True,
+        },
         "context_tree_sha256": context_receipt["context_tree_sha256"],
         "contract": "EvaManagedBOfflineCandidateImageReceipt/v3",
         "network_used": False,
@@ -416,7 +629,20 @@ def build_offline_candidate_image(
             f"{runtime_libraries_receipt['base_image_digest']}"
         ),
     }
-    return CandidateImage(image_id, receipt)
+    receipt_path = temporary_root / "candidate-image-receipt.json"
+    try:
+        image_archive.chmod(0o600)
+        write_new_private_json(
+            receipt_path, receipt, label="managed B candidate image receipt"
+        )
+    except Exception:
+        if receipt_path.exists() or receipt_path.is_symlink():
+            receipt_path.unlink()
+        if image_archive.exists() or image_archive.is_symlink():
+            image_archive.unlink()
+        temporary_root.rmdir()
+        raise
+    return CandidateImage(image_id, receipt, temporary_root)
 
 
 def validate_offline_candidate_image(
@@ -425,6 +651,7 @@ def validate_offline_candidate_image(
     if not isinstance(candidate, CandidateImage):
         raise RuntimeError("managed B candidate image must be materialized")
     receipt = candidate.receipt
+    _validate_builder_binding(receipt.get("builder"))
     if (
         receipt.get("contract") != "EvaManagedBOfflineCandidateImageReceipt/v3"
         or receipt.get("status") != "built_local_candidate"
