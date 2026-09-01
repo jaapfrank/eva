@@ -279,6 +279,91 @@ def test_stopped_p1_reports_only_a_sanitized_failure_category(
     }
 
 
+def test_setup_failure_categories_cover_the_generic_provider_boundary() -> None:
+    tree = ast.parse(PRODUCER.read_text(encoding="utf-8"))
+    function = next(
+        node
+        for node in tree.body
+        if isinstance(node, ast.FunctionDef) and node.name == "_failure_category"
+    )
+    assert len(function.body) == 1 and isinstance(function.body[0], ast.Return)
+    call = function.body[0].value
+    assert isinstance(call, ast.Call) and isinstance(call.func, ast.Attribute)
+    assert call.func.attr == "get" and isinstance(call.func.value, ast.Dict)
+    assert len(call.args) == 2
+    assert isinstance(call.args[1], ast.Constant)
+    assert call.args[1].value == "unexpected_runtime_error"
+    keys = call.func.value.keys
+    values = call.func.value.values
+    assert len(keys) == len(values) == 35
+    assert all(
+        isinstance(item, ast.Constant) and isinstance(item.value, str)
+        for item in (*keys, *values)
+    )
+    mapping = {
+        key.value: value.value
+        for key, value in zip(keys, values, strict=True)
+    }
+    assert mapping == {
+        "ContextForge response is too large": "gateway_response_too_large",
+        "ContextForge returned invalid JSON": "gateway_response_invalid",
+        "ContextForge login returned no valid access token": "gateway_login_invalid",
+        "filesystem crash proof requires PostgreSQL 16.13": "postgres_version_differs",
+        "filesystem crash proof database is not empty": "database_not_empty",
+        "proof state directory is not private": "state_directory_not_private",
+        "filesystem crash proof state is not empty": "state_directory_not_empty",
+        "filesystem crash proof schema differs": "database_schema_differs",
+        "ContextForge catalog is invalid": "gateway_catalog_invalid",
+        "ContextForge effect tool is absent or duplicated": "effect_tool_missing",
+        "ContextForge readback tool is absent or duplicated": "readback_tool_missing",
+        "ContextForge distractor tool is absent or duplicated": (
+            "distractor_tool_missing"
+        ),
+        "ContextForge effect tool authority is invalid": "effect_authority_invalid",
+        "ContextForge readback tool authority is invalid": (
+            "readback_authority_invalid"
+        ),
+        "ContextForge distractor tool authority is invalid": (
+            "distractor_authority_invalid"
+        ),
+        "ContextForge provider separation differs": "provider_separation_differs",
+        "ContextForge server catalog is invalid": "counter_server_catalog_invalid",
+        "ContextForge counter server is absent or duplicated": "counter_server_missing",
+        "ContextForge counter server differs": "counter_server_differs",
+        "ContextForge per-tool metrics are invalid": "provider_metrics_invalid",
+        "ContextForge effect counter is invalid": "effect_counter_invalid",
+        "ContextForge readback counter is invalid": "readback_counter_invalid",
+        "ContextForge distractor counter is invalid": "distractor_counter_invalid",
+        "filesystem proof database authority differs": "database_authority_differs",
+        "MCP provider did not contribute the sealed tool choice": (
+            "provider_catalog_not_loaded"
+        ),
+        "filesystem provider route uses another durable owner": (
+            "provider_durable_owner_differs"
+        ),
+        "filesystem provider durable routes differ": "provider_routes_differ",
+        "distractor tool was unexpectedly executed": "distractor_already_executed",
+        "filesystem provider counters did not start at zero": (
+            "provider_baseline_differs"
+        ),
+        "model did not select the exact filesystem comfort action": (
+            "model_selection_differs"
+        ),
+        "filesystem execute counter differs": "provider_execute_count_differs",
+        "filesystem SIGKILL timeline differs": "durable_timeline_differs",
+        "filesystem SIGKILL window is not sealed": "durable_window_not_sealed",
+        "provider call binding is incomplete": "provider_binding_incomplete",
+        "captured MCP provider call differs from admission": "provider_call_differs",
+    }
+    first_argument = call.args[0]
+    assert isinstance(first_argument, ast.Call)
+    assert isinstance(first_argument.func, ast.Name)
+    assert first_argument.func.id == "str"
+    assert len(first_argument.args) == 1
+    assert isinstance(first_argument.args[0], ast.Name)
+    assert first_argument.args[0].id == "error"
+
+
 def _file_reference(path: Path, value: dict[str, Any]) -> dict[str, Any]:
     raw = (json.dumps(value, sort_keys=True, separators=(",", ":")) + "\n").encode()
     path.write_bytes(raw)

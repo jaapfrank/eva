@@ -1036,6 +1036,50 @@ def _start() -> int:
 
 def _failure_category(error: Exception) -> str:
     return {
+        "ContextForge response is too large": "gateway_response_too_large",
+        "ContextForge returned invalid JSON": "gateway_response_invalid",
+        "ContextForge login returned no valid access token": "gateway_login_invalid",
+        "filesystem crash proof requires PostgreSQL 16.13": (
+            "postgres_version_differs"
+        ),
+        "filesystem crash proof database is not empty": "database_not_empty",
+        "proof state directory is not private": "state_directory_not_private",
+        "filesystem crash proof state is not empty": "state_directory_not_empty",
+        "filesystem crash proof schema differs": "database_schema_differs",
+        "ContextForge catalog is invalid": "gateway_catalog_invalid",
+        "ContextForge effect tool is absent or duplicated": "effect_tool_missing",
+        "ContextForge readback tool is absent or duplicated": (
+            "readback_tool_missing"
+        ),
+        "ContextForge distractor tool is absent or duplicated": (
+            "distractor_tool_missing"
+        ),
+        "ContextForge effect tool authority is invalid": "effect_authority_invalid",
+        "ContextForge readback tool authority is invalid": (
+            "readback_authority_invalid"
+        ),
+        "ContextForge distractor tool authority is invalid": (
+            "distractor_authority_invalid"
+        ),
+        "ContextForge provider separation differs": "provider_separation_differs",
+        "ContextForge server catalog is invalid": "counter_server_catalog_invalid",
+        "ContextForge counter server is absent or duplicated": (
+            "counter_server_missing"
+        ),
+        "ContextForge counter server differs": "counter_server_differs",
+        "ContextForge per-tool metrics are invalid": "provider_metrics_invalid",
+        "ContextForge effect counter is invalid": "effect_counter_invalid",
+        "ContextForge readback counter is invalid": "readback_counter_invalid",
+        "ContextForge distractor counter is invalid": "distractor_counter_invalid",
+        "filesystem proof database authority differs": "database_authority_differs",
+        "MCP provider did not contribute the sealed tool choice": (
+            "provider_catalog_not_loaded"
+        ),
+        "filesystem provider route uses another durable owner": (
+            "provider_durable_owner_differs"
+        ),
+        "filesystem provider durable routes differ": "provider_routes_differ",
+        "distractor tool was unexpectedly executed": "distractor_already_executed",
         "filesystem provider counters did not start at zero": "provider_baseline_differs",
         "model did not select the exact filesystem comfort action": (
             "model_selection_differs"
