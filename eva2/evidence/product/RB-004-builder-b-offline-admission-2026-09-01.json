@@ -56,15 +56,6 @@
     "eva2/tools/check_two_builder_reproducibility.py",
     "eva2/tests/operations/test_two_builder_reproducibility.py"
   ],
-  "cleanup": {
-    "containerdUnitState": "inactive",
-    "dockerUnitState": "inactive",
-    "failedPreflightScratchRemoved": true,
-    "matchingProofProcesses": 0,
-    "networkNamespaceRemoved": true,
-    "privateRawArtifactsRetained": true,
-    "temporaryStateRootsRemoved": true
-  },
   "contract": "EvaWorkboardTaskEvidence/v1",
   "implementationCommit": "f89d3d72c01fa8d7917d44a5a79395f0301393a9",
   "networkUsed": false,
@@ -72,7 +63,10 @@
     "This admits one independent builder-B candidate; cross-builder comparison remains RB-005.",
     "The candidate was not scanned, signed, pushed, attached to Compose, deployed, or promoted.",
     "Two isolated daemon states on one host do not prove independence from the shared host, kernel, or operator.",
-    "No live route, container, database, volume, service, or secret was opened or changed."
+    "No live route, container, database, volume, service, or secret was opened or changed.",
+    "The physical docker buildx invocation count was not independently measured, is outside the RB-004 contract, and remains unknown.",
+    "The earlier failed readiness attempt's build-call count and cleanup are excluded and are not claimed by this corrected evidence.",
+    "Final builder resource teardown was not bound into the private receipt chain and is not claimed by this corrected evidence."
   ],
   "physicalRun": {
     "admissionReceiptSha256": "20f7e8e6b4add92fa5f19d30a1fb8e5f8337e8c415ebbd8c5aaead7fc7eeee49",
@@ -84,7 +78,7 @@
     "daemonPreflightReceiptSha256": "ac94fec7100edef3b81ef12d20cddf24298f838feeeeac0e7d6c6fad244b90be",
     "dockerUnitLogSha256": "f90271e6fe1ac22f159c952e00b950e10e0e7389d5dc9a44d231d11d10838039",
     "observationChallenge": "5a183bfd12b41f80feee67877b24a17cb31ddce898913083a913fc50785f48cd",
-    "physicalBuildCalls": 1,
+    "physicalBuildCalls": "not_independently_measured",
     "postflightReceiptSha256": "9a9e5a35abc08d4fe34cb53bbca8a96875e9baa7a1526ca4657b15b0bc205767",
     "preflightReceiptSha256": "434bcbe05572c40dc5c7e27c8e405052055c75f51c8de0d27808d0e3a1872968",
     "releaseAuthorityReceiptSha256": "a8179c61901b5c36fbfabffdd7acc5d4ab1046c4364f02cdb0148f7d2da7ae21",
@@ -114,5 +108,18 @@
       "result": "All checks passed!",
       "status": "passed"
     }
-  ]
+  ],
+  "newBuildPerformedForCorrection": false,
+  "callCountAssessment": {
+    "failedReadinessAttemptBuildCallCount": "unknown_excluded",
+    "failedReadinessAttemptCleanup": "not_claimed",
+    "finalBuilderResourceTeardown": "not_claimed",
+    "physicalBuildCallCount": "not_independently_measured",
+    "rb004ContractScope": "one admitted final empty/offline preflight to candidate-only postflight with sealed base images absent"
+  },
+  "supersedes": {
+    "evidenceCommit": "cc81cef637a62c3636f2bb317f1d657d5670e84d",
+    "noGoReviewCommit": "ef9bd63341f85f1f9b8ea3ffdeddd734f51dc9b0",
+    "reason": "Withdraws the unmeasured physical build-call-count and failed-readiness cleanup claims while retaining only the independently verified final RB-004 admission chain."
+  }
 }
