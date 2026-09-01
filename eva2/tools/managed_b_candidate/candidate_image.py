@@ -21,6 +21,9 @@ from typing import Any, Callable
 
 from .base_image import (
     MaterializedBaseImage,
+    MaterializedBaseImageLayout,
+    materialize_base_image_layout,
+    validate_materialized_base_image_layout,
     validate_materialized_base_image,
 )
 from .build_context import (
@@ -47,13 +50,16 @@ Runner = Callable[[list[str], int], subprocess.CompletedProcess[str]]
 
 
 def _run(command: list[str], timeout: int) -> subprocess.CompletedProcess[str]:
-    return subprocess.run(
-        command,
-        check=True,
-        capture_output=True,
-        text=True,
-        timeout=timeout,
-    )
+    try:
+        return subprocess.run(
+            command,
+            check=True,
+            capture_output=True,
+            text=True,
+            timeout=timeout,
+        )
+    except (OSError, subprocess.SubprocessError) as error:
+        raise RuntimeError("managed B Docker command failed") from error
 
 
 def _image_id(value: str, *, label: str) -> str:
@@ -201,6 +207,28 @@ def _builder_measurement(runner: Runner) -> dict[str, object]:
     node = nodes[0]
     node_ids = node.get("IDs")
     root = info.get("DockerRootDir")
+    driver_status = info.get("DriverStatus")
+    containerd = info.get("Containerd")
+    containerd_namespaces = (
+        containerd.get("Namespaces") if isinstance(containerd, dict) else None
+    )
+    containerd_address = (
+        containerd.get("Address") if isinstance(containerd, dict) else None
+    )
+    containerd_containers_namespace = (
+        containerd_namespaces.get("Containers")
+        if isinstance(containerd_namespaces, dict)
+        else None
+    )
+    containerd_plugins_namespace = (
+        containerd_namespaces.get("Plugins")
+        if isinstance(containerd_namespaces, dict)
+        else None
+    )
+    containerd_image_store = (
+        isinstance(driver_status, list)
+        and ["driver-type", "io.containerd.snapshotter.v1"] in driver_status
+    )
     if (
         not isinstance(info.get("ID"), str)
         or not info["ID"]
@@ -217,12 +245,28 @@ def _builder_measurement(runner: Runner) -> dict[str, object]:
         or len(node_ids) != 1
         or not isinstance(node_ids[0], str)
         or not node_ids[0]
+        or containerd_image_store is not True
+        or not isinstance(containerd_address, str)
+        or not containerd_address
+        or not isinstance(containerd_containers_namespace, str)
+        or not containerd_containers_namespace
+        or not isinstance(containerd_plugins_namespace, str)
+        or not containerd_plugins_namespace
+        or containerd_containers_namespace == containerd_plugins_namespace
     ):
-        raise RuntimeError("managed B Docker/BuildKit identity differs")
+        raise RuntimeError(
+            "managed B containerd image store or Docker exporter capability differs"
+        )
     return {
         "backend": "docker-buildx/docker",
         "buildkitNodeId": node_ids[0],
         "buildkitVersion": node["Version"],
+        "containerdContainersNamespace": containerd_containers_namespace,
+        "containerdImageStore": "io.containerd.snapshotter.v1",
+        "containerdPluginsNamespace": containerd_plugins_namespace,
+        "containerdSocketIdentitySha256": _identity_sha256(
+            Path(containerd_address), socket=True, label="containerd socket"
+        ),
         "daemonId": info["ID"],
         "dockerExecutableSha256": _docker_executable_sha256(),
         "dockerServerVersion": version["Version"],
@@ -251,6 +295,10 @@ def _validate_builder_binding(value: object) -> dict[str, object]:
         "backend",
         "buildkitNodeId",
         "buildkitVersion",
+        "containerdContainersNamespace",
+        "containerdImageStore",
+        "containerdPluginsNamespace",
+        "containerdSocketIdentitySha256",
         "daemonId",
         "dockerExecutableSha256",
         "dockerServerVersion",
@@ -272,6 +320,9 @@ def _validate_builder_binding(value: object) -> dict[str, object]:
         "backend",
         "buildkitNodeId",
         "buildkitVersion",
+        "containerdContainersNamespace",
+        "containerdImageStore",
+        "containerdPluginsNamespace",
         "daemonId",
         "dockerServerVersion",
     ):
@@ -279,6 +330,7 @@ def _validate_builder_binding(value: object) -> dict[str, object]:
             raise RuntimeError("managed B builder identity differs")
     for key in (
         "dockerExecutableSha256",
+        "containerdSocketIdentitySha256",
         "socketIdentitySha256",
         "stateRootIdentitySha256",
     ):
@@ -290,22 +342,6 @@ def _validate_builder_binding(value: object) -> dict[str, object]:
         ):
             raise RuntimeError("managed B builder identity differs")
     return value
-
-
-def _verify_current_base(base: dict[str, object], runner: Runner) -> None:
-    digest = str(base["base_image_digest"])
-    reference = f"{base['base_image_repository']}@{digest}"
-    current = _inspect(reference, runner)
-    if (
-        current.get("Id") != base["local_image_id"]
-        or current.get("Os") != "linux"
-        or current.get("Architecture") != "amd64"
-        or not isinstance(current.get("RepoDigests"), list)
-        or base["local_repo_digest"] not in current["RepoDigests"]
-    ):
-        raise RuntimeError(
-            "managed B Docker base image differs from the sealed local export"
-        )
 
 
 def _read_iid(path: Path) -> str:
@@ -450,6 +486,34 @@ def _require_context_base(
         )
 
 
+def _require_layout_base(
+    layout: dict[str, object], base: dict[str, object], role: str
+) -> None:
+    if (
+        layout.get("role") != role
+        or layout.get("archive_sha256") != base.get("archive_sha256")
+        or layout.get("base_image_digest") != base.get("base_image_digest")
+        or layout.get("base_image_repository") != base.get("base_image_repository")
+        or layout.get("oci_config_digest") != base.get("oci_config_digest")
+        or layout.get("oci_selected_manifest_digest")
+        != base.get("oci_selected_manifest_digest")
+    ):
+        raise RuntimeError(f"managed B {role} OCI layout binding differs")
+
+
+def _remove_layout_root(root: Path) -> None:
+    if not root.exists():
+        return
+    for path in sorted(
+        (entry for entry in root.rglob("*") if entry.is_dir()),
+        key=lambda entry: len(entry.parts),
+        reverse=True,
+    ):
+        path.chmod(0o700)
+    root.chmod(0o700)
+    shutil.rmtree(root)
+
+
 def _verify_untagged_candidate(
     image_id: str,
     runner: Runner,
@@ -517,9 +581,11 @@ def build_offline_candidate_image(
     source_commit, source_date_epoch = _source_identity(context_receipt)
     run_challenge = secrets.token_hex(32)
     builder_before = _builder_measurement(runner)
-    for receipt in bases.values():
-        _verify_current_base(receipt, runner)
     _private_parent(output_parent)
+    layout_root = Path(
+        tempfile.mkdtemp(prefix="eva2-base-layouts-", dir=output_parent)
+    )
+    layout_root.chmod(0o700)
     temporary_root = Path(
         tempfile.mkdtemp(prefix="eva2-candidate-image-", dir=output_parent)
     )
@@ -528,18 +594,36 @@ def build_offline_candidate_image(
     image_archive = temporary_root / "candidate.tar"
     completed = False
     try:
-        runner(
+        materialized = {
+            "build": build_image,
+            "runtime_libraries": runtime_libraries_image,
+            "runtime": runtime_image,
+        }
+        layouts: dict[str, MaterializedBaseImageLayout] = {}
+        for role, base in materialized.items():
+            layout = materialize_base_image_layout(base, layout_root, role=role)
+            layout_receipt = validate_materialized_base_image_layout(layout)
+            _require_layout_base(layout_receipt, bases[role], role)
+            layouts[role] = layout
+        command = [
+            "docker",
+            "buildx",
+            "build",
+            "--builder",
+            "default",
+            "--network=none",
+            "--platform=linux/amd64",
+            "--pull=false",
+            "--no-cache",
+            "--provenance=false",
+        ]
+        for role in ("build", "runtime_libraries", "runtime"):
+            base = bases[role]
+            reference = f"{base['base_image_repository']}@{base['base_image_digest']}"
+            source = f"oci-layout://{layouts[role].path}@{base['base_image_digest']}"
+            command.extend(["--build-context", f"{reference}={source}"])
+        command.extend(
             [
-                "docker",
-                "buildx",
-                "build",
-                "--builder",
-                "default",
-                "--network=none",
-                "--platform=linux/amd64",
-                "--pull=false",
-                "--no-cache",
-                "--provenance=false",
                 "--output",
                 f"type=docker,dest={image_archive},rewrite-timestamp=true",
                 "--build-arg",
@@ -551,10 +635,10 @@ def build_offline_candidate_image(
                 "--iidfile",
                 str(iidfile),
                 str(context.path),
-            ],
-            600,
+            ]
         )
-        config_digest = _read_iid(iidfile)
+        runner(command, 600)
+        buildkit_result_digest = _read_iid(iidfile)
         image_archive_sha256 = _hash_image_archive(image_archive)
         image_id = _loaded_image_id(
             runner(
@@ -568,13 +652,17 @@ def build_offline_candidate_image(
             source_commit=source_commit,
             source_date_epoch=source_date_epoch,
         )
-        for receipt in bases.values():
-            _verify_current_base(receipt, runner)
+        for role, layout in layouts.items():
+            current = validate_materialized_base_image_layout(layout)
+            _require_layout_base(current, bases[role], role)
+        for base in materialized.values():
+            validate_materialized_base_image(base)
         builder_after = _builder_measurement(runner)
         if builder_after != builder_before:
             raise RuntimeError("managed B builder identity changed during build")
         completed = True
     finally:
+        _remove_layout_root(layout_root)
         if iidfile.exists() or iidfile.is_symlink():
             iidfile.unlink()
         if not completed:
@@ -588,9 +676,13 @@ def build_offline_candidate_image(
         "build_image_reference": (
             f"{build_receipt['base_image_repository']}@{build_receipt['base_image_digest']}"
         ),
+        "build_image_layout_tree_sha256": layouts["build"].receipt[
+            "layout_tree_sha256"
+        ],
         "candidate_image_id": image_id,
         "candidate_image_archive_sha256": image_archive_sha256,
-        "candidate_image_config_digest": config_digest,
+        "candidate_buildkit_result_digest": buildkit_result_digest,
+        "candidate_image_config_digest": image_id,
         "candidate_image_size": candidate_inspection["Size"],
         "candidate_image_exporter": "docker",
         "candidate_provenance_attestation_enabled": False,
@@ -618,6 +710,9 @@ def build_offline_candidate_image(
         "runtime_image_reference": (
             f"{runtime_receipt['base_image_repository']}@{runtime_receipt['base_image_digest']}"
         ),
+        "runtime_image_layout_tree_sha256": layouts["runtime"].receipt[
+            "layout_tree_sha256"
+        ],
         "runtime_libraries_image_archive_sha256": runtime_libraries_receipt[
             "archive_sha256"
         ],
@@ -628,6 +723,9 @@ def build_offline_candidate_image(
             f"{runtime_libraries_receipt['base_image_repository']}@"
             f"{runtime_libraries_receipt['base_image_digest']}"
         ),
+        "runtime_libraries_image_layout_tree_sha256": layouts[
+            "runtime_libraries"
+        ].receipt["layout_tree_sha256"],
     }
     receipt_path = temporary_root / "candidate-image-receipt.json"
     try:
@@ -663,7 +761,15 @@ def validate_offline_candidate_image(
         or receipt.get("candidate_timestamp_rewrite_enabled") is not True
     ):
         raise RuntimeError("managed B candidate image receipt differs")
-    _image_id(str(receipt.get("candidate_image_config_digest", "")), label="config")
+    _image_id(
+        str(receipt.get("candidate_buildkit_result_digest", "")),
+        label="BuildKit result",
+    )
+    if (
+        _image_id(str(receipt.get("candidate_image_config_digest", "")), label="config")
+        != candidate.image_id
+    ):
+        raise RuntimeError("managed B candidate config digest differs")
     archive_sha256 = receipt.get("candidate_image_archive_sha256")
     if (
         not isinstance(archive_sha256, str)
@@ -673,6 +779,13 @@ def validate_offline_candidate_image(
         raise RuntimeError("managed B candidate image archive digest differs")
     for role in ("build", "runtime_libraries", "runtime"):
         _image_binding(receipt, role)
+        tree = receipt.get(f"{role}_image_layout_tree_sha256")
+        if (
+            not isinstance(tree, str)
+            or len(tree) != 64
+            or any(character not in "0123456789abcdef" for character in tree)
+        ):
+            raise RuntimeError(f"managed B {role} OCI layout digest differs")
     source_commit, source_date_epoch = _source_identity(receipt)
     inspection = _verify_untagged_candidate(
         candidate.image_id,

@@ -23,6 +23,30 @@ from tools.managed_b_candidate.candidate_image import (
 COMMIT = "a" * 40
 
 
+def _base_archives(root: Path) -> dict[str, tuple[Path, str]]:
+    return {
+        "build": (root / "build.oci.tar", "6" * 64),
+        "runtime_libraries": (root / "runtime-libraries.oci.tar", "9" * 64),
+        "runtime": (root / "runtime.oci.tar", "a" * 64),
+    }
+
+
+def _archive_cli(root: Path) -> list[str]:
+    archives = _base_archives(root)
+    values: list[str] = []
+    for role in ("build", "runtime-libraries", "runtime"):
+        key = role.replace("-", "_")
+        values.extend(
+            [
+                f"--{role}-image-archive",
+                str(archives[key][0]),
+                f"--{role}-image-archive-sha256",
+                archives[key][1],
+            ]
+        )
+    return values
+
+
 @pytest.fixture
 def native_tmp_path() -> Path:
     with tempfile.TemporaryDirectory(
@@ -76,7 +100,7 @@ def _stub_pipeline(
             receipt={
                 "archive_sha256": archive * 64,
                 "base_image_digest": digest,
-                "local_image_id": digest,
+                "oci_config_digest": digest,
             },
         )
 
@@ -98,6 +122,10 @@ def _stub_pipeline(
                     "backend": "docker-buildx/docker",
                     "buildkitNodeId": "node-a",
                     "buildkitVersion": "v0.26.2",
+                    "containerdContainersNamespace": "moby",
+                    "containerdImageStore": "io.containerd.snapshotter.v1",
+                    "containerdPluginsNamespace": "plugins.moby",
+                    "containerdSocketIdentitySha256": "c" * 64,
                     "daemonId": "daemon-a",
                     "dockerExecutableSha256": "d" * 64,
                     "dockerServerVersion": "29.1.3",
@@ -108,6 +136,10 @@ def _stub_pipeline(
                     "backend": "docker-buildx/docker",
                     "buildkitNodeId": "node-a",
                     "buildkitVersion": "v0.26.2",
+                    "containerdContainersNamespace": "moby",
+                    "containerdImageStore": "io.containerd.snapshotter.v1",
+                    "containerdPluginsNamespace": "plugins.moby",
+                    "containerdSocketIdentitySha256": "c" * 64,
                     "daemonId": "daemon-a",
                     "dockerExecutableSha256": "d" * 64,
                     "dockerServerVersion": "29.1.3",
@@ -120,10 +152,12 @@ def _stub_pipeline(
             },
             "build_image_archive_sha256": "6" * 64,
             "build_image_digest": candidate.base_image_digest,
+            "build_image_layout_tree_sha256": "1" * 64,
             "build_image_reference": candidate.build_image_reference,
             "candidate_image_id": "sha256:" + "8" * 64,
             "candidate_image_archive_sha256": "b" * 64,
-            "candidate_image_config_digest": "sha256:" + "c" * 64,
+            "candidate_buildkit_result_digest": "sha256:" + "8" * 64,
+            "candidate_image_config_digest": "sha256:" + "8" * 64,
             "candidate_image_exporter": "docker",
             "candidate_image_size": 123456,
             "candidate_provenance_attestation_enabled": False,
@@ -138,9 +172,11 @@ def _stub_pipeline(
             "status": "built_local_candidate",
             "runtime_libraries_image_archive_sha256": "9" * 64,
             "runtime_libraries_image_digest": candidate.runtime_libraries_image_digest,
+            "runtime_libraries_image_layout_tree_sha256": "2" * 64,
             "runtime_libraries_image_reference": candidate.runtime_libraries_image_reference,
             "runtime_image_archive_sha256": "a" * 64,
             "runtime_image_digest": candidate.runtime_image_digest,
+            "runtime_image_layout_tree_sha256": "3" * 64,
             "runtime_image_reference": candidate.runtime_image_reference,
         },
     )
@@ -167,9 +203,24 @@ def _stub_pipeline(
         assert output_parent == tmp_path / "output"
         return wheelhouse
 
-    def base_image(digest, output_parent, *, repository="docker.io/library/python"):
+    archives = _base_archives(tmp_path)
+
+    def base_image(
+        source,
+        expected_sha256,
+        digest,
+        output_parent,
+        *,
+        repository="docker.io/library/python",
+    ):
         calls.append(f"materialize_base:{repository}")
         assert output_parent == tmp_path / "output"
+        role = {
+            candidate.base_image_digest: "build",
+            candidate.runtime_libraries_image_digest: "runtime_libraries",
+            candidate.runtime_image_digest: "runtime",
+        }[digest]
+        assert (source, expected_sha256) == archives[role]
         return {
             candidate.base_image_digest: build,
             candidate.runtime_libraries_image_digest: runtime_libraries,
@@ -206,7 +257,7 @@ def _stub_pipeline(
     monkeypatch.setattr(f"{module}.validate_candidate_build_inputs", validate)
     monkeypatch.setattr(f"{module}.inspect_wheelhouse_manifest", inspect)
     monkeypatch.setattr(f"{module}.materialize_wheelhouse", wheels)
-    monkeypatch.setattr(f"{module}.materialize_pinned_base_image", base_image)
+    monkeypatch.setattr(f"{module}.materialize_pinned_base_image_archive", base_image)
     monkeypatch.setattr(f"{module}.materialize_build_context", build_context)
     monkeypatch.setattr(f"{module}.build_offline_candidate_image", build_image)
     return calls
@@ -219,7 +270,12 @@ def test_sequences_only_the_existing_offline_candidate_stages(
     artifact_root.mkdir()
     calls = _stub_pipeline(monkeypatch, native_tmp_path)
 
-    receipt = build_managed_b_offline_candidate(COMMIT, artifact_root, private_output)
+    receipt = build_managed_b_offline_candidate(
+        COMMIT,
+        artifact_root,
+        private_output,
+        base_image_archives=_base_archives(native_tmp_path),
+    )
 
     assert calls == [
         "prepare",
@@ -249,6 +305,10 @@ def test_sequences_only_the_existing_offline_candidate_stages(
         ),
         "wheelhouse_path": str(native_tmp_path / "materialized-wheelhouse"),
         "candidate_artifact_path": str(native_tmp_path / "candidate-artifact"),
+    }
+    assert receipt["inputs"]["base_image_archives"] == {
+        role: {"path": str(path), "sha256": digest}
+        for role, (path, digest) in sorted(_base_archives(native_tmp_path).items())
     }
 
     decoded = json.loads(json.dumps(receipt))
@@ -295,7 +355,12 @@ def test_refuses_a_relative_artifact_root_before_opening_source(
     )
 
     with pytest.raises(RuntimeError, match="explicit absolute"):
-        build_managed_b_offline_candidate(COMMIT, Path("wheelhouse"), private_output)
+        build_managed_b_offline_candidate(
+            COMMIT,
+            Path("wheelhouse"),
+            private_output,
+            base_image_archives=_base_archives(private_output),
+        )
 
 
 def test_refuses_a_nonprivate_output_parent(native_tmp_path: Path) -> None:
@@ -303,7 +368,12 @@ def test_refuses_a_nonprivate_output_parent(native_tmp_path: Path) -> None:
     output.mkdir(mode=0o755)
 
     with pytest.raises(RuntimeError, match="must be private"):
-        build_managed_b_offline_candidate(COMMIT, native_tmp_path / "artifacts", output)
+        build_managed_b_offline_candidate(
+            COMMIT,
+            native_tmp_path / "artifacts",
+            output,
+            base_image_archives=_base_archives(native_tmp_path),
+        )
 
 
 def test_refuses_a_non_38_wheel_authority_before_copy_or_docker(
@@ -316,7 +386,12 @@ def test_refuses_a_non_38_wheel_authority_before_copy_or_docker(
     calls = _stub_pipeline(monkeypatch, native_tmp_path, wheel_count=37)
 
     with pytest.raises(RuntimeError, match="exact 38-wheel"):
-        build_managed_b_offline_candidate(COMMIT, artifact_root, private_output)
+        build_managed_b_offline_candidate(
+            COMMIT,
+            artifact_root,
+            private_output,
+            base_image_archives=_base_archives(native_tmp_path),
+        )
 
     assert calls == ["prepare", "validate", "inspect_manifest"]
 
@@ -329,7 +404,9 @@ def test_cli_emits_one_json_failure_without_starting_a_build(
 ) -> None:
     monkeypatch.setattr(
         "tools.build_managed_b_offline_candidate.build_managed_b_offline_candidate",
-        lambda *_args: (_ for _ in ()).throw(RuntimeError("sealed input differs")),
+        lambda *_args, **_kwargs: (_ for _ in ()).throw(
+            RuntimeError("sealed input differs")
+        ),
     )
 
     result = main(
@@ -342,6 +419,7 @@ def test_cli_emits_one_json_failure_without_starting_a_build(
             "--receipt",
             str(private_output / "must-not-exist.json"),
         ]
+        + _archive_cli(native_tmp_path)
     )
 
     assert result == 2
@@ -358,7 +436,7 @@ def test_cli_persists_exact_private_build_receipt(
     value = {"contract": "EvaManagedBOfflineCandidateBuildReceipt/v2", "status": "ok"}
     monkeypatch.setattr(
         "tools.build_managed_b_offline_candidate.build_managed_b_offline_candidate",
-        lambda *_args: value,
+        lambda *_args, **_kwargs: value,
     )
     receipt = private_output / "build-receipt.json"
 
@@ -372,6 +450,7 @@ def test_cli_persists_exact_private_build_receipt(
             "--receipt",
             str(receipt),
         ]
+        + _archive_cli(private_output)
     )
 
     assert result == 0

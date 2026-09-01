@@ -11,7 +11,10 @@ import pytest
 
 from tools.managed_b_candidate.base_image import (
     _docker_export,
+    materialize_base_image_layout,
     materialize_pinned_base_image,
+    materialize_pinned_base_image_archive,
+    validate_materialized_base_image_layout,
     validate_materialized_base_image,
     validate_pinned_base_image_archive,
 )
@@ -103,7 +106,7 @@ def _archive(path: Path, *, bad_config_platform: bool = False) -> tuple[str, dic
             bundle.addfile(member, io.BytesIO(content))
     return root_digest, {
         "Architecture": "amd64",
-        "Id": root_digest,
+        "Id": config_digest,
         "Os": "linux",
         "RepoDigests": [f"python@{root_digest}"],
     }
@@ -122,12 +125,21 @@ def test_validates_and_materializes_a_local_pinned_oci_export(tmp_path: Path) ->
             exporter=lambda _reference, destination: destination.write_bytes(source.read_bytes()),
         )
 
-        assert result.receipt["status"] == "local_export_validated"
+        assert result.receipt["status"] == "sealed_archive_validated"
         assert result.receipt["network_used"] is False
         assert result.receipt["platform"] == "linux/amd64"
         assert result.path.stat().st_mode & 0o222 == 0
         assert result.path.parent.stat().st_mode & 0o222 == 0
-        assert validate_materialized_base_image(result)["status"] == "local_export_validated"
+        receipt = validate_materialized_base_image(result)
+        assert receipt["status"] == "sealed_archive_validated"
+        assert len(
+            {
+                receipt["oci_root_index_digest"],
+                receipt["oci_selected_manifest_digest"],
+                receipt["oci_config_digest"],
+            }
+        ) == 3
+        assert receipt["source_local_image_id"] == receipt["oci_config_digest"]
 
 
 def test_materializes_a_non_dockerhub_runtime_repository_by_full_authority(
@@ -150,7 +162,7 @@ def test_materializes_a_non_dockerhub_runtime_repository_by_full_authority(
 
         receipt = validate_materialized_base_image(result)
         assert receipt["base_image_repository"] == repository
-        assert receipt["local_repo_digest"] == f"{repository}@{digest}"
+        assert receipt["source_local_repo_digest"] == f"{repository}@{digest}"
 
 
 def test_refuses_missing_repo_digest_or_wrong_config_platform(tmp_path: Path) -> None:
@@ -207,6 +219,79 @@ def test_revalidator_refuses_a_materialized_export_that_becomes_writable(
 
         with pytest.raises(RuntimeError, match="must remain read-only"):
             validate_materialized_base_image(result)
+
+
+def test_copies_one_hash_bound_archive_and_materializes_a_read_only_layout(
+    tmp_path: Path,
+) -> None:
+    source = tmp_path / "source.tar"
+    digest, _inspection = _archive(source)
+    archive_sha256 = hashlib.sha256(source.read_bytes()).hexdigest()
+    with tempfile.TemporaryDirectory(prefix="eva2-sealed-base-test-", dir="/tmp") as path:
+        output = Path(path)
+        materialized = materialize_pinned_base_image_archive(
+            source.resolve(),
+            archive_sha256,
+            digest,
+            output,
+        )
+        layout_parent = output / "layouts"
+        layout_parent.mkdir(mode=0o700)
+        layout = materialize_base_image_layout(
+            materialized,
+            layout_parent,
+            role="build",
+        )
+        receipt = validate_materialized_base_image_layout(layout)
+
+        assert receipt["archive_sha256"] == archive_sha256
+        assert receipt["base_image_digest"] == digest
+        assert receipt["role"] == "build"
+        assert (layout.path / "oci-layout").read_bytes() == _json(
+            {"imageLayoutVersion": "1.0.0"}
+        )
+        assert not (layout.path / "manifest.json").exists()
+        assert layout.path.stat().st_mode & 0o777 == 0o700
+        assert all(
+            path.stat().st_mode & 0o222 == 0
+            for path in layout.path.rglob("*")
+            if path.is_file()
+        )
+
+
+def test_refuses_wrong_archive_bytes_before_materializing_a_layout(
+    tmp_path: Path,
+) -> None:
+    source = tmp_path / "source.tar"
+    digest, _inspection = _archive(source)
+    with tempfile.TemporaryDirectory(prefix="eva2-sealed-base-test-", dir="/tmp") as path:
+        output = Path(path)
+        with pytest.raises(RuntimeError, match="bytes differ from their authority"):
+            materialize_pinned_base_image_archive(
+                source.resolve(),
+                "0" * 64,
+                digest,
+                output,
+            )
+
+        assert list(output.iterdir()) == []
+
+
+def test_refuses_a_tagged_archive(tmp_path: Path) -> None:
+    archive = tmp_path / "source.tar"
+    digest, _inspection = _archive(archive)
+    tagged = tmp_path / "tagged.tar"
+    with tarfile.open(archive, "r:") as source, tarfile.open(tagged, "w") as target:
+        for member in source.getmembers():
+            data = source.extractfile(member).read() if member.isfile() else None
+            if member.name == "manifest.json":
+                value = json.loads(data)
+                value[0]["RepoTags"] = ["python:latest"]
+                data = _json(value)
+                member.size = len(data)
+            target.addfile(member, None if data is None else io.BytesIO(data))
+    with pytest.raises(RuntimeError, match="compatibility manifest differs"):
+        validate_pinned_base_image_archive(tagged, digest)
 
 
 def test_default_exporter_preserves_the_pinned_source_index(

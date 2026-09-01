@@ -8,7 +8,10 @@ import tempfile
 
 import pytest
 
-from tools.managed_b_candidate.base_image import MaterializedBaseImage
+from tools.managed_b_candidate.base_image import (
+    MaterializedBaseImage,
+    MaterializedBaseImageLayout,
+)
 from tools.managed_b_candidate.build_context import MaterializedBuildContext
 from tools.managed_b_candidate.candidate_image import (
     _builder_measurement,
@@ -42,6 +45,10 @@ BUILDER_IDENTITY = {
     "backend": "docker-buildx/docker",
     "buildkitNodeId": "buildkit-node-a",
     "buildkitVersion": "v0.26.2",
+    "containerdContainersNamespace": "moby",
+    "containerdImageStore": "io.containerd.snapshotter.v1",
+    "containerdPluginsNamespace": "plugins.moby",
+    "containerdSocketIdentitySha256": "c" * 64,
     "daemonId": "daemon-a",
     "dockerExecutableSha256": "d" * 64,
     "dockerServerVersion": "29.1.3",
@@ -119,6 +126,8 @@ def _receipts() -> tuple[dict[str, object], list[dict[str, object]]]:
                 "base_image_repository": "docker.io/library/python",
                 "local_image_id": BASE_ID,
                 "local_repo_digest": REPO_DIGEST,
+                "oci_config_digest": BASE_ID,
+                "oci_selected_manifest_digest": "sha256:" + "a" * 64,
             },
             {
                 "archive_sha256": "9" * 64,
@@ -126,6 +135,8 @@ def _receipts() -> tuple[dict[str, object], list[dict[str, object]]]:
                 "base_image_repository": "docker.io/library/python",
                 "local_image_id": LIBS_ID,
                 "local_repo_digest": LIBS_REPO_DIGEST,
+                "oci_config_digest": LIBS_ID,
+                "oci_selected_manifest_digest": "sha256:" + "b" * 64,
             },
             {
                 "archive_sha256": "a" * 64,
@@ -133,6 +144,8 @@ def _receipts() -> tuple[dict[str, object], list[dict[str, object]]]:
                 "base_image_repository": "gcr.io/distroless/cc-debian13",
                 "local_image_id": RUNTIME_ID,
                 "local_repo_digest": RUNTIME_REPO_DIGEST,
+                "oci_config_digest": RUNTIME_ID,
+                "oci_selected_manifest_digest": "sha256:" + "c" * 64,
             },
         ],
     )
@@ -156,10 +169,53 @@ def _stub_validators(monkeypatch: pytest.MonkeyPatch) -> None:
         "tools.managed_b_candidate.candidate_image._builder_measurement",
         lambda _runner: dict(BUILDER_IDENTITY),
     )
+    role_by_name = {
+        "build.oci.tar": "build",
+        "runtime-libraries.oci.tar": "runtime_libraries",
+        "runtime.oci.tar": "runtime",
+    }
+    receipt_by_role = dict(zip(("build", "runtime_libraries", "runtime"), bases))
+
+    def materialize_layout(value, output_parent, *, role):
+        assert role_by_name[value.path.name] == role
+        base = receipt_by_role[role]
+        return MaterializedBaseImageLayout(
+            output_parent / f"{role}-oci-layout",
+            {
+                "archive_sha256": base["archive_sha256"],
+                "base_image_digest": base["base_image_digest"],
+                "base_image_repository": base["base_image_repository"],
+                "contract": "EvaPinnedBaseImageLayout/v1",
+                "content_read_only": True,
+                "entries": [],
+                "layout_tree_sha256": {
+                    "build": "d" * 64,
+                    "runtime_libraries": "e" * 64,
+                    "runtime": "f" * 64,
+                }[role],
+                "oci_config_digest": base["oci_config_digest"],
+                "oci_selected_manifest_digest": base[
+                    "oci_selected_manifest_digest"
+                ],
+                "platform": "linux/amd64",
+                "role": role,
+                "status": "materialized_private_store",
+            },
+        )
+
+    monkeypatch.setattr(
+        "tools.managed_b_candidate.candidate_image.materialize_base_image_layout",
+        materialize_layout,
+    )
+    monkeypatch.setattr(
+        "tools.managed_b_candidate.candidate_image.validate_materialized_base_image_layout",
+        lambda layout: layout.receipt,
+    )
 
 
 def _runner(
     *,
+    buildkit_result_id: str = IMAGE_ID,
     candidate_tags: object = None,
     candidate_labels: object = None,
     candidate_environment: object = None,
@@ -170,34 +226,7 @@ def _runner(
         commands.append(command)
         if command[:3] == ["docker", "image", "inspect"]:
             reference = command[3]
-            if reference == REPO_DIGEST:
-                value = [
-                    {
-                        "Architecture": "amd64",
-                        "Id": BASE_ID,
-                        "Os": "linux",
-                        "RepoDigests": [REPO_DIGEST],
-                    }
-                ]
-            elif reference == LIBS_REPO_DIGEST:
-                value = [
-                    {
-                        "Architecture": "amd64",
-                        "Id": LIBS_ID,
-                        "Os": "linux",
-                        "RepoDigests": [LIBS_REPO_DIGEST],
-                    }
-                ]
-            elif reference == RUNTIME_REPO_DIGEST:
-                value = [
-                    {
-                        "Architecture": "amd64",
-                        "Id": RUNTIME_ID,
-                        "Os": "linux",
-                        "RepoDigests": [RUNTIME_REPO_DIGEST],
-                    }
-                ]
-            elif reference == IMAGE_ID:
+            if reference == IMAGE_ID:
                 labels = (
                     candidate_labels
                     if candidate_labels is not None
@@ -232,7 +261,7 @@ def _runner(
             )
         if command[:3] == ["docker", "buildx", "build"]:
             iidfile = Path(command[command.index("--iidfile") + 1])
-            iidfile.write_text(f"{IMAGE_ID}\n", encoding="ascii")
+            iidfile.write_text(f"{buildkit_result_id}\n", encoding="ascii")
             output = command[command.index("--output") + 1]
             destination = Path(output.split(",dest=", 1)[1].split(",", 1)[0])
             destination.write_bytes(b"deterministic candidate archive")
@@ -253,7 +282,10 @@ def test_measures_real_docker_and_buildkit_fields(
 ) -> None:
     monkeypatch.setattr(
         "tools.managed_b_candidate.candidate_image._identity_sha256",
-        lambda _path, *, socket, label: ("a" if socket else "b") * 64,
+        lambda _path, *, socket, label: (
+            "c" if label == "containerd socket" else "a" if socket else "b"
+        )
+        * 64,
     )
     monkeypatch.setattr(
         "tools.managed_b_candidate.candidate_image._docker_executable_sha256",
@@ -265,8 +297,18 @@ def test_measures_real_docker_and_buildkit_fields(
             value = {
                 "Architecture": "x86_64",
                 "DockerRootDir": "/private/builder-a",
+                "DriverStatus": [
+                    ["driver-type", "io.containerd.snapshotter.v1"]
+                ],
                 "ID": "daemon-a",
                 "OSType": "linux",
+                "Containerd": {
+                    "Address": "/private/containerd-a.sock",
+                    "Namespaces": {
+                        "Containers": "moby",
+                        "Plugins": "plugins.moby",
+                    },
+                },
             }
             return subprocess.CompletedProcess(command, 0, json.dumps(value), "")
         if command[:2] == ["docker", "version"]:
@@ -293,12 +335,71 @@ def test_measures_real_docker_and_buildkit_fields(
         "backend": "docker-buildx/docker",
         "buildkitNodeId": "node-a",
         "buildkitVersion": "v0.26.2",
+        "containerdContainersNamespace": "moby",
+        "containerdImageStore": "io.containerd.snapshotter.v1",
+        "containerdPluginsNamespace": "plugins.moby",
+        "containerdSocketIdentitySha256": "c" * 64,
         "daemonId": "daemon-a",
         "dockerExecutableSha256": "c" * 64,
         "dockerServerVersion": "29.1.3",
         "socketIdentitySha256": "a" * 64,
         "stateRootIdentitySha256": "b" * 64,
     }
+
+
+@pytest.mark.parametrize(
+    ("driver_status", "containerd"),
+    [
+        ([], {"Address": "/private/containerd.sock", "Namespaces": {"Containers": "moby", "Plugins": "plugins.moby"}}),
+        (["not-a-pair"], {"Address": "/private/containerd.sock", "Namespaces": {"Containers": "moby", "Plugins": "plugins.moby"}}),
+        ([["driver-type", "io.containerd.snapshotter.v1"]], None),
+        ([["driver-type", "io.containerd.snapshotter.v1"]], {"Address": "", "Namespaces": {"Containers": "moby", "Plugins": "plugins.moby"}}),
+        ([["driver-type", "io.containerd.snapshotter.v1"]], {"Address": "/private/containerd.sock", "Namespaces": {"Containers": "moby", "Plugins": "moby"}}),
+    ],
+)
+def test_refuses_builder_without_bound_containerd_export_capability(
+    monkeypatch: pytest.MonkeyPatch,
+    driver_status: object,
+    containerd: object,
+) -> None:
+    monkeypatch.setattr(
+        "tools.managed_b_candidate.candidate_image._identity_sha256",
+        lambda _path, *, socket, label: "a" * 64,
+    )
+    monkeypatch.setattr(
+        "tools.managed_b_candidate.candidate_image._docker_executable_sha256",
+        lambda: "b" * 64,
+    )
+    commands: list[list[str]] = []
+
+    def runner(command: list[str], _timeout: int) -> subprocess.CompletedProcess[str]:
+        commands.append(command)
+        if command[:2] == ["docker", "info"]:
+            value = {
+                "Architecture": "x86_64",
+                "Containerd": containerd,
+                "DockerRootDir": "/private/builder-a",
+                "DriverStatus": driver_status,
+                "ID": "daemon-a",
+                "OSType": "linux",
+            }
+            return subprocess.CompletedProcess(command, 0, json.dumps(value), "")
+        if command[:2] == ["docker", "version"]:
+            value = {"Arch": "amd64", "Os": "linux", "Version": "29.1.3"}
+            return subprocess.CompletedProcess(command, 0, json.dumps(value), "")
+        if command[:3] == ["docker", "buildx", "ls"]:
+            value = {
+                "Driver": "docker",
+                "Name": "default",
+                "Nodes": [{"Endpoint": "default", "IDs": ["node-a"], "Status": "running", "Version": "v0.26.2"}],
+            }
+            return subprocess.CompletedProcess(command, 0, json.dumps(value), "")
+        raise AssertionError(command)
+
+    with pytest.raises(RuntimeError, match="containerd image store or Docker exporter"):
+        _builder_measurement(runner)
+
+    assert not any(command[:3] == ["docker", "buildx", "build"] for command in commands)
 
 
 def test_private_receipt_handles_partial_writes_and_rejects_linked_parent(
@@ -374,10 +475,30 @@ def test_builds_an_untagged_networkless_candidate_without_b(
     assert build[second_build_arg + 1] == f"SOURCE_DATE_EPOCH={SOURCE_DATE_EPOCH}"
     assert build[build.index("--file") + 1].endswith("deploy/living-core/Dockerfile")
     assert "--tag" not in build and "--push" not in build
+    contexts = [
+        build[index + 1]
+        for index, value in enumerate(build)
+        if value == "--build-context"
+    ]
+    expected_contexts = (
+        (REPO_DIGEST, "build", BASE_DIGEST),
+        (LIBS_REPO_DIGEST, "runtime_libraries", LIBS_DIGEST),
+        (RUNTIME_REPO_DIGEST, "runtime", RUNTIME_DIGEST),
+    )
+    assert len(contexts) == 3
+    for value, (reference, role, digest) in zip(contexts, expected_contexts):
+        name, source = value.split("=", 1)
+        assert name == reference
+        layout_path, selector = source.removeprefix("oci-layout://").rsplit("@", 1)
+        assert Path(layout_path).parent.parent == output
+        assert Path(layout_path).parent.name.startswith("eva2-base-layouts-")
+        assert Path(layout_path).name == f"{role}-oci-layout"
+        assert selector == digest
     assert candidate.receipt["candidate_image_archive_sha256"] == (
         "b149322f319af29425d045ed3d9b5e94a44129bc5b5dabf045fb139fad802a3f"
     )
     assert candidate.receipt["candidate_image_config_digest"] == IMAGE_ID
+    assert candidate.receipt["candidate_buildkit_result_digest"] == IMAGE_ID
     assert candidate.receipt["candidate_timestamp_rewrite_enabled"] is True
     assert candidate.receipt["candidate_provenance_attestation_enabled"] is False
     assert candidate.receipt["candidate_image_exporter"] == "docker"
@@ -386,9 +507,10 @@ def test_builds_an_untagged_networkless_candidate_without_b(
         for command in commands
         if command[:3] == ["docker", "image", "inspect"]
     ]
-    assert inspected.count(REPO_DIGEST) == 2
-    assert inspected.count(LIBS_REPO_DIGEST) == 2
-    assert inspected.count(RUNTIME_REPO_DIGEST) == 2
+    assert inspected == [IMAGE_ID, IMAGE_ID]
+    assert candidate.receipt["build_image_layout_tree_sha256"] == "d" * 64
+    assert candidate.receipt["runtime_libraries_image_layout_tree_sha256"] == "e" * 64
+    assert candidate.receipt["runtime_image_layout_tree_sha256"] == "f" * 64
     assert candidate.artifact_path is not None
     assert candidate.artifact_path.parent == output
     assert (candidate.artifact_path / "candidate.tar").read_bytes() == (
@@ -404,7 +526,7 @@ def test_builds_an_untagged_networkless_candidate_without_b(
     ).stat().st_mode & 0o777 == 0o600
 
 
-def test_refuses_when_current_docker_base_differs(
+def test_refuses_a_role_swapped_oci_layout_before_build(
     monkeypatch: pytest.MonkeyPatch, native_tmp_path: Path
 ) -> None:
     _stub_validators(monkeypatch)
@@ -412,30 +534,68 @@ def test_refuses_when_current_docker_base_differs(
     output = native_tmp_path / "output"
     output.mkdir(mode=0o700)
 
-    def runner(command: list[str], _timeout: int) -> subprocess.CompletedProcess[str]:
-        assert command == ["docker", "image", "inspect", REPO_DIGEST]
-        return subprocess.CompletedProcess(
-            command,
-            0,
-            stdout=json.dumps(
-                [
-                    {
-                        "Architecture": "amd64",
-                        "Id": IMAGE_ID,
-                        "Os": "linux",
-                        "RepoDigests": [REPO_DIGEST],
-                    }
-                ]
-            ),
-            stderr="",
+    called = False
+
+    def swapped(value, output_parent, *, role):
+        nonlocal called
+        called = True
+        return MaterializedBaseImageLayout(
+            output_parent / "swapped",
+            {
+                "archive_sha256": "9" * 64,
+                "base_image_digest": LIBS_DIGEST,
+                "base_image_repository": "docker.io/library/python",
+                "layout_tree_sha256": "e" * 64,
+                "oci_config_digest": LIBS_ID,
+                "oci_selected_manifest_digest": "sha256:" + "b" * 64,
+                "role": "runtime_libraries",
+            },
         )
 
-    with pytest.raises(RuntimeError, match="Docker base image differs"):
+    monkeypatch.setattr(
+        "tools.managed_b_candidate.candidate_image.materialize_base_image_layout",
+        swapped,
+    )
+    monkeypatch.setattr(
+        "tools.managed_b_candidate.candidate_image.validate_materialized_base_image_layout",
+        lambda layout: layout.receipt,
+    )
+
+    with pytest.raises(RuntimeError, match="build OCI layout binding differs"):
         build_offline_candidate_image(
-            context, build, runtime_libraries, runtime, output, runner=runner
+            context,
+            build,
+            runtime_libraries,
+            runtime,
+            output,
+            runner=lambda *_args: (_ for _ in ()).throw(AssertionError("Docker called")),
         )
 
+    assert called is True
     assert list(output.iterdir()) == []
+
+
+def test_keeps_buildkit_and_rewritten_archive_identities_distinct(
+    monkeypatch: pytest.MonkeyPatch, native_tmp_path: Path
+) -> None:
+    _stub_validators(monkeypatch)
+    context, build, runtime_libraries, runtime = _inputs(native_tmp_path)
+    output = native_tmp_path / "output"
+    output.mkdir(mode=0o700)
+    pre_rewrite = "sha256:" + "4" * 64
+    _commands, runner = _runner(buildkit_result_id=pre_rewrite)
+
+    candidate = build_offline_candidate_image(
+        context,
+        build,
+        runtime_libraries,
+        runtime,
+        output,
+        runner=runner,
+    )
+
+    assert candidate.receipt["candidate_buildkit_result_digest"] == pre_rewrite
+    assert candidate.receipt["candidate_image_config_digest"] == IMAGE_ID
 
 
 def test_refuses_a_candidate_that_receives_a_tag(

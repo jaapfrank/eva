@@ -14,8 +14,9 @@ import json
 import os
 from pathlib import Path
 import stat
+from typing import Mapping
 
-from tools.managed_b_candidate.base_image import materialize_pinned_base_image
+from tools.managed_b_candidate.base_image import materialize_pinned_base_image_archive
 from tools.managed_b_candidate.build_context import materialize_build_context
 from tools.managed_b_candidate.candidate_image import build_offline_candidate_image
 from tools.managed_b_candidate.private_receipt import (
@@ -74,15 +75,38 @@ def _archived_bytes(
     return value[0]
 
 
+def _base_archive_inputs(
+    value: Mapping[str, tuple[Path, str]],
+) -> dict[str, tuple[Path, str]]:
+    roles = {"build", "runtime_libraries", "runtime"}
+    if set(value) != roles:
+        raise RuntimeError("managed B requires exactly three role-bound base archives")
+    validated: dict[str, tuple[Path, str]] = {}
+    for role in sorted(roles):
+        item = value[role]
+        if (
+            not isinstance(item, tuple)
+            or len(item) != 2
+            or not isinstance(item[0], Path)
+            or not isinstance(item[1], str)
+        ):
+            raise RuntimeError(f"managed B {role} base archive authority is invalid")
+        validated[role] = item
+    return validated
+
+
 def build_managed_b_offline_candidate(
     source_commit: str,
     wheel_artifact_root: Path,
     output_parent: Path,
+    *,
+    base_image_archives: Mapping[str, tuple[Path, str]],
 ) -> dict[str, object]:
     """Materialize and build exactly one local, untagged candidate image."""
 
     _absolute_artifact_root(wheel_artifact_root)
     _private_output_parent(output_parent)
+    archives = _base_archive_inputs(base_image_archives)
     candidate = prepare_candidate_build_inputs(source_commit)
     files = validate_candidate_build_inputs(candidate)
     manifest_raw = _archived_bytes(
@@ -107,17 +131,23 @@ def build_managed_b_offline_candidate(
         output_parent,
         requirements_lock_raw,
     )
-    build_image = materialize_pinned_base_image(
+    build_image = materialize_pinned_base_image_archive(
+        archives["build"][0],
+        archives["build"][1],
         candidate.base_image_digest,
         output_parent,
         repository=candidate.build_image_reference.rsplit("@", 1)[0],
     )
-    runtime_libraries_image = materialize_pinned_base_image(
+    runtime_libraries_image = materialize_pinned_base_image_archive(
+        archives["runtime_libraries"][0],
+        archives["runtime_libraries"][1],
         candidate.runtime_libraries_image_digest,
         output_parent,
         repository=candidate.runtime_libraries_image_reference.rsplit("@", 1)[0],
     )
-    runtime_image = materialize_pinned_base_image(
+    runtime_image = materialize_pinned_base_image_archive(
+        archives["runtime"][0],
+        archives["runtime"][1],
         candidate.runtime_image_digest,
         output_parent,
         repository=candidate.runtime_image_reference.rsplit("@", 1)[0],
@@ -155,6 +185,10 @@ def build_managed_b_offline_candidate(
             "wheel_coverage_sha256": _sha256(coverage_raw),
             "wheelhouse_manifest_path": WHEELHOUSE_MANIFEST_PATH,
             "wheelhouse_manifest_sha256": _sha256(manifest_raw),
+            "base_image_archives": {
+                role: {"path": str(path), "sha256": digest}
+                for role, (path, digest) in sorted(archives.items())
+            },
         },
         "materialized": {
             "build_image_archive_path": str(build_image.path),
@@ -182,17 +216,28 @@ def build_managed_b_offline_candidate(
             "build_image": {
                 "archive_sha256": build_image.receipt["archive_sha256"],
                 "digest": build_image.receipt["base_image_digest"],
-                "local_image_id": build_image.receipt["local_image_id"],
+                "config_digest": build_image.receipt["oci_config_digest"],
+                "layout_tree_sha256": image.receipt[
+                    "build_image_layout_tree_sha256"
+                ],
             },
             "runtime_image": {
                 "archive_sha256": runtime_image.receipt["archive_sha256"],
                 "digest": runtime_image.receipt["base_image_digest"],
-                "local_image_id": runtime_image.receipt["local_image_id"],
+                "config_digest": runtime_image.receipt["oci_config_digest"],
+                "layout_tree_sha256": image.receipt[
+                    "runtime_image_layout_tree_sha256"
+                ],
             },
             "runtime_libraries_image": {
                 "archive_sha256": runtime_libraries_image.receipt["archive_sha256"],
                 "digest": runtime_libraries_image.receipt["base_image_digest"],
-                "local_image_id": runtime_libraries_image.receipt["local_image_id"],
+                "config_digest": runtime_libraries_image.receipt[
+                    "oci_config_digest"
+                ],
+                "layout_tree_sha256": image.receipt[
+                    "runtime_libraries_image_layout_tree_sha256"
+                ],
             },
             "build_context": {
                 "tree_sha256": context.receipt["context_tree_sha256"],
@@ -212,6 +257,9 @@ def _parser() -> argparse.ArgumentParser:
     parser.add_argument("--wheel-artifact-root", required=True, type=Path)
     parser.add_argument("--output-parent", required=True, type=Path)
     parser.add_argument("--receipt", required=True, type=Path)
+    for role in ("build", "runtime-libraries", "runtime"):
+        parser.add_argument(f"--{role}-image-archive", required=True, type=Path)
+        parser.add_argument(f"--{role}-image-archive-sha256", required=True)
     return parser
 
 
@@ -222,6 +270,20 @@ def main(argv: list[str] | None = None) -> int:
             arguments.source_commit,
             arguments.wheel_artifact_root,
             arguments.output_parent,
+            base_image_archives={
+                "build": (
+                    arguments.build_image_archive,
+                    arguments.build_image_archive_sha256,
+                ),
+                "runtime_libraries": (
+                    arguments.runtime_libraries_image_archive,
+                    arguments.runtime_libraries_image_archive_sha256,
+                ),
+                "runtime": (
+                    arguments.runtime_image_archive,
+                    arguments.runtime_image_archive_sha256,
+                ),
+            },
         )
     except RuntimeError as error:
         print(json.dumps({"error": str(error), "status": "failed"}, sort_keys=True))
