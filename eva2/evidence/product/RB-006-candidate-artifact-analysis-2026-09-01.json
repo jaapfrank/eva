@@ -1,0 +1,97 @@
+{
+  "analysis": {
+    "archiveExportSha256": "cc583cf439f0b3c90bcc7eb77ea99eaaaff1768c965695485dcf88f76014b139",
+    "contract": "EvaManagedBCandidateArtifactAnalysis/v1",
+    "files": {
+      "reports/analysis-receipt.json": "9a231a4934a1e85d20a63bfc1e7389794c2b0f522ee8095f4618f76cf690eed1",
+      "reports/sbom-binding.json": "f288b554c51cb54390380bd11f32e09f5568dc884f718241852b472dfb18f5f1",
+      "reports/sbom.spdx.json": "3178c7054e10adbdcac24701bf198e3bfbe43a67c73d744213c7799c17ca5224",
+      "reports/trivy.raw.json": "412137e42d07232c6830525b7b5a335c2d5c24d664fb22ce0a34cc9a6f9c0cba"
+    },
+    "findings": {
+      "CRITICAL": 0,
+      "HIGH": 0
+    },
+    "retainedArtifactCount": 5,
+    "retainedFileMode": "0444",
+    "retainedRootMode": "0500",
+    "sameArchiveReadByBothScanners": true,
+    "singleExport": true,
+    "status": "passed_candidate_artifacts"
+  },
+  "baseCommit": "eaaaa09a9d7955cec97bc3d8ad3bee266774b624",
+  "candidate": {
+    "imageId": "sha256:3a4f65544be8b0b4e543ba5148b73775b35c40ee5ab4a49dd55eec9b724899f1",
+    "receiptSha256": "3de27f483266c1d7fb63e209eb0f9facaface8dfb7fca7403302397c3c3c3c1b",
+    "rb005ArchiveSha256": "108406414bf56d0d99c436a19387c39902605ab8df0820e304ac1e486a459acc"
+  },
+  "changePaths": [
+    "eva2/tools/managed_b_candidate/artifact_analysis.py",
+    "eva2/tests/operations/test_managed_b_artifact_analysis.py"
+  ],
+  "contract": "EvaWorkboardTaskEvidence/v1",
+  "implementationCommit": "ffbff302cf3f5a35bb381fd6b53d17b14a65860b",
+  "implementationFiles": {
+    "eva2/tests/operations/test_managed_b_artifact_analysis.py": "5b15561d2a4eb43989c2524d15ff0d43924de3d0f4a597c02251c91c00bd70d8",
+    "eva2/tools/managed_b_candidate/artifact_analysis.py": "1bbbe464864ecae6374cb77ca6503d467640d2bf269918b073eccefca25519f1"
+  },
+  "networkUsed": false,
+  "nonClaims": [
+    "The candidate was not tagged, pushed, signed, started, promoted, attached to Compose, or used by a container.",
+    "The fresh Docker export is bound separately from the byte-identical RB-005 builder archive because Docker save packaging is not claimed to be byte-stable across exports.",
+    "A non-empty SPDX document and a zero HIGH/CRITICAL scan are candidate evidence, not release approval or proof that no vulnerability exists.",
+    "No live route, database, volume, service, connector, secret, Eva1 runtime, or Eva2 runtime was opened or changed."
+  ],
+  "rb005": {
+    "inputAuthoritySha256": "d9e51cc588a21a186bff68afc48e71978319761cbe9814c5b6a5a3da4d2f4a74",
+    "privateReceiptSha256": "848c236c76abe66e4c2db1d00324aa3df6987a98d4cfc41e9198de0a59261a4f",
+    "publicEvidencePath": "eva2/evidence/product/RB-005-two-builder-reproducibility-2026-09-01.json",
+    "publicEvidenceSha256": "77ad4553ce10e20fdfc1e80c92219b61528d23c6e2d641f3771e962a465c4ed3",
+    "releaseAuthoritySha256": "20323cc166d5b7055c43dc94a0d5e09c47ab729036e479c166768a2a6e841020",
+    "status": "passed",
+    "sourceCommit": "45d2ff6d61793809a514c01b3a3c000ce1632da6"
+  },
+  "sbom": {
+    "fileCount": 1521,
+    "format": "SPDX-2.3-json",
+    "packageCount": 76,
+    "policySha256": "1b954e5d4bfaef341b1e2f0611f622b98bdae16e81194453ea6223e6b7d408bd",
+    "relationshipCounts": {
+      "CONTAINS": 1315,
+      "DEPENDENCY_OF": 120,
+      "DESCRIBES": 1,
+      "OTHER": 180
+    }
+  },
+  "scanners": {
+    "licenseInventorySha256": "0608e0bb2f59f3d05433a17b2275822987020b2d8ae2d8c36af71c02a39007aa",
+    "pullPolicy": "never",
+    "runtimeNetwork": "none",
+    "syft": {
+      "image": "ghcr.io/anchore/syft@sha256:678bfa565b60f747aac0f8e964fe5588a24445b8d0a480e91f6efd70020dfbb0",
+      "version": "1.51.0"
+    },
+    "toolAuthoritySha256": "a981113931a6a243f112319f819c8f1974f5679a20944cf5652c4c90fd387297",
+    "trivy": {
+      "cacheAuthoritySha256": "a2c300c5a1d85b95be4a3eaed51004b3f2e8d7f232b9bc0226844e45b1ae8585",
+      "image": "aquasec/trivy@sha256:62b1e65e8869bc4b4c6aa4fa2b21595256c7c2f6018a9d9ad61caf87187c1969",
+      "resultCount": 2,
+      "version": "0.74.0"
+    }
+  },
+  "sourceCommit": "45d2ff6d61793809a514c01b3a3c000ce1632da6",
+  "status": "tested_pending_independent_evidence_review",
+  "taskId": "RB-006",
+  "tests": [
+    {
+      "command": "TMPDIR=/tmp TEMP=/tmp TMP=/tmp pytest -q tests/operations/test_managed_b_artifact_analysis.py tests/operations/test_container_vulnerability_gate.py",
+      "result": "36 passed",
+      "status": "passed"
+    },
+    {
+      "command": "ruff check tools/managed_b_candidate/artifact_analysis.py tests/operations/test_managed_b_artifact_analysis.py",
+      "result": "All checks passed!",
+      "status": "passed"
+    }
+  ]
+}
