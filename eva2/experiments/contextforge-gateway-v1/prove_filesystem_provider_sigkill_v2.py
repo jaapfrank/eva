@@ -38,6 +38,7 @@ from eva.application.memory import PresenceMemory
 from eva.application.orchestration import (
     AsyncToolPort,
     ToolDispatchResult,
+    ToolExecutionRejected,
     ToolProofObservation,
     ToolRequest,
 )
@@ -863,10 +864,53 @@ class _BlockAfterRealExecute(AsyncToolPort):
     ) -> None:
         self._delegate = delegate
         self._durable_state = durable_state
+        self.delegate_started = False
+        self.delegate_returned = False
+        self.delegate_accepted: bool | None = None
+        self.delegate_rejected = False
+        self.delegate_cancelled = False
+        self.delegate_error_type: str | None = None
+        self.callback_started = False
+        self.callback_completed = False
+        self.callback_error_type: str | None = None
+        self.marker_write_started = False
+        self.kill_window_committed = False
+        self.marker_error_type: str | None = None
+        self.wait_started = False
+        self.wait_cancelled = False
 
     async def execute(self, request: ToolRequest) -> ToolDispatchResult:
-        await self._delegate.execute(request)
-        _write_once("effect-returned.json", self._durable_state(request))
+        self.delegate_started = True
+        try:
+            dispatch = await self._delegate.execute(request)
+        except asyncio.CancelledError:
+            self.delegate_cancelled = True
+            raise
+        except ToolExecutionRejected:
+            self.delegate_rejected = True
+            raise
+        except Exception as error:
+            self.delegate_error_type = _failure_identifier(type(error).__name__)
+            raise
+        self.delegate_returned = True
+        self.delegate_accepted = dispatch.accepted
+        if not dispatch.accepted:
+            self.delegate_rejected = True
+            return dispatch
+        self.callback_started = True
+        try:
+            durable_state = self._durable_state(request)
+        except Exception as error:
+            self.callback_error_type = _failure_identifier(type(error).__name__)
+            raise
+        self.callback_completed = True
+        self.marker_write_started = True
+        try:
+            _write_once("effect-returned.json", durable_state)
+        except Exception as error:
+            self.marker_error_type = _failure_identifier(type(error).__name__)
+            raise
+        self.kill_window_committed = True
         print(
             json.dumps(
                 {
@@ -877,7 +921,12 @@ class _BlockAfterRealExecute(AsyncToolPort):
             ),
             flush=True,
         )
-        await asyncio.Event().wait()
+        self.wait_started = True
+        try:
+            await asyncio.Event().wait()
+        except asyncio.CancelledError:
+            self.wait_cancelled = True
+            raise
         raise AssertionError("SIGKILL wait unexpectedly returned")
 
     async def observe(
@@ -899,6 +948,54 @@ def _history_sha256(turn: ConversationTurn, call: Any) -> str:
             "prompt": turn.grounded_text,
         }
     )
+
+
+def _unexpected_start_result(
+    blocker: _BlockAfterRealExecute,
+    receipt: Any,
+) -> str:
+    output = getattr(receipt, "output", None)
+    status = output.get("status") if isinstance(output, dict) else None
+    failure_status = status in {"failed", "needs_help"}
+    if blocker.delegate_rejected:
+        return (
+            "filesystem provider execution was rejected"
+            if status == "rejected"
+            else "filesystem terminal receipt contradicts execution state"
+        )
+    if blocker.delegate_cancelled:
+        return (
+            "filesystem provider execution was cancelled"
+            if failure_status
+            else "filesystem terminal receipt contradicts execution state"
+        )
+    if blocker.delegate_error_type is not None:
+        return (
+            "filesystem provider execution raised an error"
+            if failure_status
+            else "filesystem terminal receipt contradicts execution state"
+        )
+    if blocker.callback_started and not blocker.callback_completed:
+        return (
+            "filesystem post-execute callback failed"
+            if failure_status
+            else "filesystem terminal receipt contradicts execution state"
+        )
+    if blocker.marker_write_started and not blocker.kill_window_committed:
+        return (
+            "filesystem kill-window marker write failed"
+            if failure_status
+            else "filesystem terminal receipt contradicts execution state"
+        )
+    if blocker.wait_cancelled:
+        return (
+            "filesystem kill wait was cancelled"
+            if failure_status
+            else "filesystem terminal receipt contradicts execution state"
+        )
+    if not blocker.delegate_started:
+        return "filesystem provider execution was not started"
+    return "filesystem terminal receipt contradicts execution state"
 
 
 def _start() -> int:
@@ -1025,13 +1122,14 @@ def _start() -> int:
             "snapshot": snapshot,
         }
 
-    route._provider = _BlockAfterRealExecute(  # noqa: SLF001
+    blocker = _BlockAfterRealExecute(
         route._provider,
         post_execute,  # noqa: SLF001
     )
-    route.execute(turn, call)
+    route._provider = blocker  # noqa: SLF001
+    receipt = route.execute(turn, call)
     engine.dispose()
-    raise RuntimeError("p1 returned instead of being killed")
+    raise RuntimeError(_unexpected_start_result(blocker, receipt))
 
 
 def _failure_category(error: Exception) -> str:
@@ -1090,6 +1188,20 @@ def _failure_category(error: Exception) -> str:
         "provider call binding is incomplete": "provider_binding_incomplete",
         "captured MCP provider call differs from admission": (
             "provider_call_differs"
+        ),
+        "filesystem provider execution raised an error": (
+            "provider_execute_error"
+        ),
+        "filesystem provider execution was rejected": "provider_execute_rejected",
+        "filesystem provider execution was cancelled": (
+            "provider_execute_cancelled"
+        ),
+        "filesystem post-execute callback failed": "post_execute_callback_failed",
+        "filesystem kill-window marker write failed": "kill_window_marker_failed",
+        "filesystem kill wait was cancelled": "kill_wait_cancelled",
+        "filesystem provider execution was not started": "provider_execute_not_started",
+        "filesystem terminal receipt contradicts execution state": (
+            "terminal_receipt_contradiction"
         ),
     }.get(str(error), "unexpected_runtime_error")
 

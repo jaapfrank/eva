@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import ast
+import asyncio
 import copy
 import hashlib
 import importlib.util
@@ -9,7 +10,7 @@ from pathlib import Path
 import re
 import subprocess
 import sys
-from typing import Any
+from typing import Any, Callable
 
 import pytest
 
@@ -112,6 +113,173 @@ def test_proof_runtime_budget_satisfies_the_product_contract() -> None:
         canonical_json_bytes(budget.budget_payload())
     ).hexdigest()
     assert budget.max_output_tokens <= checker.BUDGET["outputTokens"]
+
+
+def test_kill_window_tracks_delegate_progress_without_error_text() -> None:
+    tree = ast.parse(PRODUCER.read_text(encoding="utf-8"))
+    blocker_class = next(
+        node
+        for node in tree.body
+        if isinstance(node, ast.ClassDef) and node.name == "_BlockAfterRealExecute"
+    )
+    classifier = next(
+        node
+        for node in tree.body
+        if isinstance(node, ast.FunctionDef) and node.name == "_unexpected_start_result"
+    )
+    writes: list[tuple[str, dict[str, Any]]] = []
+
+    class FakeDispatch:
+        def __init__(self, accepted: bool) -> None:
+            self.accepted = accepted
+
+    class FakeToolExecutionRejected(RuntimeError):
+        pass
+
+    namespace = {
+        "Any": Any,
+        "AsyncToolPort": object,
+        "Callable": Callable,
+        "ToolDispatchResult": FakeDispatch,
+        "ToolExecutionRejected": FakeToolExecutionRejected,
+        "ToolProofObservation": object,
+        "ToolRequest": object,
+        "_failure_identifier": lambda value: value,
+        "_write_once": lambda name, value: writes.append((name, value)),
+        "asyncio": asyncio,
+        "json": json,
+    }
+    exec(  # noqa: S102 - executes the tracked, parsed proof helper only.
+        compile(
+            ast.Module(body=[blocker_class, classifier], type_ignores=[]),
+            "<kill-window>",
+            "exec",
+        ),
+        namespace,
+    )
+    blocker_type = namespace["_BlockAfterRealExecute"]
+    classify = namespace["_unexpected_start_result"]
+
+    class Receipt:
+        def __init__(self, status: str | None) -> None:
+            self.output = {} if status is None else {"status": status}
+
+    class SuccessfulDelegate:
+        async def execute(self, request):
+            del request
+            return FakeDispatch(True)
+
+    class HangingDelegate:
+        async def execute(self, request):
+            del request
+            await asyncio.Event().wait()
+            raise AssertionError("hanging delegate returned")
+
+    class RuntimeFailureDelegate:
+        async def execute(self, request):
+            del request
+            raise RuntimeError("SECRET_PROVIDER_DETAIL")
+
+    class RejectedDelegate:
+        async def execute(self, request):
+            del request
+            raise FakeToolExecutionRejected("SECRET_REJECTION_DETAIL")
+
+    class NegativeDelegate:
+        async def execute(self, request):
+            del request
+            return FakeDispatch(False)
+
+    async def exercise_success() -> None:
+        blocker = blocker_type(
+            SuccessfulDelegate(), lambda request: {"request": str(request)}
+        )
+        task = asyncio.create_task(blocker.execute("request"))
+        for _ in range(10):
+            if blocker.kill_window_committed:
+                break
+            await asyncio.sleep(0)
+        assert blocker.delegate_started is True
+        assert blocker.delegate_returned is True
+        assert blocker.delegate_accepted is True
+        assert blocker.delegate_error_type is None
+        assert blocker.callback_completed is True
+        assert blocker.kill_window_committed is True
+        assert blocker.wait_started is True
+        task.cancel()
+        with pytest.raises(asyncio.CancelledError):
+            await task
+        assert blocker.wait_cancelled is True
+        assert classify(blocker, Receipt("failed")) == (
+            "filesystem kill wait was cancelled"
+        )
+
+    async def exercise_failures() -> None:
+        hanging = blocker_type(HangingDelegate(), lambda request: {"request": request})
+        task = asyncio.create_task(hanging.execute("request"))
+        while not hanging.delegate_started:
+            await asyncio.sleep(0)
+        task.cancel()
+        with pytest.raises(asyncio.CancelledError):
+            await task
+        assert hanging.delegate_cancelled is True
+        assert hanging.delegate_error_type is None
+        assert classify(hanging, Receipt("failed")) == (
+            "filesystem provider execution was cancelled"
+        )
+
+        runtime = blocker_type(
+            RuntimeFailureDelegate(), lambda request: {"request": request}
+        )
+        with pytest.raises(RuntimeError, match="SECRET_PROVIDER_DETAIL"):
+            await runtime.execute("request")
+        assert runtime.delegate_error_type == "RuntimeError"
+        assert "SECRET" not in repr(vars(runtime))
+        assert classify(runtime, Receipt("failed")) == (
+            "filesystem provider execution raised an error"
+        )
+        assert classify(runtime, Receipt("verified")) == (
+            "filesystem terminal receipt contradicts execution state"
+        )
+
+        rejected = blocker_type(RejectedDelegate(), lambda request: {"request": request})
+        with pytest.raises(FakeToolExecutionRejected, match="SECRET_REJECTION_DETAIL"):
+            await rejected.execute("request")
+        assert rejected.delegate_rejected is True
+        assert rejected.delegate_error_type is None
+        assert "SECRET" not in repr(vars(rejected))
+        assert classify(rejected, Receipt("rejected")) == (
+            "filesystem provider execution was rejected"
+        )
+
+        negative = blocker_type(NegativeDelegate(), lambda request: {"request": request})
+        result = await negative.execute("request")
+        assert result.accepted is False
+        assert negative.delegate_rejected is True
+        assert negative.callback_started is False
+        assert classify(negative, Receipt("rejected")) == (
+            "filesystem provider execution was rejected"
+        )
+
+        def callback_failure(request):
+            del request
+            raise RuntimeError("SECRET_CALLBACK_DETAIL")
+
+        callback = blocker_type(SuccessfulDelegate(), callback_failure)
+        with pytest.raises(RuntimeError, match="SECRET_CALLBACK_DETAIL"):
+            await callback.execute("request")
+        assert callback.callback_started is True
+        assert callback.callback_completed is False
+        assert callback.callback_error_type == "RuntimeError"
+        assert callback.marker_write_started is False
+        assert "SECRET" not in repr(vars(callback))
+        assert classify(callback, Receipt("failed")) == (
+            "filesystem post-execute callback failed"
+        )
+
+    asyncio.run(exercise_success())
+    asyncio.run(exercise_failures())
+    assert writes == [("effect-returned.json", {"request": "request"})]
 
 
 def test_host_helpers_keep_stdin_attached_for_private_payloads() -> None:
@@ -331,7 +499,7 @@ def test_setup_failure_categories_cover_the_generic_provider_boundary() -> None:
     assert call.args[1].value == "unexpected_runtime_error"
     keys = call.func.value.keys
     values = call.func.value.values
-    assert len(keys) == len(values) == 35
+    assert len(keys) == len(values) == 43
     assert all(
         isinstance(item, ast.Constant) and isinstance(item.value, str)
         for item in (*keys, *values)
@@ -390,6 +558,20 @@ def test_setup_failure_categories_cover_the_generic_provider_boundary() -> None:
         "filesystem SIGKILL window is not sealed": "durable_window_not_sealed",
         "provider call binding is incomplete": "provider_binding_incomplete",
         "captured MCP provider call differs from admission": "provider_call_differs",
+        "filesystem provider execution raised an error": "provider_execute_error",
+        "filesystem provider execution was rejected": "provider_execute_rejected",
+        "filesystem provider execution was cancelled": (
+            "provider_execute_cancelled"
+        ),
+        "filesystem post-execute callback failed": "post_execute_callback_failed",
+        "filesystem kill-window marker write failed": "kill_window_marker_failed",
+        "filesystem kill wait was cancelled": "kill_wait_cancelled",
+        "filesystem provider execution was not started": (
+            "provider_execute_not_started"
+        ),
+        "filesystem terminal receipt contradicts execution state": (
+            "terminal_receipt_contradiction"
+        ),
     }
     first_argument = call.args[0]
     assert isinstance(first_argument, ast.Call)
