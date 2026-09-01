@@ -283,7 +283,7 @@ def _contextforge_start_sha256(
         "status", "--porcelain", "--untracked-files=no"
     ):
         raise Tool01V2Error("candidate source checkout is not clean and commit-bound")
-    git("ls-files", "--error-unmatch", _CONTEXTFORGE_START_PATH)
+    git("ls-files", "--error-unmatch", f":(top){_CONTEXTFORGE_START_PATH}")
     path = git_root / _CONTEXTFORGE_START_PATH
     try:
         raw = path.read_bytes()

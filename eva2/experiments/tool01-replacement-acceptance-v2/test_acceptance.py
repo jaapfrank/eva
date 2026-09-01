@@ -1317,6 +1317,38 @@ def test_contextforge_start_valid_alternative_hash_is_rejected(tmp_path: Path) -
         )
 
 
+def test_contextforge_start_authority_accepts_the_nested_eva_package_root(
+    tmp_path: Path,
+) -> None:
+    repository = tmp_path / "repository"
+    package = repository / "eva2"
+    start = package / "experiments/contextforge-gateway-v1/start-contextforge.sh"
+    start.parent.mkdir(parents=True)
+    start.write_bytes(CONTEXTFORGE_START)
+    subprocess.run(["git", "init", "-q", str(repository)], check=True)
+    subprocess.run(["git", "-C", str(repository), "add", "eva2"], check=True)
+    subprocess.run(
+        [
+            "git",
+            "-C",
+            str(repository),
+            "-c",
+            "user.name=TOOL01 Fixture",
+            "-c",
+            "user.email=tool01@example.invalid",
+            "commit",
+            "-qm",
+            "fixture",
+        ],
+        check=True,
+    )
+    commit = checker.source_authority.current_commit(package)
+
+    assert checker._contextforge_start_sha256(package, commit) == (
+        CONTEXTFORGE_START_SHA256
+    )
+
+
 def test_all_three_containers_must_use_exact_candidate_image(tmp_path: Path) -> None:
     def mutate(artifacts):
         artifacts["containerCrashAudit"]["containers"][2]["imageId"] = (
