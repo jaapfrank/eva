@@ -922,16 +922,20 @@ def _create_virtual_server(
         "POST",
         "/servers",
         payload={
-            "associated_tools": tool_ids,
-            "description": "Disposable TOOL01 v2 filesystem acceptance server.",
-            "name": name,
+            "server": {
+                "associated_tools": tool_ids,
+                "description": "Disposable TOOL01 v2 filesystem acceptance server.",
+                "name": name,
+            },
             "visibility": "public",
         },
         token=token,
         expected=(200, 201),
     )
-    if not isinstance(value, dict):
-        raise PhysicalAcceptanceError("ContextForge virtual server is malformed")
+    if not isinstance(value, dict) or value.get("visibility") != "public":
+        raise PhysicalAcceptanceError(
+            "ContextForge virtual server is malformed or not public"
+        )
     server_id = _row_id(value, label="virtual server")
     server_tools = _gateway_request(
         container,

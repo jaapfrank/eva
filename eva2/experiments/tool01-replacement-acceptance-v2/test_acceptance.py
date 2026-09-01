@@ -25,6 +25,11 @@ assert SPEC is not None and SPEC.loader is not None
 checker = importlib.util.module_from_spec(SPEC)
 sys.modules[SPEC.name] = checker
 SPEC.loader.exec_module(checker)
+RUNNER_SPEC = importlib.util.spec_from_file_location("tool01_v2_runner", RUNNER)
+assert RUNNER_SPEC is not None and RUNNER_SPEC.loader is not None
+physical_runner = importlib.util.module_from_spec(RUNNER_SPEC)
+sys.modules[RUNNER_SPEC.name] = physical_runner
+RUNNER_SPEC.loader.exec_module(physical_runner)
 
 RUN_ID = "tool01-v2-fixture-001"
 NONCE = "a1b2c3d4e5f6"
@@ -167,6 +172,68 @@ def test_physical_runner_keeps_contextforge_generated_tool_names() -> None:
     assert '"custom_name": final_name' not in runner_source
     assert 'not provider_id.endswith(f"_{nonce}")' in producer_source
     assert 'not name.startswith(f"{provider_id}_")' in producer_source
+
+
+def test_virtual_server_uses_contextforge_server_body_envelope(monkeypatch) -> None:
+    tool_ids = ["1" * 32, "2" * 32, "3" * 32]
+    server_id = "4" * 32
+    calls = []
+
+    def request(container, method, path, *, payload=None, token=None, expected=(200,)):
+        calls.append((container, method, path, payload, token, expected))
+        if method == "POST":
+            return {"id": server_id, "visibility": "public"}
+        return [{"id": tool_id} for tool_id in tool_ids]
+
+    monkeypatch.setattr(physical_runner, "_gateway_request", request)
+    assert (
+        physical_runner._create_virtual_server(
+            "gateway", "token", name="tool01_fixture", tool_ids=tool_ids
+        )
+        == server_id
+    )
+    assert calls == [
+        (
+            "gateway",
+            "POST",
+            "/servers",
+            {
+                "server": {
+                    "associated_tools": tool_ids,
+                    "description": (
+                        "Disposable TOOL01 v2 filesystem acceptance server."
+                    ),
+                    "name": "tool01_fixture",
+                },
+                "visibility": "public",
+            },
+            "token",
+            (200, 201),
+        ),
+        (
+            "gateway",
+            "GET",
+            f"/servers/{server_id}/tools?include_inactive=false&include_metrics=false",
+            None,
+            "token",
+            (200,),
+        ),
+    ]
+
+
+def test_virtual_server_rejects_a_nonpublic_create_response(monkeypatch) -> None:
+    def request(container, method, path, *, payload=None, token=None, expected=(200,)):
+        del container, method, path, payload, token, expected
+        return {"id": "4" * 32, "visibility": "private"}
+
+    monkeypatch.setattr(physical_runner, "_gateway_request", request)
+    with pytest.raises(
+        physical_runner.PhysicalAcceptanceError,
+        match="virtual server is malformed or not public",
+    ):
+        physical_runner._create_virtual_server(
+            "gateway", "token", name="tool01_fixture", tool_ids=["1" * 32]
+        )
 
 
 def _file_reference(path: Path, value: dict[str, Any]) -> dict[str, Any]:
