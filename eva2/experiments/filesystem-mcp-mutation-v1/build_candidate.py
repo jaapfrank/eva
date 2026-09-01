@@ -35,11 +35,17 @@ def _run(*command: str, cwd: Path | None = None) -> str:
     completed = subprocess.run(
         command,
         cwd=cwd,
-        check=True,
+        check=False,
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
         text=True,
     )
+    if completed.returncode != 0:
+        diagnostic = completed.stderr.strip() or completed.stdout.strip()
+        raise RuntimeError(
+            f"command {command[0]!r} failed with {completed.returncode}: "
+            f"{diagnostic[-8_000:]}"
+        )
     return completed.stdout.strip()
 
 
