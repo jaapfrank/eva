@@ -2,7 +2,9 @@ from __future__ import annotations
 
 import io
 import json
+import os
 from pathlib import Path
+import sys
 import xml.etree.ElementTree as ET
 import zipfile
 
@@ -151,6 +153,27 @@ def test_cli_requires_all_external_browser_authorities() -> None:
                 "/receipt.json",
             ]
         )
+
+
+def test_real_command_runner_enforces_a_private_umask(private_tmp_path: Path) -> None:
+    result = runner._run(
+        [
+            sys.executable,
+            "-c",
+            (
+                "from pathlib import Path; "
+                "Path('created').mkdir(); "
+                "print(oct(Path('created').stat().st_mode & 0o777))"
+            ),
+        ],
+        cwd=private_tmp_path,
+        env=os.environ,
+        timeout=30,
+    )
+
+    assert result.returncode == 0
+    assert result.stderr == ""
+    assert result.stdout.strip() == "0o700"
 
 
 def test_gate_lock_is_exact_and_adds_pyyaml_only_to_gate_toolchain() -> None:

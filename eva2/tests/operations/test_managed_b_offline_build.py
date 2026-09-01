@@ -45,6 +45,7 @@ def _candidate(lock: bytes) -> CandidateBuildInputs:
                 b"COPY schemas ./schemas",
                 b"FROM " + RUNTIME_LIBRARIES_REFERENCE.encode() + b" AS runtime_libs",
                 b"FROM " + RUNTIME_REFERENCE.encode(),
+                b"ENV LD_LIBRARY_PATH=/usr/local/lib",
                 b"COPY --from=build /usr/local /usr/local",
                 b"COPY --from=build /opt/eva /opt/eva",
                 b"COPY --from=runtime_libs /usr/lib/x86_64-linux-gnu/libffi.so.8* /usr/lib/x86_64-linux-gnu/",
@@ -89,7 +90,9 @@ def _candidate(lock: bytes) -> CandidateBuildInputs:
 
 @pytest.fixture
 def native_tmp_path() -> Path:
-    with tempfile.TemporaryDirectory(prefix="eva2-offline-build-test-", dir="/tmp") as path:
+    with tempfile.TemporaryDirectory(
+        prefix="eva2-offline-build-test-", dir="/tmp"
+    ) as path:
         yield Path(path)
 
 
@@ -143,8 +146,10 @@ def _wheel_inputs(
     )
     output = native_tmp_path / "output"
     output.mkdir()
-    return manifest, coverage, materialize_wheelhouse(
-        manifest, coverage, wheelhouse, output, lock
+    return (
+        manifest,
+        coverage,
+        materialize_wheelhouse(manifest, coverage, wheelhouse, output, lock),
     )
 
 

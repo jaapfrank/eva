@@ -3,7 +3,7 @@
 Deze kaart is mechanisch gegenereerd. Zij staat naast de semantische runtimegraaf en
 classificeert ieder gevolgd, verwijderd of niet-genegeerd nieuw repositorypad.
 
-Schema: `EvaRepositoryInventory/v1`. Brondigest: `11cf4382cadc6e24f5b5b8fbce2481d33876779d13145d46ad1ef9d0b1793601`.
+Schema: `EvaRepositoryInventory/v1`. Brondigest: `9b826bbc08340f8b50a9a7ddf0d9469c4aa96d033af1e9dec07626b88f09f068`.
 
 ## Samenvatting
 
@@ -1648,7 +1648,7 @@ Schema: `EvaRepositoryInventory/v1`. Brondigest: `11cf4382cadc6e24f5b5b8fbce2481
 | `eva2/tests/operations/test_managed_b_base_image.py` | tracked | verification | included-tracked-critical | keep | 8434 |
 | `eva2/tests/operations/test_managed_b_build_context.py` | tracked | verification | included-tracked-critical | keep | 14091 |
 | `eva2/tests/operations/test_managed_b_candidate_image.py` | tracked | verification | included-tracked-critical | keep | 13512 |
-| `eva2/tests/operations/test_managed_b_offline_build.py` | tracked | verification | included-tracked-critical | keep | 8731 |
+| `eva2/tests/operations/test_managed_b_offline_build.py` | tracked | verification | included-tracked-critical | keep | 8819 |
 | `eva2/tests/operations/test_managed_b_reboot_deployment.py` | tracked | verification | included-tracked-critical | keep | 1326 |
 | `eva2/tests/operations/test_managed_b_reboot_probe.py` | tracked | verification | included-tracked-critical | keep | 10508 |
 | `eva2/tests/operations/test_managed_b_release_inputs.py` | tracked | verification | included-tracked-critical | keep | 22825 |
@@ -1669,7 +1669,7 @@ Schema: `EvaRepositoryInventory/v1`. Brondigest: `11cf4382cadc6e24f5b5b8fbce2481
 | `eva2/tests/operations/test_probe_codex_source_compatibility.py` | tracked | verification | included-tracked-critical | keep | 10355 |
 | `eva2/tests/operations/test_release_verifier.py` | tracked | verification | included-tracked-critical | keep | 5156 |
 | `eva2/tests/operations/test_run_managed_b_browser_release_subgate.py` | tracked | verification | included-tracked-critical | keep | 13728 |
-| `eva2/tests/operations/test_run_managed_b_required_tests.py` | tracked | verification | included-tracked-critical | keep | 17277 |
+| `eva2/tests/operations/test_run_managed_b_required_tests.py` | tracked | verification | included-tracked-critical | keep | 17857 |
 | `eva2/tests/operations/test_telegram_binding_loader.py` | tracked | verification | included-tracked-critical | keep | 3471 |
 | `eva2/tests/operations/test_telegram_ingress_wiring.py` | tracked | verification | included-tracked-critical | keep | 4184 |
 | `eva2/tests/platform/test_design_gates.py` | tracked | verification | included-tracked-critical | keep | 5720 |
@@ -1837,7 +1837,7 @@ Schema: `EvaRepositoryInventory/v1`. Brondigest: `11cf4382cadc6e24f5b5b8fbce2481
 | `eva2/tools/run_gate.py` | tracked | verification-runtime | included-tracked-critical | keep | 29950 |
 | `eva2/tools/run_legacy_memory_trial.py` | tracked | verification-runtime | included-tracked-critical | keep | 14372 |
 | `eva2/tools/run_managed_b_browser_release_subgate.py` | tracked | verification-runtime | included-tracked-critical | keep | 42698 |
-| `eva2/tools/run_managed_b_required_tests.py` | tracked | verification-runtime | included-tracked-critical | keep | 38461 |
+| `eva2/tools/run_managed_b_required_tests.py` | tracked | verification-runtime | included-tracked-critical | keep | 38486 |
 | `eva2/tools/run_pc05_text_latency.py` | tracked | verification-runtime | included-tracked-critical | keep | 11607 |
 | `eva2/tools/smoke_people_memory_runtime.py` | tracked | verification-runtime | included-tracked-critical | keep | 1902 |
 | `eva2/tools/switch_eva2_canary.py` | tracked | verification-runtime | included-tracked-critical | keep | 183 |
