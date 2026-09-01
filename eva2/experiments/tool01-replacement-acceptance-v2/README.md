@@ -16,6 +16,10 @@ De filesystem-provider krijgt daarbij een eigen kortlevende, private
 opstartsleutelset. De beheersleutels van de centrale ContextForge-gateway
 worden niet met deze verwisselbare provider gedeeld.
 
+De proef gebruikt de unieke toolnamen die ContextForge zelf uit de
+noncegebonden providernaam maakt. Zij herschrijft ontdekte providertools niet:
+de toolnaam en de providerbinding moeten na registratie ongewijzigd blijven.
+
 V2 gebruikt uitsluitend de gebeurtenissen die de huidige algemene toolroute
 werkelijk duurzaam schrijft:
 

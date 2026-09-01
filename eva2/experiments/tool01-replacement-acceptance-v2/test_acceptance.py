@@ -158,6 +158,17 @@ def test_filesystem_provider_has_a_distinct_private_start_secret_volume() -> Non
     )
 
 
+def test_physical_runner_keeps_contextforge_generated_tool_names() -> None:
+    runner_source = RUNNER.read_text(encoding="utf-8")
+    producer_source = PRODUCER.read_text(encoding="utf-8")
+
+    assert "def _make_tool_public(" in runner_source
+    assert "def _rename_tool(" not in runner_source
+    assert '"custom_name": final_name' not in runner_source
+    assert 'not provider_id.endswith(f"_{nonce}")' in producer_source
+    assert 'not name.startswith(f"{provider_id}_")' in producer_source
+
+
 def _file_reference(path: Path, value: dict[str, Any]) -> dict[str, Any]:
     raw = (json.dumps(value, sort_keys=True, separators=(",", ":")) + "\n").encode()
     path.write_bytes(raw)
@@ -203,9 +214,11 @@ def _framework_event(
 def _artifacts(
     *, image_id: str = IMAGE_ID, source_commit: str = SOURCE_COMMIT
 ) -> dict[str, dict[str, Any]]:
-    effect = f"write_file_{NONCE}"
-    readback = f"read_text_file_{NONCE}"
-    distractor = f"get_current_time_{NONCE}"
+    filesystem_provider = f"filesystem_{NONCE}"
+    time_provider = f"time_{NONCE}"
+    effect = f"{filesystem_provider}_write_file"
+    readback = f"{filesystem_provider}_read_text_file"
+    distractor = f"{time_provider}_echo"
     candidate = {
         "contract": checker.CANDIDATE_CONTRACT,
         "imageId": image_id,
@@ -278,7 +291,7 @@ def _artifacts(
                     "type": "object",
                 },
                 "name": effect,
-                "providerId": "space-provider",
+                "providerId": filesystem_provider,
                 "role": "effect",
             },
             {
@@ -289,14 +302,14 @@ def _artifacts(
                     "type": "object",
                 },
                 "name": readback,
-                "providerId": "space-provider",
+                "providerId": filesystem_provider,
                 "role": "readback",
             },
             {
                 "description": "Read the current time without changing the proof file.",
                 "inputSchema": {"type": "object"},
                 "name": distractor,
-                "providerId": "music-provider",
+                "providerId": time_provider,
                 "role": "distractor",
             },
         ],
@@ -619,6 +632,19 @@ def test_complete_source_for_same_image_commit_promotes(tmp_path: Path) -> None:
         source_root=source_root,
     )
     assert result["replacementStatus"] == "replacement_passed"
+
+
+def test_catalog_rejects_nonce_as_an_unbound_name_substring(tmp_path: Path) -> None:
+    def mutate(artifacts):
+        artifacts["catalog"]["tools"][0]["name"] = (
+            f"rogue_{NONCE}_filesystem_{NONCE}_write_file"
+        )
+
+    with pytest.raises(
+        checker.Tool01V2Error,
+        match="catalog tool/provider namespace differs",
+    ):
+        _check(_bundle(tmp_path, mutate=mutate))
 
 
 def test_source_commit_must_match_candidate_image_label(tmp_path: Path) -> None:

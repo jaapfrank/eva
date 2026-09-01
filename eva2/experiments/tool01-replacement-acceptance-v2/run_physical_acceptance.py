@@ -841,36 +841,45 @@ def _wait_gateway_tool(
     )
 
 
-def _rename_tool(
+def _make_tool_public(
     container: str,
     token: str,
     row: dict[str, Any],
-    *,
-    final_name: str,
 ) -> dict[str, Any]:
-    tool_id = _row_id(row, label=f"tool {final_name}")
-    _gateway_request(
-        container,
-        "PUT",
-        f"/tools/{tool_id}",
-        payload={
-            "custom_name": final_name,
-            "name": final_name,
-            "visibility": "public",
-        },
-        token=token,
-    )
+    tool_id = _row_id(row, label="discovered tool")
+    original_name = _original_name(row)
+    runtime_name = row.get("name")
+    gateway_id = _row_gateway_id(row)
+    if (
+        original_name is None
+        or not isinstance(runtime_name, str)
+        or not runtime_name
+        or gateway_id is None
+    ):
+        raise PhysicalAcceptanceError("ContextForge discovered tool authority is malformed")
+    if row.get("visibility") != "public":
+        _gateway_request(
+            container,
+            "PUT",
+            f"/tools/{tool_id}",
+            payload={"visibility": "public"},
+            token=token,
+        )
     for _ in range(30):
         matches = [
             item
             for item in _list_tools(container, token, include_metrics=False)
-            if item.get("id") == tool_id and item.get("name") == final_name
+            if item.get("id") == tool_id
+            and item.get("name") == runtime_name
+            and _original_name(item) == original_name
+            and _row_gateway_id(item) == gateway_id
+            and item.get("visibility") == "public"
         ]
         if len(matches) == 1:
             return matches[0]
         time.sleep(1)
     raise PhysicalAcceptanceError(
-        f"ContextForge did not persist tool name {final_name}"
+        f"ContextForge did not persist public visibility for tool {tool_id}"
     )
 
 
@@ -1682,7 +1691,7 @@ def main() -> int:
             name=f"time_{nonce}",
             url="http://proof-time:9080/mcp",
         )
-        effect = _rename_tool(
+        effect = _make_tool_public(
             containers["contextforge"],
             token,
             _wait_gateway_tool(
@@ -1691,9 +1700,8 @@ def main() -> int:
                 gateway_id=filesystem_gateway,
                 original_name="write_file",
             ),
-            final_name=f"write_file_{nonce}",
         )
-        readback = _rename_tool(
+        readback = _make_tool_public(
             containers["contextforge"],
             token,
             _wait_gateway_tool(
@@ -1702,9 +1710,8 @@ def main() -> int:
                 gateway_id=filesystem_gateway,
                 original_name="read_text_file",
             ),
-            final_name=f"read_text_file_{nonce}",
         )
-        distractor = _rename_tool(
+        distractor = _make_tool_public(
             containers["contextforge"],
             token,
             _wait_gateway_tool(
@@ -1713,7 +1720,6 @@ def main() -> int:
                 gateway_id=time_gateway,
                 original_name="echo",
             ),
-            final_name=f"echo_{nonce}",
         )
         selected = {
             "effect": effect,

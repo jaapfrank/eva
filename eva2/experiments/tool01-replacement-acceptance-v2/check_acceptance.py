@@ -487,18 +487,31 @@ def _catalog(
         role = _text(item["role"], label="catalog role", limit=16)
         provider_id = _identifier(item["providerId"], label="provider id")
         _text(item["description"], label="tool description", limit=4_096)
-        if not isinstance(item["inputSchema"], dict) or not name.endswith(f"_{nonce}"):
-            raise Tool01V2Error("catalog tool is not runtime nonce-bound")
+        if not isinstance(item["inputSchema"], dict):
+            raise Tool01V2Error("catalog tool schema is invalid")
         if role in by_role or name in names:
             raise Tool01V2Error("catalog tool or role is duplicated")
         by_role[role] = {"name": name, "providerId": provider_id}
         names.add(name)
     if set(by_role) != {"distractor", "effect", "readback"}:
         raise Tool01V2Error("catalog roles differ")
-    if by_role["effect"]["providerId"] != by_role["readback"]["providerId"]:
-        raise Tool01V2Error("effect and readback must share one provider")
-    if by_role["distractor"]["providerId"] == by_role["effect"]["providerId"]:
-        raise Tool01V2Error("distractor must come from another provider")
+    filesystem_provider = f"filesystem_{nonce}"
+    time_provider = f"time_{nonce}"
+    if by_role != {
+        "distractor": {
+            "name": f"{time_provider}_echo",
+            "providerId": time_provider,
+        },
+        "effect": {
+            "name": f"{filesystem_provider}_write_file",
+            "providerId": filesystem_provider,
+        },
+        "readback": {
+            "name": f"{filesystem_provider}_read_text_file",
+            "providerId": filesystem_provider,
+        },
+    }:
+        raise Tool01V2Error("catalog tool/provider namespace differs")
     return {"byRole": by_role, "sha256": _sha256(row)}
 
 

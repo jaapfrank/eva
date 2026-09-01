@@ -298,9 +298,10 @@ def _discovered_tools(token: str, nonce: str) -> dict[str, dict[str, Any]]:
         if (
             not isinstance(name, str)
             or _IDENTIFIER.fullmatch(name) is None
-            or not name.endswith(f"_{nonce}")
             or not isinstance(provider_id, str)
             or _IDENTIFIER.fullmatch(provider_id) is None
+            or not provider_id.endswith(f"_{nonce}")
+            or not name.startswith(f"{provider_id}_")
             or not isinstance(schema, dict)
             or not isinstance(row.get("description"), str)
             or not row["description"].strip()
