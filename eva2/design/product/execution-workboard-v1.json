@@ -6,7 +6,7 @@
   "commandWorkingDirectory": "eva2",
   "inventoryPath": "docs/eva-repository-inventory.generated.json",
   "humanBoardPath": "eva2/WERKBORD.md",
-  "activeTaskId": "RB-005",
+  "activeTaskId": "RB-006",
   "maxActiveImplementationTasks": 1,
   "statusValues": ["queued", "in_progress", "review", "done", "blocked"],
   "rules": [
@@ -240,8 +240,8 @@
       "area": "Releasebasis",
       "title": "Beide builds vergelijken",
       "outcome": "Config, lagen en runtime-inhoud zijn gelijk; bewijshergebruik faalt.",
-      "status": "in_progress",
-      "stateDetails": {"baseCommit": null, "implementationCommit": null, "evidenceCommit": null, "reviewEvidencePaths": [], "blockerReason": null},
+      "status": "done",
+      "stateDetails": {"baseCommit": "172c9b487ec1184082837ad9734e6361f48698b4", "implementationCommit": "72de385d2759c64db01b3e3d53dc54629f0a846f", "evidenceCommit": "1b56ac38adc252e53f5c26a847d4bd5c94f477fe", "reviewEvidencePaths": ["eva2/evidence/product/RB-005-two-builder-reproducibility-2026-09-01.json"], "blockerReason": null},
       "ownerRole": "releaselead",
       "reviewerRole": "proofreviewer",
       "dependsOn": ["RB-004"],
@@ -271,7 +271,7 @@
       "area": "Releasebasis",
       "title": "SBOM en kwetsbaarheden controleren",
       "outcome": "De exact door RB-005 gekozen kandidaat heeft een gebonden, niet-lege SBOM en nul hoge of kritieke kwetsbaarheden.",
-      "status": "queued",
+      "status": "in_progress",
       "stateDetails": {"baseCommit": null, "implementationCommit": null, "evidenceCommit": null, "reviewEvidencePaths": [], "blockerReason": null},
       "ownerRole": "releaselead",
       "reviewerRole": "proofreviewer",
@@ -295,10 +295,40 @@
         "De kandidaat wordt eenmaal geëxporteerd en hetzelfde alleen-lezen archief wordt zonder netwerk of pulls door gepinde Syft en Trivy gelezen; SPDX en scan zijn onveranderlijk hashgebonden.",
         "Hoge en kritieke bevindingen zijn beide exact nul; iedere mismatch, misvormde uitvoer of bevinding faalt gesloten en een onafhankelijke reviewer geeft GO."
       ]
+    },
+    {
+      "id": "RB-007",
+      "order": 70,
+      "area": "Releasebasis",
+      "title": "Alle verplichte testgroepen uitvoeren",
+      "outcome": "Iedere verzegelde testgroep slaagt op dezelfde commit.",
+      "status": "queued",
+      "stateDetails": {"baseCommit": null, "implementationCommit": null, "evidenceCommit": null, "reviewEvidencePaths": [], "blockerReason": null},
+      "ownerRole": "releaselead",
+      "reviewerRole": "proofreviewer",
+      "dependsOn": ["RB-006"],
+      "componentIds": ["operations-and-release-tests"],
+      "inventoryOwners": ["verification"],
+      "changePaths": [
+        "eva2/tools/run_managed_b_required_tests.py",
+        "eva2/tests/operations/test_run_managed_b_required_tests.py"
+      ],
+      "testCommands": [
+        "TMPDIR=/tmp TEMP=/tmp TMP=/tmp pytest -q tests/operations/test_run_managed_b_required_tests.py",
+        "ruff check tools/run_managed_b_required_tests.py tests/operations/test_run_managed_b_required_tests.py"
+      ],
+      "evidenceRequired": [
+        "Een private commitgebonden uitvoerreceipt bewijst dat alle 147 verzegelde uitvoerbare testmodules, verdeeld over exact zeven groepen en met alle 19 supportinputs uitsluitend als gebonden invoer, zonder failures, errors, skips of xfails zijn uitgevoerd tegen dezelfde door RB-005 gekozen en door RB-006 schoon bevonden kandidaatbron.",
+        "Onafhankelijke aanvalstests bewijzen dat de huidige checkout, een schrijfbare of verwisselde source tree, verkeerde sourceCommit of authority, een ander kandidaatimage, ontbrekende of dubbele collectie, gewijzigde invoer tijdens uitvoering en hergebruikt browserbewijs allemaal vóór een groen receipt falen."
+      ],
+      "doneWhen": [
+        "De runner accepteert uitsluitend een apart gematerialiseerde, alleen-lezen source tree waarvan sourceCommit en release-inputauthority exact overeenkomen met de door RB-005 gekozen kandidaat en het geslaagde RB-006-bewijs; de huidige checkout wordt nooit als testbron gebruikt.",
+        "Collectie en uitvoering dekken exact alle verzegelde modules in zeven niet-overlappende groepen, inclusief de fysieke browsersubgate en de vereiste afzonderlijke wegwerpdatabases, en iedere failure, error, skip, xfail, ontbrekende of extra test faalt gesloten zonder passing receipt.",
+        "Het passing receipt bindt kandidaatimage, sourceCommit, authorityhash, onveranderlijke source-snapshot, toolchains, wheelhouses, groepsresultaten en het RB-006-bewijs; een onafhankelijke reviewer geeft GO."
+      ]
     }
   ],
   "milestones": [
-    {"id": "RB-007", "order": 70, "area": "Releasebasis", "title": "Alle verplichte testgroepen uitvoeren", "outcome": "Iedere verzegelde testgroep slaagt op dezelfde commit."},
     {"id": "RB-008", "order": 80, "area": "Releasebasis", "title": "Volledige wegwerpstack testen", "outcome": "De stack migreert, antwoordt, onthoudt, herstart en ruimt op."},
     {"id": "RB-009", "order": 90, "area": "Releasebasis", "title": "Fysieke bewijsset beoordelen", "outcome": "Een onafhankelijke reviewer controleert de volledige releaseketen."},
     {"id": "RB-010", "order": 100, "area": "Releasebasis", "title": "A/B-besluit nemen", "outcome": "Alleen volledig groen mag naar het niet-actieve slot."},
@@ -398,6 +428,17 @@
       "reviewCommit": "14d33a94557bf0b0bdba497658b1c10eb660f8aa",
       "reviewedBy": "/root/proof_review",
       "testReceiptPaths": ["eva2/evidence/product/RB-004-builder-b-offline-admission-2026-09-01.json"]
+    },
+    "RB-005": {
+      "baseCommit": "172c9b487ec1184082837ad9734e6361f48698b4",
+      "commit": "72de385d2759c64db01b3e3d53dc54629f0a846f",
+      "decision": "GO",
+      "evidenceCommit": "1b56ac38adc252e53f5c26a847d4bd5c94f477fe",
+      "evidencePaths": ["eva2/reviews/RB-005-two-builder-reproducibility-72de385.md"],
+      "implementedBy": "/root/release_authority",
+      "reviewCommit": "fe18fbb8e9bf9c5b96bc8937afcd3ff873f2604f",
+      "reviewedBy": "/root/proof_review",
+      "testReceiptPaths": ["eva2/evidence/product/RB-005-two-builder-reproducibility-2026-09-01.json"]
     }
   }
 }

@@ -10,34 +10,34 @@ de volgende begint.
 
 | Volgorde | Kaart | Resultaat | Status |
 |---:|---|---|---|
-| 50 | `RB-005` — Beide builds vergelijken | Config, lagen en runtime-inhoud zijn gelijk; bewijshergebruik faalt. | 🟡 BEZIG |
-| 60 | `RB-006` — SBOM en kwetsbaarheden controleren | De exact door RB-005 gekozen kandidaat heeft een gebonden, niet-lege SBOM en nul hoge of kritieke kwetsbaarheden. | ⚪ HIERNA |
+| 60 | `RB-006` — SBOM en kwetsbaarheden controleren | De exact door RB-005 gekozen kandidaat heeft een gebonden, niet-lege SBOM en nul hoge of kritieke kwetsbaarheden. | 🟡 BEZIG |
+| 70 | `RB-007` — Alle verplichte testgroepen uitvoeren | Iedere verzegelde testgroep slaagt op dezelfde commit. | ⚪ HIERNA |
 
-### Exact werk voor `RB-005`
-
-- `eva2/tools/check_two_builder_reproducibility.py`
-- `eva2/tests/operations/test_two_builder_reproducibility.py`
-
-Klaar betekent:
-
-- Beide toegelaten builds verwijzen naar exact dezelfde verzegelde productbron en release-inputset.
-- OCI-config, ongecomprimeerde lagen en runtime-inhoud zijn bytegelijk terwijl de builderidentiteiten en bewijsuitdagingen verschillend blijven.
-- Een onafhankelijke reviewer geeft GO.
-
-Echte controles:
-
-- `TMPDIR=/tmp TEMP=/tmp TMP=/tmp pytest -q tests/operations/test_two_builder_reproducibility.py`
-- `ruff check tools/check_two_builder_reproducibility.py tests/operations/test_two_builder_reproducibility.py`
-
-### Daarna voorbereid: `RB-006`
+### Exact werk voor `RB-006`
 
 - `eva2/tools/managed_b_candidate/artifact_analysis.py`
 - `eva2/tests/operations/test_managed_b_artifact_analysis.py`
 
-Vooraf vastgelegde controles:
+Klaar betekent:
+
+- Alleen een geslaagd RB-005-bewijs wordt geaccepteerd; image-ID en kandidaatreceipthash moeten vóór export of scan overeenkomen.
+- De kandidaat wordt eenmaal geëxporteerd en hetzelfde alleen-lezen archief wordt zonder netwerk of pulls door gepinde Syft en Trivy gelezen; SPDX en scan zijn onveranderlijk hashgebonden.
+- Hoge en kritieke bevindingen zijn beide exact nul; iedere mismatch, misvormde uitvoer of bevinding faalt gesloten en een onafhankelijke reviewer geeft GO.
+
+Echte controles:
 
 - `TMPDIR=/tmp TEMP=/tmp TMP=/tmp pytest -q tests/operations/test_managed_b_artifact_analysis.py tests/operations/test_container_vulnerability_gate.py`
 - `ruff check tools/managed_b_candidate/artifact_analysis.py tests/operations/test_managed_b_artifact_analysis.py`
+
+### Daarna voorbereid: `RB-007`
+
+- `eva2/tools/run_managed_b_required_tests.py`
+- `eva2/tests/operations/test_run_managed_b_required_tests.py`
+
+Vooraf vastgelegde controles:
+
+- `TMPDIR=/tmp TEMP=/tmp TMP=/tmp pytest -q tests/operations/test_run_managed_b_required_tests.py`
+- `ruff check tools/run_managed_b_required_tests.py tests/operations/test_run_managed_b_required_tests.py`
 
 ## Daarna
 
@@ -46,7 +46,6 @@ nadat zij als eerstvolgende kleine kaart exacte bestanden en tests heeft.
 
 | Nr. | Onderdeel | Begrijpelijk eindresultaat |
 |---:|---|---|
-| 70 | `RB-007` — Alle verplichte testgroepen uitvoeren | Iedere verzegelde testgroep slaagt op dezelfde commit. |
 | 80 | `RB-008` — Volledige wegwerpstack testen | De stack migreert, antwoordt, onthoudt, herstart en ruimt op. |
 | 90 | `RB-009` — Fysieke bewijsset beoordelen | Een onafhankelijke reviewer controleert de volledige releaseketen. |
 | 100 | `RB-010` — A/B-besluit nemen | Alleen volledig groen mag naar het niet-actieve slot. |
