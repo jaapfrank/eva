@@ -1102,6 +1102,25 @@ def _failure_stage() -> str:
     return "setup"
 
 
+def _failure_identifier(value: object) -> str:
+    return (
+        value
+        if isinstance(value, str)
+        and re.fullmatch(r"[A-Za-z_][A-Za-z0-9_]{0,63}", value)
+        else "unknown"
+    )
+
+
+def _failure_origin(error: Exception) -> str:
+    traceback = error.__traceback__
+    if traceback is None:
+        return "unknown"
+    while traceback.tb_next is not None:
+        traceback = traceback.tb_next
+    name = traceback.tb_frame.f_code.co_name
+    return _failure_identifier(name)
+
+
 def _resume() -> int:
     _state_root(require_empty=False)
     run_id = _run_id()
@@ -1405,7 +1424,9 @@ def main() -> int:
     except Exception as error:
         failure = {
             "category": _failure_category(error),
-            "contract": "EvaTool01CandidateFailure/v1",
+            "contract": "EvaTool01CandidateFailure/v2",
+            "errorType": _failure_identifier(type(error).__name__),
+            "origin": _failure_origin(error),
             "phase": arguments.phase,
             "stage": _failure_stage(),
         }

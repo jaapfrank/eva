@@ -6,6 +6,7 @@ import hashlib
 import importlib.util
 import json
 from pathlib import Path
+import re
 import subprocess
 import sys
 from typing import Any
@@ -254,7 +255,9 @@ def test_stopped_p1_reports_only_a_sanitized_failure_category(
             json.dumps(
                 {
                     "category": "model_selection_differs",
-                    "contract": "EvaTool01CandidateFailure/v1",
+                    "contract": "EvaTool01CandidateFailure/v2",
+                    "errorType": "RuntimeError",
+                    "origin": "_start",
                     "phase": "start",
                     "stage": "model_selection",
                 }
@@ -266,7 +269,7 @@ def test_stopped_p1_reports_only_a_sanitized_failure_category(
     monkeypatch.setattr(physical_runner, "_run", run)
     with pytest.raises(
         physical_runner.PhysicalAcceptanceError,
-        match=r"\(model_selection_differs\)$",
+        match=r"\(model_selection_differs:RuntimeError:_start\)$",
     ):
         physical_runner._wait_marker(
             "p1", "effect-returned.json", failure_path=failure_path
@@ -274,6 +277,8 @@ def test_stopped_p1_reports_only_a_sanitized_failure_category(
     assert set(json.loads(failure_path.read_text(encoding="utf-8"))) == {
         "category",
         "contract",
+        "errorType",
+        "origin",
         "phase",
         "stage",
     }
@@ -362,6 +367,54 @@ def test_setup_failure_categories_cover_the_generic_provider_boundary() -> None:
     assert len(first_argument.args) == 1
     assert isinstance(first_argument.args[0], ast.Name)
     assert first_argument.args[0].id == "error"
+
+
+def test_candidate_failure_identifiers_are_sanitized_before_persistence() -> None:
+    tree = ast.parse(PRODUCER.read_text(encoding="utf-8"))
+    helper = next(
+        node
+        for node in tree.body
+        if isinstance(node, ast.FunctionDef) and node.name == "_failure_identifier"
+    )
+    namespace = {"re": re}
+    exec(compile(ast.Module(body=[helper], type_ignores=[]), "<failure-id>", "exec"), namespace)  # noqa: S102
+    sanitize = namespace["_failure_identifier"]
+    assert sanitize("RuntimeError") == "RuntimeError"
+    assert sanitize("x" * 65) == "unknown"
+    assert sanitize("secret=value") == "unknown"
+    assert sanitize(None) == "unknown"
+    producer_source = PRODUCER.read_text(encoding="utf-8")
+    assert '"errorType": _failure_identifier(type(error).__name__)' in producer_source
+    assert "return _failure_identifier(name)" in producer_source
+
+
+def test_host_rejects_an_unsanitized_candidate_failure_identifier(
+    monkeypatch, tmp_path: Path
+) -> None:
+    failure_path = tmp_path / "failure.json"
+    unsafe = "secret=value"
+
+    def run(command, *, check=True, input_bytes=None, timeout=120):
+        del check, input_bytes, timeout
+        failure_path.write_text(
+            json.dumps(
+                {
+                    "category": "unexpected_runtime_error",
+                    "contract": "EvaTool01CandidateFailure/v2",
+                    "errorType": unsafe,
+                    "origin": "_start",
+                    "phase": "start",
+                    "stage": "setup",
+                }
+            ),
+            encoding="utf-8",
+        )
+        return subprocess.CompletedProcess(command, 0, b"", b"")
+
+    monkeypatch.setattr(physical_runner, "_run", run)
+    result = physical_runner._candidate_failure_category("p1", failure_path)
+    assert result == "invalid"
+    assert unsafe not in result
 
 
 def _file_reference(path: Path, value: dict[str, Any]) -> dict[str, Any]:

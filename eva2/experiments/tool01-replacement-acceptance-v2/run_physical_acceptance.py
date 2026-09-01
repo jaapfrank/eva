@@ -1193,21 +1193,32 @@ def _candidate_failure_category(container: str, destination: Path) -> str:
     if result.returncode != 0:
         return "unavailable"
     value = _read_json(destination, label="candidate failure receipt")
-    if set(value) != {"category", "contract", "phase", "stage"} or value.get(
-        "contract"
-    ) != "EvaTool01CandidateFailure/v1":
+    if set(value) != {
+        "category",
+        "contract",
+        "errorType",
+        "origin",
+        "phase",
+        "stage",
+    } or value.get("contract") != "EvaTool01CandidateFailure/v2":
         return "invalid"
     category = value.get("category")
+    error_type = value.get("errorType")
+    origin = value.get("origin")
     phase = value.get("phase")
     stage = value.get("stage")
     if (
         not isinstance(category, str)
         or re.fullmatch(r"[a-z_]{3,64}", category) is None
+        or not isinstance(error_type, str)
+        or re.fullmatch(r"[A-Za-z_][A-Za-z0-9_]{0,63}", error_type) is None
+        or not isinstance(origin, str)
+        or re.fullmatch(r"[A-Za-z_][A-Za-z0-9_]{0,63}", origin) is None
         or phase != "start"
         or stage not in {"setup", "model_selection", "after_model_selection"}
     ):
         return "invalid"
-    return category
+    return f"{category}:{error_type}:{origin}"
 
 
 def _wait_marker(container: str, marker: str, *, failure_path: Path) -> None:
