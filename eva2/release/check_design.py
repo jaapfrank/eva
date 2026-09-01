@@ -50,7 +50,7 @@ DIRECT_PINS = {
     "openai": "3.6.0",
     "psycopg": "3.3.4",
     "pydantic": "2.12.5",
-    "pydantic-ai-slim": "2.36.0",
+    "pydantic-ai-slim": "2.37.0",
     "pynacl": "1.6.2",
     "setuptools": "84.0.0",
     "sqlalchemy": "2.0.52",
@@ -91,7 +91,7 @@ LOCKED_PINS = {
     "click": "8.4.2",
     "cryptography": "50.0.1",
     "fastapi": "0.141.1",
-    "genai-prices": "0.1.4",
+    "genai-prices": "0.1.5",
     "greenlet": "3.5.5",
     "griffelib": "2.2.0",
     "h11": "0.16.0",
@@ -108,9 +108,9 @@ LOCKED_PINS = {
     "psycopg-binary": "3.3.4",
     "pycparser": "3.0",
     "pydantic": "2.12.5",
-    "pydantic-ai-slim": "2.36.0",
+    "pydantic-ai-slim": "2.37.0",
     "pydantic-core": "2.41.5",
-    "pydantic-graph": "2.36.0",
+    "pydantic-graph": "2.37.0",
     "pynacl": "1.6.2",
     "sniffio": "1.3.1",
     "setuptools": "84.0.0",
@@ -286,21 +286,21 @@ def platform_gate(root: Path) -> dict[str, Any]:
 
     platform = safe_load(root, "eva2/release/platform-lock.json", errors, checked)
     if (
-        platform.get("contract") != "PlatformLock/v2"
-        or platform.get("schema_version") != 2
+        platform.get("contract") != "PlatformLock/v3"
+        or platform.get("schema_version") != 3
     ):
         issue(
             errors,
             "platform_contract",
             Path("eva2/release/platform-lock.json"),
-            "must be PlatformLock/v2 schema_version 2",
+            "must be PlatformLock/v3 schema_version 3",
         )
     expected_versions = {
         "python_version": "3.12.14",
         "postgres_version": "16.13",
         "dbos_version": "2.30.0",
         "pydantic_version": "2.12.5",
-        "pydantic_ai_slim_version": "2.36.0",
+        "pydantic_ai_slim_version": "2.37.0",
     }
     for field, expected in expected_versions.items():
         if platform.get(field) != expected:

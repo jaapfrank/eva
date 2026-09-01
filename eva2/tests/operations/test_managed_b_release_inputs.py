@@ -21,9 +21,85 @@ from tools.managed_b_candidate.release_inputs import (
     _validate_static_archive_inputs,
     prepare_managed_b_release_inputs,
 )
+from tools.reseal_managed_b_release_input_authority import _admit_contracts
 
 
 ROOT = Path(__file__).resolve().parents[2]
+
+
+def test_reseal_admits_one_explicit_current_contract_without_rewriting_history() -> (
+    None
+):
+    authority = {
+        "contractRegistry": {
+            "historical4d": {
+                "allowedCurrentAdditions": {"Existing/v2": "valid-existing-v2"},
+                "contractCount": 64,
+            }
+        }
+    }
+    manifest = {
+        "contractCount": 66,
+        "schemas": {"Existing/v2": "0" * 64, "PlatformLock/v3": "1" * 64},
+    }
+    corpus = {
+        "cases": [
+            {"caseId": "valid-existing-v2", "contract": "Existing/v2"},
+            {"caseId": "valid-platform-lock-v3", "contract": "PlatformLock/v3"},
+        ]
+    }
+
+    _admit_contracts(
+        authority=authority,
+        manifest=manifest,
+        corpus=corpus,
+        admissions=["PlatformLock/v3=valid-platform-lock-v3"],
+    )
+
+    assert authority["contractRegistry"]["historical4d"][  # type: ignore[index]
+        "allowedCurrentAdditions"
+    ] == {
+        "Existing/v2": "valid-existing-v2",
+        "PlatformLock/v3": "valid-platform-lock-v3",
+    }
+
+
+@pytest.mark.parametrize(
+    "admission",
+    (
+        "PlatformLock/v3",
+        "Unknown/v1=valid-platform-lock-v3",
+        "PlatformLock/v3=wrong-case",
+        "Existing/v2=valid-existing-v2",
+    ),
+)
+def test_reseal_refuses_an_unbound_or_duplicate_contract(admission: str) -> None:
+    authority = {
+        "contractRegistry": {
+            "historical4d": {
+                "allowedCurrentAdditions": {"Existing/v2": "valid-existing-v2"},
+                "contractCount": 64,
+            }
+        }
+    }
+    manifest = {
+        "contractCount": 66,
+        "schemas": {"Existing/v2": "0" * 64, "PlatformLock/v3": "1" * 64},
+    }
+    corpus = {
+        "cases": [
+            {"caseId": "valid-existing-v2", "contract": "Existing/v2"},
+            {"caseId": "valid-platform-lock-v3", "contract": "PlatformLock/v3"},
+        ]
+    }
+
+    with pytest.raises(RuntimeError, match="admitted managed-B contract"):
+        _admit_contracts(
+            authority=authority,
+            manifest=manifest,
+            corpus=corpus,
+            admissions=[admission],
+        )
 
 
 def _canonical(value: object) -> bytes:
@@ -243,7 +319,7 @@ def test_release_inputs_bind_current_registry_runtime_dependencies_and_migration
         "version_matched_runtime_dependency_inputs"
     )
     assert receipt["dependency_alignment"]["expected_wheel_count"] == 38
-    assert receipt["current_contract_count"] == 72
+    assert receipt["current_contract_count"] == 73
     assert receipt["historical_4d_contract_count"] == 64
     assert receipt["portable_v1_contract_count"] == 64
     assert receipt["cockpit_evidence_claim_count"] == 16
@@ -363,6 +439,7 @@ def test_release_inputs_bind_exact_current_additions_without_resealing_v1() -> N
         "IdentityPackDraft/v1",
         "McpReadOnlyToolImport/v1",
         "PlatformLock/v2",
+        "PlatformLock/v3",
     }
     files = _files(authority)
     assert (

@@ -300,7 +300,9 @@ def test_dashboard_page_serves_the_packaged_react_admin_candidate() -> None:
     assert response.headers["cache-control"] == "no-store"
     assert "connect-src 'self'" in response.headers["content-security-policy"]
     assert "script-src 'self'" in response.headers["content-security-policy"]
-    assert "script-src 'unsafe-inline'" not in response.headers["content-security-policy"]
+    assert (
+        "script-src 'unsafe-inline'" not in response.headers["content-security-policy"]
+    )
     assert response.headers["x-content-type-options"] == "nosniff"
 
     asset_urls = re.findall(r'(?:src|href)="([^"]+)"', response.text)
@@ -309,7 +311,9 @@ def test_dashboard_page_serves_the_packaged_react_admin_candidate() -> None:
     assets = [client.get(url) for url in asset_urls]
     assert all(asset.status_code == 200 for asset in assets)
     assert all("immutable" in asset.headers["cache-control"] for asset in assets)
-    javascript = next(asset.text for asset in assets if "javascript" in asset.headers["content-type"])
+    javascript = next(
+        asset.text for asset in assets if "javascript" in asset.headers["content-type"]
+    )
     assert "/internal/v1/dashboard/status" in javascript
     assert "/internal/v1/dashboard/identity" in javascript
     assert "/internal/v1/dashboard/workboard" in javascript
@@ -336,10 +340,13 @@ def test_dashboard_assets_are_exact_and_owner_gated() -> None:
     assert allowed.headers["x-content-type-options"] == "nosniff"
     assert allowed.headers["content-security-policy"] == "default-src 'none'"
     assert token not in allowed.text
-    assert client.get(
-        "/internal/v1/dashboard/assets/not-sealed.js",
-        headers={"authorization": f"Bearer {token}"},
-    ).status_code == 404
+    assert (
+        client.get(
+            "/internal/v1/dashboard/assets/not-sealed.js",
+            headers={"authorization": f"Bearer {token}"},
+        ).status_code
+        == 404
+    )
 
 
 def test_dashboard_people_memory_is_closed_read_only_and_non_identifying() -> None:
@@ -482,7 +489,12 @@ def test_dashboard_progress_separates_live_tested_selected_and_open_work() -> No
     dependency_by_name = {item["name"]: item for item in payload["dependencies"]}
     assert dependency_by_name["Pydantic AI"]["state"] == "tested"
     assert dependency_by_name["Pydantic AI"]["version"] == (
-        "hoofdbron 2.36.0; live/worker 2.32.1; OpenAI SDK 3.6.0"
+        "hoofdbron 2.37.0; live/worker 2.32.1; OpenAI SDK 3.6.0"
+    )
+    assert dependency_by_name["Pydantic AI"]["decision"] == (
+        "De actuele bronkandidaat gebruikt de minimale 2.37.0-kern. De laatste "
+        "offline gebouwde, scan- en crashbeproefde kandidaat gebruikt 2.36.0; "
+        "live en de afzonderlijke worker draaien nog 2.32.1."
     )
     assert dependency_by_name["Pydantic AI Harness"]["version"] == "0.25.0 kandidaat"
     assert dependency_by_name["Microsoft Playwright MCP"]["state"] == "tested"
@@ -662,9 +674,7 @@ def test_dashboard_identity_diff_previews_a_bound_staged_draft_without_storing_i
 
     response = TestClient(
         create_app(_Runtime(), dashboard_identity_loader=load_current_identity_pack)
-    ).post(
-        "/internal/v1/dashboard/identity/diff", json=_identity_draft()
-    )
+    ).post("/internal/v1/dashboard/identity/diff", json=_identity_draft())
 
     assert response.status_code == 200
     assert response.headers["cache-control"] == "no-store"

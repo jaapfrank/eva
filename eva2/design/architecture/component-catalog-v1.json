@@ -81,9 +81,9 @@
       "upstream": {
         "status": "adopted",
         "name": "Pydantic AI",
-        "version": "2.36.0",
+        "version": "2.37.0",
         "url": "https://github.com/pydantic/pydantic-ai",
-        "reviewedOn": "2026-08-31"
+        "reviewedOn": "2026-09-01"
       },
       "replacement": {
         "status": "retained",

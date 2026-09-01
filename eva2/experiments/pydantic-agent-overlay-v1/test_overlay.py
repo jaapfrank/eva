@@ -37,7 +37,11 @@ def _requirement(name: str, version: str, digest: str) -> str:
     return f"{name}=={version} {chr(92)}\n    --hash=sha256:{digest}"
 
 
-def test_committed_overlay_is_exactly_three_replacements_over_live_lock() -> None:
+def test_committed_overlay_is_exactly_three_replacements_over_frozen_236() -> None:
+    assert checker.BASE_LOCK.name == "requirements-4d-baseline-2.36.lock"
+    assert hashlib.sha256(checker.BASE_LOCK.read_bytes()).hexdigest() == (
+        "204fefe5052a2f457b8a12aece51ca675520bb250bf97771a69a7e22e14c81c5"
+    )
     receipt = checker.inspect_overlay(*_inputs())
     assert receipt == {
         "contract": "Eva2PydanticAgentOverlayInspection/v1",

@@ -66,7 +66,9 @@ class _CancelledModel(Model):
         yield  # pragma: no cover
 
 
-def _response(text: str, *, status: str = "completed") -> dict[str, Any]:
+def _response(
+    text: str, *, status: str = "completed", reasoning_tokens: int = 0
+) -> dict[str, Any]:
     return {
         "id": "resp_shared_1",
         "object": "response",
@@ -96,16 +98,24 @@ def _response(text: str, *, status: str = "completed") -> dict[str, Any]:
             "input_tokens": 17,
             "input_tokens_details": {"cached_tokens": 0},
             "output_tokens": 7,
-            "output_tokens_details": {"reasoning_tokens": 0},
+            "output_tokens_details": {"reasoning_tokens": reasoning_tokens},
             "total_tokens": 24,
         },
     }
 
 
-def _sse(text: str, *, duplicate_completion: bool = False) -> list[bytes]:
+def _sse(
+    text: str,
+    *,
+    duplicate_completion: bool = False,
+    reasoning_tokens: int = 0,
+) -> list[bytes]:
     created = _response(text, status="in_progress")
     created["output"] = []
-    completed = {"type": "response.completed", "response": _response(text)}
+    completed = {
+        "type": "response.completed",
+        "response": _response(text, reasoning_tokens=reasoning_tokens),
+    }
     events = [
         {"type": "response.created", "response": created},
         {
@@ -209,6 +219,38 @@ def test_true_stream_has_one_raw_usage_attestation_and_rotates_access_token(
             "type": "message",
         }
     ]
+
+
+def test_nonzero_reasoning_tokens_do_not_change_attested_top_level_usage() -> None:
+    async def respond(request: httpx2.Request) -> httpx2.Response:
+        return httpx2.Response(
+            200,
+            headers={"content-type": "text/event-stream"},
+            stream=_Chunks(_sse("REDENERING", reasoning_tokens=5)),
+            request=request,
+        )
+
+    async def run() -> None:
+        provider = OpenAICodexProvider(
+            _settings(),
+            credential_loader=lambda: ("access-a", "account-a"),
+            network_transport=httpx2.MockTransport(respond),
+        )
+        async with provider as session:
+            result = await Agent(session.model, retries=0).run(
+                "Antwoord exact REDENERING.",
+                instructions="Volg exact de gebruikersopdracht.",
+                output_type=str,
+                event_stream_handler=lambda _ctx, events: _drain(events),
+                usage_limits=UsageLimits(request_limit=1),
+            )
+            assert result.output == "REDENERING"
+            assert result.usage.input_tokens == 17
+            assert result.usage.output_tokens == 7
+            assert result.usage.total_tokens == 24
+            assert session.consume_raw_usage() == RawUsageAttestation(17, 7, 24)
+
+    asyncio.run(run())
 
 
 def test_duplicate_raw_completion_is_a_sanitized_protocol_failure() -> None:

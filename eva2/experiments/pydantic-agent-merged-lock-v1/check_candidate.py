@@ -1,4 +1,4 @@
-"""Validate the full 38-distribution Pydantic AI 2.36 candidate lock."""
+"""Replay the historical 2.32-to-2.36 merged-lock candidate."""
 
 from __future__ import annotations
 
@@ -10,12 +10,11 @@ import stat
 from typing import Any
 
 
-EVA2 = Path(__file__).resolve().parents[2]
 HERE = Path(__file__).resolve().parent
-PRODUCT_LOCK = EVA2 / "requirements-4d.lock"
+PRODUCT_LOCK = HERE / "requirements-4d-baseline-2.32.lock"
 CANDIDATE_LOCK = HERE / "requirements-4d-candidate.lock"
 AUTHORITY = HERE / "wheelhouse-authority.json"
-COVERAGE = EVA2 / "release/managed-b-wheel-coverage-4d-amd64-v1.json"
+COVERAGE = HERE / "managed-b-wheel-coverage-2.32-amd64.json"
 PIN = re.compile(r"^([A-Za-z0-9_.-]+)==([^\s\\]+)(?:\s*\\)?$")
 HASH = re.compile(r"--hash=sha256:([0-9a-f]{64})(?:\s*\\)?$")
 FORBIDDEN = {"fastmcp", "fastmcp-slim", "httpcore", "httpx", "mcp"}
@@ -125,6 +124,32 @@ def inspect_candidate(
         raise CandidateError("authority contract differs")
     if authority.get("status") != "experimental_merged_lock_not_product_release":
         raise CandidateError("candidate is not explicitly experimental")
+    if authority.get("productLock") != {
+        "packageCount": 38,
+        "path": (
+            "eva2/experiments/pydantic-agent-merged-lock-v1/"
+            "requirements-4d-baseline-2.32.lock"
+        ),
+        "sha256": _sha(product_raw),
+    }:
+        raise CandidateError("historical baseline authority differs")
+    if authority.get("baselineCoverage") != {
+        "path": (
+            "eva2/experiments/pydantic-agent-merged-lock-v1/"
+            "managed-b-wheel-coverage-2.32-amd64.json"
+        ),
+        "sha256": _sha(coverage_raw),
+    }:
+        raise CandidateError("historical coverage authority differs")
+    if authority.get("candidateLock") != {
+        "packageCount": 38,
+        "path": (
+            "eva2/experiments/pydantic-agent-merged-lock-v1/"
+            "requirements-4d-candidate.lock"
+        ),
+        "sha256": _sha(candidate_raw),
+    }:
+        raise CandidateError("historical candidate authority differs")
     if _sha(product_raw) != authority["productLock"]["sha256"]:
         raise CandidateError("product lock digest differs")
     if _sha(candidate_raw) != authority["candidateLock"]["sha256"]:

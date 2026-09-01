@@ -228,14 +228,14 @@ def test_committed_v2_manifest_is_the_exact_sealed_runtime_dependency_delta() ->
         "network_used": False,
         "requirements_lock_path": "requirements-4d.lock",
         "requirements_lock_sha256": (
-            "204fefe5052a2f457b8a12aece51ca675520bb250bf97771a69a7e22e14c81c5"
+            "88b5095e87596b80a84c591682723647665c49cbde924fe7931207455fa4b2f2"
         ),
         "selected_manifest_sha256": (
-            "e64f3b7beab50396f2140dca0a86072c9fc92ad5ae19e85a5782ca07a3a58291"
+            "2e16c5b44dbe853222c016a52273977f06560887379b4041b00edf34511cacd8"
         ),
         "status": "version_matched_runtime_dependency_inputs",
         "wheelhouse_tree_sha256": (
-            "b7b7daa58c350f55204f6863b1153a4b8058ce85186069c4183fcbb6b6918c6c"
+            "0f2a6e34de884571f2968080df3ae86fd64e49836e391d2d54f4d50dace911d8"
         ),
     }
     assert hashlib.sha256(inputs[3]).hexdigest() == (
@@ -243,7 +243,9 @@ def test_committed_v2_manifest_is_the_exact_sealed_runtime_dependency_delta() ->
     )
 
 
-def test_committed_runtime_lock_promotes_only_the_two_pydantic_distributions() -> None:
+def test_committed_runtime_lock_promotes_only_the_three_pydantic_distributions() -> (
+    None
+):
     root = Path(__file__).resolve().parents[2]
     lock = (root / "requirements-4d.lock").read_text(encoding="utf-8")
     pins = {
@@ -253,8 +255,9 @@ def test_committed_runtime_lock_promotes_only_the_two_pydantic_distributions() -
     }
 
     assert len(pins) == 38
-    assert pins["pydantic-ai-slim"] == "2.36.0"
-    assert pins["pydantic-graph"] == "2.36.0"
+    assert pins["genai-prices"] == "0.1.5"
+    assert pins["pydantic-ai-slim"] == "2.37.0"
+    assert pins["pydantic-graph"] == "2.37.0"
     assert {"fastmcp", "fastmcp-slim", "httpcore", "httpx", "mcp"}.isdisjoint(pins)
     assert pins["httpcore2"] == "2.12.0"
     assert pins["httpx2"] == "2.12.0"
@@ -262,8 +265,9 @@ def test_committed_runtime_lock_promotes_only_the_two_pydantic_distributions() -
     gate_toolchain = json.loads(
         (root / "release" / "gate-toolchain.lock.json").read_text(encoding="utf-8")
     )["requiredDistributions"]
-    assert gate_toolchain["pydantic-ai-slim"] == "2.36.0"
-    assert gate_toolchain["pydantic-graph"] == "2.36.0"
+    assert gate_toolchain["genai-prices"] == "0.1.5"
+    assert gate_toolchain["pydantic-ai-slim"] == "2.37.0"
+    assert gate_toolchain["pydantic-graph"] == "2.37.0"
     assert {"fastmcp", "fastmcp-slim", "httpcore", "httpx", "mcp"}.isdisjoint(
         gate_toolchain
     )

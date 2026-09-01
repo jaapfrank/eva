@@ -1547,6 +1547,15 @@ def valid_examples() -> dict[str, dict[str, Any]]:
         }
     )
     add("valid-platform-lock-v2", platform_lock_v2)
+    platform_lock_v3 = deepcopy(platform_lock)
+    platform_lock_v3.update(
+        {
+            **_meta("PlatformLock/v3"),
+            "lock_id": "platform-lock:4a:003",
+            "pydantic_ai_slim_version": "2.37.0",
+        }
+    )
+    add("valid-platform-lock-v3", platform_lock_v3)
     add("valid-policy-pack", policy)
     add("valid-presence-context", presence_context)
     add(
@@ -3276,6 +3285,7 @@ def _apply_schema_cross_field_rules(
     if contract_name not in {
         "PlatformLock/v1",
         "PlatformLock/v2",
+        "PlatformLock/v3",
         "InstallationManifest/v1",
         "PromotionDecision/v1",
     }:
@@ -3453,6 +3463,7 @@ HOST_CONFORMANCE_RULES = {
     ],
     "PlatformLock/v1": ["target set equals the sealed platform matrix"],
     "PlatformLock/v2": ["target set equals the sealed platform matrix"],
+    "PlatformLock/v3": ["target set equals the sealed platform matrix"],
     "PresenceContext/v1": [
         "embedded IdentityPack hash and relationship/consent scope equal the enclosing context"
     ],

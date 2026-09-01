@@ -27,7 +27,12 @@ from eva.contracts.planning import (
     PresenceContext,
     PresenceReply,
 )
-from eva.contracts.platform import EvaPortableArchive, PlatformLock, PlatformLockV2
+from eva.contracts.platform import (
+    EvaPortableArchive,
+    PlatformLock,
+    PlatformLockV2,
+    PlatformLockV3,
+)
 
 H = "0" * 64
 NOW = "2026-08-20T12:00:00Z"
@@ -597,6 +602,8 @@ def test_platform_and_export_contracts_forbid_claim_inflation() -> None:
     assert platform_schema["additionalProperties"] is False
     platform_v2_schema = PlatformLockV2.model_json_schema()
     assert platform_v2_schema["additionalProperties"] is False
+    platform_v3_schema = PlatformLockV3.model_json_schema()
+    assert platform_v3_schema["additionalProperties"] is False
     archive_schema = EvaPortableArchive.model_json_schema()
     false_only = archive_schema["properties"]["credentials_included"]
     assert false_only["const"] is False
@@ -639,7 +646,7 @@ def test_4a_platform_fixture_is_design_only_and_contains_no_receipts_or_images()
         PlatformLock.model_validate(future_dependency)
 
 
-def test_platform_lock_v2_binds_the_current_main_runtime_dependency() -> None:
+def test_platform_lock_v2_preserves_the_historical_main_runtime_dependency() -> None:
     corpus = json.loads(
         (EVA2_ROOT / "schemas" / "contracts" / "contract-corpus-v1.json").read_bytes()
     )
@@ -653,3 +660,19 @@ def test_platform_lock_v2_binds_the_current_main_runtime_dependency() -> None:
     stale_dependency["pydantic_ai_slim_version"] = "2.32.1"
     with pytest.raises(ValidationError):
         PlatformLockV2.model_validate(stale_dependency)
+
+
+def test_platform_lock_v3_binds_the_current_main_runtime_dependency() -> None:
+    corpus = json.loads(
+        (EVA2_ROOT / "schemas" / "contracts" / "contract-corpus-v1.json").read_bytes()
+    )
+    case = next(
+        item for item in corpus["cases"] if item["caseId"] == "valid-platform-lock-v3"
+    )
+    payload = json.loads(case["wireUtf8"])
+    lock = PlatformLockV3.model_validate(payload)
+    assert lock.pydantic_ai_slim_version == "2.37.0"
+    historical_dependency = deepcopy(payload)
+    historical_dependency["pydantic_ai_slim_version"] = "2.36.0"
+    with pytest.raises(ValidationError):
+        PlatformLockV3.model_validate(historical_dependency)

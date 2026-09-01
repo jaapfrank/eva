@@ -5,7 +5,7 @@ from pathlib import Path
 
 import pytest
 
-from eva.contracts.platform import PlatformLock, PlatformLockV2
+from eva.contracts.platform import PlatformLock, PlatformLockV2, PlatformLockV3
 from eva.operations.installer_preflight import (
     HostFacts,
     InstallerPreflightError,
@@ -18,8 +18,8 @@ from eva.operations.installer_preflight import (
 ROOT = Path(__file__).resolve().parents[2]
 
 
-def _lock() -> PlatformLockV2:
-    return PlatformLockV2.model_validate_json(
+def _lock() -> PlatformLockV3:
+    return PlatformLockV3.model_validate_json(
         (ROOT / "release/platform-lock.json").read_bytes()
     )
 
@@ -42,8 +42,13 @@ def test_selected_platform_lock_stops_before_any_installation_claim() -> None:
     assert receipt["contract"] == "EvaInstallerPreflight/v1"
     assert receipt["read_only"] is True
     assert receipt["status"] == "blocked"
-    assert receipt["next"] == "Er is niets geïnstalleerd of gewijzigd. Los eerst de geblokkeerde controle op."
-    support = next(item for item in receipt["checks"] if item["id"] == "release_support")
+    assert (
+        receipt["next"]
+        == "Er is niets geïnstalleerd of gewijzigd. Los eerst de geblokkeerde controle op."
+    )
+    support = next(
+        item for item in receipt["checks"] if item["id"] == "release_support"
+    )
     assert support == {
         "id": "release_support",
         "state": "blocked",
@@ -57,7 +62,12 @@ def test_selected_platform_lock_stops_before_any_installation_claim() -> None:
         (_facts(python_version="3.12.13"), "python"),
         (_facts(operating_system="Ubuntu 24.04.4 LTS"), "host"),
         (_facts(docker_version="29.7.1"), "container_engine"),
-        (_facts(docker_version=None, docker_error="Docker Engine is niet beschikbaar"), "container_engine"),
+        (
+            _facts(
+                docker_version=None, docker_error="Docker Engine is niet beschikbaar"
+            ),
+            "container_engine",
+        ),
     ],
 )
 def test_preflight_explains_the_exact_blocking_local_requirement(
@@ -86,7 +96,7 @@ def test_preflight_can_only_be_ready_for_a_validated_release_target() -> None:
         image["image_digest"] = "sha256:" + "b" * 64
         image["sbom_sha256"] = "c" * 64
 
-    receipt = preflight(PlatformLockV2.model_validate(value), _facts())
+    receipt = preflight(PlatformLockV3.model_validate(value), _facts())
 
     assert receipt["status"] == "ready"
     assert receipt["next"] == "De lokale wizard mag starten."
@@ -121,6 +131,25 @@ def test_platform_lock_loader_refuses_the_historical_v1_contract(
         load_platform_lock(path)
 
 
+def test_platform_lock_loader_refuses_the_historical_v2_contract(
+    tmp_path: Path,
+) -> None:
+    value = json.loads((ROOT / "release/platform-lock.json").read_text())
+    value.update(
+        {
+            "contract": "PlatformLock/v2",
+            "schema_version": 2,
+            "pydantic_ai_slim_version": "2.36.0",
+        }
+    )
+    PlatformLockV2.model_validate(value)
+    path = tmp_path / "platform-lock-v2.json"
+    path.write_text(json.dumps(value))
+
+    with pytest.raises(InstallerPreflightError, match="platform lock is invalid"):
+        load_platform_lock(path)
+
+
 def test_host_metadata_uses_a_regular_system_copy_when_etc_is_a_link(
     tmp_path: Path,
 ) -> None:
@@ -128,8 +157,6 @@ def test_host_metadata_uses_a_regular_system_copy_when_etc_is_a_link(
     system.write_text('PRETTY_NAME="Ubuntu Server 24.04.4 LTS"\n')
 
     assert (
-        _ubuntu_pretty_name(
-            Path("/etc/os-release"), system_os_release_path=system
-        )
+        _ubuntu_pretty_name(Path("/etc/os-release"), system_os_release_path=system)
         == "Ubuntu Server 24.04.4 LTS"
     )

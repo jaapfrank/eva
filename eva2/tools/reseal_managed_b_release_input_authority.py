@@ -68,6 +68,12 @@ def _arguments() -> argparse.Namespace:
         help="explicitly add one reviewed static release test path",
     )
     parser.add_argument(
+        "--admit-contract",
+        action="append",
+        default=[],
+        help="explicitly add CONTRACT=VALID_CORPUS_CASE to the current registry",
+    )
+    parser.add_argument(
         "--admit-cockpit-source",
         help="explicitly add CLAIM_ID=PATH to one existing cockpit claim",
     )
@@ -79,6 +85,57 @@ def _arguments() -> argparse.Namespace:
         ),
     )
     return parser.parse_args()
+
+
+def _admit_contracts(
+    *,
+    authority: dict[str, object],
+    manifest: dict[str, object],
+    corpus: dict[str, object],
+    admissions: list[str],
+) -> None:
+    registry = authority["contractRegistry"]
+    if not isinstance(registry, dict):
+        raise RuntimeError("managed-B contract registry is invalid")
+    historical = registry["historical4d"]
+    if not isinstance(historical, dict):
+        raise RuntimeError("managed-B historical contract registry is invalid")
+    additions = historical["allowedCurrentAdditions"]
+    schemas = manifest.get("schemas")
+    cases = corpus.get("cases")
+    if (
+        not isinstance(additions, dict)
+        or not isinstance(schemas, dict)
+        or not isinstance(cases, list)
+    ):
+        raise RuntimeError("current contract registry inputs are invalid")
+    for admission in admissions:
+        contract, separator, case_id = admission.partition("=")
+        matching_cases = [
+            case
+            for case in cases
+            if isinstance(case, dict)
+            and case.get("caseId") == case_id
+            and case.get("contract") == contract
+        ]
+        if (
+            not separator
+            or not contract
+            or not case_id
+            or contract in additions
+            or contract not in schemas
+            or len(matching_cases) != 1
+        ):
+            raise RuntimeError("admitted managed-B contract is invalid")
+        additions[contract] = case_id
+    count = historical.get("contractCount")
+    if (
+        isinstance(count, bool)
+        or not isinstance(count, int)
+        or count + len(additions) != manifest.get("contractCount")
+    ):
+        raise RuntimeError("managed-B admitted contract count differs")
+    historical["allowedCurrentAdditions"] = dict(sorted(additions.items()))
 
 
 def main() -> int:
@@ -116,7 +173,12 @@ def main() -> int:
         rows = authority[field]
         known = {row["path"] for row in rows}
         for path in admitted:
-            if path in known or not path or path.startswith("/") or ".." in Path(path).parts:
+            if (
+                path in known
+                or not path
+                or path.startswith("/")
+                or ".." in Path(path).parts
+            ):
                 raise RuntimeError("admitted managed-B authority path is invalid")
             rows.append({"path": path, "sha256": _sha256(path)})
             known.add(path)
@@ -182,12 +244,10 @@ def main() -> int:
     )
     cockpit_file.write_bytes(cockpit_payload)
     authority["requiredInputs"] = [
-        {"path": path, "sha256": _sha256(path)}
-        for path in input_paths
+        {"path": path, "sha256": _sha256(path)} for path in input_paths
     ]
     authority["requiredTests"] = [
-        {"path": path, "sha256": _sha256(path)}
-        for path in test_paths
+        {"path": path, "sha256": _sha256(path)} for path in test_paths
     ]
     revisions = {
         row["revision"]: row for row in authority["migrationAuthority"]["revisions"]
@@ -196,7 +256,9 @@ def main() -> int:
     current_revisions = set(revisions)
     missing_revisions = expected_revisions - current_revisions
     extra_revisions = current_revisions - expected_revisions
-    admitted = set() if arguments.admit_migration is None else {arguments.admit_migration}
+    admitted = (
+        set() if arguments.admit_migration is None else {arguments.admit_migration}
+    )
     if extra_revisions or missing_revisions != admitted:
         raise RuntimeError("managed-B migration authority differs before reseal")
     authority["migrationAuthority"]["revisions"] = [
@@ -210,6 +272,15 @@ def main() -> int:
     ]
     authority["migrationAuthority"]["head"] = _EXPECTED_MIGRATIONS[-1][0]
     manifest = json.loads((ROOT / "schemas/contracts/manifest.json").read_bytes())
+    corpus = json.loads(
+        (ROOT / "schemas/contracts/contract-corpus-v1.json").read_bytes()
+    )
+    _admit_contracts(
+        authority=authority,
+        manifest=manifest,
+        corpus=corpus,
+        admissions=arguments.admit_contract,
+    )
     authority["contractRegistry"]["currentContractCount"] = manifest["contractCount"]
     authority["contractRegistry"]["currentManifestSha256"] = _sha256(
         "schemas/contracts/manifest.json"

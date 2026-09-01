@@ -54,17 +54,22 @@ OPENAI_SDK_WHEELS = {
     ),
 }
 STOCK_PYDANTIC_AGENT_WHEELS = (
+    "genai_prices-0.1.4-py3-none-any.whl",
     "pydantic_ai_slim-2.32.1-py3-none-any.whl",
     "pydantic_graph-2.32.1-py3-none-any.whl",
 )
 PYDANTIC_AGENT_WHEELS = {
-    "pydantic_ai_slim-2.36.0-py3-none-any.whl": (
-        "90957c37c99d3bfbfab4be632b733bf50d563686fbfbf8a2e42b6c91a4fca877",
-        1548738,
+    "genai_prices-0.1.5-py3-none-any.whl": (
+        "5215706950decd833ce3527a9e1e745ad0dbdd35ce1b33ac1f7167699640b82a",
+        116330,
     ),
-    "pydantic_graph-2.36.0-py3-none-any.whl": (
-        "c0c7cddb87038298b367036d799b4b605b2a23858869b2b661706df6e1b811f2",
-        52700,
+    "pydantic_ai_slim-2.37.0-py3-none-any.whl": (
+        "439973ce2dae1e64631b05b803743fe44b3b1791514b16488c005b1ca4f2b3e7",
+        1552945,
+    ),
+    "pydantic_graph-2.37.0-py3-none-any.whl": (
+        "7b07237264b92f57aa06b1686315005e320099106534fc20da4081873f68c31f",
+        52701,
     ),
 }
 CRYPTOGRAPHY50_AMD64_ARTIFACT = (
@@ -440,25 +445,29 @@ def inspect_runtime_dependency_alignment(
     pynacl = dependencies.get("pynacl")
     websockets = dependencies.get("websockets")
     openai = dependencies.get("openai")
+    genai_prices = dependencies.get("genai-prices")
     pydantic_ai = dependencies.get("pydantic-ai-slim")
     pydantic_graph = dependencies.get("pydantic-graph")
     if (
         set(dependencies)
         != {
             "openai",
+            "genai-prices",
             "pydantic-ai-slim",
             "pydantic-graph",
             "pynacl",
             "websockets",
         }
         or not isinstance(openai, dict)
+        or not isinstance(genai_prices, dict)
         or not isinstance(pydantic_ai, dict)
         or not isinstance(pydantic_graph, dict)
         or not isinstance(pynacl, dict)
         or not isinstance(websockets, dict)
         or openai.get("version") != "3.6.0"
-        or pydantic_ai.get("version") != "2.36.0"
-        or pydantic_graph.get("version") != "2.36.0"
+        or genai_prices.get("version") != "0.1.5"
+        or pydantic_ai.get("version") != "2.37.0"
+        or pydantic_graph.get("version") != "2.37.0"
         or pynacl.get("version") != "1.6.2"
         or websockets.get("version") != "17.0.1"
         or binding.get("removedDistributions")

@@ -11,6 +11,7 @@ from .base import (
     ContractModel,
     Version1Contract,
     Version2Contract,
+    Version3Contract,
 )
 from .canonical_json import (
     DuplicateKeyError,
@@ -34,6 +35,7 @@ __all__ = [
     "DuplicateKeyError",
     "Version1Contract",
     "Version2Contract",
+    "Version3Contract",
     "canonical_json_bytes",
     "canonical_sha256",
     "decode_json_bytes",

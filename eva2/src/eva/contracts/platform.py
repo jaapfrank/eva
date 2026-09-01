@@ -16,6 +16,7 @@ from .base import (
     Timestamp,
     Version1Contract,
     Version2Contract,
+    Version3Contract,
 )
 
 
@@ -120,7 +121,34 @@ class PlatformLockV2(Version2Contract):
         return self
 
 
-def _check_platform_lock_claims(lock: PlatformLock | PlatformLockV2) -> None:
+class PlatformLockV3(Version3Contract):
+    """Current platform lock without rewriting the sealed v1/v2 dependency sets."""
+
+    contract: Literal["PlatformLock/v3"]
+    lock_id: Identifier
+    claim_state: Literal["selected_for_validation", "validated"]
+    python_version: str = Field(pattern=r"^3\.12\.14$", min_length=7, max_length=7)
+    postgres_version: str = Field(pattern=r"^16\.13$", min_length=5, max_length=5)
+    dbos_version: str = Field(pattern=r"^2\.30\.0$", min_length=6, max_length=6)
+    pydantic_version: str = Field(pattern=r"^2\.12\.5$", min_length=6, max_length=6)
+    pydantic_ai_slim_version: str = Field(
+        pattern=r"^2\.37\.0$", min_length=6, max_length=6
+    )
+    tier1_targets: list[PlatformTarget] = Field(min_length=2, max_length=2)
+    compatibility_targets: list[PlatformTarget] = Field(min_length=3, max_length=3)
+    oci_images: list[OciImageLock] = Field(min_length=1, max_length=64)
+    mutable_image_tags_allowed: Literal[False]
+    generated_at: Timestamp
+
+    @model_validator(mode="after")
+    def _validate_claims(self) -> "PlatformLockV3":
+        _check_platform_lock_claims(self)
+        return self
+
+
+def _check_platform_lock_claims(
+    lock: PlatformLock | PlatformLockV2 | PlatformLockV3,
+) -> None:
     expected_tier1 = {
         (
             "Ubuntu Server 24.04.4 LTS",
@@ -180,8 +208,7 @@ def _check_platform_lock_claims(lock: PlatformLock | PlatformLockV2) -> None:
     ):
         raise ValueError("validated release lock requires both Tier 1 receipts")
     if any(
-        target.support_status != "unsupported"
-        for target in lock.compatibility_targets
+        target.support_status != "unsupported" for target in lock.compatibility_targets
     ):
         raise ValueError(
             f"{lock.contract.removeprefix('PlatformLock/')} makes no "

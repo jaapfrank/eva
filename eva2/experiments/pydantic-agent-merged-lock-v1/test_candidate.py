@@ -39,6 +39,14 @@ def _authority_for(candidate: bytes, authority_raw: bytes) -> bytes:
 
 
 def test_committed_full_candidate_retains_exact_38_distribution_set() -> None:
+    assert checker.PRODUCT_LOCK.name == "requirements-4d-baseline-2.32.lock"
+    assert hashlib.sha256(checker.PRODUCT_LOCK.read_bytes()).hexdigest() == (
+        "ce92ff9385c0b708ea0596b4cbfdfe5473379a744d1eb3dc6c1080959d17334f"
+    )
+    assert checker.COVERAGE.name == "managed-b-wheel-coverage-2.32-amd64.json"
+    assert hashlib.sha256(checker.COVERAGE.read_bytes()).hexdigest() == (
+        "0eceb7bce89a847680cccf8c0a12a82fc6a3cbe3701f1dc0d1ea09c413ac382c"
+    )
     receipt = checker.inspect_candidate(*_inputs())
     assert receipt == {
         "contract": "Eva2PydanticAgentMergedLockInspection/v1",
@@ -98,10 +106,28 @@ def test_candidate_refuses_previous_69_package_lock() -> None:
 
 def test_candidate_refuses_product_or_coverage_drift() -> None:
     product, candidate, authority, coverage = _inputs()
-    with pytest.raises(checker.CandidateError, match="product lock digest"):
+    with pytest.raises(checker.CandidateError, match="historical baseline authority"):
         checker.inspect_candidate(product + b"\n", candidate, authority, coverage)
-    with pytest.raises(checker.CandidateError, match="coverage digest"):
+    with pytest.raises(checker.CandidateError, match="historical coverage authority"):
         checker.inspect_candidate(product, candidate, authority, coverage + b"\n")
+
+
+@pytest.mark.parametrize(
+    ("binding", "path"),
+    (
+        ("productLock", "eva2/requirements-4d.lock"),
+        (
+            "baselineCoverage",
+            "eva2/release/managed-b-wheel-coverage-4d-amd64-v1.json",
+        ),
+    ),
+)
+def test_candidate_refuses_rebinding_to_active_inputs(binding: str, path: str) -> None:
+    product, candidate, authority_raw, coverage = _inputs()
+    authority = json.loads(authority_raw)
+    authority[binding]["path"] = path
+    with pytest.raises(checker.CandidateError, match="historical .* authority"):
+        checker.inspect_candidate(product, candidate, _canonical(authority), coverage)
 
 
 def test_wheelhouse_validator_refuses_missing_extra_and_changed_bytes(

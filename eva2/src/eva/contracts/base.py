@@ -220,3 +220,9 @@ class Version2Contract(ContractModel):
     """Required version metadata for an additive, non-v1-compatible wire shape."""
 
     schema_version: Literal[2]
+
+
+class Version3Contract(ContractModel):
+    """Required version metadata for an additive, non-v2-compatible wire shape."""
+
+    schema_version: Literal[3]

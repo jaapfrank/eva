@@ -20,7 +20,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Callable, Literal
 
-from eva.contracts.platform import PlatformLockV2, PlatformTarget
+from eva.contracts.platform import PlatformLockV3, PlatformTarget
 
 
 class InstallerPreflightError(RuntimeError):
@@ -64,13 +64,13 @@ def _regular_read(path: Path, *, label: str, maximum: int) -> bytes:
     return raw
 
 
-def load_platform_lock(path: Path) -> PlatformLockV2:
+def load_platform_lock(path: Path) -> PlatformLockV3:
     """Load one local, small, non-linked platform lock."""
 
     raw = _regular_read(path, label="platform lock", maximum=_MAX_PLATFORM_LOCK_BYTES)
     try:
         value = json.loads(raw)
-        return PlatformLockV2.model_validate(value)
+        return PlatformLockV3.model_validate(value)
     except ValueError as error:
         raise InstallerPreflightError("platform lock is invalid") from error
 
@@ -142,7 +142,7 @@ def inspect_host(
     )
 
 
-def _target(lock: PlatformLockV2, facts: HostFacts) -> PlatformTarget | None:
+def _target(lock: PlatformLockV3, facts: HostFacts) -> PlatformTarget | None:
     if facts.operating_system is None or facts.architecture is None:
         return None
     for candidate in lock.tier1_targets + lock.compatibility_targets:
@@ -155,12 +155,14 @@ def _target(lock: PlatformLockV2, facts: HostFacts) -> PlatformTarget | None:
     return None
 
 
-def preflight(lock: PlatformLockV2, facts: HostFacts) -> dict[str, object]:
+def preflight(lock: PlatformLockV3, facts: HostFacts) -> dict[str, object]:
     """Return a sanitized, fail-closed decision without making any change."""
 
     checks: list[dict[str, str]] = []
 
-    def check(identifier: str, state: Literal["passed", "blocked"], detail: str) -> None:
+    def check(
+        identifier: str, state: Literal["passed", "blocked"], detail: str
+    ) -> None:
         checks.append({"id": identifier, "state": state, "detail": detail})
 
     check(
@@ -178,8 +180,12 @@ def preflight(lock: PlatformLockV2, facts: HostFacts) -> dict[str, object]:
         if target is not None
         else "Deze computer is geen gekozen Eva-target",
     )
-    expected_engine = target.container_engine.removeprefix("Docker Engine ") if target else None
-    engine_ok = facts.docker_version is not None and facts.docker_version == expected_engine
+    expected_engine = (
+        target.container_engine.removeprefix("Docker Engine ") if target else None
+    )
+    engine_ok = (
+        facts.docker_version is not None and facts.docker_version == expected_engine
+    )
     check(
         "container_engine",
         "passed" if engine_ok else "blocked",
@@ -251,7 +257,9 @@ def main(argv: list[str] | None = None) -> int:
     except InstallerPreflightError as error:
         print(json.dumps({"status": "failed", "error": str(error)}, sort_keys=True))
         return 2
-    print(json.dumps(receipt, ensure_ascii=False, sort_keys=True, separators=(",", ":")))
+    print(
+        json.dumps(receipt, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
+    )
     return 0 if receipt["status"] == "ready" else 1
 
 

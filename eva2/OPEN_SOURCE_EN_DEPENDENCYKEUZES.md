@@ -1,6 +1,6 @@
 # Eva 2 — eerst hergebruiken, pas daarna zelf bouwen
 
-Bijgewerkt: 31 augustus 2026.
+Bijgewerkt: 1 september 2026.
 
 ## Het eerlijke antwoord
 
@@ -9,9 +9,10 @@ al konden**. Daardoor dreigde Eva delen zelf te bouwen die een onderhouden
 dependency of sidecar al beter en sneller kan leveren.
 
 Het duidelijkste voorbeeld staat al in de repository. De draaiende `/eva2`-
-image bevat nog `pydantic-ai-slim==2.32.1`, maar de actuele hoofdbron en
-releasekandidaat gebruiken `2.36.0` werkelijk voor de algemene agent- en
-toolloop. De oude modeltransportlaag is daar verwijderd. Het aparte
+image bevat nog `pydantic-ai-slim==2.32.1`. De laatste offline gebouwde,
+scan-schone kandidaat gebruikt `2.36.0`; de actuele bronkandidaat voor dezelfde
+algemene agent- en toolloop is `2.37.0`. De oude modeltransportlaag is daar
+verwijderd. Het aparte
 Harness `0.25.0` levert subagents, planning, browsergebruik, skills en
 contextbeheer.
 Tegelijk telt een kleine selectie van Eva's eigen action-chain-, API- en
@@ -44,7 +45,7 @@ chattransport, dashboards en update-scanners zijn hulpmiddelen rond die kern.
 
 | Onderdeel | Eerste hergebruikkeuze | Wat Eva nog toevoegt | Besluit |
 |---|---|---|---|
-| Modeltransport en gestructureerde antwoorden | Officiële OpenAI-SDK onder Pydantic AI Slim | Identiteit, persoonscontext, grants, duurzaam bewijs en antwoordbeleid | OpenAI SDK `3.6.0` draait live. In de actuele bronkandidaat gebruikt de gewone gesprekbootstrap Pydantic AI `2.36.0`; de oude transportklasse is verwijderd. De scan-schone kandidaat en crashproef zijn groen, maar A/B-livegang ontbreekt nog |
+| Modeltransport en gestructureerde antwoorden | Officiële OpenAI-SDK onder Pydantic AI Slim | Identiteit, persoonscontext, grants, duurzaam bewijs en antwoordbeleid | OpenAI SDK `3.6.0` draait live. De actuele bronkandidaat gebruikt Pydantic AI `2.37.0`; de oude transportklasse is verwijderd. De laatste scan-schone kandidaat en crashproef zijn met `2.36.0` groen; voor `2.37.0` ontbreken image, scan en A/B-livegang nog |
 | MCP-koppeling | Pydantic AI's native `MCPToolset`; ContextForge alleen als optionele gateway | Toegelaten persoon/scope, byte- en tijdslimieten, duurzame poging en readback | Een afzonderlijke providercontainer werd door de minimale client ontdekt en aangeroepen. `process_tool_call` onderschepte de call vóór provider-I/O; promotie wacht op verwijdering van de oude client/loop |
 | Home Assistant-skill | Eerst Home Assistants ingebouwde MCP Server voor basiscontext; voor historie/configuratie de community-sidecar `homeassistant-ai/ha-mcp` | Persoonsmandaat, toolallowlist, één duurzame poging en onafhankelijke controle achteraf | `ha-mcp` `v8.3.0` is exact gepind en lokaal read-only gestart; promotie vereist semantische pariteit, verwijdering van de oude uitvoerroute en precies één runtime-eigenaar |
 | Duurzame workflows en wachtrijen | DBOS blijft de bestaande workflowdependency; `2.31.0+eva.1` wordt de volgende proef | Eva-ledger voor intent, call-start, ambigu resultaat en readback | Stock `2.31.0` kan de kleine Eva-patch en workerledger niet veilig vervangen; rebase wel, blind upgraden niet |
@@ -67,10 +68,12 @@ chattransport, dashboards en update-scanners zijn hulpmiddelen rond die kern.
 Hergebruik betekent niet blind `latest` installeren.
 
 - De draaiende `/eva2`-image gebruikt nog `pydantic-ai-slim==2.32.1`. De
-  actuele hoofd-runtimebron, `pyproject.toml`, `requirements-4d.lock` en
-  `platform-lock.json` kiezen `2.36.0`. Die versie is niet stil toegevoegd:
-  zij doorliep echte model-, uitgestelde-tool-, hervat- en crashgevallen in
-  een netwerkloos gebouwde 38-distributie-image met een verse 0/0-scan. De
+  actuele hoofd-runtimebron en dependencylock kiezen `2.37.0`; het afzonderlijke
+  platformcontract en de releasepoort worden in dezelfde kandidaat naar v3
+  gebracht. De direct voorafgaande `2.36.0`-kandidaat doorliep echte model-,
+  uitgestelde-tool-, hervat- en crashgevallen in een netwerkloos gebouwde
+  38-distributie-image met een verse 0/0-scan. Dat historische bewijs wordt
+  niet als bewijs voor `2.37.0` hernoemd. De
   brede 69-distributiekandidaat met MCP-extra en een tweede HTTP-stack is
   afgewezen. De
   voicekandidaat
@@ -108,7 +111,7 @@ Hergebruik betekent niet blind `latest` installeren.
   release, commit, image-digest en licentie vastgezet voordat zij secrets of
   echte accounts zien.
 
-De actuele hoofdproefpins zijn: OpenAI Python `3.6.0`, Pydantic AI `2.36.0`,
+De actuele hoofdproefpins zijn: OpenAI Python `3.6.0`, Pydantic AI `2.37.0`,
 MCP Python SDK `2.1.1`, HA-MCP `v8.3.0` op OCI-index
 `sha256:38b3a0b6b6b69d3fd074f958fbf9653ae2d50c8727b4c0dcde640cfa3a638176`,
 Playwright MCP `0.0.79`, Harness `0.25.0`, React Admin
@@ -274,7 +277,7 @@ een concreet gat laat zien.
 
 | Project | Oordeel | Feitelijke onderhoudssignalen | Voorbehoud |
 |---|---|---|---|
-| Pydantic AI Slim `2.36.0` + OpenAI SDK `3.6.0` | `GO: minimale hoofd-runtimekandidaat, niet live` | De bestaande 38 distributies blijven 38; de gewone gesprekbootstrap gebruikt de publieke Pydantic-agentloop en de oude modeltransportlaag is verwijderd. Streaming, uitgestelde toolkeuze, hervatten, echte provider, fysieke proceskill en 0/0-scan zijn groen | De draaiende `/eva2`-image gebruikt nog `2.32.1`; veilige A/B-promotie en live regressie ontbreken |
+| Pydantic AI Slim `2.37.0` + OpenAI SDK `3.6.0` | `PROEF: minimale bronkandidaat, niet live` | De bestaande 38 distributies blijven 38; lock, exacte wheels en gerichte model-/gespreksregressies zijn groen | Offline image, SBOM, scan, echte provider-/tool-/crashpariteit en A/B ontbreken nog; het laatste volledige kandidaatbewijs hoort bij `2.36.0` en wordt niet doorgeschoven |
 | Pydantic AI Slim `2.32.1` + OpenAI SDK `3.6.0` | `GO: geïsoleerde bestaande delegated-work-worker` | De worker gebruikt PostgreSQL-handoff, lease, eenmalige call-start, resultaat, actieve stop, aparte kandidaatimage en read-only Kanban | Dit is een afzonderlijke legacy pin, niet de hoofd-runtime. Upgrade en productpromotie blijven apart |
 | Pydantic AI `2.34.0` + Harness `0.25.0` | `GO: geïsoleerde fork/join-kandidaat` | Harness voert de interactieve toolvrije en effectvrije fork/join-engine uit met gesloten context, calls, tokens en time-out | Nog niet de duurzame worker of productroute; koppeling aan Eva's identiteit, live provider, Telegram/B en productpromotie blijven afzonderlijk open |
 | DBOS Transact `2.31.0` | `NO-GO stock / GO rebaseproef` | MIT, actuele officiële release met de belangrijke duplicate-loserfix #823 en nul nieuwe basispackages | Stock behoudt onbegrensde transactieretry en kan na verloren commitbevestiging de body herhalen; Eva's smalle patch moet op 2.31 worden gerebased |
@@ -362,7 +365,7 @@ mag daarbij groeien voor aantoonbaar afzonderlijk nut.
   route met Eva's identiteit, access-only lease en usage. De exacte offline
   image, SBOM/scan, echte providerbeurt, data-upgrade en volledige
   nieuw→oud→nieuw A/B-cyclus zijn groen.
-- [ ] `DF02b` — Pydantic AI `2.36.0` mag de model- en MCP-toolloop alleen in één
+- [ ] `DF02b` — Pydantic AI `2.37.0` mag de model- en MCP-toolloop alleen in één
   aantoonbaar verwijderende diff overnemen. De 5/5 modelproef, minimale image,
   SBOM, verse 0/0-scan, externe providercall en callback vóór provider-I/O zijn
   groen. Er zijn 3.342 overlappende productregels gemeten, maar nog nul regels
@@ -412,7 +415,8 @@ zijn de nieuwe packages nog geen goedgekeurde productdependencies.
 
 ## Primaire bronnen
 
-- Pydantic AI actuele hoofdkandidaat `2.36.0`: <https://github.com/pydantic/pydantic-ai/tree/v2.36.0>
+- Pydantic AI actuele hoofdkandidaat `2.37.0`: <https://github.com/pydantic/pydantic-ai/tree/v2.37.0>
+- Pydantic AI laatste volledig gebouwde kandidaat `2.36.0`: <https://github.com/pydantic/pydantic-ai/tree/v2.36.0>
 - Pydantic AI bestaande delegated-worker `2.32.1`: <https://github.com/pydantic/pydantic-ai/tree/v2.32.1>
 - Pydantic AI actuele proefrelease `2.34.0`: <https://github.com/pydantic/pydantic-ai/releases/tag/v2.34.0>
 - Pydantic AI realtime-fix `2.32.2`: <https://github.com/pydantic/pydantic-ai/releases/tag/v2.32.2>

@@ -1,7 +1,7 @@
 """Fail-closed checker for the isolated Pydantic AI 2.37 overlay.
 
 The overlay is deliberately not a standalone runtime lock.  It replaces three
-already-present distributions in the sealed ``requirements-4d.lock`` baseline
+already-present distributions in the frozen historical 2.36 baseline
 and is installed with ``--no-deps`` from exactly three wheel bytes.  This module
 does not install anything and does not import product code.
 """
@@ -19,9 +19,8 @@ from typing import Any
 import zipfile
 
 
-EVA2_ROOT = Path(__file__).resolve().parents[2]
 EXPERIMENT_ROOT = Path(__file__).resolve().parent
-BASE_LOCK = EVA2_ROOT / "requirements-4d.lock"
+BASE_LOCK = EXPERIMENT_ROOT / "requirements-4d-baseline-2.36.lock"
 OVERLAY_LOCK = EXPERIMENT_ROOT / "requirements-overlay.lock"
 AUTHORITY = EXPERIMENT_ROOT / "wheelhouse-authority.json"
 
@@ -296,7 +295,10 @@ def _validate_authority_shape(
         raise OverlayError("overlay requirements lock digest differs")
     if authority["baseLock"] != {
         "packageCount": 38,
-        "path": "eva2/requirements-4d.lock",
+        "path": (
+            "eva2/experiments/pydantic-agent-overlay-v1/"
+            "requirements-4d-baseline-2.36.lock"
+        ),
         "sha256": _sha256(base_raw),
     }:
         raise OverlayError("base lock authority differs")

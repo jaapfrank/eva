@@ -39,10 +39,10 @@ _PORTABLE_V1_PROFILE_PATH = (
     f"{_PORTABLE_V1_CONTRACT_ROOT}/canonical-json-profile-v1.json"
 )
 _EXPECTED_INPUT_PATHS_SHA256 = (
-    "bb99efb3e2ea6dc4e7b3a53fa1f58c517a83e3247bf5d49576ec82614865967d"
+    "51e905edfe440e6b85662996d368e05d6c51165134c589a5a2c6be323ebc6f7d"
 )
 _EXPECTED_TEST_PATHS_SHA256 = (
-    "3d93b7497e6e6d951e50a751b6ebf29e00f6c9989287739336fdc932f8c93be0"
+    "2351cecbdff89af0d9e5c0f9181ed860a6b316da1fc765ef82916e34931932ba"
 )
 _BUILD_PROVENANCE_INPUTS = {
     "deploy/living-core/Dockerfile",
@@ -103,11 +103,11 @@ _NONCLAIMS = (
     "No image, container, Compose graph, database, volume, network, secret, A service, or B service was opened.",
     "This static authority does not prove a build, deploy, release, B adoption, live Telegram, live Home Assistant, another capability provider, or production readiness.",
     "The pinned test files are inputs only; this authority does not prove collection, execution, results, skips, xfails, environment, toolchain, or complete regression coverage.",
-    "The active amd64 dependency inputs are version-matched to the 38-package DBOS-free requirements-4d.lock with pydantic-ai-slim 2.36.0 and the official OpenAI SDK; the stock 38-wheel authority remains historical and is not a fallback build input.",
+    "The active amd64 dependency inputs are version-matched to the 38-package DBOS-free requirements-4d.lock with pydantic-ai-slim 2.37.0 and the official OpenAI SDK; the stock 38-wheel authority remains historical and is not a fallback build input.",
     "The Pydantic AI conversation and provider inputs are a static source candidate only; no offline image, vulnerability scan, real-provider parity run, A/B deployment, or live-route promotion has been performed for this change.",
     "Four cold background model paths still use the older direct HTTP helper and remain explicit removal debt; this authority does not claim that every handwritten model transport has been removed.",
     "The exact offline installer command, post-install attestations, physical 38-wheel wheelhouse, and runtime import remain separate open gates.",
-    "The historical 4D authority remains a 64-contract compatibility baseline; this authority does not reseal it as the current 72-contract registry.",
+    "The historical 4D authority remains a 64-contract compatibility baseline; this authority does not reseal it as the current 73-contract registry.",
     "An immutable 0/0-scanned core serves the explicit /eva2 route from one retained managed slot after a lossless two-database cutover; the slot identity is live state and is not claimed by this static authority, while resident acceptance remains open.",
 )
 _COCKPIT_EVIDENCE_NONCLAIMS = (
