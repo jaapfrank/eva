@@ -1,0 +1,160 @@
+{
+  "contract": "EvaRB001SealedOciLayoutEmptyBuildersEvidence/v1",
+  "taskId": "RB-001",
+  "implementationCommit": "d54dd0af97514acf6189ef7a1c0f66dafbb86086",
+  "baseCommit": "56c3e5231620ed7d805cf259d26f5e1633dc56a7",
+  "status": "passed",
+  "scope": "Build the exact managed candidate twice from sealed local OCI layouts on independent empty Docker and containerd stores without a network route.",
+  "implementationPaths": [
+    "eva2/tools/managed_b_candidate/base_image.py",
+    "eva2/tools/managed_b_candidate/candidate_image.py",
+    "eva2/tools/build_managed_b_offline_candidate.py",
+    "eva2/tests/operations/test_managed_b_base_image.py",
+    "eva2/tests/operations/test_managed_b_candidate_image.py",
+    "eva2/tests/operations/test_build_managed_b_offline_candidate.py"
+  ],
+  "tests": {
+    "pytest": {
+      "command": "TMPDIR=/tmp TEMP=/tmp TMP=/tmp pytest -q tests/operations/test_managed_b_base_image.py tests/operations/test_managed_b_candidate_image.py tests/operations/test_build_managed_b_offline_candidate.py",
+      "result": "40 passed in 0.29s"
+    },
+    "ruff": {
+      "command": "ruff check tools/managed_b_candidate/base_image.py tools/managed_b_candidate/candidate_image.py tools/build_managed_b_offline_candidate.py tests/operations/test_managed_b_base_image.py tests/operations/test_managed_b_candidate_image.py tests/operations/test_build_managed_b_offline_candidate.py",
+      "result": "All checks passed!"
+    },
+    "coveredRefusals": [
+      "wrong archive SHA-256",
+      "wrong OCI root digest",
+      "wrong selected manifest, config or layer digest",
+      "wrong linux/amd64 platform or foreign platform",
+      "wrong build, runtime-libraries or runtime role",
+      "tagged or mutable base identity",
+      "classic Docker store without the containerd snapshotter",
+      "missing or unsafe containerd socket and namespace binding",
+      "builder identity change during the build",
+      "registry pull or build-network fallback"
+    ]
+  },
+  "sealedInputs": {
+    "build": {
+      "archiveSha256": "6c41fc2512fc76b1e736f98a73745c32a81c4d29e3661a007c20bbd2f52190f3",
+      "ociRootDigest": "sha256:a116514e19457bcb7af7efe9c3dd0b9b71e85b317694e7882a1c52aa15a78134",
+      "ociConfigDigest": "sha256:183e5ad42322fea6f731433ae7f6be7498812b31d2eaf05537ffed838dd1ba7c"
+    },
+    "runtimeLibraries": {
+      "archiveSha256": "1d20ae0dce8f1c747ececf8bc554eb5e656fa334c27c6c4437fc7f5b1f9fb3ad",
+      "ociRootDigest": "sha256:09f7da3bc104798d0afb40bc08d23ab2da20a76130cec1f2ef170848f5d85217",
+      "ociConfigDigest": "sha256:72a58063c7563c5c64052da2becebce3f25b60055cb351b668c4e2df9153702c"
+    },
+    "runtime": {
+      "archiveSha256": "ebe8f63c9b7d4e753dfe4d36a0da994a916439b50a51d7fac9d235ab9868561b",
+      "ociRootDigest": "sha256:9b615fff20e1a4fad29c2b30562580b212c7dd5e2225236735cca0070ed11c78",
+      "ociConfigDigest": "sha256:2ee3752a35096cd67144bc7469e67bf30b325183d295763cb9a3d69e60a8e5a6"
+    },
+    "wheelCount": 38,
+    "wheelTreeSha256": "0f2a6e34de884571f2968080df3ae86fd64e49836e391d2d54f4d50dace911d8"
+  },
+  "physicalRuns": [
+    {
+      "id": "A",
+      "preflight": {
+        "newPrivateDockerRoot": true,
+        "newPrivateContainerdRoot": true,
+        "dockerImageCount": 0,
+        "dockerContainerCount": 0,
+        "containerdImageCount": 0,
+        "networkRoutes": [],
+        "networkLinks": ["lo DOWN"],
+        "proxyEnvironmentRemoved": true,
+        "containerdImageStore": "io.containerd.snapshotter.v1",
+        "containerdContainersNamespace": "eva-rb001-proof-a",
+        "containerdPluginsNamespace": "eva-rb001-proof-a-plugins",
+        "buildkitDiskUsageRaw": "Reclaimable:\t0B\nTotal:\t\t0B\n"
+      },
+      "builderBinding": {
+        "observationChallenge": "956161781d9fcc6120d24d883b2343e024f81222c6c56a77fa4715a454ba2242",
+        "buildRunChallenge": "4177238f7f9bc568be69032991d19ca2c8411f9b1e76a243974c08ffa827abb6",
+        "daemonId": "a4405635-fd96-413f-8cb1-914839fb5e65",
+        "buildkitNodeId": "xxiq06dn0k0j9h4yl9z8tt2iy",
+        "containerdSocketIdentitySha256": "46483cdaea504a790e39ec74abb9042a8d4301f576a35c8bed3b944e9b65c71a",
+        "dockerSocketIdentitySha256": "c1a6c6d001e5d172525be023c6742fd82a97a493f1aa1559ca892f560d29208e",
+        "stateRootIdentitySha256": "4b713120b9db81b657cc58618330eefe6865423494267ada9c43c2335a1bf1a5"
+      },
+      "postflight": {
+        "dockerImages": ["sha256:b597b5612cc47b3e058fa1bb59da72edb29e3d1396b66843dba58e81858216fc <none>:<none>"],
+        "sealedBaseImagesLoadedIntoDocker": 0,
+        "networkRoutes": []
+      },
+      "privateRawReceipts": {
+        "preflightSha256": "914a386d5efd8fca2e7735dd581c7c9d3a262f542122c8b952259d35d0578bec",
+        "buildSha256": "c29efb349f8feea948fd7360e36ff744bef4947577563831c48e7303e60738ba",
+        "postflightSha256": "c04bdd8b49cc46d8b45d2fe0c95ce41ab0c2e71e0917e60d2e76e506a3f1cc52",
+        "preflightBuilderMatchesBuildBefore": true,
+        "postflightBuilderMatchesBuildAfter": true
+      }
+    },
+    {
+      "id": "B",
+      "preflight": {
+        "newPrivateDockerRoot": true,
+        "newPrivateContainerdRoot": true,
+        "dockerImageCount": 0,
+        "dockerContainerCount": 0,
+        "containerdImageCount": 0,
+        "networkRoutes": [],
+        "networkLinks": ["lo DOWN"],
+        "proxyEnvironmentRemoved": true,
+        "containerdImageStore": "io.containerd.snapshotter.v1",
+        "containerdContainersNamespace": "eva-rb001-proof-b",
+        "containerdPluginsNamespace": "eva-rb001-proof-b-plugins",
+        "buildkitDiskUsageRaw": "Reclaimable:\t0B\nTotal:\t\t0B\n"
+      },
+      "builderBinding": {
+        "observationChallenge": "9526e1f29639c83fb65b9b1903317231e5f72f8a2ab30a778ad1b6b936ee9bb5",
+        "buildRunChallenge": "61003c1768687b2218ca1e050c907d2ff2b3780bbe43eebef942f3ea93ae0391",
+        "daemonId": "de9a9528-737e-4b68-93c8-40ed4798271a",
+        "buildkitNodeId": "0mcrs4b2oxpyxpyb6t9757wt7",
+        "containerdSocketIdentitySha256": "fdfcd0f12a06a7e49c8e58b1fa3b40304027069f71f9f2aa4bbb8f2f8bd3567f",
+        "dockerSocketIdentitySha256": "ad63cb063ea523fbbad00b0d9980a7771f60d7afe296d64783348d4a0a2ca8b8",
+        "stateRootIdentitySha256": "864bcef1394670f6743b37d5cf81840205f586b802f2c07f8f335863c8e37b38"
+      },
+      "postflight": {
+        "dockerImages": ["sha256:b597b5612cc47b3e058fa1bb59da72edb29e3d1396b66843dba58e81858216fc <none>:<none>"],
+        "sealedBaseImagesLoadedIntoDocker": 0,
+        "networkRoutes": []
+      },
+      "privateRawReceipts": {
+        "preflightSha256": "8cb3a72a33ea60d5bce1309579ed04b6dda67b8d5a260592e164352fd5e3c58e",
+        "buildSha256": "6e6f4e647ce252e1e75880a67fee5c8376feabffaba905af8795b1d989fa4af1",
+        "postflightSha256": "aa487b32ccf0772992bfad61c4dc55fbad7a56a994235faed7cae15fc06e413f",
+        "preflightBuilderMatchesBuildBefore": true,
+        "postflightBuilderMatchesBuildAfter": true
+      }
+    }
+  ],
+  "deterministicEquality": {
+    "sourceArchiveSha256": "ee7942a24a5cc0cbea6204ee45bbcd7fd50d00b6afa8dc44db844cf10394e32f",
+    "buildContextTreeSha256": "e9bb063de091dd9134d388031d685c7cb1b717298c343961bce683172b6025d5",
+    "buildkitResultDigest": "sha256:cd44223103c843221e0da95c7bbebca7feba44e4a0f044b3ebef04a81c998491",
+    "candidateImageId": "sha256:b597b5612cc47b3e058fa1bb59da72edb29e3d1396b66843dba58e81858216fc",
+    "candidateArchiveSha256": "b8dc34d47e0cdaf183b1b100c29e9b49fdb8b038f33d7a4914b103e5addf88cd",
+    "allEqualAcrossRuns": true
+  },
+  "adversarialHistory": [
+    "A classic isolated Docker store was rejected after its real Docker exporter failure exposed the missing preflight.",
+    "A second attempted daemon was rejected because it shared the system containerd image store despite a private Docker data root.",
+    "The implementation now requires the containerd snapshotter and binds the containerd socket and both namespaces before OCI-layout materialization."
+  ],
+  "cleanup": {
+    "privateDockerdProcessesStopped": 2,
+    "privateContainerdProcessesStopped": 2,
+    "networkNamespaceKeepersStopped": 2,
+    "matchingLiveProcessesAfterStop": 0,
+    "rawPrivateArtifactsRetainedForReview": true
+  },
+  "nonclaims": [
+    "This evidence does not scan, sign, tag, push, deploy or attach the candidate to Compose.",
+    "No live Eva route, container, volume, database, secret or service was opened or changed.",
+    "Docker buildx 0.18.0 does not expose a separate Docker-exporter feature field in its JSON builder listing; the required containerd image store is preflighted and both real Docker exports succeeded."
+  ]
+}
