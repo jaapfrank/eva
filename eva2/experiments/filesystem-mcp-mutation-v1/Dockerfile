@@ -14,8 +14,7 @@ LABEL io.eva2.proof="filesystem-mcp-mutation-v1" \
 USER 0:0
 
 COPY rpm/ /opt/eva2/rpm/
-RUN microdnf install -y /opt/eva2/rpm/*.rpm \
-    && microdnf clean all \
+RUN rpm -Uvh --replacepkgs /opt/eva2/rpm/*.rpm \
     && rm -rf /opt/eva2/rpm /var/cache/dnf /var/cache/yum
 
 WORKDIR /opt/eva2/filesystem-mcp
