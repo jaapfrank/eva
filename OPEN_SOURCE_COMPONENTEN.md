@@ -1,6 +1,6 @@
 # Eva 2 — open-source componentenbord
 
-Bijgewerkt: 31 augustus 2026.
+Bijgewerkt: 1 september 2026.
 
 Dit bord beantwoordt maar één vraag: gebruikt Eva voor ieder algemeen probleem
 de beste onderhouden bouwsteen, of onderhoudt zij onnodig eigen code?
@@ -24,11 +24,11 @@ overlappende Eva-code is verwijderd.
 
 | Onderdeel | Gekozen route | Werkelijkheid nu | Besluit |
 |---|---|---|---|
-| Denken, tools en modelproviders | [Pydantic AI](https://github.com/pydantic/pydantic-ai) als `pydantic-ai-slim`, met alleen de gekozen officiële provider-SDK | `slim` bevat dezelfde agentkern zonder ongebruikte provider-, CLI- en UI-extra's; Eva pint de officiële OpenAI-SDK afzonderlijk. Pydantic AI `2.36.0` is de enige eigenaar van gewone modelgesprekken, streaming en toolkeuze. De exacte minimale Distroless-image streamde via echte Codex, koos een uitgestelde tool, vervolgde uit een receipt en doorliep duurzame PostgreSQL-replay; SBOM en scan zijn 0 hoog/0 kritisch | **Exacte imagepariteit groen behalve fysieke kill tijdens een echte externe toolactie en A/B-livegang** |
+| Denken, tools en modelproviders | [Pydantic AI](https://github.com/pydantic/pydantic-ai) als `pydantic-ai-slim`, met alleen de gekozen officiële provider-SDK | `slim` bevat dezelfde agentkern zonder ongebruikte provider-, CLI- en UI-extra's; Eva pint de officiële OpenAI-SDK afzonderlijk. Pydantic AI `2.36.0` is de enige eigenaar van gewone modelgesprekken, streaming en toolkeuze. De exacte minimale Distroless-image streamde via echte Codex, koos een uitgestelde tool, vervolgde uit een receipt en herstelde na fysieke `SIGKILL` tijdens een echte externe providercall; SBOM en scan zijn 0 hoog/0 kritisch | **Exacte imagepariteit groen; toestandwijzigende providerproef en A/B-livegang nog open** |
 | Werk hervatten na een crash | PostgreSQL met een onderhouden workflowmotor zodra die Eva's ambiguïteitsgrens bewaart | Stock DBOS `2.31.0` kan na een onduidelijke commit dubbel uitvoeren; de lokale rebase voegt 306 regels toe en verwijdert nul veilige workerregels | **DBOS voor deze worker `NO-GO`; Restate/Temporal/andere actuele kandidaten alleen promoveren als zij de verantwoordelijkheid aantoonbaar overnemen, onverklaarde overlap verwijderen en de crashproef winnen** |
 | Langetermijngeheugen | [Hindsight](https://github.com/vectorize-io/hindsight) | Hindsight draait echt, maar Eva heeft daarnaast ongeveer 1.485 regels projectiecode | **Houden; adapter sterk verkleinen via officiële client/MCP** |
 | Telegram | [aiogram](https://github.com/aiogram/aiogram) blijft de gevolgde kandidaat | De actuele teksttransportlaag is klein en synchroon; de aiogram-proef voegt 12 distributies, een async-bridge en een Pydantic-upgrade toe zonder Eva's ledger te vervangen | **Nu `NO-GO`; heropenen voor media, webhooks of async-native ingress** |
-| Externe gereedschappen | Pydantic AI met runtime-ontdekte tools; [IBM ContextForge](https://github.com/IBM/mcp-context-forge) alleen als optionele gateway; officiële API's/SDK's achter verwisselbare providers | De brede 69-distributieproef is afgewezen. De actuele route houdt 38 pakketten en Eva's ledger/readback. Exacte-image Codexselectie en duurzame PostgreSQL-uitvoering/readback/replay zijn groen. De PostgreSQL-proef gebruikte een synthetische provider; een echte externe provider met fysieke kill en twee verwisselbare providers blijven open | **Geen tweede toolframework; sluit de echte crash/providerpoort en promoveer daarna pas via A/B** |
+| Externe gereedschappen | Pydantic AI met runtime-ontdekte tools; [IBM ContextForge](https://github.com/IBM/mcp-context-forge) alleen als optionele gateway; officiële API's/SDK's achter verwisselbare providers | De brede 69-distributieproef is afgewezen. De actuele route houdt 38 pakketten en Eva's ledger/readback. Op de exacte image doorliep een echte IBM-provider uitvoering, fysieke `SIGKILL`, aparte readback en verse replay zonder dubbelen. De provider was alleen-lezen; een toestandwijzigende provider met afzonderlijke observatie en een tweede echte dienst blijven open | **Geen tweede toolframework; sluit de muterende crashpoort en promoveer daarna pas via A/B** |
 | Voice | [Pipecat](https://github.com/pipecat-ai/pipecat) als eerste media-pipeline; [LiveKit Agents](https://github.com/livekit/agents) alleen als transportvergelijking; Wyoming blijft lokale STT/TTS-fallback | Losse voicebouwstenen werken, maar vormen nog geen product | **Pipecat-bake-off; eigen streaming/interruptlijm daarna verwijderen** |
 | Browser en computer | [Playwright MCP](https://github.com/microsoft/playwright-mcp) tegenover [Browser Use](https://github.com/browser-use/browser-use); daarna precies één motor | Functionele proeven bestaan, maar de geteste images voldeden niet aan de releasepoort | **Eén veilige brongebouwde winnaar kiezen; geen eigen browserengine** |
 | Subagents en onderzoek | Pydantic AI voor agentruns; een bewezen workflowmotor voor duurzame uitvoering | De actuele kandidaat heeft een grote eigen databaseworker en commandolaag; DBOS won de gemeten vervanging niet | **Bevroren tot een actuele kandidaat de verantwoordelijkheid aantoonbaar overneemt, onverklaarde overlap verwijdert en de eenmalige-call/crashproef wint** |
@@ -221,6 +221,14 @@ readback en een nieuwe runtime-instantie deed bij replay nul providercalls. De
 generieke MCP-aansluiting is broncode in Eva's providergrens; de concrete tools
 en hun aanbieders zijn runtimeconfiguratie. Externe Python-providerpakketten
 blijven optioneel via entry points laadbaar.
+
+Dezelfde exacte image is daarna gestopt met een fysieke `SIGKILL`, nadat de
+echte tijdprovider al had geantwoord maar vóór Eva dat resultaat had
+vastgelegd. Een vers proces deed precies één readback; een derde vers proces
+deed nul extra calls en las dezelfde receipt. Dit sluit de echte read-only
+providercrashpoort. Omdat uitvoering en observatie op de draad nog dezelfde
+MCP-tool gebruiken, blijft een toestandwijzigende provider met afzonderlijke
+observatie de volgende eerlijke poort.
 
 Hiermee wordt “top of the edge” een terugkerende releasepoort in plaats van een
 marketingclaim van vandaag.

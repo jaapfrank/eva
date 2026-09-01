@@ -1,0 +1,132 @@
+{
+  "candidate": {
+    "imageId": "sha256:dec43d3d11f31667fdfde96e5e4aafb173ca680ad830ca9d70e1cd6cca8b55e8",
+    "priorCandidateEvidence": "eva2/evidence/product/pydantic-ai-2.36-distroless-offline-candidate-2026-08-31.json",
+    "priorCandidateEvidenceSha256": "882d7fc32182362f4eeefc6a6ce7eecbfedcce0e5b8532ee03dcad3e4f1808a1",
+    "sourceCommit": "0c469ee513b1843253dc170eba08161101d5a70d"
+  },
+  "contract": "Eva2PydanticAI236RealProviderSigkillEvidence/v1",
+  "durableOutcome": {
+    "alembicRevision": "4e_0007_delegated_private",
+    "checkpoint": {
+      "phase": "state_verified",
+      "revision": 3,
+      "status": "completed",
+      "threadId": "tool:external-tool:18bb99689f40c41cefb52311bc0671b9"
+    },
+    "eventTypes": [
+      "TOOL_REQUEST_ADMITTED",
+      "TOOL_PREPARED",
+      "STATE_VERIFIED"
+    ],
+    "finalAnswerSha256": "1d04c6256daa2ecc47dbcd19d5093ece9b518ceab1b9e7ec6b3579e6a6d3bb7c",
+    "providerRequestCountAfterFreshReplay": 2,
+    "providerRequestCountBefore": 0,
+    "providerRequestsForEffect": 1,
+    "providerRequestsForFreshProcessReplay": 0,
+    "providerRequestsForReadback": 1,
+    "receiptSha256": "c3b73ff5ffa223d36cb76e0a5bb51db2f6fdf5a5c450ff458a3c6c9952e79245",
+    "receiptStatus": "verified"
+  },
+  "issuedAt": "2026-09-01T02:47:33+02:00",
+  "modelUsage": {
+    "completion": {
+      "inputTokens": 1039,
+      "measurement": "measured",
+      "modelAttempts": 1,
+      "outputTokens": 20,
+      "toolCalls": 0
+    },
+    "selection": {
+      "inputTokens": 1606,
+      "measurement": "measured",
+      "modelAttempts": 1,
+      "outputTokens": 90,
+      "toolCalls": 1
+    }
+  },
+  "nonclaims": [
+    "The real IBM fast-time provider operation is read-only; this is not a physical or state-mutating effect proof.",
+    "Execution and observation currently use the same MCP tool name, arguments and RPC identifier. The durable Eva phase distinguishes their roles, but the provider wire protocol does not.",
+    "This proves recovery through reliable readback after SIGKILL, not universal exactly-once execution for non-observable or non-idempotent external mutations.",
+    "TOOL01 v1 is not claimed as passed because that older acceptance contract requires different ledger event names and does not bind the real image, container or SIGKILL result.",
+    "The candidate has not been promoted, deployed or attached to the live A/B route by this proof.",
+    "The active Eva1 and Eva2 services, databases, volumes, secrets and containers were not opened or changed by this proof.",
+    "A first failed harness attempt used the wrong Alembic table name. It is retained privately for diagnosis and does not count as a passed run."
+  ],
+  "phases": [
+    {
+      "capDrop": [
+        "ALL"
+      ],
+      "containerId": "61bb9edbcfd0df50375b965f9b18c3aab3647c45422cbf27e0dbdc55b55f958b",
+      "exitCode": 137,
+      "finishedAt": "2026-08-31T20:58:47.760080738Z",
+      "logSha256": "fc001bedc1abc97e32ec5dc2e860ee5ef781893654fe7deca3279cb9e446ba2e",
+      "name": "start_and_physical_sigkill",
+      "oomKilled": false,
+      "readOnlyRootFilesystem": true,
+      "runtimeUser": "65532:65532",
+      "startedAt": "2026-08-31T20:58:36.113589301Z"
+    },
+    {
+      "capDrop": [
+        "ALL"
+      ],
+      "containerId": "cd2a8bbbe415fb14e26bb09b8c44a49b9e7fc79596ba536dfc180f7c66b862cf",
+      "exitCode": 0,
+      "finishedAt": "2026-08-31T20:58:54.733615699Z",
+      "logSha256": "1d0ac434abd94a9d2d8f3e4eddfe4b7e389b707e1a9c870b4fe4f4b95418b793",
+      "name": "fresh_process_readback_and_completion",
+      "oomKilled": false,
+      "readOnlyRootFilesystem": true,
+      "runtimeUser": "65532:65532",
+      "startedAt": "2026-08-31T20:58:48.091534288Z"
+    },
+    {
+      "capDrop": [
+        "ALL"
+      ],
+      "containerId": "a3e465e106ffdfb4e5a45a55f18545f3bbd3083462cf50985fe91122baceb860",
+      "exitCode": 0,
+      "finishedAt": "2026-08-31T21:00:40.45195399Z",
+      "logSha256": "36d41583f8be6f6a3d5bed81c64f2d6ee25a74a72424d930312911db27f7cad9",
+      "name": "third_fresh_process_replay",
+      "oomKilled": false,
+      "readOnlyRootFilesystem": true,
+      "runtimeUser": "65532:65532",
+      "startedAt": "2026-08-31T21:00:36.258744014Z"
+    }
+  ],
+  "proofArtifacts": {
+    "effectReturnedSha256": "d58b1454bb156e27b1ef67c6914fd5b38aceb2b6d9c37f697a67b34b2e8091f2",
+    "freshReplayProgramSha256": "22c1d87b15572bdf767a62363e3383999b1cc839bc7ab0d9d73db3d4faed78c5",
+    "oneShotProofProgramSha256": "51f7b10d7e822124e8b137a3b8db74af72a6faed34df6a0820d5696058372578",
+    "replaySha256": "88389786e38bca77e30266ac85989620e989e58b2e91f6a3f87b586a09fc007b",
+    "startAndResumeProgramSha256": "68c56b06fdf206c1747b73293156b66bd4545088e8b43adac32580838701213e",
+    "startSha256": "ef9d866c0ac861318ffc7c45a1686403ebbf3af042c241a3cf0828c39e7cfd7b"
+  },
+  "providerStack": {
+    "contextForge": {
+      "containerId": "72d3fb45377a65a9bdb8e0262cea7906e491d24c567401ea0e85a1e573f0210c",
+      "imageId": "sha256:daf923c247fd569df5f8c9ee418cbc259fade564f78e0a0852937139a181c4dd"
+    },
+    "fastTimeProvider": {
+      "containerId": "5e223aeee139aecb19530f82bb5f39d9401c7e76735bb4caf508477d11ee6a84",
+      "imageId": "sha256:2f095509d535a0769449f3b9417858f5c233dc74b1e09de335b48b7591d995a1",
+      "server": "fast-time-server",
+      "version": "0.1.0"
+    },
+    "hostPortsPublished": false,
+    "postgres": {
+      "containerId": "4cce946dc307fdd0b4427b44c51eb55ceaa23b3e0cc40a631cec35365bc11735",
+      "imageId": "sha256:4e6e670bb069649261c9c18031f0aded7bb249a5b6664ddec29c013a89310d50",
+      "serverVersionNumber": 160013
+    }
+  },
+  "resourceCleanup": {
+    "disposableProofResourcesRetainedUntilEvidenceCommit": true,
+    "status": "pending_after_evidence_commit"
+  },
+  "status": "passed_real_provider_sigkill_candidate_only"
+}

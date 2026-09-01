@@ -3,13 +3,13 @@
 Deze kaart is mechanisch gegenereerd. Zij staat naast de semantische runtimegraaf en
 classificeert ieder gevolgd, verwijderd of niet-genegeerd nieuw repositorypad.
 
-Schema: `EvaRepositoryInventory/v1`. Brondigest: `ce6e6fcd38f3b74311645520d113a5e385a621bf652cc120a9101d3400186498`.
+Schema: `EvaRepositoryInventory/v1`. Brondigest: `f4f1a6911c24029a6dba85952039a23e4277b978173c6b1e3356466c0ea92287`.
 
 ## Samenvatting
 
 | Bestanden | Aanwezig | Tracked | Untracked | Tombstones | Policyfouten |
 | ---: | ---: | ---: | ---: | ---: | ---: |
-| 1984 | 1984 | 1905 | 79 | 0 | 88 |
+| 1986 | 1986 | 1907 | 79 | 0 | 88 |
 
 ## Policyfouten
 
@@ -125,10 +125,10 @@ Schema: `EvaRepositoryInventory/v1`. Brondigest: `ce6e6fcd38f3b74311645520d113a5
 | `design` | `documentation` | 3 |
 | `experiments` | `experimental` | 36 |
 | `transition` | `documentation` | 2 |
-| `eva2-verification` | `verification` | 720 |
+| `eva2-verification` | `verification` | 721 |
 | `eva2-documentation` | `documentation` | 102 |
 | `eva2-deployment` | `deployment` | 48 |
-| `eva2-experimental` | `experimental` | 137 |
+| `eva2-experimental` | `experimental` | 138 |
 | `eva2-verification-runtime` | `verification-runtime` | 80 |
 | `eva2-runtime` | `product-runtime` | 241 |
 | `eva2-build-contract` | `repository-config` | 241 |
@@ -153,7 +153,7 @@ Schema: `EvaRepositoryInventory/v1`. Brondigest: `ce6e6fcd38f3b74311645520d113a5
 | `.c8rc.json` | tracked | repository-config | included-tracked-critical | keep | 290 |
 | `.env.example` | tracked | repository-config | included-tracked-critical | keep | 1911 |
 | `.gitignore` | tracked | repository-config | included-tracked-critical | keep | 1283 |
-| `OPEN_SOURCE_COMPONENTEN.md` | tracked | repository-config | included-tracked-critical | keep | 17342 |
+| `OPEN_SOURCE_COMPONENTEN.md` | tracked | repository-config | included-tracked-critical | keep | 17878 |
 | `README.md` | tracked | repository-config | included-tracked-critical | keep | 7582 |
 | `benchmark/agentbench-fc-v1/Dockerfile` | tracked | benchmark | included-tracked-critical | keep | 1746 |
 | `benchmark/agentbench-fc-v1/agentbench-dbbench-dev-external-mysql-upstream-rounds.yaml` | tracked | benchmark | included-tracked-critical | keep | 1541 |
@@ -235,8 +235,8 @@ Schema: `EvaRepositoryInventory/v1`. Brondigest: `ce6e6fcd38f3b74311645520d113a5
 | `docs/eva-agent-benchmark-v1.md` | tracked | documentation | included-tracked-noncritical | keep | 18462 |
 | `docs/eva-endbeeld-roadmap.md` | tracked | documentation | included-tracked-noncritical | keep | 16956 |
 | `docs/eva-rebuild-plan-2026-08-20.md` | tracked | documentation | included-tracked-noncritical | keep | 29009 |
-| `docs/eva-repository-inventory.generated.json` | tracked | generated | included-tracked-critical | keep | 2306482 |
-| `docs/eva-repository-inventory.generated.md` | tracked | generated | included-tracked-critical | keep | 357310 |
+| `docs/eva-repository-inventory.generated.json` | tracked | generated | included-tracked-critical | keep | 2308525 |
+| `docs/eva-repository-inventory.generated.md` | tracked | generated | included-tracked-critical | keep | 357614 |
 | `docs/eva-runtime-contract-map.generated.json` | tracked | generated | included-tracked-critical | keep | 246207 |
 | `docs/eva-runtime-contract-map.generated.md` | tracked | generated | included-tracked-critical | keep | 120103 |
 | `docs/eva-runtime-contracts.md` | tracked | documentation | included-tracked-critical | keep | 80976 |
@@ -261,7 +261,7 @@ Schema: `EvaRepositoryInventory/v1`. Brondigest: `ce6e6fcd38f3b74311645520d113a5
 | `eva2/OPEN_SOURCE_EN_DEPENDENCYKEUZES.md` | tracked | documentation | included-tracked-noncritical | keep | 36476 |
 | `eva2/OUDE_EVA_VS_EVA2.md` | tracked | documentation | included-tracked-noncritical | keep | 5434 |
 | `eva2/PROJECTEN_EN_PLANNING.md` | tracked | documentation | included-tracked-noncritical | keep | 22347 |
-| `eva2/PROJECT_STATUS.md` | tracked | documentation | included-tracked-noncritical | keep | 43550 |
+| `eva2/PROJECT_STATUS.md` | tracked | documentation | included-tracked-noncritical | keep | 44580 |
 | `eva2/README.md` | tracked | documentation | included-tracked-noncritical | keep | 10625 |
 | `eva2/TEAM_WERKWIJZE.md` | tracked | documentation | included-tracked-noncritical | keep | 7129 |
 | `eva2/TECHNISCHE_MOGELIJKHEDEN_EN_GATEN.md` | tracked | documentation | included-tracked-noncritical | keep | 20072 |
@@ -759,6 +759,7 @@ Schema: `EvaRepositoryInventory/v1`. Brondigest: `ce6e6fcd38f3b74311645520d113a5
 | `eva2/evidence/product/pydantic-ai-2.36-distroless-offline-candidate-2026-08-31.json` | tracked | verification | included-tracked-critical | keep | 3836 |
 | `eva2/evidence/product/pydantic-ai-2.36-distroless-runtime-parity-2026-08-31.json` | tracked | verification | included-tracked-critical | keep | 4051 |
 | `eva2/evidence/product/pydantic-ai-2.36-real-codex-compatibility-2026-08-31.json` | tracked | verification | included-tracked-critical | keep | 2909 |
+| `eva2/evidence/product/pydantic-ai-2.36-real-provider-sigkill-2026-09-01.json` | tracked | verification | included-tracked-critical | keep | 5804 |
 | `eva2/evidence/product/pydantic-ai-2.36-source-codex-compatibility-2026-08-31.json` | tracked | verification | included-tracked-critical | keep | 2341 |
 | `eva2/evidence/product/pydantic-native-mcp-discovery-candidate-2026-08-31.json` | tracked | verification | included-tracked-critical | keep | 8668 |
 | `eva2/evidence/product/renovate-44.52.0-local-dry-run-2026-08-30.json` | tracked | verification | included-tracked-critical | keep | 1977 |
@@ -776,6 +777,7 @@ Schema: `EvaRepositoryInventory/v1`. Brondigest: `ce6e6fcd38f3b74311645520d113a5
 | `eva2/experiments/contextforge-gateway-v1/compose.yml` | tracked | experimental | included-tracked-noncritical | keep | 2511 |
 | `eva2/experiments/contextforge-gateway-v1/probe_contextforge.py` | tracked | experimental | included-tracked-noncritical | keep | 16401 |
 | `eva2/experiments/contextforge-gateway-v1/prove_real_time_provider.py` | tracked | experimental | included-tracked-noncritical | keep | 13179 |
+| `eva2/experiments/contextforge-gateway-v1/prove_real_time_provider_sigkill.py` | tracked | experimental | included-tracked-noncritical | keep | 14080 |
 | `eva2/experiments/contextforge-gateway-v1/start-contextforge.sh` | tracked | experimental | included-tracked-noncritical | keep | 1510 |
 | `eva2/experiments/distroless-core-v1/Dockerfile` | tracked | experimental | included-tracked-noncritical | keep | 1367 |
 | `eva2/experiments/distroless-core-v1/Dockerfile.chainguard` | tracked | experimental | included-tracked-noncritical | keep | 980 |
