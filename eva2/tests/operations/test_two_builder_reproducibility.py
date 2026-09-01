@@ -5,6 +5,8 @@ import gzip
 import io
 import json
 from pathlib import Path
+import subprocess
+import sys
 import tarfile
 
 import pytest
@@ -19,6 +21,7 @@ from tools.check_two_builder_reproducibility import (
 
 
 COMMIT = "a" * 40
+EVA2_ROOT = Path(__file__).resolve().parents[2]
 
 
 def _canonical(value: object) -> bytes:
@@ -53,10 +56,16 @@ def _builder(side: str) -> dict[str, object]:
     }
 
 
-def _build(side: str, image_id: str, archive_sha256: str) -> dict[str, object]:
+def _build(
+    side: str,
+    image_id: str,
+    archive_sha256: str,
+    *,
+    buildkit_result_digest: str,
+) -> dict[str, object]:
     candidate_receipt = {
         "builder": _builder(side),
-        "candidate_buildkit_result_digest": image_id,
+        "candidate_buildkit_result_digest": buildkit_result_digest,
         "candidate_image_archive_sha256": archive_sha256,
         "candidate_image_config_digest": image_id,
         "candidate_image_id": image_id,
@@ -98,8 +107,27 @@ def _build(side: str, image_id: str, archive_sha256: str) -> dict[str, object]:
     }
 
 
-def _archive(path: Path, *, mtime: int, user: str = "65532:65532") -> str:
-    layer = b"deterministic uncompressed layer"
+def _runtime_layer(content: bytes = b"deterministic runtime file\n") -> bytes:
+    output = io.BytesIO()
+    with tarfile.open(fileobj=output, mode="w") as layer:
+        info = tarfile.TarInfo("opt/eva/runtime.txt")
+        info.mode = 0o444
+        info.mtime = 1788260000
+        info.size = len(content)
+        layer.addfile(info, io.BytesIO(content))
+    return output.getvalue()
+
+
+def _archive(
+    path: Path,
+    *,
+    mtime: int,
+    user: str = "65532:65532",
+    runtime_content: bytes = b"deterministic runtime file\n",
+) -> tuple[str, str]:
+    layer = _runtime_layer(runtime_content)
+    stored_layer = gzip.compress(layer, mtime=0)
+    layer_digest = hashlib.sha256(stored_layer).hexdigest()
     config = {
         "architecture": "amd64",
         "config": {"Cmd": ["-m", "eva"], "User": user},
@@ -110,42 +138,43 @@ def _archive(path: Path, *, mtime: int, user: str = "65532:65532") -> str:
         },
     }
     config_raw = json.dumps(config, separators=(",", ":"), sort_keys=True).encode()
-    config_name = hashlib.sha256(config_raw).hexdigest() + ".json"
-    manifest = json.dumps(
-        [{"Config": config_name, "Layers": ["layer.tar"], "RepoTags": None}],
-        separators=(",", ":"),
-    ).encode()
-    with tarfile.open(path, "w") as archive:
-        for name, raw in (
-            ("manifest.json", manifest),
-            (config_name, config_raw),
-            ("layer.tar", layer),
-        ):
-            info = tarfile.TarInfo(name)
-            info.mode = 0o444
-            info.mtime = mtime
-            info.size = len(raw)
-            archive.addfile(info, io.BytesIO(raw))
-    path.chmod(0o444)
-    return "sha256:" + hashlib.sha256(config_raw).hexdigest()
-
-
-def _compressed_archive(path: Path) -> str:
-    layer = b"deterministic uncompressed layer"
-    compressed = gzip.compress(layer, mtime=0)
-    blob_digest = hashlib.sha256(compressed).hexdigest()
-    config = {
-        "architecture": "amd64",
-        "config": {"Cmd": ["-m", "eva"], "User": "65532:65532"},
-        "os": "linux",
-        "rootfs": {
-            "diff_ids": ["sha256:" + hashlib.sha256(layer).hexdigest()],
-            "type": "layers",
-        },
-    }
-    config_raw = json.dumps(config, separators=(",", ":"), sort_keys=True).encode()
-    config_name = hashlib.sha256(config_raw).hexdigest() + ".json"
-    layer_name = f"blobs/sha256/{blob_digest}"
+    config_digest = hashlib.sha256(config_raw).hexdigest()
+    config_name = f"blobs/sha256/{config_digest}"
+    layer_name = f"blobs/sha256/{layer_digest}"
+    image_manifest = _canonical(
+        {
+            "config": {
+                "digest": f"sha256:{config_digest}",
+                "mediaType": "application/vnd.docker.container.image.v1+json",
+                "size": len(config_raw),
+            },
+            "layers": [
+                {
+                    "digest": f"sha256:{layer_digest}",
+                    "mediaType": "application/vnd.docker.image.rootfs.diff.tar.gzip",
+                    "size": len(stored_layer),
+                }
+            ],
+            "mediaType": "application/vnd.docker.distribution.manifest.v2+json",
+            "schemaVersion": 2,
+        }
+    )
+    image_digest = hashlib.sha256(image_manifest).hexdigest()
+    image_name = f"blobs/sha256/{image_digest}"
+    index = _canonical(
+        {
+            "manifests": [
+                {
+                    "digest": f"sha256:{image_digest}",
+                    "mediaType": "application/vnd.docker.distribution.manifest.v2+json",
+                    "platform": {"architecture": "amd64", "os": "linux"},
+                    "size": len(image_manifest),
+                }
+            ],
+            "mediaType": "application/vnd.oci.image.index.v1+json",
+            "schemaVersion": 2,
+        }
+    )
     manifest = json.dumps(
         [{"Config": config_name, "Layers": [layer_name], "RepoTags": None}],
         separators=(",", ":"),
@@ -153,16 +182,19 @@ def _compressed_archive(path: Path) -> str:
     with tarfile.open(path, "w") as archive:
         for name, raw in (
             ("manifest.json", manifest),
+            ("index.json", index),
+            ("oci-layout", b'{"imageLayoutVersion":"1.0.0"}'),
             (config_name, config_raw),
-            (layer_name, compressed),
+            (image_name, image_manifest),
+            (layer_name, stored_layer),
         ):
             info = tarfile.TarInfo(name)
             info.mode = 0o444
-            info.mtime = 1
+            info.mtime = mtime
             info.size = len(raw)
             archive.addfile(info, io.BytesIO(raw))
     path.chmod(0o444)
-    return "sha256:" + hashlib.sha256(config_raw).hexdigest()
+    return f"sha256:{image_digest}", f"sha256:{config_digest}"
 
 
 def _write(path: Path, value: object) -> None:
@@ -180,6 +212,26 @@ def _write_build(path: Path, archive: Path, value: dict[str, object]) -> None:
     _write(archive.parent / "candidate-image-receipt.json", receipt)
 
 
+def _replace_candidate_archive(
+    build_path: Path,
+    archive_path: Path,
+    *,
+    image_id: str,
+    buildkit_result_digest: str,
+) -> None:
+    build = json.loads(build_path.read_bytes())
+    candidate = build["candidate"]
+    receipt = candidate["receipt"]
+    candidate["image_id"] = image_id
+    receipt["candidate_buildkit_result_digest"] = buildkit_result_digest
+    receipt["candidate_image_config_digest"] = image_id
+    receipt["candidate_image_id"] = image_id
+    receipt["candidate_image_archive_sha256"] = hashlib.sha256(
+        archive_path.read_bytes()
+    ).hexdigest()
+    _write_build(build_path, archive_path, build)
+
+
 def _fixture(
     tmp_path: Path,
 ) -> tuple[tuple[Path, Path], tuple[Path, Path]]:
@@ -187,14 +239,22 @@ def _fixture(
     for root in roots:
         root.mkdir(mode=0o700)
     archives = tuple(root / "candidate.tar" for root in roots)
-    image_id = _archive(archives[0], mtime=1)
-    assert _archive(archives[1], mtime=2) == image_id
+    image_id, buildkit_result_digest = _archive(archives[0], mtime=1)
+    assert _archive(archives[1], mtime=2) == (
+        image_id,
+        buildkit_result_digest,
+    )
     builds = (tmp_path / "build-a.json", tmp_path / "build-b.json")
     for side, path, archive in zip(("a", "b"), builds, archives, strict=True):
         _write_build(
             path,
             archive,
-            _build(side, image_id, hashlib.sha256(archive.read_bytes()).hexdigest()),
+            _build(
+                side,
+                image_id,
+                hashlib.sha256(archive.read_bytes()).hexdigest(),
+                buildkit_result_digest=buildkit_result_digest,
+            ),
         )
     return builds, archives
 
@@ -362,6 +422,30 @@ def _admit_builder_a(tmp_path: Path) -> tuple[dict[str, object], Path]:
         )
     }
     admission.pop("taskId")
+    replay = admission["replayKeys"]
+    chain = admission["chain"]
+    assert isinstance(replay, dict)
+    assert isinstance(chain, dict)
+    replay["archiveSha256"] = chain["archiveSha256"]
+    replay["releaseAuthorityReceiptSha256"] = chain[
+        "releaseAuthorityReceiptSha256"
+    ]
+    admission["replayKeys"] = {
+        key: replay[key]
+        for key in (
+            "admissionChallenge",
+            "archiveSha256",
+            "buildReceiptSha256",
+            "buildRunChallenge",
+            "candidateReceiptSha256",
+            "daemonId",
+            "observationChallenge",
+            "postflightReceiptSha256",
+            "preflightReceiptSha256",
+            "releaseAuthorityReceiptSha256",
+            "stateRootIdentitySha256",
+        )
+    }
     path = tmp_path / "builder-a-admission.json"
     _write(path, admission)
     return fixture, path
@@ -379,6 +463,41 @@ def _verify_builder_b(
         builder_a_preflight_path=builder_a_preflight_path,
         **overrides,
     )
+
+
+def _two_builder_fixture(tmp_path: Path) -> dict[str, object]:
+    builder_a, admission_a = _admit_builder_a(tmp_path)
+    builder_b = _single_builder_fixture(tmp_path / "builder-b", side="b")
+    admission_b_value = _verify_builder_b(
+        builder_b,
+        admission_a,
+        builder_a["preflight"],
+    )
+    admission_b = tmp_path / "builder-b-admission.json"
+    _write(admission_b, admission_b_value)
+    admissions = (admission_a, admission_b)
+    return {
+        "admissionHashes": tuple(
+            hashlib.sha256(path.read_bytes()).hexdigest() for path in admissions
+        ),
+        "admissions": admissions,
+        "archives": (builder_a["archive"], builder_b["archive"]),
+        "authoritySha256": builder_a["authoritySha256"],
+        "builds": (builder_a["build"], builder_b["build"]),
+    }
+
+
+def _verify_two(fixture: dict[str, object], **overrides: object) -> dict[str, object]:
+    values = {
+        "admission_paths": fixture["admissions"],
+        "build_paths": fixture["builds"],
+        "archive_paths": fixture["archives"],
+        "expected_admission_sha256": fixture["admissionHashes"],
+        "expected_source_commit": COMMIT,
+        "expected_authority_sha256": fixture["authoritySha256"],
+    }
+    values.update(overrides)
+    return verify_two_builds(**values)  # type: ignore[arg-type]
 
 
 def _replace_builder_identity(
@@ -580,18 +699,18 @@ def test_rejects_builder_b_reusing_any_builder_a_challenge(
 
 def test_reads_oci_compressed_layers_using_their_diff_ids(tmp_path: Path) -> None:
     archive = tmp_path / "compressed-candidate.tar"
-    image_id = _compressed_archive(archive)
+    image_id, buildkit_result_digest = _archive(archive, mtime=1)
     archive_sha256 = hashlib.sha256(archive.read_bytes()).hexdigest()
 
     result = _image_semantics(
         archive,
         expected_archive_sha256=archive_sha256,
+        expected_image_id=image_id,
     )
 
-    assert result["buildkitResultDigest"] == image_id
+    assert result["buildkitResultDigest"] == buildkit_result_digest
     assert result["diffIds"] == [
-        "sha256:"
-        + hashlib.sha256(b"deterministic uncompressed layer").hexdigest()
+        "sha256:" + hashlib.sha256(_runtime_layer()).hexdigest()
     ]
 
 
@@ -707,16 +826,17 @@ def test_rejects_replay_against_prior_admission(tmp_path: Path) -> None:
 def test_accepts_same_image_semantics_with_different_tar_envelopes(
     tmp_path: Path,
 ) -> None:
-    builds, archives = _fixture(tmp_path)
+    fixture = _two_builder_fixture(tmp_path)
+    archives = fixture["archives"]
 
-    result = verify_two_builds(
-        build_paths=builds,
-        archive_paths=archives,
-        expected_source_commit=COMMIT,
-    )
+    result = _verify_two(fixture)
 
     assert result["status"] == "passed"
     assert result["candidate"]["imageId"].startswith("sha256:")
+    assert result["candidate"]["runtimeLayerSequenceSha256"]
+    assert result["candidate"]["ociManifestSha256"] == result["candidate"][
+        "imageId"
+    ].removeprefix("sha256:")
     assert (
         result["candidate"]["archiveSha256"]
         == hashlib.sha256(archives[0].read_bytes()).hexdigest()
@@ -726,15 +846,138 @@ def test_accepts_same_image_semantics_with_different_tar_envelopes(
         result["builders"][0]["buildReceiptSha256"]
         != result["builders"][1]["buildReceiptSha256"]
     )
+    assert [builder["taskId"] for builder in result["builders"]] == [
+        "RB-003",
+        "RB-004",
+    ]
     assert "one host" in result["nonclaims"][0]
+    assert "expected admission" in result["nonclaims"][1]
+
+
+def test_direct_cli_help_starts_without_package_import_failure() -> None:
+    completed = subprocess.run(
+        [
+            sys.executable,
+            str(EVA2_ROOT / "tools/check_two_builder_reproducibility.py"),
+            "--help",
+        ],
+        cwd=EVA2_ROOT,
+        check=False,
+        capture_output=True,
+        text=True,
+    )
+
+    assert completed.returncode == 0, completed.stderr
+    assert "--expected-admission-a-sha256" in completed.stdout
+    assert "ModuleNotFoundError" not in completed.stderr
+
+
+def test_rejects_reused_admission_evidence(tmp_path: Path) -> None:
+    fixture = _two_builder_fixture(tmp_path)
+    admissions = fixture["admissions"]
+    hashes = fixture["admissionHashes"]
+    _write(admissions[1], json.loads(admissions[0].read_bytes()))
+
+    with pytest.raises(TwoBuilderError, match="builder-B admission"):
+        _verify_two(
+            fixture,
+            expected_admission_sha256=(hashes[0], hashes[0]),
+        )
+
+
+def test_rejects_unadmitted_receipt_hash(tmp_path: Path) -> None:
+    fixture = _two_builder_fixture(tmp_path)
+    hashes = fixture["admissionHashes"]
+
+    with pytest.raises(TwoBuilderError, match="admission receipt hash differs"):
+        _verify_two(
+            fixture,
+            expected_admission_sha256=(hashes[0], "0" * 64),
+        )
+
+
+def test_rejects_swapped_builder_admissions(tmp_path: Path) -> None:
+    fixture = _two_builder_fixture(tmp_path)
+    admissions = fixture["admissions"]
+    hashes = fixture["admissionHashes"]
+
+    with pytest.raises(TwoBuilderError, match="builder-A admission"):
+        _verify_two(
+            fixture,
+            admission_paths=(admissions[1], admissions[0]),
+            expected_admission_sha256=(hashes[1], hashes[0]),
+        )
+
+
+def test_rejects_admission_chain_spliced_to_other_build(tmp_path: Path) -> None:
+    fixture = _two_builder_fixture(tmp_path)
+    admissions = fixture["admissions"]
+    left = json.loads(admissions[0].read_bytes())
+    right = json.loads(admissions[1].read_bytes())
+    right["chain"]["buildReceiptSha256"] = left["chain"]["buildReceiptSha256"]
+    right["replayKeys"]["buildReceiptSha256"] = left["chain"][
+        "buildReceiptSha256"
+    ]
+    _write(admissions[1], right)
+    hashes = (
+        fixture["admissionHashes"][0],
+        hashlib.sha256(admissions[1].read_bytes()).hexdigest(),
+    )
+
+    with pytest.raises(TwoBuilderError, match="chain differs from candidate"):
+        _verify_two(fixture, expected_admission_sha256=hashes)
+
+
+def test_rejects_challenge_reused_across_admissions(tmp_path: Path) -> None:
+    fixture = _two_builder_fixture(tmp_path)
+    admissions = fixture["admissions"]
+    left = json.loads(admissions[0].read_bytes())
+    right = json.loads(admissions[1].read_bytes())
+    right["replayKeys"]["observationChallenge"] = left["replayKeys"][
+        "admissionChallenge"
+    ]
+    _write(admissions[1], right)
+    hashes = (
+        fixture["admissionHashes"][0],
+        hashlib.sha256(admissions[1].read_bytes()).hexdigest(),
+    )
+
+    with pytest.raises(TwoBuilderError, match="challenge was reused"):
+        _verify_two(fixture, expected_admission_sha256=hashes)
+
+
+def test_rejects_image_id_not_bound_to_oci_manifest(tmp_path: Path) -> None:
+    fixture = _two_builder_fixture(tmp_path)
+    builds = fixture["builds"]
+    archives = fixture["archives"]
+    right = json.loads(builds[1].read_bytes())
+    claimed_id = "sha256:" + "f" * 64
+    right["candidate"]["image_id"] = claimed_id
+    receipt = right["candidate"]["receipt"]
+    receipt["candidate_image_config_digest"] = claimed_id
+    receipt["candidate_image_id"] = claimed_id
+    _write_build(builds[1], archives[1], right)
+
+    with pytest.raises(TwoBuilderError, match="image ID differs from OCI index"):
+        _verify_two(fixture)
 
 
 @pytest.mark.parametrize(
     "field",
-    ["buildkitNodeId", "daemonId", "socketIdentitySha256", "stateRootIdentitySha256"],
+    [
+        "buildkitNodeId",
+        "containerdContainersNamespace",
+        "containerdPluginsNamespace",
+        "containerdSocketIdentitySha256",
+        "daemonId",
+        "socketIdentitySha256",
+        "stateRootIdentitySha256",
+    ],
 )
 def test_rejects_shared_builder_identity(tmp_path: Path, field: str) -> None:
-    builds, archives = _fixture(tmp_path)
+    fixture = _two_builder_fixture(tmp_path)
+    builds = fixture["builds"]
+    archives = fixture["archives"]
     left = json.loads(builds[0].read_bytes())
     right = json.loads(builds[1].read_bytes())
     left_identity = left["candidate"]["receipt"]["builder"]["before"]
@@ -744,81 +987,102 @@ def test_rejects_shared_builder_identity(tmp_path: Path, field: str) -> None:
     _write_build(builds[1], archives[1], right)
 
     with pytest.raises(TwoBuilderError, match="not independent"):
-        verify_two_builds(
-            build_paths=builds,
-            archive_paths=archives,
-            expected_source_commit=COMMIT,
-        )
+        _verify_two(fixture)
 
 
 def test_rejects_toolchain_or_input_drift(tmp_path: Path) -> None:
-    builds, archives = _fixture(tmp_path)
+    fixture = _two_builder_fixture(tmp_path)
+    builds = fixture["builds"]
+    archives = fixture["archives"]
     right_build = json.loads(builds[1].read_bytes())
     right_builder = right_build["candidate"]["receipt"]["builder"]
     right_builder["before"]["buildkitVersion"] = "v0.27.0"
     right_builder["after"]["buildkitVersion"] = "v0.27.0"
     _write_build(builds[1], archives[1], right_build)
     with pytest.raises(TwoBuilderError, match="toolchains differ"):
-        verify_two_builds(
-            build_paths=builds,
-            archive_paths=archives,
-            expected_source_commit=COMMIT,
-        )
+        _verify_two(fixture)
 
+    left_build = json.loads(builds[0].read_bytes())
     right_build = _build(
         "b",
-        str(json.loads(builds[0].read_bytes())["candidate"]["image_id"]),
+        str(left_build["candidate"]["image_id"]),
         hashlib.sha256(archives[1].read_bytes()).hexdigest(),
+        buildkit_result_digest=str(
+            left_build["candidate"]["receipt"][
+                "candidate_buildkit_result_digest"
+            ]
+        ),
     )
     right_build["source"]["dockerfile_sha256"] = "3" * 64
     _write_build(builds[1], archives[1], right_build)
     with pytest.raises(TwoBuilderError, match="input authorities differ"):
-        verify_two_builds(
-            build_paths=builds,
-            archive_paths=archives,
-            expected_source_commit=COMMIT,
+        _verify_two(fixture)
+
+
+def test_rejects_full_oci_config_drift(tmp_path: Path) -> None:
+    fixture = _two_builder_fixture(tmp_path)
+    builds = fixture["builds"]
+    archives = fixture["archives"]
+    different_root = tmp_path / "config-drift"
+    different_root.mkdir(mode=0o700)
+    different = different_root / "candidate.tar"
+    image_id, config_digest = _archive(different, mtime=3, user="0:0")
+    _replace_candidate_archive(
+        builds[1],
+        different,
+        image_id=image_id,
+        buildkit_result_digest=config_digest,
+    )
+
+    with pytest.raises(TwoBuilderError, match="OCI config differs"):
+        _verify_two(
+            fixture,
+            archive_paths=(archives[0], different),
         )
 
 
-def test_rejects_runtime_or_archive_drift(tmp_path: Path) -> None:
-    builds, archives = _fixture(tmp_path)
-    different_root = tmp_path / "different-artifact"
+def test_rejects_uncompressed_layer_and_runtime_file_byte_drift(
+    tmp_path: Path,
+) -> None:
+    fixture = _two_builder_fixture(tmp_path)
+    builds = fixture["builds"]
+    archives = fixture["archives"]
+    different_root = tmp_path / "runtime-file-drift"
     different_root.mkdir(mode=0o700)
     different = different_root / "candidate.tar"
-    different_id = _archive(different, mtime=3, user="0:0")
-    right = json.loads(builds[1].read_bytes())
-    right["candidate"]["image_id"] = different_id
-    right["candidate"]["receipt"]["candidate_buildkit_result_digest"] = different_id
-    right["candidate"]["receipt"]["candidate_image_config_digest"] = different_id
-    right["candidate"]["receipt"]["candidate_image_id"] = different_id
-    right["candidate"]["receipt"]["candidate_image_archive_sha256"] = hashlib.sha256(
-        different.read_bytes()
-    ).hexdigest()
-    _write_build(builds[1], different, right)
+    image_id, config_digest = _archive(
+        different,
+        mtime=3,
+        runtime_content=b"changed runtime file bytes\n",
+    )
+    _replace_candidate_archive(
+        builds[1],
+        different,
+        image_id=image_id,
+        buildkit_result_digest=config_digest,
+    )
 
-    with pytest.raises(TwoBuilderError, match="semantics differ"):
-        verify_two_builds(
-            build_paths=builds,
+    with pytest.raises(TwoBuilderError, match="uncompressed layers differ"):
+        _verify_two(
+            fixture,
             archive_paths=(archives[0], different),
-            expected_source_commit=COMMIT,
         )
 
 
 def test_rejects_reused_build_receipt_even_at_a_second_path(tmp_path: Path) -> None:
-    builds, archives = _fixture(tmp_path)
+    fixture = _two_builder_fixture(tmp_path)
+    builds = fixture["builds"]
+    archives = fixture["archives"]
     reused = json.loads(builds[0].read_bytes())
     _write_build(builds[1], archives[1], reused)
 
     with pytest.raises(TwoBuilderError, match="build receipt was reused"):
-        verify_two_builds(
-            build_paths=builds,
-            archive_paths=archives,
-            expected_source_commit=COMMIT,
-        )
+        _verify_two(fixture)
 
 
 def test_rejects_candidate_receipt_not_bound_to_build(tmp_path: Path) -> None:
-    builds, archives = _fixture(tmp_path)
+    fixture = _two_builder_fixture(tmp_path)
+    archives = fixture["archives"]
     persisted = json.loads(
         (archives[1].parent / "candidate-image-receipt.json").read_bytes()
     )
@@ -826,17 +1090,15 @@ def test_rejects_candidate_receipt_not_bound_to_build(tmp_path: Path) -> None:
     _write(archives[1].parent / "candidate-image-receipt.json", persisted)
 
     with pytest.raises(TwoBuilderError, match="persisted candidate receipt differs"):
-        verify_two_builds(
-            build_paths=builds,
-            archive_paths=archives,
-            expected_source_commit=COMMIT,
-        )
+        _verify_two(fixture)
 
 
 def test_rejects_reused_run_challenge_or_midbuild_identity_change(
     tmp_path: Path,
 ) -> None:
-    builds, archives = _fixture(tmp_path)
+    fixture = _two_builder_fixture(tmp_path)
+    builds = fixture["builds"]
+    archives = fixture["archives"]
     left = json.loads(builds[0].read_bytes())
     right = json.loads(builds[1].read_bytes())
     right_builder = right["candidate"]["receipt"]["builder"]
@@ -845,22 +1107,17 @@ def test_rejects_reused_run_challenge_or_midbuild_identity_change(
     ]
     _write_build(builds[1], archives[1], right)
     with pytest.raises(TwoBuilderError, match="challenge was reused"):
-        verify_two_builds(
-            build_paths=builds,
-            archive_paths=archives,
-            expected_source_commit=COMMIT,
-        )
+        _verify_two(fixture)
 
     right = _build(
         "b",
         str(left["candidate"]["image_id"]),
         hashlib.sha256(archives[1].read_bytes()).hexdigest(),
+        buildkit_result_digest=str(
+            left["candidate"]["receipt"]["candidate_buildkit_result_digest"]
+        ),
     )
     right["candidate"]["receipt"]["builder"]["after"]["daemonId"] = "changed"
     _write_build(builds[1], archives[1], right)
     with pytest.raises(TwoBuilderError, match="changed during build"):
-        verify_two_builds(
-            build_paths=builds,
-            archive_paths=archives,
-            expected_source_commit=COMMIT,
-        )
+        _verify_two(fixture)

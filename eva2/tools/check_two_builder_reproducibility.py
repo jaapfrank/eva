@@ -14,11 +14,18 @@ import stat
 import tarfile
 from typing import Any
 
-from tools.managed_b_candidate.private_receipt import (
-    PrivateReceiptError,
-    canonical_json,
-    write_new_private_json,
-)
+if __package__:
+    from tools.managed_b_candidate.private_receipt import (
+        PrivateReceiptError,
+        canonical_json,
+        write_new_private_json,
+    )
+else:  # Direct execution from eva2/tools.
+    from managed_b_candidate.private_receipt import (
+        PrivateReceiptError,
+        canonical_json,
+        write_new_private_json,
+    )
 
 
 BUILDER_CONTRACT = "EvaMeasuredDockerBuilder/v2"
@@ -35,6 +42,22 @@ _IMAGE_ID = re.compile(r"sha256:[0-9a-f]{64}\Z")
 _COMMIT = re.compile(r"[0-9a-f]{40}\Z")
 _MAX_JSON_BYTES = 32 * 1024 * 1024
 _MAX_ARCHIVE_BYTES = 2 * 1024 * 1024 * 1024
+_INDEPENDENT_BUILDER_FIELDS = (
+    "buildkitNodeId",
+    "containerdContainersNamespace",
+    "containerdPluginsNamespace",
+    "containerdSocketIdentitySha256",
+    "daemonId",
+    "socketIdentitySha256",
+    "stateRootIdentitySha256",
+)
+_TOOLCHAIN_FIELDS = (
+    "backend",
+    "buildkitVersion",
+    "containerdImageStore",
+    "dockerExecutableSha256",
+    "dockerServerVersion",
+)
 
 
 class TwoBuilderError(RuntimeError):
@@ -339,7 +362,87 @@ def _layer_diff_id(name: str, raw: bytes) -> str:
     return f"sha256:{_sha256(raw)}"
 
 
-def _image_semantics(path: Path, *, expected_archive_sha256: str) -> dict[str, object]:
+def _oci_image_binding(
+    members: dict[str, bytes],
+    *,
+    expected_image_id: str,
+    config_name: str,
+    layers: list[str],
+) -> dict[str, str]:
+    """Bind the claimed image ID through the OCI index and manifest blobs."""
+
+    try:
+        layout = json.loads(members["oci-layout"])
+        index = json.loads(members["index.json"])
+    except (KeyError, UnicodeDecodeError, json.JSONDecodeError) as error:
+        raise TwoBuilderError("candidate OCI index is invalid") from error
+    layout = _object(layout, label="candidate OCI layout")
+    index = _object(index, label="candidate OCI index")
+    manifests = index.get("manifests")
+    if (
+        layout != {"imageLayoutVersion": "1.0.0"}
+        or index.get("schemaVersion") != 2
+        or not isinstance(manifests, list)
+        or len(manifests) != 1
+    ):
+        raise TwoBuilderError("candidate OCI index contract differs")
+    descriptor = _object(manifests[0], label="candidate OCI image descriptor")
+    platform = _object(descriptor.get("platform"), label="candidate OCI platform")
+    if (
+        descriptor.get("digest") != expected_image_id
+        or platform.get("architecture") != "amd64"
+        or platform.get("os") != "linux"
+    ):
+        raise TwoBuilderError("candidate image ID differs from OCI index")
+    manifest_name = f"blobs/sha256/{expected_image_id.removeprefix('sha256:')}"
+    try:
+        manifest_raw = members[manifest_name]
+        image_manifest = json.loads(manifest_raw)
+    except (KeyError, UnicodeDecodeError, json.JSONDecodeError) as error:
+        raise TwoBuilderError("candidate OCI image manifest is invalid") from error
+    if (
+        f"sha256:{_sha256(manifest_raw)}" != expected_image_id
+        or descriptor.get("size") != len(manifest_raw)
+    ):
+        raise TwoBuilderError("candidate OCI image manifest digest differs")
+    image_manifest = _object(image_manifest, label="candidate OCI image manifest")
+    layer_descriptors = image_manifest.get("layers")
+    if (
+        image_manifest.get("schemaVersion") != 2
+        or not isinstance(layer_descriptors, list)
+        or len(layer_descriptors) != len(layers)
+    ):
+        raise TwoBuilderError("candidate OCI image manifest contract differs")
+    config_descriptor = _object(
+        image_manifest.get("config"), label="candidate OCI config descriptor"
+    )
+    expected_config_digest = f"sha256:{_sha256(members[config_name])}"
+    if (
+        config_name
+        != f"blobs/sha256/{expected_config_digest.removeprefix('sha256:')}"
+        or config_descriptor.get("digest") != expected_config_digest
+        or config_descriptor.get("size") != len(members[config_name])
+    ):
+        raise TwoBuilderError("candidate OCI config descriptor differs")
+    for layer_name, value in zip(layers, layer_descriptors, strict=True):
+        layer_descriptor = _object(value, label="candidate OCI layer descriptor")
+        expected_digest = f"sha256:{_sha256(members[layer_name])}"
+        if (
+            layer_name
+            != f"blobs/sha256/{expected_digest.removeprefix('sha256:')}"
+            or layer_descriptor.get("digest") != expected_digest
+            or layer_descriptor.get("size") != len(members[layer_name])
+        ):
+            raise TwoBuilderError("candidate OCI layer descriptor differs")
+    return {
+        "ociIndexSha256": _sha256(members["index.json"]),
+        "ociManifestSha256": _sha256(manifest_raw),
+    }
+
+
+def _image_semantics(
+    path: Path, *, expected_archive_sha256: str, expected_image_id: str
+) -> dict[str, object]:
     raw = _safe_file(path, label="candidate archive", maximum=_MAX_ARCHIVE_BYTES)
     if _sha256(raw) != expected_archive_sha256:
         raise TwoBuilderError("candidate archive hash differs from build receipt")
@@ -390,12 +493,25 @@ def _image_semantics(path: Path, *, expected_archive_sha256: str) -> dict[str, o
     if config.get("architecture") != "amd64" or config.get("os") != "linux":
         raise TwoBuilderError("candidate platform differs")
     runtime = _object(config.get("config"), label="candidate runtime config")
+    oci_binding = _oci_image_binding(
+        members,
+        expected_image_id=expected_image_id,
+        config_name=config_name,
+        layers=layers,
+    )
     return {
         "archiveSha256": expected_archive_sha256,
         "buildkitResultDigest": f"sha256:{_sha256(config_raw)}",
         "configSha256": _sha256(config_raw),
         "diffIds": diff_ids,
+        **oci_binding,
         "runtimeConfigSha256": _sha256(_canonical(runtime)),
+        # Ordered DiffIDs authenticate every byte and position of every
+        # uncompressed layer.  This compact hash names that layer sequence; it
+        # does not claim to be a separately materialised rootfs-tree hash.
+        "runtimeLayerSequenceSha256": _sha256(
+            _canonical({"orderedUncompressedLayerDiffIds": diff_ids})
+        ),
     }
 
 
@@ -523,15 +639,7 @@ def _verify_single_builder(
     ):
         raise TwoBuilderError(f"{builder_label} backend is not sealed OCI capable")
     if required_independent_builder_identity is not None:
-        for key in (
-            "buildkitNodeId",
-            "containerdContainersNamespace",
-            "containerdPluginsNamespace",
-            "containerdSocketIdentitySha256",
-            "daemonId",
-            "socketIdentitySha256",
-            "stateRootIdentitySha256",
-        ):
+        for key in _INDEPENDENT_BUILDER_FIELDS:
             if preflight_builder[key] == required_independent_builder_identity[key]:
                 raise TwoBuilderError(
                     f"{builder_label} identity is not independent from builder-A"
@@ -573,7 +681,9 @@ def _verify_single_builder(
     ):
         raise TwoBuilderError(f"{builder_label} build binding differs from preflight")
     semantics = _image_semantics(
-        archive_path, expected_archive_sha256=str(build["archiveSha256"])
+        archive_path,
+        expected_archive_sha256=str(build["archiveSha256"]),
+        expected_image_id=str(build["imageId"]),
     )
     if semantics["buildkitResultDigest"] != build["buildkitResultDigest"]:
         raise TwoBuilderError("archive BuildKit result differs from build receipt")
@@ -720,7 +830,14 @@ def _verify_single_builder(
 
     return {
         "builder": preflight_builder,
-        "candidate": {**semantics, "imageId": build["imageId"]},
+        "candidate": {
+            "archiveSha256": semantics["archiveSha256"],
+            "buildkitResultDigest": semantics["buildkitResultDigest"],
+            "configSha256": semantics["configSha256"],
+            "diffIds": semantics["diffIds"],
+            "imageId": build["imageId"],
+            "runtimeConfigSha256": semantics["runtimeConfigSha256"],
+        },
         "chain": chain_hashes,
         "contract": SINGLE_BUILDER_CONTRACT,
         "releaseAuthoritySha256": expected_authority_sha256,
@@ -839,15 +956,7 @@ def _builder_a_prior_identity(
     ):
         if replay.get(key) != chain.get(key):
             raise TwoBuilderError("builder-A replay evidence differs from its chain")
-    for key in (
-        "buildkitNodeId",
-        "containerdContainersNamespace",
-        "containerdPluginsNamespace",
-        "containerdSocketIdentitySha256",
-        "daemonId",
-        "socketIdentitySha256",
-        "stateRootIdentitySha256",
-    ):
+    for key in _INDEPENDENT_BUILDER_FIELDS:
         if key in replay and replay[key] != identity[key]:
             raise TwoBuilderError("builder-A replay identity differs from preflight")
     return identity
@@ -898,31 +1007,190 @@ def verify_single_builder_b(
     )
 
 
+def _admitted_builder_evidence(
+    *,
+    path: Path,
+    role: str,
+    expected_receipt_sha256: str,
+    expected_source_commit: str,
+    expected_authority_sha256: str,
+    build: dict[str, object],
+    build_receipt_sha256: str,
+    candidate_receipt_sha256: str,
+    semantics: dict[str, object],
+) -> dict[str, object]:
+    """Bind one immutable RB-003/RB-004 admission to its candidate bytes."""
+
+    admission, raw = _json_file(path, label=f"builder-{role} admission")
+    if _sha256(raw) != expected_receipt_sha256:
+        raise TwoBuilderError(f"builder-{role} admission receipt hash differs")
+    expected_task = "RB-003" if role == "A" else "RB-004"
+    expected_prefix = f"rb00{3 if role == 'A' else 4}-builder-{role.lower()}-"
+    run_id = admission.get("runId")
+    if (
+        admission.get("contract") != SINGLE_BUILDER_CONTRACT
+        or admission.get("status") != "passed"
+        or admission.get("sourceCommit") != expected_source_commit
+        or admission.get("releaseAuthoritySha256") != expected_authority_sha256
+        or not isinstance(run_id, str)
+        or not run_id.startswith(expected_prefix)
+        or (role == "B" and admission.get("taskId") != expected_task)
+        or (role == "A" and "taskId" in admission)
+    ):
+        raise TwoBuilderError(f"builder-{role} admission contract differs")
+
+    chain = _object(admission.get("chain"), label=f"builder-{role} admission chain")
+    for field in (
+        "archiveSha256",
+        "buildReceiptSha256",
+        "candidateReceiptSha256",
+        "postflightReceiptSha256",
+        "preflightReceiptSha256",
+        "releaseAuthorityReceiptSha256",
+    ):
+        _sha(chain.get(field), label=f"builder-{role} admission {field}")
+    if (
+        chain.get("archiveSha256") != build["archiveSha256"]
+        or chain.get("buildReceiptSha256") != build_receipt_sha256
+        or chain.get("candidateReceiptSha256") != candidate_receipt_sha256
+    ):
+        raise TwoBuilderError(f"builder-{role} admission chain differs from candidate")
+
+    candidate = _object(
+        admission.get("candidate"), label=f"builder-{role} admitted candidate"
+    )
+    expected_candidate = {
+        "archiveSha256": semantics["archiveSha256"],
+        "buildkitResultDigest": semantics["buildkitResultDigest"],
+        "configSha256": semantics["configSha256"],
+        "diffIds": semantics["diffIds"],
+        "imageId": build["imageId"],
+        "runtimeConfigSha256": semantics["runtimeConfigSha256"],
+    }
+    if candidate != expected_candidate:
+        raise TwoBuilderError(
+            f"builder-{role} admitted candidate differs from archive semantics"
+        )
+
+    build_builder = _object(build["builder"], label=f"builder-{role} build binding")
+    identity = _object(
+        build_builder.get("identity"), label=f"builder-{role} build identity"
+    )
+    summary = _object(
+        admission.get("builder"), label=f"builder-{role} admission builder"
+    )
+    summary_fields: tuple[str, ...] = (
+        "backend",
+        "buildkitNodeId",
+        "buildkitVersion",
+        "daemonId",
+        "dockerServerVersion",
+    )
+    if role == "B":
+        summary_fields = tuple(identity)
+    if (role == "B" and set(summary) != set(summary_fields)) or any(
+        summary.get(field) != identity[field] for field in summary_fields
+    ):
+        raise TwoBuilderError(f"builder-{role} admission builder differs from build")
+
+    replay = _object(
+        admission.get("replayKeys"), label=f"builder-{role} admission replay keys"
+    )
+    for field in (
+        "buildReceiptSha256",
+        "candidateReceiptSha256",
+        "postflightReceiptSha256",
+        "preflightReceiptSha256",
+    ):
+        if replay.get(field) != chain[field]:
+            raise TwoBuilderError(f"builder-{role} admission replay chain differs")
+    if role == "A" and (
+        replay.get("archiveSha256") != chain["archiveSha256"]
+        or replay.get("releaseAuthorityReceiptSha256")
+        != chain["releaseAuthorityReceiptSha256"]
+    ):
+        raise TwoBuilderError("builder-A admission replay chain differs")
+    identity_replay_fields = _INDEPENDENT_BUILDER_FIELDS
+    if role == "A":
+        identity_replay_fields = ("daemonId", "stateRootIdentitySha256")
+    for field in identity_replay_fields:
+        if replay.get(field) != identity[field]:
+            raise TwoBuilderError(f"builder-{role} admission replay identity differs")
+    challenges = tuple(
+        _challenge(replay.get(field), label=f"builder-{role} {field}")
+        for field in (
+            "admissionChallenge",
+            "buildRunChallenge",
+            "observationChallenge",
+        )
+    )
+    if len(set(challenges)) != len(challenges):
+        raise TwoBuilderError(f"builder-{role} admission challenges were reused")
+    if replay.get("buildRunChallenge") != build_builder["runChallenge"]:
+        raise TwoBuilderError(f"builder-{role} admission build challenge differs")
+    return {
+        "chain": chain,
+        "challenges": challenges,
+        "receiptSha256": expected_receipt_sha256,
+        "runId": run_id,
+        "taskId": expected_task,
+    }
+
+
 def verify_two_builds(
     *,
+    admission_paths: tuple[Path, Path],
     build_paths: tuple[Path, Path],
     archive_paths: tuple[Path, Path],
+    expected_admission_sha256: tuple[str, str],
     expected_source_commit: str,
+    expected_authority_sha256: str,
 ) -> dict[str, object]:
     if _COMMIT.fullmatch(expected_source_commit) is None:
         raise TwoBuilderError("expected source commit is invalid")
-    if build_paths[0] == build_paths[1] or archive_paths[0] == archive_paths[1]:
-        raise TwoBuilderError("two distinct build and archive paths are required")
+    if not all(
+        len(paths) == 2
+        for paths in (
+            admission_paths,
+            build_paths,
+            archive_paths,
+            expected_admission_sha256,
+        )
+    ):
+        raise TwoBuilderError("exactly two admitted builder evidence sets are required")
+    expected_authority_sha256 = _sha(
+        expected_authority_sha256, label="expected release authority"
+    )
+    expected_admission_sha256 = tuple(
+        _sha(value, label="expected admission receipt")
+        for value in expected_admission_sha256
+    )
+    candidate_receipt_paths = tuple(
+        archive_path.parent / "candidate-image-receipt.json"
+        for archive_path in archive_paths
+    )
+    evidence_paths = (
+        *admission_paths,
+        *build_paths,
+        *archive_paths,
+        *candidate_receipt_paths,
+    )
+    if len(set(evidence_paths)) != len(evidence_paths):
+        raise TwoBuilderError("distinct physical evidence paths are required")
     build_documents = [_json_file(path, label="build receipt") for path in build_paths]
     build_receipt_sha256 = [_sha256(raw) for _value, raw in build_documents]
     if build_receipt_sha256[0] == build_receipt_sha256[1]:
         raise TwoBuilderError("one build receipt was reused")
-    build_file_identities = [
-        _physical_identity(path, label="build receipt") for path in build_paths
+    evidence_file_identities = [
+        _physical_identity(path, label="two-builder evidence")
+        for path in evidence_paths
     ]
-    archive_file_identities = [
-        _physical_identity(path, label="candidate archive") for path in archive_paths
-    ]
-    if (
-        build_file_identities[0] == build_file_identities[1]
-        or archive_file_identities[0] == archive_file_identities[1]
-    ):
-        raise TwoBuilderError("one physical build artifact was reused")
+    if len(set(evidence_file_identities)) != len(evidence_file_identities):
+        raise TwoBuilderError("one physical two-builder artifact was reused")
+    admission_file_identities = evidence_file_identities[0:2]
+    build_file_identities = evidence_file_identities[2:4]
+    archive_file_identities = evidence_file_identities[4:6]
+    candidate_receipt_file_identities = evidence_file_identities[6:8]
     builds = [
         _build_inputs(
             document[0],
@@ -931,8 +1199,9 @@ def verify_two_builds(
         for document in build_documents
     ]
     candidate_receipt_sha256: list[str] = []
-    for archive_path, build in zip(archive_paths, builds, strict=True):
-        candidate_receipt_path = archive_path.parent / "candidate-image-receipt.json"
+    for candidate_receipt_path, build in zip(
+        candidate_receipt_paths, builds, strict=True
+    ):
         candidate_receipt, candidate_raw = _json_file(
             candidate_receipt_path, label="candidate image receipt"
         )
@@ -941,6 +1210,8 @@ def verify_two_builds(
                 "persisted candidate receipt differs from its build receipt"
             )
         candidate_receipt_sha256.append(_sha256(candidate_raw))
+    if candidate_receipt_sha256[0] == candidate_receipt_sha256[1]:
+        raise TwoBuilderError("one candidate receipt was reused")
     builders = [build["builder"] for build in builds]
     identities = [
         _object(builder, label="builder binding")["identity"] for builder in builders
@@ -954,22 +1225,9 @@ def verify_two_builds(
     ]
     if challenges[0] == challenges[1]:
         raise TwoBuilderError("builder run challenge was reused")
-    if any(
-        identities[0][key] != identities[1][key]
-        for key in (
-            "backend",
-            "buildkitVersion",
-            "dockerExecutableSha256",
-            "dockerServerVersion",
-        )
-    ):
+    if any(identities[0][key] != identities[1][key] for key in _TOOLCHAIN_FIELDS):
         raise TwoBuilderError("builder toolchains differ")
-    for key in (
-        "buildkitNodeId",
-        "daemonId",
-        "socketIdentitySha256",
-        "stateRootIdentitySha256",
-    ):
+    for key in _INDEPENDENT_BUILDER_FIELDS:
         if identities[0][key] == identities[1][key]:
             raise TwoBuilderError(
                 "builder identities or state roots are not independent"
@@ -977,7 +1235,11 @@ def verify_two_builds(
     if builds[0]["authority"] != builds[1]["authority"]:
         raise TwoBuilderError("build input authorities differ")
     semantics = [
-        _image_semantics(path, expected_archive_sha256=str(build["archiveSha256"]))
+        _image_semantics(
+            path,
+            expected_archive_sha256=str(build["archiveSha256"]),
+            expected_image_id=str(build["imageId"]),
+        )
         for path, build in zip(archive_paths, builds, strict=True)
     ]
     for index in (0, 1):
@@ -986,52 +1248,111 @@ def verify_two_builds(
             != builds[index]["buildkitResultDigest"]
         ):
             raise TwoBuilderError("archive BuildKit result differs from build receipt")
-    if builds[0]["imageId"] != builds[1]["imageId"]:
-        raise TwoBuilderError("candidate image semantics differ")
-    for key in (
-        "buildkitResultDigest",
-        "configSha256",
-        "diffIds",
-        "runtimeConfigSha256",
-    ):
+    semantic_comparisons = {
+        "diffIds": "candidate uncompressed layers differ",
+        "configSha256": "candidate OCI config differs",
+        "runtimeConfigSha256": "candidate runtime config differs",
+        "buildkitResultDigest": "candidate BuildKit results differ",
+        "ociManifestSha256": "candidate OCI image manifests differ",
+    }
+    for key, message in semantic_comparisons.items():
         if semantics[0][key] != semantics[1][key]:
-            raise TwoBuilderError("candidate image semantics differ")
-    return {
-        "builders": [
+            raise TwoBuilderError(message)
+    if builds[0]["imageId"] != builds[1]["imageId"]:
+        raise TwoBuilderError("candidate image IDs differ")
+
+    admissions = [
+        _admitted_builder_evidence(
+            path=admission_path,
+            role=role,
+            expected_receipt_sha256=expected_receipt_sha256,
+            expected_source_commit=expected_source_commit,
+            expected_authority_sha256=expected_authority_sha256,
+            build=build,
+            build_receipt_sha256=build_sha256,
+            candidate_receipt_sha256=candidate_sha256,
+            semantics=image_semantics,
+        )
+        for admission_path, role, expected_receipt_sha256, build, build_sha256, candidate_sha256, image_semantics in zip(
+            admission_paths,
+            ("A", "B"),
+            expected_admission_sha256,
+            builds,
+            build_receipt_sha256,
+            candidate_receipt_sha256,
+            semantics,
+            strict=True,
+        )
+    ]
+    if admissions[0]["receiptSha256"] == admissions[1]["receiptSha256"]:
+        raise TwoBuilderError("one builder admission was reused")
+    admission_chains = [
+        _object(admission["chain"], label="builder admission chain")
+        for admission in admissions
+    ]
+    if (
+        admission_chains[0]["releaseAuthorityReceiptSha256"]
+        != admission_chains[1]["releaseAuthorityReceiptSha256"]
+    ):
+        raise TwoBuilderError("release authority receipt differs between builders")
+    for field in (
+        "buildReceiptSha256",
+        "candidateReceiptSha256",
+        "postflightReceiptSha256",
+        "preflightReceiptSha256",
+    ):
+        if admission_chains[0][field] == admission_chains[1][field]:
+            raise TwoBuilderError("one builder proof was reused")
+    admission_challenges = [
+        challenge
+        for admission in admissions
+        for challenge in admission["challenges"]
+    ]
+    if len(set(admission_challenges)) != 6:
+        raise TwoBuilderError("one admission, build, or observation challenge was reused")
+
+    builder_results: list[dict[str, object]] = []
+    for index in range(2):
+        identity = identities[index]
+        admission = admissions[index]
+        build = builds[index]
+        builder_results.append(
             {
-                "backend": identity["backend"],
-                "buildReceiptFileIdentitySha256": build_file_identity,
-                "buildReceiptSha256": build_sha256,
-                "buildkitNodeId": identity["buildkitNodeId"],
-                "buildkitVersion": identity["buildkitVersion"],
-                "candidateArchiveFileIdentitySha256": archive_file_identity,
+                "admissionChain": admission["chain"],
+                "admissionReceiptFileIdentitySha256": admission_file_identities[index],
+                "admissionReceiptSha256": admission["receiptSha256"],
+                "admissionRunId": admission["runId"],
+                "buildReceiptFileIdentitySha256": build_file_identities[index],
+                "buildReceiptSha256": build_receipt_sha256[index],
+                "candidateArchiveFileIdentitySha256": archive_file_identities[index],
                 "candidateArchiveSha256": build["archiveSha256"],
-                "candidateReceiptSha256": candidate_sha256,
-                "daemonId": identity["daemonId"],
-                "dockerExecutableSha256": identity["dockerExecutableSha256"],
-                "dockerServerVersion": identity["dockerServerVersion"],
-                "runChallenge": challenge,
-                "socketIdentitySha256": identity["socketIdentitySha256"],
-                "stateRootIdentitySha256": identity["stateRootIdentitySha256"],
+                "candidateReceiptFileIdentitySha256": (
+                    candidate_receipt_file_identities[index]
+                ),
+                "candidateReceiptSha256": candidate_receipt_sha256[index],
+                "runChallenge": challenges[index],
+                "taskId": admission["taskId"],
+                **{
+                    field: identity[field]
+                    for field in (*_TOOLCHAIN_FIELDS, *_INDEPENDENT_BUILDER_FIELDS)
+                },
             }
-            for identity, challenge, build, build_sha256, build_file_identity, archive_file_identity, candidate_sha256 in zip(
-                identities,
-                challenges,
-                builds,
-                build_receipt_sha256,
-                build_file_identities,
-                archive_file_identities,
-                candidate_receipt_sha256,
-                strict=True,
-            )
-        ],
+        )
+    return {
+        "builders": builder_results,
         "candidate": {**semantics[0], "imageId": builds[0]["imageId"]},
         "contract": RESULT_CONTRACT,
         "inputAuthoritySha256": _sha256(_canonical(builds[0]["authority"])),
         "nonclaims": [
             "Two daemon and cache states on one host do not prove independence from the shared host, kernel, or operator.",
+            (
+                "Passed status is meaningful only when the expected admission, "
+                "release-authority, and source anchors are independently matched "
+                "to the accepted RB-003 and RB-004 public evidence."
+            ),
             "Reproducibility and a clean runtime scan do not prove that the candidate is vulnerability-free or ready for promotion.",
         ],
+        "releaseAuthoritySha256": expected_authority_sha256,
         "sourceCommit": expected_source_commit,
         "status": "passed",
     }
@@ -1039,18 +1360,31 @@ def verify_two_builds(
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--admission-a", type=Path, required=True)
+    parser.add_argument("--admission-b", type=Path, required=True)
     parser.add_argument("--build-a", type=Path, required=True)
     parser.add_argument("--build-b", type=Path, required=True)
     parser.add_argument("--archive-a", type=Path, required=True)
     parser.add_argument("--archive-b", type=Path, required=True)
+    parser.add_argument("--expected-admission-a-sha256", required=True)
+    parser.add_argument("--expected-admission-b-sha256", required=True)
+    parser.add_argument("--expected-release-authority-sha256", required=True)
     parser.add_argument("--expected-source-commit", required=True)
     parser.add_argument("--receipt", type=Path, required=True)
     arguments = parser.parse_args()
     try:
         result = verify_two_builds(
+            admission_paths=(arguments.admission_a, arguments.admission_b),
             build_paths=(arguments.build_a, arguments.build_b),
             archive_paths=(arguments.archive_a, arguments.archive_b),
+            expected_admission_sha256=(
+                arguments.expected_admission_a_sha256,
+                arguments.expected_admission_b_sha256,
+            ),
             expected_source_commit=arguments.expected_source_commit,
+            expected_authority_sha256=(
+                arguments.expected_release_authority_sha256
+            ),
         )
         write_new_private_json(
             arguments.receipt, result, label="two-builder result receipt"
