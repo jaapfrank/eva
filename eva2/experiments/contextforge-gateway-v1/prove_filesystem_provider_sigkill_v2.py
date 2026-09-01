@@ -550,7 +550,7 @@ def _runtime_budget() -> RuntimeResourceBudget:
         "background_reflections_per_person_day": 0,
         "external_monthly_spend_cap_eur_cents": 0,
         "max_input_tokens": 8_000,
-        "max_output_tokens": 1_500,
+        "max_output_tokens": 1_200,
         "memory_bytes_per_group": 0,
         "memory_bytes_per_installation": 1_048_576,
         "memory_bytes_per_person": 1_048_576,

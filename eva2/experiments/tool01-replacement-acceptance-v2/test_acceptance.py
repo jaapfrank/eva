@@ -13,6 +13,9 @@ from typing import Any
 
 import pytest
 
+from eva.contracts.canonical_json import canonical_json_bytes
+from eva.contracts.runtime_budget import RuntimeResourceBudget
+
 
 HERE = Path(__file__).resolve().parent
 PRODUCER = (
@@ -81,6 +84,33 @@ def test_proof_producer_is_one_self_contained_hashed_file() -> None:
     }
     functions = {node.name for node in tree.body if isinstance(node, ast.FunctionDef)}
     assert {"_json_request", "_login", "_migrate", "_write_private"} <= functions
+
+
+def test_proof_runtime_budget_satisfies_the_product_contract() -> None:
+    tree = ast.parse(PRODUCER.read_text(encoding="utf-8"))
+    function = next(
+        node
+        for node in tree.body
+        if isinstance(node, ast.FunctionDef) and node.name == "_runtime_budget"
+    )
+    namespace = {
+        "Any": Any,
+        "RuntimeResourceBudget": RuntimeResourceBudget,
+        "canonical_json_bytes": canonical_json_bytes,
+        "hashlib": hashlib,
+    }
+    exec(  # noqa: S102 - executes the tracked, parsed proof helper only.
+        compile(ast.Module(body=[function], type_ignores=[]), "<runtime-budget>", "exec"),
+        namespace,
+    )
+    budget = namespace["_runtime_budget"]()
+
+    assert isinstance(budget, RuntimeResourceBudget)
+    assert budget.max_output_tokens == 1_200
+    assert budget.source_budget_sha256 == hashlib.sha256(
+        canonical_json_bytes(budget.budget_payload())
+    ).hexdigest()
+    assert budget.max_output_tokens <= checker.BUDGET["outputTokens"]
 
 
 def test_host_helpers_keep_stdin_attached_for_private_payloads() -> None:
