@@ -269,9 +269,9 @@
     }
   ],
   "summary": {
-    "files": 2033,
-    "present": 2033,
-    "tracked": 1954,
+    "files": 2035,
+    "present": 2035,
+    "tracked": 1956,
     "untracked": 79,
     "tombstones": 0,
     "policyErrors": 88
@@ -310,12 +310,12 @@
     {
       "id": "eva2-verification",
       "role": "verification",
-      "matchCount": 737
+      "matchCount": 738
     },
     {
       "id": "eva2-documentation",
       "role": "documentation",
-      "matchCount": 109
+      "matchCount": 110
     },
     {
       "id": "eva2-deployment",
@@ -10270,7 +10270,7 @@
       "path": "docs/eva-repository-inventory.generated.json",
       "gitState": "tracked",
       "present": true,
-      "bytes": 2355799,
+      "bytes": 2357734,
       "contentSha256": "32591e23fa2eb53a038d95e726ba09edd0405306f38c5283a36a2b6d3010254d",
       "hashMode": "canonical-self-reference-redacted",
       "role": "generated",
@@ -10303,7 +10303,7 @@
       "path": "docs/eva-repository-inventory.generated.md",
       "gitState": "tracked",
       "present": true,
-      "bytes": 364254,
+      "bytes": 364536,
       "contentSha256": "2f4f8486464cbb9713b749dc898f265093d0853699f1da1b4eb3dd1625c1b2d2",
       "hashMode": "canonical-self-reference-redacted",
       "role": "generated",
@@ -11248,8 +11248,8 @@
       "path": "eva2/WERKBORD.md",
       "gitState": "tracked",
       "present": true,
-      "bytes": 6551,
-      "contentSha256": "e89a0fde79ce8a22e8577904d9c956991fca51167ab3f19dd3d76fe29d3572e0",
+      "bytes": 6557,
+      "contentSha256": "e7b2a4974af081714f36f0606bbe9ae726393e1f8d02382731734135ae26b8c3",
       "hashMode": "exact-bytes",
       "role": "documentation",
       "roleRuleId": "eva2-documentation",
@@ -13261,8 +13261,8 @@
       "path": "eva2/design/product/execution-workboard-v1.json",
       "gitState": "tracked",
       "present": true,
-      "bytes": 23823,
-      "contentSha256": "660e6c0eb33a1ba120098fe73a479e2341d0bbb04f2d9ec912bec9a4ccb0f4c0",
+      "bytes": 24165,
+      "contentSha256": "3f75cf368886ca123cc30badf1e6a9ff29c43b5bcf3a5497bbfdfef9ad9815a8",
       "hashMode": "exact-bytes",
       "role": "documentation",
       "roleRuleId": "eva2-documentation",
@@ -25110,6 +25110,41 @@
       }
     },
     {
+      "path": "eva2/evidence/product/RB-004-builder-b-offline-admission-2026-09-01.json",
+      "gitState": "tracked",
+      "present": true,
+      "bytes": 5981,
+      "contentSha256": "a831e0f9550430bbda7e3d9ef5b08f62c1773db2f2f85b55563283574739e7c1",
+      "hashMode": "exact-bytes",
+      "role": "verification",
+      "roleRuleId": "eva2-verification",
+      "matchingRuleIds": [
+        "eva2-verification"
+      ],
+      "owner": "verification",
+      "inputs": [
+        "production or fixture contract"
+      ],
+      "outputs": [
+        "test decision"
+      ],
+      "state": [
+        "temporary isolated test state"
+      ],
+      "effects": [
+        "may execute only inside its declared gate"
+      ],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": true,
+        "runtimeCritical": true,
+        "status": "included-tracked-critical"
+      }
+    },
+    {
       "path": "eva2/evidence/product/contextforge-generic-tool-durable-proof-2026-08-30.json",
       "gitState": "tracked",
       "present": true,
@@ -36774,6 +36809,37 @@
       "present": true,
       "bytes": 3676,
       "contentSha256": "c631295f044d7f72019c4ee6add351707eec45546c32ce95b55cf3ac4ab255e3",
+      "hashMode": "exact-bytes",
+      "role": "documentation",
+      "roleRuleId": "eva2-documentation",
+      "matchingRuleIds": [
+        "eva2-documentation"
+      ],
+      "owner": "documentation",
+      "inputs": [
+        "design and evidence"
+      ],
+      "outputs": [
+        "human-readable contract"
+      ],
+      "state": [],
+      "effects": [],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": true,
+        "runtimeCritical": false,
+        "status": "included-tracked-noncritical"
+      }
+    },
+    {
+      "path": "eva2/reviews/RB-004-builder-b-offline-admission-f89d3d7.md",
+      "gitState": "tracked",
+      "present": true,
+      "bytes": 4165,
+      "contentSha256": "80f9781f9f6e375c29407d2093dede649ecfed3ad796dff4f5510188dfc4d334",
       "hashMode": "exact-bytes",
       "role": "documentation",
       "roleRuleId": "eva2-documentation",
@@ -58137,8 +58203,8 @@
       "path": "eva2/tests/operations/test_current_workboard.py",
       "gitState": "tracked",
       "present": true,
-      "bytes": 15203,
-      "contentSha256": "6a501223e30a18664918fa61069a3053304bc99bf84c81f60f2d5a9dcdaacb5a",
+      "bytes": 15793,
+      "contentSha256": "f84ec9f743d086a117a65146bc5050a54e657aed363389ee60f6c04fc78865b3",
       "hashMode": "exact-bytes",
       "role": "verification",
       "roleRuleId": "eva2-verification",
@@ -60062,8 +60128,8 @@
       "path": "eva2/tests/operations/test_two_builder_reproducibility.py",
       "gitState": "tracked",
       "present": true,
-      "bytes": 23396,
-      "contentSha256": "8136b469ee4e508b34a150bd5e0ec8222619eaf4400514e535bd10350beb3fd9",
+      "bytes": 31915,
+      "contentSha256": "99b030f7b0e91abd85d5a1122f72c6792d09b00516576ac1d161ab8d957e568e",
       "hashMode": "exact-bytes",
       "role": "verification",
       "roleRuleId": "eva2-verification",
@@ -63982,8 +64048,8 @@
       "path": "eva2/tools/check_two_builder_reproducibility.py",
       "gitState": "tracked",
       "present": true,
-      "bytes": 35266,
-      "contentSha256": "a5db7814f3ce133c67652daeb700c0fa113f9f39ecc5188963fc51464f8fc772",
+      "bytes": 43694,
+      "contentSha256": "5dd1561b07986e2b84b74625390e0e78031dce0c9f4bd6b785d0443ed9a52890",
       "hashMode": "exact-bytes",
       "role": "verification-runtime",
       "roleRuleId": "eva2-verification-runtime",
@@ -82223,5 +82289,5 @@
       }
     }
   ],
-  "sourceDigest": "a0cd4525a6e3f7ba15befb67637c2a5579bd6a002324e30a7e26a66e9ebfadf9"
+  "sourceDigest": "88989167541247052e832f43e3936e1450cf2c044b1b8f228a1895ae28ef201a"
 }

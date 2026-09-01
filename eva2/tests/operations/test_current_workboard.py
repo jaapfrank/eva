@@ -204,18 +204,40 @@ def test_workboard_refuses_surplus_ownership_claims(
 
 
 def test_workboard_refuses_review_without_bound_implementation(tmp_path: Path) -> None:
+    def mutation(value: dict[str, object]) -> None:
+        task = _primary(value)
+        task["status"] = "review"
+        task["stateDetails"] = {
+            "baseCommit": None,
+            "blockerReason": None,
+            "evidenceCommit": None,
+            "implementationCommit": None,
+            "reviewEvidencePaths": [],
+        }
+
     paths = _board(
         tmp_path,
-        lambda value: _primary(value).update({"status": "review"}),
+        mutation,
     )
     with pytest.raises(RuntimeError, match="baseCommit|implementationCommit"):
         _validate_paths(paths)
 
 
 def test_workboard_refuses_blocked_without_concrete_reason(tmp_path: Path) -> None:
+    def mutation(value: dict[str, object]) -> None:
+        task = _primary(value)
+        task["status"] = "blocked"
+        task["stateDetails"] = {
+            "baseCommit": None,
+            "blockerReason": None,
+            "evidenceCommit": None,
+            "implementationCommit": None,
+            "reviewEvidencePaths": [],
+        }
+
     paths = _board(
         tmp_path,
-        lambda value: _primary(value).update({"status": "blocked"}),
+        mutation,
     )
     with pytest.raises(RuntimeError, match="concrete blocker reason"):
         _validate_paths(paths)

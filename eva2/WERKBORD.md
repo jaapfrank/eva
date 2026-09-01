@@ -10,7 +10,7 @@ de volgende begint.
 
 | Volgorde | Kaart | Resultaat | Status |
 |---:|---|---|---|
-| 40 | `RB-004` — Kandidaat op bouwer B maken | Een tweede onafhankelijke verse daemon bouwt dezelfde verzegelde commit offline en levert eigen bewijs. | 🟡 BEZIG |
+| 40 | `RB-004` — Kandidaat op bouwer B maken | Een tweede onafhankelijke verse daemon bouwt dezelfde verzegelde commit offline en levert eigen bewijs. | 🔴 GEBLOKKEERD |
 | 50 | `RB-005` — Beide builds vergelijken | Config, lagen en runtime-inhoud zijn gelijk; bewijshergebruik faalt. | ⚪ HIERNA |
 
 ### Exact werk voor `RB-004`
