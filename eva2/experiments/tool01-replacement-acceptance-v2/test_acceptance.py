@@ -13,7 +13,9 @@ import pytest
 
 
 HERE = Path(__file__).resolve().parent
-SPEC = importlib.util.spec_from_file_location("tool01_v2_acceptance", HERE / "check_acceptance.py")
+SPEC = importlib.util.spec_from_file_location(
+    "tool01_v2_acceptance", HERE / "check_acceptance.py"
+)
 assert SPEC is not None and SPEC.loader is not None
 checker = importlib.util.module_from_spec(SPEC)
 sys.modules[SPEC.name] = checker
@@ -32,14 +34,21 @@ OPERATION_ID = "operation-001"
 HISTORY_SHA = "4" * 64
 RECEIPT_SHA = "5" * 64
 PROVIDER_INSTANCE = "provider-instance-001"
-ARGUMENTS = {"space": "overkapping", "targetTemperatureC": 20}
-EXPECTED = {"comfortActive": True, "space": "overkapping", "temperatureC": 20}
+ARGUMENTS = {"content": "tool01-warm-marker", "path": "tool01-proof.txt"}
+EXECUTE_ARGUMENTS = copy.deepcopy(ARGUMENTS)
+OBSERVE_ARGUMENTS = {"path": "tool01-proof.txt"}
+EXPECTED = {"content": "tool01-warm-marker"}
+TOOL_CONFIGURATION_SHA = "7" * 64
 
 
 def _file_reference(path: Path, value: dict[str, Any]) -> dict[str, Any]:
     raw = (json.dumps(value, sort_keys=True, separators=(",", ":")) + "\n").encode()
     path.write_bytes(raw)
-    return {"bytes": len(raw), "path": path.name, "sha256": hashlib.sha256(raw).hexdigest()}
+    return {
+        "bytes": len(raw),
+        "path": path.name,
+        "sha256": hashlib.sha256(raw).hexdigest(),
+    }
 
 
 def _payload(data: dict[str, Any]) -> dict[str, Any]:
@@ -66,15 +75,20 @@ def _timeline_event(
 def _framework_event(
     sequence: int, kind: str, container_id: str, **data: Any
 ) -> dict[str, Any]:
-    return {"containerId": container_id, "data": data, "kind": kind, "sequence": sequence}
+    return {
+        "containerId": container_id,
+        "data": data,
+        "kind": kind,
+        "sequence": sequence,
+    }
 
 
 def _artifacts(
     *, image_id: str = IMAGE_ID, source_commit: str = SOURCE_COMMIT
 ) -> dict[str, dict[str, Any]]:
-    effect = f"adjust_comfort_{NONCE}"
-    readback = f"read_comfort_{NONCE}"
-    distractor = f"find_music_{NONCE}"
+    effect = f"write_file_{NONCE}"
+    readback = f"read_text_file_{NONCE}"
+    distractor = f"get_current_time_{NONCE}"
     candidate = {
         "contract": checker.CANDIDATE_CONTRACT,
         "imageId": image_id,
@@ -123,21 +137,32 @@ def _artifacts(
         "runId": RUN_ID,
         "tools": [
             {
-                "description": "Adjust comfort in a space.",
-                "inputSchema": {"type": "object"},
+                "description": "Write the requested comfort state to the proof file.",
+                "inputSchema": {
+                    "properties": {
+                        "content": {"type": "string"},
+                        "path": {"type": "string"},
+                    },
+                    "required": ["path", "content"],
+                    "type": "object",
+                },
                 "name": effect,
                 "providerId": "space-provider",
                 "role": "effect",
             },
             {
-                "description": "Read comfort independently.",
-                "inputSchema": {"type": "object"},
+                "description": "Read the proof file independently.",
+                "inputSchema": {
+                    "properties": {"path": {"type": "string"}},
+                    "required": ["path"],
+                    "type": "object",
+                },
                 "name": readback,
                 "providerId": "space-provider",
                 "role": "readback",
             },
             {
-                "description": "Find music without changing comfort.",
+                "description": "Read the current time without changing the proof file.",
                 "inputSchema": {"type": "object"},
                 "name": distractor,
                 "providerId": "music-provider",
@@ -149,7 +174,9 @@ def _artifacts(
         "budget": checker.BUDGET,
         "contract": checker.TRAJECTORY_CONTRACT,
         "events": [
-            _framework_event(1, "catalog_discovered", P1, catalogSha256=checker._sha256(catalog)),
+            _framework_event(
+                1, "catalog_discovered", P1, catalogSha256=checker._sha256(catalog)
+            ),
             _framework_event(
                 2,
                 "deferred_requests",
@@ -203,6 +230,11 @@ def _artifacts(
                 "action_arguments": ARGUMENTS,
                 "action_call_id": CALL_ID,
                 "action_name": effect,
+                "request_arguments": copy.deepcopy(EXECUTE_ARGUMENTS),
+                "request_observation_arguments": copy.deepcopy(OBSERVE_ARGUMENTS),
+                "request_observation_tool_name": readback,
+                "request_tool_configuration_sha256": TOOL_CONFIGURATION_SHA,
+                "request_tool_name": effect,
                 "source_message_id": MESSAGE_ID,
             },
         ),
@@ -211,8 +243,11 @@ def _artifacts(
             "TOOL_PREPARED",
             P1,
             {
-                "arguments": copy.deepcopy(ARGUMENTS),
+                "arguments": copy.deepcopy(EXECUTE_ARGUMENTS),
                 "expected_proof": copy.deepcopy(EXPECTED),
+                "observation_arguments": copy.deepcopy(OBSERVE_ARGUMENTS),
+                "observation_tool_name": readback,
+                "tool_configuration_sha256": TOOL_CONFIGURATION_SHA,
                 "tool_name": effect,
             },
         ),
@@ -260,28 +295,35 @@ def _artifacts(
         "events": timeline_events,
         "runId": RUN_ID,
         "snapshots": {
-            "afterExecuteBeforeKill": snapshot(P1, "tool_prepared", "waiting_for_proof", 2, 2, None),
-            "afterResume": snapshot(P2, "state_verified", "completed", 3, 3, RECEIPT_SHA),
-            "afterThirdProcessReplay": snapshot(P3, "state_verified", "completed", 3, 3, RECEIPT_SHA),
+            "afterExecuteBeforeKill": snapshot(
+                P1, "tool_prepared", "waiting_for_proof", 2, 2, None
+            ),
+            "afterResume": snapshot(
+                P2, "state_verified", "completed", 3, 3, RECEIPT_SHA
+            ),
+            "afterThirdProcessReplay": snapshot(
+                P3, "state_verified", "completed", 3, 3, RECEIPT_SHA
+            ),
         },
     }
-    arguments_sha = checker._sha256(ARGUMENTS)
     provider = {
         "calls": [
             {
-                "argumentsSha256": arguments_sha,
+                "argumentsSha256": checker._sha256(EXECUTE_ARGUMENTS),
                 "callId": "provider-execute-001",
                 "containerId": P1,
                 "kind": "execute",
                 "operationId": OPERATION_ID,
+                "toolConfigurationSha256": TOOL_CONFIGURATION_SHA,
                 "toolName": effect,
             },
             {
-                "argumentsSha256": arguments_sha,
+                "argumentsSha256": checker._sha256(OBSERVE_ARGUMENTS),
                 "callId": "provider-observe-001",
                 "containerId": P2,
                 "kind": "observe",
                 "operationId": OPERATION_ID,
+                "toolConfigurationSha256": TOOL_CONFIGURATION_SHA,
                 "toolName": readback,
             },
         ],
@@ -433,7 +475,9 @@ def test_complete_source_for_same_image_commit_promotes(tmp_path: Path) -> None:
 def test_source_commit_must_match_candidate_image_label(tmp_path: Path) -> None:
     source_root, _ = _source_tree(tmp_path / "source")
     result = _check(_bundle(tmp_path, source_root=source_root), source_root=source_root)
-    assert result["sourceAuthorityViolations"] == ["source_commit_differs_from_candidate"]
+    assert result["sourceAuthorityViolations"] == [
+        "source_commit_differs_from_candidate"
+    ]
     assert result["replacementStatus"] == "failed"
 
 
@@ -456,7 +500,9 @@ def test_candidate_requires_external_authority(
 
 def test_all_three_containers_must_use_exact_candidate_image(tmp_path: Path) -> None:
     def mutate(artifacts):
-        artifacts["containerCrashAudit"]["containers"][2]["imageId"] = "sha256:" + "8" * 64
+        artifacts["containerCrashAudit"]["containers"][2]["imageId"] = (
+            "sha256:" + "8" * 64
+        )
 
     with pytest.raises(checker.Tool01V2Error, match="container image differs"):
         _check(_bundle(tmp_path, mutate=mutate))
@@ -474,7 +520,10 @@ def test_third_process_requires_a_unique_container(tmp_path: Path) -> None:
     ("mutation", "message"),
     [
         (lambda audit: audit["containers"][0]["state"].update(exitCode=1), "exit-137"),
-        (lambda audit: audit["containers"][0]["state"].update(oomKilled=True), "exit-137"),
+        (
+            lambda audit: audit["containers"][0]["state"].update(oomKilled=True),
+            "exit-137",
+        ),
         (lambda audit: audit["kill"].update(signal="TERM"), "SIGKILL"),
         (lambda audit: audit["kill"].update(targetContainerId=P2), "SIGKILL"),
         (lambda audit: audit["kill"].update(commandExitCode=1), "SIGKILL"),
@@ -514,7 +563,9 @@ def test_tool_executed_is_not_valid_in_precommit_crash_window(tmp_path: Path) ->
 
 def test_timeline_payload_hash_is_recomputed(tmp_path: Path) -> None:
     def mutate(artifacts):
-        artifacts["durableTimeline"]["events"][1]["payload"]["data"]["arguments"]["space"] = "garage"
+        artifacts["durableTimeline"]["events"][1]["payload"]["data"]["arguments"][
+            "path"
+        ] = "other-proof.txt"
 
     result = _check(_bundle(tmp_path, mutate=mutate))
     assert "timeline_payload_hash_differs" in result["runtimeViolations"]
@@ -522,17 +573,111 @@ def test_timeline_payload_hash_is_recomputed(tmp_path: Path) -> None:
 
 def test_state_verified_requires_exact_observation(tmp_path: Path) -> None:
     def mutate(artifacts):
-        artifacts["durableTimeline"]["events"][2]["payload"]["data"]["proof"]["observed"]["temperatureC"] = 19
+        artifacts["durableTimeline"]["events"][2]["payload"]["data"]["proof"][
+            "observed"
+        ]["content"] = "different-marker"
         payload = artifacts["durableTimeline"]["events"][2]["payload"]
-        artifacts["durableTimeline"]["events"][2]["payloadSha256"] = checker._sha256(payload)
+        artifacts["durableTimeline"]["events"][2]["payloadSha256"] = checker._sha256(
+            payload
+        )
 
     result = _check(_bundle(tmp_path, mutate=mutate))
     assert "state_verification_differs" in result["runtimeViolations"]
 
 
+def test_model_arguments_must_project_to_execute_and_readback(tmp_path: Path) -> None:
+    def mutate(artifacts):
+        admission = artifacts["durableTimeline"]["events"][0]
+        admission["payload"]["data"]["action_arguments"]["content"] = (
+            "different-model-marker"
+        )
+        admission["payloadSha256"] = checker._sha256(admission["payload"])
+
+    result = _check(_bundle(tmp_path, mutate=mutate))
+    assert "model_filesystem_projection_differs" in result["runtimeViolations"]
+
+
+def test_coordinated_provider_rewrite_cannot_detach_from_model(tmp_path: Path) -> None:
+    changed_execute = {"content": "forged-marker", "path": "forged-proof.txt"}
+    changed_observe = {"path": "forged-proof.txt"}
+    changed_expected = {"content": "forged-marker"}
+
+    def mutate(artifacts):
+        events = artifacts["durableTimeline"]["events"]
+        admission = events[0]["payload"]["data"]
+        admission["request_arguments"] = copy.deepcopy(changed_execute)
+        admission["request_observation_arguments"] = copy.deepcopy(changed_observe)
+        prepared = events[1]["payload"]["data"]
+        prepared["arguments"] = copy.deepcopy(changed_execute)
+        prepared["observation_arguments"] = copy.deepcopy(changed_observe)
+        prepared["expected_proof"] = copy.deepcopy(changed_expected)
+        proof = events[2]["payload"]["data"]["proof"]
+        proof["expected"] = copy.deepcopy(changed_expected)
+        proof["observed"] = copy.deepcopy(changed_expected)
+        for event in events:
+            event["payloadSha256"] = checker._sha256(event["payload"])
+        for snapshot in artifacts["durableTimeline"]["snapshots"].values():
+            snapshot["eventsSha256"] = checker._sha256(
+                events[: snapshot["eventCount"]]
+            )
+        calls = artifacts["providerCounters"]["calls"]
+        calls[0]["argumentsSha256"] = checker._sha256(changed_execute)
+        calls[1]["argumentsSha256"] = checker._sha256(changed_observe)
+
+    result = _check(_bundle(tmp_path, mutate=mutate))
+    assert "model_filesystem_projection_differs" in result["runtimeViolations"]
+
+
 def test_execute_and_observe_must_be_separate_calls(tmp_path: Path) -> None:
     def mutate(artifacts):
         artifacts["providerCounters"]["calls"][1]["callId"] = "provider-execute-001"
+
+    result = _check(_bundle(tmp_path, mutate=mutate))
+    assert "separate_execute_observe_binding_differs" in result["runtimeViolations"]
+
+
+def test_observe_arguments_must_use_the_durable_separate_projection(
+    tmp_path: Path,
+) -> None:
+    def mutate(artifacts):
+        call = artifacts["providerCounters"]["calls"][1]
+        call["argumentsSha256"] = checker._sha256(EXECUTE_ARGUMENTS)
+
+    result = _check(_bundle(tmp_path, mutate=mutate))
+    assert "separate_execute_observe_binding_differs" in result["runtimeViolations"]
+
+
+@pytest.mark.parametrize(
+    ("field", "value", "violation"),
+    [
+        ("observation_tool_name", "changed_readback", "timeline_preparation_differs"),
+        (
+            "observation_arguments",
+            {"path": "changed-proof.txt"},
+            "timeline_preparation_differs",
+        ),
+        (
+            "tool_configuration_sha256",
+            "8" * 64,
+            "timeline_preparation_differs",
+        ),
+    ],
+)
+def test_prepared_readback_command_must_match_admission(
+    tmp_path: Path, field: str, value: object, violation: str
+) -> None:
+    def mutate(artifacts):
+        event = artifacts["durableTimeline"]["events"][1]
+        event["payload"]["data"][field] = value
+        event["payloadSha256"] = checker._sha256(event["payload"])
+
+    result = _check(_bundle(tmp_path, mutate=mutate))
+    assert violation in result["runtimeViolations"]
+
+
+def test_provider_call_must_bind_the_durable_configuration(tmp_path: Path) -> None:
+    def mutate(artifacts):
+        artifacts["providerCounters"]["calls"][1]["toolConfigurationSha256"] = "8" * 64
 
     result = _check(_bundle(tmp_path, mutate=mutate))
     assert "separate_execute_observe_binding_differs" in result["runtimeViolations"]
@@ -557,7 +702,9 @@ def test_third_process_replay_must_not_call_provider(tmp_path: Path) -> None:
 
 def test_provider_instance_cannot_change_during_resume(tmp_path: Path) -> None:
     def mutate(artifacts):
-        artifacts["providerCounters"]["snapshots"][2]["providerInstanceId"] = "replacement-provider"
+        artifacts["providerCounters"]["snapshots"][2]["providerInstanceId"] = (
+            "replacement-provider"
+        )
 
     result = _check(_bundle(tmp_path, mutate=mutate))
     assert "provider_counter_authority_differs" in result["runtimeViolations"]
@@ -565,7 +712,9 @@ def test_provider_instance_cannot_change_during_resume(tmp_path: Path) -> None:
 
 def test_replay_must_preserve_timeline_snapshot(tmp_path: Path) -> None:
     def mutate(artifacts):
-        artifacts["durableTimeline"]["snapshots"]["afterThirdProcessReplay"]["revision"] = 4
+        artifacts["durableTimeline"]["snapshots"]["afterThirdProcessReplay"][
+            "revision"
+        ] = 4
 
     result = _check(_bundle(tmp_path, mutate=mutate))
     assert "afterThirdProcessReplay_snapshot_differs" in result["runtimeViolations"]

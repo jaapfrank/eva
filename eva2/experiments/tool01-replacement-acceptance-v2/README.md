@@ -61,6 +61,15 @@ geen gebeurtenissen van de huidige generieke tooltimeline en gelden daarom
 niet als v2-bewijs. V2 leidt afzonderlijke execute en observe uitsluitend af
 uit de externe providercalls en tellerdelta's.
 
+Uitvoeren en teruglezen hebben niet hetzelfde invoerschema. Deze concrete
+acceptatiepoort berekent de twee opdrachten daarom zelf opnieuw uit de
+modelargumenten: `write_file(path, content)` moet exact dezelfde `path` en
+`content` ontvangen, `read_text_file(path)` exact hetzelfde pad en de bewezen
+uitkomst moet exact `{"content": content}` zijn. De duurzame admission,
+`TOOL_PREPARED` en externe providerartifact moeten daarnaast dezelfde
+afzonderlijke argumenthashes en configuratiehash dragen. Daardoor kan een
+intern consistente maar van het model losgeraakte bewijsbundel niet slagen.
+
 V2 gebruikt evenmin één verzonnen volgnummer over database-, provider- en
 Dockerartifacts heen. Iedere bron bewaart zijn eigen volgorde; hashes,
 container-ID's, operation-ID en de vier vaste meetfasen leggen de onderlinge

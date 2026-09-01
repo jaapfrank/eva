@@ -123,6 +123,29 @@ def _counter(value: object, *, label: str) -> int:
     return value
 
 
+def _filesystem_projection(
+    model_arguments: object,
+) -> tuple[dict[str, str], dict[str, str], dict[str, str]] | None:
+    """Recompute the concrete TOOL01 filesystem commands from model output."""
+
+    if not isinstance(model_arguments, dict) or set(model_arguments) != {
+        "content",
+        "path",
+    }:
+        return None
+    try:
+        path = _safe_path(model_arguments["path"], label="model filesystem path")
+        content = _text(
+            model_arguments["content"], label="model filesystem content", limit=4_096
+        )
+    except Tool01V2Error:
+        return None
+    execute = {"content": content, "path": path}
+    observe = {"path": path}
+    expected = {"content": content}
+    return execute, observe, expected
+
+
 def _reject_pass_claim(value: object) -> None:
     if isinstance(value, dict):
         if "passed" in value or "allPassed" in value:
@@ -137,7 +160,11 @@ def _reject_pass_claim(value: object) -> None:
 def _safe_path(value: object, *, label: str) -> str:
     result = _text(value, label=label)
     candidate = PurePosixPath(result)
-    if candidate.is_absolute() or ".." in candidate.parts or result != candidate.as_posix():
+    if (
+        candidate.is_absolute()
+        or ".." in candidate.parts
+        or result != candidate.as_posix()
+    ):
         raise Tool01V2Error(f"{label} is unsafe")
     return result
 
@@ -206,7 +233,9 @@ def _crash_audit(
     run_id: str,
     candidate: dict[str, str],
 ) -> dict[str, str]:
-    row = _exact(value, {"containers", "contract", "kill", "runId"}, label="crash audit")
+    row = _exact(
+        value, {"containers", "contract", "kill", "runId"}, label="crash audit"
+    )
     _header(row, CRASH_CONTRACT, run_id, label="crash audit")
     containers = row["containers"]
     if not isinstance(containers, list) or len(containers) != 3:
@@ -240,7 +269,10 @@ def _crash_audit(
     if p1_state != {"exitCode": 137, "oomKilled": False, "status": "exited"}:
         raise Tool01V2Error("p1 was not a non-OOM exit-137 crash")
     clean_state = {"exitCode": 0, "oomKilled": False, "status": "exited"}
-    if by_process["p2"]["state"] != clean_state or by_process["p3"]["state"] != clean_state:
+    if (
+        by_process["p2"]["state"] != clean_state
+        or by_process["p3"]["state"] != clean_state
+    ):
         raise Tool01V2Error("p2 and p3 must exit cleanly")
     kill = _exact(
         row["kill"],
@@ -377,15 +409,16 @@ def _trajectory(
     history = deferred["data"].get("historySha256")
     if not isinstance(history, str) or _DIGEST.fullmatch(history) is None:
         violations.append("framework_history_missing")
-    if (
-        deferred["containerId"] != containers["p1"]
-        or catalog["byRole"]["effect"]["name"] != binding.get("toolName")
-    ):
+    if deferred["containerId"] != containers["p1"] or catalog["byRole"]["effect"][
+        "name"
+    ] != binding.get("toolName"):
         violations.append("model_did_not_select_effect")
     if (
         action["containerId"] != containers["p1"]
         or action["data"].get("owner") != "ConversationActionPort"
-        or any(action["data"].get(field) != binding.get(field) for field in binding_fields)
+        or any(
+            action["data"].get(field) != binding.get(field) for field in binding_fields
+        )
     ):
         violations.append("action_port_binding_differs")
     receipt_sha = results["data"].get("receiptSha256")
@@ -437,7 +470,10 @@ def _timeline(
         row["database"], {"alembicHead", "name", "postgresVersionNum"}, label="database"
     )
     _text(database["alembicHead"], label="alembic head", limit=80)
-    if database["name"] != "eva2_living_disposable_tool01" or database["postgresVersionNum"] != 160013:
+    if (
+        database["name"] != "eva2_living_disposable_tool01"
+        or database["postgresVersionNum"] != 160013
+    ):
         violations.append("database_authority_differs")
     events = row["events"]
     if not isinstance(events, list) or len(events) != 3:
@@ -469,27 +505,68 @@ def _timeline(
             violations.append("timeline_process_boundary_differs")
         if item["operationId"] != binding.get("operationId"):
             violations.append("timeline_operation_differs")
-        if not isinstance(item["payload"], dict) or item["payloadSha256"] != _sha256(item["payload"]):
+        if not isinstance(item["payload"], dict) or item["payloadSha256"] != _sha256(
+            item["payload"]
+        ):
             violations.append("timeline_payload_hash_differs")
     admission_data = events[0]["payload"].get("data", {})
     prepared_data = events[1]["payload"].get("data", {})
     verified_data = events[2]["payload"].get("data", {})
-    if not all(isinstance(item, dict) for item in (admission_data, prepared_data, verified_data)):
+    if not all(
+        isinstance(item, dict)
+        for item in (admission_data, prepared_data, verified_data)
+    ):
         raise Tool01V2Error("timeline event data is malformed")
-    arguments = admission_data.get("action_arguments")
-    arguments_sha = _sha256(arguments) if isinstance(arguments, dict) else ""
+    model_arguments = admission_data.get("action_arguments")
+    filesystem_projection = _filesystem_projection(model_arguments)
+    model_arguments_sha = (
+        _sha256(model_arguments) if filesystem_projection is not None else ""
+    )
+    execute_arguments = admission_data.get("request_arguments")
+    observe_arguments = admission_data.get("request_observation_arguments")
+    execute_arguments_sha = (
+        _sha256(execute_arguments) if isinstance(execute_arguments, dict) else ""
+    )
+    observe_arguments_sha = (
+        _sha256(observe_arguments) if isinstance(observe_arguments, dict) else ""
+    )
+    execute_tool_name = admission_data.get("request_tool_name")
+    observe_tool_name = admission_data.get("request_observation_tool_name")
+    configuration_sha = admission_data.get("request_tool_configuration_sha256")
     if (
         admission_data.get("action_call_id") != binding.get("callId")
         or admission_data.get("action_name") != binding.get("toolName")
         or admission_data.get("source_message_id") != binding.get("messageId")
-        or not arguments_sha
+        or not model_arguments_sha
+        or not execute_arguments_sha
+        or not observe_arguments_sha
+        or not isinstance(execute_tool_name, str)
+        or not isinstance(observe_tool_name, str)
+        or not isinstance(configuration_sha, str)
+        or _DIGEST.fullmatch(configuration_sha) is None
     ):
         violations.append("timeline_admission_binding_differs")
+    if filesystem_projection is None:
+        violations.append("model_filesystem_projection_differs")
+        projected_execute: dict[str, str] = {}
+        projected_observe: dict[str, str] = {}
+        projected_expected: dict[str, str] = {}
+    else:
+        projected_execute, projected_observe, projected_expected = filesystem_projection
+        if (
+            execute_arguments != projected_execute
+            or observe_arguments != projected_observe
+        ):
+            violations.append("model_filesystem_projection_differs")
     provider_tool_name = prepared_data.get("tool_name")
     if (
         not isinstance(provider_tool_name, str)
-        or prepared_data.get("arguments") != arguments
-        or not isinstance(prepared_data.get("expected_proof"), dict)
+        or provider_tool_name != execute_tool_name
+        or prepared_data.get("arguments") != execute_arguments
+        or prepared_data.get("observation_tool_name") != observe_tool_name
+        or prepared_data.get("observation_arguments") != observe_arguments
+        or prepared_data.get("tool_configuration_sha256") != configuration_sha
+        or prepared_data.get("expected_proof") != projected_expected
     ):
         violations.append("timeline_preparation_differs")
     proof = verified_data.get("proof")
@@ -505,11 +582,43 @@ def _timeline(
         label="timeline snapshots",
     )
     expected_snapshots = (
-        ("afterExecuteBeforeKill", containers["p1"], "tool_prepared", "waiting_for_proof", 2, 2, None),
-        ("afterResume", containers["p2"], "state_verified", "completed", 3, 3, binding.get("receiptSha256")),
-        ("afterThirdProcessReplay", containers["p3"], "state_verified", "completed", 3, 3, binding.get("receiptSha256")),
+        (
+            "afterExecuteBeforeKill",
+            containers["p1"],
+            "tool_prepared",
+            "waiting_for_proof",
+            2,
+            2,
+            None,
+        ),
+        (
+            "afterResume",
+            containers["p2"],
+            "state_verified",
+            "completed",
+            3,
+            3,
+            binding.get("receiptSha256"),
+        ),
+        (
+            "afterThirdProcessReplay",
+            containers["p3"],
+            "state_verified",
+            "completed",
+            3,
+            3,
+            binding.get("receiptSha256"),
+        ),
     )
-    for name, container_id, phase, status, revision, count, receipt_sha in expected_snapshots:
+    for (
+        name,
+        container_id,
+        phase,
+        status,
+        revision,
+        count,
+        receipt_sha,
+    ) in expected_snapshots:
         snapshot = _exact(
             snapshots[name],
             {
@@ -537,8 +646,11 @@ def _timeline(
         }:
             violations.append(f"{name}_snapshot_differs")
     return {
-        "argumentsSha256": arguments_sha,
-        "providerToolName": str(provider_tool_name),
+        "executeArgumentsSha256": execute_arguments_sha,
+        "executeToolName": str(execute_tool_name),
+        "observeArgumentsSha256": observe_arguments_sha,
+        "observeToolName": str(observe_tool_name),
+        "toolConfigurationSha256": str(configuration_sha),
     }, sorted(set(violations))
 
 
@@ -566,7 +678,15 @@ def _provider(
     for call, kind in zip(calls, expected_call_kinds, strict=True):
         _exact(
             call,
-            {"argumentsSha256", "callId", "containerId", "kind", "operationId", "toolName"},
+            {
+                "argumentsSha256",
+                "callId",
+                "containerId",
+                "kind",
+                "operationId",
+                "toolConfigurationSha256",
+                "toolName",
+            },
             label="provider call",
         )
         if call["kind"] != kind:
@@ -578,12 +698,16 @@ def _provider(
         or execute["callId"] == observe["callId"]
         or execute["operationId"] != binding.get("operationId")
         or observe["operationId"] != binding.get("operationId")
-        or execute["argumentsSha256"] != timeline.get("argumentsSha256")
-        or observe["argumentsSha256"] != timeline.get("argumentsSha256")
+        or execute["argumentsSha256"] != timeline.get("executeArgumentsSha256")
+        or observe["argumentsSha256"] != timeline.get("observeArgumentsSha256")
+        or execute["toolConfigurationSha256"] != timeline.get("toolConfigurationSha256")
+        or observe["toolConfigurationSha256"] != timeline.get("toolConfigurationSha256")
     ):
         violations.append("separate_execute_observe_binding_differs")
     if (
-        execute["toolName"] != timeline.get("providerToolName")
+        execute["toolName"] != timeline.get("executeToolName")
+        or execute["toolName"] != catalog["byRole"]["effect"]["name"]
+        or observe["toolName"] != timeline.get("observeToolName")
         or observe["toolName"] != catalog["byRole"]["readback"]["name"]
         or execute["toolName"] == observe["toolName"]
     ):
@@ -602,7 +726,13 @@ def _provider(
     for snapshot, (phase, container_id) in zip(snapshots, expected_phases, strict=True):
         item = _exact(
             snapshot,
-            {"containerId", "executeCalls", "observeCalls", "phase", "providerInstanceId"},
+            {
+                "containerId",
+                "executeCalls",
+                "observeCalls",
+                "phase",
+                "providerInstanceId",
+            },
             label="provider counter snapshot",
         )
         if (
@@ -633,7 +763,9 @@ def _source_status(
     source_root: Path | None,
     candidate_commit: str,
 ) -> tuple[str, list[str]]:
-    row = _exact(source_reference, {"artifact", "status"}, label="source authority reference")
+    row = _exact(
+        source_reference, {"artifact", "status"}, label="source authority reference"
+    )
     if row["status"] == "pending" and row["artifact"] is None:
         return "source_authority_pending", []
     if row["status"] not in {"pending", "complete"} or row["artifact"] is None:
@@ -703,9 +835,7 @@ def check(
         expected_image_id=expected_image_id,
         expected_source_commit=expected_source_commit,
     )
-    containers = _crash_audit(
-        artifacts["containerCrashAudit"], run_id, candidate
-    )
+    containers = _crash_audit(artifacts["containerCrashAudit"], run_id, candidate)
     catalog = _catalog(artifacts["catalog"], run_id, containers)
     binding, trajectory_violations = _trajectory(
         artifacts["frameworkTrajectory"], run_id, containers, catalog
@@ -760,7 +890,11 @@ def main() -> int:
             source_root=arguments.source_root,
         )
     except (OSError, ValueError, Tool01V2Error) as error:
-        print(json.dumps({"error": str(error), "replacementStatus": "failed"}, sort_keys=True))
+        print(
+            json.dumps(
+                {"error": str(error), "replacementStatus": "failed"}, sort_keys=True
+            )
+        )
         return 2
     print(json.dumps(result, sort_keys=True, separators=(",", ":")))
     return 0 if result["replacementStatus"] != "failed" else 1
