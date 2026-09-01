@@ -6,7 +6,7 @@
   "commandWorkingDirectory": "eva2",
   "inventoryPath": "docs/eva-repository-inventory.generated.json",
   "humanBoardPath": "eva2/WERKBORD.md",
-  "activeTaskId": "RB-002",
+  "activeTaskId": "RB-003",
   "maxActiveImplementationTasks": 1,
   "statusValues": ["queued", "in_progress", "review", "done", "blocked"],
   "rules": [
@@ -146,8 +146,8 @@
       "area": "Releasebasis",
       "title": "Nieuwe bootstrapcode verzegelen",
       "outcome": "Release-inputauthority en tests nemen exact de na RB-001 bewezen bootstrapbestanden op.",
-      "status": "in_progress",
-      "stateDetails": {"baseCommit": null, "implementationCommit": null, "evidenceCommit": null, "reviewEvidencePaths": [], "blockerReason": null},
+      "status": "done",
+      "stateDetails": {"baseCommit": "5f0df55da7eb84c1c0575943bd21e2e26aa891a6", "implementationCommit": "45d2ff6d61793809a514c01b3a3c000ce1632da6", "evidenceCommit": "dff58c3fbe6d08addb83da86e4adb8d6df490000", "reviewEvidencePaths": ["eva2/evidence/product/RB-002-bootstrap-release-authority-2026-09-01.json"], "blockerReason": null},
       "ownerRole": "releaselead",
       "reviewerRole": "proofreviewer",
       "dependsOn": ["RB-001"],
@@ -178,7 +178,7 @@
       "area": "Releasebasis",
       "title": "Kandidaat op bouwer A maken",
       "outcome": "Een verse daemon bouwt de door RB-002 verzegelde commit offline en levert herleidbaar bewijs.",
-      "status": "queued",
+      "status": "in_progress",
       "stateDetails": {"baseCommit": null, "implementationCommit": null, "evidenceCommit": null, "reviewEvidencePaths": [], "blockerReason": null},
       "ownerRole": "releaselead",
       "reviewerRole": "proofreviewer",
@@ -202,10 +202,40 @@
         "De verse builder produceert offline één kandidaat met volledig gebonden bouwbewijs.",
         "Een onafhankelijke reviewer geeft GO."
       ]
+    },
+    {
+      "id": "RB-004",
+      "order": 40,
+      "area": "Releasebasis",
+      "title": "Kandidaat op bouwer B maken",
+      "outcome": "Een tweede onafhankelijke verse daemon bouwt dezelfde verzegelde commit offline en levert eigen bewijs.",
+      "status": "queued",
+      "stateDetails": {"baseCommit": null, "implementationCommit": null, "evidenceCommit": null, "reviewEvidencePaths": [], "blockerReason": null},
+      "ownerRole": "releaselead",
+      "reviewerRole": "proofreviewer",
+      "dependsOn": ["RB-003"],
+      "componentIds": ["operations-and-release-tests"],
+      "inventoryOwners": ["verification"],
+      "changePaths": [
+        "eva2/tools/check_two_builder_reproducibility.py",
+        "eva2/tests/operations/test_two_builder_reproducibility.py"
+      ],
+      "testCommands": [
+        "TMPDIR=/tmp TEMP=/tmp TMP=/tmp pytest -q tests/operations/test_two_builder_reproducibility.py",
+        "ruff check tools/check_two_builder_reproducibility.py tests/operations/test_two_builder_reproducibility.py"
+      ],
+      "evidenceRequired": [
+        "Een eigen private preflight-, build- en postflightketen van een tweede verse lege bouwer, gebonden aan exact de RB-003-broncommit.",
+        "Onafhankelijke aanvalstest dat bewijs of builderidentiteit van A niet als B kan worden hergebruikt."
+      ],
+      "doneWhen": [
+        "Bouwer B heeft een andere daemon-, socket-, state-root-, namespace- en BuildKit-identiteit dan A.",
+        "Bouwer B produceert offline één kandidaat met een eigen volledig gebonden bewijsset.",
+        "Een onafhankelijke reviewer geeft GO."
+      ]
     }
   ],
   "milestones": [
-    {"id": "RB-004", "order": 40, "area": "Releasebasis", "title": "Kandidaat op bouwer B maken", "outcome": "Een onafhankelijke verse daemon bouwt dezelfde commit offline."},
     {"id": "RB-005", "order": 50, "area": "Releasebasis", "title": "Beide builds vergelijken", "outcome": "Config, lagen en runtime-inhoud zijn gelijk; bewijshergebruik faalt."},
     {"id": "RB-006", "order": 60, "area": "Releasebasis", "title": "SBOM en kwetsbaarheden controleren", "outcome": "De exacte kandidaat heeft een gebonden SBOM en nul hoog/kritiek."},
     {"id": "RB-007", "order": 70, "area": "Releasebasis", "title": "Alle verplichte testgroepen uitvoeren", "outcome": "Iedere verzegelde testgroep slaagt op dezelfde commit."},
@@ -275,6 +305,17 @@
       "reviewCommit": "d9ae8a1fdb66919b5a7cce436bc95ca43845d6d3",
       "reviewedBy": "/root/proof_review",
       "testReceiptPaths": ["eva2/evidence/product/RB-001-sealed-oci-layout-empty-builders-2026-09-01.json"]
+    },
+    "RB-002": {
+      "baseCommit": "5f0df55da7eb84c1c0575943bd21e2e26aa891a6",
+      "commit": "45d2ff6d61793809a514c01b3a3c000ce1632da6",
+      "decision": "GO",
+      "evidenceCommit": "dff58c3fbe6d08addb83da86e4adb8d6df490000",
+      "evidencePaths": ["eva2/reviews/RB-002-bootstrap-release-authority-45d2ff6.md"],
+      "implementedBy": "/root/release_authority",
+      "reviewCommit": "db7ebf5ba2bf0890492a3a944d75aa4e638316ce",
+      "reviewedBy": "/root/proof_review",
+      "testReceiptPaths": ["eva2/evidence/product/RB-002-bootstrap-release-authority-2026-09-01.json"]
     }
   }
 }

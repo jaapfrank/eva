@@ -269,9 +269,9 @@
     }
   ],
   "summary": {
-    "files": 2029,
-    "present": 2029,
-    "tracked": 1950,
+    "files": 2031,
+    "present": 2031,
+    "tracked": 1952,
     "untracked": 79,
     "tombstones": 0,
     "policyErrors": 88
@@ -310,12 +310,12 @@
     {
       "id": "eva2-verification",
       "role": "verification",
-      "matchCount": 735
+      "matchCount": 736
     },
     {
       "id": "eva2-documentation",
       "role": "documentation",
-      "matchCount": 107
+      "matchCount": 108
     },
     {
       "id": "eva2-deployment",
@@ -10270,7 +10270,7 @@
       "path": "docs/eva-repository-inventory.generated.json",
       "gitState": "tracked",
       "present": true,
-      "bytes": 2351929,
+      "bytes": 2353864,
       "contentSha256": "32591e23fa2eb53a038d95e726ba09edd0405306f38c5283a36a2b6d3010254d",
       "hashMode": "canonical-self-reference-redacted",
       "role": "generated",
@@ -10303,7 +10303,7 @@
       "path": "docs/eva-repository-inventory.generated.md",
       "gitState": "tracked",
       "present": true,
-      "bytes": 363690,
+      "bytes": 363972,
       "contentSha256": "2f4f8486464cbb9713b749dc898f265093d0853699f1da1b4eb3dd1625c1b2d2",
       "hashMode": "canonical-self-reference-redacted",
       "role": "generated",
@@ -11248,8 +11248,8 @@
       "path": "eva2/WERKBORD.md",
       "gitState": "tracked",
       "present": true,
-      "bytes": 6817,
-      "contentSha256": "3da0d104469911f4db1067412c29903aeeadf2a6899af693632890156cf3d6c2",
+      "bytes": 6682,
+      "contentSha256": "a0f25abf0ef9603de669cf9f51dd1e6458deec369d8c55f186a05937b689dee0",
       "hashMode": "exact-bytes",
       "role": "documentation",
       "roleRuleId": "eva2-documentation",
@@ -13261,8 +13261,8 @@
       "path": "eva2/design/product/execution-workboard-v1.json",
       "gitState": "tracked",
       "present": true,
-      "bytes": 19341,
-      "contentSha256": "19c7aef9b0d37f3d63cba2fd6ee2cba009b52976a41aa9211ec6b9da34c4538e",
+      "bytes": 21555,
+      "contentSha256": "89d4baa8e6448195afbbeaf81abfa75840327c2682fe90703a6b03a3ab0aac87",
       "hashMode": "exact-bytes",
       "role": "documentation",
       "roleRuleId": "eva2-documentation",
@@ -25040,6 +25040,41 @@
       }
     },
     {
+      "path": "eva2/evidence/product/RB-002-bootstrap-release-authority-2026-09-01.json",
+      "gitState": "tracked",
+      "present": true,
+      "bytes": 2306,
+      "contentSha256": "2fe57559c264fbee82a3743a97a2eb7fbfd04ff46d04fbd69ab37edb0094fe5e",
+      "hashMode": "exact-bytes",
+      "role": "verification",
+      "roleRuleId": "eva2-verification",
+      "matchingRuleIds": [
+        "eva2-verification"
+      ],
+      "owner": "verification",
+      "inputs": [
+        "production or fixture contract"
+      ],
+      "outputs": [
+        "test decision"
+      ],
+      "state": [
+        "temporary isolated test state"
+      ],
+      "effects": [
+        "may execute only inside its declared gate"
+      ],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": true,
+        "runtimeCritical": true,
+        "status": "included-tracked-critical"
+      }
+    },
+    {
       "path": "eva2/evidence/product/contextforge-generic-tool-durable-proof-2026-08-30.json",
       "gitState": "tracked",
       "present": true,
@@ -36020,7 +36055,7 @@
       "gitState": "tracked",
       "present": true,
       "bytes": 71221,
-      "contentSha256": "c9d5828957656a49bbf90988bef02dbb0319124c4c5891d24adc660ec4c6238d",
+      "contentSha256": "20323cc166d5b7055c43dc94a0d5e09c47ab729036e479c166768a2a6e841020",
       "hashMode": "exact-bytes",
       "role": "repository-config",
       "roleRuleId": "eva2-build-contract",
@@ -36642,6 +36677,37 @@
       "present": true,
       "bytes": 2271,
       "contentSha256": "b581cc7e5ec1fb1577cf9cc63f7c16443641a21b3a50909634d2b71065f36e22",
+      "hashMode": "exact-bytes",
+      "role": "documentation",
+      "roleRuleId": "eva2-documentation",
+      "matchingRuleIds": [
+        "eva2-documentation"
+      ],
+      "owner": "documentation",
+      "inputs": [
+        "design and evidence"
+      ],
+      "outputs": [
+        "human-readable contract"
+      ],
+      "state": [],
+      "effects": [],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": true,
+        "runtimeCritical": false,
+        "status": "included-tracked-noncritical"
+      }
+    },
+    {
+      "path": "eva2/reviews/RB-002-bootstrap-release-authority-45d2ff6.md",
+      "gitState": "tracked",
+      "present": true,
+      "bytes": 2373,
+      "contentSha256": "c32b0b5043987599492970697fe22e1208f7467c16aaa52f3a47aa1a497e9316",
       "hashMode": "exact-bytes",
       "role": "documentation",
       "roleRuleId": "eva2-documentation",
@@ -59195,8 +59261,8 @@
       "path": "eva2/tests/operations/test_managed_b_release_inputs.py",
       "gitState": "tracked",
       "present": true,
-      "bytes": 22825,
-      "contentSha256": "10a1b811c93154d4829df81723d462f8c717c702e0da93e0e38d9ee3d175e633",
+      "bytes": 24795,
+      "contentSha256": "6ea8504d5a264446a5d73012c04dc3dc318433b5e1361a746959d2b8b4cc4396",
       "hashMode": "exact-bytes",
       "role": "verification",
       "roleRuleId": "eva2-verification",
@@ -64480,8 +64546,8 @@
       "path": "eva2/tools/managed_b_candidate/release_inputs.py",
       "gitState": "tracked",
       "present": true,
-      "bytes": 43417,
-      "contentSha256": "d740bfb4e49e8aabb34fc9b58d6868be2f279ae91a642bd5d0ac22323a4faeee",
+      "bytes": 44399,
+      "contentSha256": "feca230ab9e5cfe94d6925083d45afe213c0e227d095a2583c9489b01b179a84",
       "hashMode": "exact-bytes",
       "role": "verification-runtime",
       "roleRuleId": "eva2-verification-runtime",
@@ -82091,5 +82157,5 @@
       }
     }
   ],
-  "sourceDigest": "7d64fd97bc26ae59a20e9de45c33de0a0c1e19721cc740953f3058d336b56024"
+  "sourceDigest": "712e8a2d7084529562eeed90e52ca7a260777f954e7243c65789478c3a3345b3"
 }
