@@ -39,10 +39,10 @@ _PORTABLE_V1_PROFILE_PATH = (
     f"{_PORTABLE_V1_CONTRACT_ROOT}/canonical-json-profile-v1.json"
 )
 _EXPECTED_INPUT_PATHS_SHA256 = (
-    "5bb1aefa77a114b55b3f5458025bf45ac3366abe9e2bdba0ab9ddfe93f9cf80c"
+    "41505acebd5a02bb0abccdd926d0c7293154c4b3fd861f822fa2d0a85e534f31"
 )
 _EXPECTED_TEST_PATHS_SHA256 = (
-    "40c053fe92b2dd730b4f76a374d5f535785bfab23ded013ccf1c7c0deadd5e7a"
+    "3d93b7497e6e6d951e50a751b6ebf29e00f6c9989287739336fdc932f8c93be0"
 )
 _BUILD_PROVENANCE_INPUTS = {
     "deploy/living-core/Dockerfile",
@@ -83,6 +83,21 @@ _TOOL01_SOURCE_GATE_INPUTS = {
 }
 _TOOL01_SOURCE_GATE_TESTS = {
     "experiments/tool01-replacement-acceptance-v1/test_acceptance.py",
+}
+_DURABLE_TOOL_PROJECTION_INPUTS = {
+    "src/eva/adapters/connectors/mcp_gateway.py",
+    "src/eva/adapters/postgres/external_conversation_tools.py",
+    "src/eva/application/conversation.py",
+    "src/eva/application/orchestration.py",
+    "src/eva/providers/mcp_gateway.py",
+}
+_DURABLE_TOOL_PROJECTION_TESTS = {
+    "tests/application/test_conversation.py",
+    "tests/application/test_orchestration.py",
+    "tests/connectors/test_mcp_gateway.py",
+    "tests/connectors/test_mcp_gateway_provider.py",
+    "tests/connectors/test_provider_runtime.py",
+    "tests/postgres/test_operational_timeline.py",
 }
 _NONCLAIMS = (
     "No image, container, Compose graph, database, volume, network, secret, A service, or B service was opened.",
@@ -388,10 +403,16 @@ def _validate_release_path_closure(
         raise RuntimeError("managed B TOOL01 source gate input set is incomplete")
     if not _TOOL01_SOURCE_GATE_TESTS <= test_paths:
         raise RuntimeError("managed B TOOL01 source gate test set is incomplete")
+    if not _DURABLE_TOOL_PROJECTION_INPUTS <= input_paths:
+        raise RuntimeError("managed B durable tool projection input set is incomplete")
+    if not _DURABLE_TOOL_PROJECTION_TESTS <= test_paths:
+        raise RuntimeError("managed B durable tool projection test set is incomplete")
     return {
         "build_provenance_input_count": len(_BUILD_PROVENANCE_INPUTS),
         "build_provenance_test_count": len(_BUILD_PROVENANCE_TESTS),
         "connector_sdk_file_count": len(_CONNECTOR_SDK_COPY_PATHS),
+        "durable_tool_projection_inputs_bound": True,
+        "durable_tool_projection_tests_bound": True,
         "tool01_source_gate_inputs_bound": True,
         "tool01_source_gate_executed": False,
     }

@@ -37,15 +37,15 @@ def test_runtime_image_installs_eva_package_before_removing_pip() -> None:
         encoding="utf-8"
     )
     install = "python -m pip install --no-cache-dir --no-index --no-deps --no-build-isolation ."
-    metadata_check = "metadata.entry_points().select(group='eva2.external_providers')"
+    provider_check = "bundled_provider_factories(); assert any(factory.provider_id == 'mcp_gateway'"
     dependency_check = "python -m pip check"
     remove_pip = "python -m pip uninstall -y pip wheel"
 
     assert "COPY pyproject.toml ./pyproject.toml" in dockerfile
     assert install in dockerfile
-    assert metadata_check in dockerfile
-    assert dockerfile.index(install) < dockerfile.index(metadata_check)
-    assert dockerfile.index(metadata_check) < dockerfile.index(dependency_check)
+    assert provider_check in dockerfile
+    assert dockerfile.index(install) < dockerfile.index(provider_check)
+    assert dockerfile.index(provider_check) < dockerfile.index(dependency_check)
     assert dockerfile.index(dependency_check) < dockerfile.index(remove_pip)
     assert "io.eva2.source-commit=${SOURCE_COMMIT}" in dockerfile
     assert "io.eva2.source-date-epoch=${SOURCE_DATE_EPOCH}" in dockerfile

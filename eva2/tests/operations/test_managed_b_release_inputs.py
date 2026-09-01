@@ -12,6 +12,8 @@ from tools.managed_b_candidate.release_inputs import (
     _BUILD_PROVENANCE_INPUTS,
     _BUILD_PROVENANCE_TESTS,
     _CONNECTOR_SDK_COPY_PATHS,
+    _DURABLE_TOOL_PROJECTION_INPUTS,
+    _DURABLE_TOOL_PROJECTION_TESTS,
     _TOOL01_SOURCE_GATE_INPUTS,
     _TOOL01_SOURCE_GATE_TESTS,
     _pin_rows,
@@ -89,10 +91,17 @@ def _release_closure_fixture() -> tuple[
     tuple[tuple[str, str], ...],
     tuple[tuple[str, str], ...],
 ]:
-    input_paths = _BUILD_PROVENANCE_INPUTS | _CONNECTOR_SDK_COPY_PATHS | (
-        _TOOL01_SOURCE_GATE_INPUTS
+    input_paths = (
+        _BUILD_PROVENANCE_INPUTS
+        | _CONNECTOR_SDK_COPY_PATHS
+        | _TOOL01_SOURCE_GATE_INPUTS
+        | _DURABLE_TOOL_PROJECTION_INPUTS
     )
-    test_paths = _BUILD_PROVENANCE_TESTS | _TOOL01_SOURCE_GATE_TESTS
+    test_paths = (
+        _BUILD_PROVENANCE_TESTS
+        | _TOOL01_SOURCE_GATE_TESTS
+        | _DURABLE_TOOL_PROJECTION_TESTS
+    )
     files = {path: (b"bound\n", 0o644) for path in _CONNECTOR_SDK_COPY_PATHS}
     inputs = tuple((path, "0" * 64) for path in sorted(input_paths))
     tests = tuple((path, "0" * 64) for path in sorted(test_paths))
@@ -115,6 +124,16 @@ def _release_closure_fixture() -> tuple[
             "experiments/tool01-replacement-acceptance-v1/test_acceptance.py",
             "TOOL01 source gate test",
         ),
+        (
+            "input",
+            "src/eva/application/orchestration.py",
+            "durable tool projection input",
+        ),
+        (
+            "test",
+            "tests/application/test_orchestration.py",
+            "durable tool projection test",
+        ),
     ),
 )
 def test_release_path_closure_refuses_a_missing_reviewed_path(
@@ -135,6 +154,8 @@ def test_release_path_closure_binds_the_exact_connector_sdk_copy_set() -> None:
     receipt = _validate_release_path_closure(files, inputs, tests)
 
     assert receipt["connector_sdk_file_count"] == 4
+    assert receipt["durable_tool_projection_inputs_bound"] is True
+    assert receipt["durable_tool_projection_tests_bound"] is True
     assert receipt["tool01_source_gate_inputs_bound"] is True
     assert receipt["tool01_source_gate_executed"] is False
 

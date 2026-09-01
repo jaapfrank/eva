@@ -23,7 +23,7 @@ COPY src ./src
 COPY connector_sdk ./connector_sdk
 RUN python -m pip install --no-cache-dir --no-index --only-binary=:all: --find-links=./wheelhouse --require-hashes -r requirements-4d.lock \
     && python -m pip install --no-cache-dir --no-index --no-deps --no-build-isolation . \
-    && python -c "from importlib import metadata; points=metadata.entry_points().select(group='eva2.external_providers'); assert any(point.name == 'mcp_gateway' for point in points)" \
+    && python -c "from eva.providers.bundled import bundled_provider_factories; factories=bundled_provider_factories(); assert any(factory.provider_id == 'mcp_gateway' for factory in factories)" \
     && python -m pip check \
     && python -m pip uninstall -y pip wheel \
     && python -c "import importlib.util; assert importlib.util.find_spec('pip') is None; assert importlib.util.find_spec('wheel') is None"
