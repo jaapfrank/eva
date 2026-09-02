@@ -52,10 +52,33 @@ def _primary(value: dict[str, object]) -> dict[str, object]:
 
 def _next(value: dict[str, object]) -> dict[str, object]:
     primary_index = value["executionTasks"].index(_primary(value))
-    return value["executionTasks"][primary_index + 1]
+    if primary_index + 1 < len(value["executionTasks"]):
+        return value["executionTasks"][primary_index + 1]
+    milestone = value["milestones"].pop(0)
+    task = deepcopy(value["executionTasks"][primary_index])
+    task.update(
+        {
+            "id": milestone["id"],
+            "order": milestone["order"],
+            "area": milestone["area"],
+            "title": milestone["title"],
+            "outcome": milestone["outcome"],
+            "status": "queued",
+            "stateDetails": {
+                "baseCommit": None,
+                "implementationCommit": None,
+                "evidenceCommit": None,
+                "reviewEvidencePaths": [],
+                "blockerReason": None,
+            },
+            "dependsOn": [value["executionTasks"][primary_index]["id"]],
+        }
+    )
+    value["executionTasks"].append(task)
+    return task
 
 
-def test_current_workboard_is_valid_with_history_and_two_open_cards() -> None:
+def test_current_workboard_is_valid_with_history_and_one_open_card() -> None:
     board = json.loads(BOARD.read_text(encoding="utf-8"))
     result = validate(ROOT, BOARD, CATALOG, HUMAN)
     assert result == {
@@ -65,7 +88,7 @@ def test_current_workboard_is_valid_with_history_and_two_open_cards() -> None:
         "milestoneCount": len(board["milestones"]),
         "status": "valid",
     }
-    assert len([task for task in board["executionTasks"] if task["status"] != "done"]) == 2
+    assert len([task for task in board["executionTasks"] if task["status"] != "done"]) == 1
 
 
 def test_eval_engine_adoption_precedes_new_product_work() -> None:
@@ -89,10 +112,60 @@ def test_eval_engine_adoption_precedes_new_product_work() -> None:
     assert "nulmeting" in by_id["EV-003"]["outcome"]
 
 
+def test_hermetic_release_recovery_precedes_required_test_execution() -> None:
+    board = json.loads(BOARD.read_text(encoding="utf-8"))
+    tasks = {item["id"]: item for item in board["executionTasks"]}
+    milestones = {item["id"]: item for item in board["milestones"]}
+
+    assert board["activeTaskId"] == "RR-002"
+    assert tasks["RR-001"]["status"] == "done"
+    assert tasks["RR-001"]["dependsOn"] == ["CP-000"]
+    assert tasks["RR-002"]["status"] == "in_progress"
+    assert tasks["RR-002"]["dependsOn"] == ["RR-001"]
+    assert [
+        item
+        for item in board["lockedFoundationSequence"]
+        if item.startswith("RR-") or item in {"RB-007", "RB-008"}
+    ] == ["RR-001", "RR-002", "RR-003", "RR-004", "RB-007", "RB-008"]
+    assert [milestones[item]["order"] for item in ("RR-003", "RR-004", "RB-007")] == [
+        68,
+        69,
+        70,
+    ]
+    assert "Na RR-002" in milestones["RR-003"]["outcome"]
+    assert "Na RR-003" in milestones["RR-004"]["outcome"]
+    assert "na RR-004" in milestones["RB-007"]["outcome"]
+    assert {
+        "docs/eva-repository-inventory.generated.json",
+        "docs/eva-repository-inventory.generated.md",
+        "eva2/design/fixtures/noor-client-ack-key-v1.json",
+        "eva2/tests/design/test_component_catalog_repository.py",
+    }.issubset(tasks["RR-001"]["changePaths"])
+    assert "147 uitvoerbare testmodules" in " ".join(tasks["RR-001"]["evidenceRequired"])
+    assert "20 supportinputs" in " ".join(tasks["RR-001"]["evidenceRequired"])
+    assert board["completions"]["RR-001"] == {
+        "baseCommit": "ca6de2b0c0fe7bde1fdf740979ca3959c3e998ae",
+        "commit": "daa9022d2ef9f8aefa7e22c1f90d7f6a0c463c6c",
+        "decision": "GO",
+        "evidenceCommit": "78ad15c93869b663f2f55eaf1dbb15a828abbb77",
+        "evidencePaths": ["eva2/reviews/RR-001-hermetic-candidate-source-daa9022.md"],
+        "implementedBy": "/root/release_authority",
+        "reviewCommit": "766904152c62fb0debef0906321ad3d6fc731874",
+        "reviewedBy": "/root/proof_review",
+        "testReceiptPaths": [
+            "eva2/evidence/product/RR-001-hermetic-candidate-source-2026-09-02.json"
+        ],
+    }
+
+    for historical_id in ("RB-003", "RB-004", "RB-005", "RB-006"):
+        assert tasks[historical_id]["status"] == "done"
+        assert historical_id in board["completions"]
+
+
 @pytest.mark.parametrize(
     ("task_id", "order", "error"),
     [
-        ("CO-000", 75, "milestone 0 identity or order differs"),
+        ("CO-000", 75, "locked foundation policy differs"),
         ("OS-000", 101, "locked foundation policy differs"),
     ],
 )
@@ -298,7 +371,7 @@ def test_open_card_cannot_escape_the_canonical_eva2_authoring_root(
     def mutation(value: dict[str, object]) -> None:
         task = _primary(value)
         task["changePaths"] = [
-            "docs/eva-repository-inventory.generated.json",
+            "docs/repository-inventory-handwritten-copy.json",
             "eva2/tests/operations/test_current_workboard.py",
         ]
         task["inventoryOwners"] = ["architecture", "verification"]

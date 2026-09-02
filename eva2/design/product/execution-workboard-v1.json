@@ -6,9 +6,9 @@
   "commandWorkingDirectory": "eva2",
   "inventoryPath": "docs/eva-repository-inventory.generated.json",
   "humanBoardPath": "eva2/WERKBORD.md",
-  "lockedFoundationDigest": "87aaccc971e9df827fa65d9cec022b09e546aa79ea545c976a5a203f22e742f7",
-  "lockedFoundationSequence": ["GOV-001", "GOV-002", "RB-001", "RB-002", "RB-003", "RB-004", "RB-005", "RB-006", "GOV-003", "CP-000", "RB-007", "RB-008", "RB-009", "RB-010", "EV-001", "EV-002", "EV-003"],
-  "activeTaskId": "RB-007",
+  "lockedFoundationDigest": "c889870d8aed2394edf0d555edfe477980c38cb140d4e2897da9a1565ffccf5e",
+  "lockedFoundationSequence": ["GOV-001", "GOV-002", "RB-001", "RB-002", "RB-003", "RB-004", "RB-005", "RB-006", "GOV-003", "CP-000", "RR-001", "RR-002", "RR-003", "RR-004", "RB-007", "RB-008", "RB-009", "RB-010", "EV-001", "EV-002", "EV-003"],
+  "activeTaskId": "RR-002",
   "maxActiveImplementationTasks": 1,
   "statusValues": ["queued", "in_progress", "review", "done", "blocked"],
   "rules": [
@@ -18,7 +18,7 @@
     "Een bouwer keurt zijn eigen taak niet goed.",
     "Klaar vereist commitgebonden tests, bewijs en onafhankelijke beoordeling.",
     "Een gebruikersvoorbeeld test een bestaande capability en maakt geen providerspecifieke kernroute.",
-    "De enige projectingang en schrijfboom is /home/administrator/project/eva2; dit is één koppeling naar de bestaande fysieke Git-werkboom en alle agents delen diezelfde bron met exclusieve bestandspaden.",
+    "De enige broningang en handmatige schrijfboom is /home/administrator/project/eva2; alleen de twee mechanisch gegenereerde repository-inventarisbestanden blijven tijdelijk vaste afgeleide uitgangen in docs/.",
     "Er worden geen Eva2-worktrees of andere Eva2-bronmappen als sibling onder /home/administrator/project gemaakt.",
     "Tijdelijke test- en buildmappen staan via mktemp onder /tmp en worden opgeruimd.",
     "/home/administrator/project/.eva2-artifacts is alleen een beheerd artifactarchief en vereist een expliciete kaart met eigenaar, doel, exact retentiepad en opruimmoment.",
@@ -383,74 +383,87 @@
       ]
     },
     {
-      "id": "RB-007",
-      "order": 70,
-      "area": "Releasebasis",
-      "title": "Alle verplichte testgroepen uitvoeren",
-      "outcome": "Iedere verzegelde testgroep slaagt op dezelfde commit.",
+      "id": "RR-001",
+      "order": 66,
+      "area": "Releaseherstel",
+      "title": "Hermetische kandidaatbron herstellen",
+      "outcome": "De kandidaat bevat iedere vereiste test en testfixture zelf; geen test leest ongemerkt uit de bovenliggende repository.",
+      "status": "done",
+      "stateDetails": {"baseCommit": "ca6de2b0c0fe7bde1fdf740979ca3959c3e998ae", "implementationCommit": "daa9022d2ef9f8aefa7e22c1f90d7f6a0c463c6c", "evidenceCommit": "78ad15c93869b663f2f55eaf1dbb15a828abbb77", "reviewEvidencePaths": ["eva2/evidence/product/RR-001-hermetic-candidate-source-2026-09-02.json"], "blockerReason": null},
+      "ownerRole": "releaselead",
+      "reviewerRole": "proofreviewer",
+      "dependsOn": ["CP-000"],
+      "componentIds": ["core-behavior-tests", "operations-and-release-tests"],
+      "inventoryOwners": ["architecture", "documentation", "repository", "verification"],
+      "changePaths": [
+        "docs/eva-repository-inventory.generated.json",
+        "docs/eva-repository-inventory.generated.md",
+        "eva2/design/fixtures/noor-client-ack-key-v1.json",
+        "eva2/release/managed-b-release-input-authority-v1.json",
+        "eva2/tests/application/test_noor_4d.py",
+        "eva2/tests/contract/test_connector_rpc_ack_and_evidence_v2.py",
+        "eva2/tests/design/test_component_catalog.py",
+        "eva2/tests/design/test_component_catalog_repository.py",
+        "eva2/tests/objects/test_p256.py",
+        "eva2/tests/operations/test_managed_b_release_inputs.py",
+        "eva2/tests/operations/test_run_managed_b_required_tests.py",
+        "eva2/tools/managed_b_candidate/release_inputs.py",
+        "eva2/tools/run_managed_b_required_tests.py"
+      ],
+      "testCommands": [
+        "TMPDIR=/tmp TEMP=/tmp TMP=/tmp pytest -q tests/application/test_noor_4d.py tests/contract/test_connector_rpc_ack_and_evidence_v2.py tests/objects/test_p256.py tests/design/test_component_catalog.py tests/design/test_component_catalog_repository.py tests/operations/test_managed_b_release_inputs.py tests/operations/test_run_managed_b_required_tests.py",
+        "python3 tools/check_component_catalog.py",
+        "ruff check tools/managed_b_candidate/release_inputs.py tools/run_managed_b_required_tests.py tests/application/test_noor_4d.py tests/contract/test_connector_rpc_ack_and_evidence_v2.py tests/objects/test_p256.py tests/design/test_component_catalog.py tests/design/test_component_catalog_repository.py tests/operations/test_managed_b_release_inputs.py tests/operations/test_run_managed_b_required_tests.py"
+      ],
+      "evidenceRequired": [
+        "Een nieuwe release-inputauthority bindt exact de hermetische kandidaatbron, alle 147 uitvoerbare testmodules en alle 20 supportinputs; de historische RB-003 tot en met RB-006-receipts blijven ongewijzigd en gelden niet voor deze nieuwe kandidaat.",
+        "Een alleen uit de kandidaatbron gemaakte kopie voert de kandidaatlokale componentcatalogustest uit zonder bovenliggende docs, design of huidige checkout; de volledige repository-CI blijft de aparte repositorycatalogustest uitvoeren.",
+        "Aanvalstests weigeren een ontbrekende of gewijzigde Noor-fixture, een repositorytest tussen kandidaat-runtime-tests, een extra of ontbrekende release-input en iedere parent-directoryafhankelijkheid."
+      ],
+      "doneWhen": [
+        "Alle kandidaattests lezen uitsluitend bestanden uit de verzegelde kandidaatbron en de publieke Noor-testfixture staat als exact gebonden supportinput in die bron.",
+        "De repositorybrede componentcatalogustest blijft verplicht in repository-CI maar staat aantoonbaar niet tussen de uitvoerbare kandidaat-runtime-tests.",
+        "De release-inputauthority meldt exact 316 release-inputs, 147 uitvoerbare testmodules en 20 supportinputs en alle 48 gerichte release-inputtests slagen.",
+        "Een onafhankelijke reviewer geeft GO op exact de nieuwe broncommit; geen historisch bouw-, reproducibility- of scanreceipt wordt als nieuw bewijs hergebruikt."
+      ]
+    },
+    {
+      "id": "RR-002",
+      "order": 67,
+      "area": "Releaseherstel",
+      "title": "Nieuwe kandidaat op twee verse bouwers maken",
+      "outcome": "RB-003 en RB-004 worden voor de nieuwe hermetische bron opnieuw uitgevoerd; oude bouwreceipts worden niet hergebruikt.",
       "status": "in_progress",
       "stateDetails": {"baseCommit": null, "implementationCommit": null, "evidenceCommit": null, "reviewEvidencePaths": [], "blockerReason": null},
       "ownerRole": "releaselead",
       "reviewerRole": "proofreviewer",
-      "dependsOn": ["CP-000"],
+      "dependsOn": ["RR-001"],
       "componentIds": ["operations-and-release-tests"],
       "inventoryOwners": ["verification"],
       "changePaths": [
-        "eva2/tools/run_managed_b_required_tests.py",
-        "eva2/tools/run_managed_b_browser_release_subgate.py",
-        "eva2/tests/operations/test_run_managed_b_required_tests.py",
-        "eva2/tests/operations/test_run_managed_b_browser_release_subgate.py"
+        "eva2/tools/check_two_builder_reproducibility.py",
+        "eva2/tests/operations/test_two_builder_reproducibility.py"
       ],
       "testCommands": [
-        "TMPDIR=/tmp TEMP=/tmp TMP=/tmp pytest -q tests/operations/test_run_managed_b_required_tests.py tests/operations/test_run_managed_b_browser_release_subgate.py",
-        "ruff check tools/run_managed_b_required_tests.py tools/run_managed_b_browser_release_subgate.py tests/operations/test_run_managed_b_required_tests.py tests/operations/test_run_managed_b_browser_release_subgate.py"
+        "TMPDIR=/tmp TEMP=/tmp TMP=/tmp pytest -q tests/operations/test_two_builder_reproducibility.py",
+        "ruff check tools/check_two_builder_reproducibility.py tests/operations/test_two_builder_reproducibility.py"
       ],
       "evidenceRequired": [
-        "Een private commitgebonden uitvoerreceipt bewijst dat alle 147 verzegelde uitvoerbare testmodules, verdeeld over exact zeven groepen en met alle 19 supportinputs uitsluitend als gebonden invoer, zonder failures, errors, skips of xfails zijn uitgevoerd tegen dezelfde door RB-005 gekozen en door RB-006 schoon bevonden kandidaatbron.",
-        "Onafhankelijke aanvalstests bewijzen dat de huidige checkout, een schrijfbare of verwisselde source tree, verkeerde sourceCommit of authority, een ander kandidaatimage, ontbrekende of dubbele collectie, gewijzigde invoer tijdens uitvoering en hergebruikt browserbewijs allemaal vóór een groen receipt falen.",
-        "De runner bindt twaalf vers aangemaakte lege database-identiteiten aan één eigen gepinde wegwerpcontainer; de browser-subgate bindt een afzonderlijke databasecluster aan een verse door de ouder aangeleverde uitdaging en bewijst volledige resource-opruiming met succesvolle daemonqueries."
+        "Twee nieuwe private preflight-, build- en postflightketens zijn aan exact de RR-001-broncommit en release-inputauthority gebonden.",
+        "De twee lege offline bouwers hebben verschillende daemon-, socket-, state-root-, namespace-, BuildKit- en uitdagingsidentiteiten; een historisch RB-003- of RB-004-receipt kan niet worden toegelaten."
       ],
       "doneWhen": [
-        "De runner accepteert uitsluitend een apart gematerialiseerde, alleen-lezen source tree waarvan sourceCommit en release-inputauthority exact overeenkomen met de door RB-005 gekozen kandidaat en het geslaagde RB-006-bewijs; de huidige checkout wordt nooit als testbron gebruikt.",
-        "Collectie en uitvoering dekken exact alle verzegelde modules in zeven niet-overlappende groepen. De twaalf gewone databases en de afzonderlijke browserdatabase hebben fysiek gebonden cluster- en database-identiteiten, beginnen leeg en worden volledig opgeruimd; iedere failure, error, skip, xfail, ontbrekende of extra test faalt gesloten zonder passing receipt.",
-        "De browser-subgate gebruikt exact één verse ouderuitdaging in namen, labels, database en receipt; hergebruik, een verkeerde uitdaging, extra gelijk-gelabelde resources, daemonfouten of onvolledige opruiming kunnen geen groen receipt opleveren.",
-        "Het passing receipt bindt kandidaatimage, sourceCommit, authorityhash, onveranderlijke source-snapshot, toolchains, wheelhouses, groepsresultaten en het RB-006-bewijs; een onafhankelijke reviewer geeft GO."
-      ]
-    },
-    {
-      "id": "RB-008",
-      "order": 80,
-      "area": "Releasebasis",
-      "title": "Volledige wegwerpstack testen",
-      "outcome": "De stack migreert, antwoordt, onthoudt, herstart en ruimt op.",
-      "status": "queued",
-      "stateDetails": {"baseCommit": null, "implementationCommit": null, "evidenceCommit": null, "reviewEvidencePaths": [], "blockerReason": null},
-      "ownerRole": "releaselead",
-      "reviewerRole": "proofreviewer",
-      "dependsOn": ["RB-007"],
-      "componentIds": ["operations-and-release-tests"],
-      "inventoryOwners": ["verification"],
-      "changePaths": [
-        "eva2/tests/support/managed_b_runtime_smoke.py",
-        "eva2/tests/operations/test_managed_b_runtime_smoke.py"
-      ],
-      "testCommands": [
-        "TMPDIR=/tmp TEMP=/tmp TMP=/tmp pytest -q tests/operations/test_managed_b_runtime_smoke.py",
-        "ruff check tests/support/managed_b_runtime_smoke.py tests/operations/test_managed_b_runtime_smoke.py"
-      ],
-      "evidenceRequired": [
-        "Een private, canonieke en commitgebonden uitvoerreceipt bindt de exact door RB-005 gekozen kandidaat, het geslaagde RB-006-analysebewijs, het geslaagde RB-007-testreceipt, de gebruikte Compose-bytes, alle lokale image-ID's en één unieke Docker-project- en resource-namespace voordat een container, netwerk of volume wordt gemaakt.",
-        "De fysieke proef begint met nieuwe operationele, geheugen- en werkvolumes; bereikt de exacte schemahead; voltooit een echte kandidaatroute met een unieke geheugentoken; stopt en start dezelfde wegwerpstack met behoud van uitsluitend die volumes; bewijst daarna via een tweede antwoord dat dezelfde persoonsgebonden token is teruggevonden; en verwijdert tenslotte alle nonce-containers, netwerken, volumes en tijdelijke secret- of leasebestanden.",
-        "Aanvalstests bewijzen dat een verkeerde kandidaat of receipt, remote Docker-daemon, pull of build, bestaande of verwisselde resource, mislukte migratie, schijnantwoord, geheugenverlies, ontbrekende echte stop/start en onvolledige cleanup nooit een passing receipt opleveren."
-      ],
-      "doneWhen": [
-        "Vóór de eerste Docker-mutatie zijn kandidaat, RB-006-bewijs, RB-007-receipt, lokale daemon, Compose-inputs en alle image-identiteiten exact toegelaten; bouwen, pullen, taggen, pushen en gebruik van bestaande B- of productieresources zijn verboden.",
-        "Op volledig nieuwe wegwerpdata bereikt de schema-installer exact de verzegelde head, geeft de echte kandidaatroute antwoord, wordt een unieke persoonsgebonden geheugentoken aantoonbaar opgeslagen, worden alle voor deze proef vereiste langlopende services werkelijk gestopt en opnieuw gestart, en gebruikt een tweede antwoord aantoonbaar dezelfde teruggevonden token.",
-        "Cleanup draait bij succes én bij iedere fout; een passing receipt wordt pas na een onafhankelijke inventarisatie geschreven en is onmogelijk zolang ook maar één nonce-container, netwerk, volume of tijdelijk bestand resteert; een onafhankelijke reviewer geeft GO."
+        "Bouwer A en bouwer B starten leeg, gebruiken uitsluitend de verzegelde lokale OCI-bytes en produceren ieder een volledig gebonden kandidaatbewijs voor dezelfde nieuwe broncommit.",
+        "Een verkeerde commit, authority, builderidentiteit, bestaand builderobject, netwerkfallback of hergebruikt historisch bewijs stopt vóór een groen receipt.",
+        "Een onafhankelijke reviewer geeft GO op beide nieuwe bouwreceipts."
       ]
     }
   ],
   "milestones": [
+    {"id": "RR-003", "order": 68, "area": "Releaseherstel", "title": "Nieuwe A/B-builds bytegelijk beoordelen", "outcome": "Na RR-002 wordt RB-005 opnieuw uitgevoerd: alleen bytegelijke OCI-config, lagen en runtime-inhoud mogen één nieuwe kandidaat kiezen."},
+    {"id": "RR-004", "order": 69, "area": "Releaseherstel", "title": "Nieuwe kandidaat opnieuw scannen", "outcome": "Na RR-003 wordt RB-006 opnieuw uitgevoerd: de nieuw gekozen kandidaat krijgt een gebonden, niet-lege SBOM en nul hoge of kritieke bevindingen."},
+    {"id": "RB-007", "order": 70, "area": "Releasebasis", "title": "Alle verplichte testgroepen uitvoeren", "outcome": "Pas na RR-004 slaagt iedere verzegelde testgroep tegen dezelfde nieuwe, reproduceerbare en schoon bevonden kandidaat."},
+    {"id": "RB-008", "order": 80, "area": "Releasebasis", "title": "Volledige wegwerpstack testen", "outcome": "Na RB-007 migreert, antwoordt, onthoudt, herstart en ruimt de nieuwe kandidaat volledig op."},
     {"id": "RB-009", "order": 90, "area": "Releasebasis", "title": "Fysieke bewijsset beoordelen", "outcome": "Een onafhankelijke reviewer controleert de volledige releaseketen."},
     {"id": "RB-010", "order": 100, "area": "Releasebasis", "title": "A/B-besluit nemen", "outcome": "Alleen volledig groen mag naar het niet-actieve slot."},
     {"id": "EV-001", "order": 103, "area": "Continue kwaliteitsvergelijking", "title": "Inspect AI-bruggen geïsoleerd bewijzen", "outcome": "Een exact gelockte evalomgeving bewijst de benodigde Python- en sandbox/CLI-agentbruggen, bewaart de oorspronkelijke Inspect-loghash en schrijft her-scoring naar een afzonderlijk gehasht log."},
@@ -487,6 +500,17 @@
     {"id": "FN-003", "order": 390, "area": "Eindacceptatie", "title": "Zeven dagen praktijk bewijzen", "outcome": "Een ongewijzigde kandidaat doorstaat de praktijkproef en vervangbeslissing."}
   ],
   "completions": {
+    "RR-001": {
+      "baseCommit": "ca6de2b0c0fe7bde1fdf740979ca3959c3e998ae",
+      "commit": "daa9022d2ef9f8aefa7e22c1f90d7f6a0c463c6c",
+      "decision": "GO",
+      "evidenceCommit": "78ad15c93869b663f2f55eaf1dbb15a828abbb77",
+      "evidencePaths": ["eva2/reviews/RR-001-hermetic-candidate-source-daa9022.md"],
+      "implementedBy": "/root/release_authority",
+      "reviewCommit": "766904152c62fb0debef0906321ad3d6fc731874",
+      "reviewedBy": "/root/proof_review",
+      "testReceiptPaths": ["eva2/evidence/product/RR-001-hermetic-candidate-source-2026-09-02.json"]
+    },
     "CP-000": {
       "baseCommit": "ae43849c4a71fc0755247b3185543528ccf21a68",
       "commit": "f0eb745581ae63da22dbc6060d3477507fe39e8a",

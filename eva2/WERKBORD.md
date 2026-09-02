@@ -10,37 +10,23 @@ de volgende begint.
 
 | Volgorde | Kaart | Resultaat | Status |
 |---:|---|---|---|
-| 70 | `RB-007` — Alle verplichte testgroepen uitvoeren | Iedere verzegelde testgroep slaagt op dezelfde commit. | 🟡 BEZIG |
-| 80 | `RB-008` — Volledige wegwerpstack testen | De stack migreert, antwoordt, onthoudt, herstart en ruimt op. | ⚪ HIERNA |
+| 67 | `RR-002` — Nieuwe kandidaat op twee verse bouwers maken | RB-003 en RB-004 worden voor de nieuwe hermetische bron opnieuw uitgevoerd; oude bouwreceipts worden niet hergebruikt. | 🟡 BEZIG |
 
-### Exact werk voor `RB-007`
+### Exact werk voor `RR-002`
 
-- `eva2/tools/run_managed_b_required_tests.py`
-- `eva2/tools/run_managed_b_browser_release_subgate.py`
-- `eva2/tests/operations/test_run_managed_b_required_tests.py`
-- `eva2/tests/operations/test_run_managed_b_browser_release_subgate.py`
+- `eva2/tools/check_two_builder_reproducibility.py`
+- `eva2/tests/operations/test_two_builder_reproducibility.py`
 
 Klaar betekent:
 
-- De runner accepteert uitsluitend een apart gematerialiseerde, alleen-lezen source tree waarvan sourceCommit en release-inputauthority exact overeenkomen met de door RB-005 gekozen kandidaat en het geslaagde RB-006-bewijs; de huidige checkout wordt nooit als testbron gebruikt.
-- Collectie en uitvoering dekken exact alle verzegelde modules in zeven niet-overlappende groepen. De twaalf gewone databases en de afzonderlijke browserdatabase hebben fysiek gebonden cluster- en database-identiteiten, beginnen leeg en worden volledig opgeruimd; iedere failure, error, skip, xfail, ontbrekende of extra test faalt gesloten zonder passing receipt.
-- De browser-subgate gebruikt exact één verse ouderuitdaging in namen, labels, database en receipt; hergebruik, een verkeerde uitdaging, extra gelijk-gelabelde resources, daemonfouten of onvolledige opruiming kunnen geen groen receipt opleveren.
-- Het passing receipt bindt kandidaatimage, sourceCommit, authorityhash, onveranderlijke source-snapshot, toolchains, wheelhouses, groepsresultaten en het RB-006-bewijs; een onafhankelijke reviewer geeft GO.
+- Bouwer A en bouwer B starten leeg, gebruiken uitsluitend de verzegelde lokale OCI-bytes en produceren ieder een volledig gebonden kandidaatbewijs voor dezelfde nieuwe broncommit.
+- Een verkeerde commit, authority, builderidentiteit, bestaand builderobject, netwerkfallback of hergebruikt historisch bewijs stopt vóór een groen receipt.
+- Een onafhankelijke reviewer geeft GO op beide nieuwe bouwreceipts.
 
 Echte controles:
 
-- `TMPDIR=/tmp TEMP=/tmp TMP=/tmp pytest -q tests/operations/test_run_managed_b_required_tests.py tests/operations/test_run_managed_b_browser_release_subgate.py`
-- `ruff check tools/run_managed_b_required_tests.py tools/run_managed_b_browser_release_subgate.py tests/operations/test_run_managed_b_required_tests.py tests/operations/test_run_managed_b_browser_release_subgate.py`
-
-### Daarna voorbereid: `RB-008`
-
-- `eva2/tests/support/managed_b_runtime_smoke.py`
-- `eva2/tests/operations/test_managed_b_runtime_smoke.py`
-
-Vooraf vastgelegde controles:
-
-- `TMPDIR=/tmp TEMP=/tmp TMP=/tmp pytest -q tests/operations/test_managed_b_runtime_smoke.py`
-- `ruff check tests/support/managed_b_runtime_smoke.py tests/operations/test_managed_b_runtime_smoke.py`
+- `TMPDIR=/tmp TEMP=/tmp TMP=/tmp pytest -q tests/operations/test_two_builder_reproducibility.py`
+- `ruff check tools/check_two_builder_reproducibility.py tests/operations/test_two_builder_reproducibility.py`
 
 ## Daarna
 
@@ -49,6 +35,10 @@ nadat zij als eerstvolgende kleine kaart exacte bestanden en tests heeft.
 
 | Nr. | Onderdeel | Begrijpelijk eindresultaat |
 |---:|---|---|
+| 68 | `RR-003` — Nieuwe A/B-builds bytegelijk beoordelen | Na RR-002 wordt RB-005 opnieuw uitgevoerd: alleen bytegelijke OCI-config, lagen en runtime-inhoud mogen één nieuwe kandidaat kiezen. |
+| 69 | `RR-004` — Nieuwe kandidaat opnieuw scannen | Na RR-003 wordt RB-006 opnieuw uitgevoerd: de nieuw gekozen kandidaat krijgt een gebonden, niet-lege SBOM en nul hoge of kritieke bevindingen. |
+| 70 | `RB-007` — Alle verplichte testgroepen uitvoeren | Pas na RR-004 slaagt iedere verzegelde testgroep tegen dezelfde nieuwe, reproduceerbare en schoon bevonden kandidaat. |
+| 80 | `RB-008` — Volledige wegwerpstack testen | Na RB-007 migreert, antwoordt, onthoudt, herstart en ruimt de nieuwe kandidaat volledig op. |
 | 90 | `RB-009` — Fysieke bewijsset beoordelen | Een onafhankelijke reviewer controleert de volledige releaseketen. |
 | 100 | `RB-010` — A/B-besluit nemen | Alleen volledig groen mag naar het niet-actieve slot. |
 | 103 | `EV-001` — Inspect AI-bruggen geïsoleerd bewijzen | Een exact gelockte evalomgeving bewijst de benodigde Python- en sandbox/CLI-agentbruggen, bewaart de oorspronkelijke Inspect-loghash en schrijft her-scoring naar een afzonderlijk gehasht log. |
@@ -92,7 +82,7 @@ nadat zij als eerstvolgende kleine kaart exacte bestanden en tests heeft.
 - Een bouwer keurt zijn eigen taak niet goed.
 - Klaar vereist commitgebonden tests, bewijs en onafhankelijke beoordeling.
 - Een gebruikersvoorbeeld test een bestaande capability en maakt geen providerspecifieke kernroute.
-- De enige projectingang en schrijfboom is /home/administrator/project/eva2; dit is één koppeling naar de bestaande fysieke Git-werkboom en alle agents delen diezelfde bron met exclusieve bestandspaden.
+- De enige broningang en handmatige schrijfboom is /home/administrator/project/eva2; alleen de twee mechanisch gegenereerde repository-inventarisbestanden blijven tijdelijk vaste afgeleide uitgangen in docs/.
 - Er worden geen Eva2-worktrees of andere Eva2-bronmappen als sibling onder /home/administrator/project gemaakt.
 - Tijdelijke test- en buildmappen staan via mktemp onder /tmp en worden opgeruimd.
 - /home/administrator/project/.eva2-artifacts is alleen een beheerd artifactarchief en vereist een expliciete kaart met eigenaar, doel, exact retentiepad en opruimmoment.

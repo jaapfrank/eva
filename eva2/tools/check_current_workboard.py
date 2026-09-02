@@ -37,9 +37,9 @@ RULES = [
     "Een bouwer keurt zijn eigen taak niet goed.",
     "Klaar vereist commitgebonden tests, bewijs en onafhankelijke beoordeling.",
     "Een gebruikersvoorbeeld test een bestaande capability en maakt geen providerspecifieke kernroute.",
-    "De enige projectingang en schrijfboom is /home/administrator/project/eva2; "
-    "dit is één koppeling naar de bestaande fysieke Git-werkboom en alle agents "
-    "delen diezelfde bron met exclusieve bestandspaden.",
+    "De enige broningang en handmatige schrijfboom is /home/administrator/project/eva2; "
+    "alleen de twee mechanisch gegenereerde repository-inventarisbestanden blijven "
+    "tijdelijk vaste afgeleide uitgangen in docs/.",
     "Er worden geen Eva2-worktrees of andere Eva2-bronmappen als sibling onder "
     "/home/administrator/project gemaakt.",
     "Tijdelijke test- en buildmappen staan via mktemp onder /tmp en worden opgeruimd.",
@@ -61,6 +61,10 @@ LOCKED_FOUNDATION_SEQUENCE = [
     "RB-006",
     "GOV-003",
     "CP-000",
+    "RR-001",
+    "RR-002",
+    "RR-003",
+    "RR-004",
     "RB-007",
     "RB-008",
     "RB-009",
@@ -69,7 +73,7 @@ LOCKED_FOUNDATION_SEQUENCE = [
     "EV-002",
     "EV-003",
 ]
-LOCKED_FOUNDATION_DIGEST = "87aaccc971e9df827fa65d9cec022b09e546aa79ea545c976a5a203f22e742f7"
+LOCKED_FOUNDATION_DIGEST = "c889870d8aed2394edf0d555edfe477980c38cb140d4e2897da9a1565ffccf5e"
 RETIRED_BENCHMARK_MARKERS = (
     "comparable-agent-run-v1.schema.json",
     "test_comparable_agent_run_validator.py",
@@ -704,8 +708,13 @@ def validate(
             raise RuntimeError(f"{task_id} names an unknown component")
         owners = _strings(task.get("inventoryOwners"), f"{task_id} inventoryOwners")
         change_paths = _strings(task.get("changePaths"), f"{task_id} changePaths")
+        managed_generated_paths = {
+            inventory_raw,
+            "docs/eva-repository-inventory.generated.md",
+        }
         if status != "done" and any(
-            not raw.startswith("eva2/") for raw in change_paths
+            not raw.startswith("eva2/") and raw not in managed_generated_paths
+            for raw in change_paths
         ):
             raise RuntimeError(
                 f"{task_id} open changePaths must stay inside the canonical Eva2 authoring root"
