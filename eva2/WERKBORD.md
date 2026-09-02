@@ -21,6 +21,7 @@ Klaar betekent:
 
 - Bouwer A en bouwer B starten leeg, gebruiken uitsluitend de verzegelde lokale OCI-bytes en produceren ieder een volledig gebonden kandidaatbewijs voor dezelfde nieuwe broncommit.
 - Een verkeerde commit, authority, builderidentiteit, bestaand builderobject, netwerkfallback of hergebruikt historisch bewijs stopt vóór een groen receipt.
+- Een herhaalbare operator meet de private netwerknamespace en builderstaat vóór en na de build, schrijft de receipts zonder handmatige JSON-verbouwing en ruimt units, sockets en tijdelijke bouwstaat aantoonbaar op.
 - Een onafhankelijke reviewer geeft GO op beide nieuwe bouwreceipts.
 
 Echte controles:

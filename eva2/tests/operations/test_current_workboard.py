@@ -143,6 +143,13 @@ def test_hermetic_release_recovery_precedes_required_test_execution() -> None:
     }.issubset(tasks["RR-001"]["changePaths"])
     assert "147 uitvoerbare testmodules" in " ".join(tasks["RR-001"]["evidenceRequired"])
     assert "20 supportinputs" in " ".join(tasks["RR-001"]["evidenceRequired"])
+    assert "/home/administrator/project/.eva2-artifacts/rr002-daa9022-builder-a" in " ".join(
+        tasks["RR-002"]["evidenceRequired"]
+    )
+    assert "/home/administrator/project/.eva2-artifacts/rr002-daa9022-builder-b" in " ".join(
+        tasks["RR-002"]["evidenceRequired"]
+    )
+    assert "zonder handmatige JSON-verbouwing" in " ".join(tasks["RR-002"]["doneWhen"])
     assert board["completions"]["RR-001"] == {
         "baseCommit": "ca6de2b0c0fe7bde1fdf740979ca3959c3e998ae",
         "commit": "daa9022d2ef9f8aefa7e22c1f90d7f6a0c463c6c",
