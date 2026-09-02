@@ -1,0 +1,45 @@
+{
+  "baseCommit": "ca6de2b0c0fe7bde1fdf740979ca3959c3e998ae",
+  "contract": "EvaRR001HermeticCandidateSourceReceipt/v1",
+  "createdAt": "2026-09-02T21:03:11+02:00",
+  "implementationCommit": "daa9022d2ef9f8aefa7e22c1f90d7f6a0c463c6c",
+  "nonClaims": [
+    "RR-001 does not claim a new image, reproducible build, vulnerability scan, deployment, or live-route result.",
+    "Historical RB-003 through RB-006 receipts are not reused as evidence for this source commit.",
+    "The repository-wide catalog test remains repository CI and is intentionally absent from the 147 executable candidate tests."
+  ],
+  "releaseAuthority": {
+    "requiredInputCount": 316,
+    "requiredTestCount": 147,
+    "supportInputCount": 20,
+    "sha256": "2383f9bfa9cb3b470fbd4908de7f8f33b98a287d64277c457d22286bd0c3dec0"
+  },
+  "repositoryInventory": {
+    "jsonSha256": "83852c9807e27d87c736c1f206e05790a0b7dd8d2d7c97c29156976f0c511a67",
+    "markdownSha256": "223163cfc1e236a689c9911a1314d060ab239201a52893e16b0c5e69570b46df"
+  },
+  "source": {
+    "eva2ArchiveSha256": "2ef7d1cb702c3da3e312fdc51502244e1397e7aa5e974ad44b043f5a6870623b",
+    "noorFixtureSha256": "330476faf5f2317d0edfaa991cc7dd344711353188d6c504f9629a780d5f4e93"
+  },
+  "status": "passed",
+  "taskId": "RR-001",
+  "tests": [
+    {
+      "passed": 119,
+      "scope": "exact full-repository git archive including repository catalog integration",
+      "sourceWritable": false,
+      "status": "passed"
+    },
+    {
+      "passed": 118,
+      "scope": "exact flat Eva2 git archive with candidate-only tests and no parent repository files",
+      "sourceWritable": false,
+      "status": "passed"
+    },
+    {
+      "scope": "Ruff on every changed Python source and test path",
+      "status": "passed"
+    }
+  ]
+}
