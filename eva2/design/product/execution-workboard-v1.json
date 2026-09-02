@@ -6,7 +6,7 @@
   "commandWorkingDirectory": "eva2",
   "inventoryPath": "docs/eva-repository-inventory.generated.json",
   "humanBoardPath": "eva2/WERKBORD.md",
-  "lockedFoundationDigest": "8d3589c99ed5b6a59785e4c145a81f08572a34b06b898d439c336462d33ccfb6",
+  "lockedFoundationDigest": "87aaccc971e9df827fa65d9cec022b09e546aa79ea545c976a5a203f22e742f7",
   "lockedFoundationSequence": ["GOV-001", "GOV-002", "RB-001", "RB-002", "RB-003", "RB-004", "RB-005", "RB-006", "GOV-003", "CP-000", "RB-007", "RB-008", "RB-009", "RB-010", "EV-001", "EV-002", "EV-003"],
   "activeTaskId": "RB-007",
   "maxActiveImplementationTasks": 1,
@@ -18,7 +18,7 @@
     "Een bouwer keurt zijn eigen taak niet goed.",
     "Klaar vereist commitgebonden tests, bewijs en onafhankelijke beoordeling.",
     "Een gebruikersvoorbeeld test een bestaande capability en maakt geen providerspecifieke kernroute.",
-    "De enige schrijfboom is /home/administrator/project/Bottie-candidates/v2/eva2; alle agents delen die boom met exclusieve bestandspaden.",
+    "De enige projectingang en schrijfboom is /home/administrator/project/eva2; dit is één koppeling naar de bestaande fysieke Git-werkboom en alle agents delen diezelfde bron met exclusieve bestandspaden.",
     "Er worden geen Eva2-worktrees of andere Eva2-bronmappen als sibling onder /home/administrator/project gemaakt.",
     "Tijdelijke test- en buildmappen staan via mktemp onder /tmp en worden opgeruimd.",
     "/home/administrator/project/.eva2-artifacts is alleen een beheerd artifactarchief en vereist een expliciete kaart met eigenaar, doel, exact retentiepad en opruimmoment.",
@@ -397,19 +397,23 @@
       "inventoryOwners": ["verification"],
       "changePaths": [
         "eva2/tools/run_managed_b_required_tests.py",
-        "eva2/tests/operations/test_run_managed_b_required_tests.py"
+        "eva2/tools/run_managed_b_browser_release_subgate.py",
+        "eva2/tests/operations/test_run_managed_b_required_tests.py",
+        "eva2/tests/operations/test_run_managed_b_browser_release_subgate.py"
       ],
       "testCommands": [
-        "TMPDIR=/tmp TEMP=/tmp TMP=/tmp pytest -q tests/operations/test_run_managed_b_required_tests.py",
-        "ruff check tools/run_managed_b_required_tests.py tests/operations/test_run_managed_b_required_tests.py"
+        "TMPDIR=/tmp TEMP=/tmp TMP=/tmp pytest -q tests/operations/test_run_managed_b_required_tests.py tests/operations/test_run_managed_b_browser_release_subgate.py",
+        "ruff check tools/run_managed_b_required_tests.py tools/run_managed_b_browser_release_subgate.py tests/operations/test_run_managed_b_required_tests.py tests/operations/test_run_managed_b_browser_release_subgate.py"
       ],
       "evidenceRequired": [
         "Een private commitgebonden uitvoerreceipt bewijst dat alle 147 verzegelde uitvoerbare testmodules, verdeeld over exact zeven groepen en met alle 19 supportinputs uitsluitend als gebonden invoer, zonder failures, errors, skips of xfails zijn uitgevoerd tegen dezelfde door RB-005 gekozen en door RB-006 schoon bevonden kandidaatbron.",
-        "Onafhankelijke aanvalstests bewijzen dat de huidige checkout, een schrijfbare of verwisselde source tree, verkeerde sourceCommit of authority, een ander kandidaatimage, ontbrekende of dubbele collectie, gewijzigde invoer tijdens uitvoering en hergebruikt browserbewijs allemaal vóór een groen receipt falen."
+        "Onafhankelijke aanvalstests bewijzen dat de huidige checkout, een schrijfbare of verwisselde source tree, verkeerde sourceCommit of authority, een ander kandidaatimage, ontbrekende of dubbele collectie, gewijzigde invoer tijdens uitvoering en hergebruikt browserbewijs allemaal vóór een groen receipt falen.",
+        "De runner bindt twaalf vers aangemaakte lege database-identiteiten aan één eigen gepinde wegwerpcontainer; de browser-subgate bindt een afzonderlijke databasecluster aan een verse door de ouder aangeleverde uitdaging en bewijst volledige resource-opruiming met succesvolle daemonqueries."
       ],
       "doneWhen": [
         "De runner accepteert uitsluitend een apart gematerialiseerde, alleen-lezen source tree waarvan sourceCommit en release-inputauthority exact overeenkomen met de door RB-005 gekozen kandidaat en het geslaagde RB-006-bewijs; de huidige checkout wordt nooit als testbron gebruikt.",
-        "Collectie en uitvoering dekken exact alle verzegelde modules in zeven niet-overlappende groepen, inclusief de fysieke browsersubgate en de vereiste afzonderlijke wegwerpdatabases, en iedere failure, error, skip, xfail, ontbrekende of extra test faalt gesloten zonder passing receipt.",
+        "Collectie en uitvoering dekken exact alle verzegelde modules in zeven niet-overlappende groepen. De twaalf gewone databases en de afzonderlijke browserdatabase hebben fysiek gebonden cluster- en database-identiteiten, beginnen leeg en worden volledig opgeruimd; iedere failure, error, skip, xfail, ontbrekende of extra test faalt gesloten zonder passing receipt.",
+        "De browser-subgate gebruikt exact één verse ouderuitdaging in namen, labels, database en receipt; hergebruik, een verkeerde uitdaging, extra gelijk-gelabelde resources, daemonfouten of onvolledige opruiming kunnen geen groen receipt opleveren.",
         "Het passing receipt bindt kandidaatimage, sourceCommit, authorityhash, onveranderlijke source-snapshot, toolchains, wheelhouses, groepsresultaten en het RB-006-bewijs; een onafhankelijke reviewer geeft GO."
       ]
     },

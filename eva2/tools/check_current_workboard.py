@@ -37,8 +37,9 @@ RULES = [
     "Een bouwer keurt zijn eigen taak niet goed.",
     "Klaar vereist commitgebonden tests, bewijs en onafhankelijke beoordeling.",
     "Een gebruikersvoorbeeld test een bestaande capability en maakt geen providerspecifieke kernroute.",
-    "De enige schrijfboom is /home/administrator/project/Bottie-candidates/v2/eva2; "
-    "alle agents delen die boom met exclusieve bestandspaden.",
+    "De enige projectingang en schrijfboom is /home/administrator/project/eva2; "
+    "dit is één koppeling naar de bestaande fysieke Git-werkboom en alle agents "
+    "delen diezelfde bron met exclusieve bestandspaden.",
     "Er worden geen Eva2-worktrees of andere Eva2-bronmappen als sibling onder "
     "/home/administrator/project gemaakt.",
     "Tijdelijke test- en buildmappen staan via mktemp onder /tmp en worden opgeruimd.",
@@ -68,7 +69,7 @@ LOCKED_FOUNDATION_SEQUENCE = [
     "EV-002",
     "EV-003",
 ]
-LOCKED_FOUNDATION_DIGEST = "8d3589c99ed5b6a59785e4c145a81f08572a34b06b898d439c336462d33ccfb6"
+LOCKED_FOUNDATION_DIGEST = "87aaccc971e9df827fa65d9cec022b09e546aa79ea545c976a5a203f22e742f7"
 RETIRED_BENCHMARK_MARKERS = (
     "comparable-agent-run-v1.schema.json",
     "test_comparable_agent_run_validator.py",

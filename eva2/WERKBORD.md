@@ -16,18 +16,21 @@ de volgende begint.
 ### Exact werk voor `RB-007`
 
 - `eva2/tools/run_managed_b_required_tests.py`
+- `eva2/tools/run_managed_b_browser_release_subgate.py`
 - `eva2/tests/operations/test_run_managed_b_required_tests.py`
+- `eva2/tests/operations/test_run_managed_b_browser_release_subgate.py`
 
 Klaar betekent:
 
 - De runner accepteert uitsluitend een apart gematerialiseerde, alleen-lezen source tree waarvan sourceCommit en release-inputauthority exact overeenkomen met de door RB-005 gekozen kandidaat en het geslaagde RB-006-bewijs; de huidige checkout wordt nooit als testbron gebruikt.
-- Collectie en uitvoering dekken exact alle verzegelde modules in zeven niet-overlappende groepen, inclusief de fysieke browsersubgate en de vereiste afzonderlijke wegwerpdatabases, en iedere failure, error, skip, xfail, ontbrekende of extra test faalt gesloten zonder passing receipt.
+- Collectie en uitvoering dekken exact alle verzegelde modules in zeven niet-overlappende groepen. De twaalf gewone databases en de afzonderlijke browserdatabase hebben fysiek gebonden cluster- en database-identiteiten, beginnen leeg en worden volledig opgeruimd; iedere failure, error, skip, xfail, ontbrekende of extra test faalt gesloten zonder passing receipt.
+- De browser-subgate gebruikt exact één verse ouderuitdaging in namen, labels, database en receipt; hergebruik, een verkeerde uitdaging, extra gelijk-gelabelde resources, daemonfouten of onvolledige opruiming kunnen geen groen receipt opleveren.
 - Het passing receipt bindt kandidaatimage, sourceCommit, authorityhash, onveranderlijke source-snapshot, toolchains, wheelhouses, groepsresultaten en het RB-006-bewijs; een onafhankelijke reviewer geeft GO.
 
 Echte controles:
 
-- `TMPDIR=/tmp TEMP=/tmp TMP=/tmp pytest -q tests/operations/test_run_managed_b_required_tests.py`
-- `ruff check tools/run_managed_b_required_tests.py tests/operations/test_run_managed_b_required_tests.py`
+- `TMPDIR=/tmp TEMP=/tmp TMP=/tmp pytest -q tests/operations/test_run_managed_b_required_tests.py tests/operations/test_run_managed_b_browser_release_subgate.py`
+- `ruff check tools/run_managed_b_required_tests.py tools/run_managed_b_browser_release_subgate.py tests/operations/test_run_managed_b_required_tests.py tests/operations/test_run_managed_b_browser_release_subgate.py`
 
 ### Daarna voorbereid: `RB-008`
 
@@ -89,7 +92,7 @@ nadat zij als eerstvolgende kleine kaart exacte bestanden en tests heeft.
 - Een bouwer keurt zijn eigen taak niet goed.
 - Klaar vereist commitgebonden tests, bewijs en onafhankelijke beoordeling.
 - Een gebruikersvoorbeeld test een bestaande capability en maakt geen providerspecifieke kernroute.
-- De enige schrijfboom is /home/administrator/project/Bottie-candidates/v2/eva2; alle agents delen die boom met exclusieve bestandspaden.
+- De enige projectingang en schrijfboom is /home/administrator/project/eva2; dit is één koppeling naar de bestaande fysieke Git-werkboom en alle agents delen diezelfde bron met exclusieve bestandspaden.
 - Er worden geen Eva2-worktrees of andere Eva2-bronmappen als sibling onder /home/administrator/project gemaakt.
 - Tijdelijke test- en buildmappen staan via mktemp onder /tmp en worden opgeruimd.
 - /home/administrator/project/.eva2-artifacts is alleen een beheerd artifactarchief en vereist een expliciete kaart met eigenaar, doel, exact retentiepad en opruimmoment.
