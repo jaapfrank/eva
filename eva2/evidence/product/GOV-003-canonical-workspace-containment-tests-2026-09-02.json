@@ -1,0 +1,42 @@
+{
+  "contract": "EvaWorkboardTestReceipt/v1",
+  "taskId": "GOV-003",
+  "baseCommit": "458631cb022efb44adfb0b2cf4abac3c07eacc41",
+  "implementationCommit": "dc4757338165effa0aff97f9d0d6e0b5c6070c35",
+  "recordedOn": "2026-09-02",
+  "result": "GO",
+  "checks": [
+    {
+      "command": "PYTHONDONTWRITEBYTECODE=1 TMPDIR=/tmp TEMP=/tmp TMP=/tmp pytest -q -p no:cacheprovider tests/operations/test_current_workboard.py",
+      "result": "45 passed"
+    },
+    {
+      "command": "PYTHONDONTWRITEBYTECODE=1 python3 tools/check_current_workboard.py",
+      "result": "valid; GOV-003 active; CP-000 next"
+    },
+    {
+      "command": "ruff check --no-cache tools/check_current_workboard.py tests/operations/test_current_workboard.py",
+      "result": "all checks passed"
+    },
+    {
+      "command": "git diff --check",
+      "result": "passed before implementation commit"
+    },
+    {
+      "command": "sha256sum WERKBORD.md && python3 tools/check_current_workboard.py --render-human | sha256sum",
+      "result": "both 567fe0c8c255fbd5b9eee8ae21f888a9d833c85b5f7da5d6892561da4faa93a7"
+    }
+  ],
+  "attacks": [
+    "An open card naming an existing docs/ path outside eva2 is rejected even with matching inventory owners and component ownership.",
+    "A missing path, absent inventory entry, wrong inventory owner and wrong component owner are rejected.",
+    "A second active card and drift between the machine board and WERKBORD.md are rejected.",
+    "Removing or weakening the complete artifact owner, purpose, retention-path and cleanup-time rule is rejected."
+  ],
+  "nonClaims": [
+    "This receipt completes only the implementation tests for canonical Eva2 workspace containment.",
+    "The 67 pre-existing untracked living-core evidence items are not classified or accepted by this receipt.",
+    "The existing artifact archive, historical worktrees and shared Git metadata have not been moved or deleted.",
+    "No live Eva route, container, database, secret or external provider was changed."
+  ]
+}
