@@ -90,13 +90,17 @@ def test_eval_engine_adoption_precedes_new_product_work() -> None:
 
 
 @pytest.mark.parametrize(
-    ("task_id", "order"),
-    [("CO-000", 75), ("OS-000", 101)],
+    ("task_id", "order", "error"),
+    [
+        ("CO-000", 75, "milestone 0 identity or order differs"),
+        ("OS-000", 101, "locked foundation policy differs"),
+    ],
 )
 def test_workboard_refuses_inserting_work_into_locked_foundation(
     tmp_path: Path,
     task_id: str,
     order: int,
+    error: str,
 ) -> None:
     def mutation(value: dict[str, object]) -> None:
         value["milestones"].append(
@@ -122,7 +126,7 @@ def test_workboard_refuses_inserting_work_into_locked_foundation(
         value["lockedFoundationSequence"].insert(insertion, task_id)
 
     paths = _board(tmp_path, mutation)
-    with pytest.raises(RuntimeError, match="locked foundation policy differs"):
+    with pytest.raises(RuntimeError, match=error):
         _validate_paths(paths)
 
 

@@ -6,9 +6,9 @@
   "commandWorkingDirectory": "eva2",
   "inventoryPath": "docs/eva-repository-inventory.generated.json",
   "humanBoardPath": "eva2/WERKBORD.md",
-  "lockedFoundationDigest": "a68d0f204a30f6cc20e7fdb6ce72809df8e2bdd477ff30117068d081a3208074",
+  "lockedFoundationDigest": "8d3589c99ed5b6a59785e4c145a81f08572a34b06b898d439c336462d33ccfb6",
   "lockedFoundationSequence": ["GOV-001", "GOV-002", "RB-001", "RB-002", "RB-003", "RB-004", "RB-005", "RB-006", "GOV-003", "CP-000", "RB-007", "RB-008", "RB-009", "RB-010", "EV-001", "EV-002", "EV-003"],
-  "activeTaskId": "CP-000",
+  "activeTaskId": "RB-007",
   "maxActiveImplementationTasks": 1,
   "statusValues": ["queued", "in_progress", "review", "done", "blocked"],
   "rules": [
@@ -348,8 +348,8 @@
       "area": "Continue kwaliteitsvergelijking",
       "title": "Open-source evaluatiemotor voorselecteren",
       "outcome": "Inspect AI is de actuele voorkeurskandidaat; pas EV-001 maakt de keuze definitief met echte Python- en CLI-agentbruggen.",
-      "status": "in_progress",
-      "stateDetails": {"baseCommit": null, "implementationCommit": null, "evidenceCommit": null, "reviewEvidencePaths": [], "blockerReason": null},
+      "status": "done",
+      "stateDetails": {"baseCommit": "ae43849c4a71fc0755247b3185543528ccf21a68", "implementationCommit": "f0eb745581ae63da22dbc6060d3477507fe39e8a", "evidenceCommit": "327033bb2ecd2ae5de644f6796cd605051a9dd82", "reviewEvidencePaths": ["eva2/evidence/product/CP-000-open-source-eval-engine-selection-2026-09-02.json"], "blockerReason": null},
       "ownerRole": "architecturelead",
       "reviewerRole": "workboardreviewer",
       "dependsOn": ["GOV-003"],
@@ -388,7 +388,7 @@
       "area": "Releasebasis",
       "title": "Alle verplichte testgroepen uitvoeren",
       "outcome": "Iedere verzegelde testgroep slaagt op dezelfde commit.",
-      "status": "queued",
+      "status": "in_progress",
       "stateDetails": {"baseCommit": null, "implementationCommit": null, "evidenceCommit": null, "reviewEvidencePaths": [], "blockerReason": null},
       "ownerRole": "releaselead",
       "reviewerRole": "proofreviewer",
@@ -412,10 +412,41 @@
         "Collectie en uitvoering dekken exact alle verzegelde modules in zeven niet-overlappende groepen, inclusief de fysieke browsersubgate en de vereiste afzonderlijke wegwerpdatabases, en iedere failure, error, skip, xfail, ontbrekende of extra test faalt gesloten zonder passing receipt.",
         "Het passing receipt bindt kandidaatimage, sourceCommit, authorityhash, onveranderlijke source-snapshot, toolchains, wheelhouses, groepsresultaten en het RB-006-bewijs; een onafhankelijke reviewer geeft GO."
       ]
+    },
+    {
+      "id": "RB-008",
+      "order": 80,
+      "area": "Releasebasis",
+      "title": "Volledige wegwerpstack testen",
+      "outcome": "De stack migreert, antwoordt, onthoudt, herstart en ruimt op.",
+      "status": "queued",
+      "stateDetails": {"baseCommit": null, "implementationCommit": null, "evidenceCommit": null, "reviewEvidencePaths": [], "blockerReason": null},
+      "ownerRole": "releaselead",
+      "reviewerRole": "proofreviewer",
+      "dependsOn": ["RB-007"],
+      "componentIds": ["operations-and-release-tests"],
+      "inventoryOwners": ["verification"],
+      "changePaths": [
+        "eva2/tests/support/managed_b_runtime_smoke.py",
+        "eva2/tests/operations/test_managed_b_runtime_smoke.py"
+      ],
+      "testCommands": [
+        "TMPDIR=/tmp TEMP=/tmp TMP=/tmp pytest -q tests/operations/test_managed_b_runtime_smoke.py",
+        "ruff check tests/support/managed_b_runtime_smoke.py tests/operations/test_managed_b_runtime_smoke.py"
+      ],
+      "evidenceRequired": [
+        "Een private, canonieke en commitgebonden uitvoerreceipt bindt de exact door RB-005 gekozen kandidaat, het geslaagde RB-006-analysebewijs, het geslaagde RB-007-testreceipt, de gebruikte Compose-bytes, alle lokale image-ID's en één unieke Docker-project- en resource-namespace voordat een container, netwerk of volume wordt gemaakt.",
+        "De fysieke proef begint met nieuwe operationele, geheugen- en werkvolumes; bereikt de exacte schemahead; voltooit een echte kandidaatroute met een unieke geheugentoken; stopt en start dezelfde wegwerpstack met behoud van uitsluitend die volumes; bewijst daarna via een tweede antwoord dat dezelfde persoonsgebonden token is teruggevonden; en verwijdert tenslotte alle nonce-containers, netwerken, volumes en tijdelijke secret- of leasebestanden.",
+        "Aanvalstests bewijzen dat een verkeerde kandidaat of receipt, remote Docker-daemon, pull of build, bestaande of verwisselde resource, mislukte migratie, schijnantwoord, geheugenverlies, ontbrekende echte stop/start en onvolledige cleanup nooit een passing receipt opleveren."
+      ],
+      "doneWhen": [
+        "Vóór de eerste Docker-mutatie zijn kandidaat, RB-006-bewijs, RB-007-receipt, lokale daemon, Compose-inputs en alle image-identiteiten exact toegelaten; bouwen, pullen, taggen, pushen en gebruik van bestaande B- of productieresources zijn verboden.",
+        "Op volledig nieuwe wegwerpdata bereikt de schema-installer exact de verzegelde head, geeft de echte kandidaatroute antwoord, wordt een unieke persoonsgebonden geheugentoken aantoonbaar opgeslagen, worden alle voor deze proef vereiste langlopende services werkelijk gestopt en opnieuw gestart, en gebruikt een tweede antwoord aantoonbaar dezelfde teruggevonden token.",
+        "Cleanup draait bij succes én bij iedere fout; een passing receipt wordt pas na een onafhankelijke inventarisatie geschreven en is onmogelijk zolang ook maar één nonce-container, netwerk, volume of tijdelijk bestand resteert; een onafhankelijke reviewer geeft GO."
+      ]
     }
   ],
   "milestones": [
-    {"id": "RB-008", "order": 80, "area": "Releasebasis", "title": "Volledige wegwerpstack testen", "outcome": "De stack migreert, antwoordt, onthoudt, herstart en ruimt op."},
     {"id": "RB-009", "order": 90, "area": "Releasebasis", "title": "Fysieke bewijsset beoordelen", "outcome": "Een onafhankelijke reviewer controleert de volledige releaseketen."},
     {"id": "RB-010", "order": 100, "area": "Releasebasis", "title": "A/B-besluit nemen", "outcome": "Alleen volledig groen mag naar het niet-actieve slot."},
     {"id": "EV-001", "order": 103, "area": "Continue kwaliteitsvergelijking", "title": "Inspect AI-bruggen geïsoleerd bewijzen", "outcome": "Een exact gelockte evalomgeving bewijst de benodigde Python- en sandbox/CLI-agentbruggen, bewaart de oorspronkelijke Inspect-loghash en schrijft her-scoring naar een afzonderlijk gehasht log."},
@@ -452,6 +483,17 @@
     {"id": "FN-003", "order": 390, "area": "Eindacceptatie", "title": "Zeven dagen praktijk bewijzen", "outcome": "Een ongewijzigde kandidaat doorstaat de praktijkproef en vervangbeslissing."}
   ],
   "completions": {
+    "CP-000": {
+      "baseCommit": "ae43849c4a71fc0755247b3185543528ccf21a68",
+      "commit": "f0eb745581ae63da22dbc6060d3477507fe39e8a",
+      "decision": "GO",
+      "evidenceCommit": "327033bb2ecd2ae5de644f6796cd605051a9dd82",
+      "evidencePaths": ["eva2/reviews/CP-000-open-source-eval-engine-f0eb745.md"],
+      "implementedBy": "/root",
+      "reviewCommit": "068c1872626a84bf7136432bdd2a0d001f27cef9",
+      "reviewedBy": "/root/workboard_review",
+      "testReceiptPaths": ["eva2/evidence/product/CP-000-open-source-eval-engine-selection-2026-09-02.json"]
+    },
     "GOV-003": {
       "baseCommit": "458631cb022efb44adfb0b2cf4abac3c07eacc41",
       "commit": "dc4757338165effa0aff97f9d0d6e0b5c6070c35",

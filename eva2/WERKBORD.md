@@ -10,41 +10,34 @@ de volgende begint.
 
 | Volgorde | Kaart | Resultaat | Status |
 |---:|---|---|---|
-| 65 | `CP-000` — Open-source evaluatiemotor voorselecteren | Inspect AI is de actuele voorkeurskandidaat; pas EV-001 maakt de keuze definitief met echte Python- en CLI-agentbruggen. | 🟡 BEZIG |
-| 70 | `RB-007` — Alle verplichte testgroepen uitvoeren | Iedere verzegelde testgroep slaagt op dezelfde commit. | ⚪ HIERNA |
+| 70 | `RB-007` — Alle verplichte testgroepen uitvoeren | Iedere verzegelde testgroep slaagt op dezelfde commit. | 🟡 BEZIG |
+| 80 | `RB-008` — Volledige wegwerpstack testen | De stack migreert, antwoordt, onthoudt, herstart en ruimt op. | ⚪ HIERNA |
 
-### Exact werk voor `CP-000`
-
-- `eva2/WERKBORD.md`
-- `eva2/design/product/comparable-agent-benchmarks-v1.md`
-- `eva2/design/product/dashboard-v1.md`
-- `eva2/design/product/execution-workboard-v1.json`
-- `eva2/tests/operations/test_current_workboard.py`
-- `eva2/tools/check_current_workboard.py`
-
-Klaar betekent:
-
-- Het benchmarkdocument kiest op actuele, exact vastgezette feiten één voorkeurskandidaat en verklaart in gewone taal waarom die beter past dan de alternatieven.
-- Inspect blijft een aparte evaldependency en komt niet in Eva's productie-image of levende kern; de keuze wordt pas definitief nadat EV-001 de agentbruggen heeft bewezen.
-- Het oude eigen scoreformaat is expliciet afgekeurd als nieuw bewijs en wordt niet door EV-001, EV-002 of EV-003 gelezen.
-- De checker weigert iedere nieuwe kaart die tussen de vastgezette release- en evaluatiefundering wordt geschoven.
-- Een onafhankelijke reviewer bevestigt dat de voorselectie actueel, uitvoerbaar en vrij van een nieuwe eigen scorer of benchmarkformaat is.
-
-Echte controles:
-
-- `TMPDIR=/tmp TEMP=/tmp TMP=/tmp pytest -q tests/operations/test_current_workboard.py`
-- `python3 tools/check_current_workboard.py`
-- `ruff check tools/check_current_workboard.py tests/operations/test_current_workboard.py`
-
-### Daarna voorbereid: `RB-007`
+### Exact werk voor `RB-007`
 
 - `eva2/tools/run_managed_b_required_tests.py`
 - `eva2/tests/operations/test_run_managed_b_required_tests.py`
 
-Vooraf vastgelegde controles:
+Klaar betekent:
+
+- De runner accepteert uitsluitend een apart gematerialiseerde, alleen-lezen source tree waarvan sourceCommit en release-inputauthority exact overeenkomen met de door RB-005 gekozen kandidaat en het geslaagde RB-006-bewijs; de huidige checkout wordt nooit als testbron gebruikt.
+- Collectie en uitvoering dekken exact alle verzegelde modules in zeven niet-overlappende groepen, inclusief de fysieke browsersubgate en de vereiste afzonderlijke wegwerpdatabases, en iedere failure, error, skip, xfail, ontbrekende of extra test faalt gesloten zonder passing receipt.
+- Het passing receipt bindt kandidaatimage, sourceCommit, authorityhash, onveranderlijke source-snapshot, toolchains, wheelhouses, groepsresultaten en het RB-006-bewijs; een onafhankelijke reviewer geeft GO.
+
+Echte controles:
 
 - `TMPDIR=/tmp TEMP=/tmp TMP=/tmp pytest -q tests/operations/test_run_managed_b_required_tests.py`
 - `ruff check tools/run_managed_b_required_tests.py tests/operations/test_run_managed_b_required_tests.py`
+
+### Daarna voorbereid: `RB-008`
+
+- `eva2/tests/support/managed_b_runtime_smoke.py`
+- `eva2/tests/operations/test_managed_b_runtime_smoke.py`
+
+Vooraf vastgelegde controles:
+
+- `TMPDIR=/tmp TEMP=/tmp TMP=/tmp pytest -q tests/operations/test_managed_b_runtime_smoke.py`
+- `ruff check tests/support/managed_b_runtime_smoke.py tests/operations/test_managed_b_runtime_smoke.py`
 
 ## Daarna
 
@@ -53,7 +46,6 @@ nadat zij als eerstvolgende kleine kaart exacte bestanden en tests heeft.
 
 | Nr. | Onderdeel | Begrijpelijk eindresultaat |
 |---:|---|---|
-| 80 | `RB-008` — Volledige wegwerpstack testen | De stack migreert, antwoordt, onthoudt, herstart en ruimt op. |
 | 90 | `RB-009` — Fysieke bewijsset beoordelen | Een onafhankelijke reviewer controleert de volledige releaseketen. |
 | 100 | `RB-010` — A/B-besluit nemen | Alleen volledig groen mag naar het niet-actieve slot. |
 | 103 | `EV-001` — Inspect AI-bruggen geïsoleerd bewijzen | Een exact gelockte evalomgeving bewijst de benodigde Python- en sandbox/CLI-agentbruggen, bewaart de oorspronkelijke Inspect-loghash en schrijft her-scoring naar een afzonderlijk gehasht log. |
