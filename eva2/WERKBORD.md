@@ -10,30 +10,30 @@ de volgende begint.
 
 | Volgorde | Kaart | Resultaat | Status |
 |---:|---|---|---|
-| 65 | `CP-000` — Vergelijking per productkaart afdwingen | Iedere productkaart begint met een actuele open-source- en concurrentnulmeting en eindigt alleen na dezelfde praktijktest met aantoonbare winst. | 🟡 BEZIG |
+| 65 | `CP-000` — Open-source evaluatiemotor voorselecteren | Inspect AI is de actuele voorkeurskandidaat; pas EV-001 maakt de keuze definitief met echte Python- en CLI-agentbruggen. | 🟡 BEZIG |
 | 70 | `RB-007` — Alle verplichte testgroepen uitvoeren | Iedere verzegelde testgroep slaagt op dezelfde commit. | ⚪ HIERNA |
 
 ### Exact werk voor `CP-000`
 
 - `eva2/WERKBORD.md`
+- `eva2/design/product/comparable-agent-benchmarks-v1.md`
+- `eva2/design/product/dashboard-v1.md`
 - `eva2/design/product/execution-workboard-v1.json`
 - `eva2/tests/operations/test_current_workboard.py`
 - `eva2/tools/check_current_workboard.py`
 
 Klaar betekent:
 
-- De checker leest nul- en nameting uitsluitend uit hun gebonden Git-commits en leidt de beslissing opnieuw af uit echte, gehashte ruwe artifacts in plaats van een vrije GO-claim.
-- Historisch geldig bewijs blijft geldig, terwijl iedere nieuwe productkaart actuele releases en een eigen nieuwe nulmeting moet gebruiken.
-- Dezelfde vergelijking wordt vóór en na uitgevoerd; alle harde eisen blijven groen en minstens één vooraf vastgelegde hoofdmaatstaf verslaat zowel Eva-vóór als de beste actuele vergelijker buiten de tolerantie.
-- Een onafhankelijke reviewer voert de aanvalstests uit en geeft GO.
+- Het benchmarkdocument kiest op actuele, exact vastgezette feiten één voorkeurskandidaat en verklaart in gewone taal waarom die beter past dan de alternatieven.
+- Inspect blijft een aparte evaldependency en komt niet in Eva's productie-image of levende kern; de keuze wordt pas definitief nadat EV-001 de agentbruggen heeft bewezen.
+- Het oude eigen scoreformaat is expliciet afgekeurd als nieuw bewijs en wordt niet door EV-001, EV-002 of EV-003 gelezen.
+- De checker weigert iedere nieuwe kaart die tussen de vastgezette release- en evaluatiefundering wordt geschoven.
+- Een onafhankelijke reviewer bevestigt dat de voorselectie actueel, uitvoerbaar en vrij van een nieuwe eigen scorer of benchmarkformaat is.
 
 Echte controles:
 
 - `TMPDIR=/tmp TEMP=/tmp TMP=/tmp pytest -q tests/operations/test_current_workboard.py`
 - `python3 tools/check_current_workboard.py`
-- `python3 tools/check_component_catalog.py`
-- `node ../test/repository-inventory.test.js`
-- `node ../test/repository-inventory-disposition.test.js`
 - `ruff check tools/check_current_workboard.py tests/operations/test_current_workboard.py`
 
 ### Daarna voorbereid: `RB-007`
@@ -56,6 +56,9 @@ nadat zij als eerstvolgende kleine kaart exacte bestanden en tests heeft.
 | 80 | `RB-008` — Volledige wegwerpstack testen | De stack migreert, antwoordt, onthoudt, herstart en ruimt op. |
 | 90 | `RB-009` — Fysieke bewijsset beoordelen | Een onafhankelijke reviewer controleert de volledige releaseketen. |
 | 100 | `RB-010` — A/B-besluit nemen | Alleen volledig groen mag naar het niet-actieve slot. |
+| 103 | `EV-001` — Inspect AI-bruggen geïsoleerd bewijzen | Een exact gelockte evalomgeving bewijst de benodigde Python- en sandbox/CLI-agentbruggen, bewaart de oorspronkelijke Inspect-loghash en schrijft her-scoring naar een afzonderlijk gehasht log. |
+| 106 | `EV-002` — Actuele vijfwegmeting uitvoeren | Eva, OpenClaw, Hermes, Agent Zero en een relevante open-sourcekandidaat doorlopen dezelfde echte proef en Inspect-scorer. |
+| 109 | `EV-003` — Vergelijking per productkaart afdwingen | Productwerk kan pas starten na een actuele nulmeting en alleen sluiten na dezelfde nameting met aantoonbare winst. |
 | 110 | `OS-001` — Inventaris en bereikbaarheid afdwingen | Elk gevolgd bestand heeft één eigenaar en aantoonbare noodzaak. |
 | 120 | `OS-002` — Pydantic-wrapper consolideren | Pydantic doet generiek modelwerk; Eva houdt alleen unieke grenzen. |
 | 130 | `OS-003` — Child-provider consolideren | Hoofd- en hulpagent delen één provideradapter. |
@@ -99,6 +102,8 @@ nadat zij als eerstvolgende kleine kaart exacte bestanden en tests heeft.
 - Tijdelijke test- en buildmappen staan via mktemp onder /tmp en worden opgeruimd.
 - /home/administrator/project/.eva2-artifacts is alleen een beheerd artifactarchief en vereist een expliciete kaart met eigenaar, doel, exact retentiepad en opruimmoment.
 - Centrale projectdocumenten hebben steeds precies één aangewezen schrijver.
+- De vastgezette funderingsvolgorde kan niet vanuit alleen het bord worden omzeild; releaseherstel en de echte evaluatiebasis gaan vóór nieuw productwerk.
+- Nieuwe uitvoerkaarten mogen het afgekeurde ComparableAgentRun-scoreformaat of zijn validator niet meer als veranderpad of testcommando gebruiken.
 
 Machineleesbare bron:
 [`design/product/execution-workboard-v1.json`](design/product/execution-workboard-v1.json).

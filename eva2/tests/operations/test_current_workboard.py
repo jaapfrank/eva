@@ -68,6 +68,116 @@ def test_current_workboard_is_valid_with_history_and_two_open_cards() -> None:
     assert len([task for task in board["executionTasks"] if task["status"] != "done"]) == 2
 
 
+def test_eval_engine_adoption_precedes_new_product_work() -> None:
+    board = json.loads(BOARD.read_text(encoding="utf-8"))
+    by_id = {
+        item["id"]: item
+        for item in [*board["executionTasks"], *board["milestones"]]
+    }
+
+    assert by_id["CP-000"]["title"] == "Open-source evaluatiemotor voorselecteren"
+    assert [by_id[item]["order"] for item in ("RB-010", "EV-001", "EV-002", "EV-003", "OS-001")] == [
+        100,
+        103,
+        106,
+        109,
+        110,
+    ]
+    assert "productie-image" in " ".join(by_id["CP-000"]["doneWhen"])
+    assert "vijfwegmeting" in by_id["EV-002"]["title"].lower()
+    assert "sandbox/CLI-agentbruggen" in by_id["EV-001"]["outcome"]
+    assert "nulmeting" in by_id["EV-003"]["outcome"]
+
+
+@pytest.mark.parametrize(
+    ("task_id", "order"),
+    [("CO-000", 75), ("OS-000", 101)],
+)
+def test_workboard_refuses_inserting_work_into_locked_foundation(
+    tmp_path: Path,
+    task_id: str,
+    order: int,
+) -> None:
+    def mutation(value: dict[str, object]) -> None:
+        value["milestones"].append(
+            {
+                "id": task_id,
+                "order": order,
+                "area": "te vroeg productwerk",
+                "title": "fundering omzeilen",
+                "outcome": "Deze kaart mag niet tussen de vastgezette basis komen.",
+            }
+        )
+        value["milestones"].sort(key=lambda item: item["order"])
+        insertion = next(
+            index
+            for index, known_id in enumerate(value["lockedFoundationSequence"])
+            if next(
+                item["order"]
+                for item in [*value["executionTasks"], *value["milestones"]]
+                if item["id"] == known_id
+            )
+            > order
+        )
+        value["lockedFoundationSequence"].insert(insertion, task_id)
+
+    paths = _board(tmp_path, mutation)
+    with pytest.raises(RuntimeError, match="locked foundation policy differs"):
+        _validate_paths(paths)
+
+
+def test_workboard_refuses_repurposing_a_locked_foundation_card(tmp_path: Path) -> None:
+    def mutation(value: dict[str, object]) -> None:
+        item = next(
+            milestone
+            for milestone in value["milestones"]
+            if milestone["id"] == "EV-001"
+        )
+        item.update(
+            {
+                "area": "Voiceproduct",
+                "title": "Full-duplex voice bouwen",
+                "outcome": "Deze productkaart mag een evaluatiekaart niet vermommen.",
+            }
+        )
+
+    paths = _board(tmp_path, mutation)
+    with pytest.raises(RuntimeError, match="locked foundation contract differs"):
+        _validate_paths(paths)
+
+
+def test_workboard_refuses_repurposing_locked_execution_scope(tmp_path: Path) -> None:
+    def mutation(value: dict[str, object]) -> None:
+        task = _primary(value)
+        task.update(
+            {
+                "componentIds": ["api-and-runtime-composition"],
+                "inventoryOwners": ["eva-runtime"],
+                "changePaths": ["eva2/src/eva/adapters/api/app.py"],
+                "evidenceRequired": ["Een nieuwe runtimefunctie lijkt te werken."],
+                "doneWhen": [
+                    "De productfunctie is toegevoegd.",
+                    "De kaart houdt haar oude naam.",
+                ],
+            }
+        )
+
+    paths = _board(tmp_path, mutation)
+    with pytest.raises(RuntimeError, match="locked foundation contract differs"):
+        _validate_paths(paths)
+
+
+def test_open_card_refuses_retired_benchmark_validator(tmp_path: Path) -> None:
+    def mutation(value: dict[str, object]) -> None:
+        _next(value)["testCommands"].append(
+            "pytest -q tests/benchmark/test_comparable_agent_run_validator.py"
+        )
+
+    paths = _board(tmp_path, mutation)
+    with pytest.raises(RuntimeError, match="references a retired benchmark format"):
+        _validate_paths(paths)
+
+
 def test_workboard_refuses_two_primary_cards(tmp_path: Path) -> None:
     paths = _board(tmp_path, lambda value: _next(value).update({"status": "in_progress"}))
     with pytest.raises(RuntimeError, match="exactly one primary"):

@@ -6,6 +6,7 @@ from __future__ import annotations
 import argparse
 from datetime import date
 from fnmatch import fnmatchcase
+import hashlib
 import json
 from pathlib import Path, PurePosixPath
 import re
@@ -43,7 +44,36 @@ RULES = [
     "Tijdelijke test- en buildmappen staan via mktemp onder /tmp en worden opgeruimd.",
     ARTIFACT_RETENTION_RULE,
     "Centrale projectdocumenten hebben steeds precies één aangewezen schrijver.",
+    "De vastgezette funderingsvolgorde kan niet vanuit alleen het bord worden omzeild; "
+    "releaseherstel en de echte evaluatiebasis gaan vóór nieuw productwerk.",
+    "Nieuwe uitvoerkaarten mogen het afgekeurde ComparableAgentRun-scoreformaat "
+    "of zijn validator niet meer als veranderpad of testcommando gebruiken.",
 ]
+LOCKED_FOUNDATION_SEQUENCE = [
+    "GOV-001",
+    "GOV-002",
+    "RB-001",
+    "RB-002",
+    "RB-003",
+    "RB-004",
+    "RB-005",
+    "RB-006",
+    "GOV-003",
+    "CP-000",
+    "RB-007",
+    "RB-008",
+    "RB-009",
+    "RB-010",
+    "EV-001",
+    "EV-002",
+    "EV-003",
+]
+LOCKED_FOUNDATION_DIGEST = "a68d0f204a30f6cc20e7fdb6ce72809df8e2bdd477ff30117068d081a3208074"
+RETIRED_BENCHMARK_MARKERS = (
+    "comparable-agent-run-v1.schema.json",
+    "test_comparable_agent_run_validator.py",
+    "validate_comparable_agent_run.py",
+)
 TOP_FIELDS = {
     "activeTaskId",
     "commandWorkingDirectory",
@@ -53,6 +83,8 @@ TOP_FIELDS = {
     "humanBoardPath",
     "inventoryPath",
     "lastUpdated",
+    "lockedFoundationDigest",
+    "lockedFoundationSequence",
     "maxActiveImplementationTasks",
     "milestones",
     "rules",
@@ -697,6 +729,11 @@ def validate(
         if set(selected_components) != actual_component_owners:
             raise RuntimeError(f"{task_id} componentIds must match exact path ownership")
         commands = _strings(task.get("testCommands"), f"{task_id} testCommands")
+        if (
+            any(marker in raw for marker in RETIRED_BENCHMARK_MARKERS for raw in change_paths)
+            or any(marker in command for marker in RETIRED_BENCHMARK_MARKERS for command in commands)
+        ):
+            raise RuntimeError(f"{task_id} references a retired benchmark format")
         executables = [_check_command(root, command, task_id) for command in commands]
         if "pytest" not in executables:
             raise RuntimeError(f"{task_id} must contain a real test-suite command")
@@ -740,6 +777,39 @@ def validate(
         seen_ids.add(item_id)
         seen_orders.add(order)
         previous_order = order
+        by_id[item_id] = item
+    foundation = _strings(
+        board.get("lockedFoundationSequence"),
+        "lockedFoundationSequence",
+    )
+    if foundation != LOCKED_FOUNDATION_SEQUENCE:
+        raise RuntimeError("workboard locked foundation policy differs")
+    ordered_ids = [task["id"] for task in tasks] + [item["id"] for item in milestones]
+    if ordered_ids[: len(foundation)] != foundation:
+        raise RuntimeError("workboard locked foundation sequence differs")
+    execution_ids = {task["id"] for task in tasks}
+    foundation_view = []
+    for item_id in foundation:
+        item = by_id[item_id]
+        keys = (
+            sorted(set(item) - {"status", "stateDetails"})
+            if item_id in execution_ids
+            else sorted(item)
+        )
+        foundation_view.append({key: item[key] for key in keys})
+    foundation_digest = hashlib.sha256(
+        json.dumps(
+            foundation_view,
+            ensure_ascii=False,
+            sort_keys=True,
+            separators=(",", ":"),
+        ).encode("utf-8")
+    ).hexdigest()
+    if (
+        board.get("lockedFoundationDigest") != LOCKED_FOUNDATION_DIGEST
+        or foundation_digest != LOCKED_FOUNDATION_DIGEST
+    ):
+        raise RuntimeError("workboard locked foundation contract differs")
     selected_human = human_path or _repo_file(root, human_raw, "humanBoardPath")
     if selected_human.is_symlink() or not selected_human.is_file():
         raise RuntimeError("human workboard must be a regular non-symlink file")

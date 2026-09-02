@@ -47,9 +47,10 @@ versies en waar nodig providerreadback. De interface bevat nooit ruwe secrets.
 9. **D09 — Eigenaarmodus:** hetzelfde `OwnerAutonomyMandate/v1` via chat en
    dashboard previewen, activeren, bewaken en stoppen; zie
    `owner-autonomy-mode-v1.md`.
-10. **D10 — benchmarkscorebord:** uitsluitend gesaneerde, hashgebonden
-    `ComparableAgentRun/v1`-projecties tonen met links naar officiële scorer en
-    heropenbare artifacts; zie `comparable-agent-benchmarks-v1.md`.
+10. **D10 — benchmarkscorebord:** uitsluitend gesaneerde projecties uit
+    ongewijzigde, hashgebonden Inspect-logs tonen met links naar scorer en
+    heropenbare artifacts; geen tweede eigen scoreformaat; zie
+    `comparable-agent-benchmarks-v1.md`.
 
 Elke slice krijgt gerichte tests, een onafhankelijke review en een Git-checkpoint.
 De dashboardroute draait uitsluitend in B totdat haar autorisatie- en

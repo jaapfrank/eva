@@ -1,6 +1,72 @@
 # Eva 2 — extern vergelijkbare agentbenchmarks
 
-Bijgewerkt: 27 augustus 2026.
+Bijgewerkt: 2 september 2026.
+
+## Besluit: eerst een open-source evaluatiemotor bewijzen
+
+Gecontroleerd op **2 september 2026**. Inspect AI is de voorkeurskandidaat,
+maar nog niet definitief gekozen. `EV-001` moet eerst werkelijk aantonen dat
+zowel de Python-agentbrug als de sandbox/CLI-agentbrug passen bij de vijf echte
+deelnemers. Mislukt dat, dan krijgt promptfoo dezelfde bridgeproef voordat we
+een motor kiezen.
+
+| Kandidaat en exacte momentopname | Onderhoud op de controledatum | Passendheid voor Eva |
+|---|---|---|
+| Inspect AI `0.3.261`, tagcommit `f9186b4e2f34ca81f192ae2c08535c24b7e8f356`, gepubliceerd 30 augustus 2026 | `main` stond op `e2a8e854d95f70c0969930fbc0a6455bebad99b6` van 2 september 2026 | Python-native evaluaties, één `.eval`-log, epochs/reducers, her-scoring en expliciete Python- en sandbox/CLI-agentbruggen. Daarom de voorkeurskandidaat. |
+| promptfoo `0.122.2`, tagcommit `89052308bce06f53645b1f189ada5ac9d1897347`, gepubliceerd 28 augustus 2026 | `main` stond op `48a71cd0163b01ba8efb2954eb0165dd810a6c6e` van 2 september 2026 | Eveneens actief en sterk: automatische tracecorrelatie, agentproviders en assertions op tooltrajecten. Voor diepe Python-agenttrajecten vraagt de officiële route wel eigen tracinginstrumentatie/export; dat is voor deze Python-kern extra projectspecifieke lijm. |
+| OpenAI Evals, `main`-commit `8eac7a7de5215c907fbddc30efdaf316913eccdd` van 14 april 2026; geen GitHub-release | Op 2 september 2026 was dit nog steeds de laatste `main`-commit | Heeft bestaande evals en een Completion Function Protocol, maar geen even directe actuele Python-plus-CLI Agent Bridge en geen recente release. Daarom nu geen eerste bridgekandidaat. |
+
+Als `EV-001` slaagt, neemt Inspect logging, epochs, scorers, aggregatie en
+her-scoring over. Eva houdt dan alleen dunne adapters voor het starten van
+iedere deelnemer en het aanleveren van dezelfde rechten, starttoestand, tools
+en budgetten. Bij echte runs is `--log-model-api` verplicht. De oorspronkelijke
+`.eval`-log blijft bytegelijk en houdt dezelfde SHA-256; her-scoring schrijft
+een afzonderlijk log met een eigen SHA-256.
+
+Inspect bewijst niet vanzelf dat een upstreamrelease actueel is, een
+containerimage echt uit die bron komt, rechten werkelijk gelijk waren, een
+rubric eerlijk is of een fysieke handeling precies eenmaal is uitgevoerd.
+Daarvoor blijven Git-/OCI-provenance, actuele releasecontrole, onafhankelijke
+review en Eva's eigen provider-readback nodig. Grote of gevoelige logs gaan
+niet onbeheerd in Git: de evalkaart legt hash, eigenaar, afgeschermd
+retentiepad en opruimmoment vooraf vast.
+
+De invoering is bewust in drie kleine stappen gesplitst:
+
+1. `EV-001` lockt Inspect buiten de runtime en bewijst de werkelijk benodigde
+   `agent_bridge()`- en `sandbox_agent_bridge()`-routes plus een echte
+   log-schrijf/lees/her-scorecyclus. Deze kaart beslist de definitieve keuze.
+2. `EV-002` voert dezelfde Inspect-taak uit met Eva, OpenClaw, Hermes, Agent
+   Zero en een vooraf geselecteerde relevante open-sourcekandidaat.
+3. `EV-003` maakt daarna pas een dunne werkbordpoort voor de reeks nulmeting,
+   implementatie en nameting. De algemene werkbordchecker krijgt geen eigen
+   scorer of tweede benchmarkformaat.
+
+Het bestaande `ComparableAgentRun/v1`-schema en zijn Python-validator zijn per
+2 september 2026 **afgekeurd voor ieder nieuw resultaat**. Ze mogen niet door
+`EV-001`, `EV-002` of `EV-003` worden gelezen en hun eigen `officialScore`
+telt nergens meer als bewijs. De bestanden staan historisch nog buiten Eva2's
+canonieke schrijfboom; `OS-001` verwijdert ze nadat die oude repositorygrens
+controleerbaar is losgemaakt. Tot die tijd voert de oude release-regressie de
+validator nog wel uit, maar geen nieuwe uitvoerkaart mag hem als veranderpad of
+testcommando gebruiken. Een algemene release-receipt mag straks de SHA-256 van
+een ongewijzigde `.eval`-log en provenance noemen, maar geen Inspect-score
+dupliceren of opnieuw uitrekenen.
+
+Officiële bronnen voor dit besluit:
+
+- Inspect AI-documentatie: <https://inspect.aisi.org.uk/>;
+- Inspect eval-logs: <https://inspect.aisi.org.uk/eval-logs.html>;
+- Inspect Agent Bridge: <https://inspect.aisi.org.uk/agent-bridge.html>;
+- Inspect release: <https://pypi.org/project/inspect-ai/0.3.261/>;
+- Inspect bronmomentopname: <https://github.com/UKGovernmentBEIS/inspect_ai/commit/e2a8e854d95f70c0969930fbc0a6455bebad99b6>;
+- promptfoo tracing en trajectassertions: <https://www.promptfoo.dev/docs/tracing/>;
+- promptfoo Python-agentroute: <https://www.promptfoo.dev/docs/guides/evaluate-openai-agents-python/>;
+- promptfoo npm-release: <https://www.npmjs.com/package/promptfoo/v/0.122.2>;
+- promptfoo releasecommit: <https://github.com/promptfoo/promptfoo/commit/89052308bce06f53645b1f189ada5ac9d1897347>;
+- promptfoo bronmomentopname: <https://github.com/promptfoo/promptfoo/commit/48a71cd0163b01ba8efb2954eb0165dd810a6c6e>;
+- OpenAI Evals-momentopname: <https://github.com/openai/evals/tree/8eac7a7de5215c907fbddc30efdaf316913eccdd>;
+- OpenAI Evals-releases: <https://github.com/openai/evals/releases>.
 
 ## Eerlijke conclusie
 
@@ -76,14 +142,11 @@ testantwoorden worden niet opgeslagen in Eva's runtime of ontwikkelcontext.
 - [x] CB00 — AgentBench, GAIA en OSWorld op primaire bronnen afgebakend;
   benchmarkrollen, actuele OSWorldrelease en nonclaims zijn vastgelegd. Dit is
   documentatiebewijs, geen uitgevoerde score.
-- [x] CB01 — Eén `ComparableAgentRun/v1`-schema en fail-closed validator voor
-  alle hierboven verplichte provenance-, configuratie- en resultaatvelden.
-  De validator weigert onder meer een ontbrekende upstream-/scorerhash,
-  mutabele image, ontbrekend answer/log/tooltrace-artifact, padtraversal en een
-  score op een nog `planned` run. Schema en validator staan in
-  `../benchmark/comparable-agent-run-v1.schema.json` en
-  `../benchmark/validate_comparable_agent_run.py`. Dit registreert alleen
-  controleerbare resultaten; CB02-CB07 en iedere echte score blijven open.
+- [ ] CB01 — Vervangen door de Inspect-route. Het oude
+  `ComparableAgentRun/v1`-schema en zijn validator zijn niet meer toelaatbaar
+  voor nieuwe resultaten, omdat zij scores en metriek naast de echte runnerlog
+  dupliceerden. Fysieke verwijdering volgt onder `OS-001`; geldig nieuw bewijs
+  begint pas bij `EV-001` met een ongewijzigde Inspect-log.
 - [ ] CB02 — Dunne Eva-adapters voor de officiële runnerinterfaces; geen
   taaknamen, antwoorden of evaluatieregels in Eva's prompts of productcode.
   De GAIA-developmentadapter is hiervoor als eerste deel gereed:

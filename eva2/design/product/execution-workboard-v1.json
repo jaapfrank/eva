@@ -6,6 +6,8 @@
   "commandWorkingDirectory": "eva2",
   "inventoryPath": "docs/eva-repository-inventory.generated.json",
   "humanBoardPath": "eva2/WERKBORD.md",
+  "lockedFoundationDigest": "a68d0f204a30f6cc20e7fdb6ce72809df8e2bdd477ff30117068d081a3208074",
+  "lockedFoundationSequence": ["GOV-001", "GOV-002", "RB-001", "RB-002", "RB-003", "RB-004", "RB-005", "RB-006", "GOV-003", "CP-000", "RB-007", "RB-008", "RB-009", "RB-010", "EV-001", "EV-002", "EV-003"],
   "activeTaskId": "CP-000",
   "maxActiveImplementationTasks": 1,
   "statusValues": ["queued", "in_progress", "review", "done", "blocked"],
@@ -20,7 +22,9 @@
     "Er worden geen Eva2-worktrees of andere Eva2-bronmappen als sibling onder /home/administrator/project gemaakt.",
     "Tijdelijke test- en buildmappen staan via mktemp onder /tmp en worden opgeruimd.",
     "/home/administrator/project/.eva2-artifacts is alleen een beheerd artifactarchief en vereist een expliciete kaart met eigenaar, doel, exact retentiepad en opruimmoment.",
-    "Centrale projectdocumenten hebben steeds precies één aangewezen schrijver."
+    "Centrale projectdocumenten hebben steeds precies één aangewezen schrijver.",
+    "De vastgezette funderingsvolgorde kan niet vanuit alleen het bord worden omzeild; releaseherstel en de echte evaluatiebasis gaan vóór nieuw productwerk.",
+    "Nieuwe uitvoerkaarten mogen het afgekeurde ComparableAgentRun-scoreformaat of zijn validator niet meer als veranderpad of testcommando gebruiken."
   ],
   "team": {
     "architecturelead": "/root",
@@ -342,8 +346,8 @@
       "id": "CP-000",
       "order": 65,
       "area": "Continue kwaliteitsvergelijking",
-      "title": "Vergelijking per productkaart afdwingen",
-      "outcome": "Iedere productkaart begint met een actuele open-source- en concurrentnulmeting en eindigt alleen na dezelfde praktijktest met aantoonbare winst.",
+      "title": "Open-source evaluatiemotor voorselecteren",
+      "outcome": "Inspect AI is de actuele voorkeurskandidaat; pas EV-001 maakt de keuze definitief met echte Python- en CLI-agentbruggen.",
       "status": "in_progress",
       "stateDetails": {"baseCommit": null, "implementationCommit": null, "evidenceCommit": null, "reviewEvidencePaths": [], "blockerReason": null},
       "ownerRole": "architecturelead",
@@ -353,6 +357,8 @@
       "inventoryOwners": ["documentation", "verification"],
       "changePaths": [
         "eva2/WERKBORD.md",
+        "eva2/design/product/comparable-agent-benchmarks-v1.md",
+        "eva2/design/product/dashboard-v1.md",
         "eva2/design/product/execution-workboard-v1.json",
         "eva2/tests/operations/test_current_workboard.py",
         "eva2/tools/check_current_workboard.py"
@@ -360,21 +366,20 @@
       "testCommands": [
         "TMPDIR=/tmp TEMP=/tmp TMP=/tmp pytest -q tests/operations/test_current_workboard.py",
         "python3 tools/check_current_workboard.py",
-        "python3 tools/check_component_catalog.py",
-        "node ../test/repository-inventory.test.js",
-        "node ../test/repository-inventory-disposition.test.js",
         "ruff check tools/check_current_workboard.py tests/operations/test_current_workboard.py"
       ],
       "evidenceRequired": [
-        "Een productkaart kan niet starten zonder een commitgebonden, actuele nulmeting met exact dezelfde gebruikersproef, modelinstellingen, rechten, omgeving en budgetten voor Eva, OpenClaw, Hermes, Agent Zero en minstens één relevante onderhouden open-sourcekandidaat.",
-        "Een productkaart kan niet worden afgerond zonder commitgebonden ruwe uitvoer, opnieuw afgeleide scores, nul regressie op harde eisen, minstens één vooraf gekozen meetbare winst boven Eva-vóór en de beste vergelijker, en controleerbaar bewijs dat overlappende eigen code is verwijderd of aantoonbaar nodig blijft.",
-        "Aanvalstests weigeren zelfgeschreven scores, fictieve of irrelevante kandidaten, gewijzigde receipts, verouderde releases, ongelijke budgetten, hergebruik tussen kaarten en iedere vrijstellingsroute via een andere kaartsoort of release-ID."
+        "Een op 2 september 2026 reproduceerbare vergelijking van Inspect AI, promptfoo en OpenAI Evals gebruikt officiële documentatie, exacte release of commit, onderhoudsactiviteit en Eva's echte behoefte aan semantische, tool- en agentproeven.",
+        "De voorselectie legt expliciet vast wat Inspect mogelijk overneemt, welke minimale Eva-adapters overblijven, wat Inspect niet zelfstandig bewijst en dat EV-001 de vereiste Python- en sandbox/CLI-bruggen echt moet bewijzen.",
+        "Het oude ComparableAgentRun/v1-scoreformaat is niet langer toelaatbaar voor nieuwe resultaten en staat alleen nog als te verwijderen historische code buiten de canonieke schrijfboom.",
+        "Een codegebonden funderingsvolgorde dwingt RB-007 tot en met RB-010 en daarna EV-001 tot en met EV-003 af vóór alle nieuwe productkaarten."
       ],
       "doneWhen": [
-        "De checker leest nul- en nameting uitsluitend uit hun gebonden Git-commits en leidt de beslissing opnieuw af uit echte, gehashte ruwe artifacts in plaats van een vrije GO-claim.",
-        "Historisch geldig bewijs blijft geldig, terwijl iedere nieuwe productkaart actuele releases en een eigen nieuwe nulmeting moet gebruiken.",
-        "Dezelfde vergelijking wordt vóór en na uitgevoerd; alle harde eisen blijven groen en minstens één vooraf vastgelegde hoofdmaatstaf verslaat zowel Eva-vóór als de beste actuele vergelijker buiten de tolerantie.",
-        "Een onafhankelijke reviewer voert de aanvalstests uit en geeft GO."
+        "Het benchmarkdocument kiest op actuele, exact vastgezette feiten één voorkeurskandidaat en verklaart in gewone taal waarom die beter past dan de alternatieven.",
+        "Inspect blijft een aparte evaldependency en komt niet in Eva's productie-image of levende kern; de keuze wordt pas definitief nadat EV-001 de agentbruggen heeft bewezen.",
+        "Het oude eigen scoreformaat is expliciet afgekeurd als nieuw bewijs en wordt niet door EV-001, EV-002 of EV-003 gelezen.",
+        "De checker weigert iedere nieuwe kaart die tussen de vastgezette release- en evaluatiefundering wordt geschoven.",
+        "Een onafhankelijke reviewer bevestigt dat de voorselectie actueel, uitvoerbaar en vrij van een nieuwe eigen scorer of benchmarkformaat is."
       ]
     },
     {
@@ -413,6 +418,9 @@
     {"id": "RB-008", "order": 80, "area": "Releasebasis", "title": "Volledige wegwerpstack testen", "outcome": "De stack migreert, antwoordt, onthoudt, herstart en ruimt op."},
     {"id": "RB-009", "order": 90, "area": "Releasebasis", "title": "Fysieke bewijsset beoordelen", "outcome": "Een onafhankelijke reviewer controleert de volledige releaseketen."},
     {"id": "RB-010", "order": 100, "area": "Releasebasis", "title": "A/B-besluit nemen", "outcome": "Alleen volledig groen mag naar het niet-actieve slot."},
+    {"id": "EV-001", "order": 103, "area": "Continue kwaliteitsvergelijking", "title": "Inspect AI-bruggen geïsoleerd bewijzen", "outcome": "Een exact gelockte evalomgeving bewijst de benodigde Python- en sandbox/CLI-agentbruggen, bewaart de oorspronkelijke Inspect-loghash en schrijft her-scoring naar een afzonderlijk gehasht log."},
+    {"id": "EV-002", "order": 106, "area": "Continue kwaliteitsvergelijking", "title": "Actuele vijfwegmeting uitvoeren", "outcome": "Eva, OpenClaw, Hermes, Agent Zero en een relevante open-sourcekandidaat doorlopen dezelfde echte proef en Inspect-scorer."},
+    {"id": "EV-003", "order": 109, "area": "Continue kwaliteitsvergelijking", "title": "Vergelijking per productkaart afdwingen", "outcome": "Productwerk kan pas starten na een actuele nulmeting en alleen sluiten na dezelfde nameting met aantoonbare winst."},
     {"id": "OS-001", "order": 110, "area": "Open source en codebeheer", "title": "Inventaris en bereikbaarheid afdwingen", "outcome": "Elk gevolgd bestand heeft één eigenaar en aantoonbare noodzaak."},
     {"id": "OS-002", "order": 120, "area": "Open source en codebeheer", "title": "Pydantic-wrapper consolideren", "outcome": "Pydantic doet generiek modelwerk; Eva houdt alleen unieke grenzen."},
     {"id": "OS-003", "order": 130, "area": "Open source en codebeheer", "title": "Child-provider consolideren", "outcome": "Hoofd- en hulpagent delen één provideradapter."},
