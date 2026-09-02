@@ -1,0 +1,70 @@
+{
+  "contract": "EvaWorkboardTestReceipt/v1",
+  "taskId": "CP-000",
+  "baseCommit": "ae43849c4a71fc0755247b3185543528ccf21a68",
+  "implementationCommit": "f0eb745581ae63da22dbc6060d3477507fe39e8a",
+  "recordedOn": "2026-09-02",
+  "result": "GO",
+  "checks": [
+    {
+      "command": "PYTHONDONTWRITEBYTECODE=1 TMPDIR=/tmp TEMP=/tmp TMP=/tmp pytest -q -p no:cacheprovider tests/operations/test_current_workboard.py",
+      "result": "51 passed"
+    },
+    {
+      "command": "PYTHONDONTWRITEBYTECODE=1 python3 tools/check_current_workboard.py",
+      "result": "valid; CP-000 active; RB-007 next"
+    },
+    {
+      "command": "ruff check --no-cache tools/check_current_workboard.py tests/operations/test_current_workboard.py",
+      "result": "all checks passed"
+    },
+    {
+      "command": "git diff --check",
+      "result": "passed after implementation commit"
+    },
+    {
+      "command": "sha256sum WERKBORD.md && python3 tools/check_current_workboard.py --render-human | sha256sum",
+      "result": "both a67292a5d74a8cf6ef42deb9e326e6ae67a4277022fc05b14fb8340b24e12d8e"
+    }
+  ],
+  "upstreamSnapshots": [
+    {
+      "name": "Inspect AI",
+      "release": "0.3.261",
+      "releaseCommit": "f9186b4e2f34ca81f192ae2c08535c24b7e8f356",
+      "mainCommit": "e2a8e854d95f70c0969930fbc0a6455bebad99b6",
+      "checkedOn": "2026-09-02",
+      "decision": "preferred candidate pending EV-001 bridge proof"
+    },
+    {
+      "name": "promptfoo",
+      "release": "0.122.2",
+      "releaseCommit": "89052308bce06f53645b1f189ada5ac9d1897347",
+      "mainCommit": "48a71cd0163b01ba8efb2954eb0165dd810a6c6e",
+      "checkedOn": "2026-09-02",
+      "decision": "active fallback for the same bridge proof"
+    },
+    {
+      "name": "OpenAI Evals",
+      "release": null,
+      "releaseCommit": null,
+      "mainCommit": "8eac7a7de5215c907fbddc30efdaf316913eccdd",
+      "checkedOn": "2026-09-02",
+      "decision": "not selected for the first bridge proof"
+    }
+  ],
+  "attacks": [
+    "Inserting product work before RB-010 is rejected even when the board-only sequence is changed with it.",
+    "Inserting product work before EV-001 through EV-003 is rejected even when the board-only sequence is changed with it.",
+    "Changing a locked foundation card's identity or full immutable execution scope is rejected.",
+    "Naming the retired ComparableAgentRun schema, validator or test in any execution card path or command is rejected.",
+    "Changing WERKBORD.md without the machine-readable source is rejected."
+  ],
+  "nonClaims": [
+    "Inspect AI is only the preferred candidate; it is not finally adopted until EV-001 proves the required Python and sandbox/CLI bridges.",
+    "No five-way comparison, competitor win, benchmark score or claim that Eva is better is made by CP-000.",
+    "The historical ComparableAgentRun files remain outside the canonical Eva2 authoring root until OS-001; they are not accepted for new evidence.",
+    "The 67 pre-existing untracked living-core evidence items are not classified or accepted by this receipt.",
+    "No live Eva route, container, database, secret, external provider, sibling worktree or artifact archive was changed."
+  ]
+}
