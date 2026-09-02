@@ -3,7 +3,7 @@
 Deze kaart is mechanisch gegenereerd. Zij staat naast de semantische runtimegraaf en
 classificeert ieder gevolgd, verwijderd of niet-genegeerd nieuw repositorypad.
 
-Schema: `EvaRepositoryInventory/v1`. Brondigest: `c7619256f08efd334cf63a2b3143559608cdb5efd0ddceae789c18e8d6c9dae7`.
+Schema: `EvaRepositoryInventory/v1`. Brondigest: `6d52a51457f57ce87d0fe4a71d0b2f26cb211ce82d939ffb82863337175710ad`.
 
 ## Samenvatting
 
@@ -266,7 +266,7 @@ Schema: `EvaRepositoryInventory/v1`. Brondigest: `c7619256f08efd334cf63a2b314355
 | `eva2/TEAM_WERKWIJZE.md` | tracked | documentation | included-tracked-noncritical | keep | 8331 |
 | `eva2/TECHNISCHE_MOGELIJKHEDEN_EN_GATEN.md` | tracked | documentation | included-tracked-noncritical | keep | 20072 |
 | `eva2/TECHNISCHE_PRODUCTGATES.md` | tracked | documentation | included-tracked-noncritical | keep | 65630 |
-| `eva2/WERKBORD.md` | tracked | documentation | included-tracked-noncritical | keep | 7073 |
+| `eva2/WERKBORD.md` | tracked | documentation | included-tracked-noncritical | keep | 7145 |
 | `eva2/alembic.ini` | tracked | repository-config | included-tracked-critical | keep | 595 |
 | `eva2/connector_sdk/__init__.py` | tracked | product-runtime | included-tracked-critical | keep | 83 |
 | `eva2/connector_sdk/conformance/README.md` | tracked | product-runtime | included-tracked-critical | keep | 217 |
@@ -325,7 +325,7 @@ Schema: `EvaRepositoryInventory/v1`. Brondigest: `c7619256f08efd334cf63a2b314355
 | `eva2/design/product/conversational-voice-v1.md` | tracked | documentation | included-tracked-noncritical | keep | 16058 |
 | `eva2/design/product/dashboard-v1.md` | tracked | documentation | included-tracked-noncritical | keep | 6501 |
 | `eva2/design/product/delegation-and-workboard-v1.md` | tracked | documentation | included-tracked-noncritical | keep | 11007 |
-| `eva2/design/product/execution-workboard-v1.json` | tracked | documentation | included-tracked-noncritical | keep | 33879 |
+| `eva2/design/product/execution-workboard-v1.json` | tracked | documentation | included-tracked-noncritical | keep | 33711 |
 | `eva2/design/product/installer-and-onboarding-v1.md` | tracked | documentation | included-tracked-noncritical | keep | 24837 |
 | `eva2/design/product/learning-and-person-model-v1.md` | tracked | documentation | included-tracked-noncritical | keep | 12386 |
 | `eva2/design/product/owner-autonomy-mode-v1.md` | tracked | documentation | included-tracked-noncritical | keep | 6529 |
@@ -3320,4 +3320,3 @@ Schema: `EvaRepositoryInventory/v1`. Brondigest: `c7619256f08efd334cf63a2b314355
 De randdetectie is begrensd tot letterlijke lokale imports, package-scripts en testglobs,
 spawnpaden, systemd Exec/Unit/OnFailure, installerbestandsnamen en browserloads.
 Afwezigheid van een heuristische rand is geen bewijs dat een extern systeem geen caller heeft.
-

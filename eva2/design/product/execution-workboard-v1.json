@@ -6,7 +6,7 @@
   "commandWorkingDirectory": "eva2",
   "inventoryPath": "docs/eva-repository-inventory.generated.json",
   "humanBoardPath": "eva2/WERKBORD.md",
-  "activeTaskId": "RB-007",
+  "activeTaskId": "CP-000",
   "maxActiveImplementationTasks": 1,
   "statusValues": ["queued", "in_progress", "review", "done", "blocked"],
   "rules": [
@@ -297,16 +297,57 @@
       ]
     },
     {
+      "id": "CP-000",
+      "order": 65,
+      "area": "Continue kwaliteitsvergelijking",
+      "title": "Vergelijking per productkaart afdwingen",
+      "outcome": "Iedere productkaart begint met een actuele open-source- en concurrentnulmeting en eindigt alleen na dezelfde praktijktest met aantoonbare winst.",
+      "status": "in_progress",
+      "stateDetails": {"baseCommit": null, "implementationCommit": null, "evidenceCommit": null, "reviewEvidencePaths": [], "blockerReason": null},
+      "ownerRole": "architecturelead",
+      "reviewerRole": "workboardreviewer",
+      "dependsOn": ["RB-006"],
+      "componentIds": ["operations-and-release-tests"],
+      "inventoryOwners": ["architecture", "documentation", "verification"],
+      "changePaths": [
+        "docs/eva-repository-inventory.generated.json",
+        "docs/eva-repository-inventory.generated.md",
+        "eva2/WERKBORD.md",
+        "eva2/design/product/execution-workboard-v1.json",
+        "eva2/tests/operations/test_current_workboard.py",
+        "eva2/tools/check_current_workboard.py"
+      ],
+      "testCommands": [
+        "TMPDIR=/tmp TEMP=/tmp TMP=/tmp pytest -q tests/operations/test_current_workboard.py",
+        "python3 tools/check_current_workboard.py",
+        "python3 tools/check_component_catalog.py",
+        "node ../test/repository-inventory.test.js",
+        "node ../test/repository-inventory-disposition.test.js",
+        "ruff check tools/check_current_workboard.py tests/operations/test_current_workboard.py"
+      ],
+      "evidenceRequired": [
+        "Een productkaart kan niet starten zonder een commitgebonden, actuele nulmeting met exact dezelfde gebruikersproef, modelinstellingen, rechten, omgeving en budgetten voor Eva, OpenClaw, Hermes, Agent Zero en minstens één relevante onderhouden open-sourcekandidaat.",
+        "Een productkaart kan niet worden afgerond zonder commitgebonden ruwe uitvoer, opnieuw afgeleide scores, nul regressie op harde eisen, minstens één vooraf gekozen meetbare winst boven Eva-vóór en de beste vergelijker, en controleerbaar bewijs dat overlappende eigen code is verwijderd of aantoonbaar nodig blijft.",
+        "Aanvalstests weigeren zelfgeschreven scores, fictieve of irrelevante kandidaten, gewijzigde receipts, verouderde releases, ongelijke budgetten, hergebruik tussen kaarten en iedere vrijstellingsroute via een andere kaartsoort of release-ID."
+      ],
+      "doneWhen": [
+        "De checker leest nul- en nameting uitsluitend uit hun gebonden Git-commits en leidt de beslissing opnieuw af uit echte, gehashte ruwe artifacts in plaats van een vrije GO-claim.",
+        "Historisch geldig bewijs blijft geldig, terwijl iedere nieuwe productkaart actuele releases en een eigen nieuwe nulmeting moet gebruiken.",
+        "Dezelfde vergelijking wordt vóór en na uitgevoerd; alle harde eisen blijven groen en minstens één vooraf vastgelegde hoofdmaatstaf verslaat zowel Eva-vóór als de beste actuele vergelijker buiten de tolerantie.",
+        "Een onafhankelijke reviewer voert de aanvalstests uit en geeft GO."
+      ]
+    },
+    {
       "id": "RB-007",
       "order": 70,
       "area": "Releasebasis",
       "title": "Alle verplichte testgroepen uitvoeren",
       "outcome": "Iedere verzegelde testgroep slaagt op dezelfde commit.",
-      "status": "in_progress",
+      "status": "queued",
       "stateDetails": {"baseCommit": null, "implementationCommit": null, "evidenceCommit": null, "reviewEvidencePaths": [], "blockerReason": null},
       "ownerRole": "releaselead",
       "reviewerRole": "proofreviewer",
-      "dependsOn": ["RB-006"],
+      "dependsOn": ["CP-000"],
       "componentIds": ["operations-and-release-tests"],
       "inventoryOwners": ["verification"],
       "changePaths": [
@@ -326,44 +367,12 @@
         "Collectie en uitvoering dekken exact alle verzegelde modules in zeven niet-overlappende groepen, inclusief de fysieke browsersubgate en de vereiste afzonderlijke wegwerpdatabases, en iedere failure, error, skip, xfail, ontbrekende of extra test faalt gesloten zonder passing receipt.",
         "Het passing receipt bindt kandidaatimage, sourceCommit, authorityhash, onveranderlijke source-snapshot, toolchains, wheelhouses, groepsresultaten en het RB-006-bewijs; een onafhankelijke reviewer geeft GO."
       ]
-    },
-    {
-      "id": "RB-008",
-      "order": 80,
-      "area": "Releasebasis",
-      "title": "Volledige wegwerpstack testen",
-      "outcome": "De stack migreert, antwoordt, onthoudt, herstart en ruimt op.",
-      "status": "queued",
-      "stateDetails": {"baseCommit": null, "implementationCommit": null, "evidenceCommit": null, "reviewEvidencePaths": [], "blockerReason": null},
-      "ownerRole": "releaselead",
-      "reviewerRole": "proofreviewer",
-      "dependsOn": ["RB-007"],
-      "componentIds": ["operations-and-release-tests"],
-      "inventoryOwners": ["verification"],
-      "changePaths": [
-        "eva2/tests/support/managed_b_runtime_smoke.py",
-        "eva2/tests/operations/test_managed_b_runtime_smoke.py"
-      ],
-      "testCommands": [
-        "TMPDIR=/tmp TEMP=/tmp TMP=/tmp pytest -q tests/operations/test_managed_b_runtime_smoke.py",
-        "ruff check tests/support/managed_b_runtime_smoke.py tests/operations/test_managed_b_runtime_smoke.py"
-      ],
-      "evidenceRequired": [
-        "Een private, canonieke en commitgebonden uitvoerreceipt bindt de exact door RB-005 gekozen kandidaat, het geslaagde RB-006-analysebewijs, het geslaagde RB-007-testreceipt, de gebruikte Compose-bytes, alle lokale image-ID's en één unieke Docker-project- en resource-namespace voordat een container, netwerk of volume wordt gemaakt.",
-        "De fysieke proef begint met nieuwe operationele, geheugen- en werkvolumes; bereikt de exacte schemahead; voltooit een echte kandidaatroute met een unieke geheugentoken; stopt en start dezelfde wegwerpstack met behoud van uitsluitend die volumes; bewijst daarna via een tweede antwoord dat dezelfde persoonsgebonden token is teruggevonden; en verwijdert tenslotte alle nonce-containers, netwerken, volumes en tijdelijke secret- of leasebestanden.",
-        "Aanvalstests bewijzen dat een verkeerde kandidaat of receipt, remote Docker-daemon, pull of build, bestaande of verwisselde resource, mislukte migratie, schijnantwoord, geheugenverlies, ontbrekende echte stop/start en onvolledige cleanup nooit een passing receipt opleveren."
-      ],
-      "doneWhen": [
-        "Vóór de eerste Docker-mutatie zijn kandidaat, RB-006-bewijs, RB-007-receipt, lokale daemon, Compose-inputs en alle image-identiteiten exact toegelaten; bouwen, pullen, taggen, pushen en gebruik van bestaande B- of productieresources zijn verboden.",
-        "Op volledig nieuwe wegwerpdata bereikt de schema-installer exact de verzegelde head, geeft de echte kandidaatroute antwoord, wordt een unieke persoonsgebonden geheugentoken aantoonbaar opgeslagen, worden alle voor deze proef vereiste langlopende services werkelijk gestopt en opnieuw gestart, en gebruikt een tweede antwoord aantoonbaar dezelfde teruggevonden token.",
-        "Cleanup draait bij succes én bij iedere fout; een passing receipt wordt pas na een onafhankelijke inventarisatie geschreven en is onmogelijk zolang ook maar één nonce-container, netwerk, volume of tijdelijk bestand resteert; een onafhankelijke reviewer geeft GO."
-      ]
     }
   ],
   "milestones": [
+    {"id": "RB-008", "order": 80, "area": "Releasebasis", "title": "Volledige wegwerpstack testen", "outcome": "De stack migreert, antwoordt, onthoudt, herstart en ruimt op."},
     {"id": "RB-009", "order": 90, "area": "Releasebasis", "title": "Fysieke bewijsset beoordelen", "outcome": "Een onafhankelijke reviewer controleert de volledige releaseketen."},
     {"id": "RB-010", "order": 100, "area": "Releasebasis", "title": "A/B-besluit nemen", "outcome": "Alleen volledig groen mag naar het niet-actieve slot."},
-    {"id": "CP-000", "order": 105, "area": "Continue kwaliteitsvergelijking", "title": "Vergelijking per productkaart afdwingen", "outcome": "Vóór iedere productfunctie blokkeert de checker zonder actuele open-source- en concurrentnulmeting; klaar vereist dezelfde praktijktest en hetzelfde budget, een gelijk-of-beter resultaat en bewijs dat dubbele Eva-code is verwijderd."},
     {"id": "OS-001", "order": 110, "area": "Open source en codebeheer", "title": "Inventaris en bereikbaarheid afdwingen", "outcome": "Elk gevolgd bestand heeft één eigenaar en aantoonbare noodzaak."},
     {"id": "OS-002", "order": 120, "area": "Open source en codebeheer", "title": "Pydantic-wrapper consolideren", "outcome": "Pydantic doet generiek modelwerk; Eva houdt alleen unieke grenzen."},
     {"id": "OS-003", "order": 130, "area": "Open source en codebeheer", "title": "Child-provider consolideren", "outcome": "Hoofd- en hulpagent delen één provideradapter."},

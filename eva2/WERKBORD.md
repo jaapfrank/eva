@@ -10,34 +10,43 @@ de volgende begint.
 
 | Volgorde | Kaart | Resultaat | Status |
 |---:|---|---|---|
-| 70 | `RB-007` — Alle verplichte testgroepen uitvoeren | Iedere verzegelde testgroep slaagt op dezelfde commit. | 🟡 BEZIG |
-| 80 | `RB-008` — Volledige wegwerpstack testen | De stack migreert, antwoordt, onthoudt, herstart en ruimt op. | ⚪ HIERNA |
+| 65 | `CP-000` — Vergelijking per productkaart afdwingen | Iedere productkaart begint met een actuele open-source- en concurrentnulmeting en eindigt alleen na dezelfde praktijktest met aantoonbare winst. | 🟡 BEZIG |
+| 70 | `RB-007` — Alle verplichte testgroepen uitvoeren | Iedere verzegelde testgroep slaagt op dezelfde commit. | ⚪ HIERNA |
 
-### Exact werk voor `RB-007`
+### Exact werk voor `CP-000`
+
+- `docs/eva-repository-inventory.generated.json`
+- `docs/eva-repository-inventory.generated.md`
+- `eva2/WERKBORD.md`
+- `eva2/design/product/execution-workboard-v1.json`
+- `eva2/tests/operations/test_current_workboard.py`
+- `eva2/tools/check_current_workboard.py`
+
+Klaar betekent:
+
+- De checker leest nul- en nameting uitsluitend uit hun gebonden Git-commits en leidt de beslissing opnieuw af uit echte, gehashte ruwe artifacts in plaats van een vrije GO-claim.
+- Historisch geldig bewijs blijft geldig, terwijl iedere nieuwe productkaart actuele releases en een eigen nieuwe nulmeting moet gebruiken.
+- Dezelfde vergelijking wordt vóór en na uitgevoerd; alle harde eisen blijven groen en minstens één vooraf vastgelegde hoofdmaatstaf verslaat zowel Eva-vóór als de beste actuele vergelijker buiten de tolerantie.
+- Een onafhankelijke reviewer voert de aanvalstests uit en geeft GO.
+
+Echte controles:
+
+- `TMPDIR=/tmp TEMP=/tmp TMP=/tmp pytest -q tests/operations/test_current_workboard.py`
+- `python3 tools/check_current_workboard.py`
+- `python3 tools/check_component_catalog.py`
+- `node ../test/repository-inventory.test.js`
+- `node ../test/repository-inventory-disposition.test.js`
+- `ruff check tools/check_current_workboard.py tests/operations/test_current_workboard.py`
+
+### Daarna voorbereid: `RB-007`
 
 - `eva2/tools/run_managed_b_required_tests.py`
 - `eva2/tests/operations/test_run_managed_b_required_tests.py`
 
-Klaar betekent:
-
-- De runner accepteert uitsluitend een apart gematerialiseerde, alleen-lezen source tree waarvan sourceCommit en release-inputauthority exact overeenkomen met de door RB-005 gekozen kandidaat en het geslaagde RB-006-bewijs; de huidige checkout wordt nooit als testbron gebruikt.
-- Collectie en uitvoering dekken exact alle verzegelde modules in zeven niet-overlappende groepen, inclusief de fysieke browsersubgate en de vereiste afzonderlijke wegwerpdatabases, en iedere failure, error, skip, xfail, ontbrekende of extra test faalt gesloten zonder passing receipt.
-- Het passing receipt bindt kandidaatimage, sourceCommit, authorityhash, onveranderlijke source-snapshot, toolchains, wheelhouses, groepsresultaten en het RB-006-bewijs; een onafhankelijke reviewer geeft GO.
-
-Echte controles:
+Vooraf vastgelegde controles:
 
 - `TMPDIR=/tmp TEMP=/tmp TMP=/tmp pytest -q tests/operations/test_run_managed_b_required_tests.py`
 - `ruff check tools/run_managed_b_required_tests.py tests/operations/test_run_managed_b_required_tests.py`
-
-### Daarna voorbereid: `RB-008`
-
-- `eva2/tests/support/managed_b_runtime_smoke.py`
-- `eva2/tests/operations/test_managed_b_runtime_smoke.py`
-
-Vooraf vastgelegde controles:
-
-- `TMPDIR=/tmp TEMP=/tmp TMP=/tmp pytest -q tests/operations/test_managed_b_runtime_smoke.py`
-- `ruff check tests/support/managed_b_runtime_smoke.py tests/operations/test_managed_b_runtime_smoke.py`
 
 ## Daarna
 
@@ -46,9 +55,9 @@ nadat zij als eerstvolgende kleine kaart exacte bestanden en tests heeft.
 
 | Nr. | Onderdeel | Begrijpelijk eindresultaat |
 |---:|---|---|
+| 80 | `RB-008` — Volledige wegwerpstack testen | De stack migreert, antwoordt, onthoudt, herstart en ruimt op. |
 | 90 | `RB-009` — Fysieke bewijsset beoordelen | Een onafhankelijke reviewer controleert de volledige releaseketen. |
 | 100 | `RB-010` — A/B-besluit nemen | Alleen volledig groen mag naar het niet-actieve slot. |
-| 105 | `CP-000` — Vergelijking per productkaart afdwingen | Vóór iedere productfunctie blokkeert de checker zonder actuele open-source- en concurrentnulmeting; klaar vereist dezelfde praktijktest en hetzelfde budget, een gelijk-of-beter resultaat en bewijs dat dubbele Eva-code is verwijderd. |
 | 110 | `OS-001` — Inventaris en bereikbaarheid afdwingen | Elk gevolgd bestand heeft één eigenaar en aantoonbare noodzaak. |
 | 120 | `OS-002` — Pydantic-wrapper consolideren | Pydantic doet generiek modelwerk; Eva houdt alleen unieke grenzen. |
 | 130 | `OS-003` — Child-provider consolideren | Hoofd- en hulpagent delen één provideradapter. |
