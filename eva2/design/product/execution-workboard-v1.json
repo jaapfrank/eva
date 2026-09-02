@@ -6,7 +6,7 @@
   "commandWorkingDirectory": "eva2",
   "inventoryPath": "docs/eva-repository-inventory.generated.json",
   "humanBoardPath": "eva2/WERKBORD.md",
-  "activeTaskId": "GOV-003",
+  "activeTaskId": "CP-000",
   "maxActiveImplementationTasks": 1,
   "statusValues": ["queued", "in_progress", "review", "done", "blocked"],
   "rules": [
@@ -307,8 +307,8 @@
       "area": "Werkbesturing",
       "title": "Eva2-werk tot één zichtbare schrijfboom begrenzen",
       "outcome": "Iedereen ziet één Eva2-map; agents delen die map met exclusieve paden en tijdelijke uitvoer verdwijnt gecontroleerd.",
-      "status": "in_progress",
-      "stateDetails": {"baseCommit": null, "implementationCommit": null, "evidenceCommit": null, "reviewEvidencePaths": [], "blockerReason": null},
+      "status": "done",
+      "stateDetails": {"baseCommit": "458631cb022efb44adfb0b2cf4abac3c07eacc41", "implementationCommit": "dc4757338165effa0aff97f9d0d6e0b5c6070c35", "evidenceCommit": "dce1c11805bf9429ceaf5e72fce4a32b0d110a0f", "reviewEvidencePaths": ["eva2/evidence/product/GOV-003-canonical-workspace-containment-tests-2026-09-02.json"], "blockerReason": null},
       "ownerRole": "architecturelead",
       "reviewerRole": "workboardreviewer",
       "dependsOn": ["RB-006"],
@@ -344,7 +344,7 @@
       "area": "Continue kwaliteitsvergelijking",
       "title": "Vergelijking per productkaart afdwingen",
       "outcome": "Iedere productkaart begint met een actuele open-source- en concurrentnulmeting en eindigt alleen na dezelfde praktijktest met aantoonbare winst.",
-      "status": "queued",
+      "status": "in_progress",
       "stateDetails": {"baseCommit": null, "implementationCommit": null, "evidenceCommit": null, "reviewEvidencePaths": [], "blockerReason": null},
       "ownerRole": "architecturelead",
       "reviewerRole": "workboardreviewer",
@@ -376,10 +376,40 @@
         "Dezelfde vergelijking wordt vóór en na uitgevoerd; alle harde eisen blijven groen en minstens één vooraf vastgelegde hoofdmaatstaf verslaat zowel Eva-vóór als de beste actuele vergelijker buiten de tolerantie.",
         "Een onafhankelijke reviewer voert de aanvalstests uit en geeft GO."
       ]
+    },
+    {
+      "id": "RB-007",
+      "order": 70,
+      "area": "Releasebasis",
+      "title": "Alle verplichte testgroepen uitvoeren",
+      "outcome": "Iedere verzegelde testgroep slaagt op dezelfde commit.",
+      "status": "queued",
+      "stateDetails": {"baseCommit": null, "implementationCommit": null, "evidenceCommit": null, "reviewEvidencePaths": [], "blockerReason": null},
+      "ownerRole": "releaselead",
+      "reviewerRole": "proofreviewer",
+      "dependsOn": ["CP-000"],
+      "componentIds": ["operations-and-release-tests"],
+      "inventoryOwners": ["verification"],
+      "changePaths": [
+        "eva2/tools/run_managed_b_required_tests.py",
+        "eva2/tests/operations/test_run_managed_b_required_tests.py"
+      ],
+      "testCommands": [
+        "TMPDIR=/tmp TEMP=/tmp TMP=/tmp pytest -q tests/operations/test_run_managed_b_required_tests.py",
+        "ruff check tools/run_managed_b_required_tests.py tests/operations/test_run_managed_b_required_tests.py"
+      ],
+      "evidenceRequired": [
+        "Een private commitgebonden uitvoerreceipt bewijst dat alle 147 verzegelde uitvoerbare testmodules, verdeeld over exact zeven groepen en met alle 19 supportinputs uitsluitend als gebonden invoer, zonder failures, errors, skips of xfails zijn uitgevoerd tegen dezelfde door RB-005 gekozen en door RB-006 schoon bevonden kandidaatbron.",
+        "Onafhankelijke aanvalstests bewijzen dat de huidige checkout, een schrijfbare of verwisselde source tree, verkeerde sourceCommit of authority, een ander kandidaatimage, ontbrekende of dubbele collectie, gewijzigde invoer tijdens uitvoering en hergebruikt browserbewijs allemaal vóór een groen receipt falen."
+      ],
+      "doneWhen": [
+        "De runner accepteert uitsluitend een apart gematerialiseerde, alleen-lezen source tree waarvan sourceCommit en release-inputauthority exact overeenkomen met de door RB-005 gekozen kandidaat en het geslaagde RB-006-bewijs; de huidige checkout wordt nooit als testbron gebruikt.",
+        "Collectie en uitvoering dekken exact alle verzegelde modules in zeven niet-overlappende groepen, inclusief de fysieke browsersubgate en de vereiste afzonderlijke wegwerpdatabases, en iedere failure, error, skip, xfail, ontbrekende of extra test faalt gesloten zonder passing receipt.",
+        "Het passing receipt bindt kandidaatimage, sourceCommit, authorityhash, onveranderlijke source-snapshot, toolchains, wheelhouses, groepsresultaten en het RB-006-bewijs; een onafhankelijke reviewer geeft GO."
+      ]
     }
   ],
   "milestones": [
-    {"id": "RB-007", "order": 70, "area": "Releasebasis", "title": "Alle verplichte testgroepen uitvoeren", "outcome": "Iedere verzegelde testgroep slaagt op dezelfde commit."},
     {"id": "RB-008", "order": 80, "area": "Releasebasis", "title": "Volledige wegwerpstack testen", "outcome": "De stack migreert, antwoordt, onthoudt, herstart en ruimt op."},
     {"id": "RB-009", "order": 90, "area": "Releasebasis", "title": "Fysieke bewijsset beoordelen", "outcome": "Een onafhankelijke reviewer controleert de volledige releaseketen."},
     {"id": "RB-010", "order": 100, "area": "Releasebasis", "title": "A/B-besluit nemen", "outcome": "Alleen volledig groen mag naar het niet-actieve slot."},
@@ -414,6 +444,17 @@
     {"id": "FN-003", "order": 390, "area": "Eindacceptatie", "title": "Zeven dagen praktijk bewijzen", "outcome": "Een ongewijzigde kandidaat doorstaat de praktijkproef en vervangbeslissing."}
   ],
   "completions": {
+    "GOV-003": {
+      "baseCommit": "458631cb022efb44adfb0b2cf4abac3c07eacc41",
+      "commit": "dc4757338165effa0aff97f9d0d6e0b5c6070c35",
+      "decision": "GO",
+      "evidenceCommit": "dce1c11805bf9429ceaf5e72fce4a32b0d110a0f",
+      "evidencePaths": ["eva2/reviews/GOV-003-canonical-workspace-dc47573.md"],
+      "implementedBy": "/root",
+      "reviewCommit": "4d50ee83da84090e02377df6aa5b898b99fb771a",
+      "reviewedBy": "/root/workboard_review",
+      "testReceiptPaths": ["eva2/evidence/product/GOV-003-canonical-workspace-containment-tests-2026-09-02.json"]
+    },
     "GOV-001": {
       "baseCommit": "e171f68f40a17c52b03683e1eb3d2aa47317d7a0",
       "commit": "fc1e67f03739e038563ac5e4124f61d6b0a40000",
