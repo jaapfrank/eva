@@ -10,13 +10,12 @@ de volgende begint.
 
 | Volgorde | Kaart | Resultaat | Status |
 |---:|---|---|---|
-| 65 | `CP-000` — Vergelijking per productkaart afdwingen | Iedere productkaart begint met een actuele open-source- en concurrentnulmeting en eindigt alleen na dezelfde praktijktest met aantoonbare winst. | 🟡 BEZIG |
-| 70 | `RB-007` — Alle verplichte testgroepen uitvoeren | Iedere verzegelde testgroep slaagt op dezelfde commit. | ⚪ HIERNA |
+| 63 | `GOV-003` — Eva2-werk tot één zichtbare schrijfboom begrenzen | Iedereen ziet één Eva2-map; agents delen die map met exclusieve paden en tijdelijke uitvoer verdwijnt gecontroleerd. | 🟡 BEZIG |
+| 65 | `CP-000` — Vergelijking per productkaart afdwingen | Iedere productkaart begint met een actuele open-source- en concurrentnulmeting en eindigt alleen na dezelfde praktijktest met aantoonbare winst. | ⚪ HIERNA |
 
-### Exact werk voor `CP-000`
+### Exact werk voor `GOV-003`
 
-- `docs/eva-repository-inventory.generated.json`
-- `docs/eva-repository-inventory.generated.md`
+- `eva2/TEAM_WERKWIJZE.md`
 - `eva2/WERKBORD.md`
 - `eva2/design/product/execution-workboard-v1.json`
 - `eva2/tests/operations/test_current_workboard.py`
@@ -24,12 +23,26 @@ de volgende begint.
 
 Klaar betekent:
 
-- De checker leest nul- en nameting uitsluitend uit hun gebonden Git-commits en leidt de beslissing opnieuw af uit echte, gehashte ruwe artifacts in plaats van een vrije GO-claim.
-- Historisch geldig bewijs blijft geldig, terwijl iedere nieuwe productkaart actuele releases en een eigen nieuwe nulmeting moet gebruiken.
-- Dezelfde vergelijking wordt vóór en na uitgevoerd; alle harde eisen blijven groen en minstens één vooraf vastgelegde hoofdmaatstaf verslaat zowel Eva-vóór als de beste actuele vergelijker buiten de tolerantie.
-- Een onafhankelijke reviewer voert de aanvalstests uit en geeft GO.
+- De enige authoring root is /home/administrator/project/Bottie-candidates/v2/eva2; parallelle agents delen die boom met exclusieve bestandspaden en centrale documenten hebben één schrijver.
+- Tijdelijke test- en buildmappen gebruiken mktemp onder /tmp en worden opgeruimd.
+- /home/administrator/project/.eva2-artifacts is alleen een beheerd artifactarchief en vereist een expliciete kaart met eigenaar, doel, exact retentiepad en opruimmoment.
+- De workboardchecker gebruikt de repository-inventaris nog voor aanwezigheid, disposition, eigenaar en component, maar blokkeert normaal in-scope werk niet op een oude actuele-bytehash.
+- De gerichte tests en Ruff zijn groen en een onafhankelijke reviewer geeft GO.
 
 Echte controles:
+
+- `TMPDIR=/tmp TEMP=/tmp TMP=/tmp pytest -q tests/operations/test_current_workboard.py`
+- `python3 tools/check_current_workboard.py`
+- `ruff check tools/check_current_workboard.py tests/operations/test_current_workboard.py`
+
+### Daarna voorbereid: `CP-000`
+
+- `eva2/WERKBORD.md`
+- `eva2/design/product/execution-workboard-v1.json`
+- `eva2/tests/operations/test_current_workboard.py`
+- `eva2/tools/check_current_workboard.py`
+
+Vooraf vastgelegde controles:
 
 - `TMPDIR=/tmp TEMP=/tmp TMP=/tmp pytest -q tests/operations/test_current_workboard.py`
 - `python3 tools/check_current_workboard.py`
@@ -38,16 +51,6 @@ Echte controles:
 - `node ../test/repository-inventory-disposition.test.js`
 - `ruff check tools/check_current_workboard.py tests/operations/test_current_workboard.py`
 
-### Daarna voorbereid: `RB-007`
-
-- `eva2/tools/run_managed_b_required_tests.py`
-- `eva2/tests/operations/test_run_managed_b_required_tests.py`
-
-Vooraf vastgelegde controles:
-
-- `TMPDIR=/tmp TEMP=/tmp TMP=/tmp pytest -q tests/operations/test_run_managed_b_required_tests.py`
-- `ruff check tools/run_managed_b_required_tests.py tests/operations/test_run_managed_b_required_tests.py`
-
 ## Daarna
 
 Deze onderwerpen zijn alleen mijlpalen. Een mijlpaal wordt pas uitvoerbaar
@@ -55,6 +58,7 @@ nadat zij als eerstvolgende kleine kaart exacte bestanden en tests heeft.
 
 | Nr. | Onderdeel | Begrijpelijk eindresultaat |
 |---:|---|---|
+| 70 | `RB-007` — Alle verplichte testgroepen uitvoeren | Iedere verzegelde testgroep slaagt op dezelfde commit. |
 | 80 | `RB-008` — Volledige wegwerpstack testen | De stack migreert, antwoordt, onthoudt, herstart en ruimt op. |
 | 90 | `RB-009` — Fysieke bewijsset beoordelen | Een onafhankelijke reviewer controleert de volledige releaseketen. |
 | 100 | `RB-010` — A/B-besluit nemen | Alleen volledig groen mag naar het niet-actieve slot. |
@@ -96,6 +100,11 @@ nadat zij als eerstvolgende kleine kaart exacte bestanden en tests heeft.
 - Een bouwer keurt zijn eigen taak niet goed.
 - Klaar vereist commitgebonden tests, bewijs en onafhankelijke beoordeling.
 - Een gebruikersvoorbeeld test een bestaande capability en maakt geen providerspecifieke kernroute.
+- De enige schrijfboom is /home/administrator/project/Bottie-candidates/v2/eva2; alle agents delen die boom met exclusieve bestandspaden.
+- Er worden geen Eva2-worktrees of andere Eva2-bronmappen als sibling onder /home/administrator/project gemaakt.
+- Tijdelijke test- en buildmappen staan via mktemp onder /tmp en worden opgeruimd.
+- /home/administrator/project/.eva2-artifacts is alleen een beheerd artifactarchief en vereist een expliciete kaart met eigenaar, doel, exact retentiepad en opruimmoment.
+- Centrale projectdocumenten hebben steeds precies één aangewezen schrijver.
 
 Machineleesbare bron:
 [`design/product/execution-workboard-v1.json`](design/product/execution-workboard-v1.json).

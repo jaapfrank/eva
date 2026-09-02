@@ -6,7 +6,7 @@
   "commandWorkingDirectory": "eva2",
   "inventoryPath": "docs/eva-repository-inventory.generated.json",
   "humanBoardPath": "eva2/WERKBORD.md",
-  "activeTaskId": "CP-000",
+  "activeTaskId": "GOV-003",
   "maxActiveImplementationTasks": 1,
   "statusValues": ["queued", "in_progress", "review", "done", "blocked"],
   "rules": [
@@ -15,7 +15,12 @@
     "Een uitvoerkaart noemt vóór start exacte bestanden, eigenaren en echte testcommando's.",
     "Een bouwer keurt zijn eigen taak niet goed.",
     "Klaar vereist commitgebonden tests, bewijs en onafhankelijke beoordeling.",
-    "Een gebruikersvoorbeeld test een bestaande capability en maakt geen providerspecifieke kernroute."
+    "Een gebruikersvoorbeeld test een bestaande capability en maakt geen providerspecifieke kernroute.",
+    "De enige schrijfboom is /home/administrator/project/Bottie-candidates/v2/eva2; alle agents delen die boom met exclusieve bestandspaden.",
+    "Er worden geen Eva2-worktrees of andere Eva2-bronmappen als sibling onder /home/administrator/project gemaakt.",
+    "Tijdelijke test- en buildmappen staan via mktemp onder /tmp en worden opgeruimd.",
+    "/home/administrator/project/.eva2-artifacts is alleen een beheerd artifactarchief en vereist een expliciete kaart met eigenaar, doel, exact retentiepad en opruimmoment.",
+    "Centrale projectdocumenten hebben steeds precies één aangewezen schrijver."
   ],
   "team": {
     "architecturelead": "/root",
@@ -297,21 +302,56 @@
       ]
     },
     {
-      "id": "CP-000",
-      "order": 65,
-      "area": "Continue kwaliteitsvergelijking",
-      "title": "Vergelijking per productkaart afdwingen",
-      "outcome": "Iedere productkaart begint met een actuele open-source- en concurrentnulmeting en eindigt alleen na dezelfde praktijktest met aantoonbare winst.",
+      "id": "GOV-003",
+      "order": 63,
+      "area": "Werkbesturing",
+      "title": "Eva2-werk tot één zichtbare schrijfboom begrenzen",
+      "outcome": "Iedereen ziet één Eva2-map; agents delen die map met exclusieve paden en tijdelijke uitvoer verdwijnt gecontroleerd.",
       "status": "in_progress",
       "stateDetails": {"baseCommit": null, "implementationCommit": null, "evidenceCommit": null, "reviewEvidencePaths": [], "blockerReason": null},
       "ownerRole": "architecturelead",
       "reviewerRole": "workboardreviewer",
       "dependsOn": ["RB-006"],
       "componentIds": ["operations-and-release-tests"],
-      "inventoryOwners": ["architecture", "documentation", "verification"],
+      "inventoryOwners": ["documentation", "verification"],
       "changePaths": [
-        "docs/eva-repository-inventory.generated.json",
-        "docs/eva-repository-inventory.generated.md",
+        "eva2/TEAM_WERKWIJZE.md",
+        "eva2/WERKBORD.md",
+        "eva2/design/product/execution-workboard-v1.json",
+        "eva2/tests/operations/test_current_workboard.py",
+        "eva2/tools/check_current_workboard.py"
+      ],
+      "testCommands": [
+        "TMPDIR=/tmp TEMP=/tmp TMP=/tmp pytest -q tests/operations/test_current_workboard.py",
+        "python3 tools/check_current_workboard.py",
+        "ruff check tools/check_current_workboard.py tests/operations/test_current_workboard.py"
+      ],
+      "evidenceRequired": [
+        "Een aanvalstest bewijst dat gewijzigde bytes binnen een bekende Eva2-kaart zijn toegestaan, terwijl een onbekend of ontbrekend pad en een verkeerde inventory-eigenaar blijven falen.",
+        "Een onafhankelijke reviewer controleert dat alle schrijf-, tijdelijke-output- en documenteigendomsregels in TEAM_WERKWIJZE.md en het gegenereerde werkbord overeenkomen."
+      ],
+      "doneWhen": [
+        "De enige authoring root is /home/administrator/project/Bottie-candidates/v2/eva2; parallelle agents delen die boom met exclusieve bestandspaden en centrale documenten hebben één schrijver.",
+        "Tijdelijke test- en buildmappen gebruiken mktemp onder /tmp en worden opgeruimd.",
+        "/home/administrator/project/.eva2-artifacts is alleen een beheerd artifactarchief en vereist een expliciete kaart met eigenaar, doel, exact retentiepad en opruimmoment.",
+        "De workboardchecker gebruikt de repository-inventaris nog voor aanwezigheid, disposition, eigenaar en component, maar blokkeert normaal in-scope werk niet op een oude actuele-bytehash.",
+        "De gerichte tests en Ruff zijn groen en een onafhankelijke reviewer geeft GO."
+      ]
+    },
+    {
+      "id": "CP-000",
+      "order": 65,
+      "area": "Continue kwaliteitsvergelijking",
+      "title": "Vergelijking per productkaart afdwingen",
+      "outcome": "Iedere productkaart begint met een actuele open-source- en concurrentnulmeting en eindigt alleen na dezelfde praktijktest met aantoonbare winst.",
+      "status": "queued",
+      "stateDetails": {"baseCommit": null, "implementationCommit": null, "evidenceCommit": null, "reviewEvidencePaths": [], "blockerReason": null},
+      "ownerRole": "architecturelead",
+      "reviewerRole": "workboardreviewer",
+      "dependsOn": ["GOV-003"],
+      "componentIds": ["operations-and-release-tests"],
+      "inventoryOwners": ["documentation", "verification"],
+      "changePaths": [
         "eva2/WERKBORD.md",
         "eva2/design/product/execution-workboard-v1.json",
         "eva2/tests/operations/test_current_workboard.py",
@@ -336,40 +376,10 @@
         "Dezelfde vergelijking wordt vóór en na uitgevoerd; alle harde eisen blijven groen en minstens één vooraf vastgelegde hoofdmaatstaf verslaat zowel Eva-vóór als de beste actuele vergelijker buiten de tolerantie.",
         "Een onafhankelijke reviewer voert de aanvalstests uit en geeft GO."
       ]
-    },
-    {
-      "id": "RB-007",
-      "order": 70,
-      "area": "Releasebasis",
-      "title": "Alle verplichte testgroepen uitvoeren",
-      "outcome": "Iedere verzegelde testgroep slaagt op dezelfde commit.",
-      "status": "queued",
-      "stateDetails": {"baseCommit": null, "implementationCommit": null, "evidenceCommit": null, "reviewEvidencePaths": [], "blockerReason": null},
-      "ownerRole": "releaselead",
-      "reviewerRole": "proofreviewer",
-      "dependsOn": ["CP-000"],
-      "componentIds": ["operations-and-release-tests"],
-      "inventoryOwners": ["verification"],
-      "changePaths": [
-        "eva2/tools/run_managed_b_required_tests.py",
-        "eva2/tests/operations/test_run_managed_b_required_tests.py"
-      ],
-      "testCommands": [
-        "TMPDIR=/tmp TEMP=/tmp TMP=/tmp pytest -q tests/operations/test_run_managed_b_required_tests.py",
-        "ruff check tools/run_managed_b_required_tests.py tests/operations/test_run_managed_b_required_tests.py"
-      ],
-      "evidenceRequired": [
-        "Een private commitgebonden uitvoerreceipt bewijst dat alle 147 verzegelde uitvoerbare testmodules, verdeeld over exact zeven groepen en met alle 19 supportinputs uitsluitend als gebonden invoer, zonder failures, errors, skips of xfails zijn uitgevoerd tegen dezelfde door RB-005 gekozen en door RB-006 schoon bevonden kandidaatbron.",
-        "Onafhankelijke aanvalstests bewijzen dat de huidige checkout, een schrijfbare of verwisselde source tree, verkeerde sourceCommit of authority, een ander kandidaatimage, ontbrekende of dubbele collectie, gewijzigde invoer tijdens uitvoering en hergebruikt browserbewijs allemaal vóór een groen receipt falen."
-      ],
-      "doneWhen": [
-        "De runner accepteert uitsluitend een apart gematerialiseerde, alleen-lezen source tree waarvan sourceCommit en release-inputauthority exact overeenkomen met de door RB-005 gekozen kandidaat en het geslaagde RB-006-bewijs; de huidige checkout wordt nooit als testbron gebruikt.",
-        "Collectie en uitvoering dekken exact alle verzegelde modules in zeven niet-overlappende groepen, inclusief de fysieke browsersubgate en de vereiste afzonderlijke wegwerpdatabases, en iedere failure, error, skip, xfail, ontbrekende of extra test faalt gesloten zonder passing receipt.",
-        "Het passing receipt bindt kandidaatimage, sourceCommit, authorityhash, onveranderlijke source-snapshot, toolchains, wheelhouses, groepsresultaten en het RB-006-bewijs; een onafhankelijke reviewer geeft GO."
-      ]
     }
   ],
   "milestones": [
+    {"id": "RB-007", "order": 70, "area": "Releasebasis", "title": "Alle verplichte testgroepen uitvoeren", "outcome": "Iedere verzegelde testgroep slaagt op dezelfde commit."},
     {"id": "RB-008", "order": 80, "area": "Releasebasis", "title": "Volledige wegwerpstack testen", "outcome": "De stack migreert, antwoordt, onthoudt, herstart en ruimt op."},
     {"id": "RB-009", "order": 90, "area": "Releasebasis", "title": "Fysieke bewijsset beoordelen", "outcome": "Een onafhankelijke reviewer controleert de volledige releaseketen."},
     {"id": "RB-010", "order": 100, "area": "Releasebasis", "title": "A/B-besluit nemen", "outcome": "Alleen volledig groen mag naar het niet-actieve slot."},

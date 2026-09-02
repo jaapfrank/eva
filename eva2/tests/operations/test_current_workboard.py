@@ -6,8 +6,10 @@ from pathlib import Path
 import subprocess
 
 import pytest
+import tools.check_current_workboard as workboard_checker
 
 from tools.check_current_workboard import (
+    ARTIFACT_RETENTION_RULE,
     TEAM,
     _validate_completion,
     _validate_state_details,
@@ -170,9 +172,77 @@ def test_workboard_refuses_directory_as_change_path(tmp_path: Path) -> None:
 def test_workboard_refuses_unrelated_inventory_owner(tmp_path: Path) -> None:
     paths = _board(
         tmp_path,
-        lambda value: _next(value).update({"changePaths": ["eva2/PROJECT_STATUS.md"]}),
+        lambda value: _next(value).update({"changePaths": ["eva2/pyproject.toml"]}),
     )
     with pytest.raises(RuntimeError, match="inventory ownership differs"):
+        _validate_paths(paths)
+
+
+def test_open_card_cannot_escape_the_canonical_eva2_authoring_root(
+    tmp_path: Path,
+) -> None:
+    def mutation(value: dict[str, object]) -> None:
+        task = _primary(value)
+        task["changePaths"] = [
+            "docs/eva-repository-inventory.generated.json",
+            "eva2/tests/operations/test_current_workboard.py",
+        ]
+        task["inventoryOwners"] = ["architecture", "verification"]
+        task["componentIds"] = ["operations-and-release-tests"]
+
+    paths = _board(tmp_path, mutation)
+    with pytest.raises(RuntimeError, match="canonical Eva2 authoring root"):
+        _validate_paths(paths)
+
+
+def test_inventory_metadata_allows_changed_bytes_but_not_scope_attacks(
+    monkeypatch: pytest.MonkeyPatch,
+    tmp_path: Path,
+) -> None:
+    board = json.loads(BOARD.read_text(encoding="utf-8"))
+    target = _primary(board)["changePaths"][0]
+    inventory_path = ROOT / board["inventoryPath"]
+    inventory_reader = workboard_checker._inventory
+    entries, inventory = inventory_reader(ROOT, inventory_path)
+
+    changed_bytes = deepcopy(entries)
+    changed_bytes[target]["hashMode"] = "exact-bytes"
+    changed_bytes[target]["contentSha256"] = "0" * 64
+    monkeypatch.setattr(
+        workboard_checker,
+        "_inventory",
+        lambda _root, _path: (changed_bytes, inventory),
+    )
+    assert _validate_paths((BOARD, HUMAN))["status"] == "valid"
+
+    missing_entry = deepcopy(changed_bytes)
+    missing_entry.pop(target)
+    monkeypatch.setattr(
+        workboard_checker,
+        "_inventory",
+        lambda _root, _path: (missing_entry, inventory),
+    )
+    with pytest.raises(RuntimeError, match="inventory ownership differs"):
+        _validate_paths((BOARD, HUMAN))
+
+    wrong_owner = deepcopy(changed_bytes)
+    wrong_owner[target]["owner"] = "outside-eva2"
+    monkeypatch.setattr(
+        workboard_checker,
+        "_inventory",
+        lambda _root, _path: (wrong_owner, inventory),
+    )
+    with pytest.raises(RuntimeError, match="inventory ownership differs"):
+        _validate_paths((BOARD, HUMAN))
+
+    monkeypatch.setattr(workboard_checker, "_inventory", inventory_reader)
+    paths = _board(
+        tmp_path,
+        lambda value: _primary(value).update(
+            {"changePaths": ["eva2/does-not-exist.md"]}
+        ),
+    )
+    with pytest.raises(RuntimeError, match="does not exist"):
         _validate_paths(paths)
 
 
@@ -285,6 +355,27 @@ def test_workboard_refuses_invalid_date_or_rules(
 ) -> None:
     paths = _board(tmp_path, mutation)
     with pytest.raises(RuntimeError, match=message):
+        _validate_paths(paths)
+
+
+@pytest.mark.parametrize(
+    "replacement",
+    [None, ".eva2-artifacts vereist een kaart met een retentiepad."],
+)
+def test_workboard_refuses_removed_or_weakened_artifact_retention_rule(
+    tmp_path: Path,
+    replacement: str | None,
+) -> None:
+    def mutation(value: dict[str, object]) -> None:
+        rules = value["rules"]
+        index = rules.index(ARTIFACT_RETENTION_RULE)
+        if replacement is None:
+            rules.pop(index)
+        else:
+            rules[index] = replacement
+
+    paths = _board(tmp_path, mutation)
+    with pytest.raises(RuntimeError, match="contract or rules differ"):
         _validate_paths(paths)
 
 

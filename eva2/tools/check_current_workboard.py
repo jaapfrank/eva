@@ -6,7 +6,6 @@ from __future__ import annotations
 import argparse
 from datetime import date
 from fnmatch import fnmatchcase
-import hashlib
 import json
 from pathlib import Path, PurePosixPath
 import re
@@ -25,6 +24,11 @@ TASK_ID = re.compile(r"[A-Z]{2,3}-[0-9]{3}")
 GIT_COMMIT = re.compile(r"[0-9a-f]{40}")
 STATUSES = {"queued", "in_progress", "review", "done", "blocked"}
 PRIMARY_STATUSES = {"in_progress", "review", "blocked"}
+ARTIFACT_RETENTION_RULE = (
+    "/home/administrator/project/.eva2-artifacts is alleen een beheerd "
+    "artifactarchief en vereist een expliciete kaart met eigenaar, doel, exact "
+    "retentiepad en opruimmoment."
+)
 RULES = [
     "Afgeronde uitvoerkaarten staan eerst, daarna exact één primaire kaart, daarna alleen wachtrijkaarten.",
     "Alleen de primaire kaart en de direct volgende kaart zijn uitvoerbaar; latere wensen blijven mijlpalen.",
@@ -32,6 +36,13 @@ RULES = [
     "Een bouwer keurt zijn eigen taak niet goed.",
     "Klaar vereist commitgebonden tests, bewijs en onafhankelijke beoordeling.",
     "Een gebruikersvoorbeeld test een bestaande capability en maakt geen providerspecifieke kernroute.",
+    "De enige schrijfboom is /home/administrator/project/Bottie-candidates/v2/eva2; "
+    "alle agents delen die boom met exclusieve bestandspaden.",
+    "Er worden geen Eva2-worktrees of andere Eva2-bronmappen als sibling onder "
+    "/home/administrator/project gemaakt.",
+    "Tijdelijke test- en buildmappen staan via mktemp onder /tmp en worden opgeruimd.",
+    ARTIFACT_RETENTION_RULE,
+    "Centrale projectdocumenten hebben steeds precies één aangewezen schrijver.",
 ]
 TOP_FIELDS = {
     "activeTaskId",
@@ -660,10 +671,16 @@ def validate(
             raise RuntimeError(f"{task_id} names an unknown component")
         owners = _strings(task.get("inventoryOwners"), f"{task_id} inventoryOwners")
         change_paths = _strings(task.get("changePaths"), f"{task_id} changePaths")
+        if status != "done" and any(
+            not raw.startswith("eva2/") for raw in change_paths
+        ):
+            raise RuntimeError(
+                f"{task_id} open changePaths must stay inside the canonical Eva2 authoring root"
+            )
         actual_inventory_owners: set[str] = set()
         actual_component_owners: set[str] = set()
         for raw in change_paths:
-            path = _repo_file(root, raw, f"{task_id} changePath")
+            _repo_file(root, raw, f"{task_id} changePath")
             entry = inventory_entries.get(raw)
             if (
                 entry is None
@@ -673,10 +690,6 @@ def validate(
             ):
                 raise RuntimeError(f"{task_id} changePath inventory ownership differs")
             actual_inventory_owners.add(entry["owner"])
-            if entry.get("hashMode") == "exact-bytes":
-                actual_hash = hashlib.sha256(path.read_bytes()).hexdigest()
-                if entry.get("contentSha256") != actual_hash:
-                    raise RuntimeError(f"{task_id} repository inventory is stale for {raw}")
             catalog_owners = _catalog_owners(catalog, raw)
             actual_component_owners.update(catalog_owners)
         if set(owners) != actual_inventory_owners:

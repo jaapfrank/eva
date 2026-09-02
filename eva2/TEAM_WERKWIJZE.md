@@ -87,6 +87,25 @@ uitvoerwachtrij staat uitsluitend in `WERKBORD.md`; de machineleesbare bron is
   afhankelijkheden, onbekende componenten, ontbrekende bestanden en een
   actieve kaart zonder exacte bestandsscope.
 
+## Eén canonieke schrijfboom
+
+De enige plek waar het team Eva2-bron, tests of projectdocumentatie schrijft
+is `/home/administrator/project/Bottie-candidates/v2/eva2`. Alle agents delen
+diezelfde canonieke boom. Een kaart wijst vooraf exclusieve bestandspaden toe;
+twee agents schrijven nooit tegelijk aan hetzelfde pad.
+
+- Er worden geen extra Git-worktrees of andere Eva2-bronmappen als zichtbare
+  sibling onder `/home/administrator/project` gemaakt.
+- Tijdelijke test- en buildmappen worden met `mktemp` onder `/tmp` gemaakt en
+  na de taak altijd opgeruimd.
+- `/home/administrator/project/.eva2-artifacts` is alleen een beheerd
+  artifactarchief en vereist een expliciete kaart met eigenaar, doel, exact
+  retentiepad en opruimmoment. Het is nooit een schrijfboom.
+- `WERKBORD.md`, `PROJECT_STATUS.md` en andere centrale projectdocumenten
+  hebben op ieder moment precies één aangewezen schrijver.
+- Een agent meldt vóór de eerste wijziging zijn exacte paden. Werk buiten die
+  paden stopt totdat de integratielead de kaart zichtbaar heeft aangepast.
+
 ## Vaste projectcyclus
 
 1. Het vaste team vertaalt de vraag naar één zichtbare uitkomst en legt vast
@@ -94,8 +113,8 @@ uitvoerwachtrij staat uitsluitend in `WERKBORD.md`; de machineleesbare bron is
 2. De verificatielead schrijft vóór implementatie de positieve, negatieve,
    privacy-, crash-, herstart- en echte provider-/hardwareproef.
 3. Leads verdelen exclusieve bestandsscope en spreken interfacecontracten af.
-4. Bouwers leveren kleine, testbare Git-checkpoints in een eigen werkboom of
-   niet-overlappende bestandsscope.
+4. Bouwers leveren kleine, testbare wijzigingen in de gedeelde canonieke boom
+   en uitsluitend binnen hun niet-overlappende bestandsscope.
 5. De reviewer kijkt tijdens de bouw mee bij trustgrenzen en controleert ieder
    gereed checkpoint onafhankelijk. Reviews stapelen niet op tot het einde.
 6. De integratielead voegt uitsluitend groene, beoordeelde checkpoints samen.
@@ -108,11 +127,9 @@ uitvoerwachtrij staat uitsluitend in `WERKBORD.md`; de machineleesbare bron is
 
 ## Parallel werken zonder elkaars wijzigingen te beschadigen
 
-- Iedere bouwstroom gebruikt een eigen Git-werkboom of expliciet exclusieve
-  paden.
+- Iedere bouwstroom gebruikt exclusieve paden in de ene canonieke schrijfboom.
 - Gedeelde interfaces en migraties worden eerst apart vastgelegd en beoordeeld.
-- Centrale status- en productdocumenten hebben tijdens een integratieslag één
-  schrijver.
+- Centrale status- en productdocumenten hebben steeds één schrijver.
 - Samenvoegen gebeurt gericht per checkpoint; nooit via een brede `git add`.
 - De verificatielead test het samengevoegde resultaat opnieuw. Een groene losse
   branch is geen groen product.
