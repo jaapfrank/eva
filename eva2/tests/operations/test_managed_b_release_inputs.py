@@ -380,7 +380,7 @@ def test_release_inputs_bind_current_registry_runtime_dependencies_and_migration
     )
     assert receipt["migration_head"] == "4e_0007_delegated_private"
     assert receipt["required_test_count"] == 147
-    assert receipt["required_test_support_input_count"] == 19
+    assert receipt["required_test_support_input_count"] == 20
     assert "source_commit" not in receipt
     assert "source_archive_sha256" not in receipt
     assert receipt["authority_sha256"] == hashlib.sha256(raw).hexdigest()

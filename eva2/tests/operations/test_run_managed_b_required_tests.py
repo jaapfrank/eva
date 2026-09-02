@@ -14,6 +14,12 @@ from tools import run_managed_b_required_tests as runner
 
 
 ROOT = Path(__file__).resolve().parents[2]
+NESTED_ROOT = ROOT.parent / "eva2"
+REPOSITORY_ROOT = (
+    ROOT.parent
+    if NESTED_ROOT.is_dir() and NESTED_ROOT.resolve() == ROOT.resolve()
+    else ROOT
+)
 _CANDIDATE = "sha256:" + "a" * 64
 _COMMIT = "b" * 40
 _GATE_HASH = "c" * 64
@@ -111,7 +117,7 @@ def test_authority_distinguishes_executable_tests_from_bound_support() -> None:
 
     assert len(inputs.executable) == 147
     assert "tests/operations/test_two_builder_reproducibility.py" in inputs.executable
-    assert len(inputs.support) == 19
+    assert len(inputs.support) == 20
     assert all(Path(path).name.startswith("test_") for path in inputs.executable)
     assert (
         "tests/experiments/test_managed_b_local_candidate_image.py" in inputs.executable
@@ -134,6 +140,35 @@ def test_authority_distinguishes_executable_tests_from_bound_support() -> None:
     }.issubset(required_inputs)
 
 
+def test_runner_accepts_flat_candidate_source_root(
+    private_tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    flat_root = private_tmp_path / "candidate"
+    (flat_root / "release").mkdir(parents=True)
+    (flat_root / "release/managed-b-release-input-authority-v1.json").write_text(
+        "{}", encoding="utf-8"
+    )
+    monkeypatch.setattr(runner, "load_test_inputs", lambda root: root)
+    captured: dict[str, Path] = {}
+
+    def runtime_validator(root: Path, _wheelhouse: Path) -> dict[str, object]:
+        captured["root"] = root
+        raise RuntimeError("stop after source-root resolution")
+
+    with pytest.raises(RuntimeError, match="source-root resolution"):
+        runner.run_required_tests(
+            repository_root=flat_root,
+            runtime_wheelhouse=private_tmp_path,
+            gate_wheelhouse=private_tmp_path,
+            **_browser_arguments(private_tmp_path),
+            receipt_path=private_tmp_path / "receipt.json",
+            environment=_environment(monkeypatch),
+            runtime_validator=runtime_validator,
+        )
+
+    assert captured["root"] == flat_root
+
+
 def test_missing_physical_gate_wheelhouse_fails_closed(tmp_path: Path) -> None:
     absent = (tmp_path / "absent").absolute()
     with pytest.raises(runner.RequiredTestsError, match="inaccessible"):
@@ -145,7 +180,7 @@ def test_cli_requires_all_external_browser_authorities() -> None:
         runner._parser().parse_args(
             [
                 "--repository-root",
-                str(ROOT.parent),
+                str(REPOSITORY_ROOT),
                 "--runtime-wheelhouse",
                 "/runtime",
                 "--gate-wheelhouse",
@@ -344,7 +379,7 @@ def test_runner_executes_seven_closed_groups_and_redacts_dsns(
 
     receipt_path = private_tmp_path / "receipt.json"
     receipt = runner.run_required_tests(
-        repository_root=ROOT.parent,
+        repository_root=REPOSITORY_ROOT,
         runtime_wheelhouse=private_tmp_path,
         gate_wheelhouse=private_tmp_path,
         **_browser_arguments(private_tmp_path),
@@ -453,7 +488,7 @@ def test_runner_writes_no_receipt_when_a_group_skips(
     receipt_path = private_tmp_path / "must-not-exist.json"
     with pytest.raises(runner.RequiredTestsError, match="not completely green"):
         runner.run_required_tests(
-            repository_root=ROOT.parent,
+            repository_root=REPOSITORY_ROOT,
             runtime_wheelhouse=private_tmp_path,
             gate_wheelhouse=private_tmp_path,
             **_browser_arguments(private_tmp_path),
@@ -500,7 +535,7 @@ def test_runner_rejects_result_count_that_differs_from_collection(
     receipt_path = private_tmp_path / "count-mismatch-must-not-exist.json"
     with pytest.raises(runner.RequiredTestsError, match="result count differs"):
         runner.run_required_tests(
-            repository_root=ROOT.parent,
+            repository_root=REPOSITORY_ROOT,
             runtime_wheelhouse=private_tmp_path,
             gate_wheelhouse=private_tmp_path,
             **_browser_arguments(private_tmp_path),

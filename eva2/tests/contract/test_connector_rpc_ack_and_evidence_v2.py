@@ -42,7 +42,7 @@ from eva.contracts.ingress import DeliveryOffer, DeliveryOfferV2, IngressRequest
 
 EVA2_ROOT = Path(__file__).resolve().parents[2]
 CORPUS_PATH = EVA2_ROOT / "schemas" / "contracts" / "contract-corpus-v1.json"
-ACK_KEY_PATH = EVA2_ROOT.parent / "design" / "fixtures" / "noor-client-ack-key-v1.json"
+ACK_KEY_PATH = EVA2_ROOT / "design" / "fixtures" / "noor-client-ack-key-v1.json"
 
 
 def _corpus() -> dict[str, object]:

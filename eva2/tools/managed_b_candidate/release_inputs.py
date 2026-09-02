@@ -45,7 +45,7 @@ _EXPECTED_TEST_PATHS_SHA256 = (
     "119aa9c61d95758b182dfd1dabefd22c3c417742f18ecc148cc9ebb594280836"
 )
 _EXPECTED_TEST_SUPPORT_PATHS_SHA256 = (
-    "7abafec28306ece2b646b44d1b42db7562ccfbc1e473f765cdd085f0ace95ba0"
+    "01b4594668e68d2938df3eabaf5a5b71333eda320b859f5eec524ea21bd0ce43"
 )
 _BUILD_PROVENANCE_INPUTS = {
     "deploy/living-core/Dockerfile",
@@ -125,6 +125,7 @@ _NONCLAIMS = (
     "Four cold background model paths still use the older direct HTTP helper and remain explicit removal debt; this authority does not claim that every handwritten model transport has been removed.",
     "The exact offline installer command, post-install attestations, physical 38-wheel wheelhouse, and runtime import remain separate open gates.",
     "The historical 4D authority remains a 64-contract compatibility baseline; this authority does not reseal it as the current 73-contract registry.",
+    "The candidate runtime and required candidate tests are self-contained within the Eva2 source tree; historical 4A design and source-binding tools remain repository-root-bound and are not claimed to run from the flattened candidate tree.",
     "An immutable 0/0-scanned core serves the explicit /eva2 route from one retained managed slot after a lossless two-database cutover; the slot identity is live state and is not claimed by this static authority, while resident acceptance remains open.",
 )
 _COCKPIT_EVIDENCE_NONCLAIMS = (

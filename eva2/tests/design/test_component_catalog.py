@@ -7,8 +7,8 @@ from pathlib import Path
 import sys
 
 
-ROOT = Path(__file__).resolve().parents[3]
-CHECKER_PATH = ROOT / "eva2/tools/check_component_catalog.py"
+EVA2_ROOT = Path(__file__).resolve().parents[2]
+CHECKER_PATH = EVA2_ROOT / "tools/check_component_catalog.py"
 SCOPE_PREFIXES = [
     "eva2/src/eva/",
     "eva2/connector_sdk/",
@@ -181,12 +181,6 @@ def _run(
 
 def _codes(violations) -> set[str]:
     return {item.code for item in violations}
-
-
-def test_repository_catalog_has_one_owner_for_every_tracked_scoped_path() -> None:
-    checker = _checker()
-
-    assert checker.check(ROOT) == []
 
 
 def test_valid_closed_fixture_passes_and_untracked_path_is_not_required(

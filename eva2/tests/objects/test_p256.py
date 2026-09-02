@@ -13,9 +13,8 @@ from eva.contracts.execution import ClientAckChallengeClaim, DeliveryReceiptV2
 from eva.contracts.ingress import DeliveryOfferV2, IngressRequest
 
 
-ROOT = Path(__file__).resolve().parents[3]
-EVA2_ROOT = ROOT / "eva2"
-ACK_KEY_PATH = ROOT / "design/fixtures/noor-client-ack-key-v1.json"
+EVA2_ROOT = Path(__file__).resolve().parents[2]
+ACK_KEY_PATH = EVA2_ROOT / "design/fixtures/noor-client-ack-key-v1.json"
 CONNECTOR_FIXTURES = (
     EVA2_ROOT / "design/vertical/noor-4d-connector-provider-fixtures-v1.json"
 )

@@ -54,13 +54,12 @@ from eva.contracts.planning import DocumentDraft
 
 
 EVA2_ROOT = Path(__file__).resolve().parents[2]
-REPOSITORY_ROOT = EVA2_ROOT.parent
 PROFILE_PATH = EVA2_ROOT / "design/vertical/noor-4d-execution-profile-v1.json"
 MODEL_PATH = EVA2_ROOT / "design/vertical/noor-4d-model-vectors-v1.json"
 CONNECTOR_PATH = (
     EVA2_ROOT / "design/vertical/noor-4d-connector-provider-fixtures-v1.json"
 )
-ACK_KEY_PATH = REPOSITORY_ROOT / "design/fixtures/noor-client-ack-key-v1.json"
+ACK_KEY_PATH = EVA2_ROOT / "design/fixtures/noor-client-ack-key-v1.json"
 CONNECTOR_SHA256 = "7655b181889d95f1140aea114be4934724931814898b4cee134151f57c2009c6"
 
 

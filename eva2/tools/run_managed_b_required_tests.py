@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Execute the exact managed-B release tests and emit one closed receipt.
 
-The current authority distinguishes 147 executable test modules from 19 bound
+The current authority distinguishes 147 executable test modules from 20 bound
 support inputs. Thirteen physically distinct disposable databases include six
 PostgreSQL execution slices inside one receipt group. Twelve databases remain
 operator inputs; the isolated browser subgate creates and removes its own
@@ -47,7 +47,7 @@ from tools.run_managed_b_browser_release_subgate import (
 RECEIPT_CONTRACT = "EvaManagedBRequiredTestsExecution/v1"
 AUTHORITY_CONTRACT = "EvaManagedBReleaseInputAuthority/v1"
 EXPECTED_EXECUTABLE_COUNT = 147
-EXPECTED_SUPPORT_COUNT = 19
+EXPECTED_SUPPORT_COUNT = 20
 EXPECTED_GROUP_COUNT = 7
 _SHA256 = re.compile(r"[0-9a-f]{64}\Z")
 _IMAGE_ID = re.compile(r"sha256:[0-9a-f]{64}\Z")
@@ -665,7 +665,10 @@ def run_required_tests(
     ):
         raise RequiredTestsError("physical browser authority argument is invalid")
     repository_root = repository_root.resolve(strict=True)
-    eva_root = repository_root / "eva2"
+    nested_eva_root = repository_root / "eva2"
+    eva_root = nested_eva_root if nested_eva_root.is_dir() else repository_root
+    if not (eva_root / "release/managed-b-release-input-authority-v1.json").is_file():
+        raise RequiredTestsError("Eva2 source root is missing its release authority")
     inputs_before = load_test_inputs(eva_root)
     runtime_receipt = runtime_validator(eva_root, runtime_wheelhouse)
     gate_receipt = gate_validator(eva_root, gate_wheelhouse)
