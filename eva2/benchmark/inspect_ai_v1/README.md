@@ -52,7 +52,7 @@ python3 -m venv "$EVAL_ROOT/venv"
 ```
 
 De lockchecker en het receipt tonen welke exacte dependencyset werkelijk is
-gebruikt. EV-002 mag pas daarna de vijf deelnemers met dezelfde taak, rechten
+gebruikt. EV-002 mag pas daarna de vier deelnemers met dezelfde taak, rechten
 en budgetten vergelijken.
 
 ## EV-002: eerst een kredietloze voorcontrole
@@ -84,3 +84,11 @@ Een ontbrekende of verkeerde bron, tag, commit of image maakt de voorcontrole
 rood vóór een modelcall. Pas een afzonderlijk beoordeelde wijziging mag de
 Inspect-run toevoegen. De vier originele logs, traces en gebruiksgegevens gaan
 dan naar het vooraf vastgelegde private artifactpad.
+
+Eva krijgt daarvoor geen tweede benchmarkruntime. De bestaande schone
+wegwerpstack accepteert nu optioneel één regulier UTF-8-promptbestand. Zij start
+met verse PostgreSQL- en Hindsight-data, laat Home Assistant-effecten uit,
+controleert het duurzame antwoord en weigert tools, meer dan twee
+modelpogingen of een overschreden tokenbudget. De stack wordt daarna volledig
+opgeruimd. Zonder promptbestand blijft de oorspronkelijke vaste releaseprobe
+ongewijzigd werken.

@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import importlib.util
 import json
 from pathlib import Path
 import subprocess
@@ -12,6 +13,16 @@ from benchmark.inspect_ai_v1 import ev002_baseline
 
 ROOT = Path(__file__).resolve().parents[3]
 PLAN = ROOT / "eva2/benchmark/inspect_ai_v1/ev002_baseline_plan.json"
+PROBE_PATH = ROOT / "eva2/experiments/managed-b-clean-graph-v1/probe.py"
+SOURCE_ROOT = ROOT / "eva2/src"
+if str(SOURCE_ROOT) not in sys.path:
+    sys.path.insert(0, str(SOURCE_ROOT))
+PROBE_SPEC = importlib.util.spec_from_file_location(
+    "ev002_clean_graph_probe", PROBE_PATH
+)
+assert PROBE_SPEC is not None and PROBE_SPEC.loader is not None
+probe = importlib.util.module_from_spec(PROBE_SPEC)
+PROBE_SPEC.loader.exec_module(probe)
 
 
 def write_changed_plan(tmp_path: Path, change) -> Path:
@@ -65,7 +76,9 @@ def test_plan_rejects_scope_or_cost_expansion(tmp_path: Path, change) -> None:
         ev002_baseline.load_plan(write_changed_plan(tmp_path, change))
 
 
-def test_preflight_only_reads_fixed_git_and_docker_state(monkeypatch, tmp_path: Path) -> None:
+def test_preflight_only_reads_fixed_git_and_docker_state(
+    monkeypatch, tmp_path: Path
+) -> None:
     plan = ev002_baseline.load_plan(PLAN)
     roots = {"openclaw": tmp_path / "openclaw", "hermes": tmp_path / "hermes"}
     for root in roots.values():
@@ -80,13 +93,17 @@ def test_preflight_only_reads_fixed_git_and_docker_state(monkeypatch, tmp_path: 
         if command[-2:] == ["rev-parse", "HEAD"]:
             participant = "openclaw" if "openclaw" in command[2] else "hermes"
             expected = next(p for p in plan["participants"] if p["id"] == participant)
-            return subprocess.CompletedProcess(command, 0, expected["sourceCommit"] + "\n", "")
+            return subprocess.CompletedProcess(
+                command, 0, expected["sourceCommit"] + "\n", ""
+            )
         if command[-2:] == ["status", "--porcelain"]:
             return subprocess.CompletedProcess(command, 0, "", "")
         if command[-4:] == ["describe", "--tags", "--exact-match", "HEAD"]:
             participant = "openclaw" if "openclaw" in command[2] else "hermes"
             expected = next(p for p in plan["participants"] if p["id"] == participant)
-            return subprocess.CompletedProcess(command, 0, expected["sourceTag"] + "\n", "")
+            return subprocess.CompletedProcess(
+                command, 0, expected["sourceTag"] + "\n", ""
+            )
         raise AssertionError(command)
 
     monkeypatch.setattr(ev002_baseline.subprocess, "run", fake_run)
@@ -119,3 +136,52 @@ def test_cli_has_no_run_mode(monkeypatch, capsys) -> None:
         ev002_baseline.main()
     assert error.value.code == 2
     assert "--run" in capsys.readouterr().err
+
+
+def test_disposable_eva_probe_accepts_one_bounded_prompt_file(tmp_path: Path) -> None:
+    prompt = tmp_path / "prompt.txt"
+    prompt.write_text(ev002_baseline.EXPECTED_TASK["stimulus"] + "\n", encoding="utf-8")
+
+    assert probe._conversation_prompt(None) == probe.DEFAULT_CONVERSATION_PROMPT
+    assert (
+        probe._conversation_prompt(prompt) == ev002_baseline.EXPECTED_TASK["stimulus"]
+    )
+
+    linked = tmp_path / "linked.txt"
+    linked.symlink_to(prompt)
+    with pytest.raises(probe.ProbeError):
+        probe._conversation_prompt(linked)
+
+
+def test_disposable_eva_probe_requires_measured_tool_free_bounded_usage() -> None:
+    reply = "Dat lijkt mij vooral een sok met gevoel voor slechte timing."
+    durable = {
+        "provider": "chatgpt-codex:gpt-5.4-mini",
+        "text": reply,
+        "model_usage": {
+            "input_tokens": 2000,
+            "measurement": "measured",
+            "model_attempts": 1,
+            "output_tokens": 40,
+            "tool_calls": 0,
+        },
+    }
+
+    assert probe._conversation_measurement(durable, expected_text=reply) == {
+        "inputTokens": 2000,
+        "measurement": "measured",
+        "modelAttempts": 1,
+        "outputTokens": 40,
+        "provider": "chatgpt-codex:gpt-5.4-mini",
+        "toolCalls": 0,
+    }
+
+    for field, value in (
+        ("tool_calls", 1),
+        ("model_attempts", 3),
+        ("input_tokens", 24001),
+    ):
+        changed = json.loads(json.dumps(durable))
+        changed["model_usage"][field] = value
+        with pytest.raises(probe.ProbeError):
+            probe._conversation_measurement(changed, expected_text=reply)

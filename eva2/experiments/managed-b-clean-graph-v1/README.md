@@ -14,6 +14,20 @@ Uitvoeren:
 sudo -n python3 experiments/managed-b-clean-graph-v1/probe.py
 ```
 
+Voor een vooraf vastgelegde, toolvrije gesprekstest kan dezelfde wegwerpstack
+één regulier UTF-8-promptbestand lezen. Het private receipt bevat prompt,
+antwoord en de duurzame modelmeting. Het weigert een toolcall, meer dan twee
+modelpogingen of meer dan 24.000 invoer- en 4.096 uitvoertokens:
+
+```bash
+sudo -n python3 experiments/managed-b-clean-graph-v1/probe.py \
+  --conversation-prompt-file /beheerd/pad/prompt.txt \
+  --receipt /beheerd/pad/receipt.json
+```
+
+Deze optie gebruikt alleen verse wegwerpdata en is geen productvergelijking op
+zichzelf; Inspect bindt en vergelijkt de deelnemers afzonderlijk.
+
 De afzonderlijke overgangsproef leest daarnaast één consistente logische
 snapshot uit de databases die de actuele `/eva2`-route werkelijk gebruikt. De
 broncontainers en bronvolumes worden vooraf exact gecontroleerd en blijven

@@ -117,10 +117,78 @@ _PRESERVED_HINDSIGHT_TABLES = {
     "public.mental_models",
     "public.observation_history",
 }
+DEFAULT_CONVERSATION_PROMPT = "Antwoord alleen met: beheerd"
+MAX_CONVERSATION_PROMPT_BYTES = 4_096
 
 
 class ProbeError(RuntimeError):
     pass
+
+
+def _conversation_prompt(path: Path | None) -> str:
+    """Read one bounded private prompt without accepting links or special files."""
+
+    if path is None:
+        return DEFAULT_CONVERSATION_PROMPT
+    metadata = os.lstat(path)
+    if (
+        not stat.S_ISREG(metadata.st_mode)
+        or stat.S_ISLNK(metadata.st_mode)
+        or not 1 <= metadata.st_size <= MAX_CONVERSATION_PROMPT_BYTES
+    ):
+        raise ProbeError("conversation prompt file is invalid")
+    try:
+        prompt = path.read_bytes().decode("utf-8").strip()
+    except UnicodeDecodeError as error:
+        raise ProbeError("conversation prompt file is not UTF-8") from error
+    if not prompt or "\x00" in prompt:
+        raise ProbeError("conversation prompt is invalid")
+    return prompt
+
+
+def _conversation_measurement(data: object, *, expected_text: str) -> dict[str, Any]:
+    """Validate the durable reply fields used by a bounded conversation probe."""
+
+    if not isinstance(data, dict) or data.get("text") != expected_text:
+        raise ProbeError("durable conversation reply differs")
+    provider = data.get("provider")
+    usage = data.get("model_usage")
+    if provider != "chatgpt-codex:gpt-5.4-mini" or not isinstance(usage, dict):
+        raise ProbeError("durable conversation provider or usage differs")
+    expected_usage_fields = {
+        "input_tokens",
+        "measurement",
+        "model_attempts",
+        "output_tokens",
+        "tool_calls",
+    }
+    if set(usage) != expected_usage_fields or usage.get("measurement") not in {
+        "measured",
+        "partial",
+    }:
+        raise ProbeError("durable conversation usage is not measured")
+    numeric = {
+        key: usage.get(key) for key in expected_usage_fields if key != "measurement"
+    }
+    if any(
+        not isinstance(value, int) or isinstance(value, bool) or value < 0
+        for value in numeric.values()
+    ):
+        raise ProbeError("durable conversation usage is invalid")
+    if not 1 <= numeric["model_attempts"] <= 2:
+        raise ProbeError("conversation exceeded its model-call budget")
+    if numeric["tool_calls"] != 0:
+        raise ProbeError("conversation used a tool in a tool-free case")
+    if numeric["input_tokens"] > 24_000 or numeric["output_tokens"] > 4_096:
+        raise ProbeError("conversation exceeded its token budget")
+    return {
+        "inputTokens": numeric["input_tokens"],
+        "measurement": usage["measurement"],
+        "modelAttempts": numeric["model_attempts"],
+        "outputTokens": numeric["output_tokens"],
+        "provider": provider,
+        "toolCalls": numeric["tool_calls"],
+    }
 
 
 def _require_runtime_library_path(config: object) -> str:
@@ -331,6 +399,47 @@ def _operational_counts(container: str, database: str | None = None) -> dict[str
             ]
         )
     return _parse_counts(output)
+
+
+def _durable_conversation_reply(
+    container: str, database: str, message_id: str
+) -> dict[str, Any]:
+    if re.fullmatch(r"managed-b-probe:[0-9a-f]{12}:1", message_id) is None:
+        raise ProbeError("conversation message ID is invalid")
+    thread_id = f"conversation:{message_id}"
+    output = _run(
+        [
+            "/usr/bin/docker",
+            "exec",
+            "-u",
+            "postgres",
+            container,
+            "/usr/bin/psql",
+            "-X",
+            "-v",
+            "ON_ERROR_STOP=1",
+            "-U",
+            "postgres",
+            "-d",
+            database,
+            "-Atc",
+            (
+                "SELECT payload->'data' FROM eva_core.operational_events "
+                f"WHERE thread_id='{thread_id}' AND event_type='REPLY_COMMITTED' "
+                "ORDER BY sequence DESC"
+            ),
+        ]
+    ).strip()
+    lines = output.splitlines()
+    if len(lines) != 1:
+        raise ProbeError("durable conversation reply count differs")
+    try:
+        data = json.loads(lines[0])
+    except json.JSONDecodeError as error:
+        raise ProbeError("durable conversation reply is invalid") from error
+    if not isinstance(data, dict):
+        raise ProbeError("durable conversation reply is invalid")
+    return data
 
 
 def _embedded_hindsight_counts(container: str) -> dict[str, int]:
@@ -854,10 +963,16 @@ def main(
     expected_source_commit: str | None = None,
     retain_slot: bool = False,
     retained_slot_number: int = 2,
+    conversation_prompt_file: Path | None = None,
     receipt_path: Path | None = None,
 ) -> int:
     if os.geteuid() != 0:
         print(json.dumps({"error": "probe requires root", "status": "failed"}))
+        return 2
+    try:
+        conversation_prompt = _conversation_prompt(conversation_prompt_file)
+    except (OSError, ProbeError) as exc:
+        print(json.dumps({"error": str(exc), "status": "failed"}, sort_keys=True))
         return 2
     local_candidate = candidate_local_image_id is not None
     local_candidate_authority: dict[str, Any] | None = None
@@ -1434,6 +1549,7 @@ def main(
             )
 
         phase = "real-model-turn"
+        message_id = f"managed-b-probe:{run_id}:1"
         turn = {
             "audience": {
                 "audience_id": "person:33333333-3333-3333-8333-333333333333",
@@ -1446,7 +1562,7 @@ def main(
                 if retain_slot
                 else "22222222-2222-2222-8222-222222222222"
             ),
-            "message_id": f"managed-b-probe:{run_id}:1",
+            "message_id": message_id,
             "occurred_at": datetime.now(UTC).strftime("%Y-%m-%dT%H:%M:%SZ"),
             "principal_id": "33333333-3333-3333-8333-333333333333",
             "tenant_id": (
@@ -1454,13 +1570,36 @@ def main(
                 if retain_slot
                 else "11111111-1111-1111-8111-111111111111"
             ),
-            "text": "Antwoord alleen met: beheerd",
+            "text": conversation_prompt,
         }
         reply = _http_json(
             f"http://127.0.0.1:{port}/internal/v1/turns/respond", payload=turn
         )
-        if reply.get("text", "").strip().casefold() != "beheerd":
+        reply_text = reply.get("text")
+        if not isinstance(reply_text, str) or not reply_text.strip():
+            raise ProbeError("real model response was empty")
+        if (
+            conversation_prompt == DEFAULT_CONVERSATION_PROMPT
+            and reply_text.strip().casefold() != "beheerd"
+        ):
             raise ProbeError("real model response was not the requested exact word")
+        operational_id = _run(
+            _compose(project, environment_file, "ps", "-q", "postgres")
+        ).strip()
+        durable_reply = _durable_conversation_reply(operational_id, "eva2", message_id)
+        measurement = _conversation_measurement(durable_reply, expected_text=reply_text)
+        result["conversationTurn"] = {
+            "messageId": message_id,
+            "prompt": conversation_prompt,
+            "promptSha256": hashlib.sha256(
+                conversation_prompt.encode("utf-8")
+            ).hexdigest(),
+            "reply": reply_text.strip(),
+            "replySha256": hashlib.sha256(
+                reply_text.strip().encode("utf-8")
+            ).hexdigest(),
+            "usage": measurement,
+        }
 
         phase = "joint-stop"
         _run(
@@ -1526,7 +1665,9 @@ def main(
                 "coreReadyBeforeRestart": True,
                 "dashboardOwnerAuthenticated": True,
                 "dashboardAnonymousRejected": True,
-                "realCodexReplyExact": True,
+                "realCodexReplyExact": (
+                    conversation_prompt == DEFAULT_CONVERSATION_PROMPT
+                ),
                 "coreReadyAfterDatabaseAndServiceRestart": True,
                 "publishedAddress": "127.0.0.1",
                 "temporaryPort": port,
@@ -1686,6 +1827,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "--retained-slot-number", type=int, choices=(2, 3, 4), default=2
     )
+    parser.add_argument("--conversation-prompt-file", type=Path)
     parser.add_argument("--receipt", type=Path, required=True)
     arguments = parser.parse_args()
     sys.exit(
@@ -1700,6 +1842,7 @@ if __name__ == "__main__":
             expected_source_commit=arguments.expected_source_commit,
             retain_slot=arguments.retain_slot,
             retained_slot_number=arguments.retained_slot_number,
+            conversation_prompt_file=arguments.conversation_prompt_file,
             receipt_path=arguments.receipt,
         )
     )
