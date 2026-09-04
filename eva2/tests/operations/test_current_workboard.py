@@ -143,12 +143,21 @@ def test_hermetic_release_recovery_precedes_required_test_execution() -> None:
     }.issubset(tasks["RR-001"]["changePaths"])
     assert "147 uitvoerbare testmodules" in " ".join(tasks["RR-001"]["evidenceRequired"])
     assert "20 supportinputs" in " ".join(tasks["RR-001"]["evidenceRequired"])
-    assert "/home/administrator/project/.eva2-artifacts/rr002-daa9022-builder-a" in " ".join(
+    assert "/home/administrator/project/.eva2-artifacts/rr002-builder-a" in " ".join(
         tasks["RR-002"]["evidenceRequired"]
     )
-    assert "/home/administrator/project/.eva2-artifacts/rr002-daa9022-builder-b" in " ".join(
+    assert "/home/administrator/project/.eva2-artifacts/rr002-builder-b" in " ".join(
         tasks["RR-002"]["evidenceRequired"]
     )
+    assert set(tasks["RR-002"]["changePaths"]) == {
+        "docs/eva-repository-inventory.generated.json",
+        "docs/eva-repository-inventory.generated.md",
+        "eva2/deploy/living-core/Dockerfile",
+        "eva2/release/managed-b-release-input-authority-v1.json",
+        "eva2/tests/operations/test_managed_b_candidate_image.py",
+        "eva2/tests/operations/test_two_builder_reproducibility.py",
+        "eva2/tools/check_two_builder_reproducibility.py",
+    }
     assert "zonder handmatige JSON-verbouwing" in " ".join(tasks["RR-002"]["doneWhen"])
     assert board["completions"]["RR-001"] == {
         "baseCommit": "ca6de2b0c0fe7bde1fdf740979ca3959c3e998ae",
@@ -366,7 +375,12 @@ def test_workboard_refuses_directory_as_change_path(tmp_path: Path) -> None:
 def test_workboard_refuses_unrelated_inventory_owner(tmp_path: Path) -> None:
     paths = _board(
         tmp_path,
-        lambda value: _next(value).update({"changePaths": ["eva2/pyproject.toml"]}),
+        lambda value: _next(value).update(
+            {
+                "changePaths": ["eva2/pyproject.toml"],
+                "inventoryOwners": ["deployment"],
+            }
+        ),
     )
     with pytest.raises(RuntimeError, match="inventory ownership differs"):
         _validate_paths(paths)

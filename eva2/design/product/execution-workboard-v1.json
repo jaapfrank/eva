@@ -1,12 +1,12 @@
 {
   "contract": "EvaExecutionWorkboard/v1",
   "schemaVersion": 1,
-  "lastUpdated": "2026-09-02",
+  "lastUpdated": "2026-09-04",
   "sequencePolicy": "done_then_one_primary_then_queued",
   "commandWorkingDirectory": "eva2",
   "inventoryPath": "docs/eva-repository-inventory.generated.json",
   "humanBoardPath": "eva2/WERKBORD.md",
-  "lockedFoundationDigest": "b9798450d7e930e7500030c808990b94e950799ef1ffcdcab5475ebaf274dd5c",
+  "lockedFoundationDigest": "8238a2e0f1689bbe343d578f8930a47ef3d3d9dae8a2e4c1650f248ad9edd2b0",
   "lockedFoundationSequence": ["GOV-001", "GOV-002", "RB-001", "RB-002", "RB-003", "RB-004", "RB-005", "RB-006", "GOV-003", "CP-000", "RR-001", "RR-002", "RR-003", "RR-004", "RB-007", "RB-008", "RB-009", "RB-010", "EV-001", "EV-002", "EV-003"],
   "activeTaskId": "RR-002",
   "maxActiveImplementationTasks": 1,
@@ -431,31 +431,40 @@
       "id": "RR-002",
       "order": 67,
       "area": "Releaseherstel",
-      "title": "Nieuwe kandidaat op twee verse bouwers maken",
-      "outcome": "RB-003 en RB-004 worden voor de nieuwe hermetische bron opnieuw uitgevoerd; oude bouwreceipts worden niet hergebruikt.",
+      "title": "Nieuwe schone kandidaat op twee verse bouwers maken",
+      "outcome": "De nieuwe verzegelde bron wordt zonder bouwafval op twee onafhankelijke lege offline bouwers gemaakt; oude bouwreceipts worden niet hergebruikt.",
       "status": "in_progress",
       "stateDetails": {"baseCommit": null, "implementationCommit": null, "evidenceCommit": null, "reviewEvidencePaths": [], "blockerReason": null},
       "ownerRole": "releaselead",
       "reviewerRole": "proofreviewer",
       "dependsOn": ["RR-001"],
-      "componentIds": ["operations-and-release-tests"],
-      "inventoryOwners": ["verification"],
+      "componentIds": ["managed-deployment", "operations-and-release-tests"],
+      "inventoryOwners": ["architecture", "deployment", "repository", "verification"],
       "changePaths": [
-        "eva2/tools/check_two_builder_reproducibility.py",
-        "eva2/tests/operations/test_two_builder_reproducibility.py"
+        "docs/eva-repository-inventory.generated.json",
+        "docs/eva-repository-inventory.generated.md",
+        "eva2/deploy/living-core/Dockerfile",
+        "eva2/release/managed-b-release-input-authority-v1.json",
+        "eva2/tests/operations/test_managed_b_candidate_image.py",
+        "eva2/tests/operations/test_two_builder_reproducibility.py",
+        "eva2/tools/check_two_builder_reproducibility.py"
       ],
       "testCommands": [
-        "TMPDIR=/tmp TEMP=/tmp TMP=/tmp pytest -q tests/operations/test_two_builder_reproducibility.py",
-        "ruff check tools/check_two_builder_reproducibility.py tests/operations/test_two_builder_reproducibility.py"
+        "TMPDIR=/tmp TEMP=/tmp TMP=/tmp pytest -q tests/operations/test_two_builder_reproducibility.py tests/operations/test_managed_b_candidate_image.py tests/operations/test_managed_b_release_inputs.py",
+        "python3 tools/check_component_catalog.py",
+        "node ../test/repository-inventory.test.js",
+        "node ../test/repository-inventory-disposition.test.js",
+        "ruff check tools/check_two_builder_reproducibility.py tests/operations/test_two_builder_reproducibility.py tests/operations/test_managed_b_candidate_image.py"
       ],
       "evidenceRequired": [
-        "Twee nieuwe private preflight-, build- en postflightketens zijn aan exact de RR-001-broncommit en release-inputauthority gebonden. Alleen /home/administrator/project/.eva2-artifacts/rr002-daa9022-builder-a en /home/administrator/project/.eva2-artifacts/rr002-daa9022-builder-b mogen ze tot en met RR-004 bewaren; na RR-004 of bij NO-GO worden de bouwstaten verwijderd en blijven alleen de expliciet gekozen bewijsartefacten over.",
+        "Twee nieuwe private preflight-, build- en postflightketens zijn aan exact de RR-002-implementatiecommit en opnieuw verzegelde release-inputauthority gebonden. Alleen /home/administrator/project/.eva2-artifacts/rr002-builder-a en /home/administrator/project/.eva2-artifacts/rr002-builder-b mogen ze tot en met RR-004 bewaren; na RR-004 of bij NO-GO worden de bouwstaten verwijderd en blijven alleen de expliciet gekozen bewijsartefacten over.",
         "De twee lege offline bouwers hebben verschillende daemon-, socket-, state-root-, namespace-, BuildKit- en uitdagingsidentiteiten; een historisch RB-003- of RB-004-receipt kan niet worden toegelaten.",
-        "De bouwoperator draait uit exact de verzegelde RR-001-broncommit. De huidige verifier meet zelf bronlabels, private bestanden, preflight, postflight, cleanup en het symmetrische A/B-admissioncontract."
+        "De bouwoperator draait uit exact de verzegelde RR-002-broncommit. De verifier bindt alle runtime-inhoud onder /opt/eva, bronmetadata, begrensde archieven, private bestanden, preflight, postflight, cleanup en het symmetrische A/B-admissioncontract."
       ],
       "doneWhen": [
         "Bouwer A en bouwer B starten leeg, gebruiken uitsluitend de verzegelde lokale OCI-bytes en produceren ieder een volledig gebonden kandidaatbewijs voor dezelfde nieuwe broncommit.",
-        "Een verkeerde commit, authority, builderidentiteit, bestaand builderobject, netwerkfallback of hergebruikt historisch bewijs stopt vóór een groen receipt.",
+        "De runtime bevat geen buildmap, wheelhouse, egg-info of ander onverwacht bestand onder /opt/eva; een afwijkende byte, eigenaar, modus of tijdstempel stopt gesloten.",
+        "Een verkeerde commit, authority, builderidentiteit, bestaand builderobject, netwerkfallback, te groot archief of hergebruikt historisch bewijs stopt vóór een groen receipt.",
         "Een herhaalbare operator meet de private netwerknamespace en builderstaat vóór en na de build, schrijft de receipts zonder handmatige JSON-verbouwing en ruimt units, sockets en tijdelijke bouwstaat aantoonbaar op.",
         "Een onafhankelijke reviewer geeft GO op beide nieuwe bouwreceipts."
       ]
