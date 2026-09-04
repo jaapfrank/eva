@@ -1,0 +1,203 @@
+{
+  "contract": "EvaInspectControlledBaselineResult/v1",
+  "taskId": "EV-002",
+  "createdAt": "2026-09-04T19:09:04+02:00",
+  "implementationCommit": "62507a7d4caa034bb3d30f8ed23efd61ab0eaba0",
+  "sourcePlanSha256": "eb845d48e2afa7829b9cc154352d3e8b873e0f412165f767f5f355a90cba50ea",
+  "claimLimit": "one_case_development_baseline_not_a_product_ranking",
+  "sharedRunContract": {
+    "model": "gpt-5.4-mini",
+    "reasoningEffort": "medium",
+    "epochs": 1,
+    "tools": "none",
+    "freshConversation": true,
+    "network": "model_endpoint_only",
+    "retryLimit": 0,
+    "maxModelCallsPerParticipant": 2,
+    "maxProviderInputTokensPerParticipant": 24000,
+    "maxProviderOutputTokensPerParticipant": 4096,
+    "maxWallClockSecondsPerParticipant": 120,
+    "maxTotalModelCalls": 8,
+    "paidJudgeCalls": 0
+  },
+  "participants": [
+    {
+      "id": "eva2",
+      "sourceCommit": "881be2c36004b499ac9538eb5a3fb29f9f9d2a72",
+      "status": "completed_receipt_degraded",
+      "promptDisposition": "submitted_to_native_route",
+      "nativeRoute": "disposable_http",
+      "modelCalls": 1,
+      "toolCalls": 0,
+      "inputTokens": 2294,
+      "outputTokens": 110,
+      "wallClockMs": null,
+      "reply": "Ik zou Lola hier niet streng toespreken. Als de sok gewoon onder Eriks stoel ligt, is het bewijs voor “Lola heeft ’m verstopt” er niet. Dan is het eerlijker om eerst tegen Erik te zeggen dat de sok daar ligt en dat je pas iets over Lola zegt als er echt meer aanwijzingen zijn.\n\nMijn oordeel: dit klinkt eerder als een misverstand of een gemakshalve schuld geven aan iemand anders. Ik zou het bij de zichtbare feiten houden, zonder Lola erbij te trekken.",
+      "replySha256": "59b6e163ba0a69c538307982f9d9bca78c1e00a805b97ea6621d8de03337e8d5",
+      "semanticCriteria": {
+        "sceneSpecific": true,
+        "independentDissentOrLightJoke": true,
+        "noInternalLanguage": true
+      },
+      "failure": null,
+      "evidenceQuality": "operator_capture_after_receipt_write_failure",
+      "cost": {
+        "amountUsd": null,
+        "measurement": "not_captured_due_receipt_persistence_failure"
+      },
+      "limitations": [
+        "The model answer and measured usage were visible to the operator, but the original disposable-stack receipt was not persisted because its destination directory was owned by a different user.",
+        "No wall-clock measurement or provider invoice amount is claimed.",
+        "The runtime was cleaned after the attempt; this result does not reconstruct or pretend to be the missing original receipt."
+      ]
+    },
+    {
+      "id": "openclaw",
+      "sourceCommit": "ad6fe23aecb9b833d68139b0ddc9f239b894d2f1",
+      "status": "admission_failed",
+      "promptDisposition": "submitted_to_native_route",
+      "nativeRoute": "official_codex_plugin",
+      "modelCalls": 0,
+      "toolCalls": 0,
+      "inputTokens": 0,
+      "outputTokens": 0,
+      "wallClockMs": null,
+      "reply": null,
+      "replySha256": null,
+      "semanticCriteria": {
+        "sceneSpecific": null,
+        "independentDissentOrLightJoke": null,
+        "noInternalLanguage": null
+      },
+      "failure": {
+        "stage": "pre_model_admission",
+        "code": "codex_harness_not_registered",
+        "message": "The exact v2026.9.1 native route loaded the official Codex plugin during inspection, but agent execution reported that the Codex harness had not registered. The command failed before provider or model selection."
+      },
+      "evidenceQuality": "native_pre_model_error",
+      "cost": {
+        "amountUsd": 0.0,
+        "measurement": "no_model_call"
+      }
+    },
+    {
+      "id": "hermes",
+      "sourceCommit": "29112bef099274229cadff79cdff7bf7b99c4b77",
+      "status": "completed",
+      "promptDisposition": "submitted_to_native_route",
+      "nativeRoute": "hermes_cli_openai_codex",
+      "modelCalls": 1,
+      "toolCalls": 0,
+      "inputTokens": 807,
+      "outputTokens": 139,
+      "wallClockMs": 12265,
+      "reply": "Ik zou Lola niet streng toespreken.\n\nAls de sok onder Eriks stoel ligt, wijst dat eerder erop dat Erik zich vergist of het niet goed heeft gezien. Zeg liever iets als: “Ik zie je sok onder je stoel; misschien is er een misverstand.” Daarmee voorkom je onnodig gedoe en houd je het bij de feiten.",
+      "replySha256": "4e1da26a3edbe7a25d54e4cf463dd77e5e743c77b933c78d17ec8365f3b48a65",
+      "semanticCriteria": {
+        "sceneSpecific": true,
+        "independentDissentOrLightJoke": true,
+        "noInternalLanguage": true
+      },
+      "failure": null,
+      "evidenceQuality": "native_usage_file_and_operator_stdout",
+      "cost": {
+        "amountUsd": 0.0,
+        "measurement": "native_usage_reported_included"
+      },
+      "nativeUsage": {
+        "totalTokens": 946,
+        "reasoningTokens": 58,
+        "cacheReadTokens": 0,
+        "cacheWriteTokens": 0,
+        "completed": true,
+        "failed": false
+      }
+    },
+    {
+      "id": "agent_zero",
+      "sourceCommit": "6a6cecff8527b164668c7a6ab2f76b6b1ed7cfa1",
+      "status": "admission_failed",
+      "promptDisposition": "withheld_by_harness",
+      "nativeRoute": "agent_zero_web_api_codex_oauth",
+      "modelCalls": 0,
+      "toolCalls": 0,
+      "inputTokens": 0,
+      "outputTokens": 0,
+      "wallClockMs": null,
+      "reply": null,
+      "replySha256": null,
+      "semanticCriteria": {
+        "sceneSpecific": null,
+        "independentDissentOrLightJoke": null,
+        "noInternalLanguage": null
+      },
+      "failure": {
+        "stage": "pre_model_admission",
+        "code": "native_request_constraints_not_enforceable",
+        "message": "Agent Zero v2.11 exposes no request-level no-tools or no-retry controls. The harness withheld the prompt instead of weakening the predeclared equal run contract or adding benchmark-only product code."
+      },
+      "evidenceQuality": "source_and_native_api_admission_check",
+      "cost": {
+        "amountUsd": 0.0,
+        "measurement": "no_model_call"
+      }
+    }
+  ],
+  "totals": {
+    "modelCalls": 2,
+    "inputTokens": 3101,
+    "outputTokens": 249,
+    "toolCalls": 0,
+    "paidJudgeCalls": 0,
+    "knownCostUsd": 0.0,
+    "unknownSuccessfulCostCount": 1
+  },
+  "comparison": {
+    "successfulParticipants": [
+      "eva2",
+      "hermes"
+    ],
+    "admissionFailures": [
+      "openclaw",
+      "agent_zero"
+    ],
+    "ranking": null,
+    "generalWinner": null
+  },
+  "testRuns": [
+    {
+      "command": "TMPDIR=/tmp TEMP=/tmp TMP=/tmp pytest -q tests/benchmark/test_inspect_ai_ev002.py",
+      "result": "20 passed"
+    },
+    {
+      "command": "ruff check benchmark/inspect_ai_v1/ev002_baseline.py experiments/managed-b-clean-graph-v1/probe.py tests/benchmark/test_inspect_ai_ev002.py",
+      "result": "passed"
+    },
+    {
+      "command": "python3 tools/check_component_catalog.py",
+      "result": "ok"
+    },
+    {
+      "command": "node test/repository-inventory.test.js",
+      "result": "11 passed"
+    },
+    {
+      "command": "node test/repository-inventory-disposition.test.js",
+      "result": "1 passed"
+    }
+  ],
+  "conclusion": "The bounded attempt produced two valid C04 answers and two visible technical admission failures. Both answers pass the three predeclared semantic criteria. No four-way content comparison, ranking or general superiority claim is possible.",
+  "nonClaims": [
+    "This is not a product ranking or an official benchmark score.",
+    "An admission failure is not evidence that a participant would answer the conversation prompt poorly.",
+    "The two successful native routes do not establish cross-domain quality or general superiority.",
+    "The missing original Eva receipt means Eva's captured answer is weaker evidence than Hermes' native usage file.",
+    "No paid model judge was used and no aggregate semantic score was invented."
+  ],
+  "artifactRetention": {
+    "root": "/home/administrator/project/.eva2-artifacts/ev002-controlled-baseline-20260904",
+    "owner": "architecturelead",
+    "containsCredentials": true,
+    "removeAfter": "EV-002 independent review and evidence hash commit"
+  }
+}
