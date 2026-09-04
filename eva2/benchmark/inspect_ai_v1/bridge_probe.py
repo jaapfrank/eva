@@ -9,6 +9,7 @@ import importlib.metadata
 import json
 from pathlib import Path
 import re
+import subprocess
 import sys
 import tomllib
 from typing import Any
@@ -25,6 +26,11 @@ DEFAULT_SANDBOX_IMAGE = (
     "sha256:09f7da3bc104798d0afb40bc08d23ab2da20a76130cec1f2ef170848f5d85217"
 )
 LOCK_PATH = Path(__file__).with_name("pylock.toml")
+REPO_ROOT = Path(__file__).resolve().parents[3]
+EXPECTED_PYTHON = "==3.12.*"
+EXPECTED_ENVIRONMENTS = [
+    "sys_platform == 'linux' and platform_machine == 'x86_64'"
+]
 EXPECTED_COMPLETION = "Default output from mockllm/model"
 PYTHON_SAMPLE = "python-agent-bridge"
 SANDBOX_SAMPLE = "sandbox-cli-agent-bridge"
@@ -52,6 +58,10 @@ def verify_lock(path: Path = LOCK_PATH) -> dict[str, Any]:
     document = tomllib.loads(path.read_text(encoding="utf-8"))
     if document.get("lock-version") != "1.0":
         raise RuntimeError("Inspect lock must use PEP 751 lock-version 1.0")
+    if document.get("requires-python") != EXPECTED_PYTHON:
+        raise RuntimeError("Inspect lock Python version differs")
+    if document.get("environments") != EXPECTED_ENVIRONMENTS:
+        raise RuntimeError("Inspect lock platform environment differs")
     packages = document.get("packages")
     if not isinstance(packages, list) or not packages:
         raise RuntimeError("Inspect lock has no packages")
@@ -94,7 +104,24 @@ def verify_lock(path: Path = LOCK_PATH) -> dict[str, Any]:
         "packageCount": len(locked),
         "inspectVersion": INSPECT_VERSION,
         "openaiVersion": OPENAI_VERSION,
+        "python": EXPECTED_PYTHON,
+        "environment": EXPECTED_ENVIRONMENTS[0],
     }
+
+
+def current_source_commit(root: Path = REPO_ROOT) -> str:
+    """Return the exact checked-out commit used to execute the probe."""
+    result = subprocess.run(
+        ["git", "rev-parse", "HEAD"],
+        cwd=root,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    commit = result.stdout.strip()
+    if GIT_COMMIT.fullmatch(commit) is None:
+        raise RuntimeError("Probe source checkout has no exact Git commit")
+    return commit
 
 
 def _verify_runtime() -> None:
@@ -246,6 +273,8 @@ def run_probe(
     lock = verify_lock()
     if GIT_COMMIT.fullmatch(source_commit) is None:
         raise RuntimeError("Probe requires an exact lowercase Git source commit")
+    if source_commit != current_source_commit():
+        raise RuntimeError("Probe source commit does not match the current checkout")
     if output_dir.exists() and any(output_dir.iterdir()):
         raise RuntimeError("Probe output directory must be absent or empty")
     output_dir.mkdir(parents=True, exist_ok=True)

@@ -3,8 +3,8 @@
 Deze map is alleen voor eerlijke productvergelijkingen. Zij wordt niet in
 Eva's runtime-image geïnstalleerd en voegt geen productfunctionaliteit toe.
 
-`pylock.toml` legt voor Linux/amd64 en Python 3.12 exact één wheel en SHA-256
-per evaluatiedependency vast. Inspect AI `0.3.263` blijft uitsluitend een
+`pylock.toml` legt met PEP 751-velden voor Linux/amd64 en exact Python 3.12
+één wheel en SHA-256 per evaluatiedependency vast. Inspect AI `0.3.263` blijft uitsluitend een
 evaluatiedependency. De officiële OpenAI-SDK `3.6.0` zit al in Eva's runtime;
 de eval-lock pint hem opnieuw om de echte adaptercompatibiliteit te bewijzen.
 Een volgende release wordt eerst opnieuw gelockt en door dezelfde probe gehaald.
@@ -17,7 +17,9 @@ Een volgende release wordt eerst opnieuw gelockt en door dezelfde probe gehaald.
 
 Daarna leest de probe het oorspronkelijke `.eval`-log, scoort een kopie opnieuw
 en controleert dat de SHA-256 van het origineel niet veranderde. Er worden geen
-betaalde modelcalls uitgevoerd.
+betaalde modelcalls uitgevoerd. De opgegeven `--source-commit` moet bovendien
+gelijk zijn aan `git rev-parse HEAD`; een willekeurige geldige hash wordt
+geweigerd voordat een resultaatmap wordt gemaakt.
 
 De dependencycontrole kan in de gewone ontwikkelomgeving draaien:
 

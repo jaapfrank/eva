@@ -31,25 +31,25 @@ review en Eva's eigen provider-readback nodig. Grote of gevoelige logs gaan
 niet onbeheerd in Git: de evalkaart legt hash, eigenaar, afgeschermd
 retentiepad en opruimmoment vooraf vast.
 
-De invoering is bewust in drie kleine stappen gesplitst:
+De invoering is bewust in twee kleine stappen gesplitst:
 
 1. `EV-001` lockt Inspect buiten de runtime en bewijst de werkelijk benodigde
    `agent_bridge()`- en `sandbox_agent_bridge()`-routes plus een echte
    log-schrijf/lees/her-scorecyclus. Deze kaart beslist de definitieve keuze.
 2. `EV-002` voert dezelfde Inspect-taak uit met Eva, OpenClaw, Hermes, Agent
-   Zero en een vooraf geselecteerde relevante open-sourcekandidaat.
-3. `EV-003` maakt daarna pas een dunne werkbordpoort voor de reeks nulmeting,
-   implementatie en nameting. De algemene werkbordchecker krijgt geen eigen
-   scorer of tweede benchmarkformaat.
+   Zero en een vooraf geselecteerde relevante open-sourcekandidaat. Daarna
+   gebruikt iedere functionele kaart dezelfde nulmeting/nameting-cadans; er
+   komt geen aparte benchmarkchecker, scorer of tweede resultaatformaat bij.
 
 Het bestaande `ComparableAgentRun/v1`-schema en zijn Python-validator zijn per
 2 september 2026 **afgekeurd voor ieder nieuw resultaat**. Ze mogen niet door
-`EV-001`, `EV-002` of `EV-003` worden gelezen en hun eigen `officialScore`
+`EV-001` of `EV-002` worden gelezen en hun eigen `officialScore`
 telt nergens meer als bewijs. De bestanden staan historisch nog buiten Eva2's
-canonieke schrijfboom; `OS-001` verwijdert ze nadat die oude repositorygrens
-controleerbaar is losgemaakt. Tot die tijd voert de oude release-regressie de
-validator nog wel uit, maar geen nieuwe uitvoerkaart mag hem als veranderpad of
-testcommando gebruiken. Een algemene release-receipt mag straks de SHA-256 van
+canonieke schrijfboom en blijven niet-uitvoerbare geschiedenis. Een functionele
+kaart die hun eigenaarspad later raakt, registreert dan ook de verwijdering; er
+staat geen aparte opruimwachtrij vóór productwerk. Geen nieuwe uitvoerkaart mag
+de validator als veranderpad of testcommando gebruiken. Een algemene
+release-receipt mag straks de SHA-256 van
 een ongewijzigde `.eval`-log en provenance noemen, maar geen Inspect-score
 dupliceren of opnieuw uitrekenen.
 
@@ -145,8 +145,9 @@ testantwoorden worden niet opgeslagen in Eva's runtime of ontwikkelcontext.
 - [ ] CB01 — Vervangen door de Inspect-route. Het oude
   `ComparableAgentRun/v1`-schema en zijn validator zijn niet meer toelaatbaar
   voor nieuwe resultaten, omdat zij scores en metriek naast de echte runnerlog
-  dupliceerden. Fysieke verwijdering volgt onder `OS-001`; geldig nieuw bewijs
-  begint pas bij `EV-001` met een ongewijzigde Inspect-log.
+  dupliceerden. Zij blijven niet-uitvoerbare geschiedenis totdat een passende
+  functionele kaart hun eigenaarspad raakt; geldig nieuw bewijs begint pas bij
+  `EV-001` met een ongewijzigde Inspect-log.
 - [ ] CB02 — Dunne Eva-adapters voor de officiële runnerinterfaces; geen
   taaknamen, antwoorden of evaluatieregels in Eva's prompts of productcode.
   De GAIA-developmentadapter is hiervoor als eerste deel gereed:
