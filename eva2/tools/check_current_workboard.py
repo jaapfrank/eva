@@ -31,15 +31,16 @@ ARTIFACT_RETENTION_RULE = (
 )
 RULES = [
     "Afgeronde uitvoerkaarten staan eerst, daarna exact één primaire kaart, daarna alleen wachtrijkaarten.",
-    "Alleen de primaire kaart en de direct volgende kaart zijn uitvoerbaar; latere wensen blijven mijlpalen.",
+    "Alleen de primaire uitvoerkaart is nu uitvoerbaar; na afronding wordt precies één volgende productmijlpaal eerst tot een kleine kaart uitgewerkt.",
     "Een kaart noemt exacte bestanden, eigenaren en echte testcommando's.",
     "Een bouwer keurt zijn eigen taak niet goed; klaar vereist bewijs en onafhankelijke GO.",
     "Paden blijven in eva2 (of de twee gegenereerde inventory-uitgangen); tijdelijke data gaat via mktemp naar /tmp.",
     ARTIFACT_RETENTION_RULE,
     "Releaseherstel wordt compact met zijn evidence- en reviewreferenties afgesloten; "
     "daarna volgt productwerk volgens de vastgelegde meetcadans.",
-    "Productcadans: nulmeting → maintained upstream kiezen → bouwen/hergebruiken → gerichte test → echte gebruikersproef → dezelfde nameting → zware releasepoort.",
-    "Iedere functionele kaart werkt ook haar bestandsinventaris bij, verwijdert vervangen code en consolideert dubbele adapters; daarvoor bestaat geen aparte opruimwachtrij.",
+    "Productcadans: kleine nulmeting → maintained upstream kiezen → bouwen/hergebruiken → gerichte functietest → passende praktijkproef → dezelfde nameting; pas een complete installatiekandidaat doorloopt de zware releasepoort.",
+    "Een functionele kaart verwijdert alleen de code die zij binnen haar vooraf genoemde paden werkelijk vervangt; breder opruimwerk mag de gebruikersfunctie niet opslokken.",
+    "A/B betekent alleen veilig installeren: het werkende slot blijft actief terwijl de complete kandidaat in het reserveslot wordt gecontroleerd; kleine ontwikkelwijzigingen krijgen geen A/B-cyclus.",
 ]
 RETIRED_BENCHMARK_MARKERS = (
     "comparable-agent-run-v1.schema.json",

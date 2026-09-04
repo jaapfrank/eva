@@ -10,33 +10,33 @@ de volgende begint.
 
 | Volgorde | Kaart | Resultaat | Status |
 |---:|---|---|---|
-| 110 | `CO-001` — Telegramantwoord live laten meegroeien | Een privéantwoord verschijnt via de gewone Telegramroute tijdens het denken en eindigt exact als Eva's duurzame antwoord; de bestaande kernstream wordt hergebruikt zonder tweede gesprekroute. | 🟡 BEZIG |
+| 110 | `CO-001` — Telegram toont Eva's antwoordvorming live | Een privéchat toont meteen Telegrams officiële tijdelijke Thinking-draft. Alleen modeltekst uit een reeds veilige, toolvrije eindfase groeit live; daarna blijft exact één bestaand duurzaam eindantwoord staan, zonder tweede modelcall. | 🟡 BEZIG |
 
 ### Exact werk voor `CO-001`
 
 - `docs/eva-repository-inventory.generated.json`
 - `docs/eva-repository-inventory.generated.md`
 - `eva2/src/eva/adapters/api/app.py`
-- `eva2/src/eva/adapters/api/dashboard_conversation.py`
 - `eva2/src/eva/adapters/connectors/telegram.py`
-- `eva2/src/eva/adapters/postgres/telegram_ingress.py`
+- `eva2/src/eva/application/conversation.py`
 - `eva2/src/eva/application/telegram_ingress.py`
+- `eva2/src/eva/bootstrap/telegram_ingress.py`
 - `eva2/tests/api/test_memory_api.py`
+- `eva2/tests/application/test_conversation.py`
 - `eva2/tests/application/test_telegram_ingress.py`
 - `eva2/tests/connectors/test_telegram.py`
-- `eva2/tests/postgres/test_operational_timeline.py`
 
 Klaar betekent:
 
-- Een toegelaten privéturn toont veilige modeltekst stapsgewijs en eindigt met exact de al duurzaam vastgelegde finale tekst en hash.
-- Groepsberichten, lokale commando's en toolfasen lekken geen gedeeltelijke modeltekst; lange tekst, floodcontrol en providerfouten stoppen begrensd.
-- Een crash of onduidelijke provideracceptatie veroorzaakt geen tweede sendMessage of blinde mutatie; hervatten gebruikt alleen een duurzaam bekende Telegram-message-ID.
-- Bestaande finale levering en privacytests blijven groen en een onafhankelijke reviewer geeft GO.
+- Een toegelaten privéturn toont vóór het kernantwoord een tijdelijke Thinking-draft; veilige toolvrije modeltekst kan binnen Telegrams 4096-karaktergrens begrensd meegroeien.
+- Een direct antwoord met beschikbare tools, groepsbericht of lokaal commando lekt geen gedeeltelijke modeltekst en doet geen tweede modelcall.
+- De bestaande duurzame finale sendMessage blijft de enige blijvende levering; drafts zijn best-effort, verlopen vanzelf en voegen geen crash- of replaystaat toe.
+- Gerichte functie-, privacy-, limiet- en fouttests blijven groen en een onafhankelijke reviewer geeft GO.
 
 Echte controles:
 
-- `TMPDIR=/tmp TEMP=/tmp TMP=/tmp pytest -q tests/api/test_memory_api.py tests/application/test_telegram_ingress.py tests/connectors/test_telegram.py tests/postgres/test_operational_timeline.py`
-- `ruff check src/eva/adapters/api/app.py src/eva/adapters/api/dashboard_conversation.py src/eva/adapters/connectors/telegram.py src/eva/adapters/postgres/telegram_ingress.py src/eva/application/telegram_ingress.py tests/api/test_memory_api.py tests/application/test_telegram_ingress.py tests/connectors/test_telegram.py tests/postgres/test_operational_timeline.py`
+- `TMPDIR=/tmp TEMP=/tmp TMP=/tmp pytest -q tests/api/test_memory_api.py tests/application/test_conversation.py tests/application/test_telegram_ingress.py tests/connectors/test_telegram.py`
+- `ruff check src/eva/adapters/api/app.py src/eva/adapters/connectors/telegram.py src/eva/application/conversation.py src/eva/application/telegram_ingress.py src/eva/bootstrap/telegram_ingress.py tests/api/test_memory_api.py tests/application/test_conversation.py tests/application/test_telegram_ingress.py tests/connectors/test_telegram.py`
 - `python3 tools/check_component_catalog.py`
 
 ## Daarna
@@ -77,14 +77,15 @@ nadat zij als eerstvolgende kleine kaart exacte bestanden en tests heeft.
 ## Vaste regels
 
 - Afgeronde uitvoerkaarten staan eerst, daarna exact één primaire kaart, daarna alleen wachtrijkaarten.
-- Alleen de primaire kaart en de direct volgende kaart zijn uitvoerbaar; latere wensen blijven mijlpalen.
+- Alleen de primaire uitvoerkaart is nu uitvoerbaar; na afronding wordt precies één volgende productmijlpaal eerst tot een kleine kaart uitgewerkt.
 - Een kaart noemt exacte bestanden, eigenaren en echte testcommando's.
 - Een bouwer keurt zijn eigen taak niet goed; klaar vereist bewijs en onafhankelijke GO.
 - Paden blijven in eva2 (of de twee gegenereerde inventory-uitgangen); tijdelijke data gaat via mktemp naar /tmp.
 - /home/administrator/project/.eva2-artifacts is alleen een beheerd artifactarchief en vereist een expliciete kaart met eigenaar, doel, exact retentiepad en opruimmoment.
 - Releaseherstel wordt compact met zijn evidence- en reviewreferenties afgesloten; daarna volgt productwerk volgens de vastgelegde meetcadans.
-- Productcadans: nulmeting → maintained upstream kiezen → bouwen/hergebruiken → gerichte test → echte gebruikersproef → dezelfde nameting → zware releasepoort.
-- Iedere functionele kaart werkt ook haar bestandsinventaris bij, verwijdert vervangen code en consolideert dubbele adapters; daarvoor bestaat geen aparte opruimwachtrij.
+- Productcadans: kleine nulmeting → maintained upstream kiezen → bouwen/hergebruiken → gerichte functietest → passende praktijkproef → dezelfde nameting; pas een complete installatiekandidaat doorloopt de zware releasepoort.
+- Een functionele kaart verwijdert alleen de code die zij binnen haar vooraf genoemde paden werkelijk vervangt; breder opruimwerk mag de gebruikersfunctie niet opslokken.
+- A/B betekent alleen veilig installeren: het werkende slot blijft actief terwijl de complete kandidaat in het reserveslot wordt gecontroleerd; kleine ontwikkelwijzigingen krijgen geen A/B-cyclus.
 
 Machineleesbare bron:
 [`design/product/execution-workboard-v1.json`](design/product/execution-workboard-v1.json).

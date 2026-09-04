@@ -49,8 +49,10 @@ def test_product_cadence_and_release_phase_are_explicit() -> None:
     milestones = {card["id"]: card for card in board["milestones"]}
     execution = {card["id"]: card for card in board["executionTasks"]}
     assert execution["CO-001"]["order"] == 110
+    assert "sendMessageDraft" in " ".join(execution["CO-001"]["evidenceRequired"])
     assert not any(card_id.startswith("OS-") for card_id in milestones)
-    assert "geen aparte opruimwachtrij" in rules
+    assert "werkende slot blijft actief" in rules
+    assert "kleine ontwikkelwijzigingen krijgen geen A/B-cyclus" in rules
     assert [milestones[f"RB-00{i}"]["order"] for i in range(7, 10)] + [milestones["RB-010"]["order"]] == [400, 410, 420, 430]
     assert "reserveslot" in milestones["RB-010"]["outcome"]
     assert "route" in milestones["RB-010"]["outcome"]
