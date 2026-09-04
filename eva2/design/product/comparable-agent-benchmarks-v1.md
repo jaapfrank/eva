@@ -36,10 +36,13 @@ De invoering is bewust in twee kleine stappen gesplitst:
 1. `EV-001` lockt Inspect buiten de runtime en bewijst de werkelijk benodigde
    `agent_bridge()`- en `sandbox_agent_bridge()`-routes plus een echte
    log-schrijf/lees/her-scorecyclus. Deze kaart beslist de definitieve keuze.
-2. `EV-002` voert dezelfde Inspect-taak uit met Eva, OpenClaw, Hermes, Agent
-   Zero en een vooraf geselecteerde relevante open-sourcekandidaat. Daarna
-   gebruikt iedere functionele kaart dezelfde nulmeting/nameting-cadans; er
-   komt geen aparte benchmarkchecker, scorer of tweede resultaatformaat bij.
+2. `EV-002` voert eerst één kleine gespreksnulmeting uit met Eva en precies de
+   drie concurrenten uit het eigenaarsdoel: OpenClaw, Hermes en Agent Zero.
+   OpenBot blijft een browser-/dashboardreferentie totdat een reproduceerbare
+   lokale startroute bestaat; een ontbrekende deelnemer krijgt geen verzonnen
+   uitslag. Daarna gebruikt iedere functionele kaart dezelfde gerichte
+   nulmeting/nameting-cadans en groeit de vergelijking per domein. Er komt geen
+   aparte benchmarkchecker, scorer of tweede resultaatformaat bij.
 
 Het bestaande `ComparableAgentRun/v1`-schema en zijn Python-validator zijn per
 2 september 2026 **afgekeurd voor ieder nieuw resultaat**. Ze mogen niet door
@@ -96,9 +99,9 @@ AgentBench-, GAIA- of OSWorldscore worden gepresenteerd.
 | **Officieel/native** | Hoe scoort iedere agent met zijn openbaar beschreven standaardopstelling? | Exact dezelfde benchmarkrelease, split en officiële scorer; model, tools en budget mogen verschillen maar staan zichtbaar bij de score |
 | **Gecontroleerd/framework** | Welk agentframework presteert beter wanneer de belangrijkste externe variabelen gelijk zijn? | Zelfde modelrevision, provider, reasoning/temperatuur, contextgrens, tool- en stapbudget, VM/browserimage, hardwareklasse, netwerkbeleid en benchmarkrelease |
 
-Eva wordt in de gecontroleerde matrix minimaal naast OpenClaw, Hermes, Agent
-Zero en OpenBot gezet. Andere open-source agents worden toegevoegd wanneer hun
-bron, licentie en benchmarkadapter reproduceerbaar zijn. Een native score mag
+Eva wordt in de eerste gecontroleerde nulmeting naast OpenClaw, Hermes en Agent
+Zero gezet. OpenBot en andere open-source agents worden toegevoegd in het
+domein waarin hun bron, licentie en benchmarkadapter reproduceerbaar zijn. Een native score mag
 niet als frameworksnelheid of frameworkkwaliteit worden uitgelegd wanneer een
 ander model, budget of computerimage is gebruikt.
 

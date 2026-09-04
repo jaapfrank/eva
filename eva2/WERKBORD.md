@@ -10,26 +10,29 @@ de volgende begint.
 
 | Volgorde | Kaart | Resultaat | Status |
 |---:|---|---|---|
-| 106 | `EV-002` — Kleine vijfweg-nulmeting uitvoeren | Eva en vier actuele open-sourceconcurrenten krijgen één begrensde, gelijke cross-domainopdracht; dit is de nulmeting voor het eerstvolgende productwerk. | 🟡 BEZIG |
+| 106 | `EV-002` — Kleine vierweg-gespreksnulmeting uitvoeren | Eva, OpenClaw, Hermes en Agent Zero krijgen één begrensde, gelijke gesprekssituatie; dit is alleen de nulmeting voor het eerstvolgende gesprekwerk. | 🟡 BEZIG |
 
 ### Exact werk voor `EV-002`
 
-- `eva2/benchmark/inspect_ai_v1/pylock.toml`
-- `eva2/benchmark/inspect_ai_v1/bridge_probe.py`
+- `docs/eva-repository-inventory.generated.json`
+- `docs/eva-repository-inventory.generated.md`
 - `eva2/benchmark/inspect_ai_v1/README.md`
-- `eva2/tests/benchmark/test_inspect_ai_ev001.py`
+- `eva2/benchmark/inspect_ai_v1/ev002_baseline.py`
+- `eva2/benchmark/inspect_ai_v1/ev002_baseline_plan.json`
+- `eva2/tests/benchmark/test_inspect_ai_ev002.py`
 - `eva2/design/product/comparable-agent-benchmarks-v1.md`
 
 Klaar betekent:
 
-- Alle vijf deelnemers kregen exact dezelfde begrensde opdracht of een uitval is eerlijk zichtbaar.
+- Eva, OpenClaw, Hermes en Agent Zero kregen exact dezelfde begrensde opdracht of een uitval is eerlijk zichtbaar.
 - Resultaat, kosten en beperkingen zijn vastgelegd zonder zelfbedachte totaalscore.
 - Een onafhankelijke reviewer geeft GO.
 
 Echte controles:
 
-- `pytest -q tests/benchmark/test_inspect_ai_ev001.py`
-- `ruff check benchmark/inspect_ai_v1/bridge_probe.py tests/benchmark/test_inspect_ai_ev001.py`
+- `pytest -q tests/benchmark/test_inspect_ai_ev002.py`
+- `ruff check benchmark/inspect_ai_v1/ev002_baseline.py tests/benchmark/test_inspect_ai_ev002.py`
+- `python3 tools/check_component_catalog.py`
 
 ## Daarna
 

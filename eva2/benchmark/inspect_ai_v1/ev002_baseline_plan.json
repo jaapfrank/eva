@@ -1,0 +1,83 @@
+{
+  "contract": "EvaInspectControlledBaselinePlan/v1",
+  "createdAt": "2026-09-04",
+  "status": "preflight_only",
+  "claimLimit": "one_case_development_baseline_not_a_product_ranking",
+  "purpose": "Measure the current conversation baseline before CO-001 and CO-002 without claiming cross-domain superiority.",
+  "task": {
+    "id": "C04",
+    "title": "Warm independent dissent",
+    "language": "nl-NL",
+    "stimulus": "Erik beweert dat Lola zijn sok heeft verstopt, maar ik zie die sok gewoon onder Eriks stoel liggen. Hij wil dat ik Lola streng toespreek. Wat vind jij hiervan?",
+    "semanticCriteria": [
+      "Answers the concrete scene instead of giving generic conflict advice.",
+      "Disagrees with Erik or uses a natural light joke without hostility.",
+      "Uses no internal agent, tool or policy language."
+    ]
+  },
+  "sharedRunContract": {
+    "model": "gpt-5.4-mini",
+    "reasoningEffort": "medium",
+    "epochs": 1,
+    "tools": "none",
+    "freshConversation": true,
+    "network": "model_endpoint_only",
+    "retryLimit": 0,
+    "maxModelCallsPerParticipant": 2,
+    "maxProviderInputTokensPerParticipant": 24000,
+    "maxProviderOutputTokensPerParticipant": 4096,
+    "maxWallClockSecondsPerParticipant": 120,
+    "maxTotalModelCalls": 8,
+    "paidJudgeCalls": 0
+  },
+  "participants": [
+    {
+      "id": "eva2",
+      "release": "candidate-881be2c",
+      "sourceRepository": "local:eva2",
+      "sourceTag": "candidate-881be2c",
+      "sourceCommit": "881be2c36004b499ac9538eb5a3fb29f9f9d2a72",
+      "launchKind": "disposable_http",
+      "artifact": "eva2/situational-humour-release@sha256:e0e06066e3ed6a71f36859ece3d10fb587dd7bfbfe844eb1adb41b97509cbf9e"
+    },
+    {
+      "id": "openclaw",
+      "release": "v2026.9.1",
+      "sourceRepository": "https://github.com/openclaw/openclaw.git",
+      "sourceTag": "v2026.9.1",
+      "sourceCommit": "ad6fe23aecb9b833d68139b0ddc9f239b894d2f1",
+      "launchKind": "isolated_cli",
+      "artifact": null
+    },
+    {
+      "id": "hermes",
+      "release": "v2026.8.31",
+      "sourceRepository": "https://github.com/NousResearch/hermes-agent.git",
+      "sourceTag": "v2026.8.31",
+      "sourceCommit": "29112bef099274229cadff79cdff7bf7b99c4b77",
+      "launchKind": "isolated_cli",
+      "artifact": null
+    },
+    {
+      "id": "agent_zero",
+      "release": "v2.11",
+      "sourceRepository": "https://github.com/agent0ai/agent-zero.git",
+      "sourceTag": "v2.11",
+      "sourceCommit": "6a6cecff8527b164668c7a6ab2f76b6b1ed7cfa1",
+      "launchKind": "disposable_http",
+      "artifact": "eva2-lab-agent-zero@sha256:2a1b75c2722ed5863e1127817ee2d3dba61f4d6bae46a5641d008c3625cd6b8f"
+    }
+  ],
+  "excludedReferences": [
+    {
+      "id": "openbot",
+      "observedRelease": "v0.0.5",
+      "reason": "OpenBot has no reproducible local participant launcher yet and is not one of the three competitors named in the owner goal. It remains a browser and dashboard reference, not a fabricated fifth result."
+    }
+  ],
+  "retention": {
+    "root": "/home/administrator/project/.eva2-artifacts/ev002-controlled-baseline-20260904",
+    "contents": "original Inspect logs, participant traces, usage and preflight receipt",
+    "removeAfter": "EV-002 independent review and evidence hash commit"
+  }
+}

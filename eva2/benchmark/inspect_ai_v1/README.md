@@ -54,3 +54,33 @@ python3 -m venv "$EVAL_ROOT/venv"
 De lockchecker en het receipt tonen welke exacte dependencyset werkelijk is
 gebruikt. EV-002 mag pas daarna de vijf deelnemers met dezelfde taak, rechten
 en budgetten vergelijken.
+
+## EV-002: eerst een kredietloze voorcontrole
+
+`ev002_baseline_plan.json` beperkt de eerste actuele nulmeting tot Eva en de
+drie concurrenten die de eigenaar expliciet heeft genoemd: OpenClaw, Hermes en
+Agent Zero. OpenBot blijft een nuttige browser- en dashboardreferentie, maar
+krijgt geen verzonnen vijfde resultaat zolang er geen reproduceerbare lokale
+startroute is.
+
+De eerste nulmeting herhaalt uitsluitend gesprekssituatie C04. Zij is de
+baseline voor de eerstvolgende gesprekkaarten, niet het bewijs van brede
+cross-domainwinst. Iedere deelnemer krijgt één verse conversatie, hetzelfde
+model en reasoningniveau, geen tools, geen retry en maximaal twee modelcalls.
+Daarmee zijn hoogstens acht deelnemercalls mogelijk; er is geen betaalde
+modeljury.
+
+`ev002_baseline.py` heeft bewust nog geen uitvoermodus. Het kan alleen het plan
+controleren en bestaande lokale Git-/Dockerbytes bekijken:
+
+```bash
+python3 benchmark/inspect_ai_v1/ev002_baseline.py --check-plan
+python3 benchmark/inspect_ai_v1/ev002_baseline.py --preflight \
+  --source-root openclaw=/pad/naar/openclaw \
+  --source-root hermes=/pad/naar/hermes
+```
+
+Een ontbrekende of verkeerde bron, tag, commit of image maakt de voorcontrole
+rood vóór een modelcall. Pas een afzonderlijk beoordeelde wijziging mag de
+Inspect-run toevoegen. De vier originele logs, traces en gebruiksgegevens gaan
+dan naar het vooraf vastgelegde private artifactpad.
