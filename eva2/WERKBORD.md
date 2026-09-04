@@ -10,34 +10,26 @@ de volgende begint.
 
 | Volgorde | Kaart | Resultaat | Status |
 |---:|---|---|---|
-| 110 | `CO-001` — Telegram toont Eva's antwoordvorming live | Een privéchat toont meteen Telegrams officiële tijdelijke Thinking-draft. Alleen modeltekst uit een reeds veilige, toolvrije eindfase groeit live; daarna blijft exact één bestaand duurzaam eindantwoord staan, zonder tweede modelcall. | 🟡 BEZIG |
+| 120 | `CO-002` — Configureerbare menselijke identiteit aanscherpen | Eva spreekt in gewone gezinssituaties herkenbaar warm, zelfstandig en natuurlijk vanuit haar ondertekende identiteit; bij verdriet of gevaar blijft zij juist rustig en zonder geforceerde humor. | 🟡 BEZIG |
 
-### Exact werk voor `CO-001`
+### Exact werk voor `CO-002`
 
 - `docs/eva-repository-inventory.generated.json`
 - `docs/eva-repository-inventory.generated.md`
-- `eva2/src/eva/adapters/api/app.py`
-- `eva2/src/eva/adapters/connectors/telegram.py`
-- `eva2/src/eva/application/conversation.py`
-- `eva2/src/eva/application/telegram_ingress.py`
-- `eva2/src/eva/bootstrap/telegram_ingress.py`
-- `eva2/tests/api/test_memory_api.py`
-- `eva2/tests/application/test_conversation.py`
-- `eva2/tests/application/test_telegram_ingress.py`
-- `eva2/tests/connectors/test_telegram.py`
-- `eva2/tests/operations/test_telegram_ingress_wiring.py`
+- `eva2/src/eva/adapters/model/pydantic_conversation.py`
+- `eva2/tests/model/test_conversation_model.py`
 
 Klaar betekent:
 
-- Een toegelaten privéturn toont vóór het kernantwoord een tijdelijke Thinking-draft; veilige toolvrije modeltekst kan binnen Telegrams 4096-karaktergrens begrensd meegroeien.
-- Een direct antwoord met beschikbare tools, groepsbericht of lokaal commando lekt geen gedeeltelijke modeltekst en doet geen tweede modelcall.
-- De bestaande duurzame finale sendMessage blijft de enige blijvende levering; drafts zijn best-effort, verlopen vanzelf en voegen geen crash- of replaystaat toe.
-- Gerichte functie-, privacy-, limiet- en fouttests blijven groen en een onafhankelijke reviewer geeft GO.
+- Naam, temperament, stem en humor komen uit het configureerbare IdentityPack; de generieke modeladapter legt geen vaste Eva-naam of antwoordcatchphrase op.
+- De verandering voegt geen dependency toe en verwijdert of vervangt minstens evenveel identiteitsinstructie als zij toevoegt; promptgroei geldt niet als verbetering.
+- De twee begrensde nametingen halen alle vooraf vastgelegde gedragscriteria zonder veiligheids-, eerlijkheids- of taalregressie; bij geen aantoonbare winst wordt de productwijziging niet behouden.
+- Gerichte tests, componentcontrole en een onafhankelijke reviewer geven GO.
 
 Echte controles:
 
-- `TMPDIR=/tmp TEMP=/tmp TMP=/tmp pytest -q tests/api/test_memory_api.py tests/application/test_conversation.py tests/application/test_telegram_ingress.py tests/connectors/test_telegram.py tests/operations/test_telegram_ingress_wiring.py`
-- `ruff check src/eva/adapters/api/app.py src/eva/adapters/connectors/telegram.py src/eva/application/conversation.py src/eva/application/telegram_ingress.py src/eva/bootstrap/telegram_ingress.py tests/api/test_memory_api.py tests/application/test_conversation.py tests/application/test_telegram_ingress.py tests/connectors/test_telegram.py tests/operations/test_telegram_ingress_wiring.py`
+- `TMPDIR=/tmp TEMP=/tmp TMP=/tmp pytest -q tests/model/test_conversation_model.py tests/contract/test_contract_invariants.py`
+- `ruff check src/eva/adapters/model/pydantic_conversation.py tests/model/test_conversation_model.py`
 - `python3 tools/check_component_catalog.py`
 
 ## Daarna
@@ -47,7 +39,6 @@ nadat zij als eerstvolgende kleine kaart exacte bestanden en tests heeft.
 
 | Nr. | Onderdeel | Begrijpelijk eindresultaat |
 |---:|---|---|
-| 120 | `CO-002` — Menselijke identiteit bewijzen | Eva blijft warm, geestig en zelfstandig herkenbaar. |
 | 130 | `CO-003` — Persoonsbeheer afmaken | Mensen blijven privé en kunnen geheugen zien, corrigeren en wissen. |
 | 140 | `TL-001` — Algemene toolontdekking afmaken | De best onderhouden generieke model- en toolloop laadt providers via configuratie of MCP. Pydantic AI wint die plek alleen bij gemeten voordeel; eigen wrappers en oude modelpaden verdwijnen in dezelfde kaart. |
 | 150 | `TL-002` — Actie en readback generaliseren | Twee echte providers gebruiken dezelfde precies-eenmaalroute. |

@@ -16,7 +16,7 @@
       "retiredFoundationDigest": "df8bacedc1b93ea952d5e4fd0f161039f1faa91b72b6d22f71b0c020e73c7b90"
     }
   },
-  "activeTaskId": "CO-001",
+  "activeTaskId": "CO-002",
   "maxActiveImplementationTasks": 1,
   "statusValues": ["queued", "in_progress", "review", "done", "blocked"],
   "rules": [
@@ -503,17 +503,27 @@
     {
       "id": "CO-001", "order": 110, "area": "Gesprek", "title": "Telegram toont Eva's antwoordvorming live",
       "outcome": "Een privéchat toont meteen Telegrams officiële tijdelijke Thinking-draft. Alleen modeltekst uit een reeds veilige, toolvrije eindfase groeit live; daarna blijft exact één bestaand duurzaam eindantwoord staan, zonder tweede modelcall.",
-      "status": "in_progress", "stateDetails": {"baseCommit": null, "implementationCommit": null, "evidenceCommit": null, "reviewEvidencePaths": [], "blockerReason": null},
+      "status": "done", "stateDetails": {"baseCommit": "ff9ff89aa0f102543d217138a5f96fe91c2d6c4a", "implementationCommit": "7b330a3c7ba4e00fa97b5fcd18d3e127ffcf4df7", "evidenceCommit": "aae9229c29c8fef6f3576ed6ef4b4a242b1a32f9", "reviewEvidencePaths": ["eva2/evidence/product/CO-001-telegram-live-drafts-contract-2026-09-04.json"], "blockerReason": null},
       "ownerRole": "architecturelead", "reviewerRole": "proofreviewer", "dependsOn": ["EV-002"],
       "componentIds": ["api-and-runtime-composition", "core-behavior-tests", "core-semantics", "external-capability-adapters", "integration-and-storage-tests", "operations-and-release-tests"], "inventoryOwners": ["architecture", "eva-runtime", "verification"],
       "changePaths": ["docs/eva-repository-inventory.generated.json", "docs/eva-repository-inventory.generated.md", "eva2/src/eva/adapters/api/app.py", "eva2/src/eva/adapters/connectors/telegram.py", "eva2/src/eva/application/conversation.py", "eva2/src/eva/application/telegram_ingress.py", "eva2/src/eva/bootstrap/telegram_ingress.py", "eva2/tests/api/test_memory_api.py", "eva2/tests/application/test_conversation.py", "eva2/tests/application/test_telegram_ingress.py", "eva2/tests/connectors/test_telegram.py", "eva2/tests/operations/test_telegram_ingress_wiring.py"],
       "testCommands": ["TMPDIR=/tmp TEMP=/tmp TMP=/tmp pytest -q tests/api/test_memory_api.py tests/application/test_conversation.py tests/application/test_telegram_ingress.py tests/connectors/test_telegram.py tests/operations/test_telegram_ingress_wiring.py", "ruff check src/eva/adapters/api/app.py src/eva/adapters/connectors/telegram.py src/eva/application/conversation.py src/eva/application/telegram_ingress.py src/eva/bootstrap/telegram_ingress.py tests/api/test_memory_api.py tests/application/test_conversation.py tests/application/test_telegram_ingress.py tests/connectors/test_telegram.py tests/operations/test_telegram_ingress_wiring.py", "python3 tools/check_component_catalog.py"],
       "evidenceRequired": ["De actuele officiële Telegram-Bot-API levert sendMessageDraft speciaal voor tijdelijke AI-streaming; Eva breidt haar bestaande kleine stdlib-adapter uit en bouwt geen eigen edit- of deliveryledger.", "Een lokale Telegram-contractprovider bewaart de volgorde Thinking-draft, begrensde veilige tekst-drafts en de bestaande finale sendMessage. Een draftfout verandert de duurzame eindlevering niet.", "De echte kernstroom toont aan dat directe antwoorden met beschikbare tools geen achteraf verzonnen tekststream geven en dat alleen een toolvrije eindfase modeldelta's publiceert."],
       "doneWhen": ["Een toegelaten privéturn toont vóór het kernantwoord een tijdelijke Thinking-draft; veilige toolvrije modeltekst kan binnen Telegrams 4096-karaktergrens begrensd meegroeien.", "Een direct antwoord met beschikbare tools, groepsbericht of lokaal commando lekt geen gedeeltelijke modeltekst en doet geen tweede modelcall.", "De bestaande duurzame finale sendMessage blijft de enige blijvende levering; drafts zijn best-effort, verlopen vanzelf en voegen geen crash- of replaystaat toe.", "Gerichte functie-, privacy-, limiet- en fouttests blijven groen en een onafhankelijke reviewer geeft GO."]
+    },
+    {
+      "id": "CO-002", "order": 120, "area": "Gesprek", "title": "Configureerbare menselijke identiteit aanscherpen",
+      "outcome": "Eva spreekt in gewone gezinssituaties herkenbaar warm, zelfstandig en natuurlijk vanuit haar ondertekende identiteit; bij verdriet of gevaar blijft zij juist rustig en zonder geforceerde humor.",
+      "status": "in_progress", "stateDetails": {"baseCommit": null, "implementationCommit": null, "evidenceCommit": null, "reviewEvidencePaths": [], "blockerReason": null},
+      "ownerRole": "architecturelead", "reviewerRole": "proofreviewer", "dependsOn": ["CO-001"],
+      "componentIds": ["conversation-model-adapter", "core-behavior-tests"], "inventoryOwners": ["architecture", "eva-runtime", "verification"],
+      "changePaths": ["docs/eva-repository-inventory.generated.json", "docs/eva-repository-inventory.generated.md", "eva2/src/eva/adapters/model/pydantic_conversation.py", "eva2/tests/model/test_conversation_model.py"],
+      "testCommands": ["TMPDIR=/tmp TEMP=/tmp TMP=/tmp pytest -q tests/model/test_conversation_model.py tests/contract/test_contract_invariants.py", "ruff check src/eva/adapters/model/pydantic_conversation.py tests/model/test_conversation_model.py", "python3 tools/check_component_catalog.py"],
+      "evidenceRequired": ["De bestaande EV-002-uitvoer blijft de voorafgaande nulmeting; maximaal twee nieuwe toolvrije modelcalls meten dezelfde oneerlijke gezinssituatie en één verdriet- of gevaarsituatie na de wijziging.", "Een blinde menselijke beoordeling controleert concreet eigen oordeel, warmte, natuurlijke hedendaagse taal, hoogstens één situatiegebonden droge grap en juist geen humor wanneer dat ongepast is.", "De dependency-audit kiest geen nieuw personaframework: geen onderhouden kandidaat vervangt aantoonbaar Eva's ondertekende IdentityPack en persoonsgebonden grenzen; Pydantic AI blijft alleen de generieke modelloop."],
+      "doneWhen": ["Naam, temperament, stem en humor komen uit het configureerbare IdentityPack; de generieke modeladapter legt geen vaste Eva-naam of antwoordcatchphrase op.", "De verandering voegt geen dependency toe en verwijdert of vervangt minstens evenveel identiteitsinstructie als zij toevoegt; promptgroei geldt niet als verbetering.", "De twee begrensde nametingen halen alle vooraf vastgelegde gedragscriteria zonder veiligheids-, eerlijkheids- of taalregressie; bij geen aantoonbare winst wordt de productwijziging niet behouden.", "Gerichte tests, componentcontrole en een onafhankelijke reviewer geven GO."]
     }
   ],
   "milestones": [
-    {"id": "CO-002", "order": 120, "area": "Gesprek", "title": "Menselijke identiteit bewijzen", "outcome": "Eva blijft warm, geestig en zelfstandig herkenbaar."},
     {"id": "CO-003", "order": 130, "area": "Mensen en geheugen", "title": "Persoonsbeheer afmaken", "outcome": "Mensen blijven privé en kunnen geheugen zien, corrigeren en wissen."},
     {"id": "TL-001", "order": 140, "area": "Gereedschappen", "title": "Algemene toolontdekking afmaken", "outcome": "De best onderhouden generieke model- en toolloop laadt providers via configuratie of MCP. Pydantic AI wint die plek alleen bij gemeten voordeel; eigen wrappers en oude modelpaden verdwijnen in dezelfde kaart."},
     {"id": "TL-002", "order": 150, "area": "Gereedschappen", "title": "Actie en readback generaliseren", "outcome": "Twee echte providers gebruiken dezelfde precies-eenmaalroute."},
@@ -542,6 +552,17 @@
     {"id": "RB-010", "order": 430, "area": "Release-eindfase", "title": "Actief en reserveslot beheren", "outcome": "Alleen groen werk gaat naar het reserveslot; controleer het daarna en wissel de route. Bij problemen blijft het huidige slot actief."}
   ],
   "completions": {
+    "CO-001": {
+      "baseCommit": "ff9ff89aa0f102543d217138a5f96fe91c2d6c4a",
+      "commit": "7b330a3c7ba4e00fa97b5fcd18d3e127ffcf4df7",
+      "decision": "GO",
+      "evidenceCommit": "aae9229c29c8fef6f3576ed6ef4b4a242b1a32f9",
+      "evidencePaths": ["eva2/reviews/CO-001-telegram-live-drafts-proof-review-7b330a3.md"],
+      "implementedBy": "/root",
+      "reviewCommit": "7589665fbf60c8175d5443703ca7be6e1b61e942",
+      "reviewedBy": "/root/proof_review",
+      "testReceiptPaths": ["eva2/evidence/product/CO-001-telegram-live-drafts-contract-2026-09-04.json"]
+    },
     "EV-002": {
       "baseCommit": "b3c119849d277abb744030de41af54b4209c423d",
       "commit": "62507a7d4caa034bb3d30f8ed23efd61ab0eaba0",

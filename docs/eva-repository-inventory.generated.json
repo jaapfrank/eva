@@ -269,9 +269,9 @@
     }
   ],
   "summary": {
-    "files": 2062,
-    "present": 2062,
-    "tracked": 1983,
+    "files": 2064,
+    "present": 2064,
+    "tracked": 1985,
     "untracked": 79,
     "tombstones": 0,
     "policyErrors": 88
@@ -310,12 +310,12 @@
     {
       "id": "eva2-verification",
       "role": "verification",
-      "matchCount": 750
+      "matchCount": 751
     },
     {
       "id": "eva2-documentation",
       "role": "documentation",
-      "matchCount": 120
+      "matchCount": 121
     },
     {
       "id": "eva2-deployment",
@@ -10270,7 +10270,7 @@
       "path": "docs/eva-repository-inventory.generated.json",
       "gitState": "tracked",
       "present": true,
-      "bytes": 2383949,
+      "bytes": 2385892,
       "contentSha256": "32591e23fa2eb53a038d95e726ba09edd0405306f38c5283a36a2b6d3010254d",
       "hashMode": "canonical-self-reference-redacted",
       "role": "generated",
@@ -10303,7 +10303,7 @@
       "path": "docs/eva-repository-inventory.generated.md",
       "gitState": "tracked",
       "present": true,
-      "bytes": 368160,
+      "bytes": 368450,
       "contentSha256": "2f4f8486464cbb9713b749dc898f265093d0853699f1da1b4eb3dd1625c1b2d2",
       "hashMode": "canonical-self-reference-redacted",
       "role": "generated",
@@ -11248,8 +11248,8 @@
       "path": "eva2/WERKBORD.md",
       "gitState": "tracked",
       "present": true,
-      "bytes": 8011,
-      "contentSha256": "f8f61d1bd220da1b50fdffde1388234d3f062c321ff2ec0c2d9b3021402f1c8b",
+      "bytes": 7111,
+      "contentSha256": "c5e581ffefe43d544000523b9ab2f03053d6750fa7a5c00b045d130b4258a0e6",
       "hashMode": "exact-bytes",
       "role": "documentation",
       "roleRuleId": "eva2-documentation",
@@ -13467,8 +13467,8 @@
       "path": "eva2/design/product/execution-workboard-v1.json",
       "gitState": "tracked",
       "present": true,
-      "bytes": 53406,
-      "contentSha256": "9550da528870f795b2ce9c3bd17793bf81835c7f4fa39786ce1f5687b7264e2f",
+      "bytes": 56545,
+      "contentSha256": "a867bbc8316cb6b43cba2b173f4668499f603e2eb8a3a99d9fd33777e323f738",
       "hashMode": "exact-bytes",
       "role": "documentation",
       "roleRuleId": "eva2-documentation",
@@ -25138,6 +25138,41 @@
         "includedInTrackedRelease": false,
         "runtimeCritical": true,
         "status": "blocked-untracked"
+      }
+    },
+    {
+      "path": "eva2/evidence/product/CO-001-telegram-live-drafts-contract-2026-09-04.json",
+      "gitState": "tracked",
+      "present": true,
+      "bytes": 4389,
+      "contentSha256": "c3690974739f1b9874fad2de0d166bc32166dd1259a51d50d1c3be3a5946bd7f",
+      "hashMode": "exact-bytes",
+      "role": "verification",
+      "roleRuleId": "eva2-verification",
+      "matchingRuleIds": [
+        "eva2-verification"
+      ],
+      "owner": "verification",
+      "inputs": [
+        "production or fixture contract"
+      ],
+      "outputs": [
+        "test decision"
+      ],
+      "state": [
+        "temporary isolated test state"
+      ],
+      "effects": [
+        "may execute only inside its declared gate"
+      ],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": true,
+        "runtimeCritical": true,
+        "status": "included-tracked-critical"
       }
     },
     {
@@ -37175,6 +37210,37 @@
       "present": true,
       "bytes": 2297,
       "contentSha256": "512b5326230e64ec13c2423877d2d47e758380d0c07c7eddd4912b24127cbfc6",
+      "hashMode": "exact-bytes",
+      "role": "documentation",
+      "roleRuleId": "eva2-documentation",
+      "matchingRuleIds": [
+        "eva2-documentation"
+      ],
+      "owner": "documentation",
+      "inputs": [
+        "design and evidence"
+      ],
+      "outputs": [
+        "human-readable contract"
+      ],
+      "state": [],
+      "effects": [],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": true,
+        "runtimeCritical": false,
+        "status": "included-tracked-noncritical"
+      }
+    },
+    {
+      "path": "eva2/reviews/CO-001-telegram-live-drafts-proof-review-7b330a3.md",
+      "gitState": "tracked",
+      "present": true,
+      "bytes": 1813,
+      "contentSha256": "7d42d275611b57eacb3848e39ee2e46adadaebf87d925a737420676b30d211c4",
       "hashMode": "exact-bytes",
       "role": "documentation",
       "roleRuleId": "eva2-documentation",
@@ -59108,8 +59174,8 @@
       "path": "eva2/tests/operations/test_current_workboard.py",
       "gitState": "tracked",
       "present": true,
-      "bytes": 4248,
-      "contentSha256": "db14537226215c3900288cdbf40411f593e3c2db9768733b779ff85ab59b6e9c",
+      "bytes": 4294,
+      "contentSha256": "f15612d1360c2af1453e4cc0eb6fa4bf4c95bbdaec124b7490969c4f6200dbfa",
       "hashMode": "exact-bytes",
       "role": "verification",
       "roleRuleId": "eva2-verification",
@@ -83194,5 +83260,5 @@
       }
     }
   ],
-  "sourceDigest": "f829479a9fa00c7bfd1457e9001a8ec91e13c56e5e64be6de6ee7b57241c03d2"
+  "sourceDigest": "2cc4120dd96ecec157026c315234ace3398059ecefdbb9399a7c949c4f665734"
 }

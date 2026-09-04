@@ -30,9 +30,10 @@ def copy_board(tmp_path: Path, change, *, sync_human: bool = True) -> tuple[Path
 
 def test_board_has_one_small_active_card_and_direct_next() -> None:
     board = json.loads(BOARD.read_text(encoding="utf-8"))
-    assert validate(ROOT, BOARD, CATALOG, HUMAN)["activeTaskId"] == "CO-001"
+    result = validate(ROOT, BOARD, CATALOG, HUMAN)
+    assert result["activeTaskId"] == board["activeTaskId"]
     open_cards = [card for card in board["executionTasks"] if card["status"] != "done"]
-    assert [card["id"] for card in open_cards] == ["CO-001"]
+    assert [card["id"] for card in open_cards] == [board["activeTaskId"]]
     assert board["audit"]["releaseRecovery"]["evidence"].endswith(
         "RR-002-RR-004-release-recovery-2026-09-04.json"
     )
