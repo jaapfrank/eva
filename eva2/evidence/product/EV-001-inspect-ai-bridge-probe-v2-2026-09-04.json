@@ -1,0 +1,90 @@
+{
+  "contract": "EvaInspectBridgeEvidence/v2",
+  "taskId": "EV-001",
+  "status": "passed",
+  "implementationCommit": "0f126633a429b03ca83786203d08289d67368521",
+  "recordedAt": "2026-09-04T17:56:12+02:00",
+  "evaluationRuntime": {
+    "inspectAi": "0.3.263",
+    "openaiSdk": "3.6.0",
+    "python": "==3.12.*",
+    "environment": "sys_platform == 'linux' and platform_machine == 'x86_64'",
+    "packageCount": 86,
+    "lockSha256": "2826d5d25d138b81add376819b6ca73f27caba2df02ff74bd8e80c0a3fef5f5e"
+  },
+  "sourceBinding": {
+    "commit": "0f126633a429b03ca83786203d08289d67368521",
+    "tree": "964c571fc32350ff86cacfa450c6ce6965ad2fcb",
+    "files": {
+      "eva2/benchmark/inspect_ai_v1/bridge_probe.py": "9d657d92a0535f1a315dba45b47354a2895836d4781cc95265c25122d78ecda6",
+      "eva2/benchmark/inspect_ai_v1/pylock.toml": "2826d5d25d138b81add376819b6ca73f27caba2df02ff74bd8e80c0a3fef5f5e"
+    },
+    "dirtyTrackedSourceAccepted": false
+  },
+  "physicalProbe": {
+    "artifactPath": "/home/administrator/project/.eva2-artifacts/ev001-inspect-bridge-20260904",
+    "receiptSha256": "1478a7f358ef1e0f9f4d248767d0840995bd600d73d6a4b256854985a6aded4e",
+    "bridges": [
+      "python-agent-bridge",
+      "sandbox-cli-agent-bridge"
+    ],
+    "sandboxImage": "eva2/pc03-python@sha256:09f7da3bc104798d0afb40bc08d23ab2da20a76130cec1f2ef170848f5d85217",
+    "sandboxNetworkMode": "none",
+    "sandboxPullPolicy": "never",
+    "model": "mockllm/model",
+    "paidModelCalls": 0,
+    "accuracy": 1.0,
+    "originalLogSha256BeforeAndAfterRescore": "f2efba8c01bfba0a31499e0a22fe3618b22d54a6db32f0b452ec3bb24c590937",
+    "rescoredLogSha256": "1568c70e8fea26f5cce0c2e5f5fe8a0204abdb25f143a86c3b5a7526518fe0f3"
+  },
+  "dockerReadback": {
+    "objectKinds": [
+      "containers",
+      "networks",
+      "volumes"
+    ],
+    "beforeSha256": "f0c6e671712caaf5e84fc44356ad46009291bf9186267b57a45affc860960442",
+    "afterSha256": "f0c6e671712caaf5e84fc44356ad46009291bf9186267b57a45affc860960442",
+    "beforeCounts": {
+      "containers": 219,
+      "networks": 15,
+      "volumes": 185
+    },
+    "afterCounts": {
+      "containers": 219,
+      "networks": 15,
+      "volumes": 185
+    },
+    "added": {
+      "containers": [],
+      "networks": [],
+      "volumes": []
+    },
+    "removed": {
+      "containers": [],
+      "networks": [],
+      "volumes": []
+    },
+    "residualAddedCount": 0
+  },
+  "checks": [
+    {
+      "command": "pytest -q tests/benchmark/test_inspect_ai_ev001.py",
+      "result": "13 passed"
+    },
+    {
+      "command": "ruff check benchmark/inspect_ai_v1/bridge_probe.py tests/benchmark/test_inspect_ai_ev001.py",
+      "result": "passed"
+    }
+  ],
+  "artifactRetention": {
+    "owner": "architecturelead",
+    "purpose": "Inputbewijs voor de begrensde EV-002-nulmeting",
+    "removeAfter": "EV-002 is onafhankelijk beoordeeld"
+  },
+  "nonClaims": [
+    "EV-001 heeft geen echte deelnemer of betaald model vergeleken.",
+    "EV-001 bewijst geen concurrentiewinst en voegt geen Eva-productfunctie toe.",
+    "EV-001 heeft niets naar de live Eva-route uitgerold."
+  ]
+}

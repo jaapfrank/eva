@@ -1,8 +1,10 @@
 {
   "contract": "EvaInspectBridgeEvidence/v1",
   "taskId": "EV-001",
-  "status": "passed",
+  "status": "superseded",
   "implementationCommit": "03e73907bc03962ff51a6b40bfb72daf6756e601",
+  "supersededByImplementationCommit": "0f126633a429b03ca83786203d08289d67368521",
+  "supersessionReason": "De eerste probe bond geen dirty-checkoutdetectie of Docker-voor/nameting in het private receipt.",
   "recordedAt": "2026-09-04T17:49:21+02:00",
   "evaluationRuntime": {
     "inspectAi": "0.3.263",
@@ -26,7 +28,7 @@
     "accuracy": 1.0,
     "originalLogSha256BeforeAndAfterRescore": "b8576066fd1484947b111f9c4c185ff73a6d307e56d72fa53524cbbdcf9272a0",
     "rescoredLogSha256": "93fe9a8b47ffe2ca7fd742992bf887b099b0d929a2df862ded4dfdf12e477dd9",
-    "residualDockerObjects": 0
+    "residualDockerObjects": "unmeasured"
   },
   "checks": [
     {
