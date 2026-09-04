@@ -185,3 +185,16 @@ def test_disposable_eva_probe_requires_measured_tool_free_bounded_usage() -> Non
         changed["model_usage"][field] = value
         with pytest.raises(probe.ProbeError):
             probe._conversation_measurement(changed, expected_text=reply)
+
+
+def test_disposable_eva_probe_rejects_unsafe_receipt_parent_before_work(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch, capsys
+) -> None:
+    receipt_parent = tmp_path / "not-owned"
+    receipt_parent.mkdir(mode=0o700)
+    receipt = receipt_parent / "receipt.json"
+    monkeypatch.setattr(probe.os, "geteuid", lambda: 0)
+
+    assert probe.main(receipt_path=receipt) == 2
+    assert not receipt.exists()
+    assert "parent must be private and owned" in capsys.readouterr().out

@@ -11248,8 +11248,8 @@
       "path": "eva2/WERKBORD.md",
       "gitState": "tracked",
       "present": true,
-      "bytes": 6753,
-      "contentSha256": "c2154882f37abaa404be8e8b16331c1ab805d55e1d730733a90c07ead3154a3b",
+      "bytes": 6910,
+      "contentSha256": "683078a87420cdd0050b10e14c812c0e07c4eccc165837d438272ed98050e346",
       "hashMode": "exact-bytes",
       "role": "documentation",
       "roleRuleId": "eva2-documentation",
@@ -31479,8 +31479,8 @@
       "path": "eva2/experiments/managed-b-clean-graph-v1/probe.py",
       "gitState": "tracked",
       "present": true,
-      "bytes": 70710,
-      "contentSha256": "0e3590d78e8f8ea4547b8fe665ac6ed17eb012dab5864192eca81ce55cda34b8",
+      "bytes": 71494,
+      "contentSha256": "0af659cc7cbcd923c0b94ff109b7282b2f6808cb51d56eb50afb034af067f9f0",
       "hashMode": "exact-bytes",
       "role": "experimental",
       "roleRuleId": "eva2-experimental",
@@ -55612,8 +55612,8 @@
       "path": "eva2/tests/benchmark/test_inspect_ai_ev002.py",
       "gitState": "tracked",
       "present": true,
-      "bytes": 7014,
-      "contentSha256": "e037e9eb5cad08aa7116e1803caa568e9a73c7afbbae7055a110ad10bbfd7b2c",
+      "bytes": 7498,
+      "contentSha256": "21a04f69dbfd4c9948f25ada0e1fc3fb196dbc580308fcca9240025bc7cc4a45",
       "hashMode": "exact-bytes",
       "role": "verification",
       "roleRuleId": "eva2-verification",
@@ -83128,5 +83128,5 @@
       }
     }
   ],
-  "sourceDigest": "dd44acad2437559dc0980978824e5a86694e2dd1b73584b5c7450a520a5e40e2"
+  "sourceDigest": "a81435f498a3e4150a9a197fdf8fe4e1368629811a31802516d865d67afe1ab9"
 }

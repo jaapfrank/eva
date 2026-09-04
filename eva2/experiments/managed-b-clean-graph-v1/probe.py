@@ -953,6 +953,23 @@ def _write_new_private_receipt(path: Path, value: object) -> None:
         raise ProbeError(str(error)) from error
 
 
+def _validate_receipt_destination(path: Path) -> None:
+    if not path.is_absolute() or path.exists() or path.is_symlink():
+        raise ProbeError("clean-graph probe receipt must be one new absolute file")
+    try:
+        parent = path.parent.resolve(strict=True)
+        metadata = parent.stat()
+    except OSError as error:
+        raise ProbeError("clean-graph probe receipt parent is inaccessible") from error
+    if (
+        parent != path.parent
+        or not stat.S_ISDIR(metadata.st_mode)
+        or metadata.st_uid != os.geteuid()
+        or stat.S_IMODE(metadata.st_mode) & 0o077
+    ):
+        raise ProbeError("clean-graph probe receipt parent must be private and owned")
+
+
 def main(
     *,
     clone_current_route: bool = False,
@@ -970,6 +987,8 @@ def main(
         print(json.dumps({"error": "probe requires root", "status": "failed"}))
         return 2
     try:
+        if receipt_path is not None:
+            _validate_receipt_destination(receipt_path)
         conversation_prompt = _conversation_prompt(conversation_prompt_file)
     except (OSError, ProbeError) as exc:
         print(json.dumps({"error": str(exc), "status": "failed"}, sort_keys=True))

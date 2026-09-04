@@ -3,7 +3,7 @@
 Deze kaart is mechanisch gegenereerd. Zij staat naast de semantische runtimegraaf en
 classificeert ieder gevolgd, verwijderd of niet-genegeerd nieuw repositorypad.
 
-Schema: `EvaRepositoryInventory/v1`. Brondigest: `dd44acad2437559dc0980978824e5a86694e2dd1b73584b5c7450a520a5e40e2`.
+Schema: `EvaRepositoryInventory/v1`. Brondigest: `a81435f498a3e4150a9a197fdf8fe4e1368629811a31802516d865d67afe1ab9`.
 
 ## Samenvatting
 
@@ -266,7 +266,7 @@ Schema: `EvaRepositoryInventory/v1`. Brondigest: `dd44acad2437559dc0980978824e5a
 | `eva2/TEAM_WERKWIJZE.md` | tracked | documentation | included-tracked-noncritical | keep | 9391 |
 | `eva2/TECHNISCHE_MOGELIJKHEDEN_EN_GATEN.md` | tracked | documentation | included-tracked-noncritical | keep | 20072 |
 | `eva2/TECHNISCHE_PRODUCTGATES.md` | tracked | documentation | included-tracked-noncritical | keep | 65630 |
-| `eva2/WERKBORD.md` | tracked | documentation | included-tracked-noncritical | keep | 6753 |
+| `eva2/WERKBORD.md` | tracked | documentation | included-tracked-noncritical | keep | 6910 |
 | `eva2/alembic.ini` | tracked | repository-config | included-tracked-critical | keep | 595 |
 | `eva2/benchmark/inspect_ai_v1/README.md` | tracked | experimental | included-tracked-noncritical | keep | 4520 |
 | `eva2/benchmark/inspect_ai_v1/bridge_probe.py` | tracked | experimental | included-tracked-noncritical | keep | 17418 |
@@ -847,7 +847,7 @@ Schema: `EvaRepositoryInventory/v1`. Brondigest: `dd44acad2437559dc0980978824e5a
 | `eva2/experiments/home-assistant-official-mcp-v1/live_probe.py` | tracked | experimental | included-tracked-noncritical | keep | 8937 |
 | `eva2/experiments/home-assistant-official-mcp-v1/test_candidate.py` | tracked | experimental | included-tracked-noncritical | keep | 10455 |
 | `eva2/experiments/managed-b-clean-graph-v1/README.md` | tracked | experimental | included-tracked-noncritical | keep | 2840 |
-| `eva2/experiments/managed-b-clean-graph-v1/probe.py` | tracked | experimental | included-tracked-noncritical | keep | 70710 |
+| `eva2/experiments/managed-b-clean-graph-v1/probe.py` | tracked | experimental | included-tracked-noncritical | keep | 71494 |
 | `eva2/experiments/mcp-sdk-v1/README.md` | tracked | experimental | included-tracked-noncritical | keep | 4540 |
 | `eva2/experiments/mcp-sdk-v1/check_bakeoff.py` | tracked | experimental | included-tracked-noncritical | keep | 3556 |
 | `eva2/experiments/mcp-sdk-v1/receipt.json` | tracked | experimental | included-tracked-noncritical | keep | 1417 |
@@ -1559,7 +1559,7 @@ Schema: `EvaRepositoryInventory/v1`. Brondigest: `dd44acad2437559dc0980978824e5a
 | `eva2/tests/benchmark/test_eva_tool_free_model.py` | tracked | verification | included-tracked-critical | keep | 1837 |
 | `eva2/tests/benchmark/test_gaia_development_adapter.py` | tracked | verification | included-tracked-critical | keep | 6824 |
 | `eva2/tests/benchmark/test_inspect_ai_ev001.py` | tracked | verification | included-tracked-critical | keep | 5462 |
-| `eva2/tests/benchmark/test_inspect_ai_ev002.py` | tracked | verification | included-tracked-critical | keep | 7014 |
+| `eva2/tests/benchmark/test_inspect_ai_ev002.py` | tracked | verification | included-tracked-critical | keep | 7498 |
 | `eva2/tests/benchmark/test_run_agentbench_dbbench_development.py` | tracked | verification | included-tracked-critical | keep | 10986 |
 | `eva2/tests/benchmark/test_run_preselected_agentbench_dbbench_batch.py` | tracked | verification | included-tracked-critical | keep | 5153 |
 | `eva2/tests/bootstrap/test_commerce_deployment.py` | tracked | verification | included-tracked-critical | keep | 1165 |
