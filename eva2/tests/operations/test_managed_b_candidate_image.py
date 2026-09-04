@@ -67,6 +67,8 @@ def test_runtime_image_installs_eva_package_before_removing_pip() -> None:
     )
     dependency_check = "python -m pip check"
     remove_pip = "python -m pip uninstall -y pip wheel"
+    remove_build_inputs = "rm -rf ./build ./wheelhouse ./*.egg-info ./src/*.egg-info"
+    copy_runtime = "COPY --from=build /opt/eva /opt/eva"
 
     assert "COPY pyproject.toml ./pyproject.toml" in dockerfile
     assert install in dockerfile
@@ -74,6 +76,8 @@ def test_runtime_image_installs_eva_package_before_removing_pip() -> None:
     assert dockerfile.index(install) < dockerfile.index(provider_check)
     assert dockerfile.index(provider_check) < dockerfile.index(dependency_check)
     assert dockerfile.index(dependency_check) < dockerfile.index(remove_pip)
+    assert dockerfile.index(remove_pip) < dockerfile.index(remove_build_inputs)
+    assert dockerfile.index(remove_build_inputs) < dockerfile.index(copy_runtime)
     assert "io.eva2.source-commit=${SOURCE_COMMIT}" in dockerfile
     assert "io.eva2.source-date-epoch=${SOURCE_DATE_EPOCH}" in dockerfile
     assert 'io.eva2.source-refresh="git-archive-v1"' in dockerfile

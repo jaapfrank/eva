@@ -76,7 +76,8 @@ EXPECTED_OFFLINE_PIP_INSTALL = (
     "&& python -m pip uninstall -y pip wheel "
     '&& python -c "import importlib.util; '
     "assert importlib.util.find_spec('pip') is None; "
-    "assert importlib.util.find_spec('wheel') is None\""
+    "assert importlib.util.find_spec('wheel') is None\" "
+    "&& rm -rf ./build ./wheelhouse ./*.egg-info ./src/*.egg-info"
 )
 EXPECTED_RUNTIME_LIBRARY_PATH = "LD_LIBRARY_PATH=/usr/local/lib"
 

@@ -3,6 +3,7 @@ from __future__ import annotations
 import hashlib
 import io
 import json
+from pathlib import Path
 import tarfile
 
 import pytest
@@ -10,6 +11,7 @@ import pytest
 from tools.prepare_managed_b_candidate_context import (
     EXPECTED_OFFLINE_PIP_INSTALL,
     GIT_BINARY,
+    _require_offline_pip_install,
     main,
     prepare_candidate_build_inputs,
 )
@@ -18,6 +20,7 @@ from tools.prepare_managed_b_candidate_context import (
 COMMIT = "a" * 40
 RUNTIME_LIBRARIES_REFERENCE = "docker.io/library/python@sha256:" + "2" * 64
 RUNTIME_REFERENCE = "gcr.io/distroless/cc-debian13@sha256:" + "3" * 64
+EVA2_ROOT = Path(__file__).resolve().parents[2]
 
 
 def _dockerfile(
@@ -192,6 +195,16 @@ def test_preparation_refuses_online_or_unsealed_package_install() -> None:
 
     with pytest.raises(RuntimeError, match="exact offline pip install"):
         prepare_candidate_build_inputs(COMMIT, runner=run)
+
+
+def test_repository_dockerfile_removes_build_only_inputs_before_runtime_copy() -> None:
+    dockerfile = (EVA2_ROOT / "deploy/living-core/Dockerfile").read_bytes()
+
+    _require_offline_pip_install(dockerfile)
+
+    assert EXPECTED_OFFLINE_PIP_INSTALL.endswith(
+        "&& rm -rf ./build ./wheelhouse ./*.egg-info ./src/*.egg-info"
+    )
 
 
 def test_preparation_refuses_runtime_without_the_pinned_python_library_path() -> None:

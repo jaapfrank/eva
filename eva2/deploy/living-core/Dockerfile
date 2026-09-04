@@ -26,7 +26,8 @@ RUN python -m pip install --no-cache-dir --no-index --only-binary=:all: --find-l
     && python -c "from eva.providers.bundled import bundled_provider_factories; factories=bundled_provider_factories(); assert any(factory.provider_id == 'mcp_gateway' for factory in factories)" \
     && python -m pip check \
     && python -m pip uninstall -y pip wheel \
-    && python -c "import importlib.util; assert importlib.util.find_spec('pip') is None; assert importlib.util.find_spec('wheel') is None"
+    && python -c "import importlib.util; assert importlib.util.find_spec('pip') is None; assert importlib.util.find_spec('wheel') is None" \
+    && rm -rf ./build ./wheelhouse ./*.egg-info ./src/*.egg-info
 
 COPY alembic.ini ./alembic.ini
 COPY migrations ./migrations
