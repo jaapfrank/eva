@@ -17,11 +17,9 @@ de volgende begint.
 
 - `docs/eva-repository-inventory.generated.json`
 - `docs/eva-repository-inventory.generated.md`
-- `eva2/benchmark/inspect_ai_v1/pylock.toml`
 - `eva2/benchmark/inspect_ai_v1/bridge_probe.py`
 - `eva2/benchmark/inspect_ai_v1/README.md`
 - `eva2/tests/benchmark/test_inspect_ai_ev001.py`
-- `eva2/design/product/comparable-agent-benchmarks-v1.md`
 
 Klaar betekent:
 
