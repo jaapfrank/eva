@@ -18,27 +18,29 @@ de volgende begint.
 - `docs/eva-repository-inventory.generated.md`
 - `eva2/deploy/living-core/Dockerfile`
 - `eva2/release/managed-b-release-input-authority-v1.json`
+- `eva2/tests/operations/test_build_managed_b_offline_candidate.py`
 - `eva2/tests/operations/test_managed_b_candidate_image.py`
 - `eva2/tests/operations/test_prepare_managed_b_candidate_context.py`
 - `eva2/tests/operations/test_two_builder_reproducibility.py`
 - `eva2/tools/check_two_builder_reproducibility.py`
+- `eva2/tools/managed_b_candidate/candidate_image.py`
 - `eva2/tools/prepare_managed_b_candidate_context.py`
 
 Klaar betekent:
 
 - Bouwer A en bouwer B starten leeg, gebruiken uitsluitend de verzegelde lokale OCI-bytes en produceren ieder een volledig gebonden kandidaatbewijs voor dezelfde nieuwe broncommit.
 - De runtime bevat geen buildmap, wheelhouse, egg-info of ander onverwacht bestand onder /opt/eva; een afwijkende byte, eigenaar, modus of tijdstempel stopt gesloten.
-- Een verkeerde commit, authority, builderidentiteit, bestaand builderobject, netwerkfallback, te groot archief of hergebruikt historisch bewijs stopt vóór een groen receipt.
+- Een verkeerde commit, authority, Docker- of Buildxbinary, builderidentiteit, bestaand builderobject, netwerkfallback, te groot archief of hergebruikt historisch bewijs stopt vóór een groen receipt.
 - Een herhaalbare operator meet de private netwerknamespace en builderstaat vóór en na de build, schrijft de receipts zonder handmatige JSON-verbouwing en ruimt units, sockets en tijdelijke bouwstaat aantoonbaar op.
 - Een onafhankelijke reviewer geeft GO op beide nieuwe bouwreceipts.
 
 Echte controles:
 
-- `TMPDIR=/tmp TEMP=/tmp TMP=/tmp pytest -q tests/operations/test_two_builder_reproducibility.py tests/operations/test_managed_b_candidate_image.py tests/operations/test_prepare_managed_b_candidate_context.py tests/operations/test_managed_b_release_inputs.py`
+- `TMPDIR=/tmp TEMP=/tmp TMP=/tmp pytest -q tests/operations/test_two_builder_reproducibility.py tests/operations/test_managed_b_candidate_image.py tests/operations/test_build_managed_b_offline_candidate.py tests/operations/test_prepare_managed_b_candidate_context.py tests/operations/test_managed_b_release_inputs.py`
 - `python3 tools/check_component_catalog.py`
 - `node ../test/repository-inventory.test.js`
 - `node ../test/repository-inventory-disposition.test.js`
-- `ruff check tools/check_two_builder_reproducibility.py tools/prepare_managed_b_candidate_context.py tests/operations/test_two_builder_reproducibility.py tests/operations/test_managed_b_candidate_image.py tests/operations/test_prepare_managed_b_candidate_context.py`
+- `ruff check tools/check_two_builder_reproducibility.py tools/managed_b_candidate/candidate_image.py tools/prepare_managed_b_candidate_context.py tests/operations/test_two_builder_reproducibility.py tests/operations/test_managed_b_candidate_image.py tests/operations/test_build_managed_b_offline_candidate.py tests/operations/test_prepare_managed_b_candidate_context.py`
 
 ## Daarna
 

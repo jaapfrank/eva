@@ -154,12 +154,15 @@ def test_hermetic_release_recovery_precedes_required_test_execution() -> None:
         "docs/eva-repository-inventory.generated.md",
         "eva2/deploy/living-core/Dockerfile",
         "eva2/release/managed-b-release-input-authority-v1.json",
+        "eva2/tests/operations/test_build_managed_b_offline_candidate.py",
         "eva2/tests/operations/test_managed_b_candidate_image.py",
         "eva2/tests/operations/test_prepare_managed_b_candidate_context.py",
         "eva2/tests/operations/test_two_builder_reproducibility.py",
         "eva2/tools/check_two_builder_reproducibility.py",
+        "eva2/tools/managed_b_candidate/candidate_image.py",
         "eva2/tools/prepare_managed_b_candidate_context.py",
     }
+    assert "Docker en Buildx" in " ".join(tasks["RR-002"]["evidenceRequired"])
     assert "zonder handmatige JSON-verbouwing" in " ".join(tasks["RR-002"]["doneWhen"])
     assert board["completions"]["RR-001"] == {
         "baseCommit": "ca6de2b0c0fe7bde1fdf740979ca3959c3e998ae",
