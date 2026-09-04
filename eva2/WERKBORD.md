@@ -19,8 +19,10 @@ de volgende begint.
 - `eva2/deploy/living-core/Dockerfile`
 - `eva2/release/managed-b-release-input-authority-v1.json`
 - `eva2/tests/operations/test_managed_b_candidate_image.py`
+- `eva2/tests/operations/test_prepare_managed_b_candidate_context.py`
 - `eva2/tests/operations/test_two_builder_reproducibility.py`
 - `eva2/tools/check_two_builder_reproducibility.py`
+- `eva2/tools/prepare_managed_b_candidate_context.py`
 
 Klaar betekent:
 
@@ -32,11 +34,11 @@ Klaar betekent:
 
 Echte controles:
 
-- `TMPDIR=/tmp TEMP=/tmp TMP=/tmp pytest -q tests/operations/test_two_builder_reproducibility.py tests/operations/test_managed_b_candidate_image.py tests/operations/test_managed_b_release_inputs.py`
+- `TMPDIR=/tmp TEMP=/tmp TMP=/tmp pytest -q tests/operations/test_two_builder_reproducibility.py tests/operations/test_managed_b_candidate_image.py tests/operations/test_prepare_managed_b_candidate_context.py tests/operations/test_managed_b_release_inputs.py`
 - `python3 tools/check_component_catalog.py`
 - `node ../test/repository-inventory.test.js`
 - `node ../test/repository-inventory-disposition.test.js`
-- `ruff check tools/check_two_builder_reproducibility.py tests/operations/test_two_builder_reproducibility.py tests/operations/test_managed_b_candidate_image.py`
+- `ruff check tools/check_two_builder_reproducibility.py tools/prepare_managed_b_candidate_context.py tests/operations/test_two_builder_reproducibility.py tests/operations/test_managed_b_candidate_image.py tests/operations/test_prepare_managed_b_candidate_context.py`
 
 ## Daarna
 

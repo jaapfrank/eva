@@ -73,7 +73,7 @@ LOCKED_FOUNDATION_SEQUENCE = [
     "EV-002",
     "EV-003",
 ]
-LOCKED_FOUNDATION_DIGEST = "8238a2e0f1689bbe343d578f8930a47ef3d3d9dae8a2e4c1650f248ad9edd2b0"
+LOCKED_FOUNDATION_DIGEST = "dc4f319afed1091a41c6ce785dfa86b56593106c948b8d6b879d8b6b8d831b10"
 RETIRED_BENCHMARK_MARKERS = (
     "comparable-agent-run-v1.schema.json",
     "test_comparable_agent_run_validator.py",

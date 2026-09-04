@@ -155,8 +155,10 @@ def test_hermetic_release_recovery_precedes_required_test_execution() -> None:
         "eva2/deploy/living-core/Dockerfile",
         "eva2/release/managed-b-release-input-authority-v1.json",
         "eva2/tests/operations/test_managed_b_candidate_image.py",
+        "eva2/tests/operations/test_prepare_managed_b_candidate_context.py",
         "eva2/tests/operations/test_two_builder_reproducibility.py",
         "eva2/tools/check_two_builder_reproducibility.py",
+        "eva2/tools/prepare_managed_b_candidate_context.py",
     }
     assert "zonder handmatige JSON-verbouwing" in " ".join(tasks["RR-002"]["doneWhen"])
     assert board["completions"]["RR-001"] == {
