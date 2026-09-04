@@ -25,6 +25,7 @@ de volgende begint.
 - `eva2/tests/application/test_conversation.py`
 - `eva2/tests/application/test_telegram_ingress.py`
 - `eva2/tests/connectors/test_telegram.py`
+- `eva2/tests/operations/test_telegram_ingress_wiring.py`
 
 Klaar betekent:
 
@@ -35,8 +36,8 @@ Klaar betekent:
 
 Echte controles:
 
-- `TMPDIR=/tmp TEMP=/tmp TMP=/tmp pytest -q tests/api/test_memory_api.py tests/application/test_conversation.py tests/application/test_telegram_ingress.py tests/connectors/test_telegram.py`
-- `ruff check src/eva/adapters/api/app.py src/eva/adapters/connectors/telegram.py src/eva/application/conversation.py src/eva/application/telegram_ingress.py src/eva/bootstrap/telegram_ingress.py tests/api/test_memory_api.py tests/application/test_conversation.py tests/application/test_telegram_ingress.py tests/connectors/test_telegram.py`
+- `TMPDIR=/tmp TEMP=/tmp TMP=/tmp pytest -q tests/api/test_memory_api.py tests/application/test_conversation.py tests/application/test_telegram_ingress.py tests/connectors/test_telegram.py tests/operations/test_telegram_ingress_wiring.py`
+- `ruff check src/eva/adapters/api/app.py src/eva/adapters/connectors/telegram.py src/eva/application/conversation.py src/eva/application/telegram_ingress.py src/eva/bootstrap/telegram_ingress.py tests/api/test_memory_api.py tests/application/test_conversation.py tests/application/test_telegram_ingress.py tests/connectors/test_telegram.py tests/operations/test_telegram_ingress_wiring.py`
 - `python3 tools/check_component_catalog.py`
 
 ## Daarna
