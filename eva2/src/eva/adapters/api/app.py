@@ -122,7 +122,11 @@ _TURN_REQUIRED_KEYS = {
     "tenant_id",
     "text",
 }
-_TURN_OPTIONAL_KEYS = {"observation_binding", "project_id", "recent_messages"}
+_TURN_OPTIONAL_KEYS = {
+    "observation_binding",
+    "project_id",
+    "recent_messages",
+}
 _RECENT_MESSAGE_KEYS = {"occurred_at", "role", "text"}
 _OBSERVATION_BINDING_KEYS = {
     "media_sha256",
@@ -131,6 +135,25 @@ _OBSERVATION_BINDING_KEYS = {
     "source_ref",
     "subject_region_sha256",
 }
+_NDJSON_MEDIA_TYPE = "application/x-ndjson"
+
+
+def _accepts_ndjson(request: Request) -> bool:
+    for item in request.headers.get("accept", "").split(","):
+        media_type, *parameters = (part.strip() for part in item.split(";"))
+        if media_type.lower() != _NDJSON_MEDIA_TYPE:
+            continue
+        quality = 1.0
+        for parameter in parameters:
+            name, separator, value = parameter.partition("=")
+            if separator and name.strip().lower() == "q":
+                try:
+                    quality = float(value.strip())
+                except ValueError:
+                    quality = 0.0
+        if 0 < quality <= 1:
+            return True
+    return False
 _DURABLE_GOAL_KEYS = {
     "created_at",
     "delivery_recipient",
@@ -1058,11 +1081,13 @@ def create_app(
 
     @app.post("/internal/v1/turns/respond")
     def respond(
-        payload: dict[str, Any], background_tasks: BackgroundTasks
-    ) -> dict[str, Any]:
+        payload: dict[str, Any], background_tasks: BackgroundTasks, request: Request
+    ) -> Any:
         try:
             turn, recent_messages = _turn_from_wire(payload)
             runtime.admit_turn_audience(turn)
+            if turn.audience.kind == "private_person" and _accepts_ndjson(request):
+                return conversation_stream_response(runtime, turn, recent_messages)
             reply = runtime.respond(turn, recent_messages)
         except ConversationConflict as error:
             raise HTTPException(status_code=409, detail=str(error)) from error

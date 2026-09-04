@@ -488,7 +488,7 @@ def test_model_requested_memory_search_recalls_then_answers() -> None:
     ]
 
 
-def test_memory_only_answer_is_published_after_tool_capable_followup() -> None:
+def test_memory_only_answer_is_not_replayed_as_a_fake_stream() -> None:
     class Actions:
         action_names = ("read_home_assistant_state",)
 
@@ -542,10 +542,10 @@ def test_memory_only_answer_is_published_after_tool_capable_followup() -> None:
         )
 
     assert reply.text == "Die kleur kan ik niet vinden."
-    assert deltas == [reply.text]
+    assert deltas == []
 
 
-def test_direct_answer_uses_one_model_call_and_is_published() -> None:
+def test_direct_answer_uses_one_model_call_without_a_fake_posthoc_delta() -> None:
     class DirectModel(_Model):
         def __init__(self) -> None:
             super().__init__()
@@ -576,7 +576,8 @@ def test_direct_answer_uses_one_model_call_and_is_published() -> None:
         )
 
     assert model.calls == 1
-    assert deltas == [reply.text]
+    assert reply.text
+    assert deltas == []
 
 
 def test_memory_search_can_be_followed_by_one_available_action() -> None:

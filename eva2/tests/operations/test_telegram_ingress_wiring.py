@@ -40,6 +40,8 @@ def test_main_wires_one_pairing_store_as_responder_and_dynamic_resolver(
     )
     pairing_store = object()
     pairing_responder = object()
+    provider = object()
+    core = object()
     captured: dict[str, object] = {}
 
     class Engine:
@@ -73,10 +75,10 @@ def test_main_wires_one_pairing_store_as_responder_and_dynamic_resolver(
         telegram_ingress.sa, "create_engine", lambda dsn, **kwargs: Engine()
     )
     monkeypatch.setattr(
-        telegram_ingress, "TelegramBotApiAdapter", lambda **kwargs: object()
+        telegram_ingress, "TelegramBotApiAdapter", lambda **kwargs: provider
     )
     monkeypatch.setattr(
-        telegram_ingress, "LivingCoreTurnHttpAdapter", lambda **kwargs: object()
+        telegram_ingress, "LivingCoreTurnHttpAdapter", lambda **kwargs: core
     )
     monkeypatch.setattr(
         telegram_ingress,
@@ -96,6 +98,8 @@ def test_main_wires_one_pairing_store_as_responder_and_dynamic_resolver(
     def create_worker(*args, **kwargs):  # type: ignore[no-untyped-def]
         captured["pairing_responder"] = args[4]
         captured["dynamic_bindings"] = kwargs["dynamic_bindings"]
+        captured["reply_drafts"] = kwargs["reply_drafts"]
+        captured["streaming_core"] = kwargs["streaming_core"]
         return object()
 
     monkeypatch.setattr(
@@ -123,4 +127,6 @@ def test_main_wires_one_pairing_store_as_responder_and_dynamic_resolver(
         "pairing_responder": pairing_responder,
         "pairing_secret": b"p" * 32,
         "pairing_store_created": True,
+        "reply_drafts": provider,
+        "streaming_core": core,
     }

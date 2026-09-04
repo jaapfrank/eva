@@ -5,7 +5,8 @@ from __future__ import annotations
 from dataclasses import dataclass
 from datetime import UTC, datetime
 import re
-from typing import Protocol
+from time import monotonic
+from typing import Callable, Protocol
 from uuid import UUID
 
 from eva.application.conversation import ConversationTurn, GroundedReply
@@ -19,6 +20,19 @@ from eva.application.memory_audience import MemoryAudience
 
 _PRINCIPAL = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._:-]{0,159}$")
 _LINK_CONFIRM = re.compile(r"^/link\s+(EVA-[A-Z2-9]{12})$")
+_DRAFT_CHUNK_CHARACTERS = 256
+_DRAFT_MINIMUM_INTERVAL_SECONDS = 1.0
+TELEGRAM_MAXIMUM_TEXT_CHARACTERS = 4096
+
+
+class TelegramProviderRateLimited(RuntimeError):
+    """A Telegram provider asked the caller to pause before another attempt."""
+
+    def __init__(self, retry_after_seconds: int) -> None:
+        if type(retry_after_seconds) is not int or not 1 <= retry_after_seconds <= 86_400:
+            raise ValueError("Telegram retry-after value is invalid")
+        self.retry_after_seconds = retry_after_seconds
+        super().__init__("Telegram provider rate limit reached")
 
 
 @dataclass(frozen=True, slots=True)
@@ -139,6 +153,12 @@ class TelegramProviderPort(Protocol):
     def send_reply(self, message: TelegramInboundMessage, text: str) -> str: ...
 
 
+class TelegramReplyDraftPort(Protocol):
+    def send_reply_draft(
+        self, message: TelegramInboundMessage, text: str
+    ) -> None: ...
+
+
 class TelegramCorePort(Protocol):
     def respond(
         self,
@@ -146,6 +166,17 @@ class TelegramCorePort(Protocol):
         *,
         principal_id: str,
         audience: MemoryAudience,
+    ) -> TelegramCoreReply: ...
+
+
+class TelegramStreamingCorePort(Protocol):
+    def respond_stream(
+        self,
+        message: TelegramInboundMessage,
+        *,
+        principal_id: str,
+        audience: MemoryAudience,
+        on_delta: Callable[[str], None],
     ) -> TelegramCoreReply: ...
 
 
@@ -207,6 +238,9 @@ class TelegramIngressWorker:
         delegated_work_commands: TelegramDelegatedWorkCommandsPort | None = None,
         tenant_id: str | None = None,
         installation_id: str | None = None,
+        reply_drafts: TelegramReplyDraftPort | None = None,
+        streaming_core: TelegramStreamingCorePort | None = None,
+        draft_clock: Callable[[], float] = monotonic,
     ) -> None:
         if delegated_work_commands is not None and (
             tenant_id is None or installation_id is None
@@ -222,6 +256,10 @@ class TelegramIngressWorker:
         self._delegated_work_commands = delegated_work_commands
         self._tenant_id = tenant_id
         self._installation_id = installation_id
+        self._reply_drafts = reply_drafts
+        self._streaming_core = streaming_core
+        self._draft_clock = draft_clock
+        self._next_draft_at = 0.0
 
     @staticmethod
     def _now() -> datetime:
@@ -316,10 +354,8 @@ class TelegramIngressWorker:
                     reply = (
                         reply
                         if reply is not None
-                        else self._core.respond(
-                            message,
-                            principal_id=principal_id,
-                            audience=audience,
+                        else self._core_reply_with_optional_draft(
+                            message, principal_id=principal_id, audience=audience
                         )
                     )
                 except Exception as error:
@@ -340,6 +376,89 @@ class TelegramIngressWorker:
                 claimed, provider_message_id, now=self._now()
             )
         return "processed"
+
+    def _core_reply_with_optional_draft(
+        self,
+        message: TelegramInboundMessage,
+        *,
+        principal_id: str,
+        audience: MemoryAudience,
+    ) -> TelegramCoreReply:
+        if (
+            audience.kind != "private_person"
+            or self._reply_drafts is None
+            or self._streaming_core is None
+        ):
+            return self._core.respond(
+                message, principal_id=principal_id, audience=audience
+            )
+        draft_now = self._draft_clock()
+        if draft_now < self._next_draft_at:
+            return self._core.respond(
+                message, principal_id=principal_id, audience=audience
+            )
+        try:
+            self._reply_drafts.send_reply_draft(message, "")
+        except TelegramProviderRateLimited as error:
+            self._next_draft_at = max(
+                draft_now + _DRAFT_MINIMUM_INTERVAL_SECONDS,
+                self._draft_clock() + error.retry_after_seconds,
+            )
+            return self._core.respond(
+                message, principal_id=principal_id, audience=audience
+            )
+        except Exception:
+            self._next_draft_at = draft_now + _DRAFT_MINIMUM_INTERVAL_SECONDS
+            return self._core.respond(
+                message, principal_id=principal_id, audience=audience
+            )
+        self._next_draft_at = draft_now + _DRAFT_MINIMUM_INTERVAL_SECONDS
+
+        accumulated = ""
+        last_draft_length = 0
+        drafts_available = True
+
+        def publish(delta: str) -> None:
+            nonlocal accumulated, drafts_available, last_draft_length
+            accumulated += delta
+            if (
+                not drafts_available
+                or len(accumulated) > TELEGRAM_MAXIMUM_TEXT_CHARACTERS
+                or not accumulated.strip()
+                or (
+                    last_draft_length
+                    and len(accumulated) - last_draft_length
+                    < _DRAFT_CHUNK_CHARACTERS
+                )
+            ):
+                return
+            draft_now = self._draft_clock()
+            if draft_now < self._next_draft_at:
+                return
+            try:
+                self._reply_drafts.send_reply_draft(message, accumulated)
+            except TelegramProviderRateLimited as error:
+                drafts_available = False
+                self._next_draft_at = max(
+                    self._next_draft_at,
+                    self._draft_clock() + error.retry_after_seconds,
+                )
+            except Exception:
+                drafts_available = False
+            finally:
+                self._next_draft_at = max(
+                    self._next_draft_at,
+                    draft_now + _DRAFT_MINIMUM_INTERVAL_SECONDS,
+                )
+            if drafts_available:
+                last_draft_length = len(accumulated)
+
+        return self._streaming_core.respond_stream(
+            message,
+            principal_id=principal_id,
+            audience=audience,
+            on_delta=publish,
+        )
 
     def _delegated_work_reply(
         self,

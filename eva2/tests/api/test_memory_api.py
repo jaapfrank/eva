@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import hashlib
+import json
 from datetime import UTC, datetime
 
 from fastapi.testclient import TestClient
@@ -10,6 +11,7 @@ from eva.application.conversation import (
     ConversationConflict,
     ConversationTurn,
     GroundedReply,
+    publish_conversation_text,
 )
 from eva.adapters.connectors.home_assistant_advanced_tasks import (
     AdvancedTaskBlocked,
@@ -823,6 +825,80 @@ def test_channel_neutral_turn_returns_a_grounded_reply_receipt() -> None:
     assert runtime.turns[0].message_id == "telegram:5004"
     assert runtime.turns[0].audience.kind == "private_person"
     assert runtime.after[0][0].message_id == "telegram:5004"
+
+
+def test_private_turn_exposes_only_safe_model_deltas_as_ndjson() -> None:
+    class StreamingRuntime(_Runtime):
+        def respond(self, turn, recent_messages=()):  # type: ignore[no-untyped-def]
+            self.turns.append(turn)
+            publish_conversation_text("Veilig ", tools_disabled=True)
+            publish_conversation_text("antwoord.", tools_disabled=True)
+            return GroundedReply(
+                conversation_id=turn.conversation_id,
+                message_id=turn.message_id,
+                text="Veilig antwoord.",
+                evidence_memory_ids=(),
+                generated_at=turn.occurred_at,
+                provider="test-stream",
+            )
+
+    runtime = StreamingRuntime()
+    response = TestClient(create_app(runtime)).post(
+        "/internal/v1/turns/respond",
+        headers={"accept": "text/plain, application/x-ndjson; charset=utf-8"},
+        json={
+            "audience": {
+                "audience_id": f"person:{PRINCIPAL}",
+                "kind": "private_person",
+                "principal_id": PRINCIPAL,
+            },
+            "conversation_id": "conversation:telegram:jaap",
+            "installation_id": INSTALLATION,
+            "message_id": "telegram:stream:5004",
+            "occurred_at": NOW,
+            "principal_id": PRINCIPAL,
+            "tenant_id": TENANT,
+            "text": "Laat je antwoordvorming zien.",
+        },
+    )
+
+    rows = [json.loads(line) for line in response.iter_lines()]
+    assert [row["contract"] for row in rows] == [
+        "EvaTextDelta/v1",
+        "EvaTextDelta/v1",
+        "EvaInternalGroundedReply/v1",
+    ]
+    assert "".join(row["text"] for row in rows[:-1]) == rows[-1]["text"]
+    assert len(runtime.after) == 1
+    assert runtime.after[0][0] == runtime.turns[0]
+    assert runtime.after[0][1].text == "Veilig antwoord."
+
+
+def test_turn_stream_requires_an_exact_acceptable_media_type() -> None:
+    runtime = _Runtime()
+    response = TestClient(create_app(runtime)).post(
+        "/internal/v1/turns/respond",
+        headers={
+            "accept": "application/not-x-ndjson, application/x-ndjson;q=0"
+        },
+        json={
+            "audience": {
+                "audience_id": f"person:{PRINCIPAL}",
+                "kind": "private_person",
+                "principal_id": PRINCIPAL,
+            },
+            "conversation_id": "conversation:telegram:jaap",
+            "installation_id": INSTALLATION,
+            "message_id": "telegram:stream:media-type",
+            "occurred_at": NOW,
+            "principal_id": PRINCIPAL,
+            "tenant_id": TENANT,
+            "text": "Gewoon JSON graag.",
+        },
+    )
+
+    assert response.headers["content-type"].startswith("application/json")
+    assert response.json()["contract"] == "EvaInternalGroundedReply/v1"
 
 
 def test_generic_turn_endpoint_rejects_untrusted_group_audience() -> None:

@@ -2,14 +2,18 @@
 
 from __future__ import annotations
 
+import hashlib
 import json
 from datetime import UTC, datetime
+from typing import Callable
 from urllib import error, request as urllib_request
 
 from eva.application.free_will import ProactiveExpressionClaim
 from eva.application.telegram_ingress import (
+    TELEGRAM_MAXIMUM_TEXT_CHARACTERS,
     TelegramCoreReply,
     TelegramInboundMessage,
+    TelegramProviderRateLimited,
 )
 from eva.application.memory_audience import (
     MemoryAudience,
@@ -97,7 +101,13 @@ class TelegramBotApiAdapter:
         self._base_url = f"{api_base_url.rstrip('/')}/bot{bot_token}"
         self._timeout = timeout_seconds
 
-    def _call(self, method: str, payload: dict[str, object]) -> object:
+    def _call(
+        self,
+        method: str,
+        payload: dict[str, object],
+        *,
+        timeout_seconds: int | None = None,
+    ) -> object:
         encoded = json.dumps(
             payload,
             ensure_ascii=False,
@@ -112,8 +122,16 @@ class TelegramBotApiAdapter:
             method="POST",
         )
         try:
-            with urllib_request.urlopen(request, timeout=self._timeout + 2) as response:
+            with urllib_request.urlopen(
+                request,
+                timeout=self._timeout + 2 if timeout_seconds is None else timeout_seconds,
+            ) as response:
                 raw = response.read(1_048_577)
+        except error.HTTPError as exc:
+            try:
+                raw = exc.read(1_048_577)
+            finally:
+                exc.close()
         except (TimeoutError, error.URLError) as exc:
             raise RuntimeError(f"Telegram {method} failed") from exc
         if len(raw) > 1_048_576:
@@ -122,7 +140,21 @@ class TelegramBotApiAdapter:
             decoded = json.loads(raw)
         except (UnicodeDecodeError, json.JSONDecodeError) as exc:
             raise RuntimeError(f"Telegram {method} receipt is invalid") from exc
-        if not isinstance(decoded, dict) or decoded.get("ok") is not True:
+        if not isinstance(decoded, dict):
+            raise RuntimeError(f"Telegram {method} receipt is invalid")
+        if decoded.get("ok") is not True:
+            parameters = decoded.get("parameters")
+            retry_after = (
+                parameters.get("retry_after")
+                if isinstance(parameters, dict)
+                else None
+            )
+            if (
+                decoded.get("error_code") == 429
+                and type(retry_after) is int
+                and 1 <= retry_after <= 86_400
+            ):
+                raise TelegramProviderRateLimited(retry_after)
             raise RuntimeError(f"Telegram {method} was not accepted")
         return decoded.get("result")
 
@@ -155,10 +187,10 @@ class TelegramBotApiAdapter:
             if (
                 not isinstance(chat, dict)
                 or not isinstance(sender, dict)
-                or not isinstance(chat.get("id"), int)
-                or not isinstance(sender.get("id"), int)
-                or not isinstance(message_id, int)
-                or not isinstance(occurred_at, int)
+                or type(chat.get("id")) is not int
+                or type(sender.get("id")) is not int
+                or type(message_id) is not int
+                or type(occurred_at) is not int
                 or occurred_at < 0
             ):
                 raise RuntimeError("Telegram message envelope is invalid")
@@ -176,7 +208,10 @@ class TelegramBotApiAdapter:
         return tuple(updates)
 
     def send_reply(self, message: TelegramInboundMessage, text: str) -> str:
-        if not text.strip() or len(text) > 4096:
+        if (
+            not text.strip()
+            or len(text) > TELEGRAM_MAXIMUM_TEXT_CHARACTERS
+        ):
             raise ValueError("Telegram reply text is invalid")
         result = self._call(
             "sendMessage",
@@ -186,9 +221,34 @@ class TelegramBotApiAdapter:
                 "text": text,
             },
         )
-        if not isinstance(result, dict) or not isinstance(result.get("message_id"), int):
+        message_id = result.get("message_id") if isinstance(result, dict) else None
+        if type(message_id) is not int or message_id < 1:
             raise RuntimeError("Telegram sendMessage receipt is invalid")
-        return f"telegram:{message.chat_id}:{result['message_id']}"
+        return f"telegram:{message.chat_id}:{message_id}"
+
+    def send_reply_draft(self, message: TelegramInboundMessage, text: str) -> None:
+        """Show Telegram's ephemeral AI draft; final delivery remains sendMessage."""
+
+        if message.chat_id.startswith("-") or message.chat_id != str(message.sender_id):
+            raise ValueError("Telegram reply drafts require a private user chat")
+        if len(text) > TELEGRAM_MAXIMUM_TEXT_CHARACTERS:
+            raise ValueError("Telegram reply draft text is invalid")
+        digest = hashlib.sha256(
+            f"{message.chat_id}:{message.message_id}".encode()
+        ).digest()
+        # Bot API Integer values are signed 32-bit; zero is not a valid draft ID.
+        draft_id = int.from_bytes(digest[:4], "big") & 0x7FFF_FFFF
+        result = self._call(
+            "sendMessageDraft",
+            {
+                "chat_id": int(message.chat_id),
+                "draft_id": draft_id or 1,
+                "text": text,
+            },
+            timeout_seconds=2,
+        )
+        if result is not True:
+            raise RuntimeError("Telegram sendMessageDraft receipt is invalid")
 
 
 class LivingCoreTurnHttpAdapter:
@@ -218,6 +278,137 @@ class LivingCoreTurnHttpAdapter:
         principal_id: str,
         audience: MemoryAudience,
     ) -> TelegramCoreReply:
+        payload, conversation_id, message_id = self._turn_request(
+            message, principal_id=principal_id, audience=audience
+        )
+        request = urllib_request.Request(
+            self._url,
+            data=payload,
+            headers={"Content-Type": "application/json"},
+            method="POST",
+        )
+        try:
+            with urllib_request.urlopen(request, timeout=self._timeout) as response:
+                raw = response.read(65_537)
+        except (TimeoutError, error.URLError) as exc:
+            raise RuntimeError("Living Core conversation request failed") from exc
+        if len(raw) > 65_536:
+            raise RuntimeError("Living Core conversation reply is too large")
+        try:
+            decoded = json.loads(raw)
+        except (UnicodeDecodeError, json.JSONDecodeError) as exc:
+            raise RuntimeError("Living Core conversation reply is invalid") from exc
+        return self._telegram_reply(
+            self._decode_reply(decoded, conversation_id, message_id)
+        )
+
+    def respond_stream(
+        self,
+        message: TelegramInboundMessage,
+        *,
+        principal_id: str,
+        audience: MemoryAudience,
+        on_delta: Callable[[str], None],
+    ) -> TelegramCoreReply:
+        payload, conversation_id, message_id = self._turn_request(
+            message, principal_id=principal_id, audience=audience
+        )
+        request = urllib_request.Request(
+            self._url,
+            data=payload,
+            headers={
+                "Accept": "application/x-ndjson",
+                "Content-Type": "application/json",
+            },
+            method="POST",
+        )
+        final: TelegramCoreReply | None = None
+        raw_visible = ""
+        visible = ""
+        total_bytes = 0
+        event_count = 0
+        try:
+            with urllib_request.urlopen(request, timeout=self._timeout) as response:
+                if response.headers.get_content_type() != "application/x-ndjson":
+                    raise RuntimeError("Living Core conversation stream type differs")
+                while raw := response.readline(65_537):
+                    total_bytes += len(raw)
+                    event_count += 1
+                    if len(raw) > 65_536 or total_bytes > 131_072 or event_count > 1_024:
+                        raise RuntimeError("Living Core conversation stream is too large")
+                    try:
+                        decoded = json.loads(raw)
+                    except (UnicodeDecodeError, json.JSONDecodeError) as exc:
+                        raise RuntimeError(
+                            "Living Core conversation stream is invalid"
+                        ) from exc
+                    if not isinstance(decoded, dict):
+                        raise RuntimeError("Living Core conversation stream is invalid")
+                    contract = decoded.get("contract")
+                    if contract == "EvaTextDelta/v1":
+                        delta = decoded.get("text")
+                        if (
+                            set(decoded) != {"contract", "text"}
+                            or not isinstance(delta, str)
+                            or not delta
+                            or final is not None
+                        ):
+                            raise RuntimeError(
+                                "Living Core conversation delta is invalid"
+                            )
+                        raw_visible += delta
+                        unbounded = raw_visible.strip()
+                        telegram_text = (
+                            unbounded[:-1]
+                            if len(unbounded) == TELEGRAM_MAXIMUM_TEXT_CHARACTERS
+                            else _fit_telegram_text(unbounded)
+                        )
+                        if not telegram_text.startswith(visible):
+                            raise RuntimeError(
+                                "Living Core conversation stream is not append-only"
+                            )
+                        safe_delta = telegram_text[len(visible) :]
+                        if safe_delta:
+                            on_delta(safe_delta)
+                            visible = telegram_text
+                    elif contract == "EvaInternalGroundedReply/v1":
+                        if final is not None:
+                            raise RuntimeError(
+                                "Living Core conversation stream has two finals"
+                            )
+                        final = self._decode_reply(
+                            decoded, conversation_id, message_id
+                        )
+                    elif contract == "EvaTextStreamError/v1":
+                        raise RuntimeError("Living Core conversation stream failed")
+                    else:
+                        raise RuntimeError(
+                            "Living Core conversation stream contract differs"
+                        )
+        except (TimeoutError, error.URLError) as exc:
+            raise RuntimeError("Living Core conversation stream failed") from exc
+        if final is None:
+            raise RuntimeError("Living Core conversation stream has no final reply")
+        telegram_final = self._telegram_reply(final)
+        if raw_visible:
+            raw_final = raw_visible.strip()
+            expected = _fit_telegram_text(raw_final)
+            if final.text != raw_final or not expected.startswith(visible):
+                raise RuntimeError("Living Core conversation stream final differs")
+            if telegram_final.text != expected:
+                raise RuntimeError("Living Core Telegram rendering differs")
+            final_delta = expected[len(visible) :]
+            if final_delta:
+                on_delta(final_delta)
+        return telegram_final
+
+    def _turn_request(
+        self,
+        message: TelegramInboundMessage,
+        *,
+        principal_id: str,
+        audience: MemoryAudience,
+    ) -> tuple[bytes, str, str]:
         if audience.principal_id != principal_id:
             raise ValueError("Telegram turn audience principal differs")
         if message.chat_id.startswith("-") != (audience.kind == "telegram_group"):
@@ -244,23 +435,12 @@ class LivingCoreTurnHttpAdapter:
             sort_keys=True,
             separators=(",", ":"),
         ).encode()
-        request = urllib_request.Request(
-            self._url,
-            data=payload,
-            headers={"Content-Type": "application/json"},
-            method="POST",
-        )
-        try:
-            with urllib_request.urlopen(request, timeout=self._timeout) as response:
-                raw = response.read(65_537)
-        except (TimeoutError, error.URLError) as exc:
-            raise RuntimeError("Living Core conversation request failed") from exc
-        if len(raw) > 65_536:
-            raise RuntimeError("Living Core conversation reply is too large")
-        try:
-            decoded = json.loads(raw)
-        except (UnicodeDecodeError, json.JSONDecodeError) as exc:
-            raise RuntimeError("Living Core conversation reply is invalid") from exc
+        return payload, conversation_id, message_id
+
+    @staticmethod
+    def _decode_reply(
+        decoded: object, conversation_id: str, message_id: str
+    ) -> TelegramCoreReply:
         if (
             not isinstance(decoded, dict)
             or decoded.get("contract") != "EvaInternalGroundedReply/v1"
@@ -270,12 +450,39 @@ class LivingCoreTurnHttpAdapter:
             or not isinstance(decoded.get("text_sha256"), str)
         ):
             raise RuntimeError("Living Core conversation reply contract differs")
+        text = decoded["text"]
+        text_sha256 = decoded["text_sha256"]
+        if (
+            not text.strip()
+            or text != text.strip()
+            or hashlib.sha256(text.encode()).hexdigest() != text_sha256
+        ):
+            raise RuntimeError("Living Core conversation reply content differs")
         return TelegramCoreReply(
             conversation_id,
             message_id,
-            decoded["text"],
-            decoded["text_sha256"],
+            text,
+            text_sha256,
         )
+
+    @staticmethod
+    def _telegram_reply(reply: TelegramCoreReply) -> TelegramCoreReply:
+        text = _fit_telegram_text(reply.text)
+        return TelegramCoreReply(
+            reply.conversation_id,
+            reply.message_id,
+            text,
+            hashlib.sha256(text.encode()).hexdigest(),
+        )
+
+
+def _fit_telegram_text(text: str) -> str:
+    """Render a complete core reply within Telegram's single-message limit."""
+
+    canonical = text.strip()
+    if len(canonical) <= TELEGRAM_MAXIMUM_TEXT_CHARACTERS:
+        return canonical
+    return canonical[: TELEGRAM_MAXIMUM_TEXT_CHARACTERS - 1] + "…"
 
 
 __all__ = [

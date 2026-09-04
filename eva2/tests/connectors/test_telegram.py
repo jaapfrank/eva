@@ -1,8 +1,11 @@
 from __future__ import annotations
 
+import hashlib
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 import json
 from threading import Thread
+
+import pytest
 
 from eva.adapters.connectors.telegram import (
     LivingCoreTurnHttpAdapter,
@@ -11,6 +14,7 @@ from eva.adapters.connectors.telegram import (
 )
 from eva.application.free_will import ProactiveExpressionClaim
 from eva.application.memory_audience import MemoryAudience
+from eva.application.telegram_ingress import TelegramProviderRateLimited
 
 
 def test_outbound_telegram_delivery_returns_provider_receipt() -> None:
@@ -71,6 +75,7 @@ def test_bot_api_poll_send_and_living_core_contract_are_bounded() -> None:
             length = int(self.headers["Content-Length"])
             payload = json.loads(self.rfile.read(length))
             captured.append((self.path, payload))
+            status = 200
             if self.path.endswith("/getUpdates"):
                 result: object = [
                     {
@@ -85,22 +90,60 @@ def test_bot_api_poll_send_and_living_core_contract_are_bounded() -> None:
                     }
                 ]
                 response = {"ok": True, "result": result}
+            elif self.path.endswith("/sendMessageDraft"):
+                if payload["text"] == "flood":
+                    status = 429
+                    response = {
+                        "description": "Too Many Requests",
+                        "error_code": 429,
+                        "ok": False,
+                        "parameters": {"retry_after": 7},
+                    }
+                else:
+                    response = {"ok": True, "result": True}
             elif self.path.endswith("/sendMessage"):
                 response = {"ok": True, "result": {"message_id": 9001}}
             else:
-                text = "Hoi terug."
-                import hashlib
-
+                bounded_stream = payload["text"] == "Begrens dit antwoord."
+                padded_final = payload["text"] == "Weiger een niet-canonieke final."
+                text = (
+                    "x" * 4096 + " wordt niet zichtbaar"
+                    if bounded_stream
+                    else " antwoord "
+                    if padded_final
+                    else "Hoi terug."
+                )
+                stream_deltas = (
+                    ("  " + "x" * 4096, " wordt niet zichtbaar ")
+                    if bounded_stream
+                    else ("Hoi ", "terug.")
+                )
                 response = {
                     "contract": "EvaInternalGroundedReply/v1",
-                    "conversation_id": "telegram:101",
-                    "message_id": "telegram:101:501",
+                    "conversation_id": payload["conversation_id"],
+                    "message_id": payload["message_id"],
                     "text": text,
                     "text_sha256": hashlib.sha256(text.encode()).hexdigest(),
                 }
             encoded = json.dumps(response).encode()
-            self.send_response(200)
-            self.send_header("Content-Type", "application/json")
+            if self.headers.get("Accept") == "application/x-ndjson":
+                encoded = b"\n".join(
+                    json.dumps(row, separators=(",", ":")).encode()
+                    for row in (
+                        *(
+                            {"contract": "EvaTextDelta/v1", "text": delta}
+                            for delta in stream_deltas
+                        ),
+                        response,
+                    )
+                ) + b"\n"
+            self.send_response(status)
+            self.send_header(
+                "Content-Type",
+                "application/x-ndjson"
+                if self.headers.get("Accept") == "application/x-ndjson"
+                else "application/json",
+            )
             self.send_header("Content-Length", str(len(encoded)))
             self.end_headers()
             self.wfile.write(encoded)
@@ -122,6 +165,8 @@ def test_bot_api_poll_send_and_living_core_contract_are_bounded() -> None:
         assert len(updates) == 1
         assert updates[0].sender_id == 101
         assert updates[0].text == "Hoi Eva"
+        telegram.send_reply_draft(updates[0], "")
+        telegram.send_reply_draft(updates[0], "Hoi")
         assert telegram.send_reply(updates[0], "Hoi terug.") == "telegram:101:9001"
 
         core = LivingCoreTurnHttpAdapter(
@@ -136,19 +181,88 @@ def test_bot_api_poll_send_and_living_core_contract_are_bounded() -> None:
             audience=MemoryAudience.private_person(principal_id="person:jaap"),
         )
         assert reply.text == "Hoi terug."
+        deltas: list[str] = []
+        streamed = core.respond_stream(
+            updates[0],
+            principal_id="person:jaap",
+            audience=MemoryAudience.private_person(principal_id="person:jaap"),
+            on_delta=deltas.append,
+        )
+        assert streamed == reply
+        assert "".join(deltas) == reply.text
+        assert len(deltas) == 2
         assert captured[0][1] == {
             "allowed_updates": ["message"],
             "limit": 32,
             "offset": 7001,
             "timeout": 2,
         }
-        assert captured[1][1]["reply_parameters"] == {"message_id": 501}
-        assert captured[2][1]["principal_id"] == "person:jaap"
-        assert captured[2][1]["audience"] == {
+        first_draft = captured[1][1]
+        second_draft = captured[2][1]
+        assert first_draft == {
+            "chat_id": 101,
+            "draft_id": first_draft["draft_id"],
+            "text": "",
+        }
+        assert isinstance(first_draft["draft_id"], int)
+        assert 1 <= first_draft["draft_id"] <= 2_147_483_647
+        assert second_draft == {**first_draft, "text": "Hoi"}
+        assert captured[3][1]["reply_parameters"] == {"message_id": 501}
+        assert captured[4][1]["principal_id"] == "person:jaap"
+        assert captured[5][1] == captured[4][1]
+        assert captured[4][1]["audience"] == {
             "audience_id": "person:person:jaap",
             "kind": "private_person",
             "principal_id": "person:jaap",
         }
+        bounded_message = type(updates[0])(
+            7002,
+            "101",
+            502,
+            101,
+            updates[0].occurred_at,
+            "Begrens dit antwoord.",
+        )
+        bounded_deltas: list[str] = []
+        bounded = core.respond_stream(
+            bounded_message,
+            principal_id="person:jaap",
+            audience=MemoryAudience.private_person(principal_id="person:jaap"),
+            on_delta=bounded_deltas.append,
+        )
+        assert bounded.text == "x" * 4095 + "…"
+        assert "".join(bounded_deltas) == bounded.text
+        padded_message = type(updates[0])(
+            7003,
+            "101",
+            503,
+            101,
+            updates[0].occurred_at,
+            "Weiger een niet-canonieke final.",
+        )
+        with pytest.raises(RuntimeError, match="reply content differs"):
+            core.respond(
+                padded_message,
+                principal_id="person:jaap",
+                audience=MemoryAudience.private_person(principal_id="person:jaap"),
+            )
+        with pytest.raises(TelegramProviderRateLimited) as rate_limited:
+            telegram.send_reply_draft(updates[0], "flood")
+        assert rate_limited.value.retry_after_seconds == 7
+        with pytest.raises(ValueError, match="private user chat"):
+            telegram.send_reply_draft(
+                type(updates[0])(
+                    7002,
+                    "-42",
+                    502,
+                    101,
+                    updates[0].occurred_at,
+                    "groep",
+                ),
+                "",
+            )
+        with pytest.raises(ValueError, match="draft text"):
+            telegram.send_reply_draft(updates[0], "x" * 4097)
     finally:
         server.shutdown()
         thread.join(timeout=5)

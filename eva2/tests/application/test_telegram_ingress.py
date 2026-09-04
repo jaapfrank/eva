@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from datetime import UTC, datetime
+import hashlib
 from uuid import UUID
 
 from eva.application.conversation import GroundedReply
@@ -11,6 +12,7 @@ from eva.application.telegram_ingress import (
     TelegramIngressWorker,
     TelegramPrincipalBinding,
     TelegramPrincipalBindings,
+    TelegramProviderRateLimited,
 )
 from eva.application.memory_audience import TelegramGroupConsentReference
 
@@ -581,6 +583,10 @@ def test_group_message_requires_private_person_consent_before_core_or_memory() -
                 hashlib.sha256(b"Groepsantwoord").hexdigest(),
             )
 
+    class NoPrivateDraft:
+        def send_reply_draft(self, *args, **kwargs):  # type: ignore[no-untyped-def]
+            raise AssertionError((args, kwargs))
+
     class Store:
         def next_offset(self):  # type: ignore[no-untyped-def]
             return 0
@@ -653,6 +659,8 @@ def test_group_message_requires_private_person_consent_before_core_or_memory() -
             (TelegramPrincipalBinding(101, "person:jaap", ("-100123", "101")),)
         ),
         group_consent=TelegramGroupConsentResponder(ConsentStore()),
+        reply_drafts=NoPrivateDraft(),
+        streaming_core=object(),
     )  # type: ignore[arg-type]
 
     assert worker.run_once() == "processed"
@@ -703,3 +711,132 @@ def test_group_message_without_consent_never_reaches_core() -> None:
     )  # type: ignore[arg-type]
     assert worker.run_once() == "processed"
     assert rejected == ["group_consent_required"]
+
+
+def test_private_core_uses_ephemeral_drafts_but_keeps_one_final_delivery() -> None:
+    messages = (
+        _message(40, 101, "Vertel rustig wat je doet"),
+        _message(41, 202, "Blijf antwoorden als drafts niet werken"),
+        _message(42, 303, "Respecteer Telegrams afkoelperiode"),
+    )
+    events: list[tuple[str, int, str]] = []
+
+    class Clock:
+        value = 0.0
+
+        def __call__(self) -> float:
+            return self.value
+
+        def advance(self) -> None:
+            self.value += 1.0
+
+    clock = Clock()
+
+    class Provider:
+        def poll(self, *, offset):  # type: ignore[no-untyped-def]
+            return messages
+
+        def send_reply(self, message, text):  # type: ignore[no-untyped-def]
+            events.append(("final", message.sender_id, text))
+            return f"telegram:{message.chat_id}:{9000 + message.message_id}"
+
+    class Drafts:
+        def send_reply_draft(self, message, text):  # type: ignore[no-untyped-def]
+            if message.sender_id == 202:
+                raise TelegramProviderRateLimited(30)
+            if message.sender_id == 303:
+                raise AssertionError("rate-limited draft route was called again")
+            events.append(("draft", message.sender_id, text))
+
+    class Core:
+        def respond(self, message, *, principal_id, audience):  # type: ignore[no-untyped-def]
+            assert message.sender_id in {202, 303}
+            text = (
+                "Definitief zonder draft."
+                if message.sender_id == 202
+                else "Definitief tijdens afkoelen."
+            )
+            return TelegramCoreReply(
+                f"telegram:{message.chat_id}",
+                f"telegram:{message.chat_id}:{message.message_id}",
+                text,
+                hashlib.sha256(text.encode()).hexdigest(),
+            )
+
+    class StreamingCore:
+        calls = 0
+
+        def respond_stream(  # type: ignore[no-untyped-def]
+            self, message, *, principal_id, audience, on_delta
+        ):
+            self.calls += 1
+            parts = ("E", "x" * 255, "y")
+            on_delta(parts[0])
+            clock.advance()
+            on_delta(parts[1])
+            clock.advance()
+            on_delta(parts[2])
+            text = "".join(parts)
+            return TelegramCoreReply(
+                f"telegram:{message.chat_id}",
+                f"telegram:{message.chat_id}:{message.message_id}",
+                text,
+                hashlib.sha256(text.encode()).hexdigest(),
+            )
+
+    class Store:
+        def next_offset(self):  # type: ignore[no-untyped-def]
+            return 0
+
+        def reject(self, *args, **kwargs):  # type: ignore[no-untyped-def]
+            raise AssertionError((args, kwargs))
+
+        def admit(self, message, *, principal_id):  # type: ignore[no-untyped-def]
+            return TelegramIngressJob(message, principal_id, "admitted", 1)
+
+        def prepare_reply(self, job, reply, *, now):  # type: ignore[no-untyped-def]
+            return TelegramIngressJob(
+                job.message, job.principal_id, "prepared", 2, reply
+            )
+
+        def fail_processing(self, *args, **kwargs):  # type: ignore[no-untyped-def]
+            raise AssertionError((args, kwargs))
+
+        def claim_delivery(self, job, *, now):  # type: ignore[no-untyped-def]
+            return TelegramIngressJob(
+                job.message, job.principal_id, "claimed", 3, job.reply
+            )
+
+        def acknowledge_delivery(self, job, receipt, *, now):  # type: ignore[no-untyped-def]
+            assert receipt.startswith(f"telegram:{job.message.chat_id}:")
+
+        def mark_delivery_ambiguous(self, *args, **kwargs):  # type: ignore[no-untyped-def]
+            raise AssertionError((args, kwargs))
+
+    streaming = StreamingCore()
+    worker = TelegramIngressWorker(
+        Provider(),
+        Core(),
+        Store(),
+        TelegramPrincipalBindings(
+            (
+                TelegramPrincipalBinding(101, "person:jaap", ("101",)),
+                TelegramPrincipalBinding(202, "person:lola", ("202",)),
+                TelegramPrincipalBinding(303, "person:frank", ("303",)),
+            )
+        ),
+        reply_drafts=Drafts(),
+        streaming_core=streaming,
+        draft_clock=clock,
+    )  # type: ignore[arg-type]
+
+    assert worker.run_once() == "processed"
+    growing = "E" + "x" * 255 + "y"
+    assert events == [
+        ("draft", 101, ""),
+        ("draft", 101, growing[:-1]),
+        ("final", 101, growing),
+        ("final", 202, "Definitief zonder draft."),
+        ("final", 303, "Definitief tijdens afkoelen."),
+    ]
+    assert streaming.calls == 1

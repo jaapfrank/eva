@@ -168,13 +168,14 @@ def main() -> int:
         installation_id=installation_id,
         bindings=bindings,
     )
+    core = LivingCoreTurnHttpAdapter(
+        base_url=os.environ.get("EVA_LIVING_CORE_URL", "http://core:8080"),
+        tenant_id=tenant_id,
+        installation_id=installation_id,
+    )
     worker = TelegramIngressWorker(
         provider,
-        LivingCoreTurnHttpAdapter(
-            base_url=os.environ.get("EVA_LIVING_CORE_URL", "http://core:8080"),
-            tenant_id=tenant_id,
-            installation_id=installation_id,
-        ),
+        core,
         PostgresTelegramIngressStore(
             engine,
             tenant_id=tenant_id,
@@ -194,6 +195,8 @@ def main() -> int:
         delegated_work_commands=delegated_commands,
         tenant_id=tenant_id,
         installation_id=installation_id,
+        reply_drafts=provider,
+        streaming_core=core,
     )
     stop = Event()
 
