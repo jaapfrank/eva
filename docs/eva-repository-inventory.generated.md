@@ -3,7 +3,7 @@
 Deze kaart is mechanisch gegenereerd. Zij staat naast de semantische runtimegraaf en
 classificeert ieder gevolgd, verwijderd of niet-genegeerd nieuw repositorypad.
 
-Schema: `EvaRepositoryInventory/v1`. Brondigest: `aba1fe0e229bd3c24dd6b9c9f3a06d09e934543f81fd4b5c39b4938a3b20f122`.
+Schema: `EvaRepositoryInventory/v1`. Brondigest: `af3d738423480e07e5aec58de1b8267fbf6db5cd64257803c2c51a4d6c8fe169`.
 
 ## Samenvatting
 
@@ -1700,7 +1700,7 @@ Schema: `EvaRepositoryInventory/v1`. Brondigest: `aba1fe0e229bd3c24dd6b9c9f3a06d
 | `eva2/tests/operations/test_run_managed_b_required_tests.py` | tracked | verification | included-tracked-critical | keep | 21060 |
 | `eva2/tests/operations/test_telegram_binding_loader.py` | tracked | verification | included-tracked-critical | keep | 3471 |
 | `eva2/tests/operations/test_telegram_ingress_wiring.py` | tracked | verification | included-tracked-critical | keep | 4184 |
-| `eva2/tests/operations/test_two_builder_reproducibility.py` | tracked | verification | included-tracked-critical | keep | 93492 |
+| `eva2/tests/operations/test_two_builder_reproducibility.py` | tracked | verification | included-tracked-critical | keep | 93536 |
 | `eva2/tests/platform/test_design_gates.py` | tracked | verification | included-tracked-critical | keep | 5720 |
 | `eva2/tests/platform/test_fail_closed.py` | tracked | verification | included-tracked-critical | keep | 9117 |
 | `eva2/tests/portable/restore_authority_fixture.py` | tracked | verification | included-tracked-critical | keep | 1811 |
@@ -1812,7 +1812,7 @@ Schema: `EvaRepositoryInventory/v1`. Brondigest: `aba1fe0e229bd3c24dd6b9c9f3a06d
 | `eva2/tools/check_living_b_candidate.py` | tracked | verification-runtime | included-tracked-critical | keep | 12781 |
 | `eva2/tools/check_performance_complexity_pc01.py` | tracked | verification-runtime | included-tracked-critical | keep | 12859 |
 | `eva2/tools/check_performance_complexity_pc02.py` | tracked | verification-runtime | included-tracked-critical | keep | 6592 |
-| `eva2/tools/check_two_builder_reproducibility.py` | tracked | verification-runtime | included-tracked-critical | keep | 147785 |
+| `eva2/tools/check_two_builder_reproducibility.py` | tracked | verification-runtime | included-tracked-critical | keep | 147810 |
 | `eva2/tools/core_b_preflight.py` | tracked | verification-runtime | included-tracked-critical | keep | 34568 |
 | `eva2/tools/discover_telegram_test_accounts.py` | tracked | verification-runtime | included-tracked-critical | keep | 4721 |
 | `eva2/tools/eva2_canary_cutover.py` | tracked | verification-runtime | included-tracked-critical | keep | 9511 |

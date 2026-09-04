@@ -2930,6 +2930,7 @@ def _builder_inventory(
                 docker_socket,
                 "image",
                 "ls",
+                "--all",
                 "--no-trunc",
                 "--format",
                 "{{.ID}} {{.Repository}}:{{.Tag}}",

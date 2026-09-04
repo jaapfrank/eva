@@ -1011,6 +1011,7 @@ class _FakePrivateBuilderRunner:
                     command, stdout="Reclaimable:\t0B\nTotal:\t\t0B\n"
                 )
             if operation[:2] == ["image", "ls"]:
+                assert "--all" in operation
                 output = (
                     f"{self.image_id} <none>:<none>\n" if self.built else ""
                 )
