@@ -33,7 +33,7 @@ else:  # Direct execution from eva2/tools.
     )
 
 
-BUILDER_CONTRACT = "EvaMeasuredDockerBuilder/v2"
+BUILDER_CONTRACT = "EvaMeasuredDockerBuilder/v3"
 BUILD_CONTRACT = "EvaManagedBOfflineCandidateBuildReceipt/v2"
 RESULT_CONTRACT = "EvaTwoBuilderReproducibilityReceipt/v2"
 SINGLE_BUILDER_CONTRACT = "EvaSingleBuilderAdmissionReceipt/v2"
@@ -59,6 +59,7 @@ _MAX_LAYER_MEMBER_BYTES = 128 * 1024 * 1024
 _MAX_TOTAL_LAYER_MEMBER_BYTES = 512 * 1024 * 1024
 _MAX_LAYER_MEMBERS = 50_000
 _MAX_TOTAL_LAYER_MEMBERS = 100_000
+_MAX_BUILDX_EXECUTABLE_BYTES = 256 * 1024 * 1024
 _RR002_ARTIFACT_BASE = Path("/home/administrator/project/.eva2-artifacts")
 _EXPECTED_HISTORICAL_ADMISSION_SHA256S = {
     "RB-003": "b60b16fe4065b1deef7a207ef05d98e259608f436e1b7bd6a07ca62f4271de70",
@@ -87,6 +88,8 @@ _INDEPENDENT_BUILDER_FIELDS = (
 _TOOLCHAIN_FIELDS = (
     "backend",
     "buildkitVersion",
+    "buildxExecutableSha256",
+    "buildxVersion",
     "containerdImageStore",
     "dockerExecutableSha256",
     "dockerServerVersion",
@@ -319,6 +322,8 @@ def _builder_measurement(value: object) -> dict[str, object]:
         "backend",
         "buildkitNodeId",
         "buildkitVersion",
+        "buildxExecutableSha256",
+        "buildxVersion",
         "containerdContainersNamespace",
         "containerdImageStore",
         "containerdPluginsNamespace",
@@ -335,6 +340,7 @@ def _builder_measurement(value: object) -> dict[str, object]:
         "backend",
         "buildkitNodeId",
         "buildkitVersion",
+        "buildxVersion",
         "containerdContainersNamespace",
         "containerdImageStore",
         "containerdPluginsNamespace",
@@ -345,6 +351,7 @@ def _builder_measurement(value: object) -> dict[str, object]:
         if not isinstance(field, str) or not field or len(field) > 256:
             raise TwoBuilderError(f"builder {key} is invalid")
     for key in (
+        "buildxExecutableSha256",
         "dockerExecutableSha256",
         "containerdSocketIdentitySha256",
         "socketIdentitySha256",
@@ -2339,6 +2346,116 @@ def _runtime_identity(path: Path, *, socket: bool, label: str) -> str:
     )
 
 
+def _copy_private_buildx_executable(source: Path, target: Path) -> str:
+    input_descriptor = -1
+    output_descriptor = -1
+    created = False
+    copied_ok = False
+    try:
+        before = source.lstat()
+        if (
+            source.resolve(strict=True) != source
+            or not stat.S_ISREG(before.st_mode)
+            or before.st_mode & 0o022
+            or not 0 < before.st_size <= _MAX_BUILDX_EXECUTABLE_BYTES
+            or target.parent.resolve(strict=True) != target.parent
+        ):
+            raise TwoBuilderError("Buildx executable source is unsafe")
+        parent = target.parent.lstat()
+        if (
+            not stat.S_ISDIR(parent.st_mode)
+            or parent.st_uid != os.geteuid()
+            or stat.S_IMODE(parent.st_mode) & 0o077
+        ):
+            raise TwoBuilderError("private Docker plugin directory is unsafe")
+        input_descriptor = os.open(
+            source,
+            os.O_RDONLY
+            | getattr(os, "O_CLOEXEC", 0)
+            | getattr(os, "O_NOFOLLOW", 0),
+        )
+        opened = os.fstat(input_descriptor)
+        output_descriptor = os.open(
+            target,
+            os.O_WRONLY
+            | os.O_CREAT
+            | os.O_EXCL
+            | getattr(os, "O_CLOEXEC", 0)
+            | getattr(os, "O_NOFOLLOW", 0),
+            0o500,
+        )
+        created = True
+        digest = hashlib.sha256()
+        remaining = opened.st_size
+        while remaining:
+            chunk = os.read(input_descriptor, min(1024 * 1024, remaining))
+            if not chunk:
+                raise TwoBuilderError("Buildx executable changed while copied")
+            digest.update(chunk)
+            view = memoryview(chunk)
+            while view:
+                written = os.write(output_descriptor, view)
+                if written <= 0:
+                    raise TwoBuilderError("Buildx executable copy did not progress")
+                view = view[written:]
+            remaining -= len(chunk)
+        if os.read(input_descriptor, 1):
+            raise TwoBuilderError("Buildx executable changed while copied")
+        os.fchmod(output_descriptor, 0o500)
+        os.fsync(output_descriptor)
+        after = os.fstat(input_descriptor)
+        copied = os.fstat(output_descriptor)
+        stable_fields = (
+            "st_dev",
+            "st_ino",
+            "st_mode",
+            "st_nlink",
+            "st_uid",
+            "st_size",
+            "st_mtime_ns",
+            "st_ctime_ns",
+        )
+        if any(
+            getattr(before, field) != getattr(opened, field)
+            or getattr(opened, field) != getattr(after, field)
+            for field in stable_fields
+        ) or (
+            not stat.S_ISREG(copied.st_mode)
+            or copied.st_uid != os.geteuid()
+            or copied.st_nlink != 1
+            or stat.S_IMODE(copied.st_mode) != 0o500
+            or copied.st_size != opened.st_size
+        ):
+            raise TwoBuilderError("Buildx executable copy differs")
+        directory = os.open(
+            target.parent,
+            os.O_RDONLY
+            | os.O_DIRECTORY
+            | getattr(os, "O_CLOEXEC", 0)
+            | getattr(os, "O_NOFOLLOW", 0),
+        )
+        try:
+            os.fsync(directory)
+        finally:
+            os.close(directory)
+        copied_ok = True
+        return digest.hexdigest()
+    except TwoBuilderError:
+        raise
+    except OSError as error:
+        raise TwoBuilderError("Buildx executable could not be copied") from error
+    finally:
+        if output_descriptor >= 0:
+            os.close(output_descriptor)
+        if input_descriptor >= 0:
+            os.close(input_descriptor)
+        if created and not copied_ok:
+            try:
+                target.unlink()
+            except OSError:
+                pass
+
+
 def _operator_environment(
     runtime_root: Path, *, docker_socket: Path, executables: dict[str, Path]
 ) -> dict[str, str]:
@@ -2346,6 +2463,7 @@ def _operator_environment(
     for variable, name in (
         ("DOCKER_CONFIG", "docker-client-config"),
         ("BUILDX_CONFIG", "buildx-client-config"),
+        ("HOME", "home"),
         ("TMPDIR", "tmp"),
     ):
         directory = runtime_root / name
@@ -2356,13 +2474,22 @@ def _operator_environment(
     binary_directory = runtime_root / "operator-bin"
     binary_directory.mkdir(mode=0o700)
     for name, executable in executables.items():
+        if name == "buildx":
+            continue
         (binary_directory / name).symlink_to(executable)
+    plugin_directory = directories["DOCKER_CONFIG"] / "cli-plugins"
+    plugin_directory.mkdir(mode=0o700)
+    buildx_sha256 = _copy_private_buildx_executable(
+        executables["buildx"], plugin_directory / "docker-buildx"
+    )
     return {
         "BUILDX_CONFIG": str(directories["BUILDX_CONFIG"]),
         "DOCKER_CONFIG": str(directories["DOCKER_CONFIG"]),
         "DOCKER_HOST": f"unix://{docker_socket}",
+        "EVA_RR002_BUILDX_SHA256": buildx_sha256,
         "GIT_CONFIG_GLOBAL": "/dev/null",
         "GIT_CONFIG_NOSYSTEM": "1",
+        "HOME": str(directories["HOME"]),
         "LANG": "C.UTF-8",
         "LC_ALL": "C.UTF-8",
         "PATH": str(binary_directory),
@@ -2521,6 +2648,31 @@ def _measure_private_builder(
         ),
         label="Docker version",
     )
+    buildx_version_result = _checked_operator_command(
+        runner,
+        _docker_command(docker, docker_socket, "buildx", "version"),
+        cwd=None,
+        environment=environment,
+    )
+    buildx_version = buildx_version_result.stdout.strip()
+    if (
+        not buildx_version
+        or len(buildx_version) > 512
+        or "\n" in buildx_version
+        or "\r" in buildx_version
+        or any(ord(character) < 32 for character in buildx_version)
+    ):
+        raise TwoBuilderError("private Buildx version is invalid")
+    buildx_path = Path(environment["DOCKER_CONFIG"]) / "cli-plugins/docker-buildx"
+    buildx_sha256 = _sha256(
+        _safe_file(
+            buildx_path,
+            label="private Buildx executable",
+            maximum=_MAX_BUILDX_EXECUTABLE_BYTES,
+        )
+    )
+    if buildx_sha256 != environment.get("EVA_RR002_BUILDX_SHA256"):
+        raise TwoBuilderError("private Buildx executable differs")
     buildx = _checked_operator_command(
         runner,
         _docker_command(
@@ -2575,6 +2727,8 @@ def _measure_private_builder(
         "backend": "docker-buildx/docker",
         "buildkitNodeId": node_ids[0],
         "buildkitVersion": node.get("Version"),
+        "buildxExecutableSha256": buildx_sha256,
+        "buildxVersion": buildx_version,
         "containerdContainersNamespace": containers_namespace,
         "containerdImageStore": "io.containerd.snapshotter.v1",
         "containerdPluginsNamespace": plugins_namespace,
@@ -2981,7 +3135,17 @@ def _run_private_builder_operator(
     )
     executables = {
         name: _explicit_executable(getattr(arguments, name), label=name)
-        for name in ("python", "git", "docker", "ctr", "ip", "systemctl", "sudo", "rm")
+        for name in (
+            "python",
+            "git",
+            "docker",
+            "buildx",
+            "ctr",
+            "ip",
+            "systemctl",
+            "sudo",
+            "rm",
+        )
     }
     runtime_root = _private_directory(
         arguments.runtime_root, label="private runtime root", under_tmp=True
@@ -3623,7 +3787,17 @@ def _private_builder_parser() -> argparse.ArgumentParser:
     )
     parser.add_argument("--builder-a-admission", type=Path)
     parser.add_argument("--builder-a-preflight", type=Path)
-    for name in ("python", "git", "docker", "ctr", "ip", "systemctl", "sudo", "rm"):
+    for name in (
+        "python",
+        "git",
+        "docker",
+        "buildx",
+        "ctr",
+        "ip",
+        "systemctl",
+        "sudo",
+        "rm",
+    ):
         parser.add_argument(
             f"--{name}-executable",
             dest=name,

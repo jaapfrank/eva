@@ -35,8 +35,9 @@ from .private_receipt import write_new_private_json
 
 _IMAGE_PREFIX = "sha256:"
 _MAX_IMAGE_ARCHIVE_BYTES = 2 * 1024 * 1024 * 1024
+_MAX_BUILDX_EXECUTABLE_BYTES = 256 * 1024 * 1024
 _RUNTIME_LIBRARY_PATH = "LD_LIBRARY_PATH=/usr/local/lib"
-_BUILDER_CONTRACT = "EvaMeasuredDockerBuilder/v2"
+_BUILDER_CONTRACT = "EvaMeasuredDockerBuilder/v3"
 
 
 @dataclass(frozen=True, slots=True)
@@ -167,6 +168,109 @@ def _docker_executable_sha256() -> str:
     return hashlib.sha256(raw).hexdigest()
 
 
+def _buildx_executable_sha256() -> str:
+    config_raw = os.environ.get("DOCKER_CONFIG", "")
+    expected = os.environ.get("EVA_RR002_BUILDX_SHA256", "")
+    if (
+        not config_raw
+        or len(expected) != 64
+        or any(character not in "0123456789abcdef" for character in expected)
+    ):
+        raise RuntimeError("managed B Buildx authority is unavailable")
+    config = Path(config_raw)
+    plugin_directory = config / "cli-plugins"
+    path = plugin_directory / "docker-buildx"
+    try:
+        config_resolved = config.resolve(strict=True)
+        config_metadata = config.lstat()
+        plugin_directory_resolved = plugin_directory.resolve(strict=True)
+        plugin_directory_metadata = plugin_directory.lstat()
+        resolved = path.resolve(strict=True)
+        before = path.lstat()
+    except OSError as error:
+        raise RuntimeError("managed B Buildx executable is inaccessible") from error
+    if (
+        not config.is_absolute()
+        or ".." in config.parts
+        or config_resolved != config
+        or plugin_directory_resolved != plugin_directory
+        or not stat.S_ISDIR(config_metadata.st_mode)
+        or not stat.S_ISDIR(plugin_directory_metadata.st_mode)
+        or config_metadata.st_uid != os.geteuid()
+        or plugin_directory_metadata.st_uid != os.geteuid()
+        or stat.S_IMODE(config_metadata.st_mode) & 0o077
+        or stat.S_IMODE(plugin_directory_metadata.st_mode) & 0o077
+        or resolved != path
+        or not stat.S_ISREG(before.st_mode)
+        or before.st_uid != os.geteuid()
+        or before.st_nlink != 1
+        or stat.S_IMODE(before.st_mode) & 0o077
+        or stat.S_IMODE(before.st_mode) & 0o100 == 0
+        or not 0 < before.st_size <= _MAX_BUILDX_EXECUTABLE_BYTES
+    ):
+        raise RuntimeError("managed B Buildx executable is unsafe")
+    descriptor = -1
+    try:
+        descriptor = os.open(
+            path,
+            os.O_RDONLY
+            | getattr(os, "O_CLOEXEC", 0)
+            | getattr(os, "O_NOFOLLOW", 0),
+        )
+        opened = os.fstat(descriptor)
+        digest = hashlib.sha256()
+        remaining = opened.st_size
+        while remaining:
+            chunk = os.read(descriptor, min(1024 * 1024, remaining))
+            if not chunk:
+                raise RuntimeError("managed B Buildx executable changed while read")
+            digest.update(chunk)
+            remaining -= len(chunk)
+        if os.read(descriptor, 1):
+            raise RuntimeError("managed B Buildx executable changed while read")
+        after = os.fstat(descriptor)
+    except OSError as error:
+        raise RuntimeError("managed B Buildx executable is inaccessible") from error
+    finally:
+        if descriptor >= 0:
+            os.close(descriptor)
+    stable_fields = (
+        "st_dev",
+        "st_ino",
+        "st_mode",
+        "st_nlink",
+        "st_uid",
+        "st_size",
+        "st_mtime_ns",
+        "st_ctime_ns",
+    )
+    if any(
+        getattr(before, field) != getattr(opened, field)
+        or getattr(opened, field) != getattr(after, field)
+        for field in stable_fields
+    ):
+        raise RuntimeError("managed B Buildx executable changed while read")
+    observed = digest.hexdigest()
+    if observed != expected:
+        raise RuntimeError("managed B Buildx executable differs from authority")
+    return observed
+
+
+def _buildx_version(runner: Runner) -> str:
+    result = runner(["docker", "buildx", "version"], 30)
+    value = result.stdout.strip()
+    if (
+        result.returncode != 0
+        or not value
+        or len(value) > 512
+        or "\n" in value
+        or "\r" in value
+        or any(ord(character) < 32 for character in value)
+    ):
+        raise RuntimeError("managed B Buildx version is invalid")
+    return value
+
+
 def _builder_measurement(runner: Runner) -> dict[str, object]:
     info = _json_command(
         ["docker", "info", "--format", "{{json .}}"],
@@ -178,6 +282,7 @@ def _builder_measurement(runner: Runner) -> dict[str, object]:
         runner,
         label="Docker builder version",
     )
+    buildx_version = _buildx_version(runner)
     buildx_result = runner(["docker", "buildx", "ls", "--format", "{{json .}}"], 30)
     try:
         builders = [
@@ -261,6 +366,8 @@ def _builder_measurement(runner: Runner) -> dict[str, object]:
         "backend": "docker-buildx/docker",
         "buildkitNodeId": node_ids[0],
         "buildkitVersion": node["Version"],
+        "buildxExecutableSha256": _buildx_executable_sha256(),
+        "buildxVersion": buildx_version,
         "containerdContainersNamespace": containerd_containers_namespace,
         "containerdImageStore": "io.containerd.snapshotter.v1",
         "containerdPluginsNamespace": containerd_plugins_namespace,
@@ -295,6 +402,8 @@ def _validate_builder_binding(value: object) -> dict[str, object]:
         "backend",
         "buildkitNodeId",
         "buildkitVersion",
+        "buildxExecutableSha256",
+        "buildxVersion",
         "containerdContainersNamespace",
         "containerdImageStore",
         "containerdPluginsNamespace",
@@ -320,6 +429,7 @@ def _validate_builder_binding(value: object) -> dict[str, object]:
         "backend",
         "buildkitNodeId",
         "buildkitVersion",
+        "buildxVersion",
         "containerdContainersNamespace",
         "containerdImageStore",
         "containerdPluginsNamespace",
@@ -329,6 +439,7 @@ def _validate_builder_binding(value: object) -> dict[str, object]:
         if not isinstance(before[key], str) or not before[key]:
             raise RuntimeError("managed B builder identity differs")
     for key in (
+        "buildxExecutableSha256",
         "dockerExecutableSha256",
         "containerdSocketIdentitySha256",
         "socketIdentitySha256",

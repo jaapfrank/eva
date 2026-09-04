@@ -50,6 +50,8 @@ def _builder_measurement(side: str) -> dict[str, object]:
         "backend": "docker-buildx/docker",
         "buildkitNodeId": f"node-{side}",
         "buildkitVersion": "v0.26.2",
+        "buildxExecutableSha256": "8" * 64,
+        "buildxVersion": "github.com/docker/buildx v0.18.0 test",
         "containerdContainersNamespace": f"eva-test-{side}",
         "containerdImageStore": "io.containerd.snapshotter.v1",
         "containerdPluginsNamespace": f"eva-test-{side}-plugins",
@@ -67,7 +69,7 @@ def _builder(side: str) -> dict[str, object]:
     return {
         "after": dict(identity),
         "before": dict(identity),
-        "contract": "EvaMeasuredDockerBuilder/v2",
+        "contract": "EvaMeasuredDockerBuilder/v3",
         "runChallenge": ("a" if side == "a" else "b") * 64,
         "singleHost": True,
     }
@@ -874,7 +876,7 @@ class _FakePrivateBuilderRunner:
         candidate_receipt["builder"] = {
             "after": dict(identity),
             "before": dict(identity),
-            "contract": "EvaMeasuredDockerBuilder/v2",
+            "contract": "EvaMeasuredDockerBuilder/v3",
             "runChallenge": "b" * 64,
             "singleHost": True,
         }
@@ -973,6 +975,17 @@ class _FakePrivateBuilderRunner:
                     stdout=json.dumps(
                         {"Arch": "amd64", "Os": "linux", "Version": "29.1.3"}
                     ),
+                )
+            if operation[:2] == ["buildx", "version"]:
+                plugin = (
+                    Path(environment["DOCKER_CONFIG"])
+                    / "cli-plugins/docker-buildx"
+                )
+                assert plugin.read_bytes() == self.arguments.buildx.read_bytes()
+                assert plugin.stat().st_mode & 0o777 == 0o500
+                return self._completed(
+                    command,
+                    stdout="github.com/docker/buildx v0.18.0 test\n",
                 )
             if operation[:2] == ["buildx", "ls"]:
                 return self._completed(
@@ -1093,6 +1106,10 @@ def _private_builder_fixture(
         )
         for task_id in ("RB-003", "RB-004")
     ]
+    buildx = tmp_path / "docker-buildx"
+    buildx.write_bytes(b"fixture buildx executable")
+    buildx.chmod(0o500)
+
     def executable(name: str) -> Path:
         return Path(shutil.which(name) or "")
 
@@ -1101,6 +1118,7 @@ def _private_builder_fixture(
         build_image_archive=base_archives["build"],
         build_image_archive_sha256="c" * 64,
         build_receipt=output_parent / "build.json",
+        buildx=buildx,
         builder_a_admission=None,
         builder_a_preflight=None,
         cleanup_receipt=output_parent / "cleanup.json",
@@ -1166,7 +1184,7 @@ def test_private_builder_operator_measures_builds_admits_and_cleans(
     }
     for command, _cwd, environment in runner.calls:
         assert "DOCKER_CONTEXT" not in environment
-        assert "HOME" not in environment
+        assert environment.get("HOME") != "/must-not-enter-private-builder"
         if Path(command[0]).name == "docker":
             assert command[1:3] == [
                 "--host",
@@ -1208,6 +1226,16 @@ def test_private_builder_operator_measures_builds_admits_and_cleans(
     assert cwd == arguments.source_root
     assert environment["DOCKER_CONFIG"].startswith(str(arguments.runtime_root))
     assert environment["BUILDX_CONFIG"].startswith(str(arguments.runtime_root))
+    assert environment["HOME"].startswith(str(arguments.runtime_root))
+    assert environment["EVA_RR002_BUILDX_SHA256"] == hashlib.sha256(
+        arguments.buildx.read_bytes()
+    ).hexdigest()
+    assert result["admission"]["builder"]["buildxExecutableSha256"] == (
+        environment["EVA_RR002_BUILDX_SHA256"]
+    )
+    assert result["admission"]["builder"]["buildxVersion"] == (
+        "github.com/docker/buildx v0.18.0 test"
+    )
 
 
 @pytest.mark.parametrize("failure", ["source", "build", "cleanup"])
@@ -1233,6 +1261,49 @@ def test_private_builder_failure_cleans_and_never_publishes_admission(
         arguments.docker_unit,
         arguments.containerd_unit,
     }
+
+
+def test_private_builder_rejects_missing_buildx_and_still_cleans(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    arguments, runner, sockets = _private_builder_fixture(tmp_path, monkeypatch)
+    arguments.buildx = tmp_path / "missing-docker-buildx"
+    try:
+        with pytest.raises(TwoBuilderError, match="buildx executable is inaccessible"):
+            run_private_builder_operator(arguments, runner=runner)
+    finally:
+        for value in sockets:
+            value.close()
+
+    assert not arguments.runtime_root.exists()
+    assert not arguments.admission_receipt.exists()
+    assert arguments.cleanup_receipt.exists()
+
+
+def test_private_builder_rejects_changed_private_buildx_and_still_cleans(
+    tmp_path: Path,
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    arguments, runner, sockets = _private_builder_fixture(tmp_path, monkeypatch)
+    original = reproducibility._copy_private_buildx_executable
+
+    def wrong_authority(source: Path, target: Path) -> str:
+        original(source, target)
+        return "0" * 64
+
+    monkeypatch.setattr(
+        reproducibility, "_copy_private_buildx_executable", wrong_authority
+    )
+    try:
+        with pytest.raises(TwoBuilderError, match="private Buildx executable differs"):
+            run_private_builder_operator(arguments, runner=runner)
+    finally:
+        for value in sockets:
+            value.close()
+
+    assert not arguments.runtime_root.exists()
+    assert not arguments.admission_receipt.exists()
+    assert arguments.cleanup_receipt.exists()
 
 
 def test_private_builder_rejects_system_socket_and_still_cleans(
@@ -2300,6 +2371,29 @@ def test_rejects_toolchain_or_input_drift(tmp_path: Path) -> None:
     right_build["source"]["dockerfile_sha256"] = "3" * 64
     _write_build(builds[1], archives[1], right_build)
     with pytest.raises(TwoBuilderError, match="input authorities differ"):
+        _verify_two(fixture)
+
+
+@pytest.mark.parametrize(
+    ("field", "value"),
+    [
+        ("buildxExecutableSha256", "7" * 64),
+        ("buildxVersion", "github.com/docker/buildx v0.19.0 test"),
+    ],
+)
+def test_rejects_buildx_toolchain_drift(
+    tmp_path: Path, field: str, value: str
+) -> None:
+    fixture = _two_builder_fixture(tmp_path)
+    builds = fixture["builds"]
+    archives = fixture["archives"]
+    right_build = json.loads(builds[1].read_bytes())
+    right_builder = right_build["candidate"]["receipt"]["builder"]
+    right_builder["before"][field] = value
+    right_builder["after"][field] = value
+    _write_build(builds[1], archives[1], right_build)
+
+    with pytest.raises(TwoBuilderError, match="toolchains differ"):
         _verify_two(fixture)
 
 

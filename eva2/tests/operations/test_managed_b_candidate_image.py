@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import hashlib
 import json
 import os
 from pathlib import Path
@@ -14,6 +15,7 @@ from tools.managed_b_candidate.base_image import (
 )
 from tools.managed_b_candidate.build_context import MaterializedBuildContext
 from tools.managed_b_candidate.candidate_image import (
+    _buildx_executable_sha256,
     _builder_measurement,
     _hash_image_archive,
     _loaded_image_id,
@@ -45,6 +47,8 @@ BUILDER_IDENTITY = {
     "backend": "docker-buildx/docker",
     "buildkitNodeId": "buildkit-node-a",
     "buildkitVersion": "v0.26.2",
+    "buildxExecutableSha256": "a" * 64,
+    "buildxVersion": "github.com/docker/buildx v0.18.0 test",
     "containerdContainersNamespace": "moby",
     "containerdImageStore": "io.containerd.snapshotter.v1",
     "containerdPluginsNamespace": "plugins.moby",
@@ -295,6 +299,10 @@ def test_measures_real_docker_and_buildkit_fields(
         "tools.managed_b_candidate.candidate_image._docker_executable_sha256",
         lambda: "c" * 64,
     )
+    monkeypatch.setattr(
+        "tools.managed_b_candidate.candidate_image._buildx_executable_sha256",
+        lambda: "d" * 64,
+    )
 
     def runner(command: list[str], _timeout: int) -> subprocess.CompletedProcess[str]:
         if command[:2] == ["docker", "info"]:
@@ -318,6 +326,10 @@ def test_measures_real_docker_and_buildkit_fields(
         if command[:2] == ["docker", "version"]:
             value = {"Arch": "amd64", "Os": "linux", "Version": "29.1.3"}
             return subprocess.CompletedProcess(command, 0, json.dumps(value), "")
+        if command[:3] == ["docker", "buildx", "version"]:
+            return subprocess.CompletedProcess(
+                command, 0, "github.com/docker/buildx v0.18.0 test\n", ""
+            )
         if command[:3] == ["docker", "buildx", "ls"]:
             value = {
                 "Driver": "docker",
@@ -339,6 +351,8 @@ def test_measures_real_docker_and_buildkit_fields(
         "backend": "docker-buildx/docker",
         "buildkitNodeId": "node-a",
         "buildkitVersion": "v0.26.2",
+        "buildxExecutableSha256": "d" * 64,
+        "buildxVersion": "github.com/docker/buildx v0.18.0 test",
         "containerdContainersNamespace": "moby",
         "containerdImageStore": "io.containerd.snapshotter.v1",
         "containerdPluginsNamespace": "plugins.moby",
@@ -349,6 +363,32 @@ def test_measures_real_docker_and_buildkit_fields(
         "socketIdentitySha256": "a" * 64,
         "stateRootIdentitySha256": "b" * 64,
     }
+
+
+def test_buildx_authority_hashes_only_the_private_plugin(
+    native_tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    docker_config = native_tmp_path / "docker-config"
+    docker_config.mkdir(mode=0o700)
+    plugin_directory = docker_config / "cli-plugins"
+    plugin_directory.mkdir(mode=0o700)
+    plugin = plugin_directory / "docker-buildx"
+    plugin.write_bytes(b"bound buildx executable")
+    plugin.chmod(0o500)
+    expected = hashlib.sha256(plugin.read_bytes()).hexdigest()
+    monkeypatch.setenv("DOCKER_CONFIG", str(docker_config))
+    monkeypatch.setenv("EVA_RR002_BUILDX_SHA256", expected)
+
+    assert _buildx_executable_sha256() == expected
+
+    monkeypatch.setenv("EVA_RR002_BUILDX_SHA256", "0" * 64)
+    with pytest.raises(RuntimeError, match="differs from authority"):
+        _buildx_executable_sha256()
+
+    monkeypatch.setenv("EVA_RR002_BUILDX_SHA256", expected)
+    docker_config.chmod(0o755)
+    with pytest.raises(RuntimeError, match="executable is unsafe"):
+        _buildx_executable_sha256()
 
 
 @pytest.mark.parametrize(
@@ -374,6 +414,10 @@ def test_refuses_builder_without_bound_containerd_export_capability(
         "tools.managed_b_candidate.candidate_image._docker_executable_sha256",
         lambda: "b" * 64,
     )
+    monkeypatch.setattr(
+        "tools.managed_b_candidate.candidate_image._buildx_executable_sha256",
+        lambda: "c" * 64,
+    )
     commands: list[list[str]] = []
 
     def runner(command: list[str], _timeout: int) -> subprocess.CompletedProcess[str]:
@@ -391,6 +435,10 @@ def test_refuses_builder_without_bound_containerd_export_capability(
         if command[:2] == ["docker", "version"]:
             value = {"Arch": "amd64", "Os": "linux", "Version": "29.1.3"}
             return subprocess.CompletedProcess(command, 0, json.dumps(value), "")
+        if command[:3] == ["docker", "buildx", "version"]:
+            return subprocess.CompletedProcess(
+                command, 0, "github.com/docker/buildx v0.18.0 test\n", ""
+            )
         if command[:3] == ["docker", "buildx", "ls"]:
             value = {
                 "Driver": "docker",
