@@ -1,0 +1,82 @@
+{
+  "contract": "EvaTelegramLiveDraftContractProof/v1",
+  "taskId": "CO-001",
+  "createdAt": "2026-09-04T20:23:23+02:00",
+  "implementationCommit": "7b330a3c7ba4e00fa97b5fcd18d3e127ffcf4df7",
+  "baseCommit": "ff9ff89aa0f102543d217138a5f96fe91c2d6c4a",
+  "upstream": {
+    "provider": "Telegram Bot API 10.3",
+    "method": "sendMessageDraft",
+    "documentation": "https://core.telegram.org/bots/api#sendmessagedraft",
+    "factsChecked": [
+      "The method is for a private user chat and returns True on success.",
+      "An empty draft shows Telegram's temporary Thinking placeholder.",
+      "Draft text is limited to 4096 characters and the draft ID must be non-zero.",
+      "The draft is a temporary preview; sendMessage persists the completed answer."
+    ],
+    "newDependencyAdded": false
+  },
+  "provedBehavior": [
+    "An admitted private Telegram turn first submits one empty Thinking draft.",
+    "Only genuine model deltas from a tool-free final phase cross the internal NDJSON stream; post-hoc replay of a completed answer was removed.",
+    "Draft growth is append-only, coalesced and offered no more often than once per second.",
+    "A structured Telegram 429 retry_after pauses later draft attempts without delaying or duplicating the durable final answer.",
+    "The Living Core and its journal retain the complete canonical reply. Only the Telegram connector renders a maximum 4096-character channel version and recalculates its hash.",
+    "A group turn bypasses drafts. Failure of the initial placeholder falls back to one ordinary core request before any model request was started; failure of a later text draft lets the already-running stream finish.",
+    "The existing delivery claim still produces exactly one persistent sendMessage receipt. Drafts add no durable replay state."
+  ],
+  "localContractProvider": {
+    "kind": "loopback HTTP server",
+    "externalTelegramTraffic": false,
+    "observedSequence": [
+      "getUpdates",
+      "sendMessageDraft with empty text",
+      "sendMessageDraft with growing safe text",
+      "sendMessage for the final reply"
+    ],
+    "negativeCases": [
+      "group draft rejected",
+      "draft longer than 4096 rejected",
+      "hash-valid but whitespace-padded core final rejected",
+      "overlong core answer preserved upstream and ellipsized only for Telegram",
+      "429 retry_after suppresses another draft attempt while final delivery continues"
+    ]
+  },
+  "testRuns": [
+    {
+      "command": "TMPDIR=/tmp TEMP=/tmp TMP=/tmp pytest -q tests/api/test_memory_api.py tests/application/test_conversation.py tests/application/test_telegram_ingress.py tests/connectors/test_telegram.py tests/operations/test_telegram_ingress_wiring.py",
+      "result": "54 passed"
+    },
+    {
+      "command": "TMPDIR=/tmp TEMP=/tmp TMP=/tmp pytest -q tests/api/test_memory_api.py tests/application/test_conversation.py tests/application/test_telegram_ingress.py tests/connectors/test_telegram.py tests/operations/test_telegram_ingress_wiring.py tests/model/test_pydantic_conversation_model.py",
+      "result": "77 passed"
+    },
+    {
+      "command": "ruff check src/eva/adapters/api/app.py src/eva/adapters/connectors/telegram.py src/eva/application/conversation.py src/eva/application/telegram_ingress.py src/eva/bootstrap/telegram_ingress.py tests/api/test_memory_api.py tests/application/test_conversation.py tests/application/test_telegram_ingress.py tests/connectors/test_telegram.py tests/operations/test_telegram_ingress_wiring.py",
+      "result": "passed"
+    },
+    {
+      "command": "python3 tools/check_component_catalog.py",
+      "result": "ok, zero violations"
+    },
+    {
+      "command": "node ../test/repository-inventory.test.js",
+      "result": "11 passed"
+    },
+    {
+      "command": "node ../test/repository-inventory-disposition.test.js",
+      "result": "1 passed"
+    }
+  ],
+  "modelUsage": {
+    "modelCalls": 0,
+    "providerTokens": 0,
+    "reason": "This card used deterministic local contract providers and existing recorded model-stream fixtures."
+  },
+  "nonClaims": [
+    "No message was sent to the real Telegram service for this receipt.",
+    "The implementation commit is not deployed and this card does not run an A/B release cycle.",
+    "Telegram's optional stop-generation button is outside CO-001.",
+    "This functional proof is not a cross-domain superiority result."
+  ]
+}
