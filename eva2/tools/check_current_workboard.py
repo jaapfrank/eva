@@ -39,6 +39,7 @@ RULES = [
     "Releaseherstel wordt compact met zijn evidence- en reviewreferenties afgesloten; "
     "daarna volgt productwerk volgens de vastgelegde meetcadans.",
     "Productcadans: nulmeting → maintained upstream kiezen → bouwen/hergebruiken → gerichte test → echte gebruikersproef → dezelfde nameting → zware releasepoort.",
+    "Iedere functionele kaart werkt ook haar bestandsinventaris bij, verwijdert vervangen code en consolideert dubbele adapters; daarvoor bestaat geen aparte opruimwachtrij.",
 ]
 RETIRED_BENCHMARK_MARKERS = (
     "comparable-agent-run-v1.schema.json",

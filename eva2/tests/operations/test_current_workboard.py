@@ -47,6 +47,9 @@ def test_product_cadence_and_release_phase_are_explicit() -> None:
     assert "nulmeting" in rules and "maintained upstream" in rules
     assert ARTIFACT_RETENTION_RULE in board["rules"]
     milestones = {card["id"]: card for card in board["milestones"]}
+    assert milestones["CO-001"]["order"] == 110
+    assert not any(card_id.startswith("OS-") for card_id in milestones)
+    assert "geen aparte opruimwachtrij" in rules
     assert [milestones[f"RB-00{i}"]["order"] for i in range(7, 10)] + [milestones["RB-010"]["order"]] == [400, 410, 420, 430]
     assert "reserveslot" in milestones["RB-010"]["outcome"]
     assert "route" in milestones["RB-010"]["outcome"]
