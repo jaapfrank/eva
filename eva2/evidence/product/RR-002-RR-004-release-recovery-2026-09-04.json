@@ -1,0 +1,46 @@
+{
+  "candidate": {
+    "archiveSha256": "d2d0c04436e8422c0fc7dddcc11a66b8274afe9dd5d04c7c6562f089b5972b42",
+    "configSha256": "71bd9d2c8f43a9ceecc4511abf47151141a5f3de3ba19e57845b90a02f0c0867",
+    "imageId": "sha256:ffc3b9c7d49b491a1a04539cc782d85d16c4d85634a5980a66d6a6bd615713a4",
+    "runtimeLayerSequenceSha256": "c1d8f197c00e5b68593cb51232fd889f3560196ed13270ac74264725233045dc",
+    "runtimeSourceTreeSha256": "c6f7d2e2da18ee9d3e771caf4cb9cb2f43d24f053c427c92156d1f3dc358e46d"
+  },
+  "contract": "EvaReleaseRecoverySummary/v1",
+  "nonClaims": [
+    "Deze samenvatting start, wijzigt of promoveert geen live container, route of database.",
+    "Nul hoge en kritieke scanbevindingen bewijst niet dat iedere mogelijke kwetsbaarheid afwezig is."
+  ],
+  "releaseAuthoritySha256": "41e5393990759a87e3d44c6e7fe0507380e173d326480ee675d54a1278def448",
+  "results": {
+    "RR-002": {
+      "builderAAdmissionSha256": "2aab973c75cd9dcaabb9653a37edf11b7647e6973cfe0f48dc4da347829f1d1e",
+      "builderBAdmissionSha256": "2e3bfd624262ab4e4668857da9df4f20ed6bbeb8e455222e794bfcd835e3614a",
+      "decision": "GO",
+      "result": "Twee lege, onderling verschillende offline bouwers leverden ieder een geldige kandidaat op."
+    },
+    "RR-003": {
+      "decision": "GO",
+      "privateReceiptSha256": "b9afd26aae434b820c1643e7ddb9bee4b80965f58afe6ef6db9c6cd79067dc42",
+      "result": "Archief, OCI-manifest, configuratie, laagvolgorde en runtimebron zijn bytegelijk."
+    },
+    "RR-004": {
+      "decision": "GO",
+      "findings": {
+        "CRITICAL": 0,
+        "HIGH": 0
+      },
+      "privateReceiptSha256": "e10720dd1f35a76e7c85534f56bf0e7c5b2abc912c743ac92319fb46a32a4da2",
+      "sbomFileCount": 1519,
+      "sbomPackageCount": 75,
+      "result": "De gekozen kandidaat is zonder netwerk gescand met de gepinde Syft- en Trivy-images."
+    }
+  },
+  "sourceCommit": "c1d4c8a679a9651c7969a1b11591d3d1c770088e",
+  "status": "passed",
+  "tasks": [
+    "RR-002",
+    "RR-003",
+    "RR-004"
+  ]
+}

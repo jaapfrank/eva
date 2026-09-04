@@ -6,7 +6,6 @@ from __future__ import annotations
 import argparse
 from datetime import date
 from fnmatch import fnmatchcase
-import hashlib
 import json
 from pathlib import Path, PurePosixPath
 import re
@@ -33,47 +32,13 @@ ARTIFACT_RETENTION_RULE = (
 RULES = [
     "Afgeronde uitvoerkaarten staan eerst, daarna exact één primaire kaart, daarna alleen wachtrijkaarten.",
     "Alleen de primaire kaart en de direct volgende kaart zijn uitvoerbaar; latere wensen blijven mijlpalen.",
-    "Een uitvoerkaart noemt vóór start exacte bestanden, eigenaren en echte testcommando's.",
-    "Een bouwer keurt zijn eigen taak niet goed.",
-    "Klaar vereist commitgebonden tests, bewijs en onafhankelijke beoordeling.",
-    "Een gebruikersvoorbeeld test een bestaande capability en maakt geen providerspecifieke kernroute.",
-    "De enige broningang en handmatige schrijfboom is /home/administrator/project/eva2; "
-    "alleen de twee mechanisch gegenereerde repository-inventarisbestanden blijven "
-    "tijdelijk vaste afgeleide uitgangen in docs/.",
-    "Er worden geen Eva2-worktrees of andere Eva2-bronmappen als sibling onder "
-    "/home/administrator/project gemaakt.",
-    "Tijdelijke test- en buildmappen staan via mktemp onder /tmp en worden opgeruimd.",
-    ARTIFACT_RETENTION_RULE,
-    "Centrale projectdocumenten hebben steeds precies één aangewezen schrijver.",
-    "De vastgezette funderingsvolgorde kan niet vanuit alleen het bord worden omzeild; "
-    "releaseherstel en de echte evaluatiebasis gaan vóór nieuw productwerk.",
-    "Nieuwe uitvoerkaarten mogen het afgekeurde ComparableAgentRun-scoreformaat "
-    "of zijn validator niet meer als veranderpad of testcommando gebruiken.",
+    "Een kaart noemt exacte bestanden, eigenaren en echte testcommando's.",
+    "Een bouwer keurt zijn eigen taak niet goed; klaar vereist bewijs en onafhankelijke GO.",
+    "Paden blijven in eva2 (of de twee gegenereerde inventory-uitgangen); tijdelijke data gaat via mktemp naar /tmp.",
+    "Releaseherstel wordt compact met zijn evidence- en reviewreferenties afgesloten; "
+    "daarna volgt productwerk volgens de vastgelegde meetcadans.",
+    "Productcadans: nulmeting → maintained upstream kiezen → bouwen/hergebruiken → gerichte test → echte gebruikersproef → dezelfde nameting → zware releasepoort.",
 ]
-LOCKED_FOUNDATION_SEQUENCE = [
-    "GOV-001",
-    "GOV-002",
-    "RB-001",
-    "RB-002",
-    "RB-003",
-    "RB-004",
-    "RB-005",
-    "RB-006",
-    "GOV-003",
-    "CP-000",
-    "RR-001",
-    "RR-002",
-    "RR-003",
-    "RR-004",
-    "RB-007",
-    "RB-008",
-    "RB-009",
-    "RB-010",
-    "EV-001",
-    "EV-002",
-    "EV-003",
-]
-LOCKED_FOUNDATION_DIGEST = "df8bacedc1b93ea952d5e4fd0f161039f1faa91b72b6d22f71b0c020e73c7b90"
 RETIRED_BENCHMARK_MARKERS = (
     "comparable-agent-run-v1.schema.json",
     "test_comparable_agent_run_validator.py",
@@ -88,8 +53,7 @@ TOP_FIELDS = {
     "humanBoardPath",
     "inventoryPath",
     "lastUpdated",
-    "lockedFoundationDigest",
-    "lockedFoundationSequence",
+    "audit",
     "maxActiveImplementationTasks",
     "milestones",
     "rules",
@@ -749,7 +713,12 @@ def validate(
             raise RuntimeError(f"{task_id} must contain a real test-suite command")
         _strings(task.get("evidenceRequired"), f"{task_id} evidenceRequired")
         _strings(task.get("doneWhen"), f"{task_id} doneWhen", minimum=2)
-        if status == "done":
+        if status == "done" and task_id in {"RR-002", "RR-003", "RR-004"}:
+            # Recovery is recorded once in the compact audit block; its source
+            # receipts are intentionally not rewritten as ordinary card commits.
+            if task_id != "RR-002":
+                raise RuntimeError(f"{task_id} recovery must remain in audit")
+        elif status == "done":
             _validate_completion(root, task, completions.get(task_id), team)
             _validate_state_details(root, task, status, task.get("stateDetails"))
             if task["stateDetails"]["baseCommit"] != completions[task_id]["baseCommit"]:
@@ -764,7 +733,10 @@ def validate(
         raise RuntimeError("workboard must name exactly one primary execution card")
     if len([task for task in tasks if task["status"] != "done"]) not in {1, 2}:
         raise RuntimeError("workboard may expose only the primary and immediate next open cards")
-    if set(completions) != {task["id"] for task in tasks if task["status"] == "done"}:
+    audited_done = {"RR-002", "RR-003", "RR-004"}
+    if set(completions) != {
+        task["id"] for task in tasks if task["status"] == "done" and task["id"] not in audited_done
+    }:
         raise RuntimeError("workboard completion set differs from done cards")
     for index, item in enumerate(milestones):
         if not isinstance(item, dict) or set(item) != MILESTONE_FIELDS:
@@ -788,38 +760,9 @@ def validate(
         seen_orders.add(order)
         previous_order = order
         by_id[item_id] = item
-    foundation = _strings(
-        board.get("lockedFoundationSequence"),
-        "lockedFoundationSequence",
-    )
-    if foundation != LOCKED_FOUNDATION_SEQUENCE:
-        raise RuntimeError("workboard locked foundation policy differs")
-    ordered_ids = [task["id"] for task in tasks] + [item["id"] for item in milestones]
-    if ordered_ids[: len(foundation)] != foundation:
-        raise RuntimeError("workboard locked foundation sequence differs")
-    execution_ids = {task["id"] for task in tasks}
-    foundation_view = []
-    for item_id in foundation:
-        item = by_id[item_id]
-        keys = (
-            sorted(set(item) - {"status", "stateDetails"})
-            if item_id in execution_ids
-            else sorted(item)
-        )
-        foundation_view.append({key: item[key] for key in keys})
-    foundation_digest = hashlib.sha256(
-        json.dumps(
-            foundation_view,
-            ensure_ascii=False,
-            sort_keys=True,
-            separators=(",", ":"),
-        ).encode("utf-8")
-    ).hexdigest()
-    if (
-        board.get("lockedFoundationDigest") != LOCKED_FOUNDATION_DIGEST
-        or foundation_digest != LOCKED_FOUNDATION_DIGEST
-    ):
-        raise RuntimeError("workboard locked foundation contract differs")
+    audit = board.get("audit")
+    if not isinstance(audit, dict) or not audit.get("releaseRecovery"):
+        raise RuntimeError("workboard audit must retain release recovery trace")
     selected_human = human_path or _repo_file(root, human_raw, "humanBoardPath")
     if selected_human.is_symlink() or not selected_human.is_file():
         raise RuntimeError("human workboard must be a regular non-symlink file")

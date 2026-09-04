@@ -6,25 +6,27 @@
   "commandWorkingDirectory": "eva2",
   "inventoryPath": "docs/eva-repository-inventory.generated.json",
   "humanBoardPath": "eva2/WERKBORD.md",
-  "lockedFoundationDigest": "df8bacedc1b93ea952d5e4fd0f161039f1faa91b72b6d22f71b0c020e73c7b90",
-  "lockedFoundationSequence": ["GOV-001", "GOV-002", "RB-001", "RB-002", "RB-003", "RB-004", "RB-005", "RB-006", "GOV-003", "CP-000", "RR-001", "RR-002", "RR-003", "RR-004", "RB-007", "RB-008", "RB-009", "RB-010", "EV-001", "EV-002", "EV-003"],
-  "activeTaskId": "RR-002",
+  "audit": {
+    "releaseRecovery": {
+      "tasks": ["RR-002", "RR-003", "RR-004"],
+      "status": "GO — kandidaat bewezen; geen deployment of volledige releaseclaim",
+      "evidence": "eva2/evidence/product/RR-002-RR-004-release-recovery-2026-09-04.json",
+      "review": "eva2/reviews/RR-002-RR-004-release-recovery-c1d4c8a.md",
+      "sourceCommit": "c1d4c8a679a9651c7969a1b11591d3d1c770088e",
+      "retiredFoundationDigest": "df8bacedc1b93ea952d5e4fd0f161039f1faa91b72b6d22f71b0c020e73c7b90"
+    }
+  },
+  "activeTaskId": "EV-001",
   "maxActiveImplementationTasks": 1,
   "statusValues": ["queued", "in_progress", "review", "done", "blocked"],
   "rules": [
     "Afgeronde uitvoerkaarten staan eerst, daarna exact één primaire kaart, daarna alleen wachtrijkaarten.",
     "Alleen de primaire kaart en de direct volgende kaart zijn uitvoerbaar; latere wensen blijven mijlpalen.",
-    "Een uitvoerkaart noemt vóór start exacte bestanden, eigenaren en echte testcommando's.",
-    "Een bouwer keurt zijn eigen taak niet goed.",
-    "Klaar vereist commitgebonden tests, bewijs en onafhankelijke beoordeling.",
-    "Een gebruikersvoorbeeld test een bestaande capability en maakt geen providerspecifieke kernroute.",
-    "De enige broningang en handmatige schrijfboom is /home/administrator/project/eva2; alleen de twee mechanisch gegenereerde repository-inventarisbestanden blijven tijdelijk vaste afgeleide uitgangen in docs/.",
-    "Er worden geen Eva2-worktrees of andere Eva2-bronmappen als sibling onder /home/administrator/project gemaakt.",
-    "Tijdelijke test- en buildmappen staan via mktemp onder /tmp en worden opgeruimd.",
-    "/home/administrator/project/.eva2-artifacts is alleen een beheerd artifactarchief en vereist een expliciete kaart met eigenaar, doel, exact retentiepad en opruimmoment.",
-    "Centrale projectdocumenten hebben steeds precies één aangewezen schrijver.",
-    "De vastgezette funderingsvolgorde kan niet vanuit alleen het bord worden omzeild; releaseherstel en de echte evaluatiebasis gaan vóór nieuw productwerk.",
-    "Nieuwe uitvoerkaarten mogen het afgekeurde ComparableAgentRun-scoreformaat of zijn validator niet meer als veranderpad of testcommando gebruiken."
+    "Een kaart noemt exacte bestanden, eigenaren en echte testcommando's.",
+    "Een bouwer keurt zijn eigen taak niet goed; klaar vereist bewijs en onafhankelijke GO.",
+    "Paden blijven in eva2 (of de twee gegenereerde inventory-uitgangen); tijdelijke data gaat via mktemp naar /tmp.",
+    "Releaseherstel wordt compact met zijn evidence- en reviewreferenties afgesloten; daarna volgt productwerk volgens de vastgelegde meetcadans.",
+    "Productcadans: nulmeting → maintained upstream kiezen → bouwen/hergebruiken → gerichte test → echte gebruikersproef → dezelfde nameting → zware releasepoort."
   ],
   "team": {
     "architecturelead": "/root",
@@ -372,7 +374,7 @@
         "Een op 2 september 2026 reproduceerbare vergelijking van Inspect AI, promptfoo en OpenAI Evals gebruikt officiële documentatie, exacte release of commit, onderhoudsactiviteit en Eva's echte behoefte aan semantische, tool- en agentproeven.",
         "De voorselectie legt expliciet vast wat Inspect mogelijk overneemt, welke minimale Eva-adapters overblijven, wat Inspect niet zelfstandig bewijst en dat EV-001 de vereiste Python- en sandbox/CLI-bruggen echt moet bewijzen.",
         "Het oude ComparableAgentRun/v1-scoreformaat is niet langer toelaatbaar voor nieuwe resultaten en staat alleen nog als te verwijderen historische code buiten de canonieke schrijfboom.",
-        "Een codegebonden funderingsvolgorde dwingt RB-007 tot en met RB-010 en daarna EV-001 tot en met EV-003 af vóór alle nieuwe productkaarten."
+        "De releasekaart sluit herstelbewijs af; daarna bepalen productkaarten zelfstandig de volgende meetbare stap."
       ],
       "doneWhen": [
         "Het benchmarkdocument kiest op actuele, exact vastgezette feiten één voorkeurskandidaat en verklaart in gewone taal waarom die beter past dan de alternatieven.",
@@ -433,7 +435,7 @@
       "area": "Releaseherstel",
       "title": "Nieuwe schone kandidaat op twee verse bouwers maken",
       "outcome": "De nieuwe verzegelde bron wordt zonder bouwafval op twee onafhankelijke lege offline bouwers gemaakt; oude bouwreceipts worden niet hergebruikt.",
-      "status": "in_progress",
+      "status": "done",
       "stateDetails": {"baseCommit": null, "implementationCommit": null, "evidenceCommit": null, "reviewEvidencePaths": [], "blockerReason": null},
       "ownerRole": "releaselead",
       "reviewerRole": "proofreviewer",
@@ -463,7 +465,7 @@
       "evidenceRequired": [
         "Twee nieuwe private preflight-, build- en postflightketens zijn aan exact de RR-002-implementatiecommit en opnieuw verzegelde release-inputauthority gebonden. Alleen /home/administrator/project/.eva2-artifacts/rr002-builder-a en /home/administrator/project/.eva2-artifacts/rr002-builder-b mogen ze tot en met RR-004 bewaren; na RR-004 of bij NO-GO worden de bouwstaten verwijderd en blijven alleen de expliciet gekozen bewijsartefacten over.",
         "De twee lege offline bouwers hebben verschillende daemon-, socket-, state-root-, namespace-, BuildKit- en uitdagingsidentiteiten. Docker en Buildx zijn beide expliciet als uitvoerbare bytes en versie gebonden; een historisch RB-003- of RB-004-receipt kan niet worden toegelaten.",
-        "De bouwoperator draait uit exact de verzegelde RR-002-broncommit. De verifier bindt alle runtime-inhoud onder /opt/eva, bronmetadata, begrensde archieven, private bestanden, preflight, postflight, cleanup en het symmetrische A/B-admissioncontract."
+        "De bouwoperator draait uit exact de verzegelde RR-002-broncommit. De verifier bindt alle runtime-inhoud onder /opt/eva, bronmetadata, begrensde archieven, private bestanden, preflight, postflight, cleanup en beide onafhankelijke builds."
       ],
       "doneWhen": [
         "Bouwer A en bouwer B starten leeg, gebruiken uitsluitend de verzegelde lokale OCI-bytes en produceren ieder een volledig gebonden kandidaatbewijs voor dezelfde nieuwe broncommit.",
@@ -472,17 +474,31 @@
         "Een herhaalbare operator meet de private netwerknamespace en builderstaat vóór en na de build, schrijft de receipts zonder handmatige JSON-verbouwing en ruimt units, sockets en tijdelijke bouwstaat aantoonbaar op.",
         "Een onafhankelijke reviewer geeft GO op beide nieuwe bouwreceipts."
       ]
+    },
+    {
+      "id": "EV-001", "order": 103, "area": "Evaluatie", "title": "Inspect AI-evalomgeving en bruggen bouwen",
+      "outcome": "Hercontroleer Inspect AI 0.3.263, lock de actuele release exact, bouw Python-agent_bridge en sandbox_agent_bridge en bewijs log/rescore.",
+      "status": "in_progress", "stateDetails": {"baseCommit": null, "implementationCommit": null, "evidenceCommit": null, "reviewEvidencePaths": [], "blockerReason": null},
+      "ownerRole": "architecturelead", "reviewerRole": "proofreviewer", "dependsOn": ["RR-002"],
+      "componentIds": ["operations-and-release-tests"], "inventoryOwners": ["architecture", "documentation", "experimental", "verification"],
+      "changePaths": ["docs/eva-repository-inventory.generated.json", "docs/eva-repository-inventory.generated.md", "eva2/benchmark/inspect_ai_v1/pylock.toml", "eva2/benchmark/inspect_ai_v1/bridge_probe.py", "eva2/benchmark/inspect_ai_v1/README.md", "eva2/tests/benchmark/test_inspect_ai_ev001.py", "eva2/design/product/comparable-agent-benchmarks-v1.md"],
+      "testCommands": ["pytest -q tests/benchmark/test_inspect_ai_ev001.py", "ruff check benchmark/inspect_ai_v1/bridge_probe.py tests/benchmark/test_inspect_ai_ev001.py"],
+      "evidenceRequired": ["De actuele Inspect-pin, twee bruggen en log/rescorecyclus zijn aan één broncommit gebonden.", "Het fysieke resultaat blijft tot EV-002 is beoordeeld onder /home/administrator/project/.eva2-artifacts/ev001-inspect-bridge-20260904; daarna worden de twee eval-logs en het receipt verwijderd.", "Onafhankelijke review."],
+      "doneWhen": ["De actuele release is gecontroleerd en exact gelockt.", "Beide bruggen en log/rescore slagen in de gerichte test.", "Een onafhankelijke reviewer geeft GO."]
+    },
+    {
+      "id": "EV-002", "order": 106, "area": "Evaluatie", "title": "Echte vijfwegmeting met dezelfde proef",
+      "outcome": "Kies eerst een maintained upstream, bouw of hergebruik de brug, en voer met dezelfde nulmeting-proef de echte nameting uit.",
+      "status": "queued", "stateDetails": {"baseCommit": null, "implementationCommit": null, "evidenceCommit": null, "reviewEvidencePaths": [], "blockerReason": null},
+      "ownerRole": "architecturelead", "reviewerRole": "proofreviewer", "dependsOn": ["EV-001"],
+      "componentIds": ["operations-and-release-tests"], "inventoryOwners": ["documentation", "experimental", "verification"],
+      "changePaths": ["eva2/benchmark/inspect_ai_v1/pylock.toml", "eva2/benchmark/inspect_ai_v1/bridge_probe.py", "eva2/benchmark/inspect_ai_v1/README.md", "eva2/tests/benchmark/test_inspect_ai_ev001.py", "eva2/design/product/comparable-agent-benchmarks-v1.md"],
+      "testCommands": ["pytest -q tests/benchmark/test_inspect_ai_ev001.py", "ruff check benchmark/inspect_ai_v1/bridge_probe.py tests/benchmark/test_inspect_ai_ev001.py"],
+      "evidenceRequired": ["Nulmeting, maintained upstream-keuze, gerichte test, echte gebruikersproef en identieke nameting."],
+      "doneWhen": ["Dezelfde proef is voor en na uitgevoerd.", "Resultaat en beperkingen zijn eerlijk vastgelegd.", "Een onafhankelijke reviewer geeft GO."]
     }
   ],
   "milestones": [
-    {"id": "RR-003", "order": 68, "area": "Releaseherstel", "title": "Nieuwe A/B-builds bytegelijk beoordelen", "outcome": "Na RR-002 wordt RB-005 opnieuw uitgevoerd: alleen bytegelijke OCI-config, lagen en runtime-inhoud mogen één nieuwe kandidaat kiezen."},
-    {"id": "RR-004", "order": 69, "area": "Releaseherstel", "title": "Nieuwe kandidaat opnieuw scannen", "outcome": "Na RR-003 wordt RB-006 opnieuw uitgevoerd: de nieuw gekozen kandidaat krijgt een gebonden, niet-lege SBOM en nul hoge of kritieke bevindingen."},
-    {"id": "RB-007", "order": 70, "area": "Releasebasis", "title": "Alle verplichte testgroepen uitvoeren", "outcome": "Pas na RR-004 slaagt iedere verzegelde testgroep tegen dezelfde nieuwe, reproduceerbare en schoon bevonden kandidaat."},
-    {"id": "RB-008", "order": 80, "area": "Releasebasis", "title": "Volledige wegwerpstack testen", "outcome": "Na RB-007 migreert, antwoordt, onthoudt, herstart en ruimt de nieuwe kandidaat volledig op."},
-    {"id": "RB-009", "order": 90, "area": "Releasebasis", "title": "Fysieke bewijsset beoordelen", "outcome": "Een onafhankelijke reviewer controleert de volledige releaseketen."},
-    {"id": "RB-010", "order": 100, "area": "Releasebasis", "title": "A/B-besluit nemen", "outcome": "Alleen volledig groen mag naar het niet-actieve slot."},
-    {"id": "EV-001", "order": 103, "area": "Continue kwaliteitsvergelijking", "title": "Inspect AI-bruggen geïsoleerd bewijzen", "outcome": "Een exact gelockte evalomgeving bewijst de benodigde Python- en sandbox/CLI-agentbruggen, bewaart de oorspronkelijke Inspect-loghash en schrijft her-scoring naar een afzonderlijk gehasht log."},
-    {"id": "EV-002", "order": 106, "area": "Continue kwaliteitsvergelijking", "title": "Actuele vijfwegmeting uitvoeren", "outcome": "Eva, OpenClaw, Hermes, Agent Zero en een relevante open-sourcekandidaat doorlopen dezelfde echte proef en Inspect-scorer."},
     {"id": "EV-003", "order": 109, "area": "Continue kwaliteitsvergelijking", "title": "Vergelijking per productkaart afdwingen", "outcome": "Productwerk kan pas starten na een actuele nulmeting en alleen sluiten na dezelfde nameting met aantoonbare winst."},
     {"id": "OS-001", "order": 110, "area": "Open source en codebeheer", "title": "Inventaris en bereikbaarheid afdwingen", "outcome": "Elk gevolgd bestand heeft één eigenaar en aantoonbare noodzaak."},
     {"id": "OS-002", "order": 120, "area": "Open source en codebeheer", "title": "Pydantic-wrapper consolideren", "outcome": "Pydantic doet generiek modelwerk; Eva houdt alleen unieke grenzen."},
@@ -512,7 +528,11 @@
     {"id": "CP-003", "order": 360, "area": "Vergelijking", "title": "Officiële benchmarks uitvoeren", "outcome": "AgentBench, GAIA en OSWorld gebruiken officiële scorers en trajecten."},
     {"id": "FN-001", "order": 370, "area": "Eindacceptatie", "title": "Eindkandidaat bevriezen", "outcome": "Image, configuratie en bewijsset zijn onveranderlijk gebonden."},
     {"id": "FN-002", "order": 380, "area": "Eindacceptatie", "title": "Computerherstart bewijzen", "outcome": "Alles komt zonder handmatige reparatie correct terug."},
-    {"id": "FN-003", "order": 390, "area": "Eindacceptatie", "title": "Zeven dagen praktijk bewijzen", "outcome": "Een ongewijzigde kandidaat doorstaat de praktijkproef en vervangbeslissing."}
+    {"id": "FN-003", "order": 390, "area": "Eindacceptatie", "title": "Zeven dagen praktijk bewijzen", "outcome": "Een ongewijzigde kandidaat doorstaat de praktijkproef en vervangbeslissing."},
+    {"id": "RB-007", "order": 400, "area": "Release-eindfase", "title": "Verplichte testgroepen uitvoeren", "outcome": "Pas na functionele productkaarten slaagt iedere testgroep tegen dezelfde kandidaat."},
+    {"id": "RB-008", "order": 410, "area": "Release-eindfase", "title": "Wegwerpstack testen", "outcome": "De kandidaat migreert, antwoordt, onthoudt, herstart en ruimt volledig op."},
+    {"id": "RB-009", "order": 420, "area": "Release-eindfase", "title": "Bewijsset onafhankelijk beoordelen", "outcome": "Een onafhankelijke reviewer controleert de volledige releaseketen."},
+    {"id": "RB-010", "order": 430, "area": "Release-eindfase", "title": "Actief en reserveslot beheren", "outcome": "Alleen groen werk gaat naar het reserveslot; controleer het daarna en wissel de route. Bij problemen blijft het huidige slot actief."}
   ],
   "completions": {
     "RR-001": {

@@ -269,9 +269,9 @@
     }
   ],
   "summary": {
-    "files": 2048,
-    "present": 2048,
-    "tracked": 1969,
+    "files": 2054,
+    "present": 2054,
+    "tracked": 1975,
     "untracked": 79,
     "tombstones": 0,
     "policyErrors": 88
@@ -310,12 +310,12 @@
     {
       "id": "eva2-verification",
       "role": "verification",
-      "matchCount": 744
+      "matchCount": 746
     },
     {
       "id": "eva2-documentation",
       "role": "documentation",
-      "matchCount": 117
+      "matchCount": 118
     },
     {
       "id": "eva2-deployment",
@@ -325,7 +325,7 @@
     {
       "id": "eva2-experimental",
       "role": "experimental",
-      "matchCount": 155
+      "matchCount": 158
     },
     {
       "id": "eva2-verification-runtime",
@@ -10270,7 +10270,7 @@
       "path": "docs/eva-repository-inventory.generated.json",
       "gitState": "tracked",
       "present": true,
-      "bytes": 2370228,
+      "bytes": 2376089,
       "contentSha256": "32591e23fa2eb53a038d95e726ba09edd0405306f38c5283a36a2b6d3010254d",
       "hashMode": "canonical-self-reference-redacted",
       "role": "generated",
@@ -10303,7 +10303,7 @@
       "path": "docs/eva-repository-inventory.generated.md",
       "gitState": "tracked",
       "present": true,
-      "bytes": 366337,
+      "bytes": 367084,
       "contentSha256": "2f4f8486464cbb9713b749dc898f265093d0853699f1da1b4eb3dd1625c1b2d2",
       "hashMode": "canonical-self-reference-redacted",
       "role": "generated",
@@ -11248,8 +11248,8 @@
       "path": "eva2/WERKBORD.md",
       "gitState": "tracked",
       "present": true,
-      "bytes": 9878,
-      "contentSha256": "53986b6148f7f124e67e9410d4f38b1d484e2ce624b0615ffaba5b6766400304",
+      "bytes": 7395,
+      "contentSha256": "358e0e41234d0f68de241d0c0f3064eb08890226e47ddfb8946727fb851980f3",
       "hashMode": "exact-bytes",
       "role": "documentation",
       "roleRuleId": "eva2-documentation",
@@ -11306,6 +11306,111 @@
         "includedInTrackedRelease": true,
         "runtimeCritical": true,
         "status": "included-tracked-critical"
+      }
+    },
+    {
+      "path": "eva2/benchmark/inspect_ai_v1/README.md",
+      "gitState": "tracked",
+      "present": true,
+      "bytes": 1856,
+      "contentSha256": "8fee55f746b81021606e954424d48ba0d89670d60ae5b4c4f00dcc7103fe668c",
+      "hashMode": "exact-bytes",
+      "role": "experimental",
+      "roleRuleId": "eva2-experimental",
+      "matchingRuleIds": [
+        "eva2-experimental"
+      ],
+      "owner": "experimental",
+      "inputs": [
+        "prototype request"
+      ],
+      "outputs": [
+        "prototype receipt"
+      ],
+      "state": [
+        "prototype-local state"
+      ],
+      "effects": [
+        "not authorized for production"
+      ],
+      "decision": "keep",
+      "decisionReason": "explicitly classified non-production prototype",
+      "consumers": [],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": true,
+        "runtimeCritical": false,
+        "status": "included-tracked-noncritical"
+      }
+    },
+    {
+      "path": "eva2/benchmark/inspect_ai_v1/bridge_probe.py",
+      "gitState": "tracked",
+      "present": true,
+      "bytes": 12589,
+      "contentSha256": "8a4fbb7d5a407a3320cb19214dfe7c7e00f3fb94770250a760b7555de109a381",
+      "hashMode": "exact-bytes",
+      "role": "experimental",
+      "roleRuleId": "eva2-experimental",
+      "matchingRuleIds": [
+        "eva2-experimental"
+      ],
+      "owner": "experimental",
+      "inputs": [
+        "prototype request"
+      ],
+      "outputs": [
+        "prototype receipt"
+      ],
+      "state": [
+        "prototype-local state"
+      ],
+      "effects": [
+        "not authorized for production"
+      ],
+      "decision": "keep",
+      "decisionReason": "explicitly classified non-production prototype",
+      "consumers": [],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": true,
+        "runtimeCritical": false,
+        "status": "included-tracked-noncritical"
+      }
+    },
+    {
+      "path": "eva2/benchmark/inspect_ai_v1/pylock.toml",
+      "gitState": "tracked",
+      "present": true,
+      "bytes": 33619,
+      "contentSha256": "ccd193d1e2e173f94290cc5718f4ade705d277fa77100402b3beb092a5fb241e",
+      "hashMode": "exact-bytes",
+      "role": "experimental",
+      "roleRuleId": "eva2-experimental",
+      "matchingRuleIds": [
+        "eva2-experimental"
+      ],
+      "owner": "experimental",
+      "inputs": [
+        "prototype request"
+      ],
+      "outputs": [
+        "prototype receipt"
+      ],
+      "state": [
+        "prototype-local state"
+      ],
+      "effects": [
+        "not authorized for production"
+      ],
+      "decision": "keep",
+      "decisionReason": "explicitly classified non-production prototype",
+      "consumers": [],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": true,
+        "runtimeCritical": false,
+        "status": "included-tracked-noncritical"
       }
     },
     {
@@ -13169,7 +13274,7 @@
       "gitState": "tracked",
       "present": true,
       "bytes": 19368,
-      "contentSha256": "e52feda52e0c0959cec5475ec4a645270f04ea62aaf662f70bb516f86215e780",
+      "contentSha256": "ba46169a9b330f49124f6629ef1f7ed7b6cfe90e0795eb48f7b3063242e7db30",
       "hashMode": "exact-bytes",
       "role": "documentation",
       "roleRuleId": "eva2-documentation",
@@ -13292,8 +13397,8 @@
       "path": "eva2/design/product/execution-workboard-v1.json",
       "gitState": "tracked",
       "present": true,
-      "bytes": 46977,
-      "contentSha256": "3be499aae89b74282b451708d87fcf6119829fd0e4b1697030fce68c4608cca0",
+      "bytes": 48440,
+      "contentSha256": "d9ef707aa78f222a1e7c12d63c3f127e2a649ad3a2c964281fb885c1c9314022",
       "hashMode": "exact-bytes",
       "role": "documentation",
       "roleRuleId": "eva2-documentation",
@@ -25351,6 +25456,41 @@
       }
     },
     {
+      "path": "eva2/evidence/product/RR-002-RR-004-release-recovery-2026-09-04.json",
+      "gitState": "tracked",
+      "present": true,
+      "bytes": 1996,
+      "contentSha256": "abbd43f792bf4e1bd567ea0fc094b95b8f815e404f63070b9ec7eaeeb317a598",
+      "hashMode": "exact-bytes",
+      "role": "verification",
+      "roleRuleId": "eva2-verification",
+      "matchingRuleIds": [
+        "eva2-verification"
+      ],
+      "owner": "verification",
+      "inputs": [
+        "production or fixture contract"
+      ],
+      "outputs": [
+        "test decision"
+      ],
+      "state": [
+        "temporary isolated test state"
+      ],
+      "effects": [
+        "may execute only inside its declared gate"
+      ],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": true,
+        "runtimeCritical": true,
+        "status": "included-tracked-critical"
+      }
+    },
+    {
       "path": "eva2/evidence/product/contextforge-generic-tool-durable-proof-2026-08-30.json",
       "gitState": "tracked",
       "present": true,
@@ -37232,6 +37372,37 @@
       "present": true,
       "bytes": 4144,
       "contentSha256": "a78ea30821c81d20b1c93ce3bd6a9eddc9a7606973bebe401d430acf7e320f6c",
+      "hashMode": "exact-bytes",
+      "role": "documentation",
+      "roleRuleId": "eva2-documentation",
+      "matchingRuleIds": [
+        "eva2-documentation"
+      ],
+      "owner": "documentation",
+      "inputs": [
+        "design and evidence"
+      ],
+      "outputs": [
+        "human-readable contract"
+      ],
+      "state": [],
+      "effects": [],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": true,
+        "runtimeCritical": false,
+        "status": "included-tracked-noncritical"
+      }
+    },
+    {
+      "path": "eva2/reviews/RR-002-RR-004-release-recovery-c1d4c8a.md",
+      "gitState": "tracked",
+      "present": true,
+      "bytes": 2141,
+      "contentSha256": "633b73d8f3b82fc9805d212ddeadf840c42229fc639ad4564014fcbf4a5241e7",
       "hashMode": "exact-bytes",
       "role": "documentation",
       "roleRuleId": "eva2-documentation",
@@ -55232,6 +55403,41 @@
       }
     },
     {
+      "path": "eva2/tests/benchmark/test_inspect_ai_ev001.py",
+      "gitState": "tracked",
+      "present": true,
+      "bytes": 3181,
+      "contentSha256": "16e11f617d035163a039148793b0101b827db49654e7ab93040508982846a65f",
+      "hashMode": "exact-bytes",
+      "role": "verification",
+      "roleRuleId": "eva2-verification",
+      "matchingRuleIds": [
+        "eva2-verification"
+      ],
+      "owner": "verification",
+      "inputs": [
+        "production or fixture contract"
+      ],
+      "outputs": [
+        "test decision"
+      ],
+      "state": [
+        "temporary isolated test state"
+      ],
+      "effects": [
+        "may execute only inside its declared gate"
+      ],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": true,
+        "runtimeCritical": true,
+        "status": "included-tracked-critical"
+      }
+    },
+    {
       "path": "eva2/tests/benchmark/test_run_agentbench_dbbench_development.py",
       "gitState": "tracked",
       "present": true,
@@ -58630,8 +58836,8 @@
       "path": "eva2/tests/operations/test_current_workboard.py",
       "gitState": "tracked",
       "present": true,
-      "bytes": 27342,
-      "contentSha256": "c8c38ffafdae90783083daf4bebbbc20167a8ac1896da23ef66eeb1db6350a75",
+      "bytes": 2878,
+      "contentSha256": "3a807042c13aa7aaa63216d403930f2a15734c8e1779cfcc97efc3065efc7565",
       "hashMode": "exact-bytes",
       "role": "verification",
       "roleRuleId": "eva2-verification",
@@ -64265,8 +64471,8 @@
       "path": "eva2/tools/check_current_workboard.py",
       "gitState": "tracked",
       "present": true,
-      "bytes": 35224,
-      "contentSha256": "1a955d07cb66b77f964c359724dc719c6d652281987d33edbe36f3c2a301adfd",
+      "bytes": 33517,
+      "contentSha256": "704d209523ec265e1a2bcba21fb8e8908531893add736109326093923554a5ca",
       "hashMode": "exact-bytes",
       "role": "verification-runtime",
       "roleRuleId": "eva2-verification-runtime",
@@ -82716,5 +82922,5 @@
       }
     }
   ],
-  "sourceDigest": "af3d738423480e07e5aec58de1b8267fbf6db5cd64257803c2c51a4d6c8fe169"
+  "sourceDigest": "3c6c751755be226936ce89f7b9c77a1056f37d070031b00aaa92b08087ce2ef2"
 }

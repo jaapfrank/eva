@@ -10,37 +10,42 @@ de volgende begint.
 
 | Volgorde | Kaart | Resultaat | Status |
 |---:|---|---|---|
-| 67 | `RR-002` — Nieuwe schone kandidaat op twee verse bouwers maken | De nieuwe verzegelde bron wordt zonder bouwafval op twee onafhankelijke lege offline bouwers gemaakt; oude bouwreceipts worden niet hergebruikt. | 🟡 BEZIG |
+| 103 | `EV-001` — Inspect AI-evalomgeving en bruggen bouwen | Hercontroleer Inspect AI 0.3.263, lock de actuele release exact, bouw Python-agent_bridge en sandbox_agent_bridge en bewijs log/rescore. | 🟡 BEZIG |
+| 106 | `EV-002` — Echte vijfwegmeting met dezelfde proef | Kies eerst een maintained upstream, bouw of hergebruik de brug, en voer met dezelfde nulmeting-proef de echte nameting uit. | ⚪ HIERNA |
 
-### Exact werk voor `RR-002`
+### Exact werk voor `EV-001`
 
 - `docs/eva-repository-inventory.generated.json`
 - `docs/eva-repository-inventory.generated.md`
-- `eva2/deploy/living-core/Dockerfile`
-- `eva2/release/managed-b-release-input-authority-v1.json`
-- `eva2/tests/operations/test_build_managed_b_offline_candidate.py`
-- `eva2/tests/operations/test_managed_b_candidate_image.py`
-- `eva2/tests/operations/test_prepare_managed_b_candidate_context.py`
-- `eva2/tests/operations/test_two_builder_reproducibility.py`
-- `eva2/tools/check_two_builder_reproducibility.py`
-- `eva2/tools/managed_b_candidate/candidate_image.py`
-- `eva2/tools/prepare_managed_b_candidate_context.py`
+- `eva2/benchmark/inspect_ai_v1/pylock.toml`
+- `eva2/benchmark/inspect_ai_v1/bridge_probe.py`
+- `eva2/benchmark/inspect_ai_v1/README.md`
+- `eva2/tests/benchmark/test_inspect_ai_ev001.py`
+- `eva2/design/product/comparable-agent-benchmarks-v1.md`
 
 Klaar betekent:
 
-- Bouwer A en bouwer B starten leeg, gebruiken uitsluitend de verzegelde lokale OCI-bytes en produceren ieder een volledig gebonden kandidaatbewijs voor dezelfde nieuwe broncommit.
-- De runtime bevat geen buildmap, wheelhouse, egg-info of ander onverwacht bestand onder /opt/eva; een afwijkende byte, eigenaar, modus of tijdstempel stopt gesloten.
-- Een verkeerde commit, authority, Docker- of Buildxbinary, builderidentiteit, bestaand builderobject, netwerkfallback, te groot archief of hergebruikt historisch bewijs stopt vóór een groen receipt.
-- Een herhaalbare operator meet de private netwerknamespace en builderstaat vóór en na de build, schrijft de receipts zonder handmatige JSON-verbouwing en ruimt units, sockets en tijdelijke bouwstaat aantoonbaar op.
-- Een onafhankelijke reviewer geeft GO op beide nieuwe bouwreceipts.
+- De actuele release is gecontroleerd en exact gelockt.
+- Beide bruggen en log/rescore slagen in de gerichte test.
+- Een onafhankelijke reviewer geeft GO.
 
 Echte controles:
 
-- `TMPDIR=/tmp TEMP=/tmp TMP=/tmp pytest -q tests/operations/test_two_builder_reproducibility.py tests/operations/test_managed_b_candidate_image.py tests/operations/test_build_managed_b_offline_candidate.py tests/operations/test_prepare_managed_b_candidate_context.py tests/operations/test_managed_b_release_inputs.py`
-- `python3 tools/check_component_catalog.py`
-- `node ../test/repository-inventory.test.js`
-- `node ../test/repository-inventory-disposition.test.js`
-- `ruff check tools/check_two_builder_reproducibility.py tools/managed_b_candidate/candidate_image.py tools/prepare_managed_b_candidate_context.py tests/operations/test_two_builder_reproducibility.py tests/operations/test_managed_b_candidate_image.py tests/operations/test_build_managed_b_offline_candidate.py tests/operations/test_prepare_managed_b_candidate_context.py`
+- `pytest -q tests/benchmark/test_inspect_ai_ev001.py`
+- `ruff check benchmark/inspect_ai_v1/bridge_probe.py tests/benchmark/test_inspect_ai_ev001.py`
+
+### Daarna voorbereid: `EV-002`
+
+- `eva2/benchmark/inspect_ai_v1/pylock.toml`
+- `eva2/benchmark/inspect_ai_v1/bridge_probe.py`
+- `eva2/benchmark/inspect_ai_v1/README.md`
+- `eva2/tests/benchmark/test_inspect_ai_ev001.py`
+- `eva2/design/product/comparable-agent-benchmarks-v1.md`
+
+Vooraf vastgelegde controles:
+
+- `pytest -q tests/benchmark/test_inspect_ai_ev001.py`
+- `ruff check benchmark/inspect_ai_v1/bridge_probe.py tests/benchmark/test_inspect_ai_ev001.py`
 
 ## Daarna
 
@@ -49,14 +54,6 @@ nadat zij als eerstvolgende kleine kaart exacte bestanden en tests heeft.
 
 | Nr. | Onderdeel | Begrijpelijk eindresultaat |
 |---:|---|---|
-| 68 | `RR-003` — Nieuwe A/B-builds bytegelijk beoordelen | Na RR-002 wordt RB-005 opnieuw uitgevoerd: alleen bytegelijke OCI-config, lagen en runtime-inhoud mogen één nieuwe kandidaat kiezen. |
-| 69 | `RR-004` — Nieuwe kandidaat opnieuw scannen | Na RR-003 wordt RB-006 opnieuw uitgevoerd: de nieuw gekozen kandidaat krijgt een gebonden, niet-lege SBOM en nul hoge of kritieke bevindingen. |
-| 70 | `RB-007` — Alle verplichte testgroepen uitvoeren | Pas na RR-004 slaagt iedere verzegelde testgroep tegen dezelfde nieuwe, reproduceerbare en schoon bevonden kandidaat. |
-| 80 | `RB-008` — Volledige wegwerpstack testen | Na RB-007 migreert, antwoordt, onthoudt, herstart en ruimt de nieuwe kandidaat volledig op. |
-| 90 | `RB-009` — Fysieke bewijsset beoordelen | Een onafhankelijke reviewer controleert de volledige releaseketen. |
-| 100 | `RB-010` — A/B-besluit nemen | Alleen volledig groen mag naar het niet-actieve slot. |
-| 103 | `EV-001` — Inspect AI-bruggen geïsoleerd bewijzen | Een exact gelockte evalomgeving bewijst de benodigde Python- en sandbox/CLI-agentbruggen, bewaart de oorspronkelijke Inspect-loghash en schrijft her-scoring naar een afzonderlijk gehasht log. |
-| 106 | `EV-002` — Actuele vijfwegmeting uitvoeren | Eva, OpenClaw, Hermes, Agent Zero en een relevante open-sourcekandidaat doorlopen dezelfde echte proef en Inspect-scorer. |
 | 109 | `EV-003` — Vergelijking per productkaart afdwingen | Productwerk kan pas starten na een actuele nulmeting en alleen sluiten na dezelfde nameting met aantoonbare winst. |
 | 110 | `OS-001` — Inventaris en bereikbaarheid afdwingen | Elk gevolgd bestand heeft één eigenaar en aantoonbare noodzaak. |
 | 120 | `OS-002` — Pydantic-wrapper consolideren | Pydantic doet generiek modelwerk; Eva houdt alleen unieke grenzen. |
@@ -87,22 +84,20 @@ nadat zij als eerstvolgende kleine kaart exacte bestanden en tests heeft.
 | 370 | `FN-001` — Eindkandidaat bevriezen | Image, configuratie en bewijsset zijn onveranderlijk gebonden. |
 | 380 | `FN-002` — Computerherstart bewijzen | Alles komt zonder handmatige reparatie correct terug. |
 | 390 | `FN-003` — Zeven dagen praktijk bewijzen | Een ongewijzigde kandidaat doorstaat de praktijkproef en vervangbeslissing. |
+| 400 | `RB-007` — Verplichte testgroepen uitvoeren | Pas na functionele productkaarten slaagt iedere testgroep tegen dezelfde kandidaat. |
+| 410 | `RB-008` — Wegwerpstack testen | De kandidaat migreert, antwoordt, onthoudt, herstart en ruimt volledig op. |
+| 420 | `RB-009` — Bewijsset onafhankelijk beoordelen | Een onafhankelijke reviewer controleert de volledige releaseketen. |
+| 430 | `RB-010` — Actief en reserveslot beheren | Alleen groen werk gaat naar het reserveslot; controleer het daarna en wissel de route. Bij problemen blijft het huidige slot actief. |
 
 ## Vaste regels
 
 - Afgeronde uitvoerkaarten staan eerst, daarna exact één primaire kaart, daarna alleen wachtrijkaarten.
 - Alleen de primaire kaart en de direct volgende kaart zijn uitvoerbaar; latere wensen blijven mijlpalen.
-- Een uitvoerkaart noemt vóór start exacte bestanden, eigenaren en echte testcommando's.
-- Een bouwer keurt zijn eigen taak niet goed.
-- Klaar vereist commitgebonden tests, bewijs en onafhankelijke beoordeling.
-- Een gebruikersvoorbeeld test een bestaande capability en maakt geen providerspecifieke kernroute.
-- De enige broningang en handmatige schrijfboom is /home/administrator/project/eva2; alleen de twee mechanisch gegenereerde repository-inventarisbestanden blijven tijdelijk vaste afgeleide uitgangen in docs/.
-- Er worden geen Eva2-worktrees of andere Eva2-bronmappen als sibling onder /home/administrator/project gemaakt.
-- Tijdelijke test- en buildmappen staan via mktemp onder /tmp en worden opgeruimd.
-- /home/administrator/project/.eva2-artifacts is alleen een beheerd artifactarchief en vereist een expliciete kaart met eigenaar, doel, exact retentiepad en opruimmoment.
-- Centrale projectdocumenten hebben steeds precies één aangewezen schrijver.
-- De vastgezette funderingsvolgorde kan niet vanuit alleen het bord worden omzeild; releaseherstel en de echte evaluatiebasis gaan vóór nieuw productwerk.
-- Nieuwe uitvoerkaarten mogen het afgekeurde ComparableAgentRun-scoreformaat of zijn validator niet meer als veranderpad of testcommando gebruiken.
+- Een kaart noemt exacte bestanden, eigenaren en echte testcommando's.
+- Een bouwer keurt zijn eigen taak niet goed; klaar vereist bewijs en onafhankelijke GO.
+- Paden blijven in eva2 (of de twee gegenereerde inventory-uitgangen); tijdelijke data gaat via mktemp naar /tmp.
+- Releaseherstel wordt compact met zijn evidence- en reviewreferenties afgesloten; daarna volgt productwerk volgens de vastgelegde meetcadans.
+- Productcadans: nulmeting → maintained upstream kiezen → bouwen/hergebruiken → gerichte test → echte gebruikersproef → dezelfde nameting → zware releasepoort.
 
 Machineleesbare bron:
 [`design/product/execution-workboard-v1.json`](design/product/execution-workboard-v1.json).

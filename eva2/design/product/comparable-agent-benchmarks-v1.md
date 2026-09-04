@@ -1,10 +1,10 @@
 # Eva 2 — extern vergelijkbare agentbenchmarks
 
-Bijgewerkt: 2 september 2026.
+Bijgewerkt: 4 september 2026.
 
 ## Besluit: eerst een open-source evaluatiemotor bewijzen
 
-Gecontroleerd op **2 september 2026**. Inspect AI is de voorkeurskandidaat,
+Gecontroleerd op **4 september 2026**. Inspect AI is de voorkeurskandidaat,
 maar nog niet definitief gekozen. `EV-001` moet eerst werkelijk aantonen dat
 zowel de Python-agentbrug als de sandbox/CLI-agentbrug passen bij de vijf echte
 deelnemers. Mislukt dat, dan krijgt promptfoo dezelfde bridgeproef voordat we
@@ -12,7 +12,7 @@ een motor kiezen.
 
 | Kandidaat en exacte momentopname | Onderhoud op de controledatum | Passendheid voor Eva |
 |---|---|---|
-| Inspect AI `0.3.261`, tagcommit `f9186b4e2f34ca81f192ae2c08535c24b7e8f356`, gepubliceerd 30 augustus 2026 | `main` stond op `e2a8e854d95f70c0969930fbc0a6455bebad99b6` van 2 september 2026 | Python-native evaluaties, één `.eval`-log, epochs/reducers, her-scoring en expliciete Python- en sandbox/CLI-agentbruggen. Daarom de voorkeurskandidaat. |
+| Inspect AI `0.3.263`, tagcommit `7aa7343e4a14fa7be07e5a09c7431df5e88c17ee`, gepubliceerd 4 september 2026 | `main` stond op `fdef8efddef7b9ff543e28ef003b57c041bd49ea` van 4 september 2026 | Python-native evaluaties, één `.eval`-log, epochs/reducers, her-scoring en expliciete Python- en sandbox/CLI-agentbruggen. Daarom de voorkeurskandidaat. |
 | promptfoo `0.122.2`, tagcommit `89052308bce06f53645b1f189ada5ac9d1897347`, gepubliceerd 28 augustus 2026 | `main` stond op `48a71cd0163b01ba8efb2954eb0165dd810a6c6e` van 2 september 2026 | Eveneens actief en sterk: automatische tracecorrelatie, agentproviders en assertions op tooltrajecten. Voor diepe Python-agenttrajecten vraagt de officiële route wel eigen tracinginstrumentatie/export; dat is voor deze Python-kern extra projectspecifieke lijm. |
 | OpenAI Evals, `main`-commit `8eac7a7de5215c907fbddc30efdaf316913eccdd` van 14 april 2026; geen GitHub-release | Op 2 september 2026 was dit nog steeds de laatste `main`-commit | Heeft bestaande evals en een Completion Function Protocol, maar geen even directe actuele Python-plus-CLI Agent Bridge en geen recente release. Daarom nu geen eerste bridgekandidaat. |
 
@@ -58,8 +58,8 @@ Officiële bronnen voor dit besluit:
 - Inspect AI-documentatie: <https://inspect.aisi.org.uk/>;
 - Inspect eval-logs: <https://inspect.aisi.org.uk/eval-logs.html>;
 - Inspect Agent Bridge: <https://inspect.aisi.org.uk/agent-bridge.html>;
-- Inspect release: <https://pypi.org/project/inspect-ai/0.3.261/>;
-- Inspect bronmomentopname: <https://github.com/UKGovernmentBEIS/inspect_ai/commit/e2a8e854d95f70c0969930fbc0a6455bebad99b6>;
+- Inspect release: <https://pypi.org/project/inspect-ai/0.3.263/>;
+- Inspect bronmomentopname: <https://github.com/UKGovernmentBEIS/inspect_ai/commit/fdef8efddef7b9ff543e28ef003b57c041bd49ea>;
 - promptfoo tracing en trajectassertions: <https://www.promptfoo.dev/docs/tracing/>;
 - promptfoo Python-agentroute: <https://www.promptfoo.dev/docs/guides/evaluate-openai-agents-python/>;
 - promptfoo npm-release: <https://www.npmjs.com/package/promptfoo/v/0.122.2>;
