@@ -16,7 +16,7 @@
       "retiredFoundationDigest": "df8bacedc1b93ea952d5e4fd0f161039f1faa91b72b6d22f71b0c020e73c7b90"
     }
   },
-  "activeTaskId": "EV-001",
+  "activeTaskId": "EV-002",
   "maxActiveImplementationTasks": 1,
   "statusValues": ["queued", "in_progress", "review", "done", "blocked"],
   "rules": [
@@ -480,7 +480,7 @@
     {
       "id": "EV-001", "order": 103, "area": "Evaluatie", "title": "Inspect AI-evalomgeving en bruggen bouwen",
       "outcome": "Hercontroleer Inspect AI 0.3.263, lock de actuele release exact, bouw Python-agent_bridge en sandbox_agent_bridge en bewijs log/rescore.",
-      "status": "in_progress", "stateDetails": {"baseCommit": null, "implementationCommit": null, "evidenceCommit": null, "reviewEvidencePaths": [], "blockerReason": null},
+      "status": "done", "stateDetails": {"baseCommit": "8569871d9713662c5b3a3ababf6ce58b56c13b6b", "implementationCommit": "0f126633a429b03ca83786203d08289d67368521", "evidenceCommit": "effff17c33e6212d643e208e67cf4d6b53bc520c", "reviewEvidencePaths": ["eva2/evidence/product/EV-001-inspect-ai-bridge-probe-2026-09-04.json", "eva2/evidence/product/EV-001-inspect-ai-bridge-probe-v2-2026-09-04.json"], "blockerReason": null},
       "ownerRole": "architecturelead", "reviewerRole": "proofreviewer", "dependsOn": ["RR-002"],
       "componentIds": ["operations-and-release-tests"], "inventoryOwners": ["architecture", "experimental", "verification"],
       "changePaths": ["docs/eva-repository-inventory.generated.json", "docs/eva-repository-inventory.generated.md", "eva2/benchmark/inspect_ai_v1/bridge_probe.py", "eva2/benchmark/inspect_ai_v1/README.md", "eva2/tests/benchmark/test_inspect_ai_ev001.py"],
@@ -491,7 +491,7 @@
     {
       "id": "EV-002", "order": 106, "area": "Evaluatie", "title": "Kleine vijfweg-nulmeting uitvoeren",
       "outcome": "Eva en vier actuele open-sourceconcurrenten krijgen één begrensde, gelijke cross-domainopdracht; dit is de nulmeting voor het eerstvolgende productwerk.",
-      "status": "queued", "stateDetails": {"baseCommit": null, "implementationCommit": null, "evidenceCommit": null, "reviewEvidencePaths": [], "blockerReason": null},
+      "status": "in_progress", "stateDetails": {"baseCommit": null, "implementationCommit": null, "evidenceCommit": null, "reviewEvidencePaths": [], "blockerReason": null},
       "ownerRole": "architecturelead", "reviewerRole": "proofreviewer", "dependsOn": ["EV-001"],
       "componentIds": ["operations-and-release-tests"], "inventoryOwners": ["documentation", "experimental", "verification"],
       "changePaths": ["eva2/benchmark/inspect_ai_v1/pylock.toml", "eva2/benchmark/inspect_ai_v1/bridge_probe.py", "eva2/benchmark/inspect_ai_v1/README.md", "eva2/tests/benchmark/test_inspect_ai_ev001.py", "eva2/design/product/comparable-agent-benchmarks-v1.md"],
@@ -531,6 +531,17 @@
     {"id": "RB-010", "order": 430, "area": "Release-eindfase", "title": "Actief en reserveslot beheren", "outcome": "Alleen groen werk gaat naar het reserveslot; controleer het daarna en wissel de route. Bij problemen blijft het huidige slot actief."}
   ],
   "completions": {
+    "EV-001": {
+      "baseCommit": "8569871d9713662c5b3a3ababf6ce58b56c13b6b",
+      "commit": "0f126633a429b03ca83786203d08289d67368521",
+      "decision": "GO",
+      "evidenceCommit": "effff17c33e6212d643e208e67cf4d6b53bc520c",
+      "evidencePaths": ["eva2/reviews/EV-001-formal-proof-review-0f12663.md"],
+      "implementedBy": "/root",
+      "reviewCommit": "eadc925e90e4463be49e95c2a505205e2485776b",
+      "reviewedBy": "/root/proof_review",
+      "testReceiptPaths": ["eva2/evidence/product/EV-001-inspect-ai-bridge-probe-2026-09-04.json", "eva2/evidence/product/EV-001-inspect-ai-bridge-probe-v2-2026-09-04.json"]
+    },
     "RR-001": {
       "baseCommit": "ca6de2b0c0fe7bde1fdf740979ca3959c3e998ae",
       "commit": "daa9022d2ef9f8aefa7e22c1f90d7f6a0c463c6c",

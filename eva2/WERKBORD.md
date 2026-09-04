@@ -10,29 +10,9 @@ de volgende begint.
 
 | Volgorde | Kaart | Resultaat | Status |
 |---:|---|---|---|
-| 103 | `EV-001` — Inspect AI-evalomgeving en bruggen bouwen | Hercontroleer Inspect AI 0.3.263, lock de actuele release exact, bouw Python-agent_bridge en sandbox_agent_bridge en bewijs log/rescore. | 🟡 BEZIG |
-| 106 | `EV-002` — Kleine vijfweg-nulmeting uitvoeren | Eva en vier actuele open-sourceconcurrenten krijgen één begrensde, gelijke cross-domainopdracht; dit is de nulmeting voor het eerstvolgende productwerk. | ⚪ HIERNA |
+| 106 | `EV-002` — Kleine vijfweg-nulmeting uitvoeren | Eva en vier actuele open-sourceconcurrenten krijgen één begrensde, gelijke cross-domainopdracht; dit is de nulmeting voor het eerstvolgende productwerk. | 🟡 BEZIG |
 
-### Exact werk voor `EV-001`
-
-- `docs/eva-repository-inventory.generated.json`
-- `docs/eva-repository-inventory.generated.md`
-- `eva2/benchmark/inspect_ai_v1/bridge_probe.py`
-- `eva2/benchmark/inspect_ai_v1/README.md`
-- `eva2/tests/benchmark/test_inspect_ai_ev001.py`
-
-Klaar betekent:
-
-- De actuele release is gecontroleerd en exact gelockt.
-- Beide bruggen en log/rescore slagen in de gerichte test.
-- Een onafhankelijke reviewer geeft GO.
-
-Echte controles:
-
-- `pytest -q tests/benchmark/test_inspect_ai_ev001.py`
-- `ruff check benchmark/inspect_ai_v1/bridge_probe.py tests/benchmark/test_inspect_ai_ev001.py`
-
-### Daarna voorbereid: `EV-002`
+### Exact werk voor `EV-002`
 
 - `eva2/benchmark/inspect_ai_v1/pylock.toml`
 - `eva2/benchmark/inspect_ai_v1/bridge_probe.py`
@@ -40,7 +20,13 @@ Echte controles:
 - `eva2/tests/benchmark/test_inspect_ai_ev001.py`
 - `eva2/design/product/comparable-agent-benchmarks-v1.md`
 
-Vooraf vastgelegde controles:
+Klaar betekent:
+
+- Alle vijf deelnemers kregen exact dezelfde begrensde opdracht of een uitval is eerlijk zichtbaar.
+- Resultaat, kosten en beperkingen zijn vastgelegd zonder zelfbedachte totaalscore.
+- Een onafhankelijke reviewer geeft GO.
+
+Echte controles:
 
 - `pytest -q tests/benchmark/test_inspect_ai_ev001.py`
 - `ruff check benchmark/inspect_ai_v1/bridge_probe.py tests/benchmark/test_inspect_ai_ev001.py`

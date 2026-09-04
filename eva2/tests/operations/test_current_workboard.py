@@ -30,9 +30,9 @@ def copy_board(tmp_path: Path, change, *, sync_human: bool = True) -> tuple[Path
 
 def test_board_has_one_small_active_card_and_direct_next() -> None:
     board = json.loads(BOARD.read_text(encoding="utf-8"))
-    assert validate(ROOT, BOARD, CATALOG, HUMAN)["activeTaskId"] == "EV-001"
+    assert validate(ROOT, BOARD, CATALOG, HUMAN)["activeTaskId"] == "EV-002"
     open_cards = [card for card in board["executionTasks"] if card["status"] != "done"]
-    assert [card["id"] for card in open_cards] == ["EV-001", "EV-002"]
+    assert [card["id"] for card in open_cards] == ["EV-002"]
     assert board["audit"]["releaseRecovery"]["evidence"].endswith(
         "RR-002-RR-004-release-recovery-2026-09-04.json"
     )
@@ -58,7 +58,7 @@ def test_product_cadence_and_release_phase_are_explicit() -> None:
 @pytest.mark.parametrize(
     ("change", "message"),
     [
-        (lambda board: board.update({"activeTaskId": "EV-002"}), "exactly one primary"),
+        (lambda board: board.update({"activeTaskId": "EV-001"}), "exactly one primary"),
         (lambda board: board["executionTasks"][0].update({"changePaths": ["/tmp/unsafe.py"]}), "safe repository path"),
         (lambda board: board["executionTasks"][-2].update({"testCommands": ["true"]}), "unsupported test command"),
         (
