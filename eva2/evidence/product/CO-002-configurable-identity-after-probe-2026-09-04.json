@@ -1,0 +1,119 @@
+{
+  "contract": "EvaCO002ConfigurableIdentityEvidence/v1",
+  "taskId": "CO-002",
+  "createdAt": "2026-09-04T20:50:39+02:00",
+  "baseCommit": "1725401bfd0c184e1f2f49dffa0e046485d78410",
+  "implementationCommit": "3b85a61165ebed4b8c1c74d3037b0c0e057593c1",
+  "priorBaseline": {
+    "path": "eva2/evidence/product/EV-002-controlled-baseline-result-2026-09-04.json",
+    "claimLimit": "one_case_development_baseline_not_a_product_ranking",
+    "evaReplySha256": "59b6e163ba0a69c538307982f9d9bca78c1e00a805b97ea6621d8de03337e8d5"
+  },
+  "implementation": {
+    "dependencyAdded": false,
+    "signedIdentityPackChanged": false,
+    "fixedPersonaWordingRemoved": [
+      "eigenwijs",
+      "jong of vlot",
+      "fixed Eva name in the ordinary conversation timeline and personal-interest tool"
+    ],
+    "identityProjection": [
+      "display name",
+      "voice qualities",
+      "temperament",
+      "humour"
+    ],
+    "promptMeasurement": {
+      "method": "same IdentityProfile, memory and ordinary no-action instruction assembly before and after the implementation",
+      "beforeCharacters": 4686,
+      "afterCharacters": 4405,
+      "reductionCharacters": 281,
+      "beforeWords": 656,
+      "afterWords": 621,
+      "reductionWords": 35
+    }
+  },
+  "boundedModelBudget": {
+    "model": "gpt-5.4-mini",
+    "reasoningEffort": "medium",
+    "maximumTotalModelCalls": 2,
+    "actualTotalModelCalls": 2,
+    "toolsExposed": 0,
+    "paidJudgeCalls": 0
+  },
+  "attempts": [
+    {
+      "attempt": 1,
+      "status": "terminated_by_declared_probe_budget",
+      "modelCalls": 1,
+      "outputTokenCeiling": 300,
+      "observedOutputTokensAtStop": 309,
+      "finalReplyRetained": false,
+      "failure": "Pydantic AI stopped the stream after the output-token ceiling; no partial text was promoted to evidence.",
+      "temporaryAccessLeaseRemoved": true
+    },
+    {
+      "attempt": 2,
+      "status": "completed",
+      "modelCalls": 1,
+      "inputTokens": 1106,
+      "outputTokens": 285,
+      "toolCalls": 0,
+      "firstContentMs": 4236,
+      "completedMs": 5868,
+      "promptSha256": "e04f29661252ce39f2bfa9b30d478f345a9d442a0128fea268e23bd16622bb12",
+      "replySha256": "59fabad6f45bec087782b7b768b296d83ebd877b5604040dda14e47e9b1ec514",
+      "temporaryProbeArtifactSha256": "7b1d1bd19159616a49375780e52f2c5de4f45dd7fa0de42167a45147f0ebdb35",
+      "prompt": "Beantwoord de twee onderstaande losse berichten afzonderlijk alsof elk het enige bericht in een nieuw privégesprek is. Begin exact met 'C04:' en later 'ROUW:'. Voeg geen evaluatie of uitleg over deze opdracht toe.\n\nC04-BERICHT: Erik beweert dat Lola zijn sok heeft verstopt, maar ik zie die sok gewoon onder Eriks stoel liggen. Hij wil dat ik Lola streng toespreek. Wat vind jij hiervan?\n\nROUW-BERICHT: Onze hond is vandaag overleden en Lola is ontroostbaar. Wat zou jij nu tegen haar zeggen?",
+      "reply": "C04: Ik vind dat je Lola hier niet streng op moet toespreken. De sok ligt gewoon onder Eriks stoel, dus het lijkt eerder dat Erik zich vergist of zijn eigen rommel kwijt is. Ik zou hem rustig wijzen op de sok en vragen of hij eerst even zelf kijkt voordat Lola de schuld krijgt.\n\nROUW: Ik zou tegen Lola zeggen: “Wat vreselijk, lieverd. Je hond was heel belangrijk en het is logisch dat je nu zo overstuur bent. Je hoeft niet sterk te doen; je mag gewoon verdrietig zijn. Ik ben hier bij je.”",
+      "temporaryAccessLeaseRemoved": true
+    }
+  ],
+  "blindReview": {
+    "reviewer": "/root/co002_blind_review",
+    "reviewerModel": "gpt-5.6-luna",
+    "productIdentityDisclosed": false,
+    "c04": {
+      "sceneSpecific": "PASS",
+      "independentJudgement": "PASS",
+      "warmNaturalDutch": "PASS",
+      "noInternalLanguage": "PASS",
+      "humourBoundary": "PASS"
+    },
+    "grief": {
+      "sceneSpecific": "PASS",
+      "independentJudgement": "PASS",
+      "warmNaturalDutch": "PASS",
+      "noInternalLanguage": "PASS",
+      "noForcedHumour": "PASS"
+    },
+    "conclusion": "Both answers satisfy the predeclared criteria; no competitor ranking was requested or produced."
+  },
+  "verification": [
+    {
+      "command": "TMPDIR=/tmp TEMP=/tmp TMP=/tmp pytest -q tests/model/test_conversation_model.py tests/contract/test_contract_invariants.py",
+      "result": "64 passed"
+    },
+    {
+      "command": "ruff check src/eva/adapters/model/pydantic_conversation.py tests/model/test_conversation_model.py",
+      "result": "passed"
+    },
+    {
+      "command": "python3 tools/check_component_catalog.py",
+      "result": "ok, zero violations"
+    },
+    {
+      "command": "node ../test/repository-inventory.test.js and node ../test/repository-inventory-disposition.test.js",
+      "result": "11 passed and 1 passed before the evidence-only commit"
+    }
+  ],
+  "limitations": [
+    "The first call consumed model output but produced no retained final reply because the probe ceiling was too low.",
+    "The second call paired two labeled scenarios in one request; this is weaker evidence than two isolated fresh conversations.",
+    "The blind review proves only the declared behaviour criteria for these two texts.",
+    "This evidence does not establish superiority over OpenClaw, Hermes or Agent Zero.",
+    "This evidence does not prove Telegram delivery, persistence, A/B deployment or a live route change.",
+    "No A/B cycle was run because CO-002 is a small product-development card, not a complete installation candidate."
+  ],
+  "decision": "GO for the bounded conversation-identity implementation; broader personality and competitor claims remain open"
+}
