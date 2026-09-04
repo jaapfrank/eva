@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
-"""Validate EV-002 and inspect local readiness without making model calls."""
+"""Validate EV-002 plans, readiness and terminal results without model calls."""
 
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 from pathlib import Path
 import re
@@ -78,6 +79,14 @@ MAX_CALLS_PER_PARTICIPANT = 2
 MAX_TOTAL_CALLS = 8
 MAX_INPUT_TOKENS = 24_000
 MAX_OUTPUT_TOKENS = 4_096
+RESULT_CONTRACT = "EvaInspectControlledBaselineResult/v1"
+SUCCESS_STATUSES = {"completed", "completed_receipt_degraded"}
+RESULT_STATUSES = SUCCESS_STATUSES | {"admission_failed"}
+CRITERION_KEYS = {
+    "sceneSpecific",
+    "independentDissentOrLightJoke",
+    "noInternalLanguage",
+}
 
 
 def _object(value: Any, label: str) -> dict[str, Any]:
@@ -149,6 +158,169 @@ def load_plan(path: Path = PLAN_PATH) -> dict[str, Any]:
     ):
         raise RuntimeError("EV-002 artifact retention root differs")
     return plan
+
+
+def _integer(value: object, label: str, *, minimum: int = 0) -> int:
+    if isinstance(value, bool) or not isinstance(value, int) or value < minimum:
+        raise RuntimeError(f"{label} must be an integer of at least {minimum}")
+    return value
+
+
+def _sha256_text(value: str) -> str:
+    return hashlib.sha256(value.encode("utf-8")).hexdigest()
+
+
+def _result_document(path: Path) -> dict[str, Any]:
+    if path.is_symlink() or not path.is_file():
+        raise RuntimeError("EV-002 result must be a regular file")
+    if not 0 < path.stat().st_size <= 1024 * 1024:
+        raise RuntimeError("EV-002 result size is invalid")
+    return _object(json.loads(path.read_text(encoding="utf-8")), "result")
+
+
+def validate_result(
+    path: Path,
+    *,
+    plan_path: Path = PLAN_PATH,
+) -> dict[str, Any]:
+    """Validate a bounded outcome, including honest pre-model admission failures."""
+    plan = load_plan(plan_path)
+    result = _result_document(path)
+    if result.get("contract") != RESULT_CONTRACT or result.get("taskId") != "EV-002":
+        raise RuntimeError("EV-002 result identity differs")
+    if result.get("claimLimit") != plan["claimLimit"]:
+        raise RuntimeError("EV-002 result claim limit differs")
+    expected_plan_hash = hashlib.sha256(plan_path.read_bytes()).hexdigest()
+    if result.get("sourcePlanSha256") != expected_plan_hash:
+        raise RuntimeError("EV-002 result is not bound to the predeclared plan")
+    if result.get("sharedRunContract") != plan["sharedRunContract"]:
+        raise RuntimeError("EV-002 result run contract differs")
+
+    participants = result.get("participants")
+    if not isinstance(participants, list) or [
+        item.get("id") for item in participants if isinstance(item, dict)
+    ] != list(EXPECTED_PARTICIPANTS):
+        raise RuntimeError("EV-002 result participants differ")
+
+    total_calls = 0
+    total_input = 0
+    total_output = 0
+    successful: list[str] = []
+    failed: list[str] = []
+    known_cost = 0.0
+    unknown_successful_costs = 0
+    for item, planned in zip(participants, plan["participants"], strict=True):
+        participant = _object(item, "participant result")
+        participant_id = participant.get("id")
+        if participant.get("sourceCommit") != planned["sourceCommit"]:
+            raise RuntimeError(f"{participant_id} result source differs")
+        status = participant.get("status")
+        if status not in RESULT_STATUSES:
+            raise RuntimeError(f"{participant_id} result status differs")
+        calls = _integer(participant.get("modelCalls"), f"{participant_id} modelCalls")
+        if calls > MAX_CALLS_PER_PARTICIPANT:
+            raise RuntimeError(f"{participant_id} exceeded its model-call budget")
+        tools = _integer(participant.get("toolCalls"), f"{participant_id} toolCalls")
+        if tools != 0:
+            raise RuntimeError(f"{participant_id} used a forbidden tool")
+        input_tokens = _integer(
+            participant.get("inputTokens"), f"{participant_id} inputTokens"
+        )
+        output_tokens = _integer(
+            participant.get("outputTokens"), f"{participant_id} outputTokens"
+        )
+        if input_tokens > MAX_INPUT_TOKENS or output_tokens > MAX_OUTPUT_TOKENS:
+            raise RuntimeError(f"{participant_id} exceeded its token budget")
+        wall_clock = participant.get("wallClockMs")
+        if wall_clock is not None:
+            _integer(wall_clock, f"{participant_id} wallClockMs", minimum=1)
+            if wall_clock > (
+                plan["sharedRunContract"]["maxWallClockSecondsPerParticipant"] * 1000
+            ):
+                raise RuntimeError(f"{participant_id} exceeded its wall-clock budget")
+
+        criteria = _object(participant.get("semanticCriteria"), "semantic criteria")
+        if set(criteria) != CRITERION_KEYS:
+            raise RuntimeError(f"{participant_id} semantic criteria differ")
+        cost = _object(participant.get("cost"), "cost")
+        amount = cost.get("amountUsd")
+        if amount is not None and (
+            isinstance(amount, bool)
+            or not isinstance(amount, (int, float))
+            or amount < 0
+        ):
+            raise RuntimeError(f"{participant_id} cost differs")
+        if not isinstance(cost.get("measurement"), str) or not cost["measurement"]:
+            raise RuntimeError(f"{participant_id} cost measurement is missing")
+
+        if status in SUCCESS_STATUSES:
+            successful.append(str(participant_id))
+            reply = participant.get("reply")
+            if (
+                calls < 1
+                or participant.get("promptDisposition") != "submitted_to_native_route"
+                or not isinstance(reply, str)
+                or not reply.strip()
+                or participant.get("replySha256") != _sha256_text(reply)
+                or participant.get("failure") is not None
+                or not all(isinstance(value, bool) for value in criteria.values())
+            ):
+                raise RuntimeError(f"{participant_id} completed result is incomplete")
+            if amount is None:
+                unknown_successful_costs += 1
+            else:
+                known_cost += float(amount)
+        else:
+            failed.append(str(participant_id))
+            failure = _object(participant.get("failure"), "admission failure")
+            if (
+                calls != 0
+                or input_tokens != 0
+                or output_tokens != 0
+                or participant.get("reply") is not None
+                or participant.get("replySha256") is not None
+                or set(criteria.values()) != {None}
+                or failure.get("stage") != "pre_model_admission"
+                or not isinstance(failure.get("code"), str)
+                or not failure["code"]
+                or not isinstance(failure.get("message"), str)
+                or not failure["message"]
+                or amount != 0
+            ):
+                raise RuntimeError(f"{participant_id} admission failure is incomplete")
+
+        total_calls += calls
+        total_input += input_tokens
+        total_output += output_tokens
+
+    totals = _object(result.get("totals"), "totals")
+    expected_totals = {
+        "modelCalls": total_calls,
+        "inputTokens": total_input,
+        "outputTokens": total_output,
+        "toolCalls": 0,
+        "paidJudgeCalls": 0,
+        "knownCostUsd": known_cost,
+        "unknownSuccessfulCostCount": unknown_successful_costs,
+    }
+    if totals != expected_totals or total_calls > MAX_TOTAL_CALLS:
+        raise RuntimeError("EV-002 result totals differ or exceed budget")
+    comparison = _object(result.get("comparison"), "comparison")
+    if comparison != {
+        "successfulParticipants": successful,
+        "admissionFailures": failed,
+        "ranking": None,
+        "generalWinner": None,
+    }:
+        raise RuntimeError("EV-002 result contains an unsupported comparison")
+    non_claims = result.get("nonClaims")
+    if (
+        not isinstance(non_claims, list)
+        or len(non_claims) < 3
+        or not all(isinstance(item, str) and item.strip() for item in non_claims)
+    ):
+        raise RuntimeError("EV-002 result non-claims are incomplete")
+    return result
 
 
 def _git_value(root: Path, *arguments: str) -> str:
@@ -256,9 +428,27 @@ def main() -> int:
     mode = parser.add_mutually_exclusive_group(required=True)
     mode.add_argument("--check-plan", action="store_true")
     mode.add_argument("--preflight", action="store_true")
+    mode.add_argument("--check-result", action="store_true")
     parser.add_argument("--plan", type=Path, default=PLAN_PATH)
+    parser.add_argument("--result", type=Path)
     parser.add_argument("--source-root", action="append", default=[])
     arguments = parser.parse_args()
+    if arguments.check_result:
+        if arguments.result is None:
+            parser.error("--check-result requires --result")
+        result = validate_result(arguments.result, plan_path=arguments.plan)
+        print(
+            json.dumps(
+                {
+                    "contract": result["contract"],
+                    "status": "valid",
+                    "modelCalls": result["totals"]["modelCalls"],
+                    "ranking": None,
+                },
+                sort_keys=True,
+            )
+        )
+        return 0
     plan = load_plan(arguments.plan)
     if arguments.check_plan:
         print(

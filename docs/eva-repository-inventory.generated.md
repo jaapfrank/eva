@@ -3,7 +3,7 @@
 Deze kaart is mechanisch gegenereerd. Zij staat naast de semantische runtimegraaf en
 classificeert ieder gevolgd, verwijderd of niet-genegeerd nieuw repositorypad.
 
-Schema: `EvaRepositoryInventory/v1`. Brondigest: `899a76c32299240ae826a764e2a13e186e165f6a7be8a0c4e18cdb7ad1784731`.
+Schema: `EvaRepositoryInventory/v1`. Brondigest: `0ff886de7ea294b1969be8044c956ff2fac3617fcd23cee88a94f93cc6f9fd69`.
 
 ## Samenvatting
 
@@ -235,8 +235,8 @@ Schema: `EvaRepositoryInventory/v1`. Brondigest: `899a76c32299240ae826a764e2a13e
 | `docs/eva-agent-benchmark-v1.md` | tracked | documentation | included-tracked-noncritical | keep | 18462 |
 | `docs/eva-endbeeld-roadmap.md` | tracked | documentation | included-tracked-noncritical | keep | 16956 |
 | `docs/eva-rebuild-plan-2026-08-20.md` | tracked | documentation | included-tracked-noncritical | keep | 29009 |
-| `docs/eva-repository-inventory.generated.json` | tracked | generated | included-tracked-critical | keep | 2382008 |
-| `docs/eva-repository-inventory.generated.md` | tracked | generated | included-tracked-critical | keep | 367872 |
+| `docs/eva-repository-inventory.generated.json` | tracked | generated | included-tracked-critical | keep | 2382009 |
+| `docs/eva-repository-inventory.generated.md` | tracked | generated | included-tracked-critical | keep | 367873 |
 | `docs/eva-runtime-contract-map.generated.json` | tracked | generated | included-tracked-critical | keep | 246207 |
 | `docs/eva-runtime-contract-map.generated.md` | tracked | generated | included-tracked-critical | keep | 120103 |
 | `docs/eva-runtime-contracts.md` | tracked | documentation | included-tracked-critical | keep | 80976 |
@@ -268,9 +268,9 @@ Schema: `EvaRepositoryInventory/v1`. Brondigest: `899a76c32299240ae826a764e2a13e
 | `eva2/TECHNISCHE_PRODUCTGATES.md` | tracked | documentation | included-tracked-noncritical | keep | 65630 |
 | `eva2/WERKBORD.md` | tracked | documentation | included-tracked-noncritical | keep | 6741 |
 | `eva2/alembic.ini` | tracked | repository-config | included-tracked-critical | keep | 595 |
-| `eva2/benchmark/inspect_ai_v1/README.md` | tracked | experimental | included-tracked-noncritical | keep | 4520 |
+| `eva2/benchmark/inspect_ai_v1/README.md` | tracked | experimental | included-tracked-noncritical | keep | 5191 |
 | `eva2/benchmark/inspect_ai_v1/bridge_probe.py` | tracked | experimental | included-tracked-noncritical | keep | 17418 |
-| `eva2/benchmark/inspect_ai_v1/ev002_baseline.py` | tracked | experimental | included-tracked-noncritical | keep | 10862 |
+| `eva2/benchmark/inspect_ai_v1/ev002_baseline.py` | tracked | experimental | included-tracked-noncritical | keep | 19043 |
 | `eva2/benchmark/inspect_ai_v1/ev002_baseline_plan.json` | tracked | experimental | included-tracked-noncritical | keep | 3275 |
 | `eva2/benchmark/inspect_ai_v1/pylock.toml` | tracked | experimental | included-tracked-noncritical | keep | 33724 |
 | `eva2/connector_sdk/__init__.py` | tracked | product-runtime | included-tracked-critical | keep | 83 |
@@ -327,7 +327,7 @@ Schema: `EvaRepositoryInventory/v1`. Brondigest: `899a76c32299240ae826a764e2a13e
 | `eva2/design/platform/platform-design-v1.json` | tracked | documentation | included-tracked-noncritical | keep | 3937 |
 | `eva2/design/platform/process-budgets-v1.json` | tracked | documentation | included-tracked-noncritical | keep | 2540 |
 | `eva2/design/platform/trust-boundaries-v1.json` | tracked | documentation | included-tracked-noncritical | keep | 5811 |
-| `eva2/design/product/comparable-agent-benchmarks-v1.md` | tracked | documentation | included-tracked-noncritical | keep | 19670 |
+| `eva2/design/product/comparable-agent-benchmarks-v1.md` | tracked | documentation | included-tracked-noncritical | keep | 20092 |
 | `eva2/design/product/conversational-voice-v1.md` | tracked | documentation | included-tracked-noncritical | keep | 16058 |
 | `eva2/design/product/dashboard-v1.md` | tracked | documentation | included-tracked-noncritical | keep | 6532 |
 | `eva2/design/product/delegation-and-workboard-v1.md` | tracked | documentation | included-tracked-noncritical | keep | 11007 |
@@ -1559,7 +1559,7 @@ Schema: `EvaRepositoryInventory/v1`. Brondigest: `899a76c32299240ae826a764e2a13e
 | `eva2/tests/benchmark/test_eva_tool_free_model.py` | tracked | verification | included-tracked-critical | keep | 1837 |
 | `eva2/tests/benchmark/test_gaia_development_adapter.py` | tracked | verification | included-tracked-critical | keep | 6824 |
 | `eva2/tests/benchmark/test_inspect_ai_ev001.py` | tracked | verification | included-tracked-critical | keep | 5462 |
-| `eva2/tests/benchmark/test_inspect_ai_ev002.py` | tracked | verification | included-tracked-critical | keep | 7498 |
+| `eva2/tests/benchmark/test_inspect_ai_ev002.py` | tracked | verification | included-tracked-critical | keep | 11840 |
 | `eva2/tests/benchmark/test_run_agentbench_dbbench_development.py` | tracked | verification | included-tracked-critical | keep | 10986 |
 | `eva2/tests/benchmark/test_run_preselected_agentbench_dbbench_batch.py` | tracked | verification | included-tracked-critical | keep | 5153 |
 | `eva2/tests/bootstrap/test_commerce_deployment.py` | tracked | verification | included-tracked-critical | keep | 1165 |

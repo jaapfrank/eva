@@ -70,14 +70,17 @@ model en reasoningniveau, geen tools, geen retry en maximaal twee modelcalls.
 Daarmee zijn hoogstens acht deelnemercalls mogelijk; er is geen betaalde
 modeljury.
 
-`ev002_baseline.py` heeft bewust nog geen uitvoermodus. Het kan alleen het plan
-controleren en bestaande lokale Git-/Dockerbytes bekijken:
+`ev002_baseline.py` heeft bewust geen uitvoermodus. Het kan alleen het plan
+controleren, bestaande lokale Git-/Dockerbytes bekijken en achteraf één
+begrensd resultaat controleren:
 
 ```bash
 python3 benchmark/inspect_ai_v1/ev002_baseline.py --check-plan
 python3 benchmark/inspect_ai_v1/ev002_baseline.py --preflight \
   --source-root openclaw=/pad/naar/openclaw \
   --source-root hermes=/pad/naar/hermes
+python3 benchmark/inspect_ai_v1/ev002_baseline.py --check-result \
+  --result /pad/naar/ev002-result.json
 ```
 
 Een ontbrekende of verkeerde bron, tag, commit of image maakt de voorcontrole
@@ -92,3 +95,11 @@ controleert het duurzame antwoord en weigert tools, meer dan twee
 modelpogingen of een overschreden tokenbudget. De stack wordt daarna volledig
 opgeruimd. Zonder promptbestand blijft de oorspronkelijke vaste releaseprobe
 ongewijzigd werken.
+
+Een deelnemer die vóór de modelcall de gelijke nul-tools-, nul-retry- of
+isolatiegrens niet kan afdwingen, krijgt geen versoepelde proef en geen extra
+adapter. Het resultaat registreert dan een `admission_failed` met nul calls en
+nul tokens. Een geslaagd antwoord moet zijn native gebruik, antwoordhash en de
+drie losse semantische criteria bewaren. De validator accepteert geen ranglijst
+of algemene winnaar; twee bruikbare antwoorden en twee technische uitvallen
+blijven dus precies dat, geen verzonnen vierwegwinst.

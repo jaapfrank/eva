@@ -44,6 +44,13 @@ De invoering is bewust in twee kleine stappen gesplitst:
    nulmeting/nameting-cadans en groeit de vergelijking per domein. Er komt geen
    aparte benchmarkchecker, scorer of tweede resultaatformaat bij.
 
+De EV-002-uitvoering wordt niet gerepareerd met benchmark-specifieke
+frameworkcode. Als een native deelnemer de vooraf gelijke isolatie-, tool- of
+retrygrens niet hard kan afdwingen, eindigt die deelnemer vóór de modelcall als
+technische `admission_failed`. Dat is nuttige compatibiliteitsinformatie, maar
+geen inhoudelijke nederlaag en geen reden om de geslaagde antwoorden tot een
+algemene ranglijst samen te persen.
+
 Het bestaande `ComparableAgentRun/v1`-schema en zijn Python-validator zijn per
 2 september 2026 **afgekeurd voor ieder nieuw resultaat**. Ze mogen niet door
 `EV-001` of `EV-002` worden gelezen en hun eigen `officialScore`

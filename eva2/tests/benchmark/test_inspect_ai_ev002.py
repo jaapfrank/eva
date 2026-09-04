@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import hashlib
 import importlib.util
 import json
 from pathlib import Path
@@ -29,6 +30,92 @@ def write_changed_plan(tmp_path: Path, change) -> Path:
     document = json.loads(PLAN.read_text(encoding="utf-8"))
     change(document)
     target = tmp_path / "plan.json"
+    target.write_text(json.dumps(document), encoding="utf-8")
+    return target
+
+
+def result_fixture() -> dict:
+    plan = json.loads(PLAN.read_text(encoding="utf-8"))
+    participants = []
+    for source in plan["participants"]:
+        completed = source["id"] in {"eva2", "hermes"}
+        reply = "Ik spreek Lola niet streng toe; de sok ligt onder Eriks stoel."
+        participants.append(
+            {
+                "id": source["id"],
+                "sourceCommit": source["sourceCommit"],
+                "status": "completed" if completed else "admission_failed",
+                "promptDisposition": (
+                    "submitted_to_native_route" if completed else "withheld_by_harness"
+                ),
+                "nativeRoute": "test",
+                "modelCalls": 1 if completed else 0,
+                "toolCalls": 0,
+                "inputTokens": 10 if completed else 0,
+                "outputTokens": 12 if completed else 0,
+                "wallClockMs": 100 if completed else None,
+                "reply": reply if completed else None,
+                "replySha256": (
+                    hashlib.sha256(reply.encode("utf-8")).hexdigest()
+                    if completed
+                    else None
+                ),
+                "semanticCriteria": {
+                    "sceneSpecific": True if completed else None,
+                    "independentDissentOrLightJoke": True if completed else None,
+                    "noInternalLanguage": True if completed else None,
+                },
+                "failure": (
+                    None
+                    if completed
+                    else {
+                        "stage": "pre_model_admission",
+                        "code": "constraint_not_enforceable",
+                        "message": "Native route cannot prove the fixed constraint.",
+                    }
+                ),
+                "evidenceQuality": (
+                    "native_usage" if completed else "static_admission_check"
+                ),
+                "cost": {
+                    "amountUsd": None if completed else 0,
+                    "measurement": "unknown" if completed else "no_model_call",
+                },
+            }
+        )
+    return {
+        "contract": "EvaInspectControlledBaselineResult/v1",
+        "taskId": "EV-002",
+        "createdAt": "2026-09-04T00:00:00+02:00",
+        "sourcePlanSha256": hashlib.sha256(PLAN.read_bytes()).hexdigest(),
+        "claimLimit": plan["claimLimit"],
+        "sharedRunContract": plan["sharedRunContract"],
+        "participants": participants,
+        "totals": {
+            "modelCalls": 2,
+            "inputTokens": 20,
+            "outputTokens": 24,
+            "toolCalls": 0,
+            "paidJudgeCalls": 0,
+            "knownCostUsd": 0.0,
+            "unknownSuccessfulCostCount": 2,
+        },
+        "comparison": {
+            "successfulParticipants": ["eva2", "hermes"],
+            "admissionFailures": ["openclaw", "agent_zero"],
+            "ranking": None,
+            "generalWinner": None,
+        },
+        "nonClaims": [
+            "Not a product ranking.",
+            "Not a cross-domain result.",
+            "Admission failure is not a quality score.",
+        ],
+    }
+
+
+def write_result(tmp_path: Path, document: dict) -> Path:
+    target = tmp_path / "result.json"
     target.write_text(json.dumps(document), encoding="utf-8")
     return target
 
@@ -136,6 +223,31 @@ def test_cli_has_no_run_mode(monkeypatch, capsys) -> None:
         ev002_baseline.main()
     assert error.value.code == 2
     assert "--run" in capsys.readouterr().err
+
+
+def test_result_accepts_successes_and_honest_pre_model_failures(tmp_path: Path) -> None:
+    result = ev002_baseline.validate_result(write_result(tmp_path, result_fixture()))
+    assert result["totals"]["modelCalls"] == 2
+    assert result["comparison"]["ranking"] is None
+
+
+@pytest.mark.parametrize(
+    "change",
+    [
+        lambda result: result["totals"].update({"modelCalls": 3}),
+        lambda result: result["participants"][0].update({"toolCalls": 1}),
+        lambda result: result["participants"][1].update({"replySha256": "0" * 64}),
+        lambda result: result["participants"][1].update({"modelCalls": 1}),
+        lambda result: result["comparison"].update({"ranking": ["eva2"]}),
+    ],
+)
+def test_result_rejects_fabrication_scope_expansion_or_ranking(
+    tmp_path: Path, change
+) -> None:
+    document = result_fixture()
+    change(document)
+    with pytest.raises(RuntimeError):
+        ev002_baseline.validate_result(write_result(tmp_path, document))
 
 
 def test_disposable_eva_probe_accepts_one_bounded_prompt_file(tmp_path: Path) -> None:
