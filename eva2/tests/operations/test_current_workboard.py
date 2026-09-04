@@ -30,9 +30,9 @@ def copy_board(tmp_path: Path, change, *, sync_human: bool = True) -> tuple[Path
 
 def test_board_has_one_small_active_card_and_direct_next() -> None:
     board = json.loads(BOARD.read_text(encoding="utf-8"))
-    assert validate(ROOT, BOARD, CATALOG, HUMAN)["activeTaskId"] == "EV-002"
+    assert validate(ROOT, BOARD, CATALOG, HUMAN)["activeTaskId"] == "CO-001"
     open_cards = [card for card in board["executionTasks"] if card["status"] != "done"]
-    assert [card["id"] for card in open_cards] == ["EV-002"]
+    assert [card["id"] for card in open_cards] == ["CO-001"]
     assert board["audit"]["releaseRecovery"]["evidence"].endswith(
         "RR-002-RR-004-release-recovery-2026-09-04.json"
     )
@@ -47,7 +47,8 @@ def test_product_cadence_and_release_phase_are_explicit() -> None:
     assert "nulmeting" in rules and "maintained upstream" in rules
     assert ARTIFACT_RETENTION_RULE in board["rules"]
     milestones = {card["id"]: card for card in board["milestones"]}
-    assert milestones["CO-001"]["order"] == 110
+    execution = {card["id"]: card for card in board["executionTasks"]}
+    assert execution["CO-001"]["order"] == 110
     assert not any(card_id.startswith("OS-") for card_id in milestones)
     assert "geen aparte opruimwachtrij" in rules
     assert [milestones[f"RB-00{i}"]["order"] for i in range(7, 10)] + [milestones["RB-010"]["order"]] == [400, 410, 420, 430]

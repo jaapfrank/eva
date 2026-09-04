@@ -16,7 +16,7 @@
       "retiredFoundationDigest": "df8bacedc1b93ea952d5e4fd0f161039f1faa91b72b6d22f71b0c020e73c7b90"
     }
   },
-  "activeTaskId": "EV-002",
+  "activeTaskId": "CO-001",
   "maxActiveImplementationTasks": 1,
   "statusValues": ["queued", "in_progress", "review", "done", "blocked"],
   "rules": [
@@ -491,17 +491,27 @@
     {
       "id": "EV-002", "order": 106, "area": "Evaluatie", "title": "Kleine vierweg-gespreksnulmeting uitvoeren",
       "outcome": "Eva, OpenClaw, Hermes en Agent Zero krijgen één begrensde, gelijke gesprekssituatie; dit is alleen de nulmeting voor het eerstvolgende gesprekwerk.",
-      "status": "in_progress", "stateDetails": {"baseCommit": null, "implementationCommit": null, "evidenceCommit": null, "reviewEvidencePaths": [], "blockerReason": null},
+      "status": "done", "stateDetails": {"baseCommit": "b3c119849d277abb744030de41af54b4209c423d", "implementationCommit": "62507a7d4caa034bb3d30f8ed23efd61ab0eaba0", "evidenceCommit": "177c7bac7701a53cb98ca89c464dc67731292233", "reviewEvidencePaths": ["eva2/evidence/product/EV-002-controlled-baseline-result-2026-09-04.json"], "blockerReason": null},
       "ownerRole": "architecturelead", "reviewerRole": "proofreviewer", "dependsOn": ["EV-001"],
       "componentIds": ["operations-and-release-tests"], "inventoryOwners": ["architecture", "documentation", "experimental", "verification"],
       "changePaths": ["docs/eva-repository-inventory.generated.json", "docs/eva-repository-inventory.generated.md", "eva2/benchmark/inspect_ai_v1/README.md", "eva2/benchmark/inspect_ai_v1/ev002_baseline.py", "eva2/design/product/comparable-agent-benchmarks-v1.md", "eva2/tests/benchmark/test_inspect_ai_ev002.py"],
       "testCommands": ["pytest -q tests/benchmark/test_inspect_ai_ev002.py", "ruff check benchmark/inspect_ai_v1/ev002_baseline.py experiments/managed-b-clean-graph-v1/probe.py tests/benchmark/test_inspect_ai_ev002.py", "python3 tools/check_component_catalog.py"],
       "evidenceRequired": ["Deelnemers, model, taak, rechten, tijd-, call- en tokenbudget zijn vooraf gelijk vastgezet; preflight doet nul model- en netwerkcalls.", "Eén kleine uitvoerpoging bewaart per deelnemer de native uitvoer of een concrete uitval vóór de modelcall, plus feitelijke gebruiksgegevens; zij doet geen cross-domain- of algemene winnaarclaim."],
       "doneWhen": ["Eva, OpenClaw, Hermes en Agent Zero kregen exact dezelfde begrensde opdracht of een uitval is eerlijk zichtbaar.", "Resultaat, kosten en beperkingen zijn vastgelegd zonder zelfbedachte totaalscore.", "Een onafhankelijke reviewer geeft GO."]
+    },
+    {
+      "id": "CO-001", "order": 110, "area": "Gesprek", "title": "Telegramantwoord live laten meegroeien",
+      "outcome": "Een privéantwoord verschijnt via de gewone Telegramroute tijdens het denken en eindigt exact als Eva's duurzame antwoord; de bestaande kernstream wordt hergebruikt zonder tweede gesprekroute.",
+      "status": "in_progress", "stateDetails": {"baseCommit": null, "implementationCommit": null, "evidenceCommit": null, "reviewEvidencePaths": [], "blockerReason": null},
+      "ownerRole": "architecturelead", "reviewerRole": "proofreviewer", "dependsOn": ["EV-002"],
+      "componentIds": ["api-and-runtime-composition", "core-behavior-tests", "core-semantics", "durable-persistence", "external-capability-adapters", "integration-and-storage-tests"], "inventoryOwners": ["architecture", "eva-runtime", "verification"],
+      "changePaths": ["docs/eva-repository-inventory.generated.json", "docs/eva-repository-inventory.generated.md", "eva2/src/eva/adapters/api/app.py", "eva2/src/eva/adapters/api/dashboard_conversation.py", "eva2/src/eva/adapters/connectors/telegram.py", "eva2/src/eva/adapters/postgres/telegram_ingress.py", "eva2/src/eva/application/telegram_ingress.py", "eva2/tests/api/test_memory_api.py", "eva2/tests/application/test_telegram_ingress.py", "eva2/tests/connectors/test_telegram.py", "eva2/tests/postgres/test_operational_timeline.py"],
+      "testCommands": ["TMPDIR=/tmp TEMP=/tmp TMP=/tmp pytest -q tests/api/test_memory_api.py tests/application/test_telegram_ingress.py tests/connectors/test_telegram.py tests/postgres/test_operational_timeline.py", "ruff check src/eva/adapters/api/app.py src/eva/adapters/api/dashboard_conversation.py src/eva/adapters/connectors/telegram.py src/eva/adapters/postgres/telegram_ingress.py src/eva/application/telegram_ingress.py tests/api/test_memory_api.py tests/application/test_telegram_ingress.py tests/connectors/test_telegram.py tests/postgres/test_operational_timeline.py", "python3 tools/check_component_catalog.py"],
+      "evidenceRequired": ["De nulmeting legt vast dat de gewone poller nu pas na het volledige kernantwoord één sendMessage doet; de officiële Telegram-Bot-API ondersteunt één bericht maken en daarna editMessageText.", "Een lokale Telegram-contractprovider bewaart de volgorde van create, begrensde edits en de exacte finale tekst; de PostgreSQL-tijdlijn bewijst herstel zonder blinde dubbele create of edit.", "Een onafhankelijke reviewer controleert privacy, toolstilte, limieten, foutpaden en dat de bestaande stdlib-adapter wordt uitgebreid in plaats van een tweede Telegramframework toe te voegen."],
+      "doneWhen": ["Een toegelaten privéturn toont veilige modeltekst stapsgewijs en eindigt met exact de al duurzaam vastgelegde finale tekst en hash.", "Groepsberichten, lokale commando's en toolfasen lekken geen gedeeltelijke modeltekst; lange tekst, floodcontrol en providerfouten stoppen begrensd.", "Een crash of onduidelijke provideracceptatie veroorzaakt geen tweede sendMessage of blinde mutatie; hervatten gebruikt alleen een duurzaam bekende Telegram-message-ID.", "Bestaande finale levering en privacytests blijven groen en een onafhankelijke reviewer geeft GO."]
     }
   ],
   "milestones": [
-    {"id": "CO-001", "order": 110, "area": "Gesprek", "title": "Telegram live laten streamen", "outcome": "Tekst verschijnt live en eindigt exact in het duurzame antwoord; vervangen gesprekcode verdwijnt in dezelfde kaart."},
     {"id": "CO-002", "order": 120, "area": "Gesprek", "title": "Menselijke identiteit bewijzen", "outcome": "Eva blijft warm, geestig en zelfstandig herkenbaar."},
     {"id": "CO-003", "order": 130, "area": "Mensen en geheugen", "title": "Persoonsbeheer afmaken", "outcome": "Mensen blijven privé en kunnen geheugen zien, corrigeren en wissen."},
     {"id": "TL-001", "order": 140, "area": "Gereedschappen", "title": "Algemene toolontdekking afmaken", "outcome": "De best onderhouden generieke model- en toolloop laadt providers via configuratie of MCP. Pydantic AI wint die plek alleen bij gemeten voordeel; eigen wrappers en oude modelpaden verdwijnen in dezelfde kaart."},
@@ -531,6 +541,17 @@
     {"id": "RB-010", "order": 430, "area": "Release-eindfase", "title": "Actief en reserveslot beheren", "outcome": "Alleen groen werk gaat naar het reserveslot; controleer het daarna en wissel de route. Bij problemen blijft het huidige slot actief."}
   ],
   "completions": {
+    "EV-002": {
+      "baseCommit": "b3c119849d277abb744030de41af54b4209c423d",
+      "commit": "62507a7d4caa034bb3d30f8ed23efd61ab0eaba0",
+      "decision": "GO",
+      "evidenceCommit": "177c7bac7701a53cb98ca89c464dc67731292233",
+      "evidencePaths": ["eva2/reviews/EV-002-controlled-baseline-proof-review-62507a7.md"],
+      "implementedBy": "/root",
+      "reviewCommit": "05293c08ceb5ecbcddc385ed35eab5eb420ab358",
+      "reviewedBy": "/root/proof_review",
+      "testReceiptPaths": ["eva2/evidence/product/EV-002-controlled-baseline-result-2026-09-04.json"]
+    },
     "EV-001": {
       "baseCommit": "8569871d9713662c5b3a3ababf6ce58b56c13b6b",
       "commit": "0f126633a429b03ca83786203d08289d67368521",

@@ -10,27 +10,33 @@ de volgende begint.
 
 | Volgorde | Kaart | Resultaat | Status |
 |---:|---|---|---|
-| 106 | `EV-002` — Kleine vierweg-gespreksnulmeting uitvoeren | Eva, OpenClaw, Hermes en Agent Zero krijgen één begrensde, gelijke gesprekssituatie; dit is alleen de nulmeting voor het eerstvolgende gesprekwerk. | 🟡 BEZIG |
+| 110 | `CO-001` — Telegramantwoord live laten meegroeien | Een privéantwoord verschijnt via de gewone Telegramroute tijdens het denken en eindigt exact als Eva's duurzame antwoord; de bestaande kernstream wordt hergebruikt zonder tweede gesprekroute. | 🟡 BEZIG |
 
-### Exact werk voor `EV-002`
+### Exact werk voor `CO-001`
 
 - `docs/eva-repository-inventory.generated.json`
 - `docs/eva-repository-inventory.generated.md`
-- `eva2/benchmark/inspect_ai_v1/README.md`
-- `eva2/benchmark/inspect_ai_v1/ev002_baseline.py`
-- `eva2/design/product/comparable-agent-benchmarks-v1.md`
-- `eva2/tests/benchmark/test_inspect_ai_ev002.py`
+- `eva2/src/eva/adapters/api/app.py`
+- `eva2/src/eva/adapters/api/dashboard_conversation.py`
+- `eva2/src/eva/adapters/connectors/telegram.py`
+- `eva2/src/eva/adapters/postgres/telegram_ingress.py`
+- `eva2/src/eva/application/telegram_ingress.py`
+- `eva2/tests/api/test_memory_api.py`
+- `eva2/tests/application/test_telegram_ingress.py`
+- `eva2/tests/connectors/test_telegram.py`
+- `eva2/tests/postgres/test_operational_timeline.py`
 
 Klaar betekent:
 
-- Eva, OpenClaw, Hermes en Agent Zero kregen exact dezelfde begrensde opdracht of een uitval is eerlijk zichtbaar.
-- Resultaat, kosten en beperkingen zijn vastgelegd zonder zelfbedachte totaalscore.
-- Een onafhankelijke reviewer geeft GO.
+- Een toegelaten privéturn toont veilige modeltekst stapsgewijs en eindigt met exact de al duurzaam vastgelegde finale tekst en hash.
+- Groepsberichten, lokale commando's en toolfasen lekken geen gedeeltelijke modeltekst; lange tekst, floodcontrol en providerfouten stoppen begrensd.
+- Een crash of onduidelijke provideracceptatie veroorzaakt geen tweede sendMessage of blinde mutatie; hervatten gebruikt alleen een duurzaam bekende Telegram-message-ID.
+- Bestaande finale levering en privacytests blijven groen en een onafhankelijke reviewer geeft GO.
 
 Echte controles:
 
-- `pytest -q tests/benchmark/test_inspect_ai_ev002.py`
-- `ruff check benchmark/inspect_ai_v1/ev002_baseline.py experiments/managed-b-clean-graph-v1/probe.py tests/benchmark/test_inspect_ai_ev002.py`
+- `TMPDIR=/tmp TEMP=/tmp TMP=/tmp pytest -q tests/api/test_memory_api.py tests/application/test_telegram_ingress.py tests/connectors/test_telegram.py tests/postgres/test_operational_timeline.py`
+- `ruff check src/eva/adapters/api/app.py src/eva/adapters/api/dashboard_conversation.py src/eva/adapters/connectors/telegram.py src/eva/adapters/postgres/telegram_ingress.py src/eva/application/telegram_ingress.py tests/api/test_memory_api.py tests/application/test_telegram_ingress.py tests/connectors/test_telegram.py tests/postgres/test_operational_timeline.py`
 - `python3 tools/check_component_catalog.py`
 
 ## Daarna
@@ -40,7 +46,6 @@ nadat zij als eerstvolgende kleine kaart exacte bestanden en tests heeft.
 
 | Nr. | Onderdeel | Begrijpelijk eindresultaat |
 |---:|---|---|
-| 110 | `CO-001` — Telegram live laten streamen | Tekst verschijnt live en eindigt exact in het duurzame antwoord; vervangen gesprekcode verdwijnt in dezelfde kaart. |
 | 120 | `CO-002` — Menselijke identiteit bewijzen | Eva blijft warm, geestig en zelfstandig herkenbaar. |
 | 130 | `CO-003` — Persoonsbeheer afmaken | Mensen blijven privé en kunnen geheugen zien, corrigeren en wissen. |
 | 140 | `TL-001` — Algemene toolontdekking afmaken | De best onderhouden generieke model- en toolloop laadt providers via configuratie of MCP. Pydantic AI wint die plek alleen bij gemeten voordeel; eigen wrappers en oude modelpaden verdwijnen in dezelfde kaart. |
