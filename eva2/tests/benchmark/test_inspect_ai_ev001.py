@@ -56,8 +56,12 @@ def test_lock_drift_fails_closed(
 
 
 def test_probe_refuses_to_mix_results(monkeypatch: pytest.MonkeyPatch, tmp_path: Path) -> None:
+    monkeypatch.setattr(
+        probe,
+        "verify_source_checkout",
+        lambda commit: {"commit": commit, "tree": "b" * 40, "files": {}},
+    )
     monkeypatch.setattr(probe, "_verify_runtime", lambda: None)
-    monkeypatch.setattr(probe, "current_source_commit", lambda: "a" * 40)
     output = tmp_path / "existing"
     output.mkdir()
     (output / "old.json").write_text("{}\n", encoding="utf-8")
@@ -69,8 +73,6 @@ def test_probe_refuses_to_mix_results(monkeypatch: pytest.MonkeyPatch, tmp_path:
 def test_probe_requires_an_exact_source_commit(
     monkeypatch: pytest.MonkeyPatch, tmp_path: Path
 ) -> None:
-    monkeypatch.setattr(probe, "_verify_runtime", lambda: None)
-
     with pytest.raises(RuntimeError, match="exact lowercase Git"):
         probe.run_probe(tmp_path / "output", probe.DEFAULT_SANDBOX_IMAGE, "main")
 
@@ -84,6 +86,45 @@ def test_probe_requires_the_current_source_commit(
     with pytest.raises(RuntimeError, match="does not match"):
         probe.run_probe(tmp_path / "output", probe.DEFAULT_SANDBOX_IMAGE, "a" * 40)
     assert not (tmp_path / "output").exists()
+
+
+def test_source_binding_rejects_dirty_tracked_bytes(
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Path
+) -> None:
+    local = tmp_path / "probe.py"
+    local.write_bytes(b"dirty")
+    monkeypatch.setattr(probe, "current_source_commit", lambda: "a" * 40)
+    monkeypatch.setattr(probe, "_git_blob", lambda *_args: b"committed")
+
+    with pytest.raises(RuntimeError, match="differs from Git"):
+        probe.verify_source_checkout("a" * 40, {"eva2/probe.py": local})
+
+
+def test_source_binding_records_tree_and_file_hashes(
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Path
+) -> None:
+    local = tmp_path / "probe.py"
+    local.write_bytes(b"committed")
+    monkeypatch.setattr(probe, "current_source_commit", lambda: "a" * 40)
+    monkeypatch.setattr(probe, "_git_blob", lambda *_args: b"committed")
+    monkeypatch.setattr(probe, "_git_tree", lambda *_args: "b" * 40)
+
+    assert probe.verify_source_checkout("a" * 40, {"eva2/probe.py": local}) == {
+        "commit": "a" * 40,
+        "tree": "b" * 40,
+        "files": {"eva2/probe.py": probe.bytes_sha256(b"committed")},
+    }
+
+
+def test_docker_cleanup_is_measured_and_residuals_fail_closed() -> None:
+    before = {"containers": ["c1"], "networks": ["n1"], "volumes": ["v1"]}
+    clean = probe.verified_docker_cleanup(before, before)
+    assert clean["residualAddedCount"] == 0
+    assert clean["added"] == {"containers": [], "networks": [], "volumes": []}
+
+    after = {**before, "containers": ["c1", "c2"]}
+    with pytest.raises(RuntimeError, match="left Docker objects"):
+        probe.verified_docker_cleanup(before, after)
 
 
 def test_only_local_log_locations_are_hashed() -> None:
@@ -102,4 +143,5 @@ def test_probe_contract_withholds_network_tools_and_paid_models() -> None:
     assert source.count("code_execution=False") == 2
     assert source.count("client_mcp_servers=False") == 2
     assert 'network_mode="none"' in source
+    assert 'pull_policy="never"' in source
     assert '"paidModelCalls": 0' in source

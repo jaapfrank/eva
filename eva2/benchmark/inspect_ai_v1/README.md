@@ -18,8 +18,15 @@ Een volgende release wordt eerst opnieuw gelockt en door dezelfde probe gehaald.
 Daarna leest de probe het oorspronkelijke `.eval`-log, scoort een kopie opnieuw
 en controleert dat de SHA-256 van het origineel niet veranderde. Er worden geen
 betaalde modelcalls uitgevoerd. De opgegeven `--source-commit` moet bovendien
-gelijk zijn aan `git rev-parse HEAD`; een willekeurige geldige hash wordt
-geweigerd voordat een resultaatmap wordt gemaakt.
+gelijk zijn aan `git rev-parse HEAD`. De werkelijk uitgevoerde probe- en
+lockbytes moeten bytegelijk zijn aan hun Git-blobs; commit, tree en beide
+bestandshashes komen in het receipt. Een willekeurige hash of een gewijzigde
+tracked bron wordt geweigerd voordat de evaluatie start.
+
+De probe inventariseert containers, netwerken en volumes direct vóór en na de
+sandboxrun. Alleen als er geen nieuw Dockerobject achterblijft ontstaat een
+passing receipt; beide inventarissen, hun hashes en de delta staan in datzelfde
+private bewijs. `sandbox_cleanup=True` is daarmee niet de enige opruimclaim.
 
 De dependencycontrole kan in de gewone ontwikkelomgeving draaien:
 

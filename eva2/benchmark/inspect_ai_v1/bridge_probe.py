@@ -36,6 +36,15 @@ PYTHON_SAMPLE = "python-agent-bridge"
 SANDBOX_SAMPLE = "sandbox-cli-agent-bridge"
 SHA256 = re.compile(r"[0-9a-f]{64}")
 GIT_COMMIT = re.compile(r"[0-9a-f]{40}")
+SOURCE_FILES = {
+    "eva2/benchmark/inspect_ai_v1/bridge_probe.py": Path(__file__).resolve(),
+    "eva2/benchmark/inspect_ai_v1/pylock.toml": LOCK_PATH.resolve(),
+}
+DOCKER_INVENTORY_COMMANDS = {
+    "containers": ["docker", "container", "ls", "--all", "--quiet", "--no-trunc"],
+    "networks": ["docker", "network", "ls", "--quiet", "--no-trunc"],
+    "volumes": ["docker", "volume", "ls", "--quiet"],
+}
 
 
 def file_sha256(path: Path) -> str:
@@ -44,6 +53,10 @@ def file_sha256(path: Path) -> str:
         for chunk in iter(lambda: handle.read(131_072), b""):
             digest.update(chunk)
     return digest.hexdigest()
+
+
+def bytes_sha256(value: bytes) -> str:
+    return hashlib.sha256(value).hexdigest()
 
 
 def _local_log_path(location: str) -> Path:
@@ -122,6 +135,95 @@ def current_source_commit(root: Path = REPO_ROOT) -> str:
     if GIT_COMMIT.fullmatch(commit) is None:
         raise RuntimeError("Probe source checkout has no exact Git commit")
     return commit
+
+
+def _git_blob(commit: str, path: str, root: Path = REPO_ROOT) -> bytes:
+    result = subprocess.run(
+        ["git", "show", f"{commit}:{path}"],
+        cwd=root,
+        check=True,
+        capture_output=True,
+    )
+    return result.stdout
+
+
+def _git_tree(commit: str, root: Path = REPO_ROOT) -> str:
+    result = subprocess.run(
+        ["git", "rev-parse", f"{commit}^{{tree}}"],
+        cwd=root,
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    tree = result.stdout.strip()
+    if GIT_COMMIT.fullmatch(tree) is None:
+        raise RuntimeError("Probe source commit has no exact Git tree")
+    return tree
+
+
+def verify_source_checkout(
+    source_commit: str,
+    source_files: dict[str, Path] = SOURCE_FILES,
+) -> dict[str, Any]:
+    """Bind the executable probe and lock bytes to the requested Git commit."""
+    if GIT_COMMIT.fullmatch(source_commit) is None:
+        raise RuntimeError("Probe requires an exact lowercase Git source commit")
+    if source_commit != current_source_commit():
+        raise RuntimeError("Probe source commit does not match the current checkout")
+    hashes: dict[str, str] = {}
+    for repository_path, local_path in source_files.items():
+        if local_path.is_symlink() or not local_path.is_file():
+            raise RuntimeError(f"Probe source file is not regular: {repository_path}")
+        committed = _git_blob(source_commit, repository_path)
+        working = local_path.read_bytes()
+        if working != committed:
+            raise RuntimeError(f"Probe source file differs from Git: {repository_path}")
+        hashes[repository_path] = bytes_sha256(committed)
+    return {
+        "commit": source_commit,
+        "tree": _git_tree(source_commit),
+        "files": hashes,
+    }
+
+
+def docker_inventory() -> dict[str, list[str]]:
+    """Read the Docker objects that a sandbox run could leave behind."""
+    inventory: dict[str, list[str]] = {}
+    for kind, command in DOCKER_INVENTORY_COMMANDS.items():
+        result = subprocess.run(command, check=True, capture_output=True, text=True)
+        inventory[kind] = sorted(set(result.stdout.splitlines()))
+    return inventory
+
+
+def verified_docker_cleanup(
+    before: dict[str, list[str]], after: dict[str, list[str]]
+) -> dict[str, Any]:
+    """Return a hashbound before/after inventory or reject residual objects."""
+    added = {
+        kind: sorted(set(after[kind]) - set(before[kind]))
+        for kind in DOCKER_INVENTORY_COMMANDS
+    }
+    removed = {
+        kind: sorted(set(before[kind]) - set(after[kind]))
+        for kind in DOCKER_INVENTORY_COMMANDS
+    }
+    if any(added.values()):
+        raise RuntimeError(f"Inspect sandbox left Docker objects behind: {added}")
+    canonical_before = json.dumps(
+        before, sort_keys=True, separators=(",", ":")
+    ).encode("utf-8")
+    canonical_after = json.dumps(
+        after, sort_keys=True, separators=(",", ":")
+    ).encode("utf-8")
+    return {
+        "before": before,
+        "after": after,
+        "beforeSha256": bytes_sha256(canonical_before),
+        "afterSha256": bytes_sha256(canonical_after),
+        "added": added,
+        "removed": removed,
+        "residualAddedCount": 0,
+    }
 
 
 def _verify_runtime() -> None:
@@ -269,14 +371,12 @@ def run_probe(
     output_dir: Path, sandbox_image: str, source_commit: str
 ) -> dict[str, Any]:
     """Run both bridges and prove immutable-log re-scoring in a new directory."""
+    source = verify_source_checkout(source_commit)
     _verify_runtime()
     lock = verify_lock()
-    if GIT_COMMIT.fullmatch(source_commit) is None:
-        raise RuntimeError("Probe requires an exact lowercase Git source commit")
-    if source_commit != current_source_commit():
-        raise RuntimeError("Probe source commit does not match the current checkout")
     if output_dir.exists() and any(output_dir.iterdir()):
         raise RuntimeError("Probe output directory must be absent or empty")
+    docker_before = docker_inventory()
     output_dir.mkdir(parents=True, exist_ok=True)
     original_dir = output_dir / "original"
     original_dir.mkdir()
@@ -304,6 +404,7 @@ def run_probe(
     _assert_complete_log(logs[0])
     if path_hits != [PYTHON_SAMPLE, SANDBOX_SAMPLE]:
         raise RuntimeError(f"Not every bridge ran exactly once: {path_hits!r}")
+    docker_cleanup = verified_docker_cleanup(docker_before, docker_inventory())
 
     infos = list_eval_logs(str(original_dir), formats=["eval"])
     if len(infos) != 1:
@@ -323,11 +424,14 @@ def run_probe(
         "contract": "EvaInspectBridgeProbe/v1",
         "status": "passed",
         "sourceCommit": source_commit,
+        "source": source,
         "paidModelCalls": 0,
         "model": "mockllm/model",
         "bridges": path_hits,
         "sandboxImage": sandbox_image,
         "sandboxNetworkMode": "none",
+        "sandboxPullPolicy": "never",
+        "dockerObjects": docker_cleanup,
         "lock": lock,
         "accuracy": 1.0,
         "originalLog": {

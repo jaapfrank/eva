@@ -269,9 +269,9 @@
     }
   ],
   "summary": {
-    "files": 2054,
-    "present": 2054,
-    "tracked": 1975,
+    "files": 2055,
+    "present": 2055,
+    "tracked": 1976,
     "untracked": 79,
     "tombstones": 0,
     "policyErrors": 88
@@ -310,7 +310,7 @@
     {
       "id": "eva2-verification",
       "role": "verification",
-      "matchCount": 746
+      "matchCount": 747
     },
     {
       "id": "eva2-documentation",
@@ -10270,7 +10270,7 @@
       "path": "docs/eva-repository-inventory.generated.json",
       "gitState": "tracked",
       "present": true,
-      "bytes": 2376089,
+      "bytes": 2377109,
       "contentSha256": "32591e23fa2eb53a038d95e726ba09edd0405306f38c5283a36a2b6d3010254d",
       "hashMode": "canonical-self-reference-redacted",
       "role": "generated",
@@ -10303,7 +10303,7 @@
       "path": "docs/eva-repository-inventory.generated.md",
       "gitState": "tracked",
       "present": true,
-      "bytes": 367084,
+      "bytes": 367226,
       "contentSha256": "2f4f8486464cbb9713b749dc898f265093d0853699f1da1b4eb3dd1625c1b2d2",
       "hashMode": "canonical-self-reference-redacted",
       "role": "generated",
@@ -11248,8 +11248,8 @@
       "path": "eva2/WERKBORD.md",
       "gitState": "tracked",
       "present": true,
-      "bytes": 7283,
-      "contentSha256": "c7cf475cf5cf1688b35088bdf03af6d7081953473fbb98ae21034b20af780351",
+      "bytes": 7180,
+      "contentSha256": "25bf750205ef5192df645136395eadebe78f9293d431d040f72f3c17ab08ca7a",
       "hashMode": "exact-bytes",
       "role": "documentation",
       "roleRuleId": "eva2-documentation",
@@ -11312,8 +11312,8 @@
       "path": "eva2/benchmark/inspect_ai_v1/README.md",
       "gitState": "tracked",
       "present": true,
-      "bytes": 2165,
-      "contentSha256": "926b63f1966a21d116ecc81dde682ab8730b0e84e9ca7de3945549bf59ce6e1f",
+      "bytes": 2636,
+      "contentSha256": "7c8cf5fe2219a95c257324ddb4c12eafdb01727a60fd2df96bc6835e3729a197",
       "hashMode": "exact-bytes",
       "role": "experimental",
       "roleRuleId": "eva2-experimental",
@@ -11347,8 +11347,8 @@
       "path": "eva2/benchmark/inspect_ai_v1/bridge_probe.py",
       "gitState": "tracked",
       "present": true,
-      "bytes": 13719,
-      "contentSha256": "dafac5f7b4a74b259a45de14a3b52e2e8b4563d9e4fc0504565eec5bb55c2322",
+      "bytes": 17418,
+      "contentSha256": "9d657d92a0535f1a315dba45b47354a2895836d4781cc95265c25122d78ecda6",
       "hashMode": "exact-bytes",
       "role": "experimental",
       "roleRuleId": "eva2-experimental",
@@ -13397,8 +13397,8 @@
       "path": "eva2/design/product/execution-workboard-v1.json",
       "gitState": "tracked",
       "present": true,
-      "bytes": 48099,
-      "contentSha256": "e4621f3a52c446c55c30c4c7b26460776ec9cb9ebbd86a203c0752e4bf2bb43d",
+      "bytes": 47981,
+      "contentSha256": "308a60314cf457a4dad7e16817917a23bf5dd37b58a87f8f32e396b7ab1c080c",
       "hashMode": "exact-bytes",
       "role": "documentation",
       "roleRuleId": "eva2-documentation",
@@ -25076,6 +25076,41 @@
       "present": true,
       "bytes": 3179,
       "contentSha256": "36f035647f83c9ff8dd431d2f9fb2735a0ad07e41a769d62b3ac9f71072fb70c",
+      "hashMode": "exact-bytes",
+      "role": "verification",
+      "roleRuleId": "eva2-verification",
+      "matchingRuleIds": [
+        "eva2-verification"
+      ],
+      "owner": "verification",
+      "inputs": [
+        "production or fixture contract"
+      ],
+      "outputs": [
+        "test decision"
+      ],
+      "state": [
+        "temporary isolated test state"
+      ],
+      "effects": [
+        "may execute only inside its declared gate"
+      ],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": true,
+        "runtimeCritical": true,
+        "status": "included-tracked-critical"
+      }
+    },
+    {
+      "path": "eva2/evidence/product/EV-001-inspect-ai-bridge-probe-2026-09-04.json",
+      "gitState": "tracked",
+      "present": true,
+      "bytes": 1961,
+      "contentSha256": "67f12804e0e4bed799c82dc83b5b29f33941d6ceb08cfa427e0e818d9fae91b2",
       "hashMode": "exact-bytes",
       "role": "verification",
       "roleRuleId": "eva2-verification",
@@ -55406,8 +55441,8 @@
       "path": "eva2/tests/benchmark/test_inspect_ai_ev001.py",
       "gitState": "tracked",
       "present": true,
-      "bytes": 3741,
-      "contentSha256": "8d6e8ab4acbd3703b3af76bc63b7e726800ded4360d8ef3fd5a303a18387d5b7",
+      "bytes": 5462,
+      "contentSha256": "95de6b49262f9d4d1b40a385ea7ed6aa3977b39ca94a103c867f0763bceaf6b8",
       "hashMode": "exact-bytes",
       "role": "verification",
       "roleRuleId": "eva2-verification",
@@ -82922,5 +82957,5 @@
       }
     }
   ],
-  "sourceDigest": "0d672ab2567f241fd771a0623a0d21636ae77aa8cd349c69c0d1794c12a374c8"
+  "sourceDigest": "f532303d2dcad7312155147399fadb024c6f5a77f9f4557df4d4efba06af7165"
 }
