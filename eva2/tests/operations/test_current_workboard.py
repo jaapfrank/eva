@@ -33,7 +33,11 @@ def test_board_has_one_small_active_card_and_direct_next() -> None:
     result = validate(ROOT, BOARD, CATALOG, HUMAN)
     assert result["activeTaskId"] == board["activeTaskId"]
     open_cards = [card for card in board["executionTasks"] if card["status"] != "done"]
-    assert [card["id"] for card in open_cards] == [board["activeTaskId"]]
+    assert len(open_cards) in {1, 2}
+    assert open_cards[0]["id"] == board["activeTaskId"]
+    if len(open_cards) == 2:
+        assert open_cards[1]["status"] == "queued"
+        assert open_cards[1]["dependsOn"] == [open_cards[0]["id"]]
     assert board["audit"]["releaseRecovery"]["evidence"].endswith(
         "RR-002-RR-004-release-recovery-2026-09-04.json"
     )

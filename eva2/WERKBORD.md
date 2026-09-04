@@ -11,6 +11,7 @@ de volgende begint.
 | Volgorde | Kaart | Resultaat | Status |
 |---:|---|---|---|
 | 120 | `CO-002` — Configureerbare menselijke identiteit aanscherpen | Eva spreekt in gewone gezinssituaties herkenbaar warm, zelfstandig en natuurlijk vanuit haar ondertekende identiteit; bij verdriet of gevaar blijft zij juist rustig en zonder geforceerde humor. | 🔵 REVIEW |
+| 130 | `CO-003` — Eigen geheugenbronnen veilig opvragen | De eigenaar kan via Eva's afgeschermde API een begrensde pagina bekijken van de eigen privégespreksbronnen die aan het langetermijngeheugen zijn aangeboden; bronnen van andere mensen, groepen en door Hindsight afgeleide interpretaties blijven buiten beeld. | ⚪ HIERNA |
 
 ### Exact werk voor `CO-002`
 
@@ -32,6 +33,25 @@ Echte controles:
 - `ruff check src/eva/adapters/model/pydantic_conversation.py tests/model/test_conversation_model.py`
 - `python3 tools/check_component_catalog.py`
 
+### Daarna voorbereid: `CO-003`
+
+- `docs/eva-repository-inventory.generated.json`
+- `docs/eva-repository-inventory.generated.md`
+- `eva2/src/eva/adapters/api/app.py`
+- `eva2/src/eva/adapters/postgres/people_memory_overview.py`
+- `eva2/src/eva/application/people_memory_overview.py`
+- `eva2/src/eva/bootstrap/runtime.py`
+- `eva2/tests/api/test_dashboard_status.py`
+- `eva2/tests/application/test_people_memory_overview.py`
+- `eva2/tests/bootstrap/test_runtime_settings.py`
+- `eva2/tests/postgres/test_people_memory_overview.py`
+
+Vooraf vastgelegde controles:
+
+- `TMPDIR=/tmp TEMP=/tmp TMP=/tmp pytest -q tests/application/test_people_memory_overview.py tests/postgres/test_people_memory_overview.py tests/api/test_dashboard_status.py tests/bootstrap/test_runtime_settings.py`
+- `ruff check src/eva/application/people_memory_overview.py src/eva/adapters/postgres/people_memory_overview.py src/eva/bootstrap/runtime.py src/eva/adapters/api/app.py tests/application/test_people_memory_overview.py tests/postgres/test_people_memory_overview.py tests/api/test_dashboard_status.py tests/bootstrap/test_runtime_settings.py`
+- `python3 tools/check_component_catalog.py`
+
 ## Daarna
 
 Deze onderwerpen zijn alleen mijlpalen. Een mijlpaal wordt pas uitvoerbaar
@@ -39,7 +59,8 @@ nadat zij als eerstvolgende kleine kaart exacte bestanden en tests heeft.
 
 | Nr. | Onderdeel | Begrijpelijk eindresultaat |
 |---:|---|---|
-| 130 | `CO-003` — Persoonsbeheer afmaken | Mensen blijven privé en kunnen geheugen zien, corrigeren en wissen. |
+| 132 | `CO-004` — Eigen geheugen in het dashboard tonen | Het bestaande React-Admin-dashboard toont de afgeschermde geheugenbronnen begrijpelijk zonder nieuwe webstack of browseropslag. |
+| 134 | `CO-005` — Eigen geheugen corrigeren en wissen | De eigenaar kan één zichtbare bron corrigeren of wissen en krijgt controle dat PostgreSQL en Hindsight dezelfde wijziging hebben verwerkt. |
 | 140 | `TL-001` — Algemene toolontdekking afmaken | De best onderhouden generieke model- en toolloop laadt providers via configuratie of MCP. Pydantic AI wint die plek alleen bij gemeten voordeel; eigen wrappers en oude modelpaden verdwijnen in dezelfde kaart. |
 | 150 | `TL-002` — Actie en readback generaliseren | Twee echte providers gebruiken dezelfde precies-eenmaalroute. |
 | 160 | `TL-003` — Onbekende connector zelfstandig toevoegen | Eva kiest onderhouden software uit documentatie en bewijst de adapter. |
