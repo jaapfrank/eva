@@ -48044,8 +48044,8 @@
       "path": "eva2/src/eva/adapters/model/pydantic_conversation.py",
       "gitState": "tracked",
       "present": true,
-      "bytes": 98708,
-      "contentSha256": "5d4f5008de87ef56df04072d5948447f6ae2f8b1c76109fab27d893a3e18c967",
+      "bytes": 98476,
+      "contentSha256": "eb9cb3e91c4fb1526cabaf22f993b248163df09fe8e5a5f01c777a548443b670",
       "hashMode": "exact-bytes",
       "role": "product-runtime",
       "roleRuleId": "eva2-runtime",
@@ -58579,8 +58579,8 @@
       "path": "eva2/tests/model/test_conversation_model.py",
       "gitState": "tracked",
       "present": true,
-      "bytes": 72866,
-      "contentSha256": "0c878ac273ed382e59a5d35ba09cb14b73eea6c038f7c43962925f907feb2524",
+      "bytes": 74868,
+      "contentSha256": "475ff5b46c3bd0b350132620cf4f32427e527263715c8626f916b74e5980ce1b",
       "hashMode": "exact-bytes",
       "role": "verification",
       "roleRuleId": "eva2-verification",
@@ -83260,5 +83260,5 @@
       }
     }
   ],
-  "sourceDigest": "2cc4120dd96ecec157026c315234ace3398059ecefdbb9399a7c949c4f665734"
+  "sourceDigest": "2c8219c96cc1978f6dfb308a4953dcf6fa7a421390097622c6fa3842319d2c14"
 }

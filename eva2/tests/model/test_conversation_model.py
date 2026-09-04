@@ -126,7 +126,7 @@ def _home_tool_model(**kwargs: Any) -> PydanticConversationModel:
 
 def test_action_tool_catalog_remains_canonically_byte_equal() -> None:
     assert canonical_sha256(conversation_module._ACTION_TOOLS) == (
-        "3c4ec23c565e108f74396b7406e93d35ddfb8bee4a5d581cddd5b63051a0f6b8"
+        "e96adcb879caaf9a7ef864369c15d30db1b106603e8c37056b1e55c8511b6ca0"
     )
     assert not {
         "create_home_assistant_advanced_state_automation",
@@ -703,7 +703,7 @@ def test_direct_model_receives_recalled_memories_without_reflection(
         "nieuwste betrouwbare bron",
         "Duurzame stijlspiegel",
         "Actief procedureel IdentityPack",
-        "warm, practical, curious, concise, slightly_stubborn",
+        "Stem en temperament: warm, practical, curious, concise, slightly_stubborn",
         "temperament en humor als zichtbaar gedrag",
         "opvallende tegenstelling",
         "concreet detail dat al in de situatie zit",
@@ -711,8 +711,6 @@ def test_direct_model_receives_recalled_memories_without_reflection(
         "gemaakte woordspeling, verzonnen samenstelling, catchphrase",
         "duidelijkheid, warmte en bruikbaarheid gaan voor",
         "Forceer nooit humor bij verdriet, gevaar of angst",
-        "concreet, beredeneerd eigen standpunt",
-        "natuurlijk hedendaags spreektaal",
         "niet stijver of langer om identiteit te tonen",
         "claim alleen wat aantoonbaar is gelukt",
         "Jaap wil korte, directe en warme antwoorden",
@@ -734,7 +732,65 @@ def test_direct_model_receives_recalled_memories_without_reflection(
     ):
         assert fragment in instructions
     assert instructions.count("Actief procedureel IdentityPack") == 1
+    assert instructions.count("slightly_stubborn") == 1
+    assert "jong of vlot" not in instructions
     assert "/reflect" not in instructions
+
+
+def test_direct_model_projects_configured_identity_without_fixed_eva_name(
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Path
+) -> None:
+    model = PydanticConversationModel(auth_file=tmp_path / "unused-auth.json")
+    phases = _script_pydantic_phases(
+        monkeypatch, model, ("Ik blijf bij de feiten.", None)
+    )
+    pack = load_current_identity_pack()
+    voice_style = pack.voice_style.model_copy(
+        update={"qualities": ["calm", "playful", "concise"]}
+    )
+    configured_pack = pack.model_copy(
+        update={
+            "display_name": "Noor",
+            "humour": "droog en spaarzaam",
+            "temperament": ["analytical", "kind", "calm"],
+            "voice_style": voice_style,
+        }
+    )
+
+    result = model.generate(
+        ConversationTurn.private(
+            "tenant",
+            "installation",
+            "jaap",
+            "conversation",
+            "configured-identity",
+            "Wat vind jij hiervan?",
+            NOW,
+        ),
+        IdentityProfile(
+            "Noor",
+            "Je bent een oplettende digitale huisgenoot.",
+            ("Wees eerlijk.",),
+            80,
+            configured_pack,
+        ),
+        _memory(),
+        (),
+        available_actions=(conversation_module._PERSONAL_INTEREST_ACTION,),
+    )
+
+    assert result.text == "Ik blijf bij de feiten."
+    instructions = phases[0]["instructions"]
+    assert "Je bent Noor." in instructions
+    assert "Stem en temperament: calm, playful, concise, analytical, kind" in instructions
+    assert "Humor: droog en spaarzaam" in instructions
+    assert "Eva" not in instructions
+    interest_tool = _deferred_tool(phases[0], conversation_module._PERSONAL_INTEREST_ACTION)
+    encoded_tool = json.dumps(interest_tool, ensure_ascii=False)
+    assert "Eva" not in encoded_tool
+    assert "door jou zelf gekozen" in encoded_tool
+    assert "bij je past" in encoded_tool
+    assert "je hierover wilt onderzoeken" in encoded_tool
 
 
 def test_recent_durable_conversation_is_not_denied_as_missing_memory(
@@ -765,7 +821,7 @@ def test_recent_durable_conversation_is_not_denied_as_missing_memory(
 
     assert result.text == "amberkleurige maan"
     instructions = phases[0]["instructions"]
-    assert "duurzame gesprekjournal" in instructions
+    assert "duurzame gespreksgeschiedenis" in instructions
     assert "een herstart van core of databasecontainer overleven" in instructions
     assert "niet kunt onthouden" in instructions
     assert "amberkleurige maan" in instructions

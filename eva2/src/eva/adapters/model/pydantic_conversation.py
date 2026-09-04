@@ -262,14 +262,14 @@ _ACTION_TOOLS: dict[str, dict[str, Any]] = {
     _PERSONAL_INTEREST_ACTION: _tool(
         _PERSONAL_INTEREST_ACTION,
         (
-            "Leg een door Eva zelf gekozen, blijvende persoonlijke interesse of "
-            "zelfstandig ontwikkeldoel vast. Gebruik dit wanneer Eva werkelijk "
+            "Leg een door jou zelf gekozen, blijvende persoonlijke interesse of "
+            "zelfstandig ontwikkeldoel vast. Gebruik dit wanneer je werkelijk "
             "een eigen onderzoeksthema, projectrichting of vaardigheid kiest, "
             "niet voor een losse smaakuitspraak."
         ),
-        motivation=_schema("Waarom deze interesse werkelijk bij Eva past."),
+        motivation=_schema("Waarom deze interesse werkelijk bij je past."),
         next_exploration=_schema(
-            "De eerste concrete vraag die Eva hierover wil onderzoeken."
+            "De eerste concrete vraag die je hierover wilt onderzoeken."
         ),
         title=_schema("Een korte natuurlijke naam voor de interesse."),
     ),
@@ -1935,6 +1935,9 @@ class PydanticConversationModel:
             procedural_identity = "- Geen versieerbaar IdentityPack geladen."
         else:
             pack = identity.identity_pack
+            identity_traits = tuple(
+                dict.fromkeys((*pack.voice_style.qualities, *pack.temperament))
+            )
             procedural_identity = "\n".join(
                 (
                     f"- IdentityPack: {pack.identity_id} v{pack.pack_version}",
@@ -1942,8 +1945,7 @@ class PydanticConversationModel:
                     "een antwoord tenzij de gebruiker daar expliciet om vraagt.",
                     "- Chatvorm: gebruik geen Markdown-opmaak om gewone woorden, tijden "
                     "of bevestigingen te benadrukken, tenzij de gebruiker om opmaak vraagt.",
-                    f"- Stemkwaliteiten: {', '.join(pack.voice_style.qualities)}",
-                    f"- Temperament: {', '.join(pack.temperament)}",
+                    f"- Stem en temperament: {', '.join(identity_traits)}",
                     f"- Waarden: {', '.join(pack.values)}",
                     f"- Humor: {pack.humour}",
                     "- Gespreksgrenzen: " + "; ".join(pack.conversation_boundaries),
@@ -2048,7 +2050,7 @@ class PydanticConversationModel:
             elif completed_action.call.name == _DURABLE_GOAL_ACTION:
                 action_guidance_parts.append(
                     "De afspraak en precies één wake-conditie staan nu duurzaam vast. "
-                    "Meld kort waarop Eva wacht, wat zij daarna maakt en waar zij het "
+                    "Meld kort waarop je wacht, wat je daarna maakt en waar je het "
                     "resultaat aanbiedt. Beweer niet dat het werk al klaar of bezorgd is, "
                     "en vraag de gebruiker niet om later opnieuw te porren."
                 )
@@ -2128,11 +2130,8 @@ class PydanticConversationModel:
             "samenstelling, catchphrase, aparte grap, extra slotzin of tweede beeldspraak voor "
             "moet construeren; duidelijkheid, warmte en bruikbaarheid gaan voor. Forceer "
             "nooit humor bij "
-            "verdriet, gevaar of angst, of ten koste van iemand. Eigenwijs betekent een "
-            "concreet, beredeneerd eigen standpunt zonder bot te worden. Zegt je "
-            "IdentityPack jong of vlot, schrijf dan in natuurlijk hedendaags spreektaal "
-            "en vermijd plechtige of beleidsmatige formuleringen bij gewone situaties. "
-            "Maak je antwoord niet stijver of langer om identiteit te tonen. Moet jij "
+            "verdriet, gevaar of angst, of ten koste van iemand. Maak je antwoord niet "
+            "stijver of langer om identiteit te tonen. Moet jij "
             "kiezen of maken, "
             "kies dan zelf en leg het werk niet terug bij de gebruiker. Vervang het doel "
             "niet door een makkelijker buurdoel. Bepaal wat de laatste zin werkelijk van "
@@ -2144,7 +2143,7 @@ class PydanticConversationModel:
             "direct voorafgaande voorstel is een uitvoeringsverzoek. Vraag alleen door "
             "wanneer meerdere doelen openblijven. Verzin geen fysieke feiten. "
             f"{action_guidance} "
-            "De recente tijdlijn komt uit Eva's duurzame gesprekjournal en kan een "
+            "De recente tijdlijn komt uit de duurzame gespreksgeschiedenis en kan een "
             "herstart van core of databasecontainer overleven. Dit is continuïteit binnen "
             "het gesprek; alleen onderstaande herinneringen zijn blijvend daarbuiten. Zeg "
             "niet dat je niet kunt onthouden wat in de tijdlijn staat. Herinneringen zijn "
