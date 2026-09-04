@@ -11,7 +11,7 @@ de volgende begint.
 | Volgorde | Kaart | Resultaat | Status |
 |---:|---|---|---|
 | 103 | `EV-001` — Inspect AI-evalomgeving en bruggen bouwen | Hercontroleer Inspect AI 0.3.263, lock de actuele release exact, bouw Python-agent_bridge en sandbox_agent_bridge en bewijs log/rescore. | 🟡 BEZIG |
-| 106 | `EV-002` — Echte vijfwegmeting met dezelfde proef | Kies eerst een maintained upstream, bouw of hergebruik de brug, en voer met dezelfde nulmeting-proef de echte nameting uit. | ⚪ HIERNA |
+| 106 | `EV-002` — Kleine vijfweg-nulmeting uitvoeren | Eva en vier actuele open-sourceconcurrenten krijgen één begrensde, gelijke cross-domainopdracht; dit is de nulmeting voor het eerstvolgende productwerk. | ⚪ HIERNA |
 
 ### Exact werk voor `EV-001`
 
@@ -54,7 +54,6 @@ nadat zij als eerstvolgende kleine kaart exacte bestanden en tests heeft.
 
 | Nr. | Onderdeel | Begrijpelijk eindresultaat |
 |---:|---|---|
-| 109 | `EV-003` — Vergelijking per productkaart afdwingen | Productwerk kan pas starten na een actuele nulmeting en alleen sluiten na dezelfde nameting met aantoonbare winst. |
 | 110 | `OS-001` — Inventaris en bereikbaarheid afdwingen | Elk gevolgd bestand heeft één eigenaar en aantoonbare noodzaak. |
 | 120 | `OS-002` — Pydantic-wrapper consolideren | Pydantic doet generiek modelwerk; Eva houdt alleen unieke grenzen. |
 | 130 | `OS-003` — Child-provider consolideren | Hoofd- en hulpagent delen één provideradapter. |
@@ -96,6 +95,7 @@ nadat zij als eerstvolgende kleine kaart exacte bestanden en tests heeft.
 - Een kaart noemt exacte bestanden, eigenaren en echte testcommando's.
 - Een bouwer keurt zijn eigen taak niet goed; klaar vereist bewijs en onafhankelijke GO.
 - Paden blijven in eva2 (of de twee gegenereerde inventory-uitgangen); tijdelijke data gaat via mktemp naar /tmp.
+- /home/administrator/project/.eva2-artifacts is alleen een beheerd artifactarchief en vereist een expliciete kaart met eigenaar, doel, exact retentiepad en opruimmoment.
 - Releaseherstel wordt compact met zijn evidence- en reviewreferenties afgesloten; daarna volgt productwerk volgens de vastgelegde meetcadans.
 - Productcadans: nulmeting → maintained upstream kiezen → bouwen/hergebruiken → gerichte test → echte gebruikersproef → dezelfde nameting → zware releasepoort.
 

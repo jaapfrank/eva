@@ -35,6 +35,7 @@ RULES = [
     "Een kaart noemt exacte bestanden, eigenaren en echte testcommando's.",
     "Een bouwer keurt zijn eigen taak niet goed; klaar vereist bewijs en onafhankelijke GO.",
     "Paden blijven in eva2 (of de twee gegenereerde inventory-uitgangen); tijdelijke data gaat via mktemp naar /tmp.",
+    ARTIFACT_RETENTION_RULE,
     "Releaseherstel wordt compact met zijn evidence- en reviewreferenties afgesloten; "
     "daarna volgt productwerk volgens de vastgelegde meetcadans.",
     "Productcadans: nulmeting → maintained upstream kiezen → bouwen/hergebruiken → gerichte test → echte gebruikersproef → dezelfde nameting → zware releasepoort.",

@@ -4,9 +4,10 @@ Deze map is alleen voor eerlijke productvergelijkingen. Zij wordt niet in
 Eva's runtime-image geïnstalleerd en voegt geen productfunctionaliteit toe.
 
 `pylock.toml` legt voor Linux/amd64 en Python 3.12 exact één wheel en SHA-256
-per evaluatiedependency vast. De directe keuzes zijn Inspect AI `0.3.263` en
-de officiële OpenAI-SDK `3.6.0`. Een volgende release wordt eerst opnieuw
-gelockt en door dezelfde probe gehaald.
+per evaluatiedependency vast. Inspect AI `0.3.263` blijft uitsluitend een
+evaluatiedependency. De officiële OpenAI-SDK `3.6.0` zit al in Eva's runtime;
+de eval-lock pint hem opnieuw om de echte adaptercompatibiliteit te bewijzen.
+Een volgende release wordt eerst opnieuw gelockt en door dezelfde probe gehaald.
 
 `bridge_probe.py` bewijst met Inspect's lokale `mockllm/model` twee routes:
 

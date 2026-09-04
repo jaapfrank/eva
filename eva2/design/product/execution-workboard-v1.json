@@ -25,6 +25,7 @@
     "Een kaart noemt exacte bestanden, eigenaren en echte testcommando's.",
     "Een bouwer keurt zijn eigen taak niet goed; klaar vereist bewijs en onafhankelijke GO.",
     "Paden blijven in eva2 (of de twee gegenereerde inventory-uitgangen); tijdelijke data gaat via mktemp naar /tmp.",
+    "/home/administrator/project/.eva2-artifacts is alleen een beheerd artifactarchief en vereist een expliciete kaart met eigenaar, doel, exact retentiepad en opruimmoment.",
     "Releaseherstel wordt compact met zijn evidence- en reviewreferenties afgesloten; daarna volgt productwerk volgens de vastgelegde meetcadans.",
     "Productcadans: nulmeting → maintained upstream kiezen → bouwen/hergebruiken → gerichte test → echte gebruikersproef → dezelfde nameting → zware releasepoort."
   ],
@@ -487,19 +488,18 @@
       "doneWhen": ["De actuele release is gecontroleerd en exact gelockt.", "Beide bruggen en log/rescore slagen in de gerichte test.", "Een onafhankelijke reviewer geeft GO."]
     },
     {
-      "id": "EV-002", "order": 106, "area": "Evaluatie", "title": "Echte vijfwegmeting met dezelfde proef",
-      "outcome": "Kies eerst een maintained upstream, bouw of hergebruik de brug, en voer met dezelfde nulmeting-proef de echte nameting uit.",
+      "id": "EV-002", "order": 106, "area": "Evaluatie", "title": "Kleine vijfweg-nulmeting uitvoeren",
+      "outcome": "Eva en vier actuele open-sourceconcurrenten krijgen één begrensde, gelijke cross-domainopdracht; dit is de nulmeting voor het eerstvolgende productwerk.",
       "status": "queued", "stateDetails": {"baseCommit": null, "implementationCommit": null, "evidenceCommit": null, "reviewEvidencePaths": [], "blockerReason": null},
       "ownerRole": "architecturelead", "reviewerRole": "proofreviewer", "dependsOn": ["EV-001"],
       "componentIds": ["operations-and-release-tests"], "inventoryOwners": ["documentation", "experimental", "verification"],
       "changePaths": ["eva2/benchmark/inspect_ai_v1/pylock.toml", "eva2/benchmark/inspect_ai_v1/bridge_probe.py", "eva2/benchmark/inspect_ai_v1/README.md", "eva2/tests/benchmark/test_inspect_ai_ev001.py", "eva2/design/product/comparable-agent-benchmarks-v1.md"],
       "testCommands": ["pytest -q tests/benchmark/test_inspect_ai_ev001.py", "ruff check benchmark/inspect_ai_v1/bridge_probe.py tests/benchmark/test_inspect_ai_ev001.py"],
-      "evidenceRequired": ["Nulmeting, maintained upstream-keuze, gerichte test, echte gebruikersproef en identieke nameting."],
-      "doneWhen": ["Dezelfde proef is voor en na uitgevoerd.", "Resultaat en beperkingen zijn eerlijk vastgelegd.", "Een onafhankelijke reviewer geeft GO."]
+      "evidenceRequired": ["Deelnemers, model, taak, rechten, tijd-, stap- en tokenbudget zijn vooraf gelijk vastgezet.", "Eén kleine nulmeting bewaart de oorspronkelijke Inspect-logs en feitelijke kosten; zij doet nog geen algemene winnaarclaim."],
+      "doneWhen": ["Alle vijf deelnemers kregen exact dezelfde begrensde opdracht of een uitval is eerlijk zichtbaar.", "Resultaat, kosten en beperkingen zijn vastgelegd zonder zelfbedachte totaalscore.", "Een onafhankelijke reviewer geeft GO."]
     }
   ],
   "milestones": [
-    {"id": "EV-003", "order": 109, "area": "Continue kwaliteitsvergelijking", "title": "Vergelijking per productkaart afdwingen", "outcome": "Productwerk kan pas starten na een actuele nulmeting en alleen sluiten na dezelfde nameting met aantoonbare winst."},
     {"id": "OS-001", "order": 110, "area": "Open source en codebeheer", "title": "Inventaris en bereikbaarheid afdwingen", "outcome": "Elk gevolgd bestand heeft één eigenaar en aantoonbare noodzaak."},
     {"id": "OS-002", "order": 120, "area": "Open source en codebeheer", "title": "Pydantic-wrapper consolideren", "outcome": "Pydantic doet generiek modelwerk; Eva houdt alleen unieke grenzen."},
     {"id": "OS-003", "order": 130, "area": "Open source en codebeheer", "title": "Child-provider consolideren", "outcome": "Hoofd- en hulpagent delen één provideradapter."},
