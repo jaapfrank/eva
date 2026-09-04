@@ -793,7 +793,7 @@ def build_offline_candidate_image(
         "candidate_image_id": image_id,
         "candidate_image_archive_sha256": image_archive_sha256,
         "candidate_buildkit_result_digest": buildkit_result_digest,
-        "candidate_image_config_digest": image_id,
+        "candidate_image_config_digest": buildkit_result_digest,
         "candidate_image_size": candidate_inspection["Size"],
         "candidate_image_exporter": "docker",
         "candidate_provenance_attestation_enabled": False,
@@ -872,13 +872,13 @@ def validate_offline_candidate_image(
         or receipt.get("candidate_timestamp_rewrite_enabled") is not True
     ):
         raise RuntimeError("managed B candidate image receipt differs")
-    _image_id(
+    buildkit_result_digest = _image_id(
         str(receipt.get("candidate_buildkit_result_digest", "")),
         label="BuildKit result",
     )
     if (
         _image_id(str(receipt.get("candidate_image_config_digest", "")), label="config")
-        != candidate.image_id
+        != buildkit_result_digest
     ):
         raise RuntimeError("managed B candidate config digest differs")
     archive_sha256 = receipt.get("candidate_image_archive_sha256")

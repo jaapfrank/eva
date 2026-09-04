@@ -647,7 +647,11 @@ def test_keeps_buildkit_and_rewritten_archive_identities_distinct(
     )
 
     assert candidate.receipt["candidate_buildkit_result_digest"] == pre_rewrite
-    assert candidate.receipt["candidate_image_config_digest"] == IMAGE_ID
+    assert candidate.receipt["candidate_image_config_digest"] == pre_rewrite
+
+    candidate.receipt["candidate_image_config_digest"] = IMAGE_ID
+    with pytest.raises(RuntimeError, match="candidate config digest differs"):
+        validate_offline_candidate_image(candidate, runner=runner)
 
 
 def test_refuses_a_candidate_that_receives_a_tag(

@@ -88,7 +88,7 @@ def _build(
         "builder": _builder(side),
         "candidate_buildkit_result_digest": buildkit_result_digest,
         "candidate_image_archive_sha256": archive_sha256,
-        "candidate_image_config_digest": image_id,
+        "candidate_image_config_digest": buildkit_result_digest,
         "candidate_image_id": image_id,
         "candidate_source_commit": COMMIT,
         "candidate_source_date_epoch": SOURCE_DATE_EPOCH,
@@ -311,7 +311,7 @@ def _archive(
             info.size = len(raw)
             archive.addfile(info, io.BytesIO(raw))
     path.chmod(0o400)
-    return f"sha256:{config_digest}", f"sha256:{config_digest}"
+    return f"sha256:{image_digest}", f"sha256:{config_digest}"
 
 
 def _entry(
@@ -424,7 +424,7 @@ def _replace_candidate_archive(
     receipt = candidate["receipt"]
     candidate["image_id"] = image_id
     receipt["candidate_buildkit_result_digest"] = buildkit_result_digest
-    receipt["candidate_image_config_digest"] = image_id
+    receipt["candidate_image_config_digest"] = buildkit_result_digest
     receipt["candidate_image_id"] = image_id
     receipt["candidate_image_archive_sha256"] = hashlib.sha256(
         archive_path.read_bytes()
@@ -2060,9 +2060,13 @@ def test_rejects_wrong_release_authority_or_source_archive(tmp_path: Path) -> No
 def test_rejects_archive_buildkit_result_splicing(tmp_path: Path) -> None:
     fixture = _single_builder_fixture(tmp_path)
     build = json.loads(fixture["build"].read_bytes())
-    build["candidate"]["receipt"]["candidate_buildkit_result_digest"] = (
-        "sha256:" + "f" * 64
-    )
+    spliced_digest = "sha256:" + "f" * 64
+    build["candidate"]["receipt"][
+        "candidate_buildkit_result_digest"
+    ] = spliced_digest
+    build["candidate"]["receipt"][
+        "candidate_image_config_digest"
+    ] = spliced_digest
     _write_build(fixture["build"], fixture["archive"], build)
 
     with pytest.raises(TwoBuilderError, match="archive BuildKit result differs"):
@@ -2208,9 +2212,9 @@ def test_accepts_same_image_semantics_with_different_tar_envelopes(
     assert result["candidate"]["imageId"].startswith("sha256:")
     assert result["candidate"]["runtimeLayerSequenceSha256"]
     assert result["candidate"]["configSha256"] == result["candidate"][
-        "imageId"
+        "buildkitResultDigest"
     ].removeprefix("sha256:")
-    assert result["candidate"]["ociManifestSha256"] != result["candidate"][
+    assert result["candidate"]["ociManifestSha256"] == result["candidate"][
         "imageId"
     ].removeprefix("sha256:")
     assert (
@@ -2322,7 +2326,7 @@ def test_rejects_challenge_reused_across_admissions(tmp_path: Path) -> None:
         _verify_two(fixture, expected_admission_sha256=hashes)
 
 
-def test_rejects_image_id_not_bound_to_oci_config(tmp_path: Path) -> None:
+def test_rejects_image_id_not_bound_to_oci_manifest(tmp_path: Path) -> None:
     fixture = _two_builder_fixture(tmp_path)
     builds = fixture["builds"]
     archives = fixture["archives"]
@@ -2330,11 +2334,24 @@ def test_rejects_image_id_not_bound_to_oci_config(tmp_path: Path) -> None:
     claimed_id = "sha256:" + "f" * 64
     right["candidate"]["image_id"] = claimed_id
     receipt = right["candidate"]["receipt"]
-    receipt["candidate_image_config_digest"] = claimed_id
     receipt["candidate_image_id"] = claimed_id
     _write_build(builds[1], archives[1], right)
 
-    with pytest.raises(TwoBuilderError, match="image ID differs from OCI config"):
+    with pytest.raises(TwoBuilderError, match="image ID differs from OCI manifest"):
+        _verify_two(fixture)
+
+
+def test_rejects_receipt_config_not_bound_to_buildkit_result(tmp_path: Path) -> None:
+    fixture = _two_builder_fixture(tmp_path)
+    builds = fixture["builds"]
+    archives = fixture["archives"]
+    right = json.loads(builds[1].read_bytes())
+    right["candidate"]["receipt"]["candidate_image_config_digest"] = (
+        "sha256:" + "f" * 64
+    )
+    _write_build(builds[1], archives[1], right)
+
+    with pytest.raises(TwoBuilderError, match="candidate receipt binding differs"):
         _verify_two(fixture)
 
 

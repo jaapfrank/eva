@@ -466,7 +466,8 @@ def _build_inputs(value: dict[str, Any], *, expected_commit: str) -> dict[str, o
         != "EvaManagedBOfflineCandidateImageReceipt/v3"
         or candidate_receipt.get("status") != "built_local_candidate"
         or candidate_receipt.get("candidate_image_id") != image_id
-        or candidate_receipt.get("candidate_image_config_digest") != image_id
+        or candidate_receipt.get("candidate_image_config_digest")
+        != buildkit_result_digest
         or candidate_receipt.get("candidate_source_commit") != expected_commit
         or candidate_receipt.get("candidate_source_date_epoch")
         != source_date_epoch
@@ -946,6 +947,8 @@ def _oci_image_binding(
         or platform.get("os") != "linux"
     ):
         raise TwoBuilderError("candidate OCI descriptor contract differs")
+    if manifest_digest != expected_image_id:
+        raise TwoBuilderError("candidate image ID differs from OCI manifest")
     manifest_name = f"blobs/sha256/{manifest_digest.removeprefix('sha256:')}"
     image_manifest, manifest_raw = _json_member(
         members, manifest_name, label="candidate OCI image manifest"
@@ -970,15 +973,14 @@ def _oci_image_binding(
     )
     expected_config_digest = f"sha256:{_sha256(members[config_name])}"
     if (
-        expected_config_digest != expected_image_id
-        or config_name
-        != f"blobs/sha256/{expected_image_id.removeprefix('sha256:')}"
+        config_name
+        != f"blobs/sha256/{expected_config_digest.removeprefix('sha256:')}"
         or config_descriptor.get("mediaType")
         != "application/vnd.docker.container.image.v1+json"
-        or config_descriptor.get("digest") != expected_image_id
+        or config_descriptor.get("digest") != expected_config_digest
         or config_descriptor.get("size") != len(members[config_name])
     ):
-        raise TwoBuilderError("candidate image ID differs from OCI config")
+        raise TwoBuilderError("candidate OCI config binding differs")
     for layer_name, value in zip(layers, layer_descriptors, strict=True):
         layer_descriptor = _object(value, label="candidate OCI layer descriptor")
         expected_digest = f"sha256:{_sha256(members[layer_name])}"
@@ -1203,10 +1205,14 @@ def _candidate_document(value: object, *, label: str) -> dict[str, Any]:
         or candidate.get("sourceRefresh") != "git-archive-v1"
     ):
         raise TwoBuilderError(f"{label} source identity is invalid")
-    if candidate["configSha256"] != str(candidate["imageId"]).removeprefix(
+    if candidate["configSha256"] != str(
+        candidate["buildkitResultDigest"]
+    ).removeprefix("sha256:"):
+        raise TwoBuilderError(f"{label} OCI config identity differs")
+    if candidate["ociManifestSha256"] != str(candidate["imageId"]).removeprefix(
         "sha256:"
     ):
-        raise TwoBuilderError(f"{label} OCI config identity differs")
+        raise TwoBuilderError(f"{label} OCI manifest identity differs")
     return candidate
 
 
