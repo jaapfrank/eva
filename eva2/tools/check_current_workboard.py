@@ -40,7 +40,7 @@ RULES = [
     "daarna volgt productwerk volgens de vastgelegde meetcadans.",
     "Productcadans: kleine nulmeting → maintained upstream kiezen → bouwen/hergebruiken → gerichte functietest → passende praktijkproef → dezelfde nameting; pas een complete installatiekandidaat doorloopt de zware releasepoort.",
     "Een functionele kaart verwijdert alleen de code die zij binnen haar vooraf genoemde paden werkelijk vervangt; breder opruimwerk mag de gebruikersfunctie niet opslokken.",
-    "A/B betekent alleen veilig installeren: het werkende slot blijft actief terwijl de complete kandidaat in het reserveslot wordt gecontroleerd; kleine ontwikkelwijzigingen krijgen geen A/B-cyclus.",
+    "De actief/reserveslot-installatie (voorheen A/B genoemd) is geen functietest of experiment: het werkende slot blijft actief terwijl pas één complete releasekandidaat eenmaal in het reserveslot wordt gecontroleerd en daarna eventueel actief gemaakt; kleine ontwikkelwijzigingen krijgen geen A/B-cyclus.",
 ]
 RETIRED_BENCHMARK_MARKERS = (
     "comparable-agent-run-v1.schema.json",

@@ -29,7 +29,7 @@
     "Releaseherstel wordt compact met zijn evidence- en reviewreferenties afgesloten; daarna volgt productwerk volgens de vastgelegde meetcadans.",
     "Productcadans: kleine nulmeting → maintained upstream kiezen → bouwen/hergebruiken → gerichte functietest → passende praktijkproef → dezelfde nameting; pas een complete installatiekandidaat doorloopt de zware releasepoort.",
     "Een functionele kaart verwijdert alleen de code die zij binnen haar vooraf genoemde paden werkelijk vervangt; breder opruimwerk mag de gebruikersfunctie niet opslokken.",
-    "A/B betekent alleen veilig installeren: het werkende slot blijft actief terwijl de complete kandidaat in het reserveslot wordt gecontroleerd; kleine ontwikkelwijzigingen krijgen geen A/B-cyclus."
+    "De actief/reserveslot-installatie (voorheen A/B genoemd) is geen functietest of experiment: het werkende slot blijft actief terwijl pas één complete releasekandidaat eenmaal in het reserveslot wordt gecontroleerd en daarna eventueel actief gemaakt; kleine ontwikkelwijzigingen krijgen geen A/B-cyclus."
   ],
   "team": {
     "architecturelead": "/root",
@@ -514,7 +514,7 @@
     {
       "id": "CO-002", "order": 120, "area": "Gesprek", "title": "Configureerbare menselijke identiteit aanscherpen",
       "outcome": "Eva spreekt in gewone gezinssituaties herkenbaar warm, zelfstandig en natuurlijk vanuit haar ondertekende identiteit; bij verdriet of gevaar blijft zij juist rustig en zonder geforceerde humor.",
-      "status": "in_progress", "stateDetails": {"baseCommit": null, "implementationCommit": null, "evidenceCommit": null, "reviewEvidencePaths": [], "blockerReason": null},
+      "status": "review", "stateDetails": {"baseCommit": "1725401bfd0c184e1f2f49dffa0e046485d78410", "implementationCommit": "3b85a61165ebed4b8c1c74d3037b0c0e057593c1", "evidenceCommit": "7ba629f33ab7574c80ce0968b147debd300e5a5f", "reviewEvidencePaths": ["eva2/evidence/product/CO-002-configurable-identity-after-probe-2026-09-04.json"], "blockerReason": null},
       "ownerRole": "architecturelead", "reviewerRole": "proofreviewer", "dependsOn": ["CO-001"],
       "componentIds": ["conversation-model-adapter", "core-behavior-tests"], "inventoryOwners": ["architecture", "eva-runtime", "verification"],
       "changePaths": ["docs/eva-repository-inventory.generated.json", "docs/eva-repository-inventory.generated.md", "eva2/src/eva/adapters/model/pydantic_conversation.py", "eva2/tests/model/test_conversation_model.py"],
