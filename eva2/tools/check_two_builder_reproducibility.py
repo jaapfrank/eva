@@ -2508,6 +2508,27 @@ def _json_output(completed: subprocess.CompletedProcess[str], *, label: str) -> 
         raise TwoBuilderError(f"{label} output is invalid JSON") from error
 
 
+def _select_private_buildkit_builder(output: str) -> dict[str, Any]:
+    """Return one semantic default builder despite duplicate Buildx rows."""
+
+    try:
+        builders = [json.loads(line) for line in output.splitlines() if line]
+    except json.JSONDecodeError as error:
+        raise TwoBuilderError("BuildKit builder output is invalid") from error
+    selected: dict[str, dict[str, Any]] = {}
+    for row in builders:
+        if not isinstance(row, dict) or row.get("Name") != "default" or row.get("Err"):
+            continue
+        identity = json.dumps(row, separators=(",", ":"), sort_keys=True)
+        selected[identity] = row
+    if len(selected) != 1:
+        raise TwoBuilderError("private BuildKit builder differs")
+    builder = next(iter(selected.values()))
+    if builder.get("Driver") != "docker":
+        raise TwoBuilderError("private BuildKit builder differs")
+    return builder
+
+
 def _unit_binding(
     runner: OperatorRunner,
     *,
@@ -2681,18 +2702,8 @@ def _measure_private_builder(
         cwd=None,
         environment=environment,
     )
-    try:
-        builders = [json.loads(line) for line in buildx.stdout.splitlines() if line]
-    except json.JSONDecodeError as error:
-        raise TwoBuilderError("BuildKit builder output is invalid") from error
-    selected = [
-        row
-        for row in builders
-        if isinstance(row, dict) and row.get("Name") == "default" and not row.get("Err")
-    ]
-    if len(selected) != 1 or selected[0].get("Driver") != "docker":
-        raise TwoBuilderError("private BuildKit builder differs")
-    nodes = selected[0].get("Nodes")
+    selected = _select_private_buildkit_builder(buildx.stdout)
+    nodes = selected.get("Nodes")
     if not isinstance(nodes, list) or len(nodes) != 1 or not isinstance(nodes[0], dict):
         raise TwoBuilderError("private BuildKit node differs")
     node = nodes[0]

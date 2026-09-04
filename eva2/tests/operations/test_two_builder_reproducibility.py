@@ -1238,6 +1238,30 @@ def test_private_builder_operator_measures_builds_admits_and_cleans(
     )
 
 
+def test_private_builder_accepts_duplicate_identical_default_buildx_rows() -> None:
+    builder = {
+        "Driver": "docker",
+        "Name": "default",
+        "Nodes": [{"Endpoint": "default", "Status": "running"}],
+    }
+
+    selected = reproducibility._select_private_buildkit_builder(
+        json.dumps(builder) + "\n" + json.dumps(builder, sort_keys=True) + "\n"
+    )
+
+    assert selected == builder
+
+
+def test_private_builder_rejects_conflicting_default_buildx_rows() -> None:
+    first = {"Driver": "docker", "Name": "default", "Nodes": []}
+    second = {"Driver": "docker-container", "Name": "default", "Nodes": []}
+
+    with pytest.raises(TwoBuilderError, match="private BuildKit builder differs"):
+        reproducibility._select_private_buildkit_builder(
+            json.dumps(first) + "\n" + json.dumps(second) + "\n"
+        )
+
+
 @pytest.mark.parametrize("failure", ["source", "build", "cleanup"])
 def test_private_builder_failure_cleans_and_never_publishes_admission(
     tmp_path: Path,
