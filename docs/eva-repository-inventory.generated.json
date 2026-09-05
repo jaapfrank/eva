@@ -269,9 +269,9 @@
     }
   ],
   "summary": {
-    "files": 2075,
-    "present": 2075,
-    "tracked": 1996,
+    "files": 2076,
+    "present": 2076,
+    "tracked": 1997,
     "untracked": 79,
     "tombstones": 0,
     "policyErrors": 88
@@ -315,7 +315,7 @@
     {
       "id": "eva2-documentation",
       "role": "documentation",
-      "matchCount": 123
+      "matchCount": 124
     },
     {
       "id": "eva2-deployment",
@@ -10270,7 +10270,7 @@
       "path": "docs/eva-repository-inventory.generated.json",
       "gitState": "tracked",
       "present": true,
-      "bytes": 2396898,
+      "bytes": 2397814,
       "contentSha256": "32591e23fa2eb53a038d95e726ba09edd0405306f38c5283a36a2b6d3010254d",
       "hashMode": "canonical-self-reference-redacted",
       "role": "generated",
@@ -10303,7 +10303,7 @@
       "path": "docs/eva-repository-inventory.generated.md",
       "gitState": "tracked",
       "present": true,
-      "bytes": 370004,
+      "bytes": 370145,
       "contentSha256": "2f4f8486464cbb9713b749dc898f265093d0853699f1da1b4eb3dd1625c1b2d2",
       "hashMode": "canonical-self-reference-redacted",
       "role": "generated",
@@ -13467,8 +13467,8 @@
       "path": "eva2/design/product/execution-workboard-v1.json",
       "gitState": "tracked",
       "present": true,
-      "bytes": 81651,
-      "contentSha256": "7c718deda018d812d3f4ab67aec3102a15fab79b3dd15381906784dfe93c3382",
+      "bytes": 82875,
+      "contentSha256": "44ec2c7d4105c495cdec8d1b5d90a0c681b3140cf043443fafe1cdfb8d2d28be",
       "hashMode": "exact-bytes",
       "role": "documentation",
       "roleRuleId": "eva2-documentation",
@@ -37587,6 +37587,37 @@
       "present": true,
       "bytes": 8913,
       "contentSha256": "aec035a00635c1ea58c50ef8739ccdc93ef3bf9d3c1886848b98f8e4ab7f522f",
+      "hashMode": "exact-bytes",
+      "role": "documentation",
+      "roleRuleId": "eva2-documentation",
+      "matchingRuleIds": [
+        "eva2-documentation"
+      ],
+      "owner": "documentation",
+      "inputs": [
+        "design and evidence"
+      ],
+      "outputs": [
+        "human-readable contract"
+      ],
+      "state": [],
+      "effects": [],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": true,
+        "runtimeCritical": false,
+        "status": "included-tracked-noncritical"
+      }
+    },
+    {
+      "path": "eva2/reviews/CO-003-owner-memory-read-preparation-2026-09-05.md",
+      "gitState": "tracked",
+      "present": true,
+      "bytes": 3076,
+      "contentSha256": "8d57e2adf0c99688fd1d1ad0213c86884739346ac00d340f0fbdf434e1187e1a",
       "hashMode": "exact-bytes",
       "role": "documentation",
       "roleRuleId": "eva2-documentation",
@@ -83637,5 +83668,5 @@
       }
     }
   ],
-  "sourceDigest": "586c2e5e273b9f7849f924ddf737f86e745eb9b516f800154f3ef6a2ea330f3b"
+  "sourceDigest": "6b010dbe5b0396032b62dba74a8c13bd64c7cedfc8e91071d49d24880602efb5"
 }

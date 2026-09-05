@@ -7,6 +7,14 @@
   "inventoryPath": "docs/eva-repository-inventory.generated.json",
   "humanBoardPath": "eva2/WERKBORD.md",
   "audit": {
+    "ownerMemoryReadPreparation": {
+      "taskId": "CO-003", "owner": "/root", "status": "read_only_preparation_not_implementation",
+      "previousTurn": "progress:60602fc records actual live conversation rollout, restart and lossless rollback; no full product acceptance.",
+      "evidence": "eva2/reviews/CO-003-owner-memory-read-preparation-2026-09-05.md",
+      "finding": "Ordinary canary uses telegram:<user> while dashboard owner uses canonical UUID. Current configured v2 binding agrees with dashboard owner, but canary code does not consume that principal. UUID-only queries miss bridge sources. Outbox.pending excludes retained/completed sources and is not a memory list.",
+      "nextCheck": "Before implementation prove current server-side ownership of canonical and existing bridge sources, no other person/group/tenant, revoked-binding rejection, erasure/retention filtering before bounded pagination and no model/provider call. Do not rewrite live identities or accept arbitrary aliases from the browser.",
+      "humanAcceptance": "CO-002 remains open; owner asked asynchronously to assess the actual /eva2 conversation. No inferred approval or completion record. CO-003 runtime code is untouched."
+    },
     "conversationCanaryPromotion": {
       "taskId": "CO-002", "owner": "/root", "reviewer": "/root/identity_pair_review", "status": "live_conversation_restart_and_rollback_passed",
       "evidence": "eva2/evidence/product/astra-conversation-live-upgrade-2026-09-05.json",
