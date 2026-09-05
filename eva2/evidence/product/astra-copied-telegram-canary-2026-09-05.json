@@ -1,0 +1,38 @@
+{
+  "status": "copied_private_canary_passed_not_promoted",
+  "date": "2026-09-05",
+  "taskId": "CO-002",
+  "operatorCommit": "9a8b8e1bf8584071b01405b70d158cb2577be34c",
+  "runtimeSourceCommit": "dc675503b3c285a63900ef2d68e7025f4608d16e",
+  "imageReference": "eva2.local/conversation@sha256:455be8e6f52adcf2f16288ad76793f150684c058753de3d8d84730a7ce623f7e",
+  "scope": "Existing hash-bound JavaScript canary client with the actual private sender and copied binding file, against a disposable candidate with the current runtime tenant/installation and copies of both live databases. No Telegram polling or Bot API delivery.",
+  "firstRun": {
+    "operatorCommit": "40220326888928345f939638133c5206c7e3604e",
+    "status": "failed",
+    "receiptSha256": "dc31667e42b8e6ddb6b9da70d45d26050361d422bfed450f30101de85aa92e52",
+    "cause": "Probe combined principal verification with a mandatory-draft assertion. The model adapter intentionally withholds text while tools are offered. Original failed run did not preserve either observation or usage, so it proves neither identity success nor the isolated cause. Source inspection identified the inappropriate draft requirement.",
+    "correction": "Separate delivery/person checks from optional drafts, keep partial safe observations. No runtime, image or provider code changed; original failure retained. Wrapper also corrected its nonexistent OCI revision-label lookup before resources or a model call."
+  },
+  "successfulRun": {
+    "project": "eva2-clean-b-5f1ccb1a3353", "exitCode": 0,
+    "clientSha256": "943594e2ca9dfe0fc28aca2dc91dc2008fe28b3fcfe839d419b7663135b7eb14",
+    "bindingsSha256": "461eb34eb35a6bfd85cdb02e69eb055df90ee86ab47053119874f50532920d12",
+    "restoredTables": {"operational": 48, "hindsight": 23},
+    "data": "Per-table count digests match before, restored and after snapshots; source databases read-only. Core, Hindsight and both copied databases jointly restarted.",
+    "identity": "Server-derived Telegram bridge principal matched durable first and recall replies; actual copied binding file and runtime scope were used. This does not prove canonical episode admission or an independent cross-person privacy test.",
+    "conversation": {"model": "gpt-6-astra", "firstReply": "beheerd", "recallAfterJointRestart": "wilgenmerel", "exactDurableReplay": true, "foregroundModelCalls": 2, "measuredForegroundTokens": 4695, "toolCalls": 0},
+    "clientRequests": [
+      {"phase": "first", "completedMs": 4696.9714269999995, "drafts": 0},
+      {"phase": "replay", "completedMs": 52.780147, "drafts": 0},
+      {"phase": "recall", "completedMs": 5062.23168, "drafts": 0}
+    ],
+    "streaming": "No draft observed. This is final-answer delivery and restart proof, not live-text-streaming proof. No fabricated draft or additional model phase was added.",
+    "externalEffects": "Dummy Home Assistant/Telegram credentials; no real device, mail, agenda or Telegram send. Model and Hindsight were real."
+  },
+  "verification": "37 focused clone/canary API tests and48 release-input tests passed; Ruff, component and workboard checks passed. The broader1750 tests were not repeated; runtime unchanged.",
+  "independentReview": {"reviewer": "/root/identity_pair_review", "decision": "GO for bounded copied-canary evidence only", "checked": "Passing receipt and manifest hashes, unchanged candidate, private bridge scope, joint restart/exact replay,2 calls4695 foreground tokens,3 requests with0 drafts, cleanup and explicit nonclaims. Not deployment approval."},
+  "cleanup": "Both unique probe projects have no remaining containers, networks or volumes. Both empty /tmp parents removed after temporary credentials and plaintext dumps were deleted. Original private receipts remain; source data is untouched.",
+  "liveState": "Core2c05ad1a, oldimagee0e06066 and Astra setting remain ready on44711. Read-only existing4-to3 host preflight passed, but target3 still has its old image/configuration; no promotion authority inferred.",
+  "retention": {"root": "/home/administrator/project/.eva2-artifacts/co002-conversation-fa2fa3b-20260905/telegram-canary-20260905", "files": 5, "manifestSha256": "60f6c5320466f52c5cd62a26fdb36af7de531a434ca4bcbba03e304533f7f79e", "passingReceiptSha256": "1f0cfc8ead66253f0cb2ce03fffee192a9c5a8afa1c7f46197fa79d4691fe9a6", "cleanupAfter": "Independent acceptance of replacement conversation image."},
+  "nonclaims": ["No live upgrade, Telegram Bot API delivery, live streaming, human acceptance or competitor win.", "4695 tokens covers only successful foreground calls; failed first-run usage, background Hindsight and coding/review usage are not included.", "Same-person conversation recall is not independent Hindsight-only retrieval."]
+}

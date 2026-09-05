@@ -269,9 +269,9 @@
     }
   ],
   "summary": {
-    "files": 2072,
-    "present": 2072,
-    "tracked": 1993,
+    "files": 2073,
+    "present": 2073,
+    "tracked": 1994,
     "untracked": 79,
     "tombstones": 0,
     "policyErrors": 88
@@ -310,7 +310,7 @@
     {
       "id": "eva2-verification",
       "role": "verification",
-      "matchCount": 758
+      "matchCount": 759
     },
     {
       "id": "eva2-documentation",
@@ -10270,7 +10270,7 @@
       "path": "docs/eva-repository-inventory.generated.json",
       "gitState": "tracked",
       "present": true,
-      "bytes": 2393944,
+      "bytes": 2394962,
       "contentSha256": "32591e23fa2eb53a038d95e726ba09edd0405306f38c5283a36a2b6d3010254d",
       "hashMode": "canonical-self-reference-redacted",
       "role": "generated",
@@ -10303,7 +10303,7 @@
       "path": "docs/eva-repository-inventory.generated.md",
       "gitState": "tracked",
       "present": true,
-      "bytes": 369581,
+      "bytes": 369721,
       "contentSha256": "2f4f8486464cbb9713b749dc898f265093d0853699f1da1b4eb3dd1625c1b2d2",
       "hashMode": "canonical-self-reference-redacted",
       "role": "generated",
@@ -11093,8 +11093,8 @@
       "path": "eva2/PROJECT_STATUS.md",
       "gitState": "tracked",
       "present": true,
-      "bytes": 50979,
-      "contentSha256": "1cb271f771d858aa01b8d6e90ecd7cec67ffe02bc12040a50717a708275f3e2e",
+      "bytes": 51926,
+      "contentSha256": "2154f2ac95d4c30be586334f3b56e116f9c238d3ca7b22bb9eb93b7f961da489",
       "hashMode": "exact-bytes",
       "role": "documentation",
       "roleRuleId": "eva2-documentation",
@@ -11248,8 +11248,8 @@
       "path": "eva2/WERKBORD.md",
       "gitState": "tracked",
       "present": true,
-      "bytes": 9358,
-      "contentSha256": "639a7b9f2e9dd053645b0a8aa4d78f917c88d95d196821b1e313a461be231499",
+      "bytes": 9406,
+      "contentSha256": "9390c802aebf6dba6a09a2dc36e4763c3bf491cf6f47a85c585195e3e3449201",
       "hashMode": "exact-bytes",
       "role": "documentation",
       "roleRuleId": "eva2-documentation",
@@ -13467,8 +13467,8 @@
       "path": "eva2/design/product/execution-workboard-v1.json",
       "gitState": "tracked",
       "present": true,
-      "bytes": 76523,
-      "contentSha256": "67a7a229d6a2633204d782b37669f855a7003f6b329189be37e95324845e3fbe",
+      "bytes": 77465,
+      "contentSha256": "8b2976aaaaaa4558c41ad3b5e4e2d06d4ecc9210e6722842768db7df3581dca8",
       "hashMode": "exact-bytes",
       "role": "documentation",
       "roleRuleId": "eva2-documentation",
@@ -25881,6 +25881,41 @@
       "present": true,
       "bytes": 4753,
       "contentSha256": "f3e09190fca96503eaaac1e22e8f18371f4db7bab499aec8a47ad8f243b6a494",
+      "hashMode": "exact-bytes",
+      "role": "verification",
+      "roleRuleId": "eva2-verification",
+      "matchingRuleIds": [
+        "eva2-verification"
+      ],
+      "owner": "verification",
+      "inputs": [
+        "production or fixture contract"
+      ],
+      "outputs": [
+        "test decision"
+      ],
+      "state": [
+        "temporary isolated test state"
+      ],
+      "effects": [
+        "may execute only inside its declared gate"
+      ],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": true,
+        "runtimeCritical": true,
+        "status": "included-tracked-critical"
+      }
+    },
+    {
+      "path": "eva2/evidence/product/astra-copied-telegram-canary-2026-09-05.json",
+      "gitState": "tracked",
+      "present": true,
+      "bytes": 4737,
+      "contentSha256": "7f591a7d58d6765fa5752bdcf8bd40178761b9381091533794e2fa4e75661b58",
       "hashMode": "exact-bytes",
       "role": "verification",
       "roleRuleId": "eva2-verification",
@@ -83536,5 +83571,5 @@
       }
     }
   ],
-  "sourceDigest": "aefbd5e6b0e7ab95ef901319a3fd86745c54316456321d4f009d13458d338507"
+  "sourceDigest": "01a83660e8f7f654aa5d5e741503b7dd3f9b7d29e2d96b8ae73da3e3d5344b42"
 }

@@ -8,7 +8,10 @@
   "humanBoardPath": "eva2/WERKBORD.md",
   "audit": {
     "conversationCanaryDelivery": {
-      "taskId": "CO-002", "owner": "/root", "reviewer": "/root/identity_pair_review", "status": "preparing_copied_private_canary",
+      "taskId": "CO-002", "owner": "/root", "reviewer": "/root/identity_pair_review", "status": "copied_private_delivery_passed_not_live_streaming",
+      "evidence": "eva2/evidence/product/astra-copied-telegram-canary-2026-09-05.json",
+      "result": "Actual existing JS client and copied private scope answered, replayed exactly after joint restart, and recalled wilgenmerel. Two successful foreground calls,4695 tokens,0 tools; all3 requests had0 drafts. First failure retained; original failed usage unavailable. All disposable resources removed, live route unchanged.",
+      "nextStep": "Prepare the already-existing reserve slot for this exact image and Astra configuration, obtain candidate/cutover review and use the existing lossless operator. Host preflight of current slots is already green; current reserve files for budget/identity/trust/Telegram binding/HA token match active bytes. No repeated broad tests. Live text streaming remains separate open work, not a reason to pretend the delivery probe failed.",
       "previousTurn": "progress:548db04 recorded the successful copied-data Astra/restart proof; active route unchanged.",
       "scope": "Extend only the existing disposable clone probe to preserve the current runtime scope and existing private Telegram binding, then invoke the existing hash-bound canary client against that temporary core. No new bot, poller, runtime code or image.",
       "changePaths": ["eva2/experiments/managed-b-clean-graph-v1/probe.py", "eva2/tests/experiments/test_managed_b_current_data_transition.py", "eva2/release/managed-b-release-input-authority-v1.json", "docs/eva-repository-inventory.generated.json", "docs/eva-repository-inventory.generated.md"],
@@ -603,7 +606,7 @@
     },
     {
       "id": "CO-002", "order": 120, "area": "Gesprek", "title": "Configureerbare menselijke identiteit aanscherpen",
-      "outcome": "Astra is live. De nieuwe gesprekcode doorstond 1.750 controles en werkte ook met een kopie van de bestaande databases, inclusief geheugen na herstart. Deze code is nog niet live: de echte Telegrambinding en de gecontroleerde omschakeling ontbreken nog.",
+      "outcome": "Astra is live. De nieuwe gesprekcode werkt nu ook via de bestaande Telegramclient met Jaaps gekopieerde koppeling en gegevens, inclusief geheugen na herstart. Live tekststukjes ontbreken nog. Volgende concrete stap: de kandidaat gecontroleerd in het reserveslot zetten en de gewone route omschakelen.",
       "status": "in_progress", "stateDetails": {"baseCommit": null, "implementationCommit": null, "evidenceCommit": null, "reviewEvidencePaths": [], "blockerReason": null},
       "ownerRole": "architecturelead", "reviewerRole": "proofreviewer", "dependsOn": ["CO-001"],
       "componentIds": ["conversation-model-adapter", "core-behavior-tests"], "inventoryOwners": ["architecture", "eva-runtime", "verification"],

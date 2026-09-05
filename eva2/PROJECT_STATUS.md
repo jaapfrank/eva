@@ -12,7 +12,9 @@ Laatste actuele controle: 5 september 2026.
 | Werkt Astra ook met de nieuwe toolroute? | 🟡 Een gevonden aansluitfout is hersteld. De nieuwe kandidaat koos met echte Astra zelf de juiste agendatool en datum, en verwoordde daarna het testresultaat correct. Er is geen echte agenda aangeraakt. Deze nieuwe code is nog niet live. |
 | Werkt de nieuwe gesprekcode na een volledige herstart? | ✅ In een aparte proef met verse databases antwoordde Astra, bleef het eerdere antwoord exact bewaard en wist Eva na herstart van kern, Hindsight en beide databases nog `rozenmerel`. De proefmiddelen zijn verwijderd; de gebruikersroute is nog niet omgezet. |
 | Zijn de overige functies meegecontroleerd? | ✅ De bestaande selectie van 147 testmodules is uitgevoerd: uiteindelijk 1.750 geslaagde tests, inclusief aparte databases en echte browserproeven. Alleen testopzet is hersteld; de gesprekcode bleef gelijk. Dit is nog geen volledige releasegoedkeuring of live-upgrade. |
-| Werkt de kandidaat ook met de bestaande gegevens? | ✅ Een wegwerpkopie van beide huidige databases is hersteld: 48 gesprekstabellen en 23 geheugentabellen met gelijke aantallen rijen. Astra antwoordde en wist na gezamenlijke herstart nog `berkzwaluw`. De live data bleef ongemoeid. Jaaps echte Telegrambinding is hiermee nog niet getest. |
+| Werkt de kandidaat ook met de bestaande gegevens? | ✅ Een wegwerpkopie van beide huidige databases is hersteld: 48 gesprekstabellen en 23 geheugentabellen met gelijke aantallen rijen. Astra antwoordde en wist na gezamenlijke herstart nog `berkzwaluw`. De live data bleef ongemoeid. De Telegramkoppeling is daarna apart gecontroleerd, zie hieronder. |
+| Werkt de bestaande Telegramclient met mijn gegevens op de kandidaat? | ✅ In een aparte kopie met Jaaps bestaande koppeling en dezelfde installatie antwoordde Astra. Na gezamenlijke herstart kwam het opgeslagen antwoord exact terug zonder nieuwe modelaanroep; een nieuwe vraag herinnerde `wilgenmerel`. De geslaagde proef gebruikte twee Astra-aanroepen en 4.695 tokens. Er zijn geen berichten naar Telegram verstuurd. |
+| Verschijnt het antwoord nu live in stukjes? | 🟡 Nee: deze drie clientverzoeken leverden nul tekststukjes op. De modelroute houdt tekst tegen zolang zij tools aanbiedt. De eerste proef eiste dat ten onrechte wel en is als mislukt bewaard. Gesprek/herstart werkt; live tekstweergave is daarmee niet bewezen. |
 | Is Eva2 bewezen beter dan Eva1? | Nee. Het bestaande Eva1-vergelijkingsdocument noemt Eva1 sterker in ervaren aanwezigheid en speakergebruik. Een actuele gezamenlijke gebruikersproef ontbreekt. |
 | Is de laatste concurrentievergelijking compleet? | Nee. EV-002 bevat antwoorden van Eva2 en Hermes; OpenClaw en Agent Zero vielen vóór modelgebruik uit. Eva2's oorspronkelijke resultaatbestand kon bovendien niet worden opgeslagen. Geen ranglijst of winstclaim volgt hieruit. |
 | Wacht alles alleen op Jaaps goedkeuring? | Nee. Menselijke acceptatie blijft open, maar de nieuwe gesprekcode moet ook nog veilig in de werkelijke gebruikersroute komen. Onderzoek en technische voorbereiding vereisen geen kunstmatige GO van Jaap. |
@@ -34,6 +36,8 @@ De [brede functiecontrole](evidence/product/astra-candidate-regression-2026-09-0
 legt alle 147 testmodules, eerdere mislukkingen en de resterende releasegrens vast.
 De [proef met gekopieerde data](evidence/product/astra-copied-data-restart-2026-09-05.json)
 legt herstel, Astra-antwoord, herstart en verwijdering van de tijdelijke kopieën vast.
+De [proef met de bestaande Telegramclient](evidence/product/astra-copied-telegram-canary-2026-09-05.json)
+legt de gekopieerde privéroute, herstart, eerste mislukking en ontbrekende tekststroom vast.
 De actuele procesroute en containerlabels zijn alleen-lezen gecontroleerd;
 de bestaande [EV-002-resultaten](evidence/product/EV-002-controlled-baseline-result-2026-09-04.json),
 [CO-001-proef](evidence/product/CO-001-telegram-live-drafts-contract-2026-09-04.json)
