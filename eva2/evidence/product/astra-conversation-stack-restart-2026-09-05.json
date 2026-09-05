@@ -1,0 +1,79 @@
+{
+  "status": "fresh_conversation_stack_passed_not_deployed",
+  "taskId": "CO-002",
+  "issuedAt": "2026-09-05T13:25:51.668125+00:00",
+  "imageSourceCommit": "dc675503b3c285a63900ef2d68e7025f4608d16e",
+  "operatorCommit": "ce83fe085773a63a2ada3692a494bfbed18aa429",
+  "imageId": "sha256:455be8e6f52adcf2f16288ad76793f150684c058753de3d8d84730a7ce623f7e",
+  "manifestSha256": "f2c12cbc07a0d965ec4dc32c7f2f75b4166125c8ee5bcc294df05b834f2a92d9",
+  "model": "gpt-6-astra",
+  "setup": {
+    "operator": "experiments/managed-b-clean-graph-v1/probe.py",
+    "mode": "Explicit hash-bound development scan, local immutable image, fresh disposable data only. No clone or retained slot is permitted in this mode.",
+    "temporaryProject": "eva2-clean-b-37ea09417434",
+    "temporaryPort": 47525,
+    "boundAddress": "127.0.0.1",
+    "databases": "Two fresh PostgreSQL 18.6 volumes; Hindsight pgvector 0.8.6",
+    "credentials": "Access-only lease from the existing Eva2 slot; no full OAuth login or refresh token copied. Database passwords and DSNs were private temporary files.",
+    "renderedServices": 9,
+    "executedServices": ["postgres", "hindsight-postgres", "model-access-lease", "hindsight-access-lease", "hindsight", "schema-installer", "core"],
+    "notStarted": ["telegram-ingress", "durable-goal-worker"]
+  },
+  "results": {
+    "freshSchemaInstalled": true,
+    "coreReadyBeforeRestart": true,
+    "dashboardOwnerAccepted": true,
+    "dashboardAnonymousRejected": true,
+    "firstPrompt": "Mijn controlewoord is rozenmerel. Onthoud dit. Antwoord alleen met: beheerd",
+    "firstReply": "beheerd",
+    "firstUsage": {"inputTokens": 2206, "outputTokens": 7, "modelAttempts": 1, "toolCalls": 0},
+    "jointStopStart": ["core", "hindsight", "hindsight-postgres", "postgres"],
+    "coreReadyAfterRestart": true,
+    "sameTurnReplay": "HTTP response and canonical committed PostgreSQL reply compared exactly equal after the joint restart.",
+    "newFollowupPrompt": "Wat is mijn controlewoord? Antwoord alleen met dat woord.",
+    "newFollowupReply": "rozenmerel",
+    "followupUsage": {"inputTokens": 2220, "outputTokens": 7, "modelAttempts": 1, "toolCalls": 0},
+    "usageBoundary": "4440 measured foreground model tokens. This excludes coding/reviewer activity and any asynchronous Hindsight processing; it is not a total credit claim.",
+    "memoryBoundary": "Same-person same-conversation recall is proved, not independent Hindsight-only retrieval or multi-person privacy."
+  },
+  "operatorChanges": [
+    "Configure the requested model explicitly and require the durable model receipt to match it.",
+    "Use the active access-only Eva2 lease and identity instead of the old full-login source.",
+    "Allow the existing hash-bound development scan only in fresh local-candidate mode; it is explicitly not release authority.",
+    "Verify committed reply replay and a new recall question after joint restart."
+  ],
+  "unitTestIncident": {
+    "finding": "Two existing tests assumed different real runner UIDs. Running the suite as root caused the negative receipt-owner test to start a unique old-image disposable stack unintentionally.",
+    "project": "eva2-clean-b-eeab2eb31ff2",
+    "stoppedAt": "dashboard-authority-install: old default image lacked eva.operations.initialize_dashboard_authority; no foreground model call occurred.",
+    "liveImpact": "No live data cloned, no production container modified. All temporary containers, network, volumes and credential staging were removed; live readiness stayed HTTP 200.",
+    "repair": "The unsafe-parent test now uses an explicitly unsafe mode independent of UID and forbids subprocess/network calls. The final-receipt test isolates destination validation and also forbids subprocesses.",
+    "after": "All 61 focused tests passed as the ordinary user (1.08 s) and as root (0.74 s); Ruff and component catalog passed."
+  },
+  "retention": {
+    "owner": "/root",
+    "root": "/home/administrator/project/.eva2-artifacts/co002-conversation-fa2fa3b-20260905/conversation-stack-20260905",
+    "files": {
+      "fresh-stack.json": "554d384ea0c785f6d60ed83205fcf375e9c0173cb144e67acaacebc4bce7a09c",
+      "invocation.json": "56aec7460c86a60060e1537f65d71ac74cb176ed430a0fdd5efd60306dfb21f6",
+      "unintended-test-start.json": "667bd70f91680c8d734b0005d04474ef3b8350308605261f1685ee708b374420"
+    },
+    "cleanupAfter": "Independent acceptance of the replacement conversation image. Temporary runtime databases and credentials are already removed."
+  },
+  "liveRouteUnchanged": {
+    "containerId": "2c05ad1a8c7c301f17822c6ca508de167c98ea18a9eec558102c51440f7fb993",
+    "imageId": "sha256:e0e06066e3ed6a71f36859ece3d10fb587dd7bfbfe844eb1adb41b97509cbf9e",
+    "health": "healthy",
+    "readinessHttpStatus": 200
+  },
+  "independentReview": {
+    "reviewer": "/root/identity_pair_review",
+    "decision": "GO for accuracy of this development proof only; CO-002 remains open.",
+    "verified": "Retained fresh-stack and invocation hashes, candidate/source/model bindings, 4440 foreground tokens, same-conversation restart/replay and stated nonclaims."
+  },
+  "nonclaims": [
+    "No real Telegram message, external tool effect, production-data migration or live promotion was performed.",
+    "This is a development runtime proof, not RB-007, RB-008 release acceptance, complete release approval or human acceptance.",
+    "No general conversation-quality or competitor-superiority claim follows from exact-word recall."
+  ]
+}

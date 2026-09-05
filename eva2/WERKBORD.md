@@ -10,7 +10,7 @@ de volgende begint.
 
 | Volgorde | Kaart | Resultaat | Status |
 |---:|---|---|---|
-| 120 | `CO-002` — Configureerbare menselijke identiteit aanscherpen | De actieve Eva2 praat met gpt-6-astra. De nieuwe gesprekcode kiest nu ook met echte Astra correct een externe tool en verwoordt het testresultaat; de aansluitfout is hersteld en beoordeeld. Deze code en identiteitverbetering zijn nog niet live: eerst volgt de complete gesprek-/geheugenproef in een wegwerpstack. | 🟡 BEZIG |
+| 120 | `CO-002` — Configureerbare menselijke identiteit aanscherpen | De actieve Eva2 praat met gpt-6-astra. De nieuwe gesprekcode koos een tool correct en onthield in een verse proef haar controlewoord na herstart van kern, Hindsight en beide databases. De proef is opgeruimd. Deze code is nog niet live; releasecontrole en de echte Telegram-/data-overgang ontbreken nog. | 🟡 BEZIG |
 | 130 | `CO-003` — Eigen geheugenbronnen veilig opvragen | De eigenaar kan via Eva's afgeschermde API een begrensde pagina bekijken van de eigen privégespreksbronnen die aan het langetermijngeheugen zijn aangeboden; bronnen van andere mensen, groepen en door Hindsight afgeleide interpretaties blijven buiten beeld. | ⚪ HIERNA |
 
 ### Exact werk voor `CO-002`

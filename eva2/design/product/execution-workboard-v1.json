@@ -8,7 +8,9 @@
   "humanBoardPath": "eva2/WERKBORD.md",
   "audit": {
     "conversationStackDelivery": {
-      "taskId": "CO-002", "owner": "/root", "status": "preparing_fresh_stack",
+      "taskId": "CO-002", "owner": "/root", "status": "fresh_stack_passed_not_deployed",
+      "evidence": "eva2/evidence/product/astra-conversation-stack-restart-2026-09-05.json",
+      "nextStep": "The current image changes 74 production/deployment files relative to the active source. Complete the relevant release regressions and data-transition/Telegram checks before any reserve-slot promotion; do not treat the fresh-stack proof as full release authority.",
       "previousTurn": "progress: Astra hosted-tool-search compatibility was corrected and proved with the real model in immutable image 455be8e6; no deployment.",
       "purpose": "Use the existing managed-B disposable operator for the complete conversation route, its durable reply and joint database/service restart. Fix only obsolete probe assumptions; do not change production source or rebuild the already tested image.",
       "artifactRetention": {"owner": "/root", "path": "/home/administrator/project/.eva2-artifacts/co002-conversation-fa2fa3b-20260905/conversation-stack-20260905", "purpose": "Raw fresh-stack result and unexpected old-test run retained without credentials", "cleanup": "After independent acceptance of the replacement conversation image; temporary secret directories, databases and containers are removed immediately after the probe."},
@@ -25,7 +27,7 @@
       "correctedSourceCommit": "dc675503b3c285a63900ef2d68e7025f4608d16e",
       "correctedImageId": "sha256:455be8e6f52adcf2f16288ad76793f150684c058753de3d8d84730a7ce623f7e",
       "evidence": "eva2/evidence/product/astra-hosted-tool-search-repair-2026-09-05.json",
-      "nextStep": "De bestaande wegwerpstack gebruiken om de complete nieuwe gesprekroute met geheugen en herstart te controleren, daarna pas promotie via het reserveslot beoordelen. De actieve Astra-configuratie blijft behouden.",
+      "nextStep": "De verse gesprek- en herstartproef is geslaagd. Release-regressies, echte data-overgang en Telegramlevering blijven nodig vóór promotie. De actieve Astra-configuratie blijft behouden.",
       "finding": "De scan-schone kandidaat antwoordt met Astra, maar kiest de lokale Pydantic-toolzoekroute omdat Pydantic 2.37 Astra nog niet bij zijn native-tool-search-modellen noemt. Een tweede modelrequest wordt terecht door request_limit=1 geblokkeerd.",
       "repair": "Alleen de officieel beschreven native-tool-search-capability van gpt-6-astra aan het bestaande providerprofiel toevoegen, met een SDK-wiretest; geen hogere limiet, nieuwe connector of gewijzigde identiteit.",
       "removedScratchPath": "/tmp/eva2-conversation-candidate.qWjsq2",
@@ -560,7 +562,7 @@
     },
     {
       "id": "CO-002", "order": 120, "area": "Gesprek", "title": "Configureerbare menselijke identiteit aanscherpen",
-      "outcome": "De actieve Eva2 praat met gpt-6-astra. De nieuwe gesprekcode kiest nu ook met echte Astra correct een externe tool en verwoordt het testresultaat; de aansluitfout is hersteld en beoordeeld. Deze code en identiteitverbetering zijn nog niet live: eerst volgt de complete gesprek-/geheugenproef in een wegwerpstack.",
+      "outcome": "De actieve Eva2 praat met gpt-6-astra. De nieuwe gesprekcode koos een tool correct en onthield in een verse proef haar controlewoord na herstart van kern, Hindsight en beide databases. De proef is opgeruimd. Deze code is nog niet live; releasecontrole en de echte Telegram-/data-overgang ontbreken nog.",
       "status": "in_progress", "stateDetails": {"baseCommit": null, "implementationCommit": null, "evidenceCommit": null, "reviewEvidencePaths": [], "blockerReason": null},
       "ownerRole": "architecturelead", "reviewerRole": "proofreviewer", "dependsOn": ["CO-001"],
       "componentIds": ["conversation-model-adapter", "core-behavior-tests"], "inventoryOwners": ["architecture", "eva-runtime", "verification"],
