@@ -38,9 +38,9 @@ from eva.operations.logical_restore_authority import logical_restore_preparation
 ROOT = Path(__file__).resolve().parents[2]
 MANIFEST = ROOT / "deploy" / "living-core" / "managed-b.compose.yml"
 STAGING_PARENT = Path("/var/lib/eva2")
-SOURCE_AUTH = Path("/home/administrator/project/Bottie/data/auth.json")
-IDENTITY_PACK = Path("/var/lib/eva2/managed-b/identity/current.json")
-IDENTITY_TRUST = Path("/var/lib/eva2/managed-b/identity/trust.json")
+SOURCE_AUTH = Path("/var/lib/eva2/managed-b-slot4/model-access-lease/auth.json")
+IDENTITY_PACK = Path("/var/lib/eva2/managed-b-slot4/identity/current.json")
+IDENTITY_TRUST = Path("/var/lib/eva2/managed-b-slot4/identity/trust.json")
 
 CORE_IMAGE = (
     "eva2/distroless-core-crypto50-candidate@sha256:"
@@ -146,14 +146,16 @@ def _conversation_prompt(path: Path | None) -> str:
     return prompt
 
 
-def _conversation_measurement(data: object, *, expected_text: str) -> dict[str, Any]:
+def _conversation_measurement(
+    data: object, *, expected_text: str, model: str = "gpt-5.4-mini"
+) -> dict[str, Any]:
     """Validate the durable reply fields used by a bounded conversation probe."""
 
     if not isinstance(data, dict) or data.get("text") != expected_text:
         raise ProbeError("durable conversation reply differs")
     provider = data.get("provider")
     usage = data.get("model_usage")
-    if provider != "chatgpt-codex:gpt-5.4-mini" or not isinstance(usage, dict):
+    if provider != f"chatgpt-codex:{model}" or not isinstance(usage, dict):
         raise ProbeError("durable conversation provider or usage differs")
     expected_usage_fields = {
         "input_tokens",
@@ -778,6 +780,7 @@ def _candidate_authority(
     *,
     expected_sha256: str,
     image_id: str,
+    development_summary: bool = False,
 ) -> dict[str, Any]:
     if not re.fullmatch(r"[0-9a-f]{64}", expected_sha256):
         raise ProbeError("candidate authority SHA-256 is invalid")
@@ -794,6 +797,32 @@ def _candidate_authority(
         raise ProbeError("candidate authority is not valid JSON") from exc
     if not isinstance(document, dict):
         raise ProbeError("candidate authority root is invalid")
+
+    if development_summary:
+        # A hash-bound development scan admits only a fresh disposable run,
+        # never the RB-006 release gate or the retained-slot path.
+        if (
+            document.get("status") != "development_scan_complete"
+            or document.get("imageId") != image_id
+            or document.get("findings") != {"HIGH": 0, "CRITICAL": 0}
+            or document.get("network") != "none"
+            or not re.fullmatch(r"[0-9a-f]{64}", str(document.get("archiveSha256", "")))
+            or not re.fullmatch(r"[0-9a-f]{40}", str(document.get("sourceCommit", "")))
+            or any(
+                type(document.get(key)) is not int or document[key] <= 0
+                for key in ("packages", "files")
+            )
+            or not isinstance(document.get("databaseUpdatedAt"), str)
+        ):
+            raise ProbeError("development scan does not admit this disposable run")
+        return {
+            "contract": "development_scan_only_not_release_authority",
+            "fileSha256": actual_sha256,
+            "imageArchiveSha256": document["archiveSha256"],
+            "sourceCommit": document["sourceCommit"],
+            "scannerDatabaseUpdatedAt": document["databaseUpdatedAt"],
+            "findings": document["findings"],
+        }
 
     files = document.get("files")
     findings = document.get("findings")
@@ -978,9 +1007,11 @@ def main(
     candidate_authority: Path | None = None,
     expected_candidate_authority_sha256: str | None = None,
     expected_source_commit: str | None = None,
+    development_scan_summary: bool = False,
     retain_slot: bool = False,
     retained_slot_number: int = 2,
     conversation_prompt_file: Path | None = None,
+    conversation_model: str = "gpt-5.4-mini",
     receipt_path: Path | None = None,
 ) -> int:
     if os.geteuid() != 0:
@@ -990,6 +1021,8 @@ def main(
         if receipt_path is not None:
             _validate_receipt_destination(receipt_path)
         conversation_prompt = _conversation_prompt(conversation_prompt_file)
+        if not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9._-]{0,119}", conversation_model):
+            raise ProbeError("conversation model is invalid")
     except (OSError, ProbeError) as exc:
         print(json.dumps({"error": str(exc), "status": "failed"}, sort_keys=True))
         return 2
@@ -997,6 +1030,8 @@ def main(
     local_candidate_authority: dict[str, Any] | None = None
     local_candidate_inspection: dict[str, Any] | None = None
     try:
+        if development_scan_summary and not local_candidate:
+            raise ProbeError("development scan requires a fresh local candidate")
         if local_candidate:
             if core_image is not None:
                 raise ProbeError(
@@ -1021,7 +1056,13 @@ def main(
                 candidate_authority,
                 expected_sha256=expected_candidate_authority_sha256,
                 image_id=core_image,
+                development_summary=development_scan_summary,
             )
+            if (
+                development_scan_summary
+                and local_candidate_authority["sourceCommit"] != expected_source_commit
+            ):
+                raise ProbeError("development scan source commit differs")
             local_candidate_inspection = _inspect_local_candidate_image(
                 core_image, expected_source_commit=expected_source_commit
             )
@@ -1095,6 +1136,7 @@ def main(
         "issuedAt": datetime.now(UTC).isoformat(),
         "manifestSha256": hashlib.sha256(MANIFEST.read_bytes()).hexdigest(),
         "coreImage": core_image,
+        "conversationModel": conversation_model,
         "coreImageMode": (
             "local_image_id_disposable_candidate"
             if local_candidate
@@ -1331,6 +1373,7 @@ def main(
         )
 
         values = {
+            "EVA_CONVERSATION_MODEL": conversation_model,
             "EVA_B_CONFIGURATION_SHA256": hashlib.sha256(run_id.encode()).hexdigest(),
             "EVA_LIVING_CORE_IMAGE": core_image,
             "EVA_POSTGRES_IMAGE": POSTGRES_IMAGE,
@@ -1606,7 +1649,9 @@ def main(
             _compose(project, environment_file, "ps", "-q", "postgres")
         ).strip()
         durable_reply = _durable_conversation_reply(operational_id, "eva2", message_id)
-        measurement = _conversation_measurement(durable_reply, expected_text=reply_text)
+        measurement = _conversation_measurement(
+            durable_reply, expected_text=reply_text, model=conversation_model
+        )
         result["conversationTurn"] = {
             "messageId": message_id,
             "prompt": conversation_prompt,
@@ -1646,6 +1691,17 @@ def main(
         )
         phase = "core-ready-after-restart"
         _wait_ready(port)
+        phase = "durable-conversation-replay"
+        replay = _http_json(
+            f"http://127.0.0.1:{port}/internal/v1/turns/respond", payload=turn
+        )
+        if (
+            replay != reply
+            or _durable_conversation_reply(operational_id, "eva2", message_id)
+            != durable_reply
+        ):
+            raise ProbeError("durable conversation changed after joint restart")
+        result["conversationReplyPreservedAfterJointRestart"] = True
 
         if clone_current_route:
             memory_id = _run(
@@ -1842,11 +1898,13 @@ if __name__ == "__main__":
     parser.add_argument("--candidate-authority", type=Path)
     parser.add_argument("--expected-candidate-authority-sha256")
     parser.add_argument("--expected-source-commit")
+    parser.add_argument("--development-scan-summary", action="store_true")
     parser.add_argument("--retain-slot", action="store_true")
     parser.add_argument(
         "--retained-slot-number", type=int, choices=(2, 3, 4), default=2
     )
     parser.add_argument("--conversation-prompt-file", type=Path)
+    parser.add_argument("--conversation-model", default="gpt-5.4-mini")
     parser.add_argument("--receipt", type=Path, required=True)
     arguments = parser.parse_args()
     sys.exit(
@@ -1859,9 +1917,11 @@ if __name__ == "__main__":
                 arguments.expected_candidate_authority_sha256
             ),
             expected_source_commit=arguments.expected_source_commit,
+            development_scan_summary=arguments.development_scan_summary,
             retain_slot=arguments.retain_slot,
             retained_slot_number=arguments.retained_slot_number,
             conversation_prompt_file=arguments.conversation_prompt_file,
+            conversation_model=arguments.conversation_model,
             receipt_path=arguments.receipt,
         )
     )

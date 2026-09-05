@@ -7,6 +7,13 @@
   "inventoryPath": "docs/eva-repository-inventory.generated.json",
   "humanBoardPath": "eva2/WERKBORD.md",
   "audit": {
+    "conversationStackDelivery": {
+      "taskId": "CO-002", "owner": "/root", "status": "preparing_fresh_stack",
+      "previousTurn": "progress: Astra hosted-tool-search compatibility was corrected and proved with the real model in immutable image 455be8e6; no deployment.",
+      "purpose": "Use the existing managed-B disposable operator for the complete conversation route, its durable reply and joint database/service restart. Fix only obsolete probe assumptions; do not change production source or rebuild the already tested image.",
+      "changePaths": ["eva2/experiments/managed-b-clean-graph-v1/probe.py", "eva2/tests/experiments/test_managed_b_local_candidate_image.py"],
+      "checks": ["pytest -q tests/experiments/test_managed_b_local_candidate_image.py tests/experiments/test_managed_b_current_data_transition.py tests/benchmark/test_inspect_ai_ev002.py", "Existing Compose with fresh unique resources, Astra model and access-only lease; no live data copy, external tool effect or retained slot."]
+    },
     "conversationCandidateCompatibilityRepair": {
       "taskId": "CO-002",
       "owner": "/root",

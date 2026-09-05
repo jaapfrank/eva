@@ -74,6 +74,86 @@ def _valid_image_inspection() -> list[dict[str, object]]:
     ]
 
 
+def test_development_scan_is_explicit_and_not_release_authority(tmp_path: Path) -> None:
+    document = {
+        "status": "development_scan_complete",
+        "imageId": IMAGE_ID,
+        "sourceCommit": SOURCE_COMMIT,
+        "archiveSha256": "c" * 64,
+        "findings": {"HIGH": 0, "CRITICAL": 0},
+        "network": "none",
+        "packages": 75,
+        "files": 1519,
+        "databaseUpdatedAt": "2026-08-31T00:00:00Z",
+    }
+    path, digest = _write_authority(tmp_path, document)
+    with pytest.raises(probe.ProbeError):
+        probe._candidate_authority(path, expected_sha256=digest, image_id=IMAGE_ID)
+    result = probe._candidate_authority(
+        path, expected_sha256=digest, image_id=IMAGE_ID, development_summary=True
+    )
+    assert result["contract"] == "development_scan_only_not_release_authority"
+    assert result["sourceCommit"] == SOURCE_COMMIT
+    for field, value in (
+        ("imageId", "sha256:" + "e" * 64),
+        ("sourceCommit", "bad"),
+        ("archiveSha256", "bad"),
+        ("findings", {"HIGH": 1, "CRITICAL": 0}),
+        ("packages", 0),
+        ("files", True),
+        ("network", "internet"),
+    ):
+        changed = {**document, field: value}
+        path, digest = _write_authority(tmp_path, changed)
+        with pytest.raises(probe.ProbeError):
+            probe._candidate_authority(
+                path,
+                expected_sha256=digest,
+                image_id=IMAGE_ID,
+                development_summary=True,
+            )
+
+
+@pytest.mark.parametrize(
+    "extra", [{"clone_current_route": True}, {"retain_slot": True}]
+)
+def test_development_scan_never_admits_live_data_or_retained_slots(
+    monkeypatch: pytest.MonkeyPatch, extra: dict[str, bool]
+) -> None:
+    monkeypatch.setattr(probe.os, "geteuid", lambda: 0)
+    monkeypatch.setattr(
+        probe, "_live_status", lambda *_args: pytest.fail("no resources")
+    )
+    assert (
+        probe.main(
+            candidate_local_image_id=IMAGE_ID, development_scan_summary=True, **extra
+        )
+        == 2
+    )
+
+
+def test_conversation_measurement_binds_requested_model() -> None:
+    value = {
+        "text": "beheerd",
+        "provider": "chatgpt-codex:gpt-6-astra",
+        "model_usage": {
+            "measurement": "measured",
+            "input_tokens": 40,
+            "output_tokens": 5,
+            "model_attempts": 1,
+            "tool_calls": 0,
+        },
+    }
+    assert (
+        probe._conversation_measurement(
+            value, expected_text="beheerd", model="gpt-6-astra"
+        )["provider"]
+        == value["provider"]
+    )
+    with pytest.raises(probe.ProbeError):
+        probe._conversation_measurement(value, expected_text="beheerd")
+
+
 def test_local_candidate_authority_and_image_inspection_are_exact(
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
