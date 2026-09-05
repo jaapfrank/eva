@@ -553,7 +553,7 @@
     {
       "id": "CO-002", "order": 120, "area": "Gesprek", "title": "Configureerbare menselijke identiteit aanscherpen",
       "outcome": "De actieve Eva2 praat met gpt-6-astra. De nieuwe gesprekcode kiest nu ook met echte Astra correct een externe tool en verwoordt het testresultaat; de aansluitfout is hersteld en beoordeeld. Deze code en identiteitverbetering zijn nog niet live: eerst volgt de complete gesprek-/geheugenproef in een wegwerpstack.",
-      "status": "review", "stateDetails": {"baseCommit": "fa2fa3bf587911a4727c0257fd5072bf69629818", "implementationCommit": "dc675503b3c285a63900ef2d68e7025f4608d16e", "evidenceCommit": "895b2ef8e2d03e8616e53f49721b8773170e1866", "reviewEvidencePaths": ["eva2/evidence/product/astra-hosted-tool-search-repair-2026-09-05.json", "eva2/evidence/product/CO-002-separate-before-after-2026-09-05.json"], "blockerReason": null},
+      "status": "in_progress", "stateDetails": {"baseCommit": null, "implementationCommit": null, "evidenceCommit": null, "reviewEvidencePaths": [], "blockerReason": null},
       "ownerRole": "architecturelead", "reviewerRole": "proofreviewer", "dependsOn": ["CO-001"],
       "componentIds": ["conversation-model-adapter", "core-behavior-tests"], "inventoryOwners": ["architecture", "eva-runtime", "verification"],
       "changePaths": ["docs/eva-repository-inventory.generated.json", "docs/eva-repository-inventory.generated.md", "eva2/src/eva/adapters/model/openai_codex_provider.py", "eva2/tests/model/test_openai_codex_provider_shared.py"],
