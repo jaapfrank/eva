@@ -220,6 +220,22 @@ def _conversation_measurement(
     }
 
 
+def _verify_canary_delivery(
+    durable: dict[str, Any], principal_id: str, observation: dict[str, Any]
+) -> None:
+    """Verify delivery independently from optional, tool-gated text deltas."""
+    if durable.get("principal_id") != principal_id:
+        raise ProbeError("canary private identity differs")
+    drafts = observation.get("drafts")
+    if (
+        type(drafts) is not int
+        or drafts < 0
+        or observation.get("streamEqualsFinal") is not (drafts > 0)
+        or (drafts == 0 and observation.get("firstDraftMs") is not None)
+    ):
+        raise ProbeError("canary draft observation differs")
+
+
 def _require_runtime_library_path(config: object) -> str:
     if not isinstance(config, dict):
         raise ProbeError("runtime configuration is invalid")
@@ -1813,6 +1829,9 @@ def main(
             "text": conversation_prompt,
         }
         canary_measurements: list[dict[str, Any]] = []
+        if canary is not None:
+            # Keep non-content measurements even when a later assertion fails.
+            result["telegramCanaryRequests"] = canary_measurements
 
         def submit_turn(value: dict[str, Any]) -> dict[str, Any]:
             if canary is None:
@@ -1845,11 +1864,6 @@ def main(
             _compose(project, environment_file, "ps", "-q", "postgres")
         ).strip()
         durable_reply = _durable_conversation_reply(operational_id, "eva2", message_id)
-        if canary is not None and (
-            durable_reply.get("principal_id") != principal_id
-            or not canary_measurements[0]["streamEqualsFinal"]
-        ):
-            raise ProbeError("canary private identity or streaming proof differs")
         measurement = _conversation_measurement(
             durable_reply, expected_text=reply_text, model=conversation_model
         )
@@ -1867,6 +1881,8 @@ def main(
             ).hexdigest(),
             "usage": measurement,
         }
+        if canary is not None:
+            _verify_canary_delivery(durable_reply, principal_id, canary_measurements[0])
 
         phase = "joint-stop"
         _run(
@@ -1902,6 +1918,8 @@ def main(
             != durable_reply
         ):
             raise ProbeError("durable conversation changed after joint restart")
+        if canary is not None:
+            _verify_canary_delivery(durable_reply, principal_id, canary_measurements[1])
         result["conversationReplyPreservedAfterJointRestart"] = True
         if conversation_memory_word is not None:
             phase = "conversation-memory-after-restart"
@@ -1921,11 +1939,10 @@ def main(
             durable_recall = _durable_conversation_reply(
                 operational_id, "eva2", followup["message_id"]
             )
-            if (
-                canary is not None
-                and durable_recall.get("principal_id") != principal_id
-            ):
-                raise ProbeError("canary recall crossed its private identity")
+            if canary is not None:
+                _verify_canary_delivery(
+                    durable_recall, principal_id, canary_measurements[2]
+                )
             result["conversationMemoryAfterRestart"] = {
                 "reply": recalled["text"],
                 "usage": _conversation_measurement(
@@ -1944,7 +1961,7 @@ def main(
                 "privateIdentityVerified": True,
                 "requests": canary_measurements,
                 "telegramMessagesSent": 0,
-                "scope": "Existing JS canary client and real copied private binding; drafts captured locally, not delivered through Telegram Bot API.",
+                "scope": "Existing JS canary client and copied private binding. Zero drafts is recorded, not proof of live streaming; any drafts are captured locally, never sent through Telegram Bot API. Bridge principal is checked, not canonical episode admission.",
             }
 
         if clone_current_route:

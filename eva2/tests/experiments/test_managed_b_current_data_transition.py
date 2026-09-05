@@ -135,6 +135,46 @@ def test_count_window_accepts_one_consistent_logical_snapshot() -> None:
     )
 
 
+@pytest.mark.parametrize("drafts", [0, 1, 3])
+def test_canary_delivery_keeps_tool_gated_streaming_separate(drafts):
+    probe._verify_canary_delivery(
+        {"principal_id": "telegram:7"},
+        "telegram:7",
+        {
+            "drafts": drafts,
+            "streamEqualsFinal": drafts > 0,
+            "firstDraftMs": 20 if drafts else None,
+        },
+    )
+
+
+@pytest.mark.parametrize(
+    "change",
+    [
+        {"drafts": -1},
+        {"drafts": True},
+        {"streamEqualsFinal": True},
+        {"firstDraftMs": 20},
+    ],
+)
+def test_canary_delivery_rejects_false_streaming_evidence(change):
+    with pytest.raises(probe.ProbeError, match="draft observation"):
+        probe._verify_canary_delivery(
+            {"principal_id": "telegram:7"},
+            "telegram:7",
+            {"drafts": 0, "streamEqualsFinal": False, "firstDraftMs": None, **change},
+        )
+
+
+def test_canary_delivery_rejects_wrong_person_without_drafts():
+    with pytest.raises(probe.ProbeError, match="private identity"):
+        probe._verify_canary_delivery(
+            {"principal_id": "someone-else"},
+            "telegram:7",
+            {"drafts": 0, "streamEqualsFinal": False, "firstDraftMs": None},
+        )
+
+
 @pytest.mark.parametrize(
     ("before", "restored", "after"),
     [

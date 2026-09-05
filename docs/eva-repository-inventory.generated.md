@@ -3,7 +3,7 @@
 Deze kaart is mechanisch gegenereerd. Zij staat naast de semantische runtimegraaf en
 classificeert ieder gevolgd, verwijderd of niet-genegeerd nieuw repositorypad.
 
-Schema: `EvaRepositoryInventory/v1`. Brondigest: `b34f348e317726eb6ce2e8ae1eb4cc98b692b2642dd553393df4232fc27118a7`.
+Schema: `EvaRepositoryInventory/v1`. Brondigest: `aefbd5e6b0e7ab95ef901319a3fd86745c54316456321d4f009d13458d338507`.
 
 ## Samenvatting
 
@@ -331,7 +331,7 @@ Schema: `EvaRepositoryInventory/v1`. Brondigest: `b34f348e317726eb6ce2e8ae1eb4cc
 | `eva2/design/product/conversational-voice-v1.md` | tracked | documentation | included-tracked-noncritical | keep | 16058 |
 | `eva2/design/product/dashboard-v1.md` | tracked | documentation | included-tracked-noncritical | keep | 6532 |
 | `eva2/design/product/delegation-and-workboard-v1.md` | tracked | documentation | included-tracked-noncritical | keep | 11007 |
-| `eva2/design/product/execution-workboard-v1.json` | tracked | documentation | included-tracked-noncritical | keep | 75896 |
+| `eva2/design/product/execution-workboard-v1.json` | tracked | documentation | included-tracked-noncritical | keep | 76523 |
 | `eva2/design/product/installer-and-onboarding-v1.md` | tracked | documentation | included-tracked-noncritical | keep | 24837 |
 | `eva2/design/product/learning-and-person-model-v1.md` | tracked | documentation | included-tracked-noncritical | keep | 12386 |
 | `eva2/design/product/owner-autonomy-mode-v1.md` | tracked | documentation | included-tracked-noncritical | keep | 6529 |
@@ -856,7 +856,7 @@ Schema: `EvaRepositoryInventory/v1`. Brondigest: `b34f348e317726eb6ce2e8ae1eb4cc
 | `eva2/experiments/home-assistant-official-mcp-v1/live_probe.py` | tracked | experimental | included-tracked-noncritical | keep | 8937 |
 | `eva2/experiments/home-assistant-official-mcp-v1/test_candidate.py` | tracked | experimental | included-tracked-noncritical | keep | 10455 |
 | `eva2/experiments/managed-b-clean-graph-v1/README.md` | tracked | experimental | included-tracked-noncritical | keep | 2840 |
-| `eva2/experiments/managed-b-clean-graph-v1/probe.py` | tracked | experimental | included-tracked-noncritical | keep | 85056 |
+| `eva2/experiments/managed-b-clean-graph-v1/probe.py` | tracked | experimental | included-tracked-noncritical | keep | 85904 |
 | `eva2/experiments/mcp-sdk-v1/README.md` | tracked | experimental | included-tracked-noncritical | keep | 4540 |
 | `eva2/experiments/mcp-sdk-v1/check_bakeoff.py` | tracked | experimental | included-tracked-noncritical | keep | 3556 |
 | `eva2/experiments/mcp-sdk-v1/receipt.json` | tracked | experimental | included-tracked-noncritical | keep | 1417 |
@@ -1640,7 +1640,7 @@ Schema: `EvaRepositoryInventory/v1`. Brondigest: `b34f348e317726eb6ce2e8ae1eb4cc
 | `eva2/tests/design/test_gate_fail_closed.py` | tracked | verification | included-tracked-critical | keep | 13884 |
 | `eva2/tests/design/test_source_bindings.py` | tracked | verification | included-tracked-critical | keep | 6791 |
 | `eva2/tests/domain/test_episode_transition.py` | tracked | verification | included-tracked-critical | keep | 5579 |
-| `eva2/tests/experiments/test_managed_b_current_data_transition.py` | tracked | verification | included-tracked-critical | keep | 10302 |
+| `eva2/tests/experiments/test_managed_b_current_data_transition.py` | tracked | verification | included-tracked-critical | keep | 11519 |
 | `eva2/tests/experiments/test_managed_b_local_candidate_image.py` | tracked | verification | included-tracked-critical | keep | 17933 |
 | `eva2/tests/experiments/test_playwright_mcp_public_read.py` | tracked | verification | included-tracked-critical | keep | 4303 |
 | `eva2/tests/fixtures/browser/__init__.py` | tracked | verification | included-tracked-critical | keep | 80 |

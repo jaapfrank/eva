@@ -13467,8 +13467,8 @@
       "path": "eva2/design/product/execution-workboard-v1.json",
       "gitState": "tracked",
       "present": true,
-      "bytes": 75896,
-      "contentSha256": "ae9d7c6a799902fc3f1eaec7a659544a37cb5b8d341da40afbd04521b7c729d5",
+      "bytes": 76523,
+      "contentSha256": "67a7a229d6a2633204d782b37669f855a7003f6b329189be37e95324845e3fbe",
       "hashMode": "exact-bytes",
       "role": "documentation",
       "roleRuleId": "eva2-documentation",
@@ -31794,8 +31794,8 @@
       "path": "eva2/experiments/managed-b-clean-graph-v1/probe.py",
       "gitState": "tracked",
       "present": true,
-      "bytes": 85056,
-      "contentSha256": "7e9289f2f3909df25006ae0cdcca7b0179705af184f84cc727c396dffc1911cb",
+      "bytes": 85904,
+      "contentSha256": "3599f313ca978a993ecc1796e37ab11bb88272b5fad71b58b3c2eda9a4964ee4",
       "hashMode": "exact-bytes",
       "role": "experimental",
       "roleRuleId": "eva2-experimental",
@@ -36926,7 +36926,7 @@
       "gitState": "tracked",
       "present": true,
       "bytes": 71590,
-      "contentSha256": "81c3eb76db5e42b7347a976ded1c7b6a0fc915cfbf1b581bcb8f13fa257f8645",
+      "contentSha256": "fc66ea0eddf760a1d9af5e4c63d86f7fd1625384644f16a6de94368ba71add60",
       "hashMode": "exact-bytes",
       "role": "repository-config",
       "roleRuleId": "eva2-build-contract",
@@ -58435,8 +58435,8 @@
       "path": "eva2/tests/experiments/test_managed_b_current_data_transition.py",
       "gitState": "tracked",
       "present": true,
-      "bytes": 10302,
-      "contentSha256": "4e51981fa32b83b7161a77a7ac8fdadd75904c38b85d7863601c4bfddd2e04ec",
+      "bytes": 11519,
+      "contentSha256": "a559e244e878cf9b35233406354f7e634b5189fd3c110c485c24e62db0c64036",
       "hashMode": "exact-bytes",
       "role": "verification",
       "roleRuleId": "eva2-verification",
@@ -83536,5 +83536,5 @@
       }
     }
   ],
-  "sourceDigest": "b34f348e317726eb6ce2e8ae1eb4cc98b692b2642dd553393df4232fc27118a7"
+  "sourceDigest": "aefbd5e6b0e7ab95ef901319a3fd86745c54316456321d4f009d13458d338507"
 }
