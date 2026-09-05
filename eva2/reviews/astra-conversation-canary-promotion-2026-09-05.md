@@ -35,3 +35,9 @@ afwijking kopieert de bestaande omgekeerde route eerst de nieuwe gegevens terug.
 Open grenzen: de scan gebruikt de gepinde database van 31 augustus; geen nieuwe
 tweebouwerproef, volledige streaming, canonieke episodetoelating, menselijke
 acceptatie of concurrentiewinst. De volledige doelstelling blijft open.
+
+Na de geslaagde live omschakeling en herstartproef gaf dezelfde reviewer GO
+voor één 3→4→3-terugrolcontrole. Alleen de geïnstalleerde journaldecoder leest
+het nieuwe opgeslagen antwoord, met read-only databasetransacties en zonder
+model-/providerobject. De bronkopieën en kandidaatconfiguratie blijven privé
+behouden totdat beide richtingen en dezelfde antwoordhash zijn gecontroleerd.
