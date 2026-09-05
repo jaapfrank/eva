@@ -406,7 +406,7 @@ def _operational_counts(container: str, database: str | None = None) -> dict[str
 def _durable_conversation_reply(
     container: str, database: str, message_id: str
 ) -> dict[str, Any]:
-    if re.fullmatch(r"managed-b-probe:[0-9a-f]{12}:1", message_id) is None:
+    if re.fullmatch(r"managed-b-probe:[0-9a-f]{12}:[12]", message_id) is None:
         raise ProbeError("conversation message ID is invalid")
     thread_id = f"conversation:{message_id}"
     output = _run(
@@ -1012,6 +1012,7 @@ def main(
     retained_slot_number: int = 2,
     conversation_prompt_file: Path | None = None,
     conversation_model: str = "gpt-5.4-mini",
+    conversation_memory_word: str | None = None,
     receipt_path: Path | None = None,
 ) -> int:
     if os.geteuid() != 0:
@@ -1023,6 +1024,12 @@ def main(
         conversation_prompt = _conversation_prompt(conversation_prompt_file)
         if not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9._-]{0,119}", conversation_model):
             raise ProbeError("conversation model is invalid")
+        if conversation_memory_word is not None:
+            if not re.fullmatch(r"[a-z]{6,32}", conversation_memory_word):
+                raise ProbeError("conversation memory word is invalid")
+            if conversation_prompt_file is not None:
+                raise ProbeError("memory-word probe requires its own fixed prompt")
+            conversation_prompt = f"Mijn controlewoord is {conversation_memory_word}. Onthoud dit. Antwoord alleen met: beheerd"
     except (OSError, ProbeError) as exc:
         print(json.dumps({"error": str(exc), "status": "failed"}, sort_keys=True))
         return 2
@@ -1702,6 +1709,33 @@ def main(
         ):
             raise ProbeError("durable conversation changed after joint restart")
         result["conversationReplyPreservedAfterJointRestart"] = True
+        if conversation_memory_word is not None:
+            phase = "conversation-memory-after-restart"
+            followup = {
+                **turn,
+                "message_id": f"managed-b-probe:{run_id}:2",
+                "occurred_at": datetime.now(UTC).strftime("%Y-%m-%dT%H:%M:%SZ"),
+                "text": "Wat is mijn controlewoord? Antwoord alleen met dat woord.",
+            }
+            recalled = _http_json(
+                f"http://127.0.0.1:{port}/internal/v1/turns/respond", payload=followup
+            )
+            if recalled.get("text", "").strip().casefold() != conversation_memory_word:
+                raise ProbeError(
+                    "conversation memory word was not recalled after restart"
+                )
+            durable_recall = _durable_conversation_reply(
+                operational_id, "eva2", followup["message_id"]
+            )
+            result["conversationMemoryAfterRestart"] = {
+                "reply": recalled["text"],
+                "usage": _conversation_measurement(
+                    durable_recall,
+                    expected_text=recalled["text"],
+                    model=conversation_model,
+                ),
+                "scope": "Same-person same-conversation recall; not proof of independent Hindsight-only retrieval.",
+            }
 
         if clone_current_route:
             memory_id = _run(
@@ -1905,6 +1939,7 @@ if __name__ == "__main__":
     )
     parser.add_argument("--conversation-prompt-file", type=Path)
     parser.add_argument("--conversation-model", default="gpt-5.4-mini")
+    parser.add_argument("--conversation-memory-word")
     parser.add_argument("--receipt", type=Path, required=True)
     arguments = parser.parse_args()
     sys.exit(
@@ -1922,6 +1957,7 @@ if __name__ == "__main__":
             retained_slot_number=arguments.retained_slot_number,
             conversation_prompt_file=arguments.conversation_prompt_file,
             conversation_model=arguments.conversation_model,
+            conversation_memory_word=arguments.conversation_memory_word,
             receipt_path=arguments.receipt,
         )
     )

@@ -154,6 +154,15 @@ def test_conversation_measurement_binds_requested_model() -> None:
         probe._conversation_measurement(value, expected_text="beheerd")
 
 
+@pytest.mark.parametrize("word", ["", "x", "Bad", "abc def", "a" * 33])
+def test_memory_word_is_bounded_before_resources(
+    monkeypatch: pytest.MonkeyPatch, word: str
+) -> None:
+    monkeypatch.setattr(probe.os, "geteuid", lambda: 0)
+    monkeypatch.setattr(probe, "_live_status", lambda *_args: pytest.fail("no network"))
+    assert probe.main(conversation_memory_word=word) == 2
+
+
 def test_local_candidate_authority_and_image_inspection_are_exact(
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch
 ) -> None:
@@ -332,6 +341,12 @@ def test_probe_main_persists_final_result_after_cleanup_boundary(
         monkeypatch.setattr(probe, "STAGING_PARENT", staging_parent)
         monkeypatch.setattr(probe.os, "geteuid", lambda: 0)
         monkeypatch.setattr(probe, "_live_status", lambda *_args: False)
+        # This test covers final persistence after a pre-resource failure,
+        # not root-owned destination validation (tested separately).
+        monkeypatch.setattr(probe, "_validate_receipt_destination", lambda _path: None)
+        monkeypatch.setattr(
+            probe, "_run", lambda *_args, **_kwargs: pytest.fail("no subprocesses")
+        )
         monkeypatch.setattr(Path, "mkdir", fail_probe_staging)
 
         assert probe.main(receipt_path=receipt) == 2

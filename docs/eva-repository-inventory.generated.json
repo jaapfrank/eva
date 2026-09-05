@@ -13467,8 +13467,8 @@
       "path": "eva2/design/product/execution-workboard-v1.json",
       "gitState": "tracked",
       "present": true,
-      "bytes": 65849,
-      "contentSha256": "94d9b5929b2f028fa2573e9f648d927537ddf8db75381b933e18b33c4c47b9a7",
+      "bytes": 66336,
+      "contentSha256": "12c3a487eeb4086ffbe4393c8c49a3b47b413e4669da3bda34eaea894bb49e8d",
       "hashMode": "exact-bytes",
       "role": "documentation",
       "roleRuleId": "eva2-documentation",
@@ -31689,8 +31689,8 @@
       "path": "eva2/experiments/managed-b-clean-graph-v1/probe.py",
       "gitState": "tracked",
       "present": true,
-      "bytes": 74464,
-      "contentSha256": "bb2a3d6269fe4ae6f766055d8430cbd4435ac05965f64d92f0e0f68f4ce051b7",
+      "bytes": 76425,
+      "contentSha256": "953e726b2e0d6478511de80453de5bfe375d531f0bfc689e74504a62462cc2b7",
       "hashMode": "exact-bytes",
       "role": "experimental",
       "roleRuleId": "eva2-experimental",
@@ -55915,8 +55915,8 @@
       "path": "eva2/tests/benchmark/test_inspect_ai_ev002.py",
       "gitState": "tracked",
       "present": true,
-      "bytes": 11840,
-      "contentSha256": "9880fc223317befb9246a261281cb599bc250c52ed82b72b4fdf5169a7f7708f",
+      "bytes": 12147,
+      "contentSha256": "846462f6fc24b6cd2185c7b2a8b876f12454cd2682b897fbd5740888ded310cf",
       "hashMode": "exact-bytes",
       "role": "verification",
       "roleRuleId": "eva2-verification",
@@ -58365,8 +58365,8 @@
       "path": "eva2/tests/experiments/test_managed_b_local_candidate_image.py",
       "gitState": "tracked",
       "present": true,
-      "bytes": 17193,
-      "contentSha256": "9376cd9827ad92504aeaf80bb0200498d4488d71dc374455e02fed6b674278fb",
+      "bytes": 17933,
+      "contentSha256": "9f11bfb109b2c24d1b749c4c5c77f0faccff70396d43d553209a7a3bfd00a852",
       "hashMode": "exact-bytes",
       "role": "verification",
       "roleRuleId": "eva2-verification",
@@ -83431,5 +83431,5 @@
       }
     }
   ],
-  "sourceDigest": "15968b268b25641a79589281c991ba20b1efae67c2049679c470cbc8e8b5a492"
+  "sourceDigest": "fba061335a20c07ea63850e74ed3735b1809f9459b40255bd3cd50972263448a"
 }

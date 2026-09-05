@@ -304,8 +304,14 @@ def test_disposable_eva_probe_rejects_unsafe_receipt_parent_before_work(
 ) -> None:
     receipt_parent = tmp_path / "not-owned"
     receipt_parent.mkdir(mode=0o700)
+    # Unsafe regardless of the real runner's UID; root also owns tmp_path.
+    receipt_parent.chmod(0o755)
     receipt = receipt_parent / "receipt.json"
     monkeypatch.setattr(probe.os, "geteuid", lambda: 0)
+    monkeypatch.setattr(probe, "_live_status", lambda *_args: pytest.fail("no network"))
+    monkeypatch.setattr(
+        probe, "_run", lambda *_args, **_kwargs: pytest.fail("no subprocesses")
+    )
 
     assert probe.main(receipt_path=receipt) == 2
     assert not receipt.exists()
