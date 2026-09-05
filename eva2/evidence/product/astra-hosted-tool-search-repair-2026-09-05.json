@@ -1,0 +1,65 @@
+{
+  "status": "real_model_candidate_proven_not_deployed",
+  "date": "2026-09-05",
+  "taskId": "CO-002",
+  "scope": "Compatibility of the new Pydantic conversation adapter with the owner's chosen gpt-6-astra model; no new connector or external execution capability.",
+  "beforeCommit": "fa2fa3bf587911a4727c0257fd5072bf69629818",
+  "implementationCommit": "dc675503b3c285a63900ef2d68e7025f4608d16e",
+  "finding": "Pydantic AI 2.37.0 explicitly recognizes native tool search only for the gpt-5.4, gpt-5.5 and gpt-5.6 families. Astra fell back to local search_tools and attempted a second model request, correctly stopped by request_limit=1. Ordinary Astra conversation had already succeeded.",
+  "upstreamDocumentation": "https://developers.openai.com/api/docs/guides/tools-tool-search#hosted-tool-search",
+  "repair": "Extend only the exact gpt-6-astra model profile with the upstream public registry's tool_search type. Preserve all other profile fields, the existing reasoning-context override, request limits and external action authority. Remove the compatibility override once the maintained upstream profile includes Astra.",
+  "changes": {"productionLinesAdded": 12, "productionLinesRemoved": 1, "newDependencies": 0, "newConnectors": 0, "promptChanges": 0},
+  "offlineChecks": {
+    "before": "The SDK-wire regression failed for Astra and passed for gpt-5.4-mini before the production fix.",
+    "after": "261 targeted conversation, Telegram, provider, authentication, runtime, contract and release-input tests passed in 15.57 seconds. Ruff and component catalog passed. Tested bytes were committed unchanged in implementationCommit.",
+    "wireCoverage": ["Hosted server tool_search call and output with null call IDs", "Deferred external function call with correct arguments", "One client model request and medium reasoning", "No external execution during selection", "No capability expansion for gpt-4.1 or gpt-6-unknown"],
+    "inventoryLimitation": "The broad generated inventory still reports 88 pre-existing policy errors; a passing component catalog is not a clean repository or full release claim."
+  },
+  "review": {
+    "reviewer": "/root/identity_pair_review",
+    "recordedBy": "/root from the independent agent message",
+    "decision": "GO for this compatibility fix and its evidence. The reviewer separately checked the final raw-probe hash and confirmed one selection plus one completion model call after the 261-test suite passed. This is not GO for CO-002 as a whole or the full release.",
+    "boundary": "Review covers discovery and external deferral, not general provider execution, full release approval or human conversation preference."
+  },
+  "candidate": {
+    "beforeImageId": "sha256:9b068046503444b06fe743d31f040b19f2f94c3ab6a2b0c9296e62cdd07a3857",
+    "imageId": "sha256:455be8e6f52adcf2f16288ad76793f150684c058753de3d8d84730a7ce623f7e",
+    "archiveSha256": "b203ccf54f9d38e962218a1cd2422e87219fce5ca5ec1307be44b1a761b32f59",
+    "configDigest": "sha256:166f4079b07e755b02b7b891e96c19a4c06e830e23a16a013cf0ab6a06b9fc8c",
+    "build": "Existing offline operator, sealed local source/base images/wheelhouse, one local builder. Not a new two-builder reproducibility claim.",
+    "runtime": "Networkless non-root import smoke passed; no database or complete-stack smoke in this receipt.",
+    "scan": {"high": 0, "critical": 0, "packages": 75, "files": 1519, "network": "none", "vulnerabilityDatabaseUpdatedAt": "2026-08-31T07:08:27.708070973Z", "qualification": "Pinned offline database, not a current-day vulnerability refresh or full release gate."}
+  },
+  "realModelProof": {
+    "model": "gpt-6-astra",
+    "reasoning": "medium",
+    "prompt": "Wat staat er op 6 september 2026 in mijn agenda?",
+    "selection": {"name": "list_calendar_events", "arguments": {"date": "2026-09-06"}, "modelAttempts": 1, "inputTokens": 1729, "outputTokens": 46, "completedMs": 9396, "publishedTextChunks": 0},
+    "suppliedSyntheticReceipt": {"events": [{"time": "10:30", "title": "Fiets ophalen"}], "date": "2026-09-06", "source": "synthetic-contract-provider"},
+    "completion": {"reply": "Op 6 september 2026 staat er om 10:30 ‘Fiets ophalen’ in je agenda.", "modelAttempts": 1, "inputTokens": 1006, "outputTokens": 27, "firstContentMs": 2735, "completedMs": 3718, "streamEqualsFinal": true},
+    "externalProviderCalls": 0,
+    "databaseWrites": 0,
+    "budget": "12000 input / 1200 output tokens per phase; one model request per selection or completion phase. The successful pair measured 2808 tokens.",
+    "usageLimitations": "Before repair, one ordinary conversation measured 1322 tokens and three tool-selection phases failed with usage unavailable. Thus 4130 tokens are measured across the successful phases, not total charges. Coding/reviewer usage and failed-phase usage are excluded."
+  },
+  "retention": {
+    "owner": "/root",
+    "root": "/home/administrator/project/.eva2-artifacts/co002-conversation-fa2fa3b-20260905",
+    "manifest": "retention-manifest.json",
+    "manifestSha256": "0ffe3363624b5e96449c86ed919ab662dcc5ee019edf8b6df991798c88313125",
+    "files": 18,
+    "totalFileBytesExcludingManifest": 122380720,
+    "beforeBuild": "build.json",
+    "afterBuild": "build-fixed.json",
+    "afterScan": "scan-summary-fixed.json",
+    "beforeProbes": ["astra-functional-probe.json", "astra-tool-diagnostic.json", "astra-tool-limit-diagnostic.json"],
+    "afterProbe": "astra-tool-fixed-probe.json",
+    "afterProbeSha256": "687cd9f1f730508eabf483e87ccf09c601ce9733c3f1fca1437a8aeeb00a30db",
+    "cleanup": "Temporary /tmp/eva2-conversation-candidate.qWjsq2 and the unused rejected Docker image were removed after byte verification. Both image archives and raw receipts remain private and recoverable. Original base images and wheelhouse were not removed. Retain until independent acceptance of the replacement conversation image."
+  },
+  "nonclaims": [
+    "The real model saw synthetic calendar data, not the owner's real agenda; no physical or external action was executed.",
+    "The current active image remains e0e06066 on source 881be2c with gpt-6-astra; this correction and CO-001/CO-002 source improvements are not deployed.",
+    "No complete stack, migration, restart-memory, Telegram delivery, competitor superiority, lower cost or human acceptance is proved here."
+  ]
+}
