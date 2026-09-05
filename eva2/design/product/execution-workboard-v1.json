@@ -7,6 +7,18 @@
   "inventoryPath": "docs/eva-repository-inventory.generated.json",
   "humanBoardPath": "eva2/WERKBORD.md",
   "audit": {
+    "conversationCandidateCompatibilityRepair": {
+      "taskId": "CO-002",
+      "owner": "/root",
+      "status": "in_progress",
+      "previousIdentityImplementation": "3b85a61165ebed4b8c1c74d3037b0c0e057593c1",
+      "previousIdentityEvidence": "eva2/evidence/product/CO-002-separate-before-after-2026-09-05.json",
+      "candidateSourceCommit": "fa2fa3bf587911a4727c0257fd5072bf69629818",
+      "finding": "De scan-schone kandidaat antwoordt met Astra, maar kiest de lokale Pydantic-toolzoekroute omdat Pydantic 2.37 Astra nog niet bij zijn native-tool-search-modellen noemt. Een tweede modelrequest wordt terecht door request_limit=1 geblokkeerd.",
+      "repair": "Alleen de officieel beschreven native-tool-search-capability van gpt-6-astra aan het bestaande providerprofiel toevoegen, met een SDK-wiretest; geen hogere limiet, nieuwe connector of gewijzigde identiteit.",
+      "scratchPath": "/tmp/eva2-conversation-candidate.qWjsq2",
+      "artifactRetention": {"owner": "/root", "purpose": "Afgewezen en herstelde kandidaat, scans en echte Astra-voor/na-proef heropenbaar bewaren", "path": "/home/administrator/project/.eva2-artifacts/co002-conversation-fa2fa3b-20260905", "cleanup": "Na onafhankelijke acceptatie van de vervangende gesprekimage; alleen kandidaatarchieven en receipts bewaren, tijdelijke bouwkopieën verwijderen."}
+    },
     "requestedConversationModelMigration": {
       "taskId": "CO-002",
       "owner": "/root",
@@ -536,14 +548,14 @@
     },
     {
       "id": "CO-002", "order": 120, "area": "Gesprek", "title": "Configureerbare menselijke identiteit aanscherpen",
-      "outcome": "Het gespreksmodel is op Jaaps verzoek live omgezet naar gpt-6-astra, met dezelfde code en gegevens. De afzonderlijke identiteitverbetering heeft in twee situaties een beperkte vóór/na-voorkeur, maar is nog niet live of menselijk geaccepteerd. Nieuwe gesprekvergelijkingen gebruiken Astra; oude mini-resultaten blijven historische baselines.",
-      "status": "review", "stateDetails": {"baseCommit": "1725401bfd0c184e1f2f49dffa0e046485d78410", "implementationCommit": "3b85a61165ebed4b8c1c74d3037b0c0e057593c1", "evidenceCommit": "7ba629f33ab7574c80ce0968b147debd300e5a5f", "reviewEvidencePaths": ["eva2/evidence/product/CO-002-configurable-identity-after-probe-2026-09-04.json"], "blockerReason": null},
+      "outcome": "De actieve Eva2 praat met gpt-6-astra. De aparte nieuwe gesprekcode wordt nu met Astra beproefd: gewoon praten lukt; een gevonden aansluitfout bij toolkeuze is lokaal hersteld en krijgt een echte nameting. De identiteitverbetering is nog niet live of menselijk geaccepteerd.",
+      "status": "in_progress", "stateDetails": {"baseCommit": null, "implementationCommit": null, "evidenceCommit": null, "reviewEvidencePaths": [], "blockerReason": null},
       "ownerRole": "architecturelead", "reviewerRole": "proofreviewer", "dependsOn": ["CO-001"],
       "componentIds": ["conversation-model-adapter", "core-behavior-tests"], "inventoryOwners": ["architecture", "eva-runtime", "verification"],
-      "changePaths": ["docs/eva-repository-inventory.generated.json", "docs/eva-repository-inventory.generated.md", "eva2/src/eva/adapters/model/pydantic_conversation.py", "eva2/tests/model/test_conversation_model.py"],
-      "testCommands": ["TMPDIR=/tmp TEMP=/tmp TMP=/tmp pytest -q tests/model/test_conversation_model.py tests/contract/test_contract_invariants.py", "ruff check src/eva/adapters/model/pydantic_conversation.py tests/model/test_conversation_model.py", "python3 tools/check_component_catalog.py"],
+      "changePaths": ["docs/eva-repository-inventory.generated.json", "docs/eva-repository-inventory.generated.md", "eva2/src/eva/adapters/model/openai_codex_provider.py", "eva2/tests/model/test_openai_codex_provider_shared.py"],
+      "testCommands": ["TMPDIR=/tmp TEMP=/tmp TMP=/tmp pytest -q tests/model/test_openai_codex_provider_shared.py tests/model/test_pydantic_conversation_model.py tests/model/test_conversation_model.py tests/contract/test_contract_invariants.py", "ruff check src/eva/adapters/model/openai_codex_provider.py tests/model/test_openai_codex_provider_shared.py", "python3 tools/check_component_catalog.py"],
       "evidenceRequired": ["De bestaande EV-002-uitvoer blijft de voorafgaande nulmeting; maximaal twee nieuwe toolvrije modelcalls meten dezelfde oneerlijke gezinssituatie en één verdriet- of gevaarsituatie na de wijziging.", "Een blinde menselijke beoordeling controleert concreet eigen oordeel, warmte, natuurlijke hedendaagse taal, hoogstens één situatiegebonden droge grap en juist geen humor wanneer dat ongepast is.", "De dependency-audit kiest geen nieuw personaframework: geen onderhouden kandidaat vervangt aantoonbaar Eva's ondertekende IdentityPack en persoonsgebonden grenzen; Pydantic AI blijft alleen de generieke modelloop."],
-      "doneWhen": ["Naam, temperament, stem en humor komen uit het configureerbare IdentityPack; de generieke modeladapter legt geen vaste Eva-naam of antwoordcatchphrase op.", "De verandering voegt geen dependency toe en verwijdert of vervangt minstens evenveel identiteitsinstructie als zij toevoegt; promptgroei geldt niet als verbetering.", "De twee begrensde nametingen halen alle vooraf vastgelegde gedragscriteria zonder veiligheids-, eerlijkheids- of taalregressie; bij geen aantoonbare winst wordt de productwijziging niet behouden.", "Gerichte tests, componentcontrole en een onafhankelijke reviewer geven GO."]
+      "doneWhen": ["Naam, temperament, stem en humor komen uit het configureerbare IdentityPack; de generieke modeladapter legt geen vaste Eva-naam of antwoordcatchphrase op.", "De verandering voegt geen dependency toe en verwijdert of vervangt minstens evenveel identiteitsinstructie als zij toevoegt; promptgroei geldt niet als verbetering.", "De twee begrensde nametingen halen alle vooraf vastgelegde gedragscriteria zonder veiligheids-, eerlijkheids- of taalregressie; bij geen aantoonbare winst wordt de productwijziging niet behouden.", "De gekozen Astra-route doet hosted toolzoekwerk en externe toolkeuze binnen één modelrequest; uitvoering blijft bij Eva en onbekende modellen krijgen geen ongecontroleerde capabilities.", "Gerichte tests, componentcontrole en een onafhankelijke reviewer geven GO."]
     },
     {
       "id": "CO-003", "order": 130, "area": "Mensen en geheugen", "title": "Eigen geheugenbronnen veilig opvragen",

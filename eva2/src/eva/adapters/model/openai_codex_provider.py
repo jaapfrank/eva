@@ -579,6 +579,8 @@ class OpenAICodexProvider:
         try:
             from openai import AsyncOpenAI
             from pydantic_ai.models.openai import OpenAIResponsesModel
+            from pydantic_ai.native_tools import NATIVE_TOOL_TYPES
+            from pydantic_ai.profiles.openai import openai_model_profile
             from pydantic_ai.providers.openai import OpenAIProvider
         except ImportError as error:
             raise CodexProviderError("configuration") from error
@@ -624,10 +626,19 @@ class OpenAICodexProvider:
                 max_retries=0,
                 timeout=self._settings.timeout_seconds,
             )
+            profile = openai_model_profile(self._settings.model_name)
+            if self._settings.model_name == "gpt-6-astra":
+                # Pydantic 2.37 omits Astra's documented hosted tool search.
+                # Remove this compatibility override when upstream covers it.
+                # https://developers.openai.com/api/docs/guides/tools-tool-search
+                profile["supported_native_tools"] = profile[
+                    "supported_native_tools"
+                ] | {NATIVE_TOOL_TYPES["tool_search"]}
+            profile["openai_responses_supports_reasoning_context"] = False
             delegate = OpenAIResponsesModel(
                 self._settings.model_name,
                 provider=OpenAIProvider(openai_client=sdk_client),
-                profile={"openai_responses_supports_reasoning_context": False},
+                profile=profile,
                 settings={
                     "openai_reasoning_effort": self._settings.reasoning_effort,
                     "openai_reasoning_summary": "auto",

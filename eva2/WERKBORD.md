@@ -10,27 +10,28 @@ de volgende begint.
 
 | Volgorde | Kaart | Resultaat | Status |
 |---:|---|---|---|
-| 120 | `CO-002` — Configureerbare menselijke identiteit aanscherpen | Het gespreksmodel is op Jaaps verzoek live omgezet naar gpt-6-astra, met dezelfde code en gegevens. De afzonderlijke identiteitverbetering heeft in twee situaties een beperkte vóór/na-voorkeur, maar is nog niet live of menselijk geaccepteerd. Nieuwe gesprekvergelijkingen gebruiken Astra; oude mini-resultaten blijven historische baselines. | 🔵 REVIEW |
+| 120 | `CO-002` — Configureerbare menselijke identiteit aanscherpen | De actieve Eva2 praat met gpt-6-astra. De aparte nieuwe gesprekcode wordt nu met Astra beproefd: gewoon praten lukt; een gevonden aansluitfout bij toolkeuze is lokaal hersteld en krijgt een echte nameting. De identiteitverbetering is nog niet live of menselijk geaccepteerd. | 🟡 BEZIG |
 | 130 | `CO-003` — Eigen geheugenbronnen veilig opvragen | De eigenaar kan via Eva's afgeschermde API een begrensde pagina bekijken van de eigen privégespreksbronnen die aan het langetermijngeheugen zijn aangeboden; bronnen van andere mensen, groepen en door Hindsight afgeleide interpretaties blijven buiten beeld. | ⚪ HIERNA |
 
 ### Exact werk voor `CO-002`
 
 - `docs/eva-repository-inventory.generated.json`
 - `docs/eva-repository-inventory.generated.md`
-- `eva2/src/eva/adapters/model/pydantic_conversation.py`
-- `eva2/tests/model/test_conversation_model.py`
+- `eva2/src/eva/adapters/model/openai_codex_provider.py`
+- `eva2/tests/model/test_openai_codex_provider_shared.py`
 
 Klaar betekent:
 
 - Naam, temperament, stem en humor komen uit het configureerbare IdentityPack; de generieke modeladapter legt geen vaste Eva-naam of antwoordcatchphrase op.
 - De verandering voegt geen dependency toe en verwijdert of vervangt minstens evenveel identiteitsinstructie als zij toevoegt; promptgroei geldt niet als verbetering.
 - De twee begrensde nametingen halen alle vooraf vastgelegde gedragscriteria zonder veiligheids-, eerlijkheids- of taalregressie; bij geen aantoonbare winst wordt de productwijziging niet behouden.
+- De gekozen Astra-route doet hosted toolzoekwerk en externe toolkeuze binnen één modelrequest; uitvoering blijft bij Eva en onbekende modellen krijgen geen ongecontroleerde capabilities.
 - Gerichte tests, componentcontrole en een onafhankelijke reviewer geven GO.
 
 Echte controles:
 
-- `TMPDIR=/tmp TEMP=/tmp TMP=/tmp pytest -q tests/model/test_conversation_model.py tests/contract/test_contract_invariants.py`
-- `ruff check src/eva/adapters/model/pydantic_conversation.py tests/model/test_conversation_model.py`
+- `TMPDIR=/tmp TEMP=/tmp TMP=/tmp pytest -q tests/model/test_openai_codex_provider_shared.py tests/model/test_pydantic_conversation_model.py tests/model/test_conversation_model.py tests/contract/test_contract_invariants.py`
+- `ruff check src/eva/adapters/model/openai_codex_provider.py tests/model/test_openai_codex_provider_shared.py`
 - `python3 tools/check_component_catalog.py`
 
 ### Daarna voorbereid: `CO-003`

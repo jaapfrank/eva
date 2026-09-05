@@ -10,7 +10,7 @@ from typing import Any
 
 import httpx2
 import pytest
-from pydantic_ai import Agent, UnexpectedModelBehavior
+from pydantic_ai import Agent, DeferredToolRequests, UnexpectedModelBehavior
 from pydantic_ai.messages import (
     PartDeltaEvent,
     PartStartEvent,
@@ -18,6 +18,9 @@ from pydantic_ai.messages import (
     TextPartDelta,
 )
 from pydantic_ai.models import Model, ModelRequestParameters
+from pydantic_ai.profiles.openai import openai_model_profile
+from pydantic_ai.tools import ToolDefinition
+from pydantic_ai.toolsets.external import ExternalToolset
 from pydantic_ai.usage import UsageLimits
 
 from eva.adapters.model.openai_codex_provider import (
@@ -285,6 +288,145 @@ def test_duplicate_raw_completion_is_a_sanitized_protocol_failure() -> None:
 async def _drain(events: Any) -> None:
     async for _event in events:
         pass
+
+
+@pytest.mark.parametrize("model_name", ["gpt-6-astra", "gpt-5.4-mini"])
+def test_hosted_search_defers_external_action_in_one_request(model_name: str) -> None:
+    """Exercise the SDK wire, not a FunctionModel's permissive tool profile."""
+    requests: list[dict[str, Any]] = []
+    definition = ToolDefinition(
+        name="list_calendar_events",
+        description="Read calendar entries for a date.",
+        parameters_json_schema={
+            "type": "object",
+            "properties": {"date": {"type": "string"}},
+            "required": ["date"],
+            "additionalProperties": False,
+        },
+        strict=True,
+        defer_loading=True,
+    )
+
+    async def respond(request: httpx2.Request) -> httpx2.Response:
+        body = json.loads(request.content)
+        requests.append(body)
+        assert body["model"] == model_name
+        assert body["reasoning"]["effort"] == "medium"
+        assert {"type": "tool_search"} in body["tools"]
+        assert not any(tool.get("name") == "search_tools" for tool in body["tools"])
+        tool = next(
+            tool for tool in body["tools"] if tool.get("name") == definition.name
+        )
+        assert tool["defer_loading"] is True
+        search = {
+            "id": "ts_1",
+            "type": "tool_search_call",
+            "execution": "server",
+            "call_id": None,
+            "status": "completed",
+            "arguments": {"paths": [definition.name]},
+        }
+        discovery = {
+            "id": "tso_1",
+            "type": "tool_search_output",
+            "execution": "server",
+            "call_id": None,
+            "status": "completed",
+            "tools": [tool],
+        }
+        action = {
+            "id": "fc_1",
+            "type": "function_call",
+            "call_id": "calendar_1",
+            "status": "completed",
+            "name": definition.name,
+            "arguments": '{"date":"2026-09-06"}',
+        }
+        created = {
+            **_response("", status="in_progress"),
+            "model": model_name,
+            "output": [],
+        }
+        completed = {
+            **_response(""),
+            "model": model_name,
+            "output": [search, discovery, action],
+        }
+        events = [{"type": "response.created", "response": created}]
+        for index, item in enumerate(completed["output"]):
+            for phase in ("added", "done"):
+                events.append(
+                    {
+                        "type": f"response.output_item.{phase}",
+                        "output_index": index,
+                        "item": item,
+                    }
+                )
+        events.append({"type": "response.completed", "response": completed})
+        chunks = [
+            f"event: {event['type']}\ndata: {json.dumps(event)}\n\n".encode()
+            for event in events
+        ]
+        return httpx2.Response(
+            200,
+            headers={"content-type": "text/event-stream"},
+            stream=_Chunks(chunks),
+            request=request,
+        )
+
+    async def run() -> None:
+        provider = OpenAICodexProvider(
+            OpenAICodexProviderSettings(
+                endpoint="https://codex.test/responses", model_name=model_name
+            ),
+            credential_loader=lambda: ("access-a", "account-a"),
+            network_transport=httpx2.MockTransport(respond),
+        )
+        async with provider as session:
+            result = await Agent(
+                session.model,
+                retries=0,
+                instructions="Choose the supplied read tool; external execution belongs to the caller.",
+                toolsets=[ExternalToolset([definition])],
+                output_type=[str, DeferredToolRequests],
+            ).run(
+                "Wat staat er op 6 september 2026 in mijn agenda?",
+                event_stream_handler=lambda _ctx, events: _drain(events),
+                usage_limits=UsageLimits(request_limit=1, tool_calls_limit=1),
+            )
+            assert isinstance(result.output, DeferredToolRequests)
+            assert not result.output.approvals
+            assert len(result.output.calls) == 1
+            assert result.output.calls[0].tool_name == definition.name
+            assert result.output.calls[0].args_as_dict() == {"date": "2026-09-06"}
+            assert session.model_requests == len(requests) == 1
+            assert session.consume_raw_usage() == RawUsageAttestation(17, 7, 24)
+
+    asyncio.run(run())
+
+
+@pytest.mark.parametrize("model_name", ["gpt-4.1", "gpt-6-unknown"])
+def test_astra_compatibility_does_not_expand_other_model_capabilities(
+    model_name: str,
+) -> None:
+    async def run() -> None:
+        async with OpenAICodexProvider(
+            OpenAICodexProviderSettings(
+                endpoint="https://codex.test/responses", model_name=model_name
+            ),
+            credential_loader=lambda: ("access-a", "account-a"),
+        ) as session:
+            assert (
+                session.model.profile["supported_native_tools"]
+                == openai_model_profile(model_name)["supported_native_tools"]
+            )
+            assert (
+                session.model.profile["openai_responses_supports_reasoning_context"]
+                is False
+            )
+            assert session.model_requests == 0
+
+    asyncio.run(run())
 
 
 def test_account_authority_cannot_change_inside_one_phase() -> None:
