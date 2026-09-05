@@ -10,7 +10,7 @@ de volgende begint.
 
 | Volgorde | Kaart | Resultaat | Status |
 |---:|---|---|---|
-| 120 | `CO-002` — Configureerbare menselijke identiteit aanscherpen | De afzonderlijke vóór/na-proef geeft in twee situaties een beperkte voorkeur voor de nieuwe variant; nog niet live of menselijk geaccepteerd. Zie PROJECT_STATUS.md. Doel: warm, zelfstandig en natuurlijk spreken vanuit de configureerbare identiteit. | 🔵 REVIEW |
+| 120 | `CO-002` — Configureerbare menselijke identiteit aanscherpen | Het gespreksmodel is op Jaaps verzoek live omgezet naar gpt-6-astra, met dezelfde code en gegevens. De afzonderlijke identiteitverbetering heeft in twee situaties een beperkte vóór/na-voorkeur, maar is nog niet live of menselijk geaccepteerd. Nieuwe gesprekvergelijkingen gebruiken Astra; oude mini-resultaten blijven historische baselines. | 🔵 REVIEW |
 | 130 | `CO-003` — Eigen geheugenbronnen veilig opvragen | De eigenaar kan via Eva's afgeschermde API een begrensde pagina bekijken van de eigen privégespreksbronnen die aan het langetermijngeheugen zijn aangeboden; bronnen van andere mensen, groepen en door Hindsight afgeleide interpretaties blijven buiten beeld. | ⚪ HIERNA |
 
 ### Exact werk voor `CO-002`

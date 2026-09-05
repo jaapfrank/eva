@@ -7,6 +7,29 @@
   "inventoryPath": "docs/eva-repository-inventory.generated.json",
   "humanBoardPath": "eva2/WERKBORD.md",
   "audit": {
+    "requestedConversationModelMigration": {
+      "taskId": "CO-002",
+      "owner": "/root",
+      "requestedModel": "gpt-6-astra",
+      "status": "live_configuration_verified",
+      "scope": "Expliciet gebruikersverzoek van 5 september: uitsluitend het gespreksmodel van de bestaande Eva2-installatie veranderen. Geen nieuwe code, image, database, prompt of achtergrondmodel.",
+      "runtimePath": "/var/lib/eva2/managed-b-slot4/candidate.env",
+      "evidence": "eva2/evidence/product/astra-conversation-model-switch-2026-09-05.json",
+      "upgradeRequirement": "De expliciete installatiekeuze EVA_CONVERSATION_MODEL=gpt-6-astra blijft bij volgende kandidaatpromoties behouden; achtergrondmodellen en historische vergelijkingen veranderen niet mee.",
+      "checks": ["Echte toolvrije modelcall via de kandidaatadapter", "Echte toolvrije modelcall via de actieve image", "Compose-pariteit behalve model en afgeleide configuratiehash", "Gezondheid en werkelijk antwoord na omschakelen"],
+      "rollback": "Private kopie van de oude env behouden tijdens de configuratiewissel; bij mislukking oude env inclusief hash herstellen en uitsluitend core opnieuw starten.",
+      "nonclaims": ["Geen nieuwe gesprekcode live", "Geen concurrentiewinst", "Geen bewezen lagere kosten", "CO-002 blijft in review"]
+    },
+    "conversationDeliveryPreparation": {
+      "taskId": "CO-002",
+      "owner": "/root",
+      "status": "preparing_not_deployed",
+      "purpose": "De beoordeelde gesprekbron als aparte kandidaat klaarmaken; geen nieuwe productfunctie en geen menselijke acceptatieclaim.",
+      "generatedChangePaths": ["eva2/release/managed-b-release-input-authority-v1.json", "eva2/release/eva-cockpit-evidence-index-v1.json"],
+      "method": "Bestaande reseal- en bouwoperator; uitsluitend nieuwe hashes voor bestaande inputs, geen nieuwe dependency, migratie of toelatingsregel.",
+      "checks": ["Gerichte gesprek- en Telegramtests", "Bestaande release-inputcontrole op de nieuwe commit", "Nieuwe kandidaatbuild en netwerkloze importcontrole"],
+      "deployment": "Niet toegestaan door deze voorbereiding; scan, volledige relevante regressie, wegwerpstack en onafhankelijke vrijgave blijven vereist."
+    },
     "releaseRecovery": {
       "tasks": ["RR-002", "RR-003", "RR-004"],
       "status": "GO — kandidaat bewezen; geen deployment of volledige releaseclaim",
@@ -513,7 +536,7 @@
     },
     {
       "id": "CO-002", "order": 120, "area": "Gesprek", "title": "Configureerbare menselijke identiteit aanscherpen",
-      "outcome": "De afzonderlijke vóór/na-proef geeft in twee situaties een beperkte voorkeur voor de nieuwe variant; nog niet live of menselijk geaccepteerd. Zie PROJECT_STATUS.md. Doel: warm, zelfstandig en natuurlijk spreken vanuit de configureerbare identiteit.",
+      "outcome": "Het gespreksmodel is op Jaaps verzoek live omgezet naar gpt-6-astra, met dezelfde code en gegevens. De afzonderlijke identiteitverbetering heeft in twee situaties een beperkte vóór/na-voorkeur, maar is nog niet live of menselijk geaccepteerd. Nieuwe gesprekvergelijkingen gebruiken Astra; oude mini-resultaten blijven historische baselines.",
       "status": "review", "stateDetails": {"baseCommit": "1725401bfd0c184e1f2f49dffa0e046485d78410", "implementationCommit": "3b85a61165ebed4b8c1c74d3037b0c0e057593c1", "evidenceCommit": "7ba629f33ab7574c80ce0968b147debd300e5a5f", "reviewEvidencePaths": ["eva2/evidence/product/CO-002-configurable-identity-after-probe-2026-09-04.json"], "blockerReason": null},
       "ownerRole": "architecturelead", "reviewerRole": "proofreviewer", "dependsOn": ["CO-001"],
       "componentIds": ["conversation-model-adapter", "core-behavior-tests"], "inventoryOwners": ["architecture", "eva-runtime", "verification"],

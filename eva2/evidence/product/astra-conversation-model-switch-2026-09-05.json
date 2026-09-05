@@ -1,0 +1,36 @@
+{
+  "status": "live_configuration_verified_not_quality_acceptance",
+  "checkedAt": "2026-09-05T12:29:40.639296+00:00",
+  "requestedBy": "Jaap: gebruik gpt-6-astra voor Eva2",
+  "sourceCommitUnchanged": "881be2c36004b499ac9538eb5a3fb29f9f9d2a72",
+  "container": "eva2-managed-b-slot4-core",
+  "containerIdAfter": "2c05ad1a8c7c301f17822c6ca508de167c98ea18a9eec558102c51440f7fb993",
+  "imageIdUnchanged": "sha256:e0e06066e3ed6a71f36859ece3d10fb587dd7bfbfe844eb1adb41b97509cbf9e",
+  "runtimeEnvironment": "/var/lib/eva2/managed-b-slot4/candidate.env",
+  "modelBefore": "gpt-5.4-mini",
+  "modelAfter": "gpt-6-astra",
+  "reasoningUnchanged": "medium",
+  "configurationHashBefore": "8004e73a2d6fcf61d93680db067135629a55daf7afa29deb07399c22af15de04",
+  "configurationHashAfter": "16fb943b62f09b452e5d215fd3e90d193bc0bca3eb2469883acc1a9eb917bf8a",
+  "switch": {
+    "method": "Existing Compose: up -d --no-deps --no-build --pull never --timeout 120 core",
+    "firstAttempt": "Automatically restored old environment after strict HostConfig comparison reported Mounts, Dns, DnsSearch and DnsOptions differences. Effective mounts had compared equal. The old-model assertion subsequently failed locally before any model call.",
+    "secondAttempt": "Render differs only in conversation model and derived configuration labels. Runtime environment differs only in model. Effective mounts are exactly equal after sorting by destination; HostConfig is equal after sorting the unordered mount list. No DNS differences on this attempt.",
+    "unchanged": ["image", "databases", "effective mounts", "ports", "security settings", "command", "entrypoint", "user", "healthcheck", "reasoning", "background models", "Eva1"],
+    "readiness": {"database": "ready", "memory_projection": "ready", "model_provider": "ready", "ready": true},
+    "rollback": "Restore and core recreation actually executed on the first attempt. Old environment retained as /var/lib/eva2/managed-b-slot4/candidate.env.before-astra-2026-09-05, root:root 0600, until the next validated release supersedes this configuration. Temporary directory /tmp/eva2-astra-config.uKDheC removed after moving its sole backup file."
+  },
+  "modelProbes": [
+    {"scope": "candidate Pydantic adapter, existing access-only lease", "model": "gpt-6-astra", "reply": "verbinding werkt", "inputTokens": 37, "outputTokens": 7, "modelAttempts": 1, "toolCalls": 0, "completedMs": 4013},
+    {"scope": "active image compatibility, legacy transport default", "model": "gpt-6-astra", "reply": "verbinding werkt", "usage": "unmeasured; not the live SDK transport"},
+    {"scope": "active image with explicit openai_sdk transport and runtime budget before final switch", "model": "gpt-6-astra", "reply": "Astra staat klaar", "inputTokens": 35, "outputTokens": 8, "modelAttempts": 1, "toolCalls": 0, "completedMs": 3317},
+    {"scope": "recreated active container; model/auth/reasoning/budget from RuntimeSettings, openai_sdk transport", "model": "gpt-6-astra", "reply": "Astra staat klaar", "inputTokens": 35, "outputTokens": 8, "modelAttempts": 1, "toolCalls": 0, "completedMs": 3101}
+  ],
+  "usageLimitations": "Three probes measured 130 tokens together; the additional legacy compatibility probe was unmeasured. This excludes coding/reviewer usage and is not a total credit or price claim.",
+  "nonclaims": [
+    "No new source code deployed; CO-001/CO-002 source improvements remain pending.",
+    "Probes use the active model adapter, not a received and delivered Telegram message.",
+    "No household effect, memory write or full conversation benchmark was performed by these tool-free probes.",
+    "A model upgrade does not establish better conversation quality, competitor superiority or lower cost."
+  ]
+}

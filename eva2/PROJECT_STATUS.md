@@ -7,6 +7,7 @@ Laatste actuele controle: 5 september 2026.
 | Vraag | Stand op 5 september |
 |---|---|
 | Welke Eva2 gebruik ik? | De lopende Telegramrouter wijst naar `127.0.0.1:44711`. Container `eva2-managed-b-slot4-core` vermeldt broncommit `881be2c` van 31 augustus; `/readyz` geeft HTTP 200 en `ready: true`. Dit bewijst bereikbaarheid, geen gesprekskwaliteit. |
+| Welk model gebruikt Eva2 nu? | ✅ Sinds 5 september, 14:29 CEST: `gpt-6-astra`, reasoning `medium`. Alleen de bestaande installatie-instelling is veranderd; dezelfde image, gegevens en koppelingen blijven staan. Na herstart gaf de modelkoppeling exact `Astra staat klaar`. Dit is nog geen gebruikers- of kwaliteitsvergelijking. |
 | Merk ik de laatste gesprekverbeteringen al? | Nee: CO-001 (`7b330a3`, Telegramdrafts) en CO-002 (`3b85a61`, configureerbare identiteit) zijn bronwijzigingen van 4 september. Die commits draaien niet in bovenstaande container. |
 | Is Eva2 bewezen beter dan Eva1? | Nee. Het bestaande Eva1-vergelijkingsdocument noemt Eva1 sterker in ervaren aanwezigheid en speakergebruik. Een actuele gezamenlijke gebruikersproef ontbreekt. |
 | Is de laatste concurrentievergelijking compleet? | Nee. EV-002 bevat antwoorden van Eva2 en Hermes; OpenClaw en Agent Zero vielen vóór modelgebruik uit. Eva2's oorspronkelijke resultaatbestand kon bovendien niet worden opgeslagen. Geen ranglijst of winstclaim volgt hieruit. |
@@ -19,7 +20,9 @@ Daarbij blijft Eva1 de referentie voor wat al bruikbaar is. Uitrol volgt via
 de bestaande actief/reserveslot-route zodra deze kandidaat daarvoor is getest.
 De volledige eindambitie blijft staan; bovenstaande is geen eindacceptatie.
 
-Bewijs: de actuele procesroute en containerlabels zijn alleen-lezen gecontroleerd;
+Bewijs: de [Astra-configuratiewissel](evidence/product/astra-conversation-model-switch-2026-09-05.json)
+legt de echte modelcalls, controles en eerste automatische terugzetting vast.
+De actuele procesroute en containerlabels zijn alleen-lezen gecontroleerd;
 de bestaande [EV-002-resultaten](evidence/product/EV-002-controlled-baseline-result-2026-09-04.json),
 [CO-001-proef](evidence/product/CO-001-telegram-live-drafts-contract-2026-09-04.json)
 en [CO-002-herbeoordeling](reviews/CO-002-evidence-limitations-2026-09-05.md)
