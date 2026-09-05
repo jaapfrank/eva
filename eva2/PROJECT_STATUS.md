@@ -12,6 +12,7 @@ Laatste actuele controle: 5 september 2026.
 | Werkt Astra ook met de nieuwe toolroute? | 🟡 Een gevonden aansluitfout is hersteld. De nieuwe kandidaat koos met echte Astra zelf de juiste agendatool en datum, en verwoordde daarna het testresultaat correct. Er is geen echte agenda aangeraakt. Deze nieuwe code is nog niet live. |
 | Werkt de nieuwe gesprekcode na een volledige herstart? | ✅ In een aparte proef met verse databases antwoordde Astra, bleef het eerdere antwoord exact bewaard en wist Eva na herstart van kern, Hindsight en beide databases nog `rozenmerel`. De proefmiddelen zijn verwijderd; de gebruikersroute is nog niet omgezet. |
 | Zijn de overige functies meegecontroleerd? | ✅ De bestaande selectie van 147 testmodules is uitgevoerd: uiteindelijk 1.750 geslaagde tests, inclusief aparte databases en echte browserproeven. Alleen testopzet is hersteld; de gesprekcode bleef gelijk. Dit is nog geen volledige releasegoedkeuring of live-upgrade. |
+| Werkt de kandidaat ook met de bestaande gegevens? | ✅ Een wegwerpkopie van beide huidige databases is hersteld: 48 gesprekstabellen en 23 geheugentabellen met gelijke aantallen rijen. Astra antwoordde en wist na gezamenlijke herstart nog `berkzwaluw`. De live data bleef ongemoeid. Jaaps echte Telegrambinding is hiermee nog niet getest. |
 | Is Eva2 bewezen beter dan Eva1? | Nee. Het bestaande Eva1-vergelijkingsdocument noemt Eva1 sterker in ervaren aanwezigheid en speakergebruik. Een actuele gezamenlijke gebruikersproef ontbreekt. |
 | Is de laatste concurrentievergelijking compleet? | Nee. EV-002 bevat antwoorden van Eva2 en Hermes; OpenClaw en Agent Zero vielen vóór modelgebruik uit. Eva2's oorspronkelijke resultaatbestand kon bovendien niet worden opgeslagen. Geen ranglijst of winstclaim volgt hieruit. |
 | Wacht alles alleen op Jaaps goedkeuring? | Nee. Menselijke acceptatie blijft open, maar de nieuwe gesprekcode moet ook nog veilig in de werkelijke gebruikersroute komen. Onderzoek en technische voorbereiding vereisen geen kunstmatige GO van Jaap. |
@@ -31,6 +32,8 @@ De [gesprek- en geheugenherstart](evidence/product/astra-conversation-stack-rest
 legt de geslaagde verse praktijkproef en haar beperkingen vast.
 De [brede functiecontrole](evidence/product/astra-candidate-regression-2026-09-05.json)
 legt alle 147 testmodules, eerdere mislukkingen en de resterende releasegrens vast.
+De [proef met gekopieerde data](evidence/product/astra-copied-data-restart-2026-09-05.json)
+legt herstel, Astra-antwoord, herstart en verwijdering van de tijdelijke kopieën vast.
 De actuele procesroute en containerlabels zijn alleen-lezen gecontroleerd;
 de bestaande [EV-002-resultaten](evidence/product/EV-002-controlled-baseline-result-2026-09-04.json),
 [CO-001-proef](evidence/product/CO-001-telegram-live-drafts-contract-2026-09-04.json)

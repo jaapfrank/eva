@@ -7,12 +7,25 @@
   "inventoryPath": "docs/eva-repository-inventory.generated.json",
   "humanBoardPath": "eva2/WERKBORD.md",
   "audit": {
+    "conversationCandidateDataTransition": {
+      "taskId": "CO-002", "owner": "/root", "reviewer": "/root/identity_pair_review", "status": "copied_data_and_restart_passed_not_promoted",
+      "evidence": "eva2/evidence/product/astra-copied-data-restart-2026-09-05.json",
+      "result": "Existing operator exit0:48 operational and23 memory tables restored with matching count digests, real Astra response and same-conversation recall after joint restart. Two foreground model calls,4442 measured tokens. Independent limited evidence review GO; unique containers, volumes, networks and temporary plaintext copies removed.",
+      "nextStep": "Prove the existing canary client with the actual copied Telegram identity/runtime scope, then review the complete candidate before changing the active/reserve route. No second poller, repeated broad regression or historical receipt relabeling. The current clone used a test person/scope and is not that Telegram proof.",
+      "scope": "Bind the already-tested candidate to its actual manifest digest through the installed containerd image store, inspect it, then use the unchanged managed-B clone operator. No registry, downloads, new runtime code, source-database writes or live cutover.",
+      "candidateImage": "sha256:455be8e6f52adcf2f16288ad76793f150684c058753de3d8d84730a7ce623f7e",
+      "sourceCommit": "dc675503b3c285a63900ef2d68e7025f4608d16e",
+      "localReference": "eva2.local/conversation@sha256:455be8e6f52adcf2f16288ad76793f150684c058753de3d8d84730a7ce623f7e",
+      "checks": ["Verify retained archive/scan hashes and actual containerd target digest before creating a new local name; never force-replace a name", "Inspect exact image, source label, entrypoint, user, healthcheck and no source mount before model calls", "Existing logical snapshots read the live sources; restore and migration target only unique disposable volumes", "Keep gpt-6-astra and verify conversation plus joint restart; no real tool credentials or Telegram polling"],
+      "authorityBoundary": "Independent approval is for this disposable diagnostic only. Historical RB005/RB006 anchors are not changed or relabeled; a local digest name is not registry provenance, signing, full release approval or deployment authority.",
+      "artifactRetention": {"owner": "/root", "path": "/home/administrator/project/.eva2-artifacts/co002-conversation-fa2fa3b-20260905/copied-data-20260905", "purpose": "Hash-bound image inspection, clone/restart receipt and cleanup proof without copied messages, database dumps or credentials", "cleanup": "Keep these receipts until independent acceptance of replacement conversation image; remove disposable volumes and /tmp staging immediately after the run. Keep the local digest reference only with this retained candidate archive."}
+    },
     "conversationCandidateRegression": {
       "taskId": "CO-002", "owner": "/root", "reviewer": "/root/identity_pair_review",
       "status": "required_selection_passed_not_release_approved",
       "evidence": "eva2/evidence/product/astra-candidate-regression-2026-09-05.json",
       "result": "All147 required modules covered without overlap:1750 passing tests,0 failures/errors/skips in final groups. Earlier failures retained. Independent evidence review GO; no production code change, paid model call, data copy or promotion.",
-      "nextStep": "Complete release artifact approval for the exact image, then prove the existing Telegram canary streaming client and a copied-data transition. The router already has an NDJSON/draft path; do not add another poller based only on the absent native ingress container. Source tests and physical image tests remain distinct.",
+      "nextStep": "The copied-data transition has now passed separately. Prove the existing Telegram canary streaming client with actual copied bindings and obtain complete candidate approval. Do not repeat the passing broad tests or add another poller; source tests and physical image tests remain distinct.",
       "previousTurn": "progress: independently reviewed fresh Astra conversation/restart proof committed as 133fa64; active route unchanged.",
       "scope": "Run the existing required-test selection against a temporary, unedited Git archive of dc675503. No new test framework, production modification or promotion. Begin with the pure group before provisioning disposable databases.",
       "repairScope": ["eva2/tests/portable/test_portable_p1_regressions.py", "eva2/release/managed-b-release-input-authority-v1.json", "docs/eva-repository-inventory.generated.json", "docs/eva-repository-inventory.generated.md"],
@@ -580,7 +593,7 @@
     },
     {
       "id": "CO-002", "order": 120, "area": "Gesprek", "title": "Configureerbare menselijke identiteit aanscherpen",
-      "outcome": "De actieve Eva2 praat met gpt-6-astra. De nieuwe gesprekcode heeft de model- en geheugenherstartproef plus 1.750 controles doorstaan, inclusief echte database- en browserproeven. Deze code is nog niet live: releasegoedkeuring en de werkelijke Telegram-/data-overgang ontbreken nog.",
+      "outcome": "Astra is live. De nieuwe gesprekcode doorstond 1.750 controles en werkte ook met een kopie van de bestaande databases, inclusief geheugen na herstart. Deze code is nog niet live: de echte Telegrambinding en de gecontroleerde omschakeling ontbreken nog.",
       "status": "in_progress", "stateDetails": {"baseCommit": null, "implementationCommit": null, "evidenceCommit": null, "reviewEvidencePaths": [], "blockerReason": null},
       "ownerRole": "architecturelead", "reviewerRole": "proofreviewer", "dependsOn": ["CO-001"],
       "componentIds": ["conversation-model-adapter", "core-behavior-tests"], "inventoryOwners": ["architecture", "eva-runtime", "verification"],

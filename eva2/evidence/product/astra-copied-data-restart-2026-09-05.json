@@ -1,0 +1,44 @@
+{
+  "status": "copied_data_restart_passed_not_promoted",
+  "date": "2026-09-05",
+  "taskId": "CO-002",
+  "operatorCommit": "07d0b778e1e57facabc6412b6abdb95e61debf6a",
+  "runtimeSourceCommit": "dc675503b3c285a63900ef2d68e7025f4608d16e",
+  "imageReference": "eva2.local/conversation@sha256:455be8e6f52adcf2f16288ad76793f150684c058753de3d8d84730a7ce623f7e",
+  "imageBinding": {
+    "method": "Installed containerd images tag --local created one previously absent local digest name for the actual existing manifest. No force, skipped reference checks, registry, push, pull, image rebuild or changed bytes.",
+    "checks": "All18 previously retained files and27 image manifest/config/layer blobs matched their hashes. Docker inspect and containerd target agree on the exact manifest, source label, entrypoint/Cmd, user65532 and healthcheck.",
+    "publicationIncident": "The naming command succeeded, but the first receipt call omitted the required label argument. The published receipt comes from a fresh read-only verification; the naming operation was not repeated.",
+    "upstreamReference": "https://github.com/containerd/containerd/blob/main/cmd/ctr/commands/images/tag.go",
+    "boundary": "A local digest name is not registry provenance, signing or full release authority. Historical RB005/RB006 receipts and validators were not changed. The existing0/0 development scan remains qualified by its31August vulnerability database."
+  },
+  "probe": {
+    "operator": "experiments/managed-b-clean-graph-v1/probe.py",
+    "exitCode": 0,
+    "project": "eva2-clean-b-5e47fccaa831",
+    "cloneCurrentRoute": true,
+    "retainSlot": false,
+    "sourceRoutePort": 44711,
+    "sourceReads": "Read-only pg_dump snapshots; neither source database nor active core was stopped or modified by this probe.",
+    "restoredOperationalTables": 48,
+    "restoredHindsightTables": 23,
+    "restoreCheck": "Operational and Hindsight per-table count digests match before/restore/after. PostgreSQL logical restore completed with exit-on-error; no claim of an independent row-by-row semantic comparison.",
+    "runtime": "Pinned PostgreSQL18.6 databases and pgvector0.8.6, separate disposable volumes, real Hindsight and exact candidate core. No product-source mount. Nine services rendered; database/support/schema/core lifecycle executed, not a Telegram poller or worker.",
+    "externalEffects": "Dummy Home Assistant and Telegram credentials, no real device or e-mail action. Existing model access-only lease and identity copied privately for this test.",
+    "dashboard": "Bound owner accepted; anonymous access rejected.",
+    "conversation": {"model": "gpt-6-astra", "firstReply": "beheerd", "recallAfterJointRestart": "berkzwaluw", "durableExactReplyReplay": true, "modelAttemptsPerPhase": 1, "foregroundModelCalls": 2, "measuredForegroundTokens": 4442, "toolCalls": 0},
+    "restart": "Core, Hindsight and both databases stopped/started jointly; readiness and stored conversation reply recovered. Preserved Hindsight semantic-table counts did not decrease.",
+    "scopeLimit": "The model used a test person and test runtime scope over the copied database. This is not proof of Jaap's actual Telegram binding, private conversation recall, independent Hindsight-only retrieval or message delivery."
+  },
+  "independentReview": {"reviewer": "/root/identity_pair_review", "decision": "GO for this limited copied-data/restart evidence only", "verified": "Actual manifest and copied-stack hashes,48/23 table counts, restart flags, two Astra calls and4442 tokens, cleanup and explicit nonclaims."},
+  "cleanup": "All nonce-project containers, volumes and networks are absent. The empty /tmp/eva2-astra-clone.VaApZs parent was removed after the operator removed its secret files and plaintext database copies. Only private receipts remain recoverable, not copied conversations or dumps.",
+  "liveState": "Core2c05ad1a, imagee0e06066 and its gpt-6-astra setting remain unchanged and ready. No active/reserve route switched.",
+  "retention": {
+    "root": "/home/administrator/project/.eva2-artifacts/co002-conversation-fa2fa3b-20260905/copied-data-20260905",
+    "manifestSha256": "9ae914e959f71e180168a5ff26fb41940d3f1ada1994972235254d1ba3932c43",
+    "copiedStackSha256": "81967fc21795402858352c8bd88326463ad7e69bdc2d1885d4d48d1e2bab55bb",
+    "files": 4,
+    "cleanupAfter": "Independent acceptance of replacement conversation image; keep its local digest name only with the retained archive."
+  },
+  "nonclaims": ["No new production code or complete release approval.", "No real Telegram delivery, live upgrade, human acceptance, competitor superiority or lower-cost claim.", "Foreground model usage excludes background Hindsight processing and coding/reviewer usage."]
+}
