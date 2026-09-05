@@ -269,9 +269,9 @@
     }
   ],
   "summary": {
-    "files": 2073,
-    "present": 2073,
-    "tracked": 1994,
+    "files": 2075,
+    "present": 2075,
+    "tracked": 1996,
     "untracked": 79,
     "tombstones": 0,
     "policyErrors": 88
@@ -310,12 +310,12 @@
     {
       "id": "eva2-verification",
       "role": "verification",
-      "matchCount": 759
+      "matchCount": 760
     },
     {
       "id": "eva2-documentation",
       "role": "documentation",
-      "matchCount": 122
+      "matchCount": 123
     },
     {
       "id": "eva2-deployment",
@@ -10270,7 +10270,7 @@
       "path": "docs/eva-repository-inventory.generated.json",
       "gitState": "tracked",
       "present": true,
-      "bytes": 2394962,
+      "bytes": 2396898,
       "contentSha256": "32591e23fa2eb53a038d95e726ba09edd0405306f38c5283a36a2b6d3010254d",
       "hashMode": "canonical-self-reference-redacted",
       "role": "generated",
@@ -10303,7 +10303,7 @@
       "path": "docs/eva-repository-inventory.generated.md",
       "gitState": "tracked",
       "present": true,
-      "bytes": 369721,
+      "bytes": 370004,
       "contentSha256": "2f4f8486464cbb9713b749dc898f265093d0853699f1da1b4eb3dd1625c1b2d2",
       "hashMode": "canonical-self-reference-redacted",
       "role": "generated",
@@ -11093,8 +11093,8 @@
       "path": "eva2/PROJECT_STATUS.md",
       "gitState": "tracked",
       "present": true,
-      "bytes": 51926,
-      "contentSha256": "2154f2ac95d4c30be586334f3b56e116f9c238d3ca7b22bb9eb93b7f961da489",
+      "bytes": 52075,
+      "contentSha256": "73898f85d2c0163b59a4a714840fb957a6e59da60154d222aa4888e96f279782",
       "hashMode": "exact-bytes",
       "role": "documentation",
       "roleRuleId": "eva2-documentation",
@@ -11248,8 +11248,8 @@
       "path": "eva2/WERKBORD.md",
       "gitState": "tracked",
       "present": true,
-      "bytes": 9406,
-      "contentSha256": "9390c802aebf6dba6a09a2dc36e4763c3bf491cf6f47a85c585195e3e3449201",
+      "bytes": 9379,
+      "contentSha256": "dd1e4215220a10a5ccae74f6900cf12e81ee743637d5547c15bceeed137143c4",
       "hashMode": "exact-bytes",
       "role": "documentation",
       "roleRuleId": "eva2-documentation",
@@ -13467,8 +13467,8 @@
       "path": "eva2/design/product/execution-workboard-v1.json",
       "gitState": "tracked",
       "present": true,
-      "bytes": 77465,
-      "contentSha256": "8b2976aaaaaa4558c41ad3b5e4e2d06d4ecc9210e6722842768db7df3581dca8",
+      "bytes": 81651,
+      "contentSha256": "7c718deda018d812d3f4ab67aec3102a15fab79b3dd15381906784dfe93c3382",
       "hashMode": "exact-bytes",
       "role": "documentation",
       "roleRuleId": "eva2-documentation",
@@ -25776,6 +25776,41 @@
       "present": true,
       "bytes": 6668,
       "contentSha256": "0589183568ff878bfc6954bc9c700e8a33686d29a194b1f47f5de61ea4e1b50c",
+      "hashMode": "exact-bytes",
+      "role": "verification",
+      "roleRuleId": "eva2-verification",
+      "matchingRuleIds": [
+        "eva2-verification"
+      ],
+      "owner": "verification",
+      "inputs": [
+        "production or fixture contract"
+      ],
+      "outputs": [
+        "test decision"
+      ],
+      "state": [
+        "temporary isolated test state"
+      ],
+      "effects": [
+        "may execute only inside its declared gate"
+      ],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": true,
+        "runtimeCritical": true,
+        "status": "included-tracked-critical"
+      }
+    },
+    {
+      "path": "eva2/evidence/product/astra-conversation-live-upgrade-2026-09-05.json",
+      "gitState": "tracked",
+      "present": true,
+      "bytes": 3450,
+      "contentSha256": "2efcb86e285a3e6fc91fee6f957729294bfa4076842c1cc01697e34c251cd69e",
       "hashMode": "exact-bytes",
       "role": "verification",
       "roleRuleId": "eva2-verification",
@@ -38637,6 +38672,37 @@
       "present": true,
       "bytes": 1551,
       "contentSha256": "381fef18074a1af11b361b1690c6432f1535090d44fee4bc874be518e7bacbea",
+      "hashMode": "exact-bytes",
+      "role": "documentation",
+      "roleRuleId": "eva2-documentation",
+      "matchingRuleIds": [
+        "eva2-documentation"
+      ],
+      "owner": "documentation",
+      "inputs": [
+        "design and evidence"
+      ],
+      "outputs": [
+        "human-readable contract"
+      ],
+      "state": [],
+      "effects": [],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": true,
+        "runtimeCritical": false,
+        "status": "included-tracked-noncritical"
+      }
+    },
+    {
+      "path": "eva2/reviews/astra-conversation-canary-promotion-2026-09-05.md",
+      "gitState": "tracked",
+      "present": true,
+      "bytes": 3136,
+      "contentSha256": "e7456ab0d7ede82a4585448595926eb10d3285617e2beba68d90989eef23f3a4",
       "hashMode": "exact-bytes",
       "role": "documentation",
       "roleRuleId": "eva2-documentation",
@@ -83571,5 +83637,5 @@
       }
     }
   ],
-  "sourceDigest": "01a83660e8f7f654aa5d5e741503b7dd3f9b7d29e2d96b8ae73da3e3d5344b42"
+  "sourceDigest": "586c2e5e273b9f7849f924ddf737f86e745eb9b516f800154f3ef6a2ea330f3b"
 }

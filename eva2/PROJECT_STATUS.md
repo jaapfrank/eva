@@ -6,25 +6,28 @@ Laatste actuele controle: 5 september 2026.
 
 | Vraag | Stand op 5 september |
 |---|---|
-| Welke Eva2 gebruik ik? | De lopende Telegramrouter wijst naar `127.0.0.1:44711`. Container `eva2-managed-b-slot4-core` vermeldt broncommit `881be2c` van 31 augustus; `/readyz` geeft HTTP 200 en `ready: true`. Dit bewijst bereikbaarheid, geen gesprekskwaliteit. |
-| Welk model gebruikt Eva2 nu? | ✅ Sinds 5 september, 14:29 CEST: `gpt-6-astra`, reasoning `medium`. Alleen de bestaande installatie-instelling is veranderd; dezelfde image, gegevens en koppelingen blijven staan. Na herstart gaf de modelkoppeling exact `Astra staat klaar`. Dit is nog geen gebruikers- of kwaliteitsvergelijking. |
-| Merk ik de laatste gesprekverbeteringen al? | Nee: CO-001 (`7b330a3`, Telegramdrafts) en CO-002 (`3b85a61`, configureerbare identiteit) zijn bronwijzigingen van 4 september. Die commits draaien niet in bovenstaande container. |
-| Werkt Astra ook met de nieuwe toolroute? | 🟡 Een gevonden aansluitfout is hersteld. De nieuwe kandidaat koos met echte Astra zelf de juiste agendatool en datum, en verwoordde daarna het testresultaat correct. Er is geen echte agenda aangeraakt. Deze nieuwe code is nog niet live. |
-| Werkt de nieuwe gesprekcode na een volledige herstart? | ✅ In een aparte proef met verse databases antwoordde Astra, bleef het eerdere antwoord exact bewaard en wist Eva na herstart van kern, Hindsight en beide databases nog `rozenmerel`. De proefmiddelen zijn verwijderd; de gebruikersroute is nog niet omgezet. |
-| Zijn de overige functies meegecontroleerd? | ✅ De bestaande selectie van 147 testmodules is uitgevoerd: uiteindelijk 1.750 geslaagde tests, inclusief aparte databases en echte browserproeven. Alleen testopzet is hersteld; de gesprekcode bleef gelijk. Dit is nog geen volledige releasegoedkeuring of live-upgrade. |
+| Welke Eva2 gebruik ik? | ✅ De nieuwe gesprekcode staat live: de Telegramrouter wijst naar `127.0.0.1:44710`, slot 3, bron `dc675503`, image `455be8…`. De kern is bereikbaar en gereed. Slot 4 blijft gestopt met de vorige image als terugweg. |
+| Welk model gebruikt Eva2 nu? | ✅ `gpt-6-astra`, reasoning `medium`, nu ook op de nieuwe gesprekimage. Identiteit, budget, koppelingen en bestaande gegevens zijn behouden. |
+| Merk ik de laatste gesprekverbeteringen al? | ✅ De nieuwe configureerbare gesprekidentiteit en Pydantic-gesprekroute draaien nu op `/eva2`. Of jij het gesprek beter vindt, moet nog blijken. De draftcode is aanwezig, maar normale toolgestuurde antwoorden verschijnen nog niet live in stukjes. |
+| Werkt Astra ook met de nieuwe toolroute? | 🟡 De herstelde aansluiting draait nu live. De eerdere echte Astra-proef koos de juiste synthetische agendatool en datum. De live gesprekcontrole voerde geen toolactie uit; dit bewijst dus geen nieuwe echte agendakoppeling. |
+| Werkt de nieuwe gesprekcode na een herstart? | ✅ De bestaande privéclient kreeg live een antwoord, las het na kernherstart exact terug en herinnerde daarna `esdoornvink`. Twee Astra-aanroepen, 6.010 gemeten tokens. De gezamenlijke herstart van kern, Hindsight en databases was eerder op een aparte kopie bewezen. |
+| Kan deze versie veilig terug? | ✅ Nieuw → oud → nieuw is uitgevoerd met telkens de actuele gegevens. Beide versies lazen hetzelfde opgeslagen antwoord. De terugrolcontrole deed nul modelaanroepen; tijdelijke databasekopieën zijn verwijderd. |
+| Zijn de overige functies meegecontroleerd? | ✅ De bestaande selectie van 147 testmodules gaf uiteindelijk 1.750 geslaagde tests, inclusief aparte databases en echte browserproeven. De gesprekcanary is daarna afzonderlijk beoordeeld en live gezet. Dit is geen volledige productacceptatie. |
 | Werkt de kandidaat ook met de bestaande gegevens? | ✅ Een wegwerpkopie van beide huidige databases is hersteld: 48 gesprekstabellen en 23 geheugentabellen met gelijke aantallen rijen. Astra antwoordde en wist na gezamenlijke herstart nog `berkzwaluw`. De live data bleef ongemoeid. De Telegramkoppeling is daarna apart gecontroleerd, zie hieronder. |
 | Werkt de bestaande Telegramclient met mijn gegevens op de kandidaat? | ✅ In een aparte kopie met Jaaps bestaande koppeling en dezelfde installatie antwoordde Astra. Na gezamenlijke herstart kwam het opgeslagen antwoord exact terug zonder nieuwe modelaanroep; een nieuwe vraag herinnerde `wilgenmerel`. De geslaagde proef gebruikte twee Astra-aanroepen en 4.695 tokens. Er zijn geen berichten naar Telegram verstuurd. |
 | Verschijnt het antwoord nu live in stukjes? | 🟡 Nee: deze drie clientverzoeken leverden nul tekststukjes op. De modelroute houdt tekst tegen zolang zij tools aanbiedt. De eerste proef eiste dat ten onrechte wel en is als mislukt bewaard. Gesprek/herstart werkt; live tekstweergave is daarmee niet bewezen. |
 | Is Eva2 bewezen beter dan Eva1? | Nee. Het bestaande Eva1-vergelijkingsdocument noemt Eva1 sterker in ervaren aanwezigheid en speakergebruik. Een actuele gezamenlijke gebruikersproef ontbreekt. |
 | Is de laatste concurrentievergelijking compleet? | Nee. EV-002 bevat antwoorden van Eva2 en Hermes; OpenClaw en Agent Zero vielen vóór modelgebruik uit. Eva2's oorspronkelijke resultaatbestand kon bovendien niet worden opgeslagen. Geen ranglijst of winstclaim volgt hieruit. |
-| Wacht alles alleen op Jaaps goedkeuring? | Nee. Menselijke acceptatie blijft open, maar de nieuwe gesprekcode moet ook nog veilig in de werkelijke gebruikersroute komen. Onderzoek en technische voorbereiding vereisen geen kunstmatige GO van Jaap. |
+| Wacht alles alleen op Jaaps goedkeuring? | Nee. De gesprekuitrol is technisch afgerond. Menselijke beoordeling, live tekstweergave en overige productfuncties blijven afzonderlijk open; die zijn niet automatisch af door deze upgrade. |
 | Heeft de kleine controle van vandaag verbetering bewezen? | Beperkt: na herstel van een fout in de proefopzet zijn twee situaties ieder apart vóór en na beantwoord. Een onafhankelijke AI-review gaf bij beide voorkeur aan de nieuwe variant. Vier modelcalls, nul toolcalls, 5.007 gemeten tokens. Dat is geen menselijke acceptatie, livebewijs of algemene concurrentiewinst. |
 
-De eerstvolgende oplevering moet een merkbaar betere gesprekservaring in de
-werkelijke Eva2-route zijn, met hetzelfde gesprek vóór en na de wijziging.
-Daarbij blijft Eva1 de referentie voor wat al bruikbaar is. Uitrol volgt via
-de bestaande actief/reserveslot-route zodra deze kandidaat daarvoor is getest.
-De volledige eindambitie blijft staan; bovenstaande is geen eindacceptatie.
+De nieuwe gesprekcode is nu daadwerkelijk beschikbaar via `/eva2`.
+De technische uitrol, geheugencontrole en terugweg zijn afgerond; een prettiger
+gesprek is pas gebruikerswinst wanneer je dat ook werkelijk ervaart.
+Live tekstweergave en de volledige eindambitie blijven open.
+
+De [live gesprekupgrade](evidence/product/astra-conversation-live-upgrade-2026-09-05.json)
+legt de actuele route, herstart, terugrol en resterende grenzen vast.
 
 Bewijs: de [Astra-configuratiewissel](evidence/product/astra-conversation-model-switch-2026-09-05.json)
 legt de echte modelcalls, controles en eerste automatische terugzetting vast.

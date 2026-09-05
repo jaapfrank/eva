@@ -1,0 +1,50 @@
+{
+  "status": "conversation_canary_live_restart_and_rollback_passed",
+  "date": "2026-09-05",
+  "taskId": "CO-002",
+  "runtimeSourceCommit": "dc675503b3c285a63900ef2d68e7025f4608d16e",
+  "image": "sha256:455be8e6f52adcf2f16288ad76793f150684c058753de3d8d84730a7ce623f7e",
+  "model": "gpt-6-astra",
+  "reasoning": "medium",
+  "activePort": 44710,
+  "activeSlot": 3,
+  "configurationSha256": "15a63c06ed171f811b826af7c2f0ca62f779cb67074257ca4948a0ca6ec038b9",
+  "deployment": "Existing quiescent operator stopped ingress/writers, copied both current databases, verified schema/data, migrated before start and switched the router. 48 operational and 23 memory tables. No new deployment pipeline or runtime code change in this rollout.",
+  "preparationCorrection": "First preparation assertion used the Compose input name instead of the rendered runtime variable. Configuration was restored byte-for-byte before service changes; corrected assertion then passed. Original correction receipt retained; no new model call or runtime repair.",
+  "liveClient": {
+    "scope": "Existing hash-bound JavaScript canary client with actual private bridge scope against the active core; not Telegram Bot API delivery or human acceptance.",
+    "firstReply": "beheerd",
+    "exactReplayAfterCoreRestart": true,
+    "recallAfterCoreRestart": "esdoornvink",
+    "foregroundModelCalls": 2,
+    "measuredForegroundTokens": 6010,
+    "toolCalls": 0,
+    "draftsAcrossThreeRequests": 0,
+    "telegramMessagesSent": 0,
+    "receiptSha256": "05ddbc76529834cc8b9a525f48635542f669554a19a39cb37bc44121953bce4b"
+  },
+  "rollback": {
+    "sequence": [3, 4, 3],
+    "status": "passed",
+    "verification": "Each direction copied and attested the then-current database contents. Both installed journal decoders read the same new stored reply under read-only transactions. No runtime.respond, model or provider instance in this check.",
+    "modelCalls": 0,
+    "rawReplySha256": "8527b38b8f886eed89592568dbf5e99703d31687696831cab67700a0323cc7c2",
+    "receiptSha256": "52988fcbbc45a2c5398db819d69b79fba895b45410a1942f2e6dfde1991bd9da",
+    "previousImageRetained": true,
+    "temporaryBackupsRemoved": true
+  },
+  "readOnlyFinalCheck": "Slot3 image455be8 running, ready:true on44710, actual eva.service EVA2_CANARY_URL points to44710; slot4 imagee0e06066 stopped. Both unique /tmp cutover directories absent.",
+  "independentReview": "reviews/astra-conversation-canary-promotion-2026-09-05.md",
+  "retention": {
+    "root": "/home/administrator/project/.eva2-artifacts/co002-conversation-fa2fa3b-20260905/conversation-rollout-20260905",
+    "manifestSha256": "ea7b22afddef6083bbab8eeecd1ceffe8686ce79fdd886bb2039ceaa63b7309e",
+    "files": 17,
+    "cleanupAfter": "Independent acceptance of replacement conversation image; unresolved provenance retained. Private original slot3 configuration backup retained for recovery."
+  },
+  "nonclaims": [
+    "No live streaming, human acceptance, general competitor win or full Eva release acceptance.",
+    "6010 tokens counts successful foreground canary calls only, not background Hindsight, coding or review.",
+    "Existing zero-high/critical scan uses the pinned vulnerability database of 31 August, not a refreshed 5 September scan; no new two-builder proof.",
+    "Journal rollback readability is not an old-version HTTP replay test. Conversation recall does not isolate Hindsight retrieval or prove canonical episode admission."
+  ]
+}

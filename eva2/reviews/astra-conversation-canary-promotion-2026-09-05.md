@@ -41,3 +41,10 @@ voor één 3→4→3-terugrolcontrole. Alleen de geïnstalleerde journaldecoder 
 het nieuwe opgeslagen antwoord, met read-only databasetransacties en zonder
 model-/providerobject. De bronkopieën en kandidaatconfiguratie blijven privé
 behouden totdat beide richtingen en dezelfde antwoordhash zijn gecontroleerd.
+
+Eindbeoordeling door dezelfde onafhankelijke reviewer: **GO voor de beperkte
+live gesprek-, herstart- en terugrolclaim**. Het manifest `ea7b22af…` en de
+cyclusreceipt `52988fcb…` matchen; 3→4→3 slaagde met nul modelcalls en dezelfde
+journal-/antwoordhash. Slot3/image `455be8…` is gereed op 44710; de vorige
+slot4-image blijft behouden. Tijdelijke kopieën zijn verwijderd. Geen bewijs
+voor oud-HTTP-replay, streaming, Telegrambezorging of volledige acceptatie.

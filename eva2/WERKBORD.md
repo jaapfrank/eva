@@ -10,7 +10,7 @@ de volgende begint.
 
 | Volgorde | Kaart | Resultaat | Status |
 |---:|---|---|---|
-| 120 | `CO-002` — Configureerbare menselijke identiteit aanscherpen | Astra is live. De nieuwe gesprekcode werkt nu ook via de bestaande Telegramclient met Jaaps gekopieerde koppeling en gegevens, inclusief geheugen na herstart. Live tekststukjes ontbreken nog. Volgende concrete stap: de kandidaat gecontroleerd in het reserveslot zetten en de gewone route omschakelen. | 🟡 BEZIG |
+| 120 | `CO-002` — Configureerbare menselijke identiteit aanscherpen | De nieuwe gesprekcode draait nu echt op /eva2 met Astra. Antwoord, geheugen na kernherstart en terugrollen met actuele gegevens zijn gecontroleerd. De technische gesprekuitrol is af; menselijke beoordeling blijft open. Live tekststukjes ontbreken nog en tellen niet als af. | 🟡 BEZIG |
 | 130 | `CO-003` — Eigen geheugenbronnen veilig opvragen | De eigenaar kan via Eva's afgeschermde API een begrensde pagina bekijken van de eigen privégespreksbronnen die aan het langetermijngeheugen zijn aangeboden; bronnen van andere mensen, groepen en door Hindsight afgeleide interpretaties blijven buiten beeld. | ⚪ HIERNA |
 
 ### Exact werk voor `CO-002`

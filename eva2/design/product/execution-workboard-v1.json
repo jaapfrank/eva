@@ -8,7 +8,9 @@
   "humanBoardPath": "eva2/WERKBORD.md",
   "audit": {
     "conversationCanaryPromotion": {
-      "taskId": "CO-002", "owner": "/root", "reviewer": "/root/identity_pair_review", "status": "reviewed_for_exact_reserve_preparation_and_canary_cutover",
+      "taskId": "CO-002", "owner": "/root", "reviewer": "/root/identity_pair_review", "status": "live_conversation_restart_and_rollback_passed",
+      "evidence": "eva2/evidence/product/astra-conversation-live-upgrade-2026-09-05.json",
+      "result": "New dc675503 conversation image455be8 is active on44710 with Astra medium. Existing private client:2 foreground calls,6010 tokens, exact replay after core restart and recall esdoornvink;0 drafts. One3-to4-to3 cycle preserved current database contents and the same journal reply through both installed decoders with0 modelcalls. Temporary copies removed. Human acceptance, streaming and full product acceptance remain open.",
       "review": "eva2/reviews/astra-conversation-canary-promotion-2026-09-05.md",
       "candidateAdmissionSha256": "258fb21ebb87b54858d581083052643fbf9c996d43a28c111479c63497e79de7",
       "rollbackCheck": "After successful live4-to3 and two foreground canary turns, independently approved one3-to4-to3 cycle. Read only the stored reply through each installed PostgresConversationJournal with database read-only transactions; never call runtime.respond or instantiate a model/provider. Keep write-once source dumps and a private copy of candidate configuration until the cycle succeeds, then remove temporary copies. This is one complete-candidate rollback test, not a per-patch cycle.",
@@ -620,7 +622,7 @@
     },
     {
       "id": "CO-002", "order": 120, "area": "Gesprek", "title": "Configureerbare menselijke identiteit aanscherpen",
-      "outcome": "Astra is live. De nieuwe gesprekcode werkt nu ook via de bestaande Telegramclient met Jaaps gekopieerde koppeling en gegevens, inclusief geheugen na herstart. Live tekststukjes ontbreken nog. Volgende concrete stap: de kandidaat gecontroleerd in het reserveslot zetten en de gewone route omschakelen.",
+      "outcome": "De nieuwe gesprekcode draait nu echt op /eva2 met Astra. Antwoord, geheugen na kernherstart en terugrollen met actuele gegevens zijn gecontroleerd. De technische gesprekuitrol is af; menselijke beoordeling blijft open. Live tekststukjes ontbreken nog en tellen niet als af.",
       "status": "in_progress", "stateDetails": {"baseCommit": null, "implementationCommit": null, "evidenceCommit": null, "reviewEvidencePaths": [], "blockerReason": null},
       "ownerRole": "architecturelead", "reviewerRole": "proofreviewer", "dependsOn": ["CO-001"],
       "componentIds": ["conversation-model-adapter", "core-behavior-tests"], "inventoryOwners": ["architecture", "eva-runtime", "verification"],
