@@ -7,6 +7,17 @@
   "inventoryPath": "docs/eva-repository-inventory.generated.json",
   "humanBoardPath": "eva2/WERKBORD.md",
   "audit": {
+    "conversationCandidateRegression": {
+      "taskId": "CO-002", "owner": "/root", "reviewer": "/root/identity_pair_review",
+      "status": "checking_sealed_candidate",
+      "previousTurn": "progress: independently reviewed fresh Astra conversation/restart proof committed as 133fa64; active route unchanged.",
+      "scope": "Run the existing required-test selection against a temporary, unedited Git archive of dc675503. No new test framework, production modification or promotion. Begin with the pure group before provisioning disposable databases.",
+      "repairScope": ["eva2/tests/portable/test_portable_p1_regressions.py", "eva2/release/managed-b-release-input-authority-v1.json", "docs/eva-repository-inventory.generated.json", "docs/eva-repository-inventory.generated.md"],
+      "repairBoundary": "Only make the disposable tamper target writable after copying a read-only schema fixture. Never relax production schema verification or edit the sealed source snapshot. The earlier probe-test repair is already committed separately. Resealing admits current test/operator bytes without adding tests or changing runtime source.",
+      "sourceCommit": "dc675503b3c285a63900ef2d68e7025f4608d16e",
+      "temporaryRoot": "/tmp/eva2-astra-regression.1ZqSPa",
+      "cleanup": "Remove the exact temporary archive and test outputs after retaining the bounded result; no live resources are used."
+    },
     "conversationStackDelivery": {
       "taskId": "CO-002", "owner": "/root", "status": "fresh_stack_passed_not_deployed",
       "evidence": "eva2/evidence/product/astra-conversation-stack-restart-2026-09-05.json",

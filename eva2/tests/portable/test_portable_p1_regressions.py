@@ -82,6 +82,8 @@ def test_producer_rejects_unpinned_contract_authority(
     target = schema_root / "portable" / "v1" / relative
     value = json.loads(target.read_bytes())
     value["p1_tamper"] = True
+    # copytree preserves read-only snapshot modes; only mutate this test copy.
+    target.chmod(0o600)
     target.write_bytes(canonical_json_bytes(value) + b"\n")
     assert hashlib.sha256(target.read_bytes()).hexdigest() != expected
 
