@@ -7,6 +7,19 @@
   "inventoryPath": "docs/eva-repository-inventory.generated.json",
   "humanBoardPath": "eva2/WERKBORD.md",
   "audit": {
+    "conversationCanaryPromotion": {
+      "taskId": "CO-002", "owner": "/root", "reviewer": "/root/identity_pair_review", "status": "reviewed_for_exact_reserve_preparation_and_canary_cutover",
+      "review": "eva2/reviews/astra-conversation-canary-promotion-2026-09-05.md",
+      "candidateAdmissionSha256": "258fb21ebb87b54858d581083052643fbf9c996d43a28c111479c63497e79de7",
+      "previousTurn": "progress:a8c3ce7 completed the copied private canary/restart evidence with explicit0draft limitation; no live route change.",
+      "scope": "Admit the already-built dc675503/455be8 candidate to existing inactive slot3, with the already-requested Astra model. Use the existing persistence and quiescent cutover operators; no new release pipeline, model/provider code or rebuild.",
+      "admission": "Mechanically derive a new explicitly attributed EvaManagedCoreImageCandidateEvidence/v1 import from retained raw build/scan/SBOM and image inspection. Preserve source hashes and nonclaims; original development evidence and historical RB receipts remain unchanged. Existing validator plus independent review must accept before slot writes.",
+      "runtimePaths": ["/var/lib/eva2/managed-b-slot3/candidate.env", "/var/lib/eva2/managed-b-slot3/candidate.env.before-conversation-20260905", "/etc/systemd/system/eva.service.d/30-eva2-current-candidate.conf"],
+      "checks": ["Inactive target and current source preflight, source image/model/readiness and unchanged secret/budget/identity/binding content", "Private backup of target configuration before setting candidate image, dashboard digest, Astra model and disabled durable-goal admission", "Render target graph without starting ingress or workers; update only target modellease helpers before existing lossless4-to3 cutover", "Current databases copied while writers are stopped; migration before target start, authenticated/anonymous readiness and router checks via existing operator", "Bounded private canary reply/replay and one harmless external read if existing tools are exposed; do not operate devices or send a Telegram message", "On runtime failure use the existing reverse fresh-data-copy route; never return to stale databases"],
+      "budget": "At most two foreground smoke turns after promotion under installed limits; no benchmark rerun. Retained failed attempts and background Hindsight usage remain separate.",
+      "artifactRetention": {"owner": "/root", "path": "/home/administrator/project/.eva2-artifacts/co002-conversation-fa2fa3b-20260905/conversation-rollout-20260905", "purpose": "Operator-import evidence, exact configuration hashes, cutover and bounded runtime receipts; no private conversation text or credentials", "cleanup": "Use one mktemp directory under/tmp for cutover dumps; remove after successful switch or successful rollback. Preserve recovery material if rollback fails. Retain receipts and private old target env backup until conversation candidate acceptance."},
+      "nonclaims": "This upgrades the conversation canary only. Live streaming, canonical episode admission, user acceptance and full Eva goal remain open; previous scan uses its pinned31August vulnerability database."
+    },
     "conversationCanaryDelivery": {
       "taskId": "CO-002", "owner": "/root", "reviewer": "/root/identity_pair_review", "status": "copied_private_delivery_passed_not_live_streaming",
       "evidence": "eva2/evidence/product/astra-copied-telegram-canary-2026-09-05.json",
