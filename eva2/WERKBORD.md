@@ -1,6 +1,6 @@
 # Eva 2 — uitvoerbaar werkbord
 
-Laatst bijgewerkt: 2026-09-04.
+Laatst bijgewerkt: 2026-09-05.
 
 Dit bord is automatisch uit de machineleesbare werklijst gemaakt. Handmatige
 afwijkingen worden geweigerd. We ronden één kleine kaart volledig af voordat
@@ -10,7 +10,7 @@ de volgende begint.
 
 | Volgorde | Kaart | Resultaat | Status |
 |---:|---|---|---|
-| 120 | `CO-002` — Configureerbare menselijke identiteit aanscherpen | Eva spreekt in gewone gezinssituaties herkenbaar warm, zelfstandig en natuurlijk vanuit haar ondertekende identiteit; bij verdriet of gevaar blijft zij juist rustig en zonder geforceerde humor. | 🔵 REVIEW |
+| 120 | `CO-002` — Configureerbare menselijke identiteit aanscherpen | De afzonderlijke vóór/na-proef geeft in twee situaties een beperkte voorkeur voor de nieuwe variant; nog niet live of menselijk geaccepteerd. Zie PROJECT_STATUS.md. Doel: warm, zelfstandig en natuurlijk spreken vanuit de configureerbare identiteit. | 🔵 REVIEW |
 | 130 | `CO-003` — Eigen geheugenbronnen veilig opvragen | De eigenaar kan via Eva's afgeschermde API een begrensde pagina bekijken van de eigen privégespreksbronnen die aan het langetermijngeheugen zijn aangeboden; bronnen van andere mensen, groepen en door Hindsight afgeleide interpretaties blijven buiten beeld. | ⚪ HIERNA |
 
 ### Exact werk voor `CO-002`

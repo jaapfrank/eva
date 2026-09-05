@@ -1,7 +1,7 @@
 {
   "contract": "EvaExecutionWorkboard/v1",
   "schemaVersion": 1,
-  "lastUpdated": "2026-09-04",
+  "lastUpdated": "2026-09-05",
   "sequencePolicy": "done_then_one_primary_then_queued",
   "commandWorkingDirectory": "eva2",
   "inventoryPath": "docs/eva-repository-inventory.generated.json",
@@ -513,7 +513,7 @@
     },
     {
       "id": "CO-002", "order": 120, "area": "Gesprek", "title": "Configureerbare menselijke identiteit aanscherpen",
-      "outcome": "Eva spreekt in gewone gezinssituaties herkenbaar warm, zelfstandig en natuurlijk vanuit haar ondertekende identiteit; bij verdriet of gevaar blijft zij juist rustig en zonder geforceerde humor.",
+      "outcome": "De afzonderlijke vóór/na-proef geeft in twee situaties een beperkte voorkeur voor de nieuwe variant; nog niet live of menselijk geaccepteerd. Zie PROJECT_STATUS.md. Doel: warm, zelfstandig en natuurlijk spreken vanuit de configureerbare identiteit.",
       "status": "review", "stateDetails": {"baseCommit": "1725401bfd0c184e1f2f49dffa0e046485d78410", "implementationCommit": "3b85a61165ebed4b8c1c74d3037b0c0e057593c1", "evidenceCommit": "7ba629f33ab7574c80ce0968b147debd300e5a5f", "reviewEvidencePaths": ["eva2/evidence/product/CO-002-configurable-identity-after-probe-2026-09-04.json"], "blockerReason": null},
       "ownerRole": "architecturelead", "reviewerRole": "proofreviewer", "dependsOn": ["CO-001"],
       "componentIds": ["conversation-model-adapter", "core-behavior-tests"], "inventoryOwners": ["architecture", "eva-runtime", "verification"],

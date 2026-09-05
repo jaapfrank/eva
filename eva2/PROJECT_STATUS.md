@@ -1,6 +1,30 @@
 # Eva 2 — projectbord en vergelijking
 
-Laatst bijgewerkt: 1 september 2026, 12:28 CEST
+Laatste actuele controle: 5 september 2026.
+
+## Wat vandaag werkelijk is vastgesteld
+
+| Vraag | Stand op 5 september |
+|---|---|
+| Welke Eva2 gebruik ik? | De lopende Telegramrouter wijst naar `127.0.0.1:44711`. Container `eva2-managed-b-slot4-core` vermeldt broncommit `881be2c` van 31 augustus; `/readyz` geeft HTTP 200 en `ready: true`. Dit bewijst bereikbaarheid, geen gesprekskwaliteit. |
+| Merk ik de laatste gesprekverbeteringen al? | Nee: CO-001 (`7b330a3`, Telegramdrafts) en CO-002 (`3b85a61`, configureerbare identiteit) zijn bronwijzigingen van 4 september. Die commits draaien niet in bovenstaande container. |
+| Is Eva2 bewezen beter dan Eva1? | Nee. Het bestaande Eva1-vergelijkingsdocument noemt Eva1 sterker in ervaren aanwezigheid en speakergebruik. Een actuele gezamenlijke gebruikersproef ontbreekt. |
+| Is de laatste concurrentievergelijking compleet? | Nee. EV-002 bevat antwoorden van Eva2 en Hermes; OpenClaw en Agent Zero vielen vóór modelgebruik uit. Eva2's oorspronkelijke resultaatbestand kon bovendien niet worden opgeslagen. Geen ranglijst of winstclaim volgt hieruit. |
+| Wacht alles alleen op Jaaps goedkeuring? | Nee. Menselijke acceptatie blijft open, maar de nieuwe gesprekcode moet ook nog veilig in de werkelijke gebruikersroute komen. Onderzoek en technische voorbereiding vereisen geen kunstmatige GO van Jaap. |
+| Heeft de kleine controle van vandaag verbetering bewezen? | Beperkt: na herstel van een fout in de proefopzet zijn twee situaties ieder apart vóór en na beantwoord. Een onafhankelijke AI-review gaf bij beide voorkeur aan de nieuwe variant. Vier modelcalls, nul toolcalls, 5.007 gemeten tokens. Dat is geen menselijke acceptatie, livebewijs of algemene concurrentiewinst. |
+
+De eerstvolgende oplevering moet een merkbaar betere gesprekservaring in de
+werkelijke Eva2-route zijn, met hetzelfde gesprek vóór en na de wijziging.
+Daarbij blijft Eva1 de referentie voor wat al bruikbaar is. Uitrol volgt via
+de bestaande actief/reserveslot-route zodra deze kandidaat daarvoor is getest.
+De volledige eindambitie blijft staan; bovenstaande is geen eindacceptatie.
+
+Bewijs: de actuele procesroute en containerlabels zijn alleen-lezen gecontroleerd;
+de bestaande [EV-002-resultaten](evidence/product/EV-002-controlled-baseline-result-2026-09-04.json),
+[CO-001-proef](evidence/product/CO-001-telegram-live-drafts-contract-2026-09-04.json)
+en [CO-002-herbeoordeling](reviews/CO-002-evidence-limitations-2026-09-05.md)
+leggen de beperkingen vast. De uitgebreide tabellen hieronder dateren van
+1 september en zijn historische momentopnamen tot ze opnieuw gecontroleerd zijn.
 
 > **Waar wordt nu echt aan gewerkt?** Het korte, afvinkbare bord staat in
 > [WERKBORD.md](WERKBORD.md). Daar staat maximaal één primaire taak op `BEZIG`,
