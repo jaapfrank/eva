@@ -1,0 +1,57 @@
+{
+  "status": "required_selection_passed_development_evidence_not_release_receipt",
+  "taskId": "CO-002",
+  "date": "2026-09-05",
+  "candidateImageId": "sha256:455be8e6f52adcf2f16288ad76793f150684c058753de3d8d84730a7ce623f7e",
+  "runtimeSourceCommit": "dc675503b3c285a63900ef2d68e7025f4608d16e",
+  "testSourceCommit": "b6af0e55b5bf7ca756b833b3190b7e99adef0185",
+  "testAuthoritySha256": "84cdaafdb10399af59dd7901b4596543e32c8cf465d225c63f7f9a55c7eccd8a",
+  "sourceBoundary": "Unedited Git archives in /tmp; Eva2 files made read-only. Runtime src, deploy, migrations, schemas, connector_sdk, pyproject and runtime lock are unchanged between the candidate and test commits. No image rebuilt or runtime code added.",
+  "selection": {
+    "operator": "Existing selections and environment validation from tools/run_managed_b_required_tests.py; existing physical run_managed_b_browser_release_subgate.py",
+    "testModules": 147,
+    "supportInputs": 20,
+    "tests": 1750,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "coverage": "Final collected identities match original passing JUnit cases. Module sets are non-overlapping and cover exactly every required test module. Earlier failed attempts remain separate.",
+    "groups": {"pure": 1539, "portable-effect": 4, "portable-model": 4, "portable-object": 5, "portable-read": 4, "portable-full-schema": 2, "postgres-action-chain": 80, "postgres-living": 47, "postgres-4b-store": 43, "postgres-4b-current": 6, "postgres-4b-historical": 12, "postgres-browser-physical": 4}
+  },
+  "environment": {
+    "hostPython": "3.12.3, exact locked executable; 54 locked distributions",
+    "distributionFingerprint": "87a9609514b797a1b0caffdb21bcc92859af6fb8a0a21242cf84860762830802",
+    "runtimeWheelhouse": "Existing exact 38-wheel runtime closure validated without installation or downloads",
+    "gateWheelhouse": "Existing 19-wheel closure validated against its hashlock",
+    "gateWheelhouseManifestSha256": "7aa2cefdce801808396af90b9d8d0b55ef6794358a57a1790ee592c099107647",
+    "sourceTests": "Private network namespaces, loopback only, uid1000 with no supplementary groups and no-new-privileges. Collection-only JUnit recovery was performed as the ordinary host user.",
+    "databases": "Pinned PostgreSQL16.13 with fresh disposable databases and no published ports. Five portable groups passed on the first instance; five remaining PostgreSQL groups passed on a fresh replacement. The physical browser gate created its own database.",
+    "durability": "fsync, synchronous_commit and full_page_writes remained on; only disposable WAL size and storage allocation changed after the capacity failure.",
+    "browser": "Four containers on two gatewayless internal networks. Real test-page click, owner stop and before/after-call crash checks used code inside the exact candidate image, not mounted repository product code. External browser egress was rejected."
+  },
+  "repairsAndFailedAttempts": [
+    "Original dc675503 pure suite:1527 passed,3 failed. One old probe-test UID assumption had already been repaired in ce83fe0. Two tamper tests inherited read-only copy modes; b6af0e5 makes only the disposable tamper file writable, without weakening schema validation.",
+    "The test authority was mechanically resealed for current test/operator bytes; module/support sets and runtime bytes did not change. Targeted tests108/108, Ruff and component catalog passed before the sealed rerun.",
+    "The passing pure rerun and first portable-effect group could not publish their final JSON because the output directory was0755. Original JUnit remained intact; after mode0700, collection was matched exactly without repeating those tests. The original failed publication was not represented as a successful operator run.",
+    "The first disposable database exhausted its512MiB tmpfs with WAL:50 action-chain passes then3 errors, exited1 without OOM. Its log and failed results were retained. Remaining groups ran on fresh2GiB tmpfs with3GiB memory limit and256MB max_wal_size; successful portable groups were not repeated."
+  ],
+  "openWarnings": [
+    "SQLAlchemy warns that migration autogenerate cannot order mutually dependent foreign keys. The existing migration test passes; future-library compatibility or complete autogenerate coverage is not proved.",
+    "The generated repository inventory still reports88 pre-existing policy errors; this is not a clean repository or inventory-gate claim."
+  ],
+  "telegramFinding": "The current canary router source already supplies onDraft and requests NDJSON; the new core accepts that on its canary endpoint. Therefore the absence of a native telegram-ingress container does not establish that another poller is needed. Actual Telegram delivery remains to be tested; no existing router was edited or additional poller started.",
+  "independentReview": {"reviewer": "/root/identity_pair_review", "decision": "GO for accuracy of development evidence only", "verified": "Retained manifest and combined/database result hashes, final1750 tests/147 modules, preserved failed attempts, fresh replacement database and explicit source/image/release boundaries."},
+  "cleanup": "Both explicitly labeled PostgreSQL test containers and all four browser test containers/networks were removed. The255MiB temporary source/test tree was removed after byte-identical retention of32 result files. Test data was disposable; original logs and JUnit remain recoverable. Existing live containers, images, volumes and data were not removed.",
+  "retention": {
+    "root": "/home/administrator/project/.eva2-artifacts/co002-conversation-fa2fa3b-20260905/regression-20260905",
+    "files": 32,
+    "bytesExcludingManifest": 1313082,
+    "manifestSha256": "3f95f5343120b0f6307540c66d6599a5634f75544e2dc3c8f134ef8186777917",
+    "cleanupAfter": "Independent acceptance of replacement conversation image. Original failed runs and passing JUnit are recoverable; no live data or credentials are retained here."
+  },
+  "nonclaims": [
+    "The broad required-test runner was not invoked as one release transaction. This assembled diagnostic is not an RB007 receipt, independent full release approval, deployment authority or CO-002 completion.",
+    "Only the browser group executed inside the candidate image; other groups tested unchanged runtime source in the exact host toolchain. Earlier full-stack Astra/restart proof remains separate.",
+    "No live data copied, no Telegram message sent, no live route changed, no model API call performed by these tests, no conversation preference or competitor-superiority proved. Coding/reviewer usage is not included in this no-model-call statement."
+  ]
+}

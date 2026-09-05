@@ -9,13 +9,20 @@
   "audit": {
     "conversationCandidateRegression": {
       "taskId": "CO-002", "owner": "/root", "reviewer": "/root/identity_pair_review",
-      "status": "checking_sealed_candidate",
+      "status": "required_selection_passed_not_release_approved",
+      "evidence": "eva2/evidence/product/astra-candidate-regression-2026-09-05.json",
+      "result": "All147 required modules covered without overlap:1750 passing tests,0 failures/errors/skips in final groups. Earlier failures retained. Independent evidence review GO; no production code change, paid model call, data copy or promotion.",
+      "nextStep": "Complete release artifact approval for the exact image, then prove the existing Telegram canary streaming client and a copied-data transition. The router already has an NDJSON/draft path; do not add another poller based only on the absent native ingress container. Source tests and physical image tests remain distinct.",
       "previousTurn": "progress: independently reviewed fresh Astra conversation/restart proof committed as 133fa64; active route unchanged.",
       "scope": "Run the existing required-test selection against a temporary, unedited Git archive of dc675503. No new test framework, production modification or promotion. Begin with the pure group before provisioning disposable databases.",
       "repairScope": ["eva2/tests/portable/test_portable_p1_regressions.py", "eva2/release/managed-b-release-input-authority-v1.json", "docs/eva-repository-inventory.generated.json", "docs/eva-repository-inventory.generated.md"],
       "repairBoundary": "Only make the disposable tamper target writable after copying a read-only schema fixture. Never relax production schema verification or edit the sealed source snapshot. The earlier probe-test repair is already committed separately. Resealing admits current test/operator bytes without adding tests or changing runtime source.",
       "sourceCommit": "dc675503b3c285a63900ef2d68e7025f4608d16e",
       "temporaryRoot": "/tmp/eva2-astra-regression.1ZqSPa",
+      "artifactRetention": {"owner": "/root", "path": "/home/administrator/project/.eva2-artifacts/co002-conversation-fa2fa3b-20260905/regression-20260905", "purpose": "Original before/after JUnit, explicit failed diagnostic runs, isolated browser receipt and database results; no live data or credentials", "cleanup": "After independent acceptance of the replacement conversation image; all temporary source snapshots and test containers are removed at the end of this check."},
+      "databaseRegression": {"container": "eva2-astra-regression-1zqspa-pg", "image": "docker.io/library/postgres@sha256:472efd9a66f2b2f1a5aeb18b28de74332e6ef88c2b93a1a5d812fb6db67a5f60", "network": "none", "publishedPorts": 0, "data": "tmpfs only, twelve fresh explicitly prefixed disposable databases", "execution": "Existing portable and PostgreSQL selections, serial per database subgroup; host test client enters only this private network namespace without supplementary groups. Physical browser subgroup remains separate.", "cleanup": "Remove this exact labeled test container and its tmpfs data after the selected groups finish."},
+      "databaseCapacityCorrection": {"previousContainer": "eva2-astra-regression-1zqspa-pg", "finding": "Exited with WAL No space left on device in the 512MiB tmpfs, not OOM. Five portable subgroups had passed; action-chain subgroup stopped at 50 passes/3 errors. Raw failed receipt and database logs retained.", "replacementContainer": "eva2-astra-regression-1zqspa-pg2", "scope": "Same exact PostgreSQL image and isolation; 2GiB tmpfs, 3GiB memory ceiling and max_wal_size=256MB. Only remaining database subgroups restart on fresh data; completed portable tests are not replayed. No production database or setting changed.", "cleanup": "Remove the exact replacement test container and tmpfs after the remaining groups finish."},
+      "browserRegression": {"operator": "eva2/tools/run_managed_b_browser_release_subgate.py", "candidateImage": "sha256:455be8e6f52adcf2f16288ad76793f150684c058753de3d8d84730a7ce623f7e", "scope": "Four existing browser stop/click/crash tests, exact local upstream images, four nonce-labeled disposable containers, two gatewayless internal networks and no published ports. Candidate runtime code is used directly, without a source mount.", "cleanup": "The existing operator removes only its nonce-labeled containers, networks and temporary output directory."},
       "cleanup": "Remove the exact temporary archive and test outputs after retaining the bounded result; no live resources are used."
     },
     "conversationStackDelivery": {
@@ -573,7 +580,7 @@
     },
     {
       "id": "CO-002", "order": 120, "area": "Gesprek", "title": "Configureerbare menselijke identiteit aanscherpen",
-      "outcome": "De actieve Eva2 praat met gpt-6-astra. De nieuwe gesprekcode koos een tool correct en onthield in een verse proef haar controlewoord na herstart van kern, Hindsight en beide databases. De proef is opgeruimd. Deze code is nog niet live; releasecontrole en de echte Telegram-/data-overgang ontbreken nog.",
+      "outcome": "De actieve Eva2 praat met gpt-6-astra. De nieuwe gesprekcode heeft de model- en geheugenherstartproef plus 1.750 controles doorstaan, inclusief echte database- en browserproeven. Deze code is nog niet live: releasegoedkeuring en de werkelijke Telegram-/data-overgang ontbreken nog.",
       "status": "in_progress", "stateDetails": {"baseCommit": null, "implementationCommit": null, "evidenceCommit": null, "reviewEvidencePaths": [], "blockerReason": null},
       "ownerRole": "architecturelead", "reviewerRole": "proofreviewer", "dependsOn": ["CO-001"],
       "componentIds": ["conversation-model-adapter", "core-behavior-tests"], "inventoryOwners": ["architecture", "eva-runtime", "verification"],
