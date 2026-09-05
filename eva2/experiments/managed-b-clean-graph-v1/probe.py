@@ -34,6 +34,7 @@ from urllib import error, parse, request
 from uuid import uuid4
 
 from eva.operations.logical_restore_authority import logical_restore_preparation_sql
+from eva.adapters.credentials.runtime_files import read_private_runtime_file_bytes
 
 ROOT = Path(__file__).resolve().parents[2]
 MANIFEST = ROOT / "deploy" / "living-core" / "managed-b.compose.yml"
@@ -119,6 +120,32 @@ _PRESERVED_HINDSIGHT_TABLES = {
 }
 DEFAULT_CONVERSATION_PROMPT = "Antwoord alleen met: beheerd"
 MAX_CONVERSATION_PROMPT_BYTES = 4_096
+CANARY_CLIENT_ROOT = Path("/home/administrator/project/Bottie/src")
+CANARY_CLIENT_FILES = ("integrations/eva2canary.js", "telegramdialogue.js")
+_CANARY_CLIENT_PROBE = r"""
+import { readFileSync } from 'node:fs';
+const p = JSON.parse(readFileSync(0, 'utf8'));
+const { askEva2Canary } = await import(p.clientUrl);
+let cumulative = ''; let drafts = 0; let firstDraftMs = null;
+const started = performance.now();
+try {
+  const reply = await askEva2Canary({
+    baseUrl: p.baseUrl, chatId: p.userId, fromId: p.userId,
+    messageId: p.messageId, telegramDate: p.telegramDate,
+    text: `/eva2 ${p.text}`, timeoutMs: 60000,
+    onDraft: async text => {
+      if (!text.startsWith(cumulative)) throw new Error('non-monotonic draft');
+      cumulative = text; drafts++;
+      firstDraftMs ??= performance.now() - started;
+    }
+  });
+  if (drafts && cumulative !== reply.text) throw new Error('draft/final mismatch');
+  process.stdout.write(JSON.stringify({reply, drafts, firstDraftMs,
+    completedMs: performance.now() - started, streamEqualsFinal: drafts > 0}));
+} catch {
+  process.stderr.write('canary client did not complete'); process.exitCode = 2;
+}
+"""
 
 
 class ProbeError(RuntimeError):
@@ -406,7 +433,13 @@ def _operational_counts(container: str, database: str | None = None) -> dict[str
 def _durable_conversation_reply(
     container: str, database: str, message_id: str
 ) -> dict[str, Any]:
-    if re.fullmatch(r"managed-b-probe:[0-9a-f]{12}:[12]", message_id) is None:
+    if (
+        re.fullmatch(
+            r"(?:managed-b-probe:[0-9a-f]{12}:[12]|telegram:[1-9][0-9]{0,15}:[1-9][0-9]{0,15})",
+            message_id,
+        )
+        is None
+    ):
         raise ProbeError("conversation message ID is invalid")
     thread_id = f"conversation:{message_id}"
     output = _run(
@@ -595,6 +628,105 @@ def _current_environment_value(name: str) -> str:
     if len(matches) != 1 or not matches[0]:
         raise ProbeError(f"current managed route {name} is unavailable")
     return matches[0]
+
+
+def _canary_client_digest() -> str:
+    files = {}
+    for name in CANARY_CLIENT_FILES:
+        path = CANARY_CLIENT_ROOT / name
+        if not path.is_file() or path.is_symlink():
+            raise ProbeError("existing canary client must be regular local files")
+        files[name] = _sha256_file(path)
+    return hashlib.sha256(
+        json.dumps(files, sort_keys=True, separators=(",", ":")).encode()
+    ).hexdigest()
+
+
+def _canary_probe_settings(user_sha256: str, client_sha256: str) -> dict[str, Any]:
+    if any(
+        re.fullmatch(r"[0-9a-f]{64}", value) is None
+        for value in (user_sha256, client_sha256)
+    ):
+        raise ProbeError("canary probe requires complete user and client hashes")
+    if _canary_client_digest() != client_sha256:
+        raise ProbeError("existing canary client hash differs")
+    raw = read_private_runtime_file_bytes(
+        _current_environment_value("EVA_TELEGRAM_PRINCIPAL_BINDINGS_FILE_HOST"),
+        setting_name="canary probe source bindings",
+        effective_uid=65532,
+    )
+    document = json.loads(raw)
+    if (
+        not isinstance(document, dict)
+        or document.get("contract") != "EvaTelegramPrincipalBindings/v2"
+    ):
+        raise ProbeError("canary probe requires existing v2 bindings")
+    rows = document.get("bindings")
+    if not isinstance(rows, list):
+        raise ProbeError("canary probe bindings differ")
+    selected = [
+        row
+        for row in rows
+        if isinstance(row, dict)
+        and type(row.get("telegram_user_id")) is int
+        and hashlib.sha256(str(row["telegram_user_id"]).encode()).hexdigest()
+        == user_sha256
+    ]
+    if len(selected) != 1:
+        raise ProbeError("canary probe must select exactly one existing private user")
+    user_id = selected[0]["telegram_user_id"]
+    chats = selected[0].get("allowed_chat_ids")
+    if (
+        not 1 <= user_id < 2**53
+        or not isinstance(chats, list)
+        or str(user_id) not in chats
+    ):
+        raise ProbeError("canary probe user has no own private chat")
+    tenant = _current_environment_value("EVA_RUNTIME_TENANT_ID")
+    installation = _current_environment_value("EVA_RUNTIME_INSTALLATION_ID")
+    # These are the existing canary client's wire values, not a new Eva scope.
+    if (tenant, installation) != ("live-test-tenant", "live-test-installation"):
+        raise ProbeError("existing canary client and source runtime scopes differ")
+    return {
+        "user_id": user_id,
+        "bindings": raw,
+        "client_sha256": client_sha256,
+        "tenant_id": tenant,
+        "installation_id": installation,
+    }
+
+
+def _canary_client_reply(
+    port: int, settings: dict[str, Any], turn: dict[str, Any]
+) -> dict[str, Any]:
+    if (
+        not 1024 <= port <= 65535
+        or _canary_client_digest() != settings["client_sha256"]
+    ):
+        raise ProbeError("canary probe destination or client changed")
+    data = {
+        "clientUrl": (CANARY_CLIENT_ROOT / CANARY_CLIENT_FILES[0]).as_uri(),
+        "baseUrl": f"http://127.0.0.1:{port}",
+        "userId": settings["user_id"],
+        "messageId": int(turn["message_id"].rsplit(":", 1)[1]),
+        "telegramDate": int(
+            datetime.strptime(turn["occurred_at"], "%Y-%m-%dT%H:%M:%SZ")
+            .replace(tzinfo=UTC)
+            .timestamp()
+        ),
+        "text": turn["text"],
+    }
+    result = subprocess.run(
+        ["/usr/bin/node", "--input-type=module", "-e", _CANARY_CLIENT_PROBE],
+        input=json.dumps(data),
+        capture_output=True,
+        text=True,
+        timeout=130,
+        env={"PATH": "/usr/bin:/bin", "LANG": "C.UTF-8"},
+    )
+    if result.returncode or len(result.stdout) > 131072:
+        raise ProbeError("existing canary client did not complete")
+    return json.loads(result.stdout)
 
 
 def _write_private(path: Path, value: bytes, *, uid: int, gid: int) -> None:
@@ -1013,12 +1145,35 @@ def main(
     conversation_prompt_file: Path | None = None,
     conversation_model: str = "gpt-5.4-mini",
     conversation_memory_word: str | None = None,
+    telegram_canary_user_sha256: str | None = None,
+    telegram_canary_client_sha256: str | None = None,
     receipt_path: Path | None = None,
 ) -> int:
     if os.geteuid() != 0:
         print(json.dumps({"error": "probe requires root", "status": "failed"}))
         return 2
+    canary: dict[str, Any] | None = None
     try:
+        if (
+            telegram_canary_user_sha256 is not None
+            or telegram_canary_client_sha256 is not None
+        ):
+            if (
+                telegram_canary_user_sha256 is None
+                or telegram_canary_client_sha256 is None
+                or not clone_current_route
+                or retain_slot
+                or core_image is None
+                or candidate_local_image_id is not None
+                or conversation_memory_word is None
+                or conversation_prompt_file is not None
+            ):
+                raise ProbeError(
+                    "canary probe requires an explicit digest, disposable clone and memory word"
+                )
+            canary = _canary_probe_settings(
+                telegram_canary_user_sha256, telegram_canary_client_sha256
+            )
         if receipt_path is not None:
             _validate_receipt_destination(receipt_path)
         conversation_prompt = _conversation_prompt(conversation_prompt_file)
@@ -1030,7 +1185,7 @@ def main(
             if conversation_prompt_file is not None:
                 raise ProbeError("memory-word probe requires its own fixed prompt")
             conversation_prompt = f"Mijn controlewoord is {conversation_memory_word}. Onthoud dit. Antwoord alleen met: beheerd"
-    except (OSError, ProbeError) as exc:
+    except (OSError, ValueError, RuntimeError) as exc:
         print(json.dumps({"error": str(exc), "status": "failed"}, sort_keys=True))
         return 2
     local_candidate = candidate_local_image_id is not None
@@ -1292,7 +1447,9 @@ def main(
         )
         _write_private(
             secrets_dir / "telegram-bindings",
-            (
+            canary["bindings"]
+            if canary is not None
+            else (
                 b'{"bindings":[{"allowed_chat_ids":["900000001"],'
                 b'"principal_binding_id":"44444444-4444-4444-8444-444444444444",'
                 b'"principal_id":"33333333-3333-3333-8333-333333333333",'
@@ -1316,14 +1473,22 @@ def main(
             _copy_private(SOURCE_AUTH, codex_dir / "auth.json", uid=1000, gid=1000)
 
         runtime_tenant_id = (
-            "live-test-tenant"
-            if retain_slot
-            else "11111111-1111-1111-8111-111111111111"
+            canary["tenant_id"]
+            if canary is not None
+            else (
+                "live-test-tenant"
+                if retain_slot
+                else "11111111-1111-1111-8111-111111111111"
+            )
         )
         runtime_installation_id = (
-            "live-test-installation"
-            if retain_slot
-            else "22222222-2222-2222-8222-222222222222"
+            canary["installation_id"]
+            if canary is not None
+            else (
+                "live-test-installation"
+                if retain_slot
+                else "22222222-2222-2222-8222-222222222222"
+            )
         )
         runtime_budget_file = secrets_dir / "runtime-budget.json"
         runtime_budget_values = {
@@ -1618,49 +1783,80 @@ def main(
             )
 
         phase = "real-model-turn"
-        message_id = f"managed-b-probe:{run_id}:1"
+        message_id = (
+            f"managed-b-probe:{run_id}:1"
+            if canary is None
+            else f"telegram:{canary['user_id']}:{int(run_id, 16) * 10 + 1}"
+        )
+        conversation_id = (
+            f"managed-b-probe:{run_id}"
+            if canary is None
+            else f"telegram:{canary['user_id']}"
+        )
+        principal_id = (
+            "33333333-3333-3333-8333-333333333333"
+            if canary is None
+            else f"telegram:{canary['user_id']}"
+        )
         turn = {
             "audience": {
-                "audience_id": "person:33333333-3333-3333-8333-333333333333",
+                "audience_id": f"person:{principal_id}",
                 "kind": "private_person",
-                "principal_id": "33333333-3333-3333-8333-333333333333",
+                "principal_id": principal_id,
             },
-            "conversation_id": f"managed-b-probe:{run_id}",
-            "installation_id": (
-                "live-test-installation"
-                if retain_slot
-                else "22222222-2222-2222-8222-222222222222"
-            ),
+            "conversation_id": conversation_id,
+            "installation_id": runtime_installation_id,
             "message_id": message_id,
             "occurred_at": datetime.now(UTC).strftime("%Y-%m-%dT%H:%M:%SZ"),
-            "principal_id": "33333333-3333-3333-8333-333333333333",
-            "tenant_id": (
-                "live-test-tenant"
-                if retain_slot
-                else "11111111-1111-1111-8111-111111111111"
-            ),
+            "principal_id": principal_id,
+            "tenant_id": runtime_tenant_id,
             "text": conversation_prompt,
         }
-        reply = _http_json(
-            f"http://127.0.0.1:{port}/internal/v1/turns/respond", payload=turn
-        )
+        canary_measurements: list[dict[str, Any]] = []
+
+        def submit_turn(value: dict[str, Any]) -> dict[str, Any]:
+            if canary is None:
+                return _http_json(
+                    f"http://127.0.0.1:{port}/internal/v1/turns/respond", payload=value
+                )
+            observed = _canary_client_reply(port, canary, value)
+            canary_measurements.append(
+                {
+                    key: observed[key]
+                    for key in (
+                        "drafts",
+                        "firstDraftMs",
+                        "completedMs",
+                        "streamEqualsFinal",
+                    )
+                }
+            )
+            return observed["reply"]
+
+        reply = submit_turn(turn)
         reply_text = reply.get("text")
         if not isinstance(reply_text, str) or not reply_text.strip():
             raise ProbeError("real model response was empty")
         if (
-            conversation_prompt == DEFAULT_CONVERSATION_PROMPT
-            and reply_text.strip().casefold() != "beheerd"
-        ):
+            conversation_prompt == DEFAULT_CONVERSATION_PROMPT or canary is not None
+        ) and reply_text.strip().casefold() != "beheerd":
             raise ProbeError("real model response was not the requested exact word")
         operational_id = _run(
             _compose(project, environment_file, "ps", "-q", "postgres")
         ).strip()
         durable_reply = _durable_conversation_reply(operational_id, "eva2", message_id)
+        if canary is not None and (
+            durable_reply.get("principal_id") != principal_id
+            or not canary_measurements[0]["streamEqualsFinal"]
+        ):
+            raise ProbeError("canary private identity or streaming proof differs")
         measurement = _conversation_measurement(
             durable_reply, expected_text=reply_text, model=conversation_model
         )
         result["conversationTurn"] = {
-            "messageId": message_id,
+            "messageId": message_id
+            if canary is None
+            else f"sha256:{hashlib.sha256(message_id.encode()).hexdigest()}",
             "prompt": conversation_prompt,
             "promptSha256": hashlib.sha256(
                 conversation_prompt.encode("utf-8")
@@ -1699,9 +1895,7 @@ def main(
         phase = "core-ready-after-restart"
         _wait_ready(port)
         phase = "durable-conversation-replay"
-        replay = _http_json(
-            f"http://127.0.0.1:{port}/internal/v1/turns/respond", payload=turn
-        )
+        replay = submit_turn(turn)
         if (
             replay != reply
             or _durable_conversation_reply(operational_id, "eva2", message_id)
@@ -1713,13 +1907,13 @@ def main(
             phase = "conversation-memory-after-restart"
             followup = {
                 **turn,
-                "message_id": f"managed-b-probe:{run_id}:2",
+                "message_id": f"managed-b-probe:{run_id}:2"
+                if canary is None
+                else f"telegram:{canary['user_id']}:{int(run_id, 16) * 10 + 2}",
                 "occurred_at": datetime.now(UTC).strftime("%Y-%m-%dT%H:%M:%SZ"),
                 "text": "Wat is mijn controlewoord? Antwoord alleen met dat woord.",
             }
-            recalled = _http_json(
-                f"http://127.0.0.1:{port}/internal/v1/turns/respond", payload=followup
-            )
+            recalled = submit_turn(followup)
             if recalled.get("text", "").strip().casefold() != conversation_memory_word:
                 raise ProbeError(
                     "conversation memory word was not recalled after restart"
@@ -1727,6 +1921,11 @@ def main(
             durable_recall = _durable_conversation_reply(
                 operational_id, "eva2", followup["message_id"]
             )
+            if (
+                canary is not None
+                and durable_recall.get("principal_id") != principal_id
+            ):
+                raise ProbeError("canary recall crossed its private identity")
             result["conversationMemoryAfterRestart"] = {
                 "reply": recalled["text"],
                 "usage": _conversation_measurement(
@@ -1735,6 +1934,17 @@ def main(
                     model=conversation_model,
                 ),
                 "scope": "Same-person same-conversation recall; not proof of independent Hindsight-only retrieval.",
+            }
+        if canary is not None:
+            result["telegramCanary"] = {
+                "clientSha256": canary["client_sha256"],
+                "userSha256": telegram_canary_user_sha256,
+                "bindingsSha256": hashlib.sha256(canary["bindings"]).hexdigest(),
+                "runtimeScopeCopied": True,
+                "privateIdentityVerified": True,
+                "requests": canary_measurements,
+                "telegramMessagesSent": 0,
+                "scope": "Existing JS canary client and real copied private binding; drafts captured locally, not delivered through Telegram Bot API.",
             }
 
         if clone_current_route:
@@ -1940,6 +2150,8 @@ if __name__ == "__main__":
     parser.add_argument("--conversation-prompt-file", type=Path)
     parser.add_argument("--conversation-model", default="gpt-5.4-mini")
     parser.add_argument("--conversation-memory-word")
+    parser.add_argument("--telegram-canary-user-sha256")
+    parser.add_argument("--telegram-canary-client-sha256")
     parser.add_argument("--receipt", type=Path, required=True)
     arguments = parser.parse_args()
     sys.exit(
@@ -1958,6 +2170,8 @@ if __name__ == "__main__":
             conversation_prompt_file=arguments.conversation_prompt_file,
             conversation_model=arguments.conversation_model,
             conversation_memory_word=arguments.conversation_memory_word,
+            telegram_canary_user_sha256=arguments.telegram_canary_user_sha256,
+            telegram_canary_client_sha256=arguments.telegram_canary_client_sha256,
             receipt_path=arguments.receipt,
         )
     )

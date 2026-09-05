@@ -3,9 +3,12 @@
 from __future__ import annotations
 
 import importlib.util
+import hashlib
+import json
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 import threading
+import subprocess
 
 import pytest
 
@@ -16,6 +19,112 @@ SPEC = importlib.util.spec_from_file_location("managed_b_clean_graph_probe", PRO
 assert SPEC is not None and SPEC.loader is not None
 probe = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(probe)
+
+
+@pytest.mark.parametrize(
+    "changes",
+    [
+        {"clone_current_route": False},
+        {"retain_slot": True},
+        {"core_image": None},
+        {"candidate_local_image_id": "sha256:" + "a" * 64},
+        {"telegram_canary_client_sha256": None},
+        {"conversation_memory_word": None},
+        {"conversation_prompt_file": Path("/tmp/not-a-probe-prompt")},
+    ],
+)
+def test_canary_options_refuse_non_disposable_paths_before_io(monkeypatch, changes):
+    monkeypatch.setattr(probe.os, "geteuid", lambda: 0)
+    monkeypatch.setattr(
+        probe, "_canary_probe_settings", lambda *a: pytest.fail("no file I/O")
+    )
+    monkeypatch.setattr(probe, "_live_status", lambda *a: pytest.fail("no resources"))
+    options = dict(
+        clone_current_route=True,
+        core_image="eva2.local/test@sha256:" + "a" * 64,
+        conversation_memory_word="merelvink",
+        telegram_canary_user_sha256="a" * 64,
+        telegram_canary_client_sha256="b" * 64,
+    )
+    assert probe.main(**{**options, **changes}) == 2
+
+
+@pytest.mark.parametrize(
+    "problem", [None, "duplicate", "group", "missing", "scope", "client"]
+)
+def test_canary_selects_only_hash_bound_existing_private_user(monkeypatch, problem):
+    row = {
+        "telegram_user_id": 7,
+        "allowed_chat_ids": ["7"],
+        "principal_id": "person-seven",
+        "principal_binding_id": "44444444-4444-4444-8444-444444444444",
+    }
+    if problem == "group":
+        row["allowed_chat_ids"] = ["-7"]
+    rows = (
+        [row, row]
+        if problem == "duplicate"
+        else ([] if problem == "missing" else [row])
+    )
+    raw = json.dumps(
+        {"contract": "EvaTelegramPrincipalBindings/v2", "bindings": rows}
+    ).encode()
+    values = {
+        "EVA_TELEGRAM_PRINCIPAL_BINDINGS_FILE_HOST": "/private/bindings",
+        "EVA_RUNTIME_TENANT_ID": "other" if problem == "scope" else "live-test-tenant",
+        "EVA_RUNTIME_INSTALLATION_ID": "live-test-installation",
+    }
+    monkeypatch.setattr(probe, "_current_environment_value", values.__getitem__)
+    monkeypatch.setattr(
+        probe,
+        "_canary_client_digest",
+        lambda: "c" * 64 if problem == "client" else "b" * 64,
+    )
+
+    def read(path, *, setting_name, effective_uid):
+        assert path == "/private/bindings" and effective_uid == 65532
+        return raw
+
+    monkeypatch.setattr(probe, "read_private_runtime_file_bytes", read)
+    args = (hashlib.sha256(b"7").hexdigest(), "b" * 64)
+    if problem:
+        with pytest.raises(probe.ProbeError):
+            probe._canary_probe_settings(*args)
+    else:
+        settings = probe._canary_probe_settings(*args)
+        assert settings["user_id"] == 7 and settings["bindings"] == raw
+        assert settings["tenant_id"] == "live-test-tenant"
+
+
+def test_canary_client_has_loopback_only_input_and_no_inherited_secrets(monkeypatch):
+    monkeypatch.setattr(probe, "_canary_client_digest", lambda: "b" * 64)
+    monkeypatch.setenv("TELEGRAM_BOT_TOKEN", "must-not-inherit")
+    calls = []
+
+    def run(command, **kwargs):
+        calls.append(command)
+        assert command[:3] == ["/usr/bin/node", "--input-type=module", "-e"]
+        assert kwargs["env"] == {"PATH": "/usr/bin:/bin", "LANG": "C.UTF-8"}
+        data = json.loads(kwargs["input"])
+        assert data["baseUrl"] == "http://127.0.0.1:54321"
+        assert data["userId"] == 7 and data["messageId"] == 123
+        assert "onDraft:" in command[-1] and "fetchImpl" not in command[-1]
+        return subprocess.CompletedProcess(command, 0, json.dumps({"drafts": 1}), "")
+
+    monkeypatch.setattr(probe.subprocess, "run", run)
+    turn = {
+        "message_id": "telegram:7:123",
+        "occurred_at": "2026-09-05T12:00:00Z",
+        "text": "probe",
+    }
+    settings = {"user_id": 7, "client_sha256": "b" * 64}
+    assert probe._canary_client_reply(54321, settings, turn)["drafts"] == 1
+    with pytest.raises(probe.ProbeError):
+        probe._canary_client_reply(0, settings, turn)
+    settings["client_sha256"] = "c" * 64
+    with pytest.raises(probe.ProbeError):
+        probe._canary_client_reply(54321, settings, turn)
+    assert len(calls) == 1
 
 
 def test_count_window_accepts_one_consistent_logical_snapshot() -> None:
@@ -81,7 +190,7 @@ def test_current_route_clone_is_logical_read_only_and_disposable() -> None:
     assert "candidate core image must be an immutable local digest reference" in source
     assert "attempts: int = 3" in source
     assert "--retain-slot" in source
-    assert 'choices=(2, 3, 4)' in source
+    assert "choices=(2, 3, 4)" in source
     assert "port = 44707 + retained_slot_number" in source
     assert "plaintextDumpsRetained" in source
     assert "CURRENT_ROUTE_HINDSIGHT_NAMESPACE" in source

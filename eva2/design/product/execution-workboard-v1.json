@@ -7,6 +7,15 @@
   "inventoryPath": "docs/eva-repository-inventory.generated.json",
   "humanBoardPath": "eva2/WERKBORD.md",
   "audit": {
+    "conversationCanaryDelivery": {
+      "taskId": "CO-002", "owner": "/root", "reviewer": "/root/identity_pair_review", "status": "preparing_copied_private_canary",
+      "previousTurn": "progress:548db04 recorded the successful copied-data Astra/restart proof; active route unchanged.",
+      "scope": "Extend only the existing disposable clone probe to preserve the current runtime scope and existing private Telegram binding, then invoke the existing hash-bound canary client against that temporary core. No new bot, poller, runtime code or image.",
+      "changePaths": ["eva2/experiments/managed-b-clean-graph-v1/probe.py", "eva2/tests/experiments/test_managed_b_current_data_transition.py", "eva2/release/managed-b-release-input-authority-v1.json", "docs/eva-repository-inventory.generated.json", "docs/eva-repository-inventory.generated.md"],
+      "checks": ["Options, exact private binding, client hash, loopback target and receipt privacy fail closed before resources", "Existing canary client receives streamed drafts; final reply and PostgreSQL agree", "Exact replay after joint restart does not make another model call; a new turn recalls the test word", "Dummy external credentials, no Telegram-send or provider effect, unique copied databases cleaned"],
+      "budget": "Two bounded foreground turns,12000 input/1200 output tokens per turn under existing retry limits; no paid call during unit tests. Background Hindsight and coding usage remain separately qualified.",
+      "artifactRetention": {"owner": "/root", "path": "/home/administrator/project/.eva2-artifacts/co002-conversation-fa2fa3b-20260905/telegram-canary-20260905", "purpose": "Redacted client/clone/restart receipts and hashes only, never private chat text, bindings, credentials or database dumps", "cleanup": "Remove unique /tmp staging and disposable containers/volumes immediately after the run; retain receipts until replacement conversation image acceptance."}
+    },
     "conversationCandidateDataTransition": {
       "taskId": "CO-002", "owner": "/root", "reviewer": "/root/identity_pair_review", "status": "copied_data_and_restart_passed_not_promoted",
       "evidence": "eva2/evidence/product/astra-copied-data-restart-2026-09-05.json",
