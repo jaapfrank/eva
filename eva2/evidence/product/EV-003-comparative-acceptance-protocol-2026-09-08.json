@@ -4,6 +4,13 @@
   "status": "protocol_reviewed_no_comparison_run",
   "baseCommit": "71c44770b4019f94042c9a156f46693ad04af96e",
   "implementationCommit": "de77be8933d600bb719ea712fea92882c9a5b62f",
+  "independentReview": {
+    "reviewer": "/root/identity_pair_review",
+    "decision": "GO",
+    "scope": "EV-003 protocol card only, on the three exact source hashes below; no execution approval or comparison win.",
+    "evidenceCommit": "3ca19a477bc61f1683f170353b29a3f912ffdcfe",
+    "finding": "Six families, independent unseen tasks, repeated blocks, equal resources, native Inspect logs, missing-is-not-a-win, no score-optimizing retry and no user quota are covered. Coarse sample thresholds and missing concrete dataset/run inputs remain explicitly disclosed."
+  },
   "sourceSha256": {
     "eva2/design/product/comparable-agent-benchmarks-v1.md": "d59a68b4e93a6ed2a903fbca4a6de972e180a6d83b0c2a5935fc71597258f71e",
     "eva2/benchmark/inspect_ai_v1/README.md": "8b1471b8248beecd6d9e6df1cee8ff981be5786f863c3ad4566a5e3f3b87b221",
