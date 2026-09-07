@@ -1471,10 +1471,10 @@
       "ownerRole": "architecturelead",
       "reviewerRole": "dashboardreviewer",
       "dependsOn": ["EV-003"],
-      "componentIds": ["conversation-model-adapter", "core-behavior-tests"],
+      "componentIds": ["conversation-model-adapter", "core-semantics", "core-behavior-tests"],
       "inventoryOwners": ["documentation", "eva-runtime", "verification"],
-      "changePaths": ["eva2/design/product/performance-and-complexity-v1.md", "eva2/src/eva/adapters/model/pydantic_conversation.py", "eva2/tests/model/test_pydantic_conversation_model.py"],
-      "testCommands": ["pytest -q tests/model/test_pydantic_conversation_model.py tests/model/test_conversation_model.py", "ruff check src/eva/adapters/model/pydantic_conversation.py tests/model/test_pydantic_conversation_model.py", "python3 tools/check_component_catalog.py"],
+      "changePaths": ["eva2/design/product/performance-and-complexity-v1.md", "eva2/src/eva/application/conversation.py", "eva2/src/eva/adapters/model/pydantic_conversation.py", "eva2/tests/model/test_pydantic_conversation_model.py"],
+      "testCommands": ["pytest -q tests/model/test_pydantic_conversation_model.py tests/model/test_conversation_model.py tests/model/test_openai_codex_provider_shared.py tests/api/test_telegram_canary_api.py tests/api/test_memory_api.py", "ruff check src/eva/application/conversation.py src/eva/adapters/model/pydantic_conversation.py tests/model/test_pydantic_conversation_model.py", "python3 tools/check_component_catalog.py"],
       "evidenceRequired": ["Exacte officiële upstreambron, relevante functies, licentie en onderhoud vastleggen; per concurrent concreet overnemen, adapteren of afwijzen. Geen README-claim als functiebewijs.", "Kleine gelijke voor/naproef volgens EV-003 meet antwoordvorming, tools, modelcalls, gebruik en fouten. Geen tweede agentloop, blind herhaalde effecten of weglekkende gedeeltelijke tooltekst.", "Herkomst en onderhouden integratiegrens vastleggen; verwijder alleen werkelijk vervangen code binnen deze kaart. Kandidaatwerk blijft afzonderlijk van livegebruik."],
       "doneWhen": ["Minstens één herbruikbaar upstreamprincipe verbetert aantoonbaar de bestaande gesprekroute; alle drie concurrenten zijn op relevante actuele bron onderzocht.", "Dezelfde gerichte proeven vóór en na tonen het concrete voordeel en bewaken persoon, stop, toolreceipts, retry en verbruik; geen algemene concurrentiewinst claimen.", "Onafhankelijke review keurt de bronkandidaat en herkomst goed. CO-007 blijft eigenaar van de complete gezins-/Telegramervaring; een nieuwe deployment vereist de normale kandidaatpoort."]
     }

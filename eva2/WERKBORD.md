@@ -28,13 +28,14 @@ Klaar betekent:
 ### Exact werk voor `UP-001`
 
 - `eva2/design/product/performance-and-complexity-v1.md`
+- `eva2/src/eva/application/conversation.py`
 - `eva2/src/eva/adapters/model/pydantic_conversation.py`
 - `eva2/tests/model/test_pydantic_conversation_model.py`
 
 Echte controles:
 
-- `pytest -q tests/model/test_pydantic_conversation_model.py tests/model/test_conversation_model.py`
-- `ruff check src/eva/adapters/model/pydantic_conversation.py tests/model/test_pydantic_conversation_model.py`
+- `pytest -q tests/model/test_pydantic_conversation_model.py tests/model/test_conversation_model.py tests/model/test_openai_codex_provider_shared.py tests/api/test_telegram_canary_api.py tests/api/test_memory_api.py`
+- `ruff check src/eva/application/conversation.py src/eva/adapters/model/pydantic_conversation.py tests/model/test_pydantic_conversation_model.py`
 - `python3 tools/check_component_catalog.py`
 
 </details>

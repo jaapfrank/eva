@@ -3,7 +3,7 @@
 Deze kaart is mechanisch gegenereerd. Zij staat naast de semantische runtimegraaf en
 classificeert ieder gevolgd, verwijderd of niet-genegeerd nieuw repositorypad.
 
-Schema: `EvaRepositoryInventory/v1`. Brondigest: `9b4de528ae464b3a03314e24183f1801c6f4c776cbb6b3d8e2732fa85ff85988`.
+Schema: `EvaRepositoryInventory/v1`. Brondigest: `20eddf1fea36ed8f9c507004c76e69dd5be66a1df5c24483895fd914dd107cb1`.
 
 ## Samenvatting
 
@@ -235,8 +235,8 @@ Schema: `EvaRepositoryInventory/v1`. Brondigest: `9b4de528ae464b3a03314e24183f18
 | `docs/eva-agent-benchmark-v1.md` | tracked | documentation | included-tracked-noncritical | keep | 18462 |
 | `docs/eva-endbeeld-roadmap.md` | tracked | documentation | included-tracked-noncritical | keep | 16956 |
 | `docs/eva-rebuild-plan-2026-08-20.md` | tracked | documentation | included-tracked-noncritical | keep | 29009 |
-| `docs/eva-repository-inventory.generated.json` | tracked | generated | included-tracked-critical | keep | 2408141 |
-| `docs/eva-repository-inventory.generated.md` | tracked | generated | included-tracked-critical | keep | 371639 |
+| `docs/eva-repository-inventory.generated.json` | tracked | generated | included-tracked-critical | keep | 2408142 |
+| `docs/eva-repository-inventory.generated.md` | tracked | generated | included-tracked-critical | keep | 371640 |
 | `docs/eva-runtime-contract-map.generated.json` | tracked | generated | included-tracked-critical | keep | 246207 |
 | `docs/eva-runtime-contract-map.generated.md` | tracked | generated | included-tracked-critical | keep | 120103 |
 | `docs/eva-runtime-contracts.md` | tracked | documentation | included-tracked-critical | keep | 80976 |
@@ -332,11 +332,11 @@ Schema: `EvaRepositoryInventory/v1`. Brondigest: `9b4de528ae464b3a03314e24183f18
 | `eva2/design/product/conversational-voice-v1.md` | tracked | documentation | included-tracked-noncritical | keep | 16058 |
 | `eva2/design/product/dashboard-v1.md` | tracked | documentation | included-tracked-noncritical | keep | 6532 |
 | `eva2/design/product/delegation-and-workboard-v1.md` | tracked | documentation | included-tracked-noncritical | keep | 11007 |
-| `eva2/design/product/execution-workboard-v1.json` | tracked | documentation | included-tracked-noncritical | keep | 126653 |
+| `eva2/design/product/execution-workboard-v1.json` | tracked | documentation | included-tracked-noncritical | keep | 126867 |
 | `eva2/design/product/installer-and-onboarding-v1.md` | tracked | documentation | included-tracked-noncritical | keep | 24837 |
 | `eva2/design/product/learning-and-person-model-v1.md` | tracked | documentation | included-tracked-noncritical | keep | 12386 |
 | `eva2/design/product/owner-autonomy-mode-v1.md` | tracked | documentation | included-tracked-noncritical | keep | 6529 |
-| `eva2/design/product/performance-and-complexity-v1.md` | tracked | documentation | included-tracked-noncritical | keep | 7828 |
+| `eva2/design/product/performance-and-complexity-v1.md` | tracked | documentation | included-tracked-noncritical | keep | 11548 |
 | `eva2/design/product/tiered-memory-and-person-model-v1.md` | tracked | documentation | included-tracked-noncritical | keep | 10759 |
 | `eva2/design/validation/lab-36-final-acceptance-addendum-v1.md` | tracked | documentation | included-tracked-noncritical | keep | 10783 |
 | `eva2/design/vertical/noor-4d-concurrency-crash-schedules-v1.json` | tracked | documentation | included-tracked-noncritical | keep | 2362953 |
@@ -1364,7 +1364,7 @@ Schema: `EvaRepositoryInventory/v1`. Brondigest: `9b4de528ae464b3a03314e24183f18
 | `eva2/src/eva/adapters/model/openai_child_provider.py` | tracked | product-runtime | included-tracked-critical | keep | 20927 |
 | `eva2/src/eva/adapters/model/openai_codex_provider.py` | tracked | product-runtime | included-tracked-critical | keep | 26820 |
 | `eva2/src/eva/adapters/model/openai_endpoint.py` | tracked | product-runtime | included-tracked-critical | keep | 947 |
-| `eva2/src/eva/adapters/model/pydantic_conversation.py` | tracked | product-runtime | included-tracked-critical | keep | 102793 |
+| `eva2/src/eva/adapters/model/pydantic_conversation.py` | tracked | product-runtime | included-tracked-critical | keep | 106137 |
 | `eva2/src/eva/adapters/objects/__init__.py` | tracked | product-runtime | included-tracked-critical | keep | 77 |
 | `eva2/src/eva/adapters/objects/envelope.py` | tracked | product-runtime | included-tracked-critical | keep | 11121 |
 | `eva2/src/eva/adapters/objects/identity_verifier.py` | tracked | product-runtime | included-tracked-critical | keep | 2149 |
@@ -1425,7 +1425,7 @@ Schema: `EvaRepositoryInventory/v1`. Brondigest: `9b4de528ae464b3a03314e24183f18
 | `eva2/src/eva/application/action_chain_provider_claims.py` | tracked | product-runtime | included-tracked-critical | keep | 1403 |
 | `eva2/src/eva/application/action_chain_read_results.py` | tracked | product-runtime | included-tracked-critical | keep | 14407 |
 | `eva2/src/eva/application/commerce.py` | tracked | product-runtime | included-tracked-critical | keep | 13477 |
-| `eva2/src/eva/application/conversation.py` | tracked | product-runtime | included-tracked-critical | keep | 34113 |
+| `eva2/src/eva/application/conversation.py` | tracked | product-runtime | included-tracked-critical | keep | 34388 |
 | `eva2/src/eva/application/default_identity_pack.json` | tracked | product-runtime | included-tracked-critical | keep | 1517 |
 | `eva2/src/eva/application/default_identity_pack_trust.json` | tracked | product-runtime | included-tracked-critical | keep | 303 |
 | `eva2/src/eva/application/delivery.py` | tracked | product-runtime | included-tracked-critical | keep | 10516 |
@@ -1669,7 +1669,7 @@ Schema: `EvaRepositoryInventory/v1`. Brondigest: `9b4de528ae464b3a03314e24183f18
 | `eva2/tests/model/test_fixture_adapter.py` | tracked | verification | included-tracked-critical | keep | 11686 |
 | `eva2/tests/model/test_fixture_program.py` | tracked | verification | included-tracked-critical | keep | 2171 |
 | `eva2/tests/model/test_openai_codex_provider_shared.py` | tracked | verification | included-tracked-critical | keep | 19487 |
-| `eva2/tests/model/test_pydantic_conversation_model.py` | tracked | verification | included-tracked-critical | keep | 28509 |
+| `eva2/tests/model/test_pydantic_conversation_model.py` | tracked | verification | included-tracked-critical | keep | 38644 |
 | `eva2/tests/objects/test_cas.py` | tracked | verification | included-tracked-critical | keep | 21494 |
 | `eva2/tests/objects/test_envelope.py` | tracked | verification | included-tracked-critical | keep | 7256 |
 | `eva2/tests/objects/test_fixture_harness.py` | tracked | verification | included-tracked-critical | keep | 7329 |
