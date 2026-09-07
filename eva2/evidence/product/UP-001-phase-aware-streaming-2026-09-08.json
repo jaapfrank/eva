@@ -1,0 +1,60 @@
+{
+  "taskId": "UP-001",
+  "date": "2026-09-08",
+  "status": "source_verified_not_deployed",
+  "baseCommit": "ca4248b3cca80eb0680e021d813170ca6a1d63f6",
+  "implementationCommit": "56c266aaa60a20d88209d5da9cfd7d50d2f235ed",
+  "outcome": "Provider-marked final answers stream while tools are offered. Commentary and tool arguments stay hidden; final text excludes commentary. The existing adapter, SDK, text sink and durable execution path remain the only route.",
+  "sourceSha256": {
+    "src/eva/application/conversation.py": "3fb596c235c83a341caa4622459a62fde8ecb25f2aa010f998fbc304e101e618",
+    "src/eva/adapters/model/pydantic_conversation.py": "13a920fa0c6077956ed98e5e58cbb4fef3bbe0af2a01a9f7c046dcd4e6cf5dd1",
+    "tests/model/test_pydantic_conversation_model.py": "46429d20c44b756a6ea161cd9794859cbb71e5108d82f94751ce2c1d92a96917",
+    "design/product/performance-and-complexity-v1.md": "0c2977823223ff3b845eec75063c9975e5fba615eec579af5c16f97a93c293b4"
+  },
+  "verification": {
+    "command": "PYTHONPATH=src:. python -m pytest -q tests/model/test_pydantic_conversation_model.py tests/model/test_conversation_model.py tests/model/test_openai_codex_provider_shared.py tests/api/test_telegram_canary_api.py tests/api/test_memory_api.py --tb=short",
+    "result": "168 passed in 10.43s",
+    "ruff": "passed on both changed product modules and changed test module",
+    "componentCatalog": "passed after inventory regeneration",
+    "repositoryInventory": "2086 files; 88 existing policy issues, not repository-wide green",
+    "baseline": "Initial seven new tests against old product source: six failed, one passed. Both answer cases repeated twice produced zero deltas. Commentary-only output was incorrectly accepted as final.",
+    "after": "Both answer cases repeated twice emit two exact chunks before response.completed. Wire tests use the installed SDK/Pydantic parser and httpx2 MockTransport, not a real remote provider.",
+    "negativeControls": [
+      "Unmarked text with tools stays non-streaming; marker-looking content grants no permission.",
+      "Commentary-only output fails; commentary before/after final text is absent from preview and final answer.",
+      "Hosted tool discovery and external tool choice return one deferred action with no visible commentary.",
+      "Mixed final answer/external tool fails in either order before returning an executable action.",
+      "A failure after visible output makes one request, never a retry.",
+      "Changed phase on the same wire message fails without retry.",
+      "Replacement PartStartEvents fail without duplicate text; these are framework-event tests, not claims that OpenAI emitted those frames."
+    ],
+    "earlierAttempts": [
+      "Tool fixture initially omitted available_actions, then hosted discovery. Both versions failed; the fixture was corrected to represent the real provider protocol. No production retry or admission gate was weakened.",
+      "Independent first review requested part replacement/metadata-change coverage; extra guards and four tests added before final review."
+    ]
+  },
+  "realProviderPair": {
+    "model": "gpt-6-astra",
+    "reasoning": "medium",
+    "method": "Two separate public-adapter calls with the same short synthetic prompt, identity, empty memory and offered synthetic tool, using the existing private subscription lease. Baseline loaded from git 94f3f123; candidate from working source in a separate host process. No application, worker or database was started.",
+    "baselineSourceSha256": "a81723f39294573944115cb807166028c6e132ed91061957a66558c329cc743c",
+    "observedCandidateSourceSha256": "25ff50b015f58fd27394889111b7e23a7dc3c69ef0e4089c236e2bcd952d9c0b",
+    "sourceLimit": "The remote pair preceded the additional replacement/phase-change rejection guards. Final reviewed source hash is separately recorded above; its 168-test result includes those guards. Do not relabel this pair as a call on the final commit.",
+    "before": {"calls": 1, "inputTokens": 1297, "outputTokens": 11, "deltas": 0, "firstDeltaMs": null, "completionMs": 3225},
+    "after": {"calls": 1, "inputTokens": 1297, "outputTokens": 11, "deltas": 7, "firstDeltaMs": 1805, "completionMs": 2135, "previewEqualsFinal": true},
+    "sameAnswerSha256": "21f519b2b2e8b9dc9c98add7c4e2144a4d94d1f7e9506d3c5d31b6232d594727",
+    "totalMeasuredTokens": 2616,
+    "externalToolEffects": 0,
+    "telegramMessages": 0,
+    "limits": "One pair proves observed streaming compatibility, not general latency, human preference or competitor superiority. Hindsight and subagents were not invoked. This is not Telegram delivery."
+  },
+  "upstream": {
+    "Hermes": {"version": "v2026.8.31", "commit": "29112bef099274229cadff79cdff7bf7b99c4b77", "file": "gateway/stream_events.py", "sha256": "49138e7023aeea65410847ee331104fef4e22c53515a2518633a9d761622fdab", "decision": "Adapt separation of commentary/tool/final events, no additional gateway."},
+    "OpenClaw": {"version": "v2026.9.2", "commit": "3928bad9badfcb6c7d140530435e806fb8092190", "file": "extensions/telegram/src/preview-streaming.ts", "sha256": "903a00ac996ecd8dc4cfa3728a624cfa5b9ee00b93579076c537c33796d8111e", "decision": "Distinguish progress from answer text; reject a parallel provider-specific formatting route."},
+    "AgentZero": {"version": "v2.11", "commit": "6a6cecff8527b164668c7a6ab2f76b6b1ed7cfa1", "file": "extensions/python/response_stream/_20_live_response.py", "sha256": "6fd60016910f1ff691d9e70047817edb560aa0b3b5f2b1180045bb5867f4489d", "decision": "Adapt explicit user-answer selection; do not copy JSON parsing or add a response tool."},
+    "licenses": "All three exact root LICENSE files inspected: MIT. No upstream source copied, no new dependencies. Exact source links and attribution in the scoped design document.",
+    "upstreamTestsExecuted": false
+  },
+  "liveChanged": false,
+  "remaining": "Safe candidate installation and actual Telegram streaming acceptance belong to CO-007. Full product, human acceptance and comparative wins remain open."
+}
