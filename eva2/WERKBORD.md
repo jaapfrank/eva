@@ -5,75 +5,36 @@ Laatst bijgewerkt: 2026-09-07.
 Doel: [Eva als zelfstandig lerende digitale huisgenoot](PROJECTDOEL.md).
 Gebouwd, getest, live en door jou geaccepteerd zijn verschillende stappen.
 
-UX-000 is afgerond: het lokale dashboard, dezelfde vijfstappenwerklijst en de nieuwe projectmap zijn gecontroleerd en onafhankelijk beoordeeld. RT-001 is weer primair. De echte kern maakte sinds de omschakeling zes modelbesluiten om stil te blijven en twee lokale filterbesluiten; nog geen autonome levering gezien. Geen foutfingerprints in deze afgebakende controle. Stil blijven is niet automatisch een fout of bewezen nut.
+RT-001 is technisch afgerond met onafhankelijke GO en commitgebonden bewijs. De live versie bundelde twaalf oude waarnemingen tot één door Telegram bevestigde melding; een gewone bewegingsmelding bleef stil. Nu EV-003: compacte succescriteria vóór nieuwe vergelijkingsruns. Nut van de eerste melding en volledige productacceptatie blijven open.
 [Actueel bewijs](evidence/product/RT-001-autonomous-admission-wait-2026-09-07.json).
 
-RT-001: controleer de echte beslis- en leverroute en maak gemeten verbruik zichtbaar, zonder een nuttige melding te veinzen of oude gebeurtenissen blind uit te voeren. Daarna EV-003/UP-001 en de complete gesprekservaring vóór extra beheerfuncties. Het projectdashboard is geen Eva-eindacceptatie.
+Jij kunt verder praten met /eva2 voor ieder bericht; geen instellingenwerk nodig. Ik zet nu de succescriteria vast, onderzoek daarna gericht herbruikbare oplossingen en maak de gesprekroute compleet. Geen herhaling van geslaagde runtimebuilds of uitrol; geen nieuwe beheerfuncties vóór deze gebruikersverbetering.
 
 ## Nu
 
 | Volgorde | Kaart | Resultaat | Status |
 |---:|---|---|---|
-| 131 | `RT-001` — Zelfstandige runtime veilig herstellen | Zelfstandig gebruik van het bestaande abonnement herstellen zonder zelfbedacht dagmaximum; aantoonbare tokenverspilling voorkomen, oude gebeurtenissen veilig herbeoordelen en levering bewijzen. Geen dataverlies of nieuwe betaalroute. | 🟡 BEZIG |
+| 132 | `EV-003` — Eerlijke succescriteria vastzetten | Een compact, vooraf vastgezet meetprotocol voor echte gebruikerswinst; Inspect blijft de evaluatiemotor. Geen nieuwe runtime, modelcalls of winstclaim in deze kaart. | 🟡 BEZIG |
 
 Klaar betekent:
 
-- Bestaand abonnementsgebruik wordt niet geblokkeerd door een zelfbedacht dagmaximum of een ontbrekende fictieve prijsgoedkeuring. Stop, providerlimieten en bescherming tegen nutteloos herhalen blijven werken; geen betaalinstellingen wijzigen.
-- Hervatten, verlopen gebeurtenissen, bestaande needs_help-jobs en levering worden veilig behandeld; geen blind herhalen van externe effecten.
-- Zelfstandig gebruik van de bestaande modeltoegang en een passende echte gebruikersinteractie plus negatieve controle zijn bewezen op de veilig gepromoveerde kandidaat, met gemeten gebruik en zonder onnodige herhaalacties.
-- Gerichte tests en onafhankelijke review zijn groen; gegevens en terugweg zijn behouden.
+- Voor resultaat, warmte, initiatief, menselijke hulp, tijd, tokens/kosten en herstel staat vóór de runs hoe we meten en wanneer iets beter, slechter of onbekend is.
+- Winst vereist herhaalde ongeziene proeven tegen alle drie concurrenten; privacy, bevoegdheden, stop en herstel worden niet weggemiddeld. Grenzen voor ontwikkelproeven zijn geen nieuw gebruikersdagmaximum.
+- Een onafhankelijke reviewer keurt het compacte protocol goed; het dashboard verwijst naar dezelfde taak en blijft alle ontbrekende resultaten als onbekend tonen.
 
 <details>
 <summary>Technische uitvoering: bestanden en controles</summary>
 
-### Exact werk voor `RT-001`
+### Exact werk voor `EV-003`
 
-- `docs/eva-repository-inventory.generated.json`
-- `docs/eva-repository-inventory.generated.md`
-- `eva2/src/eva/application/free_will.py`
-- `eva2/src/eva/application/sensory.py`
-- `eva2/src/eva/adapters/connectors/home_assistant.py`
-- `eva2/src/eva/adapters/connectors/home_assistant_events.py`
-- `eva2/tests/connectors/test_home_assistant_live_adapters.py`
-- `eva2/src/eva/adapters/connectors/telegram.py`
-- `eva2/src/eva/adapters/postgres/telegram_pairing.py`
-- `eva2/src/eva/adapters/postgres/people_memory_overview.py`
-- `eva2/tests/postgres/test_people_memory_overview.py`
-- `eva2/tests/connectors/test_telegram.py`
-- `eva2/src/eva/adapters/postgres/sensory_events.py`
-- `eva2/src/eva/adapters/postgres/operational_timeline.py`
-- `eva2/src/eva/adapters/model/pydantic_conversation.py`
-- `eva2/src/eva/bootstrap/runtime.py`
-- `eva2/tests/application/test_free_will.py`
-- `eva2/tests/postgres/test_sensory_admission.py`
-- `eva2/tests/model/test_conversation_model.py`
-- `eva2/tests/bootstrap/test_runtime_settings.py`
-- `eva2/release/eva-cockpit-evidence-index-v1.json`
-- `eva2/deploy/living-core/telegram-proactive.compose.yml`
-- `eva2/tests/bootstrap/test_telegram_ingress_deployment.py`
-- `eva2/release/managed-b-release-input-authority-v1.json`
-- `eva2/tools/managed_b_candidate/release_inputs.py`
-- `eva2/tools/run_managed_b_required_tests.py`
-- `eva2/tests/operations/test_managed_b_release_inputs.py`
-- `eva2/tests/operations/test_run_managed_b_required_tests.py`
-- `eva2/src/eva/adapters/api/dashboard_conversation.py`
-- `eva2/tests/api/test_memory_api.py`
-- `eva2/tools/eva2_quiescent_cutover.py`
-- `eva2/tests/operations/test_eva2_quiescent_cutover.py`
+- `eva2/design/product/comparable-agent-benchmarks-v1.md`
+- `eva2/benchmark/inspect_ai_v1/README.md`
+- `eva2/tests/benchmark/test_inspect_ai_ev002.py`
 
 Echte controles:
 
-- `TMPDIR=/tmp TEMP=/tmp TMP=/tmp pytest -q tests/application/test_free_will.py tests/model/test_conversation_model.py tests/bootstrap/test_runtime_settings.py`
-- `TMPDIR=/tmp TEMP=/tmp TMP=/tmp pytest -q tests/connectors/test_home_assistant_live_adapters.py`
-- `TMPDIR=/tmp TEMP=/tmp TMP=/tmp pytest -q tests/connectors/test_telegram.py`
-- `TMPDIR=/tmp TEMP=/tmp TMP=/tmp pytest -q tests/bootstrap/test_telegram_ingress_deployment.py`
-- `TMPDIR=/tmp TEMP=/tmp TMP=/tmp pytest -q tests/postgres/test_people_memory_overview.py`
-- `TMPDIR=/tmp TEMP=/tmp TMP=/tmp pytest -q tests/postgres/test_sensory_admission.py`
-- `TMPDIR=/tmp TEMP=/tmp TMP=/tmp pytest -q tests/operations/test_managed_b_release_inputs.py tests/operations/test_run_managed_b_required_tests.py`
-- `TMPDIR=/tmp TEMP=/tmp TMP=/tmp pytest -q tests/postgres/test_operational_timeline.py`
-- `TMPDIR=/tmp TEMP=/tmp TMP=/tmp pytest -q tests/api/test_memory_api.py`
-- `TMPDIR=/tmp TEMP=/tmp TMP=/tmp pytest -q tests/operations/test_eva2_quiescent_cutover.py tests/bootstrap/test_telegram_ingress_deployment.py`
-- `ruff check src/eva/application/free_will.py src/eva/adapters/postgres/sensory_events.py src/eva/adapters/model/pydantic_conversation.py src/eva/bootstrap/runtime.py tests/application/test_free_will.py tests/postgres/test_sensory_admission.py tests/model/test_conversation_model.py`
+- `pytest -q tests/benchmark/test_inspect_ai_ev002.py`
+- `ruff check tests/benchmark/test_inspect_ai_ev002.py`
 - `python3 tools/check_component_catalog.py`
 
 </details>
@@ -83,7 +44,6 @@ Echte controles:
 Deze onderwerpen zijn alleen mijlpalen. Een mijlpaal wordt pas uitvoerbaar
 nadat zij als eerstvolgende kleine kaart exacte bestanden en tests heeft.
 
-- [ ] `EV-003` — Eerlijke succescriteria vastzetten: Vóór nieuwe vergelijkingsruns taken, herhalingen, ongeziene gevallen, versies, toegang, gelijke middelen en drempels vastleggen voor resultaat, warmte, hulp, tijd, kosten en herstel. Geen winstclaim bij ontbrekend bewijs.
 - [ ] `UP-001` — Sterke oplossingen van concurrenten hergebruiken: Exacte bronnen en licenties van OpenClaw, Hermes en Agent Zero onderzoeken; per capability overnemen, adapteren of afwijzen met kleine voor/naproef. Herkomst en onderhoud vastleggen; aantoonbaar vervangen eigen routes verwijderen.
 - [ ] `CO-007` — Menselijke gesprekroute compleet maken: Echte gezinsgesprekken beoordelen op warmte, eigen oordeel, identiteit en continuïteit; live tekststukjes met tools apart bewijzen. CO-001 bronstatus en CO-002 menselijke beoordeling zijn geen voltooiing van deze gebruikersuitkomst.
 - [ ] `CO-004` — Eigen geheugen in het dashboard tonen: Het bestaande React-Admin-dashboard toont de afgeschermde geheugenbronnen begrijpelijk zonder nieuwe webstack of browseropslag.
@@ -157,7 +117,9 @@ Afgevinkt betekent alleen: de vastgelegde kaart is afgerond, niet het hele produ
   [Bewijs](evidence/product/CO-001-telegram-live-drafts-contract-2026-09-04.json).
 - [x] `UX-000` — Grip op Eva: één visueel dashboard (done).
   [Bewijs](evidence/product/UX-000-project-dashboard-2026-09-07.json).
-- [ ] `RT-001` — Zelfstandige runtime veilig herstellen (in_progress).
+- [x] `RT-001` — Zelfstandige runtime veilig herstellen (done).
+  [Bewijs](evidence/product/RT-001-autonomous-admission-wait-2026-09-07.json).
+- [ ] `EV-003` — Eerlijke succescriteria vastzetten (in_progress).
 
 </details>
 

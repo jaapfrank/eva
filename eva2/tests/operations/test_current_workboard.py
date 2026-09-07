@@ -113,7 +113,7 @@ def test_checklist_preserves_evidence_and_open_product_outcomes() -> None:
     }
     assert "- [ ] `CO-003`" in rendered
     assert {"UP-001", "AU-004", "AU-005", "AU-006", "EV-003"} <= {
-        card["id"] for card in board["milestones"]
+        card["id"] for card in board["executionTasks"] + board["milestones"]
     }
     for completion in board["completions"].values():
         for path in completion["testReceiptPaths"]:

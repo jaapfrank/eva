@@ -2,7 +2,8 @@
 
 **[Open het visuele projectdashboard](http://localhost:44712).** Dat leest dezelfde
 werklijst als [WERKBORD.md](WERKBORD.md). UX-000 is als lokaal dashboard
-afgerond en onafhankelijk beoordeeld; RT-001 is weer de primaire opdracht.
+afgerond en onafhankelijk beoordeeld. Ook runtimeherstel RT-001 is technisch
+afgevinkt; EV-003 legt nu de succescriteria voor de volgende verbeteringen vast.
 Dit is geen eindacceptatie van Eva. De repository staat nu in
 `/home/administrator/project/Eva2`; de oude kandidaatlocatie verwijst alleen door.
 Onderstaande lange tekst blijft achtergrond en historische controle, geen
@@ -19,7 +20,23 @@ van hun sterke open-sourceoplossingen. Alle taken en afvinkstatussen staan in
 [WERKBORD.md](WERKBORD.md). Gebouwd is niet automatisch live of geaccepteerd.
 De historische volgordes hieronder bepalen niet meer wat als volgende gebeurt.
 
-Actuele route op 7 september om 17:48: `/eva2` gebruikt nu slot 4 op `44711`,
+Actueel om 23:23: de nieuwe runtime draait op slot 3 (`44710`), bron
+`bbc83b32`, image `580ef508…`. Zij groepeert oude waarnemingen en controleert
+opnieuw de uitvoeringstermijn na trage bron-/geheugenopvragen. De onafhankelijke
+review, 1.961 vereiste tests, 221 imagecontroles en scan 0 hoog/0 kritisch zijn
+groen. De omschakeling behield actuele gegevens en identiteit; een eerder
+antwoord kwam exact terug zonder nieuwe modelcall. Slot 4 blijft gestopt als
+terugweg. Je kunt praten met `/eva2` vóór ieder bericht; niets instellen.
+Je vragen van 21:48 en 21:49 kregen antwoord op de vorige versie. Om 23:34
+verwerkte Eva twaalf oude waarnemingen met één modelaanroep en verstuurde één
+samenvatting naar jouw privéchat; Telegram bevestigde de tekst en ontvanger.
+De melding maakte duidelijk dat het voedingsprobleem nu niet actief is.
+Een gewone bewegingsmelding bleef juist stil. Of de samenvatting nuttig en
+tijdig was, is nog niet beoordeeld; volledige acceptatie en live tekststukjes
+blijven open.
+[Controle en grenzen](evidence/product/RT-001-autonomous-admission-wait-2026-09-07.json).
+
+Historische route op 7 september om 17:48: `/eva2` gebruikte slot 4 op `44711`,
 bron `8c9ae668`, image `a7d1eb5c…`, met dezelfde Astra-configuratie en identiteit.
 De beoordeelde nieuwe poging heeft 48 gesprekstabellen en 23 geheugentabellen
 overgezet; slot 3 staat gestopt als terugweg, zonder uitgaande Telegramrechten.
