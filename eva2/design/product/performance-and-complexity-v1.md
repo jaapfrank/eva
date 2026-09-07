@@ -1,5 +1,47 @@
 # Eva Performance and Complexity v1
 
+## UP-001 — Eindantwoord streamen, tussenstappen gescheiden (8 september 2026)
+
+De bestaande Pydantic-route onderdrukte alle antwoordtekst zodra zij tools
+aanbood. De kandidaat gebruikt nu de provider-markering `final_answer` per
+tekstdeel. `commentary` en toolargumenten blijven verborgen. Zonder markering
+blijft de bestaande toolvrije streamroute werken; met tools verschijnt het
+ongemarkeerde antwoord pas na voltooiing. Alleen commentaar is geen eindantwoord.
+De preview is geen bewijs van een geslaagde actie: duurzame voltooiing en
+onafhankelijke readback blijven afzonderlijk verplicht. Een gemengd eindantwoord
+en externe toolcall wordt geweigerd, zonder uitvoering of nieuwe modelpoging.
+
+| Onderzochte exacte bron | Keuze voor Eva |
+|---|---|
+| [Hermes v2026.8.31, `gateway/stream_events.py`](https://github.com/NousResearch/hermes-agent/blob/29112bef099274229cadff79cdff7bf7b99c4b77/gateway/stream_events.py) | Neem de scheiding tussen tussenbericht, toolgebeurtenis en eindantwoord over; geen tweede agentloop of gateway. Bestand SHA-256 `49138e7023aeea65410847ee331104fef4e22c53515a2518633a9d761622fdab`. |
+| [OpenClaw v2026.9.2, `extensions/telegram/src/preview-streaming.ts`](https://github.com/openclaw/openclaw/blob/3928bad9badfcb6c7d140530435e806fb8092190/extensions/telegram/src/preview-streaming.ts) | Progressweergave is niet hetzelfde als antwoordtekst. Geen kopie van hun aparte opmaak-/toolnaamroute; Eva gebruikt haar bestaande tekstkanaal. Bestand SHA-256 `903a00ac996ecd8dc4cfa3728a624cfa5b9ee00b93579076c537c33796d8111e`. |
+| [Agent Zero v2.11, `extensions/python/response_stream/_20_live_response.py`](https://github.com/agent0ai/agent-zero/blob/6a6cecff8527b164668c7a6ab2f76b6b1ed7cfa1/extensions/python/response_stream/_20_live_response.py) | Neem expliciete selectie van gebruikersantwoord over; niet hun JSON-parser of een extra response-tool. Bestand SHA-256 `6fd60016910f1ff691d9e70047817edb560aa0b3b5f2b1180045bb5867f4489d`. |
+
+De drie rootlicenties op deze commits zijn gelezen: MIT, respectievelijk Nous
+Research (2025), OpenClaw Foundation (2026) en Agent Zero s.r.o. (2025). Er is geen
+upstreamcode gekopieerd en geen dependency toegevoegd. Het betreft hergebruik
+van ontwerpprincipes via de al geïnstalleerde Pydantic AI 2.37-provideradapter.
+De [officiële OpenAI-betekenis van `phase`](https://developers.openai.com/api/docs/guides/deployment-checklist#set-up-the-assistant-phase-parameter)
+onderbouwt de scheiding, niet een garantie dat een externe handeling gelukt is.
+
+De lokale voor/naproef loopt door de echte geïnstalleerde SDK en Pydantic-parser
+met een gesimuleerde SSE-verbinding. Twee tekstgevallen, ieder tweemaal: vóór
+de wijziging nul tekststukken, erna twee vóór `response.completed`. Commentaar
+wordt ook uit het bewaarde eindantwoord gehouden. Negatieve controles bewaken
+ongemarkeerde tekst, wisselende tekstonderdelen, externe toolkeuze en uitval na
+een preview. Dit is geen gemeten concurrentiewinst en nog geen live Telegram-
+acceptatie. Een echte Astra-medium voor/naproef gaf vervolgens bytegelijk
+hetzelfde antwoord: vóór nul tekststukken, na zeven; eerste tekst na 1.805 ms,
+voltooid na 2.135 ms. Beide calls gebruikten 1.297 input- en 11 outputtokens,
+zonder externe tooluitvoering of Telegrambericht. Dit ene paar bewijst de
+streamcompatibiliteit, geen algemene snelheidswinst.
+
+Review vroeg extra bewijs voor vervangende tekstonderdelen. Een gewijzigde fase
+op hetzelfde onderdeel wordt via de echte SDK-wire getest; vervangende
+`PartStartEvent`s via het publieke Pydantic-eventcontract. Beide stoppen met
+een fout zonder tekst dubbel aan te plakken of de modelcall te herhalen.
+De overige tekst hieronder is de historische ontwerpstand.
+
 Bijgewerkt: 1 september 2026.
 
 ## Doel

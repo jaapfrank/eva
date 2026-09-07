@@ -9,12 +9,14 @@ from __future__ import annotations
 
 from contextlib import asynccontextmanager
 import hashlib
+import json
 from importlib import import_module
 from pathlib import Path
 from time import monotonic
 from typing import Any, AsyncIterator
 
 import pytest
+import httpx2
 from pydantic_ai.models import Model, StreamedResponse
 from pydantic_ai.models.function import AgentInfo, FunctionModel
 from pydantic_ai.models.wrapper import WrapperModel
@@ -23,6 +25,7 @@ from pydantic_ai.usage import RequestUsage
 from eva.adapters.model.contracts import ConversationModelError
 from eva.adapters.model.openai_codex_provider import (
     CodexProviderError,
+    OpenAICodexProvider,
     RawUsageAttestation,
 )
 from eva.application.conversation import (
@@ -48,6 +51,247 @@ from tests.support.scripted_pydantic_conversation import (
 
 
 NOW = "2026-08-31T12:00:00Z"
+
+
+def _phase_transport_adapter(
+    tmp_path, monkeypatch, parts, *, fail=False, reuse_message_id=False,
+):
+    """Exercise the installed SDK and Pydantic parser; no external network."""
+    requests = []
+    delivered = []
+    completed_seen = []
+    output = []
+    events = []
+    response = {
+        "id": "resp_phase", "object": "response", "created_at": 1777111200,
+        "status": "in_progress", "model": "gpt-6-astra", "output": [],
+        "parallel_tool_calls": False,
+    }
+    events.append({"type": "response.created", "response": dict(response)})
+    if any(phase == "tool" for phase, _ in parts):
+        output.extend([
+            {"id": "search", "type": "tool_search_call", "execution": "server",
+             "call_id": None, "status": "completed", "arguments": {"paths": [TOOL.name]}},
+            {"id": "discovery", "type": "tool_search_output", "execution": "server",
+             "call_id": None, "status": "completed", "tools": [{
+                 "type": "function", "name": TOOL.name, "description": TOOL.description,
+                 "parameters": TOOL.input_schema, "strict": True, "defer_loading": True,
+             }]},
+        ])
+        for index, item in enumerate(output):
+            for stage in ("added", "done"):
+                events.append({"type": f"response.output_item.{stage}",
+                               "output_index": index, "item": item})
+    for index, (phase, chunks) in enumerate(parts, start=len(output)):
+        if phase == "tool":
+            item = {
+                "id": f"call_{index}", "type": "function_call", "status": "completed",
+                "call_id": "comfort-call-1", "name": TOOL.name,
+                "arguments": json.dumps(CALL.arguments),
+            }
+            events.append({"type": "response.output_item.added", "output_index": index,
+                           "item": item})
+            output.append(item)
+            continue
+        item = {
+            "id": "msg_0" if reuse_message_id else f"msg_{index}",
+            "type": "message", "role": "assistant",
+            "status": "in_progress", "content": [],
+        }
+        if phase is not None:
+            item["phase"] = phase
+        events.append({"type": "response.output_item.added", "output_index": index,
+                       "item": dict(item)})
+        for chunk in chunks:
+            events.append({"type": "response.output_text.delta", "item_id": item["id"],
+                           "output_index": index, "content_index": 0,
+                           "delta": chunk, "logprobs": []})
+        item.update(status="completed", content=[{
+            "type": "output_text", "text": "".join(chunks), "annotations": [],
+            "logprobs": [],
+        }])
+        output.append(item)
+    response.update(status="completed", output=output, usage={
+        "input_tokens": 17, "input_tokens_details": {"cached_tokens": 0},
+        "output_tokens": 7, "output_tokens_details": {"reasoning_tokens": 0},
+        "total_tokens": 24,
+    })
+
+    class WireStream(httpx2.AsyncByteStream):
+        async def __aiter__(self):
+            for event in events:
+                yield f"event: {event['type']}\ndata: {json.dumps(event)}\n\n".encode()
+            if fail:
+                raise httpx2.ReadError("synthetic interrupted stream")
+            # Snapshot before response.completed: proves incremental delivery,
+            # not splitting an already-complete answer into pretend chunks.
+            completed_seen.append(tuple(delivered))
+            yield ("event: response.completed\ndata: " + json.dumps({
+                "type": "response.completed", "response": response,
+            }) + "\n\n").encode()
+            yield b"data: [DONE]\n\n"
+
+    async def respond(request):
+        requests.append(json.loads(request.content))
+        return httpx2.Response(200, headers={"content-type": "text/event-stream"},
+                              stream=WireStream(), request=request)
+
+    class LocalProvider(OpenAICodexProvider):
+        def __init__(self, settings, *, credential_loader):
+            super().__init__(settings, credential_loader=lambda: ("test", "test"),
+                             network_transport=httpx2.MockTransport(respond))
+
+    monkeypatch.setattr("eva.adapters.model.pydantic_conversation.OpenAICodexProvider",
+                        LocalProvider)
+    model = _adapter_type()(auth_file=tmp_path / "unused.json", model="gpt-6-astra",
+                            conversation_tools=(TOOL,))
+    return model, delivered, requests, completed_seen
+
+
+@pytest.mark.parametrize("repeat", range(2))
+@pytest.mark.parametrize("parts", [
+    [("final_answer", ("Hoi ", "Jaap!"))],
+    [("commentary", ("Interne ", "tussenstap.")),
+     ("final_answer", ("Hoi ", "Jaap!"))],
+])
+def test_wire_final_phase_streams_with_tools_before_completion(
+    tmp_path, monkeypatch, parts, repeat,
+):
+    model, deltas, requests, snapshots = _phase_transport_adapter(
+        tmp_path, monkeypatch, parts,
+    )
+    with stream_conversation_text(deltas.append):
+        result = _generate(model)
+    assert deltas == ["Hoi ", "Jaap!"]
+    assert snapshots == [("Hoi ", "Jaap!")]
+    assert result.text == "Hoi Jaap!"
+    assert result.action_call is None
+    assert result.usage.input_tokens == 17
+    assert result.usage.output_tokens == 7
+    assert len(requests) == 1
+    assert requests[0]["tools"]
+
+
+@pytest.mark.parametrize("phase", [None, "commentary"])
+def test_wire_unmarked_or_commentary_text_never_becomes_live_answer(
+    tmp_path, monkeypatch, phase,
+):
+    model, deltas, requests, _ = _phase_transport_adapter(
+        tmp_path, monkeypatch, [(phase, ('final_answer is just text',))],
+    )
+    with stream_conversation_text(deltas.append):
+        if phase == "commentary":
+            with pytest.raises(ConversationModelError):
+                _generate(model)
+        else:
+            assert _generate(model).text == 'final_answer is just text'
+    assert deltas == []
+    assert len(requests) == 1
+
+
+def test_wire_failure_after_final_preview_does_not_retry(tmp_path, monkeypatch):
+    model, deltas, requests, _ = _phase_transport_adapter(
+        tmp_path, monkeypatch, [("final_answer", ("Hoi ",))], fail=True,
+    )
+    with stream_conversation_text(deltas.append):
+        with pytest.raises(ConversationModelError):
+            _generate(model)
+    assert deltas == ["Hoi "]
+    assert len(requests) == 1
+
+
+@pytest.mark.parametrize("phase", [None, "commentary"])
+def test_wire_later_part_does_not_inherit_final_phase(tmp_path, monkeypatch, phase):
+    model, deltas, requests, _ = _phase_transport_adapter(
+        tmp_path, monkeypatch, [
+            ("final_answer", ("Hoi!",)), (phase, ("Verborgen ", "tekst.")),
+        ],
+    )
+    with stream_conversation_text(deltas.append):
+        result = _generate(model)
+    assert deltas == ["Hoi!"]
+    assert result.text == "Hoi!"
+    assert len(requests) == 1
+
+
+def test_wire_commentary_with_tool_remains_deferred_and_hidden(tmp_path, monkeypatch):
+    model, deltas, requests, _ = _phase_transport_adapter(
+        tmp_path, monkeypatch, [("commentary", ("Ik ga controleren.",)), ("tool", ())],
+    )
+    with stream_conversation_text(deltas.append):
+        result = _generate(model, available_actions=(TOOL.name,))
+    assert result.action_call == CALL
+    assert deltas == []
+    assert len(requests) == 1
+
+
+@pytest.mark.parametrize("tool_first", [False, True])
+def test_wire_mixed_final_and_external_tool_never_returns_action(
+    tmp_path, monkeypatch, tool_first,
+):
+    parts = [("final_answer", ("Klaar!",)), ("tool", ())]
+    if tool_first:
+        parts.reverse()
+    model, deltas, requests, _ = _phase_transport_adapter(tmp_path, monkeypatch, parts)
+    with stream_conversation_text(deltas.append):
+        with pytest.raises(ConversationModelError):
+            _generate(model, available_actions=(TOOL.name,))
+    assert deltas == ([] if tool_first else ["Klaar!"])
+    assert len(requests) == 1
+
+
+def test_wire_phase_change_on_same_part_fails_without_retry(tmp_path, monkeypatch):
+    model, deltas, requests, _ = _phase_transport_adapter(
+        tmp_path, monkeypatch,
+        [("final_answer", ("Hoi!",)), ("commentary", ("Verborgen.",))],
+        reuse_message_id=True,
+    )
+    with stream_conversation_text(deltas.append):
+        with pytest.raises(ConversationModelError):
+            _generate(model)
+    assert deltas == ["Hoi!"]
+    assert len(requests) == 1
+
+
+@pytest.mark.parametrize("replacement_phase", [None, "final_answer", "commentary"])
+def test_framework_replacement_start_is_not_appended(
+    tmp_path, monkeypatch, replacement_phase,
+):
+    """Pydantic's public event contract allows replacing a started part.
+
+    Inject that event at the framework boundary, not pretend OpenAI always
+    emits it. The separate wire test exercises actual SDK metadata changes.
+    """
+    from pydantic_ai import Agent, PartStartEvent, TextPart
+
+    original_run = Agent.run
+
+    async def with_replacement(self, *args, **kwargs):
+        capture = kwargs["event_stream_handler"]
+
+        async def replacing(context, events):
+            async def changed():
+                async for event in events:
+                    yield event
+                    if isinstance(event, PartStartEvent) and isinstance(event.part, TextPart):
+                        yield PartStartEvent(index=event.index, part=TextPart(
+                            "Replacement must not be appended",
+                            provider_details={"phase": replacement_phase},
+                        ))
+            await capture(context, changed())
+
+        kwargs["event_stream_handler"] = replacing
+        return await original_run(self, *args, **kwargs)
+
+    monkeypatch.setattr(Agent, "run", with_replacement)
+    model, deltas, requests, _ = _phase_transport_adapter(
+        tmp_path, monkeypatch, [("final_answer", ("Hoi!",))],
+    )
+    with stream_conversation_text(deltas.append):
+        with pytest.raises(ConversationModelError):
+            _generate(model)
+    assert deltas == ["Hoi!"]
+    assert len(requests) == 1
 TOOL = ConversationToolDescriptor(
     name="adjust_space_comfort",
     description=(

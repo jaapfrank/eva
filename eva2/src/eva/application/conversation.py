@@ -50,9 +50,16 @@ def stream_conversation_text(sink: Callable[[str], None]) -> Iterator[None]:
         _TEXT_DELTA_SINK.reset(token)
 
 
-def publish_conversation_text(delta: str, *, tools_disabled: bool) -> None:
+def publish_conversation_text(
+    delta: str, *, tools_disabled: bool, final_answer: bool = False,
+) -> None:
+    """Publish a provisional answer, never an execution/completion receipt.
+
+    Adapters may admit provider-marked final text even with tools available.
+    Unmarked text keeps the existing tool-free requirement.
+    """
     sink = _TEXT_DELTA_SINK.get()
-    if sink is not None and tools_disabled and delta:
+    if sink is not None and (tools_disabled or final_answer) and delta:
         sink(delta)
 
 

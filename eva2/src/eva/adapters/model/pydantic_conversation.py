@@ -626,19 +626,44 @@ class PydanticConversationModel:
             ConversationModelTiming,
         ]:
             first_content_ms: int | None = None
-            publish_text = not tools
+            text_phases: dict[int, str | None] = {}
+            deferred_started = False
+            answer_preview_started = False
 
             async def capture_events(_context: Any, events: AsyncIterator[Any]) -> None:
-                nonlocal first_content_ms
+                nonlocal first_content_ms, deferred_started, answer_preview_started
                 async for event in events:
                     delta = ""
                     if isinstance(event, PartStartEvent):
                         if isinstance(event.part, TextPart):
+                            if event.index in text_phases:
+                                raise ConversationModelError(
+                                    "conversation replaced a streamed text part"
+                                )
+                            # Phase comes from the provider envelope, not model text.
+                            # Track each part separately: commentary must not inherit
+                            # an earlier part's final-answer permission.
+                            text_phases[event.index] = (
+                                event.part.provider_details or {}
+                            ).get("phase")
                             delta = event.part.content
                         elif isinstance(event.part, BaseToolCallPart):
+                            text_phases.pop(event.index, None)
                             output_started[0] = True
+                            if isinstance(event.part, ToolCallPart):
+                                deferred_started = True
+                                if answer_preview_started:
+                                    raise ConversationModelError(
+                                        "conversation mixed an answer with a deferred action"
+                                    )
                     elif isinstance(event, PartDeltaEvent):
                         if isinstance(event.delta, TextPartDelta):
+                            details = event.delta.provider_details or {}
+                            if ("phase" in details
+                                and details["phase"] != text_phases.get(event.index)):
+                                raise ConversationModelError(
+                                    "conversation changed a streamed text phase"
+                                )
                             delta = event.delta.content_delta
                         elif isinstance(event.delta, ToolCallPartDelta):
                             output_started[0] = True
@@ -648,7 +673,15 @@ class PydanticConversationModel:
                             first_content_ms = round(
                                 (monotonic() - phase_started_at) * 1000
                             )
-                        publish_conversation_text(delta, tools_disabled=publish_text)
+                        phase = text_phases.get(event.index)
+                        final_answer = phase == "final_answer"
+                        unmarked_without_tools = phase is None and not tools
+                        if not deferred_started and (final_answer or unmarked_without_tools):
+                            answer_preview_started = True
+                            publish_conversation_text(
+                                delta, tools_disabled=unmarked_without_tools,
+                                final_answer=final_answer,
+                            )
 
             definitions = [
                 ToolDefinition(
@@ -724,7 +757,31 @@ class PydanticConversationModel:
             text = ""
             if isinstance(output, str):
                 text = output
+                text_parts = [
+                    part for part in result.response.parts if isinstance(part, TextPart)
+                ]
+                if any((part.provider_details or {}).get("phase") is not None
+                       for part in text_parts):
+                    # Pydantic's plain string output joins commentary and final
+                    # parts. Keep the durable answer identical to its preview.
+                    text = "".join(
+                        part.content for part in text_parts
+                        if (part.provider_details or {}).get("phase") == "final_answer"
+                    )
+                    if not text.strip():
+                        raise ConversationModelError(
+                            "conversation ended without a final answer"
+                        )
             elif isinstance(output, DeferredToolRequests):
+                if any(
+                    isinstance(part, TextPart)
+                    and (part.provider_details or {}).get("phase") == "final_answer"
+                    and part.content
+                    for part in result.response.parts
+                ):
+                    raise ConversationModelError(
+                        "conversation mixed an answer with a deferred action"
+                    )
                 if output.approvals or len(output.calls) != 1:
                     raise ConversationModelError(
                         "conversation model must return exactly one deferred action"
