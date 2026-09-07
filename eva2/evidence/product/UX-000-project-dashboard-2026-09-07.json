@@ -1,0 +1,55 @@
+{
+  "taskId": "UX-000",
+  "date": "2026-09-07",
+  "baseCommit": "ccbe0bb62e74674c8abe1c57a7d67a7fe907aa10",
+  "implementationCommit": "1f70056a440d01e2999326debdcda7b8a957abf9",
+  "status": "local_dashboard_tests_passed_review_binding_pending",
+  "scope": "Local project dashboard and shared outcome-first work order, not the Eva runtime or product acceptance.",
+  "tests": {
+    "workboard": {
+      "command": "pytest -q tests/operations/test_current_workboard.py",
+      "passed": 17,
+      "failed": 0
+    },
+    "browser": {
+      "command": "node experiments/react-admin-dashboard-v1/verify-project.cjs",
+      "url": "http://localhost:44712",
+      "status": "passed",
+      "viewports": [
+        "1440x1100",
+        "390x844"
+      ],
+      "capabilities": 8,
+      "roadmapPhases": 5,
+      "sourceMatchesWorkboard": true,
+      "phaseExpandSearch": true,
+      "refreshAndStaleFailure": true,
+      "dynamicRuntimeLabel": true,
+      "externalRequests": 0,
+      "browserStorageEntries": 0,
+      "modelCalls": 0,
+      "dataMutations": 0
+    },
+    "build": {
+      "command": "npm run build -- --mode project",
+      "status": "passed",
+      "warning": "806.66 kB JS chunk exceeds advisory 500 kB threshold; no added dependencies."
+    },
+    "ruff": "passed"
+  },
+  "environment": {
+    "repository": "/home/administrator/project/Eva2",
+    "sourceModule": "eva2",
+    "testPython": "/home/administrator/project/.eva2-artifacts/pydantic-ai-2.37-gate-env.NWD66e/venv/bin/python",
+    "hosting": "Loopback Vite preview; transient user service eva2-project-dashboard.service; reboot persistence not proven.",
+    "limitations": "Tests use the existing workspace and installed dependencies, including pre-existing uncommitted runtime and evidence files; not a clean-room build or release attestation."
+  },
+  "userOutcomes": [
+    "One visual overview separates built, tested, in use and accepted.",
+    "Current task and five roadmap phases use the same validated workboard.",
+    "Conversation, upstream assessment and voice brought forward; all 34 existing milestones retained.",
+    "Official competitor releases and root licenses linked; proposed reuse trials are not completed integrations.",
+    "Worktree moved without file-content, Git-status or HEAD change at move time; old path is a compatibility symlink."
+  ],
+  "review": null
+}
