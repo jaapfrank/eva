@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 from pathlib import Path
+import re
 
 import pytest
 
@@ -97,7 +98,67 @@ def test_completed_work_requires_an_independent_reviewer() -> None:
     assert done["reviewerRole"] != done["ownerRole"]
 
 
+def test_checklist_preserves_evidence_and_open_product_outcomes() -> None:
+    board = json.loads(BOARD.read_text(encoding="utf-8"))
+    rendered = render_human(board)
+    assert "PROJECTDOEL.md" in rendered
+    for card in board["executionTasks"]:
+        mark = "x" if card["status"] == "done" else " "
+        assert f"- [{mark}] `{card['id']}`" in rendered
+    for card in board["milestones"]:
+        assert f"- [ ] `{card['id']}`" in rendered
+    assert "- [ ] `CO-002`" in rendered
+    assert board["activeTaskId"] in {
+        card["id"] for card in board["executionTasks"] if card["status"] != "done"
+    }
+    assert "- [ ] `CO-003`" in rendered
+    assert {"UP-001", "AU-004", "AU-005", "AU-006", "EV-003"} <= {
+        card["id"] for card in board["milestones"]
+    }
+    for completion in board["completions"].values():
+        for path in completion["testReceiptPaths"]:
+            assert path.removeprefix("eva2/") in rendered
+
+
 def test_human_board_cannot_drift_from_machine_source(tmp_path: Path) -> None:
     paths = copy_board(tmp_path, lambda _board: None, sync_human=False)
     with pytest.raises(RuntimeError, match="human workboard differs"):
         validate(ROOT, paths[0], CATALOG, paths[1])
+
+
+@pytest.mark.parametrize("mutation", ["missing", "duplicate", "unknown", "reordered"])
+def test_dashboard_roadmap_cannot_be_a_second_work_queue(tmp_path: Path, mutation: str) -> None:
+    def change(board):
+        ids = board["audit"]["projectDashboard"]["roadmap"][0]["taskIds"]
+        if mutation == "missing":
+            ids.pop()
+        elif mutation == "duplicate":
+            ids.append(ids[0])
+        elif mutation == "unknown":
+            ids.append("MISSING-001")
+        else:
+            ids[0], ids[1] = ids[1], ids[0]
+
+    paths = copy_board(tmp_path, change)
+    with pytest.raises(RuntimeError, match="roadmap"):
+        validate(ROOT, paths[0], CATALOG, paths[1])
+
+
+def test_board_keeps_outcomes_visible_and_technical_details_collapsed() -> None:
+    board = json.loads(BOARD.read_text(encoding="utf-8"))
+    rendered = render_human(board)
+    visible = re.sub(r"<details>.*?</details>", "", rendered, flags=re.DOTALL)
+    primary = next(card for card in board["executionTasks"] if card["id"] == board["activeTaskId"])
+    assert rendered.count("<details>") == rendered.count("</details>") == 3
+    assert "<details open" not in rendered
+    assert primary["outcome"] in visible
+    for condition in primary["doneWhen"]:
+        assert condition in visible
+    for path in primary["changePaths"]:
+        assert f"`{path}`" in rendered and f"`{path}`" not in visible
+    for command in primary["testCommands"]:
+        assert f"`{command}`" in rendered and f"`{command}`" not in visible
+    for milestone in board["milestones"]:
+        assert f"- [ ] `{milestone['id']}`" in visible
+    assert "- [ ] `CO-002`" in visible
+    assert "- [ ] `CO-003`" in visible

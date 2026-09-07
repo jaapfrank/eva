@@ -1,6 +1,25 @@
 # Eva 2
 
-Korte actuele voortgang: [`PROJECT_STATUS.md`](PROJECT_STATUS.md).
+**[Open het projectdashboard](http://localhost:44712)** voor het visuele overzicht.
+
+Volg het werk in **[WERKBORD.md](WERKBORD.md)**: wat nu gebeurt, wat klaar is
+en welke gebruikersfuncties nog ontbreken. Dit is de enige uitvoerwachtrij.
+
+Het [projectdoel](PROJECTDOEL.md) beschrijft de volledige ambitie.
+[PROJECT_STATUS.md](PROJECT_STATUS.md) bevat de laatste livecontrole en de
+historische productvergelijkingen; die bepalen niet de werkvolgorde.
+
+De broncode staat in `src/eva/`, tests in `tests/` en installatiecode in
+`deploy/`. Ontwerp, eerdere beoordelingen en bewijs staan respectievelijk in
+`design/`, `reviews/` en `evidence/`. Je hoeft die niet door te nemen om de
+voortgang te volgen.
+
+<details>
+<summary>Historische technische toelichting en eerdere ontwikkelcontroles</summary>
+
+Onderstaande tekst beschrijft eerdere ontwikkelfasen. Versies, routes en
+statusclaims daarin zijn geen actuele installatie-instructies. Gebruik voor
+de huidige stand het werkbord en de gedateerde livecontrole hierboven.
 
 Dit is de nieuwe, connectorneutrale Eva-runtime. Deze map deelt geen uitvoerbare code,
 schema-eigenaarschap, secrets of processtate met Eva 1.
@@ -189,3 +208,5 @@ Het bevroren resultaat staat in
 [`postgresql-durability-gate.json`](evidence/4c/postgresql-durability-gate.json).
 Het claimt geen async datasource, connector-, model-, effect-,
 gebruikers- of productiegedrag.
+
+</details>

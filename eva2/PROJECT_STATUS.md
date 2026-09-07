@@ -1,6 +1,124 @@
 # Eva 2 — projectbord en vergelijking
 
-Laatste actuele controle: 5 september 2026.
+**[Open het visuele projectdashboard](http://localhost:44712).** Dat leest dezelfde
+werklijst als [WERKBORD.md](WERKBORD.md). De primaire opdracht is nu UX-000:
+zichtbaar overzicht en herijking vóór verder productwerk. RT-001 is behouden,
+maar tijdelijk niet primair. De repository staat nu in
+`/home/administrator/project/Eva2`; de oude kandidaatlocatie verwijst alleen door.
+Onderstaande lange tekst blijft achtergrond en historische controle, geen
+tweede uitvoerwachtrij.
+
+Laatste ontwikkel- en livecontrole: 7 september 2026. De vergelijkingstabel verderop is van 5 september.
+
+## Actueel doel en afvinkbare voortgang
+
+Het aangescherpte [projectdoel](PROJECTDOEL.md) is op 7 september door Jaap
+vastgesteld: Eva als zelfstandig lerende, handelende digitale huisgenoot,
+met aantoonbare winst op OpenClaw, Hermes en Agent Zero en gericht hergebruik
+van hun sterke open-sourceoplossingen. Alle taken en afvinkstatussen staan in
+[WERKBORD.md](WERKBORD.md). Gebouwd is niet automatisch live of geaccepteerd.
+De historische volgordes hieronder bepalen niet meer wat als volgende gebeurt.
+
+Actuele route op 7 september om 17:48: `/eva2` gebruikt nu slot 4 op `44711`,
+bron `8c9ae668`, image `a7d1eb5c…`, met dezelfde Astra-configuratie en identiteit.
+De beoordeelde nieuwe poging heeft 48 gesprekstabellen en 23 geheugentabellen
+overgezet; slot 3 staat gestopt als terugweg, zonder uitgaande Telegramrechten.
+De kern is gereed en de eigen geheugenbronnen-API is nu live: eigenaar 200,
+anoniem 401 en een zelf aangeleverde persoonscope 422. Een geheugenscherm en
+volledige CO-003-review blijven open. De bestaande bot-token is alleen na
+klaarzetten vrijgegeven. Werkelijk passend autonoom handelen en positieve
+gebruikerslevering zijn nog niet bewezen; RT-001 blijft daarom open.
+In de eerste echte cyclus koos Astra éénmaal voor stilte en gingen 120 oude
+toestanden naar veilige herbeoordeling; het oude voorbereide bericht bleef
+onverzonden. Er verscheen geen nieuwe fout in deze controle. Tijdigheid blijft
+open: de cyclus wacht vijf minuten, terwijl herlezen broninformatie ook maar
+vijf minuten geldig is. Die samenloop moet gericht worden gecontroleerd.
+De vervolgcontrole corrigeert de eerdere timingdiagnose: de live herlezing van
+17:58:44 leidde om 18:03:44 tot een beslissing (Nederlandse tijd), precies vijf
+minuten later. Vastlopen is daarmee niet aangetoond. De aparte bronwijziging
+laat dezelfde waarneming direct doorgaan en slaagt voor 37 PostgreSQL- en 88
+applicatie/model/bootstrapcontroles. De twee eerst falende tests eisten dat
+nieuwe gedrag; zij bewijzen geen fout in de oude live route. Deze mogelijke
+latencyverbetering is niet live en is geen reden voor een automatische nieuwe
+uitrol. Werkelijk nuttige autonome levering en het gemeten verbruik blijven open.
+Tijdelijke databasekopieën van de omschakeling zijn verwijderd; slotgegevens
+en de private Eva1-back-up zijn behouden.
+
+De volgende alinea's bewaren de eerdere ontwikkel- en uitrolstappen; hun
+toenmalige niet-livegrenzen worden opgevolgd door de actuele stand hierboven.
+
+Jaap meldt op 7 september dat de gesprekken met Eva2 echt een stuk beter zijn.
+Dit is positieve menselijke feedback, nog geen volledige gezinsacceptatie.
+De latere omschakeling op 7 september rond 17:32 is mislukt: bij activering van
+uitgaande Telegramlevering weigerde de nieuwe kern de tokenconfiguratie. De automatische terugzetting
+heeft slot 3 herstart; om 17:35 waren de geladen route naar `44710`, Eva1 en
+Eva2-gereedheid weer goed. De kandidaat is niet gepromoveerd. Deze latere
+uitrolfout verklaart de eerdere chatfout niet. De oorzaak is inmiddels vastgesteld:
+beide slotbestanden bevatten nog `probe-only`. De hostcontrole weigert dit nu
+vóór een onderbreking. Alleen het gestopte reserveslot heeft daarna de met
+`getMe` geverifieerde bestaande bot-token gekregen, met private back-up.
+121 gerichte tests, een afgeschermde tokenleesproef op de exacte kandidaatimage
+en de echte voorcontrole zijn groen. De werkende Eva2 is daarbij niet herstart
+en er is niets verzonden. Nieuwe bewijsbinding, onafhankelijke uitrolreview en
+echte gebruikerslevering blijven open; de vorige uitrol-GO wordt niet hergebruikt.
+De foutmelding van 15:24:21 is alleen-lezen teruggevonden: de live gesprekroute
+bewaarde de oorspronkelijke exception niet. De bronkandidaat voegt veilige
+foutdiagnostiek toe; 128 gerichte controles en een begrensde onafhankelijke
+bronreview zijn groen. Kandidaat `8c9ae668` / image `a7d1eb5c…` is vervolgens
+offline gebouwd; vijf afgeschermde imagegevallen slagen met echte foutlogs en
+zonder modelcalls. Daarna: actuele scan 0 hoog/0 kritisch en één volledige
+vereiste testuitvoering met 1.866 geslaagde tests over 149 modules, zonder skips.
+Vier browsergevallen draaiden in de image; de overige proeven gebruikten de
+verzegelde bron en wheels. De begrensde onafhankelijke bewijsreview is groen.
+De gesprekovergang met actuele gegevens is nu ook geslaagd: 48 gesprekstabellen
+en 23 geheugentabellen zijn in een wegwerpkopie hersteld. Jaaps bestaande
+privéclient las na gezamenlijke herstart hetzelfde antwoord exact terug en
+herinnerde daarna `zilverlijster`. Twee gesprekmodelcalls, 5.681 gemeten tokens,
+nul toolcalls of Telegramberichten; geen onafhankelijke Hindsight-only-geheugenproef.
+De kopieën zijn verwijderd en de actieve route bleef ongewijzigd. Autonome
+herbeoordeling/levering, volledige kandidaatreview en veilige ingebruikname
+blijven open. Dit verklaart de eerdere fout niet en is niet live.
+Zie [RT-001, foutdiagnostiek en grenzen](evidence/product/RT-001-autonomous-admission-wait-2026-09-07.json).
+
+De toelatingscontrole vond daarna twee echte fouten in de host-omschakeling:
+de uitgaande Telegram-overlay zou niet worden meegenomen, en terugrol bewaarde
+achtergrondwrites vóór herstart van Telegram niet. Beide broncorrecties hebben
+36 gerichte controles en onafhankelijke beperkte GO. De oude wachtrij is
+alleen-lezen ingedeeld; één voorbereid bericht van 29 augustus mag niet blind
+worden verzonden. De verzendblokkade tijdens klaarzetten is nu ook gebouwd:
+105 gerichte tests en een echte Docker-proef met dummy-token zijn groen, met
+beperkte onafhankelijke goedkeuring. Het token ontbreekt vóór activering en
+opnieuw bij terugrol-klaarzetten. Dit bewijst de credentialgrens, niet echte
+Telegramlevering of volledige applicatiegereedheid. Daarna zijn één echt oud
+voorbereid bericht en 64 oude kostenfouten op een databasekopie veilig op wachten
+gezet. Na een echte dump/herstel lazen de oude én nieuwe image dezelfde 65
+toestanden en herbouwden hun projecties zonder nieuwe acties. De 48 tabellen
+behielden gelijke schema-, inhouds- en rijtellingen; de tijdelijke database en
+dumps zijn verwijderd. Nul modelcalls en nul Telegramberichten. De beperkte
+onafhankelijke review is groen; latere herbeoordeling, levering en volledige
+kandidaattoelating zijn daarmee niet af. Deze hostcorrecties zijn geen
+onderdeel van de eerder gebouwde image of haar volledige testreceipt; niets
+hiervan is al live geactiveerd.
+
+## Kort: geheugenbronnen bekijken
+
+Actieve taak is inmiddels **RT-001**, veilig runtimeherstel. De bronkandidaat
+herstelt bestaand abonnementsgebruik zonder een door Jaap opgelegd dagmaximum
+te verzinnen. Oude gebeurtenissen worden eerst met actuele broninformatie
+herbeoordeeld. Uitgaande Telegramlevering is lokaal getest, inclusief onzeker
+ontvangstbewijs zonder dubbele verzending. De eigenaarscontrole en gecorrigeerde
+geheugenbronnenroute werken ook alleen-lezen met de echte gegevens; het bestaande
+afgeschermde bot-tokenbestand is aanwezig. Dit is **niet live** en geen herstelde
+autonomie: onafhankelijke kandidaatcontrole, veilige ingebruikname en echte gebruikerslevering
+blijven open. [Bewijs en grenzen](evidence/product/RT-001-autonomous-admission-wait-2026-09-07.json).
+Het onderstaande CO-003-bronwerk blijft behouden met een open eindreview.
+
+- Gebouwd: CO-003, een afgeschermde lees-API voor bestaande eigen gespreksbronnen, met paginering en fragmenten van maximaal 2.048 tekens. Geen nieuw geheugensysteem.
+- Gecontroleerd: 82 gerichte tests geslaagd, waaronder een echte wegwerp-PostgreSQL met andere personen, groepsbronnen, gewiste/verlopen bronnen en ingetrokken toegang. Ook veranderde eigenaarrechten tussen twee pagina's worden geweigerd. De definitieve commitgebonden review blijft open.
+- Niet live: de API is broncode; het React-admin-scherm (CO-004), corrigeren en wissen per bron (CO-005) volgen afzonderlijk. De bestaande installatie is niet aangepast.
+- Kosten: geen extra productmodelcalls of dependencies. CO-002 menselijke beoordeling blijft open, maar blokkeert dit door Jaap opgedragen werk niet.
+
+Bewijs: [CO-003 ontwikkelcontrole](evidence/product/CO-003-owner-memory-sources-2026-09-07.json).
 
 ## Wat vandaag werkelijk is vastgesteld
 

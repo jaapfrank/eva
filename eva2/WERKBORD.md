@@ -1,92 +1,199 @@
 # Eva 2 — uitvoerbaar werkbord
 
-Laatst bijgewerkt: 2026-09-05.
+Laatst bijgewerkt: 2026-09-07.
 
-Dit bord is automatisch uit de machineleesbare werklijst gemaakt. Handmatige
-afwijkingen worden geweigerd. We ronden één kleine kaart volledig af voordat
-de volgende begint.
+Doel: [Eva als zelfstandig lerende digitale huisgenoot](PROJECTDOEL.md).
+Gebouwd, getest, live en door jou geaccepteerd zijn verschillende stappen.
+
+Het projectdashboard draait op localhost:44712 vanuit /home/administrator/project/Eva2. Vijf gebruikersuitkomsten bepalen nu dezelfde werklijst: dagelijks samenleven, handelen, projecten, installatie en eindbewijs. Gesprek, upstreamkeuze en stem zijn naar voren gehaald; er is geen einddoel geschrapt. UX-000 blijft de primaire kaart tot de aangescherpte weergave is afgerond.
+[Actueel bewijs](evidence/product/RT-001-autonomous-admission-wait-2026-09-07.json).
+
+Rond UX-000 met browserbewijs en beoordeling af. Daarna RT-001: daadwerkelijke levering en verbruiksmeting, met behoud van de werkende route. Voer vóór nieuwe functieontwikkeling de kleine EV-003/UP-001-nulmeting en hergebruikkeuze uit; bouw vervolgens de complete gesprekservaring vóór extra beheerfuncties. Een beschreven concurrentiefunctie is geen bewezen overname of winst.
 
 ## Nu
 
 | Volgorde | Kaart | Resultaat | Status |
 |---:|---|---|---|
-| 120 | `CO-002` — Configureerbare menselijke identiteit aanscherpen | De nieuwe gesprekcode draait nu echt op /eva2 met Astra. Antwoord, geheugen na kernherstart en terugrollen met actuele gegevens zijn gecontroleerd. De technische gesprekuitrol is af; menselijke beoordeling blijft open. Live tekststukjes ontbreken nog en tellen niet als af. | 🟡 BEZIG |
-| 130 | `CO-003` — Eigen geheugenbronnen veilig opvragen | De eigenaar kan via Eva's afgeschermde API een begrensde pagina bekijken van de eigen privégespreksbronnen die aan het langetermijngeheugen zijn aangeboden; bronnen van andere mensen, groepen en door Hindsight afgeleide interpretaties blijven buiten beeld. | ⚪ HIERNA |
-
-### Exact werk voor `CO-002`
-
-- `docs/eva-repository-inventory.generated.json`
-- `docs/eva-repository-inventory.generated.md`
-- `eva2/src/eva/adapters/model/openai_codex_provider.py`
-- `eva2/tests/model/test_openai_codex_provider_shared.py`
+| 130 | `UX-000` — Grip op Eva: één visueel dashboard | In één oogopslag zien wat bruikbaar is, wat ik doe en wat hierna komt. Dezelfde bron stuurt dashboard en werkvolgorde; eerst keuzes helder, dan verder bouwen. | 🟡 BEZIG |
+| 131 | `RT-001` — Zelfstandige runtime veilig herstellen | Zelfstandig gebruik van het bestaande abonnement herstellen zonder zelfbedacht dagmaximum; aantoonbare tokenverspilling voorkomen, oude gebeurtenissen veilig herbeoordelen en levering bewijzen. Geen dataverlies of nieuwe betaalroute. | ⚪ HIERNA |
 
 Klaar betekent:
 
-- Naam, temperament, stem en humor komen uit het configureerbare IdentityPack; de generieke modeladapter legt geen vaste Eva-naam of antwoordcatchphrase op.
-- De verandering voegt geen dependency toe en verwijdert of vervangt minstens evenveel identiteitsinstructie als zij toevoegt; promptgroei geldt niet als verbetering.
-- De twee begrensde nametingen halen alle vooraf vastgelegde gedragscriteria zonder veiligheids-, eerlijkheids- of taalregressie; bij geen aantoonbare winst wordt de productwijziging niet behouden.
-- De gekozen Astra-route doet hosted toolzoekwerk en externe toolkeuze binnen één modelrequest; uitvoering blijft bij Eva en onbekende modellen krijgen geen ongecontroleerde capabilities.
-- Gerichte tests, componentcontrole en een onafhankelijke reviewer geven GO.
+- Het dashboard is op deze computer bereikbaar en toont gebouwd, getest, in gebruik en geaccepteerd afzonderlijk.
+- Huidige opdracht, komende taken en actuele concurrentiebronnen komen uit dezelfde werklijst; onbekend blijft onbekend.
+- Werkmap en open keuzes zijn duidelijk; de gebruikersprioriteit is zichtbaar voordat nieuwe productfuncties worden toegevoegd.
+
+<details>
+<summary>Technische uitvoering: bestanden en controles</summary>
+
+### Exact werk voor `UX-000`
+
+- `README.md`
+- `docs/eva-repository-inventory.generated.json`
+- `docs/eva-repository-inventory.generated.md`
+- `eva2/README.md`
+- `eva2/PROJECT_STATUS.md`
+- `eva2/WERKBORD.md`
+- `eva2/design/product/execution-workboard-v1.json`
+- `eva2/tools/check_current_workboard.py`
+- `eva2/tests/operations/test_current_workboard.py`
+- `eva2/experiments/react-admin-dashboard-v1/vite.config.mjs`
+- `eva2/experiments/react-admin-dashboard-v1/project-server.mjs`
+- `eva2/experiments/react-admin-dashboard-v1/verify-project.cjs`
+- `eva2/experiments/react-admin-dashboard-v1/src/main.jsx`
+- `eva2/experiments/react-admin-dashboard-v1/src/project-dashboard.jsx`
+- `eva2/experiments/react-admin-dashboard-v1/src/project-dashboard.css`
 
 Echte controles:
 
-- `TMPDIR=/tmp TEMP=/tmp TMP=/tmp pytest -q tests/model/test_openai_codex_provider_shared.py tests/model/test_pydantic_conversation_model.py tests/model/test_conversation_model.py tests/contract/test_contract_invariants.py`
-- `ruff check src/eva/adapters/model/openai_codex_provider.py tests/model/test_openai_codex_provider_shared.py`
-- `python3 tools/check_component_catalog.py`
+- `pytest -q tests/operations/test_current_workboard.py`
+- `node experiments/react-admin-dashboard-v1/verify-project.cjs`
 
-### Daarna voorbereid: `CO-003`
+### Daarna voorbereid: `RT-001`
 
 - `docs/eva-repository-inventory.generated.json`
 - `docs/eva-repository-inventory.generated.md`
-- `eva2/src/eva/adapters/api/app.py`
+- `eva2/src/eva/application/free_will.py`
+- `eva2/src/eva/application/sensory.py`
+- `eva2/src/eva/adapters/connectors/home_assistant.py`
+- `eva2/src/eva/adapters/connectors/home_assistant_events.py`
+- `eva2/tests/connectors/test_home_assistant_live_adapters.py`
+- `eva2/src/eva/adapters/connectors/telegram.py`
+- `eva2/src/eva/adapters/postgres/telegram_pairing.py`
 - `eva2/src/eva/adapters/postgres/people_memory_overview.py`
-- `eva2/src/eva/application/people_memory_overview.py`
-- `eva2/src/eva/bootstrap/runtime.py`
-- `eva2/tests/api/test_dashboard_status.py`
-- `eva2/tests/application/test_people_memory_overview.py`
-- `eva2/tests/bootstrap/test_runtime_settings.py`
 - `eva2/tests/postgres/test_people_memory_overview.py`
+- `eva2/tests/connectors/test_telegram.py`
+- `eva2/src/eva/adapters/postgres/sensory_events.py`
+- `eva2/src/eva/adapters/postgres/operational_timeline.py`
+- `eva2/src/eva/adapters/model/pydantic_conversation.py`
+- `eva2/src/eva/bootstrap/runtime.py`
+- `eva2/tests/application/test_free_will.py`
+- `eva2/tests/postgres/test_sensory_admission.py`
+- `eva2/tests/model/test_conversation_model.py`
+- `eva2/tests/bootstrap/test_runtime_settings.py`
+- `eva2/release/eva-cockpit-evidence-index-v1.json`
+- `eva2/deploy/living-core/telegram-proactive.compose.yml`
+- `eva2/tests/bootstrap/test_telegram_ingress_deployment.py`
+- `eva2/release/managed-b-release-input-authority-v1.json`
+- `eva2/tools/managed_b_candidate/release_inputs.py`
+- `eva2/tools/run_managed_b_required_tests.py`
+- `eva2/tests/operations/test_managed_b_release_inputs.py`
+- `eva2/tests/operations/test_run_managed_b_required_tests.py`
+- `eva2/src/eva/adapters/api/dashboard_conversation.py`
+- `eva2/tests/api/test_memory_api.py`
+- `eva2/tools/eva2_quiescent_cutover.py`
+- `eva2/tests/operations/test_eva2_quiescent_cutover.py`
 
 Vooraf vastgelegde controles:
 
-- `TMPDIR=/tmp TEMP=/tmp TMP=/tmp pytest -q tests/application/test_people_memory_overview.py tests/postgres/test_people_memory_overview.py tests/api/test_dashboard_status.py tests/bootstrap/test_runtime_settings.py`
-- `ruff check src/eva/application/people_memory_overview.py src/eva/adapters/postgres/people_memory_overview.py src/eva/bootstrap/runtime.py src/eva/adapters/api/app.py tests/application/test_people_memory_overview.py tests/postgres/test_people_memory_overview.py tests/api/test_dashboard_status.py tests/bootstrap/test_runtime_settings.py`
+- `TMPDIR=/tmp TEMP=/tmp TMP=/tmp pytest -q tests/application/test_free_will.py tests/model/test_conversation_model.py tests/bootstrap/test_runtime_settings.py`
+- `TMPDIR=/tmp TEMP=/tmp TMP=/tmp pytest -q tests/connectors/test_home_assistant_live_adapters.py`
+- `TMPDIR=/tmp TEMP=/tmp TMP=/tmp pytest -q tests/connectors/test_telegram.py`
+- `TMPDIR=/tmp TEMP=/tmp TMP=/tmp pytest -q tests/bootstrap/test_telegram_ingress_deployment.py`
+- `TMPDIR=/tmp TEMP=/tmp TMP=/tmp pytest -q tests/postgres/test_people_memory_overview.py`
+- `TMPDIR=/tmp TEMP=/tmp TMP=/tmp pytest -q tests/postgres/test_sensory_admission.py`
+- `TMPDIR=/tmp TEMP=/tmp TMP=/tmp pytest -q tests/operations/test_managed_b_release_inputs.py tests/operations/test_run_managed_b_required_tests.py`
+- `TMPDIR=/tmp TEMP=/tmp TMP=/tmp pytest -q tests/postgres/test_operational_timeline.py`
+- `TMPDIR=/tmp TEMP=/tmp TMP=/tmp pytest -q tests/api/test_memory_api.py`
+- `TMPDIR=/tmp TEMP=/tmp TMP=/tmp pytest -q tests/operations/test_eva2_quiescent_cutover.py tests/bootstrap/test_telegram_ingress_deployment.py`
+- `ruff check src/eva/application/free_will.py src/eva/adapters/postgres/sensory_events.py src/eva/adapters/model/pydantic_conversation.py src/eva/bootstrap/runtime.py tests/application/test_free_will.py tests/postgres/test_sensory_admission.py tests/model/test_conversation_model.py`
 - `python3 tools/check_component_catalog.py`
+
+</details>
 
 ## Daarna
 
 Deze onderwerpen zijn alleen mijlpalen. Een mijlpaal wordt pas uitvoerbaar
 nadat zij als eerstvolgende kleine kaart exacte bestanden en tests heeft.
 
-| Nr. | Onderdeel | Begrijpelijk eindresultaat |
-|---:|---|---|
-| 132 | `CO-004` — Eigen geheugen in het dashboard tonen | Het bestaande React-Admin-dashboard toont de afgeschermde geheugenbronnen begrijpelijk zonder nieuwe webstack of browseropslag. |
-| 134 | `CO-005` — Eigen geheugen corrigeren en wissen | De eigenaar kan één zichtbare bron corrigeren of wissen en krijgt controle dat PostgreSQL en Hindsight dezelfde wijziging hebben verwerkt. |
-| 140 | `TL-001` — Algemene toolontdekking afmaken | De best onderhouden generieke model- en toolloop laadt providers via configuratie of MCP. Pydantic AI wint die plek alleen bij gemeten voordeel; eigen wrappers en oude modelpaden verdwijnen in dezelfde kaart. |
-| 150 | `TL-002` — Actie en readback generaliseren | Twee echte providers gebruiken dezelfde precies-eenmaalroute. |
-| 160 | `TL-003` — Onbekende connector zelfstandig toevoegen | Eva kiest onderhouden software uit documentatie en bewijst de adapter. |
-| 170 | `AU-001` — Eigenaarmandaat uitvoeren | Eva handelt binnen het afgesproken mandaat zonder steeds opnieuw te vragen. |
-| 180 | `AU-002` — Duurzame hulpagent bedienen | Starten, volgen, stoppen en hervatten werken via de gebruikersroute; hoofd- en hulpagent delen één provideradapter. |
-| 190 | `AU-003` — Zelfverbetering begrenzen | Alleen gemeten winst mag uit quarantaine promoveren. |
-| 200 | `UX-001` — Eigenaar-dashboard leveren | Een onderhouden adminframework toont status, mensen, geheugen, kosten en bewijs. |
-| 210 | `UX-002` — Kanban bedienbaar maken | Taken zijn te starten, volgen en stoppen met bewijs per kaart. |
-| 220 | `VB-001` — Full-duplex voice leveren | Microfoon en speaker werken tegelijk met snelle onderbreking. |
-| 230 | `VB-002` — Passende aanwezigheid leveren | Eva spreekt passend in huis met stilte, cooldown en stop. |
-| 240 | `VB-003` — Veilige browsercomputer kiezen | Eén onderhouden browsermotor ondersteunt accounts, meekijken en overname. |
-| 250 | `VB-004` — Browserherstel bewijzen | Een crash herhaalt geen externe mutatie blind. |
-| 260 | `IN-001` — Fresh install voor gebruikers | Een gewone gebruiker installeert Eva zonder terminal of configuratiebestanden. |
-| 270 | `IN-002` — Naar andere computer verplaatsen | Identiteit en data herstellen; connectoren veilig opnieuw koppelen. |
-| 280 | `IN-003` — Consumentenupdates leveren | Renovate stelt onderhouden dependencies voor; updates doorlopen dezelfde poort en rollen verliesloos terug. |
-| 290 | `CP-001` — Volledige productmatrix opnieuw uitvoeren | De tussentijdse gelijke proeven worden op de gezamenlijke releasekandidaat en actuele concurrenten als één geheel herhaald. |
-| 300 | `CP-002` — Cross-domainwinst opnieuw controleren | Gesprek, geheugen, tools, browser, subagents en beheer bevestigen samen de eerder gemeten voordelen. |
-| 310 | `CP-003` — Officiële benchmarks uitvoeren | AgentBench, GAIA en OSWorld gebruiken officiële scorers en trajecten. |
-| 320 | `FN-001` — Eindkandidaat bevriezen | Image, configuratie en bewijsset zijn onveranderlijk gebonden. |
-| 330 | `FN-002` — Computerherstart bewijzen | Alles komt zonder handmatige reparatie correct terug. |
-| 340 | `FN-003` — Zeven dagen praktijk bewijzen | Een ongewijzigde kandidaat doorstaat de praktijkproef en vervangbeslissing. |
-| 400 | `RB-007` — Verplichte testgroepen uitvoeren | Pas na functionele productkaarten slaagt iedere testgroep tegen dezelfde kandidaat. |
-| 410 | `RB-008` — Wegwerpstack testen | De kandidaat migreert, antwoordt, onthoudt, herstart en ruimt volledig op. |
-| 420 | `RB-009` — Bewijsset onafhankelijk beoordelen | Een onafhankelijke reviewer controleert de volledige releaseketen. |
-| 430 | `RB-010` — Actief en reserveslot beheren | Alleen groen werk gaat naar het reserveslot; controleer het daarna en wissel de route. Bij problemen blijft het huidige slot actief. |
+- [ ] `EV-003` — Eerlijke succescriteria vastzetten: Vóór nieuwe vergelijkingsruns taken, herhalingen, ongeziene gevallen, versies, toegang, gelijke middelen en drempels vastleggen voor resultaat, warmte, hulp, tijd, kosten en herstel. Geen winstclaim bij ontbrekend bewijs.
+- [ ] `UP-001` — Sterke oplossingen van concurrenten hergebruiken: Exacte bronnen en licenties van OpenClaw, Hermes en Agent Zero onderzoeken; per capability overnemen, adapteren of afwijzen met kleine voor/naproef. Herkomst en onderhoud vastleggen; aantoonbaar vervangen eigen routes verwijderen.
+- [ ] `CO-007` — Menselijke gesprekroute compleet maken: Echte gezinsgesprekken beoordelen op warmte, eigen oordeel, identiteit en continuïteit; live tekststukjes met tools apart bewijzen. CO-001 bronstatus en CO-002 menselijke beoordeling zijn geen voltooiing van deze gebruikersuitkomst.
+- [ ] `CO-004` — Eigen geheugen in het dashboard tonen: Het bestaande React-Admin-dashboard toont de afgeschermde geheugenbronnen begrijpelijk zonder nieuwe webstack of browseropslag.
+- [ ] `CO-005` — Eigen geheugen corrigeren en wissen: De eigenaar kan één zichtbare bron corrigeren of wissen en krijgt controle dat PostgreSQL en Hindsight dezelfde wijziging hebben verwerkt.
+- [ ] `CO-006` — Nuttig geheugen en retentie bewijzen: Bestaande Hindsight-consolidatie gebruiken; gewijzigde voorkeuren, bronherkomst en vergeten semantisch testen. Bronbewaring, compactere kennis en werkelijk schijfgebruik afzonderlijk meten; geen tweede geheugensysteem.
+- [ ] `VB-001` — Full-duplex voice leveren: Microfoon en speaker werken tegelijk met snelle onderbreking.
+- [ ] `VB-002` — Passende aanwezigheid leveren: Eva spreekt passend in huis met stilte, cooldown en stop.
+- [ ] `AU-005` — Passend initiatief en kansen bewijzen: Een nuttige kans herkennen, onder bestaand mandaat uitvoeren en controleren; bij een afleider, privacygrens of ongepast moment terecht niets doen. Gezin beoordeelt nut en hinder.
+- [ ] `TL-001` — Algemene toolontdekking afmaken: De best onderhouden generieke model- en toolloop laadt providers via configuratie of MCP. Pydantic AI wint die plek alleen bij gemeten voordeel; eigen wrappers en oude modelpaden verdwijnen in dezelfde kaart.
+- [ ] `TL-002` — Actie en readback generaliseren: Twee echte providers gebruiken dezelfde precies-eenmaalroute.
+- [ ] `AU-001` — Eigenaarmandaat uitvoeren: Eva handelt binnen het afgesproken mandaat zonder steeds opnieuw te vragen.
+- [ ] `TL-003` — Onbekende connector zelfstandig toevoegen: Eva kiest onderhouden software uit documentatie en bewijst de adapter.
+- [ ] `VB-003` — Veilige browsercomputer kiezen: Eén onderhouden browsermotor ondersteunt accounts, meekijken en overname.
+- [ ] `VB-004` — Browserherstel bewijzen: Een crash herhaalt geen externe mutatie blind.
+- [ ] `AU-002` — Duurzame hulpagent bedienen: Starten, volgen, stoppen en hervatten werken via de gebruikersroute; hoofd- en hulpagent delen één provideradapter.
+- [ ] `UX-001` — Eigenaar-dashboard leveren: Een onderhouden adminframework toont status, mensen, geheugen, kosten en bewijs.
+- [ ] `UX-002` — Kanban bedienbaar maken: Taken zijn te starten, volgen en stoppen met bewijs per kaart.
+- [ ] `AU-004` — Zelf tools en skills leren maken: Een ongeziene digitale taak leren uit documentatie; zelf een tool of skill maken, testen en bij een andere taak hergebruiken zonder nieuwe taakspecifieke kerncode. Fouten en menselijke hulp meetellen.
+- [ ] `AU-006` — Project zelfstandig tot resultaat brengen: Een meerdaags cross-domainproject plannen, uitvoeren, bijsturen en na herstart hervatten met zichtbare kosten en stop. Een bedrijfspilot kan als afgesproken project; geen echte betalingen, publicatie of verplichtingen zonder passend mandaat.
+- [ ] `AU-003` — Eigen onderdelen beoordelen en verbeteren: Eva ontdekt een overbodig of zwak onderdeel, vergelijkt onderhouden upstream, maakt een geïsoleerde verbetering en bewijst voor/na voordeel en terugrol. Alleen gemeten winst mag promoveren; geen zelfverruiming van rechten.
+- [ ] `IN-001` — Fresh install voor gebruikers: Een gewone gebruiker installeert Eva zonder terminal of configuratiebestanden.
+- [ ] `IN-002` — Naar andere computer verplaatsen: Identiteit en data herstellen; connectoren veilig opnieuw koppelen.
+- [ ] `IN-003` — Consumentenupdates leveren: Renovate stelt onderhouden dependencies voor; updates doorlopen dezelfde poort en rollen verliesloos terug.
+- [ ] `CP-001` — Volledige productmatrix opnieuw uitvoeren: De tussentijdse gelijke proeven worden op de gezamenlijke releasekandidaat en actuele concurrenten als één geheel herhaald.
+- [ ] `CP-002` — Cross-domainwinst aantonen: Herhaalde ongeziene gesprekken en handelingen toetsen de vooraf vastgelegde drempels tegen alle drie concurrenten. Resultaat, menselijk oordeel, hulp, tijd, kosten en herstel bepalen de uitkomst; winst is niet verondersteld.
+- [ ] `CP-003` — Officiële benchmarks uitvoeren: AgentBench, GAIA en OSWorld gebruiken officiële scorers en trajecten.
+- [ ] `FN-001` — Eindkandidaat bevriezen: Image, configuratie en bewijsset zijn onveranderlijk gebonden; daarna volgen de releasepoort en pas na veilige installatie de eindpraktijkproeven.
+- [ ] `RB-007` — Verplichte testgroepen uitvoeren: Pas na functionele productkaarten slaagt iedere testgroep tegen dezelfde kandidaat.
+- [ ] `RB-008` — Wegwerpstack testen: De kandidaat migreert, antwoordt, onthoudt, herstart en ruimt volledig op.
+- [ ] `RB-009` — Bewijsset onafhankelijk beoordelen: Een onafhankelijke reviewer controleert de volledige releaseketen.
+- [ ] `RB-010` — Actief en reserveslot beheren: Alleen groen werk gaat naar het reserveslot; controleer het daarna en wissel de route. Bij problemen blijft het huidige slot actief.
+- [ ] `FN-002` — Computerherstart bewijzen: De veilig geïnstalleerde eindkandidaat komt zonder handmatige reparatie terug met dezelfde gegevens en zonder dubbele acties.
+- [ ] `FN-003` — Zeven dagen praktijk en eindacceptatie bewijzen: Een ongewijzigde kandidaat doorstaat zeven dagen gezinspraktijk. De volledige bewijsset, vergelijking en menselijke beoordeling zijn groen vóór vervangbeslissing; geraakt bewijs wordt na relevante wijzigingen opnieuw uitgevoerd.
+
+<details>
+<summary>Afgeronde en eerdere uitvoerkaarten met bewijs</summary>
+
+## Uitvoerkaarten en bewijs
+
+Afgevinkt betekent alleen: de vastgelegde kaart is afgerond, niet het hele product.
+
+- [x] `GOV-001` — Klein en controleerbaar werkbord afdwingen (done).
+  [Bewijs](evidence/product/GOV-001-execution-workboard-tests-2026-09-01.json).
+- [x] `GOV-002` — Bordovergangen statusvast maken (done).
+  [Bewijs](evidence/product/GOV-002-status-stable-workboard-tests-2026-09-01.json).
+- [x] `RB-001` — Verzegelde basisimages offline bruikbaar maken op een verse bouwer (done).
+  [Bewijs](evidence/product/RB-001-sealed-oci-layout-empty-builders-2026-09-01.json).
+- [x] `RB-002` — Nieuwe bootstrapcode verzegelen (done).
+  [Bewijs](evidence/product/RB-002-bootstrap-release-authority-2026-09-01.json).
+- [x] `RB-003` — Kandidaat op bouwer A maken (done).
+  [Bewijs](evidence/product/RB-003-builder-a-offline-admission-2026-09-01.json).
+- [x] `RB-004` — Kandidaat op bouwer B maken (done).
+  [Bewijs](evidence/product/RB-004-builder-b-offline-admission-2026-09-01.json).
+- [x] `RB-005` — Beide builds vergelijken (done).
+  [Bewijs](evidence/product/RB-005-two-builder-reproducibility-2026-09-01.json).
+- [x] `RB-006` — SBOM en kwetsbaarheden controleren (done).
+  [Bewijs](evidence/product/RB-006-candidate-artifact-analysis-2026-09-01.json).
+- [x] `GOV-003` — Eva2-werk tot één zichtbare schrijfboom begrenzen (done).
+  [Bewijs](evidence/product/GOV-003-canonical-workspace-containment-tests-2026-09-02.json).
+- [x] `CP-000` — Open-source evaluatiemotor voorselecteren (done).
+  [Bewijs](evidence/product/CP-000-open-source-eval-engine-selection-2026-09-02.json).
+- [x] `RR-001` — Hermetische kandidaatbron herstellen (done).
+  [Bewijs](evidence/product/RR-001-hermetic-candidate-source-2026-09-02.json).
+- [x] `RR-002` — Nieuwe schone kandidaat op twee verse bouwers maken (done).
+- [x] `EV-001` — Inspect AI-evalomgeving en bruggen bouwen (done).
+  [Bewijs](evidence/product/EV-001-inspect-ai-bridge-probe-2026-09-04.json).
+  [Bewijs](evidence/product/EV-001-inspect-ai-bridge-probe-v2-2026-09-04.json).
+- [x] `EV-002` — Kleine vierweg-gespreksnulmeting uitvoeren (done).
+  [Bewijs](evidence/product/EV-002-controlled-baseline-result-2026-09-04.json).
+- [x] `CO-001` — Telegram toont Eva's antwoordvorming live (done).
+  [Bewijs](evidence/product/CO-001-telegram-live-drafts-contract-2026-09-04.json).
+- [ ] `UX-000` — Grip op Eva: één visueel dashboard (in_progress).
+- [ ] `RT-001` — Zelfstandige runtime veilig herstellen (queued).
+
+</details>
+
+## Technische review blijft open
+
+- [ ] `CO-003` — CO-003 blijft onder onafhankelijke review, niet afgevinkt of live. RT-001 herstelt nu de verschillende eigenaars- en geheugenscopes en herlaadt de privékoppeling per pagina. Een verse PostgreSQL-proef en een alleen-lezen proef met twee echte bronpagina's plus geweigerde andere eigenaar zijn groen; het oorspronkelijke CO-003-bewijs blijft historisch bewaard.
+  [Bestaand bewijs](evidence/product/CO-003-owner-memory-sources-2026-09-07.json).
+
+## Menselijke acceptatie blijft open
+
+- [ ] `CO-002` — Jaap meldt op 7 september dat de gesprekken met Eva2 echt een stuk beter zijn: positieve menselijke feedback, geen volledige gezinsacceptatie. De fout van 15:24:21 wordt onder RT-001 onderzocht; de oorspronkelijke exception ontbreekt. Gesprek, geheugen na kernherstart en terugrol waren gecontroleerd. Live tekststukjes en verdere menselijke beoordeling blijven open.
+
+<details>
+<summary>Werkafspraken en machineleesbare bron</summary>
 
 ## Vaste regels
 
@@ -103,3 +210,5 @@ nadat zij als eerstvolgende kleine kaart exacte bestanden en tests heeft.
 
 Machineleesbare bron:
 [`design/product/execution-workboard-v1.json`](design/product/execution-workboard-v1.json).
+
+</details>

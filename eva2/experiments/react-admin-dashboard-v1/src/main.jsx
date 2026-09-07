@@ -8,6 +8,7 @@ import {
   useGetOne,
 } from 'react-admin';
 import './style.css';
+import ProjectDashboard, { ProjectLayout, projectProvider } from './project-dashboard.jsx';
 
 const STATUS = '/internal/v1/dashboard/status';
 const IDENTITY = '/internal/v1/dashboard/identity';
@@ -202,6 +203,10 @@ function Dashboard() {
 
 createRoot(document.getElementById('root')).render(
   <React.StrictMode>
+    {import.meta.env.MODE === 'project' ? <Admin
+      dashboard={ProjectDashboard} layout={ProjectLayout} dataProvider={projectProvider}
+      disableTelemetry store={memoryStore()} loginPage={false}
+    ><Resource name="project" /></Admin> :
     <Admin
       authProvider={authProvider}
       dashboard={Dashboard}
@@ -211,6 +216,6 @@ createRoot(document.getElementById('root')).render(
       store={memoryStore()}
     >
       <Resource name="workboard" />
-    </Admin>
+    </Admin>}
   </React.StrictMode>,
 );

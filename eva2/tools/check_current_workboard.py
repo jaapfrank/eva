@@ -97,6 +97,7 @@ COMPLETION_FIELDS = {
 }
 ALLOWED_COMMANDS = {"node", "pytest", "python3", "ruff"}
 VERIFICATION_SCRIPTS = {
+    "experiments/react-admin-dashboard-v1/verify-project.cjs",
     "../test/repository-inventory-disposition.test.js",
     "../test/repository-inventory.test.js",
     "tools/check_component_catalog.py",
@@ -115,6 +116,7 @@ TEAM = {
     "dependencyreviewer": "/root/pydantic_dedup",
     "proofreviewer": "/root/proof_review",
     "workboardreviewer": "/root/workboard_review",
+    "dashboardreviewer": "/root/identity_pair_review",
 }
 
 
@@ -159,7 +161,7 @@ def _repo_file(root: Path, raw: str, label: str) -> Path:
         relative.is_absolute()
         or relative.as_posix() != raw
         or any(part in {"", ".", ".."} for part in relative.parts)
-        or not (raw.startswith("eva2/") or raw.startswith("docs/") or raw == "renovate.json")
+        or not (raw.startswith("eva2/") or raw.startswith("docs/") or raw in {"renovate.json", "README.md"})
     ):
         raise RuntimeError(f"{label} is not a safe repository path")
     path = root.joinpath(*relative.parts)
@@ -512,9 +514,13 @@ def render_human(board: dict[str, Any]) -> str:
         "",
         f"Laatst bijgewerkt: {board['lastUpdated']}.",
         "",
-        "Dit bord is automatisch uit de machineleesbare werklijst gemaakt. Handmatige",
-        "afwijkingen worden geweigerd. We ronden één kleine kaart volledig af voordat",
-        "de volgende begint.",
+        "Doel: [Eva als zelfstandig lerende digitale huisgenoot](PROJECTDOEL.md).",
+        "Gebouwd, getest, live en door jou geaccepteerd zijn verschillende stappen.",
+        "",
+        board["audit"]["goalRevision"]["currentWork"],
+        f"[Actueel bewijs]({board['audit']['goalRevision']['currentEvidence'].removeprefix('eva2/')}).",
+        "",
+        board["audit"]["goalRevision"]["nextStep"],
         "",
         "## Nu",
         "",
@@ -526,10 +532,11 @@ def render_human(board: dict[str, Any]) -> str:
         lines.append(
             f"| {next_task['order']} | `{next_task['id']}` — {next_task['title']} | {next_task['outcome']} | ⚪ HIERNA |"
         )
-    lines.extend(["", f"### Exact werk voor `{primary['id']}`", ""])
-    lines.extend(f"- `{path}`" for path in primary["changePaths"])
     lines.extend(["", "Klaar betekent:", ""])
     lines.extend(f"- {condition}" for condition in primary["doneWhen"])
+    lines.extend(["", "<details>", "<summary>Technische uitvoering: bestanden en controles</summary>",
+                  "", f"### Exact werk voor `{primary['id']}`", ""])
+    lines.extend(f"- `{path}`" for path in primary["changePaths"])
     lines.extend(["", "Echte controles:", ""])
     lines.extend(f"- `{command}`" for command in primary["testCommands"])
     if next_task is not None:
@@ -537,6 +544,7 @@ def render_human(board: dict[str, Any]) -> str:
         lines.extend(f"- `{path}`" for path in next_task["changePaths"])
         lines.extend(["", "Vooraf vastgelegde controles:", ""])
         lines.extend(f"- `{command}`" for command in next_task["testCommands"])
+    lines.extend(["", "</details>"])
     lines.extend(
         [
             "",
@@ -545,16 +553,35 @@ def render_human(board: dict[str, Any]) -> str:
             "Deze onderwerpen zijn alleen mijlpalen. Een mijlpaal wordt pas uitvoerbaar",
             "nadat zij als eerstvolgende kleine kaart exacte bestanden en tests heeft.",
             "",
-            "| Nr. | Onderdeel | Begrijpelijk eindresultaat |",
-            "|---:|---|---|",
         ]
     )
     for item in board["milestones"]:
         lines.append(
-            f"| {item['order']} | `{item['id']}` — {item['title']} | {item['outcome']} |"
+            f"- [ ] `{item['id']}` — {item['title']}: {item['outcome']}"
         )
+    lines.extend(["", "<details>", "<summary>Afgeronde en eerdere uitvoerkaarten met bewijs</summary>",
+                  "", "## Uitvoerkaarten en bewijs", "",
+                  "Afgevinkt betekent alleen: de vastgelegde kaart is afgerond, niet het hele product.", ""])
+    for task in tasks:
+        checked = "x" if task["status"] == "done" else " "
+        lines.append(f"- [{checked}] `{task['id']}` — {task['title']} ({task['status']}).")
+        completion = board["completions"].get(task["id"], {})
+        for path in completion.get("testReceiptPaths", []):
+            lines.append(f"  [Bewijs]({path.removeprefix('eva2/')}).")
+    lines.extend(["", "</details>"])
+    pending = board["audit"]["pendingHumanAcceptance"]["task"]
+    technical = board["audit"].get("pendingTechnicalReview")
+    if technical is not None:
+        lines.extend(["", "## Technische review blijft open", "",
+                      f"- [ ] `{technical['task']['id']}` — {technical['reason']}",
+                      f"  [Bestaand bewijs]({technical['evidence'].removeprefix('eva2/')})."])
+    lines.extend(["", "## Menselijke acceptatie blijft open", "",
+                  f"- [ ] `{pending['id']}` — {pending['outcome']}"])
     lines.extend(
         [
+            "",
+            "<details>",
+            "<summary>Werkafspraken en machineleesbare bron</summary>",
             "",
             "## Vaste regels",
             "",
@@ -562,6 +589,8 @@ def render_human(board: dict[str, Any]) -> str:
             "",
             "Machineleesbare bron:",
             "[`design/product/execution-workboard-v1.json`](design/product/execution-workboard-v1.json).",
+            "",
+            "</details>",
             "",
         ]
     )
@@ -678,6 +707,8 @@ def validate(
         managed_generated_paths = {
             inventory_raw,
             "docs/eva-repository-inventory.generated.md",
+            # Jaap requested a clear entry point in the relocated project root.
+            "README.md",
         }
         if status != "done" and any(
             not raw.startswith("eva2/") and raw not in managed_generated_paths
@@ -766,6 +797,29 @@ def validate(
     audit = board.get("audit")
     if not isinstance(audit, dict) or not audit.get("releaseRecovery"):
         raise RuntimeError("workboard audit must retain release recovery trace")
+    revision = audit.get("goalRevision")
+    roadmap = audit.get("projectDashboard", {}).get("roadmap")
+    if not isinstance(roadmap, list) or not roadmap:
+        raise RuntimeError("project roadmap missing")
+    roadmap_ids = []
+    for phase in roadmap:
+        if not isinstance(phase, dict) or any(
+            not isinstance(phase.get(field), str) or not phase[field].strip()
+            for field in ("id", "title", "outcome", "acceptance")
+        ):
+            raise RuntimeError("project roadmap phase differs")
+        roadmap_ids.extend(_strings(phase.get("taskIds"), "roadmap taskIds"))
+    open_ids = [task["id"] for task in tasks if task["status"] != "done"] + [item["id"] for item in milestones]
+    if (
+        len(roadmap_ids) != len(set(roadmap_ids))
+        or not set(roadmap_ids) <= set(by_id)
+        or [item_id for item_id in roadmap_ids if item_id in open_ids] != open_ids
+    ):
+        raise RuntimeError("project roadmap differs from actual work order")
+    if not isinstance(revision, dict) or revision.get("document") != "eva2/PROJECTDOEL.md":
+        raise RuntimeError("workboard goal revision differs")
+    _repo_file(root, revision["document"], "goal document")
+    _repo_file(root, revision["currentEvidence"], "current evidence")
     selected_human = human_path or _repo_file(root, human_raw, "humanBoardPath")
     if selected_human.is_symlink() or not selected_human.is_file():
         raise RuntimeError("human workboard must be a regular non-symlink file")
