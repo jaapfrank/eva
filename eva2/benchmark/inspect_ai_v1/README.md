@@ -3,6 +3,14 @@
 Deze map is alleen voor eerlijke productvergelijkingen. Zij wordt niet in
 Eva's runtime-image geïnstalleerd en voegt geen productfunctionaliteit toe.
 
+Voor nieuwe vergelijkingen geldt het compacte
+[EV-003-meetprotocol](../../design/product/comparable-agent-benchmarks-v1.md#ev-003--wanneer-telt-verbetering).
+Het legt vooraf taakfamilies, herhalingen, menselijke beoordeling en winstgrenzen
+vast. Het maakt geen nieuwe runner of resultaatformaat: Inspect blijft eigenaar
+van logs en scores. De concrete ongeziene dataset en gelijke runconfiguratie
+moeten vóór uitvoering nog onafhankelijk worden vastgezet. EV-002 hieronder
+blijft ongewijzigde historische nulmeting, geen vierwegwinst.
+
 `pylock.toml` legt met PEP 751-velden voor Linux/amd64 en exact Python 3.12
 één wheel en SHA-256 per evaluatiedependency vast. Inspect AI `0.3.263` blijft uitsluitend een
 evaluatiedependency. De officiële OpenAI-SDK `3.6.0` zit al in Eva's runtime;

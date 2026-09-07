@@ -34,6 +34,41 @@ def write_changed_plan(tmp_path: Path, change) -> Path:
     return target
 
 
+def test_ev003_protocol_preserves_comparison_scope_without_enabling_runs() -> None:
+    """Guard preregistered inputs, not agent quality or an executable scorer."""
+    document = (ROOT / "eva2/design/product/comparable-agent-benchmarks-v1.md").read_text(
+        encoding="utf-8"
+    )
+    block = document.split("<!-- EV-003 protocol -->")[1].split(
+        "<!-- /EV-003 protocol -->"
+    )[0]
+    protocol = json.loads(block.split("```json\n")[1].split("```", 1)[0])
+    assert protocol["participants"] == list(ev002_baseline.EXPECTED_PARTICIPANTS)
+    assert protocol["families"] == [
+        "conversation_memory", "cross_domain_actions", "initiative",
+        "browser_computer", "learning_projects", "voice_presence",
+    ]
+    assert protocol["development"] == {
+        "cases": 2, "epochs": 2, "claim": "development_only",
+    }
+    assert protocol["acceptance"] == {
+        "unseen_cases_per_family": 12, "epochs": 3,
+        "initiative_opportunity_fraction": 0.5, "human_raters": 2,
+    }
+    assert protocol["thresholds"] == {
+        "success_min": 0.85, "success_advantage_pp": 10,
+        "human_preference_min": 0.6, "useful_initiative_min": 0.8,
+        "nuisance_max": 0.1, "median_time_ratio_max": 1.1,
+        "p95_time_ratio_max": 1.2, "token_ratio_max": 1.1,
+        "safety_failures_max": 0,
+    }
+    assert protocol["result_owner"] == "Inspect native logs and official benchmark scorers"
+    assert protocol["missing_or_incomparable"] == "unknown_not_a_win"
+    assert protocol["retry_for_better_score"] is False
+    assert protocol["user_daily_quota"] is None
+    assert ev002_baseline.load_plan(PLAN)["status"] == "preflight_only"
+
+
 def result_fixture() -> dict:
     plan = json.loads(PLAN.read_text(encoding="utf-8"))
     participants = []

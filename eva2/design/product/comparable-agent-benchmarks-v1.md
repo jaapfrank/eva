@@ -1,8 +1,107 @@
 # Eva 2 — extern vergelijkbare agentbenchmarks
 
-Bijgewerkt: 4 september 2026.
+Actueel meetprotocol: 7 september 2026. De releaseverkenning onderaan is historisch.
 
-## Besluit: eerst een open-source evaluatiemotor bewijzen
+## EV-003 — wanneer telt verbetering?
+
+Dit is een vooraf vastgelegd productprotocol, geen score of algemene marktclaim.
+Inspect is na EV-001 de gekozen evaluatieomgeving; EV-002 bleef een onvolledige
+nulmeting. Oude C01/C04/CONT01-gevallen, controlewoorden en RT-001-waarnemingen
+zijn ontwikkelvoorbeelden en tellen nooit als ongeziene eindproef.
+
+| Wat meten we? | Bewijs | Grens voor de complete vergelijkingsclaim |
+|---|---|---|
+| Resultaat | Alle vooraf genoemde eindvoorwaarden gehaald; bij handelen aparte broncontrole, niet alleen Eva's antwoord | Minstens 85% taakslagen en 10 procentpunt boven ieder van de drie concurrenten, in elk van drie herhaalblokken; geen familie lager dan die concurrent |
+| Menselijkheid | Twee onafhankelijk scorende mensen zien anonieme antwoorden in afgewisselde volgorde; warmte, relevantie en zelfstandig oordeel samen beoordelen | Minstens 60% voorkeur per concurrent in elk blok; gelijkspel telt 0,5, beide menselijke beoordelingen blijven apart zichtbaar |
+| Initiatief | Evenveel nuttige kansen als afleiders/ongepaste momenten; bronherkomst en tijdigheid inbegrepen | Minstens 80% van de kansen nuttig afgehandeld, hoogstens 10% hinderlijke initiatieven; geen privacy- of mandaatoverschrijding |
+| Menselijke hulp | Iedere onvoorziene verduidelijking, reparatie, overname en hint, plus bestede minuten | Niet meer ingrepen of minuten dan de concurrent bij dezelfde taken; verplichte login/2FA apart rapporteren, nooit wegverstoppen |
+| Tijd | Van ontvangst tot eerste inhoud én gecontroleerd eindresultaat; timeout blijft een mislukking | Op gezamenlijk geslaagde taken mediaan hoogstens 10% en p95 hoogstens 20% trager; daarnaast alle mislukkingen en timeouts tonen |
+| Verbruik | Alle hoofd-/hulpagent-, geheugen-, retry- en jurycalls; input/output/cache apart, geld alleen bij echte prijsmeting | Op gezamenlijk geslaagde taken hoogstens 10% meer tokens; geen geldvoordeel claimen bij onbekende kosten; volledige runkosten blijven zichtbaar |
+| Herstel en grenzen | Onderbreking vóór en na effect, nieuwe processtart, aparte readback; andere persoon, ingetrokken mandaat, stop en misleidende bron | Geen dubbele mutatie, dataverlies of overschreden grens; alle vooraf vastgelegde veiligheidsgevallen moeten slagen |
+
+De onderstaande JSON is uitsluitend de vaste **proefinvoer**, geen nieuw
+resultaatformaat of scorer. De bestaande tests bewaken deze afspraken; ze
+bewijzen geen gebruikerskwaliteit. Een normale ontwikkelkaart gebruikt twee
+kleine gevallen tweemaal vóór/na, niet telkens de volledige eindmatrix.
+
+<!-- EV-003 protocol -->
+```json
+{
+  "participants": ["eva2", "openclaw", "hermes", "agent_zero"],
+  "families": ["conversation_memory", "cross_domain_actions", "initiative", "browser_computer", "learning_projects", "voice_presence"],
+  "development": {"cases": 2, "epochs": 2, "claim": "development_only"},
+  "acceptance": {"unseen_cases_per_family": 12, "epochs": 3, "initiative_opportunity_fraction": 0.5, "human_raters": 2},
+  "thresholds": {"success_min": 0.85, "success_advantage_pp": 10, "human_preference_min": 0.6, "useful_initiative_min": 0.8, "nuisance_max": 0.1, "median_time_ratio_max": 1.1, "p95_time_ratio_max": 1.2, "token_ratio_max": 1.1, "safety_failures_max": 0},
+  "result_owner": "Inspect native logs and official benchmark scorers",
+  "missing_or_incomparable": "unknown_not_a_win",
+  "retry_for_better_score": false,
+  "user_daily_quota": null
+}
+```
+<!-- /EV-003 protocol -->
+
+**Taken en ongezienheid.** De zes families krijgen elk twaalf verschillende
+scenario's; drie epochs herhalen de hele vaste set in drie gelijke blokken.
+Geheugen omvat correcties, vergeten en persoonsgrenzen; handelingen gebruiken
+minstens twee diensten. Browserwerk omvat menselijke overname. Leren/projecten
+omvat documentatie, een nieuwe skill, hergebruik in een tweede opdracht en
+hervatten van een meerdaags project. Stem omvat onderbreken, luisteren tijdens
+spreken en passende stilte. Dit zijn families, nog geen uitgevoerde dataset.
+Een onafhankelijke curator legt concrete taken, rubrics, verwachte effecten,
+afleiders en tijdvensters vast ná bevriezing van de kandidaat en vóór de run.
+De bouwer krijgt geen verborgen antwoorden. Vooraf ingeziene gevallen worden
+gemarkeerd en vervangen vóór modelgebruik; na inzage in resultaten mag dat niet.
+Iedere taak start met dezelfde lege gegevenskopie; continuïteit binnen één
+scenario is toegestaan, overdracht tussen onafhankelijke samples niet.
+
+**Gelijke kansen.** Vóór de eerste call worden de actuele officiële releases,
+commits, images, adapters, model/revision en instellingen vastgezet. Alle vier
+krijgen dezelfde taak, startdata, tools, netwerktoegang, hardwareklasse en
+taakgebonden tijd-/token-/stapgrenzen, inclusief hulpagenten en geheugenwerk.
+Die grenzen en uitvoervolgorde worden op ontwikkelgevallen vastgesteld en met
+de concrete dataset verzegeld, niet na resultaten bijgesteld. Een run start
+pas wanneer alle vier de native routes een netwerkloze contractproef en één
+ontwikkelgeval aankunnen. Onze adapterfout, ontbrekende toegang of onvergelijkbare
+meetgrens maakt de vergelijking onbekend, niet de concurrent verliezer.
+Uitval van een correct toegelaten product tijdens de echte taak telt als
+mislukking. Herstel/herstart binnen een taak telt mee; opnieuw proberen voor
+een beter cijfer niet. Geen extra quota voor Jaap en geen betaalroutewijziging.
+
+**Beoordeling.** Voor taakslagen gelden alle semantische eindvoorwaarden; deels
+gelukt blijft deels zichtbaar maar telt niet als volledig succes. Bij kansen
+beoordelen beide mensen nut en tijdigheid; onenigheid telt conservatief niet
+als nuttig. Menselijkheid wordt op de gesprek-/geheugenfamilie beoordeeld:
+iedere beoordelaar haalt zelf de voorkeurgrens; menselijke uitslagen worden
+niet vervangen door een AI-jury. Bij nul bruikbare vergelijkingsparen voor
+tijd/verbruik of een nulnoemer is de relatieve uitkomst onbekend. Ontbrekende
+usage is onbekend, geen nul. Een vooraf verplichte menselijke stap is geen
+fout, maar de totale gebruikersinspanning blijft gerapporteerd.
+
+**Winst en verlies.** Alle grenzen gelden tegen iedere concurrent afzonderlijk;
+geen gemiddelde over sterke en zwakke dimensies. Een veiligheidsfout blokkeert
+acceptatie ongeacht de score. Een lagere uitkomst is een gemeten achterstand;
+een onvolledige, gemengde of te kleine proef geeft geen complete winstclaim.
+De drie blokken tonen herhaalbaarheid, geen statistisch bewezen superioriteit
+voor alle mogelijke taken. Bij onvoldoende bewijs stoppen we deze meetronde
+met die conclusie; geen doorproeven tot winst. Aanpassing maakt de set
+ontwikkeldata en vereist een nieuwe onafhankelijk gemaakte eindset. Zeven dagen
+gezinspraktijk, Eva1-ervaring en menselijke eindacceptatie blijven aanvullende
+eisen; officiële AgentBench/GAIA/OSWorld-scores blijven afzonderlijk.
+
+**Eén bewijsroute.** De run bewaart protocol-/dataset-/bronhashes als metadata
+bij de native Inspect-logs; exacte rubric, individuele scores, fouten, usage en
+provider-receipts blijven herleidbaar. Originele logs blijven ongewijzigd;
+herbeoordeling schrijft een aparte log. Private trajecten krijgen vóór de run
+een eigenaar, afgeschermd retentiepad en opruimmoment. Geen handmatig overgetypte
+totaalscore. Een dunne scorer voor Eva-specifieke readbacks gebruikt Inspect's
+publieke scorecontract; officiële benchmarkscorers worden niet vervangen.
+Deze werkwijze sluit aan op [Inspect scorers](https://inspect.aisi.org.uk/scorers.html),
+[logs](https://inspect.aisi.org.uk/eval-logs.html) en
+[afzonderlijk scoren](https://inspect.aisi.org.uk/scoring-workflow.html)
+(gecontroleerd 7 september); de productdrempels hierboven zijn onze vooraf
+gekozen acceptatiecriteria, niet door Inspect voorgeschreven.
+
+## Historisch besluit: eerst een open-source evaluatiemotor bewijzen
 
 Gecontroleerd op **4 september 2026**. Inspect AI is de voorkeurskandidaat,
 maar nog niet definitief gekozen. `EV-001` moet eerst werkelijk aantonen dat
