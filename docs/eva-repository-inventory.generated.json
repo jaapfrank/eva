@@ -269,9 +269,9 @@
     }
   ],
   "summary": {
-    "files": 2085,
-    "present": 2085,
-    "tracked": 2006,
+    "files": 2086,
+    "present": 2086,
+    "tracked": 2007,
     "untracked": 79,
     "tombstones": 0,
     "policyErrors": 88
@@ -310,7 +310,7 @@
     {
       "id": "eva2-verification",
       "role": "verification",
-      "matchCount": 764
+      "matchCount": 765
     },
     {
       "id": "eva2-documentation",
@@ -10276,7 +10276,7 @@
       "path": "docs/eva-repository-inventory.generated.json",
       "gitState": "tracked",
       "present": true,
-      "bytes": 2407113,
+      "bytes": 2408141,
       "contentSha256": "32591e23fa2eb53a038d95e726ba09edd0405306f38c5283a36a2b6d3010254d",
       "hashMode": "canonical-self-reference-redacted",
       "role": "generated",
@@ -10309,7 +10309,7 @@
       "path": "docs/eva-repository-inventory.generated.md",
       "gitState": "tracked",
       "present": true,
-      "bytes": 371489,
+      "bytes": 371639,
       "contentSha256": "2f4f8486464cbb9713b749dc898f265093d0853699f1da1b4eb3dd1625c1b2d2",
       "hashMode": "canonical-self-reference-redacted",
       "role": "generated",
@@ -11130,8 +11130,8 @@
       "path": "eva2/PROJECT_STATUS.md",
       "gitState": "tracked",
       "present": true,
-      "bytes": 61982,
-      "contentSha256": "53cc3d0b8db1ea883ab2e2540dbb7893b031df9baa8c1e69562e356b5d8a8537",
+      "bytes": 62045,
+      "contentSha256": "30c99c72bc3fbc125b1c9e3aaa4b3a5abeec6d24cd83cb325f668fd6f1d88a48",
       "hashMode": "exact-bytes",
       "role": "documentation",
       "roleRuleId": "eva2-documentation",
@@ -11285,8 +11285,8 @@
       "path": "eva2/WERKBORD.md",
       "gitState": "tracked",
       "present": true,
-      "bytes": 13930,
-      "contentSha256": "e2f120083372958237c1bca1843346222a8f605d68d1ebc2b68fe4273ade4e13",
+      "bytes": 13939,
+      "contentSha256": "42a8d0d2f2cacfed5e0d8348af7e9431378027289fb0920d4e6cf09a15644639",
       "hashMode": "exact-bytes",
       "role": "documentation",
       "roleRuleId": "eva2-documentation",
@@ -11349,8 +11349,8 @@
       "path": "eva2/benchmark/inspect_ai_v1/README.md",
       "gitState": "tracked",
       "present": true,
-      "bytes": 5191,
-      "contentSha256": "f1a5d4b48f36c68c0de75c0fc766d8053ee1c6c9f4d229533261489edb59753b",
+      "bytes": 5729,
+      "contentSha256": "8b1471b8248beecd6d9e6df1cee8ff981be5786f863c3ad4566a5e3f3b87b221",
       "hashMode": "exact-bytes",
       "role": "experimental",
       "roleRuleId": "eva2-experimental",
@@ -13380,8 +13380,8 @@
       "path": "eva2/design/product/comparable-agent-benchmarks-v1.md",
       "gitState": "tracked",
       "present": true,
-      "bytes": 20092,
-      "contentSha256": "75ecbe973bcb9419b30a7ce04619c1f40da7a7998663b39ce3932b316701346e",
+      "bytes": 27919,
+      "contentSha256": "d59a68b4e93a6ed2a903fbca4a6de972e180a6d83b0c2a5935fc71597258f71e",
       "hashMode": "exact-bytes",
       "role": "documentation",
       "roleRuleId": "eva2-documentation",
@@ -13504,8 +13504,8 @@
       "path": "eva2/design/product/execution-workboard-v1.json",
       "gitState": "tracked",
       "present": true,
-      "bytes": 123985,
-      "contentSha256": "6895aecc110d286e0ef238af6284dce4739ec85b529bd41bc15adbc3ef568261",
+      "bytes": 126653,
+      "contentSha256": "269ca1a2a0b75ed4c2455e34851aac91741ce1bf7a4cd395e40a1762219689d1",
       "hashMode": "exact-bytes",
       "role": "documentation",
       "roleRuleId": "eva2-documentation",
@@ -25428,6 +25428,41 @@
       "present": true,
       "bytes": 8114,
       "contentSha256": "3bb966c92b24723892ed41bd959881a83a2192cebf8c8aeaaac7f618650fd613",
+      "hashMode": "exact-bytes",
+      "role": "verification",
+      "roleRuleId": "eva2-verification",
+      "matchingRuleIds": [
+        "eva2-verification"
+      ],
+      "owner": "verification",
+      "inputs": [
+        "production or fixture contract"
+      ],
+      "outputs": [
+        "test decision"
+      ],
+      "state": [
+        "temporary isolated test state"
+      ],
+      "effects": [
+        "may execute only inside its declared gate"
+      ],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": true,
+        "runtimeCritical": true,
+        "status": "included-tracked-critical"
+      }
+    },
+    {
+      "path": "eva2/evidence/product/EV-003-comparative-acceptance-protocol-2026-09-08.json",
+      "gitState": "tracked",
+      "present": true,
+      "bytes": 2679,
+      "contentSha256": "484051b5db26daa4299037e98bf0fff7bf6679f44b8169e72976fcda509f73d4",
       "hashMode": "exact-bytes",
       "role": "verification",
       "roleRuleId": "eva2-verification",
@@ -56439,8 +56474,8 @@
       "path": "eva2/tests/benchmark/test_inspect_ai_ev002.py",
       "gitState": "tracked",
       "present": true,
-      "bytes": 12147,
-      "contentSha256": "846462f6fc24b6cd2185c7b2a8b876f12454cd2682b897fbd5740888ded310cf",
+      "bytes": 13811,
+      "contentSha256": "bc6ea79d3e3343d8d230541092927add1e513a31777eff207de62acbab179a50",
       "hashMode": "exact-bytes",
       "role": "verification",
       "roleRuleId": "eva2-verification",
@@ -83990,5 +84025,5 @@
       }
     }
   ],
-  "sourceDigest": "3ea6eb52655417d260ad134da054cefb875e4f29e6ecda3d2c91934780608078"
+  "sourceDigest": "9b4de528ae464b3a03314e24183f1801c6f4c776cbb6b3d8e2732fa85ff85988"
 }

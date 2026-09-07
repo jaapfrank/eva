@@ -1,40 +1,40 @@
 # Eva 2 — uitvoerbaar werkbord
 
-Laatst bijgewerkt: 2026-09-07.
+Laatst bijgewerkt: 2026-09-08.
 
 Doel: [Eva als zelfstandig lerende digitale huisgenoot](PROJECTDOEL.md).
 Gebouwd, getest, live en door jou geaccepteerd zijn verschillende stappen.
 
-RT-001 is technisch afgerond met onafhankelijke GO en commitgebonden bewijs. De live versie bundelde twaalf oude waarnemingen tot één door Telegram bevestigde melding; een gewone bewegingsmelding bleef stil. Nu EV-003: compacte succescriteria vóór nieuwe vergelijkingsruns. Nut van de eerste melding en volledige productacceptatie blijven open.
-[Actueel bewijs](evidence/product/RT-001-autonomous-admission-wait-2026-09-07.json).
+Het meetprotocol is onafhankelijk goedgekeurd: herhaalde ongeziene taken, menselijke voorkeur, initiatief, hulp, tijd, verbruik en herstel blijven afzonderlijk zichtbaar. Geen uitgevoerde vergelijking of winstclaim. UP-001 onderzoekt nu actuele open-sourcegesprek-/toolroutes en neemt één bewezen bruikbaar patroon over in Eva's bestaande adapter.
+[Actueel bewijs](evidence/product/EV-003-comparative-acceptance-protocol-2026-09-08.json).
 
-Jij kunt verder praten met /eva2 voor ieder bericht; geen instellingenwerk nodig. Ik zet nu de succescriteria vast, onderzoek daarna gericht herbruikbare oplossingen en maak de gesprekroute compleet. Geen herhaling van geslaagde runtimebuilds of uitrol; geen nieuwe beheerfuncties vóór deze gebruikersverbetering.
+Jij kunt verder praten met /eva2 voor ieder bericht. Ik onderzoek concrete upstreamcode en licenties voor snellere, begrijpelijke antwoordvorming met tools; daarna een kleine voor/naproef en de complete gesprekroute. Geen nieuwe agentloop of brede opruimklus.
 
 ## Nu
 
 | Volgorde | Kaart | Resultaat | Status |
 |---:|---|---|---|
-| 132 | `EV-003` — Eerlijke succescriteria vastzetten | Een compact, vooraf vastgezet meetprotocol voor echte gebruikerswinst; Inspect blijft de evaluatiemotor. Geen nieuwe runtime, modelcalls of winstclaim in deze kaart. | 🟡 BEZIG |
+| 133 | `UP-001` — Sterke oplossingen van concurrenten hergebruiken | Onderzoek de actuele gesprek-/toolroutes van OpenClaw, Hermes en Agent Zero; neem één bewezen bruikbaar patroon over in de bestaande Eva-adapter. Andere capabilities volgen in hun eigen functionele kaarten, met dezelfde herkomst- en voor/naproef. | 🟡 BEZIG |
 
 Klaar betekent:
 
-- Voor resultaat, warmte, initiatief, menselijke hulp, tijd, tokens/kosten en herstel staat vóór de runs hoe we meten en wanneer iets beter, slechter of onbekend is.
-- Winst vereist herhaalde ongeziene proeven tegen alle drie concurrenten; privacy, bevoegdheden, stop en herstel worden niet weggemiddeld. Grenzen voor ontwikkelproeven zijn geen nieuw gebruikersdagmaximum.
-- Een onafhankelijke reviewer keurt het compacte protocol goed; het dashboard verwijst naar dezelfde taak en blijft alle ontbrekende resultaten als onbekend tonen.
+- Minstens één herbruikbaar upstreamprincipe verbetert aantoonbaar de bestaande gesprekroute; alle drie concurrenten zijn op relevante actuele bron onderzocht.
+- Dezelfde gerichte proeven vóór en na tonen het concrete voordeel en bewaken persoon, stop, toolreceipts, retry en verbruik; geen algemene concurrentiewinst claimen.
+- Onafhankelijke review keurt de bronkandidaat en herkomst goed. CO-007 blijft eigenaar van de complete gezins-/Telegramervaring; een nieuwe deployment vereist de normale kandidaatpoort.
 
 <details>
 <summary>Technische uitvoering: bestanden en controles</summary>
 
-### Exact werk voor `EV-003`
+### Exact werk voor `UP-001`
 
-- `eva2/design/product/comparable-agent-benchmarks-v1.md`
-- `eva2/benchmark/inspect_ai_v1/README.md`
-- `eva2/tests/benchmark/test_inspect_ai_ev002.py`
+- `eva2/design/product/performance-and-complexity-v1.md`
+- `eva2/src/eva/adapters/model/pydantic_conversation.py`
+- `eva2/tests/model/test_pydantic_conversation_model.py`
 
 Echte controles:
 
-- `pytest -q tests/benchmark/test_inspect_ai_ev002.py`
-- `ruff check tests/benchmark/test_inspect_ai_ev002.py`
+- `pytest -q tests/model/test_pydantic_conversation_model.py tests/model/test_conversation_model.py`
+- `ruff check src/eva/adapters/model/pydantic_conversation.py tests/model/test_pydantic_conversation_model.py`
 - `python3 tools/check_component_catalog.py`
 
 </details>
@@ -44,7 +44,6 @@ Echte controles:
 Deze onderwerpen zijn alleen mijlpalen. Een mijlpaal wordt pas uitvoerbaar
 nadat zij als eerstvolgende kleine kaart exacte bestanden en tests heeft.
 
-- [ ] `UP-001` — Sterke oplossingen van concurrenten hergebruiken: Exacte bronnen en licenties van OpenClaw, Hermes en Agent Zero onderzoeken; per capability overnemen, adapteren of afwijzen met kleine voor/naproef. Herkomst en onderhoud vastleggen; aantoonbaar vervangen eigen routes verwijderen.
 - [ ] `CO-007` — Menselijke gesprekroute compleet maken: Echte gezinsgesprekken beoordelen op warmte, eigen oordeel, identiteit en continuïteit; live tekststukjes met tools apart bewijzen. CO-001 bronstatus en CO-002 menselijke beoordeling zijn geen voltooiing van deze gebruikersuitkomst.
 - [ ] `CO-004` — Eigen geheugen in het dashboard tonen: Het bestaande React-Admin-dashboard toont de afgeschermde geheugenbronnen begrijpelijk zonder nieuwe webstack of browseropslag.
 - [ ] `CO-005` — Eigen geheugen corrigeren en wissen: De eigenaar kan één zichtbare bron corrigeren of wissen en krijgt controle dat PostgreSQL en Hindsight dezelfde wijziging hebben verwerkt.
@@ -119,7 +118,9 @@ Afgevinkt betekent alleen: de vastgelegde kaart is afgerond, niet het hele produ
   [Bewijs](evidence/product/UX-000-project-dashboard-2026-09-07.json).
 - [x] `RT-001` — Zelfstandige runtime veilig herstellen (done).
   [Bewijs](evidence/product/RT-001-autonomous-admission-wait-2026-09-07.json).
-- [ ] `EV-003` — Eerlijke succescriteria vastzetten (in_progress).
+- [x] `EV-003` — Eerlijke succescriteria vastzetten (done).
+  [Bewijs](evidence/product/EV-003-comparative-acceptance-protocol-2026-09-08.json).
+- [ ] `UP-001` — Sterke oplossingen van concurrenten hergebruiken (in_progress).
 
 </details>
 

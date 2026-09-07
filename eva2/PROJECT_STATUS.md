@@ -3,7 +3,8 @@
 **[Open het visuele projectdashboard](http://localhost:44712).** Dat leest dezelfde
 werklijst als [WERKBORD.md](WERKBORD.md). UX-000 is als lokaal dashboard
 afgerond en onafhankelijk beoordeeld. Ook runtimeherstel RT-001 is technisch
-afgevinkt; EV-003 legt nu de succescriteria voor de volgende verbeteringen vast.
+afgevinkt. EV-003 heeft de succescriteria vooraf vastgelegd; UP-001 onderzoekt
+nu concrete open-sourcegesprek-/toolcode voor hergebruik in Eva.
 Dit is geen eindacceptatie van Eva. De repository staat nu in
 `/home/administrator/project/Eva2`; de oude kandidaatlocatie verwijst alleen door.
 Onderstaande lange tekst blijft achtergrond en historische controle, geen
