@@ -19,7 +19,7 @@
       "runtimePort": 44710,
       "runtimeLabel": "Slot 3",
       "roadmap": [{"id":"daily","title":"Een dagelijkse huisgenoot","outcome":"Eerst betrouwbaar praten, onthouden en passend aanwezig zijn.","acceptance":"Een echt gezinsgesprek loopt van tekst of stem naar herinneren en passend initiatief; onderbreken en hervatten werken zonder dubbele melding.","taskIds":["UX-000","RT-001","EV-003","UP-001","CO-007","CO-004","CO-005","CO-006","VB-001","VB-002","AU-005"]},{"id":"actions","title":"Handelen op jouw verzoek","outcome":"Eén algemene toolroute, ook voor onbekende diensten en browserwerk.","acceptance":"Twee echte diensten en een onbekende connector werken zonder nieuwe taakspecifieke kerncode; resultaat apart gecontroleerd, mandaat intrekbaar.","taskIds":["TL-001","TL-002","AU-001","TL-003","VB-003","VB-004"]},{"id":"projects","title":"Zelfstandig leren en uitvoeren","outcome":"Een zichtbaar project afronden, met hulpagenten en herbruikbare vaardigheden.","acceptance":"Een ongezien meerdaags project hervat na herstart; aangeleerde skill opnieuw gebruikt; kosten, stop en gecontroleerde verbetering zichtbaar.","taskIds":["AU-002","UX-001","UX-002","AU-004","AU-006","AU-003"]},{"id":"install","title":"Eenvoudig installeren en behouden","outcome":"Installeren, verplaatsen en bijwerken zonder terminalwerk.","acceptance":"Een gewone gebruiker installeert Eva en herstelt identiteit en gegevens op een andere computer; updates hebben een werkende terugweg.","taskIds":["IN-001","IN-002","IN-003"]},{"id":"proof","title":"De voorsprong bewijzen","outcome":"De complete Eva eerlijk vergelijken en zeven dagen thuis gebruiken.","acceptance":"Vooraf vastgelegde drempels, onafhankelijke controles en menselijke beoordeling gehaald; anders geen winst- of eindacceptatieclaim.","taskIds":["CP-001","CP-002","CP-003","FN-001","RB-007","RB-008","RB-009","RB-010","FN-002","FN-003"]}],
-      "priorityDecision": "Runtimeherstel en het meetprotocol zijn afgerond. Nu sterke upstreamoplossingen voor de gesprekroute hergebruiken vóór extra geheugenbeheer; stem en aanwezigheid vóór brede projectautonomie. Alle oorspronkelijke doelen blijven behouden; passende releaseveiligheid geldt bij iedere ingebruikname.",
+      "priorityDecision": "Runtimeherstel, meetcriteria en UP-001 zijn afgerond. De antwoordstream is gebouwd en gecontroleerd met 168 tests plus een echte Astra-voor/naproef. Nu installeren en in Telegram bewijzen, vóór extra geheugenbeheer. Daarna stem en aanwezigheid; alle oorspronkelijke doelen blijven behouden.",
       "dashboardVerification": {
         "status": "local_browser_verified_not_full_product_acceptance",
         "priorityRevision": {
@@ -47,18 +47,18 @@
       "summary": [
         {"label": "GEWONE GESPREKKEN", "value": "Je krijgt weer antwoord", "detail": "Jouw Telegramvragen van 21:48 en 21:49 zijn beantwoord"},
         {"label": "ZELFSTANDIG HANDELEN", "value": "Eerste melding verstuurd", "detail": "12 oude waarnemingen → 1 besluit · nut nog te beoordelen"},
-        {"label": "CONCURRENTEN VERSLAAN", "value": "Geen winstclaim", "detail": "Gelijke vergelijking nog onvolledig"}
+        {"label": "NIEUW AFGEROND · UP-001", "value": "✓ Antwoordstream gebouwd", "detail": "168 tests groen · echte Astra-proef · nog installeren"}
       ],
       "nextOutcomes": [
         {"title": "Praat verder met Eva2", "detail": "Stuur /eva2 gevolgd door je vraag, ook bij vervolgvragen. Je twee laatste vragen kregen antwoord. Geen instellingen wijzigen; de gevraagde Home Assistant-inventarisatie is nog niet uitgevoerd."},
-        {"title": "Slimme gesprekstechniek hergebruiken", "detail": "De succescriteria zijn vooraf vastgezet. Nu onderzoeken we de echte gesprek-/toolcode van Hermes, OpenClaw en Agent Zero en beproeven één bruikbaar patroon in Eva's bestaande route. Geen nieuwe webstack of tweede brein."},
+        {"title": "Antwoordstream in Telegram installeren", "detail": "UP-001 is af: eindantwoord en interne tussenstappen gescheiden, zonder extra agentloop. In de echte Astra-proef kwam hetzelfde antwoord in 7 stukjes vanaf 1,8 seconde; geen extra tokens ten opzichte van de nulmeting. Nu veilige installatie en echte Telegramcontrole."},
         {"title": "Geheugen en stem verbinden", "detail": "Jou onthouden, laten corrigeren, luisteren en passend reageren."}
       ],
       "openRisks": [
         "Je twee nieuwe Telegrambeurten kregen antwoord. Dit bewijst nog geen langdurig stabiel gesprek, geslaagde Home Assistant-inventarisatie of live tekststukjes.",
         "Een beter gesprek is nog geen complete digitale huisgenoot.",
-        "Automatische tekststukjes, stem en zelfstandig werk zijn niet af.",
-        "Geen nieuwe functies stapelen vóór de herijking van de werkvolgorde."
+        "De antwoordstream is broncode-groen; nog niet geïnstalleerd. Stem en zelfstandig werk blijven open.",
+        "Er is nog geen bewezen concurrentiewinst."
       ],
       "capabilities": [
         {"id":"conversation","icon":"◌","title":"Gesprekken","subtitle":"Warmte, eigen oordeel, continuïteit","built":"yes","tested":"partial","live":"partial","accepted":"partial","gap":"Live tekststukjes en stabiele eindervaring","detail":"Het bestaande Telegramarchief bevestigt antwoorden op jouw vragen van 21:48 en 21:49, na de eerdere fouten rond 19:01. De aparte ontwikkelproef gebruikte één modelaanroep en kon exact worden teruggelezen. De Home Assistant-inventarisatie is nog niet gedaan; live tekststukjes en volledige gezinsacceptatie blijven open.","evidence":"RT-001 · chatarchief 7 september 21:48–21:49 · ontwikkelproef en feedback Jaap"},
@@ -489,7 +489,7 @@
       "retiredFoundationDigest": "df8bacedc1b93ea952d5e4fd0f161039f1faa91b72b6d22f71b0c020e73c7b90"
     }
   },
-  "activeTaskId": "UP-001",
+  "activeTaskId": "CO-007",
   "maxActiveImplementationTasks": 1,
   "statusValues": [
     "queued",
@@ -1466,8 +1466,8 @@
       "area": "Open source",
       "title": "Sterke oplossingen van concurrenten hergebruiken",
       "outcome": "Onderzoek de actuele gesprek-/toolroutes van OpenClaw, Hermes en Agent Zero; neem één bewezen bruikbaar patroon over in de bestaande Eva-adapter. Andere capabilities volgen in hun eigen functionele kaarten, met dezelfde herkomst- en voor/naproef.",
-      "status": "in_progress",
-      "stateDetails": {"baseCommit": null, "implementationCommit": null, "evidenceCommit": null, "reviewEvidencePaths": [], "blockerReason": null},
+      "status": "done",
+      "stateDetails": {"baseCommit": "ca4248b3cca80eb0680e021d813170ca6a1d63f6", "implementationCommit": "56c266aaa60a20d88209d5da9cfd7d50d2f235ed", "evidenceCommit": "da18784580f8dcbe03efcfa01e3b04d949e2c75d", "reviewEvidencePaths": ["eva2/evidence/product/UP-001-phase-aware-streaming-2026-09-08.json"], "blockerReason": null},
       "ownerRole": "architecturelead",
       "reviewerRole": "dashboardreviewer",
       "dependsOn": ["EV-003"],
@@ -1477,16 +1477,27 @@
       "testCommands": ["pytest -q tests/model/test_pydantic_conversation_model.py tests/model/test_conversation_model.py tests/model/test_openai_codex_provider_shared.py tests/api/test_telegram_canary_api.py tests/api/test_memory_api.py", "ruff check src/eva/application/conversation.py src/eva/adapters/model/pydantic_conversation.py tests/model/test_pydantic_conversation_model.py", "python3 tools/check_component_catalog.py"],
       "evidenceRequired": ["Exacte officiële upstreambron, relevante functies, licentie en onderhoud vastleggen; per concurrent concreet overnemen, adapteren of afwijzen. Geen README-claim als functiebewijs.", "Kleine gelijke voor/naproef volgens EV-003 meet antwoordvorming, tools, modelcalls, gebruik en fouten. Geen tweede agentloop, blind herhaalde effecten of weglekkende gedeeltelijke tooltekst.", "Herkomst en onderhouden integratiegrens vastleggen; verwijder alleen werkelijk vervangen code binnen deze kaart. Kandidaatwerk blijft afzonderlijk van livegebruik."],
       "doneWhen": ["Minstens één herbruikbaar upstreamprincipe verbetert aantoonbaar de bestaande gesprekroute; alle drie concurrenten zijn op relevante actuele bron onderzocht.", "Dezelfde gerichte proeven vóór en na tonen het concrete voordeel en bewaken persoon, stop, toolreceipts, retry en verbruik; geen algemene concurrentiewinst claimen.", "Onafhankelijke review keurt de bronkandidaat en herkomst goed. CO-007 blijft eigenaar van de complete gezins-/Telegramervaring; een nieuwe deployment vereist de normale kandidaatpoort."]
-    }
-  ],
-  "milestones": [
+    },
     {
       "id": "CO-007",
       "order": 134,
       "area": "Gesprek",
       "title": "Menselijke gesprekroute compleet maken",
-      "outcome": "Echte gezinsgesprekken beoordelen op warmte, eigen oordeel, identiteit en continuïteit; live tekststukjes met tools apart bewijzen. CO-001 bronstatus en CO-002 menselijke beoordeling zijn geen voltooiing van deze gebruikersuitkomst."
-    },
+      "outcome": "De bewezen antwoordstream veilig installeren en via Telegram laten werken. Gewoon praten, tools, identiteit en herstart samen controleren; gezinsbeoordeling blijft expliciet nodig voor de complete gesprekservaring.",
+      "status": "in_progress",
+      "stateDetails": {"baseCommit": null, "implementationCommit": null, "evidenceCommit": null, "reviewEvidencePaths": [], "blockerReason": null},
+      "ownerRole": "architecturelead",
+      "reviewerRole": "dashboardreviewer",
+      "dependsOn": ["UP-001"],
+      "componentIds": ["core-behavior-tests"],
+      "inventoryOwners": ["repository", "verification"],
+      "changePaths": ["eva2/tests/api/test_telegram_canary_api.py", "eva2/release/eva-cockpit-evidence-index-v1.json", "eva2/release/managed-b-release-input-authority-v1.json"],
+      "testCommands": ["pytest -q tests/api/test_telegram_canary_api.py tests/api/test_memory_api.py tests/model/test_pydantic_conversation_model.py", "ruff check tests/api/test_telegram_canary_api.py", "python3 tools/check_component_catalog.py"],
+      "evidenceRequired": ["Dezelfde gebruiker krijgt via de echte Telegramroute live antwoordtekst; tools en interne tussenstappen lekken niet als eindantwoord.", "Eén exact bronimage doorloopt passende releasecontrole, actuele datakopie, herstart en veilige actief/reserve-installatie met bewaarde terugweg.", "Menselijke beoordeling van warmte, eigen oordeel en continuïteit blijft herkenbaar afzonderlijk; geen gebruikersacceptatie afleiden uit technische tests."],
+      "doneWhen": ["De gewone gebruikersroute geeft antwoordstukjes en een compleet opgeslagen eindantwoord; herstart/replay voegt geen modelcall of externe actie toe.", "Tools blijven uitgesteld en gecontroleerd; fouten/stop en persoonsscheiding zijn negatief getest op de kandidaat.", "De geïnstalleerde kandidaat en terugweg zijn onafhankelijk gecontroleerd; echte gezinsfeedback bevestigt de gesprekservaring. Zonder die feedback blijft acceptatie open."]
+    }
+  ],
+  "milestones": [
     {
       "id": "CO-004",
       "order": 135,
@@ -1707,6 +1718,7 @@
   ],
   "completions": {
     "EV-003": {"baseCommit":"71c44770b4019f94042c9a156f46693ad04af96e","commit":"de77be8933d600bb719ea712fea92882c9a5b62f","decision":"GO","evidenceCommit":"3ca19a477bc61f1683f170353b29a3f912ffdcfe","evidencePaths":["eva2/evidence/product/EV-003-comparative-acceptance-protocol-2026-09-08.json"],"implementedBy":"/root","reviewCommit":"78f63220059740bb1ffdcc491acfaa94041878b2","reviewedBy":"/root/identity_pair_review","testReceiptPaths":["eva2/evidence/product/EV-003-comparative-acceptance-protocol-2026-09-08.json"]},
+    "UP-001": {"baseCommit":"ca4248b3cca80eb0680e021d813170ca6a1d63f6","commit":"56c266aaa60a20d88209d5da9cfd7d50d2f235ed","decision":"GO","evidenceCommit":"da18784580f8dcbe03efcfa01e3b04d949e2c75d","evidencePaths":["eva2/evidence/product/UP-001-phase-aware-streaming-2026-09-08.json"],"implementedBy":"/root","reviewCommit":"1cc4ef1a59563bb80d6e0da5c187422907cdc8a2","reviewedBy":"/root/identity_pair_review","testReceiptPaths":["eva2/evidence/product/UP-001-phase-aware-streaming-2026-09-08.json"]},
     "RT-001": {"baseCommit":"0eb625d154f9b4e0e73ef2c1cc22458c9612522e","commit":"c43df98a49b0ac8b25cac4877fafd81f2cb008de","decision":"GO","evidenceCommit":"49b4332522b910fe92ae61c6c56df287333a1519","evidencePaths":["eva2/evidence/product/RT-001-autonomous-admission-wait-2026-09-07.json"],"implementedBy":"/root","reviewCommit":"f3605db97582d9f6ba53ad16720bdf7f2ae55241","reviewedBy":"/root/identity_pair_review","testReceiptPaths":["eva2/evidence/product/RT-001-autonomous-admission-wait-2026-09-07.json"]},
     "UX-000": {"baseCommit":"ccbe0bb62e74674c8abe1c57a7d67a7fe907aa10","commit":"1f70056a440d01e2999326debdcda7b8a957abf9","decision":"GO","evidenceCommit":"2c6daa6b5a0e7806c73f10481e1ef7baacef9987","evidencePaths":["eva2/evidence/product/UX-000-project-dashboard-2026-09-07.json"],"implementedBy":"/root","reviewCommit":"523dd0f1a5ce0f1a367e6da4719eb1f3a537755a","reviewedBy":"/root/identity_pair_review","testReceiptPaths":["eva2/evidence/product/UX-000-project-dashboard-2026-09-07.json"]},
     "CO-001": {

@@ -269,9 +269,9 @@
     }
   ],
   "summary": {
-    "files": 2086,
-    "present": 2086,
-    "tracked": 2007,
+    "files": 2087,
+    "present": 2087,
+    "tracked": 2008,
     "untracked": 79,
     "tombstones": 0,
     "policyErrors": 88
@@ -310,7 +310,7 @@
     {
       "id": "eva2-verification",
       "role": "verification",
-      "matchCount": 765
+      "matchCount": 766
     },
     {
       "id": "eva2-documentation",
@@ -10276,7 +10276,7 @@
       "path": "docs/eva-repository-inventory.generated.json",
       "gitState": "tracked",
       "present": true,
-      "bytes": 2408142,
+      "bytes": 2409160,
       "contentSha256": "32591e23fa2eb53a038d95e726ba09edd0405306f38c5283a36a2b6d3010254d",
       "hashMode": "canonical-self-reference-redacted",
       "role": "generated",
@@ -10309,7 +10309,7 @@
       "path": "docs/eva-repository-inventory.generated.md",
       "gitState": "tracked",
       "present": true,
-      "bytes": 371640,
+      "bytes": 371780,
       "contentSha256": "2f4f8486464cbb9713b749dc898f265093d0853699f1da1b4eb3dd1625c1b2d2",
       "hashMode": "canonical-self-reference-redacted",
       "role": "generated",
@@ -11285,8 +11285,8 @@
       "path": "eva2/WERKBORD.md",
       "gitState": "tracked",
       "present": true,
-      "bytes": 13939,
-      "contentSha256": "42a8d0d2f2cacfed5e0d8348af7e9431378027289fb0920d4e6cf09a15644639",
+      "bytes": 14136,
+      "contentSha256": "96c2be0965bf0d7944db7e6f19ca54df2fb977f74dd3fbd5adefa3ad5d792a7a",
       "hashMode": "exact-bytes",
       "role": "documentation",
       "roleRuleId": "eva2-documentation",
@@ -13504,8 +13504,8 @@
       "path": "eva2/design/product/execution-workboard-v1.json",
       "gitState": "tracked",
       "present": true,
-      "bytes": 126867,
-      "contentSha256": "0f857532e2ddb572fe385757ffdbe95bc10609b80b5859b28a37f07828ec4b93",
+      "bytes": 129179,
+      "contentSha256": "075a2443df7ca923bbfa480c41303a34d65bf700c8d7a4c528fde819fe4ac9cc",
       "hashMode": "exact-bytes",
       "role": "documentation",
       "roleRuleId": "eva2-documentation",
@@ -25883,6 +25883,41 @@
       "present": true,
       "bytes": 192959,
       "contentSha256": "072e2712a8caeb4e28ad2a620568502ab63617f72ad18b2f6144dd59d393c957",
+      "hashMode": "exact-bytes",
+      "role": "verification",
+      "roleRuleId": "eva2-verification",
+      "matchingRuleIds": [
+        "eva2-verification"
+      ],
+      "owner": "verification",
+      "inputs": [
+        "production or fixture contract"
+      ],
+      "outputs": [
+        "test decision"
+      ],
+      "state": [
+        "temporary isolated test state"
+      ],
+      "effects": [
+        "may execute only inside its declared gate"
+      ],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": true,
+        "runtimeCritical": true,
+        "status": "included-tracked-critical"
+      }
+    },
+    {
+      "path": "eva2/evidence/product/UP-001-phase-aware-streaming-2026-09-08.json",
+      "gitState": "tracked",
+      "present": true,
+      "bytes": 6663,
+      "contentSha256": "78edff439cea9bcaa97770ec60ef0b8dcfcbfe990e70fb8ca6985f35a8bde825",
       "hashMode": "exact-bytes",
       "role": "verification",
       "roleRuleId": "eva2-verification",
@@ -84025,5 +84060,5 @@
       }
     }
   ],
-  "sourceDigest": "20eddf1fea36ed8f9c507004c76e69dd5be66a1df5c24483895fd914dd107cb1"
+  "sourceDigest": "49b22e576f47bf962729062089027c174f4e66d3f6450f75712828bc7eccc31c"
 }

@@ -14,28 +14,27 @@ Jij kunt verder praten met /eva2 voor ieder bericht. Ik onderzoek concrete upstr
 
 | Volgorde | Kaart | Resultaat | Status |
 |---:|---|---|---|
-| 133 | `UP-001` — Sterke oplossingen van concurrenten hergebruiken | Onderzoek de actuele gesprek-/toolroutes van OpenClaw, Hermes en Agent Zero; neem één bewezen bruikbaar patroon over in de bestaande Eva-adapter. Andere capabilities volgen in hun eigen functionele kaarten, met dezelfde herkomst- en voor/naproef. | 🟡 BEZIG |
+| 134 | `CO-007` — Menselijke gesprekroute compleet maken | De bewezen antwoordstream veilig installeren en via Telegram laten werken. Gewoon praten, tools, identiteit en herstart samen controleren; gezinsbeoordeling blijft expliciet nodig voor de complete gesprekservaring. | 🟡 BEZIG |
 
 Klaar betekent:
 
-- Minstens één herbruikbaar upstreamprincipe verbetert aantoonbaar de bestaande gesprekroute; alle drie concurrenten zijn op relevante actuele bron onderzocht.
-- Dezelfde gerichte proeven vóór en na tonen het concrete voordeel en bewaken persoon, stop, toolreceipts, retry en verbruik; geen algemene concurrentiewinst claimen.
-- Onafhankelijke review keurt de bronkandidaat en herkomst goed. CO-007 blijft eigenaar van de complete gezins-/Telegramervaring; een nieuwe deployment vereist de normale kandidaatpoort.
+- De gewone gebruikersroute geeft antwoordstukjes en een compleet opgeslagen eindantwoord; herstart/replay voegt geen modelcall of externe actie toe.
+- Tools blijven uitgesteld en gecontroleerd; fouten/stop en persoonsscheiding zijn negatief getest op de kandidaat.
+- De geïnstalleerde kandidaat en terugweg zijn onafhankelijk gecontroleerd; echte gezinsfeedback bevestigt de gesprekservaring. Zonder die feedback blijft acceptatie open.
 
 <details>
 <summary>Technische uitvoering: bestanden en controles</summary>
 
-### Exact werk voor `UP-001`
+### Exact werk voor `CO-007`
 
-- `eva2/design/product/performance-and-complexity-v1.md`
-- `eva2/src/eva/application/conversation.py`
-- `eva2/src/eva/adapters/model/pydantic_conversation.py`
-- `eva2/tests/model/test_pydantic_conversation_model.py`
+- `eva2/tests/api/test_telegram_canary_api.py`
+- `eva2/release/eva-cockpit-evidence-index-v1.json`
+- `eva2/release/managed-b-release-input-authority-v1.json`
 
 Echte controles:
 
-- `pytest -q tests/model/test_pydantic_conversation_model.py tests/model/test_conversation_model.py tests/model/test_openai_codex_provider_shared.py tests/api/test_telegram_canary_api.py tests/api/test_memory_api.py`
-- `ruff check src/eva/application/conversation.py src/eva/adapters/model/pydantic_conversation.py tests/model/test_pydantic_conversation_model.py`
+- `pytest -q tests/api/test_telegram_canary_api.py tests/api/test_memory_api.py tests/model/test_pydantic_conversation_model.py`
+- `ruff check tests/api/test_telegram_canary_api.py`
 - `python3 tools/check_component_catalog.py`
 
 </details>
@@ -45,7 +44,6 @@ Echte controles:
 Deze onderwerpen zijn alleen mijlpalen. Een mijlpaal wordt pas uitvoerbaar
 nadat zij als eerstvolgende kleine kaart exacte bestanden en tests heeft.
 
-- [ ] `CO-007` — Menselijke gesprekroute compleet maken: Echte gezinsgesprekken beoordelen op warmte, eigen oordeel, identiteit en continuïteit; live tekststukjes met tools apart bewijzen. CO-001 bronstatus en CO-002 menselijke beoordeling zijn geen voltooiing van deze gebruikersuitkomst.
 - [ ] `CO-004` — Eigen geheugen in het dashboard tonen: Het bestaande React-Admin-dashboard toont de afgeschermde geheugenbronnen begrijpelijk zonder nieuwe webstack of browseropslag.
 - [ ] `CO-005` — Eigen geheugen corrigeren en wissen: De eigenaar kan één zichtbare bron corrigeren of wissen en krijgt controle dat PostgreSQL en Hindsight dezelfde wijziging hebben verwerkt.
 - [ ] `CO-006` — Nuttig geheugen en retentie bewijzen: Bestaande Hindsight-consolidatie gebruiken; gewijzigde voorkeuren, bronherkomst en vergeten semantisch testen. Bronbewaring, compactere kennis en werkelijk schijfgebruik afzonderlijk meten; geen tweede geheugensysteem.
@@ -121,7 +119,9 @@ Afgevinkt betekent alleen: de vastgelegde kaart is afgerond, niet het hele produ
   [Bewijs](evidence/product/RT-001-autonomous-admission-wait-2026-09-07.json).
 - [x] `EV-003` — Eerlijke succescriteria vastzetten (done).
   [Bewijs](evidence/product/EV-003-comparative-acceptance-protocol-2026-09-08.json).
-- [ ] `UP-001` — Sterke oplossingen van concurrenten hergebruiken (in_progress).
+- [x] `UP-001` — Sterke oplossingen van concurrenten hergebruiken (done).
+  [Bewijs](evidence/product/UP-001-phase-aware-streaming-2026-09-08.json).
+- [ ] `CO-007` — Menselijke gesprekroute compleet maken (in_progress).
 
 </details>
 
