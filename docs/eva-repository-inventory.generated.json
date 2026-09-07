@@ -269,12 +269,12 @@
     }
   ],
   "summary": {
-    "files": 2084,
-    "present": 2084,
-    "tracked": 2001,
-    "untracked": 83,
+    "files": 2085,
+    "present": 2085,
+    "tracked": 2006,
+    "untracked": 79,
     "tombstones": 0,
-    "policyErrors": 92
+    "policyErrors": 88
   },
   "classificationRules": [
     {
@@ -310,7 +310,7 @@
     {
       "id": "eva2-verification",
       "role": "verification",
-      "matchCount": 763
+      "matchCount": 764
     },
     {
       "id": "eva2-documentation",
@@ -760,22 +760,6 @@
     {
       "code": "UNTRACKED_REPOSITORY_FILE",
       "path": "eva2/evidence/living-core/wyoming-local-voice-rebuild-2026-08-26.json"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "eva2/experiments/react-admin-dashboard-v1/project-server.mjs"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "eva2/experiments/react-admin-dashboard-v1/src/project-dashboard.css"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "eva2/experiments/react-admin-dashboard-v1/src/project-dashboard.jsx"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "eva2/experiments/react-admin-dashboard-v1/verify-project.cjs"
     }
   ],
   "edges": [
@@ -10292,7 +10276,7 @@
       "path": "docs/eva-repository-inventory.generated.json",
       "gitState": "tracked",
       "present": true,
-      "bytes": 2406612,
+      "bytes": 2407112,
       "contentSha256": "32591e23fa2eb53a038d95e726ba09edd0405306f38c5283a36a2b6d3010254d",
       "hashMode": "canonical-self-reference-redacted",
       "role": "generated",
@@ -10325,7 +10309,7 @@
       "path": "docs/eva-repository-inventory.generated.md",
       "gitState": "tracked",
       "present": true,
-      "bytes": 371706,
+      "bytes": 371488,
       "contentSha256": "2f4f8486464cbb9713b749dc898f265093d0853699f1da1b4eb3dd1625c1b2d2",
       "hashMode": "canonical-self-reference-redacted",
       "role": "generated",
@@ -11146,8 +11130,8 @@
       "path": "eva2/PROJECT_STATUS.md",
       "gitState": "tracked",
       "present": true,
-      "bytes": 60797,
-      "contentSha256": "6a490ccdeddefcac1593ac8993095bb0c0e5c3cd7ab1362277d82304a21e55f9",
+      "bytes": 60795,
+      "contentSha256": "32a7552fef3ee0b9be3f6b9ac7c8d052767169ee80e5a539f596d2ba02e8a793",
       "hashMode": "exact-bytes",
       "role": "documentation",
       "roleRuleId": "eva2-documentation",
@@ -11301,8 +11285,8 @@
       "path": "eva2/WERKBORD.md",
       "gitState": "tracked",
       "present": true,
-      "bytes": 17891,
-      "contentSha256": "29b86faf89a9aed38b37a70d761a734afece779ad7acd86ae955794f1c9b570c",
+      "bytes": 17121,
+      "contentSha256": "5068295e1376cfd39955ce9bdf81c48eb3da8c7ca89a36472d4111ddf2e260fd",
       "hashMode": "exact-bytes",
       "role": "documentation",
       "roleRuleId": "eva2-documentation",
@@ -13520,8 +13504,8 @@
       "path": "eva2/design/product/execution-workboard-v1.json",
       "gitState": "tracked",
       "present": true,
-      "bytes": 118680,
-      "contentSha256": "7cd521d5e41c3dbd38e98b8d6032d751e845169ef45897a3e49f4fea980a68d6",
+      "bytes": 119347,
+      "contentSha256": "cdcf7177355d6dba39c4b5f76cf178f969006928c1d4f0c0a4f4670d4f775071",
       "hashMode": "exact-bytes",
       "role": "documentation",
       "roleRuleId": "eva2-documentation",
@@ -25862,8 +25846,43 @@
       "path": "eva2/evidence/product/RT-001-autonomous-admission-wait-2026-09-07.json",
       "gitState": "tracked",
       "present": true,
-      "bytes": 112377,
-      "contentSha256": "beebf712250b22950448ccfb748245e2f4d4930f97d8cc2feb551c027be1fb79",
+      "bytes": 115083,
+      "contentSha256": "f66ea60906917985b10eb1604ab2d4940f233ff51afa4e4b488015a8c61f2d83",
+      "hashMode": "exact-bytes",
+      "role": "verification",
+      "roleRuleId": "eva2-verification",
+      "matchingRuleIds": [
+        "eva2-verification"
+      ],
+      "owner": "verification",
+      "inputs": [
+        "production or fixture contract"
+      ],
+      "outputs": [
+        "test decision"
+      ],
+      "state": [
+        "temporary isolated test state"
+      ],
+      "effects": [
+        "may execute only inside its declared gate"
+      ],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": true,
+        "runtimeCritical": true,
+        "status": "included-tracked-critical"
+      }
+    },
+    {
+      "path": "eva2/evidence/product/UX-000-project-dashboard-2026-09-07.json",
+      "gitState": "tracked",
+      "present": true,
+      "bytes": 3053,
+      "contentSha256": "7249816b24f641c0769c069e177e1ed6d88fae4d71996df55f6678941619a15f",
       "hashMode": "exact-bytes",
       "role": "verification",
       "roleRuleId": "eva2-verification",
@@ -34750,7 +34769,7 @@
     },
     {
       "path": "eva2/experiments/react-admin-dashboard-v1/project-server.mjs",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
       "bytes": 3045,
       "contentSha256": "02301688e19c56202f4e424156ffe575ea57bc3e29b20cf2a2662ec457bce048",
@@ -34783,9 +34802,9 @@
       ],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": false,
-        "status": "blocked-untracked"
+        "status": "included-tracked-noncritical"
       }
     },
     {
@@ -34830,7 +34849,7 @@
     },
     {
       "path": "eva2/experiments/react-admin-dashboard-v1/src/project-dashboard.css",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
       "bytes": 12484,
       "contentSha256": "38a409637641b50eb5a4c98900ac4a641a734f678caa58958f9bd13eef9d8c47",
@@ -34858,14 +34877,14 @@
       "consumers": [],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": false,
-        "status": "blocked-untracked"
+        "status": "included-tracked-noncritical"
       }
     },
     {
       "path": "eva2/experiments/react-admin-dashboard-v1/src/project-dashboard.jsx",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
       "bytes": 11416,
       "contentSha256": "cea6d896f11fcb96d6488cecabc1b84fe915ed0f7fe387e8f1e5e7c78829490c",
@@ -34893,9 +34912,9 @@
       "consumers": [],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": false,
-        "status": "blocked-untracked"
+        "status": "included-tracked-noncritical"
       }
     },
     {
@@ -34970,7 +34989,7 @@
     },
     {
       "path": "eva2/experiments/react-admin-dashboard-v1/verify-project.cjs",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
       "bytes": 5806,
       "contentSha256": "8dc3cc7507328a00030855e12e298ceb35a102c633e158de9d897099a1f1a4dc",
@@ -34998,9 +35017,9 @@
       "consumers": [],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": false,
-        "status": "blocked-untracked"
+        "status": "included-tracked-noncritical"
       }
     },
     {
@@ -59850,8 +59869,8 @@
       "path": "eva2/tests/operations/test_current_workboard.py",
       "gitState": "tracked",
       "present": true,
-      "bytes": 7102,
-      "contentSha256": "e0f0f2047d0d2e264630873b05c13e9e41ec74144ebf06948f238285904a265f",
+      "bytes": 7316,
+      "contentSha256": "f744008d74cb4a8fac8afd5f6ea3007be48c97af1919611762bf62fdc87f979d",
       "hashMode": "exact-bytes",
       "role": "verification",
       "roleRuleId": "eva2-verification",
@@ -83971,5 +83990,5 @@
       }
     }
   ],
-  "sourceDigest": "c186448ab058e580e12b5b12da2e052514458c875b522a3a5259c0ce79c6667f"
+  "sourceDigest": "af27235cefa78b775c8ac4d239b30097973331fb86a0f0d19673e1474ede228d"
 }

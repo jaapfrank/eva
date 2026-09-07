@@ -27,7 +27,7 @@
             "experiments/react-admin-dashboard-v1/verify-project.cjs": "8dc3cc7507328a00030855e12e298ceb35a102c633e158de9d897099a1f1a4dc",
             "tools/check_current_workboard.py": "a64163310c14f1b455503b44a2dfca1c15222fde53e1973f6ac1c27ebd79894b"
           },
-          "nonclaims": "No runtime improvement, copied competitor code, benchmark win or final acceptance. Formal commit-bound UX card closure remains open."
+          "nonclaims": "No runtime improvement, copied competitor code, benchmark win or final acceptance. Local UX-000 closure is bound separately in completions and its evidence receipt."
         },
         "url": "http://localhost:44712",
         "service": "eva2-project-dashboard.service",
@@ -152,9 +152,9 @@
       "document": "eva2/PROJECTDOEL.md",
       "scope": "Digitale huisgenoot: zelfstandig redeneren, initiatief, onbekende vaardigheden leren, handelen, zelfverbetering en aantoonbare concurrentiewinst met open-sourcehergebruik.",
       "sessionGoal": "Het sessie-goal is op 7 september opnieuw gecontroleerd en actief. Jaaps verduidelijking is verwerkt: geen nieuwe budgetvraag of zelfbedacht dagmaximum. Het volledige doel blijft onvoltooid; RT-001 is in uitvoering.",
-      "currentWork": "Het projectdashboard draait op localhost:44712 vanuit /home/administrator/project/Eva2. Vijf gebruikersuitkomsten bepalen nu dezelfde werklijst: dagelijks samenleven, handelen, projecten, installatie en eindbewijs. Gesprek, upstreamkeuze en stem zijn naar voren gehaald; er is geen einddoel geschrapt. UX-000 blijft de primaire kaart tot de aangescherpte weergave is afgerond.",
+      "currentWork": "UX-000 is afgerond: het lokale dashboard, dezelfde vijfstappenwerklijst en de nieuwe projectmap zijn gecontroleerd en onafhankelijk beoordeeld. RT-001 is weer primair. De echte kern maakte sinds de omschakeling zes modelbesluiten om stil te blijven en twee lokale filterbesluiten; nog geen autonome levering gezien. Geen foutfingerprints in deze afgebakende controle. Stil blijven is niet automatisch een fout of bewezen nut.",
       "currentEvidence": "eva2/evidence/product/RT-001-autonomous-admission-wait-2026-09-07.json",
-      "nextStep": "Rond UX-000 met browserbewijs en beoordeling af. Daarna RT-001: daadwerkelijke levering en verbruiksmeting, met behoud van de werkende route. Voer vóór nieuwe functieontwikkeling de kleine EV-003/UP-001-nulmeting en hergebruikkeuze uit; bouw vervolgens de complete gesprekservaring vóór extra beheerfuncties. Een beschreven concurrentiefunctie is geen bewezen overname of winst.",
+      "nextStep": "RT-001: controleer de echte beslis- en leverroute en maak gemeten verbruik zichtbaar, zonder een nuttige melding te veinzen of oude gebeurtenissen blind uit te voeren. Daarna EV-003/UP-001 en de complete gesprekservaring vóór extra beheerfuncties. Het projectdashboard is geen Eva-eindacceptatie.",
       "usageClarification": {
         "date": "2026-09-07",
         "authorizedBy": "Jaap",
@@ -480,7 +480,7 @@
       "retiredFoundationDigest": "df8bacedc1b93ea952d5e4fd0f161039f1faa91b72b6d22f71b0c020e73c7b90"
     }
   },
-  "activeTaskId": "UX-000",
+  "activeTaskId": "RT-001",
   "maxActiveImplementationTasks": 1,
   "statusValues": [
     "queued",
@@ -1304,8 +1304,8 @@
       "area": "Projectoverzicht",
       "title": "Grip op Eva: één visueel dashboard",
       "outcome": "In één oogopslag zien wat bruikbaar is, wat ik doe en wat hierna komt. Dezelfde bron stuurt dashboard en werkvolgorde; eerst keuzes helder, dan verder bouwen.",
-      "status": "in_progress",
-      "stateDetails": {"baseCommit": null, "implementationCommit": null, "evidenceCommit": null, "reviewEvidencePaths": [], "blockerReason": null},
+      "status": "done",
+      "stateDetails": {"baseCommit": "ccbe0bb62e74674c8abe1c57a7d67a7fe907aa10", "implementationCommit": "1f70056a440d01e2999326debdcda7b8a957abf9", "evidenceCommit": "2c6daa6b5a0e7806c73f10481e1ef7baacef9987", "reviewEvidencePaths": ["eva2/evidence/product/UX-000-project-dashboard-2026-09-07.json"], "blockerReason": null},
       "ownerRole": "architecturelead",
       "reviewerRole": "dashboardreviewer",
       "dependsOn": ["CO-001"],
@@ -1338,7 +1338,7 @@
       "area": "Runtime",
       "title": "Zelfstandige runtime veilig herstellen",
       "outcome": "Zelfstandig gebruik van het bestaande abonnement herstellen zonder zelfbedacht dagmaximum; aantoonbare tokenverspilling voorkomen, oude gebeurtenissen veilig herbeoordelen en levering bewijzen. Geen dataverlies of nieuwe betaalroute.",
-      "status": "queued",
+      "status": "in_progress",
       "stateDetails": {
         "baseCommit": null,
         "implementationCommit": null,
@@ -1672,6 +1672,7 @@
     }
   ],
   "completions": {
+    "UX-000": {"baseCommit":"ccbe0bb62e74674c8abe1c57a7d67a7fe907aa10","commit":"1f70056a440d01e2999326debdcda7b8a957abf9","decision":"GO","evidenceCommit":"2c6daa6b5a0e7806c73f10481e1ef7baacef9987","evidencePaths":["eva2/evidence/product/UX-000-project-dashboard-2026-09-07.json"],"implementedBy":"/root","reviewCommit":"523dd0f1a5ce0f1a367e6da4719eb1f3a537755a","reviewedBy":"/root/identity_pair_review","testReceiptPaths":["eva2/evidence/product/UX-000-project-dashboard-2026-09-07.json"]},
     "CO-001": {
       "baseCommit": "ff9ff89aa0f102543d217138a5f96fe91c2d6c4a",
       "commit": "7b330a3c7ba4e00fa97b5fcd18d3e127ffcf4df7",

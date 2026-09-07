@@ -5,51 +5,28 @@ Laatst bijgewerkt: 2026-09-07.
 Doel: [Eva als zelfstandig lerende digitale huisgenoot](PROJECTDOEL.md).
 Gebouwd, getest, live en door jou geaccepteerd zijn verschillende stappen.
 
-Het projectdashboard draait op localhost:44712 vanuit /home/administrator/project/Eva2. Vijf gebruikersuitkomsten bepalen nu dezelfde werklijst: dagelijks samenleven, handelen, projecten, installatie en eindbewijs. Gesprek, upstreamkeuze en stem zijn naar voren gehaald; er is geen einddoel geschrapt. UX-000 blijft de primaire kaart tot de aangescherpte weergave is afgerond.
+UX-000 is afgerond: het lokale dashboard, dezelfde vijfstappenwerklijst en de nieuwe projectmap zijn gecontroleerd en onafhankelijk beoordeeld. RT-001 is weer primair. De echte kern maakte sinds de omschakeling zes modelbesluiten om stil te blijven en twee lokale filterbesluiten; nog geen autonome levering gezien. Geen foutfingerprints in deze afgebakende controle. Stil blijven is niet automatisch een fout of bewezen nut.
 [Actueel bewijs](evidence/product/RT-001-autonomous-admission-wait-2026-09-07.json).
 
-Rond UX-000 met browserbewijs en beoordeling af. Daarna RT-001: daadwerkelijke levering en verbruiksmeting, met behoud van de werkende route. Voer vóór nieuwe functieontwikkeling de kleine EV-003/UP-001-nulmeting en hergebruikkeuze uit; bouw vervolgens de complete gesprekservaring vóór extra beheerfuncties. Een beschreven concurrentiefunctie is geen bewezen overname of winst.
+RT-001: controleer de echte beslis- en leverroute en maak gemeten verbruik zichtbaar, zonder een nuttige melding te veinzen of oude gebeurtenissen blind uit te voeren. Daarna EV-003/UP-001 en de complete gesprekservaring vóór extra beheerfuncties. Het projectdashboard is geen Eva-eindacceptatie.
 
 ## Nu
 
 | Volgorde | Kaart | Resultaat | Status |
 |---:|---|---|---|
-| 130 | `UX-000` — Grip op Eva: één visueel dashboard | In één oogopslag zien wat bruikbaar is, wat ik doe en wat hierna komt. Dezelfde bron stuurt dashboard en werkvolgorde; eerst keuzes helder, dan verder bouwen. | 🟡 BEZIG |
-| 131 | `RT-001` — Zelfstandige runtime veilig herstellen | Zelfstandig gebruik van het bestaande abonnement herstellen zonder zelfbedacht dagmaximum; aantoonbare tokenverspilling voorkomen, oude gebeurtenissen veilig herbeoordelen en levering bewijzen. Geen dataverlies of nieuwe betaalroute. | ⚪ HIERNA |
+| 131 | `RT-001` — Zelfstandige runtime veilig herstellen | Zelfstandig gebruik van het bestaande abonnement herstellen zonder zelfbedacht dagmaximum; aantoonbare tokenverspilling voorkomen, oude gebeurtenissen veilig herbeoordelen en levering bewijzen. Geen dataverlies of nieuwe betaalroute. | 🟡 BEZIG |
 
 Klaar betekent:
 
-- Het dashboard is op deze computer bereikbaar en toont gebouwd, getest, in gebruik en geaccepteerd afzonderlijk.
-- Huidige opdracht, komende taken en actuele concurrentiebronnen komen uit dezelfde werklijst; onbekend blijft onbekend.
-- Werkmap en open keuzes zijn duidelijk; de gebruikersprioriteit is zichtbaar voordat nieuwe productfuncties worden toegevoegd.
+- Bestaand abonnementsgebruik wordt niet geblokkeerd door een zelfbedacht dagmaximum of een ontbrekende fictieve prijsgoedkeuring. Stop, providerlimieten en bescherming tegen nutteloos herhalen blijven werken; geen betaalinstellingen wijzigen.
+- Hervatten, verlopen gebeurtenissen, bestaande needs_help-jobs en levering worden veilig behandeld; geen blind herhalen van externe effecten.
+- Zelfstandig gebruik van de bestaande modeltoegang en een passende echte gebruikersinteractie plus negatieve controle zijn bewezen op de veilig gepromoveerde kandidaat, met gemeten gebruik en zonder onnodige herhaalacties.
+- Gerichte tests en onafhankelijke review zijn groen; gegevens en terugweg zijn behouden.
 
 <details>
 <summary>Technische uitvoering: bestanden en controles</summary>
 
-### Exact werk voor `UX-000`
-
-- `README.md`
-- `docs/eva-repository-inventory.generated.json`
-- `docs/eva-repository-inventory.generated.md`
-- `eva2/README.md`
-- `eva2/PROJECT_STATUS.md`
-- `eva2/WERKBORD.md`
-- `eva2/design/product/execution-workboard-v1.json`
-- `eva2/tools/check_current_workboard.py`
-- `eva2/tests/operations/test_current_workboard.py`
-- `eva2/experiments/react-admin-dashboard-v1/vite.config.mjs`
-- `eva2/experiments/react-admin-dashboard-v1/project-server.mjs`
-- `eva2/experiments/react-admin-dashboard-v1/verify-project.cjs`
-- `eva2/experiments/react-admin-dashboard-v1/src/main.jsx`
-- `eva2/experiments/react-admin-dashboard-v1/src/project-dashboard.jsx`
-- `eva2/experiments/react-admin-dashboard-v1/src/project-dashboard.css`
-
-Echte controles:
-
-- `pytest -q tests/operations/test_current_workboard.py`
-- `node experiments/react-admin-dashboard-v1/verify-project.cjs`
-
-### Daarna voorbereid: `RT-001`
+### Exact werk voor `RT-001`
 
 - `docs/eva-repository-inventory.generated.json`
 - `docs/eva-repository-inventory.generated.md`
@@ -84,7 +61,7 @@ Echte controles:
 - `eva2/tools/eva2_quiescent_cutover.py`
 - `eva2/tests/operations/test_eva2_quiescent_cutover.py`
 
-Vooraf vastgelegde controles:
+Echte controles:
 
 - `TMPDIR=/tmp TEMP=/tmp TMP=/tmp pytest -q tests/application/test_free_will.py tests/model/test_conversation_model.py tests/bootstrap/test_runtime_settings.py`
 - `TMPDIR=/tmp TEMP=/tmp TMP=/tmp pytest -q tests/connectors/test_home_assistant_live_adapters.py`
@@ -178,8 +155,9 @@ Afgevinkt betekent alleen: de vastgelegde kaart is afgerond, niet het hele produ
   [Bewijs](evidence/product/EV-002-controlled-baseline-result-2026-09-04.json).
 - [x] `CO-001` — Telegram toont Eva's antwoordvorming live (done).
   [Bewijs](evidence/product/CO-001-telegram-live-drafts-contract-2026-09-04.json).
-- [ ] `UX-000` — Grip op Eva: één visueel dashboard (in_progress).
-- [ ] `RT-001` — Zelfstandige runtime veilig herstellen (queued).
+- [x] `UX-000` — Grip op Eva: één visueel dashboard (done).
+  [Bewijs](evidence/product/UX-000-project-dashboard-2026-09-07.json).
+- [ ] `RT-001` — Zelfstandige runtime veilig herstellen (in_progress).
 
 </details>
 

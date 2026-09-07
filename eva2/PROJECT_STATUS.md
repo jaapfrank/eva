@@ -1,9 +1,9 @@
 # Eva 2 — projectbord en vergelijking
 
 **[Open het visuele projectdashboard](http://localhost:44712).** Dat leest dezelfde
-werklijst als [WERKBORD.md](WERKBORD.md). De primaire opdracht is nu UX-000:
-zichtbaar overzicht en herijking vóór verder productwerk. RT-001 is behouden,
-maar tijdelijk niet primair. De repository staat nu in
+werklijst als [WERKBORD.md](WERKBORD.md). UX-000 is als lokaal dashboard
+afgerond en onafhankelijk beoordeeld; RT-001 is weer de primaire opdracht.
+Dit is geen eindacceptatie van Eva. De repository staat nu in
 `/home/administrator/project/Eva2`; de oude kandidaatlocatie verwijst alleen door.
 Onderstaande lange tekst blijft achtergrond en historische controle, geen
 tweede uitvoerwachtrij.

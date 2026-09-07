@@ -137,7 +137,9 @@ def test_dashboard_roadmap_cannot_be_a_second_work_queue(tmp_path: Path, mutatio
         elif mutation == "unknown":
             ids.append("MISSING-001")
         else:
-            ids[0], ids[1] = ids[1], ids[0]
+            done = {card["id"] for card in board["executionTasks"] if card["status"] == "done"}
+            first, second = [index for index, card_id in enumerate(ids) if card_id not in done][:2]
+            ids[first], ids[second] = ids[second], ids[first]
 
     paths = copy_board(tmp_path, change)
     with pytest.raises(RuntimeError, match="roadmap"):

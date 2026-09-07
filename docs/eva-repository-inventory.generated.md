@@ -3,13 +3,13 @@
 Deze kaart is mechanisch gegenereerd. Zij staat naast de semantische runtimegraaf en
 classificeert ieder gevolgd, verwijderd of niet-genegeerd nieuw repositorypad.
 
-Schema: `EvaRepositoryInventory/v1`. Brondigest: `c186448ab058e580e12b5b12da2e052514458c875b522a3a5259c0ce79c6667f`.
+Schema: `EvaRepositoryInventory/v1`. Brondigest: `af27235cefa78b775c8ac4d239b30097973331fb86a0f0d19673e1474ede228d`.
 
 ## Samenvatting
 
 | Bestanden | Aanwezig | Tracked | Untracked | Tombstones | Policyfouten |
 | ---: | ---: | ---: | ---: | ---: | ---: |
-| 2084 | 2084 | 2001 | 83 | 0 | 92 |
+| 2085 | 2085 | 2006 | 79 | 0 | 88 |
 
 ## Policyfouten
 
@@ -101,10 +101,6 @@ Schema: `EvaRepositoryInventory/v1`. Brondigest: `c186448ab058e580e12b5b12da2e05
 - `UNTRACKED_REPOSITORY_FILE`: `eva2/evidence/living-core/resident-long-run-v1-2026-08-24.json`
 - `UNTRACKED_REPOSITORY_FILE`: `eva2/evidence/living-core/signed-ab-operator-gate-2026-08-23.json`
 - `UNTRACKED_REPOSITORY_FILE`: `eva2/evidence/living-core/wyoming-local-voice-rebuild-2026-08-26.json`
-- `UNTRACKED_REPOSITORY_FILE`: `eva2/experiments/react-admin-dashboard-v1/project-server.mjs`
-- `UNTRACKED_REPOSITORY_FILE`: `eva2/experiments/react-admin-dashboard-v1/src/project-dashboard.css`
-- `UNTRACKED_REPOSITORY_FILE`: `eva2/experiments/react-admin-dashboard-v1/src/project-dashboard.jsx`
-- `UNTRACKED_REPOSITORY_FILE`: `eva2/experiments/react-admin-dashboard-v1/verify-project.cjs`
 
 ## Actielijst
 
@@ -129,7 +125,7 @@ Schema: `EvaRepositoryInventory/v1`. Brondigest: `c186448ab058e580e12b5b12da2e05
 | `design` | `documentation` | 3 |
 | `experiments` | `experimental` | 36 |
 | `transition` | `documentation` | 2 |
-| `eva2-verification` | `verification` | 763 |
+| `eva2-verification` | `verification` | 764 |
 | `eva2-documentation` | `documentation` | 125 |
 | `eva2-deployment` | `deployment` | 48 |
 | `eva2-experimental` | `experimental` | 164 |
@@ -239,8 +235,8 @@ Schema: `EvaRepositoryInventory/v1`. Brondigest: `c186448ab058e580e12b5b12da2e05
 | `docs/eva-agent-benchmark-v1.md` | tracked | documentation | included-tracked-noncritical | keep | 18462 |
 | `docs/eva-endbeeld-roadmap.md` | tracked | documentation | included-tracked-noncritical | keep | 16956 |
 | `docs/eva-rebuild-plan-2026-08-20.md` | tracked | documentation | included-tracked-noncritical | keep | 29009 |
-| `docs/eva-repository-inventory.generated.json` | tracked | generated | included-tracked-critical | keep | 2406612 |
-| `docs/eva-repository-inventory.generated.md` | tracked | generated | included-tracked-critical | keep | 371706 |
+| `docs/eva-repository-inventory.generated.json` | tracked | generated | included-tracked-critical | keep | 2407112 |
+| `docs/eva-repository-inventory.generated.md` | tracked | generated | included-tracked-critical | keep | 371488 |
 | `docs/eva-runtime-contract-map.generated.json` | tracked | generated | included-tracked-critical | keep | 246207 |
 | `docs/eva-runtime-contract-map.generated.md` | tracked | generated | included-tracked-critical | keep | 120103 |
 | `docs/eva-runtime-contracts.md` | tracked | documentation | included-tracked-critical | keep | 80976 |
@@ -266,12 +262,12 @@ Schema: `EvaRepositoryInventory/v1`. Brondigest: `c186448ab058e580e12b5b12da2e05
 | `eva2/OUDE_EVA_VS_EVA2.md` | tracked | documentation | included-tracked-noncritical | keep | 5434 |
 | `eva2/PROJECTDOEL.md` | tracked | documentation | included-tracked-noncritical | keep | 6611 |
 | `eva2/PROJECTEN_EN_PLANNING.md` | tracked | documentation | included-tracked-noncritical | keep | 22657 |
-| `eva2/PROJECT_STATUS.md` | tracked | documentation | included-tracked-noncritical | keep | 60797 |
+| `eva2/PROJECT_STATUS.md` | tracked | documentation | included-tracked-noncritical | keep | 60795 |
 | `eva2/README.md` | tracked | documentation | included-tracked-noncritical | keep | 11585 |
 | `eva2/TEAM_WERKWIJZE.md` | tracked | documentation | included-tracked-noncritical | keep | 9391 |
 | `eva2/TECHNISCHE_MOGELIJKHEDEN_EN_GATEN.md` | tracked | documentation | included-tracked-noncritical | keep | 20072 |
 | `eva2/TECHNISCHE_PRODUCTGATES.md` | tracked | documentation | included-tracked-noncritical | keep | 65630 |
-| `eva2/WERKBORD.md` | tracked | documentation | included-tracked-noncritical | keep | 17891 |
+| `eva2/WERKBORD.md` | tracked | documentation | included-tracked-noncritical | keep | 17121 |
 | `eva2/alembic.ini` | tracked | repository-config | included-tracked-critical | keep | 595 |
 | `eva2/benchmark/inspect_ai_v1/README.md` | tracked | experimental | included-tracked-noncritical | keep | 5191 |
 | `eva2/benchmark/inspect_ai_v1/bridge_probe.py` | tracked | experimental | included-tracked-noncritical | keep | 17418 |
@@ -336,7 +332,7 @@ Schema: `EvaRepositoryInventory/v1`. Brondigest: `c186448ab058e580e12b5b12da2e05
 | `eva2/design/product/conversational-voice-v1.md` | tracked | documentation | included-tracked-noncritical | keep | 16058 |
 | `eva2/design/product/dashboard-v1.md` | tracked | documentation | included-tracked-noncritical | keep | 6532 |
 | `eva2/design/product/delegation-and-workboard-v1.md` | tracked | documentation | included-tracked-noncritical | keep | 11007 |
-| `eva2/design/product/execution-workboard-v1.json` | tracked | documentation | included-tracked-noncritical | keep | 118680 |
+| `eva2/design/product/execution-workboard-v1.json` | tracked | documentation | included-tracked-noncritical | keep | 119347 |
 | `eva2/design/product/installer-and-onboarding-v1.md` | tracked | documentation | included-tracked-noncritical | keep | 24837 |
 | `eva2/design/product/learning-and-person-model-v1.md` | tracked | documentation | included-tracked-noncritical | keep | 12386 |
 | `eva2/design/product/owner-autonomy-mode-v1.md` | tracked | documentation | included-tracked-noncritical | keep | 6529 |
@@ -690,7 +686,8 @@ Schema: `EvaRepositoryInventory/v1`. Brondigest: `c186448ab058e580e12b5b12da2e05
 | `eva2/evidence/product/RB-006-candidate-artifact-analysis-2026-09-01.json` | tracked | verification | included-tracked-critical | keep | 4599 |
 | `eva2/evidence/product/RR-001-hermetic-candidate-source-2026-09-02.json` | tracked | verification | included-tracked-critical | keep | 1758 |
 | `eva2/evidence/product/RR-002-RR-004-release-recovery-2026-09-04.json` | tracked | verification | included-tracked-critical | keep | 1996 |
-| `eva2/evidence/product/RT-001-autonomous-admission-wait-2026-09-07.json` | tracked | verification | included-tracked-critical | keep | 112377 |
+| `eva2/evidence/product/RT-001-autonomous-admission-wait-2026-09-07.json` | tracked | verification | included-tracked-critical | keep | 115083 |
+| `eva2/evidence/product/UX-000-project-dashboard-2026-09-07.json` | tracked | verification | included-tracked-critical | keep | 3053 |
 | `eva2/evidence/product/astra-candidate-regression-2026-09-05.json` | tracked | verification | included-tracked-critical | keep | 6668 |
 | `eva2/evidence/product/astra-conversation-live-upgrade-2026-09-05.json` | tracked | verification | included-tracked-critical | keep | 3450 |
 | `eva2/evidence/product/astra-conversation-model-switch-2026-09-05.json` | tracked | verification | included-tracked-critical | keep | 3738 |
@@ -944,13 +941,13 @@ Schema: `EvaRepositoryInventory/v1`. Brondigest: `c186448ab058e580e12b5b12da2e05
 | `eva2/experiments/react-admin-dashboard-v1/index.html` | tracked | experimental | included-tracked-noncritical | keep | 293 |
 | `eva2/experiments/react-admin-dashboard-v1/package-lock.json` | tracked | experimental | included-tracked-noncritical | keep | 102709 |
 | `eva2/experiments/react-admin-dashboard-v1/package.json` | tracked | experimental | included-tracked-noncritical | keep | 432 |
-| `eva2/experiments/react-admin-dashboard-v1/project-server.mjs` | untracked | experimental | blocked-untracked | keep | 3045 |
+| `eva2/experiments/react-admin-dashboard-v1/project-server.mjs` | tracked | experimental | included-tracked-noncritical | keep | 3045 |
 | `eva2/experiments/react-admin-dashboard-v1/src/main.jsx` | tracked | experimental | included-tracked-noncritical | keep | 9772 |
-| `eva2/experiments/react-admin-dashboard-v1/src/project-dashboard.css` | untracked | experimental | blocked-untracked | keep | 12484 |
-| `eva2/experiments/react-admin-dashboard-v1/src/project-dashboard.jsx` | untracked | experimental | blocked-untracked | keep | 11416 |
+| `eva2/experiments/react-admin-dashboard-v1/src/project-dashboard.css` | tracked | experimental | included-tracked-noncritical | keep | 12484 |
+| `eva2/experiments/react-admin-dashboard-v1/src/project-dashboard.jsx` | tracked | experimental | included-tracked-noncritical | keep | 11416 |
 | `eva2/experiments/react-admin-dashboard-v1/src/style.css` | tracked | experimental | included-tracked-noncritical | keep | 1002 |
 | `eva2/experiments/react-admin-dashboard-v1/verify-browser.cjs` | tracked | experimental | included-tracked-noncritical | keep | 7525 |
-| `eva2/experiments/react-admin-dashboard-v1/verify-project.cjs` | untracked | experimental | blocked-untracked | keep | 5806 |
+| `eva2/experiments/react-admin-dashboard-v1/verify-project.cjs` | tracked | experimental | included-tracked-noncritical | keep | 5806 |
 | `eva2/experiments/react-admin-dashboard-v1/vite.config.mjs` | tracked | experimental | included-tracked-noncritical | keep | 565 |
 | `eva2/experiments/tool01-replacement-acceptance-v1/README.md` | tracked | experimental | included-tracked-noncritical | keep | 2887 |
 | `eva2/experiments/tool01-replacement-acceptance-v1/check_acceptance.py` | tracked | experimental | included-tracked-noncritical | keep | 23523 |
@@ -1684,7 +1681,7 @@ Schema: `EvaRepositoryInventory/v1`. Brondigest: `c186448ab058e580e12b5b12da2e05
 | `eva2/tests/operations/test_container_vulnerability_gate.py` | tracked | verification | included-tracked-critical | keep | 2897 |
 | `eva2/tests/operations/test_contextforge_gateway_candidate.py` | tracked | verification | included-tracked-critical | keep | 3417 |
 | `eva2/tests/operations/test_core_b_preflight.py` | tracked | verification | included-tracked-critical | keep | 36496 |
-| `eva2/tests/operations/test_current_workboard.py` | tracked | verification | included-tracked-critical | keep | 7102 |
+| `eva2/tests/operations/test_current_workboard.py` | tracked | verification | included-tracked-critical | keep | 7316 |
 | `eva2/tests/operations/test_delegated_work_image.py` | tracked | verification | included-tracked-critical | keep | 2572 |
 | `eva2/tests/operations/test_dependency_update_posture.py` | tracked | verification | included-tracked-critical | keep | 5023 |
 | `eva2/tests/operations/test_discover_telegram_test_accounts.py` | tracked | verification | included-tracked-critical | keep | 1878 |
