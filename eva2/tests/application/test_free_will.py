@@ -2,6 +2,8 @@ from __future__ import annotations
 
 from datetime import UTC, datetime
 
+import pytest
+
 from eva.application.conversation import IdentityProfile
 from eva.application.free_will import (
     FreeWillDecision,
@@ -16,7 +18,21 @@ from eva.application.sensory import SensoryEvent
 NOW = datetime(2026, 8, 23, 14, 0, tzinfo=UTC)
 
 
-def test_sensory_worker_recalls_then_commits_one_shadow_decision() -> None:
+def test_sensory_worker_clock_does_not_move_backwards() -> None:
+    from datetime import timedelta
+    worker = SensoryDecisionWorker(object(), object(), object(),
+        IdentityProfile("Eva", "Fixture", ("Be honest",), 80),
+        tenant_id="tenant", installation_id="home", principal_id="owner",
+        clock=lambda: NOW - timedelta(seconds=1))
+    assert worker._current_time(NOW) == NOW
+    worker._clock = lambda: NOW.replace(tzinfo=None)
+    with pytest.raises(ValueError, match="timezone-aware"):
+        worker.run_once(now=NOW)
+
+
+@pytest.mark.parametrize("current_state", [None, "off", "23.5"])
+@pytest.mark.parametrize("admit_dispatch", [True, False])
+def test_sensory_worker_recalls_then_commits_one_shadow_decision(current_state, admit_dispatch) -> None:
     event = SensoryEvent(
         "home-assistant",
         "home-assistant:event-1",
@@ -30,6 +46,13 @@ def test_sensory_worker_recalls_then_commits_one_shadow_decision() -> None:
             "old_state": "off",
         },
     )
+    if current_state is not None:
+        from dataclasses import replace
+        event = replace(event, event_type="observation_revalidated", payload={
+            "entity_id": "binary_sensor.achterdeur",
+            "current_state": current_state,
+            "historical_observation": {"payload": event.payload},
+        })
     claim = SensoryDecisionClaim(
         event,
         "sensory:home-assistant:event-1",
@@ -41,8 +64,12 @@ def test_sensory_worker_recalls_then_commits_one_shadow_decision() -> None:
     recalled = []
 
     class Store:
-        def claim_next(self, *, now):  # type: ignore[no-untyped-def]
+        def claim_next(self, *, now, include_waiting=True):  # type: ignore[no-untyped-def]
             return claim
+
+        def mark_model_started(self, actual, *, now):
+            assert actual == claim and len(recalled) == 1
+            return claim if admit_dispatch else None
 
         def complete(self, actual, decision, *, now):  # type: ignore[no-untyped-def]
             assert actual == claim
@@ -58,6 +85,7 @@ def test_sensory_worker_recalls_then_commits_one_shadow_decision() -> None:
 
     class Model:
         def evaluate_sensory_event(self, actual, identity, memory, attention=None):  # type: ignore[no-untyped-def]
+            assert admit_dispatch
             assert actual == event
             assert identity.name == "Eva"
             return FreeWillDecision(
@@ -79,11 +107,19 @@ def test_sensory_worker_recalls_then_commits_one_shadow_decision() -> None:
         principal_id="jaap",
     )
 
-    assert worker.run_once(now=NOW) == "silence"
+    assert worker.run_once(now=NOW) == ("silence" if admit_dispatch else "idle")
+    if not admit_dispatch:
+        assert completed == []
+        return
     assert completed[0].disposition == "silence"
     assert recalled[0].query_purpose == "passive_event_decision"
     assert recalled[0].maximum_facts == 8
     assert recalled[0].conversation_id == "sensory:home-assistant"
+    if current_state is None:
+        assert recalled[0].query_text.endswith("off naar on")
+    else:
+        assert recalled[0].query_text.endswith(f"actuele toestand: {current_state}")
+        assert event.payload["historical_observation"]["payload"]["new_state"] == "on"
 
 
 def test_sensory_worker_silences_routine_light_without_memory_or_model() -> None:
@@ -109,7 +145,7 @@ def test_sensory_worker_silences_routine_light_without_memory_or_model() -> None
     completed: list[FreeWillDecision] = []
 
     class Store:
-        def claim_next(self, *, now):  # type: ignore[no-untyped-def]
+        def claim_next(self, *, now, include_waiting=True):  # type: ignore[no-untyped-def]
             return claim
 
         def complete(self, actual, decision, *, now):  # type: ignore[no-untyped-def]

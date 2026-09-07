@@ -115,7 +115,9 @@ def test_authority_distinguishes_executable_tests_from_bound_support() -> None:
     )
     required_inputs = {row["path"] for row in authority["requiredInputs"]}
 
-    assert len(inputs.executable) == 147
+    assert len(inputs.executable) == 149
+    assert "tests/application/test_free_will.py" in inputs.executable
+    assert "tests/postgres/test_sensory_admission.py" in inputs.executable
     assert "tests/operations/test_two_builder_reproducibility.py" in inputs.executable
     assert len(inputs.support) == 20
     assert all(Path(path).name.startswith("test_") for path in inputs.executable)
@@ -320,7 +322,7 @@ def test_postgres_modules_have_six_exact_nonoverlapping_subgroups() -> None:
         "postgres-browser-physical": 1,
         "postgres-living": 2,
         "postgres-4b-store": 5,
-        "postgres-4b-current": 1,
+        "postgres-4b-current": 2,
         "postgres-4b-historical": 1,
     }
     assert subgroups["postgres-4b-store"] == (
@@ -329,6 +331,10 @@ def test_postgres_modules_have_six_exact_nonoverlapping_subgroups() -> None:
         "tests/postgres/test_delegated_work_private_context.py",
         "tests/postgres/test_memory_repository.py",
         "tests/postgres/test_people_memory_overview.py",
+    )
+    assert subgroups["postgres-4b-current"] == (
+        "tests/postgres/test_postgres_migrations.py",
+        "tests/postgres/test_sensory_admission.py",
     )
     assert set().union(*(set(modules) for modules in subgroups.values())) == set(paths)
     assert runner._POSTGRES_PURE_FILES.issubset(groups["pure"])
@@ -406,7 +412,7 @@ def test_runner_executes_seven_closed_groups_and_redacts_dsns(
     }
     assert len(receipt["groups"]) == 7
     assert len(calls) == 22
-    assert sum(group["executableModuleCount"] for group in receipt["groups"]) == 147
+    assert sum(group["executableModuleCount"] for group in receipt["groups"]) == 149
     postgres = next(
         group for group in receipt["groups"] if group["group"] == "postgres"
     )
@@ -418,7 +424,7 @@ def test_runner_executes_seven_closed_groups_and_redacts_dsns(
         "postgres-4b-current",
         "postgres-4b-historical",
     ]
-    assert postgres["executableModuleCount"] == 23
+    assert postgres["executableModuleCount"] == 24
     physical = next(
         subgroup
         for subgroup in postgres["subgroups"]

@@ -58,6 +58,9 @@ from eva.contracts.canonical_json import canonical_json_bytes, canonical_sha256
 from eva.contracts.memory import MemoryRecall, RecalledFact
 from eva.contracts.planning import ConfirmedFact
 from eva.contracts.runtime_budget import RuntimeResourceBudget
+from tests.support.scripted_pydantic_conversation import (
+    ScriptedPhase, ScriptedPydanticConversation,
+)
 
 
 NOW = "2026-08-23T14:00:00Z"
@@ -571,6 +574,94 @@ def test_runtime_budget_rejects_oversized_input_before_auth_or_network(
     assert requests == []
 
 
+@pytest.mark.parametrize("public_framework", [False, True])
+@pytest.mark.parametrize("unanswered_retries", [0, 3])
+def test_long_conversation_selects_recent_complete_context_before_model_call(
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Path, public_framework: bool,
+    unanswered_retries: int,
+) -> None:
+    scripted = ScriptedPydanticConversation((ScriptedPhase.text("Ja, dat doen we."),))
+    model = PydanticConversationModel(
+        auth_file=tmp_path / "unused-auth.json", resource_budget=_runtime_budget(),
+        model_backend=scripted.model if public_framework else None,
+    )
+    phases = ([] if public_framework else
+              _script_pydantic_phases(monkeypatch, model, ("Ja, dat doen we.", None)))
+    turn = ConversationTurn.private(
+        "tenant", "installation", "jaap", "conversation", "message",
+        "Ja, doe dat maar.", NOW,
+    )
+    identity = IdentityProfile("Eva", "Digitale huisgenoot.", ("Wees eerlijk.",), 80)
+    history = tuple(
+        RecentConversationMessage(role, f"oude beurt {n} " + "verhaal " * 180, NOW)
+        for n in range(5) for role in ("user", "assistant")
+    ) + (
+        RecentConversationMessage("user", "Kun je een plan voor morgen maken?", NOW),
+        RecentConversationMessage("assistant", "Zal ik beginnen met de boodschappen?", NOW),
+    ) + tuple(RecentConversationMessage("user", f"Nog geen antwoord {n}", NOW)
+              for n in range(unanswered_retries))
+    original = tuple(history)
+
+    result = model.generate(turn, identity, _memory(), history)
+
+    assert result.text == "Ja, dat doen we."
+    if public_framework:
+        assert len(scripted.captures) == 1
+        assert scripted.remaining_phases == 0
+        phases.append({"prompt": turn.text,
+                       "instructions": scripted.captures[0].instructions,
+                       "tools": (conversation_module._MEMORY_SEARCH_TOOL,)})
+    assert len(phases) == 1
+    phase = phases[0]
+    model._admit_request({  # noqa: SLF001
+        "input": [{"content": phase["prompt"], "role": "user", "type": "message"}],
+        "instructions": phase["instructions"], "store": False,
+        "tools": [{"execution": "server", "type": "tool_search"}]
+        + [{**tool, "defer_loading": True} for tool in phase["tools"]],
+    }, autonomous=False)
+    assert "oude beurt 0" not in phase["instructions"]
+    assert "Kun je een plan voor morgen maken?" in phase["instructions"]
+    assert "Zal ik beginnen met de boodschappen?" in phase["instructions"]
+    for n in range(unanswered_retries):
+        assert f"Nog geen antwoord {n}" in phase["instructions"]
+    assert "Jaap houdt niet van formele antwoorden" in phase["instructions"]
+    assert "Wees eerlijk." in phase["instructions"]
+    assert "Oudere gespreksbeurten zijn buiten deze invoer gelaten" in phase["instructions"]
+    assert phase["prompt"] == turn.text
+    assert history == original
+
+
+@pytest.mark.parametrize("oversized_section", ["current_question", "latest_exchange", "receipt"])
+def test_context_selection_never_discards_required_content_to_admit_request(
+    tmp_path: Path, oversized_section: str,
+) -> None:
+    scripted = ScriptedPydanticConversation((ScriptedPhase.text("must not run"),))
+    model = PydanticConversationModel(
+        auth_file=tmp_path / "unused-auth.json", model_backend=scripted.model,
+        resource_budget=_runtime_budget(),
+    )
+    long_text = "belangrijk " * 2000
+    turn = ConversationTurn.private(
+        "tenant", "installation", "jaap", "conversation", "message",
+        long_text if oversized_section == "current_question" else "Ja, doe dat.", NOW,
+    )
+    latest = long_text if oversized_section == "latest_exchange" else "Het voorstel."
+    history = tuple(RecentConversationMessage("user", f"oud {i}", NOW) for i in range(10)) + (
+        RecentConversationMessage("user", "Mijn laatste vraag.", NOW),
+        RecentConversationMessage("assistant", latest, NOW),
+    )
+    receipt = (ConversationActionReceipt(
+        ConversationActionCall("test-call", "synthetic_receipt", {}),
+        {"result": long_text},
+    ) if oversized_section == "receipt" else None)
+    with pytest.raises(ConversationModelError, match="input budget"):
+        model.generate(
+            turn, IdentityProfile("Eva", "Huisgenoot.", ("Wees eerlijk.",), 80),
+            _memory(), history, completed_action=receipt,
+        )
+    assert scripted.captures == []
+
+
 def test_runtime_budget_admits_only_the_exact_deferred_catalog(tmp_path: Path) -> None:
     budget = _runtime_budget()
     provider_tools = (
@@ -617,12 +708,95 @@ def test_runtime_budget_blocks_unknown_autonomous_spend_before_network(
             resource_budget=_runtime_budget(),
         )
 
+        assert model.autonomous_admission_blocker() == "unverified_model_cost"
         with pytest.raises(ConversationModelError, match="no verified price"):
             model._request_autonomous(  # noqa: SLF001
                 {"input": [{"content": "kleine taak", "role": "user"}]},
             )
 
     assert requests == []
+
+
+def test_existing_subscription_allows_autonomy_without_extra_daily_cap(
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Path,
+) -> None:
+    from io import BytesIO
+
+    auth = tmp_path / "subscription-lease.json"
+    _write_access_lease(auth)
+    model = PydanticConversationModel(auth_file=auth, resource_budget=_runtime_budget())
+    calls = []
+
+    def respond(request, **kwargs):
+        assert request.full_url == "https://chatgpt.com/backend-api/codex/responses"
+        assert request.get_header("Authorization") == "Bearer access"
+        calls.append(request)
+        return BytesIO(_budget_frames())
+
+    monkeypatch.setattr(conversation_module.urllib.request, "urlopen", respond)
+    assert model.autonomous_admission_blocker() is None
+    # More than the unrelated reflection quota: no invented daily model-call cap.
+    for _ in range(41):
+        assert model._request_autonomous({"input": [{"content": "kleine taak", "role": "user"}]}) == (
+            "Binnen grens.", None,
+        )
+    assert len(calls) == 41  # exactly one dispatch per request, no extra retry
+
+
+@pytest.mark.parametrize("endpoint", [
+    "https://api.openai.com/v1/responses",
+    "https://chatgpt.com.example.invalid/backend-api/codex/responses",
+    "https://chatgpt.com/backend-api/codex/responses?billing=api",
+    "http://chatgpt.com/backend-api/codex/responses",
+])
+def test_subscription_admission_does_not_authorize_other_endpoints(tmp_path: Path, endpoint: str) -> None:
+    model = PydanticConversationModel(
+        auth_file=tmp_path / "absent.json", endpoint=endpoint, resource_budget=_runtime_budget(),
+    )
+    assert model.autonomous_admission_blocker() == "unverified_model_cost"
+    with pytest.raises(ConversationModelError, match="no verified price"):
+        model._request_autonomous({"input": [{"content": "taak", "role": "user"}]})
+
+
+@pytest.mark.parametrize("frames", [
+    _budget_frames(include_usage=False), _budget_frames(output_tokens=1201),
+])
+def test_subscription_autonomy_still_requires_valid_bounded_usage(
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Path, frames: bytes,
+) -> None:
+    from io import BytesIO
+
+    auth = tmp_path / "subscription-lease.json"
+    _write_access_lease(auth)
+    model = PydanticConversationModel(auth_file=auth, resource_budget=_runtime_budget())
+    monkeypatch.setattr(conversation_module.urllib.request, "urlopen", lambda *a, **kw: BytesIO(frames))
+    with pytest.raises(ConversationModelError):
+        model._request_autonomous({"input": [{"content": "taak", "role": "user"}]})
+
+
+def test_subscription_autonomy_does_not_retry_provider_limit_or_missing_auth(
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Path,
+) -> None:
+    from io import BytesIO
+    from urllib.error import HTTPError
+
+    auth = tmp_path / "subscription-lease.json"
+    model = PydanticConversationModel(auth_file=auth, resource_budget=_runtime_budget())
+    calls = []
+
+    def limited(request, **kwargs):
+        calls.append(request)
+        raise HTTPError(request.full_url, 429, "limit", {}, BytesIO(b"{}"))
+
+    monkeypatch.setattr(conversation_module.urllib.request, "urlopen", limited)
+    body = {"input": [{"content": "taak", "role": "user"}]}
+    with pytest.raises(ConversationModelError, match="auth file is unavailable"):
+        model._request_autonomous(body)
+    assert calls == []
+    _write_access_lease(auth)
+    with pytest.raises(ConversationModelError, match="HTTP 429"):
+        model._request_autonomous(body)
+    assert len(calls) == 1
 
 
 def _memory() -> PresenceMemory:
@@ -1358,26 +1532,38 @@ def test_model_action_roundtrip_uses_durable_receipt_before_visible_text(
     assert phases[1]["completed_action"] == receipt
 
 
-def test_passive_house_event_is_forced_through_bounded_shadow_decision(
-    monkeypatch: pytest.MonkeyPatch, tmp_path: Path
+@pytest.mark.parametrize("budgeted", [False, True])
+@pytest.mark.parametrize("usage_mode", ["missing", "invalid", "valid"])
+def test_passive_house_event_retains_provider_usage_with_bounded_decision(
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Path, budgeted: bool, usage_mode: str,
 ) -> None:
-    model = PydanticConversationModel(auth_file=tmp_path / "unused-auth.json")
+    from io import BytesIO
+    from eva.application.free_will import AutonomousUsageUncertain
+
+    auth = tmp_path / "subscription-lease.json"
+    _write_access_lease(auth)
+    model = PydanticConversationModel(
+        auth_file=auth, resource_budget=_runtime_budget() if budgeted else None,
+    )
     bodies: list[dict[str, Any]] = []
 
-    def request(body: dict[str, Any]) -> tuple[str, ConversationActionCall]:
-        bodies.append(body)
-        return "", ConversationActionCall(
-            "will-call-1",
-            "submit_sensory_decision",
-            {
-                "disposition": "silence",
-                "expression": None,
-                "reason": "Een gewone lampwisseling vraagt niet om aandacht.",
-                "urgency": 0,
-            },
-        )
+    def request(request, **_kwargs):
+        bodies.append(json.loads(request.data))
+        decision = {"disposition": "silence", "expression": None,
+                    "reason": "Een gewone lampwisseling vraagt niet om aandacht.", "urgency": 0}
+        response = {"status": "completed"}
+        if usage_mode != "missing":
+            response["usage"] = {"input_tokens": 321, "output_tokens": 45, "total_tokens": 366 if usage_mode == "valid" else 1}
+        events = [
+            {"type": "response.output_item.done", "item": {
+                "type": "function_call", "call_id": "will-call-1",
+                "name": "submit_sensory_decision", "arguments": json.dumps(decision),
+            }},
+            {"type": "response.completed", "response": response},
+        ]
+        return BytesIO("".join(f"data: {json.dumps(event)}\n\n" for event in events).encode())
 
-    monkeypatch.setattr(model, "_request", request)
+    monkeypatch.setattr(conversation_module.urllib.request, "urlopen", request)
     event = SensoryEvent(
         "home-assistant",
         "home-assistant:event-1",
@@ -1394,11 +1580,20 @@ def test_passive_house_event_is_forced_through_bounded_shadow_decision(
         "Eva", "Je bent een digitale huisgenoot.", ("Wees eerlijk.",), 80
     )
 
+    if usage_mode != "valid":
+        with pytest.raises(AutonomousUsageUncertain, match="usage"):
+            model.evaluate_sensory_event(event, identity, _memory())
+        assert len(bodies) == 1
+        return
     decision = model.evaluate_sensory_event(event, identity, _memory())
 
     assert decision.disposition == "silence"
     assert decision.urgency == 0
     assert decision.provider == "chatgpt-codex:gpt-5.4-mini"
+    assert decision.usage == ConversationModelUsage.measured(
+        model_attempts=1, tool_calls=1, input_tokens=321, output_tokens=45,
+    )
+    assert len(bodies) == 1
     assert bodies[0]["tool_choice"]["name"] == "submit_sensory_decision"
     assert bodies[0]["parallel_tool_calls"] is False
     assert "transportbewijs" in bodies[0]["instructions"]

@@ -3,6 +3,9 @@ from __future__ import annotations
 import hashlib
 import json
 from datetime import UTC, datetime
+from threading import Event
+
+import pytest
 
 from fastapi.testclient import TestClient
 
@@ -872,6 +875,100 @@ def test_private_turn_exposes_only_safe_model_deltas_as_ndjson() -> None:
     assert len(runtime.after) == 1
     assert runtime.after[0][0] == runtime.turns[0]
     assert runtime.after[0][1].text == "Veilig antwoord."
+
+
+@pytest.mark.parametrize("stage,delta", [("respond", False), ("respond", True), ("after_response", False)])
+def test_stream_failure_records_private_safe_diagnostics(stage, delta, caplog, monkeypatch):
+    from eva.adapters.api import dashboard_conversation as streams
+
+    finished = Event()
+    original = streams._record_stream_failure
+
+    def record(*args):
+        try:
+            original(*args)
+        finally:
+            finished.set()
+
+    monkeypatch.setattr(streams, "_record_stream_failure", record)
+
+    class PrivateFailure(ValueError):
+        def __str__(self):
+            raise AssertionError("exception messages must not be inspected")
+
+        def __repr__(self):
+            raise AssertionError("exception representations must not be inspected")
+
+    class Runtime(_Runtime):
+        calls = 0
+
+        def respond(self, turn, recent_messages=()):
+            self.calls += 1
+            if delta:
+                publish_conversation_text("Veilige tekst", tools_disabled=True)
+            if stage == "respond":
+                raise PrivateFailure("password=secret-provider-body private-conversation")
+            return GroundedReply(turn.conversation_id, turn.message_id, "Klaar", (), NOW, "test")
+
+        def after_response(self, turn, reply):
+            raise RuntimeError("password=secret-provider-body private-conversation")
+
+    runtime = Runtime()
+    response = _diagnostic_stream_request(runtime)
+    assert finished.wait(2), "diagnostic worker did not finish"
+    rows = [json.loads(line) for line in response.iter_lines()]
+    expected = (["EvaTextDelta/v1"] if delta else []) + [
+        "EvaTextStreamError/v1" if stage == "respond" else "EvaInternalGroundedReply/v1"
+    ]
+    assert [row["contract"] for row in rows] == expected
+    assert runtime.calls == 1  # Observability must not retry a model or external effect.
+    records = [r for r in caplog.records if r.name == streams.__name__]
+    assert len(records) == 1
+    record = records[0]
+    diagnostic = json.loads(record.getMessage())
+    assert diagnostic["stage"] == stage
+    assert diagnostic["event"] == "conversation_stream_failure"
+    assert diagnostic["category"] == ("validation" if stage == "respond" else "unexpected")
+    assert len(diagnostic["turn_sha256"]) == len(diagnostic["exception_type_sha256"]) == 64
+    assert diagnostic["eva_frames"]
+    assert all(f["source"] == "adapters/api/dashboard_conversation.py" for f in diagnostic["eva_frames"])
+    assert record.exc_info is None
+    for private in ("secret-provider-body", "private-conversation", TENANT, INSTALLATION, PRINCIPAL, "private-message"):
+        assert private not in record.getMessage()
+    assert "secret-provider-body" not in response.text
+
+
+def _diagnostic_stream_request(runtime):
+    return TestClient(create_app(runtime)).post(
+        "/internal/v1/turns/respond",
+        headers={"accept": "application/x-ndjson"},
+        json={
+            "audience": {"audience_id": f"person:{PRINCIPAL}", "kind": "private_person", "principal_id": PRINCIPAL},
+            "conversation_id": "private-conversation", "message_id": "private-message",
+            "installation_id": INSTALLATION, "tenant_id": TENANT,
+            "principal_id": PRINCIPAL, "occurred_at": NOW, "text": "private-conversation",
+        },
+    )
+
+
+def test_stream_error_contract_survives_a_failed_diagnostic_sink(monkeypatch):
+    from eva.adapters.api import dashboard_conversation as streams
+
+    finished = Event()
+
+    def broken_sink(*args):
+        finished.set()
+        raise OSError("private logging failure")
+
+    monkeypatch.setattr(streams, "_record_stream_failure", broken_sink)
+
+    class Runtime(_Runtime):
+        def respond(self, turn, recent_messages=()):
+            raise RuntimeError("private provider failure")
+
+    response = _diagnostic_stream_request(Runtime())
+    assert finished.wait(2)
+    assert response.text == '{"contract":"EvaTextStreamError/v1"}\n'
 
 
 def test_turn_stream_requires_an_exact_acceptable_media_type() -> None:

@@ -26,60 +26,59 @@ class TelegramProactiveDelivery:
         self,
         *,
         bot_token: str,
-        chat_id: str,
+        chat_id: str | None = None,
+        recipient_resolver: Callable[[], str] | None = None,
         timeout_seconds: int = 10,
         api_base_url: str = "https://api.telegram.org",
     ) -> None:
         if ":" not in bot_token or any(character.isspace() for character in bot_token):
             raise ValueError("Telegram bot token is invalid")
-        if not chat_id or len(chat_id) > 32 or not chat_id.lstrip("-").isdigit():
+        if chat_id is None and recipient_resolver is None:
             raise ValueError("Telegram proactive chat ID is invalid")
+        if chat_id is not None:
+            self._validate_private_chat(chat_id)
         if not 2 <= timeout_seconds <= 20:
             raise ValueError("Telegram proactive timeout is invalid")
         if not api_base_url.startswith(("http://", "https://")):
             raise ValueError("Telegram API URL is invalid")
-        self._url = f"{api_base_url.rstrip('/')}/bot{bot_token}/sendMessage"
+        self._api = TelegramBotApiAdapter(
+            bot_token=bot_token, timeout_seconds=timeout_seconds, api_base_url=api_base_url,
+        )
         self._chat_id = chat_id
+        self._recipient_resolver = recipient_resolver
         self._timeout = timeout_seconds
+
+    @staticmethod
+    def _validate_private_chat(chat_id: str) -> None:
+        if (not isinstance(chat_id, str) or not chat_id.isascii() or not chat_id.isdigit()
+                or len(chat_id) > 16 or int(chat_id) < 1 or str(int(chat_id)) != chat_id):
+            raise ValueError("Telegram proactive recipient must be a private user")
 
     def deliver(self, claim: ProactiveExpressionClaim) -> str:
         if not claim.text.strip() or len(claim.text) > 4096:
             raise ValueError("Telegram proactive text is invalid")
-        payload = json.dumps(
+        chat_id = self._chat_id if self._recipient_resolver is None else self._recipient_resolver()
+        self._validate_private_chat(chat_id)
+        if self._chat_id is not None and self._chat_id != chat_id:
+            raise RuntimeError("configured Telegram recipient differs from verified owner")
+        result = self._api._call(
+            "sendMessage",
             {
-                "chat_id": self._chat_id,
+                "chat_id": chat_id,
                 "disable_notification": claim.urgency < 3,
                 "text": claim.text,
             },
-            ensure_ascii=False,
-            allow_nan=False,
-            sort_keys=True,
-            separators=(",", ":"),
-        ).encode()
-        request = urllib_request.Request(
-            self._url,
-            data=payload,
-            headers={"Content-Type": "application/json"},
-            method="POST",
+            timeout_seconds=self._timeout,
+            maximum_response_bytes=65_536,
         )
-        try:
-            with urllib_request.urlopen(request, timeout=self._timeout) as response:
-                raw = response.read(65_537)
-        except (TimeoutError, error.URLError) as exc:
-            raise RuntimeError("Telegram proactive delivery failed") from exc
-        if len(raw) > 65_536:
-            raise RuntimeError("Telegram proactive receipt is too large")
-        try:
-            decoded = json.loads(raw)
-        except (UnicodeDecodeError, json.JSONDecodeError) as exc:
-            raise RuntimeError("Telegram proactive receipt is invalid") from exc
-        if not isinstance(decoded, dict):
-            raise RuntimeError("Telegram proactive receipt is invalid")
-        result = decoded.get("result")
         message_id = result.get("message_id") if isinstance(result, dict) else None
-        if decoded.get("ok") is not True or not isinstance(message_id, int):
-            raise RuntimeError("Telegram did not accept the proactive expression")
-        return f"telegram:{self._chat_id}:{message_id}"
+        chat = result.get("chat") if isinstance(result, dict) else None
+        if (type(message_id) is not int or message_id < 1
+                or not isinstance(chat, dict) or type(chat.get("id")) is not int
+                or str(chat["id"]) != chat_id or chat.get("type") != "private"
+                or result.get("text") != claim.text):
+            raise RuntimeError("Telegram proactive receipt does not prove the intended private delivery")
+        return f"telegram:{chat_id}:{message_id}"
 
 
 class TelegramBotApiAdapter:
@@ -107,7 +106,10 @@ class TelegramBotApiAdapter:
         payload: dict[str, object],
         *,
         timeout_seconds: int | None = None,
+        maximum_response_bytes: int = 1_048_576,
     ) -> object:
+        if type(maximum_response_bytes) is not int or not 1 <= maximum_response_bytes <= 1_048_576:
+            raise ValueError("Telegram response bound is invalid")
         encoded = json.dumps(
             payload,
             ensure_ascii=False,
@@ -121,20 +123,22 @@ class TelegramBotApiAdapter:
             headers={"Content-Type": "application/json"},
             method="POST",
         )
+        failed_status = False
         try:
             with urllib_request.urlopen(
                 request,
                 timeout=self._timeout + 2 if timeout_seconds is None else timeout_seconds,
             ) as response:
-                raw = response.read(1_048_577)
+                raw = response.read(maximum_response_bytes + 1)
         except error.HTTPError as exc:
+            failed_status = True
             try:
-                raw = exc.read(1_048_577)
+                raw = exc.read(maximum_response_bytes + 1)
             finally:
                 exc.close()
         except (TimeoutError, error.URLError) as exc:
             raise RuntimeError(f"Telegram {method} failed") from exc
-        if len(raw) > 1_048_576:
+        if len(raw) > maximum_response_bytes:
             raise RuntimeError(f"Telegram {method} receipt is too large")
         try:
             decoded = json.loads(raw)
@@ -142,6 +146,8 @@ class TelegramBotApiAdapter:
             raise RuntimeError(f"Telegram {method} receipt is invalid") from exc
         if not isinstance(decoded, dict):
             raise RuntimeError(f"Telegram {method} receipt is invalid")
+        if failed_status and decoded.get("ok") is True:
+            raise RuntimeError(f"Telegram {method} HTTP error contradicts its receipt")
         if decoded.get("ok") is not True:
             parameters = decoded.get("parameters")
             retry_after = (

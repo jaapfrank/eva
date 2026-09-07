@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from pathlib import Path
+import os
 from typing import Any
 
 import pytest
@@ -12,6 +13,9 @@ from tools.eva2_quiescent_cutover import (
     DatabaseAttestation,
     DatabaseSnapshot,
     QuiescentCutoverError,
+    PROACTIVE_FLAG,
+    PROACTIVE_MANIFEST,
+    PROACTIVE_TOKEN_TARGET,
     SlotSpec,
     SystemBackend,
     _slot,
@@ -73,6 +77,177 @@ def test_start_writers_refuses_a_stale_core_container(
 
     with pytest.raises(QuiescentCutoverError, match="core image differs"):
         SystemBackend().start_writers(slot)
+
+
+@pytest.mark.parametrize("value", ["", "yes", "1", "TRUE", " false"])
+def test_proactive_flag_rejects_ambiguous_admission(value: str) -> None:
+    with pytest.raises(QuiescentCutoverError, match="flag"):
+        SystemBackend._proactive_token({PROACTIVE_FLAG: value})
+
+
+def test_token_file_presence_does_not_enable_proactive_delivery() -> None:
+    assert SystemBackend._proactive_token({
+        "EVA_TELEGRAM_BOT_TOKEN_FILE_HOST": "/not/read/merely/because/present",
+    }) is None
+
+
+@pytest.mark.parametrize("value", ["", "relative/token", "/tmp/../token"])
+def test_proactive_token_requires_absolute_canonical_path(value: str) -> None:
+    with pytest.raises(QuiescentCutoverError, match="path"):
+        SystemBackend._proactive_token({
+            PROACTIVE_FLAG: "true", "EVA_TELEGRAM_BOT_TOKEN_FILE_HOST": value,
+        })
+
+
+def test_proactive_token_requires_private_runtime_owner(monkeypatch: pytest.MonkeyPatch, tmp_path: Path) -> None:
+    observed = []
+    token_file = tmp_path / "telegram-token"
+    token_file.write_text("123456:synthetic-test\n")
+    monkeypatch.setattr(SystemBackend, "_private_file", staticmethod(
+        lambda path, **options: observed.append((path, options))
+    ))
+    token = SystemBackend._proactive_token({
+        PROACTIVE_FLAG: "true", "EVA_TELEGRAM_BOT_TOKEN_FILE_HOST": str(token_file),
+    })
+    assert observed == [(token, {"mode": 0o600, "uid": 65532})]
+
+
+@pytest.mark.parametrize("contents", [b"", b"probe-only", b"private-sentinel", b"123:with space", b"123:with\nnewline", b"123:\xff", b"123:" + b"x" * 4093], ids=["empty", "old-probe", "sentinel", "space", "newline", "encoding", "oversize"])
+def test_invalid_token_rejected_before_any_cutover_command(
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Path, contents: bytes,
+) -> None:
+    token_file = tmp_path / "telegram-token"
+    token_file.write_bytes(contents)
+    dropin = tmp_path / "dropin"
+    dropin.write_bytes(canonical_dropin(_slot(3).url))
+    dropin.chmod(0o644)
+    commands = []
+    monkeypatch.setattr(os, "geteuid", lambda: 0)
+    monkeypatch.setattr(SystemBackend, "_private_file", staticmethod(lambda *a, **k: None))
+    monkeypatch.setattr(SystemBackend, "_environment", staticmethod(lambda _: {
+        PROACTIVE_FLAG: "true", "EVA_TELEGRAM_BOT_TOKEN_FILE_HOST": str(token_file),
+    }))
+    monkeypatch.setattr(SystemBackend, "_run", staticmethod(lambda cmd, **kw: commands.append(cmd)))
+    with pytest.raises(QuiescentCutoverError, match="proactive token content") as error:
+        SystemBackend(owner_uid=os.getuid()).preflight(_slot(3), _slot(4), dropin)
+    assert "private-sentinel" not in str(error.value)
+    assert commands == []
+
+
+def test_start_writers_withholds_token_even_for_enabled_slot(
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Path,
+) -> None:
+    commands = []
+    image = "sha256:" + "a" * 64
+    token = tmp_path / "telegram-token"
+    token.write_text("123456:synthetic-test")
+    monkeypatch.setattr(SystemBackend, "_environment", staticmethod(lambda _: {
+        "EVA_LIVING_CORE_IMAGE": f"eva2/core@{image}", PROACTIVE_FLAG: "true",
+        "EVA_TELEGRAM_BOT_TOKEN_FILE_HOST": str(token),
+    }))
+    monkeypatch.setattr(SystemBackend, "_private_file", staticmethod(lambda *a, **k: None))
+    monkeypatch.setattr(SystemBackend, "_run", staticmethod(
+        lambda command, **kw: commands.append(command) or ""
+    ))
+    monkeypatch.setattr(SystemBackend, "_wait_container", staticmethod(lambda _: None))
+    monkeypatch.setattr(SystemBackend, "_inspect", staticmethod(lambda _: {
+        "Image": image,
+        "Config": {"Env": []}, "Mounts": [],
+    }))
+    SystemBackend().start_writers(_slot(4))
+    assert [command[-1] for command in commands] == ["hindsight", "core"]
+    assert str(PROACTIVE_MANIFEST) not in commands[0]
+    assert str(PROACTIVE_MANIFEST) not in commands[1]
+    assert all("telegram-ingress" not in command for command in commands)
+
+
+@pytest.mark.parametrize("problem", ["missing", "writable", "other_source", "duplicate", "inline"])
+def test_proactive_runtime_mount_fails_closed(problem: str) -> None:
+    token = Path("/rt001-test-token")
+    document = {
+        "Config": {"Env": [f"EVA_TELEGRAM_BOT_TOKEN_FILE={PROACTIVE_TOKEN_TARGET}"]},
+        "Mounts": [{"Type": "bind", "Source": str(token),
+                    "Destination": PROACTIVE_TOKEN_TARGET, "RW": False}],
+    }
+    if problem == "missing":
+        document["Mounts"] = []
+    elif problem == "writable":
+        document["Mounts"][0]["RW"] = True
+    elif problem == "other_source":
+        document["Mounts"][0]["Source"] = "/another-token"
+    elif problem == "duplicate":
+        document["Mounts"] *= 2
+    else:
+        document["Config"]["Env"] = ["EVA_TELEGRAM_BOT_TOKEN_FILE=not-a-file"]
+    with pytest.raises(QuiescentCutoverError, match="mount differs"):
+        SystemBackend._verify_proactive_mount(document, token)
+
+
+@pytest.mark.parametrize("document", [
+    {"Config": {"Env": [f"EVA_TELEGRAM_BOT_TOKEN_FILE={PROACTIVE_TOKEN_TARGET}"]}},
+    {"Mounts": [{"Destination": PROACTIVE_TOKEN_TARGET}]},
+])
+def test_rollback_disabled_slot_cannot_keep_proactive_token(document: dict) -> None:
+    with pytest.raises(QuiescentCutoverError, match="disabled proactive"):
+        SystemBackend._verify_proactive_mount(document, None)
+
+
+@pytest.mark.parametrize("failure", [None, "route_file", "loaded_route", "not_ready", "ingress_active", "stale_image", "mount_writable"])
+def test_activation_requires_staged_image_route_and_quiescence(
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Path, failure: str | None,
+) -> None:
+    slot = _slot(4)
+    token = tmp_path / "telegram-token"
+    token.write_text("123456:synthetic-test")
+    image = "sha256:" + "a" * 64
+    dropin = tmp_path / "dropin"
+    dropin.write_bytes(canonical_dropin(slot.url if failure != "route_file" else _slot(3).url))
+    dropin.chmod(0o644)
+    commands = []
+    activated = False
+    monkeypatch.setattr(SystemBackend, "_environment", staticmethod(lambda _: {
+        PROACTIVE_FLAG: "true", "EVA_TELEGRAM_BOT_TOKEN_FILE_HOST": str(token),
+        "EVA_LIVING_CORE_IMAGE": f"eva2/core@{image}",
+    }))
+    monkeypatch.setattr(SystemBackend, "_private_file", staticmethod(lambda *a, **k: None))
+    def run(command, **kwargs):
+        nonlocal activated
+        commands.append(command)
+        if "--property=Environment" in command:
+            return f"EVA2_CANARY_URL={_slot(3).url if failure == 'loaded_route' else slot.url}"
+        if "--property=ActiveState" in command:
+            return "active" if failure == "ingress_active" else "inactive"
+        assert command[-1] == "core" and str(PROACTIVE_MANIFEST) in command
+        activated = True
+        return ""
+    def inspect(_):
+        return {
+            "Image": "sha256:" + "b" * 64 if failure == "stale_image" else image,
+            "Config": {"Env": [f"EVA_TELEGRAM_BOT_TOKEN_FILE={PROACTIVE_TOKEN_TARGET}"] if activated else []},
+            "Mounts": [{"Type": "bind", "Source": str(token),
+                        "Destination": PROACTIVE_TOKEN_TARGET, "RW": failure == "mount_writable"}] if activated else [],
+        }
+    monkeypatch.setattr(SystemBackend, "_run", staticmethod(run))
+    monkeypatch.setattr(SystemBackend, "_inspect", staticmethod(inspect))
+    monkeypatch.setattr(SystemBackend, "_ready", staticmethod(lambda _: failure != "not_ready"))
+    monkeypatch.setattr(SystemBackend, "_wait_container", staticmethod(lambda _: None))
+    monkeypatch.setattr(SystemBackend, "verify_runtime", lambda *a: None)
+    backend = SystemBackend(owner_uid=os.getuid())
+    if failure is None:
+        assert backend.activate_delivery(slot, dropin) is True
+        assert activated
+    else:
+        with pytest.raises((QuiescentCutoverError, RuntimeError)):
+            backend.activate_delivery(slot, dropin)
+        assert activated is (failure == "mount_writable")
+    assert not any("telegram-ingress" in command for command in commands)
+
+
+def test_disabled_slot_activation_never_restarts_core(monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.setattr(SystemBackend, "_environment", staticmethod(lambda _: {}))
+    monkeypatch.setattr(SystemBackend, "_inspect", staticmethod(lambda _: {"Config": {"Env": []}, "Mounts": []}))
+    monkeypatch.setattr(SystemBackend, "_run", staticmethod(lambda *a, **k: pytest.fail("must not start or load credentials")))
+    assert SystemBackend().activate_delivery(_slot(3), Path("/unused")) is False
 
 
 def test_migrate_schema_uses_the_target_image_before_writers_start(
@@ -399,6 +574,11 @@ class FakeBackend:
         self._call(f"start-eva1:{slot.number}")
         return {path: 200 for path in EVA1_PATHS}
 
+    def activate_delivery(self, slot: SlotSpec, dropin: Path) -> bool:
+        self._call(f"activate-delivery:{slot.number}")
+        assert self.route == canonical_dropin(slot.url)
+        return True
+
 
 def test_quiesces_copies_attests_and_only_then_switches(tmp_path: Path) -> None:
     backend = FakeBackend(tmp_path)
@@ -423,6 +603,7 @@ def test_quiesces_copies_attests_and_only_then_switches(tmp_path: Path) -> None:
         "start:4",
         "verify:4",
         "route:44711",
+        "activate-delivery:4",
         "start-eva1:4",
     ]
     assert receipt["status"] == "switched"
@@ -432,7 +613,7 @@ def test_quiesces_copies_attests_and_only_then_switches(tmp_path: Path) -> None:
     assert receipt["eva1Backup"]["quickCheck"] == "ok"  # type: ignore[index]
 
 
-def test_failure_before_route_restores_source_without_reversing_data(
+def test_failure_before_route_preserves_background_writes_before_source_restart(
     tmp_path: Path,
 ) -> None:
     backend = FakeBackend(tmp_path, fail_at="verify:4")
@@ -446,8 +627,10 @@ def test_failure_before_route_restores_source_without_reversing_data(
             workspace=tmp_path,
         )
 
-    assert backend.calls[-4:] == ["stop:4", "start:3", "verify:3", "start-eva1:3"]
-    assert not any("automatic-rollback" in call for call in backend.calls)
+    assert backend.calls[-7:] == [
+        "stop:4", "snapshot:4:automatic-rollback", "restore:3:reverse",
+        "start:3", "verify:3", "activate-delivery:3", "start-eva1:3",
+    ]
     assert "route:44710" not in backend.calls
 
 
@@ -467,7 +650,7 @@ def test_schema_migration_failure_never_starts_or_routes_target(
 
     assert "start:4" not in backend.calls
     assert "route:44711" not in backend.calls
-    assert backend.calls[-3:] == ["start:3", "verify:3", "start-eva1:3"]
+    assert backend.calls[-4:] == ["start:3", "verify:3", "activate-delivery:3", "start-eva1:3"]
 
 
 def test_partial_target_start_is_stopped_before_source_recovery(tmp_path: Path) -> None:
@@ -482,11 +665,14 @@ def test_partial_target_start_is_stopped_before_source_recovery(tmp_path: Path) 
             workspace=tmp_path,
         )
 
-    assert backend.calls[-5:] == [
+    assert backend.calls[-8:] == [
         "start:4",
         "stop:4",
+        "snapshot:4:automatic-rollback",
+        "restore:3:reverse",
         "start:3",
         "verify:3",
+        "activate-delivery:3",
         "start-eva1:3",
     ]
 
@@ -505,7 +691,7 @@ def test_failure_after_eva1_start_attempt_reverses_new_writes_before_rollback(
             workspace=tmp_path,
         )
 
-    assert backend.calls[-9:] == [
+    assert backend.calls[-10:] == [
         "start-eva1:4",
         "stop-eva1",
         "stop:4",
@@ -514,9 +700,23 @@ def test_failure_after_eva1_start_attempt_reverses_new_writes_before_rollback(
         "start:3",
         "verify:3",
         "route:44710",
+        "activate-delivery:3",
         "start-eva1:3",
     ]
     assert backend.route == canonical_dropin("http://127.0.0.1:44710")
+
+
+def test_activation_failure_preserves_effect_state_before_restoring_source(tmp_path: Path) -> None:
+    backend = FakeBackend(tmp_path, fail_at="activate-delivery:4")
+    with pytest.raises(QuiescentCutoverError, match="activate-delivery:4"):
+        quiescent_cutover(source_slot=3, target_slot=4, backend=backend,
+                          dropin=tmp_path / "dropin", workspace=tmp_path)
+    assert "start-eva1:4" not in backend.calls
+    assert backend.calls[-9:] == [
+        "activate-delivery:4", "stop:4", "snapshot:4:automatic-rollback",
+        "restore:3:reverse", "start:3", "verify:3", "route:44710",
+        "activate-delivery:3", "start-eva1:3",
+    ]
 
 
 def test_route_write_failure_still_rewrites_exact_previous_route(
@@ -533,7 +733,7 @@ def test_route_write_failure_still_rewrites_exact_previous_route(
             workspace=tmp_path,
         )
 
-    assert backend.calls[-4:] == ["start:3", "verify:3", "route:44710", "start-eva1:3"]
+    assert backend.calls[-5:] == ["start:3", "verify:3", "route:44710", "activate-delivery:3", "start-eva1:3"]
 
 
 def test_refuses_same_or_unknown_slots_before_preflight(tmp_path: Path) -> None:

@@ -55,7 +55,7 @@ from eva.application.conversation import (
     publish_conversation_text,
 )
 from eva.application.memory import PresenceMemory
-from eva.application.free_will import FreeWillDecision
+from eva.application.free_will import AutonomousAdmissionBlocker, AutonomousUsageUncertain, FreeWillDecision
 from eva.application.resident_attention import ResidentAttentionDecision
 from eva.application.sensory import SensoryEvent
 from eva.application.personal_interests import (
@@ -87,6 +87,14 @@ from eva.contracts.runtime_budget import RuntimeResourceBudget
 
 _MAX_STREAM_BYTES = 8 * 1024 * 1024
 _MODEL_LEASE_OWNER_UID = 1000
+class _ProviderUsageError(ConversationModelError):
+    """Provider output cannot establish consumption for the completed request."""
+
+
+class _InputBudgetError(ConversationModelError):
+    """The local request envelope does not fit; no provider request was made."""
+
+
 _MODEL_LEASE_READER_GID = 65532
 _MODEL_LEASE_FILE_MODE = 0o640
 _ORDINARY_PROVIDER_TIMEOUT_SECONDS = 15.0
@@ -469,6 +477,9 @@ _FREE_WILL_TOOL: dict[str, Any] = _tool(
 )
 
 
+_CODEX_SUBSCRIPTION_ENDPOINT = "https://chatgpt.com/backend-api/codex/responses"
+
+
 class PydanticConversationModel:
     """One stateless Eva generation after Hindsight has recalled context."""
 
@@ -477,7 +488,7 @@ class PydanticConversationModel:
         *,
         auth_file: Path,
         model: str = "gpt-5.4-mini",
-        endpoint: str = "https://chatgpt.com/backend-api/codex/responses",
+        endpoint: str = _CODEX_SUBSCRIPTION_ENDPOINT,
         timeout_seconds: float = 30.0,
         research_timeout_seconds: float = 90.0,
         reasoning_effort: Literal["low", "medium", "high"] = "medium",
@@ -540,21 +551,15 @@ class PydanticConversationModel:
             return ConversationCredentialStatus(False, "expired", expires_at)
         return ConversationCredentialStatus(True, "ready", expires_at)
 
-    def _run_pydantic_phase(
-        self,
+    @staticmethod
+    def _phase_admission_body(
         *,
         prompt: str,
         instructions: str,
         tools: tuple[dict[str, Any], ...] = (),
         completed_action: ConversationActionReceipt | None = None,
-        cache_key: str | None = None,
-    ) -> tuple[
-        str,
-        ConversationActionCall | None,
-        ConversationModelUsage,
-        ConversationModelTiming,
-    ]:
-        """Run one framework-owned phase and stop before external execution."""
+    ) -> dict[str, Any]:
+        """One envelope shared by context selection and final admission."""
 
         admission_input: list[dict[str, Any]] = [
             {"content": prompt, "role": "user", "type": "message"}
@@ -581,20 +586,33 @@ class PydanticConversationModel:
                     },
                 )
             )
-        self._admit_request(
-            {
-                "input": admission_input,
-                "instructions": instructions,
-                "store": False,
-                "tools": (
-                    [{"execution": "server", "type": "tool_search"}]
-                    + [{**tool, "defer_loading": True} for tool in tools]
-                    if tools
-                    else []
-                ),
-            },
-            autonomous=False,
-        )
+        return {
+            "input": admission_input,
+            "instructions": instructions,
+            "store": False,
+            "tools": (
+                [{"execution": "server", "type": "tool_search"}]
+                + [{**tool, "defer_loading": True} for tool in tools]
+                if tools
+                else []
+            ),
+        }
+
+    def _run_pydantic_phase(
+        self,
+        *,
+        prompt: str,
+        instructions: str,
+        tools: tuple[dict[str, Any], ...] = (),
+        completed_action: ConversationActionReceipt | None = None,
+        cache_key: str | None = None,
+    ) -> tuple[str, ConversationActionCall | None, ConversationModelUsage,
+               ConversationModelTiming]:
+        """Run one framework-owned phase and stop before external execution."""
+        self._admit_request(self._phase_admission_body(
+            prompt=prompt, instructions=instructions, tools=tools,
+            completed_action=completed_action,
+        ), autonomous=False)
         injected_backend = self._model_backend
         phase_started_at = monotonic()
 
@@ -913,14 +931,6 @@ class PydanticConversationModel:
         )
         if completed_action is not None and available_actions and not memory_completed:
             raise ValueError("completed conversation action cannot offer more actions")
-        instructions = self._instructions(
-            identity,
-            memory,
-            recent_messages,
-            available_actions=() if offer_tools else available_actions,
-            completed_action=completed_action,
-            self_context=self_context,
-        )
         pydantic_catalog = (
             tuple(
                 ([] if memory_completed else [_MEMORY_SEARCH_TOOL])
@@ -929,6 +939,47 @@ class PydanticConversationModel:
             if offer_tools
             else ()
         )
+        selected_recent = recent_messages[-12:]
+        # Unanswered retries can follow the latest assistant proposal. Keep that
+        # proposal, its preceding user message and every subsequent message.
+        last_assistant = next((i for i in range(len(selected_recent) - 1, -1, -1)
+                               if selected_recent[i].role == "assistant"), None)
+        protected_start = last_assistant
+        if protected_start is not None:
+            while protected_start > 0 and selected_recent[protected_start].role != "user":
+                protected_start -= 1
+        minimum_recent = (2 if protected_start is None else
+                          max(2, len(selected_recent) - protected_start))
+        omitted = False
+        while True:
+            instructions = self._instructions(
+                identity, memory, selected_recent,
+                available_actions=() if offer_tools else available_actions,
+                completed_action=completed_action, self_context=self_context,
+            )
+            if omitted:
+                instructions += (
+                    "\nOudere gespreksbeurten zijn buiten deze invoer gelaten, niet "
+                    "gewist. Gebruik geheugenzoeken als ontbrekende geschiedenis "
+                    "nodig is; verzin die niet en voer geen onduidelijke verwijzing uit."
+                )
+            try:
+                self._admit_request(self._phase_admission_body(
+                    prompt=turn.grounded_text, instructions=instructions,
+                    tools=pydantic_catalog, completed_action=completed_action,
+                ), autonomous=False)
+                break
+            except _InputBudgetError:
+                # Keep the latest exchange intact: a short confirmation must not
+                # lose the proposal it refers to. Never trim identity, current
+                # input, recalled facts, active work or a completed tool receipt.
+                if len(selected_recent) <= minimum_recent:
+                    raise
+                selected_recent = selected_recent[1:]
+                while (len(selected_recent) > minimum_recent
+                       and selected_recent[0].role == "assistant"):
+                    selected_recent = selected_recent[1:]
+                omitted = True
         usages: list[ConversationModelUsage] = []
         timings: list[ConversationModelTiming] = []
         text, action_call, usage, timing = self._run_pydantic_phase(
@@ -1256,8 +1307,13 @@ class PydanticConversationModel:
                 "aanwezigheidswissels en ruis verdienen stilte. Kies alleen respond als "
                 "de gebeurtenis op zichzelf en met de bevestigde context werkelijk nuttig, "
                 "ongewoon of urgent is voor het gezin. Verzin geen oorzaak, persoon, gevaar "
-                "of intentie. Een modelafleiding is geen bewezen feit. Bij respond schrijf je "
-                "ook één kort, natuurlijk bericht alsof je een oplettende huisgenoot bent; "
+                "of intentie. Een modelafleiding is geen bewezen feit. "
+                "Bij herbeoordeling is current_state de apart gecontroleerde actuele toestand. "
+                "historical_observation en historical_observations zijn geschiedenis: lees alle "
+                "overgangen en hun tijden, maar stel een oude toestand niet voor als actueel. "
+                "Een bundel vraagt één gezamenlijke beslissing; een tijdelijk belangrijk signaal "
+                "mag niet verdwijnen alleen omdat de toestand later weer normaal werd. "
+                "Bij respond schrijf je één kort, natuurlijk bericht alsof je een oplettende huisgenoot bent; "
                 "bij silence is expression null. Geef geen aanbod, slotvraag of technisch "
                 "logboek. Roep exact de aangeboden functie aan."
                 + (
@@ -1281,7 +1337,12 @@ class PydanticConversationModel:
             "tool_choice": {"name": _FREE_WILL_ACTION, "type": "function"},
             "tools": [_FREE_WILL_TOOL],
         }
-        text, action_call = self._request_autonomous(body)
+        try:
+            (text, action_call), usage = self._request_using(
+                body, self._parse_sse, autonomous=True, include_usage=True,
+            )
+        except _ProviderUsageError as error:
+            raise AutonomousUsageUncertain("autonomous provider usage is unverified") from error
         if text.strip() or action_call is None or action_call.name != _FREE_WILL_ACTION:
             raise ConversationModelError("sensory decision response is invalid")
         arguments = action_call.arguments
@@ -1306,6 +1367,7 @@ class PydanticConversationModel:
                 urgency,
                 f"chatgpt-codex:{self._model}",
                 None if expression is None else expression.strip(),
+                usage=usage,
             )
         except ValueError as error:
             raise ConversationModelError("sensory decision is invalid") from error
@@ -1535,7 +1597,7 @@ class PydanticConversationModel:
                     terminal_usage: list[tuple[int, int]] = []
                     stream = (
                         self._capture_terminal_usage(response, terminal_usage)
-                        if self._resource_budget is not None
+                        if self._resource_budget is not None or include_usage
                         else response
                     )
                     parsed = (
@@ -1547,10 +1609,10 @@ class PydanticConversationModel:
                         if include_timing
                         else parser(stream)
                     )
-                    if self._resource_budget is None:
+                    if self._resource_budget is None and not include_usage:
                         return parsed
                     if len(terminal_usage) != 1:
-                        raise ConversationModelError(
+                        raise _ProviderUsageError(
                             "conversation provider usage is missing"
                         )
                     tool_calls = int(
@@ -1579,11 +1641,25 @@ class PydanticConversationModel:
                 ).hexdigest()
         raise ConversationModelError("conversation credentials were rejected")
 
+    def autonomous_admission_blocker(self) -> AutonomousAdmissionBlocker | None:
+        """Existing subscription use is not a new external spending commitment.
+
+        This adapter uses only the existing access lease; it does not buy credits
+        or fall back to API-key billing. Authentication, provider limits and
+        per-request usage checks still apply. Other endpoints are not admitted
+        under that subscription authority. No daily allowance is invented here.
+        """
+        if (self._resource_budget is not None
+                and self._resource_budget.unknown_cost_policy == "block_autonomous_spend"
+                and self._endpoint != _CODEX_SUBSCRIPTION_ENDPOINT):
+            return "unverified_model_cost"
+        return None
+
     def _admit_request(self, body: dict[str, Any], *, autonomous: bool) -> None:
         budget = self._resource_budget
         if budget is None:
             return
-        if autonomous and budget.unknown_cost_policy == "block_autonomous_spend":
+        if autonomous and self.autonomous_admission_blocker() is not None:
             raise ConversationModelError("autonomous model spend has no verified price")
         try:
             admission_body = body
@@ -1626,7 +1702,7 @@ class PydanticConversationModel:
                 "conversation request is not a bounded canonical payload"
             ) from error
         if conservative_input_tokens > budget.max_input_tokens:
-            raise ConversationModelError(
+            raise _InputBudgetError(
                 "conversation request exceeds the runtime input budget"
             )
 
@@ -1718,7 +1794,7 @@ class PydanticConversationModel:
                         or isinstance(total_tokens, bool)
                         or total_tokens != input_tokens + output_tokens
                     ):
-                        raise ConversationModelError(
+                        raise _ProviderUsageError(
                             "conversation provider usage is invalid"
                         )
                     retained.append((input_tokens, output_tokens))

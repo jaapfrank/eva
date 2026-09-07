@@ -185,6 +185,45 @@ def test_budgeted_writer_does_not_mark_a_failed_provider_write() -> None:
     assert calls == ["admit", "provider"]
 
 
+@pytest.mark.parametrize("stop_during", ["reflection", "first_idle_task"])
+def test_stop_does_not_start_later_background_tasks(stop_during: str) -> None:
+    entered = Event()
+    release = Event()
+    calls: list[str] = []
+
+    def step(name: str) -> None:
+        calls.append(name)
+        if name == stop_during:
+            entered.set()
+            assert release.wait(2)
+
+    class Memory:
+        def retain_conversation(self, document):
+            return None
+
+        def maintain_person_scope(self, *scope):
+            step("reflection")
+
+    worker = HindsightColdPathWorker(
+        Memory(), idle_seconds=0.01,
+        idle_tasks=(lambda: step("first_idle_task"), lambda: step("delivery")),
+    )
+    worker.submit(_document())
+    worker.start()
+    try:
+        assert entered.wait(1)
+        # The in-flight call cannot be cancelled here. Once it returns, no
+        # later model/action/delivery callback may start after this stop.
+        worker.stop(timeout_seconds=0.01)
+    finally:
+        release.set()
+        worker.stop(timeout_seconds=1)
+    assert calls == (
+        ["reflection"] if stop_during == "reflection"
+        else ["reflection", "first_idle_task"]
+    )
+
+
 def test_retain_is_fire_and_forget_and_reflect_waits_for_idle() -> None:
     retain_entered = Event()
     release_retain = Event()

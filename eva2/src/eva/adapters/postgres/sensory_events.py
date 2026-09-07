@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from dataclasses import asdict
 from datetime import datetime, timedelta
 import hashlib
 from uuid import NAMESPACE_URL, uuid5
@@ -10,16 +11,30 @@ import sqlalchemy as sa
 
 from eva.adapters.postgres.operational_timeline import (
     CheckpointConflict,
+    CheckpointState,
     PostgresOperationalTimeline,
     TimelineScope,
+    insert_initial_timeline_thread,
+    operational_checkpoints,
+    operational_events,
+    transition_timeline_thread,
 )
 from eva.application.sensory import SensoryEvent
 from eva.application.free_will import (
+    AutonomousAdmissionBlocker,
+    AutonomousUsageUncertain,
     FreeWillDecision,
     ProactiveExpressionClaim,
     SensoryDecisionClaim,
 )
 from eva.contracts.base import JsonValue
+from eva.contracts.canonical_json import canonical_json_bytes, canonical_sha256
+
+
+# Historical admission failures, not a general provider-error retry policy.
+_LEGACY_COST_BLOCK_FINGERPRINT = hashlib.sha256(
+    b"ConversationModelError: autonomous model spend has no verified price"
+).hexdigest()
 
 
 class PostgresSensoryEventStore:
@@ -30,6 +45,9 @@ class PostgresSensoryEventStore:
         tenant_id: str,
         installation_id: str,
         decision_lease_seconds: int = 60,
+        observation_freshness_seconds: int = 300,
+        recovery_started_at: datetime | None = None,
+        historical_group_size: int = 1,
     ) -> None:
         self._timeline = PostgresOperationalTimeline(
             engine,
@@ -43,6 +61,19 @@ class PostgresSensoryEventStore:
         if not 10 <= decision_lease_seconds <= 300:
             raise ValueError("sensory decision lease is outside 10..300 seconds")
         self._decision_lease_seconds = decision_lease_seconds
+        if isinstance(observation_freshness_seconds, bool) or not isinstance(
+            observation_freshness_seconds, int
+        ) or observation_freshness_seconds < 1:
+            raise ValueError("observation freshness must be positive seconds")
+        if recovery_started_at is not None and recovery_started_at.tzinfo is None:
+            raise ValueError("recovery timestamp must be timezone-aware")
+        self._observation_freshness = timedelta(seconds=observation_freshness_seconds)
+        self._recovery_started_at = recovery_started_at
+        if (isinstance(historical_group_size, bool)
+                or not isinstance(historical_group_size, int)
+                or not 1 <= historical_group_size <= 16):
+            raise ValueError("historical group size is outside 1..16")
+        self._historical_group_size = historical_group_size
 
     def retain(self, event: SensoryEvent) -> str:
         thread_id = f"sensory:{event.source_event_id}"
@@ -71,17 +102,41 @@ class PostgresSensoryEventStore:
                 raise RuntimeError("sensory event identity collision") from None
             return "already_retained"
 
-    def claim_next(self, *, now: datetime) -> SensoryDecisionClaim | None:
+    def claim_next(
+        self, *, now: datetime, include_waiting: bool = True
+    ) -> SensoryDecisionClaim | None:
+        self._restore_group_completions(now=now)
+        self._restore_cost_waits(now=now, admission_open=include_waiting)
         states = self._timeline.list_checkpoints(
             thread_prefix="sensory:home-assistant:",
-            phases=("sensory_observed", "will_claimed"),
-            statuses=("completed", "active", "failed"),
+            phases=("sensory_observed", "will_claimed", "will_model_started", "will_revalidated") + (
+                ("will_waiting_admission",) if include_waiting else ()
+            ),
+            statuses=("completed", "active", "failed") + (
+                ("waiting_for_proof",) if include_waiting else ()
+            ),
             updated_before=now,
             limit=64,
         )
         for state in reversed(states):
-            if state.phase == "will_claimed" and state.status == "active":
+            if state.phase in {"will_claimed", "will_model_started"} and state.status == "active":
                 if state.deadline is None or state.deadline > now:
+                    continue
+                history = self._timeline.events(state.thread_id)
+                last_data = history[-1].payload.get("data", {}) if history else {}
+                if (state.phase == "will_model_started"
+                        or not isinstance(last_data, dict)
+                        or last_data.get("model_dispatch_started") is not False):
+                    # Old claims had no pre-model marker either. Absence of a
+                    # durable response is not evidence that no call occurred.
+                    event = self._event_from_thread(state.thread_id, latest=True)
+                    try:
+                        self.fail(SensoryDecisionClaim(
+                            event, state.thread_id, state.operation_id or event.source_event_id,
+                            state.revision, state.retry_count,
+                        ), AutonomousUsageUncertain("model lease expired"), now=now)
+                    except CheckpointConflict:
+                        pass
                     continue
                 state = self._timeline.record_recovery_failure(
                     thread_id=state.thread_id,
@@ -95,39 +150,330 @@ class PostgresSensoryEventStore:
                     continue
             if state.status == "failed" and state.retry_count >= 3:
                 continue
-            event = self._event_from_thread(state.thread_id)
+            event = self._event_from_thread(state.thread_id, latest=True)
+            if state.phase == "will_waiting_admission" or self._requires_revalidation(event, now=now):
+                # Permission to use the model says nothing about whether the
+                # observation is still relevant. Keep recovery separate from a
+                # fresh decision, including after a process restart.
+                try:
+                    self._require_revalidation(
+                        SensoryDecisionClaim(
+                            event, state.thread_id,
+                            state.operation_id or event.source_event_id,
+                            state.revision, state.retry_count,
+                        ),
+                        now=now,
+                    )
+                except CheckpointConflict:
+                    pass
+                continue
+            try:
+                return self._claim_decision(state, event, now=now)
+            except CheckpointConflict:
+                continue
+        return None
+
+    def _claim_decision(
+        self, state: CheckpointState, event: SensoryEvent, *, now: datetime,
+    ) -> SensoryDecisionClaim:
+        claimed = self._timeline.transition(
+            thread_id=state.thread_id, expected_revision=state.revision,
+            checkpoint_id=f"{state.thread_id}:will-claimed:{state.revision + 1}",
+            operation_id=state.operation_id, phase="will_claimed", status="active",
+            event_type=("WILL_EVALUATION_CLAIMED" if state.phase == "sensory_observed"
+                        else "WILL_EVALUATION_RECLAIMED"),
+            occurred_at=now, deadline=now + timedelta(seconds=self._decision_lease_seconds),
+            data={"source_event_id": event.source_event_id, "shadow_mode": True,
+                  "model_dispatch_started": False},
+            retry_count=state.retry_count, last_error_fingerprint=state.last_error_fingerprint,
+        )
+        return SensoryDecisionClaim(
+            event, state.thread_id, state.operation_id or event.source_event_id,
+            claimed.revision, claimed.retry_count,
+        )
+
+    def mark_model_started(
+        self, claim: SensoryDecisionClaim, *, now: datetime,
+    ) -> SensoryDecisionClaim | None:
+        state = self._timeline.load(claim.thread_id)
+        if (state.phase != "will_claimed" or state.status != "active"
+                or state.revision != claim.revision
+                or state.deadline is None or state.deadline <= now):
+            return None
+        try:
+            started = self._timeline.transition(
+                thread_id=claim.thread_id, expected_revision=claim.revision,
+                checkpoint_id=f"{claim.thread_id}:model-started:{claim.revision + 1}",
+                operation_id=claim.operation_id, phase="will_model_started", status="active",
+                event_type="WILL_MODEL_STARTED", occurred_at=now,
+                deadline=now + timedelta(seconds=self._decision_lease_seconds),
+                data={"source_event_id": claim.event.source_event_id,
+                      "meaning": "model_adapter_may_dispatch_outcome_not_yet_durable"},
+                retry_count=claim.retry_count,
+                last_error_fingerprint=state.last_error_fingerprint,
+            )
+        except CheckpointConflict:
+            return None
+        return SensoryDecisionClaim(
+            claim.event, claim.thread_id, claim.operation_id, started.revision, started.retry_count,
+        )
+
+    def claim_revalidated(
+        self, claim: SensoryDecisionClaim, *, now: datetime,
+    ) -> SensoryDecisionClaim | None:
+        state = self._timeline.load(claim.thread_id)
+        if (state.phase != "will_revalidated" or state.status != "completed"
+                or state.revision != claim.revision + 1):
+            return None
+        event = self._event_from_thread(state.thread_id, latest=True)
+        if self._requires_revalidation(event, now=now):
+            return None
+        try:
+            return self._claim_decision(state, event, now=now)
+        except CheckpointConflict:
+            return None
+
+    def _requires_revalidation(self, event: SensoryEvent, *, now: datetime) -> bool:
+        return (
+            now - event.occurred_at > self._observation_freshness
+            or (self._recovery_started_at is not None
+                and event.occurred_at < self._recovery_started_at)
+        )
+
+    def claim_next_revalidation(self, *, now: datetime) -> SensoryDecisionClaim | None:
+        grouped = self._group_waiting_history(now=now)
+        states = [self._timeline.load(grouped)] if grouped else self._timeline.list_checkpoints(
+            thread_prefix="sensory:home-assistant:",
+            phases=("will_waiting_revalidation", "will_revalidation_claimed"),
+            statuses=("waiting_for_proof", "active", "failed"),
+            updated_before=now, limit=64, oldest_first=True,
+        )
+        # New arrivals must not permanently hide older recovery work outside
+        # the bounded page. Fresh observations keep their separate selection.
+        for state in states:
+            if state.status == "active":
+                if state.deadline is None or state.deadline > now:
+                    continue
+                try:
+                    state = self._timeline.record_recovery_failure(
+                        thread_id=state.thread_id, expected_revision=state.revision,
+                        checkpoint_id=f"{state.thread_id}:revalidation-expired:{state.revision + 1}",
+                        operation_id=state.operation_id,
+                        error_text="sensory source read lease expired", occurred_at=now,
+                    )
+                except CheckpointConflict:
+                    continue
+                if state.status == "needs_help":
+                    continue
+            original = self._event_from_thread(state.thread_id)
             try:
                 claimed = self._timeline.transition(
-                    thread_id=state.thread_id,
-                    expected_revision=state.revision,
-                    checkpoint_id=f"{state.thread_id}:will-claimed:{state.revision + 1}",
-                    operation_id=state.operation_id,
-                    phase="will_claimed",
-                    status="active",
-                    event_type=(
-                        "WILL_EVALUATION_CLAIMED"
-                        if state.phase == "sensory_observed"
-                        else "WILL_EVALUATION_RECLAIMED"
-                    ),
-                    occurred_at=now,
-                    deadline=now + timedelta(seconds=self._decision_lease_seconds),
-                    data={
-                        "source_event_id": event.source_event_id,
-                        "shadow_mode": True,
-                    },
-                    retry_count=state.retry_count,
-                    last_error_fingerprint=state.last_error_fingerprint,
+                    thread_id=state.thread_id, expected_revision=state.revision,
+                    checkpoint_id=f"{state.thread_id}:revalidation-claimed:{state.revision + 1}",
+                    operation_id=state.operation_id, phase="will_revalidation_claimed",
+                    status="active", event_type="SENSORY_REVALIDATION_CLAIMED",
+                    occurred_at=now, deadline=now + timedelta(seconds=self._decision_lease_seconds),
+                    data={"source_event_id": original.source_event_id},
+                    retry_count=state.retry_count, last_error_fingerprint=state.last_error_fingerprint,
                 )
             except CheckpointConflict:
                 continue
             return SensoryDecisionClaim(
-                event,
-                state.thread_id,
-                state.operation_id or event.source_event_id,
-                claimed.revision,
-                claimed.retry_count,
+                original, state.thread_id, state.operation_id or original.source_event_id,
+                claimed.revision, claimed.retry_count,
             )
         return None
+
+    def _group_waiting_history(self, *, now: datetime) -> str | None:
+        """Assign bounded same-source history to one durable decision owner.
+
+        No observation is deleted or judged here. The ordinary revalidation,
+        model-start fence and delivery loop handle the resulting group thread.
+        """
+        if self._historical_group_size == 1:
+            return None
+        scope = self._timeline._scope_value
+        checkpoints, events = operational_checkpoints, operational_events
+        with self._timeline._engine.begin() as connection:
+            self._timeline._scope(connection)
+            query = sa.select(
+                checkpoints.c.thread_id, checkpoints.c.revision, checkpoints.c.operation_id,
+                checkpoints.c.retry_count, events.c.payload, events.c.payload_sha256,
+                events.c.occurred_at,
+            ).join(events, sa.and_(
+                events.c.tenant_id == checkpoints.c.tenant_id,
+                events.c.installation_id == checkpoints.c.installation_id,
+                events.c.thread_id == checkpoints.c.thread_id, events.c.sequence == 1,
+            )).where(
+                checkpoints.c.tenant_id == scope.tenant_id,
+                checkpoints.c.installation_id == scope.installation_id,
+                checkpoints.c.phase == "will_waiting_revalidation",
+                checkpoints.c.status == "waiting_for_proof",
+                checkpoints.c.updated_at <= now,
+                events.c.event_type == "SENSORY_EVENT_OBSERVED",
+                events.c.payload["data"]["event_type"].astext == "state_changed",
+                events.c.occurred_at < now - self._observation_freshness,
+            ).order_by(events.c.occurred_at, checkpoints.c.thread_id)
+            seed = connection.execute(query.limit(1).with_for_update(
+                of=checkpoints, skip_locked=True,
+            )).mappings().first()
+            if seed is None:
+                return None
+            original = seed["payload"]["data"]
+            entity = original["payload"].get("entity_id")
+            if not isinstance(entity, str) or not entity:
+                return None
+            rows = connection.execute(query.where(
+                events.c.payload["data"]["source"].astext == original["source"],
+                events.c.payload["data"]["payload"]["entity_id"].astext == entity,
+            ).limit(self._historical_group_size).with_for_update(
+                of=checkpoints, skip_locked=True,
+            )).mappings().all()
+            selected, members = [], []
+            for row in rows:
+                if canonical_sha256(row["payload"]) != bytes(row["payload_sha256"]).hex():
+                    raise RuntimeError("historical observation hash differs")
+                member = {**row["payload"]["data"], "occurred_at": row["occurred_at"].isoformat()}
+                # Bound context without dropping fields or truncating history.
+                if len(canonical_json_bytes([*members, member])) > 6144:
+                    break
+                selected.append(row)
+                members.append(member)
+            if len(members) < 2:
+                return None
+            digest = canonical_sha256({"tenant": str(scope.tenant_id),
+                "installation": str(scope.installation_id), "members": members})
+            source_id = f"home-assistant:history:{digest}"
+            thread = f"sensory:{source_id}"
+            insert_initial_timeline_thread(
+                connection, scope, thread_id=thread, checkpoint_id=f"{thread}:grouped",
+                operation_id=source_id, occurred_at=now, phase="will_waiting_revalidation",
+                status="waiting_for_proof", event_type="SENSORY_EVENT_OBSERVED",
+                data={"source": original["source"], "source_event_id": source_id,
+                      "event_type": "historical_observation_batch",
+                      "payload": {"entity_id": entity, "historical_observations": members}},
+            )
+            for row in selected:
+                transition_timeline_thread(
+                    connection, scope, thread_id=row["thread_id"], expected_revision=row["revision"],
+                    checkpoint_id=f"{row['thread_id']}:grouped:{row['revision'] + 1}",
+                    operation_id=row["operation_id"], occurred_at=now,
+                    phase="will_grouped", status="waiting_for_proof",
+                    event_type="SENSORY_EVENT_GROUPED", data={"group_thread_id": thread},
+                    retry_count=row["retry_count"],
+                )
+            return thread
+
+    def complete_revalidation(
+        self, claim: SensoryDecisionClaim, event: SensoryEvent, *, now: datetime
+    ) -> None:
+        if (event.source != claim.event.source
+                or event.source_event_id != claim.event.source_event_id
+                or event.event_type != "observation_revalidated" or event.occurred_at > now):
+            raise ValueError("revalidated observation identity or timestamp differs")
+        state = self._timeline.load(claim.thread_id)
+        if (state.phase != "will_revalidation_claimed" or state.status != "active"
+                or state.revision != claim.revision
+                or state.deadline is None or state.deadline <= now):
+            raise CheckpointConflict("sensory revalidation claim is stale")
+        if event.occurred_at < state.updated_at:
+            raise ValueError("revalidated observation predates its source claim")
+        self._timeline.transition(
+            thread_id=claim.thread_id, expected_revision=claim.revision,
+            checkpoint_id=f"{claim.thread_id}:revalidated:{claim.revision + 1}",
+            operation_id=claim.operation_id, phase="will_revalidated", status="completed",
+            event_type="SENSORY_EVENT_REVALIDATED", occurred_at=now,
+            data={"source": event.source, "source_event_id": event.source_event_id,
+                  "event_type": event.event_type, "payload": event.payload},
+            retry_count=claim.retry_count, last_error_fingerprint=None,
+        )
+
+    def _restore_cost_waits(self, *, now: datetime, admission_open: bool) -> None:
+        """Reclassify proven pre-dispatch legacy failures without executing work.
+
+        Preserve the original event, all failed attempts and their retry count;
+        never touch expression/delivery recovery. When admission has reopened,
+        require current relevance evidence rather than replay the observation.
+        A history containing any other failure or effect is not auto-repaired.
+        """
+        states = self._timeline.list_checkpoints(
+            thread_prefix="sensory:home-assistant:",
+            phases=("will_claimed",),
+            statuses=("failed", "needs_help"),
+            updated_before=now,
+            last_error_fingerprint=_LEGACY_COST_BLOCK_FINGERPRINT,
+            limit=64,
+        )
+        for candidate in states:
+            state = self._timeline.load(candidate.thread_id)
+            if state != candidate:
+                continue
+            events = self._timeline.events(state.thread_id)
+            if not events or events[0].event_type != "SENSORY_EVENT_OBSERVED":
+                continue
+            safe_history = True
+            for event in events[1:]:
+                if event.event_type in {"WILL_EVALUATION_CLAIMED", "WILL_EVALUATION_RECLAIMED"}:
+                    continue
+                data = event.payload.get("data")
+                if (event.event_type not in {"RECOVERY_FAILED", "RECOVERY_NEEDS_HELP"}
+                        or not isinstance(data, dict)
+                        or data.get("error_fingerprint") != _LEGACY_COST_BLOCK_FINGERPRINT):
+                    safe_history = False
+                    break
+            if not safe_history:
+                continue
+            original = self._event_from_thread(state.thread_id)
+            claim = SensoryDecisionClaim(
+                original, state.thread_id, state.operation_id or original.source_event_id,
+                state.revision, state.retry_count,
+            )
+            try:
+                if admission_open:
+                    self._require_revalidation(claim, now=now)
+                else:
+                    self.wait_for_admission(claim, "unverified_model_cost", now=now)
+            except CheckpointConflict:
+                # Another worker won; do not create a replacement attempt.
+                continue
+
+    def _require_revalidation(self, claim: SensoryDecisionClaim, *, now: datetime) -> None:
+        self._timeline.transition(
+            thread_id=claim.thread_id,
+            expected_revision=claim.revision,
+            checkpoint_id=f"{claim.thread_id}:will-revalidation:{claim.revision + 1}",
+            operation_id=claim.operation_id,
+            phase="will_waiting_revalidation",
+            status="waiting_for_proof",
+            event_type="WILL_REVALIDATION_REQUIRED",
+            occurred_at=now,
+            data={
+                "reason": "historical_observation_requires_current_relevance",
+                "source_event_id": claim.event.source_event_id,
+            },
+            retry_count=claim.retry_count,
+            last_error_fingerprint=None,
+        )
+
+    def wait_for_admission(
+        self, claim: SensoryDecisionClaim, reason: AutonomousAdmissionBlocker,
+        *, now: datetime,
+    ) -> None:
+        if reason != "unverified_model_cost":
+            raise ValueError("autonomous admission blocker is invalid")
+        self._timeline.transition(
+            thread_id=claim.thread_id,
+            expected_revision=claim.revision,
+            checkpoint_id=f"{claim.thread_id}:will-waiting:{claim.revision + 1}",
+            operation_id=claim.operation_id,
+            phase="will_waiting_admission",
+            status="waiting_for_proof",
+            event_type="WILL_ADMISSION_BLOCKED",
+            occurred_at=now,
+            data={"reason": reason, "source_event_id": claim.event.source_event_id},
+            retry_count=claim.retry_count,
+            last_error_fingerprint=None,
+        )
 
     def complete(
         self,
@@ -144,12 +490,13 @@ class PostgresSensoryEventStore:
                 "Een recente proactieve melding dekt deze gebeurtenis; cooldown actief.",
                 0,
                 "eva:proactive-cooldown",
+                usage=decision.usage,
             )
         expression_pending = decision.disposition == "respond"
-        self._timeline.transition(
+        transition = dict(
             thread_id=claim.thread_id,
             expected_revision=claim.revision,
-            checkpoint_id=f"{claim.thread_id}:will-decided",
+            checkpoint_id=f"{claim.thread_id}:will-decided:{claim.revision + 1}",
             operation_id=claim.operation_id,
             phase="expression_pending" if expression_pending else "will_decided",
             status="completed",
@@ -168,10 +515,124 @@ class PostgresSensoryEventStore:
                 "shadow_mode": True,
                 "source_event_id": claim.event.source_event_id,
                 "urgency": decision.urgency,
+                "usage": None if decision.usage is None else asdict(decision.usage),
             },
             retry_count=0,
             last_error_fingerprint=None,
         )
+        original = self._event_from_thread(claim.thread_id)
+        if original.event_type != "historical_observation_batch":
+            self._timeline.transition(**transition)
+            return
+        # Decision and member coverage commit together. Only the group can
+        # prepare an expression or account usage; members never send separately.
+        scope = self._timeline._scope_value
+        with self._timeline._engine.begin() as connection:
+            self._timeline._scope(connection)
+            transition_timeline_thread(connection, scope, **transition)
+            self._complete_group_members(connection, original, group_thread_id=claim.thread_id,
+                decision_revision=claim.revision + 1, disposition=decision.disposition, now=now)
+
+    def _complete_group_members(
+        self, connection: sa.Connection, original: SensoryEvent, *, group_thread_id: str,
+        decision_revision: int, disposition: str, now: datetime,
+    ) -> None:
+        """Cover members under the already-locked root, without usage or delivery."""
+        scope = self._timeline._scope_value
+        for member in original.payload["historical_observations"]:
+            thread = f"sensory:{member['source_event_id']}"
+            row = connection.execute(sa.select(operational_checkpoints).where(
+                operational_checkpoints.c.tenant_id == scope.tenant_id,
+                operational_checkpoints.c.installation_id == scope.installation_id,
+                operational_checkpoints.c.thread_id == thread,
+            ).with_for_update()).mappings().one()
+            last = connection.execute(sa.select(operational_events.c.payload,
+                operational_events.c.payload_sha256).where(
+                operational_events.c.tenant_id == scope.tenant_id,
+                operational_events.c.installation_id == scope.installation_id,
+                operational_events.c.thread_id == thread,
+            ).order_by(operational_events.c.sequence.desc()).limit(1)).mappings().one()
+            if canonical_sha256(last["payload"]) != bytes(last["payload_sha256"]).hex():
+                raise RuntimeError("historical member hash differs")
+            data = last["payload"]["data"]
+            if (row["phase"] not in {"will_grouped", "will_group_decided"}
+                    or data.get("group_thread_id") != group_thread_id):
+                raise CheckpointConflict("historical group membership differs")
+            if (row["phase"] == "will_group_decided"
+                    and data.get("group_decision_revision") == decision_revision):
+                continue
+            transition_timeline_thread(
+                connection, scope, thread_id=thread, expected_revision=row["revision"],
+                checkpoint_id=f"{thread}:group-decided:{row['revision'] + 1}",
+                operation_id=row["operation_id"], phase="will_group_decided", status="completed",
+                event_type="WILL_GROUP_DECIDED", occurred_at=now,
+                data={"group_thread_id": group_thread_id, "group_decision_revision": decision_revision,
+                      "disposition": disposition, "usage_accounting": "group_only"}, retry_count=0,
+            )
+
+    def _restore_group_completions(self, *, now: datetime) -> None:
+        """Reconcile roots completed by a pre-grouping version during rollback.
+
+        Only recorded decisions can cover members. Root state/usage/delivery are
+        never rewritten, and uncertain or revalidating roots are not accepted.
+        """
+        scope = self._timeline._scope_value
+        child = operational_checkpoints.alias("group_child")
+        member = operational_events.alias("group_member")
+        root = operational_checkpoints.alias("group_root")
+        decision = operational_events.alias("group_decision")
+        newer = operational_events.alias("newer_decision")
+        decision_types = ("WILL_DECIDED", "PROACTIVE_EXPRESSION_PREPARED")
+        query = sa.select(root.c.thread_id, root.c.revision, decision.c.payload,
+            decision.c.payload_sha256).select_from(child.join(member, sa.and_(
+                child.c.tenant_id == member.c.tenant_id, child.c.installation_id == member.c.installation_id,
+                child.c.thread_id == member.c.thread_id, child.c.revision == member.c.sequence,
+            )).join(root, sa.and_(
+                root.c.tenant_id == child.c.tenant_id, root.c.installation_id == child.c.installation_id,
+                root.c.thread_id == member.c.payload["data"]["group_thread_id"].astext,
+            )).join(decision, sa.and_(
+                decision.c.tenant_id == root.c.tenant_id, decision.c.installation_id == root.c.installation_id,
+                decision.c.thread_id == root.c.thread_id,
+                decision.c.event_type.in_(decision_types),
+            ))).where(
+                child.c.tenant_id == scope.tenant_id, child.c.installation_id == scope.installation_id,
+                child.c.phase.in_(("will_grouped", "will_group_decided")),
+                root.c.phase.in_(("will_decided", "expression_pending", "expression_claimed",
+                                  "expression_delivered", "expression_ambiguous")),
+                root.c.updated_at <= now,
+                sa.func.coalesce(member.c.payload["data"]["group_decision_revision"].astext, "")
+                    != decision.c.payload["checkpoint"]["revision"].astext,
+                ~sa.exists(sa.select(1).where(
+                    newer.c.tenant_id == root.c.tenant_id, newer.c.installation_id == root.c.installation_id,
+                    newer.c.thread_id == root.c.thread_id, newer.c.event_type.in_(decision_types),
+                    newer.c.sequence > decision.c.sequence,
+                )),
+            ).distinct().order_by(root.c.thread_id).limit(16)
+        with self._timeline._engine.begin() as connection:
+            self._timeline._scope(connection)
+            candidates = connection.execute(query).mappings().all()
+        for candidate in candidates:
+            payload = candidate["payload"]
+            if canonical_sha256(payload) != bytes(candidate["payload_sha256"]).hex():
+                raise RuntimeError("historical group decision hash differs")
+            disposition = payload["data"].get("disposition")
+            if disposition not in {"silence", "respond"}:
+                raise RuntimeError("historical group decision is malformed")
+            original = self._event_from_thread(candidate["thread_id"])
+            if original.event_type != "historical_observation_batch":
+                raise RuntimeError("historical group root is malformed")
+            with self._timeline._engine.begin() as connection:
+                self._timeline._scope(connection)
+                revision = connection.execute(sa.select(operational_checkpoints.c.revision).where(
+                    operational_checkpoints.c.tenant_id == scope.tenant_id,
+                    operational_checkpoints.c.installation_id == scope.installation_id,
+                    operational_checkpoints.c.thread_id == candidate["thread_id"],
+                ).with_for_update()).scalar_one()
+                if revision != candidate["revision"]:
+                    continue  # Root advanced after inspection; retry the read later.
+                self._complete_group_members(connection, original,
+                    group_thread_id=candidate["thread_id"],
+                    decision_revision=payload["checkpoint"]["revision"], disposition=disposition, now=now)
 
     def claim_next_expression(
         self, *, now: datetime
@@ -215,6 +676,18 @@ class PostgresSensoryEventStore:
             if state.status == "failed" and state.retry_count >= 3:
                 continue
             prepared = self._prepared_expression(state.thread_id)
+            event = self._event_from_thread(state.thread_id, latest=True)
+            if self._requires_revalidation(event, now=now):
+                try:
+                    self._require_revalidation(
+                        SensoryDecisionClaim(
+                            event, state.thread_id, state.operation_id or event.source_event_id,
+                            state.revision, state.retry_count,
+                        ), now=now,
+                    )
+                except CheckpointConflict:
+                    pass
+                continue
             try:
                 claimed = self._timeline.transition(
                     thread_id=state.thread_id,
@@ -336,6 +809,23 @@ class PostgresSensoryEventStore:
         *,
         now: datetime,
     ) -> None:
+        state = self._timeline.load(claim.thread_id)
+        if isinstance(error, AutonomousUsageUncertain) or state.phase == "will_model_started":
+            # A new request cannot recover the missing measurement of this one.
+            # Keep the uncertainty durable instead of spending another attempt.
+            self._timeline.transition(
+                thread_id=claim.thread_id,
+                expected_revision=claim.revision,
+                checkpoint_id=f"{claim.thread_id}:usage-uncertain:{claim.revision + 1}",
+                operation_id=claim.operation_id,
+                phase="will_usage_uncertain", status="needs_help",
+                event_type="WILL_USAGE_UNCERTAIN", occurred_at=now,
+                data={"reason": "autonomous_provider_usage_unverified", "usage": None,
+                      "source_event_id": claim.event.source_event_id},
+                retry_count=claim.retry_count + 1,
+                last_error_fingerprint=hashlib.sha256(b"autonomous_provider_usage_unverified").hexdigest(),
+            )
+            return
         self._timeline.record_recovery_failure(
             thread_id=claim.thread_id,
             expected_revision=claim.revision,
@@ -345,11 +835,17 @@ class PostgresSensoryEventStore:
             occurred_at=now,
         )
 
-    def _event_from_thread(self, thread_id: str) -> SensoryEvent:
+    def _event_from_thread(self, thread_id: str, *, latest: bool = False) -> SensoryEvent:
         events = self._timeline.events(thread_id)
         if not events or events[0].event_type != "SENSORY_EVENT_OBSERVED":
             raise RuntimeError("sensory event admission is missing")
-        data = events[0].payload.get("data")
+        observation = events[0]
+        if latest:
+            observation = next(
+                (event for event in reversed(events) if event.event_type == "SENSORY_EVENT_REVALIDATED"),
+                observation,
+            )
+        data = observation.payload.get("data")
         if not isinstance(data, dict):
             raise RuntimeError("sensory event admission is malformed")
         payload = data.get("payload")
@@ -367,7 +863,7 @@ class PostgresSensoryEventStore:
             source,
             source_event_id,
             event_type,
-            events[0].occurred_at,
+            observation.occurred_at,
             payload,
         )
 

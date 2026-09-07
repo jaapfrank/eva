@@ -12,6 +12,7 @@ from urllib.parse import urlsplit, urlunsplit
 from websockets.sync.client import connect
 
 from eva.application.sensory import SensoryEvent
+from eva.adapters.connectors.home_assistant import HomeAssistantConfig, HomeAssistantToolAdapter
 from eva.contracts.canonical_json import canonical_json_bytes
 
 
@@ -42,6 +43,42 @@ class HomeAssistantEventStream:
         )
         self._token = token
         self._domains = frozenset(domains)
+        self._states = HomeAssistantToolAdapter(HomeAssistantConfig(base_url, token))
+
+    def revalidate(self, event: SensoryEvent, *, now: datetime) -> SensoryEvent:
+        """Read only the admitted entity; retain history separately from current evidence."""
+        entity_id = event.payload.get("entity_id")
+        if (event.source != "home_assistant" or not isinstance(entity_id, str)
+                or entity_id.split(".", 1)[0] not in self._domains
+                or now.tzinfo is None or now < event.occurred_at):
+            raise ValueError("Home Assistant revalidation target is not admitted")
+        state = self._states.read_entity_state(entity_id=entity_id)
+        value = state.get("state")
+        last_updated = state.get("last_updated")
+        if (not isinstance(value, str) or not value or value in {"unknown", "unavailable"}
+                or not isinstance(last_updated, str)):
+            raise RuntimeError("Home Assistant current state is unavailable")
+        updated = datetime.fromisoformat(last_updated.replace("Z", "+00:00"))
+        if updated.tzinfo is None or updated > now:
+            raise RuntimeError("Home Assistant current state timestamp is invalid")
+        attributes = state.get("attributes")
+        payload = {
+            "entity_id": entity_id,
+            "current_state": value,
+            "current_state_last_updated": last_updated,
+            "checked_at": now.isoformat(),
+            "historical_observation": {
+                "occurred_at": event.occurred_at.isoformat(),
+                "event_type": event.event_type,
+                "payload": event.payload,
+            },
+        }
+        for key in ("device_class", "friendly_name", "unit_of_measurement"):
+            value = attributes.get(key) if isinstance(attributes, dict) else None
+            payload[key] = value if isinstance(value, str) else None
+        return SensoryEvent(
+            event.source, event.source_event_id, "observation_revalidated", now, payload,
+        )
 
     def listen(
         self,

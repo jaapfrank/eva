@@ -3,9 +3,12 @@
 from __future__ import annotations
 
 from datetime import UTC, datetime
-from uuid import NAMESPACE_URL, uuid5
+from typing import Callable
+from uuid import NAMESPACE_URL, UUID, uuid5
 
+import sqlalchemy as sa
 from sqlalchemy.engine import Engine
+from eva.adapters.postgres.current_catalog import metadata
 
 from eva.adapters.postgres.operational_timeline import (
     CheckpointConflict,
@@ -19,6 +22,47 @@ from eva.application.telegram_pairing import (
 )
 from eva.application.telegram_ingress import TelegramPrincipalBindings
 from eva.contracts.base import JsonValue
+
+
+class PostgresPrivateTelegramRecipient:
+    """Combine current owner authority with the server-trusted private Telegram route."""
+
+    def __init__(self, engine: Engine, scope: TimelineScope, *, owner: UUID,
+                 binding: UUID, bindings: Callable[[], TelegramPrincipalBindings]) -> None:
+        self._engine, self._scope = engine, scope
+        self._owner, self._binding, self._bindings = owner, binding, bindings
+
+    def current_chat_id(self, *, now: datetime) -> str:
+        if now.tzinfo is None:
+            raise ValueError("recipient check requires an aware timestamp")
+        alias = self._bindings().private_bridge_principal(
+            principal_id=str(self._owner), principal_binding_id=self._binding,
+        )
+        if alias is None:
+            raise RuntimeError("private Telegram owner binding is unavailable")
+        bindings = metadata.tables["eva_core.principal_bindings"]
+        people = metadata.tables["eva_core.principals"]
+        with self._engine.begin() as connection:
+            connection.exec_driver_sql("SET TRANSACTION READ ONLY")
+            PostgresOperationalTimeline(self._engine, self._scope)._scope(connection)
+            owner = connection.scalar(sa.select(bindings.c.principal_id).join(
+                people, sa.and_(people.c.tenant_id == bindings.c.tenant_id,
+                                people.c.principal_id == bindings.c.principal_id),
+            ).where(
+                bindings.c.tenant_id == self._scope.tenant_id,
+                bindings.c.principal_binding_id == self._binding,
+                bindings.c.principal_id == self._owner,
+                bindings.c.status == "verified", people.c.status == "active",
+                sa.or_(
+                    sa.and_(bindings.c.provider_id == "telegram", bindings.c.channel_id == "private"),
+                    sa.and_(bindings.c.provider_id == "eva-dashboard", bindings.c.channel_id == "owner-local"),
+                ),
+                bindings.c.verified_at <= now,
+                bindings.c.retention_until > now, people.c.retention_until > now,
+            ))
+        if owner != self._owner:
+            raise RuntimeError("private Telegram owner binding is not current")
+        return alias.removeprefix("telegram:")
 
 
 class PostgresTelegramPairingStore:

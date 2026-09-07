@@ -16,6 +16,7 @@ from eva.adapters.connectors.home_assistant import (
     HomeAssistantToolAdapter,
 )
 from eva.adapters.connectors.home_assistant_events import HomeAssistantEventStream
+from eva.application.sensory import SensoryEvent
 from eva.adapters.connectors.home_assistant_admin import HomeAssistantAdminAdapter
 from eva.adapters.connectors.home_assistant_hacs import HomeAssistantHacsAdapter
 from eva.adapters.connectors.home_assistant_advanced_tasks import (
@@ -461,6 +462,68 @@ def test_group_history_uses_all_off_and_discards_short_stagger_noise(
             "to": "off",
         }
     ]
+
+
+@pytest.mark.parametrize("current_value", ["off", "on"])
+def test_revalidation_reads_only_current_admitted_entity(monkeypatch, current_value):
+    from io import BytesIO
+    from eva.adapters.connectors import home_assistant
+
+    now = datetime(2026, 9, 7, 15, 0, tzinfo=UTC)
+    old = SensoryEvent("home_assistant", "home-assistant:old", "state_changed",
+                       now - timedelta(days=2), {"entity_id": "binary_sensor.door", "new_state": "on"})
+    calls = []
+
+    def request(req, *, timeout):
+        calls.append((req.full_url, req.get_method(), timeout))
+        assert req.get_header("Authorization") == "Bearer fixture-token"
+        return BytesIO(json.dumps({
+            "entity_id": "binary_sensor.door", "state": current_value,
+            "last_updated": (now - timedelta(seconds=4)).isoformat(),
+            "attributes": {"friendly_name": "Door", "device_class": "door", "vendor_secret": "not retained"},
+        }).encode())
+
+    monkeypatch.setattr(home_assistant.urllib_request, "urlopen", request)
+    source = HomeAssistantEventStream(base_url="http://ha.test", token="fixture-token", admitted_domains=("binary_sensor",))
+    checked = source.revalidate(old, now=now)
+    assert calls == [("http://ha.test/api/states/binary_sensor.door", "GET", 5)]
+    assert checked.source_event_id == old.source_event_id
+    assert checked.occurred_at == now
+    assert checked.event_type == "observation_revalidated"
+    assert checked.payload["current_state"] == current_value
+    assert checked.payload["historical_observation"]["occurred_at"] == old.occurred_at.isoformat()
+    assert "vendor_secret" not in json.dumps(checked.payload)
+
+
+@pytest.mark.parametrize("entity,source_name", [
+    ("light.kitchen", "home_assistant"), ("binary_sensor.door/../../config", "home_assistant"),
+    ("binary_sensor.door", "other-provider"),
+])
+def test_revalidation_rejects_targets_before_network(monkeypatch, entity, source_name):
+    from eva.adapters.connectors import home_assistant
+
+    monkeypatch.setattr(home_assistant.urllib_request, "urlopen", lambda *a, **k: pytest.fail("network must not run"))
+    now = datetime(2026, 9, 7, 15, 0, tzinfo=UTC)
+    source = HomeAssistantEventStream(base_url="http://ha.test", token="fixture-token", admitted_domains=("binary_sensor",))
+    event = SensoryEvent(source_name, "home-assistant:bad", "state_changed", now, {"entity_id": entity})
+    with pytest.raises(ValueError):
+        source.revalidate(event, now=now)
+
+
+@pytest.mark.parametrize("state", [
+    {"state": "unknown", "last_updated": "2026-09-07T14:00:00Z"},
+    {"state": "unavailable", "last_updated": "2026-09-07T14:00:00Z"},
+    {"state": "on"},
+    {"state": "on", "last_updated": "2026-09-07T14:00:00"},
+    {"state": "on", "last_updated": "2026-09-08T14:00:00Z"},
+])
+def test_revalidation_does_not_turn_unknown_or_future_state_into_proof(monkeypatch, state):
+    now = datetime(2026, 9, 7, 15, 0, tzinfo=UTC)
+    source = HomeAssistantEventStream(base_url="http://ha.test", token="fixture-token", admitted_domains=("binary_sensor",))
+    monkeypatch.setattr(source._states, "read_entity_state", lambda **kw: state)
+    event = SensoryEvent("home_assistant", "home-assistant:bad-state", "state_changed", now, {"entity_id": "binary_sensor.door"})
+    with pytest.raises(RuntimeError):
+        source.revalidate(event, now=now)
 
 
 def test_state_changed_frame_is_minimized_and_stably_identified() -> None:

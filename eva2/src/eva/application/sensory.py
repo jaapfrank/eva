@@ -5,7 +5,7 @@ from __future__ import annotations
 from dataclasses import dataclass
 from datetime import datetime
 import threading
-from typing import Callable, Protocol
+from typing import Callable, Protocol, runtime_checkable
 
 from eva.contracts.base import JsonValue, validate_json_value
 
@@ -36,6 +36,13 @@ class SensoryEventSourcePort(Protocol):
 
 class SensoryEventStorePort(Protocol):
     def retain(self, event: SensoryEvent) -> str: ...
+
+
+@runtime_checkable
+class SensoryEventRevalidatorPort(Protocol):
+    """Read current source evidence; never replay the historical external event."""
+
+    def revalidate(self, event: SensoryEvent, *, now: datetime) -> SensoryEvent: ...
 
 
 class SensoryIngestionWorker:
@@ -72,4 +79,4 @@ class SensoryIngestionWorker:
         self._source.listen(self._stop, self._store.retain)
 
 
-__all__ = ["SensoryEvent", "SensoryIngestionWorker"]
+__all__ = ["SensoryEvent", "SensoryEventRevalidatorPort", "SensoryIngestionWorker"]

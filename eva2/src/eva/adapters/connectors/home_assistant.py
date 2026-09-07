@@ -580,6 +580,17 @@ class HomeAssistantToolAdapter:
         validate_json_value(result)
         return result
 
+    def read_entity_state(self, *, entity_id: str) -> dict[str, JsonValue]:
+        """Read one entity; the caller owns which domains it admits."""
+        if _ENTITY.fullmatch(entity_id) is None:
+            raise ValueError("Home Assistant state entity is invalid")
+        payload = self._request_json_sync(
+            "GET", f"/api/states/{parse.quote(entity_id, safe='.')}", None,
+        )
+        if not isinstance(payload, dict) or payload.get("entity_id") != entity_id:
+            raise RuntimeError("Home Assistant returned an invalid state object")
+        return payload
+
     def _light_catalog_sync(self) -> list[dict[str, Any]]:
         return self._state_catalog_sync()
 

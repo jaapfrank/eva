@@ -5,7 +5,9 @@ from __future__ import annotations
 from datetime import UTC, datetime, timedelta
 import hashlib
 import re
-from uuid import NAMESPACE_URL, uuid5
+from uuid import NAMESPACE_URL, UUID, uuid5
+
+import sqlalchemy as sa
 
 from sqlalchemy.engine import Engine
 
@@ -30,6 +32,123 @@ from eva.application.memory import MemoryRetentionReceipt
 from eva.application.memory_audience import TelegramGroupConsentReference
 from eva.application.telegram_group_consent import TelegramGroupConsent
 from eva.application.telegram_pairing import TelegramDynamicBinding
+from eva.application.telegram_ingress import TelegramPrincipalBindings
+from eva.application.people_memory_overview import (
+    MemorySource, MemorySourcePage, memory_source_page_request,
+)
+from eva.adapters.postgres.current_catalog import metadata
+from eva.adapters.postgres.operational_timeline import (
+    operational_events, operational_checkpoints, external_timeline_scope,
+)
+from eva.contracts.canonical_json import canonical_sha256
+
+
+class PostgresOwnerMemorySources:
+    """A bounded projection of existing sources, never a second memory store."""
+
+    def __init__(self, engine: Engine, *, tenant_id: str, installation_id: str,
+                 owner: UUID, binding: UUID, authority_scope: TimelineScope,
+                 telegram_bindings: TelegramPrincipalBindings | None = None) -> None:
+        self._engine = engine
+        self._tenant = tenant_id
+        self._installation = installation_id
+        self._owner = owner
+        self._binding = binding
+        self._bindings = telegram_bindings
+        self._authority_scope = authority_scope
+        self._scope = external_timeline_scope(tenant_id, installation_id, "memory scope required")
+
+    def page(self, *, now: datetime, limit: int = 20,
+             before: str | None = None) -> MemorySourcePage:
+        cursor = memory_source_page_request(limit, before)
+        if now.tzinfo is None or now.utcoffset() != timedelta(0) or now.microsecond:
+            raise ValueError("memory source time must be whole-second UTC")
+        stamp = now.strftime("%Y-%m-%dT%H:%M:%SZ")
+        bindings = metadata.tables["eva_core.principal_bindings"]
+        people = metadata.tables["eva_core.principals"]
+        e, c = operational_events.c, operational_checkpoints.c
+        data = e.payload["data"]
+        audience = data["audience"]
+        with self._engine.connect().execution_options(isolation_level="REPEATABLE READ") as conn:
+            with conn.begin():
+                conn.exec_driver_sql("SET TRANSACTION READ ONLY")
+                # Local dashboard authority and conversation storage have distinct
+                # namespaces on an existing installation. Never infer one from the other.
+                PostgresOperationalTimeline(self._engine, self._authority_scope)._scope(conn)
+                authority = conn.execute(sa.select(bindings.c.principal_id, bindings.c.provider_id,
+                                                   bindings.c.channel_id).join(
+                    people, sa.and_(people.c.tenant_id == bindings.c.tenant_id,
+                                    people.c.principal_id == bindings.c.principal_id)
+                ).where(
+                    bindings.c.tenant_id == self._authority_scope.tenant_id,
+                    bindings.c.principal_binding_id == self._binding,
+                    bindings.c.principal_id == self._owner,
+                    bindings.c.status == "verified", people.c.status == "active",
+                    bindings.c.retention_until > now, people.c.retention_until > now,
+                    bindings.c.verified_at <= now,
+                )).one_or_none()
+                if authority is None or authority.principal_id != self._owner:
+                    raise PeopleMemoryOverviewError("owner memory binding is not current")
+                alias = None if self._bindings is None else self._bindings.private_bridge_principal(
+                    principal_id=str(self._owner), principal_binding_id=self._binding
+                )
+                if (authority.provider_id, authority.channel_id) not in {
+                    ("telegram", "private"), ("eva-dashboard", "owner-local"),
+                }:
+                    raise PeopleMemoryOverviewError("owner bridge provider is not verified")
+                owners = [str(self._owner)] + ([alias] if alias else [])
+                private = sa.or_(
+                    sa.and_(audience["kind"].astext == "private_person",
+                            audience["principal_id"].astext == data["principal_id"].astext),
+                    sa.not_(data.has_key("audience")),
+                )
+                owned = data["principal_id"].astext == str(self._owner)
+                if alias:
+                    owned = sa.or_(owned, sa.and_(data["principal_id"].astext == alias,
+                                                  data["conversation_id"].astext == alias))
+                query = sa.select(e.event_id, e.occurred_at, e.payload, e.payload_sha256,
+                                  c.phase).select_from(operational_events.join(
+                    operational_checkpoints, sa.and_(e.tenant_id == c.tenant_id,
+                        e.installation_id == c.installation_id, e.thread_id == c.thread_id)
+                )).where(
+                    e.tenant_id == self._scope.tenant_id,
+                    e.installation_id == self._scope.installation_id,
+                    e.event_type == "MEMORY_RETAIN_QUEUED", e.sequence == 1,
+                    e.thread_id.startswith("memory-retain:"),
+                    e.occurred_at <= now, owned, private,
+                    data["tenant_id"].astext == self._tenant,
+                    data["installation_id"].astext == self._installation,
+                    sa.not_(data["conversation_id"].astext.startswith("telegram:-")),
+                    c.phase.in_(("memory_queued", "memory_retaining", "memory_retry",
+                                 "memory_retained", "memory_needs_help")),
+                    sa.or_(data["retention_until"].astext.is_(None),
+                           data["retention_until"].astext > stamp),
+                )
+                if cursor:
+                    query = query.where(sa.tuple_(e.occurred_at, e.event_id) < cursor)
+                PostgresOperationalTimeline(self._engine, self._scope)._scope(conn)
+                rows = conn.execute(query.order_by(e.occurred_at.desc(), e.event_id.desc())
+                                    .limit(limit + 1)).all()
+                sources = []
+                for row in rows[:limit]:
+                    if canonical_sha256(row.payload) != bytes(row.payload_sha256).hex():
+                        raise PeopleMemoryOverviewError("memory source hash differs")
+                    doc = conversation_memory_document_from_outbox_data(row.payload["data"])
+                    if (doc.principal_id not in owners or doc.audience.kind != "private_person"
+                            or doc.audience.principal_id != doc.principal_id
+                            or doc.tenant_id != self._tenant or doc.installation_id != self._installation
+                            or (doc.retention_until is not None and doc.retention_until <= stamp)):
+                        raise PeopleMemoryOverviewError("memory source scope differs")
+                    state = ("retained" if row.phase == "memory_retained" else
+                             "needs_help" if row.phase == "memory_needs_help" else "pending")
+                    sources.append(MemorySource(str(row.event_id),
+                        row.occurred_at.strftime("%Y-%m-%dT%H:%M:%SZ"),
+                        doc.content[:2048], len(doc.content) > 2048, state))
+                next_cursor = None
+                if len(rows) > limit:
+                    last = sources[-1]
+                    next_cursor = f"{last.occurred_at}|{last.source_id}"
+                return MemorySourcePage(tuple(sources), next_cursor)
 
 
 _MAX_THREADS_PER_TRACK = 256

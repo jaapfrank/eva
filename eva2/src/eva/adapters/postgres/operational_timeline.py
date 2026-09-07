@@ -410,7 +410,9 @@ class PostgresOperationalTimeline:
         phases: tuple[str, ...] = (),
         statuses: tuple[CheckpointStatus, ...] = (),
         updated_before: datetime | None = None,
+        last_error_fingerprint: str | None = None,
         limit: int = 32,
+        oldest_first: bool = False,
     ) -> tuple[CheckpointState, ...]:
         """List scoped work cursors for a background recovery worker."""
 
@@ -418,6 +420,12 @@ class PostgresOperationalTimeline:
             raise ValueError("checkpoint listing parameters are invalid")
         if updated_before is not None:
             _require_utc_second(updated_before, "updated_before")
+        if last_error_fingerprint is not None and (
+            not isinstance(last_error_fingerprint, str)
+            or len(last_error_fingerprint) != 64
+            or any(character not in "0123456789abcdef" for character in last_error_fingerprint)
+        ):
+            raise ValueError("checkpoint error fingerprint is invalid")
         statement = sa.select(operational_checkpoints).where(
             operational_checkpoints.c.tenant_id == self._scope_value.tenant_id,
             operational_checkpoints.c.installation_id
@@ -428,12 +436,18 @@ class PostgresOperationalTimeline:
             statement = statement.where(operational_checkpoints.c.phase.in_(phases))
         if statuses:
             statement = statement.where(operational_checkpoints.c.status.in_(statuses))
+        if last_error_fingerprint is not None:
+            statement = statement.where(
+                operational_checkpoints.c.last_error_fingerprint
+                == bytes.fromhex(last_error_fingerprint)
+            )
         if updated_before is not None:
             statement = statement.where(
                 operational_checkpoints.c.updated_at <= updated_before
             )
         statement = statement.order_by(
-            operational_checkpoints.c.updated_at.desc(),
+            (operational_checkpoints.c.updated_at.asc() if oldest_first
+             else operational_checkpoints.c.updated_at.desc()),
             operational_checkpoints.c.thread_id,
         ).limit(limit)
         with self._engine.connect() as connection:

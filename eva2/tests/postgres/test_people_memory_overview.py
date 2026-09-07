@@ -40,6 +40,195 @@ from eva.application.telegram_pairing import (
 )
 
 
+def test_owner_memory_sources_private_alias_pagination_erasure_and_revocation(people_memory_engine):
+    from dataclasses import replace
+    from tests.postgres.test_delegated_work_store import _seed_authority, _id
+    from eva.adapters.postgres.people_memory_overview import PostgresOwnerMemorySources
+    from eva.adapters.postgres.current_catalog import metadata
+    from eva.application.memory_audience import TelegramGroupConsentReference
+
+    label = "owner-memory-source-page"
+    scope, _, binding = _seed_authority(people_memory_engine, label)
+    owner = _id(label, "principal")
+    tenant, installation = f"tenant:{label}", f"installation:{label}"
+    bindings = TelegramPrincipalBindings((TelegramPrincipalBinding(101, str(owner), ("101",), str(binding)),))
+    outbox = PostgresMemoryOutbox(people_memory_engine, tenant_id=tenant, installation_id=installation)
+
+    def document(name, principal=None, **kwargs):
+        principal = principal or str(owner)
+        return replace(_document(name), tenant_id=tenant, installation_id=installation,
+                       principal_id=principal, conversation_id="telegram:101",
+                       audience=MemoryAudience.private_person(principal_id=principal), **kwargs)
+
+    canonical = document("canonical")
+    bridge = document("bridge", "telegram:101", content="b"*2100)
+    job = outbox.enqueue(canonical)
+    job = outbox.begin(job, now=NOW)
+    outbox.succeed(job, MemoryRetentionReceipt("bank:test", canonical.document_id,
+        hashlib.sha256(canonical.content.encode()).hexdigest()), now=NOW)
+    outbox.enqueue(bridge)
+    outbox.enqueue(document("other", "person:other"))
+    outbox.enqueue(document("expired", retention_until="2026-08-26T12:00:00Z"))
+    erased = document("erased")
+    outbox.enqueue(erased)
+    outbox.erase_content(principal_sha256=hashlib.sha256(str(owner).encode()).hexdigest(),
+                        document_id=erased.document_id, operation_sha256="ab"*32, erased_at=NOW)
+    group = replace(document("group"), conversation_id="telegram:-123",
+                    audience=MemoryAudience.telegram_group(principal_id=str(owner), group_chat_id="-123",
+                        consent_ref=TelegramGroupConsentReference(str(owner), "-123", "telegram-group-consent:source-page")))
+    outbox.enqueue(group)
+
+    def reader():
+        return PostgresOwnerMemorySources(people_memory_engine, tenant_id=tenant,
+            installation_id=installation, owner=owner, binding=binding, authority_scope=scope,
+            telegram_bindings=bindings)
+
+    page = reader().page(now=NOW, limit=1)
+    assert len(page.sources) == 1 and page.next_cursor is not None
+    second = reader().page(now=NOW, limit=1, before=page.next_cursor)
+    assert len(second.sources) == 1 and second.next_cursor is None
+    items = page.sources + second.sources
+    assert {s.excerpt for s in items} == {canonical.content, "b"*2048}
+    assert {s.retention_state for s in items} == {"retained", "pending"}
+    assert next(s for s in items if s.excerpt.startswith("b")).truncated
+    assert reader().page(now=NOW).sources == tuple(sorted(items, key=lambda s:(s.occurred_at,s.source_id), reverse=True))
+    with pytest.raises(RuntimeError, match="binding is not current"):
+        PostgresOwnerMemorySources(people_memory_engine, tenant_id=tenant,
+            installation_id=installation, owner=_id(label,"other-owner"),
+            binding=binding, authority_scope=scope, telegram_bindings=bindings).page(now=NOW)
+    other_installation = PostgresOwnerMemorySources(people_memory_engine, tenant_id=tenant,
+        installation_id="installation:other", owner=owner, binding=binding,
+        authority_scope=scope, telegram_bindings=bindings)
+    assert other_installation.page(now=NOW).sources == ()
+    table = metadata.tables["eva_core.principal_bindings"]
+    with people_memory_engine.begin() as c:
+        c.execute(sa.update(table).where(table.c.tenant_id==scope.tenant_id,
+                  table.c.principal_binding_id==binding).values(status="revoked"))
+    with pytest.raises(RuntimeError, match="binding is not current"):
+        reader().page(now=NOW)
+
+
+@pytest.mark.parametrize(
+    ("table_name", "changes", "message"),
+    [
+        ("principal_bindings", {"retention_until": "now"}, "binding is not current"),
+        ("principals", {"retention_until": "now"}, "binding is not current"),
+        ("principal_bindings", {"verified_at": "future"}, "binding is not current"),
+        ("principal_bindings", {"status": "revoked"}, "binding is not current"),
+        ("principal_bindings", {"provider_id": "other"}, "provider is not verified"),
+        ("principal_bindings", {"channel_id": "group"}, "provider is not verified"),
+    ],
+)
+def test_owner_sources_recheck_authority_between_pages(
+    people_memory_engine, table_name, changes, message
+):
+    from dataclasses import replace
+
+    from eva.adapters.postgres.current_catalog import metadata
+    from eva.adapters.postgres.people_memory_overview import PostgresOwnerMemorySources
+    from tests.postgres.test_delegated_work_store import _id, _seed_authority
+
+    label = f"owner-source-recheck-{table_name}-{next(iter(changes))}"
+    scope, _, binding = _seed_authority(people_memory_engine, label)
+    owner = _id(label, "principal")
+    tenant, installation = f"tenant:{label}", f"installation:{label}"
+    bindings = TelegramPrincipalBindings((
+        TelegramPrincipalBinding(101, str(owner), ("101",), str(binding)),
+    ))
+    outbox = PostgresMemoryOutbox(
+        people_memory_engine, tenant_id=tenant, installation_id=installation
+    )
+    for index in range(2):
+        outbox.enqueue(replace(
+            _document(f"{label}-{index}"), tenant_id=tenant,
+            installation_id=installation, principal_id="telegram:101",
+            conversation_id="telegram:101",
+            audience=MemoryAudience.private_person(principal_id="telegram:101"),
+        ))
+    reader = PostgresOwnerMemorySources(
+        people_memory_engine, tenant_id=tenant, installation_id=installation,
+        owner=owner, binding=binding, telegram_bindings=bindings,
+        authority_scope=scope,
+    )
+    first = reader.page(now=NOW, limit=1)
+    assert len(first.sources) == 1 and first.next_cursor is not None
+    table = metadata.tables[f"eva_core.{table_name}"]
+    values = {
+        key: NOW if value == "now" else NOW + timedelta(seconds=1)
+        if value == "future" else value for key, value in changes.items()
+    }
+    with people_memory_engine.begin() as connection:
+        connection.execute(sa.update(table).where(
+            table.c.tenant_id == scope.tenant_id,
+            table.c.principal_id == owner,
+        ).values(**values))
+    # Reuse the reader and cursor: neither may cache yesterday's authority.
+    with pytest.raises(RuntimeError, match=message):
+        reader.page(now=NOW, limit=1, before=first.next_cursor)
+
+
+@pytest.mark.parametrize("provider,channel", [("telegram", "private"), ("eva-dashboard", "owner-local")])
+def test_owner_sources_keep_authority_and_memory_namespaces_separate(
+    people_memory_engine, provider, channel
+):
+    from dataclasses import replace
+
+    from eva.adapters.postgres.current_catalog import metadata
+    from eva.adapters.postgres.people_memory_overview import PostgresOwnerMemorySources
+    from eva.adapters.postgres.operational_timeline import external_timeline_scope
+    from tests.postgres.test_delegated_work_store import _id, _seed_authority
+
+    label = f"owner-memory-distinct-{provider}"
+    authority, _, binding = _seed_authority(people_memory_engine, label)
+    owner = _id(label, "principal")
+    table = metadata.tables["eva_core.principal_bindings"]
+    with people_memory_engine.begin() as connection:
+        connection.execute(sa.update(table).where(
+            table.c.tenant_id == authority.tenant_id,
+            table.c.principal_binding_id == binding,
+        ).values(provider_id=provider, channel_id=channel))
+    tenant, installation = f"memory:{label}", "memory:home"
+    memory_scope = external_timeline_scope(tenant, installation, "required")
+    assert memory_scope.tenant_id != authority.tenant_id
+    assert memory_scope.installation_id != authority.installation_id
+    mapping = TelegramPrincipalBindings((
+        TelegramPrincipalBinding(101, str(owner), ("101",), str(binding)),
+    ))
+    outbox = PostgresMemoryOutbox(people_memory_engine, tenant_id=tenant, installation_id=installation)
+    for principal in (str(owner), "telegram:101", "telegram:202"):
+        outbox.enqueue(replace(
+            _document(f"{label}-{principal}"), tenant_id=tenant, installation_id=installation,
+            principal_id=principal, conversation_id=principal,
+            audience=MemoryAudience.private_person(principal_id=principal),
+            content=f"private fixture for {principal}",
+        ))
+
+    def reader(scope=authority, aliases=mapping):
+        return PostgresOwnerMemorySources(
+            people_memory_engine, tenant_id=tenant, installation_id=installation,
+            owner=owner, binding=binding, authority_scope=scope, telegram_bindings=aliases,
+        )
+
+    first = reader().page(now=NOW, limit=1)
+    assert first.next_cursor is not None
+    second = reader().page(now=NOW, limit=1, before=first.next_cursor)
+    assert {s.excerpt for s in first.sources + second.sources} == {
+        f"private fixture for {owner}", "private fixture for telegram:101",
+    }
+    # Removing the private map never widens access to another alias.
+    without_alias = reader(aliases=None).page(now=NOW)
+    assert [s.excerpt for s in without_alias.sources] == [f"private fixture for {owner}"]
+    with pytest.raises(RuntimeError, match="binding is not current"):
+        reader(scope=memory_scope).page(now=NOW)
+    with people_memory_engine.begin() as connection:
+        connection.execute(sa.update(table).where(
+            table.c.tenant_id == authority.tenant_id,
+            table.c.principal_binding_id == binding,
+        ).values(status="revoked"))
+    with pytest.raises(RuntimeError, match="binding is not current"):
+        reader().page(now=NOW, before=first.next_cursor)
+
+
 NOW = datetime(2026, 8, 26, 12, 0, tzinfo=UTC)
 TENANT = "cockpit-family-canary-tenant"
 INSTALLATION = "cockpit-family-canary-home"

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Execute the exact managed-B release tests and emit one closed receipt.
 
-The current authority distinguishes 147 executable test modules from 20 bound
+The current authority distinguishes 149 executable test modules from 20 bound
 support inputs. Thirteen physically distinct disposable databases include six
 PostgreSQL execution slices inside one receipt group. Twelve databases remain
 operator inputs; the isolated browser subgate creates and removes its own
@@ -46,7 +46,7 @@ from tools.run_managed_b_browser_release_subgate import (
 
 RECEIPT_CONTRACT = "EvaManagedBRequiredTestsExecution/v1"
 AUTHORITY_CONTRACT = "EvaManagedBReleaseInputAuthority/v1"
-EXPECTED_EXECUTABLE_COUNT = 147
+EXPECTED_EXECUTABLE_COUNT = 149
 EXPECTED_SUPPORT_COUNT = 20
 EXPECTED_GROUP_COUNT = 7
 _SHA256 = re.compile(r"[0-9a-f]{64}\Z")
@@ -96,7 +96,12 @@ _POSTGRES_4B_STORE_FILES = (
     "tests/postgres/test_memory_repository.py",
     "tests/postgres/test_people_memory_overview.py",
 )
-_POSTGRES_4B_CURRENT_FILES = ("tests/postgres/test_postgres_migrations.py",)
+_POSTGRES_4B_CURRENT_FILES = (
+    "tests/postgres/test_postgres_migrations.py",
+    # Both modules share the session-scoped current-schema fixture. Keep these
+    # apart from store modules that independently downgrade their own schemas.
+    "tests/postgres/test_sensory_admission.py",
+)
 _POSTGRES_4B_HISTORICAL_FILES = ("tests/postgres/test_postgres_schema.py",)
 _DSN_ENV = {
     "portable-effect": ("EVA2_GATE_PORTABLE_EFFECT_DSN",),
@@ -369,7 +374,7 @@ def _groups(executable: Sequence[str]) -> dict[str, tuple[str, ...]]:
         or set().union(*(set(paths) for paths in groups.values())) != known
         or sum(len(paths) for paths in groups.values()) != len(known)
         or postgres_tree & _POSTGRES_PURE_FILES != _POSTGRES_PURE_FILES
-        or len(postgres) != 23
+        or len(postgres) != 24
     ):
         raise RequiredTestsError("release test grouping differs")
     return groups

@@ -472,6 +472,62 @@ def test_runtime_reads_telegram_token_from_file(
     assert settings.telegram_bot_token == "telegram-test-value"
 
 
+def test_proactive_runtime_derives_and_rechecks_private_owner(monkeypatch):
+    import eva.bootstrap.runtime as runtime
+    from eva.application.free_will import ProactiveExpressionClaim
+
+    calls = []
+    allowed = [True]
+    tenant = UUID("00000000-0000-0000-0000-000000000001")
+    installation = UUID("00000000-0000-0000-0000-000000000002")
+    owner = UUID("00000000-0000-0000-0000-000000000003")
+    binding = UUID("00000000-0000-0000-0000-000000000004")
+    def load(path):
+        assert path == "/private/owner-bindings"
+        calls.append("reload-bindings")
+        return object()
+    class Recipient:
+        def __init__(self, engine, scope, **kwargs):
+            assert scope.tenant_id == tenant and scope.installation_id == installation
+            assert kwargs["owner"] == owner and kwargs["binding"] == binding
+            self.bindings = kwargs["bindings"]
+        def current_chat_id(self, *, now):
+            self.bindings()
+            assert now.tzinfo is not None
+            if not allowed[0]:
+                raise RuntimeError("binding revoked")
+            return "42"
+    monkeypatch.setattr(runtime, "PostgresPrivateTelegramRecipient", Recipient)
+    monkeypatch.setattr(runtime, "load_principal_bindings", load)
+    settings = RuntimeSettings(
+        database_dsn="unused", hindsight_url="unused", telegram_bot_token="123456:test",
+        telegram_principal_bindings_file="/private/owner-bindings",
+        dashboard_tenant_id=str(tenant), dashboard_installation_id=str(installation),
+        dashboard_principal_binding_id=str(binding), background_principal_id=str(owner),
+    )
+    delivery = runtime._build_proactive_delivery(settings, object())
+    assert delivery is not None  # No manually supplied chat ID or polling worker.
+    def send(method, body, **kwargs):
+        calls.append(method)
+        return {"message_id": 7, "chat": {"id": 42, "type": "private"}, "text": body["text"]}
+    monkeypatch.setattr(delivery._api, "_call", send)
+    claim = ProactiveExpressionClaim("thread", "op", 1, 0, "event", "Fixture", 1)
+    assert delivery.deliver(claim) == "telegram:42:7"
+    allowed[0] = False
+    with pytest.raises(RuntimeError, match="revoked"):
+        delivery.deliver(claim)
+    assert calls == ["reload-bindings", "reload-bindings", "sendMessage", "reload-bindings"]
+
+
+def test_proactive_runtime_without_token_stays_off_and_unbound_token_is_rejected():
+    from eva.bootstrap.runtime import _build_proactive_delivery
+    assert _build_proactive_delivery(RuntimeSettings(database_dsn="unused", hindsight_url="unused"), object()) is None
+    with pytest.raises(RuntimeError, match="verified private owner"):
+        _build_proactive_delivery(RuntimeSettings(
+            database_dsn="unused", hindsight_url="unused", telegram_bot_token="123456:test",
+        ), object())
+
+
 @pytest.mark.parametrize(
     ("name", "value", "expected"),
     (
@@ -735,6 +791,56 @@ def test_runtime_workboard_uses_only_its_fixed_owner_and_binding() -> None:
 
     assert runtime.dashboard_workboard().cards == []
     assert store.calls == [(owner, binding)]
+
+
+def test_owner_memory_sources_use_only_server_scope_without_provider_calls(monkeypatch):
+    from eva.adapters.postgres import people_memory_overview
+    from eva.adapters.postgres.operational_timeline import TimelineScope
+    from eva.application.people_memory_overview import MemorySourcePage
+
+    owner = UUID("33333333-3333-3333-3333-333333333333")
+    binding = UUID("44444444-4444-4444-8444-444444444444")
+    seen = []
+    authority_scope = TimelineScope(UUID(int=101), UUID(int=102))
+    loaded = []
+
+    def load_bindings():
+        loaded.append(True)
+        return None
+
+    class Projection:
+        def __init__(self, engine, **kwargs):
+            seen.append(kwargs)
+
+        def page(self, **kwargs):
+            seen.append(kwargs)
+            return MemorySourcePage(())
+
+    monkeypatch.setattr(people_memory_overview, "PostgresOwnerMemorySources", Projection)
+    runtime = PostgresHindsightMemoryRuntime(
+        object(), object(), None, None, None, None, None,
+        runtime_tenant_id="tenant:dashboard", runtime_installation_id="installation:dashboard",
+        delegated_work_store=object(), dashboard_owner_principal_id=owner,
+        dashboard_principal_binding_id=binding,
+        dashboard_authority_scope=authority_scope,
+        telegram_principal_bindings_loader=load_bindings,
+    )
+    assert runtime.dashboard_memory_sources(limit=2).sources == ()
+    assert seen[0] == {"tenant_id":"tenant:dashboard", "installation_id":"installation:dashboard",
+                       "owner":owner, "binding":binding, "telegram_bindings":None,
+                       "authority_scope":authority_scope}
+    assert seen[1]["limit"] == 2 and seen[1]["before"] is None
+    assert loaded == [True]
+    runtime.dashboard_memory_sources(limit=1)
+    assert loaded == [True, True]
+    runtime._dashboard_authority_scope = None
+    with pytest.raises(RuntimeError, match="unavailable"):
+        runtime.dashboard_memory_sources()
+    runtime._dashboard_authority_scope = authority_scope
+    runtime._dashboard_owner_principal_id = None
+    with pytest.raises(RuntimeError, match="unavailable"):
+        runtime.dashboard_memory_sources()
+    assert len(seen) == 4
 
 
 def test_dashboard_owner_turns_keep_one_server_bound_conversation(

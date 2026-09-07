@@ -473,6 +473,8 @@ class SemanticMemoryColdPathWorker:
             self._schedule_reflection_if_idle()
 
     def _schedule_reflection_if_idle(self) -> None:
+        if self._stop.is_set():
+            return
         with self._lock:
             if time.monotonic() - self._last_activity < self._idle_seconds:
                 return
@@ -487,6 +489,8 @@ class SemanticMemoryColdPathWorker:
                     self._last_error = f"{type(error).__name__}: {error}"
                 expired = ()
             for expiry_job in expired:
+                if self._stop.is_set():
+                    return
                 try:
                     self._remove_job(
                         expiry_job,
@@ -496,6 +500,8 @@ class SemanticMemoryColdPathWorker:
                     with self._lock:
                         self._last_error = f"{type(error).__name__}: {error}"
         for tenant_id, installation_id, principal_id in scopes:
+            if self._stop.is_set():
+                return
             try:
                 if self._reflection_budget is not None:
                     admission = self._reflection_budget.admit_background_reflection(
@@ -521,6 +527,10 @@ class SemanticMemoryColdPathWorker:
                         (tenant_id, installation_id, principal_id)
                     )
         for task in self._idle_tasks:
+            # A stop during the preceding blocking provider call must not
+            # fall through into another model run or outgoing delivery.
+            if self._stop.is_set():
+                return
             try:
                 task()
             except Exception as error:

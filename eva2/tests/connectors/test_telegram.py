@@ -24,7 +24,10 @@ def test_outbound_telegram_delivery_returns_provider_receipt() -> None:
         def do_POST(self) -> None:  # noqa: N802
             length = int(self.headers["Content-Length"])
             captured.append(json.loads(self.rfile.read(length)))
-            response = json.dumps({"ok": True, "result": {"message_id": 5001}}).encode()
+            response = json.dumps({"ok": True, "result": {
+                "message_id": 5001, "chat": {"id": 42, "type": "private"},
+                "text": captured[-1]["text"],
+            }}).encode()
             self.send_response(200)
             self.send_header("Content-Type", "application/json")
             self.send_header("Content-Length", str(len(response)))
@@ -65,6 +68,60 @@ def test_outbound_telegram_delivery_returns_provider_receipt() -> None:
         server.shutdown()
         thread.join(timeout=5)
         server.server_close()
+
+
+@pytest.mark.parametrize("changes", [
+    {"message_id": True}, {"message_id": 0}, {"message_id": -1},
+    {"chat": None}, {"chat": {"id": 43, "type": "private"}},
+    {"chat": {"id": "42", "type": "private"}}, {"chat": {"id": 42, "type": "group"}},
+    {"text": "other text"},
+])
+def test_proactive_receipt_must_prove_exact_private_delivery(monkeypatch, changes):
+    delivery = TelegramProactiveDelivery(bot_token="123456:test", chat_id="42")
+    result = {"message_id": 7, "chat": {"id": 42, "type": "private"}, "text": "Fixture"} | changes
+    calls = []
+    def send(method, body, **kwargs):
+        calls.append(method)
+        assert kwargs["maximum_response_bytes"] == 65_536
+        return result
+    monkeypatch.setattr(delivery._api, "_call", send)
+    claim = ProactiveExpressionClaim("thread", "op", 1, 0, "event", "Fixture", 1)
+    with pytest.raises(RuntimeError, match="does not prove"):
+        delivery.deliver(claim)
+    assert calls == ["sendMessage"]  # Uncertain acceptance never causes an automatic resend.
+
+
+@pytest.mark.parametrize("recipient", ["-42", "0", "042", "another-person", "４２", None])
+def test_proactive_recipient_is_checked_before_http(monkeypatch, recipient):
+    delivery = TelegramProactiveDelivery(bot_token="123456:test", recipient_resolver=lambda: recipient)
+    monkeypatch.setattr(delivery._api, "_call", lambda *a, **k: pytest.fail("no HTTP to an unverified private chat"))
+    claim = ProactiveExpressionClaim("thread", "op", 1, 0, "event", "Fixture", 1)
+    with pytest.raises(ValueError):
+        delivery.deliver(claim)
+
+
+def test_proactive_recipient_changes_cannot_override_a_configured_owner(monkeypatch):
+    delivery = TelegramProactiveDelivery(bot_token="123456:test", chat_id="42", recipient_resolver=lambda: "43")
+    monkeypatch.setattr(delivery._api, "_call", lambda *a, **k: pytest.fail("mismatched owner must not send"))
+    with pytest.raises(RuntimeError, match="differs from verified owner"):
+        delivery.deliver(ProactiveExpressionClaim("thread", "op", 1, 0, "event", "Fixture", 1))
+
+
+def test_proactive_http_error_cannot_claim_success(monkeypatch):
+    from io import BytesIO
+    from urllib.error import HTTPError
+    from eva.adapters.connectors import telegram
+    calls = []
+    def send(req, **kwargs):
+        calls.append(req.get_method())
+        raise HTTPError(req.full_url, 500, "fixture", {}, BytesIO(json.dumps({
+            "ok": True, "result": {"message_id": 7, "chat": {"id": 42, "type": "private"}, "text": "Fixture"},
+        }).encode()))
+    monkeypatch.setattr(telegram.urllib_request, "urlopen", send)
+    delivery = TelegramProactiveDelivery(bot_token="123456:test", chat_id="42")
+    with pytest.raises(RuntimeError, match="HTTP error contradicts"):
+        delivery.deliver(ProactiveExpressionClaim("thread", "op", 1, 0, "event", "Fixture", 1))
+    assert calls == ["POST"]
 
 
 def test_bot_api_poll_send_and_living_core_contract_are_bounded() -> None:

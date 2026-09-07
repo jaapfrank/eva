@@ -2,10 +2,12 @@ services:
   core:
     environment:
       EVA_TELEGRAM_BOT_TOKEN_FILE: /run/secrets/telegram_bot_token
-      EVA_TELEGRAM_PROACTIVE_CHAT_ID: ${EVA_TELEGRAM_PROACTIVE_CHAT_ID:?set the explicitly approved proactive chat ID}
-    secrets:
-      - telegram_bot_token
-
-secrets:
-  telegram_bot_token:
-    file: ${EVA_TELEGRAM_BOT_TOKEN_FILE_HOST:?set a Telegram bot-token file readable only by runtime UID 65532}
+      # Optional cross-check only; the current private owner binding selects the recipient.
+      EVA_TELEGRAM_PROACTIVE_CHAT_ID: ${EVA_TELEGRAM_PROACTIVE_CHAT_ID:-}
+    volumes:
+      - type: bind
+        source: ${EVA_TELEGRAM_BOT_TOKEN_FILE_HOST:?set a Telegram bot-token file readable only by runtime UID 65532}
+        target: /run/secrets/telegram_bot_token
+        read_only: true
+        bind:
+          create_host_path: false

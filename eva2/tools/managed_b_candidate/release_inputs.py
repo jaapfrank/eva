@@ -39,10 +39,10 @@ _PORTABLE_V1_PROFILE_PATH = (
     f"{_PORTABLE_V1_CONTRACT_ROOT}/canonical-json-profile-v1.json"
 )
 _EXPECTED_INPUT_PATHS_SHA256 = (
-    "d20711bb818519ffe3e77cfd1816f42b29ea85a9cd858fd217a5ef6a16acd96a"
+    "bc0198d39705652034940c141d173e65e9c2367b0d0dc14b2f881f94b9fedf32"
 )
 _EXPECTED_TEST_PATHS_SHA256 = (
-    "119aa9c61d95758b182dfd1dabefd22c3c417742f18ecc148cc9ebb594280836"
+    "9b4034b9f6db1faa79387caa9bf9f4555e5a524712f5be403d0fa4430fadb830"
 )
 _EXPECTED_TEST_SUPPORT_PATHS_SHA256 = (
     "01b4594668e68d2938df3eabaf5a5b71333eda320b859f5eec524ea21bd0ce43"
@@ -132,6 +132,8 @@ _COCKPIT_EVIDENCE_NONCLAIMS = (
     "The cockpit index is a release-bound evidence projection, not a new live run.",
     "A source receipt proves only the claim and nonclaims written in that receipt.",
     "Selected and open cockpit items are deliberately absent from this evidence index.",
+    "CO-003 refreshes touched source/test hashes for this development candidate only; owner memory-source listing is not yet a deployed dashboard feature.",
+    "RT-001 refreshes touched runtime/test hashes after targeted source regressions. Subscription admission, current-source recovery and owner-bound outgoing delivery are not deployed; earlier receipts do not prove these new capabilities. The current RT-001 receipt records fixture delivery and read-only real authority checks separately.",
 )
 _SANITIZED_COCKPIT_NONCLAIMS = (
     "This projection excludes raw dialogue, prompts, replies, names, identifiers, entity metadata, memory content, secrets, and provider payloads.",
@@ -572,7 +574,7 @@ def _validate_cockpit_evidence(files: ArchiveFiles) -> dict[str, object]:
         value.get("contract") != "EvaCockpitEvidenceIndex/v1"
         or value.get("schemaVersion") != 1
         or value.get("status") != "release_bound_projection"
-        or value.get("updatedOn") != "2026-08-29"
+        or value.get("updatedOn") != "2026-09-07"
         or value.get("nonClaims") != list(_COCKPIT_EVIDENCE_NONCLAIMS)
         or not isinstance(entries, list)
         or len(entries) != len(_COCKPIT_EVIDENCE_STATES)

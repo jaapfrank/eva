@@ -4,16 +4,21 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from datetime import datetime
-from typing import Literal, Protocol
+from typing import Callable, Literal, Protocol
 
-from eva.application.conversation import IdentityProfile
+from eva.application.conversation import ConversationModelUsage, IdentityProfile
 from eva.application.memory import PresenceMemory, RecallCurrentFacts
 from eva.application.memory_audience import MemoryAudience
-from eva.application.sensory import SensoryEvent
+from eva.application.sensory import SensoryEvent, SensoryEventRevalidatorPort
 from eva.application.resident_attention import ResidentAttentionDecision
 
 
 WillDisposition = Literal["silence", "respond"]
+AutonomousAdmissionBlocker = Literal["unverified_model_cost"]
+
+
+class AutonomousUsageUncertain(RuntimeError):
+    """A possibly dispatched decision has no durable outcome; do not repeat it."""
 
 
 @dataclass(frozen=True, slots=True)
@@ -32,6 +37,7 @@ class FreeWillDecision:
     urgency: int
     provider: str
     expression: str | None = None
+    usage: ConversationModelUsage | None = None
 
     def __post_init__(self) -> None:
         if self.disposition not in {"silence", "respond"}:
@@ -124,7 +130,28 @@ class ProactiveExpressionWorker:
 
 
 class FreeWillStorePort(Protocol):
-    def claim_next(self, *, now: datetime) -> SensoryDecisionClaim | None: ...
+    def mark_model_started(
+        self, claim: SensoryDecisionClaim, *, now: datetime
+    ) -> SensoryDecisionClaim | None: ...
+
+    def claim_next_revalidation(self, *, now: datetime) -> SensoryDecisionClaim | None: ...
+
+    def complete_revalidation(
+        self, claim: SensoryDecisionClaim, event: SensoryEvent, *, now: datetime
+    ) -> None: ...
+
+    def claim_revalidated(
+        self, claim: SensoryDecisionClaim, *, now: datetime
+    ) -> SensoryDecisionClaim | None: ...
+
+    def claim_next(
+        self, *, now: datetime, include_waiting: bool = True
+    ) -> SensoryDecisionClaim | None: ...
+
+    def wait_for_admission(
+        self, claim: SensoryDecisionClaim, reason: AutonomousAdmissionBlocker,
+        *, now: datetime,
+    ) -> None: ...
 
     def complete(
         self,
@@ -171,6 +198,9 @@ class SensoryDecisionWorker:
         installation_id: str,
         principal_id: str,
         resident_attention: ResidentAttentionPort | None = None,
+        admission_blocker: Callable[[], AutonomousAdmissionBlocker | None] | None = None,
+        revalidator: SensoryEventRevalidatorPort | None = None,
+        clock: Callable[[], datetime] | None = None,
     ) -> None:
         self._store = store
         self._model = model
@@ -180,11 +210,39 @@ class SensoryDecisionWorker:
         self._installation_id = installation_id
         self._principal_id = principal_id
         self._resident_attention = resident_attention
+        self._admission_blocker = admission_blocker
+        self._revalidator = revalidator
+        # Runtime supplies a live UTC clock. Without one, run_once(now=...)
+        # deliberately operates on the caller's fixed logical/test clock.
+        self._clock = clock
+        self._prefer_revalidation = False
+
+    def _current_time(self, previous: datetime) -> datetime:
+        current = previous if self._clock is None else self._clock()
+        if current.tzinfo is None or current.utcoffset() is None:
+            raise ValueError("sensory worker clock must be timezone-aware")
+        return max(previous, current)
 
     def run_once(self, *, now: datetime) -> str:
-        claim = self._store.claim_next(now=now)
+        now = self._current_time(now)
+        blocker = None if self._admission_blocker is None else self._admission_blocker()
+        if self._prefer_revalidation and blocker is None and self._revalidator is not None:
+            self._prefer_revalidation = False
+            recovered = self._revalidate_once(now=now)
+            if recovered != "idle":
+                return recovered
+        claim = self._store.claim_next(now=now, include_waiting=blocker is None)
         if claim is None:
+            if blocker is None and self._revalidator is not None:
+                return self._revalidate_once(now=now)
             return "idle"
+        self._prefer_revalidation = True
+        return self._decide_claim(claim, now=now, blocker=blocker)
+
+    def _decide_claim(
+        self, claim: SensoryDecisionClaim, *, now: datetime,
+        blocker: AutonomousAdmissionBlocker | None,
+    ) -> str:
         event = claim.event
         try:
             bounded_decision = _bounded_routine_decision(event)
@@ -205,6 +263,17 @@ class SensoryDecisionWorker:
                 )
                 self._store.complete(claim, decision, now=now)
                 return "silence"
+            if blocker is not None:
+                self._store.wait_for_admission(claim, blocker, now=now)
+                return "waiting_for_admission"
+            current_state = event.payload.get("current_state")
+            state_description = (
+                f"actuele toestand: {current_state}"
+                if event.event_type == "observation_revalidated"
+                and isinstance(current_state, str) and current_state
+                else f"{event.payload.get('old_state', '')} naar "
+                f"{event.payload.get('new_state', '')}"
+            )
             memory = self._memory.recall_for_presence(
                 RecallCurrentFacts(
                     recall_id=f"free-will:{event.source_event_id}",
@@ -227,12 +296,19 @@ class SensoryDecisionWorker:
                     query_text=(
                         f"{event.source} {event.event_type} "
                         f"{event.payload.get('entity_id', '')} "
-                        f"{event.payload.get('old_state', '')} naar "
-                        f"{event.payload.get('new_state', '')}"
+                        f"{state_description}"
                     ),
                     maximum_facts=8,
                 )
             )
+            # Persist the ambiguity boundary before entering the model adapter.
+            # A process can die without calling fail(), including after the
+            # provider response but before complete() records the decision.
+            now = self._current_time(now)
+            started = self._store.mark_model_started(claim, now=now)
+            if started is None:
+                return "idle"  # Expired or competing owner: never dispatch.
+            claim = started
             decision = self._model.evaluate_sensory_event(
                 event,
                 self._identity,
@@ -246,15 +322,58 @@ class SensoryDecisionWorker:
                 raise RuntimeError(
                     "sensory model violated the resident attention eligibility boundary"
                 )
-            self._store.complete(claim, decision, now=now)
+            self._store.complete(claim, decision, now=self._current_time(now))
             return decision.disposition
         except Exception as error:
-            self._store.fail(claim, error, now=now)
+            self._store.fail(claim, error, now=self._current_time(now))
             return "failed"
+
+
+    def _revalidate_once(self, *, now: datetime) -> str:
+        claim = self._store.claim_next_revalidation(now=now)
+        if claim is None:
+            return "idle"
+        try:
+            bounded_decision = _bounded_routine_decision(claim.event)
+            if bounded_decision is not None:
+                self._store.complete(claim, bounded_decision, now=now)
+                return bounded_decision.disposition
+            assert self._revalidator is not None
+            event = self._revalidator.revalidate(claim.event, now=now)
+            now = self._current_time(now)
+            self._store.complete_revalidation(claim, event, now=now)
+        except Exception as error:
+            self._store.fail(claim, error, now=self._current_time(now))
+            return "failed"
+        # Continue only this exact durable read, without another idle interval
+        # or an unbounded worker loop. A competing/restarted worker must win
+        # the same revision claim before any recall/model work can happen.
+        now = self._current_time(now)
+        decision_claim = self._store.claim_revalidated(claim, now=now)
+        if decision_claim is None:
+            return "revalidated"
+        blocker = None if self._admission_blocker is None else self._admission_blocker()
+        return self._decide_claim(decision_claim, now=now, blocker=blocker)
 
 
 def _bounded_routine_decision(event: SensoryEvent) -> FreeWillDecision | None:
     """Silence ordinary actuator telemetry without spending recall/model budget."""
+
+    if event.event_type == "historical_observation_batch":
+        members = event.payload.get("historical_observations")
+        if not isinstance(members, list) or not members:
+            return None
+        for member in members:
+            if (not isinstance(member, dict) or member.get("event_type") != "state_changed"
+                    or not isinstance(member.get("payload"), dict)):
+                return None
+            decision = _bounded_routine_decision(SensoryEvent(
+                event.source, event.source_event_id, "state_changed", event.occurred_at,
+                member["payload"],
+            ))
+            if decision is None:
+                return None
+        return decision  # Every original already qualified for the same no-model silence.
 
     entity_id = event.payload.get("entity_id")
     old_state = event.payload.get("old_state")

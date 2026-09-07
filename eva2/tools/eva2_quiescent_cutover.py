@@ -49,6 +49,9 @@ EVA1_BACKUPS = Path("/var/lib/eva2/eva1-cutover-backups")
 MANIFEST = (
     Path(__file__).resolve().parents[1] / "deploy/living-core/managed-b.compose.yml"
 )
+PROACTIVE_MANIFEST = MANIFEST.with_name("telegram-proactive.compose.yml")
+PROACTIVE_FLAG = "EVA_TELEGRAM_PROACTIVE_DELIVERY_ENABLED"
+PROACTIVE_TOKEN_TARGET = "/run/secrets/telegram_bot_token"
 
 _SCHEMA_HEAD_SCRIPT = (
     "from eva.operations.install_schema import _HEAD_REVISION; "
@@ -168,6 +171,8 @@ class CutoverBackend(Protocol):
     def write_route(self, dropin: Path, content: bytes) -> None: ...
 
     def start_eva1(self, slot: SlotSpec) -> dict[str, int]: ...
+
+    def activate_delivery(self, slot: SlotSpec, dropin: Path) -> bool: ...
 
 
 def _sha256_file(path: Path) -> str:
@@ -360,6 +365,7 @@ class SystemBackend:
 
     def _verify_slot(self, slot: SlotSpec, *, source: bool) -> dict[str, str]:
         environment = self._environment(slot.environment)
+        self._proactive_token(environment)
         expected = {
             "EVA_STACK_CORE_CONTAINER": slot.core,
             "EVA_STACK_CORE_PORT": str(slot.port),
@@ -517,8 +523,58 @@ class SystemBackend:
             time.sleep(1)
         raise QuiescentCutoverError("retained slot service did not become healthy")
 
+    @classmethod
+    def _proactive_token(cls, environment: dict[str, str]) -> Path | None:
+        """Explicit slot policy; token presence alone never enables delivery."""
+        enabled = environment.get(PROACTIVE_FLAG, "false")
+        if enabled not in {"true", "false"}:
+            raise QuiescentCutoverError("proactive delivery flag must be true or false")
+        if enabled == "false":
+            return None
+        value = environment.get("EVA_TELEGRAM_BOT_TOKEN_FILE_HOST", "")
+        path = Path(value)
+        if not value or not path.is_absolute() or path.resolve() != path:
+            raise QuiescentCutoverError("proactive token path is not canonical absolute")
+        cls._private_file(path, mode=0o600, uid=65532)
+        # Match runtime token admission before stopping ingress or writers.
+        # File ownership/presence alone also accepts old probe-only contents.
+        try:
+            with path.open("rb") as stream:
+                raw = stream.read(4097)
+            token = raw.decode("utf-8").strip()
+        except (OSError, UnicodeError):
+            raise QuiescentCutoverError("proactive token content is unreadable") from None
+        if len(raw) > 4096 or ":" not in token or any(c.isspace() for c in token):
+            raise QuiescentCutoverError("proactive token content is invalid")
+        return path
+
+    @staticmethod
+    def _verify_proactive_mount(document: dict[str, Any], token: Path | None) -> None:
+        configured = [
+            entry for entry in document.get("Config", {}).get("Env", [])
+            if entry.startswith("EVA_TELEGRAM_BOT_TOKEN_FILE=")
+        ]
+        mounts = [
+            mount for mount in document.get("Mounts", [])
+            if mount.get("Destination") == PROACTIVE_TOKEN_TARGET
+        ]
+        if token is None:
+            if configured or mounts:
+                raise QuiescentCutoverError("disabled proactive delivery retained token access")
+            return
+        if (
+            configured != [f"EVA_TELEGRAM_BOT_TOKEN_FILE={PROACTIVE_TOKEN_TARGET}"]
+            or len(mounts) != 1
+            or mounts[0].get("Type") != "bind"
+            or mounts[0].get("Source") != str(token)
+            or mounts[0].get("RW") is not False
+        ):
+            raise QuiescentCutoverError("proactive delivery token mount differs")
+
     def start_writers(self, slot: SlotSpec) -> None:
+        """Stage all writers without the outgoing credential, including rollback."""
         environment = self._environment(slot.environment)
+        self._proactive_token(environment)
         compose = [
             DOCKER,
             "compose",
@@ -528,19 +584,56 @@ class SystemBackend:
             slot.project,
             "--file",
             str(MANIFEST),
-            "up",
-            "--detach",
-            "--no-deps",
         ]
-        self._run([*compose, "hindsight"])
+        start = ["up", "--detach", "--no-deps"]
+        self._run([*compose, *start, "hindsight"])
         self._wait_container(slot.hindsight)
-        self._run([*compose, "core"])
+        self._run([*compose, *start, "core"])
         self._wait_container(slot.core)
         expected = environment.get("EVA_LIVING_CORE_IMAGE", "").rsplit("@", 1)[-1]
-        if self._inspect(slot.core).get("Image") != expected:
+        inspected = self._inspect(slot.core)
+        if inspected.get("Image") != expected:
             raise QuiescentCutoverError(
                 "retained slot core image differs from its environment"
             )
+        self._verify_proactive_mount(inspected, None)
+
+    def activate_delivery(self, slot: SlotSpec, dropin: Path) -> bool:
+        """Release the credential only after the staged runtime and route passed.
+
+        The core is recreated once with the previously reviewed outgoing overlay.
+        Any failure from this commit point may have external effects: the caller
+        must stop the target and preserve its new durable state during rollback.
+        """
+        environment = self._environment(slot.environment)
+        token = self._proactive_token(environment)
+        if token is None:
+            self._verify_proactive_mount(self._inspect(slot.core), None)
+            return False
+        _read_exact_dropin(dropin, slot.url, owner_uid=self.owner_uid)
+        loaded = self._run([SYSTEMCTL, "show", SERVICE, "--property=Environment", "--value"])
+        if f"EVA2_CANARY_URL={slot.url}" not in loaded.split() or not self._ready(slot):
+            raise QuiescentCutoverError("proactive activation requires the ready active route")
+        ingress = self._run([SYSTEMCTL, "show", SERVICE, "--property=ActiveState", "--value"])
+        if ingress.strip() != "inactive":
+            raise QuiescentCutoverError("proactive activation requires quiescent ingress")
+        staged = self._inspect(slot.core)
+        expected = environment.get("EVA_LIVING_CORE_IMAGE", "").rsplit("@", 1)[-1]
+        if staged.get("Image") != expected:
+            raise QuiescentCutoverError("proactive activation candidate image differs")
+        self._verify_proactive_mount(staged, None)
+        self._run([
+            DOCKER, "compose", "--env-file", str(slot.environment),
+            "--project-name", slot.project, "--file", str(MANIFEST),
+            "--file", str(PROACTIVE_MANIFEST), "up", "--detach", "--no-deps", "core",
+        ])
+        self._wait_container(slot.core)
+        activated = self._inspect(slot.core)
+        if activated.get("Image") != expected:
+            raise QuiescentCutoverError("proactive activation core image differs")
+        self._verify_proactive_mount(activated, token)
+        self.verify_runtime(slot)
+        return True
 
     @staticmethod
     def _schema_installer_command(slot: SlotSpec) -> list[str]:
@@ -1071,6 +1164,7 @@ def quiescent_cutover(
         backend.verify_runtime(target)
         route_write_attempted = True
         backend.write_route(dropin, replacement)
+        delivery_enabled = backend.activate_delivery(target, dropin)
         eva1_start_attempted = True
         statuses = backend.start_eva1(target)
     except Exception as error:
@@ -1080,7 +1174,9 @@ def quiescent_cutover(
                 backend.stop_eva1()
             if target_started:
                 backend.stop_writers(target)
-            if eva1_start_attempted:
+                # Background memory and decision workers may commit before
+                # ingress is restarted, including during a partial core start.
+                # Preserve those writes and receipts on the reverse path too.
                 reverse = backend.snapshot(target, workspace, "automatic-rollback")
                 backend.restore(source, reverse)
             if source_stop_attempted:
@@ -1089,6 +1185,8 @@ def quiescent_cutover(
             if route_write_attempted:
                 backend.write_route(dropin, previous)
             if eva1_stop_attempted:
+                if source_stop_attempted:
+                    backend.activate_delivery(source, dropin)
                 backend.start_eva1(source)
         except Exception as exc:  # preserve recovery files for manual repair
             rollback_error = exc
@@ -1115,6 +1213,8 @@ def quiescent_cutover(
         "synchronizedDatabases": _snapshot_receipt(snapshot),
         "targetPort": target.port,
         "targetReady": True,
+        "proactiveDeliveryEnabled": delivery_enabled,
+        "proactiveCredentialWithheldDuringStaging": True,
     }
 
 

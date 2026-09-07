@@ -3,6 +3,9 @@
 from __future__ import annotations
 
 import json
+import hashlib
+import logging
+from pathlib import Path
 from queue import SimpleQueue
 from threading import Thread
 from typing import Any, Iterator
@@ -15,6 +18,41 @@ from eva.application.conversation import (
     RecentConversationMessage,
     stream_conversation_text,
 )
+
+
+_LOGGER = logging.getLogger(__name__)
+_SOURCE_ROOT = Path(__file__).resolve().parents[2]
+
+
+def _record_stream_failure(error: Exception, turn: ConversationTurn, stage: str) -> None:
+    """Log code locations, never exception messages, locals or provider bodies."""
+    frames: list[dict[str, Any]] = []
+    trace = error.__traceback__
+    while trace is not None:
+        try:
+            source = Path(trace.tb_frame.f_code.co_filename).relative_to(_SOURCE_ROOT)
+        except ValueError:
+            pass  # External paths may include private account/workspace information.
+        else:
+            frames.append({"source": source.as_posix(), "line": trace.tb_lineno})
+        trace = trace.tb_next
+    error_type = type(error)
+    category = next((name for cls, name in (
+        (TimeoutError, "timeout"), (ConnectionError, "connection"),
+        (PermissionError, "permission"), (ValueError, "validation"),
+    ) if isinstance(error, cls)), "unexpected")
+    # Only identifiers enter the correlation hash; no text or exception repr is read.
+    turn_hash = hashlib.sha256(json.dumps([
+        turn.tenant_id, turn.installation_id, turn.conversation_id, turn.message_id,
+    ], separators=(",", ":")).encode()).hexdigest()
+    type_hash = hashlib.sha256(
+        f"{error_type.__module__}.{error_type.__qualname__}".encode()
+    ).hexdigest()
+    _LOGGER.error("%s", json.dumps({
+        "event": "conversation_stream_failure", "stage": stage,
+        "turn_sha256": turn_hash, "category": category,
+        "exception_type_sha256": type_hash, "eva_frames": frames[-8:],
+    }, separators=(",", ":")))
 
 
 DASHBOARD_CONVERSATION_HTML = """<!doctype html><html lang="nl"><head>
@@ -48,13 +86,21 @@ def conversation_stream_response(runtime: Any, turn: ConversationTurn,
     queue: SimpleQueue[tuple[str, Any]] = SimpleQueue()
 
     def run() -> None:
+        stage = "respond"
         try:
             with stream_conversation_text(lambda delta: queue.put(("delta", delta))):
                 reply = runtime.respond(turn, recent)
             queue.put(("final", reply))
+            stage = "after_response"
             runtime.after_response(turn, reply)
-        except Exception:
-            queue.put(("error", None))
+        except Exception as error:
+            # Preserve the terminal contract even if the diagnostic sink fails.
+            if stage == "respond":
+                queue.put(("error", None))
+            try:
+                _record_stream_failure(error, turn, stage)
+            except Exception:
+                pass
 
     def events() -> Iterator[bytes]:
         Thread(target=run, name="eva-text-stream", daemon=True).start()

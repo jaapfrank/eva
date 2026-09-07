@@ -7,7 +7,7 @@ from datetime import UTC, datetime, timedelta
 import json
 import os
 from pathlib import Path
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Callable
 from uuid import UUID, uuid4
 
 import sqlalchemy as sa
@@ -137,13 +137,14 @@ from eva.application.free_will import (
     ProactiveExpressionWorker,
     SensoryDecisionWorker,
 )
-from eva.application.sensory import SensoryIngestionWorker
+from eva.application.sensory import SensoryIngestionWorker, SensoryEventRevalidatorPort
 from eva.adapters.credentials.runtime_files import (
     environment_secret,
     read_private_runtime_file_bytes,
 )
 from eva.bootstrap.delegated_work_commands import DelegatedWorkConversationCommands
 from eva.bootstrap.telegram_ingress import load_principal_bindings
+from eva.adapters.postgres.telegram_pairing import PostgresPrivateTelegramRecipient
 from eva.adapters.api.dashboard_access import validate_dashboard_access_token
 from eva.operations.portable_restore_authority import PrivateRestoreAuthorityStore
 
@@ -476,11 +477,8 @@ class RuntimeSettings:
             raise RuntimeError("EVA_CONVERSATION_REASONING_EFFORT is invalid")
         if background_tenant_id is None or background_installation_id is None:
             raise RuntimeError("Eva runtime tenant and installation scope are required")
-        _require_complete_configuration(
-            "Eva proactive Telegram configuration is incomplete",
-            telegram_proactive_chat_id,
-            telegram_bot_token,
-        )
+        if telegram_proactive_chat_id is not None and telegram_bot_token is None:
+            raise RuntimeError("Eva proactive Telegram configuration is incomplete")
         _require_complete_configuration(
             "Eva Stripe commerce configuration is incomplete",
             stripe_account_id,
@@ -568,6 +566,8 @@ class PostgresHindsightMemoryRuntime:
         dashboard_effect_controller: DashboardActionChainEffectController | None = None,
         dashboard_owner_principal_id: UUID | None = None,
         dashboard_principal_binding_id: UUID | None = None,
+        dashboard_authority_scope: TimelineScope | None = None,
+        telegram_principal_bindings_loader: Callable[[], TelegramPrincipalBindings] | None = None,
         memory_storage_budget: PostgresMemoryStorageBudget | None = None,
     ) -> None:
         self._engine = engine
@@ -601,6 +601,8 @@ class PostgresHindsightMemoryRuntime:
         self._dashboard_effect_controller = dashboard_effect_controller
         self._dashboard_owner_principal_id = dashboard_owner_principal_id
         self._dashboard_principal_binding_id = dashboard_principal_binding_id
+        self._dashboard_authority_scope = dashboard_authority_scope
+        self._telegram_principal_bindings_loader = telegram_principal_bindings_loader
         self._memory_storage_budget = memory_storage_budget
         self._memory_writer = BudgetedConversationMemoryWriter(
             memory, memory_storage_budget
@@ -770,6 +772,26 @@ class PostgresHindsightMemoryRuntime:
             principal_binding_id=self._dashboard_principal_binding_id,
             now=datetime.now(tz=UTC).replace(microsecond=0),
         )
+
+    def dashboard_memory_sources(self, *, limit: int = 20, before: str | None = None):
+        """Read existing owner sources without a model or memory-provider call."""
+        from eva.adapters.postgres.people_memory_overview import PostgresOwnerMemorySources
+
+        if (self._runtime_tenant_id is None or self._runtime_installation_id is None
+                or self._dashboard_owner_principal_id is None
+                or self._dashboard_principal_binding_id is None
+                or self._dashboard_authority_scope is None):
+            raise RuntimeError("owner memory sources unavailable")
+        bindings = (self._telegram_principal_bindings if self._telegram_principal_bindings_loader is None
+                    else self._telegram_principal_bindings_loader())
+        return PostgresOwnerMemorySources(
+            self._engine, tenant_id=self._runtime_tenant_id,
+            installation_id=self._runtime_installation_id,
+            owner=self._dashboard_owner_principal_id,
+            binding=self._dashboard_principal_binding_id,
+            authority_scope=self._dashboard_authority_scope,
+            telegram_bindings=bindings,
+        ).page(now=datetime.now(tz=UTC).replace(microsecond=0), limit=limit, before=before)
 
     def dashboard_stop_effect(
         self, effect_intent_id: UUID
@@ -1255,6 +1277,32 @@ class PostgresHindsightMemoryRuntime:
         )
 
 
+def _build_proactive_delivery(settings: RuntimeSettings, engine: sa.Engine) -> TelegramProactiveDelivery | None:
+    if settings.telegram_bot_token is None:
+        if settings.telegram_proactive_chat_id is not None:
+            raise RuntimeError("Eva proactive Telegram configuration is incomplete")
+        return None
+    if (settings.telegram_principal_bindings_file is None
+            or settings.dashboard_tenant_id is None or settings.dashboard_installation_id is None
+            or settings.dashboard_principal_binding_id is None or settings.background_principal_id is None):
+        raise RuntimeError("proactive delivery requires the verified private owner binding")
+    recipient = PostgresPrivateTelegramRecipient(
+        engine,
+        TimelineScope(UUID(settings.dashboard_tenant_id), UUID(settings.dashboard_installation_id)),
+        owner=UUID(settings.background_principal_id), binding=UUID(settings.dashboard_principal_binding_id),
+        bindings=lambda: load_principal_bindings(settings.telegram_principal_bindings_file),
+    )
+    def current_recipient() -> str:
+        return recipient.current_chat_id(now=datetime.now(tz=UTC))
+    expected = current_recipient()
+    if settings.telegram_proactive_chat_id is not None and settings.telegram_proactive_chat_id != expected:
+        raise RuntimeError("configured Telegram recipient differs from verified owner")
+    return TelegramProactiveDelivery(
+        bot_token=settings.telegram_bot_token, chat_id=settings.telegram_proactive_chat_id,
+        recipient_resolver=current_recipient,
+    )
+
+
 def create_runtime_app() -> FastAPI:
     from eva.adapters.model.pydantic_conversation import PydanticConversationModel
 
@@ -1356,15 +1404,7 @@ def create_runtime_app() -> FastAPI:
             )
         )
     )
-    proactive_delivery = (
-        None
-        if settings.telegram_proactive_chat_id is None
-        or settings.telegram_bot_token is None
-        else TelegramProactiveDelivery(
-            bot_token=settings.telegram_bot_token,
-            chat_id=settings.telegram_proactive_chat_id,
-        )
-    )
+    proactive_delivery = _build_proactive_delivery(settings, engine)
     file_batch = (
         None
         if settings.file_batch_root is None
@@ -1413,6 +1453,8 @@ def create_runtime_app() -> FastAPI:
             engine,
             tenant_id=settings.background_tenant_id,
             installation_id=settings.background_installation_id,
+            recovery_started_at=datetime.now(tz=UTC).replace(microsecond=0),
+            historical_group_size=16,
         )
     )
     sensory_worker = (
@@ -1510,6 +1552,14 @@ def create_runtime_app() -> FastAPI:
                 tenant_id=settings.background_tenant_id,
                 installation_id=settings.background_installation_id,
                 principal_id=settings.background_principal_id,
+                admission_blocker=model.autonomous_admission_blocker,
+                clock=lambda: datetime.now(tz=UTC).replace(microsecond=0),
+                revalidator=(
+                    provider_bundle.event_source
+                    if provider_bundle is not None
+                    and isinstance(provider_bundle.event_source, SensoryEventRevalidatorPort)
+                    else None
+                ),
             )
         )
         expression_worker = (
@@ -1572,12 +1622,16 @@ def create_runtime_app() -> FastAPI:
     dashboard_effect_controller = None
     dashboard_owner_principal_id = None
     dashboard_principal_binding_id = None
+    dashboard_authority_scope = None
     if settings.dashboard_principal_binding_id is not None:
         assert settings.dashboard_tenant_id is not None
         assert settings.dashboard_installation_id is not None
         assert settings.background_principal_id is not None
         dashboard_owner_principal_id = UUID(settings.background_principal_id)
         dashboard_principal_binding_id = UUID(settings.dashboard_principal_binding_id)
+        dashboard_authority_scope = TimelineScope(
+            UUID(settings.dashboard_tenant_id), UUID(settings.dashboard_installation_id),
+        )
         delegated_work_store = PostgresDelegatedWorkStore(
             engine,
             TimelineScope(
@@ -1643,6 +1697,11 @@ def create_runtime_app() -> FastAPI:
             dashboard_effect_controller=dashboard_effect_controller,
             dashboard_owner_principal_id=dashboard_owner_principal_id,
             dashboard_principal_binding_id=dashboard_principal_binding_id,
+            dashboard_authority_scope=dashboard_authority_scope,
+            telegram_principal_bindings_loader=(
+                None if settings.telegram_principal_bindings_file is None
+                else lambda: load_principal_bindings(settings.telegram_principal_bindings_file)
+            ),
             memory_storage_budget=storage_budget,
         ),
         dashboard_access_token=settings.dashboard_access_token,
