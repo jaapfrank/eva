@@ -1,0 +1,36 @@
+{
+  "taskId": "EV-003",
+  "date": "2026-09-08",
+  "status": "protocol_reviewed_no_comparison_run",
+  "baseCommit": "71c44770b4019f94042c9a156f46693ad04af96e",
+  "implementationCommit": "de77be8933d600bb719ea712fea92882c9a5b62f",
+  "sourceSha256": {
+    "eva2/design/product/comparable-agent-benchmarks-v1.md": "d59a68b4e93a6ed2a903fbca4a6de972e180a6d83b0c2a5935fc71597258f71e",
+    "eva2/benchmark/inspect_ai_v1/README.md": "8b1471b8248beecd6d9e6df1cee8ff981be5786f863c3ad4566a5e3f3b87b221",
+    "eva2/tests/benchmark/test_inspect_ai_ev002.py": "bc6ea79d3e3343d8d230541092927add1e513a31777eff207de62acbab179a50"
+  },
+  "checks": {
+    "command": "PYTHONPATH=src:. python -m pytest -q tests/benchmark/test_inspect_ai_ev002.py",
+    "passed": 21,
+    "failed": 0,
+    "ruff": "passed",
+    "diffWhitespace": "passed",
+    "scope": "Existing historical EV-002 preflight/result constraints plus one new assertion guarding EV-003 preregistered inputs. Not agent quality, an executable new suite or scorer validation."
+  },
+  "primarySourcesRead": [
+    "https://inspect.aisi.org.uk/scorers.html",
+    "https://inspect.aisi.org.uk/eval-logs.html",
+    "https://inspect.aisi.org.uk/scoring-workflow.html"
+  ],
+  "decision": "Six task families, repeated unseen tasks, separately reported human preference, initiative, assistance, time, usage and recovery. Product thresholds are Eva's declared criteria, not thresholds prescribed by Inspect. Native Inspect logs/scorers remain authoritative; no separate runtime or result format added.",
+  "runtimeChanges": 0,
+  "modelCalls": 0,
+  "telegramMessages": 0,
+  "newDependencies": 0,
+  "limits": [
+    "Concrete unseen dataset, curator and sealed run settings must still be established independently before execution.",
+    "Small discrete samples have coarse thresholds; repeated blocks are not a statistical guarantee across arbitrary tasks.",
+    "No benchmark result, competitive win or full product acceptance follows from these document/contract checks.",
+    "Existing dirty CO-003 source and project-goal changes were preserved, not included implicitly."
+  ]
+}
