@@ -1,0 +1,314 @@
+{
+  "taskId": "CO-007",
+  "date": "2026-09-08",
+  "status": "technical_live_stream_verified_human_acceptance_open",
+  "baseCommit": "4d6d52477467392d43ac8ee3d67ccf4160081af5",
+  "implementationCommit": "de3bb2ef9346f80c4b47b7d799d2eb2f4a2eb5c6",
+  "outcome": "Provider-marked final-answer streaming deployed. Existing private JS client, throttled Telegram draft sink and Bot API acknowledged four drafts before the final developer-check message.",
+  "sourceSha256": {
+    "tests/api/test_telegram_canary_api.py": "7c998d75ff79ba11e723444fe0a3dc13c08a579249c64fe184f8daa2863ba8b1",
+    "release/eva-cockpit-evidence-index-v1.json": "6bab91e11e7ac3a229ae7df7a5775efa42ac41dc9228f5f281498be9f4cf0b22",
+    "release/managed-b-release-input-authority-v1.json": "87303552cfdff3b958ed736ad039aa37aaabce2a89f309cf8ca27b95b8108e9e"
+  },
+  "candidate": {
+    "sourceCommit": "979ab77be807e26144a22c61fc67eee00fac2785",
+    "imageId": "sha256:8389a992552bc9f88cf7aafea834cc2898fd93d5c40ae3a2eafe9af290646642",
+    "baseLiveSource": "bbc83b32fd17ecbc4a141ae150df5e0506dd77de",
+    "delta": "Four exact source/test paths from UP-001/CO-007 plus two refreshed release metadata paths. Existing live-only sources preserved; candidate is not the entire dirty development tree.",
+    "normalSourceMetadata": "Development metadata refreshed only for changed conversation/test paths. Existing UX-000 source metadata/nonclaims preserved; not substituted for candidate-archive metadata."
+  },
+  "verification": {
+    "requiredTests": {
+      "modules": 149,
+      "passed": 1979,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "installedImage": {
+      "taskId": "CO-007",
+      "sourceCommit": "979ab77be807e26144a22c61fc67eee00fac2785",
+      "image": "sha256:8389a992552bc9f88cf7aafea834cc2898fd93d5c40ae3a2eafe9af290646642",
+      "sourceHashes": {
+        "src/eva/application/conversation.py": "3fb596c235c83a341caa4622459a62fde8ecb25f2aa010f998fbc304e101e618",
+        "src/eva/adapters/model/pydantic_conversation.py": "13a920fa0c6077956ed98e5e58cbb4fef3bbe0af2a01a9f7c046dcd4e6cf5dd1"
+      },
+      "productImportedFromImage": true,
+      "network": "none",
+      "status": "passed",
+      "counts": {
+        "tests": 170,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "junitSha256": "b9aea7deedd3a1d4ebdab7c82eb535e6ab40680fa525e400ca5856e0a55f4a55"
+    },
+    "browserCases": 4,
+    "scan": {
+      "high": 0,
+      "critical": 0,
+      "databaseUpdatedAt": "2026-09-07T13:12:52.575474699Z"
+    },
+    "ruff": "passed",
+    "apiNegativeCases": "Actual SDK wire events through TestClient: final deltas only, complete/error framing, no retry after interruption; existing private-person and tool tests remain green.",
+    "copiedData": {
+      "requests": [
+        {
+          "completedMs": 5048.030146,
+          "drafts": 3,
+          "firstDraftMs": 4896.504358,
+          "streamEqualsFinal": true
+        },
+        {
+          "completedMs": 60.333248000000005,
+          "drafts": 0,
+          "firstDraftMs": null,
+          "streamEqualsFinal": false
+        },
+        {
+          "completedMs": 4814.535111,
+          "drafts": 4,
+          "firstDraftMs": 4340.479504999999,
+          "streamEqualsFinal": true
+        }
+      ],
+      "firstUsage": {
+        "inputTokens": 2512,
+        "measurement": "measured",
+        "modelAttempts": 1,
+        "outputTokens": 7,
+        "provider": "chatgpt-codex:gpt-6-astra",
+        "toolCalls": 0
+      },
+      "recallUsage": {
+        "inputTokens": 2494,
+        "measurement": "measured",
+        "modelAttempts": 1,
+        "outputTokens": 8,
+        "provider": "chatgpt-codex:gpt-6-astra",
+        "toolCalls": 0
+      },
+      "jointRestart": true,
+      "exactReplay": true,
+      "temporaryResourcesRemoved": true,
+      "sourceDataReadOnly": true,
+      "liveSafetyAfter": {
+        "currentEva2": 200,
+        "eva1": 200
+      },
+      "scope": "Existing JS canary client and copied private binding. Zero drafts is recorded, not proof of live streaming; any drafts are captured locally, never sent through Telegram Bot API. Bridge principal is checked, not canonical episode admission."
+    }
+  },
+  "deployment": {
+    "contract": "Eva2QuiescentCutoverReceipt/v1",
+    "eva1Backup": {
+      "bytes": 305545216,
+      "filename": "eva1-before-slot3-to-slot4-20260907T224725Z.db",
+      "quickCheck": "ok",
+      "sha256": "eb59b71fcfbddc697ab058d9344eab263a98155f149fa951b411e8a09f5198bf"
+    },
+    "eva1HttpStatuses": {
+      "/": 200,
+      "/api/capabilities": 200,
+      "/api/health": 200,
+      "/api/overview": 200,
+      "/api/workstatus": 200
+    },
+    "issuedAt": "2026-09-07T22:48:45.759424+00:00",
+    "previousDropinSha256": "81f1b2b687a641ae5349aa3c13198f6ad3ac1d7c88ee351bc3c559f22eee28a1",
+    "proactiveCredentialWithheldDuringStaging": true,
+    "proactiveDeliveryEnabled": true,
+    "sourcePort": 44710,
+    "sourceWritersStopped": true,
+    "status": "switched",
+    "synchronizedDatabases": {
+      "memory": {
+        "countDigest": "817439c3f966ae1a11e19a3e0c65eb346eb46979b84cbd41f253028cd47614d3",
+        "dataDigest": "881eac6ecc4d83b5fa796ea71f5e466385c3d4870bb369ae4a33aad708821b91",
+        "dumpBytes": 2385772,
+        "dumpSha256": "b5fd2419bbbeacd9f271f196f90ca45349bb7e6ede5184426cc9007e6dbc2c9d",
+        "schemaDigest": "d89bfebdbfeb55e8618e81286bf24a42b838bfe577e84f6db9b93b43f5832172",
+        "tableCount": 23
+      },
+      "operational": {
+        "countDigest": "86aca441fcf36a55662c532c631712e687d06def85c400948ff7a2bc42477563",
+        "dataDigest": "49e652960810814f8aad9f843e6b0acefd2d42ab89707741369bef7ab3231fa8",
+        "dumpBytes": 9123662,
+        "dumpSha256": "75268709555016b4f76a5d1e87f4853bd2cf75c9a89ed5ddae9175d7ea3a39ed",
+        "schemaDigest": "32acc5b66e349dfd5b385e4828897575ad543ebb5f2638b8880dff1cacb7fb39",
+        "tableCount": 48
+      }
+    },
+    "targetPort": 44711,
+    "targetReady": true
+  },
+  "livePrivateClient": {
+    "imageId": "sha256:8389a992552bc9f88cf7aafea834cc2898fd93d5c40ae3a2eafe9af290646642",
+    "limits": "Actual live runtime and existing private JS client. Drafts captured locally, not sent via Bot API; no new human message or subjective acceptance claimed.",
+    "messageIdSha256": "0349a9bd6ec62042169ac94604cfb1aec8817a2a0332c6022e20cf2336a3694f",
+    "port": 44711,
+    "probeSha256": "a77a536a6fcffbadd2b91ad9f44355146ffd18997f7d2727f8afd5381fc99610",
+    "replay": {
+      "completedMs": 52.72005300000001,
+      "drafts": 0,
+      "durableReplyUnchanged": true,
+      "newModelCalls": 0
+    },
+    "replySha256": "7a283bc300a56e7aca4f9284fcf49a4bf68687a759a18faff2392b590d39cce2",
+    "sourceCommit": "979ab77be807e26144a22c61fc67eee00fac2785",
+    "status": "live_private_client_stream_and_exact_replay_passed",
+    "stream": {
+      "completedMs": 5339.770123,
+      "drafts": 17,
+      "firstDraftMs": 4673.042242,
+      "streamEqualsFinal": true
+    },
+    "telegramMessagesSentByProbe": 0,
+    "usage": {
+      "inputTokens": 3197,
+      "measurement": "measured",
+      "modelAttempts": 1,
+      "outputTokens": 21,
+      "provider": "chatgpt-codex:gpt-6-astra",
+      "toolCalls": 0
+    }
+  },
+  "telegramNetwork": {
+    "status": "telegram_drafts_and_final_acknowledged",
+    "telegramMessagesSent": 1,
+    "draftRequests": 4,
+    "draftAccepted": 4,
+    "failures": [],
+    "humanAcceptance": false,
+    "replyCompletedMs": 4024.3963069999995,
+    "callbacks": 29,
+    "firstAcceptedDraftMs": 3049.741878,
+    "replySha256": "2ecf23f72e1dadda66552c6c908b1363f4b4fa1f06f95ae98f5234c57d0decc4",
+    "telegramMessageIdSha256": "fcc687ca8d076689aa4a5877927b816cb3ccfd681fb666da9487dbb9d0f973a0",
+    "completedMs": 4131.138733000001,
+    "usage": {
+      "inputTokens": 3453,
+      "measurement": "measured",
+      "modelAttempts": 1,
+      "outputTokens": 33,
+      "provider": "chatgpt-codex:gpt-6-astra",
+      "toolCalls": 0
+    },
+    "scope": "One clearly labelled developer check to the existing owner. Uses unchanged askEva2Canary/createEva2DraftSink/labelEva2TelegramReply and existing grammY sendMessageDraft. No fabricated inbound Telegram update, no second poller. Final sent directly through existing Bot API SDK, not the Eva1 inbound final-send/archive wrapper. Server acknowledgement is not proof that the user watched the animation."
+  },
+  "oldReplyReplay": {
+    "imageId": "sha256:8389a992552bc9f88cf7aafea834cc2898fd93d5c40ae3a2eafe9af290646642",
+    "limits": "Existing developer turn through actual private client after cutover; no new human Telegram network roundtrip, novel answer or positive initiative claimed.",
+    "messageIdSha256": "c2b7446af3bd1a6f014dea42ebd8a7d8215c47f0d219aeb807281e78f22b691f",
+    "newConversationModelCalls": 0,
+    "originalUsageUnchanged": {
+      "inputTokens": 3528,
+      "measurement": "measured",
+      "modelAttempts": 1,
+      "outputTokens": 9,
+      "provider": "chatgpt-codex:gpt-6-astra",
+      "toolCalls": 0
+    },
+    "port": 44711,
+    "probeSha256": "7478f12859c8de6d5186e6431ac9ac667c8cceae6dda3db328760dd6c6175c31",
+    "replySha256": "00da393e91c7b4145d4a810a4dd0dfc204251357065ef4890c06dfaade1c32fd",
+    "sourceCommit": "979ab77be807e26144a22c61fc67eee00fac2785",
+    "status": "exact_existing_reply_replayed",
+    "telegramMessagesSentByProbe": 0
+  },
+  "usage": {
+    "conversationModelCalls": 4,
+    "measuredTokens": 11725,
+    "toolCalls": 0,
+    "probeTelegramFinalMessages": 1,
+    "noNewDependencyOrBilling": true,
+    "codexDevelopmentUsageIncluded": false
+  },
+  "independentReleaseReview": {
+    "reviewer": "/root/identity_pair_review",
+    "decision": "GO for one lossless slot3-to-slot4 cutover and bounded post-live probe",
+    "admissionSha256": "32bf91a0d736468716564084022c5b63f7f20dfa4b145b4ee0e6cff5f16f5266",
+    "planSha256": "38263700242c1685fe0bff61b6b0a2fd09ac806a190266ef5d58b93fae1537cb"
+  },
+  "originalFiles": {
+    "archive": {
+      "path": "/tmp/eva2-co007-stream.EXnYbr/image/eva2-candidate-image-nlc66rvv/candidate.tar",
+      "sha256": "9c7c3f7ede22eed4449e17798135f86679932558e6142e88e5f25b3823dad438"
+    },
+    "browser": {
+      "path": "/tmp/eva2-co007-stream.EXnYbr/gates/browser-subgate.json",
+      "sha256": "e056bb7e2f068fefd3fa84728b00c30e56dd6993a80e3166a207086607f87ab3"
+    },
+    "build": {
+      "path": "/tmp/eva2-co007-stream.EXnYbr/image/build.json",
+      "sha256": "c7b7f8226061ef9ca5113203b71eebfe3c768df85db4297cc23b1523a565312f"
+    },
+    "copiedData": {
+      "path": "/tmp/eva2-co007-stream.EXnYbr/copy/receipt.private.json",
+      "sha256": "fef1011549a836a07848e399c77c12c872636d7bfb980addbb8c0809443c1bfa"
+    },
+    "copiedInvocation": {
+      "path": "/tmp/eva2-co007-stream.EXnYbr/copy/invocation.json",
+      "sha256": "85d3a15a64010af986d7d494f7382abdb0e3507d76a4fd8eef2b10ff2e17b64e"
+    },
+    "databaseMetadata": {
+      "path": "/tmp/eva2-rt001-verification.psfKk7/trivy-cache/db/metadata.json",
+      "sha256": "2087607cb9a08bb378fce764214f639aae8117d57fc094926db69aa9945fb4ac"
+    },
+    "imageTests": {
+      "path": "/tmp/eva2-co007-stream.EXnYbr/installed/receipt.json",
+      "sha256": "2efa00e67f0736a4b21688b1a522bbb3a5bb38b394cbb8d0e0f8f640b17375dc"
+    },
+    "requiredTests": {
+      "path": "/tmp/eva2-co007-stream.EXnYbr/gates/required-tests.json",
+      "sha256": "630772e6e0ecc71e0c4d83cadea15fbdb3defe48f4c67d811b25e9069e86d68d"
+    },
+    "sbom": {
+      "path": "/tmp/eva2-co007-stream.EXnYbr/image/scan/sbom.json",
+      "sha256": "99820faa8ddb75a8b39d8746fed1ccff0dbc1705681df94a46ebe75c8aab6e1f"
+    },
+    "scan": {
+      "path": "/tmp/eva2-co007-stream.EXnYbr/image/scan/trivy.json",
+      "sha256": "86c291751d4329ff410217bd28bb82e0bb35a7205f2e083b974b9f3870286d32"
+    },
+    "scanReceipt": {
+      "path": "/tmp/eva2-co007-stream.EXnYbr/image/scan/receipt.json",
+      "sha256": "b28d3c17827d59d905fe2321cc27e781457fcc897dd712d3337380fa964c4324"
+    },
+    "testInvocation": {
+      "path": "/tmp/eva2-co007-stream.EXnYbr/gates/invocation.json",
+      "sha256": "f732c4ae62f82bdfa7439104b8e723377f9ee762cb86d72c0c54dc2c6528ca35"
+    }
+  },
+  "postLiveFiles": {
+    "rollout/cutover.json": {
+      "path": "/tmp/eva2-co007-stream.EXnYbr/rollout/cutover.json",
+      "sha256": "a47be3c5f562fb49af500415fb6473735a89c88d15d5b2fc315601eee936fdce"
+    },
+    "rollout/live-stream.json": {
+      "path": "/tmp/eva2-co007-stream.EXnYbr/rollout/live-stream.json",
+      "sha256": "95524c5d7636f5252fdc429212abb1150bf7ad311ca3c6fa6d94816fb8b94ff4"
+    },
+    "rollout/live-replay.json": {
+      "path": "/tmp/eva2-co007-stream.EXnYbr/rollout/live-replay.json",
+      "sha256": "7d479c6e44f2b4907cf5cbad6eff3e96fbcade40843ad880e63fc1813a5f5161"
+    },
+    "rollout/telegram-network.json": {
+      "path": "/tmp/eva2-co007-stream.EXnYbr/rollout/telegram-network.json",
+      "sha256": "2a7180dd452471ca7243061ffba206b12eb854660c2a9cad85104930975b5b91"
+    },
+    "rollout/telegram-network-usage.json": {
+      "path": "/tmp/eva2-co007-stream.EXnYbr/rollout/telegram-network-usage.json",
+      "sha256": "9d1ef53621dcd31da1f75d7b04e225c85fe9184cae459dad3f0eb121866646b2"
+    }
+  },
+  "limits": [
+    "This proves streaming deployment, existing-client behavior and Telegram draft/final acknowledgement, not general competitor superiority.",
+    "Human conversation warmth/continuity acceptance remains open; prior positive Jaap feedback is not acceptance of this exact candidate.",
+    "Copied joint-restart proof is exact candidate; live proof is exact replay after cutover, not a new full-machine reboot.",
+    "Slot3 previous image and synchronized-cutover data retained. Later rollback must copy newer data back using existing lossless operator. No manual new-old-new cycle repeated.",
+    "Temporary copied stack and synthetic PostgreSQL test container removed. Private rollout receipts/config backup and image artifacts retained in the task stage; no new archival tree.",
+    "No tokens-per-day limit imposed; probe usage boundaries are not a user quota."
+  ]
+}
