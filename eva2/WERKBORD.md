@@ -5,36 +5,37 @@ Laatst bijgewerkt: 2026-09-08.
 Doel: [Eva als zelfstandig lerende digitale huisgenoot](PROJECTDOEL.md).
 Gebouwd, getest, live en door jou geaccepteerd zijn verschillende stappen.
 
-Het meetprotocol is onafhankelijk goedgekeurd: herhaalde ongeziene taken, menselijke voorkeur, initiatief, hulp, tijd, verbruik en herstel blijven afzonderlijk zichtbaar. Geen uitgevoerde vergelijking of winstclaim. UP-001 onderzoekt nu actuele open-sourcegesprek-/toolroutes en neemt één bewezen bruikbaar patroon over in Eva's bestaande adapter.
-[Actueel bewijs](evidence/product/EV-003-comparative-acceptance-protocol-2026-09-08.json).
+De nieuwe antwoordstream draait op slot 4. De echte Telegramclient, vier Telegram-drafts en één eindbericht zijn gecontroleerd; beide databases zijn behouden. Nu de bestaande bron-API zichtbaar maken in React-admin.
+[Actueel bewijs](evidence/product/CO-007-live-answer-stream-2026-09-08.json).
 
-Jij kunt verder praten met /eva2 voor ieder bericht. Ik onderzoek concrete upstreamcode en licenties voor snellere, begrijpelijke antwoordvorming met tools; daarna een kleine voor/naproef en de complete gesprekroute. Geen nieuwe agentloop of brede opruimklus.
+Praat gewoon verder met /eva2 voor iedere beurt; niets instellen. CO-004 is de volgende kleine productkaart. Menselijke beoordeling loopt apart en blokkeert het bouwen van het geheugenscherm niet.
 
 ## Nu
 
 | Volgorde | Kaart | Resultaat | Status |
 |---:|---|---|---|
-| 134 | `CO-007` — Menselijke gesprekroute compleet maken | De bewezen antwoordstream veilig installeren en via Telegram laten werken. Gewoon praten, tools, identiteit en herstart samen controleren; gezinsbeoordeling blijft expliciet nodig voor de complete gesprekservaring. | 🟡 BEZIG |
+| 135 | `CO-004` — Eigen geheugen in het dashboard tonen | Het bestaande React-admin-dashboard toont eigen afgeschermde geheugenbronnen met paginering en heldere lege/fouttoestanden. Geen nieuwe webstack, extra modelcalls of browseropslag. | 🟡 BEZIG |
 
 Klaar betekent:
 
-- De gewone gebruikersroute geeft antwoordstukjes en een compleet opgeslagen eindantwoord; herstart/replay voegt geen modelcall of externe actie toe.
-- Tools blijven uitgesteld en gecontroleerd; fouten/stop en persoonsscheiding zijn negatief getest op de kandidaat.
-- De geïnstalleerde kandidaat en terugweg zijn onafhankelijk gecontroleerd; echte gezinsfeedback bevestigt de gesprekservaring. Zonder die feedback blijft acceptatie open.
+- Eigen geheugenbronnen zijn begrijpelijk en gepagineerd zichtbaar; toegangsverlies verwijdert eerder zichtbare inhoud en toont geen details van anderen.
+- Een echte browserproef en gerichte asset/API-tests zijn groen, zonder extra dependency of modelcall; onafhankelijke review bevestigt de exacte scope.
+- De gebruiker krijgt een werkende eigenaarroute naar het scherm; geen ontwikkelbuild als live levering afvinken. Corrigeren/wissen blijft CO-005.
 
 <details>
 <summary>Technische uitvoering: bestanden en controles</summary>
 
-### Exact werk voor `CO-007`
+### Exact werk voor `CO-004`
 
-- `eva2/tests/api/test_telegram_canary_api.py`
-- `eva2/release/eva-cockpit-evidence-index-v1.json`
-- `eva2/release/managed-b-release-input-authority-v1.json`
+- `eva2/experiments/react-admin-dashboard-v1/src/main.jsx`
+- `eva2/experiments/react-admin-dashboard-v1/src/style.css`
+- `eva2/experiments/react-admin-dashboard-v1/verify-browser.cjs`
+- `eva2/tests/tools/test_build_dashboard_assets.py`
 
 Echte controles:
 
-- `pytest -q tests/api/test_telegram_canary_api.py tests/api/test_memory_api.py tests/model/test_pydantic_conversation_model.py`
-- `ruff check tests/api/test_telegram_canary_api.py`
+- `pytest -q tests/tools/test_build_dashboard_assets.py tests/api/test_dashboard_status.py`
+- `ruff check tests/tools/test_build_dashboard_assets.py`
 - `python3 tools/check_component_catalog.py`
 
 </details>
@@ -44,7 +45,6 @@ Echte controles:
 Deze onderwerpen zijn alleen mijlpalen. Een mijlpaal wordt pas uitvoerbaar
 nadat zij als eerstvolgende kleine kaart exacte bestanden en tests heeft.
 
-- [ ] `CO-004` — Eigen geheugen in het dashboard tonen: Het bestaande React-Admin-dashboard toont de afgeschermde geheugenbronnen begrijpelijk zonder nieuwe webstack of browseropslag.
 - [ ] `CO-005` — Eigen geheugen corrigeren en wissen: De eigenaar kan één zichtbare bron corrigeren of wissen en krijgt controle dat PostgreSQL en Hindsight dezelfde wijziging hebben verwerkt.
 - [ ] `CO-006` — Nuttig geheugen en retentie bewijzen: Bestaande Hindsight-consolidatie gebruiken; gewijzigde voorkeuren, bronherkomst en vergeten semantisch testen. Bronbewaring, compactere kennis en werkelijk schijfgebruik afzonderlijk meten; geen tweede geheugensysteem.
 - [ ] `VB-001` — Full-duplex voice leveren: Microfoon en speaker werken tegelijk met snelle onderbreking.
@@ -121,7 +121,9 @@ Afgevinkt betekent alleen: de vastgelegde kaart is afgerond, niet het hele produ
   [Bewijs](evidence/product/EV-003-comparative-acceptance-protocol-2026-09-08.json).
 - [x] `UP-001` — Sterke oplossingen van concurrenten hergebruiken (done).
   [Bewijs](evidence/product/UP-001-phase-aware-streaming-2026-09-08.json).
-- [ ] `CO-007` — Menselijke gesprekroute compleet maken (in_progress).
+- [x] `CO-007` — Menselijke gesprekroute compleet maken (done).
+  [Bewijs](evidence/product/CO-007-live-answer-stream-2026-09-08.json).
+- [ ] `CO-004` — Eigen geheugen in het dashboard tonen (in_progress).
 
 </details>
 
@@ -132,7 +134,7 @@ Afgevinkt betekent alleen: de vastgelegde kaart is afgerond, niet het hele produ
 
 ## Menselijke acceptatie blijft open
 
-- [ ] `CO-002` — Jaap meldt op 7 september dat de gesprekken met Eva2 echt een stuk beter zijn: positieve menselijke feedback, geen volledige gezinsacceptatie. De fout van 15:24:21 wordt onder RT-001 onderzocht; de oorspronkelijke exception ontbreekt. Gesprek, geheugen na kernherstart en terugrol waren gecontroleerd. Live tekststukjes en verdere menselijke beoordeling blijven open.
+- [ ] `CO-002` — CO-002 en CO-007: Jaap meldde dat de gesprekken echt beter zijn; verdere gezinsbeoordeling van warmte, eigen oordeel en continuïteit blijft open. De antwoordstream is op 8 september technisch geïnstalleerd en door Telegram bevestigd. Er is geen nieuwe menselijke beurt of zichtbare animatiebeoordeling verzonnen; het oude incident wordt hier niet opnieuw geopend.
 
 <details>
 <summary>Werkafspraken en machineleesbare bron</summary>

@@ -3,14 +3,15 @@
 **[Open het visuele projectdashboard](http://localhost:44712).** Dat leest dezelfde
 werklijst als [WERKBORD.md](WERKBORD.md). UX-000 is als lokaal dashboard
 afgerond en onafhankelijk beoordeeld. Ook runtimeherstel RT-001 is technisch
-afgevinkt. EV-003 heeft de succescriteria vooraf vastgelegd; UP-001 onderzoekt
-nu concrete open-sourcegesprek-/toolcode voor hergebruik in Eva.
+afgevinkt. EV-003 en UP-001 zijn af. CO-007 is technisch afgerond en live:
+Telegram bevestigde vier antwoordupdates en één eindbericht. Nu volgt CO-004,
+het scherm voor eigen geheugenbronnen; gezinsacceptatie blijft apart open.
 Dit is geen eindacceptatie van Eva. De repository staat nu in
 `/home/administrator/project/Eva2`; de oude kandidaatlocatie verwijst alleen door.
 Onderstaande lange tekst blijft achtergrond en historische controle, geen
 tweede uitvoerwachtrij.
 
-Laatste ontwikkel- en livecontrole: 7 september 2026. De vergelijkingstabel verderop is van 5 september.
+Laatste ontwikkel- en livecontrole: 8 september 2026. De vergelijkingstabel verderop is van 5 september.
 
 ## Actueel doel en afvinkbare voortgang
 
@@ -21,7 +22,16 @@ van hun sterke open-sourceoplossingen. Alle taken en afvinkstatussen staan in
 [WERKBORD.md](WERKBORD.md). Gebouwd is niet automatisch live of geaccepteerd.
 De historische volgordes hieronder bepalen niet meer wat als volgende gebeurt.
 
-Actueel om 23:23: de nieuwe runtime draait op slot 3 (`44710`), bron
+Actueel op 8 september: de antwoordstream draait op slot 4 (`44711`), bron
+`979ab77b`, image `8389a992…`. 1.979 releasecontroles en 170 imagecontroles
+zijn groen; scan 0 hoog/0 kritisch. Beide databases zijn behouden. De echte
+privéclient kreeg 17 tekststukjes en las het antwoord zonder nieuwe modelcall
+terug. Telegram bevestigde daarnaast vier drafts en één duidelijk gelabeld
+ontwikkelbericht. Slot 3 blijft gestopt als terugweg. Dit is technische
+oplevering, geen verzonnen menselijke acceptatie.
+[Live bewijs](evidence/product/CO-007-live-answer-stream-2026-09-08.json).
+
+Historisch op 7 september om 23:23: de runtime draaide op slot 3 (`44710`), bron
 `bbc83b32`, image `580ef508…`. Zij groepeert oude waarnemingen en controleert
 opnieuw de uitvoeringstermijn na trage bron-/geheugenopvragen. De onafhankelijke
 review, 1.961 vereiste tests, 221 imagecontroles en scan 0 hoog/0 kritisch zijn
