@@ -4,6 +4,7 @@ from datetime import UTC, datetime
 import json
 
 from fastapi.testclient import TestClient
+import pytest
 
 from eva.adapters.api.app import create_app
 from eva.application.conversation import (
@@ -166,7 +167,7 @@ def test_private_canary_streams_safe_deltas_then_the_durable_final_reply() -> No
     assert runtime.after == runtime.turns
 
 
-def test_stream_sink_never_emits_a_delta_while_tools_are_available() -> None:
+def test_stream_sink_never_emits_unmarked_tool_text() -> None:
     class ToolRuntime(_Runtime):
         def respond(self, turn, recent_messages=()):  # type: ignore[no-untyped-def]
             publish_conversation_text('{"target":"secret"}', tools_disabled=False)
@@ -180,6 +181,54 @@ def test_stream_sink_never_emits_a_delta_while_tools_are_available() -> None:
     assert [json.loads(line)["contract"] for line in response.iter_lines()] == [
         "EvaInternalGroundedReply/v1"
     ]
+
+
+@pytest.mark.parametrize("interrupted", [False, True])
+def test_private_canary_transports_real_adapter_final_phase(
+    tmp_path, monkeypatch, interrupted,
+) -> None:
+    # Existing SDK-wire fixture: no real account, network or external tool.
+    from tests.model.test_pydantic_conversation_model import (
+        _identity,
+        _memory,
+        _phase_transport_adapter,
+    )
+
+    model, _captured, requests, _snapshots = _phase_transport_adapter(
+        tmp_path, monkeypatch,
+        [("commentary", ("Interne tussenstap.",)), ("final_answer", ("Hoi ", "Jaap!"))],
+        fail=interrupted,
+    )
+
+    class AdapterRuntime(_Runtime):
+        def respond(self, turn, recent_messages=()):
+            self.turns.append(turn)
+            result = model.generate(turn, _identity(), _memory(), ())
+            assert result.action_call is None
+            return GroundedReply(
+                turn.conversation_id, turn.message_id, result.text, (),
+                turn.occurred_at, "gpt-6-astra",
+            )
+
+    runtime = AdapterRuntime()
+    response = TestClient(create_app(runtime)).post(
+        "/internal/v1/telegram/canary/respond",
+        headers={"accept": "application/x-ndjson"}, json=_payload(),
+    )
+    rows = [json.loads(line) for line in response.iter_lines()]
+    assert [row["text"] for row in rows[:-1]] == ["Hoi ", "Jaap!"]
+    assert "Interne tussenstap" not in response.text
+    assert len(requests) == 1
+    assert requests[0]["tools"]
+    if interrupted:
+        assert rows[-1]["contract"] == "EvaTextStreamError/v1"
+        assert runtime.after == []
+    else:
+        assert rows[-1]["contract"] == "EvaInternalGroundedReply/v1"
+        assert rows[-1]["text"] == "Hoi Jaap!"
+        assert rows[-1]["conversation_id"] == "telegram:7"
+        assert rows[-1]["message_id"] == "telegram:7:1"
+        assert runtime.after == runtime.turns
 
 
 def test_first_group_turn_stays_out_of_conversation_and_returns_instruction() -> None:
