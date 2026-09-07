@@ -1,0 +1,1831 @@
+{
+  "taskId": "RT-001",
+  "date": "2026-09-07",
+  "status": "live_candidate_cutover_passed_autonomous_acceptance_open",
+  "technicalClosure": {
+    "baseCommit": "0eb625d154f9b4e0e73ef2c1cc22458c9612522e",
+    "implementationCommit": "c43df98a49b0ac8b25cac4877fafd81f2cb008de",
+    "scope": "Exact 34 RT-001 changePaths committed on the existing dashboard branch. No unrelated staged changes existed; pending CO-003 and project documentation changes were preserved outside this implementation commit.",
+    "deployedSourceCommit": "bbc83b32fd17ecbc4a141ae150df5e0506dd77de",
+    "binding": "All 30 RT-001 runtime/deployment/tool/test paths are byte-identical between this implementation commit and the tested/deployed candidate. The two generated inventories and two release input/evidence manifests differ because the current branch also contains UX-000. This commit is not relabeled as the deployed candidate or a new standalone release; the candidate's exact archive remains the authoritative deployment input, including the separately pending CO-003 source.",
+    "sourceAndLiveReview": {"reviewer": "/root/identity_pair_review", "decision": "Technical bounded GO for the explicit RT-001 doneWhen requirements; commit bookkeeping must be completed before the card closes. No general product GO."},
+    "documentationChecks": {"workboardTestsPassed": 17, "componentCatalog": "passed", "diffWhitespace": "passed", "inventoryKnownPolicyIssues": 88},
+    "remainingOutsideThisTechnicalCard": ["Human judgement of the historical message's usefulness and timing", "Full conversation/streaming acceptance", "Whole backlog completion and broader efficiency comparison", "CO-003 independent closure and all later project milestones"]
+  },
+  "liveClockBoundaryRepair": {
+    "status": "live_grouped_decision_and_telegram_acceptance_proven_human_usefulness_open",
+    "liveGroupedDelivery": {
+      "observedAt": "2026-09-07T21:41:32.398046+00:00",
+      "sourceCommit": "bbc83b32fd17ecbc4a141ae150df5e0506dd77de",
+      "imageId": "sha256:580ef508145dbdc271610a113541ae4aead68dc8a80011a0871db0f31719a7f1",
+      "groupReceiptSha256": "e8c0948a19296de86c7f0b55ea6e874c83d8b45dca7401a2c85efb9ef4e4c9ca",
+      "deliveryReceiptSha256": "f2e4fda440120ee0abc8feb8155c92abe02826dd8a3d3d09948dacd8ed367687",
+      "groupThreadSha256": "5a83fdc6d615b171b1a764c756a78331636c685b955c80a6fb282bdc43b61e98",
+      "groupInitialSha256": "0464a6b0828ecca8d4e4eaaf61be3b6a820900d2b90163ba9adb3c8902fe1a30",
+      "group": {"members": 12, "contextBytes": 5725, "originalsPreserved": true, "memberCoverageExactlyOnce": true, "sourceReadbackMarkers": 1, "modelStartMarkers": 1, "decisionEvents": 1, "separateMemberModelDispatchesAfterGrouping": 0, "disposition": "respond", "inputTokens": 2692, "outputTokens": 107, "modelAttempts": 1, "structuredDecisionToolCalls": 1},
+      "delivery": {"preparedAt": "2026-09-07T21:34:44+00:00", "deliveredAt": "2026-09-07T21:34:45+00:00", "events": 1, "sourceState": "off", "urgency": 1, "silentNotificationRequested": true, "preparedSha256": "6247bbd732c9945ec9094db521dac13c67e18d474d87b696e88f16a8d81c090b", "eventSha256": "966ff4dd6962e8ce7b665200c92c668a0fb45418307415dd2805bf75aefdfbac", "providerMessageIdSha256": "e847be61790707ee78db4887727a8a5a90e367caa8e886d112b6059e92c8cc4a", "recipientSha256": "dd313debe81862356fa168d6ac1233621e0a4e47ae978b28461875c36d836eed", "contentAssessment": "The message summarizes repeated historical Raspberry Pi power warnings and explicitly says the warning is not active now. The adapter validates Telegram's positive message ID, exact text and bound private recipient before the ledger marks delivery."},
+      "negativeControl": {"threadSha256": "f549ee19e8358b6675537e5cf7153569aee923640d90e2f4a48393228570ed48", "decisionSha256": "a3f3cdb60a2f0952f6298eefaedc6752936a181cd4e66f2288f0fdb0c227f5fb", "case": "Ordinary motion without unusual confirmed context", "disposition": "silence", "inputTokens": 626, "outputTokens": 57, "modelAttempts": 1, "structuredDecisionToolCalls": 1, "deliveryEvents": 0},
+      "probe": {"newModelOrTelegramCalls": 0, "watchScriptSha256": "2b7f30aba3139027ae3a25a739a0bcd5c6d9019bc731a99272c39ea214f2a612", "deliveryScriptSha256": "af3850769aa70df7c63917ba3c04d6fcbd6ac754edbbd7c66edf768a29f72e7d"},
+      "humanUsefulness": "Not established. Jaap was asked whether this historical summary is useful or too late; no acceptance inferred from Telegram's receipt.",
+      "limits": "One natural history group and one negative control, not backlog completion, a general token-saving ratio, human read/usefulness, streaming or final product acceptance. Source-readback markers are ledger evidence, not a network packet count. Measured 3482 model tokens exclude Hindsight processing. Four historical failed claims remain unchanged; no blind retry or invented explanation for their original failures.",
+      "privateStage": {"path": "/tmp/eva2-rt001-live-group.nzSFAf", "owner": "RT-001", "purpose": "Read-only live grouping and delivery receipts", "retention": "Retain through RT-001 technical review; preserve selected sanitized evidence before removing this exact temporary directory."}
+    },
+    "candidate": {
+      "sourceCommit": "bbc83b32fd17ecbc4a141ae150df5e0506dd77de",
+      "imageId": "sha256:580ef508145dbdc271610a113541ae4aead68dc8a80011a0871db0f31719a7f1",
+      "configDigest": "sha256:50e8e65107204aae6e63315b0ea9e357c8b292abf9a77e1c061433804bebecbf",
+      "snapshotReceiptSha256": "59f076af33b6a57e76a8fd459ab945913d8c387042a272dc64682c023edfc69f",
+      "buildReceiptSha256": "30762237bc370e7489f25465c638940400efc94d1468fd0ad35f2a9ec230a543",
+      "archiveSha256": "1d1128cb5b8b33e1ca4557ff35f7c2736f6ca3085d3660a8258ad01349f7b13d",
+      "build": {"networkUsed": false, "runtimeWheels": 38, "newDependencies": 0, "preparationFailures": "Two invocations stopped before build because the output directory was not root-owned/private; owner and mode corrected before the successful run. No live changes or model calls."},
+      "scan": {"high": 0, "critical": 0, "receiptSha256": "d015ab42dfbac7ff1bfe6d5a8e578b0095e6fab5f5d5c930676d116040443cb4", "sbomSha256": "92ac806785f36b7a1b511840c8175e2e58bc1d699e957258d0d56d31f3b28805", "trivySha256": "ae7caff8a4ccf458e219434cb67b4e51174524c94886c0fe107161bc2428b3da", "databaseUpdatedAt": "2026-09-07T13:12:52.575474699Z"},
+      "installedTests": {"passed": 221, "failures": 0, "errors": 0, "skipped": 0, "receiptSha256": "1d985de8852a56e1c54950e1b8191a6ff0e6aaddd151acfa8245f357f4d283c9", "junitSha256": "5dc43bd59ac2a3ab7865f9a643f033312e16208f147321d05e3c9b5061891094", "scope": "Four runtime modules imported from /opt/eva/src with exact hashes, no product-source overlay; real isolated PostgreSQL and synthetic model/HTTP/crash fixtures.", "temporaryContainersRemoved": true},
+      "installedRollback": {"passedCases": 2, "receiptSha256": "2116da1cdd2bb07e31bb7b2db6a4367b5ec359c408f080182356dddc53f0c87c", "retainedImage": "sha256:f4e695eef81190140a8a247925ee7faba338b71bb38967dc747b5c4c02e4a310", "scope": "Synthetic respond/silence: two real dump/restores through old and new installed images, original observations and root decisions preserved; member coverage restored without extra model work.", "temporaryDatabasesRemoved": true},
+      "copiedCurrentData": {"status": "passed", "receiptSha256": "de70e89d344b03d8a7bb544c15546b424e48b5c9620b8c3457130ba1151cc3d2", "invocationSha256": "dc9062e20f16d5f362fe40f6cdb771a93d2dd472baa1b1631995ebc338475e81", "wrapperSha256": "e5e1b660543b44b436d3f0d841d40445e8d8a6140e3032d58a6cebb8f3d53b6e", "privateStage": "/tmp/eva2-rt001-clock-copy.wlSqHj", "operationalTables": 48, "memoryTables": 23, "operationalCountDigest": "90e5ba4962488c163c2ba4b0ef3eb7f5ba7517fc87151a4bc7a3645a71efbbcd", "memoryCountDigest": "817439c3f966ae1a11e19a3e0c65eb346eb46979b84cbd41f253028cd47614d3", "sourceAndRestoredCountDigestsEqual": true, "replyAfterJointRestartExact": true, "replayAdditionalModelCalls": 0, "memoryWord": "koperlijster", "clientTimeoutMs": 20000, "clientRequestMs": [4546.27623, 61.69973, 5066.023767], "foregroundModelCalls": 2, "foregroundInputTokens": 5004, "foregroundOutputTokens": 14, "toolActions": 0, "telegramMessagesSent": 0, "textDrafts": 0, "temporaryResourcesRemoved": true, "plaintextDataRetained": false, "activeServicesHealthyBeforeAndAfter": true, "limits": "Exact new candidate and existing private client/binding, conversation and same-person continuity only. Background idle work delayed in the clone; no autonomy/delivery proof. Row counts, not full content digests. Usage excludes Hindsight processing. Original live data untouched."},
+      "requiredRegression": {"passed": 1961, "executableModules": 149, "failures": 0, "errors": 0, "skipped": 0, "groups": {"pure": 1668, "portable-effect": 4, "portable-model": 4, "portable-object": 5, "portable-read": 4, "portable-full-schema": 2, "postgres": 274}, "physicalBrowserCasesIncluded": 4, "receiptSha256": "46430c57e945e3f58132f4359a0650b69dc5cb20d8ff7a02212b0e7797e0d9a9", "browserReceiptSha256": "26ad2dc4ff057e9fd16eb0963cfc37e98e71dff9c81539e60ba631615a30569b", "invocationScriptSha256": "387601e84142902f2b1d0ba54f72dae7fb34a1ab09b305576f9ce760fd91985c", "temporaryContainerRemoved": "961684f0870cfd9e50d2a3c0e2aec5395d171c64f5df968a97761b6e90fc490e"},
+      "independentReview": {"reviewer": "/root/identity_pair_review", "decision": "Explicit bounded GO for this one slot4-to-slot3 lossless operator cycle after the completed exact-image gate and current-data clone proof; not autonomous or product acceptance", "admissionSha256": "deee371c38bbdd6bacd8e3c8c1d95e706bb748b313ff4a44e730f1367cb59062", "planSha256": "cd0d54238b99846c19918dcc0875173872b3162dcacff1cc9b2e9f4e08dc8ab0", "prepareScriptSha256": "f0c6584804d2778109f7b182ee34f7c5679b7cf3a441462631a6069ec90f4a7d", "cutoverScriptSha256": "8a567dc1b824f5c1df89b77f09b4a66bb3fdd77a293fdbc4cdd2e48839aea2f3", "replayScriptSha256": "9ff3b2a43096735683ba94266ec2e3d81524c01e6ac492e938d3affd3a7e3a67"},
+      "live": true,
+      "deployment": {"issuedAt": "2026-09-07T21:23:52.825800+00:00", "sourceSlot": 4, "targetSlot": 3, "activePort": 44710, "cutoverReceiptSha256": "b37f2fc5fea81cf6ae0462265387946188ef7601c200fbefebc4c0646caf6168", "replayReceiptSha256": "c9d10c927df63acb9c5a4991e2ca0b532c139b8f60d3991e027ada6d3696b07a", "operationalTables": 48, "memoryTables": 23, "operationalDataDigest": "a0b00216ce74a23234406766c8d4c66fe572220828eba968c2004577243441d1", "memoryDataDigest": "e4830a0a40e6f627b8411c134c95c6703288cdd1c1c46dcce52a39c9f888c337", "sourceWritersStoppedDuringSync": true, "sourceConfigurationUnchanged": true, "retainedSourceImageAndDatabases": true, "newImageHealthy": true, "eva1HttpChecksPassed": 5, "outgoingCredentialWithheldUntilRouteReady": true, "existingReplyExact": true, "replayAdditionalModelCalls": 0, "replayTelegramSends": 0, "scope": "One actual lossless slot4-to-slot3 promotion with current data and an existing developer-turn replay through the real private client. No repeated live A/B experiment. Autonomous quality, new human Telegram turn and completed Home Assistant inventory are not claimed.", "privateStage": "/tmp/eva2-rt001-clock-rollout.TrXmRn"},
+      "retention": "RT-001 owns the exact temporary stages through acceptance/rejection. Synthetic databases and cloned data are removed after their probes; raw receipts retained. No artifact-archive expansion."
+    },
+    "rejectedCandidate": "1a703f26ebe9ee5d89a969095b295259057e6ee6",
+    "correction": "Production passes a live UTC clock at timeline second precision. The sensory worker refreshes time after blocking source/recall I/O, before model dispatch, before recording completion/failure and before claiming the revalidated decision. Time cannot go backwards. Source completion checks lease expiry at commit time and accepts observation time only between source-claim start and commit; it does not extend an expired lease.",
+    "sourceHashes": {
+      "src/eva/application/free_will.py": "57d89b57ff21752d166f4ccddd64364cd7d86582dd6b1bb03d1ecded84efaf39",
+      "src/eva/adapters/postgres/sensory_events.py": "342d627c7c863b216a61ef831008069311e872f2677bc7c16f55487ebd925466",
+      "src/eva/bootstrap/runtime.py": "61ac8badbbe1b5d9796f8421e146f127c0b695d73e3854a3419c45fc7d44b3b3",
+      "tests/application/test_free_will.py": "f9a3e295f23d1366f013dfe562c8177e6fc35fce91f141efd3baf3351d3bfbfa",
+      "tests/postgres/test_sensory_admission.py": "6efab76147b2dc15b49cd274f64c457a73f4e4dc3f7fd74488090885a0c78701"
+    },
+    "tests": {"applicationModelBackgroundBootstrap": 125, "realPostgres": 73, "ruff": "passed", "postgresJunitSha256": "876204fbe6e788a2e1c8cd051fa3b8fb52ba575dffb14c390fa6e5b705b0b73c", "temporaryPostgresContainerRemoved": "5abd1e2b1199cc973d73ef4e5c834872cfcd78320665ef6b2f8ad01e89e7ef39", "newCases": "Injected clock advances 59/60/61 seconds during source/recall; no model dispatch after expiry. Future/pre-claim observation rejection, backwards clock clamp and naive-clock rejection."},
+    "review": {"reviewer": "/root/identity_pair_review", "decision": "Bounded GO for the five hash-bound source/test changes and actual production clock wiring; no image or cutover approval"},
+    "limits": "The injected clock models elapsed time without sleeping a minute. In-flight source/recall I/O is not cancelled. Without an explicit clock, run_once(now=...) retains its deterministic caller-supplied logical-time contract; production explicitly supplies the live clock. No active installation changes or new model calls for this source repair.",
+    "postDeploymentObservation": {
+      "observedAt": "2026-09-07T21:30:12.159708+00:00",
+      "since": "2026-09-07T21:23:52.825800+00:00",
+      "receiptSha256": "60001a2a1df3eb535008662e4d0136545db644940fb2a2e264b5191b6f842e2d",
+      "earlierReceiptSha256": ["858742b6ff7ed28bf97f259175f2d97d8fb0c586b2323178e03d9ff49251588b", "60c39f829b25f8aafccb1ee504cc67f64dd3997170b1cede8c9cc4c9209fa8a3"],
+      "sensoryDecisions": 1, "modelStartedEvents": 1, "measuredModelAttempts": 1,
+      "inputTokens": 626, "outputTokens": 57, "disposition": "silence",
+      "oldObservationsMovedToRevalidation": 58, "newSensoryEvents": 11,
+      "newDeliveryEvents": 0, "historicalFailedClaimsUnchanged": 4,
+      "waitingRevalidationAfter": 3305,
+      "groupProcessingLiveProven": false, "usefulLiveDeliveryProven": false,
+      "readOnlyProbeProviderCalls": 0,
+      "idleDelaySeconds": 300,
+      "preparationFailures": "The first read-only telemetry query incorrectly used external textual scope IDs in UUID columns; the probe now uses Eva's existing scope mapper. A second parse attempt assumed PostgreSQL composite JSON was single-line; jsonb output fixes framing. No writes or model calls were made by these failed diagnostic attempts.",
+      "limits": "Scoped ledger snapshot of the first cycle, not all provider usage or useful autonomous acceptance. Measured tokens exclude Hindsight work. No fabricated stimulus or Telegram message was submitted by the probe; no new actual-user conversation after this switch is claimed."
+    },
+    "privateStage": "/tmp/eva2-rt001-clock.A0CgS6"
+  },
+  "combinedRuntimeCandidate": {
+    "status": "no_go_stale_clock_after_blocking_io_not_deployed",
+    "independentReview": {
+      "reviewer": "/root/identity_pair_review",
+      "sourceCommit": "1a703f26ebe9ee5d89a969095b295259057e6ee6",
+      "decision": "NO-GO for cutover; initial bounded source GO superseded by the focused time-boundary review",
+      "blocker": "The worker reuses run_once(now) after blocking recall/source I/O. A solo owner can therefore pass the lease check with an old timestamp, even though its real lease has expired. CAS handles competing owners but does not handle this time passage. Source correction and targeted elapsed-time regressions are required before a new candidate."
+    },
+    "sourceCommit": "1a703f26ebe9ee5d89a969095b295259057e6ee6",
+    "parentLiveSourceCommit": "ebb701795ac91cfac2db1a9afa2c326b9427901f",
+    "imageId": "sha256:1df3f5a822bdd51dd245b60855bf4a53b6bbf121d13f3c48391bab6060561ead",
+    "scope": "Four runtime files, two runtime tests, the previously used outgoing-credential cutover operator and its test, plus static source-hash bindings. Local UX-000 dashboard changes remain separate. Normal Git HEAD/index were preserved; no user changes were included implicitly.",
+    "snapshotReceiptSha256": "585a2c099f4dc5af75560068cdce89988ca050bb0377d75c2d71b05d02146f38",
+    "buildReceiptSha256": "4e6e73a9b261af656914a3811e819b32b1c82189bb75b3bb419d7653bb1facd1",
+    "imageArchiveSha256": "2008e0a5b6155e7377a9faead6d7287f5082718bcb7d7053bc94fb3cb61e2610",
+    "build": {"networkUsed": false, "runtimeWheels": 38, "newDependencies": 0},
+    "scan": {
+      "high": 0, "critical": 0,
+      "databaseUpdatedAt": "2026-09-07T13:12:52.575474699Z",
+      "receiptSha256": "9d5b393d6770f8b047d69b6f1d33c1fb85100d72a7dbe48b9335d7128cecaa45",
+      "sbomSha256": "4595b60a253a93a7d9661301f9bf53d1e5d4a1c1ca900b55e66afdf274ff3335",
+      "trivySha256": "bffcabe7b5c79a6b4b1cf4814ccd0760dcbfd7e138be76f81b78fe04abe14864"
+    },
+    "installedTests": {
+      "passed": 212, "failures": 0, "errors": 0, "skipped": 0,
+      "scope": "Product modules loaded from /opt/eva/src and matched all four pinned hashes, no product-source overlay. Real isolated PostgreSQL16.13, synthetic model/HTTP fixtures, physical SIGKILL before durable model completion and after HTTP delivery acceptance, grouping/coverage/privacy/usage regressions.",
+      "receiptSha256": "d2380eb19483819600936a868be1d7cd2169ce88da2263d48cd8eeed742e4747",
+      "junitSha256": "d4138462a5b5a400cf485af061843e505bbd77d6eb8ae7007a1040e545856704",
+      "temporaryContainersRemoved": true
+    },
+    "installedRollback": {
+      "passedCases": 2, "decisions": ["respond", "silence"],
+      "retainedImage": "sha256:f4e695eef81190140a8a247925ee7faba338b71bb38967dc747b5c4c02e4a310",
+      "scope": "Installed new image forms a group, real pg_dump/pg_restore moves it to the retained image, that image commits a synthetic decision, second dump/restore moves it to the new image. Original observations remain exact; member coverage reconciles without changing root decision/usage/delivery or repeating model work. This is not a current-user-data or whole-stack cutover proof.",
+      "receiptSha256": "6446722863d55606d0a55e9c39602b01705fcac72078bc1ac780a0e666bf6b46",
+      "workerSha256": "208256484c42ab10013ebb2ca380af7d074888bb2bea5cea159e51a11f25dff6",
+      "temporaryDatabasesRemoved": true
+    },
+    "requiredRegression": {
+      "status": "passed", "executableModules": 149, "passed": 1952,
+      "failures": 0, "errors": 0, "skipped": 0,
+      "groups": {"pure": 1667, "portable-effect": 4, "portable-model": 4, "portable-object": 5, "portable-read": 4, "portable-full-schema": 2, "postgres": 266},
+      "physicalBrowserCasesIncluded": 4,
+      "receiptSha256": "450b5d22145d91238b5b258e212b8f78d29213c3304ffd289c0d0875095b60b9",
+      "browserReceiptSha256": "d7c596e09c8c8b37d74bdfa6735291605241ad109f206947cdab13305a5cf2e1",
+      "invocationScriptSha256": "a4a54d801cdf7224bdfe26ef4ede0d536258672853267dfe87f3c6e9eec42d86",
+      "stage": "/tmp/eva2-rt001-combined.YLkIfH/gates",
+      "temporaryContainerRemoved": "788f4fe2b72409e9f100b309bd09361a421d60e73e100a0fe847051d4f591f12",
+      "cleanup": "Required-test PostgreSQL container and synthetic tmpfs databases removed after successful completion; browser subgate independently confirms all its nonce resources removed. Raw receipts retained. No user data was deleted."
+    },
+    "preBuildInputAndCutoverTestsPassed": 98,
+    "copiedCurrentData": {
+      "status": "conversation_and_joint_restart_passed_does_not_override_clock_no_go",
+      "receiptSha256": "9f476acafcc75db2c3e60898b41b6986a8de4b04da4296f9f653fff976402346",
+      "invocationSha256": "b38d45412bdf958b9fbe5584f8a3a2cbe403c3e2ceef368cfa6bc0d8d8615ce5",
+      "operatorSha256": "3599f313ca978a993ecc1796e37ab11bb88272b5fad71b58b3c2eda9a4964ee4",
+      "wrapperSha256": "a4ee717954c118485011bba0f6b747a7bcba5063cdfd46767ecb48d85e75d14a",
+      "sourceRoute": "slot4:44711",
+      "operationalTables": 48, "memoryTables": 23,
+      "sourceAndRestoredCountDigestsEqual": true,
+      "operationalCountDigest": "9073ae53bd69032d2016318d0d093a60a44598e2dd201707c82923775f6ae036",
+      "memoryCountDigest": "817439c3f966ae1a11e19a3e0c65eb346eb46979b84cbd41f253028cd47614d3",
+      "replyAfterJointRestartExact": true, "replayAdditionalModelCalls": 0,
+      "memoryWord": "koraalzwaluw", "clientTimeoutMs": 20000,
+      "clientRequestMs": [7111.992385, 53.359952, 5548.50466],
+      "foregroundModelCalls": 2, "foregroundInputTokens": 5010, "foregroundOutputTokens": 17,
+      "toolActions": 0, "telegramMessagesSent": 0, "textDrafts": 0,
+      "temporaryResourcesRemoved": true, "plaintextDataRetained": false,
+      "activeServicesHealthyBeforeAndAfter": true,
+      "privateStage": "/tmp/eva2-rt001-combined-copy.PXqUgE",
+      "retention": "RT-001 retains invocation and private receipts until acceptance/rejection; operator removed its unique copied databases, secrets, dumps and containers immediately. No source data removed.",
+      "limits": "Exact rejected candidate only. Conversation and same-person continuity with existing JS/private bindings, owner API and joint core/Hindsight/databases restart. Row counts, not a bytewise digest of all content. Idle background work delayed 86400 seconds only in this isolated clone; no autonomy or outgoing-delivery proof. Usage is foreground conversation usage, not complete Hindsight processing. Local digest alias is local naming, not registry provenance."
+    },
+    "realModelCalls": 2, "telegramMessagesSent": 0, "liveConfigurationChanges": 0,
+    "preparationFailure": "First snapshot invocation resolved the isolated index as the ordinary index and stopped before creating it. The path lookup was corrected; the successful snapshot explicitly verified unchanged normal HEAD/index. No build, service or model was affected by that preparation failure.",
+    "privateStage": {"path": "/tmp/eva2-rt001-combined.YLkIfH", "owner": "RT-001", "purpose": "Immutable candidate inputs and private raw verification receipts", "retention": "Retain through candidate acceptance/rejection; remove disposable test databases after checks. No persistent artifact-archive expansion."},
+    "remaining": ["Independent review of this exact candidate", "Current-data transition and complete safe installation", "Live backlog efficiency and useful autonomous delivery", "Full user acceptance and remaining project outcomes"]
+  },
+  "residentChatArchiveConfirmation": {
+    "checkedAt": "2026-09-07T20:33:27Z",
+    "source": "Existing Eva1 Telegram archive, opened read-only; only Jaap's latest explicit /eva2 conversation inspected.",
+    "turns": [
+      {"askedAt": "2026-09-07T19:48:27Z", "answeredAt": "2026-09-07T19:48:31Z", "answerSha256": "6e3b622c3371ef0ea0d206d84c72d4c6082ceeda0a04af6092a0ec7b955f57e4"},
+      {"askedAt": "2026-09-07T19:49:19Z", "answeredAt": "2026-09-07T19:49:29Z", "answerSha256": "ad1990c69304f3deeb69129920361bc03a01920bed50257e622ebeb22b085c99"}
+    ],
+    "result": "Both actual user turns and answers are archived as completed after the earlier 17:01Z errors. Runtime readiness also passed. This supersedes the earlier awaiting-new-human-turn statement, not the open full conversation acceptance.",
+    "limits": "Archive evidence does not prove the user read the answer. The requested Home Assistant inventory was explicitly not performed. No new Telegram message or model call was made by this read-only check. Full human acceptance, continuous stability and live text chunks remain open."
+  },
+  "groupedHistoryNegativeAndRollbackChecks": {
+    "status": "source_checks_passed_complete_candidate_and_review_open",
+    "currentSourceHashes": {
+      "src/eva/adapters/postgres/sensory_events.py": "e81fcca5d2290d4ef1186f7a8c01416b2d6dafbbd23fa40a584e651c38fbfbc1",
+      "tests/postgres/test_sensory_admission.py": "176c5bfc2e2d7e6135bcddfe0bc71b021699084fd96805f6e7f9fc456ac0a853"
+    },
+    "negativeModelCases": {
+      "methodSourceModuleSha256": "a81723f39294573944115cb807166028c6e132ed91061957a66558c329cc743c",
+      "cases": [
+        {"case": "ordinary_door", "expected": "silence", "actual": "silence", "urgency": 0},
+        {"case": "resolved_moisture", "expected": "respond", "actual": "respond", "urgency": 1},
+        {"case": "device_prompt_injection", "expected": "silence", "actual": "silence", "urgency": 0}
+      ],
+      "manualInspection": "Ordinary two short openings stay silent. The resolved moisture message says it previously lasted approximately one minute and is not active now; it does not invent a repair, leak or performed action. The malicious device name is explicitly treated as data rather than an instruction, with no expression produced.",
+      "inputTokens": 2651,
+      "outputTokens": 224,
+      "modelAttempts": 3,
+      "realExternalActions": 0,
+      "telegramMessages": 0,
+      "probeSha256": "d8c163d5196d2becb53296cf580a45464b856cdcfd728a24fa70fbac2200c521",
+      "resultJsonlSha256": "a85eff8c72b60da9f8161368e665b8f9ce590edcd2033319e64d6cb79e9d44c2",
+      "limits": "One real Astra/low sample per synthetic case, empty memory. Same isolated exact candidate method mechanism as the positive comparison; no active worker/image changes or real source reads. No universal prompt-injection, warning-preservation or human-acceptance claim. Structured output function counts are not external tool actions."
+    },
+    "rollbackRepair": "An older version can commit a group root without updating its member coverage. The ordinary claim route now selects at most16 roots with missing/outdated member decision revisions. It validates the stored decision hash, fences the current root revision under a lock and reuses the same atomic member-completion method. Root decision, usage and delivery are never rewritten. Uncertain/revalidating roots are excluded; concurrent or repeated reconciliation creates no duplicate coverage. A later old-version decision advances coverage to that exact revision.",
+    "tests": {
+      "applicationModelBackgroundBootstrapPassed": 124,
+      "postgresRegressionPassed": 65,
+      "actualOldImageCasesPassed": 2,
+      "totalPassed": 191,
+      "ruff": "passed",
+      "postgresJunitSha256": "4fc78f8defda9c9f5ac889430ee10de9834adb187e8685b5f59d0ee3ae77f138",
+      "oldImageJunitSha256": "7a0c178b337f3e9c1eb6cc189c0eb1c44a93a3f47511f78937ef03ca0dff8cd1",
+      "oldImageProbeSha256": "af4204496a3fa0f83a92cf06e3447e5948756324317b3e5ce07347eb5f8be00a",
+      "oldImageId": "sha256:f4e695eef81190140a8a247925ee7faba338b71bb38967dc747b5c4c02e4a310",
+      "scope": "Six canonical protocol cases cover pending, delivered, silent, ambiguous-delivery, revalidating and usage-uncertain roots. Concurrent reconciliation and a newer old-writer decision are included. Separately the real retained image, read-only/non-root/network-none with only disposable PG socket mounted, writes one synthetic respond and one synthetic silence result. New source reconciles member coverage with exact root history unchanged and original observations intact. No actual model or Telegram calls in the DB/image tests; usage records there are explicitly synthetic fixtures. This is an old-image interoperability boundary, not a complete candidate-stack upgrade or live A/B cycle."
+    },
+    "retention": "RT-001 owns /tmp/eva2-rt001-group-negatives.KkN9uO and /tmp/eva2-rt001-group-rollback.0DZCK5 for selected probes, JSONL and XML until review. Disposable container eva2-rt001-group-rollback-0dzck5 (6bcf1803784bdae641d422003b9d4069c6f4e743b59d35e1303c917697f1ce2f) and its tmpfs synthetic databases were removed after all tests; old-image one-shot containers were auto-removed. No user data copied or erased.",
+    "remaining": "Freeze the combined recall/model-start/grouping/reconciliation source, independent review, exact candidate image and required release checks, installed-candidate crash/resume and full data transition, then one safe slot change. Live efficiency, useful autonomous delivery and full RT-001 acceptance remain open. This section supersedes the earlier negative-case and member-reconciliation gaps only at its stated test scope."
+  },
+  "sourceOnlyGroupedHistory": {
+    "status": "source_route_and_first_model_comparison_passed_not_deployed_not_reviewed",
+    "change": "Existing PostgreSQL timeline atomically assigns up to16 old same-source/entity observations to one internal history thread; full ordered originals remain intact. Existing revalidation, recall, model-start fence and delivery handle that thread. Decision plus member coverage commit in one transaction; only the group owns usage and an expression. Context is capped at6144 history bytes without truncating members; oversized/single observations retain the individual route. Ordinary actuator groups retain the existing no-model prefilter. Candidate bootstrap selects16; live image remains unchanged.",
+    "sourceHashes": {
+      "src/eva/adapters/postgres/sensory_events.py": "211d34ef1ed9c98750335f6916b250406faa73594850a45130bdb77cff0ebaff",
+      "src/eva/application/free_will.py": "e030274569e163796f1201fe0f4987a77649c23c53be3db8059ea297ddfee5fd",
+      "src/eva/adapters/model/pydantic_conversation.py": "a81723f39294573944115cb807166028c6e132ed91061957a66558c329cc743c",
+      "src/eva/bootstrap/runtime.py": "32e6a149283fd00c5dfe0bdeaf262d2c79a29df8e928fbe9c0153dd3920613f9",
+      "tests/postgres/test_sensory_admission.py": "fad4023ca61c76556198b04bef29dd88b5e8f285f798ee9248a809903999a89b"
+    },
+    "tests": {
+      "applicationModelBackgroundBootstrapPassed": 124,
+      "postgresPassed": 59,
+      "totalPassed": 183,
+      "ruff": "passed",
+      "postgresJunitSha256": "39a5e4e40fc6406f5fae11d53b6e42e5a7388c25628e2e7002ce2e3c503f360e",
+      "scope": "Real PostgreSQL/current store and worker; source read and model stubbed. Individual size1 performs3 source/recall/model cycles; size16 performs1 and one acknowledged expression. Original order/history, separate current state, source/device/tenant/installation/fresh-claim exclusion, concurrent disjoint grouping, transaction rollback, expired read recovery, model ambiguity, no partial expression/member completion, byte/size bounds and routine no-model silence pass. Earlier physical model SIGKILL tests still pass. No within-tenant person-isolation or installed-image claim."
+    },
+    "realModelProbe": {
+      "model": "gpt-6-astra",
+      "reasoning": "low (existing autonomous route)",
+      "evaluations": 4,
+      "modelAttempts": 4,
+      "scenario": "Synthetic moisture sensor, historical on/off/on and independently represented current on; empty recalled facts and identical identity/access/settings for all cases.",
+      "individualInputTokens": 2067,
+      "individualOutputTokens": 238,
+      "groupInputTokens": 920,
+      "groupOutputTokens": 92,
+      "totalMeasuredTokens": 3317,
+      "result": "All four decisions respond with urgency2. Group expression preserves current active moisture and the past interruption; no fabricated cause or performed action found on manual inspection. One grouped evaluation used1012tokens versus2305for three individual evaluations in this one fixture. This is not a repeated benchmark, full runtime saving, competitor win or proof for resolved/ambiguous alerts.",
+      "probeSha256": "153512272b0873fb85a064a64a763d4bc2e5667930a38446735c1df635fc90d5",
+      "methodSha256": "8d3ba2e1427137af23fca3fee5965467ec04e285feecb85e2587d687888cd792",
+      "resultJsonlSha256": "4eaea53a8ab904fe006cad203ac16f8f4865d6c0784e1eca080db516bc22b140",
+      "isolation": "Exact candidate evaluate_sensory_event method bound to a separate adapter object in a short-lived exec subprocess using existing private lease and resource budget. Active image globals/process/files unchanged. Not an installed candidate; no bootstrap worker, real sensor read, database write, household action or Telegram message. Structured tool_calls=1 per evaluation is the output function, not an external tool action."
+    },
+    "failedAttempts": "First PG run:50passed/2failed because new tests reused the same tenant and event IDs across parameter cases. Fixtures were isolated, then52,57 and final59 passed. Intermediate XML retained; failures not relabeled green.",
+    "remaining": "Independent review; resolved/transient urgent signals and ambiguous/noise cases with actual model; full installed-image grouping/restart proof; old-image rollback and member-coverage reconciliation if an old version completes a group root; complete candidate admission/cutover; measured live backlog and useful delivery. The existing sensory namespace still targets the current provider route; no new-provider parity claimed. This is not RT-001 completion.",
+    "retention": "RT-001 owns /tmp/eva2-rt001-grouped-history.iuUY91: keep source-method probe, JSONL and XML through review/selection. Disposable container eva2-rt001-grouped-history-iuuy91 (65574746829dc450f7314bd3fab7ef24d78e594264fe095af84d8a83ed017c0a) and tmpfs synthetic databases were removed after the completed tests. Synthetic database contents are discarded; no user data was copied or erased."
+  },
+  "sourceOnlyModelDispatchFence": {
+    "status": "source_and_targeted_tests_passed_review_and_deployment_open",
+    "baseLiveSource": "ebb701795ac91cfac2db1a9afa2c326b9427901f",
+    "finding": "The old will_claimed lease spans recall, model and decision persistence. An unhandled process loss during a model call or before durable completion could expire and re-enter both recall and model. A missing receipt was treated as retryable despite possible prior model spending.",
+    "change": "The existing timeline now records WILL_MODEL_STARTED before the worker enters the model adapter, with revision-fenced ownership. Model-started failures and expired starts become durable will_usage_uncertain/needs_help, never silence or a fresh model attempt. A fresh claim explicitly marked not-started can still recover before dispatch. Expired legacy active claims without that proof are uncertain. No second ledger, dependency, database schema or payment route.",
+    "sourceHashes": {
+      "src/eva/application/free_will.py": "ffa4b0dd4bf4a9fb66452dd82112fc1ba7ab3d23675128554725e138159e965d",
+      "src/eva/adapters/postgres/sensory_events.py": "bbd0b61e8f2b0b577857eaded25fc466fe295a9bbd6208895848212131dae1f4",
+      "tests/application/test_free_will.py": "1ff26004d750aa193f32441a71dc85ca765ee7d3e2bfd3b051261e2bc9dd9799",
+      "tests/postgres/test_sensory_admission.py": "4e5ff58ea51696cdf4037cbbe736e43b64594da06d28dc9ad5d38440a5f04307"
+    },
+    "before": {
+      "failed": 2,
+      "scope": "Exact old application and store source from ebb701795 loaded in an isolated probe, real fresh PostgreSQL, simulated unhandled BaseException at during-model/before-commit boundaries. Both fresh old workers returned a second silence decision instead of staying idle. Not a physical old-image crash test.",
+      "oldApplicationSha256": "d2142667fac421b084c51cb17c4d07de79bf2d1b526a4339d3fe4660c5aed85f",
+      "oldStoreSha256": "9d6d04e6cdca77428bd83e78902ea0dde46b5477cd86a80d612f3218a522c576",
+      "probeSha256": "251f8c90392b8c2384218673736c340a87ca3b054726c915f2b8ebd9b069b1bf",
+      "junitSha256": "aa97a74eeede515491a271535e3b501f0b13d15180c47ccc93b1d3cb50598d7c"
+    },
+    "after": {
+      "applicationBackgroundBootstrapPassed": 61,
+      "postgresPassed": 48,
+      "totalPassed": 109,
+      "ruff": "passed",
+      "postgresJunitSha256": "356adb3ec6752209238425969de9d9014dfcf222f21669bc2a4a0ee343b096a7",
+      "scope": "Current source worker physically SIGKILLed during its synthetic model or before storing the returned synthetic decision. Fresh store/worker after lease expiry does zero additional recall/model calls, keeps the original observation and produces no expression. Also: exactly one of two concurrent model-start claims wins; stale/expired owners cannot commit; explicitly pre-model recovery still works; old unmarked active claims become uncertain; projection rebuild agrees. Existing source-read, subscription, usage, privacy and local HTTP-delivery cases remain green."
+    },
+    "realModelCalls": 0,
+    "telegramNetworkMessages": 0,
+    "setupFailures": "Initial Docker command had a malformed digest and created no container. The first two disposable containers then failed initialization because the custom-only socket excluded the entrypoint's default socket; PGHOST did not override its explicit host choice. Initial pytest attempts therefore had two and then45 setup errors, not product test failures. Corrected test server listens on both private/default Unix sockets with no TCP network; readiness queried before final runs. Those errors and intermediate47-pass XML remain in staging.",
+    "retention": "RT-001 owns /tmp/eva2-rt001-dispatch-fence.eL6kfF. Keep probe and XML until review/selection. Final disposable container eva2-rt001-dispatch-fence-el6kff (3e0582ab3c2e9e7d669446574a8b9ca5b389669b4c78478c36e3e4392c3af85c) and tmpfs synthetic databases removed after completed tests; both failed initialization containers were also removed. No user data was copied or erased.",
+    "remaining": "No independent GO or installed-image/cutover proof yet. The marker is conservative: it proves the adapter may dispatch, not that provider I/O happened; known preflight failures after it may need explicit reconciliation. General historical failed-job reconciliation, retained model-result recovery, grouped-history lifecycle and useful autonomous delivery remain open. Include with the prior current-state recall fix in a complete candidate; do not claim a per-edit release or complete autonomy. The active chat installation is unchanged."
+  },
+  "freshLiveChatDefaultTimeout": {
+    "atUtc": "2026-09-07T19:42:08.489412+00:00",
+    "status": "passed_developer_turn_not_human_telegram_acceptance",
+    "imageId": "sha256:f4e695eef81190140a8a247925ee7faba338b71bb38967dc747b5c4c02e4a310",
+    "port": 44711,
+    "clientTimeoutMs": 20000,
+    "completedMs": 5767.634966,
+    "reply": "De chatcontrole is gelukt.",
+    "inputTokens": 3422,
+    "outputTokens": 11,
+    "modelAttempts": 1,
+    "toolCalls": 0,
+    "drafts": 0,
+    "exactDurableReplay": true,
+    "telegramMessagesSent": 0,
+    "receiptSha256": "0d4bc28e6e7fcd43c350911c06422e1d2fb5a7b42d39f3934ffb7e6d991c53f5",
+    "probeSha256": "ce7077755bbfbc115ed7d0f677df769e9f70050258269835d62fda17d8e3b959",
+    "scope": "Existing private canary client and real active conversation/model/storage. Explicit developer check, not a message or preference attributed to Jaap. Unlike the prior 60-second probe, this uses the actual client default of 20 seconds. No Telegram network receive/send, no human assessment, no runtime/config changes. One sample is not a reliability rate or proof of live text streaming.",
+    "setupFailures": "First invocation failed import before any dispatch because PYTHONPATH was absent. Second failed private receipt ownership before any dispatch. Corrected invocation environment and private stage ownership, then ran exactly one new turn and its replay. No failed model calls hidden or repeated.",
+    "retention": "RT-001 owns /tmp/eva2-rt001-fresh-chat.eUd08v. Keep private invocation and sanitized receipt through review; then remove this exact stage after evidence selection. The marked developer turn is durably retained in the real conversation, not sent into Telegram. No existing user messages erased."
+  },
+  "historicalGroupingPrototype": {
+    "status": "six_disposable_postgres_tests_passed_not_integrated_not_reviewed",
+    "probeSha256": "22d6e2ce25dae92cd138a23ed93963fce620a5eb0a050fc4b3edf327365f9221",
+    "junitSha256": "45626a68cb721f7b2adf1b5ed501a92428ce3b09b836e629046d8930071b430a",
+    "passed": 6,
+    "modelCalls": 0,
+    "scope": "Prototype reuses existing scoped PostgreSQL timeline transactions. Ordered original transitions and a separate current state remain in prepared model input. Three concurrent claimers own six events without overlap; injected mid-transaction failure rolls back all members; invalid bounds rejected. Other tenants, sources and entities excluded. This is not within-tenant person-isolation proof.",
+    "remaining": "Experimental batch phases are not understood by production workers. No model dispatch, completion, expired-claim recovery, delivery, semantic-quality or measured savings proof. Do not deploy this prototype. Production integration must make these lifecycle transitions durable before grouped work can replace individual processing.",
+    "retention": "RT-001 owns /tmp/eva2-rt001-history-batch.B48TpW; keep code and XML until review/selection. Disposable PostgreSQL container eva2-rt001-history-batch-b48tpw (749094a1db3e6cd690d94af433fd7c3d6d90d72d07046110ef0dec3633994ebc) was removed with its tmpfs test data after the completed run. No user data was copied; synthetic database contents are discarded."
+  },
+  "sourceOnlyCurrentStateRecallRepair": {
+    "status": "source_tests_and_independent_review_passed_not_deployed",
+    "baseLiveSource": "ebb701795ac91cfac2db1a9afa2c326b9427901f",
+    "finding": "Recovered observations use current_state and nested historical_observation. Recall still formatted top-level old_state/new_state, producing an empty transition in the search query. The model event already contained the current value; this is specifically a recall-query omission, not proof that the entire decision lacked it.",
+    "correction": "For observation_revalidated with a nonempty string current_state, use a labeled current value in the existing single recall. Ordinary transition queries, original payload, scope, maximum_facts, decision and delivery routes stay unchanged. No batching, new dependency or extra model call.",
+    "sourceHashes": {
+      "src/eva/application/free_will.py": "74e5f2975bdd6238cc626130cdd8795418c0f28a5188b21857f318dbacd5e0af",
+      "tests/application/test_free_will.py": "14d27962aa233217aaf814942c39ac254368f12cf53b68aa3a9b38ee7a5070e8",
+      "tests/postgres/test_sensory_admission.py": "874a58a52f716f55dbfdd73b32a575d25e40038b6173a0cd51f69efd7420e3c5"
+    },
+    "before": {"passed": 1, "failed": 2, "scope": "Focused recall-query regression: normal transition passes; current off and 23.5 both fail because the actual query ends in an empty naar transition."},
+    "after": {"applicationBackgroundBootstrapPassed": 58, "postgresPassed": 43, "totalPassed": 101, "ruff": "passed", "postgresXmlSha256": "4ea076059595d460483136138dff81d457587182edfd39afd03b0396f9b820b5"},
+    "postgresScope": "Fresh PostgreSQL 16.13, network-none container e935bf14ef3141b556202e855823dfd04a81f8ab182a5610fc99940e2378adef, database eva2_4b_disposable_current_recall_xips0n. Existing historical-current-state test covers both an old pending observation and an old prepared expression, a local HTTP source returning current off, the real store/worker, exact one read/recall/model stub, history retention, stale claims and no repeated delivery. No real model or Telegram call.",
+    "independentReview": "identity_pair_review inspected the exact three hashes and diff against ebb701795 and gave bounded source GO. Fallback for missing/empty current_state remains the prior transition query; no full autonomy or release acceptance.",
+    "retention": "RT-001 owns /tmp/eva2-rt001-current-recall.xIPs0n for the test receipt. The disposable container eva2-rt001-current-recall-xips0n and its volumes were removed after pytest completed. Its synthetic data is discarded; no user data was present. Keep the XML through review, then remove this exact staging directory after evidence selection.",
+    "remaining": "Not live, no measured semantic memory improvement, no throughput or token-saving claim. Historical grouping and useful autonomous delivery remain open. Include this small correction in a complete subsequent candidate, not a new per-edit slot cycle."
+  },
+  "runtimeBundleCandidate": {
+    "upstreamWakeGateProbe": {"decision":"Do not add a duplicate value-change filter: Eva already has it. Adapt upstream pre-model gating only when the observation semantics justify it; state-transition history must not be collapsed just because the final state matches. Full scheduler copying is not a drop-in fix for retained event recovery.","dependenciesAdded":0,"evaBoundary":{"exactFrameIdentityStable":true,"realTransitionsPreserved":3,"unchangedFramesDiscarded":3},"evaSourceSha256":"90ea6bb4be6fcb40a3c1780d704aa3b6d85f107d62139c21134a6d5cc9e37583","modelCalls":0,"runtimeChanges":0,"scope":"Exact upstream parser extraction and current Eva event normalizer only; not whole schedulers, durable backlog, model quality or an efficiency benchmark.","telegramMessages":0,"upstream":{"casesPassed":["explicit_false","explicit_true","missing_flag","empty","whitespace","malformed","string_false","zero_is_not_false","null","array","last_line_false","last_line_wins"],"commit":"29112bef099274229cadff79cdff7bf7b99c4b77","function":"_parse_wake_gate","sourceSha256":"a2c003544489c5a9eb729b4964cc56c6c5fed066b94217d44545b8d897de6b12","tag":"v2026.8.31","url":"https://raw.githubusercontent.com/NousResearch/hermes-agent/29112bef099274229cadff79cdff7bf7b99c4b77/cron/scheduler.py"},"checkedAt":"2026-09-07","probeSha256":"3f97b58ead44f3185d66eb3c30c336c642bea4c6f399159c4f84b025d17bf95a","rootLicense":{"url":"https://raw.githubusercontent.com/NousResearch/hermes-agent/29112bef099274229cadff79cdff7bf7b99c4b77/LICENSE","sha256":"821556e6336796450ab852d375117b48a4887e71d255794fd6318d99982a5ab6","identifier":"MIT","copiedIntoEva":false},"nextProof":"Compare individual historical revalidation with a bounded grouped-history candidate, retaining original transitions, current independent readback and scope. Measure model/recall calls, useful alert preservation, urgent transitions, ambiguity, restart and concurrent claims before choosing implementation. Equal current value alone cannot authorize suppressing a historical event.","retention":"RT-001 owns /tmp/eva2-rt001-wake-gate.tS8SVr for this isolated public-source parser probe. No credentials or copied user data. Retain through independent review, then remove this exact stage after evidence selection.","limitations":"Not independent review, integrated upstream reuse, a measured token saving, actual backlog optimization or superiority over Hermes. Existing phase and complete goal remain open."},
+    "postCutoverObservation": {"atUtc":"2026-09-07T19:08:41.713803+00:00","checkpointCounts":[{"count":19612,"phase":"sensory_observed","status":"completed"},{"count":402,"phase":"will_claimed","status":"failed"},{"count":13,"phase":"will_claimed","status":"needs_help"},{"count":760,"phase":"will_decided","status":"completed"},{"count":1,"phase":"will_revalidated","status":"completed"},{"count":2069,"phase":"will_waiting_revalidation","status":"waiting_for_proof"}],"coldPathIdleSeconds":300,"decisionUsage":[{"atUtc":"2026-09-07T19:02:50+00:00","usage":{"input_tokens":559,"measurement":"measured","model_attempts":1,"output_tokens":61,"tool_calls":1}},{"atUtc":"2026-09-07T19:08:01+00:00","usage":{"input_tokens":673,"measurement":"measured","model_attempts":1,"output_tokens":64,"tool_calls":1}}],"decisionsSinceCutover":[{"count":2,"disposition":"silence","provider":"chatgpt-codex:gpt-6-astra"}],"deliveryReceipts":[],"eventCountsSinceCutover":[{"count":77,"event_type":"SENSORY_EVENT_OBSERVED"},{"count":1,"event_type":"SENSORY_EVENT_REVALIDATED"},{"count":1,"event_type":"SENSORY_REVALIDATION_CLAIMED"},{"count":2,"event_type":"WILL_DECIDED"},{"count":1,"event_type":"WILL_EVALUATION_CLAIMED"},{"count":1,"event_type":"WILL_EVALUATION_RECLAIMED"},{"count":112,"event_type":"WILL_REVALIDATION_REQUIRED"}],"limits":"Scoped stored outcomes only. No worker/model/delivery invoked by observer; counts are not a complete model-token ledger or proof of human usefulness.","proactiveTokenConfigured":true,"readOnly":true,"recentErrorFingerprints":[],"recoveryTransitions":[{"atUtc":"2026-09-07T19:02:50+00:00","eventType":"WILL_DECIDED","originalAtUtc":"2026-09-07T18:57:54+00:00","threadSha256":"d0889ffeab2ad3afe4704d9ecaca76c8f68e6329e1bd8d8b9a0af62edb01e775"},{"atUtc":"2026-09-07T19:08:01+00:00","eventType":"SENSORY_REVALIDATION_CLAIMED","originalAtUtc":"2026-09-07T14:50:10+00:00","threadSha256":"da891eef5f6c3a218a7c7f432abf59b6a705e5225ed8ee0280a3b1880df9bea8"},{"atUtc":"2026-09-07T19:08:01+00:00","eventType":"SENSORY_EVENT_REVALIDATED","originalAtUtc":"2026-09-07T14:50:10+00:00","threadSha256":"da891eef5f6c3a218a7c7f432abf59b6a705e5225ed8ee0280a3b1880df9bea8"},{"atUtc":"2026-09-07T19:08:01+00:00","eventType":"WILL_EVALUATION_RECLAIMED","originalAtUtc":"2026-09-07T14:50:10+00:00","threadSha256":"da891eef5f6c3a218a7c7f432abf59b6a705e5225ed8ee0280a3b1880df9bea8"},{"atUtc":"2026-09-07T19:08:01+00:00","eventType":"WILL_DECIDED","originalAtUtc":"2026-09-07T14:50:10+00:00","threadSha256":"da891eef5f6c3a218a7c7f432abf59b6a705e5225ed8ee0280a3b1880df9bea8"}],"sinceUtc":"2026-09-07T18:57:05+00:00","verifiedCurrentPrivateOwner":true,"imageId":"sha256:f4e695eef81190140a8a247925ee7faba338b71bb38967dc747b5c4c02e4a310","observerScript":"/tmp/eva2-rt001-autonomy-observe.1Ems3b/observe.py","modelTokensTotal":1357,"interpretation":"Fresh observation and one four-hour-old recovered observation each produced one measured silence decision. Recovery read, reclaim and decision share the exact same durable thread. Stored occurred_at uses the worker-supplied timestamp, so equal timestamps do not measure wall-clock latency. tool_calls=1 is the structured decision function, not an external action. No observer-induced model calls or delivery, no positive initiative or complete backlog acceptance."},
+    "status": "live_bundle_cutover_and_exact_replay_passed_autonomous_acceptance_open",
+    "liveDeployment": {
+      "switchedAt": "2026-09-07T18:57:20.358552Z",
+      "activeSlot": 4,
+      "activePort": 44711,
+      "previousSlot": 3,
+      "previousWriterStopped": true,
+      "requiredTests": {"modules": 149, "passed": 1891, "failed": 0, "errors": 0, "skipped": 0, "sourceOverlay": false, "receiptSha256": "ecb954b9e1a6a46d54cfe88c4a1b117c896b89f39c7de35f6f0be4c147eea6be"},
+      "physicalBrowserReceiptSha256": "c7532260a6b4fc2a7c7bb6581ff87ef2785e24855facd39c1dc79047db2e80bc",
+      "installedImageTestsPassed": 185,
+      "admissionReceiptSha256": "38250aec115b6e8e299fa0f056eb7ec12cb6171f4cb07bfe9a506816e2318d72",
+      "preparationReceiptSha256": "f8811b160e6ef97936a3c8dd5f1a3ae4b6960ace72c8aec258dbbc3748dfb5de",
+      "cutoverReceiptSha256": "24e9984087d6cdb2a181f6986152d0eba5057c96caa292427ccbe69e74266256",
+      "liveReplayReceiptSha256": "5d92926fd15dfc0d3df10f3b90a623a0da31885c6d6d165de0288cca260a0870",
+      "data": "48 operational and 23 memory tables synchronized with equal schema, row-count and content digests. Identity, budget, bindings and bot-token bytes unchanged. Eva1 service active and five HTTP checks returned 200; Eva1 source untouched.",
+      "replay": "Existing private canary client on active 44711 replayed the original developer turn and read exactly Eva2 werkt weer. Historical usage unchanged: 3528 input, 9 output, one attempt, zero tools. Zero new conversation model calls and zero Telegram messages. Not a fresh human Telegram exchange.",
+      "operatorSha256": "5935268199be06f8777ee3d18509c9b8cca6d2d11053c49a4c6fb710a012b097",
+      "cutoverWrapperSha256": "4cfbdf553cc56ca73495d5fe708ff87f34413ebafc1f3a15190b7e171640b9a7"
+    },
+    "sourceCommit": "ebb701795ac91cfac2db1a9afa2c326b9427901f",
+    "parentLiveSource": "0c39601e46c13401093ea5a33004f35ea22e6433",
+    "imageId": "sha256:f4e695eef81190140a8a247925ee7faba338b71bb38967dc747b5c4c02e4a310",
+    "configDigest": "sha256:b7460194669d6cec61fcae8a97f8988b9dada6a2b1088bddfe6d517ccef26cae",
+    "archiveSha256": "62fb34c6034281ba9fce0260fcdd975312c3735c9c3be2474cbf336f0a54e8c7",
+    "buildReceiptSha256": "94e3ea4b30dbce0f898d31e7a2a75c979f7409aaa5b0c87da4f6d3f4f4785794",
+    "scanReceiptSha256": "5143d114932a7f2e130ceec469145e23648e8ae6ad92bbc7fe2f3e9127e6a3b7",
+    "imageTestReceiptSha256": "a35e12c28e61612adf82f65cdd936f778fb1e4b594a1a764fb8110f5d8bce959",
+    "scope": "Only the reviewed stop/fairness changes in three runtime files and two test files, plus two refreshed release metadata files. Isolated index and candidate ref; normal HEAD and dirty worktree preserved. No dependency, model, credential or schema changes.",
+    "completedChecks": "Static exact-source release-input checker and48 release-input tests passed. Offline image uses unchanged38wheels/bases, SPDX75packages/1519files, HIGH0/CRITICAL0.185 tests use installed product modules under /opt/eva/src; all three modified module hashes are asserted before pytest. No real model calls or Telegram messages.",
+    "rollbackReceiptSha256": "fd779d4bdcd7e91a2950c1857c777233751ad734f55d95676296d844c9722091",
+    "rollbackScope": "Actual installed candidate creates synthetic usage-uncertain work in fresh PostgreSQL; dump/restore, installed current e571 and candidate rehydrate unchanged receipt and do zero retries/deliveries. Both temporary databases removed. Not a complete current-user-data cutover proof.",
+    "rejectedAttempt": "4ca551a8 /08de692a image had185 passing installed tests and0/0scan but1618 passed/10 failed required pure tests. An extra nonClaim added by the builder violated the exact metadata contract. NO-GO; runtime unchanged in replacement ebb701795, only that extra text removed and index hash rebound. Failed command receipt38d9ae3a009e6be64d8ff19cddce16ae5b063bea12eb793c17433f72b625569c retained.",
+    "operatorSetupFailures": "Initial build lacked the existing private Docker Buildx configuration and stopped before image build. Reused verified root-private Buildx, no installation changes. First required-suite invocation rejected output-directory permissions before tests; directory made private and fresh database names used. No failed attempt relabelled green.",
+    "independentReview": "identity_pair_review gave final bounded GO for reserve preparation and one exact slot3-to-slot4 cutover after inspecting the complete required-suite/browser, installed-image, scan, rollback and plan evidence. Not RT-001 completion, useful autonomy, streaming or human acceptance.",
+    "retention": "RT-001 owns /tmp/eva2-rt001-runtime-bundle.qGJnbF, /tmp/eva2-rt001-runtime-image.6WGhrd, /tmp/eva2-rt001-runtime-image-v2.zYpYQc and /tmp/eva2-rt001-bundle-rollout.6BUV0D. Preserve selected receipts and rollback backup through acceptance/rejection, then remove unused staging/images. Temporary test PG eva2-rt001-bundle-gates-qgjnbf /da6e0ee04cd90cb92923c06dc167eaf0b67fe04103b0dde260e986a8859460c9 and its disposable volumes were removed after all tests completed. Image-test containers and synthetic rollback databases were also removed. No user data in those test databases; live slots and retained private backups are outside cleanup scope.",
+    "limits": "Candidate is live on slot4/f4e695ee; exact existing reply is readable without another model call. Positive useful initiative, whole-backlog processing, a fresh human Telegram exchange, streaming and full goal remain open. Source-only sections below describe earlier phases, superseded for deployment status by this bundle receipt."
+  },
+  "sourceOnlyRevalidationFairnessRepair": {
+    "status": "source_tested_and_independently_reviewed_not_deployed",
+    "finding": "Revalidation selected the newest 64 waiting checkpoints and reversed that page. Continued arrivals could permanently exclude older waiting work. Read-only live observation at18:27 UTC found1722 waiting revalidations; this count alone does not prove each item was starved.",
+    "change": "Optional oldest_first on scoped timeline listing, default false. Only sensory revalidation opts into ascending updated_at with stable thread_id tie-break, without reversing the page. Fresh observation selection, leases, CAS, permission, model limits and original events unchanged.",
+    "hashes": {
+      "eva2/src/eva/adapters/postgres/operational_timeline.py": "e324d23c25d2b07daf95e656a9af0e2c161ad71be438b49ff7c1b58c23013a5d",
+      "eva2/src/eva/adapters/postgres/sensory_events.py": "9d6d04e6cdca77428bd83e78902ea0dde46b5477cd86a80d612f3218a522c576",
+      "eva2/tests/postgres/test_sensory_admission.py": "3b9b728c2b53993e3870a5377a598a451cb205214f618d925630259168c05be9"
+    },
+    "red": "Real PostgreSQL16.13: new regression failed because arrival-0-1 was claimed instead of old-0. No model or external service involved.",
+    "green": "43 sensory-admission tests passed, including three cycles with65 arrivals each, fresh store objects, another tenant, preserved originals and projection rebuild. Separate timeline suite39 passed. 82 unique PostgreSQL checks in total; Ruff passed.",
+    "testSetupFailures": "First combined attempt reused the red test DB after downgrade and was rejected for residual ledger:3 passed/79 setup errors. A fresh 4b database gave46 passed/36 setup errors because timeline tests require a different living_disposable database prefix. Timeline was then run separately on its own empty living_disposable DB:39 passed. No failed run relabelled green.",
+    "independentReview": "identity_pair_review read these exact three hashes and gave bounded GO for oldest-first fairness, not full backlog processing or live acceptance.",
+    "limits": "At most64 cursors examined; active leases may temporarily delay work. No claim of increased throughput, zero backlog, useful delivery or full autonomy. Both this fix and the preceding background-stop fix remain source-only; live chat image e57167d is unchanged.",
+    "testResources": "RT-001 disposable PostgreSQL container eva2-rt001-fairness-20260907 /684da8f8217bac396472a2cf96938d41a7fcecad529a5656fcbb0fd2c4659ed0 removed after tests, including its temporary data/volume. Isolated tmpfs data, loopback-only port44626, no live data copied. No user data removed."
+  },
+  "autonomousPostRepairObservation": {
+    "observedAtUtc": "2026-09-07T18:17:34.324733+00:00",
+    "imageId": "sha256:e57167d1e298158cd993f7cdb86d6d0d2e3e69adbe4d6ba2449cebf0e3ba0ecd",
+    "receiptSha256": "bf05b07e594e51a5c55effd44d34c8e5fe4c083bbdbb89b6c4f152f7316370fb",
+    "result": "One stored Astra autonomous decision: silence, 567 input and 62 output tokens, one measured model attempt. Zero delivery receipts and zero recent error fingerprints in the observed scope since cutover. Read-only observer did not invoke a model or delivery.",
+    "toolCountMeaning": "Stored tool_calls=1 denotes the structured-output decision function, not an external action or provider execution.",
+    "backlogReceiptSha256": "699846ea8b453ad6bfeae8b61f6b8ac837aabc3b75c3548e1a5656f5c7f559a6",
+    "backlog": "Many historical binary_sensor/light transitions await handling. Counts alone do not prove duplicate model spending. No queue rows deleted or blindly drained.",
+    "limits": "Negative silence route and successful terminal usage persistence are now live evidence. Positive useful delivery, human acceptance and complete failed-call accounting remain open.",
+    "retention": "RT-001 owns /tmp/eva2-rt001-autonomy-observe.1Ems3b. Sanitized counts and receipts only, no chat text. Retain until receipt review then remove staging; live data is outside cleanup scope."
+  },
+  "sourceOnlyStopRepair": {
+    "status": "source_tests_and_bounded_review_passed_not_deployed",
+    "source": {"path":"eva2/src/eva/application/memory_background.py","sha256":"8c739ec65b0aeb5d8969e03f92f4c6afc2a7d282588e5182a6674dd22a8981aa"},
+    "test": {"path":"eva2/tests/application/test_memory_background.py","sha256":"8f4e8be7a2ad1e3c6c56c226d90ab1caf3fcbbf01d43b6bcaae296f22e64abdc"},
+    "before": "Two new real-thread tests failed: stopping during reflection or the first idle task still allowed subsequent delivery callback to start.",
+    "after": "Stop event checked before scheduling, expiry jobs, reflection scopes and idle tasks. 22 memory_background/free_will tests passed; Ruff passed. No model, network or live installation changes in this source step.",
+    "independentReview": "identity_pair_review inspected these exact two hashes and gave bounded GO. Earlier response referenced unrelated hashes and is not accepted as evidence for this change.",
+    "limits": "Already running callbacks are not cancelled; a small check-to-call thread race remains. Not full user-facing stop, live autonomy or release acceptance. Active image e57167d remains unchanged."
+  },
+  "conversationContextRepair": {
+    "status": "live_context_repair_reply_and_replay_passed_human_acceptance_open",
+    "liveRepair": {
+      "activeAtUtc": "2026-09-07T18:11:38.686269+00:00",
+      "sourceCommit": "0c39601e46c13401093ea5a33004f35ea22e6433",
+      "imageId": "sha256:e57167d1e298158cd993f7cdb86d6d0d2e3e69adbe4d6ba2449cebf0e3ba0ecd",
+      "activeSlot": 3,
+      "activePort": 44710,
+      "reserveSlot": 4,
+      "requiredTests": {"passed":1888,"failures":0,"errors":0,"skipped":0,"modules":149,"receiptSha256":"32cbde2ce1334f4b40e21609f93c4684ca6d2e8058674a8ba16875d31ad9e999","scope":"Unchanged candidate runtime/tests/tools plus separately bound metadata-only overlay; not an unchanged archive full-suite result. 1626 pure,19 portable,243 PostgreSQL including four physical candidate browser cases."},
+      "metadataOverlaySha256": "4ccf26642802699f20b11a5a6a67ca93a32795398f504da93e875876c1820dba",
+      "admissionSha256": "bc5c72594bcc928d1656c28efd1a23e8aca988d4cf68c5d8639a6a6d72eefe1e",
+      "cutoverReceiptSha256": "b0338dadeff69f82b146ba6b6bf6363bc4f0f5eea490b39b673bbff355e51225",
+      "preparationReceiptSha256": "303a20769ed8021af27845d5be95656781dd63f90a5e58bbb1caf5de5b9d92a7",
+      "liveReplyReceiptSha256": "730277a5a6660bd7b1a2b669431b51e9f4c469f47bc3c02f3b068a7af63245b8",
+      "review": "identity_pair_review gave bounded GO after full suite, new usage-uncertain rollback, metadata overlay and exact reserve token-copy plan de0c9ed79f5bfbcf5419f9fd049548ec5462bc5c40ca922101c04164e592478b. Initial reserve preflight failed safely because target still held exact probe-only placeholder; no config write occurred then. Existing valid slot4 token copied only to stopped slot3 with private backups; no new credential or billing route.",
+      "data": "Lossless operator synchronized48 operational and23 memory tables with attested counts/schema/data. Existing identity, budget and bindings preserved. Eva1 backup quick_check passed; its shared ingress was briefly stopped for cutover and all five HTTP checks returned200 after restart. Slot4 config unchanged and writers stopped; automatic reverse-data rollback remains available.",
+      "liveConversation": "Explicitly marked developer connectivity check through existing private canary client on actual active conversation: Astra replied Eva2 werkt weer.; one measured model attempt,3528input/9outputtokens,0toolcalls. Same message replay returned exact durable answer without a second call. No Telegram message sent by probe; a new human Telegram network roundtrip is still separate.",
+      "userNextAction": "Send /eva2 followed by the question in the existing Telegram chat. No configuration or budget change is required.",
+      "cleanup": "Fresh required-test PostgreSQL container cb42d5f76376d28756274e7a464b65b928e098f3fb496566a5a937c9fab45042 removed with its disposable data. Physical browser operator cleaned its own resources. Copied-stack resources already removed; selected private evidence and rollback backups retained.",
+      "limits": "Does not prove all oversized mandatory-context cases, normal tool-enabled streaming, positive autonomous delivery, human acceptance or complete project superiority. No conversation history erased. Full goal and RT-001 autonomous outcome remain open."
+    },
+    "finalRegressionPreparation": {
+      "stage": "/tmp/eva2-rt001-context-gates.q1Vn8w",
+      "originalArchiveRun": "Exact 0c39601e archive: pure group 1617 passed, 9 failed. All nine failures originate from two stale cockpit-evidence source hashes. Original command-02.json retained; no passing original-archive full-suite claim.",
+      "overlay": "A separate corrected archive changes only release/eva-cockpit-evidence-index-v1.json (two model/source-test hash references) and its hash in release authority. All other 1999 files, including runtime/tests/tools, are byte-identical. Overlay and invocation are explicitly bound; unchanged required runner reruns all groups, physical browser stays bound to image e57167d/source0c39601e.",
+      "uncertainRollbackReceiptSha256": "e06e92f377cecfccfbe8e183dea9ccbc4daa30115c27be7865324a90037dbac0",
+      "uncertainRollback": "Candidate-installed adapter creates WILL_USAGE_UNCERTAIN in fresh PostgreSQL; dump/restore to another DB. Old a7 and new e571 images rebuild and preserve phase, needs_help, retry_count1 and usage:null, with exact event digest. Idle at1s/10min/1day, zero repeated recall/model/expression. Synthetic no-network probe, no live data. Both temporary databases removed.",
+      "independentReview": "identity_pair_review: bounded rollback compatibility GO; conditional GO for precisely bound metadata-overlay rerun only. No live cutover approval at this preparation point.",
+      "hostOperatorTests": "50 tests/operations/test_eva2_quiescent_cutover.py passed; operator5935268199be06f8777ee3d18509c9b8cca6d2d11053c49a4c6fb710a012b097. Actual cutover remains separate.",
+      "retention": "RT-001 owns this exact temporary test source/report directory and /tmp/eva2-rt001-context-rollout.fOy6kC. Remove disposable database container after tests; preserve selected sanitized evidence then remove staging after acceptance/rejection. Private slot backup remains until rollback is no longer needed."
+    },
+    "copiedConversationProbe": {
+      "status": "passed_incident_answer_joint_restart_and_recall_not_live",
+      "receiptSha256": "810dbe554a1d3aba09b6f01a95b31f7122f9293b845eede6262c5d33c64c66e0",
+      "incidentReceiptSha256": "23700d159cb3e9ae779cbe4525bc22584365882f3d285fb88e3b81b703eee821",
+      "incident": "Exact failed76-byte question produced a nonempty durable Astra answer with one measured call,2851input/164outputtokens,0tools. Same private client/person/conversation, newly copied current data and new message ID. Not historical recall-envelope equality or live repair.",
+      "restart": "The separate control-word answer was read back exactly after core/Hindsight/both databases restarted; the follow-up remembered koperzwaluw. Two further Astra calls,5523input/15outputtokens. Three foreground calls in total,8553 measured tokens; no toolcalls or Telegram messages. Hindsight foreground processing is not included in this foreground total.",
+      "cleanupVerified": "Disposable containers, volumes and DB snapshots removed by operator. Current Eva2 and Eva1 remained reachable; no retained slot or route change.",
+      "stage": "/tmp/eva2-rt001-context-copy.14DfQk",
+      "source": "Actual active slot4/44711, verified image a7d1eb5c and existing private canary binding/client hash. Candidate e57167d/0c39601e is a local ctr --local alias, not registry provenance.",
+      "scope": "Existing disposable current-data operator, with one additional replay of the exact76-byte failed question on a fresh turn in the same copied private conversation. Then existing control-word, joint restart/replay and memory probe. No Telegram messages, live promotion or live DB writes. Idle background tasks delayed only in temporary stack; all dummy external-effect credentials retained.",
+      "limits": "Three intended foreground answer turns plus a replay; existing provider retry and per-turn limits apply. Hindsight foreground memory work remains enabled. No exact historical recall-envelope claim.",
+      "retention": "RT-001 owns this exact private stage and the local eva2.local/rt001-context digest alias. Operator removes its temporary containers, volumes and DB dumps on completion/failure. Retain selected sanitized receipts; remove stage and unused candidate alias after candidate acceptance/rejection. Existing slots and original data are outside cleanup scope."
+    },
+    "candidate": {
+      "sourceCommit": "0c39601e46c13401093ea5a33004f35ea22e6433",
+      "reference": "refs/eva2/candidates/rt001-context-20260907",
+      "imageId": "sha256:e57167d1e298158cd993f7cdb86d6d0d2e3e69adbe4d6ba2449cebf0e3ba0ecd",
+      "buildReceipt": "/tmp/eva2-rt001-usage-image.NtDQWi/build.json",
+      "buildReceiptSha256": "4629ba35e1f4813f1c99ea7a36e537c43a799db6fd0af5f1aec9740530a26d07",
+      "build": "Offline, unchanged38wheels and baseimages; six changed paths relative to active8c9ae668: three runtime modules, two tests and refreshed source authority. Isolated Git index, normal HEAD unchanged.",
+      "imageTests": {
+        "receipt": "/tmp/eva2-rt001-usage-stop.NmZyig/image/receipt.json",
+        "sha256": "1710564a27d1376d8b5d13f51bd1c352f8f142537d6a3820b4f58cb191556f3f",
+        "passed": 165, "failed": 0, "errors": 0, "skipped": 0,
+        "scope": "Five relevant test modules including fresh PostgreSQL16.13, public Pydantic fixtures and uncertain-usage restart. Product module path and hash asserted inside image at /opt/eva/src before pytest; no /source/src import override. Host tests/fixtures mounted read-only. No network, model service or Telegram call. Both temporary containers removed."
+      },
+      "notProven": "Historical full recall-envelope equality, new human Telegram roundtrip, complete product acceptance and autonomous useful delivery. Candidate regression, safe cutover and active reply/replay are separately proven in liveRepair."
+    },
+    "candidateScan": {
+      "receipt": "/tmp/eva2-rt001-usage-image.NtDQWi/scan/receipt.json",
+      "archiveSha256": "d88971ba6543af039374427a16de3f15814b01ef2bdf16cc35b2588caafb194b",
+      "imageConfigDigest": "sha256:cc771abade5a0a1fd0f8231b1a6e179770ef4f8f0f92d9ab21c7b4f589b9593f",
+      "findings": {"HIGH": 0, "CRITICAL": 0},
+      "sbom": {"packages": 75, "files": 1519, "sha256": "5934ee2357ec2f412fa687d154a5030d455309b760f2adbf801add93eafae759"},
+      "trivySha256": "a36bf04d8b08ae247f420c68df3e7cfbce97f05b7a600ed7f320ddb05212920e",
+      "scope": "Existing pinned Syft/Trivy and dated September7 database reused offline. Archive bound to new build and Trivy config digest checked. Cache hashes checked before/after; archive/cache read-only, no Docker socket or secrets, reports captured on host. This is not a complete release or license review."
+    },
+    "additionalRegression": {
+      "imageRun": "/tmp/eva2-rt001-usage-stop.NmZyig/crossroute/receipt.json",
+      "result": "126 cases:114passed,12failed,0errors/skips. Eleven failures import SQLite for unit fakes; libsqlite3 is intentionally absent from this PostgreSQL runtime and from the preceding active image. One failure is stale host-source hashes in the development cockpit evidence index. This is not a126-pass image claim.",
+      "followup": "All50 cases in conversation-actions, the SQLite legacy-timeline case and dashboard-status passed on the existing host gate environment after refreshing exactly three changed development source hashes with an explicit nonclaim. This covers the12 failures without adding unused SQLite to the runtime or masking test failures. No runtime source SQLite imports found.",
+      "scope": "Combined evidence is165 original image passes plus114 additional image passes, with SQLite and development-evidence cases covered separately on host. The prior1866-test complete set belongs to active source8c9ae668 and is not relabeled as a complete run on this candidate."
+    },
+    "observed": "Four stream failures at 17:00:04–17:01:48 UTC mapped to the active image's _admit_request input rejection. Current request ceiling is12000; conservative admission counts canonical UTF-8 bytes plus tool reserve, not measured provider tokens. Matching durable ingress sizes were76,76,76,5bytes. Prior12 message sizes were read without exporting chat content; exact recalled memory/selfcontext envelope has not yet been reconstructed.",
+    "change": "Fit only the transient recent-history selection to the unchanged admission envelope. Keep latest assistant proposal, preceding user message and subsequent unanswered retries, identity, recalled facts, active work, current question and full completed receipt. No history deletion, additional model request, dependency or budget increase.",
+    "red": "First draft test failed on a not-yet-existing helper; corrected test then failed on the existing input-budget rejection with synthetic long history. Neither is a replay of the exact live payload.",
+    "green": "123 tests passed in7.57seconds across conversation model, public Pydantic model, free-will application and runtime settings. Seven added cases cover public/internal selection with0/3 unanswered retries and oversized current question/latest exchange/receipt. Public Pydantic fixture receives exactly one call; oversized required content causes zero calls. Ruff passed.",
+    "sourceSha256": {
+      "src/eva/adapters/model/pydantic_conversation.py": "f7b0ba48bf52f77b2acedd5b7e4e54f6cfc5bf4fa0bc926bc8851f22706a069e",
+      "tests/model/test_conversation_model.py": "facc04f3457c2035c4d1790392ae2cf98f20de3f4279bb002fa731d8ff64cb93"
+    },
+    "independentReview": "identity_pair_review: bounded GO on both exact hashes; no concrete source bug found. No exact-live-payload, deployment or release GO.",
+    "readOnlyDiagnostic": "/tmp/eva2-rt001-usage-stop.NmZyig/context_observe.py",
+    "diagnosticCorrection": "First owner-principal query returned old August records and was not incident evidence. Revised read-only query matched only the four exact failed turn hashes and scoped each preceding-history size query to that same principal/conversation.",
+    "remaining": "Observe the next human Telegram conversation and autonomous positive/negative outcomes. Required context can still exceed the input ceiling; this change does not silently truncate it or claim all context-size failures solved. Earlier usage-only candidate6aa8bbe is superseded; historical reviews and failures remain scoped to original hashes."
+  },
+  "uncertainUsageRepair": {
+    "status": "source_tested_independently_reviewed_candidate_build_pending",
+    "problem": "A missing or inconsistent terminal token measurement in the new usage-retaining sensory route was treated as an ordinary retryable failure. Retrying cannot recover the consumption of the original request.",
+    "change": "Use a typed autonomous usage-uncertainty outcome and persist WILL_USAGE_UNCERTAIN / will_usage_uncertain / needs_help with usage:null and the actual failure count. Fresh workers neither recall nor request another model decision for that event. Existing ordinary transient recovery remains unchanged.",
+    "red": {"receipt": "/tmp/eva2-rt001-usage-stop.NmZyig/red/receipt.json", "sha256": "050084324922b53e47bfbe09ce35b8505c2e8e5958e9b81e031d5e9d11a4fed9", "passed": 41, "failed": 1, "failure": "checkpoint status was failed instead of needs_help; not a fixture/access failure"},
+    "green": {"receipt": "/tmp/eva2-rt001-usage-stop.NmZyig/green/receipt.json", "sha256": "32ac3d9e5d6418497cfcc5eeb2b23e57959e1433a49e0fee8f8c31b6ac0bbff7", "passed": 42, "failed": 0, "modelApplicationBootstrapTests": 93, "ruff": "passed"},
+    "review": "identity_pair_review inspected exact source hashes and gave bounded GO for usage uncertainty handling. Reviewer initially mislabeled the red run as an access problem, then reread it and corrected that statement; red proves failed versus needs_help.",
+    "candidateCommit": "6aa8bbe218c22d37ba1f8de9a30eb2200021e26c",
+    "candidateParent": "8c9ae668526fa7de2c83fb3e2fdfde347ed3028a",
+    "candidateReference": "refs/eva2/candidates/rt001-usage-20260907",
+    "candidateScope": "Three existing runtime modules, two tests and their source-authority hashes only; isolated Git index based on the current live source. Also retains the separately tested same-cycle revalidation latency improvement, not proof of a previous live stall. User HEAD and normal index preserved.",
+    "retention": {"owner": "RT-001 architecturelead", "exactPaths": ["/tmp/eva2-rt001-usage-stop.NmZyig", "/tmp/eva2-rt001-usage-image.NtDQWi"], "purpose": "Isolated red/green PG receipts, source snapshot, candidate image and build evidence; no live database copies or secrets", "cleanupWhen": "After candidate acceptance or rejection, retain sanitized evidence then remove these exact task directories and any unneeded untagged candidate image"},
+    "limits": "Source tests over existing wheels, not yet image acceptance. Zero real model calls/messages in tests. No full crash, timeout or provider-billing ledger; no live repair or completed RT-001 claim."
+  },
+  "resumedAfterDashboard": {
+    "atUtc": "2026-09-07T16:57:41.885913+00:00",
+    "previousGoalTurn": "progress: outcome-first dashboard and roadmap tested; this turn closed UX-000 with independent commit-bound GO and restored RT-001 as primary.",
+    "method": "Existing owner-scoped observe.py executed in actual slot4 core; PostgreSQL repeatable-read transaction with read-only setting verified, no worker/model/send invoked by observer.",
+    "observedSinceUtc": "2026-09-07T15:47:30+00:00",
+    "observed": {"sensoryEvents": 230, "revalidatedEvents": 5, "astraSilenceDecisions": 6, "localPrefilterSilenceDecisions": 2, "deliveryReceipts": 0, "newErrorFingerprints": 0, "waitingRevalidationCheckpoints": 819, "idleSeconds": 300},
+    "ownerVerified": true,
+    "telegramTokenConfigured": true,
+    "conclusion": "Autonomous decisions continue, but no positive delivery has occurred in this scoped observation. Silence alone proves neither a defect nor useful initiative. No new runtime deployment justified by the earlier withdrawn stuck-revalidation hypothesis.",
+    "next": "Finish measured usage and verify a genuinely appropriate delivery through the existing owner-bound route; do not fabricate positive initiative by forcing a stale event or removing attention guards."
+  },
+  "usageSourceVerification": {
+    "status": "source_tested_not_deployed",
+    "change": "Successful autonomous model decisions carry terminal measured usage into the existing durable WILL_DECIDED payload; local prefilter decisions and old unmeasured records remain distinguishable. Cooldown preserves model usage.",
+    "receipt": "/tmp/eva2-rt001-timing.wc0yOI/review/receipt.json",
+    "receiptSha256": "e247eb17b729594d8878dd1690ad139d762ce3004f31010c73916dc2c6fc9780",
+    "verifiedNow": "Receipt reread and its three source hashes matched current source; 41 real isolated PostgreSQL cases passed, zero failures/errors/skips. Temporary containers removed. No model calls or real Telegram messages.",
+    "sourceHashes": {"src/eva/application/free_will.py": "55d0ffb4fc0d746c8349a0db642da7cef6344ebc3b1688e84934c6f77861ad40", "src/eva/adapters/postgres/sensory_events.py": "179fbc2eb4189330307f7ee378ad8d50b7941e94699c5082acccf4e50043133e", "tests/postgres/test_sensory_admission.py": "3b1114ecea991de9224ddc974da0860f09294b8ab73a0dc767092b688ed1863d"},
+    "modelSourceSha256": "62c125b74fea9b5fcd3982e9b2e8a08416fa84d61797dcfc65d5da2782941e0d",
+    "limits": "Current source mounted read-only over unchanged candidate wheels, not a rebuilt image. Successful decisions only: failed calls, provider totals and historical missing usage are not a complete consumption ledger. Not live and not RT-001 acceptance."
+  },
+  "revalidationTimingRepair": {
+    "status": "source_tested_not_deployed_live_failure_hypothesis_unproven",
+    "previousGoalTurn": "progress: exact candidate deployed with lossless current-data cutover and read-only owner/autonomous observations; those observations changed next action to timing verification",
+    "problem": "Potential latency/freshness edge, not a demonstrated live failure: the worker returns after revalidation and the configured idle interval and source freshness are both 300 seconds. A subsequent read-only live check proved one revalidated event reached a decision exactly 300 seconds later. Earlier claims that this observation demonstrated stuck recovery were too strong.",
+    "change": "After persisting the current source read, acquire the exact revalidated revision and continue through the same decision helper in this cycle. Claim transition is shared with normal claim_next, CAS-protected, same tenant/installation and freshness. Recheck admission after source I/O. No recursive drain loop, scheduler interval reduction, freshness extension or dependency added.",
+    "sourceHashes": {
+      "src/eva/application/free_will.py": "6b8f40af2ea0bba4dd164d853835277fcf8c7f70c063995b0285adb61c8bc79f",
+      "src/eva/adapters/postgres/sensory_events.py": "b822f0692a60de1f1f7e871834ec05c5710fe33d6f6fca6ee74c8afd9efff42b",
+      "tests/postgres/test_sensory_admission.py": "98f06432e81140538991652195e1f41e5d74cf1c20576d6bafc211f1e7f4e431"
+    },
+    "sourceAuthoritySha256": "7a390ae3a7fe66bbf2be6f8cd76e36a9480fe0d19c6134ea7a7de11850c75979",
+    "testEvidence": {
+      "runner": "/tmp/eva2-rt001-timing.wc0yOI/run.py",
+      "runnerSha256": "d257df662b80290f7b09e51566f187d64e7097b964acae7ddb0c46ee9c279999",
+      "beforeReceiptSha256": "b771492f20cef5acfc8ea600c49a4364b45c6d888356400f8e8f5cab9fb9fe0a",
+      "before": "33 cases: 31 passed, 2 failed. The two tests were changed to require same-cycle response, while the existing implementation returned revalidated and continued on a later cycle. This proves a difference from the new latency requirement, not an independently established defect in deployed behavior. Failed run retained.",
+      "afterReceipt": "/tmp/eva2-rt001-timing.wc0yOI/green/receipt.json",
+      "afterReceiptSha256": "55ec52b4ee40adc8fa447e77e3921423b3ebabfdae78d8924f74c21c4e8037ca",
+      "afterJunitSha256": "2c3a897bbc255495a0d3e302b46d1ffb76aa44e98dfc7a5b612875a8d7dcfd3c",
+      "after": "37/37 PostgreSQL cases passed;0failed/errors/skips. Fresh PG16.13, network none, current source mounted read-only over existing candidate runtime wheels; not an independently rebuilt image. Real loopback HTTP, fixture model/memory, existing physical SIGKILL delivery case.",
+      "newBoundaries": "Exact continuation cannot claim an unrelated latest event; four concurrent claimers produce one winner; regular claim_next winner excludes continuation;301-second-old proof rejected; model admission closure during revalidation causes durable wait with no recall/model. Fresh store after successful delivery stays idle at+301seconds with one HTTP read/model only.",
+      "relatedTests": "88 application/model/bootstrap tests passed in3.70s; Ruff passed. Earlier37 application/bootstrap passed in2.40s; not additive distinct coverage.",
+      "modelCalls": 0,
+      "realTelegramMessages": 0,
+      "cleanup": "Both red and green isolated test/PG containers removed, temporary database contents destroyed; only synthetic receipts/logs remain. Live databases and image untouched."
+    },
+    "independentReview": "identity_pair_review: first report was based only on supplied summaries and was not accepted as sufficient; renewed review reported the exact three inspected hashes and bounded GO for this source correction. No deployment or RT-001 completion GO inferred.",
+    "liveObservation": "At16:02:56UTC installed a7d1 remained running since15:48:29UTC. One SENSORY_EVENT_REVALIDATED and a completed will_revalidated checkpoint existed, with no extra decision or delivery yet. That observation does not itself prove an infinite loop or the source repair working live.",
+    "retention": {
+      "owner": "RT-001 timing verification",
+      "exactPath": "/tmp/eva2-rt001-timing.wc0yOI",
+      "purpose": "Isolated source-test runner, red and green receipts/JUnit/logs; no live secrets or database copies",
+      "cleanupWhen": "After acceptance or rejection of the source correction, preserve sanitized evidence then remove this exact temporary directory"
+    },
+    "subsequentLiveCheck": {
+      "atUtc": "2026-09-07T16:13:26.964285+00:00",
+      "method": "Read-only query of actual slot4 operational_events, tenant/installation-scoped sensory threads since cutover; match each revalidation to its first subsequent decision in the same thread. No thread IDs, message bodies or secrets exported; no worker, model or send invoked.",
+      "revalidatedAtUtc": "2026-09-07T15:58:44+00:00",
+      "decidedAtUtc": "2026-09-07T16:03:44+00:00",
+      "elapsedSeconds": 300,
+      "secondRevalidationAtUtc": "2026-09-07T16:08:55+00:00",
+      "secondDecisionAtCheck": null,
+      "conclusion": "Observed continuation contradicts a claim that the first revalidation was stuck. The second observation has not reached five minutes at query time and is not evidence of failure either. General latency, throughput and usefulness are still unproven."
+    },
+    "remaining": "Keep the tested same-cycle source change separate as a possible latency improvement. Do not initiate another deployment on the withdrawn failure hypothesis. First establish actual recovery behavior, useful owner-bound delivery and measured autonomous usage. RT-001 and the full goal remain incomplete."
+  },
+  "liveCutoverRetry": {
+    "status": "switched_verified_route_autonomy_acceptance_open",
+    "issuedAtUtc": "2026-09-07T15:48:43.803372Z",
+    "previousGoalTurn": "progress: fixed missing token-content preflight and prepared only inactive slot4 from authenticated existing bot; no restart or message in that prior turn",
+    "admission": "/tmp/eva2-rt001-admission-v3.pImQuA/candidate-admission-v3.json",
+    "admissionSha256": "2c4fd961edfcfd61a263f2d596b4ea8ac074fae012dd1acdbfc65bec95f9d5d9",
+    "admissionScope": "Original raw build/scan/SBOM/full tests and physical recovery receipts rechecked by hashes and 28 OCI blobs. New host/test/authority and token preparation bound separately; historical proofs not relabeled. No new build or scan.",
+    "receipt": "/tmp/eva2-rt001-retry.HKukMS/cutover.json",
+    "receiptSha256": "9c1baa69c16ba4c58afd72f75c5cd91fad5c3b635982128a171617c75b35e761",
+    "invocationSha256": "9eeb4d9647f265c7fe492757fdc7c64c3cf0aacf8434cea1a38c43edcdf83cd2",
+    "independentReview": "identity_pair_review: bounded GO for one exact3-to4 retry with repaired existing credential and operator5935268, current-data synchronization, outgoing withholding during staging and source3 outgoing-disabled rollback. Not RT-001 or full goal completion.",
+    "image": "sha256:a7d1eb5c35c092c1ac602854cc42acd9ca363a5242aa770cad6362d9ecc6ca23",
+    "sourceCommit": "8c9ae668526fa7de2c83fb3e2fdfde347ed3028a",
+    "activeSlot": 4,
+    "activeCoreStartedAtUtc": "2026-09-07T15:48:29.466322465Z",
+    "loadedEva1Route": "http://127.0.0.1:44711",
+    "source3Core": "stopped; old image455be8e6 retained; outgoing disabled",
+    "runtimeReadiness": "database, memory_projection and model_provider ready; ready=true",
+    "eva1Http": "Five existing health/overview/work endpoints returned200",
+    "dataTransfer": "48 operational and23 memory tables synchronized by existing quiescent snapshot/restore and attestation checks; source writers stopped before snapshot",
+    "outgoing": "Real existing token withheld during staging, enabled only after image/route/readiness checks; current owner resolver subsequently verified read-only in installed runtime. No extra poller or billing route enabled.",
+    "cleanup": "Operator removed temporary forward database dumps after success; original data remains in retained slots and private Eva1 database backup retained. Those temporary dump copies are no longer available.",
+    "ownerApi": "Installed memory-sources API returned200 with no-store for owner,401 anonymously and422 for caller-supplied principal scope. No private contents exported; no new conversation/model/message triggered by observer.",
+    "initialAutonomousObservation": "At15:51:51Z five real sensory observations arrived since cutover; no new decisions or delivery receipts yet. Configured cold-path idle interval is300seconds. About19623 retained observations remain; genuine autonomous responsiveness must be observed, not inferred from readiness.",
+    "firstLiveCycle": {
+      "atUtc": "2026-09-07T15:53:46.416075Z",
+      "initialReceiptSha256": "8fb363d5a264824f17e14e7da9a1abdc1a8b1b82ac5c9a7793a2f5782e292518",
+      "receipt": "/tmp/eva2-rt001-live-observe.JT5t9h/after_first_cycle.json",
+      "receiptSha256": "239f1169a37cf24e462ea9e4fe4fffcdebb33b9a9e4a9b83ecfd0b399925774d",
+      "observerSha256": "2f83ab0e3b8ff9aabd7c2c1c8af7d29cb232a9dff2dcd27abd276d7ffb3fdf28",
+      "verifierSha256": "aa9ff96d3b9c12b2ae109cb38413a895b0b1f6eec8d00c4934f62d6f12a4718d",
+      "result": "Nine real sensory observations since cutover. Existing runtime made one persisted Astra-backed silence decision.120 old states moved to waiting_for_proof/will_waiting_revalidation; the old pending expression is no longer pending. No delivery receipt or new error fingerprint observed in this scoped interval.",
+      "limits": "One genuine stored model decision is not a complete call/token ledger, a positive useful initiative, or independent human endorsement of the silence choice. Observer performed no worker/model/send action. About19571 observations remain,1539 legacy failed will claims and28 needs_help; RT-001 remains incomplete.",
+      "schedulingConcern": "Cold path executes each idle task once after300seconds then resets idle time. Revalidated source evidence has default300second freshness. Source inspection identifies potential expiry before the next decision cycle and throughput limits; verify with an explicit scheduling test/live continuation before claiming timely recovery. Do not solve by weakening freshness or blindly draining model calls."
+    },
+    "retention": {
+      "owner": "RT-001 rollout and verification",
+      "exactPaths": ["/tmp/eva2-rt001-admission-v3.pImQuA", "/tmp/eva2-rt001-retry.HKukMS", "/tmp/eva2-rt001-live-observe.JT5t9h"],
+      "purpose": "Rebound admission, exact retry invocation/result and read-only owner-scoped observation scripts/receipts",
+      "cleanupWhen": "After RT-001 acceptance or candidate rejection, retain sanitized final evidence and remove these exact task directories; preserve recovery evidence until no longer needed"
+    },
+    "remaining": "Observe real autonomous recovery/negative control and owner-bound useful delivery, check restored responsiveness and errors, independently review RT-001 outcome. No new human conversation or positive proactive delivery is claimed merely from successful installation."
+  },
+  "tokenAdmissionRepair": {
+    "previousGoalTurn": "progress: failed cutover and verified rollback identified a concrete startup failure and changed the next action",
+    "status": "reviewed_host_fix_and_inactive_secret_preparation_passed_not_live",
+    "rootCause": "Both slot3 and slot4 Telegram token files contained the exact old probe-only value. Metadata and equality checks had incorrectly admitted this as a usable credential. The failed slot4 container has the proactive overlay and read-only token mount: failure occurred at outgoing activation, after credential-free staging passed, not during staging.",
+    "hostFix": "Before stopping ingress or writers, read at most4097 bytes and reject oversized, undecodable, missing-colon or internal-whitespace token content. Preserve explicit enable flag, private file metadata and canonical path checks. Syntax is not proof of provider authentication.",
+    "operatorSha256": "5935268199be06f8777ee3d18509c9b8cca6d2d11053c49a4c6fb710a012b097",
+    "testSha256": "9f1f1b6cd1a4e300305bb81ea25a0878c0d9bd547eb22d8767e560629953d021",
+    "sourceAuthoritySha256": "d6debf9c05d5640bacde5c81051c0e58e50351ac6907153b11d3d5020528da6f",
+    "verification": {
+      "hostTests": "50 passed in0.15s; seven invalid-content cases assert no host command before refusal; Ruff passed",
+      "relatedTests": "121 passed in9.87s across quiescent cutover, Telegram deployment, managed-B release inputs and both workboard test modules",
+      "realNegativePreflight": "Current source3/target4 --preflight-only rejected proactive token content is invalid before preparation; no service stopped",
+      "existingCredentialAuthentication": "Existing Eva1 configured token authenticated with Telegram getMe; only bot-id SHA256 retained, no messages",
+      "candidatePhysicalRead": "Exact a7d1eb5c image, UID65532, read-only file bind, network none, cap-drop ALL, no-new-privileges: installed TelegramProactiveDelivery constructor accepted prepared token. Fixture resolver not called and no delivery invoked. Temporary container removed.",
+      "realPositivePreflight": "After preparation the existing full source3/target4 preflight passed; currentDropinSha25681f1b2b687a641ae5349aa3c13198f6ad3ac1d7c88ee351bc3c559f22eee28a1",
+      "activeRuntime": "Source3 start time remained2026-09-07T15:33:15.709080638Z, image455be8e6; readyz database/memory_projection/model_provider ready; no source token mount",
+      "earlierAttempts": "First new test run failed7/50 because the fixture omitted simulated root and the dropin; corrected test setup then50/50. First preflight invocation omitted required --preflight-only and exited at argument parsing; corrected invocation returned the expected token-content failure. No live changes from either failed setup."
+    },
+    "preparation": {
+      "atUtc": "2026-09-07T15:42:05.411Z",
+      "receipt": "/tmp/eva2-rt001-token-repair.l55AgV/preparation.json",
+      "receiptSha256": "8914dfd795737b725f73d9f73be519ea63a061f9191554c664e2c2c9f3410bf1",
+      "scriptSha256": "9b4dba6bb63f470fe1f584c2ebce32b3e2575435c425c67ecb0210e06b2e1cab",
+      "authenticatedBotIdSha256": "5ff8a0ed7a7b4cddb13c7217c4dcb10130f1900d65f474d4cb059834c326a5ae",
+      "changed": "Only inactive slot4 secrets/telegram-token atomically replaced with bytes of authenticated existing Eva1 configured bot token; UID/GID65532, mode0600. Prior exact bytes backed up root0600. Slot3 token, both candidate.env files and both images unchanged. Target core remained stopped.",
+      "messagesSent": 0,
+      "modelCalls": 0,
+      "servicesRestarted": 0
+    },
+    "independentReview": "identity_pair_review: bounded GO for hostfix and exact inactive slot4 credential preparation with private backup/attestation; explicitly no new cutover GO",
+    "retention": {
+      "owner": "RT-001 rollout",
+      "exactPath": "/tmp/eva2-rt001-token-repair.l55AgV",
+      "purpose": "Private provisioning script, receipt and root0600 old probe-only token backup",
+      "cleanupWhen": "After candidate acceptance or rejection, preserve sanitized receipt and remove exact temporary directory; retain until recovery no longer needs backup"
+    },
+    "remaining": "Rebind changed hostoperator/test/authority and repaired target secret provenance to candidate admission, independently review exact current cutover conditions, then safe activation with real owner-bound positive/negative delivery. The original chat exception is still unknown and the full goal is incomplete. No runtime-image rebuild is required by this host/config-only repair."
+  },
+  "liveCutoverAttempt": {
+    "checkedAtUtc": "2026-09-07T15:35:11Z",
+    "status": "failed_automatic_rollback_returned_previous_runtime",
+    "receipt": "/tmp/eva2-rt001-rollout.4bTUOH/cutover.json",
+    "receiptSha256": "2dc617a1ec1b0fa679b69d7adae89d16e9ebf221e3c21ca349112cbcb6913902",
+    "invocationWrapperSha256": "d3ee0d729f64b944a78497d44dd4dd5a3ddbce2d4ad4b7a4235f3e39c6c0de60",
+    "operatorExitCode": 2,
+    "operatorError": "retained slot service did not become healthy",
+    "candidateStartupError": "ValueError: Telegram bot token is invalid; create_runtime_app -> _build_proactive_delivery -> TelegramProactiveDelivery.__init__",
+    "targetCore": "slot4 image a7d1eb5c; exited1 after start at 2026-09-07T15:32:07.765395598Z",
+    "restoredCore": "slot3 image455be8e6; running and healthy, restarted at 2026-09-07T15:33:15.709080638Z",
+    "loadedEva1Route": "http://127.0.0.1:44710",
+    "eva1Service": "active",
+    "readiness": "ready=true; database, memory_projection and model_provider ready",
+    "limits": "Operator returned the original startup failure, not a double-rollback failure. Read-only checks confirm restored route and readiness, not a new human conversation or complete data-equality attestation. Candidate is not promoted. No new model or Telegram probe was issued during these diagnostic checks. Earlier chat error at15:24Amsterdam remains unexplained and is not attributed to this later cutover.",
+    "next": "Superseded by tokenAdmissionRepair: outgoing activation used a probe-only credential. Preserve this failure; changed host/config admission must be independently bound before another cutover."
+  },
+  "candidateAdmission": {
+    "previousGoalTurn": "progress: physical copied waiting-state rollback passed and changed the next action to complete candidate admission",
+    "status": "historical_v2_admission_for_failed_first_cutover_superseded_by_liveCutoverRetry",
+    "import": "/tmp/eva2-rt001-admission.wcK0XG/candidate-admission-v2.json",
+    "importSha256": "f171d85e8c5c67c8af030c687e3a32a0bc7695080bab79b6a140ee8aec092c7c",
+    "method": "Mechanical projection of hash-verified raw build/archive/scan/SBOM and existing test/data receipts into the existing image persistence validator. 28 archive blobs verified; candidate manifest binds the scanned image config. No scan/rebuild repeated, no registry provenance or new signature claimed.",
+    "earlierImportSha256": "a72f91e720f1e0ce28b1766ed4394ef5bc8af4e4fe8f7865a93923adaed58ed9",
+    "newTestSourceSha256": "fc9262c75537e9edc2861374be96ab0b6d356996a0d5205b6c297bb54cf2b74c",
+    "sourceAuthoritySha256": "134fa80785ad45551e36cf0e7b3ea6d6c627932f004fa88c0686358b5d64d0b3",
+    "sourceBinding": "Runtime and deployment source remain exactly source8c9ae668/imagea7d1eb5c. Four later source deltas are separately bound: hostoperator, its test, new sensory crash test, and resealed authority. Historical 1866-test receipt is not relabeled.",
+    "additionalVerification": {
+      "operatorOverlayAuthorityBoard": "105 passed in 8.94s; Ruff passed",
+      "installedAutonomousTests": "/tmp/eva2-rt001-outbound-crash.axPulC/export/receipt.json",
+      "installedAutonomousReceiptSha256": "09c7764c2526a2e636423e27963536cfa09966bb576ae0aa378728ff539b5acf",
+      "installedAutonomousJunitSha256": "f96f0d19d819fe67fd41a5e846019b0bafa76d1dc0a4cf90e55c7f38fe9f0e11",
+      "result": "33/33 RT-001 PostgreSQL cases passed on exact candidate image with installed adapters. Fresh PostgreSQL16.13, network none, no provider credentials; test packages appended after installed runtime packages. Real loopback HTTP with fixture model/memory, not a real model run.",
+      "physicalCrash": "New sigkill_after_acceptance case validates a real loopback Telegram receipt inside a separate Python process, then SIGKILLs that process before durable worker acknowledgement. Fresh store sees active claim, does not retry before expiry, then marks ambiguous/needs_help. One HTTP send, one claim and no delivered event; no second send.",
+      "oldPhaseDecoderReceipt": "/tmp/eva2-rt001-outbound-crash.axPulC/old-decoder-receipt.json",
+      "oldPhaseDecoderSha256": "6a62df4dcfe3eaeb63fd9a55ed3e658d517dedebc80342642074e29e712107b1",
+      "phaseSamplesSha256": "0edbf56cb558a6ed10f806a1aa498eb821747a6d6c986d0e5e2af532f4bb7c02",
+      "oldDecoderScope": "Exact old image decodes hash-verified candidate PostgreSQL event samples for revalidation claimed/revalidated and expression claimed/ambiguous/delivered. Offline event decoding only, not old owner-bound delivery or complete old runtime recovery.",
+      "failedAttempts": [
+        "First candidate crash case returned before SIGKILL; second instrumented run exposed an incorrect fixture chat43 receipt. Corrected fixture returns chat43 only for wrong_chat. Both 1-failed/32-passed runs remain separately retained.",
+        "Trying the new delivery test on the old image failed at import: old image lacks PostgresPrivateTelegramRecipient. Not a passing old-delivery test. Separate installed old decoder proof passed; rollback outgoing must remain disabled.",
+        "First admission receipt write correctly rejected a parent directory owned by the invoking developer rather than root. Exact private stage ownership was corrected; no live mutation occurred."
+      ],
+      "cleanup": "All disposable PG/test/decoder containers removed; no named volumes or networks retained"
+    },
+    "independentReview": "identity_pair_review: initial cutover NO-GO pending autonomous crash/phase evidence; after the above terminal evidence, bounded GO for exact3-to4 with owner-bound outgoing, no additional billing and source-slot3 rollback outgoing disabled. Exact target plan separately confirmed. Not RT-001 completion or full product acceptance.",
+    "targetPlan": {
+      "path": "/tmp/eva2-rt001-rollout.4bTUOH/target-plan.json",
+      "status": "prepared_then_cutover_failed_previous_runtime_restored",
+      "sourceBeforeSha256": "15a63c06ed171f811b826af7c2f0ca62f779cb67074257ca4948a0ca6ec038b9",
+      "targetBeforeSha256": "7aec4726b10814ccb5e3ebc928ab5c35f79ca980dbbabe12bd935b5acf33d08c",
+      "targetAfterSha256": "98d666f7742aeb0b559885fe1a039ec1bf31d6c2e0a4f856c35eb08350fab60d",
+      "changedKeys": ["EVA_LIVING_CORE_IMAGE", "EVA_DASHBOARD_RELEASE_SHA256", "EVA_B_CONFIGURATION_SHA256", "EVA_TELEGRAM_PROACTIVE_DELIVERY_ENABLED"],
+      "preserved": "Astra and scopes unchanged; identity/trust/budget/Telegram binding and token bytes equal between slots. Existing private token metadata validated. No manual chat ID. Source core token mount absent and source flag disabled."
+    },
+    "retention": {
+      "owner": "RT-001 verification and rollout",
+      "exactPaths": ["/tmp/eva2-rt001-admission.wcK0XG", "/tmp/eva2-rt001-outbound-crash.axPulC", "/tmp/eva2-rt001-rollout.4bTUOH"],
+      "purpose": "Admission projections, physical test/decoder receipts and synthetic event samples; exact rollout plan, private pre-change configuration backup and subsequent receipts",
+      "cleanupWhen": "After successful rollout/rollback and candidate acceptance or rejection, preserve selected sanitized evidence and remove these exact task directories; retain recovery material on failed rollback"
+    },
+    "productModelCalls": 0,
+    "realTelegramMessages": 0
+  },
+  "copiedSensoryRollback": {
+    "status": "bounded_physical_state_rollback_passed_not_live",
+    "receipt": "/tmp/eva2-rt001-state-rollback.tG6YWA/receipt.json",
+    "receiptSha256": "c2ee71b365e6ebae9d1f629cb26a6194685cd632c152f5b4c320a8fc88fe5ef7",
+    "probeSha256": "fb6c8a4870acc82110c1a52f354cadac299eda55b2bc88a6d91487585fb4e904",
+    "workerSha256": "5eafd8970bd8ed7965e65f023aecd97225c78218834116672d4c130993c3ce0c",
+    "candidateImage": "sha256:a7d1eb5c35c092c1ac602854cc42acd9ca363a5242aa770cad6362d9ecc6ca23",
+    "oldImage": "sha256:455be8e6f52adcf2f16288ad76793f150684c058753de3d8d84730a7ce623f7e",
+    "postgresImage": "sha256:7e641ed0cf38285bebfc6151ba48243439dfe9cf3306feab4023a812466cd6c1",
+    "hostOperatorSha256": "1ec02a4037bfcb370b6a2a01f39e550f65cd51af61e3211917b3b218c03f1e74",
+    "method": "One consistent read-only live operational pg_dump, restored into disposable PostgreSQL using existing hostoperator helpers and exact live DB image. Installed candidate adapters act only on the one copied sensory scope. No runtime/model/transport bootstrap. A new logical dump is restored to a second database; old and new installed adapters load and rebuild the same projections.",
+    "sourceScopeBinding": "Harness resolves the single actual copied sensory tenant/installation scope and assigns that PostgresOperationalTimeline to the store; no live settings, model credentials or private message text are exported.",
+    "result": {
+      "historicalPreparedMessagesWithheld": 1,
+      "legacyCostHistoriesMovedToWaiting": 64,
+      "oldPreparedEventHistoryRetained": true,
+      "oldAndNewStatesReadAndRebuilt": 65,
+      "coveredPhases": ["will_waiting_admission", "will_waiting_revalidation"],
+      "oldAndNewExpressionClaimReturnedNone": true,
+      "eventDigestAfterCandidateAndBothReadbacks": "94a968dc485747eb64814bb3c95ba7e2517662215ca6d81d4dcd9597bb191795",
+      "reverseRestoredTableCount": 48,
+      "countDigest": "3e33bbac46a2a72c5a9ab7cea6c729b7a705ccb47b986e3e19b21c5d047d102d",
+      "schemaDigest": "32acc5b66e349dfd5b385e4828897575ad543ebb5f2638b8880dff1cacb7fb39",
+      "dataDigest": "d208b7758e22f9466cd4715591550f06db072634e6ef398cdd3585490af2ead2",
+      "fullAttestationEqualBeforeRestoreAfterRestoreAndReadbacks": true
+    },
+    "isolation": "Docker network none, no TCP listening, private Unix socket, temporary PostgreSQL data in tmpfs. Adapter containers are UID65532, read-only, cap-drop ALL, no-new-privileges, with only worker script and disposable socket mounted. No model credentials or Telegram token.",
+    "earlierAttempts": [
+      "First attempt duplicated the image's postgres entrypoint argument and exited before any live dump.",
+      "Second attempt corrected the argument but omitted the image's compiled /tmp Unix socket; exited before dump.",
+      "Third attempt added private startup diagnostics and reproduced that socket failure; no dump.",
+      "Fourth attempt supplied PGHOST, but the upstream init helper still used /tmp; no dump. Fifth attempt explicitly included /tmp and passed. Prior scripts and failed receipts remain separate."
+    ],
+    "cleanup": {
+      "temporaryContainer": "eva2-rt001-state-rollback-tg6ywa",
+      "temporaryDatabaseContainerRemoved": true,
+      "adapterContainersRemoved": true,
+      "plaintextDumpCopiesRemoved": true,
+      "noNamedVolumesOrNetworksCreated": true,
+      "liveCoreImageAndStartTimeUnchanged": true
+    },
+    "independentReview": "identity_pair_review: bounded GO on exact receipt/probe/worker hashes for copied waiting-state and projection compatibility, not later revalidation, outgoing delivery or full RT-001",
+    "limits": "Not a live cutover or whole autonomous runtime run. Only the two listed waiting phases are physically exercised; claimed/revalidated phases and later provider delivery are not established by this proof. Live ingestion continues, so unchanged live core identity/start time is not a claim that the live database contents froze. The probe did not write to that source.",
+    "retention": {
+      "owner": "RT-001 verification",
+      "exactPath": "/tmp/eva2-rt001-state-rollback.tG6YWA",
+      "purpose": "Private invocation scripts, successful and failed receipts and startup diagnostics; data dumps and disposable databases already removed",
+      "cleanupWhen": "After candidate acceptance or rejection and preservation of selected sanitized evidence, remove this exact task directory"
+    },
+    "productModelCalls": 0,
+    "telegramMessagesSent": 0,
+    "liveChanges": false
+  },
+  "preSendBarrier": {
+    "previousGoalTurn": "progress: host operator now withholds outgoing credentials during staging; physical Compose fixture passed and independent bounded evidence GO received. The subsequent user-answer turn only explained the recorded chat incident and added no implementation progress.",
+    "status": "source_and_physical_credential_barrier_passed_not_live",
+    "behavior": "Stage and verify core without the Telegram overlay, persist and reload the route while ingress remains stopped, then explicitly activate delivery before reopening ingress. Activation releases the credential and is the effect commit point; later checks cannot prevent an already possible send. Rollback staging also withholds the credential.",
+    "hostOperatorSha256": "1ec02a4037bfcb370b6a2a01f39e550f65cd51af61e3211917b3b218c03f1e74",
+    "operatorTestsSha256": "15372d960075e8f400f9715098fb337481d94dd65df3bdac4e270e53883e7b46",
+    "relatedTests": "105 passed in 8.37s: operator, overlay, release inputs and workboard; Ruff passed",
+    "sourceAuthoritySha256": "1432ddda0b2589880584d34900760449db5506265331e585aa09ac1b3358642f",
+    "sourceBindingLimit": "Supersedes the earlier hostoperator hashes below, not the unchanged candidate runtime image or its historical full-test receipt. Final release admission must bind this hostoperator separately.",
+    "physicalProof": {
+      "receipt": "/tmp/eva2-rt001-delivery-gate.H2FJlL/receipt.json",
+      "receiptSha256": "41a8b2e846853b50c86064a72d714ec63c8f5fb62fd7d5647b7f05a4c84a416b",
+      "probeSha256": "3c60b77cb8d21df408f1c9a5f2b6e2356230faed50e73f59f9440c5fe53adc17",
+      "imageId": "sha256:a7d1eb5c35c092c1ac602854cc42acd9ca363a5242aa770cad6362d9ecc6ca23",
+      "overlaySha256": "62bee1695b8e397efe11c7eb4bc7e9cd58ca7bd08caae37c37415040fca18631",
+      "result": "Actual Docker Compose recreation: dummy token absent in staging, present after activation, absent again in rollback staging. Network none, UID65532, read-only root filesystem. Containers and dummy credential removed.",
+      "limits": "Sleeping fixture processes, not an application server. systemd route/inactive and readiness are fixture inputs. No database recovery, real credential, Telegram delivery or full deployment demonstrated.",
+      "firstAttempt": "Inherited application healthcheck was incompatible with the sleeping fixture; the sole owned fixture was stopped. Receipt writing then rejected a missing label. Original first-probe.py retained; corrected fixture disabled that healthcheck explicitly and supplied the required label. Only the separate successful retry is passing evidence.",
+      "independentReview": "identity_pair_review: bounded source GO and bounded physical evidence GO on exact receipt hash; not full RT-001 or live release GO"
+    },
+    "retention": {
+      "owner": "RT-001 verification",
+      "exactPath": "/tmp/eva2-rt001-delivery-gate.H2FJlL",
+      "purpose": "Private probe, fixture configuration and receipt; no real credentials or user data",
+      "cleanupWhen": "After candidate acceptance or rejection and retention of selected sanitized evidence, remove this exact task directory"
+    },
+    "remaining": "Copied waiting-state rollback is subsequently proved in copiedSensoryRollback. Complete candidate admission and later autonomous revalidation/delivery remain open before live activation.",
+    "productModelCalls": 0,
+    "telegramMessagesSent": 0,
+    "liveChanges": false
+  },
+  "activationAdmissionAudit": {
+    "date": "2026-09-07",
+    "previousGoalTurn": "progress: exact candidate passed copied-current-data conversation, joint restart and replay; private copies removed and independent bounded evidence GO recorded",
+    "status": "host_operator_corrected_activation_not_yet_admitted",
+    "liveInspection": {
+      "readOnly": true,
+      "scope": "One sensory tenant/installation namespace in the active slot3 operational database; counts are point-in-time and live ingestion continues.",
+      "firstSnapshot": {"sensoryObserved": 19151, "willFailed": 1589, "willNeedsHelp": 28, "willDecided": 734, "expressionPending": 1},
+      "pendingExpressionUpdatedAtUtc": "2026-08-29T06:17:41Z",
+      "laterSafeHistoryClassification": {
+        "legacyCostFailedOnly": 1586,
+        "legacyCostNeedsHelpOnly": 28,
+        "otherFailureHistoriesExcluded": 4,
+        "method": "Read-only SQL joined every candidate checkpoint to its complete event history. First event must be SENSORY_EVENT_OBSERVED; subsequent events only evaluation claims/reclaims or recovery failures with exact legacy-cost fingerprint. No payload text or person/device identifiers retained.",
+        "legacyCostFingerprint": "069b69035c62712b794ea83ea8b3563200375b70ee1c01d44d9d4a342848025b"
+      },
+      "activeOrFailedExpressionAndRevalidationStates": 0,
+      "initialDiagnosticErrors": ["Initial SQL omitted eva_core schema and was rejected before reading; corrected schema-qualified query succeeded.", "First complex history query had an extra parenthesis and was rejected; grouped CASE/bool_and query then classified all eligible histories read-only."],
+      "liveChanges": false
+    },
+    "hostPreflight": {
+      "operator": "tools/eva2_quiescent_cutover.py --source-slot 3 --target-slot 4 --preflight-only",
+      "result": "preflight_passed before and after the overlay-selection correction; no execute invocation",
+      "dropinSha256": "81f1b2b687a641ae5349aa3c13198f6ad3ac1d7c88ee351bc3c559f22eee28a1"
+    },
+    "defectsCorrected": [
+      "start_writers used only the base Compose manifest and would drop the outgoing Telegram overlay. Slot-local strict true/false EVA_TELEGRAM_PROACTIVE_DELIVERY_ENABLED now defaults false; true requires a canonical absolute UID65532/mode0600 private token file. Only core uses the existing outgoing overlay. No poller is started.",
+      "After start the exact token environment and read-only bind source are checked; a disabled rollback slot must have neither token environment nor token mount. Token file presence alone never enables outgoing delivery.",
+      "Automatic rollback formerly preserved target writes only after Eva1 ingress restart was attempted. Background writes can precede that point. Any attempted target-writer start now requires stop, target snapshot and reverse restore before source restart. Failure before writer start still leaves source data unchanged."
+    ],
+    "sources": {
+      "tools/eva2_quiescent_cutover.py": "e680c50e8a32ab6fb036a6b947915d0daeac88d863f753f6464b59f2ce10e628",
+      "tests/operations/test_eva2_quiescent_cutover.py": "06418d6b202b4397bc2c1914466023a578815def6660c857a04f6296ab1bbcc6"
+    },
+    "verification": {
+      "operatorAndOverlayTests": "36 passed in 0.14s",
+      "finalRelatedTests": "96 passed in 9.08s: cutover operator, outgoing overlay deployment contract, release-input authority and current workboard",
+      "resealedSourceAuthoritySha256": "733027c00156d29f1e1361f6e333f6bf7b69b35c9cd5b15fa88d7facc5a889f2",
+      "sourceAuthorityLimit": "Mechanical static source-hash update only; the existing built image and 1866-test receipt remain bound to the earlier authority 27b6b978 and source8c9ae668.",
+      "catalogAndBoard": "Passed after inventory regeneration completed. One premature catalog invocation raced the generator and correctly reported old inventory bytes; rerun after generator completion is green. 2080 files, 88 pre-existing repository-policy findings remain.",
+      "ruff": "passed",
+      "composeRender": "Existing base plus outgoing overlay renders nine services and one read-only core token bind; only config rendered, no service started. The render used existing slot3 image/config, not a new candidate runtime proof.",
+      "independentReview": "identity_pair_review: bounded GO on outgoing-overlay selection and on corrected pre-ingress/partial-start reverse-copy boundary. No full activation approval."
+    },
+    "sourceBindingLimit": "These two hostoperator/test files changed after image8c9ae668/a7d1eb5c and its 1866-test receipt. Runtime source and candidate image are unchanged; the old whole-source equality assertion is historical. The new hostoperator is not retroactively part of that built image or full-test receipt. Static source authority is resealed separately; exact final release binding remains required.",
+    "remaining": [
+      "Subsequent copiedSensoryRollback proves the historical prepared message and 64 legacy cost histories through two waiting phases with installed old/new adapters; not every later autonomous phase or delivery.",
+      "The pre-send credential barrier is subsequently implemented and physically fixture-tested in preSendBarrier; full application/rollback admission remains separate.",
+      "Complete independent candidate admission before configuring the reserve slot and executing lossless cutover; subsequent real positive/negative outgoing delivery and revocation checks."
+    ],
+    "productModelCalls": 0,
+    "telegramMessagesSent": 0,
+    "liveChanges": false
+  },
+  "candidateRequiredTests": {
+    "status": "complete_required_test_execution_passed_not_live",
+    "sourceCommit": "8c9ae668526fa7de2c83fb3e2fdfde347ed3028a",
+    "imageId": "sha256:a7d1eb5c35c092c1ac602854cc42acd9ca363a5242aa770cad6362d9ecc6ca23",
+    "runner": "tools/run_managed_b_required_tests.py",
+    "invocationWrapper": "/tmp/eva2-rt001-gates.sAhR7L/run_required.py",
+    "invocationWrapperSha256": "ea1ed358ac4c8191dd94dd5aaf77d754a7b29aedebb4933343266ad515fac1c0",
+    "receipt": "/tmp/eva2-rt001-gates.sAhR7L/required-tests.json",
+    "receiptSha256": "af88c80792cfe09b2f002a19e0b6242ded740f92252957f6851dd68dca9a235a",
+    "authoritySha256": "27b6b978aa832fde6cebf722d416aab26d6317b5840054524e040301df721744",
+    "testSnapshotSha256": "2f32516343e59d6bc165394c742cfdab7bb8a090aa3748b42fe9a9870d78f00b",
+    "executableModules": 149,
+    "supportInputs": 20,
+    "result": {"tests": 1866, "failures": 0, "errors": 0, "skipped": 0},
+    "groups": {
+      "pure": 1614,
+      "portable-effect": 4,
+      "portable-model": 4,
+      "portable-object": 5,
+      "portable-read": 4,
+      "portable-full-schema": 2,
+      "postgres": 233
+    },
+    "postgresSubgroups": {
+      "postgres-action-chain": 80,
+      "postgres-browser-physical": 4,
+      "postgres-living": 47,
+      "postgres-4b-store": 52,
+      "postgres-4b-current": 38,
+      "postgres-4b-historical": 12
+    },
+    "execution": {
+      "oneCompleteRunnerInvocation": true,
+      "failedGroupsOrReruns": 0,
+      "distributionCount": 54,
+      "distributionFingerprint": "87a9609514b797a1b0caffdb21bcc92859af6fb8a0a21242cf84860762830802",
+      "runtimeWheelCount": 38,
+      "gateWheelCount": 19,
+      "dependencyDownloads": false,
+      "sourceIsolation": "Wrapper runs each unchanged collection/test command in a fresh network namespace with only loopback up, uid/gid1000, no supplementary groups and no-new-privileges; no provider credentials are passed in the runner's filtered environment.",
+      "databaseIsolation": "Pinned PostgreSQL16.13, network none, no published ports, private Unix socket, twelve distinct empty databases; fsync/synchronous_commit/full_page_writes on, 2GiB disposable tmpfs with bounded WAL. Browser subgroup owns a separate thirteenth database.",
+      "browserIsolation": "Four containers on two gatewayless internal networks; candidate's internal product code, no repository product-code mount, external egress rejected.",
+      "sourceBinding": "Product, deploy, tests, tools and release files were byte-identical to the candidate commit before and after execution. Only status/evidence/inventory documents differ.",
+      "originalRunnerNonclaim": "Only postgres-browser-physical runs in the candidate image; other groups validate sealed source and wheelhouse inputs. The original runner does not itself claim network-namespace enforcement; that additional boundary is in the retained wrapper."
+    },
+    "independentReview": "identity_pair_review: bounded evidence GO after exact receipt/manifest hashes, 1866 totals, 149/20 authority and browser image/isolation/cleanup inspection. Not full RB007-card completion, release or live approval.",
+    "cleanup": {
+      "containerId": "a66b6cc9d63b0c66c5583ad102ea3ec368b35312cde8c13d40246b5f6cfe23ee",
+      "containerName": "eva2-rt001-required-tests-20260907",
+      "stoppedAndRemoved": true,
+      "browserNonceResourcesRemoved": true,
+      "scope": "Only synthetic disposable databases and browser test resources removed. Raw outcomes are retained; live services/data untouched."
+    },
+    "retention": {
+      "owner": "RT-001 architecturelead",
+      "root": "/tmp/eva2-rt001-gates.sAhR7L",
+      "manifestSha256": "ac22ba2e57a0ce857993daa3b98eefb3a98b799219e8561f4d7f9774a380de43",
+      "filesExcludingManifest": 27,
+      "bytesExcludingManifest": 586925,
+      "purpose": "Immutable invocation, wrapper, all 22 collection/execution results including JUnit, browser receipt, exact complete-run receipt and synthetic database inputs.",
+      "cleanupWhen": "After RT-001 candidate acceptance or rejection, retain selected sanitized evidence and remove this exact task directory."
+    },
+    "warnings": ["Existing SQLAlchemy mutually dependent foreign-key ordering warnings remain; this is not future-library compatibility proof.", "Repository inventory still reports 88 pre-existing policy findings; no clean-repository claim."],
+    "productModelCalls": 0,
+    "liveChanges": false,
+    "remaining": ["Current-data transition and restart proof", "Full candidate review", "Safe active/reserve promotion", "Actual autonomous positive/negative user delivery"]
+  },
+  "candidateScan": {
+    "date": "2026-09-07",
+    "previousTurnClassification": "progress: exact candidate built, source diagnostic tests and physical image probes completed",
+    "status": "candidate_scan_passed_not_release_approval",
+    "imageId": "sha256:a7d1eb5c35c092c1ac602854cc42acd9ca363a5242aa770cad6362d9ecc6ca23",
+    "sourceCommit": "8c9ae668526fa7de2c83fb3e2fdfde347ed3028a",
+    "buildReceiptSha256": "545b71f02a065a3e3035248fa7509b43ec299ba633ee557145af4f0aaf41dead",
+    "archiveSha256": "6c20432fd662cbd03b9e33cee5b25b307291a6898ebd0bf30e663bf5bbeff745",
+    "scanImageConfigDigest": "sha256:f48eed1aad33c70ba66adeba11724c54a291d74e2de6e2fcb49e39469133ff62",
+    "binding": "Rehashed the candidate archive, matched build receipt, and matched Trivy image configuration digest to the build's configuration digest. Runtime, deploy, test, tool and release paths remain byte-identical to the candidate commit.",
+    "findings": {"HIGH": 0, "CRITICAL": 0},
+    "sbom": {"format": "SPDX-2.3", "packages": 75, "files": 1519},
+    "tools": {
+      "authority": "release/candidate-artifact-tool-authority-v1.json",
+      "syft": "ghcr.io/anchore/syft@sha256:678bfa565b60f747aac0f8e964fe5588a24445b8d0a480e91f6efd70020dfbb0",
+      "trivy": "aquasec/trivy@sha256:62b1e65e8869bc4b4c6aa4fa2b21595256c7c2f6018a9d9ad61caf87187c1969"
+    },
+    "databasePreparation": {
+      "networkUsed": true,
+      "repository": "ghcr.io/aquasecurity/trivy-db:2",
+      "updatedAt": "2026-09-07T13:12:52.575474699Z",
+      "downloadedAt": "2026-09-07T13:49:38.437839893Z",
+      "nextUpdate": "2026-09-08T13:12:52.575474439Z",
+      "scope": "New private task cache only; old cache and live installation unchanged."
+    },
+    "scanNetwork": "none",
+    "containerBoundary": "--pull never, read-only root, read-only candidate archive and database cache, cap-drop ALL, no-new-privileges; only private reports and temporary storage writable. No Docker socket, secrets, live config or live database mounted.",
+    "hashes": {
+      "reports/sbom.raw.json": "7c698bfe9f9b975551e92549faa33ea8da506b55c9bdd221a9661629a386d796",
+      "reports/trivy.raw.json": "9c4602a9d72ca3165a6c708b5c74cb452351546517a34e0bdec1e2e25eaafdc6",
+      "trivy-cache/db/metadata.json": "2087607cb9a08bb378fce764214f639aae8117d57fc094926db69aa9945fb4ac",
+      "trivy-cache/db/trivy.db": "140bfd47fd4dc054d0d4563e79a0b8be630b1488105b01d052a8c0ebce54ed12"
+    },
+    "earlierReports": {
+      "sbom.raw.json": "f980ebfa6b703bc2f37e1f113bdfb84381502db02866e99675dc84b99c2b0cb6",
+      "trivy.raw.json": "ad0695a5c377a4c2807745c60e9dda1a21f801e131baf522b3d36488b51e87a0",
+      "reasonForRerun": "The original writable reports parent also contained the read-only-mounted cache, providing an unintended alternate writable path. Repeated the two scans with only the separate reports subdirectory writable. Original outputs retained, not presented as the final isolation proof.",
+      "originalReview": "identity_pair_review: bounded result/hash/image-binding GO on the original reports, not release approval"
+    },
+    "databaseHashUnchangedAcrossFinalScan": true,
+    "warnings": ["The first Syft run could not create its optional cache on the read-only root. Final run sets XDG_CACHE_HOME=/tmp within the existing tmpfs.", "Trivy reports vendor-severity selection and Python license metadata caveats; no lower-severity, exploitability or full license-audit claim follows from this HIGH/CRITICAL scan."],
+    "independentReview": "identity_pair_review checked the final separated-output report hashes, 0 HIGH/CRITICAL and 75 packages/1519 files: bounded candidate-scan GO only. The trivy.db SHA256 is a single-file hash, not a cache-tree hash. Earlier report review is retained separately.",
+    "retention": {
+      "owner": "RT-001 architecturelead",
+      "root": "/tmp/eva2-rt001-verification.psfKk7",
+      "purpose": "Exact candidate SPDX, raw vulnerability scan and dated private scanner database.",
+      "cleanupWhen": "After RT-001 candidate acceptance or rejection, retain selected sanitized evidence and remove this exact task directory."
+    },
+    "productModelCalls": 0,
+    "liveChanges": false
+  },
+  "candidateBuild": {
+    "status": "built_local_untagged_candidate_not_deployed",
+    "sourceCommit": "8c9ae668526fa7de2c83fb3e2fdfde347ed3028a",
+    "sourceReference": "refs/eva2/candidates/rt001-20260907-stream-diagnostics",
+    "parentCommit": "ccbe0bb62e74674c8abe1c57a7d67a7fe907aa10",
+    "snapshot": "44 existing tracked goal-change paths captured through a temporary Git index; user's HEAD, index and working files preserved. Historical untracked evidence excluded.",
+    "imageId": "sha256:a7d1eb5c35c092c1ac602854cc42acd9ca363a5242aa770cad6362d9ecc6ca23",
+    "sourceArchiveSha256": "61d824bf63ea8ca6226a6ae5b4beabee5d8e595a0e3fe19129d431422eb42a2e",
+    "imageArchiveSha256": "6c20432fd662cbd03b9e33cee5b25b307291a6898ebd0bf30e663bf5bbeff745",
+    "receiptPath": "/tmp/eva2-rt001-candidate.8hgB7h/build.json",
+    "receiptSha256": "545b71f02a065a3e3035248fa7509b43ec299ba633ee557145af4f0aaf41dead",
+    "operator": "tools/build_managed_b_offline_candidate.py",
+    "networkUsed": false,
+    "wheelCount": 38,
+    "earlierAttempt": "Build preflight stopped because root lacked the existing Buildx plugin. No image build occurred. Copied the existing local plugin into a private task directory, verified SHA256 4fe2eb90ac22b27fa03734899fcf814aa1e214a4952b9b30b20d551baf1d9a5c and supplied its required authority; second invocation built successfully. No download or gate bypass.",
+    "artifactRetention": {
+      "owner": "RT-001 architecturelead",
+      "paths": ["/tmp/eva2-rt001-candidate.8hgB7h", "/tmp/eva2-rt001-source.UaGjDA", "/tmp/eva2-rt001-docker.WMGqVc"],
+      "purpose": "Private exact-candidate inputs, archive, build receipt and measured local builder tool for remaining RT-001 verification.",
+      "cleanupWhen": "Remove these exact task directories after RT-001 candidate acceptance or rejection, after retaining the selected sanitized evidence. No move into a new artifact archive without explicit retention scope."
+    },
+    "physicalStreamProbe": {
+      "result": "5/5 cases passed on the exact image",
+      "cases": ["success", "before_delta", "after_delta", "after_response", "sink_failure"],
+      "probeSha256": "62a65c92f79382e9ccd85215a6b317cb5e3ba1494f1aedc56c35658a1495255d",
+      "stderrSha256": "82682ecf3c4f70961e9b78657e975561614784e696d8d5badf09f69846022013",
+      "sourceSha256InsideImage": "c5ba870c8012f2fc89d6d183c5c1c77c1168d2e5d8950726e75fc2fa742c5bd3",
+      "uid": 65532,
+      "readOnlyRoot": true,
+      "network": "none",
+      "secretsMounted": false,
+      "diagnosticRecords": 3,
+      "diagnosticStages": ["respond", "respond", "after_response"],
+      "syntheticRespondCallsPerCase": 1,
+      "productModelCalls": 0,
+      "privacy": "Private marker, provider password and raw turn identifiers absent from stdout and stderr; emitted code positions and hashes present.",
+      "cleanup": "Ephemeral --rm container removed; no remaining task-labelled disposable container.",
+      "limits": "Actual installed streaming helper and real stderr, with synthetic runtime callbacks. Not a real model, database, Telegram, full runtime or release-acceptance test."
+    },
+    "remaining": ["Current-data transition and restart proof", "Independent full-candidate review", "Safe active/reserve promotion and actual positive/negative user delivery"],
+    "liveChanges": false
+  },
+  "summary": "RT-001 combines subscription admission, current-source recovery, owner-bound Telegram and corrected memory-owner scopes. After a failed first activation due to a probe-only token, the repaired and independently reviewed exact candidate was promoted to slot4 at15:48UTC. Readiness and owner-scoped API checks pass; actual autonomous recovery/useful delivery and RT-001 acceptance remain open. Original15:24Amsterdam chat exception remains unknown; privacy-safe diagnostics are now installed.",
+  "copiedCurrentDataProbe": {
+    "status": "copied_current_data_conversation_restart_passed",
+    "previousGoalTurn": "no progress toward implementation: incident explanation and unchanged live health were reported; this turn resumes the available copied-data proof",
+    "sourceRoute": "eva2-managed-b-slot3-core:44710",
+    "candidateImage": "sha256:a7d1eb5c35c092c1ac602854cc42acd9ca363a5242aa770cad6362d9ecc6ca23",
+    "localDigestReference": "eva2.local/rt001@sha256:a7d1eb5c35c092c1ac602854cc42acd9ca363a5242aa770cad6362d9ecc6ca23",
+    "localReferenceCreation": "Previously absent reference created with existing ctr images tag --local, without force, skipped reference checks, pull, push or rebuild. Docker image ID and source label match. This is local naming, not registry provenance or release signing.",
+    "sourceCommit": "8c9ae668526fa7de2c83fb3e2fdfde347ed3028a",
+    "operatorSha256": "3599f313ca978a993ecc1796e37ab11bb88272b5fad71b58b3c2eda9a4964ee4",
+    "wrapperSha256": "97a37ba7a73b23a3ea1f997e6d2e9caaef033a4e00a0059c7422ff67ec1bde7c",
+    "overlaySha256": "950029d0ba214ebd2306c4bfe40a8878e5c482cf7a2f418f1fe07e2d208c158f",
+    "privateRetentionPath": "/tmp/eva2-rt001-copied.L8z4Cm",
+    "retentionOwner": "RT-001 verification",
+    "retentionPurpose": "Exact invocation, configuration-only idle delay, private probe receipt and diagnostic output. Operator removes its unique dump/secret/database stack immediately after success or failure; retained invocation and sanitized evidence remain until RT-001 acceptance or candidate rejection, then this exact directory is removed.",
+    "isolation": "Disposable copied databases, existing private canary client and identity; dummy Home Assistant/Telegram credentials, effects disabled, no Telegram poller or worker started, retain_slot false. Idle autonomous work is delayed 86400 seconds in this probe only; wall timeout 1800 seconds. Conversation memory processing remains enabled.",
+    "scope": "Conversation, joint restart, exact replay and same-person memory on current data; not autonomous recovery, actual Telegram delivery, full release acceptance or the unrecorded original error fix.",
+    "result": {
+      "attempts": 1,
+      "exitCode": 0,
+      "receiptPath": "/tmp/eva2-rt001-copied.L8z4Cm/receipt.private.json",
+      "receiptSha256": "0b838f0701a23a369ccbcede72044f93cc9fcbd97eea270bc2980d1b8bcf2fe8",
+      "invocationSha256": "28896f06fa6e43be4ae6885636d9b006e0aeb4530260551b731cfbd31fc77d5d",
+      "operationalTables": 48,
+      "hindsightTables": 23,
+      "sourceAndRestoredRowCountDigestsEqual": true,
+      "operationalRowCountDigest": "a87ab349042eab23ab3e9a7b281a641114b291c87b06805b500e56e95d739372",
+      "hindsightRowCountDigest": "04e37c63ac2839e2582abc270b133e347a018a4ef06ab3a96be51d917dbb36a4",
+      "countProofLimit": "Row counts match across each table, not a bytewise comparison of every row. Restores used the existing exit-on-error logical restore path.",
+      "dashboardOwnerAuthenticated": true,
+      "dashboardAnonymousRejected": true,
+      "existingPrivateClientAndRuntimeScope": true,
+      "jointRestart": "core, Hindsight API and both PostgreSQL databases",
+      "storedReplyExactAfterRestart": true,
+      "replayAddedForegroundModelCalls": 0,
+      "memoryWord": "zilverlijster",
+      "memoryLimit": "Same person and conversation; not independent Hindsight-only retrieval.",
+      "foregroundModelCalls": 2,
+      "foregroundInputTokens": 5666,
+      "foregroundOutputTokens": 15,
+      "foregroundTotalTokens": 5681,
+      "usageLimit": "Foreground conversation usage only; Hindsight memory processing is not included in this figure.",
+      "toolCalls": 0,
+      "canaryRequests": 3,
+      "drafts": 0,
+      "telegramMessagesSent": 0,
+      "temporaryProject": "eva2-clean-b-27cb064c8c3c",
+      "temporaryContainersVolumesNetworksAbsentAfterCleanup": true,
+      "plaintextDumpsAndSecretCopiesRemoved": true,
+      "liveHealthBeforeAndAfter": {"eva1": 200, "eva2": 200},
+      "liveImageUnchanged": "sha256:455be8e6f52adcf2f16288ad76793f150684c058753de3d8d84730a7ce623f7e",
+      "liveCoreStartedAtUnchanged": "2026-09-05T19:02:51.592014762Z",
+      "liveCoreRestartCount": 0
+    },
+    "independentReview": "identity_pair_review: bounded GO for the exact receipt SHA-256, table counts, joint restart/replay, measured foreground usage and cleanup. Existing private binding on copied data; not synthetic-person, canonical episode admission, Hindsight-only, streaming, autonomous recovery, live delivery or full release/promotion acceptance.",
+    "remaining": "Full candidate review and current historical-work recovery/delivery admission before safe active/reserve use. This conversation proof does not exercise autonomous old-event decisions or real outgoing Telegram delivery; RT-001 remains in progress."
+  },
+  "conversationFailureDiagnostics": {
+    "date": "2026-09-07",
+    "previousTurnClassification": "progress: read-only incident evidence identified missing exception diagnostics and changed the next implementation step",
+    "incident": {
+      "errorAtUtc": "2026-09-07T13:24:21Z",
+      "errorAtAmsterdam": "2026-09-07T15:24:21+02:00",
+      "publicError": "Eva2 kon haar antwoord niet veilig afronden. Eva1 heeft dit bericht niet verwerkt.",
+      "previousSuccessfulReplyAtUtc": "2026-09-07T13:23:13Z",
+      "storedPhase": "admitted",
+      "storedStatus": "active",
+      "storedEventTypes": ["INGRESS_COMMITTED"],
+      "failureFingerprintRecorded": false,
+      "coreStartedAtUtc": "2026-09-05T19:02:51.592014762Z",
+      "restartCount": 0,
+      "oomKilled": false,
+      "readiness": "ready at inspection; not proof that another conversation succeeds",
+      "sourceFinding": "Installed conversation_stream_response discarded the exception and returned only EvaTextStreamError/v1. Recent container/router logs yielded no underlying exception.",
+      "rootCause": "unknown; no deployment interruption observed",
+      "scope": "Owner-scoped read-only SQLite and PostgreSQL inspection; no private conversation text retained here; no replay or model call."
+    },
+    "humanFeedback": {
+      "source": "Jaap in this conversation",
+      "feedback": "De gesprekken met eva2 zijn echt een stuk beter!",
+      "acceptance": "positive limited feedback, not completed CO-002 or seven-day family acceptance"
+    },
+    "sources": {
+      "src/eva/adapters/api/dashboard_conversation.py": "c5ba870c8012f2fc89d6d183c5c1c77c1168d2e5d8950726e75fc2fa742c5bd3",
+      "tests/api/test_memory_api.py": "5366c639705e2ef65aaaa60bef9f537e9432e7abd34bcaa1433e8ca02bcad3d1"
+    },
+    "behavior": [
+      "One internal diagnostic record with respond/after_response stage, bounded Eva-code locations, coarse category and hashed type/turn identifiers.",
+      "No exception message, repr, locals, raw identifiers, absolute external path or provider body is logged; no exception-info attached.",
+      "A failed response preserves the existing terminal error contract before or after a delta; a failed after_response hook leaves the already-final reply intact.",
+      "No model retry, external effect, new database or dependency; a failed diagnostic sink cannot suppress the client error."
+    ],
+    "verification": {
+      "command": "PYTHONPATH=src:. TMPDIR=/tmp TEMP=/tmp TMP=/tmp python -m pytest -q -p no:cacheprovider --tb=short --show-capture=no tests/api/test_memory_api.py tests/api/test_dashboard_status.py tests/operations/test_current_workboard.py tests/operations/test_managed_b_release_inputs.py tests/operations/test_run_managed_b_required_tests.py",
+      "result": "128 passed in 12.52s",
+      "earlierAttempts": ["First test invocation omitted PYTHONPATH and stopped at collection with ModuleNotFoundError; corrected environment, no test bypassed.", "Intermediate API-only run: 26 passed in 2.22s before strengthening the exception str/repr negative control."],
+      "independentReview": {
+        "reviewer": "identity_pair_review",
+        "result": "bounded source-only GO on the two exact hashes above",
+        "limits": "Not the original incident fix, streaming-quality acceptance, full RT-001 approval or release GO."
+      }
+    },
+    "liveChanges": false,
+    "productModelCalls": 0,
+    "remaining": "Build and verify the exact shared candidate, including physical logging and data-transition checks, before safe promotion. A future failure can be localized; this does not reconstruct or fix the unrecorded original exception."
+  },
+  "releaseGatePreparation": {
+    "scope": "Source gate preparation, not execution of the complete 149-module release set",
+    "inputs": 325,
+    "requiredTestModules": 149,
+    "supportInputs": 20,
+    "addedTestModules": ["tests/application/test_free_will.py", "tests/postgres/test_sensory_admission.py"],
+    "postgresGrouping": "Sensory admission shares the existing current-migrations postgres_gate fixture group, separate from modules that downgrade their schemas. Existing 13 disposable-database layout retained.",
+    "sources": {
+      "tools/managed_b_candidate/release_inputs.py": "a11411770508798e93684f40226f68c6646e9ff5d6b97a9968000c7644c1a76f",
+      "tools/run_managed_b_required_tests.py": "f9cdc823e8d893d4f6b47202b36250db90292b9a850f189fc8344ebd3aa7f966",
+      "tests/operations/test_managed_b_release_inputs.py": "3d6f1f87c2503a4b8f428431e2452a888da7df9ff0dcf86baa82e53a34384f81",
+      "tests/operations/test_run_managed_b_required_tests.py": "4bf9b4fdc768f2e0e0c873c252d668feb38dc564483191f7e8ca81d56900e32a",
+      "release/managed-b-release-input-authority-v1.json": "27b6b978aa832fde6cebf722d416aab26d6317b5840054524e040301df721744"
+    },
+    "recordedChecks": [
+      "Two release-gate operations modules: 68 passed in 3.55s; included again in the 128-test run above.",
+      "Fresh PostgreSQL 16.13, test_postgres_migrations.py plus test_sensory_admission.py: 38 passed, one existing SQLAlchemy mutual-FK sorting warning, in 15.49s.",
+      "Earlier gate attempts: 14 failed/54 passed, then 1 failed/67 passed. Corrected stale exact cockpit date/nonclaims and PostgreSQL test-count assertions; no test removed or isolation relaxed."
+    ],
+    "cleanup": {
+      "container": "eva2-rt001-release-current-20260907",
+      "exactContainerId": "8e15a942468a6adde427388ffc4cf4ff2ca509f6a7c0ed6905eb00e178d5d352",
+      "removed": true,
+      "storage": "tmpfs; synthetic test data only; no live data changed"
+    },
+    "independentReview": "identity_pair_review: bounded test-gate/source GO only; no full runtime or release approval"
+  },
+  "sources": {
+    "src/eva/application/free_will.py": "07488d5c2b6527a85e8eb5d239dd622d89a7c35466bd43b053c2c00c582ab46e",
+    "src/eva/adapters/postgres/sensory_events.py": "157a0131948d4f7c991106d20d6e146404f71a73732481eaf642d588c43cd8c0",
+    "src/eva/adapters/model/pydantic_conversation.py": "351091015c5146265c1c3cfc6dacf5dbb1622cd026339e3b66895b2d632cf41b",
+    "src/eva/bootstrap/runtime.py": "9c51e0910a3c117a7ef369cfb340f24844ecd11c1245b46ae151aeb2798e16e8",
+    "tests/application/test_free_will.py": "1903dfef6cecb4e6ebb50ecc6a56d9f6a1852f9b35a6c3ffa1d7abb1b3177fdf",
+    "tests/postgres/test_sensory_admission.py": "fd10057aec463d0e9332106e534b9ebd86fc0e930e340e768122f332c584e190",
+    "tests/model/test_conversation_model.py": "0eb0aeac8a4de89d662faae8f69ece688b9a3527a4fdaa22d0328b0706aa9598",
+    "src/eva/adapters/postgres/operational_timeline.py": "2878b88b2634c141828db1811a755dc4ebcc94b7d3a4757a35fe0aa9284e932a",
+    "src/eva/application/sensory.py": "3abb3558cd93e1fe6d79accf41305d3fdb359a722a2eb56d0f69514c1a8ac589",
+    "src/eva/adapters/connectors/home_assistant.py": "65daf8929b4b7114afeb0d1025c9f004d79c9e2f803bd838f144db657e890970",
+    "src/eva/adapters/connectors/home_assistant_events.py": "90ea6bb4be6fcb40a3c1780d704aa3b6d85f107d62139c21134a6d5cc9e37583",
+    "tests/connectors/test_home_assistant_live_adapters.py": "ea33bb363d1cefe6ee2502726ea9efbee6ff6fd72b1f76039139a33f2fef45c0",
+    "src/eva/adapters/connectors/telegram.py": "46a42431bf88df10fe2c5e7a0bb31f272a95458b8e3f561055a4ca10c68dd3bc",
+    "src/eva/adapters/postgres/telegram_pairing.py": "643dae35a642f5d32e2b86d177e3fb4cce796100b45f707413ea9abe821c9b21",
+    "src/eva/application/telegram_ingress.py": "47fbb2f1b4ef8388a4fef106dee42a326112a3151aa0017284dd2d54178e9d22",
+    "tests/connectors/test_telegram.py": "7eed83d60a75367d13db966ebadc5434aeea1e2b722267f7ae8e617ea06ddd84",
+    "tests/bootstrap/test_runtime_settings.py": "1dfc2c355d328931d66b7eff1cf09abab8975f4acb4aac771f61cdda8af646af",
+    "deploy/living-core/telegram-proactive.compose.yml": "62bee1695b8e397efe11c7eb4bc7e9cd58ca7bd08caae37c37415040fca18631",
+    "tests/bootstrap/test_telegram_ingress_deployment.py": "4d3f7bda3a85714d195df4e4ad5ee62c21f7b55c0c17f12adaa30ad84d55a045",
+    "src/eva/adapters/postgres/people_memory_overview.py": "2b5e344d18736b2e13332bbde6d34e60da633df6842b1a6ca8725e143445282d",
+    "src/eva/application/people_memory_overview.py": "2aa3cecd6ea6454408089a303c3ed1ceb0a9b5487ced0fe73047fbb7f5332184",
+    "tests/postgres/test_people_memory_overview.py": "36de5592879e117e539f0ec2c0254c4263205de21569aec945bd19b82ca3ef0a"
+  },
+  "verification": {
+    "command": "EVA2_TEST_POSTGRES_DSN=<disposable PostgreSQL 16.13> PYTHONPATH=src:. TMPDIR=/tmp TEMP=/tmp TMP=/tmp python -m pytest -q -p no:cacheprovider tests/postgres/test_sensory_admission.py tests/application/test_free_will.py tests/model/test_conversation_model.py tests/model/test_pydantic_conversation_model.py tests/bootstrap/test_runtime_settings.py tests/operations/test_current_workboard.py",
+    "result": "116 passed in 15.29s",
+    "checks": [
+      "One durable WILL_ADMISSION_BLOCKED with closed reason; zero memory/model calls.",
+      "Repeated worker ticks and new store/worker objects leave the waiting timeline unchanged.",
+      "A separate Python subprocess reads the same waiting status and does not reclaim it.",
+      "Routine light event is silenced locally while other work waits.",
+      "Synthetic changed admission resumes the retained event once: one memory call and one fake-model call; no second work after completion.",
+      "Unknown blocker strings and stale claims refused.",
+      "Ordinary transient errors still stop after three identical failures.",
+      "Actual Pydantic adapter still refuses unknown autonomous cost before credentials/network."
+    ],
+    "earlierFailures": [
+      "Initial new test used an invalid empty identity-principles tuple: 79 tests passed, one failed; fixture corrected.",
+      "Second attempt correctly refused reused disposable DB containing Alembic version metadata: 78 passed, two setup errors; used a new explicitly named disposable DB. No production data touched."
+    ],
+    "ruff": "passed",
+    "dashboardAndWorkboard": "34 passed in 7.31s after refreshing only the touched runtime, model and model-test source hashes; no new live claim. Earlier run: 33 passed, one source-hash freshness failure.",
+    "componentCatalog": "passed after inventory regeneration",
+    "cleanup": "Task-labelled tmpfs PostgreSQL container eva2-rt001-admission-20260907 and its three disposable databases removed; no live data removed.",
+    "scope": "Historical pre-legacy-recovery run, bound to preLegacyRecoverySources; not a new run for the current hashes."
+  },
+  "liveReadOnlyCheck": {
+    "container": "eva2-managed-b-slot3-core",
+    "image": "sha256:455be8e6f52adcf2f16288ad76793f150684c058753de3d8d84730a7ce623f7e",
+    "readyz": true,
+    "scope": "Existing loopback endpoint checked only; not a fresh user interaction, full route audit or deployment."
+  },
+  "costAdmissionAudit": {
+    "checkedAt": "2026-09-07T09:45:00Z",
+    "status": "owner_usage_mandate_required_before_activation",
+    "documentationVerification": "tests/operations/test_current_workboard.py: 12 passed in 5.11s; workboard checker valid with RT-001 active; git diff --check passed. No product source changed in this audit.",
+    "previousGoalTurn": "No progress: the preceding answer restated the goal and existing board. This audit revalidated live settings and identified the missing owner choice; it does not claim runtime restoration.",
+    "liveReadOnlyMethod": "Existing core image/status and GET /readyz; a separate Python process loaded RuntimeSettings.from_environment without creating the app or starting workers. Only allowlisted budget values and a delivery-configured boolean were printed; no credentials or private conversations.",
+    "observed": {
+      "container": "eva2-managed-b-slot3-core",
+      "image": "sha256:455be8e6f52adcf2f16288ad76793f150684c058753de3d8d84730a7ce623f7e",
+      "running": true,
+      "readyz": true,
+      "budgetPresent": true,
+      "externalMonthlySpendCapEurCents": 0,
+      "unknownCostPolicy": "block_autonomous_spend",
+      "maxInputTokens": 12000,
+      "maxOutputTokens": 1200,
+      "reflectionsPerPersonDay": 4,
+      "reflectionsPerInstallationDay": 40,
+      "directTelegramDeliveryConfigured": false
+    },
+    "sourceFindings": [
+      "RuntimeResourceBudget accepts only block_autonomous_spend. The model adapter rejects autonomous requests whenever that installed budget is present; no positive verified-cost admission exists.",
+      "Searching Python source for external_monthly_spend_cap_eur_cents found only installer input/validation and budget serialization. No monthly reservation/debit enforcement was found. Increasing the stored cap alone cannot fix admission.",
+      "PostgresDailyReflectionBudget durably limits reflection counts; this is not a monthly currency or subscription allowance ledger and does not by itself cover all autonomous calls.",
+      "Runtime bootstrap requires both a proactive Telegram chat and bot token to construct direct proactive delivery. The installed token is absent; ordinary bridged replies are a separate route."
+    ],
+    "authorityBoundary": "The confirmed extra-spend cap remains zero. Do not invent a subscription allowance, treat unknown usage as free, buy credits, add API billing, raise limits or mass-requeue old work. Owner must specify permitted autonomous usage; technical proof must then establish enforceable admission and delivery.",
+    "ownerDecision": "Should autonomous Eva use only existing subscription allowance with no purchased credits/API spend, and what daily share may she consume? If additional spend is intended, the owner must explicitly set that separate budget.",
+    "nextImplementation": "Bind the chosen usage mandate to durable pre-dispatch reservation and conservative settlement, including failed/ambiguous calls and dependent memory work. Keep old-event freshness/recovery and existing bridged delivery in scope; do not activate merely because configuration validates.",
+    "productModelCalls": 0,
+    "liveChanges": false,
+    "limitations": "Readiness is not autonomous behavior, provider allowance proof, a new end-user interaction or a full route audit. Existing 116-test result above is historical for the unchanged source candidate, not a new test execution.",
+    "supersededBy": "ownerUsageClarification: no additional daily cap or new owner mandate is required for existing subscription use."
+  },
+  "upstream": {
+    "source": "https://learn.chatgpt.com/docs/pricing",
+    "finding": "Official documentation distinguishes plan allowance from API-key usage-based billing. No verified price for this particular installed access arrangement was inferred and no price or spend permission was changed."
+  },
+  "newDependencies": 0,
+  "productModelCalls": 0,
+  "liveChanges": false,
+  "remaining": [
+    "Enable existing private token file through the managed outgoing-only overlay after exact candidate review; no new bot, extra poller or credential request needed.",
+    "Include corrected local-owner/memory namespace integration in independent CO-003 and shared-candidate review; historical tests stay separate evidence.",
+    "Complete independent review and exact candidate release/data-recovery checks; activate safely and prove positive/negative user-visible delivery.",
+    "Existing daily Hindsight style-reflection counters remain maintenance limits; follow up with change-driven maintenance, not a new subscription usage mandate.",
+    "Full product goal, competition evidence and family acceptance remain incomplete."
+  ],
+  "preLegacyRecoverySources": {
+    "src/eva/application/free_will.py": "174f0000611b1d7e5561dc85f232301e567fcd440d12f0007c713ed66b082b63",
+    "src/eva/adapters/postgres/sensory_events.py": "6edbd1e3a1cfe6baedb32b593619a8cb4fc232eb4f894bd3d99056cac65cc0ec",
+    "src/eva/adapters/model/pydantic_conversation.py": "ad80167feca1d2febe0e98273ac17ab25cfa498f2f2c0d1abb4b894799024743",
+    "src/eva/bootstrap/runtime.py": "485e8abbdc9385725fd53dbc04350223c4f9b2745b37d9511f35087205294fb5",
+    "tests/application/test_free_will.py": "1903dfef6cecb4e6ebb50ecc6a56d9f6a1852f9b35a6c3ffa1d7abb1b3177fdf",
+    "tests/postgres/test_sensory_admission.py": "89bf9a4b22249c5893809b4bab29e558021228769a32b0d73b04f89ad52bbaa2",
+    "tests/model/test_conversation_model.py": "2717dddf7f0eb425c82aacc41110a6033899441abc92eb42222f4123b70e11e5"
+  },
+  "legacyRecoveryVerification": {
+    "date": "2026-09-07",
+    "status": "source_candidate_only",
+    "previousGoalTurn": "Progress: read-only installed budget/delivery audit established the missing owner usage mandate. That mandate is still unanswered; this change only repairs local durable waiting under the unchanged block.",
+    "implementation": [
+      "When admission is closed, filter only failed/needs_help will_claimed checkpoints by the exact historical cost-error fingerprint, before LIMIT 64 and within the existing tenant/installation scope.",
+      "Read and validate the existing timeline; only sensory observation, decision claims and failures with that same cost fingerprint may be reclassified. Mixed or action/delivery history is not auto-repaired.",
+      "Append one WILL_ADMISSION_BLOCKED, preserving original observation, operation identity, every previous event and retry count. No migration, deletion, new dependency, external execution or cost-policy change."
+    ],
+    "results": [
+      {
+        "scope": "Sensory admission, free will, both conversation model modules and bootstrap runtime settings",
+        "result": "108 non-workboard tests passed within the 120-test run (17.21s); its four board failures were corrected and all 12 board tests rerun separately."
+      },
+      {
+        "scope": "tests/postgres/test_operational_timeline.py",
+        "result": "39 passed in 4.23s, separate fresh eva2_living_disposable_ database."
+      },
+      {
+        "scope": "tests/operations/test_current_workboard.py",
+        "result": "12 passed in 5.01s after replacing invalid descriptive DSN placeholders with valid commands and separate database instructions."
+      }
+    ],
+    "uniquePassingTests": 159,
+    "duplicateCountNote": "108 product tests + 39 timeline tests + 12 board tests; do not add the eight board passes from the earlier combined run again.",
+    "newCases": [
+      "One and three exact legacy cost failures normalize once under four concurrent fresh store instances; original timeline prefix and sensory event remain byte/structurally identical.",
+      "Repeated blocked polling does not append another event or claim work.",
+      "Mixed timeout/cost history stays needs_help unchanged.",
+      "Seventy newer unrelated failures cannot hide the matching cost failure behind the query limit.",
+      "Another installation and an ambiguous-delivery phase remain unchanged, even with a matching error fingerprint; invalid query fingerprint rejected."
+    ],
+    "failuresRetained": [
+      "First combined run: 6 failed, 117 passed, 36 setup errors. New BYTEA filter incorrectly used a string, and two PostgreSQL suites require different disposable DB prefixes.",
+      "Isolated diagnostic on another fresh database: 1 failed, confirming the BYTEA type mismatch. Corrected to bytes.fromhex after strict fingerprint validation.",
+      "After correction: 116 passed, 4 board failures in 17.21s; test-command placeholders violated the existing verifier. Commands corrected without relaxing the verifier. All 12 board tests then passed."
+    ],
+    "limits": [
+      "Only the historical Home Assistant sensory queue is normalized; no general connector-neutral recovery claim.",
+      "This is not a live data migration, physical SIGKILL test, actual allowance admission or end-to-end proactive delivery proof.",
+      "Original event times remain intact; stale-event policy and safe eventual resumption still require implementation before activation.",
+      "Anomalous histories are deliberately not normalized; a bounded matching batch is not a guarantee to automatically repair every malformed or mixed history.",
+      "Independent review, exact candidate release tests and safe promotion remain open."
+    ],
+    "productModelCalls": 0,
+    "liveChanges": false,
+    "cleanup": "Verified exact ID 2ac3faae351a176a4c68262881752464b9bd8527d72f744a0956a2b5570a903d, RT-001/disposable labels and tmpfs; removed only eva2-rt001-recovery-20260907 and its four disposable databases. No live data removed.",
+    "qualityChecks": "Ruff passed for RT-001 source/tests; current receipt source hashes match; component catalog and workboard valid; diff whitespace check passed. Inventory retains 88 existing policy issues, not a full repository green claim.",
+    "sourceHashes": "preSubscriptionAdmissionSources (historical run; model and sensory test changed afterwards)"
+  },
+  "ownerMandateBlockedAudit": {
+    "date": "2026-09-07",
+    "consecutiveGoalTurnsWithSameMissingMandate": 3,
+    "previousTurnClassification": "progress: legacy cost-only failures safely normalized in source and checked against PostgreSQL. This turn inspected stale-event behavior and revalidated the unchanged installed zero cap; no new product source change.",
+    "currentReadOnlyResult": {
+      "externalMonthlySpendCapEurCents": 0,
+      "unknownCostPolicy": "block_autonomous_spend",
+      "directTelegramDeliveryConfigured": false
+    },
+    "freshnessFinding": "SensoryDecisionWorker passes the original observation to recall/model without an age/revalidation gate. PostgresSensoryEventStore.claim_next_expression claims a prepared expression without checking observation age. An expiring work lease is not observation freshness. The model sees occurred_at but this is not independent current-state proof.",
+    "decisionRequired": "Owner must specify which subscription/paid usage autonomous Eva may consume and its daily limit. Source fixes must not be promoted by guessing this mandate, expanding a zero-spend cap or calling unverified usage free.",
+    "reasonToStop": "The remaining primary runtime route requires choosing and proving authorized cost/allowance admission plus current-state revalidation and delivery. The local cost-wait repairs are preserved; adding a different admission policy without owner input would choose a material product/resource policy.",
+    "notDone": [
+      "Actual autonomous admission",
+      "Stale observation and prepared-message revalidation",
+      "End-to-end proactive delivery",
+      "Independent candidate review and safe promotion",
+      "Full product goal"
+    ],
+    "supersededBy": "ownerUsageClarification: assistant-imposed blocker withdrawn; historical audit retained, not a current owner requirement."
+  },
+  "ownerUsageClarification": {
+    "date": "2026-09-07",
+    "authorizedBy": "Jaap",
+    "existingSubscriptionAutonomy": true,
+    "additionalEvaDailyTokenCap": null,
+    "additionalEvaDailyCallCap": null,
+    "efficiencyRequirement": "Geen absurde tokenverspilling door slecht programmeerwerk: onnodige herhaling, te grote context, dubbele modelcalls en vastlopende loops voorkomen en met werkelijk gebruik onderzoeken.",
+    "accountLimitsStillApply": true,
+    "codexDevelopmentUsageSeparate": true,
+    "doesNotAuthorize": "Geen wijziging van abonnement, betaalinstellingen, aanschaf van credits of inschakeling van een andere betaalde API-route op basis van deze verduidelijking.",
+    "previousBlockerWithdrawn": true,
+    "previousInterpretation": "Een door de assistent verplicht gesteld dagmaximum of nieuw verbruiksmandaat was geen eis van Jaap. De geïnstalleerde €0-configuratiewaarde was geen bewijs dat Jaap bestaand abonnementsgebruik wilde blokkeren.",
+    "developmentWeekLimitCause": "Niet vastgesteld; werktijd alleen is geen gebruiksmeting."
+  },
+  "preSubscriptionAdmissionSources": {
+    "src/eva/application/free_will.py": "174f0000611b1d7e5561dc85f232301e567fcd440d12f0007c713ed66b082b63",
+    "src/eva/adapters/postgres/sensory_events.py": "cb4f51e6a83a74260ef882991a00fdecfa99683894a23719baba622d01decba1",
+    "src/eva/adapters/model/pydantic_conversation.py": "ad80167feca1d2febe0e98273ac17ab25cfa498f2f2c0d1abb4b894799024743",
+    "src/eva/bootstrap/runtime.py": "485e8abbdc9385725fd53dbc04350223c4f9b2745b37d9511f35087205294fb5",
+    "tests/application/test_free_will.py": "1903dfef6cecb4e6ebb50ecc6a56d9f6a1852f9b35a6c3ffa1d7abb1b3177fdf",
+    "tests/postgres/test_sensory_admission.py": "463e17db5bd7d362836596a7554ad33fb8b271afa8f2578b1a41ce68df7e92a0",
+    "tests/model/test_conversation_model.py": "2717dddf7f0eb425c82aacc41110a6033899441abc92eb42222f4123b70e11e5",
+    "src/eva/adapters/postgres/operational_timeline.py": "2878b88b2634c141828db1811a755dc4ebcc94b7d3a4757a35fe0aa9284e932a"
+  },
+  "subscriptionAdmissionRepair": {
+    "date": "2026-09-07",
+    "status": "source_candidate_not_deployed",
+    "authority": "Jaap explicitly clarified that the existing subscription may be used autonomously without an additional daily model-call or token cap; avoid waste. No payment setting or other paid API route authorized or changed.",
+    "source": "https://learn.chatgpt.com/docs/auth",
+    "documentationFinding": "Official OpenAI documentation distinguishes ChatGPT subscription sign-in from usage-based API-key access. This is not a claim of unlimited provider allowance or zero actual usage cost.",
+    "implementation": "Existing exact Codex subscription endpoint is no longer refused by the generic unknown-external-cost setting. The adapter still reads its existing access lease, validates usage, respects provider rejection and never selects API-key fallback. Other endpoint variants retain the previous refusal. No new quota, dependency, budget artifact or changed live configuration.",
+    "verification": [
+      {
+        "command": "pytest -q tests/model/test_conversation_model.py tests/model/test_pydantic_conversation_model.py tests/application/test_free_will.py tests/bootstrap/test_runtime_settings.py",
+        "result": "109 passed in 7.50s"
+      },
+      {
+        "command": "EVA2_TEST_POSTGRES_DSN=<fresh eva2_4b_disposable_subscription> pytest -q tests/postgres/test_sensory_admission.py",
+        "result": "8 passed in 7.04s"
+      }
+    ],
+    "checks": [
+      "41 sequential intercepted subscription requests each dispatch once, without a daily model-call cap.",
+      "Missing authentication performs zero dispatches. HTTP 429 performs one dispatch with no retry or alternate provider.",
+      "Missing usage and over-limit output are refused; API endpoint, lookalike host, query-modified endpoint and HTTP downgrade stay blocked.",
+      "Real PydanticConversationModel admission and sensory decision parsing feed the real worker and PostgreSQL, using a synthetic model response and memory stub. One expression and one test receipt persist; fresh stores do not repeat execution or delivery."
+    ],
+    "limitations": [
+      "No product model calls or real Telegram sends were made. The PostgreSQL expression test uses a synthetic provider and synthetic receipt, not physical end-user delivery.",
+      "Old cost-failed needs_help rows are not automatically recovered when admission is now open. Safe old-event revalidation/resumption remains required before deployment.",
+      "Other background reflection quotas are separate existing paths and have not been removed or declared compliant by this patch.",
+      "No independent review or exact-image deployment approval yet. The automatic goal's app status remains blocked until resumed through user controls."
+    ],
+    "productModelCalls": 0,
+    "liveChanges": false,
+    "cleanup": "Verified exact ID 354286084b347ea0dc557aac2dd24d45e5784f3708fc4f10f7e2439f0b6aeaf4, RT-001/disposable labels and tmpfs; removed only eva2-rt001-subscription-20260907 and its synthetic disposable database. No live data removed.",
+    "additionalChecks": "Dashboard/workboard: 34 passed in 7.01s. Ruff, component catalog, workboard and diff whitespace check passed. Only touched cockpit source hashes refreshed; historical evidence is not a live claim for this admission repair. Inventory retains 88 pre-existing policy issues.",
+    "sourceHashes": {
+      "src/eva/application/free_will.py": "174f0000611b1d7e5561dc85f232301e567fcd440d12f0007c713ed66b082b63",
+      "src/eva/adapters/postgres/sensory_events.py": "cb4f51e6a83a74260ef882991a00fdecfa99683894a23719baba622d01decba1",
+      "src/eva/adapters/model/pydantic_conversation.py": "351091015c5146265c1c3cfc6dacf5dbb1622cd026339e3b66895b2d632cf41b",
+      "src/eva/bootstrap/runtime.py": "485e8abbdc9385725fd53dbc04350223c4f9b2745b37d9511f35087205294fb5",
+      "tests/application/test_free_will.py": "1903dfef6cecb4e6ebb50ecc6a56d9f6a1852f9b35a6c3ffa1d7abb1b3177fdf",
+      "tests/postgres/test_sensory_admission.py": "cdac915db31ffcef47cab47fb1de99359d91ffd3e704b526a16d1bcfdfead57f",
+      "tests/model/test_conversation_model.py": "0eb0aeac8a4de89d662faae8f69ece688b9a3527a4fdaa22d0328b0706aa9598",
+      "src/eva/adapters/postgres/operational_timeline.py": "2878b88b2634c141828db1811a755dc4ebcc94b7d3a4757a35fe0aa9284e932a"
+    }
+  },
+  "preRevalidationRecoverySources": {
+    "src/eva/application/free_will.py": "174f0000611b1d7e5561dc85f232301e567fcd440d12f0007c713ed66b082b63",
+    "src/eva/adapters/postgres/sensory_events.py": "cb4f51e6a83a74260ef882991a00fdecfa99683894a23719baba622d01decba1",
+    "src/eva/adapters/model/pydantic_conversation.py": "351091015c5146265c1c3cfc6dacf5dbb1622cd026339e3b66895b2d632cf41b",
+    "src/eva/bootstrap/runtime.py": "485e8abbdc9385725fd53dbc04350223c4f9b2745b37d9511f35087205294fb5",
+    "tests/application/test_free_will.py": "1903dfef6cecb4e6ebb50ecc6a56d9f6a1852f9b35a6c3ffa1d7abb1b3177fdf",
+    "tests/postgres/test_sensory_admission.py": "cdac915db31ffcef47cab47fb1de99359d91ffd3e704b526a16d1bcfdfead57f",
+    "tests/model/test_conversation_model.py": "0eb0aeac8a4de89d662faae8f69ece688b9a3527a4fdaa22d0328b0706aa9598",
+    "src/eva/adapters/postgres/operational_timeline.py": "2878b88b2634c141828db1811a755dc4ebcc94b7d3a4757a35fe0aa9284e932a"
+  },
+  "revalidationRecovery": {
+    "date": "2026-09-07",
+    "status": "partial_source_candidate_not_deployed",
+    "sourceHashes": {
+      "src/eva/application/free_will.py": "174f0000611b1d7e5561dc85f232301e567fcd440d12f0007c713ed66b082b63",
+      "src/eva/adapters/postgres/sensory_events.py": "67f4a1203d606b991449cbb3565f6902a0fa0428a822f82ab14b7ef0a0123f59",
+      "src/eva/adapters/model/pydantic_conversation.py": "351091015c5146265c1c3cfc6dacf5dbb1622cd026339e3b66895b2d632cf41b",
+      "src/eva/bootstrap/runtime.py": "485e8abbdc9385725fd53dbc04350223c4f9b2745b37d9511f35087205294fb5",
+      "tests/application/test_free_will.py": "1903dfef6cecb4e6ebb50ecc6a56d9f6a1852f9b35a6c3ffa1d7abb1b3177fdf",
+      "tests/postgres/test_sensory_admission.py": "c531c40eb095fa88b1220c8530bdf003b07e45415a3cc81ef73998c8588959da",
+      "tests/model/test_conversation_model.py": "0eb0aeac8a4de89d662faae8f69ece688b9a3527a4fdaa22d0328b0706aa9598",
+      "src/eva/adapters/postgres/operational_timeline.py": "2878b88b2634c141828db1811a755dc4ebcc94b7d3a4757a35fe0aa9284e932a"
+    },
+    "implementation": [
+      "Cost-only legacy failures are recognized whether model admission is closed or open. Hash-verified mixed histories and ambiguous delivery stay untouched.",
+      "Reopened admission moves retained observations to will_waiting_revalidation / waiting_for_proof, preserving original events, identity and retries. This is neither a new owner-approval request nor proof of relevance.",
+      "Fresh events continue through the existing subscription path; repeated scheduler ticks and fresh process objects do not replay observations pending revalidation."
+    ],
+    "verification": [
+      {
+        "scope": "model, worker, bootstrap",
+        "result": "109 passed in 7.36s"
+      },
+      {
+        "scope": "PostgreSQL 16.13 sensory recovery, fresh disposable DB",
+        "result": "12 passed in 9.67s",
+        "cases": [
+          "open and closed admission",
+          "legacy one and three cost failures",
+          "four concurrent stores",
+          "restart and no repeated provider work",
+          "new work still eligible",
+          "mixed failures, ambiguous delivery and other installations preserved",
+          "70 unrelated failures do not hide matching recovery candidates"
+        ]
+      },
+      {
+        "scope": "PostgreSQL 16.13 operational timeline, separate disposable DB",
+        "result": "39 passed in 5.15s"
+      }
+    ],
+    "failedAttempts": [
+      {
+        "result": "4 failed, 8 passed in 9.47s",
+        "cause": "New parameterized cases reused tenant IDs in a session-scoped database and collided with already retained histories.",
+        "correction": "Separate tenant identity per parameter; full rerun on a newly created disposable database. Production recovery rules were not weakened."
+      }
+    ],
+    "checks": {
+      "ruff": "passed",
+      "workboard": "valid",
+      "dashboardAndBoardTests": "34 passed in 6.89s",
+      "inventory": "2080 files; 88 pre-existing policy findings remain open",
+      "componentCatalog": "passed",
+      "diffCheck": "passed"
+    },
+    "limitations": [
+      "The current-source revalidation consumer is not implemented yet; parking old work alone is not runtime completion.",
+      "Old already-prepared expressions still need relevance verification before the live outbox is activated.",
+      "No actual Telegram delivery, real product model calls, independent review or safe promotion in this check."
+    ],
+    "productModelCalls": 0,
+    "liveChanges": false,
+    "cleanup": {
+      "container": "eva2-rt001-revalidation-20260907",
+      "exactContainerId": "b0e6db6057d92f4049d5df409c4048f1f57de54a83305d991c079f201abbfc2d",
+      "removed": true,
+      "storage": "tmpfs, no persistent volume",
+      "databases": [
+        "eva2_4b_disposable_revalidation",
+        "eva2_4b_disposable_revalidation_v2",
+        "eva2_living_disposable_revalidation"
+      ],
+      "scope": "Only disposable synthetic test data removed; live data untouched."
+    }
+  },
+  "preCurrentSourceRevalidationSources": {
+    "src/eva/application/free_will.py": "174f0000611b1d7e5561dc85f232301e567fcd440d12f0007c713ed66b082b63",
+    "src/eva/adapters/postgres/sensory_events.py": "67f4a1203d606b991449cbb3565f6902a0fa0428a822f82ab14b7ef0a0123f59",
+    "src/eva/adapters/model/pydantic_conversation.py": "351091015c5146265c1c3cfc6dacf5dbb1622cd026339e3b66895b2d632cf41b",
+    "src/eva/bootstrap/runtime.py": "485e8abbdc9385725fd53dbc04350223c4f9b2745b37d9511f35087205294fb5",
+    "tests/application/test_free_will.py": "1903dfef6cecb4e6ebb50ecc6a56d9f6a1852f9b35a6c3ffa1d7abb1b3177fdf",
+    "tests/postgres/test_sensory_admission.py": "c531c40eb095fa88b1220c8530bdf003b07e45415a3cc81ef73998c8588959da",
+    "tests/model/test_conversation_model.py": "0eb0aeac8a4de89d662faae8f69ece688b9a3527a4fdaa22d0328b0706aa9598",
+    "src/eva/adapters/postgres/operational_timeline.py": "2878b88b2634c141828db1811a755dc4ebcc94b7d3a4757a35fe0aa9284e932a"
+  },
+  "currentSourceRevalidation": {
+    "date": "2026-09-07",
+    "status": "tested_source_not_live",
+    "sourceHashes": {
+      "src/eva/application/free_will.py": "07488d5c2b6527a85e8eb5d239dd622d89a7c35466bd43b053c2c00c582ab46e",
+      "src/eva/adapters/postgres/sensory_events.py": "157a0131948d4f7c991106d20d6e146404f71a73732481eaf642d588c43cd8c0",
+      "src/eva/adapters/model/pydantic_conversation.py": "351091015c5146265c1c3cfc6dacf5dbb1622cd026339e3b66895b2d632cf41b",
+      "src/eva/bootstrap/runtime.py": "435e9d162d804cb0b0eb14b1e32349454b31dd7b51ba31faefa6f3c684033c85",
+      "tests/application/test_free_will.py": "1903dfef6cecb4e6ebb50ecc6a56d9f6a1852f9b35a6c3ffa1d7abb1b3177fdf",
+      "tests/postgres/test_sensory_admission.py": "8f9b25f9255bb46e4bd9c3faf24a8cc762070cfd7d68e67d2c90e60743a99a21",
+      "tests/model/test_conversation_model.py": "0eb0aeac8a4de89d662faae8f69ece688b9a3527a4fdaa22d0328b0706aa9598",
+      "src/eva/adapters/postgres/operational_timeline.py": "2878b88b2634c141828db1811a755dc4ebcc94b7d3a4757a35fe0aa9284e932a",
+      "src/eva/application/sensory.py": "3abb3558cd93e1fe6d79accf41305d3fdb359a722a2eb56d0f69514c1a8ac589",
+      "src/eva/adapters/connectors/home_assistant.py": "65daf8929b4b7114afeb0d1025c9f004d79c9e2f803bd838f144db657e890970",
+      "src/eva/adapters/connectors/home_assistant_events.py": "90ea6bb4be6fcb40a3c1780d704aa3b6d85f107d62139c21134a6d5cc9e37583",
+      "tests/connectors/test_home_assistant_live_adapters.py": "ea33bb363d1cefe6ee2502726ea9efbee6ff6fd72b1f76039139a33f2fef45c0"
+    },
+    "implementation": [
+      "Connector-neutral optional revalidation port on the existing event source; bootstrap binds it without a Home Assistant branch in the worker.",
+      "Existing Home Assistant HTTP transport reads exactly one admitted entity. Original history and a minimized current-state snapshot stay distinct; unavailable, wrong-target or future-dated evidence is rejected.",
+      "Durable leased read -> stored snapshot -> new model decision -> new expression. Ordinary historical light/switch telemetry is silenced locally without source, recall or model I/O.",
+      "A five-minute observation-freshness window and process-start boundary trigger source revalidation before deciding or releasing pending messages. This is not a usage cap or data deletion.",
+      "Fresh decisions and historical revalidation alternate when both queues have work. Closed admission prevents new revalidation I/O. Failed current reads retain existing bounded recovery; ambiguous prior delivery is never replayed."
+    ],
+    "verification": [
+      {
+        "scope": "model, application, bootstrap, connector tests",
+        "result": "135 passed in 7.41s"
+      },
+      {
+        "scope": "fresh PostgreSQL 16.13 sensory tests",
+        "result": "17 passed in 10.74s",
+        "evidence": "A real localhost HTTP source reports closed after a historical open observation; both admission-wait and pre-restart pending-expression cases create a new decision and test receipt. Exactly one HTTP read, recall and synthetic model call per positive case; fresh store instances use the stored snapshot. Includes concurrency, expired/stale claims, bounded source failure and zero-I/O old routine telemetry."
+      },
+      {
+        "scope": "separate fresh PostgreSQL 16.13 operational timeline",
+        "result": "39 passed in 5.17s"
+      }
+    ],
+    "failedAttempts": [
+      {
+        "result": "1 failed, 124 passed in 7.87s",
+        "cause": "An unnecessary rewrite of the pre-existing async state method bypassed its injected HTTP seam; its regression test attempted the reserved ha.test hostname.",
+        "correction": "Preserved the existing async method. The revalidation reader shares the existing bounded HTTP transport without changing that contract. Original regression passed unchanged."
+      }
+    ],
+    "limitations": [
+      "HTTP/PG lifecycle tests use a local fixture and a synthetic decision model. A separate real provider read also passed; there was no real Telegram action or product model call.",
+      "Fresh storage-object replay is not a physical process/database crash proof. A new runtime startup intentionally rechecks still-pending historical observations.",
+      "Current source evidence is a point-in-time read, not a guarantee that an entity remains unchanged until message receipt.",
+      "The existing sensory PostgreSQL namespace remains Home Assistant-specific; this is not completion of general multi-provider discovery.",
+      "No independent technical review or live promotion yet. No real outbox consumer proven."
+    ],
+    "deliveryInspection": {
+      "service": "eva.service",
+      "pid": "2454726",
+      "entry": "src/index.js",
+      "bridge": "/home/administrator/project/Bottie/src/integrations/eva2canary.js",
+      "finding": "Read-only source inspection finds the request/reply canary endpoint; no proactive outbox consumer in the inspected integrations. Do not equate existing replies with proactive delivery.",
+      "changes": false
+    },
+    "productModelCalls": 0,
+    "liveChanges": false,
+    "newDependencies": [],
+    "checks": {
+      "ruff": "passed",
+      "dashboardAndWorkboardTests": "34 passed in 7.30s",
+      "workboard": "valid",
+      "componentCatalog": "passed",
+      "inventory": "2080 files; 88 existing policy findings remain open",
+      "diffCheck": "passed"
+    },
+    "realProviderRead": {
+      "status": "passed",
+      "current_time_utc": "2026-09-07T12:30:40.993544+00:00",
+      "source_files_sha256": {
+        "home_assistant": "65daf8929b4b7114afeb0d1025c9f004d79c9e2f803bd838f144db657e890970",
+        "home_assistant_events": "90ea6bb4be6fcb40a3c1780d704aa3b6d85f107d62139c21134a6d5cc9e37583"
+      },
+      "original_observation_age_seconds": 8,
+      "source_event_sha256": "801f69beb0592860992ca2c27884ba74e8ad1786c0f76db6053e2055852cf949",
+      "current_evidence_sha256": "a6cc84178fa2fb3ea5276aaff586d357cc23872c49899e9e85b86160539b0e6d",
+      "same_event_identity": true,
+      "revalidated_type": "observation_revalidated",
+      "provider_reads": 1,
+      "database_read_only": true,
+      "model_calls": 0,
+      "telegram_sends": 0,
+      "state_mutations": 0,
+      "proof_scope": "separate process with exact candidate adapter sources; not installed runtime or durable live recovery",
+      "liveImage": "sha256:455be8e6f52adcf2f16288ad76793f150684c058753de3d8d84730a7ce623f7e",
+      "procedure": "Separate short-lived process in the existing core container. Load existing settings without starting the application. Evaluate the two exact candidate adapter modules in that process only. Read one admitted retained observation under PostgreSQL default_transaction_read_only=on and 5-second statement timeout. Revalidate it against the configured source with existing credentials. Emit hashes and counters only. No files, runtime settings, queues or database rows changed.",
+      "limitation": "The selected real observation was 8 seconds old. This proves the real adapter read and current identity binding, not recovery of a real old job or live notification delivery.",
+      "failedPreparationAttempts": [
+        {
+          "attempts": 2,
+          "status": "failed_before_provider_read",
+          "error": "ModuleNotFoundError: psycopg2",
+          "correction": "The probe initially used SQLAlchemy's default driver for a bare PostgreSQL URL. Explicitly selected the already installed psycopg driver, as required by this runtime. No dependencies installed and no provider read before this correction."
+        }
+      ]
+    },
+    "cleanup": {
+      "container": "eva2-rt001-current-source-20260907",
+      "exactContainerId": "30d32f9c2922cf60c0966a1a0a30626e187d2e14fc1eccc726c55b6e0dac0b6a",
+      "removed": true,
+      "storage": "tmpfs, no persistent volume",
+      "databases": [
+        "eva2_4b_disposable_current_source",
+        "eva2_4b_disposable_current_source_v2",
+        "eva2_4b_disposable_current_source_final",
+        "eva2_living_disposable_current_source",
+        "eva2_living_disposable_current_source_final"
+      ],
+      "scope": "Only disposable synthetic test data removed. Live data and installed image unchanged."
+    }
+  },
+  "preOwnerDeliverySources": {
+    "src/eva/application/free_will.py": "07488d5c2b6527a85e8eb5d239dd622d89a7c35466bd43b053c2c00c582ab46e",
+    "src/eva/adapters/postgres/sensory_events.py": "157a0131948d4f7c991106d20d6e146404f71a73732481eaf642d588c43cd8c0",
+    "src/eva/adapters/model/pydantic_conversation.py": "351091015c5146265c1c3cfc6dacf5dbb1622cd026339e3b66895b2d632cf41b",
+    "src/eva/bootstrap/runtime.py": "435e9d162d804cb0b0eb14b1e32349454b31dd7b51ba31faefa6f3c684033c85",
+    "tests/application/test_free_will.py": "1903dfef6cecb4e6ebb50ecc6a56d9f6a1852f9b35a6c3ffa1d7abb1b3177fdf",
+    "tests/postgres/test_sensory_admission.py": "8f9b25f9255bb46e4bd9c3faf24a8cc762070cfd7d68e67d2c90e60743a99a21",
+    "tests/model/test_conversation_model.py": "0eb0aeac8a4de89d662faae8f69ece688b9a3527a4fdaa22d0328b0706aa9598",
+    "src/eva/adapters/postgres/operational_timeline.py": "2878b88b2634c141828db1811a755dc4ebcc94b7d3a4757a35fe0aa9284e932a",
+    "src/eva/application/sensory.py": "3abb3558cd93e1fe6d79accf41305d3fdb359a722a2eb56d0f69514c1a8ac589",
+    "src/eva/adapters/connectors/home_assistant.py": "65daf8929b4b7114afeb0d1025c9f004d79c9e2f803bd838f144db657e890970",
+    "src/eva/adapters/connectors/home_assistant_events.py": "90ea6bb4be6fcb40a3c1780d704aa3b6d85f107d62139c21134a6d5cc9e37583",
+    "tests/connectors/test_home_assistant_live_adapters.py": "ea33bb363d1cefe6ee2502726ea9efbee6ff6fd72b1f76039139a33f2fef45c0"
+  },
+  "ownerBoundOutboundDelivery": {
+    "date": "2026-09-07",
+    "status": "tested_source_not_live",
+    "sourceHashes": {
+      "src/eva/application/free_will.py": "07488d5c2b6527a85e8eb5d239dd622d89a7c35466bd43b053c2c00c582ab46e",
+      "src/eva/adapters/postgres/sensory_events.py": "157a0131948d4f7c991106d20d6e146404f71a73732481eaf642d588c43cd8c0",
+      "src/eva/adapters/model/pydantic_conversation.py": "351091015c5146265c1c3cfc6dacf5dbb1622cd026339e3b66895b2d632cf41b",
+      "src/eva/bootstrap/runtime.py": "10e51f4eb6c683573d8ff7affdc0da704ec62191d1efa96507e80503bb413aa2",
+      "tests/application/test_free_will.py": "1903dfef6cecb4e6ebb50ecc6a56d9f6a1852f9b35a6c3ffa1d7abb1b3177fdf",
+      "tests/postgres/test_sensory_admission.py": "fd10057aec463d0e9332106e534b9ebd86fc0e930e340e768122f332c584e190",
+      "tests/model/test_conversation_model.py": "0eb0aeac8a4de89d662faae8f69ece688b9a3527a4fdaa22d0328b0706aa9598",
+      "src/eva/adapters/postgres/operational_timeline.py": "2878b88b2634c141828db1811a755dc4ebcc94b7d3a4757a35fe0aa9284e932a",
+      "src/eva/application/sensory.py": "3abb3558cd93e1fe6d79accf41305d3fdb359a722a2eb56d0f69514c1a8ac589",
+      "src/eva/adapters/connectors/home_assistant.py": "65daf8929b4b7114afeb0d1025c9f004d79c9e2f803bd838f144db657e890970",
+      "src/eva/adapters/connectors/home_assistant_events.py": "90ea6bb4be6fcb40a3c1780d704aa3b6d85f107d62139c21134a6d5cc9e37583",
+      "tests/connectors/test_home_assistant_live_adapters.py": "ea33bb363d1cefe6ee2502726ea9efbee6ff6fd72b1f76039139a33f2fef45c0",
+      "src/eva/adapters/connectors/telegram.py": "46a42431bf88df10fe2c5e7a0bb31f272a95458b8e3f561055a4ca10c68dd3bc",
+      "src/eva/adapters/postgres/telegram_pairing.py": "643dae35a642f5d32e2b86d177e3fb4cce796100b45f707413ea9abe821c9b21",
+      "src/eva/application/telegram_ingress.py": "47fbb2f1b4ef8388a4fef106dee42a326112a3151aa0017284dd2d54178e9d22",
+      "tests/connectors/test_telegram.py": "7eed83d60a75367d13db966ebadc5434aeea1e2b722267f7ae8e617ea06ddd84",
+      "tests/bootstrap/test_runtime_settings.py": "f4a28a29f50fb1ec8ac80d01bafba94cae10ad7d7dfb3a549566a5693745b86d",
+      "deploy/living-core/telegram-proactive.compose.yml": "62bee1695b8e397efe11c7eb4bc7e9cd58ca7bd08caae37c37415040fca18631",
+      "tests/bootstrap/test_telegram_ingress_deployment.py": "4d3f7bda3a85714d195df4e4ad5ee62c21f7b55c0c17f12adaa30ad84d55a045"
+    },
+    "implementation": [
+      "Proactive sending reuses the existing TelegramBotApiAdapter transport; no second polling worker. The prior duplicate HTTP/JSON implementation was removed while preserving the 64-KiB proactive response bound and explicit timeout.",
+      "The configured canonical owner authority scope is used directly, not guessed from the sensory namespace. A fresh read of the trusted private mapping plus current verified/active/non-expired database authority selects the recipient before each send.",
+      "Existing native Telegram/private authority and existing eva-dashboard/owner-local authority are supported only with an unambiguous trusted private route. Unknown providers, group-only mappings, wrong owners, other tenants and revoked/expired authority remain rejected.",
+      "Success requires a positive non-boolean message ID, the expected private chat and exact sent text. Conflicting HTTP status, wrong receipt or loss after acceptance cannot trigger automatic resend.",
+      "The existing outgoing-only compose overlay mounts just the private token file read-only, refuses automatic creation of a missing host path and does not require a manually supplied chat ID."
+    ],
+    "documentation": {
+      "url": "https://core.telegram.org/bots/api#sendmessage",
+      "messageContract": "https://core.telegram.org/bots/api#message",
+      "usedFor": "sendMessage returns a Message; message_id, chat and text bind receipt validation."
+    },
+    "verification": [
+      {
+        "scope": "model/application/bootstrap/Telegram and Home Assistant adapters",
+        "result": "155 passed in 8.04s"
+      },
+      {
+        "scope": "fresh PostgreSQL 16.13 sensory/owner delivery",
+        "result": "32 passed in 12.43s",
+        "cases": "Actual local HTTP POST from the proactive worker under verified database authority; native and local-owner routes; fresh-store replay; wrong recipient receipt and lost acceptance cause one POST only. Eleven authority negatives plus prior source-revalidation tests."
+      },
+      {
+        "scope": "separate fresh PostgreSQL operational timeline",
+        "result": "39 passed in 4.28s"
+      },
+      {
+        "scope": "Telegram deployment shape",
+        "result": "2 passed in 0.06s"
+      }
+    ],
+    "realOwnerAuthorityRead": {
+      "status": "passed",
+      "recipient_sha256": "dd313debe81862356fa168d6ac1233621e0a4e47ae978b28461875c36d836eed",
+      "source_sha256": {
+        "pairing": "643dae35a642f5d32e2b86d177e3fb4cce796100b45f707413ea9abe821c9b21",
+        "ingress": "47fbb2f1b4ef8388a4fef106dee42a326112a3151aa0017284dd2d54178e9d22"
+      },
+      "procedure": "Execute the exact candidate recipient class and alias helper in a separate process against the existing configured database scope and private binding file. PostgreSQL default_transaction_read_only=on, 5-second statement timeout. Emit hashes and booleans only.",
+      "database_read_only": true,
+      "model_calls": 0,
+      "telegram_sends": 0,
+      "bot_token_configured": false,
+      "liveImage": "sha256:455be8e6f52adcf2f16288ad76793f150684c058753de3d8d84730a7ce623f7e",
+      "distinction": "Existing live authority is verified eva-dashboard/owner-local with active retained person and retained binding; the trusted v2 file separately binds its private Telegram peer. This is not an unverified Telegram account or a request for a new owner.",
+      "sourceBasis": [
+        "src/eva/operations/initialize_dashboard_authority.py",
+        "tools/persist_delegated_work_activation.py"
+      ]
+    },
+    "limitations": [
+      "All sendMessage calls were to local fixture servers, never Telegram. The real check only resolved current authority and hashed the recipient.",
+      "Owner authority is checked immediately before dispatch; this is not atomic with remote Telegram acceptance.",
+      "The live core has no configured bot-token file. Existing private access must be provisioned through the managed candidate deployment; no Eva1 secrets copied or Eva1 code changed in this step.",
+      "Independent review, exact release candidate, activation and real user-visible acceptance remain open.",
+      "CO-003 review must cover the real local-owner authority scope separately from the sensory/memory namespace; its previous fixtures do not establish that configuration."
+    ],
+    "preparationCorrections": [
+      "The installed older TelegramPrincipalBindings lacks the new source-only alias helper; read-only inspection used the existing binding data, and the exact candidate helper was then tested in a separate process.",
+      "An initial native-Telegram-only authority predicate did not describe the existing verified local-owner route. The installed state and its initializer/persistence source established the two-part authority model; both legitimate routes and rejected alternatives are now tested.",
+      "A workboard scope patch initially matched historical CO-001. The checker rejected it; CO-001 was restored, and the deployment/test paths and owner were assigned to RT-001 explicitly."
+    ],
+    "productModelCalls": 0,
+    "liveChanges": false,
+    "newDependencies": [],
+    "checks": {
+      "ruff": "passed",
+      "workboard": "valid"
+    },
+    "cleanup": {
+      "exactContainerId": "b2a07fc3fb284723e61c448d2b9c178087072f1ff60f1825e36795f02a23e6d2",
+      "container": "eva2-rt001-owner-delivery-20260907",
+      "removed": true,
+      "storage": "tmpfs",
+      "databases": [
+        "eva2_4b_disposable_owner_delivery",
+        "eva2_4b_disposable_owner_delivery_final",
+        "eva2_living_disposable_owner_delivery"
+      ],
+      "scope": "Only disposable fixture databases removed; live data unchanged."
+    }
+  },
+  "ownerMemoryRuntimeIntegration": {
+    "date": "2026-09-07",
+    "status": "tested_source_not_live",
+    "sourceHashes": {
+      "src/eva/bootstrap/runtime.py": "9c51e0910a3c117a7ef369cfb340f24844ecd11c1245b46ae151aeb2798e16e8",
+      "src/eva/adapters/postgres/people_memory_overview.py": "2b5e344d18736b2e13332bbde6d34e60da633df6842b1a6ca8725e143445282d",
+      "src/eva/application/people_memory_overview.py": "2aa3cecd6ea6454408089a303c3ed1ceb0a9b5487ced0fe73047fbb7f5332184",
+      "src/eva/application/telegram_ingress.py": "47fbb2f1b4ef8388a4fef106dee42a326112a3151aa0017284dd2d54178e9d22",
+      "tests/bootstrap/test_runtime_settings.py": "1dfc2c355d328931d66b7eff1cf09abab8975f4acb4aac771f61cdda8af646af",
+      "tests/postgres/test_people_memory_overview.py": "36de5592879e117e539f0ec2c0254c4263205de21569aec945bd19b82ca3ef0a"
+    },
+    "implementation": [
+      "Verify current owner under explicit dashboard authority scope, then read fixed memory namespace under its own RLS scope in the same repeatable-read, read-only transaction.",
+      "Support only verified Telegram/private or eva-dashboard/owner-local; reload trusted private map for each runtime page request. No browser-supplied owner or namespace.",
+      "Keep CO-003 historical evidence unchanged. Its independent acceptance remains open; this compatibility correction is RT-001 source work."
+    ],
+    "verification": [
+      {
+        "scope": "runtime settings/composition",
+        "result": "34 passed in 2.08s"
+      },
+      {
+        "scope": "fresh PostgreSQL 16.13 people/memory",
+        "result": "17 passed in 4.23s",
+        "cases": "Both valid provider pairs, distinct namespaces, canonical plus alias pagination, other person excluded, absent alias, wrong namespace, revocation, existing retention/erasure negatives."
+      },
+      {
+        "scope": "API/workboard/memory contract/Telegram deployment",
+        "result": "49 passed in 7.22s"
+      }
+    ],
+    "realMemoryRead": {
+      "status": "passed",
+      "source_sha256": {
+        "projection": "2b5e344d18736b2e13332bbde6d34e60da633df6842b1a6ca8725e143445282d",
+        "contract": "2aa3cecd6ea6454408089a303c3ed1ceb0a9b5487ced0fe73047fbb7f5332184",
+        "ingress": "47fbb2f1b4ef8388a4fef106dee42a326112a3151aa0017284dd2d54178e9d22"
+      },
+      "first_page_count": 1,
+      "second_page_count": 1,
+      "other_owner_rejected": true,
+      "distinct_authority_namespace": true,
+      "database_read_only": true,
+      "model_calls": 0,
+      "telegram_sends": 0,
+      "memory_provider_calls": 0,
+      "private_content_output": false,
+      "procedure": "Exact candidate projection, contract and alias helper in a separate short-lived process using existing data/mapping. default_transaction_read_only=on; statement_timeout=5000. No app startup or installed code change; counts and booleans only."
+    },
+    "existingTokenFile": {
+      "status": "present_metadata_only",
+      "hostReferencePresent": true,
+      "regularFilePresent": true,
+      "runtimeUidOwned": true,
+      "privatePermissions": true,
+      "tokenValueRead": false,
+      "tokenCopied": false,
+      "liveCoreTokenConfigured": false,
+      "note": "Read active deployment's host-file reference and filesystem metadata only. No new credential request needed; outgoing overlay not active."
+    },
+    "backgroundQuotaAudit": {
+      "status": "read_only_source_and_configuration",
+      "backgroundReflectionsPerPersonDay": 4,
+      "backgroundReflectionsPerInstallationDay": 40,
+      "callPath": [
+        "src/eva/bootstrap/runtime.py",
+        "src/eva/application/memory_background.py: _schedule_reflection_if_idle",
+        "src/eva/adapters/postgres/runtime_resource_usage.py: admit_background_reflection",
+        "src/eva/adapters/projection/hindsight.py: maintain_person_scope"
+      ],
+      "finding": "These existing counters limit scheduled Hindsight style-mirror refreshes, not conversation or sensory model-admission. They remain actual maintenance limits, not a usage ceiling requested by Jaap.",
+      "remaining": "Follow up with change-driven maintenance and anti-loop evidence; do not claim all background limits are removed.",
+      "liveChanges": false
+    },
+    "checks": {
+      "ruff": "passed",
+      "diffWhitespace": "passed",
+      "workboard": "valid; RT-001 in_progress; no blocker",
+      "componentCatalog": "passed; zero violations",
+      "inventory": "regenerated; 2080 files; 88 pre-existing policy findings remain",
+      "sourceBinding": "22 current source hashes checked; zero mismatches"
+    },
+    "cleanup": {
+      "container": "eva2-rt001-owner-scope-20260907",
+      "exactContainerId": "5c42ee78201ec8905389b15eac4e4c8a20e1e719889746854b5f52b71ee25189",
+      "removed": true,
+      "storage": "tmpfs",
+      "database": "eva2_4b_disposable_owner_scope",
+      "scope": "Only synthetic disposable database removed; live data unchanged."
+    },
+    "independentReview": "not_completed",
+    "productModelCalls": 0,
+    "liveChanges": false,
+    "newDependencies": [],
+    "limitations": [
+      "Read-only candidate-class compatibility, not installed HTTP route or release acceptance.",
+      "No real Telegram send, promotion or human acceptance.",
+      "Independent shared-candidate review and data-transition proof remain required."
+    ]
+  }
+}
