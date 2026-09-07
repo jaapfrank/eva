@@ -525,6 +525,57 @@ def test_private_fast_recall_returns_immediately_then_reuses_scoped_refresh(
     ]
 
 
+@pytest.mark.parametrize("changed_field", ["content", "occurred_at", "principal_id", "installation_id"])
+def test_retain_operation_tracks_exact_source_revision_and_scope(
+    hindsight_server: tuple[str, _State], changed_field: str,
+) -> None:
+    base_url, state = hindsight_server
+    engine = HindsightMemoryEngine(HindsightProjectionConfig(base_url))
+    document = _conversation_document()
+    engine.retain_conversation(document)
+    engine.retain_conversation(document)
+    updates = {
+        "content": "Jaap: Mijn voorkeur is veranderd; voortaan liever uitgebreid.",
+        "occurred_at": "2026-08-24T10:00:00Z",
+        "principal_id": SOURCE,
+        "installation_id": SOURCE,
+    }
+    changes = {changed_field: updates[changed_field]}
+    if changed_field == "principal_id":
+        changes["audience"] = MemoryAudience.private_person(principal_id=SOURCE)
+    changed = replace(document, **changes)
+    engine.retain_conversation(changed)
+    # A fresh adapter must derive the same retry identity without a process cache.
+    HindsightMemoryEngine(HindsightProjectionConfig(base_url)).retain_conversation(changed)
+    requests = [body for method, path, body in state.requests
+                if method == "POST" and path.endswith("/memories")]
+    ids = [body["operation_id"] for body in requests]
+    assert ids[0] == ids[1]
+    assert ids[0] != ids[2]
+    assert ids[2] == ids[3]
+
+
+def test_retained_correction_discards_stale_context_and_fences_inflight_recall(
+    hindsight_server: tuple[str, _State], monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    base_url, _state = hindsight_server
+    engine = HindsightMemoryEngine(HindsightProjectionConfig(base_url))
+    query = _query()
+    key = engine._fast_presence_key(query)
+    memory = engine.recall_for_presence(query)
+    engine._fast_presence_cache[key] = (time.monotonic(), memory)
+    engine._fast_presence_cache["other-person"] = (time.monotonic(), memory)
+    generation = engine._fast_presence_generation
+    engine.retain_conversation(_conversation_document())
+    assert key not in engine._fast_presence_cache
+    assert "other-person" in engine._fast_presence_cache
+    assert engine._fast_presence_generation > generation
+    monkeypatch.setattr(engine, "recall_for_presence", lambda _query: memory)
+    assert engine._fast_presence_slots.acquire(blocking=False)
+    engine._refresh_fast_presence(key, query, generation)
+    assert key not in engine._fast_presence_cache
+
+
 def test_hindsight_retention_deadline_and_exact_document_removal(
     hindsight_server: tuple[str, _State],
 ) -> None:

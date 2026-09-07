@@ -866,7 +866,13 @@ class HindsightMemoryEngine:
             {
                 "items": [item],
                 "async": True,
-                "operation_id": str(uuid5(NAMESPACE_URL, document.document_id)),
+                # Hindsight replays an existing operation before examining its
+                # content. Bind retries to the complete source revision, not
+                # just the document ID, or an edit silently retains old memory.
+                "operation_id": str(uuid5(
+                    NAMESPACE_URL,
+                    "EvaMemoryRetain/v2:" + canonical_sha256([bank_id, item]),
+                )),
             },
         )
         operation_id = response.get("operation_id")
@@ -879,8 +885,19 @@ class HindsightMemoryEngine:
         ):
             raise HindsightProjectionProtocolError(
                 "Hindsight did not acknowledge exactly one memory document"
-            )
+        )
         self._wait_for_operation(bank_id, operation_id)
+        with self._cache_lock:
+            # A completed retain may correct a previously recalled preference.
+            # Drop this audience's old snapshot and fence any earlier read still
+            # in flight; unrelated warm snapshots remain available.
+            self._fast_presence_generation += 1
+            self._fast_presence_cache.pop(canonical_sha256([
+                document.tenant_id,
+                document.installation_id,
+                document.principal_id,
+                document.audience.audience_id,
+            ]), None)
         return MemoryRetentionReceipt(
             bank_id=bank_id,
             document_id=document.document_id,
