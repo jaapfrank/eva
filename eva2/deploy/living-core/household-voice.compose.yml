@@ -1,0 +1,13 @@
+# Native HA household access is withheld until reviewed reserve activation.
+services:
+  core:
+    environment:
+      EVA_HOUSEHOLD_VOICE_POLICY_FILE: /run/eva/household-voice/current.json
+      EVA_HOUSEHOLD_VOICE_TOKEN_FILE: /run/eva/household-voice/token
+    volumes:
+      - type: bind
+        source: ${EVA_HOUSEHOLD_VOICE_POLICY_DIR_HOST:?set the private household voice directory}
+        target: /run/eva/household-voice
+        read_only: true
+        bind:
+          create_host_path: false

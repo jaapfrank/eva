@@ -200,7 +200,16 @@ def validate_mcp_gateway_render(
 def validate_dashboard_voice_render(
     baseline: object, activated: object, settings: dict[str, str],
 ) -> dict[str, str]:
-    """Admit only the voice policy mount, preserving all other overlays."""
+    return _validate_voice_render(baseline, activated, settings, household=False)
+
+
+def validate_household_voice_render(baseline: object, activated: object,
+                                    settings: dict[str, str]) -> dict[str, str]:
+    return _validate_voice_render(baseline, activated, settings, household=True)
+
+
+def _validate_voice_render(baseline, activated, settings, *, household):
+    """Admit only the exact channel mount and paths, preserving other overlays."""
     if (not isinstance(baseline, dict) or not isinstance(activated, dict)
             or _contains_unresolved_interpolation(baseline)
             or _contains_unresolved_interpolation(activated)):
@@ -208,16 +217,21 @@ def validate_dashboard_voice_render(
     before, after = copy.deepcopy(baseline), copy.deepcopy(activated)
     try:
         original, core = before["services"]["core"], after["services"]["core"]
-        prefix = "EVA_DASHBOARD_VOICE_"
+        prefix = "EVA_HOUSEHOLD_VOICE_" if household else "EVA_DASHBOARD_VOICE_"
+        target = "/run/eva/household-voice" if household else "/run/eva/voice"
         if any(key.startswith(prefix) for key in original["environment"]):
             raise ValueError("baseline voice environment")
         actual = {key: value for key, value in core["environment"].items()
                   if key.startswith(prefix)}
-        if actual != {prefix + "POLICY_FILE": "/run/eva/voice/current.json"}:
+        expected = {prefix + "POLICY_FILE": target + "/current.json"}
+        if household:
+            expected[prefix + "TOKEN_FILE"] = target + "/token"
+        if actual != expected:
             raise ValueError("voice environment")
-        del core["environment"][prefix + "POLICY_FILE"]
+        for key in expected:
+            del core["environment"][key]
         mount = {"type": "bind", "source": settings[prefix + "POLICY_DIR_HOST"],
-                 "target": "/run/eva/voice", "read_only": True, "bind": {}}
+                 "target": target, "read_only": True, "bind": {}}
         matching = [item for item in core["volumes"]
                     if str(item.get("target", "")).startswith(mount["target"])]
         if len(matching) != 1:

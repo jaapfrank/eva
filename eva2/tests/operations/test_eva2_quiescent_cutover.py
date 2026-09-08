@@ -914,8 +914,12 @@ def test_first_connector_activation_rolls_back_to_disabled_source_without_telegr
     assert backend.calls.index("snapshot:4:automatic-rollback") < backend.calls.index("restore:3:reverse") < backend.calls.index("activate-delivery:3")
 
 
-@pytest.mark.parametrize("mutation", [None, "revoked", "changed", "overlay", "baseline", "extra_file", "directory_mode", "file_mode", "symlink", "disabled_config"])
-def test_voice_activation_pins_policy_and_private_directory(monkeypatch, tmp_path, mutation):
+@pytest.mark.parametrize("household,mutation", [
+    (household, mutation) for household in (False, True)
+    for mutation in [None, "revoked", "changed", "overlay", "baseline", "extra_file",
+                     "directory_mode", "file_mode", "symlink", "disabled_config"]
+] + [(True, mutation) for mutation in ("token_changed", "token_missing", "token_mode")])
+def test_voice_activation_pins_policy_and_private_directory(monkeypatch, tmp_path, mutation, household):
     import hashlib
     from types import SimpleNamespace
     from tools.eva2_quiescent_cutover import VOICE_MANIFEST, MANIFEST, CONNECTOR_MANIFEST
@@ -924,10 +928,18 @@ def test_voice_activation_pins_policy_and_private_directory(monkeypatch, tmp_pat
     policy = directory / "current.json"
     policy.write_text('{"synthetic":"policy"}')
     policy.chmod(0o600)
-    prefix = "EVA_DASHBOARD_VOICE_"
+    from tools.eva2_quiescent_cutover import HOUSEHOLD_VOICE_MANIFEST
+    prefix = "EVA_HOUSEHOLD_VOICE_" if household else "EVA_DASHBOARD_VOICE_"
+    loader = SystemBackend._household_voice_settings if household else SystemBackend._voice_settings
+    token = directory / "token"
+    if household:
+        token.write_text("synthetic-token")
+        token.chmod(0o600)
     values = {prefix + "ENABLED": "true", prefix + "POLICY_DIR_HOST": str(directory),
               prefix + "POLICY_SHA256": hashlib.sha256(policy.read_bytes()).hexdigest()}
-    for path, key in ((VOICE_MANIFEST, "OVERLAY_SHA256"), (MANIFEST, "BASE_MANIFEST_SHA256"),
+    if household:
+        values[prefix + "TOKEN_SHA256"] = hashlib.sha256(token.read_bytes()).hexdigest()
+    for path, key in ((HOUSEHOLD_VOICE_MANIFEST if household else VOICE_MANIFEST, "OVERLAY_SHA256"), (MANIFEST, "BASE_MANIFEST_SHA256"),
                       (PROACTIVE_MANIFEST, "DELIVERY_OVERLAY_SHA256"), (CONNECTOR_MANIFEST, "CONNECTOR_OVERLAY_SHA256")):
         values[prefix + key] = hashlib.sha256(path.read_bytes()).hexdigest()
     original_stat = Path.stat
@@ -956,21 +968,33 @@ def test_voice_activation_pins_policy_and_private_directory(monkeypatch, tmp_pat
         policy.symlink_to(tmp_path / "missing")
     if mutation == "disabled_config":
         values[prefix + "ENABLED"] = "false"
+    if mutation and mutation.startswith("token_"):
+        if mutation == "token_changed":
+            token.write_text("changed")
+        elif mutation == "token_missing":
+            token.unlink()
+        else:
+            token.chmod(0o644)
     if mutation not in {None, "revoked"}:
         with pytest.raises(QuiescentCutoverError):
-            SystemBackend._voice_settings(values)
+            loader(values)
     else:
-        assert SystemBackend._voice_settings(values) is not None
-    assert SystemBackend._voice_settings({}) is None
+        assert loader(values) is not None
+    assert loader({}) is None
 
 
+@pytest.mark.parametrize("household", [False, True])
 @pytest.mark.parametrize("others", [False, True])
 @pytest.mark.parametrize("failure", [None, "staging_leak", "writable", "wrong_path", "policy_race", "environment_race"])
-def test_voice_is_withheld_until_managed_activation(monkeypatch, tmp_path, others, failure):
+def test_voice_is_withheld_until_managed_activation(monkeypatch, tmp_path, others, failure, household):
     from tools.eva2_quiescent_cutover import VOICE_MANIFEST, CONNECTOR_MANIFEST
     slot = _slot(3)
     image = "sha256:" + "a" * 64
-    settings = {"EVA_DASHBOARD_VOICE_POLICY_DIR_HOST": "/private/voice"}
+    from tools.eva2_quiescent_cutover import HOUSEHOLD_VOICE_MANIFEST
+    manifest = HOUSEHOLD_VOICE_MANIFEST if household else VOICE_MANIFEST
+    prefix = "EVA_HOUSEHOLD_VOICE_" if household else "EVA_DASHBOARD_VOICE_"
+    target = "/run/eva/household-voice" if household else "/run/eva/voice"
+    settings = {prefix + "POLICY_DIR_HOST": "/private/voice"}
     active = False
     commands = []
     def environment(_):
@@ -983,7 +1007,7 @@ def test_voice_is_withheld_until_managed_activation(monkeypatch, tmp_path, other
             raise QuiescentCutoverError("voice policy changed after admission")
         return settings
     monkeypatch.setattr(SystemBackend, "_environment", staticmethod(environment))
-    monkeypatch.setattr(SystemBackend, "_voice_settings", classmethod(voice_settings))
+    monkeypatch.setattr(SystemBackend, "_household_voice_settings" if household else "_voice_settings", classmethod(voice_settings))
     monkeypatch.setattr(SystemBackend, "_connector_settings", classmethod(lambda cls, env: {} if others else None))
     monkeypatch.setattr(SystemBackend, "_proactive_token", staticmethod(lambda env: tmp_path / "token" if others else None))
     monkeypatch.setattr(SystemBackend, "_verify_connector", staticmethod(lambda *args: None))
@@ -991,8 +1015,10 @@ def test_voice_is_withheld_until_managed_activation(monkeypatch, tmp_path, other
     def inspect(_):
         result = {"Image": image, "Config": {"Env": []}, "Mounts": []}
         if active or failure == "staging_leak":
-            result["Config"]["Env"] = ["EVA_DASHBOARD_VOICE_POLICY_FILE=/run/eva/voice/current.json"]
-            result["Mounts"] = [{"Type": "bind", "Source": "/wrong" if failure == "wrong_path" else "/private/voice", "Destination": "/run/eva/voice", "RW": failure == "writable"}]
+            result["Config"]["Env"] = [prefix + "POLICY_FILE=" + target + "/current.json"]
+            if household:
+                result["Config"]["Env"].append(prefix + "TOKEN_FILE=" + target + "/token")
+            result["Mounts"] = [{"Type": "bind", "Source": "/wrong" if failure == "wrong_path" else "/private/voice", "Destination": target, "RW": failure == "writable"}]
         return result
     def run(command, **kwargs):
         nonlocal active
@@ -1002,7 +1028,7 @@ def test_voice_is_withheld_until_managed_activation(monkeypatch, tmp_path, other
         if "--property=ActiveState" in command:
             return "inactive"
         if "up" in command and command[-1] == "core":
-            active = str(VOICE_MANIFEST) in command
+            active = str(manifest) in command
             if active:
                 assert (str(CONNECTOR_MANIFEST) in command) is others
                 assert (str(PROACTIVE_MANIFEST) in command) is others

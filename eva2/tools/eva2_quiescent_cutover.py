@@ -52,6 +52,7 @@ MANIFEST = (
 PROACTIVE_MANIFEST = MANIFEST.with_name("telegram-proactive.compose.yml")
 CONNECTOR_MANIFEST = MANIFEST.with_name("mcp-gateway.compose.yml")
 VOICE_MANIFEST = MANIFEST.with_name("dashboard-voice.compose.yml")
+HOUSEHOLD_VOICE_MANIFEST = MANIFEST.with_name("household-voice.compose.yml")
 CONNECTOR_TARGET = "/run/eva/connectors/mcp"
 CONNECTOR_FLAG = "EVA_MCP_GATEWAY_ENABLED"
 PROACTIVE_FLAG = "EVA_TELEGRAM_PROACTIVE_DELIVERY_ENABLED"
@@ -479,14 +480,27 @@ class SystemBackend:
 
     @classmethod
     def _voice_settings(cls, environment: dict[str, str]) -> dict[str, str] | None:
-        prefix = "EVA_DASHBOARD_VOICE_"
+        return cls._media_voice_settings(environment, household=False)
+
+    @classmethod
+    def _household_voice_settings(cls, environment):
+        return cls._media_voice_settings(environment, household=True)
+
+    @classmethod
+    def _media_voice_settings(cls, environment, *, household):
+        prefix = "EVA_HOUSEHOLD_VOICE_" if household else "EVA_DASHBOARD_VOICE_"
+        manifest = HOUSEHOLD_VOICE_MANIFEST if household else VOICE_MANIFEST
+        keys = {"POLICY_DIR_HOST", "POLICY_SHA256", "OVERLAY_SHA256", "BASE_MANIFEST_SHA256",
+                "DELIVERY_OVERLAY_SHA256", "CONNECTOR_OVERLAY_SHA256"}
+        if household:
+            keys.add("TOKEN_SHA256")
         flag = environment.get(prefix + "ENABLED", "false")
         values = {k: v for k, v in environment.items()
                   if k.startswith(prefix) and k != prefix + "ENABLED"}
         if flag == "false" and not values:
             return None
-        if (flag != "true" or set(values) != {prefix + key for key in ("POLICY_DIR_HOST", "POLICY_SHA256", "OVERLAY_SHA256", "BASE_MANIFEST_SHA256", "DELIVERY_OVERLAY_SHA256", "CONNECTOR_OVERLAY_SHA256")}
-                or values[prefix + "OVERLAY_SHA256"] != _sha256_file(VOICE_MANIFEST)):
+        if (flag != "true" or set(values) != {prefix + key for key in keys}
+                or values[prefix + "OVERLAY_SHA256"] != _sha256_file(manifest)):
             raise QuiescentCutoverError("voice configuration or overlay differs")
         if re.fullmatch(r"[0-9a-f]{64}", values[prefix + "POLICY_SHA256"]) is None:
             raise QuiescentCutoverError("voice policy digest is invalid")
@@ -504,10 +518,18 @@ class SystemBackend:
                     or metadata.st_uid != 65532):
                 raise ValueError("unsafe directory")
             names = {item.name for item in directory.iterdir()}
-            if not names <= {"current.json"}:
+            allowed = {"current.json", "token"} if household else {"current.json"}
+            if not names <= allowed:
                 raise ValueError("unexpected policy directory contents")
             # Empty means revoked. Keep the directory mount so removal survives restart.
-            if names:
+            if household and "current.json" in names and "token" not in names:
+                raise ValueError("missing integration token")
+            if household and "token" in names:
+                token = directory / "token"
+                cls._private_file(token, mode=0o600, uid=65532)
+                if not 0 < token.stat().st_size <= 4097 or _sha256_file(token) != values[prefix + "TOKEN_SHA256"]:
+                    raise ValueError("integration token changed after admission")
+            if "current.json" in names:
                 policy = directory / "current.json"
                 cls._private_file(policy, mode=0o600, uid=65532)
                 if not 0 < policy.stat().st_size <= 65536:
@@ -519,38 +541,48 @@ class SystemBackend:
         return values
 
     @staticmethod
-    def _verify_voice(inspected: dict[str, Any], settings: dict[str, str] | None) -> None:
+    def _verify_voice(inspected: dict[str, Any], settings: dict[str, str] | None,
+                      *, household: bool = False) -> None:
+        prefix = "EVA_HOUSEHOLD_VOICE_" if household else "EVA_DASHBOARD_VOICE_"
+        target = "/run/eva/household-voice" if household else "/run/eva/voice"
         mounts = [m for m in inspected.get("Mounts", [])
-                  if str(m.get("Destination", "")).startswith("/run/eva/voice")]
+                  if str(m.get("Destination", "")).startswith(target)]
         environment = dict(row.split("=", 1) for row in inspected.get("Config", {}).get("Env", []) if "=" in row)
-        actual = {k: v for k, v in environment.items() if k.startswith("EVA_DASHBOARD_VOICE_")}
+        actual = {k: v for k, v in environment.items() if k.startswith(prefix)}
         if settings is None:
             if mounts or actual:
                 raise QuiescentCutoverError("staged or disabled core exposes voice access")
             return
-        if (actual != {"EVA_DASHBOARD_VOICE_POLICY_FILE": "/run/eva/voice/current.json"}
+        expected = {prefix + "POLICY_FILE": target + "/current.json"}
+        if household:
+            expected[prefix + "TOKEN_FILE"] = target + "/token"
+        if (actual != expected
                 or len(mounts) != 1 or mounts[0].get("Type") != "bind"
-                or mounts[0].get("Source") != settings["EVA_DASHBOARD_VOICE_POLICY_DIR_HOST"]
-                or mounts[0].get("Destination") != "/run/eva/voice" or mounts[0].get("RW") is not False):
+                or mounts[0].get("Source") != settings[prefix + "POLICY_DIR_HOST"]
+                or mounts[0].get("Destination") != target or mounts[0].get("RW") is not False):
             raise QuiescentCutoverError("activated voice environment or mount differs")
 
-    def _verify_voice_render(self, slot: SlotSpec, settings: dict[str, str]) -> dict[str, str]:
-        from tools.managed_b_render import validate_dashboard_voice_render
+    def _verify_voice_render(self, slot: SlotSpec, settings: dict[str, str],
+                             *, household: bool = False) -> dict[str, str]:
+        from tools.managed_b_render import validate_dashboard_voice_render, validate_household_voice_render
+        manifest = HOUSEHOLD_VOICE_MANIFEST if household else VOICE_MANIFEST
         environment = self._environment(slot.environment)
-        paths = [MANIFEST, VOICE_MANIFEST, slot.environment]
+        paths = [MANIFEST, manifest, slot.environment]
         command = [DOCKER, "compose", "--env-file", str(slot.environment),
                    "--project-name", slot.project, "--profile", "*", "--file", str(MANIFEST)]
         for enabled, path in ((self._proactive_token(environment) is not None, PROACTIVE_MANIFEST),
-                              (self._connector_settings(environment) is not None, CONNECTOR_MANIFEST)):
+                              (self._connector_settings(environment) is not None, CONNECTOR_MANIFEST),
+                              (household and self._voice_settings(environment) is not None, VOICE_MANIFEST)):
             if enabled:
                 paths.append(path)
                 command.extend(["--file", str(path)])
         hashes = {str(path): _sha256_file(path) for path in paths}
         try:
             baseline = json.loads(self._run([*command, "config", "--format", "json"], extra_env=environment))
-            activated = json.loads(self._run([*command, "--file", str(VOICE_MANIFEST),
+            activated = json.loads(self._run([*command, "--file", str(manifest),
                                              "config", "--format", "json"], extra_env=environment))
-            result = validate_dashboard_voice_render(baseline, activated, settings)
+            validate = validate_household_voice_render if household else validate_dashboard_voice_render
+            result = validate(baseline, activated, settings)
         except (ValueError, RuntimeError) as exc:
             raise QuiescentCutoverError("voice Compose render failed closed") from exc
         if any(_sha256_file(Path(path)) != digest for path, digest in hashes.items()):
@@ -562,8 +594,11 @@ class SystemBackend:
         self._proactive_token(environment)
         connector = self._connector_settings(environment)
         voice = self._voice_settings(environment)
+        household_voice = self._household_voice_settings(environment)
         if voice is not None:
             self._verify_voice_render(slot, voice)
+        if household_voice is not None:
+            self._verify_voice_render(slot, household_voice, household=True)
         if connector is not None:
             self._verify_connector_render(slot, connector)
         expected = {
@@ -634,6 +669,7 @@ class SystemBackend:
         if source:
             self._verify_connector(inspected["core"], connector)
             self._verify_voice(inspected["core"], voice)
+            self._verify_voice(inspected["core"], household_voice, household=True)
         self._private_file(slot.dashboard_token, mode=0o600, uid=65532)
         return environment
 
@@ -780,6 +816,7 @@ class SystemBackend:
         self._proactive_token(environment)
         self._connector_settings(environment)
         self._voice_settings(environment)
+        self._household_voice_settings(environment)
         compose = [
             DOCKER,
             "compose",
@@ -804,6 +841,7 @@ class SystemBackend:
         self._verify_proactive_mount(inspected, None)
         self._verify_connector(inspected, None)
         self._verify_voice(inspected, None)
+        self._verify_voice(inspected, None, household=True)
 
     def activate_delivery(self, slot: SlotSpec, dropin: Path) -> bool:
         """Release the credential only after the staged runtime and route passed.
@@ -816,11 +854,13 @@ class SystemBackend:
         token = self._proactive_token(environment)
         connector = self._connector_settings(environment)
         voice = self._voice_settings(environment)
-        if token is None and connector is None and voice is None:
+        household_voice = self._household_voice_settings(environment)
+        if token is None and connector is None and voice is None and household_voice is None:
             inspected = self._inspect(slot.core)
             self._verify_proactive_mount(inspected, None)
             self._verify_connector(inspected, None)
             self._verify_voice(inspected, None)
+            self._verify_voice(inspected, None, household=True)
             return False
         _read_exact_dropin(dropin, slot.url, owner_uid=self.owner_uid)
         loaded = self._run([SYSTEMCTL, "show", SERVICE, "--property=Environment", "--value"])
@@ -836,6 +876,7 @@ class SystemBackend:
         self._verify_proactive_mount(staged, None)
         self._verify_connector(staged, None)
         self._verify_voice(staged, None)
+        self._verify_voice(staged, None, household=True)
         overlays = []
         if token is not None:
             overlays.extend(["--file", str(PROACTIVE_MANIFEST)])
@@ -843,6 +884,8 @@ class SystemBackend:
             overlays.extend(["--file", str(CONNECTOR_MANIFEST)])
         if voice is not None:
             overlays.extend(["--file", str(VOICE_MANIFEST)])
+        if household_voice is not None:
+            overlays.extend(["--file", str(HOUSEHOLD_VOICE_MANIFEST)])
         self._run([
             DOCKER, "compose", "--env-file", str(slot.environment),
             "--project-name", slot.project, "--file", str(MANIFEST),
@@ -855,6 +898,9 @@ class SystemBackend:
         self._verify_proactive_mount(activated, token)
         self._verify_connector(activated, connector)
         self._verify_voice(activated, voice)
+        self._verify_voice(activated, household_voice, household=True)
+        if self._household_voice_settings(environment) != household_voice:
+            raise QuiescentCutoverError("household voice activation binding changed")
         if self._environment(slot.environment) != environment or self._voice_settings(environment) != voice:
             raise QuiescentCutoverError("voice activation binding changed during recreation")
         self.verify_runtime(slot)

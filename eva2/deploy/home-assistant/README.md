@@ -177,3 +177,20 @@ References: [ESPHome packages](https://esphome.io/components/packages/),
 [voice assistant](https://esphome.io/components/voice_assistant/).
 Configuration validation is pinned to the devices' reported ESPHome 2026.6.2;
 the current online documentation may describe newer behavior.
+
+
+## Managed household release overlay
+
+`deploy/living-core/household-voice.compose.yml` adds the private directory at
+`/run/eva/household-voice` read-only, with `current.json` and `token`.
+The managed cutover keeps both absent while staging, then verifies exact
+container bindings and rechecks file digests after activation. It supports
+coexistence with retained dashboard voice and connector/proactive overlays.
+The household prefix is `EVA_HOUSEHOLD_VOICE_`; activation requires `ENABLED=true`,
+`POLICY_DIR_HOST`, `POLICY_SHA256`, `TOKEN_SHA256`, and the overlay/base/delivery/
+connector manifest SHA256 values, as checked by `_household_voice_settings`.
+The directory and files require UID65532, modes0700/0600, canonical paths and no
+unexpected contents. File digests cover exact bytes, including token newlines;
+the runtime policy token digest covers the stripped token used on the wire.
+This overlay is tested but still needs admission into a complete release input
+set and actual HA/hardware verification before production use.

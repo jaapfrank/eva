@@ -1,0 +1,31 @@
+{
+  "contract": "EvaHouseholdVoiceReleaseOverlay/v1",
+  "status": "overlay_and_cutover_tests_passed_not_deployed",
+  "sourceSha256": {
+    "eva2/deploy/living-core/household-voice.compose.yml": "cb09e4bddf75cffab6b5cad147353d6f9460f4e1b57167bb4a4ba06df379fdf9",
+    "eva2/tools/eva2_quiescent_cutover.py": "d5acbb1f25046b602467b9489397224acef84652935c4e306feb3576f50e1445",
+    "eva2/tools/managed_b_render.py": "958d5d8c70e749fc02076c297fd97f68a55db6d1f84b4926ce076db8eeaeadd2",
+    "eva2/tests/operations/test_eva2_quiescent_cutover.py": "e80364115e4902d0bdf888d0559922c47e8edb0a1646fb5ca9d02fded7e49cd8",
+    "eva2/tests/operations/test_managed_b_render.py": "5c2f15be9d6ae40b1ec9bd20d11cc82ab63faca5fdd14152ceab2518fe4d7a4a"
+  },
+  "validation": {
+    "tests": "173 passed in 0.97s; cutover and render including both voice channels, token changes, missing token, permissions, stage leaks and activation races",
+    "lint": "Ruff passed",
+    "review": "co006_review bounded source GO; no stage/token leak found; not release/live GO",
+    "actualCompose": {
+      "status": "actual_docker_compose_delta_verified",
+      "baselineSha256": "626c3a7e4702c5559cf9fb8abb2c581e09d9d86ca6910cb14094a6eb6e76b725",
+      "activatedSha256": "f35079415967c1c3f10698bfe787233b4d13dc23aed8927ad0f20645728992ed",
+      "services": 10,
+      "scope": "Read-only render using current slot3 env, synthetic household directory; no container/mount/HA mutation"
+    },
+    "firstFailure": "Initial render harness omitted package src path; corrected harness with locked runtime Python; no product fallback"
+  },
+  "remaining": [
+    "Add native inputs/tests to complete release authority and dependency gate",
+    "Prepare actual owner-authorized private files in reserve release",
+    "Actual HA integration and Hindsight provenance readback",
+    "Hardware interruption/resume and measured latency",
+    "Safe A/B deployment and acceptance"
+  ]
+}
