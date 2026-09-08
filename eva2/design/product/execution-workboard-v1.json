@@ -168,7 +168,7 @@
       "nextOutcomes": [
         {
           "title": "Stem bruikbaar maken",
-          "detail": "Spraakroute met echte providers geslaagd op een kopie. Complete kandidaatcontrole is groen; de laatste spraak- en herstartproef met de officiële uitrolconfiguratie loopt."
+          "detail": "Complete kandidaat en echte spraak-/herstartproef met officiële uitrolconfiguratie zijn onafhankelijk gecontroleerd. Nu volgt de reserveroute vóór jouw eigen stemtest."
         },
         {
           "title": "Laat Eva een document bewaren",
@@ -270,8 +270,8 @@
           "live": "no",
           "accepted": "no",
           "gap": "Veilige ingebruikname en jouw microfoon-/speakerproef",
-          "detail": "De complete browser → spraakherkenning → Eva → spraakaudio-route is op actuele gekopieerde gegevens geslaagd: de vraag hoeveel zeven plus vijf is kreeg antwoord 12, met één modelaanroep. Gesprek bleef na herstart bewaard en ingetrokken microfoontoegang werd geweigerd. De beheerde uitrolaansluiting is gebouwd en onafhankelijk beoordeeld; de kandidaatcontrole loopt. Stem is nog niet live. Jouw eigen microfoon-/speakerervaring, herhaalde onderbrekingsmetingen en aanwezigheid in huis blijven open.",
-          "evidence": "VB-001 · echte providerproef op kandidaat 215fe32 geslaagd · beheerde aansluiting 723febe beoordeeld · kandidaat 4d7d039 in releasecontrole"
+          "detail": "De complete browser → spraakherkenning → Eva → spraakaudio-route is op actuele gekopieerde gegevens geslaagd: zeven plus vijf kreeg antwoord 12, met één modelaanroep. Gesprek bleef na herstart bewaard; na verwijdering van de microfoonpolicy bleef chat beschikbaar bij herstart en stem geweigerd. De complete kandidaat met beheerde uitrolaansluiting is onafhankelijk gecontroleerd. Veilige ingebruikname, jouw microfoon-/speakerervaring, herhaalde onderbrekingsmetingen en aanwezigheid in huis blijven open.",
+          "evidence": "VB-001 · kandidaat 4d7d039: releasecontrole, echte spraakproef, herstart en intrekking geslaagd · onafhankelijke technische GO; nog niet live"
         },
         {
           "id": "projects",
@@ -1687,7 +1687,7 @@
     "vb001ManagedVoiceActivation": {
       "owner": "/root",
       "reviewer": "/root/co006_review",
-      "status": "complete_candidate_gates_passed_official_overlay_voice_probe_running",
+      "status": "complete_candidate_and_official_voice_integration_passed_reviewed_not_live",
       "scope": [
         "eva2/deploy/living-core/dashboard-voice.compose.yml",
         "eva2/tools/eva2_quiescent_cutover.py",
@@ -1712,7 +1712,7 @@
         "receiptPath": "/tmp/eva2-vb001-ack-release-j5p21b_z/managed-voice-render/receipt.json",
         "liveChanges": false
       },
-      "next": "Verify copied voice/journal/restart and extra revoked-policy restart on final candidate, then prepare owner-bound reserve policy and preserved MCP configuration for reviewed safe cutover.",
+      "next": "Prepare concrete slot4-to-slot3 reserve plan with preserved current MCP access and an explicit owner-bound voice policy; verify candidate admission and lossless rollback before controlled cutover. Human microphone/speaker proof remains separate.",
       "implementationCommit": "723febe70d1c12f5e3f5a8179e21f883725d35f1",
       "stage": {
         "path": "/tmp/eva2-vb001-managed-release-bym6cas7",
@@ -1737,7 +1737,7 @@
         "databaseScope": "Twelve dedicated vb001_managed3_ databases; remove recorded names only after terminal gate."
       },
       "copyProbePreparation": {
-        "status": "executing_after_terminal_gates_cleanup_and_review",
+        "status": "completed_exit_0_independent_integration_go",
         "wrapper": "/tmp/eva2-vb001-managed-release-bym6cas7/run_voice_copy.py",
         "wrapperSha256": "ac79ee220d163e2b35be27f408aec2c4212587b5611ca3eb21685725a0c71770",
         "policyTemplateSha256": "fb5fa164ea37ee538f5fa4dc183cbfbd62f439b7294534af5ef2cfc782b280c9",
@@ -1769,6 +1769,26 @@
         "status": "passed",
         "removed": 12,
         "receiptPath": "/tmp/eva2-vb001-managed-release-bym6cas7/test-database-cleanup.json"
+      },
+      "copiedVoiceResult": {
+        "status": "passed",
+        "receiptDirectory": "/tmp/eva2-vb001-managed-release-bym6cas7/copy",
+        "sourceCommit": "4d7d039c1b4761489d2e2d20ac6231f5b602337b",
+        "imageId": "sha256:7b75cfe18df5691e1c2cc2fa56c9ee0f202959eab090ce723cd11761b5af84f7",
+        "officialVoiceOverlayUsed": true,
+        "reply": "12",
+        "modelAttempts": 1,
+        "inputTokens": 2467,
+        "outputTokens": 5,
+        "toolCalls": 0,
+        "audioBytes": 9741,
+        "journalPreservedAfterRestart": true,
+        "policyRemovalRejectsNewSession": true,
+        "coreRestartAfterPolicyRemovalPassed": true,
+        "temporaryResourcesRemoved": true,
+        "liveInputsAndRouteUnchanged": true,
+        "humanHardwareAcceptance": false,
+        "review": "Independent bounded integration GO /root/co006_review for reserve preparation: all source/wrapper/policy/precopy bindings, complete gates, voice readback, both restart cases and actual resource absence verified. Concrete reserve configuration/admission still requires review. No live GO."
       }
     }
   },
