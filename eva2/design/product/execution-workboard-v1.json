@@ -1874,6 +1874,63 @@
       "ruff": "passed",
       "review": "Independent bounded source GO /root/co006_review; 36 bootstrap tests independently repeated. No full candidate release or live update.",
       "next": "Include in next complete candidate after remaining owner-route/hardware findings; current pilot unchanged."
+    },
+    "vb001InterruptMeasurement": {
+      "status": "reviewed_render_submeasurement_only",
+      "owner": "/root",
+      "reviewer": "/root/co006_review",
+      "stage": "/tmp/eva2-vb001-interrupt-p15afy1l",
+      "scope": "Exact live JS; 40 manual and 40 synthetic RMS VAD interruptions; real Chromium AudioWorklet tap, no physical microphone or provider calls. Record every trial including failures and render-block resolution.",
+      "review": "Bounded measurement design GO co006_review; measure both invocation-to-silence and first synthetic frame-to-silence, audible precondition and fixed post-stop silence. Not acoustic/hardware acceptance.",
+      "retention": "Archive bound receipt/runner, remove this exact temporary stage before VB-001 closure.",
+      "execSessionId": 66314,
+      "terminalExitCode": 0,
+      "groups": {
+        "manual": {
+          "trials": 40,
+          "failures": 0,
+          "validMeasurements": 40,
+          "p95StopUpperBoundMs": 2.6666666666666665
+        },
+        "vad": {
+          "trials": 40,
+          "failures": 0,
+          "validMeasurements": 40,
+          "p95StopUpperBoundMs": 2.6666666666666665,
+          "p95FirstFrameToLastSampleMs": 106.6458333333351
+        }
+      },
+      "audioSettings": {
+        "sampleRate": 48000,
+        "baseLatency": 0.011625,
+        "outputLatency": 0.248,
+        "renderQuantumFrames": 128,
+        "sampleThreshold": 1e-05,
+        "postStopWaitMs": 220,
+        "requiredObservedSilenceMs": 150
+      },
+      "physicalHardwareAcceptance": false,
+      "receipts": {
+        "receipt.json": {
+          "path": "/tmp/eva2-vb001-interrupt-p15afy1l/receipt.json",
+          "sha256": "379192308bcec9e3a25d5c2ea02df7cde39db082f4f517359a48f9a12f305d58"
+        },
+        "binding.json": {
+          "path": "/tmp/eva2-vb001-interrupt-p15afy1l/binding.json",
+          "sha256": "475f8e534a1c70ce802cd769b944eeb585156316a13c0e94064e05d347aca7ec"
+        },
+        "measure.cjs": {
+          "path": "/tmp/eva2-vb001-interrupt-p15afy1l/measure.cjs",
+          "sha256": "8f5122e12d0ef1e3d212eeb7d82099d0136be100fb69c225a77dfe974e96fe45"
+        },
+        "client.js": {
+          "path": "/tmp/eva2-vb001-interrupt-p15afy1l/client.js",
+          "sha256": "ec6b6f3c93fffc57f026673283fdc5d700e7986772bfa941ec26f80e13f061ff"
+        }
+      },
+      "finding": "All 80 rendered-sample trials passed. Reported headless outputLatency is 248ms; software tap excludes physical output buffering. This cannot close the acoustic p95<=250ms requirement.",
+      "next": "Independent runner/result review; retain real microphone/speaker and acoustic end-to-end campaign as open. Do not infer hardware acceptance from render timing.",
+      "resultReview": "Independent bounded GO co006_review: exact runner/client hashes verified, all80 retained; p95 modeled render-tail bound2.67ms, syntheticfirst-frame-to-last-sample106.65ms. Reported outputLatency248ms remains outside tap and physical<=250ms criterion is not closed."
     }
   },
   "activeTaskId": "VB-001",

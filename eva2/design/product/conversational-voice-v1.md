@@ -480,3 +480,27 @@ hoorbaar antwoord, doorpraten tijdens afspelen, gesproken én handmatige onderbr
 microfoon uit en herverbinden. Noteer browser/apparatuur en iedere mislukte beurt.
 Een geslaagde handmatige indruk vervangt de vastgelegde latencycampagne niet.
 De oorspronkelijke V01–V07-eindcriteria en overige routes blijven behouden.
+
+
+### Gemeten renderonderbreking — 8 september 2026
+
+De exacte live browser-JavaScriptbytes van kandidaat `4d7d039` zijn via de
+geauthenticeerde route teruggelezen en vergeleken met de verzegelde bron.
+Een afzonderlijke Chromium/WebAudio-proef omvatte 40 handmatige en 40
+synthetische RMS/VAD-onderbrekingen. Iedere proef controleerde lopend geluid,
+eenzelfde audioklok, wisselende onderbreekposities en minimaal 150 ms waargenomen
+stilte na stoppen. Alle 80 individuele proeven zijn behouden; nul mislukkingen.
+
+P95 (nearest rank) van de gemodelleerde rendertailgrens was voor beide groepen
+2,67 ms: negatieve blokklokafstand begrensd op nul plus één kwantum van
+128 samples bij 48 kHz. Vanaf het eerste aangeboden synthetische spraakframe
+tot de laatste niet-stille gerenderde sample was p95 106,65 ms. Dit meet geen
+microfoonherkenning of echo-onderdrukking. De headless browser meldde bovendien
+248 ms outputLatency, buiten de meettap. Daarom bewijst deze softwaremeting
+geen hoorbare stop binnen 250 ms; het fysieke criterium blijft open.
+
+Runner, exacte clientbytes, instellingen en alle uitkomsten zijn gebonden in
+`audit.vb001InterruptMeasurement`. Onafhankelijke beperkte meetreview is groen.
+Er zijn geen nieuwe model-/spraakprovidercalls of live productwijzigingen gedaan.
+De Windows-route `localhost:44710` gaf afzonderlijk de verwachte HTTP401 zonder
+inloggegevens; de eerste trage PowerShell-aanvraag is normaal met401 geëindigd.
