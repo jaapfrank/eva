@@ -1856,6 +1856,24 @@
         "browserHarnessCorrection": "First live readback timed out looking for a separate Microfoon uit button before starting. This is the dynamic label of the start toggle. Corrected harness checks initial microphone-off status; product unchanged. Second readback passed with no microphone/audio/model request.",
         "documentationReview": "Independent GO /root/co006_review: live route and copied candidate-chain claims are separated; accepted:no and VB-001 in_progress retained. Hardware experience and p95-stop latency remain open."
       }
+    },
+    "vb001InactivePolicyRecovery": {
+      "status": "source_reviewed_not_live",
+      "owner": "/root",
+      "reviewer": "/root/co006_review",
+      "scope": [
+        "eva2/src/eva/bootstrap/dashboard_voice.py",
+        "eva2/tests/bootstrap/test_dashboard_voice_bootstrap.py",
+        "eva2/design/product/conversational-voice-v1.md"
+      ],
+      "problem": "An otherwise valid expired/revoked/future voice policy prevents entire core startup. Disable media while retaining other channels; keep invalid policy and runtime bindings fail-closed.",
+      "designReview": "co006_review bounded GO; validate private/schema/scope/provider/identity before inactive return; exact boundaries and existing-session rejection tested. No claim of historical policy-hash pin at direct bootstrap.",
+      "liveChanges": false,
+      "implementationCommit": "3a5e151df64db9f1b1835b1b7061496f32131d39",
+      "testsPassed": 36,
+      "ruff": "passed",
+      "review": "Independent bounded source GO /root/co006_review; 36 bootstrap tests independently repeated. No full candidate release or live update.",
+      "next": "Include in next complete candidate after remaining owner-route/hardware findings; current pilot unchanged."
     }
   },
   "activeTaskId": "VB-001",
