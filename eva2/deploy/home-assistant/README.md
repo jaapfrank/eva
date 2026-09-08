@@ -77,6 +77,32 @@ Run `pytest -q tests/postgres/test_operational_timeline.py tests/api/test_native
 tests/operations/test_ha_voice_native_client.py` in the locked runtime test
 environment plus HA's `aiohttp==3.14.3` test dependencies. No model call is needed.
 
+## Household memory candidate
+
+`MemoryAudience.household` now carries a distinct audience ID and exact owner
+mandate reference. A speaker audit actor is not an authenticated human identity.
+Conversation and document identifiers must stay in that household's namespace;
+private projects, observation bindings and Telegram audience payloads cannot be
+substituted. The core accepts this audience only with an explicitly supplied
+current mandate resolver, and rechecks it before queuing semantic retention.
+Bootstrap currently supplies no household resolver, so this remains disabled.
+
+Hindsight uses a household tag, checks the current mandate of both the querying
+actor and every selected source actor, and never loads a private style mirror for
+a shared conversation. The existing durable outbox preserves the full audience
+and mandate reference after reconnection. Derived observations in ALL audiences
+now require complete, consistently bound source facts: mixed audiences, old
+mandates, incomplete/truncated sources and injected source metadata are rejected.
+Direct memories and valid source-bound observations remain supported. Older
+observations lacking complete source provenance are intentionally not recalled;
+real Hindsight compatibility must be verified before deployment.
+
+Remaining wiring: issue/load a current, revocable household mandate from the
+owner's configured authority; bind registered devices to audit actors; connect
+the native responder to Eva's real model/tool runtime with cooperative stop and
+existing resource budgets. This memory candidate does not create a mandate or
+activate the voice route by itself.
+
 ## Device candidate
 
 `voice-pe-interruption.yaml` replaces the saved device's wake-word handler.

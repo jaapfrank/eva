@@ -1,4 +1,4 @@
-"""Fail-closed audience admission for private and Telegram-group memory.
+"""Fail-closed audience admission for private, Telegram-group and household memory.
 
 This module deliberately has no database, Hindsight or connector dependency.
 The connector must establish that a group contribution is currently consented
@@ -37,6 +37,28 @@ class TelegramGroupConsentReference:
 
 
 @dataclass(frozen=True, slots=True)
+class HouseholdConsentReference:
+    """Exact owner mandate for an audit actor's shared household contributions.
+
+    This reference is not a grant by itself. Every admission, retention and
+    recall must resolve the current mandate. An audit actor can be a speaker
+    device; it must not be presented as an authenticated human identity.
+    """
+
+    principal_id: str
+    household_id: str
+    operation_id: str
+
+    def __post_init__(self) -> None:
+        if (not isinstance(self.principal_id, str) or not _PRINCIPAL.fullmatch(self.principal_id)
+                or not isinstance(self.household_id, str)
+                or not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9._-]{0,79}", self.household_id)
+                or not isinstance(self.operation_id, str)
+                or not re.fullmatch(r"household-consent:[A-Za-z0-9._:-]{1,200}", self.operation_id)):
+            raise ValueError("household consent reference is invalid")
+
+
+@dataclass(frozen=True, slots=True)
 class MemoryAudience:
     """The only audience eligible to receive a retained or recalled memory.
 
@@ -45,15 +67,28 @@ class MemoryAudience:
     audience and a durable consent reference, never an implicit personal one.
     """
 
-    kind: Literal["private_person", "telegram_group"]
+    kind: Literal["private_person", "telegram_group", "household"]
     audience_id: str
     principal_id: str
     group_chat_id: str | None = None
     consent_ref: TelegramGroupConsentReference | None = None
+    household_id: str | None = None
+    household_consent_ref: HouseholdConsentReference | None = None
 
     def __post_init__(self) -> None:
         if not _PRINCIPAL.fullmatch(self.principal_id):
             raise ValueError("memory audience principal is invalid")
+        if self.kind == "household":
+            ref = self.household_consent_ref
+            if (not isinstance(ref, HouseholdConsentReference)
+                    or ref.principal_id != self.principal_id
+                    or ref.household_id != self.household_id
+                    or self.audience_id != f"household:{self.household_id}"
+                    or self.group_chat_id is not None or self.consent_ref is not None):
+                raise ValueError("household memory audience is invalid")
+            return
+        if self.household_id is not None or self.household_consent_ref is not None:
+            raise ValueError("non-household memory has household authority")
         if self.kind == "private_person":
             if (
                 self.audience_id != f"person:{self.principal_id}"
@@ -98,6 +133,13 @@ class MemoryAudience:
             consent_ref=consent_ref,
         )
 
+    @classmethod
+    def household(cls, *, principal_id: str, household_id: str,
+                  consent_ref: HouseholdConsentReference) -> "MemoryAudience":
+        return cls(kind="household", audience_id=f"household:{household_id}",
+                   principal_id=principal_id, household_id=household_id,
+                   household_consent_ref=consent_ref)
+
 
 @dataclass(frozen=True, slots=True)
 class TelegramMemoryAdmission:
@@ -111,7 +153,7 @@ class TelegramMemoryAdmission:
             if not _PRIVATE_CHAT.fullmatch(self.chat_id):
                 raise ValueError("private Telegram memory admission is invalid")
             return
-        if self.chat_id != self.audience.group_chat_id:
+        if self.audience.kind != "telegram_group" or self.chat_id != self.audience.group_chat_id:
             raise ValueError("Telegram group memory audience differs from chat")
 
 
@@ -134,6 +176,13 @@ def memory_audience_to_wire(audience: MemoryAudience) -> dict[str, str]:
                 "group_chat_id": audience.group_chat_id,
             }
         )
+    if audience.kind == "household":
+        ref = audience.household_consent_ref
+        assert ref is not None
+        data.update(household_id=ref.household_id,
+                    consent_household_id=ref.household_id,
+                    consent_principal_id=ref.principal_id,
+                    consent_operation_id=ref.operation_id)
     return data
 
 
@@ -152,6 +201,18 @@ def memory_audience_from_wire(value: object) -> MemoryAudience:
         "consent_principal_id",
         "group_chat_id",
     }
+    household_keys = {*private_keys, "household_id", "consent_household_id",
+                      "consent_principal_id", "consent_operation_id"}
+    if set(value) == household_keys:
+        return MemoryAudience(
+            kind=value["kind"], audience_id=value["audience_id"],
+            principal_id=value["principal_id"], household_id=value["household_id"],
+            household_consent_ref=HouseholdConsentReference(
+                principal_id=value["consent_principal_id"],
+                household_id=value["consent_household_id"],
+                operation_id=value["consent_operation_id"],
+            ),
+        )
     if set(value) == private_keys:
         return MemoryAudience(
             kind=value["kind"],  # type: ignore[arg-type]
@@ -212,6 +273,7 @@ def admit_telegram_memory(
 
 __all__ = [
     "MemoryAudience",
+    "HouseholdConsentReference",
     "TelegramGroupConsentReference",
     "TelegramMemoryAdmission",
     "admit_telegram_memory",

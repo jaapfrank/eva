@@ -69,6 +69,7 @@ from eva.adapters.postgres.commerce import (
     PostgresProductPublicationStore,
 )
 from eva.adapters.projection.hindsight import (
+    ActiveHouseholdConsentResolver,
     HindsightMemoryEngine,
     HindsightProjectionConfig,
 )
@@ -572,6 +573,7 @@ class PostgresHindsightMemoryRuntime:
         runtime_tenant_id: str | None = None,
         runtime_installation_id: str | None = None,
         group_consent: TelegramGroupConsentStorePort | None = None,
+        household_consent: ActiveHouseholdConsentResolver | None = None,
         telegram_canary: TelegramCanaryBridge | None = None,
         people_memory_overview: PeopleMemoryOverviewPort | None = None,
         delegated_work_store: PostgresDelegatedWorkStore | None = None,
@@ -607,6 +609,7 @@ class PostgresHindsightMemoryRuntime:
         self._runtime_tenant_id = runtime_tenant_id
         self._runtime_installation_id = runtime_installation_id
         self._group_consent = group_consent
+        self._household_consent = household_consent
         self._telegram_canary = telegram_canary
         self._people_memory_overview = people_memory_overview
         if (delegated_work_store is None) != (dashboard_owner_principal_id is None):
@@ -907,6 +910,20 @@ class PostgresHindsightMemoryRuntime:
         audience: MemoryAudience = turn.audience
         if audience.kind == "private_person":
             return
+        if audience.kind == "household":
+            resolver = getattr(self, "_household_consent", None)
+            if resolver is None:
+                raise ValueError("household turn has no mandate verifier")
+            try:
+                active = resolver.active_reference(
+                    principal_id=turn.principal_id, household_id=audience.household_id,
+                    now=datetime.now(tz=UTC).replace(microsecond=0),
+                )
+            except Exception as error:
+                raise ValueError("household turn mandate could not be verified") from error
+            if active != audience.household_consent_ref:
+                raise ValueError("household turn mandate is not active and exact")
+            return
         if self._group_consent is None:
             raise ValueError("Telegram group turn has no consent verifier")
         assert audience.group_chat_id is not None
@@ -1033,6 +1050,9 @@ class PostgresHindsightMemoryRuntime:
     def after_response(self, turn: ConversationTurn, reply: GroundedReply) -> None:
         """Queue semantic retention only after the reply is durably committed."""
 
+        if turn.audience.kind == "household":
+            self.admit_turn_audience(turn)
+
         # The durable journal already owns the complete user/assistant exchange.
         # Hindsight may learn semantic facts from direct user testimony only: an
         # assistant reply is model output and must never inherit direct_user trust.
@@ -1052,7 +1072,7 @@ class PostgresHindsightMemoryRuntime:
             content = f"Gebruiker (directe bron): {turn.text}"
             evidence_ref = (
                 f"{turn.conversation_id}:evidence:{turn.message_id}"
-                if turn.audience.kind == "telegram_group"
+                if turn.audience.kind in {"telegram_group", "household"}
                 else f"conversation-reply:{turn.message_id}"
             )
             privacy_class = "internal"

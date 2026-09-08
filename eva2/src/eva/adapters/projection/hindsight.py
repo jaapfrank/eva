@@ -38,6 +38,7 @@ from eva.application.memory import (
 )
 from eva.application.memory_audience import (
     MemoryAudience,
+    HouseholdConsentReference,
     TelegramGroupConsentReference,
 )
 from eva.contracts.canonical_json import canonical_json_bytes, canonical_sha256
@@ -68,6 +69,12 @@ class HindsightProjectionProtocolError(HindsightProjectionError):
 
 class HindsightMemoryScopeError(HindsightProjectionError):
     """A retain or recall crossed its admitted person/install scope."""
+
+
+class ActiveHouseholdConsentResolver(Protocol):
+    def active_reference(
+        self, *, principal_id: str, household_id: str, now: datetime
+    ) -> HouseholdConsentReference | None: ...
 
 
 class ActiveGroupConsentResolver(Protocol):
@@ -164,6 +171,7 @@ class HindsightMemoryEngine:
         config: HindsightProjectionConfig,
         *,
         active_group_consent_resolver: ActiveGroupConsentResolver | None = None,
+        active_household_consent_resolver: ActiveHouseholdConsentResolver | None = None,
     ) -> None:
         self._config = config
         self._base_url = config.base_url.rstrip("/")
@@ -175,6 +183,7 @@ class HindsightMemoryEngine:
         self._fast_presence_generation = 0
         self._derivative_lock = threading.RLock()
         self._active_group_consent_resolver = active_group_consent_resolver
+        self._active_household_consent_resolver = active_household_consent_resolver
 
     def _bank_id(self, tenant_id: str, installation_id: str) -> str:
         raw = canonical_json_bytes(
@@ -192,6 +201,30 @@ class HindsightMemoryEngine:
     def _group_tag(group_chat_id: str) -> str:
         digest = hashlib.sha256(group_chat_id.encode("utf-8")).hexdigest()
         return f"eva-telegram-group-{digest[:32]}"
+
+    @staticmethod
+    def _household_tag(household_id: str) -> str:
+        digest = hashlib.sha256(household_id.encode("utf-8")).hexdigest()
+        return f"eva-household-{digest[:32]}"
+
+    def _resolve_active_household_reference(
+        self, *, principal_id: str, household_id: str
+    ) -> HouseholdConsentReference | None:
+        resolver = self._active_household_consent_resolver
+        if resolver is None:
+            raise HindsightMemoryScopeError("household memory has no active mandate resolver")
+        try:
+            return resolver.active_reference(principal_id=principal_id, household_id=household_id,
+                now=datetime.now(tz=timezone.utc).replace(microsecond=0))
+        except Exception as error:
+            raise HindsightMemoryScopeError("household memory mandate could not be resolved") from error
+
+    def _household_admitted(self, audience: MemoryAudience) -> bool:
+        assert audience.household_id is not None
+        assert audience.household_consent_ref is not None
+        return self._resolve_active_household_reference(
+            principal_id=audience.principal_id, household_id=audience.household_id,
+        ) == audience.household_consent_ref
 
     def _require_active_group_audience(
         self, audience: MemoryAudience
@@ -449,6 +482,7 @@ class HindsightMemoryEngine:
         enriched: list[dict[str, Any]] = []
         for item in results:
             copied = dict(item)
+            copied.pop("_eva_source_metadata", None)
             copied["_eva_memory_project_id"] = memory_project_id
             copied["_eva_memory_observation_binding_sha256"] = (
                 memory_observation_binding_sha256
@@ -510,11 +544,29 @@ class HindsightMemoryEngine:
                 metadata.get("principal_id"),
                 metadata.get("privacy_class"),
                 metadata.get("trust"),
+                metadata.get("audience_kind"),
+                metadata.get("audience_id"),
+                metadata.get("household_id"),
+                metadata.get("group_chat_id"),
+                metadata.get("consent_operation_id"),
+                metadata.get("project_id"),
+                metadata.get("observation_binding_sha256"),
             )
             for _timestamp, metadata in candidates
         }
         if len(authorities) != 1:
             return None
+        for _timestamp, metadata in candidates:
+            if metadata.get("audience_kind") == "household":
+                household_id = metadata.get("household_id")
+                conversation = metadata.get("conversation_id")
+                prefix = f"household:{household_id}:conversation:"
+                if (not isinstance(conversation, str) or not conversation.startswith(prefix)
+                        or not conversation.removeprefix(prefix)
+                        or not all(isinstance(metadata.get(key), str)
+                                   and metadata[key].startswith(conversation + ":")
+                                   for key in ("source_ref", "evidence_ref"))):
+                    return None
         return max(candidates, key=lambda item: item[0])[1]
 
     def _request(
@@ -782,6 +834,18 @@ class HindsightMemoryEngine:
         if document.audience.kind == "private_person":
             audience_tag = self._person_tag(document.principal_id)
             audience_metadata: dict[str, str] = {}
+        elif document.audience.kind == "household":
+            if not self._household_admitted(document.audience):
+                raise HindsightMemoryScopeError("household memory mandate is not active and exact")
+            assert document.audience.household_id is not None
+            assert document.audience.household_consent_ref is not None
+            audience_tag = self._household_tag(document.audience.household_id)
+            audience_metadata = {
+                "audience_id": document.audience.audience_id,
+                "audience_kind": "household",
+                "household_id": document.audience.household_id,
+                "consent_operation_id": document.audience.household_consent_ref.operation_id,
+            }
         else:
             consent_ref = self._require_active_group_audience(document.audience)
             assert document.audience.group_chat_id is not None
@@ -978,7 +1042,13 @@ class HindsightMemoryEngine:
                 "memory recall must include the admitted principal"
             )
         group_recall = query.audience.kind == "telegram_group"
-        if group_recall:
+        household_recall = query.audience.kind == "household"
+        if household_recall:
+            if not self._household_admitted(query.audience):
+                return self._empty_presence(query)
+            assert query.audience.household_id is not None
+            audience_tag = self._household_tag(query.audience.household_id)
+        elif group_recall:
             assert query.audience.group_chat_id is not None
             assert query.audience.consent_ref is not None
             if (
@@ -1108,6 +1178,8 @@ class HindsightMemoryEngine:
             text = raw.get("text")
             memory_type = raw.get("type") or "world"
             source_metadata = raw.get("_eva_source_metadata")
+            if memory_type == "observation" and not isinstance(source_metadata, dict):
+                continue
             metadata = (
                 source_metadata
                 if isinstance(source_metadata, dict)
@@ -1205,6 +1277,34 @@ class HindsightMemoryEngine:
                     != retained_reference
                 ):
                     continue
+            elif household_recall:
+                assert query.audience.household_id is not None
+                required = {"audience_id": query.audience.audience_id,
+                            "audience_kind": "household",
+                            "household_id": query.audience.household_id}
+                if any(metadata.get(key) != value for key, value in required.items()):
+                    raise HindsightMemoryScopeError("Hindsight returned memory for another household audience")
+                conversation = metadata.get("conversation_id")
+                prefix = f"household:{query.audience.household_id}:conversation:"
+                if (not isinstance(conversation, str) or not conversation.startswith(prefix)
+                        or not conversation.removeprefix(prefix)
+                        or not all(isinstance(metadata.get(key), str)
+                                   and metadata[key].startswith(conversation + ":")
+                                   for key in ("source_ref", "evidence_ref"))):
+                    raise HindsightMemoryScopeError("Hindsight household memory has cross-scope provenance")
+                try:
+                    retained = HouseholdConsentReference(
+                        principal_id=subject_id, household_id=query.audience.household_id,
+                        operation_id=metadata.get("consent_operation_id"),
+                    )
+                except ValueError as error:
+                    raise HindsightMemoryScopeError("Hindsight household memory lacks exact mandate") from error
+                if self._resolve_active_household_reference(
+                    principal_id=retained.principal_id, household_id=retained.household_id,
+                ) != retained:
+                    continue
+            elif metadata.get("audience_kind") not in {None, "private_person"}:
+                raise HindsightMemoryScopeError("Hindsight returned shared memory for a private audience")
             elif subject_id not in query.subject_ids:
                 raise HindsightMemoryScopeError(
                     "Hindsight returned memory for another subject"
@@ -1303,6 +1403,8 @@ class HindsightMemoryEngine:
             if len(confirmed) >= query.maximum_facts:
                 break
 
+        if household_recall and not self._household_admitted(query.audience):
+            return self._empty_presence(query)
         fact_ids = [item.fact_id for item in selected]
         recall = MemoryRecall(
             schema_version=1,
@@ -1326,7 +1428,7 @@ class HindsightMemoryEngine:
             confirmed_facts=tuple(confirmed),
             style_mirror=(
                 None
-                if group_recall
+                if group_recall or household_recall
                 else self._recall_style_mirror(global_bank_id, query.principal_id)
             ),
         )

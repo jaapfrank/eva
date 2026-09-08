@@ -149,3 +149,64 @@ def test_memory_audience_wire_rejects_a_partial_or_cross_bound_group_grant() -> 
     payload["consent_principal_id"] = "person:frank"
     with pytest.raises(ValueError, match="audience is invalid"):
         memory_audience_from_wire(payload)
+
+
+
+def household():
+    from eva.application.memory_audience import HouseholdConsentReference
+    return MemoryAudience.household(principal_id="household-device:abc", household_id="home",
+        consent_ref=HouseholdConsentReference("household-device:abc", "home", "household-consent:1"))
+
+
+def test_household_audience_roundtrips_without_person_or_telegram_fallback():
+    from eva.application.memory_audience import TelegramMemoryAdmission
+    audience = household()
+    wire = memory_audience_to_wire(audience)
+    assert memory_audience_from_wire(wire) == audience
+    assert wire["audience_id"] == "household:home"
+    for chat in ("101", "-100123", None):
+        with pytest.raises(ValueError):
+            TelegramMemoryAdmission(audience, chat)
+
+
+@pytest.mark.parametrize("field,value", [
+    ("kind", "private_person"), ("kind", "telegram_group"),
+    ("audience_id", "person:jaap"), ("principal_id", "person:jaap"),
+    ("household_id", "neighbours"), ("consent_household_id", "neighbours"),
+    ("consent_operation_id", "telegram-group-consent:1"),
+    ("group_chat_id", "-100123"),
+])
+def test_household_wire_rejects_mixed_or_cross_bound_authority(field, value):
+    wire = memory_audience_to_wire(household())
+    wire[field] = value
+    with pytest.raises(ValueError):
+        memory_audience_from_wire(wire)
+
+
+def test_household_turn_and_runtime_require_exact_scope_and_current_mandate():
+    from dataclasses import replace
+    from eva.application.conversation import ConversationTurn
+    from eva.bootstrap.runtime import PostgresHindsightMemoryRuntime
+    turn = ConversationTurn("tenant", "installation", "household-device:abc",
+        "household:home:conversation:one", "household:home:conversation:one:request:1",
+        "Hallo", "2026-09-08T21:00:00Z", household())
+    for changes in ({"conversation_id": "telegram:101"}, {"message_id": "private:1"},
+                    {"project_id": "owner-project"}):
+        with pytest.raises(ValueError):
+            replace(turn, **changes)
+    runtime = object.__new__(PostgresHindsightMemoryRuntime)
+    runtime._runtime_tenant_id = "tenant"
+    runtime._runtime_installation_id = "installation"
+    with pytest.raises(ValueError, match="no mandate verifier"):
+        runtime.admit_turn_audience(turn)
+    class Resolver:
+        active = turn.audience.household_consent_ref
+        def active_reference(self, **kwargs):
+            assert kwargs["principal_id"] == turn.principal_id
+            assert kwargs["household_id"] == "home"
+            return self.active
+    runtime._household_consent = Resolver()
+    runtime.admit_turn_audience(turn)
+    runtime._household_consent.active = None
+    with pytest.raises(ValueError, match="not active and exact"):
+        runtime.admit_turn_audience(turn)

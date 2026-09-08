@@ -144,7 +144,13 @@ def hindsight_server() -> Iterator[tuple[str, _State]]:
                                             "observation_binding_sha256": "a" * 64,
                                         },
                                     }
-                                ]
+                                ],
+                                "source_facts": {"anchor-source": {
+                                    "mentioned_at": NOW,
+                                    "metadata": {"principal_id": PRINCIPAL, "privacy_class": "internal",
+                                                 "trust": "host_policy", "source_ref": "telegram:anchor",
+                                                 "evidence_ref": "evidence:anchor"},
+                                }},
                             },
                         )
                     else:
@@ -215,9 +221,16 @@ def hindsight_server() -> Iterator[tuple[str, _State]]:
                                         ),
                                         "type": "observation",
                                         "mentioned_at": NOW,
+                                        "source_fact_ids": ["anchor-source"],
                                         "metadata": {},
                                     }
-                                ]
+                                ],
+                                "source_facts": {"anchor-source": {
+                                    "mentioned_at": NOW,
+                                    "metadata": {"principal_id": PRINCIPAL, "privacy_class": "internal",
+                                                 "trust": "host_policy", "source_ref": "telegram:anchor",
+                                                 "evidence_ref": "evidence:anchor"},
+                                }},
                             },
                         )
                     else:
@@ -228,6 +241,12 @@ def hindsight_server() -> Iterator[tuple[str, _State]]:
                     {"not_results": []}
                     if state.bad_recall
                     else {
+                        "source_facts": {"style-source": {
+                            "mentioned_at": NOW,
+                            "metadata": {"principal_id": PRINCIPAL, "privacy_class": "internal",
+                                         "trust": "host_policy", "source_ref": "telegram:conversation:jaap",
+                                         "evidence_ref": "evidence:style:jaap"},
+                        }},
                         "results": [
                             {
                                 "id": FACT,
@@ -247,6 +266,7 @@ def hindsight_server() -> Iterator[tuple[str, _State]]:
                             },
                             {
                                 "id": OLD_FACT,
+                                "source_fact_ids": ["style-source"],
                                 "scores": {"final": 0.88},
                                 "text": "Jaap wil korte, directe antwoorden.",
                                 "type": "observation",
@@ -1399,3 +1419,153 @@ def test_invalid_hindsight_response_fails_closed_instead_of_falling_back(
 
     with pytest.raises(HindsightProjectionProtocolError, match="result list"):
         projection.recall_or_sql_fallback(_query())
+
+
+
+def _household_memory_fixture(base_url, state):
+    from eva.application.memory_audience import HouseholdConsentReference
+    actor = "household-device:" + "a" * 32
+    other = "household-device:" + "c" * 32
+    grants = {p: HouseholdConsentReference(p, "home", "household-consent:" + str(i))
+              for i, p in enumerate((actor, other))}
+    audience = MemoryAudience.household(principal_id=actor, household_id="home", consent_ref=grants[actor])
+    conversation = "household:home:conversation:room"
+    doc = replace(_conversation_document(), principal_id=actor, audience=audience,
+                  conversation_id=conversation, document_id=conversation + ":document:1",
+                  source_ref=conversation + ":message:1", evidence_ref=conversation + ":evidence:1")
+    query = replace(_query(), principal_id=actor, subject_ids=(actor,), audience=audience,
+                    conversation_id=conversation, scope={"kind": "household", "household_id": "home"})
+    class Resolver:
+        def active_reference(self, *, principal_id, household_id, now):
+            assert household_id == "home"
+            return grants.get(principal_id)
+    engine = HindsightMemoryEngine(HindsightProjectionConfig(base_url),
+                                  active_household_consent_resolver=Resolver())
+    source_conversation = "household:home:conversation:garden"
+    metadata = {"audience_kind": "household", "audience_id": "household:home",
+                "household_id": "home", "principal_id": other,
+                "consent_operation_id": grants[other].operation_id,
+                "conversation_id": source_conversation,
+                "source_ref": source_conversation + ":message:2",
+                "evidence_ref": source_conversation + ":evidence:2",
+                "trust": "direct_user", "privacy_class": "internal"}
+    state.group_recall_response = {"results": [{"id": "household-memory", "scores": {"final": 0.95},
+        "text": "De barbecue begint om zes uur.", "type": "world", "mentioned_at": NOW,
+        "document_id": source_conversation + ":document:2", "metadata": metadata}]}
+    return engine, doc, query, grants, metadata
+
+
+def test_household_memory_is_shared_between_admitted_devices_without_private_style(hindsight_server):
+    base_url, state = hindsight_server
+    engine, doc, query, grants, metadata = _household_memory_fixture(base_url, state)
+    engine.retain_conversation(doc)
+    result = engine.recall_for_presence(query)
+    assert [fact.value["text"] for fact in result.confirmed_facts] == ["De barbecue begint om zes uur."]
+    assert result.style_mirror is None
+    assert not any("/mental-models/" in path for _, path, _ in state.requests)
+    retained = next(body for method, path, body in state.requests if method == "POST" and path.endswith("/memories"))
+    item = retained["items"][0]
+    assert item["tags"] == ["eva-memory", engine._household_tag("home")]
+    assert item["metadata"]["audience_kind"] == "household"
+    for method, path, body in state.requests:
+        if path.endswith("/memories/recall"):
+            assert body["tags"] == [engine._household_tag("home")]
+    grants.pop(metadata["principal_id"])
+    assert engine.recall_for_presence(query).confirmed_facts == ()
+    grants.clear()
+    state.requests.clear()
+    assert engine.recall_for_presence(query).confirmed_facts == ()
+    with pytest.raises(HindsightMemoryScopeError, match="not active and exact"):
+        engine.retain_conversation(doc)
+    assert not state.requests
+
+
+@pytest.mark.parametrize("field,value", [
+    ("audience_kind", "private_person"), ("audience_id", "household:neighbours"),
+    ("household_id", "neighbours"), ("source_ref", "telegram:101:private"),
+    ("evidence_ref", "conversation-reply:private"), ("conversation_id", "private:1"),
+    ("consent_operation_id", "telegram-group-consent:1"),
+])
+def test_household_recall_rejects_cross_scope_provider_results(hindsight_server, field, value):
+    base_url, state = hindsight_server
+    engine, doc, query, grants, metadata = _household_memory_fixture(base_url, state)
+    metadata[field] = value
+    with pytest.raises(HindsightMemoryScopeError):
+        engine.recall_for_presence(query)
+
+
+def test_household_memory_has_no_unconfigured_private_fallback(hindsight_server):
+    base_url, state = hindsight_server
+    _, doc, query, _, _ = _household_memory_fixture(base_url, state)
+    engine = HindsightMemoryEngine(HindsightProjectionConfig(base_url))
+    with pytest.raises(HindsightMemoryScopeError, match="no active mandate resolver"):
+        engine.retain_conversation(doc)
+    with pytest.raises(HindsightMemoryScopeError, match="no active mandate resolver"):
+        engine.recall_for_presence(query)
+    assert not state.requests
+    for change in ({"scope": {"kind": "person", "principal_id": query.principal_id}},
+                   {"conversation_id": "telegram:101"}, {"project_id": "private-project"}):
+        with pytest.raises(ValueError):
+            replace(query, **change)
+    with pytest.raises(ValueError):
+        replace(doc, source_ref="telegram:101:private")
+
+
+
+@pytest.mark.parametrize("corruption", ["private", "other_household", "old_mandate", "bad_provenance", "missing", "truncated", "injected", None])
+def test_household_observations_require_every_source_authority(hindsight_server, corruption):
+    base_url, state = hindsight_server
+    engine, doc, query, grants, metadata = _household_memory_fixture(base_url, state)
+    good = dict(metadata)
+    earlier = dict(good)
+    if corruption == "private":
+        earlier.update(audience_kind="private_person", audience_id="person:private")
+    elif corruption == "other_household":
+        earlier.update(household_id="neighbours", audience_id="household:neighbours")
+    elif corruption == "old_mandate":
+        earlier["consent_operation_id"] = "household-consent:expired"
+    elif corruption == "bad_provenance":
+        earlier["evidence_ref"] = "private:1"
+    source_facts = {"one": {"metadata": earlier, "mentioned_at": "2026-08-22T10:00:00Z"},
+                    "two": {"metadata": good, "mentioned_at": NOW}}
+    if corruption in {"missing", "injected"}:
+        source_facts.pop("one")
+    state.group_recall_response = {
+        "results": [{"id": "derived", "scores": {"final": 0.95}, "type": "observation",
+                     "text": "A combined conclusion", "mentioned_at": NOW,
+                     "source_fact_ids": ["one", "two"], "metadata": good,
+                     "_eva_source_metadata": good}],
+        "source_facts": source_facts,
+        "source_facts_truncated": corruption == "truncated",
+    }
+    result = engine.recall_for_presence(query)
+    if corruption is None:
+        assert len(result.confirmed_facts) == 1
+        assert result.confirmed_facts[0].trust == "direct_user"
+    else:
+        assert result.confirmed_facts == ()
+
+
+
+@pytest.mark.parametrize("sources_kind", ["mixed", "household_only", "missing"])
+def test_private_recall_cannot_hide_shared_observation_sources(hindsight_server, sources_kind):
+    base_url, state = hindsight_server
+    _, _, _, _, household_metadata = _household_memory_fixture(base_url, state)
+    shared = {**household_metadata, "principal_id": PRINCIPAL}
+    private = {"principal_id": PRINCIPAL, "privacy_class": "internal", "trust": "direct_user",
+               "audience_kind": "private_person", "source_ref": "telegram:private",
+               "evidence_ref": "evidence:private"}
+    sources = {"one": {"mentioned_at": NOW, "metadata": shared},
+               "two": {"mentioned_at": NOW, "metadata": private if sources_kind == "mixed" else shared}}
+    if sources_kind == "missing":
+        sources = {}
+    state.group_recall_response = {"results": [{"id": "mixed", "type": "observation",
+        "scores": {"final": 0.9}, "text": "Shared content disguised as private",
+        "mentioned_at": NOW, "metadata": private, "source_fact_ids": ["one", "two"],
+        "_eva_source_metadata": private}], "source_facts": sources}
+    engine = HindsightMemoryEngine(HindsightProjectionConfig(base_url))
+    if sources_kind == "household_only":
+        with pytest.raises(HindsightMemoryScopeError, match="shared memory for a private audience"):
+            engine.recall_for_presence(_query())
+    else:
+        assert engine.recall_for_presence(_query()).confirmed_facts == ()

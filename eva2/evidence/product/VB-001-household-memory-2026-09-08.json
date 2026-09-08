@@ -1,0 +1,44 @@
+{
+  "contract": "EvaHouseholdMemoryCandidate/v1",
+  "status": "source_and_storage_tested_not_bootstrapped_or_live",
+  "sourceSha256": {
+    "eva2/src/eva/application/memory_audience.py": "4aef5ec9ca0b6467d67a1531bfe7dee2f09a99a48cd2cfdb378325ac5828c9fa",
+    "eva2/src/eva/application/conversation.py": "c10a3b3489960116f05dfc358e2f530f1353b8c1e36d8e872fcd379cab709503",
+    "eva2/src/eva/application/memory.py": "5336de7e0754368fd2c008e75b2e937e18ad21e15d10b1696399530dc6b4c37c",
+    "eva2/src/eva/adapters/projection/hindsight.py": "a7c3a88542516ac05c7070973afe259ffbc5ca921ef009f7a3a71982d0563785",
+    "eva2/src/eva/bootstrap/runtime.py": "bd2d444aa67c21e7bad8e431a073f61a651aacb1ed2c343179a1ce5bf7e7ea98",
+    "eva2/tests/application/test_memory_audience.py": "2e8df859e4545ea648671285e6b89e3bc1da7089b962fb49eaa06645d644aa87",
+    "eva2/tests/projection/test_hindsight.py": "0144455d40ba54023e340c49bcbb43a8393a85459b839bb722324736cbc3e25f",
+    "eva2/tests/postgres/test_operational_timeline.py": "698e88e7767a6abce98cf9042f1cb72bf1de3550d4416565aa63f29e63cce5de"
+  },
+  "validation": {
+    "memory": "100 passed in 28.73s: audience, Hindsight HTTP adapter and conversation tests",
+    "storageAndApi": "104 passed in 16.48s: actual isolated PostgreSQL timeline/outbox plus memory and Telegram API tests",
+    "lint": "Ruff passed for all changed Python files",
+    "review": "co006_review bounded privacy GO after fixing shared/private observation source-authority fallback in both directions",
+    "initialFailures": [
+      "New positive household test initially omitted existing eva-memory umbrella tag from expected retained tags; corrected exact two-tag assertion.",
+      "New derived-memory test initially expected host_policy, while existing complete-source contract preserves direct_user for fully bound direct sources. Retained existing contract; no change to trust promotion semantics.",
+      "Combined migration/API suite initially failed three log-capture assertions because Alembic fileConfig disabled existing loggers. Timeline fixture now restores original logger disabled flags; same full combination passed."
+    ]
+  },
+  "proven": [
+    "Explicit household audience and exact mandate reference roundtrip; rejects mixed person/group/household authority",
+    "Household conversation/document/recall scope validation and default core rejection without mandate verifier",
+    "Distinct Hindsight household tag; no private style reads",
+    "Shared recall between admitted speaker audit actors; each source mandate rechecked and revoked sources excluded",
+    "Derived observations require complete uniform source authorities; no raw metadata fallback in any audience",
+    "Mixed private/household sources, old mandate, invalid provenance, truncation and injected metadata rejected",
+    "Durable outbox retains exact household document/audience/reference across reconnect"
+  ],
+  "compatibility": "Direct memories and fully source-bound observations remain supported. Older derived observations without complete source facts are deliberately excluded; verify actual Hindsight response compatibility before deployment.",
+  "remaining": [
+    "Configured durable current household mandate issuance/loading and owner revocation",
+    "Bootstrap mapping from registered speakers to household audit actors",
+    "Cancellation-aware actual conversation/model/tool runtime connection",
+    "Existing resource budget/authority wiring for shared household tools",
+    "Native HA pipeline and physical interruption/resume proof",
+    "Complete release gate, A/B deployment, household acceptance"
+  ],
+  "nonclaims": "No live runtime change, existing data migration, firmware flash, microphone change, household audio or model call. A mandate reference is not itself a grant."
+}

@@ -356,6 +356,13 @@ class ConversationTurn:
             raise ValueError("conversation turn text is empty or too large")
         if self.audience.principal_id != self.principal_id:
             raise ValueError("conversation turn audience principal differs")
+        if self.audience.kind == "household":
+            prefix = f"household:{self.audience.household_id}:conversation:"
+            if (not self.conversation_id.startswith(prefix)
+                    or not self.conversation_id.removeprefix(prefix)
+                    or not self.message_id.startswith(self.conversation_id + ":")
+                    or self.project_id is not None or self.observation_binding is not None):
+                raise ValueError("household turn is not bound to its audience")
         if self.audience.kind == "telegram_group":
             assert self.audience.group_chat_id is not None
             prefix = f"telegram:{self.audience.group_chat_id}:"
@@ -755,7 +762,9 @@ class LivingConversation:
                 requested_valid_at=turn.occurred_at,
                 project_id=turn.project_id,
                 scope=(
-                    {
+                    {"kind": "household", "household_id": turn.audience.household_id}
+                    if turn.audience.kind == "household"
+                    else {
                         "kind": "telegram_group",
                         "group_chat_id": turn.audience.group_chat_id,
                     }

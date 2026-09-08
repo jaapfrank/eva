@@ -3,6 +3,7 @@ from __future__ import annotations
 from concurrent.futures import ThreadPoolExecutor
 from datetime import UTC, datetime, timedelta
 import hashlib
+import logging
 import os
 from pathlib import Path
 from threading import Event
@@ -214,6 +215,10 @@ def timeline_engine() -> Iterator[Engine]:
     ):
         pytest.fail("timeline gate requires an explicit disposable PostgreSQL DB")
     engine = sa.create_engine(url, pool_pre_ping=False)
+    # Alembic's fileConfig disables existing loggers. Restore their original
+    # state so later API privacy-diagnostic tests still observe real records.
+    logger_states = {name: logger.disabled for name, logger in logging.Logger.manager.loggerDict.items()
+                     if isinstance(logger, logging.Logger)}
     config = Config(str(EVA2_ROOT / "alembic.ini"))
     config.set_main_option("sqlalchemy.url", dsn.replace("%", "%%"))
     try:
@@ -244,6 +249,8 @@ def timeline_engine() -> Iterator[Engine]:
             command.downgrade(config, "base")
         finally:
             engine.dispose()
+            for name, disabled in logger_states.items():
+                logging.getLogger(name).disabled = disabled
 
 
 def _scope(label: str) -> TimelineScope:
@@ -3467,3 +3474,29 @@ def test_native_ha_http_client_to_core_postgres_cancel_and_resume(timeline_engin
             await service.close()
             sock.close()
     asyncio.run(run())
+
+
+
+def test_household_memory_outbox_preserves_exact_audience_after_reconnect(timeline_engine: Engine):
+    from eva.application.memory_audience import HouseholdConsentReference
+    actor = "household-device:" + "a" * 32
+    ref = HouseholdConsentReference(actor, "home", "household-consent:mandate-1")
+    audience = MemoryAudience.household(principal_id=actor, household_id="home", consent_ref=ref)
+    conversation = "household:home:conversation:room"
+    document = ConversationMemoryDocument(
+        tenant_id="household-outbox", installation_id="home", principal_id=actor,
+        conversation_id=conversation, document_id=conversation + ":document:1",
+        source_ref=conversation + ":message:1", evidence_ref=conversation + ":evidence:1",
+        content="De barbecue begint om zes uur.", occurred_at="2026-09-08T21:00:00Z",
+        privacy_class="internal", trust="direct_user", audience=audience,
+    )
+    outbox = PostgresMemoryOutbox(timeline_engine, tenant_id="household-outbox", installation_id="home")
+    queued = outbox.enqueue(document)
+    assert outbox.enqueue(document) == queued
+    timeline_engine.dispose()
+    restarted = PostgresMemoryOutbox(timeline_engine, tenant_id="household-outbox", installation_id="home")
+    recovered = restarted.pending()
+    assert len(recovered) == 1
+    assert recovered[0].document == document
+    assert recovered[0].document.audience.household_consent_ref == ref
+    assert recovered[0].document.audience.kind == "household"

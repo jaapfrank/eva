@@ -99,6 +99,14 @@ class RecallCurrentFacts:
     def __post_init__(self) -> None:
         if self.audience.principal_id != self.principal_id:
             raise ValueError("memory recall audience principal differs")
+        if self.audience.kind == "household":
+            prefix = f"household:{self.audience.household_id}:conversation:"
+            if (self.scope != {"kind": "household", "household_id": self.audience.household_id}
+                    or not isinstance(self.conversation_id, str)
+                    or not self.conversation_id.startswith(prefix)
+                    or not self.conversation_id.removeprefix(prefix)
+                    or self.project_id is not None):
+                raise ValueError("household recall is not bound to its audience")
 
 
 @dataclass(frozen=True, slots=True)
@@ -161,6 +169,14 @@ class ConversationMemoryDocument:
             raise ValueError("memory document identifiers are required")
         if self.audience.principal_id != self.principal_id:
             raise ValueError("memory document audience author differs")
+        if self.audience.kind == "household":
+            prefix = f"household:{self.audience.household_id}:conversation:"
+            if (not self.conversation_id.startswith(prefix)
+                    or not self.conversation_id.removeprefix(prefix)
+                    or not all(ref.startswith(self.conversation_id + ":")
+                               for ref in (self.document_id, self.source_ref, self.evidence_ref))
+                    or self.project_id is not None):
+                raise ValueError("household memory document has cross-scope provenance")
         if not self.content.strip():
             raise ValueError("memory document content is required")
         if self.project_id is not None and (
