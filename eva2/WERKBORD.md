@@ -5,50 +5,38 @@ Laatst bijgewerkt: 2026-09-08.
 Doel: [Eva als zelfstandig lerende digitale huisgenoot](PROJECTDOEL.md).
 Gebouwd, getest, live en door jou geaccepteerd zijn verschillende stappen.
 
-CO-006 technisch afgerond en live: broncorrectie en cacheverversing bewezen, onafhankelijk goedgekeurd, gegevens behouden. Nu TL-001: de algemene route voor meerdere toolstappen.
-[Actueel bewijs](evidence/product/CO-006-autonomous-memory-2026-09-08.json).
+TL-002: huisinventarisatie blijft live. Documentendienst-activering is teruggerold na een Uvicorn-opstartfout. Reparatie gericht getest en onafhankelijk goedgekeurd; nieuwe volledige kandidaatcontrole volgt.
+[Actueel bewijs](evidence/product/TL-002-workspace-candidate-2026-09-08.json).
 
-De huidige één-actieroute gericht meten en via onderhouden Pydantic-uitvoering vervangen door een duurzame toolketen. Stem en meer eigen initiatief volgen op dezelfde basis.
+Independent admission review, then prepare stopped slot4 and lossless slot3-to4 cutover.
 
 ## Nu
 
 | Volgorde | Kaart | Resultaat | Status |
 |---:|---|---|---|
-| 137 | `TL-002` — Handelingen via twee providers echt afmaken | Eva voert handelingen via twee echte providers door dezelfde algemene route uit en controleert onafhankelijk het resultaat; herstel herhaalt een al bevestigde handeling niet. Geen absolute precies-eenmaalgarantie bij iedere externe storing. | 🟡 BEZIG |
+| 138 | `VB-001` — Full-duplex voice leveren | Microfoon en speaker werken tegelijk met snelle onderbreking. | 🟡 BEZIG |
 
 Klaar betekent:
 
-- Twee echte providers voltooien een nuttige handeling via dezelfde algemene uitvoerroute met onafhankelijk gecontroleerd resultaat.
-- Fout, stop en herstel zijn getoetst; passende gebruikersroute, gerichte controles, veilige ingebruikname en onafhankelijke beoordeling zijn vastgelegd.
+- Een geverifieerde gebruiker kan met echte microfoon en speaker doorlopend met dezelfde Eva-gesprekskern praten, tegelijk luisteren en hoorbaar onderbreken; p95 stoplatentie maximaal250ms gemeten.
+- Persoonsbinding, privacy, gesprekcontinuiteit, toolstopgrenzen en herstel zijn getest; complete gebruikersroute veilig live met onafhankelijke beoordeling. Menselijke ervaringsacceptatie wordt apart vastgelegd.
 
 <details>
 <summary>Technische uitvoering: bestanden en controles</summary>
 
-### Exact werk voor `TL-002`
+### Exact werk voor `VB-001`
 
-- `eva2/src/eva/providers/runtime.py`
-- `eva2/src/eva/adapters/postgres/external_conversation_tools.py`
-- `eva2/tests/connectors/test_provider_runtime.py`
-- `eva2/tests/postgres/test_operational_timeline.py`
-- `eva2/src/eva/providers/mcp_gateway.py`
-- `eva2/tests/connectors/test_mcp_gateway_provider.py`
-- `eva2/src/eva/adapters/postgres/conversation_actions.py`
-- `eva2/src/eva/adapters/connectors/home_assistant_admin.py`
-- `eva2/src/eva/providers/home_assistant.py`
-- `eva2/tests/connectors/test_home_assistant_live_adapters.py`
-- `eva2/src/eva/adapters/model/pydantic_conversation.py`
-- `eva2/tests/model/test_pydantic_conversation_model.py`
-- `eva2/release/managed-b-release-input-authority-v1.json`
-- `eva2/release/eva-cockpit-evidence-index-v1.json`
+- `eva2/src/eva/application/voice.py`
+- `eva2/src/eva/contracts/voice.py`
+- `eva2/tests/application/test_voice_playback.py`
+- `eva2/tests/contract/test_voice.py`
+- `eva2/design/product/conversational-voice-v1.md`
 
 Echte controles:
 
-- `pytest -q tests/connectors/test_provider_runtime.py`
-- `pytest -q tests/postgres/test_operational_timeline.py`
+- `pytest -q tests/application/test_voice_playback.py`
+- `pytest -q tests/contract/test_voice.py`
 - `python3 tools/check_current_workboard.py`
-- `pytest -q tests/connectors/test_mcp_gateway_provider.py`
-- `pytest -q tests/connectors/test_home_assistant_live_adapters.py`
-- `pytest -q tests/model/test_pydantic_conversation_model.py`
 
 </details>
 
@@ -57,7 +45,6 @@ Echte controles:
 Deze onderwerpen zijn alleen mijlpalen. Een mijlpaal wordt pas uitvoerbaar
 nadat zij als eerstvolgende kleine kaart exacte bestanden en tests heeft.
 
-- [ ] `VB-001` — Full-duplex voice leveren: Microfoon en speaker werken tegelijk met snelle onderbreking.
 - [ ] `VB-002` — Passende aanwezigheid leveren: Eva zoekt spontaan contact via de beschikbare speakers en deurbel, met herkenbare identiteit en gevoel voor het moment. Gezin beoordeelt plezier, betrokkenheid en hinder; onderbreken en stop werken.
 - [ ] `AU-005` — Passend initiatief en kansen bewijzen: Meer gewaardeerd eigen initiatief dan Bottie: humor, nieuwsgierigheid, zelfgekozen onderzoek, creatieve bijdragen en kansen. Eva begint en vervolgt zelf werk, voert binnen bestaand mandaat uit en controleert het resultaat. Gezin beoordeelt eigenheid, plezier, nut en hinder; alleen meer berichten telt niet als winst.
 - [ ] `CO-008` — Autonoom geheugen in gezinsgesprekken bewijzen: De oorspronkelijke brede geheugenuitkomst blijft open: relevante kennis zelfstandig kiezen, gewijzigde en tijdelijke informatie goed gebruiken in gewone gesprekken en langere gezinspraktijk. Geen handmatig geheugenbeheer; familie beoordeelt continuïteit en vertrouwen.
@@ -149,7 +136,9 @@ Afgevinkt betekent alleen: de vastgelegde kaart is afgerond, niet het hele produ
   [Bewijs](evidence/product/TL-001-storage-foundation-2026-09-08.json).
   [Bewijs](evidence/product/TL-001-telegram-stop-2026-09-08.json).
   [Bewijs](evidence/product/TL-001-turn-limit-2026-09-08.json).
-- [ ] `TL-002` — Handelingen via twee providers echt afmaken (in_progress).
+- [x] `TL-002` — Handelingen via twee providers echt afmaken (done).
+  [Bewijs](evidence/product/TL-002-completion-2026-09-08.json).
+- [ ] `VB-001` — Full-duplex voice leveren (in_progress).
 
 </details>
 
