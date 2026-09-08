@@ -88,6 +88,8 @@ Klaar betekent:
 - `eva2/deploy/living-core/household-voice.compose.yml`
 - `eva2/release/gate-toolchain-roots.in`
 - `eva2/release/gate-toolchain.requirements.lock`
+- `eva2/release/gate-toolchain.lock.json`
+- `eva2/release/gate-toolchain-license-inventory.json`
 
 Echte controles:
 

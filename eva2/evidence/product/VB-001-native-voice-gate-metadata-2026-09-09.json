@@ -1,0 +1,26 @@
+{
+  "contract": "EvaNativeVoiceGateMetadataRepair/v1",
+  "status": "preflight_repaired_focused_tests_passed_candidate_rebuild_required",
+  "previousGoalTurn": "no_progress_status_explanation_only",
+  "reason": "Full required-test runner rejected stale gate requirement-lock digest before executing tests. Existing toolchain metadata still bound19gate packages; lock already contained27.",
+  "repair": "Existing offline refresh_runtime_dependency_metadata generator changed only gate-toolchain.lock.json among its five outputs. Runtime lock, wheel manifest, runtime license inventory and dependency binding stayed byte-identical.",
+  "gatePackages": 27,
+  "installedUnionPackages": 61,
+  "checks": {
+    "execution_environment": "passed exact installed distribution/interpreter/lock verification in external offline venv",
+    "refreshGeneratorTests": 19,
+    "releaseInputAndRunnerTests": 103
+  },
+  "licenses": "Existing19rows retained; eight newrows read from exact local wheels with SHA256 present in gate hashlock. No legal-clearance claim.",
+  "hashes": {
+    "eva2/release/gate-toolchain.lock.json": "b7c50ccec48cbdc9d65d8f504887795968178328fd6f448ddb9b58285dc11e4a",
+    "eva2/release/gate-toolchain-license-inventory.json": "5bf1bf0d1a1790c6d6f9f6a7d14de4bb6e5c4053db0c88033fda790103d7945f",
+    "eva2/release/managed-b-release-input-authority-v1.json": "9acb60d84544a741558163d79193f206df2f1595cb594ffbf67d351cf73946c0"
+  },
+  "review": "pending co006_review",
+  "remaining": [
+    "Rebuild candidate from committed metadata closure; old edb3a704 image cannot represent changed closure.",
+    "Execute complete required-test gate and current-data restart/rollback rehearsal.",
+    "Activate native HA route and prove real speaker interruption/continuation; no live or household acceptance claim."
+  ]
+}

@@ -2274,6 +2274,12 @@
       "tests": "134 installed tests and4physical browser tests passed; scan0HIGH/CRITICAL against31AugustDB; HApackage staged andhashes readback",
       "review": "co006_review bounded evidence GO: raw scan archive/hash and0HIGH/CRITICAL verified, browser4/4 cleanup verified, installed134pass verified, six staged HA hashes match edb3a704; no full release or live GO",
       "next": "Complete bound release bundle and current-data restart/copy/rollback proof; prepare actual native mandate/token and HA installation/pipeline; measure speaker interruption before safe activation."
+    },
+    "vb001NativeVoiceGateMetadata": {
+      "status": "preflight_repaired_focused_tests_passed_candidate_rebuild_required",
+      "evidence": "eva2/evidence/product/VB-001-native-voice-gate-metadata-2026-09-09.json",
+      "tests": "122 focused tests passed; exact61 installed distributions verified",
+      "next": "Rebuild candidate from committed metadata closure; old edb3a704 image cannot represent changed closure."
     }
   },
   "activeTaskId": "VB-001",
@@ -3692,7 +3698,9 @@
         "eva2/tests/bootstrap/test_household_voice_authority.py",
         "eva2/deploy/living-core/household-voice.compose.yml",
         "eva2/release/gate-toolchain-roots.in",
-        "eva2/release/gate-toolchain.requirements.lock"
+        "eva2/release/gate-toolchain.requirements.lock",
+        "eva2/release/gate-toolchain.lock.json",
+        "eva2/release/gate-toolchain-license-inventory.json"
       ],
       "componentIds": [
         "api-and-runtime-composition",
