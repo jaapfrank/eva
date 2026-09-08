@@ -10,6 +10,8 @@ import pytest
 from tools.managed_b_candidate.release_inputs import (
     AUTHORITY_PATH,
     _BUILD_PROVENANCE_INPUTS,
+    _VOICE_INPUTS,
+    _VOICE_TESTS,
     _BUILD_PROVENANCE_TESTS,
     _CONNECTOR_SDK_COPY_PATHS,
     _DURABLE_TOOL_PROJECTION_INPUTS,
@@ -172,12 +174,14 @@ def _release_closure_fixture() -> tuple[
 ]:
     input_paths = (
         _BUILD_PROVENANCE_INPUTS
+        | _VOICE_INPUTS
         | _CONNECTOR_SDK_COPY_PATHS
         | _TOOL01_SOURCE_GATE_INPUTS
         | _DURABLE_TOOL_PROJECTION_INPUTS
     )
     test_paths = (
         _BUILD_PROVENANCE_TESTS
+        | _VOICE_TESTS
         | _TOOL01_SOURCE_GATE_TESTS
         | _DURABLE_TOOL_PROJECTION_TESTS
     )
@@ -379,7 +383,7 @@ def test_release_inputs_bind_current_registry_runtime_dependencies_and_migration
         "fcf6655ccc61f9258b132620b02d51492c7eb19ce762b4e1728548b6fa2d53a5"
     )
     assert receipt["migration_head"] == "4e_0007_delegated_private"
-    assert receipt["required_test_count"] == 151
+    assert receipt["required_test_count"] == 156
     assert receipt["required_test_support_input_count"] == 20
     assert "source_commit" not in receipt
     assert "source_archive_sha256" not in receipt
@@ -692,3 +696,14 @@ def test_release_inputs_refuse_group_or_world_writable_pins() -> None:
 
     with pytest.raises(RuntimeError, match="group/world writable"):
         _validate(files, raw)
+
+
+@pytest.mark.parametrize("kind,path", [("input", p) for p in sorted(_VOICE_INPUTS)] + [("test", p) for p in sorted(_VOICE_TESTS)])
+def test_voice_release_closure_refuses_each_missing_source_or_test(kind: str, path: str) -> None:
+    files, inputs, tests = _release_closure_fixture()
+    if kind == "input":
+        inputs = tuple(row for row in inputs if row[0] != path)
+    else:
+        tests = tuple(row for row in tests if row[0] != path)
+    with pytest.raises(RuntimeError, match="voice .* set is incomplete"):
+        _validate_release_path_closure(files, inputs, tests)

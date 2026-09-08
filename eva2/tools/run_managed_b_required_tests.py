@@ -46,7 +46,7 @@ from tools.run_managed_b_browser_release_subgate import (
 
 RECEIPT_CONTRACT = "EvaManagedBRequiredTestsExecution/v1"
 AUTHORITY_CONTRACT = "EvaManagedBReleaseInputAuthority/v1"
-EXPECTED_EXECUTABLE_COUNT = 151
+EXPECTED_EXECUTABLE_COUNT = 156
 EXPECTED_SUPPORT_COUNT = 20
 EXPECTED_GROUP_COUNT = 7
 _SHA256 = re.compile(r"[0-9a-f]{64}\Z")

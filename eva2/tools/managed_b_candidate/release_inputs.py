@@ -39,14 +39,34 @@ _PORTABLE_V1_PROFILE_PATH = (
     f"{_PORTABLE_V1_CONTRACT_ROOT}/canonical-json-profile-v1.json"
 )
 _EXPECTED_INPUT_PATHS_SHA256 = (
-    "26cd66836e85a925f83b2e32c3501711e73e704fe957e65e38da7824e89dfe06"
+    "b26ebf8153aa950a237e7adff300e26bdcd9774811069dd83a503c95d66a9829"
 )
 _EXPECTED_TEST_PATHS_SHA256 = (
-    "35844e87ee184c8d6da1af8a8c7aca0f7f5c14c0099bb07bdbdc0c4a1d13be51"
+    "3df2e8469a63a4934e18814ec8f3086905304a2e3e27579ae7e935ff2dc90d31"
 )
 _EXPECTED_TEST_SUPPORT_PATHS_SHA256 = (
     "01b4594668e68d2938df3eabaf5a5b71333eda320b859f5eec524ea21bd0ce43"
 )
+_VOICE_INPUTS = {
+    'src/eva/adapters/api/app.py',
+    'src/eva/adapters/api/dashboard_conversation.py',
+    'src/eva/adapters/api/dashboard_voice.py',
+    'src/eva/adapters/api/dashboard_voice_client.py',
+    'src/eva/adapters/connectors/home_assistant_voice.py',
+    'src/eva/application/voice.py',
+    'src/eva/bootstrap/dashboard_voice.py',
+    'src/eva/bootstrap/runtime.py',
+    'src/eva/contracts/voice.py',
+    'tests/api/test_dashboard_voice_client.cjs',
+}
+_VOICE_TESTS = {
+    'tests/api/test_dashboard_voice.py',
+    'tests/application/test_voice_playback.py',
+    'tests/bootstrap/test_dashboard_voice_bootstrap.py',
+    'tests/connectors/test_home_assistant_voice.py',
+    'tests/contract/test_voice.py',
+}
+
 _BUILD_PROVENANCE_INPUTS = {
     "deploy/living-core/Dockerfile",
     "release/candidate-artifact-tool-authority-v1.json",
@@ -408,6 +428,10 @@ def _validate_release_path_closure(
 
     input_paths = {path for path, _ in inputs}
     test_paths = {path for path, _ in tests}
+    if not _VOICE_INPUTS <= input_paths:
+        raise RuntimeError("managed B voice input set is incomplete")
+    if not _VOICE_TESTS <= test_paths:
+        raise RuntimeError("managed B voice test set is incomplete")
     if not _BUILD_PROVENANCE_INPUTS <= input_paths:
         raise RuntimeError("managed B build provenance input set is incomplete")
     if not _BUILD_PROVENANCE_TESTS <= test_paths:
@@ -432,6 +456,9 @@ def _validate_release_path_closure(
     if not _DURABLE_TOOL_PROJECTION_TESTS <= test_paths:
         raise RuntimeError("managed B durable tool projection test set is incomplete")
     return {
+        "voice_inputs_bound": True,
+        "voice_tests_bound": True,
+        "voice_browser_executed": False,
         "build_provenance_input_count": len(_BUILD_PROVENANCE_INPUTS),
         "build_provenance_test_count": len(_BUILD_PROVENANCE_TESTS),
         "connector_sdk_file_count": len(_CONNECTOR_SDK_COPY_PATHS),
