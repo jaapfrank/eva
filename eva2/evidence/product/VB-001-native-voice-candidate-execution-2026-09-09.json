@@ -1,6 +1,6 @@
 {
   "contract": "EvaNativeVoiceCandidateExecution/v1",
-  "status": "offline_candidate_built_2519_source_tests_passed_not_full_release_or_live",
+  "status": "offline_candidate_built_2419_source_tests_passed_not_full_release_or_live",
   "sourceCommit": "edb3a704c316a3272be5a99e195a76a009d3a302",
   "imageId": "sha256:e24e4c74757f12e8d17fee223e517a5c0f122b64a481be943e811b7194261277",
   "buildReceiptSha256": "58b056049c5e7f6e20697d0fbe251aa8aabb40f8a2959ceaf5c49e4f74cde02c",
@@ -28,7 +28,7 @@
     "postgresStore": 52,
     "postgresCurrent": 79,
     "postgresHistorical": 12,
-    "totalPassed": 2519,
+    "totalPassed": 2419,
     "notExecutedPhysicalBrowser": 4,
     "skipped": 0
   },
@@ -48,5 +48,10 @@
     "Actual native HA entity/pipeline and household policy activation",
     "Speaker interruption/resume/latency and safe A/B deployment",
     "Human acceptance and full goal evidence"
-  ]
+  ],
+  "aggregateCorrection": {
+    "previousTotal": 2519,
+    "correctedTotal": 2419,
+    "reason": "Arithmetic correction from unchanged per-group evidence; see eva2/evidence/product/VB-001-complete-candidate-tests-restore-2026-09-09.json"
+  }
 }

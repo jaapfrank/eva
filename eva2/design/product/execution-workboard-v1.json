@@ -2253,16 +2253,16 @@
       "status": "source_closure_and_offline_targeted_tests_passed_not_full_release",
       "implementationCommit": "3ba7fe4",
       "evidence": "eva2/evidence/product/VB-001-native-voice-release-closure-2026-09-09.json",
-      "tests": "164 tests pass in clean offline venv; all161modules/2523tests collect in real release groups",
+      "tests": "164 tests pass in clean offline venv; all161modules/2423tests collect in real release groups",
       "review": "co006_review bounded closure GO; not full release or live",
-      "next": "Offline candidate built and2519source tests passed; follow vb001NativeVoiceCandidateExecution for remaining image/physical/live checks."
+      "next": "Offline candidate built and2419source tests passed; follow vb001NativeVoiceCandidateExecution for remaining image/physical/live checks."
     },
     "vb001NativeVoiceCandidateExecution": {
-      "status": "offline_candidate_built_2519_source_tests_passed_not_full_release_or_live",
+      "status": "offline_candidate_built_2419_source_tests_passed_not_full_release_or_live",
       "sourceCommit": "edb3a704c316a3272be5a99e195a76a009d3a302",
       "imageId": "sha256:e24e4c74757f12e8d17fee223e517a5c0f122b64a481be943e811b7194261277",
       "evidence": "eva2/evidence/product/VB-001-native-voice-candidate-execution-2026-09-09.json",
-      "tests": "2519 isolated source tests passed; first installed smoke passed;4physical browser tests not yet executed",
+      "tests": "2419 isolated source tests passed; first installed smoke passed;4physical browser tests not yet executed",
       "review": "co006_review confirmed built image/source label and all bound snapshot files byte-equal to edb3a704; bounded proof GO, not full release/live",
       "next": "Exact image scans, installed134tests, physicalbrowser4tests and HApackage staging now proved; follow vb001NativeVoiceInstalledChecks for remaining release and actual speaker route."
     },
@@ -2295,6 +2295,13 @@
       "sourceCommit": "cab9227356cb68b81edb9d27aab3d160dc959643",
       "imageId": "sha256:86ec4e3598cc07fcc61ba76ac405cfbbac39f63a14e8a98f4600d02154d3c14b",
       "next": "Poll existing full-gate session76235; then validate current-data reserve runtime and native HA stop/next-question route. No restart of still-running tests."
+    },
+    "vb001CompleteCandidateTestsRestore": {
+      "status": "complete_required_tests_and_reserve_dump_restore_passed_not_live",
+      "evidence": "eva2/evidence/product/VB-001-complete-candidate-tests-restore-2026-09-09.json",
+      "tests": "2423 passed,0failed/errors/skipped,161modules20support; physicalbrowser4included",
+      "reserveRestore": "Both saved reserve dumps restored into fresh temporary databases; counts/schema/data matched; temporary databases removed",
+      "next": "Prepare and validate current-data reserve runtime with household authority and restart proof."
     }
   },
   "activeTaskId": "VB-001",

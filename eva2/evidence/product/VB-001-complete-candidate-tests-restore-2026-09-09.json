@@ -1,0 +1,122 @@
+{
+  "contract": "EvaNativeVoiceCompleteCandidateTestsRestore/v1",
+  "status": "complete_required_tests_and_reserve_dump_restore_passed_not_live",
+  "candidate": {
+    "imageId": "sha256:86ec4e3598cc07fcc61ba76ac405cfbbac39f63a14e8a98f4600d02154d3c14b",
+    "scope": [
+      "postgres-browser-physical"
+    ],
+    "sourceCommit": "cab9227356cb68b81edb9d27aab3d160dc959643"
+  },
+  "authority": {
+    "executableModuleCount": 161,
+    "requiredTestSupportInputCount": 20,
+    "sha256": "9acb60d84544a741558163d79193f206df2f1595cb594ffbf67d351cf73946c0",
+    "snapshotSha256": "e95b86e2abf16dc09e734e9200244d6e0c7fac84af762236a15a156e471270cb"
+  },
+  "tests": {
+    "totalPassed": 2423,
+    "groups": [
+      {
+        "name": "pure",
+        "errors": 0,
+        "failures": 0,
+        "skipped": 0,
+        "tests": 2097
+      },
+      {
+        "name": "portable-effect",
+        "errors": 0,
+        "failures": 0,
+        "skipped": 0,
+        "tests": 4
+      },
+      {
+        "name": "portable-model",
+        "errors": 0,
+        "failures": 0,
+        "skipped": 0,
+        "tests": 4
+      },
+      {
+        "name": "portable-object",
+        "errors": 0,
+        "failures": 0,
+        "skipped": 0,
+        "tests": 5
+      },
+      {
+        "name": "portable-read",
+        "errors": 0,
+        "failures": 0,
+        "skipped": 0,
+        "tests": 4
+      },
+      {
+        "name": "portable-full-schema",
+        "errors": 0,
+        "failures": 0,
+        "skipped": 0,
+        "tests": 2
+      },
+      {
+        "name": "postgres",
+        "errors": 0,
+        "failures": 0,
+        "skipped": 0,
+        "tests": 307
+      }
+    ],
+    "scope": "All161bound test modules executed; source/wheelhouse groups and four physical browser tests against exact installed candidate. No microphone, native HA pipeline or speaker acceptance claim."
+  },
+  "completeReceiptSha256": "c8fae8b9a67e6806dc6a0ad79852009d0808061fa5f1d2f3650b8e5a327ca932",
+  "privateEvidenceDirectory": "/home/administrator/project/.eva2-artifacts/native-voice-candidate-repaired-w16uve7q",
+  "cleanup": {
+    "status": "passed",
+    "ownDisposableDatabasesDropped": [
+      "eva2_4b_disposable_f62b44ec0f_0",
+      "eva2_4b_disposable_f62b44ec0f_1",
+      "eva2_4b_disposable_f62b44ec0f_2",
+      "eva2_4b_disposable_f62b44ec0f_3",
+      "eva2_4b_disposable_f62b44ec0f_4",
+      "eva2_4b_disposable_f62b44ec0f_5",
+      "eva2_4b_disposable_f62b44ec0f_6",
+      "eva2_action_chain_disposable_f62b44ec0f_7",
+      "eva2_living_disposable_f62b44ec0f_8",
+      "eva2_4b_disposable_f62b44ec0f_9",
+      "eva2_4b_disposable_f62b44ec0f_10",
+      "eva2_4b_disposable_f62b44ec0f_11"
+    ],
+    "testContainerStopped": true
+  },
+  "reserveRestore": {
+    "sha256": "65bd1224855c094a431ec30097d7154ee13c1691c915ffc2337c08b9813986ca",
+    "receipt": {
+      "status": "passed",
+      "restores": {
+        "operational": {
+          "restored": true,
+          "countsEqual": true,
+          "schemaDigestEqual": true,
+          "dataDigestEqual": true
+        },
+        "memory": {
+          "restored": true,
+          "countsEqual": true,
+          "schemaDigestEqual": true,
+          "dataDigestEqual": true
+        }
+      },
+      "temporaryDatabasesRemoved": 2,
+      "activeSlot3RunningAfter": true,
+      "scope": "Exact saved slot4 dumps restored into fresh temporary databases and matched count/schema/data attestations. Does not prove current slot3 cutover or full runtime restart."
+    }
+  },
+  "review": "pending co006_review full-receipt and restore review; prior exact artifact/scan/stage/backup review bounded GO",
+  "correction": "Earlier source-test aggregate2519 was arithmetic error: listed group counts sum2419. Including4physical browser tests gives2423, not2523. Raw per-group logs unchanged.",
+  "remaining": [
+    "Prepare and validate current-data reserve runtime with household authority and restart proof.",
+    "Install native HA integration/pipeline with rollback; test actual stop/next question and household memory.",
+    "Actual speaker interruption/continuation/latency and human experience; full goal and seven days remain open."
+  ]
+}
