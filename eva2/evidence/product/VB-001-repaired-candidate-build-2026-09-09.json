@@ -1,0 +1,39 @@
+{
+  "contract": "EvaNativeVoiceRepairedCandidateBuild/v1",
+  "status": "built_full_gate_running_not_live",
+  "previousGoalTurn": "progress_metadata_repair_verified_and_committed",
+  "sourceCommit": "cab9227356cb68b81edb9d27aab3d160dc959643",
+  "imageId": "sha256:86ec4e3598cc07fcc61ba76ac405cfbbac39f63a14e8a98f4600d02154d3c14b",
+  "archiveSha256": "a217f89f71cf825b783e165787426e09ab0204163e3b6dc25acec7b975fe6b50",
+  "buildReceiptSha256": "a584e16155b313a48bd8cf6cf0b9f1caec2658b54ea2f5949e73df1a1079ea9a",
+  "privateEvidenceDirectory": "/home/administrator/project/.eva2-artifacts/native-voice-candidate-repaired-w16uve7q",
+  "fullGate": {
+    "status": "running",
+    "pid": 1554676,
+    "execSessionId": 76235,
+    "receipt": "/home/administrator/project/.eva2-artifacts/native-voice-candidate-repaired-w16uve7q/complete-required-tests-receipt.json",
+    "log": "/home/administrator/project/.eva2-artifacts/native-voice-candidate-repaired-w16uve7q/complete-required-tests.log",
+    "testDatabases": 12,
+    "note": "First attempt rejected unqualified PostgreSQL scheme before tests; explicit postgresql+psycopg DSNs validated and actual runner now running. Do not restart on observation timeout."
+  },
+  "reserveBackup": {
+    "status": "quiescent_reserve_snapshot_saved",
+    "path": "/var/lib/eva2/quiescent-cutover/native-voice-reserve-backup-bgwsfqee",
+    "slot": 4,
+    "operationalBytes": 10707681,
+    "memoryBytes": 2478885,
+    "environmentSaved": true,
+    "beforeAfterDataUnchanged": true,
+    "activeSlot3RunningAfter": true,
+    "restoreProven": false
+  },
+  "nativeInterruptionFinding": {
+    "status": "independent_review_pending",
+    "finding": "Native HA component has no listener for firmware interruption events. HA2026.8.1 distinguishes audio stream stop from task abort. Check exact ESPHome protocol path before accepting device stop as cancellation of Eva generation.",
+    "sources": [
+      "https://raw.githubusercontent.com/home-assistant/core/2026.8.1/homeassistant/components/esphome/assist_satellite.py",
+      "https://raw.githubusercontent.com/esphome/esphome/2026.6.2/esphome/components/voice_assistant/voice_assistant.cpp"
+    ],
+    "next": "Resolve native speaker stop-to-core cancellation and test actual HA event boundary before any live activation; full release tests alone do not cover that gap."
+  }
+}

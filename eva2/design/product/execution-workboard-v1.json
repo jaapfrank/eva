@@ -2281,6 +2281,13 @@
       "tests": "122 focused tests passed; exact61 installed distributions verified",
       "next": "Rebuild candidate from committed metadata closure; old edb3a704 image cannot represent changed closure.",
       "review": "co006_review bounded metadata GO: old pins/claims and19license rows unchanged; eight new wheel hashes allowed by lock; authority binds repaired toolchain. Rebuild required; no attribution to old edb3a704 image and no live GO."
+    },
+    "vb001RepairedCandidateBuild": {
+      "status": "built_full_gate_running_not_live",
+      "sourceCommit": "cab9227356cb68b81edb9d27aab3d160dc959643",
+      "imageId": "sha256:86ec4e3598cc07fcc61ba76ac405cfbbac39f63a14e8a98f4600d02154d3c14b",
+      "evidence": "eva2/evidence/product/VB-001-repaired-candidate-build-2026-09-09.json",
+      "next": "Resolve native speaker stop-to-core cancellation and test actual HA event boundary before any live activation; full release tests alone do not cover that gap."
     }
   },
   "activeTaskId": "VB-001",
