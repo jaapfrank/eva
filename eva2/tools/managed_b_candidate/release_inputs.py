@@ -39,7 +39,7 @@ _PORTABLE_V1_PROFILE_PATH = (
     f"{_PORTABLE_V1_CONTRACT_ROOT}/canonical-json-profile-v1.json"
 )
 _EXPECTED_INPUT_PATHS_SHA256 = (
-    "b26ebf8153aa950a237e7adff300e26bdcd9774811069dd83a503c95d66a9829"
+    "fa75c879faf9a8933fe59ccfa9d4527a0bc25f1320b24e33efeabc44877f86c8"
 )
 _EXPECTED_TEST_PATHS_SHA256 = (
     "3df2e8469a63a4934e18814ec8f3086905304a2e3e27579ae7e935ff2dc90d31"
@@ -48,6 +48,7 @@ _EXPECTED_TEST_SUPPORT_PATHS_SHA256 = (
     "01b4594668e68d2938df3eabaf5a5b71333eda320b859f5eec524ea21bd0ce43"
 )
 _VOICE_INPUTS = {
+    'deploy/living-core/dashboard-voice.compose.yml',
     'src/eva/adapters/api/app.py',
     'src/eva/adapters/api/dashboard_conversation.py',
     'src/eva/adapters/api/dashboard_voice.py',

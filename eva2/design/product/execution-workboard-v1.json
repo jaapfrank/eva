@@ -1679,6 +1679,37 @@
         "finding": "Existing tools/eva2_quiescent_cutover.py and managed-b composition have no voice-policy activation wiring. The copied-data proof used a temporary voice-only overlay.",
         "nextDesign": "Integrate the same explicit read-only directory policy mount as an optional managed overlay; validate render and actual mount, preserve withheld staging and reversible activation. Do not put policy into unrelated credential mounts."
       }
+    },
+    "vb001ManagedVoiceActivation": {
+      "owner": "/root",
+      "reviewer": "/root/co006_review",
+      "status": "built_tested_independently_reviewed_not_live",
+      "scope": [
+        "eva2/deploy/living-core/dashboard-voice.compose.yml",
+        "eva2/tools/eva2_quiescent_cutover.py",
+        "eva2/tools/managed_b_render.py",
+        "eva2/tests/operations/test_eva2_quiescent_cutover.py",
+        "eva2/tests/operations/test_managed_b_render.py",
+        "eva2/src/eva/bootstrap/dashboard_voice.py",
+        "eva2/tests/bootstrap/test_dashboard_voice_bootstrap.py"
+      ],
+      "design": "Optional fixed core-only overlay with private read-only directory; concrete policy and all baseline/overlay hashes checked before and after activation. Withhold during staging, activate after ready route with ingress stopped; keep MCP/Telegram. Bootstrap disables only voice when policy is deleted; present invalid policy still fails. Preserve slot-specific rollback and new data.",
+      "checks": {
+        "focusedTestsPassed": 168,
+        "skipped": 0,
+        "ruff": "passed",
+        "diffCheck": "passed",
+        "actualComposeRender": "passed"
+      },
+      "doneWhen": "Managed activation and rollback preserve voice policy scope/revocation and existing connector behavior; complete candidate safely released and real owner hardware route exercised separately.",
+      "review": "Independent source GO /root/co006_review: exact mount delta, policy and environment rechecked after recreation, deleted-policy bootstrap leaves voice disabled. Final rollback test included in 168 passing checks. No candidate release/live approval.",
+      "actualComposeRender": {
+        "status": "passed",
+        "receiptPath": "/tmp/eva2-vb001-ack-release-j5p21b_z/managed-voice-render/receipt.json",
+        "liveChanges": false
+      },
+      "next": "Seal deployment overlay and its committed source into complete release authority; build and verify complete candidate, then prepare reserve with current data and explicit owner voice policy.",
+      "implementationCommit": "723febe70d1c12f5e3f5a8179e21f883725d35f1"
     }
   },
   "activeTaskId": "VB-001",
@@ -3057,7 +3088,12 @@
         "eva2/tools/managed_b_candidate/release_inputs.py",
         "eva2/tools/run_managed_b_required_tests.py",
         "eva2/tests/operations/test_managed_b_release_inputs.py",
-        "eva2/tests/operations/test_run_managed_b_required_tests.py"
+        "eva2/tests/operations/test_run_managed_b_required_tests.py",
+        "eva2/deploy/living-core/dashboard-voice.compose.yml",
+        "eva2/tools/eva2_quiescent_cutover.py",
+        "eva2/tools/managed_b_render.py",
+        "eva2/tests/operations/test_eva2_quiescent_cutover.py",
+        "eva2/tests/operations/test_managed_b_render.py"
       ],
       "componentIds": [
         "api-and-runtime-composition",
@@ -3065,9 +3101,11 @@
         "core-semantics",
         "external-capability-adapters",
         "integration-and-storage-tests",
+        "managed-deployment",
         "operations-and-release-tests"
       ],
       "inventoryOwners": [
+        "deployment",
         "documentation",
         "eva-runtime",
         "repository",
@@ -3081,7 +3119,9 @@
         "pytest -q tests/api/test_dashboard_voice.py",
         "pytest -q tests/bootstrap/test_dashboard_voice_bootstrap.py",
         "pytest -q tests/bootstrap/test_runtime_settings.py",
-        "pytest -q tests/operations/test_managed_b_release_inputs.py tests/operations/test_run_managed_b_required_tests.py"
+        "pytest -q tests/operations/test_managed_b_release_inputs.py tests/operations/test_run_managed_b_required_tests.py",
+        "pytest -q tests/operations/test_eva2_quiescent_cutover.py",
+        "pytest -q tests/operations/test_managed_b_render.py"
       ],
       "evidenceRequired": [
         "Onderzoek bestaande Eva2-voicebouwstenen en Bottie/HA-route; leg concrete ontbrekende media-aansluiting, providerkeuze, bestaand mandaat en verbruik vast.",

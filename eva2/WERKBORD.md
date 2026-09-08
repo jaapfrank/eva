@@ -48,6 +48,11 @@ Klaar betekent:
 - `eva2/tools/run_managed_b_required_tests.py`
 - `eva2/tests/operations/test_managed_b_release_inputs.py`
 - `eva2/tests/operations/test_run_managed_b_required_tests.py`
+- `eva2/deploy/living-core/dashboard-voice.compose.yml`
+- `eva2/tools/eva2_quiescent_cutover.py`
+- `eva2/tools/managed_b_render.py`
+- `eva2/tests/operations/test_eva2_quiescent_cutover.py`
+- `eva2/tests/operations/test_managed_b_render.py`
 
 Echte controles:
 
@@ -59,6 +64,8 @@ Echte controles:
 - `pytest -q tests/bootstrap/test_dashboard_voice_bootstrap.py`
 - `pytest -q tests/bootstrap/test_runtime_settings.py`
 - `pytest -q tests/operations/test_managed_b_release_inputs.py tests/operations/test_run_managed_b_required_tests.py`
+- `pytest -q tests/operations/test_eva2_quiescent_cutover.py`
+- `pytest -q tests/operations/test_managed_b_render.py`
 
 </details>
 

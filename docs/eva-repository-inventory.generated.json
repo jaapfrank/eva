@@ -269,12 +269,12 @@
     }
   ],
   "summary": {
-    "files": 2088,
-    "present": 2088,
-    "tracked": 2009,
-    "untracked": 79,
+    "files": 2048,
+    "present": 2048,
+    "tracked": 2048,
+    "untracked": 0,
     "tombstones": 0,
-    "policyErrors": 88
+    "policyErrors": 9
   },
   "classificationRules": [
     {
@@ -310,17 +310,17 @@
     {
       "id": "eva2-verification",
       "role": "verification",
-      "matchCount": 767
+      "matchCount": 715
     },
     {
       "id": "eva2-documentation",
       "role": "documentation",
-      "matchCount": 125
+      "matchCount": 128
     },
     {
       "id": "eva2-deployment",
       "role": "deployment",
-      "matchCount": 48
+      "matchCount": 51
     },
     {
       "id": "eva2-experimental",
@@ -330,12 +330,12 @@
     {
       "id": "eva2-verification-runtime",
       "role": "verification-runtime",
-      "matchCount": 85
+      "matchCount": 87
     },
     {
       "id": "eva2-runtime",
       "role": "product-runtime",
-      "matchCount": 241
+      "matchCount": 245
     },
     {
       "id": "eva2-build-contract",
@@ -444,322 +444,6 @@
     {
       "code": "UNRESOLVED_DISPOSITION_QUARANTINE",
       "path": "scripts/sanitize-secret-history.mjs"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "eva2/evidence/living-core/fixtures/i02-workspaces/initiative-service-current/eva-quality.json"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "eva2/evidence/living-core/fixtures/i02-workspaces/initiative-service-current/notifications.md"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "eva2/evidence/living-core/fixtures/i02-workspaces/initiative-service-current/README.md"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "eva2/evidence/living-core/fixtures/i02-workspaces/initiative-service-current/settings.toml"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "eva2/evidence/living-core/fixtures/i02-workspaces/initiative-service-current/unrelated-notes.txt"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "eva2/evidence/living-core/fixtures/i02-workspaces/initiative-service/eva-quality.json"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "eva2/evidence/living-core/fixtures/i02-workspaces/initiative-service/notifications.md"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "eva2/evidence/living-core/fixtures/i02-workspaces/initiative-service/README.md"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "eva2/evidence/living-core/fixtures/i02-workspaces/initiative-service/settings.toml"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "eva2/evidence/living-core/fixtures/i02-workspaces/initiative-service/unrelated-notes.txt"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "eva2/evidence/living-core/fixtures/lab36-x04/focused-test.json"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "eva2/evidence/living-core/fixtures/lab36-x04/settings.txt"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "eva2/evidence/living-core/fixtures/lab36-x04/unrelated-notes.txt"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "eva2/evidence/living-core/lab36-c04-blind-2026-08-24.json"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "eva2/evidence/living-core/lab36-core-live-evidence-index-v39-2026-08-24.json"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "eva2/evidence/living-core/lab36-eva2-development-live-2026-08-23.json"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "eva2/evidence/living-core/lab36-eva2-openclaw-hermes-agent-zero-live-2026-08-23.json"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "eva2/evidence/living-core/lab36-eva2-openclaw-hermes-live-2026-08-23.json"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "eva2/evidence/living-core/lab36-eva2-openclaw-live-2026-08-23.json"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "eva2/evidence/living-core/lab36-eva2-runner-live-2026-08-23.json"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "eva2/evidence/living-core/live-b-access-only-memory-context-2026-08-24.json"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "eva2/evidence/living-core/live-b-advanced-automation-execution-2026-08-23.json"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "eva2/evidence/living-core/live-b-candidate-preflight-2026-08-23.json"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "eva2/evidence/living-core/live-b-commerce-publication-2026-08-24.json"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "eva2/evidence/living-core/live-b-conversation-intent-2026-08-23.json"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "eva2/evidence/living-core/live-b-current-automation-2026-08-23.json"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "eva2/evidence/living-core/live-b-durable-memory-crash-2026-08-24.json"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "eva2/evidence/living-core/live-b-hindsight-income-2026-08-23.json"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "eva2/evidence/living-core/live-b-hindsight-provenance-and-paraphrase-2026-08-24.json"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "eva2/evidence/living-core/live-b-home-assistant-conversation-2026-08-23.json"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "eva2/evidence/living-core/live-b-home-assistant-current-state-2026-08-24.json"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "eva2/evidence/living-core/live-b-home-assistant-history-2026-08-24.json"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "eva2/evidence/living-core/live-b-identitypack-conversation-2026-08-23.json"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "eva2/evidence/living-core/live-b-lab36-c02-trusted-identity-isolation-2026-08-24.json"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "eva2/evidence/living-core/live-b-lab36-c03-r03-bound-observation-corrections-2026-08-24.json"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "eva2/evidence/living-core/live-b-lab36-hidden-humanity-v39-2026-08-24.json"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "eva2/evidence/living-core/live-b-lab36-m02-memory-isolation-2026-08-24.json"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "eva2/evidence/living-core/live-b-lab36-m03-direct-task-continuation-2026-08-24.json"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "eva2/evidence/living-core/live-b-lab36-m04-person-project-memory-2026-08-24.json"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "eva2/evidence/living-core/live-b-lab36-p02-file-batch-partial-success-2026-08-24.json"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "eva2/evidence/living-core/live-b-lab36-r02-mid-task-scope-change-2026-08-24.json"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "eva2/evidence/living-core/live-b-lab36-t03-group-history-2026-08-24.json"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "eva2/evidence/living-core/live-b-lab36-t04-current-research-2026-08-24.json"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "eva2/evidence/living-core/live-b-lab36-x02-mid-work-restart-2026-08-24.json"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "eva2/evidence/living-core/live-b-lab36-x03-bounded-transient-recovery-2026-08-24.json"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "eva2/evidence/living-core/live-b-lab36-x04-validated-edit-rollback-2026-08-24.json"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "eva2/evidence/living-core/live-b-localtuya-compatibility-2026-08-23.json"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "eva2/evidence/living-core/live-b-localtuya-maintained-source-v39-2026-08-24.json"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "eva2/evidence/living-core/live-b-localtuya-registration-v40-preflight-2026-08-24.json"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "eva2/evidence/living-core/live-b-localtuya-repository-registration-v40-2026-08-24.json"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "eva2/evidence/living-core/live-b-memory-candidate-preflight-2026-08-24.json"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "eva2/evidence/living-core/live-b-native-a01-a02-durable-goals-v50-2026-08-24.json"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "eva2/evidence/living-core/live-b-native-a03-f03-goal-pivot-blocker-v50-2026-08-24.json"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "eva2/evidence/living-core/live-b-native-f04-terminal-goals-v50-2026-08-24.json"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "eva2/evidence/living-core/live-b-native-i02-self-chosen-repository-improvement-v52-2026-08-24.json"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "eva2/evidence/living-core/live-b-native-m01-cross-channel-continuity-v53-2026-08-24.json"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "eva2/evidence/living-core/live-b-native-p03-fanout-v43-2026-08-24.json"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "eva2/evidence/living-core/live-b-native-telegram-ingress-2026-08-24.json"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "eva2/evidence/living-core/live-b-native-v43-preflight-2026-08-24.json"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "eva2/evidence/living-core/live-b-native-x01-crash-recovery-v43-2026-08-24.json"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "eva2/evidence/living-core/live-b-natural-action-expression-2026-08-23.json"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "eva2/evidence/living-core/live-b-natural-automation-resolution-2026-08-23.json"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "eva2/evidence/living-core/live-b-paid-fulfillment-2026-08-24.json"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "eva2/evidence/living-core/live-b-proactive-event-prefilter-2026-08-23.json"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "eva2/evidence/living-core/live-b-proactive-exact-delivery-2026-08-23.json"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "eva2/evidence/living-core/live-b-proactive-outbox-recovery-2026-08-23.json"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "eva2/evidence/living-core/live-b-proactive-telegram-ready-2026-08-23.json"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "eva2/evidence/living-core/live-b-sensory-automation-advanced-2026-08-23.json"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "eva2/evidence/living-core/live-b-style-memory-advanced-automation-2026-08-23.json"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "eva2/evidence/living-core/live-b-style-switch-routing-2026-08-23.json"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "eva2/evidence/living-core/live-b-time-numeric-automations-2026-08-23.json"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "eva2/evidence/living-core/live-current-candidate-advanced-2026-08-23.json"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "eva2/evidence/living-core/live-fresh-install-gate-2026-08-23.json"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "eva2/evidence/living-core/live-full-stack-install-gate-2026-08-23.json"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "eva2/evidence/living-core/live-hindsight-fresh-install-2026-08-23.json"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "eva2/evidence/living-core/live-human-medium-candidate-2026-08-23.json"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "eva2/evidence/living-core/resident-long-run-v1-2026-08-24.json"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "eva2/evidence/living-core/signed-ab-operator-gate-2026-08-23.json"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "eva2/evidence/living-core/wyoming-local-voice-rebuild-2026-08-26.json"
     }
   ],
   "edges": [
@@ -10276,7 +9960,7 @@
       "path": "docs/eva-repository-inventory.generated.json",
       "gitState": "tracked",
       "present": true,
-      "bytes": 2410177,
+      "bytes": 2356943,
       "contentSha256": "32591e23fa2eb53a038d95e726ba09edd0405306f38c5283a36a2b6d3010254d",
       "hashMode": "canonical-self-reference-redacted",
       "role": "generated",
@@ -10309,7 +9993,7 @@
       "path": "docs/eva-repository-inventory.generated.md",
       "gitState": "tracked",
       "present": true,
-      "bytes": 371919,
+      "bytes": 357015,
       "contentSha256": "2f4f8486464cbb9713b749dc898f265093d0853699f1da1b4eb3dd1625c1b2d2",
       "hashMode": "canonical-self-reference-redacted",
       "role": "generated",
@@ -11068,8 +10752,8 @@
       "path": "eva2/PROJECTDOEL.md",
       "gitState": "tracked",
       "present": true,
-      "bytes": 6611,
-      "contentSha256": "e96f5baa43f4a06a399452c2c10b0eab2563d165e435416dea7ce923c0a0de7a",
+      "bytes": 10786,
+      "contentSha256": "f43e6b7401d85faac8afe74f6a44882a0ecffabd96fd5925698815573dd5f58e",
       "hashMode": "exact-bytes",
       "role": "documentation",
       "roleRuleId": "eva2-documentation",
@@ -11099,8 +10783,8 @@
       "path": "eva2/PROJECTEN_EN_PLANNING.md",
       "gitState": "tracked",
       "present": true,
-      "bytes": 22657,
-      "contentSha256": "aa0322486d370274aa1b2c89413f6c5456527762d372409d97c52f334e63d260",
+      "bytes": 22347,
+      "contentSha256": "e4963520cf0f885433ba8c939bfebc75e492979755d7a9deb1949d377569ffe5",
       "hashMode": "exact-bytes",
       "role": "documentation",
       "roleRuleId": "eva2-documentation",
@@ -11285,8 +10969,8 @@
       "path": "eva2/WERKBORD.md",
       "gitState": "tracked",
       "present": true,
-      "bytes": 13387,
-      "contentSha256": "bfe265883bc4961d841ba567134a0b6fbc39b791d4033b8ff6df72149eb5878f",
+      "bytes": 15833,
+      "contentSha256": "79af65db9b9556b9dda11bb678624b76ccb66e5cbbd78b4329f5b0a3df3801a5",
       "hashMode": "exact-bytes",
       "role": "documentation",
       "roleRuleId": "eva2-documentation",
@@ -12361,6 +12045,41 @@
       }
     },
     {
+      "path": "eva2/deploy/living-core/dashboard-voice.compose.yml",
+      "gitState": "tracked",
+      "present": true,
+      "bytes": 406,
+      "contentSha256": "8d88b1228570af15dd78b73b505ea7c3483fb4090753348dff003f0c6754a029",
+      "hashMode": "exact-bytes",
+      "role": "deployment",
+      "roleRuleId": "eva2-deployment",
+      "matchingRuleIds": [
+        "eva2-deployment"
+      ],
+      "owner": "deployment",
+      "inputs": [
+        "operator, systemd or repair request"
+      ],
+      "outputs": [
+        "installed service, receipt or lifecycle transition"
+      ],
+      "state": [
+        "systemd and release state"
+      ],
+      "effects": [
+        "may install, promote, restart or recover runtime files"
+      ],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": true,
+        "runtimeCritical": true,
+        "status": "included-tracked-critical"
+      }
+    },
+    {
       "path": "eva2/deploy/living-core/durable-goals.compose.yml",
       "gitState": "tracked",
       "present": true,
@@ -12613,6 +12332,41 @@
       "present": true,
       "bytes": 22070,
       "contentSha256": "f2c12cbc07a0d965ec4dc32c7f2f75b4166125c8ee5bcc294df05b834f2a92d9",
+      "hashMode": "exact-bytes",
+      "role": "deployment",
+      "roleRuleId": "eva2-deployment",
+      "matchingRuleIds": [
+        "eva2-deployment"
+      ],
+      "owner": "deployment",
+      "inputs": [
+        "operator, systemd or repair request"
+      ],
+      "outputs": [
+        "installed service, receipt or lifecycle transition"
+      ],
+      "state": [
+        "systemd and release state"
+      ],
+      "effects": [
+        "may install, promote, restart or recover runtime files"
+      ],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": true,
+        "runtimeCritical": true,
+        "status": "included-tracked-critical"
+      }
+    },
+    {
+      "path": "eva2/deploy/living-core/mcp-gateway.compose.yml",
+      "gitState": "tracked",
+      "present": true,
+      "bytes": 1000,
+      "contentSha256": "d2016f39b5ab3fd916733dee846e4e6fe0ed6c662d46e64d4a9c23821dffdedf",
       "hashMode": "exact-bytes",
       "role": "deployment",
       "roleRuleId": "eva2-deployment",
@@ -13098,6 +12852,41 @@
       }
     },
     {
+      "path": "eva2/deploy/living-core/workspace-provider.compose.yml",
+      "gitState": "tracked",
+      "present": true,
+      "bytes": 3792,
+      "contentSha256": "39db35ed968380ab91be52b414e45c1726a99920e5c62f649d04c25bc06babb6",
+      "hashMode": "exact-bytes",
+      "role": "deployment",
+      "roleRuleId": "eva2-deployment",
+      "matchingRuleIds": [
+        "eva2-deployment"
+      ],
+      "owner": "deployment",
+      "inputs": [
+        "operator, systemd or repair request"
+      ],
+      "outputs": [
+        "installed service, receipt or lifecycle transition"
+      ],
+      "state": [
+        "systemd and release state"
+      ],
+      "effects": [
+        "may install, promote, restart or recover runtime files"
+      ],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": true,
+        "runtimeCritical": true,
+        "status": "included-tracked-critical"
+      }
+    },
+    {
       "path": "eva2/design/architecture/component-catalog-v1.json",
       "gitState": "tracked",
       "present": true,
@@ -13411,8 +13200,8 @@
       "path": "eva2/design/product/conversational-voice-v1.md",
       "gitState": "tracked",
       "present": true,
-      "bytes": 16058,
-      "contentSha256": "110a3726099773fc007fe829e06f6089f0eb0ac5320ea24685ce4fcf6d670a90",
+      "bytes": 26720,
+      "contentSha256": "097d3f8f93356f26922220169d00a201aa4341a9d1be35a7a5cdb78c927d8109",
       "hashMode": "exact-bytes",
       "role": "documentation",
       "roleRuleId": "eva2-documentation",
@@ -13504,8 +13293,8 @@
       "path": "eva2/design/product/execution-workboard-v1.json",
       "gitState": "tracked",
       "present": true,
-      "bytes": 134113,
-      "contentSha256": "7c70ad282d695873cefe26536afbe9b9a118eb4eee33e949d7dbe5fadc7f3e75",
+      "bytes": 216783,
+      "contentSha256": "0da362a7f1258916ed10a876f2570b1f4ece9dd095affac961291046441c9652",
       "hashMode": "exact-bytes",
       "role": "documentation",
       "roleRuleId": "eva2-documentation",
@@ -21083,461 +20872,6 @@
       }
     },
     {
-      "path": "eva2/evidence/living-core/fixtures/i02-workspaces/initiative-service-current/README.md",
-      "gitState": "untracked",
-      "present": true,
-      "bytes": 169,
-      "contentSha256": "61157bd90c8f6b0994e3826ff5919c09dee38b7a55205e6257790aacd3db04bb",
-      "hashMode": "exact-bytes",
-      "role": "verification",
-      "roleRuleId": "eva2-verification",
-      "matchingRuleIds": [
-        "eva2-verification"
-      ],
-      "owner": "verification",
-      "inputs": [
-        "production or fixture contract"
-      ],
-      "outputs": [
-        "test decision"
-      ],
-      "state": [
-        "temporary isolated test state"
-      ],
-      "effects": [
-        "may execute only inside its declared gate"
-      ],
-      "decision": "keep",
-      "decisionReason": "active repository input or evidence",
-      "consumers": [],
-      "entrypointEvidence": [],
-      "release": {
-        "includedInTrackedRelease": false,
-        "runtimeCritical": true,
-        "status": "blocked-untracked"
-      }
-    },
-    {
-      "path": "eva2/evidence/living-core/fixtures/i02-workspaces/initiative-service-current/eva-quality.json",
-      "gitState": "untracked",
-      "present": true,
-      "bytes": 823,
-      "contentSha256": "b24087609f68d1c9d3981e8a6f007f05978f66e0eb2672970ab82a037dcfabc3",
-      "hashMode": "exact-bytes",
-      "role": "verification",
-      "roleRuleId": "eva2-verification",
-      "matchingRuleIds": [
-        "eva2-verification"
-      ],
-      "owner": "verification",
-      "inputs": [
-        "production or fixture contract"
-      ],
-      "outputs": [
-        "test decision"
-      ],
-      "state": [
-        "temporary isolated test state"
-      ],
-      "effects": [
-        "may execute only inside its declared gate"
-      ],
-      "decision": "keep",
-      "decisionReason": "active repository input or evidence",
-      "consumers": [],
-      "entrypointEvidence": [],
-      "release": {
-        "includedInTrackedRelease": false,
-        "runtimeCritical": true,
-        "status": "blocked-untracked"
-      }
-    },
-    {
-      "path": "eva2/evidence/living-core/fixtures/i02-workspaces/initiative-service-current/notifications.md",
-      "gitState": "untracked",
-      "present": true,
-      "bytes": 35,
-      "contentSha256": "e714fab492342fcd2a85a15873d1d3e001431999ea3de24aae10fada3e5ac728",
-      "hashMode": "exact-bytes",
-      "role": "verification",
-      "roleRuleId": "eva2-verification",
-      "matchingRuleIds": [
-        "eva2-verification"
-      ],
-      "owner": "verification",
-      "inputs": [
-        "production or fixture contract"
-      ],
-      "outputs": [
-        "test decision"
-      ],
-      "state": [
-        "temporary isolated test state"
-      ],
-      "effects": [
-        "may execute only inside its declared gate"
-      ],
-      "decision": "keep",
-      "decisionReason": "active repository input or evidence",
-      "consumers": [],
-      "entrypointEvidence": [],
-      "release": {
-        "includedInTrackedRelease": false,
-        "runtimeCritical": true,
-        "status": "blocked-untracked"
-      }
-    },
-    {
-      "path": "eva2/evidence/living-core/fixtures/i02-workspaces/initiative-service-current/settings.toml",
-      "gitState": "untracked",
-      "present": true,
-      "bytes": 82,
-      "contentSha256": "6d8d07831b5225ea633a1302f5e30f1d17b8b32ae9111caacf1965d22b09db15",
-      "hashMode": "exact-bytes",
-      "role": "verification",
-      "roleRuleId": "eva2-verification",
-      "matchingRuleIds": [
-        "eva2-verification"
-      ],
-      "owner": "verification",
-      "inputs": [
-        "production or fixture contract"
-      ],
-      "outputs": [
-        "test decision"
-      ],
-      "state": [
-        "temporary isolated test state"
-      ],
-      "effects": [
-        "may execute only inside its declared gate"
-      ],
-      "decision": "keep",
-      "decisionReason": "active repository input or evidence",
-      "consumers": [],
-      "entrypointEvidence": [],
-      "release": {
-        "includedInTrackedRelease": false,
-        "runtimeCritical": true,
-        "status": "blocked-untracked"
-      }
-    },
-    {
-      "path": "eva2/evidence/living-core/fixtures/i02-workspaces/initiative-service-current/unrelated-notes.txt",
-      "gitState": "untracked",
-      "present": true,
-      "bytes": 80,
-      "contentSha256": "d6bed3ebebbd3d7274acc67a5078861dcf8fd41cef6ff8146f438427dc1c596b",
-      "hashMode": "exact-bytes",
-      "role": "verification",
-      "roleRuleId": "eva2-verification",
-      "matchingRuleIds": [
-        "eva2-verification"
-      ],
-      "owner": "verification",
-      "inputs": [
-        "production or fixture contract"
-      ],
-      "outputs": [
-        "test decision"
-      ],
-      "state": [
-        "temporary isolated test state"
-      ],
-      "effects": [
-        "may execute only inside its declared gate"
-      ],
-      "decision": "keep",
-      "decisionReason": "active repository input or evidence",
-      "consumers": [],
-      "entrypointEvidence": [],
-      "release": {
-        "includedInTrackedRelease": false,
-        "runtimeCritical": true,
-        "status": "blocked-untracked"
-      }
-    },
-    {
-      "path": "eva2/evidence/living-core/fixtures/i02-workspaces/initiative-service/README.md",
-      "gitState": "untracked",
-      "present": true,
-      "bytes": 169,
-      "contentSha256": "61157bd90c8f6b0994e3826ff5919c09dee38b7a55205e6257790aacd3db04bb",
-      "hashMode": "exact-bytes",
-      "role": "verification",
-      "roleRuleId": "eva2-verification",
-      "matchingRuleIds": [
-        "eva2-verification"
-      ],
-      "owner": "verification",
-      "inputs": [
-        "production or fixture contract"
-      ],
-      "outputs": [
-        "test decision"
-      ],
-      "state": [
-        "temporary isolated test state"
-      ],
-      "effects": [
-        "may execute only inside its declared gate"
-      ],
-      "decision": "keep",
-      "decisionReason": "active repository input or evidence",
-      "consumers": [],
-      "entrypointEvidence": [],
-      "release": {
-        "includedInTrackedRelease": false,
-        "runtimeCritical": true,
-        "status": "blocked-untracked"
-      }
-    },
-    {
-      "path": "eva2/evidence/living-core/fixtures/i02-workspaces/initiative-service/eva-quality.json",
-      "gitState": "untracked",
-      "present": true,
-      "bytes": 823,
-      "contentSha256": "b24087609f68d1c9d3981e8a6f007f05978f66e0eb2672970ab82a037dcfabc3",
-      "hashMode": "exact-bytes",
-      "role": "verification",
-      "roleRuleId": "eva2-verification",
-      "matchingRuleIds": [
-        "eva2-verification"
-      ],
-      "owner": "verification",
-      "inputs": [
-        "production or fixture contract"
-      ],
-      "outputs": [
-        "test decision"
-      ],
-      "state": [
-        "temporary isolated test state"
-      ],
-      "effects": [
-        "may execute only inside its declared gate"
-      ],
-      "decision": "keep",
-      "decisionReason": "active repository input or evidence",
-      "consumers": [],
-      "entrypointEvidence": [],
-      "release": {
-        "includedInTrackedRelease": false,
-        "runtimeCritical": true,
-        "status": "blocked-untracked"
-      }
-    },
-    {
-      "path": "eva2/evidence/living-core/fixtures/i02-workspaces/initiative-service/notifications.md",
-      "gitState": "untracked",
-      "present": true,
-      "bytes": 35,
-      "contentSha256": "e714fab492342fcd2a85a15873d1d3e001431999ea3de24aae10fada3e5ac728",
-      "hashMode": "exact-bytes",
-      "role": "verification",
-      "roleRuleId": "eva2-verification",
-      "matchingRuleIds": [
-        "eva2-verification"
-      ],
-      "owner": "verification",
-      "inputs": [
-        "production or fixture contract"
-      ],
-      "outputs": [
-        "test decision"
-      ],
-      "state": [
-        "temporary isolated test state"
-      ],
-      "effects": [
-        "may execute only inside its declared gate"
-      ],
-      "decision": "keep",
-      "decisionReason": "active repository input or evidence",
-      "consumers": [],
-      "entrypointEvidence": [],
-      "release": {
-        "includedInTrackedRelease": false,
-        "runtimeCritical": true,
-        "status": "blocked-untracked"
-      }
-    },
-    {
-      "path": "eva2/evidence/living-core/fixtures/i02-workspaces/initiative-service/settings.toml",
-      "gitState": "untracked",
-      "present": true,
-      "bytes": 82,
-      "contentSha256": "6d8d07831b5225ea633a1302f5e30f1d17b8b32ae9111caacf1965d22b09db15",
-      "hashMode": "exact-bytes",
-      "role": "verification",
-      "roleRuleId": "eva2-verification",
-      "matchingRuleIds": [
-        "eva2-verification"
-      ],
-      "owner": "verification",
-      "inputs": [
-        "production or fixture contract"
-      ],
-      "outputs": [
-        "test decision"
-      ],
-      "state": [
-        "temporary isolated test state"
-      ],
-      "effects": [
-        "may execute only inside its declared gate"
-      ],
-      "decision": "keep",
-      "decisionReason": "active repository input or evidence",
-      "consumers": [],
-      "entrypointEvidence": [],
-      "release": {
-        "includedInTrackedRelease": false,
-        "runtimeCritical": true,
-        "status": "blocked-untracked"
-      }
-    },
-    {
-      "path": "eva2/evidence/living-core/fixtures/i02-workspaces/initiative-service/unrelated-notes.txt",
-      "gitState": "untracked",
-      "present": true,
-      "bytes": 80,
-      "contentSha256": "d6bed3ebebbd3d7274acc67a5078861dcf8fd41cef6ff8146f438427dc1c596b",
-      "hashMode": "exact-bytes",
-      "role": "verification",
-      "roleRuleId": "eva2-verification",
-      "matchingRuleIds": [
-        "eva2-verification"
-      ],
-      "owner": "verification",
-      "inputs": [
-        "production or fixture contract"
-      ],
-      "outputs": [
-        "test decision"
-      ],
-      "state": [
-        "temporary isolated test state"
-      ],
-      "effects": [
-        "may execute only inside its declared gate"
-      ],
-      "decision": "keep",
-      "decisionReason": "active repository input or evidence",
-      "consumers": [],
-      "entrypointEvidence": [],
-      "release": {
-        "includedInTrackedRelease": false,
-        "runtimeCritical": true,
-        "status": "blocked-untracked"
-      }
-    },
-    {
-      "path": "eva2/evidence/living-core/fixtures/lab36-x04/focused-test.json",
-      "gitState": "untracked",
-      "present": true,
-      "bytes": 250,
-      "contentSha256": "078ff9de6677320b80a77cb40ab2377ef2b82b1e8614693f1350781e867cf34a",
-      "hashMode": "exact-bytes",
-      "role": "verification",
-      "roleRuleId": "eva2-verification",
-      "matchingRuleIds": [
-        "eva2-verification"
-      ],
-      "owner": "verification",
-      "inputs": [
-        "production or fixture contract"
-      ],
-      "outputs": [
-        "test decision"
-      ],
-      "state": [
-        "temporary isolated test state"
-      ],
-      "effects": [
-        "may execute only inside its declared gate"
-      ],
-      "decision": "keep",
-      "decisionReason": "active repository input or evidence",
-      "consumers": [],
-      "entrypointEvidence": [],
-      "release": {
-        "includedInTrackedRelease": false,
-        "runtimeCritical": true,
-        "status": "blocked-untracked"
-      }
-    },
-    {
-      "path": "eva2/evidence/living-core/fixtures/lab36-x04/settings.txt",
-      "gitState": "untracked",
-      "present": true,
-      "bytes": 21,
-      "contentSha256": "e3da472edcf49cf8df03f4abb8d5088e965f7f5ad04e06eba5be181abe1adc8a",
-      "hashMode": "exact-bytes",
-      "role": "verification",
-      "roleRuleId": "eva2-verification",
-      "matchingRuleIds": [
-        "eva2-verification"
-      ],
-      "owner": "verification",
-      "inputs": [
-        "production or fixture contract"
-      ],
-      "outputs": [
-        "test decision"
-      ],
-      "state": [
-        "temporary isolated test state"
-      ],
-      "effects": [
-        "may execute only inside its declared gate"
-      ],
-      "decision": "keep",
-      "decisionReason": "active repository input or evidence",
-      "consumers": [],
-      "entrypointEvidence": [],
-      "release": {
-        "includedInTrackedRelease": false,
-        "runtimeCritical": true,
-        "status": "blocked-untracked"
-      }
-    },
-    {
-      "path": "eva2/evidence/living-core/fixtures/lab36-x04/unrelated-notes.txt",
-      "gitState": "untracked",
-      "present": true,
-      "bytes": 51,
-      "contentSha256": "cad1a88ea2c7504803e951c7b5065f8998747f23e0636b690951becbcb3bbec3",
-      "hashMode": "exact-bytes",
-      "role": "verification",
-      "roleRuleId": "eva2-verification",
-      "matchingRuleIds": [
-        "eva2-verification"
-      ],
-      "owner": "verification",
-      "inputs": [
-        "production or fixture contract"
-      ],
-      "outputs": [
-        "test decision"
-      ],
-      "state": [
-        "temporary isolated test state"
-      ],
-      "effects": [
-        "may execute only inside its declared gate"
-      ],
-      "decision": "keep",
-      "decisionReason": "active repository input or evidence",
-      "consumers": [],
-      "entrypointEvidence": [],
-      "release": {
-        "includedInTrackedRelease": false,
-        "runtimeCritical": true,
-        "status": "blocked-untracked"
-      }
-    },
-    {
       "path": "eva2/evidence/living-core/hindsight-control-plane-isolation-2026-08-26.json",
       "gitState": "tracked",
       "present": true,
@@ -21570,251 +20904,6 @@
         "includedInTrackedRelease": true,
         "runtimeCritical": true,
         "status": "included-tracked-critical"
-      }
-    },
-    {
-      "path": "eva2/evidence/living-core/lab36-c04-blind-2026-08-24.json",
-      "gitState": "untracked",
-      "present": true,
-      "bytes": 6651,
-      "contentSha256": "8551a92ba175435a780ca3c87c471486dfa0ace0683a1b6a75f54d1df989150a",
-      "hashMode": "exact-bytes",
-      "role": "verification",
-      "roleRuleId": "eva2-verification",
-      "matchingRuleIds": [
-        "eva2-verification"
-      ],
-      "owner": "verification",
-      "inputs": [
-        "production or fixture contract"
-      ],
-      "outputs": [
-        "test decision"
-      ],
-      "state": [
-        "temporary isolated test state"
-      ],
-      "effects": [
-        "may execute only inside its declared gate"
-      ],
-      "decision": "keep",
-      "decisionReason": "active repository input or evidence",
-      "consumers": [],
-      "entrypointEvidence": [],
-      "release": {
-        "includedInTrackedRelease": false,
-        "runtimeCritical": true,
-        "status": "blocked-untracked"
-      }
-    },
-    {
-      "path": "eva2/evidence/living-core/lab36-core-live-evidence-index-v39-2026-08-24.json",
-      "gitState": "untracked",
-      "present": true,
-      "bytes": 5786,
-      "contentSha256": "50b80a4217c811e1267b96328977dd460b8f728a74ed58a0c33ee92025faaffd",
-      "hashMode": "exact-bytes",
-      "role": "verification",
-      "roleRuleId": "eva2-verification",
-      "matchingRuleIds": [
-        "eva2-verification"
-      ],
-      "owner": "verification",
-      "inputs": [
-        "production or fixture contract"
-      ],
-      "outputs": [
-        "test decision"
-      ],
-      "state": [
-        "temporary isolated test state"
-      ],
-      "effects": [
-        "may execute only inside its declared gate"
-      ],
-      "decision": "keep",
-      "decisionReason": "active repository input or evidence",
-      "consumers": [],
-      "entrypointEvidence": [],
-      "release": {
-        "includedInTrackedRelease": false,
-        "runtimeCritical": true,
-        "status": "blocked-untracked"
-      }
-    },
-    {
-      "path": "eva2/evidence/living-core/lab36-eva2-development-live-2026-08-23.json",
-      "gitState": "untracked",
-      "present": true,
-      "bytes": 3806,
-      "contentSha256": "03a016356dbac31388c33ab03b0b52d0f4e105b2e4b39339d3dd88c9db511f78",
-      "hashMode": "exact-bytes",
-      "role": "verification",
-      "roleRuleId": "eva2-verification",
-      "matchingRuleIds": [
-        "eva2-verification"
-      ],
-      "owner": "verification",
-      "inputs": [
-        "production or fixture contract"
-      ],
-      "outputs": [
-        "test decision"
-      ],
-      "state": [
-        "temporary isolated test state"
-      ],
-      "effects": [
-        "may execute only inside its declared gate"
-      ],
-      "decision": "keep",
-      "decisionReason": "active repository input or evidence",
-      "consumers": [],
-      "entrypointEvidence": [],
-      "release": {
-        "includedInTrackedRelease": false,
-        "runtimeCritical": true,
-        "status": "blocked-untracked"
-      }
-    },
-    {
-      "path": "eva2/evidence/living-core/lab36-eva2-openclaw-hermes-agent-zero-live-2026-08-23.json",
-      "gitState": "untracked",
-      "present": true,
-      "bytes": 8528,
-      "contentSha256": "d4424895c56a2ae2834bc73630317fa3258c8b6fdf0d5c245efacb763ab8b870",
-      "hashMode": "exact-bytes",
-      "role": "verification",
-      "roleRuleId": "eva2-verification",
-      "matchingRuleIds": [
-        "eva2-verification"
-      ],
-      "owner": "verification",
-      "inputs": [
-        "production or fixture contract"
-      ],
-      "outputs": [
-        "test decision"
-      ],
-      "state": [
-        "temporary isolated test state"
-      ],
-      "effects": [
-        "may execute only inside its declared gate"
-      ],
-      "decision": "keep",
-      "decisionReason": "active repository input or evidence",
-      "consumers": [],
-      "entrypointEvidence": [],
-      "release": {
-        "includedInTrackedRelease": false,
-        "runtimeCritical": true,
-        "status": "blocked-untracked"
-      }
-    },
-    {
-      "path": "eva2/evidence/living-core/lab36-eva2-openclaw-hermes-live-2026-08-23.json",
-      "gitState": "untracked",
-      "present": true,
-      "bytes": 8480,
-      "contentSha256": "9d7efcb44be13c85d81b56a152213c62a9ed71a19e03cc6ae4150dded9aed419",
-      "hashMode": "exact-bytes",
-      "role": "verification",
-      "roleRuleId": "eva2-verification",
-      "matchingRuleIds": [
-        "eva2-verification"
-      ],
-      "owner": "verification",
-      "inputs": [
-        "production or fixture contract"
-      ],
-      "outputs": [
-        "test decision"
-      ],
-      "state": [
-        "temporary isolated test state"
-      ],
-      "effects": [
-        "may execute only inside its declared gate"
-      ],
-      "decision": "keep",
-      "decisionReason": "active repository input or evidence",
-      "consumers": [],
-      "entrypointEvidence": [],
-      "release": {
-        "includedInTrackedRelease": false,
-        "runtimeCritical": true,
-        "status": "blocked-untracked"
-      }
-    },
-    {
-      "path": "eva2/evidence/living-core/lab36-eva2-openclaw-live-2026-08-23.json",
-      "gitState": "untracked",
-      "present": true,
-      "bytes": 5936,
-      "contentSha256": "af6cfcaada393141e61c700028c3ff89d837c9a5f83356dfd851abe0a333bfca",
-      "hashMode": "exact-bytes",
-      "role": "verification",
-      "roleRuleId": "eva2-verification",
-      "matchingRuleIds": [
-        "eva2-verification"
-      ],
-      "owner": "verification",
-      "inputs": [
-        "production or fixture contract"
-      ],
-      "outputs": [
-        "test decision"
-      ],
-      "state": [
-        "temporary isolated test state"
-      ],
-      "effects": [
-        "may execute only inside its declared gate"
-      ],
-      "decision": "keep",
-      "decisionReason": "active repository input or evidence",
-      "consumers": [],
-      "entrypointEvidence": [],
-      "release": {
-        "includedInTrackedRelease": false,
-        "runtimeCritical": true,
-        "status": "blocked-untracked"
-      }
-    },
-    {
-      "path": "eva2/evidence/living-core/lab36-eva2-runner-live-2026-08-23.json",
-      "gitState": "untracked",
-      "present": true,
-      "bytes": 4599,
-      "contentSha256": "7f01874f8d019a0eade2930457723cee7a930d525bdda37b7b9cc4ba15229af4",
-      "hashMode": "exact-bytes",
-      "role": "verification",
-      "roleRuleId": "eva2-verification",
-      "matchingRuleIds": [
-        "eva2-verification"
-      ],
-      "owner": "verification",
-      "inputs": [
-        "production or fixture contract"
-      ],
-      "outputs": [
-        "test decision"
-      ],
-      "state": [
-        "temporary isolated test state"
-      ],
-      "effects": [
-        "may execute only inside its declared gate"
-      ],
-      "decision": "keep",
-      "decisionReason": "active repository input or evidence",
-      "consumers": [],
-      "entrypointEvidence": [],
-      "release": {
-        "includedInTrackedRelease": false,
-        "runtimeCritical": true,
-        "status": "blocked-untracked"
       }
     },
     {
@@ -21923,1791 +21012,6 @@
       }
     },
     {
-      "path": "eva2/evidence/living-core/live-b-access-only-memory-context-2026-08-24.json",
-      "gitState": "untracked",
-      "present": true,
-      "bytes": 4039,
-      "contentSha256": "914bdbeb9f318d4e3a42a71e2db2a37059a18fc01dd4cc77652352a6e3f81171",
-      "hashMode": "exact-bytes",
-      "role": "verification",
-      "roleRuleId": "eva2-verification",
-      "matchingRuleIds": [
-        "eva2-verification"
-      ],
-      "owner": "verification",
-      "inputs": [
-        "production or fixture contract"
-      ],
-      "outputs": [
-        "test decision"
-      ],
-      "state": [
-        "temporary isolated test state"
-      ],
-      "effects": [
-        "may execute only inside its declared gate"
-      ],
-      "decision": "keep",
-      "decisionReason": "active repository input or evidence",
-      "consumers": [],
-      "entrypointEvidence": [],
-      "release": {
-        "includedInTrackedRelease": false,
-        "runtimeCritical": true,
-        "status": "blocked-untracked"
-      }
-    },
-    {
-      "path": "eva2/evidence/living-core/live-b-advanced-automation-execution-2026-08-23.json",
-      "gitState": "untracked",
-      "present": true,
-      "bytes": 9838,
-      "contentSha256": "c89d4204d19233adc5a32e414f3c605e70a585ad8b59e96a4f42f52909676165",
-      "hashMode": "exact-bytes",
-      "role": "verification",
-      "roleRuleId": "eva2-verification",
-      "matchingRuleIds": [
-        "eva2-verification"
-      ],
-      "owner": "verification",
-      "inputs": [
-        "production or fixture contract"
-      ],
-      "outputs": [
-        "test decision"
-      ],
-      "state": [
-        "temporary isolated test state"
-      ],
-      "effects": [
-        "may execute only inside its declared gate"
-      ],
-      "decision": "keep",
-      "decisionReason": "active repository input or evidence",
-      "consumers": [],
-      "entrypointEvidence": [],
-      "release": {
-        "includedInTrackedRelease": false,
-        "runtimeCritical": true,
-        "status": "blocked-untracked"
-      }
-    },
-    {
-      "path": "eva2/evidence/living-core/live-b-candidate-preflight-2026-08-23.json",
-      "gitState": "untracked",
-      "present": true,
-      "bytes": 1008,
-      "contentSha256": "ad521c6a14a13772997e3e939e1ee4c396046fc040cda829a0373ead1f3be32d",
-      "hashMode": "exact-bytes",
-      "role": "verification",
-      "roleRuleId": "eva2-verification",
-      "matchingRuleIds": [
-        "eva2-verification"
-      ],
-      "owner": "verification",
-      "inputs": [
-        "production or fixture contract"
-      ],
-      "outputs": [
-        "test decision"
-      ],
-      "state": [
-        "temporary isolated test state"
-      ],
-      "effects": [
-        "may execute only inside its declared gate"
-      ],
-      "decision": "keep",
-      "decisionReason": "active repository input or evidence",
-      "consumers": [],
-      "entrypointEvidence": [],
-      "release": {
-        "includedInTrackedRelease": false,
-        "runtimeCritical": true,
-        "status": "blocked-untracked"
-      }
-    },
-    {
-      "path": "eva2/evidence/living-core/live-b-commerce-publication-2026-08-24.json",
-      "gitState": "untracked",
-      "present": true,
-      "bytes": 3056,
-      "contentSha256": "638e8a5177abfa3b797a411646ea038c69ac3da5b3159d82a64ede103f2783ba",
-      "hashMode": "exact-bytes",
-      "role": "verification",
-      "roleRuleId": "eva2-verification",
-      "matchingRuleIds": [
-        "eva2-verification"
-      ],
-      "owner": "verification",
-      "inputs": [
-        "production or fixture contract"
-      ],
-      "outputs": [
-        "test decision"
-      ],
-      "state": [
-        "temporary isolated test state"
-      ],
-      "effects": [
-        "may execute only inside its declared gate"
-      ],
-      "decision": "keep",
-      "decisionReason": "active repository input or evidence",
-      "consumers": [],
-      "entrypointEvidence": [],
-      "release": {
-        "includedInTrackedRelease": false,
-        "runtimeCritical": true,
-        "status": "blocked-untracked"
-      }
-    },
-    {
-      "path": "eva2/evidence/living-core/live-b-conversation-intent-2026-08-23.json",
-      "gitState": "untracked",
-      "present": true,
-      "bytes": 3482,
-      "contentSha256": "f6f9cc3ce1d02f419c7806c163c6916e1ce09189041b5acdcfb7fca32d65826c",
-      "hashMode": "exact-bytes",
-      "role": "verification",
-      "roleRuleId": "eva2-verification",
-      "matchingRuleIds": [
-        "eva2-verification"
-      ],
-      "owner": "verification",
-      "inputs": [
-        "production or fixture contract"
-      ],
-      "outputs": [
-        "test decision"
-      ],
-      "state": [
-        "temporary isolated test state"
-      ],
-      "effects": [
-        "may execute only inside its declared gate"
-      ],
-      "decision": "keep",
-      "decisionReason": "active repository input or evidence",
-      "consumers": [],
-      "entrypointEvidence": [],
-      "release": {
-        "includedInTrackedRelease": false,
-        "runtimeCritical": true,
-        "status": "blocked-untracked"
-      }
-    },
-    {
-      "path": "eva2/evidence/living-core/live-b-current-automation-2026-08-23.json",
-      "gitState": "untracked",
-      "present": true,
-      "bytes": 2197,
-      "contentSha256": "71643d2e44d18b195ef255937fe4e86ff51b159201ba2526362d5b1d85e46572",
-      "hashMode": "exact-bytes",
-      "role": "verification",
-      "roleRuleId": "eva2-verification",
-      "matchingRuleIds": [
-        "eva2-verification"
-      ],
-      "owner": "verification",
-      "inputs": [
-        "production or fixture contract"
-      ],
-      "outputs": [
-        "test decision"
-      ],
-      "state": [
-        "temporary isolated test state"
-      ],
-      "effects": [
-        "may execute only inside its declared gate"
-      ],
-      "decision": "keep",
-      "decisionReason": "active repository input or evidence",
-      "consumers": [],
-      "entrypointEvidence": [],
-      "release": {
-        "includedInTrackedRelease": false,
-        "runtimeCritical": true,
-        "status": "blocked-untracked"
-      }
-    },
-    {
-      "path": "eva2/evidence/living-core/live-b-durable-memory-crash-2026-08-24.json",
-      "gitState": "untracked",
-      "present": true,
-      "bytes": 8189,
-      "contentSha256": "5c09f2194f33dcd16c4b80a4159b97a67a4b31d2d8ca35d40ba893c185e4dd59",
-      "hashMode": "exact-bytes",
-      "role": "verification",
-      "roleRuleId": "eva2-verification",
-      "matchingRuleIds": [
-        "eva2-verification"
-      ],
-      "owner": "verification",
-      "inputs": [
-        "production or fixture contract"
-      ],
-      "outputs": [
-        "test decision"
-      ],
-      "state": [
-        "temporary isolated test state"
-      ],
-      "effects": [
-        "may execute only inside its declared gate"
-      ],
-      "decision": "keep",
-      "decisionReason": "active repository input or evidence",
-      "consumers": [],
-      "entrypointEvidence": [],
-      "release": {
-        "includedInTrackedRelease": false,
-        "runtimeCritical": true,
-        "status": "blocked-untracked"
-      }
-    },
-    {
-      "path": "eva2/evidence/living-core/live-b-hindsight-income-2026-08-23.json",
-      "gitState": "untracked",
-      "present": true,
-      "bytes": 7594,
-      "contentSha256": "26fe6affe51ba840f900408fcb50e329215ca51a41d3c090cd2b3ef4420d4af1",
-      "hashMode": "exact-bytes",
-      "role": "verification",
-      "roleRuleId": "eva2-verification",
-      "matchingRuleIds": [
-        "eva2-verification"
-      ],
-      "owner": "verification",
-      "inputs": [
-        "production or fixture contract"
-      ],
-      "outputs": [
-        "test decision"
-      ],
-      "state": [
-        "temporary isolated test state"
-      ],
-      "effects": [
-        "may execute only inside its declared gate"
-      ],
-      "decision": "keep",
-      "decisionReason": "active repository input or evidence",
-      "consumers": [],
-      "entrypointEvidence": [],
-      "release": {
-        "includedInTrackedRelease": false,
-        "runtimeCritical": true,
-        "status": "blocked-untracked"
-      }
-    },
-    {
-      "path": "eva2/evidence/living-core/live-b-hindsight-provenance-and-paraphrase-2026-08-24.json",
-      "gitState": "untracked",
-      "present": true,
-      "bytes": 7642,
-      "contentSha256": "c652083aea54ebc624bf848fc1383618f399953481f061350f1db35810c5ae1b",
-      "hashMode": "exact-bytes",
-      "role": "verification",
-      "roleRuleId": "eva2-verification",
-      "matchingRuleIds": [
-        "eva2-verification"
-      ],
-      "owner": "verification",
-      "inputs": [
-        "production or fixture contract"
-      ],
-      "outputs": [
-        "test decision"
-      ],
-      "state": [
-        "temporary isolated test state"
-      ],
-      "effects": [
-        "may execute only inside its declared gate"
-      ],
-      "decision": "keep",
-      "decisionReason": "active repository input or evidence",
-      "consumers": [],
-      "entrypointEvidence": [],
-      "release": {
-        "includedInTrackedRelease": false,
-        "runtimeCritical": true,
-        "status": "blocked-untracked"
-      }
-    },
-    {
-      "path": "eva2/evidence/living-core/live-b-home-assistant-conversation-2026-08-23.json",
-      "gitState": "untracked",
-      "present": true,
-      "bytes": 3830,
-      "contentSha256": "f70ee32118075dd4f0036f294b92840e553b7b34da48c3c13f7d3142226a0e5e",
-      "hashMode": "exact-bytes",
-      "role": "verification",
-      "roleRuleId": "eva2-verification",
-      "matchingRuleIds": [
-        "eva2-verification"
-      ],
-      "owner": "verification",
-      "inputs": [
-        "production or fixture contract"
-      ],
-      "outputs": [
-        "test decision"
-      ],
-      "state": [
-        "temporary isolated test state"
-      ],
-      "effects": [
-        "may execute only inside its declared gate"
-      ],
-      "decision": "keep",
-      "decisionReason": "active repository input or evidence",
-      "consumers": [],
-      "entrypointEvidence": [],
-      "release": {
-        "includedInTrackedRelease": false,
-        "runtimeCritical": true,
-        "status": "blocked-untracked"
-      }
-    },
-    {
-      "path": "eva2/evidence/living-core/live-b-home-assistant-current-state-2026-08-24.json",
-      "gitState": "untracked",
-      "present": true,
-      "bytes": 4826,
-      "contentSha256": "9bc899abd202f39ccff11b780ccc3ceda71ad80bba170d19d9103e91d704abff",
-      "hashMode": "exact-bytes",
-      "role": "verification",
-      "roleRuleId": "eva2-verification",
-      "matchingRuleIds": [
-        "eva2-verification"
-      ],
-      "owner": "verification",
-      "inputs": [
-        "production or fixture contract"
-      ],
-      "outputs": [
-        "test decision"
-      ],
-      "state": [
-        "temporary isolated test state"
-      ],
-      "effects": [
-        "may execute only inside its declared gate"
-      ],
-      "decision": "keep",
-      "decisionReason": "active repository input or evidence",
-      "consumers": [],
-      "entrypointEvidence": [],
-      "release": {
-        "includedInTrackedRelease": false,
-        "runtimeCritical": true,
-        "status": "blocked-untracked"
-      }
-    },
-    {
-      "path": "eva2/evidence/living-core/live-b-home-assistant-history-2026-08-24.json",
-      "gitState": "untracked",
-      "present": true,
-      "bytes": 4862,
-      "contentSha256": "66c2cb46fe9375b611d94cadef478927eb2c5e32adde4a46960f211829cd4e24",
-      "hashMode": "exact-bytes",
-      "role": "verification",
-      "roleRuleId": "eva2-verification",
-      "matchingRuleIds": [
-        "eva2-verification"
-      ],
-      "owner": "verification",
-      "inputs": [
-        "production or fixture contract"
-      ],
-      "outputs": [
-        "test decision"
-      ],
-      "state": [
-        "temporary isolated test state"
-      ],
-      "effects": [
-        "may execute only inside its declared gate"
-      ],
-      "decision": "keep",
-      "decisionReason": "active repository input or evidence",
-      "consumers": [],
-      "entrypointEvidence": [],
-      "release": {
-        "includedInTrackedRelease": false,
-        "runtimeCritical": true,
-        "status": "blocked-untracked"
-      }
-    },
-    {
-      "path": "eva2/evidence/living-core/live-b-identitypack-conversation-2026-08-23.json",
-      "gitState": "untracked",
-      "present": true,
-      "bytes": 3798,
-      "contentSha256": "dcb8face65ce0ac649796a982a26c60757698e784086a0cf9c8ceeb80b67a9d1",
-      "hashMode": "exact-bytes",
-      "role": "verification",
-      "roleRuleId": "eva2-verification",
-      "matchingRuleIds": [
-        "eva2-verification"
-      ],
-      "owner": "verification",
-      "inputs": [
-        "production or fixture contract"
-      ],
-      "outputs": [
-        "test decision"
-      ],
-      "state": [
-        "temporary isolated test state"
-      ],
-      "effects": [
-        "may execute only inside its declared gate"
-      ],
-      "decision": "keep",
-      "decisionReason": "active repository input or evidence",
-      "consumers": [],
-      "entrypointEvidence": [],
-      "release": {
-        "includedInTrackedRelease": false,
-        "runtimeCritical": true,
-        "status": "blocked-untracked"
-      }
-    },
-    {
-      "path": "eva2/evidence/living-core/live-b-lab36-c02-trusted-identity-isolation-2026-08-24.json",
-      "gitState": "untracked",
-      "present": true,
-      "bytes": 7800,
-      "contentSha256": "809984c94d9a1105e1f9556842894ecb8045e5a5d852d4109d7c200999611766",
-      "hashMode": "exact-bytes",
-      "role": "verification",
-      "roleRuleId": "eva2-verification",
-      "matchingRuleIds": [
-        "eva2-verification"
-      ],
-      "owner": "verification",
-      "inputs": [
-        "production or fixture contract"
-      ],
-      "outputs": [
-        "test decision"
-      ],
-      "state": [
-        "temporary isolated test state"
-      ],
-      "effects": [
-        "may execute only inside its declared gate"
-      ],
-      "decision": "keep",
-      "decisionReason": "active repository input or evidence",
-      "consumers": [],
-      "entrypointEvidence": [],
-      "release": {
-        "includedInTrackedRelease": false,
-        "runtimeCritical": true,
-        "status": "blocked-untracked"
-      }
-    },
-    {
-      "path": "eva2/evidence/living-core/live-b-lab36-c03-r03-bound-observation-corrections-2026-08-24.json",
-      "gitState": "untracked",
-      "present": true,
-      "bytes": 8170,
-      "contentSha256": "e4026dbc5f4af1db059f488e52d005d0ce09499edb1e94fc950409877fd333d9",
-      "hashMode": "exact-bytes",
-      "role": "verification",
-      "roleRuleId": "eva2-verification",
-      "matchingRuleIds": [
-        "eva2-verification"
-      ],
-      "owner": "verification",
-      "inputs": [
-        "production or fixture contract"
-      ],
-      "outputs": [
-        "test decision"
-      ],
-      "state": [
-        "temporary isolated test state"
-      ],
-      "effects": [
-        "may execute only inside its declared gate"
-      ],
-      "decision": "keep",
-      "decisionReason": "active repository input or evidence",
-      "consumers": [],
-      "entrypointEvidence": [],
-      "release": {
-        "includedInTrackedRelease": false,
-        "runtimeCritical": true,
-        "status": "blocked-untracked"
-      }
-    },
-    {
-      "path": "eva2/evidence/living-core/live-b-lab36-hidden-humanity-v39-2026-08-24.json",
-      "gitState": "untracked",
-      "present": true,
-      "bytes": 5324,
-      "contentSha256": "2461bd98ea832229436e1d4d23df325c55924211b3b39b463067184a2893f0a0",
-      "hashMode": "exact-bytes",
-      "role": "verification",
-      "roleRuleId": "eva2-verification",
-      "matchingRuleIds": [
-        "eva2-verification"
-      ],
-      "owner": "verification",
-      "inputs": [
-        "production or fixture contract"
-      ],
-      "outputs": [
-        "test decision"
-      ],
-      "state": [
-        "temporary isolated test state"
-      ],
-      "effects": [
-        "may execute only inside its declared gate"
-      ],
-      "decision": "keep",
-      "decisionReason": "active repository input or evidence",
-      "consumers": [],
-      "entrypointEvidence": [],
-      "release": {
-        "includedInTrackedRelease": false,
-        "runtimeCritical": true,
-        "status": "blocked-untracked"
-      }
-    },
-    {
-      "path": "eva2/evidence/living-core/live-b-lab36-m02-memory-isolation-2026-08-24.json",
-      "gitState": "untracked",
-      "present": true,
-      "bytes": 7305,
-      "contentSha256": "129fce179cef8f770de3dba5effde4e4b2136315cd81551b5c637a4617d396ae",
-      "hashMode": "exact-bytes",
-      "role": "verification",
-      "roleRuleId": "eva2-verification",
-      "matchingRuleIds": [
-        "eva2-verification"
-      ],
-      "owner": "verification",
-      "inputs": [
-        "production or fixture contract"
-      ],
-      "outputs": [
-        "test decision"
-      ],
-      "state": [
-        "temporary isolated test state"
-      ],
-      "effects": [
-        "may execute only inside its declared gate"
-      ],
-      "decision": "keep",
-      "decisionReason": "active repository input or evidence",
-      "consumers": [],
-      "entrypointEvidence": [],
-      "release": {
-        "includedInTrackedRelease": false,
-        "runtimeCritical": true,
-        "status": "blocked-untracked"
-      }
-    },
-    {
-      "path": "eva2/evidence/living-core/live-b-lab36-m03-direct-task-continuation-2026-08-24.json",
-      "gitState": "untracked",
-      "present": true,
-      "bytes": 5646,
-      "contentSha256": "95833de3cf0c2fdc5cda17663ede4c1ca85c4702beb5f5db7c781ff3824ae00f",
-      "hashMode": "exact-bytes",
-      "role": "verification",
-      "roleRuleId": "eva2-verification",
-      "matchingRuleIds": [
-        "eva2-verification"
-      ],
-      "owner": "verification",
-      "inputs": [
-        "production or fixture contract"
-      ],
-      "outputs": [
-        "test decision"
-      ],
-      "state": [
-        "temporary isolated test state"
-      ],
-      "effects": [
-        "may execute only inside its declared gate"
-      ],
-      "decision": "keep",
-      "decisionReason": "active repository input or evidence",
-      "consumers": [],
-      "entrypointEvidence": [],
-      "release": {
-        "includedInTrackedRelease": false,
-        "runtimeCritical": true,
-        "status": "blocked-untracked"
-      }
-    },
-    {
-      "path": "eva2/evidence/living-core/live-b-lab36-m04-person-project-memory-2026-08-24.json",
-      "gitState": "untracked",
-      "present": true,
-      "bytes": 6721,
-      "contentSha256": "37d153315b4841d92838950a2f607c05c880a8b1fcaf5bf44d9c523e7083fe62",
-      "hashMode": "exact-bytes",
-      "role": "verification",
-      "roleRuleId": "eva2-verification",
-      "matchingRuleIds": [
-        "eva2-verification"
-      ],
-      "owner": "verification",
-      "inputs": [
-        "production or fixture contract"
-      ],
-      "outputs": [
-        "test decision"
-      ],
-      "state": [
-        "temporary isolated test state"
-      ],
-      "effects": [
-        "may execute only inside its declared gate"
-      ],
-      "decision": "keep",
-      "decisionReason": "active repository input or evidence",
-      "consumers": [],
-      "entrypointEvidence": [],
-      "release": {
-        "includedInTrackedRelease": false,
-        "runtimeCritical": true,
-        "status": "blocked-untracked"
-      }
-    },
-    {
-      "path": "eva2/evidence/living-core/live-b-lab36-p02-file-batch-partial-success-2026-08-24.json",
-      "gitState": "untracked",
-      "present": true,
-      "bytes": 5273,
-      "contentSha256": "e76522968ff6bd26d81e95bde62f2ef1df59dc90abfa65e12eb07d0ea5ac042d",
-      "hashMode": "exact-bytes",
-      "role": "verification",
-      "roleRuleId": "eva2-verification",
-      "matchingRuleIds": [
-        "eva2-verification"
-      ],
-      "owner": "verification",
-      "inputs": [
-        "production or fixture contract"
-      ],
-      "outputs": [
-        "test decision"
-      ],
-      "state": [
-        "temporary isolated test state"
-      ],
-      "effects": [
-        "may execute only inside its declared gate"
-      ],
-      "decision": "keep",
-      "decisionReason": "active repository input or evidence",
-      "consumers": [],
-      "entrypointEvidence": [],
-      "release": {
-        "includedInTrackedRelease": false,
-        "runtimeCritical": true,
-        "status": "blocked-untracked"
-      }
-    },
-    {
-      "path": "eva2/evidence/living-core/live-b-lab36-r02-mid-task-scope-change-2026-08-24.json",
-      "gitState": "untracked",
-      "present": true,
-      "bytes": 4010,
-      "contentSha256": "977cb90e417c0e6292bb18278adf55deeb5270014c033375545719e41731ffdb",
-      "hashMode": "exact-bytes",
-      "role": "verification",
-      "roleRuleId": "eva2-verification",
-      "matchingRuleIds": [
-        "eva2-verification"
-      ],
-      "owner": "verification",
-      "inputs": [
-        "production or fixture contract"
-      ],
-      "outputs": [
-        "test decision"
-      ],
-      "state": [
-        "temporary isolated test state"
-      ],
-      "effects": [
-        "may execute only inside its declared gate"
-      ],
-      "decision": "keep",
-      "decisionReason": "active repository input or evidence",
-      "consumers": [],
-      "entrypointEvidence": [],
-      "release": {
-        "includedInTrackedRelease": false,
-        "runtimeCritical": true,
-        "status": "blocked-untracked"
-      }
-    },
-    {
-      "path": "eva2/evidence/living-core/live-b-lab36-t03-group-history-2026-08-24.json",
-      "gitState": "untracked",
-      "present": true,
-      "bytes": 5181,
-      "contentSha256": "db48bcf59e1538a31343cf5705d72eb8269ccb513b196460c61c6607b69666eb",
-      "hashMode": "exact-bytes",
-      "role": "verification",
-      "roleRuleId": "eva2-verification",
-      "matchingRuleIds": [
-        "eva2-verification"
-      ],
-      "owner": "verification",
-      "inputs": [
-        "production or fixture contract"
-      ],
-      "outputs": [
-        "test decision"
-      ],
-      "state": [
-        "temporary isolated test state"
-      ],
-      "effects": [
-        "may execute only inside its declared gate"
-      ],
-      "decision": "keep",
-      "decisionReason": "active repository input or evidence",
-      "consumers": [],
-      "entrypointEvidence": [],
-      "release": {
-        "includedInTrackedRelease": false,
-        "runtimeCritical": true,
-        "status": "blocked-untracked"
-      }
-    },
-    {
-      "path": "eva2/evidence/living-core/live-b-lab36-t04-current-research-2026-08-24.json",
-      "gitState": "untracked",
-      "present": true,
-      "bytes": 5480,
-      "contentSha256": "c0184e6b85a875f9c6b1eb9ff3a22139fb492a5a59f78335cd75aafc6f7baaf9",
-      "hashMode": "exact-bytes",
-      "role": "verification",
-      "roleRuleId": "eva2-verification",
-      "matchingRuleIds": [
-        "eva2-verification"
-      ],
-      "owner": "verification",
-      "inputs": [
-        "production or fixture contract"
-      ],
-      "outputs": [
-        "test decision"
-      ],
-      "state": [
-        "temporary isolated test state"
-      ],
-      "effects": [
-        "may execute only inside its declared gate"
-      ],
-      "decision": "keep",
-      "decisionReason": "active repository input or evidence",
-      "consumers": [],
-      "entrypointEvidence": [],
-      "release": {
-        "includedInTrackedRelease": false,
-        "runtimeCritical": true,
-        "status": "blocked-untracked"
-      }
-    },
-    {
-      "path": "eva2/evidence/living-core/live-b-lab36-x02-mid-work-restart-2026-08-24.json",
-      "gitState": "untracked",
-      "present": true,
-      "bytes": 4845,
-      "contentSha256": "dbd1114a61c158ad4800ecf510d6a2de6253cea537bad26abc66f99b2da1d924",
-      "hashMode": "exact-bytes",
-      "role": "verification",
-      "roleRuleId": "eva2-verification",
-      "matchingRuleIds": [
-        "eva2-verification"
-      ],
-      "owner": "verification",
-      "inputs": [
-        "production or fixture contract"
-      ],
-      "outputs": [
-        "test decision"
-      ],
-      "state": [
-        "temporary isolated test state"
-      ],
-      "effects": [
-        "may execute only inside its declared gate"
-      ],
-      "decision": "keep",
-      "decisionReason": "active repository input or evidence",
-      "consumers": [],
-      "entrypointEvidence": [],
-      "release": {
-        "includedInTrackedRelease": false,
-        "runtimeCritical": true,
-        "status": "blocked-untracked"
-      }
-    },
-    {
-      "path": "eva2/evidence/living-core/live-b-lab36-x03-bounded-transient-recovery-2026-08-24.json",
-      "gitState": "untracked",
-      "present": true,
-      "bytes": 5227,
-      "contentSha256": "635209c13ecea7b1aea7afa620684dab1b09e94a48a0af48f1feeabef432fc10",
-      "hashMode": "exact-bytes",
-      "role": "verification",
-      "roleRuleId": "eva2-verification",
-      "matchingRuleIds": [
-        "eva2-verification"
-      ],
-      "owner": "verification",
-      "inputs": [
-        "production or fixture contract"
-      ],
-      "outputs": [
-        "test decision"
-      ],
-      "state": [
-        "temporary isolated test state"
-      ],
-      "effects": [
-        "may execute only inside its declared gate"
-      ],
-      "decision": "keep",
-      "decisionReason": "active repository input or evidence",
-      "consumers": [],
-      "entrypointEvidence": [],
-      "release": {
-        "includedInTrackedRelease": false,
-        "runtimeCritical": true,
-        "status": "blocked-untracked"
-      }
-    },
-    {
-      "path": "eva2/evidence/living-core/live-b-lab36-x04-validated-edit-rollback-2026-08-24.json",
-      "gitState": "untracked",
-      "present": true,
-      "bytes": 6196,
-      "contentSha256": "326ec9dc1790ed9f635d6a8a93274882a6352fbf1af2f1364ca62280b095ec4f",
-      "hashMode": "exact-bytes",
-      "role": "verification",
-      "roleRuleId": "eva2-verification",
-      "matchingRuleIds": [
-        "eva2-verification"
-      ],
-      "owner": "verification",
-      "inputs": [
-        "production or fixture contract"
-      ],
-      "outputs": [
-        "test decision"
-      ],
-      "state": [
-        "temporary isolated test state"
-      ],
-      "effects": [
-        "may execute only inside its declared gate"
-      ],
-      "decision": "keep",
-      "decisionReason": "active repository input or evidence",
-      "consumers": [],
-      "entrypointEvidence": [],
-      "release": {
-        "includedInTrackedRelease": false,
-        "runtimeCritical": true,
-        "status": "blocked-untracked"
-      }
-    },
-    {
-      "path": "eva2/evidence/living-core/live-b-localtuya-compatibility-2026-08-23.json",
-      "gitState": "untracked",
-      "present": true,
-      "bytes": 3561,
-      "contentSha256": "922fa926cb435359a3bdf2dae3746a5dc199f32f9e258e0f09e841031c984d9a",
-      "hashMode": "exact-bytes",
-      "role": "verification",
-      "roleRuleId": "eva2-verification",
-      "matchingRuleIds": [
-        "eva2-verification"
-      ],
-      "owner": "verification",
-      "inputs": [
-        "production or fixture contract"
-      ],
-      "outputs": [
-        "test decision"
-      ],
-      "state": [
-        "temporary isolated test state"
-      ],
-      "effects": [
-        "may execute only inside its declared gate"
-      ],
-      "decision": "keep",
-      "decisionReason": "active repository input or evidence",
-      "consumers": [],
-      "entrypointEvidence": [],
-      "release": {
-        "includedInTrackedRelease": false,
-        "runtimeCritical": true,
-        "status": "blocked-untracked"
-      }
-    },
-    {
-      "path": "eva2/evidence/living-core/live-b-localtuya-maintained-source-v39-2026-08-24.json",
-      "gitState": "untracked",
-      "present": true,
-      "bytes": 6004,
-      "contentSha256": "2285d853c952a139346b8b51946fd3479f3f96dd02c4b909d22deb0a27428b9e",
-      "hashMode": "exact-bytes",
-      "role": "verification",
-      "roleRuleId": "eva2-verification",
-      "matchingRuleIds": [
-        "eva2-verification"
-      ],
-      "owner": "verification",
-      "inputs": [
-        "production or fixture contract"
-      ],
-      "outputs": [
-        "test decision"
-      ],
-      "state": [
-        "temporary isolated test state"
-      ],
-      "effects": [
-        "may execute only inside its declared gate"
-      ],
-      "decision": "keep",
-      "decisionReason": "active repository input or evidence",
-      "consumers": [],
-      "entrypointEvidence": [],
-      "release": {
-        "includedInTrackedRelease": false,
-        "runtimeCritical": true,
-        "status": "blocked-untracked"
-      }
-    },
-    {
-      "path": "eva2/evidence/living-core/live-b-localtuya-registration-v40-preflight-2026-08-24.json",
-      "gitState": "untracked",
-      "present": true,
-      "bytes": 1473,
-      "contentSha256": "5e6c35a5f96fed25d4787fb3da3aa9f5539de08d1c443e07969fbaa50d566cf7",
-      "hashMode": "exact-bytes",
-      "role": "verification",
-      "roleRuleId": "eva2-verification",
-      "matchingRuleIds": [
-        "eva2-verification"
-      ],
-      "owner": "verification",
-      "inputs": [
-        "production or fixture contract"
-      ],
-      "outputs": [
-        "test decision"
-      ],
-      "state": [
-        "temporary isolated test state"
-      ],
-      "effects": [
-        "may execute only inside its declared gate"
-      ],
-      "decision": "keep",
-      "decisionReason": "active repository input or evidence",
-      "consumers": [],
-      "entrypointEvidence": [],
-      "release": {
-        "includedInTrackedRelease": false,
-        "runtimeCritical": true,
-        "status": "blocked-untracked"
-      }
-    },
-    {
-      "path": "eva2/evidence/living-core/live-b-localtuya-repository-registration-v40-2026-08-24.json",
-      "gitState": "untracked",
-      "present": true,
-      "bytes": 5093,
-      "contentSha256": "d0d563e48625c6905bb1ead45c273ffce8eb728cb412048f3e154adbb643649d",
-      "hashMode": "exact-bytes",
-      "role": "verification",
-      "roleRuleId": "eva2-verification",
-      "matchingRuleIds": [
-        "eva2-verification"
-      ],
-      "owner": "verification",
-      "inputs": [
-        "production or fixture contract"
-      ],
-      "outputs": [
-        "test decision"
-      ],
-      "state": [
-        "temporary isolated test state"
-      ],
-      "effects": [
-        "may execute only inside its declared gate"
-      ],
-      "decision": "keep",
-      "decisionReason": "active repository input or evidence",
-      "consumers": [],
-      "entrypointEvidence": [],
-      "release": {
-        "includedInTrackedRelease": false,
-        "runtimeCritical": true,
-        "status": "blocked-untracked"
-      }
-    },
-    {
-      "path": "eva2/evidence/living-core/live-b-memory-candidate-preflight-2026-08-24.json",
-      "gitState": "untracked",
-      "present": true,
-      "bytes": 1472,
-      "contentSha256": "01ea36cbf7caa8b2fe3926f700d054d8a1bcfd19a960c97d6fe2626d85952318",
-      "hashMode": "exact-bytes",
-      "role": "verification",
-      "roleRuleId": "eva2-verification",
-      "matchingRuleIds": [
-        "eva2-verification"
-      ],
-      "owner": "verification",
-      "inputs": [
-        "production or fixture contract"
-      ],
-      "outputs": [
-        "test decision"
-      ],
-      "state": [
-        "temporary isolated test state"
-      ],
-      "effects": [
-        "may execute only inside its declared gate"
-      ],
-      "decision": "keep",
-      "decisionReason": "active repository input or evidence",
-      "consumers": [],
-      "entrypointEvidence": [],
-      "release": {
-        "includedInTrackedRelease": false,
-        "runtimeCritical": true,
-        "status": "blocked-untracked"
-      }
-    },
-    {
-      "path": "eva2/evidence/living-core/live-b-native-a01-a02-durable-goals-v50-2026-08-24.json",
-      "gitState": "untracked",
-      "present": true,
-      "bytes": 4995,
-      "contentSha256": "d7e794281b22d180eda0167375513859b9dbc266d0f2b6a43846436be5489eaa",
-      "hashMode": "exact-bytes",
-      "role": "verification",
-      "roleRuleId": "eva2-verification",
-      "matchingRuleIds": [
-        "eva2-verification"
-      ],
-      "owner": "verification",
-      "inputs": [
-        "production or fixture contract"
-      ],
-      "outputs": [
-        "test decision"
-      ],
-      "state": [
-        "temporary isolated test state"
-      ],
-      "effects": [
-        "may execute only inside its declared gate"
-      ],
-      "decision": "keep",
-      "decisionReason": "active repository input or evidence",
-      "consumers": [],
-      "entrypointEvidence": [],
-      "release": {
-        "includedInTrackedRelease": false,
-        "runtimeCritical": true,
-        "status": "blocked-untracked"
-      }
-    },
-    {
-      "path": "eva2/evidence/living-core/live-b-native-a03-f03-goal-pivot-blocker-v50-2026-08-24.json",
-      "gitState": "untracked",
-      "present": true,
-      "bytes": 5362,
-      "contentSha256": "8e3eaed7bbe6fbac23e4fcd134d73c544bc0aaac773f4db5e5694654d9c4c8b7",
-      "hashMode": "exact-bytes",
-      "role": "verification",
-      "roleRuleId": "eva2-verification",
-      "matchingRuleIds": [
-        "eva2-verification"
-      ],
-      "owner": "verification",
-      "inputs": [
-        "production or fixture contract"
-      ],
-      "outputs": [
-        "test decision"
-      ],
-      "state": [
-        "temporary isolated test state"
-      ],
-      "effects": [
-        "may execute only inside its declared gate"
-      ],
-      "decision": "keep",
-      "decisionReason": "active repository input or evidence",
-      "consumers": [],
-      "entrypointEvidence": [],
-      "release": {
-        "includedInTrackedRelease": false,
-        "runtimeCritical": true,
-        "status": "blocked-untracked"
-      }
-    },
-    {
-      "path": "eva2/evidence/living-core/live-b-native-f04-terminal-goals-v50-2026-08-24.json",
-      "gitState": "untracked",
-      "present": true,
-      "bytes": 5578,
-      "contentSha256": "1f9a0f57e8c6aadde101456779d2b5850e43fff94b9d113db0116f4958c32b8b",
-      "hashMode": "exact-bytes",
-      "role": "verification",
-      "roleRuleId": "eva2-verification",
-      "matchingRuleIds": [
-        "eva2-verification"
-      ],
-      "owner": "verification",
-      "inputs": [
-        "production or fixture contract"
-      ],
-      "outputs": [
-        "test decision"
-      ],
-      "state": [
-        "temporary isolated test state"
-      ],
-      "effects": [
-        "may execute only inside its declared gate"
-      ],
-      "decision": "keep",
-      "decisionReason": "active repository input or evidence",
-      "consumers": [],
-      "entrypointEvidence": [],
-      "release": {
-        "includedInTrackedRelease": false,
-        "runtimeCritical": true,
-        "status": "blocked-untracked"
-      }
-    },
-    {
-      "path": "eva2/evidence/living-core/live-b-native-i02-self-chosen-repository-improvement-v52-2026-08-24.json",
-      "gitState": "untracked",
-      "present": true,
-      "bytes": 6801,
-      "contentSha256": "c376bf81001b5d5cb93f715ca8aebb88e22c50f050ffc4640ed003197488105b",
-      "hashMode": "exact-bytes",
-      "role": "verification",
-      "roleRuleId": "eva2-verification",
-      "matchingRuleIds": [
-        "eva2-verification"
-      ],
-      "owner": "verification",
-      "inputs": [
-        "production or fixture contract"
-      ],
-      "outputs": [
-        "test decision"
-      ],
-      "state": [
-        "temporary isolated test state"
-      ],
-      "effects": [
-        "may execute only inside its declared gate"
-      ],
-      "decision": "keep",
-      "decisionReason": "active repository input or evidence",
-      "consumers": [],
-      "entrypointEvidence": [],
-      "release": {
-        "includedInTrackedRelease": false,
-        "runtimeCritical": true,
-        "status": "blocked-untracked"
-      }
-    },
-    {
-      "path": "eva2/evidence/living-core/live-b-native-m01-cross-channel-continuity-v53-2026-08-24.json",
-      "gitState": "untracked",
-      "present": true,
-      "bytes": 9080,
-      "contentSha256": "9c75431b27003f06b62a6eecac96c4bc2438f7d7ecadda82e7cabca89de5ba72",
-      "hashMode": "exact-bytes",
-      "role": "verification",
-      "roleRuleId": "eva2-verification",
-      "matchingRuleIds": [
-        "eva2-verification"
-      ],
-      "owner": "verification",
-      "inputs": [
-        "production or fixture contract"
-      ],
-      "outputs": [
-        "test decision"
-      ],
-      "state": [
-        "temporary isolated test state"
-      ],
-      "effects": [
-        "may execute only inside its declared gate"
-      ],
-      "decision": "keep",
-      "decisionReason": "active repository input or evidence",
-      "consumers": [],
-      "entrypointEvidence": [],
-      "release": {
-        "includedInTrackedRelease": false,
-        "runtimeCritical": true,
-        "status": "blocked-untracked"
-      }
-    },
-    {
-      "path": "eva2/evidence/living-core/live-b-native-p03-fanout-v43-2026-08-24.json",
-      "gitState": "untracked",
-      "present": true,
-      "bytes": 4413,
-      "contentSha256": "222338d9d9783a149c182167c5eabcc8346a1024ec1f983418ea1327103d7426",
-      "hashMode": "exact-bytes",
-      "role": "verification",
-      "roleRuleId": "eva2-verification",
-      "matchingRuleIds": [
-        "eva2-verification"
-      ],
-      "owner": "verification",
-      "inputs": [
-        "production or fixture contract"
-      ],
-      "outputs": [
-        "test decision"
-      ],
-      "state": [
-        "temporary isolated test state"
-      ],
-      "effects": [
-        "may execute only inside its declared gate"
-      ],
-      "decision": "keep",
-      "decisionReason": "active repository input or evidence",
-      "consumers": [],
-      "entrypointEvidence": [],
-      "release": {
-        "includedInTrackedRelease": false,
-        "runtimeCritical": true,
-        "status": "blocked-untracked"
-      }
-    },
-    {
-      "path": "eva2/evidence/living-core/live-b-native-telegram-ingress-2026-08-24.json",
-      "gitState": "untracked",
-      "present": true,
-      "bytes": 6164,
-      "contentSha256": "dffdd21c792784d24e60d85fa1e9576de26601714fa46b24ed01b53923d30acb",
-      "hashMode": "exact-bytes",
-      "role": "verification",
-      "roleRuleId": "eva2-verification",
-      "matchingRuleIds": [
-        "eva2-verification"
-      ],
-      "owner": "verification",
-      "inputs": [
-        "production or fixture contract"
-      ],
-      "outputs": [
-        "test decision"
-      ],
-      "state": [
-        "temporary isolated test state"
-      ],
-      "effects": [
-        "may execute only inside its declared gate"
-      ],
-      "decision": "keep",
-      "decisionReason": "active repository input or evidence",
-      "consumers": [],
-      "entrypointEvidence": [],
-      "release": {
-        "includedInTrackedRelease": false,
-        "runtimeCritical": true,
-        "status": "blocked-untracked"
-      }
-    },
-    {
-      "path": "eva2/evidence/living-core/live-b-native-v43-preflight-2026-08-24.json",
-      "gitState": "untracked",
-      "present": true,
-      "bytes": 1465,
-      "contentSha256": "b99d02cc40025eb9023ab875dd2dc4077b7ad6f59fa398ea180f3c1313459779",
-      "hashMode": "exact-bytes",
-      "role": "verification",
-      "roleRuleId": "eva2-verification",
-      "matchingRuleIds": [
-        "eva2-verification"
-      ],
-      "owner": "verification",
-      "inputs": [
-        "production or fixture contract"
-      ],
-      "outputs": [
-        "test decision"
-      ],
-      "state": [
-        "temporary isolated test state"
-      ],
-      "effects": [
-        "may execute only inside its declared gate"
-      ],
-      "decision": "keep",
-      "decisionReason": "active repository input or evidence",
-      "consumers": [],
-      "entrypointEvidence": [],
-      "release": {
-        "includedInTrackedRelease": false,
-        "runtimeCritical": true,
-        "status": "blocked-untracked"
-      }
-    },
-    {
-      "path": "eva2/evidence/living-core/live-b-native-x01-crash-recovery-v43-2026-08-24.json",
-      "gitState": "untracked",
-      "present": true,
-      "bytes": 4112,
-      "contentSha256": "6b86ba251d1e019022f61169dead89f5b004a0c4b92b5b234fe2ac04a0c5f9e5",
-      "hashMode": "exact-bytes",
-      "role": "verification",
-      "roleRuleId": "eva2-verification",
-      "matchingRuleIds": [
-        "eva2-verification"
-      ],
-      "owner": "verification",
-      "inputs": [
-        "production or fixture contract"
-      ],
-      "outputs": [
-        "test decision"
-      ],
-      "state": [
-        "temporary isolated test state"
-      ],
-      "effects": [
-        "may execute only inside its declared gate"
-      ],
-      "decision": "keep",
-      "decisionReason": "active repository input or evidence",
-      "consumers": [],
-      "entrypointEvidence": [],
-      "release": {
-        "includedInTrackedRelease": false,
-        "runtimeCritical": true,
-        "status": "blocked-untracked"
-      }
-    },
-    {
-      "path": "eva2/evidence/living-core/live-b-natural-action-expression-2026-08-23.json",
-      "gitState": "untracked",
-      "present": true,
-      "bytes": 7922,
-      "contentSha256": "f5703de4bbd9aa99cc28b6687f11df27db1106bd83a6135d1f6987017b35eb92",
-      "hashMode": "exact-bytes",
-      "role": "verification",
-      "roleRuleId": "eva2-verification",
-      "matchingRuleIds": [
-        "eva2-verification"
-      ],
-      "owner": "verification",
-      "inputs": [
-        "production or fixture contract"
-      ],
-      "outputs": [
-        "test decision"
-      ],
-      "state": [
-        "temporary isolated test state"
-      ],
-      "effects": [
-        "may execute only inside its declared gate"
-      ],
-      "decision": "keep",
-      "decisionReason": "active repository input or evidence",
-      "consumers": [],
-      "entrypointEvidence": [],
-      "release": {
-        "includedInTrackedRelease": false,
-        "runtimeCritical": true,
-        "status": "blocked-untracked"
-      }
-    },
-    {
-      "path": "eva2/evidence/living-core/live-b-natural-automation-resolution-2026-08-23.json",
-      "gitState": "untracked",
-      "present": true,
-      "bytes": 2280,
-      "contentSha256": "f3fd296b43e62eab1eb040b7b3fec5f3a34a2fc8763451c8675e0fd3a27f1da9",
-      "hashMode": "exact-bytes",
-      "role": "verification",
-      "roleRuleId": "eva2-verification",
-      "matchingRuleIds": [
-        "eva2-verification"
-      ],
-      "owner": "verification",
-      "inputs": [
-        "production or fixture contract"
-      ],
-      "outputs": [
-        "test decision"
-      ],
-      "state": [
-        "temporary isolated test state"
-      ],
-      "effects": [
-        "may execute only inside its declared gate"
-      ],
-      "decision": "keep",
-      "decisionReason": "active repository input or evidence",
-      "consumers": [],
-      "entrypointEvidence": [],
-      "release": {
-        "includedInTrackedRelease": false,
-        "runtimeCritical": true,
-        "status": "blocked-untracked"
-      }
-    },
-    {
-      "path": "eva2/evidence/living-core/live-b-paid-fulfillment-2026-08-24.json",
-      "gitState": "untracked",
-      "present": true,
-      "bytes": 4128,
-      "contentSha256": "25c276d1375a58eba9001afca2428ecfe6d028d34094686e58de8e7dfac8619a",
-      "hashMode": "exact-bytes",
-      "role": "verification",
-      "roleRuleId": "eva2-verification",
-      "matchingRuleIds": [
-        "eva2-verification"
-      ],
-      "owner": "verification",
-      "inputs": [
-        "production or fixture contract"
-      ],
-      "outputs": [
-        "test decision"
-      ],
-      "state": [
-        "temporary isolated test state"
-      ],
-      "effects": [
-        "may execute only inside its declared gate"
-      ],
-      "decision": "keep",
-      "decisionReason": "active repository input or evidence",
-      "consumers": [],
-      "entrypointEvidence": [],
-      "release": {
-        "includedInTrackedRelease": false,
-        "runtimeCritical": true,
-        "status": "blocked-untracked"
-      }
-    },
-    {
-      "path": "eva2/evidence/living-core/live-b-proactive-event-prefilter-2026-08-23.json",
-      "gitState": "untracked",
-      "present": true,
-      "bytes": 2234,
-      "contentSha256": "bdb748443aa3f3ca603feecf6cbf38c533c7f5646cf6885e8f1ce881efac6bc8",
-      "hashMode": "exact-bytes",
-      "role": "verification",
-      "roleRuleId": "eva2-verification",
-      "matchingRuleIds": [
-        "eva2-verification"
-      ],
-      "owner": "verification",
-      "inputs": [
-        "production or fixture contract"
-      ],
-      "outputs": [
-        "test decision"
-      ],
-      "state": [
-        "temporary isolated test state"
-      ],
-      "effects": [
-        "may execute only inside its declared gate"
-      ],
-      "decision": "keep",
-      "decisionReason": "active repository input or evidence",
-      "consumers": [],
-      "entrypointEvidence": [],
-      "release": {
-        "includedInTrackedRelease": false,
-        "runtimeCritical": true,
-        "status": "blocked-untracked"
-      }
-    },
-    {
-      "path": "eva2/evidence/living-core/live-b-proactive-exact-delivery-2026-08-23.json",
-      "gitState": "untracked",
-      "present": true,
-      "bytes": 2682,
-      "contentSha256": "e1996ab7065e2d00dcd8ae59b0dcf3694d4618ab4cf9312d5e8bc57da008544f",
-      "hashMode": "exact-bytes",
-      "role": "verification",
-      "roleRuleId": "eva2-verification",
-      "matchingRuleIds": [
-        "eva2-verification"
-      ],
-      "owner": "verification",
-      "inputs": [
-        "production or fixture contract"
-      ],
-      "outputs": [
-        "test decision"
-      ],
-      "state": [
-        "temporary isolated test state"
-      ],
-      "effects": [
-        "may execute only inside its declared gate"
-      ],
-      "decision": "keep",
-      "decisionReason": "active repository input or evidence",
-      "consumers": [],
-      "entrypointEvidence": [],
-      "release": {
-        "includedInTrackedRelease": false,
-        "runtimeCritical": true,
-        "status": "blocked-untracked"
-      }
-    },
-    {
-      "path": "eva2/evidence/living-core/live-b-proactive-outbox-recovery-2026-08-23.json",
-      "gitState": "untracked",
-      "present": true,
-      "bytes": 2603,
-      "contentSha256": "930078860b19ef18fe346436ac06ee3e2b278fd5c409c6219ce3d71f1bf2e141",
-      "hashMode": "exact-bytes",
-      "role": "verification",
-      "roleRuleId": "eva2-verification",
-      "matchingRuleIds": [
-        "eva2-verification"
-      ],
-      "owner": "verification",
-      "inputs": [
-        "production or fixture contract"
-      ],
-      "outputs": [
-        "test decision"
-      ],
-      "state": [
-        "temporary isolated test state"
-      ],
-      "effects": [
-        "may execute only inside its declared gate"
-      ],
-      "decision": "keep",
-      "decisionReason": "active repository input or evidence",
-      "consumers": [],
-      "entrypointEvidence": [],
-      "release": {
-        "includedInTrackedRelease": false,
-        "runtimeCritical": true,
-        "status": "blocked-untracked"
-      }
-    },
-    {
-      "path": "eva2/evidence/living-core/live-b-proactive-telegram-ready-2026-08-23.json",
-      "gitState": "untracked",
-      "present": true,
-      "bytes": 2079,
-      "contentSha256": "15986a2efb4f3335be674c6f3987387acbf773b83a77e881807da01d7b9551b1",
-      "hashMode": "exact-bytes",
-      "role": "verification",
-      "roleRuleId": "eva2-verification",
-      "matchingRuleIds": [
-        "eva2-verification"
-      ],
-      "owner": "verification",
-      "inputs": [
-        "production or fixture contract"
-      ],
-      "outputs": [
-        "test decision"
-      ],
-      "state": [
-        "temporary isolated test state"
-      ],
-      "effects": [
-        "may execute only inside its declared gate"
-      ],
-      "decision": "keep",
-      "decisionReason": "active repository input or evidence",
-      "consumers": [],
-      "entrypointEvidence": [],
-      "release": {
-        "includedInTrackedRelease": false,
-        "runtimeCritical": true,
-        "status": "blocked-untracked"
-      }
-    },
-    {
-      "path": "eva2/evidence/living-core/live-b-sensory-automation-advanced-2026-08-23.json",
-      "gitState": "untracked",
-      "present": true,
-      "bytes": 4912,
-      "contentSha256": "27c96f6d5d1a244c7f10232848c2436fc6373270af863194236f2c051c9a4ebb",
-      "hashMode": "exact-bytes",
-      "role": "verification",
-      "roleRuleId": "eva2-verification",
-      "matchingRuleIds": [
-        "eva2-verification"
-      ],
-      "owner": "verification",
-      "inputs": [
-        "production or fixture contract"
-      ],
-      "outputs": [
-        "test decision"
-      ],
-      "state": [
-        "temporary isolated test state"
-      ],
-      "effects": [
-        "may execute only inside its declared gate"
-      ],
-      "decision": "keep",
-      "decisionReason": "active repository input or evidence",
-      "consumers": [],
-      "entrypointEvidence": [],
-      "release": {
-        "includedInTrackedRelease": false,
-        "runtimeCritical": true,
-        "status": "blocked-untracked"
-      }
-    },
-    {
-      "path": "eva2/evidence/living-core/live-b-style-memory-advanced-automation-2026-08-23.json",
-      "gitState": "untracked",
-      "present": true,
-      "bytes": 4490,
-      "contentSha256": "5cf92670b842b1ca764de58bc52b0d77dd704b88c8eeddb002ad6a2560968364",
-      "hashMode": "exact-bytes",
-      "role": "verification",
-      "roleRuleId": "eva2-verification",
-      "matchingRuleIds": [
-        "eva2-verification"
-      ],
-      "owner": "verification",
-      "inputs": [
-        "production or fixture contract"
-      ],
-      "outputs": [
-        "test decision"
-      ],
-      "state": [
-        "temporary isolated test state"
-      ],
-      "effects": [
-        "may execute only inside its declared gate"
-      ],
-      "decision": "keep",
-      "decisionReason": "active repository input or evidence",
-      "consumers": [],
-      "entrypointEvidence": [],
-      "release": {
-        "includedInTrackedRelease": false,
-        "runtimeCritical": true,
-        "status": "blocked-untracked"
-      }
-    },
-    {
-      "path": "eva2/evidence/living-core/live-b-style-switch-routing-2026-08-23.json",
-      "gitState": "untracked",
-      "present": true,
-      "bytes": 3120,
-      "contentSha256": "3f46cad19198f7bfbfbe6e0ef4aef1b98a69f4574821b9ebd1d9ff6e36b0c59e",
-      "hashMode": "exact-bytes",
-      "role": "verification",
-      "roleRuleId": "eva2-verification",
-      "matchingRuleIds": [
-        "eva2-verification"
-      ],
-      "owner": "verification",
-      "inputs": [
-        "production or fixture contract"
-      ],
-      "outputs": [
-        "test decision"
-      ],
-      "state": [
-        "temporary isolated test state"
-      ],
-      "effects": [
-        "may execute only inside its declared gate"
-      ],
-      "decision": "keep",
-      "decisionReason": "active repository input or evidence",
-      "consumers": [],
-      "entrypointEvidence": [],
-      "release": {
-        "includedInTrackedRelease": false,
-        "runtimeCritical": true,
-        "status": "blocked-untracked"
-      }
-    },
-    {
-      "path": "eva2/evidence/living-core/live-b-time-numeric-automations-2026-08-23.json",
-      "gitState": "untracked",
-      "present": true,
-      "bytes": 2979,
-      "contentSha256": "a91f79164ff3a58176ca9c88cb7fbe52d1f56fdf8fdd4bfbd144f97ecabb8f67",
-      "hashMode": "exact-bytes",
-      "role": "verification",
-      "roleRuleId": "eva2-verification",
-      "matchingRuleIds": [
-        "eva2-verification"
-      ],
-      "owner": "verification",
-      "inputs": [
-        "production or fixture contract"
-      ],
-      "outputs": [
-        "test decision"
-      ],
-      "state": [
-        "temporary isolated test state"
-      ],
-      "effects": [
-        "may execute only inside its declared gate"
-      ],
-      "decision": "keep",
-      "decisionReason": "active repository input or evidence",
-      "consumers": [],
-      "entrypointEvidence": [],
-      "release": {
-        "includedInTrackedRelease": false,
-        "runtimeCritical": true,
-        "status": "blocked-untracked"
-      }
-    },
-    {
       "path": "eva2/evidence/living-core/live-b-v53-source-provenance-2026-08-24.json",
       "gitState": "tracked",
       "present": true,
@@ -23743,41 +21047,6 @@
       }
     },
     {
-      "path": "eva2/evidence/living-core/live-current-candidate-advanced-2026-08-23.json",
-      "gitState": "untracked",
-      "present": true,
-      "bytes": 3802,
-      "contentSha256": "9df8476b78c6b33d61a926d78e88b2ceb580a552503ed4a80e874664eec96f05",
-      "hashMode": "exact-bytes",
-      "role": "verification",
-      "roleRuleId": "eva2-verification",
-      "matchingRuleIds": [
-        "eva2-verification"
-      ],
-      "owner": "verification",
-      "inputs": [
-        "production or fixture contract"
-      ],
-      "outputs": [
-        "test decision"
-      ],
-      "state": [
-        "temporary isolated test state"
-      ],
-      "effects": [
-        "may execute only inside its declared gate"
-      ],
-      "decision": "keep",
-      "decisionReason": "active repository input or evidence",
-      "consumers": [],
-      "entrypointEvidence": [],
-      "release": {
-        "includedInTrackedRelease": false,
-        "runtimeCritical": true,
-        "status": "blocked-untracked"
-      }
-    },
-    {
       "path": "eva2/evidence/living-core/live-eva1-memory-source-audit-2026-08-27.json",
       "gitState": "tracked",
       "present": true,
@@ -23810,146 +21079,6 @@
         "includedInTrackedRelease": true,
         "runtimeCritical": true,
         "status": "included-tracked-critical"
-      }
-    },
-    {
-      "path": "eva2/evidence/living-core/live-fresh-install-gate-2026-08-23.json",
-      "gitState": "untracked",
-      "present": true,
-      "bytes": 3381,
-      "contentSha256": "a1b6eaa049a0ce18d25c7280a82c4da78f652babe86134526fbe9865098f7562",
-      "hashMode": "exact-bytes",
-      "role": "verification",
-      "roleRuleId": "eva2-verification",
-      "matchingRuleIds": [
-        "eva2-verification"
-      ],
-      "owner": "verification",
-      "inputs": [
-        "production or fixture contract"
-      ],
-      "outputs": [
-        "test decision"
-      ],
-      "state": [
-        "temporary isolated test state"
-      ],
-      "effects": [
-        "may execute only inside its declared gate"
-      ],
-      "decision": "keep",
-      "decisionReason": "active repository input or evidence",
-      "consumers": [],
-      "entrypointEvidence": [],
-      "release": {
-        "includedInTrackedRelease": false,
-        "runtimeCritical": true,
-        "status": "blocked-untracked"
-      }
-    },
-    {
-      "path": "eva2/evidence/living-core/live-full-stack-install-gate-2026-08-23.json",
-      "gitState": "untracked",
-      "present": true,
-      "bytes": 7690,
-      "contentSha256": "9ba4b1b0fa299df72079b45ce7e6165c4971de5df84c116170c3cde6cdda6e17",
-      "hashMode": "exact-bytes",
-      "role": "verification",
-      "roleRuleId": "eva2-verification",
-      "matchingRuleIds": [
-        "eva2-verification"
-      ],
-      "owner": "verification",
-      "inputs": [
-        "production or fixture contract"
-      ],
-      "outputs": [
-        "test decision"
-      ],
-      "state": [
-        "temporary isolated test state"
-      ],
-      "effects": [
-        "may execute only inside its declared gate"
-      ],
-      "decision": "keep",
-      "decisionReason": "active repository input or evidence",
-      "consumers": [],
-      "entrypointEvidence": [],
-      "release": {
-        "includedInTrackedRelease": false,
-        "runtimeCritical": true,
-        "status": "blocked-untracked"
-      }
-    },
-    {
-      "path": "eva2/evidence/living-core/live-hindsight-fresh-install-2026-08-23.json",
-      "gitState": "untracked",
-      "present": true,
-      "bytes": 3526,
-      "contentSha256": "70d03e4127d09db931af1a55e46a8d72e5a875c7d053fe8afb4ec8383782c55e",
-      "hashMode": "exact-bytes",
-      "role": "verification",
-      "roleRuleId": "eva2-verification",
-      "matchingRuleIds": [
-        "eva2-verification"
-      ],
-      "owner": "verification",
-      "inputs": [
-        "production or fixture contract"
-      ],
-      "outputs": [
-        "test decision"
-      ],
-      "state": [
-        "temporary isolated test state"
-      ],
-      "effects": [
-        "may execute only inside its declared gate"
-      ],
-      "decision": "keep",
-      "decisionReason": "active repository input or evidence",
-      "consumers": [],
-      "entrypointEvidence": [],
-      "release": {
-        "includedInTrackedRelease": false,
-        "runtimeCritical": true,
-        "status": "blocked-untracked"
-      }
-    },
-    {
-      "path": "eva2/evidence/living-core/live-human-medium-candidate-2026-08-23.json",
-      "gitState": "untracked",
-      "present": true,
-      "bytes": 3768,
-      "contentSha256": "639a9036739587137bc5b30f3f1d49fe2dce1b21f5428d1a82434884c49550e8",
-      "hashMode": "exact-bytes",
-      "role": "verification",
-      "roleRuleId": "eva2-verification",
-      "matchingRuleIds": [
-        "eva2-verification"
-      ],
-      "owner": "verification",
-      "inputs": [
-        "production or fixture contract"
-      ],
-      "outputs": [
-        "test decision"
-      ],
-      "state": [
-        "temporary isolated test state"
-      ],
-      "effects": [
-        "may execute only inside its declared gate"
-      ],
-      "decision": "keep",
-      "decisionReason": "active repository input or evidence",
-      "consumers": [],
-      "entrypointEvidence": [],
-      "release": {
-        "includedInTrackedRelease": false,
-        "runtimeCritical": true,
-        "status": "blocked-untracked"
       }
     },
     {
@@ -25073,111 +22202,6 @@
       }
     },
     {
-      "path": "eva2/evidence/living-core/resident-long-run-v1-2026-08-24.json",
-      "gitState": "untracked",
-      "present": true,
-      "bytes": 6157,
-      "contentSha256": "ddd01d82cba6d944888e54902cec990bd2f0c2fcf3ec99dec393651e0aa65a83",
-      "hashMode": "exact-bytes",
-      "role": "verification",
-      "roleRuleId": "eva2-verification",
-      "matchingRuleIds": [
-        "eva2-verification"
-      ],
-      "owner": "verification",
-      "inputs": [
-        "production or fixture contract"
-      ],
-      "outputs": [
-        "test decision"
-      ],
-      "state": [
-        "temporary isolated test state"
-      ],
-      "effects": [
-        "may execute only inside its declared gate"
-      ],
-      "decision": "keep",
-      "decisionReason": "active repository input or evidence",
-      "consumers": [],
-      "entrypointEvidence": [],
-      "release": {
-        "includedInTrackedRelease": false,
-        "runtimeCritical": true,
-        "status": "blocked-untracked"
-      }
-    },
-    {
-      "path": "eva2/evidence/living-core/signed-ab-operator-gate-2026-08-23.json",
-      "gitState": "untracked",
-      "present": true,
-      "bytes": 2016,
-      "contentSha256": "aec7d25d669b0643fcb07f9dc56d44d54451c1c426b2bb0f0edadb7bc6833d8e",
-      "hashMode": "exact-bytes",
-      "role": "verification",
-      "roleRuleId": "eva2-verification",
-      "matchingRuleIds": [
-        "eva2-verification"
-      ],
-      "owner": "verification",
-      "inputs": [
-        "production or fixture contract"
-      ],
-      "outputs": [
-        "test decision"
-      ],
-      "state": [
-        "temporary isolated test state"
-      ],
-      "effects": [
-        "may execute only inside its declared gate"
-      ],
-      "decision": "keep",
-      "decisionReason": "active repository input or evidence",
-      "consumers": [],
-      "entrypointEvidence": [],
-      "release": {
-        "includedInTrackedRelease": false,
-        "runtimeCritical": true,
-        "status": "blocked-untracked"
-      }
-    },
-    {
-      "path": "eva2/evidence/living-core/wyoming-local-voice-rebuild-2026-08-26.json",
-      "gitState": "untracked",
-      "present": true,
-      "bytes": 2951,
-      "contentSha256": "63782c79bacf5dc5d8acbebad7bf7a606101f1ade5b78f6b3325b590bc3314d4",
-      "hashMode": "exact-bytes",
-      "role": "verification",
-      "roleRuleId": "eva2-verification",
-      "matchingRuleIds": [
-        "eva2-verification"
-      ],
-      "owner": "verification",
-      "inputs": [
-        "production or fixture contract"
-      ],
-      "outputs": [
-        "test decision"
-      ],
-      "state": [
-        "temporary isolated test state"
-      ],
-      "effects": [
-        "may execute only inside its declared gate"
-      ],
-      "decision": "keep",
-      "decisionReason": "active repository input or evidence",
-      "consumers": [],
-      "entrypointEvidence": [],
-      "release": {
-        "includedInTrackedRelease": false,
-        "runtimeCritical": true,
-        "status": "blocked-untracked"
-      }
-    },
-    {
       "path": "eva2/evidence/product/CO-001-telegram-live-drafts-contract-2026-09-04.json",
       "gitState": "tracked",
       "present": true,
@@ -25283,11 +22307,11 @@
       }
     },
     {
-      "path": "eva2/evidence/product/CO-003-owner-memory-sources-2026-09-07.json",
+      "path": "eva2/evidence/product/CO-006-autonomous-memory-2026-09-08.json",
       "gitState": "tracked",
       "present": true,
-      "bytes": 2786,
-      "contentSha256": "f5023122a378ebf4c93ed03d9a1ba793ffd8f75ee2a8ce5440826485a8675fd7",
+      "bytes": 30919,
+      "contentSha256": "59dc1cddc23ae6354ece4d08646093f9c8715513ce7d2c4bdefbccedc7390e09",
       "hashMode": "exact-bytes",
       "role": "verification",
       "roleRuleId": "eva2-verification",
@@ -25918,6 +22942,741 @@
       "present": true,
       "bytes": 192959,
       "contentSha256": "072e2712a8caeb4e28ad2a620568502ab63617f72ad18b2f6144dd59d393c957",
+      "hashMode": "exact-bytes",
+      "role": "verification",
+      "roleRuleId": "eva2-verification",
+      "matchingRuleIds": [
+        "eva2-verification"
+      ],
+      "owner": "verification",
+      "inputs": [
+        "production or fixture contract"
+      ],
+      "outputs": [
+        "test decision"
+      ],
+      "state": [
+        "temporary isolated test state"
+      ],
+      "effects": [
+        "may execute only inside its declared gate"
+      ],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": true,
+        "runtimeCritical": true,
+        "status": "included-tracked-critical"
+      }
+    },
+    {
+      "path": "eva2/evidence/product/TL-001-candidate-build-2026-09-08.json",
+      "gitState": "tracked",
+      "present": true,
+      "bytes": 69530,
+      "contentSha256": "cf8acbec0007b83443e4468bebd05fcb02c159dc6c556b7e0e2679e7400b7cc8",
+      "hashMode": "exact-bytes",
+      "role": "verification",
+      "roleRuleId": "eva2-verification",
+      "matchingRuleIds": [
+        "eva2-verification"
+      ],
+      "owner": "verification",
+      "inputs": [
+        "production or fixture contract"
+      ],
+      "outputs": [
+        "test decision"
+      ],
+      "state": [
+        "temporary isolated test state"
+      ],
+      "effects": [
+        "may execute only inside its declared gate"
+      ],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": true,
+        "runtimeCritical": true,
+        "status": "included-tracked-critical"
+      }
+    },
+    {
+      "path": "eva2/evidence/product/TL-001-conversation-chain-2026-09-08.json",
+      "gitState": "tracked",
+      "present": true,
+      "bytes": 39008,
+      "contentSha256": "c5a2efc7a450a1c7ef771197a2c6c8af39459644a9f8db604b80ab6acd2648cc",
+      "hashMode": "exact-bytes",
+      "role": "verification",
+      "roleRuleId": "eva2-verification",
+      "matchingRuleIds": [
+        "eva2-verification"
+      ],
+      "owner": "verification",
+      "inputs": [
+        "production or fixture contract"
+      ],
+      "outputs": [
+        "test decision"
+      ],
+      "state": [
+        "temporary isolated test state"
+      ],
+      "effects": [
+        "may execute only inside its declared gate"
+      ],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": true,
+        "runtimeCritical": true,
+        "status": "included-tracked-critical"
+      }
+    },
+    {
+      "path": "eva2/evidence/product/TL-001-durable-model-usage-2026-09-08.json",
+      "gitState": "tracked",
+      "present": true,
+      "bytes": 23245,
+      "contentSha256": "5f73e8130cef5095bda350522a5381bc23276b5ef1e10d6f57aad16cd2d369b4",
+      "hashMode": "exact-bytes",
+      "role": "verification",
+      "roleRuleId": "eva2-verification",
+      "matchingRuleIds": [
+        "eva2-verification"
+      ],
+      "owner": "verification",
+      "inputs": [
+        "production or fixture contract"
+      ],
+      "outputs": [
+        "test decision"
+      ],
+      "state": [
+        "temporary isolated test state"
+      ],
+      "effects": [
+        "may execute only inside its declared gate"
+      ],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": true,
+        "runtimeCritical": true,
+        "status": "included-tracked-critical"
+      }
+    },
+    {
+      "path": "eva2/evidence/product/TL-001-final-candidate-2026-09-08.json",
+      "gitState": "tracked",
+      "present": true,
+      "bytes": 48368,
+      "contentSha256": "f9d49dffa10552a4309d6ff423f751f6b23afb8887e43ba7154966283328d17b",
+      "hashMode": "exact-bytes",
+      "role": "verification",
+      "roleRuleId": "eva2-verification",
+      "matchingRuleIds": [
+        "eva2-verification"
+      ],
+      "owner": "verification",
+      "inputs": [
+        "production or fixture contract"
+      ],
+      "outputs": [
+        "test decision"
+      ],
+      "state": [
+        "temporary isolated test state"
+      ],
+      "effects": [
+        "may execute only inside its declared gate"
+      ],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": true,
+        "runtimeCritical": true,
+        "status": "included-tracked-critical"
+      }
+    },
+    {
+      "path": "eva2/evidence/product/TL-001-native-poller-stop-2026-09-08.json",
+      "gitState": "tracked",
+      "present": true,
+      "bytes": 22090,
+      "contentSha256": "b9f60271114515fbf09876e42bd411d7e7d52654b5880c535b468538287c031b",
+      "hashMode": "exact-bytes",
+      "role": "verification",
+      "roleRuleId": "eva2-verification",
+      "matchingRuleIds": [
+        "eva2-verification"
+      ],
+      "owner": "verification",
+      "inputs": [
+        "production or fixture contract"
+      ],
+      "outputs": [
+        "test decision"
+      ],
+      "state": [
+        "temporary isolated test state"
+      ],
+      "effects": [
+        "may execute only inside its declared gate"
+      ],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": true,
+        "runtimeCritical": true,
+        "status": "included-tracked-critical"
+      }
+    },
+    {
+      "path": "eva2/evidence/product/TL-001-owner-stop-2026-09-08.json",
+      "gitState": "tracked",
+      "present": true,
+      "bytes": 54527,
+      "contentSha256": "b061bdc0d2d7b560767f8a6f00c7cec306eda7b1454e1e249a5a9b02466dabc7",
+      "hashMode": "exact-bytes",
+      "role": "verification",
+      "roleRuleId": "eva2-verification",
+      "matchingRuleIds": [
+        "eva2-verification"
+      ],
+      "owner": "verification",
+      "inputs": [
+        "production or fixture contract"
+      ],
+      "outputs": [
+        "test decision"
+      ],
+      "state": [
+        "temporary isolated test state"
+      ],
+      "effects": [
+        "may execute only inside its declared gate"
+      ],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": true,
+        "runtimeCritical": true,
+        "status": "included-tracked-critical"
+      }
+    },
+    {
+      "path": "eva2/evidence/product/TL-001-provider-stop-2026-09-08.json",
+      "gitState": "tracked",
+      "present": true,
+      "bytes": 13468,
+      "contentSha256": "23b225d04a3a5049b4503c94160eef84c7e678eb36f6103880054ae348e4be3a",
+      "hashMode": "exact-bytes",
+      "role": "verification",
+      "roleRuleId": "eva2-verification",
+      "matchingRuleIds": [
+        "eva2-verification"
+      ],
+      "owner": "verification",
+      "inputs": [
+        "production or fixture contract"
+      ],
+      "outputs": [
+        "test decision"
+      ],
+      "state": [
+        "temporary isolated test state"
+      ],
+      "effects": [
+        "may execute only inside its declared gate"
+      ],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": true,
+        "runtimeCritical": true,
+        "status": "included-tracked-critical"
+      }
+    },
+    {
+      "path": "eva2/evidence/product/TL-001-real-model-chain-2026-09-08.json",
+      "gitState": "tracked",
+      "present": true,
+      "bytes": 127051,
+      "contentSha256": "797e383c42757f82a3c27089f57b8b31678d97d63252df8ae0d3855b20fb123f",
+      "hashMode": "exact-bytes",
+      "role": "verification",
+      "roleRuleId": "eva2-verification",
+      "matchingRuleIds": [
+        "eva2-verification"
+      ],
+      "owner": "verification",
+      "inputs": [
+        "production or fixture contract"
+      ],
+      "outputs": [
+        "test decision"
+      ],
+      "state": [
+        "temporary isolated test state"
+      ],
+      "effects": [
+        "may execute only inside its declared gate"
+      ],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": true,
+        "runtimeCritical": true,
+        "status": "included-tracked-critical"
+      }
+    },
+    {
+      "path": "eva2/evidence/product/TL-001-runtime-serialization-2026-09-08.json",
+      "gitState": "tracked",
+      "present": true,
+      "bytes": 42656,
+      "contentSha256": "9193bdaebc694a963ade378bce95b0399cba7612291f1e7fd1d4befaa483152a",
+      "hashMode": "exact-bytes",
+      "role": "verification",
+      "roleRuleId": "eva2-verification",
+      "matchingRuleIds": [
+        "eva2-verification"
+      ],
+      "owner": "verification",
+      "inputs": [
+        "production or fixture contract"
+      ],
+      "outputs": [
+        "test decision"
+      ],
+      "state": [
+        "temporary isolated test state"
+      ],
+      "effects": [
+        "may execute only inside its declared gate"
+      ],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": true,
+        "runtimeCritical": true,
+        "status": "included-tracked-critical"
+      }
+    },
+    {
+      "path": "eva2/evidence/product/TL-001-storage-foundation-2026-09-08.json",
+      "gitState": "tracked",
+      "present": true,
+      "bytes": 16056,
+      "contentSha256": "89c0566efcba19a01168c673004638a236bec074d68f098eccdc3454614c61a6",
+      "hashMode": "exact-bytes",
+      "role": "verification",
+      "roleRuleId": "eva2-verification",
+      "matchingRuleIds": [
+        "eva2-verification"
+      ],
+      "owner": "verification",
+      "inputs": [
+        "production or fixture contract"
+      ],
+      "outputs": [
+        "test decision"
+      ],
+      "state": [
+        "temporary isolated test state"
+      ],
+      "effects": [
+        "may execute only inside its declared gate"
+      ],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": true,
+        "runtimeCritical": true,
+        "status": "included-tracked-critical"
+      }
+    },
+    {
+      "path": "eva2/evidence/product/TL-001-telegram-stop-2026-09-08.json",
+      "gitState": "tracked",
+      "present": true,
+      "bytes": 14692,
+      "contentSha256": "8f26858fe30e8c8d8a01ea89e8a478d2106d7e450b3650fe2c85125db2cb9746",
+      "hashMode": "exact-bytes",
+      "role": "verification",
+      "roleRuleId": "eva2-verification",
+      "matchingRuleIds": [
+        "eva2-verification"
+      ],
+      "owner": "verification",
+      "inputs": [
+        "production or fixture contract"
+      ],
+      "outputs": [
+        "test decision"
+      ],
+      "state": [
+        "temporary isolated test state"
+      ],
+      "effects": [
+        "may execute only inside its declared gate"
+      ],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": true,
+        "runtimeCritical": true,
+        "status": "included-tracked-critical"
+      }
+    },
+    {
+      "path": "eva2/evidence/product/TL-001-turn-limit-2026-09-08.json",
+      "gitState": "tracked",
+      "present": true,
+      "bytes": 31698,
+      "contentSha256": "78a47fa0d7549e7bb60e461f24d3d2d8a272625dcdbd83623a7dd648747b9edc",
+      "hashMode": "exact-bytes",
+      "role": "verification",
+      "roleRuleId": "eva2-verification",
+      "matchingRuleIds": [
+        "eva2-verification"
+      ],
+      "owner": "verification",
+      "inputs": [
+        "production or fixture contract"
+      ],
+      "outputs": [
+        "test decision"
+      ],
+      "state": [
+        "temporary isolated test state"
+      ],
+      "effects": [
+        "may execute only inside its declared gate"
+      ],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": true,
+        "runtimeCritical": true,
+        "status": "included-tracked-critical"
+      }
+    },
+    {
+      "path": "eva2/evidence/product/TL-002-completion-2026-09-08.json",
+      "gitState": "tracked",
+      "present": true,
+      "bytes": 21145,
+      "contentSha256": "00e8c8c816b7ee49bb4d1d0a0dcd96423af97e46080939121e743ad59a92fdda",
+      "hashMode": "exact-bytes",
+      "role": "verification",
+      "roleRuleId": "eva2-verification",
+      "matchingRuleIds": [
+        "eva2-verification"
+      ],
+      "owner": "verification",
+      "inputs": [
+        "production or fixture contract"
+      ],
+      "outputs": [
+        "test decision"
+      ],
+      "state": [
+        "temporary isolated test state"
+      ],
+      "effects": [
+        "may execute only inside its declared gate"
+      ],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": true,
+        "runtimeCritical": true,
+        "status": "included-tracked-critical"
+      }
+    },
+    {
+      "path": "eva2/evidence/product/TL-002-house-analysis-conversation-2026-09-08.json",
+      "gitState": "tracked",
+      "present": true,
+      "bytes": 23021,
+      "contentSha256": "081c9072c308c90a6cb92d3453cc9fa36e0c6d58e8b33f57746958c286e2922e",
+      "hashMode": "exact-bytes",
+      "role": "verification",
+      "roleRuleId": "eva2-verification",
+      "matchingRuleIds": [
+        "eva2-verification"
+      ],
+      "owner": "verification",
+      "inputs": [
+        "production or fixture contract"
+      ],
+      "outputs": [
+        "test decision"
+      ],
+      "state": [
+        "temporary isolated test state"
+      ],
+      "effects": [
+        "may execute only inside its declared gate"
+      ],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": true,
+        "runtimeCritical": true,
+        "status": "included-tracked-critical"
+      }
+    },
+    {
+      "path": "eva2/evidence/product/TL-002-household-inventory-2026-09-08.json",
+      "gitState": "tracked",
+      "present": true,
+      "bytes": 14759,
+      "contentSha256": "3116607a8a60014ab3f5840272bdad9f1f61d180fa8e7ba26dbc86df9e5aa733",
+      "hashMode": "exact-bytes",
+      "role": "verification",
+      "roleRuleId": "eva2-verification",
+      "matchingRuleIds": [
+        "eva2-verification"
+      ],
+      "owner": "verification",
+      "inputs": [
+        "production or fixture contract"
+      ],
+      "outputs": [
+        "test decision"
+      ],
+      "state": [
+        "temporary isolated test state"
+      ],
+      "effects": [
+        "may execute only inside its declared gate"
+      ],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": true,
+        "runtimeCritical": true,
+        "status": "included-tracked-critical"
+      }
+    },
+    {
+      "path": "eva2/evidence/product/TL-002-household-live-2026-09-08.json",
+      "gitState": "tracked",
+      "present": true,
+      "bytes": 3331,
+      "contentSha256": "7e89d4543e946c7d18dc7a2b3381f2fa988835839e0cfd5170566babaa0269f0",
+      "hashMode": "exact-bytes",
+      "role": "verification",
+      "roleRuleId": "eva2-verification",
+      "matchingRuleIds": [
+        "eva2-verification"
+      ],
+      "owner": "verification",
+      "inputs": [
+        "production or fixture contract"
+      ],
+      "outputs": [
+        "test decision"
+      ],
+      "state": [
+        "temporary isolated test state"
+      ],
+      "effects": [
+        "may execute only inside its declared gate"
+      ],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": true,
+        "runtimeCritical": true,
+        "status": "included-tracked-critical"
+      }
+    },
+    {
+      "path": "eva2/evidence/product/TL-002-private-provider-authorization-2026-09-08.json",
+      "gitState": "tracked",
+      "present": true,
+      "bytes": 5011,
+      "contentSha256": "b58cc78cd4fbf32085cbb8ad6bdaf8ff96cb7f545807c14d7be3d80112d68804",
+      "hashMode": "exact-bytes",
+      "role": "verification",
+      "roleRuleId": "eva2-verification",
+      "matchingRuleIds": [
+        "eva2-verification"
+      ],
+      "owner": "verification",
+      "inputs": [
+        "production or fixture contract"
+      ],
+      "outputs": [
+        "test decision"
+      ],
+      "state": [
+        "temporary isolated test state"
+      ],
+      "effects": [
+        "may execute only inside its declared gate"
+      ],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": true,
+        "runtimeCritical": true,
+        "status": "included-tracked-critical"
+      }
+    },
+    {
+      "path": "eva2/evidence/product/TL-002-service-token-2026-09-08.json",
+      "gitState": "tracked",
+      "present": true,
+      "bytes": 12482,
+      "contentSha256": "036410355a1c1710d85efcd02f11fcc80ff0ad6b69b784084ab833811f3d44c7",
+      "hashMode": "exact-bytes",
+      "role": "verification",
+      "roleRuleId": "eva2-verification",
+      "matchingRuleIds": [
+        "eva2-verification"
+      ],
+      "owner": "verification",
+      "inputs": [
+        "production or fixture contract"
+      ],
+      "outputs": [
+        "test decision"
+      ],
+      "state": [
+        "temporary isolated test state"
+      ],
+      "effects": [
+        "may execute only inside its declared gate"
+      ],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": true,
+        "runtimeCritical": true,
+        "status": "included-tracked-critical"
+      }
+    },
+    {
+      "path": "eva2/evidence/product/TL-002-two-provider-conversation-2026-09-08.json",
+      "gitState": "tracked",
+      "present": true,
+      "bytes": 20508,
+      "contentSha256": "b6a784ba628effcc6ba594c364a40ccb975ab84c2302b91503fe1311d5cb70c9",
+      "hashMode": "exact-bytes",
+      "role": "verification",
+      "roleRuleId": "eva2-verification",
+      "matchingRuleIds": [
+        "eva2-verification"
+      ],
+      "owner": "verification",
+      "inputs": [
+        "production or fixture contract"
+      ],
+      "outputs": [
+        "test decision"
+      ],
+      "state": [
+        "temporary isolated test state"
+      ],
+      "effects": [
+        "may execute only inside its declared gate"
+      ],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": true,
+        "runtimeCritical": true,
+        "status": "included-tracked-critical"
+      }
+    },
+    {
+      "path": "eva2/evidence/product/TL-002-workspace-conversation-2026-09-08.json",
+      "gitState": "tracked",
+      "present": true,
+      "bytes": 19330,
+      "contentSha256": "5d69d8ef794c89aeaeb022edbc33d74ca0b2604ac40e05a2ce807b5392a6e5dc",
+      "hashMode": "exact-bytes",
+      "role": "verification",
+      "roleRuleId": "eva2-verification",
+      "matchingRuleIds": [
+        "eva2-verification"
+      ],
+      "owner": "verification",
+      "inputs": [
+        "production or fixture contract"
+      ],
+      "outputs": [
+        "test decision"
+      ],
+      "state": [
+        "temporary isolated test state"
+      ],
+      "effects": [
+        "may execute only inside its declared gate"
+      ],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": true,
+        "runtimeCritical": true,
+        "status": "included-tracked-critical"
+      }
+    },
+    {
+      "path": "eva2/evidence/product/TL-002-workspace-provider-restart-2026-09-08.json",
+      "gitState": "tracked",
+      "present": true,
+      "bytes": 9657,
+      "contentSha256": "11221ee2b377da3cc2a3175dbc8dcee42ca21a0992c4911c9d700a7b4b855975",
       "hashMode": "exact-bytes",
       "role": "verification",
       "roleRuleId": "eva2-verification",
@@ -36958,8 +34717,8 @@
       "path": "eva2/release/eva-cockpit-evidence-index-v1.json",
       "gitState": "tracked",
       "present": true,
-      "bytes": 38561,
-      "contentSha256": "6bab91e11e7ac3a229ae7df7a5775efa42ac41dc9228f5f281498be9f4cf0b22",
+      "bytes": 38278,
+      "contentSha256": "be4a3c7e795e807689b904186c213974029429537cdf0b7002af60e2a83dd226",
       "hashMode": "exact-bytes",
       "role": "repository-config",
       "roleRuleId": "eva2-build-contract",
@@ -37387,8 +35146,8 @@
       "path": "eva2/release/managed-b-release-input-authority-v1.json",
       "gitState": "tracked",
       "present": true,
-      "bytes": 73011,
-      "contentSha256": "87303552cfdff3b958ed736ad039aa37aaabce2a89f309cf8ca27b95b8108e9e",
+      "bytes": 75760,
+      "contentSha256": "f07ad2a0b62556613a082eb17f98e898851d1a75d39b3309d3e3cafee4fa6e24",
       "hashMode": "exact-bytes",
       "role": "repository-config",
       "roleRuleId": "eva2-build-contract",
@@ -38036,6 +35795,37 @@
       }
     },
     {
+      "path": "eva2/reviews/CO-006-candidate-review-2026-09-08.md",
+      "gitState": "tracked",
+      "present": true,
+      "bytes": 8625,
+      "contentSha256": "844f33442364e2a425fce74c542a3cad48b34cbbae1e9407ba8858cdcca66e40",
+      "hashMode": "exact-bytes",
+      "role": "documentation",
+      "roleRuleId": "eva2-documentation",
+      "matchingRuleIds": [
+        "eva2-documentation"
+      ],
+      "owner": "documentation",
+      "inputs": [
+        "design and evidence"
+      ],
+      "outputs": [
+        "human-readable contract"
+      ],
+      "state": [],
+      "effects": [],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": true,
+        "runtimeCritical": false,
+        "status": "included-tracked-noncritical"
+      }
+    },
+    {
       "path": "eva2/reviews/CP-000-open-source-eval-engine-f0eb745.md",
       "gitState": "tracked",
       "present": true,
@@ -38475,6 +36265,68 @@
       "present": true,
       "bytes": 2141,
       "contentSha256": "633b73d8f3b82fc9805d212ddeadf840c42229fc639ad4564014fcbf4a5241e7",
+      "hashMode": "exact-bytes",
+      "role": "documentation",
+      "roleRuleId": "eva2-documentation",
+      "matchingRuleIds": [
+        "eva2-documentation"
+      ],
+      "owner": "documentation",
+      "inputs": [
+        "design and evidence"
+      ],
+      "outputs": [
+        "human-readable contract"
+      ],
+      "state": [],
+      "effects": [],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": true,
+        "runtimeCritical": false,
+        "status": "included-tracked-noncritical"
+      }
+    },
+    {
+      "path": "eva2/reviews/TL-001-candidate-review-2026-09-08.md",
+      "gitState": "tracked",
+      "present": true,
+      "bytes": 7569,
+      "contentSha256": "8fee7878046650e5a14a29bc293d2264c973c3f88002b8b7c04da76f9ad175fb",
+      "hashMode": "exact-bytes",
+      "role": "documentation",
+      "roleRuleId": "eva2-documentation",
+      "matchingRuleIds": [
+        "eva2-documentation"
+      ],
+      "owner": "documentation",
+      "inputs": [
+        "design and evidence"
+      ],
+      "outputs": [
+        "human-readable contract"
+      ],
+      "state": [],
+      "effects": [],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": true,
+        "runtimeCritical": false,
+        "status": "included-tracked-noncritical"
+      }
+    },
+    {
+      "path": "eva2/reviews/TL-002-completion-2026-09-08.json",
+      "gitState": "tracked",
+      "present": true,
+      "bytes": 3217,
+      "contentSha256": "7d765862811a0600400392164a2609925ac28119a5303f61f6ab353f95bea4d9",
       "hashMode": "exact-bytes",
       "role": "documentation",
       "roleRuleId": "eva2-documentation",
@@ -47024,8 +44876,8 @@
       "path": "eva2/src/eva/adapters/api/app.py",
       "gitState": "tracked",
       "present": true,
-      "bytes": 58412,
-      "contentSha256": "add2e35cbaba7c87b0c6a39dfe524aff47e59200ef07724eb19486805123894c",
+      "bytes": 59694,
+      "contentSha256": "3e061d6e25ac4c2c444e24cdfc85ff25cd1e41db3cf3ce1fbc5f193dc97ccc76",
       "hashMode": "exact-bytes",
       "role": "product-runtime",
       "roleRuleId": "eva2-runtime",
@@ -47164,8 +45016,8 @@
       "path": "eva2/src/eva/adapters/api/dashboard_conversation.py",
       "gitState": "tracked",
       "present": true,
-      "bytes": 8848,
-      "contentSha256": "c5ba870c8012f2fc89d6d183c5c1c77c1168d2e5d8950726e75fc2fa742c5bd3",
+      "bytes": 9977,
+      "contentSha256": "0580791e2aa32e0e3371f83b230193c31a65dbcc59945aad96b3f553dc595a92",
       "hashMode": "exact-bytes",
       "role": "product-runtime",
       "roleRuleId": "eva2-runtime",
@@ -47306,6 +45158,76 @@
       "present": true,
       "bytes": 435,
       "contentSha256": "a27a048f5d57343015e061baa90d2c2dad5142e362682c2e1f4ad36a5fb753fb",
+      "hashMode": "exact-bytes",
+      "role": "product-runtime",
+      "roleRuleId": "eva2-runtime",
+      "matchingRuleIds": [
+        "eva2-runtime"
+      ],
+      "owner": "eva-runtime",
+      "inputs": [
+        "issued runtime input and dependencies"
+      ],
+      "outputs": [
+        "runtime result or capability"
+      ],
+      "state": [
+        "runtime-owned durable or process state"
+      ],
+      "effects": [
+        "module-specific runtime effects"
+      ],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": true,
+        "runtimeCritical": true,
+        "status": "included-tracked-critical"
+      }
+    },
+    {
+      "path": "eva2/src/eva/adapters/api/dashboard_voice.py",
+      "gitState": "tracked",
+      "present": true,
+      "bytes": 11785,
+      "contentSha256": "68ccbbb490f7ef071c666a3057843463cb2f33ce8c4de25a0bd9d3f5c1809286",
+      "hashMode": "exact-bytes",
+      "role": "product-runtime",
+      "roleRuleId": "eva2-runtime",
+      "matchingRuleIds": [
+        "eva2-runtime"
+      ],
+      "owner": "eva-runtime",
+      "inputs": [
+        "issued runtime input and dependencies"
+      ],
+      "outputs": [
+        "runtime result or capability"
+      ],
+      "state": [
+        "runtime-owned durable or process state"
+      ],
+      "effects": [
+        "module-specific runtime effects"
+      ],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": true,
+        "runtimeCritical": true,
+        "status": "included-tracked-critical"
+      }
+    },
+    {
+      "path": "eva2/src/eva/adapters/api/dashboard_voice_client.py",
+      "gitState": "tracked",
+      "present": true,
+      "bytes": 12835,
+      "contentSha256": "8505e2da47dcc9e71dc96c39abf2383a42707fbadeed8bc23825e041e7ae9dbd",
       "hashMode": "exact-bytes",
       "role": "product-runtime",
       "roleRuleId": "eva2-runtime",
@@ -47829,8 +45751,8 @@
       "path": "eva2/src/eva/adapters/connectors/home_assistant_admin.py",
       "gitState": "tracked",
       "present": true,
-      "bytes": 9621,
-      "contentSha256": "41ca2b1cb54cdd47c73a9062c1c19359a516234f4adaa10de066799fbab65abf",
+      "bytes": 27181,
+      "contentSha256": "ea94a1a87fa42ebaa75e0d28db053fb148db2d0aa7aaa196beb15c96b5e934a1",
       "hashMode": "exact-bytes",
       "role": "product-runtime",
       "roleRuleId": "eva2-runtime",
@@ -48076,6 +45998,41 @@
       "present": true,
       "bytes": 6188,
       "contentSha256": "5cfce9169a71b4d4a9ff7e5e8b2390165eef233e404344aec09d9ddbcfa8ef9a",
+      "hashMode": "exact-bytes",
+      "role": "product-runtime",
+      "roleRuleId": "eva2-runtime",
+      "matchingRuleIds": [
+        "eva2-runtime"
+      ],
+      "owner": "eva-runtime",
+      "inputs": [
+        "issued runtime input and dependencies"
+      ],
+      "outputs": [
+        "runtime result or capability"
+      ],
+      "state": [
+        "runtime-owned durable or process state"
+      ],
+      "effects": [
+        "module-specific runtime effects"
+      ],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": true,
+        "runtimeCritical": true,
+        "status": "included-tracked-critical"
+      }
+    },
+    {
+      "path": "eva2/src/eva/adapters/connectors/home_assistant_voice.py",
+      "gitState": "tracked",
+      "present": true,
+      "bytes": 18256,
+      "contentSha256": "2ced3ef6c8bc28233ef3f4150132b6034eec89c5303745be367665884231e31d",
       "hashMode": "exact-bytes",
       "role": "product-runtime",
       "roleRuleId": "eva2-runtime",
@@ -48494,8 +46451,8 @@
       "path": "eva2/src/eva/adapters/connectors/telegram.py",
       "gitState": "tracked",
       "present": true,
-      "bytes": 20725,
-      "contentSha256": "46a42431bf88df10fe2c5e7a0bb31f272a95458b8e3f561055a4ca10c68dd3bc",
+      "bytes": 22602,
+      "contentSha256": "644fa4e968bc7dfaa87de9c7d95b66982da74bd38cdfa0788d080932fad1be70",
       "hashMode": "exact-bytes",
       "role": "product-runtime",
       "roleRuleId": "eva2-runtime",
@@ -48844,8 +46801,8 @@
       "path": "eva2/src/eva/adapters/model/pydantic_conversation.py",
       "gitState": "tracked",
       "present": true,
-      "bytes": 106137,
-      "contentSha256": "13a920fa0c6077956ed98e5e58cbb4fef3bbe0af2a01a9f7c046dcd4e6cf5dd1",
+      "bytes": 107692,
+      "contentSha256": "2545252842e4aeda8cf13d3c5d6e230f4490f879f65dff4783f11311cea2d1e3",
       "hashMode": "exact-bytes",
       "role": "product-runtime",
       "roleRuleId": "eva2-runtime",
@@ -49859,8 +47816,8 @@
       "path": "eva2/src/eva/adapters/postgres/conversation_actions.py",
       "gitState": "tracked",
       "present": true,
-      "bytes": 138042,
-      "contentSha256": "dd07d668d465db6ed7be9ea23d9681aae1deb158575ea37f18b50cd09f9f8c65",
+      "bytes": 139834,
+      "contentSha256": "352aa0dd6734828a1626efe32aa6980269c07da7153817ddaa862e67b017ad34",
       "hashMode": "exact-bytes",
       "role": "product-runtime",
       "roleRuleId": "eva2-runtime",
@@ -49894,8 +47851,8 @@
       "path": "eva2/src/eva/adapters/postgres/conversation_journal.py",
       "gitState": "tracked",
       "present": true,
-      "bytes": 23075,
-      "contentSha256": "c4f555e91d0f3152d79be347e88db6e0124498e932c30dfbbc7149dbdd3af024",
+      "bytes": 42571,
+      "contentSha256": "7bc71cc8752a82e66619eb9ddf8b3243ef36145e1ce458b1ca77f4a9062b7aca",
       "hashMode": "exact-bytes",
       "role": "product-runtime",
       "roleRuleId": "eva2-runtime",
@@ -50069,8 +48026,8 @@
       "path": "eva2/src/eva/adapters/postgres/external_conversation_tools.py",
       "gitState": "tracked",
       "present": true,
-      "bytes": 15679,
-      "contentSha256": "65a946adc797dbab192ddfd52641307adca28d76e920d880fffaa7ea06e62ab0",
+      "bytes": 22052,
+      "contentSha256": "ef4f70c6f8c2283a69264cfaa6777eabf25aa8b2d32f5234e911e7978f502161",
       "hashMode": "exact-bytes",
       "role": "product-runtime",
       "roleRuleId": "eva2-runtime",
@@ -50314,8 +48271,8 @@
       "path": "eva2/src/eva/adapters/postgres/scope.py",
       "gitState": "tracked",
       "present": true,
-      "bytes": 2227,
-      "contentSha256": "8ff3d9f429a2e061548e947c0bd7d88fe0029291a587c30c331c124a0764af8e",
+      "bytes": 3708,
+      "contentSha256": "b48ec5abf4d75e55f714a539e6bb036e8bcd444124b038a1af7ed58365b8636c",
       "hashMode": "exact-bytes",
       "role": "product-runtime",
       "roleRuleId": "eva2-runtime",
@@ -50559,8 +48516,8 @@
       "path": "eva2/src/eva/adapters/projection/hindsight.py",
       "gitState": "tracked",
       "present": true,
-      "bytes": 61937,
-      "contentSha256": "d242c48b422c612b744edb11016f64947c2a324cb35fd3a944cc4f71f2165bf1",
+      "bytes": 62819,
+      "contentSha256": "22b41699bbb5fd1bb72d49fbf57b57793b37e67871fa6cf4fa1d3eb2e953a20d",
       "hashMode": "exact-bytes",
       "role": "product-runtime",
       "roleRuleId": "eva2-runtime",
@@ -50979,8 +48936,8 @@
       "path": "eva2/src/eva/application/conversation.py",
       "gitState": "tracked",
       "present": true,
-      "bytes": 34388,
-      "contentSha256": "3fb596c235c83a341caa4622459a62fde8ecb25f2aa010f998fbc304e101e618",
+      "bytes": 39016,
+      "contentSha256": "26bc13dac6f85dbb097b202986bc6f3de845c254eca31ee6bdc6b4dcc1d01c80",
       "hashMode": "exact-bytes",
       "role": "product-runtime",
       "roleRuleId": "eva2-runtime",
@@ -51994,8 +49951,8 @@
       "path": "eva2/src/eva/application/telegram_ingress.py",
       "gitState": "tracked",
       "present": true,
-      "bytes": 21708,
-      "contentSha256": "47fbb2f1b4ef8388a4fef106dee42a326112a3151aa0017284dd2d54178e9d22",
+      "bytes": 25279,
+      "contentSha256": "42a675c2129c65f3cd7ff251b8607d9fb35c0a1990977a5e0c1624e1ca368606",
       "hashMode": "exact-bytes",
       "role": "product-runtime",
       "roleRuleId": "eva2-runtime",
@@ -52099,8 +50056,8 @@
       "path": "eva2/src/eva/application/voice.py",
       "gitState": "tracked",
       "present": true,
-      "bytes": 9891,
-      "contentSha256": "b30c7b9005134b49b16a4797319ee33d52897daa14b6bec01fb2b77a8d9fcb40",
+      "bytes": 12194,
+      "contentSha256": "8282ca3d5d4960597f6eb1a25bec4317cdae848cba24cd6a41bffea914ce69b3",
       "hashMode": "exact-bytes",
       "role": "product-runtime",
       "roleRuleId": "eva2-runtime",
@@ -52171,6 +50128,41 @@
       "present": true,
       "bytes": 5194,
       "contentSha256": "4de9ca1a3adebcb6c5613cc7b49118ab5d71af2723561d54e4cba60aa9986fc1",
+      "hashMode": "exact-bytes",
+      "role": "product-runtime",
+      "roleRuleId": "eva2-runtime",
+      "matchingRuleIds": [
+        "eva2-runtime"
+      ],
+      "owner": "eva-runtime",
+      "inputs": [
+        "issued runtime input and dependencies"
+      ],
+      "outputs": [
+        "runtime result or capability"
+      ],
+      "state": [
+        "runtime-owned durable or process state"
+      ],
+      "effects": [
+        "module-specific runtime effects"
+      ],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": true,
+        "runtimeCritical": true,
+        "status": "included-tracked-critical"
+      }
+    },
+    {
+      "path": "eva2/src/eva/bootstrap/dashboard_voice.py",
+      "gitState": "tracked",
+      "present": true,
+      "bytes": 9427,
+      "contentSha256": "57ad08e0c1f04af3f88dc7e457e131e9f2211f8b295193c51a926a05ab4e3974",
       "hashMode": "exact-bytes",
       "role": "product-runtime",
       "roleRuleId": "eva2-runtime",
@@ -52344,8 +50336,8 @@
       "path": "eva2/src/eva/bootstrap/runtime.py",
       "gitState": "tracked",
       "present": true,
-      "bytes": 72232,
-      "contentSha256": "61ac8badbbe1b5d9796f8421e146f127c0b695d73e3854a3419c45fc7d44b3b3",
+      "bytes": 77370,
+      "contentSha256": "6e7d86532888dc5719ff751b0d3aee18dce4289b53ff81c6e7723dfcf2ded3e5",
       "hashMode": "exact-bytes",
       "role": "product-runtime",
       "roleRuleId": "eva2-runtime",
@@ -52379,8 +50371,8 @@
       "path": "eva2/src/eva/bootstrap/telegram_ingress.py",
       "gitState": "tracked",
       "present": true,
-      "bytes": 7994,
-      "contentSha256": "d54317003f7d60c45b75ad76ad053064d6f3f6f4ef4296d220a73bc8da18da76",
+      "bytes": 8012,
+      "contentSha256": "86b689a036ce5d9264ae987962b521e84dfaa70bc2b342025b60b462db8a91bb",
       "hashMode": "exact-bytes",
       "role": "product-runtime",
       "roleRuleId": "eva2-runtime",
@@ -54689,8 +52681,8 @@
       "path": "eva2/src/eva/providers/home_assistant.py",
       "gitState": "tracked",
       "present": true,
-      "bytes": 9699,
-      "contentSha256": "877e259875b987557e98c3bd975b9e13ee96ca13a1bc0ae3abe1d6397a4b42a0",
+      "bytes": 10529,
+      "contentSha256": "596f49351a303b6c33223abd1b4fa5d536f0a344b68079eb6eb422f9905b0a0b",
       "hashMode": "exact-bytes",
       "role": "product-runtime",
       "roleRuleId": "eva2-runtime",
@@ -54759,8 +52751,8 @@
       "path": "eva2/src/eva/providers/mcp_gateway.py",
       "gitState": "tracked",
       "present": true,
-      "bytes": 9961,
-      "contentSha256": "3cd9e33de0669ac76c3691a72c1bb0c2f34149612cf094a2e72c226e97bb9ebf",
+      "bytes": 11756,
+      "contentSha256": "7234446cc2a8a88eb1a392c35ae47340da348195868421b2110350d6debbfc92",
       "hashMode": "exact-bytes",
       "role": "product-runtime",
       "roleRuleId": "eva2-runtime",
@@ -54864,8 +52856,78 @@
       "path": "eva2/tests/api/test_dashboard_status.py",
       "gitState": "tracked",
       "present": true,
-      "bytes": 31953,
-      "contentSha256": "c16abb668e310e6378b04af3582fefac0190b8147d57bbe54b660a1232ad3b8f",
+      "bytes": 31843,
+      "contentSha256": "7d748fce9f47e917fe6fe2e15adb9eb3e92dfc1a010e6f678a2c0fb60e697ae7",
+      "hashMode": "exact-bytes",
+      "role": "verification",
+      "roleRuleId": "eva2-verification",
+      "matchingRuleIds": [
+        "eva2-verification"
+      ],
+      "owner": "verification",
+      "inputs": [
+        "production or fixture contract"
+      ],
+      "outputs": [
+        "test decision"
+      ],
+      "state": [
+        "temporary isolated test state"
+      ],
+      "effects": [
+        "may execute only inside its declared gate"
+      ],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": true,
+        "runtimeCritical": true,
+        "status": "included-tracked-critical"
+      }
+    },
+    {
+      "path": "eva2/tests/api/test_dashboard_voice.py",
+      "gitState": "tracked",
+      "present": true,
+      "bytes": 10430,
+      "contentSha256": "b3a6458ddbd0824fbbd038bfa0be689bbf82935160605d1c96ff8a1fdbf0e325",
+      "hashMode": "exact-bytes",
+      "role": "verification",
+      "roleRuleId": "eva2-verification",
+      "matchingRuleIds": [
+        "eva2-verification"
+      ],
+      "owner": "verification",
+      "inputs": [
+        "production or fixture contract"
+      ],
+      "outputs": [
+        "test decision"
+      ],
+      "state": [
+        "temporary isolated test state"
+      ],
+      "effects": [
+        "may execute only inside its declared gate"
+      ],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": true,
+        "runtimeCritical": true,
+        "status": "included-tracked-critical"
+      }
+    },
+    {
+      "path": "eva2/tests/api/test_dashboard_voice_client.cjs",
+      "gitState": "tracked",
+      "present": true,
+      "bytes": 16552,
+      "contentSha256": "4db7b25f7d2002308b188f683ab09a2941f3cd2e25fac0561db0e3d11cad8a9c",
       "hashMode": "exact-bytes",
       "role": "verification",
       "roleRuleId": "eva2-verification",
@@ -55179,8 +53241,8 @@
       "path": "eva2/tests/application/test_conversation.py",
       "gitState": "tracked",
       "present": true,
-      "bytes": 29204,
-      "contentSha256": "c3b09dca4de00cb51060dda04565cc3b2f4282e0d69d229bb4a691341a0d0aae",
+      "bytes": 34641,
+      "contentSha256": "06062f32f45158b0ee1d7dc07ccc14d49382d03089d6a2524cf9695c2af57f53",
       "hashMode": "exact-bytes",
       "role": "verification",
       "roleRuleId": "eva2-verification",
@@ -55914,8 +53976,8 @@
       "path": "eva2/tests/application/test_telegram_ingress.py",
       "gitState": "tracked",
       "present": true,
-      "bytes": 31088,
-      "contentSha256": "fa6fb4f246addbb4754f9ac4b18ecef28fdf98d8f86a01cf85c048b779fe7f51",
+      "bytes": 36168,
+      "contentSha256": "587e14ce555ea9bc1fefbcfce3736798f44f126286b8c4bd1ff4d39a879af973",
       "hashMode": "exact-bytes",
       "role": "verification",
       "roleRuleId": "eva2-verification",
@@ -55984,8 +54046,8 @@
       "path": "eva2/tests/application/test_voice_playback.py",
       "gitState": "tracked",
       "present": true,
-      "bytes": 12652,
-      "contentSha256": "5846897a0d547e134d9457c93afc8c227e3f8acf3b57d30851df99ed320d569a",
+      "bytes": 16634,
+      "contentSha256": "b83287f4e81a5a436bdb2530b75d3d3dea4ea5932442e970e693eb243e51ec0c",
       "hashMode": "exact-bytes",
       "role": "verification",
       "roleRuleId": "eva2-verification",
@@ -56681,6 +54743,41 @@
       }
     },
     {
+      "path": "eva2/tests/bootstrap/test_dashboard_voice_bootstrap.py",
+      "gitState": "tracked",
+      "present": true,
+      "bytes": 8613,
+      "contentSha256": "1dd3b70a5570e444833ce161d32c1f95963527f26d08c9e85b3cf59c6b332d5f",
+      "hashMode": "exact-bytes",
+      "role": "verification",
+      "roleRuleId": "eva2-verification",
+      "matchingRuleIds": [
+        "eva2-verification"
+      ],
+      "owner": "verification",
+      "inputs": [
+        "production or fixture contract"
+      ],
+      "outputs": [
+        "test decision"
+      ],
+      "state": [
+        "temporary isolated test state"
+      ],
+      "effects": [
+        "may execute only inside its declared gate"
+      ],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": true,
+        "runtimeCritical": true,
+        "status": "included-tracked-critical"
+      }
+    },
+    {
       "path": "eva2/tests/bootstrap/test_delegated_work_commands.py",
       "gitState": "tracked",
       "present": true,
@@ -56859,8 +54956,8 @@
       "path": "eva2/tests/bootstrap/test_managed_b_manifest.py",
       "gitState": "tracked",
       "present": true,
-      "bytes": 11755,
-      "contentSha256": "b45346206fcb273d1712d06d2e5d08c5e97d578de281f5fbff84e53fa6191372",
+      "bytes": 12663,
+      "contentSha256": "36e4e059f742bb97b5a2561e757aaeb62a231d22c74545413da98c5a532ae07a",
       "hashMode": "exact-bytes",
       "role": "verification",
       "roleRuleId": "eva2-verification",
@@ -56894,8 +54991,8 @@
       "path": "eva2/tests/bootstrap/test_memory_provenance.py",
       "gitState": "tracked",
       "present": true,
-      "bytes": 11404,
-      "contentSha256": "a57c36e996bd9d15490d06d1d7e12e6e8f6e05571ed2ac5b772bbdaa60860ebd",
+      "bytes": 13374,
+      "contentSha256": "1750f88e4a5d63139d439fd300c8444d06970513ea7dcea60f6ae906d463e509",
       "hashMode": "exact-bytes",
       "role": "verification",
       "roleRuleId": "eva2-verification",
@@ -56999,8 +55096,8 @@
       "path": "eva2/tests/bootstrap/test_runtime_settings.py",
       "gitState": "tracked",
       "present": true,
-      "bytes": 36729,
-      "contentSha256": "1dfc2c355d328931d66b7eff1cf09abab8975f4acb4aac771f61cdda8af646af",
+      "bytes": 37299,
+      "contentSha256": "93224235c00975bb2ac2b091eb38a959fa43681bc3e6457a90d6a31fb287992c",
       "hashMode": "exact-bytes",
       "role": "verification",
       "roleRuleId": "eva2-verification",
@@ -57384,8 +55481,8 @@
       "path": "eva2/tests/connectors/test_home_assistant_live_adapters.py",
       "gitState": "tracked",
       "present": true,
-      "bytes": 27349,
-      "contentSha256": "ea33bb363d1cefe6ee2502726ea9efbee6ff6fd72b1f76039139a33f2fef45c0",
+      "bytes": 35986,
+      "contentSha256": "7be3ea4784588135b1d3089dcfe689e48d2ea45cbcb32b0cbbda311df5872f26",
       "hashMode": "exact-bytes",
       "role": "verification",
       "roleRuleId": "eva2-verification",
@@ -57456,6 +55553,41 @@
       "present": true,
       "bytes": 5424,
       "contentSha256": "4a5e788870e95470a3868a026d4a99475fb3278c7dbb4f8075fa97862c5b0dc3",
+      "hashMode": "exact-bytes",
+      "role": "verification",
+      "roleRuleId": "eva2-verification",
+      "matchingRuleIds": [
+        "eva2-verification"
+      ],
+      "owner": "verification",
+      "inputs": [
+        "production or fixture contract"
+      ],
+      "outputs": [
+        "test decision"
+      ],
+      "state": [
+        "temporary isolated test state"
+      ],
+      "effects": [
+        "may execute only inside its declared gate"
+      ],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": true,
+        "runtimeCritical": true,
+        "status": "included-tracked-critical"
+      }
+    },
+    {
+      "path": "eva2/tests/connectors/test_home_assistant_voice.py",
+      "gitState": "tracked",
+      "present": true,
+      "bytes": 14796,
+      "contentSha256": "78b99f7382e5dafe7c367a730eff2a5928b7026c0a42701433f2f83e46acded9",
       "hashMode": "exact-bytes",
       "role": "verification",
       "roleRuleId": "eva2-verification",
@@ -57734,8 +55866,8 @@
       "path": "eva2/tests/connectors/test_mcp_gateway_provider.py",
       "gitState": "tracked",
       "present": true,
-      "bytes": 8084,
-      "contentSha256": "b7509631b5ad59991daffd2626f0a5c5ef1205a4047155e6cd4cfc5f33c6a9f1",
+      "bytes": 13591,
+      "contentSha256": "f1ac78093fe09bc5c3262a8261b6db38d778a3fbe0aad7309346c15dc3203605",
       "hashMode": "exact-bytes",
       "role": "verification",
       "roleRuleId": "eva2-verification",
@@ -57874,8 +56006,8 @@
       "path": "eva2/tests/connectors/test_provider_runtime.py",
       "gitState": "tracked",
       "present": true,
-      "bytes": 10187,
-      "contentSha256": "838994fbce28cd2dcfc3d6c26c7dd6d3127ac04157f3a59bc2b55eae1ec59569",
+      "bytes": 11866,
+      "contentSha256": "a5235ef090f181d2911e80bdc6de3e88d1d9d6ebd2080d16db93b3e648815bed",
       "hashMode": "exact-bytes",
       "role": "verification",
       "roleRuleId": "eva2-verification",
@@ -59519,8 +57651,8 @@
       "path": "eva2/tests/model/test_pydantic_conversation_model.py",
       "gitState": "tracked",
       "present": true,
-      "bytes": 38644,
-      "contentSha256": "46429d20c44b756a6ea161cd9794859cbb71e5108d82f94751ce2c1d92a96917",
+      "bytes": 43944,
+      "contentSha256": "74da09964b1c27b766a1d9c8bcd24f774976be460a1790aca7c2a4fa06b7c227",
       "hashMode": "exact-bytes",
       "role": "verification",
       "roleRuleId": "eva2-verification",
@@ -60254,8 +58386,8 @@
       "path": "eva2/tests/operations/test_eva2_quiescent_cutover.py",
       "gitState": "tracked",
       "present": true,
-      "bytes": 27072,
-      "contentSha256": "9f1f1b6cd1a4e300305bb81ea25a0878c0d9bd547eb22d8767e560629953d021",
+      "bytes": 43959,
+      "contentSha256": "20cf7f473c0a859f8677bd0588ca4b88fdade7942494c18d7dd4ed491f8e37bf",
       "hashMode": "exact-bytes",
       "role": "verification",
       "roleRuleId": "eva2-verification",
@@ -61164,8 +59296,8 @@
       "path": "eva2/tests/operations/test_managed_b_release_inputs.py",
       "gitState": "tracked",
       "present": true,
-      "bytes": 24795,
-      "contentSha256": "3d6f1f87c2503a4b8f428431e2452a888da7df9ff0dcf86baa82e53a34384f81",
+      "bytes": 25459,
+      "contentSha256": "587540b51f0bd22ccf96f4605162f1de198c0f8b8424bc1e5ff6609ae13cf8fd",
       "hashMode": "exact-bytes",
       "role": "verification",
       "roleRuleId": "eva2-verification",
@@ -61199,8 +59331,8 @@
       "path": "eva2/tests/operations/test_managed_b_render.py",
       "gitState": "tracked",
       "present": true,
-      "bytes": 8474,
-      "contentSha256": "e8602b04b35fa4943e805bffb337f4b13d957b9b98dd744ea917ea84dcad06d2",
+      "bytes": 13731,
+      "contentSha256": "66e1e4617c20c695571d95125d86c648f54823fc0c31b6d7854e2c660df9cb43",
       "hashMode": "exact-bytes",
       "role": "verification",
       "roleRuleId": "eva2-verification",
@@ -61721,6 +59853,41 @@
       }
     },
     {
+      "path": "eva2/tests/operations/test_provision_workspace_provider.py",
+      "gitState": "tracked",
+      "present": true,
+      "bytes": 4345,
+      "contentSha256": "9639c5dd905662362717fae89c8d95f3da2ef4c4308f30d8aabad405e3040b52",
+      "hashMode": "exact-bytes",
+      "role": "verification",
+      "roleRuleId": "eva2-verification",
+      "matchingRuleIds": [
+        "eva2-verification"
+      ],
+      "owner": "verification",
+      "inputs": [
+        "production or fixture contract"
+      ],
+      "outputs": [
+        "test decision"
+      ],
+      "state": [
+        "temporary isolated test state"
+      ],
+      "effects": [
+        "may execute only inside its declared gate"
+      ],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": true,
+        "runtimeCritical": true,
+        "status": "included-tracked-critical"
+      }
+    },
+    {
       "path": "eva2/tests/operations/test_release_verifier.py",
       "gitState": "tracked",
       "present": true,
@@ -61795,7 +59962,7 @@
       "gitState": "tracked",
       "present": true,
       "bytes": 21366,
-      "contentSha256": "4bf9b4fdc768f2e0e0c873c252d668feb38dc564483191f7e8ca81d56900e32a",
+      "contentSha256": "3cf18243e095a9155e8662f4be2c6bc3e82797bf6fc53a992066e14283e6b57a",
       "hashMode": "exact-bytes",
       "role": "verification",
       "roleRuleId": "eva2-verification",
@@ -61901,6 +60068,41 @@
       "present": true,
       "bytes": 93536,
       "contentSha256": "4f068d14a5e54759374707c2d46f94584899d89cd41e6456c121b054cf3b45dd",
+      "hashMode": "exact-bytes",
+      "role": "verification",
+      "roleRuleId": "eva2-verification",
+      "matchingRuleIds": [
+        "eva2-verification"
+      ],
+      "owner": "verification",
+      "inputs": [
+        "production or fixture contract"
+      ],
+      "outputs": [
+        "test decision"
+      ],
+      "state": [
+        "temporary isolated test state"
+      ],
+      "effects": [
+        "may execute only inside its declared gate"
+      ],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": true,
+        "runtimeCritical": true,
+        "status": "included-tracked-critical"
+      }
+    },
+    {
+      "path": "eva2/tests/operations/test_workspace_provider_access.py",
+      "gitState": "tracked",
+      "present": true,
+      "bytes": 5634,
+      "contentSha256": "534d5214c1b96f36f866f2a986dcd74c24c9c587f2bfa279fa19b3e857361ad6",
       "hashMode": "exact-bytes",
       "role": "verification",
       "roleRuleId": "eva2-verification",
@@ -63474,8 +61676,8 @@
       "path": "eva2/tests/postgres/test_conversation_actions.py",
       "gitState": "tracked",
       "present": true,
-      "bytes": 42202,
-      "contentSha256": "fe42a4d0955cde5fd7e5b9393f7d40637484d130c2e1f8fab145b14748f0cdd5",
+      "bytes": 43958,
+      "contentSha256": "1021a1dfec044c5b41c1eb3371967b0ef5933fcfa7bfd36e6735a8d042d5205c",
       "hashMode": "exact-bytes",
       "role": "verification",
       "roleRuleId": "eva2-verification",
@@ -63894,8 +62096,8 @@
       "path": "eva2/tests/postgres/test_operational_timeline.py",
       "gitState": "tracked",
       "present": true,
-      "bytes": 88327,
-      "contentSha256": "a6749eaa3b1f1b29e99c449c154cf23725df2a3cbaf26e9c25355f06c1fcabf3",
+      "bytes": 123701,
+      "contentSha256": "cf602c66a71854cff7a6d9f0dd0e17ae39fcf7d641dd707e617611e380f371ff",
       "hashMode": "exact-bytes",
       "role": "verification",
       "roleRuleId": "eva2-verification",
@@ -64244,8 +62446,8 @@
       "path": "eva2/tests/projection/test_hindsight.py",
       "gitState": "tracked",
       "present": true,
-      "bytes": 50762,
-      "contentSha256": "74d0e0a976009ce4cb56a90e068561f688d19fe7b316b94cc3e54542973c2f91",
+      "bytes": 53216,
+      "contentSha256": "7ca3a8f665e33d624d861709774d97628628f21ec03805a190942e5885965337",
       "hashMode": "exact-bytes",
       "role": "verification",
       "roleRuleId": "eva2-verification",
@@ -65644,8 +63846,8 @@
       "path": "eva2/tools/check_current_workboard.py",
       "gitState": "tracked",
       "present": true,
-      "bytes": 37245,
-      "contentSha256": "c4e30fcfc362169db0039f8f6b7f2625b71fe91bcc21ebb4d3232a78d7e3ee97",
+      "bytes": 37289,
+      "contentSha256": "e8d2aea3d8393d874c281ef50df8fd9a97c046ddf44f808ab414c40e235f2712",
       "hashMode": "exact-bytes",
       "role": "verification-runtime",
       "roleRuleId": "eva2-verification-runtime",
@@ -65994,8 +64196,8 @@
       "path": "eva2/tools/eva2_quiescent_cutover.py",
       "gitState": "tracked",
       "present": true,
-      "bytes": 50078,
-      "contentSha256": "5935268199be06f8777ee3d18509c9b8cca6d2d11053c49a4c6fb710a012b097",
+      "bytes": 65143,
+      "contentSha256": "8d980138e3c79ddf80cf9b3cf747e789bad83227b26556c6f6e2b9d25f583fc1",
       "hashMode": "exact-bytes",
       "role": "verification-runtime",
       "roleRuleId": "eva2-verification-runtime",
@@ -66484,8 +64686,8 @@
       "path": "eva2/tools/managed_b_candidate/release_inputs.py",
       "gitState": "tracked",
       "present": true,
-      "bytes": 45140,
-      "contentSha256": "a11411770508798e93684f40226f68c6646e9ff5d6b97a9968000c7644c1a76f",
+      "bytes": 46248,
+      "contentSha256": "e3f60eaad973de28015449515e53d9dcfede542870cfe67115fe57593ead23c7",
       "hashMode": "exact-bytes",
       "role": "verification-runtime",
       "roleRuleId": "eva2-verification-runtime",
@@ -66589,8 +64791,8 @@
       "path": "eva2/tools/managed_b_render.py",
       "gitState": "tracked",
       "present": true,
-      "bytes": 9048,
-      "contentSha256": "f5a471f0baf3b88184a5d67ed1437f5034662a1623db49b9ba4219b117623416",
+      "bytes": 15152,
+      "contentSha256": "afc41dd26bac146e1b5bb87da5ddcc23084ce21995ada40a7463ed0db047efb8",
       "hashMode": "exact-bytes",
       "role": "verification-runtime",
       "roleRuleId": "eva2-verification-runtime",
@@ -67636,6 +65838,41 @@
       }
     },
     {
+      "path": "eva2/tools/provision_workspace_provider.py",
+      "gitState": "tracked",
+      "present": true,
+      "bytes": 13259,
+      "contentSha256": "453656c761367e74025f4733f3f70101273aed838d4ab859716d17d0918de313",
+      "hashMode": "exact-bytes",
+      "role": "verification-runtime",
+      "roleRuleId": "eva2-verification-runtime",
+      "matchingRuleIds": [
+        "eva2-verification-runtime"
+      ],
+      "owner": "verification",
+      "inputs": [
+        "repository and test selection"
+      ],
+      "outputs": [
+        "gate or inventory result"
+      ],
+      "state": [
+        "temporary gate state"
+      ],
+      "effects": [
+        "starts bounded verification processes or writes generated evidence"
+      ],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": true,
+        "runtimeCritical": true,
+        "status": "included-tracked-critical"
+      }
+    },
+    {
       "path": "eva2/tools/read_eva_portable_archive.py",
       "gitState": "tracked",
       "present": true,
@@ -67850,7 +66087,7 @@
       "gitState": "tracked",
       "present": true,
       "bytes": 40383,
-      "contentSha256": "f9cdc823e8d893d4f6b47202b36250db90292b9a850f189fc8344ebd3aa7f966",
+      "contentSha256": "c90a76922ea7cc1116a4efa2c6d4ffc9a6258580d4e7a08d34251d9628aecb79",
       "hashMode": "exact-bytes",
       "role": "verification-runtime",
       "roleRuleId": "eva2-verification-runtime",
@@ -68166,6 +66403,41 @@
       "present": true,
       "bytes": 13859,
       "contentSha256": "37c640f37da68cd1c4268d2c711a65a7d6fbecfb02e21548e5386ed20eea9a5f",
+      "hashMode": "exact-bytes",
+      "role": "verification-runtime",
+      "roleRuleId": "eva2-verification-runtime",
+      "matchingRuleIds": [
+        "eva2-verification-runtime"
+      ],
+      "owner": "verification",
+      "inputs": [
+        "repository and test selection"
+      ],
+      "outputs": [
+        "gate or inventory result"
+      ],
+      "state": [
+        "temporary gate state"
+      ],
+      "effects": [
+        "starts bounded verification processes or writes generated evidence"
+      ],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": true,
+        "runtimeCritical": true,
+        "status": "included-tracked-critical"
+      }
+    },
+    {
+      "path": "eva2/tools/workspace_provider_access.py",
+      "gitState": "tracked",
+      "present": true,
+      "bytes": 8280,
+      "contentSha256": "9ab8e4ab0bde79aeca62275b9348b3a0889d53ac2a41903d8185fa151e0f75dc",
       "hashMode": "exact-bytes",
       "role": "verification-runtime",
       "roleRuleId": "eva2-verification-runtime",
@@ -84095,5 +82367,5 @@
       }
     }
   ],
-  "sourceDigest": "37bf409752f7c58f067fcfdcbabe4bf966419a2606aab5be3e3c8b833a0d8c30"
+  "sourceDigest": "36448c992de0d36b8e5e791ea21337ae410dfd49b2f2783be01481c9f9f598ae"
 }
