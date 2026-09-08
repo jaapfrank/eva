@@ -1598,10 +1598,44 @@
       },
       "buildProcess": {
         "execSessionId": 68210,
-        "status": "running",
+        "status": "completed_exit_0",
         "invocation": "/tmp/eva2-vb001-ack-release-j5p21b_z/build.cjs",
         "output": "/tmp/eva2-vb001-ack-release-j5p21b_z/image",
         "liveChanges": false
+      },
+      "buildResult": {
+        "status": "built_local_untagged_candidate",
+        "imageId": "sha256:7425b4303ccf32247a57a9889bb5040c41a56ea687bbdc8c6c616e7e24222d30",
+        "receiptPath": "/tmp/eva2-vb001-ack-release-j5p21b_z/image/build.json",
+        "deployment": false
+      },
+      "scanResult": {
+        "high": 0,
+        "critical": 0,
+        "receiptPath": "/tmp/eva2-vb001-ack-release-j5p21b_z/image/scan/receipt.json"
+      },
+      "installedTests": {
+        "passed": 139,
+        "skipped": 0,
+        "receiptPath": "/tmp/eva2-vb001-ack-release-j5p21b_z/installed/receipt.json"
+      },
+      "browserProof": {
+        "passed": 18,
+        "skipped": 0,
+        "receiptPath": "/tmp/eva2-vb001-ack-release-j5p21b_z/browser-proof.json"
+      },
+      "requiredGateProcess": {
+        "execSessionId": 67088,
+        "status": "running",
+        "output": "/tmp/eva2-vb001-ack-release-j5p21b_z/gates",
+        "databaseScope": "Twelve disposable databases with vb001_ack2_ marker; remove exact recorded names only after terminal result."
+      },
+      "copyProbePreparation": {
+        "status": "independent_wrapper_go_waiting_full_gate",
+        "wrapper": "/tmp/eva2-vb001-ack-release-j5p21b_z/run_voice_copy.py",
+        "wrapperSha256": "30ffed5af982ceaa3ad6ba19179aeee4bf40f09517fa979180053e0cabc03819",
+        "scope": "One real browser/HA STT/Astra/HA TTS arithmetic roundtrip with all new ingress readbacks, restart and policy revocation. Full release gates and cleanup must pass before execution. Prior multi-sentence segmentation remains separately recorded, not claimed fixed.",
+        "review": "Bounded GO /root/co006_review: readbacks captured before validation even when browser returns nonzero or times out. Incomplete reply/usage is unknown, never zero. Execute only after terminal full gate, cleanup and exact pre-copy binding."
       }
     }
   },
@@ -3011,7 +3045,7 @@
         "Onderzoek bestaande Eva2-voicebouwstenen en Bottie/HA-route; leg concrete ontbrekende media-aansluiting, providerkeuze, bestaand mandaat en verbruik vast.",
         "Bewijs echte microfoon en speaker tegelijk, hoorbare onderbreking p95 maximaal250ms, behoud van persoonsbinding/gesprek/geheugen en geen dubbele tooluitvoering.",
         "Behoud ruwe audio standaard niet; toets ongeldige sessies, stop, verbindingsverlies en herstel, en lever een bruikbare gebruikersroute via veilige release.",
-        "Echte browserproef inschakelen met audit.vb001BrowserIntegration.browserCommand: 15 geslaagd, nul skips vereist. De gewone node-opdracht zonder die omgeving is alleen de beperkte clientregressie."
+        "Echte browserproef inschakelen met audit.vb001BrowserIntegration.browserCommand: 18 geslaagd, nul skips vereist. De gewone node-opdracht zonder die omgeving is alleen de beperkte clientregressie."
       ],
       "doneWhen": [
         "Een geverifieerde gebruiker kan met echte microfoon en speaker doorlopend met dezelfde Eva-gesprekskern praten, tegelijk luisteren en hoorbaar onderbreken; p95 stoplatentie maximaal250ms gemeten.",
