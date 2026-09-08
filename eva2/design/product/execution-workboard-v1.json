@@ -1353,6 +1353,46 @@
         "runner.py": "3831214a28a7003acd811cc9fc56ef8c03006867b8afdd6693f697026b57e8f1",
         "bootstrap-runner.py": "72af9c8d9c74a29a45701d60e40c0f0398ed4fe8a6408ff95e39103bc5b4ce69"
       }
+    },
+    "vb001IntegratedDevelopmentProbe": {
+      "owner": "/root",
+      "reviewer": "/root/co006_review",
+      "status": "development_image_binding_verified_copied_data_route_rejected",
+      "stage": "/tmp/eva2-vb001-integrated-9b3j7ztv",
+      "sourceCommit": "2988d73bd40aed95bf1b3dd87725a138c2a3795f",
+      "image": "sha256:af2b04ca848cc18028f6520446b7631053fb901a1d064846ede5a9321b32b703",
+      "receiptPath": "/tmp/eva2-vb001-integrated-9b3j7ztv/image-proof.json",
+      "receiptSha256": "9e80959da8f92ad85a429085064173b07e57404b335e2c285a0fcaea00777c2f",
+      "scope": "Disposable development image and integrated voice probe only. Existing live route and policy remain unchanged. No release, deployment or hardware acceptance claim.",
+      "plannedModelUse": "One existing operator text turn and one synthetic spoken turn; replay must not create a duplicate turn. Record actual usage and any additional memory-provider calls.",
+      "failures": [
+        "First Docker build interpreted bare sha256 as a registry image; corrected to exact local base alias.",
+        "First overlay copied to site-packages; actual imports used /opt/eva/src. Rebuilt with correct destination; six imported module paths and hashes now match committed source."
+      ],
+      "next": "Seal source including the CSP correction, build a verified candidate, then execute browser/STT/model/TTS proof on copied data using the authorized admission path.",
+      "retention": "Only /root owns this exact temporary stage and its two development images/local base alias. Retain during VB-001 integrated proof and review; archive bounded receipts and remove temporary source/audio/policy and unused development images before card closure. Never remove active base image or live data.",
+      "independentReview": {
+        "reviewer": "/root/co006_review",
+        "imageBinding": "Six module hashes and preserved base layers verified.",
+        "copiedDataDecision": "NO-GO: giving the local development image a repository-shaped alias bypasses the operator local-candidate clone restriction and authority check. This route will not run.",
+        "nextAllowed": "Build a sealed candidate with its required authority/admission before copied-data integration. Fresh disposable development state remains a distinct permitted route with its own checks."
+      },
+      "imageSupersededForVoiceIntegration": "The development image predates e880b2b CSP fix and cannot prove the corrected browser page."
+    },
+    "vb001BrowserCspCorrection": {
+      "implementationCommit": "e880b2b43291c51933234d856f0f362cc792e247",
+      "reviewer": "/root/co006_review",
+      "decision": "Bounded GO for source and browser regression; no release or live acceptance.",
+      "problem": "The owner conversation route blocked its packaged voice script and Blob AudioWorklet under script-src unsafe-inline only. The original browser fixture omitted production response headers.",
+      "change": "Allow same-origin scripts and Blob worklet code; retain existing inline script permission and other CSP restrictions. Browser fixture extracts the actual route response headers and checks them in real Chromium.",
+      "before": "Real Chromium with production headers: 14 passed, 1 failed (voice never started, 20-second timeout).",
+      "after": "15 passed, zero skips; full synthetic capture/worklet/PCM/WS/reply/decode/play/interrupt/track cleanup. No CSP violation during voice; deliberately external script produces required CSP violation and never reaches abort routing guard.",
+      "testCorrection": "Playwright request events also report CSP-blocked attempts; negative proof uses securitypolicyviolation plus an unreached route interception guard instead.",
+      "endpointRegression": "22 passed in tests/api/test_dashboard_voice.py.",
+      "sourceSha256": {
+        "tests/api/test_dashboard_voice_client.cjs": "040e18a80d15282c95338542fa777c3bb0ab3ca697b6f99e2d26b0687fd5062a"
+      },
+      "remaining": "Synthetic provider/model fixture only. Real integrated model/media, hardware measurements and safe release still required."
     }
   },
   "activeTaskId": "VB-001",
