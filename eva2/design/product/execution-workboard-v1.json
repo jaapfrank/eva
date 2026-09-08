@@ -2287,7 +2287,7 @@
       "sourceCommit": "cab9227356cb68b81edb9d27aab3d160dc959643",
       "imageId": "sha256:86ec4e3598cc07fcc61ba76ac405cfbbac39f63a14e8a98f4600d02154d3c14b",
       "evidence": "eva2/evidence/product/VB-001-repaired-candidate-build-2026-09-09.json",
-      "next": "Resolve native speaker stop-to-core cancellation and test actual HA event boundary before any live activation; full release tests alone do not cover that gap."
+      "next": "Poll running full gate session76235 without restart; exercise pinned native stop-to-Eva interrupt chain with two speakers and next question, then actual HA/firmware route."
     }
   },
   "activeTaskId": "VB-001",
