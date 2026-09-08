@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import asyncio
 from contextlib import contextmanager
-from collections.abc import Iterator
+from collections.abc import Callable, Iterator
 from datetime import datetime
 import hashlib
 from uuid import NAMESPACE_URL, uuid5
@@ -59,6 +59,8 @@ class PostgresExternalConversationTools:
         engine: sa.Engine,
         planner: ConversationExternalToolPlanner,
         provider: AsyncToolPort,
+        *,
+        authorize_turn: Callable[[ConversationTurn], None] | None = None,
     ) -> None:
         action_names = planner.action_names
         if (
@@ -70,11 +72,20 @@ class PostgresExternalConversationTools:
         self._engine = engine
         self._planner = planner
         self._provider = provider
+        self._authorize_turn = authorize_turn
         self._action_names = action_names
 
     @property
     def action_names(self) -> tuple[str, ...]:
         return self._action_names
+
+    def available_for(self, turn: ConversationTurn) -> bool:
+        """Filter model offerings; execution still rechecks authorization."""
+        try:
+            self._authorize(turn)
+        except ConversationConflict:
+            return False
+        return True
 
     def active_context(self, turn: ConversationTurn) -> tuple[str, ...]:
         provider_context = getattr(self._planner, "active_context", None)
@@ -101,6 +112,7 @@ class PostgresExternalConversationTools:
                 admitted_name = self._event_data(events[0]).get("action_name")
                 if admitted_name not in self.action_names:
                     return None
+                self._authorize(turn)
                 if events[-1].event_type not in _TERMINAL_EVENTS:
                     self._resume(turn, str(admitted_name), events, step_index)
                     events = timeline.events(thread_id)
@@ -114,6 +126,7 @@ class PostgresExternalConversationTools:
         self._validate_step_index(step_index)
         if call.name not in self.action_names:
             raise ConversationConflict(f"external tool {call.name!r} is unavailable")
+        self._authorize(turn)
         # Preserve clarification before storage access for the initial action.
         preparation = (
             asyncio.run(self._planner.prepare(turn, call)) if step_index == 0 else None
@@ -129,6 +142,7 @@ class PostgresExternalConversationTools:
         self, turn: ConversationTurn, call: ConversationActionCall,
         *, step_index: int, preparation: ConversationToolPreparation | None,
     ) -> ConversationActionReceipt:
+        self._authorize(turn)
         if step_index:
             timeline = self._timeline(turn)
             events = timeline.events(self._thread_id(turn, call.name, step_index))
@@ -393,6 +407,7 @@ class PostgresExternalConversationTools:
         self, turn: ConversationTurn, timeline: PostgresOperationalTimeline
     ) -> VerifiedToolOrchestrator:
         provider = self._provider
+        authorize = self._authorize
         journal = PostgresConversationJournal(self._engine, external_timeline_scope(
             turn.tenant_id, turn.installation_id, "conversation stop scope is required",
         ))
@@ -401,17 +416,24 @@ class PostgresExternalConversationTools:
             async def execute(self, request: ToolRequest) -> ToolDispatchResult:
                 # Also covers a recovery dispatch after an observation. Readback
                 # itself remains possible for an effect that already started.
+                await asyncio.to_thread(authorize, turn)
                 await asyncio.to_thread(journal.admit_dispatch, turn, request.operation_id)
                 return await provider.execute(request)
 
             async def observe(
                 self, request: ToolRequest, dispatch: ToolDispatchResult | None
             ) -> ToolProofObservation:
+                await asyncio.to_thread(authorize, turn)
                 return await provider.observe(request, dispatch)
 
         return VerifiedToolOrchestrator(timeline, StopCheckedProvider())
 
+    def _authorize(self, turn: ConversationTurn) -> None:
+        if self._authorize_turn is not None:
+            self._authorize_turn(turn)
+
     def _ensure_running(self, turn: ConversationTurn) -> None:
+        self._authorize(turn)
         PostgresConversationJournal(self._engine, external_timeline_scope(
             turn.tenant_id, turn.installation_id, "conversation stop scope is required",
         )).ensure_running(turn)

@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from contextlib import contextmanager
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
+import hashlib
 import json
 from pathlib import Path
 from threading import Thread
@@ -110,6 +111,7 @@ def test_file_configured_gateway_contributes_tools_without_core_branch(
         monkeypatch.setenv("EVA_MCP_GATEWAY_CATALOG_FILE", str(catalog_file))
         monkeypatch.setenv("EVA_MCP_GATEWAY_ALLOW_PLAIN_HTTP", "true")
 
+        monkeypatch.setenv("EVA_MCP_GATEWAY_PRINCIPAL_SHA256_ALLOWLIST", hashlib.sha256(b"owner").hexdigest())
         settings = McpGatewayProviderFactory.load_settings()
         contribution = McpGatewayProviderFactory.build(
             settings, sa.create_engine("sqlite://")
@@ -222,3 +224,66 @@ def test_v2_catalog_rejects_missing_or_unknown_argument_projections() -> None:
     payload["tools"][0]["execute_argument_bindings"] = []
     with pytest.raises(RuntimeError, match="configuration"):
         parse_mcp_gateway_catalog(json.dumps(payload))
+
+
+def test_gateway_requires_explicit_private_principal_before_loading_secrets(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    monkeypatch.setenv("EVA_MCP_GATEWAY_URL", "https://gateway.example.invalid")
+    monkeypatch.setenv("EVA_MCP_GATEWAY_TOKEN_FILE", "/not-opened-token")
+    monkeypatch.setenv("EVA_MCP_GATEWAY_CATALOG_FILE", "/not-opened-catalog")
+    monkeypatch.setenv("EVA_MCP_GATEWAY_ALLOW_PLAIN_HTTP", "false")
+    monkeypatch.delenv("EVA_MCP_GATEWAY_PRINCIPAL_SHA256_ALLOWLIST", raising=False)
+    with pytest.raises(RuntimeError, match="principal allowlist"):
+        McpGatewayProviderFactory.load_settings()
+
+
+def test_gateway_private_workspace_refuses_other_person_before_storage_or_io() -> None:
+    from eva.application.conversation import ConversationActionCall, ConversationConflict, ConversationTurn
+    settings = McpGatewayProviderSettings(
+        base_url="https://gateway.example.invalid", bearer_token="test-token",
+        allow_plain_http=False, specs=parse_mcp_gateway_catalog(_provider_catalog()),
+        principal_sha256_allowlist=(hashlib.sha256(b"owner").hexdigest(),),
+    )
+    turn = ConversationTurn.private("tenant", "installation", "other", "chat", "message", "Read file", "2026-09-08T12:00:00Z")
+    with pytest.raises(ConversationConflict, match="audience"):
+        settings.authorize_turn(turn)
+    from eva.adapters.postgres.external_conversation_tools import PostgresExternalConversationTools
+    class Planner:
+        action_names = ("echo_proof",)
+        async def prepare(self, turn, call):
+            pytest.fail("Unauthorized turn reached planning")
+    tools = PostgresExternalConversationTools(
+        sa.create_engine("sqlite://"), Planner(), object(), authorize_turn=settings.authorize_turn,
+    )
+    from eva.adapters.postgres.conversation_actions import PostgresConversationActions
+    actions = PostgresConversationActions(sa.create_engine("sqlite://"), external_tools=(tools,))
+    assert "echo_proof" not in actions.available_action_names(turn)
+    assert "echo_proof" not in actions.continuation_action_names(turn)
+    owner = ConversationTurn.private("tenant", "installation", "owner", "chat", "owner-message", "Read file", "2026-09-08T12:00:00Z")
+    assert "echo_proof" in actions.available_action_names(owner)
+    assert "echo_proof" in actions.continuation_action_names(owner)
+    for index in (0, 1):
+        with pytest.raises(ConversationConflict, match="audience"):
+            tools.execute(turn, ConversationActionCall("call", "echo_proof", {"message": "private"}), step_index=index)
+    settings.authorize_turn(ConversationTurn.private("tenant", "installation", "owner", "chat", "owner-message", "Read file", "2026-09-08T12:00:00Z"))
+
+
+def test_gateway_workspace_rejects_owner_request_in_consented_group() -> None:
+    from eva.application.conversation import ConversationConflict, ConversationTurn
+    from eva.application.memory_audience import MemoryAudience, TelegramGroupConsentReference
+    settings = McpGatewayProviderSettings(
+        base_url="https://gateway.example.invalid", bearer_token="test-token",
+        allow_plain_http=False, specs=parse_mcp_gateway_catalog(_provider_catalog()),
+        principal_sha256_allowlist=(hashlib.sha256(b"owner").hexdigest(),),
+    )
+    audience = MemoryAudience.telegram_group(
+        principal_id="owner", group_chat_id="-100",
+        consent_ref=TelegramGroupConsentReference("owner", "-100", "telegram-group-consent:proof"),
+    )
+    turn = ConversationTurn(
+        "tenant", "installation", "owner", "telegram:-100", "telegram:-100:1",
+        "Read my private file", "2026-09-08T12:00:00Z", audience,
+    )
+    with pytest.raises(ConversationConflict, match="audience"):
+        settings.authorize_turn(turn)

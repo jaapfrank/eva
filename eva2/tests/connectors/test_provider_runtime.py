@@ -128,7 +128,7 @@ def test_provider_bundle_registers_tools_without_core_branch(
     assert "list_email_messages" in {
         descriptor.name for descriptor in bundle.conversation_tools
     }
-    assert len(bundle.external_tools) == 6
+    assert len(bundle.external_tools) == 7
     assert bundle.event_source is not None
 
 
@@ -291,3 +291,24 @@ def test_provider_registry_rejects_missing_plugins_and_duplicate_tools(
             ),
             sa.create_engine("sqlite://"),
         )
+
+
+def test_household_inventory_is_private_owner_read_even_with_effects_disabled():
+    from eva.application.conversation import ConversationTurn, ConversationActionCall, ConversationConflict
+    from eva.application.memory_audience import MemoryAudience, TelegramGroupConsentReference
+
+    engine = sa.create_engine("sqlite://")
+    contribution = home_assistant_provider.HomeAssistantProviderFactory.build(
+        HomeAssistantProviderSettings("http://ha.invalid", "fixture", False, (), (hashlib.sha256(b"owner").hexdigest(),), ("light",)), engine,
+    )
+    household = next(tool for tool in contribution.external_tools if "read_home_assistant_inventory" in tool.action_names)
+    assert not any("set_home_assistant_light" in tool.action_names for tool in contribution.external_tools)
+    owner = ConversationTurn.private("tenant", "install", "owner", "chat", "one", "Lees mijn huis", "2026-09-08T12:00:00Z")
+    other = ConversationTurn.private("tenant", "install", "other", "chat2", "two", "Lees het huis", "2026-09-08T12:00:00Z")
+    group = ConversationTurn("tenant", "install", "owner", "telegram:-100", "telegram:-100:three", "Lees het huis", "2026-09-08T12:00:00Z", MemoryAudience.telegram_group(principal_id="owner", group_chat_id="-100", consent_ref=TelegramGroupConsentReference("owner", "-100", "telegram-group-consent:proof")))
+    assert household.available_for(owner) is True
+    for denied in (other, group):
+        assert household.available_for(denied) is False
+        with pytest.raises(ConversationConflict, match="audience"):
+            household.execute(denied, ConversationActionCall("call", "read_home_assistant_inventory", {}))
+    engine.dispose()

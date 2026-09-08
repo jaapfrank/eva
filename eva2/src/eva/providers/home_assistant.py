@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 import os
+import hashlib
 
 import sqlalchemy as sa
 
@@ -11,7 +12,7 @@ from eva.adapters.connectors.home_assistant import (
     HomeAssistantConfig,
     HomeAssistantToolAdapter,
 )
-from eva.adapters.connectors.home_assistant_admin import HomeAssistantAdminAdapter
+from eva.adapters.connectors.home_assistant_admin import HomeAssistantAdminAdapter, HomeAssistantHouseholdTool
 from eva.adapters.connectors.home_assistant_automations import (
     HomeAssistantAutomationAdapter,
     HomeAssistantAutomationConfig,
@@ -29,7 +30,7 @@ from eva.adapters.credentials.runtime_files import environment_secret
 from eva.adapters.postgres.external_conversation_tools import (
     PostgresExternalConversationTools,
 )
-from eva.application.conversation import ConversationExternalToolPort
+from eva.application.conversation import ConversationExternalToolPort, ConversationConflict
 from eva.providers.home_assistant_advanced_store import PostgresAdvancedTaskStore
 from eva.providers.contracts import ProviderContribution
 
@@ -185,6 +186,21 @@ class HomeAssistantProviderFactory:
                 provider,
             )
         ]
+        household = HomeAssistantHouseholdTool(HomeAssistantAdminAdapter(
+            base_url=settings.endpoint_url, token=settings.credential,
+        ))
+
+        def authorize_household(turn):
+            if (
+                turn.audience.kind != "private_person"
+                or turn.audience.principal_id != turn.principal_id
+                or hashlib.sha256(turn.principal_id.encode()).hexdigest() not in effect_principals
+            ):
+                raise ConversationConflict("household inventory is unavailable for this audience")
+
+        external_tools.append(PostgresExternalConversationTools(
+            engine, household, household, authorize_turn=authorize_household,
+        ))
         if settings.effects_enabled:
             external_tools.append(
                 PostgresExternalConversationTools(
@@ -230,6 +246,7 @@ class HomeAssistantProviderFactory:
             name for external_tool in external_tools for name in external_tool.action_names
         }
         all_descriptors = (
+            *HomeAssistantHouseholdTool.conversation_tools(),
             *HomeAssistantToolAdapter.conversation_tools(),
             *HomeAssistantConversationAutomationPlanner.conversation_tools(),
             *HomeAssistantConversationMigrationPlanner.conversation_tools(),

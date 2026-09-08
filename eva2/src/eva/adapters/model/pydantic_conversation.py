@@ -100,7 +100,6 @@ class _InputBudgetError(ConversationModelError):
 
 _MODEL_LEASE_READER_GID = 65532
 _MODEL_LEASE_FILE_MODE = 0o640
-_ORDINARY_PROVIDER_TIMEOUT_SECONDS = 15.0
 _PERSONAL_INTEREST_ACTION = "adopt_personal_interest"
 _FANOUT_DELIVERY_ACTION = "deliver_test_message_fanout"
 _DURABLE_GOAL_ACTION = "create_bounded_durable_goal"
@@ -494,7 +493,7 @@ class PydanticConversationModel:
         auth_file: Path,
         model: str = "gpt-5.4-mini",
         endpoint: str = _CODEX_SUBSCRIPTION_ENDPOINT,
-        timeout_seconds: float = 30.0,
+        timeout_seconds: float = 60.0,
         research_timeout_seconds: float = 90.0,
         reasoning_effort: Literal["low", "medium", "high"] = "medium",
         resource_budget: RuntimeResourceBudget | None = None,
@@ -857,10 +856,7 @@ class PydanticConversationModel:
                             OpenAICodexProviderSettings(
                                 endpoint=self._endpoint,
                                 model_name=self._model,
-                                timeout_seconds=min(
-                                    self._timeout_seconds,
-                                    _ORDINARY_PROVIDER_TIMEOUT_SECONDS,
-                                ),
+                                timeout_seconds=self._timeout_seconds,
                                 reasoning_effort=self._reasoning_effort,
                                 maximum_request_bytes=_MAX_STREAM_BYTES,
                                 maximum_response_bytes=_MAX_STREAM_BYTES,

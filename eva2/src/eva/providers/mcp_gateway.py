@@ -4,7 +4,9 @@ from __future__ import annotations
 
 import asyncio
 from dataclasses import dataclass, field
+import hashlib
 import json
+import re
 import os
 from typing import Any
 
@@ -20,7 +22,9 @@ from eva.adapters.connectors.mcp_gateway import (
 from eva.adapters.postgres.external_conversation_tools import (
     PostgresExternalConversationTools,
 )
-from eva.application.conversation import ConversationToolDescriptor
+from eva.application.conversation import (
+    ConversationConflict, ConversationToolDescriptor, ConversationTurn,
+)
 from eva.adapters.credentials.runtime_files import read_runtime_secret_file
 from eva.contracts.base import validate_json_value
 from eva.providers.contracts import ProviderContribution
@@ -53,6 +57,25 @@ class McpGatewayProviderSettings:
     bearer_token: str = field(repr=False)
     allow_plain_http: bool
     specs: tuple[McpGatewayToolSpec, ...]
+    principal_sha256_allowlist: tuple[str, ...]
+
+    def __post_init__(self) -> None:
+        if (
+            not self.principal_sha256_allowlist
+            or any(re.fullmatch(r"[0-9a-f]{64}", value) is None
+                   for value in self.principal_sha256_allowlist)
+            or len(set(self.principal_sha256_allowlist)) != len(self.principal_sha256_allowlist)
+        ):
+            raise ValueError("MCP gateway principal allowlist is invalid")
+
+    def authorize_turn(self, turn: ConversationTurn) -> None:
+        principal = hashlib.sha256(turn.principal_id.encode("utf-8")).hexdigest()
+        if (
+            turn.audience.kind != "private_person"
+            or turn.audience.principal_id != turn.principal_id
+            or principal not in self.principal_sha256_allowlist
+        ):
+            raise ConversationConflict("MCP gateway is unavailable for this audience")
 
 
 def _environment_value(name: str) -> str:
@@ -219,6 +242,13 @@ class McpGatewayProviderFactory:
         ).casefold()
         if allow_plain_raw not in {"false", "true"}:
             raise RuntimeError("EVA_MCP_GATEWAY_ALLOW_PLAIN_HTTP is invalid")
+        principals = tuple(sorted(set(filter(None, (
+            item.strip() for item in _environment_value(
+                "EVA_MCP_GATEWAY_PRINCIPAL_SHA256_ALLOWLIST"
+            ).split(",")
+        )))))
+        if not principals or any(re.fullmatch(r"[0-9a-f]{64}", p) is None for p in principals):
+            raise RuntimeError("MCP gateway principal allowlist is required and must contain SHA-256 values")
         token = read_runtime_secret_file(
             token_file, setting_name="EVA_MCP_GATEWAY_TOKEN_FILE"
         )
@@ -230,6 +260,7 @@ class McpGatewayProviderFactory:
             bearer_token=token,
             allow_plain_http=allow_plain_raw == "true",
             specs=parse_mcp_gateway_catalog(catalog),
+            principal_sha256_allowlist=principals,
         )
         try:
             McpGatewayConfig(
@@ -262,6 +293,7 @@ class McpGatewayProviderFactory:
                     engine,
                     adapter.planner(),
                     adapter,
+                    authorize_turn=settings.authorize_turn,
                 ),
             ),
         )

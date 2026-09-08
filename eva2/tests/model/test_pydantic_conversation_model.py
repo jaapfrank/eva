@@ -55,6 +55,7 @@ NOW = "2026-08-31T12:00:00Z"
 
 def _phase_transport_adapter(
     tmp_path, monkeypatch, parts, *, fail=False, reuse_message_id=False,
+    before_response=None, timeout_seconds=60.0,
 ):
     """Exercise the installed SDK and Pydantic parser; no external network."""
     requests = []
@@ -132,6 +133,8 @@ def _phase_transport_adapter(
             yield b"data: [DONE]\n\n"
 
     async def respond(request):
+        if before_response is not None:
+            before_response()
         requests.append(json.loads(request.content))
         return httpx2.Response(200, headers={"content-type": "text/event-stream"},
                               stream=WireStream(), request=request)
@@ -143,7 +146,7 @@ def _phase_transport_adapter(
 
     monkeypatch.setattr("eva.adapters.model.pydantic_conversation.OpenAICodexProvider",
                         LocalProvider)
-    model = _adapter_type()(auth_file=tmp_path / "unused.json", model="gpt-6-astra",
+    model = _adapter_type()(auth_file=tmp_path / "unused.json", model="gpt-6-astra", timeout_seconds=timeout_seconds,
                             conversation_tools=(TOOL,))
     return model, delivered, requests, completed_seen
 
@@ -1179,3 +1182,23 @@ def test_each_provider_attempt_is_journaled_and_stop_blocks_internal_repeat(tmp_
     # Context teardown cannot leak one owner's journal into another request.
     from eva.application.conversation import begin_current_model_request
     assert begin_current_model_request() is None
+
+
+@pytest.mark.parametrize(("seconds", "expires"), [(60.0, False), (10.0, True)])
+def test_configured_phase_deadline_allows_long_generation_and_still_expires(tmp_path, monkeypatch, seconds, expires):
+    clock = [0.0]
+    monkeypatch.setattr("eva.adapters.model.openai_codex_provider.monotonic", lambda: clock[0])
+
+    def provider_generation_elapsed():
+        clock[0] = 24.0
+
+    model, _, requests, _ = _phase_transport_adapter(
+        tmp_path, monkeypatch, [("final_answer", ("Het advies is klaar.",))],
+        before_response=provider_generation_elapsed, timeout_seconds=seconds,
+    )
+    if expires:
+        with pytest.raises(ConversationModelError, match="deadline"):
+            _generate(model)
+    else:
+        assert _generate(model).text == "Het advies is klaar."
+    assert len(requests) == 1

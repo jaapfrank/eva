@@ -1526,6 +1526,29 @@ def test_external_effect_provider_is_durable_and_not_repeated_after_restart(
     assert restarted_tools.execute(turn, call, step_index=step_index) == receipt
     assert len(calls) == 1
 
+    def revoked(turn):
+        raise ConversationConflict("provider authorization revoked")
+
+    class UnrelatedPlanner:
+        action_names = ("private_workspace_write",)
+
+    unrelated_tools = PostgresExternalConversationTools(
+        timeline_engine, UnrelatedPlanner(), provider, authorize_turn=revoked,
+    )
+    # Later steps share their identity across providers. A denied unrelated
+    # provider must not intercept this provider's stored step.
+    assert unrelated_tools.pending(turn, step_index=step_index) is None
+    assert restarted_tools.pending(turn, step_index=step_index) == receipt
+
+    revoked_tools = PostgresExternalConversationTools(
+        timeline_engine, Planner(), provider, authorize_turn=revoked,
+    )
+    with pytest.raises(ConversationConflict, match="authorization revoked"):
+        revoked_tools.pending(turn, step_index=step_index)
+    with pytest.raises(ConversationConflict, match="authorization revoked"):
+        revoked_tools.execute(turn, call, step_index=step_index)
+    assert len(calls) == 1
+
 
 
 def test_external_steps_repeat_a_tool_and_replay_without_replanning(
@@ -1674,9 +1697,25 @@ def test_external_tool_restart_uses_durable_separate_observation_command(
     with pytest.raises(SystemExit, match="137"):
         first.execute(turn, call, step_index=step_index)
 
+    allowed = False
+
+    def authorize(resuming_turn):
+        assert resuming_turn == turn
+        if not allowed:
+            raise ConversationConflict("workspace access revoked")
+
     restarted = PostgresExternalConversationTools(
-        timeline_engine, Planner(), RestartedProvider()
+        timeline_engine, Planner(), RestartedProvider(), authorize_turn=authorize
     )
+    # Revocation after a crash must block both recovery entry points before IO.
+    with pytest.raises(ConversationConflict, match="workspace access revoked"):
+        restarted.pending(turn, step_index=step_index)
+    with pytest.raises(ConversationConflict, match="workspace access revoked"):
+        restarted.execute(turn, call, step_index=step_index)
+    assert len(execution_calls) == 1
+    assert observation_calls == []
+
+    allowed = True
     receipt = restarted.pending(turn, step_index=step_index)
 
     assert receipt is not None and receipt.output["status"] == "verified"

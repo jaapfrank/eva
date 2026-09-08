@@ -249,6 +249,11 @@ class PostgresConversationActions:
 
     def available_action_names(self, turn: ConversationTurn) -> tuple[str, ...]:
         actions = list(self.action_names)
+        for provider in self._external_tools:
+            available = getattr(provider, "available_for", None)
+            if callable(available) and not available(turn):
+                blocked = set(provider.action_names)
+                actions = [name for name in actions if name not in blocked]
         if turn.observation_binding is not None:
             actions.append(_OBSERVATION_IDENTITY_CORRECTION_ACTION)
         return tuple(actions)
