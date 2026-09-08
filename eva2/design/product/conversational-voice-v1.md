@@ -277,3 +277,178 @@ latencytests; zij bezit geen identiteit, geheugen, policy of secretsauthority.
   <https://developers.home-assistant.io/docs/voice/pipelines/>
 - Home Assistant Wyoming:
   <https://www.home-assistant.io/integrations/wyoming/>
+
+## VB-001 herstart — installatie gecontroleerd op 8 september 2026
+
+De actuele productkandidaat gebruikt Pydantic AI 2.37. De oudere
+2.34/2.32-versies hierboven blijven historische proefbindingen, geen actuele
+installatiekeuze. De bestaande voicecontract- en playbacktests slagen op de
+huidige ontwikkelomgeving: 19 tests. Er is nog geen echte duplexgebruikersroute.
+
+Een read-only `assist_pipeline/pipeline/list` via de bestaande live
+Home Assistant-connector vond drie pipelines, waarvan twee Nederlands.
+Deze gebruiken `stt.home_assistant_cloud` en `tts.home_assistant_cloud`;
+de geconfigureerde conversation-engine is `conversation.home_assistant`.
+Er zijn geen pipelines veranderd, geen microfoon geopend en geen audio of
+modelaanroepen verstuurd. Een aanwezige cloudconfiguratie bewijst niet dat
+nieuwe audioversturing of providerretentie al is geaccepteerd.
+
+De actuele officiële Assist-interface ondersteunt afzonderlijk
+`start_stage=stt,end_stage=stt` en `start_stage=tts,end_stage=tts`.
+Daarmee kan de bestaande HA-media-aansluiting worden onderzocht zonder de
+HA-intentfase aan Eva's gesprek toe te voegen. De dunne serveradapter moet
+iedere onverwachte `intent-start`/`intent-end` als ongeldige route afwijzen.
+Een HA-device-ID blijft geen bewijs van een persoonlijke identiteit.
+
+De volgende verticale stap is een geauthenticeerde media-aansluiting die één
+finale transcriptie via `admit_final_voice_turn` in de bestaande gesprekskern
+brengt en uitsluitend Eva's antwoord terugspreekt. Microfoon en afspelen moeten
+naast elkaar kunnen werken; lokale playbackstop mag niet wachten op de
+server of modelprovider. De bestaande lokale Wyoming/Piper/Whisper-proef
+blijft de beschikbare route voor audio zonder nieuwe cloudverwerking.
+De keuze tussen deze media-aansluitingen wordt pas definitief na hun concrete
+sessie-, privacy- en interruptproef; geen nieuwe tweede agentkern toevoegen.
+
+Bronnen gecontroleerd op 8 september 2026:
+- [Assist pipelines](https://developers.home-assistant.io/docs/voice/pipelines/)
+- [Wyoming Piper](https://github.com/OHF-Voice/wyoming-piper)
+- [Wyoming Faster-Whisper](https://github.com/OHF-Voice/wyoming-faster-whisper)
+
+### Serveraansluiting na de echte HA-mediaproef
+
+Media-checkpoint `04ebe03` levert STT/TTS-adapters met afzonderlijke pipeline-
+stappen. De echte HA-proef onthulde `run-end.data=null`; beide adapters
+accepteren dat nu uitsluitend voor dit afsluitende event. De synthetische zin
+werd via echte TTS, vluchtige ffmpeg-PCM en echte STT teruggelezen. Bronreview
+is groen; dit is nog geen browsermicrofoon, speaker of Eva-gesprekslus.
+
+De serverroute gebruikt de bestaande eigenaar-dashboardauthenticatie, met
+verplicht aanwezige token en exacte Origincontrole vóór WebSocket-accept.
+Geen credential komt in een URL of frontendconfiguratie. Browser-Basic-auth
+moet fysiek worden bewezen; indien nodig wordt een eenmalig kort ticket via
+geauthenticeerde POST gebruikt. De bestaande ontwikkelmodus zonder
+dashboardtoken mag voice nooit openen.
+
+De runtime kiest dezelfde tenant, installatie, eigenaarprincipal en
+`dashboard:{binding}` als de bestaande dashboardgesprekken. Voice kopieert
+geen Telegramprincipal of diens bevoegdheden. De server genereert sessie-,
+beurt- en bericht-ID, hercontroleert grant, klok, actuele identiteit/policy en
+eigenaarbinding vóór STT en vóór gespreksadmission. De finale transcriptie gaat
+via `admit_final_voice_turn` naar `runtime.respond` en `after_response`.
+`dashboard_turn` mag niet alsnog een tweede bericht-ID voor dezelfde beurt
+maken. Synchroon modelwerk draait buiten de WebSocket-eventloop; een
+geannuleerde thread-wacht betekent niet dat dat werk zelf geannuleerd is.
+
+Playback en iedere chunk blijven aan een generatie gebonden. Barge-in stopt
+TTS/playback en onderdrukt achterhaalde uitvoer. Alleen een expliciete
+opdrachtstop gebruikt de bestaande duurzame stoproute. De mediaconfiguratie
+moet werkelijk providerretentiebeleid bevatten: lokaal geen audio bewaren
+bewijst geen uitgeschakelde retentie bij Home Assistant Cloud.
+
+
+### VB-001 — dashboardtransport gebouwd, nog niet live (8 september 2026)
+
+De route `/internal/v1/dashboard/conversation/voice` staat standaard uit.
+Expliciete serverconfiguratie levert de eigenaargebonden sessie, actuele
+identity/policy/consentcontrole en media-adapters. Een dashboardtoken én exacte
+Origin zijn verplicht; querycredentials, clientpersoon en clienttranscripten
+worden geweigerd. De bootstrap die deze actuele grant uitgeeft en de browser
+met microfoon en speaker moeten nog worden aangesloten.
+
+Het transport accepteert `start`, binaire 16 kHz mono PCM-s16le frames, `end`,
+`interrupt` en `stop`. Eén verwerking per verbinding voorkomt overlappende
+modeltaken; een volgende start tijdens verwerking meldt `busy`. Audio-uitvoer
+is base64 met MIME en servergeneratie. De toekomstige browser moet bij
+`clear_audio` onmiddellijk de speakerbuffer wissen en oude generaties weigeren.
+Deze transportmelding bewijst geen hoorbare stop of volledige duplexervaring.
+
+Finale herkenning gebruikt gewone ConversationTurn-admission, respond en
+hetzelfde after_response-geheugenpad. Onderbreken onderdrukt spraakuitvoer;
+alleen expliciet stoppen roept de bestaande duurzame taakstop aan. Een lopende
+synchrone model/tooltaak wordt bij disconnect afgewacht inclusief after_response;
+threadcancellation geldt niet als bewijs dat externe effecten gestopt zijn.
+
+Gerichte API-, contract-, playback- en mediatests: 67 geslaagd. Onder andere
+weigering vóór media, grantverval na STT, server-ID's, gewone geheugenafhandeling,
+onderbreking tijdens model/TTS en geblokkeerde antwoordverzending zijn getoetst.
+De bredere API-run heeft een open cockpit-evidencehashcontrole op gewijzigde
+bronbestanden. Geen live-, release- of gezinsacceptatieclaim.
+
+
+### Browsercheckpoint — 8 september 2026
+
+De bestaande eigenaar-gesprekpagina heeft nu microfoon aan/uit en onderbreken.
+De browser gebruikt AudioWorklet met 16 kHz mono PCM, korte voorbuffer en
+spraak/stiltedetectie. De microfoon blijft tijdens afspelen actief. Vroege
+STT-afronding ruimt de lopende capture op; een nieuwe opgenomen zin tijdens
+modelwerk blijft tijdelijk lokaal tot dezelfde sessie weer vrij is. Maximaal
+vier audioframes wachten op bevestiging door de server na consumptie. Een
+complete audiofile wordt begrensd samengesteld vóór decode/afspelen; dit is
+nog geen incrementele spraaksynthese of streaming-playback.
+
+Bij onderbreken stoppen de lokale speaker en gebufferde audio onmiddellijk;
+ook late decode-uitkomsten en fouten uit oudere sessies worden genegeerd.
+Sluiten, een verborgen pagina en verbindingsverlies stoppen microfoontracks.
+Een microfoontoestemming die pas na sluiten terugkomt opent geen nieuwe opname.
+
+Vijftien JavaScriptproeven, inclusief een ingeschakelde echte Chromium1228 /
+Uvicorn-proef, zijn geslaagd zonder skips; daarnaast 67 Python-stemtests en
+Ruff. De browserproef gebruikt een synthetisch WAV-bestand als fake microfoon,
+werkelijke AudioWorklet/PCM en Basic-auth op WebSocket, maar testfixtures voor
+STT, modelantwoord en TTS. WAV-decodering en afspeelplanning, onderbreken en
+trackcleanup zijn werkelijk in Chromium uitgevoerd. Dit bewijst nog geen
+hoorbare gezinsinteractie, HA/modelintegratie, p95-stoplatentie of live gebruik.
+De exacte browseropdracht staat op VB-001; zonder de Playwright-omgeving wordt
+die proef overgeslagen en mag zij niet als releasebewijs meetellen.
+
+Onafhankelijke reviewer co006_review gaf begrensde bron-/browsercheckpoint-GO.
+Bootstrap met echte eigenaar, actuele identiteit, policy en providerconsent,
+volledige gebruikersroute, fysieke eindproeven en veilige release blijven open.
+
+API-keuzes gecontroleerd tegen MDN: AudioWorkletNode,
+https://developer.mozilla.org/en-US/docs/Web/API/AudioWorkletNode ; volledige
+file bij decodeAudioData,
+https://developer.mozilla.org/en-US/docs/Web/API/BaseAudioContext/decodeAudioData ;
+getUserMedia, https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia .
+
+
+### Runtimebinding — 8 september 2026
+
+`EVA_DASHBOARD_VOICE_POLICY_FILE` is optioneel. Zonder bestand blijft voice uit;
+een ingesteld maar ongeldig bestand weigert startup. Het private bestand draagt
+`DashboardVoicePolicy/v1`: een nieuwe, echte mediaspecifieke eigenaarpolicy,
+geen bewering dat de runtime een globale PolicyPack heeft geladen. Het bindt
+beide bestaande scopes afzonderlijk: de runtimegespreksscope heeft Identifier-
+waarden, de beheeromgeving heeft UUID's. Gesproken beurten volgen precies
+`dashboard_turn`, inclusief `dashboard:UUID`-bericht-ID voor de vergeetroute.
+Er worden geen bestaande scopegegevens of toolbevoegdheden aangepast.
+
+De geconfigureerde ondertekende identiteit/trustbinding is gedeeld met de
+cockpitloader. Verwijdering, wijziging, permissiedrift, intrekking of verloop
+van de voicepolicy maakt bestaande grants ongeldig. Nieuwe sessies duren
+hoogstens dertig minuten en nooit langer dan de policy. De policy geeft
+uitsluitend toegang tot media; persoonsgeheugen en handelingen lopen via
+bestaande gesprekadmission en bevoegdheden.
+
+STT controleert geselecteerde pipeline, taal en engine vóór PCM-overdracht.
+TTS gebruikt de bestaande `/api/tts_get_url`-route met expliciet `engine_id`,
+`language` en `cache:false`; de veranderbare pipeline kiest daardoor niet de
+TTS-provider. Alleen een begrensd `/api/tts_proxy/`-pad op dezelfde HA-origin
+wordt opgehaald. Cache:false vraagt geen HA-schijfcache; het bewijst niet dat
+alle interne/externe buffers ogenblikkelijk verdwijnen. Providerretentie blijft
+een eigenaarassertie met bewijsreferentie, geen autonoom geverifieerde garantie.
+Bron voor deze route: Home Assistant tts/__init__.py,
+https://github.com/home-assistant/core/blob/dev/homeassistant/components/tts/__init__.py .
+De daadwerkelijke Cloud-engines zijn in de installatie gecontroleerd; relevante
+providerverklaring: https://www.nabucasa.com/privacy/ .
+
+218 gerichte bootstrap-/stemtests en Ruff slagen. Een aparte proef met de echte
+runtimeconfiguratie heeft de geconfigureerde ondertekende identiteit, eigenaar,
+beide scopes en intrekking na verwijderen van een tijdelijk policybestand
+bewezen. Dat bestand is verwijderd; geen live voice-instelling is geactiveerd.
+Een echte HA-proef met directe TTS en enginegebonden STT herkende de vaste
+synthetische testzin correct. Geen menselijke opname, speaker, modelcall of
+geïntegreerde browser/modelproef wordt daarmee geclaimd. Bronnen, reproduceerbare
+runners en receipts zijn gebonden in audit.vb001RuntimeIntegration; onafhankelijke
+co006_review gaf beperkte GO. De gekopieerde-data-kandidaat, fysieke eindproeven
+en volledige veilige release blijven open.

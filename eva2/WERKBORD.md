@@ -31,12 +31,27 @@ Klaar betekent:
 - `eva2/tests/application/test_voice_playback.py`
 - `eva2/tests/contract/test_voice.py`
 - `eva2/design/product/conversational-voice-v1.md`
+- `eva2/src/eva/adapters/connectors/home_assistant_voice.py`
+- `eva2/tests/connectors/test_home_assistant_voice.py`
+- `eva2/src/eva/adapters/api/dashboard_voice.py`
+- `eva2/tests/api/test_dashboard_voice.py`
+- `eva2/src/eva/adapters/api/app.py`
+- `eva2/src/eva/adapters/api/dashboard_voice_client.py`
+- `eva2/src/eva/adapters/api/dashboard_conversation.py`
+- `eva2/tests/api/test_dashboard_voice_client.cjs`
+- `eva2/src/eva/bootstrap/dashboard_voice.py`
+- `eva2/src/eva/bootstrap/runtime.py`
+- `eva2/tests/bootstrap/test_dashboard_voice_bootstrap.py`
 
 Echte controles:
 
 - `pytest -q tests/application/test_voice_playback.py`
 - `pytest -q tests/contract/test_voice.py`
 - `python3 tools/check_current_workboard.py`
+- `pytest -q tests/connectors/test_home_assistant_voice.py`
+- `pytest -q tests/api/test_dashboard_voice.py`
+- `pytest -q tests/bootstrap/test_dashboard_voice_bootstrap.py`
+- `pytest -q tests/bootstrap/test_runtime_settings.py`
 
 </details>
 
