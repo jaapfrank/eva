@@ -2204,6 +2204,20 @@
         "missingPath": "eva2/evidence/product/TL-002-workspace-candidate-2026-09-08.json",
         "note": "Werkbordcontrole werkt in huidige werkmap; zuivere Git-snapshot mist bestaand niet-gecommit TL-002-bewijs. Dit is geen geslaagde volledige releasepoort."
       }
+    },
+    "vb001NativeVoiceCancellation": {
+      "status": "source_tested_not_connected_or_live",
+      "evidence": "eva2/evidence/product/VB-001-native-voice-cancellation-2026-09-08.json",
+      "tests": "67 PostgreSQL timeline tests passed, including five native voice cases; Ruff passed",
+      "review": "co006_review bounded source GO after expiry-under-lock correction",
+      "next": "Connect authenticated native HA request/interrupt endpoints with shared household memory admission, worker cancellation and per-device supersession. Then real HA/speaker tests and safe release."
+    },
+    "vb001NativeVoiceHttp": {
+      "status": "http_and_database_tested_not_household_or_live",
+      "evidence": "eva2/evidence/product/VB-001-native-voice-http-2026-09-08.json",
+      "tests": "99 combined tests;50 core API tests;final native API15passed;Ruff passed",
+      "review": "co006_review bounded source GO after admission/shutdown lifecycle fixes",
+      "next": "Bind household audience and current mandate to actual cancellation-aware Eva runtime; then native HA pipeline and hardware interruption/resume proof."
     }
   },
   "activeTaskId": "VB-001",
@@ -3599,12 +3613,18 @@
         "eva2/deploy/home-assistant/custom_components/eva2_voice/config_flow.py",
         "eva2/deploy/home-assistant/custom_components/eva2_voice/manifest.json",
         "eva2/deploy/home-assistant/custom_components/eva2_voice/strings.json",
-        "eva2/tests/operations/test_ha_voice_native_client.py"
+        "eva2/tests/operations/test_ha_voice_native_client.py",
+        "eva2/src/eva/adapters/postgres/voice_requests.py",
+        "eva2/src/eva/adapters/postgres/operational_timeline.py",
+        "eva2/tests/postgres/test_operational_timeline.py",
+        "eva2/src/eva/adapters/api/native_voice.py",
+        "eva2/tests/api/test_native_voice.py"
       ],
       "componentIds": [
         "api-and-runtime-composition",
         "core-behavior-tests",
         "core-semantics",
+        "durable-persistence",
         "external-capability-adapters",
         "integration-and-storage-tests",
         "managed-deployment",
@@ -3629,7 +3649,9 @@
         "pytest -q tests/operations/test_eva2_quiescent_cutover.py",
         "pytest -q tests/operations/test_managed_b_render.py",
         "pytest -q tests/operations/test_plan_home_assistant_voice_bridge.py",
-        "pytest -q tests/operations/test_ha_voice_native_client.py"
+        "pytest -q tests/operations/test_ha_voice_native_client.py",
+        "pytest -q tests/postgres/test_operational_timeline.py",
+        "pytest -q tests/api/test_native_voice.py"
       ],
       "evidenceRequired": [
         "Onderzoek bestaande Eva2-voicebouwstenen en Bottie/HA-route; leg concrete ontbrekende media-aansluiting, providerkeuze, bestaand mandaat en verbruik vast.",

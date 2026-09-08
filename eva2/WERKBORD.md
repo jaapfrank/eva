@@ -55,6 +55,21 @@ Klaar betekent:
 - `eva2/tests/operations/test_managed_b_render.py`
 - `eva2/tools/plan_home_assistant_voice_bridge.py`
 - `eva2/tests/operations/test_plan_home_assistant_voice_bridge.py`
+- `eva2/deploy/home-assistant/voice-pe-interruption.yaml`
+- `eva2/deploy/home-assistant/README.md`
+- `eva2/design/architecture/component-catalog-v1.json`
+- `eva2/deploy/home-assistant/custom_components/eva2_voice/conversation.py`
+- `eva2/deploy/home-assistant/custom_components/eva2_voice/__init__.py`
+- `eva2/deploy/home-assistant/custom_components/eva2_voice/client.py`
+- `eva2/deploy/home-assistant/custom_components/eva2_voice/config_flow.py`
+- `eva2/deploy/home-assistant/custom_components/eva2_voice/manifest.json`
+- `eva2/deploy/home-assistant/custom_components/eva2_voice/strings.json`
+- `eva2/tests/operations/test_ha_voice_native_client.py`
+- `eva2/src/eva/adapters/postgres/voice_requests.py`
+- `eva2/src/eva/adapters/postgres/operational_timeline.py`
+- `eva2/tests/postgres/test_operational_timeline.py`
+- `eva2/src/eva/adapters/api/native_voice.py`
+- `eva2/tests/api/test_native_voice.py`
 
 Echte controles:
 
@@ -69,6 +84,9 @@ Echte controles:
 - `pytest -q tests/operations/test_eva2_quiescent_cutover.py`
 - `pytest -q tests/operations/test_managed_b_render.py`
 - `pytest -q tests/operations/test_plan_home_assistant_voice_bridge.py`
+- `pytest -q tests/operations/test_ha_voice_native_client.py`
+- `pytest -q tests/postgres/test_operational_timeline.py`
+- `pytest -q tests/api/test_native_voice.py`
 
 </details>
 

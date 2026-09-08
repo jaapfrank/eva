@@ -269,9 +269,9 @@
     }
   ],
   "summary": {
-    "files": 2059,
-    "present": 2059,
-    "tracked": 2059,
+    "files": 2064,
+    "present": 2064,
+    "tracked": 2064,
     "untracked": 0,
     "tombstones": 0,
     "policyErrors": 9
@@ -310,7 +310,7 @@
     {
       "id": "eva2-verification",
       "role": "verification",
-      "matchCount": 717
+      "matchCount": 720
     },
     {
       "id": "eva2-documentation",
@@ -335,7 +335,7 @@
     {
       "id": "eva2-runtime",
       "role": "product-runtime",
-      "matchCount": 245
+      "matchCount": 247
     },
     {
       "id": "eva2-build-contract",
@@ -9960,7 +9960,7 @@
       "path": "docs/eva-repository-inventory.generated.json",
       "gitState": "tracked",
       "present": true,
-      "bytes": 2368467,
+      "bytes": 2373511,
       "contentSha256": "32591e23fa2eb53a038d95e726ba09edd0405306f38c5283a36a2b6d3010254d",
       "hashMode": "canonical-self-reference-redacted",
       "role": "generated",
@@ -9993,7 +9993,7 @@
       "path": "docs/eva-repository-inventory.generated.md",
       "gitState": "tracked",
       "present": true,
-      "bytes": 358479,
+      "bytes": 359113,
       "contentSha256": "2f4f8486464cbb9713b749dc898f265093d0853699f1da1b4eb3dd1625c1b2d2",
       "hashMode": "canonical-self-reference-redacted",
       "role": "generated",
@@ -11803,8 +11803,8 @@
       "path": "eva2/deploy/home-assistant/README.md",
       "gitState": "tracked",
       "present": true,
-      "bytes": 4470,
-      "contentSha256": "59da852186e37f9f4680541582b2845429040b23a90d477f7cb8bf72e9a63500",
+      "bytes": 7187,
+      "contentSha256": "6bfd4a6b75ca94bb764874a32a2ac27a864bdb499f46eb0a28085eea6be7b885",
       "hashMode": "exact-bytes",
       "role": "deployment",
       "roleRuleId": "eva2-deployment",
@@ -13573,8 +13573,8 @@
       "path": "eva2/design/product/execution-workboard-v1.json",
       "gitState": "tracked",
       "present": true,
-      "bytes": 250487,
-      "contentSha256": "7f854e96505b9e35e619b5e9d35436a3d419d9067a47e67265162c655b63c37b",
+      "bytes": 251056,
+      "contentSha256": "9d08bd06b4db80d1a25d9c942adbb98beb473e09a084a8fb42efe1b04b66239a",
       "hashMode": "exact-bytes",
       "role": "documentation",
       "roleRuleId": "eva2-documentation",
@@ -24027,6 +24027,76 @@
       "present": true,
       "bytes": 3053,
       "contentSha256": "7249816b24f641c0769c069e177e1ed6d88fae4d71996df55f6678941619a15f",
+      "hashMode": "exact-bytes",
+      "role": "verification",
+      "roleRuleId": "eva2-verification",
+      "matchingRuleIds": [
+        "eva2-verification"
+      ],
+      "owner": "verification",
+      "inputs": [
+        "production or fixture contract"
+      ],
+      "outputs": [
+        "test decision"
+      ],
+      "state": [
+        "temporary isolated test state"
+      ],
+      "effects": [
+        "may execute only inside its declared gate"
+      ],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": true,
+        "runtimeCritical": true,
+        "status": "included-tracked-critical"
+      }
+    },
+    {
+      "path": "eva2/evidence/product/VB-001-native-voice-cancellation-2026-09-08.json",
+      "gitState": "tracked",
+      "present": true,
+      "bytes": 1717,
+      "contentSha256": "6dd2879005467d76fb9a94490fc65fa28c33c55f185256c1f4dae4745b9f47f3",
+      "hashMode": "exact-bytes",
+      "role": "verification",
+      "roleRuleId": "eva2-verification",
+      "matchingRuleIds": [
+        "eva2-verification"
+      ],
+      "owner": "verification",
+      "inputs": [
+        "production or fixture contract"
+      ],
+      "outputs": [
+        "test decision"
+      ],
+      "state": [
+        "temporary isolated test state"
+      ],
+      "effects": [
+        "may execute only inside its declared gate"
+      ],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": true,
+        "runtimeCritical": true,
+        "status": "included-tracked-critical"
+      }
+    },
+    {
+      "path": "eva2/evidence/product/VB-001-native-voice-http-2026-09-08.json",
+      "gitState": "tracked",
+      "present": true,
+      "bytes": 2697,
+      "contentSha256": "aa46ac2af97199d64f60759cde9ec088e6a5c2533bec7e7a04b035a31949db42",
       "hashMode": "exact-bytes",
       "role": "verification",
       "roleRuleId": "eva2-verification",
@@ -45156,8 +45226,8 @@
       "path": "eva2/src/eva/adapters/api/app.py",
       "gitState": "tracked",
       "present": true,
-      "bytes": 59694,
-      "contentSha256": "3e061d6e25ac4c2c444e24cdfc85ff25cd1e41db3cf3ce1fbc5f193dc97ccc76",
+      "bytes": 60011,
+      "contentSha256": "ef5509a6df60c9190f1618a4104db8e0f7e7b159646a428bce40afd7d8d9d745",
       "hashMode": "exact-bytes",
       "role": "product-runtime",
       "roleRuleId": "eva2-runtime",
@@ -45823,6 +45893,41 @@
       "present": true,
       "bytes": 33148,
       "contentSha256": "3a7768759be24a5044c545e06298cdc70b1cada50f022603d6db42885c6ced12",
+      "hashMode": "exact-bytes",
+      "role": "product-runtime",
+      "roleRuleId": "eva2-runtime",
+      "matchingRuleIds": [
+        "eva2-runtime"
+      ],
+      "owner": "eva-runtime",
+      "inputs": [
+        "issued runtime input and dependencies"
+      ],
+      "outputs": [
+        "runtime result or capability"
+      ],
+      "state": [
+        "runtime-owned durable or process state"
+      ],
+      "effects": [
+        "module-specific runtime effects"
+      ],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": true,
+        "runtimeCritical": true,
+        "status": "included-tracked-critical"
+      }
+    },
+    {
+      "path": "eva2/src/eva/adapters/api/native_voice.py",
+      "gitState": "tracked",
+      "present": true,
+      "bytes": 12258,
+      "contentSha256": "e066779ccf715f5d93ed84676fb3075198640a8c6e5bfcbe0afd032c435071cb",
       "hashMode": "exact-bytes",
       "role": "product-runtime",
       "roleRuleId": "eva2-runtime",
@@ -48411,8 +48516,8 @@
       "path": "eva2/src/eva/adapters/postgres/operational_timeline.py",
       "gitState": "tracked",
       "present": true,
-      "bytes": 31626,
-      "contentSha256": "e324d23c25d2b07daf95e656a9af0e2c161ad71be438b49ff7c1b58c23013a5d",
+      "bytes": 32076,
+      "contentSha256": "09d9c916457eb24ee9e32e1076cb0974e2620d3e222768678cca66daa9b25a42",
       "hashMode": "exact-bytes",
       "role": "product-runtime",
       "roleRuleId": "eva2-runtime",
@@ -48728,6 +48833,41 @@
       "present": true,
       "bytes": 14460,
       "contentSha256": "643dae35a642f5d32e2b86d177e3fb4cce796100b45f707413ea9abe821c9b21",
+      "hashMode": "exact-bytes",
+      "role": "product-runtime",
+      "roleRuleId": "eva2-runtime",
+      "matchingRuleIds": [
+        "eva2-runtime"
+      ],
+      "owner": "eva-runtime",
+      "inputs": [
+        "issued runtime input and dependencies"
+      ],
+      "outputs": [
+        "runtime result or capability"
+      ],
+      "state": [
+        "runtime-owned durable or process state"
+      ],
+      "effects": [
+        "module-specific runtime effects"
+      ],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": true,
+        "runtimeCritical": true,
+        "status": "included-tracked-critical"
+      }
+    },
+    {
+      "path": "eva2/src/eva/adapters/postgres/voice_requests.py",
+      "gitState": "tracked",
+      "present": true,
+      "bytes": 4292,
+      "contentSha256": "a7e14ab8acce031b2e2aeb926747540d74dba0c6bf3035c48fa5683072758958",
       "hashMode": "exact-bytes",
       "role": "product-runtime",
       "roleRuleId": "eva2-runtime",
@@ -53313,6 +53453,41 @@
       "present": true,
       "bytes": 43917,
       "contentSha256": "5366c639705e2ef65aaaa60bef9f537e9432e7abd34bcaa1433e8ca02bcad3d1",
+      "hashMode": "exact-bytes",
+      "role": "verification",
+      "roleRuleId": "eva2-verification",
+      "matchingRuleIds": [
+        "eva2-verification"
+      ],
+      "owner": "verification",
+      "inputs": [
+        "production or fixture contract"
+      ],
+      "outputs": [
+        "test decision"
+      ],
+      "state": [
+        "temporary isolated test state"
+      ],
+      "effects": [
+        "may execute only inside its declared gate"
+      ],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": true,
+        "runtimeCritical": true,
+        "status": "included-tracked-critical"
+      }
+    },
+    {
+      "path": "eva2/tests/api/test_native_voice.py",
+      "gitState": "tracked",
+      "present": true,
+      "bytes": 12228,
+      "contentSha256": "f33b6cb86dc896453476c39dcfa9c92e507c7f73343b865bc3c7856b1c5756bb",
       "hashMode": "exact-bytes",
       "role": "verification",
       "roleRuleId": "eva2-verification",
@@ -62446,8 +62621,8 @@
       "path": "eva2/tests/postgres/test_operational_timeline.py",
       "gitState": "tracked",
       "present": true,
-      "bytes": 123701,
-      "contentSha256": "cf602c66a71854cff7a6d9f0dd0e17ae39fcf7d641dd707e617611e380f371ff",
+      "bytes": 133319,
+      "contentSha256": "2cb1b3117d2d558267966d90211f18ecddc6a0d28dc114baa7979467a3ce61df",
       "hashMode": "exact-bytes",
       "role": "verification",
       "roleRuleId": "eva2-verification",
@@ -82752,5 +82927,5 @@
       }
     }
   ],
-  "sourceDigest": "c528406829743f5550c2e4d48fd4fa9809ad6330c79d1ba68b452dc394ace286"
+  "sourceDigest": "2f2b96be952d6459541490ea82a8af18357882929c9ac3ee64e801e6281682f6"
 }
