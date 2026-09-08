@@ -167,6 +167,10 @@
       ],
       "nextOutcomes": [
         {
+          "title": "Stem bruikbaar maken",
+          "detail": "Spraakroute met echte providers geslaagd op een kopie. Beheerde uitrol gebouwd; complete kandidaatcontrole loopt vóór jouw eigen stemtest."
+        },
+        {
           "title": "Laat Eva een document bewaren",
           "detail": "Vraag via /eva2: Bewaar een kort plan in /proof-state/mijn-plan.txt en controleer de opgeslagen inhoud. Dit werkt in de toegestane privéwerkmap."
         },
@@ -265,9 +269,9 @@
           "tested": "partial",
           "live": "no",
           "accepted": "no",
-          "gap": "Echte microfoon-/speakerervaring",
-          "detail": "Losse spraakbouwstenen zijn beproefd. Een complete Eva2-ervaring met gelijktijdig luisteren, spreken, onderbreken en passend initiatief in huis ontbreekt. Eva1 is hier een belangrijke referentie.",
-          "evidence": "VB-001, VB-002 · OUDE_EVA_VS_EVA2.md"
+          "gap": "Veilige ingebruikname en jouw microfoon-/speakerproef",
+          "detail": "De complete browser → spraakherkenning → Eva → spraakaudio-route is op actuele gekopieerde gegevens geslaagd: de vraag hoeveel zeven plus vijf is kreeg antwoord 12, met één modelaanroep. Gesprek bleef na herstart bewaard en ingetrokken microfoontoegang werd geweigerd. De beheerde uitrolaansluiting is gebouwd en onafhankelijk beoordeeld; de kandidaatcontrole loopt. Stem is nog niet live. Jouw eigen microfoon-/speakerervaring, herhaalde onderbrekingsmetingen en aanwezigheid in huis blijven open.",
+          "evidence": "VB-001 · echte providerproef op kandidaat 215fe32 geslaagd · beheerde aansluiting 723febe beoordeeld · kandidaat 4d7d039 in releasecontrole"
         },
         {
           "id": "projects",
@@ -1709,7 +1713,49 @@
         "liveChanges": false
       },
       "next": "Seal deployment overlay and its committed source into complete release authority; build and verify complete candidate, then prepare reserve with current data and explicit owner voice policy.",
-      "implementationCommit": "723febe70d1c12f5e3f5a8179e21f883725d35f1"
+      "implementationCommit": "723febe70d1c12f5e3f5a8179e21f883725d35f1",
+      "stage": {
+        "path": "/tmp/eva2-vb001-managed-release-bym6cas7",
+        "owner": "/root",
+        "purpose": "Complete candidate with managed voice overlay; clean inventory verified without including unrelated worktree edits",
+        "retention": "Archive bound evidence and remove this exact temporary source/build stage before VB-001 closure."
+      },
+      "sealedSourceCommit": "4d7d039c1b4761489d2e2d20ac6231f5b602337b",
+      "buildResult": {
+        "status": "passed",
+        "imageId": "sha256:7b75cfe18df5691e1c2cc2fa56c9ee0f202959eab090ce723cd11761b5af84f7",
+        "receiptPath": "/tmp/eva2-vb001-managed-release-bym6cas7/image/build.json",
+        "installedTestsPassed": 141,
+        "voiceBrowserTestsPassed": 18,
+        "scanHigh": 0,
+        "scanCritical": 0
+      },
+      "requiredGateProcess": {
+        "execSessionId": 20127,
+        "status": "running",
+        "output": "/tmp/eva2-vb001-managed-release-bym6cas7/gates",
+        "databaseScope": "Twelve dedicated vb001_managed3_ databases; remove recorded names only after terminal gate."
+      },
+      "copyProbePreparation": {
+        "status": "independent_conditional_go_waiting_full_gate",
+        "wrapper": "/tmp/eva2-vb001-managed-release-bym6cas7/run_voice_copy.py",
+        "wrapperSha256": "ac79ee220d163e2b35be27f408aec2c4212587b5611ca3eb21685725a0c71770",
+        "policyTemplateSha256": "fb5fa164ea37ee538f5fa4dc183cbfbd62f439b7294534af5ef2cfc782b280c9",
+        "review": "Bounded conditional GO /root/co006_review: exact official overlay, normal restart/readback plus policy removal and temporary core restart with new WebSocket rejection. Requires terminal full gate/cleanup/exact pre-copy binding. No live GO."
+      },
+      "reservePreflight": {
+        "status": "passed_read_only",
+        "sourceSlot": 4,
+        "targetSlot": 3,
+        "targetCoreStopped": true,
+        "scopeAndModelMatch": true,
+        "identityTrustBudgetBindingsAndTelegramFilesMatch": true,
+        "sourceConnectorEnabled": true,
+        "targetConnectorEnabled": false,
+        "voiceConfiguredInEitherSlot": false,
+        "liveMutations": false,
+        "next": "Preserve source MCP access in target configuration while adding explicit owner voice policy; do not activate before completed candidate admission."
+      }
     }
   },
   "activeTaskId": "VB-001",
