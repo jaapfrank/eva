@@ -1397,7 +1397,7 @@
     "vb001ReleasePreparation": {
       "owner": "/root",
       "reviewer": "/root/co006_review",
-      "status": "sealed_candidate_gates_passed_copied_data_integration_pending",
+      "status": "copied_data_voice_failed_ack_repair_reviewed_candidate_reseal_pending",
       "scope": [
         "release/managed-b-release-input-authority-v1.json",
         "release/eva-cockpit-evidence-index-v1.json",
@@ -1422,7 +1422,7 @@
         "enabledChromiumTestsPassed": 15,
         "enabledChromiumSkips": 0
       },
-      "next": "Complete and independently review concrete copied-data voice wrapper and temporary policy. Execute one synthetic browser voice turn plus existing two canary model turns/replay; verify journal/TTS/cleanup and unchanged live route.",
+      "next": "Reseal reviewed ACK repair 7be3a1c into complete candidate; correct generation-aware voice readback using recovered HA transcripts before rerun. No live voice claim.",
       "buildInvocation": {
         "path": "/tmp/eva2-vb001-sealed-source-_jmj6pcy/build.cjs",
         "sha256": "4045acef650ed529280dc54976f909ffaefc7e5ff4c158df5f0158a79a37b5ff",
@@ -1506,9 +1506,87 @@
       },
       "integratedBrowserHarness": {
         "path": "/tmp/eva2-vb001-sealed-source-_jmj6pcy/browser_integrated.cjs",
-        "status": "syntax_checked_not_executed",
-        "scope": "Prepared real candidate browser harness; not yet actual HA/model voice proof."
+        "status": "executed_partial_browser_pass_full_integration_failed",
+        "scope": "Real candidate browser received HA STT / Astra / HA TTS reply and audio; full journal/restart/revocation integration did not pass."
+      },
+      "copiedVoiceInvocation": {
+        "owner": "/root",
+        "reviewer": "/root/co006_review",
+        "status": "completed_exit_1_temporary_resources_removed",
+        "files": {
+          "run_voice_copy.py": {
+            "path": "/tmp/eva2-vb001-sealed-source-_jmj6pcy/run_voice_copy.py",
+            "sha256": "731fb0fc1cb0098f0b4ac2d633b2510b7f192fcb4a23977095ec58eb25bc8a19"
+          },
+          "browser_integrated.cjs": {
+            "path": "/tmp/eva2-vb001-sealed-source-_jmj6pcy/browser_integrated.cjs",
+            "sha256": "8ada68d6a5e03ae17aad52351361a730f4aabad65a0b86acc4df3b5112409769"
+          },
+          "policy-template.json": {
+            "path": "/tmp/eva2-vb001-sealed-source-_jmj6pcy/policy-template.json",
+            "sha256": "03979640f48e5457adc5636bd5cb0cc602bacca3d41decd1815581a42071bb22"
+          },
+          "policy_metadata.py": {
+            "path": "/tmp/eva2-vb001-sealed-source-_jmj6pcy/policy_metadata.py",
+            "sha256": "341312c7e0e256a9d6fddf88a950a2c495a1dd22406225453e0a6a1f385b1d8e"
+          }
+        },
+        "scope": "Existing disposable operator; current Slot4 data read-only snapshots into private new graph. No live promotion. Preserve actual owner and both scopes; actual signed identity/HA engines in temporary policy.",
+        "modelPlan": "Two existing canary turns plus replay and one synthetic voice turn, actual measured per-turn usage retained. Additional foreground memory-provider work recorded separately where observable.",
+        "mediaPlan": "One HA TTS call makes synthetic input, browser Worklet sends PCM to real HA STT, Astra reply goes through real HA TTS. Synthetic WAV removed.",
+        "effectBoundaries": "HA effects false, no MCP access, no Telegram ingress service or real bot token in candidate. Existing owner runtime budget copied unchanged.",
+        "recovery": "Compare independent voice ingress/reply rows after restart; delete directory-mounted policy and require new WebSocket403; existing operator removes temporary graph and secrets.",
+        "preflightCorrection": "Use strict JSON policy validation for UUID wire strings; no permissive validation introduced.",
+        "executionReview": "Bounded GO by /root/co006_review for exact wrapper/browser/policy hashes: copied-data voice probe only, no deployment/live acceptance. TTS audio hash proves receipt, not independently spoken content.",
+        "execSessionId": 70947,
+        "resultDirectory": "/tmp/eva2-vb001-sealed-source-_jmj6pcy/copy",
+        "result": {
+          "status": "failed",
+          "failedPhase": "core-ready-before-restart",
+          "receiptPath": "/tmp/eva2-vb001-sealed-source-_jmj6pcy/copy/receipt.private.json",
+          "temporaryResourcesRemoved": true,
+          "liveInputsAndRouteUnchanged": true,
+          "browserReply": "ik",
+          "browserAudioBytes": 7629,
+          "voiceGenerationsObserved": 2,
+          "modelCallCount": "not fully measured; do not claim one call",
+          "restartAndRevocationVerified": false,
+          "readbackFailure": "Compared operational UUID5 scopes with external runtime names. Draft corrected to external_timeline_scope and persists selected rows before assertions."
+        },
+        "recoveredSttEvidence": {
+          "path": "/tmp/eva2-vb001-sealed-source-_jmj6pcy/copy/ha-stt-debug.private.json",
+          "method": "Read-only HA pipeline debug list/get, filtered to exact invocation time window; no new model or media calls.",
+          "matchingRuns": 2,
+          "transcripts": [
+            "Dit is een test.",
+            "Antwoord Alleen met ik, hoor je?"
+          ],
+          "conclusion": "Two utterances were recognized. This does not establish that the ACK race caused this particular failed result. Existing 600ms segmentation remains unchanged."
+        },
+        "readbackDraft": {
+          "path": "/tmp/eva2-vb001-sealed-source-_jmj6pcy/run_voice_copy_next.py",
+          "sha256": "aec9c08ff85a0ed841f52c3f21431d0cc5a1a3d9a94eaf857575e02a1fec9d17",
+          "status": "syntax_valid_execution_disabled_until_new_candidate_and_generation_readback_bound"
+        }
       }
+    },
+    "vb001AckBufferRepair": {
+      "owner": "/root",
+      "reviewer": "/root/co006_review",
+      "status": "built_tested_reviewed_not_live",
+      "implementationCommit": "7be3a1ce31f8bd8ce3ac27c463156df662c3263d",
+      "problem": "Resumed speech could lose initial frames while ended previous capture waited for provider ACKs.",
+      "change": "Separate sendingCapture ownership from active microphone capture; preserve queued speech through early STT completion and ignore retired generation ACKs.",
+      "checks": {
+        "enabledBrowserTestsPassed": 18,
+        "skipped": 0,
+        "ruff": "passed",
+        "diffCheck": "passed",
+        "independentFocusedTestsPassed": 5
+      },
+      "reviewDecision": "Bounded GO by /root/co006_review; no concrete blocker in queue/resume/generation/capacity logic. No live GO and no claim that ordinary pauses form one utterance.",
+      "candidateBinding": "Previous 69529/a286 candidate evidence remains historical for that source; new repair requires resealing before integration/deployment.",
+      "next": "Complete corrected voice candidate and run actual browser/provider readback, restart, revocation, safe rollout and human microphone/speaker acceptance."
     }
   },
   "activeTaskId": "VB-001",
