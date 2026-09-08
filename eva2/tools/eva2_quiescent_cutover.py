@@ -50,6 +50,9 @@ MANIFEST = (
     Path(__file__).resolve().parents[1] / "deploy/living-core/managed-b.compose.yml"
 )
 PROACTIVE_MANIFEST = MANIFEST.with_name("telegram-proactive.compose.yml")
+CONNECTOR_MANIFEST = MANIFEST.with_name("mcp-gateway.compose.yml")
+CONNECTOR_TARGET = "/run/eva/connectors/mcp"
+CONNECTOR_FLAG = "EVA_MCP_GATEWAY_ENABLED"
 PROACTIVE_FLAG = "EVA_TELEGRAM_PROACTIVE_DELIVERY_ENABLED"
 PROACTIVE_TOKEN_TARGET = "/run/secrets/telegram_bot_token"
 
@@ -363,9 +366,122 @@ class SystemBackend:
             raise QuiescentCutoverError("Docker inspection was invalid")
         return documents
 
+    @classmethod
+    def _connector_settings(cls, environment: dict[str, str]) -> dict[str, str] | None:
+        """Validate one fixed optional overlay without releasing its credential."""
+        flag = environment.get(CONNECTOR_FLAG, "false")
+        if flag not in {"true", "false"}:
+            raise QuiescentCutoverError("connector flag is invalid")
+        values = {key: value for key, value in environment.items()
+                  if key.startswith("EVA_MCP_GATEWAY_") and key != CONNECTOR_FLAG}
+        if flag == "false":
+            if any(values.values()):
+                raise QuiescentCutoverError("disabled connector has active configuration")
+            return None
+        required = {"URL", "ACCESS_DIR_HOST", "NETWORK_NAME", "ALLOW_PLAIN_HTTP",
+                    "PRINCIPAL_SHA256_ALLOWLIST", "CATALOG_SHA256", "TOKEN_SHA256", "OVERLAY_SHA256", "IMAGE_ID", "BASE_MANIFEST_SHA256", "DELIVERY_OVERLAY_SHA256"}
+        if set(values) != {"EVA_MCP_GATEWAY_" + key for key in required} or not all(values.values()):
+            raise QuiescentCutoverError("connector configuration is incomplete")
+        for key in ("CATALOG_SHA256", "TOKEN_SHA256", "OVERLAY_SHA256", "BASE_MANIFEST_SHA256", "DELIVERY_OVERLAY_SHA256"):
+            if re.fullmatch(r"[0-9a-f]{64}", values["EVA_MCP_GATEWAY_" + key]) is None:
+                raise QuiescentCutoverError("connector digest is invalid")
+        principals = values["EVA_MCP_GATEWAY_PRINCIPAL_SHA256_ALLOWLIST"].split(",")
+        if any(re.fullmatch(r"[0-9a-f]{64}", value) is None for value in principals):
+            raise QuiescentCutoverError("connector owner allowlist is invalid")
+        if (values["EVA_MCP_GATEWAY_URL"] != "http://eva2-mcp-gateway:4444"
+                or values["EVA_MCP_GATEWAY_ALLOW_PLAIN_HTTP"] != "true"
+                or re.fullmatch(r"sha256:[0-9a-f]{64}", values["EVA_MCP_GATEWAY_IMAGE_ID"]) is None):
+            raise QuiescentCutoverError("local connector gateway URL, transport or image is invalid")
+        for path, key in ((CONNECTOR_MANIFEST, "OVERLAY_SHA256"),
+                          (MANIFEST, "BASE_MANIFEST_SHA256"),
+                          (PROACTIVE_MANIFEST, "DELIVERY_OVERLAY_SHA256")):
+            if hashlib.sha256(path.read_bytes()).hexdigest() != values["EVA_MCP_GATEWAY_" + key]:
+                raise QuiescentCutoverError("connector Compose template digest differs")
+        directory = Path(values["EVA_MCP_GATEWAY_ACCESS_DIR_HOST"])
+        if not directory.is_absolute() or directory.resolve(strict=True) != directory:
+            raise QuiescentCutoverError("connector access directory is not canonical")
+        metadata = directory.stat()
+        if not stat.S_ISDIR(metadata.st_mode) or stat.S_IMODE(metadata.st_mode) != 0o700 or metadata.st_uid != 65532:
+            raise QuiescentCutoverError("connector access directory metadata is unsafe")
+        if {item.name for item in directory.iterdir()} != {"token", "catalog.json"}:
+            raise QuiescentCutoverError("connector directory contains unexpected files")
+        for name, key in (("token", "TOKEN_SHA256"), ("catalog.json", "CATALOG_SHA256")):
+            path = directory / name
+            cls._private_file(path, mode=0o600, uid=65532)
+            if hashlib.sha256(path.read_bytes()).hexdigest() != values["EVA_MCP_GATEWAY_" + key]:
+                raise QuiescentCutoverError("connector credential or catalog digest differs")
+        network = values["EVA_MCP_GATEWAY_NETWORK_NAME"]
+        if re.fullmatch(r"eva2-[a-z0-9][a-z0-9_-]{0,62}", network) is None:
+            raise QuiescentCutoverError("connector network name is invalid")
+        try:
+            networks = json.loads(cls._run([DOCKER, "network", "inspect", network]))
+        except (ValueError, TypeError) as exc:
+            raise QuiescentCutoverError("connector network inspection is invalid") from exc
+        if (not isinstance(networks, list) or len(networks) != 1
+                or not isinstance(networks[0], dict) or networks[0].get("Name") != network
+                or networks[0].get("Internal") is not True):
+            raise QuiescentCutoverError("connector network must be the reviewed internal network")
+        gateway = cls._inspect("eva2-mcp-gateway")
+        membership = gateway.get("NetworkSettings", {}).get("Networks", {}).get(network, {})
+        network_id = networks[0].get("Id")
+        gateway_id = gateway.get("Id")
+        if (not network_id or not gateway_id or gateway.get("Name") != "/eva2-mcp-gateway"
+                or gateway.get("State", {}).get("Running") is not True
+                or gateway.get("Image") != values["EVA_MCP_GATEWAY_IMAGE_ID"]
+                or membership.get("NetworkID") != network_id
+                or "eva2-mcp-gateway" not in (membership.get("Aliases") or [])
+                or gateway_id not in networks[0].get("Containers", {})):
+            raise QuiescentCutoverError("connector gateway image or network membership differs")
+        return values
+
+    @staticmethod
+    def _verify_connector(inspected: dict[str, Any], settings: dict[str, str] | None) -> None:
+        mounts = [m for m in inspected.get("Mounts", [])
+                  if str(m.get("Destination", "")).startswith("/run/eva/connectors")]
+        environment = dict(row.split("=", 1) for row in inspected.get("Config", {}).get("Env", []) if "=" in row)
+        actual = {key: value for key, value in environment.items() if key.startswith("EVA_MCP_GATEWAY_")}
+        if settings is None:
+            if mounts or actual:
+                raise QuiescentCutoverError("staged or disabled core exposes connector access")
+            return
+        from tools.managed_b_render import mcp_gateway_environment
+        expected = mcp_gateway_environment(settings)
+        if (actual != expected or len(mounts) != 1 or mounts[0].get("Type") != "bind"
+                or mounts[0].get("Source") != settings["EVA_MCP_GATEWAY_ACCESS_DIR_HOST"]
+                or mounts[0].get("Destination") != CONNECTOR_TARGET or mounts[0].get("RW") is not False):
+            raise QuiescentCutoverError("activated connector environment or mount differs")
+        if settings["EVA_MCP_GATEWAY_NETWORK_NAME"] not in inspected.get("NetworkSettings", {}).get("Networks", {}):
+            raise QuiescentCutoverError("activated connector network differs")
+
+    def _verify_connector_render(self, slot: SlotSpec, settings: dict[str, str]) -> dict[str, str]:
+        from tools.managed_b_render import validate_mcp_gateway_render
+        environment = self._environment(slot.environment)
+        hashes = {str(path): hashlib.sha256(path.read_bytes()).hexdigest()
+                  for path in (MANIFEST, PROACTIVE_MANIFEST, CONNECTOR_MANIFEST, slot.environment)}
+        command = [DOCKER, "compose", "--env-file", str(slot.environment),
+                   "--project-name", slot.project, "--profile", "*", "--file", str(MANIFEST)]
+        if self._proactive_token(environment) is not None:
+            command.extend(["--file", str(PROACTIVE_MANIFEST)])
+        try:
+            baseline = json.loads(self._run([*command, "config", "--format", "json"], extra_env=environment))
+            activated = json.loads(self._run([*command, "--file", str(CONNECTOR_MANIFEST),
+                                             "config", "--format", "json"], extra_env=environment))
+            result = validate_mcp_gateway_render(baseline, activated, settings)
+        except (ValueError, RuntimeError) as exc:
+            raise QuiescentCutoverError("connector Compose render failed closed") from exc
+        if any(hashlib.sha256(Path(path).read_bytes()).hexdigest() != digest for path, digest in hashes.items()):
+            raise QuiescentCutoverError("connector render inputs changed during verification")
+        return {**result, "overlaySha256": hashes[str(CONNECTOR_MANIFEST)],
+                "environmentSha256": hashes[str(slot.environment)],
+                "baseManifestSha256": hashes[str(MANIFEST)],
+                "deliveryOverlaySha256": hashes[str(PROACTIVE_MANIFEST)]}
+
     def _verify_slot(self, slot: SlotSpec, *, source: bool) -> dict[str, str]:
         environment = self._environment(slot.environment)
         self._proactive_token(environment)
+        connector = self._connector_settings(environment)
+        if connector is not None:
+            self._verify_connector_render(slot, connector)
         expected = {
             "EVA_STACK_CORE_CONTAINER": slot.core,
             "EVA_STACK_CORE_PORT": str(slot.port),
@@ -431,6 +547,8 @@ class SystemBackend:
                 raise QuiescentCutoverError("retained slot database is not running")
         if source and inspected["core"].get("State", {}).get("Running") is not True:
             raise QuiescentCutoverError("active retained slot core is not running")
+        if source:
+            self._verify_connector(inspected["core"], connector)
         self._private_file(slot.dashboard_token, mode=0o600, uid=65532)
         return environment
 
@@ -575,6 +693,7 @@ class SystemBackend:
         """Stage all writers without the outgoing credential, including rollback."""
         environment = self._environment(slot.environment)
         self._proactive_token(environment)
+        self._connector_settings(environment)
         compose = [
             DOCKER,
             "compose",
@@ -597,6 +716,7 @@ class SystemBackend:
                 "retained slot core image differs from its environment"
             )
         self._verify_proactive_mount(inspected, None)
+        self._verify_connector(inspected, None)
 
     def activate_delivery(self, slot: SlotSpec, dropin: Path) -> bool:
         """Release the credential only after the staged runtime and route passed.
@@ -607,8 +727,11 @@ class SystemBackend:
         """
         environment = self._environment(slot.environment)
         token = self._proactive_token(environment)
-        if token is None:
-            self._verify_proactive_mount(self._inspect(slot.core), None)
+        connector = self._connector_settings(environment)
+        if token is None and connector is None:
+            inspected = self._inspect(slot.core)
+            self._verify_proactive_mount(inspected, None)
+            self._verify_connector(inspected, None)
             return False
         _read_exact_dropin(dropin, slot.url, owner_uid=self.owner_uid)
         loaded = self._run([SYSTEMCTL, "show", SERVICE, "--property=Environment", "--value"])
@@ -622,18 +745,25 @@ class SystemBackend:
         if staged.get("Image") != expected:
             raise QuiescentCutoverError("proactive activation candidate image differs")
         self._verify_proactive_mount(staged, None)
+        self._verify_connector(staged, None)
+        overlays = []
+        if token is not None:
+            overlays.extend(["--file", str(PROACTIVE_MANIFEST)])
+        if connector is not None:
+            overlays.extend(["--file", str(CONNECTOR_MANIFEST)])
         self._run([
             DOCKER, "compose", "--env-file", str(slot.environment),
             "--project-name", slot.project, "--file", str(MANIFEST),
-            "--file", str(PROACTIVE_MANIFEST), "up", "--detach", "--no-deps", "core",
+            *overlays, "up", "--detach", "--no-deps", "core",
         ])
         self._wait_container(slot.core)
         activated = self._inspect(slot.core)
         if activated.get("Image") != expected:
             raise QuiescentCutoverError("proactive activation core image differs")
         self._verify_proactive_mount(activated, token)
+        self._verify_connector(activated, connector)
         self.verify_runtime(slot)
-        return True
+        return token is not None
 
     @staticmethod
     def _schema_installer_command(slot: SlotSpec) -> list[str]:

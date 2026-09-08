@@ -753,3 +753,162 @@ def test_refuses_same_or_unknown_slots_before_preflight(tmp_path: Path) -> None:
             workspace=tmp_path,
         )
     assert backend.calls == []
+
+
+@pytest.mark.parametrize("telegram", [False, True])
+@pytest.mark.parametrize("failure", [None, "staging_leak", "writable", "network", "url"])
+def test_connector_access_only_appears_at_activation(monkeypatch, tmp_path, telegram, failure):
+    from tools.eva2_quiescent_cutover import CONNECTOR_MANIFEST, CONNECTOR_TARGET
+    slot = _slot(3)
+    image = "sha256:" + "a" * 64
+    settings = {"EVA_MCP_GATEWAY_URL": "http://gateway:4444",
+                "EVA_MCP_GATEWAY_ACCESS_DIR_HOST": "/private/connector",
+                "EVA_MCP_GATEWAY_NETWORK_NAME": "eva2-connectors",
+                "EVA_MCP_GATEWAY_ALLOW_PLAIN_HTTP": "true",
+                "EVA_MCP_GATEWAY_PRINCIPAL_SHA256_ALLOWLIST": "b" * 64}
+    token = tmp_path / "telegram-token" if telegram else None
+    commands = []
+    active = False
+    monkeypatch.setattr(SystemBackend, "_connector_settings", classmethod(lambda cls, env: settings))
+    monkeypatch.setattr(SystemBackend, "_proactive_token", staticmethod(lambda env: token))
+    monkeypatch.setattr(SystemBackend, "_environment", staticmethod(lambda _: {"EVA_LIVING_CORE_IMAGE": "eva2/core@" + image}))
+    def inspect(_):
+        row = {"Image": image, "Config": {"Env": []}, "Mounts": [], "NetworkSettings": {"Networks": {}}}
+        if active or failure == "staging_leak":
+            env = {k: settings[k] for k in ("EVA_MCP_GATEWAY_URL", "EVA_MCP_GATEWAY_ALLOW_PLAIN_HTTP", "EVA_MCP_GATEWAY_PRINCIPAL_SHA256_ALLOWLIST")}
+            env.update(EVA_MCP_GATEWAY_TOKEN_FILE=CONNECTOR_TARGET + "/token", EVA_MCP_GATEWAY_CATALOG_FILE=CONNECTOR_TARGET + "/catalog.json")
+            if failure == "url":
+                env["EVA_MCP_GATEWAY_URL"] = "http://other:4444"
+            row["Config"]["Env"] = [k + "=" + v for k, v in env.items()]
+            row["Mounts"] = [{"Type": "bind", "Source": settings["EVA_MCP_GATEWAY_ACCESS_DIR_HOST"], "Destination": CONNECTOR_TARGET, "RW": failure == "writable"}]
+            if failure != "network":
+                row["NetworkSettings"]["Networks"]["eva2-connectors"] = {}
+        if active and telegram:
+            row["Config"]["Env"].append("EVA_TELEGRAM_BOT_TOKEN_FILE=" + PROACTIVE_TOKEN_TARGET)
+            row["Mounts"].append({"Type": "bind", "Source": str(token), "Destination": PROACTIVE_TOKEN_TARGET, "RW": False})
+        return row
+    def run(command, **kwargs):
+        nonlocal active
+        commands.append(command)
+        if "--property=Environment" in command:
+            return "EVA2_CANARY_URL=" + slot.url
+        if "--property=ActiveState" in command:
+            return "inactive"
+        if "up" in command and command[-1] == "core":
+            active = str(CONNECTOR_MANIFEST) in command
+            assert (str(PROACTIVE_MANIFEST) in command) is telegram if active else True
+        return ""
+    monkeypatch.setattr(SystemBackend, "_inspect", staticmethod(inspect))
+    monkeypatch.setattr(SystemBackend, "_run", staticmethod(run))
+    monkeypatch.setattr(SystemBackend, "_wait_container", staticmethod(lambda _: None))
+    monkeypatch.setattr(SystemBackend, "_ready", staticmethod(lambda _: True))
+    monkeypatch.setattr(SystemBackend, "verify_runtime", lambda *a: None)
+    backend = SystemBackend(owner_uid=os.getuid())
+    if failure == "staging_leak":
+        with pytest.raises(QuiescentCutoverError, match="connector access"):
+            backend.start_writers(slot)
+        assert not active
+        return
+    backend.start_writers(slot)
+    assert not active and not any(str(CONNECTOR_MANIFEST) in command for command in commands)
+    dropin = tmp_path / "route"
+    dropin.write_bytes(canonical_dropin(slot.url))
+    dropin.chmod(0o644)
+    if failure:
+        with pytest.raises(QuiescentCutoverError, match="connector"):
+            backend.activate_delivery(slot, dropin)
+    else:
+        # Preserve the existing return meaning: Telegram delivery, not MCP presence.
+        assert backend.activate_delivery(slot, dropin) is telegram
+    assert active
+
+
+@pytest.mark.parametrize("failure", [None, "disabled_config", "flag", "overlay", "catalog", "token", "public_network", "extra_file", "external_host", "wrong_image", "wrong_network"])
+def test_connector_configuration_is_sealed_before_activation(monkeypatch, tmp_path, failure):
+    import hashlib
+    import json
+    from types import SimpleNamespace
+    from tools.eva2_quiescent_cutover import CONNECTOR_MANIFEST, CONNECTOR_FLAG, MANIFEST
+    directory = tmp_path / "access"
+    directory.mkdir(mode=0o700)
+    (directory / "token").write_text("synthetic-token")
+    (directory / "catalog.json").write_text('{"contract":"synthetic"}')
+    values = {CONNECTOR_FLAG: "true", "EVA_MCP_GATEWAY_URL": "http://eva2-mcp-gateway:4444",
+              "EVA_MCP_GATEWAY_IMAGE_ID": "sha256:" + "b" * 64,
+              "EVA_MCP_GATEWAY_ACCESS_DIR_HOST": str(directory), "EVA_MCP_GATEWAY_NETWORK_NAME": "eva2-connectors",
+              "EVA_MCP_GATEWAY_ALLOW_PLAIN_HTTP": "true", "EVA_MCP_GATEWAY_PRINCIPAL_SHA256_ALLOWLIST": "a" * 64,
+              "EVA_MCP_GATEWAY_OVERLAY_SHA256": hashlib.sha256(CONNECTOR_MANIFEST.read_bytes()).hexdigest(),
+              "EVA_MCP_GATEWAY_BASE_MANIFEST_SHA256": hashlib.sha256(MANIFEST.read_bytes()).hexdigest(),
+              "EVA_MCP_GATEWAY_DELIVERY_OVERLAY_SHA256": hashlib.sha256(PROACTIVE_MANIFEST.read_bytes()).hexdigest(),
+              "EVA_MCP_GATEWAY_TOKEN_SHA256": hashlib.sha256((directory / "token").read_bytes()).hexdigest(),
+              "EVA_MCP_GATEWAY_CATALOG_SHA256": hashlib.sha256((directory / "catalog.json").read_bytes()).hexdigest()}
+    real_stat = Path.stat
+    def metadata(path, **kwargs):
+        original = real_stat(path, **kwargs)
+        return SimpleNamespace(st_mode=original.st_mode, st_uid=65532) if path == directory else original
+    monkeypatch.setattr(Path, "stat", metadata)
+    monkeypatch.setattr(SystemBackend, "_private_file", staticmethod(lambda *args, **kwargs: None))
+    calls = []
+    def run(command, **kwargs):
+        calls.append(command)
+        if command[1:3] == ["network", "inspect"]:
+            return json.dumps([{"Name": "eva2-connectors", "Internal": failure != "public_network", "Id": "network-id", "Containers": {"gateway-id": {}}}])
+        assert command[1:] == ["inspect", "eva2-mcp-gateway"]
+        return json.dumps([{"Id": "gateway-id", "Name": "/eva2-mcp-gateway", "State": {"Running": True},
+                           "Image": "sha256:" + ("c" if failure == "wrong_image" else "b") * 64,
+                           "NetworkSettings": {"Networks": {"eva2-connectors": {
+                               "NetworkID": "wrong" if failure == "wrong_network" else "network-id", "Aliases": ["eva2-mcp-gateway"]}}}}])
+    monkeypatch.setattr(SystemBackend, "_run", staticmethod(run))
+    if failure == "external_host":
+        values["EVA_MCP_GATEWAY_URL"] = "https://external.example"
+    if failure == "disabled_config":
+        values[CONNECTOR_FLAG] = "false"
+    if failure == "flag":
+        values[CONNECTOR_FLAG] = "TRUE"
+    if failure == "overlay":
+        values["EVA_MCP_GATEWAY_OVERLAY_SHA256"] = "0" * 64
+    if failure in {"catalog", "token"}:
+        (directory / ("catalog.json" if failure == "catalog" else "token")).write_text("changed")
+    if failure == "extra_file":
+        (directory / "admin-token").write_text("must-not-be-mounted")
+    if failure:
+        with pytest.raises(QuiescentCutoverError, match="connector"):
+            SystemBackend._connector_settings(values)
+    else:
+        assert SystemBackend._connector_settings(values) is not None
+    assert all(command[1:3] == ["network", "inspect"] or command[1:] == ["inspect", "eva2-mcp-gateway"] for command in calls)
+    assert bool(calls) is (failure in {None, "public_network", "wrong_image", "wrong_network"})
+
+
+def test_first_connector_activation_rolls_back_to_disabled_source_without_telegram(tmp_path):
+    class ConnectorBackend(FakeBackend):
+        def __init__(self):
+            super().__init__(tmp_path, fail_at="start-eva1:4")
+            self.active_connectors = set()
+            self.activations = []
+
+        def stop_writers(self, slot):
+            super().stop_writers(slot)
+            self.active_connectors.discard(slot.number)
+
+        def start_writers(self, slot):
+            super().start_writers(slot)
+            assert slot.number not in self.active_connectors
+
+        def activate_delivery(self, slot, dropin):
+            self._call(f"activate-delivery:{slot.number}")
+            assert self.route == canonical_dropin(slot.url)
+            enabled = slot.number == 4
+            if enabled:
+                self.active_connectors.add(slot.number)
+            self.activations.append((slot.number, enabled))
+            return False  # MCP-only activation must still trigger lossless rollback.
+
+    backend = ConnectorBackend()
+    with pytest.raises(QuiescentCutoverError, match="start-eva1:4"):
+        quiescent_cutover(source_slot=3, target_slot=4, backend=backend,
+                          dropin=tmp_path / "route", workspace=tmp_path)
+    assert backend.activations == [(4, True), (3, False)]
+    assert backend.active_connectors == set()
+    assert backend.route == canonical_dropin(_slot(3).url)
+    assert backend.calls.index("snapshot:4:automatic-rollback") < backend.calls.index("restore:3:reverse") < backend.calls.index("activate-delivery:3")

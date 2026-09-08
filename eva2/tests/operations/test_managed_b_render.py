@@ -286,3 +286,57 @@ def test_renderer_cli_sanitizes_operating_system_failures(
         "error": "managed B render refused",
         "status": "failed",
     }
+
+
+@pytest.mark.parametrize("tamper", [None, "extra_service", "command", "secret_env", "owner", "writable", "extra_mount", "network_name", "public_network", "network_alias", "volume_removed", "duplicate_mount", "unresolved"])
+def test_connector_render_accepts_only_exact_approved_delta(tamper):
+    import copy
+    from tools.managed_b_render import mcp_gateway_environment, validate_mcp_gateway_render
+    settings = {"EVA_MCP_GATEWAY_URL": "http://eva2-mcp-gateway:4444", "EVA_MCP_GATEWAY_ALLOW_PLAIN_HTTP": "true",
+                "EVA_MCP_GATEWAY_PRINCIPAL_SHA256_ALLOWLIST": "a" * 64,
+                "EVA_MCP_GATEWAY_ACCESS_DIR_HOST": "/private/access-v1", "EVA_MCP_GATEWAY_NETWORK_NAME": "eva2-connectors"}
+    baseline = {"name": "eva2-test", "services": {
+        "core": {"environment": {"EVA_TELEGRAM_BOT_TOKEN_FILE": "/run/secrets/telegram"},
+                 "volumes": [{"type": "volume", "source": "work", "target": "/work"}],
+                 "networks": {"default": None}, "command": ["original"]},
+        "postgres": {"image": "original"}}, "networks": {"default": {"name": "default"}}}
+    activated = copy.deepcopy(baseline)
+    core = activated["services"]["core"]
+    core["environment"].update(mcp_gateway_environment(settings))
+    core["volumes"].append({"type": "bind", "source": "/private/access-v1", "target": "/run/eva/connectors/mcp", "read_only": True, "bind": {"create_host_path": False}})
+    core["networks"] = {"default": {}, "mcp-gateway": {}}
+    activated["networks"]["mcp-gateway"] = {"name": "eva2-connectors", "external": True, "ipam": {}}
+    if tamper == "extra_service":
+        activated["services"]["extra"] = {}
+    if tamper == "command":
+        core["command"] = ["unreviewed"]
+    if tamper == "secret_env":
+        core["environment"]["EVA_MCP_GATEWAY_TOKEN"] = "never-publish-this-synthetic-secret"
+    if tamper == "owner":
+        core["environment"]["EVA_MCP_GATEWAY_PRINCIPAL_SHA256_ALLOWLIST"] = "b" * 64
+    if tamper == "writable":
+        core["volumes"][-1]["read_only"] = False
+    if tamper == "extra_mount":
+        core["volumes"].append({"source": "/", "target": "/host"})
+    if tamper == "network_name":
+        activated["networks"]["mcp-gateway"]["name"] = "other"
+    if tamper == "public_network":
+        activated["networks"]["mcp-gateway"]["external"] = False
+    if tamper == "network_alias":
+        core["networks"]["mcp-gateway"] = {"aliases": ["eva2-mcp-gateway"]}
+    if tamper == "volume_removed":
+        core["volumes"].pop(0)
+    if tamper == "duplicate_mount":
+        core["volumes"].append(copy.deepcopy(core["volumes"][-1]))
+    if tamper == "unresolved":
+        core["environment"]["EVA_MCP_GATEWAY_URL"] = "${MISSING}"
+    original = copy.deepcopy(activated)
+    if tamper:
+        with pytest.raises(RuntimeError, match="connector render") as error:
+            validate_mcp_gateway_render(baseline, activated, settings)
+        assert "never-publish" not in str(error.value)
+    else:
+        receipt = validate_mcp_gateway_render(baseline, activated, settings)
+        assert set(receipt) == {"baselineSha256", "activatedSha256"}
+        assert all(len(value) == 64 for value in receipt.values())
+    assert activated == original

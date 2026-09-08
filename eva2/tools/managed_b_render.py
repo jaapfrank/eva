@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+import copy
 import hashlib
 import json
 import os
@@ -122,6 +123,78 @@ def _validate_rendered_graph(rendered: object, plan: CoreBPlan) -> dict[str, Any
         if labels.get(SNAPSHOT_LABEL) != plan.snapshot_sha256:
             raise RuntimeError(f"managed B service {name} has the wrong configuration label")
     return rendered
+
+
+def mcp_gateway_environment(settings: dict[str, str]) -> dict[str, str]:
+    """The complete non-secret core environment introduced by the fixed overlay."""
+    result = {key: settings[key] for key in (
+        "EVA_MCP_GATEWAY_URL", "EVA_MCP_GATEWAY_ALLOW_PLAIN_HTTP",
+        "EVA_MCP_GATEWAY_PRINCIPAL_SHA256_ALLOWLIST",
+    )}
+    result.update(
+        EVA_MCP_GATEWAY_TOKEN_FILE="/run/eva/connectors/mcp/token",
+        EVA_MCP_GATEWAY_CATALOG_FILE="/run/eva/connectors/mcp/catalog.json",
+    )
+    return result
+
+
+def validate_mcp_gateway_render(
+    baseline: object, activated: object, settings: dict[str, str],
+) -> dict[str, str]:
+    """Require that the fixed connector adds only its exact approved bindings.
+
+    Inputs are actual Compose JSON renders. The baseline includes any separately
+    admitted Telegram overlay, so that credential must be unchanged by MCP.
+    Return only hashes; rendered private host paths never become public receipts.
+    """
+    if (not isinstance(baseline, dict) or not isinstance(activated, dict)
+            or _contains_unresolved_interpolation(baseline)
+            or _contains_unresolved_interpolation(activated)):
+        raise RuntimeError("connector render is invalid or unresolved")
+    before, after = copy.deepcopy(baseline), copy.deepcopy(activated)
+    try:
+        if set(before["services"]) != set(after["services"]) or "core" not in before["services"]:
+            raise ValueError("service graph")
+        original, core = before["services"]["core"], after["services"]["core"]
+        expected = mcp_gateway_environment(settings)
+        if any(key.startswith("EVA_MCP_GATEWAY_") for key in original["environment"]):
+            raise ValueError("baseline connector environment")
+        actual = {key: value for key, value in core["environment"].items()
+                  if key.startswith("EVA_MCP_GATEWAY_")}
+        if actual != expected:
+            raise ValueError("connector environment")
+        for key in expected:
+            del core["environment"][key]
+        mount = {"type": "bind", "source": settings["EVA_MCP_GATEWAY_ACCESS_DIR_HOST"],
+                 "target": "/run/eva/connectors/mcp", "read_only": True, "bind": {}}
+        matching = [item for item in core["volumes"] if item.get("target") == mount["target"]]
+        if len(matching) != 1:
+            raise ValueError("connector mount count")
+        rendered_mount = copy.deepcopy(matching[0])
+        # Compose may omit an explicit false create_host_path in canonical JSON.
+        if rendered_mount.get("bind", {}).get("create_host_path") is False:
+            del rendered_mount["bind"]["create_host_path"]
+        if rendered_mount != mount:
+            raise ValueError("connector mount")
+        core["volumes"].remove(matching[0])
+        if "mcp-gateway" in original["networks"] or core["networks"].pop("mcp-gateway") not in ({}, None):
+            raise ValueError("connector service network")
+        for service in (original, core):
+            service["networks"] = {key: {} if value is None else value
+                                   for key, value in service["networks"].items()}
+        if "mcp-gateway" in before["networks"]:
+            raise ValueError("baseline connector network")
+        network = after["networks"].pop("mcp-gateway")
+        if network.get("ipam") == {}:
+            network = {key: value for key, value in network.items() if key != "ipam"}
+        if network != {"name": settings["EVA_MCP_GATEWAY_NETWORK_NAME"], "external": True}:
+            raise ValueError("connector network")
+        if before != after:
+            raise ValueError("unrelated Compose mutation")
+    except (KeyError, TypeError, AttributeError, ValueError) as exc:
+        raise RuntimeError("connector render differs from its exact allowed delta") from exc
+    return {"baselineSha256": _sha256(_canonical_json(baseline)),
+            "activatedSha256": _sha256(_canonical_json(activated))}
 
 
 def _run(command: list[str], environment: dict[str, str]) -> str:

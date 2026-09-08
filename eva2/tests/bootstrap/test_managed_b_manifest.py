@@ -313,3 +313,19 @@ def test_managed_b_keeps_hindsight_database_credentials_out_of_environment() -> 
         "/run/eva2/hindsight-postgres-password"
     )
     assert "hindsight-data" not in _manifest()["volumes"]
+
+
+def test_optional_mcp_overlay_only_mounts_private_access_and_internal_network():
+    overlay = yaml.safe_load((MANIFEST.parent / "mcp-gateway.compose.yml").read_text())
+    assert set(overlay["services"]) == {"core"}
+    core = overlay["services"]["core"]
+    assert "ports" not in core and "command" not in core
+    assert set(core["networks"]) == {"default", "mcp-gateway"}
+    assert overlay["networks"]["mcp-gateway"]["external"] is True
+    assert len(core["volumes"]) == 1
+    mount = core["volumes"][0]
+    assert mount["target"] == "/run/eva/connectors/mcp"
+    assert mount["read_only"] is True and mount["bind"] == {"create_host_path": False}
+    assert "EVA_MCP_GATEWAY_TOKEN" not in core["environment"]
+    assert core["environment"]["EVA_MCP_GATEWAY_TOKEN_FILE"] == mount["target"] + "/token"
+    assert core["environment"]["EVA_MCP_GATEWAY_CATALOG_FILE"] == mount["target"] + "/catalog.json"

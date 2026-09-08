@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Execute the exact managed-B release tests and emit one closed receipt.
 
-The current authority distinguishes 149 executable test modules from 20 bound
+The current authority distinguishes 151 executable test modules from 20 bound
 support inputs. Thirteen physically distinct disposable databases include six
 PostgreSQL execution slices inside one receipt group. Twelve databases remain
 operator inputs; the isolated browser subgate creates and removes its own
@@ -46,7 +46,7 @@ from tools.run_managed_b_browser_release_subgate import (
 
 RECEIPT_CONTRACT = "EvaManagedBRequiredTestsExecution/v1"
 AUTHORITY_CONTRACT = "EvaManagedBReleaseInputAuthority/v1"
-EXPECTED_EXECUTABLE_COUNT = 149
+EXPECTED_EXECUTABLE_COUNT = 151
 EXPECTED_SUPPORT_COUNT = 20
 EXPECTED_GROUP_COUNT = 7
 _SHA256 = re.compile(r"[0-9a-f]{64}\Z")

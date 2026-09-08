@@ -1,0 +1,23 @@
+# Applied only at the reviewed activation point, never during staging.
+services:
+  core:
+    environment:
+      EVA_MCP_GATEWAY_URL: ${EVA_MCP_GATEWAY_URL:?set the reviewed gateway URL}
+      EVA_MCP_GATEWAY_TOKEN_FILE: /run/eva/connectors/mcp/token
+      EVA_MCP_GATEWAY_CATALOG_FILE: /run/eva/connectors/mcp/catalog.json
+      EVA_MCP_GATEWAY_ALLOW_PLAIN_HTTP: ${EVA_MCP_GATEWAY_ALLOW_PLAIN_HTTP:?set the reviewed transport policy}
+      EVA_MCP_GATEWAY_PRINCIPAL_SHA256_ALLOWLIST: ${EVA_MCP_GATEWAY_PRINCIPAL_SHA256_ALLOWLIST:?set the admitted private owners}
+    volumes:
+      - type: bind
+        source: ${EVA_MCP_GATEWAY_ACCESS_DIR_HOST:?set the runtime-owned private connector access directory}
+        target: /run/eva/connectors/mcp
+        read_only: true
+        bind:
+          create_host_path: false
+    networks:
+      default: {}
+      mcp-gateway: {}
+networks:
+  mcp-gateway:
+    external: true
+    name: ${EVA_MCP_GATEWAY_NETWORK_NAME:?set the existing private connector network}
