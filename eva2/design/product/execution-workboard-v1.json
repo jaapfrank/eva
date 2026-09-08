@@ -2131,6 +2131,36 @@
         "Geen duurzame idempotentie over verbindingen of verstreken vensters.",
         "Geen identiteit of eigenaarbevoegdheden uit sender-tekst afgeleid."
       ]
+    },
+    "vb001HaPipelineBindingInvestigation": {
+      "status": "upstream_source_checked_for_reported_live_versions",
+      "homeAssistantReportedVersion": "2026.8.1",
+      "haManifestAioesphomeapiVersion": "45.6.1",
+      "esphomeCandidateVersion": "2026.6.2",
+      "sourceDirectory": "/home/administrator/project/.eva2-artifacts/ha-2026.8.1-voice-source",
+      "sourceHashes": {
+        "components_esphome_assist_satellite.py": "2f9fedf1e0022259e02b6288342343f59ceee068a0ad625943c93ac15ca05623",
+        "components_assist_satellite_entity.py": "59ee14ae54902bbd3098ee4cbf7e354fda6ebb1347cdc4b7b452d42f551e0b1b",
+        "components_conversation_models.py": "ab01f362b6e218ab64a1b170d505cdc2c6e9832254d5fc8236b85df639223e71",
+        "aioesphomeapi_45.6.1_client.py": "96b02f6f9f04a6dbed0e5e66f3a9dba8253d8ad4b3ac3ca1ffebb553af3e4bcb",
+        "components_automation___init__.py": "a35c56383eb468cb98b92ff3ea39edb93230f51ec21a0788f09b0098f40af853",
+        "components_conversation_trigger.py": "2230d73345d55aedddf1034aa9cab6916374f0839ec9fb1a05839a04ae1645e7",
+        "helpers_script.py": "f7be0386517eb685d1d8e3ba0e4ccff58f85811af6e9601fb17b6631726eba3e",
+        "components_assist_pipeline_pipeline.py": "1b3d97e6e0085141898a0c0eb9fcdefb38dd460b247b208dda0759ef146d3fb5",
+        "components_assist_pipeline_websocket_api.py": "f94c08eedcf18001400fd3194a3f9945ad6975334a49298f492bc528734b3aa5"
+      },
+      "findings": [
+        "ESPHome voice_assistant.stop verstuurt VoiceAssistantRequest(start=false); aioesphomeapi45.6.1 vertaalt dat naar handle_stop(True), waarna HA de pipelinetaak annuleert. Dit verschilt van Audio(end=true), dat alleen de audiostroom sluit.",
+        "De satelliet kan dezelfde HA Context meerdere keren gebruiken; context-ID en de tijd daarvan zijn geen unieke oorspronkelijke pipelinebinding.",
+        "ConversationInput.as_dict bevat context, conversation_id, device_id en satellite_id, maar geen pipeline_run_id of starttijd. De bestaande sentence-trigger exporteert dus niet rechtstreeks de vereiste binding.",
+        "HA annuleert bij een nieuwe satellietpipeline de vorige taak. Script.async_run vangt annulering op en stopt de scriptrun. Dit bronpad is nog geen bewijs voor iedere eventbusrace of reeds extern gestart Eva-werk."
+      ],
+      "decision": "Verbind Eva2 via een annuleerbare native HA-conversation-agent-aanroep. Geef iedere aanroep een eigen antwoordgeneratie en stuur annulering voor precies die aanroep door. Gebruik geen geraden starttijd uit context-ID, laatste speakerstate of matching van transcriptietekst. Behoud de bestaande apparaten, STT en TTS.",
+      "nonClaims": [
+        "Gerapporteerde HA-versie is vergeleken met upstream bron; geen hash van de werkelijk geïnstalleerde HA-code verkregen.",
+        "Geen live route gewijzigd of firmware geflasht.",
+        "Geen volledige cancellation-proef, private-speakeradmissie of akoestische meting geleverd."
+      ]
     }
   },
   "activeTaskId": "VB-001",
