@@ -1,0 +1,67 @@
+{
+  "contract": "EvaHouseholdVoiceActualPolicyPreparation/v1",
+  "status": "actual_household_policy_and_overlay_prepared_installed_validation_passed_not_active",
+  "previousGoalTurn": "progress_current_data_reserve_restore_start_restart_verified",
+  "sourceCommit": "cab9227356cb68b81edb9d27aab3d160dc959643",
+  "imageId": "sha256:86ec4e3598cc07fcc61ba76ac405cfbbac39f63a14e8a98f4600d02154d3c14b",
+  "proof": {
+    "household-policy-preparation.json": {
+      "sha256": "6b4a8521b53bc3721608f0276fd3021e30f41197d039f89afb4adb01b0337f58",
+      "receipt": {
+        "status": "owner_authorized_household_policy_prepared_not_mounted",
+        "directory": "/var/lib/eva2/managed-b-slot4/household-voice",
+        "policySha256": "bce83d1366b0466ac097f16a2a0f79eb03d295dcbbf2d96ffcfeff7a3e55665e",
+        "tokenFileSha256": "bbc6f0bcc6725fffe527caeb101c24091b274b612a9bf57b6568f883c59ce464",
+        "deviceCount": 2,
+        "effectiveAt": "2026-09-08T23:37:17Z",
+        "expiresAt": "2026-10-08T23:37:17Z",
+        "authorizationBasis": "Existing explicit owner request in this thread for digital household member with durable family memory and voice through these Home Assistant speakers. No owner/private fallback, budget change, unmute or human acceptance claim.",
+        "candidateSourceCommit": "cab9227356cb68b81edb9d27aab3d160dc959643"
+      }
+    },
+    "household-policy-installed-validation.json": {
+      "sha256": "bb9c05d2d21ac1a661e35efef7ec9d05daa4d802cc96cf24ae7ae36f4e3aecbc",
+      "receipt": {
+        "result": {
+          "status": "passed",
+          "installedCandidateAuthority": true,
+          "registeredDevices": 2,
+          "privateOwnerNotHouseholdActor": true,
+          "identitySignatureVerified": true
+        },
+        "imageId": "sha256:86ec4e3598cc07fcc61ba76ac405cfbbac39f63a14e8a98f4600d02154d3c14b",
+        "network": "none",
+        "runtimeCodeFromImage": true,
+        "productSourceMounted": false
+      }
+    },
+    "household-overlay-preparation.json": {
+      "sha256": "f44ebac5eb7f7c2daeafb4158606c508a2e327b06701b654e9e2c5e6ddeb18e8",
+      "receipt": {
+        "status": "household_overlay_render_verified_prepared_not_activated",
+        "beforeEnvironmentSha256": "b746146ada232ba39c3fd3084a5bc8c2979c3df9acee9a0972ad103877452e27",
+        "afterEnvironmentSha256": "d31063d33ad8b9cb605e752ea88d591d497408b87ac8168cc28620c0c9e29659",
+        "configurationSha256": "c93b0b723344e01ba5021f25cf35895a7116b742ebbf0cfde7f3c38a65f9abe2",
+        "render": {
+          "baselineSha256": "3318cca04dd816b1d3f1d8bb6f819041f3df29e9912d7f8cda8551c76d2b8e56",
+          "activatedSha256": "cf89d97da0be1809e7156065d50153c708b8b961f65a878e39f774a03bdab41c"
+        },
+        "coreHasNoHouseholdMountOrSetting": true,
+        "policyDirectory": "/var/lib/eva2/managed-b-slot4/household-voice",
+        "rollbackEnvironment": "/home/administrator/project/.eva2-artifacts/native-voice-candidate-repaired-w16uve7q/candidate-before-household.env"
+      }
+    }
+  },
+  "review": "co006_review bounded preparation GO: hashes/private rights/two registrybindings/exactruntimeownerbinding confirmed; separatehousehold/deviceactors/30dayvalidity; no privateownerfallback. Exactimage validation confirms signedidentity and actorrefusal; running core has nohouseholdmount/env. No installation/cutover/liveGO. Overlay render and subsequent env preparation recorded separately.",
+  "existingSpeechRoute": "HA2026.8.1: Dutch cloud STT/TTS, current preferred Eva pipeline still conversation.home_assistant. No pipeline changed.",
+  "repairs": [
+    "Registrylist exceeded default1MiB websocket message limit; repeated read-only with8MiB limit.",
+    "Strict versioned contract requires model_validate_json for UUID JSONfields; initial failed constructions left onlyempty private directory, no policy/token/env activation.",
+    "Overlay validator needed lockedPython dependencies; defaultPython importfailed before envmutation, correctvenv renderpassed."
+  ],
+  "remaining": [
+    "Install staged native HA custom component with rollback and load/configure integration.",
+    "Connect Dutch speechpipeline to nativeEva; preserve settings for rollback.",
+    "Final current-data quiescent cutover and actual speaker interruption/resume/latency proof; human acceptance remains open."
+  ]
+}
