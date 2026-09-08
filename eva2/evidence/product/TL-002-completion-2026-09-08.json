@@ -1,0 +1,398 @@
+{
+  "contract": "EvaProductCompletionEvidence/v1",
+  "taskId": "TL-002",
+  "implementationCommit": "7b6c0c279813f9f3539b95cb7afdc0fd283998f2",
+  "baseCommit": "2984012aaaa860e83e6ff2a521af5607925af1ad",
+  "status": "ready_for_independent_final_review",
+  "built": true,
+  "tested": true,
+  "live": true,
+  "humanAccepted": false,
+  "imageId": "sha256:64dd6d31f788a8ee6b1cc62b43f792cf0635df250cb1d60dbc37236819f4eb9f",
+  "activeSlot": 4,
+  "runtimePort": 44711,
+  "completeOutcome": "Home Assistant onderzoeken en advies via dezelfde algemene route in een duurzame privéwerkmap bewaren, met onafhankelijke resultaatcontrole.",
+  "originalFiles": {
+    "admission": {
+      "path": "/tmp/eva2-tl002-startup-release.sxbx02eb/rollout/admission.json",
+      "sha256": "1a6508c4d224056978d6a5236aaf496f3c53f044bb3e4839398ce249745be54d"
+    },
+    "cutover": {
+      "path": "/tmp/eva2-tl002-startup-release.sxbx02eb/rollout/cutover.json",
+      "sha256": "1205cd2533381ea1d7c8134c285ba0d6f2408321dd4cd07d6672ab6fe2b1a1ad"
+    },
+    "liveWorkspace": {
+      "path": "/tmp/eva2-tl002-startup-release.sxbx02eb/rollout/live-workspace.json",
+      "sha256": "26d56eaebc3f0e13bd77c646843bbcabbee5c42ff6fb0b0f3b12d3e5cc8a3697"
+    },
+    "liveHousehold": {
+      "path": "/tmp/eva2-tl002-startup-release.sxbx02eb/rollout/live-household.json",
+      "sha256": "5df8908c607a0e1dd108dacdae1a7abb23c88baa95016bf19f0d4666dfd86133"
+    },
+    "liveReplay": {
+      "path": "/tmp/eva2-tl002-startup-release.sxbx02eb/rollout/live-replay.json",
+      "sha256": "319c504b3e71c6714468c226ab9d99370d95fdb186fccc6ed5aade80755001eb"
+    },
+    "fullRuntimeStartup": {
+      "path": "/tmp/eva2-tl002-startup-release.sxbx02eb/copy/connector-startup.json",
+      "sha256": "411452fffd3588f12fce13b73864628dd4f56d71c706e458181e3d04c1db6c7f"
+    },
+    "workspaceUnchangedInStartupProbe": {
+      "path": "/tmp/eva2-tl002-startup-release.sxbx02eb/copy/workspace-effects.json",
+      "sha256": "cec058dec31f667205925a42a8178ef55b3762a23bdd6303c5132b92aae02578"
+    },
+    "connectorEffect": {
+      "path": "/tmp/eva2-tl002-startup-release.sxbx02eb/connector-effect2/receipt.json",
+      "sha256": "714a11929f744e7f721389252fbc104e6cae60655e08a65fb3533b4fc15bacec"
+    },
+    "requiredTests": {
+      "path": "/tmp/eva2-tl002-startup-release.sxbx02eb/gates/required-tests.json",
+      "sha256": "7796d7213d07db865d8c538a3bee9cc236d94045c60b03135d28d365cd252fac"
+    },
+    "installedTests": {
+      "path": "/tmp/eva2-tl002-startup-release.sxbx02eb/installed/receipt.json",
+      "sha256": "2deb4586b550dbee7fb9714e425cc881fa733e8ff6c78b82c844ff600bab452a"
+    },
+    "rollback": {
+      "path": "/tmp/eva2-tl002-workspace-release2.ci1zczwn/rollout/rollback-live-replay.json",
+      "sha256": "d218630821217f889c8d367fe60b77246dd665141ad9085cde50c09fd84b54d2"
+    }
+  },
+  "liveWorkspace": {
+    "contentSha256": "13518716b45bb72692bae9f499e2d8e83d4342f405fc4410f292e7a491bc47fc",
+    "elapsedSeconds": 17.992,
+    "filename": "/proof-state/eva-werkmap-live.txt",
+    "imageId": "sha256:64dd6d31f788a8ee6b1cc62b43f792cf0635df250cb1d60dbc37236819f4eb9f",
+    "replayPreservedReplyAndFileState": true,
+    "replySha256": "9989ac4c4dff2552827ea8b69c69dcbdf07937ac98269a8e3560f879c1fbe8dd",
+    "scope": "Actual private-client developer turn, not human household acceptance.",
+    "sourceCommit": "7b6c0c279813f9f3539b95cb7afdc0fd283998f2",
+    "status": "live_workspace_conversation_verified",
+    "telegramMessagesSentByProbe": 0,
+    "usage": {
+      "input_tokens": 6668,
+      "measurement": "measured",
+      "model_attempts": 2,
+      "output_tokens": 114,
+      "tool_calls": 1
+    },
+    "wrapperSha256": "c7ad974cffa1968debd96c0cb2adf72a32f2229ac7db9ad0a94eb1967223806f"
+  },
+  "liveHomeAssistant": {
+    "status": "passed",
+    "counts": {
+      "areas": 18,
+      "devices": 328,
+      "entities": 2469,
+      "automations": 17
+    },
+    "snapshotSha256": "e2fce0aba5cc58d57cc7d7c129ef5f917dc35873e5e6554d425c32e10f15e76e",
+    "readOnly": true,
+    "modelCalls": 0,
+    "telegramSends": 0,
+    "scope": "Installed provider direct read with live credentials; user conversation proven separately on identical source.",
+    "imageId": "sha256:64dd6d31f788a8ee6b1cc62b43f792cf0635df250cb1d60dbc37236819f4eb9f",
+    "sourceCommit": "7b6c0c279813f9f3539b95cb7afdc0fd283998f2",
+    "probeSha256": "c7e4921931f8cba31616a734938f7c0eaef68b7a142f61ef8b5f1a94f54f5502"
+  },
+  "release": {
+    "requiredTestsPassed": 2095,
+    "installedTestsPassed": 124,
+    "admissionSha256": "1a6508c4d224056978d6a5236aaf496f3c53f044bb3e4839398ce249745be54d",
+    "sourceCommit": "7b6c0c279813f9f3539b95cb7afdc0fd283998f2",
+    "fullRuntimeStartupAndRestart": {
+      "imageId": "sha256:64dd6d31f788a8ee6b1cc62b43f792cf0635df250cb1d60dbc37236819f4eb9f",
+      "protectedInputsUnchanged": true,
+      "providerImages": {
+        "eva2-mcp-gateway": "sha256:daf923c247fd569df5f8c9ee418cbc259fade564f78e0a0852937139a181c4dd",
+        "eva2-workspace-filesystem": "sha256:bd31ea2dde76561fe662a551756f939e9007048956c300e54ad49a8c18ddfdc4"
+      },
+      "render": {
+        "activatedSha256": "285a25838c3c82fd6f61f044ca91f1b8924342dd3b0a5d3cbdbba14e68a52dd6",
+        "baselineSha256": "7a235e6142b6b0b31ceb0a56d11b324fe24715836182412c7e5db94de4002586"
+      },
+      "scope": "Full runtime startup and existing conversation replay with MCP; no workspace effect claim.",
+      "sourceCommit": "7b6c0c279813f9f3539b95cb7afdc0fd283998f2",
+      "starts": [
+        {
+          "containerId": "ccec1bc235f78bc1953e7163d3eb50a57c65722b245d683e60a2ff5baee32281",
+          "exactConnectorEnvironment": true,
+          "fullRuntimeStartup": true,
+          "imageId": "sha256:64dd6d31f788a8ee6b1cc62b43f792cf0635df250cb1d60dbc37236819f4eb9f",
+          "networkId": "743058d118e62b0afe1ed8195f0c4c76e877ee3cbd794dcd3a40e4d3e9ac12cf",
+          "readOnlyMount": true,
+          "startedAt": "2026-09-08T13:48:10.356937942Z"
+        },
+        {
+          "containerId": "ccec1bc235f78bc1953e7163d3eb50a57c65722b245d683e60a2ff5baee32281",
+          "exactConnectorEnvironment": true,
+          "fullRuntimeStartup": true,
+          "imageId": "sha256:64dd6d31f788a8ee6b1cc62b43f792cf0635df250cb1d60dbc37236819f4eb9f",
+          "networkId": "743058d118e62b0afe1ed8195f0c4c76e877ee3cbd794dcd3a40e4d3e9ac12cf",
+          "readOnlyMount": true,
+          "startedAt": "2026-09-08T13:49:12.244475513Z"
+        }
+      ],
+      "status": "passed"
+    },
+    "cutover": {
+      "contract": "Eva2QuiescentCutoverReceipt/v1",
+      "eva1Backup": {
+        "bytes": 306966528,
+        "filename": "eva1-before-slot3-to-slot4-20260908T135335Z.db",
+        "quickCheck": "ok",
+        "sha256": "1b16e9ec46b76784deba850ee63a0073bde1613921612e5979353c8fdc44dc01"
+      },
+      "eva1HttpStatuses": {
+        "/": 200,
+        "/api/capabilities": 200,
+        "/api/health": 200,
+        "/api/overview": 200,
+        "/api/workstatus": 200
+      },
+      "issuedAt": "2026-09-08T13:54:53.647016+00:00",
+      "previousDropinSha256": "81f1b2b687a641ae5349aa3c13198f6ad3ac1d7c88ee351bc3c559f22eee28a1",
+      "proactiveCredentialWithheldDuringStaging": true,
+      "proactiveDeliveryEnabled": true,
+      "sourcePort": 44710,
+      "sourceWritersStopped": true,
+      "status": "switched",
+      "synchronizedDatabases": {
+        "memory": {
+          "countDigest": "fe467839225cbfdca405b0014ede289f805e2935edc1b9d0d9c1967b69ccc14a",
+          "dataDigest": "a21b7925a7b47b270ea247f3d1f6bca8aff2cdaa75b628e0f714b51ec37c83ee",
+          "dumpBytes": 2463294,
+          "dumpSha256": "3e4c00ecdf38deff3f701ff314cdf767e7b059614c6f06a2137ec8204365d48e",
+          "schemaDigest": "d89bfebdbfeb55e8618e81286bf24a42b838bfe577e84f6db9b93b43f5832172",
+          "tableCount": 23
+        },
+        "operational": {
+          "countDigest": "ce61acf779c7984bd4edec2070ac9a33502341524ef673843acb4211a7eee412",
+          "dataDigest": "8e564dea05c372689fd6e180f0f9db5074179f4eff5abd1d9f0441991ee07973",
+          "dumpBytes": 10396438,
+          "dumpSha256": "de652a64edc9e25c7018d483e94bc8b44ca8ec1428f329d2651f1aafc362eac1",
+          "schemaDigest": "32acc5b66e349dfd5b385e4828897575ad543ebb5f2638b8880dff1cacb7fb39",
+          "tableCount": 48
+        }
+      },
+      "targetPort": 44711,
+      "targetReady": true
+    }
+  },
+  "twoProviderChain": {
+    "historicalEvidencePath": "/home/administrator/project/Eva2/eva2/evidence/product/TL-002-house-analysis-conversation-2026-09-08.json",
+    "historicalEvidenceSha256": "081c9072c308c90a6cb92d3453cc9fa36e0c6d58e8b33f57746958c286e2922e",
+    "result": {
+      "status": "passed",
+      "sourceHashes": {
+        "src/eva/adapters/model/pydantic_conversation.py": "2545252842e4aeda8cf13d3c5d6e230f4490f879f65dff4783f11311cea2d1e3",
+        "src/eva/adapters/connectors/home_assistant_admin.py": "ea94a1a87fa42ebaa75e0d28db053fb148db2d0aa7aaa196beb15c96b5e934a1",
+        "src/eva/providers/home_assistant.py": "596f49351a303b6c33223abd1b4fa5d536f0a344b68079eb6eb422f9905b0a0b",
+        "src/eva/adapters/postgres/external_conversation_tools.py": "ef4f70c6f8c2283a69264cfaa6777eabf25aa8b2d32f5234e911e7978f502161",
+        "src/eva/adapters/postgres/conversation_actions.py": "352aa0dd6734828a1626efe32aa6980269c07da7153817ddaa862e67b017ad34"
+      },
+      "names": {
+        "fs": "eva2-tl002-a7f6dde6ccec-fs",
+        "gateway": "eva2-tl002-a7f6dde6ccec-gateway",
+        "files": "eva2-tl002-a7f6dde6ccec-files",
+        "database": "eva2-tl002-a7f6dde6ccec-database",
+        "secrets": "eva2-tl002-a7f6dde6ccec-secrets",
+        "network": "eva2-tl002-a7f6dde6ccec-network"
+      },
+      "images": {
+        "filesystem": "sha256:bd31ea2dde76561fe662a551756f939e9007048956c300e54ad49a8c18ddfdc4",
+        "gateway": "sha256:daf923c247fd569df5f8c9ee418cbc259fade564f78e0a0852937139a181c4dd"
+      },
+      "operatorSha256": "a8dc2a31ea327a54f70850669c0c2c3f3b40893a7bb80863df6bdeb09527d3be",
+      "scope": "Real Eva conversation combining read-only live Home Assistant and isolated official filesystem. Household-derived output remains in private receipts; no device mutations or live deployment.",
+      "network": "new internal only; no published ports",
+      "homeAssistant": {
+        "automationIndexCount": 17,
+        "configurationIdsRequested": 17,
+        "allIndependentIdsRequested": true,
+        "effectsEnabled": false
+      },
+      "providerAdmissions": 7,
+      "modelResumeTrials": [],
+      "twoProviderAdmissions": true,
+      "replayAddedEvents": 0,
+      "temporaryResourcesRemoved": true,
+      "providerRestartPreservedContent": true,
+      "gatewayRegistrationPreserved": true,
+      "independentContentSha256": "c3a1ec397d8c7ac160bac24afb67adaf3e783d5a6195a94261eb3bba218e4657",
+      "conversation": {
+        "usage": {
+          "input_tokens": 82740,
+          "measurement": "measured",
+          "model_attempts": 8,
+          "output_tokens": 2309,
+          "tool_calls": 7
+        },
+        "seconds": 124.38468313898193,
+        "toolName": "bewaar_document_a7f6dde6ccec",
+        "replayEqual": true
+      },
+      "configurationCoverage": {
+        "requested": 17,
+        "read": 15,
+        "completeProjection": 4,
+        "unavailable": 2
+      }
+    },
+    "privateReceiptHashesReverified": {
+      "all-operational-events.private.json": "fc3da9c8e71ea0eabe853e20c04b72daf6f7eab19809c49ede9f693aed2c55c1",
+      "automation-index-before.private.json": "a22808772245a0d8e2a58c483b7fa60e2326c4b082ad74a04e6878e80a13cb0c",
+      "automation-index-after.private.json": "a22808772245a0d8e2a58c483b7fa60e2326c4b082ad74a04e6878e80a13cb0c",
+      "advice.private.md": "c3a1ec397d8c7ac160bac24afb67adaf3e783d5a6195a94261eb3bba218e4657",
+      "result.json": "5f6c8c9e2a70e2d6f49f4ea1e93810f6483b6cbc9cb0da445aec01c29c0edf54"
+    },
+    "sourceHashesUnchangedInCurrentCandidate": {
+      "src/eva/adapters/model/pydantic_conversation.py": "2545252842e4aeda8cf13d3c5d6e230f4490f879f65dff4783f11311cea2d1e3",
+      "src/eva/adapters/connectors/home_assistant_admin.py": "ea94a1a87fa42ebaa75e0d28db053fb148db2d0aa7aaa196beb15c96b5e934a1",
+      "src/eva/providers/home_assistant.py": "596f49351a303b6c33223abd1b4fa5d536f0a344b68079eb6eb422f9905b0a0b",
+      "src/eva/adapters/postgres/external_conversation_tools.py": "ef4f70c6f8c2283a69264cfaa6777eabf25aa8b2d32f5234e911e7978f502161",
+      "src/eva/adapters/postgres/conversation_actions.py": "352aa0dd6734828a1626efe32aa6980269c07da7153817ddaa862e67b017ad34"
+    },
+    "limitations": [
+      "Synthetic private principal, empty-memory fixture and disposable database/filesystem; actual Eva model, actual HA and actual filesystem providers.",
+      "No live installation or household acceptance; this proves the requested user case in the isolated candidate path.",
+      "Inventory before/after automation identities independently match; automation configuration reads are not an atomic global snapshot.",
+      "Advice semantics require independent review; no claimed real-world household improvement without applying and observing approved changes.",
+      "No device mutation, automation mutation or Telegram message sent.",
+      "Successful-trial usage excludes preceding failed trials, which retain partial/unavailable usage separately."
+    ],
+    "interpretation": "Combined real HA/model/filesystem user case was isolated. Its5business-logic modules are byte-identical to current live image; separate exact-image installed/live proofs establish deployment. MCP startup changed and was separately verified under real Uvicorn. This is not a new combined live chat claim."
+  },
+  "faultStopRecovery": {
+    "requiredGateCases": [
+      {
+        "name": "test_external_effect_provider_is_durable_and_not_repeated_after_restart[0]",
+        "class": "tests.postgres.test_operational_timeline",
+        "commandReceipt": "/tmp/eva2-tl002-startup-release.sxbx02eb/gates/command-16.json",
+        "commandSha256": "10d57b50a09faae8022e1783a5570d0e14237b1e79b6d55e1d7bc15507d7c5f4"
+      },
+      {
+        "name": "test_external_effect_provider_is_durable_and_not_repeated_after_restart[1]",
+        "class": "tests.postgres.test_operational_timeline",
+        "commandReceipt": "/tmp/eva2-tl002-startup-release.sxbx02eb/gates/command-16.json",
+        "commandSha256": "10d57b50a09faae8022e1783a5570d0e14237b1e79b6d55e1d7bc15507d7c5f4"
+      },
+      {
+        "name": "test_external_effect_provider_is_durable_and_not_repeated_after_restart[2]",
+        "class": "tests.postgres.test_operational_timeline",
+        "commandReceipt": "/tmp/eva2-tl002-startup-release.sxbx02eb/gates/command-16.json",
+        "commandSha256": "10d57b50a09faae8022e1783a5570d0e14237b1e79b6d55e1d7bc15507d7c5f4"
+      },
+      {
+        "name": "test_external_tool_restart_uses_durable_separate_observation_command[0]",
+        "class": "tests.postgres.test_operational_timeline",
+        "commandReceipt": "/tmp/eva2-tl002-startup-release.sxbx02eb/gates/command-16.json",
+        "commandSha256": "10d57b50a09faae8022e1783a5570d0e14237b1e79b6d55e1d7bc15507d7c5f4"
+      },
+      {
+        "name": "test_external_tool_restart_uses_durable_separate_observation_command[1]",
+        "class": "tests.postgres.test_operational_timeline",
+        "commandReceipt": "/tmp/eva2-tl002-startup-release.sxbx02eb/gates/command-16.json",
+        "commandSha256": "10d57b50a09faae8022e1783a5570d0e14237b1e79b6d55e1d7bc15507d7c5f4"
+      },
+      {
+        "name": "test_owner_conversation_stop_is_durable_and_does_not_cross_people_or_chats",
+        "class": "tests.postgres.test_operational_timeline",
+        "commandReceipt": "/tmp/eva2-tl002-startup-release.sxbx02eb/gates/command-16.json",
+        "commandSha256": "10d57b50a09faae8022e1783a5570d0e14237b1e79b6d55e1d7bc15507d7c5f4"
+      },
+      {
+        "name": "test_stop_and_dispatch_admission_share_a_transaction_fence[tool]",
+        "class": "tests.postgres.test_operational_timeline",
+        "commandReceipt": "/tmp/eva2-tl002-startup-release.sxbx02eb/gates/command-16.json",
+        "commandSha256": "10d57b50a09faae8022e1783a5570d0e14237b1e79b6d55e1d7bc15507d7c5f4"
+      },
+      {
+        "name": "test_stop_and_dispatch_admission_share_a_transaction_fence[model]",
+        "class": "tests.postgres.test_operational_timeline",
+        "commandReceipt": "/tmp/eva2-tl002-startup-release.sxbx02eb/gates/command-16.json",
+        "commandSha256": "10d57b50a09faae8022e1783a5570d0e14237b1e79b6d55e1d7bc15507d7c5f4"
+      },
+      {
+        "name": "test_telegram_stop_command_interrupts_other_running_turn_without_model[/stop]",
+        "class": "tests.postgres.test_operational_timeline",
+        "commandReceipt": "/tmp/eva2-tl002-startup-release.sxbx02eb/gates/command-16.json",
+        "commandSha256": "10d57b50a09faae8022e1783a5570d0e14237b1e79b6d55e1d7bc15507d7c5f4"
+      },
+      {
+        "name": "test_telegram_stop_command_interrupts_other_running_turn_without_model[stop deze opdracht]",
+        "class": "tests.postgres.test_operational_timeline",
+        "commandReceipt": "/tmp/eva2-tl002-startup-release.sxbx02eb/gates/command-16.json",
+        "commandSha256": "10d57b50a09faae8022e1783a5570d0e14237b1e79b6d55e1d7bc15507d7c5f4"
+      },
+      {
+        "name": "test_exact_stop_arriving_before_ingress_prevents_model_start",
+        "class": "tests.postgres.test_operational_timeline",
+        "commandReceipt": "/tmp/eva2-tl002-startup-release.sxbx02eb/gates/command-16.json",
+        "commandSha256": "10d57b50a09faae8022e1783a5570d0e14237b1e79b6d55e1d7bc15507d7c5f4"
+      }
+    ],
+    "personalStop": "Durable owner stop and transactional model/tool admission fence, tested with real PostgreSQL and synthetic conversation/provider; not a new live personal-stop interaction.",
+    "recovery": "External-effect crash/restart resumes separate observation, no repeated execution; real filesystem restart/replay proven separately.",
+    "runtimeFailure": "Prior Uvicorn activation failed; actual operator restored previous live source and exact prior reply. Current candidate fixes startup and passes full Uvicorn+MCP joint restart.",
+    "authorization": "Actual candidate refuses another person and group; distinct from personal-stop proof.",
+    "effectProof": {
+      "actualNetworkVerified": true,
+      "actualReadOnlyMountVerified": true,
+      "catalogSha256": "f5cca41bcc9fdc20a3988682251879f56997491b2030c9470d31177dacaedd17",
+      "database": "eva2_living_disposable_workspace_1927679c5184",
+      "fileStateUnchangedAfterRestartReplay": true,
+      "groupDenied": true,
+      "imageId": "sha256:64dd6d31f788a8ee6b1cc62b43f792cf0635df250cb1d60dbc37236819f4eb9f",
+      "independentFileSha256": "7feb9df7ba38899094d639f1a72e39cf5a2edfe70702262bda45c618423bfdd3",
+      "modelCalls": 0,
+      "otherPersonDenied": true,
+      "overlaySha256": "d2016f39b5ab3fd916733dee846e4e6fe0ed6c662d46e64d4a9c23821dffdedf",
+      "ownerActionVerified": true,
+      "replayReceiptUnchanged": true,
+      "sourceCommit": "7b6c0c279813f9f3539b95cb7afdc0fd283998f2",
+      "stagingProviderDisabled": true,
+      "status": "passed",
+      "syntheticFile": "/proof-state/candidate-1927679c5184.txt",
+      "telegramSends": 0,
+      "temporaryDatabaseAndCoreRemoved": true,
+      "workspaceDataRetained": true,
+      "wrapperSha256": "1b4e13eabd162b3c7af4b9b1b465f8be63fb6f2c5adc06bf43925ba22be512ef"
+    },
+    "rollbackProof": {
+      "imageId": "sha256:541762487caf441a2755997a5b5a1ed31fd2cafae794dfc4f84858e862fc3f43",
+      "limits": "Existing developer turn through actual private client after cutover; no new human Telegram network roundtrip, novel answer or positive initiative claimed.",
+      "messageIdSha256": "c2b7446af3bd1a6f014dea42ebd8a7d8215c47f0d219aeb807281e78f22b691f",
+      "newConversationModelCalls": 0,
+      "originalUsageUnchanged": {
+        "inputTokens": 3528,
+        "measurement": "measured",
+        "modelAttempts": 1,
+        "outputTokens": 9,
+        "provider": "chatgpt-codex:gpt-6-astra",
+        "toolCalls": 0
+      },
+      "port": 44710,
+      "probeSha256": "28b156900e0c5d44428eb87d3731967c0ee59fedf929cdb370fe6f008fd05c47",
+      "replySha256": "00da393e91c7b4145d4a810a4dd0dfc204251357065ef4890c06dfaade1c32fd",
+      "sourceCommit": "a986b062d24ac7ee0fa654b473af867e586e6402",
+      "status": "exact_existing_reply_replayed",
+      "telegramMessagesSentByProbe": 0
+    }
+  },
+  "userRoute": {
+    "channel": "Existing /eva2 private conversation",
+    "example": "Bewaar een kort plan in /proof-state/mijn-plan.txt en controleer de opgeslagen inhoud.",
+    "liveProbe": "Labelled developer request through real private client; no Telegram send."
+  },
+  "remainingOutsideThisCard": [
+    "Human family acceptance and seven-day final practice.",
+    "Unknown connector onboarding and general computer control.",
+    "Operational token renewal remains documented maintenance; both credentials retained for rollback.",
+    "No competitor win or universal exactly-once guarantee."
+  ],
+  "review": {
+    "reviewer": "/root/co006_review",
+    "status": "pending_final_evidence_review"
+  }
+}
