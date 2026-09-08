@@ -115,7 +115,7 @@ def test_authority_distinguishes_executable_tests_from_bound_support() -> None:
     )
     required_inputs = {row["path"] for row in authority["requiredInputs"]}
 
-    assert len(inputs.executable) == 156
+    assert len(inputs.executable) == 161
     assert "tests/application/test_free_will.py" in inputs.executable
     assert "tests/postgres/test_sensory_admission.py" in inputs.executable
     assert "tests/operations/test_two_builder_reproducibility.py" in inputs.executable
@@ -216,12 +216,14 @@ def test_real_command_runner_enforces_a_stable_non_group_writable_umask(
     assert result.stdout.strip() == "0o755"
 
 
-def test_gate_lock_is_exact_and_adds_pyyaml_only_to_gate_toolchain() -> None:
+def test_gate_lock_binds_yaml_and_native_ha_http_test_dependencies() -> None:
     rows = runner._lock_rows(
         (ROOT / "release/gate-toolchain.requirements.lock").read_bytes()
     )
 
-    assert len(rows) == 19
+    assert len(rows) == 27
+    assert rows["aiohttp"][0] == "3.14.3"
+    assert {"aiohappyeyeballs", "aiosignal", "frozenlist", "multidict", "propcache", "yarl"} <= rows.keys()
     assert rows["pyyaml"] == (
         "6.0.3",
         frozenset({"ba1cc08a7ccde2d2ec775841541641e4548226580ab850948cbfda66a1befcdc"}),
@@ -412,7 +414,7 @@ def test_runner_executes_seven_closed_groups_and_redacts_dsns(
     }
     assert len(receipt["groups"]) == 7
     assert len(calls) == 22
-    assert sum(group["executableModuleCount"] for group in receipt["groups"]) == 156
+    assert sum(group["executableModuleCount"] for group in receipt["groups"]) == 161
     postgres = next(
         group for group in receipt["groups"] if group["group"] == "postgres"
     )

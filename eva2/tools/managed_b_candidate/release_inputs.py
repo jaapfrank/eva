@@ -39,10 +39,10 @@ _PORTABLE_V1_PROFILE_PATH = (
     f"{_PORTABLE_V1_CONTRACT_ROOT}/canonical-json-profile-v1.json"
 )
 _EXPECTED_INPUT_PATHS_SHA256 = (
-    "fa75c879faf9a8933fe59ccfa9d4527a0bc25f1320b24e33efeabc44877f86c8"
+    "bd37c453d2f3506bde454441af3807978c2bdb15136083e9f8661e8d908cafc0"
 )
 _EXPECTED_TEST_PATHS_SHA256 = (
-    "3df2e8469a63a4934e18814ec8f3086905304a2e3e27579ae7e935ff2dc90d31"
+    "2f5f52209a7f931d3237ae0211f55696be4dde922e1965fdab726e3502a4f723"
 )
 _EXPECTED_TEST_SUPPORT_PATHS_SHA256 = (
     "01b4594668e68d2938df3eabaf5a5b71333eda320b859f5eec524ea21bd0ce43"
@@ -59,6 +59,29 @@ _VOICE_INPUTS = {
     'src/eva/bootstrap/runtime.py',
     'src/eva/contracts/voice.py',
     'tests/api/test_dashboard_voice_client.cjs',
+}
+_NATIVE_VOICE_INPUTS = {
+    'deploy/home-assistant/custom_components/eva2_voice/__init__.py',
+    'deploy/home-assistant/custom_components/eva2_voice/client.py',
+    'deploy/home-assistant/custom_components/eva2_voice/config_flow.py',
+    'deploy/home-assistant/custom_components/eva2_voice/conversation.py',
+    'deploy/home-assistant/custom_components/eva2_voice/manifest.json',
+    'deploy/home-assistant/custom_components/eva2_voice/strings.json',
+    'deploy/home-assistant/voice-pe-interruption.yaml',
+    'deploy/living-core/household-voice.compose.yml',
+    'src/eva/adapters/api/native_voice.py',
+    'src/eva/adapters/postgres/voice_requests.py',
+    'src/eva/application/cancellation.py',
+    'src/eva/application/memory_audience.py',
+    'src/eva/bootstrap/household_voice.py',
+    'src/eva/bootstrap/native_voice.py',
+}
+_NATIVE_VOICE_TESTS = {
+    'tests/api/test_native_voice.py',
+    'tests/application/test_cancellation.py',
+    'tests/bootstrap/test_household_voice_authority.py',
+    'tests/bootstrap/test_native_household_responder.py',
+    'tests/operations/test_ha_voice_native_client.py',
 }
 _VOICE_TESTS = {
     'tests/api/test_dashboard_voice.py',
@@ -429,6 +452,10 @@ def _validate_release_path_closure(
 
     input_paths = {path for path, _ in inputs}
     test_paths = {path for path, _ in tests}
+    if not _NATIVE_VOICE_INPUTS <= input_paths:
+        raise RuntimeError("managed B native voice input set is incomplete")
+    if not _NATIVE_VOICE_TESTS <= test_paths:
+        raise RuntimeError("managed B native voice test set is incomplete")
     if not _VOICE_INPUTS <= input_paths:
         raise RuntimeError("managed B voice input set is incomplete")
     if not _VOICE_TESTS <= test_paths:

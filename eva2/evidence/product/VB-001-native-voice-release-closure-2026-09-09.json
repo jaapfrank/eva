@@ -1,0 +1,117 @@
+{
+  "contract": "EvaNativeVoiceReleaseClosure/v1",
+  "status": "source_closure_and_offline_targeted_tests_passed_not_full_release",
+  "sourceSha256": {
+    "eva2/tools/managed_b_candidate/release_inputs.py": "1f3244189fbf162fef894222fc895b3e376bde793602af550d269861a5b2756d",
+    "eva2/tools/run_managed_b_required_tests.py": "20e06943c3675ce994525addd3d4dc146e25e70c88897f297cdb6a14f70761d8",
+    "eva2/release/gate-toolchain-roots.in": "64a18dae95ab4dfa55e529159d881d388e149452157144c7451df856519e94f7",
+    "eva2/release/gate-toolchain.requirements.lock": "ccc0b1d5118452eb2d4c5bbd945cad8bcf956480d5d755742b1da0a7132950db",
+    "eva2/release/managed-b-release-input-authority-v1.json": "0defd01f055fb061ccf5cc9a66027adfe8e15c4cba33ea23183f59ae426a835c",
+    "eva2/release/eva-cockpit-evidence-index-v1.json": "8235a09f1cdf2a0ff22ca5af7aad8019f35c5658f43836932b335255d3c1545c",
+    "eva2/tests/operations/test_managed_b_release_inputs.py": "175ee0df0b3f448364e79e13613c6697a59647fbd6ebe71f4de08177eef3b77f",
+    "eva2/tests/operations/test_run_managed_b_required_tests.py": "f04c6f6d31a34742ab53eaba29cd7ee6432daa11de9b8b02f5f4941d0457f58c"
+  },
+  "releaseAuthority": {
+    "requiredInputs": 353,
+    "requiredTests": 161,
+    "supportInputs": 20,
+    "addedInputs": 14,
+    "addedTestModules": 5,
+    "removedPaths": 0
+  },
+  "offline": {
+    "gatePackageCount": 27,
+    "existingPackagePinsChanged": 0,
+    "gateLockSha256": "ccc0b1d5118452eb2d4c5bbd945cad8bcf956480d5d755742b1da0a7132950db",
+    "gateWheelManifestSha256": "d04d676d3053075391c99b8fefb89ca963c400f7c93bf5d49df78c05a785e9f8",
+    "installation": "new venv, no index, require hashes, runtime4d and gate locks",
+    "tests": "164 passed in 4.27s: five native modules and release authority/runner tests",
+    "sourceBoundary": "clean HEAD archive plus this release closure change; excludes unrelated dirty dashboard/app source"
+  },
+  "collection": [
+    {
+      "group": "pure",
+      "modules": 132,
+      "status": 0,
+      "summary": "2097 tests collected in 3.66s"
+    },
+    {
+      "group": "portable-effect",
+      "modules": 1,
+      "status": 0,
+      "summary": "4 tests collected in 0.47s"
+    },
+    {
+      "group": "portable-model",
+      "modules": 1,
+      "status": 0,
+      "summary": "4 tests collected in 0.43s"
+    },
+    {
+      "group": "portable-object",
+      "modules": 1,
+      "status": 0,
+      "summary": "5 tests collected in 0.47s"
+    },
+    {
+      "group": "portable-read",
+      "modules": 1,
+      "status": 0,
+      "summary": "4 tests collected in 0.39s"
+    },
+    {
+      "group": "portable-full-schema",
+      "modules": 1,
+      "status": 0,
+      "summary": "2 tests collected in 0.91s"
+    },
+    {
+      "group": "postgres-action-chain",
+      "modules": 13,
+      "status": 0,
+      "summary": "80 tests collected in 0.34s"
+    },
+    {
+      "group": "postgres-browser-physical",
+      "modules": 1,
+      "status": 0,
+      "summary": "4 tests collected in 0.19s"
+    },
+    {
+      "group": "postgres-living",
+      "modules": 2,
+      "status": 0,
+      "summary": "80 tests collected in 0.43s"
+    },
+    {
+      "group": "postgres-4b-store",
+      "modules": 5,
+      "status": 0,
+      "summary": "52 tests collected in 1.03s"
+    },
+    {
+      "group": "postgres-4b-current",
+      "modules": 2,
+      "status": 0,
+      "summary": "79 tests collected in 0.28s"
+    },
+    {
+      "group": "postgres-4b-historical",
+      "modules": 1,
+      "status": 0,
+      "summary": "12 tests collected in 0.03s"
+    }
+  ],
+  "review": "co006_review bounded closure GO: exactly14inputs5tests added, existingversions/hashes unchanged, runtime and nonclaims unchanged",
+  "failuresResolved": [
+    "Gate package count still19 after adding8dependencies; updated to27 and tested pinned aiohttp",
+    "Wheelhouse rejected download.log; moved log outside exact wheel directory",
+    "Combined one-process collection hit existing duplicate module basenames; real runner group collection all passed"
+  ],
+  "remaining": [
+    "Complete candidate image and full isolated release execution; collection is not execution",
+    "Verify clean-source historical TL002 evidence chain and dependency metadata",
+    "Actual HA entity/pipeline integration, authorized private configuration and Hindsight readback",
+    "Hardware stop/resume/latency, safe A/B deployment and household acceptance"
+  ]
+}
