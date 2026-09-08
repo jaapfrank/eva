@@ -1,0 +1,959 @@
+{
+  "taskId": "TL-001",
+  "status": "runtime_serialization_and_consent_tested_not_live",
+  "sourceSha256": {
+    "eva2/src/eva/application/conversation.py": "0198d4bc29584d928c16c10b9c6564632f12105815254f86076d0d8ff7c00b9a",
+    "eva2/src/eva/adapters/model/pydantic_conversation.py": "a8797bfc150b8beb718bb8c4ca89c328fe44b6f006fece984330c4c101cc5401",
+    "eva2/src/eva/adapters/postgres/conversation_actions.py": "4fceb6e69da62c39cca10d05bbf2d1639c1d279e2aa51362e491d2ac85a42240",
+    "eva2/src/eva/adapters/postgres/external_conversation_tools.py": "10d42280ff88e0b610755a44748622f8015f50e8a6dc3fd5e7d09351f1d68542",
+    "eva2/tests/application/test_conversation.py": "06062f32f45158b0ee1d7dc07ccc14d49382d03089d6a2524cf9695c2af57f53",
+    "eva2/tests/model/test_pydantic_conversation_model.py": "f7f0f000ab5a642dff6ee2e1f788d1393b7cd11b2b7525dfe9a2117f26bfabd2",
+    "eva2/tests/postgres/test_conversation_actions.py": "1021a1dfec044c5b41c1eb3371967b0ef5933fcfa7bfd36e6735a8d042d5205c",
+    "eva2/tests/postgres/test_operational_timeline.py": "e18465f8ba3e521c6054e23b2f6279346fa786dd5157a38f43dadeeb069e75c4",
+    "eva2/src/eva/bootstrap/runtime.py": "e06a1c8e69b6c86d8f2e8c7667d96118361e8413f67f7503b324350f2a676074",
+    "eva2/src/eva/adapters/postgres/conversation_journal.py": "bb57e60f48b398a9daa75cec95409d3b0775ac89d4036033ff07673516633226",
+    "eva2/tests/bootstrap/test_memory_provenance.py": "62a6b980c412f6b3d448d2c848e4609c4a37b28a5786f9580f02ef5678bcd912",
+    "eva2/tests/postgres/test_conversation_usage_journal.py": "6f975b8a1190b77cdf9b74896dc0059cfeb71e0bc1d3eccb921709e1cb02fd93",
+    "eva2/src/eva/adapters/postgres/scope.py": "b48ec5abf4d75e55f714a539e6bb036e8bcd444124b038a1af7ed58365b8636c"
+  },
+  "tests": {
+    "count": 223,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "junitSha256": "3145a7d653f151e14626765ce202f3d3b040f2f1c233473120972b88f781c092",
+    "command": "EVA2_TEST_POSTGRES_DSN=<explicit disposable PostgreSQL 16.13> PYTHONPATH=src:. python -m pytest -q tests/bootstrap/test_memory_provenance.py tests/postgres/test_conversation_usage_journal.py tests/postgres/test_operational_timeline.py tests/postgres/test_conversation_actions.py tests/application/test_conversation.py tests/model/test_pydantic_conversation_model.py tests/model/test_conversation_model.py",
+    "cases": [
+      {
+        "name": "test_semantic_retention_never_promotes_model_output_to_direct_user",
+        "class": "tests.bootstrap.test_memory_provenance"
+      },
+      {
+        "name": "test_quota_refusal_is_durable_and_never_claimed_as_queued",
+        "class": "tests.bootstrap.test_memory_provenance"
+      },
+      {
+        "name": "test_bound_identity_correction_retains_only_the_grounded_user_fact",
+        "class": "tests.bootstrap.test_memory_provenance"
+      },
+      {
+        "name": "test_group_turn_retains_the_same_audience_and_group_bound_provenance",
+        "class": "tests.bootstrap.test_memory_provenance"
+      },
+      {
+        "name": "test_conversation_rejects_a_cross_installation_scope_before_model_work",
+        "class": "tests.bootstrap.test_memory_provenance"
+      },
+      {
+        "name": "test_group_turn_revalidates_exact_consent_before_journal_or_model",
+        "class": "tests.bootstrap.test_memory_provenance"
+      },
+      {
+        "name": "test_runtime_rechecks_consent_in_conversation_callback_before_commit",
+        "class": "tests.bootstrap.test_memory_provenance"
+      },
+      {
+        "name": "test_reported_usage_round_trips_through_the_durable_reply_payload",
+        "class": "tests.postgres.test_conversation_usage_journal"
+      },
+      {
+        "name": "test_partial_retry_usage_round_trips_through_durable_reply_payload",
+        "class": "tests.postgres.test_conversation_usage_journal"
+      },
+      {
+        "name": "test_legacy_reply_without_usage_replays_as_unmeasured_not_zero",
+        "class": "tests.postgres.test_conversation_usage_journal"
+      },
+      {
+        "name": "test_measured_timing_round_trips_and_legacy_timing_stays_unmeasured",
+        "class": "tests.postgres.test_conversation_usage_journal"
+      },
+      {
+        "name": "test_malformed_durable_usage_fails_closed[model_usage0]",
+        "class": "tests.postgres.test_conversation_usage_journal"
+      },
+      {
+        "name": "test_malformed_durable_usage_fails_closed[model_usage1]",
+        "class": "tests.postgres.test_conversation_usage_journal"
+      },
+      {
+        "name": "test_malformed_durable_usage_fails_closed[model_usage2]",
+        "class": "tests.postgres.test_conversation_usage_journal"
+      },
+      {
+        "name": "test_malformed_durable_usage_fails_closed[model_usage3]",
+        "class": "tests.postgres.test_conversation_usage_journal"
+      },
+      {
+        "name": "test_changed_reported_usage_is_not_a_byte_equal_reply_replay",
+        "class": "tests.postgres.test_conversation_usage_journal"
+      },
+      {
+        "name": "test_legacy_external_tool_admission_recovers_and_checks_receipt_hash",
+        "class": "tests.postgres.test_operational_timeline"
+      },
+      {
+        "name": "test_external_timeline_scope_preserves_existing_ids_and_error",
+        "class": "tests.postgres.test_operational_timeline"
+      },
+      {
+        "name": "test_timeline_survives_restart_and_escalates_third_identical_failure",
+        "class": "tests.postgres.test_operational_timeline"
+      },
+      {
+        "name": "test_event_history_is_immutable_and_projection_is_rebuildable",
+        "class": "tests.postgres.test_operational_timeline"
+      },
+      {
+        "name": "test_row_scope_hides_another_installation",
+        "class": "tests.postgres.test_operational_timeline"
+      },
+      {
+        "name": "test_telegram_ingress_is_person_bound_delivered_and_restart_idempotent",
+        "class": "tests.postgres.test_operational_timeline"
+      },
+      {
+        "name": "test_telegram_restart_after_delivery_claim_never_blindly_resends",
+        "class": "tests.postgres.test_operational_timeline"
+      },
+      {
+        "name": "test_telegram_pairing_is_private_two_sided_and_survives_restart",
+        "class": "tests.postgres.test_operational_timeline"
+      },
+      {
+        "name": "test_dynamically_paired_account_reaches_normal_ingress_after_restart",
+        "class": "tests.postgres.test_operational_timeline"
+      },
+      {
+        "name": "test_dynamic_binding_is_scope_isolated_and_conflict_rejects_without_text",
+        "class": "tests.postgres.test_operational_timeline"
+      },
+      {
+        "name": "test_telegram_pairing_rejects_self_confirmation_and_expired_codes",
+        "class": "tests.postgres.test_operational_timeline"
+      },
+      {
+        "name": "test_telegram_pairing_resumes_the_crash_between_request_and_waiting_state",
+        "class": "tests.postgres.test_operational_timeline"
+      },
+      {
+        "name": "test_telegram_pairing_never_overwrites_an_account_bound_by_another_code",
+        "class": "tests.postgres.test_operational_timeline"
+      },
+      {
+        "name": "test_telegram_pairing_concurrent_restarts_share_one_waiting_challenge",
+        "class": "tests.postgres.test_operational_timeline"
+      },
+      {
+        "name": "test_telegram_poison_turn_stops_after_three_identical_processing_failures",
+        "class": "tests.postgres.test_operational_timeline"
+      },
+      {
+        "name": "test_conversation_replay_returns_one_durable_reply_and_one_memory_queue",
+        "class": "tests.postgres.test_operational_timeline"
+      },
+      {
+        "name": "test_conversation_content_erasure_is_physical_scoped_and_replay_safe",
+        "class": "tests.postgres.test_operational_timeline"
+      },
+      {
+        "name": "test_conversation_records_a_content_free_memory_quota_refusal",
+        "class": "tests.postgres.test_operational_timeline"
+      },
+      {
+        "name": "test_hindsight_outbox_rehydrates_and_stops_after_three_attempts",
+        "class": "tests.postgres.test_operational_timeline"
+      },
+      {
+        "name": "test_hindsight_outbox_commits_hash_bound_success",
+        "class": "tests.postgres.test_operational_timeline"
+      },
+      {
+        "name": "test_hindsight_outbox_erasure_stops_replay_and_physically_redacts_content",
+        "class": "tests.postgres.test_operational_timeline"
+      },
+      {
+        "name": "test_hindsight_outbox_preserves_group_audience_across_restart",
+        "class": "tests.postgres.test_operational_timeline"
+      },
+      {
+        "name": "test_hindsight_outbox_rejects_legacy_group_payload_without_audience",
+        "class": "tests.postgres.test_operational_timeline"
+      },
+      {
+        "name": "test_model_chosen_interest_survives_restart_and_is_not_adopted_twice",
+        "class": "tests.postgres.test_operational_timeline"
+      },
+      {
+        "name": "test_external_effect_provider_is_durable_and_not_repeated_after_restart[0]",
+        "class": "tests.postgres.test_operational_timeline"
+      },
+      {
+        "name": "test_external_effect_provider_is_durable_and_not_repeated_after_restart[1]",
+        "class": "tests.postgres.test_operational_timeline"
+      },
+      {
+        "name": "test_external_effect_provider_is_durable_and_not_repeated_after_restart[2]",
+        "class": "tests.postgres.test_operational_timeline"
+      },
+      {
+        "name": "test_external_steps_repeat_a_tool_and_replay_without_replanning",
+        "class": "tests.postgres.test_operational_timeline"
+      },
+      {
+        "name": "test_external_tool_restart_uses_durable_separate_observation_command[0]",
+        "class": "tests.postgres.test_operational_timeline"
+      },
+      {
+        "name": "test_external_tool_restart_uses_durable_separate_observation_command[1]",
+        "class": "tests.postgres.test_operational_timeline"
+      },
+      {
+        "name": "test_provider_owned_automation_is_durable_and_not_repeated_after_restart",
+        "class": "tests.postgres.test_operational_timeline"
+      },
+      {
+        "name": "test_provider_owned_tuya_plan_is_durable_and_not_repeated_after_restart",
+        "class": "tests.postgres.test_operational_timeline"
+      },
+      {
+        "name": "test_provider_owned_repository_registration_is_verified_and_not_repeated",
+        "class": "tests.postgres.test_operational_timeline"
+      },
+      {
+        "name": "test_provider_owned_package_install_is_verified_and_not_repeated",
+        "class": "tests.postgres.test_operational_timeline"
+      },
+      {
+        "name": "test_home_assistant_history_read_is_durable_and_not_repeated_after_restart",
+        "class": "tests.postgres.test_operational_timeline"
+      },
+      {
+        "name": "test_home_assistant_current_state_read_is_durable_and_not_repeated",
+        "class": "tests.postgres.test_operational_timeline"
+      },
+      {
+        "name": "test_current_research_artifact_is_durable_and_reopens_without_repeat",
+        "class": "tests.postgres.test_operational_timeline"
+      },
+      {
+        "name": "test_telegram_group_consent_is_durable_person_scoped_and_revocable",
+        "class": "tests.postgres.test_operational_timeline"
+      },
+      {
+        "name": "test_telegram_group_observation_is_durable_bounded_and_contains_no_text",
+        "class": "tests.postgres.test_operational_timeline"
+      },
+      {
+        "name": "test_telegram_group_consent_replay_never_renews_a_private_decision",
+        "class": "tests.postgres.test_operational_timeline"
+      },
+      {
+        "name": "test_telegram_group_without_consent_is_durably_rejected",
+        "class": "tests.postgres.test_operational_timeline"
+      },
+      {
+        "name": "test_admitted_group_replay_after_consent_revoke_completes_without_core",
+        "class": "tests.postgres.test_operational_timeline"
+      },
+      {
+        "name": "test_email_provider_read_is_durable_and_not_repeated_after_restart",
+        "class": "tests.postgres.test_operational_timeline"
+      },
+      {
+        "name": "test_external_concurrent_retry_cannot_resume_an_inflight_dispatch[0]",
+        "class": "tests.postgres.test_operational_timeline"
+      },
+      {
+        "name": "test_external_concurrent_retry_cannot_resume_an_inflight_dispatch[1]",
+        "class": "tests.postgres.test_operational_timeline"
+      },
+      {
+        "name": "test_pydantic_conversation_chain_restarts_from_durable_receipts[False]",
+        "class": "tests.postgres.test_operational_timeline"
+      },
+      {
+        "name": "test_pydantic_conversation_chain_restarts_from_durable_receipts[True]",
+        "class": "tests.postgres.test_operational_timeline"
+      },
+      {
+        "name": "test_runtime_serializes_message_before_model_and_replays_committed_reply",
+        "class": "tests.postgres.test_operational_timeline"
+      },
+      {
+        "name": "test_durable_turn_identifiers_remain_byte_equal_after_shared_derivation",
+        "class": "tests.postgres.test_conversation_actions"
+      },
+      {
+        "name": "test_home_assistant_ambiguous_read_requests_a_natural_clarification",
+        "class": "tests.postgres.test_conversation_actions"
+      },
+      {
+        "name": "test_home_assistant_read_only_policy_exposes_reads_but_refuses_effects",
+        "class": "tests.postgres.test_conversation_actions"
+      },
+      {
+        "name": "test_external_tool_provider_registers_executes_and_resumes_without_core_branch",
+        "class": "tests.postgres.test_conversation_actions"
+      },
+      {
+        "name": "test_validated_file_edit_action_requires_its_bounded_adapter",
+        "class": "tests.postgres.test_conversation_actions"
+      },
+      {
+        "name": "test_repository_improvement_requires_both_snapshot_adapter_and_chooser",
+        "class": "tests.postgres.test_conversation_actions"
+      },
+      {
+        "name": "test_fanout_action_reports_each_sink_without_resending_successes",
+        "class": "tests.postgres.test_conversation_actions"
+      },
+      {
+        "name": "test_durable_goal_action_persists_one_wake_and_explicit_cancel_stops_it",
+        "class": "tests.postgres.test_conversation_actions"
+      },
+      {
+        "name": "test_identity_correction_action_exists_only_for_a_bound_photo_region",
+        "class": "tests.postgres.test_conversation_actions"
+      },
+      {
+        "name": "test_identity_retrieval_hint_is_scoped_to_the_exact_bound_region",
+        "class": "tests.postgres.test_conversation_actions"
+      },
+      {
+        "name": "test_document_focus_never_falls_back_to_an_older_unfinished_task",
+        "class": "tests.postgres.test_conversation_actions"
+      },
+      {
+        "name": "test_document_task_arguments_require_full_safe_markdown",
+        "class": "tests.postgres.test_conversation_actions"
+      },
+      {
+        "name": "test_document_continue_rejects_a_noop_checkpoint",
+        "class": "tests.postgres.test_conversation_actions"
+      },
+      {
+        "name": "test_completed_document_rejects_empty_sections",
+        "class": "tests.postgres.test_conversation_actions"
+      },
+      {
+        "name": "test_completed_document_accepts_substantive_sections",
+        "class": "tests.postgres.test_conversation_actions"
+      },
+      {
+        "name": "test_personal_completed_work_uses_the_exact_shared_checkpoint_selection[PostgresPersonalInterestStore-exploration-CompletedPersonalExploration]",
+        "class": "tests.postgres.test_conversation_actions"
+      },
+      {
+        "name": "test_personal_completed_work_uses_the_exact_shared_checkpoint_selection[PostgresPersonalPrototypeStore-prototype-CompletedPersonalPrototype]",
+        "class": "tests.postgres.test_conversation_actions"
+      },
+      {
+        "name": "test_personal_completed_work_uses_the_exact_shared_checkpoint_selection[PostgresPersonalProductReleaseStore-release-CompletedPersonalProductRelease]",
+        "class": "tests.postgres.test_conversation_actions"
+      },
+      {
+        "name": "test_personal_latest_artifacts_share_selection_without_cross_principal_leak",
+        "class": "tests.postgres.test_conversation_actions"
+      },
+      {
+        "name": "test_personal_work_claim_stages_keep_their_exact_durable_contract[PostgresPersonalInterestStore-exploration-_claim_from_events-PersonalInterestClaim-PERSONAL_EXPLORATION_CLAIMED]",
+        "class": "tests.postgres.test_conversation_actions"
+      },
+      {
+        "name": "test_personal_work_claim_stages_keep_their_exact_durable_contract[PostgresPersonalPrototypeStore-prototype-_exploration_from_events-PersonalPrototypeClaim-PERSONAL_PROTOTYPE_CLAIMED]",
+        "class": "tests.postgres.test_conversation_actions"
+      },
+      {
+        "name": "test_personal_work_claim_stages_keep_their_exact_durable_contract[PostgresPersonalProductReleaseStore-release-_completed_prototype-PersonalProductReleaseClaim-PERSONAL_PRODUCT_RELEASE_CLAIMED]",
+        "class": "tests.postgres.test_conversation_actions"
+      },
+      {
+        "name": "test_personal_work_claim_stages_recover_their_exact_expired_lease[PostgresPersonalInterestStore-exploration-_claim_from_events-lease-expired-personal exploration lease expired]",
+        "class": "tests.postgres.test_conversation_actions"
+      },
+      {
+        "name": "test_personal_work_claim_stages_recover_their_exact_expired_lease[PostgresPersonalPrototypeStore-prototype-_exploration_from_events-prototype-lease-expired-personal prototype lease expired]",
+        "class": "tests.postgres.test_conversation_actions"
+      },
+      {
+        "name": "test_personal_work_claim_stages_recover_their_exact_expired_lease[PostgresPersonalProductReleaseStore-release-_completed_prototype-release-lease-expired-personal product release lease expired]",
+        "class": "tests.postgres.test_conversation_actions"
+      },
+      {
+        "name": "test_personal_work_stages_keep_complete_projection_and_failure_contracts",
+        "class": "tests.postgres.test_conversation_actions"
+      },
+      {
+        "name": "test_retry_claim_preserves_error_fingerprint_until_third_identical_failure",
+        "class": "tests.postgres.test_conversation_actions"
+      },
+      {
+        "name": "test_external_step_rejects_invalid_index_before_access[-1]",
+        "class": "tests.postgres.test_conversation_actions"
+      },
+      {
+        "name": "test_external_step_rejects_invalid_index_before_access[True]",
+        "class": "tests.postgres.test_conversation_actions"
+      },
+      {
+        "name": "test_external_step_rejects_invalid_index_before_access[1.5]",
+        "class": "tests.postgres.test_conversation_actions"
+      },
+      {
+        "name": "test_external_step_rejects_invalid_index_before_access[1]",
+        "class": "tests.postgres.test_conversation_actions"
+      },
+      {
+        "name": "test_external_step_slots_are_shared_across_tools_but_isolated_by_owner",
+        "class": "tests.postgres.test_conversation_actions"
+      },
+      {
+        "name": "test_external_tool_observation_output_key_is_fail_closed",
+        "class": "tests.application.test_conversation"
+      },
+      {
+        "name": "test_external_tool_preparation_keeps_historical_positional_timeout_order",
+        "class": "tests.application.test_conversation"
+      },
+      {
+        "name": "test_bundled_procedural_identity_is_the_exact_current_eva_pack",
+        "class": "tests.application.test_conversation"
+      },
+      {
+        "name": "test_direct_answer_uses_fast_memory_boundary_when_available",
+        "class": "tests.application.test_conversation"
+      },
+      {
+        "name": "test_hot_path_recalls_then_lets_evas_model_answer",
+        "class": "tests.application.test_conversation"
+      },
+      {
+        "name": "test_hot_path_binds_recall_to_the_explicit_person_and_project",
+        "class": "tests.application.test_conversation"
+      },
+      {
+        "name": "test_group_turn_passes_the_exact_audience_and_group_scope_to_recall",
+        "class": "tests.application.test_conversation"
+      },
+      {
+        "name": "test_bound_photo_region_is_carried_into_recall_and_action_availability",
+        "class": "tests.application.test_conversation"
+      },
+      {
+        "name": "test_photo_identity_memory_is_filtered_to_the_exact_bound_region",
+        "class": "tests.application.test_conversation"
+      },
+      {
+        "name": "test_model_requested_memory_search_recalls_then_answers",
+        "class": "tests.application.test_conversation"
+      },
+      {
+        "name": "test_memory_only_answer_is_not_replayed_as_a_fake_stream",
+        "class": "tests.application.test_conversation"
+      },
+      {
+        "name": "test_direct_answer_uses_one_model_call_without_a_fake_posthoc_delta",
+        "class": "tests.application.test_conversation"
+      },
+      {
+        "name": "test_memory_search_can_be_followed_by_one_available_action",
+        "class": "tests.application.test_conversation"
+      },
+      {
+        "name": "test_invalid_model_requested_memory_query_is_rejected",
+        "class": "tests.application.test_conversation"
+      },
+      {
+        "name": "test_model_chosen_interest_is_committed_before_eva_claims_it",
+        "class": "tests.application.test_conversation"
+      },
+      {
+        "name": "test_action_clarification_becomes_one_normal_reply_without_second_model_call",
+        "class": "tests.application.test_conversation"
+      },
+      {
+        "name": "test_pending_durable_interest_resumes_without_choosing_again",
+        "class": "tests.application.test_conversation"
+      },
+      {
+        "name": "test_dependent_tool_chain_recovers_before_model_and_aggregates_usage[0]",
+        "class": "tests.application.test_conversation"
+      },
+      {
+        "name": "test_dependent_tool_chain_recovers_before_model_and_aggregates_usage[1]",
+        "class": "tests.application.test_conversation"
+      },
+      {
+        "name": "test_dependent_tool_chain_recovers_before_model_and_aggregates_usage[2]",
+        "class": "tests.application.test_conversation"
+      },
+      {
+        "name": "test_chain_checkpoint_can_stop_after_model_before_tool_dispatch",
+        "class": "tests.application.test_conversation"
+      },
+      {
+        "name": "test_memory_search_call_id_cannot_be_reused_for_an_external_action",
+        "class": "tests.application.test_conversation"
+      },
+      {
+        "name": "test_wire_final_phase_streams_with_tools_before_completion[parts0-0]",
+        "class": "tests.model.test_pydantic_conversation_model"
+      },
+      {
+        "name": "test_wire_final_phase_streams_with_tools_before_completion[parts0-1]",
+        "class": "tests.model.test_pydantic_conversation_model"
+      },
+      {
+        "name": "test_wire_final_phase_streams_with_tools_before_completion[parts1-0]",
+        "class": "tests.model.test_pydantic_conversation_model"
+      },
+      {
+        "name": "test_wire_final_phase_streams_with_tools_before_completion[parts1-1]",
+        "class": "tests.model.test_pydantic_conversation_model"
+      },
+      {
+        "name": "test_wire_unmarked_or_commentary_text_never_becomes_live_answer[None]",
+        "class": "tests.model.test_pydantic_conversation_model"
+      },
+      {
+        "name": "test_wire_unmarked_or_commentary_text_never_becomes_live_answer[commentary]",
+        "class": "tests.model.test_pydantic_conversation_model"
+      },
+      {
+        "name": "test_wire_failure_after_final_preview_does_not_retry",
+        "class": "tests.model.test_pydantic_conversation_model"
+      },
+      {
+        "name": "test_wire_later_part_does_not_inherit_final_phase[None]",
+        "class": "tests.model.test_pydantic_conversation_model"
+      },
+      {
+        "name": "test_wire_later_part_does_not_inherit_final_phase[commentary]",
+        "class": "tests.model.test_pydantic_conversation_model"
+      },
+      {
+        "name": "test_wire_commentary_with_tool_remains_deferred_and_hidden",
+        "class": "tests.model.test_pydantic_conversation_model"
+      },
+      {
+        "name": "test_wire_mixed_final_and_external_tool_never_returns_action[False]",
+        "class": "tests.model.test_pydantic_conversation_model"
+      },
+      {
+        "name": "test_wire_mixed_final_and_external_tool_never_returns_action[True]",
+        "class": "tests.model.test_pydantic_conversation_model"
+      },
+      {
+        "name": "test_wire_phase_change_on_same_part_fails_without_retry",
+        "class": "tests.model.test_pydantic_conversation_model"
+      },
+      {
+        "name": "test_framework_replacement_start_is_not_appended[None]",
+        "class": "tests.model.test_pydantic_conversation_model"
+      },
+      {
+        "name": "test_framework_replacement_start_is_not_appended[final_answer]",
+        "class": "tests.model.test_pydantic_conversation_model"
+      },
+      {
+        "name": "test_framework_replacement_start_is_not_appended[commentary]",
+        "class": "tests.model.test_pydantic_conversation_model"
+      },
+      {
+        "name": "test_scripted_text_stream_preserves_exact_deltas_final_usage_and_timing",
+        "class": "tests.model.test_pydantic_conversation_model"
+      },
+      {
+        "name": "test_scripted_external_tool_returns_deferred_call_without_execution_or_delta",
+        "class": "tests.model.test_pydantic_conversation_model"
+      },
+      {
+        "name": "test_scripted_durable_receipt_resumes_in_fresh_adapter_with_no_tools",
+        "class": "tests.model.test_pydantic_conversation_model"
+      },
+      {
+        "name": "test_scripted_request_usage_projects_and_two_phase_usage_aggregates",
+        "class": "tests.model.test_pydantic_conversation_model"
+      },
+      {
+        "name": "test_scripted_absolute_deadline_cancels_one_stalled_phase",
+        "class": "tests.model.test_pydantic_conversation_model"
+      },
+      {
+        "name": "test_scripted_post_delta_stall_is_not_retried",
+        "class": "tests.model.test_pydantic_conversation_model"
+      },
+      {
+        "name": "test_unavailable_before_output_retries_once_and_reports_partial_usage",
+        "class": "tests.model.test_pydantic_conversation_model"
+      },
+      {
+        "name": "test_unavailable_after_visible_text_is_not_retried",
+        "class": "tests.model.test_pydantic_conversation_model"
+      },
+      {
+        "name": "test_unavailable_after_tool_call_start_is_not_retried",
+        "class": "tests.model.test_pydantic_conversation_model"
+      },
+      {
+        "name": "test_second_pre_output_unavailable_is_not_retried_again",
+        "class": "tests.model.test_pydantic_conversation_model"
+      },
+      {
+        "name": "test_non_transient_or_unknown_failure_is_never_retried[failure0]",
+        "class": "tests.model.test_pydantic_conversation_model"
+      },
+      {
+        "name": "test_non_transient_or_unknown_failure_is_never_retried[failure1]",
+        "class": "tests.model.test_pydantic_conversation_model"
+      },
+      {
+        "name": "test_non_transient_or_unknown_failure_is_never_retried[failure2]",
+        "class": "tests.model.test_pydantic_conversation_model"
+      },
+      {
+        "name": "test_non_transient_or_unknown_failure_is_never_retried[failure3]",
+        "class": "tests.model.test_pydantic_conversation_model"
+      },
+      {
+        "name": "test_non_transient_or_unknown_failure_is_never_retried[failure4]",
+        "class": "tests.model.test_pydantic_conversation_model"
+      },
+      {
+        "name": "test_non_transient_or_unknown_failure_is_never_retried[failure5]",
+        "class": "tests.model.test_pydantic_conversation_model"
+      },
+      {
+        "name": "test_non_transient_or_unknown_failure_is_never_retried[failure6]",
+        "class": "tests.model.test_pydantic_conversation_model"
+      },
+      {
+        "name": "test_retry_attempts_share_one_absolute_phase_deadline",
+        "class": "tests.model.test_pydantic_conversation_model"
+      },
+      {
+        "name": "test_real_provider_seam_streams_and_matches_raw_usage_without_network",
+        "class": "tests.model.test_pydantic_conversation_model"
+      },
+      {
+        "name": "test_real_provider_retry_rotates_credentials_and_keeps_only_known_usage",
+        "class": "tests.model.test_pydantic_conversation_model"
+      },
+      {
+        "name": "test_real_provider_seam_rejects_raw_usage_mismatch_without_network",
+        "class": "tests.model.test_pydantic_conversation_model"
+      },
+      {
+        "name": "test_oversized_prompt_is_rejected_before_model_credentials_or_network",
+        "class": "tests.model.test_pydantic_conversation_model"
+      },
+      {
+        "name": "test_rejected_status_tracks_only_the_access_token_used_by_the_401_phase",
+        "class": "tests.model.test_pydantic_conversation_model"
+      },
+      {
+        "name": "test_completed_tool_can_choose_next_tool_and_preserve_all_receipts",
+        "class": "tests.model.test_pydantic_conversation_model"
+      },
+      {
+        "name": "test_prior_tool_results_are_included_in_input_budget_before_provider_call",
+        "class": "tests.model.test_pydantic_conversation_model"
+      },
+      {
+        "name": "test_duplicate_history_call_ids_are_rejected_before_provider_call",
+        "class": "tests.model.test_pydantic_conversation_model"
+      },
+      {
+        "name": "test_action_tool_catalog_remains_canonically_byte_equal",
+        "class": "tests.model.test_conversation_model"
+      },
+      {
+        "name": "test_external_provider_catalog_needs_no_model_specific_code",
+        "class": "tests.model.test_conversation_model"
+      },
+      {
+        "name": "test_bound_photo_correction_uses_closed_action_without_face_inference",
+        "class": "tests.model.test_conversation_model"
+      },
+      {
+        "name": "test_validated_file_edit_is_a_closed_model_action",
+        "class": "tests.model.test_conversation_model"
+      },
+      {
+        "name": "test_tool_free_text_generation_rejects_empty_inputs[-valid]",
+        "class": "tests.model.test_conversation_model"
+      },
+      {
+        "name": "test_tool_free_text_generation_rejects_empty_inputs[valid-]",
+        "class": "tests.model.test_conversation_model"
+      },
+      {
+        "name": "test_repository_improvement_is_self_chosen_from_a_bounded_snapshot",
+        "class": "tests.model.test_conversation_model"
+      },
+      {
+        "name": "test_runtime_budget_rejects_oversized_input_before_auth_or_network",
+        "class": "tests.model.test_conversation_model"
+      },
+      {
+        "name": "test_long_conversation_selects_recent_complete_context_before_model_call[0-False]",
+        "class": "tests.model.test_conversation_model"
+      },
+      {
+        "name": "test_long_conversation_selects_recent_complete_context_before_model_call[0-True]",
+        "class": "tests.model.test_conversation_model"
+      },
+      {
+        "name": "test_long_conversation_selects_recent_complete_context_before_model_call[3-False]",
+        "class": "tests.model.test_conversation_model"
+      },
+      {
+        "name": "test_long_conversation_selects_recent_complete_context_before_model_call[3-True]",
+        "class": "tests.model.test_conversation_model"
+      },
+      {
+        "name": "test_context_selection_never_discards_required_content_to_admit_request[current_question]",
+        "class": "tests.model.test_conversation_model"
+      },
+      {
+        "name": "test_context_selection_never_discards_required_content_to_admit_request[latest_exchange]",
+        "class": "tests.model.test_conversation_model"
+      },
+      {
+        "name": "test_context_selection_never_discards_required_content_to_admit_request[receipt]",
+        "class": "tests.model.test_conversation_model"
+      },
+      {
+        "name": "test_runtime_budget_admits_only_the_exact_deferred_catalog",
+        "class": "tests.model.test_conversation_model"
+      },
+      {
+        "name": "test_runtime_budget_blocks_unknown_autonomous_spend_before_network",
+        "class": "tests.model.test_conversation_model"
+      },
+      {
+        "name": "test_existing_subscription_allows_autonomy_without_extra_daily_cap",
+        "class": "tests.model.test_conversation_model"
+      },
+      {
+        "name": "test_subscription_admission_does_not_authorize_other_endpoints[https://api.openai.com/v1/responses]",
+        "class": "tests.model.test_conversation_model"
+      },
+      {
+        "name": "test_subscription_admission_does_not_authorize_other_endpoints[https://chatgpt.com.example.invalid/backend-api/codex/responses]",
+        "class": "tests.model.test_conversation_model"
+      },
+      {
+        "name": "test_subscription_admission_does_not_authorize_other_endpoints[https://chatgpt.com/backend-api/codex/responses?billing=api]",
+        "class": "tests.model.test_conversation_model"
+      },
+      {
+        "name": "test_subscription_admission_does_not_authorize_other_endpoints[http://chatgpt.com/backend-api/codex/responses]",
+        "class": "tests.model.test_conversation_model"
+      },
+      {
+        "name": "test_subscription_autonomy_still_requires_valid_bounded_usage[event: response.output_text.delta\\ndata: {\"type\":\"response.output_text.delta\",\"delta\":\"Binnen grens.\"}\\n\\nevent: response.completed\\ndata: {\"response\":{\"error\":null,\"status\":\"completed\",\"usage\":null},\"type\":\"response.completed\"}\\n\\ndata: [DONE]\\n\\n]",
+        "class": "tests.model.test_conversation_model"
+      },
+      {
+        "name": "test_subscription_autonomy_still_requires_valid_bounded_usage[event: response.output_text.delta\\ndata: {\"type\":\"response.output_text.delta\",\"delta\":\"Binnen grens.\"}\\n\\nevent: response.completed\\ndata: {\"response\":{\"error\":null,\"status\":\"completed\",\"usage\":{\"input_tokens\":100,\"output_tokens\":1201,\"total_tokens\":1301}},\"type\":\"response.completed\"}\\n\\ndata: [DONE]\\n\\n]",
+        "class": "tests.model.test_conversation_model"
+      },
+      {
+        "name": "test_subscription_autonomy_does_not_retry_provider_limit_or_missing_auth",
+        "class": "tests.model.test_conversation_model"
+      },
+      {
+        "name": "test_direct_model_receives_recalled_memories_without_reflection",
+        "class": "tests.model.test_conversation_model"
+      },
+      {
+        "name": "test_direct_model_projects_configured_identity_without_fixed_eva_name",
+        "class": "tests.model.test_conversation_model"
+      },
+      {
+        "name": "test_recent_durable_conversation_is_not_denied_as_missing_memory",
+        "class": "tests.model.test_conversation_model"
+      },
+      {
+        "name": "test_document_work_action_is_model_chosen_but_episode_bound",
+        "class": "tests.model.test_conversation_model"
+      },
+      {
+        "name": "test_dynamic_selection_uses_one_pydantic_deferred_tool_catalog",
+        "class": "tests.model.test_conversation_model"
+      },
+      {
+        "name": "test_dynamic_catalog_defers_memory_and_available_actions",
+        "class": "tests.model.test_conversation_model"
+      },
+      {
+        "name": "test_full_dynamic_conversation_offers_exact_pydantic_deferred_catalog",
+        "class": "tests.model.test_conversation_model"
+      },
+      {
+        "name": "test_model_reports_an_expired_access_lease_without_provider_call",
+        "class": "tests.model.test_conversation_model"
+      },
+      {
+        "name": "test_model_rejects_a_full_refresh_authority_file",
+        "class": "tests.model.test_conversation_model"
+      },
+      {
+        "name": "test_provider_rejection_latches_until_the_access_lease_rotates",
+        "class": "tests.model.test_conversation_model"
+      },
+      {
+        "name": "test_stream_read_timeout_is_a_bounded_provider_error",
+        "class": "tests.model.test_conversation_model"
+      },
+      {
+        "name": "test_model_can_choose_a_verified_switch_without_treating_it_as_a_light",
+        "class": "tests.model.test_conversation_model"
+      },
+      {
+        "name": "test_model_can_choose_bounded_home_assistant_history_read",
+        "class": "tests.model.test_conversation_model"
+      },
+      {
+        "name": "test_model_can_choose_current_home_assistant_state_read",
+        "class": "tests.model.test_conversation_model"
+      },
+      {
+        "name": "test_dutch_identity_retries_an_accidental_foreign_script",
+        "class": "tests.model.test_conversation_model"
+      },
+      {
+        "name": "test_model_action_roundtrip_uses_durable_receipt_before_visible_text",
+        "class": "tests.model.test_conversation_model"
+      },
+      {
+        "name": "test_passive_house_event_retains_provider_usage_with_bounded_decision[missing-False]",
+        "class": "tests.model.test_conversation_model"
+      },
+      {
+        "name": "test_passive_house_event_retains_provider_usage_with_bounded_decision[missing-True]",
+        "class": "tests.model.test_conversation_model"
+      },
+      {
+        "name": "test_passive_house_event_retains_provider_usage_with_bounded_decision[invalid-False]",
+        "class": "tests.model.test_conversation_model"
+      },
+      {
+        "name": "test_passive_house_event_retains_provider_usage_with_bounded_decision[invalid-True]",
+        "class": "tests.model.test_conversation_model"
+      },
+      {
+        "name": "test_passive_house_event_retains_provider_usage_with_bounded_decision[valid-False]",
+        "class": "tests.model.test_conversation_model"
+      },
+      {
+        "name": "test_passive_house_event_retains_provider_usage_with_bounded_decision[valid-True]",
+        "class": "tests.model.test_conversation_model"
+      },
+      {
+        "name": "test_explicit_automation_request_uses_exact_bounded_action",
+        "class": "tests.model.test_conversation_model"
+      },
+      {
+        "name": "test_natural_if_then_request_does_not_require_the_word_automation",
+        "class": "tests.model.test_conversation_model"
+      },
+      {
+        "name": "test_explicit_multistep_automation_uses_advanced_action",
+        "class": "tests.model.test_conversation_model"
+      },
+      {
+        "name": "test_verified_automation_receipt_is_evidence_not_a_robotic_reply_template",
+        "class": "tests.model.test_conversation_model"
+      },
+      {
+        "name": "test_full_tuya_request_selects_read_only_advanced_plan_first",
+        "class": "tests.model.test_conversation_model"
+      },
+      {
+        "name": "test_tuya_receipt_is_factual_input_not_a_robotic_script",
+        "class": "tests.model.test_conversation_model"
+      },
+      {
+        "name": "test_explicit_followup_can_select_exact_localtuya_package_install",
+        "class": "tests.model.test_conversation_model"
+      },
+      {
+        "name": "test_explicit_followup_can_register_only_exact_localtuya_repository",
+        "class": "tests.model.test_conversation_model"
+      },
+      {
+        "name": "test_explicit_fanout_request_selects_one_multi_recipient_action",
+        "class": "tests.model.test_conversation_model"
+      },
+      {
+        "name": "test_fanout_receipt_keeps_provider_acceptance_distinct_from_human_receipt",
+        "class": "tests.model.test_conversation_model"
+      },
+      {
+        "name": "test_future_condition_selects_bounded_durable_goal_action",
+        "class": "tests.model.test_conversation_model"
+      },
+      {
+        "name": "test_durable_goal_receipt_does_not_claim_work_already_finished",
+        "class": "tests.model.test_conversation_model"
+      },
+      {
+        "name": "test_model_builds_complete_download_instead_of_another_plan",
+        "class": "tests.model.test_conversation_model"
+      },
+      {
+        "name": "test_model_listing_cannot_claim_unproven_sales_or_product_features",
+        "class": "tests.model.test_conversation_model"
+      },
+      {
+        "name": "test_web_research_uses_built_in_search_and_requires_cited_sources",
+        "class": "tests.model.test_conversation_model"
+      },
+      {
+        "name": "test_web_research_sse_parser_preserves_clickable_citations",
+        "class": "tests.model.test_conversation_model"
+      }
+    ]
+  },
+  "proven": [
+    "Runtime holds a message-scoped PostgreSQL advisory lock around admission, committed-answer replay, conversation and reply commit.",
+    "Second runtime cannot start a model run for the same in-flight message; replay after commit does not call the model.",
+    "Runtime passes current scope/group-consent validation into conversation checkpoints and checks before reply commit.",
+    "Shared PostgreSQL session lock uses an independent recreated pool in AUTOCOMMIT and disposes it after work.",
+    "Single-connection work pool supports runtime execution and concurrent retry rejection without pool starvation.",
+    "Pydantic plus PostgreSQL two-step crash/replay fixture now executes through runtime and journal."
+  ],
+  "independentReview": {
+    "agent": "/root/co006_review",
+    "initialFinding": "Lock sessions consumed work-pool capacity, causing QueuePool timeout with pool_size=1,max_overflow=0.",
+    "baselinePath": "/tmp/eva2-tl001/pool-baseline.txt",
+    "resolution": "Independent pool preserving configured connection factory; AUTOCOMMIT and finally disposal.",
+    "result": "GO for pool-blockade repair and bounded runtime coupling. Not full TL-001 or live GO.",
+    "reviewedScopeSha256": "b48ec5abf4d75e55f714a539e6bb036e8bcd444124b038a1af7ed58365b8636c",
+    "tests": "Root executed tests; reviewer inspected code/tests/baseline, did not repeat suite."
+  },
+  "remaining": [
+    "Wire a durable owner stop for ordinary conversation tool chains; consent revocation is not a personal stop button.",
+    "Record model usage across failed/crashed attempts, including honest uncertain consumption.",
+    "Bound continuing execution through approved controls without inventing a subscription day cap.",
+    "Physical model/tool acceptance, complete independent review and safe candidate release."
+  ],
+  "limits": [
+    "Model/provider outputs in integration probes are deterministic fixtures.",
+    "Losing the PostgreSQL session during an external effect still requires provider idempotency/readback.",
+    "Independent lock sessions consume database capacity; this change does not prove arbitrary concurrency."
+  ],
+  "live": false,
+  "humanAccepted": false,
+  "integrationBinding": {
+    "baseCommit": "3117d1a14b8fa40102ec28cdd60894deb1616e7b",
+    "integratedImplementationCommit": "95053b7305b3bb4f408c7132da15f833e861d8ea",
+    "testedAndDeployedSourceCommit": "8297f7d07aefd1e41c5ba9d94c01b745b54afc04",
+    "identicalTree": "b2a0f019ad407ecb8adb7f806cb796b0470d48e8",
+    "preservedPendingApiChanges": true,
+    "imageWasNotRebuiltForIntegrationCommit": true
+  }
+}

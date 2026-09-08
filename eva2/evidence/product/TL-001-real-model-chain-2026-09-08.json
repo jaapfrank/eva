@@ -1,0 +1,2581 @@
+{
+  "contract": "EvaDevelopmentEvidence/v1",
+  "taskId": "TL-001",
+  "stage": "real-model-unknown-tool-chain",
+  "createdAt": "2026-09-08T08:47:01.541835+00:00",
+  "built": true,
+  "tested": true,
+  "live": false,
+  "humanAccepted": false,
+  "result": "Three predeclared corrected-fixture trials passed; first invalid-fixture trial retained as failed.",
+  "runs": [
+    {
+      "runner": "from pathlib import Path\nimport json, hashlib, secrets, time\nfrom datetime import datetime, UTC\nfrom alembic.config import Config\nfrom alembic import command\nimport sqlalchemy as sa\nfrom tests.postgres.test_operational_timeline import _upgrade\nfrom eva.adapters.model.pydantic_conversation import PydanticConversationModel\nfrom eva.adapters.postgres.conversation_actions import PostgresConversationActions\nfrom eva.adapters.postgres.external_conversation_tools import PostgresExternalConversationTools\nfrom eva.adapters.postgres.conversation_journal import PostgresConversationJournal\nfrom eva.adapters.postgres.operational_timeline import external_timeline_scope\nfrom eva.application.conversation import (LivingConversation, IdentityProfile, ConversationTurn,\n ConversationToolDescriptor, ConversationToolPreparation)\nfrom eva.application.memory import PresenceMemory\nfrom eva.contracts.memory import MemoryRecall\nfrom eva.contracts.canonical_json import canonical_sha256\nfrom eva.application.orchestration import ToolDispatchResult, ToolProofObservation\nfrom eva.bootstrap.runtime import PostgresHindsightMemoryRuntime\n\nROOT=Path('/tmp/eva2-tl001/real-model')\nROOT.mkdir(exist_ok=True)\nDSN='postgresql+psycopg://postgres@/eva2_living_disposable_tl001_real_20260908?host=/tmp/eva2-co006-memory.JxnTze/pgsocket'\nengine=sa.create_engine(DSN)\nconfig=Config('alembic.ini');config.set_main_option('sqlalchemy.url',DSN)\n_upgrade(engine,config)\nclass Memory:\n def recall_for_presence(self,q):\n  return PresenceMemory(MemoryRecall(schema_version=1,contract='MemoryRecall/v1',\n   recall_id=q.recall_id,query_purpose=q.query_purpose,tenant_id=q.tenant_id,\n   principal_id=q.principal_id,conversation_id=q.conversation_id,project_id=q.project_id,\n   requested_valid_at=q.requested_valid_at,admitted_fact_ids_sha256=canonical_sha256([]),\n   selected=[],excluded_reasons={},projection_version='probe',\n   scope_sha256=canonical_sha256(q.scope),created_at=q.requested_valid_at),())\nreports=[]\ntry:\n for index in range(3):\n  node='kast_'+secrets.token_hex(5); answer='gezinscode-'+secrets.token_hex(7)\n  name='lees_document_'+secrets.token_hex(4)\n  directory=ROOT/str(index);directory.mkdir()\n  documents={'start':{'volgend_document':node},node:{'gezochte_code':answer}}\n  for key,value in documents.items():\n   (directory/(key+'.json')).write_text(json.dumps(value))\n  descriptor=ConversationToolDescriptor(name=name,\n   description='Lees een lokaal testdocument op sleutel. Begin bij start. Een document kan met volgend_document verwijzen naar een ander document. De inhoud komt onder document terug.',\n   input_schema={'type':'object','properties':{'sleutel':{'type':'string'}},'required':['sleutel'],'additionalProperties':False})\n  calls=[]; observations=[]\n  class Planner:\n   action_names=(name,)\n   async def prepare(self,turn,call):\n    assert set(call.arguments)=={'sleutel'}\n    key=call.arguments['sleutel']\n    if key not in documents: raise ValueError('unknown document')\n    return ConversationToolPreparation(tool_name='probe.read_document',arguments={'sleutel':key},\n     expected_proof={'sleutel':key},receipt_output={},observation_output_key='document')\n  class Provider:\n   async def execute(self,request):\n    key=request.arguments['sleutel']; json.loads((directory/(key+'.json')).read_text())\n    calls.append({'key':key,'operation_id':request.operation_id})\n    return ToolDispatchResult(True,request.operation_id,{})\n   async def observe(self,request,dispatch):\n    key=request.arguments['sleutel']; path=directory/(key+'.json')\n    raw=path.read_bytes(); observations.append({'key':key,'sha256':hashlib.sha256(raw).hexdigest()})\n    return ToolProofObservation('verified',{'sleutel':key,**json.loads(raw)},\n     {'source':str(path),'sha256':hashlib.sha256(raw).hexdigest()})\n  model=PydanticConversationModel(auth_file=Path('/var/lib/eva2/managed-b-slot3/model-access-lease/auth.json'),\n   conversation_tools=(descriptor,),timeout_seconds=60)\n  external=PostgresExternalConversationTools(engine,Planner(),Provider())\n  runtime=object.__new__(PostgresHindsightMemoryRuntime)\n  runtime._engine=engine;runtime._runtime_tenant_id='tl001-real';runtime._runtime_installation_id='probe'\n  runtime._conversation=LivingConversation(Memory(),model,\n   IdentityProfile('Eva','Warme en praktische digitale huisgenoot.',('Gebruik toolresultaten als bewijs.',),80),\n   PostgresConversationActions(engine,external_tools=(external,)))\n  turn=ConversationTurn.private('tl001-real','probe','test-owner','probe-chat',f'probe:{index}',\n   'Zoek de gezochte code met de beschikbare documenttool. Begin bij start en volg de verwijzing. Geef de code exact terug.',\n   datetime.now(UTC).replace(microsecond=0).isoformat().replace('+00:00','Z'))\n  before=time.monotonic()\n  try:\n   reply=runtime.respond(turn)\n   elapsed=time.monotonic()-before\n   independent=json.loads((directory/(node+'.json')).read_text())['gezochte_code']\n   prior=list(calls)\n   replay=runtime.respond(turn)\n   passed=(independent in reply.text and [x['key'] for x in calls]==['start',node]\n     and replay==reply and calls==prior)\n   record={'trial':index,'passed':passed,'toolName':name,'reply':reply.text,'usage':reply.model_usage.to_wire(),\n    'seconds':elapsed,'calls':calls,'observations':observations,'expectedAnswer':independent,'replayEqual':replay==reply}\n  except Exception as error:\n   record={'trial':index,'passed':False,'errorType':type(error).__name__,\n    'error':str(error),'calls':calls,'observations':observations}\n  reports.append(record)\n  (ROOT/'results.json').write_text(json.dumps(reports,indent=2))\n  print(json.dumps(record),flush=True)\n  if not record['passed']: break\nfinally:\n engine.dispose()\n",
+      "runnerSha256": "9f7f3ee807080eacd937fdc48ccebf7b9c150a54d278a8a4e0cf7552225f9bbe",
+      "plan": {
+        "trials": 3,
+        "passCriteria": [
+          "New random tool name and document references per trial; answer absent from prompt and descriptor.",
+          "Exactly two dependent document reads: start then observed reference.",
+          "Final answer contains exact independently read answer.",
+          "Committed reply replay equals first reply and adds no tool execution."
+        ],
+        "model": "gpt-5.4-mini via existing subscription lease",
+        "scope": "Real model; local read-only fixture connector; no family data or external side effects.",
+        "limits": [
+          "Not proof of arbitrary skill learning or competitor superiority.",
+          "No live deployment claim."
+        ],
+        "runnerSha256": "9f7f3ee807080eacd937fdc48ccebf7b9c150a54d278a8a4e0cf7552225f9bbe"
+      },
+      "results": [
+        {
+          "trial": 0,
+          "passed": false,
+          "errorType": "ConversationModelError",
+          "error": "conversation provider deadline exceeded",
+          "calls": [
+            {
+              "key": "start",
+              "operation_id": "external-tool:5d57578c1e1fe89853083e1319124f54"
+            }
+          ],
+          "observations": [
+            {
+              "key": "start",
+              "sha256": "a5268c769f5e0a2fd4db922f79a57afe97fabfb7eaa56acab4feef5e6d54d0d7"
+            }
+          ]
+        }
+      ],
+      "files": {
+        "0/kast_7e686f0e28.json": {
+          "sha256": "a0065695e850db135a672bd29977410008cfa15eb5e7c250d57460e125cf9e56",
+          "contents": {
+            "gezochte_code": "gezinscode-b71cabe72d1f20"
+          }
+        },
+        "0/start.json": {
+          "sha256": "a5268c769f5e0a2fd4db922f79a57afe97fabfb7eaa56acab4feef5e6d54d0d7",
+          "contents": {
+            "volgend_document": "kast_7e686f0e28"
+          }
+        }
+      },
+      "operationalEvents": [
+        {
+          "tenant_id": "70b97082-b18b-5b63-9c1e-90d27350e17f",
+          "installation_id": "4f75e11d-8686-5e56-a8ac-fcf7f712476b",
+          "event_id": "c3abf5e3-ac23-4e65-9d58-9869bf3a4dc8",
+          "thread_id": "conversation:probe:0",
+          "sequence": 1,
+          "checkpoint_id": "conversation:probe:0:ingress",
+          "operation_id": null,
+          "event_type": "INGRESS_COMMITTED",
+          "payload": {
+            "data": {
+              "kind": "conversation_ingress",
+              "text": "Zoek de gezochte code met de beschikbare documenttool. Begin bij start en volg de verwijzing. Geef de code exact terug.",
+              "message_id": "probe:0",
+              "principal_id": "test-owner",
+              "conversation_id": "probe-chat"
+            },
+            "checkpoint": {
+              "phase": "admitted",
+              "status": "active",
+              "deadline": null,
+              "revision": 1,
+              "updated_at": "2026-09-08T08:44:34Z",
+              "retry_count": 0,
+              "operation_id": null,
+              "checkpoint_id": "conversation:probe:0:ingress",
+              "last_error_fingerprint": null
+            }
+          },
+          "payload_sha256": "b'\\xa6\\xbb\\xfd\\x9f\\\\\\x86{\\x90IA\\xab\\x8a\\x7f\\xfeU\\x84n\\x13\\x9f\\xb2A\\x89\\x1d\\x04\\xccl\\x8b\\x13R\\xe7\\xc4\\xc9'",
+          "occurred_at": "2026-09-08 08:44:34+00:00"
+        },
+        {
+          "tenant_id": "70b97082-b18b-5b63-9c1e-90d27350e17f",
+          "installation_id": "4f75e11d-8686-5e56-a8ac-fcf7f712476b",
+          "event_id": "19522151-488f-4f58-b67b-a05c25c39039",
+          "thread_id": "conversation-model:bc714dff-15f7-42db-a52f-66bdcc5c7fbd",
+          "sequence": 1,
+          "checkpoint_id": "conversation-model:bc714dff-15f7-42db-a52f-66bdcc5c7fbd:admitted",
+          "operation_id": null,
+          "event_type": "CONVERSATION_MODEL_ADMITTED",
+          "payload": {
+            "data": {
+              "message_id": "probe:0",
+              "request_id": "bc714dff-15f7-42db-a52f-66bdcc5c7fbd",
+              "principal_id": "test-owner",
+              "conversation_id": "probe-chat"
+            },
+            "checkpoint": {
+              "phase": "model_admitted",
+              "status": "active",
+              "deadline": null,
+              "revision": 1,
+              "updated_at": "2026-09-08T08:44:35Z",
+              "retry_count": 0,
+              "operation_id": null,
+              "checkpoint_id": "conversation-model:bc714dff-15f7-42db-a52f-66bdcc5c7fbd:admitted",
+              "last_error_fingerprint": null
+            }
+          },
+          "payload_sha256": "b'+b\\xb5\\xb9\\xba\\xdbf\\xd8\\xa9d\\x84cD2\\xa2An\\x9cF\\x10Z\\xc3\\xa5\\x7f\\xb1\\xc1\\x0f \\xbb+U\\x07'",
+          "occurred_at": "2026-09-08 08:44:35+00:00"
+        },
+        {
+          "tenant_id": "70b97082-b18b-5b63-9c1e-90d27350e17f",
+          "installation_id": "4f75e11d-8686-5e56-a8ac-fcf7f712476b",
+          "event_id": "2699ffd9-0d82-4d6a-a770-9228de57fce6",
+          "thread_id": "conversation-model:bc714dff-15f7-42db-a52f-66bdcc5c7fbd",
+          "sequence": 2,
+          "checkpoint_id": "conversation-model:bc714dff-15f7-42db-a52f-66bdcc5c7fbd:recorded",
+          "operation_id": null,
+          "event_type": "CONVERSATION_MODEL_RECORDED",
+          "payload": {
+            "data": {
+              "usage": {
+                "tool_calls": 1,
+                "measurement": "measured",
+                "input_tokens": 1674,
+                "output_tokens": 90,
+                "model_attempts": 1
+              },
+              "message_id": "probe:0",
+              "request_id": "bc714dff-15f7-42db-a52f-66bdcc5c7fbd",
+              "principal_id": "test-owner",
+              "conversation_id": "probe-chat"
+            },
+            "checkpoint": {
+              "phase": "model_recorded",
+              "status": "completed",
+              "deadline": null,
+              "revision": 2,
+              "updated_at": "2026-09-08T08:44:39Z",
+              "retry_count": 0,
+              "operation_id": null,
+              "checkpoint_id": "conversation-model:bc714dff-15f7-42db-a52f-66bdcc5c7fbd:recorded",
+              "last_error_fingerprint": null
+            }
+          },
+          "payload_sha256": "b'\\xdcg\\xaf\\x82w\\x81\\x1fg\\xf4\\x9a\\x8c\\xe5\\xe5\\x02k\\xcf\\x84\\x0bGY\\xe2\\x8b!\\xae\\xeb\\x10\\x11\\x03`$Fe'",
+          "occurred_at": "2026-09-08 08:44:39+00:00"
+        },
+        {
+          "tenant_id": "70b97082-b18b-5b63-9c1e-90d27350e17f",
+          "installation_id": "4f75e11d-8686-5e56-a8ac-fcf7f712476b",
+          "event_id": "682449eb-904d-4ee8-a726-1f02eff7dff6",
+          "thread_id": "tool:external-tool:5d57578c1e1fe89853083e1319124f54",
+          "sequence": 1,
+          "checkpoint_id": "checkpoint:external-tool:5d57578c1e1fe89853083e1319124f54:admitted",
+          "operation_id": "external-tool:5d57578c1e1fe89853083e1319124f54",
+          "event_type": "TOOL_REQUEST_ADMITTED",
+          "payload": {
+            "data": {
+              "action_name": "lees_document_0088f243",
+              "principal_id": "test-owner",
+              "action_call_id": "call_y5HnS9hhDun7HJtU0lhpwSjZ",
+              "receipt_output": {},
+              "conversation_id": "probe-chat",
+              "action_arguments": {
+                "sleutel": "start"
+              },
+              "request_arguments": {
+                "sleutel": "start"
+              },
+              "request_tool_name": "probe.read_document",
+              "source_message_id": "probe:0",
+              "observation_output_key": "document",
+              "request_expected_proof": {
+                "sleutel": "start"
+              },
+              "request_execution_timeout_seconds": 10,
+              "request_verification_timeout_seconds": 10
+            },
+            "checkpoint": {
+              "phase": "admitted",
+              "status": "active",
+              "deadline": null,
+              "revision": 1,
+              "updated_at": "2026-09-08T08:44:34Z",
+              "retry_count": 0,
+              "operation_id": "external-tool:5d57578c1e1fe89853083e1319124f54",
+              "checkpoint_id": "checkpoint:external-tool:5d57578c1e1fe89853083e1319124f54:admitted",
+              "last_error_fingerprint": null
+            }
+          },
+          "payload_sha256": "b'l\\xf17~\\xb3\\x12\\xf1~\\xf1\\x03\\x808o\\xf1R\\x08m\\xa7/\\x0bSG>\\x9e2R\\xc0\\xa1s\\x030}'",
+          "occurred_at": "2026-09-08 08:44:34+00:00"
+        },
+        {
+          "tenant_id": "70b97082-b18b-5b63-9c1e-90d27350e17f",
+          "installation_id": "4f75e11d-8686-5e56-a8ac-fcf7f712476b",
+          "event_id": "7da66d89-87b2-4960-b1b4-6294d3fbd5a1",
+          "thread_id": "tool:external-tool:5d57578c1e1fe89853083e1319124f54",
+          "sequence": 2,
+          "checkpoint_id": "checkpoint:external-tool:5d57578c1e1fe89853083e1319124f54:prepared",
+          "operation_id": "external-tool:5d57578c1e1fe89853083e1319124f54",
+          "event_type": "TOOL_PREPARED",
+          "payload": {
+            "data": {
+              "arguments": {
+                "sleutel": "start"
+              },
+              "tool_name": "probe.read_document",
+              "expected_proof": {
+                "sleutel": "start"
+              }
+            },
+            "checkpoint": {
+              "phase": "tool_prepared",
+              "status": "waiting_for_proof",
+              "deadline": "2026-09-08T08:44:59Z",
+              "revision": 2,
+              "updated_at": "2026-09-08T08:44:39Z",
+              "retry_count": 0,
+              "operation_id": "external-tool:5d57578c1e1fe89853083e1319124f54",
+              "checkpoint_id": "checkpoint:external-tool:5d57578c1e1fe89853083e1319124f54:prepared",
+              "last_error_fingerprint": null
+            }
+          },
+          "payload_sha256": "b'\\n\\xa8Wu\\xb2\\xda\\xdc\\x9e\\x85\\x11j[\\xe6\\xa4F\\x0fR\\xa3U\\xab-\\xfe\\x18\\x9b\\xcb\\x9c1\\x82 \\x11\\x9b\\x18'",
+          "occurred_at": "2026-09-08 08:44:39+00:00"
+        },
+        {
+          "tenant_id": "70b97082-b18b-5b63-9c1e-90d27350e17f",
+          "installation_id": "4f75e11d-8686-5e56-a8ac-fcf7f712476b",
+          "event_id": "406cf0b9-bbde-442b-87f8-c33f00b6e283",
+          "thread_id": "conversation-dispatch:ef54f120b81a9f7ac9ff32bef6e2ff7664696a05e61f6504a7188f49f0c0bc0f",
+          "sequence": 1,
+          "checkpoint_id": "conversation-dispatch:ef54f120b81a9f7ac9ff32bef6e2ff7664696a05e61f6504a7188f49f0c0bc0f:admitted",
+          "operation_id": null,
+          "event_type": "CONVERSATION_DISPATCH_ADMITTED",
+          "payload": {
+            "data": {
+              "message_id": "probe:0",
+              "operation_id": "external-tool:5d57578c1e1fe89853083e1319124f54",
+              "principal_id": "test-owner",
+              "conversation_id": "probe-chat"
+            },
+            "checkpoint": {
+              "phase": "dispatch_admitted",
+              "status": "completed",
+              "deadline": null,
+              "revision": 1,
+              "updated_at": "2026-09-08T08:44:39Z",
+              "retry_count": 0,
+              "operation_id": null,
+              "checkpoint_id": "conversation-dispatch:ef54f120b81a9f7ac9ff32bef6e2ff7664696a05e61f6504a7188f49f0c0bc0f:admitted",
+              "last_error_fingerprint": null
+            }
+          },
+          "payload_sha256": "b\"\\x99\\xfb\\xa5O\\xc5~\\xf6\\xff?\\xf5Czn\\xf9\\xdf\\xd80\\xf7l,\\x0bq\\x02+I\\xa6\\x86\\xab\\xeb'(>\"",
+          "occurred_at": "2026-09-08 08:44:39+00:00"
+        },
+        {
+          "tenant_id": "70b97082-b18b-5b63-9c1e-90d27350e17f",
+          "installation_id": "4f75e11d-8686-5e56-a8ac-fcf7f712476b",
+          "event_id": "7cc67ed1-55de-4f21-9766-119c0d55768f",
+          "thread_id": "tool:external-tool:5d57578c1e1fe89853083e1319124f54",
+          "sequence": 3,
+          "checkpoint_id": "checkpoint:external-tool:5d57578c1e1fe89853083e1319124f54:executed",
+          "operation_id": "external-tool:5d57578c1e1fe89853083e1319124f54",
+          "event_type": "TOOL_EXECUTED",
+          "payload": {
+            "data": {
+              "dispatch": {
+                "details": {},
+                "accepted": true,
+                "provider_ref": "external-tool:5d57578c1e1fe89853083e1319124f54"
+              }
+            },
+            "checkpoint": {
+              "phase": "tool_executed",
+              "status": "waiting_for_proof",
+              "deadline": "2026-09-08T08:44:59Z",
+              "revision": 3,
+              "updated_at": "2026-09-08T08:44:39Z",
+              "retry_count": 0,
+              "operation_id": "external-tool:5d57578c1e1fe89853083e1319124f54",
+              "checkpoint_id": "checkpoint:external-tool:5d57578c1e1fe89853083e1319124f54:executed",
+              "last_error_fingerprint": null
+            }
+          },
+          "payload_sha256": "b'\\xd86\\xa6\\xf7\\x04\\xbc\\x00\\xa8\\xae\\xa4[\\xa2\\x88\\x1a\\xfb9I\\x94.\\x0f\\xb6\\x89\\x96\\x7f\\xa7;S\\xe2\\xfa\\\\\\x02\\x8e'",
+          "occurred_at": "2026-09-08 08:44:39+00:00"
+        },
+        {
+          "tenant_id": "70b97082-b18b-5b63-9c1e-90d27350e17f",
+          "installation_id": "4f75e11d-8686-5e56-a8ac-fcf7f712476b",
+          "event_id": "573caa85-f56b-4f95-a4ac-d3971592e77e",
+          "thread_id": "tool:external-tool:5d57578c1e1fe89853083e1319124f54",
+          "sequence": 4,
+          "checkpoint_id": "checkpoint:external-tool:5d57578c1e1fe89853083e1319124f54:proof-mismatch",
+          "operation_id": "external-tool:5d57578c1e1fe89853083e1319124f54",
+          "event_type": "STATE_VERIFICATION_CONFLICT",
+          "payload": {
+            "data": {
+              "proof": {
+                "evidence": {
+                  "sha256": "a5268c769f5e0a2fd4db922f79a57afe97fabfb7eaa56acab4feef5e6d54d0d7",
+                  "source": "/tmp/eva2-tl001/real-model/0/start.json"
+                },
+                "expected": {
+                  "sleutel": "start"
+                },
+                "observed": {
+                  "sleutel": "start",
+                  "volgend_document": "kast_7e686f0e28"
+                }
+              }
+            },
+            "checkpoint": {
+              "phase": "verification_conflict",
+              "status": "failed",
+              "deadline": null,
+              "revision": 4,
+              "updated_at": "2026-09-08T08:44:39Z",
+              "retry_count": 0,
+              "operation_id": "external-tool:5d57578c1e1fe89853083e1319124f54",
+              "checkpoint_id": "checkpoint:external-tool:5d57578c1e1fe89853083e1319124f54:proof-mismatch",
+              "last_error_fingerprint": null
+            }
+          },
+          "payload_sha256": "b'\\xd6\\xfdn\\x0c\\xf8q8r\\x0c\\x15\\x1a|n\\xde\\xa0PC\\x1f}\\xfb\\x1b(#\\x88\\xc9<\\xdd\\xb8 \\xa0!\\xbe'",
+          "occurred_at": "2026-09-08 08:44:39+00:00"
+        },
+        {
+          "tenant_id": "70b97082-b18b-5b63-9c1e-90d27350e17f",
+          "installation_id": "4f75e11d-8686-5e56-a8ac-fcf7f712476b",
+          "event_id": "55e0bc86-6e4e-481f-a42a-ae3d9ff1ea6e",
+          "thread_id": "conversation-model:1521b294-0a48-41bf-8a33-80434d1b0a09",
+          "sequence": 1,
+          "checkpoint_id": "conversation-model:1521b294-0a48-41bf-8a33-80434d1b0a09:admitted",
+          "operation_id": null,
+          "event_type": "CONVERSATION_MODEL_ADMITTED",
+          "payload": {
+            "data": {
+              "message_id": "probe:0",
+              "request_id": "1521b294-0a48-41bf-8a33-80434d1b0a09",
+              "principal_id": "test-owner",
+              "conversation_id": "probe-chat"
+            },
+            "checkpoint": {
+              "phase": "model_admitted",
+              "status": "active",
+              "deadline": null,
+              "revision": 1,
+              "updated_at": "2026-09-08T08:44:39Z",
+              "retry_count": 0,
+              "operation_id": null,
+              "checkpoint_id": "conversation-model:1521b294-0a48-41bf-8a33-80434d1b0a09:admitted",
+              "last_error_fingerprint": null
+            }
+          },
+          "payload_sha256": "b'`\\xf2\\x14^\\xb7\\x12\\x12\\x19\\xe8\\xaet\\xe6\\xfah\\x0fp(\\xab\\x1e\\xa7\\xa1\\x87\\x9f\\x91.\\x1a\\xb67eN\\xdd\\xc6'",
+          "occurred_at": "2026-09-08 08:44:39+00:00"
+        }
+      ]
+    },
+    {
+      "runner": "from pathlib import Path\nimport json, hashlib, secrets, time\nfrom datetime import datetime, UTC\nfrom alembic.config import Config\nfrom alembic import command\nimport sqlalchemy as sa\nfrom tests.postgres.test_operational_timeline import _upgrade\nfrom eva.adapters.model.pydantic_conversation import PydanticConversationModel\nfrom eva.adapters.postgres.conversation_actions import PostgresConversationActions\nfrom eva.adapters.postgres.external_conversation_tools import PostgresExternalConversationTools\nfrom eva.adapters.postgres.conversation_journal import PostgresConversationJournal\nfrom eva.adapters.postgres.operational_timeline import external_timeline_scope\nfrom eva.application.conversation import (LivingConversation, IdentityProfile, ConversationTurn,\n ConversationToolDescriptor, ConversationToolPreparation)\nfrom eva.application.memory import PresenceMemory\nfrom eva.contracts.memory import MemoryRecall\nfrom eva.contracts.canonical_json import canonical_sha256\nfrom eva.application.orchestration import ToolDispatchResult, ToolProofObservation\nfrom eva.bootstrap.runtime import PostgresHindsightMemoryRuntime\n\nROOT=Path('/tmp/eva2-tl001/real-model-v2')\nROOT.mkdir(exist_ok=True)\nDSN='postgresql+psycopg://postgres@/eva2_living_disposable_tl001_real2_20260908?host=/tmp/eva2-co006-memory.JxnTze/pgsocket'\nengine=sa.create_engine(DSN)\nconfig=Config('alembic.ini');config.set_main_option('sqlalchemy.url',DSN)\n_upgrade(engine,config)\nclass Memory:\n def recall_for_presence(self,q):\n  return PresenceMemory(MemoryRecall(schema_version=1,contract='MemoryRecall/v1',\n   recall_id=q.recall_id,query_purpose=q.query_purpose,tenant_id=q.tenant_id,\n   principal_id=q.principal_id,conversation_id=q.conversation_id,project_id=q.project_id,\n   requested_valid_at=q.requested_valid_at,admitted_fact_ids_sha256=canonical_sha256([]),\n   selected=[],excluded_reasons={},projection_version='probe',\n   scope_sha256=canonical_sha256(q.scope),created_at=q.requested_valid_at),())\nreports=[]\ntry:\n for index in range(3):\n  node='kast_'+secrets.token_hex(5); answer='gezinscode-'+secrets.token_hex(7)\n  name='lees_document_'+secrets.token_hex(4)\n  directory=ROOT/str(index);directory.mkdir()\n  documents={'start':{'volgend_document':node},node:{'gezochte_code':answer}}\n  for key,value in documents.items():\n   (directory/(key+'.json')).write_text(json.dumps(value))\n  descriptor=ConversationToolDescriptor(name=name,\n   description='Lees een lokaal testdocument op sleutel. Begin bij start. Een document kan met volgend_document verwijzen naar een ander document. De inhoud komt onder document terug.',\n   input_schema={'type':'object','properties':{'sleutel':{'type':'string'}},'required':['sleutel'],'additionalProperties':False})\n  (directory/'trial-plan.json').write_text(json.dumps({'tool':name,'node':node,'answer':answer,'descriptor':descriptor.description}))\n  calls=[]; observations=[]\n  class Planner:\n   action_names=(name,)\n   async def prepare(self,turn,call):\n    assert set(call.arguments)=={'sleutel'}\n    key=call.arguments['sleutel']\n    if key not in documents: raise ValueError('unknown document')\n    return ConversationToolPreparation(tool_name='probe.read_document',arguments={'sleutel':key},\n     expected_proof={'sleutel':key},receipt_output={},observation_output_key='document')\n  class Provider:\n   async def execute(self,request):\n    key=request.arguments['sleutel']; json.loads((directory/(key+'.json')).read_text())\n    calls.append({'key':key,'operation_id':request.operation_id})\n    return ToolDispatchResult(True,request.operation_id,{})\n   async def observe(self,request,dispatch):\n    key=request.arguments['sleutel']; path=directory/(key+'.json')\n    raw=path.read_bytes(); observations.append({'key':key,'sha256':hashlib.sha256(raw).hexdigest()})\n    return ToolProofObservation('verified',{'sleutel':key},\n     {'source':str(path),'sha256':hashlib.sha256(raw).hexdigest(),'observation':json.loads(raw)})\n  model=PydanticConversationModel(auth_file=Path('/var/lib/eva2/managed-b-slot3/model-access-lease/auth.json'),\n   conversation_tools=(descriptor,),timeout_seconds=60)\n  external=PostgresExternalConversationTools(engine,Planner(),Provider())\n  runtime=object.__new__(PostgresHindsightMemoryRuntime)\n  runtime._engine=engine;runtime._runtime_tenant_id='tl001-real';runtime._runtime_installation_id='probe'\n  runtime._conversation=LivingConversation(Memory(),model,\n   IdentityProfile('Eva','Warme en praktische digitale huisgenoot.',('Gebruik toolresultaten als bewijs.',),80),\n   PostgresConversationActions(engine,external_tools=(external,)))\n  turn=ConversationTurn.private('tl001-real','probe','test-owner','probe-chat',f'probe:{index}',\n   'Zoek de gezochte code met de beschikbare documenttool. Begin bij start en volg de verwijzing. Geef de code exact terug.',\n   datetime.now(UTC).replace(microsecond=0).isoformat().replace('+00:00','Z'))\n  before=time.monotonic()\n  try:\n   reply=runtime.respond(turn)\n   elapsed=time.monotonic()-before\n   independent=json.loads((directory/(node+'.json')).read_text())['gezochte_code']\n   prior=list(calls)\n   replay=runtime.respond(turn)\n   passed=(independent in reply.text and [x['key'] for x in calls]==['start',node]\n     and replay==reply and calls==prior)\n   record={'trial':index,'passed':passed,'toolName':name,'reply':reply.text,'usage':reply.model_usage.to_wire(),\n    'seconds':elapsed,'calls':calls,'observations':observations,'expectedAnswer':independent,'replayEqual':replay==reply}\n  except Exception as error:\n   record={'trial':index,'passed':False,'errorType':type(error).__name__,\n    'error':str(error),'calls':calls,'observations':observations}\n  reports.append(record)\n  (ROOT/'results.json').write_text(json.dumps(reports,indent=2))\n  print(json.dumps(record),flush=True)\n  if not record['passed']: break\nfinally:\n engine.dispose()\n",
+      "runnerSha256": "6c6b3504108d8428ea3ee5f6a6df43c5d24d8efcd70a3fe7c2add75f5c4c4175",
+      "plan": {
+        "trials": 3,
+        "passCriteria": [
+          "New random tool name and document references per trial; answer absent from prompt and descriptor.",
+          "Exactly two dependent document reads: start then observed reference.",
+          "Final answer contains exact independently read answer.",
+          "Committed reply replay equals first reply and adds no tool execution."
+        ],
+        "model": "gpt-5.4-mini via existing subscription lease",
+        "scope": "Real model; local read-only fixture connector; no family data or external side effects.",
+        "limits": [
+          "Not proof of arbitrary skill learning or competitor superiority.",
+          "No live deployment claim."
+        ],
+        "runnerSha256": "6c6b3504108d8428ea3ee5f6a6df43c5d24d8efcd70a3fe7c2add75f5c4c4175",
+        "supersedes": "real-model-plan.json: invalid fixture proof/evidence contract; failed trial retained",
+        "change": "Proof key exact; document in evidence.observation as required by external conversation adapter."
+      },
+      "results": [
+        {
+          "trial": 0,
+          "passed": true,
+          "toolName": "lees_document_a9d4f902",
+          "reply": "gezinscode-f5450b338acf3a",
+          "usage": {
+            "input_tokens": 4859,
+            "measurement": "measured",
+            "model_attempts": 3,
+            "output_tokens": 275,
+            "tool_calls": 2
+          },
+          "seconds": 10.771198639995418,
+          "calls": [
+            {
+              "key": "start",
+              "operation_id": "external-tool:d310a73f59bd7f13d0d4785eb1491f2c"
+            },
+            {
+              "key": "kast_0289bee737",
+              "operation_id": "external-tool:436c58e83c96c447048b113862daeae1"
+            }
+          ],
+          "observations": [
+            {
+              "key": "start",
+              "sha256": "9d6770182aa6fb7f9f4561bbf92699a7c4d4403c7f4a164f96d3a62757b3a761"
+            },
+            {
+              "key": "kast_0289bee737",
+              "sha256": "5665e84057522dd220cc72ac22ce83e12a8014026cbf81a1fb36c70c8656eff6"
+            }
+          ],
+          "expectedAnswer": "gezinscode-f5450b338acf3a",
+          "replayEqual": true
+        },
+        {
+          "trial": 1,
+          "passed": true,
+          "toolName": "lees_document_0801d6bc",
+          "reply": "gezinscode-7d76169058372c",
+          "usage": {
+            "input_tokens": 4933,
+            "measurement": "measured",
+            "model_attempts": 3,
+            "output_tokens": 243,
+            "tool_calls": 2
+          },
+          "seconds": 9.607771313982084,
+          "calls": [
+            {
+              "key": "start",
+              "operation_id": "external-tool:79db79ecbd27395ad18a7e7bf3e2b75b"
+            },
+            {
+              "key": "kast_dd8cfb2659",
+              "operation_id": "external-tool:7f1263bd41d6293bab8abab3c8fbaa2f"
+            }
+          ],
+          "observations": [
+            {
+              "key": "start",
+              "sha256": "cbd8b801ee97ce9b0e77a6a398d5624738dd62b769798831c901f5202757f06a"
+            },
+            {
+              "key": "kast_dd8cfb2659",
+              "sha256": "3560c322ccc896c6f3b1d75fa6d16cdc33f5a67ff0eeba1cdf13492203aa1a0d"
+            }
+          ],
+          "expectedAnswer": "gezinscode-7d76169058372c",
+          "replayEqual": true
+        },
+        {
+          "trial": 2,
+          "passed": true,
+          "toolName": "lees_document_6d2a3de1",
+          "reply": "gezinscode-e1b662662dcca9",
+          "usage": {
+            "input_tokens": 5166,
+            "measurement": "measured",
+            "model_attempts": 3,
+            "output_tokens": 327,
+            "tool_calls": 2
+          },
+          "seconds": 9.855625536001753,
+          "calls": [
+            {
+              "key": "start",
+              "operation_id": "external-tool:5e6088f4291002840ca0cc125d64e91e"
+            },
+            {
+              "key": "kast_b01212d280",
+              "operation_id": "external-tool:91d0da8a3bb54e3e4f2f24929b2e0ae6"
+            }
+          ],
+          "observations": [
+            {
+              "key": "start",
+              "sha256": "6d19d450bd4ddbe1e362ec6ae9df02698483b41d94d57ba8b0ccb0782e7a9b22"
+            },
+            {
+              "key": "kast_b01212d280",
+              "sha256": "b9914c89cb173c484bf7d0c46e9f77670968340cacf85be667384a1d9aae6d38"
+            }
+          ],
+          "expectedAnswer": "gezinscode-e1b662662dcca9",
+          "replayEqual": true
+        }
+      ],
+      "files": {
+        "0/trial-plan.json": {
+          "sha256": "aff18159b53e97c91545a83386a92f94781e16b3559b2541a4361dde9f7c7376",
+          "contents": {
+            "tool": "lees_document_a9d4f902",
+            "node": "kast_0289bee737",
+            "answer": "gezinscode-f5450b338acf3a",
+            "descriptor": "Lees een lokaal testdocument op sleutel. Begin bij start. Een document kan met volgend_document verwijzen naar een ander document. De inhoud komt onder document terug."
+          }
+        },
+        "0/kast_0289bee737.json": {
+          "sha256": "5665e84057522dd220cc72ac22ce83e12a8014026cbf81a1fb36c70c8656eff6",
+          "contents": {
+            "gezochte_code": "gezinscode-f5450b338acf3a"
+          }
+        },
+        "0/start.json": {
+          "sha256": "9d6770182aa6fb7f9f4561bbf92699a7c4d4403c7f4a164f96d3a62757b3a761",
+          "contents": {
+            "volgend_document": "kast_0289bee737"
+          }
+        },
+        "1/kast_dd8cfb2659.json": {
+          "sha256": "3560c322ccc896c6f3b1d75fa6d16cdc33f5a67ff0eeba1cdf13492203aa1a0d",
+          "contents": {
+            "gezochte_code": "gezinscode-7d76169058372c"
+          }
+        },
+        "1/trial-plan.json": {
+          "sha256": "ae7b36061c7b3315d1d401f8526bb51aab765111e6e1a6beb0b46b182be50c11",
+          "contents": {
+            "tool": "lees_document_0801d6bc",
+            "node": "kast_dd8cfb2659",
+            "answer": "gezinscode-7d76169058372c",
+            "descriptor": "Lees een lokaal testdocument op sleutel. Begin bij start. Een document kan met volgend_document verwijzen naar een ander document. De inhoud komt onder document terug."
+          }
+        },
+        "1/start.json": {
+          "sha256": "cbd8b801ee97ce9b0e77a6a398d5624738dd62b769798831c901f5202757f06a",
+          "contents": {
+            "volgend_document": "kast_dd8cfb2659"
+          }
+        },
+        "2/trial-plan.json": {
+          "sha256": "2b03aece4b7d333bcc762f7be90f0381195f82fb773f06d23a52d05becc35c79",
+          "contents": {
+            "tool": "lees_document_6d2a3de1",
+            "node": "kast_b01212d280",
+            "answer": "gezinscode-e1b662662dcca9",
+            "descriptor": "Lees een lokaal testdocument op sleutel. Begin bij start. Een document kan met volgend_document verwijzen naar een ander document. De inhoud komt onder document terug."
+          }
+        },
+        "2/start.json": {
+          "sha256": "6d19d450bd4ddbe1e362ec6ae9df02698483b41d94d57ba8b0ccb0782e7a9b22",
+          "contents": {
+            "volgend_document": "kast_b01212d280"
+          }
+        },
+        "2/kast_b01212d280.json": {
+          "sha256": "b9914c89cb173c484bf7d0c46e9f77670968340cacf85be667384a1d9aae6d38",
+          "contents": {
+            "gezochte_code": "gezinscode-e1b662662dcca9"
+          }
+        }
+      },
+      "operationalEvents": [
+        {
+          "tenant_id": "70b97082-b18b-5b63-9c1e-90d27350e17f",
+          "installation_id": "4f75e11d-8686-5e56-a8ac-fcf7f712476b",
+          "event_id": "57584158-af23-4591-8a16-113344bd07dd",
+          "thread_id": "conversation:probe:0",
+          "sequence": 1,
+          "checkpoint_id": "conversation:probe:0:ingress",
+          "operation_id": null,
+          "event_type": "INGRESS_COMMITTED",
+          "payload": {
+            "data": {
+              "kind": "conversation_ingress",
+              "text": "Zoek de gezochte code met de beschikbare documenttool. Begin bij start en volg de verwijzing. Geef de code exact terug.",
+              "message_id": "probe:0",
+              "principal_id": "test-owner",
+              "conversation_id": "probe-chat"
+            },
+            "checkpoint": {
+              "phase": "admitted",
+              "status": "active",
+              "deadline": null,
+              "revision": 1,
+              "updated_at": "2026-09-08T08:45:56Z",
+              "retry_count": 0,
+              "operation_id": null,
+              "checkpoint_id": "conversation:probe:0:ingress",
+              "last_error_fingerprint": null
+            }
+          },
+          "payload_sha256": "b'\\x00\\x17\\xbd\\x98\\xec\\x8b\\xca\\xf30}9M\\xca\\x19\\x84\\xdb\\xfbN\\xa9\\x03\\xc0S\\xc0\\x8c=x\\xaeu\\xb0J\\xf8\\xbb'",
+          "occurred_at": "2026-09-08 08:45:56+00:00"
+        },
+        {
+          "tenant_id": "70b97082-b18b-5b63-9c1e-90d27350e17f",
+          "installation_id": "4f75e11d-8686-5e56-a8ac-fcf7f712476b",
+          "event_id": "933134f4-50b5-45c2-9f6a-e2c83d5e2890",
+          "thread_id": "conversation-model:68caea39-afaa-4135-8a18-ce922f195f70",
+          "sequence": 1,
+          "checkpoint_id": "conversation-model:68caea39-afaa-4135-8a18-ce922f195f70:admitted",
+          "operation_id": null,
+          "event_type": "CONVERSATION_MODEL_ADMITTED",
+          "payload": {
+            "data": {
+              "message_id": "probe:0",
+              "request_id": "68caea39-afaa-4135-8a18-ce922f195f70",
+              "principal_id": "test-owner",
+              "conversation_id": "probe-chat"
+            },
+            "checkpoint": {
+              "phase": "model_admitted",
+              "status": "active",
+              "deadline": null,
+              "revision": 1,
+              "updated_at": "2026-09-08T08:45:57Z",
+              "retry_count": 0,
+              "operation_id": null,
+              "checkpoint_id": "conversation-model:68caea39-afaa-4135-8a18-ce922f195f70:admitted",
+              "last_error_fingerprint": null
+            }
+          },
+          "payload_sha256": "b',\\xabJ\\xb2D\\x94\\xde7q\\x9cs\\x83\\xe2\\xd7}x{\\xf3V\\x07\\xdbA\\xe0\\x99\\x1b\\xd4\\xc2\\xebc[\\xb3\\xd9'",
+          "occurred_at": "2026-09-08 08:45:57+00:00"
+        },
+        {
+          "tenant_id": "70b97082-b18b-5b63-9c1e-90d27350e17f",
+          "installation_id": "4f75e11d-8686-5e56-a8ac-fcf7f712476b",
+          "event_id": "f184b618-4f77-4795-91da-470e49e13e72",
+          "thread_id": "conversation-model:68caea39-afaa-4135-8a18-ce922f195f70",
+          "sequence": 2,
+          "checkpoint_id": "conversation-model:68caea39-afaa-4135-8a18-ce922f195f70:recorded",
+          "operation_id": null,
+          "event_type": "CONVERSATION_MODEL_RECORDED",
+          "payload": {
+            "data": {
+              "usage": {
+                "tool_calls": 1,
+                "measurement": "measured",
+                "input_tokens": 1684,
+                "output_tokens": 98,
+                "model_attempts": 1
+              },
+              "message_id": "probe:0",
+              "request_id": "68caea39-afaa-4135-8a18-ce922f195f70",
+              "principal_id": "test-owner",
+              "conversation_id": "probe-chat"
+            },
+            "checkpoint": {
+              "phase": "model_recorded",
+              "status": "completed",
+              "deadline": null,
+              "revision": 2,
+              "updated_at": "2026-09-08T08:46:01Z",
+              "retry_count": 0,
+              "operation_id": null,
+              "checkpoint_id": "conversation-model:68caea39-afaa-4135-8a18-ce922f195f70:recorded",
+              "last_error_fingerprint": null
+            }
+          },
+          "payload_sha256": "b'\"P+\\xa5\\xdfP\\xe2\\x87\\x9e\\xe3\\x8f\\xa3\\xac\\x83\\xe2<\\x17\\xb4D\\xf4\\rT\\xa4s\\xb3\\xe3\\xf4\\x8c>\\x87\\xd7\\x91'",
+          "occurred_at": "2026-09-08 08:46:01+00:00"
+        },
+        {
+          "tenant_id": "70b97082-b18b-5b63-9c1e-90d27350e17f",
+          "installation_id": "4f75e11d-8686-5e56-a8ac-fcf7f712476b",
+          "event_id": "2756df48-cd27-4400-9ce0-942ce3fb3e29",
+          "thread_id": "tool:external-tool:d310a73f59bd7f13d0d4785eb1491f2c",
+          "sequence": 1,
+          "checkpoint_id": "checkpoint:external-tool:d310a73f59bd7f13d0d4785eb1491f2c:admitted",
+          "operation_id": "external-tool:d310a73f59bd7f13d0d4785eb1491f2c",
+          "event_type": "TOOL_REQUEST_ADMITTED",
+          "payload": {
+            "data": {
+              "action_name": "lees_document_a9d4f902",
+              "principal_id": "test-owner",
+              "action_call_id": "call_pT3dVFld9KBbylhur5tH4fGc",
+              "receipt_output": {},
+              "conversation_id": "probe-chat",
+              "action_arguments": {
+                "sleutel": "start"
+              },
+              "request_arguments": {
+                "sleutel": "start"
+              },
+              "request_tool_name": "probe.read_document",
+              "source_message_id": "probe:0",
+              "observation_output_key": "document",
+              "request_expected_proof": {
+                "sleutel": "start"
+              },
+              "request_execution_timeout_seconds": 10,
+              "request_verification_timeout_seconds": 10
+            },
+            "checkpoint": {
+              "phase": "admitted",
+              "status": "active",
+              "deadline": null,
+              "revision": 1,
+              "updated_at": "2026-09-08T08:45:56Z",
+              "retry_count": 0,
+              "operation_id": "external-tool:d310a73f59bd7f13d0d4785eb1491f2c",
+              "checkpoint_id": "checkpoint:external-tool:d310a73f59bd7f13d0d4785eb1491f2c:admitted",
+              "last_error_fingerprint": null
+            }
+          },
+          "payload_sha256": "b'\\x1f|Rr\\xb1\\x8b\\x11\\x11\\x8cQ\\x0c{\\xd5\\x87\\x11c\\xf2\\xcb\\xe3aG\\xbagh?\\xbb\\x82\\x9c\\xdbgI`'",
+          "occurred_at": "2026-09-08 08:45:56+00:00"
+        },
+        {
+          "tenant_id": "70b97082-b18b-5b63-9c1e-90d27350e17f",
+          "installation_id": "4f75e11d-8686-5e56-a8ac-fcf7f712476b",
+          "event_id": "8b0ab799-f1ef-4ce5-84cf-c7dddb4cdacb",
+          "thread_id": "tool:external-tool:d310a73f59bd7f13d0d4785eb1491f2c",
+          "sequence": 2,
+          "checkpoint_id": "checkpoint:external-tool:d310a73f59bd7f13d0d4785eb1491f2c:prepared",
+          "operation_id": "external-tool:d310a73f59bd7f13d0d4785eb1491f2c",
+          "event_type": "TOOL_PREPARED",
+          "payload": {
+            "data": {
+              "arguments": {
+                "sleutel": "start"
+              },
+              "tool_name": "probe.read_document",
+              "expected_proof": {
+                "sleutel": "start"
+              }
+            },
+            "checkpoint": {
+              "phase": "tool_prepared",
+              "status": "waiting_for_proof",
+              "deadline": "2026-09-08T08:46:21Z",
+              "revision": 2,
+              "updated_at": "2026-09-08T08:46:01Z",
+              "retry_count": 0,
+              "operation_id": "external-tool:d310a73f59bd7f13d0d4785eb1491f2c",
+              "checkpoint_id": "checkpoint:external-tool:d310a73f59bd7f13d0d4785eb1491f2c:prepared",
+              "last_error_fingerprint": null
+            }
+          },
+          "payload_sha256": "b'\\x84\\xef\\x99)P\\xd6\\x96\\x7f?n\\xe5\\x1c\\xc7\\xdf-\\xe3Ez\\x12\\xb8\\xb4\\xa9\\xd3\\xb9\\xc1i\"\\x91,*\\xef.'",
+          "occurred_at": "2026-09-08 08:46:01+00:00"
+        },
+        {
+          "tenant_id": "70b97082-b18b-5b63-9c1e-90d27350e17f",
+          "installation_id": "4f75e11d-8686-5e56-a8ac-fcf7f712476b",
+          "event_id": "a21a280a-d112-4f9c-8bb7-d93c6a32ac37",
+          "thread_id": "conversation-dispatch:0ecb4ab6af7309c8c5f878ea858af67fce69374ce885952a273184e50bc254b4",
+          "sequence": 1,
+          "checkpoint_id": "conversation-dispatch:0ecb4ab6af7309c8c5f878ea858af67fce69374ce885952a273184e50bc254b4:admitted",
+          "operation_id": null,
+          "event_type": "CONVERSATION_DISPATCH_ADMITTED",
+          "payload": {
+            "data": {
+              "message_id": "probe:0",
+              "operation_id": "external-tool:d310a73f59bd7f13d0d4785eb1491f2c",
+              "principal_id": "test-owner",
+              "conversation_id": "probe-chat"
+            },
+            "checkpoint": {
+              "phase": "dispatch_admitted",
+              "status": "completed",
+              "deadline": null,
+              "revision": 1,
+              "updated_at": "2026-09-08T08:46:01Z",
+              "retry_count": 0,
+              "operation_id": null,
+              "checkpoint_id": "conversation-dispatch:0ecb4ab6af7309c8c5f878ea858af67fce69374ce885952a273184e50bc254b4:admitted",
+              "last_error_fingerprint": null
+            }
+          },
+          "payload_sha256": "b\"\\xe8\\xdc'\\x17\\x1fX\\x03\\xca\\x98l\\x19\\xe5\\x17\\xe6\\xe9\\x14J\\xd6m[\\xa8]\\xd7L&,m\\x16\\x10S=^\"",
+          "occurred_at": "2026-09-08 08:46:01+00:00"
+        },
+        {
+          "tenant_id": "70b97082-b18b-5b63-9c1e-90d27350e17f",
+          "installation_id": "4f75e11d-8686-5e56-a8ac-fcf7f712476b",
+          "event_id": "d9289d55-cdee-4c4b-855e-eda0cc710ad2",
+          "thread_id": "tool:external-tool:d310a73f59bd7f13d0d4785eb1491f2c",
+          "sequence": 3,
+          "checkpoint_id": "checkpoint:external-tool:d310a73f59bd7f13d0d4785eb1491f2c:executed",
+          "operation_id": "external-tool:d310a73f59bd7f13d0d4785eb1491f2c",
+          "event_type": "TOOL_EXECUTED",
+          "payload": {
+            "data": {
+              "dispatch": {
+                "details": {},
+                "accepted": true,
+                "provider_ref": "external-tool:d310a73f59bd7f13d0d4785eb1491f2c"
+              }
+            },
+            "checkpoint": {
+              "phase": "tool_executed",
+              "status": "waiting_for_proof",
+              "deadline": "2026-09-08T08:46:21Z",
+              "revision": 3,
+              "updated_at": "2026-09-08T08:46:01Z",
+              "retry_count": 0,
+              "operation_id": "external-tool:d310a73f59bd7f13d0d4785eb1491f2c",
+              "checkpoint_id": "checkpoint:external-tool:d310a73f59bd7f13d0d4785eb1491f2c:executed",
+              "last_error_fingerprint": null
+            }
+          },
+          "payload_sha256": "b'L\\x1b\\xa2\\xc2\\xd0\\xeb\\xbc\\xb6\\xa9B/\\x8c\\x00\\x0c3\\x97\\x9f\\xfa.\\xe3\\xdb\\x9d\\xc9\\x07\\x98\\xa8\\xf8\\xe2@\\x19\\x04&'",
+          "occurred_at": "2026-09-08 08:46:01+00:00"
+        },
+        {
+          "tenant_id": "70b97082-b18b-5b63-9c1e-90d27350e17f",
+          "installation_id": "4f75e11d-8686-5e56-a8ac-fcf7f712476b",
+          "event_id": "f9450feb-bc4b-458a-85a8-7bafff60e5c4",
+          "thread_id": "tool:external-tool:d310a73f59bd7f13d0d4785eb1491f2c",
+          "sequence": 4,
+          "checkpoint_id": "checkpoint:external-tool:d310a73f59bd7f13d0d4785eb1491f2c:verified",
+          "operation_id": "external-tool:d310a73f59bd7f13d0d4785eb1491f2c",
+          "event_type": "STATE_VERIFIED",
+          "payload": {
+            "data": {
+              "proof": {
+                "evidence": {
+                  "sha256": "9d6770182aa6fb7f9f4561bbf92699a7c4d4403c7f4a164f96d3a62757b3a761",
+                  "source": "/tmp/eva2-tl001/real-model-v2/0/start.json",
+                  "observation": {
+                    "volgend_document": "kast_0289bee737"
+                  }
+                },
+                "expected": {
+                  "sleutel": "start"
+                },
+                "observed": {
+                  "sleutel": "start"
+                }
+              }
+            },
+            "checkpoint": {
+              "phase": "state_verified",
+              "status": "completed",
+              "deadline": null,
+              "revision": 4,
+              "updated_at": "2026-09-08T08:46:01Z",
+              "retry_count": 0,
+              "operation_id": "external-tool:d310a73f59bd7f13d0d4785eb1491f2c",
+              "checkpoint_id": "checkpoint:external-tool:d310a73f59bd7f13d0d4785eb1491f2c:verified",
+              "last_error_fingerprint": null
+            }
+          },
+          "payload_sha256": "b'fu\\x9a\\xc8\\xb7\\x81\\x90\\x02\\x92\\n\\xb8?Q\\xb3\\xa4\\x9c\\xbb\\xde)&\\x8f\\xd7\\xbf\\x88\\\\\\x05\\x92\\x08\\xe3[\\xb2\\x10'",
+          "occurred_at": "2026-09-08 08:46:01+00:00"
+        },
+        {
+          "tenant_id": "70b97082-b18b-5b63-9c1e-90d27350e17f",
+          "installation_id": "4f75e11d-8686-5e56-a8ac-fcf7f712476b",
+          "event_id": "0e08f7f3-a626-413b-a5bd-7c1727e54f79",
+          "thread_id": "conversation-model:77e9f053-60c1-426c-a1cf-e5f26973eb7a",
+          "sequence": 1,
+          "checkpoint_id": "conversation-model:77e9f053-60c1-426c-a1cf-e5f26973eb7a:admitted",
+          "operation_id": null,
+          "event_type": "CONVERSATION_MODEL_ADMITTED",
+          "payload": {
+            "data": {
+              "message_id": "probe:0",
+              "request_id": "77e9f053-60c1-426c-a1cf-e5f26973eb7a",
+              "principal_id": "test-owner",
+              "conversation_id": "probe-chat"
+            },
+            "checkpoint": {
+              "phase": "model_admitted",
+              "status": "active",
+              "deadline": null,
+              "revision": 1,
+              "updated_at": "2026-09-08T08:46:01Z",
+              "retry_count": 0,
+              "operation_id": null,
+              "checkpoint_id": "conversation-model:77e9f053-60c1-426c-a1cf-e5f26973eb7a:admitted",
+              "last_error_fingerprint": null
+            }
+          },
+          "payload_sha256": "b'\\x18>kT\\x8dzE\\x1d\\x9e\\xc2q\\x8d0\\x94+Ky\\xba\\x1d\\xdf\\xc5b&\\x93\\xe3$\\x87^\\xf2.jO'",
+          "occurred_at": "2026-09-08 08:46:01+00:00"
+        },
+        {
+          "tenant_id": "70b97082-b18b-5b63-9c1e-90d27350e17f",
+          "installation_id": "4f75e11d-8686-5e56-a8ac-fcf7f712476b",
+          "event_id": "a4a09442-41b5-43ef-934a-9f92802eb1dd",
+          "thread_id": "conversation-model:77e9f053-60c1-426c-a1cf-e5f26973eb7a",
+          "sequence": 2,
+          "checkpoint_id": "conversation-model:77e9f053-60c1-426c-a1cf-e5f26973eb7a:recorded",
+          "operation_id": null,
+          "event_type": "CONVERSATION_MODEL_RECORDED",
+          "payload": {
+            "data": {
+              "usage": {
+                "tool_calls": 1,
+                "measurement": "measured",
+                "input_tokens": 1632,
+                "output_tokens": 162,
+                "model_attempts": 1
+              },
+              "message_id": "probe:0",
+              "request_id": "77e9f053-60c1-426c-a1cf-e5f26973eb7a",
+              "principal_id": "test-owner",
+              "conversation_id": "probe-chat"
+            },
+            "checkpoint": {
+              "phase": "model_recorded",
+              "status": "completed",
+              "deadline": null,
+              "revision": 2,
+              "updated_at": "2026-09-08T08:46:05Z",
+              "retry_count": 0,
+              "operation_id": null,
+              "checkpoint_id": "conversation-model:77e9f053-60c1-426c-a1cf-e5f26973eb7a:recorded",
+              "last_error_fingerprint": null
+            }
+          },
+          "payload_sha256": "b'z>.@\\x0e\\x85\\xcbF\\x19\\xdfXG\\xaa+\\x1d\\x13\\xd2\\xb3\\x9d\\xbfU\\x16m\\x0e\\xb5\\xbaO\\x94\\x94&[\\xb7'",
+          "occurred_at": "2026-09-08 08:46:05+00:00"
+        },
+        {
+          "tenant_id": "70b97082-b18b-5b63-9c1e-90d27350e17f",
+          "installation_id": "4f75e11d-8686-5e56-a8ac-fcf7f712476b",
+          "event_id": "98599911-10e4-4983-9140-df96be11bd94",
+          "thread_id": "tool:external-tool:436c58e83c96c447048b113862daeae1",
+          "sequence": 1,
+          "checkpoint_id": "checkpoint:external-tool:436c58e83c96c447048b113862daeae1:admitted",
+          "operation_id": "external-tool:436c58e83c96c447048b113862daeae1",
+          "event_type": "TOOL_REQUEST_ADMITTED",
+          "payload": {
+            "data": {
+              "step_index": 1,
+              "action_name": "lees_document_a9d4f902",
+              "principal_id": "test-owner",
+              "action_call_id": "call_JQpECetQh4ziT3LCloyoiTDX",
+              "receipt_output": {},
+              "conversation_id": "probe-chat",
+              "action_arguments": {
+                "sleutel": "kast_0289bee737"
+              },
+              "request_arguments": {
+                "sleutel": "kast_0289bee737"
+              },
+              "request_tool_name": "probe.read_document",
+              "source_message_id": "probe:0",
+              "observation_output_key": "document",
+              "request_expected_proof": {
+                "sleutel": "kast_0289bee737"
+              },
+              "request_execution_timeout_seconds": 10,
+              "request_verification_timeout_seconds": 10
+            },
+            "checkpoint": {
+              "phase": "admitted",
+              "status": "active",
+              "deadline": null,
+              "revision": 1,
+              "updated_at": "2026-09-08T08:45:56Z",
+              "retry_count": 0,
+              "operation_id": "external-tool:436c58e83c96c447048b113862daeae1",
+              "checkpoint_id": "checkpoint:external-tool:436c58e83c96c447048b113862daeae1:admitted",
+              "last_error_fingerprint": null
+            }
+          },
+          "payload_sha256": "b\"q0\\xa7\\xc9t\\x03J\\xcf\\x1cbc\\xfeI'Xw\\x19\\xe7\\xcca\\x19\\xa9gv\\xc2\\x87*\\xea\\xc9!\\xfb\\xfb\"",
+          "occurred_at": "2026-09-08 08:45:56+00:00"
+        },
+        {
+          "tenant_id": "70b97082-b18b-5b63-9c1e-90d27350e17f",
+          "installation_id": "4f75e11d-8686-5e56-a8ac-fcf7f712476b",
+          "event_id": "2679cb7c-f25e-4507-82d2-e2dff1471850",
+          "thread_id": "tool:external-tool:436c58e83c96c447048b113862daeae1",
+          "sequence": 2,
+          "checkpoint_id": "checkpoint:external-tool:436c58e83c96c447048b113862daeae1:prepared",
+          "operation_id": "external-tool:436c58e83c96c447048b113862daeae1",
+          "event_type": "TOOL_PREPARED",
+          "payload": {
+            "data": {
+              "arguments": {
+                "sleutel": "kast_0289bee737"
+              },
+              "tool_name": "probe.read_document",
+              "expected_proof": {
+                "sleutel": "kast_0289bee737"
+              }
+            },
+            "checkpoint": {
+              "phase": "tool_prepared",
+              "status": "waiting_for_proof",
+              "deadline": "2026-09-08T08:46:25Z",
+              "revision": 2,
+              "updated_at": "2026-09-08T08:46:05Z",
+              "retry_count": 0,
+              "operation_id": "external-tool:436c58e83c96c447048b113862daeae1",
+              "checkpoint_id": "checkpoint:external-tool:436c58e83c96c447048b113862daeae1:prepared",
+              "last_error_fingerprint": null
+            }
+          },
+          "payload_sha256": "b\"\\xa5\\x1a\\xa6F\\x00\\x03\\xaa\\xc4h>\\x84VM\\x182\\x86\\xe19\\xe03:\\xc0\\xcb>t\\xeehF\\xe0\\xdb\\xb3'\"",
+          "occurred_at": "2026-09-08 08:46:05+00:00"
+        },
+        {
+          "tenant_id": "70b97082-b18b-5b63-9c1e-90d27350e17f",
+          "installation_id": "4f75e11d-8686-5e56-a8ac-fcf7f712476b",
+          "event_id": "d8a79895-c0a1-4a83-b36b-ec5a8ea014f2",
+          "thread_id": "conversation-dispatch:658525941434a0d422dca7fc0d736120e242eb1d5b35d742dba0c5e7b1553645",
+          "sequence": 1,
+          "checkpoint_id": "conversation-dispatch:658525941434a0d422dca7fc0d736120e242eb1d5b35d742dba0c5e7b1553645:admitted",
+          "operation_id": null,
+          "event_type": "CONVERSATION_DISPATCH_ADMITTED",
+          "payload": {
+            "data": {
+              "message_id": "probe:0",
+              "operation_id": "external-tool:436c58e83c96c447048b113862daeae1",
+              "principal_id": "test-owner",
+              "conversation_id": "probe-chat"
+            },
+            "checkpoint": {
+              "phase": "dispatch_admitted",
+              "status": "completed",
+              "deadline": null,
+              "revision": 1,
+              "updated_at": "2026-09-08T08:46:05Z",
+              "retry_count": 0,
+              "operation_id": null,
+              "checkpoint_id": "conversation-dispatch:658525941434a0d422dca7fc0d736120e242eb1d5b35d742dba0c5e7b1553645:admitted",
+              "last_error_fingerprint": null
+            }
+          },
+          "payload_sha256": "b'\\xc5\"\\xaa\\x8b\\x06\\x05\\xf1\\xfd\\xe3_9S\\xa0\\xfe\\x16\\x0c\\x86\\x18-\\x10\\xdd\\xb2\\xb2\\x15\\xd8\\x10\\xb2\\xfa\\x15\\xff\\xf7\\xff'",
+          "occurred_at": "2026-09-08 08:46:05+00:00"
+        },
+        {
+          "tenant_id": "70b97082-b18b-5b63-9c1e-90d27350e17f",
+          "installation_id": "4f75e11d-8686-5e56-a8ac-fcf7f712476b",
+          "event_id": "f1767875-8664-4d54-a283-dc4b72b7bc37",
+          "thread_id": "tool:external-tool:436c58e83c96c447048b113862daeae1",
+          "sequence": 3,
+          "checkpoint_id": "checkpoint:external-tool:436c58e83c96c447048b113862daeae1:executed",
+          "operation_id": "external-tool:436c58e83c96c447048b113862daeae1",
+          "event_type": "TOOL_EXECUTED",
+          "payload": {
+            "data": {
+              "dispatch": {
+                "details": {},
+                "accepted": true,
+                "provider_ref": "external-tool:436c58e83c96c447048b113862daeae1"
+              }
+            },
+            "checkpoint": {
+              "phase": "tool_executed",
+              "status": "waiting_for_proof",
+              "deadline": "2026-09-08T08:46:25Z",
+              "revision": 3,
+              "updated_at": "2026-09-08T08:46:05Z",
+              "retry_count": 0,
+              "operation_id": "external-tool:436c58e83c96c447048b113862daeae1",
+              "checkpoint_id": "checkpoint:external-tool:436c58e83c96c447048b113862daeae1:executed",
+              "last_error_fingerprint": null
+            }
+          },
+          "payload_sha256": "b'\\x80\\xabj/\\xcc\\xdc\\xb0\\xb8_\\xd0w\\x92\\x92\\xc3\\x9e|\\xec\\xbd\\x9f\\x07\\x856\\xef=?\\x99\\xcaA#\\xf0\\xa1`'",
+          "occurred_at": "2026-09-08 08:46:05+00:00"
+        },
+        {
+          "tenant_id": "70b97082-b18b-5b63-9c1e-90d27350e17f",
+          "installation_id": "4f75e11d-8686-5e56-a8ac-fcf7f712476b",
+          "event_id": "ed9ffe2a-aa9a-4ee0-8ecc-43dd263ddcd8",
+          "thread_id": "tool:external-tool:436c58e83c96c447048b113862daeae1",
+          "sequence": 4,
+          "checkpoint_id": "checkpoint:external-tool:436c58e83c96c447048b113862daeae1:verified",
+          "operation_id": "external-tool:436c58e83c96c447048b113862daeae1",
+          "event_type": "STATE_VERIFIED",
+          "payload": {
+            "data": {
+              "proof": {
+                "evidence": {
+                  "sha256": "5665e84057522dd220cc72ac22ce83e12a8014026cbf81a1fb36c70c8656eff6",
+                  "source": "/tmp/eva2-tl001/real-model-v2/0/kast_0289bee737.json",
+                  "observation": {
+                    "gezochte_code": "gezinscode-f5450b338acf3a"
+                  }
+                },
+                "expected": {
+                  "sleutel": "kast_0289bee737"
+                },
+                "observed": {
+                  "sleutel": "kast_0289bee737"
+                }
+              }
+            },
+            "checkpoint": {
+              "phase": "state_verified",
+              "status": "completed",
+              "deadline": null,
+              "revision": 4,
+              "updated_at": "2026-09-08T08:46:05Z",
+              "retry_count": 0,
+              "operation_id": "external-tool:436c58e83c96c447048b113862daeae1",
+              "checkpoint_id": "checkpoint:external-tool:436c58e83c96c447048b113862daeae1:verified",
+              "last_error_fingerprint": null
+            }
+          },
+          "payload_sha256": "b'\\x12|\\xe6\\xcb\\xba\\x81r\\xb5w\\xa3K:~X\\xef5Z\\xa2\\xd3\\xc2\\xd1\\xfd\\x0c\\x8b5\\xe8\\xc9\\xf0\\x00p\\x18n'",
+          "occurred_at": "2026-09-08 08:46:05+00:00"
+        },
+        {
+          "tenant_id": "70b97082-b18b-5b63-9c1e-90d27350e17f",
+          "installation_id": "4f75e11d-8686-5e56-a8ac-fcf7f712476b",
+          "event_id": "4e841c11-85f6-4126-8b50-406f3d150456",
+          "thread_id": "conversation-model:104feecc-e0d5-46c2-9ed9-38d86d561733",
+          "sequence": 1,
+          "checkpoint_id": "conversation-model:104feecc-e0d5-46c2-9ed9-38d86d561733:admitted",
+          "operation_id": null,
+          "event_type": "CONVERSATION_MODEL_ADMITTED",
+          "payload": {
+            "data": {
+              "message_id": "probe:0",
+              "request_id": "104feecc-e0d5-46c2-9ed9-38d86d561733",
+              "principal_id": "test-owner",
+              "conversation_id": "probe-chat"
+            },
+            "checkpoint": {
+              "phase": "model_admitted",
+              "status": "active",
+              "deadline": null,
+              "revision": 1,
+              "updated_at": "2026-09-08T08:46:05Z",
+              "retry_count": 0,
+              "operation_id": null,
+              "checkpoint_id": "conversation-model:104feecc-e0d5-46c2-9ed9-38d86d561733:admitted",
+              "last_error_fingerprint": null
+            }
+          },
+          "payload_sha256": "b'\\xbf\\xfd\\x11?2\\x95\\x18\\xe2\\xddd\\xcc\\x90}\\x0cl\\x1e\\x8e\\xd5\\xc9\\xc0\\xd93}\\x8e\\xf3\\x1f\\x1e\\x8d\\x06`\\xaf\\xd4'",
+          "occurred_at": "2026-09-08 08:46:05+00:00"
+        },
+        {
+          "tenant_id": "70b97082-b18b-5b63-9c1e-90d27350e17f",
+          "installation_id": "4f75e11d-8686-5e56-a8ac-fcf7f712476b",
+          "event_id": "fb6fe4f1-4e4a-4162-aa6e-732d96587060",
+          "thread_id": "conversation-model:104feecc-e0d5-46c2-9ed9-38d86d561733",
+          "sequence": 2,
+          "checkpoint_id": "conversation-model:104feecc-e0d5-46c2-9ed9-38d86d561733:recorded",
+          "operation_id": null,
+          "event_type": "CONVERSATION_MODEL_RECORDED",
+          "payload": {
+            "data": {
+              "usage": {
+                "tool_calls": 0,
+                "measurement": "measured",
+                "input_tokens": 1543,
+                "output_tokens": 15,
+                "model_attempts": 1
+              },
+              "message_id": "probe:0",
+              "request_id": "104feecc-e0d5-46c2-9ed9-38d86d561733",
+              "principal_id": "test-owner",
+              "conversation_id": "probe-chat"
+            },
+            "checkpoint": {
+              "phase": "model_recorded",
+              "status": "completed",
+              "deadline": null,
+              "revision": 2,
+              "updated_at": "2026-09-08T08:46:06Z",
+              "retry_count": 0,
+              "operation_id": null,
+              "checkpoint_id": "conversation-model:104feecc-e0d5-46c2-9ed9-38d86d561733:recorded",
+              "last_error_fingerprint": null
+            }
+          },
+          "payload_sha256": "b'P\\xcb\\x9fMw[`*$\\x82+\\xac\\x95}\\xf0\\x10C7\\xfa5\\x98\\xe3{\\xd3}w\\xbc\\xaf\\xf3+[\\x10'",
+          "occurred_at": "2026-09-08 08:46:06+00:00"
+        },
+        {
+          "tenant_id": "70b97082-b18b-5b63-9c1e-90d27350e17f",
+          "installation_id": "4f75e11d-8686-5e56-a8ac-fcf7f712476b",
+          "event_id": "15d948e2-eea4-4767-982c-bd7a63905369",
+          "thread_id": "conversation:probe:0",
+          "sequence": 2,
+          "checkpoint_id": "conversation:probe:0:reply",
+          "operation_id": null,
+          "event_type": "REPLY_COMMITTED",
+          "payload": {
+            "data": {
+              "kind": "conversation_reply",
+              "text": "gezinscode-f5450b338acf3a",
+              "provider": "chatgpt-codex:gpt-5.4-mini",
+              "message_id": "probe:0",
+              "model_usage": {
+                "tool_calls": 2,
+                "measurement": "measured",
+                "input_tokens": 4859,
+                "output_tokens": 275,
+                "model_attempts": 3
+              },
+              "text_sha256": "02780f2e0aa1f6adfaa68961759f7298fbcad4784c89fd1792cf394216e626f2",
+              "model_timing": {
+                "completed_ms": 10597,
+                "first_content_ms": 10191
+              },
+              "principal_id": "test-owner",
+              "conversation_id": "probe-chat",
+              "evidence_memory_ids": []
+            },
+            "checkpoint": {
+              "phase": "reply_committed",
+              "status": "completed",
+              "deadline": null,
+              "revision": 2,
+              "updated_at": "2026-09-08T08:45:56Z",
+              "retry_count": 0,
+              "operation_id": null,
+              "checkpoint_id": "conversation:probe:0:reply",
+              "last_error_fingerprint": null
+            }
+          },
+          "payload_sha256": "b'\\x8bT\\x80\\xed\\xfdK\\xf5Z\\x9a@\\x90oT\\n\\xb5\\xb7\\x9c\\xde\\x8b\\xe5b\\xd3S\\xda\\x11\\r\\x89\\x8c\\xa4y\\xb8m'",
+          "occurred_at": "2026-09-08 08:45:56+00:00"
+        },
+        {
+          "tenant_id": "70b97082-b18b-5b63-9c1e-90d27350e17f",
+          "installation_id": "4f75e11d-8686-5e56-a8ac-fcf7f712476b",
+          "event_id": "5b331bce-d85e-4b82-903e-f45e6255b76a",
+          "thread_id": "conversation:probe:1",
+          "sequence": 1,
+          "checkpoint_id": "conversation:probe:1:ingress",
+          "operation_id": null,
+          "event_type": "INGRESS_COMMITTED",
+          "payload": {
+            "data": {
+              "kind": "conversation_ingress",
+              "text": "Zoek de gezochte code met de beschikbare documenttool. Begin bij start en volg de verwijzing. Geef de code exact terug.",
+              "message_id": "probe:1",
+              "principal_id": "test-owner",
+              "conversation_id": "probe-chat"
+            },
+            "checkpoint": {
+              "phase": "admitted",
+              "status": "active",
+              "deadline": null,
+              "revision": 1,
+              "updated_at": "2026-09-08T08:46:06Z",
+              "retry_count": 0,
+              "operation_id": null,
+              "checkpoint_id": "conversation:probe:1:ingress",
+              "last_error_fingerprint": null
+            }
+          },
+          "payload_sha256": "b'H\\xde\\r\\x9f\\x92CQsj\\x92\\x8e;p\\x17\\xbf\\x1b{\\x15\\x0ef\\x1c\\x19]\\x04@Q\\x1d@\\xc6\\xa3\\x8d\\x13'",
+          "occurred_at": "2026-09-08 08:46:06+00:00"
+        },
+        {
+          "tenant_id": "70b97082-b18b-5b63-9c1e-90d27350e17f",
+          "installation_id": "4f75e11d-8686-5e56-a8ac-fcf7f712476b",
+          "event_id": "b42f817d-2baa-4a3a-a8e4-a70fb3462aca",
+          "thread_id": "conversation-model:f2177167-86b2-474d-93c8-ad817e1d0130",
+          "sequence": 1,
+          "checkpoint_id": "conversation-model:f2177167-86b2-474d-93c8-ad817e1d0130:admitted",
+          "operation_id": null,
+          "event_type": "CONVERSATION_MODEL_ADMITTED",
+          "payload": {
+            "data": {
+              "message_id": "probe:1",
+              "request_id": "f2177167-86b2-474d-93c8-ad817e1d0130",
+              "principal_id": "test-owner",
+              "conversation_id": "probe-chat"
+            },
+            "checkpoint": {
+              "phase": "model_admitted",
+              "status": "active",
+              "deadline": null,
+              "revision": 1,
+              "updated_at": "2026-09-08T08:46:06Z",
+              "retry_count": 0,
+              "operation_id": null,
+              "checkpoint_id": "conversation-model:f2177167-86b2-474d-93c8-ad817e1d0130:admitted",
+              "last_error_fingerprint": null
+            }
+          },
+          "payload_sha256": "b'\\xc1\\x11\\xfa\\xdff\\xd7\\\\6F\\x87\\x98\\x80\\x89\\x0c\\xa6\\x15F}\\x89\\r\\xb7\\n\\xf0\\xbf\\xce\\xe8A\\xbaqq\\x1c\\xc4'",
+          "occurred_at": "2026-09-08 08:46:06+00:00"
+        },
+        {
+          "tenant_id": "70b97082-b18b-5b63-9c1e-90d27350e17f",
+          "installation_id": "4f75e11d-8686-5e56-a8ac-fcf7f712476b",
+          "event_id": "f958a6b9-d8f2-4947-876d-f335befe946c",
+          "thread_id": "conversation-model:f2177167-86b2-474d-93c8-ad817e1d0130",
+          "sequence": 2,
+          "checkpoint_id": "conversation-model:f2177167-86b2-474d-93c8-ad817e1d0130:recorded",
+          "operation_id": null,
+          "event_type": "CONVERSATION_MODEL_RECORDED",
+          "payload": {
+            "data": {
+              "usage": {
+                "tool_calls": 1,
+                "measurement": "measured",
+                "input_tokens": 1715,
+                "output_tokens": 92,
+                "model_attempts": 1
+              },
+              "message_id": "probe:1",
+              "request_id": "f2177167-86b2-474d-93c8-ad817e1d0130",
+              "principal_id": "test-owner",
+              "conversation_id": "probe-chat"
+            },
+            "checkpoint": {
+              "phase": "model_recorded",
+              "status": "completed",
+              "deadline": null,
+              "revision": 2,
+              "updated_at": "2026-09-08T08:46:09Z",
+              "retry_count": 0,
+              "operation_id": null,
+              "checkpoint_id": "conversation-model:f2177167-86b2-474d-93c8-ad817e1d0130:recorded",
+              "last_error_fingerprint": null
+            }
+          },
+          "payload_sha256": "b'G\\xd4\\xad\\xe8\\xe2\\xc2H`\\xd9\\xb0bhHF_\\x93^\\xc1w|\\xf9\\x8f\\x11M\\x9a*\\x1bN\\xd4E\\x04\\xba'",
+          "occurred_at": "2026-09-08 08:46:09+00:00"
+        },
+        {
+          "tenant_id": "70b97082-b18b-5b63-9c1e-90d27350e17f",
+          "installation_id": "4f75e11d-8686-5e56-a8ac-fcf7f712476b",
+          "event_id": "b9435b5a-ed6d-4229-9df8-80b7933307d5",
+          "thread_id": "tool:external-tool:79db79ecbd27395ad18a7e7bf3e2b75b",
+          "sequence": 1,
+          "checkpoint_id": "checkpoint:external-tool:79db79ecbd27395ad18a7e7bf3e2b75b:admitted",
+          "operation_id": "external-tool:79db79ecbd27395ad18a7e7bf3e2b75b",
+          "event_type": "TOOL_REQUEST_ADMITTED",
+          "payload": {
+            "data": {
+              "action_name": "lees_document_0801d6bc",
+              "principal_id": "test-owner",
+              "action_call_id": "call_G4UovCt2mFJ4nxzn5ReF1f1B",
+              "receipt_output": {},
+              "conversation_id": "probe-chat",
+              "action_arguments": {
+                "sleutel": "start"
+              },
+              "request_arguments": {
+                "sleutel": "start"
+              },
+              "request_tool_name": "probe.read_document",
+              "source_message_id": "probe:1",
+              "observation_output_key": "document",
+              "request_expected_proof": {
+                "sleutel": "start"
+              },
+              "request_execution_timeout_seconds": 10,
+              "request_verification_timeout_seconds": 10
+            },
+            "checkpoint": {
+              "phase": "admitted",
+              "status": "active",
+              "deadline": null,
+              "revision": 1,
+              "updated_at": "2026-09-08T08:46:06Z",
+              "retry_count": 0,
+              "operation_id": "external-tool:79db79ecbd27395ad18a7e7bf3e2b75b",
+              "checkpoint_id": "checkpoint:external-tool:79db79ecbd27395ad18a7e7bf3e2b75b:admitted",
+              "last_error_fingerprint": null
+            }
+          },
+          "payload_sha256": "b'|\\x1f6\\x88\\xd9\\xae\\x1a-\\x11\\x98pKPx@\\x1fD \\xc09y\\x8e\\xa6\\xdb5y\\xceB\\xf9\\xff\\xf0$'",
+          "occurred_at": "2026-09-08 08:46:06+00:00"
+        },
+        {
+          "tenant_id": "70b97082-b18b-5b63-9c1e-90d27350e17f",
+          "installation_id": "4f75e11d-8686-5e56-a8ac-fcf7f712476b",
+          "event_id": "77c12870-be1d-48be-ac68-8e49aa59342f",
+          "thread_id": "tool:external-tool:79db79ecbd27395ad18a7e7bf3e2b75b",
+          "sequence": 2,
+          "checkpoint_id": "checkpoint:external-tool:79db79ecbd27395ad18a7e7bf3e2b75b:prepared",
+          "operation_id": "external-tool:79db79ecbd27395ad18a7e7bf3e2b75b",
+          "event_type": "TOOL_PREPARED",
+          "payload": {
+            "data": {
+              "arguments": {
+                "sleutel": "start"
+              },
+              "tool_name": "probe.read_document",
+              "expected_proof": {
+                "sleutel": "start"
+              }
+            },
+            "checkpoint": {
+              "phase": "tool_prepared",
+              "status": "waiting_for_proof",
+              "deadline": "2026-09-08T08:46:29Z",
+              "revision": 2,
+              "updated_at": "2026-09-08T08:46:09Z",
+              "retry_count": 0,
+              "operation_id": "external-tool:79db79ecbd27395ad18a7e7bf3e2b75b",
+              "checkpoint_id": "checkpoint:external-tool:79db79ecbd27395ad18a7e7bf3e2b75b:prepared",
+              "last_error_fingerprint": null
+            }
+          },
+          "payload_sha256": "b\"\\x83p'H+\\x16\\xde\\xb5\\x1a\\xf0\\xa0e\\x1d\\xdd\\x95\\xde\\x81\\xedY}\\xb2v\\xdf=M|!\\x81\\x98l\\x92\\xbf\"",
+          "occurred_at": "2026-09-08 08:46:09+00:00"
+        },
+        {
+          "tenant_id": "70b97082-b18b-5b63-9c1e-90d27350e17f",
+          "installation_id": "4f75e11d-8686-5e56-a8ac-fcf7f712476b",
+          "event_id": "ae1b42d0-ea2b-41fb-8816-d557384118e3",
+          "thread_id": "conversation-dispatch:f252cf240452252bdc09119106766724ee4ebe11ac402ff3e734286e2f7a42b9",
+          "sequence": 1,
+          "checkpoint_id": "conversation-dispatch:f252cf240452252bdc09119106766724ee4ebe11ac402ff3e734286e2f7a42b9:admitted",
+          "operation_id": null,
+          "event_type": "CONVERSATION_DISPATCH_ADMITTED",
+          "payload": {
+            "data": {
+              "message_id": "probe:1",
+              "operation_id": "external-tool:79db79ecbd27395ad18a7e7bf3e2b75b",
+              "principal_id": "test-owner",
+              "conversation_id": "probe-chat"
+            },
+            "checkpoint": {
+              "phase": "dispatch_admitted",
+              "status": "completed",
+              "deadline": null,
+              "revision": 1,
+              "updated_at": "2026-09-08T08:46:09Z",
+              "retry_count": 0,
+              "operation_id": null,
+              "checkpoint_id": "conversation-dispatch:f252cf240452252bdc09119106766724ee4ebe11ac402ff3e734286e2f7a42b9:admitted",
+              "last_error_fingerprint": null
+            }
+          },
+          "payload_sha256": "b'\\xa6\\x1b\\x9dG\\x13*\\xc5\\x86\\x93\\xd5r\\x8b`\\xce\\xb1\\x87F\\xa7\\xda:\\x8a\\xb7\\xe8\\xdc\\xc2\\xe1\\x9fy&\\xd6\\xc8\\x98'",
+          "occurred_at": "2026-09-08 08:46:09+00:00"
+        },
+        {
+          "tenant_id": "70b97082-b18b-5b63-9c1e-90d27350e17f",
+          "installation_id": "4f75e11d-8686-5e56-a8ac-fcf7f712476b",
+          "event_id": "fdd39418-a008-42d2-a33c-7b69a638bf5a",
+          "thread_id": "tool:external-tool:79db79ecbd27395ad18a7e7bf3e2b75b",
+          "sequence": 3,
+          "checkpoint_id": "checkpoint:external-tool:79db79ecbd27395ad18a7e7bf3e2b75b:executed",
+          "operation_id": "external-tool:79db79ecbd27395ad18a7e7bf3e2b75b",
+          "event_type": "TOOL_EXECUTED",
+          "payload": {
+            "data": {
+              "dispatch": {
+                "details": {},
+                "accepted": true,
+                "provider_ref": "external-tool:79db79ecbd27395ad18a7e7bf3e2b75b"
+              }
+            },
+            "checkpoint": {
+              "phase": "tool_executed",
+              "status": "waiting_for_proof",
+              "deadline": "2026-09-08T08:46:29Z",
+              "revision": 3,
+              "updated_at": "2026-09-08T08:46:09Z",
+              "retry_count": 0,
+              "operation_id": "external-tool:79db79ecbd27395ad18a7e7bf3e2b75b",
+              "checkpoint_id": "checkpoint:external-tool:79db79ecbd27395ad18a7e7bf3e2b75b:executed",
+              "last_error_fingerprint": null
+            }
+          },
+          "payload_sha256": "b'\\xc7\\xc5\\x07\\xe3\\xd5\\x12v\\xb9\\x9a\\xf1~gV\\xd3\\xcc\\x9f\\xbf,a\\xd6\\xafW\\x90\\x95\\x1f\\x82U\\x87h\\xc4\\xc6\\xdf'",
+          "occurred_at": "2026-09-08 08:46:09+00:00"
+        },
+        {
+          "tenant_id": "70b97082-b18b-5b63-9c1e-90d27350e17f",
+          "installation_id": "4f75e11d-8686-5e56-a8ac-fcf7f712476b",
+          "event_id": "a0cbcb2d-6c36-4b46-832d-c289922ea8b9",
+          "thread_id": "conversation-model:a2e28222-f67b-4b0c-8fe0-8cd29eef2d3d",
+          "sequence": 1,
+          "checkpoint_id": "conversation-model:a2e28222-f67b-4b0c-8fe0-8cd29eef2d3d:admitted",
+          "operation_id": null,
+          "event_type": "CONVERSATION_MODEL_ADMITTED",
+          "payload": {
+            "data": {
+              "message_id": "probe:1",
+              "request_id": "a2e28222-f67b-4b0c-8fe0-8cd29eef2d3d",
+              "principal_id": "test-owner",
+              "conversation_id": "probe-chat"
+            },
+            "checkpoint": {
+              "phase": "model_admitted",
+              "status": "active",
+              "deadline": null,
+              "revision": 1,
+              "updated_at": "2026-09-08T08:46:15Z",
+              "retry_count": 0,
+              "operation_id": null,
+              "checkpoint_id": "conversation-model:a2e28222-f67b-4b0c-8fe0-8cd29eef2d3d:admitted",
+              "last_error_fingerprint": null
+            }
+          },
+          "payload_sha256": "b'\\xa5+\\x1e\\x87\\xbb\\x986v\\x05\\xa1\\xc3\\n{\\x171\\xb2\\x06=\\xef!\\xd3\\xdc\\x11\\x14\\xbdn%\\xf6\\xb3\\x17\\x9a\\x94'",
+          "occurred_at": "2026-09-08 08:46:15+00:00"
+        },
+        {
+          "tenant_id": "70b97082-b18b-5b63-9c1e-90d27350e17f",
+          "installation_id": "4f75e11d-8686-5e56-a8ac-fcf7f712476b",
+          "event_id": "488bc220-4ed3-4a1b-815c-19d02a52a7aa",
+          "thread_id": "tool:external-tool:79db79ecbd27395ad18a7e7bf3e2b75b",
+          "sequence": 4,
+          "checkpoint_id": "checkpoint:external-tool:79db79ecbd27395ad18a7e7bf3e2b75b:verified",
+          "operation_id": "external-tool:79db79ecbd27395ad18a7e7bf3e2b75b",
+          "event_type": "STATE_VERIFIED",
+          "payload": {
+            "data": {
+              "proof": {
+                "evidence": {
+                  "sha256": "cbd8b801ee97ce9b0e77a6a398d5624738dd62b769798831c901f5202757f06a",
+                  "source": "/tmp/eva2-tl001/real-model-v2/1/start.json",
+                  "observation": {
+                    "volgend_document": "kast_dd8cfb2659"
+                  }
+                },
+                "expected": {
+                  "sleutel": "start"
+                },
+                "observed": {
+                  "sleutel": "start"
+                }
+              }
+            },
+            "checkpoint": {
+              "phase": "state_verified",
+              "status": "completed",
+              "deadline": null,
+              "revision": 4,
+              "updated_at": "2026-09-08T08:46:09Z",
+              "retry_count": 0,
+              "operation_id": "external-tool:79db79ecbd27395ad18a7e7bf3e2b75b",
+              "checkpoint_id": "checkpoint:external-tool:79db79ecbd27395ad18a7e7bf3e2b75b:verified",
+              "last_error_fingerprint": null
+            }
+          },
+          "payload_sha256": "b\"\\xf0\\xb7t\\xe0'\\xf46\\xdb\\x9dSX\\x9e\\xa1\\xd8\\xf6Y\\x10+\\x9c\\x0b$\\xa1\\x95\\x988\\xab\\x02\\x82\\xdaQn6\"",
+          "occurred_at": "2026-09-08 08:46:09+00:00"
+        },
+        {
+          "tenant_id": "70b97082-b18b-5b63-9c1e-90d27350e17f",
+          "installation_id": "4f75e11d-8686-5e56-a8ac-fcf7f712476b",
+          "event_id": "6ba0f547-2d0a-4f75-be4b-1fc62dd62be9",
+          "thread_id": "conversation-model:cd13f839-7ba9-4233-8c53-041c4cd129c1",
+          "sequence": 1,
+          "checkpoint_id": "conversation-model:cd13f839-7ba9-4233-8c53-041c4cd129c1:admitted",
+          "operation_id": null,
+          "event_type": "CONVERSATION_MODEL_ADMITTED",
+          "payload": {
+            "data": {
+              "message_id": "probe:1",
+              "request_id": "cd13f839-7ba9-4233-8c53-041c4cd129c1",
+              "principal_id": "test-owner",
+              "conversation_id": "probe-chat"
+            },
+            "checkpoint": {
+              "phase": "model_admitted",
+              "status": "active",
+              "deadline": null,
+              "revision": 1,
+              "updated_at": "2026-09-08T08:46:09Z",
+              "retry_count": 0,
+              "operation_id": null,
+              "checkpoint_id": "conversation-model:cd13f839-7ba9-4233-8c53-041c4cd129c1:admitted",
+              "last_error_fingerprint": null
+            }
+          },
+          "payload_sha256": "b'\\r\\x18>\\xd0/D\\x92ix\\xde^h;\\x1cu\\xc7\\x8f\\x1b\\xb0j\\x0e(h\\xa0\\xccP\\xbc\\x97\\xfa\\xe9\\x85\\x92'",
+          "occurred_at": "2026-09-08 08:46:09+00:00"
+        },
+        {
+          "tenant_id": "70b97082-b18b-5b63-9c1e-90d27350e17f",
+          "installation_id": "4f75e11d-8686-5e56-a8ac-fcf7f712476b",
+          "event_id": "50271131-e533-40d6-ac7e-0cb1c2c82583",
+          "thread_id": "conversation-model:cd13f839-7ba9-4233-8c53-041c4cd129c1",
+          "sequence": 2,
+          "checkpoint_id": "conversation-model:cd13f839-7ba9-4233-8c53-041c4cd129c1:recorded",
+          "operation_id": null,
+          "event_type": "CONVERSATION_MODEL_RECORDED",
+          "payload": {
+            "data": {
+              "usage": {
+                "tool_calls": 1,
+                "measurement": "measured",
+                "input_tokens": 1635,
+                "output_tokens": 136,
+                "model_attempts": 1
+              },
+              "message_id": "probe:1",
+              "request_id": "cd13f839-7ba9-4233-8c53-041c4cd129c1",
+              "principal_id": "test-owner",
+              "conversation_id": "probe-chat"
+            },
+            "checkpoint": {
+              "phase": "model_recorded",
+              "status": "completed",
+              "deadline": null,
+              "revision": 2,
+              "updated_at": "2026-09-08T08:46:14Z",
+              "retry_count": 0,
+              "operation_id": null,
+              "checkpoint_id": "conversation-model:cd13f839-7ba9-4233-8c53-041c4cd129c1:recorded",
+              "last_error_fingerprint": null
+            }
+          },
+          "payload_sha256": "b'\\xff=\\xd3\\xa7{\\xa9>\\xed\\xcb\\xde\\x87\\xadM\\x7f\\x83&=1\\x04\\xd6z\\xfdx\"b\\xfew\\xda\\xf0w%\\xd0'",
+          "occurred_at": "2026-09-08 08:46:14+00:00"
+        },
+        {
+          "tenant_id": "70b97082-b18b-5b63-9c1e-90d27350e17f",
+          "installation_id": "4f75e11d-8686-5e56-a8ac-fcf7f712476b",
+          "event_id": "38b69cff-261f-4cc4-9959-71894ff30df3",
+          "thread_id": "tool:external-tool:7f1263bd41d6293bab8abab3c8fbaa2f",
+          "sequence": 1,
+          "checkpoint_id": "checkpoint:external-tool:7f1263bd41d6293bab8abab3c8fbaa2f:admitted",
+          "operation_id": "external-tool:7f1263bd41d6293bab8abab3c8fbaa2f",
+          "event_type": "TOOL_REQUEST_ADMITTED",
+          "payload": {
+            "data": {
+              "step_index": 1,
+              "action_name": "lees_document_0801d6bc",
+              "principal_id": "test-owner",
+              "action_call_id": "call_HWRwilSC0acF3KmNhatulsMx",
+              "receipt_output": {},
+              "conversation_id": "probe-chat",
+              "action_arguments": {
+                "sleutel": "kast_dd8cfb2659"
+              },
+              "request_arguments": {
+                "sleutel": "kast_dd8cfb2659"
+              },
+              "request_tool_name": "probe.read_document",
+              "source_message_id": "probe:1",
+              "observation_output_key": "document",
+              "request_expected_proof": {
+                "sleutel": "kast_dd8cfb2659"
+              },
+              "request_execution_timeout_seconds": 10,
+              "request_verification_timeout_seconds": 10
+            },
+            "checkpoint": {
+              "phase": "admitted",
+              "status": "active",
+              "deadline": null,
+              "revision": 1,
+              "updated_at": "2026-09-08T08:46:06Z",
+              "retry_count": 0,
+              "operation_id": "external-tool:7f1263bd41d6293bab8abab3c8fbaa2f",
+              "checkpoint_id": "checkpoint:external-tool:7f1263bd41d6293bab8abab3c8fbaa2f:admitted",
+              "last_error_fingerprint": null
+            }
+          },
+          "payload_sha256": "b'+\\xb1k\\xadY\\xbd,B4\\x8e\\xbe\\xba\\xa2l\\x86-\\xbc\\xa5\\x95\\x9c\\xbc\\x8fJ\\xb7\\x14\\xc4\\x8d\\xdc\\xbd\\x1b\\x1b\\xad'",
+          "occurred_at": "2026-09-08 08:46:06+00:00"
+        },
+        {
+          "tenant_id": "70b97082-b18b-5b63-9c1e-90d27350e17f",
+          "installation_id": "4f75e11d-8686-5e56-a8ac-fcf7f712476b",
+          "event_id": "cc3d111a-64af-4a23-a52b-0ca603128f51",
+          "thread_id": "tool:external-tool:7f1263bd41d6293bab8abab3c8fbaa2f",
+          "sequence": 2,
+          "checkpoint_id": "checkpoint:external-tool:7f1263bd41d6293bab8abab3c8fbaa2f:prepared",
+          "operation_id": "external-tool:7f1263bd41d6293bab8abab3c8fbaa2f",
+          "event_type": "TOOL_PREPARED",
+          "payload": {
+            "data": {
+              "arguments": {
+                "sleutel": "kast_dd8cfb2659"
+              },
+              "tool_name": "probe.read_document",
+              "expected_proof": {
+                "sleutel": "kast_dd8cfb2659"
+              }
+            },
+            "checkpoint": {
+              "phase": "tool_prepared",
+              "status": "waiting_for_proof",
+              "deadline": "2026-09-08T08:46:35Z",
+              "revision": 2,
+              "updated_at": "2026-09-08T08:46:15Z",
+              "retry_count": 0,
+              "operation_id": "external-tool:7f1263bd41d6293bab8abab3c8fbaa2f",
+              "checkpoint_id": "checkpoint:external-tool:7f1263bd41d6293bab8abab3c8fbaa2f:prepared",
+              "last_error_fingerprint": null
+            }
+          },
+          "payload_sha256": "b'\\x99\\xd6\\xbc=+~\\x8f\\x7f\\t\\xf9\\xed2\\x8d\\x8f\\xc6\\xa3\\x81\\xa1\\x838\\xffkj\\xbd_\\xc8\\xd7n\\x18\\xa2+\\xe3'",
+          "occurred_at": "2026-09-08 08:46:15+00:00"
+        },
+        {
+          "tenant_id": "70b97082-b18b-5b63-9c1e-90d27350e17f",
+          "installation_id": "4f75e11d-8686-5e56-a8ac-fcf7f712476b",
+          "event_id": "f60c80f0-d0e5-4ba5-93dd-71456098a9c4",
+          "thread_id": "conversation-dispatch:3140bf00a7b8fa3957e2e2dfeac23a102fea4c1ace31742daf3b3023281f03b3",
+          "sequence": 1,
+          "checkpoint_id": "conversation-dispatch:3140bf00a7b8fa3957e2e2dfeac23a102fea4c1ace31742daf3b3023281f03b3:admitted",
+          "operation_id": null,
+          "event_type": "CONVERSATION_DISPATCH_ADMITTED",
+          "payload": {
+            "data": {
+              "message_id": "probe:1",
+              "operation_id": "external-tool:7f1263bd41d6293bab8abab3c8fbaa2f",
+              "principal_id": "test-owner",
+              "conversation_id": "probe-chat"
+            },
+            "checkpoint": {
+              "phase": "dispatch_admitted",
+              "status": "completed",
+              "deadline": null,
+              "revision": 1,
+              "updated_at": "2026-09-08T08:46:15Z",
+              "retry_count": 0,
+              "operation_id": null,
+              "checkpoint_id": "conversation-dispatch:3140bf00a7b8fa3957e2e2dfeac23a102fea4c1ace31742daf3b3023281f03b3:admitted",
+              "last_error_fingerprint": null
+            }
+          },
+          "payload_sha256": "b'\\xdb\\x99\\x9dcI\\xc3tv\\x8a\\xdf\\x82\\x856\\x7f+\\x86\\x0b\\xb2\\x9cU)\\xc5\\xc1\\xe6\\xd6\\x031\\xae\\xe9-9\\\\'",
+          "occurred_at": "2026-09-08 08:46:15+00:00"
+        },
+        {
+          "tenant_id": "70b97082-b18b-5b63-9c1e-90d27350e17f",
+          "installation_id": "4f75e11d-8686-5e56-a8ac-fcf7f712476b",
+          "event_id": "4cc09286-bf87-4e93-a5c6-8c5142294f1e",
+          "thread_id": "tool:external-tool:7f1263bd41d6293bab8abab3c8fbaa2f",
+          "sequence": 3,
+          "checkpoint_id": "checkpoint:external-tool:7f1263bd41d6293bab8abab3c8fbaa2f:executed",
+          "operation_id": "external-tool:7f1263bd41d6293bab8abab3c8fbaa2f",
+          "event_type": "TOOL_EXECUTED",
+          "payload": {
+            "data": {
+              "dispatch": {
+                "details": {},
+                "accepted": true,
+                "provider_ref": "external-tool:7f1263bd41d6293bab8abab3c8fbaa2f"
+              }
+            },
+            "checkpoint": {
+              "phase": "tool_executed",
+              "status": "waiting_for_proof",
+              "deadline": "2026-09-08T08:46:35Z",
+              "revision": 3,
+              "updated_at": "2026-09-08T08:46:15Z",
+              "retry_count": 0,
+              "operation_id": "external-tool:7f1263bd41d6293bab8abab3c8fbaa2f",
+              "checkpoint_id": "checkpoint:external-tool:7f1263bd41d6293bab8abab3c8fbaa2f:executed",
+              "last_error_fingerprint": null
+            }
+          },
+          "payload_sha256": "b'\\x179\\x8e\\xa3\\xf3\\x12e\\x97\\x10\\xdb\\x97\\xe0\\x10[f\\xb2\\x03\\xa6s\\xa82\\x16J[k!\\xc8\\x9f\\x1f\\x81\\xf8\\x14'",
+          "occurred_at": "2026-09-08 08:46:15+00:00"
+        },
+        {
+          "tenant_id": "70b97082-b18b-5b63-9c1e-90d27350e17f",
+          "installation_id": "4f75e11d-8686-5e56-a8ac-fcf7f712476b",
+          "event_id": "9019953e-dd35-4acc-9aa3-15cc45c64fde",
+          "thread_id": "tool:external-tool:7f1263bd41d6293bab8abab3c8fbaa2f",
+          "sequence": 4,
+          "checkpoint_id": "checkpoint:external-tool:7f1263bd41d6293bab8abab3c8fbaa2f:verified",
+          "operation_id": "external-tool:7f1263bd41d6293bab8abab3c8fbaa2f",
+          "event_type": "STATE_VERIFIED",
+          "payload": {
+            "data": {
+              "proof": {
+                "evidence": {
+                  "sha256": "3560c322ccc896c6f3b1d75fa6d16cdc33f5a67ff0eeba1cdf13492203aa1a0d",
+                  "source": "/tmp/eva2-tl001/real-model-v2/1/kast_dd8cfb2659.json",
+                  "observation": {
+                    "gezochte_code": "gezinscode-7d76169058372c"
+                  }
+                },
+                "expected": {
+                  "sleutel": "kast_dd8cfb2659"
+                },
+                "observed": {
+                  "sleutel": "kast_dd8cfb2659"
+                }
+              }
+            },
+            "checkpoint": {
+              "phase": "state_verified",
+              "status": "completed",
+              "deadline": null,
+              "revision": 4,
+              "updated_at": "2026-09-08T08:46:15Z",
+              "retry_count": 0,
+              "operation_id": "external-tool:7f1263bd41d6293bab8abab3c8fbaa2f",
+              "checkpoint_id": "checkpoint:external-tool:7f1263bd41d6293bab8abab3c8fbaa2f:verified",
+              "last_error_fingerprint": null
+            }
+          },
+          "payload_sha256": "b's.\\tk\\xb4B\\xa4\\x9fO\\xbf\\xe4o\\xba\\'\\x19E\\x98\\xe2\\xa9\\x01\\xc9\\xdb\\xe3\\xe0\\xa1u\\xf8\\xb4\\x84\\x1b\"a'",
+          "occurred_at": "2026-09-08 08:46:15+00:00"
+        },
+        {
+          "tenant_id": "70b97082-b18b-5b63-9c1e-90d27350e17f",
+          "installation_id": "4f75e11d-8686-5e56-a8ac-fcf7f712476b",
+          "event_id": "a8d13273-2ae1-4c6e-a4f5-d5b7411702d8",
+          "thread_id": "conversation-model:a2e28222-f67b-4b0c-8fe0-8cd29eef2d3d",
+          "sequence": 2,
+          "checkpoint_id": "conversation-model:a2e28222-f67b-4b0c-8fe0-8cd29eef2d3d:recorded",
+          "operation_id": null,
+          "event_type": "CONVERSATION_MODEL_RECORDED",
+          "payload": {
+            "data": {
+              "usage": {
+                "tool_calls": 0,
+                "measurement": "measured",
+                "input_tokens": 1583,
+                "output_tokens": 15,
+                "model_attempts": 1
+              },
+              "message_id": "probe:1",
+              "request_id": "a2e28222-f67b-4b0c-8fe0-8cd29eef2d3d",
+              "principal_id": "test-owner",
+              "conversation_id": "probe-chat"
+            },
+            "checkpoint": {
+              "phase": "model_recorded",
+              "status": "completed",
+              "deadline": null,
+              "revision": 2,
+              "updated_at": "2026-09-08T08:46:16Z",
+              "retry_count": 0,
+              "operation_id": null,
+              "checkpoint_id": "conversation-model:a2e28222-f67b-4b0c-8fe0-8cd29eef2d3d:recorded",
+              "last_error_fingerprint": null
+            }
+          },
+          "payload_sha256": "b'\\xb2?\\xa9\\xb8\\xb5\\xdfi\\x92_\\xc677\\x1f\\xba\\xd8\\x82\\xeb\\x12\"k9$6\\x93\\xe3\\x02@\\x9d\\xd1\\x9a\\xe7\\x1d'",
+          "occurred_at": "2026-09-08 08:46:16+00:00"
+        },
+        {
+          "tenant_id": "70b97082-b18b-5b63-9c1e-90d27350e17f",
+          "installation_id": "4f75e11d-8686-5e56-a8ac-fcf7f712476b",
+          "event_id": "a73ae6d6-0b37-46d6-b425-e33c1e214460",
+          "thread_id": "conversation:probe:1",
+          "sequence": 2,
+          "checkpoint_id": "conversation:probe:1:reply",
+          "operation_id": null,
+          "event_type": "REPLY_COMMITTED",
+          "payload": {
+            "data": {
+              "kind": "conversation_reply",
+              "text": "gezinscode-7d76169058372c",
+              "provider": "chatgpt-codex:gpt-5.4-mini",
+              "message_id": "probe:1",
+              "model_usage": {
+                "tool_calls": 2,
+                "measurement": "measured",
+                "input_tokens": 4933,
+                "output_tokens": 243,
+                "model_attempts": 3
+              },
+              "text_sha256": "828185f55745292f0aab64eea86175c9c23592efca0f37f8034952b302c5c9f8",
+              "model_timing": {
+                "completed_ms": 9449,
+                "first_content_ms": 9144
+              },
+              "principal_id": "test-owner",
+              "conversation_id": "probe-chat",
+              "evidence_memory_ids": []
+            },
+            "checkpoint": {
+              "phase": "reply_committed",
+              "status": "completed",
+              "deadline": null,
+              "revision": 2,
+              "updated_at": "2026-09-08T08:46:06Z",
+              "retry_count": 0,
+              "operation_id": null,
+              "checkpoint_id": "conversation:probe:1:reply",
+              "last_error_fingerprint": null
+            }
+          },
+          "payload_sha256": "b'Z\\xeb\\x116\\x0czW\\xe2)B\\x0b\\x8ebp\\x9c\\x17j\\xd3\\xb6i\\x94}\\xd3\\xda\\xdc\\x16\\x013-\\x8f=K'",
+          "occurred_at": "2026-09-08 08:46:06+00:00"
+        },
+        {
+          "tenant_id": "70b97082-b18b-5b63-9c1e-90d27350e17f",
+          "installation_id": "4f75e11d-8686-5e56-a8ac-fcf7f712476b",
+          "event_id": "a16fd118-eb31-4800-8019-12cdede32b39",
+          "thread_id": "conversation:probe:2",
+          "sequence": 1,
+          "checkpoint_id": "conversation:probe:2:ingress",
+          "operation_id": null,
+          "event_type": "INGRESS_COMMITTED",
+          "payload": {
+            "data": {
+              "kind": "conversation_ingress",
+              "text": "Zoek de gezochte code met de beschikbare documenttool. Begin bij start en volg de verwijzing. Geef de code exact terug.",
+              "message_id": "probe:2",
+              "principal_id": "test-owner",
+              "conversation_id": "probe-chat"
+            },
+            "checkpoint": {
+              "phase": "admitted",
+              "status": "active",
+              "deadline": null,
+              "revision": 1,
+              "updated_at": "2026-09-08T08:46:16Z",
+              "retry_count": 0,
+              "operation_id": null,
+              "checkpoint_id": "conversation:probe:2:ingress",
+              "last_error_fingerprint": null
+            }
+          },
+          "payload_sha256": "b'Q\\x0e\\xa6J\\xf1\\xf2\"\\x04\\x05\\x94\\xf9\\xf1\\xf2\\xaaj\\xe0\\xf6\\xf0\\x83N\\x88\\'\\xda\\xfe\\xb2\\x88\\xbd\\xe4\\xf4?l\\x02'",
+          "occurred_at": "2026-09-08 08:46:16+00:00"
+        },
+        {
+          "tenant_id": "70b97082-b18b-5b63-9c1e-90d27350e17f",
+          "installation_id": "4f75e11d-8686-5e56-a8ac-fcf7f712476b",
+          "event_id": "b05d52eb-bd27-4803-9124-fffc50d57811",
+          "thread_id": "conversation-model:78a58793-4b36-40c1-901f-f050a00eef38",
+          "sequence": 1,
+          "checkpoint_id": "conversation-model:78a58793-4b36-40c1-901f-f050a00eef38:admitted",
+          "operation_id": null,
+          "event_type": "CONVERSATION_MODEL_ADMITTED",
+          "payload": {
+            "data": {
+              "message_id": "probe:2",
+              "request_id": "78a58793-4b36-40c1-901f-f050a00eef38",
+              "principal_id": "test-owner",
+              "conversation_id": "probe-chat"
+            },
+            "checkpoint": {
+              "phase": "model_admitted",
+              "status": "active",
+              "deadline": null,
+              "revision": 1,
+              "updated_at": "2026-09-08T08:46:16Z",
+              "retry_count": 0,
+              "operation_id": null,
+              "checkpoint_id": "conversation-model:78a58793-4b36-40c1-901f-f050a00eef38:admitted",
+              "last_error_fingerprint": null
+            }
+          },
+          "payload_sha256": "b\"\\x10\\\\`\\xa4\\ro\\x17\\xe4\\x9d\\x98\\xcc\\x0f?\\xcd)'\\xf0\\xfbB[\\xd2\\x07\\x1f\\x9f\\xd1w4(\\xa1q\\xa3v\"",
+          "occurred_at": "2026-09-08 08:46:16+00:00"
+        },
+        {
+          "tenant_id": "70b97082-b18b-5b63-9c1e-90d27350e17f",
+          "installation_id": "4f75e11d-8686-5e56-a8ac-fcf7f712476b",
+          "event_id": "4fd2fc49-6859-45dc-a32a-c403316fbf4c",
+          "thread_id": "conversation-model:78a58793-4b36-40c1-901f-f050a00eef38",
+          "sequence": 2,
+          "checkpoint_id": "conversation-model:78a58793-4b36-40c1-901f-f050a00eef38:recorded",
+          "operation_id": null,
+          "event_type": "CONVERSATION_MODEL_RECORDED",
+          "payload": {
+            "data": {
+              "usage": {
+                "tool_calls": 1,
+                "measurement": "measured",
+                "input_tokens": 1767,
+                "output_tokens": 97,
+                "model_attempts": 1
+              },
+              "message_id": "probe:2",
+              "request_id": "78a58793-4b36-40c1-901f-f050a00eef38",
+              "principal_id": "test-owner",
+              "conversation_id": "probe-chat"
+            },
+            "checkpoint": {
+              "phase": "model_recorded",
+              "status": "completed",
+              "deadline": null,
+              "revision": 2,
+              "updated_at": "2026-09-08T08:46:19Z",
+              "retry_count": 0,
+              "operation_id": null,
+              "checkpoint_id": "conversation-model:78a58793-4b36-40c1-901f-f050a00eef38:recorded",
+              "last_error_fingerprint": null
+            }
+          },
+          "payload_sha256": "b'\\x0bO:|)\\xd5\\x93\\x10:u7\\xa2\\xb0\\x9d\\x80T\\x87\\x12v\\x0cl}=\\xce\\x9a<\\x0eR{\\x7f\\xd7\\x99'",
+          "occurred_at": "2026-09-08 08:46:19+00:00"
+        },
+        {
+          "tenant_id": "70b97082-b18b-5b63-9c1e-90d27350e17f",
+          "installation_id": "4f75e11d-8686-5e56-a8ac-fcf7f712476b",
+          "event_id": "faf35f0c-2792-406a-967a-b06ef3b4160e",
+          "thread_id": "tool:external-tool:5e6088f4291002840ca0cc125d64e91e",
+          "sequence": 1,
+          "checkpoint_id": "checkpoint:external-tool:5e6088f4291002840ca0cc125d64e91e:admitted",
+          "operation_id": "external-tool:5e6088f4291002840ca0cc125d64e91e",
+          "event_type": "TOOL_REQUEST_ADMITTED",
+          "payload": {
+            "data": {
+              "action_name": "lees_document_6d2a3de1",
+              "principal_id": "test-owner",
+              "action_call_id": "call_x4QPmOxvGxt1UGcnMKptUuIL",
+              "receipt_output": {},
+              "conversation_id": "probe-chat",
+              "action_arguments": {
+                "sleutel": "start"
+              },
+              "request_arguments": {
+                "sleutel": "start"
+              },
+              "request_tool_name": "probe.read_document",
+              "source_message_id": "probe:2",
+              "observation_output_key": "document",
+              "request_expected_proof": {
+                "sleutel": "start"
+              },
+              "request_execution_timeout_seconds": 10,
+              "request_verification_timeout_seconds": 10
+            },
+            "checkpoint": {
+              "phase": "admitted",
+              "status": "active",
+              "deadline": null,
+              "revision": 1,
+              "updated_at": "2026-09-08T08:46:16Z",
+              "retry_count": 0,
+              "operation_id": "external-tool:5e6088f4291002840ca0cc125d64e91e",
+              "checkpoint_id": "checkpoint:external-tool:5e6088f4291002840ca0cc125d64e91e:admitted",
+              "last_error_fingerprint": null
+            }
+          },
+          "payload_sha256": "b'b)\\xf0\\xfa\\x88\\xaf\\x8e\\xbf|\\x87\\xda\\x1d\\x8f\\x8f\\xce0Dl\\xf6@g\\xa4\\xd04V\\x11\\xe0\\xbc\\xa0\\xfb\\xb7\\x0b'",
+          "occurred_at": "2026-09-08 08:46:16+00:00"
+        },
+        {
+          "tenant_id": "70b97082-b18b-5b63-9c1e-90d27350e17f",
+          "installation_id": "4f75e11d-8686-5e56-a8ac-fcf7f712476b",
+          "event_id": "8823c046-6321-44c3-834c-27042a26e8d1",
+          "thread_id": "tool:external-tool:5e6088f4291002840ca0cc125d64e91e",
+          "sequence": 2,
+          "checkpoint_id": "checkpoint:external-tool:5e6088f4291002840ca0cc125d64e91e:prepared",
+          "operation_id": "external-tool:5e6088f4291002840ca0cc125d64e91e",
+          "event_type": "TOOL_PREPARED",
+          "payload": {
+            "data": {
+              "arguments": {
+                "sleutel": "start"
+              },
+              "tool_name": "probe.read_document",
+              "expected_proof": {
+                "sleutel": "start"
+              }
+            },
+            "checkpoint": {
+              "phase": "tool_prepared",
+              "status": "waiting_for_proof",
+              "deadline": "2026-09-08T08:46:39Z",
+              "revision": 2,
+              "updated_at": "2026-09-08T08:46:19Z",
+              "retry_count": 0,
+              "operation_id": "external-tool:5e6088f4291002840ca0cc125d64e91e",
+              "checkpoint_id": "checkpoint:external-tool:5e6088f4291002840ca0cc125d64e91e:prepared",
+              "last_error_fingerprint": null
+            }
+          },
+          "payload_sha256": "b'\\xd7f\\xe0O\\xc8mL\\x88\\xb1\\n\\xfd\\xa9\\x19M3\\xe1o@N\\xd7\\x02\\xbd\\t\\x9cS\\x0fh76\\xf4\\x01\\x90'",
+          "occurred_at": "2026-09-08 08:46:19+00:00"
+        },
+        {
+          "tenant_id": "70b97082-b18b-5b63-9c1e-90d27350e17f",
+          "installation_id": "4f75e11d-8686-5e56-a8ac-fcf7f712476b",
+          "event_id": "9fc3ab8e-1958-4887-9c5d-641204c90549",
+          "thread_id": "conversation-dispatch:1c6bb42b6cc7e2706b0287651c50dd7648e00876040c8f7e32adf0187eae533e",
+          "sequence": 1,
+          "checkpoint_id": "conversation-dispatch:1c6bb42b6cc7e2706b0287651c50dd7648e00876040c8f7e32adf0187eae533e:admitted",
+          "operation_id": null,
+          "event_type": "CONVERSATION_DISPATCH_ADMITTED",
+          "payload": {
+            "data": {
+              "message_id": "probe:2",
+              "operation_id": "external-tool:5e6088f4291002840ca0cc125d64e91e",
+              "principal_id": "test-owner",
+              "conversation_id": "probe-chat"
+            },
+            "checkpoint": {
+              "phase": "dispatch_admitted",
+              "status": "completed",
+              "deadline": null,
+              "revision": 1,
+              "updated_at": "2026-09-08T08:46:19Z",
+              "retry_count": 0,
+              "operation_id": null,
+              "checkpoint_id": "conversation-dispatch:1c6bb42b6cc7e2706b0287651c50dd7648e00876040c8f7e32adf0187eae533e:admitted",
+              "last_error_fingerprint": null
+            }
+          },
+          "payload_sha256": "b'\\xeeX\\xa1a\\xdd\\xac\\xa7~\\x15l\\x06%|\\x18\\x08\\x02\\xbd\\xc7|,\\xeao8#\\'U\"&\\x98\\xf1\\xed\\xa4'",
+          "occurred_at": "2026-09-08 08:46:19+00:00"
+        },
+        {
+          "tenant_id": "70b97082-b18b-5b63-9c1e-90d27350e17f",
+          "installation_id": "4f75e11d-8686-5e56-a8ac-fcf7f712476b",
+          "event_id": "9ee85521-1aec-4bda-9417-2ab4b9e03bdb",
+          "thread_id": "tool:external-tool:5e6088f4291002840ca0cc125d64e91e",
+          "sequence": 3,
+          "checkpoint_id": "checkpoint:external-tool:5e6088f4291002840ca0cc125d64e91e:executed",
+          "operation_id": "external-tool:5e6088f4291002840ca0cc125d64e91e",
+          "event_type": "TOOL_EXECUTED",
+          "payload": {
+            "data": {
+              "dispatch": {
+                "details": {},
+                "accepted": true,
+                "provider_ref": "external-tool:5e6088f4291002840ca0cc125d64e91e"
+              }
+            },
+            "checkpoint": {
+              "phase": "tool_executed",
+              "status": "waiting_for_proof",
+              "deadline": "2026-09-08T08:46:39Z",
+              "revision": 3,
+              "updated_at": "2026-09-08T08:46:19Z",
+              "retry_count": 0,
+              "operation_id": "external-tool:5e6088f4291002840ca0cc125d64e91e",
+              "checkpoint_id": "checkpoint:external-tool:5e6088f4291002840ca0cc125d64e91e:executed",
+              "last_error_fingerprint": null
+            }
+          },
+          "payload_sha256": "b'\\xc1\\xf4\\\\\\xf3\\x8aAp3\\xfc\\x1co\\xf4\\xb9\\xd6,\\xf3!C\\xf2\\x1cv\\'p\\x83\\x8f\\x7f\\xe0\\xdf\\x99\"\\xe1T'",
+          "occurred_at": "2026-09-08 08:46:19+00:00"
+        },
+        {
+          "tenant_id": "70b97082-b18b-5b63-9c1e-90d27350e17f",
+          "installation_id": "4f75e11d-8686-5e56-a8ac-fcf7f712476b",
+          "event_id": "5a14094b-d3c2-4e66-b3a1-6a38ac137124",
+          "thread_id": "tool:external-tool:5e6088f4291002840ca0cc125d64e91e",
+          "sequence": 4,
+          "checkpoint_id": "checkpoint:external-tool:5e6088f4291002840ca0cc125d64e91e:verified",
+          "operation_id": "external-tool:5e6088f4291002840ca0cc125d64e91e",
+          "event_type": "STATE_VERIFIED",
+          "payload": {
+            "data": {
+              "proof": {
+                "evidence": {
+                  "sha256": "6d19d450bd4ddbe1e362ec6ae9df02698483b41d94d57ba8b0ccb0782e7a9b22",
+                  "source": "/tmp/eva2-tl001/real-model-v2/2/start.json",
+                  "observation": {
+                    "volgend_document": "kast_b01212d280"
+                  }
+                },
+                "expected": {
+                  "sleutel": "start"
+                },
+                "observed": {
+                  "sleutel": "start"
+                }
+              }
+            },
+            "checkpoint": {
+              "phase": "state_verified",
+              "status": "completed",
+              "deadline": null,
+              "revision": 4,
+              "updated_at": "2026-09-08T08:46:19Z",
+              "retry_count": 0,
+              "operation_id": "external-tool:5e6088f4291002840ca0cc125d64e91e",
+              "checkpoint_id": "checkpoint:external-tool:5e6088f4291002840ca0cc125d64e91e:verified",
+              "last_error_fingerprint": null
+            }
+          },
+          "payload_sha256": "b\"'\\x88\\x82\\x18\\x0el\\xca\\x8aCO\\xfa\\xb3\\x85~^\\xd1r\\x96f\\xb4\\x9f\\xde\\x08o\\xc0/\\xe1rM\\xbdEA\"",
+          "occurred_at": "2026-09-08 08:46:19+00:00"
+        },
+        {
+          "tenant_id": "70b97082-b18b-5b63-9c1e-90d27350e17f",
+          "installation_id": "4f75e11d-8686-5e56-a8ac-fcf7f712476b",
+          "event_id": "8fc3ff47-8680-4701-9297-c08d8f9f9635",
+          "thread_id": "conversation-model:cddedafe-60f3-40f8-875a-84e6506a5d73",
+          "sequence": 1,
+          "checkpoint_id": "conversation-model:cddedafe-60f3-40f8-875a-84e6506a5d73:admitted",
+          "operation_id": null,
+          "event_type": "CONVERSATION_MODEL_ADMITTED",
+          "payload": {
+            "data": {
+              "message_id": "probe:2",
+              "request_id": "cddedafe-60f3-40f8-875a-84e6506a5d73",
+              "principal_id": "test-owner",
+              "conversation_id": "probe-chat"
+            },
+            "checkpoint": {
+              "phase": "model_admitted",
+              "status": "active",
+              "deadline": null,
+              "revision": 1,
+              "updated_at": "2026-09-08T08:46:19Z",
+              "retry_count": 0,
+              "operation_id": null,
+              "checkpoint_id": "conversation-model:cddedafe-60f3-40f8-875a-84e6506a5d73:admitted",
+              "last_error_fingerprint": null
+            }
+          },
+          "payload_sha256": "b\"\\xfa\\xa1\\xd5\\xaf\\x8bJD\\xfb\\xb5\\xc2\\x99G\\xb51Wsq0z\\x97a/\\xf4>\\xaf')$\\xaa\\xdb\\xf3\\x00\"",
+          "occurred_at": "2026-09-08 08:46:19+00:00"
+        },
+        {
+          "tenant_id": "70b97082-b18b-5b63-9c1e-90d27350e17f",
+          "installation_id": "4f75e11d-8686-5e56-a8ac-fcf7f712476b",
+          "event_id": "1e40c4c3-1b2e-431c-88e3-2f2bf27c2b7f",
+          "thread_id": "conversation-model:cddedafe-60f3-40f8-875a-84e6506a5d73",
+          "sequence": 2,
+          "checkpoint_id": "conversation-model:cddedafe-60f3-40f8-875a-84e6506a5d73:recorded",
+          "operation_id": null,
+          "event_type": "CONVERSATION_MODEL_RECORDED",
+          "payload": {
+            "data": {
+              "usage": {
+                "tool_calls": 1,
+                "measurement": "measured",
+                "input_tokens": 1767,
+                "output_tokens": 215,
+                "model_attempts": 1
+              },
+              "message_id": "probe:2",
+              "request_id": "cddedafe-60f3-40f8-875a-84e6506a5d73",
+              "principal_id": "test-owner",
+              "conversation_id": "probe-chat"
+            },
+            "checkpoint": {
+              "phase": "model_recorded",
+              "status": "completed",
+              "deadline": null,
+              "revision": 2,
+              "updated_at": "2026-09-08T08:46:24Z",
+              "retry_count": 0,
+              "operation_id": null,
+              "checkpoint_id": "conversation-model:cddedafe-60f3-40f8-875a-84e6506a5d73:recorded",
+              "last_error_fingerprint": null
+            }
+          },
+          "payload_sha256": "b'\\xa2\\xe7\\r\\xe2\\xca\\xdbd\\x00e?\\t\\xda\\xe6*~\\xf1-\\xf2r\\xae\\xc8\\x7f\\x96\\xb2\\\\\\x0b\\xa6&F\\xc6JH'",
+          "occurred_at": "2026-09-08 08:46:24+00:00"
+        },
+        {
+          "tenant_id": "70b97082-b18b-5b63-9c1e-90d27350e17f",
+          "installation_id": "4f75e11d-8686-5e56-a8ac-fcf7f712476b",
+          "event_id": "bd909616-4196-4d1a-9d32-964f3e6cf27b",
+          "thread_id": "tool:external-tool:91d0da8a3bb54e3e4f2f24929b2e0ae6",
+          "sequence": 1,
+          "checkpoint_id": "checkpoint:external-tool:91d0da8a3bb54e3e4f2f24929b2e0ae6:admitted",
+          "operation_id": "external-tool:91d0da8a3bb54e3e4f2f24929b2e0ae6",
+          "event_type": "TOOL_REQUEST_ADMITTED",
+          "payload": {
+            "data": {
+              "step_index": 1,
+              "action_name": "lees_document_6d2a3de1",
+              "principal_id": "test-owner",
+              "action_call_id": "call_d3sXU6iQln0iTBNVb3fxvvB1",
+              "receipt_output": {},
+              "conversation_id": "probe-chat",
+              "action_arguments": {
+                "sleutel": "kast_b01212d280"
+              },
+              "request_arguments": {
+                "sleutel": "kast_b01212d280"
+              },
+              "request_tool_name": "probe.read_document",
+              "source_message_id": "probe:2",
+              "observation_output_key": "document",
+              "request_expected_proof": {
+                "sleutel": "kast_b01212d280"
+              },
+              "request_execution_timeout_seconds": 10,
+              "request_verification_timeout_seconds": 10
+            },
+            "checkpoint": {
+              "phase": "admitted",
+              "status": "active",
+              "deadline": null,
+              "revision": 1,
+              "updated_at": "2026-09-08T08:46:16Z",
+              "retry_count": 0,
+              "operation_id": "external-tool:91d0da8a3bb54e3e4f2f24929b2e0ae6",
+              "checkpoint_id": "checkpoint:external-tool:91d0da8a3bb54e3e4f2f24929b2e0ae6:admitted",
+              "last_error_fingerprint": null
+            }
+          },
+          "payload_sha256": "b'\\xbe\\x91~3$\\xc75U\\xc4\\xa4yj\\xc9\\xf8k!\\xe7F\"\\xb9i\\xdc\\x96\"#Z\\xd8\\x8b\\x17)2\\xa9'",
+          "occurred_at": "2026-09-08 08:46:16+00:00"
+        },
+        {
+          "tenant_id": "70b97082-b18b-5b63-9c1e-90d27350e17f",
+          "installation_id": "4f75e11d-8686-5e56-a8ac-fcf7f712476b",
+          "event_id": "4a6ee123-6216-401d-81a7-ec83c5352579",
+          "thread_id": "tool:external-tool:91d0da8a3bb54e3e4f2f24929b2e0ae6",
+          "sequence": 2,
+          "checkpoint_id": "checkpoint:external-tool:91d0da8a3bb54e3e4f2f24929b2e0ae6:prepared",
+          "operation_id": "external-tool:91d0da8a3bb54e3e4f2f24929b2e0ae6",
+          "event_type": "TOOL_PREPARED",
+          "payload": {
+            "data": {
+              "arguments": {
+                "sleutel": "kast_b01212d280"
+              },
+              "tool_name": "probe.read_document",
+              "expected_proof": {
+                "sleutel": "kast_b01212d280"
+              }
+            },
+            "checkpoint": {
+              "phase": "tool_prepared",
+              "status": "waiting_for_proof",
+              "deadline": "2026-09-08T08:46:44Z",
+              "revision": 2,
+              "updated_at": "2026-09-08T08:46:24Z",
+              "retry_count": 0,
+              "operation_id": "external-tool:91d0da8a3bb54e3e4f2f24929b2e0ae6",
+              "checkpoint_id": "checkpoint:external-tool:91d0da8a3bb54e3e4f2f24929b2e0ae6:prepared",
+              "last_error_fingerprint": null
+            }
+          },
+          "payload_sha256": "b\"\\xea\\xdc\\xf2m\\xdb(\\x1d\\x80y\\xbc\\x1f\\xb2\\xec\\x80\\xaa\\xac\\x0c2t\\xc2\\xc7\\xa2\\x80\\x89{\\x8c^s'\\x97td\"",
+          "occurred_at": "2026-09-08 08:46:24+00:00"
+        },
+        {
+          "tenant_id": "70b97082-b18b-5b63-9c1e-90d27350e17f",
+          "installation_id": "4f75e11d-8686-5e56-a8ac-fcf7f712476b",
+          "event_id": "1bee0424-0ff8-457d-9255-9ab9475e4311",
+          "thread_id": "conversation-dispatch:b761e4b35b97ea9d3b076ab80c5cd56fda67d3282cbd8108b9e08734980ecf76",
+          "sequence": 1,
+          "checkpoint_id": "conversation-dispatch:b761e4b35b97ea9d3b076ab80c5cd56fda67d3282cbd8108b9e08734980ecf76:admitted",
+          "operation_id": null,
+          "event_type": "CONVERSATION_DISPATCH_ADMITTED",
+          "payload": {
+            "data": {
+              "message_id": "probe:2",
+              "operation_id": "external-tool:91d0da8a3bb54e3e4f2f24929b2e0ae6",
+              "principal_id": "test-owner",
+              "conversation_id": "probe-chat"
+            },
+            "checkpoint": {
+              "phase": "dispatch_admitted",
+              "status": "completed",
+              "deadline": null,
+              "revision": 1,
+              "updated_at": "2026-09-08T08:46:24Z",
+              "retry_count": 0,
+              "operation_id": null,
+              "checkpoint_id": "conversation-dispatch:b761e4b35b97ea9d3b076ab80c5cd56fda67d3282cbd8108b9e08734980ecf76:admitted",
+              "last_error_fingerprint": null
+            }
+          },
+          "payload_sha256": "b\"\\xc9\\xbc9[+\\x11C)'\\xea\\x96\\xd0\\x0b\\n\\xf7\\t\\xcds\\xd80N\\x0eMB$-}'?<>\\xc5\"",
+          "occurred_at": "2026-09-08 08:46:24+00:00"
+        },
+        {
+          "tenant_id": "70b97082-b18b-5b63-9c1e-90d27350e17f",
+          "installation_id": "4f75e11d-8686-5e56-a8ac-fcf7f712476b",
+          "event_id": "1a3804aa-6193-45da-a6b3-7f3b9aca3695",
+          "thread_id": "tool:external-tool:91d0da8a3bb54e3e4f2f24929b2e0ae6",
+          "sequence": 3,
+          "checkpoint_id": "checkpoint:external-tool:91d0da8a3bb54e3e4f2f24929b2e0ae6:executed",
+          "operation_id": "external-tool:91d0da8a3bb54e3e4f2f24929b2e0ae6",
+          "event_type": "TOOL_EXECUTED",
+          "payload": {
+            "data": {
+              "dispatch": {
+                "details": {},
+                "accepted": true,
+                "provider_ref": "external-tool:91d0da8a3bb54e3e4f2f24929b2e0ae6"
+              }
+            },
+            "checkpoint": {
+              "phase": "tool_executed",
+              "status": "waiting_for_proof",
+              "deadline": "2026-09-08T08:46:44Z",
+              "revision": 3,
+              "updated_at": "2026-09-08T08:46:24Z",
+              "retry_count": 0,
+              "operation_id": "external-tool:91d0da8a3bb54e3e4f2f24929b2e0ae6",
+              "checkpoint_id": "checkpoint:external-tool:91d0da8a3bb54e3e4f2f24929b2e0ae6:executed",
+              "last_error_fingerprint": null
+            }
+          },
+          "payload_sha256": "b'c\\xf9l\\xfd9m\\xb7Fe\\xfb\\x07OI\\x90\\xd9\\x1e\\x00M\\xa7\\x1f3\\\\=$j\\xa4\\xd9\\xec\\xe6\\xa5\\n\\x97'",
+          "occurred_at": "2026-09-08 08:46:24+00:00"
+        },
+        {
+          "tenant_id": "70b97082-b18b-5b63-9c1e-90d27350e17f",
+          "installation_id": "4f75e11d-8686-5e56-a8ac-fcf7f712476b",
+          "event_id": "2c8ba6b2-c547-4f77-a48b-c11a0f8d72e8",
+          "thread_id": "tool:external-tool:91d0da8a3bb54e3e4f2f24929b2e0ae6",
+          "sequence": 4,
+          "checkpoint_id": "checkpoint:external-tool:91d0da8a3bb54e3e4f2f24929b2e0ae6:verified",
+          "operation_id": "external-tool:91d0da8a3bb54e3e4f2f24929b2e0ae6",
+          "event_type": "STATE_VERIFIED",
+          "payload": {
+            "data": {
+              "proof": {
+                "evidence": {
+                  "sha256": "b9914c89cb173c484bf7d0c46e9f77670968340cacf85be667384a1d9aae6d38",
+                  "source": "/tmp/eva2-tl001/real-model-v2/2/kast_b01212d280.json",
+                  "observation": {
+                    "gezochte_code": "gezinscode-e1b662662dcca9"
+                  }
+                },
+                "expected": {
+                  "sleutel": "kast_b01212d280"
+                },
+                "observed": {
+                  "sleutel": "kast_b01212d280"
+                }
+              }
+            },
+            "checkpoint": {
+              "phase": "state_verified",
+              "status": "completed",
+              "deadline": null,
+              "revision": 4,
+              "updated_at": "2026-09-08T08:46:24Z",
+              "retry_count": 0,
+              "operation_id": "external-tool:91d0da8a3bb54e3e4f2f24929b2e0ae6",
+              "checkpoint_id": "checkpoint:external-tool:91d0da8a3bb54e3e4f2f24929b2e0ae6:verified",
+              "last_error_fingerprint": null
+            }
+          },
+          "payload_sha256": "b'7_\\xebvD\\x05\\xe1km8@\\x02\\x13\\x88\\xa1U\\x1e\\x9b\\x91\\x9d\\x90&\\xd3A_\\xea\\xcf\\xfc\\xb8\\xf3\\xd6{'",
+          "occurred_at": "2026-09-08 08:46:24+00:00"
+        },
+        {
+          "tenant_id": "70b97082-b18b-5b63-9c1e-90d27350e17f",
+          "installation_id": "4f75e11d-8686-5e56-a8ac-fcf7f712476b",
+          "event_id": "7fda9d1a-dc93-4166-97a6-187a518f14d7",
+          "thread_id": "conversation-model:79451d32-6d25-49cb-9702-16913b02ecf2",
+          "sequence": 1,
+          "checkpoint_id": "conversation-model:79451d32-6d25-49cb-9702-16913b02ecf2:admitted",
+          "operation_id": null,
+          "event_type": "CONVERSATION_MODEL_ADMITTED",
+          "payload": {
+            "data": {
+              "message_id": "probe:2",
+              "request_id": "79451d32-6d25-49cb-9702-16913b02ecf2",
+              "principal_id": "test-owner",
+              "conversation_id": "probe-chat"
+            },
+            "checkpoint": {
+              "phase": "model_admitted",
+              "status": "active",
+              "deadline": null,
+              "revision": 1,
+              "updated_at": "2026-09-08T08:46:24Z",
+              "retry_count": 0,
+              "operation_id": null,
+              "checkpoint_id": "conversation-model:79451d32-6d25-49cb-9702-16913b02ecf2:admitted",
+              "last_error_fingerprint": null
+            }
+          },
+          "payload_sha256": "b'\\xcc@_\\x00sq\\xccwQ\\x7f\\xe6\\x98\\x88\\x8eS\\x9f\\xeb\\xb7-v\\xcf\\xf2\\x9d\\xa6\\xa5=\\x9a~/^@\\xb4'",
+          "occurred_at": "2026-09-08 08:46:24+00:00"
+        },
+        {
+          "tenant_id": "70b97082-b18b-5b63-9c1e-90d27350e17f",
+          "installation_id": "4f75e11d-8686-5e56-a8ac-fcf7f712476b",
+          "event_id": "8a8d5259-d42e-4f95-9fab-890df9d527aa",
+          "thread_id": "conversation-model:79451d32-6d25-49cb-9702-16913b02ecf2",
+          "sequence": 2,
+          "checkpoint_id": "conversation-model:79451d32-6d25-49cb-9702-16913b02ecf2:recorded",
+          "operation_id": null,
+          "event_type": "CONVERSATION_MODEL_RECORDED",
+          "payload": {
+            "data": {
+              "usage": {
+                "tool_calls": 0,
+                "measurement": "measured",
+                "input_tokens": 1632,
+                "output_tokens": 15,
+                "model_attempts": 1
+              },
+              "message_id": "probe:2",
+              "request_id": "79451d32-6d25-49cb-9702-16913b02ecf2",
+              "principal_id": "test-owner",
+              "conversation_id": "probe-chat"
+            },
+            "checkpoint": {
+              "phase": "model_recorded",
+              "status": "completed",
+              "deadline": null,
+              "revision": 2,
+              "updated_at": "2026-09-08T08:46:26Z",
+              "retry_count": 0,
+              "operation_id": null,
+              "checkpoint_id": "conversation-model:79451d32-6d25-49cb-9702-16913b02ecf2:recorded",
+              "last_error_fingerprint": null
+            }
+          },
+          "payload_sha256": "b'\\xf0\\xd9Yl\\x99\\xbb\\x17 -RM\\xd9\\x7f\\xb0P_\\x12A*-Q\\xf5-\\x9c9\\x84UT\\xa6\\x937!'",
+          "occurred_at": "2026-09-08 08:46:26+00:00"
+        },
+        {
+          "tenant_id": "70b97082-b18b-5b63-9c1e-90d27350e17f",
+          "installation_id": "4f75e11d-8686-5e56-a8ac-fcf7f712476b",
+          "event_id": "df377935-13cf-4be9-bf40-9b6d2b9c3bd7",
+          "thread_id": "conversation:probe:2",
+          "sequence": 2,
+          "checkpoint_id": "conversation:probe:2:reply",
+          "operation_id": null,
+          "event_type": "REPLY_COMMITTED",
+          "payload": {
+            "data": {
+              "kind": "conversation_reply",
+              "text": "gezinscode-e1b662662dcca9",
+              "provider": "chatgpt-codex:gpt-5.4-mini",
+              "message_id": "probe:2",
+              "model_usage": {
+                "tool_calls": 2,
+                "measurement": "measured",
+                "input_tokens": 5166,
+                "output_tokens": 327,
+                "model_attempts": 3
+              },
+              "text_sha256": "f71957728018c4e02276d17fbe39693fd85439b3ace92d6c74d3b26a70442da0",
+              "model_timing": {
+                "completed_ms": 9711,
+                "first_content_ms": 9412
+              },
+              "principal_id": "test-owner",
+              "conversation_id": "probe-chat",
+              "evidence_memory_ids": []
+            },
+            "checkpoint": {
+              "phase": "reply_committed",
+              "status": "completed",
+              "deadline": null,
+              "revision": 2,
+              "updated_at": "2026-09-08T08:46:16Z",
+              "retry_count": 0,
+              "operation_id": null,
+              "checkpoint_id": "conversation:probe:2:reply",
+              "last_error_fingerprint": null
+            }
+          },
+          "payload_sha256": "b's\\xfb\\xfb\\xe6i2}\\x9c\\xd1\\xecI\\x8cw\\x94hSe\\xb6BM\\x02\\x0eZ\\xe9N0h\\x8b\\xe3{\\xc7i'",
+          "occurred_at": "2026-09-08 08:46:16+00:00"
+        }
+      ]
+    }
+  ],
+  "sourceSha256": {
+    "eva2/src/eva/application/conversation.py": "574048537df302075c32b12c8c0fe32974920f5a24e0bdd0168dd9740c63d246",
+    "eva2/src/eva/adapters/model/pydantic_conversation.py": "2b7aaa6deebcf8ceb0943009cf9ef6e3c1fc9c33389bcabb4d5bcf21fc2d4f8b",
+    "eva2/src/eva/adapters/postgres/external_conversation_tools.py": "db7a8f40b8d6b9c01e1e4ea3a68ddc930107a59ad482f0457290f1a5015351f4",
+    "eva2/src/eva/adapters/postgres/conversation_actions.py": "4fceb6e69da62c39cca10d05bbf2d1639c1d279e2aa51362e491d2ac85a42240",
+    "eva2/src/eva/adapters/postgres/conversation_journal.py": "ce54c21b4af2420c0f01814b3ff4e1048d9265010ff81a0f55273cc4a99dbedf",
+    "eva2/src/eva/bootstrap/runtime.py": "443e35503bd778e70d7ca83d77d24e3194ee5108a596498b5796822dc62ce81b"
+  },
+  "limits": [
+    "First run had a fixture proof/evidence mismatch and ended with provider deadline; correcting the fixture does not establish the timeout root cause.",
+    "New tool names and random dependent document references prove this narrow generic route; not arbitrary skill acquisition or competitor superiority.",
+    "Real subscription model with read-only local test connector and synthetic memory; no live household system or family acceptance.",
+    "Historical uncertain usage of failed run is retained; no invented euro conversion or reset usage."
+  ],
+  "review": {
+    "reviewer": "/root/co006_review",
+    "verdict": "limited_go",
+    "trialsIndependentlyConfirmed": 3,
+    "resultsSha256": "761ed09fda25e944f9defe6f2b26f336019ef508285133ad86cedc5d9453d30a",
+    "checks": "Local documents/hashes, scoped PostgreSQL admissions, step indices 0/1, STATE_VERIFIED, exact reply, model usage. No model/tool execution by reviewer.",
+    "limits": "Narrow generic dependent document reads; not live or full release GO."
+  },
+  "integrationBinding": {
+    "baseCommit": "3117d1a14b8fa40102ec28cdd60894deb1616e7b",
+    "integratedImplementationCommit": "95053b7305b3bb4f408c7132da15f833e861d8ea",
+    "testedAndDeployedSourceCommit": "8297f7d07aefd1e41c5ba9d94c01b745b54afc04",
+    "identicalTree": "b2a0f019ad407ecb8adb7f806cb796b0470d48e8",
+    "preservedPendingApiChanges": true,
+    "imageWasNotRebuiltForIntegrationCommit": true
+  }
+}

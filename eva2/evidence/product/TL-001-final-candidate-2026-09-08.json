@@ -1,0 +1,853 @@
+{
+  "contract": "EvaProductCandidateVerification/v1",
+  "taskId": "TL-001",
+  "date": "2026-09-08",
+  "sourceCommit": "8297f7d07aefd1e41c5ba9d94c01b745b54afc04",
+  "image": "sha256:fb668fd3be833ade03d281c3ea09e13ac28d221b80d8232342fac12185572ca7",
+  "build": {
+    "candidate": {
+      "image_id": "sha256:fb668fd3be833ade03d281c3ea09e13ac28d221b80d8232342fac12185572ca7",
+      "receipt": {
+        "build_image_archive_sha256": "6c41fc2512fc76b1e736f98a73745c32a81c4d29e3661a007c20bbd2f52190f3",
+        "build_image_digest": "sha256:a116514e19457bcb7af7efe9c3dd0b9b71e85b317694e7882a1c52aa15a78134",
+        "build_image_layout_tree_sha256": "6e0a8a16c0e9d0a70b90e66d210823d390a2e77ffb77a513113988a949ac43a9",
+        "build_image_reference": "docker.io/library/python@sha256:a116514e19457bcb7af7efe9c3dd0b9b71e85b317694e7882a1c52aa15a78134",
+        "builder": {
+          "after": {
+            "backend": "docker-buildx/docker",
+            "buildkitNodeId": "4bc0gr9soec56klfdy7z1ju32",
+            "buildkitVersion": "v0.26.2",
+            "buildxExecutableSha256": "4fe2eb90ac22b27fa03734899fcf814aa1e214a4952b9b30b20d551baf1d9a5c",
+            "buildxVersion": "github.com/docker/buildx v0.18.0 fa4461b9a1ec45c23d1b9e32dee0d0a8ed29900b",
+            "containerdContainersNamespace": "moby",
+            "containerdImageStore": "io.containerd.snapshotter.v1",
+            "containerdPluginsNamespace": "plugins.moby",
+            "containerdSocketIdentitySha256": "98a44d9c23966ae325e085dc0be4d44f484279ea4b54516a43f45f5c527973cc",
+            "daemonId": "f3aaa476-80d7-4694-b80e-ae5ed696c69b",
+            "dockerExecutableSha256": "7ed12b00293d64742419a6601ae97960a367a0ce97c88b06e3278cc0a409557b",
+            "dockerServerVersion": "29.1.3",
+            "socketIdentitySha256": "30ecd1d3f8bcaa35dbd6179f11f8a54d82c1c490e5bf36c7bf14c64aa2358e91",
+            "stateRootIdentitySha256": "9062d3e36588fe83ac0d1b8d22ec19f168015e2250c798c799bbc676a3ada098"
+          },
+          "before": {
+            "backend": "docker-buildx/docker",
+            "buildkitNodeId": "4bc0gr9soec56klfdy7z1ju32",
+            "buildkitVersion": "v0.26.2",
+            "buildxExecutableSha256": "4fe2eb90ac22b27fa03734899fcf814aa1e214a4952b9b30b20d551baf1d9a5c",
+            "buildxVersion": "github.com/docker/buildx v0.18.0 fa4461b9a1ec45c23d1b9e32dee0d0a8ed29900b",
+            "containerdContainersNamespace": "moby",
+            "containerdImageStore": "io.containerd.snapshotter.v1",
+            "containerdPluginsNamespace": "plugins.moby",
+            "containerdSocketIdentitySha256": "98a44d9c23966ae325e085dc0be4d44f484279ea4b54516a43f45f5c527973cc",
+            "daemonId": "f3aaa476-80d7-4694-b80e-ae5ed696c69b",
+            "dockerExecutableSha256": "7ed12b00293d64742419a6601ae97960a367a0ce97c88b06e3278cc0a409557b",
+            "dockerServerVersion": "29.1.3",
+            "socketIdentitySha256": "30ecd1d3f8bcaa35dbd6179f11f8a54d82c1c490e5bf36c7bf14c64aa2358e91",
+            "stateRootIdentitySha256": "9062d3e36588fe83ac0d1b8d22ec19f168015e2250c798c799bbc676a3ada098"
+          },
+          "contract": "EvaMeasuredDockerBuilder/v3",
+          "runChallenge": "d87a4b763bbe3ef5018412085ba70c8730292c2864859589a448ba7fc09d8010",
+          "singleHost": true
+        },
+        "candidate_buildkit_result_digest": "sha256:a4352387c47589671ae470b1ac41b4b0030e62c1f864fd679882b100c335ccc0",
+        "candidate_image_archive_sha256": "f5484152f6945502496d15c154ac03261686d7da6c62fae36eb209da8984bed9",
+        "candidate_image_config_digest": "sha256:a4352387c47589671ae470b1ac41b4b0030e62c1f864fd679882b100c335ccc0",
+        "candidate_image_exporter": "docker",
+        "candidate_image_id": "sha256:fb668fd3be833ade03d281c3ea09e13ac28d221b80d8232342fac12185572ca7",
+        "candidate_image_size": 59652846,
+        "candidate_provenance_attestation_enabled": false,
+        "candidate_runtime_library_path": "LD_LIBRARY_PATH=/usr/local/lib",
+        "candidate_source_commit": "8297f7d07aefd1e41c5ba9d94c01b745b54afc04",
+        "candidate_source_date_epoch": 1788860279,
+        "candidate_timestamp_rewrite_enabled": true,
+        "context_tree_sha256": "b11c5dbfc9a407bacb516135a2dfe3fc2dd9f662e84095c8698fdf101b48b668",
+        "contract": "EvaManagedBOfflineCandidateImageReceipt/v3",
+        "network_used": false,
+        "nonclaims": [
+          "The candidate image is untagged and was not pushed, signed, released, or attached to Compose.",
+          "No B configuration, container, volume, secret, or live service was opened."
+        ],
+        "runtime_image_archive_sha256": "ebe8f63c9b7d4e753dfe4d36a0da994a916439b50a51d7fac9d235ab9868561b",
+        "runtime_image_digest": "sha256:9b615fff20e1a4fad29c2b30562580b212c7dd5e2225236735cca0070ed11c78",
+        "runtime_image_layout_tree_sha256": "a4ff83b387cb91c9c50fc5910e2c0554d3cc710a605bf3328743f138de958797",
+        "runtime_image_reference": "gcr.io/distroless/cc-debian13@sha256:9b615fff20e1a4fad29c2b30562580b212c7dd5e2225236735cca0070ed11c78",
+        "runtime_libraries_image_archive_sha256": "1d20ae0dce8f1c747ececf8bc554eb5e656fa334c27c6c4437fc7f5b1f9fb3ad",
+        "runtime_libraries_image_digest": "sha256:09f7da3bc104798d0afb40bc08d23ab2da20a76130cec1f2ef170848f5d85217",
+        "runtime_libraries_image_layout_tree_sha256": "ef743808ebcbea013ccd45c9eb3a801680afa8f8ef28e534e7dcf633e4036ae7",
+        "runtime_libraries_image_reference": "docker.io/library/python@sha256:09f7da3bc104798d0afb40bc08d23ab2da20a76130cec1f2ef170848f5d85217",
+        "status": "built_local_candidate"
+      }
+    },
+    "contract": "EvaManagedBOfflineCandidateBuildReceipt/v2",
+    "inputs": {
+      "base_image_archives": {
+        "build": {
+          "path": "/home/administrator/project/.eva2-artifacts/rr002-builder-a/eva2-base-image-5e742yvc/base.oci.tar",
+          "sha256": "6c41fc2512fc76b1e736f98a73745c32a81c4d29e3661a007c20bbd2f52190f3"
+        },
+        "runtime": {
+          "path": "/home/administrator/project/.eva2-artifacts/rr002-builder-a/eva2-base-image-2w7k3fjh/base.oci.tar",
+          "sha256": "ebe8f63c9b7d4e753dfe4d36a0da994a916439b50a51d7fac9d235ab9868561b"
+        },
+        "runtime_libraries": {
+          "path": "/home/administrator/project/.eva2-artifacts/rr002-builder-a/eva2-base-image-rd23fyq0/base.oci.tar",
+          "sha256": "1d20ae0dce8f1c747ececf8bc554eb5e656fa334c27c6c4437fc7f5b1f9fb3ad"
+        }
+      },
+      "output_parent": "/tmp/eva2-tl001-final.w7dkemvj/image3",
+      "wheel_artifact_root": "/home/administrator/project/.eva2-artifacts/pydantic-ai-2.37-runtime-wheelhouse.1VqGCZ",
+      "wheel_coverage_path": "release/managed-b-wheel-coverage-4d-amd64-v1.json",
+      "wheel_coverage_sha256": "65d90437d20fd8da8a9f40b30c6ba837ae92bf9a71d860dd8c2f434120ad62a0",
+      "wheelhouse_manifest_path": "release/managed-b-wheelhouse-amd64-v2.json",
+      "wheelhouse_manifest_sha256": "3f3a7ba26e9df154f42149b18073512d46e9a92fac97dd12a6945f61406b754e"
+    },
+    "materialized": {
+      "build_context_path": "/tmp/eva2-tl001-final.w7dkemvj/image3/eva2-build-context-y9c5b5jk",
+      "build_image_archive_path": "/tmp/eva2-tl001-final.w7dkemvj/image3/eva2-base-image-k8vtn2a6/base.oci.tar",
+      "candidate_artifact_path": "/tmp/eva2-tl001-final.w7dkemvj/image3/eva2-candidate-image-_swi81nh",
+      "runtime_image_archive_path": "/tmp/eva2-tl001-final.w7dkemvj/image3/eva2-base-image-0vfogwea/base.oci.tar",
+      "runtime_libraries_image_archive_path": "/tmp/eva2-tl001-final.w7dkemvj/image3/eva2-base-image-z7aoyg38/base.oci.tar",
+      "wheelhouse_path": "/tmp/eva2-tl001-final.w7dkemvj/image3/eva2-wheelhouse-tn13km8_"
+    },
+    "network_used": false,
+    "nonclaims": [
+      "No wheel or base image was downloaded.",
+      "The candidate archive and receipts were persisted privately for verification; the image was not tagged, scanned, signed, pushed, attached to Compose, or deployed.",
+      "No live configuration, container, volume, database, secret, route, or service was opened or changed."
+    ],
+    "source": {
+      "archive_sha256": "2652c64941b1289028fcdca9964519c039b0b088f2545c1b04f9935a22f67ecb",
+      "commit": "8297f7d07aefd1e41c5ba9d94c01b745b54afc04",
+      "date_epoch": 1788860279,
+      "dockerfile_sha256": "31e66bb775845fe3af0168937bc646b96579c9e9a4eaf537e9c281ca748d8b4b",
+      "requirements_lock_path": "requirements-4d.lock",
+      "requirements_lock_sha256": "88b5095e87596b80a84c591682723647665c49cbde924fe7931207455fa4b2f2"
+    },
+    "stages": {
+      "build_context": {
+        "tree_sha256": "b11c5dbfc9a407bacb516135a2dfe3fc2dd9f662e84095c8698fdf101b48b668"
+      },
+      "build_image": {
+        "archive_sha256": "6c41fc2512fc76b1e736f98a73745c32a81c4d29e3661a007c20bbd2f52190f3",
+        "config_digest": "sha256:183e5ad42322fea6f731433ae7f6be7498812b31d2eaf05537ffed838dd1ba7c",
+        "digest": "sha256:a116514e19457bcb7af7efe9c3dd0b9b71e85b317694e7882a1c52aa15a78134",
+        "layout_tree_sha256": "6e0a8a16c0e9d0a70b90e66d210823d390a2e77ffb77a513113988a949ac43a9"
+      },
+      "runtime_image": {
+        "archive_sha256": "ebe8f63c9b7d4e753dfe4d36a0da994a916439b50a51d7fac9d235ab9868561b",
+        "config_digest": "sha256:2ee3752a35096cd67144bc7469e67bf30b325183d295763cb9a3d69e60a8e5a6",
+        "digest": "sha256:9b615fff20e1a4fad29c2b30562580b212c7dd5e2225236735cca0070ed11c78",
+        "layout_tree_sha256": "a4ff83b387cb91c9c50fc5910e2c0554d3cc710a605bf3328743f138de958797"
+      },
+      "runtime_libraries_image": {
+        "archive_sha256": "1d20ae0dce8f1c747ececf8bc554eb5e656fa334c27c6c4437fc7f5b1f9fb3ad",
+        "config_digest": "sha256:72a58063c7563c5c64052da2becebce3f25b60055cb351b668c4e2df9153702c",
+        "digest": "sha256:09f7da3bc104798d0afb40bc08d23ab2da20a76130cec1f2ef170848f5d85217",
+        "layout_tree_sha256": "ef743808ebcbea013ccd45c9eb3a801680afa8f8ef28e534e7dcf633e4036ae7"
+      },
+      "wheelhouse": {
+        "count": 38,
+        "tree_sha256": "0f2a6e34de884571f2968080df3ae86fd64e49836e391d2d54f4d50dace911d8"
+      }
+    },
+    "status": "built_local_untagged_candidate"
+  },
+  "scan": {
+    "archiveSha256": "f5484152f6945502496d15c154ac03261686d7da6c62fae36eb209da8984bed9",
+    "cacheHashesVerifiedBeforeAndAfter": {
+      "db/metadata.json": "2087607cb9a08bb378fce764214f639aae8117d57fc094926db69aa9945fb4ac",
+      "db/trivy.db": "140bfd47fd4dc054d0d4563e79a0b8be630b1488105b01d052a8c0ebce54ed12"
+    },
+    "files": 1519,
+    "findings": {
+      "CRITICAL": 0,
+      "HIGH": 0
+    },
+    "image": "sha256:fb668fd3be833ade03d281c3ea09e13ac28d221b80d8232342fac12185572ca7",
+    "network": "none",
+    "packages": 75,
+    "reportSha256": {
+      "sbom": "820ee3d5be176c5e6fe4c12d1a4a8a721840ba661fcd9ee7b63eec06e601bf43",
+      "trivy": "04bcf474e466b7d1f6749b417aafd878bc0fe1dd164df83e122fee6cdd360a20"
+    },
+    "scope": "Candidate scan only; no deployment, complete license audit or release approval."
+  },
+  "installed": {
+    "taskId": "TL-001",
+    "sourceCommit": "8297f7d07aefd1e41c5ba9d94c01b745b54afc04",
+    "image": "sha256:fb668fd3be833ade03d281c3ea09e13ac28d221b80d8232342fac12185572ca7",
+    "sourceHashes": {
+      "src/eva/application/conversation.py": "26bc13dac6f85dbb097b202986bc6f3de845c254eca31ee6bdc6b4dcc1d01c80",
+      "src/eva/adapters/model/pydantic_conversation.py": "2b7aaa6deebcf8ceb0943009cf9ef6e3c1fc9c33389bcabb4d5bcf21fc2d4f8b",
+      "src/eva/adapters/postgres/conversation_actions.py": "4fceb6e69da62c39cca10d05bbf2d1639c1d279e2aa51362e491d2ac85a42240",
+      "src/eva/adapters/postgres/external_conversation_tools.py": "db7a8f40b8d6b9c01e1e4ea3a68ddc930107a59ad482f0457290f1a5015351f4",
+      "src/eva/bootstrap/runtime.py": "d635c1ba766ae766ab69ce62de7a9ff10185d3d2acc24f3e6317758ebaa263a4",
+      "src/eva/adapters/postgres/conversation_journal.py": "7bc71cc8752a82e66619eb9ddf8b3243ef36145e1ce458b1ca77f4a9062b7aca",
+      "src/eva/adapters/postgres/scope.py": "b48ec5abf4d75e55f714a539e6bb036e8bcd444124b038a1af7ed58365b8636c",
+      "src/eva/adapters/api/app.py": "019ce05c3bb55b0f280a81c998a8cea4d4798c1ce57bb3fc3b2bfecdc7c0905f",
+      "src/eva/adapters/api/dashboard_conversation.py": "827faab3e336f0cf1c0091b77f026befc82279420ca401d28e71a874baba5b8a",
+      "src/eva/application/people_memory_overview.py": "2aa3cecd6ea6454408089a303c3ed1ceb0a9b5487ced0fe73047fbb7f5332184",
+      "src/eva/application/telegram_ingress.py": "42a675c2129c65f3cd7ff251b8607d9fb35c0a1990977a5e0c1624e1ca368606",
+      "src/eva/bootstrap/telegram_ingress.py": "86b689a036ce5d9264ae987962b521e84dfaa70bc2b342025b60b462db8a91bb",
+      "src/eva/adapters/connectors/telegram.py": "644fa4e968bc7dfaa87de9c7d95b66982da74bd38cdfa0788d080932fad1be70"
+    },
+    "productImportedFromImage": true,
+    "network": "none",
+    "status": "passed",
+    "counts": {
+      "tests": 122,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "junitSha256": "db410c7a8ce924b68cdd681ff2da341192ef8e37d5b323589969a6bdf7ceb2bc"
+  },
+  "status": "live_independently_verified",
+  "fullGateDirectory": "/tmp/eva2-tl001-final.w7dkemvj/gates3",
+  "nonclaims": [
+    "Menselijke acceptatie van algemene taakuitvoering nog open.",
+    "Meer toolstappen zijn geen bewijs van universele vaardigheden, langdurig projectherstel of concurrentiewinst.",
+    "Scan gebruikt de vastgelegde offline database; geen claim over latere kwetsbaarheden.",
+    "Live readback betreft bestaande ontwikkeltest; geen nieuw menselijk Telegramgesprek of nieuwe meerstapstaak live geclaimd."
+  ],
+  "metadataRepair": {
+    "cause": "Fixed cockpit index metadata differs from release contract, including pre-existing RT-001 appended nonclaim. No test or validator relaxed.",
+    "preservedHistoricalNonClaims": [
+      "The cockpit index is a release-bound evidence projection, not a new live run.",
+      "A source receipt proves only the claim and nonclaims written in that receipt.",
+      "Selected and open cockpit items are deliberately absent from this evidence index.",
+      "CO-003 refreshes touched source/test hashes for this development candidate only; owner memory-source listing is not yet a deployed dashboard feature.",
+      "RT-001 refreshes touched runtime/test hashes after targeted source regressions. Subscription admission, current-source recovery and owner-bound outgoing delivery are not deployed; earlier receipts do not prove these new capabilities. The current RT-001 receipt records fixture delivery and read-only real authority checks separately.",
+      "RT-001 context repair refreshes only changed model/test hashes after 165 image tests and a copied-data incident answer. UX-000 main.jsx is bound to its completed local browser proof. This does not promote live repair or installer acceptance; historical evidence retains its scope."
+    ],
+    "originalGate": "10 failed, 1703 passed; raw command-02.json retained",
+    "status": "48 targeted checks passed; independent bounded GO"
+  },
+  "supersededCandidate": {
+    "sourceCommit": "76fd74054f1bf90b25db2f016f7e13d9c319054e",
+    "image": "sha256:5ce0e2ffc1498daf0e204bd9f144de727d0bb1f1101fef409928b79e7c63c2d3",
+    "build": {
+      "candidate": {
+        "image_id": "sha256:5ce0e2ffc1498daf0e204bd9f144de727d0bb1f1101fef409928b79e7c63c2d3",
+        "receipt": {
+          "build_image_archive_sha256": "6c41fc2512fc76b1e736f98a73745c32a81c4d29e3661a007c20bbd2f52190f3",
+          "build_image_digest": "sha256:a116514e19457bcb7af7efe9c3dd0b9b71e85b317694e7882a1c52aa15a78134",
+          "build_image_layout_tree_sha256": "6e0a8a16c0e9d0a70b90e66d210823d390a2e77ffb77a513113988a949ac43a9",
+          "build_image_reference": "docker.io/library/python@sha256:a116514e19457bcb7af7efe9c3dd0b9b71e85b317694e7882a1c52aa15a78134",
+          "builder": {
+            "after": {
+              "backend": "docker-buildx/docker",
+              "buildkitNodeId": "4bc0gr9soec56klfdy7z1ju32",
+              "buildkitVersion": "v0.26.2",
+              "buildxExecutableSha256": "4fe2eb90ac22b27fa03734899fcf814aa1e214a4952b9b30b20d551baf1d9a5c",
+              "buildxVersion": "github.com/docker/buildx v0.18.0 fa4461b9a1ec45c23d1b9e32dee0d0a8ed29900b",
+              "containerdContainersNamespace": "moby",
+              "containerdImageStore": "io.containerd.snapshotter.v1",
+              "containerdPluginsNamespace": "plugins.moby",
+              "containerdSocketIdentitySha256": "98a44d9c23966ae325e085dc0be4d44f484279ea4b54516a43f45f5c527973cc",
+              "daemonId": "f3aaa476-80d7-4694-b80e-ae5ed696c69b",
+              "dockerExecutableSha256": "7ed12b00293d64742419a6601ae97960a367a0ce97c88b06e3278cc0a409557b",
+              "dockerServerVersion": "29.1.3",
+              "socketIdentitySha256": "30ecd1d3f8bcaa35dbd6179f11f8a54d82c1c490e5bf36c7bf14c64aa2358e91",
+              "stateRootIdentitySha256": "9062d3e36588fe83ac0d1b8d22ec19f168015e2250c798c799bbc676a3ada098"
+            },
+            "before": {
+              "backend": "docker-buildx/docker",
+              "buildkitNodeId": "4bc0gr9soec56klfdy7z1ju32",
+              "buildkitVersion": "v0.26.2",
+              "buildxExecutableSha256": "4fe2eb90ac22b27fa03734899fcf814aa1e214a4952b9b30b20d551baf1d9a5c",
+              "buildxVersion": "github.com/docker/buildx v0.18.0 fa4461b9a1ec45c23d1b9e32dee0d0a8ed29900b",
+              "containerdContainersNamespace": "moby",
+              "containerdImageStore": "io.containerd.snapshotter.v1",
+              "containerdPluginsNamespace": "plugins.moby",
+              "containerdSocketIdentitySha256": "98a44d9c23966ae325e085dc0be4d44f484279ea4b54516a43f45f5c527973cc",
+              "daemonId": "f3aaa476-80d7-4694-b80e-ae5ed696c69b",
+              "dockerExecutableSha256": "7ed12b00293d64742419a6601ae97960a367a0ce97c88b06e3278cc0a409557b",
+              "dockerServerVersion": "29.1.3",
+              "socketIdentitySha256": "30ecd1d3f8bcaa35dbd6179f11f8a54d82c1c490e5bf36c7bf14c64aa2358e91",
+              "stateRootIdentitySha256": "9062d3e36588fe83ac0d1b8d22ec19f168015e2250c798c799bbc676a3ada098"
+            },
+            "contract": "EvaMeasuredDockerBuilder/v3",
+            "runChallenge": "f09ca8ee7f257c56655bc3d3a15ab2cb3a0c5a30dff30e569a040c4d3906ea89",
+            "singleHost": true
+          },
+          "candidate_buildkit_result_digest": "sha256:a69e2c921006256566f9dc014e54aa9fd67d85e5f2d4e91b6b877b4ab3d5e391",
+          "candidate_image_archive_sha256": "775f5e1a7cf82a074beae8049b2b9d663b1ac31d8301ee45e2650f40fa8bb1e3",
+          "candidate_image_config_digest": "sha256:a69e2c921006256566f9dc014e54aa9fd67d85e5f2d4e91b6b877b4ab3d5e391",
+          "candidate_image_exporter": "docker",
+          "candidate_image_id": "sha256:5ce0e2ffc1498daf0e204bd9f144de727d0bb1f1101fef409928b79e7c63c2d3",
+          "candidate_image_size": 59652760,
+          "candidate_provenance_attestation_enabled": false,
+          "candidate_runtime_library_path": "LD_LIBRARY_PATH=/usr/local/lib",
+          "candidate_source_commit": "76fd74054f1bf90b25db2f016f7e13d9c319054e",
+          "candidate_source_date_epoch": 1788859631,
+          "candidate_timestamp_rewrite_enabled": true,
+          "context_tree_sha256": "8d670a71aa235c005e556049ecffcc62d70006829e56309983811ae577b2fa82",
+          "contract": "EvaManagedBOfflineCandidateImageReceipt/v3",
+          "network_used": false,
+          "nonclaims": [
+            "The candidate image is untagged and was not pushed, signed, released, or attached to Compose.",
+            "No B configuration, container, volume, secret, or live service was opened."
+          ],
+          "runtime_image_archive_sha256": "ebe8f63c9b7d4e753dfe4d36a0da994a916439b50a51d7fac9d235ab9868561b",
+          "runtime_image_digest": "sha256:9b615fff20e1a4fad29c2b30562580b212c7dd5e2225236735cca0070ed11c78",
+          "runtime_image_layout_tree_sha256": "a4ff83b387cb91c9c50fc5910e2c0554d3cc710a605bf3328743f138de958797",
+          "runtime_image_reference": "gcr.io/distroless/cc-debian13@sha256:9b615fff20e1a4fad29c2b30562580b212c7dd5e2225236735cca0070ed11c78",
+          "runtime_libraries_image_archive_sha256": "1d20ae0dce8f1c747ececf8bc554eb5e656fa334c27c6c4437fc7f5b1f9fb3ad",
+          "runtime_libraries_image_digest": "sha256:09f7da3bc104798d0afb40bc08d23ab2da20a76130cec1f2ef170848f5d85217",
+          "runtime_libraries_image_layout_tree_sha256": "ef743808ebcbea013ccd45c9eb3a801680afa8f8ef28e534e7dcf633e4036ae7",
+          "runtime_libraries_image_reference": "docker.io/library/python@sha256:09f7da3bc104798d0afb40bc08d23ab2da20a76130cec1f2ef170848f5d85217",
+          "status": "built_local_candidate"
+        }
+      },
+      "contract": "EvaManagedBOfflineCandidateBuildReceipt/v2",
+      "inputs": {
+        "base_image_archives": {
+          "build": {
+            "path": "/home/administrator/project/.eva2-artifacts/rr002-builder-a/eva2-base-image-5e742yvc/base.oci.tar",
+            "sha256": "6c41fc2512fc76b1e736f98a73745c32a81c4d29e3661a007c20bbd2f52190f3"
+          },
+          "runtime": {
+            "path": "/home/administrator/project/.eva2-artifacts/rr002-builder-a/eva2-base-image-2w7k3fjh/base.oci.tar",
+            "sha256": "ebe8f63c9b7d4e753dfe4d36a0da994a916439b50a51d7fac9d235ab9868561b"
+          },
+          "runtime_libraries": {
+            "path": "/home/administrator/project/.eva2-artifacts/rr002-builder-a/eva2-base-image-rd23fyq0/base.oci.tar",
+            "sha256": "1d20ae0dce8f1c747ececf8bc554eb5e656fa334c27c6c4437fc7f5b1f9fb3ad"
+          }
+        },
+        "output_parent": "/tmp/eva2-tl001-final.w7dkemvj/image2",
+        "wheel_artifact_root": "/home/administrator/project/.eva2-artifacts/pydantic-ai-2.37-runtime-wheelhouse.1VqGCZ",
+        "wheel_coverage_path": "release/managed-b-wheel-coverage-4d-amd64-v1.json",
+        "wheel_coverage_sha256": "65d90437d20fd8da8a9f40b30c6ba837ae92bf9a71d860dd8c2f434120ad62a0",
+        "wheelhouse_manifest_path": "release/managed-b-wheelhouse-amd64-v2.json",
+        "wheelhouse_manifest_sha256": "3f3a7ba26e9df154f42149b18073512d46e9a92fac97dd12a6945f61406b754e"
+      },
+      "materialized": {
+        "build_context_path": "/tmp/eva2-tl001-final.w7dkemvj/image2/eva2-build-context-j3u9m3x5",
+        "build_image_archive_path": "/tmp/eva2-tl001-final.w7dkemvj/image2/eva2-base-image-b9_79qud/base.oci.tar",
+        "candidate_artifact_path": "/tmp/eva2-tl001-final.w7dkemvj/image2/eva2-candidate-image-5ybuouhx",
+        "runtime_image_archive_path": "/tmp/eva2-tl001-final.w7dkemvj/image2/eva2-base-image-m48bd6en/base.oci.tar",
+        "runtime_libraries_image_archive_path": "/tmp/eva2-tl001-final.w7dkemvj/image2/eva2-base-image-_ll75595/base.oci.tar",
+        "wheelhouse_path": "/tmp/eva2-tl001-final.w7dkemvj/image2/eva2-wheelhouse-pc0elj97"
+      },
+      "network_used": false,
+      "nonclaims": [
+        "No wheel or base image was downloaded.",
+        "The candidate archive and receipts were persisted privately for verification; the image was not tagged, scanned, signed, pushed, attached to Compose, or deployed.",
+        "No live configuration, container, volume, database, secret, route, or service was opened or changed."
+      ],
+      "source": {
+        "archive_sha256": "602c4bec6d2a0c8f9c356c49265f894e23e243af0a2b17ce229360f9954010cb",
+        "commit": "76fd74054f1bf90b25db2f016f7e13d9c319054e",
+        "date_epoch": 1788859631,
+        "dockerfile_sha256": "31e66bb775845fe3af0168937bc646b96579c9e9a4eaf537e9c281ca748d8b4b",
+        "requirements_lock_path": "requirements-4d.lock",
+        "requirements_lock_sha256": "88b5095e87596b80a84c591682723647665c49cbde924fe7931207455fa4b2f2"
+      },
+      "stages": {
+        "build_context": {
+          "tree_sha256": "8d670a71aa235c005e556049ecffcc62d70006829e56309983811ae577b2fa82"
+        },
+        "build_image": {
+          "archive_sha256": "6c41fc2512fc76b1e736f98a73745c32a81c4d29e3661a007c20bbd2f52190f3",
+          "config_digest": "sha256:183e5ad42322fea6f731433ae7f6be7498812b31d2eaf05537ffed838dd1ba7c",
+          "digest": "sha256:a116514e19457bcb7af7efe9c3dd0b9b71e85b317694e7882a1c52aa15a78134",
+          "layout_tree_sha256": "6e0a8a16c0e9d0a70b90e66d210823d390a2e77ffb77a513113988a949ac43a9"
+        },
+        "runtime_image": {
+          "archive_sha256": "ebe8f63c9b7d4e753dfe4d36a0da994a916439b50a51d7fac9d235ab9868561b",
+          "config_digest": "sha256:2ee3752a35096cd67144bc7469e67bf30b325183d295763cb9a3d69e60a8e5a6",
+          "digest": "sha256:9b615fff20e1a4fad29c2b30562580b212c7dd5e2225236735cca0070ed11c78",
+          "layout_tree_sha256": "a4ff83b387cb91c9c50fc5910e2c0554d3cc710a605bf3328743f138de958797"
+        },
+        "runtime_libraries_image": {
+          "archive_sha256": "1d20ae0dce8f1c747ececf8bc554eb5e656fa334c27c6c4437fc7f5b1f9fb3ad",
+          "config_digest": "sha256:72a58063c7563c5c64052da2becebce3f25b60055cb351b668c4e2df9153702c",
+          "digest": "sha256:09f7da3bc104798d0afb40bc08d23ab2da20a76130cec1f2ef170848f5d85217",
+          "layout_tree_sha256": "ef743808ebcbea013ccd45c9eb3a801680afa8f8ef28e534e7dcf633e4036ae7"
+        },
+        "wheelhouse": {
+          "count": 38,
+          "tree_sha256": "0f2a6e34de884571f2968080df3ae86fd64e49836e391d2d54f4d50dace911d8"
+        }
+      },
+      "status": "built_local_untagged_candidate"
+    },
+    "scan": {
+      "archiveSha256": "775f5e1a7cf82a074beae8049b2b9d663b1ac31d8301ee45e2650f40fa8bb1e3",
+      "cacheHashesVerifiedBeforeAndAfter": {
+        "db/metadata.json": "2087607cb9a08bb378fce764214f639aae8117d57fc094926db69aa9945fb4ac",
+        "db/trivy.db": "140bfd47fd4dc054d0d4563e79a0b8be630b1488105b01d052a8c0ebce54ed12"
+      },
+      "files": 1519,
+      "findings": {
+        "CRITICAL": 0,
+        "HIGH": 0
+      },
+      "image": "sha256:5ce0e2ffc1498daf0e204bd9f144de727d0bb1f1101fef409928b79e7c63c2d3",
+      "network": "none",
+      "packages": 75,
+      "reportSha256": {
+        "sbom": "2cc2fb2966f9508d9a8f844f3be7535b275bdf90a6813a04e67a21f77378a283",
+        "trivy": "25b9e1f658f739e0866e1d758b875ac94de2d15d5f88c642dd4e9330d3a8d66b"
+      },
+      "scope": "Candidate scan only; no deployment, complete license audit or release approval."
+    },
+    "installed": {
+      "taskId": "TL-001",
+      "sourceCommit": "76fd74054f1bf90b25db2f016f7e13d9c319054e",
+      "image": "sha256:5ce0e2ffc1498daf0e204bd9f144de727d0bb1f1101fef409928b79e7c63c2d3",
+      "sourceHashes": {
+        "src/eva/application/conversation.py": "26bc13dac6f85dbb097b202986bc6f3de845c254eca31ee6bdc6b4dcc1d01c80",
+        "src/eva/adapters/model/pydantic_conversation.py": "2b7aaa6deebcf8ceb0943009cf9ef6e3c1fc9c33389bcabb4d5bcf21fc2d4f8b",
+        "src/eva/adapters/postgres/conversation_actions.py": "4fceb6e69da62c39cca10d05bbf2d1639c1d279e2aa51362e491d2ac85a42240",
+        "src/eva/adapters/postgres/external_conversation_tools.py": "db7a8f40b8d6b9c01e1e4ea3a68ddc930107a59ad482f0457290f1a5015351f4",
+        "src/eva/bootstrap/runtime.py": "d635c1ba766ae766ab69ce62de7a9ff10185d3d2acc24f3e6317758ebaa263a4",
+        "src/eva/adapters/postgres/conversation_journal.py": "7bc71cc8752a82e66619eb9ddf8b3243ef36145e1ce458b1ca77f4a9062b7aca",
+        "src/eva/adapters/postgres/scope.py": "b48ec5abf4d75e55f714a539e6bb036e8bcd444124b038a1af7ed58365b8636c",
+        "src/eva/adapters/api/app.py": "019ce05c3bb55b0f280a81c998a8cea4d4798c1ce57bb3fc3b2bfecdc7c0905f",
+        "src/eva/adapters/api/dashboard_conversation.py": "827faab3e336f0cf1c0091b77f026befc82279420ca401d28e71a874baba5b8a",
+        "src/eva/application/people_memory_overview.py": "2aa3cecd6ea6454408089a303c3ed1ceb0a9b5487ced0fe73047fbb7f5332184",
+        "src/eva/application/telegram_ingress.py": "42a675c2129c65f3cd7ff251b8607d9fb35c0a1990977a5e0c1624e1ca368606",
+        "src/eva/bootstrap/telegram_ingress.py": "86b689a036ce5d9264ae987962b521e84dfaa70bc2b342025b60b462db8a91bb",
+        "src/eva/adapters/connectors/telegram.py": "644fa4e968bc7dfaa87de9c7d95b66982da74bd38cdfa0788d080932fad1be70"
+      },
+      "productImportedFromImage": true,
+      "network": "none",
+      "status": "passed",
+      "counts": {
+        "tests": 122,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0
+      },
+      "junitSha256": "54e76d9e32b2b19fa16295c1ee4ddbae663d94eadb8131c3805d2a731d5edf5d"
+    }
+  },
+  "independentReview": {
+    "reviewer": "/root/co006_review",
+    "status": "bounded_go",
+    "scope": "image3 source binding, 13 installed module hashes, archive and scan reports, 122/122 JUnit",
+    "pending": [
+      "full release gates",
+      "current-data probe",
+      "A/B deployment"
+    ]
+  },
+  "copiedData": {
+    "status": "passed",
+    "dataTransition": {
+      "hindsightCountDigest": "35c69dd90e73122c40486617eb6173431757229a6b9f3932002bd7afa9e8f894",
+      "hindsightDumpBytes": 2480709,
+      "hindsightDumpSha256": "01c5e4117524553bdd44c295cb56fd258611a0643360a55c15ca9522d2de7007",
+      "hindsightTableCount": 23,
+      "operationalCountDigest": "da828218f695d987cb3168fd8a8d65402251359a41d21c8b5454d21c0028fb98",
+      "operationalDumpBytes": 10061646,
+      "operationalDumpSha256": "d63858cca08c69f07d4eefb5d027d12224d421ce739b01edc96ccd602adc2121",
+      "operationalTableCount": 48,
+      "plaintextRetainedAfterProbe": false,
+      "restoredWithinHindsightSnapshotWindow": true,
+      "restoredWithinOperationalSnapshotWindow": true,
+      "semanticHindsightDataSurvivedJointRestart": true,
+      "sourceDatabasesReadOnly": true,
+      "sourceHindsightVolume": "eva2-managed-b-slot3-memory",
+      "sourceHindsightWindowDigests": [
+        "35c69dd90e73122c40486617eb6173431757229a6b9f3932002bd7afa9e8f894",
+        "35c69dd90e73122c40486617eb6173431757229a6b9f3932002bd7afa9e8f894"
+      ],
+      "sourceOperationalVolume": "eva2-managed-b-slot3-operational",
+      "sourceOperationalWindowDigests": [
+        "da828218f695d987cb3168fd8a8d65402251359a41d21c8b5454d21c0028fb98",
+        "da828218f695d987cb3168fd8a8d65402251359a41d21c8b5454d21c0028fb98"
+      ],
+      "sourceRoutePort": 44710
+    },
+    "conversationReplyPreservedAfterJointRestart": true,
+    "temporaryResourcesRemoved": true,
+    "liveSafetyAfter": {
+      "currentEva2": 200,
+      "eva1": 200
+    },
+    "privateReceiptSha256": "36fcbac2afcdfea7148481018d8869c9e7d90c2c8fb3b982af0c22ea0f3be293",
+    "independentReview": {
+      "reviewer": "/root/co006_review",
+      "status": "bounded_go",
+      "modelCalls": 2,
+      "tokens": 5512,
+      "telegramMessagesSent": 0,
+      "nonclaims": "Same-person/conversation memory test does not prove Hindsight-only retrieval. Full release gate and live rollout remain open."
+    }
+  },
+  "fullReleaseGate": {
+    "status": "passed",
+    "candidate": {
+      "imageId": "sha256:fb668fd3be833ade03d281c3ea09e13ac28d221b80d8232342fac12185572ca7",
+      "scope": [
+        "postgres-browser-physical"
+      ],
+      "sourceCommit": "8297f7d07aefd1e41c5ba9d94c01b745b54afc04"
+    },
+    "groups": [
+      {
+        "collectedCount": 1713,
+        "collectionSha256": "c85b8fd886897ccc4fe2ba123c4a8d01f91ca24cd3cbddeeebf0f47c4971575d",
+        "executableModuleCount": 120,
+        "group": "pure",
+        "junitSha256": "ca5758537c8a90881afaa82d3033ef8c926488137c86062efc4793cbd511e737",
+        "result": {
+          "errors": 0,
+          "failures": 0,
+          "skipped": 0,
+          "tests": 1713
+        },
+        "stderrSha256": "047e9fa17665373822f8beebaea339ea86c906e7135f99db267dfa376194ff4c",
+        "stdoutSha256": "5f2e6562268892cc2aab17b141e20eef49bc65718027ff7248983b30e18ad4e3"
+      },
+      {
+        "collectedCount": 4,
+        "collectionSha256": "940e4d63dc0fd8dbd7778e7abfe0195be2bd4d6117d1126824c1fe0e5947da33",
+        "executableModuleCount": 1,
+        "group": "portable-effect",
+        "junitSha256": "afa630e65d4cb4ecc910996299475e80274e1304bd35a90b9d73811718032c1a",
+        "result": {
+          "errors": 0,
+          "failures": 0,
+          "skipped": 0,
+          "tests": 4
+        },
+        "stderrSha256": "047e9fa17665373822f8beebaea339ea86c906e7135f99db267dfa376194ff4c",
+        "stdoutSha256": "345b17f46b1e900eae7a3b78f35d5a36a1c96f400db5b984b4d2aebc3e92da75"
+      },
+      {
+        "collectedCount": 4,
+        "collectionSha256": "831d61a1cdccd6676403ffdca1501cb10e2bd874ad2ed10e98636cbda38b98ca",
+        "executableModuleCount": 1,
+        "group": "portable-model",
+        "junitSha256": "6521896731fa970cfafbe13a4625817de00942dd322c8f5f71e92764b841917f",
+        "result": {
+          "errors": 0,
+          "failures": 0,
+          "skipped": 0,
+          "tests": 4
+        },
+        "stderrSha256": "047e9fa17665373822f8beebaea339ea86c906e7135f99db267dfa376194ff4c",
+        "stdoutSha256": "a1fa29d12ded6f1fbd7ecd1de368a6cf30fd6bcdaef6b7a4468df1552a60edaf"
+      },
+      {
+        "collectedCount": 5,
+        "collectionSha256": "c93ae00d5ea4c2fab8483e02c007017033c46b959828b01a1ab1f0a6165d0eb8",
+        "executableModuleCount": 1,
+        "group": "portable-object",
+        "junitSha256": "f2d334b682b717f1f057152e0171c1ee89d83fd472fa25e7991d46362c18ca1b",
+        "result": {
+          "errors": 0,
+          "failures": 0,
+          "skipped": 0,
+          "tests": 5
+        },
+        "stderrSha256": "047e9fa17665373822f8beebaea339ea86c906e7135f99db267dfa376194ff4c",
+        "stdoutSha256": "f0323c460f416548f9fd3fb352b69da1ab2896bc99bfa0128eac96517d2127c3"
+      },
+      {
+        "collectedCount": 4,
+        "collectionSha256": "f96668ce99772e13320085143157d58cdc1e059b9ce6a6a352f0f68b878798aa",
+        "executableModuleCount": 1,
+        "group": "portable-read",
+        "junitSha256": "b900e228c9136fb16b4a87865c79fea2a06020c74e7fe6fa168afde200576f9e",
+        "result": {
+          "errors": 0,
+          "failures": 0,
+          "skipped": 0,
+          "tests": 4
+        },
+        "stderrSha256": "047e9fa17665373822f8beebaea339ea86c906e7135f99db267dfa376194ff4c",
+        "stdoutSha256": "bbcaf88bd166b306352c0a3c61c4e40eb5b1e7727bb353333d482e1263af39de"
+      },
+      {
+        "collectedCount": 2,
+        "collectionSha256": "338ea2d153a97377ed94f3a5afd5ca760ca96c095db3b8744699cf12e4cbe670",
+        "executableModuleCount": 1,
+        "group": "portable-full-schema",
+        "junitSha256": "6c302ff475bc04ca9ca5616063d9e46aeacedae5d38cc4debbdf41513de6d305",
+        "result": {
+          "errors": 0,
+          "failures": 0,
+          "skipped": 0,
+          "tests": 2
+        },
+        "stderrSha256": "047e9fa17665373822f8beebaea339ea86c906e7135f99db267dfa376194ff4c",
+        "stdoutSha256": "8c8a9a37aff53c18bfb46d9f8f34b6c0dc728d7541dd4c3780082e8a769de657"
+      },
+      {
+        "collectedCount": 297,
+        "collectionSha256": "78e79cef2672b81a5ec1860aa1943d008567bcf793f950037e0feb9b27977839",
+        "executableModuleCount": 24,
+        "group": "postgres",
+        "junitSha256": "ddcef7fa6d953284e14c74fdb06d2a2c71929aad1a37b20867742cf6d0087fe1",
+        "result": {
+          "errors": 0,
+          "failures": 0,
+          "skipped": 0,
+          "tests": 297
+        },
+        "stderrSha256": "eeea8fff81f27663e4afebba3d9f09c5e141e35ce45bb48348990ddf81e90e66",
+        "stdoutSha256": "b86468d3b33071467efb24d4e0a8cd938307b4f7f33748a24fe21e42950b03c4",
+        "subgroups": [
+          {
+            "collectedCount": 80,
+            "collectionSha256": "a8394ddf5fefa3a8f50ab18459267a776e7d592bd65d9a1dfd357a275c934227",
+            "executableModuleCount": 13,
+            "junitSha256": "d2d35471f112ab4ba6c0a22cad70d321cd6f5b51bcf4c635d73cf5b3709c73af",
+            "name": "postgres-action-chain",
+            "result": {
+              "errors": 0,
+              "failures": 0,
+              "skipped": 0,
+              "tests": 80
+            },
+            "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stdoutSha256": "22c482ede431c32db5846787def845c77e4612dfa61cd20c8ff436be6e857601"
+          },
+          {
+            "collectedCount": 4,
+            "collectionSha256": "152995b97308f3dad60713e99dc3d9107b3d4cd0e49173f49fe309acd00f1439",
+            "executableModuleCount": 1,
+            "junitSha256": "f2f4ebcd8604681f80eece858933c1cd69a2bbf1eece62009778a8e9a015977a",
+            "name": "postgres-browser-physical",
+            "physicalReceipt": {
+              "candidate": {
+                "imageId": "sha256:fb668fd3be833ade03d281c3ea09e13ac28d221b80d8232342fac12185572ca7",
+                "sourceCommit": "8297f7d07aefd1e41c5ba9d94c01b745b54afc04"
+              },
+              "cleanup": {
+                "allNonceResourcesRemoved": true
+              },
+              "contract": "EvaManagedBBrowserReleaseSubgate/v1",
+              "execution": {
+                "collectedNodeids": [
+                  "tests/postgres/test_playwright_mcp_action_chain.py::test_owner_stop_after_browser_authorization_prevents_the_real_click",
+                  "tests/postgres/test_playwright_mcp_action_chain.py::test_real_browser_click_crosses_durable_ledger_and_server_readback",
+                  "tests/postgres/test_playwright_mcp_action_chain.py::test_browser_click_crash_never_starts_a_second_provider_call[before-before_effect_io-0-not_committed]",
+                  "tests/postgres/test_playwright_mcp_action_chain.py::test_browser_click_crash_never_starts_a_second_provider_call[after-after_effect_io-1-committed]"
+                ],
+                "externalBrowserEgressBlocked": true,
+                "junit": {
+                  "errors": 0,
+                  "failures": 0,
+                  "skipped": 0,
+                  "tests": 4
+                },
+                "junitSha256": "f2f4ebcd8604681f80eece858933c1cd69a2bbf1eece62009778a8e9a015977a",
+                "stderrSha256": "92212e973a9f1104947e535e761d8731a82532291f7083855721e5b939bc525d",
+                "stdoutSha256": "918d428ceb80fc5ee61edd27a2342fb1285ffacef685afdd169bbc07d0d6abd3"
+              },
+              "images": {
+                "browser": {
+                  "id": "sha256:add8756264bc95962597d2e5095b66317acb1d89a7c8b64f264e7d2dee140bc9",
+                  "reference": "mcr.microsoft.com/playwright/mcp@sha256:add8756264bc95962597d2e5095b66317acb1d89a7c8b64f264e7d2dee140bc9"
+                },
+                "fixture": {
+                  "id": "sha256:a116514e19457bcb7af7efe9c3dd0b9b71e85b317694e7882a1c52aa15a78134",
+                  "reference": "docker.io/library/python@sha256:a116514e19457bcb7af7efe9c3dd0b9b71e85b317694e7882a1c52aa15a78134"
+                },
+                "postgres": {
+                  "id": "sha256:472efd9a66f2b2f1a5aeb18b28de74332e6ef88c2b93a1a5d812fb6db67a5f60",
+                  "reference": "docker.io/library/postgres@sha256:472efd9a66f2b2f1a5aeb18b28de74332e6ef88c2b93a1a5d812fb6db67a5f60"
+                }
+              },
+              "inputs": {
+                "fixtureServerSha256": "6be987eecf2d909e91db095c861edd45a43469f39b12dc2fffd9716f08680797",
+                "gateSitePackagesSha256": "82cd690c580cdcbf0634d859586bf1e6194a3519aba5d2efca4d7d2760844c4c",
+                "harnessSha256": "b5e120271b531e314d78ec24ef173241b50e10d1fadca0310e4ba308ae2d6538",
+                "profileSha256": "c2ce8e60dc1884521b1406bd074544fba9ac965a4364dccd5beb3d0fd0bbbc5b",
+                "scheduleSha256": "f492d746779ec5276478893ff22720c84926912371d19175dd7508a18734b91d",
+                "testModuleSha256": "93b5931ca65baa5a1e8f2562723d3f0838c500f2e69d970c17bcb5a609765d5a",
+                "testsTreeSha256": "0791c1f99a809073393fbcc2ae6241acd7808216fd250cc758131bfa0ed547fd",
+                "toolsTreeSha256": "fef24970833d69a2bf3f647a505ba75c73daaa3efa1ef95ef9388477937d7c65",
+                "workerSha256": "85252cf1a110c4bc9b9b516798d325e17ca1aff3dc2387a9305251a643e1044b"
+              },
+              "isolation": {
+                "containerCount": 4,
+                "controllerUsesCandidateInternalProductCode": true,
+                "gatewaylessInternalNetworkCount": 2,
+                "publishedPortCount": 0,
+                "repositoryProductSourceMounted": false
+              },
+              "nonClaims": [
+                "This isolated test does not promote or start a live Eva route.",
+                "This receipt does not replace the broad managed required-test receipt."
+              ],
+              "resources": {
+                "containers": {
+                  "eva2-browser-gate-64022af655b33dbe-browser": "f926705ee1b5788a80c214abfcde91efe575619dfa97b395e966b7c2dd016ab2",
+                  "eva2-browser-gate-64022af655b33dbe-controller": "c0efef9128264ab52ee2b591f8831cdc292c1939d9547394b4f701d84f24b0cb",
+                  "eva2-browser-gate-64022af655b33dbe-db": "2723122a1af5bc4dd99866d7b41fdd1f2b030bc89b53876998e4bdf9995ad083",
+                  "eva2-browser-gate-64022af655b33dbe-fixture": "c4aad394b1ef77c4f9f1472a043140f4f45f5334f0103576b241e44246fc2f51"
+                },
+                "database": "eva2_action_chain_disposable_64022af655b33dbe",
+                "networks": {
+                  "eva2-browser-gate-64022af655b33dbe-browser-net": "eea4719048ef42a4b68735badf5ee247db73e5f2a024eb73ed5865cb0e988f2f",
+                  "eva2-browser-gate-64022af655b33dbe-db-net": "9a27d5be8159f60d7f16513f0328095310ded8f5b93594cd8fab99358cd874b9"
+                },
+                "nonce": "64022af655b33dbe"
+              },
+              "schemaVersion": 1,
+              "status": "passed"
+            },
+            "physicalReceiptSha256": "260bd5970e16856442ad99ea1f2ab9e34bc542c0a95c297edc3da1b47703a46b",
+            "result": {
+              "errors": 0,
+              "failures": 0,
+              "skipped": 0,
+              "tests": 4
+            },
+            "stderrSha256": "92212e973a9f1104947e535e761d8731a82532291f7083855721e5b939bc525d",
+            "stdoutSha256": "918d428ceb80fc5ee61edd27a2342fb1285ffacef685afdd169bbc07d0d6abd3"
+          },
+          {
+            "collectedCount": 70,
+            "collectionSha256": "02b6eebd74a128054f4812f665a214d893465a7fae2bec0b04599d23adc73ae6",
+            "executableModuleCount": 2,
+            "junitSha256": "ad6b7315cbdf44ba67d0402d837bdf0dd41c3f7d15f2c84e19084d781850167b",
+            "name": "postgres-living",
+            "result": {
+              "errors": 0,
+              "failures": 0,
+              "skipped": 0,
+              "tests": 70
+            },
+            "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stdoutSha256": "852647160a7d5eccebadaf8b4d1ce17baeb2f5e7902b415f4e4e540cabfea6b1"
+          },
+          {
+            "collectedCount": 52,
+            "collectionSha256": "1d65813b733a66eb50a2332703126d52fd71f0d6be6815b4c91a964b1acaf820",
+            "executableModuleCount": 5,
+            "junitSha256": "9c4334c285eadc3290c159fd1b941f7073919b88b2e266b046bd580bd7e87bdf",
+            "name": "postgres-4b-store",
+            "result": {
+              "errors": 0,
+              "failures": 0,
+              "skipped": 0,
+              "tests": 52
+            },
+            "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stdoutSha256": "a4f50efcb960077ef38f9f8f2e7f5d05b5ce6d70d9683a2d861d64f76c0c994c"
+          },
+          {
+            "collectedCount": 79,
+            "collectionSha256": "23f119356e3617c9044f2f69f33b1163dedbe98febd981efb588d7c38cfbadfb",
+            "executableModuleCount": 2,
+            "junitSha256": "c4152ae482602ba0fb983010873d1ce5ce0ccbc6b230caf7437af5358839810b",
+            "name": "postgres-4b-current",
+            "result": {
+              "errors": 0,
+              "failures": 0,
+              "skipped": 0,
+              "tests": 79
+            },
+            "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stdoutSha256": "0de462355a11224a6fb984e89630911e4bbba0bd55924313776841bcb73160a2"
+          },
+          {
+            "collectedCount": 12,
+            "collectionSha256": "ffff02bcfbf4de27662009714e3424167a2ce8f4d1f80bf6085902dced58530d",
+            "executableModuleCount": 1,
+            "junitSha256": "b19b458711de825aaaee1f24b921e852a379988a46e572333ee39a6330847cb7",
+            "name": "postgres-4b-historical",
+            "result": {
+              "errors": 0,
+              "failures": 0,
+              "skipped": 0,
+              "tests": 12
+            },
+            "stderrSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stdoutSha256": "d834225c41313e09f1bec5f5502bffba32162c42d66307a764b237c177ac7ca3"
+          }
+        ]
+      }
+    ],
+    "receiptSha256": "25df9a5f8a979d05c1b0250144643be94c527691a5c20c20d786555cad423bd8"
+  },
+  "live": {
+    "cutover": {
+      "contract": "Eva2QuiescentCutoverReceipt/v1",
+      "eva1Backup": {
+        "bytes": 306585600,
+        "filename": "eva1-before-slot3-to-slot4-20260908T095539Z.db",
+        "quickCheck": "ok",
+        "sha256": "541689ca82c50b9709939e1491a9102db2c78b0c7494922c6d68305682eb5404"
+      },
+      "eva1HttpStatuses": {
+        "/": 200,
+        "/api/capabilities": 200,
+        "/api/health": 200,
+        "/api/overview": 200,
+        "/api/workstatus": 200
+      },
+      "issuedAt": "2026-09-08T09:57:24.554164+00:00",
+      "previousDropinSha256": "81f1b2b687a641ae5349aa3c13198f6ad3ac1d7c88ee351bc3c559f22eee28a1",
+      "proactiveCredentialWithheldDuringStaging": true,
+      "proactiveDeliveryEnabled": true,
+      "sourcePort": 44710,
+      "sourceWritersStopped": true,
+      "status": "switched",
+      "synchronizedDatabases": {
+        "memory": {
+          "countDigest": "35c69dd90e73122c40486617eb6173431757229a6b9f3932002bd7afa9e8f894",
+          "dataDigest": "eea26900f70481b1d4f6a49920d1feedd3a092d7ef84b8e5c1789341634490d2",
+          "dumpBytes": 2480709,
+          "dumpSha256": "adfe6184ef147fd71a1530e7d5e4edc36b010f84bb3a397521134c949bdafb42",
+          "schemaDigest": "d89bfebdbfeb55e8618e81286bf24a42b838bfe577e84f6db9b93b43f5832172",
+          "tableCount": 23
+        },
+        "operational": {
+          "countDigest": "d7109cb93f7aa7a40f5a7cb96673e3947d1ddf75250c559b60b5d0542ecceea1",
+          "dataDigest": "bea59eaeb96f9f087164fd07b7334ffa3ad186edb3c3849d98d4354d2d3c1f2a",
+          "dumpBytes": 10078017,
+          "dumpSha256": "21e8a5917083acf630ee97fcf6b2ba84034f888241755191c2819aa953ffefbc",
+          "schemaDigest": "32acc5b66e349dfd5b385e4828897575ad543ebb5f2638b8880dff1cacb7fb39",
+          "tableCount": 48
+        }
+      },
+      "targetPort": 44711,
+      "targetReady": true
+    },
+    "cutoverSha256": "eea217ea045d5ed8411ffdd10ed2b1c5bc7cb0ded715d8d20eeb153b6e3f0ffc",
+    "readback": {
+      "imageId": "sha256:fb668fd3be833ade03d281c3ea09e13ac28d221b80d8232342fac12185572ca7",
+      "limits": "Existing developer turn through actual private client after cutover; no new human Telegram network roundtrip, novel answer or positive initiative claimed.",
+      "messageIdSha256": "c2b7446af3bd1a6f014dea42ebd8a7d8215c47f0d219aeb807281e78f22b691f",
+      "newConversationModelCalls": 0,
+      "originalUsageUnchanged": {
+        "inputTokens": 3528,
+        "measurement": "measured",
+        "modelAttempts": 1,
+        "outputTokens": 9,
+        "provider": "chatgpt-codex:gpt-6-astra",
+        "toolCalls": 0
+      },
+      "port": 44711,
+      "probeSha256": "e1162ed0e98ff154303633dfb53978e29e74843e089cea098ec4ee525cdd112a",
+      "replySha256": "00da393e91c7b4145d4a810a4dd0dfc204251357065ef4890c06dfaade1c32fd",
+      "sourceCommit": "8297f7d07aefd1e41c5ba9d94c01b745b54afc04",
+      "status": "exact_existing_reply_replayed",
+      "telegramMessagesSentByProbe": 0
+    },
+    "readbackSha256": "8a6829d844519ad7074ddf9d5f466c75f948bdb5792a5e76974233fc192a51c9",
+    "independentReview": {
+      "reviewer": "/root/co006_review",
+      "decision": "bounded technical GO",
+      "scope": "source/image/route, data synchronization, preserved rollback and exact existing reply readback; no human acceptance"
+    }
+  },
+  "integrationBinding": {
+    "baseCommit": "3117d1a14b8fa40102ec28cdd60894deb1616e7b",
+    "integratedImplementationCommit": "95053b7305b3bb4f408c7132da15f833e861d8ea",
+    "testedAndDeployedSourceCommit": "8297f7d07aefd1e41c5ba9d94c01b745b54afc04",
+    "identicalTree": "b2a0f019ad407ecb8adb7f806cb796b0470d48e8",
+    "preservedPendingApiChanges": true,
+    "imageWasNotRebuiltForIntegrationCommit": true
+  }
+}
