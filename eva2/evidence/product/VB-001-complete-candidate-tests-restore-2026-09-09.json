@@ -110,9 +110,31 @@
       "temporaryDatabasesRemoved": 2,
       "activeSlot3RunningAfter": true,
       "scope": "Exact saved slot4 dumps restored into fresh temporary databases and matched count/schema/data attestations. Does not prove current slot3 cutover or full runtime restart."
+    },
+    "bindings": {
+      "backupReceiptSha256": "c715a1b2f18f681c0bf8c59013f89e3a047447bcad5b8ac0514dfd3aa05becff",
+      "backupDirectory": "/var/lib/eva2/quiescent-cutover/native-voice-reserve-backup-bgwsfqee",
+      "helperSourceCommit": "cab9227356cb68b81edb9d27aab3d160dc959643",
+      "helperSourceSha256": "d5acbb1f25046b602467b9489397224acef84652935c4e306feb3576f50e1445",
+      "dumpHashes": {
+        "operational": "7c6328e5670301ead85b61ec85170e6a90d92b216089c24af241bb433cdb6c69",
+        "memory": "539616630e34ce7ff100d9d75737e65ca0a161729419ce4b615e304ad8ccc1db"
+      },
+      "expectedAttestations": {
+        "operational": {
+          "count_digest": "4fa29ef5262323582cccb36e728efc32e7a1d7264f26b45e7d7e5c6aa305fdec",
+          "data_digest": "325305efbc6c1f4de28da0e88aecd01c62b315315b1bebb0873075fab31eb5b0",
+          "schema_digest": "32acc5b66e349dfd5b385e4828897575ad543ebb5f2638b8880dff1cacb7fb39"
+        },
+        "memory": {
+          "count_digest": "019707c2ebed6467ce901306efa5a3e58c509a0da1ce1c6d0fc2c2cdf6cb8320",
+          "data_digest": "ef22f71cbdbdbf2ad6c521a382f3569b8ed80f14d4d65d28e42f12cb209fb693",
+          "schema_digest": "d89bfebdbfeb55e8618e81286bf24a42b838bfe577e84f6db9b93b43f5832172"
+        }
+      }
     }
   },
-  "review": "pending co006_review full-receipt and restore review; prior exact artifact/scan/stage/backup review bounded GO",
+  "review": "co006_review bounded GO for complete2423test receipt (161modules20support,0fail/error/skip), source authority and recorded restore equality/cleanup. Arithmetic corrected preserving rawlogs; restore now explicitly bound to verified backup/dumphashes and sealed helper. No runtime restart, livecutover, native HA/hardware or household acceptance claim.",
   "correction": "Earlier source-test aggregate2519 was arithmetic error: listed group counts sum2419. Including4physical browser tests gives2423, not2523. Raw per-group logs unchanged.",
   "remaining": [
     "Prepare and validate current-data reserve runtime with household authority and restart proof.",

@@ -2301,7 +2301,8 @@
       "evidence": "eva2/evidence/product/VB-001-complete-candidate-tests-restore-2026-09-09.json",
       "tests": "2423 passed,0failed/errors/skipped,161modules20support; physicalbrowser4included",
       "reserveRestore": "Both saved reserve dumps restored into fresh temporary databases; counts/schema/data matched; temporary databases removed",
-      "next": "Prepare and validate current-data reserve runtime with household authority and restart proof."
+      "next": "Prepare and validate current-data reserve runtime with household authority and restart proof.",
+      "review": "co006_review bounded GO for complete2423test receipt (161modules20support,0fail/error/skip), source authority and recorded restore equality/cleanup. Arithmetic corrected preserving rawlogs; restore now explicitly bound to verified backup/dumphashes and sealed helper. No runtime restart, livecutover, native HA/hardware or household acceptance claim."
     }
   },
   "activeTaskId": "VB-001",
