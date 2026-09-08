@@ -2218,6 +2218,13 @@
       "tests": "99 combined tests;50 core API tests;final native API15passed;Ruff passed",
       "review": "co006_review bounded source GO after admission/shutdown lifecycle fixes",
       "next": "Bind household audience and current mandate to actual cancellation-aware Eva runtime; then native HA pipeline and hardware interruption/resume proof."
+    },
+    "vb001HouseholdMemory": {
+      "status": "source_and_storage_tested_not_bootstrapped_or_live",
+      "evidence": "eva2/evidence/product/VB-001-household-memory-2026-09-08.json",
+      "tests": "100 memory/conversation tests;104 PostgreSQL/API tests;Ruff passed",
+      "review": "co006_review bounded privacy GO after source-authority fallback fixes",
+      "next": "Bind configured current household mandate/device actors, then cooperative model/tool cancellation in native responder. Actual HA pipeline/speaker and release tests remain open."
     }
   },
   "activeTaskId": "VB-001",
@@ -3618,7 +3625,13 @@
         "eva2/src/eva/adapters/postgres/operational_timeline.py",
         "eva2/tests/postgres/test_operational_timeline.py",
         "eva2/src/eva/adapters/api/native_voice.py",
-        "eva2/tests/api/test_native_voice.py"
+        "eva2/tests/api/test_native_voice.py",
+        "eva2/src/eva/application/memory_audience.py",
+        "eva2/src/eva/application/conversation.py",
+        "eva2/src/eva/application/memory.py",
+        "eva2/src/eva/adapters/projection/hindsight.py",
+        "eva2/tests/application/test_memory_audience.py",
+        "eva2/tests/projection/test_hindsight.py"
       ],
       "componentIds": [
         "api-and-runtime-composition",
@@ -3628,7 +3641,8 @@
         "external-capability-adapters",
         "integration-and-storage-tests",
         "managed-deployment",
-        "operations-and-release-tests"
+        "operations-and-release-tests",
+        "supporting-runtime-adapters"
       ],
       "inventoryOwners": [
         "deployment",
@@ -3651,7 +3665,8 @@
         "pytest -q tests/operations/test_plan_home_assistant_voice_bridge.py",
         "pytest -q tests/operations/test_ha_voice_native_client.py",
         "pytest -q tests/postgres/test_operational_timeline.py",
-        "pytest -q tests/api/test_native_voice.py"
+        "pytest -q tests/api/test_native_voice.py",
+        "pytest -q tests/application/test_memory_audience.py tests/projection/test_hindsight.py tests/application/test_conversation.py"
       ],
       "evidenceRequired": [
         "Onderzoek bestaande Eva2-voicebouwstenen en Bottie/HA-route; leg concrete ontbrekende media-aansluiting, providerkeuze, bestaand mandaat en verbruik vast.",

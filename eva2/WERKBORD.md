@@ -70,6 +70,12 @@ Klaar betekent:
 - `eva2/tests/postgres/test_operational_timeline.py`
 - `eva2/src/eva/adapters/api/native_voice.py`
 - `eva2/tests/api/test_native_voice.py`
+- `eva2/src/eva/application/memory_audience.py`
+- `eva2/src/eva/application/conversation.py`
+- `eva2/src/eva/application/memory.py`
+- `eva2/src/eva/adapters/projection/hindsight.py`
+- `eva2/tests/application/test_memory_audience.py`
+- `eva2/tests/projection/test_hindsight.py`
 
 Echte controles:
 
@@ -87,6 +93,7 @@ Echte controles:
 - `pytest -q tests/operations/test_ha_voice_native_client.py`
 - `pytest -q tests/postgres/test_operational_timeline.py`
 - `pytest -q tests/api/test_native_voice.py`
+- `pytest -q tests/application/test_memory_audience.py tests/projection/test_hindsight.py tests/application/test_conversation.py`
 
 </details>
 
