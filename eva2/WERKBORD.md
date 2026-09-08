@@ -14,32 +14,28 @@ De huidige één-actieroute gericht meten en via onderhouden Pydantic-uitvoering
 
 | Volgorde | Kaart | Resultaat | Status |
 |---:|---|---|---|
-| 136 | `TL-001` — Algemene toolroute meerdere stappen laten uitvoeren | Eva kiest en vervolgt meerdere tools in dezelfde taak via de bestaande onderhouden agentroute; een onbekende tool wordt via zijn beschrijving gebruikt. Uitvoering blijft herstelbaar en stopt direct op verzoek. | 🟡 BEZIG |
+| 137 | `TL-002` — Handelingen via twee providers echt afmaken | Eva voert handelingen via twee echte providers door dezelfde algemene route uit en controleert onafhankelijk het resultaat; herstel herhaalt een al bevestigde handeling niet. Geen absolute precies-eenmaalgarantie bij iedere externe storing. | 🟡 BEZIG |
 
 Klaar betekent:
 
-- Twee afhankelijke toolstappen en een onbekende toolbeschrijving werken via dezelfde generieke route zonder taakspecifieke kerncode.
-- Gerichte controles, duurzame replay/stop, onafhankelijke review en passende praktijkproef zijn groen; oorspronkelijke beperkingen en verbruik zijn zichtbaar.
+- Twee echte providers voltooien een nuttige handeling via dezelfde algemene uitvoerroute met onafhankelijk gecontroleerd resultaat.
+- Fout, stop en herstel zijn getoetst; passende gebruikersroute, gerichte controles, veilige ingebruikname en onafhankelijke beoordeling zijn vastgelegd.
 
 <details>
 <summary>Technische uitvoering: bestanden en controles</summary>
 
-### Exact werk voor `TL-001`
+### Exact werk voor `TL-002`
 
-- `eva2/src/eva/application/conversation.py`
-- `eva2/src/eva/adapters/model/pydantic_conversation.py`
-- `eva2/src/eva/adapters/postgres/conversation_actions.py`
+- `eva2/src/eva/providers/runtime.py`
 - `eva2/src/eva/adapters/postgres/external_conversation_tools.py`
-- `eva2/tests/application/test_conversation.py`
-- `eva2/tests/model/test_pydantic_conversation_model.py`
-- `eva2/tests/postgres/test_conversation_actions.py`
+- `eva2/tests/connectors/test_provider_runtime.py`
+- `eva2/tests/postgres/test_operational_timeline.py`
 
 Echte controles:
 
-- `pytest -q tests/application/test_conversation.py tests/model/test_pydantic_conversation_model.py`
-- `pytest -q tests/postgres/test_conversation_actions.py`
-- `ruff check src/eva/application/conversation.py src/eva/adapters/model/pydantic_conversation.py src/eva/adapters/postgres/conversation_actions.py src/eva/adapters/postgres/external_conversation_tools.py`
-- `python3 tools/check_component_catalog.py`
+- `pytest -q tests/connectors/test_provider_runtime.py`
+- `pytest -q tests/postgres/test_operational_timeline.py`
+- `python3 tools/check_current_workboard.py`
 
 </details>
 
@@ -52,7 +48,6 @@ nadat zij als eerstvolgende kleine kaart exacte bestanden en tests heeft.
 - [ ] `VB-002` — Passende aanwezigheid leveren: Eva zoekt spontaan contact via de beschikbare speakers en deurbel, met herkenbare identiteit en gevoel voor het moment. Gezin beoordeelt plezier, betrokkenheid en hinder; onderbreken en stop werken.
 - [ ] `AU-005` — Passend initiatief en kansen bewijzen: Meer gewaardeerd eigen initiatief dan Bottie: humor, nieuwsgierigheid, zelfgekozen onderzoek, creatieve bijdragen en kansen. Eva begint en vervolgt zelf werk, voert binnen bestaand mandaat uit en controleert het resultaat. Gezin beoordeelt eigenheid, plezier, nut en hinder; alleen meer berichten telt niet als winst.
 - [ ] `CO-008` — Autonoom geheugen in gezinsgesprekken bewijzen: De oorspronkelijke brede geheugenuitkomst blijft open: relevante kennis zelfstandig kiezen, gewijzigde en tijdelijke informatie goed gebruiken in gewone gesprekken en langere gezinspraktijk. Geen handmatig geheugenbeheer; familie beoordeelt continuïteit en vertrouwen.
-- [ ] `TL-002` — Actie en readback generaliseren: Twee echte providers gebruiken dezelfde precies-eenmaalroute.
 - [ ] `AU-001` — Eigenaarmandaat uitvoeren: Eva handelt binnen het afgesproken mandaat zonder steeds opnieuw te vragen.
 - [ ] `TL-003` — Onbekende connector zelfstandig toevoegen: Eva kiest onderhouden software uit documentatie en bewijst de adapter.
 - [ ] `VB-003` — Veilige browsercomputer kiezen: Eén onderhouden browsermotor ondersteunt accounts, meekijken en overname.
@@ -128,7 +123,20 @@ Afgevinkt betekent alleen: de vastgelegde kaart is afgerond, niet het hele produ
   [Bewijs](evidence/product/CO-007-live-answer-stream-2026-09-08.json).
 - [x] `CO-006` — Geheugenbroncorrectie veilig in gebruik nemen (done).
   [Bewijs](evidence/product/CO-006-autonomous-memory-2026-09-08.json).
-- [ ] `TL-001` — Algemene toolroute meerdere stappen laten uitvoeren (in_progress).
+- [x] `TL-001` — Algemene toolroute meerdere stappen laten uitvoeren (done).
+  [Bewijs](evidence/product/TL-001-candidate-build-2026-09-08.json).
+  [Bewijs](evidence/product/TL-001-conversation-chain-2026-09-08.json).
+  [Bewijs](evidence/product/TL-001-durable-model-usage-2026-09-08.json).
+  [Bewijs](evidence/product/TL-001-final-candidate-2026-09-08.json).
+  [Bewijs](evidence/product/TL-001-native-poller-stop-2026-09-08.json).
+  [Bewijs](evidence/product/TL-001-owner-stop-2026-09-08.json).
+  [Bewijs](evidence/product/TL-001-provider-stop-2026-09-08.json).
+  [Bewijs](evidence/product/TL-001-real-model-chain-2026-09-08.json).
+  [Bewijs](evidence/product/TL-001-runtime-serialization-2026-09-08.json).
+  [Bewijs](evidence/product/TL-001-storage-foundation-2026-09-08.json).
+  [Bewijs](evidence/product/TL-001-telegram-stop-2026-09-08.json).
+  [Bewijs](evidence/product/TL-001-turn-limit-2026-09-08.json).
+- [ ] `TL-002` — Handelingen via twee providers echt afmaken (in_progress).
 
 </details>
 
