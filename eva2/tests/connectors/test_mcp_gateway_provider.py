@@ -287,3 +287,44 @@ def test_gateway_workspace_rejects_owner_request_in_consented_group() -> None:
     )
     with pytest.raises(ConversationConflict, match="audience"):
         settings.authorize_turn(turn)
+
+
+@pytest.mark.parametrize("valid_catalog", [True, False])
+def test_uvicorn_factory_admits_gateway_inside_running_server_loop(valid_catalog):
+    import asyncio
+    from fastapi import FastAPI
+    import uvicorn
+
+    with _gateway() as base_url:
+        settings = McpGatewayProviderSettings(
+            base_url=base_url, bearer_token="test-token", allow_plain_http=True,
+            specs=parse_mcp_gateway_catalog(_provider_catalog(
+                extra=None if valid_catalog else {"execute_catalog_sha256": "0" * 64},
+            )),
+            principal_sha256_allowlist=(hashlib.sha256(b"owner").hexdigest(),),
+        )
+        admitted = []
+        engine = sa.create_engine("sqlite://")
+
+        def app_factory():
+            # Uvicorn's real factory loader runs here within Server.serve's loop.
+            asyncio.get_running_loop()
+            contribution = McpGatewayProviderFactory.build(settings, engine)
+            admitted.extend(tool.name for tool in contribution.conversation_tools)
+            return FastAPI()
+
+        async def load_in_server_loop():
+            config = uvicorn.Config(app_factory, factory=True, log_config=None, ws="none")
+            config.load()
+            assert config.loaded
+
+        try:
+            if valid_catalog:
+                asyncio.run(load_in_server_loop())
+                assert admitted == ["echo_proof"]
+            else:
+                with pytest.raises(RuntimeError, match="tool differs from the sealed catalog"):
+                    asyncio.run(load_in_server_loop())
+                assert admitted == []
+        finally:
+            engine.dispose()

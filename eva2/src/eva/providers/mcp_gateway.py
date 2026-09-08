@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import asyncio
+from concurrent.futures import ThreadPoolExecutor
 from dataclasses import dataclass, field
 import hashlib
 import json
@@ -284,7 +285,10 @@ class McpGatewayProviderFactory:
             ),
             settings.specs,
         )
-        asyncio.run(adapter.verify_catalog())
+        # Uvicorn calls synchronous app factories inside its running event loop.
+        # Complete admission in an owned worker loop before exposing any tools.
+        with ThreadPoolExecutor(max_workers=1) as executor:
+            executor.submit(asyncio.run, adapter.verify_catalog()).result()
         return ProviderContribution(
             provider_id="mcp_gateway",
             conversation_tools=adapter.conversation_tools(settings.specs),
