@@ -203,7 +203,7 @@ class _Connection:
             final = VoiceTurn(
                 contract="VoiceTurn/v1", schema_version=1, **bound,
                 voice_turn_id=f"voice-turn:{uuid4()}",
-                conversation_message_id=f"voice-message:{uuid4()}",
+                conversation_message_id=f"dashboard:{uuid4()}",
                 transcript_state="final", final_transcript=text,
                 final_transcript_sha256=hashlib.sha256(text.encode()).hexdigest(),
                 language=self.config.language, reply_generation=self.generation,

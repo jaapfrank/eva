@@ -252,3 +252,64 @@ def test_tts_bounded_audio_relay_closes_fetch_on_interruption(monkeypatch, statu
             assert closed.is_set()
             assert len(requested) == 1 and requested[0].url.port == port
     asyncio.run(run())
+
+
+@pytest.mark.parametrize("engine", [None, "stt.other", "stt.allowed"])
+def test_stt_engine_pin_precedes_first_audio_byte(engine):
+    async def run():
+        received = []
+        async def handler(socket):
+            await _handshake(socket)
+            await _event(socket, "stt-start", {"engine": engine})
+            if engine == "stt.allowed":
+                received.append(await socket.recv())
+                received.append(await socket.recv())
+                await _event(socket, "stt-end", {"stt_output": {"text": "Dag Eva"}})
+                await _event(socket, "run-end")
+            else:
+                await socket.wait_closed()
+        async with serve(handler, "127.0.0.1", 0) as server:
+            adapter = HomeAssistantSpeechInput(
+                base_url=f"http://127.0.0.1:{server.sockets[0].getsockname()[1]}",
+                token="synthetic", pipeline_id="test-pipeline", expected_stt_engine="stt.allowed",
+            )
+            if engine == "stt.allowed":
+                assert await adapter.transcribe(_audio(b"12")) == "Dag Eva"
+                assert received == [b"\x0712", b"\x07"]
+            else:
+                with pytest.raises(VoiceMediaError, match="engine differs"):
+                    await adapter.transcribe(_audio(b"12"))
+                assert received == []
+    asyncio.run(run())
+
+
+@pytest.mark.parametrize("path", ["/api/tts_proxy/result.mp3", "https://other.test/audio", "/api/tts_proxy/../secret"])
+def test_direct_tts_pins_engine_disables_disk_cache_and_ignores_external_url(monkeypatch, path):
+    import httpx2 as httpx
+    from eva.adapters.connectors.home_assistant_voice import HomeAssistantSpeechOutput
+    requests = []
+    def handler(request):
+        requests.append(request)
+        assert request.headers["Authorization"] == "Bearer synthetic"
+        assert request.url.host == "ha.test"
+        if request.method == "POST":
+            assert request.url.path == "/api/tts_get_url"
+            assert json.loads(request.content) == {
+                "engine_id": "tts.allowed", "message": "Dag Eva", "language": "nl-NL", "cache": False,
+            }
+            return httpx.Response(200, json={"path": path, "url": "https://untrusted.test/ignored"})
+        assert request.url.path == "/api/tts_proxy/result.mp3"
+        return httpx.Response(200, content=b"synthetic", headers={"content-type": "audio/mpeg"})
+    client = httpx.AsyncClient
+    monkeypatch.setattr(httpx, "AsyncClient", lambda **kw: client(**kw, transport=httpx.MockTransport(handler)))
+    async def run():
+        adapter = HomeAssistantSpeechOutput(base_url="http://ha.test", token="synthetic",
+                    pipeline_id="unused-direct-tts", tts_engine="tts.allowed", tts_language="nl-NL")
+        if path == "/api/tts_proxy/result.mp3":
+            result = [chunk async for chunk in adapter.synthesize("Dag Eva")]
+            assert result[0].data == b"synthetic" and len(requests) == 2
+        else:
+            with pytest.raises(VoiceMediaError, match="reference"):
+                await anext(adapter.synthesize("Dag Eva"))
+            assert len(requests) == 1
+    asyncio.run(run())

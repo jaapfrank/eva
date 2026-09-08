@@ -58,6 +58,7 @@ from eva.adapters.postgres.operational_timeline import (
     TimelineScope,
     external_timeline_scope,
 )
+from eva.bootstrap.dashboard_voice import build_dashboard_voice
 from eva.bootstrap.action_chain_effect_controls import (
     DashboardActionChainEffectController,
     DashboardActionChainEffectStop,
@@ -232,6 +233,7 @@ class RuntimeSettings:
     dashboard_installation_id: str | None = None
     dashboard_principal_binding_id: str | None = None
     dashboard_access_token: str | None = None
+    dashboard_voice_policy_file: str | None = None
     portable_restore_authority_file: str | None = None
     cold_path_idle_seconds: float = 300.0
     personal_interest_lease_seconds: int = 90
@@ -527,6 +529,7 @@ class RuntimeSettings:
             dashboard_installation_id=dashboard_installation_id,
             dashboard_principal_binding_id=dashboard_principal_binding_id,
             dashboard_access_token=dashboard_access_token,
+            dashboard_voice_policy_file=_environment_optional("EVA_DASHBOARD_VOICE_POLICY_FILE"),
             portable_restore_authority_file=portable_restore_authority_file,
             cold_path_idle_seconds=cold_path_idle_seconds,
             personal_interest_lease_seconds=personal_interest_lease_seconds,
@@ -1427,17 +1430,16 @@ def create_runtime_app() -> FastAPI:
         ),
         active_group_consent_resolver=group_consent,
     )
-    identity_pack = load_current_identity_pack(
-        None
-        if settings.identity_pack_file is None
-        else Path(settings.identity_pack_file),
-        trust=(
-            None
-            if settings.identity_pack_trust_file is None
-            else load_identity_pack_trust_binding(
-                Path(settings.identity_pack_trust_file)
-            )
-        ),
+    def current_identity_pack():
+        return load_current_identity_pack(
+            None if settings.identity_pack_file is None else Path(settings.identity_pack_file),
+            trust=(None if settings.identity_pack_trust_file is None
+                   else load_identity_pack_trust_binding(Path(settings.identity_pack_trust_file))),
+        )
+
+    identity_pack = current_identity_pack()
+    dashboard_voice = build_dashboard_voice(
+        settings, runtime_identity=identity_pack, identity_loader=current_identity_pack,
     )
     identity = IdentityProfile(
         name=settings.identity_name,
@@ -1785,7 +1787,8 @@ def create_runtime_app() -> FastAPI:
             memory_storage_budget=storage_budget,
         ),
         dashboard_access_token=settings.dashboard_access_token,
-        dashboard_identity_loader=load_current_identity_pack,
+        dashboard_identity_loader=current_identity_pack,
+        dashboard_voice=dashboard_voice,
     )
 
 

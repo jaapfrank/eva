@@ -143,6 +143,7 @@ def test_final_audio_uses_same_private_turn_and_memory_callback():
         assert [x["type"] for x in (reply, audio, end, finished)] == [
             "reply", "audio", "audio_end", "turn_finished"]
         assert reply["message_id"] == runtime.turns[0].message_id
+        assert reply["message_id"].startswith("dashboard:")
         assert runtime.turns[0].principal_id == "person:owner"
         assert runtime.turns[0].conversation_id == "dashboard:owner"
         assert runtime.memories[0][0] is runtime.turns[0]
