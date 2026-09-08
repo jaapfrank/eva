@@ -2060,6 +2060,44 @@
         "Geen akoestische stoplatentie gemeten.",
         "Geen configuratie geflasht, microfoon ontmutet of HA-route omgezet."
       ]
+    },
+    "vb001DeviceInterruptionCandidate": {
+      "status": "candidate_compiled_not_live",
+      "source": "eva2/deploy/home-assistant/voice-pe-interruption.yaml",
+      "esphomeVersion": "2026.6.2",
+      "privateArtifactDirectory": "/home/administrator/project/.eva2-artifacts/voice-pe-interruption-candidate",
+      "behavior": [
+        "Lokale announcement-stop en voice-assistant-stop vóór het melden van de onderbreking.",
+        "Hey Eva start daarna opnieuw luisteren; Stop/stop start geen nieuwe luisterbeurt.",
+        "Startgeluid, vertraging en herstart vallen onder één annuleerbaar script; mute/timer/verbinding worden na wachten opnieuw getoetst.",
+        "Native event-entiteit meldt stop_requested/resume_requested zonder Home Assistant action-permissies toe te voegen."
+      ],
+      "review": "co006_review gaf gerichte bron-GO na reparatie van Stop tijdens de startgeluidvertraging.",
+      "nonClaims": [
+        "Niet geflasht of live.",
+        "Nog geen Eva2 eventlistener en complete spraakroute.",
+        "Geen akoestische stopmeting; wakeword-onderbreking is geen willekeurige-spraak-full-duplex.",
+        "Oorspronkelijke stopwoordvertraging blijft aanwezig."
+      ],
+      "verification": {
+        "esphomeVersion": "2026.6.2",
+        "candidateSha256": "be88d9e2e995748de7fcbac9d8a5024e7c8749aae720addc6e018f1e5b7f15b8",
+        "wrapperSha256": "44168b4c0aeb3dc4efa05b053a765f2fe2a0ba68b85d0bab118abdc2a4c92831",
+        "exitCode": 0,
+        "logSha256": "9cf5d3e1d522de5fe57e42c77fc071bef4ed987ae25fcdb705b46c2cb2fd52c7",
+        "flashed": false,
+        "generatedCppSha256": "b3b9e2f4c408983e23524f27ba9fa7c097af302c5f0a28a5154da6db1bbca61d",
+        "generatedWakeWordHandlers": 1,
+        "firmwareSha256": "81f70fae82f3ce6d631fe651511e85ce856fc8a0f1309d00362717c8140b18aa",
+        "firmwareBytes": 2911760,
+        "overkappingConfigurationExitCode": 0,
+        "overkappingConfigLogSha256": "8f9327440b24a4b691211f3e4a722f54d9c3a8d80d66ec5ebe26568bd22dbab7"
+      },
+      "commands": [
+        "esphome 2026.6.2 config overkapping.yaml",
+        "esphome 2026.6.2 compile woonkamer.yaml"
+      ],
+      "remaining": "Verbind native interrupt-event en HA-spraak met Eva2, bewijs late-answer suppression en privacy, verifieer firmwareterugrol en test daarna op de echte apparaten."
     }
   },
   "activeTaskId": "VB-001",
@@ -3445,7 +3483,10 @@
         "eva2/tests/operations/test_eva2_quiescent_cutover.py",
         "eva2/tests/operations/test_managed_b_render.py",
         "eva2/tools/plan_home_assistant_voice_bridge.py",
-        "eva2/tests/operations/test_plan_home_assistant_voice_bridge.py"
+        "eva2/tests/operations/test_plan_home_assistant_voice_bridge.py",
+        "eva2/deploy/home-assistant/voice-pe-interruption.yaml",
+        "eva2/deploy/home-assistant/README.md",
+        "eva2/design/architecture/component-catalog-v1.json"
       ],
       "componentIds": [
         "api-and-runtime-composition",

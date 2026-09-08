@@ -368,7 +368,8 @@
       "lifecycleStatus": "tested",
       "ownerPaths": [
         "eva2/deploy/delegated-work/**",
-        "eva2/deploy/living-core/**"
+        "eva2/deploy/living-core/**",
+        "eva2/deploy/home-assistant/**"
       ],
       "forbiddenScope": [
         "Geen applicatiebeslissingen, secretwaarden of mutable image-tags in deploymentbestanden."
