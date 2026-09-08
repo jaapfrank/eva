@@ -2239,7 +2239,15 @@
       "implementationCommit": "b84c519",
       "tests": "84 passed in 3.54s: runtime settings, household authority, native responder, native HTTP, managed manifest",
       "review": "co006_review bounded source GO after household ID fix; authenticated stop after revocation independently reviewed. No live or release GO.",
-      "next": "Seal household authority and token in reserve release inputs, integrate native HA pipeline and real Hindsight, then speaker stop/resume and safe release."
+      "next": "Managed staging/activation overlay implemented in 1cee968; follow vb001HouseholdVoiceReleaseOverlay for remaining full release authority and actual HA proof."
+    },
+    "vb001HouseholdVoiceReleaseOverlay": {
+      "status": "overlay_and_cutover_tests_passed_not_deployed",
+      "implementationCommit": "1cee968",
+      "evidence": "eva2/evidence/product/VB-001-household-voice-release-overlay-2026-09-09.json",
+      "tests": "173 passed in 0.97s; cutover and render including both voice channels, token changes, missing token, permissions, stage leaks and activation races",
+      "review": "co006_review bounded source GO; no stage/token leak found; not release/live GO",
+      "next": "Admit native source/tests/dependencies to full release authority; then actual owner files, HA pipeline and speaker proof before A/B activation."
     }
   },
   "activeTaskId": "VB-001",
@@ -3655,7 +3663,8 @@
         "eva2/tests/bootstrap/test_native_household_responder.py",
         "eva2/tests/model/test_pydantic_conversation_model.py",
         "eva2/src/eva/bootstrap/household_voice.py",
-        "eva2/tests/bootstrap/test_household_voice_authority.py"
+        "eva2/tests/bootstrap/test_household_voice_authority.py",
+        "eva2/deploy/living-core/household-voice.compose.yml"
       ],
       "componentIds": [
         "api-and-runtime-composition",

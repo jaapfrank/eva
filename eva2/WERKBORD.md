@@ -85,6 +85,7 @@ Klaar betekent:
 - `eva2/tests/model/test_pydantic_conversation_model.py`
 - `eva2/src/eva/bootstrap/household_voice.py`
 - `eva2/tests/bootstrap/test_household_voice_authority.py`
+- `eva2/deploy/living-core/household-voice.compose.yml`
 
 Echte controles:
 
