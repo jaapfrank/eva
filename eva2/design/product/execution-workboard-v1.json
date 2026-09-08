@@ -1966,6 +1966,30 @@
         "The existing HA bridge cannot be claimed as an Eva2 voice capability."
       ],
       "review": "Independent bounded source/doc GO co006_review: text-only ingress, explicit speaker verification and strict ACK binding confirmed from code. Live HA inventory/automation observed by root, not independently reread in this checkpoint."
+    },
+    "vb001HaBridgePlan": {
+      "status": "source_and_private_plan_reviewed_not_applied",
+      "owner": "/root",
+      "reviewer": "/root/co006_review",
+      "scope": [
+        "eva2/tools/plan_home_assistant_voice_bridge.py",
+        "eva2/tests/operations/test_plan_home_assistant_voice_bridge.py"
+      ],
+      "outcome": "Generate reviewable HA bridge config change for exact device destination and correlated acknowledgement; no live write, no identity grant or Eva2 handoff claim.",
+      "doneWhen": "Only two expected event payload changes; render known/unknown device and full acknowledgement; reject ambiguous automation; review plan against live config before any activation.",
+      "implementationCommit": "64aa27ccbd1f8ab955657fc0cea913498f7ab6b2",
+      "hostTestCommand": "python3 -m pytest -q tests/operations/test_plan_home_assistant_voice_bridge.py",
+      "hostTestsPassed": 19,
+      "testEnvironment": "System Python with distro Jinja2; runtime gate venv lacks Jinja2 and is not used for this host-only planner. No product dependency added.",
+      "review": "Independent limited GO co006_review:19tests repeated, private before/after hashes and only3subtrees verified. HA-native templates and Bottie actual acknowledgement are next; no apply-GO.",
+      "privateEvidenceDirectory": "/tmp/eva2-vb001-ha-bridge-plan-vqwkax7d",
+      "retention": "Retain private source automation/proposal and original dirty inventory backups through this active card; archive evidence and clean exact temporary directory before closure.",
+      "changedSubtrees": [
+        "query satellite",
+        "response correlation condition",
+        "ack event payload"
+      ],
+      "next": "Validate proposed templates with actual HA renderer without triggering actions, then exercise existing Bottie ACK verifier before reviewed activation and Eva2 handoff."
     }
   },
   "activeTaskId": "VB-001",
@@ -3349,7 +3373,9 @@
         "eva2/tools/eva2_quiescent_cutover.py",
         "eva2/tools/managed_b_render.py",
         "eva2/tests/operations/test_eva2_quiescent_cutover.py",
-        "eva2/tests/operations/test_managed_b_render.py"
+        "eva2/tests/operations/test_managed_b_render.py",
+        "eva2/tools/plan_home_assistant_voice_bridge.py",
+        "eva2/tests/operations/test_plan_home_assistant_voice_bridge.py"
       ],
       "componentIds": [
         "api-and-runtime-composition",
@@ -3377,7 +3403,8 @@
         "pytest -q tests/bootstrap/test_runtime_settings.py",
         "pytest -q tests/operations/test_managed_b_release_inputs.py tests/operations/test_run_managed_b_required_tests.py",
         "pytest -q tests/operations/test_eva2_quiescent_cutover.py",
-        "pytest -q tests/operations/test_managed_b_render.py"
+        "pytest -q tests/operations/test_managed_b_render.py",
+        "pytest -q tests/operations/test_plan_home_assistant_voice_bridge.py"
       ],
       "evidenceRequired": [
         "Onderzoek bestaande Eva2-voicebouwstenen en Bottie/HA-route; leg concrete ontbrekende media-aansluiting, providerkeuze, bestaand mandaat en verbruik vast.",

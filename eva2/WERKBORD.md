@@ -53,6 +53,8 @@ Klaar betekent:
 - `eva2/tools/managed_b_render.py`
 - `eva2/tests/operations/test_eva2_quiescent_cutover.py`
 - `eva2/tests/operations/test_managed_b_render.py`
+- `eva2/tools/plan_home_assistant_voice_bridge.py`
+- `eva2/tests/operations/test_plan_home_assistant_voice_bridge.py`
 
 Echte controles:
 
@@ -66,6 +68,7 @@ Echte controles:
 - `pytest -q tests/operations/test_managed_b_release_inputs.py tests/operations/test_run_managed_b_required_tests.py`
 - `pytest -q tests/operations/test_eva2_quiescent_cutover.py`
 - `pytest -q tests/operations/test_managed_b_render.py`
+- `pytest -q tests/operations/test_plan_home_assistant_voice_bridge.py`
 
 </details>
 
