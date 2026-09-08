@@ -1,0 +1,32 @@
+{
+  "contract": "EvaVoiceCancellationCandidate/v1",
+  "status": "source_tested_not_connected_or_live",
+  "sourceSha256": {
+    "eva2/src/eva/adapters/postgres/voice_requests.py": "a7e14ab8acce031b2e2aeb926747540d74dba0c6bf3035c48fa5683072758958",
+    "eva2/src/eva/adapters/postgres/operational_timeline.py": "09d9c916457eb24ee9e32e1076cb0974e2620d3e222768678cca66daa9b25a42",
+    "eva2/tests/postgres/test_operational_timeline.py": "f413ffd6177bba679bdcb44ee6edbdf2583bcf50e855a3322154f6b7b24d824f"
+  },
+  "validation": {
+    "database": "isolated disposable PostgreSQL 16.13 container; no household data",
+    "command": "pytest -q tests/postgres/test_operational_timeline.py",
+    "result": "67 passed in 14.30s; includes five native voice cases",
+    "review": "co006_review: bounded source GO after deadline race fix; no live GO",
+    "firstFailure": "Held-lock test initially selected the external UUIDs rather than derived timeline scope and locked no row. Fixed to use external_timeline_scope and assert exactly one row and expected deadline. Repeated full file passes.",
+    "coverage": [
+      "stop before and after admission",
+      "new store and new database connections preserve stop",
+      "single reply under concurrency",
+      "32-second expiry, including waiting for row lock",
+      "device and installation isolation",
+      "12 concurrent stop/start trials"
+    ]
+  },
+  "remaining": [
+    "HTTP request and interrupt endpoints",
+    "authenticated household admission and memory scope",
+    "worker cancellation and per-device supersession",
+    "native HA pipeline integration",
+    "actual speaker interruption and resumed conversation",
+    "safe deployment and hardware acceptance"
+  ]
+}

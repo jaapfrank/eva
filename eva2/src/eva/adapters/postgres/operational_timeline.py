@@ -284,6 +284,7 @@ class PostgresOperationalTimeline:
         deadline: datetime | None = None,
         retry_count: int | None = None,
         last_error_fingerprint: str | None = None,
+        require_unexpired: bool = False,
     ) -> CheckpointState:
         with self._engine.begin() as connection:
             self._scope(connection)
@@ -302,6 +303,7 @@ class PostgresOperationalTimeline:
                 deadline=deadline,
                 retry_count=retry_count,
                 last_error_fingerprint=last_error_fingerprint,
+                require_unexpired=require_unexpired,
             )
 
     def record_recovery_failure(
@@ -629,6 +631,7 @@ def transition_timeline_thread(
     deadline: datetime | None = None,
     retry_count: int | None = None,
     last_error_fingerprint: str | None = None,
+    require_unexpired: bool = False,
 ) -> CheckpointState:
     """Append one transition inside the caller's root transaction."""
 
@@ -659,6 +662,12 @@ def transition_timeline_thread(
         raise OperationalTimelineError("thread does not exist")
     if int(row.revision) != expected_revision:
         raise CheckpointConflict("checkpoint revision changed")
+    if require_unexpired:
+        # clock_timestamp(), unlike now(), advances while waiting for the lock.
+        current_time = connection.scalar(sa.select(sa.func.clock_timestamp()))
+        if row.deadline is None or current_time >= row.deadline:
+            raise CheckpointConflict("checkpoint deadline expired")
+
     next_retry = int(row.retry_count) if retry_count is None else retry_count
     if not 0 <= next_retry <= 3:
         raise ValueError("checkpoint retry count is outside 0..3")

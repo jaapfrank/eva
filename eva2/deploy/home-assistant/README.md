@@ -35,6 +35,22 @@ proof of audible delivery. The client uses the existing 32-second answer window
 after STT and a bounded two-second interrupt attempt; a failed interrupt request
 does not produce a false server-stop receipt.
 
+## Core cancellation ledger candidate
+
+`src/eva/adapters/postgres/voice_requests.py` now uses Eva2's existing operational
+PostgreSQL timeline to admit a request once, record an interruption before or
+after admission, and claim at most one reply within 32 seconds. Its identity is
+scoped to the authenticated installation and registry-derived device. Stops are
+retained across connections/restarts, without storing transcripts or responses.
+A crashed request is not re-executed on retry; a new question needs a new ID.
+
+Five tests on an isolated PostgreSQL 16.13 database cover reordered requests,
+new store instances and connections, concurrent admission/interruption and reply
+claims, expiry after lock waiting, duplicate requests and device/installation isolation. This is
+not yet connected to the HTTP endpoints, household admission, worker cancellation
+or per-device supersession. A reply claim is not proof of audible delivery; HA
+must still discard a cancelled response already in flight.
+
 ## Device candidate
 
 `voice-pe-interruption.yaml` replaces the saved device's wake-word handler.

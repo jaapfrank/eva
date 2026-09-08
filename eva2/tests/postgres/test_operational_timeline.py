@@ -3279,3 +3279,97 @@ def test_model_request_limit_is_durable_across_restart_and_unknown_usage(timelin
     from dataclasses import replace
     another = replace(turn, message_id="another-turn")
     restarted.begin_model_request(another)  # No installation/day-wide cap.
+
+
+@pytest.mark.parametrize("stop_first", [True, False])
+def test_native_voice_stop_survives_new_store_and_rejects_late_reply(
+    timeline_engine: Engine, stop_first: bool,
+) -> None:
+    from eva.adapters.postgres.voice_requests import PostgresVoiceRequests
+
+    scope = _scope(f"voice-stop-{stop_first}")
+    def store():
+        return PostgresVoiceRequests(timeline_engine, tenant_id=str(scope.tenant_id),
+                                    installation_id=str(scope.installation_id))
+    args = {"device_id": "a" * 32, "request_id": "b" * 32}
+    if not stop_first:
+        assert store().begin(**args, now=NOW)
+    store().interrupt(**args, now=NOW + timedelta(seconds=1))
+    timeline_engine.dispose()
+    assert not store().begin(**args, now=NOW + timedelta(seconds=2))
+    assert not store().claim_reply(**args, now=NOW + timedelta(seconds=3))
+    store().interrupt(**args, now=NOW + timedelta(seconds=4))
+    # A different physical speaker, request or installation stays independent.
+    assert store().begin(**{**args, "device_id": "c" * 32}, now=NOW)
+    assert store().begin(**{**args, "request_id": "c" * 32}, now=NOW)
+    other = _scope(f"voice-other-{stop_first}")
+    assert PostgresVoiceRequests(timeline_engine, tenant_id=str(other.tenant_id),
+                                installation_id=str(other.installation_id)).begin(**args, now=NOW)
+
+
+def test_native_voice_reply_is_single_use_and_expires(timeline_engine: Engine) -> None:
+    from eva.adapters.postgres.voice_requests import PostgresVoiceRequests
+
+    scope = _scope("voice-expiry")
+    store = PostgresVoiceRequests(timeline_engine, tenant_id=str(scope.tenant_id),
+                                 installation_id=str(scope.installation_id))
+    now = datetime.now(UTC).replace(microsecond=0)
+    args = {"device_id": "a" * 32, "request_id": "b" * 32}
+    assert store.begin(**args, now=now)
+    assert not store.begin(**args, now=now)
+    with ThreadPoolExecutor(max_workers=2) as pool:
+        claims = list(pool.map(lambda _: store.claim_reply(**args, now=now), range(2)))
+    assert sorted(claims) == [False, True]
+    store.interrupt(**args, now=now + timedelta(seconds=1))
+    assert not store.claim_reply(**args, now=now + timedelta(seconds=2))
+    args["request_id"] = "c" * 32
+    assert store.begin(**args, now=now)
+    assert not store.claim_reply(**args, now=now + timedelta(seconds=32))
+
+
+def test_native_voice_racing_stop_cannot_be_reopened(timeline_engine: Engine) -> None:
+    from eva.adapters.postgres.voice_requests import PostgresVoiceRequests
+
+    scope = _scope("voice-race")
+    store = PostgresVoiceRequests(timeline_engine, tenant_id=str(scope.tenant_id),
+                                 installation_id=str(scope.installation_id))
+    for index in range(12):
+        args = {"device_id": "a" * 32, "request_id": f"{index:032x}"}
+        with ThreadPoolExecutor(max_workers=2) as pool:
+            start = pool.submit(store.begin, **args, now=NOW)
+            stop = pool.submit(store.interrupt, **args, now=NOW)
+            start.result()
+            stop.result()
+        assert not store.begin(**args, now=NOW)
+        assert not store.claim_reply(**args, now=NOW)
+
+
+
+def test_native_voice_reply_waiting_for_lock_expires(timeline_engine: Engine) -> None:
+    from eva.adapters.postgres.voice_requests import PostgresVoiceRequests
+
+    scope = _scope("voice-lock-expiry")
+    store = PostgresVoiceRequests(timeline_engine, tenant_id=str(scope.tenant_id),
+                                 installation_id=str(scope.installation_id))
+    args = {"device_id": "a" * 32, "request_id": "b" * 32}
+    now = datetime.now(UTC).replace(microsecond=0)
+    assert store.begin(**args, now=now - timedelta(seconds=31))
+    reached_transition = Event()
+    original = store._timeline.transition
+    def observed_transition(**kwargs):
+        reached_transition.set()
+        return original(**kwargs)
+    store._timeline.transition = observed_transition
+    bound = external_timeline_scope(str(scope.tenant_id), str(scope.installation_id), "test")
+    with ThreadPoolExecutor(max_workers=1) as pool:
+        with timeline_engine.begin() as lock:
+            rows = lock.execute(sa.select(operational_checkpoints).where(
+                operational_checkpoints.c.tenant_id == bound.tenant_id,
+                operational_checkpoints.c.installation_id == bound.installation_id,
+            ).with_for_update()).all()
+            assert len(rows) == 1
+            assert rows[0].deadline == now + timedelta(seconds=1)
+            claim = pool.submit(store.claim_reply, **args, now=now)
+            assert reached_transition.wait(3)
+            lock.execute(sa.text("SELECT pg_sleep(1.1)"))
+        assert claim.result(timeout=3) is False
