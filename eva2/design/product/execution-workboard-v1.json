@@ -2255,7 +2255,16 @@
       "evidence": "eva2/evidence/product/VB-001-native-voice-release-closure-2026-09-09.json",
       "tests": "164 tests pass in clean offline venv; all161modules/2523tests collect in real release groups",
       "review": "co006_review bounded closure GO; not full release or live",
-      "next": "Prepare complete candidate with full isolated execution and correct source/dependency evidence; integrate actual HA pipeline and speaker proof before A/B deployment."
+      "next": "Offline candidate built and2519source tests passed; follow vb001NativeVoiceCandidateExecution for remaining image/physical/live checks."
+    },
+    "vb001NativeVoiceCandidateExecution": {
+      "status": "offline_candidate_built_2519_source_tests_passed_not_full_release_or_live",
+      "sourceCommit": "edb3a704c316a3272be5a99e195a76a009d3a302",
+      "imageId": "sha256:e24e4c74757f12e8d17fee223e517a5c0f122b64a481be943e811b7194261277",
+      "evidence": "eva2/evidence/product/VB-001-native-voice-candidate-execution-2026-09-09.json",
+      "tests": "2519 isolated source tests passed; first installed smoke passed;4physical browser tests not yet executed",
+      "review": "co006_review confirmed built image/source label and all bound snapshot files byte-equal to edb3a704; bounded proof GO, not full release/live",
+      "next": "Scan exact candidate and complete installed/physical/copy-restart release proof; then native HA pipeline and measured speaker stop/resume before A/B activation."
     }
   },
   "activeTaskId": "VB-001",
