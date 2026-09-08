@@ -1573,7 +1573,7 @@
     "vb001AckBufferRepair": {
       "owner": "/root",
       "reviewer": "/root/co006_review",
-      "status": "sealed_candidate_gates_passed_copied_voice_running",
+      "status": "copied_data_voice_integration_passed_reviewed_not_live",
       "implementationCommit": "7be3a1ce31f8bd8ce3ac27c463156df662c3263d",
       "problem": "Resumed speech could lose initial frames while ended previous capture waited for provider ACKs.",
       "change": "Separate sendingCapture ownership from active microphone capture; preserve queued speech through early STT completion and ignore retired generation ACKs.",
@@ -1586,7 +1586,7 @@
       },
       "reviewDecision": "Bounded GO by /root/co006_review; no concrete blocker in queue/resume/generation/capacity logic. No live GO and no claim that ordinary pauses form one utterance.",
       "candidateBinding": "Previous 69529/a286 candidate evidence remains historical for that source; new repair requires resealing before integration/deployment.",
-      "next": "Read actual copied-data voice result, verify all new ingress/reply rows and measured usage, restart/revocation and cleanup before reserve rollout preparation.",
+      "next": "Wire optional private voice policy directory into managed reserve-slot activation, preserving connectors/current data/rollback. Current cutover operator has no voice overlay support; do not use an ad hoc live container patch. Then deliver actual owner microphone/speaker entry and acceptance.",
       "sealedSourceCommit": "215fe32f938331494036e26b32de958a4ef9a128",
       "releaseInputReview": "Independent GO /root/co006_review: exactly two input hashes changed, 338/156/20 collections unchanged; snapshot hashes verified, no cockpit claim changes.",
       "releaseGateTestsPassed": 83,
@@ -1631,7 +1631,7 @@
         "databaseScope": "Twelve disposable databases with vb001_ack2_ marker; remove exact recorded names only after terminal result."
       },
       "copyProbePreparation": {
-        "status": "executing_after_bound_gates_and_independent_go",
+        "status": "completed_exit_0_independent_integration_go",
         "wrapper": "/tmp/eva2-vb001-ack-release-j5p21b_z/run_voice_copy.py",
         "wrapperSha256": "30ffed5af982ceaa3ad6ba19179aeee4bf40f09517fa979180053e0cabc03819",
         "scope": "One real browser/HA STT/Astra/HA TTS arithmetic roundtrip with all new ingress readbacks, restart and policy revocation. Full release gates and cleanup must pass before execution. Prior multi-sentence segmentation remains separately recorded, not claimed fixed.",
@@ -1650,6 +1650,34 @@
         "removed": 12,
         "status": "passed",
         "receiptPath": "/tmp/eva2-vb001-ack-release-j5p21b_z/test-database-cleanup.json"
+      },
+      "copiedVoiceResult": {
+        "status": "passed",
+        "sourceCommit": "215fe32f938331494036e26b32de958a4ef9a128",
+        "imageId": "sha256:7425b4303ccf32247a57a9889bb5040c41a56ea687bbdc8c6c616e7e24222d30",
+        "syntheticQuestion": "Hoeveel is zeven plus vijf?",
+        "recognizedTranscript": "Hoeveel is 7 plus 5?",
+        "reply": "12",
+        "voiceAdmissions": 1,
+        "voiceModelAttempts": 1,
+        "inputTokens": 2467,
+        "outputTokens": 5,
+        "toolCalls": 0,
+        "audioBytes": 9741,
+        "browserElapsedMs": 11026,
+        "microphoneLiveDuringPlayback": true,
+        "microphoneEndedAfterClose": true,
+        "journalPreservedAfterRestart": true,
+        "policyRemovalRejectsNewSession": true,
+        "temporaryResourcesRemoved": true,
+        "liveInputsAndRouteUnchanged": true,
+        "humanHardwareAcceptance": false,
+        "review": "Independent bounded integration GO /root/co006_review: source and hash bindings, browser/journal/audio correspondence, restart, revocation and actual absence of temporary containers/networks/volumes checked. No live GO.",
+        "receiptDirectory": "/tmp/eva2-vb001-ack-release-j5p21b_z/copy"
+      },
+      "deploymentGap": {
+        "finding": "Existing tools/eva2_quiescent_cutover.py and managed-b composition have no voice-policy activation wiring. The copied-data proof used a temporary voice-only overlay.",
+        "nextDesign": "Integrate the same explicit read-only directory policy mount as an optional managed overlay; validate render and actual mount, preserve withheld staging and reversible activation. Do not put policy into unrelated credential mounts."
       }
     }
   },
