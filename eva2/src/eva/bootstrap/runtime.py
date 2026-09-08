@@ -78,6 +78,9 @@ if TYPE_CHECKING:
 from eva.application.conversation import (
     ConversationConflict,
     ConversationTurn,
+    ConversationStopped,
+    ConversationExecutionLimitReached,
+    ConversationModelUsage,
     GroundedReply,
     IdentityProfile,
     LivingConversation,
@@ -219,6 +222,7 @@ class RuntimeSettings:
     identity_pack_trust_file: str | None = None
     conversation_auth_file: str = "/run/eva/codex/auth.json"
     conversation_model: str = "gpt-5.4-mini"
+    conversation_maximum_requests: int = 32
     conversation_reasoning_effort: str = "medium"
     runtime_resource_budget: RuntimeResourceBudget | None = None
     background_tenant_id: str | None = None
@@ -245,6 +249,10 @@ class RuntimeSettings:
     fanout_allow_insecure_http: bool = False
     durable_goal_provider: str | None = None
     durable_goal_recipients: tuple[str, ...] = ()
+
+    def __post_init__(self) -> None:
+        if type(self.conversation_maximum_requests) is not int or self.conversation_maximum_requests < 1:
+            raise ValueError("conversation request limit must be a positive integer")
 
     @classmethod
     def from_environment(cls) -> "RuntimeSettings":
@@ -508,6 +516,9 @@ class RuntimeSettings:
             conversation_auth_file=conversation_auth_file,
             conversation_model=conversation_model,
             conversation_reasoning_effort=conversation_reasoning_effort,
+            conversation_maximum_requests=_environment_int(
+                "EVA_CONVERSATION_MAXIMUM_REQUESTS", 32, "Eva conversation request limit is invalid",
+            ),
             runtime_resource_budget=runtime_resource_budget,
             background_tenant_id=background_tenant_id,
             background_installation_id=background_installation_id,
@@ -569,9 +580,13 @@ class PostgresHindsightMemoryRuntime:
         dashboard_authority_scope: TimelineScope | None = None,
         telegram_principal_bindings_loader: Callable[[], TelegramPrincipalBindings] | None = None,
         memory_storage_budget: PostgresMemoryStorageBudget | None = None,
+        conversation_maximum_requests: int = 32,
     ) -> None:
         self._engine = engine
         self._memory = memory
+        if type(conversation_maximum_requests) is not int or conversation_maximum_requests < 1:
+            raise ValueError("conversation request limit must be a positive integer")
+        self._conversation_maximum_requests = conversation_maximum_requests
         self._conversation = conversation
         self._cold_path = cold_path
         self._prototype_store = prototype_store
@@ -802,6 +817,21 @@ class PostgresHindsightMemoryRuntime:
             raise RuntimeError("effect stop control is unavailable")
         return self._dashboard_effect_controller.stop(effect_intent_id)
 
+    def dashboard_stop_conversation(self) -> int:
+        """Stop unfinished turns in the server-bound owner's dashboard chat."""
+        if (self._runtime_tenant_id is None or self._runtime_installation_id is None
+                or self._dashboard_owner_principal_id is None
+                or self._dashboard_principal_binding_id is None):
+            raise RuntimeError("owner conversation stop is unavailable")
+        journal = PostgresConversationJournal(self._engine, external_timeline_scope(
+            self._runtime_tenant_id, self._runtime_installation_id,
+            "conversation stop scope is required",
+        ))
+        return journal.request_conversation_stop(
+            principal_id=str(self._dashboard_owner_principal_id),
+            conversation_id=f"dashboard:{self._dashboard_principal_binding_id}",
+        )
+
     def dashboard_turn(self, text: str) -> tuple[ConversationTurn, GroundedReply]:
         """Create one private owner turn without trusting browser-supplied scope.
 
@@ -898,14 +928,62 @@ class PostgresHindsightMemoryRuntime:
     ) -> GroundedReply:
         self.admit_turn_audience(turn)
         journal = self._journal(turn)
-        journal.admit(turn)
-        committed = journal.committed_reply(turn)
-        if committed is not None:
-            return committed
-        durable_recent = journal.recent(turn, exclude_message_id=turn.message_id)
-        recent = tuple((*recent_messages, *durable_recent)[-12:])
-        candidate = self._conversation.respond(turn, recent)
-        return journal.commit_reply(turn, candidate)
+        with journal.execution(turn):
+            journal.admit(turn)
+            committed = journal.committed_reply(turn)
+            if committed is not None:
+                return committed
+            if turn.text.strip().casefold() in {"/stop", "stop deze opdracht", "stop deze opdracht."}:
+                count = journal.request_conversation_stop(
+                    principal_id=turn.principal_id, conversation_id=turn.conversation_id,
+                    request_message_id=turn.message_id,
+                )
+                return journal.commit_reply(turn, GroundedReply(
+                    conversation_id=turn.conversation_id, message_id=turn.message_id,
+                    text=("Ik start geen verdere stappen voor de lopende opdracht. Een stap die al in behandeling is, kan nog afronden."
+                          if count else "Er is in dit gesprek geen lopende opdracht om te stoppen."),
+                    evidence_memory_ids=(), generated_at=turn.occurred_at,
+                    provider="runtime:conversation-stop-command",
+                ))
+            durable_recent = journal.recent(turn, exclude_message_id=turn.message_id)
+            recent = tuple((*recent_messages, *durable_recent)[-12:])
+            latest_usage = ConversationModelUsage.unmeasured()
+
+            def checkpoint(current, usage):
+                nonlocal latest_usage
+                if isinstance(usage, ConversationModelUsage):
+                    latest_usage = usage
+                self.admit_turn_audience(current)
+                journal.ensure_running(current)
+
+            try:
+                candidate = self._conversation.respond(
+                    turn, recent, before_step=checkpoint, model_journal=journal,
+                )
+                checkpoint(turn, candidate.model_usage)
+            except ConversationExecutionLimitReached:
+                candidate = GroundedReply(
+                    conversation_id=turn.conversation_id, message_id=turn.message_id,
+                    text="Deze opdracht is nog niet af. Ik heb de ingestelde uitvoergrens bereikt en start daarom geen nieuwe stappen.",
+                    evidence_memory_ids=(), generated_at=turn.occurred_at,
+                    provider="runtime:conversation-limit", model_usage=journal.model_usage(turn),
+                )
+            except ConversationStopped:
+                durable_usage = journal.model_usage(turn)
+                if durable_usage.measurement != "unmeasured":
+                    latest_usage = durable_usage
+                candidate = GroundedReply(
+                    conversation_id=turn.conversation_id,
+                    message_id=turn.message_id,
+                    text="Ik start geen verdere stappen voor deze opdracht. Een stap die al in behandeling is, kan nog afronden.",
+                    evidence_memory_ids=(), generated_at=turn.occurred_at,
+                    provider="runtime:conversation-stop", model_usage=latest_usage,
+                )
+            return journal.commit_reply(turn, candidate)
+
+    def request_turn_stop(self, turn: ConversationTurn, *, request_message_id: str | None = None) -> str:
+        self.admit_turn_audience(turn)
+        return self._journal(turn).request_turn_stop(turn, request_message_id=request_message_id)
 
     def respond_telegram_delegated_work(
         self,
@@ -1274,6 +1352,7 @@ class PostgresHindsightMemoryRuntime:
                 turn.installation_id,
                 "conversation journal scope is required",
             ),
+            maximum_model_requests=getattr(self, "_conversation_maximum_requests", 32),
         )
 
 
@@ -1682,6 +1761,7 @@ def create_runtime_app() -> FastAPI:
             sensory_worker,
             sensory_store,
             model,
+            conversation_maximum_requests=settings.conversation_maximum_requests,
             stripe_publication=stripe_publication,
             stripe_webhook=stripe_webhook,
             commerce_tenant_id=settings.background_tenant_id,

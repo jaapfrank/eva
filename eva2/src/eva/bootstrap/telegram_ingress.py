@@ -208,7 +208,7 @@ def main() -> int:
     try:
         while not stop.is_set():
             try:
-                worker.run_once()
+                worker.run_once_interruptible(stop)
             except Exception as error:
                 print(
                     f"Telegram ingress retry after {type(error).__name__}",

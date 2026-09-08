@@ -5,6 +5,7 @@ from datetime import UTC, datetime, timedelta
 import hashlib
 import os
 from pathlib import Path
+from threading import Event
 from typing import Iterator
 from uuid import NAMESPACE_URL, uuid5
 
@@ -1445,8 +1446,9 @@ def test_model_chosen_interest_survives_restart_and_is_not_adopted_twice(
     restarted_engine.dispose()
 
 
+@pytest.mark.parametrize("step_index", [0, 1, 2])
 def test_external_effect_provider_is_durable_and_not_repeated_after_restart(
-    timeline_engine: Engine,
+    timeline_engine: Engine, step_index: int,
 ) -> None:
     calls: list[str] = []
 
@@ -1481,7 +1483,7 @@ def test_external_effect_provider_is_durable_and_not_repeated_after_restart(
         "installation",
         "jaap",
         "conversation",
-        "message:calendar-effect",
+        f"message:calendar-effect:{step_index}",
         "Reserveer morgen tien uur",
         "2026-08-30T19:16:00Z",
     )
@@ -1492,9 +1494,12 @@ def test_external_effect_provider_is_durable_and_not_repeated_after_restart(
     )
     provider = Provider()
     tools = PostgresExternalConversationTools(timeline_engine, Planner(), provider)
-    actions = PostgresConversationActions(timeline_engine, external_tools=(tools,))
 
-    receipt = actions.execute(turn, call)
+    actions = PostgresConversationActions(timeline_engine, external_tools=(tools,))
+    receipt = (
+        actions.execute(turn, call) if step_index == 0
+        else tools.execute(turn, call, step_index=step_index)
+    )
 
     assert receipt.output == {
         "contract": "EvaConversationActionReceipt/v1",
@@ -1511,15 +1516,87 @@ def test_external_effect_provider_is_durable_and_not_repeated_after_restart(
     restarted_tools = PostgresExternalConversationTools(
         timeline_engine, Planner(), provider
     )
-    restarted = PostgresConversationActions(
-        timeline_engine, external_tools=(restarted_tools,)
+    restarted_actions = PostgresConversationActions(
+        timeline_engine, external_tools=(restarted_tools,),
     )
-    assert restarted.pending(turn) == receipt
+    assert (
+        restarted_actions.pending(turn) if step_index == 0
+        else restarted_tools.pending(turn, step_index=step_index)
+    ) == receipt
+    assert restarted_tools.execute(turn, call, step_index=step_index) == receipt
     assert len(calls) == 1
 
 
-def test_external_tool_restart_uses_durable_separate_observation_command(
+
+def test_external_steps_repeat_a_tool_and_replay_without_replanning(
     timeline_engine: Engine,
+) -> None:
+    prepared: list[str] = []
+    dispatched: list[str] = []
+
+    class Planner:
+        action_names = ("inspect_unfamiliar_item", "inspect_other_item")
+
+        async def prepare(self, turn, call):
+            prepared.append(call.call_id)
+            return ConversationToolPreparation(
+                tool_name="fixture.inspect",
+                arguments=call.arguments,
+                expected_proof={"found": True},
+                receipt_output={"next_item": call.arguments["item"] + "/child"},
+            )
+
+    class Provider:
+        async def execute(self, request):
+            dispatched.append(request.operation_id)
+            return ToolDispatchResult(True, request.operation_id, {})
+
+        async def observe(self, request, dispatch):
+            return ToolProofObservation("verified", {"found": True}, {})
+
+    turn = ConversationTurn.private(
+        "external-chain", "installation", "jaap", "conversation",
+        "message:chain", "Onderzoek het item en daarna het gevonden kind.",
+        "2026-09-08T09:00:00Z",
+    )
+    provider = Provider()
+    tools = PostgresExternalConversationTools(timeline_engine, Planner(), provider)
+    first_call = ConversationActionCall(
+        "call:first", "inspect_unfamiliar_item", {"item": "root"},
+    )
+    first = tools.execute(turn, first_call)
+    second_call = ConversationActionCall(
+        "call:second", "inspect_unfamiliar_item",
+        {"item": first.output["next_item"]},
+    )
+    second = tools.execute(turn, second_call, step_index=1)
+    assert second.output["next_item"] == "root/child/child"
+    assert len(set(dispatched)) == 2
+    assert prepared == ["call:first", "call:second"]
+
+    class RestartedPlanner(Planner):
+        async def prepare(self, turn, call):
+            raise AssertionError("an admitted step must use its stored plan")
+
+    restarted = PostgresExternalConversationTools(
+        timeline_engine, RestartedPlanner(), provider,
+    )
+    assert restarted.pending(turn) == first
+    assert restarted.pending(turn, step_index=1) == second
+    assert restarted.execute(turn, second_call, step_index=1) == second
+    assert restarted.pending(turn, step_index=2) is None
+    for conflicting_call in (
+        ConversationActionCall("call:third", "inspect_other_item", {"item": "root"}),
+        ConversationActionCall("call:second", "inspect_unfamiliar_item", {"item": "other"}),
+    ):
+        with pytest.raises(ConversationConflict, match="replay differs"):
+            restarted.execute(turn, conflicting_call, step_index=1)
+    assert len(dispatched) == 2
+
+
+@pytest.mark.parametrize("step_index", [0, 1])
+def test_external_tool_restart_uses_durable_separate_observation_command(
+    timeline_engine: Engine, step_index: int,
 ) -> None:
     execution_calls: list[dict[str, object]] = []
     observation_calls: list[dict[str, object]] = []
@@ -1582,7 +1659,7 @@ def test_external_tool_restart_uses_durable_separate_observation_command(
         "installation",
         "jaap",
         "conversation",
-        "message:separate-observation",
+        f"message:separate-observation:{step_index}",
         "Schrijf het bewijsbestand",
         "2026-09-01T10:00:00Z",
     )
@@ -1595,12 +1672,12 @@ def test_external_tool_restart_uses_durable_separate_observation_command(
         timeline_engine, Planner(), KilledProvider()
     )
     with pytest.raises(SystemExit, match="137"):
-        first.execute(turn, call)
+        first.execute(turn, call, step_index=step_index)
 
     restarted = PostgresExternalConversationTools(
         timeline_engine, Planner(), RestartedProvider()
     )
-    receipt = restarted.pending(turn)
+    receipt = restarted.pending(turn, step_index=step_index)
 
     assert receipt is not None and receipt.output["status"] == "verified"
     assert execution_calls == [
@@ -1625,7 +1702,7 @@ def test_external_tool_restart_uses_durable_separate_observation_command(
     )
     timeline = PostgresOperationalTimeline(timeline_engine, scope)
     events = timeline.events(
-        PostgresExternalConversationTools._thread_id(turn, "write_document")
+        PostgresExternalConversationTools._thread_id(turn, "write_document", step_index)
     )
     assert [event.event_type for event in events] == [
         "TOOL_REQUEST_ADMITTED",
@@ -2526,3 +2603,640 @@ def test_email_provider_read_is_durable_and_not_repeated_after_restart(
     )
     assert restarted.pending(turn) == receipt
     assert calls == [1]
+
+
+@pytest.mark.parametrize("step_index", [0, 1])
+def test_external_concurrent_retry_cannot_resume_an_inflight_dispatch(
+    timeline_engine: Engine, step_index: int,
+) -> None:
+    entered, release = Event(), Event()
+    dispatched: list[str] = []
+
+    class Planner:
+        action_names = ("perform_unfamiliar_action",)
+
+        async def prepare(self, turn, call):
+            return ConversationToolPreparation(
+                tool_name="fixture.action", arguments={},
+                expected_proof={"done": True}, receipt_output={},
+            )
+
+    class Provider:
+        async def execute(self, request):
+            dispatched.append(request.operation_id)
+            entered.set()
+            assert release.wait(5), "test did not release the first dispatch"
+            return ToolDispatchResult(True, request.operation_id, {})
+
+        async def observe(self, request, dispatch):
+            if dispatch is None:
+                return ToolProofObservation("safe_to_execute", {}, {})
+            return ToolProofObservation("verified", {"done": True}, {})
+
+    turn = ConversationTurn.private(
+        "external-concurrency", "installation", "jaap", "conversation",
+        f"message:concurrency:{step_index}", "Doe de actie",
+        "2026-09-08T09:00:00Z",
+    )
+    call = ConversationActionCall("call", "perform_unfamiliar_action", {})
+    first = PostgresExternalConversationTools(timeline_engine, Planner(), Provider())
+    second = PostgresExternalConversationTools(timeline_engine, Planner(), Provider())
+    with ThreadPoolExecutor(max_workers=1) as executor:
+        future = executor.submit(first.execute, turn, call, step_index=step_index)
+        try:
+            assert entered.wait(5), "first dispatch did not start"
+            with pytest.raises(ConversationConflict, match="already running"):
+                second.pending(turn, step_index=step_index)
+            with pytest.raises(ConversationConflict, match="already running"):
+                second.execute(turn, call, step_index=step_index)
+        finally:
+            release.set()
+        receipt = future.result(timeout=5)
+    assert second.pending(turn, step_index=step_index) == receipt
+    assert len(dispatched) == 1
+
+
+@pytest.mark.parametrize(("crash_in_second_step", "stop_stage", "crash_in_model"), [
+    (False, None, False), (True, None, False), (False, "after_first_effect", False),
+    (False, "during_second_preparation", False), (False, None, True),
+])
+def test_pydantic_conversation_chain_restarts_from_durable_receipts(
+    timeline_engine: Engine, tmp_path: Path, crash_in_second_step: bool, stop_stage: str | None,
+    crash_in_model: bool,
+) -> None:
+    from eva.bootstrap.runtime import PostgresHindsightMemoryRuntime
+    from eva.adapters.model.pydantic_conversation import PydanticConversationModel
+    from eva.application.conversation import (
+        ConversationToolDescriptor, IdentityProfile, LivingConversation,
+    )
+    from eva.application.memory import PresenceMemory
+    from eva.contracts.canonical_json import canonical_sha256
+    from eva.contracts.memory import MemoryRecall
+    from tests.support.scripted_pydantic_conversation import (
+        ScriptedCall, ScriptedPhase, ScriptedPydanticConversation, tool_returns,
+    )
+
+    descriptor = ConversationToolDescriptor(
+        name="inspect_chain_node",
+        description="Inspect a named node and return the name of its child.",
+        input_schema={
+            "type": "object", "properties": {"node": {"type": "string"}},
+            "required": ["node"], "additionalProperties": False,
+        },
+    )
+    calls = [ScriptedCall("node:0", descriptor.name, {"node": "root"}),
+             ScriptedCall("node:1", descriptor.name, {"node": "child"})]
+    effects: list[str] = []
+    crash = crash_in_second_step
+    model_crash = crash_in_model
+
+    def stop_current_turn():
+        journal = PostgresConversationJournal(timeline_engine, external_timeline_scope(
+            turn.tenant_id, turn.installation_id, "scope",
+        ))
+        assert journal.request_conversation_stop(
+            principal_id=turn.principal_id, conversation_id=turn.conversation_id,
+        ) >= 1
+
+    class Planner:
+        action_names = (descriptor.name,)
+
+        async def prepare(self, turn, call):
+            node = call.arguments["node"]
+            if node == "child" and stop_stage == "during_second_preparation":
+                stop_current_turn()
+            return ConversationToolPreparation(
+                tool_name="fixture.inspect", arguments={"node": node},
+                expected_proof={"node": node},
+                receipt_output={"child": {"root": "child", "child": "leaf"}[node]},
+            )
+
+    class Provider:
+        async def execute(self, request):
+            nonlocal crash
+            effects.append(request.arguments["node"])
+            if request.arguments["node"] == "root" and stop_stage == "after_first_effect":
+                stop_current_turn()
+            if crash and request.arguments["node"] == "child":
+                crash = False
+                raise SystemExit(137)
+            return ToolDispatchResult(True, request.operation_id, {})
+
+        async def observe(self, request, dispatch):
+            assert request.arguments["node"] in effects
+            return ToolProofObservation("verified", request.expected_proof, {"source": "fixture"})
+
+    class Memory:
+        def recall_for_presence(self, query):
+            return PresenceMemory(MemoryRecall(
+                schema_version=1, contract="MemoryRecall/v1", recall_id=query.recall_id,
+                query_purpose=query.query_purpose, tenant_id=query.tenant_id,
+                principal_id=query.principal_id, conversation_id=query.conversation_id,
+                project_id=query.project_id, requested_valid_at=query.requested_valid_at,
+                admitted_fact_ids_sha256=canonical_sha256([]), selected=[],
+                excluded_reasons={}, projection_version="fixture",
+                scope_sha256=canonical_sha256(query.scope), created_at=query.requested_valid_at,
+            ), ())
+
+    def conversation(scripted):
+        nonlocal model_crash
+        model = PydanticConversationModel(
+            auth_file=tmp_path / "unused.json", model_backend=scripted.model,
+            conversation_tools=(descriptor,),
+        )
+        generate = model.generate
+
+        def interrupt_final_model(*args, **kwargs):
+            nonlocal model_crash
+            if model_crash and effects == ["root", "child"]:
+                model_crash = False
+                from eva.application.conversation import begin_current_model_request
+                begin_current_model_request()
+                raise SystemExit(137)
+            return generate(*args, **kwargs)
+
+        model.generate = interrupt_final_model
+        actions = PostgresConversationActions(timeline_engine, external_tools=(
+            PostgresExternalConversationTools(timeline_engine, Planner(), Provider()),
+        ))
+        runtime = object.__new__(PostgresHindsightMemoryRuntime)
+        runtime._engine = timeline_engine
+        runtime._runtime_tenant_id = "pydantic-chain"
+        runtime._runtime_installation_id = "installation"
+        runtime._conversation = LivingConversation(
+            Memory(), model, IdentityProfile("Eva", "Huisgenoot.", ("Eerlijk.",), 80), actions,
+        )
+        return runtime
+
+    turn = ConversationTurn.private(
+        "pydantic-chain", "installation", "jaap", "conversation",
+        f"message:chain:{crash_in_second_step}:{stop_stage}:{crash_in_model}", "Inspecteer root en daarna zijn kind.",
+        "2026-09-08T09:00:00Z",
+    )
+    phases = tuple(ScriptedPhase.deferred(call) for call in calls)
+    if not crash_in_second_step:
+        phases += (ScriptedPhase.text("Het kind heeft leaf als volgende node."),)
+    first = ScriptedPydanticConversation(phases)
+    if crash_in_second_step or crash_in_model:
+        with pytest.raises(SystemExit, match="137"):
+            conversation(first).respond(turn)
+    else:
+        first_reply = conversation(first).respond(turn)
+        if stop_stage is not None:
+            assert first_reply.provider == "runtime:conversation-stop"
+            assert first_reply.model_usage.model_attempts == len(first.captures)
+            assert effects == ["root"]
+            restarted_model = ScriptedPydanticConversation((ScriptedPhase.text("Must not run."),))
+            assert conversation(restarted_model).respond(turn) == first_reply
+            assert restarted_model.captures == []
+            return
+        assert first_reply.model_usage.tool_calls == 2
+    assert effects == ["root", "child"]
+    second_input = tool_returns(first.captures[1].messages)
+    assert second_input[-1].content["child"] == calls[1].arguments["node"]
+
+    resumed = ScriptedPydanticConversation((ScriptedPhase.text("Root en child zijn gecontroleerd."),))
+    result = conversation(resumed).respond(turn)
+    assert effects == ["root", "child"]
+    if crash_in_second_step or crash_in_model:
+        assert result.text == "Root en child zijn gecontroleerd."
+        assert result.model_usage.model_attempts == (4 if crash_in_model else 3)
+        assert result.model_usage.tool_calls == 2
+        assert result.model_usage.measurement == ("partial" if crash_in_model else "measured")
+        assert len(resumed.captures) == 1
+        assert [part.content["child"] for part in tool_returns(resumed.captures[0].messages)] == ["child", "leaf"]
+    else:
+        assert result.text == "Het kind heeft leaf als volgende node."
+        assert resumed.captures == []  # The journal replays the entire answer.
+
+
+
+def test_runtime_serializes_message_before_model_and_replays_committed_reply(
+    timeline_engine: Engine,
+) -> None:
+    from eva.bootstrap.runtime import PostgresHindsightMemoryRuntime
+
+    work_engine = sa.create_engine(
+        timeline_engine.url, pool_size=1, max_overflow=0, pool_timeout=0.1,
+    )
+    entered, release = Event(), Event()
+    model_runs = []
+
+    class Conversation:
+        def respond(self, turn, recent, *, before_step, model_journal):
+            model_runs.append(turn.message_id)
+            entered.set()
+            assert release.wait(5)
+            return GroundedReply(
+                turn.conversation_id, turn.message_id, "Klaar.", (), turn.occurred_at, "fixture",
+            )
+
+    def runtime():
+        result = object.__new__(PostgresHindsightMemoryRuntime)
+        result._engine = work_engine
+        result._runtime_tenant_id = "runtime-lock"
+        result._runtime_installation_id = "installation"
+        result._conversation = Conversation()
+        return result
+
+    turn = ConversationTurn.private(
+        "runtime-lock", "installation", "jaap", "conversation", "message:concurrent",
+        "Voer de opdracht uit.", "2026-09-08T09:00:00Z",
+    )
+    first, second = runtime(), runtime()
+    with ThreadPoolExecutor(max_workers=1) as executor:
+        future = executor.submit(first.respond, turn)
+        try:
+            if not entered.wait(1):
+                future.result(timeout=1)  # Surface a work-pool timeout directly.
+                pytest.fail("model did not start")
+            with timeline_engine.connect() as connection:
+                assert connection.scalar(sa.text(
+                    "SELECT count(*) FROM pg_stat_activity "
+                    "WHERE datname=current_database() AND state='idle in transaction'"
+                )) == 0
+            with pytest.raises(ConversationConflict, match="message is already running"):
+                second.respond(turn)
+            assert model_runs == [turn.message_id]
+        finally:
+            release.set()
+        reply = future.result(timeout=5)
+    assert second.respond(turn) == reply
+    assert model_runs == [turn.message_id]
+    work_engine.dispose()
+
+
+
+def test_owner_conversation_stop_is_durable_and_does_not_cross_people_or_chats(
+    timeline_engine: Engine,
+) -> None:
+    from eva.application.conversation import ConversationStopped
+    from eva.bootstrap.runtime import PostgresHindsightMemoryRuntime
+
+    owner = uuid5(NAMESPACE_URL, "stop-owner")
+    binding = uuid5(NAMESPACE_URL, "stop-binding")
+    conversation_id = f"dashboard:{binding}"
+    scope = external_timeline_scope("owner-stop", "installation", "scope")
+    journal = PostgresConversationJournal(timeline_engine, scope)
+
+    def turn(message_id, principal_id=str(owner), chat=conversation_id):
+        return ConversationTurn.private(
+            "owner-stop", "installation", principal_id, chat, message_id,
+            "Doe de opdracht.", "2026-09-08T09:00:00Z",
+        )
+
+    active = turn("stop:active")
+    other_person = turn("stop:other-person", principal_id="another-person")
+    other_chat = turn("stop:other-chat", chat="another-conversation")
+    done = turn("stop:done")
+    for item in (active, other_person, other_chat, done):
+        journal.admit(item)
+    journal.commit_reply(done, GroundedReply(
+        done.conversation_id, done.message_id, "Klaar.", (), done.occurred_at, "fixture",
+    ))
+    runtime = object.__new__(PostgresHindsightMemoryRuntime)
+    runtime._engine = timeline_engine
+    runtime._runtime_tenant_id = "owner-stop"
+    runtime._runtime_installation_id = "installation"
+    runtime._dashboard_owner_principal_id = owner
+    runtime._dashboard_principal_binding_id = binding
+    assert runtime.dashboard_stop_conversation() == 1
+    assert runtime.dashboard_stop_conversation() == 1  # Idempotent marker, no duplicate event.
+
+    restarted = PostgresConversationJournal(timeline_engine, scope)
+    with pytest.raises(ConversationStopped):
+        restarted.ensure_running(active)
+    for item in (other_person, other_chat, done):
+        restarted.ensure_running(item)
+    new_turn = turn("stop:new")
+    restarted.admit(new_turn)
+    restarted.ensure_running(new_turn)
+
+    class Conversation:
+        def respond(self, turn, recent, *, before_step, model_journal):
+            before_step(turn, None)
+            raise AssertionError("stopped turn must not start model work")
+
+    runtime._conversation = Conversation()
+    stopped_reply = runtime.respond(active)
+    assert stopped_reply.provider == "runtime:conversation-stop"
+    assert "geen verdere stappen" in stopped_reply.text
+    assert runtime.respond(active) == stopped_reply
+
+
+
+@pytest.mark.parametrize("kind", ["tool", "model"])
+def test_stop_and_dispatch_admission_share_a_transaction_fence(timeline_engine: Engine, kind):
+    from time import monotonic, sleep
+    from eva.application.conversation import ConversationStopped
+
+    scope = external_timeline_scope(f"stop-fence-{kind}", "installation", "scope")
+    turn = ConversationTurn.private(
+        "stop-fence", "installation", "owner", "chat", "message:fence",
+        "Doe de opdracht.", "2026-09-08T09:00:00Z",
+    )
+    entered, release = Event(), Event()
+
+    class PausedStopJournal(PostgresConversationJournal):
+        def _stop_fence(self, connection, identity):
+            super()._stop_fence(connection, identity)
+            entered.set()
+            assert release.wait(5)
+
+    stop_journal = PausedStopJournal(timeline_engine, scope)
+    dispatch_journal = PostgresConversationJournal(timeline_engine, scope)
+    dispatch_journal.admit(turn)
+    dispatch_journal.admit_dispatch(turn, "already-started")
+    with ThreadPoolExecutor(max_workers=2) as executor:
+        stop = executor.submit(stop_journal.request_conversation_stop,
+                               principal_id="owner", conversation_id="chat")
+        try:
+            assert entered.wait(2)
+            dispatch = (executor.submit(dispatch_journal.admit_dispatch, turn, "new-step")
+                        if kind == "tool" else executor.submit(dispatch_journal.begin_model_request, turn))
+            deadline = monotonic() + 2
+            blocked = False
+            while monotonic() < deadline:
+                with timeline_engine.connect() as connection:
+                    blocked = bool(connection.scalar(sa.text(
+                        "SELECT count(*) FROM pg_stat_activity WHERE datname=current_database() "
+                        "AND wait_event_type='Lock' AND query LIKE '%pg_advisory_xact_lock%'"
+                    )))
+                if blocked:
+                    break
+                sleep(0.01)
+            assert blocked, "dispatch must wait for the uncommitted stop fence"
+        finally:
+            release.set()
+        assert stop.result(timeout=2) == 1
+        with pytest.raises(ConversationStopped):
+            dispatch.result(timeout=2)
+    with pytest.raises(ConversationStopped):
+        dispatch_journal.admit_dispatch(turn, "already-started")
+
+
+def test_stop_during_final_answer_preserves_its_reported_usage(timeline_engine: Engine):
+    from eva.application.conversation import ConversationModelUsage
+    from eva.bootstrap.runtime import PostgresHindsightMemoryRuntime
+
+    usage = ConversationModelUsage.measured(model_attempts=2, tool_calls=1, input_tokens=33, output_tokens=4)
+    turn = ConversationTurn.private(
+        "stop-final", "installation", "owner", "chat", "message:final",
+        "Doe de opdracht.", "2026-09-08T09:00:00Z",
+    )
+    journal = PostgresConversationJournal(timeline_engine, external_timeline_scope(
+        turn.tenant_id, turn.installation_id, "scope",
+    ))
+
+    class Conversation:
+        def respond(self, current, recent, *, before_step, model_journal):
+            assert journal.request_conversation_stop(principal_id="owner", conversation_id="chat") == 1
+            return GroundedReply(current.conversation_id, current.message_id, "Klaar.", (),
+                                 current.occurred_at, "fixture", model_usage=usage)
+
+    runtime = object.__new__(PostgresHindsightMemoryRuntime)
+    runtime._engine = timeline_engine
+    runtime._runtime_tenant_id = turn.tenant_id
+    runtime._runtime_installation_id = turn.installation_id
+    runtime._conversation = Conversation()
+    reply = runtime.respond(turn)
+    assert reply.provider == "runtime:conversation-stop"
+    assert reply.model_usage == usage
+    assert runtime.respond(turn) == reply
+
+
+
+def test_model_usage_survives_restart_with_unknown_attempt_and_owner_stop(timeline_engine: Engine):
+    from dataclasses import replace
+    from eva.application.memory_audience import MemoryAudience
+    from eva.application.conversation import ConversationModelUsage, ConversationStopped
+
+    turn = ConversationTurn.private(
+        "usage-restart", "installation", "owner", "chat", "message:usage-restart",
+        "Voer mijn opdracht uit.", "2026-09-08T09:00:00Z",
+    )
+    scope = external_timeline_scope(turn.tenant_id, turn.installation_id, "scope")
+    journal = PostgresConversationJournal(timeline_engine, scope)
+    completed = journal.begin_model_request(turn)
+    usage = ConversationModelUsage.measured(
+        model_attempts=2, tool_calls=1, input_tokens=31, output_tokens=8,
+    )
+    journal.complete_model_request(turn, completed, usage)
+    journal.complete_model_request(turn, completed, usage)  # Exact receipt replay.
+    unknown = journal.begin_model_request(turn)  # Process could die before or during I/O.
+    restarted = PostgresConversationJournal(timeline_engine, scope)
+    assert restarted.model_usage(turn) == ConversationModelUsage.partial(
+        model_attempts=3, tool_calls=1, input_tokens=31, output_tokens=8,
+    )
+    assert restarted.model_usage(replace(turn, principal_id="someone-else", audience=MemoryAudience.private_person(principal_id="someone-else"))).measurement == "unmeasured"
+    with pytest.raises(ConversationConflict, match="admission differs"):
+        restarted.complete_model_request(replace(turn, principal_id="someone-else", audience=MemoryAudience.private_person(principal_id="someone-else")), unknown, usage)
+    with pytest.raises(ConversationConflict, match="result differs"):
+        restarted.complete_model_request(turn, completed, ConversationModelUsage.unmeasured())
+    assert restarted.request_conversation_stop(principal_id="owner", conversation_id="chat") == 1
+    with pytest.raises(ConversationStopped):
+        restarted.begin_model_request(turn)
+    # An already admitted phase can report its actual usage after stop.
+    restarted.complete_model_request(turn, unknown, usage)
+    assert restarted.model_usage(turn) == ConversationModelUsage.measured(
+        model_attempts=4, tool_calls=2, input_tokens=62, output_tokens=16,
+    )
+
+
+@pytest.mark.parametrize("command", ["/stop", "stop deze opdracht"])
+def test_telegram_stop_command_interrupts_other_running_turn_without_model(timeline_engine, command):
+    from eva.application.conversation import ConversationModelUsage
+    from eva.bootstrap.runtime import PostgresHindsightMemoryRuntime
+
+    entered, release = Event(), Event()
+    active = ConversationTurn.private(
+        "telegram-stop", "installation", "owner", "telegram:123", f"active:{command}",
+        "Doe de opdracht.", "2026-09-08T09:00:00Z",
+    )
+    stop = ConversationTurn.private(
+        active.tenant_id, active.installation_id, active.principal_id, active.conversation_id,
+        f"stop:{command}", command, active.occurred_at,
+    )
+    calls = []
+    class Conversation:
+        def respond(self, turn, recent, *, before_step, model_journal):
+            calls.append(turn.message_id)
+            entered.set()
+            assert release.wait(5)
+            before_step(turn, ConversationModelUsage.unmeasured())
+            raise AssertionError("stopped work must not continue")
+    runtime = object.__new__(PostgresHindsightMemoryRuntime)
+    runtime._engine = timeline_engine
+    runtime._runtime_tenant_id = active.tenant_id
+    runtime._runtime_installation_id = active.installation_id
+    runtime._conversation = Conversation()
+    with ThreadPoolExecutor(max_workers=2) as executor:
+        running = executor.submit(runtime.respond, active)
+        try:
+            assert entered.wait(2)
+            stopped = executor.submit(runtime.respond, stop).result(timeout=2)
+            assert stopped.provider == "runtime:conversation-stop-command"
+            assert "geen verdere stappen" in stopped.text
+        finally:
+            release.set()
+        assert running.result(timeout=2).provider == "runtime:conversation-stop"
+    assert runtime.respond(stop) == stopped
+    assert calls == [active.message_id]
+
+
+def test_stop_command_crash_replay_does_not_stop_later_work_or_other_people(timeline_engine):
+    from dataclasses import replace
+    from eva.bootstrap.runtime import PostgresHindsightMemoryRuntime
+
+    turn = ConversationTurn.private(
+        "stop-snapshot", "installation", "owner", "telegram:456", "stop-command",
+        "/stop", "2026-09-08T09:00:00Z",
+    )
+    scope = external_timeline_scope(turn.tenant_id, turn.installation_id, "scope")
+    crashed = False
+    class Journal(PostgresConversationJournal):
+        def commit_reply(self, current, reply):
+            nonlocal crashed
+            if not crashed:
+                crashed = True
+                raise SystemExit(137)
+            return super().commit_reply(current, reply)
+    journal = Journal(timeline_engine, scope)
+    existing = replace(turn, message_id="old-work", text="Doe iets.")
+    other = ConversationTurn.private(turn.tenant_id, turn.installation_id, "other", turn.conversation_id,
+                                     "other-work", "Doe iets.", turn.occurred_at)
+    journal.admit(existing)
+    journal.admit(other)
+    runtime = object.__new__(PostgresHindsightMemoryRuntime)
+    runtime._runtime_tenant_id = turn.tenant_id
+    runtime._runtime_installation_id = turn.installation_id
+    runtime._journal = lambda current: journal
+    with pytest.raises(SystemExit):
+        runtime.respond(turn)
+    later = replace(existing, message_id="later-work")
+    journal.admit(later)
+    reply = runtime.respond(turn)
+    assert reply.provider == "runtime:conversation-stop-command"
+    journal.ensure_running(later)
+    journal.ensure_running(other)
+    from eva.application.conversation import ConversationStopped
+    with pytest.raises(ConversationStopped):
+        journal.ensure_running(existing)
+
+
+
+def test_telegram_bridge_accepts_stop_while_an_http_answer_is_running(timeline_engine):
+    from fastapi.testclient import TestClient
+    from eva.adapters.api.app import create_app
+    from eva.bootstrap.runtime import PostgresHindsightMemoryRuntime
+    from tests.api.test_telegram_canary_api import _Runtime, _payload
+
+    entered, release = Event(), Event()
+    model_turns = []
+    class Conversation:
+        def respond(self, turn, recent, *, before_step, model_journal):
+            model_turns.append(turn)
+            entered.set()
+            assert release.wait(5)
+            before_step(turn, None)
+            raise AssertionError("the stop must reach the running HTTP turn")
+    runtime = object.__new__(PostgresHindsightMemoryRuntime)
+    runtime._engine = timeline_engine
+    runtime._runtime_tenant_id = "family"
+    runtime._runtime_installation_id = "home"
+    runtime._telegram_principal_bindings = None
+    runtime._delegated_work_commands = None
+    runtime._conversation = Conversation()
+    runtime.admit_telegram_canary = _Runtime().bridge.admit
+    runtime.after_response = lambda *args: None
+    runtime.start_background_work = lambda: None
+    runtime.stop_background_work = lambda: None
+    with TestClient(create_app(runtime)) as client, ThreadPoolExecutor(max_workers=2) as executor:
+        url = "/internal/v1/telegram/canary/respond"
+        running = executor.submit(client.post, url, json=_payload(message_id=101, text="Voer de opdracht uit."))
+        try:
+            assert entered.wait(2)
+            stop = executor.submit(client.post, url, json=_payload(message_id=102, text="/stop")).result(timeout=2)
+            assert stop.status_code == 200
+            assert stop.json()["provider"] == "runtime:conversation-stop-command"
+        finally:
+            release.set()
+        response = running.result(timeout=2)
+    assert response.status_code == 200
+    assert response.json()["provider"] == "runtime:conversation-stop"
+    assert len(model_turns) == 1
+    assert model_turns[0].principal_id == "telegram:7"
+
+
+
+def test_exact_stop_arriving_before_ingress_prevents_model_start(timeline_engine):
+    from dataclasses import replace
+    from eva.bootstrap.runtime import PostgresHindsightMemoryRuntime
+    from eva.application.conversation import ConversationStopped
+    turn = ConversationTurn.private("early-stop", "installation", "owner", "telegram:101",
+                                    "early-message", "Werk", "2026-09-08T09:00:00Z")
+    runtime = object.__new__(PostgresHindsightMemoryRuntime)
+    runtime._engine = timeline_engine
+    runtime._runtime_tenant_id = turn.tenant_id
+    runtime._runtime_installation_id = turn.installation_id
+    from fastapi.testclient import TestClient
+    from eva.adapters.api.app import create_app
+    from eva.application.memory_audience import memory_audience_to_wire
+    payload = {"tenant_id": turn.tenant_id, "installation_id": turn.installation_id,
+               "principal_id": turn.principal_id, "conversation_id": turn.conversation_id,
+               "message_id": turn.message_id, "text": turn.text, "occurred_at": turn.occurred_at,
+               "audience": memory_audience_to_wire(turn.audience), "recent_messages": []}
+    client = TestClient(create_app(runtime))
+    for _ in range(2):
+        response = client.post("/internal/v1/turns/stop", json=payload)
+        assert response.status_code == 200
+        assert response.json() == {"contract": "EvaTurnStop/v1",
+                                   "conversation_id": turn.conversation_id, "message_id": turn.message_id}
+        assert response.headers["cache-control"] == "no-store"
+    assert client.post("/internal/v1/turns/stop", json={**payload, "tenant_id": "other"}).status_code == 422
+    journal = runtime._journal(turn)
+    journal.admit(turn)
+    with pytest.raises(ConversationStopped):
+        journal.begin_model_request(turn)
+    later = replace(turn, message_id="later-message")
+    journal.admit(later)
+    journal.ensure_running(later)
+    assert journal.request_turn_stop(turn, request_message_id="native-stop") == turn.message_id
+    restarted = PostgresConversationJournal(timeline_engine, journal._scope_value)
+    assert restarted.request_turn_stop(later, request_message_id="native-stop") == turn.message_id
+    restarted.ensure_running(later)
+    with pytest.raises(ValueError, match="scope"):
+        runtime.request_turn_stop(replace(turn, tenant_id="other-tenant"))
+
+
+
+def test_model_request_limit_is_durable_across_restart_and_unknown_usage(timeline_engine):
+    from eva.application.conversation import ConversationExecutionLimitReached
+    from eva.bootstrap.runtime import PostgresHindsightMemoryRuntime
+    turn = ConversationTurn.private("turn-budget", "installation", "owner", "chat", "limited-turn",
+                                    "Voer de opdracht uit.", "2026-09-08T09:00:00Z")
+    scope = external_timeline_scope(turn.tenant_id, turn.installation_id, "scope")
+    journal = PostgresConversationJournal(timeline_engine, scope, maximum_model_requests=2)
+    journal.begin_model_request(turn)
+    journal.begin_model_request(turn)  # Unknown usage still consumes an admission.
+    restarted = PostgresConversationJournal(timeline_engine, scope, maximum_model_requests=100)
+    with pytest.raises(ConversationExecutionLimitReached):
+        restarted.begin_model_request(turn)
+    class Conversation:
+        def respond(self, turn, recent, *, before_step, model_journal):
+            model_journal.begin_model_request(turn)
+            raise AssertionError("provider must not start after its durable limit")
+    runtime = object.__new__(PostgresHindsightMemoryRuntime)
+    runtime._engine = timeline_engine
+    runtime._runtime_tenant_id = turn.tenant_id
+    runtime._runtime_installation_id = turn.installation_id
+    runtime._conversation = Conversation()
+    reply = runtime.respond(turn)
+    assert reply.provider == "runtime:conversation-limit"
+    assert "nog niet af" in reply.text
+    assert reply.model_usage.measurement == "partial"
+    assert reply.model_usage.model_attempts == 2
+    assert runtime.respond(turn) == reply
+    from dataclasses import replace
+    another = replace(turn, message_id="another-turn")
+    restarted.begin_model_request(another)  # No installation/day-wide cap.

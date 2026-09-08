@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from contextlib import contextmanager
+from collections.abc import Iterator
 from typing import Protocol
 from uuid import UUID
 
@@ -69,3 +71,36 @@ def set_local_scope(
     ).one()
     if tuple(configured) != desired_scope:
         raise TransactionScopeMismatch()
+
+
+@contextmanager
+def try_execution_lock(engine: sa.Engine, key: str) -> Iterator[bool]:
+    """Own a session lock across separate transactions, without waiting on work.
+
+    Dispatch/model work runs outside this connection. Losing the DB session
+    releases the lock; external effects still need idempotence and readback.
+    """
+    # Recreate the configured pool so connection factories and connect hooks are
+    # retained, while long-lived locks cannot consume the work pool's capacity.
+    lock_engine = sa.Engine(engine.pool.recreate(), engine.dialect, engine.url)
+    try:
+        with lock_engine.connect().execution_options(isolation_level="AUTOCOMMIT") as connection:
+            acquired = bool(connection.scalar(sa.text(
+                "SELECT pg_try_advisory_lock(hashtextextended(:key, 0))"
+            ), {"key": key}))
+            if not acquired:
+                yield False
+                return
+            try:
+                yield True
+            finally:
+                try:
+                    connection.execute(sa.text(
+                        "SELECT pg_advisory_unlock(hashtextextended(:key, 0))"
+                    ), {"key": key})
+                except BaseException:
+                    # A session that may still own the lock must not reenter the pool.
+                    connection.invalidate()
+                    raise
+    finally:
+        lock_engine.dispose()

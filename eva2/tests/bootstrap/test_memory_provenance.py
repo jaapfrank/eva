@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from contextlib import contextmanager
 from dataclasses import dataclass
 from types import SimpleNamespace
 
@@ -333,3 +334,64 @@ def test_group_turn_revalidates_exact_consent_before_journal_or_model() -> None:
     Consent.active = None
     with pytest.raises(ValueError, match="not active and exact"):
         runtime.respond(turn)
+
+
+
+def test_runtime_rechecks_consent_in_conversation_callback_before_commit():
+    reference = TelegramGroupConsentReference(
+        principal_id="person:1", group_chat_id="-100123",
+        operation_id="telegram-group-consent:current",
+    )
+    turn = ConversationTurn(
+        "tenant:1", "installation:1", "person:1", "telegram:-100123",
+        "telegram:-100123:message:9", "Bekijk de gegevens.", "2026-09-08T09:00:00Z",
+        MemoryAudience.telegram_group(
+            principal_id="person:1", group_chat_id="-100123", consent_ref=reference,
+        ),
+    )
+    locked = False
+
+    class Consent:
+        active = reference
+
+        def active_reference(self, **kwargs):
+            return self.active
+
+    class Journal:
+        @contextmanager
+        def execution(self, turn):
+            nonlocal locked
+            locked = True
+            try:
+                yield
+            finally:
+                locked = False
+
+        def admit(self, turn):
+            assert locked
+
+        def committed_reply(self, turn):
+            return None
+
+        def recent(self, *args, **kwargs):
+            return ()
+
+        def commit_reply(self, *args):
+            raise AssertionError("revoked audience must not receive a committed reply")
+
+    class Conversation:
+        def respond(self, turn, recent, *, before_step, model_journal):
+            assert locked
+            Consent.active = None
+            before_step(turn, None)
+            raise AssertionError("revoked consent must stop continuation")
+
+    runtime = object.__new__(PostgresHindsightMemoryRuntime)
+    runtime._runtime_tenant_id = "tenant:1"
+    runtime._runtime_installation_id = "installation:1"
+    runtime._group_consent = Consent()
+    runtime._journal = lambda turn: Journal()
+    runtime._conversation = Conversation()
+    with pytest.raises(ValueError, match="not active and exact"):
+        runtime.respond(turn)
+    assert not locked

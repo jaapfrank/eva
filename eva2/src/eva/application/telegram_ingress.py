@@ -2,9 +2,12 @@
 
 from __future__ import annotations
 
+from concurrent.futures import ThreadPoolExecutor
+from threading import Event, Lock
 from dataclasses import dataclass
 from datetime import UTC, datetime
 import re
+import logging
 from time import monotonic
 from typing import Callable, Protocol
 from uuid import UUID
@@ -129,6 +132,20 @@ class TelegramPrincipalBindings:
             for binding in self._by_user.values()
         )
 
+    def private_bridge_principal(
+        self, *, principal_id: str, principal_binding_id: UUID
+    ) -> str | None:
+        """Resolve one trusted private bridge alias, never a browser-supplied ID."""
+        matches = [
+            item for item in self._by_user.values()
+            if item.principal_id == principal_id
+            and item.principal_binding_id == str(principal_binding_id)
+            and str(item.telegram_user_id) in item.allowed_chat_ids
+        ]
+        if len(matches) > 1:
+            raise ValueError("owner private bridge binding is ambiguous")
+        return f"telegram:{matches[0].telegram_user_id}" if matches else None
+
 
 @dataclass(frozen=True, slots=True)
 class TelegramCoreReply:
@@ -160,6 +177,8 @@ class TelegramReplyDraftPort(Protocol):
 
 
 class TelegramCorePort(Protocol):
+    def stop_pending(self, message: TelegramInboundMessage, *, stop_message: TelegramInboundMessage, principal_id: str, audience: MemoryAudience) -> None: ...
+
     def respond(
         self,
         message: TelegramInboundMessage,
@@ -260,10 +279,62 @@ class TelegramIngressWorker:
         self._streaming_core = streaming_core
         self._draft_clock = draft_clock
         self._next_draft_at = 0.0
+        self._active_lock = Lock()
+        self._active_reply: tuple[TelegramInboundMessage, str, MemoryAudience] | None = None
+        self._observed_stops: set[int] = set()
 
     @staticmethod
     def _now() -> datetime:
         return datetime.now(tz=UTC).replace(microsecond=0)
+
+    def run_once_interruptible(self, shutdown: Event) -> str:
+        """Keep polling stop requests during core I/O without acknowledging ahead.
+
+        There is still exactly one normal batch and one delivery path. Lookahead
+        never admits/delivers Telegram jobs or advances their durable offset.
+        """
+        with ThreadPoolExecutor(max_workers=1, thread_name_prefix="eva-telegram") as executor:
+            future = executor.submit(self.run_once)
+            while not future.done() and not shutdown.wait(0.2):
+                try:
+                    self._poll_pending_stop()
+                except Exception as error:
+                    logging.getLogger(__name__).warning("Telegram stop lookahead failed: %s", type(error).__name__)
+                    if shutdown.wait(1.0):
+                        break
+            return future.result()
+
+    def _poll_pending_stop(self) -> None:
+        with self._active_lock:
+            active = self._active_reply
+        if active is None:
+            return
+        current, principal_id, audience = active
+        updates = self._provider.poll(offset=self._store.next_offset())
+        for message in sorted(updates, key=lambda item: item.update_id):
+            if (message.update_id <= current.update_id
+                    or message.sender_id != current.sender_id or message.chat_id != current.chat_id
+                    or message.text is None or message.text.strip().casefold() not in
+                    {"/stop", "stop deze opdracht", "stop deze opdracht."}):
+                continue
+            resolved, conflict = self._resolve_principal(message)
+            if conflict or resolved != principal_id:
+                continue
+            if audience.kind == "telegram_group":
+                consent = (None if self._group_consent is None else self._group_consent.active_reference(
+                    principal_id=principal_id, group_chat_id=message.chat_id, now=self._now(),
+                ))
+                if consent != audience.consent_ref:
+                    continue
+            # Prevent moving on to another ordinary message during this control
+            # call. The current provider request itself may still finish.
+            with self._active_lock:
+                if self._active_reply != active:
+                    return
+                if message.update_id in self._observed_stops:
+                    continue
+                self._core.stop_pending(current, stop_message=message, principal_id=principal_id, audience=audience)
+                self._observed_stops.add(message.update_id)
 
     def run_once(self) -> str:
         updates = self._provider.poll(offset=self._store.next_offset())
@@ -375,9 +446,22 @@ class TelegramIngressWorker:
             self._store.acknowledge_delivery(
                 claimed, provider_message_id, now=self._now()
             )
+            with self._active_lock:
+                self._observed_stops.discard(message.update_id)
         return "processed"
 
     def _core_reply_with_optional_draft(
+        self, message: TelegramInboundMessage, *, principal_id: str, audience: MemoryAudience,
+    ) -> TelegramCoreReply:
+        with self._active_lock:
+            self._active_reply = (message, principal_id, audience)
+        try:
+            return self._respond_core(message, principal_id=principal_id, audience=audience)
+        finally:
+            with self._active_lock:
+                self._active_reply = None
+
+    def _respond_core(
         self,
         message: TelegramInboundMessage,
         *,

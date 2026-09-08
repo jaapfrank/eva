@@ -23,6 +23,14 @@ class ConversationConflict(RuntimeError):
     """A replay reused a durable message identity for different content."""
 
 
+class ConversationExecutionLimitReached(RuntimeError):
+    """This turn exhausted its durable provider-request admission limit."""
+
+
+class ConversationStopped(RuntimeError):
+    """The principal durably requested no further steps for this turn."""
+
+
 class ConversationClarificationRequired(RuntimeError):
     """A safe action needs one ordinary follow-up answer from the user."""
 
@@ -602,6 +610,7 @@ class ConversationModelPort(Protocol):
         *,
         available_actions: tuple[str, ...] = (),
         completed_action: ConversationActionReceipt | None = None,
+        prior_actions: tuple[ConversationActionReceipt, ...] = (),
         self_context: tuple[str, ...] = (),
     ) -> ConversationModelResult: ...
 
@@ -647,6 +656,45 @@ class ConversationExternalToolPlanner(Protocol):
     ) -> ConversationToolPreparation: ...
 
 
+class ConversationModelJournal(Protocol):
+    """Durable model admissions and reported usage, independent of provider."""
+
+    def begin_model_request(self, turn: ConversationTurn) -> str: ...
+
+    def complete_model_request(
+        self, turn: ConversationTurn, request_id: str, usage: ConversationModelUsage,
+    ) -> None: ...
+
+    def model_usage(self, turn: ConversationTurn) -> ConversationModelUsage: ...
+
+
+_MODEL_REQUEST_JOURNAL: ContextVar[tuple[ConversationTurn, ConversationModelJournal] | None] = ContextVar(
+    "eva_model_request_journal", default=None,
+)
+
+
+@contextmanager
+def observe_model_requests(
+    turn: ConversationTurn, journal: ConversationModelJournal | None,
+) -> Iterator[None]:
+    token = _MODEL_REQUEST_JOURNAL.set(None if journal is None else (turn, journal))
+    try:
+        yield
+    finally:
+        _MODEL_REQUEST_JOURNAL.reset(token)
+
+
+def begin_current_model_request() -> str | None:
+    context = _MODEL_REQUEST_JOURNAL.get()
+    return None if context is None else context[1].begin_model_request(context[0])
+
+
+def complete_current_model_request(request_id: str | None, usage: ConversationModelUsage) -> None:
+    context = _MODEL_REQUEST_JOURNAL.get()
+    if context is not None and request_id is not None:
+        context[1].complete_model_request(context[0], request_id, usage)
+
+
 class LivingConversation:
     """Recall memory, then let Eva's own model formulate one answer.
 
@@ -660,16 +708,22 @@ class LivingConversation:
         model: ConversationModelPort,
         identity: IdentityProfile,
         actions: ConversationActionPort | None = None,
+        *,
+        before_step: Callable[[ConversationTurn, ConversationModelUsage], None] | None = None,
     ) -> None:
         self._memory = memory
         self._model = model
         self._identity = identity
         self._actions = actions
+        self._before_step = before_step
 
     def respond(
         self,
         turn: ConversationTurn,
         recent_messages: tuple[RecentConversationMessage, ...] = (),
+        *,
+        before_step: Callable[[ConversationTurn, ConversationModelUsage], None] | None = None,
+        model_journal: ConversationModelJournal | None = None,
     ) -> GroundedReply:
         hint_loader = (
             None
@@ -747,65 +801,119 @@ class LivingConversation:
             )
             return self._bound_observation_memory(turn, recalled)
 
+        usages: list[ConversationModelUsage] = []
+        timings: list[ConversationModelTiming] = []
+
+        def total_usage() -> ConversationModelUsage:
+            return (model_journal.model_usage(turn) if model_journal is not None
+                    else ConversationModelUsage.aggregate(tuple(usages)))
+
+        def checkpoint() -> None:
+            usage = total_usage()
+            if self._before_step is not None:
+                self._before_step(turn, usage)
+            if before_step is not None:
+                before_step(turn, usage)
+
+        def continuation_names(receipt: ConversationActionReceipt) -> tuple[str, ...]:
+            selector = getattr(self._actions, "continuation_action_names", None)
+            if receipt.output.get("status") != "verified" or not callable(selector):
+                return ()
+            return selector(turn)
+
+        checkpoint()
         completed = None if self._actions is None else self._actions.pending(turn)
+        receipts: list[ConversationActionReceipt] = []
+        if completed is not None:
+            receipts.append(completed)
+            pending_step = getattr(self._actions, "pending_step", None)
+            # Recover admitted steps before asking the model to choose again.
+            while completed.output.get("status") == "verified" and callable(pending_step):
+                checkpoint()
+                recovered = pending_step(turn, step_index=len(receipts))
+                if recovered is None:
+                    break
+                if recovered.call.call_id in {item.call.call_id for item in receipts}:
+                    raise ConversationConflict("conversation replay has duplicate call IDs")
+                receipts.append(recovered)
+                completed = recovered
         available_names: tuple[str, ...] = ()
-        if self._actions is not None and completed is None:
-            action_selector = getattr(self._actions, "available_action_names", None)
-            available_names = (
-                action_selector(turn)
-                if callable(action_selector)
-                else self._actions.action_names
-            )
+        if self._actions is not None:
+            if completed is None:
+                action_selector = getattr(self._actions, "available_action_names", None)
+                available_names = (
+                    action_selector(turn)
+                    if callable(action_selector)
+                    else self._actions.action_names
+                )
+            else:
+                available_names = continuation_names(completed)
         self_context = (
             () if self._actions is None else self._actions.active_context(turn)
         )
         memory = recall(turn.text, fast=True)
-        generated = self._model.generate(
-            turn,
-            self._identity,
-            memory,
-            recent_messages,
-            available_actions=available_names,
-            completed_action=completed,
-            self_context=self_context,
-        )
-        usages = [generated.usage]
-        timings = [generated.timing]
-        if (
-            generated.action_call is not None
-            and generated.action_call.name == MEMORY_SEARCH_ACTION
-        ):
-            arguments = generated.action_call.arguments
-            query_text = arguments.get("query_text")
-            if (
-                set(arguments) != {"query_text"}
-                or not isinstance(query_text, str)
-                or not query_text.strip()
-                or len(query_text.encode("utf-8")) > 1_024
-            ):
-                raise RuntimeError("conversation memory search request is invalid")
-            expanded = recall(f"{turn.text}\nSemantische zoekconcepten: {query_text}")
-            if expanded.confirmed_facts:
-                memory = expanded
-            generated = self._model.generate(
-                turn,
-                self._identity,
-                memory,
-                recent_messages,
-                available_actions=available_names,
-                completed_action=ConversationActionReceipt(
-                    call=generated.action_call,
-                    output={"result_count": len(expanded.confirmed_facts)},
-                ),
-                self_context=self_context,
-            )
+        memory_searched = False
+        seen_call_ids = {item.call.call_id for item in receipts}
+        while True:
+            checkpoint()
+            history = {"prior_actions": tuple(receipts[:-1])} if len(receipts) > 1 else {}
+            individual_requests = getattr(self._model, "journals_provider_requests", False) is True
+            request_id = (None if model_journal is None or individual_requests
+                          else model_journal.begin_model_request(turn))
+            with observe_model_requests(turn, model_journal if individual_requests else None):
+                generated = self._model.generate(
+                    turn,
+                    self._identity,
+                    memory,
+                    recent_messages,
+                    available_actions=available_names,
+                    completed_action=completed,
+                    self_context=self_context,
+                    **history,
+                )
+            if model_journal is not None and request_id is not None:
+                model_journal.complete_model_request(turn, request_id, generated.usage)
             usages.append(generated.usage)
             timings.append(generated.timing)
-        if generated.action_call is not None:
-            if self._actions is None or completed is not None:
+            call = generated.action_call
+            if call is None:
+                break
+            checkpoint()
+            if call.call_id in seen_call_ids:
+                raise ConversationConflict("conversation model reused a completed call ID")
+            seen_call_ids.add(call.call_id)
+            if call.name == MEMORY_SEARCH_ACTION:
+                if memory_searched or receipts:
+                    raise RuntimeError("conversation memory search is unavailable")
+                arguments = call.arguments
+                query_text = arguments.get("query_text")
+                if (
+                    set(arguments) != {"query_text"}
+                    or not isinstance(query_text, str)
+                    or not query_text.strip()
+                    or len(query_text.encode("utf-8")) > 1_024
+                ):
+                    raise RuntimeError("conversation memory search request is invalid")
+                expanded = recall(f"{turn.text}\nSemantische zoekconcepten: {query_text}")
+                if expanded.confirmed_facts:
+                    memory = expanded
+                completed = ConversationActionReceipt(
+                    call=call, output={"result_count": len(expanded.confirmed_facts)},
+                )
+                memory_searched = True
+                continue
+            if self._actions is None or call.name not in available_names:
                 raise RuntimeError("conversation model requested an unavailable action")
             try:
-                completed = self._actions.execute(turn, generated.action_call)
+                if receipts:
+                    execute_step = getattr(self._actions, "execute_step", None)
+                    if not callable(execute_step):
+                        raise ConversationConflict("conversation continuation is unavailable")
+                    completed = execute_step(turn, call, step_index=len(receipts))
+                    if completed.call != call:
+                        raise ConversationConflict("conversation step returned another call")
+                else:
+                    completed = self._actions.execute(turn, call)
             except ConversationClarificationRequired as clarification:
                 return GroundedReply(
                     conversation_id=turn.conversation_id,
@@ -816,22 +924,11 @@ class LivingConversation:
                     ),
                     generated_at=turn.occurred_at,
                     provider=generated.provider,
-                    model_usage=ConversationModelUsage.aggregate(tuple(usages)),
+                    model_usage=total_usage(),
                     model_timing=ConversationModelTiming.aggregate(tuple(timings)),
                 )
-            generated = self._model.generate(
-                turn,
-                self._identity,
-                memory,
-                recent_messages,
-                available_actions=(),
-                completed_action=completed,
-                self_context=self_context,
-            )
-            usages.append(generated.usage)
-            timings.append(generated.timing)
-        if generated.action_call is not None:
-            raise RuntimeError("conversation model requested more than one action")
+            receipts.append(completed)
+            available_names = continuation_names(completed)
         text = "" if generated.text is None else generated.text.strip()
         if not text:
             raise RuntimeError("conversation model returned an empty reply")
@@ -844,7 +941,7 @@ class LivingConversation:
             evidence_memory_ids=tuple(item.fact_id for item in memory.recall.selected),
             generated_at=turn.occurred_at,
             provider=generated.provider,
-            model_usage=ConversationModelUsage.aggregate(tuple(usages)),
+            model_usage=total_usage(),
             model_timing=ConversationModelTiming.aggregate(tuple(timings)),
         )
 
