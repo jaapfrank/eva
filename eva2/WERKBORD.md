@@ -5,37 +5,40 @@ Laatst bijgewerkt: 2026-09-08.
 Doel: [Eva als zelfstandig lerende digitale huisgenoot](PROJECTDOEL.md).
 Gebouwd, getest, live en door jou geaccepteerd zijn verschillende stappen.
 
-De nieuwe antwoordstream draait op slot 4. De echte Telegramclient, vier Telegram-drafts en één eindbericht zijn gecontroleerd; beide databases zijn behouden. Nu de bestaande bron-API zichtbaar maken in React-admin.
-[Actueel bewijs](evidence/product/CO-007-live-answer-stream-2026-09-08.json).
+CO-006 technisch afgerond en live: broncorrectie en cacheverversing bewezen, onafhankelijk goedgekeurd, gegevens behouden. Nu TL-001: de algemene route voor meerdere toolstappen.
+[Actueel bewijs](evidence/product/CO-006-autonomous-memory-2026-09-08.json).
 
-Praat gewoon verder met /eva2 voor iedere beurt; niets instellen. CO-004 is de volgende kleine productkaart. Menselijke beoordeling loopt apart en blokkeert het bouwen van het geheugenscherm niet.
+De huidige één-actieroute gericht meten en via onderhouden Pydantic-uitvoering vervangen door een duurzame toolketen. Stem en meer eigen initiatief volgen op dezelfde basis.
 
 ## Nu
 
 | Volgorde | Kaart | Resultaat | Status |
 |---:|---|---|---|
-| 135 | `CO-004` — Eigen geheugen in het dashboard tonen | Het bestaande React-admin-dashboard toont eigen afgeschermde geheugenbronnen met paginering en heldere lege/fouttoestanden. Geen nieuwe webstack, extra modelcalls of browseropslag. | 🟡 BEZIG |
+| 136 | `TL-001` — Algemene toolroute meerdere stappen laten uitvoeren | Eva kiest en vervolgt meerdere tools in dezelfde taak via de bestaande onderhouden agentroute; een onbekende tool wordt via zijn beschrijving gebruikt. Uitvoering blijft herstelbaar en stopt direct op verzoek. | 🟡 BEZIG |
 
 Klaar betekent:
 
-- Eigen geheugenbronnen zijn begrijpelijk en gepagineerd zichtbaar; toegangsverlies verwijdert eerder zichtbare inhoud en toont geen details van anderen.
-- Een echte browserproef en gerichte asset/API-tests zijn groen, zonder extra dependency of modelcall; onafhankelijke review bevestigt de exacte scope.
-- De gebruiker krijgt een werkende eigenaarroute naar het scherm; geen ontwikkelbuild als live levering afvinken. Corrigeren/wissen blijft CO-005.
+- Twee afhankelijke toolstappen en een onbekende toolbeschrijving werken via dezelfde generieke route zonder taakspecifieke kerncode.
+- Gerichte controles, duurzame replay/stop, onafhankelijke review en passende praktijkproef zijn groen; oorspronkelijke beperkingen en verbruik zijn zichtbaar.
 
 <details>
 <summary>Technische uitvoering: bestanden en controles</summary>
 
-### Exact werk voor `CO-004`
+### Exact werk voor `TL-001`
 
-- `eva2/experiments/react-admin-dashboard-v1/src/main.jsx`
-- `eva2/experiments/react-admin-dashboard-v1/src/style.css`
-- `eva2/experiments/react-admin-dashboard-v1/verify-browser.cjs`
-- `eva2/tests/tools/test_build_dashboard_assets.py`
+- `eva2/src/eva/application/conversation.py`
+- `eva2/src/eva/adapters/model/pydantic_conversation.py`
+- `eva2/src/eva/adapters/postgres/conversation_actions.py`
+- `eva2/src/eva/adapters/postgres/external_conversation_tools.py`
+- `eva2/tests/application/test_conversation.py`
+- `eva2/tests/model/test_pydantic_conversation_model.py`
+- `eva2/tests/postgres/test_conversation_actions.py`
 
 Echte controles:
 
-- `pytest -q tests/tools/test_build_dashboard_assets.py tests/api/test_dashboard_status.py`
-- `ruff check tests/tools/test_build_dashboard_assets.py`
+- `pytest -q tests/application/test_conversation.py tests/model/test_pydantic_conversation_model.py`
+- `pytest -q tests/postgres/test_conversation_actions.py`
+- `ruff check src/eva/application/conversation.py src/eva/adapters/model/pydantic_conversation.py src/eva/adapters/postgres/conversation_actions.py src/eva/adapters/postgres/external_conversation_tools.py`
 - `python3 tools/check_component_catalog.py`
 
 </details>
@@ -45,12 +48,10 @@ Echte controles:
 Deze onderwerpen zijn alleen mijlpalen. Een mijlpaal wordt pas uitvoerbaar
 nadat zij als eerstvolgende kleine kaart exacte bestanden en tests heeft.
 
-- [ ] `CO-005` — Eigen geheugen corrigeren en wissen: De eigenaar kan één zichtbare bron corrigeren of wissen en krijgt controle dat PostgreSQL en Hindsight dezelfde wijziging hebben verwerkt.
-- [ ] `CO-006` — Nuttig geheugen en retentie bewijzen: Bestaande Hindsight-consolidatie gebruiken; gewijzigde voorkeuren, bronherkomst en vergeten semantisch testen. Bronbewaring, compactere kennis en werkelijk schijfgebruik afzonderlijk meten; geen tweede geheugensysteem.
 - [ ] `VB-001` — Full-duplex voice leveren: Microfoon en speaker werken tegelijk met snelle onderbreking.
-- [ ] `VB-002` — Passende aanwezigheid leveren: Eva spreekt passend in huis met stilte, cooldown en stop.
-- [ ] `AU-005` — Passend initiatief en kansen bewijzen: Een nuttige kans herkennen, onder bestaand mandaat uitvoeren en controleren; bij een afleider, privacygrens of ongepast moment terecht niets doen. Gezin beoordeelt nut en hinder.
-- [ ] `TL-001` — Algemene toolontdekking afmaken: De best onderhouden generieke model- en toolloop laadt providers via configuratie of MCP. Pydantic AI wint die plek alleen bij gemeten voordeel; eigen wrappers en oude modelpaden verdwijnen in dezelfde kaart.
+- [ ] `VB-002` — Passende aanwezigheid leveren: Eva zoekt spontaan contact via de beschikbare speakers en deurbel, met herkenbare identiteit en gevoel voor het moment. Gezin beoordeelt plezier, betrokkenheid en hinder; onderbreken en stop werken.
+- [ ] `AU-005` — Passend initiatief en kansen bewijzen: Meer gewaardeerd eigen initiatief dan Bottie: humor, nieuwsgierigheid, zelfgekozen onderzoek, creatieve bijdragen en kansen. Eva begint en vervolgt zelf werk, voert binnen bestaand mandaat uit en controleert het resultaat. Gezin beoordeelt eigenheid, plezier, nut en hinder; alleen meer berichten telt niet als winst.
+- [ ] `CO-008` — Autonoom geheugen in gezinsgesprekken bewijzen: De oorspronkelijke brede geheugenuitkomst blijft open: relevante kennis zelfstandig kiezen, gewijzigde en tijdelijke informatie goed gebruiken in gewone gesprekken en langere gezinspraktijk. Geen handmatig geheugenbeheer; familie beoordeelt continuïteit en vertrouwen.
 - [ ] `TL-002` — Actie en readback generaliseren: Twee echte providers gebruiken dezelfde precies-eenmaalroute.
 - [ ] `AU-001` — Eigenaarmandaat uitvoeren: Eva handelt binnen het afgesproken mandaat zonder steeds opnieuw te vragen.
 - [ ] `TL-003` — Onbekende connector zelfstandig toevoegen: Eva kiest onderhouden software uit documentatie en bewijst de adapter.
@@ -62,6 +63,8 @@ nadat zij als eerstvolgende kleine kaart exacte bestanden en tests heeft.
 - [ ] `AU-004` — Zelf tools en skills leren maken: Een ongeziene digitale taak leren uit documentatie; zelf een tool of skill maken, testen en bij een andere taak hergebruiken zonder nieuwe taakspecifieke kerncode. Fouten en menselijke hulp meetellen.
 - [ ] `AU-006` — Project zelfstandig tot resultaat brengen: Een meerdaags cross-domainproject plannen, uitvoeren, bijsturen en na herstart hervatten met zichtbare kosten en stop. Een bedrijfspilot kan als afgesproken project; geen echte betalingen, publicatie of verplichtingen zonder passend mandaat.
 - [ ] `AU-003` — Eigen onderdelen beoordelen en verbeteren: Eva ontdekt een overbodig of zwak onderdeel, vergelijkt onderhouden upstream, maakt een geïsoleerde verbetering en bewijst voor/na voordeel en terugrol. Alleen gemeten winst mag promoveren; geen zelfverruiming van rechten.
+- [ ] `CO-004` — Optioneel geheugen inzien: Alleen een optionele inzagefunctie; geen voorwaarde voor dagelijks gebruik. Begonnen bronwerk blijft bewaard, niet afgevinkt of live gezet.
+- [ ] `CO-005` — Optioneel expliciet vergeten of corrigeren: Alleen op uitdrukkelijk verzoek kunnen corrigeren of vergeten. Geen onderhoudstaak voor Jaap en geen blokkade voor autonoom geheugen.
 - [ ] `IN-001` — Fresh install voor gebruikers: Een gewone gebruiker installeert Eva zonder terminal of configuratiebestanden.
 - [ ] `IN-002` — Naar andere computer verplaatsen: Identiteit en data herstellen; connectoren veilig opnieuw koppelen.
 - [ ] `IN-003` — Consumentenupdates leveren: Renovate stelt onderhouden dependencies voor; updates doorlopen dezelfde poort en rollen verliesloos terug.
@@ -123,7 +126,9 @@ Afgevinkt betekent alleen: de vastgelegde kaart is afgerond, niet het hele produ
   [Bewijs](evidence/product/UP-001-phase-aware-streaming-2026-09-08.json).
 - [x] `CO-007` — Menselijke gesprekroute compleet maken (done).
   [Bewijs](evidence/product/CO-007-live-answer-stream-2026-09-08.json).
-- [ ] `CO-004` — Eigen geheugen in het dashboard tonen (in_progress).
+- [x] `CO-006` — Geheugenbroncorrectie veilig in gebruik nemen (done).
+  [Bewijs](evidence/product/CO-006-autonomous-memory-2026-09-08.json).
+- [ ] `TL-001` — Algemene toolroute meerdere stappen laten uitvoeren (in_progress).
 
 </details>
 

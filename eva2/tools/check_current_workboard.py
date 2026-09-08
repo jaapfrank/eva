@@ -117,6 +117,7 @@ TEAM = {
     "proofreviewer": "/root/proof_review",
     "workboardreviewer": "/root/workboard_review",
     "dashboardreviewer": "/root/identity_pair_review",
+    "memoryreviewer": "/root/co006_review",
 }
 
 
