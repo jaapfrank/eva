@@ -3041,3 +3041,202 @@ def test_model_usage_survives_restart_with_unknown_attempt_and_owner_stop(timeli
     assert restarted.model_usage(turn) == ConversationModelUsage.measured(
         model_attempts=4, tool_calls=2, input_tokens=62, output_tokens=16,
     )
+
+
+@pytest.mark.parametrize("command", ["/stop", "stop deze opdracht"])
+def test_telegram_stop_command_interrupts_other_running_turn_without_model(timeline_engine, command):
+    from eva.application.conversation import ConversationModelUsage
+    from eva.bootstrap.runtime import PostgresHindsightMemoryRuntime
+
+    entered, release = Event(), Event()
+    active = ConversationTurn.private(
+        "telegram-stop", "installation", "owner", "telegram:123", f"active:{command}",
+        "Doe de opdracht.", "2026-09-08T09:00:00Z",
+    )
+    stop = ConversationTurn.private(
+        active.tenant_id, active.installation_id, active.principal_id, active.conversation_id,
+        f"stop:{command}", command, active.occurred_at,
+    )
+    calls = []
+    class Conversation:
+        def respond(self, turn, recent, *, before_step, model_journal):
+            calls.append(turn.message_id)
+            entered.set()
+            assert release.wait(5)
+            before_step(turn, ConversationModelUsage.unmeasured())
+            raise AssertionError("stopped work must not continue")
+    runtime = object.__new__(PostgresHindsightMemoryRuntime)
+    runtime._engine = timeline_engine
+    runtime._runtime_tenant_id = active.tenant_id
+    runtime._runtime_installation_id = active.installation_id
+    runtime._conversation = Conversation()
+    with ThreadPoolExecutor(max_workers=2) as executor:
+        running = executor.submit(runtime.respond, active)
+        try:
+            assert entered.wait(2)
+            stopped = executor.submit(runtime.respond, stop).result(timeout=2)
+            assert stopped.provider == "runtime:conversation-stop-command"
+            assert "geen verdere stappen" in stopped.text
+        finally:
+            release.set()
+        assert running.result(timeout=2).provider == "runtime:conversation-stop"
+    assert runtime.respond(stop) == stopped
+    assert calls == [active.message_id]
+
+
+def test_stop_command_crash_replay_does_not_stop_later_work_or_other_people(timeline_engine):
+    from dataclasses import replace
+    from eva.bootstrap.runtime import PostgresHindsightMemoryRuntime
+
+    turn = ConversationTurn.private(
+        "stop-snapshot", "installation", "owner", "telegram:456", "stop-command",
+        "/stop", "2026-09-08T09:00:00Z",
+    )
+    scope = external_timeline_scope(turn.tenant_id, turn.installation_id, "scope")
+    crashed = False
+    class Journal(PostgresConversationJournal):
+        def commit_reply(self, current, reply):
+            nonlocal crashed
+            if not crashed:
+                crashed = True
+                raise SystemExit(137)
+            return super().commit_reply(current, reply)
+    journal = Journal(timeline_engine, scope)
+    existing = replace(turn, message_id="old-work", text="Doe iets.")
+    other = ConversationTurn.private(turn.tenant_id, turn.installation_id, "other", turn.conversation_id,
+                                     "other-work", "Doe iets.", turn.occurred_at)
+    journal.admit(existing)
+    journal.admit(other)
+    runtime = object.__new__(PostgresHindsightMemoryRuntime)
+    runtime._runtime_tenant_id = turn.tenant_id
+    runtime._runtime_installation_id = turn.installation_id
+    runtime._journal = lambda current: journal
+    with pytest.raises(SystemExit):
+        runtime.respond(turn)
+    later = replace(existing, message_id="later-work")
+    journal.admit(later)
+    reply = runtime.respond(turn)
+    assert reply.provider == "runtime:conversation-stop-command"
+    journal.ensure_running(later)
+    journal.ensure_running(other)
+    from eva.application.conversation import ConversationStopped
+    with pytest.raises(ConversationStopped):
+        journal.ensure_running(existing)
+
+
+
+def test_telegram_bridge_accepts_stop_while_an_http_answer_is_running(timeline_engine):
+    from fastapi.testclient import TestClient
+    from eva.adapters.api.app import create_app
+    from eva.bootstrap.runtime import PostgresHindsightMemoryRuntime
+    from tests.api.test_telegram_canary_api import _Runtime, _payload
+
+    entered, release = Event(), Event()
+    model_turns = []
+    class Conversation:
+        def respond(self, turn, recent, *, before_step, model_journal):
+            model_turns.append(turn)
+            entered.set()
+            assert release.wait(5)
+            before_step(turn, None)
+            raise AssertionError("the stop must reach the running HTTP turn")
+    runtime = object.__new__(PostgresHindsightMemoryRuntime)
+    runtime._engine = timeline_engine
+    runtime._runtime_tenant_id = "family"
+    runtime._runtime_installation_id = "home"
+    runtime._telegram_principal_bindings = None
+    runtime._delegated_work_commands = None
+    runtime._conversation = Conversation()
+    runtime.admit_telegram_canary = _Runtime().bridge.admit
+    runtime.after_response = lambda *args: None
+    runtime.start_background_work = lambda: None
+    runtime.stop_background_work = lambda: None
+    with TestClient(create_app(runtime)) as client, ThreadPoolExecutor(max_workers=2) as executor:
+        url = "/internal/v1/telegram/canary/respond"
+        running = executor.submit(client.post, url, json=_payload(message_id=101, text="Voer de opdracht uit."))
+        try:
+            assert entered.wait(2)
+            stop = executor.submit(client.post, url, json=_payload(message_id=102, text="/stop")).result(timeout=2)
+            assert stop.status_code == 200
+            assert stop.json()["provider"] == "runtime:conversation-stop-command"
+        finally:
+            release.set()
+        response = running.result(timeout=2)
+    assert response.status_code == 200
+    assert response.json()["provider"] == "runtime:conversation-stop"
+    assert len(model_turns) == 1
+    assert model_turns[0].principal_id == "telegram:7"
+
+
+
+def test_exact_stop_arriving_before_ingress_prevents_model_start(timeline_engine):
+    from dataclasses import replace
+    from eva.bootstrap.runtime import PostgresHindsightMemoryRuntime
+    from eva.application.conversation import ConversationStopped
+    turn = ConversationTurn.private("early-stop", "installation", "owner", "telegram:101",
+                                    "early-message", "Werk", "2026-09-08T09:00:00Z")
+    runtime = object.__new__(PostgresHindsightMemoryRuntime)
+    runtime._engine = timeline_engine
+    runtime._runtime_tenant_id = turn.tenant_id
+    runtime._runtime_installation_id = turn.installation_id
+    from fastapi.testclient import TestClient
+    from eva.adapters.api.app import create_app
+    from eva.application.memory_audience import memory_audience_to_wire
+    payload = {"tenant_id": turn.tenant_id, "installation_id": turn.installation_id,
+               "principal_id": turn.principal_id, "conversation_id": turn.conversation_id,
+               "message_id": turn.message_id, "text": turn.text, "occurred_at": turn.occurred_at,
+               "audience": memory_audience_to_wire(turn.audience), "recent_messages": []}
+    client = TestClient(create_app(runtime))
+    for _ in range(2):
+        response = client.post("/internal/v1/turns/stop", json=payload)
+        assert response.status_code == 200
+        assert response.json() == {"contract": "EvaTurnStop/v1",
+                                   "conversation_id": turn.conversation_id, "message_id": turn.message_id}
+        assert response.headers["cache-control"] == "no-store"
+    assert client.post("/internal/v1/turns/stop", json={**payload, "tenant_id": "other"}).status_code == 422
+    journal = runtime._journal(turn)
+    journal.admit(turn)
+    with pytest.raises(ConversationStopped):
+        journal.begin_model_request(turn)
+    later = replace(turn, message_id="later-message")
+    journal.admit(later)
+    journal.ensure_running(later)
+    assert journal.request_turn_stop(turn, request_message_id="native-stop") == turn.message_id
+    restarted = PostgresConversationJournal(timeline_engine, journal._scope_value)
+    assert restarted.request_turn_stop(later, request_message_id="native-stop") == turn.message_id
+    restarted.ensure_running(later)
+    with pytest.raises(ValueError, match="scope"):
+        runtime.request_turn_stop(replace(turn, tenant_id="other-tenant"))
+
+
+
+def test_model_request_limit_is_durable_across_restart_and_unknown_usage(timeline_engine):
+    from eva.application.conversation import ConversationExecutionLimitReached
+    from eva.bootstrap.runtime import PostgresHindsightMemoryRuntime
+    turn = ConversationTurn.private("turn-budget", "installation", "owner", "chat", "limited-turn",
+                                    "Voer de opdracht uit.", "2026-09-08T09:00:00Z")
+    scope = external_timeline_scope(turn.tenant_id, turn.installation_id, "scope")
+    journal = PostgresConversationJournal(timeline_engine, scope, maximum_model_requests=2)
+    journal.begin_model_request(turn)
+    journal.begin_model_request(turn)  # Unknown usage still consumes an admission.
+    restarted = PostgresConversationJournal(timeline_engine, scope, maximum_model_requests=100)
+    with pytest.raises(ConversationExecutionLimitReached):
+        restarted.begin_model_request(turn)
+    class Conversation:
+        def respond(self, turn, recent, *, before_step, model_journal):
+            model_journal.begin_model_request(turn)
+            raise AssertionError("provider must not start after its durable limit")
+    runtime = object.__new__(PostgresHindsightMemoryRuntime)
+    runtime._engine = timeline_engine
+    runtime._runtime_tenant_id = turn.tenant_id
+    runtime._runtime_installation_id = turn.installation_id
+    runtime._conversation = Conversation()
+    reply = runtime.respond(turn)
+    assert reply.provider == "runtime:conversation-limit"
+    assert "nog niet af" in reply.text
+    assert reply.model_usage.measurement == "partial"
+    assert reply.model_usage.model_attempts == 2
+    assert runtime.respond(turn) == reply
+    from dataclasses import replace
+    another = replace(turn, message_id="another-turn")
+    restarted.begin_model_request(another)  # No installation/day-wide cap.

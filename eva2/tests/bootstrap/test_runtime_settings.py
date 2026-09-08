@@ -920,3 +920,14 @@ def test_dashboard_erasure_uses_only_fixed_owner_and_conversation() -> None:
     with pytest.raises(ValueError, match="message is invalid"):
         runtime.dashboard_erase_conversation_message("telegram:other-person:1")
     assert len(cold_path.calls) == 1
+
+
+@pytest.mark.parametrize("value", [0, -1, True, 1.5, "32"])
+def test_conversation_request_limit_requires_positive_integer(value):
+    with pytest.raises(ValueError, match="request limit"):
+        RuntimeSettings("unused", "http://memory", conversation_maximum_requests=value)
+
+
+def test_conversation_request_limit_has_configurable_turn_local_default():
+    assert RuntimeSettings("unused", "http://memory").conversation_maximum_requests == 32
+    assert RuntimeSettings("unused", "http://memory", conversation_maximum_requests=96).conversation_maximum_requests == 96

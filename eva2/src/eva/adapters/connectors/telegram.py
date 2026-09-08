@@ -308,6 +308,35 @@ class LivingCoreTurnHttpAdapter:
             self._decode_reply(decoded, conversation_id, message_id)
         )
 
+    def stop_pending(self, message: TelegramInboundMessage, *, stop_message: TelegramInboundMessage, principal_id: str, audience: MemoryAudience) -> None:
+        payload, conversation_id, message_id = self._turn_request(
+            message, principal_id=principal_id, audience=audience,
+        )
+        if stop_message.chat_id != message.chat_id or stop_message.sender_id != message.sender_id:
+            raise ValueError("stop sender differs")
+        _, _, stop_id = self._turn_request(stop_message, principal_id=principal_id, audience=audience)
+        decoded_payload = json.loads(payload)
+        decoded_payload["stop_request_message_id"] = stop_id
+        payload = json.dumps(decoded_payload).encode()
+        request = urllib_request.Request(
+            self._url.removesuffix("/respond") + "/stop", data=payload,
+            headers={"Content-Type": "application/json"}, method="POST",
+        )
+        try:
+            with urllib_request.urlopen(request, timeout=self._timeout) as response:
+                raw = response.read(2049)
+            decoded = json.loads(raw)
+            if (len(raw) > 2048 or not isinstance(decoded, dict)
+                    or set(decoded) != {"contract", "conversation_id", "message_id", "stop_request_message_id"}
+                    or decoded["contract"] != "EvaTurnStop/v1" or decoded["conversation_id"] != conversation_id
+                    or decoded["stop_request_message_id"] != stop_id
+                    or not isinstance(decoded["message_id"], str)
+                    or not decoded["message_id"].startswith(conversation_id + ":")
+                    or len(decoded["message_id"]) > 240):
+                raise ValueError("stop receipt differs")
+        except (TimeoutError, error.URLError, ValueError, UnicodeDecodeError) as exc:
+            raise RuntimeError("Living Core stop was not confirmed") from exc
+
     def respond_stream(
         self,
         message: TelegramInboundMessage,

@@ -25,6 +25,7 @@ from eva.adapters.postgres.operational_timeline import (
 from eva.adapters.postgres.scope import PostgresScopedRole, try_execution_lock
 from eva.application.conversation import (
     ConversationConflict,
+    ConversationExecutionLimitReached,
     ConversationStopped,
     ConversationModelTiming,
     ConversationModelUsage,
@@ -55,7 +56,10 @@ class PostgresConversationJournal(PostgresScopedRole):
 
     _role = "eva_runtime"
 
-    def __init__(self, engine: sa.Engine, scope: TimelineScope) -> None:
+    def __init__(self, engine: sa.Engine, scope: TimelineScope, *, maximum_model_requests: int = 32) -> None:
+        if type(maximum_model_requests) is not int or maximum_model_requests < 1:
+            raise ValueError("conversation request limit must be a positive integer")
+        self._maximum_model_requests = maximum_model_requests
         self._engine = engine
         self._scope_value = scope
         self._timeline = PostgresOperationalTimeline(engine, scope)
@@ -184,10 +188,23 @@ class PostgresConversationJournal(PostgresScopedRole):
             if self._marker_exists(connection, self._stop_thread_id(identity),
                                    "CONVERSATION_STOP_REQUESTED", identity):
                 raise ConversationStopped("conversation has a durable stop request")
+            payload = operational_events.c.payload["data"]
+            admitted = connection.execute(sa.select(payload).where(
+                operational_events.c.tenant_id == self._scope_value.tenant_id,
+                operational_events.c.installation_id == self._scope_value.installation_id,
+                operational_events.c.event_type == "CONVERSATION_MODEL_ADMITTED",
+                *(payload[key].astext == value for key, value in identity.items()),
+            )).scalars().all()
+            limits = [item["maximum_requests"] for item in admitted if "maximum_requests" in item]
+            if any(type(value) is not int or value < 1 for value in limits):
+                raise ConversationConflict("durable model request limit is invalid")
+            maximum = min([self._maximum_model_requests, *limits])
+            if len(admitted) >= maximum:
+                raise ConversationExecutionLimitReached("conversation request limit reached")
             insert_initial_timeline_thread(
                 connection, self._scope_value, thread_id=thread_id,
                 checkpoint_id=f"{thread_id}:admitted",
-                data={**identity, "request_id": request_id},
+                data={**identity, "request_id": request_id, "maximum_requests": maximum},
                 occurred_at=datetime.now(tz=UTC).replace(microsecond=0),
                 event_type="CONVERSATION_MODEL_ADMITTED", phase="model_admitted",
                 status="active",
@@ -202,8 +219,11 @@ class PostgresConversationJournal(PostgresScopedRole):
         thread_id = f"conversation-model:{request_id}"
         events = self._timeline.events(thread_id)
         admission = {**identity, "request_id": request_id}
+        stored_admission = {} if not events else events[0].payload.get("data", {})
+        admitted_identity = (None if not isinstance(stored_admission, dict) else
+                             {key: value for key, value in stored_admission.items() if key != "maximum_requests"})
         if (not events or events[0].event_type != "CONVERSATION_MODEL_ADMITTED"
-                or events[0].payload.get("data") != admission):
+                or admitted_identity != admission):
             raise ConversationConflict("model request admission differs")
         data = {**admission, "usage": usage.to_wire()}
         if len(events) > 1:
@@ -265,35 +285,68 @@ class PostgresConversationJournal(PostgresScopedRole):
             usages.append(usage)
         return ConversationModelUsage.aggregate(tuple(usages))
 
-    def request_conversation_stop(self, *, principal_id: str, conversation_id: str) -> int:
+    def request_conversation_stop(
+        self, *, principal_id: str, conversation_id: str, request_message_id: str | None = None,
+    ) -> int:
         """Snapshot unfinished turns owned by this principal in this conversation.
 
         New turns admitted after this snapshot remain usable. No browser-supplied
         principal or cross-conversation task identity is used by the runtime.
         """
-        with self._engine.begin() as connection:
-            self._scope(connection)
-            data = operational_events.c.payload["data"]
-            rows = connection.execute(sa.select(data.label("data")).select_from(
-                operational_events.join(operational_checkpoints, sa.and_(
-                    operational_events.c.tenant_id == operational_checkpoints.c.tenant_id,
-                    operational_events.c.installation_id == operational_checkpoints.c.installation_id,
-                    operational_events.c.thread_id == operational_checkpoints.c.thread_id,
-                ))
-            ).where(
-                operational_events.c.tenant_id == self._scope_value.tenant_id,
-                operational_events.c.installation_id == self._scope_value.installation_id,
-                operational_events.c.event_type == "INGRESS_COMMITTED",
-                data["kind"].astext == "conversation_ingress",
-                data["principal_id"].astext == principal_id,
-                data["conversation_id"].astext == conversation_id,
-                operational_checkpoints.c.status == "active",
-            )).all()
-        count = 0
-        for row in rows:
-            message_id = row.data.get("message_id")
-            if not isinstance(message_id, str) or not message_id:
+        snapshot_id = None if request_message_id is None else (
+            "conversation-stop-targets:" + canonical_sha256(self._stop_identity(
+                principal_id, conversation_id, request_message_id,
+            ))
+        )
+        snapshot = [] if snapshot_id is None else self._timeline.events(snapshot_id)
+        if snapshot:
+            data = snapshot[0].payload.get("data")
+            if (len(snapshot) != 1 or snapshot[0].event_type != "CONVERSATION_STOP_TARGETS"
+                    or not isinstance(data, dict) or data.get("principal_id") != principal_id
+                    or data.get("conversation_id") != conversation_id
+                    or data.get("request_message_id") != request_message_id
+                    or not isinstance(data.get("targets"), list)
+                    or any(not isinstance(item, str) or not item for item in data["targets"])):
+                raise ConversationConflict("conversation stop snapshot differs")
+            targets = data["targets"]
+        else:
+            with self._engine.begin() as connection:
+                self._scope(connection)
+                data = operational_events.c.payload["data"]
+                rows = connection.execute(sa.select(data.label("data")).select_from(
+                    operational_events.join(operational_checkpoints, sa.and_(
+                        operational_events.c.tenant_id == operational_checkpoints.c.tenant_id,
+                        operational_events.c.installation_id == operational_checkpoints.c.installation_id,
+                        operational_events.c.thread_id == operational_checkpoints.c.thread_id,
+                    ))
+                ).where(
+                    operational_events.c.tenant_id == self._scope_value.tenant_id,
+                    operational_events.c.installation_id == self._scope_value.installation_id,
+                    operational_events.c.event_type == "INGRESS_COMMITTED",
+                    data["kind"].astext == "conversation_ingress",
+                    data["principal_id"].astext == principal_id,
+                    data["conversation_id"].astext == conversation_id,
+                    operational_checkpoints.c.status == "active",
+                    *( () if request_message_id is None else
+                       (data["message_id"].astext != request_message_id,) ),
+                )).all()
+            targets = [row.data.get("message_id") for row in rows]
+            if any(not isinstance(item, str) or not item for item in targets):
                 raise ConversationConflict("conversation stop target is malformed")
+            if snapshot_id is not None:
+                with self._engine.begin() as connection:
+                    self._scope(connection)
+                    insert_initial_timeline_thread(
+                        connection, self._scope_value, thread_id=snapshot_id,
+                        checkpoint_id=f"{snapshot_id}:targets",
+                        occurred_at=datetime.now(tz=UTC).replace(microsecond=0),
+                        data={"principal_id": principal_id, "conversation_id": conversation_id,
+                              "request_message_id": request_message_id, "targets": sorted(targets)},
+                        event_type="CONVERSATION_STOP_TARGETS", phase="targets_snapshotted",
+                        status="completed",
+                    )
+        count = 0
+        for message_id in targets:
             identity = self._stop_identity(principal_id, conversation_id, message_id)
             thread_id = self._stop_thread_id(identity)
             with self._engine.begin() as connection:
@@ -309,6 +362,52 @@ class PostgresConversationJournal(PostgresScopedRole):
                     )
             count += 1
         return count
+
+    def request_turn_stop(self, turn: ConversationTurn, *, request_message_id: str | None = None) -> str:
+        """Stop an exact trusted ingress even if model admission has not arrived."""
+        target_message_id = turn.message_id
+        if request_message_id is not None:
+            command_identity = self._stop_identity(turn.principal_id, turn.conversation_id, request_message_id)
+            snapshot_id = "conversation-stop-targets:" + canonical_sha256(command_identity)
+            with self._engine.begin() as connection:
+                self._scope(connection)
+                self._stop_fence(connection, command_identity)
+                rows = connection.execute(sa.select(operational_events.c.event_type, operational_events.c.payload).where(
+                    operational_events.c.tenant_id == self._scope_value.tenant_id,
+                    operational_events.c.installation_id == self._scope_value.installation_id,
+                    operational_events.c.thread_id == snapshot_id,
+                )).all()
+                if rows:
+                    data = rows[0].payload.get("data")
+                    if (len(rows) != 1 or rows[0].event_type != "CONVERSATION_STOP_TARGETS"
+                            or not isinstance(data, dict) or data.get("principal_id") != turn.principal_id
+                            or data.get("conversation_id") != turn.conversation_id
+                            or data.get("request_message_id") != request_message_id
+                            or not isinstance(data.get("targets"), list) or len(data["targets"]) != 1
+                            or not isinstance(data["targets"][0], str) or not data["targets"][0]):
+                        raise ConversationConflict("exact stop target snapshot differs")
+                    target_message_id = data["targets"][0]
+                else:
+                    insert_initial_timeline_thread(
+                        connection, self._scope_value, thread_id=snapshot_id,
+                        checkpoint_id=f"{snapshot_id}:targets", occurred_at=datetime.now(tz=UTC).replace(microsecond=0),
+                        data={"principal_id": turn.principal_id, "conversation_id": turn.conversation_id,
+                              "request_message_id": request_message_id, "targets": [target_message_id]},
+                        event_type="CONVERSATION_STOP_TARGETS", phase="targets_snapshotted", status="completed",
+                    )
+        identity = self._stop_identity(turn.principal_id, turn.conversation_id, target_message_id)
+        thread_id = self._stop_thread_id(identity)
+        with self._engine.begin() as connection:
+            self._scope(connection)
+            self._stop_fence(connection, identity)
+            if not self._marker_exists(connection, thread_id, "CONVERSATION_STOP_REQUESTED", identity):
+                insert_initial_timeline_thread(
+                    connection, self._scope_value, thread_id=thread_id,
+                    checkpoint_id=f"{thread_id}:requested",
+                    occurred_at=datetime.now(tz=UTC).replace(microsecond=0), data=identity,
+                    event_type="CONVERSATION_STOP_REQUESTED", phase="stop_requested", status="completed",
+                )
+        return target_message_id
 
     def ensure_running(self, turn: ConversationTurn) -> None:
         identity = self._stop_identity(turn.principal_id, turn.conversation_id, turn.message_id)

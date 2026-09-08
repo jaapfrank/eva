@@ -1100,6 +1100,28 @@ def create_app(
             "document_id": receipt.document_id,
         }
 
+    @app.post("/internal/v1/turns/stop")
+    def stop_exact_turn(payload: dict[str, Any]) -> JSONResponse:
+        # Same trusted connector boundary as /turns/respond; never a browser's
+        # choice of principal. Runtime validates installation and current audience.
+        try:
+            payload = dict(payload)
+            request_message_id = payload.pop("stop_request_message_id", None)
+            if request_message_id is not None and (
+                not isinstance(request_message_id, str) or not request_message_id or len(request_message_id) > 240
+            ):
+                raise ValueError("stop request identity invalid")
+            turn, _ = _turn_from_wire(payload)
+            target_message_id = runtime.request_turn_stop(turn, request_message_id=request_message_id)
+        except (KeyError, TypeError, ValueError) as error:
+            raise HTTPException(status_code=422, detail="turn stop is invalid") from error
+        except RuntimeError as error:
+            raise HTTPException(status_code=503, detail="turn stop unavailable") from error
+        return JSONResponse({"contract": "EvaTurnStop/v1", "conversation_id": turn.conversation_id,
+                             "message_id": target_message_id,
+                             **({} if request_message_id is None else {"stop_request_message_id": request_message_id})},
+                            headers={"Cache-Control": "no-store"})
+
     @app.post("/internal/v1/turns/respond")
     def respond(
         payload: dict[str, Any], background_tasks: BackgroundTasks, request: Request

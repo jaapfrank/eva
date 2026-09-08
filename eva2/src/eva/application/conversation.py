@@ -23,6 +23,10 @@ class ConversationConflict(RuntimeError):
     """A replay reused a durable message identity for different content."""
 
 
+class ConversationExecutionLimitReached(RuntimeError):
+    """This turn exhausted its durable provider-request admission limit."""
+
+
 class ConversationStopped(RuntimeError):
     """The principal durably requested no further steps for this turn."""
 

@@ -3,6 +3,7 @@ from __future__ import annotations
 from datetime import UTC, datetime
 import hashlib
 from uuid import UUID
+import pytest
 
 from eva.application.conversation import GroundedReply
 from eva.application.telegram_ingress import (
@@ -840,3 +841,102 @@ def test_private_core_uses_ephemeral_drafts_but_keeps_one_final_delivery() -> No
         ("final", 303, "Definitief tijdens afkoelen."),
     ]
     assert streaming.calls == 1
+
+
+
+@pytest.mark.parametrize("transient", [False, True])
+def test_interruptible_poller_stops_exact_pending_turn_without_acknowledging_ahead(transient):
+    from threading import Event
+    from dataclasses import replace
+    active, middle, stop, stranger = (_message(1, 101, "Werk"), _message(2, 101, "Later"),
+                                     _message(3, 101, "/stop"), _message(4, 999, "/stop"))
+    released = Event()
+    middle_entered, middle_release, middle_polled = Event(), Event(), Event()
+    admitted, delivered, stopped, rejected, offsets = [], [], [], [], []
+    class Provider:
+        first = True
+        failed = False
+        def poll(self, *, offset):
+            offsets.append(offset)
+            if self.first:
+                self.first = False
+                return (active,)
+            if transient and not self.failed:
+                self.failed = True
+                raise RuntimeError("temporary poll failure")
+            if middle_entered.is_set():
+                middle_polled.set()
+            return tuple(m for m in (active, middle, stop, stranger) if m.update_id >= offset)
+        def send_reply(self, message, text):
+            delivered.append(message.update_id)
+            return str(message.update_id)
+    class Core:
+        def respond(self, message, *, principal_id, audience):
+            if message == active:
+                assert released.wait(4), "control poll must run during pending core request"
+            if message == middle:
+                middle_entered.set()
+                assert middle_release.wait(3)
+            return TelegramCoreReply("telegram:101", str(message.message_id), "Klaar", hashlib.sha256(b"Klaar").hexdigest())
+        def stop_pending(self, message, *, stop_message, principal_id, audience):
+            assert admitted == [1] and delivered == []
+            assert message == active and principal_id == "owner"
+            stopped.append(message.update_id)
+            released.set()
+    class Store:
+        def next_offset(self):
+            return max(delivered, default=0) + 1
+        def admit(self, message, *, principal_id):
+            admitted.append(message.update_id)
+            return TelegramIngressJob(message, principal_id, "admitted", 1)
+        def prepare_reply(self, job, reply, *, now):
+            return replace(job, reply=reply)
+        def claim_delivery(self, job, *, now):
+            return job
+        def acknowledge_delivery(self, *args, **kwargs): pass
+        def reject(self, message, *, reason): rejected.append(message.update_id)
+        def fail_processing(self, job, error, *, now): raise error
+        def mark_delivery_ambiguous(self, job, error, *, now): raise error
+    worker = TelegramIngressWorker(Provider(), Core(), Store(), TelegramPrincipalBindings((
+        TelegramPrincipalBinding(101, "owner", ("101",)),
+    )))
+    assert worker.run_once_interruptible(Event()) == "processed"
+    assert stopped == [1] and delivered == [1] and admitted == [1]
+    assert len(offsets) >= 2 and set(offsets) == {1}  # No acknowledgement ahead.
+    from concurrent.futures import ThreadPoolExecutor
+    with ThreadPoolExecutor(max_workers=1) as executor:
+        pending = executor.submit(worker.run_once_interruptible, Event())
+        try:
+            assert middle_entered.wait(2)
+            assert middle_polled.wait(2)
+            assert stopped == [1], "one stop must not target both A and B"
+        finally:
+            middle_release.set()
+        assert pending.result(timeout=2) == "processed"
+    assert admitted == [1, 2, 3] and delivered == [1, 2, 3]
+    assert rejected == [4]
+
+
+def test_native_stop_http_adapter_requires_an_exact_target_receipt(monkeypatch):
+    import io
+    import json
+    import pytest
+    from eva.adapters.connectors.telegram import LivingCoreTurnHttpAdapter
+    from eva.application.memory_audience import MemoryAudience
+    from eva.adapters.connectors import telegram
+    adapter = LivingCoreTurnHttpAdapter(base_url="http://core:8080", tenant_id="family", installation_id="home")
+    message = _message(1, 101, "Werk")
+    wrong = False
+    def urlopen(request, *, timeout):
+        assert request.full_url == "http://core:8080/internal/v1/turns/stop"
+        payload = json.loads(request.data)
+        assert payload["principal_id"] == "owner"
+        return io.BytesIO(json.dumps({"contract": "EvaTurnStop/v1",
+            "conversation_id": payload["conversation_id"],
+            "message_id": "other" if wrong else payload["message_id"],
+            "stop_request_message_id": payload["stop_request_message_id"]}).encode())
+    monkeypatch.setattr(telegram.urllib_request, "urlopen", urlopen)
+    adapter.stop_pending(message, stop_message=_message(2, 101, "/stop"), principal_id="owner", audience=MemoryAudience.private_person(principal_id="owner"))
+    wrong = True
+    with pytest.raises(RuntimeError, match="not confirmed"):
+        adapter.stop_pending(message, stop_message=_message(2, 101, "/stop"), principal_id="owner", audience=MemoryAudience.private_person(principal_id="owner"))
