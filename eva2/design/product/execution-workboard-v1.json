@@ -2194,7 +2194,16 @@
         "Complete kandidaat via veilige route aansluiten en hoorbare onderbreking/hervatten op apparaten meten."
       ],
       "live": false,
-      "accepted": false
+      "accepted": false,
+      "sourceSnapshotValidation": {
+        "snapshot": "/home/administrator/project/.eva2-artifacts/voice-native-source-ykwey049",
+        "inventoryFiles": 2059,
+        "inventoryPolicyErrors": 9,
+        "inventoryCommit": "f360710",
+        "workboard": "failed_missing_preexisting_evidence",
+        "missingPath": "eva2/evidence/product/TL-002-workspace-candidate-2026-09-08.json",
+        "note": "Werkbordcontrole werkt in huidige werkmap; zuivere Git-snapshot mist bestaand niet-gecommit TL-002-bewijs. Dit is geen geslaagde volledige releasepoort."
+      }
     }
   },
   "activeTaskId": "VB-001",
