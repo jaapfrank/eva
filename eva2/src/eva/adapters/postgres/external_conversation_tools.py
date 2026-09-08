@@ -20,6 +20,7 @@ from eva.adapters.postgres.operational_timeline import (
 )
 from eva.adapters.postgres.scope import try_execution_lock
 from eva.adapters.postgres.conversation_journal import PostgresConversationJournal
+from eva.application.cancellation import check_cancellation
 from eva.application.conversation import (
     ConversationActionCall,
     ConversationActionReceipt,
@@ -123,6 +124,7 @@ class PostgresExternalConversationTools:
         self, turn: ConversationTurn, call: ConversationActionCall,
         *, step_index: int = 0,
     ) -> ConversationActionReceipt:
+        check_cancellation()
         self._validate_step_index(step_index)
         if call.name not in self.action_names:
             raise ConversationConflict(f"external tool {call.name!r} is unavailable")
@@ -414,10 +416,12 @@ class PostgresExternalConversationTools:
 
         class StopCheckedProvider:
             async def execute(self, request: ToolRequest) -> ToolDispatchResult:
+                check_cancellation()
                 # Also covers a recovery dispatch after an observation. Readback
                 # itself remains possible for an effect that already started.
                 await asyncio.to_thread(authorize, turn)
                 await asyncio.to_thread(journal.admit_dispatch, turn, request.operation_id)
+                check_cancellation()
                 return await provider.execute(request)
 
             async def observe(
@@ -433,6 +437,7 @@ class PostgresExternalConversationTools:
             self._authorize_turn(turn)
 
     def _ensure_running(self, turn: ConversationTurn) -> None:
+        check_cancellation()
         self._authorize(turn)
         PostgresConversationJournal(self._engine, external_timeline_scope(
             turn.tenant_id, turn.installation_id, "conversation stop scope is required",

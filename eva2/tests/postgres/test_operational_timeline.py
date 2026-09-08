@@ -3500,3 +3500,110 @@ def test_household_memory_outbox_preserves_exact_audience_after_reconnect(timeli
     assert recovered[0].document == document
     assert recovered[0].document.audience.household_consent_ref == ref
     assert recovered[0].document.audience.kind == "household"
+
+
+
+@pytest.mark.parametrize("step_index", [0, 1])
+def test_native_stop_during_tool_preparation_prevents_dispatch(timeline_engine: Engine, step_index):
+    import asyncio
+    from eva.application.cancellation import run_in_cancellation_thread
+    entered, release = Event(), Event()
+    dispatched = []
+    class Planner:
+        action_names = ("fixture_action",)
+        async def prepare(self, turn, call):
+            entered.set()
+            assert release.wait(3)
+            return ConversationToolPreparation(tool_name="fixture.action", arguments={},
+                                               expected_proof={"done": True}, receipt_output={})
+    class Provider:
+        async def execute(self, request):
+            dispatched.append(request.operation_id)
+            return ToolDispatchResult(True, request.operation_id, {})
+        async def observe(self, request, dispatch):
+            return ToolProofObservation("verified", {"done": True}, {})
+    tools = PostgresExternalConversationTools(timeline_engine, Planner(), Provider())
+    turn = ConversationTurn.private("native-tool-stop", "installation", "owner", "chat",
+                                    f"message:{step_index}", "Doe de actie", "2026-09-08T21:00:00Z")
+    call = ConversationActionCall("call", "fixture_action", {})
+    async def run():
+        task = asyncio.create_task(run_in_cancellation_thread(lambda: tools.execute(turn, call, step_index=step_index)))
+        assert await asyncio.to_thread(entered.wait, 3)
+        task.cancel()
+        await asyncio.sleep(0)  # Deliver owner cancellation before releasing preparation.
+        release.set()
+        with pytest.raises(asyncio.CancelledError):
+            await asyncio.wait_for(task, 3)
+        assert dispatched == []
+    asyncio.run(run())
+
+
+
+def test_native_household_responder_runs_real_core_and_pydantic_with_stop_and_resume(timeline_engine: Engine, tmp_path):
+    import asyncio
+    from pydantic_ai.models.function import FunctionModel
+    from eva.adapters.api.native_voice import VoiceRequest
+    from eva.adapters.model.pydantic_conversation import PydanticConversationModel
+    from eva.adapters.projection.hindsight import HindsightMemoryEngine
+    from eva.application.conversation import IdentityProfile, LivingConversation
+    from eva.application.memory_audience import HouseholdConsentReference
+    from eva.bootstrap.native_voice import NativeHouseholdResponder
+    from eva.bootstrap.runtime import PostgresHindsightMemoryRuntime
+    started, closed = Event(), Event()
+    calls = []
+    class Memory:
+        def recall_for_presence(self, query):
+            assert query.audience.kind == "household"
+            return HindsightMemoryEngine._empty_presence(query)
+    class Consent:
+        def active_reference(self, *, principal_id, household_id, now):
+            return HouseholdConsentReference(principal_id, household_id, "household-consent:1")
+    async def stream(messages, info):
+        calls.append(messages)
+        if len(calls) == 1:
+            started.set()
+            try:
+                await asyncio.Event().wait()
+            finally:
+                closed.set()
+        yield "Ik luister weer."
+    model = PydanticConversationModel(auth_file=tmp_path / "unused.json",
+        model_backend=FunctionModel(stream_function=stream), timeout_seconds=10)
+    actions = PostgresConversationActions(timeline_engine)
+    runtime = object.__new__(PostgresHindsightMemoryRuntime)
+    runtime._engine = timeline_engine
+    runtime._runtime_tenant_id = "household-real-core"
+    runtime._runtime_installation_id = "installation"
+    runtime._household_consent = Consent()
+    runtime._conversation_actions = actions
+    runtime._conversation = LivingConversation(Memory(), model,
+        IdentityProfile("Eva", "Huisgenoot.", ("Eerlijk.",), 80), actions)
+    outbox = PostgresMemoryOutbox(timeline_engine, tenant_id=runtime._runtime_tenant_id,
+                                 installation_id=runtime._runtime_installation_id)
+    class ColdPath:
+        def submit(self, document):
+            return outbox.enqueue(document)
+    runtime._cold_path = ColdPath()
+    respond = NativeHouseholdResponder(runtime=runtime, tenant_id=runtime._runtime_tenant_id,
+        installation_id=runtime._runtime_installation_id, household_id="home",
+        devices={"assist_satellite.room": "a" * 32}, consent=runtime._household_consent)
+    payload = dict(request_id="b" * 32, satellite_id="assist_satellite.room", device_id="a" * 32,
+                   conversation_id="ha-session", text="Hallo", language="nl")
+    async def run():
+        task = asyncio.create_task(respond(VoiceRequest(**payload)))
+        assert await asyncio.to_thread(started.wait, 3)
+        task.cancel()
+        with pytest.raises(asyncio.CancelledError):
+            await asyncio.wait_for(task, 3)
+        assert closed.is_set()
+        assert outbox.pending() == ()
+        result = await respond(VoiceRequest(**{**payload, "request_id": "c" * 32}))
+        assert result.text == "Ik luister weer."
+        queued = outbox.pending()
+        assert len(queued) == 1
+        assert queued[0].document.audience.kind == "household"
+        assert queued[0].document.principal_id == "household-device:" + "a" * 32
+        assert len(calls) == 2
+        assert "gedeeld huishoudelijk gesprek" in str(calls[0])
+        assert "speakerapparaat is geen persoon" in str(calls[0])
+    asyncio.run(run())

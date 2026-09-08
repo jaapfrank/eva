@@ -77,6 +77,7 @@ from eva.adapters.objects.identity_verifier import load_current_identity_pack
 
 if TYPE_CHECKING:
     from eva.adapters.model.pydantic_conversation import PydanticConversationModel
+from eva.application.cancellation import WorkInterrupted, check_cancellation
 from eva.application.conversation import (
     ConversationConflict,
     ConversationTurn,
@@ -946,9 +947,11 @@ class PostgresHindsightMemoryRuntime:
         turn: ConversationTurn,
         recent_messages: tuple[RecentConversationMessage, ...] = (),
     ) -> GroundedReply:
+        check_cancellation()
         self.admit_turn_audience(turn)
         journal = self._journal(turn)
         with journal.execution(turn):
+            check_cancellation()
             journal.admit(turn)
             committed = journal.committed_reply(turn)
             if committed is not None:
@@ -973,6 +976,7 @@ class PostgresHindsightMemoryRuntime:
                 nonlocal latest_usage
                 if isinstance(usage, ConversationModelUsage):
                     latest_usage = usage
+                check_cancellation()
                 self.admit_turn_audience(current)
                 journal.ensure_running(current)
 
@@ -988,7 +992,7 @@ class PostgresHindsightMemoryRuntime:
                     evidence_memory_ids=(), generated_at=turn.occurred_at,
                     provider="runtime:conversation-limit", model_usage=journal.model_usage(turn),
                 )
-            except ConversationStopped:
+            except (ConversationStopped, WorkInterrupted):
                 durable_usage = journal.model_usage(turn)
                 if durable_usage.measurement != "unmeasured":
                     latest_usage = durable_usage

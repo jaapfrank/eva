@@ -1,0 +1,42 @@
+{
+  "contract": "EvaNativeRuntimeCancellation/v1",
+  "status": "real_core_sdk_and_postgres_tested_not_activated_or_live",
+  "sourceSha256": {
+    "eva2/src/eva/application/cancellation.py": "b97ab6117742a0a09367b77ac8293ad7297e271c1e5a79ab7ec101765f9963c4",
+    "eva2/src/eva/adapters/model/pydantic_conversation.py": "2296a4c07b047e3fe3e8adca2863dac33db3d36f836f551cf300c970383bd104",
+    "eva2/src/eva/bootstrap/runtime.py": "5fb98a2d175b83bfabb070ec71c19d81fc4ac5813cb9eba2ee4faca8012cb404",
+    "eva2/src/eva/bootstrap/native_voice.py": "be27f031721d2281d4d8b7eed96c6df46a4ce6d92a560c5f0893a3bac9ca96ed",
+    "eva2/src/eva/adapters/postgres/external_conversation_tools.py": "ee8619cfaa36ca75b92b52be9ca891955780f1225eb0dbcd187e0db585ffec11",
+    "eva2/tests/application/test_cancellation.py": "ab2d72d82c26f598afe9bceaf006e99a2ff76815047425186aa76c3f81cd1b23",
+    "eva2/tests/bootstrap/test_native_household_responder.py": "820facecae1fd6aa31d2d203ff2c04b205677064cd962fcb19febb014d45aa6b",
+    "eva2/tests/model/test_pydantic_conversation_model.py": "75fba88ffc2f83b831fc653f6a4db2e3514d66ac8525424af10734d0edeb27d7",
+    "eva2/tests/postgres/test_operational_timeline.py": "ae20c52dabff124bd20e89d67edf14bb40e138b6e43ce8681568ea29979ee4c4"
+  },
+  "validation": {
+    "combined": "180 passed in 22.23s: timeline, cancellation, native responder, Pydantic model, native/memory/Telegram APIs",
+    "householdContextAndBinding": "50 passed in 10.67s: actual core household stop/resume plus Pydantic suite after shared-channel context and reply binding",
+    "finalProvider": "50 passed in 6.85s including owner stop during provider-unavailable failure => one call and no retry",
+    "review": "co006_review bounded source GO after effect dispatch checks added",
+    "lint": "Ruff passed",
+    "firstFailure": "Combined collection found duplicate test_native_voice.py basenames in bootstrap and api; new bootstrap test renamed test_native_household_responder.py. No tests bypassed."
+  },
+  "proven": [
+    "Cross-thread request cancellation stops registered async providers and preserves worker cleanup ownership",
+    "Repeated stop and nested provider scopes do not abandon cleanup or remove outer cancellation registration",
+    "Actual Pydantic agent stream closes on stop; new request can answer",
+    "NativeHouseholdResponder derives only device audit actor and checks current exact household mandate",
+    "Actual PostgresHindsightMemoryRuntime plus LivingConversation/Pydantic and outbox supports interrupt then next question; interrupted reply not queued",
+    "Initial and later synchronous preparation barriers: owner cancellation followed by release produces zero dispatches",
+    "Signal rechecked immediately before real/recovery dispatch; already-started effect readback remains possible",
+    "No retry after owner stop during provider unavailability",
+    "Shared-channel model context and exact reply conversation/message binding"
+  ],
+  "testBoundaries": "Pydantic FunctionModel and controlled providers, empty memory fixture for real-core test, isolated PostgreSQL16.13 and existing HTTP tests. No external paid model, real HA STT/TTS or acoustic speaker test. Cooperative cancellation does not undo external effects or forcibly stop synchronous tools.",
+  "remaining": [
+    "Current household mandate loading and startup service construction",
+    "Same verifier wiring in runtime/Hindsight/native service and existing budget authority",
+    "Live-equivalent external provider and native HA pipeline integration",
+    "Actual speaker interruption latency/resume and hardware acceptance",
+    "Complete release source/dependency proof, A/B deployment, seven-day household practice"
+  ]
+}

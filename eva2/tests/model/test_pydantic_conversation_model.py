@@ -1202,3 +1202,51 @@ def test_configured_phase_deadline_allows_long_generation_and_still_expires(tmp_
     else:
         assert _generate(model).text == "Het advies is klaar."
     assert len(requests) == 1
+
+
+
+def test_actual_pydantic_stream_cancels_and_closes_before_next_question(tmp_path):
+    import asyncio
+    from threading import Event
+    from eva.application.cancellation import run_in_cancellation_thread
+    started, closed = Event(), Event()
+    calls = []
+    async def stream(messages, info):
+        calls.append(messages)
+        started.set()
+        try:
+            await asyncio.Event().wait()
+            yield "Must not arrive"
+        finally:
+            closed.set()
+    model = _adapter_type()(auth_file=tmp_path / "unused.json",
+                            model_backend=FunctionModel(stream_function=stream), timeout_seconds=10)
+    async def run():
+        task = asyncio.create_task(run_in_cancellation_thread(lambda: _generate(model)))
+        assert await asyncio.to_thread(started.wait, 3)
+        task.cancel()
+        with pytest.raises(asyncio.CancelledError):
+            await asyncio.wait_for(task, 3)
+        assert closed.is_set()
+        assert len(calls) == 1
+        scripted = ScriptedPydanticConversation((ScriptedPhase.text("Ik luister weer."),))
+        reply = await run_in_cancellation_thread(lambda: _generate(_adapter(tmp_path, scripted)))
+        assert reply.text == "Ik luister weer."
+    asyncio.run(run())
+
+
+
+def test_owner_stop_during_provider_failure_prevents_retry(tmp_path):
+    from eva.application.cancellation import CancellationSignal, WorkInterrupted, cancellation_scope
+    signal = CancellationSignal()
+    calls = []
+    async def stream(messages, info):
+        calls.append(messages)
+        signal.cancel()
+        raise CodexProviderError("unavailable")
+        yield "unreachable"
+    model = _adapter_type()(auth_file=tmp_path / "unused.json",
+                            model_backend=FunctionModel(stream_function=stream))
+    with cancellation_scope(signal), pytest.raises(WorkInterrupted):
+        _generate(model)
+    assert len(calls) == 1

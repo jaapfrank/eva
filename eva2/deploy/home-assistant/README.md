@@ -97,11 +97,25 @@ Direct memories and valid source-bound observations remain supported. Older
 observations lacking complete source provenance are intentionally not recalled;
 real Hindsight compatibility must be verified before deployment.
 
-Remaining wiring: issue/load a current, revocable household mandate from the
-owner's configured authority; bind registered devices to audit actors; connect
-the native responder to Eva's real model/tool runtime with cooperative stop and
-existing resource budgets. This memory candidate does not create a mandate or
-activate the voice route by itself.
+`bootstrap/native_voice.py` now binds each registered device to its household
+audit actor and the current exact mandate, namespaces HA continuity identifiers,
+and invokes the ordinary conversation runtime through a cancellable worker.
+The model receives explicit shared-channel context: the speaker device is not
+an authenticated person. Reply conversation/message binding is checked before
+retention. Interrupted replies are not queued for semantic retention.
+
+The request-owned cancellation signal closes registered async model streams and
+prevents later provider retries and tool dispatches. Worker cleanup remains
+owned and joined; already-running synchronous effects may finish and readback
+remains possible. This does not claim forced thread termination or rollback of
+external effects. Real core/Pydantic/PostgreSQL tests use an injected FunctionModel
+and empty memory fixture, plus the actual durable outbox; no paid model call or
+hardware speech is included.
+
+Remaining wiring: load a current, revocable household mandate from the owner's
+configured authority and supply the same resolver to runtime, Hindsight and the
+native service during startup, with the existing resource budgets. These pieces
+do not create a mandate or activate the voice route by themselves.
 
 ## Device candidate
 
