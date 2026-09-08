@@ -2,10 +2,11 @@
 
 The `custom_components/eva2_voice` directory now contains a **native Home
 Assistant conversation-agent candidate**. Its HTTP client is tested against a
-local HTTP server. The HA entry/configflow/pipeline have not been integration
-tested and the Eva2 core endpoints below do not exist yet. Do not install or
-select this agent as the household pipeline until those pieces are implemented
-and the complete candidate passes its release checks.
+local HTTP server and the new Eva2 HTTP service with a real PostgreSQL ledger.
+The HA entry/configflow/pipeline and actual Eva conversation runtime have not
+been integrated. Do not install or select this agent as the household pipeline
+until household admission and runtime cancellation are connected and the complete
+candidate passes its release checks.
 
 The native client gives each invocation a random request ID. Cancellation or
 supersession sends an interrupt for that exact request, while another speaker
@@ -47,9 +48,34 @@ A crashed request is not re-executed on retry; a new question needs a new ID.
 Five tests on an isolated PostgreSQL 16.13 database cover reordered requests,
 new store instances and connections, concurrent admission/interruption and reply
 claims, expiry after lock waiting, duplicate requests and device/installation isolation. This is
-not yet connected to the HTTP endpoints, household admission, worker cancellation
-or per-device supersession. A reply claim is not proof of audible delivery; HA
+now connected to the optional native HTTP service below. Household admission
+and the actual Eva conversation runtime remain unconnected. A reply claim is not proof of audible delivery; HA
 must still discard a cancelled response already in flight.
+
+## Native HTTP service candidate
+
+`src/eva/adapters/api/native_voice.py` provides both protocol routes. `create_app`
+installs them only when explicitly supplied a NativeVoiceService; default is off.
+The service binds an integration token to a fixed satellite/device mapping and
+rechecks its current grant before model work and before returning a reply. The
+responder callback must be cancellation-aware and bind to a shared household
+memory audience; no owner/private-person fallback is supplied.
+
+Within one API process, a new question stops the earlier request from that
+speaker. Admission-in-flight is tracked so a stop between database commit and
+worker creation cannot start new model work. Disconnects, cancellation and failed
+replies persist stops. Workers remain owned through cancellation cleanup; service
+shutdown joins them even if durable stop registration fails, then reports failure.
+A non-cooperative model adapter cannot be made cancellable by this wrapper.
+Multiple API workers are unsupported until supersession is coordinated durably.
+
+A real HTTP test uses the native aiohttp HA client, uvicorn/FastAPI and isolated
+PostgreSQL: cancel a pending response, answer the next question, and separately
+cancel a raw HTTP connection without sending an interrupt POST. The responder is
+a controlled test coroutine, not Eva's model, HA STT/TTS or acoustic hardware.
+Run `pytest -q tests/postgres/test_operational_timeline.py tests/api/test_native_voice.py
+tests/operations/test_ha_voice_native_client.py` in the locked runtime test
+environment plus HA's `aiohttp==3.14.3` test dependencies. No model call is needed.
 
 ## Device candidate
 

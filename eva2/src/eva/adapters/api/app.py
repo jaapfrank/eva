@@ -20,6 +20,7 @@ from eva.adapters.api.dashboard_conversation import (
     grounded_reply_wire,
 )
 from eva.adapters.api.dashboard_access import DashboardAccess
+from eva.adapters.api.native_voice import NativeVoiceService, install_native_voice
 from eva.adapters.api.dashboard_voice import DashboardVoice, install_dashboard_voice
 
 from eva.application.conversation import (
@@ -591,6 +592,7 @@ def create_app(
     dashboard_access_token: str | None = None,
     dashboard_identity_loader: Callable[[], IdentityPack] | None = None,
     dashboard_voice: DashboardVoice | None = None,
+    native_voice: NativeVoiceService | None = None,
 ) -> FastAPI:
     start_background = getattr(runtime, "start_background_work", None)
     stop_background = getattr(runtime, "stop_background_work", None)
@@ -602,10 +604,15 @@ def create_app(
         try:
             yield
         finally:
-            if callable(stop_background):
-                stop_background()
+            try:
+                if native_voice is not None:
+                    await native_voice.close()
+            finally:
+                if callable(stop_background):
+                    stop_background()
 
     app = FastAPI(title="Eva Living Core", version="0.1.0", lifespan=lifespan)
+    install_native_voice(app, native_voice)
     dashboard_access = DashboardAccess(dashboard_access_token)
     install_dashboard_voice(app, access=dashboard_access, runtime=runtime, config=dashboard_voice)
 

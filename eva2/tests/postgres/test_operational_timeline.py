@@ -3373,3 +3373,97 @@ def test_native_voice_reply_waiting_for_lock_expires(timeline_engine: Engine) ->
             assert reached_transition.wait(3)
             lock.execute(sa.text("SELECT pg_sleep(1.1)"))
         assert claim.result(timeout=3) is False
+
+
+
+def test_native_ha_http_client_to_core_postgres_cancel_and_resume(timeline_engine: Engine) -> None:
+    import asyncio
+    import importlib.util
+    import socket
+    import sys
+    import aiohttp
+    import uvicorn
+    from fastapi import FastAPI
+    from eva.adapters.api.native_voice import NativeVoiceService, VoiceReply, install_native_voice
+    from eva.adapters.postgres.voice_requests import PostgresVoiceRequests
+
+    path = EVA2_ROOT / "deploy/home-assistant/custom_components/eva2_voice/client.py"
+    spec = importlib.util.spec_from_file_location("ha_voice_http_integration", path)
+    module = importlib.util.module_from_spec(spec)
+    sys.modules[spec.name] = module
+    spec.loader.exec_module(module)
+    scope = _scope("ha-native-http-postgres")
+    ledger = PostgresVoiceRequests(timeline_engine, tenant_id=str(scope.tenant_id),
+                                  installation_id=str(scope.installation_id))
+    async def run():
+        started, cancelled = asyncio.Event(), asyncio.Event()
+        request_ids = []
+        async def respond(request):
+            request_ids.append(request.request_id)
+            if request.text == "eerste":
+                started.set()
+                try:
+                    await asyncio.Event().wait()
+                except asyncio.CancelledError:
+                    cancelled.set()
+                    raise
+            return VoiceReply("Ik luister weer.", True)
+        service = NativeVoiceService(token="synthetic", devices={"assist_satellite.room": "a" * 32},
+                                     ledger=ledger, respond=respond, validate_current=lambda: None)
+        app = FastAPI()
+        install_native_voice(app, service)
+        sock = socket.socket()
+        sock.bind(("127.0.0.1", 0))
+        port = sock.getsockname()[1]
+        server = uvicorn.Server(uvicorn.Config(app, log_level="critical", lifespan="off"))
+        serving = asyncio.create_task(server.serve(sockets=[sock]))
+        try:
+            async with asyncio.timeout(3):
+                while not server.started:
+                    await asyncio.sleep(0.01)
+            async with aiohttp.ClientSession() as session:
+                client = module.EvaVoiceClient(session, url=f"http://127.0.0.1:{port}",
+                    token="synthetic", satellite_ids=frozenset({"assist_satellite.room"}))
+                args = dict(satellite_id="assist_satellite.room", device_id="a" * 32,
+                            conversation_id="ha-session", language="nl")
+                try:
+                    old = asyncio.create_task(client.respond(**args, text="eerste"))
+                    await asyncio.wait_for(started.wait(), 3)
+                    old.cancel()
+                    with pytest.raises(asyncio.CancelledError):
+                        await old
+                    await asyncio.wait_for(cancelled.wait(), 3)
+                    assert not ledger.begin(device_id="a" * 32, request_id=request_ids[0],
+                                            now=datetime.now(UTC).replace(microsecond=0))
+                    assert not ledger.claim_reply(device_id="a" * 32, request_id=request_ids[0],
+                                                  now=datetime.now(UTC).replace(microsecond=0))
+                    reply = await client.respond(**args, text="volgende")
+                    assert reply.text == "Ik luister weer." and reply.continue_conversation
+                    assert len(request_ids) == 2 and len(set(request_ids)) == 2
+                    # A raw HTTP disconnect sends no explicit interrupt POST.
+                    # The ASGI watcher must still cancel and persist the stop.
+                    started.clear()
+                    cancelled.clear()
+                    raw_id = "f" * 32
+                    raw = asyncio.create_task(session.post(
+                        f"http://127.0.0.1:{port}/internal/v1/ha-voice/turns",
+                        headers={"Authorization": "Bearer synthetic"},
+                        json={**args, "request_id": raw_id, "text": "eerste"}))
+                    await asyncio.wait_for(started.wait(), 3)
+                    raw.cancel()
+                    with pytest.raises(asyncio.CancelledError):
+                        await raw
+                    await asyncio.wait_for(cancelled.wait(), 3)
+                    async with asyncio.timeout(3):
+                        while service._cleanups or service._active:
+                            await asyncio.sleep(0.01)
+                    assert not ledger.claim_reply(device_id="a" * 32, request_id=raw_id,
+                                                  now=datetime.now(UTC).replace(microsecond=0))
+                finally:
+                    await client.close()
+        finally:
+            server.should_exit = True
+            await serving
+            await service.close()
+            sock.close()
+    asyncio.run(run())

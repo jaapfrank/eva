@@ -1,0 +1,39 @@
+{
+  "contract": "EvaNativeVoiceHttpCandidate/v1",
+  "status": "http_and_database_tested_not_household_or_live",
+  "sourceWorktreeSha256": {
+    "eva2/src/eva/adapters/api/native_voice.py": "e066779ccf715f5d93ed84676fb3075198640a8c6e5bfcbe0afd032c435071cb",
+    "eva2/src/eva/adapters/api/app.py": "a2126a0ed30c5bd9bf3b892c18e98b6193685212816132287a63d246242aff04",
+    "eva2/tests/api/test_native_voice.py": "f33b6cb86dc896453476c39dcfa9c92e507c7f73343b865bc3c7856b1c5756bb",
+    "eva2/tests/postgres/test_operational_timeline.py": "2cb1b3117d2d558267966d90211f18ecddc6a0d28dc114baa7979467a3ce61df"
+  },
+  "validation": {
+    "combined": "99 passed in 16.16s: PostgreSQL timeline, native API, HA native client; before adding actual create_app/lifespan test",
+    "coreApi": "50 passed in 4.70s: native, memory, Telegram API tests with actual create_app",
+    "finalNativeApi": "15 passed in 1.70s after cleanup exception retrieval; Ruff passed",
+    "environment": "Locked runtime test environment with aiohttp==3.14.3 from isolated HA-client test environment; disposable PostgreSQL16.13, loopback HTTP only",
+    "review": "co006_review bounded source GO after three lifecycle fixes",
+    "reviewFixes": [
+      "Interrupt between durable admission commit and return prevents responder creation",
+      "Responders remain owned and joined throughout asynchronous cancellation cleanup",
+      "Shutdown joins responders even if durable stop registration fails, then reports sanitized failure"
+    ]
+  },
+  "provenTransport": [
+    "HA aiohttp client cancels active response through uvicorn/FastAPI and PostgreSQL",
+    "Next request gets reply through same native client",
+    "Raw HTTP disconnect without interrupt POST cancels responder and persists stop",
+    "New question supersedes only same speaker",
+    "Stop before start, replay suppression, revoked grant and unbound device rejection",
+    "Default core routes disabled; explicit injection and lifespan close work"
+  ],
+  "remaining": [
+    "Actual household audience and current mandate admission in core",
+    "Cancellation-aware connection to Eva conversation/model/tool runtime",
+    "Native HA entry/configflow/pipeline integration",
+    "Multi-worker supersession if ever enabled; candidate is single-process only",
+    "Real microphone/speaker interruption and resumed conversation",
+    "Complete release dependency/source proof, A/B deployment and human acceptance"
+  ],
+  "nonclaims": "No live HA change, firmware flash, microphone unmute, Telegram message, household audio or model call. Controlled responder only. Validation used current worktree, which also contains pre-existing app changes; not a clean-release proof."
+}
