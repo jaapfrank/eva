@@ -3,13 +3,13 @@
 Deze kaart is mechanisch gegenereerd. Zij staat naast de semantische runtimegraaf en
 classificeert ieder gevolgd, verwijderd of niet-genegeerd nieuw repositorypad.
 
-Schema: `EvaRepositoryInventory/v1`. Brondigest: `36448c992de0d36b8e5e791ea21337ae410dfd49b2f2783be01481c9f9f598ae`.
+Schema: `EvaRepositoryInventory/v1`. Brondigest: `c528406829743f5550c2e4d48fd4fa9809ad6330c79d1ba68b452dc394ace286`.
 
 ## Samenvatting
 
 | Bestanden | Aanwezig | Tracked | Untracked | Tombstones | Policyfouten |
 | ---: | ---: | ---: | ---: | ---: | ---: |
-| 2048 | 2048 | 2048 | 0 | 0 | 9 |
+| 2059 | 2059 | 2059 | 0 | 0 | 9 |
 
 ## Policyfouten
 
@@ -46,11 +46,11 @@ Schema: `EvaRepositoryInventory/v1`. Brondigest: `36448c992de0d36b8e5e791ea21337
 | `design` | `documentation` | 3 |
 | `experiments` | `experimental` | 36 |
 | `transition` | `documentation` | 2 |
-| `eva2-verification` | `verification` | 715 |
+| `eva2-verification` | `verification` | 717 |
 | `eva2-documentation` | `documentation` | 128 |
-| `eva2-deployment` | `deployment` | 51 |
+| `eva2-deployment` | `deployment` | 59 |
 | `eva2-experimental` | `experimental` | 164 |
-| `eva2-verification-runtime` | `verification-runtime` | 87 |
+| `eva2-verification-runtime` | `verification-runtime` | 88 |
 | `eva2-runtime` | `product-runtime` | 245 |
 | `eva2-build-contract` | `repository-config` | 243 |
 | `generated-doc` | `generated` | 4 |
@@ -156,8 +156,8 @@ Schema: `EvaRepositoryInventory/v1`. Brondigest: `36448c992de0d36b8e5e791ea21337
 | `docs/eva-agent-benchmark-v1.md` | tracked | documentation | included-tracked-noncritical | keep | 18462 |
 | `docs/eva-endbeeld-roadmap.md` | tracked | documentation | included-tracked-noncritical | keep | 16956 |
 | `docs/eva-rebuild-plan-2026-08-20.md` | tracked | documentation | included-tracked-noncritical | keep | 29009 |
-| `docs/eva-repository-inventory.generated.json` | tracked | generated | included-tracked-critical | keep | 2356943 |
-| `docs/eva-repository-inventory.generated.md` | tracked | generated | included-tracked-critical | keep | 357015 |
+| `docs/eva-repository-inventory.generated.json` | tracked | generated | included-tracked-critical | keep | 2368467 |
+| `docs/eva-repository-inventory.generated.md` | tracked | generated | included-tracked-critical | keep | 358479 |
 | `docs/eva-runtime-contract-map.generated.json` | tracked | generated | included-tracked-critical | keep | 246207 |
 | `docs/eva-runtime-contract-map.generated.md` | tracked | generated | included-tracked-critical | keep | 120103 |
 | `docs/eva-runtime-contracts.md` | tracked | documentation | included-tracked-critical | keep | 80976 |
@@ -188,7 +188,7 @@ Schema: `EvaRepositoryInventory/v1`. Brondigest: `36448c992de0d36b8e5e791ea21337
 | `eva2/TEAM_WERKWIJZE.md` | tracked | documentation | included-tracked-noncritical | keep | 9391 |
 | `eva2/TECHNISCHE_MOGELIJKHEDEN_EN_GATEN.md` | tracked | documentation | included-tracked-noncritical | keep | 20072 |
 | `eva2/TECHNISCHE_PRODUCTGATES.md` | tracked | documentation | included-tracked-noncritical | keep | 65630 |
-| `eva2/WERKBORD.md` | tracked | documentation | included-tracked-noncritical | keep | 15833 |
+| `eva2/WERKBORD.md` | tracked | documentation | included-tracked-noncritical | keep | 16253 |
 | `eva2/alembic.ini` | tracked | repository-config | included-tracked-critical | keep | 595 |
 | `eva2/benchmark/inspect_ai_v1/README.md` | tracked | experimental | included-tracked-noncritical | keep | 5729 |
 | `eva2/benchmark/inspect_ai_v1/bridge_probe.py` | tracked | experimental | included-tracked-noncritical | keep | 17418 |
@@ -212,6 +212,14 @@ Schema: `EvaRepositoryInventory/v1`. Brondigest: `36448c992de0d36b8e5e791ea21337
 | `eva2/connectors/mail/worker.py` | tracked | product-runtime | included-tracked-critical | keep | 274 |
 | `eva2/deploy/delegated-work/Dockerfile` | tracked | deployment | included-tracked-critical | keep | 1546 |
 | `eva2/deploy/delegated-work/Dockerfile.source-refresh` | tracked | deployment | included-tracked-critical | keep | 401 |
+| `eva2/deploy/home-assistant/README.md` | tracked | deployment | included-tracked-critical | keep | 4470 |
+| `eva2/deploy/home-assistant/custom_components/eva2_voice/__init__.py` | tracked | deployment | included-tracked-critical | keep | 1015 |
+| `eva2/deploy/home-assistant/custom_components/eva2_voice/client.py` | tracked | deployment | included-tracked-critical | keep | 6817 |
+| `eva2/deploy/home-assistant/custom_components/eva2_voice/config_flow.py` | tracked | deployment | included-tracked-critical | keep | 1314 |
+| `eva2/deploy/home-assistant/custom_components/eva2_voice/conversation.py` | tracked | deployment | included-tracked-critical | keep | 2313 |
+| `eva2/deploy/home-assistant/custom_components/eva2_voice/manifest.json` | tracked | deployment | included-tracked-critical | keep | 260 |
+| `eva2/deploy/home-assistant/custom_components/eva2_voice/strings.json` | tracked | deployment | included-tracked-critical | keep | 443 |
+| `eva2/deploy/home-assistant/voice-pe-interruption.yaml` | tracked | deployment | included-tracked-critical | keep | 4398 |
 | `eva2/deploy/living-core/Dockerfile` | tracked | deployment | included-tracked-critical | keep | 3135 |
 | `eva2/deploy/living-core/Dockerfile.telegram-test` | tracked | deployment | included-tracked-critical | keep | 888 |
 | `eva2/deploy/living-core/MANAGED_B_HOST_CONTRACT.md` | tracked | deployment | included-tracked-critical | keep | 7608 |
@@ -243,7 +251,7 @@ Schema: `EvaRepositoryInventory/v1`. Brondigest: `36448c992de0d36b8e5e791ea21337
 | `eva2/deploy/living-core/telegram-test-support.compose.yml` | tracked | deployment | included-tracked-critical | keep | 3868 |
 | `eva2/deploy/living-core/telegram-test.example` | tracked | deployment | included-tracked-critical | keep | 1427 |
 | `eva2/deploy/living-core/workspace-provider.compose.yml` | tracked | deployment | included-tracked-critical | keep | 3792 |
-| `eva2/design/architecture/component-catalog-v1.json` | tracked | documentation | included-tracked-noncritical | keep | 20765 |
+| `eva2/design/architecture/component-catalog-v1.json` | tracked | documentation | included-tracked-noncritical | keep | 20983 |
 | `eva2/design/architecture/ecosystem-bridge-v1.md` | tracked | documentation | included-tracked-noncritical | keep | 15849 |
 | `eva2/design/architecture/evidence-tool-registry-v1.json` | tracked | documentation | included-tracked-noncritical | keep | 3772 |
 | `eva2/design/architecture/living-core-v1.md` | tracked | documentation | included-tracked-noncritical | keep | 132974 |
@@ -253,10 +261,10 @@ Schema: `EvaRepositoryInventory/v1`. Brondigest: `36448c992de0d36b8e5e791ea21337
 | `eva2/design/platform/process-budgets-v1.json` | tracked | documentation | included-tracked-noncritical | keep | 2540 |
 | `eva2/design/platform/trust-boundaries-v1.json` | tracked | documentation | included-tracked-noncritical | keep | 5811 |
 | `eva2/design/product/comparable-agent-benchmarks-v1.md` | tracked | documentation | included-tracked-noncritical | keep | 27919 |
-| `eva2/design/product/conversational-voice-v1.md` | tracked | documentation | included-tracked-noncritical | keep | 26720 |
+| `eva2/design/product/conversational-voice-v1.md` | tracked | documentation | included-tracked-noncritical | keep | 32037 |
 | `eva2/design/product/dashboard-v1.md` | tracked | documentation | included-tracked-noncritical | keep | 6532 |
 | `eva2/design/product/delegation-and-workboard-v1.md` | tracked | documentation | included-tracked-noncritical | keep | 11007 |
-| `eva2/design/product/execution-workboard-v1.json` | tracked | documentation | included-tracked-noncritical | keep | 216783 |
+| `eva2/design/product/execution-workboard-v1.json` | tracked | documentation | included-tracked-noncritical | keep | 250487 |
 | `eva2/design/product/installer-and-onboarding-v1.md` | tracked | documentation | included-tracked-noncritical | keep | 24837 |
 | `eva2/design/product/learning-and-person-model-v1.md` | tracked | documentation | included-tracked-noncritical | keep | 12386 |
 | `eva2/design/product/owner-autonomy-mode-v1.md` | tracked | documentation | included-tracked-noncritical | keep | 6529 |
@@ -1216,7 +1224,7 @@ Schema: `EvaRepositoryInventory/v1`. Brondigest: `36448c992de0d36b8e5e791ea21337
 | `eva2/src/eva/adapters/connectors/home_assistant_hacs.py` | tracked | product-runtime | included-tracked-critical | keep | 11096 |
 | `eva2/src/eva/adapters/connectors/home_assistant_management.py` | tracked | product-runtime | included-tracked-critical | keep | 26437 |
 | `eva2/src/eva/adapters/connectors/home_assistant_mcp.py` | tracked | product-runtime | included-tracked-critical | keep | 6188 |
-| `eva2/src/eva/adapters/connectors/home_assistant_voice.py` | tracked | product-runtime | included-tracked-critical | keep | 18256 |
+| `eva2/src/eva/adapters/connectors/home_assistant_voice.py` | tracked | product-runtime | included-tracked-critical | keep | 25245 |
 | `eva2/src/eva/adapters/connectors/installer_agentmail_probe.py` | tracked | product-runtime | included-tracked-critical | keep | 5188 |
 | `eva2/src/eva/adapters/connectors/installer_codex_model_probe.py` | tracked | product-runtime | included-tracked-critical | keep | 11567 |
 | `eva2/src/eva/adapters/connectors/installer_configured_probe_factory.py` | tracked | product-runtime | included-tracked-critical | keep | 849 |
@@ -1334,7 +1342,7 @@ Schema: `EvaRepositoryInventory/v1`. Brondigest: `36448c992de0d36b8e5e791ea21337
 | `eva2/src/eva/application/voice.py` | tracked | product-runtime | included-tracked-critical | keep | 12194 |
 | `eva2/src/eva/bootstrap/__init__.py` | tracked | product-runtime | included-tracked-critical | keep | 621 |
 | `eva2/src/eva/bootstrap/action_chain_effect_controls.py` | tracked | product-runtime | included-tracked-critical | keep | 5194 |
-| `eva2/src/eva/bootstrap/dashboard_voice.py` | tracked | product-runtime | included-tracked-critical | keep | 9427 |
+| `eva2/src/eva/bootstrap/dashboard_voice.py` | tracked | product-runtime | included-tracked-critical | keep | 9637 |
 | `eva2/src/eva/bootstrap/delegated_work_commands.py` | tracked | product-runtime | included-tracked-critical | keep | 8089 |
 | `eva2/src/eva/bootstrap/delegated_work_provider.py` | tracked | product-runtime | included-tracked-critical | keep | 10485 |
 | `eva2/src/eva/bootstrap/delegated_work_service.py` | tracked | product-runtime | included-tracked-critical | keep | 11358 |
@@ -1465,7 +1473,7 @@ Schema: `EvaRepositoryInventory/v1`. Brondigest: `36448c992de0d36b8e5e791ea21337
 | `eva2/tests/benchmark/test_run_agentbench_dbbench_development.py` | tracked | verification | included-tracked-critical | keep | 10986 |
 | `eva2/tests/benchmark/test_run_preselected_agentbench_dbbench_batch.py` | tracked | verification | included-tracked-critical | keep | 5153 |
 | `eva2/tests/bootstrap/test_commerce_deployment.py` | tracked | verification | included-tracked-critical | keep | 1165 |
-| `eva2/tests/bootstrap/test_dashboard_voice_bootstrap.py` | tracked | verification | included-tracked-critical | keep | 8613 |
+| `eva2/tests/bootstrap/test_dashboard_voice_bootstrap.py` | tracked | verification | included-tracked-critical | keep | 10574 |
 | `eva2/tests/bootstrap/test_delegated_work_commands.py` | tracked | verification | included-tracked-critical | keep | 6598 |
 | `eva2/tests/bootstrap/test_delegated_work_provider.py` | tracked | verification | included-tracked-critical | keep | 7744 |
 | `eva2/tests/bootstrap/test_delegated_work_service.py` | tracked | verification | included-tracked-critical | keep | 9536 |
@@ -1489,7 +1497,7 @@ Schema: `EvaRepositoryInventory/v1`. Brondigest: `36448c992de0d36b8e5e791ea21337
 | `eva2/tests/connectors/test_home_assistant_live_adapters.py` | tracked | verification | included-tracked-critical | keep | 35986 |
 | `eva2/tests/connectors/test_home_assistant_management.py` | tracked | verification | included-tracked-critical | keep | 4872 |
 | `eva2/tests/connectors/test_home_assistant_mcp_effect.py` | tracked | verification | included-tracked-critical | keep | 5424 |
-| `eva2/tests/connectors/test_home_assistant_voice.py` | tracked | verification | included-tracked-critical | keep | 14796 |
+| `eva2/tests/connectors/test_home_assistant_voice.py` | tracked | verification | included-tracked-critical | keep | 21035 |
 | `eva2/tests/connectors/test_installer_agentmail_probe.py` | tracked | verification | included-tracked-critical | keep | 8907 |
 | `eva2/tests/connectors/test_installer_codex_model_probe.py` | tracked | verification | included-tracked-critical | keep | 9807 |
 | `eva2/tests/connectors/test_installer_home_assistant_probe.py` | tracked | verification | included-tracked-critical | keep | 9773 |
@@ -1570,6 +1578,7 @@ Schema: `EvaRepositoryInventory/v1`. Brondigest: `36448c992de0d36b8e5e791ea21337
 | `eva2/tests/operations/test_durable_goal_worker_secret.py` | tracked | verification | included-tracked-critical | keep | 1466 |
 | `eva2/tests/operations/test_eva2_canary_cutover.py` | tracked | verification | included-tracked-critical | keep | 4138 |
 | `eva2/tests/operations/test_eva2_quiescent_cutover.py` | tracked | verification | included-tracked-critical | keep | 43959 |
+| `eva2/tests/operations/test_ha_voice_native_client.py` | tracked | verification | included-tracked-critical | keep | 8296 |
 | `eva2/tests/operations/test_hindsight_provenance_migration.py` | tracked | verification | included-tracked-critical | keep | 1269 |
 | `eva2/tests/operations/test_identity_pack_lifecycle.py` | tracked | verification | included-tracked-critical | keep | 12980 |
 | `eva2/tests/operations/test_initialize_dashboard_authority.py` | tracked | verification | included-tracked-critical | keep | 2087 |
@@ -1605,6 +1614,7 @@ Schema: `EvaRepositoryInventory/v1`. Brondigest: `36448c992de0d36b8e5e791ea21337
 | `eva2/tests/operations/test_operator_cli.py` | tracked | verification | included-tracked-critical | keep | 7154 |
 | `eva2/tests/operations/test_performance_complexity_pc01.py` | tracked | verification | included-tracked-critical | keep | 9006 |
 | `eva2/tests/operations/test_performance_complexity_pc02.py` | tracked | verification | included-tracked-critical | keep | 3596 |
+| `eva2/tests/operations/test_plan_home_assistant_voice_bridge.py` | tracked | verification | included-tracked-critical | keep | 6590 |
 | `eva2/tests/operations/test_portable_object_materializer.py` | tracked | verification | included-tracked-critical | keep | 5379 |
 | `eva2/tests/operations/test_portable_object_verifier.py` | tracked | verification | included-tracked-critical | keep | 3509 |
 | `eva2/tests/operations/test_prepare_managed_b_candidate_context.py` | tracked | verification | included-tracked-critical | keep | 12169 |
@@ -1759,6 +1769,7 @@ Schema: `EvaRepositoryInventory/v1`. Brondigest: `36448c992de0d36b8e5e791ea21337
 | `eva2/tools/persist_delegated_work_activation.py` | tracked | verification-runtime | included-tracked-critical | keep | 15311 |
 | `eva2/tools/persist_home_effect_policy.py` | tracked | verification-runtime | included-tracked-critical | keep | 7849 |
 | `eva2/tools/persist_managed_core_image.py` | tracked | verification-runtime | included-tracked-critical | keep | 8430 |
+| `eva2/tools/plan_home_assistant_voice_bridge.py` | tracked | verification-runtime | included-tracked-critical | keep | 6203 |
 | `eva2/tools/portable_export.py` | tracked | verification-runtime | included-tracked-critical | keep | 25025 |
 | `eva2/tools/portable_object_materializer.py` | tracked | verification-runtime | included-tracked-critical | keep | 13512 |
 | `eva2/tools/portable_object_verifier.py` | tracked | verification-runtime | included-tracked-critical | keep | 9228 |
