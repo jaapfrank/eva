@@ -111,3 +111,34 @@ def test_changed_or_ambiguous_automation_is_rejected():
     config["actions"][1]["wait_for_trigger"][0]["event_data"] = {}
     with pytest.raises(ValueError):
         plan_voice_bridge(config, device_satellites=DEVICES)
+
+
+def test_registry_device_replacement_does_not_reuse_old_automation_id():
+    from tools.plan_home_assistant_voice_bridge import device_satellite_mapping
+    registry = [{"entity_id": "assist_satellite.living", "device_id": "f" * 32,
+                 "platform": "esphome", "disabled_by": None}]
+    mapping = device_satellite_mapping(registry, satellite_ids=("assist_satellite.living",))
+    plan = plan_voice_bridge(original(), device_satellites=mapping)
+    template = plan["automation"]["actions"][0]["event_data"]["satellite"]
+    assert render(template, device="f" * 32) == "assist_satellite.living"
+    assert render(template, device="a" * 32) == ""
+
+
+@pytest.mark.parametrize("mutation", ["missing", "duplicate", "disabled", "no-device", "wrong-platform"])
+def test_registry_rejects_unusable_or_ambiguous_binding(mutation):
+    from tools.plan_home_assistant_voice_bridge import device_satellite_mapping
+    row = {"entity_id": "assist_satellite.living", "device_id": "f" * 32,
+           "platform": "esphome", "disabled_by": None}
+    registry = [row]
+    if mutation == "missing":
+        registry = []
+    elif mutation == "duplicate":
+        registry.append(dict(row))
+    elif mutation == "disabled":
+        row["disabled_by"] = "user"
+    elif mutation == "no-device":
+        row["device_id"] = None
+    else:
+        row["platform"] = "other"
+    with pytest.raises(ValueError):
+        device_satellite_mapping(registry, satellite_ids=("assist_satellite.living",))

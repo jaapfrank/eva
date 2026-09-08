@@ -40,6 +40,30 @@ def _mapping(devices: dict[str, str]) -> str:
     return json.dumps(devices, sort_keys=True, separators=(",", ":"))
 
 
+
+def device_satellite_mapping(
+    registry: list[dict[str, Any]], *, satellite_ids: tuple[str, ...],
+) -> dict[str, str]:
+    """Resolve current device IDs from HA registry, never an old template."""
+    if (not satellite_ids or len(set(satellite_ids)) != len(satellite_ids)
+            or any(not _SATELLITE.fullmatch(value) for value in satellite_ids)):
+        raise ValueError("unique satellite selection required")
+    mapping: dict[str, str] = {}
+    for satellite in satellite_ids:
+        matches = [row for row in registry if row.get("entity_id") == satellite]
+        if len(matches) != 1:
+            raise ValueError("selected satellite registry entry is missing or ambiguous")
+        entry = matches[0]
+        device = entry.get("device_id")
+        if (entry.get("platform") != "esphome" or entry.get("disabled_by") is not None
+                or not isinstance(device, str) or not _DEVICE.fullmatch(device)
+                or device in mapping):
+            raise ValueError("selected satellite device binding is invalid")
+        mapping[device] = satellite
+    _mapping(mapping)
+    return mapping
+
+
 def plan_voice_bridge(
     automation: dict[str, Any], *, device_satellites: dict[str, str],
 ) -> dict[str, Any]:
