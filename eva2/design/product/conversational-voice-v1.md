@@ -4,6 +4,11 @@ Bijgewerkt: 27 augustus 2026.
 
 ## Productuitkomst
 
+**Eigenaarcorrectie 8 september 2026:** de gebruikersroute is Telegram of de
+Home Assistant-spraakapparaten/speakers. Een losse browsergesprekpagina is niet
+gevraagd en telt uitsluitend als interne technische proef. De onderstaande
+historische browsercheckpoints leveren deze kanaaluitkomst niet op.
+
 De eigenaar kan een doorlopend gesprek met Eva voeren zoals in een moderne
 voice mode: spreken, snel antwoord horen, tijdens Eva's antwoord opnieuw gaan
 praten, Eva onmiddellijk laten stoppen en daarna vanuit dezelfde context
@@ -504,3 +509,33 @@ Runner, exacte clientbytes, instellingen en alle uitkomsten zijn gebonden in
 Er zijn geen nieuwe model-/spraakprovidercalls of live productwijzigingen gedaan.
 De Windows-route `localhost:44710` gaf afzonderlijk de verwachte HTTP401 zonder
 inloggegevens; de eerste trage PowerShell-aanvraag is normaal met401 geëindigd.
+
+
+### Bestaande gevraagde kanalen — inspectie 8 september 2026
+
+De eigenaar houdt de keuze Telegram óf Home Assistant. Een eerste complete
+kanaaluitkomst vereist niet stilzwijgend beide tegelijk. Losse Telegram-
+spraakberichten mogen wel een bruikbaar deelresultaat zijn, maar sluiten de
+vereiste doorlopende/full-duplex-gespreksproef niet af. De voorkeur voor
+spraakberichten of doorlopend gesprek binnen Telegram wordt apart nagevraagd.
+
+De woonkamer en overkapping hebben beide een beschikbare Assist-satellite.
+De bestaande HA-automation `eva_voice_bridge_naar_eva` vangt conversation-
+triggers, stuurt `eva_voice_query`, wacht35seconden op `eva_voice_reply` en
+geeft de tekst aan dezelfde HA-conversationresponse voor uitspreken. Bottie's
+`src/mind/voicebridge.js` verwerkt de beurt nog via zijn eigen agent. Dit is
+een bestaande fysieke gebruikersroute, maar nog geen aansluiting op Eva2.
+
+Bij hergebruik moeten drie waargenomen verschillen worden opgelost: een vaste
+sendernaam is geen geverifieerde spreker; een onbekend device mag niet naar de
+overkappingssatellite worden omgeleid; de HA-ack bevat momenteel niet de
+operation-/payload-/replyhashes die Bottie's huidige verifier vereist. Een
+speaker mag niet vanzelf de persoonlijke identiteit/geheugenrechten van Jaap
+krijgen. Eva2 kent momenteel alleen private-person en Telegram-group audiences;
+eventuele gedeelde huiscontext vereist expliciete passende ondersteuning.
+
+De Eva2 Telegram-ingress verwerkt momenteel tekst. Voor spraak ontbreken de
+media-download, transcriptie en gesproken antwoordlevering in die ingang.
+Bottie's bestaande duurzame audiotransport is een hergebruikskandidaat, geen
+bewijs dat een Telegram-belroute al bestaat. Deze inspectie heeft geen
+berichten of audio verstuurd en geen huisconfiguratie gewijzigd.

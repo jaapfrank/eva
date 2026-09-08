@@ -14,11 +14,11 @@ Independent admission review, then prepare stopped slot4 and lossless slot3-to4 
 
 | Volgorde | Kaart | Resultaat | Status |
 |---:|---|---|---|
-| 138 | `VB-001` — Full-duplex voice leveren | Microfoon en speaker werken tegelijk met snelle onderbreking. | 🟡 BEZIG |
+| 138 | `VB-001` — Full-duplex voice leveren | Met dezelfde Eva praten via Telegram of Home Assistant-spraakapparaten, met hoorbaar antwoord en onderbreken passend bij het kanaal. | 🟡 BEZIG |
 
 Klaar betekent:
 
-- Een geverifieerde gebruiker kan met echte microfoon en speaker doorlopend met dezelfde Eva-gesprekskern praten, tegelijk luisteren en hoorbaar onderbreken; p95 stoplatentie maximaal250ms gemeten.
+- Een complete gevraagde spraakroute via Telegram of bestaande Home Assistant-spraakapparaten werkt met dezelfde Eva-gesprekskern. Voor de doorlopende gespreksroute: tegelijk luisteren en hoorbaar onderbreken, p95 stoplatentie maximaal250ms gemeten. Losse spraakberichten sluiten de full-duplex-eis niet af; een aparte browserpagina sluit geen gevraagde route af.
 - Persoonsbinding, privacy, gesprekcontinuiteit, toolstopgrenzen en herstel zijn getest; complete gebruikersroute veilig live met onafhankelijke beoordeling. Menselijke ervaringsacceptatie wordt apart vastgelegd.
 
 <details>

@@ -111,7 +111,7 @@
           ]
         }
       ],
-      "priorityDecision": "TL-002 is technisch afgerond: Home Assistant en duurzame werkmap werken via de algemene route. VB-001 is actief voor tegelijk luisteren, spreken en onderbreken.",
+      "priorityDecision": "VB-001 levert een complete gevraagde spraakroute via Telegram of bestaande Home Assistant-spraakapparaten. De browserproef is intern bewijs. Losse spraakberichten vervangen de doorlopende gespreksproef niet.",
       "dashboardVerification": {
         "status": "local_browser_verified_not_full_product_acceptance",
         "priorityRevision": {
@@ -150,9 +150,9 @@
       },
       "summary": [
         {
-          "label": "LIVE · BROWSERSTEM",
-          "value": "Je kunt nu praten met Eva in de browser",
-          "detail": "De stemroute is live. De echte spraakproef slaagde; jouw microfoon-/speakerervaring en gemeten onderbreeklatentie staan nog open."
+          "label": "AFGEROND · TL-002",
+          "value": "Eva kan documenten bewaren in haar werkmap",
+          "detail": "Opslaan en teruglezen via de echte gespreksroute, behoud van Home Assistant en gecontroleerde uitrol bewezen. Gezinsacceptatie blijft open."
         },
         {
           "label": "AFGEROND · TL-001",
@@ -167,8 +167,8 @@
       ],
       "nextOutcomes": [
         {
-          "title": "Probeer praten met Eva",
-          "detail": "Open http://localhost:44710/internal/v1/dashboard/conversation met je eigenaarslogin. Kies Praten met Eva en geef microfoontoegang. Onderbreek Eva stopt het afspelen; Microfoon uit beëindigt de stemsessie."
+          "title": "Met Eva praten via Telegram of Home Assistant",
+          "detail": "De stemfunctie aansluiten op jouw Telegram en de bestaande Home Assistant-spraakapparaten. De losse browserpagina was een technische proef en sluit deze opdracht niet af."
         },
         {
           "title": "Laat Eva een document bewaren",
@@ -261,30 +261,17 @@
           "evidence": "TL-001 en TL-002 technisch afgerond en live · 8 september · gezinsacceptatie open"
         },
         {
-          "id": "browser-voice",
-          "icon": "≈",
-          "title": "Praten via de browser",
-          "subtitle": "Luisteren, antwoorden en afspelen onderbreken",
-          "built": "yes",
-          "tested": "yes",
-          "live": "yes",
-          "accepted": "no",
-          "gap": "Jouw microfoon-/speakerervaring beoordelen",
-          "detail": "Beperkte browserpilot: echte browser → Home Assistant STT → Eva → Home Assistant TTS op exacte kandidaat bewezen. Live eigenaarsroute en WebSocket gecontroleerd. Geen bewijs van jouw hardware-ervaring of p95-stoplatentie. Open http://localhost:44710/internal/v1/dashboard/conversation met je eigenaarslogin.",
-          "evidence": "VB-001 · live 8 september · onafhankelijke uitrol/readback-GO; menselijke proef open"
-        },
-        {
           "id": "voice",
           "icon": "≋",
           "title": "Stem & aanwezigheid",
-          "subtitle": "Praten, luisteren, onderbreken",
+          "subtitle": "Praten via Telegram en Home Assistant",
           "built": "partial",
           "tested": "partial",
-          "live": "partial",
+          "live": "no",
           "accepted": "no",
-          "gap": "Jouw microfoon-/speakerproef en overige stemkanalen",
-          "detail": "Browserstem is technisch live op slot 3: dezelfde gesprekskern, Home Assistant-spraak en privé-eigenaarsbinding. Echte spraak en herstart zijn in de gekopieerde omgeving bewezen; live pagina, WebSocket, policy en mounts apart gecontroleerd. Echte hardware, gemeten p95-onderbreking en volledige huisaanwezigheid blijven open.",
-          "evidence": "VB-001 · kandidaat 4d7d039: releasecontrole, echte spraakproef, herstart en intrekking geslaagd · onafhankelijke technische GO; nog niet live"
+          "gap": "Werkend gesprek via Telegram en HA-spraakapparaten",
+          "detail": "De interne spraakketen is technisch beproefd. De gevraagde gebruikersroutes via Telegram en Home Assistant-speakers zijn daarmee nog niet opgeleverd. Een losse browserpagina telt niet als deze functie.",
+          "evidence": "VB-001 · technische media- en herstelproeven; Telegram-/HA-gebruikersroute en acceptatie open"
         },
         {
           "id": "projects",
@@ -1725,7 +1712,7 @@
         "receiptPath": "/tmp/eva2-vb001-ack-release-j5p21b_z/managed-voice-render/receipt.json",
         "liveChanges": false
       },
-      "next": "Complete real owner microphone/speaker experience, measured stop latency and durable evidence archival before full VB-001 closure. Browser voice pilot is live; no complete voice-presence claim.",
+      "next": "Technical browser pilot only. Deliver requested Telegram and HA speaker routes; browser hardware acceptance is no longer the next requested user action.",
       "implementationCommit": "723febe70d1c12f5e3f5a8179e21f883725d35f1",
       "stage": {
         "path": "/tmp/eva2-vb001-managed-release-bym6cas7",
@@ -1873,7 +1860,7 @@
       "testsPassed": 36,
       "ruff": "passed",
       "review": "Independent bounded source GO /root/co006_review; 36 bootstrap tests independently repeated. No full candidate release or live update.",
-      "next": "Include in next complete candidate after remaining owner-route/hardware findings; current pilot unchanged."
+      "next": "Retain reviewed source fix for next integrated candidate with the requested Telegram/HA channel work; do not prioritize another standalone browser release."
     },
     "vb001InterruptMeasurement": {
       "status": "reviewed_render_submeasurement_only",
@@ -1931,6 +1918,54 @@
       "finding": "All 80 rendered-sample trials passed. Reported headless outputLatency is 248ms; software tap excludes physical output buffering. This cannot close the acoustic p95<=250ms requirement.",
       "next": "Independent runner/result review; retain real microphone/speaker and acoustic end-to-end campaign as open. Do not infer hardware acceptance from render timing.",
       "resultReview": "Independent bounded GO co006_review: exact runner/client hashes verified, all80 retained; p95 modeled render-tail bound2.67ms, syntheticfirst-frame-to-last-sample106.65ms. Reported outputLatency248ms remains outside tap and physical<=250ms criterion is not closed."
+    },
+    "vb001ChannelCorrection": {
+      "status": "user_requirement_restored",
+      "owner": "/root",
+      "reviewer": "/root/co006_review",
+      "userRequest": "Telegram of de speakers van Home Assistant; geen aparte browsergesprekpagina gevraagd.",
+      "correction": "Remove browser pilot from product capabilities and restore live:no for requested voice routes. Preserve technical evidence as such.",
+      "next": "Inspect existing Telegram voice ingress and Home Assistant speaker/Assist integration before selecting the smallest complete requested channel implementation. No standalone browser deployment as next product result.",
+      "liveRuntimeMutation": false,
+      "review": "Independent limited GO co006_review; preserve owner choice Telegram or HA, no requirement to deliver both before any first usable outcome, no full-duplex claim for voice messages."
+    },
+    "vb001RequestedChannelDiscovery": {
+      "status": "existing_routes_inspected_no_runtime_changes",
+      "owner": "/root",
+      "reviewer": "/root/co006_review",
+      "homeAssistant": {
+        "assistSatellitesAvailable": 2,
+        "areas": [
+          "woonkamer",
+          "overkapping"
+        ],
+        "satelliteState": "idle",
+        "services": [
+          "assist_satellite.announce",
+          "assist_satellite.start_conversation",
+          "assist_satellite.ask_question"
+        ],
+        "existingAutomation": "automation.eva_voice_bridge_naar_eva",
+        "transport": "conversation trigger -> eva_voice_query -> matching eva_voice_reply -> set_conversation_response -> eva_voice_reply_ack",
+        "existingBrain": "Bottie src/mind/voicebridge.js -> handleMessageDetailed(channel=voice)",
+        "gaps": [
+          "No Eva2 conversation-core handoff in this route.",
+          "Automation labels sender Jaap but does not attest speaker identity; cannot map all household speech to Jaap private memory.",
+          "Unknown device currently falls back to the overkapping satellite; must preserve exact physical destination instead.",
+          "Automation acknowledgement does not copy the offer operation/payload/reply hashes required by the current Bottie acknowledgement verifier. HA acceptance and durable reply acknowledgement are distinct."
+        ]
+      },
+      "telegram": {
+        "currentEva2Ingress": "TelegramInboundMessage has text only; current provider does not download/transcribe voice or deliver spoken reply.",
+        "existingBottieTransport": "Existing durable audio sending can be reused as a reviewed boundary, not proof of full-duplex calling.",
+        "pendingOwnerPreference": "Asked whether voice messages, continuous conversation, or both; no assumption of a standalone browser."
+      },
+      "nonClaims": [
+        "No message sent, no speaker output, no HA automation modified.",
+        "Service and idle state are availability evidence, not acoustic function proof.",
+        "The existing HA bridge cannot be claimed as an Eva2 voice capability."
+      ],
+      "review": "Independent bounded source/doc GO co006_review: text-only ingress, explicit speaker verification and strict ACK binding confirmed from code. Live HA inventory/automation observed by root, not independently reread in this checkpoint."
     }
   },
   "activeTaskId": "VB-001",
@@ -3273,7 +3308,7 @@
       "order": 138,
       "area": "Voice",
       "title": "Full-duplex voice leveren",
-      "outcome": "Microfoon en speaker werken tegelijk met snelle onderbreking.",
+      "outcome": "Met dezelfde Eva praten via Telegram of Home Assistant-spraakapparaten, met hoorbaar antwoord en onderbreken passend bij het kanaal.",
       "status": "in_progress",
       "stateDetails": {
         "baseCommit": null,
@@ -3351,7 +3386,7 @@
         "Echte browserproef inschakelen met audit.vb001BrowserIntegration.browserCommand: 18 geslaagd, nul skips vereist. De gewone node-opdracht zonder die omgeving is alleen de beperkte clientregressie."
       ],
       "doneWhen": [
-        "Een geverifieerde gebruiker kan met echte microfoon en speaker doorlopend met dezelfde Eva-gesprekskern praten, tegelijk luisteren en hoorbaar onderbreken; p95 stoplatentie maximaal250ms gemeten.",
+        "Een complete gevraagde spraakroute via Telegram of bestaande Home Assistant-spraakapparaten werkt met dezelfde Eva-gesprekskern. Voor de doorlopende gespreksroute: tegelijk luisteren en hoorbaar onderbreken, p95 stoplatentie maximaal250ms gemeten. Losse spraakberichten sluiten de full-duplex-eis niet af; een aparte browserpagina sluit geen gevraagde route af.",
         "Persoonsbinding, privacy, gesprekcontinuiteit, toolstopgrenzen en herstel zijn getest; complete gebruikersroute veilig live met onafhankelijke beoordeling. Menselijke ervaringsacceptatie wordt apart vastgelegd."
       ]
     }
