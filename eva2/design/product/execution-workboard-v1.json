@@ -2025,6 +2025,41 @@
         "speakerOutput": false
       },
       "next": "Determine installed local announcement-stop/wake-word behavior and wire same Eva2 core with proper household/person binding. Owner mute preference pending; do not alter microphone privacy setting implicitly."
+    },
+    "vb001SavedDeviceConfiguration": {
+      "checkedAt": "2026-09-08T20:17:08.293770+00:00",
+      "status": "source_located_not_bound_to_installed_firmware",
+      "files": [
+        {
+          "file": "/home/administrator/project/Bottie/data/private/voice-pe-devices/home-assistant-voice-0a16e0.eva-patched.yaml",
+          "sha256": "87b9c4476dfee28c939b8f2578a6dc6f1fe3397368dd62f2268c50f753a1f1c1",
+          "bytes": 71174,
+          "localStopBranch": 1720,
+          "stopWordActivationScript": 1483,
+          "savedConfigurationOnly": true
+        },
+        {
+          "file": "/home/administrator/project/Bottie/data/private/voice-pe-devices/home-assistant-voice-0a5035.eva-patched.yaml",
+          "sha256": "94c281fca6a73172bee78e8b0d7df6258c764cc4689cf9d0191c2bdf5a8c744a",
+          "bytes": 71175,
+          "localStopBranch": 1720,
+          "stopWordActivationScript": 1483,
+          "savedConfigurationOnly": true
+        }
+      ],
+      "findings": [
+        "Beide opgeslagen apparaatconfiguraties bevatten lokale wakeword-onderbreking: een lopende voice assistant wordt gestopt; anders wordt een lopende announcement gestopt.",
+        "De onderbreektak start niet opnieuw de voice assistant. De starttak wordt alleen uitgevoerd wanneer er geen lopende voice assistant of announcement is.",
+        "Het lokale stopwoord wordt pas ingeschakeld na het begin van een announcement plus een expliciete vertraging van één seconde.",
+        "De opgeslagen configuratie stuurt bij lokale onderbreking geen Eva-specifiek cancel-event naar de gesprekskern.",
+        "De .eva-patched-variant voegt voor de gecontroleerde woonkamerconfiguratie uitsluitend verwijzingen naar WiFi-secrets toe; dit is geen onderbrekingspatch."
+      ],
+      "nextAction": "Maak de lokale onderbreking en opnieuw luisteren expliciet en verbind dezelfde apparaatbeurt met annulering/onderdrukking van Eva2-antwoorden. Koppel eerst de opgeslagen bron aan de geïnstalleerde build; geen firmware-uitrol zonder terugrol.",
+      "nonClaims": [
+        "Geen bewijs dat deze bestanden exact de geïnstalleerde firmware opleverden.",
+        "Geen akoestische stoplatentie gemeten.",
+        "Geen configuratie geflasht, microfoon ontmutet of HA-route omgezet."
+      ]
     }
   },
   "activeTaskId": "VB-001",
