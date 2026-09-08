@@ -1,7 +1,7 @@
 {
   "contract": "EvaExecutionWorkboard/v1",
   "schemaVersion": 1,
-  "lastUpdated": "2026-09-08",
+  "lastUpdated": "2026-09-09",
   "sequencePolicy": "done_then_one_primary_then_queued",
   "commandWorkingDirectory": "eva2",
   "inventoryPath": "docs/eva-repository-inventory.generated.json",
@@ -2225,6 +2225,13 @@
       "tests": "100 memory/conversation tests;104 PostgreSQL/API tests;Ruff passed",
       "review": "co006_review bounded privacy GO after source-authority fallback fixes",
       "next": "Bind configured current household mandate/device actors, then cooperative model/tool cancellation in native responder. Actual HA pipeline/speaker and release tests remain open."
+    },
+    "vb001NativeRuntimeCancellation": {
+      "status": "real_core_sdk_and_postgres_tested_not_activated_or_live",
+      "evidence": "eva2/evidence/product/VB-001-native-runtime-cancellation-2026-09-09.json",
+      "tests": "180 combined tests;50 actual-core/provider tests after context/binding;final provider suite50passed",
+      "review": "co006_review bounded source GO after closing preparation-to-dispatch cancellation window",
+      "next": "Load current household mandate and construct native service during startup with shared runtime/Hindsight verifier and existing budgets; then actual HA/speaker candidate tests and safe release."
     }
   },
   "activeTaskId": "VB-001",
@@ -3631,10 +3638,18 @@
         "eva2/src/eva/application/memory.py",
         "eva2/src/eva/adapters/projection/hindsight.py",
         "eva2/tests/application/test_memory_audience.py",
-        "eva2/tests/projection/test_hindsight.py"
+        "eva2/tests/projection/test_hindsight.py",
+        "eva2/src/eva/application/cancellation.py",
+        "eva2/src/eva/adapters/model/pydantic_conversation.py",
+        "eva2/src/eva/bootstrap/native_voice.py",
+        "eva2/src/eva/adapters/postgres/external_conversation_tools.py",
+        "eva2/tests/application/test_cancellation.py",
+        "eva2/tests/bootstrap/test_native_household_responder.py",
+        "eva2/tests/model/test_pydantic_conversation_model.py"
       ],
       "componentIds": [
         "api-and-runtime-composition",
+        "conversation-model-adapter",
         "core-behavior-tests",
         "core-semantics",
         "durable-persistence",
@@ -3666,7 +3681,8 @@
         "pytest -q tests/operations/test_ha_voice_native_client.py",
         "pytest -q tests/postgres/test_operational_timeline.py",
         "pytest -q tests/api/test_native_voice.py",
-        "pytest -q tests/application/test_memory_audience.py tests/projection/test_hindsight.py tests/application/test_conversation.py"
+        "pytest -q tests/application/test_memory_audience.py tests/projection/test_hindsight.py tests/application/test_conversation.py",
+        "pytest -q tests/application/test_cancellation.py tests/bootstrap/test_native_household_responder.py tests/model/test_pydantic_conversation_model.py"
       ],
       "evidenceRequired": [
         "Onderzoek bestaande Eva2-voicebouwstenen en Bottie/HA-route; leg concrete ontbrekende media-aansluiting, providerkeuze, bestaand mandaat en verbruik vast.",

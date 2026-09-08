@@ -1,6 +1,6 @@
 # Eva 2 — uitvoerbaar werkbord
 
-Laatst bijgewerkt: 2026-09-08.
+Laatst bijgewerkt: 2026-09-09.
 
 Doel: [Eva als zelfstandig lerende digitale huisgenoot](PROJECTDOEL.md).
 Gebouwd, getest, live en door jou geaccepteerd zijn verschillende stappen.
@@ -76,6 +76,13 @@ Klaar betekent:
 - `eva2/src/eva/adapters/projection/hindsight.py`
 - `eva2/tests/application/test_memory_audience.py`
 - `eva2/tests/projection/test_hindsight.py`
+- `eva2/src/eva/application/cancellation.py`
+- `eva2/src/eva/adapters/model/pydantic_conversation.py`
+- `eva2/src/eva/bootstrap/native_voice.py`
+- `eva2/src/eva/adapters/postgres/external_conversation_tools.py`
+- `eva2/tests/application/test_cancellation.py`
+- `eva2/tests/bootstrap/test_native_household_responder.py`
+- `eva2/tests/model/test_pydantic_conversation_model.py`
 
 Echte controles:
 
@@ -94,6 +101,7 @@ Echte controles:
 - `pytest -q tests/postgres/test_operational_timeline.py`
 - `pytest -q tests/api/test_native_voice.py`
 - `pytest -q tests/application/test_memory_audience.py tests/projection/test_hindsight.py tests/application/test_conversation.py`
+- `pytest -q tests/application/test_cancellation.py tests/bootstrap/test_native_household_responder.py tests/model/test_pydantic_conversation_model.py`
 
 </details>
 
