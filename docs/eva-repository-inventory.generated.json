@@ -269,9 +269,9 @@
     }
   ],
   "summary": {
-    "files": 2077,
-    "present": 2077,
-    "tracked": 2077,
+    "files": 2078,
+    "present": 2078,
+    "tracked": 2078,
     "untracked": 0,
     "tombstones": 0,
     "policyErrors": 9
@@ -310,7 +310,7 @@
     {
       "id": "eva2-verification",
       "role": "verification",
-      "matchCount": 729
+      "matchCount": 730
     },
     {
       "id": "eva2-documentation",
@@ -9960,7 +9960,7 @@
       "path": "docs/eva-repository-inventory.generated.json",
       "gitState": "tracked",
       "present": true,
-      "bytes": 2386719,
+      "bytes": 2387745,
       "contentSha256": "32591e23fa2eb53a038d95e726ba09edd0405306f38c5283a36a2b6d3010254d",
       "hashMode": "canonical-self-reference-redacted",
       "role": "generated",
@@ -9993,7 +9993,7 @@
       "path": "docs/eva-repository-inventory.generated.md",
       "gitState": "tracked",
       "present": true,
-      "bytes": 360832,
+      "bytes": 360980,
       "contentSha256": "2f4f8486464cbb9713b749dc898f265093d0853699f1da1b4eb3dd1625c1b2d2",
       "hashMode": "canonical-self-reference-redacted",
       "role": "generated",
@@ -13608,8 +13608,8 @@
       "path": "eva2/design/product/execution-workboard-v1.json",
       "gitState": "tracked",
       "present": true,
-      "bytes": 257247,
-      "contentSha256": "64e96fd59b5ad4b747480244aeff800614761e81bb65c6b2576972a66789682a",
+      "bytes": 258078,
+      "contentSha256": "702a7455dcb59e646e4069c4c94a49183fc03a5074eb263d7ea0e97e7916c2b7",
       "hashMode": "exact-bytes",
       "role": "documentation",
       "roleRuleId": "eva2-documentation",
@@ -24307,6 +24307,41 @@
       "present": true,
       "bytes": 2697,
       "contentSha256": "aa46ac2af97199d64f60759cde9ec088e6a5c2533bec7e7a04b035a31949db42",
+      "hashMode": "exact-bytes",
+      "role": "verification",
+      "roleRuleId": "eva2-verification",
+      "matchingRuleIds": [
+        "eva2-verification"
+      ],
+      "owner": "verification",
+      "inputs": [
+        "production or fixture contract"
+      ],
+      "outputs": [
+        "test decision"
+      ],
+      "state": [
+        "temporary isolated test state"
+      ],
+      "effects": [
+        "may execute only inside its declared gate"
+      ],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": true,
+        "runtimeCritical": true,
+        "status": "included-tracked-critical"
+      }
+    },
+    {
+      "path": "eva2/evidence/product/VB-001-native-voice-installed-checks-2026-09-09.json",
+      "gitState": "tracked",
+      "present": true,
+      "bytes": 4361,
+      "contentSha256": "d6d76d702607523327e4b9538f80467a850ba85e15c5b6eddbe5169ee957cac4",
       "hashMode": "exact-bytes",
       "role": "verification",
       "roleRuleId": "eva2-verification",
@@ -83382,5 +83417,5 @@
       }
     }
   ],
-  "sourceDigest": "e1dab455a08e546d03e83973d1a2ed5d59c8f583cc7e4b968d577c617e1605d7"
+  "sourceDigest": "76a71e9294f5f19b8c34363548cec7fcf379bfbcda561cde4aad2ea81afb5da6"
 }

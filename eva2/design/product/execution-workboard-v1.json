@@ -2264,7 +2264,16 @@
       "evidence": "eva2/evidence/product/VB-001-native-voice-candidate-execution-2026-09-09.json",
       "tests": "2519 isolated source tests passed; first installed smoke passed;4physical browser tests not yet executed",
       "review": "co006_review confirmed built image/source label and all bound snapshot files byte-equal to edb3a704; bounded proof GO, not full release/live",
-      "next": "Scan exact candidate and complete installed/physical/copy-restart release proof; then native HA pipeline and measured speaker stop/resume before A/B activation."
+      "next": "Exact image scans, installed134tests, physicalbrowser4tests and HApackage staging now proved; follow vb001NativeVoiceInstalledChecks for remaining release and actual speaker route."
+    },
+    "vb001NativeVoiceInstalledChecks": {
+      "status": "exact_candidate_checks_passed_ha_package_staged_not_live",
+      "sourceCommit": "edb3a704c316a3272be5a99e195a76a009d3a302",
+      "imageId": "sha256:e24e4c74757f12e8d17fee223e517a5c0f122b64a481be943e811b7194261277",
+      "evidence": "eva2/evidence/product/VB-001-native-voice-installed-checks-2026-09-09.json",
+      "tests": "134 installed tests and4physical browser tests passed; scan0HIGH/CRITICAL against31AugustDB; HApackage staged andhashes readback",
+      "review": "co006_review bounded evidence GO: raw scan archive/hash and0HIGH/CRITICAL verified, browser4/4 cleanup verified, installed134pass verified, six staged HA hashes match edb3a704; no full release or live GO",
+      "next": "Complete bound release bundle and current-data restart/copy/rollback proof; prepare actual native mandate/token and HA installation/pipeline; measure speaker interruption before safe activation."
     }
   },
   "activeTaskId": "VB-001",
