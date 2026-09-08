@@ -358,3 +358,107 @@ def test_playback_requires_a_non_empty_voice_turn_id(voice_turn_id: str) -> None
             sink=_Sink(),
             reply_canceller=_ReplyGenerationCanceller(),
         )
+
+
+def test_barge_in_releases_delivery_waiting_for_provider_audio() -> None:
+    async def run() -> None:
+        waiting, closed = asyncio.Event(), asyncio.Event()
+        sink = _Sink()
+        controller = VoicePlaybackController(
+            session=_session(), voice_turn_id="voice-turn:001",
+            reply_generation=4, sink=sink,
+            reply_canceller=_ReplyGenerationCanceller(),
+        )
+
+        async def stalled_audio():
+            try:
+                yield b"first"
+                waiting.set()
+                await asyncio.Event().wait()
+                yield b"late"
+            finally:
+                closed.set()
+
+        delivery = asyncio.create_task(controller.deliver(stalled_audio()))
+        await waiting.wait()
+        await controller.interrupt(_barge_in())
+        receipt = await asyncio.wait_for(delivery, timeout=1)
+        assert receipt.status == "interrupted"
+        assert closed.is_set()
+        assert sink.played_lengths == [5]
+        assert sink.stop_calls == 1
+
+    asyncio.run(run())
+
+
+def test_barge_in_closes_provider_stream_while_sink_write_is_pending() -> None:
+    async def run() -> None:
+        closed = asyncio.Event()
+        sink = _Sink(block_first_write=True)
+        controller = VoicePlaybackController(
+            session=_session(), voice_turn_id="voice-turn:001",
+            reply_generation=4, sink=sink,
+            reply_canceller=_ReplyGenerationCanceller(),
+        )
+
+        async def audio():
+            try:
+                yield b"first"
+                yield b"late"
+            finally:
+                closed.set()
+
+        delivery = asyncio.create_task(controller.deliver(audio()))
+        await sink.first_write_started.wait()
+        await controller.interrupt(_barge_in())
+        assert (await delivery).status == "interrupted"
+        assert closed.is_set()
+        assert sink.played_lengths == []
+
+    asyncio.run(run())
+
+
+def test_cancelled_interruption_fails_delivery_without_stranding_children() -> None:
+    async def run() -> None:
+        sink = _Sink(block_first_write=True, block_stop=True)
+        canceller = _ReplyGenerationCanceller(block=True)
+        controller = VoicePlaybackController(
+            session=_session(), voice_turn_id="voice-turn:001",
+            reply_generation=4, sink=sink, reply_canceller=canceller,
+        )
+        delivery = asyncio.create_task(controller.deliver(_chunks(b"first")))
+        await sink.first_write_started.wait()
+        interruption = asyncio.create_task(controller.interrupt(_barge_in()))
+        await sink.stop_started.wait()
+        await canceller.started.wait()
+        interruption.cancel()
+        with pytest.raises(asyncio.CancelledError):
+            await interruption
+        with pytest.raises(RuntimeError, match="interruption was cancelled"):
+            await asyncio.wait_for(delivery, timeout=1)
+        assert not [t for t in asyncio.all_tasks() if t is not asyncio.current_task()]
+
+    asyncio.run(run())
+
+
+def test_caller_cancellation_is_not_converted_to_barge_in_receipt() -> None:
+    async def run() -> None:
+        sink = _Sink(block_first_write=True, block_stop=True)
+        controller = VoicePlaybackController(
+            session=_session(), voice_turn_id="voice-turn:001",
+            reply_generation=4, sink=sink,
+            reply_canceller=_ReplyGenerationCanceller(),
+        )
+        delivery = asyncio.create_task(controller.deliver(_chunks(b"first")))
+        await sink.first_write_started.wait()
+        # Queue interrupt first so it marks the state, then cancel delivery
+        # before the cancelled sink write can resume its caller.
+        interruption = asyncio.create_task(controller.interrupt(_barge_in()))
+        asyncio.get_running_loop().call_soon(delivery.cancel)
+        await sink.stop_started.wait()
+        sink.release_stop.set()
+        await interruption
+        with pytest.raises(asyncio.CancelledError):
+            await delivery
+
+    asyncio.run(run())

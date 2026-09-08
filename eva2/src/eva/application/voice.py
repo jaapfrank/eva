@@ -8,7 +8,7 @@ conversation, memory path or tool path.
 from __future__ import annotations
 
 import asyncio
-from collections.abc import AsyncIterable
+from collections.abc import AsyncIterable, AsyncIterator
 from dataclasses import dataclass
 import time
 from typing import Literal, Protocol
@@ -116,6 +116,7 @@ class VoicePlaybackController:
             "ready", "streaming", "completed", "interrupted", "failed"
         ] = "ready"
         self._current_play: asyncio.Task[None] | None = None
+        self._current_read: asyncio.Future[bytes] | None = None
         self._delivered_chunk_count = 0
         self._delivered_byte_count = 0
         self._interrupt_to_sink_stop_ms: int | None = None
@@ -131,9 +132,19 @@ class VoicePlaybackController:
             self._state = "streaming"
 
         try:
-            async for chunk in chunks:
-                if not await self._play_chunk(chunk):
-                    break
+            iterator = aiter(chunks)
+            try:
+                while True:
+                    try:
+                        chunk = await self._read_chunk(iterator)
+                    except StopAsyncIteration:
+                        break
+                    if not await self._play_chunk(chunk):
+                        break
+            finally:
+                close = getattr(iterator, "aclose", None)
+                if close is not None:
+                    await close()
         except BaseException:
             async with self._lock:
                 if self._state == "streaming":
@@ -179,9 +190,9 @@ class VoicePlaybackController:
             if self._state != "streaming":
                 raise RuntimeError("voice playback is not interruptible")
             self._state = "interrupted"
-            current_play = self._current_play
-            if current_play is not None and not current_play.done():
-                current_play.cancel()
+            for pending in (self._current_play, self._current_read):
+                if pending is not None and not pending.done():
+                    pending.cancel()
         # Start both cancellation paths before awaiting either one.  Speaker
         # silence must not wait for a slow model provider, and a silently
         # continuing model/TTS stream must never be reported as interrupted.
@@ -196,14 +207,27 @@ class VoicePlaybackController:
         sink_error: Exception | None = None
         reply_error: Exception | None = None
         try:
-            await sink_stop
-        except Exception as error:
-            sink_error = error
-        sink_stop_ms = (time.monotonic_ns() - started) // 1_000_000
-        try:
-            await reply_cancel
-        except Exception as error:
-            reply_error = error
+            try:
+                await sink_stop
+            except Exception as error:
+                sink_error = error
+            sink_stop_ms = (time.monotonic_ns() - started) // 1_000_000
+            try:
+                await reply_cancel
+            except Exception as error:
+                reply_error = error
+        except asyncio.CancelledError:
+            # A disconnected interruption caller must not strand delivery or
+            # turn incomplete speaker/model shutdown into a success receipt.
+            async with self._lock:
+                self._state = "failed"
+                self._interruption_error = RuntimeError("voice interruption was cancelled")
+                self._interruption_finished.set()
+            for pending in (sink_stop, reply_cancel):
+                if not pending.done():
+                    pending.cancel()
+            await asyncio.gather(sink_stop, reply_cancel, return_exceptions=True)
+            raise
 
         if sink_error is not None or reply_error is not None:
             failure = RuntimeError(
@@ -219,6 +243,29 @@ class VoicePlaybackController:
         async with self._lock:
             self._interrupt_to_sink_stop_ms = sink_stop_ms
             self._interruption_finished.set()
+
+    async def _read_chunk(self, iterator: AsyncIterator[bytes]) -> bytes:
+        """Let barge-in cancel a stalled provider read as well as speaker I/O."""
+        async with self._lock:
+            if self._state == "interrupted":
+                raise StopAsyncIteration
+            if self._state != "streaming":
+                raise RuntimeError("voice playback is not streaming")
+            current_read = asyncio.ensure_future(anext(iterator))
+            self._current_read = current_read
+        try:
+            return await current_read
+        except asyncio.CancelledError:
+            async with self._lock:
+                caller = asyncio.current_task()
+                if (self._state in {"interrupted", "failed"}
+                        and caller is not None and not caller.cancelling()):
+                    raise StopAsyncIteration
+            raise
+        finally:
+            async with self._lock:
+                if self._current_read is current_read:
+                    self._current_read = None
 
     async def _play_chunk(self, chunk: bytes) -> bool:
         if not isinstance(chunk, bytes) or not chunk:
@@ -237,7 +284,9 @@ class VoicePlaybackController:
             await current_play
         except asyncio.CancelledError:
             async with self._lock:
-                if self._state in {"interrupted", "failed"}:
+                caller = asyncio.current_task()
+                if (self._state in {"interrupted", "failed"}
+                        and caller is not None and not caller.cancelling()):
                     return False
             raise
         finally:
