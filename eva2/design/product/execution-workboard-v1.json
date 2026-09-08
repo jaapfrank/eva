@@ -2279,7 +2279,8 @@
       "status": "preflight_repaired_focused_tests_passed_candidate_rebuild_required",
       "evidence": "eva2/evidence/product/VB-001-native-voice-gate-metadata-2026-09-09.json",
       "tests": "122 focused tests passed; exact61 installed distributions verified",
-      "next": "Rebuild candidate from committed metadata closure; old edb3a704 image cannot represent changed closure."
+      "next": "Rebuild candidate from committed metadata closure; old edb3a704 image cannot represent changed closure.",
+      "review": "co006_review bounded metadata GO: old pins/claims and19license rows unchanged; eight new wheel hashes allowed by lock; authority binds repaired toolchain. Rebuild required; no attribution to old edb3a704 image and no live GO."
     }
   },
   "activeTaskId": "VB-001",

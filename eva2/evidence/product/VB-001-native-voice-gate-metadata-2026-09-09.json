@@ -17,7 +17,7 @@
     "eva2/release/gate-toolchain-license-inventory.json": "5bf1bf0d1a1790c6d6f9f6a7d14de4bb6e5c4053db0c88033fda790103d7945f",
     "eva2/release/managed-b-release-input-authority-v1.json": "9acb60d84544a741558163d79193f206df2f1595cb594ffbf67d351cf73946c0"
   },
-  "review": "pending co006_review",
+  "review": "co006_review bounded metadata GO: old pins/claims and19license rows unchanged; eight new wheel hashes allowed by lock; authority binds repaired toolchain. Rebuild required; no attribution to old edb3a704 image and no live GO.",
   "remaining": [
     "Rebuild candidate from committed metadata closure; old edb3a704 image cannot represent changed closure.",
     "Execute complete required-test gate and current-data restart/rollback rehearsal.",
