@@ -17,7 +17,9 @@ import json
 from typing import Protocol
 from uuid import uuid4
 
-from fastapi import FastAPI, HTTPException, WebSocket, WebSocketDisconnect
+from fastapi import FastAPI, HTTPException, Request, Response, WebSocket, WebSocketDisconnect
+
+from eva.adapters.api.dashboard_voice_client import DASHBOARD_VOICE_CLIENT_JS
 
 from eva.adapters.api.dashboard_access import DashboardAccess
 from eva.adapters.connectors.home_assistant_voice import SpeechAudioChunk
@@ -66,6 +68,12 @@ def install_dashboard_voice(
     app: FastAPI, *, access: DashboardAccess,
     runtime: VoiceRuntime, config: DashboardVoice | None,
 ) -> None:
+    @app.get("/internal/v1/dashboard/conversation/voice-client.js")
+    def voice_client(request: Request) -> Response:
+        access.require(request)
+        return Response(DASHBOARD_VOICE_CLIENT_JS, media_type="text/javascript",
+                        headers={"Cache-Control": "no-store", "X-Content-Type-Options": "nosniff"})
+
     @app.websocket("/internal/v1/dashboard/conversation/voice")
     async def voice(socket: WebSocket) -> None:
         # No permissive development mode, query credentials or cross-origin media.
@@ -176,8 +184,11 @@ class _Connection:
 
     async def process(self, queue: asyncio.Queue[bytes | None]) -> None:
         async def chunks() -> AsyncIterator[bytes]:
+            sequence = 0
             while (chunk := await queue.get()) is not None:
                 yield chunk
+                sequence += 1
+                await self.send("audio_ack", sequence=sequence)
         try:
             self.config.check(self.session)
             text = await self.config.speech_input.transcribe(chunks())

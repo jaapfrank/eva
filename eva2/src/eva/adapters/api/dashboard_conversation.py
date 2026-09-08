@@ -62,6 +62,7 @@ DASHBOARD_CONVERSATION_HTML = """<!doctype html><html lang="nl"><head>
   <div class="eyebrow">Lokale eigenaarssessie</div><h1>Praat met Eva</h1>
   <p>Dit is Eva's echte gesprekroute. De server bindt ieder bericht aan de ingestelde eigenaar en privécontext; de browser kan die identiteit niet kiezen. Een antwoord is pas zichtbaar nadat de kern het heeft vastgelegd.</p>
   <div class="notice">Je kunt een opdracht stoppen. Een stap die al in behandeling is, kan nog afronden; Eva start daarna geen vervolgstappen.</div>
+  <section class="notice" aria-label="Stemgesprek"><button id="voice-toggle" type="button">Praten met Eva</button> <button id="voice-interrupt" type="button">Onderbreek Eva</button><p id="voice-state" role="status">Microfoon uit. Je browser vraagt toestemming wanneer je begint.</p></section>
   <section id="chat" class="chat" aria-live="polite"><div class="state">Klaar voor een privébericht.</div></section>
   <form id="form"><label for="text">Jouw bericht</label><textarea id="text" maxlength="4096" required placeholder="Schrijf iets aan Eva…"></textarea><button id="send" type="submit">Verstuur</button><button id="stop" type="button">Stop deze opdracht</button></form>
   <p><a href="/internal/v1/dashboard">Terug naar cockpit</a></p>
@@ -71,7 +72,7 @@ function message(role,text,messageId=null,userNode=null){const node=document.cre
 function state(text,error=false){const node=document.createElement('div');node.className='state'+(error?' error':'');node.textContent=text;chat.append(node);node.scrollIntoView({block:'end'});return node;}
 stop.addEventListener('click',async()=>{stop.disabled=true;try{const response=await fetch('/internal/v1/dashboard/conversation/stop',{method:'POST',headers:{'content-type':'application/json'},body:'{}'});const data=await response.json();if(!response.ok||data.contract!=='EvaDashboardConversationStop/v1'||!Number.isInteger(data.requested_count)||data.requested_count<0)throw new Error('unavailable');state(data.requested_count?'Stopverzoek opgeslagen. Eva start geen vervolgstappen.':'Er is nu geen onafgeronde opdracht in dit gesprek gevonden.');}catch(_error){state('Het stopverzoek is niet bevestigd. Probeer opnieuw.',true);}finally{stop.disabled=false;}});
 form.addEventListener('submit',async event=>{event.preventDefault();const text=input.value.trim();if(!text)return;const userNode=message('user',text);input.value='';send.disabled=true;const pending=state('Eva denkt na…');try{const response=await fetch('/internal/v1/dashboard/conversation/respond',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({text})});const data=await response.json();if(!response.ok||!data||data.contract!=='EvaDashboardGroundedReply/v1'||typeof data.text!=='string'||typeof data.message_id!=='string')throw new Error('unavailable');pending.remove();message('eva',data.text,data.message_id,userNode);}catch(_error){pending.textContent='Eva kon nu geen antwoord geven. Er is geen antwoord of actie verzonnen.';pending.classList.add('error');}finally{send.disabled=false;input.focus();}});
-</script></body></html>
+</script><script src="/internal/v1/dashboard/conversation/voice-client.js" defer></script></body></html>
 """
 
 

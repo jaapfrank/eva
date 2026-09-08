@@ -104,9 +104,16 @@ def setup(*, token=TOKEN, enabled=True):
     return TestClient(app), runtime, media, current, valid
 
 
+def receive(ws):
+    while True:
+        data = ws.receive_json()
+        if data["type"] != "audio_ack":
+            return data
+
+
 def speak(ws):
     ws.send_json({"type": "start"})
-    assert ws.receive_json()["type"] == "listening"
+    assert receive(ws)["type"] == "listening"
     ws.send_bytes(b"\0\0" * 160)
     ws.send_json({"type": "end"})
 
@@ -130,9 +137,9 @@ def test_reject_before_media(token, enabled, headers, path):
 def test_final_audio_uses_same_private_turn_and_memory_callback():
     client, runtime, media, _, _ = setup()
     with client, client.websocket_connect(PATH, headers=HEADERS) as ws:
-        assert ws.receive_json()["session_id"] != "voice:issued"
+        assert receive(ws)["session_id"] != "voice:issued"
         speak(ws)
-        reply, audio, end, finished = [ws.receive_json() for _ in range(4)]
+        reply, audio, end, finished = [receive(ws) for _ in range(4)]
         assert [x["type"] for x in (reply, audio, end, finished)] == [
             "reply", "audio", "audio_end", "turn_finished"]
         assert reply["message_id"] == runtime.turns[0].message_id
@@ -142,7 +149,7 @@ def test_final_audio_uses_same_private_turn_and_memory_callback():
         assert media.closed.is_set()
         speak(ws)
         for _ in range(4):
-            assert ws.receive_json()["generation"] == 2
+            assert receive(ws)["generation"] == 2
         assert runtime.turns[0].message_id != runtime.turns[1].message_id
 
 
@@ -157,11 +164,11 @@ def test_recheck_after_stt_before_model(change):
             valid[0] = False
     media.before_final = revoke
     with client, client.websocket_connect(PATH, headers=HEADERS) as ws:
-        ws.receive_json()
+        receive(ws)
         speak(ws)
-        assert ws.receive_json() == {"type": "error", "generation": 1,
+        assert receive(ws) == {"type": "error", "generation": 1,
                                      "code": "voice_turn_failed"}
-        assert ws.receive_json()["type"] == "turn_finished"
+        assert receive(ws)["type"] == "turn_finished"
     assert not runtime.turns
 
 
@@ -169,13 +176,13 @@ def test_interrupt_during_model_suppresses_audio_without_cancelling_effects():
     client, runtime, media, _, _ = setup()
     runtime.release.clear()
     with client, client.websocket_connect(PATH, headers=HEADERS) as ws:
-        ws.receive_json()
+        receive(ws)
         speak(ws)
         assert runtime.started.wait(2)
         ws.send_json({"type": "interrupt"})
-        assert ws.receive_json()["type"] == "clear_audio"
+        assert receive(ws)["type"] == "clear_audio"
         runtime.release.set()
-        assert ws.receive_json()["type"] == "turn_finished"
+        assert receive(ws)["type"] == "turn_finished"
     assert runtime.stops == 0
     assert len(runtime.memories) == 1
     assert not media.synthesized
@@ -185,12 +192,12 @@ def test_interrupt_closes_stalled_tts_and_explicit_stop_reaches_runtime():
     client, runtime, media, _, _ = setup()
     media.wait_audio = True
     with client, client.websocket_connect(PATH, headers=HEADERS) as ws:
-        ws.receive_json()
+        receive(ws)
         speak(ws)
-        assert ws.receive_json()["type"] == "reply"
-        assert ws.receive_json()["type"] == "audio"
+        assert receive(ws)["type"] == "reply"
+        assert receive(ws)["type"] == "audio"
         ws.send_json({"type": "stop"})
-        events = [ws.receive_json()["type"] for _ in range(3)]
+        events = [receive(ws)["type"] for _ in range(3)]
         assert set(events) == {"clear_audio", "turn_finished", "stop_requested"}
         assert media.closed.wait(2)
     assert runtime.stops == 1
@@ -203,10 +210,10 @@ def test_interrupt_closes_stalled_tts_and_explicit_stop_reaches_runtime():
 def test_client_cannot_supply_authority_or_final_transcript(payload):
     client, runtime, _, _, _ = setup()
     with client, client.websocket_connect(PATH, headers=HEADERS) as ws:
-        ws.receive_json()
+        receive(ws)
         ws.send_json(payload)
         with pytest.raises(WebSocketDisconnect):
-            ws.receive_json()
+            receive(ws)
     assert not runtime.turns
 
 
@@ -214,12 +221,12 @@ def test_client_cannot_supply_authority_or_final_transcript(payload):
 def test_reject_invalid_pcm(frame):
     client, runtime, _, _, _ = setup()
     with client, client.websocket_connect(PATH, headers=HEADERS) as ws:
-        ws.receive_json()
+        receive(ws)
         ws.send_json({"type": "start"})
-        ws.receive_json()
+        receive(ws)
         ws.send_bytes(frame)
         with pytest.raises(WebSocketDisconnect):
-            ws.receive_json()
+            receive(ws)
     assert not runtime.turns
 
 
@@ -228,7 +235,7 @@ def test_disconnect_during_model_keeps_memory_callback_owned():
     runtime.release.clear()
     with client:
         with client.websocket_connect(PATH, headers=HEADERS) as ws:
-            ws.receive_json()
+            receive(ws)
             speak(ws)
             assert runtime.started.wait(2)
             ws.close()
