@@ -8,7 +8,10 @@ from __future__ import annotations
 import asyncio
 from collections.abc import AsyncIterable, AsyncIterator
 from dataclasses import dataclass
+from datetime import datetime, timedelta, timezone
 import json
+import re
+from typing import Callable
 from urllib.parse import urlsplit, urlunsplit
 
 import httpx2 as httpx
@@ -17,6 +20,137 @@ from websockets.asyncio.client import connect
 
 class VoiceMediaError(RuntimeError):
     """A sanitized media failure, without credentials, frames or transcripts."""
+
+
+@dataclass(frozen=True, slots=True)
+class HomeAssistantVoiceQuery:
+    """An admitted transport query; this does not authenticate its speaker."""
+
+    query_id: str
+    satellite: str
+    occurred_at: datetime
+    deadline: datetime
+
+
+class HomeAssistantVoiceReplyGuard:
+    """Invalidate unfinished replies on a device interrupt or newer query.
+
+    One instance belongs to one authenticated HA WebSocket subscription. The
+    listener must discard it on disconnect, including its query workers. The
+    registry-derived mapping is satellite -> native interruption event entity.
+    No client-supplied sender is turned into an Eva person or tool authority.
+
+    Methods run synchronously on the listener's event loop. Before offering
+    a result, the sender must check ``may_reply`` without yielding between
+    that check and enqueuing the offer. This cannot retract an offer already
+    accepted by HA and is not a receipt of acoustic silence or model stop.
+    """
+
+    def __init__(self, *, interruption_entities: dict[str, str],
+                 connected_at: datetime, clock: Callable[[], datetime]) -> None:
+        if (not interruption_entities or len(interruption_entities) > 64
+                or any(not isinstance(satellite, str) or not isinstance(entity, str)
+                       or not re.fullmatch(r"assist_satellite\.[a-z0-9_]+", satellite)
+                       or not re.fullmatch(r"event\.[a-z0-9_]+", entity)
+                       for satellite, entity in interruption_entities.items())
+                or len(set(interruption_entities.values())) != len(interruption_entities)):
+            raise ValueError("voice interruption device mapping is invalid")
+        if connected_at.tzinfo is None or connected_at.utcoffset() is None:
+            raise ValueError("voice subscription time must be timezone aware")
+        self._entities = {entity: satellite for satellite, entity
+                          in interruption_entities.items()}
+        self._satellites = frozenset(interruption_entities)
+        self._connected_at = connected_at
+        self._clock = clock
+        self._pending: dict[str, HomeAssistantVoiceQuery] = {}
+        self._latest: dict[str, datetime] = {}
+        self._seen: dict[str, datetime] = {}
+        self._closed = False
+
+    @staticmethod
+    def _timestamp(value: object) -> datetime | None:
+        if not isinstance(value, str) or len(value) > 40:
+            return None
+        try:
+            parsed = datetime.fromisoformat(value.replace("Z", "+00:00"))
+        except ValueError:
+            return None
+        return parsed if parsed.tzinfo is not None and parsed.utcoffset() is not None else None
+
+    def _fresh(self, occurred_at: datetime) -> bool:
+        return (not self._closed and self._connected_at <= occurred_at
+                <= self._clock() + timedelta(seconds=1))
+
+    def begin(self, event: dict, *, turn_started_at: datetime) -> HomeAssistantVoiceQuery:
+        """Bind a query to its original, independently attested pipeline start.
+
+        The listener must resolve this timestamp from the *same* HA pipeline,
+        not from event publication time or the device's latest listening state.
+        Without that binding it must not call this method. Duplicate IDs are
+        refused within the voice delivery window; durable core idempotency is
+        still required across connections and expired windows.
+        """
+        data = event.get("data")
+        at = self._timestamp(event.get("time_fired"))
+        if event.get("event_type") != "eva_voice_query" or not isinstance(data, dict):
+            raise ValueError("voice query event is invalid")
+        satellite, query_id = data.get("satellite"), data.get("id")
+        if (not isinstance(satellite, str) or satellite not in self._satellites
+                or not isinstance(query_id, str) or not query_id.strip()
+                or len(query_id) > 128 or at is None or not self._fresh(at)
+                or not isinstance(turn_started_at, datetime)
+                or turn_started_at.tzinfo is None or turn_started_at.utcoffset() is None
+                or not self._fresh(turn_started_at) or turn_started_at > at
+                or self._clock() >= at + timedelta(seconds=32)
+                or turn_started_at <= self._latest.get(
+                    satellite, datetime.min.replace(tzinfo=timezone.utc))):
+            raise ValueError("voice query is stale or not bound to a configured device")
+        now = self._clock()
+        self._seen = {key: deadline for key, deadline in self._seen.items() if deadline > now}
+        if query_id in self._seen or len(self._seen) >= 4096:
+            raise ValueError("voice query ID was repeated or the delivery window is full")
+        # HA's reply wait begins after STT publishes the final query. Long
+        # speech must not consume this answer-delivery window.
+        deadline = at + timedelta(seconds=32)
+        query = HomeAssistantVoiceQuery(query_id, satellite, turn_started_at, deadline)
+        self._seen[query_id] = deadline
+        self._latest[satellite] = turn_started_at
+        self._pending[satellite] = query
+        return query
+
+    def interrupt(self, event: dict) -> HomeAssistantVoiceQuery | None:
+        """Return the invalidated query, ignoring restored or stale entity state."""
+        data = event.get("data")
+        at = self._timestamp(event.get("time_fired"))
+        if (event.get("event_type") != "state_changed" or not isinstance(data, dict)
+                or at is None or not self._fresh(at)):
+            return None
+        entity = data.get("entity_id")
+        if not isinstance(entity, str) or entity not in self._entities:
+            return None
+        before, after = data.get("old_state"), data.get("new_state")
+        if not isinstance(before, dict) or not isinstance(after, dict):
+            return None
+        attributes = after.get("attributes")
+        happened = self._timestamp(after.get("state"))
+        satellite = self._entities[entity]
+        if (not isinstance(attributes, dict) or attributes.get("restored") is True
+                or attributes.get("event_type") not in {"stop_requested", "resume_requested"}
+                or after.get("entity_id") != entity or before.get("entity_id") != entity
+                or before.get("state") == after.get("state") or happened is None
+                or not self._fresh(happened) or happened > at
+                or happened <= self._latest.get(satellite, self._connected_at)):
+            return None
+        self._latest[satellite] = happened
+        return self._pending.pop(satellite, None)
+
+    def may_reply(self, query: HomeAssistantVoiceQuery) -> bool:
+        return (not self._closed and self._pending.get(query.satellite) is query
+                and self._clock() < query.deadline)
+
+    def close(self) -> None:
+        self._closed = True
+        self._pending.clear()
 
 
 class HomeAssistantSpeechInput:

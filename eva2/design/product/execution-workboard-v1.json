@@ -2098,6 +2098,39 @@
         "esphome 2026.6.2 compile woonkamer.yaml"
       ],
       "remaining": "Verbind native interrupt-event en HA-spraak met Eva2, bewijs late-answer suppression en privacy, verifieer firmwareterugrol en test daarna op de echte apparaten."
+    },
+    "vb001HaReplyGuard": {
+      "status": "source_tested_not_connected",
+      "sources": {
+        "eva2/src/eva/adapters/connectors/home_assistant_voice.py": "2bd38e74dc3dee71ae6701ed232d07fc0d33eb6aeb1dc79da3a5a8cfd8351af7",
+        "eva2/tests/connectors/test_home_assistant_voice.py": "a10b66c8346112d7073695444e4d4d3065ac554636f74936a5d816d265ab5337"
+      },
+      "tests": {
+        "command": "PYTHONPATH=.:src python -m pytest -q tests/connectors/test_home_assistant_voice.py",
+        "passed": 45,
+        "failed": 0,
+        "ruff": "passed"
+      },
+      "behavior": [
+        "Actieve vraag per toegelaten speaker; nieuwe vraag of nieuw native onderbrekingsevent maakt oude antwoordreferentie ongeldig.",
+        "Herstelde, herhaalde, verouderde, toekomstige en verkeerd gebonden events raken geen nieuwe vraag of andere speaker.",
+        "Oorspronkelijke starttijd van exact dezelfde pipeline is verplicht; late publicatie maakt een onderbroken oude beurt niet nieuw.",
+        "Dubbele query-ID wordt vóór wijziging van de actieve vraag afgewezen; geheugen hiervoor is begrensd tot4096 IDs binnen de antwoordtermijn.",
+        "Verbindingssluiting en verlopen antwoordtermijn weigeren alsnog gereedkomende antwoorden.",
+        "32 seconden antwoordtermijn begint bij publicatie van de transcriptie, zodat inspreken/STT deze termijn niet verbruikt."
+      ],
+      "review": "co006_review vond twee replay-/volgordegaten; beide gerepareerd en gericht op bronniveau goedgekeurd. Daarna de antwoorddeadline teruggelegd na STT met regressietest voor lang inspreken.",
+      "remaining": [
+        "Betrouwbare HA-resolver voor oorspronkelijke pipelinebinding ontbreekt; publicatietijd of laatste device-state mogen die niet vervangen.",
+        "De eventlistener, veilige gedeelde-sprekersadmissie en Eva2-kernroute zijn nog niet verbonden.",
+        "Zender moet de geldigheidscontrole direct vóór het aanbieden uitvoeren; reeds door HA geaccepteerde audio wordt niet door deze guard teruggetrokken."
+      ],
+      "nonClaims": [
+        "Geen live spraakroute of model-/toolannulering.",
+        "Geen akoestische stopmeting.",
+        "Geen duurzame idempotentie over verbindingen of verstreken vensters.",
+        "Geen identiteit of eigenaarbevoegdheden uit sender-tekst afgeleid."
+      ]
     }
   },
   "activeTaskId": "VB-001",

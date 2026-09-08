@@ -1,12 +1,152 @@
 from __future__ import annotations
 
 import asyncio
+from copy import deepcopy
+from datetime import datetime, timedelta, timezone
 import json
 
 import pytest
 from websockets.asyncio.server import serve
 
-from eva.adapters.connectors.home_assistant_voice import HomeAssistantSpeechInput, VoiceMediaError
+from eva.adapters.connectors.home_assistant_voice import (
+    HomeAssistantSpeechInput, HomeAssistantVoiceReplyGuard, VoiceMediaError,
+)
+
+
+@pytest.fixture
+def reply_guard():
+    start = datetime(2026, 9, 8, 10, tzinfo=timezone.utc)
+    now = [start + timedelta(seconds=10)]
+    guard = HomeAssistantVoiceReplyGuard(
+        interruption_entities={"assist_satellite.room": "event.room_interrupt",
+                               "assist_satellite.garden": "event.garden_interrupt"},
+        connected_at=start, clock=lambda: now[0],
+    )
+    return guard, start, now
+
+
+def _voice_query(at, query_id="q1", satellite="assist_satellite.room"):
+    return {"event_type": "eva_voice_query", "time_fired": at.isoformat(),
+            "data": {"id": query_id, "satellite": satellite, "sender": "Jaap"}}
+
+
+def _begin_voice(guard, event, *, started_at=None):
+    return guard.begin(event, turn_started_at=(started_at or datetime.fromisoformat(event["time_fired"])))
+
+
+def _voice_interrupt(at, entity="event.room_interrupt", kind="resume_requested"):
+    return {"event_type": "state_changed", "time_fired": at.isoformat(), "data": {
+        "entity_id": entity,
+        "old_state": {"entity_id": entity, "state": (at - timedelta(seconds=1)).isoformat()},
+        "new_state": {"entity_id": entity, "state": at.isoformat(),
+                      "attributes": {"event_type": kind}},
+    }}
+
+
+def test_device_interrupt_suppresses_old_reply_without_touching_other_speaker(reply_guard):
+    guard, start, _ = reply_guard
+    room = _begin_voice(guard, _voice_query(start + timedelta(seconds=2)))
+    garden = _begin_voice(guard, _voice_query(start + timedelta(seconds=3), "q2", "assist_satellite.garden"))
+    assert guard.interrupt(_voice_interrupt(start + timedelta(seconds=4))) is room
+    assert not guard.may_reply(room)
+    assert guard.may_reply(garden)
+    fresh = _begin_voice(guard, _voice_query(start + timedelta(seconds=5), "q3"))
+    assert guard.interrupt(_voice_interrupt(start + timedelta(seconds=4))) is None
+    assert guard.may_reply(fresh)
+
+
+def test_new_query_supersedes_reply_and_replayed_query_cannot_supersede_it(reply_guard):
+    guard, start, _ = reply_guard
+    first_event = _voice_query(start + timedelta(seconds=2))
+    first = _begin_voice(guard, first_event)
+    newer = _begin_voice(guard, _voice_query(start + timedelta(seconds=3), "q2"))
+    with pytest.raises(ValueError):
+        _begin_voice(guard, first_event)
+    assert not guard.may_reply(first)
+    assert guard.may_reply(newer)
+    assert not guard.may_reply(deepcopy(newer))
+
+
+@pytest.mark.parametrize("change", [
+    "restored", "initial_state", "unknown_entity", "wrong_state_entity",
+    "unknown_kind", "unchanged_state", "before_subscription", "future",
+    "naive_timestamp", "future_state",
+])
+def test_unbound_or_restored_interrupt_cannot_cancel_reply(reply_guard, change):
+    guard, start, _ = reply_guard
+    query = _begin_voice(guard, _voice_query(start + timedelta(seconds=2)))
+    event = _voice_interrupt(start + timedelta(seconds=4))
+    data = event["data"]
+    if change == "restored":
+        data["new_state"]["attributes"]["restored"] = True
+    elif change == "initial_state":
+        data["old_state"] = None
+    elif change == "unknown_entity":
+        data["entity_id"] = "event.unknown"
+    elif change == "wrong_state_entity":
+        data["new_state"]["entity_id"] = "event.garden_interrupt"
+    elif change == "unknown_kind":
+        data["new_state"]["attributes"]["event_type"] = "button_pressed"
+    elif change == "unchanged_state":
+        data["old_state"]["state"] = data["new_state"]["state"]
+    elif change == "before_subscription":
+        event = _voice_interrupt(start - timedelta(seconds=1))
+    elif change == "future":
+        event = _voice_interrupt(start + timedelta(seconds=20))
+    elif change == "naive_timestamp":
+        event["time_fired"] = "2026-09-08T10:00:04"
+    elif change == "future_state":
+        data["new_state"]["state"] = (start + timedelta(seconds=5)).isoformat()
+    assert guard.interrupt(event) is None
+    assert guard.may_reply(query)
+
+
+def test_disconnect_and_deadline_prevent_reply_even_when_worker_finishes(reply_guard):
+    guard, start, now = reply_guard
+    query = _begin_voice(guard, _voice_query(start + timedelta(seconds=2)))
+    now[0] = start + timedelta(seconds=34)
+    assert not guard.may_reply(query)
+    guard.close()
+    with pytest.raises(ValueError):
+        _begin_voice(guard, _voice_query(now[0], "q2"))
+    assert guard.interrupt(_voice_interrupt(now[0])) is None
+
+
+def test_stop_before_delayed_query_prevents_admitting_that_query(reply_guard):
+    guard, start, _ = reply_guard
+    assert guard.interrupt(_voice_interrupt(start + timedelta(seconds=4), kind="stop_requested")) is None
+    with pytest.raises(ValueError):
+        _begin_voice(guard, _voice_query(start + timedelta(seconds=3)))
+
+
+def test_old_pipeline_publishing_after_interrupt_does_not_become_a_new_turn(reply_guard):
+    guard, start, _ = reply_guard
+    assert guard.interrupt(_voice_interrupt(start + timedelta(seconds=4))) is None
+    with pytest.raises(ValueError):
+        _begin_voice(guard, _voice_query(start + timedelta(seconds=5)),
+                     started_at=start + timedelta(seconds=2))
+    fresh = _begin_voice(guard, _voice_query(start + timedelta(seconds=7), "fresh"),
+                         started_at=start + timedelta(seconds=6))
+    assert guard.may_reply(fresh)
+
+
+def test_republished_query_id_cannot_replace_newer_question(reply_guard):
+    guard, start, _ = reply_guard
+    _begin_voice(guard, _voice_query(start + timedelta(seconds=2)))
+    fresh = _begin_voice(guard, _voice_query(start + timedelta(seconds=3), "fresh"))
+    with pytest.raises(ValueError):
+        _begin_voice(guard, _voice_query(start + timedelta(seconds=5)))
+    assert guard.may_reply(fresh)
+
+
+def test_long_spoken_input_does_not_consume_the_ha_reply_window(reply_guard):
+    guard, start, now = reply_guard
+    now[0] = start + timedelta(seconds=50)
+    query = _begin_voice(guard, _voice_query(start + timedelta(seconds=45)),
+                         started_at=start + timedelta(seconds=2))
+    assert guard.may_reply(query)
+    now[0] = start + timedelta(seconds=77)
+    assert not guard.may_reply(query)
 
 
 async def _audio(*chunks):
