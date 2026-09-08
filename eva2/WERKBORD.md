@@ -83,6 +83,8 @@ Klaar betekent:
 - `eva2/tests/application/test_cancellation.py`
 - `eva2/tests/bootstrap/test_native_household_responder.py`
 - `eva2/tests/model/test_pydantic_conversation_model.py`
+- `eva2/src/eva/bootstrap/household_voice.py`
+- `eva2/tests/bootstrap/test_household_voice_authority.py`
 
 Echte controles:
 
@@ -102,6 +104,7 @@ Echte controles:
 - `pytest -q tests/api/test_native_voice.py`
 - `pytest -q tests/application/test_memory_audience.py tests/projection/test_hindsight.py tests/application/test_conversation.py`
 - `pytest -q tests/application/test_cancellation.py tests/bootstrap/test_native_household_responder.py tests/model/test_pydantic_conversation_model.py`
+- `pytest -q tests/bootstrap/test_household_voice_authority.py`
 
 </details>
 

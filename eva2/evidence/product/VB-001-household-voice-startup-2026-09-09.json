@@ -11,7 +11,7 @@
   "validation": {
     "targeted": "84 passed in 3.54s: runtime settings, household authority, native responder, native HTTP, managed manifest",
     "lint": "Ruff and git diff --check passed",
-    "review": "co006_review found household ID contract mismatch; fixed with three regressions. Additional authenticated-stop review pending."
+    "review": "co006_review bounded source GO after household ID fix; authenticated stop after revocation independently reviewed. No live or release GO."
   },
   "proven": [
     "Startup supplies the same current household authority to Hindsight, runtime, native responder and HTTP service",

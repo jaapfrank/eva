@@ -2231,7 +2231,15 @@
       "evidence": "eva2/evidence/product/VB-001-native-runtime-cancellation-2026-09-09.json",
       "tests": "180 combined tests;50 actual-core/provider tests after context/binding;final provider suite50passed",
       "review": "co006_review bounded source GO after closing preparation-to-dispatch cancellation window",
-      "next": "Load current household mandate and construct native service during startup with shared runtime/Hindsight verifier and existing budgets; then actual HA/speaker candidate tests and safe release."
+      "next": "Startup wiring completed in b84c519; follow vb001HouseholdVoiceStartup for remaining actual HA integration and release."
+    },
+    "vb001HouseholdVoiceStartup": {
+      "status": "source_wired_and_targeted_tests_passed_not_live",
+      "evidence": "eva2/evidence/product/VB-001-household-voice-startup-2026-09-09.json",
+      "implementationCommit": "b84c519",
+      "tests": "84 passed in 3.54s: runtime settings, household authority, native responder, native HTTP, managed manifest",
+      "review": "co006_review bounded source GO after household ID fix; authenticated stop after revocation independently reviewed. No live or release GO.",
+      "next": "Seal household authority and token in reserve release inputs, integrate native HA pipeline and real Hindsight, then speaker stop/resume and safe release."
     }
   },
   "activeTaskId": "VB-001",
@@ -3645,7 +3653,9 @@
         "eva2/src/eva/adapters/postgres/external_conversation_tools.py",
         "eva2/tests/application/test_cancellation.py",
         "eva2/tests/bootstrap/test_native_household_responder.py",
-        "eva2/tests/model/test_pydantic_conversation_model.py"
+        "eva2/tests/model/test_pydantic_conversation_model.py",
+        "eva2/src/eva/bootstrap/household_voice.py",
+        "eva2/tests/bootstrap/test_household_voice_authority.py"
       ],
       "componentIds": [
         "api-and-runtime-composition",
@@ -3682,7 +3692,8 @@
         "pytest -q tests/postgres/test_operational_timeline.py",
         "pytest -q tests/api/test_native_voice.py",
         "pytest -q tests/application/test_memory_audience.py tests/projection/test_hindsight.py tests/application/test_conversation.py",
-        "pytest -q tests/application/test_cancellation.py tests/bootstrap/test_native_household_responder.py tests/model/test_pydantic_conversation_model.py"
+        "pytest -q tests/application/test_cancellation.py tests/bootstrap/test_native_household_responder.py tests/model/test_pydantic_conversation_model.py",
+        "pytest -q tests/bootstrap/test_household_voice_authority.py"
       ],
       "evidenceRequired": [
         "Onderzoek bestaande Eva2-voicebouwstenen en Bottie/HA-route; leg concrete ontbrekende media-aansluiting, providerkeuze, bestaand mandaat en verbruik vast.",
