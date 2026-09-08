@@ -2303,6 +2303,15 @@
       "reserveRestore": "Both saved reserve dumps restored into fresh temporary databases; counts/schema/data matched; temporary databases removed",
       "next": "Prepare and validate current-data reserve runtime with household authority and restart proof.",
       "review": "co006_review bounded GO for complete2423test receipt (161modules20support,0fail/error/skip), source authority and recorded restore equality/cleanup. Arithmetic corrected preserving rawlogs; restore now explicitly bound to verified backup/dumphashes and sealed helper. No runtime restart, livecutover, native HA/hardware or household acceptance claim."
+    },
+    "vb001CurrentDataReserveRestart": {
+      "status": "reserve_current_data_restore_start_restart_passed_not_live",
+      "evidence": "eva2/evidence/product/VB-001-current-data-reserve-restart-2026-09-09.json",
+      "sourceCommit": "cab9227356cb68b81edb9d27aab3d160dc959643",
+      "imageId": "sha256:86ec4e3598cc07fcc61ba76ac405cfbbac39f63a14e8a98f4600d02154d3c14b",
+      "result": "Fresh active-data copy restored to reserve4; ready owner route and anonymous401; both database contents unchanged across restart; source3 healthy",
+      "review": "co006_review bounded reserve GO: dump hashes and before/after attestations match; slot4env changes only image/configuration/release hashes, slot4 healthy on exactcandidate without household/browservoice/MCP mounts, slot3 healthy on oldimage. Terminal restart equality/authenticated readiness verified. Running-source rehearsal copy is not final quiescent cutover; no liveGO.",
+      "next": "Prepare actual owner-authorized shared-household policy/token and validate satellite/device bindings."
     }
   },
   "activeTaskId": "VB-001",

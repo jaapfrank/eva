@@ -1,0 +1,82 @@
+{
+  "contract": "EvaNativeVoiceCurrentDataReserveRestart/v1",
+  "status": "reserve_current_data_restore_start_restart_passed_not_live",
+  "previousGoalTurn": "progress_complete_required_tests_scan_stage_and_backup_restore_verified",
+  "candidateSourceCommit": "cab9227356cb68b81edb9d27aab3d160dc959643",
+  "candidateImageId": "sha256:86ec4e3598cc07fcc61ba76ac405cfbbac39f63a14e8a98f4600d02154d3c14b",
+  "privateEvidenceDirectory": "/home/administrator/project/.eva2-artifacts/native-voice-candidate-repaired-w16uve7q",
+  "copy": {
+    "receiptSha256": "9f60c16ee7cd60458c00630fdd32f98ac059886da484202d2b99d6c194fbafef",
+    "sourceSlot": 3,
+    "writersStopped": false,
+    "status": "stable_content_copy",
+    "beforeAfterEqual": true,
+    "dumps": {
+      "operational": {
+        "path": "/var/lib/eva2/quiescent-cutover/native-voice-current-data-ihswzals/operational.dump",
+        "sha256": "9968e7d20a0aa6fcf9e3dd3c12a516f49c5f40996a36e1c2b250236dfd5e1d38",
+        "bytes": 11228699
+      },
+      "memory": {
+        "path": "/var/lib/eva2/quiescent-cutover/native-voice-current-data-ihswzals/memory.dump",
+        "sha256": "6f34d7470a6a1b9b72384737a8acb8c8a7fa4d0b1c4f753a962248e9f53e85ac",
+        "bytes": 2450146
+      }
+    },
+    "boundary": "Each database uses PostgreSQL consistent dump; paired before/after content comparisons. Rehearsal copy, not final quiescent cutover snapshot."
+  },
+  "runtime": {
+    "status": "reserve_started_ready_owner_authenticated",
+    "sourceCopyReceiptSha256": "9f60c16ee7cd60458c00630fdd32f98ac059886da484202d2b99d6c194fbafef",
+    "sourceCopyDirectory": "/var/lib/eva2/quiescent-cutover/native-voice-current-data-ihswzals",
+    "targetSlot": 4,
+    "activeSlot": 3,
+    "restoredExactCopy": true,
+    "schemaMigrationVerified": true,
+    "activeSlot3Running": true,
+    "targetImage": "sha256:86ec4e3598cc07fcc61ba76ac405cfbbac39f63a14e8a98f4600d02154d3c14b"
+  },
+  "persistence": {
+    "candidateImage": "eva2.local/native-household-voice@sha256:86ec4e3598cc07fcc61ba76ac405cfbbac39f63a14e8a98f4600d02154d3c14b",
+    "candidateSourceCommit": "cab9227356cb68b81edb9d27aab3d160dc959643",
+    "configurationSha256": "7171de523a41a947f77dd29d8f91d652bf773120c82ed697484ca1ba6b1617fb",
+    "contract": "EvaManagedCoreImagePersistenceReceipt/v1",
+    "destinationAfterSha256": "b746146ada232ba39c3fd3084a5bc8c2979c3df9acee9a0972ad103877452e27",
+    "destinationBeforeSha256": "d19610b6156ba78087ab3bd49dadda3d712c557497865fc9175821d0975a6e81",
+    "scanEvidenceSha256": "6e1b04b7cbaeb6be37f35a2066cdfb443b2a875c2a084f445590655332afbff5",
+    "status": "persisted"
+  },
+  "restart": {
+    "status": "passed",
+    "targetSlot": 4,
+    "sourceSlot": 3,
+    "restartedReadyAndAuthenticated": true,
+    "databaseContentUnchangedAcrossRestart": true,
+    "reserveRunningReady": true,
+    "activeSlot3Running": true,
+    "imageId": "sha256:86ec4e3598cc07fcc61ba76ac405cfbbac39f63a14e8a98f4600d02154d3c14b"
+  },
+  "restartHashes": {
+    "operational": {
+      "count_digest": "7e2a323e41435c86f526d876024c20d73de8cb2bc73c067f0f7c6f594103e1e0",
+      "schema_digest": "32acc5b66e349dfd5b385e4828897575ad543ebb5f2638b8880dff1cacb7fb39",
+      "data_digest": "4365e82745e377db974cd9bfa56df3a702cf61bcb53b4e6c23b06a8262844adb"
+    },
+    "memory": {
+      "count_digest": "2f9c5c9a2cfcfcff7ce90ce5ddb5794e8ff49140e794d84baef2e338647e6cff",
+      "schema_digest": "d89bfebdbfeb55e8618e81286bf24a42b838bfe577e84f6db9b93b43f5832172",
+      "data_digest": "d525f8e0fbef7e87c4ab905f7053284197333272f349803fef98604f25f4b386"
+    }
+  },
+  "receiptHashes": {
+    "reserve-current-data-runtime.json": "b36ef0755840475f72cfb80e520285c6335ae951688afe13e342c60132848b6a",
+    "reserve-restart-receipt.json": "4d233792934c176910ac94253a276bc55bbdae156e299b93e4e40a5420661492",
+    "slot-image-persistence-receipt.json": "1405db9618d2ec17315fd0d8397490f23d038ec9411aa7ecb28686ceb5eb1876"
+  },
+  "review": "co006_review bounded reserve GO: dump hashes and before/after attestations match; slot4env changes only image/configuration/release hashes, slot4 healthy on exactcandidate without household/browservoice/MCP mounts, slot3 healthy on oldimage. Terminal restart equality/authenticated readiness verified. Running-source rehearsal copy is not final quiescent cutover; no liveGO.",
+  "remaining": [
+    "Prepare actual owner-authorized shared-household policy/token and validate satellite/device bindings.",
+    "Configure native HA integration and pipeline with rollback and prove stop/next-question/household memory route.",
+    "Final quiescent current-data copy and safe slot activation; hardware latency and human acceptance remain open."
+  ]
+}
