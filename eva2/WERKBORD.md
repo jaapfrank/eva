@@ -86,6 +86,8 @@ Klaar betekent:
 - `eva2/src/eva/bootstrap/household_voice.py`
 - `eva2/tests/bootstrap/test_household_voice_authority.py`
 - `eva2/deploy/living-core/household-voice.compose.yml`
+- `eva2/release/gate-toolchain-roots.in`
+- `eva2/release/gate-toolchain.requirements.lock`
 
 Echte controles:
 
