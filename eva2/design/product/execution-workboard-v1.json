@@ -1397,7 +1397,7 @@
     "vb001ReleasePreparation": {
       "owner": "/root",
       "reviewer": "/root/co006_review",
-      "status": "in_progress",
+      "status": "sealed_candidate_gates_passed_copied_data_integration_pending",
       "scope": [
         "release/managed-b-release-input-authority-v1.json",
         "release/eva-cockpit-evidence-index-v1.json",
@@ -1422,7 +1422,7 @@
         "enabledChromiumTestsPassed": 15,
         "enabledChromiumSkips": 0
       },
-      "next": "Run existing offline candidate builder on this exact committed authority; scan and complete required gates before copied-data integration.",
+      "next": "Complete and independently review concrete copied-data voice wrapper and temporary policy. Execute one synthetic browser voice turn plus existing two canary model turns/replay; verify journal/TTS/cleanup and unchanged live route.",
       "buildInvocation": {
         "path": "/tmp/eva2-vb001-sealed-source-_jmj6pcy/build.cjs",
         "sha256": "4045acef650ed529280dc54976f909ffaefc7e5ff4c158df5f0158a79a37b5ff",
@@ -1473,8 +1473,41 @@
       },
       "requiredGateProcess": {
         "execSessionId": 85121,
-        "status": "running_at_last_poll",
+        "status": "completed_exit_0",
         "receiptDirectory": "/tmp/eva2-vb001-sealed-source-_jmj6pcy/gates"
+      },
+      "requiredGateResult": {
+        "status": "passed",
+        "tests": 2209,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "groups": 7,
+        "receiptPath": "/tmp/eva2-vb001-sealed-source-_jmj6pcy/gates/required-tests.json",
+        "receiptSha256": "bfe066aca18ba613f124b03de3f85cabaf753b7ddd374578db1d200fac4e0add",
+        "scope": "Sealed-source regression groups; four physical browser cases execute against candidate image. Installed-image139 and voice-browser15 are separate proofs."
+      },
+      "testDatabaseCleanup": {
+        "status": "passed",
+        "removed": 12,
+        "receiptPath": "/tmp/eva2-vb001-sealed-source-_jmj6pcy/test-database-cleanup.json",
+        "sharedVerificationContainerPreserved": true
+      },
+      "voiceBrowserReceipt": {
+        "path": "/tmp/eva2-vb001-sealed-source-_jmj6pcy/browser-proof.json",
+        "sha256": "e65a70b351cc9a4e864b413e11c95311a857b86aca8681604799a448851a1bed",
+        "tests": 15,
+        "skipped": 0
+      },
+      "preCopyEvidence": {
+        "path": "/tmp/eva2-vb001-sealed-source-_jmj6pcy/precopy-evidence.json",
+        "status": "verified_pre_copy_inputs",
+        "notAnExecutionApproval": true
+      },
+      "integratedBrowserHarness": {
+        "path": "/tmp/eva2-vb001-sealed-source-_jmj6pcy/browser_integrated.cjs",
+        "status": "syntax_checked_not_executed",
+        "scope": "Prepared real candidate browser harness; not yet actual HA/model voice proof."
       }
     }
   },
