@@ -308,3 +308,37 @@ def test_native_route_is_disabled_by_default_and_closed_by_core_lifespan():
         assert service._closed
         await client.aclose()
     asyncio.run(run())
+
+
+def test_revoked_authority_blocks_new_work_but_authenticated_stop_still_cancels():
+    async def run():
+        entered, cancelled = asyncio.Event(), asyncio.Event()
+        active = [True]
+        def validate():
+            if not active[0]:
+                raise ValueError("Revoked")
+        async def waiting(request):
+            entered.set()
+            try:
+                await asyncio.Event().wait()
+            finally:
+                cancelled.set()
+        service, ledger, client = setup(waiting, validate=validate)
+        async with client:
+            data = payload()
+            running = asyncio.create_task(client.post("/internal/v1/ha-voice/turns", json=data))
+            await asyncio.wait_for(entered.wait(), 2)
+            active[0] = False
+            stop = {key: data[key] for key in ("device_id", "satellite_id")}
+            url = f"/internal/v1/ha-voice/turns/{data['request_id']}/interrupt"
+            assert (await client.post(url, json=stop,
+                                      headers={"Authorization": "Bearer wrong"})).status_code == 401
+            assert not cancelled.is_set()
+            assert (await client.post("/internal/v1/ha-voice/turns",
+                                      json=payload("d" * 32))).status_code == 503
+            assert (await client.post(url, json=stop)).status_code == 200
+            await asyncio.wait_for(cancelled.wait(), 2)
+            assert (await running).status_code == 409
+            assert ledger.states[data["device_id"], data["request_id"]] == "stopped"
+        await service.close()
+    asyncio.run(run())

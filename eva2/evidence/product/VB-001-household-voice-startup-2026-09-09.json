@@ -1,0 +1,33 @@
+{
+  "contract": "EvaHouseholdVoiceStartup/v1",
+  "status": "source_wired_and_targeted_tests_passed_not_live",
+  "sourceSha256": {
+    "eva2/src/eva/bootstrap/household_voice.py": "2f5c5cf2bc948839cb52f699cc6d408dd8abab02be5e4bb607012276972c38ab",
+    "eva2/src/eva/bootstrap/runtime.py": "2ad07207919d70d4166ce043d80cbf939dcca7ef0be5207f95aca2fabd7912fa",
+    "eva2/src/eva/adapters/api/native_voice.py": "f5ebec8d32e3642bd59498ffa6418699d5356621855528087062ce1518908c2b",
+    "eva2/tests/bootstrap/test_household_voice_authority.py": "1c8cf3547b8c85c759371bd84beab7a58a22171702f14f52b5793c99e79ec70b",
+    "eva2/tests/api/test_native_voice.py": "40da04f3ad090bb18957bfc3f42bacad5ee732b2017fc8193231165cadf0a9cf"
+  },
+  "validation": {
+    "targeted": "84 passed in 3.54s: runtime settings, household authority, native responder, native HTTP, managed manifest",
+    "lint": "Ruff and git diff --check passed",
+    "review": "co006_review found household ID contract mismatch; fixed with three regressions. Additional authenticated-stop review pending."
+  },
+  "proven": [
+    "Startup supplies the same current household authority to Hindsight, runtime, native responder and HTTP service",
+    "Private policy binds runtime owner, installation, identity, token and registered device audit actors",
+    "Removal, revocation, expiry, token rotation and identity change invalidate existing authority",
+    "Absent or inactive optional policy leaves core startup available",
+    "Revocation denies new turns while authenticated device can still cancel its earlier request"
+  ],
+  "boundaries": [
+    "Source and isolated tests only; no HA pipeline, external model, real Hindsight, production startup or hardware acceptance",
+    "No mandate or token generated; no deployment, HA settings, microphone mute or firmware changes",
+    "Existing resource budget is reused; household grant does not authenticate a human or confer owner effects"
+  ],
+  "remaining": [
+    "Seal owner-authorized household policy and private token in reserve release inputs",
+    "Integrate actual native HA conversation entity and verify real Hindsight shared provenance",
+    "Measure speaker interrupt and continued conversation, prove rollback, then safe A/B release"
+  ]
+}

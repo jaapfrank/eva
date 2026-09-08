@@ -236,6 +236,8 @@ class RuntimeSettings:
     dashboard_principal_binding_id: str | None = None
     dashboard_access_token: str | None = None
     dashboard_voice_policy_file: str | None = None
+    household_voice_policy_file: str | None = None
+    household_voice_token_file: str | None = None
     portable_restore_authority_file: str | None = None
     cold_path_idle_seconds: float = 300.0
     personal_interest_lease_seconds: int = 90
@@ -532,6 +534,8 @@ class RuntimeSettings:
             dashboard_principal_binding_id=dashboard_principal_binding_id,
             dashboard_access_token=dashboard_access_token,
             dashboard_voice_policy_file=_environment_optional("EVA_DASHBOARD_VOICE_POLICY_FILE"),
+            household_voice_policy_file=_environment_optional("EVA_HOUSEHOLD_VOICE_POLICY_FILE"),
+            household_voice_token_file=_environment_optional("EVA_HOUSEHOLD_VOICE_TOKEN_FILE"),
             portable_restore_authority_file=portable_restore_authority_file,
             cold_path_idle_seconds=cold_path_idle_seconds,
             personal_interest_lease_seconds=personal_interest_lease_seconds,
@@ -1411,6 +1415,7 @@ def _build_proactive_delivery(settings: RuntimeSettings, engine: sa.Engine) -> T
 
 def create_runtime_app() -> FastAPI:
     from eva.adapters.model.pydantic_conversation import PydanticConversationModel
+    from eva.bootstrap.household_voice import load_household_voice_authority
 
     settings = RuntimeSettings.from_environment()
     engine = sa.create_engine(
@@ -1444,6 +1449,17 @@ def create_runtime_app() -> FastAPI:
         tenant_id=settings.background_tenant_id,
         installation_id=settings.background_installation_id,
     )
+    def current_identity_pack():
+        return load_current_identity_pack(
+            None if settings.identity_pack_file is None else Path(settings.identity_pack_file),
+            trust=(None if settings.identity_pack_trust_file is None
+                   else load_identity_pack_trust_binding(Path(settings.identity_pack_trust_file))),
+        )
+
+    identity_pack = current_identity_pack()
+    household_voice = load_household_voice_authority(
+        settings, runtime_identity=identity_pack, identity_loader=current_identity_pack,
+    )
     memory = HindsightMemoryEngine(
         HindsightProjectionConfig(
             settings.hindsight_url,
@@ -1453,15 +1469,8 @@ def create_runtime_app() -> FastAPI:
             recall_node_budget=settings.hindsight_recall_node_budget,
         ),
         active_group_consent_resolver=group_consent,
+        active_household_consent_resolver=household_voice,
     )
-    def current_identity_pack():
-        return load_current_identity_pack(
-            None if settings.identity_pack_file is None else Path(settings.identity_pack_file),
-            trust=(None if settings.identity_pack_trust_file is None
-                   else load_identity_pack_trust_binding(Path(settings.identity_pack_trust_file))),
-        )
-
-    identity_pack = current_identity_pack()
     dashboard_voice = build_dashboard_voice(
         settings, runtime_identity=identity_pack, identity_loader=current_identity_pack,
     )
@@ -1766,50 +1775,56 @@ def create_runtime_app() -> FastAPI:
             owner_principal_id=dashboard_owner_principal_id,
             principal_binding_id=dashboard_principal_binding_id,
         )
-    return create_app(
-        PostgresHindsightMemoryRuntime(
-            engine,
+    runtime = PostgresHindsightMemoryRuntime(
+        engine,
+        memory,
+        conversation,
+        HindsightColdPathWorker(
             memory,
-            conversation,
-            HindsightColdPathWorker(
-                memory,
-                idle_seconds=settings.cold_path_idle_seconds,
-                idle_tasks=idle_tasks,
-                outbox=memory_outbox,
-                reflection_budget=reflection_budget,
-                storage_budget=storage_budget,
-                conversation_erasure=conversation_erasure,
-                restore_authority_erasure=restore_authority_erasure,
-            ),
-            prototype_store,
-            release_store,
-            conversation_actions,
-            sensory_worker,
-            sensory_store,
-            model,
-            conversation_maximum_requests=settings.conversation_maximum_requests,
-            stripe_publication=stripe_publication,
-            stripe_webhook=stripe_webhook,
-            commerce_tenant_id=settings.background_tenant_id,
-            commerce_installation_id=settings.background_installation_id,
-            runtime_tenant_id=settings.background_tenant_id,
-            runtime_installation_id=settings.background_installation_id,
-            group_consent=group_consent,
-            telegram_canary=telegram_canary,
-            people_memory_overview=people_memory_overview,
-            delegated_work_store=delegated_work_store,
-            telegram_principal_bindings=telegram_principal_bindings,
-            delegated_work_commands=delegated_work_commands,
-            dashboard_effect_controller=dashboard_effect_controller,
-            dashboard_owner_principal_id=dashboard_owner_principal_id,
-            dashboard_principal_binding_id=dashboard_principal_binding_id,
-            dashboard_authority_scope=dashboard_authority_scope,
-            telegram_principal_bindings_loader=(
-                None if settings.telegram_principal_bindings_file is None
-                else lambda: load_principal_bindings(settings.telegram_principal_bindings_file)
-            ),
-            memory_storage_budget=storage_budget,
+            idle_seconds=settings.cold_path_idle_seconds,
+            idle_tasks=idle_tasks,
+            outbox=memory_outbox,
+            reflection_budget=reflection_budget,
+            storage_budget=storage_budget,
+            conversation_erasure=conversation_erasure,
+            restore_authority_erasure=restore_authority_erasure,
         ),
+        prototype_store,
+        release_store,
+        conversation_actions,
+        sensory_worker,
+        sensory_store,
+        model,
+        conversation_maximum_requests=settings.conversation_maximum_requests,
+        stripe_publication=stripe_publication,
+        stripe_webhook=stripe_webhook,
+        commerce_tenant_id=settings.background_tenant_id,
+        commerce_installation_id=settings.background_installation_id,
+        runtime_tenant_id=settings.background_tenant_id,
+        runtime_installation_id=settings.background_installation_id,
+        group_consent=group_consent,
+        household_consent=household_voice,
+        telegram_canary=telegram_canary,
+        people_memory_overview=people_memory_overview,
+        delegated_work_store=delegated_work_store,
+        telegram_principal_bindings=telegram_principal_bindings,
+        delegated_work_commands=delegated_work_commands,
+        dashboard_effect_controller=dashboard_effect_controller,
+        dashboard_owner_principal_id=dashboard_owner_principal_id,
+        dashboard_principal_binding_id=dashboard_principal_binding_id,
+        dashboard_authority_scope=dashboard_authority_scope,
+        telegram_principal_bindings_loader=(
+            None if settings.telegram_principal_bindings_file is None
+            else lambda: load_principal_bindings(settings.telegram_principal_bindings_file)
+        ),
+        memory_storage_budget=storage_budget,
+    )
+    native_voice = (None if household_voice is None else household_voice.build_service(
+        runtime=runtime, engine=engine,
+    ))
+    return create_app(
+        runtime,
+        native_voice=native_voice,
         dashboard_access_token=settings.dashboard_access_token,
         dashboard_identity_loader=current_identity_pack,
         dashboard_voice=dashboard_voice,

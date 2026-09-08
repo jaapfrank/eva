@@ -79,12 +79,16 @@ class NativeVoiceService:
         self._cleanups: set[asyncio.Task] = set()
         self._closed = False
 
-    def authorize(self, authorization: str, satellite_id: str, device_id: str) -> None:
+    def authorize(self, authorization: str, satellite_id: str, device_id: str,
+                  *, stopping: bool = False) -> None:
         if not hmac.compare_digest(authorization.encode(), ("Bearer " + self._token).encode()):
             raise HTTPException(401, "Voice authentication required")
         if self._closed:
             raise HTTPException(503, "Voice service unavailable")
-        self._validate_current()
+        # A revoked grant blocks new work, but its authenticated device can
+        # still stop an already admitted request. This grants no new effects.
+        if not stopping:
+            self._validate_current()
         if self._devices.get(satellite_id) != device_id:
             raise HTTPException(403, "Voice device is not admitted")
 
@@ -208,9 +212,10 @@ def install_native_voice(app: FastAPI, service: NativeVoiceService | None) -> No
     if service is None:
         return
 
-    def authorize(request: Request, satellite: str, device: str) -> None:
+    def authorize(request: Request, satellite: str, device: str, *, stopping: bool = False) -> None:
         try:
-            service.authorize(request.headers.get("authorization", ""), satellite, device)
+            service.authorize(request.headers.get("authorization", ""), satellite, device,
+                              stopping=stopping)
         except HTTPException:
             raise
         except Exception:
@@ -218,7 +223,7 @@ def install_native_voice(app: FastAPI, service: NativeVoiceService | None) -> No
 
     @app.post("/internal/v1/ha-voice/turns/{request_id}/interrupt")
     async def interrupt(request_id: str, payload: VoiceInterrupt, request: Request):
-        authorize(request, payload.satellite_id, payload.device_id)
+        authorize(request, payload.satellite_id, payload.device_id, stopping=True)
         if not re.fullmatch(r"[0-9a-f]{32}", request_id):
             raise HTTPException(422, "Invalid voice request identity")
         try:

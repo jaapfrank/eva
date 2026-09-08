@@ -112,10 +112,32 @@ external effects. Real core/Pydantic/PostgreSQL tests use an injected FunctionMo
 and empty memory fixture, plus the actual durable outbox; no paid model call or
 hardware speech is included.
 
-Remaining wiring: load a current, revocable household mandate from the owner's
-configured authority and supply the same resolver to runtime, Hindsight and the
-native service during startup, with the existing resource budgets. These pieces
-do not create a mandate or activate the voice route by themselves.
+Startup now accepts `EVA_HOUSEHOLD_VOICE_POLICY_FILE` and
+`EVA_HOUSEHOLD_VOICE_TOKEN_FILE`. Both must reference private regular files
+inside the container. The policy follows `HouseholdVoicePolicy/v1` in
+`src/eva/bootstrap/household_voice.py`: exact runtime tenant, installation,
+owner and owner binding, current identity digest, integration-token SHA256,
+household ID, explicit consent operation, satellite-to-device registry mapping,
+and effective/expiry timestamps. The token is separate from the dashboard and
+Home Assistant provider credentials. No environment token value is accepted.
+
+The same current authority instance is supplied to Hindsight, the ordinary
+runtime, and the native voice service. Token, policy or identity changes revoke
+existing admissions. Missing, revoked or expired policy leaves this optional
+channel off on restart. An authenticated device can still stop its admitted
+request after revocation; new work remains denied. Existing resource budgets
+continue to apply. A device audit actor never becomes the owner's identity.
+
+Keep the consent operation ID unchanged only when explicitly continuing the
+same household memory grant; a new operation intentionally invalidates source
+references under the old grant. Policy renewal requires service reconstruction;
+changing a file does not silently extend an existing service's authority.
+
+These settings do not mint a household mandate or activate HA. The next release
+must mount the actual owner-authorized files read-only on the reserve core,
+include that configuration in release input authority, and test the native HA
+pipeline before switching traffic. No production files have been created by
+the source tests.
 
 ## Device candidate
 
