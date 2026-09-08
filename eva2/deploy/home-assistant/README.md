@@ -1,5 +1,42 @@
 # Voice PE interruption candidate
 
+The `custom_components/eva2_voice` directory now contains a **native Home
+Assistant conversation-agent candidate**. Its HTTP client is tested against a
+local HTTP server. The HA entry/configflow/pipeline have not been integration
+tested and the Eva2 core endpoints below do not exist yet. Do not install or
+select this agent as the household pipeline until those pieces are implemented
+and the complete candidate passes its release checks.
+
+The native client gives each invocation a random request ID. Cancellation or
+supersession sends an interrupt for that exact request, while another speaker
+can continue independently. The entity obtains the device ID from HA's registry
+and forwards no speaker name, HA user ID, Eva principal or private chat history.
+The server must still independently enforce household admission.
+
+## Required core protocol
+
+Both endpoints require an integration credential bound server-side to the
+installation, permitted satellites/devices and a shared household audience.
+Existing owner/dashboard/private-person routes are not substitutes.
+
+- `POST /internal/v1/ha-voice/turns`: JSON fields `request_id`, `satellite_id`,
+  `device_id`, `conversation_id`, `text`, `language`. A successful JSON response
+  contains exactly `request_id`, `reply`, `continue_conversation`.
+- `POST /internal/v1/ha-voice/turns/{request_id}/interrupt`: JSON fields
+  `satellite_id`, `device_id`. This invalidates that answer generation, including
+  when interruption arrives before admission of the corresponding request.
+
+The server must scope idempotency and cancellation to the authenticated
+installation/device/request, preserve a cancellation tombstone for reordered
+requests, suppress superseded answers and enforce a deadline independently of
+the HTTP client. Interrupting spoken delivery must not undo an external effect
+or silently grant authority to cancel other work. A transport response is not
+proof of audible delivery. The client uses the existing 32-second answer window
+after STT and a bounded two-second interrupt attempt; a failed interrupt request
+does not produce a false server-stop receipt.
+
+## Device candidate
+
 `voice-pe-interruption.yaml` replaces the saved device's wake-word handler.
 It requests local announcement/assistant stop before reporting a native API
 event. A new wake word then starts listening after the old assistant stops;

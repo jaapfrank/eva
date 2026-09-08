@@ -148,7 +148,8 @@
       "ownerPaths": [
         "eva2/connectors/**",
         "eva2/src/eva/adapters/connectors/**",
-        "eva2/src/eva/providers/**"
+        "eva2/src/eva/providers/**",
+        "eva2/deploy/home-assistant/custom_components/**/*.py"
       ],
       "forbiddenScope": [
         "Geen Home Assistant-, mail-, browser- of ander providerbegrip in Eva's application-, contract- of modelkern."
@@ -369,7 +370,9 @@
       "ownerPaths": [
         "eva2/deploy/delegated-work/**",
         "eva2/deploy/living-core/**",
-        "eva2/deploy/home-assistant/**"
+        "eva2/deploy/home-assistant/*.yaml",
+        "eva2/deploy/home-assistant/*.md",
+        "eva2/deploy/home-assistant/custom_components/**/*.json"
       ],
       "forbiddenScope": [
         "Geen applicatiebeslissingen, secretwaarden of mutable image-tags in deploymentbestanden."

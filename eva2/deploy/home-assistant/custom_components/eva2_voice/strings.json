@@ -1,0 +1,18 @@
+{
+  "config": {
+    "error": {
+      "invalid_connection": "Controleer het Eva2-adres, de toegangssleutel en de geselecteerde speakers."
+    },
+    "step": {
+      "user": {
+        "title": "Eva2 verbinden",
+        "description": "Verbind de gekozen speakers met je Eva2-installatie.",
+        "data": {
+          "url": "Eva2-adres",
+          "token": "Toegangssleutel",
+          "satellite_ids": "Speakers"
+        }
+      }
+    }
+  }
+}

@@ -2161,6 +2161,40 @@
         "Geen live route gewijzigd of firmware geflasht.",
         "Geen volledige cancellation-proef, private-speakeradmissie of akoestische meting geleverd."
       ]
+    },
+    "vb001NativeHaConversationCandidate": {
+      "status": "http_client_tested_native_ha_and_core_not_connected",
+      "sources": {
+        "eva2/deploy/home-assistant/custom_components/eva2_voice/conversation.py": "4377e9f49082e7b722d7864d99b21bd4a6288bba71db11bc6c0f98f71f25fab0",
+        "eva2/deploy/home-assistant/custom_components/eva2_voice/__init__.py": "1533d85b995b3666c5af427abe32c7cd73625910c005e4607014fc27bb186906",
+        "eva2/deploy/home-assistant/custom_components/eva2_voice/client.py": "db9948dbcd70a293d8c2bb256f59ed3a8efd53880472cacd54c440e46f99f6b4",
+        "eva2/deploy/home-assistant/custom_components/eva2_voice/config_flow.py": "b3b14d7b50ec08c0f7af437973b9d7da3b72e553f44435b9bee246610423da13",
+        "eva2/deploy/home-assistant/custom_components/eva2_voice/manifest.json": "cce7b2324a7f10c3eef6f536a09aafa3d3ba770d8385c6b5daa675ba0fc02161",
+        "eva2/deploy/home-assistant/custom_components/eva2_voice/strings.json": "9dc97e8be92bd05452cfa34138413efaaf6ddc252e0d22802d8d03bb036cbc45",
+        "eva2/tests/operations/test_ha_voice_native_client.py": "124b0d78bcfa45f5fccbc38ddfc9d2504c764f21efeb091a865c69fb2367dc26"
+      },
+      "testInterpreter": "/home/administrator/project/.eva2-artifacts/ha-voice-client-env/bin/python",
+      "aiohttpVersion": "3.14.3",
+      "checks": {
+        "httpAndValidationTestsPassed": 17,
+        "ruff": "passed",
+        "pythonSyntaxAndJson": "passed"
+      },
+      "behavior": [
+        "Native HA ConversationEntity roept Eva2 direct aan met uniek requestID en speaker/device uit HA-registry.",
+        "HA-annulering en nieuwe vraag op dezelfde speaker annuleren exact de oude HTTP-aanvraag en sturen een gerichte interrupt; andere speaker blijft onafhankelijk.",
+        "Foutantwoord, verkeerde requestbinding, redirect en te groot antwoord worden geen spraak.",
+        "Annulering tijdens foutcleanup blijft CancelledError; geen foutzin na onderbreking.",
+        "Geen persoon/principal/private geschiedenis vanuit HA doorgestuurd; core-admission blijft verplicht."
+      ],
+      "review": "co006_review gaf gerichte bron-GO na reparatie van annulering tijdens foutcleanup en configvalidatie. Geen native HA-, core- of live-GO.",
+      "remaining": [
+        "De nieuwe core endpoints bestaan nog niet; implementeer gedeelde-speakeradmissie, idempotentie, vroege-interrupttombstones en antwoordgeneraties.",
+        "Werkelijke HA-entry/configflow/pipeline-integratie testen.",
+        "Complete kandidaat via veilige route aansluiten en hoorbare onderbreking/hervatten op apparaten meten."
+      ],
+      "live": false,
+      "accepted": false
     }
   },
   "activeTaskId": "VB-001",
@@ -3549,7 +3583,14 @@
         "eva2/tests/operations/test_plan_home_assistant_voice_bridge.py",
         "eva2/deploy/home-assistant/voice-pe-interruption.yaml",
         "eva2/deploy/home-assistant/README.md",
-        "eva2/design/architecture/component-catalog-v1.json"
+        "eva2/design/architecture/component-catalog-v1.json",
+        "eva2/deploy/home-assistant/custom_components/eva2_voice/conversation.py",
+        "eva2/deploy/home-assistant/custom_components/eva2_voice/__init__.py",
+        "eva2/deploy/home-assistant/custom_components/eva2_voice/client.py",
+        "eva2/deploy/home-assistant/custom_components/eva2_voice/config_flow.py",
+        "eva2/deploy/home-assistant/custom_components/eva2_voice/manifest.json",
+        "eva2/deploy/home-assistant/custom_components/eva2_voice/strings.json",
+        "eva2/tests/operations/test_ha_voice_native_client.py"
       ],
       "componentIds": [
         "api-and-runtime-composition",
@@ -3578,7 +3619,8 @@
         "pytest -q tests/operations/test_managed_b_release_inputs.py tests/operations/test_run_managed_b_required_tests.py",
         "pytest -q tests/operations/test_eva2_quiescent_cutover.py",
         "pytest -q tests/operations/test_managed_b_render.py",
-        "pytest -q tests/operations/test_plan_home_assistant_voice_bridge.py"
+        "pytest -q tests/operations/test_plan_home_assistant_voice_bridge.py",
+        "pytest -q tests/operations/test_ha_voice_native_client.py"
       ],
       "evidenceRequired": [
         "Onderzoek bestaande Eva2-voicebouwstenen en Bottie/HA-route; leg concrete ontbrekende media-aansluiting, providerkeuze, bestaand mandaat en verbruik vast.",
