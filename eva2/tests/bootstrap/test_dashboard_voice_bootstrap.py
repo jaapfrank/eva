@@ -88,8 +88,6 @@ def test_existing_owner_identity_and_policy_bound_into_voice_session(tmp_path):
 @pytest.mark.parametrize("field,value", [
     ("owner_principal_id", TENANT), ("tenant_id", OWNER), ("principal_binding_id", OWNER),
     ("identity_sha256", "0"*64), ("endpoint_url", "http://other.test"),
-    ("state", "revoked"), ("expires_at", "2026-09-08T09:30:00Z"),
-    ("effective_at", "2026-09-08T10:30:00Z"),
     ("allowed_origin", "http://lan.test"), ("allowed_origin", "https://example.test/path"),
     ("allowed_origin", "null"),
 ])
@@ -188,3 +186,55 @@ def test_dangling_policy_symlink_is_invalid_not_missing_configuration(tmp_path):
     path.symlink_to(tmp_path / "missing")
     with pytest.raises(ValueError):
         build(settings, identity)
+
+
+@pytest.mark.parametrize("field,value", [
+    ("state", "revoked"), ("expires_at", "2026-09-08T10:00:00Z"),
+    ("effective_at", "2026-09-08T10:30:00Z"),
+])
+def test_inactive_valid_policy_disables_voice_on_restart(tmp_path, field, value):
+    path, policy, settings, identity = setup(tmp_path)
+    config = build(settings, identity)
+    session = config.issue_session()
+    policy[field] = value
+    path.write_text(json.dumps(policy))
+    with pytest.raises(ValueError):
+        config.check(session)
+    assert build(settings, identity) is None
+
+
+@pytest.mark.parametrize("hour,active", [(9, True), (11, False)])
+def test_policy_window_exact_boundaries(tmp_path, hour, active):
+    _, _, settings, identity = setup(tmp_path)
+    config = build(settings, identity, clock=lambda: datetime(2026, 9, 8, hour, tzinfo=UTC))
+    assert (config is not None) is active
+    if config is not None:
+        config.check(config.issue_session())
+
+
+@pytest.mark.parametrize("mutation", ["permissions", "malformed", "scope", "provider", "identity"])
+def test_inactive_policy_still_validates_safety_and_bindings(tmp_path, mutation):
+    path, policy, settings, identity = setup(tmp_path)
+    policy["state"] = "revoked"
+    if mutation == "scope":
+        policy["owner_principal_id"] = TENANT
+    elif mutation == "provider":
+        policy["endpoint_url"] = "http://other.test"
+    elif mutation == "identity":
+        policy["identity_sha256"] = "0" * 64
+    path.write_text("{" if mutation == "malformed" else json.dumps(policy))
+    if mutation == "permissions":
+        path.chmod(0o644)
+    with pytest.raises(ValueError):
+        build(settings, identity)
+
+
+def test_expiry_rejects_old_session_but_allows_voiceless_restart(tmp_path):
+    _, _, settings, identity = setup(tmp_path)
+    now = [NOW]
+    config = build(settings, identity, clock=lambda: now[0])
+    session = config.issue_session()
+    now[0] = datetime(2026, 9, 8, 11, tzinfo=UTC)
+    with pytest.raises(ValueError):
+        config.check(session)
+    assert build(settings, identity, clock=lambda: now[0]) is None

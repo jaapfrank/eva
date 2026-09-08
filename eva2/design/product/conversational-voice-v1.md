@@ -452,3 +452,31 @@ geïntegreerde browser/modelproef wordt daarmee geclaimd. Bronnen, reproduceerba
 runners en receipts zijn gebonden in audit.vb001RuntimeIntegration; onafhankelijke
 co006_review gaf beperkte GO. De gekopieerde-data-kandidaat, fysieke eindproeven
 en volledige veilige release blijven open.
+
+
+### Actuele browserpilot en herstelgrens — 8 september 2026
+
+De eerdere paragrafen hierboven beschrijven historische checkpoints. De browserpilot
+op bron `4d7d039` is nu live op slot 3 via
+`http://localhost:44710/internal/v1/dashboard/conversation`. De volledige
+browser → HA STT → Eva-gesprek → HA TTS-keten is op deze exacte kandidaat met
+synthetische microfooninput bewezen, inclusief herstart en policyverwijdering.
+Na de verliesloos gecontroleerde omschakeling zijn de live eigenaarsroute,
+WebSocket en gecombineerde voice-/MCP-mounts onafhankelijk gecontroleerd.
+Dit is geen menselijke hardwareacceptatie en geen gemeten akoestische p95-stop.
+
+De volgende bronreparatie is nog niet live: een verder geldig maar ingetrokken,
+toekomstig of verlopen mediabeleid schakelt uitsluitend voice uit tijdens
+bootstrap. Private bestandsrechten, schema, eigenaar-/providerscope en actuele
+identiteitsbinding worden daarvoor gecontroleerd. Bestaande sessies blijven
+intrekking en verloop weigeren. Ongeldig beleid blijft een configuratiefout.
+Een historische policyhash wordt bij directe bootstrap niet apart bewaard;
+de exacte uitrolpin hoort bij de managed operator, en actieve sessies bewaken
+hun geladen policyhash. Deze reparatie vereist een volgende kandidaatuitrol.
+
+De resterende gebruikersproef begint met toegang via de bestaande eigenaarslogin,
+expliciete microfoontoegang en een gesprek op echte hardware. Controleer verstaan,
+hoorbaar antwoord, doorpraten tijdens afspelen, gesproken én handmatige onderbreking,
+microfoon uit en herverbinden. Noteer browser/apparatuur en iedere mislukte beurt.
+Een geslaagde handmatige indruk vervangt de vastgelegde latencycampagne niet.
+De oorspronkelijke V01–V07-eindcriteria en overige routes blijven behouden.

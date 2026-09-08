@@ -121,20 +121,25 @@ def build_dashboard_voice(
     if policy.identity_sha256 != identity_hash or runtime_identity.state != "current":
         raise ValueError("voice identity differs from active runtime")
 
-    def current() -> None:
+    def current(*, allow_inactive: bool = False) -> bool:
         actual = _read_policy(path)
         current_identity = identity_loader()
         now = clock()
         if now.tzinfo is None:
             raise ValueError("voice clock must be timezone aware")
         stamp = now.astimezone(UTC).strftime("%Y-%m-%dT%H:%M:%SZ")
-        if (actual.state != "enabled" or not actual.effective_at <= stamp < actual.expires_at
-                or canonical_sha256(actual.model_dump(mode="json")) != policy_hash
+        if (canonical_sha256(actual.model_dump(mode="json")) != policy_hash
                 or current_identity.state != "current"
                 or canonical_sha256(current_identity.model_dump(mode="json")) != identity_hash):
-            raise ValueError("voice authority changed or expired")
+            raise ValueError("voice authority changed")
+        active = actual.state == "enabled" and actual.effective_at <= stamp < actual.expires_at
+        if not active and not allow_inactive:
+            raise ValueError("voice authority is inactive")
+        return active
 
-    current()  # Present but invalid configuration is visible startup failure.
+    # A valid inactive media grant must not disable unrelated conversation channels.
+    if not current(allow_inactive=True):
+        return None
 
     def issue() -> VoiceSession:
         current()
