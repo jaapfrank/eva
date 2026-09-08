@@ -2288,6 +2288,13 @@
       "imageId": "sha256:86ec4e3598cc07fcc61ba76ac405cfbbac39f63a14e8a98f4600d02154d3c14b",
       "evidence": "eva2/evidence/product/VB-001-repaired-candidate-build-2026-09-09.json",
       "next": "Poll running full gate session76235 without restart; exercise pinned native stop-to-Eva interrupt chain with two speakers and next question, then actual HA/firmware route."
+    },
+    "vb001RepairedCandidateScanStage": {
+      "status": "exact_image_scanned_ha_staged_full_gate_running_not_live",
+      "evidence": "eva2/evidence/product/VB-001-repaired-candidate-scan-stage-2026-09-09.json",
+      "sourceCommit": "cab9227356cb68b81edb9d27aab3d160dc959643",
+      "imageId": "sha256:86ec4e3598cc07fcc61ba76ac405cfbbac39f63a14e8a98f4600d02154d3c14b",
+      "next": "Poll existing full-gate session76235; then validate current-data reserve runtime and native HA stop/next-question route. No restart of still-running tests."
     }
   },
   "activeTaskId": "VB-001",

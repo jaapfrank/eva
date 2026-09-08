@@ -1,0 +1,29 @@
+{
+  "contract": "EvaNativeVoiceRepairedCandidateScanStage/v1",
+  "status": "exact_image_scanned_ha_staged_full_gate_running_not_live",
+  "previousGoalTurn": "progress_rebuilt_candidate_saved_reserve_snapshot_and_corrected_native_abort_evidence",
+  "scan": {
+    "imageId": "sha256:86ec4e3598cc07fcc61ba76ac405cfbbac39f63a14e8a98f4600d02154d3c14b",
+    "sourceCommit": "cab9227356cb68b81edb9d27aab3d160dc959643",
+    "archiveSha256": "a217f89f71cf825b783e165787426e09ab0204163e3b6dc25acec7b975fe6b50",
+    "counts": {
+      "HIGH": 0,
+      "CRITICAL": 0
+    },
+    "sbomPackageCount": 75,
+    "databaseUpdatedAt": "2026-08-31T07:08:27.708070973Z"
+  },
+  "scanReceiptHashes": {
+    "syft.json": "2fd94bf5ce1d59e0c9ededf6e1d14bb732ef4d13868e7acc0e4bfab1e0f9cbf3",
+    "trivy.json": "3740f2c82ff5b8d997b080fdbb5268c9f324c1f0002f7c51b422a1e486b6371a",
+    "summary.json": "25baeda94c41135c13ad1a3fd48fbcd579e91f554cafa4982dbf7ea184eeb661"
+  },
+  "scanLimit": "Pinned database updated2026-08-31;0HIGH/CRITICAL is not a claim of current complete vulnerability absence. SPDX validated against bound policy.",
+  "homeAssistantStage": {
+    "status": "six_files_and_manifest_remote_hashes_verified",
+    "destination": "/share/eva2_voice_candidates/cab9227356cb68b81edb9d27aab3d160dc959643",
+    "activeChanges": false
+  },
+  "privateEvidenceDirectory": "/home/administrator/project/.eva2-artifacts/native-voice-candidate-repaired-w16uve7q",
+  "next": "Poll existing full-gate session76235; then validate current-data reserve runtime and native HA stop/next-question route. No restart of still-running tests."
+}
