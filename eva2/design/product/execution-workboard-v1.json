@@ -30,8 +30,8 @@
       "nonclaims": "No new deployment or model calls for this closure. Human usefulness/timing, full backlog completion, streaming and all later product outcomes remain open."
     },
     "projectDashboard": {
-      "runtimePort": 44711,
-      "runtimeLabel": "Slot 4",
+      "runtimePort": 44710,
+      "runtimeLabel": "Slot 3",
       "roadmap": [
         {
           "id": "daily",
@@ -150,9 +150,9 @@
       },
       "summary": [
         {
-          "label": "AFGEROND · TL-002",
-          "value": "Eva kan documenten bewaren in haar werkmap",
-          "detail": "Opslaan en teruglezen via de echte gespreksroute, behoud van Home Assistant, stop/herstel en A/B-uitrol onafhankelijk beoordeeld. Menselijke gezinsacceptatie blijft open."
+          "label": "LIVE · BROWSERSTEM",
+          "value": "Je kunt nu praten met Eva in de browser",
+          "detail": "De stemroute is live. De echte spraakproef slaagde; jouw microfoon-/speakerervaring en gemeten onderbreeklatentie staan nog open."
         },
         {
           "label": "AFGEROND · TL-001",
@@ -167,8 +167,8 @@
       ],
       "nextOutcomes": [
         {
-          "title": "Stem bruikbaar maken",
-          "detail": "Complete kandidaat en echte spraak-/herstartproef met officiële uitrolconfiguratie zijn onafhankelijk gecontroleerd. Nu volgt de reserveroute vóór jouw eigen stemtest."
+          "title": "Probeer praten met Eva",
+          "detail": "Open http://localhost:44710/internal/v1/dashboard/conversation met je eigenaarslogin. Kies Praten met Eva en geef microfoontoegang. Onderbreek Eva stopt het afspelen; Microfoon uit beëindigt de stemsessie."
         },
         {
           "title": "Laat Eva een document bewaren",
@@ -190,7 +190,7 @@
       "openRisks": [
         "Telegram heeft de live tekstupdates en het eindbericht bevestigd. Dit bewijst niet dat jij de animatie hebt gezien of de complete gesprekservaring hebt geaccepteerd.",
         "Een beter gesprek is nog geen complete digitale huisgenoot.",
-        "Stem en zelfstandig werk blijven open. Home Assistant-inventarisatie is live; jouw beoordeling van het advies blijft open.",
+        "Volledige stem-/hardwareacceptatie en zelfstandig werk blijven open. Home Assistant-inventarisatie is live; jouw beoordeling van het advies blijft open.",
         "Er is nog geen bewezen concurrentiewinst.",
         "CO-006 is live; volledige geheugengezondheid en gezinsacceptatie zijn niet bewezen. De eerdere wisselende browseruitkomst blijft apart open."
       ],
@@ -205,7 +205,7 @@
           "live": "yes",
           "accepted": "no",
           "gap": "Jouw zichtbare ervaring bevestigen",
-          "detail": "Actief op slot 4; bestaande antwoordherhaling na omschakeling exact behouden. De echte privéclient ontving 17 tekststukjes en las het eindantwoord exact terug zonder nieuwe modelcall. Een afzonderlijke gelabelde ontwikkelcontrole kreeg vier Telegram-draftbevestigingen en één definitief bericht. Interne tussenstappen blijven verborgen; serverbevestiging is geen menselijke acceptatie.",
+          "detail": "Nu actief op slot 3; eerdere proef op slot 4: bestaande antwoordherhaling na omschakeling exact behouden. De echte privéclient ontving 17 tekststukjes en las het eindantwoord exact terug zonder nieuwe modelcall. Een afzonderlijke gelabelde ontwikkelcontrole kreeg vier Telegram-draftbevestigingen en één definitief bericht. Interne tussenstappen blijven verborgen; serverbevestiging is geen menselijke acceptatie.",
           "evidence": "CO-007 · livecontrole 8 september · onafhankelijke technische GO"
         },
         {
@@ -261,16 +261,29 @@
           "evidence": "TL-001 en TL-002 technisch afgerond en live · 8 september · gezinsacceptatie open"
         },
         {
+          "id": "browser-voice",
+          "icon": "≈",
+          "title": "Praten via de browser",
+          "subtitle": "Luisteren, antwoorden en afspelen onderbreken",
+          "built": "yes",
+          "tested": "yes",
+          "live": "yes",
+          "accepted": "no",
+          "gap": "Jouw microfoon-/speakerervaring beoordelen",
+          "detail": "Beperkte browserpilot: echte browser → Home Assistant STT → Eva → Home Assistant TTS op exacte kandidaat bewezen. Live eigenaarsroute en WebSocket gecontroleerd. Geen bewijs van jouw hardware-ervaring of p95-stoplatentie. Open http://localhost:44710/internal/v1/dashboard/conversation met je eigenaarslogin.",
+          "evidence": "VB-001 · live 8 september · onafhankelijke uitrol/readback-GO; menselijke proef open"
+        },
+        {
           "id": "voice",
           "icon": "≋",
           "title": "Stem & aanwezigheid",
           "subtitle": "Praten, luisteren, onderbreken",
           "built": "partial",
           "tested": "partial",
-          "live": "no",
+          "live": "partial",
           "accepted": "no",
-          "gap": "Veilige ingebruikname en jouw microfoon-/speakerproef",
-          "detail": "De complete browser → spraakherkenning → Eva → spraakaudio-route is op actuele gekopieerde gegevens geslaagd: zeven plus vijf kreeg antwoord 12, met één modelaanroep. Gesprek bleef na herstart bewaard; na verwijdering van de microfoonpolicy bleef chat beschikbaar bij herstart en stem geweigerd. De complete kandidaat met beheerde uitrolaansluiting is onafhankelijk gecontroleerd. Veilige ingebruikname, jouw microfoon-/speakerervaring, herhaalde onderbrekingsmetingen en aanwezigheid in huis blijven open.",
+          "gap": "Jouw microfoon-/speakerproef en overige stemkanalen",
+          "detail": "Browserstem is technisch live op slot 3: dezelfde gesprekskern, Home Assistant-spraak en privé-eigenaarsbinding. Echte spraak en herstart zijn in de gekopieerde omgeving bewezen; live pagina, WebSocket, policy en mounts apart gecontroleerd. Echte hardware, gemeten p95-onderbreking en volledige huisaanwezigheid blijven open.",
           "evidence": "VB-001 · kandidaat 4d7d039: releasecontrole, echte spraakproef, herstart en intrekking geslaagd · onafhankelijke technische GO; nog niet live"
         },
         {
@@ -1712,7 +1725,7 @@
         "receiptPath": "/tmp/eva2-vb001-ack-release-j5p21b_z/managed-voice-render/receipt.json",
         "liveChanges": false
       },
-      "next": "Prepare concrete slot4-to-slot3 reserve plan with preserved current MCP access and an explicit owner-bound voice policy; verify candidate admission and lossless rollback before controlled cutover. Human microphone/speaker proof remains separate.",
+      "next": "Complete real owner microphone/speaker experience, measured stop latency and durable evidence archival before full VB-001 closure. Browser voice pilot is live; no complete voice-presence claim.",
       "implementationCommit": "723febe70d1c12f5e3f5a8179e21f883725d35f1",
       "stage": {
         "path": "/tmp/eva2-vb001-managed-release-bym6cas7",
@@ -1789,6 +1802,59 @@
         "liveInputsAndRouteUnchanged": true,
         "humanHardwareAcceptance": false,
         "review": "Independent bounded integration GO /root/co006_review for reserve preparation: all source/wrapper/policy/precopy bindings, complete gates, voice readback, both restart cases and actual resource absence verified. Concrete reserve configuration/admission still requires review. No live GO."
+      },
+      "reservePreparation": {
+        "owner": "/root",
+        "reviewer": "/root/co006_review",
+        "status": "prepared_independently_reviewed_and_switched",
+        "stage": "/tmp/eva2-vb001-managed-release-bym6cas7/rollout",
+        "sourceSlot": 4,
+        "targetSlot": 3,
+        "scope": "Prepare reviewed candidate image, preserve existing MCP configuration, private explicit owner voice policy for localhost browser; no broader model/tool grants. Preserve current source runtime until reviewed cutover.",
+        "policyPlan": "Owner-authenticated local browser, microphone opt-in, 30-day policy with per-session cap and immediate revocation; existing owner budget unchanged. Not product/human acceptance.",
+        "doneWhen": "Concrete plan/source hashes/policy/render and bound candidate admission reviewed, target configuration prepared without touching source, then lossless cutover/readback and human microphone test."
+      },
+      "liveResult": {
+        "status": "live_browser_pilot",
+        "sourceCommit": "4d7d039c1b4761489d2e2d20ac6231f5b602337b",
+        "imageId": "sha256:7b75cfe18df5691e1c2cc2fa56c9ee0f202959eab090ce723cd11761b5af84f7",
+        "sourceSlot": 4,
+        "activeSlot": 3,
+        "port": 44710,
+        "url": "http://localhost:44710/internal/v1/dashboard/conversation",
+        "cutoverStatus": "switched",
+        "operationalTablesSynchronized": 48,
+        "memoryTablesSynchronized": 23,
+        "sourceWritersStopped": true,
+        "combinedVoiceMcpMountsVerified": true,
+        "ownerBrowserPageStatus": 200,
+        "ownerVoiceWebSocketOpened": true,
+        "humanHardwareAcceptance": false,
+        "review": "Independent bounded preparation, cutover and live-state GO /root/co006_review. Browser UI and WebSocket readback passed; no live audio/model call in this readback.",
+        "receipts": {
+          "admission.json": {
+            "path": "/tmp/eva2-vb001-managed-release-bym6cas7/rollout/admission.json",
+            "sha256": "7bd4290dfa1b5e082091db7b72e49ec717f44996db544946f166b5b59e7c7310"
+          },
+          "preparation.json": {
+            "path": "/tmp/eva2-vb001-managed-release-bym6cas7/rollout/preparation.json",
+            "sha256": "d181a79a7f237521a74d3bf0d5de75cb14d1bae99a445ba9c32a43bb16df2079"
+          },
+          "cutover-invocation.json": {
+            "path": "/tmp/eva2-vb001-managed-release-bym6cas7/rollout/cutover-invocation.json",
+            "sha256": "74b5d4207f4abcc8d85a8a64499e3e77bfd84c3d8d0ebd979799a211088c3be5"
+          },
+          "cutover.json": {
+            "path": "/tmp/eva2-vb001-managed-release-bym6cas7/rollout/cutover.json",
+            "sha256": "86d1da4adbff10201c9f85057c8cebab23945ae4c22300ab0804cc01d9b4ab50"
+          },
+          "live-browser.json": {
+            "path": "/tmp/eva2-vb001-managed-release-bym6cas7/rollout/live-browser.json",
+            "sha256": "313b0a69a75ec102089b12a8685de0a99cafc2876dc60407b7e168689f66a257"
+          }
+        },
+        "browserHarnessCorrection": "First live readback timed out looking for a separate Microfoon uit button before starting. This is the dynamic label of the start toggle. Corrected harness checks initial microphone-off status; product unchanged. Second readback passed with no microphone/audio/model request.",
+        "documentationReview": "Independent GO /root/co006_review: live route and copied candidate-chain claims are separated; accepted:no and VB-001 in_progress retained. Hardware experience and p95-stop latency remain open."
       }
     }
   },
