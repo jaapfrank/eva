@@ -1,0 +1,52 @@
+{
+  "contract": "EvaNativeVoiceCandidateExecution/v1",
+  "status": "offline_candidate_built_2519_source_tests_passed_not_full_release_or_live",
+  "sourceCommit": "edb3a704c316a3272be5a99e195a76a009d3a302",
+  "imageId": "sha256:e24e4c74757f12e8d17fee223e517a5c0f122b64a481be943e811b7194261277",
+  "buildReceiptSha256": "58b056049c5e7f6e20697d0fbe251aa8aabb40f8a2959ceaf5c49e4f74cde02c",
+  "sourceArchiveSha256": "656757e5e16a3ef71def3baa8cbca82e5160f50978f8019653a900c43d9b7d80",
+  "privateBuildDirectory": "/home/administrator/project/.eva2-artifacts/native-voice-candidate-m4flh7ov",
+  "privateExecutionDirectory": "/home/administrator/project/.eva2-artifacts/native-voice-release-y8o_glye",
+  "testLogSha256": {
+    "pure-execution.log": "0f1358f78a4b64539027f3588dd8957dca6b8f29de7326b2077e6c8ecc8732e9",
+    "postgres-living-execution.log": "c5bca057829fee3c5f309a5222f1814b375be0e9ad99b530a94b469ad83cd28c",
+    "portable-effect-execution.log": "3a3c2a1889431af87bf78fc4d98a99b3af4135444a7f14264b05af8182db1426",
+    "portable-model-execution.log": "43a36e062be95387a02fc672c2fac66982bc81772d78a1ef5851f7874b809966",
+    "portable-object-execution.log": "70fbf717ae74e25557bc55be610c442463bfc9effda9d8003363a6620e41f665",
+    "portable-read-execution.log": "ec0be29a1fc84d2917560f326b956022681332a326b59856fecf911604f995d2",
+    "portable-full-schema-execution.log": "e5a74291b492f6d5e0ac837dbb2cd464fc3523ad39b76d400ac34194f345260b",
+    "postgres-action-chain-execution.log": "a8b8f687804fd461a41c0a64b9d0bb657811a8fe53b30cc290f977399a549faa",
+    "postgres-4b-store-execution.log": "2b2f7bb6f37f79b9d83d6cb915d82b1d43d373c12abb49844209f522eb06c398",
+    "postgres-4b-current-execution.log": "1a3afd6ce9388b9a3cbdb5a8ecfb7bd64706d6d91305805ac553d0160e5abb47",
+    "postgres-4b-historical-execution.log": "fcf4c30e0a254eb17e1fbecdbcf83f72195feea64ef96f542a175c15f6a053d4"
+  },
+  "tests": {
+    "pure": 2097,
+    "postgresLiving": 80,
+    "portable": 19,
+    "postgresActionChain": 80,
+    "postgresStore": 52,
+    "postgresCurrent": 79,
+    "postgresHistorical": 12,
+    "totalPassed": 2519,
+    "notExecutedPhysicalBrowser": 4,
+    "skipped": 0
+  },
+  "installedSmoke": {
+    "image": "sha256:e24e4c74757f12e8d17fee223e517a5c0f122b64a481be943e811b7194261277",
+    "returncode": 0,
+    "stdout": "{\"installed_native_imports\": true, \"unconfigured_channel_off\": true, \"cancellation_scope\": true}\n",
+    "stderr": ""
+  },
+  "buildRepair": "Default Buildx state file permission denied. Used new private DOCKER_CONFIG and copied/hash-bound existing Buildx executable; no default config permission change. Two failed preparatory attempts preserved; final offline build completed.",
+  "review": "co006_review confirmed built image/source label and all bound snapshot files byte-equal to edb3a704; bounded proof GO, not full release/live",
+  "isolation": "Tests used clean source snapshot and new offline hash-pinned venv; dedicated PostgreSQL16.13. Created disposable databases removed after all groups passed, existing test container stopped. Live Eva/HA unchanged.",
+  "remaining": [
+    "Exact image artifact/security/license scan",
+    "Expanded installed-candidate and physical browser subgate; source tests are not installed tests",
+    "Complete closed release execution receipt and controlled copied-data/restart proof",
+    "Actual native HA entity/pipeline and household policy activation",
+    "Speaker interruption/resume/latency and safe A/B deployment",
+    "Human acceptance and full goal evidence"
+  ]
+}
