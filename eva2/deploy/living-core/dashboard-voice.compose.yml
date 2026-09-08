@@ -1,0 +1,12 @@
+# Optional owner voice access; admitted only after reserve staging.
+services:
+  core:
+    environment:
+      EVA_DASHBOARD_VOICE_POLICY_FILE: /run/eva/voice/current.json
+    volumes:
+      - type: bind
+        source: ${EVA_DASHBOARD_VOICE_POLICY_DIR_HOST:?set the private owner voice policy directory}
+        target: /run/eva/voice
+        read_only: true
+        bind:
+          create_host_path: false

@@ -51,6 +51,7 @@ MANIFEST = (
 )
 PROACTIVE_MANIFEST = MANIFEST.with_name("telegram-proactive.compose.yml")
 CONNECTOR_MANIFEST = MANIFEST.with_name("mcp-gateway.compose.yml")
+VOICE_MANIFEST = MANIFEST.with_name("dashboard-voice.compose.yml")
 CONNECTOR_TARGET = "/run/eva/connectors/mcp"
 CONNECTOR_FLAG = "EVA_MCP_GATEWAY_ENABLED"
 PROACTIVE_FLAG = "EVA_TELEGRAM_PROACTIVE_DELIVERY_ENABLED"
@@ -476,10 +477,93 @@ class SystemBackend:
                 "baseManifestSha256": hashes[str(MANIFEST)],
                 "deliveryOverlaySha256": hashes[str(PROACTIVE_MANIFEST)]}
 
+    @classmethod
+    def _voice_settings(cls, environment: dict[str, str]) -> dict[str, str] | None:
+        prefix = "EVA_DASHBOARD_VOICE_"
+        flag = environment.get(prefix + "ENABLED", "false")
+        values = {k: v for k, v in environment.items()
+                  if k.startswith(prefix) and k != prefix + "ENABLED"}
+        if flag == "false" and not values:
+            return None
+        if (flag != "true" or set(values) != {prefix + key for key in ("POLICY_DIR_HOST", "POLICY_SHA256", "OVERLAY_SHA256", "BASE_MANIFEST_SHA256", "DELIVERY_OVERLAY_SHA256", "CONNECTOR_OVERLAY_SHA256")}
+                or values[prefix + "OVERLAY_SHA256"] != _sha256_file(VOICE_MANIFEST)):
+            raise QuiescentCutoverError("voice configuration or overlay differs")
+        if re.fullmatch(r"[0-9a-f]{64}", values[prefix + "POLICY_SHA256"]) is None:
+            raise QuiescentCutoverError("voice policy digest is invalid")
+        for path, key in ((MANIFEST, "BASE_MANIFEST_SHA256"),
+                          (PROACTIVE_MANIFEST, "DELIVERY_OVERLAY_SHA256"),
+                          (CONNECTOR_MANIFEST, "CONNECTOR_OVERLAY_SHA256")):
+            if _sha256_file(path) != values[prefix + key]:
+                raise QuiescentCutoverError("voice baseline manifest differs")
+        directory = Path(values[prefix + "POLICY_DIR_HOST"])
+        try:
+            if not directory.is_absolute() or directory.resolve(strict=True) != directory:
+                raise ValueError("noncanonical directory")
+            metadata = directory.stat()
+            if (not stat.S_ISDIR(metadata.st_mode) or stat.S_IMODE(metadata.st_mode) != 0o700
+                    or metadata.st_uid != 65532):
+                raise ValueError("unsafe directory")
+            names = {item.name for item in directory.iterdir()}
+            if not names <= {"current.json"}:
+                raise ValueError("unexpected policy directory contents")
+            # Empty means revoked. Keep the directory mount so removal survives restart.
+            if names:
+                policy = directory / "current.json"
+                cls._private_file(policy, mode=0o600, uid=65532)
+                if not 0 < policy.stat().st_size <= 65536:
+                    raise ValueError("policy size")
+                if _sha256_file(policy) != values[prefix + "POLICY_SHA256"]:
+                    raise ValueError("policy changed after admission")
+        except (OSError, ValueError) as exc:
+            raise QuiescentCutoverError("voice policy directory is unsafe") from exc
+        return values
+
+    @staticmethod
+    def _verify_voice(inspected: dict[str, Any], settings: dict[str, str] | None) -> None:
+        mounts = [m for m in inspected.get("Mounts", [])
+                  if str(m.get("Destination", "")).startswith("/run/eva/voice")]
+        environment = dict(row.split("=", 1) for row in inspected.get("Config", {}).get("Env", []) if "=" in row)
+        actual = {k: v for k, v in environment.items() if k.startswith("EVA_DASHBOARD_VOICE_")}
+        if settings is None:
+            if mounts or actual:
+                raise QuiescentCutoverError("staged or disabled core exposes voice access")
+            return
+        if (actual != {"EVA_DASHBOARD_VOICE_POLICY_FILE": "/run/eva/voice/current.json"}
+                or len(mounts) != 1 or mounts[0].get("Type") != "bind"
+                or mounts[0].get("Source") != settings["EVA_DASHBOARD_VOICE_POLICY_DIR_HOST"]
+                or mounts[0].get("Destination") != "/run/eva/voice" or mounts[0].get("RW") is not False):
+            raise QuiescentCutoverError("activated voice environment or mount differs")
+
+    def _verify_voice_render(self, slot: SlotSpec, settings: dict[str, str]) -> dict[str, str]:
+        from tools.managed_b_render import validate_dashboard_voice_render
+        environment = self._environment(slot.environment)
+        paths = [MANIFEST, VOICE_MANIFEST, slot.environment]
+        command = [DOCKER, "compose", "--env-file", str(slot.environment),
+                   "--project-name", slot.project, "--profile", "*", "--file", str(MANIFEST)]
+        for enabled, path in ((self._proactive_token(environment) is not None, PROACTIVE_MANIFEST),
+                              (self._connector_settings(environment) is not None, CONNECTOR_MANIFEST)):
+            if enabled:
+                paths.append(path)
+                command.extend(["--file", str(path)])
+        hashes = {str(path): _sha256_file(path) for path in paths}
+        try:
+            baseline = json.loads(self._run([*command, "config", "--format", "json"], extra_env=environment))
+            activated = json.loads(self._run([*command, "--file", str(VOICE_MANIFEST),
+                                             "config", "--format", "json"], extra_env=environment))
+            result = validate_dashboard_voice_render(baseline, activated, settings)
+        except (ValueError, RuntimeError) as exc:
+            raise QuiescentCutoverError("voice Compose render failed closed") from exc
+        if any(_sha256_file(Path(path)) != digest for path, digest in hashes.items()):
+            raise QuiescentCutoverError("voice render inputs changed during verification")
+        return result
+
     def _verify_slot(self, slot: SlotSpec, *, source: bool) -> dict[str, str]:
         environment = self._environment(slot.environment)
         self._proactive_token(environment)
         connector = self._connector_settings(environment)
+        voice = self._voice_settings(environment)
+        if voice is not None:
+            self._verify_voice_render(slot, voice)
         if connector is not None:
             self._verify_connector_render(slot, connector)
         expected = {
@@ -549,6 +633,7 @@ class SystemBackend:
             raise QuiescentCutoverError("active retained slot core is not running")
         if source:
             self._verify_connector(inspected["core"], connector)
+            self._verify_voice(inspected["core"], voice)
         self._private_file(slot.dashboard_token, mode=0o600, uid=65532)
         return environment
 
@@ -694,6 +779,7 @@ class SystemBackend:
         environment = self._environment(slot.environment)
         self._proactive_token(environment)
         self._connector_settings(environment)
+        self._voice_settings(environment)
         compose = [
             DOCKER,
             "compose",
@@ -717,6 +803,7 @@ class SystemBackend:
             )
         self._verify_proactive_mount(inspected, None)
         self._verify_connector(inspected, None)
+        self._verify_voice(inspected, None)
 
     def activate_delivery(self, slot: SlotSpec, dropin: Path) -> bool:
         """Release the credential only after the staged runtime and route passed.
@@ -728,10 +815,12 @@ class SystemBackend:
         environment = self._environment(slot.environment)
         token = self._proactive_token(environment)
         connector = self._connector_settings(environment)
-        if token is None and connector is None:
+        voice = self._voice_settings(environment)
+        if token is None and connector is None and voice is None:
             inspected = self._inspect(slot.core)
             self._verify_proactive_mount(inspected, None)
             self._verify_connector(inspected, None)
+            self._verify_voice(inspected, None)
             return False
         _read_exact_dropin(dropin, slot.url, owner_uid=self.owner_uid)
         loaded = self._run([SYSTEMCTL, "show", SERVICE, "--property=Environment", "--value"])
@@ -746,11 +835,14 @@ class SystemBackend:
             raise QuiescentCutoverError("proactive activation candidate image differs")
         self._verify_proactive_mount(staged, None)
         self._verify_connector(staged, None)
+        self._verify_voice(staged, None)
         overlays = []
         if token is not None:
             overlays.extend(["--file", str(PROACTIVE_MANIFEST)])
         if connector is not None:
             overlays.extend(["--file", str(CONNECTOR_MANIFEST)])
+        if voice is not None:
+            overlays.extend(["--file", str(VOICE_MANIFEST)])
         self._run([
             DOCKER, "compose", "--env-file", str(slot.environment),
             "--project-name", slot.project, "--file", str(MANIFEST),
@@ -762,6 +854,9 @@ class SystemBackend:
             raise QuiescentCutoverError("proactive activation core image differs")
         self._verify_proactive_mount(activated, token)
         self._verify_connector(activated, connector)
+        self._verify_voice(activated, voice)
+        if self._environment(slot.environment) != environment or self._voice_settings(environment) != voice:
+            raise QuiescentCutoverError("voice activation binding changed during recreation")
         self.verify_runtime(slot)
         return token is not None
 

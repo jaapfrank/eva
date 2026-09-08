@@ -7,6 +7,7 @@ from __future__ import annotations
 
 from collections.abc import Callable
 from datetime import UTC, datetime, timedelta
+from pathlib import Path
 from typing import Literal
 from urllib.parse import urlsplit
 from uuid import UUID, uuid4
@@ -89,6 +90,11 @@ def build_dashboard_voice(
         return None
     if not settings.dashboard_access_token or not settings.dashboard_principal_binding_id:
         raise ValueError("voice requires an authenticated dashboard owner")
+    try:
+        Path(path).lstat()
+    except FileNotFoundError:
+        # Removal revokes voice, including after a core restart. Other channels stay usable.
+        return None
     policy = _read_policy(path)
     expected_scope = (
         settings.background_tenant_id, settings.background_installation_id,

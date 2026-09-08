@@ -197,6 +197,45 @@ def validate_mcp_gateway_render(
             "activatedSha256": _sha256(_canonical_json(activated))}
 
 
+def validate_dashboard_voice_render(
+    baseline: object, activated: object, settings: dict[str, str],
+) -> dict[str, str]:
+    """Admit only the voice policy mount, preserving all other overlays."""
+    if (not isinstance(baseline, dict) or not isinstance(activated, dict)
+            or _contains_unresolved_interpolation(baseline)
+            or _contains_unresolved_interpolation(activated)):
+        raise RuntimeError("voice render is invalid or unresolved")
+    before, after = copy.deepcopy(baseline), copy.deepcopy(activated)
+    try:
+        original, core = before["services"]["core"], after["services"]["core"]
+        prefix = "EVA_DASHBOARD_VOICE_"
+        if any(key.startswith(prefix) for key in original["environment"]):
+            raise ValueError("baseline voice environment")
+        actual = {key: value for key, value in core["environment"].items()
+                  if key.startswith(prefix)}
+        if actual != {prefix + "POLICY_FILE": "/run/eva/voice/current.json"}:
+            raise ValueError("voice environment")
+        del core["environment"][prefix + "POLICY_FILE"]
+        mount = {"type": "bind", "source": settings[prefix + "POLICY_DIR_HOST"],
+                 "target": "/run/eva/voice", "read_only": True, "bind": {}}
+        matching = [item for item in core["volumes"]
+                    if str(item.get("target", "")).startswith(mount["target"])]
+        if len(matching) != 1:
+            raise ValueError("voice mount count")
+        rendered = copy.deepcopy(matching[0])
+        if rendered.get("bind", {}).get("create_host_path") is False:
+            del rendered["bind"]["create_host_path"]
+        if rendered != mount:
+            raise ValueError("voice mount")
+        core["volumes"].remove(matching[0])
+        if before != after:
+            raise ValueError("unrelated Compose mutation")
+    except (KeyError, TypeError, AttributeError, ValueError) as exc:
+        raise RuntimeError("voice render differs from its exact allowed delta") from exc
+    return {"baselineSha256": _sha256(_canonical_json(baseline)),
+            "activatedSha256": _sha256(_canonical_json(activated))}
+
+
 def _run(command: list[str], environment: dict[str, str]) -> str:
     try:
         completed = subprocess.run(

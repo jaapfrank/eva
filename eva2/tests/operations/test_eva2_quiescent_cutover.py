@@ -912,3 +912,153 @@ def test_first_connector_activation_rolls_back_to_disabled_source_without_telegr
     assert backend.active_connectors == set()
     assert backend.route == canonical_dropin(_slot(3).url)
     assert backend.calls.index("snapshot:4:automatic-rollback") < backend.calls.index("restore:3:reverse") < backend.calls.index("activate-delivery:3")
+
+
+@pytest.mark.parametrize("mutation", [None, "revoked", "changed", "overlay", "baseline", "extra_file", "directory_mode", "file_mode", "symlink", "disabled_config"])
+def test_voice_activation_pins_policy_and_private_directory(monkeypatch, tmp_path, mutation):
+    import hashlib
+    from types import SimpleNamespace
+    from tools.eva2_quiescent_cutover import VOICE_MANIFEST, MANIFEST, CONNECTOR_MANIFEST
+    directory = tmp_path / "voice"
+    directory.mkdir(mode=0o700)
+    policy = directory / "current.json"
+    policy.write_text('{"synthetic":"policy"}')
+    policy.chmod(0o600)
+    prefix = "EVA_DASHBOARD_VOICE_"
+    values = {prefix + "ENABLED": "true", prefix + "POLICY_DIR_HOST": str(directory),
+              prefix + "POLICY_SHA256": hashlib.sha256(policy.read_bytes()).hexdigest()}
+    for path, key in ((VOICE_MANIFEST, "OVERLAY_SHA256"), (MANIFEST, "BASE_MANIFEST_SHA256"),
+                      (PROACTIVE_MANIFEST, "DELIVERY_OVERLAY_SHA256"), (CONNECTOR_MANIFEST, "CONNECTOR_OVERLAY_SHA256")):
+        values[prefix + key] = hashlib.sha256(path.read_bytes()).hexdigest()
+    original_stat = Path.stat
+    def metadata(path, **kwargs):
+        actual = original_stat(path, **kwargs)
+        return SimpleNamespace(st_mode=actual.st_mode, st_uid=65532) if path == directory else actual
+    monkeypatch.setattr(Path, "stat", metadata)
+    original_private = SystemBackend._private_file
+    monkeypatch.setattr(SystemBackend, "_private_file", staticmethod(lambda path, mode, uid: original_private(path, mode=mode, uid=os.getuid())))
+    if mutation == "revoked":
+        policy.unlink()
+    if mutation == "changed":
+        policy.write_text('{"synthetic":"expanded grant"}')
+    if mutation == "overlay":
+        values[prefix + "OVERLAY_SHA256"] = "0" * 64
+    if mutation == "baseline":
+        values[prefix + "BASE_MANIFEST_SHA256"] = "0" * 64
+    if mutation == "extra_file":
+        (directory / "secret").write_text("must not mount")
+    if mutation == "directory_mode":
+        directory.chmod(0o755)
+    if mutation == "file_mode":
+        policy.chmod(0o644)
+    if mutation == "symlink":
+        policy.unlink()
+        policy.symlink_to(tmp_path / "missing")
+    if mutation == "disabled_config":
+        values[prefix + "ENABLED"] = "false"
+    if mutation not in {None, "revoked"}:
+        with pytest.raises(QuiescentCutoverError):
+            SystemBackend._voice_settings(values)
+    else:
+        assert SystemBackend._voice_settings(values) is not None
+    assert SystemBackend._voice_settings({}) is None
+
+
+@pytest.mark.parametrize("others", [False, True])
+@pytest.mark.parametrize("failure", [None, "staging_leak", "writable", "wrong_path", "policy_race", "environment_race"])
+def test_voice_is_withheld_until_managed_activation(monkeypatch, tmp_path, others, failure):
+    from tools.eva2_quiescent_cutover import VOICE_MANIFEST, CONNECTOR_MANIFEST
+    slot = _slot(3)
+    image = "sha256:" + "a" * 64
+    settings = {"EVA_DASHBOARD_VOICE_POLICY_DIR_HOST": "/private/voice"}
+    active = False
+    commands = []
+    def environment(_):
+        result = {"EVA_LIVING_CORE_IMAGE": "eva/core@" + image}
+        if active and failure == "environment_race":
+            result["CHANGED_AFTER_ADMISSION"] = "true"
+        return result
+    def voice_settings(cls, env):
+        if active and failure == "policy_race":
+            raise QuiescentCutoverError("voice policy changed after admission")
+        return settings
+    monkeypatch.setattr(SystemBackend, "_environment", staticmethod(environment))
+    monkeypatch.setattr(SystemBackend, "_voice_settings", classmethod(voice_settings))
+    monkeypatch.setattr(SystemBackend, "_connector_settings", classmethod(lambda cls, env: {} if others else None))
+    monkeypatch.setattr(SystemBackend, "_proactive_token", staticmethod(lambda env: tmp_path / "token" if others else None))
+    monkeypatch.setattr(SystemBackend, "_verify_connector", staticmethod(lambda *args: None))
+    monkeypatch.setattr(SystemBackend, "_verify_proactive_mount", staticmethod(lambda *args: None))
+    def inspect(_):
+        result = {"Image": image, "Config": {"Env": []}, "Mounts": []}
+        if active or failure == "staging_leak":
+            result["Config"]["Env"] = ["EVA_DASHBOARD_VOICE_POLICY_FILE=/run/eva/voice/current.json"]
+            result["Mounts"] = [{"Type": "bind", "Source": "/wrong" if failure == "wrong_path" else "/private/voice", "Destination": "/run/eva/voice", "RW": failure == "writable"}]
+        return result
+    def run(command, **kwargs):
+        nonlocal active
+        commands.append(command)
+        if "--property=Environment" in command:
+            return "EVA2_CANARY_URL=" + slot.url
+        if "--property=ActiveState" in command:
+            return "inactive"
+        if "up" in command and command[-1] == "core":
+            active = str(VOICE_MANIFEST) in command
+            if active:
+                assert (str(CONNECTOR_MANIFEST) in command) is others
+                assert (str(PROACTIVE_MANIFEST) in command) is others
+        return ""
+    monkeypatch.setattr(SystemBackend, "_inspect", staticmethod(inspect))
+    monkeypatch.setattr(SystemBackend, "_run", staticmethod(run))
+    monkeypatch.setattr(SystemBackend, "_wait_container", staticmethod(lambda _: None))
+    monkeypatch.setattr(SystemBackend, "_ready", staticmethod(lambda _: True))
+    monkeypatch.setattr(SystemBackend, "verify_runtime", lambda *args: None)
+    backend = SystemBackend(owner_uid=os.getuid())
+    if failure == "staging_leak":
+        with pytest.raises(QuiescentCutoverError, match="voice access"):
+            backend.start_writers(slot)
+        assert not active
+        return
+    backend.start_writers(slot)
+    assert not active
+    dropin = tmp_path / "route"
+    dropin.write_bytes(canonical_dropin(slot.url))
+    dropin.chmod(0o644)
+    if failure:
+        with pytest.raises(QuiescentCutoverError, match="voice"):
+            backend.activate_delivery(slot, dropin)
+    else:
+        assert backend.activate_delivery(slot, dropin) is others
+    assert active
+
+
+def test_voice_only_cutover_failure_preserves_new_data_before_disabling_voice(tmp_path):
+    class VoiceBackend(FakeBackend):
+        def __init__(self):
+            super().__init__(tmp_path, fail_at="start-eva1:4")
+            self.voice_slots = set()
+            self.activations = []
+
+        def stop_writers(self, slot):
+            super().stop_writers(slot)
+            self.voice_slots.discard(slot.number)
+
+        def start_writers(self, slot):
+            super().start_writers(slot)
+            assert slot.number not in self.voice_slots
+
+        def activate_delivery(self, slot, dropin):
+            self._call(f"activate-delivery:{slot.number}")
+            assert self.route == canonical_dropin(slot.url)
+            if slot.number == 4:
+                self.voice_slots.add(slot.number)
+            self.activations.append(slot.number)
+            return False  # Voice-only activation still needs reverse data sync.
+
+    backend = VoiceBackend()
+    with pytest.raises(QuiescentCutoverError, match="start-eva1:4"):
+        quiescent_cutover(source_slot=3, target_slot=4, backend=backend,
+                          dropin=tmp_path / "route", workspace=tmp_path)
+    assert backend.activations == [4, 3]
+    assert backend.voice_slots == set()
+    assert backend.route == canonical_dropin(_slot(3).url)
+    assert backend.calls.index("snapshot:4:automatic-rollback") < backend.calls.index("restore:3:reverse") < backend.calls.index("activate-delivery:3")

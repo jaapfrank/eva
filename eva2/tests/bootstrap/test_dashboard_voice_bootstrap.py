@@ -170,3 +170,21 @@ def test_runtime_scope_identifiers_need_not_be_administration_uuids(tmp_path):
     session = config.issue_session()
     assert (session.tenant_id, session.installation_id) == ("runtime:tenant", "runtime:installation")
     config.check(session)
+
+
+def test_deleted_policy_disables_voice_on_restart_and_keeps_old_session_revoked(tmp_path):
+    path, _, settings, identity = setup(tmp_path)
+    config = build(settings, identity)
+    session = config.issue_session()
+    path.unlink()
+    with pytest.raises(ValueError):
+        config.check(session)
+    assert build(settings, identity) is None
+
+
+def test_dangling_policy_symlink_is_invalid_not_missing_configuration(tmp_path):
+    path, _, settings, identity = setup(tmp_path)
+    path.unlink()
+    path.symlink_to(tmp_path / "missing")
+    with pytest.raises(ValueError):
+        build(settings, identity)

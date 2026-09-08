@@ -340,3 +340,38 @@ def test_connector_render_accepts_only_exact_approved_delta(tamper):
         assert set(receipt) == {"baselineSha256", "activatedSha256"}
         assert all(len(value) == 64 for value in receipt.values())
     assert activated == original
+
+
+@pytest.mark.parametrize("mutation", [None, "writable", "file_bind", "extra_env", "other_service", "network", "auto_create", "duplicate"])
+def test_voice_overlay_preserves_every_other_binding(mutation):
+    import copy
+    from tools.managed_b_render import validate_dashboard_voice_render
+    baseline = {"services": {"core": {"environment": {"EVA_MCP_GATEWAY_URL": "http://gateway", "EVA_TELEGRAM_BOT_TOKEN_FILE": "/secret"},
+                                      "volumes": [{"type": "bind", "source": "/connector", "target": "/run/eva/connectors/mcp"}],
+                                      "networks": {"mcp-gateway": {}}},
+                             "postgres": {"image": "unchanged"}}, "networks": {"mcp-gateway": {"external": True}}}
+    activated = copy.deepcopy(baseline)
+    core = activated["services"]["core"]
+    core["environment"]["EVA_DASHBOARD_VOICE_POLICY_FILE"] = "/run/eva/voice/current.json"
+    mount = {"type": "bind", "source": "/private/voice", "target": "/run/eva/voice", "read_only": True, "bind": {"create_host_path": False}}
+    core["volumes"].append(mount)
+    if mutation == "writable":
+        mount["read_only"] = False
+    if mutation == "file_bind":
+        mount["source"] += "/current.json"
+    if mutation == "extra_env":
+        core["environment"]["EVA_DASHBOARD_VOICE_OTHER"] = "true"
+    if mutation == "other_service":
+        activated["services"]["postgres"]["image"] = "changed"
+    if mutation == "network":
+        activated["networks"]["mcp-gateway"]["external"] = False
+    if mutation == "auto_create":
+        mount["bind"]["create_host_path"] = True
+    if mutation == "duplicate":
+        core["volumes"].append(copy.deepcopy(mount))
+    settings = {"EVA_DASHBOARD_VOICE_POLICY_DIR_HOST": "/private/voice"}
+    if mutation:
+        with pytest.raises(RuntimeError, match="voice render"):
+            validate_dashboard_voice_render(baseline, activated, settings)
+    else:
+        assert validate_dashboard_voice_render(baseline, activated, settings)["activatedSha256"]
