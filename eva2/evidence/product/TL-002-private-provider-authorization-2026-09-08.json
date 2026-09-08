@@ -1,0 +1,77 @@
+{
+  "contract": "EvaProductDevelopmentEvidence/v1",
+  "taskId": "TL-002",
+  "date": "2026-09-08",
+  "status": "authorization_built_targeted_tests_passed_not_live",
+  "sourceHashes": {
+    "eva2/src/eva/providers/mcp_gateway.py": "6dc0f801d4c25ee7b47c4eee30317a89acc7f7476954530a6145ab87683ce045",
+    "eva2/src/eva/adapters/postgres/external_conversation_tools.py": "5edd4431b24455f8c7bdd2050bb9214965719faa52e2086fd82961424a619541",
+    "eva2/tests/connectors/test_mcp_gateway_provider.py": "2bafa5fb8cc6ce87e4553c36716bc08d7d548acf0d9f583a471b6fa3d3f8970d",
+    "eva2/tests/postgres/test_operational_timeline.py": "5333941d420c7b2e259ed1a2ccec9a4aa4ddee10f9aa54e48eb21bae460477e9"
+  },
+  "tests": {
+    "count": 18,
+    "failures": 0,
+    "errors": 0,
+    "junitSha256": "fb9c772ca192817a0755e5a023a3eda573a3fd2f9c303285f207ff25f90ac8da",
+    "receiptPath": "/tmp/eva2-tl002-auth2.kz_ukesb/results.xml"
+  },
+  "finding": "Active installation configures HomeAssistant only; second MCP provider must be integrated with explicit private-person authority.",
+  "built": [
+    "Explicit MCP principal SHA256 allowlist required before secret files are read.",
+    "Private audience required even for an allowed principal.",
+    "Provider-neutral authorization at execute, stored pending result access, recovered dispatch and observation."
+  ],
+  "pending": [
+    "Durable filesystem/gateway deployment and two-real-provider proof",
+    "Release and safe A/B rollout"
+  ],
+  "nonclaims": [
+    "No filesystem provider connected live.",
+    "Tests use synthetic principals/providers and disposable database.",
+    "No new file access or household action performed.",
+    "Allowlist is loaded on startup; changing an environment file alone is not dynamic revocation."
+  ],
+  "originalTests": {
+    "count": 18,
+    "failures": 0,
+    "errors": 0,
+    "junitSha256": "f4a04895fb04a1c44a2230253a18dabd8cc50709965f666d51d30b062ee84b20",
+    "receiptPath": "/tmp/eva2-tl002-auth.v71wgqaj/results.xml"
+  },
+  "reviewRepair": {
+    "finding": "Authorization before provider ownership check could block another provider sharing the indexed step slot.",
+    "change": "Check admitted provider identity under lock before its authorization; unrelated provider pending returns None.",
+    "regression": "Denied unrelated provider cannot intercept another provider step0/1/4 replay; owner route still returns exact receipt."
+  },
+  "review": {
+    "reviewer": "/root/co006_review",
+    "decision": "bounded GO for authorization prerequisite; no live/second-provider acceptance"
+  },
+  "temporaryDatabasesRemoved": true,
+  "offeringFilter": {
+    "tests": 47,
+    "junitSha256": "992c5f93af61570d43eedd1d69764f2a0c6ae03e04860a309b3516655109f33b",
+    "reviewer": "/root/co006_review",
+    "review": "bounded GO",
+    "sourceHashes": {
+      "eva2/src/eva/adapters/postgres/conversation_actions.py": "352aa0dd6734828a1626efe32aa6980269c07da7153817ddaa862e67b017ad34",
+      "eva2/src/eva/adapters/postgres/external_conversation_tools.py": "ef4f70c6f8c2283a69264cfaa6777eabf25aa8b2d32f5234e911e7978f502161",
+      "eva2/tests/connectors/test_mcp_gateway_provider.py": "af56d9ac2e1a4c4b5481ae6cac92efa3c4a2db9eb9d16d9410c9a7fb27ecb20a"
+    }
+  },
+  "interruptedRecovery": {
+    "status": "passed",
+    "tests": 5,
+    "junitSha256": "638763860f989fe6ed49cc22a1eb211255467c7eacff7807aa5defa85cb99bc7",
+    "junit": "<?xml version=\"1.0\" encoding=\"utf-8\"?><testsuites name=\"pytest tests\"><testsuite name=\"pytest\" errors=\"0\" failures=\"0\" skipped=\"0\" tests=\"5\" time=\"1.679\" timestamp=\"2026-09-08T12:39:57.806276+02:00\" hostname=\"JAAP\"><testcase classname=\"tests.postgres.test_operational_timeline\" name=\"test_external_effect_provider_is_durable_and_not_repeated_after_restart[0]\" time=\"0.686\" /><testcase classname=\"tests.postgres.test_operational_timeline\" name=\"test_external_effect_provider_is_durable_and_not_repeated_after_restart[1]\" time=\"0.064\" /><testcase classname=\"tests.postgres.test_operational_timeline\" name=\"test_external_effect_provider_is_durable_and_not_repeated_after_restart[2]\" time=\"0.061\" /><testcase classname=\"tests.postgres.test_operational_timeline\" name=\"test_external_tool_restart_uses_durable_separate_observation_command[0]\" time=\"0.044\" /><testcase classname=\"tests.postgres.test_operational_timeline\" name=\"test_external_tool_restart_uses_durable_separate_observation_command[1]\" time=\"0.296\" /></testsuite></testsuites>",
+    "sourceSha256": "cf602c66a71854cff7a6d9f0dd0e17ae39fcf7d641dd707e617611e380f371ff",
+    "databaseRemoved": true,
+    "initialInvocationFailure": "First wrapper omitted PYTHONPATH; no tests collected; disposable database removed.",
+    "coverage": "After simulated provider exit137, revoked authorization blocks pending and execute without observation. Reauthorization resumes via durable readback, no second execute; step0/1.",
+    "review": {
+      "reviewer": "/root/co006_review",
+      "decision": "bounded_GO"
+    }
+  }
+}

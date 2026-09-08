@@ -1,0 +1,77 @@
+{
+  "taskId": "TL-002",
+  "status": "household_inventory_live_tl002_still_open",
+  "sourceCommit": "a986b062d24ac7ee0fa654b473af867e586e6402",
+  "imageId": "sha256:541762487caf441a2755997a5b5a1ed31fd2cafae794dfc4f84858e862fc3f43",
+  "deployedAt": "2026-09-08T12:00:51.609846+00:00",
+  "sourceSlot": 4,
+  "activeSlot": 3,
+  "port": 44710,
+  "releaseTestsPassed": 2044,
+  "installedTestsPassed": 124,
+  "releaseAdmissionSha256": "9f77da41f011f9aa55b347f699723cf7f0c12a314cda610e40732ae269417fd5",
+  "dataPreserved": {
+    "operationalTables": 48,
+    "memoryTables": 23,
+    "sourceWritersStopped": true,
+    "targetReady": true
+  },
+  "bottieHttpStatuses": {
+    "/": 200,
+    "/api/capabilities": 200,
+    "/api/health": 200,
+    "/api/overview": 200,
+    "/api/workstatus": 200
+  },
+  "liveInventory": {
+    "status": "passed",
+    "counts": {
+      "areas": 18,
+      "devices": 328,
+      "entities": 2469,
+      "automations": 17
+    },
+    "snapshotSha256": "e2fce0aba5cc58d57cc7d7c129ef5f917dc35873e5e6554d425c32e10f15e76e",
+    "readOnly": true,
+    "modelCalls": 0,
+    "telegramSends": 0,
+    "scope": "Installed provider direct read with live credentials; user conversation proven separately on identical source.",
+    "imageId": "sha256:541762487caf441a2755997a5b5a1ed31fd2cafae794dfc4f84858e862fc3f43",
+    "sourceCommit": "a986b062d24ac7ee0fa654b473af867e586e6402",
+    "probeSha256": "7e5f72870c0531b1bc12d1081be36e71c55043068f8440793232fb445be11cbf"
+  },
+  "liveReplay": {
+    "imageId": "sha256:541762487caf441a2755997a5b5a1ed31fd2cafae794dfc4f84858e862fc3f43",
+    "limits": "Existing developer turn through actual private client after cutover; no new human Telegram network roundtrip, novel answer or positive initiative claimed.",
+    "messageIdSha256": "c2b7446af3bd1a6f014dea42ebd8a7d8215c47f0d219aeb807281e78f22b691f",
+    "newConversationModelCalls": 0,
+    "originalUsageUnchanged": {
+      "inputTokens": 3528,
+      "measurement": "measured",
+      "modelAttempts": 1,
+      "outputTokens": 9,
+      "provider": "chatgpt-codex:gpt-6-astra",
+      "toolCalls": 0
+    },
+    "port": 44710,
+    "probeSha256": "4d7c2c59ad6892eae58a0cbce64412c31c65967cc5f13e0645776dde7647dec4",
+    "replySha256": "00da393e91c7b4145d4a810a4dd0dfc204251357065ef4890c06dfaade1c32fd",
+    "sourceCommit": "a986b062d24ac7ee0fa654b473af867e586e6402",
+    "status": "exact_existing_reply_replayed",
+    "telegramMessagesSentByProbe": 0
+  },
+  "sourceReview": "Independent bounded GO /root/co006_review",
+  "releaseReview": "Independent GO for exact admission and plan /root/co006_review",
+  "liveReview": {
+    "reviewedBy": "/root/co006_review",
+    "decision": "bounded technical live GO",
+    "verified": "slot3 healthy with exact image/source and route44710; slot4 stopped and retained; configuration hashes, cutover, existing reply and installed HA reader receipts verified",
+    "nonclaims": "No new live user conversation, human acceptance or full TL-002 completion"
+  },
+  "remaining": [
+    "Durable second provider must be deployed for full TL-002 closure.",
+    "Human usefulness and family acceptance are not inferred.",
+    "No complete automation logic claim: prior user-case read15of17 configurations, projected logic may omit templates and service data."
+  ],
+  "privateStage": "/tmp/eva2-tl002-release.ubll0hjy"
+}

@@ -30,12 +30,25 @@ Klaar betekent:
 - `eva2/src/eva/adapters/postgres/external_conversation_tools.py`
 - `eva2/tests/connectors/test_provider_runtime.py`
 - `eva2/tests/postgres/test_operational_timeline.py`
+- `eva2/src/eva/providers/mcp_gateway.py`
+- `eva2/tests/connectors/test_mcp_gateway_provider.py`
+- `eva2/src/eva/adapters/postgres/conversation_actions.py`
+- `eva2/src/eva/adapters/connectors/home_assistant_admin.py`
+- `eva2/src/eva/providers/home_assistant.py`
+- `eva2/tests/connectors/test_home_assistant_live_adapters.py`
+- `eva2/src/eva/adapters/model/pydantic_conversation.py`
+- `eva2/tests/model/test_pydantic_conversation_model.py`
+- `eva2/release/managed-b-release-input-authority-v1.json`
+- `eva2/release/eva-cockpit-evidence-index-v1.json`
 
 Echte controles:
 
 - `pytest -q tests/connectors/test_provider_runtime.py`
 - `pytest -q tests/postgres/test_operational_timeline.py`
 - `python3 tools/check_current_workboard.py`
+- `pytest -q tests/connectors/test_mcp_gateway_provider.py`
+- `pytest -q tests/connectors/test_home_assistant_live_adapters.py`
+- `pytest -q tests/model/test_pydantic_conversation_model.py`
 
 </details>
 

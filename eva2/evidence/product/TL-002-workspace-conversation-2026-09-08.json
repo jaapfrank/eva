@@ -1,0 +1,182 @@
+{
+  "contract": "EvaProductDevelopmentEvidence/v1",
+  "taskId": "TL-002",
+  "date": "2026-09-08",
+  "status": "real_conversation_workspace_prototype_passed_not_live",
+  "sourceHashes": {
+    "eva2/src/eva/providers/mcp_gateway.py": "6dc0f801d4c25ee7b47c4eee30317a89acc7f7476954530a6145ab87683ce045",
+    "eva2/src/eva/adapters/postgres/external_conversation_tools.py": "ef4f70c6f8c2283a69264cfaa6777eabf25aa8b2d32f5234e911e7978f502161",
+    "eva2/src/eva/adapters/postgres/conversation_actions.py": "352aa0dd6734828a1626efe32aa6980269c07da7153817ddaa862e67b017ad34",
+    "eva2/src/eva/adapters/connectors/mcp_gateway.py": "a4d752d0a8421251ba1165df43db24dc011c1d34f13010d25b131e211fa91ccd",
+    "eva2/src/eva/providers/runtime.py": "ef230e6e7b40890f29b76e6eb450294e88932662a5ca0fc7824a521c79c35336"
+  },
+  "result": {
+    "taskId": "TL-002",
+    "status": "passed",
+    "names": {
+      "fs": "eva2-tl002-7267d0b4a359-fs",
+      "gateway": "eva2-tl002-7267d0b4a359-gateway",
+      "files": "eva2-tl002-7267d0b4a359-files",
+      "database": "eva2-tl002-7267d0b4a359-database",
+      "secrets": "eva2-tl002-7267d0b4a359-secrets",
+      "network": "eva2-tl002-7267d0b4a359-network"
+    },
+    "images": {
+      "filesystem": "sha256:bd31ea2dde76561fe662a551756f939e9007048956c300e54ad49a8c18ddfdc4",
+      "gateway": "sha256:daf923c247fd569df5f8c9ee418cbc259fade564f78e0a0852937139a181c4dd"
+    },
+    "operatorSha256": "a8dc2a31ea327a54f70850669c0c2c3f3b40893a7bb80863df6bdeb09527d3be",
+    "network": "new internal only; no published ports",
+    "scope": "Real Eva conversation with official filesystem provider in isolated workspace; no household data, HomeAssistant effect or live deployment.",
+    "conversation": {
+      "reply": "Opgeslagen in `/proof-state/gezinsplan.txt` en gecontroleerd door teruglezen: de inhoud komt exact overeen, inclusief de afsluitende newline.",
+      "usage": {
+        "input_tokens": 3171,
+        "measurement": "measured",
+        "model_attempts": 2,
+        "output_tokens": 139,
+        "tool_calls": 1
+      },
+      "seconds": 11.752044452994596,
+      "toolName": "bewaar_document_7267d0b4a359",
+      "replayEqual": true
+    },
+    "write": {
+      "throughEvaConversation": true
+    },
+    "readBefore": {
+      "id": "read-before",
+      "jsonrpc": "2.0",
+      "result": {
+        "content": [
+          {
+            "text": "Eva werkmapproef: een plan opslaan, teruglezen en na herstart behouden.\n",
+            "type": "text"
+          }
+        ],
+        "isError": false,
+        "structuredContent": {
+          "content": "Eva werkmapproef: een plan opslaan, teruglezen en na herstart behouden.\n"
+        }
+      }
+    },
+    "readAfter": {
+      "id": "read-after",
+      "jsonrpc": "2.0",
+      "result": {
+        "content": [
+          {
+            "text": "Eva werkmapproef: een plan opslaan, teruglezen en na herstart behouden.\n",
+            "type": "text"
+          }
+        ],
+        "isError": false,
+        "structuredContent": {
+          "content": "Eva werkmapproef: een plan opslaan, teruglezen en na herstart behouden.\n"
+        }
+      }
+    },
+    "independentContentSha256": "700364ebf94410cfad96f76a7bf5d8789bbf0763a21b24a5bc065f912d0b9e97",
+    "gatewayRegistrationPreserved": true,
+    "providerRestartPreservedContent": true,
+    "temporaryResourcesRemoved": true
+  },
+  "runner": "import hashlib, importlib.util, json, secrets, subprocess\nfrom pathlib import Path\nimport yaml\nroot=Path('/home/administrator/project/Eva2/eva2')\nstage=Path(__file__).parent\npath=root/'experiments/tool01-replacement-acceptance-v2/run_physical_acceptance.py'\nspec=importlib.util.spec_from_file_location('workspace_existing_operator',path);h=importlib.util.module_from_spec(spec);spec.loader.exec_module(h)\nnonce=secrets.token_hex(6);prefix='eva2-tl002-'+nonce\nnames={k:prefix+'-'+k for k in ('fs','gateway','files','database','secrets','network')}\ncf='sha256:daf923c247fd569df5f8c9ee418cbc259fade564f78e0a0852937139a181c4dd'\nfs=h._docker_json('image','inspect','eva2/filesystem-mcp-mutation:2026.8.31-efdae0b')[0]['Id']\nconfig=yaml.safe_load((root/'experiments/contextforge-gateway-v1/compose.yml').read_text())['services']['contextforge']\npassword=secrets.token_urlsafe(32)\nsecret_files={k:(secrets.token_urlsafe(40).encode(),10001,10001,0o400) for k in ['contextforge-jwt','contextforge-encryption','filesystem-jwt','filesystem-encryption']}\nfor k in ('contextforge-admin-password','filesystem-admin-password'):secret_files[k]=(password.encode(),10001,10001,0o400)\nresult={'taskId':'TL-002','status':'started','names':names,'images':{'filesystem':fs,'gateway':cf},'operatorSha256':hashlib.sha256(path.read_bytes()).hexdigest(),'network':'new internal only; no published ports','scope':'Real Eva conversation with official filesystem provider in isolated workspace; no household data, HomeAssistant effect or live deployment.'}\n(stage/'invocation.json').write_text(json.dumps(result,indent=2))\ncontainers=[];volumes=[];networks=[]\ntry:\n for kind,keys in [('container',('fs','gateway')),('volume',('files','database','secrets')),('network',('network',))]:\n  for k in keys:h._require_docker_resource_absent(kind,names[k])\n h._docker('network','create','--internal','--label','eva2.task=TL-002',names['network']);networks.append(names['network'])\n for k in ('files','database','secrets'):\n  h._docker('volume','create','--label','eva2.task=TL-002',names[k]);volumes.append(names[k])\n  h._init_volume(helper_image=cf,volume=names[k],container_name=prefix+'-init-'+k,run_id=prefix,files=secret_files if k=='secrets' else {},directory_owner=(10001,10001,0o700))\n base=['run','--detach','--pull','never','--read-only','--cap-drop','ALL','--security-opt','no-new-privileges','--pids-limit','256','--memory','768m','--network',names['network'],'--label','eva2.task=TL-002','--tmpfs','/tmp:rw,noexec,nosuid,nodev,size=256m,uid=10001,gid=10001,mode=0700','--mount',f'type=volume,src={names[\"secrets\"]},dst=/run/secrets,readonly']\n args=base+['--name',names['fs'],'--network-alias','proof-filesystem','--no-healthcheck','--mount',f'type=volume,src={names[\"files\"]},dst=/proof-state']\n for suffix,key in [('JWT_SECRET','filesystem-jwt'),('ENCRYPTION_SECRET','filesystem-encryption'),('ADMIN_PASSWORD','filesystem-admin-password')]:args+=['--env',f'EVA_CONTEXTFORGE_{suffix}_FILE=/run/secrets/{key}']\n h._docker(*args,fs);containers.append(names['fs']);h._wait_filesystem_mcp(names['fs'])\n env=dict(config['environment']);env.update(DATABASE_URL='sqlite:////data/contextforge.db',SSRF_ALLOW_PRIVATE_NETWORKS='true',CACHE_TYPE='none')\n args=base+['--name',names['gateway'],'--network-alias','contextforge','--mount',f'type=volume,src={names[\"database\"]},dst=/data','--mount',f'type=bind,src={root}/experiments/contextforge-gateway-v1/start-contextforge.sh,dst=/run/eva2/start-contextforge.sh,readonly']\n for k,v in env.items():args+=['--env',f'{k}={v}']\n h._docker(*args,'--entrypoint','/bin/sh',cf,'/run/eva2/start-contextforge.sh');containers.append(names['gateway']);h._wait_contextforge(names['gateway'])\n token=h._login_contextforge(names['gateway'],password)\n gid=h._register_gateway(names['gateway'],token,name='workspace_'+nonce,url='http://proof-filesystem:9000/mcp')\n selected={k:h._make_tool_public(names['gateway'],token,h._wait_gateway_tool(names['gateway'],token,gateway_id=gid,original_name=k)) for k in ('write_file','read_text_file')}\n filename='/proof-state/gezinsplan.txt';content='Eva werkmapproef: een plan opslaan, teruglezen en na herstart behouden.\\n'\n def call(name,args,phase):\n  r=h._gateway_request(names['gateway'],'POST','/rpc',token=token,payload={'jsonrpc':'2.0','id':phase,'method':'tools/call','params':{'name':selected[name]['name'],'arguments':args}})\n  assert not r.get('error') and not r['result'].get('isError'), 'upstream tool rejected request'\n  return r\n\n import sys, os, time\n sys.path.insert(0,str(root));sys.path.insert(0,str(root/'src'))\n import sqlalchemy as sa\n import psycopg\n from psycopg import sql\n from alembic.config import Config\n from tests.postgres.test_operational_timeline import _upgrade\n from eva.adapters.connectors.mcp_gateway import mcp_gateway_catalog_binding\n from eva.providers.mcp_gateway import McpGatewayProviderSettings, McpGatewayProviderFactory, parse_mcp_gateway_catalog\n from eva.adapters.model.pydantic_conversation import PydanticConversationModel\n from eva.adapters.postgres.conversation_actions import PostgresConversationActions\n from eva.application.conversation import LivingConversation, IdentityProfile, ConversationTurn\n from eva.application.memory import PresenceMemory\n from eva.contracts.memory import MemoryRecall\n from eva.contracts.canonical_json import canonical_sha256\n from eva.bootstrap.runtime import PostgresHindsightMemoryRuntime\n from datetime import datetime, UTC\n os.chdir(root)\n database='eva2_living_disposable_tl002_conversation_'+nonce\n socket='/tmp/eva2-co006-memory.JxnTze/pgsocket'\n with psycopg.connect(host=socket,user='postgres',dbname='postgres',autocommit=True) as connection:\n  connection.execute(sql.SQL('CREATE DATABASE {}').format(sql.Identifier(database)))\n dsn='postgresql+psycopg://postgres@/'+database+'?host='+socket\n engine=sa.create_engine(dsn);config=Config('alembic.ini');config.set_main_option('sqlalchemy.url',dsn);_upgrade(engine,config)\n address=h._docker_json('inspect',names['gateway'])[0]['NetworkSettings']['Networks'][names['network']]['IPAddress']\n tool={'eva_name':'bewaar_document_'+nonce,'description':'Schrijf een document in de beschikbare eigen werkmap. De dienst leest het bestand onafhankelijk terug en bevestigt de opgeslagen inhoud.','completion_guidance':'Bevestig opslaan alleen op grond van de geverifieerde inhoud.','input_schema':{'type':'object','properties':{'path':{'type':'string','enum':[filename]},'content':{'type':'string','maxLength':12000}},'required':['path','content'],'additionalProperties':False},'execute_catalog_name':selected['write_file']['name'],'execute_catalog_sha256':canonical_sha256(mcp_gateway_catalog_binding(selected['write_file'],contract='EvaMcpGatewayProvider/v2')),'execute_tool_name':selected['write_file']['name'],'observe_catalog_name':selected['read_text_file']['name'],'observe_catalog_sha256':canonical_sha256(mcp_gateway_catalog_binding(selected['read_text_file'],contract='EvaMcpGatewayProvider/v2')),'observe_tool_name':selected['read_text_file']['name'],'proof_bindings':[{'argument_name':'content','observed_name':'content'}],'execute_argument_bindings':[{'argument_name':'path','provider_name':'path'},{'argument_name':'content','provider_name':'content'}],'observe_argument_bindings':[{'argument_name':'path','provider_name':'path'}]}\n catalog=json.dumps({'contract':'EvaMcpGatewayProvider/v2','tools':[tool]});(stage/'catalog.json').write_text(catalog)\n settings=McpGatewayProviderSettings(base_url='http://'+address+':4444',bearer_token=token,allow_plain_http=True,specs=parse_mcp_gateway_catalog(catalog),principal_sha256_allowlist=(hashlib.sha256(b'test-owner').hexdigest(),))\n bundle=McpGatewayProviderFactory.build(settings,engine)\n class Memory:\n  def recall_for_presence(self,q):\n   return PresenceMemory(MemoryRecall(schema_version=1,contract='MemoryRecall/v1',recall_id=q.recall_id,query_purpose=q.query_purpose,tenant_id=q.tenant_id,principal_id=q.principal_id,conversation_id=q.conversation_id,project_id=q.project_id,requested_valid_at=q.requested_valid_at,admitted_fact_ids_sha256=canonical_sha256([]),selected=[],excluded_reasons={},projection_version='probe',scope_sha256=canonical_sha256(q.scope),created_at=q.requested_valid_at),())\n model=PydanticConversationModel(auth_file=Path('/var/lib/eva2/managed-b-slot4/model-access-lease/auth.json'),model='gpt-6-astra',conversation_tools=bundle.conversation_tools,timeout_seconds=60)\n def runtime():\n  instance=object.__new__(PostgresHindsightMemoryRuntime);instance._engine=engine;instance._runtime_tenant_id='tl002-real';instance._runtime_installation_id='probe'\n  instance._conversation=LivingConversation(Memory(),model,IdentityProfile('Eva','Praktische digitale huisgenoot.',('Bevestig alleen gecontroleerde resultaten.',),100),PostgresConversationActions(engine,external_tools=bundle.external_tools))\n  return instance\n turn=ConversationTurn.private('tl002-real','probe','test-owner','probe-chat','probe:'+nonce,'Schrijf exact de volgende inhoud naar het beschikbare document '+filename+' en controleer dat het opgeslagen is: '+repr(content),datetime.now(UTC).replace(microsecond=0).isoformat().replace('+00:00','Z'))\n started=time.monotonic();reply=runtime().respond(turn)\n result['conversation']={'reply':reply.text,'usage':reply.model_usage.to_wire(),'seconds':time.monotonic()-started,'toolName':tool['eva_name']}\n write={'throughEvaConversation':True}\n\n before=call('read_text_file',{'path':filename},'read-before')\n direct=h._docker('exec',names['fs'],'python3','-c','from pathlib import Path;import hashlib;print(hashlib.sha256(Path(\"/proof-state/gezinsplan.txt\").read_bytes()).hexdigest())')\n assert direct==hashlib.sha256(content.encode()).hexdigest()\n h._docker('restart',names['fs'],names['gateway']);h._wait_filesystem_mcp(names['fs']);h._wait_contextforge(names['gateway']);token=h._login_contextforge(names['gateway'],password)\n after=call('read_text_file',{'path':filename},'read-after')\n assert before['result']==after['result']\n rows=h._list_tools(names['gateway'],token,include_metrics=False)\n assert all(any(row.get('id')==selected[k].get('id') and row.get('name')==selected[k].get('name') for row in rows) for k in selected)\n replay=runtime().respond(turn)\n assert replay==reply\n with engine.connect() as connection:\n  events=[dict(row) for row in connection.execute(sa.text(\"SELECT event_type,payload FROM eva_core.operational_events ORDER BY occurred_at,event_id\")).mappings()]\n (stage/'operational-events.json').write_text(json.dumps(events,default=str,indent=2))\n result['conversation']['replayEqual']=True\n result.update(status='passed',write=write,readBefore=before,readAfter=after,independentContentSha256=direct,gatewayRegistrationPreserved=True,providerRestartPreservedContent=True)\nexcept Exception as exc:\n result.update(status='failed',errorType=type(exc).__name__,error=str(exc)[:1500]);raise\nfinally:\n if 'engine' in locals():engine.dispose()\n if 'database' in locals():\n  with psycopg.connect(host=socket,user='postgres',dbname='postgres',autocommit=True) as connection:\n   assert connection.execute('SELECT count(*) FROM pg_stat_activity WHERE datname=%s',(database,)).fetchone()[0]==0\n   connection.execute(sql.SQL('DROP DATABASE {}').format(sql.Identifier(database)))\n h._cleanup_disposable_resources(containers=tuple(containers),volumes=tuple(volumes),networks=tuple(networks))\n result['temporaryResourcesRemoved']=True\n (stage/'result.json').write_text(json.dumps(result,indent=2))\n print(json.dumps({k:result.get(k) for k in ('status','temporaryResourcesRemoved','providerRestartPreservedContent','gatewayRegistrationPreserved','error')}),flush=True)\n",
+  "runnerSha256": "323712ef1b24ceaf55b9920861e66762e7cb5cd43ccb400de2bdccb3ea30e0d2",
+  "eventExportSha256": "0fb2000cc6e11e9d127de48ce56aa22fb0dd2f1ea7564fea6c4d0215710eea34",
+  "catalog": {
+    "contract": "EvaMcpGatewayProvider/v2",
+    "tools": [
+      {
+        "eva_name": "bewaar_document_7267d0b4a359",
+        "description": "Schrijf een document in de beschikbare eigen werkmap. De dienst leest het bestand onafhankelijk terug en bevestigt de opgeslagen inhoud.",
+        "completion_guidance": "Bevestig opslaan alleen op grond van de geverifieerde inhoud.",
+        "input_schema": {
+          "type": "object",
+          "properties": {
+            "path": {
+              "type": "string",
+              "enum": [
+                "/proof-state/gezinsplan.txt"
+              ]
+            },
+            "content": {
+              "type": "string",
+              "maxLength": 12000
+            }
+          },
+          "required": [
+            "path",
+            "content"
+          ],
+          "additionalProperties": false
+        },
+        "execute_catalog_name": "workspace-7267d0b4a359-write-file",
+        "execute_catalog_sha256": "d914dee932bf89e9911ca2755e301ecb05fddb3dba58b9d1d6622780cf05d5d5",
+        "execute_tool_name": "workspace-7267d0b4a359-write-file",
+        "observe_catalog_name": "workspace-7267d0b4a359-read-text-file",
+        "observe_catalog_sha256": "5cf7769f5bef602f0979cb4a5f0d6fed9e78864ad6bd8266b11a13cfdd2a3935",
+        "observe_tool_name": "workspace-7267d0b4a359-read-text-file",
+        "proof_bindings": [
+          {
+            "argument_name": "content",
+            "observed_name": "content"
+          }
+        ],
+        "execute_argument_bindings": [
+          {
+            "argument_name": "path",
+            "provider_name": "path"
+          },
+          {
+            "argument_name": "content",
+            "provider_name": "content"
+          }
+        ],
+        "observe_argument_bindings": [
+          {
+            "argument_name": "path",
+            "provider_name": "path"
+          }
+        ]
+      }
+    ]
+  },
+  "priorFailedTrial": {
+    "result": {
+      "taskId": "TL-002",
+      "status": "failed",
+      "names": {
+        "fs": "eva2-tl002-973e76d9aace-fs",
+        "gateway": "eva2-tl002-973e76d9aace-gateway",
+        "files": "eva2-tl002-973e76d9aace-files",
+        "database": "eva2-tl002-973e76d9aace-database",
+        "secrets": "eva2-tl002-973e76d9aace-secrets",
+        "network": "eva2-tl002-973e76d9aace-network"
+      },
+      "images": {
+        "filesystem": "sha256:bd31ea2dde76561fe662a551756f939e9007048956c300e54ad49a8c18ddfdc4",
+        "gateway": "sha256:daf923c247fd569df5f8c9ee418cbc259fade564f78e0a0852937139a181c4dd"
+      },
+      "operatorSha256": "a8dc2a31ea327a54f70850669c0c2c3f3b40893a7bb80863df6bdeb09527d3be",
+      "network": "new internal only; no published ports",
+      "scope": "Real Eva conversation with official filesystem provider in isolated workspace; no household data, HomeAssistant effect or live deployment.",
+      "errorType": "RuntimeError",
+      "error": "MCP gateway tool differs from the sealed catalog",
+      "temporaryResourcesRemoved": true
+    },
+    "cause": "Probe sealed v2 catalog with default v1 binding, omitting output_schema; zero model calls. Fixed both hash calls to explicit v2; runtime verification unchanged."
+  },
+  "limitations": [
+    "Synthetic private principal and empty-memory fixture; actual model, Eva conversation orchestration, PostgreSQL and upstream filesystem/gateway.",
+    "No second Home Assistant action in this trial.",
+    "No live installation, packaged release, household acceptance or competition win.",
+    "Provider services restarted after completed action; no crash injection in real-provider trial.",
+    "Replay equality checked; external request count was not independently recorded."
+  ],
+  "review": {
+    "reviewer": "/root/co006_review",
+    "status": "bounded_GO",
+    "findings": "Source hashes, catalog and private events match. One admitted/executed/verified tool action; two modelrequests match usage; six named disposable resources independently absent. No release/live/two-provider claim."
+  }
+}

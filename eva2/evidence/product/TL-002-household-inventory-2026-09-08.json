@@ -1,0 +1,83 @@
+{
+  "contract": "EvaProductDevelopmentEvidence/v1",
+  "taskId": "TL-002",
+  "date": "2026-09-08",
+  "status": "household_inventory_tool_built_real_reads_passed_not_live",
+  "sourceHashes": {
+    "eva2/src/eva/adapters/connectors/home_assistant_admin.py": "cebebb072329f439060b8b45e45b48c51b2275af040e842d72bd1f5692ecea5a",
+    "eva2/src/eva/providers/home_assistant.py": "596f49351a303b6c33223abd1b4fa5d536f0a344b68079eb6eb422f9905b0a0b",
+    "eva2/tests/connectors/test_home_assistant_live_adapters.py": "b2f8bbed93103441f7eb8124b810270a3d3792095885b74acced3a5361bdefa4",
+    "eva2/tests/connectors/test_provider_runtime.py": "a5235ef090f181d2911e80bdc6de3e88d1d9d6ebd2080d16db93b3e648815bed"
+  },
+  "tests": {
+    "passed": 39,
+    "junitSha256": "bf68dbd29e7eb2040e4a7bb19ce52d796ae52032931e5d2b3a20330ce2b438fa",
+    "junit": "<?xml version=\"1.0\" encoding=\"utf-8\"?><testsuites name=\"pytest tests\"><testsuite name=\"pytest\" errors=\"0\" failures=\"0\" skipped=\"0\" tests=\"39\" time=\"0.705\" timestamp=\"2026-09-08T13:07:37.233932+02:00\" hostname=\"JAAP\"><testcase classname=\"tests.connectors.test_home_assistant_live_adapters\" name=\"test_effect_planner_owns_resolution_policy_and_provider_command\" time=\"0.005\" /><testcase classname=\"tests.connectors.test_home_assistant_live_adapters\" name=\"test_light_resolution_ignores_unavailable_duplicate\" time=\"0.001\" /><testcase classname=\"tests.connectors.test_home_assistant_live_adapters\" name=\"test_switch_resolution_maps_a_natural_dutch_heater_name_fail_closed\" time=\"0.001\" /><testcase classname=\"tests.connectors.test_home_assistant_live_adapters\" name=\"test_switch_resolution_rejects_a_real_semantic_tie\" time=\"0.001\" /><testcase classname=\"tests.connectors.test_home_assistant_live_adapters\" name=\"test_automation_entities_resolve_natural_names_from_one_live_snapshot\" time=\"0.001\" /><testcase classname=\"tests.connectors.test_home_assistant_live_adapters\" name=\"test_automation_entity_resolution_rejects_ambiguous_natural_name\" time=\"0.001\" /><testcase classname=\"tests.connectors.test_home_assistant_live_adapters\" name=\"test_history_uses_home_assistant_timezone_and_returns_only_real_transitions\" time=\"0.001\" /><testcase classname=\"tests.connectors.test_home_assistant_live_adapters\" name=\"test_current_state_returns_only_bounded_provider_evidence\" time=\"0.000\" /><testcase classname=\"tests.connectors.test_home_assistant_live_adapters\" name=\"test_history_target_resolves_a_natural_light_area_as_bounded_group\" time=\"0.001\" /><testcase classname=\"tests.connectors.test_home_assistant_live_adapters\" name=\"test_group_history_uses_all_off_and_discards_short_stagger_noise\" time=\"0.001\" /><testcase classname=\"tests.connectors.test_home_assistant_live_adapters\" name=\"test_revalidation_reads_only_current_admitted_entity[off]\" time=\"0.001\" /><testcase classname=\"tests.connectors.test_home_assistant_live_adapters\" name=\"test_revalidation_reads_only_current_admitted_entity[on]\" time=\"0.000\" /><testcase classname=\"tests.connectors.test_home_assistant_live_adapters\" name=\"test_revalidation_rejects_targets_before_network[light.kitchen-home_assistant]\" time=\"0.000\" /><testcase classname=\"tests.connectors.test_home_assistant_live_adapters\" name=\"test_revalidation_rejects_targets_before_network[binary_sensor.door/../../config-home_assistant]\" time=\"0.000\" /><testcase classname=\"tests.connectors.test_home_assistant_live_adapters\" name=\"test_revalidation_rejects_targets_before_network[binary_sensor.door-other-provider]\" time=\"0.000\" /><testcase classname=\"tests.connectors.test_home_assistant_live_adapters\" name=\"test_revalidation_does_not_turn_unknown_or_future_state_into_proof[state0]\" time=\"0.000\" /><testcase classname=\"tests.connectors.test_home_assistant_live_adapters\" name=\"test_revalidation_does_not_turn_unknown_or_future_state_into_proof[state1]\" time=\"0.000\" /><testcase classname=\"tests.connectors.test_home_assistant_live_adapters\" name=\"test_revalidation_does_not_turn_unknown_or_future_state_into_proof[state2]\" time=\"0.000\" /><testcase classname=\"tests.connectors.test_home_assistant_live_adapters\" name=\"test_revalidation_does_not_turn_unknown_or_future_state_into_proof[state3]\" time=\"0.000\" /><testcase classname=\"tests.connectors.test_home_assistant_live_adapters\" name=\"test_revalidation_does_not_turn_unknown_or_future_state_into_proof[state4]\" time=\"0.000\" /><testcase classname=\"tests.connectors.test_home_assistant_live_adapters\" name=\"test_state_changed_frame_is_minimized_and_stably_identified\" time=\"0.000\" /><testcase classname=\"tests.connectors.test_home_assistant_live_adapters\" name=\"test_state_changed_frame_drops_creation_and_same_state_noise\" time=\"0.000\" /><testcase classname=\"tests.connectors.test_home_assistant_live_adapters\" name=\"test_admin_inventory_keeps_only_read_only_localtuya_package_evidence\" time=\"0.000\" /><testcase classname=\"tests.connectors.test_home_assistant_live_adapters\" name=\"test_hacs_install_requires_exact_approval_and_independent_readback\" time=\"0.001\" /><testcase classname=\"tests.connectors.test_home_assistant_live_adapters\" name=\"test_hacs_registration_adds_exact_source_then_verifies_readback\" time=\"0.001\" /><testcase classname=\"tests.connectors.test_home_assistant_live_adapters\" name=\"test_hacs_registration_rejects_mismatched_readback\" time=\"0.001\" /><testcase classname=\"tests.connectors.test_home_assistant_live_adapters\" name=\"test_household_inventory_includes_helpers_yaml_entities_and_area_precedence\" time=\"0.000\" /><testcase classname=\"tests.connectors.test_home_assistant_live_adapters\" name=\"test_household_inventory_rejects_duplicate_identity_instead_of_losing_rows\" time=\"0.000\" /><testcase classname=\"tests.connectors.test_home_assistant_live_adapters\" name=\"test_household_inventory_uses_shared_session_and_only_registry_reads\" time=\"0.001\" /><testcase classname=\"tests.connectors.test_home_assistant_live_adapters\" name=\"test_household_inventory_pages_large_snapshot_and_rejects_changed_cursor\" time=\"0.004\" /><testcase classname=\"tests.connectors.test_home_assistant_live_adapters\" name=\"test_household_automation_projection_preserves_logic_and_marks_private_omissions\" time=\"0.000\" /><testcase classname=\"tests.connectors.test_home_assistant_live_adapters\" name=\"test_household_automation_details_cannot_read_undiscovered_id\" time=\"0.001\" /><testcase classname=\"tests.connectors.test_provider_runtime\" name=\"test_generic_provider_compositor_contains_no_provider_specific_identifiers\" time=\"0.000\" /><testcase classname=\"tests.connectors.test_provider_runtime\" name=\"test_provider_settings_stay_outside_core_and_fail_closed\" time=\"0.005\" /><testcase classname=\"tests.connectors.test_provider_runtime\" name=\"test_email_provider_settings_are_file_only_and_live_outside_core\" time=\"0.001\" /><testcase classname=\"tests.connectors.test_provider_runtime\" name=\"test_provider_bundle_registers_tools_without_core_branch\" time=\"0.009\" /><testcase classname=\"tests.connectors.test_provider_runtime\" name=\"test_explicit_python_entry_point_adds_a_provider_without_compositor_branch\" time=\"0.001\" /><testcase classname=\"tests.connectors.test_provider_runtime\" name=\"test_provider_registry_rejects_missing_plugins_and_duplicate_tools\" time=\"0.001\" /><testcase classname=\"tests.connectors.test_provider_runtime\" name=\"test_household_inventory_is_private_owner_read_even_with_effects_disabled\" time=\"0.001\" /></testsuite></testsuites>"
+  },
+  "realRead": {
+    "taskId": "TL-002",
+    "status": "passed",
+    "counts": {
+      "areas": 18,
+      "devices": 328,
+      "entities": 2469,
+      "automations": 17
+    },
+    "automationIndexCount": 17,
+    "configurationReads": 15,
+    "partiallyProjected": 14,
+    "unavailable": 2,
+    "readbackSha256": "b78603d9890d9f91d7554c80d65e026227858db2238a933abe5aab66141ed065",
+    "sourceSha256": "cebebb072329f439060b8b45e45b48c51b2275af040e842d72bd1f5692ecea5a",
+    "modelCalls": 0,
+    "deviceMutations": 0
+  },
+  "privateReadbackDirectory": "/tmp/eva2-tl002-household-tools3.nlxne0sx",
+  "runner": "from pathlib import Path\nimport asyncio,hashlib,json,subprocess,sys\nstage=Path(__file__).parent\nroot=Path('/home/administrator/project/Eva2/eva2');sys.path.insert(0,str(root));sys.path.insert(0,str(root/'src'))\nfrom eva.adapters.connectors.home_assistant_admin import HomeAssistantAdminAdapter\nfrom eva.contracts.canonical_json import canonical_sha256\nactive=json.loads(subprocess.check_output(['docker','inspect','eva2-managed-b-slot4-core']))[0]\nenv=dict(v.split('=',1) for v in active['Config']['Env'])\ncredential=subprocess.check_output(['docker','exec','eva2-managed-b-slot4-core','/usr/local/bin/python','-c','from pathlib import Path;import sys;print(Path(sys.argv[1]).read_text(),end=\"\")',env['EVA_HOME_ASSISTANT_TOKEN_FILE']],text=True).strip()\nreader=HomeAssistantAdminAdapter(base_url=env['EVA_HOME_ASSISTANT_URL'],token=credential)\nfrom eva.adapters.connectors.home_assistant_admin import HomeAssistantHouseholdTool\nfrom eva.application.orchestration import ToolRequest\nfrom eva.contracts.base import validate_json_value\ntool=HomeAssistantHouseholdTool(reader)\nasync def query(section, ids=None, snapshot=\"\"):\n args={'section':section,'area_id':'','offset':0,'snapshot_sha256':snapshot,'automation_ids':ids or []}\n command=ToolRequest('household-probe','read:'+section,'proof:'+section,tool.action_names[0],args,args)\n dispatch=await tool.execute(command);proof=await tool.observe(command,dispatch)\n assert proof.disposition=='verified'\n result=dispatch.details['observation'];validate_json_value(result);return result\nasync def run():\n overview=await query('overview')\n index=await query('automations',snapshot=overview['snapshot_sha256'])\n assert not index['has_more'], 'probe must explicitly paginate if more automation rows exist'\n ids=[row['automation_id'] for row in index['items'] if row['automation_id']]\n batches=[]\n for offset in range(0,len(ids),8):batches.append(await query('automation_details',ids[offset:offset+8]))\n return {'overview':overview,'index':index,'details':batches}\nresult=asyncio.run(run())\n(stage/'readbacks.private.json').write_text(json.dumps(result,ensure_ascii=False,indent=2))\nrows=[row for batch in result['details'] for row in batch['automations']]\nsummary={'taskId':'TL-002','status':'passed','counts':result['overview']['counts'],'automationIndexCount':len(result['index']['items']),'configurationReads':sum(row['configuration_read'] for row in rows),'partiallyProjected':sum(row['configuration_read'] and not row['coverage']['complete'] for row in rows),'unavailable':sum(not row['configuration_read'] for row in rows),'readbackSha256':hashlib.sha256((stage/'readbacks.private.json').read_bytes()).hexdigest(),'sourceSha256':hashlib.sha256((root/'src/eva/adapters/connectors/home_assistant_admin.py').read_bytes()).hexdigest(),'modelCalls':0,'deviceMutations':0}\n(stage/'result.json').write_text(json.dumps(summary,indent=2));print(json.dumps(summary))\n",
+  "runnerSha256": "de9e7526f25917e60f8dc6affe736d8f0c759c2b06c154d61f82eeb237c1acac",
+  "built": [
+    "General inventory reads include all registries and state-only entities, preserve existing Tuya migration inventory contract.",
+    "Provider-owned conversation descriptor and read execution on existing durable external-tool route.",
+    "Private owner hash authorization on same callback used for offerings, execution and recovery; independent of effects_enabled.",
+    "Paged projected reads detect changed snapshot before continuation.",
+    "Up to eight selected automation configurations per request; omitted service data/templates/blueprints and unavailable configurations explicitly marked."
+  ],
+  "nonclaims": [
+    "Real proof calls provider execute/observe directly; no conversation model in this particular read proof.",
+    "Live user core still runs previous installed source.",
+    "No claim of complete automation semantic analysis: 14 of 15 available configurations have omitted fields; 2 unavailable.",
+    "Timeout occurred in earlier actual read attempt; later terminal fresh attempt passed. No automatic retry implemented or reliability claim from this one pass."
+  ],
+  "priorFailures": [
+    "Old provider composition test expected six tool adapters; now seven with household read; count and private read behavior updated.",
+    "Group test fixture initially had unbound conversation ID; corrected to actual telegram:-100 identifiers.",
+    "Initial full provider snapshot exceeded contract array limit during hashing; retained snapshot reused for counts and proper bounded pages implemented.",
+    "First direct-tool probe used nonexistent proof.status; corrected to proof.disposition.",
+    "Second direct-tool probe hit actual timeout; process terminal exit1; third fresh probe passed."
+  ],
+  "review": {
+    "reviewer": "/root/co006_review",
+    "status": "bounded_GO_for_original_read_checkpoint_with_repair",
+    "findings": "Private offering, migration isolation and direct readback checked. Required per-config timeout/parse isolation implemented and independently confirmed at 41 tests."
+  },
+  "currentRepairLayer": {
+    "tests": 42,
+    "junitSha256": "be0ddae0c47102472a9eb77f01e5ef0a317a486fdd91f8f78e4e74163066688d",
+    "sourceHashes": {
+      "eva2/src/eva/adapters/connectors/home_assistant_admin.py": "ea94a1a87fa42ebaa75e0d28db053fb148db2d0aa7aaa196beb15c96b5e934a1",
+      "eva2/src/eva/providers/home_assistant.py": "596f49351a303b6c33223abd1b4fa5d536f0a344b68079eb6eb422f9905b0a0b",
+      "eva2/tests/connectors/test_home_assistant_live_adapters.py": "7be3ea4784588135b1d3089dcfe689e48d2ea45cbcb32b0cbbda311df5872f26",
+      "eva2/tests/connectors/test_provider_runtime.py": "a5235ef090f181d2911e80bdc6de3e88d1d9d6ebd2080d16db93b3e648815bed"
+    },
+    "changes": [
+      "Per-config TimeoutError/ValueError isolated; cancellation and projection programming errors remain visible.",
+      "Automation details accepts and verifies parent inventory snapshot and area, instead of rejecting their presence.",
+      "Preserve state conditions, if/then/else, wait_for_trigger and nested target IDs; omission depth now32 within existing contract depth64."
+    ],
+    "limitations": [
+      "First actual model probe failed at selection validation; exact failed arguments not retained by original runner, so the specific conflicting field is not proven.",
+      "New model probe retains all operational events even on failure and binds source at start.",
+      "This layer does not retroactively change earlier real readback hashes."
+    ]
+  }
+}

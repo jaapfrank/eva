@@ -1,0 +1,98 @@
+{
+  "contract": "EvaProductProviderProbe/v1",
+  "taskId": "TL-002",
+  "status": "upstream_workspace_restart_passed_not_live",
+  "result": {
+    "taskId": "TL-002",
+    "status": "passed",
+    "names": {
+      "fs": "eva2-tl002-66e026ecfe0d-fs",
+      "gateway": "eva2-tl002-66e026ecfe0d-gateway",
+      "files": "eva2-tl002-66e026ecfe0d-files",
+      "database": "eva2-tl002-66e026ecfe0d-database",
+      "secrets": "eva2-tl002-66e026ecfe0d-secrets",
+      "network": "eva2-tl002-66e026ecfe0d-network"
+    },
+    "images": {
+      "filesystem": "sha256:bd31ea2dde76561fe662a551756f939e9007048956c300e54ad49a8c18ddfdc4",
+      "gateway": "sha256:daf923c247fd569df5f8c9ee418cbc259fade564f78e0a0852937139a181c4dd"
+    },
+    "operatorSha256": "a8dc2a31ea327a54f70850669c0c2c3f3b40893a7bb80863df6bdeb09527d3be",
+    "network": "new internal only; no published ports",
+    "scope": "Upstream filesystem write/readback and durable gateway registration only; no Eva model, household connection or live deployment.",
+    "write": {
+      "id": "write",
+      "jsonrpc": "2.0",
+      "result": {
+        "content": [
+          {
+            "text": "Successfully wrote to /proof-state/gezinsplan.txt",
+            "type": "text"
+          }
+        ],
+        "isError": false,
+        "structuredContent": {
+          "content": "Successfully wrote to /proof-state/gezinsplan.txt"
+        }
+      }
+    },
+    "readBefore": {
+      "id": "read-before",
+      "jsonrpc": "2.0",
+      "result": {
+        "content": [
+          {
+            "text": "Eva werkmapproef: een plan opslaan, teruglezen en na herstart behouden.\n",
+            "type": "text"
+          }
+        ],
+        "isError": false,
+        "structuredContent": {
+          "content": "Eva werkmapproef: een plan opslaan, teruglezen en na herstart behouden.\n"
+        }
+      }
+    },
+    "readAfter": {
+      "id": "read-after",
+      "jsonrpc": "2.0",
+      "result": {
+        "content": [
+          {
+            "text": "Eva werkmapproef: een plan opslaan, teruglezen en na herstart behouden.\n",
+            "type": "text"
+          }
+        ],
+        "isError": false,
+        "structuredContent": {
+          "content": "Eva werkmapproef: een plan opslaan, teruglezen en na herstart behouden.\n"
+        }
+      }
+    },
+    "independentContentSha256": "700364ebf94410cfad96f76a7bf5d8789bbf0763a21b24a5bc065f912d0b9e97",
+    "gatewayRegistrationPreserved": true,
+    "providerRestartPreservedContent": true,
+    "temporaryResourcesRemoved": true
+  },
+  "resultSha256": "b4ca396d7f130fd3dc4ba838ad89662b96372fd6f8fbe4d0a04a9298dc514e3b",
+  "runnerSource": "import hashlib, importlib.util, json, secrets, subprocess\nfrom pathlib import Path\nimport yaml\nroot=Path('/home/administrator/project/Eva2/eva2')\nstage=Path(__file__).parent\npath=root/'experiments/tool01-replacement-acceptance-v2/run_physical_acceptance.py'\nspec=importlib.util.spec_from_file_location('workspace_existing_operator',path);h=importlib.util.module_from_spec(spec);spec.loader.exec_module(h)\nnonce=secrets.token_hex(6);prefix='eva2-tl002-'+nonce\nnames={k:prefix+'-'+k for k in ('fs','gateway','files','database','secrets','network')}\ncf='sha256:daf923c247fd569df5f8c9ee418cbc259fade564f78e0a0852937139a181c4dd'\nfs=h._docker_json('image','inspect','eva2/filesystem-mcp-mutation:2026.8.31-efdae0b')[0]['Id']\nconfig=yaml.safe_load((root/'experiments/contextforge-gateway-v1/compose.yml').read_text())['services']['contextforge']\npassword=secrets.token_urlsafe(32)\nsecret_files={k:(secrets.token_urlsafe(40).encode(),10001,10001,0o400) for k in ['contextforge-jwt','contextforge-encryption','filesystem-jwt','filesystem-encryption']}\nfor k in ('contextforge-admin-password','filesystem-admin-password'):secret_files[k]=(password.encode(),10001,10001,0o400)\nresult={'taskId':'TL-002','status':'started','names':names,'images':{'filesystem':fs,'gateway':cf},'operatorSha256':hashlib.sha256(path.read_bytes()).hexdigest(),'network':'new internal only; no published ports','scope':'Upstream filesystem write/readback and durable gateway registration only; no Eva model, household connection or live deployment.'}\n(stage/'invocation.json').write_text(json.dumps(result,indent=2))\ncontainers=[];volumes=[];networks=[]\ntry:\n for kind,keys in [('container',('fs','gateway')),('volume',('files','database','secrets')),('network',('network',))]:\n  for k in keys:h._require_docker_resource_absent(kind,names[k])\n h._docker('network','create','--internal','--label','eva2.task=TL-002',names['network']);networks.append(names['network'])\n for k in ('files','database','secrets'):\n  h._docker('volume','create','--label','eva2.task=TL-002',names[k]);volumes.append(names[k])\n  h._init_volume(helper_image=cf,volume=names[k],container_name=prefix+'-init-'+k,run_id=prefix,files=secret_files if k=='secrets' else {},directory_owner=(10001,10001,0o700))\n base=['run','--detach','--pull','never','--read-only','--cap-drop','ALL','--security-opt','no-new-privileges','--pids-limit','256','--memory','768m','--network',names['network'],'--label','eva2.task=TL-002','--tmpfs','/tmp:rw,noexec,nosuid,nodev,size=256m,uid=10001,gid=10001,mode=0700','--mount',f'type=volume,src={names[\"secrets\"]},dst=/run/secrets,readonly']\n args=base+['--name',names['fs'],'--network-alias','proof-filesystem','--no-healthcheck','--mount',f'type=volume,src={names[\"files\"]},dst=/proof-state']\n for suffix,key in [('JWT_SECRET','filesystem-jwt'),('ENCRYPTION_SECRET','filesystem-encryption'),('ADMIN_PASSWORD','filesystem-admin-password')]:args+=['--env',f'EVA_CONTEXTFORGE_{suffix}_FILE=/run/secrets/{key}']\n h._docker(*args,fs);containers.append(names['fs']);h._wait_filesystem_mcp(names['fs'])\n env=dict(config['environment']);env.update(DATABASE_URL='sqlite:////data/contextforge.db',SSRF_ALLOW_PRIVATE_NETWORKS='true',CACHE_TYPE='none')\n args=base+['--name',names['gateway'],'--network-alias','contextforge','--mount',f'type=volume,src={names[\"database\"]},dst=/data','--mount',f'type=bind,src={root}/experiments/contextforge-gateway-v1/start-contextforge.sh,dst=/run/eva2/start-contextforge.sh,readonly']\n for k,v in env.items():args+=['--env',f'{k}={v}']\n h._docker(*args,'--entrypoint','/bin/sh',cf,'/run/eva2/start-contextforge.sh');containers.append(names['gateway']);h._wait_contextforge(names['gateway'])\n token=h._login_contextforge(names['gateway'],password)\n gid=h._register_gateway(names['gateway'],token,name='workspace_'+nonce,url='http://proof-filesystem:9000/mcp')\n selected={k:h._make_tool_public(names['gateway'],token,h._wait_gateway_tool(names['gateway'],token,gateway_id=gid,original_name=k)) for k in ('write_file','read_text_file')}\n filename='/proof-state/gezinsplan.txt';content='Eva werkmapproef: een plan opslaan, teruglezen en na herstart behouden.\\n'\n def call(name,args,phase):\n  r=h._gateway_request(names['gateway'],'POST','/rpc',token=token,payload={'jsonrpc':'2.0','id':phase,'method':'tools/call','params':{'name':selected[name]['name'],'arguments':args}})\n  assert not r.get('error') and not r['result'].get('isError'), 'upstream tool rejected request'\n  return r\n write=call('write_file',{'path':filename,'content':content},'write')\n before=call('read_text_file',{'path':filename},'read-before')\n direct=h._docker('exec',names['fs'],'python3','-c','from pathlib import Path;import hashlib;print(hashlib.sha256(Path(\"/proof-state/gezinsplan.txt\").read_bytes()).hexdigest())')\n assert direct==hashlib.sha256(content.encode()).hexdigest()\n h._docker('restart',names['fs'],names['gateway']);h._wait_filesystem_mcp(names['fs']);h._wait_contextforge(names['gateway']);token=h._login_contextforge(names['gateway'],password)\n after=call('read_text_file',{'path':filename},'read-after')\n assert before['result']==after['result']\n rows=h._list_tools(names['gateway'],token,include_metrics=False)\n assert all(any(row.get('id')==selected[k].get('id') and row.get('name')==selected[k].get('name') for row in rows) for k in selected)\n result.update(status='passed',write=write,readBefore=before,readAfter=after,independentContentSha256=direct,gatewayRegistrationPreserved=True,providerRestartPreservedContent=True)\nexcept Exception as exc:\n result.update(status='failed',errorType=type(exc).__name__,error=str(exc)[:1500]);raise\nfinally:\n h._cleanup_disposable_resources(containers=tuple(containers),volumes=tuple(volumes),networks=tuple(networks))\n result['temporaryResourcesRemoved']=True\n (stage/'result.json').write_text(json.dumps(result,indent=2))\n print(json.dumps({k:result.get(k) for k in ('status','temporaryResourcesRemoved','providerRestartPreservedContent','gatewayRegistrationPreserved','error')}),flush=True)\n",
+  "runnerSha256": "e6aa63d6db0614c9902efc353321dfb8ad95f2fcdea971d703bd5bdb6cb304b3",
+  "nonclaims": [
+    "No Eva conversation or model call in this provider-only probe.",
+    "No HomeAssistant action or two-provider acceptance in this probe.",
+    "No family documents accessed, no deployed provider and no fresh image scan claimed."
+  ],
+  "retainedReadbackVerification": {
+    "bothGatewayReadbacksMatchIndependentFileSha256": true,
+    "sha256": "700364ebf94410cfad96f76a7bf5d8789bbf0763a21b24a5bc065f912d0b9e97"
+  },
+  "independentReview": {
+    "reviewer": "/root/co006_review",
+    "decision": "bounded GO for provider-only restart proof",
+    "resourcesIndependentlyConfirmedAbsent": 6,
+    "catalogProofBinding": {
+      "argument_name": "content",
+      "observed_name": "content"
+    },
+    "reason": "The actual official read_text_file returns structuredContent.content; Eva prefers structured content over text fallback."
+  }
+}
