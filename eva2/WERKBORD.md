@@ -14,11 +14,11 @@ Independent admission review, then prepare stopped slot4 and lossless slot3-to4 
 
 | Volgorde | Kaart | Resultaat | Status |
 |---:|---|---|---|
-| 138 | `VB-001` — Full-duplex voice leveren | Met dezelfde Eva praten via Telegram of Home Assistant-spraakapparaten, met hoorbaar antwoord en onderbreken passend bij het kanaal. | 🟡 BEZIG |
+| 138 | `VB-001` — Full-duplex voice leveren | Met Eva2 praten via de bestaande Telegram- of Home Assistant-aansluiting, waarbij Eva hoorbaar onderbroken kan worden en het gesprek daarna doorgaat. | 🟡 BEZIG |
 
 Klaar betekent:
 
-- Een complete gevraagde spraakroute via Telegram of bestaande Home Assistant-spraakapparaten werkt met dezelfde Eva-gesprekskern. Voor de doorlopende gespreksroute: tegelijk luisteren en hoorbaar onderbreken, p95 stoplatentie maximaal250ms gemeten. Losse spraakberichten sluiten de full-duplex-eis niet af; een aparte browserpagina sluit geen gevraagde route af.
+- De gevraagde doorlopende spraakroute naar Eva2 werkt op het gekozen kanaal inclusief hoorbaar onderbreken en hervatten; p95 stoplatentie maximaal250ms gemeten. Eva1-aansluitingen mogen worden hergebruikt, maar zonder bewezen onderbreking op het echte kanaal is VB-001 niet af. Browserproeven of losse spraakberichten sluiten dit niet af.
 - Persoonsbinding, privacy, gesprekcontinuiteit, toolstopgrenzen en herstel zijn getest; complete gebruikersroute veilig live met onafhankelijke beoordeling. Menselijke ervaringsacceptatie wordt apart vastgelegd.
 
 <details>

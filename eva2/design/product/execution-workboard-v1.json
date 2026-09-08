@@ -1979,7 +1979,7 @@
       "doneWhen": "Only two expected event payload changes; render known/unknown device and full acknowledgement; reject ambiguous automation; review plan against live config before any activation.",
       "implementationCommit": "64aa27ccbd1f8ab955657fc0cea913498f7ab6b2",
       "hostTestCommand": "python3 -m pytest -q tests/operations/test_plan_home_assistant_voice_bridge.py",
-      "hostTestsPassed": 19,
+      "hostTestsPassed": 25,
       "testEnvironment": "System Python with distro Jinja2; runtime gate venv lacks Jinja2 and is not used for this host-only planner. No product dependency added.",
       "review": "Independent limited GO co006_review:19tests repeated, private before/after hashes and only3subtrees verified. HA-native templates and Bottie actual acknowledgement are next; no apply-GO.",
       "privateEvidenceDirectory": "/tmp/eva2-vb001-ha-bridge-plan-vqwkax7d",
@@ -1989,7 +1989,42 @@
         "response correlation condition",
         "ack event payload"
       ],
-      "next": "Validate proposed templates with actual HA renderer without triggering actions, then exercise existing Bottie ACK verifier before reviewed activation and Eva2 handoff."
+      "next": "Review registry-based mapping correction; actual Eva2 handoff, native ACK path and audible interruption remain required. No HA configuration apply yet.",
+      "registryMappingCorrection": {
+        "implementationCommit": "ca70c3d49d7c890eebe956e7512f914f3b527110",
+        "testsPassed": 25,
+        "review": "Independent bounded source GO co006_review; entity registry binding checked, separate device availability remains live preflight. No apply/hardware claim."
+      }
+    },
+    "vb001InterruptionOwnerRequirement": {
+      "status": "mandatory_for_delivery",
+      "userCorrection": "Eva2 moet onderbroken kunnen worden; Eva1 kon dit niet. Geen klakkeloze overname van Eva1.",
+      "implementationBoundary": "Reuse existing physical/channel connectivity only after inspection; same Eva2 conversation/memory core. Adapt playback cancellation and stale-reply suppression to actual channel, with audible proof.",
+      "nonClaim": "Existing browser interruption tests do not prove interruption on Home Assistant hardware or Telegram.",
+      "next": "Establish actual HA device playback-stop mechanism and integrate it with Eva2 reply generation before declaring the requested voice route complete."
+    },
+    "vb001HaStopDiscovery": {
+      "status": "current_device_registry_observed",
+      "owner": "/root",
+      "reviewer": "/root/co006_review",
+      "installedFirmware": "ESPHome2026.6.2 custom builds June21; exact YAML not yet found.",
+      "microphoneMuteObserved": {
+        "woonkamer": "on",
+        "overkapping": "on"
+      },
+      "speakerStop": "Official upstream Voice PE supports local voice_assistant.stop/announcement stop; not proof that installed custom builds have this configuration.",
+      "upstreamSource": "https://github.com/esphome/home-assistant-voice-pe/blob/dev/home-assistant-voice.yaml",
+      "oldAutomationIdsAbsent": true,
+      "mappingFix": "Resolve current selected satellites through the entity registry; never reuse stale template device IDs.",
+      "nativeTemplateProbe": {
+        "status": "root_observed_passed",
+        "cases": 7,
+        "evidenceDirectory": "/tmp/eva2-vb001-ha-native-lyupre8x",
+        "independentReview": "co006_review verified registry mapping and exact regenerated plan. Native request bodies/runner and second raw config readback were not retained, so full native execution binding is not independently reconstructible. No repetition merely to relabel this probe.",
+        "automationWrites": 0,
+        "speakerOutput": false
+      },
+      "next": "Determine installed local announcement-stop/wake-word behavior and wire same Eva2 core with proper household/person binding. Owner mute preference pending; do not alter microphone privacy setting implicitly."
     }
   },
   "activeTaskId": "VB-001",
@@ -3332,7 +3367,7 @@
       "order": 138,
       "area": "Voice",
       "title": "Full-duplex voice leveren",
-      "outcome": "Met dezelfde Eva praten via Telegram of Home Assistant-spraakapparaten, met hoorbaar antwoord en onderbreken passend bij het kanaal.",
+      "outcome": "Met Eva2 praten via de bestaande Telegram- of Home Assistant-aansluiting, waarbij Eva hoorbaar onderbroken kan worden en het gesprek daarna doorgaat.",
       "status": "in_progress",
       "stateDetails": {
         "baseCommit": null,
@@ -3413,7 +3448,7 @@
         "Echte browserproef inschakelen met audit.vb001BrowserIntegration.browserCommand: 18 geslaagd, nul skips vereist. De gewone node-opdracht zonder die omgeving is alleen de beperkte clientregressie."
       ],
       "doneWhen": [
-        "Een complete gevraagde spraakroute via Telegram of bestaande Home Assistant-spraakapparaten werkt met dezelfde Eva-gesprekskern. Voor de doorlopende gespreksroute: tegelijk luisteren en hoorbaar onderbreken, p95 stoplatentie maximaal250ms gemeten. Losse spraakberichten sluiten de full-duplex-eis niet af; een aparte browserpagina sluit geen gevraagde route af.",
+        "De gevraagde doorlopende spraakroute naar Eva2 werkt op het gekozen kanaal inclusief hoorbaar onderbreken en hervatten; p95 stoplatentie maximaal250ms gemeten. Eva1-aansluitingen mogen worden hergebruikt, maar zonder bewezen onderbreking op het echte kanaal is VB-001 niet af. Browserproeven of losse spraakberichten sluiten dit niet af.",
         "Persoonsbinding, privacy, gesprekcontinuiteit, toolstopgrenzen en herstel zijn getest; complete gebruikersroute veilig live met onafhankelijke beoordeling. Menselijke ervaringsacceptatie wordt apart vastgelegd."
       ]
     }
