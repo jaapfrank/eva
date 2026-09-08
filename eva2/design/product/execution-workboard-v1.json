@@ -1586,7 +1586,23 @@
       },
       "reviewDecision": "Bounded GO by /root/co006_review; no concrete blocker in queue/resume/generation/capacity logic. No live GO and no claim that ordinary pauses form one utterance.",
       "candidateBinding": "Previous 69529/a286 candidate evidence remains historical for that source; new repair requires resealing before integration/deployment.",
-      "next": "Complete corrected voice candidate and run actual browser/provider readback, restart, revocation, safe rollout and human microphone/speaker acceptance."
+      "next": "Build sealed complete candidate offline, verify full release gates, then corrected copied-data voice probe.",
+      "sealedSourceCommit": "215fe32f938331494036e26b32de958a4ef9a128",
+      "releaseInputReview": "Independent GO /root/co006_review: exactly two input hashes changed, 338/156/20 collections unchanged; snapshot hashes verified, no cockpit claim changes.",
+      "releaseGateTestsPassed": 83,
+      "stage": {
+        "path": "/tmp/eva2-vb001-ack-release-j5p21b_z",
+        "owner": "/root",
+        "purpose": "Sealed reviewed ACK repair candidate and final release evidence",
+        "retention": "Archive receipts and remove exact temporary stage before VB-001 closure."
+      },
+      "buildProcess": {
+        "execSessionId": 68210,
+        "status": "running",
+        "invocation": "/tmp/eva2-vb001-ack-release-j5p21b_z/build.cjs",
+        "output": "/tmp/eva2-vb001-ack-release-j5p21b_z/image",
+        "liveChanges": false
+      }
     }
   },
   "activeTaskId": "VB-001",
