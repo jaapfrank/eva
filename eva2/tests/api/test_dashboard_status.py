@@ -788,3 +788,28 @@ def test_dashboard_effect_stop_is_authenticated_and_honest_about_call_start() ->
     )
     assert invalid.status_code == 422
     assert invalid.json() == {"detail": "effect stop request is invalid"}
+
+
+def test_owner_conversation_stop_requires_auth_and_rejects_browser_scope():
+    class Runtime(_Runtime):
+        calls = 0
+
+        def dashboard_stop_conversation(self):
+            self.calls += 1
+            return 1
+
+    runtime = Runtime()
+    client = TestClient(create_app(runtime, dashboard_access_token="t" * 32))
+    url = "/internal/v1/dashboard/conversation/stop"
+    headers = {"authorization": "Bearer " + "t" * 32}
+    assert client.post(url, json={}).status_code == 401
+    for field in ("principal_id", "tenant_id", "conversation_id", "message_id"):
+        assert client.post(url, json={field: "other"}, headers=headers).status_code == 422
+    assert runtime.calls == 0
+    result = client.post(url, json={}, headers=headers)
+    assert result.status_code == 200
+    assert result.json() == {"contract": "EvaDashboardConversationStop/v1", "requested_count": 1}
+    assert result.headers["cache-control"] == "no-store"
+    assert runtime.calls == 1
+    missing = TestClient(create_app(_Runtime(), dashboard_access_token="t" * 32))
+    assert missing.post(url, json={}, headers=headers).status_code == 503

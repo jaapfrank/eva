@@ -129,6 +129,20 @@ class TelegramPrincipalBindings:
             for binding in self._by_user.values()
         )
 
+    def private_bridge_principal(
+        self, *, principal_id: str, principal_binding_id: UUID
+    ) -> str | None:
+        """Resolve one trusted private bridge alias, never a browser-supplied ID."""
+        matches = [
+            item for item in self._by_user.values()
+            if item.principal_id == principal_id
+            and item.principal_binding_id == str(principal_binding_id)
+            and str(item.telegram_user_id) in item.allowed_chat_ids
+        ]
+        if len(matches) > 1:
+            raise ValueError("owner private bridge binding is ambiguous")
+        return f"telegram:{matches[0].telegram_user_id}" if matches else None
+
 
 @dataclass(frozen=True, slots=True)
 class TelegramCoreReply:

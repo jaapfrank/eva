@@ -36,6 +36,7 @@ from pydantic_ai.messages import (
     ModelRequest,
     ModelResponse,
     ToolCallPart,
+    ToolReturnPart,
     UserPromptPart,
 )
 from pydantic_ai.models import Model
@@ -53,6 +54,8 @@ from eva.application.conversation import (
     MEMORY_SEARCH_ACTION,
     RecentConversationMessage,
     publish_conversation_text,
+    begin_current_model_request,
+    complete_current_model_request,
 )
 from eva.application.memory import PresenceMemory
 from eva.application.free_will import AutonomousAdmissionBlocker, AutonomousUsageUncertain, FreeWillDecision
@@ -483,6 +486,8 @@ _CODEX_SUBSCRIPTION_ENDPOINT = "https://chatgpt.com/backend-api/codex/responses"
 class PydanticConversationModel:
     """One stateless Eva generation after Hindsight has recalled context."""
 
+    journals_provider_requests = True
+
     def __init__(
         self,
         *,
@@ -558,28 +563,29 @@ class PydanticConversationModel:
         instructions: str,
         tools: tuple[dict[str, Any], ...] = (),
         completed_action: ConversationActionReceipt | None = None,
+        prior_actions: tuple[ConversationActionReceipt, ...] = (),
     ) -> dict[str, Any]:
         """One envelope shared by context selection and final admission."""
 
         admission_input: list[dict[str, Any]] = [
             {"content": prompt, "role": "user", "type": "message"}
         ]
-        if completed_action is not None:
+        for receipt in prior_actions + (() if completed_action is None else (completed_action,)):
             admission_input.extend(
                 (
                     {
                         "arguments": canonical_json_bytes(
-                            completed_action.call.arguments
+                            receipt.call.arguments
                         )
                         .decode("utf-8")
                         .rstrip("\n"),
-                        "call_id": completed_action.call.call_id,
-                        "name": completed_action.call.name,
+                        "call_id": receipt.call.call_id,
+                        "name": receipt.call.name,
                         "type": "function_call",
                     },
                     {
-                        "call_id": completed_action.call.call_id,
-                        "output": canonical_json_bytes(completed_action.output)
+                        "call_id": receipt.call.call_id,
+                        "output": canonical_json_bytes(receipt.output)
                         .decode("utf-8")
                         .rstrip("\n"),
                         "type": "function_call_output",
@@ -605,13 +611,14 @@ class PydanticConversationModel:
         instructions: str,
         tools: tuple[dict[str, Any], ...] = (),
         completed_action: ConversationActionReceipt | None = None,
+        prior_actions: tuple[ConversationActionReceipt, ...] = (),
         cache_key: str | None = None,
     ) -> tuple[str, ConversationActionCall | None, ConversationModelUsage,
                ConversationModelTiming]:
         """Run one framework-owned phase and stop before external execution."""
         self._admit_request(self._phase_admission_body(
             prompt=prompt, instructions=instructions, tools=tools,
-            completed_action=completed_action,
+            completed_action=completed_action, prior_actions=prior_actions,
         ), autonomous=False)
         injected_backend = self._model_backend
         phase_started_at = monotonic()
@@ -704,12 +711,20 @@ class PydanticConversationModel:
             user_prompt: str | None = prompt
             if completed_action is not None:
                 call = completed_action.call
-                message_history = [
-                    ModelRequest(parts=[UserPromptPart(prompt)]),
-                    ModelResponse(
-                        parts=[ToolCallPart(call.name, call.arguments, call.call_id)]
-                    ),
-                ]
+                message_history = [ModelRequest(parts=[UserPromptPart(prompt)])]
+                for receipt in prior_actions:
+                    previous = receipt.call
+                    message_history.extend([
+                        ModelResponse(parts=[ToolCallPart(
+                            previous.name, previous.arguments, previous.call_id,
+                        )]),
+                        ModelRequest(parts=[ToolReturnPart(
+                            previous.name, receipt.output, previous.call_id,
+                        )]),
+                    ])
+                message_history.append(ModelResponse(
+                    parts=[ToolCallPart(call.name, call.arguments, call.call_id)]
+                ))
                 deferred_results = DeferredToolResults(
                     calls={call.call_id: completed_action.output}
                 )
@@ -834,6 +849,7 @@ class PydanticConversationModel:
                 session = None
                 try:
                     if injected_backend is not None:
+                        request_id = begin_current_model_request()
                         dispatched_attempts += 1
                         phase = await run(injected_backend, output_started)
                     else:
@@ -852,6 +868,7 @@ class PydanticConversationModel:
                             credential_loader=self._load_auth,
                         )
                         async with provider as session:
+                            request_id = begin_current_model_request()
                             dispatched_attempts += 1
                             phase = await run(session.model, output_started)
                             raw_usage = session.consume_raw_usage()
@@ -887,6 +904,7 @@ class PydanticConversationModel:
                     else:
                         message = "conversation provider returned an invalid response"
                     raise ConversationModelError(message) from error
+                complete_current_model_request(request_id, phase[2])
                 if dispatched_attempts == 2:
                     usage = phase[2]
                     assert usage.input_tokens is not None
@@ -973,24 +991,22 @@ class PydanticConversationModel:
         *,
         available_actions: tuple[str, ...] = (),
         completed_action: ConversationActionReceipt | None = None,
+        prior_actions: tuple[ConversationActionReceipt, ...] = (),
         self_context: tuple[str, ...] = (),
     ) -> ConversationModelResult:
         action_tools = {**_ACTION_TOOLS, **self._conversation_tools}
         unknown = set(available_actions) - set(action_tools)
         if unknown:
             raise ValueError(f"unknown conversation actions: {sorted(unknown)!r}")
-        memory_completed = (
-            completed_action is not None
-            and completed_action.call.name == MEMORY_SEARCH_ACTION
-        )
-        offer_tools = completed_action is None or (
-            memory_completed and bool(available_actions)
-        )
-        if completed_action is not None and available_actions and not memory_completed:
-            raise ValueError("completed conversation action cannot offer more actions")
+        if prior_actions and completed_action is None:
+            raise ValueError("conversation action history needs its latest receipt")
+        receipts = prior_actions + (() if completed_action is None else (completed_action,))
+        if len({receipt.call.call_id for receipt in receipts}) != len(receipts):
+            raise ValueError("conversation action history contains duplicate call IDs")
+        offer_tools = completed_action is None or bool(available_actions)
         pydantic_catalog = (
             tuple(
-                ([] if memory_completed else [_MEMORY_SEARCH_TOOL])
+                ([_MEMORY_SEARCH_TOOL] if completed_action is None else [])
                 + [action_tools[name] for name in available_actions]
             )
             if offer_tools
@@ -1014,6 +1030,14 @@ class PydanticConversationModel:
                 available_actions=() if offer_tools else available_actions,
                 completed_action=completed_action, self_context=self_context,
             )
+            if completed_action is not None and available_actions:
+                instructions += (
+                    "\nGebruik de toolresultaten als bewijs. Als de opdracht nog niet "
+                    "af is, kies de volgende aangeboden tool met argumenten die op "
+                    "die resultaten steunen. Herhaal geen voltooide actie. Geef pas "
+                    "een eindantwoord als het gevraagde klaar is of een concrete "
+                    "belemmering verdere uitvoering verhindert."
+                )
             if omitted:
                 instructions += (
                     "\nOudere gespreksbeurten zijn buiten deze invoer gelaten, niet "
@@ -1024,6 +1048,7 @@ class PydanticConversationModel:
                 self._admit_request(self._phase_admission_body(
                     prompt=turn.grounded_text, instructions=instructions,
                     tools=pydantic_catalog, completed_action=completed_action,
+                    prior_actions=prior_actions,
                 ), autonomous=False)
                 break
             except _InputBudgetError:
@@ -1044,6 +1069,7 @@ class PydanticConversationModel:
             instructions=instructions,
             tools=pydantic_catalog,
             completed_action=completed_action,
+            prior_actions=prior_actions,
             cache_key=self._cache_key(turn),
         )
         usages.append(usage)
@@ -1066,6 +1092,7 @@ class PydanticConversationModel:
                 ),
                 tools=pydantic_catalog,
                 completed_action=completed_action,
+                prior_actions=prior_actions,
                 cache_key=self._cache_key(turn),
             )
             usages.append(usage)

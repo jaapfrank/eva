@@ -839,6 +839,27 @@ def create_app(
             headers={"Cache-Control": "no-store"},
         )
 
+    @app.post("/internal/v1/dashboard/conversation/stop")
+    def dashboard_conversation_stop(request: Request, payload: dict[str, Any]) -> JSONResponse:
+        dashboard_access.require(request)
+        if payload:
+            raise HTTPException(status_code=422, detail="conversation stop is invalid")
+        stop = getattr(runtime, "dashboard_stop_conversation", None)
+        if not callable(stop):
+            raise HTTPException(status_code=503, detail="conversation stop unavailable")
+        try:
+            count = stop()
+            if type(count) is not int or count < 0:
+                raise RuntimeError("invalid conversation stop result")
+        except ConversationConflict as error:
+            raise HTTPException(status_code=409, detail="conversation stop conflicted") from error
+        except (RuntimeError, ValueError) as error:
+            raise HTTPException(status_code=503, detail="conversation stop unavailable") from error
+        return JSONResponse({
+            "contract": "EvaDashboardConversationStop/v1",
+            "requested_count": count,
+        }, headers={"Cache-Control": "no-store"})
+
     @app.post("/internal/v1/dashboard/conversation/erase")
     def dashboard_conversation_erase(
         request: Request, payload: dict[str, Any]

@@ -501,6 +501,7 @@ def _generate(
     *,
     completed_action: ConversationActionReceipt | None = None,
     available_actions: tuple[str, ...] = (),
+    prior_actions: tuple[ConversationActionReceipt, ...] = (),
 ):  # type: ignore[no-untyped-def]
     return model.generate(
         _turn(),
@@ -509,6 +510,7 @@ def _generate(
         (),
         completed_action=completed_action,
         available_actions=available_actions,
+        prior_actions=prior_actions,
     )
 
 
@@ -1096,3 +1098,84 @@ def test_rejected_status_tracks_only_the_access_token_used_by_the_401_phase(
     rotated = model.credential_status()
     assert rotated.ready is True
     assert rotated.state == "ready"
+
+
+
+def test_completed_tool_can_choose_next_tool_and_preserve_all_receipts(tmp_path):
+    second = ConversationActionCall(
+        "comfort-call-2", TOOL.name, {"direction": "cooler", "space": "zolder"},
+    )
+    scripted = ScriptedPydanticConversation((
+        ScriptedPhase.deferred(ScriptedCall(second.call_id, second.name, second.arguments)),
+        ScriptedPhase.text("Beide ruimtes zijn gecontroleerd."),
+    ))
+    adapter = _adapter(tmp_path, scripted)
+    result = _generate(adapter, completed_action=RECEIPT, available_actions=(TOOL.name,))
+    assert result.action_call == second
+    second_receipt = ConversationActionReceipt(second, {"observed_temperature_c": 19})
+    final = _generate(adapter, completed_action=second_receipt, prior_actions=(RECEIPT,))
+    assert final.text == "Beide ruimtes zijn gecontroleerd."
+    assert [part.tool_call_id for part in tool_calls(scripted.captures[-1].messages)] == [CALL.call_id, second.call_id]
+    assert [part.content for part in tool_returns(scripted.captures[-1].messages)] == [RECEIPT.output, second_receipt.output]
+
+
+
+def test_prior_tool_results_are_included_in_input_budget_before_provider_call(tmp_path):
+    scripted = ScriptedPydanticConversation((ScriptedPhase.text("Mag niet starten."),))
+    previous = ConversationActionReceipt(CALL, {"large_result": "word " * 20_000})
+    latest = ConversationActionReceipt(
+        ConversationActionCall("next-call", TOOL.name, dict(CALL.arguments)), {"done": True},
+    )
+    adapter = _adapter(tmp_path, scripted, resource_budget=_runtime_budget())
+    with pytest.raises(ConversationModelError, match="input|invoer|budget"):
+        _generate(adapter, completed_action=latest, prior_actions=(previous,))
+    assert scripted.captures == []
+
+
+def test_duplicate_history_call_ids_are_rejected_before_provider_call(tmp_path):
+    scripted = ScriptedPydanticConversation((ScriptedPhase.text("Mag niet starten."),))
+    with pytest.raises(ValueError, match="duplicate call IDs"):
+        _generate(_adapter(tmp_path, scripted), completed_action=RECEIPT, prior_actions=(RECEIPT,))
+    assert scripted.captures == []
+
+
+@pytest.mark.parametrize("kind", ["retry", "language_repair"])
+@pytest.mark.parametrize("stop", [False, True])
+def test_each_provider_attempt_is_journaled_and_stop_blocks_internal_repeat(tmp_path, kind, stop):
+    from dataclasses import replace
+    from eva.adapters.objects.identity_verifier import load_current_identity_pack
+    from eva.application.conversation import ConversationStopped, observe_model_requests
+
+    first = (ScriptedPhase.failure(CodexProviderError("unavailable")) if kind == "retry"
+             else ScriptedPhase.text("Привет"))
+    scripted = ScriptedPydanticConversation((first, ScriptedPhase.text("Hallo Jaap.")))
+    starts, results = [], {}
+
+    class Journal:
+        def begin_model_request(self, turn):
+            if stop and starts:
+                raise ConversationStopped("owner stopped")
+            request_id = str(len(starts))
+            starts.append(request_id)
+            return request_id
+
+        def complete_model_request(self, turn, request_id, usage):
+            results[request_id] = usage
+
+    identity = replace(_identity(), identity_pack=load_current_identity_pack())
+    with observe_model_requests(_turn(), Journal()):
+        if stop:
+            with pytest.raises(ConversationStopped):
+                _adapter(tmp_path, scripted).generate(_turn(), identity, _memory(), ())
+        else:
+            result = _adapter(tmp_path, scripted).generate(_turn(), identity, _memory(), ())
+            assert result.text == "Hallo Jaap."
+    assert len(scripted.captures) == (1 if stop else 2)
+    assert len(starts) == len(scripted.captures)
+    # First successful usage survives a stop before language repair. Failed
+    # provider attempts keep their admission without invented completion usage.
+    assert len(results) == ((0 if stop else 1) if kind == "retry" else len(starts))
+    assert all(usage.model_attempts == 1 for usage in results.values())
+    # Context teardown cannot leak one owner's journal into another request.
+    from eva.application.conversation import begin_current_model_request
+    assert begin_current_model_request() is None

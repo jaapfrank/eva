@@ -7,7 +7,9 @@ from eva.application.conversation import (
     ConversationActionCall,
     ConversationActionReceipt,
     ConversationClarificationRequired,
+    ConversationConflict,
     ConversationModelResult,
+    ConversationModelUsage,
     ConversationObservationBinding,
     ConversationToolPreparation,
     ConversationTurn,
@@ -898,3 +900,150 @@ def test_pending_durable_interest_resumes_without_choosing_again() -> None:
     )
 
     assert reply.text == "Mijn gekozen interesse blijft rustige huisrituelen."
+
+
+@pytest.mark.parametrize("already_completed", [0, 1, 2])
+def test_dependent_tool_chain_recovers_before_model_and_aggregates_usage(already_completed):
+    first = ConversationActionReceipt(
+        ConversationActionCall("step:0", "inspect_item", {"item": "root"}),
+        {"status": "verified", "next": "child"},
+    )
+    second = ConversationActionReceipt(
+        ConversationActionCall("step:1", "inspect_item", {"item": "child"}),
+        {"status": "verified", "next": "leaf"},
+    )
+    durable = {i: value for i, value in enumerate((first, second)) if i < already_completed}
+    executions, requests = [], []
+
+    class Actions:
+        action_names = ("inspect_item",)
+
+        def pending(self, turn):
+            return durable.get(0)
+
+        def pending_step(self, turn, *, step_index):
+            return durable.get(step_index)
+
+        def active_context(self, turn):
+            return ()
+
+        def continuation_action_names(self, turn):
+            return self.action_names
+
+        def execute(self, turn, call):
+            return self.perform(call, 0)
+
+        def execute_step(self, turn, call, *, step_index):
+            return self.perform(call, step_index)
+
+        def perform(self, call, index):
+            assert index not in durable, "completed action must not execute again"
+            receipt = (first, second)[index]
+            assert call == receipt.call
+            executions.append(index)
+            durable[index] = receipt
+            return receipt
+
+    class Model:
+        def generate(self, *args, completed_action=None, prior_actions=(), **kwargs):
+            requests.append(completed_action)
+            if completed_action is None:
+                call = first.call
+            elif completed_action == first:
+                assert completed_action.output["next"] == second.call.arguments["item"]
+                call = second.call
+            else:
+                assert completed_action == second
+                assert prior_actions == (first,)
+                call = None
+            return ConversationModelResult(
+                "Het kind is gecontroleerd." if call is None else None,
+                "fixture", call,
+                usage=ConversationModelUsage.measured(
+                    input_tokens=10, output_tokens=2, tool_calls=int(call is not None),
+                ),
+            )
+
+    turn = ConversationTurn.private(
+        "tenant", "installation", "jaap", "conversation", "chain:1",
+        "Inspecteer root en daarna het gevonden kind.", NOW,
+    )
+    result = LivingConversation(
+        _Memory(), Model(), IdentityProfile("Eva", "Huisgenoot.", ("Eerlijk.",), 80), Actions(),
+    ).respond(turn)
+    assert result.text == "Het kind is gecontroleerd."
+    assert executions == list(range(already_completed, 2))
+    assert len(requests) == 3 - already_completed
+    assert result.model_usage.model_attempts == len(requests)
+    assert result.model_usage.input_tokens == 10 * len(requests)
+    assert result.model_usage.tool_calls == len(executions)
+
+
+def test_chain_checkpoint_can_stop_after_model_before_tool_dispatch():
+    stopped = False
+
+    class Actions:
+        action_names = ("inspect_item",)
+
+        def pending(self, turn):
+            return None
+
+        def active_context(self, turn):
+            return ()
+
+        def execute(self, turn, call):
+            raise AssertionError("stop must prevent dispatch")
+
+    class Model:
+        def generate(self, *args, **kwargs):
+            nonlocal stopped
+            stopped = True
+            return ConversationModelResult(
+                None, "fixture", ConversationActionCall("step:0", "inspect_item", {}),
+            )
+
+    def checkpoint(turn, usage):
+        if stopped:
+            raise RuntimeError("owner stopped execution")
+
+    turn = ConversationTurn.private(
+        "tenant", "installation", "jaap", "conversation", "chain:stop",
+        "Inspecteer root.", NOW,
+    )
+    with pytest.raises(RuntimeError, match="owner stopped"):
+        LivingConversation(
+            _Memory(), Model(), IdentityProfile("Eva", "Huisgenoot.", ("Eerlijk.",), 80),
+            Actions(), before_step=checkpoint,
+        ).respond(turn)
+
+
+
+def test_memory_search_call_id_cannot_be_reused_for_an_external_action():
+    class Actions:
+        action_names = ("inspect_item",)
+
+        def pending(self, turn):
+            return None
+
+        def active_context(self, turn):
+            return ()
+
+        def execute(self, turn, call):
+            raise AssertionError("duplicate call ID must not reach dispatch")
+
+    class Model:
+        def generate(self, *args, completed_action=None, **kwargs):
+            call = (
+                ConversationActionCall("same-id", MEMORY_SEARCH_ACTION, {"query_text": "voorkeur"})
+                if completed_action is None else
+                ConversationActionCall("same-id", "inspect_item", {})
+            )
+            return ConversationModelResult(None, "fixture", call)
+
+    with pytest.raises(ConversationConflict, match="reused a completed call ID"):
+        LivingConversation(
+            _Memory(), Model(), IdentityProfile("Eva", "Huisgenoot.", ("Eerlijk.",), 80), Actions(),
+        ).respond(ConversationTurn.private(
+            "tenant", "installation", "jaap", "conversation", "same-id-test",
+            "Gebruik mijn voorkeur om het item te bekijken.", NOW,
+        ))

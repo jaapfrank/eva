@@ -253,6 +253,39 @@ class PostgresConversationActions:
             actions.append(_OBSERVATION_IDENTITY_CORRECTION_ACTION)
         return tuple(actions)
 
+    def continuation_action_names(self, turn: ConversationTurn) -> tuple[str, ...]:
+        allowed = set(self.available_action_names(turn))
+        return tuple(
+            name
+            for provider in self._external_tools
+            if getattr(provider, "supports_indexed_steps", False)
+            for name in provider.action_names
+            if name in allowed
+        )
+
+    def pending_step(
+        self, turn: ConversationTurn, *, step_index: int
+    ) -> ConversationActionReceipt | None:
+        if type(step_index) is not int or step_index < 1:
+            raise ValueError("continuation step index must be a positive integer")
+        for provider in self._external_tools:
+            if getattr(provider, "supports_indexed_steps", False):
+                receipt = provider.pending(turn, step_index=step_index)
+                if receipt is not None:
+                    return receipt
+        return None
+
+    def execute_step(
+        self, turn: ConversationTurn, call: ConversationActionCall, *, step_index: int
+    ) -> ConversationActionReceipt:
+        if type(step_index) is not int or step_index < 1:
+            raise ValueError("continuation step index must be a positive integer")
+        if call.name not in self.continuation_action_names(turn):
+            raise ConversationConflict("conversation continuation action is unavailable")
+        return self._external_tool_by_action[call.name].execute(
+            turn, call, step_index=step_index,
+        )
+
     def memory_query_hints(self, turn: ConversationTurn) -> tuple[str, ...]:
         binding = turn.observation_binding
         if binding is None:

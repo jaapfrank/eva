@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from dataclasses import replace
 from datetime import UTC, datetime, timedelta
 import hashlib
 from types import SimpleNamespace
@@ -1242,3 +1243,42 @@ def test_retry_claim_preserves_error_fingerprint_until_third_identical_failure(
     assert captured["retry_count"] == 2
     assert captured["last_error_fingerprint"] == fingerprint
     assert captured["deadline"] == NOW + timedelta(seconds=90)
+
+
+@pytest.mark.parametrize("step_index", [-1, True, 1.5, "1"])
+def test_external_step_rejects_invalid_index_before_access(step_index) -> None:
+    tools = PostgresExternalConversationTools(
+        sa.create_engine("sqlite://"),
+        SimpleNamespace(action_names=("inspect_item",)),
+        object(),
+    )
+    turn = ConversationTurn.private(
+        "tenant", "installation", "jaap", "conversation", "message", "test",
+        "2026-09-08T09:00:00Z",
+    )
+    with pytest.raises(ValueError, match="step index"):
+        tools.pending(turn, step_index=step_index)
+    with pytest.raises(ValueError, match="step index"):
+        tools.execute(
+            turn, ConversationActionCall("call", "inspect_item", {}),
+            step_index=step_index,
+        )
+
+
+def test_external_step_slots_are_shared_across_tools_but_isolated_by_owner() -> None:
+    turn = ConversationTurn.private(
+        "tenant", "installation", "jaap", "conversation", "message", "test",
+        "2026-09-08T09:00:00Z",
+    )
+    thread_id = PostgresExternalConversationTools._thread_id
+    first = thread_id(turn, "inspect_item", 1)
+    assert first == thread_id(turn, "different_provider_tool", 1)
+    assert first != thread_id(turn, "inspect_item", 2)
+    assert first != thread_id(replace(turn, conversation_id="other"), "inspect_item", 1)
+    other_person = ConversationTurn.private(
+        "tenant", "installation", "someone_else", "conversation", "message", "test",
+        "2026-09-08T09:00:00Z",
+    )
+    assert first != thread_id(other_person, "inspect_item", 1)
+    assert first != thread_id(replace(turn, tenant_id="other"), "inspect_item", 1)
+    assert first != thread_id(replace(turn, installation_id="other"), "inspect_item", 1)

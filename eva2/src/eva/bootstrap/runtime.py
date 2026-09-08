@@ -78,6 +78,8 @@ if TYPE_CHECKING:
 from eva.application.conversation import (
     ConversationConflict,
     ConversationTurn,
+    ConversationStopped,
+    ConversationModelUsage,
     GroundedReply,
     IdentityProfile,
     LivingConversation,
@@ -802,6 +804,21 @@ class PostgresHindsightMemoryRuntime:
             raise RuntimeError("effect stop control is unavailable")
         return self._dashboard_effect_controller.stop(effect_intent_id)
 
+    def dashboard_stop_conversation(self) -> int:
+        """Stop unfinished turns in the server-bound owner's dashboard chat."""
+        if (self._runtime_tenant_id is None or self._runtime_installation_id is None
+                or self._dashboard_owner_principal_id is None
+                or self._dashboard_principal_binding_id is None):
+            raise RuntimeError("owner conversation stop is unavailable")
+        journal = PostgresConversationJournal(self._engine, external_timeline_scope(
+            self._runtime_tenant_id, self._runtime_installation_id,
+            "conversation stop scope is required",
+        ))
+        return journal.request_conversation_stop(
+            principal_id=str(self._dashboard_owner_principal_id),
+            conversation_id=f"dashboard:{self._dashboard_principal_binding_id}",
+        )
+
     def dashboard_turn(self, text: str) -> tuple[ConversationTurn, GroundedReply]:
         """Create one private owner turn without trusting browser-supplied scope.
 
@@ -898,14 +915,39 @@ class PostgresHindsightMemoryRuntime:
     ) -> GroundedReply:
         self.admit_turn_audience(turn)
         journal = self._journal(turn)
-        journal.admit(turn)
-        committed = journal.committed_reply(turn)
-        if committed is not None:
-            return committed
-        durable_recent = journal.recent(turn, exclude_message_id=turn.message_id)
-        recent = tuple((*recent_messages, *durable_recent)[-12:])
-        candidate = self._conversation.respond(turn, recent)
-        return journal.commit_reply(turn, candidate)
+        with journal.execution(turn):
+            journal.admit(turn)
+            committed = journal.committed_reply(turn)
+            if committed is not None:
+                return committed
+            durable_recent = journal.recent(turn, exclude_message_id=turn.message_id)
+            recent = tuple((*recent_messages, *durable_recent)[-12:])
+            latest_usage = ConversationModelUsage.unmeasured()
+
+            def checkpoint(current, usage):
+                nonlocal latest_usage
+                if isinstance(usage, ConversationModelUsage):
+                    latest_usage = usage
+                self.admit_turn_audience(current)
+                journal.ensure_running(current)
+
+            try:
+                candidate = self._conversation.respond(
+                    turn, recent, before_step=checkpoint, model_journal=journal,
+                )
+                checkpoint(turn, candidate.model_usage)
+            except ConversationStopped:
+                durable_usage = journal.model_usage(turn)
+                if durable_usage.measurement != "unmeasured":
+                    latest_usage = durable_usage
+                candidate = GroundedReply(
+                    conversation_id=turn.conversation_id,
+                    message_id=turn.message_id,
+                    text="Ik start geen verdere stappen voor deze opdracht. Een stap die al in behandeling is, kan nog afronden.",
+                    evidence_memory_ids=(), generated_at=turn.occurred_at,
+                    provider="runtime:conversation-stop", model_usage=latest_usage,
+                )
+            return journal.commit_reply(turn, candidate)
 
     def respond_telegram_delegated_work(
         self,
