@@ -30,7 +30,7 @@ DASHBOARD_VOICE_CLIENT_JS = r"""
       this.env=env; this.onState=onState; this.onReply=onReply;
       this.epoch=0; this.running=false; this.generation=0; this.discardThrough=0;
       this.playEpoch=0; this.parts=[]; this.audioBytes=0; this.audioMime=null;
-      this.capture=null; this.preRoll=[]; this.loud=0; this.quiet=0; this.serverBusy=false;
+      this.capture=null; this.sendingCapture=null; this.preRoll=[]; this.loud=0; this.quiet=0; this.serverBusy=false;
     }
     state(text) { this.onState(text); }
     control(type) {
@@ -88,10 +88,19 @@ DASHBOARD_VOICE_CLIENT_JS = r"""
       if(!this.running) return;
       this.preRoll.push(bytes); if(this.preRoll.length>10)this.preRoll.shift();
       this.loud=rms>0.018?this.loud+1:0;
-      if(!this.capture && this.loud>=6) {
+      if((!this.capture || this.capture.ended) && this.loud>=6) {
         this.clearAudio(); this.discardThrough=this.generation;
         if(this.serverBusy)this.control('interrupt');
-        this.capture={frames:[...this.preRoll],total:this.preRoll.length*640,ended:false,sent:false,requested:false,inFlight:0,ack:0};
+        if(this.capture?.ended && !this.capture.sent) {
+          // Resume queued speech while the preceding model turn is finishing.
+          this.capture.frames.push(...this.preRoll);
+          this.capture.total+=this.preRoll.length*640;
+          if(this.capture.total>1920000){this.fail();return;}
+          this.capture.ended=false;
+        } else {
+          // ACKs still belong to the previous capture; recording must not wait.
+          this.capture={frames:[...this.preRoll],total:this.preRoll.length*640,ended:false,sent:false,requested:false,inFlight:0,ack:0};
+        }
         this.quiet=0; this.requestCapture();
         return;
       }
@@ -113,7 +122,7 @@ DASHBOARD_VOICE_CLIENT_JS = r"""
       this.socket.send(bytes); return true;
     }
     pumpCapture() {
-      const capture=this.capture;
+      const capture=this.sendingCapture;
       if(!capture?.sent)return;
       // Acknowledgements follow server consumption, not merely network receipt.
       while(capture.frames.length && capture.inFlight<4) {
@@ -121,7 +130,8 @@ DASHBOARD_VOICE_CLIENT_JS = r"""
         capture.inFlight++;
       }
       if(capture.ended && !capture.frames.length && !capture.inFlight) {
-        this.control('end');this.capture=null;
+        this.control('end');this.sendingCapture=null;
+        if(this.capture===capture)this.capture=null;
       }
     }
     finishCapture() {
@@ -136,11 +146,11 @@ DASHBOARD_VOICE_CLIENT_JS = r"""
       if(data.type==='listening') {
         const capture=this.capture;
         if(!capture?.requested||data.generation<=this.generation)throw new Error('unexpected capture');
-        this.generation=data.generation;this.serverBusy=true;capture.sent=true;
+        this.generation=data.generation;this.serverBusy=true;capture.sent=true;this.sendingCapture=capture;
         this.pumpCapture();
         if(!capture.ended)this.state('Ik luister…');
       } else if(data.type==='audio_ack') {
-        const capture=this.capture;
+        const capture=this.sendingCapture;
         if(data.generation!==this.generation || !capture?.sent)return;
         if(data.sequence!==capture.ack+1 || capture.inFlight<1)throw new Error('audio acknowledgement');
         capture.ack=data.sequence;capture.inFlight--;this.pumpCapture();
@@ -150,7 +160,8 @@ DASHBOARD_VOICE_CLIENT_JS = r"""
         this.discardThrough=Math.max(this.discardThrough,data.generation);this.clearAudio();
       } else if(data.type==='turn_finished') {
         if(data.generation!==this.generation)return;
-        if(this.capture?.sent){this.capture=null;this.preRoll=[];this.loud=0;this.quiet=0;}
+        if(this.capture===this.sendingCapture){this.capture=null;this.preRoll=[];this.loud=0;this.quiet=0;}
+        this.sendingCapture=null;
         this.serverBusy=false;this.requestCapture();
       } else if(data.type==='error') {
         this.clearAudio();this.state('Deze gesproken beurt is niet gelukt. Probeer opnieuw.');
@@ -206,7 +217,7 @@ DASHBOARD_VOICE_CLIENT_JS = r"""
       if(this.processor){this.processor.port.onmessage=null;this.processor.disconnect();this.processor=null;}
       this.mic?.disconnect();this.mic=null;this.mute?.disconnect();this.mute=null;
       if(this.context){void this.context.close().catch(()=>{});this.context=null;}
-      this.capture=null;this.preRoll=[];this.serverBusy=false;this.loud=0;this.quiet=0;
+      this.capture=null;this.sendingCapture=null;this.preRoll=[];this.serverBusy=false;this.loud=0;this.quiet=0;
       this.generation=0;this.discardThrough=0;this.state('Microfoon uit.');
     }
     fail() {this.close();this.state('Stem is niet beschikbaar of de verbinding is verbroken. Je kunt blijven typen.');}

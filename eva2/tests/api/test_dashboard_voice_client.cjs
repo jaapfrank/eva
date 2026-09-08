@@ -236,3 +236,46 @@ uvicorn.Server(uvicorn.Config(app,log_level='error',access_log=False)).run(socke
     fs.rmSync(directory,{recursive:true,force:true});
   }
 });
+
+
+test('resumed speech survives while ended capture waits for acknowledgements',()=>{
+  const {client,sent}=setup();client.generation=0;
+  for(let i=0;i<6;i++)client.frame(frame());
+  client.event({type:'listening',generation:1});client.finishCapture();
+  // Hold provider acknowledgements while 600 ms of the next utterance arrives.
+  for(let i=0;i<30;i++)client.frame({bytes:new Uint8Array(640).fill(7).buffer,rms:0.1});
+  client.finishCapture();
+  for(let sequence=1;sequence<=6;sequence++)client.event({type:'audio_ack',generation:1,sequence});
+  client.event({type:'turn_finished',generation:1});
+  assert.equal(JSON.parse(sent.at(-1)).type,'start','buffered next utterance must be requested');
+  client.event({type:'listening',generation:2});
+  for(let sequence=1;client.capture&&sequence<=50;sequence++)client.event({type:'audio_ack',generation:2,sequence});
+  assert.equal(sent.filter(x=>x instanceof ArrayBuffer&&new Uint8Array(x)[0]===7).length,30,'all resumed speech frames must reach the provider');
+  assert.equal(JSON.parse(sent.at(-1)).type,'end');
+});
+
+
+test('queued speech resumes without replacing its earlier words',()=>{
+  const {client,sent}=setup();client.serverBusy=true;
+  for(let i=0;i<6;i++)client.frame(frame());client.finishCapture();
+  for(let i=0;i<30;i++)client.frame({bytes:new Uint8Array(640).fill(7).buffer,rms:0.1});
+  client.finishCapture();client.event({type:'turn_finished',generation:1});
+  client.event({type:'listening',generation:2});
+  for(let sequence=1;client.capture&&sequence<=50;sequence++)client.event({type:'audio_ack',generation:2,sequence});
+  assert.equal(sent.filter(x=>x instanceof ArrayBuffer&&new Uint8Array(x)[0]===0).length,6);
+  assert.equal(sent.filter(x=>x instanceof ArrayBuffer&&new Uint8Array(x)[0]===7).length,30);
+});
+
+test('early STT finish preserves speech recorded during old ACK draining',()=>{
+  const {client,sent}=setup();client.generation=0;
+  for(let i=0;i<6;i++)client.frame(frame());
+  client.event({type:'listening',generation:1});client.finishCapture();
+  for(let i=0;i<30;i++)client.frame({bytes:new Uint8Array(640).fill(7).buffer,rms:0.1});
+  client.finishCapture();client.event({type:'turn_finished',generation:1});
+  assert.equal(JSON.parse(sent.at(-1)).type,'start');
+  client.event({type:'listening',generation:2});
+  // Late acknowledgement for the retired stream must not touch the new one.
+  client.event({type:'audio_ack',generation:1,sequence:1});
+  for(let sequence=1;client.capture&&sequence<=50;sequence++)client.event({type:'audio_ack',generation:2,sequence});
+  assert.equal(sent.filter(x=>x instanceof ArrayBuffer&&new Uint8Array(x)[0]===7).length,30);
+});
