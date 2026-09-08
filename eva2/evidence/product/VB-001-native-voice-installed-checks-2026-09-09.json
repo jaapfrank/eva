@@ -1,0 +1,74 @@
+{
+  "contract": "EvaNativeVoiceInstalledCandidateChecks/v1",
+  "status": "exact_candidate_checks_passed_ha_package_staged_not_live",
+  "sourceCommit": "edb3a704c316a3272be5a99e195a76a009d3a302",
+  "imageId": "sha256:e24e4c74757f12e8d17fee223e517a5c0f122b64a481be943e811b7194261277",
+  "privateEvidenceDirectory": "/home/administrator/project/.eva2-artifacts/native-voice-candidate-m4flh7ov",
+  "receiptSha256": {
+    "scan-readable/syft.json": "81d27a7ca98f233e8c022b4993bacdaba1d5b6ffca0bb34d92734a09695b557d",
+    "scan-readable/trivy.json": "50d6de880fcb1254afd71b0d1dbe50288007520c7f182b0b1aa80dfbeb46590a",
+    "browser-subgate-receipt.json": "ca09c9727a3ae8cf22a90db20721b0e08c74306fd3e064211810cd901ef59d68",
+    "installed-native-tests.log": "bafc27c6054bf9eb11575983f06075478715b2e0c6827c1aed91f6a8aeacbd19",
+    "ha-stage-receipt.json": "923d3ca15db6772ff37a1570d6e6331648ecb902c1a7804e9f416188104b0fc4"
+  },
+  "scan": {
+    "HIGH": 0,
+    "CRITICAL": 0,
+    "databaseUpdatedAt": "2026-08-31T07:08:27.708070973Z",
+    "sbomPackageCount": 75,
+    "archiveSha256": "1d4346989f3718c0d1267d32e0af28af25439df8456d2f27820964ba17d33ce1",
+    "tools": "pinned Syft1.51.0 and Trivy0.74.0, no network; SPDX document validated",
+    "limit": "Pinned DB dated31August; not a claim of current complete vulnerability absence or complete license acceptance"
+  },
+  "installedTests": {
+    "passed": 134,
+    "durationSeconds": 9.08,
+    "modules": [
+      "cancellation",
+      "native_household_responder",
+      "household_voice_authority",
+      "native_voice_http",
+      "pydantic_conversation_model",
+      "runtime_settings"
+    ],
+    "boundary": "Product from exact candidate image; only test/tool and gate dependencies mounted, no product source mount; injected model providers"
+  },
+  "physicalBrowser": {
+    "status": "passed",
+    "passed": 4,
+    "cleanup": {
+      "allNonceResourcesRemoved": true
+    },
+    "boundary": "Real Playwright action-chain tests on exact candidate; not a voice microphone or speaker test"
+  },
+  "homeAssistantStage": {
+    "version": "2026.8.1",
+    "sshAddonVersion": "10.4.0",
+    "fileEditorVersion": "6.1.0",
+    "adminAccess": "authenticated supervisor WebSocket and existing configured SSH; no new login credential",
+    "destination": "/share/eva2_voice_candidates/edb3a704c316a3272be5a99e195a76a009d3a302",
+    "fileHashes": {
+      "eva2_voice/__init__.py": "1533d85b995b3666c5af427abe32c7cd73625910c005e4607014fc27bb186906",
+      "eva2_voice/client.py": "db9948dbcd70a293d8c2bb256f59ed3a8efd53880472cacd54c440e46f99f6b4",
+      "eva2_voice/config_flow.py": "b3b14d7b50ec08c0f7af437973b9d7da3b72e553f44435b9bee246610423da13",
+      "eva2_voice/conversation.py": "4377e9f49082e7b722d7864d99b21bd4a6288bba71db11bc6c0f98f71f25fab0",
+      "eva2_voice/manifest.json": "cce7b2324a7f10c3eef6f536a09aafa3d3ba770d8385c6b5daa675ba0fc02161",
+      "eva2_voice/strings.json": "9dc97e8be92bd05452cfa34138413efaaf6ddc252e0d22802d8d03bb036cbc45"
+    },
+    "readback": "all six source files and candidate manifest SHA256 verified on remote host",
+    "activeChanges": "none: no custom_components installation, config entry, pipeline change, microphone unmute, firmware flash or HA restart"
+  },
+  "repairs": [
+    "Original private image inaccessible to scanner containers; copied only artifact and exact DB to separate read-only scan mounts; original permissions unchanged",
+    "Scancopy directory validator required no write bits; changed only copied cache dirs to0555",
+    "Supervisor HTTP proxy path not usable; official HA2026.8.1 supervisor WebSocket provided authorized admin access; installed SSH addon stdinfalse respected; used its existing port/password without printing credential"
+  ],
+  "review": "co006_review bounded evidence GO: raw scan archive/hash and0HIGH/CRITICAL verified, browser4/4 cleanup verified, installed134pass verified, six staged HA hashes match edb3a704; no full release or live GO",
+  "remaining": [
+    "Closed complete release receipt plus controlled current-data copy/start/restart/rollback proof",
+    "Activate owner-authorized native runtime configuration through A/B route",
+    "Install staged native component and configure actual HA pipeline with rollback",
+    "Real speaker interruption/resume/latency and owner experience",
+    "Complete full-goal acceptance evidence"
+  ]
+}
