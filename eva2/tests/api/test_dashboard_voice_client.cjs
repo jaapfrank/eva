@@ -153,7 +153,7 @@ test('real Chromium AudioWorklet and authenticated Uvicorn voice roundtrip', {
   const root=path.resolve(__dirname,'../..');
   const python=process.env.EVA_VOICE_TEST_PYTHON;
   assert.ok(python && path.isAbsolute(python));
-  const fixture=`import runpy,socket,sys
+  const fixture=`import ast,runpy,socket,sys
 from pathlib import Path
 from fastapi import Request
 from fastapi.responses import HTMLResponse
@@ -172,10 +172,15 @@ async def synthesize(self,text):
 mod['Media'].synthesize=synthesize
 client,runtime,media,_,_=mod['setup']()
 app=client.app
+# Use the real owner page headers: a permissive fixture hid CSP failures.
+tree=ast.parse(Path('src/eva/adapters/api/app.py').read_text())
+route=next(n for n in ast.walk(tree) if isinstance(n,ast.FunctionDef) and n.name=='dashboard_conversation')
+response=next(n for n in ast.walk(route) if isinstance(n,ast.Call) and isinstance(n.func,ast.Name) and n.func.id=='HTMLResponse')
+headers=ast.literal_eval(next(k.value for k in response.keywords if k.arg=='headers'))
 @app.get('/')
 def page(request:Request):
  DashboardAccess(mod['TOKEN']).require(request)
- return HTMLResponse(DASHBOARD_CONVERSATION_HTML)
+ return HTMLResponse(DASHBOARD_CONVERSATION_HTML,headers=headers)
 print(port,flush=True)
 uvicorn.Server(uvicorn.Config(app,log_level='error',access_log=False)).run(sockets=[sock])
 `;
@@ -191,12 +196,17 @@ uvicorn.Server(uvicorn.Config(app,log_level='error',access_log=False)).run(socke
     browser=await chromium.launch({headless:true,executablePath:process.env.EVA_DASHBOARD_CHROMIUM,
       args:['--use-fake-ui-for-media-stream','--use-fake-device-for-media-stream',`--use-file-for-fake-audio-capture=${wav}`]});
     const context=await browser.newContext({httpCredentials:{username:'eva-owner',password:'v'.repeat(40)},permissions:['microphone']});
-    const page=await context.newPage();const pageErrors=[],received=[];
+    const page=await context.newPage();const pageErrors=[],received=[],externalRequests=[];
+    // Playwright emits request events even for CSP-blocked attempts. The route
+    // handler is reached only if an external fetch passes CSP; abort as a guard.
+    await page.route('https://eva2-csp-test.invalid/**',route=>{externalRequests.push(route.request().url());return route.abort();});
     page.on('pageerror',e=>pageErrors.push(e.message));
     page.on('websocket',socket=>socket.on('framereceived',event=>{
       try{received.push(JSON.parse(String(event.payload)).type);}catch(_){}
     }));
     await page.addInitScript(()=>{
+      window.voiceCspViolations=[];
+      document.addEventListener('securitypolicyviolation',event=>voiceCspViolations.push({directive:event.effectiveDirective,uri:event.blockedURI}));
       const original=navigator.mediaDevices.getUserMedia.bind(navigator.mediaDevices);
       navigator.mediaDevices.getUserMedia=async(...args)=>{
         const stream=await original(...args);window.voiceTestTracks=stream.getTracks();return stream;
@@ -215,6 +225,10 @@ uvicorn.Server(uvicorn.Config(app,log_level='error',access_log=False)).run(socke
     await page.getByRole('button',{name:'Microfoon uit',exact:true}).click();
     assert.equal(await page.evaluate(()=>voiceTestTracks[0].readyState),'ended');
     assert.deepEqual(pageErrors,[]);
+    assert.deepEqual(await page.evaluate(()=>voiceCspViolations),[],'production CSP must allow voice script and worklet');
+    await page.evaluate(()=>{const script=document.createElement('script');script.src='https://eva2-csp-test.invalid/forbidden.js';document.head.append(script);});
+    await page.waitForFunction(()=>voiceCspViolations.some(event=>event.directive==='script-src-elem'&&event.uri==='https://eva2-csp-test.invalid/forbidden.js'));
+    assert.deepEqual(externalRequests,[],'external scripts remain blocked before network access');
     console.log('Synthetic browser proof: real Chromium capture/worklet/PCM, Basic WS handshake, Uvicorn admission, WAV decode/play scheduling, interrupt and track cleanup. No human microphone/speaker or provider/model claim.');
   } finally {
     if(browser)await browser.close();

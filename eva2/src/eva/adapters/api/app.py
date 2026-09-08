@@ -792,7 +792,7 @@ def create_app(
             DASHBOARD_CONVERSATION_HTML,
             headers={
                 "Cache-Control": "no-store",
-                "Content-Security-Policy": "default-src 'none'; style-src 'unsafe-inline'; script-src 'unsafe-inline'; connect-src 'self'; base-uri 'none'; frame-ancestors 'none'",
+                "Content-Security-Policy": "default-src 'none'; style-src 'unsafe-inline'; script-src 'self' 'unsafe-inline' blob:; connect-src 'self'; base-uri 'none'; frame-ancestors 'none'",
                 "X-Content-Type-Options": "nosniff",
             },
         )
