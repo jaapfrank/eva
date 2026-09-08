@@ -1573,7 +1573,7 @@
     "vb001AckBufferRepair": {
       "owner": "/root",
       "reviewer": "/root/co006_review",
-      "status": "built_tested_reviewed_not_live",
+      "status": "sealed_candidate_gates_passed_copied_voice_running",
       "implementationCommit": "7be3a1ce31f8bd8ce3ac27c463156df662c3263d",
       "problem": "Resumed speech could lose initial frames while ended previous capture waited for provider ACKs.",
       "change": "Separate sendingCapture ownership from active microphone capture; preserve queued speech through early STT completion and ignore retired generation ACKs.",
@@ -1586,7 +1586,7 @@
       },
       "reviewDecision": "Bounded GO by /root/co006_review; no concrete blocker in queue/resume/generation/capacity logic. No live GO and no claim that ordinary pauses form one utterance.",
       "candidateBinding": "Previous 69529/a286 candidate evidence remains historical for that source; new repair requires resealing before integration/deployment.",
-      "next": "Build sealed complete candidate offline, verify full release gates, then corrected copied-data voice probe.",
+      "next": "Read actual copied-data voice result, verify all new ingress/reply rows and measured usage, restart/revocation and cleanup before reserve rollout preparation.",
       "sealedSourceCommit": "215fe32f938331494036e26b32de958a4ef9a128",
       "releaseInputReview": "Independent GO /root/co006_review: exactly two input hashes changed, 338/156/20 collections unchanged; snapshot hashes verified, no cockpit claim changes.",
       "releaseGateTestsPassed": 83,
@@ -1626,16 +1626,30 @@
       },
       "requiredGateProcess": {
         "execSessionId": 67088,
-        "status": "running",
+        "status": "completed_exit_0",
         "output": "/tmp/eva2-vb001-ack-release-j5p21b_z/gates",
         "databaseScope": "Twelve disposable databases with vb001_ack2_ marker; remove exact recorded names only after terminal result."
       },
       "copyProbePreparation": {
-        "status": "independent_wrapper_go_waiting_full_gate",
+        "status": "executing_after_bound_gates_and_independent_go",
         "wrapper": "/tmp/eva2-vb001-ack-release-j5p21b_z/run_voice_copy.py",
         "wrapperSha256": "30ffed5af982ceaa3ad6ba19179aeee4bf40f09517fa979180053e0cabc03819",
         "scope": "One real browser/HA STT/Astra/HA TTS arithmetic roundtrip with all new ingress readbacks, restart and policy revocation. Full release gates and cleanup must pass before execution. Prior multi-sentence segmentation remains separately recorded, not claimed fixed.",
-        "review": "Bounded GO /root/co006_review: readbacks captured before validation even when browser returns nonzero or times out. Incomplete reply/usage is unknown, never zero. Execute only after terminal full gate, cleanup and exact pre-copy binding."
+        "review": "Bounded GO /root/co006_review: readbacks captured before validation even when browser returns nonzero or times out. Incomplete reply/usage is unknown, never zero. Execute only after terminal full gate, cleanup and exact pre-copy binding.",
+        "execSessionId": 88591,
+        "precopyEvidenceSha256": "a6c14b913bf232d573e9210f2c17f6a0c3f6378ea0122976f5b9e2a188dad8d9"
+      },
+      "requiredGateResult": {
+        "passed": 2209,
+        "failures": 0,
+        "errors": 0,
+        "skipped": 0,
+        "receiptPath": "/tmp/eva2-vb001-ack-release-j5p21b_z/gates/required-tests.json"
+      },
+      "testDatabaseCleanup": {
+        "removed": 12,
+        "status": "passed",
+        "receiptPath": "/tmp/eva2-vb001-ack-release-j5p21b_z/test-database-cleanup.json"
       }
     }
   },
