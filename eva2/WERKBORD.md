@@ -42,6 +42,12 @@ Klaar betekent:
 - `eva2/src/eva/bootstrap/dashboard_voice.py`
 - `eva2/src/eva/bootstrap/runtime.py`
 - `eva2/tests/bootstrap/test_dashboard_voice_bootstrap.py`
+- `eva2/release/managed-b-release-input-authority-v1.json`
+- `eva2/release/eva-cockpit-evidence-index-v1.json`
+- `eva2/tools/managed_b_candidate/release_inputs.py`
+- `eva2/tools/run_managed_b_required_tests.py`
+- `eva2/tests/operations/test_managed_b_release_inputs.py`
+- `eva2/tests/operations/test_run_managed_b_required_tests.py`
 
 Echte controles:
 
@@ -52,6 +58,7 @@ Echte controles:
 - `pytest -q tests/api/test_dashboard_voice.py`
 - `pytest -q tests/bootstrap/test_dashboard_voice_bootstrap.py`
 - `pytest -q tests/bootstrap/test_runtime_settings.py`
+- `pytest -q tests/operations/test_managed_b_release_inputs.py tests/operations/test_run_managed_b_required_tests.py`
 
 </details>
 
