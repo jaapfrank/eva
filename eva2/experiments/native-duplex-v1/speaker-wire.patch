@@ -1,0 +1,190 @@
+--- a/va_pipecat.h
++++ b/va_pipecat.h
+@@ -6,6 +6,7 @@
+ #include "esphome/components/speaker/speaker.h"
+ 
+ #include "playback_stop_barrier.h"
++#include "eva_output_protocol.h"
+ 
+ #include <atomic>
+ #include <cstdint>
+@@ -36,6 +37,7 @@
+   // When enabled, microphone audio continues through thinking and speaking so
+   // Pipecat VAD can detect barge-in. Use a microphone path with suitable AEC.
+   void set_barge_in(bool v) { barge_in_ = v; }
++  void set_eva_pcm_protocol(bool enabled) { eva_pcm_protocol_ = enabled; }
+   void set_playback_buffer_size(size_t bytes) { audio_buf_bytes_ = bytes; }
+   // Sets the output-volume multiplier applied to TTS in handle_binary_.
+   // Driven from yaml by external_media_player's volume / mute state so the
+@@ -91,6 +93,23 @@
+   void on_mic_data_(const std::vector<uint8_t> &samples);
+   bool ensure_playback_speaker_ready_();
+   bool drain_audio_();
++  void eva_flush_locked_();
++  void eva_apply_locked_(const EvaOutputAction &action, const uint8_t *record, size_t size);
++  void eva_reset_connection_();
++  void eva_ws_data_(uint8_t opcode, bool fin, int offset, int total, const uint8_t *data, int size);
++  void eva_service_output_();
++  void eva_output_frames_(uint32_t frames, int64_t timestamp);
++  void eva_pump_receipts_();
++  bool eva_pcm_protocol_{false};
++  EvaOutputProtocol eva_output_;
++  EvaWireAssembler eva_assembler_;
++  std::array<uint8_t, EvaOutputProtocol::MAX_RECORD> eva_held_record_{};
++  size_t eva_held_size_{0};
++  std::array<EvaReceipt, 8> eva_ack_queue_{};
++  size_t eva_ack_head_{0}, eva_ack_count_{0};
++  uint32_t eva_written_frames_{0}, eva_played_frames_{0}, eva_prime_frames_{0};
++  int64_t eva_epoch_us_{0};
++  std::atomic<bool> eva_reprime_{false}, eva_close_requested_{false};
+   PlaybackStopBarrier playback_stop_;
+   std::atomic<uint32_t> playback_main_loop_{0};
+   bool playback_failure_reported_{false};  // audio task only
+@@ -364,7 +383,7 @@
+   // Output volume multiplier in [0, 1], updated from yaml whenever
+   // external_media_player.volume / mute changes. Defaults to 1.0 so a
+   // stand-alone va_pipecat (no media_player wiring) still plays audibly.
+-  float volume_{1.0f};
++  std::atomic<float> volume_{1.0f};
+ 
+   // Ring buffer for pending TTS audio, allocated in PSRAM. The server can
+   // burst the entire response in ~200 ms; we buffer here and drain into
+--- a/va_pipecat.cpp
++++ b/va_pipecat.cpp
+@@ -166,6 +166,11 @@
+     return;
+   }
+ 
++  if (this->eva_pcm_protocol_ && this->speaker_ != nullptr) {
++    this->speaker_->add_audio_output_callback([this](uint32_t frames, int64_t timestamp) {
++      this->eva_output_frames_(frames, timestamp);
++    });
++  }
+   // Eva candidate: speaker operations start lazily in audio_task_, never here.
+ 
+   BaseType_t task_ok = xTaskCreatePinnedToCore(
+@@ -295,7 +300,8 @@
+     this->playback_priming_ = false;
+   }
+   if (!this->playback_stop_.poll(*this->speaker_, this->playback_main_loop_.load(std::memory_order_acquire), millis())) {
+-    if (this->playback_stop_.failed() && !this->playback_failure_reported_) {
++    if (this->eva_pcm_protocol_) this->eva_service_output_();
++    if (!this->eva_pcm_protocol_ && this->playback_stop_.failed() && !this->playback_failure_reported_) {
+       this->playback_failure_reported_ = true;
+       this->defer([this]() {
+         this->cancel_turn_("stop");
+@@ -303,6 +309,17 @@
+       });
+     }
+     return false;
++  }
++
++  if (this->eva_pcm_protocol_) {
++    this->eva_service_output_();
++    if (this->playback_stop_.pending() || this->playback_stop_.failed()) return false;
++    if (this->eva_reprime_.exchange(false, std::memory_order_acq_rel)) {
++      this->chain_prime_remaining_=0;
++      this->last_fed_ms_=0;
++      this->playback_priming_=true;
++      this->prime_started_ms_=millis();
++    }
+   }
+ 
+   portENTER_CRITICAL(&this->ring_mux_);
+@@ -332,6 +349,11 @@
+       size_t want = std::min(this->chain_prime_remaining_, sizeof(kSilence));
+       size_t fed = this->speaker_->play(kSilence, want);
+       if (fed > 0) {
++        if (this->eva_pcm_protocol_) {
++          portENTER_CRITICAL(&this->ring_mux_);
++          this->eva_prime_frames_+=fed/2;
++          portEXIT_CRITICAL(&this->ring_mux_);
++        }
+         this->chain_prime_remaining_ -= fed;
+         this->last_fed_ms_ = now_ms;
+         return true;
+@@ -378,6 +400,7 @@
+ 
+   this->last_fed_ms_ = millis();
+   portENTER_CRITICAL(&this->ring_mux_);
++  if (this->eva_pcm_protocol_) this->eva_written_frames_+=accepted/2;
+   if (this->audio_generation_ == generation && this->audio_fill_ >= accepted) {
+     this->audio_head_ = (this->audio_head_ + accepted) % this->audio_buf_bytes_;
+     this->audio_fill_ -= accepted;
+@@ -428,6 +451,10 @@
+ 
+ void VaPipecat::loop() {
+   this->playback_main_loop_.fetch_add(1, std::memory_order_release);
++  if (this->eva_pcm_protocol_) {
++    this->eva_pump_receipts_();
++    return;  // Legacy followup/has_buffered_data completion cannot emit wire receipts.
++  }
+   this->publish_audio_levels_();
+ 
+   if (this->streaming_ && this->mic_source_ != nullptr) {
+@@ -614,6 +641,7 @@
+   auto *data = static_cast<esp_websocket_event_data_t *>(event_data);
+   switch (event_id) {
+     case WEBSOCKET_EVENT_CONNECTED: {
++      if (this->eva_pcm_protocol_) this->eva_reset_connection_();
+       ESP_LOGI(TAG, "WS connected");
+       this->ws_connected_ = true;
+       this->reconnect_delay_ms_ = 1000;  // reset backoff on a clean open
+@@ -633,6 +661,17 @@
+       break;
+     }
+     case WEBSOCKET_EVENT_DATA: {
++      if (this->eva_pcm_protocol_) {
++        if (data == nullptr) {
++          portENTER_CRITICAL(&this->ring_mux_);
++          this->eva_apply_locked_(this->eva_output_.fail(), nullptr, 0);
++          portEXIT_CRITICAL(&this->ring_mux_);
++        } else {
++          this->eva_ws_data_(data->op_code, data->fin, data->payload_offset, data->payload_len,
++                            reinterpret_cast<const uint8_t *>(data->data_ptr), data->data_len);
++        }
++        break;
++      }
+       if (data == nullptr || data->data_ptr == nullptr || data->data_len <= 0)
+         break;
+       // op_code: 0x01 = text, 0x02 = binary, 0x00 = continuation of the prior
+@@ -823,6 +862,13 @@
+ }
+ 
+ size_t VaPipecat::flush_playback_queue_() {
++  if (this->eva_pcm_protocol_) {
++    portENTER_CRITICAL(&this->ring_mux_);
++    const size_t flushed=this->audio_fill_;
++    this->eva_apply_locked_(this->eva_output_.fail(), nullptr, 0);
++    portEXIT_CRITICAL(&this->ring_mux_);
++    return flushed;
++  }
+   portENTER_CRITICAL(&this->ring_mux_);
+   const size_t flushed_bytes = this->audio_fill_;
+   this->playback_stop_.request();
+--- a/__init__.py
++++ b/__init__.py
+@@ -17,6 +17,7 @@
+ CONF_SPEAKER = "speaker"
+ CONF_AUTO_PROVISION = "auto_provision"
+ CONF_BARGE_IN = "barge_in"
++CONF_EVA_PCM_PROTOCOL = "eva_pcm_protocol"
+ CONF_PLAYBACK_BUFFER_SIZE = "playback_buffer_size"
+ CONF_ON_PHASE = "on_phase"
+ CONF_ON_TRANSCRIPT = "on_transcript"
+@@ -72,6 +73,7 @@
+                 max_channels=1,
+             ),
+             cv.Optional(CONF_BARGE_IN, default=True): cv.boolean,
++            cv.Optional(CONF_EVA_PCM_PROTOCOL, default=False): cv.boolean,
+             cv.Optional(CONF_PLAYBACK_BUFFER_SIZE, default="2MB"): cv.All(
+                 cv.validate_bytes,
+                 cv.int_range(min=64 * 1024, max=4 * 1024 * 1024),
+@@ -160,6 +162,7 @@
+     cg.add(var.set_url(config[CONF_URL]))
+     cg.add(var.set_auto_provision(config[CONF_AUTO_PROVISION]))
+     cg.add(var.set_barge_in(config[CONF_BARGE_IN]))
++    cg.add(var.set_eva_pcm_protocol(config[CONF_EVA_PCM_PROTOCOL]))
+     cg.add(var.set_playback_buffer_size(config[CONF_PLAYBACK_BUFFER_SIZE]))
+ 
+     # Own an active microphone source during realtime turns. The underlying

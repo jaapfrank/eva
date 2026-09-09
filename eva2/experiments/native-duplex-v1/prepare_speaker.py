@@ -36,14 +36,17 @@ def prepare(upstream: Path, destination: Path) -> Path:
         component.mkdir(parents=True)
         for name, data in contents.items():
             (component / name).write_bytes(data)
-        patch = str(HERE / "speaker-stop.patch")
-        for args in [["--check", patch], [patch]]:
-            subprocess.run(["git", "apply", *args], cwd=component, check=True, capture_output=True, text=True)
-        shutil.copyfile(HERE / "playback_stop_barrier.h", component / "playback_stop_barrier.h")
+        for name in ["speaker-stop.patch", "speaker-wire.patch"]:
+            patch = str(HERE / name)
+            for args in [["--check", patch], [patch]]:
+                subprocess.run(["git", "apply", *args], cwd=component, check=True, capture_output=True, text=True)
+        for name in ["playback_stop_barrier.h", "eva_output_protocol.h", "eva_output_driver.cpp"]:
+            shutil.copyfile(HERE / name, component / name)
         (stage / "LICENSE").write_bytes(license_data)
         receipt = {
             "upstream": manifest["revision"],
             "patchSha256": hashlib.sha256((HERE / "speaker-stop.patch").read_bytes()).hexdigest(),
+            "wirePatchSha256": hashlib.sha256((HERE / "speaker-wire.patch").read_bytes()).hexdigest(),
             "files": {p.name: hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted(component.iterdir())},
             "deployable": False,
         }

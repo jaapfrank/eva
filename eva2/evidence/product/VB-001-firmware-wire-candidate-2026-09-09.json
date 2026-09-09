@@ -1,0 +1,131 @@
+{
+  "taskId": "VB-001",
+  "practiceTestId": "SP-03",
+  "recordedAt": "2026-09-09T13:01:43.834489+00:00",
+  "status": "candidate-built-and-host-verified-not-live",
+  "ownerAcceptances": {
+    "SP-01": "accepted",
+    "SP-02": "accepted",
+    "SP-03": "not-ready-for-practice"
+  },
+  "scope": "Generation-bound output receiver only. No microphone/session service, live deployment or physical playback claim.",
+  "upstream": "a538d1d1bacc8609061719f0b05c1622147ccb4b",
+  "preparation": {
+    "upstream": "a538d1d1bacc8609061719f0b05c1622147ccb4b",
+    "patchSha256": "e12526be6276ba99f2561dc29440e82b36cb061b83231dccd87097d493dc4d29",
+    "wirePatchSha256": "42232994c8d1876a5831b99adde4973213e091933cfd80bc47c0a029514bccb7",
+    "files": {
+      "__init__.py": "06c4017ba963a4751d972559e8199148aca930f86b3bad829c005cbaea8aaf91",
+      "automation.h": "62882ce3acce7f1e53c4e777543f5a89a57b7893cb6dd20e93878cfb25444035",
+      "eva_output_driver.cpp": "bdb7795cfb98970b35343b67dede212b888f5e1c7cc38a1ef15006cf735ae9f3",
+      "eva_output_protocol.h": "777efe7b30446e956b35160b7194b58444cff691ca414409781f4be47fb3ef77",
+      "playback_stop_barrier.h": "74836cf2f3c0629b721e0d7b0d3dc824455a42f712cce00678b686b8e7518205",
+      "va_pipecat.cpp": "66f23c712f3b2e68258f1d2cb7f9d2d296f5438453499f623ec1c601913efda4",
+      "va_pipecat.h": "e777425a808999003a6c1ef571d5811c50e00d79c24cd8d9461c5cb794a94fc7"
+    },
+    "deployable": false
+  },
+  "build": {
+    "esphome": "2026.6.2",
+    "durationSeconds": 244.21,
+    "status": "success",
+    "sourceMatches": {
+      "automation.h": true,
+      "eva_output_driver.cpp": true,
+      "eva_output_protocol.h": true,
+      "playback_stop_barrier.h": true,
+      "va_pipecat.cpp": true,
+      "va_pipecat.h": true
+    },
+    "protocolEnabledInGeneratedCpp": true,
+    "ownMixerSourceAndResamplerPresent": true,
+    "configIsCompileOnly": true,
+    "endpoint": "ws://127.0.0.1:9/not-for-deployment",
+    "otaFirmwareSha256": "8b44f6c463ca25d3918e3df9f29ff9a1adc8fa3d7baca2ad4ef67c1f2ff4c4b4"
+  },
+  "hostProbe": {
+    "status": "passed",
+    "normalReceipts": [
+      [
+        "FINISHED",
+        1,
+        580
+      ],
+      [
+        "STOPPED",
+        1,
+        580
+      ]
+    ],
+    "interruptedReceipts": [
+      [
+        "STOPPED",
+        1,
+        0
+      ],
+      [
+        "FINISHED",
+        2,
+        580
+      ],
+      [
+        "STOPPED",
+        2,
+        580
+      ]
+    ],
+    "driverBoundaries": [
+      "held PCM discarded before STOPPED",
+      "STOP during unfinished play waits for barrier",
+      "previous-lifetime callback excluded"
+    ],
+    "sourceHashes": {
+      "va_pipecat.h": "e777425a808999003a6c1ef571d5811c50e00d79c24cd8d9461c5cb794a94fc7",
+      "eva_output_driver.cpp": "bdb7795cfb98970b35343b67dede212b888f5e1c7cc38a1ef15006cf735ae9f3",
+      "va_pipecat.cpp": "66f23c712f3b2e68258f1d2cb7f9d2d296f5438453499f623ec1c601913efda4",
+      "playback_stop_barrier.h": "74836cf2f3c0629b721e0d7b0d3dc824455a42f712cce00678b686b8e7518205",
+      "automation.h": "62882ce3acce7f1e53c4e777543f5a89a57b7893cb6dd20e93878cfb25444035",
+      "eva_output_protocol.h": "777efe7b30446e956b35160b7194b58444cff691ca414409781f4be47fb3ef77"
+    },
+    "scope": "Actual prepared C++ receiver, driver, drain and stop barrier; host speaker/clock/locks; UBSan. Not hardware."
+  },
+  "targetedTests": {
+    "passed": 45,
+    "command": "pytest -q tests/operations/test_native_duplex_speaker_protocol.py tests/operations/test_native_duplex_speaker_stop.py tests/operations/test_native_duplex_speaker_wire.py tests/operations/test_native_duplex_ha_pcm.py tests/operations/test_native_duplex_reply_lane.py"
+  },
+  "independentReview": {
+    "reviewer": "co006_review",
+    "result": "bounded GO for source, host probes and build",
+    "independentlyRepeated": [
+      "protocol and stop-barrier tests",
+      "actual C++ driver/drain interoperability under UBSan",
+      "six compiled source hashes match prepared files",
+      "protocol enabled in generated C++ and successful compilation"
+    ],
+    "notApproved": [
+      "firmware deployment",
+      "authentication integration",
+      "physical output route",
+      "acoustic stop or p95"
+    ]
+  },
+  "limitations": [
+    "Queued receipt popped before concurrent reconnect can reach a new connection; nonce validation rejects it safely, but fresh connection may fail. Must resolve before live use.",
+    "Host speaker, clock and locks do not establish FreeRTOS scheduling, echo cancellation, actual DAC audibility or physical stop latency.",
+    "STOPPED count is confirmed lower bound; counts evicted from eight-entry history return zero, not proof nothing was heard.",
+    "Authenticated device/household service, microphone input, native wake/mute arbitration and heard context remain open.",
+    "No firmware was flashed; usable physical recovery and complete candidate validation required."
+  ],
+  "sourceHashes": {
+    "eva2/experiments/native-duplex-v1/eva_output_protocol.h": "777efe7b30446e956b35160b7194b58444cff691ca414409781f4be47fb3ef77",
+    "eva2/experiments/native-duplex-v1/eva_output_driver.cpp": "bdb7795cfb98970b35343b67dede212b888f5e1c7cc38a1ef15006cf735ae9f3",
+    "eva2/experiments/native-duplex-v1/speaker-wire.patch": "42232994c8d1876a5831b99adde4973213e091933cfd80bc47c0a029514bccb7",
+    "eva2/experiments/native-duplex-v1/prepare_speaker.py": "4bbfb9292c491cb56f4abc58d246d7f2f97861de5fa676b9f6c6c2dd98808eb2",
+    "eva2/experiments/native-duplex-v1/verify_speaker_wire.py": "b5b0337f715075c9301632ca00f102c41d577ff1144973f806fd6492da24e8b1",
+    "eva2/experiments/native-duplex-v1/speaker-wire-v1.md": "348385ba71305c12e68dfdcf9fbffa8d3acc44ff67bdebb8475316c018bc7545",
+    "eva2/experiments/native-duplex-v1/README.md": "13337f5a705ff0da678f655d3fb996fafec23c2e08806f80cf225db0377b3663",
+    "eva2/tests/fixtures/native_duplex_speaker_host.h": "4075b14527cdd71e83c0bd9a7ecdcea985cd6e5919dad79269817de6b48afc3f",
+    "eva2/tests/fixtures/native_duplex_speaker_host.cpp": "91ae173241f358387caa8af5d0c2ac6862a06bad6a2458bd2d09f0dfed31d4dd",
+    "eva2/tests/operations/test_native_duplex_speaker_protocol.py": "331147b90d331e7256bc80a93c6413d6fa9361ae92414780b718dfac6827219a"
+  }
+}

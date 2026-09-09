@@ -277,11 +277,11 @@
           "subtitle": "Praten via Telegram en Home Assistant",
           "built": "partial",
           "tested": "partial",
-          "live": "no",
-          "accepted": "no",
-          "gap": "Werkend gesprek via Telegram en HA-spraakapparaten",
-          "detail": "De interne spraakketen is technisch beproefd. De gevraagde gebruikersroutes via Telegram en Home Assistant-speakers zijn daarmee nog niet opgeleverd. Een losse browserpagina telt niet als deze functie.",
-          "evidence": "VB-001 · technische media- en herstelproeven; Telegram-/HA-gebruikersroute en acceptatie open"
+          "live": "partial",
+          "accepted": "partial",
+          "gap": "Onderbreken met gewone spraak tijdens Eva’s antwoord",
+          "detail": "Jaap accepteert verstaanbare woonkamer-audio (SP-01) en doorpraten na het antwoord zonder nieuw Hey Eva (SP-02). Onderbreken met een gewone nieuwe vraag is nog niet opgeleverd; de speakerkandidaat is gebouwd en met hostproeven gecontroleerd. Telegram-spraak en volledige gezinsacceptatie blijven apart open.",
+          "evidence": "VB-001 · SP-01 en SP-02 geaccepteerd · SP-03 gebouwd als kandidaat, nog niet live"
         },
         {
           "id": "projects",
@@ -438,8 +438,8 @@
           "updatedOn": "9 september",
           "status": "working",
           "title": "Onderbreken met gewone spraak",
-          "change": "HA Cloud-spraak nu gekoppeld aan antwoordnummers en aparte stop-/afspeelbevestigingen. Gerichte proeven en echte HA-audio naar de proefontvanger geslaagd.",
-          "result": "Nog geen praktijktest: de nieuwe protocolontvanger moet op de speaker worden aangesloten. De lokale stopreparatie is al als firmware gebouwd. SP-01 en SP-02 blijven geaccepteerd."
+          "change": "Ontvanger voor onderbreekbare spraak als speakerkandidaat gebouwd. Koppeling met de zender, stop tijdens audio-uitvoer en oude audioberichten gecontroleerd; onafhankelijke review geslaagd.",
+          "result": "Nog geen praktijktest: beveiligde verbinding en microfoonbediening moeten worden aangesloten vóór installatie. SP-01 en SP-02 blijven geaccepteerd."
         },
         {
           "id": "SP-04",
@@ -526,9 +526,9 @@
       "document": "eva2/PROJECTDOEL.md",
       "scope": "Digitale huisgenoot: zelfstandig redeneren, initiatief, onbekende vaardigheden leren, handelen, zelfverbetering en aantoonbare concurrentiewinst met open-sourcehergebruik.",
       "sessionGoal": "Het volledige doel blijft actief. Nu VB-001: doorlopende gesprekken via Home Assistant, inclusief onderbreken met gewone spraak.",
-      "currentWork": "VB-001: SP-01 en SP-02 door Jaap geaccepteerd. Lokale speakerstop gebouwd; HA Cloud-TTS naar generatiegebonden transport aangesloten en gericht getest. Fysieke aansluiting voor SP-03 nog open.",
-      "currentEvidence": "eva2/evidence/product/VB-001-ha-pcm-wire-2026-09-09.json",
-      "nextStep": "De nieuwe protocolontvanger op de gepinde va_pipecat-component aansluiten, met generatiebinding en bevestiging uit de echte stopbarrière/DAC-callback. Daarna authenticatie, native bediening, herstel en fysieke SP-03-proeven.",
+      "currentWork": "VB-001: SP-01 en SP-02 door Jaap geaccepteerd. Speakerontvanger met antwoordnummers en stop-/afspeelbevestiging gebouwd; Python-C++-koppeling en 45 gerichte controles geslaagd. SP-03 nog niet live.",
+      "currentEvidence": "eva2/evidence/product/VB-001-firmware-wire-candidate-2026-09-09.json",
+      "nextStep": "Geauthenticeerde servicebinding en native microfoon-/wakewordbediening aansluiten; reconnect afhandelen, mute en herstel behouden. Daarna complete kandidaat met bruikbaar fysiek herstel en SP-03-praktijkproef.",
       "usageClarification": {
         "date": "2026-09-07",
         "authorizedBy": "Jaap",
@@ -3940,7 +3940,15 @@
         "eva2/experiments/native-duplex-v1/speaker-wire-v1.md",
         "eva2/tests/operations/test_native_duplex_speaker_wire.py",
         "eva2/tests/operations/test_native_duplex_ha_pcm.py",
-        "eva2/evidence/product/VB-001-ha-pcm-wire-2026-09-09.json"
+        "eva2/evidence/product/VB-001-ha-pcm-wire-2026-09-09.json",
+        "eva2/experiments/native-duplex-v1/eva_output_protocol.h",
+        "eva2/experiments/native-duplex-v1/eva_output_driver.cpp",
+        "eva2/experiments/native-duplex-v1/speaker-wire.patch",
+        "eva2/experiments/native-duplex-v1/verify_speaker_wire.py",
+        "eva2/tests/fixtures/native_duplex_speaker_host.h",
+        "eva2/tests/fixtures/native_duplex_speaker_host.cpp",
+        "eva2/tests/operations/test_native_duplex_speaker_protocol.py",
+        "eva2/evidence/product/VB-001-firmware-wire-candidate-2026-09-09.json"
       ],
       "componentIds": [
         "api-and-runtime-composition",
@@ -3983,7 +3991,8 @@
         "pytest -q tests/operations/test_native_duplex_reply_lane.py tests/operations/test_ha_voice_native_client.py tests/connectors/test_home_assistant_voice.py",
         "pytest -q tests/operations/test_native_duplex_local_onset.py",
         "pytest -q tests/operations/test_native_duplex_speaker_stop.py",
-        "pytest -q tests/operations/test_native_duplex_speaker_wire.py tests/operations/test_native_duplex_ha_pcm.py tests/operations/test_native_duplex_reply_lane.py"
+        "pytest -q tests/operations/test_native_duplex_speaker_wire.py tests/operations/test_native_duplex_ha_pcm.py tests/operations/test_native_duplex_reply_lane.py",
+        "pytest -q tests/operations/test_native_duplex_speaker_protocol.py tests/operations/test_native_duplex_speaker_stop.py"
       ],
       "evidenceRequired": [
         "Onderzoek bestaande Eva2-voicebouwstenen en Bottie/HA-route; leg concrete ontbrekende media-aansluiting, providerkeuze, bestaand mandaat en verbruik vast.",
