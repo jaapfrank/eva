@@ -77,7 +77,7 @@ class RuntimeResourceBudget:
         bounds = (
             (self.recall_context_tokens, "recall context", 2_000, 4_000),
             (self.retrieval_nodes, "retrieval nodes", 20, 100),
-            (self.max_input_tokens, "input tokens", 4_000, 16_000),
+            (self.max_input_tokens, "input tokens", 4_000, 32_768),
             (self.max_output_tokens, "output tokens", 100, 1_200),
             (self.profile_context_tokens, "profile context", 100, 1_000),
             (self.memory_records_per_person, "memory records", 100, 10_000),

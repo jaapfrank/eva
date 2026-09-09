@@ -156,7 +156,7 @@ def _budget(**values: object) -> InstallerBudget:
             values["max_input_tokens"],
             label="input tokens",
             minimum=4_000,
-            maximum=16_000,
+            maximum=32_768,
         ),
         max_output_tokens=_integer(
             values["max_output_tokens"],

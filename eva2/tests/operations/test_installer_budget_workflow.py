@@ -58,7 +58,7 @@ def test_budget_requires_selection_and_rejects_unsafe_values(
         workflow.stage(**_values())
     capability.select(step_id="budgets", wanted=True)
     invalid = _values()
-    invalid["max_input_tokens"] = 16_001
+    invalid["max_input_tokens"] = 32_769
     with pytest.raises(InstallerBudgetInputError, match="safe range"):
         workflow.stage(**invalid)
     invalid = _values()
