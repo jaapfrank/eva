@@ -150,14 +150,14 @@
       },
       "summary": [
         {
-          "label": "BEVESTIGD · SP-01",
-          "value": "Korte én langere audio weer verstaanbaar",
-          "detail": "Na één speakerherstart, zonder firmwarewijziging. Jaap bevestigt goed geluid; langdurige stabiliteit blijft open."
+          "label": "BEVESTIGD · SP-01 + SP-02",
+          "value": "Verstaanbare audio en doorpraten na het antwoord",
+          "detail": "Jaap bevestigt beide praktijkproeven. Onderbreken tijdens Eva’s antwoord en langdurige stabiliteit blijven open."
         },
         {
           "label": "IN ONTWIKKELING · SP-03",
           "value": "Eva met gewone spraak onderbreken",
-          "detail": "SP-02 staat klaar als afzonderlijke vervolgproef na het antwoord. Onderbreken tijdens spreken blijft de actieve ontwikkelstap."
+          "detail": "Compatibiliteitsbouw geslaagd. Gesprekskoppeling en veilige audio-overname nog in ontwikkeling; geen nieuwe firmware geïnstalleerd."
         },
         {
           "label": "APART PROBLEEM",
@@ -421,7 +421,7 @@
         {
           "id": "SP-02",
           "updatedOn": "9 september",
-          "status": "ready",
+          "status": "accepted",
           "title": "Doorpraten na het antwoord",
           "change": "Native Home Assistant-vervolgbeurten staan aan. Deze proef controleert praten nadat Eva klaar is.",
           "steps": [
@@ -430,14 +430,15 @@
             "Wacht tot Eva klaar is en de speaker weer luistert. Zeg zonder Hey Eva: Welk woord moest je onthouden?"
           ],
           "expected": "Eva hoort de vervolgvraag zonder nieuw wakeword en antwoordt appel, met verstaanbare audio.",
-          "report": "SP-02: werkt / werkt niet, met wat je hoorde en wanneer je sprak."
+          "report": "SP-02: werkt / werkt niet, met wat je hoorde en wanneer je sprak.",
+          "result": "Jaap bevestigt hier: SP-02: werkt. Vervolgvraag na het antwoord zonder nieuw Hey Eva geslaagd volgens eigenaar."
         },
         {
           "id": "SP-03",
           "updatedOn": "9 september",
           "status": "working",
           "title": "Onderbreken met gewone spraak",
-          "change": "Bestaande opensource-audiocomponent beoordelen voor tegelijk luisteren en spreken; Eva-kern behouden.",
+          "change": "Bestaande Pipecat-audiocomponent bouwt succesvol met Voice PE en ESPHome 2026.6.2. Koppeling met Eva en veilige audio-overname worden nog uitgewerkt.",
           "result": "Nog niet beschikbaar. Tijdens een antwoord werkt nu het aparte stopwoord; gewone spraak wordt nog niet als onderbreking verwerkt."
         },
         {
@@ -2452,7 +2453,18 @@
       "observedAt": "2026-09-09T10:50:13.699700+00:00",
       "action": "Living-room device restart only; original firmware and codec settings retained",
       "ownerReadback": "Short FLAC/MP3 and long native Eva2 answer intelligible. Owner spoke during story; only stop recognized. Ordinary-speech interruption not available.",
-      "next": "Longer native response and wakeword-free follow-up trial; no root-cause or durable recovery claim"
+      "next": "Longer native response and wakeword-free follow-up trial; no root-cause or durable recovery claim",
+      "followupOwnerReadback": {
+        "observedAt": "2026-09-09T11:01:47.524244+00:00",
+        "test": "SP-02",
+        "result": "werkt",
+        "scope": "Follow-up after completed reply; not ordinary-speech interruption"
+      }
+    },
+    "vb001DuplexComponentBuild": {
+      "status": "compiled_not_deployable",
+      "evidence": "eva2/evidence/product/VB-001-duplex-component-build-2026-09-09.json",
+      "next": "Implement and verify controlled speaker ownership and existing Eva session/cancellation adapter before any hardware candidate."
     }
   },
   "activeTaskId": "VB-001",

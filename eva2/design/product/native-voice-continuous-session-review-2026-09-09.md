@@ -30,3 +30,13 @@ Jaap wil tijdens één gesprek gewoon kunnen praten, Eva kunnen onderbreken en d
 4. Bouw en bewijs daarna de volledige sessie: onderbreken met gewone spraak, direct vervolgen, geen oude audio, juiste context na onderbreken, mute/einde/herverbinding en gemeten stoplatentie.
 
 Niet concluderen dat MP3, continue_conversation=true of een Realtime API-koppeling afzonderlijk het gevraagde product oplevert. Geen nieuwe browser-spraakroute voor Jaap introduceren.
+
+## Stand na de praktijkproef en testkaarten
+
+Jaap heeft na de woonkamer-herstart zowel korte FLAC/MP3-audio als het langere native Eva2-verhaal verstaanbaar bevonden. Er is geen firmware gewijzigd. De eerdere impliciete verklaring dat de conversation-integratie of FLAC op zichzelf de fout veroorzaakt, is daarmee niet bewezen. De opname en oorspronkelijke mislukte proeven blijven historisch bewijs; langdurige stabiliteit blijft open.
+
+Jouw praktijktests op het dashboard gebruikt dezelfde bron onder `audit.projectDashboard.practiceTests`: SP-01 geaccepteerd voor deze audio-ervaring, SP-02 gereed voor vervolgvragen na het antwoord, SP-03 in ontwikkeling voor gewone-spraakonderbreking, SP-04 in ontwikkeling voor onterechte wakeword-detectie. Jaap rapporteert via deze chat met het testnummer. Geen automatische menselijke acceptatie.
+
+Voor SP-03 wordt de vastgezette va_pipecat-component eerst uitsluitend op de computer op compatibiliteit gecontroleerd. De combinatie met de opgeslagen Voice PE-configuratie doorstaat ESPHome2026.6.2-configuratievalidatie. De buildproef heeft een onbruikbaar lokaal placeholder-endpoint en is nadrukkelijk niet geschikt om te installeren. Bij runtime-integratie zijn exclusief speakergebruik, stoppen van alle achtergebleven audiobuffers, echo-onderdrukking, eerste woorden behouden en mute/einde nog te bewijzen. De component start zelf een speaker en kan diens audioformaat terugzetten; samen op dezelfde speaker aansluiten is daarom nog geen veilige gebruiksconfiguratie.
+
+Eva's bestaande native requestbinding, annulering, geheugen en toolmandaat moeten behouden blijven. Er is geen nieuwe realtime-modelprovider geselecteerd of geactiveerd. Het SP-03-probleem is gelijktijdige audiotoegang plus juiste onderbrekingsafhandeling, niet het vervangen van Eva's kern.

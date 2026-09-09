@@ -1,0 +1,20 @@
+{
+  "status": "owner_accepted_bounded_practice",
+  "observedAt": "2026-09-09T11:02:06.066570+00:00",
+  "SP-01": {
+    "result": "accepted",
+    "evidence": "Owner confirmed both short FLAC/MP3 and longer native story intelligible after living-room restart",
+    "change": "Device restart only, no firmware change"
+  },
+  "SP-02": {
+    "result": "accepted",
+    "ownerMessage": "SP-02: werkt",
+    "scope": "Follow-up after completed answer without a new wakeword, as described on the practice card"
+  },
+  "remaining": [
+    "SP-03 ordinary-speech interruption during playback",
+    "SP-04 false wakeword triggers",
+    "Long-term stability and full household acceptance"
+  ],
+  "VB-001": "in_progress"
+}

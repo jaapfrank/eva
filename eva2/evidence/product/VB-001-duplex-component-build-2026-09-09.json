@@ -1,0 +1,33 @@
+{
+  "status": "compiled_not_deployable",
+  "exitCode": 0,
+  "upstreamCommit": "a538d1d1bacc8609061719f0b05c1622147ccb4b",
+  "esphome": "2026.6.2",
+  "observedAt": "2026-09-09T11:02:46.730251+00:00",
+  "boundary": "Build-only coexistence probe; dummy endpoint, no firmware installation, no audio provider, no proven speaker arbitration or household-session adapter.",
+  "binaries": [
+    {
+      "file": "firmware.ota.bin",
+      "bytes": 2924976,
+      "sha256": "aa75b63d70d772be83078db5f88adba5a59a7bbbbf182fa1c40e6f4386995112"
+    },
+    {
+      "file": "firmware.factory.bin",
+      "bytes": 2990512,
+      "sha256": "ae6f16cad793c55553707525f77dceaed370b36c884246f707985d8d463bfc52"
+    },
+    {
+      "file": "firmware.bin",
+      "bytes": 2924976,
+      "sha256": "aa75b63d70d772be83078db5f88adba5a59a7bbbbf182fa1c40e6f4386995112"
+    }
+  ],
+  "sourceFiles": {
+    "__init__.py": "2ac826b5d054fb240978a784163479a67797e484706852b3c4f2d903ed8d520d",
+    "va_pipecat.h": "ffb05396048db3a4a9d4cc2d4b5eaf6da09641b58370696f7dd3adfe3338e6c9",
+    "va_pipecat.cpp": "ce9ab2c9f45fa3a397eb411d87efa7c76ea3d226079848a788702785d2229eaa",
+    "automation.h": "62882ce3acce7f1e53c4e777543f5a89a57b7893cb6dd20e93878cfb25444035",
+    "README.md": "dc2524e4529586f089b8b10e672b01b73c8b1a5917acf8fc8be4f93da2df4920"
+  },
+  "deploymentAllowed": false
+}
