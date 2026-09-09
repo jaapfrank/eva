@@ -5,8 +5,8 @@ Laatst bijgewerkt: 2026-09-09.
 Doel: [Eva als zelfstandig lerende digitale huisgenoot](PROJECTDOEL.md).
 Gebouwd, getest, live en door jou geaccepteerd zijn verschillende stappen.
 
-VB-001: opwarmfout in echte spraakdetectie hersteld. De afgebakende systeemproef is klaar: vijf onderbroken testantwoorden, stop/herstart en wisselen naar een andere gesimuleerde core en terug geslaagd. 52 gerichte tests groen. Dit is kandidaatsbewijs; SP-03 is nog niet live opgeleverd.
-[Actueel bewijs](evidence/product/VB-001-speaker-lifecycle-2026-09-09.json).
+VB-001 oplevering: complete corekandidaat 32fb12d is gebouwd. De volledige releasecontrole draait op tijdelijke testdatabases en de bestaande browserproef. Geen live omschakeling; SP-01 en SP-02 blijven geaccepteerd.
+[Actueel bewijs](evidence/product/VB-001-core-release-candidate-2026-09-09.json).
 
 Bestaande SP-03-kandidaat naar oplevering brengen: complete core-releasepoort, bruikbaar speakerherstel en gecontroleerde ingebruikname. Geen nieuwe spraakuitbreidingen of herhaling van geslaagde controles zonder concrete aanleiding. Daarna één duidelijke woonkamerproef.
 
@@ -177,6 +177,7 @@ Klaar betekent:
 - `eva2/evidence/product/VB-001-speaker-bundle-systemd-2026-09-09.json`
 - `eva2/experiments/native-duplex-v1/verify_service_lifecycle.py`
 - `eva2/evidence/product/VB-001-speaker-lifecycle-2026-09-09.json`
+- `eva2/evidence/product/VB-001-core-release-candidate-2026-09-09.json`
 
 Echte controles:
 

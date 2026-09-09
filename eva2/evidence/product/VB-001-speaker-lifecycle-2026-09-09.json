@@ -252,5 +252,10 @@
     "SP-01": "accepted",
     "SP-02": "accepted",
     "SP-03": "not-ready-for-practice"
+  },
+  "independentReview": {
+    "reviewer": "/root/co006_review",
+    "decision": "Bounded source and evidence GO; no physical or production A/B claim.",
+    "scopeClarification": "Both stop receipts were held and released together. This probe proves shutdown stayed pending during that joint hold; it does not isolate each receipt dependency."
   }
 }

@@ -1,0 +1,67 @@
+{
+  "contract": "EvaProductEvidence/v1",
+  "taskId": "VB-001",
+  "date": "2026-09-09",
+  "result": "Complete core candidate built; full release gate in progress, not deployed.",
+  "sourceCommit": "32fb12d75f3f78410d1c1e591bc12a93d618f472",
+  "candidateImageId": "sha256:cb31295d926e85e7d0328abe611f1cfff522324668991c837270f65e8d4dcfec",
+  "candidateReceipt": "/home/administrator/project/.eva2-artifacts/native-voice-playback-candidate-uts1rdjj/eva2-candidate-image-9jyja61v/candidate-image-receipt.json",
+  "candidateReceiptSha256": "74e2fcbc73773ff3a7a2c24dafdcfbba13f7e93d5911b0b6d580c7f1c87222fa",
+  "buildNetworkUsed": false,
+  "releaseInputValidation": {
+    "inputs": 354,
+    "testModules": 162,
+    "supportFiles": 20,
+    "targetedTestsPassed": 105,
+    "durationSeconds": 3.1,
+    "addedInputs": [
+      "src/eva/application/audio_playback.py"
+    ],
+    "addedTests": [
+      "tests/application/test_audio_playback.py"
+    ],
+    "removedInputsOrTests": []
+  },
+  "independentReview": {
+    "reviewer": "/root/co006_review",
+    "decision": "Bounded GO for source fix and release-input binding; full release gate and physical speaker acceptance remain required."
+  },
+  "releaseGate": {
+    "status": "running",
+    "artifactDirectory": "/home/administrator/project/.eva2-artifacts/native-voice-playback-candidate-uts1rdjj",
+    "sourceSnapshot": "/home/administrator/project/.eva2-artifacts/native-voice-playback-final-src-7cdf95qo",
+    "toolSessionId": 92126,
+    "successReceipt": "/home/administrator/project/.eva2-artifacts/native-voice-playback-candidate-uts1rdjj/complete-required-tests-receipt.json",
+    "progressObservation": "Pure test group ended; PostgreSQL action-chain subgroup process active. Full result remains pending."
+  },
+  "preparedArtifacts": {
+    "owner": "VB-001 architecturelead",
+    "path": "/home/administrator/project/.eva2-artifacts/native-voice-playback-candidate-uts1rdjj",
+    "purpose": "Immutable candidate, full gate output and rollback/readback evidence",
+    "cleanupWhen": "After VB-001 deployment acceptance and expiry of the retained rollback evidence period; no automatic removal while candidate is pending."
+  },
+  "buildPreparationFindings": [
+    "A single root-owned Docker buildx selection file was returned to its existing parent-directory owner; content and mode unchanged.",
+    "Reused the retained private Buildx executable and its existing SHA256 authority.",
+    "Persisted image receipt reused for gate binding; successful image build not repeated because the wrapper return value was not written to build-receipt.json."
+  ],
+  "ownerAcceptances": {
+    "SP-01": "accepted",
+    "SP-02": "accepted",
+    "SP-03": "not-ready-for-practice"
+  },
+  "productionServiceChanged": false,
+  "speakerFlashed": false,
+  "physicalRecovery": "No USB speaker found in the current serial inventory; only Bluetooth COM3/COM4.",
+  "artifactScan": {
+    "status": "passed_against_pinned_database",
+    "high": 0,
+    "critical": 0,
+    "databaseUpdatedAt": "2026-08-31T07:08:27.708070973Z",
+    "databaseCurrentnessClaim": false,
+    "packageCount": 75,
+    "unchangedDependencyCount": 74,
+    "sameDependencyVersionsAndLicenses": true,
+    "summary": "/home/administrator/project/.eva2-artifacts/native-voice-playback-candidate-uts1rdjj/scan/summary.json"
+  }
+}
