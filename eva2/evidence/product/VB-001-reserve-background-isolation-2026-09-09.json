@@ -1,9 +1,9 @@
 {
   "contract": "EvaProductEvidence/v1",
   "taskId": "VB-001",
-  "observedAt": "2026-09-09T01:07:33.359383+00:00",
+  "observedAt": "2026-09-09T01:22:08.424135+00:00",
   "previousGoalTurnClassification": "progress",
-  "status": "runtime_and_deployment_switch_tested_reserve_stopped_candidate_release_pending",
+  "status": "deployment_repair_built_gate_found_stale_manifest_pins_repaired",
   "change": "Strict EVA_BACKGROUND_WORK_ENABLED switch suppresses both sensory ingress and cold-path workers. Existing runtimes default to enabled. Runtime scope, owner mandate and budgets remain required.",
   "tests": {
     "command": "pytest -q tests/bootstrap/test_runtime_settings.py tests/bootstrap/test_memory_provenance.py",
@@ -16,7 +16,7 @@
     "Configuration and focused tests do not prove physical isolation of the not-yet-built new candidate.",
     "No live voice pipeline, speaker acceptance or acoustic interruption proof."
   ],
-  "next": "Bind the complete repaired source and deployment inputs, build and test the candidate once, then verify its staged workers and unchanged databases before reviewed activation.",
+  "next": "Reseal the corrected template and test pins from clean committed source, rebuild the exact candidate and rerun the complete gate while retaining raw test results.",
   "review": "co006_review: bounded source GO for runtime/settings tests. Strict boolean validation, default behavior and build wiring verified; no physical reserve isolation or release GO.",
   "deployment": {
     "testsPassed": 188,
@@ -171,5 +171,69 @@
     "reserveSlot": 4,
     "reserveCoreAndHindsight": "stopped_for_stable_comparison",
     "reason": "Legacy reserve was still performing autonomous work; new candidate is not deployed yet."
+  },
+  "candidate": {
+    "sourceCommit": "0d6a7407514cfb019be9fc36838abbf0f60e4f96",
+    "imageId": "sha256:a24d2f7bd09f1ea0faa0a47762da0d99688fe40bf001475823800aa6bbf82236",
+    "scan": {
+      "imageId": "sha256:a24d2f7bd09f1ea0faa0a47762da0d99688fe40bf001475823800aa6bbf82236",
+      "sourceCommit": "0d6a7407514cfb019be9fc36838abbf0f60e4f96",
+      "archiveSha256": "3e61360d2471e8d4b79e18aa149b9f8c77a7fd7761135cd7cb8d913b555fdbca",
+      "counts": {
+        "HIGH": 0,
+        "CRITICAL": 0
+      },
+      "sbomPackageCount": 75,
+      "databaseUpdatedAt": "2026-08-31T07:08:27.708070973Z"
+    },
+    "licenseInventory": {
+      "status": "component_versions_and_license_declarations_unchanged",
+      "comparedComponentCount": 74,
+      "boundary": "Archive wrapper excluded; existing license exceptions still apply."
+    },
+    "packagedWorkerProbe": {
+      "status": "passed",
+      "results": [
+        {
+          "enabled": false,
+          "cycles": 2,
+          "outboxReads": 0,
+          "threadsCleaned": true
+        },
+        {
+          "enabled": true,
+          "cycles": 2,
+          "outboxReads": 2,
+          "threadsCleaned": true
+        }
+      ],
+      "imageId": "sha256:a24d2f7bd09f1ea0faa0a47762da0d99688fe40bf001475823800aa6bbf82236",
+      "sourceCommit": "0d6a7407514cfb019be9fc36838abbf0f60e4f96",
+      "probeSha256": "61f435e407ab97d4fd94a48ab12869f65bc439e5ef58189a2514d979e06e7caf",
+      "boundary": "Real packaged worker threads and lifecycle; synthetic event source/outbox, no network, database, HA or household data."
+    },
+    "fullGate": "failed_pure_group",
+    "diagnosticPureCounts": {
+      "tests": 2118,
+      "failures": 2,
+      "errors": 0,
+      "skipped": 0
+    },
+    "failures": [
+      "runtime.env.example contained the previous managed Compose hash",
+      "delegated activation test expected the previous managed Compose hash"
+    ],
+    "cleanup": {
+      "databasesCreated": 12,
+      "databasesDropped": 12,
+      "testContainerStopped": true
+    },
+    "pinRepair": {
+      "status": "two_literal_pins_corrected",
+      "testsPassed": 70,
+      "command": "pytest -q tests/operations/test_core_b_preflight.py tests/tools/test_persist_delegated_work_activation.py",
+      "review": "co006_review bounded GO; exact manifest SHA independently recomputed, no assertion or rule weakened."
+    },
+    "releaseAdmitted": false
   }
 }

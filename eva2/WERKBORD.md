@@ -97,6 +97,8 @@ Klaar betekent:
 - `eva2/deploy/home-assistant/native-voice-ingress.md`
 - `eva2/tests/bootstrap/test_runtime_settings.py`
 - `eva2/deploy/living-core/managed-b.compose.yml`
+- `eva2/deploy/living-core/runtime.env.example`
+- `eva2/tests/tools/test_persist_delegated_work_activation.py`
 
 Echte controles:
 
