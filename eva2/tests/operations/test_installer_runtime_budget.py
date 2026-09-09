@@ -122,7 +122,7 @@ def test_runtime_budget_is_idempotent_but_never_overwrites_another_slot(
     ) == first
 
 
-def test_confirmed_32768_input_budget_roundtrips_through_runtime_manifest(
+def test_confirmed_65536_input_budget_roundtrips_through_runtime_manifest(
     private_tmp_path: Path,
 ) -> None:
     from eva.adapters.api.installer_budget_api import INSTALLER_BUDGET_SECTION
@@ -130,10 +130,10 @@ def test_confirmed_32768_input_budget_roundtrips_through_runtime_manifest(
 
     values = _values()
     assert values["max_input_tokens"] == 12_000
-    values["max_input_tokens"] = 32_768
+    values["max_input_tokens"] = 65_536
     workflow = _workflow(private_tmp_path)
     with pytest.raises(InstallerBudgetInputError, match="safe range"):
-        workflow.stage(**{**values, "max_input_tokens": 32_769})
+        workflow.stage(**{**values, "max_input_tokens": 65_537})
     staged = workflow.stage(**values)
     workflow.confirm(expected_budget_sha256=staged.budget_sha256)
     target = private_tmp_path / "operator-runtime-budget.json"
@@ -142,9 +142,9 @@ def test_confirmed_32768_input_budget_roundtrips_through_runtime_manifest(
     restarted = RuntimeResourceBudget.from_bytes(target.read_bytes(),
         expected_tenant_id="tenant:operator", expected_installation_id="installation:operator")
     assert restarted == policy
-    assert restarted.max_input_tokens == 32_768
+    assert restarted.max_input_tokens == 65_536
     assert restarted.max_output_tokens == 1_200
     assert restarted.external_monthly_spend_cap_eur_cents == 0
     assert restarted.unknown_cost_policy == "block_autonomous_spend"
     assert restarted.source_budget_sha256 == staged.budget_sha256
-    assert 'data-budget="max_input_tokens" min="4000" max="32768" value="12000"' in INSTALLER_BUDGET_SECTION
+    assert 'data-budget="max_input_tokens" min="4000" max="65536" value="12000"' in INSTALLER_BUDGET_SECTION
