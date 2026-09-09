@@ -229,3 +229,31 @@ def test_proactive_worker_commits_receipt_only_after_delivery() -> None:
 
     assert worker.run_once(now=NOW) == "delivered"
     assert order == ["claim", "provider", "ack"]
+
+
+def test_spontaneous_initiative_retains_own_origin_and_event_identity():
+    from types import SimpleNamespace
+    from eva.application.free_will import PersonalInitiativeProposal
+    proposal = PersonalInitiativeProposal("Gezinsidee", "Zelf gekozen", "Maak iets bruikbaars")
+    claim = SimpleNamespace(event=SimpleNamespace(source_event_id="event-1"),
+                            thread_id="sensory:event-1", operation_id="decision-1")
+    first = proposal.adoption(claim, principal_id="owner")
+    assert first == proposal.adoption(claim, principal_id="owner")
+    assert first["origin"] == "eva_initiative"
+    assert first["source_message_id"] == "sensory:event-1"
+    assert first["authority"] == "private_research_and_draft_only"
+    assert first["intent_id"] != proposal.adoption(claim, principal_id="another-owner")["intent_id"]
+    claim.event.source_event_id = "event-2"
+    assert first["intent_id"] != proposal.adoption(claim, principal_id="owner")["intent_id"]
+
+
+def test_spontaneous_initiative_rejects_missing_owner_or_unbounded_proposal():
+    from types import SimpleNamespace
+    from eva.application.free_will import PersonalInitiativeProposal
+    import pytest
+    with pytest.raises(ValueError):
+        PersonalInitiativeProposal("", "why", "what")
+    with pytest.raises(ValueError):
+        PersonalInitiativeProposal("x" * 161, "why", "what")
+    with pytest.raises(ValueError):
+        PersonalInitiativeProposal("title", "why", "what").adoption(SimpleNamespace(), principal_id="")

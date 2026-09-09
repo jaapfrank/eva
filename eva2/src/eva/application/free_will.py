@@ -31,6 +31,46 @@ class SensoryDecisionClaim:
 
 
 @dataclass(frozen=True, slots=True)
+class PersonalInitiativeProposal:
+    """Eva's own bounded research idea; never an owner instruction or mandate."""
+
+    title: str
+    motivation: str
+    next_exploration: str
+
+    def __post_init__(self) -> None:
+        for name, limit in (("title", 160), ("motivation", 800), ("next_exploration", 800)):
+            value = getattr(self, name)
+            if not isinstance(value, str) or not value.strip() or len(value) > limit:
+                raise ValueError("personal initiative proposal is invalid")
+
+    def adoption(self, claim: SensoryDecisionClaim, *, principal_id: str) -> dict[str, str]:
+        """Use a separate source namespace, retaining durable event provenance."""
+        import hashlib
+        if not isinstance(principal_id, str) or not principal_id.strip():
+            raise ValueError("personal initiative needs the configured owner scope")
+        source_id = claim.event.source_event_id
+        digest = hashlib.sha256((principal_id + "\0" + source_id).encode()).hexdigest()
+        return {
+            "action_name": "adopt_personal_interest",
+            "action_call_id": "initiative:" + digest,
+            "intent_id": "personal-interest:" + digest,
+            "kind": "personal_interest",
+            "origin": "eva_initiative",
+            "principal_id": principal_id,
+            "conversation_id": "initiative:home-assistant",
+            "source_message_id": "sensory:" + source_id,
+            "source_event_id": source_id,
+            "source_thread_id": claim.thread_id,
+            "source_operation_id": claim.operation_id,
+            "title": self.title.strip(),
+            "motivation": self.motivation.strip(),
+            "next_exploration": self.next_exploration.strip(),
+            "authority": "private_research_and_draft_only",
+        }
+
+
+@dataclass(frozen=True, slots=True)
 class FreeWillDecision:
     disposition: WillDisposition
     reason: str
@@ -38,8 +78,11 @@ class FreeWillDecision:
     provider: str
     expression: str | None = None
     usage: ConversationModelUsage | None = None
+    initiative: PersonalInitiativeProposal | None = None
 
     def __post_init__(self) -> None:
+        if self.initiative is not None and not isinstance(self.initiative, PersonalInitiativeProposal):
+            raise ValueError("personal initiative must be a validated proposal")
         if self.disposition not in {"silence", "respond"}:
             raise ValueError("free-will disposition is invalid")
         if not self.reason.strip() or len(self.reason) > 600:

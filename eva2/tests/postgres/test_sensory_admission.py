@@ -1363,3 +1363,105 @@ def test_cost_recovery_filters_before_limit_and_preserves_other_scopes(postgres_
     )) == 71
     with pytest.raises(ValueError, match="fingerprint is invalid"):
         local._timeline.list_checkpoints(thread_prefix="sensory:", last_error_fingerprint="invalid")
+
+
+def test_spontaneous_idea_enters_existing_background_worker_after_restart(postgres_engine):
+    from eva.application.free_will import PersonalInitiativeProposal
+    from eva.adapters.postgres.conversation_actions import PostgresPersonalInterestStore
+    from eva.application.personal_interests import PersonalInterestWorker, PersonalInterestExploration
+    tenant = "initiative-existing-worker"
+    store = PostgresSensoryEventStore(postgres_engine, tenant_id=tenant,
+        installation_id="home", initiative_principal_id="owner")
+    event = _event(tenant)
+    store.retain(event)
+    claim = store.mark_model_started(store.claim_next(now=NOW), now=NOW)
+    decision = FreeWillDecision("silence", "Eigen maakidee", 0, "fixture",
+        initiative=PersonalInitiativeProposal("Gezinsplan", "Zelf gekozen", "Maak een bruikbaar gezinsplan"))
+    store.complete(claim, decision, now=NOW)
+    data = store._timeline.events(claim.thread_id)[-1].payload["data"]["initiative"]
+    assert data["status"] == "adopted"
+    events = store._timeline.events(data["thread_id"])
+    assert events[0].payload["data"]["origin"] == "eva_initiative"
+    assert events[0].payload["data"]["source_event_id"] == event.source_event_id
+    calls = []
+    class Ports:
+        def explore(self, interest):
+            calls.append(interest)
+            return PersonalInterestExploration("Een concreet bruikbaar gezinsplan.", "fixture")
+        def retain_bounded(self, document, *, now):
+            pass
+    ports = Ports()
+    worker = PersonalInterestWorker(PostgresPersonalInterestStore(postgres_engine), ports, ports)
+    assert worker.run_once(tenant_id=tenant, installation_id="home", now=NOW) == "completed"
+    assert len(calls) == 1 and calls[0].intent_id == data["intent_id"]
+    assert worker.run_once(tenant_id=tenant, installation_id="home", now=NOW) == "idle"
+    from eva.adapters.postgres.conversation_actions import PostgresPersonalPrototypeStore, PostgresPersonalProductReleaseStore
+    from eva.application.personal_interests import (PersonalPrototypeWorker, PersonalProductReleaseWorker,
+        PersonalPrototype, PersonalProductListing)
+    ports.build_prototype = lambda claim: PersonalPrototype("Gezinsplan", "gezinsplan.md", "text/markdown", "# Gezinsplan\nEen invulbaar plan.", "fixture")
+    ports.prepare_product_listing = lambda claim: PersonalProductListing("Gezinsplan", "Een invulbaar gezinsplan.", 499, ("gezin", "week", "plan"), "fixture")
+    for next_worker in (PersonalPrototypeWorker(PostgresPersonalPrototypeStore(postgres_engine), ports, ports),
+                        PersonalProductReleaseWorker(PostgresPersonalProductReleaseStore(postgres_engine), ports, ports)):
+        assert next_worker.run_once(tenant_id=tenant, installation_id="home", now=NOW) == "completed"
+    assert store._timeline.load(data["thread_id"]).phase == "release_ready"
+    from dataclasses import replace
+    next_event = replace(event, source_event_id=event.source_event_id + "-next")
+    store.retain(next_event)
+    next_claim = store.mark_model_started(store.claim_next(now=NOW), now=NOW)
+    store.complete(next_claim, decision, now=NOW)
+    next_data = store._timeline.events(next_claim.thread_id)[-1].payload["data"]["initiative"]
+    assert next_data["status"] == "adopted" and next_data["intent_id"] != data["intent_id"]
+
+
+def test_spontaneous_idea_rolls_back_with_decision_and_does_not_fan_out(postgres_engine):
+    from eva.application.free_will import PersonalInitiativeProposal
+    tenant = "initiative-atomic"
+    store = PostgresSensoryEventStore(postgres_engine, tenant_id=tenant,
+        installation_id="home", initiative_principal_id="owner")
+    event = _event(tenant)
+    store.retain(event)
+    claim = store.mark_model_started(store.claim_next(now=NOW), now=NOW)
+    decision = FreeWillDecision("silence", "Eigen maakidee", 0, "fixture",
+        initiative=PersonalInitiativeProposal("Gezinsplan", "Zelf gekozen", "Maak een plan"))
+    with patch("eva.adapters.postgres.sensory_events.transition_timeline_thread", side_effect=RuntimeError("abort")):
+        with pytest.raises(RuntimeError, match="abort"):
+            store.complete(claim, decision, now=NOW)
+    assert not store._timeline.list_checkpoints(thread_prefix="intent:personal-interest:")
+    store.complete(claim, decision, now=NOW)
+    first = store._timeline.events(claim.thread_id)[-1].payload["data"]["initiative"]
+    from dataclasses import replace
+    other = replace(event, source_event_id=event.source_event_id + "-other")
+    store.retain(other)
+    second = store.mark_model_started(store.claim_next(now=NOW), now=NOW)
+    store.complete(second, decision, now=NOW)
+    result = store._timeline.events(second.thread_id)[-1].payload["data"]["initiative"]
+    assert result == {"status": "not_admitted", "reason": "active_initiative_exists", "thread_id": first["thread_id"]}
+    assert len(store._timeline.list_checkpoints(thread_prefix="intent:personal-interest:")) == 1
+
+
+def test_spontaneous_idea_cannot_supply_its_own_owner_scope(postgres_engine):
+    from eva.application.free_will import PersonalInitiativeProposal
+    tenant = "initiative-no-owner"
+    store = PostgresSensoryEventStore(postgres_engine, tenant_id=tenant, installation_id="home")
+    store.retain(_event(tenant))
+    claim = store.mark_model_started(store.claim_next(now=NOW), now=NOW)
+    store.complete(claim, FreeWillDecision("silence", "Eigen maakidee", 0, "fixture",
+        initiative=PersonalInitiativeProposal("Plan", "Zelf gekozen", "Maak een plan")), now=NOW)
+    assert not store._timeline.list_checkpoints(thread_prefix="intent:personal-interest:")
+    result = store._timeline.events(claim.thread_id)[-1].payload["data"]["initiative"]
+    assert result["status"] == "not_admitted"
+
+
+def test_notification_cooldown_preserves_private_initiative(postgres_engine):
+    from eva.application.free_will import PersonalInitiativeProposal
+    tenant = "initiative-cooldown"
+    store = PostgresSensoryEventStore(postgres_engine, tenant_id=tenant,
+        installation_id="home", initiative_principal_id="owner")
+    store.retain(_event(tenant))
+    claim = store.mark_model_started(store.claim_next(now=NOW), now=NOW)
+    with patch.object(store, "_cooldown_applies", return_value=True):
+        store.complete(claim, FreeWillDecision("respond", "Eigen idee", 1, "fixture", "Een bericht.",
+            initiative=PersonalInitiativeProposal("Plan", "Eigen idee", "Maak een plan")), now=NOW)
+    data = store._timeline.events(claim.thread_id)[-1].payload["data"]
+    assert data["disposition"] == "silence" and data["expression"] is None
+    assert data["initiative"]["status"] == "adopted"

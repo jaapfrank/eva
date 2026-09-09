@@ -48,6 +48,7 @@ class PostgresSensoryEventStore:
         observation_freshness_seconds: int = 300,
         recovery_started_at: datetime | None = None,
         historical_group_size: int = 1,
+        initiative_principal_id: str | None = None,
     ) -> None:
         self._timeline = PostgresOperationalTimeline(
             engine,
@@ -74,6 +75,7 @@ class PostgresSensoryEventStore:
                 or not 1 <= historical_group_size <= 16):
             raise ValueError("historical group size is outside 1..16")
         self._historical_group_size = historical_group_size
+        self._initiative_principal_id = initiative_principal_id
 
     def retain(self, event: SensoryEvent) -> str:
         thread_id = f"sensory:{event.source_event_id}"
@@ -491,6 +493,7 @@ class PostgresSensoryEventStore:
                 0,
                 "eva:proactive-cooldown",
                 usage=decision.usage,
+                initiative=decision.initiative,
             )
         expression_pending = decision.disposition == "respond"
         transition = dict(
@@ -521,7 +524,7 @@ class PostgresSensoryEventStore:
             last_error_fingerprint=None,
         )
         original = self._event_from_thread(claim.thread_id)
-        if original.event_type != "historical_observation_batch":
+        if original.event_type != "historical_observation_batch" and decision.initiative is None:
             self._timeline.transition(**transition)
             return
         # Decision and member coverage commit together. Only the group can
@@ -529,9 +532,45 @@ class PostgresSensoryEventStore:
         scope = self._timeline._scope_value
         with self._timeline._engine.begin() as connection:
             self._timeline._scope(connection)
+            if decision.initiative is not None:
+                transition["data"]["initiative"] = self._adopt_initiative(
+                    connection, claim, decision, now=now)
             transition_timeline_thread(connection, scope, **transition)
-            self._complete_group_members(connection, original, group_thread_id=claim.thread_id,
-                decision_revision=claim.revision + 1, disposition=decision.disposition, now=now)
+            if original.event_type == "historical_observation_batch":
+                self._complete_group_members(connection, original, group_thread_id=claim.thread_id,
+                    decision_revision=claim.revision + 1, disposition=decision.disposition, now=now)
+
+    def _adopt_initiative(self, connection, claim, decision, *, now):
+        proposal = decision.initiative
+        principal = self._initiative_principal_id
+        if proposal is None or principal is None:
+            return {"status": "not_admitted", "reason": "owner_scope_unavailable"}
+        scope = self._timeline._scope_value
+        # Serialize admission for one owner's background work, across workers.
+        key = f"eva-initiative:{scope.tenant_id}:{scope.installation_id}:{principal}"
+        connection.execute(sa.text("SELECT pg_advisory_xact_lock(hashtextextended(:key, 0))"), {"key": key})
+        pending = connection.execute(sa.select(operational_checkpoints.c.thread_id).join(
+            operational_events, sa.and_(
+                operational_events.c.tenant_id == operational_checkpoints.c.tenant_id,
+                operational_events.c.installation_id == operational_checkpoints.c.installation_id,
+                operational_events.c.thread_id == operational_checkpoints.c.thread_id,
+            )).where(
+                operational_checkpoints.c.tenant_id == scope.tenant_id,
+                operational_checkpoints.c.installation_id == scope.installation_id,
+                operational_events.c.event_type == "PERSONAL_INTENT_ADOPTED",
+                operational_events.c.payload["data"]["principal_id"].astext == principal,
+                operational_events.c.payload["data"]["origin"].astext == "eva_initiative",
+                operational_checkpoints.c.phase != "release_ready",
+            ).limit(1)).scalar_one_or_none()
+        if pending is not None:
+            return {"status": "not_admitted", "reason": "active_initiative_exists", "thread_id": pending}
+        data = proposal.adoption(claim, principal_id=principal)
+        thread_id = "intent:" + data["intent_id"]
+        insert_initial_timeline_thread(connection, scope, thread_id=thread_id,
+            checkpoint_id=f"{thread_id}:adopted", occurred_at=now, data=data,
+            event_type="PERSONAL_INTENT_ADOPTED", phase="intent_adopted",
+            status="active", operation_id=data["intent_id"])
+        return {"status": "adopted", "intent_id": data["intent_id"], "thread_id": thread_id}
 
     def _complete_group_members(
         self, connection: sa.Connection, original: SensoryEvent, *, group_thread_id: str,

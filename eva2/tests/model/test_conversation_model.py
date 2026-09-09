@@ -2407,3 +2407,33 @@ def test_web_research_sse_parser_preserves_clickable_citations() -> None:
         "https://c.example/x",
     ]
     assert consulted == ()
+
+
+@pytest.mark.parametrize("proposal", [None,
+    {"title": "Gezinsplan", "motivation": "Eigen idee", "next_exploration": "Maak een bruikbaar plan"},
+    {"title": "Plan", "motivation": "Eigen idee", "next_exploration": "Plan", "principal_id": "attacker"},
+    {"title": "", "motivation": "Eigen idee", "next_exploration": "Plan"}])
+def test_sensory_model_parses_only_bounded_own_initiative(monkeypatch, tmp_path, proposal):
+    from eva.application.free_will import PersonalInitiativeProposal
+    model = PydanticConversationModel(auth_file=tmp_path / "unused")
+    decision = {"disposition": "silence", "expression": None,
+                "reason": "Eigen idee", "urgency": 0, "initiative": proposal}
+    observed = []
+    def request(body, *args, **kwargs):
+        observed.append(body)
+        return (("", ConversationActionCall("initiative-1", "submit_sensory_decision", decision)),
+                ConversationModelUsage.measured(model_attempts=1, tool_calls=1, input_tokens=100, output_tokens=20))
+    monkeypatch.setattr(model, "_request_using", request)
+    event = SensoryEvent("home-assistant", "event-initiative", "state_changed", datetime.fromisoformat(NOW.replace("Z", "+00:00")),
+                         {"entity_id": "sensor.example", "new_state": "1", "old_state": "0"})
+    identity = IdentityProfile("Eva", "Huisgenoot", ("Eerlijk",), 80)
+    if proposal is not None and (not proposal["title"] or "principal_id" in proposal):
+        with pytest.raises(ConversationModelError):
+            model.evaluate_sensory_event(event, identity, _memory())
+    else:
+        result = model.evaluate_sensory_event(event, identity, _memory())
+        assert result.initiative == (None if proposal is None else PersonalInitiativeProposal(**proposal))
+        assert result.usage.input_tokens == 100
+    schema = observed[0]["tools"][0]["parameters"]
+    assert "initiative" in schema["required"]
+    assert schema["properties"]["initiative"]["additionalProperties"] is False
