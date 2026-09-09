@@ -1,8 +1,8 @@
 {
   "contract": "EvaProductEvidence/v1",
   "taskId": "VB-001",
-  "observedAt": "2026-09-09T00:32:25.992219+00:00",
-  "status": "repaired_source_candidate_built_scanned_complete_gate_running",
+  "observedAt": "2026-09-09T00:57:34.396376+00:00",
+  "status": "candidate_gate_passed_reserve_update_rolled_back_background_isolation_required",
   "sourceCommit": "8c5090829c8557db89d42162473b9526c5d89c16",
   "candidateImage": "sha256:dcec0dd6fc2b9a1d80092b39c4a8d456491675ade3d05ffc16fc908f35eff5fe",
   "buildStatus": "built_local_untagged_candidate",
@@ -30,20 +30,114 @@
     "boundary": "Inventory equality; existing license exceptions still apply."
   },
   "releaseAuthorityReview": "co006_review confirms new source/image/full gate required by existing exact-input and image-source rules. Reseal reviewed:353 inputs161 tests20 support; only configflow and componentcatalog hashes differ. No component override.",
-  "completedTestsSoFar": {
-    "tests": 2116,
-    "failures": 0,
-    "errors": 0,
-    "skipped": 0,
-    "scope": [
-      "pure",
-      "portable-effect",
-      "portable-model",
-      "portable-object",
-      "portable-read",
-      "portable-full-schema"
-    ]
+  "gateStatus": "passed",
+  "boundary": "De kandidaat is technisch getest. De reserve-update faalde op een gegevensvergelijking; de vorige reserveversie is hersteld. Geen live omschakeling of akoestisch bewijs.",
+  "completeGate": {
+    "result": {
+      "tests": 2423,
+      "errors": 0,
+      "failures": 0,
+      "skipped": 0
+    },
+    "groups": [
+      {
+        "group": "pure",
+        "result": {
+          "errors": 0,
+          "failures": 0,
+          "skipped": 0,
+          "tests": 2097
+        },
+        "collectedCount": 2097
+      },
+      {
+        "group": "portable-effect",
+        "result": {
+          "errors": 0,
+          "failures": 0,
+          "skipped": 0,
+          "tests": 4
+        },
+        "collectedCount": 4
+      },
+      {
+        "group": "portable-model",
+        "result": {
+          "errors": 0,
+          "failures": 0,
+          "skipped": 0,
+          "tests": 4
+        },
+        "collectedCount": 4
+      },
+      {
+        "group": "portable-object",
+        "result": {
+          "errors": 0,
+          "failures": 0,
+          "skipped": 0,
+          "tests": 5
+        },
+        "collectedCount": 5
+      },
+      {
+        "group": "portable-read",
+        "result": {
+          "errors": 0,
+          "failures": 0,
+          "skipped": 0,
+          "tests": 4
+        },
+        "collectedCount": 4
+      },
+      {
+        "group": "portable-full-schema",
+        "result": {
+          "errors": 0,
+          "failures": 0,
+          "skipped": 0,
+          "tests": 2
+        },
+        "collectedCount": 2
+      },
+      {
+        "group": "postgres",
+        "result": {
+          "errors": 0,
+          "failures": 0,
+          "skipped": 0,
+          "tests": 307
+        },
+        "collectedCount": 307
+      }
+    ],
+    "receiptSha256": "8a6152fe87b42b9bdb5a36fe49b2b60e852fb1e1e8379df183f3237602402463",
+    "authority": {
+      "executableModuleCount": 161,
+      "requiredTestSupportInputCount": 20,
+      "sha256": "a4525c8f6de437e16511e5a96ce39bc4abfe49aa1804610a582275e6a74f0362",
+      "snapshotSha256": "e95b86e2abf16dc09e734e9200244d6e0c7fac84af762236a15a156e471270cb"
+    },
+    "candidate": {
+      "imageId": "sha256:dcec0dd6fc2b9a1d80092b39c4a8d456491675ade3d05ffc16fc908f35eff5fe",
+      "scope": [
+        "postgres-browser-physical"
+      ],
+      "sourceCommit": "8c5090829c8557db89d42162473b9526c5d89c16"
+    },
+    "cleanup": {
+      "databasesCreated": 12,
+      "databasesDropped": 12,
+      "testContainerStopped": true
+    }
   },
-  "gateStatus": "running",
-  "boundary": "Not persisted to reserve, not cut over. Actual native audio and interruption remain unproven. Windows administrator network rule still absent."
+  "reserveUpdate": {
+    "status": "previous_environment_restored_after_failed_update",
+    "failure": "reserve data changed during baseline restart",
+    "diagnosis": "Runtime lifespan starts the Home Assistant sensory thread in the reserve. Four additional sensory events and checkpoints were observed; count equality alone cannot establish preservation of existing rows.",
+    "activeImageUnchanged": "sha256:7b75cfe18df5691e1c2cc2fa56c9ee0f202959eab090ce723cd11761b5af84f7",
+    "reserveImageRestored": "sha256:86ec4e3598cc07fcc61ba76ac405cfbbac39f63a14e8a98f4600d02154d3c14b",
+    "readback": "both cores healthy",
+    "databaseRestored": false
+  }
 }

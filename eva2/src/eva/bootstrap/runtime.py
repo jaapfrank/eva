@@ -228,6 +228,7 @@ class RuntimeSettings:
     conversation_maximum_requests: int = 32
     conversation_reasoning_effort: str = "medium"
     runtime_resource_budget: RuntimeResourceBudget | None = None
+    background_work_enabled: bool = True
     background_tenant_id: str | None = None
     background_installation_id: str | None = None
     background_principal_id: str | None = None
@@ -257,6 +258,8 @@ class RuntimeSettings:
     durable_goal_recipients: tuple[str, ...] = ()
 
     def __post_init__(self) -> None:
+        if type(self.background_work_enabled) is not bool:
+            raise ValueError("background work switch must be a boolean")
         if type(self.conversation_maximum_requests) is not int or self.conversation_maximum_requests < 1:
             raise ValueError("conversation request limit must be a positive integer")
 
@@ -526,6 +529,7 @@ class RuntimeSettings:
                 "EVA_CONVERSATION_MAXIMUM_REQUESTS", 32, "Eva conversation request limit is invalid",
             ),
             runtime_resource_budget=runtime_resource_budget,
+            background_work_enabled=_environment_bool("EVA_BACKGROUND_WORK_ENABLED", True),
             background_tenant_id=background_tenant_id,
             background_installation_id=background_installation_id,
             background_principal_id=background_principal_id,
@@ -591,6 +595,7 @@ class PostgresHindsightMemoryRuntime:
         telegram_principal_bindings_loader: Callable[[], TelegramPrincipalBindings] | None = None,
         memory_storage_budget: PostgresMemoryStorageBudget | None = None,
         conversation_maximum_requests: int = 32,
+        background_work_enabled: bool = True,
     ) -> None:
         self._engine = engine
         self._memory = memory
@@ -599,6 +604,9 @@ class PostgresHindsightMemoryRuntime:
         self._conversation_maximum_requests = conversation_maximum_requests
         self._conversation = conversation
         self._cold_path = cold_path
+        if type(background_work_enabled) is not bool:
+            raise ValueError("background work switch must be a boolean")
+        self._background_work_enabled = background_work_enabled
         self._prototype_store = prototype_store
         self._release_store = release_store
         self._conversation_actions = conversation_actions
@@ -712,11 +720,17 @@ class PostgresHindsightMemoryRuntime:
             raise ValueError("request crossed its runtime scope")
 
     def start_background_work(self) -> None:
+        # A staged reserve may serve readiness checks without observing the home
+        # or consuming the copied outbox and autonomous work queues.
+        if not self._background_work_enabled:
+            return
         self._cold_path.start()
         if self._sensory_worker is not None:
             self._sensory_worker.start()
 
     def stop_background_work(self) -> None:
+        if not self._background_work_enabled:
+            return
         if self._sensory_worker is not None:
             self._sensory_worker.stop()
         self._cold_path.stop()
@@ -1796,6 +1810,7 @@ def create_runtime_app() -> FastAPI:
         sensory_store,
         model,
         conversation_maximum_requests=settings.conversation_maximum_requests,
+        background_work_enabled=settings.background_work_enabled,
         stripe_publication=stripe_publication,
         stripe_webhook=stripe_webhook,
         commerce_tenant_id=settings.background_tenant_id,

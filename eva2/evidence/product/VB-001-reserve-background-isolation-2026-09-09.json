@@ -1,0 +1,20 @@
+{
+  "contract": "EvaProductEvidence/v1",
+  "taskId": "VB-001",
+  "observedAt": "2026-09-09T00:57:34.396376+00:00",
+  "previousGoalTurnClassification": "no_progress",
+  "status": "runtime_background_switch_built_and_focused_tests_passed_not_deployed",
+  "change": "Strict EVA_BACKGROUND_WORK_ENABLED switch suppresses both sensory ingress and cold-path workers. Existing runtimes default to enabled. Runtime scope, owner mandate and budgets remain required.",
+  "tests": {
+    "command": "pytest -q tests/bootstrap/test_runtime_settings.py tests/bootstrap/test_memory_provenance.py",
+    "passed": 58,
+    "failures": 0
+  },
+  "boundaries": [
+    "Managed-B compose and cutover helper do not yet apply the switch.",
+    "Existing rollback images ignore the new setting; environment readback alone cannot prove isolation for them.",
+    "This is no claim of general database read-only behavior or actual speaker interruption."
+  ],
+  "next": "Wire explicit staging/activation in managed deployment, verify legacy rollback compatibility, compare preserved reserve rows against a temporary restore, then rebuild and run the complete candidate gate.",
+  "review": "co006_review: bounded source GO for runtime/settings tests. Strict boolean validation, default behavior and build wiring verified; no physical reserve isolation or release GO."
+}

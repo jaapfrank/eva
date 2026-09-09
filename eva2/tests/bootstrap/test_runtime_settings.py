@@ -76,6 +76,7 @@ def _minimum(monkeypatch: pytest.MonkeyPatch, private_tmp_path: Path) -> None:
     monkeypatch.setenv("EVA_RUNTIME_INSTALLATION_ID", "installation:test")
     monkeypatch.setenv("EVA_RUNTIME_TENANT_ID", "tenant:test")
     for name in (
+        "EVA_BACKGROUND_WORK_ENABLED",
         "EVA_DATABASE_DSN",
         "EVA_DATABASE_DSN_FILE",
         "EVA_HOME_ASSISTANT_URL",
@@ -931,3 +932,50 @@ def test_conversation_request_limit_requires_positive_integer(value):
 def test_conversation_request_limit_has_configurable_turn_local_default():
     assert RuntimeSettings("unused", "http://memory").conversation_maximum_requests == 32
     assert RuntimeSettings("unused", "http://memory", conversation_maximum_requests=96).conversation_maximum_requests == 96
+
+
+@pytest.mark.parametrize("raw, expected", [(None, True), ("true", True), ("false", False)])
+def test_runtime_background_work_switch(monkeypatch, private_tmp_path, raw, expected):
+    _minimum(monkeypatch, private_tmp_path)
+    if raw is not None:
+        monkeypatch.setenv("EVA_BACKGROUND_WORK_ENABLED", raw)
+    assert RuntimeSettings.from_environment().background_work_enabled is expected
+
+
+@pytest.mark.parametrize("raw", ["yes", "0", "disabled"])
+def test_runtime_rejects_ambiguous_background_work_switch(monkeypatch, private_tmp_path, raw):
+    _minimum(monkeypatch, private_tmp_path)
+    monkeypatch.setenv("EVA_BACKGROUND_WORK_ENABLED", raw)
+    with pytest.raises(RuntimeError, match="EVA_BACKGROUND_WORK_ENABLED"):
+        RuntimeSettings.from_environment()
+
+
+@pytest.mark.parametrize("enabled", [False, True])
+def test_reserve_lifecycle_cannot_start_observation_or_autonomous_workers(enabled):
+    from unittest.mock import Mock
+
+    cold_path, sensory = Mock(), Mock()
+    runtime = PostgresHindsightMemoryRuntime(
+        None, None, None, cold_path, None, None, None,
+        sensory_worker=sensory, background_work_enabled=enabled,
+    )
+    runtime.start_background_work()
+    runtime.stop_background_work()
+    if enabled:
+        cold_path.start.assert_called_once_with()
+        sensory.start.assert_called_once_with()
+        sensory.stop.assert_called_once_with()
+        cold_path.stop.assert_called_once_with()
+    else:
+        assert cold_path.mock_calls == []
+        assert sensory.mock_calls == []
+
+
+@pytest.mark.parametrize("invalid", ["false", 0, None])
+def test_runtime_background_switch_rejects_non_boolean_constructor_values(invalid):
+    with pytest.raises(ValueError, match="background work switch"):
+        RuntimeSettings("postgresql://test", "http://memory", background_work_enabled=invalid)
+    with pytest.raises(ValueError, match="background work switch"):
+        PostgresHindsightMemoryRuntime(
+            None, None, None, None, None, None, None, background_work_enabled=invalid,
+        )
