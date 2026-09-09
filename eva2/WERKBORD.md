@@ -1,42 +1,43 @@
 # Eva 2 — uitvoerbaar werkbord
 
-Laatst bijgewerkt: 2026-09-09.
+Laatst bijgewerkt: 2026-09-10.
 
 Doel: [Eva als zelfstandig lerende digitale huisgenoot](PROJECTDOEL.md).
 Gebouwd, getest, live en door jou geaccepteerd zijn verschillende stappen.
 
-TL-003: een nieuwe dienst vanuit het gesprek aansluiten en dezelfde opdracht ermee afmaken. De bestaande MCP-uitvoering werkt; automatisch voorbereiden en activeren ontbreekt.
-[Actueel bewijs](evidence/product/AU-001-completion-2026-09-09.json).
+TL-003 is technisch afgerond en live: nieuwe dienst aangesloten, gebruikt en oorspronkelijke documentatieopdracht afgerond met apart teruggelezen bestand en eindantwoord. Nu de browserfunctie aansluiten.
+[Actueel bewijs](evidence/product/TL-003-completion-2026-09-10.json).
 
-Algemene connectorregistratie verbinden met de bestaande eigenaars- en uitvoerroute; één nieuwe dienst van opdracht tot gecontroleerd resultaat opleveren.
+VB-003: de bestaande onderhouden browsermotor bruikbaar maken vanuit Eva en het eigenaarsdashboard, met exclusieve overname en blijvend profiel.
 
 ## Nu
 
 | Volgorde | Kaart | Resultaat | Status |
 |---:|---|---|---|
-| 139 | `TL-003` — Onbekende connector zelfstandig toevoegen | Eva sluit vanuit een eigenaarsopdracht een nieuwe MCP-dienst aan en gebruikt die om de oorspronkelijke opdracht af te maken, zonder dienstspecifieke kerncode. | 🟡 BEZIG |
+| 140 | `VB-003` — Browser bedienen en overnemen | Eva gebruikt één onderhouden browser met blijvend profiel; de eigenaar kan die bekijken, overnemen en teruggeven, waarbij Eva tijdens overname geen browseracties uitvoert. | 🟡 BEZIG |
 
 Klaar betekent:
 
-- De eigenaar kan in een normale opdracht een nieuwe dienst laten koppelen; Eva onderzoekt en activeert de beschikbare koppeling via de bestaande algemene route.
-- De oorspronkelijke opdracht wordt met de nieuwe connector afgemaakt en het resultaat is onafhankelijk teruggelezen. Alleen voorbereiding of een handmatig klaargezette catalogus is niet klaar.
+- De eigenaar opent de browser vanuit het bestaande dashboard en kan de sessie overnemen en teruggeven.
+- Eva gebruikt dezelfde browser via de algemene toolroute; overname sluit haar toegang en teruggeven sluit de bediening van de eigenaar.
+- De werkelijke sessie en het profiel blijven behouden; fouten staan zichtbaar en hervatten voert geen vorige mutatie blind opnieuw uit.
 
 <details>
 <summary>Technische uitvoering: bestanden en controles</summary>
 
-### Exact werk voor `TL-003`
+### Exact werk voor `VB-003`
 
-- `eva2/src/eva/adapters/model/pydantic_conversation.py`
-- `eva2/src/eva/adapters/postgres/conversation_actions.py`
+- `eva2/src/eva/operations/browser_session.py`
+- `eva2/src/eva/adapters/api/browser_session.py`
+- `eva2/src/eva/adapters/connectors/browser_session.py`
+- `eva2/src/eva/adapters/api/app.py`
 - `eva2/src/eva/bootstrap/runtime.py`
-- `eva2/src/eva/providers/runtime.py`
-- `eva2/tools/provision_workspace_provider.py`
-- `eva2/tools/workspace_provider_access.py`
-- `eva2/tests/connectors/test_provider_runtime.py`
+- `eva2/tests/operations/test_browser_session.py`
+- `eva2/tests/api/test_dashboard_browser_session.py`
 
 Echte controles:
 
-- `pytest -q tests/connectors/test_provider_runtime.py`
+- `pytest -q tests/operations/test_browser_session.py tests/api/test_dashboard_browser_session.py`
 - `python3 tools/check_current_workboard.py`
 
 </details>
@@ -50,7 +51,6 @@ nadat zij als eerstvolgende kleine kaart exacte bestanden en tests heeft.
 - [ ] `VB-001` — Full-duplex voice leveren: Met Eva2 praten via de bestaande Telegram- of Home Assistant-aansluiting, waarbij Eva hoorbaar onderbroken kan worden en het gesprek daarna doorgaat.
 - [ ] `VB-002` — Passende aanwezigheid leveren: Eva zoekt spontaan contact via de beschikbare speakers en deurbel, met herkenbare identiteit en gevoel voor het moment. Gezin beoordeelt plezier, betrokkenheid en hinder; onderbreken en stop werken.
 - [ ] `CO-008` — Autonoom geheugen in gezinsgesprekken bewijzen: De oorspronkelijke brede geheugenuitkomst blijft open: relevante kennis zelfstandig kiezen, gewijzigde en tijdelijke informatie goed gebruiken in gewone gesprekken en langere gezinspraktijk. Geen handmatig geheugenbeheer; familie beoordeelt continuïteit en vertrouwen.
-- [ ] `VB-003` — Veilige browsercomputer kiezen: Eén onderhouden browsermotor ondersteunt accounts, meekijken en overname.
 - [ ] `VB-004` — Browserherstel bewijzen: Een crash herhaalt geen externe mutatie blind.
 - [ ] `AU-002` — Duurzame hulpagent bedienen: Starten, volgen, stoppen en hervatten werken via de gebruikersroute; hoofd- en hulpagent delen één provideradapter.
 - [ ] `UX-001` — Eigenaar-dashboard leveren: Een onderhouden adminframework toont status, mensen, geheugen, kosten en bewijs.
@@ -140,7 +140,9 @@ Afgevinkt betekent alleen: de vastgelegde kaart is afgerond, niet het hele produ
   [Bewijs](evidence/product/TL-002-completion-2026-09-08.json).
 - [x] `AU-001` — Eigenaarmandaat uitvoeren (done).
   [Bewijs](evidence/product/AU-001-completion-2026-09-09.json).
-- [ ] `TL-003` — Onbekende connector zelfstandig toevoegen (in_progress).
+- [x] `TL-003` — Onbekende connector zelfstandig toevoegen (done).
+  [Bewijs](evidence/product/TL-003-completion-2026-09-10.json).
+- [ ] `VB-003` — Browser bedienen en overnemen (in_progress).
 
 </details>
 

@@ -1,7 +1,7 @@
 {
   "contract": "EvaExecutionWorkboard/v1",
   "schemaVersion": 1,
-  "lastUpdated": "2026-09-09",
+  "lastUpdated": "2026-09-10",
   "sequencePolicy": "done_then_one_primary_then_queued",
   "commandWorkingDirectory": "eva2",
   "inventoryPath": "docs/eva-repository-inventory.generated.json",
@@ -30,8 +30,8 @@
       "nonclaims": "No new deployment or model calls for this closure. Human usefulness/timing, full backlog completion, streaming and all later product outcomes remain open."
     },
     "projectDashboard": {
-      "runtimePort": 44710,
-      "runtimeLabel": "Slot 3",
+      "runtimePort": 44711,
+      "runtimeLabel": "Slot 4",
       "roadmap": [
         {
           "id": "daily",
@@ -49,6 +49,7 @@
             "TL-002",
             "AU-001",
             "TL-003",
+            "VB-003",
             "AU-005",
             "VB-001",
             "VB-002",
@@ -61,7 +62,6 @@
           "outcome": "Eén algemene toolroute, ook voor onbekende diensten en browserwerk.",
           "acceptance": "Twee echte diensten en een onbekende connector werken zonder nieuwe taakspecifieke kerncode; resultaat apart gecontroleerd, mandaat intrekbaar.",
           "taskIds": [
-            "VB-003",
             "VB-004"
           ]
         },
@@ -111,7 +111,7 @@
           ]
         }
       ],
-      "priorityDecision": "AU-001 is afgerond. Nieuwe connectors krijgen voorrang; eerder opgeleverde spraak en initiatiefcode blijven gesloten en praktijkbeoordeling staat apart.",
+      "priorityDecision": "TL-003 is technisch afgerond met opgeslagen resultaat en eindantwoord. Browserbediening is nu actief; eerder geaccepteerde spraak blijft gesloten en brede gezinspraktijk staat apart.",
       "dashboardVerification": {
         "status": "local_browser_verified_not_full_product_acceptance",
         "priorityRevision": {
@@ -150,6 +150,16 @@
       },
       "summary": [
         {
+          "label": "IN UITVOERING · VB-003",
+          "value": "Browser bedienen en overnemen",
+          "detail": "De onderhouden browser en MCP-motor zijn voorbereid. Eigenaarsbediening, exclusieve overname en veilige aansluiting worden nu samengebracht."
+        },
+        {
+          "label": "OPGELEVERD · LIVE · TL-003",
+          "value": "Nieuwe dienst aansluiten én gebruiken",
+          "detail": "Eva heeft GitMCP aangesloten, Playwright-documentatie gelezen, een Nederlandse uitleg opgeslagen en teruggelezen. Eindantwoord en bestand onafhankelijk bevestigd. Ontwikkelfouten en handmatige hervattingen zijn vastgelegd."
+        },
+        {
           "label": "OPGELEVERD · LIVE · AU-001",
           "value": "Bestaande documenten verwerken",
           "detail": "Eva zoekt, leest, vergelijkt en bewaart het resultaat binnen jouw werkmapmandaat. Complete opdracht slaagde live in 40 seconden; bestand apart teruggelezen. Vastlopen na twee stappen hersteld."
@@ -186,6 +196,10 @@
         }
       ],
       "nextOutcomes": [
+        {
+          "title": "Een nieuwe MCP-dienst laten gebruiken",
+          "detail": "Vraag via /eva2 of het eigenaarsgesprek een openbare MCP-dienst aan te sluiten en er een concrete opdracht mee uit te voeren. Het ontwikkelvoorbeeld staat in /proof-state/tl003-browseronderzoek.md."
+        },
         {
           "title": "Laat Eva bestaande documenten verwerken",
           "detail": "Vraag via /eva2 of het eigenaarsdashboard: Zoek in je werkmap de twee au001-ea1ac62d-notities, lees ze en leg uit welke optie past binnen 30 euro en 2 uur. Het al gemaakte advies staat in /proof-state/au001-ea1ac62d-advies.md."
@@ -280,7 +294,7 @@
           "tested": "partial",
           "live": "partial",
           "accepted": "no",
-          "gap": "Onbekende connectors en bredere computerbediening",
+          "gap": "Browserbediening en bredere praktijk met diensten die aanmelding vragen",
           "detail": "Eva kan Home Assistant onderzoeken en in haar duurzame privéwerkmap bestanden zoeken, lezen, de mapinhoud en bestandsgegevens opvragen, en documenten bewaren. Een complete eigenaarsopdracht vond twee notities, las beide, vergeleek budget en tijd en sloeg gecontroleerd advies op in 40 seconden. Onbekende connectors en algemene computerbediening volgen nog.",
           "evidence": "TL-001, TL-002 en AU-001 · vierstapsopdracht live bewezen 9 september; gezinsacceptatie open"
         },
@@ -535,14 +549,14 @@
       }
     },
     "goalRevision": {
-      "date": "2026-09-07",
+      "date": "2026-09-10",
       "authorizedBy": "Jaap",
       "document": "eva2/PROJECTDOEL.md",
       "scope": "Digitale huisgenoot: zelfstandig redeneren, initiatief, onbekende vaardigheden leren, handelen, zelfverbetering en aantoonbare concurrentiewinst met open-sourcehergebruik.",
       "sessionGoal": "Het volledige projectdoel blijft actief. Eigen initiatief is technisch live; nu toegestane algemene handelingen bruikbaar afronden.",
-      "currentWork": "TL-003: een nieuwe dienst vanuit het gesprek aansluiten en dezelfde opdracht ermee afmaken. De bestaande MCP-uitvoering werkt; automatisch voorbereiden en activeren ontbreekt.",
-      "currentEvidence": "eva2/evidence/product/AU-001-completion-2026-09-09.json",
-      "nextStep": "Algemene connectorregistratie verbinden met de bestaande eigenaars- en uitvoerroute; één nieuwe dienst van opdracht tot gecontroleerd resultaat opleveren.",
+      "currentWork": "TL-003 is technisch afgerond en live: nieuwe dienst aangesloten, gebruikt en oorspronkelijke documentatieopdracht afgerond met apart teruggelezen bestand en eindantwoord. Nu de browserfunctie aansluiten.",
+      "currentEvidence": "eva2/evidence/product/TL-003-completion-2026-09-10.json",
+      "nextStep": "VB-003: de bestaande onderhouden browsermotor bruikbaar maken vanuit Eva en het eigenaarsdashboard, met exclusieve overname en blijvend profiel.",
       "usageClarification": {
         "date": "2026-09-07",
         "authorizedBy": "Jaap",
@@ -557,7 +571,7 @@
         "previousInterpretation": "Een door de assistent verplicht gesteld dagmaximum of nieuw verbruiksmandaat was geen eis van Jaap. De geïnstalleerde €0-configuratiewaarde was geen bewijs dat Jaap bestaand abonnementsgebruik wilde blokkeren.",
         "developmentWeekLimitCause": "Niet vastgesteld; werktijd alleen is geen gebruiksmeting."
       },
-      "developmentSourceCommit": "c34633ab2f65c882c33b060bdfcad47a7c21545a"
+      "developmentSourceCommit": "3d4111c946a49504a6558bd64042597b67e9abc9"
     },
     "pendingHumanAcceptance": {
       "authorization": "Jaap approved 7 September: build memory viewer while conversation assessment stays open. No human acceptance inferred.",
@@ -2918,9 +2932,44 @@
       "dashboardReadback": "Actual /project-state: AU-001 done, TL-003 active, runtime ready. Available workspace capabilities and example shown.",
       "nextTask": "TL-003",
       "retainedOpenWork": "Unknown connectors, general computer operation, family acceptance and complete goal remain open."
+    },
+    "tl003InitialImplementation": {
+      "baseCommit": "8d87d9278955e3d98f3464f808e3ab5ed06f46cc",
+      "implementationCommit": "6ab24e0ffb599b03b2d7d0528c9bc8a94fdd8075",
+      "changePaths": [
+        "eva2/deploy/living-core/mcp-gateway.compose.yml",
+        "eva2/deploy/mcp-autonomy/README.md",
+        "eva2/deploy/mcp-autonomy/eva_mcp_pinning.py",
+        "eva2/deploy/mcp-autonomy/prepare.py",
+        "eva2/deploy/mcp-autonomy/upstream.json",
+        "eva2/src/eva/adapters/connectors/mcp_gateway.py",
+        "eva2/src/eva/adapters/connectors/mcp_registration.py",
+        "eva2/src/eva/adapters/postgres/mcp_connector_registry.py",
+        "eva2/src/eva/providers/bundled.py",
+        "eva2/src/eva/providers/mcp_autonomy.py",
+        "eva2/src/eva/providers/mcp_discovery.py",
+        "eva2/src/eva/providers/mcp_gateway.py",
+        "eva2/src/eva/providers/mcp_owner_authority.py",
+        "eva2/src/eva/providers/mcp_registration.py",
+        "eva2/tests/connectors/test_mcp_autonomy_provider.py",
+        "eva2/tests/connectors/test_mcp_discovery.py",
+        "eva2/tests/connectors/test_mcp_invocation.py",
+        "eva2/tests/connectors/test_mcp_registration.py",
+        "eva2/tests/connectors/test_mcp_registration_tools.py",
+        "eva2/tests/operations/test_eva2_quiescent_cutover.py",
+        "eva2/tests/operations/test_managed_b_render.py",
+        "eva2/tests/operations/test_mcp_autonomy_pinning.py",
+        "eva2/tests/postgres/test_mcp_autonomy_source.py",
+        "eva2/tests/postgres/test_mcp_connector_registry.py",
+        "eva2/tests/postgres/test_mcp_owner_authority.py",
+        "eva2/tools/eva2_quiescent_cutover.py",
+        "eva2/tools/managed_b_render.py",
+        "eva2/tools/prepare_mcp_autonomy_access.py"
+      ],
+      "reason": "Oorspronkelijke implementatie blijft zichtbaar; TL-003 beschrijft nu de zeven bestanden van de daaropvolgende reparatie. De volledige opdracht is nog niet afgerond."
     }
   },
-  "activeTaskId": "TL-003",
+  "activeTaskId": "VB-003",
   "maxActiveImplementationTasks": 1,
   "statusValues": [
     "queued",
@@ -4319,41 +4368,40 @@
       "area": "Gereedschappen",
       "title": "Onbekende connector zelfstandig toevoegen",
       "outcome": "Eva sluit vanuit een eigenaarsopdracht een nieuwe MCP-dienst aan en gebruikt die om de oorspronkelijke opdracht af te maken, zonder dienstspecifieke kerncode.",
-      "status": "in_progress",
+      "status": "done",
       "stateDetails": {
-        "baseCommit": null,
-        "implementationCommit": null,
-        "evidenceCommit": null,
-        "reviewEvidencePaths": [],
+        "baseCommit": "ecfc580142f97666a9f7d434ff5a3f5066b99eb0",
+        "implementationCommit": "3d4111c946a49504a6558bd64042597b67e9abc9",
+        "evidenceCommit": "186fbf5bd27b38642e3b0a5b6c8f45d7a6cb40af",
+        "reviewEvidencePaths": [
+          "eva2/evidence/product/TL-003-completion-2026-09-10.json"
+        ],
         "blockerReason": null
       },
       "ownerRole": "architecturelead",
-      "reviewerRole": "memoryreviewer",
+      "reviewerRole": "proofreviewer",
       "dependsOn": [
         "AU-001"
       ],
       "changePaths": [
-        "eva2/src/eva/adapters/model/pydantic_conversation.py",
-        "eva2/src/eva/adapters/postgres/conversation_actions.py",
-        "eva2/src/eva/bootstrap/runtime.py",
-        "eva2/src/eva/providers/runtime.py",
-        "eva2/tools/provision_workspace_provider.py",
-        "eva2/tools/workspace_provider_access.py",
-        "eva2/tests/connectors/test_provider_runtime.py"
+        "eva2/src/eva/contracts/runtime_budget.py",
+        "eva2/src/eva/operations/installer_budget_workflow.py",
+        "eva2/src/eva/adapters/api/installer_budget_api.py",
+        "eva2/tests/operations/test_installer_budget_workflow.py",
+        "eva2/tests/operations/test_installer_runtime_budget.py"
       ],
       "componentIds": [
         "api-and-runtime-composition",
-        "conversation-model-adapter",
-        "durable-persistence",
-        "external-capability-adapters",
-        "integration-and-storage-tests"
+        "core-semantics",
+        "operations-and-release-tests",
+        "operator-workflows"
       ],
       "inventoryOwners": [
         "eva-runtime",
         "verification"
       ],
       "testCommands": [
-        "pytest -q tests/connectors/test_provider_runtime.py",
+        "pytest -q tests/model/test_conversation_model.py::test_duplicate_observation_model_view_matches_admission_and_actual_tool_returns tests/model/test_conversation_model.py::test_multistep_dutch_receipts_use_token_admission_without_losing_content",
         "python3 tools/check_current_workboard.py"
       ],
       "evidenceRequired": [
@@ -4365,6 +4413,59 @@
         "De eigenaar kan in een normale opdracht een nieuwe dienst laten koppelen; Eva onderzoekt en activeert de beschikbare koppeling via de bestaande algemene route.",
         "De oorspronkelijke opdracht wordt met de nieuwe connector afgemaakt en het resultaat is onafhankelijk teruggelezen. Alleen voorbereiding of een handmatig klaargezette catalogus is niet klaar."
       ]
+    },
+    {
+      "id": "VB-003",
+      "order": 140,
+      "area": "Browser",
+      "title": "Browser bedienen en overnemen",
+      "outcome": "Eva gebruikt één onderhouden browser met blijvend profiel; de eigenaar kan die bekijken, overnemen en teruggeven, waarbij Eva tijdens overname geen browseracties uitvoert.",
+      "status": "in_progress",
+      "stateDetails": {
+        "baseCommit": null,
+        "implementationCommit": null,
+        "evidenceCommit": null,
+        "reviewEvidencePaths": [],
+        "blockerReason": null
+      },
+      "ownerRole": "architecturelead",
+      "reviewerRole": "proofreviewer",
+      "dependsOn": [
+        "TL-003"
+      ],
+      "changePaths": [
+        "eva2/src/eva/operations/browser_session.py",
+        "eva2/src/eva/adapters/api/browser_session.py",
+        "eva2/src/eva/adapters/connectors/browser_session.py",
+        "eva2/src/eva/adapters/api/app.py",
+        "eva2/src/eva/bootstrap/runtime.py",
+        "eva2/tests/operations/test_browser_session.py",
+        "eva2/tests/api/test_dashboard_browser_session.py"
+      ],
+      "componentIds": [
+        "api-and-runtime-composition",
+        "core-behavior-tests",
+        "external-capability-adapters",
+        "operations-and-release-tests",
+        "operator-workflows"
+      ],
+      "inventoryOwners": [
+        "eva-runtime",
+        "verification"
+      ],
+      "testCommands": [
+        "pytest -q tests/operations/test_browser_session.py tests/api/test_dashboard_browser_session.py",
+        "python3 tools/check_current_workboard.py"
+      ],
+      "evidenceRequired": [
+        "Onderhouden Chromium en Playwright MCP met vastgelegde herkomst, versie en licentie.",
+        "Echte eigenaarbediening, exclusieve overname, blijvend profiel en toolroute apart waargenomen."
+      ],
+      "doneWhen": [
+        "De eigenaar opent de browser vanuit het bestaande dashboard en kan de sessie overnemen en teruggeven.",
+        "Eva gebruikt dezelfde browser via de algemene toolroute; overname sluit haar toegang en teruggeven sluit de bediening van de eigenaar.",
+        "De werkelijke sessie en het profiel blijven behouden; fouten staan zichtbaar en hervatten voert geen vorige mutatie blind opnieuw uit."
+      ]
     }
   ],
   "milestones": [
@@ -4373,35 +4474,28 @@
       "area": "Initiatief",
       "title": "Passend initiatief en kansen bewijzen",
       "outcome": "Meer gewaardeerd eigen initiatief dan Bottie: humor, nieuwsgierigheid, zelfgekozen onderzoek, creatieve bijdragen en kansen. Eva begint en vervolgt zelf werk, voert binnen bestaand mandaat uit en controleert het resultaat. Gezin beoordeelt eigenheid, plezier, nut en hinder; alleen meer berichten telt niet als winst.",
-      "order": 140
+      "order": 141
     },
     {
       "id": "VB-001",
       "area": "Voice",
       "title": "Full-duplex voice leveren",
       "outcome": "Met Eva2 praten via de bestaande Telegram- of Home Assistant-aansluiting, waarbij Eva hoorbaar onderbroken kan worden en het gesprek daarna doorgaat.",
-      "order": 141
+      "order": 142
     },
     {
       "id": "VB-002",
-      "order": 142,
+      "order": 143,
       "area": "Voice",
       "title": "Passende aanwezigheid leveren",
       "outcome": "Eva zoekt spontaan contact via de beschikbare speakers en deurbel, met herkenbare identiteit en gevoel voor het moment. Gezin beoordeelt plezier, betrokkenheid en hinder; onderbreken en stop werken."
     },
     {
       "id": "CO-008",
-      "order": 143,
+      "order": 144,
       "area": "Geheugen",
       "title": "Autonoom geheugen in gezinsgesprekken bewijzen",
       "outcome": "De oorspronkelijke brede geheugenuitkomst blijft open: relevante kennis zelfstandig kiezen, gewijzigde en tijdelijke informatie goed gebruiken in gewone gesprekken en langere gezinspraktijk. Geen handmatig geheugenbeheer; familie beoordeelt continuïteit en vertrouwen."
-    },
-    {
-      "id": "VB-003",
-      "order": 144,
-      "area": "Browser",
-      "title": "Veilige browsercomputer kiezen",
-      "outcome": "Eén onderhouden browsermotor ondersteunt accounts, meekijken en overname."
     },
     {
       "id": "VB-004",
@@ -4915,6 +5009,21 @@
       "implementedBy": "/root",
       "reviewedBy": "/root/co006_review",
       "reviewCommit": "e060bc7031c90d58afd6a2961fab2aabfd7609c5"
+    },
+    "TL-003": {
+      "baseCommit": "ecfc580142f97666a9f7d434ff5a3f5066b99eb0",
+      "commit": "3d4111c946a49504a6558bd64042597b67e9abc9",
+      "evidenceCommit": "186fbf5bd27b38642e3b0a5b6c8f45d7a6cb40af",
+      "decision": "GO",
+      "evidencePaths": [
+        "eva2/reviews/TL-003-completion-2026-09-10.json"
+      ],
+      "testReceiptPaths": [
+        "eva2/evidence/product/TL-003-completion-2026-09-10.json"
+      ],
+      "implementedBy": "/root",
+      "reviewedBy": "/root/proof_review",
+      "reviewCommit": "1e24d710780f2bcd68e59a0efa922180d6dced1e"
     }
   }
 }
