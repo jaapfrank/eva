@@ -752,7 +752,7 @@ def _validate_projection_contract(
 ) -> None:
     eva_properties = eva_schema.get("properties")
     eva_required = eva_schema.get("required")
-    provider_properties = provider_schema.get("properties")
+    provider_properties = provider_schema.get("properties", {})
     provider_required = provider_schema.get("required", [])
     provider_additional = provider_schema.get("additionalProperties", True)
     if (
@@ -848,7 +848,7 @@ def _validate_schema_value(
     if kind == "object":
         if not isinstance(value, dict):
             raise ConversationConflict(f"{path} must be an object")
-        properties = schema.get("properties")
+        properties = schema.get("properties", {} if provider_schema else None)
         required = schema.get("required", [] if provider_schema else None)
         additional = schema.get("additionalProperties", True)
         if (

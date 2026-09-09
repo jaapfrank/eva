@@ -169,7 +169,12 @@ class McpOwnerAuthority:
         for row in rows:
             binding = mcp_gateway_catalog_binding(row, contract=catalog["contract"])
             schema = json.loads(json.dumps(binding["input_schema"]))
-            if schema.get("type") != "object" or not isinstance(schema.get("properties"), dict):
+            if schema.get("type") != "object":
+                raise ConversationConflict("connector input schema is unsupported")
+            # JSON Schema permits an object without declared properties. Expose
+            # its empty-argument projection while pinning the original binding.
+            schema.setdefault("properties", {})
+            if not isinstance(schema["properties"], dict):
                 raise ConversationConflict("connector input schema is unsupported")
             schema.setdefault("required", [])
             schema["additionalProperties"] = False

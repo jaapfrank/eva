@@ -175,3 +175,49 @@ def test_factory_reuses_two_durable_ports_without_registration_io(monkeypatch):
     assert all(port.available_for(source_turn()) for port in contribution.external_tools)
     assert all(not port.available_for(ConversationTurn.private("tenant", "installation", "other",
         "chat", "message", "hello", "2026-09-09T12:00:00Z")) for port in contribution.external_tools)
+
+
+def test_parameterless_mcp_schema_keeps_original_catalog_pin(monkeypatch):
+    import asyncio
+    import copy
+    import json
+    from eva.adapters.connectors.mcp_gateway import (
+        McpGatewayToolAdapter, mcp_gateway_catalog_binding,
+    )
+    from eva.application.conversation import ConversationActionCall
+    from eva.contracts.canonical_json import canonical_sha256
+    from eva.providers.mcp_gateway import parse_mcp_gateway_catalog
+    from eva.providers.mcp_owner_authority import McpOwnerAuthority
+
+    row = {"name": "provider-fetch-docs", "inputSchema": {"type": "object"},
+        "description": "Fetch documentation", "integrationType": "MCP",
+        "requestType": "STREAMABLEHTTP", "enabled": True, "reachable": True,
+        "deprecated": False, "visibility": "public", "annotations": {}}
+    original = copy.deepcopy(row)
+    original_hash = canonical_sha256(mcp_gateway_catalog_binding(
+        row, contract="EvaMcpGatewayProvider/v4"))
+    authority = McpOwnerAuthority.__new__(McpOwnerAuthority)
+    monkeypatch.setattr(authority, "authorize_endpoint", lambda *args: None)
+    catalog = authority.admit_catalog(source_turn(), "https://service.example/mcp",
+        [row], {"documentation_url": "https://service.example/docs"})
+    spec, = parse_mcp_gateway_catalog(json.dumps(catalog))
+    assert row == original
+    assert spec.descriptor.input_schema == {
+        "type": "object", "properties": {}, "required": [], "additionalProperties": False,
+    }
+    assert spec.execute_catalog_sha256 == spec.observe_catalog_sha256 == original_hash
+    adapter = McpGatewayToolAdapter(McpGatewayConfig("https://gateway.example", "fixture"), (spec,))
+    def catalog_read(method, path, payload):
+        assert (method, path, payload) == ("GET", "/tools", None)
+        return [row]
+    monkeypatch.setattr(adapter, "_request_json", catalog_read)
+    asyncio.run(adapter.verify_catalog())
+    prepared = asyncio.run(adapter.planner().prepare(source_turn(),
+        ConversationActionCall("empty-args", spec.descriptor.name, {})))
+    assert prepared.arguments == prepared.observation_arguments == {}
+    with pytest.raises(ConversationConflict, match="fields are invalid"):
+        asyncio.run(adapter.planner().prepare(source_turn(),
+            ConversationActionCall("extra-args", spec.descriptor.name, {"invented": True})))
+    row["inputSchema"]["properties"] = {}
+    with pytest.raises(RuntimeError, match="differs from the sealed catalog"):
+        asyncio.run(adapter.verify_catalog())
