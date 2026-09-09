@@ -1,0 +1,15 @@
+# Build-only overlay for the pinned Voice PE configuration. No wakeword or
+# native voice-assistant arbitration is provided here: this is NOT deployable.
+# Set va_pipecat.speaker to eva_duplex_resampling_speaker in the candidate.
+speaker:
+  - id: !extend mixing_speaker
+    source_speakers:
+      - id: eva_duplex_mixing_input
+        timeout: never
+        buffer_duration: 40ms
+  - platform: resampler
+    id: eva_duplex_resampling_speaker
+    output_speaker: eva_duplex_mixing_input
+    sample_rate: 48000
+    bits_per_sample: 16
+    buffer_duration: 40ms

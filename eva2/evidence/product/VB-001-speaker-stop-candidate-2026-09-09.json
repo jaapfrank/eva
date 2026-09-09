@@ -1,0 +1,88 @@
+{
+  "contract": "eva2.vb001-speaker-stop-candidate.v1",
+  "recordedAt": "2026-09-09T12:11:21.324231+00:00",
+  "status": "built_and_host_tested_not_live",
+  "practice": {
+    "SP-01": "owner_accepted",
+    "SP-02": "owner_accepted",
+    "SP-03": "not_ready"
+  },
+  "upstream": {
+    "repository": "https://github.com/kyvaith/pipecat-homeassistant",
+    "revision": "a538d1d1bacc8609061719f0b05c1622147ccb4b",
+    "license": "MIT",
+    "files": {
+      "__init__.py": "2ac826b5d054fb240978a784163479a67797e484706852b3c4f2d903ed8d520d",
+      "automation.h": "62882ce3acce7f1e53c4e777543f5a89a57b7893cb6dd20e93878cfb25444035",
+      "va_pipecat.h": "ffb05396048db3a4a9d4cc2d4b5eaf6da09641b58370696f7dd3adfe3338e6c9",
+      "va_pipecat.cpp": "ce9ab2c9f45fa3a397eb411d87efa7c76ea3d226079848a788702785d2229eaa"
+    },
+    "licenseSha256": "e8c368bca4d947121e6f2ab21cc6136001048ebe5fb90aff71241429caf8f809",
+    "esphomeVersion": "2026.6.2",
+    "scope": "Build-only local playback cancellation; network generation receipts and deployment remain open."
+  },
+  "sourceFiles": {
+    "__init__.py": "2ac826b5d054fb240978a784163479a67797e484706852b3c4f2d903ed8d520d",
+    "automation.h": "62882ce3acce7f1e53c4e777543f5a89a57b7893cb6dd20e93878cfb25444035",
+    "playback_stop_barrier.h": "74836cf2f3c0629b721e0d7b0d3dc824455a42f712cce00678b686b8e7518205",
+    "va_pipecat.cpp": "13b520a5487851ffa45c82e8bca30ecfd14aa5bd0c556a5d3b6087aab8f4306c",
+    "va_pipecat.h": "733e61210f2182826068449f37d5e753084f2bd707b121215e86f470c0531739"
+  },
+  "patchSha256": "e12526be6276ba99f2561dc29440e82b36cb061b83231dccd87097d493dc4d29",
+  "localFiles": {
+    "verify_speaker_stop.py": "d82e13bcf2245929dabfa4a9397160d68a1e6e838b8f053a3f7fa0a65aa69296",
+    "prepare_speaker.py": "9bce918767a82b22e91845af0f000ae4eb54d019d44e9c26e87722e8085e36c2",
+    "speaker-output.example.yaml": "497e8908b82f0280400bbc6aef60771beb7f576ca3144790dd3c81e582c1670e",
+    "test_native_duplex_speaker_stop.py": "bf3c4350a6fb02afcc53e75b7ebe92a82005e8c8bce32ed108adfd709425e24f"
+  },
+  "hostVerification": {
+    "barrierScenarios": 6,
+    "actualMethodScenarios": 4,
+    "result": "passed",
+    "sanitizer": "UBSan",
+    "upstreamControl": "Same mid-play overwrite probe fails unchanged upstream; patched passes.",
+    "limitations": "Host stubs; no real FreeRTOS scheduling or physical speaker."
+  },
+  "sourcePreparation": {
+    "changedSourceRejectedBeforeOutput": true,
+    "existingBuildRefused": true
+  },
+  "firmware": {
+    "esphomeVersion": "2026.6.2",
+    "initialBuildSeconds": 247.39,
+    "finalBuildSeconds": 31.97,
+    "finalBuildSucceeded": true,
+    "compiledCppAndHeadersMatchPrepared": true,
+    "otaSha256": "8f5105ca12daa33aa128471d0b2e0e4564c853bdf15412b7e70b68392dee73a2",
+    "otaBytes": 2926192,
+    "generatedWiring": [
+      "mixing_speaker->add_source_speaker(eva_duplex_mixing_input);",
+      "eva_duplex_resampling_speaker->set_output_speaker(eva_duplex_mixing_input);",
+      "eva_realtime_probe->set_speaker(eva_duplex_resampling_speaker);"
+    ],
+    "flashed": false
+  },
+  "independentReview": {
+    "reviewer": "co006_review",
+    "result": "bounded_source_and_host_probe_GO",
+    "checks": "Independently ran 6 barrier and 4 actual-method scenarios and checked source hashes.",
+    "exclusions": [
+      "hardware",
+      "deployment",
+      "wire receipts",
+      "acoustic p95"
+    ]
+  },
+  "remaining": [
+    "Session/generation-bound authenticated audio transport and stop/playback receipts.",
+    "Existing HA STT/TTS output connection and continuity of heard/unheard text.",
+    "Native assistant, wakeword and microphone/mute arbitration.",
+    "Real ESPHome loop scheduling, echo and p95 physical stop measurement.",
+    "Usable recovery before physical candidate trial."
+  ],
+  "limitations": [
+    "STOPPED normally waits pending DAC frames; two main-loop boundaries still need hardware confirmation.",
+    "ESPHome source can force-stop shared I2S on pause/timeout; own source is not full fault isolation.",
+    "Unchanged raw PCM and timed suppression do not provide generation-safe transport."
+  ]
+}

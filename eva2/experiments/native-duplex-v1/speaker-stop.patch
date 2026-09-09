@@ -1,0 +1,266 @@
+--- a/va_pipecat.h
++++ b/va_pipecat.h
+@@ -4,6 +4,8 @@
+ #include "esphome/components/api/custom_api_device.h"
+ #include "esphome/components/microphone/microphone_source.h"
+ #include "esphome/components/speaker/speaker.h"
++
++#include "playback_stop_barrier.h"
+ 
+ #include <atomic>
+ #include <cstdint>
+@@ -89,6 +91,9 @@
+   void on_mic_data_(const std::vector<uint8_t> &samples);
+   bool ensure_playback_speaker_ready_();
+   bool drain_audio_();
++  PlaybackStopBarrier playback_stop_;
++  std::atomic<uint32_t> playback_main_loop_{0};
++  bool playback_failure_reported_{false};  // audio task only
+   void audio_task_();
+   void mic_tx_task_();
+   void mic_tx_push_(const uint8_t *data, size_t len);
+@@ -230,7 +235,7 @@
+   // from the in-flight frames. While this is true we DROP incoming audio so the
+   // cancelled reply actually goes silent. Cleared in set_phase_ on the next
+   // "idle" (reply ended) or "listening" (a fresh turn's audio is legitimate).
+-  bool suppress_incoming_audio_{false};
++  std::atomic<bool> suppress_incoming_audio_{false};
+   // Set by send_interrupt() (a local "stop"), cleared in start_session() (the
+   // next wake). After a stop the mic gate is CLOSED, so no new turn can begin
+   // until a wake — yet server VAD can still fire an end-of-turn for
+@@ -278,16 +283,16 @@
+   // kPlaybackPrebufferMaxMs. Defaults to 300 ms; 0 from the backend disables it
+   // and plays immediately.
+   // Re-armed whenever the ring drains to empty (reply start AND post-underflow).
+-  uint32_t playback_prebuffer_ms_{300};
++  std::atomic<uint32_t> playback_prebuffer_ms_{300};
+   static constexpr uint32_t kPlaybackPrebufferMaxMs = 2000;
+   static constexpr uint32_t kPlaybackSampleRate = 24000;  // incoming TTS PCM rate
+   // True while we're accumulating the prebuffer cushion (holding playback).
+   // Touched by handle_binary_ (WS task, arms it) + loop() (main task, releases);
+   // plain flag like streaming_, the tiny race is harmless.
+-  bool playback_priming_{false};
++  std::atomic<bool> playback_priming_{false};
+   // millis() when priming started (first byte after the ring was empty); used
+   // for the prime deadline so real-time (non-burst) audio still starts promptly.
+-  uint32_t prime_started_ms_{0};
++  std::atomic<uint32_t> prime_started_ms_{0};
+ 
+   // Resampler cold-start SILENCE-PRIME (crackle fix). The resampler does NOT
+   // idle-timeout (verified vs ESPHome source): resample(stop_gracefully=false)
+--- a/va_pipecat.cpp
++++ b/va_pipecat.cpp
+@@ -166,15 +166,7 @@
+     return;
+   }
+ 
+-  // Tell the resampler what format we'll feed it. The resampler converts to
+-  // its yaml-configured output format (48k 16-bit) before passing to the
+-  // mixer → i2s leaf. Start the speaker task once so play() calls just push
+-  // into its ring buffer instead of racing to re-create the i2s channel.
+-  if (this->speaker_ != nullptr) {
+-    audio::AudioStreamInfo info(/*bits_per_sample=*/16, /*channels=*/1, /*sample_rate=*/24000);
+-    this->speaker_->set_audio_stream_info(info);
+-    this->speaker_->start();
+-  }
++  // Eva candidate: speaker operations start lazily in audio_task_, never here.
+ 
+   BaseType_t task_ok = xTaskCreatePinnedToCore(
+       [](void *arg) { static_cast<VaPipecat *>(arg)->audio_task_(); },
+@@ -182,7 +174,6 @@
+   if (task_ok != pdPASS) {
+     this->audio_task_handle_ = nullptr;
+     ESP_LOGE(TAG, "Failed to start realtime audio drain task");
+-    this->speaker_->stop();
+     heap_caps_free(this->audio_buf_);
+     heap_caps_free(this->mic_tx_buf_);
+     this->audio_buf_ = nullptr;
+@@ -201,7 +192,6 @@
+     ESP_LOGE(TAG, "Failed to start realtime mic uplink task");
+     vTaskDelete(this->audio_task_handle_);
+     this->audio_task_handle_ = nullptr;
+-    this->speaker_->stop();
+     heap_caps_free(this->audio_buf_);
+     heap_caps_free(this->mic_tx_buf_);
+     this->audio_buf_ = nullptr;
+@@ -275,7 +265,7 @@
+   if (this->speaker_->get_audio_stream_info() != playback_info) {
+     if (!this->speaker_->is_stopped()) {
+       ESP_LOGD(TAG, "stopping realtime speaker before restoring 24 kHz playback format");
+-      this->speaker_->stop();
++      this->flush_playback_queue_();
+       this->last_fed_ms_ = 0;
+       this->chain_prime_remaining_ = 0;
+       return false;
+@@ -296,6 +286,24 @@
+ bool VaPipecat::drain_audio_() {
+   if (this->speaker_ == nullptr || this->audio_buf_ == nullptr)
+     return false;
++
++  // Stop has priority even when the PSRAM ring is empty. No new play/start
++  // call is made until the owned source has processed its stop command.
++  if (this->playback_stop_.pending() || this->playback_stop_.failed()) {
++    this->chain_prime_remaining_ = 0;
++    this->last_fed_ms_ = 0;
++    this->playback_priming_ = false;
++  }
++  if (!this->playback_stop_.poll(*this->speaker_, this->playback_main_loop_.load(std::memory_order_acquire), millis())) {
++    if (this->playback_stop_.failed() && !this->playback_failure_reported_) {
++      this->playback_failure_reported_ = true;
++      this->defer([this]() {
++        this->cancel_turn_("stop");
++        this->fire_error_("playback_stop_timeout", "Speaker stop was not confirmed; playback disabled");
++      });
++    }
++    return false;
++  }
+ 
+   portENTER_CRITICAL(&this->ring_mux_);
+   size_t head = this->audio_head_;
+@@ -353,7 +361,18 @@
+   if (contiguous > fill)
+     contiguous = fill;
+ 
+-  size_t accepted = this->speaker_->play(this->audio_buf_ + head, contiguous);
++  // Never pass mutable ring storage to a blocking downstream play(). A flush
++  // may reset/reuse that storage while play is still reading on this core.
++  uint8_t playback_chunk[960];  // bounded 20 ms at 24 kHz, fits audio-task stack
++  contiguous = std::min(contiguous, sizeof(playback_chunk));
++  portENTER_CRITICAL(&this->ring_mux_);
++  if (this->audio_generation_ != generation || this->playback_stop_.pending()) {
++    portEXIT_CRITICAL(&this->ring_mux_);
++    return false;
++  }
++  std::memcpy(playback_chunk, this->audio_buf_ + head, contiguous);
++  portEXIT_CRITICAL(&this->ring_mux_);
++  size_t accepted = this->speaker_->play(playback_chunk, contiguous);
+   if (accepted == 0)
+     return false;
+ 
+@@ -408,6 +427,7 @@
+ }
+ 
+ void VaPipecat::loop() {
++  this->playback_main_loop_.fetch_add(1, std::memory_order_release);
+   this->publish_audio_levels_();
+ 
+   if (this->streaming_ && this->mic_source_ != nullptr) {
+@@ -643,6 +663,8 @@
+       if (this->ws_connected_) {
+         ESP_LOGW(TAG, "WS disconnected (event %d)", (int) event_id);
+       }
++      this->suppress_incoming_audio_ = true;
++      this->flush_playback_queue_();
+       this->ws_connected_ = false;
+       // Connection broke before the stability window elapsed — keep the
+       // failure counter and the fired flag. A flapping link won't earn
+@@ -803,14 +825,13 @@
+ size_t VaPipecat::flush_playback_queue_() {
+   portENTER_CRITICAL(&this->ring_mux_);
+   const size_t flushed_bytes = this->audio_fill_;
++  this->playback_stop_.request();
+   this->audio_head_ = 0;
+   this->audio_tail_ = 0;
+   this->audio_fill_ = 0;
+   this->audio_generation_++;
+   portEXIT_CRITICAL(&this->ring_mux_);
+ 
+-  this->playback_priming_ = false;
+-  this->chain_prime_remaining_ = 0;
+   return flushed_bytes;
+ }
+ 
+@@ -841,9 +862,10 @@
+ }
+ 
+ void VaPipecat::handle_server_interrupt_(const std::string &reason) {
++  this->suppress_incoming_audio_ = true;
++  const size_t flushed_bytes = this->flush_playback_queue_();
+   const std::string reason_copy = reason;
+-  this->defer([this, reason_copy]() {
+-    const size_t flushed_bytes = this->flush_playback_queue_();
++  this->defer([this, reason_copy, flushed_bytes]() {
+     this->followup_pending_ = false;
+     this->thanks_pending_ = false;
+     this->waiting_for_speaker_stop_ = false;
+@@ -880,7 +902,7 @@
+   // rest of the already-generated reply. Drop it so the cancelled reply goes
+   // silent instead of refilling the PSRAM ring we just flushed. Cleared on the
+   // next "idle"/"listening" phase (see set_phase_).
+-  if (this->suppress_incoming_audio_)
++  if (this->suppress_incoming_audio_ || this->playback_stop_.pending() || this->playback_stop_.failed())
+     return;
+   const uint32_t now_ms = millis();
+   if (this->turn_t_first_audio_out_ == 0 && this->turn_t_wake_ != 0) {
+@@ -957,6 +979,11 @@
+   // to guarantee that ordering — len is at most a few KB per WS frame
+   // and PSRAM memcpy is ~10–20 µs, well under any audio deadline.
+   portENTER_CRITICAL(&this->ring_mux_);
++  // Recheck at commit: cancellation can arrive during volume conversion.
++  if (this->suppress_incoming_audio_ || this->playback_stop_.pending() || this->playback_stop_.failed()) {
++    portEXIT_CRITICAL(&this->ring_mux_);
++    return;
++  }
+   const bool was_empty = (this->audio_fill_ == 0);
+   size_t tail = this->audio_tail_;
+   size_t first = std::min(len, this->audio_buf_bytes_ - tail);
+@@ -1254,15 +1281,9 @@
+     // our PSRAM ring so playback stops immediately instead of finishing the
+     // now-cancelled sentence. We do NOT send a WS interrupt here — the backend
+     // initiated this — we just stop local playback.
+-    if (this->barge_in_ && this->audio_fill_ > 0) {
+-      portENTER_CRITICAL(&this->ring_mux_);
+-      this->audio_head_ = 0;
+-      this->audio_tail_ = 0;
+-      this->audio_fill_ = 0;
+-      this->audio_generation_++;
+-      portEXIT_CRITICAL(&this->ring_mux_);
++    if (this->barge_in_ && (prev == Phase::REPLYING || this->audio_fill_ > 0)) {
++      this->flush_playback_queue_();
+       this->idle_emit_pending_ = false;
+-      ESP_LOGI(TAG, "phase=listening during reply — barge-in, flushed TTS queue");
+     }
+     if (this->turn_t_listening_ == 0 && this->turn_t_wake_ != 0) {
+       this->turn_t_listening_ = millis();
+@@ -1782,25 +1803,9 @@
+ }
+ 
+ void VaPipecat::cancel_turn_(const char *message_type) {
+-  // Best-effort cancel to the backend — ONLY if the socket is alive. The local
+-  // cleanup below must ALWAYS run: returning early on a dead socket (the old
+-  // behaviour) left streaming_ on, the PSRAM ring full and the follow-up timers
+-  // armed after a "stop" on a dead link, so the mic would resume streaming the
+-  // room the instant we reconnected.
+-  if (this->ws_connected_ && this->ws_handle_ != nullptr) {
+-    const std::string msg = std::string("{\"type\":\"") + message_type + "\"}";
+-    this->ws_send_text_(msg.c_str(), msg.size(), kWsControlSendTimeout);
+-  } else {
+-    ESP_LOGW(TAG, "send_interrupt: WS not connected — local cleanup only");
+-  }
+-  // Flush our PSRAM playback queue — what's already been pushed into the
+-  // resampler/mixer/leaf will still drain (~600 ms residual), but everything
+-  // we have yet to hand off is dropped. The yaml side stops the resampler
+-  // explicitly. Reset deferred state too so we don't accidentally hold an
+-  // "idle" emit waiting for the (now-empty) queue. The ring reset has to
+-  // happen under the mux: the WS task could be mid-write and seeing
+-  // head=tail=fill=0 partway through would let it write into a "freshly
+-  // empty" buffer the user just barge-cancelled.
++  // Local cancellation wins over a stalled network send. The audio task owns
++  // the actual stop, including its downstream completion barrier.
++  this->suppress_incoming_audio_ = true;
+   const size_t flushed_bytes = this->flush_playback_queue_();
+   // Drop further incoming TTS until the backend confirms the turn boundary —
+   // it keeps streaming the rest of the (already-generated) reply otherwise.
+@@ -1831,6 +1836,12 @@
+   // Cleared in start_session() (the next wake). See set_phase_.
+   this->post_stop_guard_ = true;
+   this->cancel_timeout("va_followup_open");
++  if (this->ws_connected_ && this->ws_handle_ != nullptr) {
++    const std::string msg = std::string("{\"type\":\"") + message_type + "\"}";
++    this->ws_send_text_(msg.c_str(), msg.size(), kWsControlSendTimeout);
++  } else {
++    ESP_LOGW(TAG, "send_interrupt: WS not connected — local cleanup only");
++  }
+   // Report how much already-buffered TTS we just dropped — i.e. how much of the
+   // (burst-complete) reply the user did NOT hear. If stale audio ever bleeds into
+   // the next turn, this number + the next "Phase ->" tell the story.

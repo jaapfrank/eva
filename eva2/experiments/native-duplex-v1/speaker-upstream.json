@@ -1,0 +1,14 @@
+{
+  "repository": "https://github.com/kyvaith/pipecat-homeassistant",
+  "revision": "a538d1d1bacc8609061719f0b05c1622147ccb4b",
+  "license": "MIT",
+  "files": {
+    "__init__.py": "2ac826b5d054fb240978a784163479a67797e484706852b3c4f2d903ed8d520d",
+    "automation.h": "62882ce3acce7f1e53c4e777543f5a89a57b7893cb6dd20e93878cfb25444035",
+    "va_pipecat.h": "ffb05396048db3a4a9d4cc2d4b5eaf6da09641b58370696f7dd3adfe3338e6c9",
+    "va_pipecat.cpp": "ce9ab2c9f45fa3a397eb411d87efa7c76ea3d226079848a788702785d2229eaa"
+  },
+  "licenseSha256": "e8c368bca4d947121e6f2ab21cc6136001048ebe5fb90aff71241429caf8f809",
+  "esphomeVersion": "2026.6.2",
+  "scope": "Build-only local playback cancellation; network generation receipts and deployment remain open."
+}

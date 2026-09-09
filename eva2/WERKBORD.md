@@ -5,10 +5,10 @@ Laatst bijgewerkt: 2026-09-09.
 Doel: [Eva als zelfstandig lerende digitale huisgenoot](PROJECTDOEL.md).
 Gebouwd, getest, live en door jou geaccepteerd zijn verschillende stappen.
 
-SP-01 en SP-02 zijn door Jaap geaccepteerd. Voor SP-03 werkt de experimentele detectie vóór de definitieve transcriptie. Silero reageerde in drie synthetische HA Cloud-proeven ruim een halve seconde eerder dan HA; de fysieke speakeronderbreking is nog in uitvoering.
-[Actueel bewijs](evidence/product/VB-001-silero-speech-onset-2026-09-09.json).
+VB-001: SP-01 en SP-02 door Jaap geaccepteerd. Snelle detector en lokale speakerstop voorbereid en gericht getest. SP-03 blijft in uitvoering; kandidaat nog niet op de speaker.
+[Actueel bewijs](evidence/product/VB-001-speaker-stop-candidate-2026-09-09.json).
 
-De bestaande speakercomponent krijgt een eigen audiobron en bevestigde, generatiegebonden stop. Daarna volgt de complete kandidaat en de echte praktijktest.
+Generatiegebonden audio en stopbevestiging koppelen aan de bestaande HA STT/TTS-route; native bediening, herstel en fysieke proeven afmaken voor SP-03.
 
 ## Nu
 
@@ -115,6 +115,15 @@ Klaar betekent:
 - `eva2/evidence/product/VB-001-early-speech-onset-2026-09-09.json`
 - `eva2/evidence/product/VB-001-microvad-onset-comparison-2026-09-09.json`
 - `eva2/evidence/product/VB-001-silero-speech-onset-2026-09-09.json`
+- `eva2/experiments/native-duplex-v1/playback_stop_barrier.h`
+- `eva2/experiments/native-duplex-v1/speaker-stop.patch`
+- `eva2/experiments/native-duplex-v1/prepare_speaker.py`
+- `eva2/experiments/native-duplex-v1/verify_speaker_stop.py`
+- `eva2/experiments/native-duplex-v1/speaker-upstream.json`
+- `eva2/experiments/native-duplex-v1/LICENSE.va_pipecat`
+- `eva2/experiments/native-duplex-v1/speaker-output.example.yaml`
+- `eva2/tests/operations/test_native_duplex_speaker_stop.py`
+- `eva2/evidence/product/VB-001-speaker-stop-candidate-2026-09-09.json`
 
 Echte controles:
 
@@ -137,6 +146,7 @@ Echte controles:
 - `pytest -q tests/bootstrap/test_household_voice_authority.py`
 - `pytest -q tests/operations/test_native_duplex_reply_lane.py tests/operations/test_ha_voice_native_client.py tests/connectors/test_home_assistant_voice.py`
 - `pytest -q tests/operations/test_native_duplex_local_onset.py`
+- `pytest -q tests/operations/test_native_duplex_speaker_stop.py`
 
 </details>
 
