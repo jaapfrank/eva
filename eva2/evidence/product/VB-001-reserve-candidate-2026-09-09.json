@@ -1,9 +1,9 @@
 {
   "contract": "EvaProductEvidence/v1",
   "taskId": "VB-001",
-  "observedAt": "2026-09-09T01:36:51.795425+00:00",
+  "observedAt": "2026-09-09T01:45:51.258819+00:00",
   "previousGoalTurnClassification": "progress",
-  "status": "complete_candidate_built_scanned_required_gate_running",
+  "status": "reserve_restart_and_data_preservation_passed_ha_practice_blocked",
   "sourceCommit": "5eb98f8336fa22a586d2accd514dde37774d4186",
   "imageId": "sha256:e6e33b0be32b7f4a1c3d04da55f8c903998d00fea88e50d817897111e92a35cc",
   "archiveSha256": "1f6c8e53da6a539d6e6755851c857914355dcef5005b1f37cc016fd8d9b99034",
@@ -44,19 +44,76 @@
     "probeSha256": "61f435e407ab97d4fd94a48ab12869f65bc439e5ef58189a2514d979e06e7caf",
     "boundary": "Real packaged worker threads; synthetic event source/outbox, no network, database or HA."
   },
-  "review": "co006_review verified exact source/image/archive, all input pins, scans and prepared env delta. Conditional reserve-only GO after terminal green full gate and cleanup.",
+  "review": "co006_review independently confirmed the complete 2444-test gate, physical browser cleanup, both reserve database attestations matching the fresh backup, actual healthy slot4/source5eb/imagee6e/background=false, absent voice/MCP/proactive access, and unchanged active slot3/44710.",
   "gateObserverSha256": "0ac95f2de38eed28a15a187aca5baff59f5d482194ba1d2c81bacd9791969a09",
   "reserveUpdateScriptSha256": "d7495f40d6d76e3f6bdfd234c4960c9e1f8ab977f55914a20b7b032f32b9f61c",
   "reserveBackup": "Fresh stopped-writer snapshot and private candidate.env preserved.",
   "runtimeState": {
     "activeSlot": 3,
     "reserveSlot": 4,
-    "reserveCoreAndHindsight": "stopped"
+    "reserveCoreAndHindsight": "running_healthy_baseline"
   },
-  "next": "Await the same running complete gate, then execute the reviewed reserve restart and database preservation proof.",
+  "next": "Owner applies the prepared administrator-only Windows rule and clarifies microphone mute preference; then verify actual HA reachability, perform the reviewed current-data A/B switch, and measure real speaker interruption.",
   "boundaries": [
-    "No active route or HA pipeline change.",
-    "Windows HA firewall rule remains absent; acoustic interruption unproven.",
-    "Standalone worker probe uses synthetic source/outbox; real reserve preservation remains to be tested."
-  ]
+    "No active cutover, HA pipeline change, microphone unmute or firmware flash performed.",
+    "The first data comparison was stopped, the second running: unchanged throughout these observations, not an unlimited silence guarantee.",
+    "The complete goal and voice acceptance remain unfinished."
+  ],
+  "completeGate": {
+    "status": "passed",
+    "result": {
+      "tests": 2444,
+      "errors": 0,
+      "failures": 0,
+      "skipped": 0
+    },
+    "authority": {
+      "executableModuleCount": 161,
+      "requiredTestSupportInputCount": 20,
+      "sha256": "028e610947320655947f2f944f0e51b457bdd49a04c8278e326d24817dd73b37",
+      "snapshotSha256": "61eb06ba46fe45ef340a76fc996bdd8b279b077effd22a86925df11514aaa2b5"
+    },
+    "receiptSha256": "5b88f262f3d61d1283a6db6d0c23a77f7d81aff5604f9f59683092ff4b5e62e0",
+    "cleanup": {
+      "databasesCreated": 12,
+      "databasesDropped": 12,
+      "testContainerStopped": true
+    }
+  },
+  "reserveRestart": {
+    "sourceCommit": "5eb98f8336fa22a586d2accd514dde37774d4186",
+    "imageId": "sha256:e6e33b0be32b7f4a1c3d04da55f8c903998d00fea88e50d817897111e92a35cc",
+    "phases": [
+      {
+        "phase": 0,
+        "ownerAndAnonymousChecks": "passed",
+        "backgroundConfigured": false,
+        "dataAndSchemaUnchanged": true,
+        "writersStoppedForAttestation": true
+      },
+      {
+        "phase": 1,
+        "ownerAndAnonymousChecks": "passed",
+        "backgroundConfigured": false,
+        "dataAndSchemaUnchanged": true,
+        "writersStoppedForAttestation": false
+      }
+    ],
+    "boundary": "Reserve restart and data preservation only, not active household voice or acoustic interruption.",
+    "status": "passed",
+    "reserveHealthy": true,
+    "activeSlotUnchanged": true,
+    "observedAt": "2026-09-09T01:40:02.461548+00:00"
+  },
+  "sourcePreparation": {
+    "status": "prepared_not_applied",
+    "preflight": "passed_only_with_prepared_source_environment",
+    "changes": "Only dashboard voice and MCP manifest pins plus configuration hash; image, credentials and scopes unchanged.",
+    "review": "co006_review bounded GO for exact private env delta."
+  },
+  "blockers": {
+    "windowsFirewallRule": "Eva2-NativeVoice-HA absent; previous creation was denied by Windows in this non-administrator session.",
+    "haGatewayReachability": "Fresh unauthenticated HA curl returned HTTP 000; connectivity still unproven, firewall is not claimed as the sole cause.",
+    "microphoneChoice": "Earlier question whether both HA Voice microphones should remain muted has no answer."
+  }
 }

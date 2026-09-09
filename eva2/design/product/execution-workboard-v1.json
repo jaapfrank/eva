@@ -2349,16 +2349,16 @@
       "next": "Reseal the corrected template and test pins from clean committed source, rebuild the exact candidate and rerun the complete gate while retaining raw test results."
     },
     "vb001ReserveBackgroundIsolation": {
-      "status": "deployment_repair_built_gate_found_stale_manifest_pins_repaired",
+      "status": "implemented_and_verified_on_reserve",
       "evidence": "eva2/evidence/product/VB-001-reserve-background-isolation-2026-09-09.json",
-      "result": "Uitrolcorrectie gebouwd; echte workerproef geslaagd. Volledige gate vond twee verouderde manifestpinnen. Beide hersteld; 70 gerichte controles groen. Kandidaat nog niet toegelaten.",
-      "next": "Reseal the corrected template and test pins from clean committed source, rebuild the exact candidate and rerun the complete gate while retaining raw test results."
+      "result": "Correctie volledig getest en op reserve bewezen met behoud van data en schema.",
+      "next": "Owner applies the prepared administrator-only Windows rule and clarifies microphone mute preference; then verify actual HA reachability, perform the reviewed current-data A/B switch, and measure real speaker interruption."
     },
     "vb001ReserveCandidate": {
-      "status": "complete_candidate_built_scanned_required_gate_running",
+      "status": "reserve_restart_and_data_preservation_passed_ha_practice_blocked",
       "evidence": "eva2/evidence/product/VB-001-reserve-candidate-2026-09-09.json",
-      "result": "Kandidaat 5eb98f8/e6e33b0 gebouwd en gescand; volledige gate loopt. Verse reserveback-up gereed; reserve staat stil.",
-      "next": "Await the same running complete gate, then execute the reviewed reserve restart and database preservation proof."
+      "result": "2.444 tests groen. Reserve tweemaal gezond gestart; data en schema volledig behouden. Onafhankelijk bevestigd. Actieve Eva ongewijzigd. HA-praktijk wacht op Windows-toegang en microfoonkeuze.",
+      "next": "Owner applies the prepared administrator-only Windows rule and clarifies microphone mute preference; then verify actual HA reachability, perform the reviewed current-data A/B switch, and measure real speaker interruption."
     }
   },
   "activeTaskId": "VB-001",
@@ -3702,13 +3702,13 @@
       "area": "Voice",
       "title": "Full-duplex voice leveren",
       "outcome": "Met Eva2 praten via de bestaande Telegram- of Home Assistant-aansluiting, waarbij Eva hoorbaar onderbroken kan worden en het gesprek daarna doorgaat.",
-      "status": "in_progress",
+      "status": "blocked",
       "stateDetails": {
         "baseCommit": null,
         "implementationCommit": null,
         "evidenceCommit": null,
         "reviewEvidencePaths": [],
-        "blockerReason": null
+        "blockerReason": "Echte HA-spraakproef kan niet starten: HA bereikt de spraakingang niet (HTTP 000); de voorbereide Windows-regel vereist een beheerder en ontbreekt nog. Ook de eerder gevraagde keuze over beide gedempte microfoons is onbeantwoord. Kandidaat en reserveproef zijn volledig gecontroleerd; geen verdere bouw nodig vóór deze externe stappen."
       },
       "ownerRole": "architecturelead",
       "reviewerRole": "proofreviewer",
