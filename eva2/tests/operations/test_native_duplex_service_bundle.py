@@ -140,5 +140,9 @@ def test_silero_disables_telemetry_before_constructing_inference_session(monkeyp
     sys.modules["numpy"].ndarray = object
     spec.loader.exec_module(module)
     monkeypatch.setattr(module, "SileroOnnxModel", lambda path: events.append("session"))
-    module.Silero10msDetector("synthetic-model")
+    detector = module.Silero10msDetector("synthetic-model")
     assert events == ["disabled", "session"]
+    # The continuous microphone validates every 10ms result, including the
+    # three blocks retained before the first 32ms inference window is ready.
+    for _ in range(3):
+        assert detector.Process10ms(bytes(320)) == 0.0

@@ -110,7 +110,9 @@ class Silero10msDetector:
         onnxruntime.disable_telemetry_events()
         self._model = SileroOnnxModel(str(model_path))
         self._pending = bytearray()
-        self._probability = -1.0
+        # The continuous microphone accepts probabilities in [0, 1]. Until
+        # the first full model window is ready, retain PCM without an onset.
+        self._probability = 0.0
 
     def Process10ms(self, audio: bytes) -> float:
         if len(audio) != 320:
