@@ -34,6 +34,15 @@
       "runtimeLabel": "Slot 4",
       "roadmap": [
         {
+          "id": "actions",
+          "title": "Handelen op jouw verzoek",
+          "outcome": "Eén algemene toolroute, ook voor onbekende diensten en browserwerk.",
+          "acceptance": "Twee echte diensten en een onbekende connector werken zonder nieuwe taakspecifieke kerncode; resultaat apart gecontroleerd, mandaat intrekbaar.",
+          "taskIds": [
+            "VB-004"
+          ]
+        },
+        {
           "id": "daily",
           "title": "Een dagelijkse huisgenoot",
           "outcome": "Betrouwbaar praten en onthouden, met meer spontane, warme en ondernemende aanwezigheid dan Bottie.",
@@ -54,15 +63,6 @@
             "VB-001",
             "VB-002",
             "CO-008"
-          ]
-        },
-        {
-          "id": "actions",
-          "title": "Handelen op jouw verzoek",
-          "outcome": "Eén algemene toolroute, ook voor onbekende diensten en browserwerk.",
-          "acceptance": "Twee echte diensten en een onbekende connector werken zonder nieuwe taakspecifieke kerncode; resultaat apart gecontroleerd, mandaat intrekbaar.",
-          "taskIds": [
-            "VB-004"
           ]
         },
         {
@@ -111,7 +111,7 @@
           ]
         }
       ],
-      "priorityDecision": "TL-003 is technisch afgerond met opgeslagen resultaat en eindantwoord. Browserbediening is nu actief; eerder geaccepteerde spraak blijft gesloten en brede gezinspraktijk staat apart.",
+      "priorityDecision": "Browserbediening en exclusieve overname zijn technisch klaar. Nu één gerichte herstelstap voor dezelfde browser; bestaande spraakacceptatie blijft ongewijzigd.",
       "dashboardVerification": {
         "status": "local_browser_verified_not_full_product_acceptance",
         "priorityRevision": {
@@ -150,9 +150,14 @@
       },
       "summary": [
         {
-          "label": "IN UITVOERING · VB-003",
+          "label": "IN UITVOERING · VB-004",
+          "value": "Browser veilig hervatten",
+          "detail": "Profiel, hostbeheer en netwerkbeperking herstellen na een onderbreking; geen vorige actie blind herhalen."
+        },
+        {
+          "label": "OPGELEVERD · LIVE · VB-003",
           "value": "Browser bedienen en overnemen",
-          "detail": "De onderhouden browser en MCP-motor zijn voorbereid. Eigenaarsbediening, exclusieve overname en veilige aansluiting worden nu samengebracht."
+          "detail": "Echte browseropdracht afgerond en bestand apart teruggelezen. De eigenaar kan dezelfde browser zien, overnemen en teruggeven."
         },
         {
           "label": "OPGELEVERD · LIVE · TL-003",
@@ -197,6 +202,10 @@
       ],
       "nextOutcomes": [
         {
+          "title": "Browser bekijken en overnemen",
+          "detail": "Open Browser in het eigenaarsdashboard, neem de huidige sessie over en geef hem terug. Of laat Eva drie recente Home Assistant-berichten lezen en een korte samenvatting opslaan; die gewone opdracht is al technisch bewezen."
+        },
+        {
           "title": "Een nieuwe MCP-dienst laten gebruiken",
           "detail": "Vraag via /eva2 of het eigenaarsgesprek een openbare MCP-dienst aan te sluiten en er een concrete opdracht mee uit te voeren. Het ontwikkelvoorbeeld staat in /proof-state/tl003-browseronderzoek.md."
         },
@@ -206,7 +215,7 @@
         },
         {
           "title": "Eigen initiatieven bekijken",
-          "detail": "Open het eigenaarsdashboard op localhost:44710/internal/v1/dashboard. Hier verschijnen Eva’s zelfgekozen werk, gemaakte bestanden en de stopknop; er is geen extra test van spraak nodig."
+          "detail": "Open het eigenaarsdashboard op localhost:44711/internal/v1/dashboard. Hier verschijnen Eva’s zelfgekozen werk, gemaakte bestanden en de stopknop; er is geen extra test van spraak nodig."
         },
         {
           "title": "Laat Eva een document bewaren",
@@ -327,15 +336,15 @@
         {
           "id": "browser",
           "icon": "▣",
-          "title": "Computer & browser",
-          "subtitle": "Accounts, meekijken en overnemen",
-          "built": "partial",
-          "tested": "partial",
-          "live": "no",
+          "title": "Browser gebruiken en overnemen",
+          "subtitle": "Websites bekijken en bedienen",
+          "built": "yes",
+          "tested": "yes",
+          "live": "yes",
           "accepted": "no",
-          "gap": "Algemeen bruikbare browser met herstel",
-          "detail": "Afgesloten browserproeven en crashherstel bestaan. Een geselecteerde motor met accounts en menselijke overname ontbreekt nog in de gewone gebruikersroute.",
-          "evidence": "VB-003, VB-004 · fysieke browserproeven"
+          "gap": "Herstel na onderbreking en persoonlijke acceptatie",
+          "detail": "Playwright MCP bedient dezelfde zichtbare Chromium met blijvend profiel. Overname sluit Eva af; teruggeven sluit eerst de eigenaarverbinding. Een gewone browseropdracht en opgeslagen resultaat zijn werkelijk teruggelezen. Deze groene stappen gelden voor de browser; algemene bediening van andere computerprogramma’s is nog niet aangetoond.",
+          "evidence": "VB-003 · technisch live; VB-004 · herstel volgt"
         },
         {
           "id": "installation",
@@ -417,9 +426,9 @@
         },
         {
           "name": "BROWSER",
-          "candidate": "Playwright MCP / Browser Use",
-          "state": "Kandidaten · geen definitieve winnaar",
-          "next": "Vergelijk accounts, menselijke overname en herstel; kies één motor."
+          "candidate": "Playwright MCP 0.0.80 + Chromium/Selkies",
+          "state": "Gebruikt · browserbediening en overname live",
+          "next": "Dezelfde route na onderbreking herstellen; profiel behouden en geen mutatie herhalen."
         },
         {
           "name": "DUURZAAM WERK",
@@ -476,6 +485,21 @@
           "title": "Minder onterechte Hey Eva-detecties",
           "change": "Wakeword-model en apparaatinstellingen apart onderzoeken.",
           "result": "Laagste gevoeligheid staat al ingesteld. Jaap meldt activering door gewone gesprekken zonder Eva te noemen; nog niet opgelost."
+        },
+        {
+          "id": "BR-01",
+          "updatedOn": "2026-09-10",
+          "status": "ready",
+          "title": "Meekijken en overnemen",
+          "change": "De browser staat in het bestaande eigenaarsdashboard.",
+          "steps": [
+            "Laat Eva een openbare pagina openen en kort samenvatten.",
+            "Open http://localhost:44711/internal/v1/dashboard/ met je eigenaarslogin, klik bij Browser op Neem over en scroll in de pagina.",
+            "Geef de browser terug en laat Eva de huidige pagina beschrijven."
+          ],
+          "expected": "Het beeld en de pagina blijven gelijk; Eva en jij bedienen nooit tegelijk.",
+          "report": "BR-01: werkt / werkt niet, met waar het eventueel misgaat.",
+          "result": "Technisch gecontroleerd; persoonlijke acceptatie is nog niet gevraagd of geclaimd."
         }
       ]
     },
@@ -554,9 +578,9 @@
       "document": "eva2/PROJECTDOEL.md",
       "scope": "Digitale huisgenoot: zelfstandig redeneren, initiatief, onbekende vaardigheden leren, handelen, zelfverbetering en aantoonbare concurrentiewinst met open-sourcehergebruik.",
       "sessionGoal": "Het volledige projectdoel blijft actief. Eigen initiatief is technisch live; nu toegestane algemene handelingen bruikbaar afronden.",
-      "currentWork": "TL-003 is technisch afgerond en live: nieuwe dienst aangesloten, gebruikt en oorspronkelijke documentatieopdracht afgerond met apart teruggelezen bestand en eindantwoord. Nu de browserfunctie aansluiten.",
-      "currentEvidence": "eva2/evidence/product/TL-003-completion-2026-09-10.json",
-      "nextStep": "VB-003: de bestaande onderhouden browsermotor bruikbaar maken vanuit Eva en het eigenaarsdashboard, met exclusieve overname en blijvend profiel.",
+      "currentWork": "VB-003 is technisch afgerond en live: Eva maakt een gewone browseropdracht af; de eigenaar ziet dezelfde browser, neemt over en geeft exclusief terug. Herstel na een onderbreking volgt nu.",
+      "currentEvidence": "eva2/evidence/product/VB-003-completion-2026-09-10.json",
+      "nextStep": "VB-004: bestaand browserprofiel, hostbeheer en netwerkbeperking betrouwbaar terugbrengen na een gerichte onderbreking, zonder dubbele handeling.",
       "usageClarification": {
         "date": "2026-09-07",
         "authorizedBy": "Jaap",
@@ -571,7 +595,7 @@
         "previousInterpretation": "Een door de assistent verplicht gesteld dagmaximum of nieuw verbruiksmandaat was geen eis van Jaap. De geïnstalleerde €0-configuratiewaarde was geen bewijs dat Jaap bestaand abonnementsgebruik wilde blokkeren.",
         "developmentWeekLimitCause": "Niet vastgesteld; werktijd alleen is geen gebruiksmeting."
       },
-      "developmentSourceCommit": "3d4111c946a49504a6558bd64042597b67e9abc9"
+      "developmentSourceCommit": "3e7e6811ccf400fec1c6c9d44882e95487ba4253"
     },
     "pendingHumanAcceptance": {
       "authorization": "Jaap approved 7 September: build memory viewer while conversation assessment stays open. No human acceptance inferred.",
@@ -2967,9 +2991,55 @@
         "eva2/tools/prepare_mcp_autonomy_access.py"
       ],
       "reason": "Oorspronkelijke implementatie blijft zichtbaar; TL-003 beschrijft nu de zeven bestanden van de daaropvolgende reparatie. De volledige opdracht is nog niet afgerond."
+    },
+    "vb003Closure": {
+      "status": "technical_done_human_acceptance_open",
+      "implementationCommit": "3e7e6811ccf400fec1c6c9d44882e95487ba4253",
+      "evidenceCommit": "31fdfc383105ca1683cdbdd1de7330a374bf3978",
+      "reviewCommit": "16872bc344f551404f2bbb7539ca325dad4d583e",
+      "prerequisiteCommits": [
+        "a664ddc5c2467616bbc159a8c943fe8e339eef29"
+      ],
+      "prerequisiteChangePaths": {
+        "a664ddc5c2467616bbc159a8c943fe8e339eef29": [
+          "eva2/deploy/living-core/mcp-gateway.compose.yml",
+          "eva2/deploy/mcp-autonomy/eva_mcp_pinning.py",
+          "eva2/experiments/react-admin-dashboard-v1/src/main.jsx",
+          "eva2/experiments/react-admin-dashboard-v1/src/owner-browser.css",
+          "eva2/experiments/react-admin-dashboard-v1/src/owner-browser.jsx",
+          "eva2/src/eva/adapters/api/app.py",
+          "eva2/src/eva/adapters/api/browser_session.py",
+          "eva2/src/eva/adapters/api/dashboard_static/assets/index-BNiWsXjm.js",
+          "eva2/src/eva/adapters/api/dashboard_static/assets/index-BUCrzRot.css",
+          "eva2/src/eva/adapters/api/dashboard_static/assets/index-CBXVU8xE.css",
+          "eva2/src/eva/adapters/api/dashboard_static/assets/index-DEVkS50K.js",
+          "eva2/src/eva/adapters/api/dashboard_static/eva-dashboard-assets.json",
+          "eva2/src/eva/adapters/api/dashboard_static/index.html",
+          "eva2/src/eva/adapters/connectors/browser_session.py",
+          "eva2/src/eva/bootstrap/runtime.py",
+          "eva2/src/eva/operations/browser_session.py",
+          "eva2/src/eva/providers/mcp_autonomy.py",
+          "eva2/src/eva/providers/mcp_owner_authority.py",
+          "eva2/tests/api/test_dashboard_browser_session.py",
+          "eva2/tests/operations/test_browser_session.py",
+          "eva2/tests/operations/test_eva2_quiescent_cutover.py",
+          "eva2/tests/operations/test_managed_b_render.py",
+          "eva2/tests/operations/test_mcp_autonomy_pinning.py",
+          "eva2/tests/postgres/test_mcp_owner_authority.py",
+          "eva2/tools/eva2_quiescent_cutover.py",
+          "eva2/tools/managed_b_render.py"
+        ]
+      },
+      "documentationCommit": null,
+      "ownerTaskRunId": "dashboard:a2f162b9-5e2e-4bc7-a337-0098ba082efd",
+      "ownerTaskSeconds": 75.775,
+      "ownerTaskResultSha256": "6fc736e9fdfd17e3b33de2d286f1df7a79e08f7f41fb5901f2ad6f3d78d068f4",
+      "ownerOrigin": "http://localhost:44711",
+      "next": "VB-004",
+      "scope": "Browser bedienen, meekijken en exclusief overnemen. Herstartbestendigheid en herstel worden niet als voltooid opgevoerd."
     }
   },
-  "activeTaskId": "VB-003",
+  "activeTaskId": "VB-004",
   "maxActiveImplementationTasks": 1,
   "statusValues": [
     "queued",
@@ -4420,12 +4490,14 @@
       "area": "Browser",
       "title": "Browser bedienen en overnemen",
       "outcome": "Eva gebruikt één onderhouden browser met blijvend profiel; de eigenaar kan die bekijken, overnemen en teruggeven, waarbij Eva tijdens overname geen browseracties uitvoert.",
-      "status": "in_progress",
+      "status": "done",
       "stateDetails": {
-        "baseCommit": null,
-        "implementationCommit": null,
-        "evidenceCommit": null,
-        "reviewEvidencePaths": [],
+        "baseCommit": "a664ddc5c2467616bbc159a8c943fe8e339eef29",
+        "implementationCommit": "3e7e6811ccf400fec1c6c9d44882e95487ba4253",
+        "evidenceCommit": "31fdfc383105ca1683cdbdd1de7330a374bf3978",
+        "reviewEvidencePaths": [
+          "eva2/evidence/product/VB-003-completion-2026-09-10.json"
+        ],
         "blockerReason": null
       },
       "ownerRole": "architecturelead",
@@ -4434,24 +4506,14 @@
         "TL-003"
       ],
       "changePaths": [
-        "eva2/src/eva/operations/browser_session.py",
-        "eva2/src/eva/adapters/api/browser_session.py",
-        "eva2/src/eva/adapters/connectors/browser_session.py",
         "eva2/src/eva/adapters/api/app.py",
-        "eva2/src/eva/bootstrap/runtime.py",
-        "eva2/tests/operations/test_browser_session.py",
-        "eva2/tests/api/test_dashboard_browser_session.py"
+        "eva2/src/eva/adapters/api/browser_session.py"
       ],
       "componentIds": [
-        "api-and-runtime-composition",
-        "core-behavior-tests",
-        "external-capability-adapters",
-        "operations-and-release-tests",
-        "operator-workflows"
+        "api-and-runtime-composition"
       ],
       "inventoryOwners": [
-        "eva-runtime",
-        "verification"
+        "eva-runtime"
       ],
       "testCommands": [
         "pytest -q tests/operations/test_browser_session.py tests/api/test_dashboard_browser_session.py",
@@ -4466,6 +4528,57 @@
         "Eva gebruikt dezelfde browser via de algemene toolroute; overname sluit haar toegang en teruggeven sluit de bediening van de eigenaar.",
         "De werkelijke sessie en het profiel blijven behouden; fouten staan zichtbaar en hervatten voert geen vorige mutatie blind opnieuw uit."
       ]
+    },
+    {
+      "id": "VB-004",
+      "order": 141,
+      "area": "Browser",
+      "title": "Browser na onderbreking veilig hervatten",
+      "outcome": "Na een browser- of beheeronderbreking blijft het profiel behouden en hervat Eva pas vanuit de werkelijk teruggelezen toestand, zonder vorige handeling blind te herhalen.",
+      "status": "in_progress",
+      "stateDetails": {
+        "baseCommit": null,
+        "implementationCommit": null,
+        "evidenceCommit": null,
+        "reviewEvidencePaths": [],
+        "blockerReason": null
+      },
+      "ownerRole": "architecturelead",
+      "reviewerRole": "proofreviewer",
+      "dependsOn": [
+        "VB-003"
+      ],
+      "changePaths": [
+        "eva2/src/eva/operations/browser_session.py",
+        "eva2/tests/operations/test_browser_session.py",
+        "eva2/deploy/owner-browser/README.md",
+        "eva2/deploy/owner-browser/configure-egress.py",
+        "eva2/deploy/owner-browser/browser-firewall.py",
+        "eva2/deploy/owner-browser/host-config.template.json"
+      ],
+      "testCommands": [
+        "pytest -q tests/operations/test_browser_session.py",
+        "python3 tools/check_current_workboard.py"
+      ],
+      "evidenceRequired": [
+        "Eén begrensde onderbreking met een herkenbare lokale profielmarkering; toestand en resultaat daarna apart teruglezen.",
+        "Bestaande hostservice en exacte-IP-firewall komen in de juiste volgorde terug voordat browserbediening beschikbaar wordt; geen algemene Dockerrechten voor de core."
+      ],
+      "doneWhen": [
+        "Dezelfde profielgegevens komen terug na een gerichte browser-/hostbeheerherstart; de eigenaar krijgt een bruikbare herstelstatus.",
+        "Nieuwe browseracties beginnen pas na herstel van de vaste netwerkbeperking en een actuele waarneming; de vorige mutatie wordt niet herhaald.",
+        "Een bestaande eigenaarverbinding en Eva krijgen na herstel nooit tegelijk bediening. Eén praktische herstelproef en onafhankelijke GO sluiten deze kaart af."
+      ],
+      "inventoryOwners": [
+        "deployment",
+        "eva-runtime",
+        "verification"
+      ],
+      "componentIds": [
+        "managed-deployment",
+        "operations-and-release-tests",
+        "operator-workflows"
+      ]
     }
   ],
   "milestones": [
@@ -4474,35 +4587,28 @@
       "area": "Initiatief",
       "title": "Passend initiatief en kansen bewijzen",
       "outcome": "Meer gewaardeerd eigen initiatief dan Bottie: humor, nieuwsgierigheid, zelfgekozen onderzoek, creatieve bijdragen en kansen. Eva begint en vervolgt zelf werk, voert binnen bestaand mandaat uit en controleert het resultaat. Gezin beoordeelt eigenheid, plezier, nut en hinder; alleen meer berichten telt niet als winst.",
-      "order": 141
+      "order": 142
     },
     {
       "id": "VB-001",
       "area": "Voice",
       "title": "Full-duplex voice leveren",
       "outcome": "Met Eva2 praten via de bestaande Telegram- of Home Assistant-aansluiting, waarbij Eva hoorbaar onderbroken kan worden en het gesprek daarna doorgaat.",
-      "order": 142
+      "order": 143
     },
     {
       "id": "VB-002",
-      "order": 143,
+      "order": 144,
       "area": "Voice",
       "title": "Passende aanwezigheid leveren",
       "outcome": "Eva zoekt spontaan contact via de beschikbare speakers en deurbel, met herkenbare identiteit en gevoel voor het moment. Gezin beoordeelt plezier, betrokkenheid en hinder; onderbreken en stop werken."
     },
     {
       "id": "CO-008",
-      "order": 144,
+      "order": 145,
       "area": "Geheugen",
       "title": "Autonoom geheugen in gezinsgesprekken bewijzen",
       "outcome": "De oorspronkelijke brede geheugenuitkomst blijft open: relevante kennis zelfstandig kiezen, gewijzigde en tijdelijke informatie goed gebruiken in gewone gesprekken en langere gezinspraktijk. Geen handmatig geheugenbeheer; familie beoordeelt continuïteit en vertrouwen."
-    },
-    {
-      "id": "VB-004",
-      "order": 145,
-      "area": "Browser",
-      "title": "Browserherstel bewijzen",
-      "outcome": "Een crash herhaalt geen externe mutatie blind."
     },
     {
       "id": "AU-002",
@@ -5024,6 +5130,21 @@
       "implementedBy": "/root",
       "reviewedBy": "/root/proof_review",
       "reviewCommit": "1e24d710780f2bcd68e59a0efa922180d6dced1e"
+    },
+    "VB-003": {
+      "baseCommit": "a664ddc5c2467616bbc159a8c943fe8e339eef29",
+      "commit": "3e7e6811ccf400fec1c6c9d44882e95487ba4253",
+      "decision": "GO",
+      "evidenceCommit": "31fdfc383105ca1683cdbdd1de7330a374bf3978",
+      "evidencePaths": [
+        "eva2/reviews/VB-003-completion-2026-09-10.json"
+      ],
+      "implementedBy": "/root",
+      "reviewCommit": "16872bc344f551404f2bbb7539ca325dad4d583e",
+      "reviewedBy": "/root/proof_review",
+      "testReceiptPaths": [
+        "eva2/evidence/product/VB-003-completion-2026-09-10.json"
+      ]
     }
   }
 }

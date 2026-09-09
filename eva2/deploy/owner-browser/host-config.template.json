@@ -1,0 +1,15 @@
+{
+  "contract": "EvaBrowserSessionHost/v1",
+  "browser_container_id": "${BROWSER_CONTAINER_ID}",
+  "mcp_container_id": "${MCP_CONTAINER_ID}",
+  "state_directory": "${DEPLOYMENT_DIR}/state",
+  "viewer_origin": "http://192.168.0.2:3000",
+  "owner_origin": "${OWNER_ORIGIN}",
+  "listen_host": "172.30.0.1",
+  "listen_port": "${CONTROL_PORT}",
+  "access_token_file": "${DEPLOYMENT_DIR}/secrets/control-token",
+  "viewer_password_file": "${DEPLOYMENT_DIR}/secrets/viewer-password",
+  "viewer_session_token_file": "${DEPLOYMENT_DIR}/secrets/viewer-session-token",
+  "viewer_master_token_file": "${DEPLOYMENT_DIR}/secrets/viewer-master-token",
+  "viewer_control_origin": "http://192.168.0.2:8083"
+}

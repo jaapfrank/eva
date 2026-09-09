@@ -1,0 +1,15 @@
+#!/bin/sh
+# Direct browser launch as the desktop's abc user. No upstream no-sandbox wrapper.
+exec env -u SELKIES_MASTER_TOKEN -u PASSWORD /usr/bin/chromium \
+  --ozone-platform=wayland \
+  --user-data-dir=/config/browser-profile \
+  --remote-debugging-address=127.0.0.1 \
+  --remote-debugging-port=9222 \
+  --no-first-run \
+  --no-default-browser-check \
+  --disable-background-networking \
+  --disable-component-update \
+  --disable-sync \
+  --disable-extensions \
+  --disable-default-apps \
+  about:blank > /config/browser-start.log 2>&1

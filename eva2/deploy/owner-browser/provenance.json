@@ -1,0 +1,155 @@
+{
+  "contract": "EvaOwnerBrowserDeploymentMaterials/v1",
+  "status": "maintenance_materials_no_new_execution",
+  "sourceArtifact": "vb003-owner-browser-candidate-20260909T225932Z-10ed02",
+  "upstream": {
+    "chromium": {
+      "image": "lscr.io/linuxserver/chromium@sha256:63e8e38540462a38c70ef85497c13c412485b39979394ea95da450fca5b4efa8",
+      "tag": "9fde18d4-ls52",
+      "source_commit": "dd4df02a9614d2107ae303a77b5e309c5ceee12d",
+      "source": "https://github.com/linuxserver/docker-chromium",
+      "license": "GPL-3.0-only packaging; component licenses separate",
+      "binary_version": "152.0.7977.82-1~deb13u1"
+    },
+    "playwright_mcp": {
+      "version": "0.0.80",
+      "license": "Apache-2.0",
+      "source": "https://github.com/microsoft/playwright-mcp/releases/tag/v0.0.80",
+      "image": "mcr.microsoft.com/playwright/mcp@sha256:e3f6a85f0fd771dd9440584bd905011f1b4ea25b115bfea8b796d17d23e7b767",
+      "server_version": "1.63.0-alpha-2026-08-31",
+      "node_version": "22.23.2"
+    },
+    "moby_seccomp": {
+      "commit": "3c28324314729dbade8287e868eef6338c42807a",
+      "baseline_sha256": "536529b665dd0972c37bfb569f5d4ac8a53592e7b00752bc39ff063ca9864c74",
+      "candidate_sha256": "2d9ea2427c989f05d21088cd0b11acd407f0ac41d1fdd06e2c213853fba6d3a0",
+      "license": "Apache-2.0",
+      "source": "https://github.com/moby/profiles",
+      "namespace_rule_source": "https://playwright.dev/docs/docker#crawling-and-scraping"
+    }
+  },
+  "selkiesOverlay": {
+    "base_image": "lscr.io/linuxserver/chromium@sha256:63e8e38540462a38c70ef85497c13c412485b39979394ea95da450fca5b4efa8",
+    "path": "/lsiopy/lib/python3.13/site-packages/selkies/selkies.py",
+    "license": "MPL-2.0",
+    "upstream_sha256": "660a578fc9fca69d2cd06580f1e8bf216ddfe1e2994f3c2eb1acbadeb113d5de",
+    "patched_sha256": "79e757b001f65213d5db552629a0f04c7ddcb42506fcde9011e683aee23b4bed",
+    "changes": [
+      "native websocket credential from header instead of query",
+      "omit master_token from server_settings",
+      "redact only master_token from startup settings log",
+      "read master once from inherited root-opened FD3 and close it; no secret in exec environment"
+    ]
+  },
+  "files": {
+    "selkies-auth.patch": {
+      "sha256": "b3e5af15fab91efd7db6c6bd69ee9c8f1de863869fcd18bc396d086aae27e6af",
+      "sourceFile": "selkies-auth.patch",
+      "copiedByteForByte": true
+    },
+    "selkies-auth-source.json": {
+      "sha256": "f96a52a613303ce1f147c58fbcb81797e28b5f65af567a75dd5d38e9416abad9",
+      "sourceFile": "selkies-auth-source.json",
+      "copiedByteForByte": true
+    },
+    "selkies-run": {
+      "sha256": "5227d3c7333134256b2c84d26c56753eae035594eb0107ab70ba059346c6a912",
+      "sourceFile": "selkies-run",
+      "copiedByteForByte": true
+    },
+    "autostart": {
+      "sha256": "8d45045811054ae0534bbe7411f7398b2464bd0ffb336f328bc8a731e0a8b099",
+      "sourceFile": "autostart",
+      "copiedByteForByte": true
+    },
+    "browser-health.py": {
+      "sha256": "e8ec5d67ec4909afcbed840c9577a6d1ce141ab1fdf90b82c4e871f393120ceb",
+      "sourceFile": "browser-health.py",
+      "copiedByteForByte": true
+    },
+    "nginx-default.conf": {
+      "sha256": "090a439b67c37b3ad8351ab0774cd12d425a62d7fd537fb9044b164c394482c3",
+      "sourceFile": "nginx-default.conf",
+      "copiedByteForByte": true
+    },
+    "seccomp-browser.json": {
+      "sha256": "2d9ea2427c989f05d21088cd0b11acd407f0ac41d1fdd06e2c213853fba6d3a0",
+      "sourceFile": "seccomp-browser.json",
+      "copiedByteForByte": true
+    },
+    "seccomp-delta.json": {
+      "sha256": "ebb6334911448895617e3f86ba7cf4b82885029a6f7245cbc40226fda03a690c",
+      "sourceFile": "seccomp-delta.json",
+      "copiedByteForByte": true
+    },
+    "browser-firewall.py": {
+      "sha256": "fdebbf966752f9e74e5ad6bb813a049e7c999b05e8749c4f5c1b981080c29761",
+      "sourceFile": "browser-firewall.py",
+      "copiedByteForByte": true
+    },
+    "configure-egress.py": {
+      "sha256": "20d57373e1b2492dd70d9474e69d0b043411ccdc527fc01ff1c27c0376ad2b12",
+      "sourceFile": "configure-egress.py",
+      "copiedByteForByte": true
+    },
+    "provision-master.py": {
+      "sha256": "3b9fab0c26d1868286e5e14fe9bbd93ecdf23f01ea60bce48251bac1133b615b",
+      "sourceFile": "provision-master.py",
+      "copiedByteForByte": true
+    },
+    "LICENSE-linuxserver.txt": {
+      "sha256": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986",
+      "sourceFile": "LICENSE-linuxserver.txt",
+      "copiedByteForByte": true
+    },
+    "LICENSE-playwright-mcp.txt": {
+      "sha256": "9a7110fc2d2f964038e5dc49128f908f29f47a574c961cba16085914e879cbda",
+      "sourceFile": "LICENSE-playwright-mcp.txt",
+      "copiedByteForByte": true
+    },
+    "LICENSE-moby-profiles.txt": {
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "sourceFile": "LICENSE-moby-profiles.txt",
+      "copiedByteForByte": true
+    },
+    "browser-create-argv.template.json": {
+      "sha256": "74542a827fef052cb02408bba8c1ece978e53369badfee005fd41223d35893cd",
+      "sourceFile": "browser-create-argv.json",
+      "onlyParameterization": [
+        "deployment directory",
+        "instance/network name",
+        "full container identity",
+        "loopback viewer port"
+      ]
+    },
+    "mcp-create-argv.template.json": {
+      "sha256": "a0a50e32f11963fccbf746555caf44a83f17cbed4af6c9e9de4bc182d16a73af",
+      "sourceFile": "mcp-create-argv.json",
+      "onlyParameterization": [
+        "deployment directory",
+        "instance/network name",
+        "full container identity",
+        "loopback viewer port"
+      ]
+    },
+    "host-config.template.json": {
+      "sha256": "179f6cd7a2a8a0d4aaef1040a611f4a08e6d1ff61f4e57cf702537e68ca4e42a",
+      "sourceFile": "host-config.json",
+      "containsCredentials": false
+    },
+    "README.md": {
+      "sha256": "d6f95bb98f680d5ebebef31544c81a5774b265799ac0dbcc60eb176daa58049a",
+      "source": "Maintenance instructions derived from copied source/argv and browser_next deployment report."
+    }
+  },
+  "excluded": [
+    "profile/",
+    "state/",
+    "secrets/",
+    "viewer.htpasswd",
+    "logs",
+    "live container identity/configuration",
+    "full copied Selkies module (reconstruct with hash-bound patch)"
+  ],
+  "runtimeLifecycle": "Existing host controller runs from a manually launched process; user service template was not activated. Host reboot persistence is not established."
+}

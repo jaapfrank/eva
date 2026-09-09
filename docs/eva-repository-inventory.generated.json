@@ -269,12 +269,12 @@
     }
   ],
   "summary": {
-    "files": 2311,
-    "present": 2311,
-    "tracked": 2221,
-    "untracked": 90,
-    "tombstones": 0,
-    "policyErrors": 99
+    "files": 2335,
+    "present": 2334,
+    "tracked": 2249,
+    "untracked": 85,
+    "tombstones": 1,
+    "policyErrors": 96
   },
   "classificationRules": [
     {
@@ -310,22 +310,22 @@
     {
       "id": "eva2-verification",
       "role": "verification",
-      "matchCount": 885
+      "matchCount": 886
     },
     {
       "id": "eva2-documentation",
       "role": "documentation",
-      "matchCount": 132
+      "matchCount": 133
     },
     {
       "id": "eva2-deployment",
       "role": "deployment",
-      "matchCount": 73
+      "matchCount": 92
     },
     {
       "id": "eva2-experimental",
       "role": "experimental",
-      "matchCount": 207
+      "matchCount": 209
     },
     {
       "id": "eva2-verification-runtime",
@@ -335,7 +335,7 @@
     {
       "id": "eva2-runtime",
       "role": "product-runtime",
-      "matchCount": 265
+      "matchCount": 266
     },
     {
       "id": "eva2-build-contract",
@@ -410,6 +410,10 @@
   ],
   "policyErrors": [
     {
+      "code": "TRACKED_TOMBSTONE",
+      "path": "eva2/src/eva/adapters/api/dashboard_static/assets/index-DEVkS50K.js"
+    },
+    {
       "code": "UNGATED_TEST",
       "path": "eva_brain/test_service.py"
     },
@@ -420,6 +424,10 @@
     {
       "code": "UNRESOLVED_DISPOSITION_ARCHIVE",
       "path": "docs/live-acceptance-2026-08-04.md"
+    },
+    {
+      "code": "UNRESOLVED_DISPOSITION_DECISION",
+      "path": "eva2/src/eva/adapters/api/dashboard_static/assets/index-DEVkS50K.js"
     },
     {
       "code": "UNRESOLVED_DISPOSITION_DELETE",
@@ -784,26 +792,6 @@
     {
       "code": "UNTRACKED_REPOSITORY_FILE",
       "path": "eva2/evidence/product/TL-002-workspace-startup-fix-2026-09-08.json"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "eva2/src/eva/adapters/api/browser_session.py"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "eva2/src/eva/adapters/connectors/browser_session.py"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "eva2/src/eva/operations/browser_session.py"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "eva2/tests/api/test_dashboard_browser_session.py"
-    },
-    {
-      "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "eva2/tests/operations/test_browser_session.py"
     }
   ],
   "edges": [
@@ -10320,7 +10308,7 @@
       "path": "docs/eva-repository-inventory.generated.json",
       "gitState": "tracked",
       "present": true,
-      "bytes": 2636988,
+      "bytes": 2661351,
       "contentSha256": "32591e23fa2eb53a038d95e726ba09edd0405306f38c5283a36a2b6d3010254d",
       "hashMode": "canonical-self-reference-redacted",
       "role": "generated",
@@ -10353,7 +10341,7 @@
       "path": "docs/eva-repository-inventory.generated.md",
       "gitState": "tracked",
       "present": true,
-      "bytes": 402241,
+      "bytes": 405112,
       "contentSha256": "2f4f8486464cbb9713b749dc898f265093d0853699f1da1b4eb3dd1625c1b2d2",
       "hashMode": "canonical-self-reference-redacted",
       "role": "generated",
@@ -11329,8 +11317,8 @@
       "path": "eva2/WERKBORD.md",
       "gitState": "tracked",
       "present": true,
-      "bytes": 14559,
-      "contentSha256": "8eaed2b6921597d519160aa1a477d6be0e59ff02befd91ef7eb532d4053caa10",
+      "bytes": 14568,
+      "contentSha256": "924d52e74dcfe06da262f3fafa809d61df86e00a2c04ecb7ec22f394442cfaf4",
       "hashMode": "exact-bytes",
       "role": "documentation",
       "roleRuleId": "eva2-documentation",
@@ -13361,8 +13349,8 @@
       "path": "eva2/deploy/living-core/mcp-gateway.compose.yml",
       "gitState": "tracked",
       "present": true,
-      "bytes": 1326,
-      "contentSha256": "aa2b9cf1007b5e23110a2b26b95de096d4e457f4dd69b00c378fd725bb9f8131",
+      "bytes": 1596,
+      "contentSha256": "f6f80931f1c74fbca70e4e13eda8c23f99cf2a46bd55ce95ad37465157933342",
       "hashMode": "exact-bytes",
       "role": "deployment",
       "roleRuleId": "eva2-deployment",
@@ -13921,8 +13909,8 @@
       "path": "eva2/deploy/mcp-autonomy/eva_mcp_pinning.py",
       "gitState": "tracked",
       "present": true,
-      "bytes": 5358,
-      "contentSha256": "3f81bd8a882ddc9e9c7c9b68ab61122cc9822a89196729f5a2f923955aa6a22e",
+      "bytes": 7024,
+      "contentSha256": "4f964ff65721a3ef3791bc4062d935cf1b2eb022c18e92f339e20c9442f6e462",
       "hashMode": "exact-bytes",
       "role": "deployment",
       "roleRuleId": "eva2-deployment",
@@ -14023,11 +14011,676 @@
       }
     },
     {
+      "path": "eva2/deploy/owner-browser/LICENSE-linuxserver.txt",
+      "gitState": "tracked",
+      "present": true,
+      "bytes": 35149,
+      "contentSha256": "3972dc9744f6499f0f9b2dbf76696f2ae7ad8af9b23dde66d6af86c9dfb36986",
+      "hashMode": "exact-bytes",
+      "role": "deployment",
+      "roleRuleId": "eva2-deployment",
+      "matchingRuleIds": [
+        "eva2-deployment"
+      ],
+      "owner": "deployment",
+      "inputs": [
+        "operator, systemd or repair request"
+      ],
+      "outputs": [
+        "installed service, receipt or lifecycle transition"
+      ],
+      "state": [
+        "systemd and release state"
+      ],
+      "effects": [
+        "may install, promote, restart or recover runtime files"
+      ],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": true,
+        "runtimeCritical": true,
+        "status": "included-tracked-critical"
+      }
+    },
+    {
+      "path": "eva2/deploy/owner-browser/LICENSE-moby-profiles.txt",
+      "gitState": "tracked",
+      "present": true,
+      "bytes": 11358,
+      "contentSha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "hashMode": "exact-bytes",
+      "role": "deployment",
+      "roleRuleId": "eva2-deployment",
+      "matchingRuleIds": [
+        "eva2-deployment"
+      ],
+      "owner": "deployment",
+      "inputs": [
+        "operator, systemd or repair request"
+      ],
+      "outputs": [
+        "installed service, receipt or lifecycle transition"
+      ],
+      "state": [
+        "systemd and release state"
+      ],
+      "effects": [
+        "may install, promote, restart or recover runtime files"
+      ],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": true,
+        "runtimeCritical": true,
+        "status": "included-tracked-critical"
+      }
+    },
+    {
+      "path": "eva2/deploy/owner-browser/LICENSE-playwright-mcp.txt",
+      "gitState": "tracked",
+      "present": true,
+      "bytes": 11552,
+      "contentSha256": "9a7110fc2d2f964038e5dc49128f908f29f47a574c961cba16085914e879cbda",
+      "hashMode": "exact-bytes",
+      "role": "deployment",
+      "roleRuleId": "eva2-deployment",
+      "matchingRuleIds": [
+        "eva2-deployment"
+      ],
+      "owner": "deployment",
+      "inputs": [
+        "operator, systemd or repair request"
+      ],
+      "outputs": [
+        "installed service, receipt or lifecycle transition"
+      ],
+      "state": [
+        "systemd and release state"
+      ],
+      "effects": [
+        "may install, promote, restart or recover runtime files"
+      ],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": true,
+        "runtimeCritical": true,
+        "status": "included-tracked-critical"
+      }
+    },
+    {
+      "path": "eva2/deploy/owner-browser/README.md",
+      "gitState": "tracked",
+      "present": true,
+      "bytes": 11717,
+      "contentSha256": "d6f95bb98f680d5ebebef31544c81a5774b265799ac0dbcc60eb176daa58049a",
+      "hashMode": "exact-bytes",
+      "role": "deployment",
+      "roleRuleId": "eva2-deployment",
+      "matchingRuleIds": [
+        "eva2-deployment"
+      ],
+      "owner": "deployment",
+      "inputs": [
+        "operator, systemd or repair request"
+      ],
+      "outputs": [
+        "installed service, receipt or lifecycle transition"
+      ],
+      "state": [
+        "systemd and release state"
+      ],
+      "effects": [
+        "may install, promote, restart or recover runtime files"
+      ],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": true,
+        "runtimeCritical": true,
+        "status": "included-tracked-critical"
+      }
+    },
+    {
+      "path": "eva2/deploy/owner-browser/autostart",
+      "gitState": "tracked",
+      "present": true,
+      "bytes": 540,
+      "contentSha256": "8d45045811054ae0534bbe7411f7398b2464bd0ffb336f328bc8a731e0a8b099",
+      "hashMode": "exact-bytes",
+      "role": "deployment",
+      "roleRuleId": "eva2-deployment",
+      "matchingRuleIds": [
+        "eva2-deployment"
+      ],
+      "owner": "deployment",
+      "inputs": [
+        "operator, systemd or repair request"
+      ],
+      "outputs": [
+        "installed service, receipt or lifecycle transition"
+      ],
+      "state": [
+        "systemd and release state"
+      ],
+      "effects": [
+        "may install, promote, restart or recover runtime files"
+      ],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": true,
+        "runtimeCritical": true,
+        "status": "included-tracked-critical"
+      }
+    },
+    {
+      "path": "eva2/deploy/owner-browser/browser-create-argv.template.json",
+      "gitState": "tracked",
+      "present": true,
+      "bytes": 2105,
+      "contentSha256": "74542a827fef052cb02408bba8c1ece978e53369badfee005fd41223d35893cd",
+      "hashMode": "exact-bytes",
+      "role": "deployment",
+      "roleRuleId": "eva2-deployment",
+      "matchingRuleIds": [
+        "eva2-deployment"
+      ],
+      "owner": "deployment",
+      "inputs": [
+        "operator, systemd or repair request"
+      ],
+      "outputs": [
+        "installed service, receipt or lifecycle transition"
+      ],
+      "state": [
+        "systemd and release state"
+      ],
+      "effects": [
+        "may install, promote, restart or recover runtime files"
+      ],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": true,
+        "runtimeCritical": true,
+        "status": "included-tracked-critical"
+      }
+    },
+    {
+      "path": "eva2/deploy/owner-browser/browser-firewall.py",
+      "gitState": "tracked",
+      "present": true,
+      "bytes": 3536,
+      "contentSha256": "fdebbf966752f9e74e5ad6bb813a049e7c999b05e8749c4f5c1b981080c29761",
+      "hashMode": "exact-bytes",
+      "role": "deployment",
+      "roleRuleId": "eva2-deployment",
+      "matchingRuleIds": [
+        "eva2-deployment"
+      ],
+      "owner": "deployment",
+      "inputs": [
+        "operator, systemd or repair request"
+      ],
+      "outputs": [
+        "installed service, receipt or lifecycle transition"
+      ],
+      "state": [
+        "systemd and release state"
+      ],
+      "effects": [
+        "may install, promote, restart or recover runtime files"
+      ],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": true,
+        "runtimeCritical": true,
+        "status": "included-tracked-critical"
+      }
+    },
+    {
+      "path": "eva2/deploy/owner-browser/browser-health.py",
+      "gitState": "tracked",
+      "present": true,
+      "bytes": 1436,
+      "contentSha256": "e8ec5d67ec4909afcbed840c9577a6d1ce141ab1fdf90b82c4e871f393120ceb",
+      "hashMode": "exact-bytes",
+      "role": "deployment",
+      "roleRuleId": "eva2-deployment",
+      "matchingRuleIds": [
+        "eva2-deployment"
+      ],
+      "owner": "deployment",
+      "inputs": [
+        "operator, systemd or repair request"
+      ],
+      "outputs": [
+        "installed service, receipt or lifecycle transition"
+      ],
+      "state": [
+        "systemd and release state"
+      ],
+      "effects": [
+        "may install, promote, restart or recover runtime files"
+      ],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": true,
+        "runtimeCritical": true,
+        "status": "included-tracked-critical"
+      }
+    },
+    {
+      "path": "eva2/deploy/owner-browser/configure-egress.py",
+      "gitState": "tracked",
+      "present": true,
+      "bytes": 1055,
+      "contentSha256": "20d57373e1b2492dd70d9474e69d0b043411ccdc527fc01ff1c27c0376ad2b12",
+      "hashMode": "exact-bytes",
+      "role": "deployment",
+      "roleRuleId": "eva2-deployment",
+      "matchingRuleIds": [
+        "eva2-deployment"
+      ],
+      "owner": "deployment",
+      "inputs": [
+        "operator, systemd or repair request"
+      ],
+      "outputs": [
+        "installed service, receipt or lifecycle transition"
+      ],
+      "state": [
+        "systemd and release state"
+      ],
+      "effects": [
+        "may install, promote, restart or recover runtime files"
+      ],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": true,
+        "runtimeCritical": true,
+        "status": "included-tracked-critical"
+      }
+    },
+    {
+      "path": "eva2/deploy/owner-browser/host-config.template.json",
+      "gitState": "tracked",
+      "present": true,
+      "bytes": 692,
+      "contentSha256": "179f6cd7a2a8a0d4aaef1040a611f4a08e6d1ff61f4e57cf702537e68ca4e42a",
+      "hashMode": "exact-bytes",
+      "role": "deployment",
+      "roleRuleId": "eva2-deployment",
+      "matchingRuleIds": [
+        "eva2-deployment"
+      ],
+      "owner": "deployment",
+      "inputs": [
+        "operator, systemd or repair request"
+      ],
+      "outputs": [
+        "installed service, receipt or lifecycle transition"
+      ],
+      "state": [
+        "systemd and release state"
+      ],
+      "effects": [
+        "may install, promote, restart or recover runtime files"
+      ],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": true,
+        "runtimeCritical": true,
+        "status": "included-tracked-critical"
+      }
+    },
+    {
+      "path": "eva2/deploy/owner-browser/mcp-create-argv.template.json",
+      "gitState": "tracked",
+      "present": true,
+      "bytes": 1266,
+      "contentSha256": "a0a50e32f11963fccbf746555caf44a83f17cbed4af6c9e9de4bc182d16a73af",
+      "hashMode": "exact-bytes",
+      "role": "deployment",
+      "roleRuleId": "eva2-deployment",
+      "matchingRuleIds": [
+        "eva2-deployment"
+      ],
+      "owner": "deployment",
+      "inputs": [
+        "operator, systemd or repair request"
+      ],
+      "outputs": [
+        "installed service, receipt or lifecycle transition"
+      ],
+      "state": [
+        "systemd and release state"
+      ],
+      "effects": [
+        "may install, promote, restart or recover runtime files"
+      ],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": true,
+        "runtimeCritical": true,
+        "status": "included-tracked-critical"
+      }
+    },
+    {
+      "path": "eva2/deploy/owner-browser/nginx-default.conf",
+      "gitState": "tracked",
+      "present": true,
+      "bytes": 5182,
+      "contentSha256": "090a439b67c37b3ad8351ab0774cd12d425a62d7fd537fb9044b164c394482c3",
+      "hashMode": "exact-bytes",
+      "role": "deployment",
+      "roleRuleId": "eva2-deployment",
+      "matchingRuleIds": [
+        "eva2-deployment"
+      ],
+      "owner": "deployment",
+      "inputs": [
+        "operator, systemd or repair request"
+      ],
+      "outputs": [
+        "installed service, receipt or lifecycle transition"
+      ],
+      "state": [
+        "systemd and release state"
+      ],
+      "effects": [
+        "may install, promote, restart or recover runtime files"
+      ],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": true,
+        "runtimeCritical": true,
+        "status": "included-tracked-critical"
+      }
+    },
+    {
+      "path": "eva2/deploy/owner-browser/provenance.json",
+      "gitState": "tracked",
+      "present": true,
+      "bytes": 6447,
+      "contentSha256": "c6a0a4d223385b7d101347efff7c085ed4e9511f5d087837a6015b8dcb117ba9",
+      "hashMode": "exact-bytes",
+      "role": "deployment",
+      "roleRuleId": "eva2-deployment",
+      "matchingRuleIds": [
+        "eva2-deployment"
+      ],
+      "owner": "deployment",
+      "inputs": [
+        "operator, systemd or repair request"
+      ],
+      "outputs": [
+        "installed service, receipt or lifecycle transition"
+      ],
+      "state": [
+        "systemd and release state"
+      ],
+      "effects": [
+        "may install, promote, restart or recover runtime files"
+      ],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": true,
+        "runtimeCritical": true,
+        "status": "included-tracked-critical"
+      }
+    },
+    {
+      "path": "eva2/deploy/owner-browser/provision-master.py",
+      "gitState": "tracked",
+      "present": true,
+      "bytes": 677,
+      "contentSha256": "3b9fab0c26d1868286e5e14fe9bbd93ecdf23f01ea60bce48251bac1133b615b",
+      "hashMode": "exact-bytes",
+      "role": "deployment",
+      "roleRuleId": "eva2-deployment",
+      "matchingRuleIds": [
+        "eva2-deployment"
+      ],
+      "owner": "deployment",
+      "inputs": [
+        "operator, systemd or repair request"
+      ],
+      "outputs": [
+        "installed service, receipt or lifecycle transition"
+      ],
+      "state": [
+        "systemd and release state"
+      ],
+      "effects": [
+        "may install, promote, restart or recover runtime files"
+      ],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": true,
+        "runtimeCritical": true,
+        "status": "included-tracked-critical"
+      }
+    },
+    {
+      "path": "eva2/deploy/owner-browser/seccomp-browser.json",
+      "gitState": "tracked",
+      "present": true,
+      "bytes": 16904,
+      "contentSha256": "2d9ea2427c989f05d21088cd0b11acd407f0ac41d1fdd06e2c213853fba6d3a0",
+      "hashMode": "exact-bytes",
+      "role": "deployment",
+      "roleRuleId": "eva2-deployment",
+      "matchingRuleIds": [
+        "eva2-deployment"
+      ],
+      "owner": "deployment",
+      "inputs": [
+        "operator, systemd or repair request"
+      ],
+      "outputs": [
+        "installed service, receipt or lifecycle transition"
+      ],
+      "state": [
+        "systemd and release state"
+      ],
+      "effects": [
+        "may install, promote, restart or recover runtime files"
+      ],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": true,
+        "runtimeCritical": true,
+        "status": "included-tracked-critical"
+      }
+    },
+    {
+      "path": "eva2/deploy/owner-browser/seccomp-delta.json",
+      "gitState": "tracked",
+      "present": true,
+      "bytes": 905,
+      "contentSha256": "ebb6334911448895617e3f86ba7cf4b82885029a6f7245cbc40226fda03a690c",
+      "hashMode": "exact-bytes",
+      "role": "deployment",
+      "roleRuleId": "eva2-deployment",
+      "matchingRuleIds": [
+        "eva2-deployment"
+      ],
+      "owner": "deployment",
+      "inputs": [
+        "operator, systemd or repair request"
+      ],
+      "outputs": [
+        "installed service, receipt or lifecycle transition"
+      ],
+      "state": [
+        "systemd and release state"
+      ],
+      "effects": [
+        "may install, promote, restart or recover runtime files"
+      ],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": true,
+        "runtimeCritical": true,
+        "status": "included-tracked-critical"
+      }
+    },
+    {
+      "path": "eva2/deploy/owner-browser/selkies-auth-source.json",
+      "gitState": "tracked",
+      "present": true,
+      "bytes": 678,
+      "contentSha256": "f96a52a613303ce1f147c58fbcb81797e28b5f65af567a75dd5d38e9416abad9",
+      "hashMode": "exact-bytes",
+      "role": "deployment",
+      "roleRuleId": "eva2-deployment",
+      "matchingRuleIds": [
+        "eva2-deployment"
+      ],
+      "owner": "deployment",
+      "inputs": [
+        "operator, systemd or repair request"
+      ],
+      "outputs": [
+        "installed service, receipt or lifecycle transition"
+      ],
+      "state": [
+        "systemd and release state"
+      ],
+      "effects": [
+        "may install, promote, restart or recover runtime files"
+      ],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": true,
+        "runtimeCritical": true,
+        "status": "included-tracked-critical"
+      }
+    },
+    {
+      "path": "eva2/deploy/owner-browser/selkies-auth.patch",
+      "gitState": "tracked",
+      "present": true,
+      "bytes": 2397,
+      "contentSha256": "b3e5af15fab91efd7db6c6bd69ee9c8f1de863869fcd18bc396d086aae27e6af",
+      "hashMode": "exact-bytes",
+      "role": "deployment",
+      "roleRuleId": "eva2-deployment",
+      "matchingRuleIds": [
+        "eva2-deployment"
+      ],
+      "owner": "deployment",
+      "inputs": [
+        "operator, systemd or repair request"
+      ],
+      "outputs": [
+        "installed service, receipt or lifecycle transition"
+      ],
+      "state": [
+        "systemd and release state"
+      ],
+      "effects": [
+        "may install, promote, restart or recover runtime files"
+      ],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": true,
+        "runtimeCritical": true,
+        "status": "included-tracked-critical"
+      }
+    },
+    {
+      "path": "eva2/deploy/owner-browser/selkies-run",
+      "gitState": "tracked",
+      "present": true,
+      "bytes": 3678,
+      "contentSha256": "5227d3c7333134256b2c84d26c56753eae035594eb0107ab70ba059346c6a912",
+      "hashMode": "exact-bytes",
+      "role": "deployment",
+      "roleRuleId": "eva2-deployment",
+      "matchingRuleIds": [
+        "eva2-deployment"
+      ],
+      "owner": "deployment",
+      "inputs": [
+        "operator, systemd or repair request"
+      ],
+      "outputs": [
+        "installed service, receipt or lifecycle transition"
+      ],
+      "state": [
+        "systemd and release state"
+      ],
+      "effects": [
+        "may install, promote, restart or recover runtime files"
+      ],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": true,
+        "runtimeCritical": true,
+        "status": "included-tracked-critical"
+      }
+    },
+    {
       "path": "eva2/design/architecture/component-catalog-v1.json",
       "gitState": "tracked",
       "present": true,
-      "bytes": 21168,
-      "contentSha256": "73bca07b78bf269602ea1917d699710c47f5d59840e223d812fd08c7a16e9d38",
+      "bytes": 21208,
+      "contentSha256": "c6064f82c99b695807368132791c6486498311efced01d6d2664728a3699d004",
       "hashMode": "exact-bytes",
       "role": "documentation",
       "roleRuleId": "eva2-documentation",
@@ -14429,8 +15082,8 @@
       "path": "eva2/design/product/execution-workboard-v1.json",
       "gitState": "tracked",
       "present": true,
-      "bytes": 307299,
-      "contentSha256": "0482de2f13d568d527b88daa8ba218b4a3f1f4d167cab666d2bde884d4e52cdb",
+      "bytes": 313896,
+      "contentSha256": "7544f294bbc60df9fe17ac140817e2706083243e6dad3f0f88eedf1b9dae3ca4",
       "hashMode": "exact-bytes",
       "role": "documentation",
       "roleRuleId": "eva2-documentation",
@@ -29735,6 +30388,41 @@
       }
     },
     {
+      "path": "eva2/evidence/product/VB-003-completion-2026-09-10.json",
+      "gitState": "tracked",
+      "present": true,
+      "bytes": 22710,
+      "contentSha256": "5e7c459e9b5de9acac19c28af93d8f6e2a9f2fabee223cd2095f6c8c7a104a1f",
+      "hashMode": "exact-bytes",
+      "role": "verification",
+      "roleRuleId": "eva2-verification",
+      "matchingRuleIds": [
+        "eva2-verification"
+      ],
+      "owner": "verification",
+      "inputs": [
+        "production or fixture contract"
+      ],
+      "outputs": [
+        "test decision"
+      ],
+      "state": [
+        "temporary isolated test state"
+      ],
+      "effects": [
+        "may execute only inside its declared gate"
+      ],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": true,
+        "runtimeCritical": true,
+        "status": "included-tracked-critical"
+      }
+    },
+    {
       "path": "eva2/evidence/product/astra-candidate-regression-2026-09-05.json",
       "gitState": "tracked",
       "present": true,
@@ -40103,8 +40791,8 @@
       "path": "eva2/experiments/react-admin-dashboard-v1/src/main.jsx",
       "gitState": "tracked",
       "present": true,
-      "bytes": 16012,
-      "contentSha256": "a518ff6d66ffe7c2adbd9d4c3aa4da7244930d40a0b97e62373d76e70fadf828",
+      "bytes": 16081,
+      "contentSha256": "8d9a4f5344153eaf1c9f1ee42fad44560c83dd078d53c6c8009042d262ebd0d3",
       "hashMode": "exact-bytes",
       "role": "experimental",
       "roleRuleId": "eva2-experimental",
@@ -40132,6 +40820,76 @@
           "from": "eva2/experiments/react-admin-dashboard-v1/index.html"
         }
       ],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": true,
+        "runtimeCritical": false,
+        "status": "included-tracked-noncritical"
+      }
+    },
+    {
+      "path": "eva2/experiments/react-admin-dashboard-v1/src/owner-browser.css",
+      "gitState": "tracked",
+      "present": true,
+      "bytes": 824,
+      "contentSha256": "70ea6489bace47fb8921916f477892d12663176af7a43e444ffadf6775499337",
+      "hashMode": "exact-bytes",
+      "role": "experimental",
+      "roleRuleId": "eva2-experimental",
+      "matchingRuleIds": [
+        "eva2-experimental"
+      ],
+      "owner": "experimental",
+      "inputs": [
+        "prototype request"
+      ],
+      "outputs": [
+        "prototype receipt"
+      ],
+      "state": [
+        "prototype-local state"
+      ],
+      "effects": [
+        "not authorized for production"
+      ],
+      "decision": "keep",
+      "decisionReason": "explicitly classified non-production prototype",
+      "consumers": [],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": true,
+        "runtimeCritical": false,
+        "status": "included-tracked-noncritical"
+      }
+    },
+    {
+      "path": "eva2/experiments/react-admin-dashboard-v1/src/owner-browser.jsx",
+      "gitState": "tracked",
+      "present": true,
+      "bytes": 4656,
+      "contentSha256": "4a5e0531006ac6019e7844861bb15e7f243a000c3dac751602bc446cdf11e91f",
+      "hashMode": "exact-bytes",
+      "role": "experimental",
+      "roleRuleId": "eva2-experimental",
+      "matchingRuleIds": [
+        "eva2-experimental"
+      ],
+      "owner": "experimental",
+      "inputs": [
+        "prototype request"
+      ],
+      "outputs": [
+        "prototype receipt"
+      ],
+      "state": [
+        "prototype-local state"
+      ],
+      "effects": [
+        "not authorized for production"
+      ],
+      "decision": "keep",
+      "decisionReason": "explicitly classified non-production prototype",
+      "consumers": [],
       "entrypointEvidence": [],
       "release": {
         "includedInTrackedRelease": true,
@@ -43852,6 +44610,37 @@
       "present": true,
       "bytes": 6713,
       "contentSha256": "acc4a503431f3d041e7a11b90f045b0440408ea3a331c77be497716afb91db5d",
+      "hashMode": "exact-bytes",
+      "role": "documentation",
+      "roleRuleId": "eva2-documentation",
+      "matchingRuleIds": [
+        "eva2-documentation"
+      ],
+      "owner": "documentation",
+      "inputs": [
+        "design and evidence"
+      ],
+      "outputs": [
+        "human-readable contract"
+      ],
+      "state": [],
+      "effects": [],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": true,
+        "runtimeCritical": false,
+        "status": "included-tracked-noncritical"
+      }
+    },
+    {
+      "path": "eva2/reviews/VB-003-completion-2026-09-10.json",
+      "gitState": "tracked",
+      "present": true,
+      "bytes": 7709,
+      "contentSha256": "e49ff8ca3399c741a7f24fe4d6ab5a0e9f3e6a245765fab5aeefa27477567c23",
       "hashMode": "exact-bytes",
       "role": "documentation",
       "roleRuleId": "eva2-documentation",
@@ -52401,8 +53190,8 @@
       "path": "eva2/src/eva/adapters/api/app.py",
       "gitState": "tracked",
       "present": true,
-      "bytes": 61696,
-      "contentSha256": "c1f8880e9a0770de8dfc9d9d93b890cef3f18bf4997e9bacf280a398242cd6a5",
+      "bytes": 61947,
+      "contentSha256": "8804ef61e5bc2d2b59771e06a09f6292ff65c4c0b9ce8d202fd4f6f3d665f16c",
       "hashMode": "exact-bytes",
       "role": "product-runtime",
       "roleRuleId": "eva2-runtime",
@@ -52434,10 +53223,10 @@
     },
     {
       "path": "eva2/src/eva/adapters/api/browser_session.py",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
-      "bytes": 11654,
-      "contentSha256": "2df25dc474332ddf17d0f232bde5e51f4195b081ad8390b02d54c13cb18a4c67",
+      "bytes": 13449,
+      "contentSha256": "a9efd002c8a563a664ba463715dc0d3404d2c588d3122f9f7bfe4bd920a8b68e",
       "hashMode": "exact-bytes",
       "role": "product-runtime",
       "roleRuleId": "eva2-runtime",
@@ -52462,9 +53251,9 @@
       "consumers": [],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
@@ -52643,11 +53432,46 @@
       }
     },
     {
-      "path": "eva2/src/eva/adapters/api/dashboard_static/assets/index-BUCrzRot.css",
+      "path": "eva2/src/eva/adapters/api/dashboard_static/assets/index-BNiWsXjm.js",
       "gitState": "tracked",
       "present": true,
-      "bytes": 14143,
-      "contentSha256": "a321aaace293a2dd724834f30a1d63fcc07fd99c87a19f836482f9536d6565d6",
+      "bytes": 807510,
+      "contentSha256": "b5728fe9ad48f212e31af1c777523038e21c86cdbd70c333a0869a020d2e4592",
+      "hashMode": "exact-bytes",
+      "role": "product-runtime",
+      "roleRuleId": "eva2-runtime",
+      "matchingRuleIds": [
+        "eva2-runtime"
+      ],
+      "owner": "eva-runtime",
+      "inputs": [
+        "issued runtime input and dependencies"
+      ],
+      "outputs": [
+        "runtime result or capability"
+      ],
+      "state": [
+        "runtime-owned durable or process state"
+      ],
+      "effects": [
+        "module-specific runtime effects"
+      ],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": true,
+        "runtimeCritical": true,
+        "status": "included-tracked-critical"
+      }
+    },
+    {
+      "path": "eva2/src/eva/adapters/api/dashboard_static/assets/index-CBXVU8xE.css",
+      "gitState": "tracked",
+      "present": true,
+      "bytes": 14860,
+      "contentSha256": "1a6b4fae07345a2d2840f49e40fe2d0d7c89179f20acd145ccf35f276fa893fe",
       "hashMode": "exact-bytes",
       "role": "product-runtime",
       "roleRuleId": "eva2-runtime",
@@ -52679,11 +53503,11 @@
     },
     {
       "path": "eva2/src/eva/adapters/api/dashboard_static/assets/index-DEVkS50K.js",
-      "gitState": "tracked",
-      "present": true,
-      "bytes": 804053,
-      "contentSha256": "041888e6a47f22f8d4c1a3693d9e190215151e977308f4fa24c21b2e2621a20a",
-      "hashMode": "exact-bytes",
+      "gitState": "tombstone",
+      "present": false,
+      "bytes": null,
+      "contentSha256": null,
+      "hashMode": "absent",
       "role": "product-runtime",
       "roleRuleId": "eva2-runtime",
       "matchingRuleIds": [
@@ -52702,14 +53526,14 @@
       "effects": [
         "module-specific runtime effects"
       ],
-      "decision": "keep",
-      "decisionReason": "active repository input or evidence",
+      "decision": "decision",
+      "decisionReason": "unresolved tracked tombstone",
       "consumers": [],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": true,
+        "includedInTrackedRelease": false,
         "runtimeCritical": true,
-        "status": "included-tracked-critical"
+        "status": "blocked-unresolved-disposition"
       }
     },
     {
@@ -52717,7 +53541,7 @@
       "gitState": "tracked",
       "present": true,
       "bytes": 648,
-      "contentSha256": "c094a6dbf5db39176755cb9fa976bdf217d2136e9f2b3c62cbecff5b4f4e99e3",
+      "contentSha256": "e2c5075bafbd68073071fcdcf7aef33fbaa8e59339f70cf6b93fb1ed37df4809",
       "hashMode": "exact-bytes",
       "role": "product-runtime",
       "roleRuleId": "eva2-runtime",
@@ -52752,7 +53576,7 @@
       "gitState": "tracked",
       "present": true,
       "bytes": 435,
-      "contentSha256": "90b9ded1f87e36474bea19716250115514955bd53a3b2cf8ccb47a76e3b7911c",
+      "contentSha256": "5a8351ffca95ab6631b5135321cf7267dee2943ce34f9c727bcc64633c564890",
       "hashMode": "exact-bytes",
       "role": "product-runtime",
       "roleRuleId": "eva2-runtime",
@@ -53274,10 +54098,10 @@
     },
     {
       "path": "eva2/src/eva/adapters/connectors/browser_session.py",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
-      "bytes": 3467,
-      "contentSha256": "5564f4badb3994af90accf80dbe982eadc59202973f6c1cd3a1e8627c80e4ede",
+      "bytes": 3713,
+      "contentSha256": "0c58ed0c5684ffd8d9d7a5956b944649f2a0df457d2d233a4096befbf0d56c3d",
       "hashMode": "exact-bytes",
       "role": "product-runtime",
       "roleRuleId": "eva2-runtime",
@@ -53302,9 +54126,9 @@
       "consumers": [],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
@@ -58386,8 +59210,8 @@
       "path": "eva2/src/eva/bootstrap/runtime.py",
       "gitState": "tracked",
       "present": true,
-      "bytes": 81414,
-      "contentSha256": "23dfeee48bb93b608bfce849522b2a62c613d6fb78af54957b5852f21f5c894f",
+      "bytes": 81552,
+      "contentSha256": "1fe59675c3cedd03a09dc6cb5786efe9ceeb1dd96c309b42c976894c708cb2e4",
       "hashMode": "exact-bytes",
       "role": "product-runtime",
       "roleRuleId": "eva2-runtime",
@@ -59714,10 +60538,10 @@
     },
     {
       "path": "eva2/src/eva/operations/browser_session.py",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
-      "bytes": 15812,
-      "contentSha256": "2a497b04a73af041fe0a0b2844b0c96658188c55f2d9525909728fcb236976ad",
+      "bytes": 17499,
+      "contentSha256": "12dadfa3caaf3516b6de95385baeab9285eb885b0bd4e18f86fbb52f15099322",
       "hashMode": "exact-bytes",
       "role": "product-runtime",
       "roleRuleId": "eva2-runtime",
@@ -59742,9 +60566,9 @@
       "consumers": [],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
@@ -60836,8 +61660,8 @@
       "path": "eva2/src/eva/providers/mcp_autonomy.py",
       "gitState": "tracked",
       "present": true,
-      "bytes": 8006,
-      "contentSha256": "4ca5e7eb8d61654cca4364b740555e31c191b4950ebe8047452efb7446f97d04",
+      "bytes": 8170,
+      "contentSha256": "6d801fcfaaa006fd153a195b7600283cc226442d1ed9fb0bb6d8f3ce41f834f6",
       "hashMode": "exact-bytes",
       "role": "product-runtime",
       "roleRuleId": "eva2-runtime",
@@ -60941,8 +61765,8 @@
       "path": "eva2/src/eva/providers/mcp_owner_authority.py",
       "gitState": "tracked",
       "present": true,
-      "bytes": 12754,
-      "contentSha256": "d6d8e1b79604eb1e5a17be172cae6d667219cd10f4bb0dd739be81c6fc8a931a",
+      "bytes": 15593,
+      "contentSha256": "ffa9c64dab7cdf0cff0e12822cec827b15980dbbba7b9035e13c5eb469b9ea4d",
       "hashMode": "exact-bytes",
       "role": "product-runtime",
       "roleRuleId": "eva2-runtime",
@@ -61079,10 +61903,10 @@
     },
     {
       "path": "eva2/tests/api/test_dashboard_browser_session.py",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
-      "bytes": 4524,
-      "contentSha256": "a85f998aa3c53dd53baa88ad1d3565e69685ba01497462eca7c391f61b66e7da",
+      "bytes": 6288,
+      "contentSha256": "73824a37776952133266df1d3a13aa8c0219a67fd550e913c2227290e4d717ff",
       "hashMode": "exact-bytes",
       "role": "verification",
       "roleRuleId": "eva2-verification",
@@ -61107,9 +61931,9 @@
       "consumers": [],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
@@ -66609,7 +67433,7 @@
     },
     {
       "path": "eva2/tests/operations/test_browser_session.py",
-      "gitState": "untracked",
+      "gitState": "tracked",
       "present": true,
       "bytes": 5374,
       "contentSha256": "5905e165fa3b1798eeaa2621cfc7892eaad13a564410bbabd364ca27be6ac3fa",
@@ -66637,9 +67461,9 @@
       "consumers": [],
       "entrypointEvidence": [],
       "release": {
-        "includedInTrackedRelease": false,
+        "includedInTrackedRelease": true,
         "runtimeCritical": true,
-        "status": "blocked-untracked"
+        "status": "included-tracked-critical"
       }
     },
     {
@@ -66856,8 +67680,8 @@
       "path": "eva2/tests/operations/test_current_workboard.py",
       "gitState": "tracked",
       "present": true,
-      "bytes": 7342,
-      "contentSha256": "756bd557f96ca5d5259863954f916a85b8d7db593ae5f32e690c915e94eff378",
+      "bytes": 9125,
+      "contentSha256": "1a37def5d33b86dfd1992d445108d574e3f680e0da6fb207b19920dff05d2ff7",
       "hashMode": "exact-bytes",
       "role": "verification",
       "roleRuleId": "eva2-verification",
@@ -67136,8 +67960,8 @@
       "path": "eva2/tests/operations/test_eva2_quiescent_cutover.py",
       "gitState": "tracked",
       "present": true,
-      "bytes": 61524,
-      "contentSha256": "3d824e7cddaef08dc9f0eb730993db82c6e603f221ac0b5304cbc8505e81c8b6",
+      "bytes": 63361,
+      "contentSha256": "2efd3c5ce905d7a5f1c7bac40ae2261e89bb1df7e002e7d6efe13dee734d7e74",
       "hashMode": "exact-bytes",
       "role": "verification",
       "roleRuleId": "eva2-verification",
@@ -68116,8 +68940,8 @@
       "path": "eva2/tests/operations/test_managed_b_render.py",
       "gitState": "tracked",
       "present": true,
-      "bytes": 19898,
-      "contentSha256": "e8b03f722c651b2cde0d73cb6797a8796481464934ffe5f7764b1073f0dd4b33",
+      "bytes": 20699,
+      "contentSha256": "7f263f580b40f09913503a95d0c701f93f991797009bdee090eeb9d3e9638920",
       "hashMode": "exact-bytes",
       "role": "verification",
       "roleRuleId": "eva2-verification",
@@ -68221,8 +69045,8 @@
       "path": "eva2/tests/operations/test_mcp_autonomy_pinning.py",
       "gitState": "tracked",
       "present": true,
-      "bytes": 4497,
-      "contentSha256": "0b656ccf5971afbdc871909f219929a061a1c4c5cd762de2bd0b2e604ae82a70",
+      "bytes": 5967,
+      "contentSha256": "b73cc8991f26ca53c5c9b5fe4585f143a7804a8e618a34e7d8ca6d7570a8afd2",
       "hashMode": "exact-bytes",
       "role": "verification",
       "roleRuleId": "eva2-verification",
@@ -71371,8 +72195,8 @@
       "path": "eva2/tests/postgres/test_mcp_owner_authority.py",
       "gitState": "tracked",
       "present": true,
-      "bytes": 3301,
-      "contentSha256": "bcfc5b33a0c09fae08049c7388caf5903a6786e21b37fbc9ad80ad9509f03c4a",
+      "bytes": 7186,
+      "contentSha256": "df39e0d3f5b85550603adb8214fb8907b4553c71e1e6443491f889112671db4b",
       "hashMode": "exact-bytes",
       "role": "verification",
       "roleRuleId": "eva2-verification",
@@ -73261,8 +74085,8 @@
       "path": "eva2/tools/check_current_workboard.py",
       "gitState": "tracked",
       "present": true,
-      "bytes": 37289,
-      "contentSha256": "e8d2aea3d8393d874c281ef50df8fd9a97c046ddf44f808ab414c40e235f2712",
+      "bytes": 39516,
+      "contentSha256": "c7dfbfc611564d0add88172a6aa5e50f495a097239c89f1081b2e8521dd273e2",
       "hashMode": "exact-bytes",
       "role": "verification-runtime",
       "roleRuleId": "eva2-verification-runtime",
@@ -73611,8 +74435,8 @@
       "path": "eva2/tools/eva2_quiescent_cutover.py",
       "gitState": "tracked",
       "present": true,
-      "bytes": 78205,
-      "contentSha256": "a27aaa37cfebbb35e3447e32f71a2a3ac2dd980277281cebf9676f89b6f2bc76",
+      "bytes": 79732,
+      "contentSha256": "e17a7047a66479da99b3f63e12926b402d57fd21a4005027d68d84671da30cdb",
       "hashMode": "exact-bytes",
       "role": "verification-runtime",
       "roleRuleId": "eva2-verification-runtime",
@@ -74206,8 +75030,8 @@
       "path": "eva2/tools/managed_b_render.py",
       "gitState": "tracked",
       "present": true,
-      "bytes": 17234,
-      "contentSha256": "91117a3d319349e2b605175414f3e6949865983dca6657d010edd3971a3918c3",
+      "bytes": 18816,
+      "contentSha256": "88daa7761b3d595eadb15641783db758e5234b6918a67070dbcf27d43e0705d5",
       "hashMode": "exact-bytes",
       "role": "verification-runtime",
       "roleRuleId": "eva2-verification-runtime",
@@ -91922,5 +92746,5 @@
       }
     }
   ],
-  "sourceDigest": "5848e726da5b1fa21d9388f0f8dbbde88cbec255fc2dfaa9d69a91b5fff4fbcc"
+  "sourceDigest": "317e175bb37666192f74fad8554a6eba248337510cf4ccb6715d19f1b84111b4"
 }

@@ -3,6 +3,7 @@ from __future__ import annotations
 import json
 from pathlib import Path
 import re
+import subprocess
 
 import pytest
 
@@ -164,3 +165,44 @@ def test_board_keeps_outcomes_visible_and_technical_details_collapsed() -> None:
         assert f"- [ ] `{milestone['id']}`" in visible
     assert "- [ ] `CO-002`" in visible
     assert "- [ ] `CO-003`" in visible
+
+
+def test_only_completed_bound_deletions_use_historical_inventory(tmp_path: Path) -> None:
+    from tools.check_current_workboard import _task_inventory_entry
+
+    def git(*args: str) -> str:
+        return subprocess.run(
+            ["git", *args], cwd=tmp_path, check=True, capture_output=True, text=True,
+        ).stdout.strip()
+
+    git("init", "-q")
+    git("config", "user.name", "Workboard fixture")
+    git("config", "user.email", "workboard@example.invalid")
+    raw = "eva2/old-asset.js"
+    old = tmp_path / raw
+    old.parent.mkdir()
+    old.write_text("old asset\n")
+    kept = tmp_path / "eva2/kept.js"
+    kept.write_text("kept asset\n")
+    entry = {"path": raw, "present": True, "decision": "keep", "owner": "eva-runtime"}
+    inventory = tmp_path / "docs/eva-repository-inventory.generated.json"
+    inventory.parent.mkdir()
+    inventory.write_text(json.dumps({"files": [entry]}))
+    git("add", ".")
+    git("commit", "-qm", "base")
+    base = git("rev-parse", "HEAD")
+    old.unlink()
+    git("add", "-u")
+    git("commit", "-qm", "replace asset")
+    implementation = git("rev-parse", "HEAD")
+    task = {"id": "VB-003", "status": "done", "stateDetails": {
+        "baseCommit": base, "implementationCommit": implementation,
+    }}
+    assert _task_inventory_entry(tmp_path, raw, task, {}) == entry
+    for status in ("in_progress", "queued"):
+        with pytest.raises(RuntimeError, match="does not exist"):
+            _task_inventory_entry(tmp_path, raw, {**task, "status": status}, {})
+    # A local deletion absent from the implementation is not historical proof.
+    kept.unlink()
+    with pytest.raises(RuntimeError, match="not a verified implementation deletion"):
+        _task_inventory_entry(tmp_path, "eva2/kept.js", task, {})

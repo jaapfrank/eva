@@ -5,39 +5,38 @@ Laatst bijgewerkt: 2026-09-10.
 Doel: [Eva als zelfstandig lerende digitale huisgenoot](PROJECTDOEL.md).
 Gebouwd, getest, live en door jou geaccepteerd zijn verschillende stappen.
 
-TL-003 is technisch afgerond en live: nieuwe dienst aangesloten, gebruikt en oorspronkelijke documentatieopdracht afgerond met apart teruggelezen bestand en eindantwoord. Nu de browserfunctie aansluiten.
-[Actueel bewijs](evidence/product/TL-003-completion-2026-09-10.json).
+VB-003 is technisch afgerond en live: Eva maakt een gewone browseropdracht af; de eigenaar ziet dezelfde browser, neemt over en geeft exclusief terug. Herstel na een onderbreking volgt nu.
+[Actueel bewijs](evidence/product/VB-003-completion-2026-09-10.json).
 
-VB-003: de bestaande onderhouden browsermotor bruikbaar maken vanuit Eva en het eigenaarsdashboard, met exclusieve overname en blijvend profiel.
+VB-004: bestaand browserprofiel, hostbeheer en netwerkbeperking betrouwbaar terugbrengen na een gerichte onderbreking, zonder dubbele handeling.
 
 ## Nu
 
 | Volgorde | Kaart | Resultaat | Status |
 |---:|---|---|---|
-| 140 | `VB-003` — Browser bedienen en overnemen | Eva gebruikt één onderhouden browser met blijvend profiel; de eigenaar kan die bekijken, overnemen en teruggeven, waarbij Eva tijdens overname geen browseracties uitvoert. | 🟡 BEZIG |
+| 141 | `VB-004` — Browser na onderbreking veilig hervatten | Na een browser- of beheeronderbreking blijft het profiel behouden en hervat Eva pas vanuit de werkelijk teruggelezen toestand, zonder vorige handeling blind te herhalen. | 🟡 BEZIG |
 
 Klaar betekent:
 
-- De eigenaar opent de browser vanuit het bestaande dashboard en kan de sessie overnemen en teruggeven.
-- Eva gebruikt dezelfde browser via de algemene toolroute; overname sluit haar toegang en teruggeven sluit de bediening van de eigenaar.
-- De werkelijke sessie en het profiel blijven behouden; fouten staan zichtbaar en hervatten voert geen vorige mutatie blind opnieuw uit.
+- Dezelfde profielgegevens komen terug na een gerichte browser-/hostbeheerherstart; de eigenaar krijgt een bruikbare herstelstatus.
+- Nieuwe browseracties beginnen pas na herstel van de vaste netwerkbeperking en een actuele waarneming; de vorige mutatie wordt niet herhaald.
+- Een bestaande eigenaarverbinding en Eva krijgen na herstel nooit tegelijk bediening. Eén praktische herstelproef en onafhankelijke GO sluiten deze kaart af.
 
 <details>
 <summary>Technische uitvoering: bestanden en controles</summary>
 
-### Exact werk voor `VB-003`
+### Exact werk voor `VB-004`
 
 - `eva2/src/eva/operations/browser_session.py`
-- `eva2/src/eva/adapters/api/browser_session.py`
-- `eva2/src/eva/adapters/connectors/browser_session.py`
-- `eva2/src/eva/adapters/api/app.py`
-- `eva2/src/eva/bootstrap/runtime.py`
 - `eva2/tests/operations/test_browser_session.py`
-- `eva2/tests/api/test_dashboard_browser_session.py`
+- `eva2/deploy/owner-browser/README.md`
+- `eva2/deploy/owner-browser/configure-egress.py`
+- `eva2/deploy/owner-browser/browser-firewall.py`
+- `eva2/deploy/owner-browser/host-config.template.json`
 
 Echte controles:
 
-- `pytest -q tests/operations/test_browser_session.py tests/api/test_dashboard_browser_session.py`
+- `pytest -q tests/operations/test_browser_session.py`
 - `python3 tools/check_current_workboard.py`
 
 </details>
@@ -51,7 +50,6 @@ nadat zij als eerstvolgende kleine kaart exacte bestanden en tests heeft.
 - [ ] `VB-001` — Full-duplex voice leveren: Met Eva2 praten via de bestaande Telegram- of Home Assistant-aansluiting, waarbij Eva hoorbaar onderbroken kan worden en het gesprek daarna doorgaat.
 - [ ] `VB-002` — Passende aanwezigheid leveren: Eva zoekt spontaan contact via de beschikbare speakers en deurbel, met herkenbare identiteit en gevoel voor het moment. Gezin beoordeelt plezier, betrokkenheid en hinder; onderbreken en stop werken.
 - [ ] `CO-008` — Autonoom geheugen in gezinsgesprekken bewijzen: De oorspronkelijke brede geheugenuitkomst blijft open: relevante kennis zelfstandig kiezen, gewijzigde en tijdelijke informatie goed gebruiken in gewone gesprekken en langere gezinspraktijk. Geen handmatig geheugenbeheer; familie beoordeelt continuïteit en vertrouwen.
-- [ ] `VB-004` — Browserherstel bewijzen: Een crash herhaalt geen externe mutatie blind.
 - [ ] `AU-002` — Duurzame hulpagent bedienen: Starten, volgen, stoppen en hervatten werken via de gebruikersroute; hoofd- en hulpagent delen één provideradapter.
 - [ ] `UX-001` — Eigenaar-dashboard leveren: Een onderhouden adminframework toont status, mensen, geheugen, kosten en bewijs.
 - [ ] `UX-002` — Kanban bedienbaar maken: Taken zijn te starten, volgen en stoppen met bewijs per kaart.
@@ -142,7 +140,9 @@ Afgevinkt betekent alleen: de vastgelegde kaart is afgerond, niet het hele produ
   [Bewijs](evidence/product/AU-001-completion-2026-09-09.json).
 - [x] `TL-003` — Onbekende connector zelfstandig toevoegen (done).
   [Bewijs](evidence/product/TL-003-completion-2026-09-10.json).
-- [ ] `VB-003` — Browser bedienen en overnemen (in_progress).
+- [x] `VB-003` — Browser bedienen en overnemen (done).
+  [Bewijs](evidence/product/VB-003-completion-2026-09-10.json).
+- [ ] `VB-004` — Browser na onderbreking veilig hervatten (in_progress).
 
 </details>
 

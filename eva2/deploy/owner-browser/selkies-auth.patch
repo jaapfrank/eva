@@ -1,0 +1,46 @@
+--- pinned/selkies.py
++++ candidate/selkies.py
+@@ -1550,8 +1550,7 @@
+         if self.is_secure_mode:
+             await config_gate.wait()
+ 
+-            query_params = urllib.parse.parse_qs(urllib.parse.urlparse(websocket.request.path).query)
+-            token = query_params.get('token', [None])[0]
++            token = websocket.request.headers.get('X-Eva-Browser-Session')
+ 
+             if not token or token not in user_tokens:
+                 data_logger.warning(f"Rejecting connection from {websocket.remote_address}: Missing or invalid token.")
+@@ -1637,7 +1636,7 @@
+         server_settings_payload = {"type": "server_settings", "settings": {}}
+         for setting_def in SETTING_DEFINITIONS:
+             name = setting_def['name']
+-            if name in ['port', 'dri_node', 'debug', 'audio_device_name', 'watermark_path']:
++            if name in ['port', 'dri_node', 'debug', 'audio_device_name', 'watermark_path', 'master_token']:
+                 continue
+             value = getattr(settings, name)
+             if setting_def['type'] == 'bool':
+@@ -3447,6 +3446,15 @@
+         logger_gst_app_resize.error(f"Error during resize handling for '{res_str}': {e}", exc_info=True)
+ 
+ async def ws_entrypoint():
++    master_fd = os.environ.pop("SELKIES_MASTER_TOKEN_FD", "")
++    if master_fd:
++        if master_fd != "3":
++            raise RuntimeError("Invalid private Selkies credential descriptor")
++        with os.fdopen(3, "r") as private_master:
++            master_token = private_master.read(1025).strip()
++        if not 32 <= len(master_token) <= 1024 or any(c.isspace() for c in master_token):
++            raise RuntimeError("Invalid private Selkies credential")
++        settings.master_token = master_token
+     is_secure_mode = bool(settings.master_token)
+     if is_secure_mode:
+         logger.info("Secure Mode ENABLED (SELKIES_MASTER_TOKEN is set).")
+@@ -3563,7 +3571,7 @@
+     if not settings.debug[0] and PULSEAUDIO_AVAILABLE:
+         logging.getLogger("pulsectl").setLevel(logging.WARNING)
+ 
+-    logger.info(f"Starting Selkies (WebSocket Mode) with settings: {vars(settings)}")
++    logger.info("Starting Selkies (WebSocket Mode) with settings: %s", {key: ("[REDACTED]" if key == "master_token" else value) for key, value in vars(settings).items()})
+     logger.info(
+         f"Initial Encoder: {initial_encoder}, Framerate: {TARGET_FRAMERATE}"
+     )

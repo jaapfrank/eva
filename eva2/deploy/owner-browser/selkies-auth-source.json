@@ -1,0 +1,13 @@
+{
+  "base_image": "lscr.io/linuxserver/chromium@sha256:63e8e38540462a38c70ef85497c13c412485b39979394ea95da450fca5b4efa8",
+  "path": "/lsiopy/lib/python3.13/site-packages/selkies/selkies.py",
+  "license": "MPL-2.0",
+  "upstream_sha256": "660a578fc9fca69d2cd06580f1e8bf216ddfe1e2994f3c2eb1acbadeb113d5de",
+  "patched_sha256": "79e757b001f65213d5db552629a0f04c7ddcb42506fcde9011e683aee23b4bed",
+  "changes": [
+    "native websocket credential from header instead of query",
+    "omit master_token from server_settings",
+    "redact only master_token from startup settings log",
+    "read master once from inherited root-opened FD3 and close it; no secret in exec environment"
+  ]
+}

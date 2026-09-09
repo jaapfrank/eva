@@ -175,6 +175,51 @@ def _repo_file(root: Path, raw: str, label: str) -> Path:
     return path
 
 
+def _task_inventory_entry(
+    root: Path, raw: str, task: dict[str, Any], entries: dict[str, dict[str, Any]],
+) -> dict[str, Any] | None:
+    label = f"{task['id']} changePath"
+    try:
+        _repo_file(root, raw, label)
+    except RuntimeError as error:
+        # Completed replacement work may remove an old asset. Keep that path in
+        # exact changePaths; only the bound implementation may prove its deletion.
+        if task["status"] != "done" or str(error) != f"{label} does not exist":
+            raise
+        path = root / raw
+        if path.is_symlink() or root not in path.resolve(strict=False).parents:
+            raise
+        details = task["stateDetails"]
+        base, implementation = details["baseCommit"], details["implementationCommit"]
+        _commit_exists(root, base, f"{task['id']} baseCommit")
+        _commit_exists(root, implementation, f"{task['id']} implementationCommit")
+        deleted = subprocess.run(
+            ["git", "diff", "--name-only", "--diff-filter=D", "--no-renames",
+             base, implementation, "--", raw],
+            cwd=root, check=True, capture_output=True, text=True,
+        ).stdout.splitlines()
+        base_object = subprocess.run(
+            ["git", "ls-tree", base, "--", raw],
+            cwd=root, check=True, capture_output=True, text=True,
+        ).stdout.split()
+        implementation_object = subprocess.run(
+            ["git", "cat-file", "-e", f"{implementation}:{raw}"],
+            cwd=root, capture_output=True,
+        )
+        if (deleted != [raw] or base_object[:2] not in (["100644", "blob"], ["100755", "blob"])
+                or implementation_object.returncode == 0):
+            raise RuntimeError(f"{label} is not a verified implementation deletion") from error
+        historical = json.loads(_git_text(
+            root, base, "docs/eva-repository-inventory.generated.json",
+            f"{task['id']} deleted path inventory",
+        ))
+        # Ownership still comes from the inventory, now from the commit where
+        # the regular file existed. Current missing files never invent owners.
+        return next((entry for entry in historical.get("files", [])
+                     if entry.get("path") == raw), None)
+    return entries.get(raw)
+
+
 def _inventory(root: Path, path: Path) -> tuple[dict[str, dict[str, Any]], dict[str, Any]]:
     inventory = _object(path, "repository inventory", max_bytes=MAX_INVENTORY_BYTES)
     if inventory.get("schema") != INVENTORY_CONTRACT:
@@ -721,8 +766,7 @@ def validate(
         actual_inventory_owners: set[str] = set()
         actual_component_owners: set[str] = set()
         for raw in change_paths:
-            _repo_file(root, raw, f"{task_id} changePath")
-            entry = inventory_entries.get(raw)
+            entry = _task_inventory_entry(root, raw, task, inventory_entries)
             if (
                 entry is None
                 or entry.get("present") is not True
