@@ -88,3 +88,31 @@ container-env is daarom geen bewijs dat hun achtergrondthreads stilstaan.
 De terugrol behoudt de bestaande regel: stop de kandidaat, kopieer ook eventuele
 nieuwe gegevens terug en herstel vervolgens de bronroute. Fysieke isolatie van
 de nieuwe kandidaat moet nog met worker- en gegevensreadbacks worden bewezen.
+
+## Actuele spraakproef 9 september 2026
+
+De native core staat op slot4 en de HA-gateway op upstream44711. Beide primaire
+speakerselectors kiezen de Eva2-pipeline. De oude conversation-catch-all is
+behouden maar uitgeschakeld: een automationvoorwaarde voorkomt in HA2026.8.1
+niet dat de zin al wordt geclaimd. De native pipeline heeft daarnaast
+`prefer_local_intents=false`. De synthetische intent-stage-readback bereikte
+`conversation.eva2`, zonder oud `eva_voice_query`-event; dit is geen audioproef.
+
+De gebruiker bevestigde verstaanbare directe MP3-weergave (24kHz mono). FLAC-
+proeven lieten woorden weg. `voice-pe-mp3.yaml` gebruikt `!extend` om uitsluitend
+het announcement-formaat en de bronfrequentie van de bestaande speler te
+wijzigen. De volledig uitgewerkte config is met de oorspronkelijke variant
+vergeleken: precies die twee verschillen; mixer/resampler, credentials, bronnen
+en handlers blijven gelijk. Beide varianten zijn succesvol gebouwd met ESPHome
+2026.6.2; de afzonderlijk bewaarde OTA- en USB-images zijn op grootte en SHA256
+gecontroleerd. Zie `VB-001-mp3-device-candidate-2026-09-09.json` voor de exacte
+bestanden. Dit is nog geen geïnstalleerde firmware. Het herstelimage is opnieuw
+gebouwd uit de bewaarde configuratie, geen kopie van de geïnstalleerde binary.
+
+De oude bootloader meldt dat automatische OTA-terugrol niet beschikbaar is.
+Een opnieuw gebouwde oorspronkelijke configuratie is een herstelkandidaat,
+geen bewijs van geslaagde fysieke terugrol. Firmware-installatie vereist een
+uitvoerbare herstelroute op het apparaat. De codecwijziging voegt geen gewone-
+spraakonderbreking toe: de huidige VA-state-machine verstuurt microfoonaudio
+alleen in STREAMING_MICROPHONE, niet tijdens antwoordweergave. Continue-
+conversation start pas na de weergave een volgende microfoonbeurt.

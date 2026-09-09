@@ -1,0 +1,9 @@
+# Candidate only: native HA announcements use the MP3 format verified on the
+# living-room speaker. Include the exact saved device config as packages.original
+# in a private main YAML, then add this mapping. Do not flash without recovery.
+# Only codec and source rate change; the inherited output resampler stays 48 kHz.
+media_player:
+  - id: !extend external_media_player
+    announcement_pipeline:
+      format: MP3
+      sample_rate: 24000

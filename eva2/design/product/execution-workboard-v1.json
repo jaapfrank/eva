@@ -2381,6 +2381,11 @@
       "requirement": "Eén gesprek met gewone spraak onderbreken en direct vervolgen zonder nieuw Hey Eva.",
       "mp3ListeningTrial": "User confirmed fully intelligible direct MP3 on living-room speaker.",
       "next": "Native audio herstellen en hardware-input tijdens playback toetsen; daarna volledige sessie bewijzen."
+    },
+    "vb001Mp3DeviceCandidate": {
+      "status": "compiled_verified_not_installed",
+      "evidence": "eva2/evidence/product/VB-001-mp3-device-candidate-2026-09-09.json",
+      "next": "Confirm usable physical USB recovery, then install the verified codec-only candidate and read back native MP3 playback. Ordinary-speech interruption remains separate, unproven work."
     }
   },
   "activeTaskId": "VB-001",

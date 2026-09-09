@@ -1,0 +1,78 @@
+{
+  "contract": "EvaVoicePeMp3Candidate/v1",
+  "status": "compiled_verified_not_installed",
+  "observedAt": "2026-09-09T07:59:52.058676+00:00",
+  "userAudioReadback": "Direct 24kHz mono MP3 fully intelligible on living-room speaker; FLAC-route tests dropped words.",
+  "configuration": {
+    "status": "passed",
+    "changedPaths": [
+      "/media_player/1/announcement_pipeline/format",
+      "/media_player/1/announcement_pipeline/sample_rate"
+    ],
+    "otherConfigurationUnchanged": true
+  },
+  "overlaySha256": "49eebdab40d12963a38f7cce661894baa23e4c52b2cefe3f3202493caedc7f36",
+  "device": "home-assistant-voice-0a16e0",
+  "esphomeVersion": "2026.6.2",
+  "firmwareInstalled": false,
+  "recovery": "Old device bootloader reports no automatic OTA rollback. USB recovery availability requested; not confirmed.",
+  "continuousSpeechBoundary": "Current firmware sends microphone audio only in STREAMING_MICROPHONE, not AWAITING_RESPONSE or STREAMING_RESPONSE. Local wake-word inference is not ordinary-speech interruption.",
+  "review": {
+    "reviewer": "co006_review",
+    "verdict": "GO for preparation only; no flash GO",
+    "independentlyVerified": [
+      "Six binary sizes and SHA256 hashes",
+      "Four source input SHA256 hashes",
+      "ESPHome 2026.6.2 package merge including !extend: exactly two format/rate differences"
+    ],
+    "limitation": "Rebuilt recovery configuration is not the installed June 21 binary; USB recovery not confirmed."
+  },
+  "build": {
+    "status": "compiled_not_flashed",
+    "variants": [
+      {
+        "variant": "rollback",
+        "binaries": [
+          {
+            "file": "firmware.ota.bin",
+            "bytes": 2908080,
+            "sha256": "222b87eefca70de27af8db210c06156c0f2dd34c82558ff2614d7173a93040bc"
+          },
+          {
+            "file": "firmware.factory.bin",
+            "bytes": 2973616,
+            "sha256": "d4d7dbbc6646fa9fd3609fda8d3b836943551091fa65f94e33e63e7f5a6076bc"
+          },
+          {
+            "file": "firmware.bin",
+            "bytes": 2908080,
+            "sha256": "222b87eefca70de27af8db210c06156c0f2dd34c82558ff2614d7173a93040bc"
+          }
+        ]
+      },
+      {
+        "variant": "woonkamer",
+        "binaries": [
+          {
+            "file": "firmware.ota.bin",
+            "bytes": 2908096,
+            "sha256": "b08d769f7d13c3f1651b4b2b9784670376307542a51b3e41d1c6f503d2e7cee9"
+          },
+          {
+            "file": "firmware.factory.bin",
+            "bytes": 2973632,
+            "sha256": "117dcf812c8747b2796f474a8d34acb34a2ebdaf20d5111731b40f94f294ea7c"
+          },
+          {
+            "file": "firmware.bin",
+            "bytes": 2908096,
+            "sha256": "b08d769f7d13c3f1651b4b2b9784670376307542a51b3e41d1c6f503d2e7cee9"
+          }
+        ]
+      }
+    ],
+    "observedAt": "2026-09-09T07:57:52.327902+00:00",
+    "boundary": "Rebuilt original configuration is a prepared recovery image, not proof of successful hardware rollback."
+  },
+  "sourceInputsVerified": true
+}

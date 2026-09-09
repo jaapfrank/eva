@@ -24,7 +24,7 @@ Jaap wil tijdens één gesprek gewoon kunnen praten, Eva kunnen onderbreken en d
 
 ## Eerstvolgende bewijs en werk
 
-1. Behoud de geslaagde MP3-proef en herstel de native audioweergave afzonderlijk. Nog geen firmware uitrollen zonder uitvoerbare herstelroute. De eerste codec-overlayconfig faalde de package-mergevalidatie; er is niets geïnstalleerd.
+1. Behoud de geslaagde MP3-proef en herstel de native audioweergave afzonderlijk. Nog geen firmware uitrollen zonder uitvoerbare herstelroute. De eerste codec-overlayconfig faalde de package-mergevalidatie; de gecorrigeerde `!extend`-variant is inmiddels gevalideerd en gebouwd, samen met een herstelimage uit de bewaarde oorspronkelijke configuratie. Er is niets geïnstalleerd en fysieke terugrol is nog niet bewezen.
 2. Controleer na de herstelde HA-routering een echte beurt via conversation.eva2, met native request-readback en continuation. De eerdere praktijkbeurt was onderschept door de oude catch-all; die is behouden maar uitgeschakeld voor de native proef.
 3. Beproef gelijktijdige invoer/uitvoer en echo-onderdrukking op de bestaande Voice PE voordat een realtime-provider wordt gekozen of een bruikbaarheidsgarantie wordt gegeven.
 4. Bouw en bewijs daarna de volledige sessie: onderbreken met gewone spraak, direct vervolgen, geen oude audio, juiste context na onderbreken, mute/einde/herverbinding en gemeten stoplatentie.
