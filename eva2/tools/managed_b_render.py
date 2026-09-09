@@ -49,6 +49,7 @@ class RenderedBManifest:
             "rendered_sha256": self.rendered_sha256,
             "service_names": list(self.service_names),
             "status": "passed",
+            "background_work_enabled": False,
         }
 
 
@@ -309,6 +310,7 @@ def render_managed_b(plan: CoreBPlan) -> RenderedBManifest:
 
     environment = {
         "EVA_B_CONFIGURATION_SHA256": plan.snapshot_sha256,
+        "EVA_BACKGROUND_WORK_ENABLED": "false",
         "LC_ALL": "C",
     }
     prefix = [
@@ -343,6 +345,8 @@ def render_managed_b(plan: CoreBPlan) -> RenderedBManifest:
     except json.JSONDecodeError as error:
         raise RuntimeError("managed B Compose returned invalid JSON") from error
     graph = _validate_rendered_graph(rendered, plan)
+    if graph["services"]["core"].get("environment", {}).get("EVA_BACKGROUND_WORK_ENABLED") != "false":
+        raise RuntimeError("managed B staging must disable background work")
     return RenderedBManifest(
         configuration_sha256=plan.snapshot_sha256,
         compose_version=compose_version,

@@ -63,3 +63,28 @@ The native stop path is HA pipeline cancellation through aioesphomeapi's
 not required for that native cancellation path. Earlier notes in the main voice
 README describe intermediate development states; current source-bound receipts
 and the workboard distinguish what is installed, tested and actually live.
+
+
+## Achtergrondwerk tijdens reserve-uitrol
+
+De managed-B basisconfiguratie start nieuwe runtimes met
+`EVA_BACKGROUND_WORK_ENABLED=false`. De quiescent-cutoverprocedure dwingt
+`false` af tijdens staging en `true` pas nadat de gekozen route klaar is en de
+ingress stilstaat. Dit geldt ook zonder Telegram- of andere connectorcredentials.
+De runtime schakelt daarmee de sensory-ingress en cold-pathworkers uit; dit
+maakt de database niet algemeen read-only en schakelt geen afzonderlijke
+Hindsight-processen of expliciet aangeroepen HTTP-handelingen uit.
+
+De renderer controleert de fasewaarde naast de toegestane connectorverschillen.
+Een tegengestelde waarde in het envbestand wint niet van de expliciet gekozen
+procesomgeving. Na recreatie controleert de helper de containerinstelling.
+Rechtstreeks starten met alleen de basis-Compose is staging. Proeven die
+achtergrondwerk nodig hebben moeten een expliciete, daarvoor toegestane
+activeringsfase gebruiken; een gewone kopie- of readinessproef doet dat niet.
+
+Oudere herstelimages herkennen deze runtime-instelling niet. De aanwezige
+images `7b75cfe1` en `86ec4e35` zijn daarop afzonderlijk gecontroleerd. Hun
+container-env is daarom geen bewijs dat hun achtergrondthreads stilstaan.
+De terugrol behoudt de bestaande regel: stop de kandidaat, kopieer ook eventuele
+nieuwe gegevens terug en herstel vervolgens de bronroute. Fysieke isolatie van
+de nieuwe kandidaat moet nog met worker- en gegevensreadbacks worden bewezen.

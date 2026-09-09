@@ -1,9 +1,9 @@
 {
   "contract": "EvaProductEvidence/v1",
   "taskId": "VB-001",
-  "observedAt": "2026-09-09T00:57:34.396376+00:00",
-  "previousGoalTurnClassification": "no_progress",
-  "status": "runtime_background_switch_built_and_focused_tests_passed_not_deployed",
+  "observedAt": "2026-09-09T01:07:33.359383+00:00",
+  "previousGoalTurnClassification": "progress",
+  "status": "runtime_and_deployment_switch_tested_reserve_stopped_candidate_release_pending",
   "change": "Strict EVA_BACKGROUND_WORK_ENABLED switch suppresses both sensory ingress and cold-path workers. Existing runtimes default to enabled. Runtime scope, owner mandate and budgets remain required.",
   "tests": {
     "command": "pytest -q tests/bootstrap/test_runtime_settings.py tests/bootstrap/test_memory_provenance.py",
@@ -11,10 +11,165 @@
     "failures": 0
   },
   "boundaries": [
-    "Managed-B compose and cutover helper do not yet apply the switch.",
-    "Existing rollback images ignore the new setting; environment readback alone cannot prove isolation for them.",
-    "This is no claim of general database read-only behavior or actual speaker interruption."
+    "Both existing rollback images were inspected without network or host mounts and do not support the new setting.",
+    "All existing operational event rows remain identical. No primary keys disappeared in changed tables. 101 checkpoint states changed, 28 checkpoints and 162 events were added; only updated_at changed in one memory bank.",
+    "Configuration and focused tests do not prove physical isolation of the not-yet-built new candidate.",
+    "No live voice pipeline, speaker acceptance or acoustic interruption proof."
   ],
-  "next": "Wire explicit staging/activation in managed deployment, verify legacy rollback compatibility, compare preserved reserve rows against a temporary restore, then rebuild and run the complete candidate gate.",
-  "review": "co006_review: bounded source GO for runtime/settings tests. Strict boolean validation, default behavior and build wiring verified; no physical reserve isolation or release GO."
+  "next": "Bind the complete repaired source and deployment inputs, build and test the candidate once, then verify its staged workers and unchanged databases before reviewed activation.",
+  "review": "co006_review: bounded source GO for runtime/settings tests. Strict boolean validation, default behavior and build wiring verified; no physical reserve isolation or release GO.",
+  "deployment": {
+    "testsPassed": 188,
+    "command": "pytest -q tests/operations/test_eva2_quiescent_cutover.py tests/operations/test_managed_b_render.py tests/bootstrap/test_managed_b_manifest.py",
+    "actualComposeReadback": {
+      "status": "passed",
+      "checks": [
+        {
+          "configured": "true",
+          "forced": "false",
+          "actual": "false"
+        },
+        {
+          "configured": "true",
+          "forced": "true",
+          "actual": "true"
+        },
+        {
+          "configured": "false",
+          "forced": "false",
+          "actual": "false"
+        },
+        {
+          "configured": "false",
+          "forced": "true",
+          "actual": "true"
+        }
+      ],
+      "onlyPhaseEnvironmentDiffers": true,
+      "manifestSha256": "6720cfe2eca7b14c494542b3597202cc568d2861fbdbc02bc14e0a10fa99e017",
+      "boundary": "Actual Docker Compose config only; no containers created or started, no credentials retained in output."
+    },
+    "review": "co006_review bounded source GO: explicit staging/activation phases, conflicting env values, connector-free route checks, return compatibility and strict readbacks. No deployment GO."
+  },
+  "reserveComparison": {
+    "fullRows": {
+      "observedAt": "2026-09-09T01:05:53.671288+00:00",
+      "status": "incomplete_or_different",
+      "method": "Restore retained pre-update dumps to unique temporary databases and compare every user table as multisets of full row JSON, including primary-key fields. No household row payload retained in receipt.",
+      "results": [
+        {
+          "database": "operational",
+          "tableCount": 48,
+          "backupDumpSha256": "e35496baf86ff57109a92879f473341b2f7e0e4119385cda24204db7fe081e04",
+          "missingOrChangedFullRows": 101,
+          "additionalFullRows": 291,
+          "changes": [
+            {
+              "table": "eva_core.operational_checkpoints",
+              "missingOrChangedFullRows": 101,
+              "additionalFullRows": 129
+            },
+            {
+              "table": "eva_core.operational_events",
+              "missingOrChangedFullRows": 0,
+              "additionalFullRows": 162
+            }
+          ]
+        },
+        {
+          "database": "memory",
+          "tableCount": 23,
+          "backupDumpSha256": "03f1abe80a458ae7540319f1d732cb094f318f158a5d704f576577314599daeb",
+          "missingOrChangedFullRows": 1,
+          "additionalFullRows": 1,
+          "changes": [
+            {
+              "table": "public.banks",
+              "missingOrChangedFullRows": 1,
+              "additionalFullRows": 1
+            }
+          ]
+        }
+      ],
+      "cleanup": [
+        {
+          "database": "eva2_compare_vb001_e1bad5ef84e6",
+          "dropped": true
+        },
+        {
+          "database": "eva2_compare_vb001_b3a98b7fda09",
+          "dropped": true
+        }
+      ],
+      "reserveWritersStopped": true
+    },
+    "primaryKeys": {
+      "observedAt": "2026-09-09T01:06:49.056455+00:00",
+      "status": "classified",
+      "results": [
+        {
+          "table": "eva_core.operational_checkpoints",
+          "primaryKeyColumns": [
+            "tenant_id",
+            "installation_id",
+            "thread_id"
+          ],
+          "deletedKeys": 0,
+          "addedKeys": 28,
+          "updatedKeys": 101,
+          "changedColumns": {
+            "checkpoint_id": 101,
+            "phase": 101,
+            "status": 101,
+            "revision": 101,
+            "updated_at": 101
+          }
+        },
+        {
+          "table": "eva_core.operational_events",
+          "primaryKeyColumns": [
+            "tenant_id",
+            "installation_id",
+            "thread_id",
+            "sequence"
+          ],
+          "deletedKeys": 0,
+          "addedKeys": 162,
+          "updatedKeys": 0,
+          "changedColumns": {},
+          "additionalEventTypes": {
+            "SENSORY_REVALIDATION_CLAIMED": 2,
+            "SENSORY_EVENT_OBSERVED": 28,
+            "WILL_REVALIDATION_REQUIRED": 118,
+            "WILL_EVALUATION_RECLAIMED": 2,
+            "WILL_MODEL_STARTED": 4,
+            "WILL_DECIDED": 4,
+            "SENSORY_EVENT_REVALIDATED": 2,
+            "WILL_EVALUATION_CLAIMED": 2
+          }
+        },
+        {
+          "table": "public.banks",
+          "primaryKeyColumns": [
+            "bank_id"
+          ],
+          "deletedKeys": 0,
+          "addedKeys": 0,
+          "updatedKeys": 1,
+          "changedColumns": {
+            "updated_at": 1
+          }
+        }
+      ],
+      "temporaryDatabasesDropped": 2,
+      "boundary": "Classifies preserved keys and state changes; does not claim unchanged data or validate the effects of every background operation."
+    }
+  },
+  "runtimeState": {
+    "activeSlot": 3,
+    "activeHealth": "healthy",
+    "reserveSlot": 4,
+    "reserveCoreAndHindsight": "stopped_for_stable_comparison",
+    "reason": "Legacy reserve was still performing autonomous work; new candidate is not deployed yet."
+  }
 }

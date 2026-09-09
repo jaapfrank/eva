@@ -2346,13 +2346,13 @@
       "evidence": "eva2/evidence/product/VB-001-final-voice-candidate-2026-09-09.json",
       "result": "Kandidaat 8c50908/dcec0dd6: 2423 tests geslaagd. Reservecontrole faalde doordat HA-gebeurtenissen werden verwerkt; vorige reserveversie hersteld. Beide cores gezond.",
       "boundary": "Actieve Eva ongewijzigd. Bestaande rijen moeten nog volledig met de back-up worden vergeleken. Geen bewijs van hoorbaar onderbreken.",
-      "next": "Achtergrondwerk op reserve uitschakelen en gecontroleerd bij omschakeling activeren; herstelcompatibiliteit bewijzen."
+      "next": "Bind the complete repaired source and deployment inputs, build and test the candidate once, then verify its staged workers and unchanged databases before reviewed activation."
     },
     "vb001ReserveBackgroundIsolation": {
-      "status": "runtime_background_switch_built_and_focused_tests_passed_not_deployed",
+      "status": "runtime_and_deployment_switch_tested_reserve_stopped_candidate_release_pending",
       "evidence": "eva2/evidence/product/VB-001-reserve-background-isolation-2026-09-09.json",
-      "result": "Runtime-instelling gebouwd; 58 gerichte tests geslaagd. Nog niet uitgerold.",
-      "next": "Wire explicit staging/activation in managed deployment, verify legacy rollback compatibility, compare preserved reserve rows against a temporary restore, then rebuild and run the complete candidate gate."
+      "result": "Runtime en uitrolprocedure bijgewerkt. 188 uitroltests geslaagd; vier echte Compose-fasecontroles geslaagd. Oude reserve gestopt. Bestaande events volledig behouden; checkpointstatussen en banktijdstip veranderden door achtergrondwerk.",
+      "next": "Bind the complete repaired source and deployment inputs, build and test the candidate once, then verify its staged workers and unchanged databases before reviewed activation."
     }
   },
   "activeTaskId": "VB-001",
@@ -3779,7 +3779,8 @@
         "eva2/deploy/home-assistant/eva2-voice-ingress.service",
         "eva2/deploy/home-assistant/allow-native-voice-wsl.ps1",
         "eva2/deploy/home-assistant/native-voice-ingress.md",
-        "eva2/tests/bootstrap/test_runtime_settings.py"
+        "eva2/tests/bootstrap/test_runtime_settings.py",
+        "eva2/deploy/living-core/managed-b.compose.yml"
       ],
       "componentIds": [
         "api-and-runtime-composition",

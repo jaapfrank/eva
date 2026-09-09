@@ -14,6 +14,7 @@ from tools.eva2_quiescent_cutover import (
     DatabaseSnapshot,
     QuiescentCutoverError,
     PROACTIVE_FLAG,
+    BACKGROUND_FLAG,
     PROACTIVE_MANIFEST,
     PROACTIVE_TOKEN_TARGET,
     SlotSpec,
@@ -43,7 +44,7 @@ def test_start_writers_recreates_services_and_checks_exact_core_image(
         SystemBackend, "_wait_container", staticmethod(lambda _container: None)
     )
     monkeypatch.setattr(
-        SystemBackend, "_inspect", staticmethod(lambda _container: {"Image": image})
+        SystemBackend, "_inspect", staticmethod(lambda _container: {"Image": image, "Config": {"Env": [BACKGROUND_FLAG + "=false"]}})
     )
 
     SystemBackend().start_writers(slot)
@@ -152,7 +153,7 @@ def test_start_writers_withholds_token_even_for_enabled_slot(
     monkeypatch.setattr(SystemBackend, "_wait_container", staticmethod(lambda _: None))
     monkeypatch.setattr(SystemBackend, "_inspect", staticmethod(lambda _: {
         "Image": image,
-        "Config": {"Env": []}, "Mounts": [],
+        "Config": {"Env": [BACKGROUND_FLAG + "=false"]}, "Mounts": [],
     }))
     SystemBackend().start_writers(_slot(4))
     assert [command[-1] for command in commands] == ["hindsight", "core"]
@@ -223,7 +224,7 @@ def test_activation_requires_staged_image_route_and_quiescence(
     def inspect(_):
         return {
             "Image": "sha256:" + "b" * 64 if failure == "stale_image" else image,
-            "Config": {"Env": [f"EVA_TELEGRAM_BOT_TOKEN_FILE={PROACTIVE_TOKEN_TARGET}"] if activated else []},
+            "Config": {"Env": ([f"EVA_TELEGRAM_BOT_TOKEN_FILE={PROACTIVE_TOKEN_TARGET}"] if activated else []) + [BACKGROUND_FLAG + "=" + str(activated).lower()]},
             "Mounts": [{"Type": "bind", "Source": str(token),
                         "Destination": PROACTIVE_TOKEN_TARGET, "RW": failure == "mount_writable"}] if activated else [],
         }
@@ -243,11 +244,11 @@ def test_activation_requires_staged_image_route_and_quiescence(
     assert not any("telegram-ingress" in command for command in commands)
 
 
-def test_disabled_slot_activation_never_restarts_core(monkeypatch: pytest.MonkeyPatch) -> None:
+def test_connector_free_activation_still_requires_selected_route(monkeypatch, tmp_path):
     monkeypatch.setattr(SystemBackend, "_environment", staticmethod(lambda _: {}))
-    monkeypatch.setattr(SystemBackend, "_inspect", staticmethod(lambda _: {"Config": {"Env": []}, "Mounts": []}))
-    monkeypatch.setattr(SystemBackend, "_run", staticmethod(lambda *a, **k: pytest.fail("must not start or load credentials")))
-    assert SystemBackend().activate_delivery(_slot(3), Path("/unused")) is False
+    monkeypatch.setattr(SystemBackend, "_run", staticmethod(lambda *a, **k: pytest.fail("invalid route must not activate")))
+    with pytest.raises((RuntimeError, OSError)):
+        SystemBackend().activate_delivery(_slot(3), tmp_path / "missing-route")
 
 
 def test_migrate_schema_uses_the_target_image_before_writers_start(
@@ -786,6 +787,7 @@ def test_connector_access_only_appears_at_activation(monkeypatch, tmp_path, tele
         if active and telegram:
             row["Config"]["Env"].append("EVA_TELEGRAM_BOT_TOKEN_FILE=" + PROACTIVE_TOKEN_TARGET)
             row["Mounts"].append({"Type": "bind", "Source": str(token), "Destination": PROACTIVE_TOKEN_TARGET, "RW": False})
+        row["Config"]["Env"].append(BACKGROUND_FLAG + "=" + str(active).lower())
         return row
     def run(command, **kwargs):
         nonlocal active
@@ -1019,6 +1021,7 @@ def test_voice_is_withheld_until_managed_activation(monkeypatch, tmp_path, other
             if household:
                 result["Config"]["Env"].append(prefix + "TOKEN_FILE=" + target + "/token")
             result["Mounts"] = [{"Type": "bind", "Source": "/wrong" if failure == "wrong_path" else "/private/voice", "Destination": target, "RW": failure == "writable"}]
+        result["Config"]["Env"].append(BACKGROUND_FLAG + "=" + str(active).lower())
         return result
     def run(command, **kwargs):
         nonlocal active
@@ -1088,3 +1091,53 @@ def test_voice_only_cutover_failure_preserves_new_data_before_disabling_voice(tm
     assert backend.voice_slots == set()
     assert backend.route == canonical_dropin(_slot(3).url)
     assert backend.calls.index("snapshot:4:automatic-rollback") < backend.calls.index("restore:3:reverse") < backend.calls.index("activate-delivery:3")
+
+
+@pytest.mark.parametrize("configured", ["true", "false"])
+def test_connector_free_staging_activation_and_reverse_path_force_background_phase(monkeypatch, tmp_path, configured):
+    image = "sha256:" + "a" * 64
+    slot = _slot(4)
+    dropin = tmp_path / "route"
+    dropin.write_bytes(canonical_dropin(slot.url))
+    dropin.chmod(0o644)
+    phases = []
+    actual = "false"
+    monkeypatch.setattr(SystemBackend, "_environment", staticmethod(lambda _: {
+        "EVA_LIVING_CORE_IMAGE": "eva2/core@" + image, BACKGROUND_FLAG: configured,
+    }))
+    def run(command, **kwargs):
+        nonlocal actual
+        if "--property=Environment" in command:
+            return "EVA2_CANARY_URL=" + slot.url
+        if "--property=ActiveState" in command:
+            return "inactive"
+        assert "up" in command
+        phase = kwargs["extra_env"][BACKGROUND_FLAG]
+        if command[-1] == "core":
+            actual = phase
+            phases.append((slot.number, phase))
+        else:
+            assert phase == "false"
+        return ""
+    monkeypatch.setattr(SystemBackend, "_run", staticmethod(run))
+    monkeypatch.setattr(SystemBackend, "_inspect", staticmethod(lambda _: {
+        "Image": image, "Config": {"Env": [BACKGROUND_FLAG + "=" + actual]}, "Mounts": [],
+    }))
+    monkeypatch.setattr(SystemBackend, "_wait_container", staticmethod(lambda _: None))
+    monkeypatch.setattr(SystemBackend, "_ready", staticmethod(lambda _: True))
+    monkeypatch.setattr(SystemBackend, "verify_runtime", lambda *a: None)
+    backend = SystemBackend(owner_uid=os.getuid())
+    backend.start_writers(slot)
+    assert backend.activate_delivery(slot, dropin) is False
+    # A reverse route also stages first, even with no delivery credentials.
+    slot = _slot(3)
+    dropin.write_bytes(canonical_dropin(slot.url))
+    backend.start_writers(slot)
+    assert backend.activate_delivery(slot, dropin) is False
+    assert phases == [(4, "false"), (4, "true"), (3, "false"), (3, "true")]
+
+
+@pytest.mark.parametrize("enabled, values", [(False, []), (False, ["true"]), (True, ["false"]), (False, ["false", "false"])])
+def test_background_phase_readback_refuses_missing_wrong_or_duplicate_switch(enabled, values):
+    with pytest.raises(QuiescentCutoverError, match="background work setting"):
+        SystemBackend._verify_background_setting({"Config": {"Env": [BACKGROUND_FLAG + "=" + v for v in values]}}, enabled=enabled)

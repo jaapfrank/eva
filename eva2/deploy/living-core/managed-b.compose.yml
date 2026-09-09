@@ -269,6 +269,8 @@ services:
       - "8080"
       - --no-access-log
     environment:
+      # Staging stays idle; the quiescent cutover helper explicitly activates it.
+      EVA_BACKGROUND_WORK_ENABLED: ${EVA_BACKGROUND_WORK_ENABLED:-false}
       EVA_COLD_PATH_IDLE_SECONDS: ${EVA_COLD_PATH_IDLE_SECONDS:-300}
       EVA_CONVERSATION_AUTH_FILE: /run/eva/model-lease/auth.json
       EVA_CONVERSATION_MODEL: ${EVA_CONVERSATION_MODEL:-gpt-5.4-mini}

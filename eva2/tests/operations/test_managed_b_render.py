@@ -47,7 +47,7 @@ def _rendered_graph(
     }
     return {
         "services": {
-            name: {"labels": dict(labels)} for name in sorted(EXPECTED_SERVICES)
+            name: {"labels": dict(labels), **({"environment": {"EVA_BACKGROUND_WORK_ENABLED": "false"}} if name == "core" else {})} for name in sorted(EXPECTED_SERVICES)
         },
         "x-note": "${LEFT_OPEN}" if include_unresolved else "sealed",
     }
@@ -126,6 +126,7 @@ def test_renderer_binds_template_snapshot_and_compose_graph(
     for _, environment in calls:
         assert environment == {
             "EVA_B_CONFIGURATION_SHA256": plan.snapshot_sha256,
+            "EVA_BACKGROUND_WORK_ENABLED": "false",
             "LC_ALL": "C",
         }
     assert environment_files == [
@@ -381,3 +382,21 @@ def test_voice_overlay_preserves_every_other_binding(mutation, household):
             validate(baseline, activated, settings)
     else:
         assert validate(baseline, activated, settings)["activatedSha256"]
+
+
+@pytest.mark.parametrize("value", ["true", None, "0"])
+def test_staging_render_refuses_background_work_even_if_graph_otherwise_matches(monkeypatch, value):
+    plan = _plan(EVA_BACKGROUND_WORK_ENABLED="true")
+    graph = _rendered_graph(plan.snapshot_sha256)
+    graph["services"]["core"]["environment"]["EVA_BACKGROUND_WORK_ENABLED"] = value
+    _mock_compose(monkeypatch, graph)
+    with pytest.raises(RuntimeError, match="staging must disable"):
+        render_managed_b(plan)
+
+
+def test_staging_render_overrides_enabled_configuration(monkeypatch):
+    plan = _plan(EVA_BACKGROUND_WORK_ENABLED="true")
+    calls, files = _mock_compose(monkeypatch, _rendered_graph(plan.snapshot_sha256))
+    assert render_managed_b(plan).receipt()["background_work_enabled"] is False
+    assert "EVA_BACKGROUND_WORK_ENABLED=true" in files[0][2]
+    assert all(env["EVA_BACKGROUND_WORK_ENABLED"] == "false" for _, env in calls)

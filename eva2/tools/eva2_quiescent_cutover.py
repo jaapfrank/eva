@@ -56,6 +56,7 @@ HOUSEHOLD_VOICE_MANIFEST = MANIFEST.with_name("household-voice.compose.yml")
 CONNECTOR_TARGET = "/run/eva/connectors/mcp"
 CONNECTOR_FLAG = "EVA_MCP_GATEWAY_ENABLED"
 PROACTIVE_FLAG = "EVA_TELEGRAM_PROACTIVE_DELIVERY_ENABLED"
+BACKGROUND_FLAG = "EVA_BACKGROUND_WORK_ENABLED"
 PROACTIVE_TOKEN_TARGET = "/run/secrets/telegram_bot_token"
 
 _SCHEMA_HEAD_SCRIPT = (
@@ -465,9 +466,11 @@ class SystemBackend:
         if self._proactive_token(environment) is not None:
             command.extend(["--file", str(PROACTIVE_MANIFEST)])
         try:
-            baseline = json.loads(self._run([*command, "config", "--format", "json"], extra_env=environment))
+            baseline = json.loads(self._run([*command, "config", "--format", "json"], extra_env={**environment, BACKGROUND_FLAG: "true"}))
             activated = json.loads(self._run([*command, "--file", str(CONNECTOR_MANIFEST),
-                                             "config", "--format", "json"], extra_env=environment))
+                                             "config", "--format", "json"], extra_env={**environment, BACKGROUND_FLAG: "true"}))
+            for graph in (baseline, activated):
+                self._verify_rendered_background(graph, enabled=True)
             result = validate_mcp_gateway_render(baseline, activated, settings)
         except (ValueError, RuntimeError) as exc:
             raise QuiescentCutoverError("connector Compose render failed closed") from exc
@@ -476,7 +479,8 @@ class SystemBackend:
         return {**result, "overlaySha256": hashes[str(CONNECTOR_MANIFEST)],
                 "environmentSha256": hashes[str(slot.environment)],
                 "baseManifestSha256": hashes[str(MANIFEST)],
-                "deliveryOverlaySha256": hashes[str(PROACTIVE_MANIFEST)]}
+                "deliveryOverlaySha256": hashes[str(PROACTIVE_MANIFEST)],
+                "backgroundWorkEnabled": "true"}
 
     @classmethod
     def _voice_settings(cls, environment: dict[str, str]) -> dict[str, str] | None:
@@ -578,16 +582,18 @@ class SystemBackend:
                 command.extend(["--file", str(path)])
         hashes = {str(path): _sha256_file(path) for path in paths}
         try:
-            baseline = json.loads(self._run([*command, "config", "--format", "json"], extra_env=environment))
+            baseline = json.loads(self._run([*command, "config", "--format", "json"], extra_env={**environment, BACKGROUND_FLAG: "true"}))
             activated = json.loads(self._run([*command, "--file", str(manifest),
-                                             "config", "--format", "json"], extra_env=environment))
+                                             "config", "--format", "json"], extra_env={**environment, BACKGROUND_FLAG: "true"}))
             validate = validate_household_voice_render if household else validate_dashboard_voice_render
+            for graph in (baseline, activated):
+                self._verify_rendered_background(graph, enabled=True)
             result = validate(baseline, activated, settings)
         except (ValueError, RuntimeError) as exc:
             raise QuiescentCutoverError("voice Compose render failed closed") from exc
         if any(_sha256_file(Path(path)) != digest for path, digest in hashes.items()):
             raise QuiescentCutoverError("voice render inputs changed during verification")
-        return result
+        return {**result, "backgroundWorkEnabled": "true"}
 
     def _verify_slot(self, slot: SlotSpec, *, source: bool) -> dict[str, str]:
         environment = self._environment(slot.environment)
@@ -810,8 +816,22 @@ class SystemBackend:
         ):
             raise QuiescentCutoverError("proactive delivery token mount differs")
 
+    @staticmethod
+    def _verify_rendered_background(graph: dict[str, Any], *, enabled: bool) -> None:
+        if graph.get("services", {}).get("core", {}).get("environment", {}).get(BACKGROUND_FLAG) != str(enabled).lower():
+            raise QuiescentCutoverError("rendered core background work setting differs")
+
+    @staticmethod
+    def _verify_background_setting(inspected: dict[str, Any], *, enabled: bool) -> None:
+        # This checks deployment configuration. Legacy images may ignore it;
+        # only a candidate worker/data probe establishes runtime isolation.
+        values = [row for row in inspected.get("Config", {}).get("Env", [])
+                  if row.startswith(BACKGROUND_FLAG + "=")]
+        if values != [BACKGROUND_FLAG + "=" + str(enabled).lower()]:
+            raise QuiescentCutoverError("core background work setting differs")
+
     def start_writers(self, slot: SlotSpec) -> None:
-        """Stage all writers without the outgoing credential, including rollback."""
+        """Stage without outgoing credentials; disable supported background workers."""
         environment = self._environment(slot.environment)
         self._proactive_token(environment)
         self._connector_settings(environment)
@@ -828,9 +848,9 @@ class SystemBackend:
             str(MANIFEST),
         ]
         start = ["up", "--detach", "--no-deps"]
-        self._run([*compose, *start, "hindsight"])
+        self._run([*compose, *start, "hindsight"], extra_env={BACKGROUND_FLAG: "false"})
         self._wait_container(slot.hindsight)
-        self._run([*compose, *start, "core"])
+        self._run([*compose, *start, "core"], extra_env={BACKGROUND_FLAG: "false"})
         self._wait_container(slot.core)
         expected = environment.get("EVA_LIVING_CORE_IMAGE", "").rsplit("@", 1)[-1]
         inspected = self._inspect(slot.core)
@@ -842,11 +862,12 @@ class SystemBackend:
         self._verify_connector(inspected, None)
         self._verify_voice(inspected, None)
         self._verify_voice(inspected, None, household=True)
+        self._verify_background_setting(inspected, enabled=False)
 
     def activate_delivery(self, slot: SlotSpec, dropin: Path) -> bool:
-        """Release the credential only after the staged runtime and route passed.
+        """Activate background work and credentials after runtime and route checks.
 
-        The core is recreated once with the previously reviewed outgoing overlay.
+        The core is recreated with active workers and any reviewed outgoing overlays.
         Any failure from this commit point may have external effects: the caller
         must stop the target and preserve its new durable state during rollback.
         """
@@ -855,13 +876,6 @@ class SystemBackend:
         connector = self._connector_settings(environment)
         voice = self._voice_settings(environment)
         household_voice = self._household_voice_settings(environment)
-        if token is None and connector is None and voice is None and household_voice is None:
-            inspected = self._inspect(slot.core)
-            self._verify_proactive_mount(inspected, None)
-            self._verify_connector(inspected, None)
-            self._verify_voice(inspected, None)
-            self._verify_voice(inspected, None, household=True)
-            return False
         _read_exact_dropin(dropin, slot.url, owner_uid=self.owner_uid)
         loaded = self._run([SYSTEMCTL, "show", SERVICE, "--property=Environment", "--value"])
         if f"EVA2_CANARY_URL={slot.url}" not in loaded.split() or not self._ready(slot):
@@ -877,6 +891,7 @@ class SystemBackend:
         self._verify_connector(staged, None)
         self._verify_voice(staged, None)
         self._verify_voice(staged, None, household=True)
+        self._verify_background_setting(staged, enabled=False)
         overlays = []
         if token is not None:
             overlays.extend(["--file", str(PROACTIVE_MANIFEST)])
@@ -890,7 +905,7 @@ class SystemBackend:
             DOCKER, "compose", "--env-file", str(slot.environment),
             "--project-name", slot.project, "--file", str(MANIFEST),
             *overlays, "up", "--detach", "--no-deps", "core",
-        ])
+        ], extra_env={BACKGROUND_FLAG: "true"})
         self._wait_container(slot.core)
         activated = self._inspect(slot.core)
         if activated.get("Image") != expected:
@@ -899,6 +914,7 @@ class SystemBackend:
         self._verify_connector(activated, connector)
         self._verify_voice(activated, voice)
         self._verify_voice(activated, household_voice, household=True)
+        self._verify_background_setting(activated, enabled=True)
         if self._household_voice_settings(environment) != household_voice:
             raise QuiescentCutoverError("household voice activation binding changed")
         if self._environment(slot.environment) != environment or self._voice_settings(environment) != voice:
@@ -1486,6 +1502,9 @@ def quiescent_cutover(
         "targetReady": True,
         "proactiveDeliveryEnabled": delivery_enabled,
         "proactiveCredentialWithheldDuringStaging": True,
+        "backgroundWorkConfiguredDuringStaging": False,
+        "backgroundWorkConfiguredAfterActivation": True,
+        "backgroundIsolationBoundary": "Legacy images may ignore the switch; configuration readback is not worker isolation proof.",
     }
 
 
