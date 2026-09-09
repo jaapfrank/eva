@@ -5,10 +5,10 @@ Laatst bijgewerkt: 2026-09-09.
 Doel: [Eva als zelfstandig lerende digitale huisgenoot](PROJECTDOEL.md).
 Gebouwd, getest, live en door jou geaccepteerd zijn verschillende stappen.
 
-VB-001: SP-01 en SP-02 door Jaap geaccepteerd. Speakerontvanger met antwoordnummers en stop-/afspeelbevestiging gebouwd; Python-C++-koppeling en 45 gerichte controles geslaagd. SP-03 nog niet live.
-[Actueel bewijs](evidence/product/VB-001-firmware-wire-candidate-2026-09-09.json).
+VB-001: beveiligde speakerverbinding, langere antwoorden en opruiming bij sessieverloop getest; 55 gerichte controles geslaagd. Firmware met endpoint- en logbeveiliging gebouwd. SP-01 en SP-02 blijven geaccepteerd.
+[Actueel bewijs](evidence/product/VB-001-authenticated-speaker-candidate-2026-09-09.json).
 
-Geauthenticeerde servicebinding en native microfoon-/wakewordbediening aansluiten; reconnect afhandelen, mute en herstel behouden. Daarna complete kandidaat met bruikbaar fysiek herstel en SP-03-praktijkproef.
+Continue microfooninvoer en native wakeword/mute-bediening aansluiten op de bestaande HA/Eva-route. Daarna gehoorde context, bruikbaar fysiek herstel en complete SP-03-praktijkproef.
 
 ## Nu
 
@@ -138,6 +138,14 @@ Klaar betekent:
 - `eva2/tests/fixtures/native_duplex_speaker_host.cpp`
 - `eva2/tests/operations/test_native_duplex_speaker_protocol.py`
 - `eva2/evidence/product/VB-001-firmware-wire-candidate-2026-09-09.json`
+- `eva2/experiments/native-duplex-v1/speaker_endpoint.py`
+- `eva2/experiments/native-duplex-v1/speaker-auth.patch`
+- `eva2/experiments/native-duplex-v1/websocket-no-redirect.patch`
+- `eva2/experiments/native-duplex-v1/websocket-upstream.json`
+- `eva2/experiments/native-duplex-v1/LICENSE.esp_websocket_client`
+- `eva2/experiments/native-duplex-v1/verify_speaker_auth.py`
+- `eva2/tests/operations/test_native_duplex_speaker_endpoint.py`
+- `eva2/evidence/product/VB-001-authenticated-speaker-candidate-2026-09-09.json`
 
 Echte controles:
 
@@ -163,6 +171,7 @@ Echte controles:
 - `pytest -q tests/operations/test_native_duplex_speaker_stop.py`
 - `pytest -q tests/operations/test_native_duplex_speaker_wire.py tests/operations/test_native_duplex_ha_pcm.py tests/operations/test_native_duplex_reply_lane.py`
 - `pytest -q tests/operations/test_native_duplex_speaker_protocol.py tests/operations/test_native_duplex_speaker_stop.py`
+- `pytest -q tests/operations/test_native_duplex_speaker_endpoint.py tests/operations/test_native_duplex_speaker_wire.py`
 
 </details>
 

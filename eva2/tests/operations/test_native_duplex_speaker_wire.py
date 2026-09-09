@@ -109,6 +109,47 @@ async def test_acceptance_does_not_finish_playback():
 
 
 @run_async
+async def test_playback_duration_extends_finish_deadline_but_not_stop():
+    peer = SpeakerPeer()
+    async def longer(text):
+        for _ in range(20):  # 400 ms of accepted audio, possibly still queued
+            yield bytes(960)
+    async with opened(peer, source=longer, timeout=.1) as output:
+        task = asyncio.create_task(output.speak(generation=1, text="langere spraak"))
+        await asyncio.wait_for(peer.end_received.wait(), 1)
+        await asyncio.sleep(.15)
+        assert not task.done()  # longer than the control deadline, shorter than playback
+        peer.finished.set()
+        await task
+        with pytest.raises(wire.WireError):
+            await asyncio.wait_for(output.interrupt(generation=1), .3)
+        assert peer.stop_received.is_set()  # unconfirmed STOP wasn't given 400 ms extra
+
+
+@run_async
+async def test_missing_playback_receipt_still_expires():
+    peer = SpeakerPeer(); peer.stopped.set()
+    async with opened(peer, timeout=.02) as output:
+        with pytest.raises(wire.WireError):
+            await asyncio.wait_for(output.speak(generation=1, text="geen bevestiging"), .5)
+
+
+@run_async
+async def test_retired_receipt_budget_cannot_be_flooded():
+    class Socket:
+        async def send(self, raw):
+            pass
+        async def recv(self):
+            return Packet(Kind.OPENED, b"retired!").encode()
+        async def close(self):
+            pass
+    output = wire.FramedSpeakerOutput(socket=Socket(), pcm=pcm, retired_sessions=(b"retired!",))
+    with pytest.raises(wire.WireError):
+        await asyncio.wait_for(output.start(), .5)
+    assert output._retired_receipts == 8
+
+
+@run_async
 async def test_incompressible_pcm_uses_bounded_binary_transport():
     peer = SpeakerPeer()
     peer.finished.set()

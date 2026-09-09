@@ -12,6 +12,7 @@ from collections.abc import AsyncIterator, Callable
 from dataclasses import dataclass
 from enum import IntEnum
 import secrets
+import math
 import struct
 from typing import Protocol
 
@@ -101,10 +102,17 @@ class FramedSpeakerOutput:
     """
     def __init__(self, *, socket: Socket, pcm: Callable[[str], AsyncIterator[bytes]],
                  session: bytes | None = None, receipt_timeout: float = 3.5,
-                 send_timeout: float = 0.5) -> None:
+                 send_timeout: float = 0.5, retired_sessions: tuple[bytes, ...] = ()) -> None:
         self._socket, self._pcm = socket, pcm
         self.session = session if session is not None else secrets.token_bytes(8)
         Packet(Kind.OPEN, self.session).encode()
+        if (not all(math.isfinite(t) and t > 0 for t in (receipt_timeout, send_timeout))
+                or len(retired_sessions) > 8 or self.session in retired_sessions):
+            raise ValueError("invalid speaker session bounds")
+        for retired in retired_sessions:
+            Packet(Kind.OPEN, retired).encode()
+        self._retired_sessions = frozenset(retired_sessions)
+        self._retired_receipts = 0
         self._receipt_timeout, self._send_timeout = receipt_timeout, send_timeout
         self._writer = asyncio.Lock()
         self._pending: dict[tuple[Kind, int, int], asyncio.Future] = {}
@@ -148,6 +156,14 @@ class FramedSpeakerOutput:
             while True:
                 reply = Packet.decode(await self._socket.recv())
                 if reply.session != self.session:
+                    # Only the authenticated device owner supplies this history.
+                    # A queued receipt may cross reconnect, but can never satisfy
+                    # a new operation. Unknown nonces still fail the connection.
+                    if (reply.session in self._retired_sessions and self._retired_receipts < 8
+                            and reply.kind in {Kind.OPENED, Kind.BEGUN, Kind.ACCEPTED,
+                                               Kind.FINISHED, Kind.STOPPED, Kind.ERROR}):
+                        self._retired_receipts += 1
+                        continue
                     raise WireError("speaker receipt belongs to another session")
                 if reply.kind == Kind.ERROR:
                     raise WireError("speaker reported output failure")
@@ -168,7 +184,7 @@ class FramedSpeakerOutput:
             self._fail(error)
             await self._socket.close()
 
-    async def _exchange(self, packet: Packet, expected: Kind) -> Packet:
+    async def _exchange(self, packet: Packet, expected: Kind, *, playback_seconds: float = 0) -> Packet:
         key = expected, packet.generation, packet.sequence
         if key in self._pending:
             raise WireError("duplicate pending output operation")
@@ -183,7 +199,7 @@ class FramedSpeakerOutput:
                     raise PlaybackInterrupted("answer was interrupted")
                 async with asyncio.timeout(self._send_timeout):
                     await self._socket.send(packet.encode())
-            async with asyncio.timeout(self._receipt_timeout):
+            async with asyncio.timeout(self._receipt_timeout + playback_seconds):
                 return await asyncio.shield(future)
         except TimeoutError as error:
             self._fail(error)
@@ -281,7 +297,10 @@ class FramedSpeakerOutput:
                     raise WireError("speaker accepted frame count differs")
             if not frames:
                 raise WireError("reply audio is empty")
-            reply = await self._exchange(Packet(Kind.END, self.session, generation, sequence), Kind.FINISHED)
+            # Queue acceptance may run ahead of the DAC. Allow the known audio
+            # duration for normal completion, without extending STOP's deadline.
+            reply = await self._exchange(Packet(Kind.END, self.session, generation, sequence),
+                                         Kind.FINISHED, playback_seconds=frames / 24_000)
             if struct.unpack("!I", reply.payload)[0] != frames:
                 raise WireError("speaker played frame count differs")
         finally:

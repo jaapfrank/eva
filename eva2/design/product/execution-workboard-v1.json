@@ -438,8 +438,8 @@
           "updatedOn": "9 september",
           "status": "working",
           "title": "Onderbreken met gewone spraak",
-          "change": "Ontvanger voor onderbreekbare spraak als speakerkandidaat gebouwd. Koppeling met de zender, stop tijdens audio-uitvoer en oude audioberichten gecontroleerd; onafhankelijke review geslaagd.",
-          "result": "Nog geen praktijktest: beveiligde verbinding en microfoonbediening moeten worden aangesloten vóór installatie. SP-01 en SP-02 blijven geaccepteerd."
+          "change": "Beveiligde speakerverbinding en firmware gebouwd en technisch gecontroleerd. Langere antwoorden krijgen hun volledige afspeeltijd; stop houdt voorrang. Intrekking en herstel na opnieuw verbinden getest.",
+          "result": "Nog geen praktijktest: microfoon- en wakewordbediening worden aangesloten voordat de kandidaat op de speaker komt. SP-01 en SP-02 blijven geaccepteerd."
         },
         {
           "id": "SP-04",
@@ -526,9 +526,9 @@
       "document": "eva2/PROJECTDOEL.md",
       "scope": "Digitale huisgenoot: zelfstandig redeneren, initiatief, onbekende vaardigheden leren, handelen, zelfverbetering en aantoonbare concurrentiewinst met open-sourcehergebruik.",
       "sessionGoal": "Het volledige doel blijft actief. Nu VB-001: doorlopende gesprekken via Home Assistant, inclusief onderbreken met gewone spraak.",
-      "currentWork": "VB-001: SP-01 en SP-02 door Jaap geaccepteerd. Speakerontvanger met antwoordnummers en stop-/afspeelbevestiging gebouwd; Python-C++-koppeling en 45 gerichte controles geslaagd. SP-03 nog niet live.",
-      "currentEvidence": "eva2/evidence/product/VB-001-firmware-wire-candidate-2026-09-09.json",
-      "nextStep": "Geauthenticeerde servicebinding en native microfoon-/wakewordbediening aansluiten; reconnect afhandelen, mute en herstel behouden. Daarna complete kandidaat met bruikbaar fysiek herstel en SP-03-praktijkproef.",
+      "currentWork": "VB-001: beveiligde speakerverbinding, langere antwoorden en opruiming bij sessieverloop getest; 55 gerichte controles geslaagd. Firmware met endpoint- en logbeveiliging gebouwd. SP-01 en SP-02 blijven geaccepteerd.",
+      "currentEvidence": "eva2/evidence/product/VB-001-authenticated-speaker-candidate-2026-09-09.json",
+      "nextStep": "Continue microfooninvoer en native wakeword/mute-bediening aansluiten op de bestaande HA/Eva-route. Daarna gehoorde context, bruikbaar fysiek herstel en complete SP-03-praktijkproef.",
       "usageClarification": {
         "date": "2026-09-07",
         "authorizedBy": "Jaap",
@@ -3948,7 +3948,15 @@
         "eva2/tests/fixtures/native_duplex_speaker_host.h",
         "eva2/tests/fixtures/native_duplex_speaker_host.cpp",
         "eva2/tests/operations/test_native_duplex_speaker_protocol.py",
-        "eva2/evidence/product/VB-001-firmware-wire-candidate-2026-09-09.json"
+        "eva2/evidence/product/VB-001-firmware-wire-candidate-2026-09-09.json",
+        "eva2/experiments/native-duplex-v1/speaker_endpoint.py",
+        "eva2/experiments/native-duplex-v1/speaker-auth.patch",
+        "eva2/experiments/native-duplex-v1/websocket-no-redirect.patch",
+        "eva2/experiments/native-duplex-v1/websocket-upstream.json",
+        "eva2/experiments/native-duplex-v1/LICENSE.esp_websocket_client",
+        "eva2/experiments/native-duplex-v1/verify_speaker_auth.py",
+        "eva2/tests/operations/test_native_duplex_speaker_endpoint.py",
+        "eva2/evidence/product/VB-001-authenticated-speaker-candidate-2026-09-09.json"
       ],
       "componentIds": [
         "api-and-runtime-composition",
@@ -3992,7 +4000,8 @@
         "pytest -q tests/operations/test_native_duplex_local_onset.py",
         "pytest -q tests/operations/test_native_duplex_speaker_stop.py",
         "pytest -q tests/operations/test_native_duplex_speaker_wire.py tests/operations/test_native_duplex_ha_pcm.py tests/operations/test_native_duplex_reply_lane.py",
-        "pytest -q tests/operations/test_native_duplex_speaker_protocol.py tests/operations/test_native_duplex_speaker_stop.py"
+        "pytest -q tests/operations/test_native_duplex_speaker_protocol.py tests/operations/test_native_duplex_speaker_stop.py",
+        "pytest -q tests/operations/test_native_duplex_speaker_endpoint.py tests/operations/test_native_duplex_speaker_wire.py"
       ],
       "evidenceRequired": [
         "Onderzoek bestaande Eva2-voicebouwstenen en Bottie/HA-route; leg concrete ontbrekende media-aansluiting, providerkeuze, bestaand mandaat en verbruik vast.",

@@ -1,0 +1,170 @@
+{
+  "taskId": "VB-001",
+  "practiceTestId": "SP-03",
+  "recordedAt": "2026-09-09T13:38:17.157120+00:00",
+  "status": "candidate-built-and-host-verified-not-live",
+  "ownerAcceptances": {
+    "SP-01": "accepted",
+    "SP-02": "accepted",
+    "SP-03": "not-ready-for-practice"
+  },
+  "preparation": {
+    "upstream": "a538d1d1bacc8609061719f0b05c1622147ccb4b",
+    "patchSha256": "e12526be6276ba99f2561dc29440e82b36cb061b83231dccd87097d493dc4d29",
+    "wirePatchSha256": "42232994c8d1876a5831b99adde4973213e091933cfd80bc47c0a029514bccb7",
+    "authPatchSha256": "09c583d5b05239a5682c365c10fccc9b743f9bba6b01ab7fd8e7b2715e77275d",
+    "files": {
+      "__init__.py": "4ef97184e72e24795598729122eb068601b85b01ef4f22206032d661140f5c61",
+      "automation.h": "62882ce3acce7f1e53c4e777543f5a89a57b7893cb6dd20e93878cfb25444035",
+      "eva_output_driver.cpp": "bdb7795cfb98970b35343b67dede212b888f5e1c7cc38a1ef15006cf735ae9f3",
+      "eva_output_protocol.h": "777efe7b30446e956b35160b7194b58444cff691ca414409781f4be47fb3ef77",
+      "playback_stop_barrier.h": "74836cf2f3c0629b721e0d7b0d3dc824455a42f712cce00678b686b8e7518205",
+      "va_pipecat.cpp": "4b13e8ee69272fda9e07ee82b6273d95622435842dcb0b386de095bab00f0b62",
+      "va_pipecat.h": "b45c4d6a865435281957b0a4189198c547b238169d348dce3582eeb51dd5cf85"
+    },
+    "transport": {
+      "revision": "b385915ca011094238f5e8ebc45d539183b09cf2",
+      "patchSha256": "732a98c9933d848e9855d3e841268204bbe67cffc85483abb7552c7579a4219d",
+      "files": {
+        "CMakeLists.txt": "2d26aec8d9f48972e451b7d74c4f2295cd8acd8494e4a33219af6325daf81399",
+        "Kconfig": "b56c434dfbc1958090e26ca86a11f6909894cf77d33a28b26a6d5eb8787e5651",
+        "LICENSE": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+        "esp_websocket_client.c": "675e180c0bbde99159bb24efda4129081cdafd9d93095ea24b2bd12e1fe3942a",
+        "idf_component.yml": "bcea608b039cef4d344fdccb5a949e34ea1fc8fc7a9a880dae9f3d84e41d52fd",
+        "include/esp_websocket_client.h": "c0d40ef8ba452cc24269d5cd12312db9b548c5547ae3946029069ebce052fac4"
+      }
+    },
+    "deployable": false
+  },
+  "targetedTests": {
+    "passed": 55,
+    "scope": "Endpoint real TLS/WebSocket tests; Python output/PCM/replylane; C++ protocol/barrier tests. Physical speaker represented by explicit test doubles."
+  },
+  "authProbe": {
+    "status": "passed",
+    "redirectCodesRejectedBeforeUriChange": [
+      301,
+      302,
+      303,
+      307,
+      308
+    ],
+    "legacyRedirectBehaviorRetained": true,
+    "unsafeConfigurationsRejected": [
+      "plaintext",
+      "dynamic-provisioning",
+      "userinfo",
+      "wrong-path",
+      "query-credential",
+      "missing-ca",
+      "header-injection",
+      "legacy-with-credential"
+    ],
+    "transportSourceSha256": "675e180c0bbde99159bb24efda4129081cdafd9d93095ea24b2bd12e1fe3942a",
+    "scope": "Actual prepared C redirect branch under host transport stubs/UBSan; actual Python validation function. Not a physical TLS handshake."
+  },
+  "build": {
+    "status": "success",
+    "esphome": "2026.6.2",
+    "durationSeconds": 234.85,
+    "freshWorkspace": true,
+    "sourceMatches": {
+      "automation.h": true,
+      "eva_output_driver.cpp": true,
+      "eva_output_protocol.h": true,
+      "playback_stop_barrier.h": true,
+      "va_pipecat.cpp": true,
+      "va_pipecat.h": true
+    },
+    "compiledTransportMatchesPreparedSource": true,
+    "protocolCredentialAndCaSettersPresent": true,
+    "dynamicTagLevelControlEnabled": true,
+    "firmwareOtaSha256": "4a86487cef3bd115eea2ef3dcdf6c364cb16e31c8b7c82bd80d1d37894b7898b",
+    "configIsCompileOnly": true,
+    "physicalDeployment": false
+  },
+  "independentReview": {
+    "reviewer": "co006_review",
+    "endpointLifecycle": "bounded GO; seven endpoint tests independently passed",
+    "redirectPatch": "bounded source GO; actual redirect branch and eight negative configuration cases independently repeated",
+    "buildBinding": "bounded GO; independently read back six C++ source hashes, local patched transport compile input, generated credential/CA/protocol setters, dynamic logging config, OTA hash and successful 234.85s build",
+    "credentialLoggingGuard": "bounded source GO; transport_ws/websocket_client tags disabled before I/O; generated CONFIG_LOG_DYNAMIC_LEVEL_CONTROL=y independently read back"
+  },
+  "findingsAndFixes": [
+    "Normal FINISHED deadline incorrectly matched short control deadline. It now includes known offered PCM duration; STOP does not.",
+    "Expiry/session exception used to close socket before STOP. Work cancellation and output close now precede transport closure; expiry during active playback with delayed STOPPED tested.",
+    "Known retired-device receipts are discarded without satisfying current requests, with a budget of eight. Unknown nonces still fail.",
+    "Pinned Espressif1.7.0 followed redirects internally, bypassing endpoint freeze. Optional disable_redirect rejects before URI change; enabled for Eva only.",
+    "One compile used a relative source path pointing to the earlier auth copy. That compile was explicitly terminated; fixed source generation and local patched dependency were verified before replacement build.",
+    "The old build cache continued to reference the former managed archive after selecting the local component. Final build uses a fresh workspace and matching local component name.",
+    "ESP-IDF transport_ws logs complete upgrade headers even on failed writes. The two WebSocket transport/client log tags are disabled before authenticated I/O, with dynamic tag-level control enabled in the generated firmware. This reduces diagnostic output for those tags device-wide."
+  ],
+  "limitations": [
+    "No firmware flashed, installed endpoint, live device credential or real physical TLS handshake.",
+    "Session callback still needs continuous microphone/wake/mute integration and native household conversation composition.",
+    "Known-nonce history is process-local; firmware send/reset failure paths and physical reconnect still require validation.",
+    "Voice hears-context preservation, physical recovery, acoustic interruption and p95 still open.",
+    "Temporary TLS test credentials/certificates only; no household audio or model request sent by these probes."
+  ],
+  "sourceHashes": {
+    "eva2/experiments/native-duplex-v1/speaker_endpoint.py": "bd7c0b50918c719765e25c77b5246663634227db4dff1ace3eab29b3aeaba6a8",
+    "eva2/experiments/native-duplex-v1/speaker_wire.py": "ce325b3357b7ab5f723aa28f3e06f0dcd6cba478497213f7b66257c1f2bf9181",
+    "eva2/experiments/native-duplex-v1/speaker-auth.patch": "09c583d5b05239a5682c365c10fccc9b743f9bba6b01ab7fd8e7b2715e77275d",
+    "eva2/experiments/native-duplex-v1/websocket-no-redirect.patch": "732a98c9933d848e9855d3e841268204bbe67cffc85483abb7552c7579a4219d",
+    "eva2/experiments/native-duplex-v1/websocket-upstream.json": "8ae7b21f159c13500ea5df74801e4cd2a4effea24e34dc64c367be252bc764b5",
+    "eva2/experiments/native-duplex-v1/LICENSE.esp_websocket_client": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+    "eva2/experiments/native-duplex-v1/prepare_speaker.py": "cc6963210eb3b4264b9c723d0396da5bb803542538938e60283cb7e73f5659ca",
+    "eva2/experiments/native-duplex-v1/verify_speaker_auth.py": "7bb6694736711c003dcb222efff8fa26edeaa2d4fc91c0c256054f095bc99cf1",
+    "eva2/experiments/native-duplex-v1/README.md": "229431b74c3ede80bf0735738b9abc663b6b4b67507e47a9cdfbc334929cbbe2",
+    "eva2/experiments/native-duplex-v1/speaker-wire-v1.md": "9f7284b4e6e67c12e8535c68ee411a9c470d827cf276744f87a9cbf6ba1c8e87",
+    "eva2/tests/operations/test_native_duplex_speaker_endpoint.py": "180023af32cf7546e098c0f6086cbda5162b13d34c2007b6a446de551eb4dc3c",
+    "eva2/tests/operations/test_native_duplex_speaker_wire.py": "87639bbd5486f8580f0f0aa91679c73d63e4c70dd3e35b67179e1cea74dbaedb"
+  },
+  "cppOutputProbe": {
+    "status": "passed",
+    "normalReceipts": [
+      [
+        "FINISHED",
+        1,
+        580
+      ],
+      [
+        "STOPPED",
+        1,
+        580
+      ]
+    ],
+    "interruptedReceipts": [
+      [
+        "STOPPED",
+        1,
+        0
+      ],
+      [
+        "FINISHED",
+        2,
+        580
+      ],
+      [
+        "STOPPED",
+        2,
+        580
+      ]
+    ],
+    "driverBoundaries": [
+      "held PCM discarded before STOPPED",
+      "STOP during unfinished play waits for barrier",
+      "previous-lifetime callback excluded"
+    ],
+    "sourceHashes": {
+      "va_pipecat.h": "b45c4d6a865435281957b0a4189198c547b238169d348dce3582eeb51dd5cf85",
+      "eva_output_driver.cpp": "bdb7795cfb98970b35343b67dede212b888f5e1c7cc38a1ef15006cf735ae9f3",
+      "va_pipecat.cpp": "4b13e8ee69272fda9e07ee82b6273d95622435842dcb0b386de095bab00f0b62",
+      "playback_stop_barrier.h": "74836cf2f3c0629b721e0d7b0d3dc824455a42f712cce00678b686b8e7518205",
+      "automation.h": "62882ce3acce7f1e53c4e777543f5a89a57b7893cb6dd20e93878cfb25444035",
+      "eva_output_protocol.h": "777efe7b30446e956b35160b7194b58444cff691ca414409781f4be47fb3ef77"
+    },
+    "scope": "Actual prepared C++ receiver, driver, drain and stop barrier; host speaker/clock/locks; UBSan. Not hardware."
+  },
+  "dashboardReadback": "http://127.0.0.1:44712/project-state exactly matches the current board, including accepted SP-01/SP-02 and working SP-03"
+}

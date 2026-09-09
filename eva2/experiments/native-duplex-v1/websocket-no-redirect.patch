@@ -1,0 +1,41 @@
+--- a/esp_websocket_client.c
++++ b/esp_websocket_client.c
+@@ -93,6 +93,7 @@
+     char                        *auth;
+     int                         port;
+     bool                        auto_reconnect;
++    bool                        disable_redirect; // Eva: keep credentials at the configured endpoint
+     bool                        close_reconnect;
+     void                        *user_context;
+     int                         network_timeout_ms;
+@@ -428,6 +429,7 @@
+ 
+ 
+     cfg->user_context = config->user_context;
++    cfg->disable_redirect = config->disable_redirect;
+     cfg->auto_reconnect = true;
+     if (config->disable_auto_reconnect) {
+         cfg->auto_reconnect = false;
+@@ -1206,6 +1208,12 @@
+             }
+ #if WS_TRANSPORT_REDIRECT_HEADER_SUPPORT
+             else if (WS_HTTP_REDIRECT(result)) {
++                if (client->config->disable_redirect) {
++                    // Eva: a redirect must not move a provisioned credential.
++                    esp_websocket_client_error(client, "HTTP redirect refused");
++                    esp_websocket_client_abort_connection(client, WEBSOCKET_ERROR_TYPE_TCP_TRANSPORT);
++                    break;
++                }
+                 const char *redir = esp_transport_ws_get_redir_uri(client->transport);
+                 if (redir) {
+                     // Redirecting to a new URI
+--- a/include/esp_websocket_client.h
++++ b/include/esp_websocket_client.h
+@@ -112,6 +112,7 @@
+     const char                  *username;                  /*!< Using for Http authentication, only support basic auth now */
+     const char                  *password;                  /*!< Using for Http authentication */
+     const char                  *path;                      /*!< HTTP Path, if not set, default is `/` */
++    bool                        disable_redirect;           /*!< Eva: refuse HTTP redirects before changing URI */
+     bool                        disable_auto_reconnect;     /*!< Disable the automatic reconnect function when disconnected */
+     bool                        enable_close_reconnect;     /*!< Enable reconnect after server close */
+     void                        *user_context;              /*!< HTTP user data context */

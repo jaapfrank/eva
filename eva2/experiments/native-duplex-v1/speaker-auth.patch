@@ -1,0 +1,155 @@
+--- a/va_pipecat.h
++++ b/va_pipecat.h
+@@ -38,6 +38,8 @@
+   // Pipecat VAD can detect barge-in. Use a microphone path with suitable AEC.
+   void set_barge_in(bool v) { barge_in_ = v; }
+   void set_eva_pcm_protocol(bool enabled) { eva_pcm_protocol_ = enabled; }
++  void set_eva_credential(const std::string &credential) { eva_authorization_ = "Authorization: Bearer " + credential + "\r\n"; }
++  void set_eva_server_ca(const std::string &certificate) { eva_server_ca_ = certificate; }
+   void set_playback_buffer_size(size_t bytes) { audio_buf_bytes_ = bytes; }
+   // Sets the output-volume multiplier applied to TTS in handle_binary_.
+   // Driven from yaml by external_media_player's volume / mute state so the
+@@ -101,6 +103,7 @@
+   void eva_output_frames_(uint32_t frames, int64_t timestamp);
+   void eva_pump_receipts_();
+   bool eva_pcm_protocol_{false};
++  std::string eva_authorization_, eva_server_ca_;
+   EvaOutputProtocol eva_output_;
+   EvaWireAssembler eva_assembler_;
+   std::array<uint8_t, EvaOutputProtocol::MAX_RECORD> eva_held_record_{};
+--- a/va_pipecat.cpp
++++ b/va_pipecat.cpp
+@@ -1,3 +1,4 @@
++#include "esp_log.h"
+ #include "va_pipecat.h"
+ #include "automation.h"
+ 
+@@ -62,6 +63,10 @@
+ 
+ void VaPipecat::set_url(const std::string &url) {
+   if (url == this->url_) {
++    return;
++  }
++  if (this->eva_pcm_protocol_ && this->setup_complete_) {
++    ESP_LOGW(TAG, "Eva endpoint changes require reprovisioning; credentials stay bound to their server");
+     return;
+   }
+   this->url_ = url;
+@@ -551,6 +556,17 @@
+ }
+ 
+ void VaPipecat::connect_() {
++  if (this->eva_pcm_protocol_) {
++    // ESP-IDF transport_ws logs complete Authorization headers even on a
++    // failed upgrade write. Disable that tag before any authenticated I/O.
++    esp_log_level_set("transport_ws", ESP_LOG_NONE);
++    esp_log_level_set("websocket_client", ESP_LOG_NONE);
++  }
++  if (this->eva_pcm_protocol_ && (this->url_.rfind("wss://", 0) != 0 ||
++      this->eva_authorization_.empty() || this->eva_server_ca_.empty() || this->auto_provision_)) {
++    ESP_LOGE(TAG, "Eva requires a fixed authenticated TLS endpoint");
++    return;
++  }
+   if (this->url_.empty()) {
+     ESP_LOGW(TAG, "Realtime backend URL is empty; websocket connection disabled");
+     return;
+@@ -575,6 +591,15 @@
+   cfg.ping_interval_sec = 60;
+   cfg.pingpong_timeout_sec = 180;
+   cfg.disable_pingpong_discon = true;
++  if (this->eva_pcm_protocol_) {
++    cfg.disable_redirect = true;
++    cfg.headers = this->eva_authorization_.c_str();
++    cfg.cert_pem = this->eva_server_ca_.c_str();
++    cfg.skip_cert_common_name_check = false;
++    cfg.ping_interval_sec = 20;
++    cfg.pingpong_timeout_sec = 20;
++    cfg.disable_pingpong_discon = false;
++  }
+ 
+   esp_websocket_client_handle_t handle = esp_websocket_client_init(&cfg);
+   if (handle == nullptr) {
+--- a/__init__.py
++++ b/__init__.py
+@@ -1,3 +1,7 @@
++from pathlib import Path
++import re
++from urllib.parse import urlsplit
++
+ import esphome.codegen as cg
+ import esphome.config_validation as cv
+ from esphome import automation, final_validate as fv
+@@ -18,6 +22,8 @@
+ CONF_AUTO_PROVISION = "auto_provision"
+ CONF_BARGE_IN = "barge_in"
+ CONF_EVA_PCM_PROTOCOL = "eva_pcm_protocol"
++CONF_EVA_CREDENTIAL = "eva_credential"
++CONF_EVA_SERVER_CA = "eva_server_ca"
+ CONF_PLAYBACK_BUFFER_SIZE = "playback_buffer_size"
+ CONF_ON_PHASE = "on_phase"
+ CONF_ON_TRANSCRIPT = "on_transcript"
+@@ -59,6 +65,25 @@
+ SetUrlAction = va_pipecat_ns.class_("SetUrlAction", automation.Action)
+ SetVolumeAction = va_pipecat_ns.class_("SetVolumeAction", automation.Action)
+ ConnectedCondition = va_pipecat_ns.class_("ConnectedCondition", automation.Condition)
++
++def validate_eva_transport(config):
++    if not config[CONF_EVA_PCM_PROTOCOL]:
++        if CONF_EVA_CREDENTIAL in config or CONF_EVA_SERVER_CA in config:
++            raise cv.Invalid("Eva credentials require eva_pcm_protocol")
++        return config
++    endpoint = urlsplit(config[CONF_URL])
++    if (endpoint.scheme != "wss" or not endpoint.hostname or endpoint.username or endpoint.password
++            or endpoint.path != "/eva-speaker/v1" or endpoint.query or endpoint.fragment
++            or config[CONF_AUTO_PROVISION]):
++        raise cv.Invalid("Eva requires a fixed wss endpoint at /eva-speaker/v1 and auto_provision: false")
++    if not re.fullmatch(r"[A-Za-z0-9_-]{43}", config.get(CONF_EVA_CREDENTIAL, "")):
++        raise cv.Invalid("Eva requires a provisioned 32-byte base64url credential")
++    certificate = config.get(CONF_EVA_SERVER_CA, "")
++    if (not certificate.startswith("-----BEGIN CERTIFICATE-----") or
++            "-----END CERTIFICATE-----" not in certificate or len(certificate) > 8192):
++        raise cv.Invalid("Eva requires a PEM server CA certificate")
++    return config
++
+ 
+ CONFIG_SCHEMA = cv.All(
+     cv.Schema(
+@@ -74,6 +99,8 @@
+             ),
+             cv.Optional(CONF_BARGE_IN, default=True): cv.boolean,
+             cv.Optional(CONF_EVA_PCM_PROTOCOL, default=False): cv.boolean,
++            cv.Optional(CONF_EVA_CREDENTIAL): cv.string_strict,
++            cv.Optional(CONF_EVA_SERVER_CA): cv.string_strict,
+             cv.Optional(CONF_PLAYBACK_BUFFER_SIZE, default="2MB"): cv.All(
+                 cv.validate_bytes,
+                 cv.int_range(min=64 * 1024, max=4 * 1024 * 1024),
+@@ -146,14 +173,17 @@
+         extra=cv.ALLOW_EXTRA,
+     ),
+     _final_validate,
++    validate_eva_transport,
+ )
+ 
+ 
+ async def to_code(config):
++    if config[CONF_EVA_PCM_PROTOCOL]:
++        esp32.add_idf_sdkconfig_option("CONFIG_LOG_DYNAMIC_LEVEL_CONTROL", True)
+     # esp-idf managed component providing esp_websocket_client.
+     esp32.add_idf_component(
+-        name="espressif/esp_websocket_client",
+-        ref="1.7.0",
++        name="esp_websocket_client",
++        path=str(Path(__file__).resolve().parent / "esp_websocket_client"),
+     )
+ 
+     var = cg.new_Pvariable(config[CONF_ID])
+@@ -163,6 +193,9 @@
+     cg.add(var.set_auto_provision(config[CONF_AUTO_PROVISION]))
+     cg.add(var.set_barge_in(config[CONF_BARGE_IN]))
+     cg.add(var.set_eva_pcm_protocol(config[CONF_EVA_PCM_PROTOCOL]))
++    if config[CONF_EVA_PCM_PROTOCOL]:
++        cg.add(var.set_eva_credential(config[CONF_EVA_CREDENTIAL]))
++        cg.add(var.set_eva_server_ca(config[CONF_EVA_SERVER_CA]))
+     cg.add(var.set_playback_buffer_size(config[CONF_PLAYBACK_BUFFER_SIZE]))
+ 
+     # Own an active microphone source during realtime turns. The underlying

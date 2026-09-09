@@ -1,0 +1,15 @@
+{
+  "repository": "https://github.com/espressif/esp-protocols",
+  "revision": "b385915ca011094238f5e8ebc45d539183b09cf2",
+  "component": "components/esp_websocket_client",
+  "version": "1.7.0",
+  "license": "Apache-2.0",
+  "files": {
+    "esp_websocket_client.c": "c2f63db401f79481f4cb58350999d4fb02b1749fbfbec23c1ba5b7c064c091fc",
+    "include/esp_websocket_client.h": "f12804e09dddc278110b2628cb805c5d76183d7e5d3564df24724d22da543520",
+    "CMakeLists.txt": "2d26aec8d9f48972e451b7d74c4f2295cd8acd8494e4a33219af6325daf81399",
+    "Kconfig": "b56c434dfbc1958090e26ca86a11f6909894cf77d33a28b26a6d5eb8787e5651",
+    "idf_component.yml": "bcea608b039cef4d344fdccb5a949e34ea1fc8fc7a9a880dae9f3d84e41d52fd",
+    "LICENSE": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+  }
+}

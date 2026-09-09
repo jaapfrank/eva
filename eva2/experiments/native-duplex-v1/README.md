@@ -16,7 +16,7 @@ Het bestaande `VoicePlaybackController` verzorgt V01-playback voor een reeds uit
 
 ## Nog nodig voor de gevraagde functie
 
-- Geauthenticeerde speakertransport-aansluiting en generatiebinding op de werkelijke audio-uitvoer; de huidige Pipecat-wirelaag bewijst dat niet automatisch.
+- De gebouwde TLS-serveradapter voorzien van geverifieerde HA-apparaatbindingen en op de echte speaker beproeven; hostproeven bewijzen geen fysieke ontvangst.
 - Continue microfooninvoer, echo-onderdrukking, VAD en behoud van de eerste woorden bij onderbreken.
 - STT is op de experimentele beurtcoördinatie aangesloten. De bestaande HA TTS-adapter moet nog op de werkelijke audio-uitvoer worden aangesloten; geen andere realtime-modelprovider is geactiveerd.
 - Stemuitvoer en overige media exclusief overnemen en weer vrijgeven. De compatibiliteitsfirmware is nadrukkelijk geen gebruiksconfiguratie.
@@ -42,11 +42,11 @@ Voor een tijdelijke Linux/CPython3.12-proef: installeer `vad-requirements.lock` 
 
 De onafhankelijke controle van de gepinde `va_pipecat`-component bevestigt dat `flush_playback_queue_` alleen de PSRAM-ring leegt. `drain_audio_` kan daarna nog een oude `speaker_->play` afmaken; de controle na die call herstelt alleen de boekhouding. Het huidige protocol geeft ook geen generatiegebonden stop- of playbackbevestiging.
 
-De onderstaande aanpassing hergebruikt de bestaande audio-task als enige eigenaar van `play/start/stop`, met voorrang voor stoppen. Een eigen resampler/mixerbron scheidt Eva's invoer van de announcement- en mediabron. Audiobatches en bevestigingen moeten nog aan sessie en generatie worden gebonden. Reeds gemengde I²S-/DAC-samples vormen een aparte meetgrens; timeout mag niet als bevestigde stilte gelden. De werkende speaker krijgt deze wijzigingen pas als complete kandidaat met bruikbaar herstel.
+De onderstaande aanpassing hergebruikt de bestaande audio-task als enige eigenaar van `play/start/stop`, met voorrang voor stoppen. Een eigen resampler/mixerbron scheidt Eva's invoer van de announcement- en mediabron. Het nieuwe protocol bindt audiobatches en bevestigingen aan sessie en generatie. Reeds gemengde I²S-/DAC-samples vormen een aparte meetgrens; timeout mag niet als bevestigde stilte gelden. De werkende speaker krijgt deze wijzigingen pas als complete kandidaat met bruikbaar herstel.
 
 ### Lokale stopaanpassing gebouwd als kandidaat
 
-`speaker-stop.patch` past de bestaande `va_pipecat`-component aan op de pin in `speaker-upstream.json`. `prepare_speaker.py --upstream <bronmap> --output <nieuwe-bouwmap>` controleert de vier bronbestanden en MIT-licentie op hash, past de patch toe en legt de resulterende hashes vast. Een bestaande bouwmap wordt niet overschreven. Er is geen OTA- of flashactie in dit hulpmiddel.
+`speaker-stop.patch` past de bestaande `va_pipecat`-component aan op de pin in `speaker-upstream.json`. De actuele voorbereiding gebruikt `prepare_speaker.py --upstream <bronmap> --websocket-upstream <esp-websocket-client-1.7.0-map> --output <nieuwe-bouwmap>`. Dit controleert de speaker- en transportbronbestanden en hun MIT-/Apache-2.0-licenties op hash, past de patches toe en legt de resulterende hashes vast. Een bestaande bouwmap wordt niet overschreven. Er is geen OTA- of flashactie in dit hulpmiddel.
 
 De bestaande audiotaak is nu de enige aanroeper van speaker `play/start/stop`. Annuleren leegt de ring en vraagt een stop aan, ook als de ring al leeg was. Een begrensde kopie van maximaal20ms PCM voorkomt dat de reader tijdens `play` opnieuw gebruikte ringinhoud leest. Writes controleren bij het vastleggen opnieuw of een stop loopt. Stoppen gaat vóór de netwerkboodschap; verbindingsverlies gebruikt dezelfde lokale stopaanvraag.
 
@@ -76,4 +76,20 @@ De volledige kandidaat compileert met ESPHome2026.6.2 in244,21seconden. De gegen
 
 De onafhankelijke review heeft protocol/barrier, driverinteroperabiliteit en buildbinding zelf geverifieerd.45 gerichte pytest-controles slagen. Bewijs: `evidence/product/VB-001-firmware-wire-candidate-2026-09-09.json`. Deze kandidaat is niet geflasht. De eerder beschreven lokale stopkandidaat blijft afzonderlijk reproduceerbaar via zijn vastgelegde bron en bewijs.
 
-Volgende stap: geauthenticeerde servicebinding en native microfoon-/wakewordbediening, inclusief behoud van mute en herstel. Een receipt die al uit de wachtrij is genomen kan tijdens reconnect bij een nieuwe verbinding terechtkomen; sessiecontrole weigert hem veilig, maar het herstel kan hierdoor mislukken. Dat blijft een expliciete beperking tot de reconnectroute is aangesloten en beproefd. Daarna volgen bruikbaar fysiek herstel en de complete speakerproef. SP-01 en SP-02 blijven geaccepteerd; SP-03 is nog niet beschikbaar voor een praktijktest.
+Na deze ontvangerbuild is de hieronder beschreven serveradapter toegevoegd. De resterende aansluiting betreft native microfoon-/wakewordbediening, inclusief behoud van mute en herstel. Daarna volgen bruikbaar fysiek herstel en de complete speakerproef. SP-01 en SP-02 blijven geaccepteerd; SP-03 is nog niet beschikbaar voor een praktijktest.
+
+### Apparaattoegang en herstel van de verbinding
+
+`speaker_endpoint.py` levert nu de TLS-serveradapter voor deze uitvoer. De samenstellende service moet vooraf gecontroleerde HA-huishoudbindingen en afzonderlijke credentialhashes aanleveren. Een apparaat kan zelf geen persoon, apparaat-ID of gespreks-ID kiezen. De adapter accepteert uitsluitend een apparaatsleutel in de Authorization-header, zonder browser-Origin, URL-token of tweede gelijktijdige eigenaar. Intrekken sluit nieuwe toegang onmiddellijk en wacht op opruiming van de actieve sessie. Verbindingsverlies en een begrensde sessieduur annuleren werk; bij een nog levende verbinding blijft STOP/STOPPED beschikbaar voordat de socket sluit.
+
+Per geauthenticeerd apparaat bewaart de adapter acht voorgaande verbindingsnonces. Maximaal acht achtergebleven receipts met zo'n bekende nonce worden genegeerd; zij kunnen geen nieuwe opdracht bevestigen. Een onbekende nonce of meer oude receipts sluit de verbinding. De historie leeft binnen dit serviceproces. De echte netwerkproef laat een oud FINISHED-bericht tijdens reconnect aankomen en voltooit daarna de nieuwe sessie. Dit vangt de eerder gevonden achtergebleven receipt aan serverzijde op; een fysieke reconnectproef en firmwarefouten rond gelijktijdige send/reset blijven onderdeel van de volledige route.
+
+Normale afspeelvoltooiing krijgt nu de aangeboden PCM-duur plus de receiptmarge om te eindigen. Anders zou een langer antwoord door de korte controldeadline worden afgebroken terwijl de speaker nog terecht afspeelt. De STOP-deadline blijft kort en onafhankelijk. Een ontbrekende FINISHED blijft een fout.
+
+`speaker-auth.patch` configureert WSS, servercertificaatcontrole en de apparaatsleutel op de speaker. In deze modus is automatische endpointprovisioning verboden; een draaiend apparaat kan zijn geconfigureerde bestemming niet met een gewone URL-actie veranderen. De gepinde Espressif-client volgde daarnaast intern HTTP-redirects. `websocket-no-redirect.patch` voegt daarom een optionele weigering toe vóór URI-wijziging of vervolgverbinding. Alleen Eva schakelt die in. De oorspronkelijke client blijft in de voorbereide kandidaat behouden met Apache-2.0-licentie en de herkomst in `websocket-upstream.json`.
+
+ESP-IDF kan volledige upgradeheaders loggen, ook op foutniveau bij een mislukte write. De kandidaat schakelt daarom de tags `transport_ws` en `websocket_client` uit vóór geauthenticeerde I/O en zet de benodigde dynamische logniveaucontrole aan. Dit vermindert diagnostiek voor die twee tags op het hele apparaat; overige logtags blijven beschikbaar. De echte firmware-handshake en een foutscenario moeten nog fysiek bevestigen dat de apparaatsleutel niet in logs verschijnt.
+
+De gerichte Python-proeven gebruiken echte TLS en WebSockets met een tijdelijk testcertificaat: verkeerde sleutels, onbekende servercertificaten, dubbele toegang, intrekking, reconnect en sessieverloop tijdens playback. `verify_speaker_auth.py --component <voorbereide-component>` voert daarnaast de werkelijke gepatchte C-redirectbranch uit onder UBSan en controleert onveilige configuraties. Dit is geen fysieke ESP32-TLS-handshake. De adapter is nog geen geïnstalleerde dienst: continue microfooninvoer, native wakeword/mute-bediening, gehoorde context en fysieke herstel-/acceptatieproeven ontbreken nog.
+
+De definitieve kandidaat is in een verse bouwmap succesvol gecompileerd in234,85seconden.55 gerichte controles slagen; de C++-uitvoerproef en redirectproef slagen ook op deze voorbereide bron. De onafhankelijke review bevestigt de zes C++-bronhashes, de gebruikte gepatchte transportbron, de gegenereerde instellingen en de OTA-hash. Bewijs: `evidence/product/VB-001-authenticated-speaker-candidate-2026-09-09.json`. De kandidaat gebruikt alleen testcredentials en is niet op een speaker geplaatst.
