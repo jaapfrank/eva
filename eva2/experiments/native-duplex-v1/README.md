@@ -130,3 +130,24 @@ De hieronder beschreven firmware-uitbreiding vervangt in de optionele Eva-modus 
 De volledige ESPHome2026.6.2-build slaagt in 243,38 seconden. Alle negen gegenereerde componentbronnen matchen de voorbereide hashes; de echte native start/stop/mute-bedrading, gepatchte WebSocket-client en logguard zijn onafhankelijk gecontroleerd. 139 gerichte tests slagen. De echte C++-driver/stop-proef met Python-zender en de authenticatieproef slagen ook tegen deze voorbereide kandidaat. Een extra raw-wrapperproef onderbreekt juist tijdens omzetting: oude audio behoudt het oude token.
 
 Bewijs: `evidence/product/VB-001-native-input-firmware-2026-09-09.json`. Dit is een gebouwde, onafhankelijk beoordeelde kandidaat met host- en netwerkbewijs; geen fysieke microfoon-, echo- of latentieproef. De samenstellende dienst met werkelijke apparaatbinding en HA/Eva-clients, gehoorde context, bruikbaar fysiek herstel en volledige woonkamerpraktijk moeten nog worden afgerond. Er is geen speaker geflasht en geen nieuwe dienst geïnstalleerd. SP-03 blijft nog niet beschikbaar voor een eigenaarstest.
+
+### Uitvoerbare kandidaatsamenstelling
+
+`speaker_service.py` verbindt de bestaande `EvaVoiceClient`, HA-spraakadapters, `HomeAssistantPCM`, Silero-factory, `HouseholdSpeakerSession` en TLS-endpoint. Het maakt geen tweede model-, geheugen- of toolroute. De configuratie bevat expliciete apparaatbindingsgegevens en credentialhashes; de speaker kan geen persoon of gesprek kiezen. Voor luisteren controleert de service het gepinde model en de lokale dependencies, TLS-key en HA-registerbinding. De geselecteerde pipeline moet de verwachte taal, STT-/TTS-engine en standaardstem hebben.
+
+Voor een lokale kandidaat, met bestaande Eva-dependencies en de eerder gepinde VAD-packages op PYTHONPATH:
+
+```sh
+PYTHONPATH=src:/private/vad-packages python experiments/native-duplex-v1/speaker_service.py --config /private/candidate.json --check-only
+PYTHONPATH=src:/private/vad-packages python experiments/native-duplex-v1/speaker_service.py --config /private/candidate.json
+```
+
+De JSON-velden volgen `ServiceConfig`: listeneradres/poort, absolute certificaat-/key-/modelpaden, HA-origin en token, pipeline/taal/engines, Eva-origin en token, plus `grants` met `binding` en `credential_sha256`. Het bestand en de private key moeten gewone owner-only bestanden zijn. `--check-only` opent geen speakerlistener en start geen opname of provider-/corebeurt. De gewone opdracht start expliciet de kandidaat; SIGTERM/SIGINT sluit hem gecontroleerd. Dit bestand installeert geen systeemdienst en wijzigt geen HA-instellingen of firmware. De bestaande [HA 2026.8.1 pipeline-get API](https://github.com/home-assistant/core/blob/2026.8.1/homeassistant/components/assist_pipeline/pipeline.py) levert de readback.
+
+Shutdown sluit eerst nieuwe toelating, houdt bestaande verbindingen beschikbaar voor STOPPED en CAPTURE_ENDED, en ruimt daarna native-clienttaken, WebSocket-server en HTTP-pool op. Eén eigen taak bewaakt die volledige volgorde, ook bij herhaalde annulering. Configuratie/grants zijn statisch gedurende deze servicelevensduur; een bestandswijziging wordt niet automatisch geladen. `SpeakerEndpoint.revoke` en service-stop trekken toegang in. Continue beleids-/configbewaking is hiermee niet bewezen.
+
+De volledige servicetest gebruikt echte TLS, HTTP, HA-adapters, native client en FFmpeg. HA, core, detector en speaker zijn expliciete testdubbels. Stop, nieuwe vraag zonder wake en mute doorlopen de samenstelling. De echte woonkamer-registerbinding, actuele spraakpipeline, lokaal gepinde Silero en token-/devicebinding aan de actieve Eva-slotpolicy zijn apart read-only gecontroleerd; geen echte STT/TTS/corebeurt of microfoonstart.
+
+De onafhankelijke serviceherhaling legde een bestaande race in de optionele HA-segmentcallback bloot. De callback beëindigde de audiolease, waarna de zender nog EOF probeerde te versturen terwijl HA de run al had beëindigd. Zo kon een geldig herkend antwoord alsnog als producerfout verdwijnen. Een nieuwe test maakt dit deterministisch zichtbaar op de oude code. De adapter stopt en joint de zender nu vóór de callback; reeds opgetreden producerfouten blijven fataal. De nieuwe beperkte endpointdiagnostiek bewaart maximaal acht foutlocaties en fouttypen, zonder exceptiontekst, bindingsgegevens, transcript of credential.
+
+146 gerichte controles slagen; de onafhankelijke reviewer heeft 90 connector-/service-/endpoint-/microfooncontroles herhaald en de racefix bevestigd. Zie `evidence/product/VB-001-speaker-service-composition-2026-09-09.json`. Dit bewijst geen fysieke audio of oorzaak van de historische stotterklacht. De complete kandidaat heeft nog afspeelstatus in de gesprekscontext, duurzame live-inrichting, bruikbaar fysiek herstel en SP-03-praktijk nodig. Er is geen service live geïnstalleerd of speaker geflasht.

@@ -15,8 +15,10 @@ import hashlib
 import hmac
 from http import HTTPStatus
 import math
+from pathlib import Path
 import re
 import ssl
+import traceback
 from weakref import WeakKeyDictionary
 
 from websockets.asyncio.server import serve
@@ -74,8 +76,24 @@ class SpeakerEndpoint:
         self._active: dict[str, asyncio.Task] = {}
         self._revoked: set[str] = set()
         self._history = {g.binding.device_id: deque(maxlen=8) for g in grants}
+        self._closed = False
+        self._close_task: asyncio.Task | None = None
+        self._failures = deque(maxlen=8)
+
+    def diagnostics(self) -> dict:
+        """Bounded local status, without identities, transcripts or error text."""
+        return {"closed": self._closed, "activeDevices": len(self._active),
+                "recentFailures": list(self._failures)}
+
+    def _record_failure(self, stage: str, error: Exception) -> None:
+        self._failures.append({"stage": stage, "type": type(error).__name__[:64],
+            "frames": [{"file": Path(frame.filename).name, "function": frame.name,
+                        "line": frame.lineno}
+                       for frame in traceback.extract_tb(error.__traceback__)[-5:]]})
 
     def _authenticate(self, connection, request):
+        if self._closed:
+            return connection.respond(HTTPStatus.SERVICE_UNAVAILABLE, "Speaker service stopping\n")
         if request.path != "/eva-speaker/v1":
             return connection.respond(HTTPStatus.NOT_FOUND, "Not found\n")
         headers = request.headers
@@ -111,7 +129,7 @@ class SpeakerEndpoint:
 
     async def _handle(self, socket):
         grant = self._admitted.pop(socket, None)
-        if (grant is None or grant.binding.device_id in self._revoked
+        if (self._closed or grant is None or grant.binding.device_id in self._revoked
                 or grant.binding.device_id in self._active):
             await socket.close(code=1008, reason="Speaker unavailable")
             return
@@ -135,28 +153,31 @@ class SpeakerEndpoint:
                     retired_sessions=tuple(self._history[device]), receipt_timeout=self._receipt_timeout,
                     microphone_enabled=self._microphone_enabled)
         work = disconnected = None
+        stage = "opening"
         try:
             async with asyncio.timeout(self._max_session_seconds):
                 await output.start()
                 if device in self._revoked:
                     return
+                stage = "conversation"
                 work = asyncio.create_task(self._session(grant.binding, output))
                 disconnected = asyncio.create_task(socket.wait_closed())
                 await asyncio.wait((work, disconnected), return_when=asyncio.FIRST_COMPLETED)
                 if work.done():
                     await work
-        except Exception:
+        except Exception as error:
             # Don't log raw headers, private bindings, transcripts or provider
             # errors through the WebSocket server's default traceback handler.
             # Keep a live transport available for STOP/STOPPED during cleanup.
-            pass
+            self._record_failure(stage, error)
         finally:
             for task in (work, disconnected):
                 if task is not None and not task.done() and not task.cancelling():
                     task.cancel()
             try:
                 await output.close()
-            except Exception:
+            except Exception as error:
+                self._record_failure("output-close", error)
                 await socket.close(code=1011, reason="Speaker stop unconfirmed")
             finally:
                 await asyncio.gather(*(t for t in (work, disconnected) if t is not None),
@@ -172,3 +193,13 @@ class SpeakerEndpoint:
             if not owned.done() and not owned.cancelling():
                 owned.cancel()
             await asyncio.gather(asyncio.shield(owned), return_exceptions=True)
+
+    async def close(self) -> None:
+        """Stop admission first; retain sockets for physical cleanup receipts."""
+        self._closed = True
+        if self._close_task is None:
+            self._close_task = asyncio.create_task(self._close_all())
+        await asyncio.shield(self._close_task)
+
+    async def _close_all(self) -> None:
+        await asyncio.gather(*(self.revoke(device_id=device) for device in self._history))

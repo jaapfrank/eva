@@ -1,0 +1,96 @@
+{
+  "taskId": "VB-001",
+  "practiceTestId": "SP-03",
+  "recordedAt": "2026-09-09T15:23:35.759464+00:00",
+  "baseCommit": "51aad7837f20ff53c1e074808d5f0b2721659334",
+  "status": "composed-service-tested-not-live",
+  "sourceSha256": {
+    "experiments/native-duplex-v1/speaker_service.py": "b6c9f31426d0636f458290038f6fcfbc9216567222dbcb3fc383d4ed1b9d0d6b",
+    "experiments/native-duplex-v1/speaker_endpoint.py": "cc8d0d0ac27749bba42371fa22c079f36c1394f665a7a2b2a175f0a27a68938b",
+    "src/eva/adapters/connectors/home_assistant_voice.py": "1842c544bf4874ce10061ce99de18f7aa00133ba7f6900882a136bdbedecb604",
+    "tests/connectors/test_home_assistant_voice.py": "42d6cb8819b628da6f8c97eae9f218452daafe8ae52479b6a987c6d451273301",
+    "tests/operations/test_native_duplex_speaker_service.py": "d59be1ac4f7db47f28df3a8895692a8faa592565f8714c0819764821f507edc9"
+  },
+  "targetedTests": {
+    "command": "pytest -q tests/operations/test_native_duplex_speaker_service.py tests/operations/test_native_duplex_speaker_endpoint.py tests/operations/test_native_duplex_speaker_input.py tests/operations/test_native_duplex_speaker_wire.py tests/operations/test_native_duplex_microphone_session.py tests/operations/test_ha_voice_native_client.py tests/connectors/test_home_assistant_voice.py",
+    "passed": 146,
+    "durationSeconds": 9.05,
+    "realComponents": [
+      "TLS/WebSocket and HTTP transports",
+      "Existing HA STT/TTS adapters",
+      "Existing EvaVoiceClient",
+      "FFmpeg PCM decoding",
+      "Household session and wire input/output"
+    ],
+    "explicitDoubles": [
+      "HA and core servers",
+      "Speaker and acoustic playback",
+      "VAD detector in composition test"
+    ]
+  },
+  "fixedFindings": [
+    {
+      "problem": "Final native HTTP interrupt cleanup could be cancelled after endpoint cleanup.",
+      "repair": "One owned shutdown task joins endpoint, client, WebSocket server and HTTP pool; repeated outer cancellation cannot abandon it.",
+      "test": "test_final_native_client_cleanup_survives_cancel_after_endpoint_closed"
+    },
+    {
+      "problem": "Lease boundary callback allowed obsolete EOF send after HA run-end; send failure replaced successful STT.",
+      "originalIndependentRun": {
+        "failed": 1,
+        "passed": 13
+      },
+      "localDiagnosticReproduction": "Attempt4 failed; STT2 completed but core1, VoiceMediaError in producer cleanup.",
+      "deterministicRegressionBeforeFix": "1 failed with speech input producer failed",
+      "repair": "Join/cancel sender before invoking explicitly requested speech-end callback, retain earlier producer errors.",
+      "test": "test_vad_end_stops_sender_before_segment_callback_can_close_the_source",
+      "testTimeoutIncreased": false
+    }
+  ],
+  "independentReview": {
+    "reviewer": "co006_review",
+    "decision": "bounded GO for lifecycle and EOF-race repair",
+    "targetedTestsPassed": 90,
+    "excludes": "Physical audio, deployment, echo, stop latency and human acceptance."
+  },
+  "runtimeChange": false,
+  "serviceInstalled": false,
+  "speakerFlashed": false,
+  "additionalModelOrSpeechProviderCalls": 0,
+  "ownerAcceptances": {
+    "SP-01": "accepted",
+    "SP-02": "accepted",
+    "SP-03": "not-ready-for-practice"
+  },
+  "remaining": [
+    "Bind generated/native reply to actual playback status in household conversation history; do not infer word prefixes from frame counts.",
+    "Finalize durable service dependencies, provisioning, active/recovery route and physical USB recovery.",
+    "Physical simultaneous speech/AEC, local stop then immediate question, reconnect, measured latency and SP-03 owner acceptance.",
+    "SP-04 false wakewords remains unresolved."
+  ],
+  "livePreflight": {
+    "status": "live-ha-binding-and-local-dependencies-verified",
+    "coreTokenMatchesLiveSlotPolicy": true,
+    "deviceMatchesLiveSlotPolicy": true,
+    "privateConfigSha256": "2d971c3e5b124d25fa3e0f9fb04d494dfbc5be193481f93a824dc2b1e9e097bb",
+    "speakerEndpointOpened": false,
+    "microphoneOpened": false,
+    "sttTtsCoreCalls": 0,
+    "speakerFlashed": false,
+    "privateArtifactDirectory": "/home/administrator/project/.eva2-artifacts/native-speaker-service-4wp9_bb3"
+  },
+  "recoveryObservation": {
+    "source": "Windows Get-PnpDevice -Class Ports -Status OK",
+    "visiblePorts": [
+      "Bluetooth COM3",
+      "Bluetooth COM4"
+    ],
+    "usbSpeakerPortObserved": false,
+    "usbRecoveryProven": false
+  },
+  "dashboardReadback": {
+    "projectMatchesCanonicalBoard": true,
+    "SP-02": "accepted",
+    "SP-03": "working-not-ready-for-practice"
+  }
+}

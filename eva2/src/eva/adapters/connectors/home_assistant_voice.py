@@ -305,6 +305,20 @@ class HomeAssistantSpeechInput:
                                 or timestamp < 0 or timestamp % 10):
                             raise VoiceMediaError("speech provider audio boundary is invalid")
                         speech_ended = True
+                        # HA has finished consuming this audio segment. Stop
+                        # its sender before the owner's boundary callback ends
+                        # the lease: an obsolete EOF write racing run-end or
+                        # provider close must not invalidate valid final text.
+                        # Producer errors that already occurred remain fatal.
+                        if sender is not None:
+                            if not sender.done():
+                                sender.cancel()
+                            results = await asyncio.gather(sender, return_exceptions=True)
+                            if any(isinstance(result, BaseException)
+                                   and not isinstance(result, asyncio.CancelledError)
+                                   for result in results):
+                                raise VoiceMediaError("speech input producer failed") from None
+                            sender = None
                         await on_speech_end(timestamp)
                 elif kind == "stt-end":
                     text = data.get("stt_output", {}).get("text")

@@ -482,3 +482,52 @@ def test_direct_tts_pins_engine_disables_disk_cache_and_ignores_external_url(mon
                 await anext(adapter.synthesize("Dag Eva"))
             assert len(requests) == 1
     asyncio.run(run())
+def test_vad_end_stops_sender_before_segment_callback_can_close_the_source():
+    """Late EOF must not overwrite a complete, bound STT result."""
+    async def run():
+        released, first_audio = asyncio.Event(), asyncio.Event()
+        writes = []
+        class Chunks:
+            first = True
+            def __aiter__(self):
+                return self
+            async def __anext__(self):
+                if self.first:
+                    self.first = False
+                    return b"12"
+                await released.wait()
+                raise StopAsyncIteration
+        class Socket:
+            def __init__(self):
+                self.messages = iter([
+                    {"type": "auth_required"}, {"type": "auth_ok"},
+                    {"id": 1, "type": "result", "success": True},
+                    *[{"id": 1, "type": "event", "event": {"type": kind, "data": data}} for kind, data in [
+                        ("run-start", {"runner_data": {"stt_binary_handler_id": 7}}),
+                        ("stt-start", {}), ("stt-vad-start", {"timestamp": 0}),
+                        ("stt-vad-end", {"timestamp": 0}),
+                        ("stt-end", {"stt_output": {"text": "Geldig antwoord"}}),
+                        ("run-end", None),
+                    ]],
+                ])
+            async def recv(self):
+                message = next(self.messages)
+                if message.get("event", {}).get("type") == "stt-vad-start":
+                    await first_audio.wait()
+                return json.dumps(message)
+            async def send(self, value):
+                if isinstance(value, bytes):
+                    writes.append(value)
+                    first_audio.set()
+                    if value == b"\x07":
+                        raise RuntimeError("provider already ended the completed run")
+        async def end(timestamp):
+            assert timestamp == 0
+            released.set()
+            # Deterministically let the old sender attempt its obsolete EOF.
+            for _ in range(3):
+                await asyncio.sleep(0)
+        adapter = HomeAssistantSpeechInput(base_url="http://127.0.0.1", token="test", pipeline_id="test")
+        text = await adapter._transcribe(Socket(), Chunks(), on_speech_end=end)
+        assert text == "Geldig antwoord" and writes == [b"\x0712"]
+    asyncio.run(run())
