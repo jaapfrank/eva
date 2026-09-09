@@ -19,10 +19,12 @@ EvaVoiceUnavailable = _MODULE.EvaVoiceUnavailable
 
 
 @asynccontextmanager
-async def server(handler, interrupt):
+async def server(handler, interrupt, playback=None):
     app = web.Application()
     app.router.add_post("/internal/v1/ha-voice/turns", handler)
     app.router.add_post("/internal/v1/ha-voice/turns/{request_id}/interrupt", interrupt)
+    if playback is not None:
+        app.router.add_post("/internal/v1/ha-voice/turns/{request_id}/playback", playback)
     runner = web.AppRunner(app)
     await runner.setup()
     site = web.TCPSite(runner, "127.0.0.1", 0)
@@ -184,3 +186,63 @@ def test_cancellation_during_error_cleanup_never_becomes_an_error_utterance():
 def test_invalid_settings_rejected_by_shared_configflow_validation(url, token, satellites):
     with pytest.raises(ValueError):
         EvaVoiceClient.validate_config(url=url, token=token, satellite_ids=frozenset(satellites))
+
+
+def test_playback_report_precedes_next_model_turn_and_survives_waiter_cancellation():
+    async def run():
+        import hashlib
+        entered, release = asyncio.Event(), asyncio.Event()
+        calls = []
+        async def handler(request):
+            data = await request.json()
+            calls.append(data["text"])
+            return web.json_response({"request_id": data["request_id"], "reply": "Antwoord é",
+                                      "continue_conversation": True})
+        async def interrupt(request):
+            return web.json_response({"stopped": True})
+        async def playback(request):
+            data = await request.json()
+            assert request.headers["Authorization"] == "Bearer synthetic"
+            assert data["reply_sha256"] == hashlib.sha256("Antwoord é".encode()).hexdigest()
+            assert data["result"]["status"] == "interrupted"
+            entered.set()
+            await release.wait()
+            return web.json_response({"request_id": request.match_info["request_id"], "recorded": True})
+        async with server(handler, interrupt, playback) as client:
+            answer = await ask(client)
+            report = client.record_playback(satellite_id="assist_satellite.room", device_id="a" * 32,
+                answer=answer, result={"status": "interrupted"})
+            await entered.wait()
+            cancelled = asyncio.create_task(ask(client, "geannuleerd"))
+            await asyncio.sleep(0)
+            cancelled.cancel()
+            with pytest.raises(asyncio.CancelledError):
+                await cancelled
+            assert not report.done()
+            next_turn = asyncio.create_task(ask(client, "vervolgvraag"))
+            await asyncio.sleep(.02)
+            assert calls == ["Hoi"] and not next_turn.done()
+            release.set()
+            await next_turn
+            assert calls == ["Hoi", "vervolgvraag"]
+    asyncio.run(run())
+
+
+def test_failed_playback_report_does_not_fabricate_receipt_or_block_new_question():
+    async def run():
+        async def handler(request):
+            data = await request.json()
+            return web.json_response({"request_id": data["request_id"], "reply": "antwoord",
+                                      "continue_conversation": True})
+        async def interrupt(request):
+            return web.json_response({"stopped": True})
+        async def playback(request):
+            return web.json_response({"request_id": "wrong", "recorded": True})
+        async with server(handler, interrupt, playback) as client:
+            answer = await ask(client)
+            report = client.record_playback(satellite_id="assist_satellite.room", device_id="a" * 32,
+                answer=answer, result={"status": "unconfirmed"})
+            with pytest.raises(EvaVoiceUnavailable, match="binding differs"):
+                await report
+            assert (await ask(client, "opnieuw")).text == "antwoord"
+    asyncio.run(run())

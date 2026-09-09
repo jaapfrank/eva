@@ -589,8 +589,11 @@ class RecentConversationMessage:
     role: str
     text: str
     occurred_at: str
+    playback_status: Literal["completed", "interrupted", "unconfirmed"] | None = None
 
     def __post_init__(self) -> None:
+        if self.playback_status not in (None, "completed", "interrupted", "unconfirmed"):
+            raise ValueError("recent conversation playback status is invalid")
         if not self.role.strip() or len(self.role) > 64:
             raise ValueError("recent conversation role is invalid")
         if not self.text.strip() or len(self.text.encode("utf-8")) > 65_536:

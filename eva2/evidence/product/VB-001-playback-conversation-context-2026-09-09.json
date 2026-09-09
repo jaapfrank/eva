@@ -1,0 +1,116 @@
+{
+  "taskId": "VB-001",
+  "practiceTestId": "SP-03",
+  "recordedAt": "2026-09-09T15:52:35.247607+00:00",
+  "baseCommit": "cacd544e15412124e5c2c2b5bcc843f5d8476701",
+  "status": "playback-context-built-tested-not-live",
+  "sourceSha256": {
+    "src/eva/application/audio_playback.py": "cdf242eb7e3db03ca32a192891ac0e1ab7a900146a9cd7f2ff68366ae0253bdc",
+    "src/eva/application/conversation.py": "75e2ede175079e1094fd6fd7d797e30cb18ba7cff453edc7810299d648346728",
+    "src/eva/adapters/api/native_voice.py": "4025e187dcbfb5811525b74b154e662f2aa85723ca34822717bffbdc99ab6c52",
+    "src/eva/adapters/postgres/voice_requests.py": "f0dc71f7b83ff099a08a6505072be3363db594e2cc2d83f552df82a7750c7351",
+    "src/eva/adapters/postgres/operational_timeline.py": "0943eb28812b750da03132247efebf59d42c1d92dc65da06546a232a157cdc03",
+    "src/eva/adapters/postgres/conversation_journal.py": "8e572e1b581eacbabbd4fc8faff676e5347421dfb9916f92e94ec6e527371049",
+    "src/eva/adapters/model/pydantic_conversation.py": "7e42b001ebda57faaf93aa8a51e66706d17872c7f4312855363192b076d36a66",
+    "deploy/home-assistant/custom_components/eva2_voice/client.py": "3c73b1c86c9572fc537171a14cbf5286e4c2ad4978faaf95d8304e6f3ebe1d25",
+    "experiments/native-duplex-v1/speaker_wire.py": "e43522787dc6b7ae3f4e400004e574cfa390281abff7db320b658c5ec3202e01",
+    "experiments/native-duplex-v1/reply_lane.py": "06603f4fc028b4e319e7e9f61d3a94411cb7fa42b5f4e3724237c263c5c009c1",
+    "experiments/native-duplex-v1/speaker_session.py": "ecd48ceb9cb7c5e607e589f012f030fb0b8363322dd913fb34265240423f62ee",
+    "experiments/native-duplex-v1/speaker_service.py": "36184ca8ac63fccef4b4771b477aad8e0d70a0636ea1ff56a9072b2c05ddd8a9",
+    "tests/application/test_audio_playback.py": "563184c4bf833cc19f3583d4f0906af64835ddee741801e7fba23bb730326aaf",
+    "tests/api/test_native_voice.py": "9e7b04c59a0f3660eb0adba89453a4019b98f6d94d9df0824e690e9813227e85",
+    "tests/operations/test_ha_voice_native_client.py": "4c8d51c6a5082b922c5663846d1be3630315d6ba6d0afcc23dc1559845d797ec",
+    "tests/operations/test_native_duplex_speaker_wire.py": "83227852cd35926e28cdc5041be5d1ff9dd949aaf1a340bba65b277c7e8ea6f8",
+    "tests/operations/test_native_duplex_speaker_service.py": "89509701206aa0962fa780d5420ff6471576bcaedaeb7f4eb465ab233fba80b4",
+    "tests/postgres/test_operational_timeline.py": "21928e09d40333e2747480e127bfdc164558f5cab77388024be3fe289434eba3"
+  },
+  "targetedTests": {
+    "passed": 219,
+    "durationSeconds": 17.14,
+    "command": "pytest -q tests/application/test_audio_playback.py tests/application/test_conversation.py tests/api/test_native_voice.py tests/operations/test_ha_voice_native_client.py tests/operations/test_native_duplex_speaker_wire.py tests/operations/test_native_duplex_speaker_service.py tests/operations/test_native_duplex_speaker_input.py tests/operations/test_native_duplex_reply_lane.py tests/operations/test_native_duplex_microphone_session.py tests/operations/test_native_duplex_speaker_endpoint.py tests/model/test_pydantic_conversation_model.py",
+    "finalCompositionRecheck": {
+      "passed": 24,
+      "durationSeconds": 3.35,
+      "reason": "Added explicit protocol support check and assertion that previous playback report reaches upstream before next core turn."
+    }
+  },
+  "postgresTests": {
+    "version": "16.13",
+    "isolatedDatabase": true,
+    "passed": 79,
+    "durationSeconds": 16.81,
+    "command": "pytest -q tests/postgres/test_operational_timeline.py",
+    "realComponents": [
+      "Native aiohttp client to actual FastAPI service and PostgreSQL ledger",
+      "Durable household journal and model context formatting",
+      "Concurrent row-lock expiry and competing terminal receipts",
+      "Restart and installation/device isolation"
+    ],
+    "warnings": [
+      "Two pre-existing websockets legacy API deprecations from uvicorn"
+    ],
+    "initialFailure": "1 failed / 11 passed: concurrent load() read old checkpoint and new event in separate READ COMMITTED statements."
+  },
+  "fixedFindings": [
+    {
+      "problem": "FINISHED received before renderer resumed could become interrupted on simultaneous STOP.",
+      "repair": "Validate and retain FINISHED in the sole reader before future release.",
+      "regression": "test_finished_receipt_survives_stop_before_renderer_can_resume"
+    },
+    {
+      "problem": "Reporting window was checked before database rowlock.",
+      "repair": "Separate ten-minute commit_before deadline checked using PostgreSQL clock_timestamp after rowlock.",
+      "regression": "test_native_playback_reporting_deadline_is_checked_after_database_lock"
+    },
+    {
+      "problem": "Concurrent checkpoint/event reads could falsely claim corruption.",
+      "repair": "One SQL statement and MVCC snapshot, preserve payload consistency validation.",
+      "regression": "test_timeline_load_uses_one_snapshot_during_concurrent_transition"
+    },
+    {
+      "problem": "Invalid digest / absent request leaked wrong error classes.",
+      "repair": "Strict digest type validation and explicit TimelineNotFound to PlaybackConflict."
+    }
+  ],
+  "independentReview": {
+    "reviewer": "/root/co006_review",
+    "decision": "Bounded source GO for experimental playback/context coupling",
+    "testsPassed": 102,
+    "postgresReview": "Source reviewed; 79 database tests run by primary agent.",
+    "deploymentCondition": "Existing LAN ingress only allows turns/interrupt. Direct local core URL is used by candidate; if LAN ingress is chosen, add and test exact capabilities/playback route and method allowlist first."
+  },
+  "resultSemantics": {
+    "completed": "Valid session/generation FINISHED with exact offered frames; not human hearing.",
+    "interrupted": "Validated STOPPED; frames are not a heard-text prefix.",
+    "unconfirmed": "No valid evidence; confirmed frame count unknown, not zero.",
+    "history": "Household speaker is Onbekende spreker; full generated answer is retained with explicit playback status. No implied private-person identity.",
+    "nextTurn": "Physical stop precedes audit; next model call waits for previously scheduled same-device reports. Failed report remains unconfirmed."
+  },
+  "runtimeChange": false,
+  "serviceInstalled": false,
+  "speakerFlashed": false,
+  "additionalModelOrSpeechProviderCalls": 0,
+  "ownerAcceptances": {
+    "SP-01": "accepted",
+    "SP-02": "accepted",
+    "SP-03": "not-ready-for-practice"
+  },
+  "remaining": [
+    "Durable service dependencies, provisioning, complete core candidate and safe A/B deployment.",
+    "Usable physical recovery before speaker firmware installation.",
+    "Physical simultaneous speech/AEC, immediate question after stop, reconnect and p95 stop latency.",
+    "SP-03 owner acceptance and SP-04 false-wake repair."
+  ],
+  "dashboardReadback": {
+    "projectMatchesCanonicalBoard": true,
+    "SP-02": "accepted",
+    "SP-03": "working-not-ready-for-practice"
+  },
+  "workboardValidation": {
+    "checker": "valid",
+    "testsPassed": 16,
+    "testsFailed": 1,
+    "existingFailure": "test_product_cadence_and_release_phase_are_explicit expects RB-007..RB-010 orders [400,410,420,430]; HEAD already has [161,162,163,164]. Test file unchanged. This delta does not change these milestone orders.",
+    "repositoryInventory": "2259 files; 94 pre-existing untracked-file policy errors, no added errors after staging own files. Generated inventory remains uncommitted."
+  }
+}

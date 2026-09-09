@@ -16,6 +16,8 @@ import math
 import struct
 from typing import Protocol
 
+from eva.application.audio_playback import AudioPlaybackResult
+
 
 class Kind(IntEnum):
     OPEN = 1
@@ -134,6 +136,7 @@ class FramedSpeakerOutput:
         self._stops: dict[int, asyncio.Task] = {}
         self._renderers: dict[int, asyncio.Task] = {}
         self._sent_frames: dict[int, int] = {}
+        self._playback_results: dict[int, AudioPlaybackResult] = {}
         self._reader: asyncio.Task | None = None
         self._closer: asyncio.Task | None = None
         self._failure: BaseException | None = None
@@ -192,6 +195,14 @@ class FramedSpeakerOutput:
                 key = reply.kind, reply.generation, reply.sequence
                 future = self._pending.get(key)
                 if future is not None and not future.done():
+                    if reply.kind == Kind.FINISHED and reply.generation > self._cancelled_through:
+                        frames = self._sent_frames.get(reply.generation, 0)
+                        if not frames or struct.unpack("!I", reply.payload)[0] != frames:
+                            raise WireError("speaker played frame count differs")
+                        # Preserve the receipt before waking the renderer: a
+                        # concurrent STOP can cancel it before it resumes.
+                        self._playback_results[reply.generation] = AudioPlaybackResult(
+                            self.session.hex(), reply.generation, "completed", frames, frames)
                     future.set_result(reply)
                 elif key in self._recent:
                     continue
@@ -260,10 +271,16 @@ class FramedSpeakerOutput:
                 future.set_exception(PlaybackInterrupted("answer was interrupted"))
         try:
             reply = await self._exchange(Packet(Kind.STOP, self.session, generation), Kind.STOPPED)
-            if struct.unpack("!I", reply.payload)[0] > self._sent_frames.get(generation, 0):
+            confirmed = struct.unpack("!I", reply.payload)[0]
+            if confirmed > self._sent_frames.get(generation, 0):
                 error = WireError("speaker stop frame count exceeds supplied audio")
                 self._fail(error)
                 raise error
+            # A normal close/next-turn STOP cannot undo a validated FINISHED.
+            if generation not in self._playback_results:
+                self._playback_results[generation] = AudioPlaybackResult(
+                    self.session.hex(), generation, "interrupted",
+                    self._sent_frames.get(generation, 0), confirmed)
         finally:
             # Stop the hardware before joining decoder/HA cleanup. The owned
             # renderer never waits on this stop, so this cannot cancel itself.
@@ -274,6 +291,11 @@ class FramedSpeakerOutput:
             raise WireError("invalid stop generation")
         # Shield the physical stop from cancellation of speak/new-speech/close.
         await asyncio.shield(self._owned_stop(generation))
+
+    def playback_result(self, generation: int) -> AudioPlaybackResult:
+        return self._playback_results.get(generation) or AudioPlaybackResult(
+            self.session.hex(), generation, "unconfirmed",
+            self._sent_frames.get(generation, 0), None)
 
     async def speak(self, *, generation: int, text: str) -> None:
         if not self._open or self._closing:
@@ -327,6 +349,8 @@ class FramedSpeakerOutput:
                                          Kind.FINISHED, playback_seconds=frames / 24_000)
             if struct.unpack("!I", reply.payload)[0] != frames:
                 raise WireError("speaker played frame count differs")
+            if self.playback_result(generation).status != "completed":
+                raise PlaybackInterrupted("answer completion arrived after interruption")
         finally:
             if source is not None and hasattr(source, "aclose"):
                 await source.aclose()

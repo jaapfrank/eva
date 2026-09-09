@@ -104,8 +104,15 @@ async def test_acceptance_does_not_finish_playback():
         task = asyncio.create_task(output.speak(generation=1, text="antwoord"))
         await asyncio.wait_for(peer.end_received.wait(), 1)
         assert peer.frames == {1: 580} and not task.done()
+        assert output.playback_result(1).status == "unconfirmed"
+        assert output.playback_result(1).confirmed_frames is None
         peer.finished.set()
         await task
+        result = output.playback_result(1)
+        assert result.status == "completed" and result.confirmed_frames == 580
+        peer.stopped.set()
+        await output.interrupt(generation=1)
+        assert output.playback_result(1) == result
 
 
 @run_async
@@ -132,6 +139,8 @@ async def test_missing_playback_receipt_still_expires():
     async with opened(peer, timeout=.02) as output:
         with pytest.raises(wire.WireError):
             await asyncio.wait_for(output.speak(generation=1, text="geen bevestiging"), .5)
+        assert output.playback_result(1).status == "unconfirmed"
+        assert output.playback_result(1).confirmed_frames is None
 
 
 @run_async
@@ -183,6 +192,8 @@ async def test_cancelled_caller_cannot_cancel_owned_stop_or_reopen_old_answer():
         with pytest.raises(wire.PlaybackInterrupted):
             await reply
         await output.interrupt(generation=1)
+        assert output.playback_result(1).status == "interrupted"
+        assert output.playback_result(1).confirmed_frames == 580
         await output.speak(generation=2, text="nieuw antwoord")
         assert sum(p.kind == Kind.STOP and p.generation == 1 for p in peer.packets) == 1
 
@@ -229,9 +240,13 @@ async def test_incomplete_playback_count_is_not_success():
     peer = SpeakerPeer()
     peer.finished.set(); peer.stopped.set(); peer.wrong_finished_count = True
     async with opened(peer) as output:
-        with pytest.raises(wire.WireError, match="played frame count differs"):
+        with pytest.raises(wire.WireError):
             await output.speak(generation=1, text="antwoord")
-        assert any(p.kind == Kind.STOP for p in peer.packets)
+        # Validation now happens in the sole reader before its completion
+        # future is released, so malformed evidence closes the connection.
+        assert str(output._failure) == "speaker played frame count differs"
+        await asyncio.wait_for(peer.connection.wait_closed(), 1)
+        assert output.playback_result(1).status == "unconfirmed"
 
 
 @run_async
@@ -386,3 +401,25 @@ def test_malformed_records_rejected(mutation):
     raw = Packet(Kind.OPEN, b"session1").encode()
     with pytest.raises(wire.WireError):
         Packet.decode(mutation(raw))
+
+
+@run_async
+async def test_finished_receipt_survives_stop_before_renderer_can_resume():
+    peer = SpeakerPeer()
+    peer.finished.set(); peer.stopped.set()
+    async with opened(peer) as output:
+        received = asyncio.Event()
+        original = output._exchange
+        async def paused(packet, expected, **kwargs):
+            reply = await original(packet, expected, **kwargs)
+            if expected == Kind.FINISHED:
+                received.set()
+                await asyncio.Event().wait()
+            return reply
+        output._exchange = paused
+        rendering = asyncio.create_task(output.speak(generation=1, text="al volledig afgespeeld"))
+        await asyncio.wait_for(received.wait(), 1)
+        await output.interrupt(generation=1)
+        await asyncio.gather(rendering, return_exceptions=True)
+        assert output.playback_result(1).status == "completed"
+        assert output.playback_result(1).confirmed_frames == 580

@@ -716,6 +716,14 @@ class PostgresConversationJournal(PostgresScopedRole):
             finally:
                 transaction.rollback()
         messages: list[RecentConversationMessage] = []
+        household = turn.audience is not None and turn.audience.kind == "household"
+        voice_requests = None
+        device_id = turn.principal_id.removeprefix("household-device:")
+        if (household and turn.principal_id.startswith("household-device:")
+                and re.fullmatch(r"[0-9a-f]{32}", device_id)):
+            from eva.adapters.postgres.voice_requests import PostgresVoiceRequests
+            voice_requests = PostgresVoiceRequests(self._engine, tenant_id=turn.tenant_id,
+                                                   installation_id=turn.installation_id)
         for row in reversed(rows):
             payload = row.payload
             value: Any = payload.get("data") if isinstance(payload, dict) else None
@@ -726,11 +734,25 @@ class PostgresConversationJournal(PostgresScopedRole):
             text = value.get("text")
             if not isinstance(text, str) or not text:
                 continue
+            playback_status = None
+            if household and row.event_type == "REPLY_COMMITTED":
+                playback_status = "unconfirmed"
+                message_id = value.get("message_id")
+                prefix = turn.conversation_id + ":request:"
+                digest = hashlib.sha256(text.encode("utf-8")).hexdigest()
+                if (voice_requests is not None and isinstance(message_id, str)
+                        and message_id.startswith(prefix)
+                        and re.fullmatch(r"[0-9a-f]{32}", message_id[len(prefix):])
+                        and value.get("text_sha256") == digest):
+                    playback_status = voice_requests.playback_status(device_id=device_id,
+                        request_id=message_id[len(prefix):], reply_sha256=digest)
             messages.append(
                 RecentConversationMessage(
-                    role="Jaap" if row.event_type == "INGRESS_COMMITTED" else "Eva",
+                    role=("Onbekende spreker" if household else "Jaap")
+                         if row.event_type == "INGRESS_COMMITTED" else "Eva",
                     text=text,
                     occurred_at=row.occurred_at.strftime("%Y-%m-%dT%H:%M:%SZ"),
+                    playback_status=playback_status,
                 )
             )
         return tuple(messages[-limit:])

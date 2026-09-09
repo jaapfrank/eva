@@ -3447,6 +3447,13 @@ def test_native_ha_http_client_to_core_postgres_cancel_and_resume(timeline_engin
                     reply = await client.respond(**args, text="volgende")
                     assert reply.text == "Ik luister weer." and reply.continue_conversation
                     assert len(request_ids) == 2 and len(set(request_ids)) == 2
+                    await client.verify_playback_support(satellite_id=args["satellite_id"], device_id=args["device_id"])
+                    from eva.application.audio_playback import AudioPlaybackResult
+                    result = AudioPlaybackResult("a" * 16, 2, "interrupted", 2400, 480)
+                    await client.record_playback(satellite_id=args["satellite_id"], device_id=args["device_id"],
+                                                 answer=reply, result=result.to_wire())
+                    assert ledger.playback_status(device_id=args["device_id"], request_id=reply.request_id,
+                        reply_sha256=hashlib.sha256(reply.text.encode()).hexdigest()) == "interrupted"
                     # A raw HTTP disconnect sends no explicit interrupt POST.
                     # The ASGI watcher must still cancel and persist the stop.
                     started.clear()
@@ -3607,3 +3614,158 @@ def test_native_household_responder_runs_real_core_and_pydantic_with_stop_and_re
         assert "gedeeld huishoudelijk gesprek" in str(calls[0])
         assert "speakerapparaat is geen persoon" in str(calls[0])
     asyncio.run(run())
+
+
+@pytest.mark.parametrize("status", ["completed", "interrupted", "unconfirmed"])
+def test_native_playback_survives_stop_restart_and_changes_household_history(timeline_engine, status):
+    from eva.adapters.postgres.voice_requests import PostgresVoiceRequests
+    from eva.application.audio_playback import AudioPlaybackResult, PlaybackConflict
+    from eva.application.memory_audience import HouseholdConsentReference
+    from eva.adapters.model.pydantic_conversation import _recent_message_line
+    tenant, installation = "voice-history-" + status, "home"
+    scope = external_timeline_scope(tenant, installation, "test")
+    now = datetime.now(UTC).replace(microsecond=0)
+    args = {"device_id": "a" * 32, "request_id": "b" * 32}
+    actor = "household-device:" + args["device_id"]
+    conversation = "household:home:conversation:" + "c" * 64
+    audience = MemoryAudience.household(principal_id=actor, household_id="home",
+        consent_ref=HouseholdConsentReference(actor, "home", "household-consent:test"))
+    turn = ConversationTurn(tenant_id=tenant, installation_id=installation, principal_id=actor,
+        conversation_id=conversation, message_id=conversation + ":request:" + args["request_id"],
+        text="Vertel iets", occurred_at=now.strftime("%Y-%m-%dT%H:%M:%SZ"), audience=audience)
+    journal = PostgresConversationJournal(timeline_engine, scope)
+    journal.admit(turn)
+    reply = GroundedReply(conversation, turn.message_id, "Eén. Twee. Drie.", (), turn.occurred_at, "test")
+    journal.commit_reply(turn, reply)
+    def ledger():
+        return PostgresVoiceRequests(timeline_engine, tenant_id=tenant, installation_id=installation)
+    store = ledger()
+    assert store.begin(**args, now=now)
+    assert store.claim_reply(**args, now=now, reply_sha256=reply.text_sha256)
+    assert journal.recent(turn)[-1].playback_status == "unconfirmed"
+    # A later stop intentionally replaces checkpoint data; reply binding must
+    # still be recovered from immutable events, including after restart.
+    store.interrupt(**args, now=now + timedelta(seconds=1))
+    result = AudioPlaybackResult("c" * 16, 1, status, 4800,
+        4800 if status == "completed" else 1200 if status == "interrupted" else None)
+    store.record_playback(**args, reply_sha256=reply.text_sha256, result=result,
+                          now=now + timedelta(seconds=90))
+    timeline_engine.dispose()
+    restarted = ledger()
+    assert restarted.playback_status(**args, reply_sha256=reply.text_sha256) == status
+    assert restarted._timeline.load(restarted._key(**args)).phase == "voice_stopped"
+    assert not restarted.claim_reply(**args, now=now + timedelta(seconds=91), reply_sha256=reply.text_sha256)
+    # Exact retries remain idempotent after expiry.
+    restarted.record_playback(**args, reply_sha256=reply.text_sha256, result=result,
+                              now=now + timedelta(minutes=11))
+    history = PostgresConversationJournal(timeline_engine, scope).recent(turn)
+    assert [m.role for m in history] == ["Onbekende spreker", "Eva"]
+    assert history[-1].text == reply.text and history[-1].playback_status == status
+    context = _recent_message_line(history[-1])
+    assert "gegenereerd antwoord" in context
+    assert ("afspelen onderbroken" if status == "interrupted" else
+            "afspelen voltooid" if status == "completed" else "afspelen niet bevestigd") in context
+    assert reply.text in context  # Never invent an exact heard-word prefix.
+    assert restarted.playback_status(**{**args, "device_id": "d" * 32}, reply_sha256=reply.text_sha256) == "unconfirmed"
+    other = PostgresVoiceRequests(timeline_engine, tenant_id=tenant + "-other", installation_id=installation)
+    assert other.playback_status(**args, reply_sha256=reply.text_sha256) == "unconfirmed"
+    with pytest.raises(PlaybackConflict):
+        other.record_playback(**args, reply_sha256=reply.text_sha256, result=result, now=now)
+    with pytest.raises(PlaybackConflict):
+        restarted.record_playback(**args, reply_sha256="d" * 64, result=result, now=now)
+
+
+def test_native_playback_conflicting_reports_cannot_downgrade_completion(timeline_engine):
+    from dataclasses import replace
+    from eva.adapters.postgres.voice_requests import PostgresVoiceRequests
+    from eva.application.audio_playback import AudioPlaybackResult, PlaybackConflict
+    store = PostgresVoiceRequests(timeline_engine, tenant_id="voice-playback-conflict", installation_id="home")
+    args = {"device_id": "a" * 32, "request_id": "b" * 32, "reply_sha256": "c" * 64}
+    now = datetime.now(UTC).replace(microsecond=0)
+    assert store.begin(device_id=args["device_id"], request_id=args["request_id"], now=now)
+    assert store.claim_reply(**args, now=now)
+    unknown = AudioPlaybackResult("a" * 16, 1, "unconfirmed", 480, None)
+    store.record_playback(**args, result=unknown, now=now)
+    completed = replace(unknown, status="completed", offered_frames=960, confirmed_frames=960)
+    for changed in [replace(completed, session_id="b" * 16), replace(completed, generation=2)]:
+        with pytest.raises(PlaybackConflict):
+            store.record_playback(**args, result=changed, now=now)
+    store.record_playback(**args, result=completed, now=now)
+    store.interrupt(device_id=args["device_id"], request_id=args["request_id"], now=now)
+    with pytest.raises(PlaybackConflict):
+        store.record_playback(**args, result=replace(completed, status="interrupted"), now=now)
+    assert store.playback_status(**args) == "completed"
+    assert store._timeline.load(store._key(device_id=args["device_id"], request_id=args["request_id"])).phase == "voice_stopped"
+
+
+def test_native_playback_racing_terminal_results_record_only_one(timeline_engine):
+    from eva.adapters.postgres.voice_requests import PostgresVoiceRequests
+    from eva.application.audio_playback import AudioPlaybackResult, PlaybackConflict
+    store = PostgresVoiceRequests(timeline_engine, tenant_id="voice-playback-race", installation_id="home")
+    now = datetime.now(UTC).replace(microsecond=0)
+    args = {"device_id": "a" * 32, "request_id": "b" * 32, "reply_sha256": "c" * 64}
+    store.begin(device_id=args["device_id"], request_id=args["request_id"], now=now)
+    store.claim_reply(**args, now=now)
+    def record(status):
+        try:
+            store.record_playback(**args, result=AudioPlaybackResult("a" * 16, 1, status, 480, 480), now=now)
+            return status
+        except PlaybackConflict:
+            return "conflict"
+    with ThreadPoolExecutor(max_workers=2) as pool:
+        results = list(pool.map(record, ("completed", "interrupted")))
+    assert results.count("conflict") == 1
+    assert store.playback_status(**args) in set(results) - {"conflict"}
+
+
+def test_native_playback_reporting_deadline_is_checked_after_database_lock(timeline_engine):
+    from eva.adapters.postgres.voice_requests import PostgresVoiceRequests
+    from eva.application.audio_playback import AudioPlaybackResult, PlaybackConflict
+    store = PostgresVoiceRequests(timeline_engine, tenant_id="voice-report-lock-expiry", installation_id="home")
+    now = datetime.now(UTC).replace(microsecond=0)
+    # Model a previously issued claim whose reporting window ends in one second.
+    args = {"device_id": "a" * 32, "request_id": "b" * 32, "reply_sha256": "c" * 64}
+    key = store._key(device_id=args["device_id"], request_id=args["request_id"])
+    store._timeline.create_thread(thread_id=key, checkpoint_id=key + ":1", occurred_at=now - timedelta(seconds=599),
+        data={"reply_sha256": args["reply_sha256"]}, event_type="VOICE_REPLY_CLAIMED", phase="voice_reply_claimed")
+    reached = Event()
+    original = store._timeline.transition
+    def transition(**kwargs):
+        reached.set()
+        return original(**kwargs)
+    store._timeline.transition = transition
+    with ThreadPoolExecutor(max_workers=1) as pool:
+        with timeline_engine.begin() as lock:
+            row = lock.execute(sa.select(operational_checkpoints).where(
+                operational_checkpoints.c.thread_id == key,
+                operational_checkpoints.c.tenant_id == store._timeline._scope_value.tenant_id,
+            ).with_for_update()).one()
+            pending = pool.submit(store.record_playback, **args,
+                result=AudioPlaybackResult("a" * 16, 1, "completed", 480, 480), now=now)
+            assert reached.wait(3)
+            lock.execute(sa.text("SELECT pg_sleep(1.1)"))
+        with pytest.raises(PlaybackConflict):
+            pending.result(timeout=3)
+    assert store.playback_status(**args) == "unconfirmed"
+
+
+
+def test_timeline_load_uses_one_snapshot_during_concurrent_transition(timeline_engine):
+    timeline = PostgresOperationalTimeline(timeline_engine, _scope("load-snapshot-race"))
+    first = timeline.create_thread(thread_id="snapshot-thread", checkpoint_id="snapshot:1", occurred_at=NOW, data={})
+    advanced = False
+    def concurrent_transition(connection, cursor, statement, parameters, context, executemany):
+        nonlocal advanced
+        if (not advanced and statement.lstrip().startswith("SELECT")
+                and "operational_checkpoints" in statement and "FOR UPDATE" not in statement):
+            advanced = True
+            timeline.transition(thread_id=first.thread_id, expected_revision=first.revision,
+                checkpoint_id="snapshot:2", phase="completed", status="completed",
+                event_type="SNAPSHOT_ADVANCED", occurred_at=NOW, data={})
+    sa.event.listen(timeline_engine, "after_cursor_execute", concurrent_transition)
+    try:
+        loaded = timeline.load(first.thread_id)
+        assert advanced and loaded.revision == 1
+    finally:
+        sa.event.remove(timeline_engine, "after_cursor_execute", concurrent_transition)
+    assert timeline.load(first.thread_id).revision == 2

@@ -5,10 +5,10 @@ Laatst bijgewerkt: 2026-09-09.
 Doel: [Eva als zelfstandig lerende digitale huisgenoot](PROJECTDOEL.md).
 Gebouwd, getest, live en door jou geaccepteerd zijn verschillende stappen.
 
-VB-001: uitvoerbare speakerkandidaat aangesloten op bestaande HA/Eva-adapters. 146 gerichte controles groen; onafhankelijke review vond en bevestigde reparaties voor afsluiten en verdwijnende STT-resultaten. Echte woonkamer- en pipelinebinding read-only gecontroleerd. SP-01 en SP-02 blijven geaccepteerd.
-[Actueel bewijs](evidence/product/VB-001-speaker-service-composition-2026-09-09.json).
+VB-001: afspeelbewijs verbonden met de huishoudelijke gesprekscontext. Eva ziet of een antwoord voltooid, onderbroken of onbevestigd is. 219 gerichte controles en 79 PostgreSQL-controles groen; onafhankelijke bronreview akkoord. SP-01 en SP-02 blijven geaccepteerd.
+[Actueel bewijs](evidence/product/VB-001-playback-conversation-context-2026-09-09.json).
 
-Afspeelstatus verbinden aan de native huishoudelijke gespreksgeschiedenis, zodat gegenereerde maar onderbroken tekst niet als volledig gehoord geldt. Daarna duurzame dienst-/speakerinrichting, bruikbaar herstel en complete SP-03-praktijkproef.
+Complete speaker-/corekandidaat duurzaam inrichten: dependencies en beperkte serviceconfiguratie, veilige A/B-core-uitrol en aantoonbaar bruikbaar speakerherstel. Daarna firmware installeren en SP-03 als echte praktijktest aanbieden; SP-04 blijft apart open.
 
 ## Nu
 
@@ -163,6 +163,10 @@ Klaar betekent:
 - `eva2/experiments/native-duplex-v1/speaker_service.py`
 - `eva2/tests/operations/test_native_duplex_speaker_service.py`
 - `eva2/evidence/product/VB-001-speaker-service-composition-2026-09-09.json`
+- `eva2/src/eva/application/audio_playback.py`
+- `eva2/src/eva/adapters/postgres/conversation_journal.py`
+- `eva2/tests/application/test_audio_playback.py`
+- `eva2/evidence/product/VB-001-playback-conversation-context-2026-09-09.json`
 
 Echte controles:
 
@@ -193,6 +197,7 @@ Echte controles:
 - `pytest -q tests/operations/test_native_duplex_speaker_input.py tests/operations/test_native_duplex_speaker_wire.py tests/operations/test_native_duplex_speaker_endpoint.py tests/operations/test_native_duplex_reply_lane.py tests/operations/test_native_duplex_microphone_session.py tests/connectors/test_home_assistant_voice.py`
 - `pytest -q tests/operations/test_native_duplex_input_firmware.py tests/operations/test_native_duplex_speaker_protocol.py tests/operations/test_native_duplex_speaker_stop.py`
 - `pytest -q tests/operations/test_native_duplex_speaker_service.py tests/connectors/test_home_assistant_voice.py`
+- `pytest -q tests/application/test_audio_playback.py`
 
 </details>
 

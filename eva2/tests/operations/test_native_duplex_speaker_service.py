@@ -36,7 +36,7 @@ def config(tmp_path, origin):
 
 @asynccontextmanager
 async def upstream(*, fault=None):
-    observed = {"stt": [], "tts": [], "core": [], "interrupts": []}
+    observed = {"stt": [], "tts": [], "core": [], "interrupts": [], "playback": []}
     async def websocket(request):
         socket = web.WebSocketResponse()
         await socket.prepare(request)
@@ -85,6 +85,8 @@ async def upstream(*, fault=None):
     async def core(request):
         assert request.headers["Authorization"] == "Bearer eva-test-secret"
         data = await request.json()
+        if observed["core"]:
+            assert observed["core"][-1]["request_id"] in {r[0] for r in observed["playback"]}
         observed["core"].append(data)
         return web.json_response({"request_id": data["request_id"], "reply": "antwoord " + str(len(observed["core"])),
                                   "continue_conversation": True})
@@ -92,6 +94,16 @@ async def upstream(*, fault=None):
     async def interrupt(request):
         observed["interrupts"].append(await request.json())
         return web.json_response({"status": "interrupted"})
+
+    async def capabilities(request):
+        assert request.headers["Authorization"] == "Bearer eva-test-secret"
+        assert dict(request.query) == {"satellite_id": "assist_satellite.test", "device_id": DEVICE}
+        return web.json_response({"playback_reporting": 0 if fault == "old-core" else 1})
+
+    async def playback(request):
+        assert request.headers["Authorization"] == "Bearer eva-test-secret"
+        observed["playback"].append((request.match_info["request_id"], await request.json()))
+        return web.json_response({"request_id": request.match_info["request_id"], "recorded": True})
 
     async def tts(request):
         assert request.headers["Authorization"] == "Bearer ha-test-secret"
@@ -114,6 +126,8 @@ async def upstream(*, fault=None):
     app.router.add_get("/api/tts_proxy/example.wav", audio)
     app.router.add_post("/internal/v1/ha-voice/turns", core)
     app.router.add_post("/internal/v1/ha-voice/turns/{request_id}/interrupt", interrupt)
+    app.router.add_get("/internal/v1/ha-voice/capabilities", capabilities)
+    app.router.add_post("/internal/v1/ha-voice/turns/{request_id}/playback", playback)
     runner = web.AppRunner(app)
     await runner.setup()
     site = web.TCPSite(runner, "127.0.0.1", 0)
@@ -162,6 +176,12 @@ async def test_complete_composition_reuses_real_adapters_and_native_client(tls_p
     assert {r["conversation_id"] for r in observed["core"]} == {"configured-household-conversation"}
     assert [r["message"] for r in observed["tts"]] == ["antwoord 1", "antwoord 2"]
     assert all(set(r) == {"request_id", "satellite_id", "device_id", "conversation_id", "language", "text"} for r in observed["core"])
+    assert {request_id for request_id, _ in observed["playback"]} == {r["request_id"] for r in observed["core"]}
+    assert all(r["result"]["status"] in {"completed", "interrupted"} for _, r in observed["playback"])
+    for request_id, report in observed["playback"]:
+        index = next(i for i, r in enumerate(observed["core"], 1) if r["request_id"] == request_id)
+        assert report["reply_sha256"] == hashlib.sha256(f"antwoord {index}".encode()).hexdigest()
+        assert report["device_id"] == DEVICE
 
 
 @pytest.mark.parametrize("fault", ["device", "disabled", "voice"])
@@ -170,7 +190,18 @@ async def test_preflight_refuses_wrong_ha_binding_without_stt_or_core(tmp_path, 
     async with upstream(fault=fault) as (origin, observed):
         with pytest.raises(service.SpeakerServiceError, match="binding differs"):
             await service.verify_home_assistant(config(tmp_path, origin))
-        assert observed == {"stt": [], "tts": [], "core": [], "interrupts": []}
+        assert not any(observed.values())
+
+
+@run_async
+async def test_service_refuses_core_without_playback_support_before_listener(tls_pair, tmp_path, monkeypatch):
+    monkeypatch.setattr(service, "verify_model", lambda path: path)
+    monkeypatch.setattr(service, "verified_detector", lambda path: Detector())
+    async with upstream(fault="old-core") as (origin, observed):
+        with pytest.raises(RuntimeError, match="playback reporting"):
+            async with service.open_service(config(tmp_path, origin)):
+                pytest.fail("old core must not open a microphone listener")
+        assert not any(observed.values())
 
 
 @run_async

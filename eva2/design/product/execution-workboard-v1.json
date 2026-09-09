@@ -157,7 +157,7 @@
         {
           "label": "IN ONTWIKKELING · SP-03",
           "value": "Eva met gewone spraak onderbreken",
-          "detail": "Firmware en service zijn als kandidaat gekoppeld en getest. Een fout met verdwijnende herkenningsresultaten is gericht hersteld. Volgende stap: onderbroken antwoorden juist meenemen in het gesprek, daarna herstel en praktijk."
+          "detail": "De kandidaat houdt nu rekening met onderbroken antwoorden in het gesprek. Gebouwd en getest met onafhankelijke review. Volgende stap: veilige inrichting en herstel, daarna testen in de woonkamer."
         },
         {
           "label": "APART PROBLEEM",
@@ -438,8 +438,8 @@
           "updatedOn": "9 september",
           "status": "working",
           "title": "Onderbreken met gewone spraak",
-          "change": "Firmware en service zijn als kandidaat aangesloten. De netwerkproef gebruikt de bestaande HA-adapters en Eva-client; stop en nieuwe vraag slagen. Race hersteld waarbij succesvolle spraakherkenning alsnog kon verdwijnen. 146 gerichte controles groen.",
-          "result": "Nog geen praktijktest: afspeelstatus in de gesprekscontext, duurzame inrichting en fysiek herstel volgen eerst. De echte woonkamerbinding is gecontroleerd; er is niets geflasht. SP-01 en SP-02 blijven geaccepteerd."
+          "change": "Afgerond in de kandidaat: Eva houdt bij of haar vorige antwoord is afgespeeld, onderbroken of onbevestigd. Stop hoeft niet op het opslaan te wachten. 219 gerichte en 79 databasecontroles groen; onafhankelijk beoordeeld.",
+          "result": "Nog geen praktijktest: complete kandidaat veilig inrichten en uitrollen, met bruikbaar fysiek herstel. Er is niets geflasht. SP-01 en SP-02 blijven geaccepteerd."
         },
         {
           "id": "SP-04",
@@ -526,9 +526,9 @@
       "document": "eva2/PROJECTDOEL.md",
       "scope": "Digitale huisgenoot: zelfstandig redeneren, initiatief, onbekende vaardigheden leren, handelen, zelfverbetering en aantoonbare concurrentiewinst met open-sourcehergebruik.",
       "sessionGoal": "Het volledige doel blijft actief. Nu VB-001: doorlopende gesprekken via Home Assistant, inclusief onderbreken met gewone spraak.",
-      "currentWork": "VB-001: uitvoerbare speakerkandidaat aangesloten op bestaande HA/Eva-adapters. 146 gerichte controles groen; onafhankelijke review vond en bevestigde reparaties voor afsluiten en verdwijnende STT-resultaten. Echte woonkamer- en pipelinebinding read-only gecontroleerd. SP-01 en SP-02 blijven geaccepteerd.",
-      "currentEvidence": "eva2/evidence/product/VB-001-speaker-service-composition-2026-09-09.json",
-      "nextStep": "Afspeelstatus verbinden aan de native huishoudelijke gespreksgeschiedenis, zodat gegenereerde maar onderbroken tekst niet als volledig gehoord geldt. Daarna duurzame dienst-/speakerinrichting, bruikbaar herstel en complete SP-03-praktijkproef.",
+      "currentWork": "VB-001: afspeelbewijs verbonden met de huishoudelijke gesprekscontext. Eva ziet of een antwoord voltooid, onderbroken of onbevestigd is. 219 gerichte controles en 79 PostgreSQL-controles groen; onafhankelijke bronreview akkoord. SP-01 en SP-02 blijven geaccepteerd.",
+      "currentEvidence": "eva2/evidence/product/VB-001-playback-conversation-context-2026-09-09.json",
+      "nextStep": "Complete speaker-/corekandidaat duurzaam inrichten: dependencies en beperkte serviceconfiguratie, veilige A/B-core-uitrol en aantoonbaar bruikbaar speakerherstel. Daarna firmware installeren en SP-03 als echte praktijktest aanbieden; SP-04 blijft apart open.",
       "usageClarification": {
         "date": "2026-09-07",
         "authorizedBy": "Jaap",
@@ -2480,6 +2480,12 @@
       "inputLifecycleTestsPassed": 5,
       "independentReview": "GO experimental input lifecycle and model binding; no hardware GO",
       "next": "Implement owned playback stop, own mixer source and generation-bound receipts in the pinned speaker component. Preserve existing HA STT/TTS and core route."
+    },
+    "vb001PlaybackConversationContext": {
+      "evidence": "eva2/evidence/product/VB-001-playback-conversation-context-2026-09-09.json",
+      "status": "built-tested-not-live",
+      "independentReview": "/root/co006_review: bounded source GO; physical practice open",
+      "nextStep": "Complete speaker-/corekandidaat duurzaam inrichten: dependencies en beperkte serviceconfiguratie, veilige A/B-core-uitrol en aantoonbaar bruikbaar speakerherstel. Daarna firmware installeren en SP-03 als echte praktijktest aanbieden; SP-04 blijft apart open."
     }
   },
   "activeTaskId": "VB-001",
@@ -3973,7 +3979,11 @@
         "eva2/evidence/product/VB-001-native-input-firmware-2026-09-09.json",
         "eva2/experiments/native-duplex-v1/speaker_service.py",
         "eva2/tests/operations/test_native_duplex_speaker_service.py",
-        "eva2/evidence/product/VB-001-speaker-service-composition-2026-09-09.json"
+        "eva2/evidence/product/VB-001-speaker-service-composition-2026-09-09.json",
+        "eva2/src/eva/application/audio_playback.py",
+        "eva2/src/eva/adapters/postgres/conversation_journal.py",
+        "eva2/tests/application/test_audio_playback.py",
+        "eva2/evidence/product/VB-001-playback-conversation-context-2026-09-09.json"
       ],
       "componentIds": [
         "api-and-runtime-composition",
@@ -4022,7 +4032,8 @@
         "pytest -q tests/operations/test_native_duplex_microphone_session.py tests/operations/test_native_duplex_reply_lane.py tests/connectors/test_home_assistant_voice.py tests/operations/test_native_duplex_speaker_endpoint.py tests/operations/test_native_duplex_speaker_wire.py",
         "pytest -q tests/operations/test_native_duplex_speaker_input.py tests/operations/test_native_duplex_speaker_wire.py tests/operations/test_native_duplex_speaker_endpoint.py tests/operations/test_native_duplex_reply_lane.py tests/operations/test_native_duplex_microphone_session.py tests/connectors/test_home_assistant_voice.py",
         "pytest -q tests/operations/test_native_duplex_input_firmware.py tests/operations/test_native_duplex_speaker_protocol.py tests/operations/test_native_duplex_speaker_stop.py",
-        "pytest -q tests/operations/test_native_duplex_speaker_service.py tests/connectors/test_home_assistant_voice.py"
+        "pytest -q tests/operations/test_native_duplex_speaker_service.py tests/connectors/test_home_assistant_voice.py",
+        "pytest -q tests/application/test_audio_playback.py"
       ],
       "evidenceRequired": [
         "Onderzoek bestaande Eva2-voicebouwstenen en Bottie/HA-route; leg concrete ontbrekende media-aansluiting, providerkeuze, bestaand mandaat en verbruik vast.",

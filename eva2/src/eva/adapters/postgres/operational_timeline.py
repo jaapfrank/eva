@@ -142,6 +142,10 @@ class CheckpointConflict(OperationalTimelineError):
     pass
 
 
+class TimelineNotFound(OperationalTimelineError):
+    pass
+
+
 @dataclass(frozen=True, slots=True)
 class TimelineScope:
     tenant_id: UUID
@@ -285,6 +289,7 @@ class PostgresOperationalTimeline:
         retry_count: int | None = None,
         last_error_fingerprint: str | None = None,
         require_unexpired: bool = False,
+        commit_before: datetime | None = None,
     ) -> CheckpointState:
         with self._engine.begin() as connection:
             self._scope(connection)
@@ -304,6 +309,7 @@ class PostgresOperationalTimeline:
                 retry_count=retry_count,
                 last_error_fingerprint=last_error_fingerprint,
                 require_unexpired=require_unexpired,
+                commit_before=commit_before,
             )
 
     def record_recovery_failure(
@@ -345,8 +351,22 @@ class PostgresOperationalTimeline:
             transaction = connection.begin()
             try:
                 self._scope(connection)
+                last_payload = (
+                    sa.select(operational_events.c.payload)
+                    .where(
+                        operational_events.c.tenant_id == self._scope_value.tenant_id,
+                        operational_events.c.installation_id == self._scope_value.installation_id,
+                        operational_events.c.thread_id == thread_id,
+                    )
+                    .order_by(operational_events.c.sequence.desc())
+                    .limit(1)
+                    .scalar_subquery()
+                )
                 row = connection.execute(
-                    sa.select(operational_checkpoints).where(
+                    # One statement gives checkpoint and event the same MVCC
+                    # snapshot. Two READ COMMITTED reads can straddle a valid
+                    # concurrent transition and falsely report corruption.
+                    sa.select(operational_checkpoints, last_payload.label("timeline_payload")).where(
                         operational_checkpoints.c.tenant_id
                         == self._scope_value.tenant_id,
                         operational_checkpoints.c.installation_id
@@ -355,19 +375,9 @@ class PostgresOperationalTimeline:
                     )
                 ).one_or_none()
                 if row is None:
-                    raise OperationalTimelineError("thread does not exist")
+                    raise TimelineNotFound("thread does not exist")
                 state = _state_from_row(row)
-                last_payload = connection.scalar(
-                    sa.select(operational_events.c.payload)
-                    .where(
-                        operational_events.c.tenant_id == self._scope_value.tenant_id,
-                        operational_events.c.installation_id
-                        == self._scope_value.installation_id,
-                        operational_events.c.thread_id == thread_id,
-                    )
-                    .order_by(operational_events.c.sequence.desc())
-                    .limit(1)
-                )
+                last_payload = row.timeline_payload
                 if (
                     not isinstance(last_payload, dict)
                     or last_payload.get("checkpoint")
@@ -632,6 +642,7 @@ def transition_timeline_thread(
     retry_count: int | None = None,
     last_error_fingerprint: str | None = None,
     require_unexpired: bool = False,
+    commit_before: datetime | None = None,
 ) -> CheckpointState:
     """Append one transition inside the caller's root transaction."""
 
@@ -644,6 +655,8 @@ def transition_timeline_thread(
     if operation_id is not None:
         _require_identifier(operation_id, "operation_id")
     _require_utc_second(occurred_at, "occurred_at")
+    if commit_before is not None:
+        _require_utc_second(commit_before, "commit_before")
     if deadline is not None:
         _require_utc_second(deadline, "deadline")
     if last_error_fingerprint is not None:
@@ -659,9 +672,15 @@ def transition_timeline_thread(
         .with_for_update()
     ).one_or_none()
     if row is None:
-        raise OperationalTimelineError("thread does not exist")
+        raise TimelineNotFound("thread does not exist")
     if int(row.revision) != expected_revision:
         raise CheckpointConflict("checkpoint revision changed")
+    if commit_before is not None:
+        # Independent event deadline, checked after lock acquisition. This does
+        # not renew or reuse the operation's own execution deadline.
+        current_time = connection.scalar(sa.select(sa.func.clock_timestamp()))
+        if occurred_at >= commit_before or current_time >= commit_before:
+            raise CheckpointConflict("transition reporting deadline expired")
     if require_unexpired:
         # clock_timestamp(), unlike now(), advances while waiting for the lock.
         current_time = connection.scalar(sa.select(sa.func.clock_timestamp()))

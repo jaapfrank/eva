@@ -91,6 +91,20 @@ from eva.contracts.runtime_budget import RuntimeResourceBudget
 
 _MAX_STREAM_BYTES = 8 * 1024 * 1024
 _MODEL_LEASE_OWNER_UID = 1000
+
+
+def _recent_message_line(message: RecentConversationMessage) -> str:
+    descriptions = {
+        "completed": "afspelen voltooid; dit bewijst niet dat iemand het hoorde",
+        "interrupted": "afspelen onderbroken; neem niet aan dat de volledige tekst is gehoord; het gehoorde tekstdeel is onbekend",
+        "unconfirmed": "afspelen niet bevestigd; neem niet aan dat deze tekst is gehoord",
+    }
+    if message.playback_status is None:
+        return f"{message.role}: {message.text}"
+    return (f"{message.role} [gegenereerd antwoord; {descriptions[message.playback_status]}]: "
+            f"{message.text}")
+
+
 class _ProviderUsageError(ConversationModelError):
     """Provider output cannot establish consumption for the completed request."""
 
@@ -2153,9 +2167,7 @@ class PydanticConversationModel:
             if memory.style_mirror is not None and memory.style_mirror.strip()
             else "Geen afzonderlijke duurzame stijlspiegel beschikbaar."
         )
-        recent = "\n".join(
-            f"{message.role}: {message.text}" for message in recent_messages[-12:]
-        )
+        recent = "\n".join(_recent_message_line(message) for message in recent_messages[-12:])
         if not recent:
             recent = "Geen eerdere berichten in deze actieve context."
         durable_self = (

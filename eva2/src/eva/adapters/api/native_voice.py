@@ -13,11 +13,14 @@ from collections.abc import Awaitable, Callable, Mapping
 from dataclasses import dataclass
 from datetime import UTC, datetime
 import hmac
+import hashlib
 import re
-from typing import Protocol
+from typing import Literal, Protocol
 
 from fastapi import FastAPI, HTTPException, Request
 from pydantic import BaseModel, ConfigDict, Field
+
+from eva.application.audio_playback import AudioPlaybackResult, PlaybackConflict
 
 
 class VoiceRequest(BaseModel):
@@ -36,6 +39,21 @@ class VoiceInterrupt(BaseModel):
     device_id: str = Field(pattern=r"^[0-9a-f]{32}$")
 
 
+class PlaybackPayload(BaseModel):
+    model_config = ConfigDict(extra="forbid", strict=True)
+    session_id: str = Field(pattern=r"^[0-9a-f]{16}$")
+    generation: int = Field(ge=1, le=0xFFFFFFFF)
+    status: Literal["completed", "interrupted", "unconfirmed"]
+    offered_frames: int = Field(ge=0, le=24000 * 180)
+    confirmed_frames: int | None = Field(ge=0, le=24000 * 180)
+    sample_rate: int = Field(ge=24000, le=24000)
+
+
+class VoicePlayback(VoiceInterrupt):
+    reply_sha256: str = Field(pattern=r"^[0-9a-f]{64}$")
+    result: PlaybackPayload
+
+
 @dataclass(frozen=True)
 class VoiceReply:
     text: str
@@ -45,7 +63,10 @@ class VoiceReply:
 class RequestLedger(Protocol):
     def begin(self, *, device_id: str, request_id: str, now: datetime) -> bool: ...
     def interrupt(self, *, device_id: str, request_id: str, now: datetime) -> None: ...
-    def claim_reply(self, *, device_id: str, request_id: str, now: datetime) -> bool: ...
+    def claim_reply(self, *, device_id: str, request_id: str, now: datetime,
+                    reply_sha256: str) -> bool: ...
+    def record_playback(self, *, device_id: str, request_id: str, reply_sha256: str,
+                        result: AudioPlaybackResult, now: datetime) -> None: ...
 
 
 @dataclass
@@ -170,7 +191,8 @@ class NativeVoiceService:
                     or type(reply.continue_conversation) is not bool):
                 raise HTTPException(409, "Voice reply no longer deliverable")
             claimed = await asyncio.to_thread(self._ledger.claim_reply, device_id=device,
-                                              request_id=request_id, now=self._now())
+                request_id=request_id, now=self._now(),
+                reply_sha256=hashlib.sha256(reply.text.encode("utf-8")).hexdigest())
             if not claimed or entry.stopped or self._active.get(device) is not entry:
                 raise HTTPException(409, "Voice reply no longer deliverable")
             self._validate_current()
@@ -231,6 +253,37 @@ def install_native_voice(app: FastAPI, service: NativeVoiceService | None) -> No
         except Exception:
             raise HTTPException(503, "Voice stop could not be committed") from None
         return {"request_id": request_id, "stopped": True}
+
+    @app.get("/internal/v1/ha-voice/capabilities")
+    async def capabilities(satellite_id: str, device_id: str, request: Request):
+        authorize(request, satellite_id, device_id)
+        if not callable(getattr(service._ledger, "record_playback", None)):
+            raise HTTPException(503, "Playback reporting unavailable")
+        return {"playback_reporting": 1}
+
+    @app.post("/internal/v1/ha-voice/turns/{request_id}/playback")
+    async def playback(request_id: str, payload: VoicePlayback, request: Request):
+        # Audit for an admitted answer remains possible after revocation. This
+        # route cannot start/reopen a turn or grant household/person authority.
+        authorize(request, payload.satellite_id, payload.device_id, stopping=True)
+        if not re.fullmatch(r"[0-9a-f]{32}", request_id):
+            raise HTTPException(422, "Invalid voice request identity")
+        try:
+            result = AudioPlaybackResult.from_wire(payload.result.model_dump())
+        except PlaybackConflict:
+            raise HTTPException(422, "Invalid playback result") from None
+        task = asyncio.create_task(asyncio.to_thread(service._ledger.record_playback,
+            device_id=payload.device_id, request_id=request_id,
+            reply_sha256=payload.reply_sha256, result=result, now=service._now()))
+        service._cleanups.add(task)
+        task.add_done_callback(service._cleanup_finished)
+        try:
+            await asyncio.shield(task)
+        except PlaybackConflict:
+            raise HTTPException(409, "Playback evidence conflicts with admitted reply") from None
+        except Exception:
+            raise HTTPException(503, "Playback result unavailable") from None
+        return {"request_id": request_id, "recorded": True}
 
     @app.post("/internal/v1/ha-voice/turns")
     async def respond(payload: VoiceRequest, request: Request):

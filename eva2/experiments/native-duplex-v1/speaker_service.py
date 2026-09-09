@@ -201,9 +201,13 @@ async def open_service(config: ServiceConfig):
     try:
         client = native_client_class()(http, url=config.eva_url, token=config.eva_token,
                        satellite_ids=frozenset(g.binding.satellite_id for g in config.grants))
+        for grant in config.grants:
+            await client.verify_playback_support(satellite_id=grant.binding.satellite_id,
+                                                  device_id=grant.binding.device_id)
         endpoint = SpeakerEndpoint(grants=config.grants, pcm=pcm.synthesize_pcm,
             session=HouseholdSpeakerSession(client=client, speech_input=speech_input,
-                detector_factory=lambda: verified_detector(config.model)), microphone_enabled=True)
+                detector_factory=lambda: verified_detector(config.model), report_playback=True),
+            microphone_enabled=True)
         server = await endpoint.listen(host=config.host, port=config.port, tls=tls)
         yield server, endpoint
     finally:

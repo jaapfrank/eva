@@ -9,6 +9,7 @@ from __future__ import annotations
 import asyncio
 from dataclasses import dataclass
 import json
+import hashlib
 import re
 from urllib.parse import urlsplit
 from uuid import uuid4
@@ -24,6 +25,7 @@ class EvaVoiceUnavailable(RuntimeError):
 class EvaVoiceAnswer:
     text: str
     continue_conversation: bool
+    request_id: str | None = None
 
 
 class EvaVoiceClient:
@@ -52,6 +54,7 @@ class EvaVoiceClient:
         self._satellites = satellite_ids
         self._active: dict[str, asyncio.Task] = {}
         self._cleanups: set[asyncio.Task] = set()
+        self._reports: dict[str, set[asyncio.Task]] = {}
         self._closed = False
 
     async def respond(self, *, satellite_id: str, device_id: str,
@@ -63,6 +66,13 @@ class EvaVoiceClient:
                 or not language or len(language) > 32):
             raise EvaVoiceUnavailable("Eva voice request is not admitted")
         request_id = uuid4().hex
+        # Physical stop and microphone capture need not wait for HTTP auditing.
+        # A new model turn waits for already scheduled evidence; a failed report
+        # leaves the durable history explicitly unconfirmed.
+        await asyncio.gather(*(asyncio.shield(task) for task in
+            tuple(self._reports.get(device_id, ()))), return_exceptions=True)
+        if self._closed:
+            raise EvaVoiceUnavailable("Eva voice client is closed")
         payload = {"request_id": request_id, "satellite_id": satellite_id,
                    "device_id": device_id, "conversation_id": conversation_id,
                    "text": text, "language": language}
@@ -102,7 +112,7 @@ class EvaVoiceClient:
                     or len(data["reply"]) > 16_384
                     or type(data["continue_conversation"]) is not bool):
                 raise EvaVoiceUnavailable("Eva voice response binding differs")
-            return EvaVoiceAnswer(data["reply"], data["continue_conversation"])
+            return EvaVoiceAnswer(data["reply"], data["continue_conversation"], data["request_id"])
         except BaseException as error:
             cancelled = isinstance(error, asyncio.CancelledError)
             # Cancellation is request-specific, including a response that may
@@ -135,6 +145,70 @@ class EvaVoiceClient:
             # No remote-stop receipt is claimed. The server must enforce its
             # own deadline and suppress a disconnected/expired response.
             pass
+
+    async def verify_playback_support(self, *, satellite_id: str, device_id: str) -> None:
+        if self._closed or satellite_id not in self._satellites:
+            raise EvaVoiceUnavailable("Eva voice device is not admitted")
+        data = await self._evidence_request("GET", self._url.rsplit("/", 1)[0] + "/capabilities",
+            params={"satellite_id": satellite_id, "device_id": device_id})
+        if data != {"playback_reporting": 1} or type(data.get("playback_reporting")) is not int:
+            raise EvaVoiceUnavailable("Eva playback reporting is unavailable")
+
+    async def _evidence_request(self, method: str, url: str, **kwargs) -> dict:
+        try:
+            async with asyncio.timeout(2):
+                async with self._session.request(method, url, headers=self._headers,
+                        allow_redirects=False, **kwargs) as response:
+                    if response.status != 200:
+                        raise EvaVoiceUnavailable("Eva playback evidence request failed")
+                    raw = bytearray()
+                    async for chunk in response.content.iter_chunked(1024):
+                        raw.extend(chunk)
+                        if len(raw) > 4096:
+                            raise EvaVoiceUnavailable("Eva playback evidence exceeds its bound")
+            data = json.loads(raw)
+            if not isinstance(data, dict):
+                raise EvaVoiceUnavailable("Invalid Eva playback evidence response")
+            return data
+        except Exception:
+            raise EvaVoiceUnavailable("Eva playback evidence unavailable") from None
+
+    def record_playback(self, *, satellite_id: str, device_id: str,
+                        answer: EvaVoiceAnswer, result: dict) -> asyncio.Task:
+        """Own a bounded idempotent report without holding up physical stop.
+
+        The authenticated core validates the result and immutable reply hash.
+        Keep this HA-package transport independent of Eva's Python packages.
+        """
+        if (self._closed or satellite_id not in self._satellites
+                or not isinstance(device_id, str) or not re.fullmatch(r"[0-9a-f]{32}", device_id)
+                or not isinstance(answer.request_id, str)
+                or not re.fullmatch(r"[0-9a-f]{32}", answer.request_id)):
+            raise EvaVoiceUnavailable("Eva playback reply binding is invalid")
+        request_id = answer.request_id
+        payload = {"satellite_id": satellite_id, "device_id": device_id,
+            "reply_sha256": hashlib.sha256(answer.text.encode("utf-8")).hexdigest(),
+            "result": dict(result)}
+
+        async def report():
+            data = await self._evidence_request("POST", self._url + "/" + request_id + "/playback",
+                                               json=payload)
+            if data != {"request_id": request_id, "recorded": True} or data.get("recorded") is not True:
+                raise EvaVoiceUnavailable("Eva playback receipt binding differs")
+
+        task = asyncio.create_task(report())
+        pending = self._reports.setdefault(device_id, set())
+        pending.add(task)
+        self._cleanups.add(task)
+        def finished(task):
+            pending.discard(task)
+            self._cleanups.discard(task)
+            if not pending:
+                self._reports.pop(device_id, None)
+            if not task.cancelled():
+                task.exception()
+        task.add_done_callback(finished)
+        return task
 
     async def close(self) -> None:
         self._closed = True

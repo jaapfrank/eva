@@ -14,11 +14,13 @@ class HouseholdSpeakerSession:
     Retired core/STT cleanup never owns new audio or its generation.
     """
 
-    def __init__(self, *, client, speech_input, detector_factory, idle_seconds=15):
+    def __init__(self, *, client, speech_input, detector_factory, idle_seconds=15,
+                 report_playback=False):
         self.client = client
         self.speech_input = speech_input
         self.detector_factory = detector_factory
         self.idle_seconds = idle_seconds
+        self.report_playback = report_playback
 
     async def __call__(self, binding, output):
         channel = output.microphone
@@ -38,7 +40,8 @@ class HouseholdSpeakerSession:
                     raise WireError("retired microphone sessions exceeded their bound")
                 source = await channel.begin_capture()
                 lane = HouseholdDuplexReplyLane(binding=binding, client=self.client,
-                                               output=output, initial_generation=generation)
+                    output=output, initial_generation=generation,
+                    report_playback=self.report_playback)
                 microphone = BufferedMicrophone(source, detector_factory=self.detector_factory)
                 work = asyncio.create_task(run_conversation(
                     microphone=microphone, speech_input=self.speech_input,
@@ -52,7 +55,10 @@ class HouseholdSpeakerSession:
                     # Physical stop precedes slow old STT/core cleanup.
                     generation = lane.generation
                     if generation:
-                        await output.interrupt(generation=generation)
+                        try:
+                            await output.interrupt(generation=generation)
+                        finally:
+                            lane.report_output(generation)
                     await source.aclose()
                     retired.add(work)
                     work = None

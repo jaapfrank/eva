@@ -12,6 +12,8 @@ from collections.abc import AsyncIterable, Awaitable, Callable
 from dataclasses import dataclass
 from typing import Protocol
 
+from eva.application.audio_playback import AudioPlaybackResult
+
 
 @dataclass(frozen=True)
 class HouseholdBinding:
@@ -30,14 +32,18 @@ class PlaybackCompleted:
 class Answer(Protocol):
     text: str
     continue_conversation: bool
+    request_id: str | None
 
 
 class NativeClient(Protocol):
     async def respond(self, *, satellite_id: str, device_id: str,
                       conversation_id: str, text: str, language: str) -> Answer: ...
+    def record_playback(self, *, satellite_id: str, device_id: str,
+                        answer: Answer, result: dict) -> asyncio.Task: ...
 
 
 class MediaOutput(Protocol):
+    def playback_result(self, generation: int) -> AudioPlaybackResult: ...
     async def speak(self, *, generation: int, text: str) -> None:
         """Return only after actual playback completion, not queue acceptance."""
         ...
@@ -55,9 +61,14 @@ class HouseholdDuplexReplyLane:
     No alternate memory, person identity, model or tool execution is created.
     """
     def __init__(self, *, binding: HouseholdBinding, client: NativeClient,
-                 output: MediaOutput, initial_generation: int = 0) -> None:
+                 output: MediaOutput, initial_generation: int = 0,
+                 report_playback: bool = False) -> None:
         if type(initial_generation) is not int or not 0 <= initial_generation < 0xFFFFFFFF:
             raise ValueError("invalid initial reply generation")
+        if type(report_playback) is not bool or (report_playback and (
+                not callable(getattr(client, "record_playback", None))
+                or not callable(getattr(output, "playback_result", None)))):
+            raise ValueError("playback reporting requires bound client and output support")
         self.binding = binding
         self._client = client
         self._output = output
@@ -73,6 +84,21 @@ class HouseholdDuplexReplyLane:
         self._stops: dict[int, asyncio.Task] = {}
         self._completed: PlaybackCompleted | None = None
         self._completion_event = asyncio.Event()
+        self._report_playback = report_playback
+        self._answers: dict[int, Answer] = {}
+        self._reported = {}
+
+    def report_output(self, generation: int) -> None:
+        """Schedule evidence now; the client owns it through the next turn/close."""
+        if not self._report_playback or generation not in self._answers:
+            return
+        result = self._output.playback_result(generation)
+        if self._reported.get(generation) == result:
+            return
+        self._client.record_playback(satellite_id=self.binding.satellite_id,
+            device_id=self.binding.device_id, answer=self._answers[generation],
+            result=result.to_wire())
+        self._reported[generation] = result
 
     @property
     def failure(self) -> BaseException | None:
@@ -111,7 +137,12 @@ class HouseholdDuplexReplyLane:
         # Stop ownership outlives a cancelled reply, new-speech callback or
         # close caller. Closed admission is not confirmation of silent output.
         if generation not in self._stops:
-            stop = asyncio.create_task(self._output.interrupt(generation=generation))
+            async def stop_and_report():
+                try:
+                    await self._output.interrupt(generation=generation)
+                finally:
+                    self.report_output(generation)
+            stop = asyncio.create_task(stop_and_report())
             self._stops[generation] = stop
             stop.add_done_callback(self._observe_stop)
         return self._stops[generation]
@@ -156,7 +187,9 @@ class HouseholdDuplexReplyLane:
         answer = await self._client.respond(
             satellite_id=b.satellite_id, device_id=b.device_id,
             conversation_id=b.conversation_id, language=b.language, text=text)
+        self._answers[generation] = answer
         if self._closed or generation != self._generation:
+            self.report_output(generation)
             return
         try:
             await self._output.speak(generation=generation, text=answer.text)
@@ -167,6 +200,7 @@ class HouseholdDuplexReplyLane:
                 self._record_failure(error)
             await asyncio.shield(self._ensure_stop(generation))
             raise
+        self.report_output(generation)
         # Publish only after confirmed playback, and recheck after the await.
         # Cancel-resistant old output must not close a newer listening turn.
         if not self._closed and generation == self._generation:

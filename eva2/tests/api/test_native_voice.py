@@ -14,6 +14,8 @@ from eva.adapters.api.native_voice import (
 class Ledger:
     def __init__(self):
         self.states = {}
+        self.digests = {}
+        self.reports = []
         self.lock = Lock()
 
     def begin(self, *, device_id, request_id, now):
@@ -28,13 +30,20 @@ class Ledger:
         with self.lock:
             self.states[device_id, request_id] = "stopped"
 
-    def claim_reply(self, *, device_id, request_id, now):
+    def claim_reply(self, *, device_id, request_id, now, reply_sha256):
         with self.lock:
             key = (device_id, request_id)
             if self.states.get(key) != "running":
                 return False
             self.states[key] = "claimed"
+            self.digests[key] = reply_sha256
             return True
+
+    def record_playback(self, **kwargs):
+        from eva.application.audio_playback import PlaybackConflict
+        if self.digests.get((kwargs["device_id"], kwargs["request_id"])) != kwargs["reply_sha256"]:
+            raise PlaybackConflict("no reply")
+        self.reports.append(kwargs)
 
 
 def payload(request_id="b" * 32, device="a" * 32, satellite="room"):
@@ -340,5 +349,53 @@ def test_revoked_authority_blocks_new_work_but_authenticated_stop_still_cancels(
             await asyncio.wait_for(cancelled.wait(), 2)
             assert (await running).status_code == 409
             assert ledger.states[data["device_id"], data["request_id"]] == "stopped"
+        await service.close()
+    asyncio.run(run())
+
+
+@pytest.mark.parametrize("change,expected", [
+    ({}, 200), ({"device_id": "c" * 32}, 403), ({"reply_sha256": "f" * 64}, 409),
+    ({"principal_id": "Jaap"}, 422),
+    ({"result": {"status": "completed"}}, 422),
+])
+def test_playback_api_binds_reply_and_device_without_starting_new_work(change, expected):
+    async def run():
+        import hashlib
+        service, ledger, client = setup(answer)
+        async with client:
+            request = payload()
+            assert (await client.post("/internal/v1/ha-voice/turns", json=request)).status_code == 200
+            report = {"satellite_id": request["satellite_id"], "device_id": request["device_id"],
+                "reply_sha256": hashlib.sha256("Dag!".encode()).hexdigest(),
+                "result": {"session_id": "a" * 16, "generation": 1, "status": "interrupted",
+                           "sample_rate": 24000, "offered_frames": 2400, "confirmed_frames": 480}}
+            response = await client.post("/internal/v1/ha-voice/turns/" + request["request_id"] + "/playback",
+                                         json={**report, **change})
+            assert response.status_code == expected
+            assert len(ledger.reports) == (1 if expected == 200 else 0)
+            assert len(ledger.states) == 1
+        await service.close()
+    asyncio.run(run())
+
+
+def test_revocation_blocks_capabilities_but_allows_audit_of_existing_answer():
+    async def run():
+        import hashlib
+        active = True
+        def validate():
+            if not active:
+                raise ValueError("revoked")
+        service, ledger, client = setup(answer, validate=validate)
+        async with client:
+            request = payload()
+            params = {k: request[k] for k in ("satellite_id", "device_id")}
+            assert (await client.get("/internal/v1/ha-voice/capabilities", params=params)).json() == {"playback_reporting": 1}
+            await client.post("/internal/v1/ha-voice/turns", json=request)
+            active = False
+            assert (await client.get("/internal/v1/ha-voice/capabilities", params=params)).status_code == 503
+            report = {**params, "reply_sha256": hashlib.sha256("Dag!".encode()).hexdigest(),
+                "result": {"session_id": "a" * 16, "generation": 1, "status": "completed",
+                           "sample_rate": 24000, "offered_frames": 2400, "confirmed_frames": 2400}}
+            assert (await client.post("/internal/v1/ha-voice/turns/" + request["request_id"] + "/playback", json=report)).status_code == 200
         await service.close()
     asyncio.run(run())
