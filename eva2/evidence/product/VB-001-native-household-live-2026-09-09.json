@@ -3,7 +3,7 @@
   "observedAt": "2026-09-09T06:24:35.356842+00:00",
   "sourceCommit": "5eb98f8336fa22a586d2accd514dde37774d4186",
   "imageId": "sha256:e6e33b0be32b7f4a1c3d04da55f8c903998d00fea88e50d817897111e92a35cc",
-  "status": "live_selected_awaiting_hardware_trial",
+  "status": "live_hardware_trial_failed",
   "cutover": {
     "sourceSlot": 3,
     "targetSlot": 4,
@@ -57,5 +57,37 @@
       "privateArtifact": "ha-pipeline-selection.json"
     }
   },
-  "next": "Gebruiker spreekt via Hey Eva; lees werkelijke pipeline-run terug en controleer hoorbaar stoppen en vervolgvraag."
+  "next": "Bepaal met of zonder nieuw Hey Eva gewenste vervolg; vergelijk hoorbaarheid losse TTS-test en native route. Herstel audio en vervolgluisteren vóór nieuwe acceptatieclaim.",
+  "hardwareTrial": {
+    "observedAt": "2026-09-09T06:40:02.612532+00:00",
+    "userReport": {
+      "audio": "hort en stoot; geen duidelijke audio",
+      "stop": "onzeker",
+      "followUp": "niet meteen nieuwe vraag mogelijk"
+    },
+    "pipelineRunId": "01M22DVB2V95S23NBZEN35W1X3",
+    "pipelineEvidence": {
+      "satellite": "woonkamer",
+      "sttCompleted": true,
+      "engine": "conversation.eva2",
+      "replyCharacters": 270,
+      "continueConversation": false,
+      "ttsEngine": "tts.home_assistant_cloud",
+      "ttsMimeType": "audio/flac"
+    },
+    "deviceReadback": {
+      "esphomeVersion": "2026.6.2",
+      "compiled": "2026-06-21 20:56:28 +0200",
+      "wifiRssiDb": -50,
+      "firmwareChanged": false,
+      "automaticOtaRollback": "Device warns bootloader is too old; cannot claim automatic OTA recovery."
+    },
+    "findings": [
+      "Current saved wake-word handler stops active assistant without starting another listening turn.",
+      "Prepared candidate restarts on a new wake word, but Stop itself still does not reopen listening.",
+      "One synthetic standalone TTS sentence was played with device log capture; user audio assessment pending.",
+      "Audio fault cause remains unproven; successful TTS generation is not audible acceptance."
+    ],
+    "review": "co006_review independently confirmed stop/relisten limitation; no firmware deployment approval claimed."
+  }
 }

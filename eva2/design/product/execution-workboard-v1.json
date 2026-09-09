@@ -2369,11 +2369,11 @@
       "next": "Verse A/B-omschakeling en geauthenticeerde spraakroute controleren; daarna echte speaker- en onderbreekproef."
     },
     "vb001NativeHouseholdLive": {
-      "status": "live_selected_awaiting_hardware_trial",
+      "status": "live_hardware_trial_failed",
       "evidence": "eva2/evidence/product/VB-001-native-household-live-2026-09-09.json",
       "sourceCommit": "5eb98f8336fa22a586d2accd514dde37774d4186",
       "imageId": "sha256:e6e33b0be32b7f4a1c3d04da55f8c903998d00fea88e50d817897111e92a35cc",
-      "next": "Gebruiker spreekt via Hey Eva; lees werkelijke pipeline-run terug en controleer hoorbaar stoppen en vervolgvraag."
+      "next": "Bepaal met of zonder nieuw Hey Eva gewenste vervolg; vergelijk hoorbaarheid losse TTS-test en native route. Herstel audio en vervolgluisteren vóór nieuwe acceptatieclaim."
     }
   },
   "activeTaskId": "VB-001",
