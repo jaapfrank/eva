@@ -1,0 +1,1020 @@
+{
+  "contract": "EvaProductCompletionEvidence/v1",
+  "taskId": "TL-003",
+  "baseCommit": "ecfc580142f97666a9f7d434ff5a3f5066b99eb0",
+  "implementationCommit": "3d4111c946a49504a6558bd64042597b67e9abc9",
+  "status": "ready_for_independent_final_review",
+  "built": true,
+  "tested": true,
+  "live": true,
+  "humanAccepted": false,
+  "imageId": "sha256:c1b44a8119d55ba6acffb0ee5ffa30d0ab65cb5d742df368593dbaf0aef3d8d7",
+  "sourceScope": [
+    {
+      "implementationCommit": "6ab24e0ffb599b03b2d7d0528c9bc8a94fdd8075",
+      "baseCommit": "8d87d9278955e3d98f3464f808e3ab5ed06f46cc",
+      "changePaths": [
+        "eva2/deploy/living-core/mcp-gateway.compose.yml",
+        "eva2/deploy/mcp-autonomy/README.md",
+        "eva2/deploy/mcp-autonomy/eva_mcp_pinning.py",
+        "eva2/deploy/mcp-autonomy/prepare.py",
+        "eva2/deploy/mcp-autonomy/upstream.json",
+        "eva2/src/eva/adapters/connectors/mcp_gateway.py",
+        "eva2/src/eva/adapters/connectors/mcp_registration.py",
+        "eva2/src/eva/adapters/postgres/mcp_connector_registry.py",
+        "eva2/src/eva/providers/bundled.py",
+        "eva2/src/eva/providers/mcp_autonomy.py",
+        "eva2/src/eva/providers/mcp_discovery.py",
+        "eva2/src/eva/providers/mcp_gateway.py",
+        "eva2/src/eva/providers/mcp_owner_authority.py",
+        "eva2/src/eva/providers/mcp_registration.py",
+        "eva2/tests/connectors/test_mcp_autonomy_provider.py",
+        "eva2/tests/connectors/test_mcp_discovery.py",
+        "eva2/tests/connectors/test_mcp_invocation.py",
+        "eva2/tests/connectors/test_mcp_registration.py",
+        "eva2/tests/connectors/test_mcp_registration_tools.py",
+        "eva2/tests/operations/test_eva2_quiescent_cutover.py",
+        "eva2/tests/operations/test_managed_b_render.py",
+        "eva2/tests/operations/test_mcp_autonomy_pinning.py",
+        "eva2/tests/postgres/test_mcp_autonomy_source.py",
+        "eva2/tests/postgres/test_mcp_connector_registry.py",
+        "eva2/tests/postgres/test_mcp_owner_authority.py",
+        "eva2/tools/eva2_quiescent_cutover.py",
+        "eva2/tools/managed_b_render.py",
+        "eva2/tools/prepare_mcp_autonomy_access.py"
+      ],
+      "declaredMatchesActual": true,
+      "artifactDirectory": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1"
+    },
+    {
+      "implementationCommit": "dac4373ee8ce81a2cc1c5184e59b317959c7b349",
+      "baseCommit": "6ab24e0ffb599b03b2d7d0528c9bc8a94fdd8075",
+      "changePaths": [
+        "eva2/deploy/mcp-autonomy/prepare.py",
+        "eva2/src/eva/adapters/model/pydantic_conversation.py",
+        "eva2/src/eva/adapters/postgres/conversation_actions.py",
+        "eva2/src/eva/application/research.py",
+        "eva2/tests/model/test_conversation_model.py",
+        "eva2/tests/operations/test_eva2_quiescent_cutover.py",
+        "eva2/tools/eva2_quiescent_cutover.py"
+      ],
+      "declaredMatchesActual": true,
+      "artifactDirectory": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/repair-1"
+    },
+    {
+      "implementationCommit": "55accc84b688d23fa88a424e0e487450fd4ac65b",
+      "baseCommit": "dac4373ee8ce81a2cc1c5184e59b317959c7b349",
+      "changePaths": [
+        "eva2/src/eva/adapters/model/pydantic_conversation.py",
+        "eva2/tests/model/test_conversation_model.py"
+      ],
+      "declaredMatchesActual": true,
+      "artifactDirectory": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/repair-2"
+    },
+    {
+      "implementationCommit": "cae2609229d3c6fb2f07fff07ddb047a02c5b3dd",
+      "baseCommit": "55accc84b688d23fa88a424e0e487450fd4ac65b",
+      "changePaths": [
+        "eva2/src/eva/adapters/model/pydantic_conversation.py",
+        "eva2/src/eva/adapters/postgres/conversation_actions.py",
+        "eva2/tests/model/test_conversation_model.py",
+        "eva2/tests/postgres/test_operational_timeline.py"
+      ],
+      "declaredMatchesActual": true,
+      "artifactDirectory": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/repair-3"
+    },
+    {
+      "baseCommit": "cae2609229d3c6fb2f07fff07ddb047a02c5b3dd",
+      "implementationCommit": "8de8ad388426d406e604840e614279713b4bb3f9",
+      "changePaths": [
+        "eva2/src/eva/adapters/model/pydantic_conversation.py",
+        "eva2/src/eva/adapters/postgres/conversation_actions.py",
+        "eva2/src/eva/application/research.py",
+        "eva2/tests/model/test_conversation_model.py",
+        "eva2/tests/postgres/test_operational_timeline.py"
+      ],
+      "artifactDirectory": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/repair-4",
+      "purpose": "Retain measured provider web context; preserve request envelope admission and durable research usage"
+    },
+    {
+      "baseCommit": "8de8ad388426d406e604840e614279713b4bb3f9",
+      "implementationCommit": "25d30e1e4506dd476ef12fef44a716206a6a4966",
+      "changePaths": [
+        "eva2/src/eva/providers/mcp_owner_authority.py",
+        "eva2/src/eva/adapters/connectors/mcp_gateway.py",
+        "eva2/tests/connectors/test_mcp_autonomy_provider.py"
+      ],
+      "artifactDirectory": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/repair-5",
+      "purpose": "Accept valid parameterless MCP object schemas while preserving original catalog binding and argument checks"
+    },
+    {
+      "baseCommit": "25d30e1e4506dd476ef12fef44a716206a6a4966",
+      "implementationCommit": "166574818859cd35c7d8af1b8f6da3ef85aa9231",
+      "changePaths": [
+        "eva2/src/eva/providers/mcp_registration.py",
+        "eva2/src/eva/providers/mcp_discovery.py",
+        "eva2/src/eva/adapters/postgres/mcp_connector_registry.py",
+        "eva2/tests/connectors/test_mcp_registration_tools.py"
+      ],
+      "artifactDirectory": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/repair-6",
+      "purpose": "Endpoint references and recoverable owner-scoped missing catalog lookup"
+    },
+    {
+      "baseCommit": "166574818859cd35c7d8af1b8f6da3ef85aa9231",
+      "implementationCommit": "12bfdb612a85c964530a46a850bfbce3a23d25bd",
+      "changePaths": [
+        "eva2/src/eva/adapters/model/pydantic_conversation.py",
+        "eva2/tests/model/test_conversation_model.py"
+      ],
+      "declaredMatchesActual": true,
+      "artifactDirectory": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/repair-7",
+      "purpose": "Deduplicate exact model-visible proof observations with hash references while retaining full result and durable proof"
+    },
+    {
+      "baseCommit": "12bfdb612a85c964530a46a850bfbce3a23d25bd",
+      "implementationCommit": "ecfc580142f97666a9f7d434ff5a3f5066b99eb0",
+      "changePaths": [
+        "eva2/src/eva/contracts/runtime_budget.py",
+        "eva2/src/eva/operations/installer_budget_workflow.py",
+        "eva2/src/eva/adapters/api/installer_budget_api.py",
+        "eva2/tests/operations/test_installer_budget_workflow.py",
+        "eva2/tests/operations/test_installer_runtime_budget.py"
+      ],
+      "artifactDirectory": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/repair-8",
+      "purpose": "Allow existing operator-configured input envelope32768 consistently across runtime and installer; unchanged default, output/spend caps"
+    },
+    {
+      "baseCommit": "ecfc580142f97666a9f7d434ff5a3f5066b99eb0",
+      "implementationCommit": "3d4111c946a49504a6558bd64042597b67e9abc9",
+      "changePaths": [
+        "eva2/src/eva/contracts/runtime_budget.py",
+        "eva2/src/eva/operations/installer_budget_workflow.py",
+        "eva2/src/eva/adapters/api/installer_budget_api.py",
+        "eva2/tests/operations/test_installer_budget_workflow.py",
+        "eva2/tests/operations/test_installer_runtime_budget.py"
+      ],
+      "artifactDirectory": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/repair-9",
+      "purpose": "Context room for complete actual tool continuation; previous limits and failed finalization retained"
+    }
+  ],
+  "originalRequestSha256": "7d7f455fc38d2d8cb43b5235cdb4dabba365ef6fc99b9605e7c1e2c2a262564f",
+  "repairs": [
+    {
+      "scope": "research arguments",
+      "result": "Accept one to five named topics and validate matching primary source identities."
+    },
+    {
+      "scope": "gateway recreation",
+      "result": "Seal and revalidate actual transportguard mounts/policy on activation and canonical gateway recreation."
+    },
+    {
+      "scope": "research continuation",
+      "result": "A durably read back research artifact offers existing external continuation tools."
+    },
+    {
+      "scope": "research usage",
+      "result": "Submitted envelope remains bounded; exact subscription built-in search retains measured provider-added context rather than discarding result."
+    },
+    {
+      "scope": "owner installation binding",
+      "result": "Correct original operator manifest from placeholder UUID strings to actual live-test tenant/installation. Same existing owner and policy; old scope/history and revocation state retained."
+    },
+    {
+      "scope": "parameterless MCP tools",
+      "result": "Preserve catalog schema pin while admitting valid object schemas with no properties; reject unexpected arguments."
+    },
+    {
+      "scope": "endpoint discovery and continuation",
+      "result": "Resolve owner-bound endpoint references; missing authorized catalog is a verified not_connected lookup that permits connect_service."
+    },
+    {
+      "scope": "ordinary MCP result context",
+      "result": "Only byte-identical canonical proof observations are replaced in model view by result references and observation/original-proof hashes; full durable events and complete result retained. Same view used in admission and actual Pydantic returns."
+    },
+    {
+      "scope": "deployment technical context",
+      "result": "Operator prepares32768 input tokens instead of the programmer probe default12000. External monthly cap0, output1200, unknown-cost policy and billing route preserved. This is operator assistance, not autonomous budget expansion or a newly observed owner numeric choice."
+    }
+  ],
+  "retainedFailures": [
+    {
+      "attempt": "initial HTTP",
+      "artifact": "acceptance-http-receipt.json",
+      "result": "409 current research options invalid"
+    },
+    {
+      "attempt": "repair1 HTTP",
+      "artifact": "repair-1/http-receipt.json",
+      "result": "503 research provider input beyond ordinary reply threshold"
+    },
+    {
+      "attempt": "repair1 same-ingress diagnostic",
+      "result": "Provider input budget failure confirmed; no result or counts captured."
+    },
+    {
+      "attempt": "repair2 same-ingress diagnostic",
+      "result": "Backend rejected unsupported max_tool_calls. Runtime returned truthful failure reply; not success."
+    },
+    {
+      "attempt": "repair3 HTTP",
+      "artifact": "repair-3/http-receipt.json",
+      "result": "503 at measured27040 input/1092 output against12000 ordinary reply threshold. Four MCP actions also filtered by incorrect installation binding."
+    },
+    {
+      "attempt": "repair4 image preparation",
+      "result": "First build used incorrect COPY destination; rejected before deployment, corrected and installed source inspected."
+    },
+    {
+      "attempt": "repair-4 owner HTTP",
+      "artifact": "repair-4/http-receipt.json",
+      "httpStatus": 200,
+      "elapsedSeconds": 55.62049589201342,
+      "messageId": "dashboard:cdad1485-99ab-4e31-aced-4bcf40920993",
+      "result": "HTTP200 was a truthful incomplete reply, not task success. Catalog registration recovery failed on a valid parameterless object schema; output file absent."
+    },
+    {
+      "attempt": "repair-5 owner HTTP",
+      "artifact": "repair-5/http-receipt.json",
+      "httpStatus": 200,
+      "elapsedSeconds": 24.205989497946575,
+      "messageId": "dashboard:7a81d448-1e2d-48e6-ac89-5746aeff670b",
+      "result": "HTTP200 was a truthful incomplete reply, not task success. Endpoint URL supplied as connector_id was rejected before registry lookup; output file absent."
+    },
+    {
+      "attempt": "repair-6 owner HTTP",
+      "artifact": "repair-6/http-receipt.json",
+      "httpStatus": 503,
+      "elapsedSeconds": 34.4827744680224,
+      "messageId": "dashboard:2a7741d1-3f02-439f-bb49-1a9afe106297",
+      "result": "HTTP503 after four verified external steps including documentation fetch; no next model request/reply. Full result duplicated under proof exhausted local12000 input admission; output file absent."
+    },
+    {
+      "attempt": "initial diagnostic journal scaffolding",
+      "result": "Pre-request unqualified table lookup failed; baseline omitted. Historical owner-scoped capture is not counted as new attempt events; per-message events retained separately."
+    },
+    {
+      "attempt": "repair7 local test preparation",
+      "result": "Edit script syntax and test fixture attribute/old-output expectation failures corrected before final2pass result; no provider calls in these local attempts."
+    },
+    {
+      "attempt": "repair7 target startup",
+      "result": "Prepared32768 configuration exceeded old16000 validation maximum. Target failed to start; automatic lossless rollback restored healthy slot4. No target activation.",
+      "artifacts": [
+        "repair-7/cutover.stdout",
+        "repair-7/rollback-readback.json"
+      ]
+    },
+    {
+      "attempt": "repair8 same-ingress runtime resume",
+      "result": "New documentation fetch and verified file write succeeded; final reply input34617 exceeded32768. File remained durable; no reply committed.",
+      "elapsedSeconds": 35.42967721505556,
+      "artifacts": [
+        "repair-8/resume-result/resume-receipt.json",
+        "repair-8/resume-result/admission-observations.json",
+        "repair-8/durable-events.private.json"
+      ]
+    }
+  ],
+  "nonclaims": [
+    "No human/family acceptance",
+    "No competitor win",
+    "No autonomous arbitrary paid commitment",
+    "No browser/account access exercised by this command",
+    "No new full release or broad test suite",
+    "No autonomous successful recovery without operator assistance",
+    "No claim HTTP200 alone means the requested task completed",
+    "No full release-gate claim from these focused tests",
+    "No repeated provider/model calls performed while drafting this evidence",
+    "No fresh uninterrupted normal HTTP success on final candidate; complete outcome spans original owner ingress, developer repairs and explicitly recorded operator-assisted resumptions.",
+    "Runtime context65536 is an operator setting. Ordinary default remains12000; Eva cannot enlarge it or financial authority itself.",
+    "The updated65536 unit fixture was not rerun; prior32768 real installer roundtrip passed and exact final packaged image accepted the actual65536 manifest."
+  ],
+  "finalResult": {
+    "messageId": "dashboard:2a7741d1-3f02-439f-bb49-1a9afe106297",
+    "replyText": "De opdracht is afgerond. Ik heb de bestaande GitMCP-registratie hergebruikt en de werking bevestigd door de Playwright-documentatie ermee te lezen; het eerdere GitMCP-brononderzoek is niet herhaald.\n\nEen bestaande ingelogde sessie kan via de Playwright Extension en de optie --extension worden gekoppeld. Je kiest daarbij een tabblad en keurt standaard de verbinding goed. De Nederlandse uitleg met bronlinks, browserbeperkingen en veiligheidsaandachtspunten is opgeslagen in /proof-state/tl003-browseronderzoek.md. Ik heb het bestand teruggelezen en de inhoud gecontroleerd.\n\nNiets geïnstalleerd, geen browsersessie geopend en niets naar anderen gestuurd.",
+    "replyCommittedCount": 1,
+    "verifiedToolSteps": 7,
+    "filePath": "/proof-state/tl003-browseronderzoek.md",
+    "fileBytes": 2322,
+    "fileSha256": "7d040da54420f1a98748acf9f278c28d1bb5525c29e6689cab8d614990984eec",
+    "aggregateUsageAcrossResumedIngress": {
+      "measurement": "measured",
+      "model_attempts": 8,
+      "tool_calls": 7,
+      "input_tokens": 145564,
+      "output_tokens": 1342
+    },
+    "finalResumeSeconds": 17.56970927293878,
+    "ordinaryHttpFinalSuccess": false,
+    "sameCommittedIngressRuntimeResume": true,
+    "newOwnerIngressForLastTwoResumes": false,
+    "finalResumeOnlyNewToolEffect": "Read saved file; original documentation and registration reused",
+    "ownerVisibleExample": "Vraag Eva via Telegram /eva2 of eigenaarsgesprek een openbare MCP-dienst te koppelen en die meteen te gebruiken binnen het afgesproken mandaat."
+  },
+  "operatorAssistance": [
+    "Operator built, configured and switched each candidate and corrected gateway guard deployment and owner installation scope.",
+    "Operator initiated saved-ingress diagnostics after failed model attempts and retained failures; no autonomous-recovery claim.",
+    "Operator supplied subsequent synthetic development requests/resume instructions; request variants and hashes must remain distinguishable.",
+    "Operator diagnosed and repaired schema, identifier, continuation, provider-web-context and duplicate-model-context defects.",
+    "Operator changed the technical deployment context setting; Eva did not independently expand a budget.",
+    "Operator resumed the same unfinished ingress twice after deployment repairs. The first saved the document but failed finalization; the second read the saved document and committed the final reply. No fresh owner ingress, repeated registration or repeated original GitMCP research during these resumptions."
+  ],
+  "provenance": {
+    "implementationChainSha256": "65484b5638f7def20778158078dff2635c6ab02e303db751f87104735a9ed501",
+    "latestSourceFiles": {
+      "eva2/src/eva/contracts/runtime_budget.py": "23a42ca1c66149401d525c2440ad47adef57e5a8e3a7012073f32c61f7880109",
+      "eva2/src/eva/operations/installer_budget_workflow.py": "d5c91a593b0bf529a29064065139809d1a6df9fece38d94101db911705a93d9c",
+      "eva2/src/eva/adapters/api/installer_budget_api.py": "0eb35b5ccf368fff4417f694c4075e1593c128f34b3b9972991d5fc32f760dfc",
+      "eva2/tests/operations/test_installer_budget_workflow.py": "d6093b774eb7e61a9b81d1003270e7ade54026064379623c97eab0ec0bb17979",
+      "eva2/tests/operations/test_installer_runtime_budget.py": "5cfc06ecbe4c0d9afa9381699d58084ccdbe00e0e4b3d8285d25da8344f35eee"
+    }
+  },
+  "privateEvidenceBindings": [
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/acceptance-attempt.private.json",
+      "sha256": "1da5e42ba6ed033936923038e90dc23ab31ef16fea995c4b2bd816e48d42944e"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/acceptance-baseline-event-ids.json",
+      "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/acceptance-criteria.json",
+      "sha256": "c45d0ca9d40ec28182370761b6fb2895580caefa60455d270c0b8fdd512375e3"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/acceptance-durable-events.private.json",
+      "sha256": "a3c5313ff3d41935dcfcf9ab04af9e450e7f7eb646b56a32085acf70f82d8393"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/acceptance-file.private.json",
+      "sha256": "57cb42d1644719363912e5e8683704f9427f0367068924dee6109d85303935f3"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/acceptance-http-receipt.json",
+      "sha256": "c566133f093ac084117eff77dc30bbcdae6d2b279cd47d5b946aec2b5780beca"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/acceptance-matching-events.private.json",
+      "sha256": "76ec2fc03c28171a4ee6d7e74ac7a66c44bd737f4ac16d86168394a6d7712641"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/acceptance-matching-ingress.private.json",
+      "sha256": "b3ccf446a9190509373d8a7777b52299ad3a223beb6658f9721da760cfb765f7"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/acceptance-readback.json",
+      "sha256": "e358b182a3c47b5d626b2fbcbf34dd15283016c737b81ecb12d69d50fffc615d"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/acceptance-request.json",
+      "sha256": "7d7f455fc38d2d8cb43b5235cdb4dabba365ef6fc99b9605e7c1e2c2a262564f"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/acceptance-response.private.json",
+      "sha256": "0113ececefb0c29d195ba522f6f81cadad94b538eaaf6caa4a47b5e943122985"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/access-preparation.json",
+      "sha256": "558f4a3b99bedef4797296df39327ae5321ec0c753e4493364e382bff2bf8871"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/build-receipt.json",
+      "sha256": "2b2a9e72e943b610229d7b263c2c07e43abf998b01b3fc9d37f75bba27e26b58"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/change-paths.json",
+      "sha256": "7d49b571c89a6c8586c0b4c9eeac84c7d5ad09d15d167ab3e7b03e0e3f0116b7"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/cutover-probe-startup-abort-gateway-guard-rollback.json",
+      "sha256": "d0a02d8b76a86b2519670c5fed5bb10b35c1c2489419feb66e9b9b7f73a096aa"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/gateway-guard-live-readback.json",
+      "sha256": "1222b0b17e2b5e256bc6e11d8455a52274026b6a91d1a2a334e644421319b948"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/gateway-guard-preparation.json",
+      "sha256": "e3308af332d1abc3cabc77ed8f3d629bb1c69006d3debb5478f84d666fcbe4e1"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/implementation-chain.json",
+      "sha256": "65484b5638f7def20778158078dff2635c6ab02e303db751f87104735a9ed501"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/live-core-readback.json",
+      "sha256": "87288609cbb5bc6af1bdfd6cf61f80a50415fd11c39f89960d3f389b32922681"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/mcp-initialize-pinning-readback.json",
+      "sha256": "caf8fedf715e52ad275396c4d3b2b73a38b7312cd4d866cee1151ed4bf9a12d2"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/repair-1/acceptance-request.json",
+      "sha256": "7d7f455fc38d2d8cb43b5235cdb4dabba365ef6fc99b9605e7c1e2c2a262564f"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/repair-1/attempt.private.json",
+      "sha256": "ceb559d4ccee8e7682e60675403216ae6eb855805c745316a0a1afa911c76c88"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/repair-1/build-receipt.json",
+      "sha256": "d07bb2d0a18fea03c7cb8d4fd095d0723409642270201c7a3911f431b0dec9a1"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/repair-1/change-paths.json",
+      "sha256": "32c14e424868301ec8c66209fe6e127d9a27dfecd15b9ecba7919afd324b44d2"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/repair-1/diagnostic-research-exception.private.json",
+      "sha256": "4b5b3f6321f85aa0c0084d9def6bd903f04095f5f3e64a8c039b538c8e8d6894"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/repair-1/diagnostic-research-request.private.json",
+      "sha256": "b968b58ca744b58a7ffab173ddef1f7d367c27812b7437c4eec8982ac9739a14"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/repair-1/diagnostic-resume-exception.private.json",
+      "sha256": "7a6b202051e9b8fcfda918d8e53b1e8b0d7c1719a1899f0b4e34632672fc2ef9"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/repair-1/durable-events.private.json",
+      "sha256": "ebd6a2d7a37f22da7f629e0113cbcfbaaac4d1897ab2c0cdf9965adee4d856f5"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/repair-1/file.private.json",
+      "sha256": "57cb42d1644719363912e5e8683704f9427f0367068924dee6109d85303935f3"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/repair-1/focused-tests.json",
+      "sha256": "2385ff717b7783b1cdde629d8fd4dc1c68e49fa902b88c710229ea552c802c46"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/repair-1/guard-focused-tests.json",
+      "sha256": "cba6b5bd1a7c31bba2a5c5a517e71b93a60280c43a54f4b307806d8cf28029b8"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/repair-1/guard-sealing.json",
+      "sha256": "0a9329aa7e54a3a06414ccc9484a22850ed10e21ae6fecb1c036f2d94e35b6c0"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/repair-1/http-receipt.json",
+      "sha256": "e2f7eee53907914ecdb5975e791712e81373828e393eb5a3e04b1cf6df389054"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/repair-1/initial-source-scope.json",
+      "sha256": "6b5ffa7c47da14fc09399882948c4bdd8ade57d239411f22b3908bb1a46e5edf"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/repair-1/readback.json",
+      "sha256": "9589a2614a9ecd7dfbe5c158f00173992e1ac38ae5984b865cf37d43e4cbbf90"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/repair-1/response.private.json",
+      "sha256": "9b2737acd6957dd4fd925073b09aaafd455a9a8d0db0a9a7c629702cdb15ec6c"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/repair-1/slot-preparation.json",
+      "sha256": "90b2f346c2916c2c737138bda054b819a2494f3b3409afeedc20c3e2c55a029c"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/repair-2/actual-result.json",
+      "sha256": "eb957acf2747059bd0d52eedbf5681bd82bd6ae38bd580a020f9c7e0ece588ee"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/repair-2/build-receipt.json",
+      "sha256": "f217bfd54130212750e00d00acbb21b7b9dbb5f046c0824f1233607956e46172"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/repair-2/change-paths.json",
+      "sha256": "8820bcc9e7e29c359c129efcc22c356e80c73f783825bf2b075038d45c1855a5"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/repair-2/diagnostic-research-exception.private.json",
+      "sha256": "15ea8a4d24c477b25fa57cd6568dcd17dff5dca1c2ac4fa64eea96dfe0b9d030"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/repair-2/diagnostic-research-request.private.json",
+      "sha256": "7d98ba51aa92d16b18e18778a93613b2246a7693ed5636af6a4fbb4a59421787"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/repair-2/diagnostic-resume-response.private.json",
+      "sha256": "adbdc76e7d3d0ca5bdad887050aace036762df96fb12da24e1d033e4976432db"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/repair-2/focused-tests-budget.json",
+      "sha256": "d82db09eb1eb1649a635dd3485a875528641846bbec990fb96f395c37ce2db2e"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/repair-2/focused-tests.json",
+      "sha256": "39b477cbd2dc0e40e581c8e756e705cad6f0ee39e0df688e158ae11fa2bbf6d7"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/repair-2/implementation-chain.json",
+      "sha256": "8bc913759fefa3fc18e1a74e25408e7db0d7c47b3ce69c5c086d9ee474162445"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/repair-2/slot-preparation.json",
+      "sha256": "772aac4fe5585e3cf480d6c8ad8915748dfe50e433306ddd2e6396d238827aa3"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/repair-3/acceptance-request.json",
+      "sha256": "7d7f455fc38d2d8cb43b5235cdb4dabba365ef6fc99b9605e7c1e2c2a262564f"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/repair-3/attempt.private.json",
+      "sha256": "9d3ff0d97a1c7431e4cbeaea7dd13fb50fd8de12d63c4182038a051ff4e7e33e"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/repair-3/build-receipt.json",
+      "sha256": "76fb982279df9fb7cec2f5a9436f590260a262456176ef4c3a10d5d06ee6b5b6"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/repair-3/change-paths.json",
+      "sha256": "375f1a4e6aa1cbb07492550dba5cbfb6750a5c914fd14c97721f3f560201a45e"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/repair-3/durable-events.private.json",
+      "sha256": "fda4ff9b0e332472f285539a65e3c2fd690c0478554a2de681d224bb731ec7e3"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/repair-3/file.private.json",
+      "sha256": "57cb42d1644719363912e5e8683704f9427f0367068924dee6109d85303935f3"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/repair-3/focused-model-tests.json",
+      "sha256": "eb7fc2242cf4d2a008bb3e4e5ade435e61bd87ce24382476f4a03c7184081514"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/repair-3/focused-tests.json",
+      "sha256": "0c81d0ba86a8a52529d6dd9a1f8e452235086faf4a089c8cdc44733766920b96"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/repair-3/http-receipt.json",
+      "sha256": "0c447d88fb0dc8353195e413df70709180fb290f0723d0148034a5b829b679e8"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/repair-3/postgres-research-regression.json",
+      "sha256": "35bbcf0b005be3862529526309fed833eb68b2478ee8a228565422def6d1e911"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/repair-3/postgres-research-setup-attempt-1.json",
+      "sha256": "26b0d5088c7bdbdc3cb254b37e36e173b4e17a23125b777af77464453519ac91"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/repair-3/postgres-research-setup-attempt-2.json",
+      "sha256": "2748d3b20ee018ad5bcc624fc329cda075f3a718b9c14e858a9920c62444877f"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/repair-3/postgres-research-setup-attempt-3.json",
+      "sha256": "803463d9bf4fe558c9d0741f4bd4ae425c9b8012fcf0bf94c470b78580ef412c"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/repair-3/readback.json",
+      "sha256": "f591d0a83635808de7b84baf5be71974bb282f8fba069704fd5b76f095694cf3"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/repair-3/response.private.json",
+      "sha256": "9b2737acd6957dd4fd925073b09aaafd455a9a8d0db0a9a7c629702cdb15ec6c"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/repair-3/slot-preparation.json",
+      "sha256": "37c44b625aac4d2b73b7a14dd2e7c8ca77457cb3865d56ea6b152c2808d87018"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/repair-4/acceptance-request.json",
+      "sha256": "7d7f455fc38d2d8cb43b5235cdb4dabba365ef6fc99b9605e7c1e2c2a262564f"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/repair-4/attempt.private.json",
+      "sha256": "8375bfcc6f0134799fbe3d6c496b8be42d8aade5200b35fc095a712754f0a604"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/repair-4/build-receipt.json",
+      "sha256": "a8f84ae302db8d4228a48de50a46d6e9d99dc697e6551738f15bc85c96532c36"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/repair-4/catalog-admission-error.json",
+      "sha256": "4d02728b83b949f88f2ca124d911798abd1096437c567d71f7ecd6de056b8525"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/repair-4/change-paths.json",
+      "sha256": "b9f8acd0b549bfddf7ff01f067a691a97ad4474a6b029a928f23ea32e9f581a4"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/repair-4/durable-events.private.json",
+      "sha256": "fb6619d2113548836993f16dc756157eb1fe6d284d303816bdc2b4bcacb6e323"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/repair-4/file.private.json",
+      "sha256": "57cb42d1644719363912e5e8683704f9427f0367068924dee6109d85303935f3"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/repair-4/focused-model-tests.json",
+      "sha256": "a07dcc1c85b811ecacd1ccdaf7b78b816723dd2f56f4cba42c3edc171fc72a36"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/repair-4/http-receipt.json",
+      "sha256": "b34e697587f068b7fffb5f51009e2f2920cfa97a2346f6ef0c6759d19a392bd6"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/repair-4/live-availability.json",
+      "sha256": "df47fc7dceb9dccb2e20efcca50da9832c31d0c034b79a72ce1260978b8f3b75"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/repair-4/mandate-availability.json",
+      "sha256": "73ac0b077cf63f40b64cc9e67467e0944f3760aebf02fdad21354bcd3eafea5c"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/repair-4/mandate-preparation.json",
+      "sha256": "651ae92a854a3e3b905dcf4488b9215629666d2f18ea71957835eaf6c55aab9d"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/repair-4/mandate-prepared.json",
+      "sha256": "969e350b8cb582c7034a12e4c431e9e421d510afcf09fb76188cfac1770f4e89"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/repair-4/postgres-research-regression.json",
+      "sha256": "ea883da7066c61e25bd155b3c835f92be1e2a140d81ec82e8828daf619dd58df"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/repair-4/progress-events.private.json",
+      "sha256": "fb6619d2113548836993f16dc756157eb1fe6d284d303816bdc2b4bcacb6e323"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/repair-4/readback.json",
+      "sha256": "c01309b18b696918d1cb9316e1598215439e55438cd17e1dfcbac7e163d2fe33"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/repair-4/registration-discovery-readback.json",
+      "sha256": "db68d7221d06f420bed40027353cf95523f7ddbaa5f843e6118f1c8fcad0c736"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/repair-4/rejected-wrong-copy-path-build-receipt.json",
+      "sha256": "25070b42084c56cabc5d22a401f7ee1b3ccaa8739a915890c1a819cee57ea16b"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/repair-4/response.private.json",
+      "sha256": "9cf172c96592b9dcea867f57ecd81731c12b263cb7a1927fb04295a7f15bec16"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/repair-4/slot-preparation.json",
+      "sha256": "68f5f2cf1c821aeba3af16191304f5d4ac7b1eb5868cc0c9435f16d769518626"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/repair-5/acceptance-request.json",
+      "sha256": "07eb9ec22f99807ae352b97499a6bb82a1fcc412df2d2bdf52ad8064230fe1fa"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/repair-5/actual-four-schema-check.json",
+      "sha256": "168a2e4edb4efcf810b9b614e32d25cbc443b7281119187a8d96abbd0de7ea23"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/repair-5/attempt.private.json",
+      "sha256": "5f11e1821b7e03ebcd562ea618a1e3a081c4a24b579f6390567037882644a2e6"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/repair-5/build-receipt.json",
+      "sha256": "e035999d9bd8d7175c0200ace9a93336362765fd910914964017df03c3ae5a4b"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/repair-5/change-paths.json",
+      "sha256": "81a70f6d64caf63c8f91541552a67fd49345ad69e988ebe62af84bdba54eab3f"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/repair-5/durable-events.private.json",
+      "sha256": "e65d80f2c0009837ae90c58bf5528a21a03f33fd2c6afc2bfc5d123284244f67"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/repair-5/empty-schema-regression.json",
+      "sha256": "d9a607ed31e377ba9d7e3db410d253ebce35d4ef336f57257273c6208f9a1ae4"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/repair-5/file.private.json",
+      "sha256": "57cb42d1644719363912e5e8683704f9427f0367068924dee6109d85303935f3"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/repair-5/http-receipt.json",
+      "sha256": "c40b5907d49cbed355bc85b75066e9cf976f593db2f966b1ffe41d94ddd602ed"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/repair-5/live-availability.json",
+      "sha256": "df47fc7dceb9dccb2e20efcca50da9832c31d0c034b79a72ce1260978b8f3b75"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/repair-5/readback.json",
+      "sha256": "f2676c3970bb7c509886d7f318d1c7fe2b5ca09d9dd8c1c549723cc1abe8f0fc"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/repair-5/response.private.json",
+      "sha256": "13fa8541e8b540180ba2a2fcadf875d1deb32ac593a0c4785b7aa2d204168d7c"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/repair-5/resume-scope.json",
+      "sha256": "587944209fbd96552e69601b7286a15d33472ac054c17a9617c6dab344990342"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/repair-5/slot-preparation.json",
+      "sha256": "31656e6d670bad0b84baa6cbab5108b3da7483c54acfff45216314433a875c40"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/repair-6/acceptance-request.json",
+      "sha256": "07eb9ec22f99807ae352b97499a6bb82a1fcc412df2d2bdf52ad8064230fe1fa"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/repair-6/attempt.private.json",
+      "sha256": "92fb862fa95ec2b9a336c3ad3ffd21352e6885a89780cbe3c27f3e430687751e"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/repair-6/build-receipt.json",
+      "sha256": "2160b85ef408bad8a0da7b2849a0e385832c5bad82f384032b114d14694ef797"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/repair-6/change-paths.json",
+      "sha256": "fcc3fce9f5d186a5463fcefd68ec718c5e6d71bc0237a66c1232bdadd96d6e61"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/repair-6/context-envelope-lower-bound.json",
+      "sha256": "0a19407e452ec151ae1bc4b8e98a4b235bb72a47c0662f981247ab1fc8597ce9"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/repair-6/context-receipt-measurements.json",
+      "sha256": "627271fd641c64bc8e477d190c24fd1d10497369e2a2bc811c4487d0c740a7d3"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/repair-6/durable-events.private.json",
+      "sha256": "f9f21708f4adafda72e606f2871ae9a34864c437fc78f3eb44657a7bc84b3c3a"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/repair-6/endpoint-discovery-diagnosis.json",
+      "sha256": "52b72e6d3c33048b03f35eacee82bacd1702a25b2016631839e31a846e6615a2"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/repair-6/endpoint-discovery-regression.json",
+      "sha256": "6b701effb2fff7cbd09cd46a0bb8c0706bc324e524114ce6a65e3042ad436ab5"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/repair-6/file.private.json",
+      "sha256": "57cb42d1644719363912e5e8683704f9427f0367068924dee6109d85303935f3"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/repair-6/http-receipt.json",
+      "sha256": "ad5c4979eaea83245acf22de73ee15e3b9f9dcfe3853f3a78202c32dc0b82cb7"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/repair-6/live-availability.json",
+      "sha256": "df47fc7dceb9dccb2e20efcca50da9832c31d0c034b79a72ce1260978b8f3b75"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/repair-6/readback.json",
+      "sha256": "8c8d0caada6580b275fd6b3dc3f0ddd38e432dda554d22f2db098a2ec3b37b35"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/repair-6/response.private.json",
+      "sha256": "9b2737acd6957dd4fd925073b09aaafd455a9a8d0db0a9a7c629702cdb15ec6c"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/repair-6/resume-scope.json",
+      "sha256": "a0ba3c9cd651f6a40aa4ba772c02f3e8c85614790c011ba59056a0a75d891b11"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/repair-6/slot-preparation.json",
+      "sha256": "07b022e09e3051bc984233b580613c1ebcae71c344ea2771792c8b5ce313ea75"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/repair-7/context-configuration.json",
+      "sha256": "82f3175411fcd84c73b8989b6ef53dac91ad7884b87c6698d63dc693c4b3f255"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/repair-7/focused-model-view-tests.json",
+      "sha256": "52f5b8bb6ff2aac3f2e25136473317e50750069af4478f3d587b314cccc5b4d6"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/repair-7/rollback-readback.json",
+      "sha256": "011c696d276a3ac2206c4bb079e19e445dcda6eb318f47b0d2840bf8a9a4957f"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/repair-7/slot-preparation.json",
+      "sha256": "4de86a9c38b6f903094f7a059072f2a33e6a4df02e7771cd85a87964ba30321f"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/repair-7/slot3-runtime-budget-after.json",
+      "sha256": "ce3bbc9b7b277980df69df33551fcb6c797348477689726fc0f33ec44981e8f7"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/repair-7/source.json",
+      "sha256": "0d265ffb37192ab4813fc4d34128902b5c0d172996a8cd052689cf10bdc7ed90"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/repair-8/budget-manifest-fixture-correction.json",
+      "sha256": "4aea3218b7e44a176d8ced8d7af8d5982b3f53979ee0c12c5e9929501fdb8c3c"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/repair-8/budget-manifest-regression.json",
+      "sha256": "46d39c9c0068d5747f8c8a55e5cf2b8f5c3f8863784558cbed2179db0f30db21"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/repair-8/durable-events.private.json",
+      "sha256": "2bbb4e363e158c59113ecf9369673047f618ef7e8f29d8867bd357784b765009"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/repair-8/file.private.json",
+      "sha256": "aac6d0eb1867999e73454569095541889f9a1b7f7bdde9d999284bce71cfeb8e"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/repair-8/image-budget-readback.json",
+      "sha256": "18affee2dfd0b7489d82a38e72a911edadf9596221959491176463849f72f3f4"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/repair-8/proof-review-readback.private.json",
+      "sha256": "f449b22123ae475806d9801dae18f8b3f99177d386f0e6e7512900c1feab8f91"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/repair-8/resume-result/admission-observations.json",
+      "sha256": "0dadf82d729cd31437c76c4880a452e6e3e0b95e0e7a798d104ef4645127dd77"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/repair-8/resume-result/exception.private.json",
+      "sha256": "0a5f65419f8b894a0019008a809de62342e8b43dd36d8b2ffbfdc4269bcc9ee6"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/repair-8/resume-result/resume-receipt.json",
+      "sha256": "6f0179fee3b99d86014f9a78dd433f200decfb557a8da59a0b8f31185e597d8f"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/repair-8/slot-preparation.json",
+      "sha256": "a3729627df7c9b0e5aaaa8fd01b85aca5014a07def045fa970209ef2f858d3ea"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/repair-8/source.json",
+      "sha256": "6072bb46d41842ae82e626e8013ef5b336cfb766a773cdd3e04b4a290ec3dfa6"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/repair-9/context-configuration.json",
+      "sha256": "36b78400de907f9354cc1b7ccab209599f66bb07a7db3d7bd6fab053f67754b3"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/repair-9/durable-events.private.json",
+      "sha256": "82050da03a4f678c58cd2c19b7f0c749507b26fa574a6983d3af5d96c8a29f6b"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/repair-9/file.private.json",
+      "sha256": "aac6d0eb1867999e73454569095541889f9a1b7f7bdde9d999284bce71cfeb8e"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/repair-9/image-budget-readback.json",
+      "sha256": "c33dd3f6ae1457f9798343a978ee7706f562be3debbc1f391475d06950e8533e"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/repair-9/readback.json",
+      "sha256": "b883d803f44d673b417c8161d48ec3461413873771353cee8ad5ecf1c8b0a3f7"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/repair-9/resume-result/admission-observations.json",
+      "sha256": "6dd40378ea95c6533b6f3852f54d298fd9fdd0cd95e663c52dcfab0fa50cbb05"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/repair-9/resume-result/response.private.json",
+      "sha256": "119461842d099ae59a322c750fda95d9d395f0ed1620f7373cf57dc6cd11f651"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/repair-9/resume-result/resume-receipt.json",
+      "sha256": "4c65520591093d690a2ccd2ab6553cba714b05f4b0b1c53992b7c21a8b30ddf9"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/repair-9/slot-preparation.json",
+      "sha256": "1e4a5bc12a50bb2a07bb982a63a672c04805173ffd51369177fe8a854edadcd1"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/repair-9/slot4-runtime-budget-after.json",
+      "sha256": "88595a1704c1ad751008802873831f140a87ad967d14f015e56d1d4dc46a72a9"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/repair-9/source-verification.json",
+      "sha256": "1e473214518ac9192f6029da95d18e76f1c74fd9579a89cc57a20f4b2cf33803"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/repair-9/source.json",
+      "sha256": "45a0d5e0b8cae2b3c756d3415c2886e3224a8adf0fd2b708860ffdb71de8cc65"
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/slot-preparation.json",
+      "sha256": "d8d14c3ba321362d77f56aa7b7090b8ef327b9ccd09039bce2ba4dbc6b3459a0"
+    }
+  ],
+  "activeSlot": 4,
+  "runtimePort": 44711,
+  "completeOutcome": "Owner command researched and connected the previously unfamiliar GitMCP service through generic tools, used it to retrieve Playwright documentation, saved a Dutch sourced explanation, read it back and committed a final reply. Development failures and operator-assisted resumptions are retained; this was not uninterrupted autonomous success.",
+  "cutover": {
+    "backgroundIsolationBoundary": "Legacy images may ignore the switch; configuration readback is not worker isolation proof.",
+    "backgroundWorkConfiguredAfterActivation": true,
+    "backgroundWorkConfiguredDuringStaging": false,
+    "contract": "Eva2QuiescentCutoverReceipt/v1",
+    "eva1Backup": {
+      "bytes": 311558144,
+      "filename": "eva1-before-slot3-to-slot4-20260909T225123Z.db",
+      "quickCheck": "ok",
+      "sha256": "f6c9683538cd7456bef1f83435b0e84d63536444cc60a2d1ad7dbbbf68f995ba"
+    },
+    "eva1HttpStatuses": {
+      "/": 200,
+      "/api/capabilities": 200,
+      "/api/health": 200,
+      "/api/overview": 200,
+      "/api/workstatus": 200
+    },
+    "issuedAt": "2026-09-09T22:52:44.631709+00:00",
+    "previousDropinSha256": "81f1b2b687a641ae5349aa3c13198f6ad3ac1d7c88ee351bc3c559f22eee28a1",
+    "proactiveCredentialWithheldDuringStaging": true,
+    "proactiveDeliveryEnabled": true,
+    "sourcePort": 44710,
+    "sourceWritersStopped": true,
+    "status": "switched",
+    "synchronizedDatabases": {
+      "memory": {
+        "countDigest": "6c2cb4266e85a8476861a82bd7162b6d04e5057a9545874f1823959bf9c0f06e",
+        "dataDigest": "a3258814310eacc50b95685ac97c2f4d98d9097a6482ac6b8622c69821a35bb8",
+        "dumpBytes": 2427531,
+        "dumpSha256": "13838dedf86781935774cd8fbafe30ece99918fce5a21c6491caac928beceb90",
+        "schemaDigest": "d89bfebdbfeb55e8618e81286bf24a42b838bfe577e84f6db9b93b43f5832172",
+        "tableCount": 23
+      },
+      "operational": {
+        "countDigest": "247c8db051ac74f187c39673f86239589577e813b4c581de92a5a2252619adf9",
+        "dataDigest": "be6e8ba5363615e93fcd9ac6a2a6a8a4be09234e5c11a54869f55d99e75ddea1",
+        "dumpBytes": 12729048,
+        "dumpSha256": "a8e392d218b4ac25e6d335926234afb9d898b7358e7133e74cb2215eadd2314b",
+        "schemaDigest": "32acc5b66e349dfd5b385e4828897575ad543ebb5f2638b8880dff1cacb7fb39",
+        "tableCount": 48
+      }
+    },
+    "targetPort": 44711,
+    "targetReady": true
+  },
+  "runtimeContext": {
+    "operatorTechnicalContextSetting": 65536,
+    "previousActiveSetting": 32768,
+    "observedFinalEnvelope": 34617,
+    "changedBudgetFields": [
+      "max_input_tokens"
+    ],
+    "otherBudgetFieldsUnchanged": true,
+    "financialCapEurCents": 0,
+    "outputTokens": 1200,
+    "sourceBudgetSha256": "c13e5f33682d5919aeae15fd7ac94919a3403d6920c2f524ea357bcdabc77ee5",
+    "runtimeFileSha256": "88595a1704c1ad751008802873831f140a87ad967d14f015e56d1d4dc46a72a9"
+  },
+  "finalAdmission": [
+    {
+      "estimatedInputTokens": 34617,
+      "limit": 65536,
+      "autonomous": false,
+      "status": "admitted"
+    },
+    {
+      "estimatedInputTokens": 34617,
+      "limit": 65536,
+      "autonomous": false,
+      "status": "admitted"
+    },
+    {
+      "estimatedInputTokens": 35552,
+      "limit": 65536,
+      "autonomous": false,
+      "status": "admitted"
+    },
+    {
+      "estimatedInputTokens": 35552,
+      "limit": 65536,
+      "autonomous": false,
+      "status": "admitted"
+    }
+  ],
+  "admissionObservationMethod": "A standalone observer called the original admission function unchanged and recorded its result; no bypass or substituted model/tool data.",
+  "upstreamReuse": [
+    {
+      "component": "ContextForge",
+      "version": "1.0.8",
+      "license": "Apache-2.0",
+      "licenseEvidence": "mcpgateway/services/gateway_service.py SPDX header",
+      "image": "sha256:daf923c247fd569df5f8c9ee418cbc259fade564f78e0a0852937139a181c4dd",
+      "sourceHashes": {
+        "mcpgateway/services/gateway_service.py": "02e4afac654239672f8687e2374a80933bda6b8279c648764017394973080d83",
+        "mcpgateway/services/tool_service.py": "0c2e856af5c785ef98cd5deeb7a623fa6b7a9ad86a60d82016b5c08741eb378a",
+        "mcpgateway/common/validators.py": "af9e646244061c70fa9e322a26764c2b0e227bd36111c54bb49b86d4513471cc",
+        "mcpgateway/services/upstream_session_registry.py": "17f51e345669fd32988857e29aa22b5eaf3755327aa1c901512c3b5c159e04a2"
+      }
+    },
+    {
+      "component": "GitMCP",
+      "observedServerVersion": "1.1.0",
+      "observedProtocolVersion": "2025-03-26",
+      "source": "https://github.com/idosal/git-mcp",
+      "license": "Apache-2.0",
+      "licenseSource": "https://raw.githubusercontent.com/idosal/git-mcp/main/LICENSE",
+      "licenseCheckedOn": "2026-09-10",
+      "use": "Hosted MCP service; no GitMCP source vendored into Eva core. Hosted deployment commit is not independently pinned."
+    }
+  ]
+}
