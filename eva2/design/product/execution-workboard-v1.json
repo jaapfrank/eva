@@ -2373,7 +2373,7 @@
       "evidence": "eva2/evidence/product/VB-001-native-household-live-2026-09-09.json",
       "sourceCommit": "5eb98f8336fa22a586d2accd514dde37774d4186",
       "imageId": "sha256:e6e33b0be32b7f4a1c3d04da55f8c903998d00fea88e50d817897111e92a35cc",
-      "next": "Bepaal met of zonder nieuw Hey Eva gewenste vervolg; vergelijk hoorbaarheid losse TTS-test en native route. Herstel audio en vervolgluisteren vóór nieuwe acceptatieclaim."
+      "next": "Vergelijk werkende Home Assistant/Music Assistant-audioweg met native ESPHome-weergave. Test na routeringsfix een echte Eva2-beurt en verdere luisterbeurt; onderbreken zonder wakeword blijft onaf."
     }
   },
   "activeTaskId": "VB-001",

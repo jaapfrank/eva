@@ -57,7 +57,7 @@
       "privateArtifact": "ha-pipeline-selection.json"
     }
   },
-  "next": "Bepaal met of zonder nieuw Hey Eva gewenste vervolg; vergelijk hoorbaarheid losse TTS-test en native route. Herstel audio en vervolgluisteren vóór nieuwe acceptatieclaim.",
+  "next": "Vergelijk werkende Home Assistant/Music Assistant-audioweg met native ESPHome-weergave. Test na routeringsfix een echte Eva2-beurt en verdere luisterbeurt; onderbreken zonder wakeword blijft onaf.",
   "hardwareTrial": {
     "observedAt": "2026-09-09T06:40:02.612532+00:00",
     "userReport": {
@@ -83,11 +83,43 @@
       "automaticOtaRollback": "Device warns bootloader is too old; cannot claim automatic OTA recovery."
     },
     "findings": [
-      "Current saved wake-word handler stops active assistant without starting another listening turn.",
-      "Prepared candidate restarts on a new wake word, but Stop itself still does not reopen listening.",
-      "One synthetic standalone TTS sentence was played with device log capture; user audio assessment pending.",
-      "Audio fault cause remains unproven; successful TTS generation is not audible acceptance."
+      "Initial hardware turn was intercepted by legacy catch-all, not a native Eva2 response; its false continuation cannot be attributed to Eva2 responder.",
+      "User requires direct follow-up without another Hey Eva, including after interruption.",
+      "User reports older Eva and Home Assistant audio worked.",
+      "Static 48kHz mono 16-bit FLAC comparison also reported unintelligible; source MP3 decodes without errors and lasts 7.844557 seconds.",
+      "Music Assistant comparison requested separately from ESPHome player; assessment pending.",
+      "No firmware changed."
     ],
     "review": "co006_review independently confirmed stop/relisten limitation; no firmware deployment approval claimed."
+  },
+  "routingCorrection": {
+    "observedAt": "2026-09-09T07:00:47.390868+00:00",
+    "status": "verified_native_agent_routing",
+    "initialHardwareRunProcessedLocally": true,
+    "cause": "Legacy conversation catch-all intercepted native Eva2 pipeline before the agent. Native responder itself returns continue_conversation=true.",
+    "applied": [
+      "Eva2 pipeline prefer_local_intents=false",
+      "Original legacy bridge configuration retained, automation switched off for native speaker trial"
+    ],
+    "failedAttempt": "A template condition did not stop sentence recognition from claiming the turn; that condition was reverted.",
+    "readback": {
+      "status": "passed",
+      "nativeAgentReachedWithoutSatellite": true,
+      "processedLocally": false,
+      "legacyQueryEvents": 0,
+      "events": [
+        "run-start",
+        "intent-start",
+        "intent-end",
+        "run-end"
+      ],
+      "observedAt": "2026-09-09T06:58:41.802695+00:00",
+      "boundary": "HA intent-stage routing only; deliberately no satellite means native device admission rejects before model/audio. No hardware claim."
+    },
+    "rollbackArtifact": "ha-legacy-bridge-disabled.json",
+    "boundaries": [
+      "No actual post-fix microphone turn yet verified.",
+      "No audio quality or stop-without-wakeword success claimed."
+    ]
   }
 }
