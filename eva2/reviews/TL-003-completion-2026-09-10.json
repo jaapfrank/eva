@@ -1,0 +1,47 @@
+{
+  "contract": "EvaProductCompletionReview/v1",
+  "taskId": "TL-003",
+  "implementationCommit": "3d4111c946a49504a6558bd64042597b67e9abc9",
+  "evidenceCommit": "186fbf5bd27b38642e3b0a5b6c8f45d7a6cb40af",
+  "decision": "GO",
+  "reviewerRole": "/root/proof_review",
+  "reviewingSession": "/root/proof_review",
+  "reviewedAt": "2026-09-09T22:59:30.964351+00:00",
+  "independentOfImplementationAndTestExecution": true,
+  "evidencePath": "eva2/evidence/product/TL-003-completion-2026-09-10.json",
+  "evidenceSha256": "f9d5bb7e3637392c6b8945bc89d3095fdd0af8eade706a46cac1fd5a30f2b2e6",
+  "imageId": "sha256:c1b44a8119d55ba6acffb0ee5ffa30d0ab65cb5d742df368593dbaf0aef3d8d7",
+  "scope": "Technical TL-003 closure: the owner-scoped generic connector route registered and used GitMCP, produced the requested sourced document, independently verified the physical result and durably committed the final reply. Development repairs and operator-assisted resumptions are part of this evidence; uninterrupted autonomous success is not claimed.",
+  "findings": [
+    "The evidence-only commit directly follows the final implementation, changes only its named evidence file, and its file bytes match the working copy. All ten declared implementation parents and changed-path sets match Git. All 143 retained private evidence hashes independently match.",
+    "Bounded repair reviews found no blocking defect in research argument/source matching, retained provider research usage, guarded gateway recreation, empty-argument schema projection, owner-bound endpoint discovery, and exact duplicate model-view projection. Durable results, original provider catalog hashes and current mandate checks remain preserved.",
+    "Final source delta changes only the consistent runtime, installer and UI input ceiling from 32768 to 65536 and corresponding boundary fixtures. Default input 12000, output 1200 and financial cap 0 remain unchanged. Actual deployed manifest contains 65536, output 1200 and cap 0 with the retained source-budget digest; its hash matches the evidence.",
+    "Direct Docker inspection finds slot4 healthy on the expected image with source-commit label 3d4111c. The three changed production files read inside that container match the committed evidence hashes. Slot3 core is stopped. The final packaged-image manifest readback and successful cutover receipt agree.",
+    "Direct read-only PostgreSQL query found exactly one INGRESS_COMMITTED and one REPLY_COMMITTED for the resumed message. Reply event d094d86b-d30b-4a1f-8542-5dbae9d1627c contains the exact final text and measured aggregate usage of 8 model attempts, 7 tool calls, 145564 input and 1342 output tokens. Aggregate output is across attempts, not a single-response cap claim.",
+    "The final retained timeline preserves every prior repair 8 event, contains 7 verified tool steps, and adds only a saved-file read as its new external action before the final reply. No new ingress, repeated registration or repeated original GitMCP research appears in that final resumption. The resume observer calls original admission unchanged and retains both admitted and rejected results.",
+    "Physical Docker-volume file /proof-state/tl003-browseronderzoek.md is 2322 bytes with SHA256 7d040da54420f1a98748acf9f278c28d1bb5525c29e6689cab8d614990984eec. It matches the retained bytes, durable expected and observed content, and remains unchanged after finalization. Its Dutch explanation and limitations are supported by the two saved MCP documentation responses and contain primary source links.",
+    "Earlier direct query-only SQLite read confirmed gateway 1d1cc3da17df4c7786253a8fcaa54a7e active, enabled and reachable at the exact GitMCP endpoint. All four actual tool catalog hashes match their original durable bindings. Gateway was healthy with three read-only transport-guard mounts, matching host/installed hashes and a policy present. This independent receipt remains bound in the final evidence.",
+    "Focused repair receipts are retained, including providerless model-boundary checks, real PostgreSQL research persistence, empty-schema and endpoint-discovery regressions, and the 32768 installer roundtrip. The latest 65536 unit fixture was not rerun; the exact final packaged image accepted the actual manifest and completed the real continuation. No full-suite or full-release-gate conclusion is inferred.",
+    "Failures and operator help are explicit: multiple incomplete HTTP attempts, source/configuration fixes, installation-scope correction, a failed startup with healthy automatic rollback, context increases, and two saved-ingress resumptions. HTTP 200 alone and manually prepared registration alone are not treated as completion."
+  ],
+  "blockingFindings": [],
+  "built": true,
+  "tested": true,
+  "live": true,
+  "humanAccepted": false,
+  "independentReadback": {
+    "path": "/home/administrator/project/.eva2-artifacts/tl003-delivery-jp__krn1/repair-8/proof-review-readback.private.json",
+    "sha256": "f449b22123ae475806d9801dae18f8b3f99177d386f0e6e7512900c1feab8f91",
+    "finalLiveReplyEventId": "d094d86b-d30b-4a1f-8542-5dbae9d1627c",
+    "finalPhysicalFileUnchanged": true
+  },
+  "limitations": [
+    "No fresh uninterrupted normal-HTTP success on the final candidate, autonomous recovery without operator assistance, or human/family acceptance is established.",
+    "The final ingress is an explicit development resumption that reuses earlier research and an existing gateway registration. Request variants remain distinct; this is not one untouched original request succeeding unaided.",
+    "The 65536 runtime context is an operator technical setting, not an independently observed owner numeric choice or authority for Eva to expand its own budget. Financial and messaging authority did not expand.",
+    "No actual browser session, account login, installation, third-party message or household appointment was performed by the demonstrated command.",
+    "GitMCP hosted server version and protocol were observed, but its hosted deployment commit is not independently pinned. No general arbitrary-connector reliability or competitor-win claim follows.",
+    "One committed reply and preserved tool receipts establish this observed run only; they do not prove universal exactly-once effects or unlimited recovery."
+  ],
+  "reviewMethod": "Independent bounded source and receipt review; Git parent/path and retained hash checks; direct physical-file, query-only SQLite gateway, read-only PostgreSQL reply, Docker state and installed-source reads. No reviewer test reruns, model/provider RPC calls, implementation edits, deployment changes or commit. Only the private readback receipt and this review artifact were written."
+}
