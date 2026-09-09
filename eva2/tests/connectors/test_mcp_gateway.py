@@ -2,6 +2,9 @@ from __future__ import annotations
 
 import asyncio
 from contextlib import contextmanager
+from dataclasses import replace
+from datetime import datetime, timezone
+from uuid import uuid4
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 import json
 from threading import Thread
@@ -859,3 +862,186 @@ def test_gateway_rejects_response_for_another_rpc_id() -> None:
         asyncio.run(adapter.verify_catalog())
         with pytest.raises(RuntimeError, match="invalid RPC envelope"):
             asyncio.run(adapter.execute(_echo_request(_spec(), "gebonden")))
+
+
+def _read_spec(**overrides: object) -> McpGatewayToolSpec:
+    return replace(
+        _spec(),
+        **{
+            "contract": "EvaMcpGatewayProvider/v3",
+            "operation_kind": "read",
+            "proof_bindings": (),
+            **overrides,
+        },
+    )
+
+
+def test_v3_read_calls_provider_once_and_delivers_result_to_existing_receipt() -> None:
+    import sqlalchemy as sa
+    from eva.adapters.postgres.external_conversation_tools import PostgresExternalConversationTools
+    from eva.adapters.postgres.operational_timeline import TimelineEvent
+
+    with _gateway() as (base_url, handler):
+        spec = _read_spec()
+        adapter = McpGatewayToolAdapter(
+            McpGatewayConfig(base_url, "token", allow_plain_http=True), (spec,)
+        )
+        asyncio.run(adapter.verify_catalog())
+        planner = adapter.planner()
+        call = ConversationActionCall("read-1", "echo_proof", {"message": "lees mij"})
+        prepared = asyncio.run(planner.prepare(_turn(), call))
+        command = replace(_echo_request(spec, "lees mij"), expected_proof={})
+        dispatch = asyncio.run(adapter.execute(command))
+        assert dispatch.details == {"operation_kind": "read", "provider_call_deferred": True}
+        assert handler.calls == []
+        observation = asyncio.run(adapter.observe(command, dispatch))
+        assert len(handler.calls) == 1
+        assert observation.observed == prepared.expected_proof == {}
+        assert observation.evidence["source"] == "mcp_gateway_read"
+        assert prepared.observation_output_key == "result"
+        assert observation.evidence["observation"] == {"text": "lees mij"}
+
+        # Exercise the existing terminal-receipt projection without a database.
+        admission = {
+            "action_name": call.name,
+            "action_call_id": call.call_id,
+            "action_arguments": call.arguments,
+            "conversation_id": _turn().conversation_id,
+            "principal_id": _turn().principal_id,
+            "source_message_id": _turn().message_id,
+            "receipt_output": prepared.receipt_output,
+            "observation_output_key": prepared.observation_output_key,
+        }
+        proof = {"observed": observation.observed, "evidence": observation.evidence}
+        events = tuple(
+            TimelineEvent(
+                uuid4(), "read-thread", index, f"read-checkpoint-{index}", "read-op",
+                event_type, {"data": data}, canonical_sha256(data), datetime.now(timezone.utc),
+            )
+            for index, (event_type, data) in enumerate((
+                ("TOOL_REQUEST_ADMITTED", admission),
+                ("STATE_VERIFIED", {"proof": proof}),
+            ))
+        )
+        engine = sa.create_engine("sqlite://")
+        try:
+            tools = PostgresExternalConversationTools(engine, planner, adapter)
+            receipt = tools._receipt(_turn(), events)
+        finally:
+            engine.dispose()
+        assert receipt.output["result"] == {"text": "lees mij"}
+        assert receipt.output["status"] == "verified"
+        assert len(handler.calls) == 1
+
+
+@pytest.mark.parametrize("contract", ["EvaMcpGatewayProvider/v1", "EvaMcpGatewayProvider/v2", "EvaMcpGatewayProvider/v3"])
+def test_effect_modes_never_infer_read_authority_from_provider_hint(contract: str) -> None:
+    spec = replace(_spec(), contract=contract, operation_kind="effect")
+    with _gateway() as (base_url, handler):
+        assert handler.catalog[0]["annotations"]["readOnlyHint"] is True
+        adapter = McpGatewayToolAdapter(
+            McpGatewayConfig(base_url, "token", allow_plain_http=True), (spec,)
+        )
+        asyncio.run(adapter.verify_catalog())
+        prepared = asyncio.run(adapter.planner().prepare(
+            _turn(), ConversationActionCall("effect-1", "echo_proof", {"message": "effect"})
+        ))
+        command = _echo_request(spec, "effect")
+        dispatch = asyncio.run(adapter.execute(command))
+        observation = asyncio.run(adapter.observe(command, dispatch))
+        assert len(handler.calls) == 2
+        assert observation.observed == {"text": "effect"}
+        assert "observation" not in observation.evidence
+        assert prepared.observation_output_key is None
+
+
+@pytest.mark.parametrize("override", [
+    {"observe_tool_name": "another-read"},
+    {"observe_catalog_name": "another-read"},
+    {"observe_catalog_sha256": "a" * 64},
+    {"observe_argument_bindings": ()},
+    {"proof_bindings": (McpGatewayProofBinding("message", "text"),)},
+    {"contract": "EvaMcpGatewayProvider/v2"},
+    {"operation_kind": None},
+    {"operation_kind": "effect"},
+])
+def test_v3_read_rejects_mode_or_pinned_route_mismatch(override: dict[str, object]) -> None:
+    with pytest.raises(ValueError, match="MCP gateway"):
+        _read_spec(**override)
+
+
+@pytest.mark.parametrize("change", [
+    {"observation_arguments": {"message": "another target"}},
+    {"expected_proof": {"text": "invented"}},
+    {"tool_configuration_sha256": _spec().configuration_sha256},
+    {"observation_tool_name": "another-read"},
+])
+def test_v3_read_rejects_changed_durable_binding_before_provider_io(change: dict[str, object]) -> None:
+    with _gateway() as (base_url, handler):
+        spec = _read_spec()
+        adapter = McpGatewayToolAdapter(
+            McpGatewayConfig(base_url, "token", allow_plain_http=True), (spec,)
+        )
+        asyncio.run(adapter.verify_catalog())
+        command = replace(_echo_request(spec, "target"), expected_proof={}, **{
+            key: value for key, value in change.items() if key != "expected_proof"
+        })
+        if "expected_proof" in change:
+            command = replace(command, expected_proof=change["expected_proof"])
+        with pytest.raises(RuntimeError, match="binding differs"):
+            asyncio.run(adapter.execute(command))
+        with pytest.raises(RuntimeError, match="binding differs"):
+            asyncio.run(adapter.observe(command, None))
+        assert handler.calls == []
+
+
+@pytest.mark.parametrize("output,accepted", [
+    ({"content": "a" * (65536 - len('{"content":""}'))}, True),
+    ({"content": "a" * (65537 - len('{"content":""}'))}, False),
+    ({"content": "€" * 22000}, False),
+    ({"content": "a" * 32000, "metadata": "b" * 34000}, False),
+])
+def test_v3_read_bounds_complete_structured_result_before_journal(
+    monkeypatch: pytest.MonkeyPatch, output: dict[str, object], accepted: bool,
+) -> None:
+    spec = _read_spec()
+    adapter = McpGatewayToolAdapter(McpGatewayConfig("https://example.invalid", "token"), (spec,))
+    calls = []
+    def request_json(method, path, payload):
+        if method == "GET":
+            return [_catalog_row()]
+        calls.append(payload)
+        return {"jsonrpc": "2.0", "id": payload["id"], "result": {"structuredContent": output}}
+    monkeypatch.setattr(adapter, "_request_json", request_json)
+    asyncio.run(adapter.verify_catalog())
+    command = replace(_echo_request(spec, "read"), expected_proof={})
+    dispatch = asyncio.run(adapter.execute(command))
+    if accepted:
+        observed = asyncio.run(adapter.observe(command, dispatch))
+        assert observed.evidence["observation"] == output
+    else:
+        with pytest.raises(RuntimeError, match="read result exceeds 65536 bytes"):
+            asyncio.run(adapter.observe(command, dispatch))
+    assert len(calls) == 1
+
+
+def test_v3_read_rejects_output_schema_drift_and_revokes_failed_catalog() -> None:
+    output_schema = {"type": "object", "properties": {"text": {"type": "integer"}}, "required": ["text"]}
+    row = {**_catalog_row(), "output_schema": output_schema}
+    digest = canonical_sha256(mcp_gateway_catalog_binding(row, contract="EvaMcpGatewayProvider/v3"))
+    spec = _read_spec(execute_catalog_sha256=digest, observe_catalog_sha256=digest)
+    with _gateway() as (base_url, handler):
+        handler.catalog = [row]
+        adapter = McpGatewayToolAdapter(McpGatewayConfig(base_url, "token", allow_plain_http=True), (spec,))
+        asyncio.run(adapter.verify_catalog())
+        command = replace(_echo_request(spec, "wrong type"), expected_proof={})
+        with pytest.raises(ConversationConflict, match="wrong type"):
+            asyncio.run(adapter.observe(command, None))
+        handler.catalog = [{**row, "output_schema": {**output_schema, "required": []}}]
+        with pytest.raises(RuntimeError, match="sealed catalog"):
+            asyncio.run(adapter.verify_catalog())
+        with pytest.raises(RuntimeError, match="catalog must be verified"):
+            adapter.planner()
+        with pytest.raises(RuntimeError, match="catalog is not verified"):
+            asyncio.run(adapter.observe(command, None))
+        assert len(handler.calls) == 1

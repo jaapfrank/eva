@@ -45,11 +45,14 @@ def exclusive_access(root: Path):
 
 def check_catalog(helper, token: str, catalog: dict) -> None:
     rows = {row["name"]: row for row in helper._list_tools(provider.GATEWAY, token, include_metrics=False)}
-    tool = catalog["tools"][0]
-    actual = provider.catalog_for({"write_file": rows[tool["execute_catalog_name"]],
-                                   "read_text_file": rows[tool["observe_catalog_name"]]})
-    if actual != catalog:
-        raise RuntimeError("workspace registry differs from the admitted catalog")
+    specs = provider.parse_mcp_gateway_catalog(json.dumps(catalog))
+    for spec in specs:
+        for name, expected in ((spec.execute_catalog_name, spec.execute_catalog_sha256),
+                               (spec.observe_catalog_name, spec.observe_catalog_sha256)):
+            row = rows.get(name)
+            if row is None or provider.canonical_sha256(provider.mcp_gateway_catalog_binding(
+                    row, contract=spec.contract)) != expected:
+                raise RuntimeError("workspace registry differs from the admitted catalog")
 
 
 def check_readback(helper, token: str, catalog: dict, expected_sha256: str) -> None:
@@ -66,7 +69,7 @@ def check_readback(helper, token: str, catalog: dict, expected_sha256: str) -> N
     provider.verify_readback(reply.get("result", {}), "Eva's duurzame werkmap is voorbereid.\n", direct)
 
 
-def prepare(generation: int) -> dict:
+def prepare(generation: int, *, include_reads: bool = False) -> dict:
     if os.geteuid() != 0 or generation < 2:
         raise RuntimeError("workspace credential preparation requires root and generation >= 2")
     root = provider.HOST_ROOT
@@ -74,10 +77,10 @@ def prepare(generation: int) -> dict:
     if not stat.S_ISDIR(info.st_mode) or info.st_uid != 0 or stat.S_IMODE(info.st_mode) != 0o700:
         raise RuntimeError("workspace root permissions differ")
     with exclusive_access(root):
-        return _prepare(root, generation)
+        return _prepare(root, generation, include_reads=include_reads)
 
 
-def _prepare(root: Path, generation: int) -> dict:
+def _prepare(root: Path, generation: int, *, include_reads: bool = False) -> dict:
     previous = root / ("receipt.json" if generation == 2 else f"access-{generation - 1}-receipt.json")
     source = json.loads(read_private(previous, 0, 0o600))
     if source["status"] not in {"standalone_prepared_core_disabled", "replacement_prepared_not_activated"}:
@@ -105,6 +108,19 @@ def _prepare(root: Path, generation: int) -> dict:
     catalog = json.loads(catalog_bytes)
     check_catalog(helper, old_token.decode(), catalog)
     check_readback(helper, old_token.decode(), catalog, source["independentContentSha256"])
+    if include_reads:
+        original = json.loads(read_private(root / "receipt.json", 0, 0o600))
+        rows = helper._list_tools(provider.GATEWAY, old_token.decode(), include_metrics=False)
+        selected = {}
+        for name in ("write_file", "read_text_file", "list_directory", "search_files", "get_file_info"):
+            matches = [row for row in rows if helper._row_gateway_id(row) == original["gatewayId"]
+                       and helper._original_name(row) == name]
+            if len(matches) != 1:
+                raise RuntimeError("workspace read tool catalog is incomplete")
+            selected[name] = matches[0]
+        catalog = provider.catalog_for(selected, include_reads=True)
+        catalog_bytes = json.dumps(catalog, ensure_ascii=False, separators=(",", ":")).encode()
+        check_catalog(helper, old_token.decode(), catalog)
     password = read_private(root / "admin-password", 0, 0o600).decode()
     admin = helper._login_contextforge(provider.GATEWAY, password)
     # Reserve the generation before issuing a credential; failure is never retried silently.
@@ -120,7 +136,7 @@ def _prepare(root: Path, generation: int) -> dict:
               "generation": generation, "previousTokenId": source["tokenId"],
               "tokenId": issued["token"]["id"], "tokenExpiresAt": issued["token"]["expires_at"],
               "tokenScopes": issued["token"]["resource_scopes"], "accessDirectory": str(access),
-              "tokenSha256": provider._digest(access / "token"), "catalogSha256": source["catalogSha256"],
+              "tokenSha256": provider._digest(access / "token"), "catalogSha256": hashlib.sha256(catalog_bytes).hexdigest(),
               "independentContentSha256": source["independentContentSha256"],
               "operatorSha256": provider._digest(Path(__file__)),
               "coreConfigurationChanged": False, "previousTokenRevoked": False}
@@ -141,9 +157,10 @@ def _prepare(root: Path, generation: int) -> dict:
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("generation", type=int)
+    parser.add_argument("--include-reads", action="store_true", help="Include existing workspace read, list, search and metadata tools within the same private root")
     args = parser.parse_args()
     try:
-        print(json.dumps(prepare(args.generation)))
+        print(json.dumps(prepare(args.generation, include_reads=args.include_reads)))
         return 0
     except Exception:
         print(json.dumps({"status": "refused_or_incomplete", "error": "Inspect retained private generation state; never delete or retry blindly."}))

@@ -328,3 +328,64 @@ def test_uvicorn_factory_admits_gateway_inside_running_server_loop(valid_catalog
                 assert admitted == []
         finally:
             engine.dispose()
+
+
+def _v3_catalog(operation_kind: str = "read") -> dict[str, object]:
+    payload = json.loads(_provider_catalog())
+    payload["contract"] = "EvaMcpGatewayProvider/v3"
+    tool = payload["tools"][0]
+    tool["operation_kind"] = operation_kind
+    tool["execute_argument_bindings"] = [{"argument_name": "message", "provider_name": "message"}]
+    tool["observe_argument_bindings"] = tool["execute_argument_bindings"]
+    if operation_kind == "read":
+        tool["proof_bindings"] = []
+    return payload
+
+
+def test_v3_catalog_requires_explicit_host_read_or_effect_authority() -> None:
+    read = parse_mcp_gateway_catalog(json.dumps(_v3_catalog()))[0]
+    effect = parse_mcp_gateway_catalog(json.dumps(_v3_catalog("effect")))[0]
+    assert read.operation_kind == "read"
+    assert read.proof_bindings == ()
+    assert effect.operation_kind == "effect"
+    assert effect.proof_bindings
+    assert effect.configuration_sha256 != read.configuration_sha256
+    # A provider readOnlyHint alone has never authorized the read route.
+    assert parse_mcp_gateway_catalog(_provider_catalog())[0].operation_kind == "effect"
+    with pytest.raises(RuntimeError, match="configuration"):
+        parse_mcp_gateway_catalog(_provider_catalog(extra={"operation_kind": "read"}))
+
+
+@pytest.mark.parametrize("value", [None, "automatic", "READ", 0, {}, []])
+def test_v3_catalog_rejects_malformed_operation_kind(value: object) -> None:
+    payload = _v3_catalog()
+    payload["tools"][0]["operation_kind"] = value
+    with pytest.raises(RuntimeError, match="operation kind"):
+        parse_mcp_gateway_catalog(json.dumps(payload))
+
+
+def test_v3_catalog_rejects_missing_operation_and_empty_effect_proof() -> None:
+    payload = _v3_catalog()
+    del payload["tools"][0]["operation_kind"]
+    with pytest.raises(RuntimeError, match="configuration"):
+        parse_mcp_gateway_catalog(json.dumps(payload))
+    payload = _v3_catalog("effect")
+    payload["tools"][0]["proof_bindings"] = []
+    with pytest.raises(RuntimeError, match="proof bindings"):
+        parse_mcp_gateway_catalog(json.dumps(payload))
+    payload = _v3_catalog()
+    payload["tools"][0]["observe_tool_name"] = "another-tool"
+    with pytest.raises(RuntimeError, match="configuration"):
+        parse_mcp_gateway_catalog(json.dumps(payload))
+
+
+def test_v3_binds_output_schema_like_v2_without_changing_legacy_configuration_hash() -> None:
+    payload = _v3_catalog("effect")
+    v3 = parse_mcp_gateway_catalog(json.dumps(payload))[0]
+    payload["contract"] = "EvaMcpGatewayProvider/v2"
+    del payload["tools"][0]["operation_kind"]
+    v2 = parse_mcp_gateway_catalog(json.dumps(payload))[0]
+    assert v3.configuration_sha256 != v2.configuration_sha256
+    assert v2.operation_kind == "effect"
+    row = {**CATALOG_ROW, "output_schema": {"type": "object", "properties": {"content": {"type": "string"}}}}
+    assert mcp_gateway_catalog_binding(row, contract="EvaMcpGatewayProvider/v3") == mcp_gateway_catalog_binding(row, contract="EvaMcpGatewayProvider/v2")

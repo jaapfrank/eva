@@ -28,6 +28,12 @@ from eva.contracts.canonical_json import canonical_sha256
 
 _GATEWAY_TOOL_NAME = re.compile(r"[A-Za-z0-9][A-Za-z0-9_.:-]{0,239}")
 _ORCHESTRATOR_TIMEOUT_MARGIN_SECONDS = 5
+_READ_OBSERVATION_MAX_BYTES = 65_536
+_GATEWAY_CONTRACTS = {
+    "EvaMcpGatewayProvider/v1",
+    "EvaMcpGatewayProvider/v2",
+    "EvaMcpGatewayProvider/v3",
+}
 
 
 @dataclass(frozen=True, slots=True)
@@ -103,11 +109,16 @@ class McpGatewayToolSpec:
     contract: str = "EvaMcpGatewayProvider/v1"
     execute_argument_bindings: tuple[McpGatewayArgumentBinding, ...] = ()
     observe_argument_bindings: tuple[McpGatewayArgumentBinding, ...] = ()
+    operation_kind: str | None = None
 
     def __post_init__(self) -> None:
+        if self.contract != "EvaMcpGatewayProvider/v3":
+            if self.operation_kind not in {None, "effect"}:
+                raise ValueError("MCP gateway legacy contract requires effect mode")
+            object.__setattr__(self, "operation_kind", "effect")
         if (
-            self.contract
-            not in {"EvaMcpGatewayProvider/v1", "EvaMcpGatewayProvider/v2"}
+            self.contract not in _GATEWAY_CONTRACTS
+            or self.operation_kind not in {"read", "effect"}
             or _GATEWAY_TOOL_NAME.fullmatch(self.execute_tool_name) is None
             or _GATEWAY_TOOL_NAME.fullmatch(self.observe_tool_name) is None
             or _GATEWAY_TOOL_NAME.fullmatch(self.execute_catalog_name) is None
@@ -119,11 +130,19 @@ class McpGatewayToolSpec:
                 for character in self.execute_catalog_sha256
                 + self.observe_catalog_sha256
             )
-            or not self.proof_bindings
+            or (self.operation_kind == "effect" and not self.proof_bindings)
             or len({item.observed_name for item in self.proof_bindings})
             != len(self.proof_bindings)
         ):
             raise ValueError("MCP gateway tool specification is invalid")
+        if self.operation_kind == "read" and (
+            self.proof_bindings
+            or self.execute_tool_name != self.observe_tool_name
+            or self.execute_catalog_name != self.observe_catalog_name
+            or self.execute_catalog_sha256 != self.observe_catalog_sha256
+            or self.execute_argument_bindings != self.observe_argument_bindings
+        ):
+            raise ValueError("MCP gateway read requires one identical pinned route")
         properties = self.descriptor.input_schema["properties"]
         required = self.descriptor.input_schema["required"]
         if self.contract == "EvaMcpGatewayProvider/v1":
@@ -177,7 +196,7 @@ class McpGatewayToolSpec:
                 for item in self.proof_bindings
             ],
         }
-        if self.contract == "EvaMcpGatewayProvider/v2":
+        if self.contract in {"EvaMcpGatewayProvider/v2", "EvaMcpGatewayProvider/v3"}:
             payload["contract"] = self.contract
             payload["execute_argument_bindings"] = [
                 {
@@ -193,6 +212,8 @@ class McpGatewayToolSpec:
                 }
                 for item in self.observe_argument_bindings
             ]
+        if self.contract == "EvaMcpGatewayProvider/v3":
+            payload["operation_kind"] = self.operation_kind
         return canonical_sha256(payload)
 
 
@@ -218,7 +239,7 @@ class McpGatewayToolPlanner:
             raise ValueError("MCP gateway action catalog is invalid")
         if provider_input_schemas is None:
             if any(item.contract != "EvaMcpGatewayProvider/v1" for item in specs):
-                raise ValueError("MCP gateway v2 planner requires verified schemas")
+                raise ValueError("MCP gateway v2/v3 planner requires verified schemas")
             provider_input_schemas = {
                 (tool_name, phase): item.descriptor.input_schema
                 for item in specs
@@ -285,6 +306,7 @@ class McpGatewayToolPlanner:
                 "tool_configuration_sha256": spec.configuration_sha256,
                 "transport": "mcp_gateway",
             },
+            observation_output_key="result" if spec.operation_kind == "read" else None,
             execution_timeout_seconds=self._execution_timeout_seconds,
             verification_timeout_seconds=self._verification_timeout_seconds,
         )
@@ -329,6 +351,9 @@ class McpGatewayToolAdapter:
         )
 
     async def verify_catalog(self) -> dict[str, str]:
+        # A rejected re-admission must not leave an earlier catalog usable.
+        self._verified_input_schemas = {}
+        self._verified_output_schemas = {}
         rows = await asyncio.to_thread(self._request_json, "GET", "/tools", None)
         if not isinstance(rows, list) or len(rows) > 1_024:
             raise RuntimeError("MCP gateway catalog is invalid")
@@ -404,6 +429,14 @@ class McpGatewayToolAdapter:
             "execute_arguments",
             provider_schema=True,
         )
+        if spec.operation_kind == "read":
+            # The durable observe phase owns the read, including crash recovery.
+            # Never invoke an effect merely because a provider calls it read-only.
+            return ToolDispatchResult(
+                accepted=True,
+                provider_ref=spec.configuration_sha256,
+                details={"operation_kind": "read", "provider_call_deferred": True},
+            )
         output = await asyncio.to_thread(
             self._call_tool,
             spec.execute_tool_name,
@@ -449,9 +482,32 @@ class McpGatewayToolAdapter:
             observe_arguments,
             _rpc_id(command, "observe", observe_tool_name, observe_arguments),
         )
+        if spec.operation_kind == "read":
+            encoded = json.dumps(
+                output, ensure_ascii=False, separators=(",", ":"), allow_nan=False
+            ).encode("utf-8")
+            if len(encoded) > _READ_OBSERVATION_MAX_BYTES:
+                raise RuntimeError(
+                    "MCP gateway read result exceeds 65536 bytes; request a smaller result"
+                )
         output_schema = self._verified_output_schemas.get(observe_tool_name)
         if output_schema is not None:
-            _validate_schema_value(output, output_schema, "observe_output")
+            _validate_schema_value(
+                output,
+                output_schema,
+                "observe_output",
+                provider_schema=spec.contract == "EvaMcpGatewayProvider/v3",
+            )
+        if spec.operation_kind == "read":
+            return ToolProofObservation(
+                "verified",
+                {},
+                {
+                    "observation": output,
+                    "observation_sha256": canonical_sha256(output),
+                    "source": "mcp_gateway_read",
+                },
+            )
         observed: dict[str, JsonValue] = {}
         for binding in spec.proof_bindings:
             if binding.observed_name not in output:
@@ -472,6 +528,11 @@ class McpGatewayToolAdapter:
     ) -> None:
         if command.tool_configuration_sha256 != spec.configuration_sha256:
             raise RuntimeError("MCP gateway durable tool binding differs")
+        if spec.operation_kind == "read" and (
+            command.arguments != command.observation_arguments
+            or command.expected_proof != {}
+        ):
+            raise RuntimeError("MCP gateway durable read binding differs")
         if (
             command.observation_tool_name is None
             and command.observation_arguments is None
@@ -576,7 +637,7 @@ def mcp_gateway_catalog_binding(
     *,
     contract: str = "EvaMcpGatewayProvider/v1",
 ) -> dict[str, JsonValue]:
-    if contract not in {"EvaMcpGatewayProvider/v1", "EvaMcpGatewayProvider/v2"}:
+    if contract not in _GATEWAY_CONTRACTS:
         raise RuntimeError("MCP gateway catalog contract is invalid")
     input_schema = row.get("input_schema", row.get("inputSchema"))
     integration_type = row.get("integration_type", row.get("integrationType"))
@@ -593,7 +654,7 @@ def mcp_gateway_catalog_binding(
         "request_type": request_type,
         "visibility": row.get("visibility"),
     }
-    if contract == "EvaMcpGatewayProvider/v2" and output_schema is not None:
+    if contract != "EvaMcpGatewayProvider/v1" and output_schema is not None:
         selected["output_schema"] = output_schema
     validate_json_value(selected)
     if (

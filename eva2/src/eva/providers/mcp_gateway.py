@@ -33,6 +33,7 @@ from eva.providers.contracts import ProviderContribution
 
 _CONTRACT_V1 = "EvaMcpGatewayProvider/v1"
 _CONTRACT_V2 = "EvaMcpGatewayProvider/v2"
+_CONTRACT_V3 = "EvaMcpGatewayProvider/v3"
 _TOOL_FIELDS_V1 = {
     "completion_guidance",
     "description",
@@ -50,6 +51,8 @@ _TOOL_FIELDS_V2 = _TOOL_FIELDS_V1 | {
     "execute_argument_bindings",
     "observe_argument_bindings",
 }
+
+_TOOL_FIELDS_V3 = _TOOL_FIELDS_V2 | {"operation_kind"}
 
 
 @dataclass(frozen=True, slots=True)
@@ -129,7 +132,11 @@ def _argument_bindings(
 
 
 def _tool_spec(payload: object, *, contract: str) -> McpGatewayToolSpec:
-    expected_fields = _TOOL_FIELDS_V1 if contract == _CONTRACT_V1 else _TOOL_FIELDS_V2
+    expected_fields = {
+        _CONTRACT_V1: _TOOL_FIELDS_V1,
+        _CONTRACT_V2: _TOOL_FIELDS_V2,
+        _CONTRACT_V3: _TOOL_FIELDS_V3,
+    }.get(contract)
     if not isinstance(payload, dict) or set(payload) != expected_fields:
         raise RuntimeError("MCP gateway tool configuration is invalid")
     schema = payload.get("input_schema")
@@ -139,10 +146,13 @@ def _tool_spec(payload: object, *, contract: str) -> McpGatewayToolSpec:
         raise RuntimeError("MCP gateway tool configuration is invalid") from exc
     if not isinstance(schema, dict):
         raise RuntimeError("MCP gateway tool configuration is invalid")
+    operation_kind = payload.get("operation_kind") if contract == _CONTRACT_V3 else "effect"
+    if not isinstance(operation_kind, str) or operation_kind not in {"read", "effect"}:
+        raise RuntimeError("MCP gateway operation kind is invalid")
     bindings_payload = payload.get("proof_bindings")
     if (
         not isinstance(bindings_payload, list)
-        or not bindings_payload
+        or (operation_kind == "effect" and not bindings_payload)
         or len(bindings_payload) > 32
     ):
         raise RuntimeError("MCP gateway proof bindings are invalid")
@@ -171,6 +181,7 @@ def _tool_spec(payload: object, *, contract: str) -> McpGatewayToolSpec:
         )
         return McpGatewayToolSpec(
             contract=contract,
+            operation_kind=operation_kind,
             descriptor=descriptor,
             execute_tool_name=_required_text(payload, "execute_tool_name", 240),
             observe_tool_name=_required_text(payload, "observe_tool_name", 240),
@@ -206,7 +217,8 @@ def parse_mcp_gateway_catalog(raw: str) -> tuple[McpGatewayToolSpec, ...]:
     if (
         not isinstance(payload, dict)
         or set(payload) != {"contract", "tools"}
-        or payload.get("contract") not in {_CONTRACT_V1, _CONTRACT_V2}
+        or not isinstance(payload.get("contract"), str)
+        or payload.get("contract") not in {_CONTRACT_V1, _CONTRACT_V2, _CONTRACT_V3}
         or not isinstance(payload.get("tools"), list)
         or not 1 <= len(payload["tools"]) <= 128
     ):
