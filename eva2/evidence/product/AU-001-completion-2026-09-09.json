@@ -1,0 +1,224 @@
+{
+  "contract": "EvaProductCompletionEvidence/v1",
+  "taskId": "AU-001",
+  "baseCommit": "e73cdd8a402beafafe66a05353dcf932a86b3eae",
+  "implementationCommit": "998ecd4b640d2840fd284ff02111c4425812e74f",
+  "prerequisiteImplementationCommit": "e73cdd8a402beafafe66a05353dcf932a86b3eae",
+  "status": "ready_for_independent_final_review",
+  "built": true,
+  "tested": true,
+  "live": true,
+  "humanAccepted": false,
+  "activeSlot": 3,
+  "runtimePort": 44710,
+  "imageId": "sha256:f5d309fd787f0d83b47c8a43910b0f151b26f061d6c92331a22e4c6c583e8301",
+  "completeOutcome": "Eva finds existing private workspace documents, reads them, compares facts against the owner request and saves checked advice through the existing general action route without requesting permission again.",
+  "sourceScope": {
+    "initialMcpImplementation": "e73cdd8a402beafafe66a05353dcf932a86b3eae",
+    "finalRepairAndPackagingPaths": [
+      "eva2/pyproject.toml",
+      "eva2/release/4d-dependency-source-binding.json",
+      "eva2/release/dependency-roots.in",
+      "eva2/release/gate-toolchain.lock.json",
+      "eva2/release/license-inventory.json",
+      "eva2/release/managed-b-wheel-coverage-4d-amd64-v1.json",
+      "eva2/release/managed-b-wheelhouse-amd64-v2.json",
+      "eva2/requirements-4d.lock",
+      "eva2/src/eva/adapters/model/pydantic_conversation.py",
+      "eva2/src/eva/adapters/model/tokenizer_data/LICENSE.tiktoken",
+      "eva2/src/eva/adapters/model/tokenizer_data/README.md",
+      "eva2/src/eva/adapters/model/tokenizer_data/fb374d419588a4632f3f557e76b4b70aebbca790",
+      "eva2/tests/model/test_conversation_model.py"
+    ]
+  },
+  "originalFiles": {
+    "build-receipt.json": {
+      "path": "/home/administrator/project/.eva2-artifacts/au001-daily-work-9hsjxh0z/build-receipt.json",
+      "sha256": "f077067588941f5c08f98ef036f04bb5e1d36119df77b2b4b68244220a0abbe6"
+    },
+    "catalog-readback.json": {
+      "path": "/home/administrator/project/.eva2-artifacts/au001-daily-work-9hsjxh0z/catalog-readback.json",
+      "sha256": "2ce59c2df5501083992de793576fdbdda628fe26af72973357a625f13f04826c"
+    },
+    "quiescent-pending-check.json": {
+      "path": "/home/administrator/project/.eva2-artifacts/au001-daily-work-9hsjxh0z/quiescent-pending-check.json",
+      "sha256": "c4a06c545a37d26408e082512a38fc8dfe099ff6120ab40882efc5ed05bfd0a8"
+    },
+    "owner-binding-readback.json": {
+      "path": "/home/administrator/project/.eva2-artifacts/au001-daily-work-9hsjxh0z/owner-binding-readback.json",
+      "sha256": "fdba76867ed95abe003ebbca06de265fcc59059ac83ed8bb737a82f5b1262e64"
+    },
+    "owner-scope-preparation.json": {
+      "path": "/home/administrator/project/.eva2-artifacts/au001-daily-work-9hsjxh0z/owner-scope-preparation.json",
+      "sha256": "64b98077f882893d08788b22503a2f0d52ddb53eb6cd243d1e921e7205058d7b"
+    },
+    "tokenizer-build-receipt.json": {
+      "path": "/home/administrator/project/.eva2-artifacts/au001-daily-work-9hsjxh0z/tokenizer-build-receipt.json",
+      "sha256": "b07d77bd429fd5426cf878fc9a350b04fa4415f3a879ce0b375bc20ab28a54a0"
+    },
+    "tokenizer-installed-check.json": {
+      "path": "/home/administrator/project/.eva2-artifacts/au001-daily-work-9hsjxh0z/tokenizer-installed-check.json",
+      "sha256": "541946405766d40bd36380a1dab2df7b8acadef3291b959721907f71b2405e24"
+    },
+    "tokenizer-cutover.stdout": {
+      "path": "/home/administrator/project/.eva2-artifacts/au001-daily-work-9hsjxh0z/tokenizer-cutover.stdout",
+      "sha256": "c239260e1db646c02c9d198e50a919a1f2415459b6761cab15e2e00aa2141084"
+    },
+    "acceptance-request.json": {
+      "path": "/home/administrator/project/.eva2-artifacts/au001-daily-work-9hsjxh0z/acceptance-request.json",
+      "sha256": "4381fc3f9de578a4c1a44422c28d64b5be58be0f619e196da03017f5bf268dae"
+    },
+    "acceptance-inputs.json": {
+      "path": "/home/administrator/project/.eva2-artifacts/au001-daily-work-9hsjxh0z/acceptance-inputs.json",
+      "sha256": "746e8bbf574ea3aa510c0d9bea2c12179c3358407c56c32d2cb92fbd25d8efcc"
+    },
+    "acceptance-response.json": {
+      "path": "/home/administrator/project/.eva2-artifacts/au001-daily-work-9hsjxh0z/acceptance-response.json",
+      "sha256": "da079c623ed29442d569189ea92828deaee008ffbb3840eb530f9b4e01e24543"
+    },
+    "acceptance-retry-http-receipt.json": {
+      "path": "/home/administrator/project/.eva2-artifacts/au001-daily-work-9hsjxh0z/acceptance-retry-http-receipt.json",
+      "sha256": "e66347ab94dbc6d18ff4f9f2af55c45bd1abb687e2ae088e200bc8bf6770ad45"
+    },
+    "acceptance-retry-durable-events.json": {
+      "path": "/home/administrator/project/.eva2-artifacts/au001-daily-work-9hsjxh0z/acceptance-retry-durable-events.json",
+      "sha256": "ecf498ae483f1739bfc71ca8969da142ae4a33d8d1c652b90c220e1760461cbc"
+    },
+    "diagnose-resume.stderr": {
+      "path": "/home/administrator/project/.eva2-artifacts/au001-daily-work-9hsjxh0z/diagnose-resume.stderr",
+      "sha256": "b56e1f123fe7cff9abfea76217499a1fe33702d14789abcc0ba2ee172ad3dcd9"
+    },
+    "input-budget-diagnosis.stdout": {
+      "path": "/home/administrator/project/.eva2-artifacts/au001-daily-work-9hsjxh0z/input-budget-diagnosis.stdout",
+      "sha256": "113d30d49db317d285d787b0c71d6e7f454baf70feb324de2e0ffa636ff216ab"
+    },
+    "acceptance-final-http-receipt.json": {
+      "path": "/home/administrator/project/.eva2-artifacts/au001-daily-work-9hsjxh0z/acceptance-final-http-receipt.json",
+      "sha256": "75d9e8ace75ab531825b9c41ee8e335083a20e2c4a92076a489047e6557aa288"
+    },
+    "acceptance-final-response.json": {
+      "path": "/home/administrator/project/.eva2-artifacts/au001-daily-work-9hsjxh0z/acceptance-final-response.json",
+      "sha256": "12db939dab4bb354d75074167d7e8683f983ef0578e54ee99550974717a894be"
+    },
+    "acceptance-file-readback.json": {
+      "path": "/home/administrator/project/.eva2-artifacts/au001-daily-work-9hsjxh0z/acceptance-file-readback.json",
+      "sha256": "2b99c619974457e1ce863bee7c02f7275d4b27cbbce644fefabe3cbc871be429"
+    },
+    "acceptance-final-durable-events.json": {
+      "path": "/home/administrator/project/.eva2-artifacts/au001-daily-work-9hsjxh0z/acceptance-final-durable-events.json",
+      "sha256": "947f754bf27c8b84f54cc52b3031acbf1998f9e9bd3a5d621eb789097405176b"
+    },
+    "acceptance-final-conversation-events.json": {
+      "path": "/home/administrator/project/.eva2-artifacts/au001-daily-work-9hsjxh0z/acceptance-final-conversation-events.json",
+      "sha256": "5a6d71a6193d00d7465aaa66ef1fbc80855d782e59728fd8b9725ae7aa336ed5"
+    }
+  },
+  "liveTask": {
+    "channel": "actual owner dashboard HTTP route",
+    "fixtureScope": "Two explicitly fictional development notes; not real family data or plans. No household messages or speaker actions.",
+    "elapsedSeconds": 39.982,
+    "steps": [
+      "find_workspace_files",
+      "read_workspace_document",
+      "read_workspace_document",
+      "save_workspace_document"
+    ],
+    "verifiedSteps": 4,
+    "resultPath": "/proof-state/au001-ea1ac62d-advies.md",
+    "resultSha256": "e6a190d737a4d01f9d15072604d98bad99d83a2e2b19524fa00a7a6e20104d17",
+    "resultBytes": 912,
+    "result": "Chooses option A at EUR24 and2hours; rejects option B at EUR36 and3hours against EUR30/2hour constraints; records preparation and time uncertainty.",
+    "independentReadback": "Direct Python file read inside the real filesystem provider container, separate from model/provider effect receipt.",
+    "unnecessaryPermissionQuestions": 0,
+    "usage": {
+      "tool_calls": 4,
+      "measurement": "measured",
+      "input_tokens": 22068,
+      "output_tokens": 648,
+      "model_attempts": 5
+    }
+  },
+  "failuresRetained": [
+    {
+      "attempt": 1,
+      "result": "HTTP200 but no task completed. Workspace allowlist contained owner Telegram alias, not linked canonical dashboard identity.",
+      "repair": "Verified existing private principal bridge, retained alias, added canonical identity for same workspace scope."
+    },
+    {
+      "attempt": 2,
+      "result": "HTTP503 after two successful reads. InputBudgetError before third model request; UTF8 bytes had been counted as tokens.",
+      "repair": "Pinned offline o200k BPE envelope estimate including full tool catalog and receipts; same12000input budget, unchanged provider-reported usage enforcement."
+    }
+  ],
+  "focusedChecks": {
+    "mcpProviderAndGateway": "68 passed in16.12seconds; no rerun after unchanged MCP source.",
+    "inputBudget": "10 passed,58 deselected in2.01seconds; no unrelated suites.",
+    "installedTokenizer": "Offline hash-locked wheels; BPE loads in read-only container with networking disabled before final metadata-only image rebind. Final live task independently exercises same packaged tokenizer.",
+    "sourceReview": "Bounded source-GO /root/au001_reuse for MCP code and local tokenizer repair. Metadata binding corrections included before final activation."
+  },
+  "stopAndRevocation": {
+    "change": "Uses existing durable external tool admission, stop and principal controls; v1/v2 effect behavior unchanged. Read descriptor uses same admission scope and configpins.",
+    "retainedEvidence": "eva2/evidence/product/TL-002-completion-2026-09-08.json",
+    "focusedNewChecks": "V3 drift/schema/admission/one-call read and backward compatibility covered in68scoped tests.",
+    "nonclaim": "No new physical owner-stop trial; no exactly-once guarantee under every external failure."
+  },
+  "cutover": {
+    "backgroundIsolationBoundary": "Legacy images may ignore the switch; configuration readback is not worker isolation proof.",
+    "backgroundWorkConfiguredAfterActivation": true,
+    "backgroundWorkConfiguredDuringStaging": false,
+    "contract": "Eva2QuiescentCutoverReceipt/v1",
+    "eva1Backup": {
+      "bytes": 311123968,
+      "filename": "eva1-before-slot4-to-slot3-20260909T195130Z.db",
+      "quickCheck": "ok",
+      "sha256": "3806d07bfbdac968d9899a8fac7723e45bd7d1c9ee4afe1d4fde2937c9c366a7"
+    },
+    "eva1HttpStatuses": {
+      "/": 200,
+      "/api/capabilities": 200,
+      "/api/health": 200,
+      "/api/overview": 200,
+      "/api/workstatus": 200
+    },
+    "issuedAt": "2026-09-09T19:52:51.249752+00:00",
+    "previousDropinSha256": "697494ce129c08b712d2e5ef7e62f5e1a6a81931280c32465bc0db0ad76d15c8",
+    "proactiveCredentialWithheldDuringStaging": true,
+    "proactiveDeliveryEnabled": true,
+    "sourcePort": 44711,
+    "sourceWritersStopped": true,
+    "status": "switched",
+    "synchronizedDatabases": {
+      "memory": {
+        "countDigest": "d3df2ce2c4def8610834b3c4edc71c6bf15f3cd570b162df007fd0f91fc06306",
+        "dataDigest": "666fc030eb4e61fe99b0e410262f89508f3dc5e9160508c570d922bd4d670486",
+        "dumpBytes": 2419140,
+        "dumpSha256": "a7c1786795a171fc2d87f989083a9aea9d09a3d0e6ab2e735816d2cff938ca43",
+        "schemaDigest": "d89bfebdbfeb55e8618e81286bf24a42b838bfe577e84f6db9b93b43f5832172",
+        "tableCount": 23
+      },
+      "operational": {
+        "countDigest": "9278a2ce3725c4e09f74a1f9d115474ca1ff2198d96607f9b6299e29205a8ee1",
+        "dataDigest": "490edb24fdaf1edfa3c2802e01d7ee6f17270a4305d5a1710613fbcd55c3c66e",
+        "dumpBytes": 12533181,
+        "dumpSha256": "a0266b74dd61e438d30653fa81195da68b7d3f2260541eca52f1c6b70f6d18f8",
+        "schemaDigest": "32acc5b66e349dfd5b385e4828897575ad543ebb5f2638b8880dff1cacb7fb39",
+        "tableCount": 48
+      }
+    },
+    "targetPort": 44710,
+    "targetReady": true
+  },
+  "availableCapabilities": [
+    "find_workspace_files",
+    "read_workspace_document",
+    "list_workspace_directory",
+    "inspect_workspace_file",
+    "save_workspace_document"
+  ],
+  "limitations": [
+    "Private /proof-state workspace only; no arbitrary host filesystem access.",
+    "Local o200k encoding is an estimate for Astra; provider usage is actual measured consumption.",
+    "Controlled real API/model/filesystem task, not human acceptance or a family plan.",
+    "No unknown connector installation, multi-day project completion or competitor win proven."
+  ]
+}
