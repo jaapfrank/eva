@@ -26,6 +26,7 @@ SOURCE_PATHS = (
     "eva2/src/eva", "eva2/experiments/native-duplex-v1",
     "eva2/deploy/home-assistant/custom_components/eva2_voice/client.py",
     "eva2/deploy/home-assistant/eva2-native-speaker.service",
+    "eva2/deploy/home-assistant/eva2-native-speaker.sysusers.conf",
 )
 HERE = Path(__file__).resolve().parent
 

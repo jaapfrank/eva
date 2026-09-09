@@ -8,6 +8,8 @@ Wants=network-online.target
 [Service]
 Type=simple
 DynamicUser=yes
+User=eva2-speaker
+Group=eva2-speaker
 RuntimeDirectory=eva2-native-speaker
 RuntimeDirectoryMode=0700
 LoadCredential=config.json:/etc/eva2/native-speaker/config.json
