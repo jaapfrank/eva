@@ -53,8 +53,8 @@ def host_runtime(bundle: Path | None = None) -> dict:
     stdlib = Path(sysconfig.get_path("stdlib")).resolve()
     files = {python, ffmpeg}
     for path in stdlib.rglob("*"):
-        if (path.is_file() and path.suffix in {".py", ".so"}
-                and not any(part in {"site-packages", "dist-packages", "__pycache__"}
+        if (path.is_file() and path.suffix in {".py", ".pyc", ".so"}
+                and not any(part in {"site-packages", "dist-packages"}
                             for part in path.relative_to(stdlib).parts)):
             files.add(path.resolve())
     # ldd recursively resolves DT_NEEDED dependencies, including FFmpeg's
@@ -92,6 +92,10 @@ def verify(root: Path, *, require_root: bool = True) -> dict:
             if info.st_uid != 0 or info.st_mode & 0o022:
                 raise ValueError("speaker bundle must be root-owned and immutable to the service")
     runtime = data["hostRuntime"]
+    # Re-resolve the dependency closure, not only yesterday's target files:
+    # SONAME links, newly added stdlib modules and readable pyc caches matter.
+    if runtime != host_runtime(root):
+        raise ValueError("speaker host runtime changed; prepare and test a new bundle")
     if runtime["python"] != str(Path(sys.executable).resolve()) or runtime["pythonVersion"] != platform.python_version():
         raise ValueError("speaker Python runtime differs from prepared bundle")
     for path, expected in runtime["files"].items():

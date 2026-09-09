@@ -1,4 +1,3 @@
-import hashlib
 import importlib
 import json
 from pathlib import Path
@@ -39,7 +38,7 @@ def test_launcher_uses_loaded_parent_route_and_checks_parent_state(monkeypatch):
         launcher.active_core()
 
 
-def prepared(tmp_path):
+def prepared(tmp_path, monkeypatch):
     root = tmp_path / "bundle"; root.mkdir()
     (root / "source.py").write_text("print('candidate')\n")
     runtime = tmp_path / "host-library"; runtime.write_bytes(b"expected host bytes")
@@ -48,12 +47,15 @@ def prepared(tmp_path):
             "python": str(Path(sys.executable).resolve()), "pythonVersion": platform.python_version(),
             "files": {str(runtime): bundle.digest(runtime)}}}
     (root / "bundle.json").write_text(json.dumps(data))
+    def current(_root):
+        return {**data["hostRuntime"], "files": {str(runtime): bundle.digest(runtime)}}
+    monkeypatch.setattr(bundle, "host_runtime", current)
     return root, runtime
 
 
 @pytest.mark.parametrize("change", ["source", "extra-file", "symlink", "host-library"])
-def test_startup_rejects_changed_source_dependency_or_host_library(tmp_path, change):
-    root, runtime = prepared(tmp_path)
+def test_startup_rejects_changed_source_dependency_or_host_library(tmp_path, monkeypatch, change):
+    root, runtime = prepared(tmp_path, monkeypatch)
     assert bundle.verify(root, require_root=False)["sourceCommit"] == "a" * 40
     if change == "source":
         (root / "source.py").write_text("changed")
@@ -84,3 +86,20 @@ def test_systemd_preserves_parent_lifecycle_and_owned_child_cleanup():
     assert " -I -S -B " in text
     assert "LoadCredential=config.json:" in text and "LoadCredential=tls.key:" in text
     assert "EnvironmentFile=" not in text
+
+
+def test_host_closure_detects_changed_soname_and_added_python_cache(tmp_path, monkeypatch):
+    from types import SimpleNamespace
+    stdlib = tmp_path / "stdlib"; stdlib.mkdir()
+    old = tmp_path / "lib-old.so"; old.write_bytes(b"old")
+    new = tmp_path / "lib-new.so"; new.write_bytes(b"new")
+    link = tmp_path / "lib.so.1"; link.symlink_to(old)
+    monkeypatch.setattr(bundle.sysconfig, "get_path", lambda name: str(stdlib))
+    monkeypatch.setattr(bundle.subprocess, "run", lambda *a, **k: SimpleNamespace(stdout=f"lib.so.1 => {link} (0x123)"))
+    first = bundle.host_runtime()
+    link.unlink(); link.symlink_to(new)
+    changed = bundle.host_runtime()
+    assert str(old) in first["files"] and str(new) in changed["files"]
+    assert first != changed
+    cache = stdlib / "module.pyc"; cache.write_bytes(b"new cache")
+    assert str(cache) in bundle.host_runtime()["files"]
