@@ -14,7 +14,7 @@ Independent admission review, then prepare stopped slot4 and lossless slot3-to4 
 
 | Volgorde | Kaart | Resultaat | Status |
 |---:|---|---|---|
-| 138 | `VB-001` — Full-duplex voice leveren | Met Eva2 praten via de bestaande Telegram- of Home Assistant-aansluiting, waarbij Eva hoorbaar onderbroken kan worden en het gesprek daarna doorgaat. | 🔴 GEBLOKKEERD |
+| 138 | `VB-001` — Full-duplex voice leveren | Met Eva2 praten via de bestaande Telegram- of Home Assistant-aansluiting, waarbij Eva hoorbaar onderbroken kan worden en het gesprek daarna doorgaat. | 🟡 BEZIG |
 
 Klaar betekent:
 
@@ -220,7 +220,7 @@ Afgevinkt betekent alleen: de vastgelegde kaart is afgerond, niet het hele produ
   [Bewijs](evidence/product/TL-001-turn-limit-2026-09-08.json).
 - [x] `TL-002` — Handelingen via twee providers echt afmaken (done).
   [Bewijs](evidence/product/TL-002-completion-2026-09-08.json).
-- [ ] `VB-001` — Full-duplex voice leveren (blocked).
+- [ ] `VB-001` — Full-duplex voice leveren (in_progress).
 
 </details>
 

@@ -2359,6 +2359,21 @@
       "evidence": "eva2/evidence/product/VB-001-reserve-candidate-2026-09-09.json",
       "result": "2.444 tests groen. Reserve tweemaal gezond gestart; data en schema volledig behouden. Onafhankelijk bevestigd. Actieve Eva ongewijzigd. HA-praktijk wacht op Windows-toegang en microfoonkeuze.",
       "next": "Owner applies the prepared administrator-only Windows rule and clarifies microphone mute preference; then verify actual HA reachability, perform the reviewed current-data A/B switch, and measure real speaker interruption."
+    },
+    "vb001HaNetworkResolved": {
+      "status": "verified",
+      "observedAt": "2026-09-09T06:16:16.760637+00:00",
+      "networkHttpStatus": 405,
+      "microphonesMuted": false,
+      "componentMatchesSealedCandidate": true,
+      "next": "Verse A/B-omschakeling en geauthenticeerde spraakroute controleren; daarna echte speaker- en onderbreekproef."
+    },
+    "vb001NativeHouseholdLive": {
+      "status": "live_selected_awaiting_hardware_trial",
+      "evidence": "eva2/evidence/product/VB-001-native-household-live-2026-09-09.json",
+      "sourceCommit": "5eb98f8336fa22a586d2accd514dde37774d4186",
+      "imageId": "sha256:e6e33b0be32b7f4a1c3d04da55f8c903998d00fea88e50d817897111e92a35cc",
+      "next": "Gebruiker spreekt via Hey Eva; lees werkelijke pipeline-run terug en controleer hoorbaar stoppen en vervolgvraag."
     }
   },
   "activeTaskId": "VB-001",
@@ -3702,13 +3717,13 @@
       "area": "Voice",
       "title": "Full-duplex voice leveren",
       "outcome": "Met Eva2 praten via de bestaande Telegram- of Home Assistant-aansluiting, waarbij Eva hoorbaar onderbroken kan worden en het gesprek daarna doorgaat.",
-      "status": "blocked",
+      "status": "in_progress",
       "stateDetails": {
         "baseCommit": null,
         "implementationCommit": null,
         "evidenceCommit": null,
         "reviewEvidencePaths": [],
-        "blockerReason": "Echte HA-spraakproef kan niet starten: HA bereikt de spraakingang niet (HTTP 000); de voorbereide Windows-regel vereist een beheerder en ontbreekt nog. Ook de eerder gevraagde keuze over beide gedempte microfoons is onbeantwoord. Kandidaat en reserveproef zijn volledig gecontroleerd; geen verdere bouw nodig vóór deze externe stappen."
+        "blockerReason": null
       },
       "ownerRole": "architecturelead",
       "reviewerRole": "proofreviewer",

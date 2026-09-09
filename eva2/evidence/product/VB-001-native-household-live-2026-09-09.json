@@ -1,0 +1,61 @@
+{
+  "contract": "EvaNativeHouseholdVoiceLiveProgress/v1",
+  "observedAt": "2026-09-09T06:24:35.356842+00:00",
+  "sourceCommit": "5eb98f8336fa22a586d2accd514dde37774d4186",
+  "imageId": "sha256:e6e33b0be32b7f4a1c3d04da55f8c903998d00fea88e50d817897111e92a35cc",
+  "status": "live_selected_awaiting_hardware_trial",
+  "cutover": {
+    "sourceSlot": 3,
+    "targetSlot": 4,
+    "currentDataSynchronized": true,
+    "sourceWritersStopped": true,
+    "retainedFreshRollbackWorkspace": true,
+    "review": "co006_review GO wrapper af60f4e4470e449e0a9c1083199ef5fd44ee74cb4614d6effff3f637b2eb5b87"
+  },
+  "homeAssistant": {
+    "microphonesMuted": false,
+    "authenticatedStopStatus": 200,
+    "stoppedRequestStatus": 409,
+    "nextRequestStatus": 200,
+    "selectedPipelineId": "01m22dc2hyd9rcyv3zq935ay1g",
+    "conversationEngine": "conversation.eva2",
+    "speakers": [
+      "woonkamer",
+      "overkapping"
+    ],
+    "previousPipelineAndPreferredPreserved": true,
+    "review": "co006_review bounded GO reversible pipeline trial"
+  },
+  "proofBoundaries": [
+    "Synthetic text through HA HTTP proves authenticated transport and stop-before-request rejection; not actual microphone, STT, TTS or acoustic interruption.",
+    "No acoustic p95 latency or full-duplex hardware acceptance claimed. Existing firmware remains installed.",
+    "Legacy rollback source ignores background switch; reverse-sync precedes source restart."
+  ],
+  "receipts": {
+    "live-cutover-receipt.json": {
+      "sha256": "3fa89cf5f408a5edaa469e8eeffdb370be3f14f23dd28d4a1502e8875551655c",
+      "privateArtifact": "live-cutover-receipt.json"
+    },
+    "live-cutover-readback.json": {
+      "sha256": "9688f0db8dd40608c84b042685194291b57bdb66b74e99c2599558557b2ade81",
+      "privateArtifact": "live-cutover-readback.json"
+    },
+    "live-gateway-readback.json": {
+      "sha256": "3c208eaf409ad717926f407f5b84937e60f6316aad3c78f5c999cf41d3e50e15",
+      "privateArtifact": "live-gateway-readback.json"
+    },
+    "ha-practice-prerequisites.json": {
+      "sha256": "4d3c88d9fb95ecc20f0b7b9a8178f29f0d6f0fe6edaf6ab80404b46cdb0f4517",
+      "privateArtifact": "ha-practice-prerequisites.json"
+    },
+    "live-ha-authenticated-voice.json": {
+      "sha256": "f43e7f0a8de85442512df192dd29c0c454dc8dd7f96dbf2c4b70e4eb94d86517",
+      "privateArtifact": "live-ha-authenticated-voice.json"
+    },
+    "ha-pipeline-selection.json": {
+      "sha256": "01406073133d2e0452ce254cfd88f89656920099b140168b541c9ccbeb6ce407",
+      "privateArtifact": "ha-pipeline-selection.json"
+    }
+  },
+  "next": "Gebruiker spreekt via Hey Eva; lees werkelijke pipeline-run terug en controleer hoorbaar stoppen en vervolgvraag."
+}
