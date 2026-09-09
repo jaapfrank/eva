@@ -30,8 +30,8 @@
       "nonclaims": "No new deployment or model calls for this closure. Human usefulness/timing, full backlog completion, streaming and all later product outcomes remain open."
     },
     "projectDashboard": {
-      "runtimePort": 44710,
-      "runtimeLabel": "Slot 3",
+      "runtimePort": 44711,
+      "runtimeLabel": "Slot 4",
       "roadmap": [
         {
           "id": "daily",
@@ -111,7 +111,7 @@
           ]
         }
       ],
-      "priorityDecision": "VB-001 levert een complete gevraagde spraakroute via Telegram of bestaande Home Assistant-spraakapparaten. De browserproef is intern bewijs. Losse spraakberichten vervangen de doorlopende gespreksproef niet.",
+      "priorityDecision": "Eerst verstaanbare spraak en vervolgvragen via de bestaande Home Assistant-speakerroute. Vergelijk Eva1 en Eva2 gecontroleerd; firmwarewijzigingen geparkeerd. Wakeword-fout apart onderzoeken.",
       "dashboardVerification": {
         "status": "local_browser_verified_not_full_product_acceptance",
         "priorityRevision": {
@@ -131,7 +131,7 @@
         },
         "url": "http://localhost:44712",
         "service": "eva2-project-dashboard.service",
-        "hosting": "Loopback-only Vite preview in transient user service; reboot persistence not proven.",
+        "hosting": "Loopback Vite preview under persistent user systemd unit with restart on failure; current start verified separately, full reboot not tested.",
         "checks": [
           "Existing React-admin production build in project mode",
           "Real source JSON matches endpoint",
@@ -150,6 +150,21 @@
       },
       "summary": [
         {
+          "label": "BEZIG · VB-001",
+          "value": "Spraak hapert; vervolggesprek nog niet bruikbaar",
+          "detail": "Praktijkproef 9 september mislukt: woorden vallen weg. Eva2 ontvangt vragen en geeft opnieuw luisteren door. Dat is nog geen werkend gesprek."
+        },
+        {
+          "label": "NU ONDERZOEKEN",
+          "value": "Eva1 en Eva2 met dezelfde antwoordtekst vergelijken",
+          "detail": "Beide gebruiken HA Cloud STT/TTS. Verschil in gespreksafhandeling wordt onderzocht. Geen speakerfirmware gewijzigd; MP3-kandidaat geparkeerd."
+        },
+        {
+          "label": "APART PROBLEEM",
+          "value": "Hey Eva activeert bij gewone gesprekken",
+          "detail": "Gevoeligheid staat al op de laagste stand. Eigenaar meldt geen verband met audio-uitval; oorzaak nog niet vastgesteld."
+        },
+        {
           "label": "AFGEROND · TL-002",
           "value": "Eva kan documenten bewaren in haar werkmap",
           "detail": "Opslaan en teruglezen via de echte gespreksroute, behoud van Home Assistant en gecontroleerde uitrol bewezen. Gezinsacceptatie blijft open."
@@ -158,11 +173,6 @@
           "label": "AFGEROND · TL-001",
           "value": "Algemene meerstaps-toolroute live",
           "detail": "TL-001 en de geheugenbroncorrectie CO-006 zijn technisch afgerond. Nieuwe dagelijkse mogelijkheden volgen via TL-002."
-        },
-        {
-          "label": "ZELFSTANDIG HANDELEN",
-          "value": "Eerste melding verstuurd",
-          "detail": "12 oude waarnemingen → 1 besluit · nut nog te beoordelen"
         }
       ],
       "nextOutcomes": [
@@ -2391,6 +2401,11 @@
       "status": "researched_not_installed",
       "evidence": "eva2/design/product/home-assistant-voice-opensource-review-2026-09-09.md",
       "next": "Preserve or restore the known-good HA audio route and verify three continued native turns; assess Pipecat va_pipecat separately for ordinary-speech interruption."
+    },
+    "vb001NativeContinuationTrial": {
+      "status": "hardware_trial_failed",
+      "evidence": "eva2/evidence/product/VB-001-native-continuation-failed-2026-09-09.json",
+      "next": "Correlate actual wake detection and playback completion with failed audio/continuation. Lowest wake sensitivity already selected; do not claim a settings fix or repeat an unchanged acceptance test."
     }
   },
   "activeTaskId": "VB-001",

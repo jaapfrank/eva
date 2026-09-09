@@ -1,0 +1,28 @@
+{
+  "status": "hardware_trial_failed",
+  "observedAt": "2026-09-09T09:43:35.001650+00:00",
+  "ownerReadback": {
+    "audio": "Words still drop out",
+    "continuation": "Cannot continue speaking naturally",
+    "wakeWord": "Hey Eva triggers too easily and frequently"
+  },
+  "observations": {
+    "nativeAgentReached": true,
+    "processedLocally": false,
+    "continueConversation": true,
+    "sharedConversationIdAcrossRecognizedTurns": true,
+    "recognizedTurns": 3,
+    "audioFormat": "FLAC",
+    "sttNoTextErrorsAlsoPresent": true,
+    "wakeSensitivity": "Slightly sensitive (lowest available selector option)",
+    "deviceLogWindowSeconds": 45,
+    "wakeEventsDuringLogWindow": 0
+  },
+  "limits": [
+    "HA run-end is not proof of device playback completion",
+    "Repeated turns with shared conversation ID do not prove wakeword-free continuation",
+    "No-text errors do not establish false wakeword detection",
+    "Saved firmware configuration stops an active VA on wake detection; this is a possible mechanism, not proven cause of the reported failed trial"
+  ],
+  "runtimeChanges": false
+}

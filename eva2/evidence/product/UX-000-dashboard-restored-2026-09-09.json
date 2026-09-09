@@ -1,0 +1,26 @@
+{
+  "status": "restored_and_visible",
+  "observedAt": "2026-09-09T10:00:11.976168+00:00",
+  "cause": "Transient user dashboard service stopped; no listener on 44712",
+  "fix": "Persistent enabled user unit with Restart=on-failure, same loopback Vite preview and existing build",
+  "checks": {
+    "wslHttp": 200,
+    "windowsLocalhostHttp": 200,
+    "browserVisible": true,
+    "visibleActiveTask": "VB-001",
+    "visibleRuntime": "Slot 4",
+    "runtimeReady": true,
+    "sourceChecker": "valid"
+  },
+  "contentChanges": [
+    "Failed voice trial visible in summary",
+    "Same-text Eva1/Eva2 comparison shown as current investigation",
+    "False wakeword issue shown separately",
+    "Runtime reference corrected from 44710/slot3 to 44711/slot4"
+  ],
+  "limits": [
+    "Full machine reboot not tested",
+    "Existing browser regression command did not run because its Playwright environment variable was unset; direct browser visibility verified instead",
+    "No successful speech fix or A/B audio result claimed"
+  ]
+}
