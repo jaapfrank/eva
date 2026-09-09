@@ -1,0 +1,49 @@
+{
+  "contract": "EvaProductEvidence/v1",
+  "taskId": "VB-001",
+  "observedAt": "2026-09-09T00:32:25.992219+00:00",
+  "status": "repaired_source_candidate_built_scanned_complete_gate_running",
+  "sourceCommit": "8c5090829c8557db89d42162473b9526c5d89c16",
+  "candidateImage": "sha256:dcec0dd6fc2b9a1d80092b39c4a8d456491675ade3d05ffc16fc908f35eff5fe",
+  "buildStatus": "built_local_untagged_candidate",
+  "networkUsedForBuild": false,
+  "scan": {
+    "imageId": "sha256:dcec0dd6fc2b9a1d80092b39c4a8d456491675ade3d05ffc16fc908f35eff5fe",
+    "sourceCommit": "8c5090829c8557db89d42162473b9526c5d89c16",
+    "archiveSha256": "a712cce00106e9a1d916d813e1c2c4af2ed4a8ef4cf220d6032748f5fd7eba60",
+    "counts": {
+      "HIGH": 0,
+      "CRITICAL": 0
+    },
+    "sbomPackageCount": 75,
+    "databaseUpdatedAt": "2026-08-31T07:08:27.708070973Z"
+  },
+  "licenseInventory": {
+    "status": "74_component_versions_and_license_declarations_unchanged",
+    "totalSpdxPackageCount": 75,
+    "comparedComponentCount": 74,
+    "excludedArchiveWrappers": [
+      "/archive/candidate.tar",
+      "/image/candidate.tar"
+    ],
+    "reason": "Only archive wrapper name and candidate image reference differ.",
+    "boundary": "Inventory equality; existing license exceptions still apply."
+  },
+  "releaseAuthorityReview": "co006_review confirms new source/image/full gate required by existing exact-input and image-source rules. Reseal reviewed:353 inputs161 tests20 support; only configflow and componentcatalog hashes differ. No component override.",
+  "completedTestsSoFar": {
+    "tests": 2116,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "scope": [
+      "pure",
+      "portable-effect",
+      "portable-model",
+      "portable-object",
+      "portable-read",
+      "portable-full-schema"
+    ]
+  },
+  "gateStatus": "running",
+  "boundary": "Not persisted to reserve, not cut over. Actual native audio and interruption remain unproven. Windows administrator network rule still absent."
+}

@@ -2340,6 +2340,13 @@
       "result": "HA6bestandenmatchen gerepareerdebron7a38792; hostgateway5installatiehasheskloppen; actieveenreservecoregezond. Schonebronresealwijzigt alleenHAconfigflow en componentcatalogus, geenonbedoeldewerkboomcode.",
       "boundary": "Bestaande cab9227 gate bewijst gewijzigdeHAfile niet; bijgewerkteautoriteit is nog geen volledigekandidaatpoort.",
       "next": "Controleer nieuwebronbinding en volledigekandidaat. Windowsbeheerregel en HA-netwerkproef blijven nodig vóór stemlive."
+    },
+    "vb001FinalVoiceCandidate": {
+      "status": "new_candidate_built_scanned_full_required_tests_running",
+      "evidence": "eva2/evidence/product/VB-001-final-voice-candidate-2026-09-09.json",
+      "result": "Nieuwebron8c50908 metgerepareerdHAformuliergebouwd totimagedcec0dd6; exactarchiefscan0HIGH/0CRITICAL metvastgelegdeDB31augustus. Eerste2116tests geslaagd; overige database/browsergroepen lopen.",
+      "boundary": "Noggeenvolledigegatepass, reserveruntimeongewijzigd, geenA/Bswitch of hoorbareonderbrekingsclaim.",
+      "next": "Lopendevolledigepoortafwachten, onafhankelijkeexactkandidaatreview en reserveslotvoorbereiding. Windowsbeheerregel en echteHAroute blijven nodig."
     }
   },
   "activeTaskId": "VB-001",
