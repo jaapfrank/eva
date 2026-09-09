@@ -185,6 +185,7 @@ def install_browser_session_routes(app: FastAPI, *, access: DashboardAccess,
             "Content-Security-Policy": "frame-ancestors 'self'; base-uri 'self'",
         })
 
+    @app.websocket(VIEW_PATH + "websockets")
     @app.websocket(VIEW_PATH + "websocket")
     async def browser_socket(socket: WebSocket):
         upstream = None

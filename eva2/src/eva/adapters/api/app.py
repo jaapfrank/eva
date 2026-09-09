@@ -771,7 +771,7 @@ def create_app(
             content=asset.content,
             headers={
                 "Cache-Control": "no-store",
-                "Content-Security-Policy": "default-src 'none'; style-src 'self' 'unsafe-inline'; script-src 'self'; connect-src 'self'; img-src 'self' data:; font-src 'self'; base-uri 'none'; frame-ancestors 'none'; form-action 'self'",
+                "Content-Security-Policy": "default-src 'none'; style-src 'self' 'unsafe-inline'; script-src 'self'; connect-src 'self'; frame-src 'self'; img-src 'self' data:; font-src 'self'; base-uri 'none'; frame-ancestors 'none'; form-action 'self'",
                 "Content-Type": asset.content_type,
                 "X-Content-Type-Options": "nosniff",
             },
