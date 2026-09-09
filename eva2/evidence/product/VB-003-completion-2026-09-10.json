@@ -1,0 +1,505 @@
+{
+  "contract": "EvaProductOutcomeEvidence/v1",
+  "taskId": "VB-003",
+  "baseCommit": "a664ddc5c2467616bbc159a8c943fe8e339eef29",
+  "implementationCommit": "3e7e6811ccf400fec1c6c9d44882e95487ba4253",
+  "status": "technically_complete",
+  "built": true,
+  "tested": true,
+  "live": true,
+  "humanAccepted": false,
+  "imageId": "sha256:6fa3b019068517bf390825975ffd0b6eb235f961a894c960343e6167400397cd",
+  "activeSlot": 4,
+  "runtimePort": 44711,
+  "completeOutcome": "Eva bedient één onderhouden browser via de algemene MCP-route; eigenaar ziet dezelfde sessie in het bestaande dashboard en neemt exclusief over/terug. Een gewone browseropdracht levert een opgeslagen en onafhankelijk teruggelezen document op.",
+  "sourceScope": {
+    "changePaths": [
+      "eva2/src/eva/adapters/api/app.py",
+      "eva2/src/eva/adapters/api/browser_session.py"
+    ],
+    "prerequisites": [
+      {
+        "baseCommit": "cc27430d8f5adc6649f750da0928905c149b2639",
+        "commit": "a664ddc5c2467616bbc159a8c943fe8e339eef29",
+        "changePaths": [
+          "eva2/deploy/living-core/mcp-gateway.compose.yml",
+          "eva2/deploy/mcp-autonomy/eva_mcp_pinning.py",
+          "eva2/experiments/react-admin-dashboard-v1/src/main.jsx",
+          "eva2/experiments/react-admin-dashboard-v1/src/owner-browser.css",
+          "eva2/experiments/react-admin-dashboard-v1/src/owner-browser.jsx",
+          "eva2/src/eva/adapters/api/app.py",
+          "eva2/src/eva/adapters/api/browser_session.py",
+          "eva2/src/eva/adapters/api/dashboard_static/assets/index-BNiWsXjm.js",
+          "eva2/src/eva/adapters/api/dashboard_static/assets/index-BUCrzRot.css",
+          "eva2/src/eva/adapters/api/dashboard_static/assets/index-CBXVU8xE.css",
+          "eva2/src/eva/adapters/api/dashboard_static/assets/index-DEVkS50K.js",
+          "eva2/src/eva/adapters/api/dashboard_static/eva-dashboard-assets.json",
+          "eva2/src/eva/adapters/api/dashboard_static/index.html",
+          "eva2/src/eva/adapters/connectors/browser_session.py",
+          "eva2/src/eva/bootstrap/runtime.py",
+          "eva2/src/eva/operations/browser_session.py",
+          "eva2/src/eva/providers/mcp_autonomy.py",
+          "eva2/src/eva/providers/mcp_owner_authority.py",
+          "eva2/tests/api/test_dashboard_browser_session.py",
+          "eva2/tests/operations/test_browser_session.py",
+          "eva2/tests/operations/test_eva2_quiescent_cutover.py",
+          "eva2/tests/operations/test_managed_b_render.py",
+          "eva2/tests/operations/test_mcp_autonomy_pinning.py",
+          "eva2/tests/postgres/test_mcp_owner_authority.py",
+          "eva2/tools/eva2_quiescent_cutover.py",
+          "eva2/tools/managed_b_render.py"
+        ]
+      }
+    ]
+  },
+  "normalOwnerTask": {
+    "sourceCommit": "a664ddc5c2467616bbc159a8c943fe8e339eef29",
+    "imageId": "sha256:c4090b2115eeb4068234c3f50fe1a939811a64e64b30fe891d8288ef3c99368c",
+    "criteriaEstablishedBeforeExecution": true,
+    "route": "POST /internal/v1/dashboard/conversation/respond",
+    "http": {
+      "status": 200,
+      "elapsedSeconds": 75.77555524394847,
+      "errorType": null,
+      "responseSha256": "9b2e4505ec88c0bc2e7833a9372fdd3989de97e50e8e20f1267ffaa491cc4b6e",
+      "messageId": "dashboard:a2f162b9-5e2e-4bc7-a337-0098ba082efd",
+      "conversationId": "dashboard:44444444-4444-4444-8444-444444444444",
+      "requestCount": 1,
+      "retry": false
+    },
+    "actualBrowserPage": "https://www.home-assistant.io/blog/",
+    "file": "/proof-state/vb003-browsernieuws.md",
+    "fileBytes": 1119,
+    "fileSha256": "6fc736e9fdfd17e3b33de2d286f1df7a79e08f7f41fb5901f2ad6f3d78d068f4",
+    "ingressCount": 1,
+    "finalReplyCount": 1,
+    "verifiedToolSteps": 8,
+    "modelUsage": {
+      "tool_calls": 8,
+      "measurement": "measured",
+      "input_tokens": 130691,
+      "output_tokens": 1285,
+      "model_attempts": 9
+    },
+    "modelUsageIsAggregate": true,
+    "operatorResumptions": 0,
+    "finalReplyAndFileRetainedAfterCutover": true
+  },
+  "finalOwnerUI": {
+    "contract": "EvaBrowserLiveUI/v1",
+    "sourceCommit": "3e7e6811ccf400fec1c6c9d44882e95487ba4253",
+    "origin": "http://localhost:44711",
+    "liveUnmodifiedResponses": true,
+    "ownerButtonsWorked": true,
+    "nativeIframeLoaded": true,
+    "nativeWebsocketUrls": [
+      "ws://localhost:44711/internal/v1/dashboard/browser/view/websockets",
+      "ws://localhost:44711/internal/v1/dashboard/browser/view/websockets"
+    ],
+    "video": {
+      "frames": 22,
+      "bytes": 291937
+    },
+    "returnedToEva": true,
+    "iframeClosedBeforeEvaControl": true,
+    "pageErrors": []
+  },
+  "exclusiveControl": {
+    "contract": "EvaBrowserLiveOwnerRoute/v1",
+    "url": "http://localhost:44710/internal/v1/dashboard/browser",
+    "checks": {
+      "mcpStoppedDuringOwner": true,
+      "viewerHtml": {
+        "http": 200,
+        "bytes": 762,
+        "sha256": "6dc915a3abf8b8f04cd028c7aac543d3d74aa6128a6cadc0702be5171cbad486"
+      },
+      "videoFrame": {
+        "bytes": 15420,
+        "sha256": "4c568b68e774b30628a440321a138bdd1e63f01f3a2d6314b8811a92c1de0551"
+      },
+      "nativeSettingsWithoutMaster": true,
+      "viewerClosedOnResume": 1000,
+      "sameBrowserProcess": true,
+      "viewerDeniedDuringEva": 409
+    },
+    "before": {
+      "contract": "EvaBrowserSession/v1",
+      "revision": 4,
+      "state": "eva",
+      "owner_control": false,
+      "eva_control": true,
+      "browser_ready": true,
+      "mcp_ready": true,
+      "profile_preserved": true,
+      "fresh_observation_required": true,
+      "viewer_path": null
+    },
+    "takeover": {
+      "contract": "EvaBrowserSession/v1",
+      "revision": 6,
+      "state": "owner",
+      "owner_control": true,
+      "eva_control": false,
+      "browser_ready": true,
+      "mcp_ready": false,
+      "profile_preserved": true,
+      "fresh_observation_required": true,
+      "viewer_path": "/internal/v1/dashboard/browser/view/"
+    },
+    "resume": {
+      "contract": "EvaBrowserSession/v1",
+      "revision": 8,
+      "state": "eva",
+      "owner_control": false,
+      "eva_control": true,
+      "browser_ready": true,
+      "mcp_ready": true,
+      "profile_preserved": true,
+      "fresh_observation_required": true,
+      "viewer_path": null
+    },
+    "after": {
+      "contract": "EvaBrowserSession/v1",
+      "revision": 8,
+      "state": "eva",
+      "owner_control": false,
+      "eva_control": true,
+      "browser_ready": true,
+      "mcp_ready": true,
+      "profile_preserved": true,
+      "fresh_observation_required": true,
+      "viewer_path": null
+    }
+  },
+  "finalRuntimeReadback": {
+    "contract": "EvaBrowserFinalRuntimeReadback/v1",
+    "imageId": "sha256:6fa3b019068517bf390825975ffd0b6eb235f961a894c960343e6167400397cd",
+    "sourceCommit": "3e7e6811ccf400fec1c6c9d44882e95487ba4253",
+    "ready": true,
+    "fileBytes": 1119,
+    "fileSha256": "6fc736e9fdfd17e3b33de2d286f1df7a79e08f7f41fb5901f2ad6f3d78d068f4",
+    "messageId": "dashboard:a2f162b9-5e2e-4bc7-a337-0098ba082efd",
+    "retainedIngressCount": 1,
+    "retainedFinalReplyCount": 1,
+    "replyTextSha256": "be4fa163bf8b3e091644e7b000a87a5877357001e1219b8b6a5f9f3330de15d6",
+    "hostConfigSha256": "be6724173af319db4e53aa6f381f1d61b506faaa3f538ec100ab8ec61455f8cd",
+    "hostOwnerOrigin": "http://localhost:44711",
+    "hostPid": 3729232
+  },
+  "cutover": {
+    "backgroundIsolationBoundary": "Legacy images may ignore the switch; configuration readback is not worker isolation proof.",
+    "backgroundWorkConfiguredAfterActivation": true,
+    "backgroundWorkConfiguredDuringStaging": false,
+    "contract": "Eva2QuiescentCutoverReceipt/v1",
+    "eva1Backup": {
+      "bytes": 311635968,
+      "filename": "eva1-before-slot3-to-slot4-20260909T234630Z.db",
+      "quickCheck": "ok",
+      "sha256": "351bbbd930781dc1f50b64ddb60bef911b2178348c2f5fa75c71484b6e052bf5"
+    },
+    "eva1HttpStatuses": {
+      "/": 200,
+      "/api/capabilities": 200,
+      "/api/health": 200,
+      "/api/overview": 200,
+      "/api/workstatus": 200
+    },
+    "issuedAt": "2026-09-09T23:47:51.016989+00:00",
+    "previousDropinSha256": "81f1b2b687a641ae5349aa3c13198f6ad3ac1d7c88ee351bc3c559f22eee28a1",
+    "proactiveCredentialWithheldDuringStaging": true,
+    "proactiveDeliveryEnabled": true,
+    "sourcePort": 44710,
+    "sourceWritersStopped": true,
+    "status": "switched",
+    "synchronizedDatabases": {
+      "memory": {
+        "countDigest": "8b5cc5745c0b070b9283f97319afe3822e22f5347d8e4ec4d49344d0069e2749",
+        "dataDigest": "78363e7c2fe30f187cf0ce04db924e46f21b292454d81a1bcb690fde685c36bf",
+        "dumpBytes": 2430861,
+        "dumpSha256": "876d5fd6cd2d261f2bf19052ca5743edb19831f2d8fb462417add74d941eb1c0",
+        "schemaDigest": "d89bfebdbfeb55e8618e81286bf24a42b838bfe577e84f6db9b93b43f5832172",
+        "tableCount": 23
+      },
+      "operational": {
+        "countDigest": "649e4219993cf9ca21dd53a8e4a6bef0e791ceac89a1d348641f34a44bb7d5e8",
+        "dataDigest": "2097e66f1dde89d00054316e3fbd3efd43d5b0534b029d7f5980e0cbfdde129e",
+        "dumpBytes": 12777247,
+        "dumpSha256": "c9a9331b08fb440fadea8b527078daa7e4f3da4a984432a9f8ed680f7e567b5b",
+        "schemaDigest": "32acc5b66e349dfd5b385e4828897575ad543ebb5f2638b8880dff1cacb7fb39",
+        "tableCount": 48
+      }
+    },
+    "targetPort": 44711,
+    "targetReady": true
+  },
+  "verification": {
+    "approach": "Targeted lifecycle/authority checks, isolated frontend build, one fresh owner task, real native viewer and final live UI. No repeated voice/old feature suites.",
+    "browserSourceChecks": "7 passed in 3.01s",
+    "managedAuthorityChecks": [
+      "/home/administrator/project/.eva2-artifacts/native-voice-offline-env-w8rt00c4/venv/bin/python",
+      "-B",
+      "-m",
+      "pytest",
+      "-q",
+      "tests/postgres/test_mcp_owner_authority.py::test_managed_endpoint_is_exact_owner_bound_and_cannot_revive_stopped_mandate",
+      "tests/operations/test_eva2_quiescent_cutover.py::test_connector_autonomy_seals_the_two_additional_files_without_extra_mount",
+      "tests/operations/test_managed_b_render.py::test_connector_autonomy_render_keeps_one_mount_and_explicit_activation"
+    ],
+    "lastUiOnlyFixDidNotRerunModelTask": true
+  },
+  "retainedCorrections": [
+    "Initial native secure-mode master exposure corrected before use; details retained in private deployment receipts.",
+    "Actual dashboard UI exposed missing frame-src and plural native WebSocket path. Both corrected in final implementation; final live UI uses unmodified responses.",
+    "Final host helper root launch was refused by credential ownership. Relaunched as its existing configured owner UID1000; no ownership boundary relaxed."
+  ],
+  "nonclaims": [
+    "No reboot persistence yet for host helper/firewall; containers restart=no; tracked as VB-004.",
+    "No unobserved crash recovery or automatic replay of external browser mutations claimed.",
+    "The ordinary model task ran on prerequisite a664ddc. Final3e7e6811 changes only dashboard frame permission and native route alias; final image UI and preserved data were checked directly.",
+    "No personal/family acceptance, general computer mastery, competitor victory or seven-day acceptance claimed."
+  ],
+  "upstreamReuse": [
+    {
+      "project": "Playwright MCP",
+      "version": "0.0.80",
+      "license": "Apache-2.0",
+      "source": "https://github.com/microsoft/playwright-mcp"
+    },
+    {
+      "project": "LinuxServer Chromium/Selkies",
+      "image": {
+        "status": "candidate_only_not_admitted",
+        "chromium": {
+          "image": "lscr.io/linuxserver/chromium@sha256:63e8e38540462a38c70ef85497c13c412485b39979394ea95da450fca5b4efa8",
+          "tag": "9fde18d4-ls52",
+          "source_commit": "dd4df02a9614d2107ae303a77b5e309c5ceee12d",
+          "source": "https://github.com/linuxserver/docker-chromium",
+          "license": "GPL-3.0-only packaging; component licenses separate",
+          "binary_version": "152.0.7977.82-1~deb13u1"
+        },
+        "playwright_mcp": {
+          "version": "0.0.80",
+          "status": "official_temporary_container_initialize_list_snapshot_passed",
+          "license": "Apache-2.0",
+          "source": "https://github.com/microsoft/playwright-mcp/releases/tag/v0.0.80",
+          "image": "mcr.microsoft.com/playwright/mcp@sha256:e3f6a85f0fd771dd9440584bd905011f1b4ea25b115bfea8b796d17d23e7b767",
+          "server_version": "1.63.0-alpha-2026-08-31",
+          "node_version": "22.23.2"
+        },
+        "moby_seccomp": {
+          "commit": "3c28324314729dbade8287e868eef6338c42807a",
+          "baseline_sha256": "536529b665dd0972c37bfb569f5d4ac8a53592e7b00752bc39ff063ca9864c74",
+          "candidate_sha256": "2d9ea2427c989f05d21088cd0b11acd407f0ac41d1fdd06e2c213853fba6d3a0",
+          "license": "Apache-2.0",
+          "source": "https://github.com/moby/profiles",
+          "namespace_rule_source": "https://playwright.dev/docs/docker#crawling-and-scraping"
+        }
+      },
+      "source": "https://github.com/linuxserver/docker-chromium",
+      "note": "Maintained native viewer/token lifecycle with small pinned patches; attribution and reproducible deployment materials retained."
+    }
+  ],
+  "privateEvidenceBindings": [
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/vb003-root-integration/core-image/build-receipt.json",
+      "sha256": "aa984687d1b34b4090e2f2587fb9763793dedec51b5fd341418887d14d52e634",
+      "bytes": 304
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/vb003-root-integration/ui-fix-image/build-receipt.json",
+      "sha256": "cf2b3dca30a389a64c887ce238e8afbf3abbec326cb0aeaac5c9be3fc1c7846c",
+      "bytes": 345
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/vb003-root-integration/core-image/config-readback.json",
+      "sha256": "af0fa82b9e55ac615a746b6db9910bde13a87ef68fee5cf9ce629a7ddb2a431b",
+      "bytes": 182
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/vb003-root-integration/frontend-build-receipt.json",
+      "sha256": "ebc411d9c15767f4e576b62e4f5cc653ae3be6ef19b8157bf7dc4087bfb92729",
+      "bytes": 506
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/vb003-root-integration/managed-pinning-port-regression.json",
+      "sha256": "d41ef599470d026993231dffeb8ddb4f739dde38ef583a3147be29cee3351539",
+      "bytes": 321
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/vb003-root-integration/managed-access-preparation.json",
+      "sha256": "53158976b7de2d4351be03f5ca99bbd223202d090242cb5760683632beff597d",
+      "bytes": 405
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/vb003-root-integration/prepared-config-918g9ze7/receipt.json",
+      "sha256": "9a8ceb9804e55c34c3bfb85f3da2793f1266335a6ddea4d999edec5e8dbcc191",
+      "bytes": 3212
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/vb003-root-integration/reverse-config-r9vl06h8/receipt.json",
+      "sha256": "47a5725a36ae234c22bafc2426a9dff88b6f7931e31cd5e5e983ac8237034e1f",
+      "bytes": 1291
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/vb003-root-integration/cutover.stdout",
+      "sha256": "f437dbc1a7353406e37b88941d6f45c76e1333bbef40812e30ea42f7d8d21c9c",
+      "bytes": 1727
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/vb003-root-integration/final-cutover.stdout",
+      "sha256": "931bf33841348d29fd29a80e47f104ac10685e14b387b796fa4ffe9e6a8062a5",
+      "bytes": 1727
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/vb003-root-integration/owner-task-criteria.json",
+      "sha256": "b2f8b080233fd37e0ac28a51363f5879470b11a6f8d985e2f0ce1db17d129514",
+      "bytes": 484
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/vb003-root-integration/owner-task-request.json",
+      "sha256": "de7ad64899c2a3b2bb12d0e895501867d614041121a3e080060900ec5a8a180e",
+      "bytes": 741
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/vb003-root-integration/acceptance-attempt.private.json",
+      "sha256": "371e0fec9c028307deea6b83ba67dee40472f94d23b6c697de87ad24e19640ff",
+      "bytes": 210
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/vb003-root-integration/acceptance-http-receipt.json",
+      "sha256": "9cb007df1885556bd300d59e9f01ea1646f9e03e9807d6c68ad10c6b8214f503",
+      "bytes": 342
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/vb003-root-integration/acceptance-response.private.json",
+      "sha256": "04dbe73f962fc9e08335f73ee92f39afa35ffc37ab67fe0339ab34514cb92f3d",
+      "bytes": 1157
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/vb003-root-integration/acceptance-durable-events.private.json",
+      "sha256": "e4a4e98faec4db1f6e8a715fc6293538641a444153f7e9b5a8bad18fb0a4987d",
+      "bytes": 266971
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/vb003-root-integration/acceptance-file.private.json",
+      "sha256": "57b985ffd596e518c47964553c73c9233478436c1ffaa5c5821f5dbbbb329ed7",
+      "bytes": 1634
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/vb003-root-integration/final-durable-reply-readback.private.json",
+      "sha256": "40ee54e8c9a7391e7c4c78f1f42814aeca8321bfa738b87c72d4ebea59a54a03",
+      "bytes": 3894
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/vb003-root-integration/final-runtime-readback.json",
+      "sha256": "c8a1117d3c5c40809566a3c2631f8e5f29f3093e77de926b1066e60d0e96efcb",
+      "bytes": 700
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/vb003-root-integration/live-owner-route-receipt.json",
+      "sha256": "48dab00cad1893d5155ff3ab5a9c85364ba305ee94311712befeef2bdde1fbba",
+      "bytes": 1810
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/vb003-root-integration/final-live-ui-receipt.json",
+      "sha256": "9b8d2ba9b59ef22552d746f616e698be84fe2cd25130a291264d84fcb0fab76f",
+      "bytes": 555
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/vb003-root-integration/owner-browser-final.png",
+      "sha256": "5bdf7e4337df0c8f0d966d62e144a74accefabab20a820bb58fa13e52b872e55",
+      "bytes": 369186
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/vb003-root-integration/ui-diagnosis.private.json",
+      "sha256": "4d46ce8aeb948d829231f15b59eefdd6c606e657e19f1ed3fe8398c881af3c9a",
+      "bytes": 2724
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/vb003-root-integration/ui-csp-diagnosis.private.json",
+      "sha256": "ce3b591b2acfb28e242bf05c8d4384f94b2d5decfca9bc3eb9edfb2daab2db4a",
+      "bytes": 6107
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/vb003-root-integration/host-launch-correction.json",
+      "sha256": "f98174e4662ef1e0c1accd2b4b6f132a678cf255946156f0b996283f3657bbd6",
+      "bytes": 481
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/vb003-owner-browser-candidate-20260909T225932Z-10ed02/deployment-manifest.json",
+      "sha256": "2d64758baefcf0d25b97a99c80b8c98a7e60843c891d182d1796a74773cfcf9b",
+      "bytes": 5505
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/vb003-owner-browser-candidate-20260909T225932Z-10ed02/receipt.json",
+      "sha256": "d5d03c359202ac33a15c524ca95b7af68a553d7abd47f72163b8371b5ce339d7",
+      "bytes": 1208
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/vb003-owner-browser-candidate-20260909T225932Z-10ed02/source-sha256.json",
+      "sha256": "4afc2f46ea573a4389bd0a13e70c778957c8a8f774773e7380a235a9f461431a",
+      "bytes": 767
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/vb003-owner-browser-candidate-20260909T225932Z-10ed02/owner-route-receipt.json",
+      "sha256": "7c9e04dc3593905dbc65e79baa9424b49398f812d6b6718412c7296981cddef0",
+      "bytes": 4382
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/vb003-owner-browser-candidate-20260909T225932Z-10ed02/runtime-source-binding.json",
+      "sha256": "d29ddcd4b38efa11d4fdc56d2f0358dc84cd62e838b75ea994fdee6cf61c0b80",
+      "bytes": 717
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/vb003-owner-browser-candidate-20260909T225932Z-10ed02/master-environment-after.json",
+      "sha256": "11030f882412fb39e786df8b1233e5b2dd4c41b6cafe06aa78ba6bd081d2ea0c",
+      "bytes": 192
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/vb003-owner-browser-candidate-20260909T225932Z-10ed02/browser-firewall.py",
+      "sha256": "fdebbf966752f9e74e5ad6bb813a049e7c999b05e8749c4f5c1b981080c29761",
+      "bytes": 3536
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/vb003-owner-browser-candidate-20260909T225932Z-10ed02/firewall-status.json",
+      "sha256": "970a1a86666de817eeef4500a9cd66fc1d1855eb4ace0e08c50df66b829db252",
+      "bytes": 5017
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/vb003-owner-browser-candidate-20260909T225932Z-10ed02/private-destination-denials.json",
+      "sha256": "9867990cd2be8b304e5b0a44d59ef63e0ea2759c120d0152de359fc23d38d1b2",
+      "bytes": 1095
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/vb003-owner-browser-candidate-20260909T225932Z-10ed02/public-page-receipt.json",
+      "sha256": "25ca550e9d4922825fbea56acec304b59c9e27613bbd9c954293f10740536360",
+      "bytes": 3211
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/vb003-owner-browser-candidate-20260909T225932Z-10ed02/ipv6-before-exclusion.json",
+      "sha256": "6d16c00b167cd2da97c68ca8b778abaf9bc1b6b85969abd9e46c8190d5cf3160",
+      "bytes": 803
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/vb003-owner-browser-candidate-20260909T225932Z-10ed02/ipv6-exclusion.json",
+      "sha256": "20b62f945225357ce40bbbc57803d191d70148146c4913a7c53748e03fc86b66",
+      "bytes": 611
+    },
+    {
+      "path": "/var/lib/eva2/workspace-provider/mcp-autonomy-guard-2/transport-receipt.json",
+      "sha256": "41375b2ec803a2be1f3bceb88e98fccd3fa7bdadddc39ba03c9277f41104ce49",
+      "bytes": 3648
+    },
+    {
+      "path": "/var/lib/eva2/workspace-provider/mcp-autonomy-guard-2/activation-readback.json",
+      "sha256": "e4b5d51431485e2664cd738ef6e68f6a8b73bb1dfbd7a2f7e9555f2c1851fd8a",
+      "bytes": 1070
+    },
+    {
+      "path": "/home/administrator/project/.eva2-artifacts/vb003-managed-endpoints-4afiukwm/receipt.json",
+      "sha256": "04996d8d02c463a568334ff019332f2eb1a628764ecb70390f277f8781cf6683",
+      "bytes": 1681
+    }
+  ]
+}
