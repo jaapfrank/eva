@@ -5,36 +5,38 @@ Laatst bijgewerkt: 2026-09-09.
 Doel: [Eva als zelfstandig lerende digitale huisgenoot](PROJECTDOEL.md).
 Gebouwd, getest, live en door jou geaccepteerd zijn verschillende stappen.
 
-AU-001: bestaande eigenaarmandaten en algemene actieroute naar werkelijke gebruikersopdrachten brengen. AU-005-uitvoerroute live; praktijkbeoordeling staat apart.
-[Actueel bewijs](evidence/product/AU-005-owner-execution-2026-09-09.json).
+TL-003: een nieuwe dienst vanuit het gesprek aansluiten en dezelfde opdracht ermee afmaken. De bestaande MCP-uitvoering werkt; automatisch voorbereiden en activeren ontbreekt.
+[Actueel bewijs](evidence/product/AU-001-completion-2026-09-09.json).
 
-De live catalogus bevat 10 Home Assistant-acties en alleen document opslaan via de algemene connectorroute. Breid de bruikbare bestaande aansluiting uit voor dagelijks computerwerk binnen hetzelfde mandaat.
+Algemene connectorregistratie verbinden met de bestaande eigenaars- en uitvoerroute; één nieuwe dienst van opdracht tot gecontroleerd resultaat opleveren.
 
 ## Nu
 
 | Volgorde | Kaart | Resultaat | Status |
 |---:|---|---|---|
-| 138 | `AU-001` — Eigenaarmandaat uitvoeren | Eva handelt binnen het afgesproken mandaat zonder steeds opnieuw te vragen. | 🟡 BEZIG |
+| 139 | `TL-003` — Onbekende connector zelfstandig toevoegen | Eva sluit vanuit een eigenaarsopdracht een nieuwe MCP-dienst aan en gebruikt die om de oorspronkelijke opdracht af te maken, zonder dienstspecifieke kerncode. | 🟡 BEZIG |
 
 Klaar betekent:
 
-- De bestaande mandaat- en actieroute voert toegestane gebruikersopdrachten daadwerkelijk uit.
-- Resultaat is live teruggelezen en de gebruiker ziet welke mogelijkheden beschikbaar zijn.
+- De eigenaar kan in een normale opdracht een nieuwe dienst laten koppelen; Eva onderzoekt en activeert de beschikbare koppeling via de bestaande algemene route.
+- De oorspronkelijke opdracht wordt met de nieuwe connector afgemaakt en het resultaat is onafhankelijk teruggelezen. Alleen voorbereiding of een handmatig klaargezette catalogus is niet klaar.
 
 <details>
 <summary>Technische uitvoering: bestanden en controles</summary>
 
-### Exact werk voor `AU-001`
+### Exact werk voor `TL-003`
 
-- `eva2/src/eva/operations/action_chain_effect_authority.py`
+- `eva2/src/eva/adapters/model/pydantic_conversation.py`
 - `eva2/src/eva/adapters/postgres/conversation_actions.py`
 - `eva2/src/eva/bootstrap/runtime.py`
-- `eva2/tools/persist_home_effect_policy.py`
-- `eva2/tests/tools/test_persist_home_effect_policy.py`
+- `eva2/src/eva/providers/runtime.py`
+- `eva2/tools/provision_workspace_provider.py`
+- `eva2/tools/workspace_provider_access.py`
+- `eva2/tests/connectors/test_provider_runtime.py`
 
 Echte controles:
 
-- `pytest -q tests/tools/test_persist_home_effect_policy.py`
+- `pytest -q tests/connectors/test_provider_runtime.py`
 - `python3 tools/check_current_workboard.py`
 
 </details>
@@ -48,7 +50,6 @@ nadat zij als eerstvolgende kleine kaart exacte bestanden en tests heeft.
 - [ ] `VB-001` — Full-duplex voice leveren: Met Eva2 praten via de bestaande Telegram- of Home Assistant-aansluiting, waarbij Eva hoorbaar onderbroken kan worden en het gesprek daarna doorgaat.
 - [ ] `VB-002` — Passende aanwezigheid leveren: Eva zoekt spontaan contact via de beschikbare speakers en deurbel, met herkenbare identiteit en gevoel voor het moment. Gezin beoordeelt plezier, betrokkenheid en hinder; onderbreken en stop werken.
 - [ ] `CO-008` — Autonoom geheugen in gezinsgesprekken bewijzen: De oorspronkelijke brede geheugenuitkomst blijft open: relevante kennis zelfstandig kiezen, gewijzigde en tijdelijke informatie goed gebruiken in gewone gesprekken en langere gezinspraktijk. Geen handmatig geheugenbeheer; familie beoordeelt continuïteit en vertrouwen.
-- [ ] `TL-003` — Onbekende connector zelfstandig toevoegen: Eva kiest onderhouden software uit documentatie en bewijst de adapter.
 - [ ] `VB-003` — Veilige browsercomputer kiezen: Eén onderhouden browsermotor ondersteunt accounts, meekijken en overname.
 - [ ] `VB-004` — Browserherstel bewijzen: Een crash herhaalt geen externe mutatie blind.
 - [ ] `AU-002` — Duurzame hulpagent bedienen: Starten, volgen, stoppen en hervatten werken via de gebruikersroute; hoofd- en hulpagent delen één provideradapter.
@@ -137,7 +138,9 @@ Afgevinkt betekent alleen: de vastgelegde kaart is afgerond, niet het hele produ
   [Bewijs](evidence/product/TL-001-turn-limit-2026-09-08.json).
 - [x] `TL-002` — Handelingen via twee providers echt afmaken (done).
   [Bewijs](evidence/product/TL-002-completion-2026-09-08.json).
-- [ ] `AU-001` — Eigenaarmandaat uitvoeren (in_progress).
+- [x] `AU-001` — Eigenaarmandaat uitvoeren (done).
+  [Bewijs](evidence/product/AU-001-completion-2026-09-09.json).
+- [ ] `TL-003` — Onbekende connector zelfstandig toevoegen (in_progress).
 
 </details>
 

@@ -30,8 +30,8 @@
       "nonclaims": "No new deployment or model calls for this closure. Human usefulness/timing, full backlog completion, streaming and all later product outcomes remain open."
     },
     "projectDashboard": {
-      "runtimePort": 44711,
-      "runtimeLabel": "Slot 4",
+      "runtimePort": 44710,
+      "runtimeLabel": "Slot 3",
       "roadmap": [
         {
           "id": "daily",
@@ -48,6 +48,7 @@
             "TL-001",
             "TL-002",
             "AU-001",
+            "TL-003",
             "AU-005",
             "VB-001",
             "VB-002",
@@ -60,7 +61,6 @@
           "outcome": "Eén algemene toolroute, ook voor onbekende diensten en browserwerk.",
           "acceptance": "Twee echte diensten en een onbekende connector werken zonder nieuwe taakspecifieke kerncode; resultaat apart gecontroleerd, mandaat intrekbaar.",
           "taskIds": [
-            "TL-003",
             "VB-003",
             "VB-004"
           ]
@@ -111,7 +111,7 @@
           ]
         }
       ],
-      "priorityDecision": "Jaap vraagt complete mogelijkheden en voortgang. Eigen initiatief is technisch opgeleverd; praktijkbeoordeling houdt algemene taakuitvoering niet tegen.",
+      "priorityDecision": "AU-001 is afgerond. Nieuwe connectors krijgen voorrang; eerder opgeleverde spraak en initiatiefcode blijven gesloten en praktijkbeoordeling staat apart.",
       "dashboardVerification": {
         "status": "local_browser_verified_not_full_product_acceptance",
         "priorityRevision": {
@@ -150,14 +150,14 @@
       },
       "summary": [
         {
+          "label": "OPGELEVERD · LIVE · AU-001",
+          "value": "Bestaande documenten verwerken",
+          "detail": "Eva zoekt, leest, vergelijkt en bewaart het resultaat binnen jouw werkmapmandaat. Complete opdracht slaagde live in 40 seconden; bestand apart teruggelezen. Vastlopen na twee stappen hersteld."
+        },
+        {
           "label": "OPGELEVERD · LIVE",
           "value": "Eigen idee → uitgevoerd werk",
           "detail": "Eigen initiatieven kunnen onderzoek en een bestand opleveren. Inzage, download en duurzaam stoppen staan live in het eigenaarsdashboard. Praktijkwaardering blijft open."
-        },
-        {
-          "label": "NU · AU-001",
-          "value": "Handelen binnen jouw mandaat",
-          "detail": "De bestaande algemene actieroute bruikbaar afronden; geen herhaling van gesloten spraak- of initiatiefwerk zonder nieuwe fout."
         },
         {
           "label": "BEVESTIGD · SP-01 + SP-02",
@@ -187,8 +187,12 @@
       ],
       "nextOutcomes": [
         {
+          "title": "Laat Eva bestaande documenten verwerken",
+          "detail": "Vraag via /eva2 of het eigenaarsdashboard: Zoek in je werkmap de twee au001-ea1ac62d-notities, lees ze en leg uit welke optie past binnen 30 euro en 2 uur. Het al gemaakte advies staat in /proof-state/au001-ea1ac62d-advies.md."
+        },
+        {
           "title": "Eigen initiatieven bekijken",
-          "detail": "Open het eigenaarsdashboard op localhost:44711/internal/v1/dashboard. Hier verschijnen Eva’s zelfgekozen werk, gemaakte bestanden en de stopknop; er is geen extra test van spraak nodig."
+          "detail": "Open het eigenaarsdashboard op localhost:44710/internal/v1/dashboard. Hier verschijnen Eva’s zelfgekozen werk, gemaakte bestanden en de stopknop; er is geen extra test van spraak nodig."
         },
         {
           "title": "Laat Eva een document bewaren",
@@ -277,8 +281,8 @@
           "live": "partial",
           "accepted": "no",
           "gap": "Onbekende connectors en bredere computerbediening",
-          "detail": "De algemene route kan Home Assistant onderzoeken en documenten in de duurzame privéwerkmap opslaan met terugleescontrole. Een echte ontwikkelopdracht via de privégespreksclient slaagde live in 18 seconden; herhaling behield bestand en antwoord zonder extra uitvoering. Dit bewijst nog geen willekeurige computerbediening of gezinsacceptatie.",
-          "evidence": "TL-001 en TL-002 technisch afgerond en live · 8 september · gezinsacceptatie open"
+          "detail": "Eva kan Home Assistant onderzoeken en in haar duurzame privéwerkmap bestanden zoeken, lezen, de mapinhoud en bestandsgegevens opvragen, en documenten bewaren. Een complete eigenaarsopdracht vond twee notities, las beide, vergeleek budget en tijd en sloeg gecontroleerd advies op in 40 seconden. Onbekende connectors en algemene computerbediening volgen nog.",
+          "evidence": "TL-001, TL-002 en AU-001 · vierstapsopdracht live bewezen 9 september; gezinsacceptatie open"
         },
         {
           "id": "voice",
@@ -536,9 +540,9 @@
       "document": "eva2/PROJECTDOEL.md",
       "scope": "Digitale huisgenoot: zelfstandig redeneren, initiatief, onbekende vaardigheden leren, handelen, zelfverbetering en aantoonbare concurrentiewinst met open-sourcehergebruik.",
       "sessionGoal": "Het volledige projectdoel blijft actief. Eigen initiatief is technisch live; nu toegestane algemene handelingen bruikbaar afronden.",
-      "currentWork": "AU-001: bestaande eigenaarmandaten en algemene actieroute naar werkelijke gebruikersopdrachten brengen. AU-005-uitvoerroute live; praktijkbeoordeling staat apart.",
-      "currentEvidence": "eva2/evidence/product/AU-005-owner-execution-2026-09-09.json",
-      "nextStep": "De live catalogus bevat 10 Home Assistant-acties en alleen document opslaan via de algemene connectorroute. Breid de bruikbare bestaande aansluiting uit voor dagelijks computerwerk binnen hetzelfde mandaat.",
+      "currentWork": "TL-003: een nieuwe dienst vanuit het gesprek aansluiten en dezelfde opdracht ermee afmaken. De bestaande MCP-uitvoering werkt; automatisch voorbereiden en activeren ontbreekt.",
+      "currentEvidence": "eva2/evidence/product/AU-001-completion-2026-09-09.json",
+      "nextStep": "Algemene connectorregistratie verbinden met de bestaande eigenaars- en uitvoerroute; één nieuwe dienst van opdracht tot gecontroleerd resultaat opleveren.",
       "usageClarification": {
         "date": "2026-09-07",
         "authorizedBy": "Jaap",
@@ -2876,9 +2880,47 @@
         "save_workspace_document"
       ],
       "implication": "General gateway is present but only one workspace tool is exposed. This is the next useful delivery gap."
+    },
+    "au001SourceScope": {
+      "initialImplementationCommit": "e73cdd8a402beafafe66a05353dcf932a86b3eae",
+      "initialChangePaths": [
+        "eva2/src/eva/adapters/connectors/mcp_gateway.py",
+        "eva2/src/eva/providers/mcp_gateway.py",
+        "eva2/tests/connectors/test_mcp_gateway.py",
+        "eva2/tests/connectors/test_mcp_gateway_provider.py",
+        "eva2/tools/provision_workspace_provider.py",
+        "eva2/tools/workspace_provider_access.py"
+      ],
+      "finalImplementationCommit": "998ecd4b640d2840fd284ff02111c4425812e74f",
+      "finalChangePaths": [
+        "eva2/pyproject.toml",
+        "eva2/release/4d-dependency-source-binding.json",
+        "eva2/release/dependency-roots.in",
+        "eva2/release/gate-toolchain.lock.json",
+        "eva2/release/license-inventory.json",
+        "eva2/release/managed-b-wheel-coverage-4d-amd64-v1.json",
+        "eva2/release/managed-b-wheelhouse-amd64-v2.json",
+        "eva2/requirements-4d.lock",
+        "eva2/src/eva/adapters/model/pydantic_conversation.py",
+        "eva2/src/eva/adapters/model/tokenizer_data/LICENSE.tiktoken",
+        "eva2/src/eva/adapters/model/tokenizer_data/README.md",
+        "eva2/src/eva/adapters/model/tokenizer_data/fb374d419588a4632f3f557e76b4b70aebbca790",
+        "eva2/tests/model/test_conversation_model.py"
+      ],
+      "reason": "Live volledige opdracht vond een tweede aansluitfout: bytes als tokens. Finale commit bevat deze reparatie en de benodigde offline dependencybestanden; eerdere MCP-code blijft in de bronlijn."
+    },
+    "au001TechnicalClosure": {
+      "reviewedBy": "/root/co006_review",
+      "decision": "GO for bounded technical AU-001 completion; human acceptance open",
+      "evidence": "eva2/evidence/product/AU-001-completion-2026-09-09.json",
+      "review": "eva2/reviews/AU-001-completion-2026-09-09.json",
+      "sourceCommit": "998ecd4b640d2840fd284ff02111c4425812e74f",
+      "dashboardReadback": "Actual /project-state: AU-001 done, TL-003 active, runtime ready. Available workspace capabilities and example shown.",
+      "nextTask": "TL-003",
+      "retainedOpenWork": "Unknown connectors, general computer operation, family acceptance and complete goal remain open."
     }
   },
-  "activeTaskId": "AU-001",
+  "activeTaskId": "TL-003",
   "maxActiveImplementationTasks": 1,
   "statusValues": [
     "queued",
@@ -4219,6 +4261,64 @@
       "area": "Zelfstandigheid",
       "title": "Eigenaarmandaat uitvoeren",
       "outcome": "Eva handelt binnen het afgesproken mandaat zonder steeds opnieuw te vragen.",
+      "status": "done",
+      "stateDetails": {
+        "baseCommit": "e73cdd8a402beafafe66a05353dcf932a86b3eae",
+        "implementationCommit": "998ecd4b640d2840fd284ff02111c4425812e74f",
+        "evidenceCommit": "30f6d1b35f9214e6b61e19085f0df0607b4f2d1c",
+        "reviewEvidencePaths": [
+          "eva2/evidence/product/AU-001-completion-2026-09-09.json"
+        ],
+        "blockerReason": null
+      },
+      "ownerRole": "architecturelead",
+      "reviewerRole": "memoryreviewer",
+      "dependsOn": [
+        "TL-002"
+      ],
+      "changePaths": [
+        "eva2/pyproject.toml",
+        "eva2/release/4d-dependency-source-binding.json",
+        "eva2/release/dependency-roots.in",
+        "eva2/release/gate-toolchain.lock.json",
+        "eva2/release/license-inventory.json",
+        "eva2/release/managed-b-wheel-coverage-4d-amd64-v1.json",
+        "eva2/release/managed-b-wheelhouse-amd64-v2.json",
+        "eva2/requirements-4d.lock",
+        "eva2/src/eva/adapters/model/pydantic_conversation.py",
+        "eva2/src/eva/adapters/model/tokenizer_data/LICENSE.tiktoken",
+        "eva2/src/eva/adapters/model/tokenizer_data/README.md",
+        "eva2/src/eva/adapters/model/tokenizer_data/fb374d419588a4632f3f557e76b4b70aebbca790",
+        "eva2/tests/model/test_conversation_model.py"
+      ],
+      "componentIds": [
+        "conversation-model-adapter",
+        "core-behavior-tests"
+      ],
+      "inventoryOwners": [
+        "eva-runtime",
+        "repository",
+        "verification"
+      ],
+      "testCommands": [
+        "pytest -q tests/connectors/test_mcp_gateway.py tests/connectors/test_mcp_gateway_provider.py",
+        "python3 tools/check_current_workboard.py"
+      ],
+      "evidenceRequired": [
+        "Werkelijke gebruikersopdracht uitvoeren binnen bestaand mandaat zonder onnodige toestemmingsvraag.",
+        "Effect apart teruglezen; intrekking en stoppen blijven werken."
+      ],
+      "doneWhen": [
+        "De bestaande mandaat- en actieroute voert toegestane gebruikersopdrachten daadwerkelijk uit.",
+        "Resultaat is live teruggelezen en de gebruiker ziet welke mogelijkheden beschikbaar zijn."
+      ]
+    },
+    {
+      "id": "TL-003",
+      "order": 139,
+      "area": "Gereedschappen",
+      "title": "Onbekende connector zelfstandig toevoegen",
+      "outcome": "Eva sluit vanuit een eigenaarsopdracht een nieuwe MCP-dienst aan en gebruikt die om de oorspronkelijke opdracht af te maken, zonder dienstspecifieke kerncode.",
       "status": "in_progress",
       "stateDetails": {
         "baseCommit": null,
@@ -4230,36 +4330,40 @@
       "ownerRole": "architecturelead",
       "reviewerRole": "memoryreviewer",
       "dependsOn": [
-        "TL-002"
+        "AU-001"
       ],
       "changePaths": [
-        "eva2/src/eva/operations/action_chain_effect_authority.py",
+        "eva2/src/eva/adapters/model/pydantic_conversation.py",
         "eva2/src/eva/adapters/postgres/conversation_actions.py",
         "eva2/src/eva/bootstrap/runtime.py",
-        "eva2/tools/persist_home_effect_policy.py",
-        "eva2/tests/tools/test_persist_home_effect_policy.py"
+        "eva2/src/eva/providers/runtime.py",
+        "eva2/tools/provision_workspace_provider.py",
+        "eva2/tools/workspace_provider_access.py",
+        "eva2/tests/connectors/test_provider_runtime.py"
       ],
       "componentIds": [
         "api-and-runtime-composition",
+        "conversation-model-adapter",
         "durable-persistence",
-        "operations-and-release-tests",
-        "operator-workflows"
+        "external-capability-adapters",
+        "integration-and-storage-tests"
       ],
       "inventoryOwners": [
         "eva-runtime",
         "verification"
       ],
       "testCommands": [
-        "pytest -q tests/tools/test_persist_home_effect_policy.py",
+        "pytest -q tests/connectors/test_provider_runtime.py",
         "python3 tools/check_current_workboard.py"
       ],
       "evidenceRequired": [
-        "Werkelijke gebruikersopdracht uitvoeren binnen bestaand mandaat zonder onnodige toestemmingsvraag.",
-        "Effect apart teruglezen; intrekking en stoppen blijven werken."
+        "Gebruik bestaande maintained MCP-server en documentatie; leg bron, versie en licentie vast.",
+        "Werkelijke eigenaarsopdracht laat de nieuwe tool toevoegen, beschikbaar worden en het resultaat onafhankelijk teruglezen.",
+        "Bevoegdheden, credentials en bestaande diensten behouden; geen nieuwe toestemming voor een al toegestane stap."
       ],
       "doneWhen": [
-        "De bestaande mandaat- en actieroute voert toegestane gebruikersopdrachten daadwerkelijk uit.",
-        "Resultaat is live teruggelezen en de gebruiker ziet welke mogelijkheden beschikbaar zijn."
+        "De eigenaar kan in een normale opdracht een nieuwe dienst laten koppelen; Eva onderzoekt en activeert de beschikbare koppeling via de bestaande algemene route.",
+        "De oorspronkelijke opdracht wordt met de nieuwe connector afgemaakt en het resultaat is onafhankelijk teruggelezen. Alleen voorbereiding of een handmatig klaargezette catalogus is niet klaar."
       ]
     }
   ],
@@ -4269,35 +4373,28 @@
       "area": "Initiatief",
       "title": "Passend initiatief en kansen bewijzen",
       "outcome": "Meer gewaardeerd eigen initiatief dan Bottie: humor, nieuwsgierigheid, zelfgekozen onderzoek, creatieve bijdragen en kansen. Eva begint en vervolgt zelf werk, voert binnen bestaand mandaat uit en controleert het resultaat. Gezin beoordeelt eigenheid, plezier, nut en hinder; alleen meer berichten telt niet als winst.",
-      "order": 139
+      "order": 140
     },
     {
       "id": "VB-001",
       "area": "Voice",
       "title": "Full-duplex voice leveren",
       "outcome": "Met Eva2 praten via de bestaande Telegram- of Home Assistant-aansluiting, waarbij Eva hoorbaar onderbroken kan worden en het gesprek daarna doorgaat.",
-      "order": 140
+      "order": 141
     },
     {
       "id": "VB-002",
-      "order": 141,
+      "order": 142,
       "area": "Voice",
       "title": "Passende aanwezigheid leveren",
       "outcome": "Eva zoekt spontaan contact via de beschikbare speakers en deurbel, met herkenbare identiteit en gevoel voor het moment. Gezin beoordeelt plezier, betrokkenheid en hinder; onderbreken en stop werken."
     },
     {
       "id": "CO-008",
-      "order": 142,
+      "order": 143,
       "area": "Geheugen",
       "title": "Autonoom geheugen in gezinsgesprekken bewijzen",
       "outcome": "De oorspronkelijke brede geheugenuitkomst blijft open: relevante kennis zelfstandig kiezen, gewijzigde en tijdelijke informatie goed gebruiken in gewone gesprekken en langere gezinspraktijk. Geen handmatig geheugenbeheer; familie beoordeelt continuïteit en vertrouwen."
-    },
-    {
-      "id": "TL-003",
-      "order": 143,
-      "area": "Gereedschappen",
-      "title": "Onbekende connector zelfstandig toevoegen",
-      "outcome": "Eva kiest onderhouden software uit documentatie en bewijst de adapter."
     },
     {
       "id": "VB-003",
@@ -4803,6 +4900,21 @@
       "implementedBy": "/root",
       "reviewedBy": "/root/proof_review",
       "reviewCommit": "0b7760ecf488c15df61e8c17bf540bdb363e26bf"
+    },
+    "AU-001": {
+      "baseCommit": "e73cdd8a402beafafe66a05353dcf932a86b3eae",
+      "commit": "998ecd4b640d2840fd284ff02111c4425812e74f",
+      "evidenceCommit": "30f6d1b35f9214e6b61e19085f0df0607b4f2d1c",
+      "decision": "GO",
+      "evidencePaths": [
+        "eva2/reviews/AU-001-completion-2026-09-09.json"
+      ],
+      "testReceiptPaths": [
+        "eva2/evidence/product/AU-001-completion-2026-09-09.json"
+      ],
+      "implementedBy": "/root",
+      "reviewedBy": "/root/co006_review",
+      "reviewCommit": "e060bc7031c90d58afd6a2961fab2aabfd7609c5"
     }
   }
 }
