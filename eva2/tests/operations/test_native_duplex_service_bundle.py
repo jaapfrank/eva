@@ -125,3 +125,20 @@ def test_systemd_credential_copy_is_private_bounded_and_removed(tmp_path):
         with launcher.private_credentials(credentials, runtime):
             pytest.fail("oversized credentials must not enter service")
     assert not list(runtime.iterdir())
+
+
+
+def test_silero_disables_telemetry_before_constructing_inference_session(monkeypatch):
+    from types import SimpleNamespace
+    import importlib.util
+    events = []
+    monkeypatch.setitem(sys.modules, "numpy", SimpleNamespace())
+    monkeypatch.setitem(sys.modules, "onnxruntime", SimpleNamespace(disable_telemetry_events=lambda: events.append("disabled")))
+    spec = importlib.util.spec_from_file_location("speaker_telemetry_probe", EXPERIMENT / "silero_onnx.py")
+    module = importlib.util.module_from_spec(spec)
+    # np.ndarray appears in annotations in the retained wrapper.
+    sys.modules["numpy"].ndarray = object
+    spec.loader.exec_module(module)
+    monkeypatch.setattr(module, "SileroOnnxModel", lambda path: events.append("session"))
+    module.Silero10msDetector("synthetic-model")
+    assert events == ["disabled", "session"]

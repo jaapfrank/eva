@@ -106,6 +106,8 @@ class SileroOnnxModel:
 class Silero10msDetector:
     """Eva adapter: retain exact PCM while batching Pipecat's 32ms model input."""
     def __init__(self, model_path):
+        # Local speech detection needs no platform telemetry collection.
+        onnxruntime.disable_telemetry_events()
         self._model = SileroOnnxModel(str(model_path))
         self._pending = bytearray()
         self._probability = -1.0
