@@ -2009,7 +2009,8 @@ class PostgresConversationActions:
                 },
                 "contract": "EvaConversationActionReceipt/v1",
                 "durable": True,
-                "status": "completed",
+                "status": "verified",
+                "verification_scope": "research_artifact_only",
             },
         )
 

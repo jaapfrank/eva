@@ -8,6 +8,7 @@ from datetime import UTC, datetime
 from functools import lru_cache
 import hashlib
 import json
+import logging
 import os
 from pathlib import Path
 import re
@@ -1358,7 +1359,6 @@ class PydanticConversationModel:
             "stream": True,
             "tool_choice": "auto",
             "tools": [{"search_context_size": "low", "type": "web_search"}],
-            "max_tool_calls": 2 * len(options),
         }
         content, cited, consulted = self._request_research(body)
         selected: list[ResearchSource] = []
@@ -1883,10 +1883,18 @@ class PydanticConversationModel:
         ):
             raise ConversationModelError("conversation provider usage is unmeasured")
         if usage.input_tokens > budget.max_input_tokens:
+            logging.getLogger(__name__).warning(
+                "Model input budget exceeded: measured_input=%d measured_output=%d limit=%d",
+                usage.input_tokens, usage.output_tokens, budget.max_input_tokens,
+            )
             raise ConversationModelError(
                 "conversation provider exceeded the runtime input budget"
             )
         if usage.output_tokens > budget.max_output_tokens:
+            logging.getLogger(__name__).warning(
+                "Model output budget exceeded: measured_input=%d measured_output=%d limit=%d",
+                usage.input_tokens, usage.output_tokens, budget.max_output_tokens,
+            )
             raise ConversationModelError(
                 "conversation provider exceeded the runtime output budget"
             )
@@ -2296,7 +2304,10 @@ class PydanticConversationModel:
                 action_guidance_parts.append(
                     "De action receipt bevat een werkelijk uitgevoerd webonderzoek, een "
                     "duurzaam opgeslagen Markdown-document en de geciteerde bronnen. "
-                    "Geef kort de belangrijkste uitkomst en noem dat het document is "
+                    "Dit bewijst alleen het onderzoeksdocument, niet dat de oorspronkelijke "
+                    "opdracht al af is. Als daarin nog werk resteert, voer dat nu uit met "
+                    "de aangeboden vervolgtools binnen hetzelfde mandaat. Geef pas als "
+                    "de opdracht af is kort de belangrijkste uitkomst en noem dat het document is "
                     "bewaard. Laat minstens één zichtbare klikbare bronverwijzing uit de "
                     "receipt staan; verzin of wijzig geen URL. Noem geen interne receipt, "
                     "eventnaam of systeemtechniek."

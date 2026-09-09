@@ -2372,7 +2372,7 @@ def test_web_research_uses_built_in_search_and_requires_cited_sources(
     assert bodies[0]["tools"] == [
         {"search_context_size": "low", "type": "web_search"}
     ]
-    assert bodies[0]["max_tool_calls"] == 6
+    assert "max_tool_calls" not in bodies[0]
     assert bodies[0]["include"] == ["web_search_call.action.sources"]
     assert "primaire bron" in bodies[0]["instructions"]
     assert "gevolgtrekking" in bodies[0]["instructions"]
@@ -2502,7 +2502,7 @@ def test_sensory_model_parses_only_bounded_own_initiative(monkeypatch, tmp_path,
     assert schema["properties"]["initiative"]["additionalProperties"] is False
 
 
-def test_multistep_dutch_receipts_use_token_admission_without_losing_content(tmp_path: Path) -> None:
+def test_multistep_dutch_receipts_use_token_admission_without_losing_content(tmp_path: Path, caplog) -> None:
     """A real-shaped list/read/read/save context must fit the unchanged owner budget."""
     import copy
     model = PydanticConversationModel(
@@ -2543,3 +2543,5 @@ def test_multistep_dutch_receipts_use_token_admission_without_losing_content(tmp
         model._enforce_reported_usage(ConversationModelUsage.measured(
             model_attempts=1, tool_calls=0, input_tokens=12_001, output_tokens=1,
         ))
+    assert "measured_input=12001 measured_output=1 limit=12000" in caplog.text
+    assert "Duurzaam onthouden" not in caplog.text

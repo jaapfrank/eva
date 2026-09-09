@@ -2344,7 +2344,8 @@ def test_current_research_artifact_is_durable_and_reopens_without_repeat(
 
     receipt = actions.execute(turn, call)
 
-    assert receipt.output["status"] == "completed"
+    assert receipt.output["status"] == "verified"
+    assert receipt.output["verification_scope"] == "research_artifact_only"
     artifact = receipt.output["artifact"]
     assert artifact["content_sha256"]
     assert len(artifact["sources"]) == 3
@@ -2363,6 +2364,45 @@ def test_current_research_artifact_is_durable_and_reopens_without_repeat(
     assert [
         event.event_type for event in timeline.events(actions._research_thread_id(turn))
     ] == ["CURRENT_RESEARCH_ADMITTED", "CURRENT_RESEARCH_COMPLETED"]
+
+    # A restored research receipt must offer the ordinary external continuation
+    # route; replay must recover that effect without researching/dispatching again.
+    from eva.application.conversation import LivingConversation, IdentityProfile, ConversationModelResult
+    from eva.adapters.projection.hindsight import HindsightMemoryEngine
+
+    dispatched = []
+    class Memory:
+        def recall_for_presence(self, query):
+            return HindsightMemoryEngine._empty_presence(query)
+    class Planner:
+        action_names = ("use_researched_service",)
+        async def prepare(self, turn, call):
+            return ConversationToolPreparation("fixture.use", call.arguments,
+                {"done": True}, {"service": "researched"})
+    class Provider:
+        async def execute(self, request):
+            dispatched.append(request.operation_id)
+            return ToolDispatchResult(True, request.operation_id, {})
+        async def observe(self, request, dispatch):
+            return ToolProofObservation("verified", {"done": True}, {})
+    class Model:
+        def generate(self, *args, completed_action=None, available_actions=(), **kwargs):
+            assert completed_action is not None
+            if completed_action.call.name == "research_current_options":
+                assert "use_researched_service" in available_actions
+                assert completed_action.output["verification_scope"] == "research_artifact_only"
+                return ConversationModelResult(None, "fixture", ConversationActionCall(
+                    "call:research:followthrough", "use_researched_service", {"source": "A"}))
+            assert completed_action.output["status"] == "verified"
+            return ConversationModelResult("De onderzochte dienst is gebruikt.", "fixture")
+    def conversation():
+        tools = PostgresExternalConversationTools(timeline_engine, Planner(), Provider())
+        actions = PostgresConversationActions(timeline_engine, research=Research(), external_tools=(tools,))
+        return LivingConversation(Memory(), Model(), IdentityProfile("Eva", "Huisgenoot", ("Eerlijk",), 80), actions)
+    assert conversation().respond(turn).text == "De onderzochte dienst is gebruikt."
+    assert conversation().respond(turn).text == "De onderzochte dienst is gebruikt."
+    assert len(dispatched) == 1
+    assert calls == ["Vergelijk drie actuele opties op prijs en privacy."]
 
 
 def test_telegram_group_consent_is_durable_person_scoped_and_revocable(
