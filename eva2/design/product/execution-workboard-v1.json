@@ -2333,6 +2333,13 @@
       "result": "Echte HA-configflow500 gerepareerd: serialiseerbareURLselector, ongeldigeURLnoggeweigerd. Na configcheck en éénherstart HA RUNNING. conversation.eva2 geladen met2registrygebonden speakers; bestaande3pipelines en voorkeursEva behouden, geenpipelineomgezet.",
       "boundary": "Gewijzigde externeHAfile heeft eigenhash/proef; oude cab9227-kandidaatbinding bewijst deze wijziging niet. Geenmodelcall/audio/akoestischeonderbreking getest.",
       "next": "Windowsadministratorregel uitvoeren, bereikbaarheid vanuitHA bewijzen en gewijzigde externecomponent meenemen in releasebewijs vóór nativeingebruikname."
+    },
+    "vb001NativeComponentReadback": {
+      "status": "installed_components_verified_authority_resealed_new_candidate_gate_pending",
+      "evidence": "eva2/evidence/product/VB-001-native-component-readback-2026-09-09.json",
+      "result": "HA6bestandenmatchen gerepareerdebron7a38792; hostgateway5installatiehasheskloppen; actieveenreservecoregezond. Schonebronresealwijzigt alleenHAconfigflow en componentcatalogus, geenonbedoeldewerkboomcode.",
+      "boundary": "Bestaande cab9227 gate bewijst gewijzigdeHAfile niet; bijgewerkteautoriteit is nog geen volledigekandidaatpoort.",
+      "next": "Controleer nieuwebronbinding en volledigekandidaat. Windowsbeheerregel en HA-netwerkproef blijven nodig vóór stemlive."
     }
   },
   "activeTaskId": "VB-001",

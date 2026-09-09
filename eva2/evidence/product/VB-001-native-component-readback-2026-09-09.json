@@ -1,0 +1,54 @@
+{
+  "contract": "EvaProductEvidence/v1",
+  "taskId": "VB-001",
+  "observedAt": "2026-09-09T00:18:18.713475+00:00",
+  "status": "installed_components_readback_verified_not_release_admitted",
+  "sourceRevision": "7a3879241741e0cee20d2b8dfed526b015c4d085",
+  "haComponentFiles": {
+    "__init__.py": "1533d85b995b3666c5af427abe32c7cd73625910c005e4607014fc27bb186906",
+    "client.py": "db9948dbcd70a293d8c2bb256f59ed3a8efd53880472cacd54c440e46f99f6b4",
+    "config_flow.py": "2dc1a989207cbfdc856fb61ced7c91f8a094efa10dd0f3d842d0087b217b074d",
+    "conversation.py": "4377e9f49082e7b722d7864d99b21bd4a6288bba71db11bc6c0f98f71f25fab0",
+    "manifest.json": "cce7b2324a7f10c3eef6f536a09aafa3d3ba770d8385c6b5daa675ba0fc02161",
+    "strings.json": "9dc97e8be92bd05452cfa34138413efaaf6ddc252e0d22802d8d03bb036cbc45"
+  },
+  "remoteMatchesCommittedSource": true,
+  "gatewayInstalledFileHashesVerified": true,
+  "cores": {
+    "3": {
+      "image": "sha256:7b75cfe18df5691e1c2cc2fa56c9ee0f202959eab090ce723cd11761b5af84f7",
+      "sourceRevision": "4d7d039c1b4761489d2e2d20ac6231f5b602337b",
+      "health": "healthy"
+    },
+    "4": {
+      "image": "sha256:86ec4e3598cc07fcc61ba76ac405cfbbac39f63a14e8a98f4600d02154d3c14b",
+      "sourceRevision": "cab9227356cb68b81edb9d27aab3d160dc959643",
+      "health": "healthy"
+    }
+  },
+  "authorityMismatch": {
+    "path": "deploy/home-assistant/custom_components/eva2_voice/config_flow.py",
+    "requiredInputsSha256": "b3b14d7b50ec08c0f7af437973b9d7da3b72e553f44435b9bee246610423da13",
+    "installedSha256": "2dc1a989207cbfdc856fb61ced7c91f8a094efa10dd0f3d842d0087b217b074d",
+    "matches": false
+  },
+  "network": {
+    "firewallRule": "absent",
+    "haRequest": "timeout"
+  },
+  "boundary": "This inventory does not override the required-input authority or grant release/cutover GO. External HA file differs from the earlier core candidate source set.",
+  "authorityPreparation": {
+    "status": "mechanically_resealed_from_clean_archive_full_candidate_gate_pending",
+    "baseSource": "7a3879241741e0cee20d2b8dfed526b015c4d085",
+    "sourceArchiveSha256": "c46200136c7b8a9296528bca5be0a5e5841a300dc940ced34c7b4496bd8ded29",
+    "changedInputs": [
+      "deploy/home-assistant/custom_components/eva2_voice/config_flow.py",
+      "design/architecture/component-catalog-v1.json"
+    ],
+    "authoritySha256": "a4525c8f6de437e16511e5a96ce39bc4abfe49aa1804610a582275e6a74f0362",
+    "boundaries": [
+      "No unrelated working-tree source was admitted.",
+      "Reseal does not establish a test, image or release pass."
+    ]
+  }
+}
