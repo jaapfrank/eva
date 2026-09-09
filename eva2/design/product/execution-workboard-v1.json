@@ -2374,6 +2374,13 @@
       "sourceCommit": "5eb98f8336fa22a586d2accd514dde37774d4186",
       "imageId": "sha256:e6e33b0be32b7f4a1c3d04da55f8c903998d00fea88e50d817897111e92a35cc",
       "next": "Vergelijk werkende Home Assistant/Music Assistant-audioweg met native ESPHome-weergave. Test na routeringsfix een echte Eva2-beurt en verdere luisterbeurt; onderbreken zonder wakeword blijft onaf."
+    },
+    "vb001ContinuousVoiceReference": {
+      "status": "researched_not_implemented",
+      "document": "eva2/design/product/native-voice-continuous-session-review-2026-09-09.md",
+      "requirement": "Eén gesprek met gewone spraak onderbreken en direct vervolgen zonder nieuw Hey Eva.",
+      "mp3ListeningTrial": "User confirmed fully intelligible direct MP3 on living-room speaker.",
+      "next": "Native audio herstellen en hardware-input tijdens playback toetsen; daarna volledige sessie bewijzen."
     }
   },
   "activeTaskId": "VB-001",
