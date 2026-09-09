@@ -1141,3 +1141,49 @@ def test_connector_free_staging_activation_and_reverse_path_force_background_pha
 def test_background_phase_readback_refuses_missing_wrong_or_duplicate_switch(enabled, values):
     with pytest.raises(QuiescentCutoverError, match="background work setting"):
         SystemBackend._verify_background_setting({"Config": {"Env": [BACKGROUND_FLAG + "=" + v for v in values]}}, enabled=enabled)
+
+
+@pytest.mark.parametrize("difference", ["disabled", "policy", "revoked"])
+def test_preflight_refuses_household_voice_loss_before_any_cutover_command(
+    monkeypatch: pytest.MonkeyPatch, tmp_path: Path, difference: str,
+) -> None:
+    source_dir, target_dir = tmp_path / "source", tmp_path / "target"
+    for directory in (source_dir, target_dir):
+        directory.mkdir()
+        (directory / "current.json").write_bytes(b"same-policy")
+        (directory / "token").write_bytes(b"same-token")
+    prefix = "EVA_HOUSEHOLD_VOICE_"
+    source = {prefix + "ENABLED": "true", prefix + "POLICY_DIR_HOST": str(source_dir),
+              prefix + "POLICY_SHA256": "a" * 64, prefix + "TOKEN_SHA256": "b" * 64}
+    target = {**source, prefix + "POLICY_DIR_HOST": str(target_dir)}
+    if difference == "disabled":
+        target = {}
+    elif difference == "policy":
+        target[prefix + "POLICY_SHA256"] = "c" * 64
+    else:
+        (target_dir / "current.json").unlink()
+    dropin = tmp_path / "route"
+    dropin.write_bytes(canonical_dropin(_slot(4).url))
+    dropin.chmod(0o644)
+    monkeypatch.setattr(os, "geteuid", lambda: 0)
+    monkeypatch.setattr(SystemBackend, "_verify_slot", lambda self, slot, **kw:
+                        source if slot.number == 4 else target)
+    commands = []
+    monkeypatch.setattr(SystemBackend, "_inspect_all", lambda self: commands.append("inspect") or [])
+    monkeypatch.setattr(SystemBackend, "_run", lambda self, *a, **kw: commands.append("run") or "")
+    with pytest.raises(QuiescentCutoverError, match="voice continuity"):
+        SystemBackend(owner_uid=os.getuid()).preflight(_slot(4), _slot(3), dropin)
+    assert commands == []
+
+
+def test_voice_continuity_allows_distinct_slot_paths_with_same_authority(tmp_path: Path) -> None:
+    prefix = "EVA_HOUSEHOLD_VOICE_"
+    environments = []
+    for name in ("source", "target"):
+        directory = tmp_path / name
+        directory.mkdir()
+        (directory / "current.json").write_bytes(b"same-policy")
+        (directory / "token").write_bytes(b"same-token")
+        environments.append({prefix + "ENABLED": "true", prefix + "POLICY_DIR_HOST": str(directory),
+                             prefix + "POLICY_SHA256": "a" * 64, prefix + "TOKEN_SHA256": "b" * 64})
+    SystemBackend._verify_voice_continuity(*environments)

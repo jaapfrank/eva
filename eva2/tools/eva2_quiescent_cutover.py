@@ -679,6 +679,29 @@ class SystemBackend:
         self._private_file(slot.dashboard_token, mode=0o600, uid=65532)
         return environment
 
+    @staticmethod
+    def _verify_voice_continuity(source: dict[str, str], target: dict[str, str]) -> None:
+        """A core replacement must retain admitted voice channels and revocations."""
+        for prefix in ("EVA_DASHBOARD_VOICE_", "EVA_HOUSEHOLD_VOICE_"):
+            left_enabled = source.get(prefix + "ENABLED", "false")
+            right_enabled = target.get(prefix + "ENABLED", "false")
+            if left_enabled != right_enabled:
+                raise QuiescentCutoverError("voice continuity: enabled channel differs")
+            if left_enabled != "true":
+                continue
+            path_key = prefix + "POLICY_DIR_HOST"
+            left = {k: v for k, v in source.items() if k.startswith(prefix) and k != path_key}
+            right = {k: v for k, v in target.items() if k.startswith(prefix) and k != path_key}
+            if left != right:
+                raise QuiescentCutoverError("voice continuity: admitted policy differs")
+            # Slot validation already checks private paths, owners and file hashes.
+            # Missing files are meaningful revocations, even with unchanged pins.
+            names = ("current.json", "token") if "HOUSEHOLD" in prefix else ("current.json",)
+            for name in names:
+                a, b = Path(source[path_key]) / name, Path(target[path_key]) / name
+                if a.exists() != b.exists() or (a.exists() and a.read_bytes() != b.read_bytes()):
+                    raise QuiescentCutoverError("voice continuity: authority or revocation differs")
+
     def preflight(self, source: SlotSpec, target: SlotSpec, dropin: Path) -> bytes:
         if os.geteuid() != 0:
             raise QuiescentCutoverError("quiescent cutover requires root authority")
@@ -687,6 +710,7 @@ class SystemBackend:
         previous = _read_exact_dropin(dropin, source.url, owner_uid=self.owner_uid)
         source_environment = self._verify_slot(source, source=True)
         target_environment = self._verify_slot(target, source=False)
+        self._verify_voice_continuity(source_environment, target_environment)
         inspected = self._inspect_all()
         for slot in (source, target):
             if _shared_database_consumers(
