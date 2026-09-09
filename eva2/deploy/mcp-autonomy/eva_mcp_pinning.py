@@ -19,7 +19,7 @@ def _policy():
         return None
     value = json.loads(raw)
     fields = {"owner_networks", "blocked_addresses", "filesystem_origin", "filesystem_address"}
-    if not isinstance(value, dict) or set(value) != fields:
+    if not isinstance(value, dict) or set(value) not in (fields, fields | {"managed_endpoints"}):
         raise ValueError("MCP pinning policy is invalid")
     if (not isinstance(value["owner_networks"], list)
             or not 1 <= len(value["owner_networks"]) <= 32
@@ -39,6 +39,27 @@ def _policy():
             or value["filesystem_address"].is_loopback):
         raise ValueError("MCP pinning filesystem origin is invalid")
     value["filesystem_origin"] = (origin.scheme, origin.hostname, origin.port)
+    managed = value.get("managed_endpoints", [])
+    if not isinstance(managed, list) or len(managed) > 16:
+        raise ValueError("MCP managed endpoints are invalid")
+    admitted = []
+    for item in managed:
+        if (not isinstance(item, dict) or set(item) != {"endpoint", "resolved_ip"}
+                or not all(isinstance(item[key], str) and item[key] for key in item)):
+            raise ValueError("MCP managed endpoint is invalid")
+        endpoint = urlsplit(item["endpoint"])
+        address = ipaddress.ip_address(item["resolved_ip"])
+        endpoint_port = endpoint.port if endpoint.port is not None else (443 if endpoint.scheme == "https" else 80)
+        if (endpoint.scheme not in {"http", "https"} or not endpoint.hostname
+                or endpoint.username is not None or endpoint.password is not None
+                or endpoint.query or endpoint.fragment or not address.is_private
+                or address.is_loopback or address.is_link_local or address.is_multicast
+                or address.is_unspecified or address in value["blocked_addresses"]
+                or not 1 <= endpoint_port <= 65535):
+            raise ValueError("MCP managed endpoint is invalid")
+        admitted.append((endpoint.scheme, endpoint.hostname, endpoint_port,
+                         endpoint.path or "/", address))
+    value["managed_endpoints"] = tuple(admitted)
     return value
 
 
@@ -47,13 +68,17 @@ def _admit(url: str, metadata: dict, policy: dict) -> None:
     address = ipaddress.ip_address(metadata["resolved_ip"])
     if isinstance(address, ipaddress.IPv6Address) and address.ipv4_mapped:
         address = address.ipv4_mapped
-    port = target.port or (443 if target.scheme == "https" else 80)
+    port = target.port if target.port is not None else (443 if target.scheme == "https" else 80)
     if (address in policy["blocked_addresses"] or address.is_loopback
             or address.is_link_local or address.is_multicast or address.is_unspecified
-            or target.username or target.password):
+            or target.username or target.password or not 1 <= port <= 65535):
         raise ValueError("MCP destination is outside the deployment policy")
     if ((target.scheme, target.hostname, port) == policy["filesystem_origin"]
             and address == policy["filesystem_address"]):
+        return
+    if (not target.query and not target.fragment
+            and (target.scheme, target.hostname, port, target.path or "/", address)
+            in policy["managed_endpoints"]):
         return
     if target.scheme == "https" and port == 443 and address.is_global:
         return

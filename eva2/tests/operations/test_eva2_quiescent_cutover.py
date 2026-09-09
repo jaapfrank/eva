@@ -1289,6 +1289,39 @@ def test_connector_autonomy_seals_the_two_additional_files_without_extra_mount(m
         (directory / name).unlink()
     assert SystemBackend._connector_settings(disabled) is not None
 
+    # The installed service and owner controls share the same private directory.
+    # Every optional file and environment group is pinned before Docker inspection.
+    values.update({
+        "EVA_MCP_MANAGED_ENDPOINTS_FILE": "/run/eva/connectors/mcp/managed-endpoints.json",
+        "EVA_BROWSER_CONTROL_URL": "http://172.30.0.1:45163",
+        "EVA_BROWSER_CONTROL_TOKEN_FILE": "/run/eva/connectors/mcp/browser-control-token",
+        "EVA_BROWSER_OWNER_ORIGIN": "http://localhost:44710",
+    })
+    for name, key in {**{name: "EVA_MCP_GATEWAY_" + key for name, key in files.items()},
+                      "managed-endpoints.json": "EVA_MCP_GATEWAY_MANAGED_ENDPOINTS_SHA256",
+                      "browser-control-token": "EVA_BROWSER_CONTROL_TOKEN_SHA256"}.items():
+        path = directory / name
+        path.write_text("synthetic-" + name)
+        path.chmod(0o600)
+        values[key] = hashlib.sha256(path.read_bytes()).hexdigest()
+    sealed = SystemBackend._connector_settings(values)
+    assert sealed["EVA_BROWSER_CONTROL_URL"] == values["EVA_BROWSER_CONTROL_URL"]
+    assert {"managed-endpoints.json", "browser-control-token"} <= set(verified_files)
+    before_invalid = len(inspections)
+    for changes in (
+        {"EVA_MCP_MANAGED_ENDPOINTS_FILE": ""},
+        {"EVA_MCP_GATEWAY_MANAGED_ENDPOINTS_SHA256": ""},
+        {"EVA_MCP_GATEWAY_MANAGED_ENDPOINTS_SHA256": "a" * 64},
+        {"EVA_BROWSER_CONTROL_TOKEN_SHA256": ""},
+        {"EVA_BROWSER_CONTROL_TOKEN_SHA256": "a" * 64},
+        {"EVA_BROWSER_CONTROL_TOKEN_FILE": "/other/token"},
+        {"EVA_BROWSER_OWNER_ORIGIN": ""},
+        {"EVA_BROWSER_CONTROL_URL": "http://host/control"},
+    ):
+        with pytest.raises(QuiescentCutoverError):
+            SystemBackend._connector_settings({**values, **changes})
+    assert len(inspections) == before_invalid
+
 
 def _prepared_transport_guard(tmp_path):
     import hashlib

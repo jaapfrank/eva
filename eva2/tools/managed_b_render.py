@@ -11,6 +11,7 @@ from pathlib import Path
 import subprocess
 import tempfile
 from typing import Any
+from urllib.parse import urlsplit
 
 from tools.core_b_preflight import (
     MANAGEMENT_LABEL,
@@ -28,9 +29,15 @@ EXPECTED_SERVICES = MANAGED_SERVICE_NAMES
 _ALLOWED_ESCAPED_CONTAINER_INTERPOLATIONS = frozenset({"$${POSTGRES_DB}"})
 MCP_AUTONOMY_ENVIRONMENT_KEYS = (
     "EVA_MCP_AUTONOMY_MANDATE_FILE",
+    "EVA_MCP_MANAGED_ENDPOINTS_FILE",
     "EVA_MCP_REGISTRATION_TOKEN_FILE",
     "EVA_MCP_REGISTRATION_VISIBILITY",
     "EVA_MCP_REGISTRATION_EXCLUSIVE_OWNER_GATEWAY",
+)
+BROWSER_ENVIRONMENT_KEYS = (
+    "EVA_BROWSER_CONTROL_URL",
+    "EVA_BROWSER_CONTROL_TOKEN_FILE",
+    "EVA_BROWSER_OWNER_ORIGIN",
 )
 
 
@@ -141,12 +148,36 @@ def mcp_autonomy_environment(settings: dict[str, str]) -> dict[str, str]:
     if (
         values["EVA_MCP_AUTONOMY_MANDATE_FILE"] != "/run/eva/connectors/mcp/mandate.json"
         or values["EVA_MCP_REGISTRATION_TOKEN_FILE"] != "/run/eva/connectors/mcp/registration-token"
+        or values["EVA_MCP_MANAGED_ENDPOINTS_FILE"] not in {"", "/run/eva/connectors/mcp/managed-endpoints.json"}
         or values["EVA_MCP_REGISTRATION_VISIBILITY"] not in {"private", "public"}
         or values["EVA_MCP_REGISTRATION_EXCLUSIVE_OWNER_GATEWAY"] not in {"true", "false"}
         or (values["EVA_MCP_REGISTRATION_VISIBILITY"] == "public"
             and values["EVA_MCP_REGISTRATION_EXCLUSIVE_OWNER_GATEWAY"] != "true")
     ):
         raise RuntimeError("connector autonomy configuration is incomplete or invalid")
+    return values
+
+
+def browser_environment(settings: dict[str, str]) -> dict[str, str]:
+    """Optional fixed browser-control client on the existing read-only mount."""
+    values = {key: settings.get(key, "") for key in BROWSER_ENVIRONMENT_KEYS}
+    if not any(values.values()):
+        return values
+    if (not all(values.values()) or values["EVA_BROWSER_CONTROL_TOKEN_FILE"]
+            != "/run/eva/connectors/mcp/browser-control-token"):
+        raise RuntimeError("browser configuration is incomplete or invalid")
+    try:
+        for key in ("EVA_BROWSER_CONTROL_URL", "EVA_BROWSER_OWNER_ORIGIN"):
+            value = values[key]
+            parsed = urlsplit(value)
+            if (parsed.scheme not in {"http", "https"} or not parsed.hostname
+                    or parsed.username is not None or parsed.password is not None
+                    or parsed.path or parsed.query or parsed.fragment
+                    or any(c.isspace() or ord(c) < 32 for c in value)):
+                raise ValueError("invalid origin")
+            _ = parsed.port
+    except ValueError as exc:
+        raise RuntimeError("browser configuration requires exact HTTP(S) origins") from exc
     return values
 
 
@@ -157,6 +188,7 @@ def mcp_gateway_environment(settings: dict[str, str]) -> dict[str, str]:
         "EVA_MCP_GATEWAY_PRINCIPAL_SHA256_ALLOWLIST",
     )}
     result.update(mcp_autonomy_environment(settings))
+    result.update(browser_environment(settings))
     result.update(
         EVA_MCP_GATEWAY_TOKEN_FILE="/run/eva/connectors/mcp/token",
         EVA_MCP_GATEWAY_CATALOG_FILE="/run/eva/connectors/mcp/catalog.json",
@@ -183,10 +215,10 @@ def validate_mcp_gateway_render(
             raise ValueError("service graph")
         original, core = before["services"]["core"], after["services"]["core"]
         expected = mcp_gateway_environment(settings)
-        if any(key.startswith("EVA_MCP_") for key in original["environment"]):
+        if any(key.startswith(("EVA_MCP_", "EVA_BROWSER_")) for key in original["environment"]):
             raise ValueError("baseline connector environment")
         actual = {key: value for key, value in core["environment"].items()
-                  if key.startswith("EVA_MCP_")}
+                  if key.startswith(("EVA_MCP_", "EVA_BROWSER_"))}
         if actual != expected:
             raise ValueError("connector environment")
         for key in expected:

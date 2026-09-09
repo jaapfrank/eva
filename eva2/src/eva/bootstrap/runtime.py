@@ -15,6 +15,7 @@ from fastapi import FastAPI
 from sqlalchemy.engine import Engine
 
 from eva.adapters.api.app import RuntimeHealth, create_app
+from eva.adapters.api.browser_session import browser_session_from_environment
 from eva.adapters.connectors.telegram import TelegramProactiveDelivery
 from eva.adapters.connectors.fanout_http import HttpFanoutDeliverySink
 from eva.adapters.connectors.local_files import LocalMarkdownBatchAdapter
@@ -1868,6 +1869,7 @@ def create_runtime_app() -> FastAPI:
         dashboard_access_token=settings.dashboard_access_token,
         dashboard_identity_loader=current_identity_pack,
         dashboard_voice=dashboard_voice,
+        browser_session=browser_session_from_environment(),
     )
 
 

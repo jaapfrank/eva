@@ -104,3 +104,33 @@ def test_owner_network_is_configuration_not_a_household_specific_code_path(monke
     monkeypatch.setenv("EVA_MCP_PINNING_POLICY", json.dumps(policy))
     with pytest.raises(ValueError):
         module._policy()
+
+
+def test_managed_endpoint_pins_one_path_and_address_without_admitting_its_network(monkeypatch, policy):
+    policy["managed_endpoints"] = [{
+        "endpoint": "http://managed-browser:8931/mcp", "resolved_ip": "192.168.0.2",
+    }, {
+        "endpoint": "http://default-browser/mcp", "resolved_ip": "192.168.0.2",
+    }]
+    monkeypatch.setenv("EVA_MCP_PINNING_POLICY", json.dumps(policy))
+    admitted = module._policy()
+    module._admit("http://managed-browser:8931/mcp", {"resolved_ip": "192.168.0.2"}, admitted)
+    for url, address in [
+        ("http://managed-browser:8931/mcp", "192.168.0.3"),
+        ("http://other:8931/mcp", "192.168.0.2"),
+        ("http://managed-browser:8931/admin", "192.168.0.2"),
+        ("http://managed-browser:9222/mcp", "192.168.0.2"),
+        ("http://managed-browser:8931/mcp?target=other", "192.168.0.2"),
+        ("http://default-browser:0/mcp", "192.168.0.2"),
+    ]:
+        with pytest.raises(ValueError):
+            module._admit(url, {"resolved_ip": address}, admitted)
+    policy["blocked_addresses"].append("192.168.0.2")
+    monkeypatch.setenv("EVA_MCP_PINNING_POLICY", json.dumps(policy))
+    with pytest.raises(ValueError):
+        module._policy()
+    policy["blocked_addresses"].remove("192.168.0.2")
+    policy["managed_endpoints"][0]["endpoint"] = "http://managed-browser:0/mcp"
+    monkeypatch.setenv("EVA_MCP_PINNING_POLICY", json.dumps(policy))
+    with pytest.raises(ValueError):
+        module._policy()

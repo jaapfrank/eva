@@ -40,11 +40,14 @@ _POLICY = (
 
 
 class McpOwnerAuthority:
-    def __init__(self, engine: Engine, mandate_file: str) -> None:
+    def __init__(self, engine: Engine, mandate_file: str,
+                 managed_endpoints_file: str | None = None) -> None:
         self._path = mandate_file
+        self._managed_endpoints_file = managed_endpoints_file
         self._mandate = self._read()
         self.configuration_sha256 = canonical_sha256(self._identity(self._mandate))
         self.owner_principal_id = self._mandate["owner_principal_id"]
+        self._managed_endpoints = self._read_managed_endpoints()
         self.scope = external_timeline_scope(
             self._mandate["tenant_id"], self._mandate["installation_id"],
             "connector mandate scope is required")
@@ -81,6 +84,40 @@ class McpOwnerAuthority:
                     or parsed.is_multicast or parsed.is_unspecified):
                 raise RuntimeError("connector local network scope is invalid")
         return payload
+
+    def _read_managed_endpoints(self) -> dict[str, frozenset]:
+        if not self._managed_endpoints_file:
+            return {}
+        payload = json.loads(read_runtime_secret_file(
+            self._managed_endpoints_file, setting_name="EVA_MCP_MANAGED_ENDPOINTS_FILE"))
+        fields = {"contract", "tenant_id", "installation_id", "owner_principal_id",
+                  "mandate_configuration_sha256", "endpoints"}
+        if (not isinstance(payload, dict) or set(payload) != fields
+                or payload["contract"] != "EvaManagedConnectorEndpoints/v1"
+                or any(payload[key] != self._mandate[key] for key in
+                       ("tenant_id", "installation_id", "owner_principal_id"))
+                or payload["mandate_configuration_sha256"] != self.configuration_sha256
+                or not isinstance(payload["endpoints"], list)
+                or not 1 <= len(payload["endpoints"]) <= 32):
+            raise ConversationConflict("managed connector endpoints do not bind the owner mandate")
+        admitted: dict[str, set] = {}
+        for entry in payload["endpoints"]:
+            if not isinstance(entry, dict) or set(entry) != {"endpoint", "resolved_ip"}:
+                raise ConversationConflict("managed connector endpoint entry is invalid")
+            try:
+                endpoint = canonical_mcp_endpoint(entry["endpoint"])
+                address = ipaddress.ip_address(entry["resolved_ip"])
+                if (endpoint != entry["endpoint"] or str(address) != entry["resolved_ip"]
+                        or address.is_unspecified or address.is_multicast
+                        or address.is_loopback or address.is_link_local):
+                    raise ValueError()
+            except (TypeError, ValueError) as error:
+                raise ConversationConflict("managed connector endpoint entry is invalid") from error
+            known = admitted.setdefault(endpoint, set())
+            if address in known:
+                raise ConversationConflict("managed connector endpoint entry is duplicated")
+            known.add(address)
+        return {endpoint: frozenset(addresses) for endpoint, addresses in admitted.items()}
 
     @staticmethod
     def _identity(payload: dict) -> dict:
@@ -137,7 +174,11 @@ class McpOwnerAuthority:
     def authorize_endpoint(self, turn: ConversationTurn, endpoint: str) -> None:
         self.authorize_turn(turn)
         self.authorize_current(phase="execute", operation_kind="effect")
-        parsed = urlsplit(canonical_mcp_endpoint(endpoint))
+        canonical_endpoint = canonical_mcp_endpoint(endpoint)
+        parsed = urlsplit(canonical_endpoint)
+        managed = self._read_managed_endpoints()
+        if managed != self._managed_endpoints:
+            raise ConversationConflict("managed connector endpoints changed after admission")
         try:
             addresses = {ipaddress.ip_address(parsed.hostname)}
         except ValueError:
@@ -147,6 +188,10 @@ class McpOwnerAuthority:
                     type=socket.SOCK_STREAM)}
             except OSError as exc:
                 raise ConversationConflict("connector endpoint could not be resolved") from exc
+        if canonical_endpoint in managed:
+            if not addresses or not addresses.issubset(managed[canonical_endpoint]):
+                raise ConversationConflict("managed connector endpoint address differs")
+            return
         local = tuple(ipaddress.ip_network(item) for item in self._mandate["local_networks"])
         if not addresses or any(not (
             (address.is_global and parsed.scheme == "https" and (parsed.port or 443) == 443

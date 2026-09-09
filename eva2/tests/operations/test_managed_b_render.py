@@ -405,7 +405,8 @@ def test_staging_render_overrides_enabled_configuration(monkeypatch):
 def test_connector_autonomy_render_keeps_one_mount_and_explicit_activation():
     import copy
     from tools.managed_b_render import (
-        MCP_AUTONOMY_ENVIRONMENT_KEYS, mcp_gateway_environment, validate_mcp_gateway_render,
+        BROWSER_ENVIRONMENT_KEYS, MCP_AUTONOMY_ENVIRONMENT_KEYS,
+        mcp_gateway_environment, validate_mcp_gateway_render,
     )
     from tools.eva2_quiescent_cutover import SystemBackend, QuiescentCutoverError
     settings = {"EVA_MCP_GATEWAY_URL": "http://eva2-mcp-gateway:4444",
@@ -419,12 +420,19 @@ def test_connector_autonomy_render_keeps_one_mount_and_explicit_activation():
                "EVA_MCP_REGISTRATION_EXCLUSIVE_OWNER_GATEWAY": "true"}
     baseline = {"services": {"core": {"environment": {"UNCHANGED": "yes"}, "volumes": [],
                                        "networks": {"default": {}}}}, "networks": {"default": {}}}
-    for extra in ({}, enabled, {**enabled, "EVA_MCP_REGISTRATION_VISIBILITY": "private",
-                                "EVA_MCP_REGISTRATION_EXCLUSIVE_OWNER_GATEWAY": "false"}):
+    installed = {**enabled,
+                 "EVA_MCP_MANAGED_ENDPOINTS_FILE": "/run/eva/connectors/mcp/managed-endpoints.json",
+                 "EVA_BROWSER_CONTROL_URL": "http://172.30.0.1:45163",
+                 "EVA_BROWSER_CONTROL_TOKEN_FILE": "/run/eva/connectors/mcp/browser-control-token",
+                 "EVA_BROWSER_OWNER_ORIGIN": "http://localhost:44710"}
+    optional_keys = (*MCP_AUTONOMY_ENVIRONMENT_KEYS, *BROWSER_ENVIRONMENT_KEYS)
+    for extra in ({}, enabled, installed,
+                  {**enabled, "EVA_MCP_REGISTRATION_VISIBILITY": "private",
+                   "EVA_MCP_REGISTRATION_EXCLUSIVE_OWNER_GATEWAY": "false"}):
         configuration = {**settings, **extra}
         expected = mcp_gateway_environment(configuration)
-        assert {key: expected[key] for key in MCP_AUTONOMY_ENVIRONMENT_KEYS} == (
-            extra or dict.fromkeys(MCP_AUTONOMY_ENVIRONMENT_KEYS, ""))
+        assert {key: expected[key] for key in optional_keys} == {
+            key: extra.get(key, "") for key in optional_keys}
         graph = copy.deepcopy(baseline)
         core = graph["services"]["core"]
         core["environment"].update(expected)
@@ -439,11 +447,15 @@ def test_connector_autonomy_render_keeps_one_mount_and_explicit_activation():
                      "NetworkSettings": {"Networks": {"eva2-connectors": {}}}}
         SystemBackend._verify_connector(inspected, configuration)
         if not extra:
-            # Existing retained cores without the four empty variables remain valid.
+            # Existing retained cores without the optional empty variables remain valid.
             inspected["Config"]["Env"] = [key + "=" + value for key, value in expected.items()
-                                          if key not in MCP_AUTONOMY_ENVIRONMENT_KEYS]
+                                          if key not in optional_keys]
             SystemBackend._verify_connector(inspected, configuration)
         for key, value in (("EVA_MCP_REGISTRATION_TOKEN_FILE", "/other/token"),
+                           ("EVA_MCP_MANAGED_ENDPOINTS_FILE", "/other/endpoints"),
+                           ("EVA_BROWSER_CONTROL_URL", "http://unexpected:45163"),
+                           ("EVA_BROWSER_CONTROL_TOKEN_FILE", "/other/browser-token"),
+                           ("EVA_BROWSER_OWNER_ORIGIN", "http://unexpected:44710"),
                            ("EVA_MCP_AUTONOMY_MANDATE_FILE", "/other/mandate"),
                            ("EVA_MCP_REGISTRATION_EXCLUSIVE_OWNER_GATEWAY", "false"),
                            ("EVA_MCP_REGISTRATION_TOKEN", "synthetic-secret")):

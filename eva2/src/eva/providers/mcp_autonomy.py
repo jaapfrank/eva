@@ -35,6 +35,7 @@ class McpAutonomySettings:
     mandate_file: str
     gateway: McpGatewayConfig
     registration: McpRegistrationConfig
+    managed_endpoints_file: str | None = None
 
 
 def _value(name: str) -> str:
@@ -108,7 +109,8 @@ class McpAutonomyProviderFactory:
         registration_file = _value("EVA_MCP_REGISTRATION_TOKEN_FILE")
         visibility = _value("EVA_MCP_REGISTRATION_VISIBILITY")
         exclusive = _value("EVA_MCP_REGISTRATION_EXCLUSIVE_OWNER_GATEWAY")
-        if not any((mandate, registration_file, visibility, exclusive)):
+        managed = _value("EVA_MCP_MANAGED_ENDPOINTS_FILE")
+        if not any((mandate, registration_file, visibility, exclusive, managed)):
             return None
         if "EVA_MCP_REGISTRATION_TOKEN" in os.environ or "EVA_MCP_GATEWAY_TOKEN" in os.environ:
             raise RuntimeError("MCP autonomy credentials require private runtime files")
@@ -122,14 +124,14 @@ class McpAutonomyProviderFactory:
         registration = McpRegistrationConfig(base_url, read_runtime_secret_file(registration_file,
             setting_name="EVA_MCP_REGISTRATION_TOKEN_FILE"), allow_plain_http=plain == "true",
             visibility=visibility or "private", exclusive_owner_gateway=exclusive == "true")
-        return McpAutonomySettings(mandate, gateway, registration)
+        return McpAutonomySettings(mandate, gateway, registration, managed or None)
 
     @staticmethod
     def build(settings: McpAutonomySettings, engine: Engine) -> ProviderContribution:
         # No mandate file means no import, no authority object, and no meta tools.
         from eva.providers.mcp_owner_authority import McpOwnerAuthority
 
-        authority = McpOwnerAuthority(engine, settings.mandate_file)
+        authority = McpOwnerAuthority(engine, settings.mandate_file, settings.managed_endpoints_file)
         registry = PostgresMcpConnectorRegistry(engine, authority.scope,
             authority.owner_principal_id, settings.gateway,
             authority.authorize_turn, authority.authorize_current)
