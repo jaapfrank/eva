@@ -103,3 +103,25 @@ def test_host_closure_detects_changed_soname_and_added_python_cache(tmp_path, mo
     assert first != changed
     cache = stdlib / "module.pyc"; cache.write_bytes(b"new cache")
     assert str(cache) in bundle.host_runtime()["files"]
+
+
+def test_systemd_credential_copy_is_private_bounded_and_removed(tmp_path):
+    import stat
+    credentials = tmp_path / "systemd"; credentials.mkdir()
+    runtime = tmp_path / "runtime"; runtime.mkdir(mode=0o700)
+    for name in ("config.json", "tls.crt", "tls.key"):
+        path = credentials / name; path.write_bytes(b"synthetic")
+        path.chmod(0o440)  # ACL mask on actual systemd credentials is 0440.
+    with launcher.private_credentials(credentials, runtime) as copy:
+        saved = copy
+        assert stat.S_IMODE(copy.stat().st_mode) == 0o700
+        for path in copy.iterdir():
+            assert path.read_bytes() == b"synthetic"
+            assert stat.S_IMODE(path.stat().st_mode) == 0o600
+    assert not saved.exists() and not list(runtime.iterdir())
+    (credentials / "tls.key").chmod(0o600)
+    (credentials / "tls.key").write_bytes(b"x" * 65537)
+    with pytest.raises(ValueError):
+        with launcher.private_credentials(credentials, runtime):
+            pytest.fail("oversized credentials must not enter service")
+    assert not list(runtime.iterdir())

@@ -3,12 +3,15 @@ from __future__ import annotations
 
 import asyncio
 import argparse
+from contextlib import contextmanager
 from dataclasses import replace
 import os
 from pathlib import Path
 import re
 import subprocess
 import sys
+import stat
+import tempfile
 
 # -I intentionally omits the script directory; this fixed root-managed sibling
 # is the verifier, before any dependency or application path is admitted.
@@ -34,17 +37,46 @@ def active_core(source_service: str = "eva.service") -> str:
     return selected_core(environment)
 
 
+@contextmanager
+def private_credentials(credentials: Path, runtime: Path):
+    """Systemd uses root-owned 0440 files with a per-user ACL on this host.
+
+    Copy its three bounded credentials into a process-private temporary 0700
+    directory. The existing strict 0600 config/key reader remains unchanged.
+    Cleanup occurs on exit; systemd also owns the enclosing runtime directory.
+    """
+    info = runtime.stat()
+    if not runtime.is_absolute() or runtime.is_symlink() or info.st_uid != os.geteuid() or info.st_mode & 0o077:
+        raise ValueError("speaker runtime directory is not process-private")
+    with tempfile.TemporaryDirectory(prefix="credentials-", dir=runtime) as directory:
+        target = Path(directory)
+        for name in ("config.json", "tls.crt", "tls.key"):
+            descriptor = os.open(credentials / name, os.O_RDONLY | os.O_NOFOLLOW)
+            with os.fdopen(descriptor, "rb") as stream:
+                info = os.fstat(stream.fileno())
+                if not stat.S_ISREG(info.st_mode) or info.st_uid not in {0, os.geteuid()} or info.st_size > 65536:
+                    raise ValueError("invalid systemd speaker credential")
+                data = stream.read(65537)
+                if len(data) > 65536:
+                    raise ValueError("systemd speaker credential exceeds its bound")
+            descriptor = os.open(target / name, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600)
+            with os.fdopen(descriptor, "wb") as stream:
+                stream.write(data)
+        yield target
+
+
 def main(*, source_service: str = "eva.service") -> None:
     root = Path(__file__).resolve().parents[3]
     verify(root)
     # Isolated Python (-I) ignores shell/site PYTHONPATH. Add only verified files.
     sys.path[:0] = [str(root / "dependencies"), str(root / "eva2/src")]
     from speaker_service import ServiceConfig, main as run
-    credentials = Path(os.environ["CREDENTIALS_DIRECTORY"])
-    config = ServiceConfig.load(credentials / "config.json")
-    config = replace(config, eva_url=active_core(source_service), model=root / "silero_vad.onnx",
-        certificate=credentials / "tls.crt", private_key=credentials / "tls.key")
-    asyncio.run(run(config, check_only=False))
+    with private_credentials(Path(os.environ["CREDENTIALS_DIRECTORY"]),
+                             Path(os.environ["RUNTIME_DIRECTORY"])) as credentials:
+        config = ServiceConfig.load(credentials / "config.json")
+        config = replace(config, eva_url=active_core(source_service), model=root / "silero_vad.onnx",
+            certificate=credentials / "tls.crt", private_key=credentials / "tls.key")
+        asyncio.run(run(config, check_only=False))
 
 
 if __name__ == "__main__":
