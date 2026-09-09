@@ -30,8 +30,8 @@
       "nonclaims": "No new deployment or model calls for this closure. Human usefulness/timing, full backlog completion, streaming and all later product outcomes remain open."
     },
     "projectDashboard": {
-      "runtimePort": 44711,
-      "runtimeLabel": "Slot 4",
+      "runtimePort": 44710,
+      "runtimeLabel": "Slot 3",
       "roadmap": [
         {
           "id": "daily",
@@ -157,7 +157,7 @@
         {
           "label": "IN ONTWIKKELING · SP-03",
           "value": "Eva met gewone spraak onderbreken",
-          "detail": "Complete core gebouwd en releasecontrole geslaagd. SP-03 is nog niet opgeleverd: ingebruikname en de woonkamerproef staan nog open. Geslaagde controles worden niet zonder concrete aanleiding herhaald."
+          "detail": "Core-uitrol afgerond: afspeelstatus beschikbaar, Home Assistant-toegang behouden en actuele gegevens overgezet. Speakerinstallatie en SP-03-praktijk staan nog open."
         },
         {
           "label": "APART PROBLEEM",
@@ -438,8 +438,8 @@
           "updatedOn": "9 september",
           "status": "working",
           "title": "Onderbreken met gewone spraak",
-          "change": "Kandidaat gecontroleerd: echte spraakdetectie start correct; vijf testantwoorden stoppen met bevestiging, waarna herstart en routewissel werken.",
-          "result": "Nog niet testklaar in de woonkamer. Geen speaker geflasht; complete core-uitrol en bruikbaar speakerherstel ontbreken. SP-01 en SP-02 blijven geaccepteerd."
+          "change": "Core live: Eva kan afspeelstatus bewaren voor het volgende antwoord. De speakerkandidaat voor onderbreken is technisch gecontroleerd.",
+          "result": "Nog niet testklaar in de woonkamer. Core-uitrol is afgesloten; speakerinstallatie, bruikbaar USB-herstel en fysieke proef staan open. SP-01 en SP-02 blijven geaccepteerd."
         },
         {
           "id": "SP-04",
@@ -526,9 +526,9 @@
       "document": "eva2/PROJECTDOEL.md",
       "scope": "Digitale huisgenoot: zelfstandig redeneren, initiatief, onbekende vaardigheden leren, handelen, zelfverbetering en aantoonbare concurrentiewinst met open-sourcehergebruik.",
       "sessionGoal": "Het volledige doel blijft actief. Nu VB-001: doorlopende gesprekken via Home Assistant, inclusief onderbreken met gewone spraak.",
-      "currentWork": "VB-001 oplevering: complete corekandidaat 32fb12d is gebouwd en de volledige releasecontrole is geslaagd (2482 tests). Dit is een technische tussenstap; SP-03 is nog niet opgeleverd. SP-01 en SP-02 blijven geaccepteerd en afgesloten.",
+      "currentWork": "VB-001: core-uitrol naar slot3 afgerond en live teruggelezen, met behoud van actuele gegevens en Home Assistant-spraakbeleid. De ontbrekende configuratie bij de eerste poging is hersteld na terugrol. Nog open: speakerinstallatie en SP-03-praktijk.",
       "currentEvidence": "eva2/evidence/product/VB-001-core-release-candidate-2026-09-09.json",
-      "nextStep": "Bestaande SP-03-kandidaat naar oplevering brengen: complete core-releasepoort, bruikbaar speakerherstel en gecontroleerde ingebruikname. Geen nieuwe spraakuitbreidingen of herhaling van geslaagde controles zonder concrete aanleiding. Daarna één duidelijke woonkamerproef.",
+      "nextStep": "Bereid de definitieve native-speakerconfiguratie voor; installeer de woonkamerkandidaat zodra bruikbaar fysiek USB-herstel beschikbaar is. Daarna één SP-03-praktijkproef. Corebouw, releasecontrole en geslaagde uitrol zijn afgesloten.",
       "usageClarification": {
         "date": "2026-09-07",
         "authorizedBy": "Jaap",
@@ -2504,7 +2504,15 @@
         "SP-02: doorpraten na het antwoord, door Jaap geaccepteerd."
       ],
       "currentDeliveryBoundary": "SP-03: Eva tijdens haar antwoord met gewone spraak onderbreken en direct een nieuwe vraag stellen op de woonkamer-speaker. Opgeleverd betekent bruikbaar en klaar voor Jaaps praktijkproef; geaccepteerd volgt pas op zijn bevestiging.",
-      "reopenRequirement": "Vermeld vooraf het afgesloten resultaat, de concrete nieuwe fout of relevante wijziging en de noodzakelijke beperkte hercontrole. Geen heropening voor vrijblijvende verbetering."
+      "reopenRequirement": "Vermeld vooraf het afgesloten resultaat, de concrete nieuwe fout of relevante wijziging en de noodzakelijke beperkte hercontrole. Geen heropening voor vrijblijvende verbetering.",
+      "closedTechnicalSteps": [
+        {
+          "id": "VB-001-core-rollout",
+          "status": "closed",
+          "evidence": "eva2/evidence/product/VB-001-core-release-candidate-2026-09-09.json",
+          "boundary": "Core live en spraakcontract gecontroleerd; dit is geen SP-03-gebruikersacceptatie."
+        }
+      ]
     }
   },
   "activeTaskId": "VB-001",

@@ -2,7 +2,7 @@
   "contract": "EvaProductEvidence/v1",
   "taskId": "VB-001",
   "date": "2026-09-09",
-  "result": "Complete core candidate built; full release gate passed. SP-03 remains not delivered.",
+  "result": "Core candidate live on slot3 with preserved household voice authority; playback capability authenticated and verified. Speaker rollout and SP-03 practice remain open.",
   "sourceCommit": "32fb12d75f3f78410d1c1e591bc12a93d618f472",
   "candidateImageId": "sha256:cb31295d926e85e7d0328abe611f1cfff522324668991c837270f65e8d4dcfec",
   "candidateReceipt": "/home/administrator/project/.eva2-artifacts/native-voice-playback-candidate-uts1rdjj/eva2-candidate-image-9jyja61v/candidate-image-receipt.json",
@@ -65,7 +65,7 @@
     "SP-02": "accepted",
     "SP-03": "not-ready-for-practice"
   },
-  "productionServiceChanged": false,
+  "productionServiceChanged": true,
   "speakerFlashed": false,
   "physicalRecovery": "No USB speaker found in the current serial inventory; only Bluetooth COM3/COM4.",
   "artifactScan": {
@@ -78,5 +78,92 @@
     "unchangedDependencyCount": 74,
     "sameDependencyVersionsAndLicenses": true,
     "summary": "/home/administrator/project/.eva2-artifacts/native-voice-playback-candidate-uts1rdjj/scan/summary.json"
+  },
+  "deployment": {
+    "status": "live_core_verified",
+    "firstAttempt": "Core switched successfully but live voice capability readback returned404 because inactive slot3 retained browser voice configuration and omitted active slot4 household voice configuration.",
+    "recovery": "Existing quiescent reverse3-to4 completed with fresh operational and memory data; original voice route returned422 for invalid empty request, without creating a model turn.",
+    "fix": "Existing household policy and token copied byte-exact into private slot3 directory. Inactive browser configuration removed to match current source. Added preflight channel and authority continuity guard.",
+    "operatorSource": "986ca79e1c58cd4294bdc40059be706d4d19b733",
+    "operatorRegressionTests": {
+      "before": "4 failed",
+      "after": "130 passed",
+      "durationSeconds": 1.01
+    },
+    "independentReview": {
+      "reviewer": "/root/co006_review",
+      "decision": "GO for corrected core cutover4-to3 only; voice settings and bound runtime files compared independently."
+    },
+    "receipts": {
+      "cutover-receipt.json": {
+        "path": "/home/administrator/project/.eva2-artifacts/native-voice-playback-deploy-p_c9lq67/cutover-receipt.json",
+        "sha256": "e3f4308cd0b1292945c74adef0807158625d2bc0f865467f0866959f9ba988cf"
+      },
+      "rollback-receipt.json": {
+        "path": "/home/administrator/project/.eva2-artifacts/native-voice-playback-deploy-p_c9lq67/rollback-receipt.json",
+        "sha256": "a4a43e9a954440b6ad0072af21543479a83ab7a54077deff6bd619c1bec744f2"
+      },
+      "voice-continuity-preparation.json": {
+        "path": "/home/administrator/project/.eva2-artifacts/native-voice-playback-deploy-p_c9lq67/voice-continuity-preparation.json",
+        "sha256": "d1983ca7f528c15bfabb333c96203ec23add76429289fe4f4d74f598845290f7"
+      },
+      "corrected-operator-preflight.json": {
+        "path": "/home/administrator/project/.eva2-artifacts/native-voice-playback-deploy-p_c9lq67/corrected-operator-preflight.json",
+        "sha256": "d0ca23893a5071015575897f371b1e0fd432a56c8e0b0c6ef559e999018df388"
+      },
+      "operator-source.json": {
+        "path": "/home/administrator/project/.eva2-artifacts/native-voice-playback-deploy-p_c9lq67/operator-source.json",
+        "sha256": "481709d59398415ba6b4940686c6678ba3cfd7bcee0f2a7946da00c34545465a"
+      },
+      "corrected-cutover-receipt.json": {
+        "path": "/home/administrator/project/.eva2-artifacts/native-voice-playback-deploy-p_c9lq67/corrected-cutover-receipt.json",
+        "sha256": "6805feb87391766e8ea053e018fe290ec4d154957e1d36b2d6868e98036283f4"
+      },
+      "live-readback.json": {
+        "path": "/home/administrator/project/.eva2-artifacts/native-voice-playback-deploy-p_c9lq67/live-readback.json",
+        "sha256": "033d2e18b6e0170c03127874d7d523879c1bd7b29de9bd685e6be85f9331dbc1"
+      }
+    },
+    "coreImageRebuilt": false,
+    "physicalSpeakerChanged": false,
+    "liveReadback": {
+      "contract": "EvaCorePlaybackDeploymentReadback/v1",
+      "issuedAt": "2026-09-09T17:21:59.996058+00:00",
+      "status": "passed",
+      "cores": {
+        "eva2-managed-b-slot3-core": {
+          "image": "sha256:cb31295d926e85e7d0328abe611f1cfff522324668991c837270f65e8d4dcfec",
+          "running": true,
+          "health": "healthy",
+          "source": "32fb12d75f3f78410d1c1e591bc12a93d618f472"
+        },
+        "eva2-managed-b-slot4-core": {
+          "image": "sha256:e6e33b0be32b7f4a1c3d04da55f8c903998d00fea88e50d817897111e92a35cc",
+          "running": false,
+          "health": "unhealthy",
+          "source": "5eb98f8336fa22a586d2accd514dde37774d4186"
+        }
+      },
+      "loadedRoute": [
+        "EVA2_CANARY_URL=http://127.0.0.1:44710"
+      ],
+      "services": {
+        "eva.service": "active",
+        "eva2-voice-ingress.service": "active"
+      },
+      "authenticatedCapabilities": {
+        "playback_reporting": 1
+      },
+      "anonymousCapabilityStatus": 401,
+      "modelCalls": 0,
+      "speakerFlashed": false,
+      "SP-03": "not-delivered"
+    },
+    "closedBoundary": "Core rollout complete. Reopen only for a concrete failure or relevant code/configuration change; speaker rollout is a separate remaining step within SP-03.",
+    "remaining": [
+      "Production native-speaker service configuration and activation",
+      "Woonkamer physical recovery access and configured firmware installation",
+      "SP-03 physical practice and Jaap acceptance"
+    ]
   }
 }
