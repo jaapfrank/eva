@@ -1,0 +1,136 @@
+"""Owner control of existing personal-work timelines; no second task store."""
+from __future__ import annotations
+
+from datetime import datetime
+from uuid import UUID
+import re
+import hashlib
+import sqlalchemy as sa
+
+from eva.adapters.postgres.current_catalog import metadata
+from eva.adapters.postgres.operational_timeline import (
+    PostgresOperationalTimeline, TimelineScope, external_timeline_scope,
+    operational_checkpoints, operational_events, transition_timeline_thread,
+)
+
+
+class PostgresOwnerInitiatives:
+    def __init__(self, engine: sa.Engine, *, tenant_id: str, installation_id: str,
+                 owner: UUID, binding: UUID, authority_scope: TimelineScope) -> None:
+        self._engine, self._owner, self._binding = engine, owner, binding
+        self._authority = authority_scope
+        self._scope = external_timeline_scope(tenant_id, installation_id, "initiative scope required")
+
+    def _authorize(self, conn, now):
+        bindings = metadata.tables["eva_core.principal_bindings"]
+        people = metadata.tables["eva_core.principals"]
+        PostgresOperationalTimeline(self._engine, self._authority)._scope(conn)
+        row = conn.execute(sa.select(bindings.c.principal_id).join(people, sa.and_(
+            people.c.tenant_id == bindings.c.tenant_id,
+            people.c.principal_id == bindings.c.principal_id,
+        )).where(
+            bindings.c.tenant_id == self._authority.tenant_id,
+            bindings.c.principal_binding_id == self._binding,
+            bindings.c.principal_id == self._owner,
+            bindings.c.status == "verified", people.c.status == "active",
+            bindings.c.retention_until > now, people.c.retention_until > now,
+            bindings.c.verified_at <= now,
+        ).with_for_update(read=True)).one_or_none()
+        if row is None:
+            raise RuntimeError("initiative owner binding is not current")
+        PostgresOperationalTimeline(self._engine, self._scope)._scope(conn)
+
+    def _query(self):
+        c, e = operational_checkpoints.c, operational_events.c
+        return sa.select(operational_checkpoints, e.payload.label("adoption")).join(
+            operational_events, sa.and_(c.tenant_id == e.tenant_id,
+                c.installation_id == e.installation_id, c.thread_id == e.thread_id)
+        ).where(c.tenant_id == self._scope.tenant_id,
+            c.installation_id == self._scope.installation_id,
+            e.event_type == "PERSONAL_INTENT_ADOPTED",
+            e.payload["data"]["principal_id"].astext == str(self._owner),
+            e.payload["data"]["origin"].astext == "eva_initiative")
+
+    @staticmethod
+    def _intent_id(value):
+        if not isinstance(value, str) or not re.fullmatch(r"personal-interest:[0-9a-f]{64}", value):
+            raise ValueError("invalid initiative ID")
+        return value
+
+    def page(self, *, now: datetime) -> dict:
+        with self._engine.begin() as conn:
+            self._authorize(conn, now)
+            rows = conn.execute(self._query().order_by(
+                operational_checkpoints.c.updated_at.desc(), operational_checkpoints.c.thread_id
+            ).limit(65)).all()
+            cards = []
+            for row in rows[:64]:
+                data = row.adoption["data"]
+                phase = row.phase
+                status = ("stopped" if phase == "personal_stopped" else
+                          "done" if phase == "release_ready" else
+                          "attention" if row.status in ("failed", "needs_help") else "working")
+                cards.append({"intent_id": data["intent_id"], "title": data["title"],
+                    "motivation": data["motivation"], "question": data["next_exploration"],
+                    "status": status, "phase": phase,
+                    "updated_at": row.updated_at.isoformat(),
+                    "can_stop": status not in ("stopped", "done"),
+                    "has_artifact": self._artifact(conn, row.thread_id) is not None})
+        return {"contract": "EvaOwnerInitiatives/v1", "cards": cards, "truncated": len(rows) > 64}
+
+    def _artifact(self, conn, thread_id):
+        e = operational_events.c
+        payload = conn.execute(sa.select(e.payload).where(
+            e.tenant_id == self._scope.tenant_id, e.installation_id == self._scope.installation_id,
+            e.thread_id == thread_id, e.event_type == "PERSONAL_PROTOTYPE_COMPLETED"
+        ).order_by(e.sequence.desc()).limit(1)).scalar_one_or_none()
+        if payload is None:
+            return None
+        data = payload["data"]
+        content, filename = data["content"], data["filename"]
+        if (not isinstance(content, str) or len(content.encode()) > 131_072
+                or not isinstance(filename, str) or len(filename) > 120
+                or not filename.endswith(".md") or "/" in filename or "\\" in filename
+                or hashlib.sha256(content.encode()).hexdigest() != data["content_sha256"]):
+            raise RuntimeError("initiative artifact differs")
+        return {"filename": filename, "content": content, "sha256": data["content_sha256"]}
+
+    def artifact(self, intent_id: str, *, now: datetime) -> dict:
+        intent_id = self._intent_id(intent_id)
+        with self._engine.begin() as conn:
+            self._authorize(conn, now)
+            row = conn.execute(self._query().where(
+                operational_checkpoints.c.thread_id == "intent:" + intent_id
+            )).one_or_none()
+            if row is None:
+                raise LookupError("initiative unavailable")
+            result = self._artifact(conn, row.thread_id)
+            if result is None:
+                raise LookupError("initiative artifact unavailable")
+            return result
+
+    def stop(self, intent_id: str, *, now: datetime) -> dict:
+        intent_id = self._intent_id(intent_id)
+        with self._engine.begin() as conn:
+            self._authorize(conn, now)
+            row = conn.execute(self._query().where(
+                operational_checkpoints.c.thread_id == "intent:" + intent_id
+            ).with_for_update(of=operational_checkpoints)).one_or_none()
+            if row is None:
+                raise LookupError("initiative unavailable")
+            if row.phase == "release_ready":
+                status = "already_completed"
+            elif row.phase == "personal_stopped":
+                status = "stopped"
+            else:
+                transition_timeline_thread(conn, self._scope, thread_id=row.thread_id,
+                    expected_revision=row.revision,
+                    checkpoint_id=f"{row.thread_id}:owner-stop:{row.revision + 1}",
+                    phase="personal_stopped", status="completed",
+                    event_type="PERSONAL_INITIATIVE_STOPPED", occurred_at=now,
+                    operation_id=intent_id,
+                    data={"intent_id": intent_id, "owner_principal_id": str(self._owner),
+                          "principal_binding_id": str(self._binding), "reason": "owner_stop"})
+                status = "stopped"
+        return {"contract": "EvaOwnerInitiativeStop/v1", "intent_id": intent_id,
+                "status": status}

@@ -19,6 +19,7 @@ from eva.adapters.api.dashboard_conversation import (
     conversation_stream_response,
     grounded_reply_wire,
 )
+from eva.adapters.api.dashboard_initiatives import install_dashboard_initiatives
 from eva.adapters.api.dashboard_access import DashboardAccess
 from eva.adapters.api.native_voice import NativeVoiceService, install_native_voice
 from eva.adapters.api.dashboard_voice import DashboardVoice, install_dashboard_voice
@@ -614,6 +615,7 @@ def create_app(
     app = FastAPI(title="Eva Living Core", version="0.1.0", lifespan=lifespan)
     install_native_voice(app, native_voice)
     dashboard_access = DashboardAccess(dashboard_access_token)
+    install_dashboard_initiatives(app, access=dashboard_access, runtime=runtime)
     install_dashboard_voice(app, access=dashboard_access, runtime=runtime, config=dashboard_voice)
 
     @app.get("/healthz")

@@ -8,6 +8,7 @@ import {
   useGetOne,
 } from 'react-admin';
 import './style.css';
+import OwnerInitiatives from './owner-initiatives.jsx';
 import ProjectDashboard, { ProjectLayout, projectProvider } from './project-dashboard.jsx';
 
 const STATUS = '/internal/v1/dashboard/status';
@@ -185,6 +186,7 @@ function Dashboard() {
         {status.data.runtime.ready ? 'Gereed' : 'Aandacht nodig'}
       </span>
     </header>
+    <OwnerInitiatives />
     <section>
       <h2>Werkbord</h2>
       <p>{cards.length} duurzame {cards.length === 1 ? 'taak' : 'taken'}</p>

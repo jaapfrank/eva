@@ -833,6 +833,30 @@ class PostgresHindsightMemoryRuntime:
             telegram_bindings=bindings,
         ).page(now=datetime.now(tz=UTC).replace(microsecond=0), limit=limit, before=before)
 
+    def _owner_initiatives(self):
+        from eva.adapters.postgres.owner_initiatives import PostgresOwnerInitiatives
+        if (self._runtime_tenant_id is None or self._runtime_installation_id is None
+                or self._dashboard_owner_principal_id is None
+                or self._dashboard_principal_binding_id is None
+                or self._dashboard_authority_scope is None):
+            raise RuntimeError("owner initiatives unavailable")
+        return PostgresOwnerInitiatives(self._engine,
+            tenant_id=self._runtime_tenant_id, installation_id=self._runtime_installation_id,
+            owner=self._dashboard_owner_principal_id,
+            binding=self._dashboard_principal_binding_id,
+            authority_scope=self._dashboard_authority_scope)
+
+    def dashboard_initiatives(self):
+        return self._owner_initiatives().page(now=datetime.now(tz=UTC).replace(microsecond=0))
+
+    def dashboard_initiative_artifact(self, intent_id: str):
+        return self._owner_initiatives().artifact(intent_id,
+            now=datetime.now(tz=UTC).replace(microsecond=0))
+
+    def dashboard_stop_initiative(self, intent_id: str):
+        return self._owner_initiatives().stop(intent_id,
+            now=datetime.now(tz=UTC).replace(microsecond=0))
+
     def dashboard_stop_effect(
         self, effect_intent_id: UUID
     ) -> DashboardActionChainEffectStop:

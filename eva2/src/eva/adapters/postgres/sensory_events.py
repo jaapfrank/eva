@@ -560,7 +560,7 @@ class PostgresSensoryEventStore:
                 operational_events.c.event_type == "PERSONAL_INTENT_ADOPTED",
                 operational_events.c.payload["data"]["principal_id"].astext == principal,
                 operational_events.c.payload["data"]["origin"].astext == "eva_initiative",
-                operational_checkpoints.c.phase != "release_ready",
+                operational_checkpoints.c.phase.not_in(("release_ready", "personal_stopped")),
             ).limit(1)).scalar_one_or_none()
         if pending is not None:
             return {"status": "not_admitted", "reason": "active_initiative_exists", "thread_id": pending}
