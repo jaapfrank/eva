@@ -1,0 +1,67 @@
+{
+  "contract": "eva2.vb001-ha-pcm-wire.v1",
+  "recordedAt": "2026-09-09T12:32:38.412436+00:00",
+  "status": "real_ha_tts_to_local_protocol_peer_passed_not_hardware",
+  "provider": {
+    "engine": "tts.home_assistant_cloud",
+    "language": "nl-NL",
+    "mimeTypes": [
+      "audio/mpeg"
+    ],
+    "encodedBytes": 58437
+  },
+  "decoded": {
+    "format": "PCM16LE mono 24000 Hz",
+    "frames": 154368,
+    "audioSeconds": 6.432,
+    "batches": 322,
+    "maxBatchBytes": 960
+  },
+  "flowControl": {
+    "acceptanceWasNotCompletion": true,
+    "exactFinishedFrameCountValidated": true
+  },
+  "probeSeconds": 0.245,
+  "sourceHashes": {
+    "experiments/native-duplex-v1/speaker_wire.py": "6dddd1caefff931009b0f9e8f37a749911bdbea6030b75caf7abac2cd89d8f2d",
+    "experiments/native-duplex-v1/ha_pcm.py": "a1425bc4bf2a9587c7cd40b0352e768de034144af3a8c2c2bf82a05dab05c6c9",
+    "src/eva/adapters/connectors/home_assistant_voice.py": "7102834f8eb5a2a053c0378aeebca3bf8a6e6181ac9cadef2c1e982f1a8a9a34",
+    "tests/operations/test_native_duplex_speaker_wire.py": "6652dcc143b245176a56e2577e05b5d65558c6ab4d224f9d7d583f05359871b8"
+  },
+  "independentReview": {
+    "reviewer": "co006_review",
+    "result": "bounded_GO",
+    "independentTestsPassed": 26,
+    "scope": "Python wire/decoder source and lifecycle; not this HA probe or hardware."
+  },
+  "limitations": [
+    "Loopback protocol peer simulates playback receipts.",
+    "Speaker firmware receiver and authentication integration are not yet connected.",
+    "No acoustic stop, echo, latency or household practice claim."
+  ],
+  "speakerPlaybackTriggered": false,
+  "coreConversationCreated": false,
+  "rawAudioPersisted": false,
+  "liveConfigurationChanged": false,
+  "firstAttempt": {
+    "result": "failed",
+    "cause": "WebSocket compressed frame of 994 bytes exceeded transport max_size 988.",
+    "change": "Transport compression disabled, max_size 2048; application record remains bounded to 988.",
+    "scope": "Local probe settings; not a diagnosed cause of historical physical speaker dropout."
+  },
+  "currentVerification": {
+    "recordedAt": "2026-09-09T12:36:16.750506+00:00",
+    "focusedSuitePassed": 43,
+    "independentlyRepeatedWireAndDecoderTests": 28,
+    "reviewer": "co006_review",
+    "result": "bounded_GO",
+    "testHashes": {
+      "tests/operations/test_native_duplex_speaker_wire.py": "3803afb5b75ad53df2288e66d26afeb84436057a2b606627cccb09bdc20e5d6c",
+      "tests/operations/test_native_duplex_ha_pcm.py": "8bcc3c730e81823b96a4614305969f82b1ce82cfab29f6c2896d8623536349b4",
+      "tests/operations/test_native_duplex_reply_lane.py": "0f0302975eaf06031af7865c3d85df7f0e5d0dce317a163c2c2808cc91c110de"
+    },
+    "note": "Original HA-probe sourceHashes above are retained. Later test additions include incompressible audio and the real reply-lane/wire composition with a simulated NativeClient (two simulated core calls, no runtime/model requests).",
+    "hardwareProven": false
+  },
+  "decoderRuntime": "ffmpeg version 6.1.1-3ubuntu5 Copyright (c) 2000-2023 the FFmpeg developers"
+}

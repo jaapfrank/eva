@@ -438,8 +438,8 @@
           "updatedOn": "9 september",
           "status": "working",
           "title": "Onderbreken met gewone spraak",
-          "change": "Speakerstop gebouwd als kandidaat: race met oude audiobuffers hersteld en aparte audiobron toegevoegd. Gerichte C++-proeven geslaagd; nog niet live.",
-          "result": "Nog geen praktijktest. SP-01 en SP-02 blijven geaccepteerd. Nu sessiegebonden audiotransport en stopbevestigingen aansluiten; hardware, echo en stoplatentie nog bewijzen."
+          "change": "HA Cloud-spraak nu gekoppeld aan antwoordnummers en aparte stop-/afspeelbevestigingen. Gerichte proeven en echte HA-audio naar de proefontvanger geslaagd.",
+          "result": "Nog geen praktijktest: de nieuwe protocolontvanger moet op de speaker worden aangesloten. De lokale stopreparatie is al als firmware gebouwd. SP-01 en SP-02 blijven geaccepteerd."
         },
         {
           "id": "SP-04",
@@ -526,9 +526,9 @@
       "document": "eva2/PROJECTDOEL.md",
       "scope": "Digitale huisgenoot: zelfstandig redeneren, initiatief, onbekende vaardigheden leren, handelen, zelfverbetering en aantoonbare concurrentiewinst met open-sourcehergebruik.",
       "sessionGoal": "Het volledige doel blijft actief. Nu VB-001: doorlopende gesprekken via Home Assistant, inclusief onderbreken met gewone spraak.",
-      "currentWork": "VB-001: SP-01 en SP-02 door Jaap geaccepteerd. Snelle detector en lokale speakerstop voorbereid en gericht getest. SP-03 blijft in uitvoering; kandidaat nog niet op de speaker.",
-      "currentEvidence": "eva2/evidence/product/VB-001-speaker-stop-candidate-2026-09-09.json",
-      "nextStep": "Generatiegebonden audio en stopbevestiging koppelen aan de bestaande HA STT/TTS-route; native bediening, herstel en fysieke proeven afmaken voor SP-03.",
+      "currentWork": "VB-001: SP-01 en SP-02 door Jaap geaccepteerd. Lokale speakerstop gebouwd; HA Cloud-TTS naar generatiegebonden transport aangesloten en gericht getest. Fysieke aansluiting voor SP-03 nog open.",
+      "currentEvidence": "eva2/evidence/product/VB-001-ha-pcm-wire-2026-09-09.json",
+      "nextStep": "De nieuwe protocolontvanger op de gepinde va_pipecat-component aansluiten, met generatiebinding en bevestiging uit de echte stopbarrière/DAC-callback. Daarna authenticatie, native bediening, herstel en fysieke SP-03-proeven.",
       "usageClarification": {
         "date": "2026-09-07",
         "authorizedBy": "Jaap",
@@ -3934,7 +3934,13 @@
         "eva2/experiments/native-duplex-v1/LICENSE.va_pipecat",
         "eva2/experiments/native-duplex-v1/speaker-output.example.yaml",
         "eva2/tests/operations/test_native_duplex_speaker_stop.py",
-        "eva2/evidence/product/VB-001-speaker-stop-candidate-2026-09-09.json"
+        "eva2/evidence/product/VB-001-speaker-stop-candidate-2026-09-09.json",
+        "eva2/experiments/native-duplex-v1/speaker_wire.py",
+        "eva2/experiments/native-duplex-v1/ha_pcm.py",
+        "eva2/experiments/native-duplex-v1/speaker-wire-v1.md",
+        "eva2/tests/operations/test_native_duplex_speaker_wire.py",
+        "eva2/tests/operations/test_native_duplex_ha_pcm.py",
+        "eva2/evidence/product/VB-001-ha-pcm-wire-2026-09-09.json"
       ],
       "componentIds": [
         "api-and-runtime-composition",
@@ -3976,7 +3982,8 @@
         "pytest -q tests/bootstrap/test_household_voice_authority.py",
         "pytest -q tests/operations/test_native_duplex_reply_lane.py tests/operations/test_ha_voice_native_client.py tests/connectors/test_home_assistant_voice.py",
         "pytest -q tests/operations/test_native_duplex_local_onset.py",
-        "pytest -q tests/operations/test_native_duplex_speaker_stop.py"
+        "pytest -q tests/operations/test_native_duplex_speaker_stop.py",
+        "pytest -q tests/operations/test_native_duplex_speaker_wire.py tests/operations/test_native_duplex_ha_pcm.py tests/operations/test_native_duplex_reply_lane.py"
       ],
       "evidenceRequired": [
         "Onderzoek bestaande Eva2-voicebouwstenen en Bottie/HA-route; leg concrete ontbrekende media-aansluiting, providerkeuze, bestaand mandaat en verbruik vast.",
