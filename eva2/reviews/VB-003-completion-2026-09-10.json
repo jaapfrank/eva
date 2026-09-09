@@ -1,0 +1,52 @@
+{
+  "contract": "EvaProductCompletionReview/v1",
+  "taskId": "VB-003",
+  "implementationCommit": "3e7e6811ccf400fec1c6c9d44882e95487ba4253",
+  "evidenceCommit": "31fdfc383105ca1683cdbdd1de7330a374bf3978",
+  "decision": "GO",
+  "reviewerRole": "/root/proof_review",
+  "reviewingSession": "/root/proof_review",
+  "reviewedAt": "2026-09-09T23:56:50.521104+00:00",
+  "independentOfImplementationAndTestExecution": true,
+  "evidencePath": "eva2/evidence/product/VB-003-completion-2026-09-10.json",
+  "evidenceSha256": "5e7c459e9b5de9acac19c28af93d8f6e2a9f2fabee223cd2095f6c8c7a104a1f",
+  "imageId": "sha256:6fa3b019068517bf390825975ffd0b6eb235f961a894c960343e6167400397cd",
+  "scope": "Technical VB-003 closure: an ordinary owner HTTP task used the managed browser through the generic MCP route and saved/read back its result; the final image exposes the same native browser in the owner dashboard with exclusive takeover and return to Eva.",
+  "findings": [
+    "The evidence-only commit directly follows the final implementation and changes only its named evidence file. Its committed bytes match the reviewed copy. Both declared source parents and changed-path sets match Git, including all 26 prerequisite paths with deleted assets represented using --no-renames. All 40 private evidence hashes and byte counts independently match.",
+    "Bounded source reviews found no remaining blocker in exact owner/mandate-bound managed endpoint admission, exact address/host/path/port pinning, revocation ordering, native token handling, master-secret exclusion, fixed-origin WebSocket forwarding, bounded stream closure, or exclusive owner/MCP lifecycle. The identified port-zero ambiguity was corrected and its focused regression receipt was reviewed without rerunning it.",
+    "The final implementation delta contains only the dashboard CSP frame-src self permission and the native plural websockets route alias. The alias shares the already reviewed owner/origin/revision and revoke handler. The real final UI receipt reports unmodified responses from port 44711, actual owner buttons, authenticated plural WebSockets, 22 video frames totaling 291937 bytes, iframe closure before Eva control, and no page errors. The retained screenshot was visually inspected and shows the native browser displaying the same Home Assistant blog inside the owner dashboard.",
+    "The ordinary owner task on prerequisite a664ddc returned HTTP 200 after 75.775555 seconds, with one request and no retry or operator resumption. Its retained timeline contains one ingress, one final reply, nine measured model attempts and eight verified tool steps: discovery, connection, discovery, browser navigation, page-body evaluation, title/link evaluation, file write and file read. Browser invocation results remain correctly identified as provider responses rather than independent external-state verification.",
+    "The three reported titles, dates, links and short Dutch summaries match the retained browser page and link results. The physical Docker-volume file was independently read again after final cutover: 1119 bytes and SHA256 6fc736e9fdfd17e3b33de2d286f1df7a79e08f7f41fb5901f2ad6f3d78d068f4. Its content matches the saved document and tool readback, allowing the reader tool normal trailing-newline removal.",
+    "A direct read-only query in the final slot4 runtime, using its existing tenant/installation timeline scope and filtering the exact message, returned only ingress event 5799e3cc-331b-4dc2-bd03-62364daeb9dc and reply event e7de64ad-3f45-4d1e-a81b-b21676abf4b1. Both rows exactly match the retained final readback. The reply matches the HTTP response and has text SHA256 be4fa163bf8b3e091644e7b000a87a5877357001e1219b8b6a5f9f3330de15d6; usage is aggregate across nine attempts.",
+    "Direct Docker inspection confirms slot4 healthy on the declared final image with source label 3e7e6811; the former slot3 core is stopped. The successful quiescent cutover receipt and preserved file/reply agree. The current hosthelper PID 3729232 was independently inspected: UID1000, expected module/configuration path, operations SHA256 12dadfa3caaf3516b6de95385baeab9285eb885b0bd4e18f86fbb52f15099322, and host configuration SHA256 be6724173af319db4e53aa6f381f1d61b506faaa3f538ec100ab8ec61455f8cd.",
+    "Earlier independent native readbacks remain bound: actual viewer WebSocket closure preceded MCP restart, the browser process stayed the same across owner handoff, owner-mode MCP was stopped, Eva-mode viewer access was denied, and the master secret was absent from native settings and readable process environment. The final root-launch refusal and relaunch under the existing UID1000 credential owner are explicitly retained without relaxing ownership checks.",
+    "The previously inspected live DOCKER-USER and INPUT chains exactly matched the retained rules and were scoped to the two browser /32 addresses; MCP shares that browser network namespace. The retained four private-destination denials and actual Example Domain navigation agree with the rule counters. Independent process-network reads found only loopback IPv6 addresses/routes. Docker had already disabled IPv6 on both non-loopback interfaces; the helper checks this state and no manual sysctl step is inferred.",
+    "Existing targeted source, managed-authority, dependency pinning and frontend build receipts were reviewed. No new model call, browser probe or test suite was executed for this review. The public evidence distinguishes the prerequisite-image ordinary task from the final-image UI fixes and retains development corrections."
+  ],
+  "blockingFindings": [],
+  "built": true,
+  "tested": true,
+  "live": true,
+  "humanAccepted": false,
+  "independentReadback": {
+    "finalLiveUiReceiptPath": "/home/administrator/project/.eva2-artifacts/vb003-root-integration/final-live-ui-receipt.json",
+    "finalLiveUiReceiptSha256": "9b8d2ba9b59ef22552d746f616e698be84fe2cd25130a291264d84fcb0fab76f",
+    "finalRuntimeReceiptSha256": "c8a1117d3c5c40809566a3c2631f8e5f29f3093e77de926b1066e60d0e96efcb",
+    "finalReplyReadbackSha256": "40ee54e8c9a7391e7c4c78f1f42814aeca8321bfa738b87c72d4ebea59a54a03",
+    "finalScreenshotSha256": "5bdf7e4337df0c8f0d966d62e144a74accefabab20a820bb58fa13e52b872e55",
+    "directDatabaseRowsMatchRetainedReadback": true,
+    "finalPhysicalFileUnchanged": true,
+    "finalSourceHashes": {
+      "eva2/src/eva/adapters/api/app.py": "f1c719ee0c239ddfeb4abea12fad63d1e4dc951a15c65835b308e801495c73f5",
+      "eva2/src/eva/adapters/api/browser_session.py": "a9efd002c8a563a664ba463715dc0d3404d2c588d3122f9f7bfe4bd920a8b68e"
+    }
+  },
+  "limitations": [
+    "Hosthelper/firewall reboot persistence and container restart policy remain outside this closure and are tracked as VB-004.",
+    "The ordinary model task ran on prerequisite a664ddc; it was not rerun on final 3e7e6811, whose two UI integration changes were directly exercised on the final image.",
+    "The evidence establishes the observed task and owner handoff, not arbitrary browser reliability, automatic crash recovery, universal exactly-once external effects, or unattended long-running operation.",
+    "No personal/family acceptance, account login, broader computer mastery, competitor superiority or seven-day acceptance is established."
+  ],
+  "reviewMethod": "Independent bounded source and retained-receipt review, Git parent/path and hash checks, screenshot inspection, direct physical-file and scoped final PostgreSQL reads, Docker state and host process/configuration reads. No implementation edits, test reruns, model/provider calls, live mutations or commits. Only this review artifact and a temporary local screenshot copy for viewing were written."
+}
