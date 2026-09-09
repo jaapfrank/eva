@@ -2385,7 +2385,12 @@
     "vb001Mp3DeviceCandidate": {
       "status": "compiled_verified_not_installed",
       "evidence": "eva2/evidence/product/VB-001-mp3-device-candidate-2026-09-09.json",
-      "next": "Confirm usable physical USB recovery, then install the verified codec-only candidate and read back native MP3 playback. Ordinary-speech interruption remains separate, unproven work."
+      "next": "Parked after owner clarification. Investigate the established good HA audio route and native continuation first; no firmware installation selected."
+    },
+    "vb001HaOpenSourceReview": {
+      "status": "researched_not_installed",
+      "evidence": "eva2/design/product/home-assistant-voice-opensource-review-2026-09-09.md",
+      "next": "Preserve or restore the known-good HA audio route and verify three continued native turns; assess Pipecat va_pipecat separately for ordinary-speech interruption."
     }
   },
   "activeTaskId": "VB-001",
