@@ -1,0 +1,19 @@
+{
+  "status": "built_and_live_browser_verified",
+  "observedAt": "2026-09-09T10:58:06.486747+00:00",
+  "source": "audit.projectDashboard.practiceTests in execution-workboard-v1.json",
+  "cards": {
+    "SP-01": "owner-confirmed short and long audio after device restart",
+    "SP-02": "ready for owner follow-up after completed answer",
+    "SP-03": "working: ordinary-speech interruption, not ready",
+    "SP-04": "working: false wakeword detection, not ready"
+  },
+  "checks": [
+    "Isolated project build from committed source plus only changed project dashboard files",
+    "Existing dependencies; no dependency additions",
+    "Current workboard checker valid",
+    "In-app browser displays all four cards with correct statuses and SP-02 steps"
+  ],
+  "dataBoundary": "Read-only dashboard; owner reports results in this chat; no automatic household acceptance",
+  "runtimeBoundary": "No Eva runtime or speaker firmware deployment"
+}

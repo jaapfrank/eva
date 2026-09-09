@@ -150,14 +150,14 @@
       },
       "summary": [
         {
-          "label": "BEZIG · VB-001",
-          "value": "Spraak hapert; vervolggesprek nog niet bruikbaar",
-          "detail": "Praktijkproef 9 september mislukt: woorden vallen weg. Eva2 ontvangt vragen en geeft opnieuw luisteren door. Dat is nog geen werkend gesprek."
+          "label": "BEVESTIGD · SP-01",
+          "value": "Korte én langere audio weer verstaanbaar",
+          "detail": "Na één speakerherstart, zonder firmwarewijziging. Jaap bevestigt goed geluid; langdurige stabiliteit blijft open."
         },
         {
-          "label": "NU ONDERZOEKEN",
-          "value": "Eva1 en Eva2 met dezelfde antwoordtekst vergelijken",
-          "detail": "Beide gebruiken HA Cloud STT/TTS. Verschil in gespreksafhandeling wordt onderzocht. Geen speakerfirmware gewijzigd; MP3-kandidaat geparkeerd."
+          "label": "IN ONTWIKKELING · SP-03",
+          "value": "Eva met gewone spraak onderbreken",
+          "detail": "SP-02 staat klaar als afzonderlijke vervolgproef na het antwoord. Onderbreken tijdens spreken blijft de actieve ontwikkelstap."
         },
         {
           "label": "APART PROBLEEM",
@@ -408,7 +408,47 @@
         "gitStatusSha256BeforeAndAfter": "916d786b8ce5d6ebf4a3493bebffbfea0a0ff284671b5e03c1e9bcfb1ffdd6c5",
         "head": "ccbe0bb62e74674c8abe1c57a7d67a7fe907aa10",
         "oldPath": "Compatibility symlink only; no second active copy. Source module still eva2/."
-      }
+      },
+      "practiceTests": [
+        {
+          "id": "SP-01",
+          "updatedOn": "9 september",
+          "status": "accepted",
+          "title": "Verstaanbare audio",
+          "change": "Woonkamer-speaker herstart; bestaande firmware en HA Cloud-stem behouden.",
+          "result": "Jaap bevestigt FLAC, MP3 en het langere Eva2-verhaal zonder stotteren. Langdurige stabiliteit nog niet bewezen."
+        },
+        {
+          "id": "SP-02",
+          "updatedOn": "9 september",
+          "status": "ready",
+          "title": "Doorpraten na het antwoord",
+          "change": "Native Home Assistant-vervolgbeurten staan aan. Deze proef controleert praten nadat Eva klaar is.",
+          "steps": [
+            "Ga voor deze proef dicht bij de woonkamer-speaker staan.",
+            "Zeg: Hey Eva, onthoud voor dit gesprek het woord appel.",
+            "Wacht tot Eva klaar is en de speaker weer luistert. Zeg zonder Hey Eva: Welk woord moest je onthouden?"
+          ],
+          "expected": "Eva hoort de vervolgvraag zonder nieuw wakeword en antwoordt appel, met verstaanbare audio.",
+          "report": "SP-02: werkt / werkt niet, met wat je hoorde en wanneer je sprak."
+        },
+        {
+          "id": "SP-03",
+          "updatedOn": "9 september",
+          "status": "working",
+          "title": "Onderbreken met gewone spraak",
+          "change": "Bestaande opensource-audiocomponent beoordelen voor tegelijk luisteren en spreken; Eva-kern behouden.",
+          "result": "Nog niet beschikbaar. Tijdens een antwoord werkt nu het aparte stopwoord; gewone spraak wordt nog niet als onderbreking verwerkt."
+        },
+        {
+          "id": "SP-04",
+          "updatedOn": "9 september",
+          "status": "working",
+          "title": "Minder onterechte Hey Eva-detecties",
+          "change": "Wakeword-model en apparaatinstellingen apart onderzoeken.",
+          "result": "Laagste gevoeligheid staat al ingesteld. Jaap meldt activering door gewone gesprekken zonder Eva te noemen; nog niet opgelost."
+        }
+      ]
     },
     "pendingTechnicalReview": {
       "reason": "CO-003 blijft onder onafhankelijke review, niet afgevinkt of live. RT-001 herstelt nu de verschillende eigenaars- en geheugenscopes en herlaadt de privékoppeling per pagina. Een verse PostgreSQL-proef en een alleen-lezen proef met twee echte bronpagina's plus geweigerde andere eigenaar zijn groen; het oorspronkelijke CO-003-bewijs blijft historisch bewaard.",
@@ -2406,6 +2446,13 @@
       "status": "hardware_trial_failed",
       "evidence": "eva2/evidence/product/VB-001-native-continuation-failed-2026-09-09.json",
       "next": "Correlate actual wake detection and playback completion with failed audio/continuation. Lowest wake sensitivity already selected; do not claim a settings fix or repeat an unchanged acceptance test."
+    },
+    "vb001PostRestartAudio": {
+      "status": "owner_confirmed_short_audio_only",
+      "observedAt": "2026-09-09T10:50:13.699700+00:00",
+      "action": "Living-room device restart only; original firmware and codec settings retained",
+      "ownerReadback": "Short FLAC/MP3 and long native Eva2 answer intelligible. Owner spoke during story; only stop recognized. Ordinary-speech interruption not available.",
+      "next": "Longer native response and wakeword-free follow-up trial; no root-cause or durable recovery claim"
     }
   },
   "activeTaskId": "VB-001",

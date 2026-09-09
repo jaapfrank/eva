@@ -23,6 +23,20 @@ function Stage({ state, label }) {
   </span>;
 }
 
+function PracticeTests({ tests = [] }) {
+  if (!tests.length) return null;
+  const labels = { ready: 'Klaar om te testen', accepted: 'Door jou bevestigd', working: 'In ontwikkeling — nog niet testen' };
+  return <section className="practice-section" aria-label="Jouw praktijktests">
+    <div className="section-title"><div><h2>Jouw praktijktests</h2><p>Geef hier in de chat het testnummer en je ervaring door. Ik werk de uitslag bij.</p></div></div>
+    <div className="practice-grid">{tests.map((test) => <article className={`practice-card ${test.status}`} key={test.id}>
+      <span className="task-id">{test.id} · {test.updatedOn}</span><span className="task-status">{labels[test.status] || 'Status onbekend'}</span>
+      <h3>{test.title}</h3><p>{test.change}</p>
+      {test.status === 'ready' && <><h4>Zo test je</h4><ol>{test.steps.map((step) => <li key={step}>{step}</li>)}</ol><p><b>Geslaagd als:</b> {test.expected}</p><p><b>Bericht hier:</b> {test.report}</p></>}
+      {test.result && <p className="practice-result"><b>Uitslag:</b> {test.result}</p>}
+    </article>)}</div>
+  </section>;
+}
+
 function Roadmap({ phases, tasks, searching }) {
   return <div className="project-roadmap" aria-label="Route naar een complete Eva">{phases.map((phase, index) => {
     const cards = tasks.filter((task) => phase.taskIds.includes(task.id));
@@ -59,6 +73,7 @@ export default function ProjectDashboard() {
         <section className="project-summary" aria-label="Samenvatting">
           {project.summary.map((item) => <article key={item.label}><span className="stat-label">{item.label}</span><strong>{item.value}</strong><span className="stat-foot">{item.detail}</span></article>)}
         </section>
+        <PracticeTests tests={project.practiceTests}/>
         <section className="focus-grid">
           <article className="project-focus"><div className="focus-kicker"><span className="pulse-dot"/> HUIDIGE OPDRACHT <span>{active.id}</span></div><h2>{active.title}</h2><p>{active.outcome}</p><div className="focus-footer"><span>Kaart: {active.status === 'in_progress' ? 'in uitvoering' : active.status}</span><button onClick={() => setTab('werk')}>Bekijk werk →</button></div></article>
           <article className="project-next"><p className="eyebrow">EERST DUIDELIJK, DAN VERDER</p>{project.nextOutcomes.map((item, index) => <div className="next-outcome" key={item.title}><span>{String(index + 1).padStart(2, '0')}</span><div><strong>{item.title}</strong><small>{item.detail}</small></div></div>)}</article>
