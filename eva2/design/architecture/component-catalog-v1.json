@@ -374,7 +374,8 @@
         "eva2/deploy/home-assistant/*.md",
         "eva2/deploy/home-assistant/custom_components/**/*.json",
         "eva2/deploy/home-assistant/*.service",
-        "eva2/deploy/home-assistant/*.ps1"
+        "eva2/deploy/home-assistant/*.ps1",
+        "eva2/deploy/home-assistant/*.sysusers.conf"
       ],
       "forbiddenScope": [
         "Geen applicatiebeslissingen, secretwaarden of mutable image-tags in deploymentbestanden."

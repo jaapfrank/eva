@@ -5,10 +5,10 @@ Laatst bijgewerkt: 2026-09-09.
 Doel: [Eva als zelfstandig lerende digitale huisgenoot](PROJECTDOEL.md).
 Gebouwd, getest, live en door jou geaccepteerd zijn verschillende stappen.
 
-VB-001: afspeelbewijs verbonden met de huishoudelijke gesprekscontext. Eva ziet of een antwoord voltooid, onderbroken of onbevestigd is. 219 gerichte controles en 79 PostgreSQL-controles groen; onafhankelijke bronreview akkoord. SP-01 en SP-02 blijven geaccepteerd.
-[Actueel bewijs](evidence/product/VB-001-playback-conversation-context-2026-09-09.json).
+VB-001: afzonderlijke spraakdienst voorbereid en de opstart op deze computer gecontroleerd. Afhankelijkheden vastgelegd; private instellingen laden correct. Opstartfout in serviceaccount hersteld. 96 gerichte controles groen, 15 herhaald na de correctie; onafhankelijke review akkoord. SP-01 en SP-02 blijven geaccepteerd.
+[Actueel bewijs](evidence/product/VB-001-speaker-bundle-systemd-2026-09-09.json).
 
-Complete speaker-/corekandidaat duurzaam inrichten: dependencies en beperkte serviceconfiguratie, veilige A/B-core-uitrol en aantoonbaar bruikbaar speakerherstel. Daarna firmware installeren en SP-03 als echte praktijktest aanbieden; SP-04 blijft apart open.
+Volledige stop-, herstart- en terugrolproef van de dienst en complete corekandidaat afronden. Daarna veilige A/B-uitrol, speakerinrichting en fysiek herstel; pas vervolgens SP-03 in de woonkamer aanbieden. SP-04 blijft apart open.
 
 ## Nu
 
@@ -167,6 +167,14 @@ Klaar betekent:
 - `eva2/src/eva/adapters/postgres/conversation_journal.py`
 - `eva2/tests/application/test_audio_playback.py`
 - `eva2/evidence/product/VB-001-playback-conversation-context-2026-09-09.json`
+- `eva2/experiments/native-duplex-v1/service-requirements.lock`
+- `eva2/experiments/native-duplex-v1/service_bundle.py`
+- `eva2/experiments/native-duplex-v1/service_launcher.py`
+- `eva2/src/eva/adapters/connectors/__init__.py`
+- `eva2/deploy/home-assistant/eva2-native-speaker.service`
+- `eva2/deploy/home-assistant/eva2-native-speaker.sysusers.conf`
+- `eva2/tests/operations/test_native_duplex_service_bundle.py`
+- `eva2/evidence/product/VB-001-speaker-bundle-systemd-2026-09-09.json`
 
 Echte controles:
 
@@ -198,6 +206,7 @@ Echte controles:
 - `pytest -q tests/operations/test_native_duplex_input_firmware.py tests/operations/test_native_duplex_speaker_protocol.py tests/operations/test_native_duplex_speaker_stop.py`
 - `pytest -q tests/operations/test_native_duplex_speaker_service.py tests/connectors/test_home_assistant_voice.py`
 - `pytest -q tests/application/test_audio_playback.py`
+- `pytest -q tests/operations/test_native_duplex_service_bundle.py tests/operations/test_native_duplex_speaker_service.py tests/connectors/test_process.py tests/connectors/test_home_assistant_voice.py`
 
 </details>
 
