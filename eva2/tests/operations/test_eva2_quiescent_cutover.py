@@ -1187,3 +1187,94 @@ def test_voice_continuity_allows_distinct_slot_paths_with_same_authority(tmp_pat
         environments.append({prefix + "ENABLED": "true", prefix + "POLICY_DIR_HOST": str(directory),
                              prefix + "POLICY_SHA256": "a" * 64, prefix + "TOKEN_SHA256": "b" * 64})
     SystemBackend._verify_voice_continuity(*environments)
+
+
+def test_connector_autonomy_seals_the_two_additional_files_without_extra_mount(monkeypatch, tmp_path):
+    import hashlib
+    import json
+    from types import SimpleNamespace
+    from tools.eva2_quiescent_cutover import CONNECTOR_MANIFEST, CONNECTOR_FLAG, MANIFEST
+    directory = tmp_path / "access-autonomy"
+    directory.mkdir(mode=0o700)
+    files = {"token": "TOKEN_SHA256", "catalog.json": "CATALOG_SHA256",
+             "mandate.json": "AUTONOMY_MANDATE_SHA256", "registration-token": "REGISTRATION_TOKEN_SHA256"}
+    values = {CONNECTOR_FLAG: "true", "EVA_MCP_GATEWAY_URL": "http://eva2-mcp-gateway:4444",
+              "EVA_MCP_GATEWAY_IMAGE_ID": "sha256:" + "b" * 64,
+              "EVA_MCP_GATEWAY_ACCESS_DIR_HOST": str(directory), "EVA_MCP_GATEWAY_NETWORK_NAME": "eva2-connectors",
+              "EVA_MCP_GATEWAY_ALLOW_PLAIN_HTTP": "true", "EVA_MCP_GATEWAY_PRINCIPAL_SHA256_ALLOWLIST": "a" * 64,
+              "EVA_MCP_AUTONOMY_MANDATE_FILE": "/run/eva/connectors/mcp/mandate.json",
+              "EVA_MCP_REGISTRATION_TOKEN_FILE": "/run/eva/connectors/mcp/registration-token",
+              "EVA_MCP_REGISTRATION_VISIBILITY": "public",
+              "EVA_MCP_REGISTRATION_EXCLUSIVE_OWNER_GATEWAY": "true"}
+    for name, key in files.items():
+        path = directory / name
+        path.write_text("synthetic-" + name)
+        path.chmod(0o600)
+        values["EVA_MCP_GATEWAY_" + key] = hashlib.sha256(path.read_bytes()).hexdigest()
+    for path, key in ((CONNECTOR_MANIFEST, "OVERLAY_SHA256"), (MANIFEST, "BASE_MANIFEST_SHA256"),
+                      (PROACTIVE_MANIFEST, "DELIVERY_OVERLAY_SHA256")):
+        values["EVA_MCP_GATEWAY_" + key] = hashlib.sha256(path.read_bytes()).hexdigest()
+    real_stat = Path.stat
+    def metadata(path, **kwargs):
+        original = real_stat(path, **kwargs)
+        return SimpleNamespace(st_mode=original.st_mode, st_uid=65532) if path == directory else original
+    monkeypatch.setattr(Path, "stat", metadata)
+    original_private = SystemBackend._private_file
+    verified_files = []
+    def private_file(path, *, mode, uid):
+        assert uid == 65532 and mode == 0o600
+        verified_files.append(path.name)
+        original_private(path, mode=mode, uid=os.getuid())
+    monkeypatch.setattr(SystemBackend, "_private_file", staticmethod(private_file))
+    inspections = []
+    def run(command, **kwargs):
+        inspections.append(command)
+        if command[1:3] == ["network", "inspect"]:
+            return json.dumps([{"Name": "eva2-connectors", "Internal": True, "Id": "network-id",
+                                "Containers": {"gateway-id": {}}}])
+        assert command[1:] == ["inspect", "eva2-mcp-gateway"]
+        return json.dumps([{"Id": "gateway-id", "Name": "/eva2-mcp-gateway", "State": {"Running": True},
+                            "Image": "sha256:" + "b" * 64,
+                            "NetworkSettings": {"Networks": {"eva2-connectors": {
+                                "NetworkID": "network-id", "Aliases": ["eva2-mcp-gateway"]}}}}])
+    monkeypatch.setattr(SystemBackend, "_run", staticmethod(run))
+    assert SystemBackend._connector_settings(values) == {k: v for k, v in values.items() if k != CONNECTOR_FLAG}
+    assert set(verified_files) == set(files)
+    assert len(inspections) == 2
+    for changes in (
+        {"EVA_MCP_GATEWAY_AUTONOMY_MANDATE_SHA256": ""},
+        {"EVA_MCP_GATEWAY_REGISTRATION_TOKEN_SHA256": ""},
+        {"EVA_MCP_GATEWAY_AUTONOMY_MANDATE_SHA256": "z" * 64},
+        {"EVA_MCP_GATEWAY_REGISTRATION_TOKEN_SHA256": "a" * 64},
+        {"EVA_MCP_REGISTRATION_EXCLUSIVE_OWNER_GATEWAY": "false"},
+        {"EVA_MCP_REGISTRATION_TOKEN_FILE": "/other/token"},
+        {"EVA_MCP_AUTONOMY_MANDATE_FILE": ""},
+        {"EVA_MCP_REGISTRATION_TOKEN": "synthetic-inline-secret"},
+        {CONNECTOR_FLAG: "false"},
+    ):
+        with pytest.raises(QuiescentCutoverError, match="connector"):
+            SystemBackend._connector_settings({**values, **changes})
+    for name in ("mandate.json", "registration-token"):
+        path = directory / name
+        content = path.read_bytes()
+        path.write_text("changed-after-sealing")
+        with pytest.raises(QuiescentCutoverError, match="digest differs"):
+            SystemBackend._connector_settings(values)
+        path.write_bytes(content)
+        path.chmod(0o644)
+        with pytest.raises(QuiescentCutoverError, match="metadata is unsafe"):
+            SystemBackend._connector_settings(values)
+        path.chmod(0o600)
+    disabled = {**values, **dict.fromkeys(("EVA_MCP_AUTONOMY_MANDATE_FILE",
+        "EVA_MCP_REGISTRATION_TOKEN_FILE", "EVA_MCP_REGISTRATION_VISIBILITY",
+        "EVA_MCP_REGISTRATION_EXCLUSIVE_OWNER_GATEWAY"), "")}
+    with pytest.raises(QuiescentCutoverError, match="digest pair"):
+        SystemBackend._connector_settings(disabled)
+    for key in ("EVA_MCP_GATEWAY_AUTONOMY_MANDATE_SHA256", "EVA_MCP_GATEWAY_REGISTRATION_TOKEN_SHA256"):
+        disabled.pop(key)
+    with pytest.raises(QuiescentCutoverError, match="unexpected files"):
+        SystemBackend._connector_settings(disabled)
+    assert len(inspections) == 2  # all altered configurations failed before Docker inspection
+    for name in ("mandate.json", "registration-token"):
+        (directory / name).unlink()
+    assert SystemBackend._connector_settings(disabled) is not None

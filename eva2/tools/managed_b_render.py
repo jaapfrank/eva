@@ -26,6 +26,13 @@ ROOT = Path(__file__).resolve().parents[1]
 MANAGED_B_MANIFEST = ROOT / "deploy" / "living-core" / "managed-b.compose.yml"
 EXPECTED_SERVICES = MANAGED_SERVICE_NAMES
 _ALLOWED_ESCAPED_CONTAINER_INTERPOLATIONS = frozenset({"$${POSTGRES_DB}"})
+MCP_AUTONOMY_ENVIRONMENT_KEYS = (
+    "EVA_MCP_AUTONOMY_MANDATE_FILE",
+    "EVA_MCP_REGISTRATION_TOKEN_FILE",
+    "EVA_MCP_REGISTRATION_VISIBILITY",
+    "EVA_MCP_REGISTRATION_EXCLUSIVE_OWNER_GATEWAY",
+)
+
 
 
 @dataclass(frozen=True, slots=True)
@@ -126,12 +133,30 @@ def _validate_rendered_graph(rendered: object, plan: CoreBPlan) -> dict[str, Any
     return rendered
 
 
+def mcp_autonomy_environment(settings: dict[str, str]) -> dict[str, str]:
+    """Keep autonomy absent unless the complete explicit file route is admitted."""
+    values = {key: settings.get(key, "") for key in MCP_AUTONOMY_ENVIRONMENT_KEYS}
+    if not any(values.values()):
+        return values
+    if (
+        values["EVA_MCP_AUTONOMY_MANDATE_FILE"] != "/run/eva/connectors/mcp/mandate.json"
+        or values["EVA_MCP_REGISTRATION_TOKEN_FILE"] != "/run/eva/connectors/mcp/registration-token"
+        or values["EVA_MCP_REGISTRATION_VISIBILITY"] not in {"private", "public"}
+        or values["EVA_MCP_REGISTRATION_EXCLUSIVE_OWNER_GATEWAY"] not in {"true", "false"}
+        or (values["EVA_MCP_REGISTRATION_VISIBILITY"] == "public"
+            and values["EVA_MCP_REGISTRATION_EXCLUSIVE_OWNER_GATEWAY"] != "true")
+    ):
+        raise RuntimeError("connector autonomy configuration is incomplete or invalid")
+    return values
+
+
 def mcp_gateway_environment(settings: dict[str, str]) -> dict[str, str]:
     """The complete non-secret core environment introduced by the fixed overlay."""
     result = {key: settings[key] for key in (
         "EVA_MCP_GATEWAY_URL", "EVA_MCP_GATEWAY_ALLOW_PLAIN_HTTP",
         "EVA_MCP_GATEWAY_PRINCIPAL_SHA256_ALLOWLIST",
     )}
+    result.update(mcp_autonomy_environment(settings))
     result.update(
         EVA_MCP_GATEWAY_TOKEN_FILE="/run/eva/connectors/mcp/token",
         EVA_MCP_GATEWAY_CATALOG_FILE="/run/eva/connectors/mcp/catalog.json",
@@ -158,10 +183,10 @@ def validate_mcp_gateway_render(
             raise ValueError("service graph")
         original, core = before["services"]["core"], after["services"]["core"]
         expected = mcp_gateway_environment(settings)
-        if any(key.startswith("EVA_MCP_GATEWAY_") for key in original["environment"]):
+        if any(key.startswith("EVA_MCP_") for key in original["environment"]):
             raise ValueError("baseline connector environment")
         actual = {key: value for key, value in core["environment"].items()
-                  if key.startswith("EVA_MCP_GATEWAY_")}
+                  if key.startswith("EVA_MCP_")}
         if actual != expected:
             raise ValueError("connector environment")
         for key in expected:

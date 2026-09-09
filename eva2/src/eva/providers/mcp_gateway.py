@@ -34,6 +34,7 @@ from eva.providers.contracts import ProviderContribution
 _CONTRACT_V1 = "EvaMcpGatewayProvider/v1"
 _CONTRACT_V2 = "EvaMcpGatewayProvider/v2"
 _CONTRACT_V3 = "EvaMcpGatewayProvider/v3"
+_CONTRACT_V4 = "EvaMcpGatewayProvider/v4"
 _TOOL_FIELDS_V1 = {
     "completion_guidance",
     "description",
@@ -136,6 +137,7 @@ def _tool_spec(payload: object, *, contract: str) -> McpGatewayToolSpec:
         _CONTRACT_V1: _TOOL_FIELDS_V1,
         _CONTRACT_V2: _TOOL_FIELDS_V2,
         _CONTRACT_V3: _TOOL_FIELDS_V3,
+        _CONTRACT_V4: _TOOL_FIELDS_V3,
     }.get(contract)
     if not isinstance(payload, dict) or set(payload) != expected_fields:
         raise RuntimeError("MCP gateway tool configuration is invalid")
@@ -146,8 +148,9 @@ def _tool_spec(payload: object, *, contract: str) -> McpGatewayToolSpec:
         raise RuntimeError("MCP gateway tool configuration is invalid") from exc
     if not isinstance(schema, dict):
         raise RuntimeError("MCP gateway tool configuration is invalid")
-    operation_kind = payload.get("operation_kind") if contract == _CONTRACT_V3 else "effect"
-    if not isinstance(operation_kind, str) or operation_kind not in {"read", "effect"}:
+    operation_kind = payload.get("operation_kind") if contract in {_CONTRACT_V3, _CONTRACT_V4} else "effect"
+    allowed_kinds = {"read", "effect", "invoke"} if contract == _CONTRACT_V4 else {"read", "effect"}
+    if not isinstance(operation_kind, str) or operation_kind not in allowed_kinds:
         raise RuntimeError("MCP gateway operation kind is invalid")
     bindings_payload = payload.get("proof_bindings")
     if (
@@ -218,7 +221,7 @@ def parse_mcp_gateway_catalog(raw: str) -> tuple[McpGatewayToolSpec, ...]:
         not isinstance(payload, dict)
         or set(payload) != {"contract", "tools"}
         or not isinstance(payload.get("contract"), str)
-        or payload.get("contract") not in {_CONTRACT_V1, _CONTRACT_V2, _CONTRACT_V3}
+        or payload.get("contract") not in {_CONTRACT_V1, _CONTRACT_V2, _CONTRACT_V3, _CONTRACT_V4}
         or not isinstance(payload.get("tools"), list)
         or not 1 <= len(payload["tools"]) <= 128
     ):

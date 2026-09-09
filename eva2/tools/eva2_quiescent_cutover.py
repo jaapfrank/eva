@@ -376,16 +376,33 @@ class SystemBackend:
         if flag not in {"true", "false"}:
             raise QuiescentCutoverError("connector flag is invalid")
         values = {key: value for key, value in environment.items()
-                  if key.startswith("EVA_MCP_GATEWAY_") and key != CONNECTOR_FLAG}
+                  if key.startswith("EVA_MCP_") and key != CONNECTOR_FLAG}
         if flag == "false":
             if any(values.values()):
                 raise QuiescentCutoverError("disabled connector has active configuration")
             return None
         required = {"URL", "ACCESS_DIR_HOST", "NETWORK_NAME", "ALLOW_PLAIN_HTTP",
                     "PRINCIPAL_SHA256_ALLOWLIST", "CATALOG_SHA256", "TOKEN_SHA256", "OVERLAY_SHA256", "IMAGE_ID", "BASE_MANIFEST_SHA256", "DELIVERY_OVERLAY_SHA256"}
-        if set(values) != {"EVA_MCP_GATEWAY_" + key for key in required} or not all(values.values()):
+        from tools.managed_b_render import MCP_AUTONOMY_ENVIRONMENT_KEYS, mcp_autonomy_environment
+        required_keys = {"EVA_MCP_GATEWAY_" + key for key in required}
+        autonomy_hash_keys = {"EVA_MCP_GATEWAY_AUTONOMY_MANDATE_SHA256",
+                              "EVA_MCP_GATEWAY_REGISTRATION_TOKEN_SHA256"}
+        allowed_keys = required_keys | set(MCP_AUTONOMY_ENVIRONMENT_KEYS) | autonomy_hash_keys
+        if (not required_keys.issubset(values) or not set(values).issubset(allowed_keys)
+                or not all(values[key] for key in required_keys)):
             raise QuiescentCutoverError("connector configuration is incomplete")
-        for key in ("CATALOG_SHA256", "TOKEN_SHA256", "OVERLAY_SHA256", "BASE_MANIFEST_SHA256", "DELIVERY_OVERLAY_SHA256"):
+        try:
+            autonomy = mcp_autonomy_environment(values)
+        except RuntimeError as exc:
+            raise QuiescentCutoverError("connector autonomy configuration is invalid") from exc
+        autonomy_enabled = bool(autonomy["EVA_MCP_AUTONOMY_MANDATE_FILE"])
+        if (autonomy_enabled and any(not values.get(key) for key in autonomy_hash_keys)
+                or not autonomy_enabled and any(values.get(key) for key in autonomy_hash_keys)):
+            raise QuiescentCutoverError("connector autonomy digest pair differs from activation")
+        digests = ["CATALOG_SHA256", "TOKEN_SHA256", "OVERLAY_SHA256", "BASE_MANIFEST_SHA256", "DELIVERY_OVERLAY_SHA256"]
+        if autonomy_enabled:
+            digests.extend(("AUTONOMY_MANDATE_SHA256", "REGISTRATION_TOKEN_SHA256"))
+        for key in digests:
             if re.fullmatch(r"[0-9a-f]{64}", values["EVA_MCP_GATEWAY_" + key]) is None:
                 raise QuiescentCutoverError("connector digest is invalid")
         principals = values["EVA_MCP_GATEWAY_PRINCIPAL_SHA256_ALLOWLIST"].split(",")
@@ -406,9 +423,13 @@ class SystemBackend:
         metadata = directory.stat()
         if not stat.S_ISDIR(metadata.st_mode) or stat.S_IMODE(metadata.st_mode) != 0o700 or metadata.st_uid != 65532:
             raise QuiescentCutoverError("connector access directory metadata is unsafe")
-        if {item.name for item in directory.iterdir()} != {"token", "catalog.json"}:
+        files = [("token", "TOKEN_SHA256"), ("catalog.json", "CATALOG_SHA256")]
+        if autonomy_enabled:
+            files.extend((("mandate.json", "AUTONOMY_MANDATE_SHA256"),
+                          ("registration-token", "REGISTRATION_TOKEN_SHA256")))
+        if {item.name for item in directory.iterdir()} != {name for name, _ in files}:
             raise QuiescentCutoverError("connector directory contains unexpected files")
-        for name, key in (("token", "TOKEN_SHA256"), ("catalog.json", "CATALOG_SHA256")):
+        for name, key in files:
             path = directory / name
             cls._private_file(path, mode=0o600, uid=65532)
             if hashlib.sha256(path.read_bytes()).hexdigest() != values["EVA_MCP_GATEWAY_" + key]:
@@ -442,13 +463,17 @@ class SystemBackend:
         mounts = [m for m in inspected.get("Mounts", [])
                   if str(m.get("Destination", "")).startswith("/run/eva/connectors")]
         environment = dict(row.split("=", 1) for row in inspected.get("Config", {}).get("Env", []) if "=" in row)
-        actual = {key: value for key, value in environment.items() if key.startswith("EVA_MCP_GATEWAY_")}
+        actual = {key: value for key, value in environment.items() if key.startswith("EVA_MCP_")}
         if settings is None:
             if mounts or actual:
                 raise QuiescentCutoverError("staged or disabled core exposes connector access")
             return
-        from tools.managed_b_render import mcp_gateway_environment
+        from tools.managed_b_render import MCP_AUTONOMY_ENVIRONMENT_KEYS, mcp_gateway_environment
         expected = mcp_gateway_environment(settings)
+        # Already-running older images omit these disabled optional variables.
+        for key in MCP_AUTONOMY_ENVIRONMENT_KEYS:
+            if expected[key] == "":
+                actual.setdefault(key, "")
         if (actual != expected or len(mounts) != 1 or mounts[0].get("Type") != "bind"
                 or mounts[0].get("Source") != settings["EVA_MCP_GATEWAY_ACCESS_DIR_HOST"]
                 or mounts[0].get("Destination") != CONNECTOR_TARGET or mounts[0].get("RW") is not False):

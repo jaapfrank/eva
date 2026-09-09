@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import asyncio
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, replace
 import json
 import re
 from typing import Any
@@ -33,6 +33,7 @@ _GATEWAY_CONTRACTS = {
     "EvaMcpGatewayProvider/v1",
     "EvaMcpGatewayProvider/v2",
     "EvaMcpGatewayProvider/v3",
+    "EvaMcpGatewayProvider/v4",
 }
 
 
@@ -96,7 +97,7 @@ class McpGatewayArgumentBinding:
 
 @dataclass(frozen=True, slots=True)
 class McpGatewayToolSpec:
-    """Sealed Eva-facing tool plus its independent gateway readback."""
+    """Sealed tool with explicit read, effect-readback or invocation semantics."""
 
     descriptor: ConversationToolDescriptor
     execute_tool_name: str
@@ -112,13 +113,14 @@ class McpGatewayToolSpec:
     operation_kind: str | None = None
 
     def __post_init__(self) -> None:
-        if self.contract != "EvaMcpGatewayProvider/v3":
+        if self.contract not in {"EvaMcpGatewayProvider/v3", "EvaMcpGatewayProvider/v4"}:
             if self.operation_kind not in {None, "effect"}:
                 raise ValueError("MCP gateway legacy contract requires effect mode")
             object.__setattr__(self, "operation_kind", "effect")
         if (
             self.contract not in _GATEWAY_CONTRACTS
-            or self.operation_kind not in {"read", "effect"}
+            or self.operation_kind not in {"read", "effect", "invoke"}
+            or (self.operation_kind == "invoke" and self.contract != "EvaMcpGatewayProvider/v4")
             or _GATEWAY_TOOL_NAME.fullmatch(self.execute_tool_name) is None
             or _GATEWAY_TOOL_NAME.fullmatch(self.observe_tool_name) is None
             or _GATEWAY_TOOL_NAME.fullmatch(self.execute_catalog_name) is None
@@ -135,14 +137,14 @@ class McpGatewayToolSpec:
             != len(self.proof_bindings)
         ):
             raise ValueError("MCP gateway tool specification is invalid")
-        if self.operation_kind == "read" and (
+        if self.operation_kind in {"read", "invoke"} and (
             self.proof_bindings
             or self.execute_tool_name != self.observe_tool_name
             or self.execute_catalog_name != self.observe_catalog_name
             or self.execute_catalog_sha256 != self.observe_catalog_sha256
             or self.execute_argument_bindings != self.observe_argument_bindings
         ):
-            raise ValueError("MCP gateway read requires one identical pinned route")
+            raise ValueError(f"MCP gateway {self.operation_kind} requires one identical pinned route")
         properties = self.descriptor.input_schema["properties"]
         required = self.descriptor.input_schema["required"]
         if self.contract == "EvaMcpGatewayProvider/v1":
@@ -196,7 +198,7 @@ class McpGatewayToolSpec:
                 for item in self.proof_bindings
             ],
         }
-        if self.contract in {"EvaMcpGatewayProvider/v2", "EvaMcpGatewayProvider/v3"}:
+        if self.contract in {"EvaMcpGatewayProvider/v2", "EvaMcpGatewayProvider/v3", "EvaMcpGatewayProvider/v4"}:
             payload["contract"] = self.contract
             payload["execute_argument_bindings"] = [
                 {
@@ -212,7 +214,7 @@ class McpGatewayToolSpec:
                 }
                 for item in self.observe_argument_bindings
             ]
-        if self.contract == "EvaMcpGatewayProvider/v3":
+        if self.contract in {"EvaMcpGatewayProvider/v3", "EvaMcpGatewayProvider/v4"}:
             payload["operation_kind"] = self.operation_kind
         return canonical_sha256(payload)
 
@@ -239,7 +241,7 @@ class McpGatewayToolPlanner:
             raise ValueError("MCP gateway action catalog is invalid")
         if provider_input_schemas is None:
             if any(item.contract != "EvaMcpGatewayProvider/v1" for item in specs):
-                raise ValueError("MCP gateway v2/v3 planner requires verified schemas")
+                raise ValueError("MCP gateway v2/v3/v4 planner requires verified schemas")
             provider_input_schemas = {
                 (tool_name, phase): item.descriptor.input_schema
                 for item in specs
@@ -305,8 +307,15 @@ class McpGatewayToolPlanner:
                 "catalog_sha256": spec.execute_catalog_sha256,
                 "tool_configuration_sha256": spec.configuration_sha256,
                 "transport": "mcp_gateway",
+                **({
+                    "operation_kind": "invoke",
+                    "external_state_verified": False,
+                    "result_meaning": "Provider response; not independent external-state readback.",
+                } if spec.operation_kind == "invoke" else {}),
             },
-            observation_output_key="result" if spec.operation_kind == "read" else None,
+            observation_output_key=(
+                "result" if spec.operation_kind in {"read", "invoke"} else None
+            ),
             execution_timeout_seconds=self._execution_timeout_seconds,
             verification_timeout_seconds=self._verification_timeout_seconds,
         )
@@ -334,7 +343,17 @@ class McpGatewayToolAdapter:
     def conversation_tools(
         specs: tuple[McpGatewayToolSpec, ...],
     ) -> tuple[ConversationToolDescriptor, ...]:
-        return tuple(item.descriptor for item in specs)
+        return tuple(
+            replace(
+                item.descriptor,
+                completion_guidance=(item.descriptor.completion_guidance + " " +
+                    "result is the persisted provider response, not independent external-state "
+                    "readback. external_state_verified=false: verify changes with a separate "
+                    "read when needed; do not repeat an uncertain invocation."
+                ).strip(),
+            ) if item.operation_kind == "invoke" else item.descriptor
+            for item in specs
+        )
 
     def planner(self) -> McpGatewayToolPlanner:
         if not self._verified_input_schemas:
@@ -443,6 +462,24 @@ class McpGatewayToolAdapter:
             command.arguments,
             _rpc_id(command, "execute", spec.execute_tool_name, command.arguments),
         )
+        if spec.operation_kind == "invoke":
+            _validate_bounded_output(output, operation_kind="invoke")
+            output_schema = self._verified_output_schemas.get(spec.execute_tool_name)
+            if output_schema is not None:
+                _validate_schema_value(
+                    output, output_schema, "invoke_output", provider_schema=True,
+                )
+            return ToolDispatchResult(
+                accepted=True,
+                provider_ref=canonical_sha256(output),
+                details={
+                    "operation_kind": "invoke",
+                    "invocation_response": output,
+                    "invocation_request_sha256": _invocation_request_sha256(command),
+                    "tool_configuration_sha256": spec.configuration_sha256,
+                    "gateway_output_sha256": canonical_sha256(output),
+                },
+            )
         return ToolDispatchResult(
             accepted=True,
             provider_ref=canonical_sha256(output),
@@ -454,11 +491,14 @@ class McpGatewayToolAdapter:
         command: ToolRequest,
         dispatch: ToolDispatchResult | None,
     ) -> ToolProofObservation:
-        del dispatch
         spec = self._by_execute_name.get(command.tool_name)
         if spec is None:
             raise ValueError("MCP gateway command is unsupported")
         self._validate_request_binding(command, spec)
+        if spec.operation_kind == "invoke":
+            # The durable dispatch is the only invocation receipt. A missing receipt
+            # can mean the provider acted before a crash: never call it again here.
+            return self._observe_invocation(command, spec, dispatch)
         observe_tool_name = command.observation_tool_name or spec.observe_tool_name
         observe_arguments = (
             command.observation_arguments
@@ -483,20 +523,14 @@ class McpGatewayToolAdapter:
             _rpc_id(command, "observe", observe_tool_name, observe_arguments),
         )
         if spec.operation_kind == "read":
-            encoded = json.dumps(
-                output, ensure_ascii=False, separators=(",", ":"), allow_nan=False
-            ).encode("utf-8")
-            if len(encoded) > _READ_OBSERVATION_MAX_BYTES:
-                raise RuntimeError(
-                    "MCP gateway read result exceeds 65536 bytes; request a smaller result"
-                )
+            _validate_bounded_output(output, operation_kind="read")
         output_schema = self._verified_output_schemas.get(observe_tool_name)
         if output_schema is not None:
             _validate_schema_value(
                 output,
                 output_schema,
                 "observe_output",
-                provider_schema=spec.contract == "EvaMcpGatewayProvider/v3",
+                provider_schema=spec.contract in {"EvaMcpGatewayProvider/v3", "EvaMcpGatewayProvider/v4"},
             )
         if spec.operation_kind == "read":
             return ToolProofObservation(
@@ -523,16 +557,58 @@ class McpGatewayToolAdapter:
         )
 
     @staticmethod
+    def _observe_invocation(
+        command: ToolRequest,
+        spec: McpGatewayToolSpec,
+        dispatch: ToolDispatchResult | None,
+    ) -> ToolProofObservation:
+        if dispatch is None or "invocation_response" not in dispatch.details:
+            return ToolProofObservation(
+                "pending", {},
+                {
+                    "source": "mcp_gateway_invocation_response",
+                    "external_state_verified": False,
+                    "reason": "Durable invocation response is missing; automatic replay is unsafe.",
+                },
+            )
+        details = dispatch.details
+        output = details["invocation_response"]
+        if (
+            not dispatch.accepted
+            or details.get("operation_kind") != "invoke"
+            or details.get("tool_configuration_sha256") != spec.configuration_sha256
+            or details.get("invocation_request_sha256") != _invocation_request_sha256(command)
+            or not isinstance(output, dict)
+        ):
+            raise RuntimeError("MCP gateway durable invocation binding differs")
+        _validate_bounded_output(output, operation_kind="invoke")
+        output_sha256 = canonical_sha256(output)
+        if (details.get("gateway_output_sha256") != output_sha256
+                or dispatch.provider_ref != output_sha256):
+            raise RuntimeError("MCP gateway durable invocation response differs")
+        return ToolProofObservation(
+            "verified", {},
+            {
+                "observation": output,
+                "observation_sha256": output_sha256,
+                "source": "mcp_gateway_invocation_response",
+                "external_state_verified": False,
+                "invocation_request_sha256": details["invocation_request_sha256"],
+                "tool_configuration_sha256": spec.configuration_sha256,
+            },
+        )
+
+    @staticmethod
     def _validate_request_binding(
         command: ToolRequest, spec: McpGatewayToolSpec
     ) -> None:
         if command.tool_configuration_sha256 != spec.configuration_sha256:
             raise RuntimeError("MCP gateway durable tool binding differs")
-        if spec.operation_kind == "read" and (
+        if spec.operation_kind in {"read", "invoke"} and (
             command.arguments != command.observation_arguments
             or command.expected_proof != {}
         ):
-            raise RuntimeError("MCP gateway durable read binding differs")
+            raise RuntimeError(f"MCP gateway durable {spec.operation_kind} binding differs")
         if (
             command.observation_tool_name is None
             and command.observation_arguments is None
@@ -698,6 +774,29 @@ def _validate_projection_contract(
         or any(by_provider_name[name] not in eva_required for name in provider_required)
     ):
         raise RuntimeError("MCP gateway argument projection is incomplete")
+
+
+def _validate_bounded_output(output: dict[str, JsonValue], *, operation_kind: str) -> None:
+    encoded = json.dumps(
+        output, ensure_ascii=False, separators=(",", ":"), allow_nan=False,
+    ).encode("utf-8")
+    if len(encoded) > _READ_OBSERVATION_MAX_BYTES:
+        raise RuntimeError(
+            f"MCP gateway {operation_kind} result exceeds 65536 bytes; request a smaller result"
+        )
+
+
+def _invocation_request_sha256(command: ToolRequest) -> str:
+    return canonical_sha256({
+        "thread_id": command.thread_id,
+        "operation_id": command.operation_id,
+        "tool_name": command.tool_name,
+        "arguments": command.arguments,
+        "observation_tool_name": command.observation_tool_name,
+        "observation_arguments": command.observation_arguments,
+        "expected_proof": command.expected_proof,
+        "tool_configuration_sha256": command.tool_configuration_sha256,
+    })
 
 
 def _rpc_id(

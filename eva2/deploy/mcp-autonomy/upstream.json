@@ -1,0 +1,13 @@
+{
+  "component": "ContextForge",
+  "version": "1.0.8",
+  "license": "Apache-2.0",
+  "licenseEvidence": "mcpgateway/services/gateway_service.py SPDX header",
+  "image": "sha256:daf923c247fd569df5f8c9ee418cbc259fade564f78e0a0852937139a181c4dd",
+  "sourceHashes": {
+    "mcpgateway/services/gateway_service.py": "02e4afac654239672f8687e2374a80933bda6b8279c648764017394973080d83",
+    "mcpgateway/services/tool_service.py": "0c2e856af5c785ef98cd5deeb7a623fa6b7a9ad86a60d82016b5c08741eb378a",
+    "mcpgateway/common/validators.py": "af9e646244061c70fa9e322a26764c2b0e227bd36111c54bb49b86d4513471cc",
+    "mcpgateway/services/upstream_session_registry.py": "17f51e345669fd32988857e29aa22b5eaf3755327aa1c901512c3b5c159e04a2"
+  }
+}

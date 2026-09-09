@@ -10,6 +10,7 @@ from eva.providers.agentmail import AgentMailProviderFactory
 from eva.providers.contracts import RuntimeProviderFactory
 from eva.providers.home_assistant import HomeAssistantProviderFactory
 from eva.providers.mcp_gateway import McpGatewayProviderFactory
+from eva.providers.mcp_autonomy import McpAutonomyProviderFactory
 
 
 def bundled_provider_factories() -> tuple[RuntimeProviderFactory, ...]:
@@ -17,6 +18,7 @@ def bundled_provider_factories() -> tuple[RuntimeProviderFactory, ...]:
         AgentMailProviderFactory(),
         HomeAssistantProviderFactory(),
         McpGatewayProviderFactory(),
+        McpAutonomyProviderFactory(),
     )
 
 

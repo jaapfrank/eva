@@ -400,3 +400,72 @@ def test_staging_render_overrides_enabled_configuration(monkeypatch):
     assert render_managed_b(plan).receipt()["background_work_enabled"] is False
     assert "EVA_BACKGROUND_WORK_ENABLED=true" in files[0][2]
     assert all(env["EVA_BACKGROUND_WORK_ENABLED"] == "false" for _, env in calls)
+
+
+def test_connector_autonomy_render_keeps_one_mount_and_explicit_activation():
+    import copy
+    from tools.managed_b_render import (
+        MCP_AUTONOMY_ENVIRONMENT_KEYS, mcp_gateway_environment, validate_mcp_gateway_render,
+    )
+    from tools.eva2_quiescent_cutover import SystemBackend, QuiescentCutoverError
+    settings = {"EVA_MCP_GATEWAY_URL": "http://eva2-mcp-gateway:4444",
+                "EVA_MCP_GATEWAY_ALLOW_PLAIN_HTTP": "true",
+                "EVA_MCP_GATEWAY_PRINCIPAL_SHA256_ALLOWLIST": "a" * 64,
+                "EVA_MCP_GATEWAY_ACCESS_DIR_HOST": "/private/access-v2",
+                "EVA_MCP_GATEWAY_NETWORK_NAME": "eva2-connectors"}
+    enabled = {"EVA_MCP_AUTONOMY_MANDATE_FILE": "/run/eva/connectors/mcp/mandate.json",
+               "EVA_MCP_REGISTRATION_TOKEN_FILE": "/run/eva/connectors/mcp/registration-token",
+               "EVA_MCP_REGISTRATION_VISIBILITY": "public",
+               "EVA_MCP_REGISTRATION_EXCLUSIVE_OWNER_GATEWAY": "true"}
+    baseline = {"services": {"core": {"environment": {"UNCHANGED": "yes"}, "volumes": [],
+                                       "networks": {"default": {}}}}, "networks": {"default": {}}}
+    for extra in ({}, enabled, {**enabled, "EVA_MCP_REGISTRATION_VISIBILITY": "private",
+                                "EVA_MCP_REGISTRATION_EXCLUSIVE_OWNER_GATEWAY": "false"}):
+        configuration = {**settings, **extra}
+        expected = mcp_gateway_environment(configuration)
+        assert {key: expected[key] for key in MCP_AUTONOMY_ENVIRONMENT_KEYS} == (
+            extra or dict.fromkeys(MCP_AUTONOMY_ENVIRONMENT_KEYS, ""))
+        graph = copy.deepcopy(baseline)
+        core = graph["services"]["core"]
+        core["environment"].update(expected)
+        core["volumes"].append({"type": "bind", "source": settings["EVA_MCP_GATEWAY_ACCESS_DIR_HOST"],
+                                "target": "/run/eva/connectors/mcp", "read_only": True, "bind": {}})
+        core["networks"]["mcp-gateway"] = {}
+        graph["networks"]["mcp-gateway"] = {"name": "eva2-connectors", "external": True}
+        assert validate_mcp_gateway_render(baseline, graph, configuration)["activatedSha256"]
+        inspected = {"Config": {"Env": [key + "=" + value for key, value in expected.items()]},
+                     "Mounts": [{"Type": "bind", "Source": settings["EVA_MCP_GATEWAY_ACCESS_DIR_HOST"],
+                                 "Destination": "/run/eva/connectors/mcp", "RW": False}],
+                     "NetworkSettings": {"Networks": {"eva2-connectors": {}}}}
+        SystemBackend._verify_connector(inspected, configuration)
+        if not extra:
+            # Existing retained cores without the four empty variables remain valid.
+            inspected["Config"]["Env"] = [key + "=" + value for key, value in expected.items()
+                                          if key not in MCP_AUTONOMY_ENVIRONMENT_KEYS]
+            SystemBackend._verify_connector(inspected, configuration)
+        for key, value in (("EVA_MCP_REGISTRATION_TOKEN_FILE", "/other/token"),
+                           ("EVA_MCP_AUTONOMY_MANDATE_FILE", "/other/mandate"),
+                           ("EVA_MCP_REGISTRATION_EXCLUSIVE_OWNER_GATEWAY", "false"),
+                           ("EVA_MCP_REGISTRATION_TOKEN", "synthetic-secret")):
+            # A changed false value is already expected in the private case.
+            if expected.get(key) == value:
+                continue
+            changed = copy.deepcopy(graph)
+            changed["services"]["core"]["environment"][key] = value
+            with pytest.raises(RuntimeError, match="connector render"):
+                validate_mcp_gateway_render(baseline, changed, configuration)
+            changed_inspection = copy.deepcopy(inspected)
+            changed_env = dict(row.split("=", 1) for row in inspected["Config"]["Env"])
+            changed_env[key] = value
+            changed_inspection["Config"]["Env"] = [k + "=" + v for k, v in changed_env.items()]
+            with pytest.raises(QuiescentCutoverError):
+                SystemBackend._verify_connector(changed_inspection, configuration)
+    for changes in ({"EVA_MCP_REGISTRATION_EXCLUSIVE_OWNER_GATEWAY": "false"},
+                    {"EVA_MCP_AUTONOMY_MANDATE_FILE": ""},
+                    {"EVA_MCP_REGISTRATION_TOKEN_FILE": "/wrong/token"},
+                    {"EVA_MCP_REGISTRATION_VISIBILITY": "team"},
+                    {"EVA_MCP_REGISTRATION_EXCLUSIVE_OWNER_GATEWAY": "TRUE"}):
+        with pytest.raises(RuntimeError, match="connector autonomy"):
+            mcp_gateway_environment({**settings, **enabled, **changes})
+    assert all(f"${{{key}:-}}" in (MANAGED_B_MANIFEST.parent / "mcp-gateway.compose.yml").read_text()
+               for key in MCP_AUTONOMY_ENVIRONMENT_KEYS)
