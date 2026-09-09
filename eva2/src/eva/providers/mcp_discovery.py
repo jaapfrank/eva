@@ -68,6 +68,10 @@ class McpExecutionBinding:
             raise ValueError("MCP connector execution binding is invalid")
 
 
+class McpConnectorNotFound(ConversationConflict):
+    """An authorized owner catalog lookup found no registered connector."""
+
+
 class McpConnectorRegistry(Protocol):
     """Host-owned records; both lookups enforce current grants and revocation."""
 
@@ -186,5 +190,5 @@ class McpDiscoveryToolAdapter:
 
 
 __all__ = [
-    "McpConnectorRegistry", "McpDiscoveryToolAdapter", "McpDiscoveryToolPlanner", "McpExecutionBinding",
+    "McpConnectorNotFound", "McpConnectorRegistry", "McpDiscoveryToolAdapter", "McpDiscoveryToolPlanner", "McpExecutionBinding",
 ]

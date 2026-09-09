@@ -133,3 +133,75 @@ def test_owner_can_stop_and_inspect_mandate_without_a_new_provider_call():
     status = asyncio.run(adapter.planner().prepare(TURN, ConversationActionCall("status1", "manage_connected_services", {"action": "status"})))
     assert asyncio.run(adapter.observe(command(status), None)).evidence["observation"] == {"active": False, "revoked": True}
     assert client.registrations == client.reads == 0
+
+
+def test_endpoint_discovery_absence_allows_connection_without_hiding_denials(monkeypatch):
+    import sqlalchemy as sa
+    from eva.adapters.connectors.mcp_gateway import McpGatewayConfig
+    from eva.adapters.postgres.mcp_connector_registry import PostgresMcpConnectorRegistry
+    from eva.adapters.postgres.operational_timeline import external_timeline_scope
+    from eva.providers.mcp_registration import connector_id_for
+
+    class ExistingClient(Client):
+        find_calls = 0
+        def register(self, *, owner_key, endpoint):
+            self.find_calls += 1
+            return {"id": "already-registered-gateway"}
+
+    client, registry, authority = ExistingClient(), Registry(), Authority()
+    def current(**kwargs):
+        if not authority.active:
+            raise ConversationConflict("owner mandate revoked")
+    engine = sa.create_engine("postgresql+psycopg://never-connected.invalid/unused")
+    durable = PostgresMcpConnectorRegistry(engine,
+        external_timeline_scope(TURN.tenant_id, TURN.installation_id, "required"),
+        TURN.principal_id, McpGatewayConfig("https://gateway.example", "fixture"),
+        authority.authorize_turn, current)
+    monkeypatch.setattr(durable, "_snapshot", lambda: (None, {}))
+    registry.discover = durable.discover
+    adapter = McpRegistrationToolAdapter(client, registry, authority, "owner", lambda source: TURN)
+    endpoint = "https://docs.example/mcp"
+    prepared = asyncio.run(adapter.planner().prepare(TURN,
+        ConversationActionCall("lookup", "discover_connector_tools", {"connector_id": endpoint})))
+    cid = connector_id_for("owner", endpoint)
+    assert cid != connector_id_for("another-owner", endpoint)
+    assert prepared.arguments["connector_id"] == cid
+    assert prepared.arguments["endpoint"] == endpoint
+    req = command(prepared)
+    dispatch = asyncio.run(adapter.execute(req))
+    proof = asyncio.run(adapter.observe(req, dispatch))
+    result = proof.evidence["observation"]
+    assert proof.disposition == "verified" and proof.observed == req.expected_proof
+    assert proof.evidence["source"] == "owner_connector_catalog_lookup"
+    assert result["connection_status"] == "not_connected" and result["tools"] == []
+    assert result["next_action"] == "connect_service" and result["endpoint"] == endpoint
+    assert client.registrations == client.find_calls == client.reads == 0
+
+    authority.active = False
+    with pytest.raises(ConversationConflict, match="revoked"):
+        asyncio.run(adapter.observe(req, dispatch))
+    authority.active = True
+    other = ConversationTurn.private("tenant", "installation", "other-owner", "chat", "message", "hello", TURN.occurred_at)
+    with pytest.raises(ConversationConflict, match="another owner"):
+        asyncio.run(adapter.planner().prepare(other,
+            ConversationActionCall("wrong-owner", "discover_connector_tools", {"connector_id": endpoint})))
+    monkeypatch.setattr(durable, "_record", lambda cid: {"revoked": False})
+    def drift(record):
+        raise ConversationConflict("gateway binding differs")
+    monkeypatch.setattr(durable, "_require_gateway", drift)
+    with pytest.raises(ConversationConflict, match="gateway binding differs"):
+        asyncio.run(adapter.observe(req, dispatch))
+
+    # The verified absence gives the next ordinary action usable arguments;
+    # connecting reuses the provider's existing registration and seals its catalog.
+    registry.discover = Registry.discover.__get__(registry)
+    follow = asyncio.run(adapter.planner().prepare(TURN,
+        ConversationActionCall("complete-connection", result["next_action"], {
+            "endpoint": result["endpoint"], "documentation_url": "https://docs.example/about",
+            "provenance": "Previously researched maintainer documentation.",
+        })))
+    connected = command(follow)
+    done = asyncio.run(adapter.observe(connected, asyncio.run(adapter.execute(connected))))
+    assert done.disposition == "verified" and done.observed == connected.expected_proof
+    assert asyncio.run(adapter.observe(req, dispatch)).evidence["observation"]["tools"]
+    assert client.find_calls == client.reads == 1 and client.registrations == 0

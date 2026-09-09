@@ -29,7 +29,7 @@ from eva.adapters.postgres.operational_timeline import (
 from eva.application.conversation import ConversationConflict, ConversationTurn
 from eva.contracts.base import validate_json_value
 from eva.contracts.canonical_json import canonical_sha256
-from eva.providers.mcp_discovery import McpExecutionBinding
+from eva.providers.mcp_discovery import McpConnectorNotFound, McpExecutionBinding
 from eva.providers.mcp_gateway import parse_mcp_gateway_catalog
 
 
@@ -252,7 +252,7 @@ class PostgresMcpConnectorRegistry:
         self._validate_connector_id(connector_id)
         _, records = self._snapshot()
         if connector_id not in records:
-            raise ConversationConflict("MCP connector is unknown")
+            raise McpConnectorNotFound("MCP connector is unknown")
         return records[connector_id]
 
     def _binding(self, record: dict[str, Any], spec: McpGatewayToolSpec) -> McpExecutionBinding:
