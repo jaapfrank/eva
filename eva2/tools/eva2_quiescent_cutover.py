@@ -387,7 +387,8 @@ class SystemBackend:
         required_keys = {"EVA_MCP_GATEWAY_" + key for key in required}
         autonomy_hash_keys = {"EVA_MCP_GATEWAY_AUTONOMY_MANDATE_SHA256",
                               "EVA_MCP_GATEWAY_REGISTRATION_TOKEN_SHA256"}
-        allowed_keys = required_keys | set(MCP_AUTONOMY_ENVIRONMENT_KEYS) | autonomy_hash_keys
+        guard_keys = {"EVA_MCP_GATEWAY_GUARD_RECEIPT_FILE", "EVA_MCP_GATEWAY_GUARD_RECEIPT_SHA256"}
+        allowed_keys = required_keys | set(MCP_AUTONOMY_ENVIRONMENT_KEYS) | autonomy_hash_keys | guard_keys
         if (not required_keys.issubset(values) or not set(values).issubset(allowed_keys)
                 or not all(values[key] for key in required_keys)):
             raise QuiescentCutoverError("connector configuration is incomplete")
@@ -399,9 +400,12 @@ class SystemBackend:
         if (autonomy_enabled and any(not values.get(key) for key in autonomy_hash_keys)
                 or not autonomy_enabled and any(values.get(key) for key in autonomy_hash_keys)):
             raise QuiescentCutoverError("connector autonomy digest pair differs from activation")
+        if (autonomy_enabled and any(not values.get(key) for key in guard_keys)
+                or not autonomy_enabled and any(values.get(key) for key in guard_keys)):
+            raise QuiescentCutoverError("connector guard receipt pair differs from activation")
         digests = ["CATALOG_SHA256", "TOKEN_SHA256", "OVERLAY_SHA256", "BASE_MANIFEST_SHA256", "DELIVERY_OVERLAY_SHA256"]
         if autonomy_enabled:
-            digests.extend(("AUTONOMY_MANDATE_SHA256", "REGISTRATION_TOKEN_SHA256"))
+            digests.extend(("AUTONOMY_MANDATE_SHA256", "REGISTRATION_TOKEN_SHA256", "GUARD_RECEIPT_SHA256"))
         for key in digests:
             if re.fullmatch(r"[0-9a-f]{64}", values["EVA_MCP_GATEWAY_" + key]) is None:
                 raise QuiescentCutoverError("connector digest is invalid")
@@ -456,7 +460,81 @@ class SystemBackend:
                 or "eva2-mcp-gateway" not in (membership.get("Aliases") or [])
                 or gateway_id not in networks[0].get("Containers", {})):
             raise QuiescentCutoverError("connector gateway image or network membership differs")
+        if autonomy_enabled:
+            cls._verify_connector_guard(gateway, values)
         return values
+
+    @classmethod
+    def _verify_connector_guard(cls, gateway: dict[str, Any], settings: dict[str, str]) -> None:
+        """Read the actual guarded transport before making autonomy available."""
+        targets = {"/app/mcpgateway/services/gateway_service.py",
+                   "/app/mcpgateway/services/tool_service.py", "/app/mcpgateway/eva_mcp_pinning.py"}
+        try:
+            path = Path(settings["EVA_MCP_GATEWAY_GUARD_RECEIPT_FILE"])
+            if not path.is_absolute() or path.resolve(strict=True) != path:
+                raise ValueError("receipt path")
+            cls._private_file(path, mode=0o600, uid=0)
+            raw = path.read_bytes()
+            if hashlib.sha256(raw).hexdigest() != settings["EVA_MCP_GATEWAY_GUARD_RECEIPT_SHA256"]:
+                raise ValueError("receipt digest")
+            receipt = json.loads(raw)
+            if (receipt.get("contract") != "EvaMcpTransportGuard/v1"
+                    or receipt.get("upstreamImage") != gateway.get("Image")
+                    or receipt.get("upstreamImage") != settings["EVA_MCP_GATEWAY_IMAGE_ID"]):
+                raise ValueError("guard image binding")
+            compose = receipt["composeFiles"]
+            environment_file = receipt["environmentFile"]
+            if (not isinstance(compose, list) or len(compose) != 3 or len(set(compose)) != 3
+                    or set(receipt["inputSha256"]) != {*compose, environment_file}):
+                raise ValueError("guard Compose input set")
+            for filename, digest in receipt["inputSha256"].items():
+                source = Path(filename)
+                if (not source.is_absolute() or source.resolve(strict=True) != source
+                        or not source.is_file() or hashlib.sha256(source.read_bytes()).hexdigest() != digest):
+                    raise ValueError("guard Compose input digest")
+            prefix = ["/usr/bin/docker", "compose", "--project-name", "eva2-workspace-provider",
+                      "--env-file", environment_file]
+            for filename in compose[:2]:
+                prefix.extend(("--file", filename))
+            suffix = ["up", "--detach", "--no-deps", "gateway"]
+            if (receipt["recreateCommand"] != [*prefix, "--file", compose[2], *suffix]
+                    or receipt["rollback"] != {"requiresAutonomyDisabled": True, "command": [*prefix, *suffix]}):
+                raise ValueError("guard recreate route")
+            files = receipt["files"]
+            if not isinstance(files, list) or len(files) != 3 or {row["target"] for row in files} != targets:
+                raise ValueError("guard source set")
+            actual_mounts = [m for m in gateway.get("Mounts", [])
+                             if str(m.get("Destination", "")).startswith("/app/mcpgateway")]
+            if len(actual_mounts) != 3:
+                raise ValueError("guard mount count")
+            for row in files:
+                source = Path(row["source"])
+                if (not source.is_absolute() or source.resolve(strict=True) != source
+                        or hashlib.sha256(source.read_bytes()).hexdigest() != row["sha256"]):
+                    raise ValueError("guard source digest")
+                matches = [m for m in actual_mounts if m.get("Destination") == row["target"]]
+                if (len(matches) != 1 or matches[0].get("Source") != str(source)
+                        or matches[0].get("Type") != "bind" or matches[0].get("RW") is not False):
+                    raise ValueError("guard source mount")
+            policies = [row.partition("=")[2] for row in gateway.get("Config", {}).get("Env", [])
+                        if row.startswith("EVA_MCP_PINNING_POLICY=")]
+            if len(policies) != 1 or policies[0] != receipt["policy"] or not isinstance(json.loads(policies[0]), dict):
+                raise ValueError("guard runtime policy")
+            overlay = json.loads(Path(compose[2]).read_text())["services"]["gateway"]
+            expected_mounts = [{"type": "bind", "source": row["source"], "target": row["target"],
+                                "read_only": True, "bind": {"create_host_path": False}} for row in files]
+            if (overlay["environment"] != {"EVA_MCP_PINNING_POLICY": receipt["policy"]}
+                    or sorted(overlay["volumes"], key=lambda m: m["target"]) != expected_mounts):
+                raise ValueError("guard overlay bindings")
+            script = ("import hashlib,json;from pathlib import Path;"
+                      "print(json.dumps({p:hashlib.sha256(Path(p).read_bytes()).hexdigest() for p in "
+                      + repr(sorted(targets)) + "}))")
+            observed = json.loads(cls._run([DOCKER, "exec", "eva2-mcp-gateway",
+                                           "/app/.venv/bin/python", "-c", script], timeout=15))
+            if observed != {row["target"]: row["sha256"] for row in files}:
+                raise ValueError("guard installed file digest")
+        except (OSError, ValueError, TypeError, KeyError, AttributeError) as exc:
+            raise QuiescentCutoverError("connector transport guard is absent or differs") from exc
 
     @staticmethod
     def _verify_connector(inspected: dict[str, Any], settings: dict[str, str] | None) -> None:

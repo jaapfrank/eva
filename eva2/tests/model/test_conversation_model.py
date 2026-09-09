@@ -2377,6 +2377,36 @@ def test_web_research_uses_built_in_search_and_requires_cited_sources(
     assert "gevolgtrekking" in bodies[0]["instructions"]
 
 
+def test_web_research_supports_one_named_primary_document(monkeypatch, tmp_path):
+    from eva.adapters.postgres.conversation_actions import PostgresConversationActions
+
+    model = PydanticConversationModel(auth_file=tmp_path / "unused-auth.json")
+    bodies = []
+    source = ResearchSource("GitMCP documentation", "https://github.com/idosal/git-mcp")
+
+    def request(body):
+        bodies.append(body)
+        return "# GitMCP\n\nControleer het officiële endpoint en de beperkingen.", (source,), ()
+
+    monkeypatch.setattr(model, "_request_research", request)
+    arguments = {"question": "Lees de officiële GitMCP-documentatie.",
+                 "title": "GitMCP aansluiten", "options": ["GitMCP"]}
+    assert PostgresConversationActions._validated_research_arguments(arguments) == arguments
+    artifact = model.research_current_options(
+        question=arguments["question"], title=arguments["title"],
+        options=("GitMCP",), researched_at=NOW)
+    assert artifact.sources == (source,)
+    assert "Verzin geen alternatieven" in bodies[0]["instructions"]
+    with pytest.raises(ConversationModelError, match="primary source for Playwright"):
+        model.research_current_options(
+            question="Vergelijk GitMCP en Playwright.", title="Vergelijking",
+            options=("GitMCP", "Playwright"), researched_at=NOW)
+    for invalid in ([], ["A"] * 6, [""]):
+        with pytest.raises(ValueError):
+            model.research_current_options(question="Read docs", title="Docs",
+                                           options=tuple(invalid), researched_at=NOW)
+
+
 def test_web_research_sse_parser_preserves_clickable_citations() -> None:
     annotations = [
         {"type": "url_citation", "title": "A", "url": "https://a.example/x"},

@@ -2504,7 +2504,7 @@ class PostgresConversationActions:
             options = raw.get("options")
             if (
                 not isinstance(options, list)
-                or not 3 <= len(options) <= 5
+                or not 1 <= len(options) <= 5
                 or any(
                     not isinstance(option, str)
                     or not option.strip()

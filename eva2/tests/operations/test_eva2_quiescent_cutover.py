@@ -1194,12 +1194,15 @@ def test_connector_autonomy_seals_the_two_additional_files_without_extra_mount(m
     import json
     from types import SimpleNamespace
     from tools.eva2_quiescent_cutover import CONNECTOR_MANIFEST, CONNECTOR_FLAG, MANIFEST
+    guard_path, guard, guard_gateway = _prepared_transport_guard(tmp_path)
     directory = tmp_path / "access-autonomy"
     directory.mkdir(mode=0o700)
     files = {"token": "TOKEN_SHA256", "catalog.json": "CATALOG_SHA256",
              "mandate.json": "AUTONOMY_MANDATE_SHA256", "registration-token": "REGISTRATION_TOKEN_SHA256"}
     values = {CONNECTOR_FLAG: "true", "EVA_MCP_GATEWAY_URL": "http://eva2-mcp-gateway:4444",
-              "EVA_MCP_GATEWAY_IMAGE_ID": "sha256:" + "b" * 64,
+              "EVA_MCP_GATEWAY_IMAGE_ID": guard["upstreamImage"],
+              "EVA_MCP_GATEWAY_GUARD_RECEIPT_FILE": str(guard_path),
+              "EVA_MCP_GATEWAY_GUARD_RECEIPT_SHA256": hashlib.sha256(guard_path.read_bytes()).hexdigest(),
               "EVA_MCP_GATEWAY_ACCESS_DIR_HOST": str(directory), "EVA_MCP_GATEWAY_NETWORK_NAME": "eva2-connectors",
               "EVA_MCP_GATEWAY_ALLOW_PLAIN_HTTP": "true", "EVA_MCP_GATEWAY_PRINCIPAL_SHA256_ALLOWLIST": "a" * 64,
               "EVA_MCP_AUTONOMY_MANDATE_FILE": "/run/eva/connectors/mcp/mandate.json",
@@ -1222,8 +1225,9 @@ def test_connector_autonomy_seals_the_two_additional_files_without_extra_mount(m
     original_private = SystemBackend._private_file
     verified_files = []
     def private_file(path, *, mode, uid):
-        assert uid == 65532 and mode == 0o600
-        verified_files.append(path.name)
+        assert uid in {0, 65532} and mode == 0o600
+        if uid == 65532:
+            verified_files.append(path.name)
         original_private(path, mode=mode, uid=os.getuid())
     monkeypatch.setattr(SystemBackend, "_private_file", staticmethod(private_file))
     inspections = []
@@ -1232,16 +1236,21 @@ def test_connector_autonomy_seals_the_two_additional_files_without_extra_mount(m
         if command[1:3] == ["network", "inspect"]:
             return json.dumps([{"Name": "eva2-connectors", "Internal": True, "Id": "network-id",
                                 "Containers": {"gateway-id": {}}}])
+        if command[1:3] == ["exec", "eva2-mcp-gateway"]:
+            assert command[3:5] == ["/app/.venv/bin/python", "-c"]
+            return json.dumps({row["target"]: row["sha256"] for row in guard["files"]})
         assert command[1:] == ["inspect", "eva2-mcp-gateway"]
-        return json.dumps([{"Id": "gateway-id", "Name": "/eva2-mcp-gateway", "State": {"Running": True},
-                            "Image": "sha256:" + "b" * 64,
+        return json.dumps([{**guard_gateway, "Id": "gateway-id", "Name": "/eva2-mcp-gateway", "State": {"Running": True},
+                            "Image": guard["upstreamImage"],
                             "NetworkSettings": {"Networks": {"eva2-connectors": {
                                 "NetworkID": "network-id", "Aliases": ["eva2-mcp-gateway"]}}}}])
     monkeypatch.setattr(SystemBackend, "_run", staticmethod(run))
     assert SystemBackend._connector_settings(values) == {k: v for k, v in values.items() if k != CONNECTOR_FLAG}
     assert set(verified_files) == set(files)
-    assert len(inspections) == 2
+    assert len(inspections) == 3
     for changes in (
+        {"EVA_MCP_GATEWAY_GUARD_RECEIPT_FILE": ""},
+        {"EVA_MCP_GATEWAY_GUARD_RECEIPT_SHA256": ""},
         {"EVA_MCP_GATEWAY_AUTONOMY_MANDATE_SHA256": ""},
         {"EVA_MCP_GATEWAY_REGISTRATION_TOKEN_SHA256": ""},
         {"EVA_MCP_GATEWAY_AUTONOMY_MANDATE_SHA256": "z" * 64},
@@ -1270,11 +1279,104 @@ def test_connector_autonomy_seals_the_two_additional_files_without_extra_mount(m
         "EVA_MCP_REGISTRATION_EXCLUSIVE_OWNER_GATEWAY"), "")}
     with pytest.raises(QuiescentCutoverError, match="digest pair"):
         SystemBackend._connector_settings(disabled)
-    for key in ("EVA_MCP_GATEWAY_AUTONOMY_MANDATE_SHA256", "EVA_MCP_GATEWAY_REGISTRATION_TOKEN_SHA256"):
+    for key in ("EVA_MCP_GATEWAY_AUTONOMY_MANDATE_SHA256", "EVA_MCP_GATEWAY_REGISTRATION_TOKEN_SHA256",
+                "EVA_MCP_GATEWAY_GUARD_RECEIPT_FILE", "EVA_MCP_GATEWAY_GUARD_RECEIPT_SHA256"):
         disabled.pop(key)
     with pytest.raises(QuiescentCutoverError, match="unexpected files"):
         SystemBackend._connector_settings(disabled)
-    assert len(inspections) == 2  # all altered configurations failed before Docker inspection
+    assert len(inspections) == 3  # all altered configurations failed before Docker inspection
     for name in ("mandate.json", "registration-token"):
         (directory / name).unlink()
     assert SystemBackend._connector_settings(disabled) is not None
+
+
+def _prepared_transport_guard(tmp_path):
+    import hashlib
+    import importlib.util
+    import json
+    source = Path(__file__).resolve().parents[2] / "deploy/mcp-autonomy/prepare.py"
+    spec = importlib.util.spec_from_file_location("guard_preparation_test", source)
+    preparation = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(preparation)
+    directory = tmp_path / "transport-guard"
+    directory.mkdir(mode=0o700)
+    code = directory / "code"
+    hashes, mounts = {}, []
+    for relative in (*preparation.INPUTS, "mcpgateway/eva_mcp_pinning.py"):
+        path = code / relative
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text("sealed fixture source " + relative)
+        hashes[relative] = hashlib.sha256(path.read_bytes()).hexdigest()
+        mounts.append({"type": "bind", "source": str(path), "target": "/app/" + relative,
+                       "read_only": True, "bind": {"create_host_path": False}})
+    policy = json.dumps({"owner_networks": ["10.0.20.0/24"], "blocked_addresses": ["10.0.20.46"],
+                         "filesystem_origin": "http://filesystem:9000", "filesystem_address": "172.30.0.3"})
+    overlay = directory / "pinning.compose.json"
+    overlay.write_text(json.dumps({"services": {"gateway": {
+        "environment": {"EVA_MCP_PINNING_POLICY": policy}, "volumes": mounts}}}))
+    base, egress, environment = (directory / name for name in ("base.yml", "egress.yml", "provider.env"))
+    base.write_text("services: {gateway: {}}")
+    egress.write_text("networks: {egress: {}}")
+    environment.write_text("SYNTHETIC=fixture")
+    receipt_path = directory / "guard-receipt.json"
+    receipt = preparation.seal_guard(overlay, base_compose=base, egress_compose=egress,
+        environment_file=environment, receipt_path=receipt_path, effective_file_sha256=hashes)
+    assert receipt["recreateCommand"] == ["/usr/bin/docker", "compose", "--project-name", "eva2-workspace-provider",
+        "--env-file", str(environment), "--file", str(base), "--file", str(egress),
+        "--file", str(overlay), "up", "--detach", "--no-deps", "gateway"]
+    assert receipt["rollback"]["requiresAutonomyDisabled"] is True
+    assert str(overlay) not in receipt["rollback"]["command"]
+    return receipt_path, receipt, {"Image": receipt["upstreamImage"],
+        "Config": {"Env": ["EVA_MCP_PINNING_POLICY=" + policy]},
+        "Mounts": [{"Type": "bind", "Source": item["source"], "Destination": item["target"], "RW": False}
+                   for item in mounts]}
+
+
+def test_connector_guard_refuses_recreated_gateway_or_changed_policy_and_source(monkeypatch, tmp_path):
+    import copy
+    import hashlib
+    import json
+    path, receipt, inspected = _prepared_transport_guard(tmp_path)
+    settings = {"EVA_MCP_GATEWAY_IMAGE_ID": receipt["upstreamImage"],
+                "EVA_MCP_GATEWAY_GUARD_RECEIPT_FILE": str(path),
+                "EVA_MCP_GATEWAY_GUARD_RECEIPT_SHA256": hashlib.sha256(path.read_bytes()).hexdigest()}
+    original_private = SystemBackend._private_file
+    monkeypatch.setattr(SystemBackend, "_private_file", staticmethod(
+        lambda path, *, mode, uid: original_private(path, mode=mode, uid=os.getuid())))
+    calls, changed = [], False
+    def run(command, **kwargs):
+        calls.append(command)
+        assert command[1:5] == ["exec", "eva2-mcp-gateway", "/app/.venv/bin/python", "-c"]
+        assert kwargs["timeout"] == 15
+        return json.dumps({row["target"]: ("a" * 64 if changed else row["sha256"]) for row in receipt["files"]})
+    monkeypatch.setattr(SystemBackend, "_run", staticmethod(run))
+    SystemBackend._verify_connector_guard(inspected, settings)
+    assert len(calls) == 1
+    for mutation in ("missing_guard", "missing_policy", "different_policy", "writable", "different_image"):
+        gateway = copy.deepcopy(inspected)
+        if mutation == "missing_guard":
+            gateway["Mounts"] = []
+        elif mutation == "missing_policy":
+            gateway["Config"]["Env"] = []
+        elif mutation == "different_policy":
+            gateway["Config"]["Env"] = ['EVA_MCP_PINNING_POLICY={"broader":true}']
+        elif mutation == "writable":
+            gateway["Mounts"][0]["RW"] = True
+        else:
+            gateway["Image"] = "sha256:" + "a" * 64
+        with pytest.raises(QuiescentCutoverError, match="transport guard"):
+            SystemBackend._verify_connector_guard(gateway, settings)
+    assert len(calls) == 1  # denied by inspection before reading installed files
+    changed = True
+    with pytest.raises(QuiescentCutoverError, match="transport guard"):
+        SystemBackend._verify_connector_guard(inspected, settings)
+    changed = False
+    original = Path(receipt["files"][0]["source"])
+    content = original.read_bytes()
+    original.write_text("unexpected source edit")
+    with pytest.raises(QuiescentCutoverError, match="transport guard"):
+        SystemBackend._verify_connector_guard(inspected, settings)
+    original.write_bytes(content)
+    path.write_text(path.read_text() + "\n")
+    with pytest.raises(QuiescentCutoverError, match="transport guard"):
+        SystemBackend._verify_connector_guard(inspected, settings)

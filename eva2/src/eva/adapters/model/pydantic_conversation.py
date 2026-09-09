@@ -411,13 +411,13 @@ _ACTION_TOOLS: dict[str, dict[str, Any]] = {
         ),
         options=_schema(
             (
-                "De drie tot vijf concrete producten, projecten of routes die "
+                "De één tot vijf concrete producten, projecten of routes die "
                 "afzonderlijk met hun eigen primaire bron moeten worden getoetst."
             ),
             type_="array",
-            items={"type": "string"},
+            items={"type": "string", "minLength": 1, "maxLength": 120},
             maxItems=5,
-            minItems=3,
+            minItems=1,
         ),
         title=_schema("Korte menselijke titel voor het blijvende document."),
     ),
@@ -1318,7 +1318,7 @@ class PydanticConversationModel:
             or len(question) > 2_000
             or not title
             or len(title) > 200
-            or not 3 <= len(options) <= 5
+            or not 1 <= len(options) <= 5
             or any(not option.strip() or len(option) > 120 for option in options)
         ):
             raise ValueError("research request is invalid")
@@ -1328,7 +1328,7 @@ class PydanticConversationModel:
             "input": [
                 {
                     "content": (
-                        f"Te vergelijken opties: {', '.join(options)}\n\n{question}"
+                        f"Te onderzoeken onderwerpen: {', '.join(options)}\n\n{question}"
                     ),
                     "role": "user",
                     "type": "message",
@@ -1337,7 +1337,9 @@ class PydanticConversationModel:
             "instructions": (
                 "Je bent Eva en maakt een zelfstandig bruikbaar Nederlandstalig "
                 "onderzoeksdocument in Markdown. Zoek actuele informatie op het web. "
-                "Vergelijk exact het gevraagde aantal opties. Gebruik voor iedere optie "
+                "Onderzoek exact de opgegeven onderwerpen; vergelijk ze wanneer de "
+                "vraag daarom vraagt. Verzin geen alternatieven bij één onderwerp. "
+                "Gebruik voor ieder onderwerp "
                 "minstens één primaire bron: officiële productdocumentatie, de maker, "
                 "een overheid, een register of oorspronkelijk onderzoek; gebruik geen "
                 "vergelijkingssite als bewijs voor een primaire claim. Benoem expliciet "

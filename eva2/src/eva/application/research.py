@@ -46,8 +46,8 @@ class ResearchArtifact:
             raise ValueError("research question is invalid")
         if not self.content.strip() or len(self.content.encode("utf-8")) > 262_144:
             raise ValueError("research content is invalid")
-        if len(self.sources) < 3:
-            raise ValueError("research requires at least three cited sources")
+        if len(self.sources) < 1:
+            raise ValueError("research requires at least one cited source")
         if len({source.url for source in self.sources}) != len(self.sources):
             raise ValueError("research sources must be unique")
         if not self.provider.strip():
