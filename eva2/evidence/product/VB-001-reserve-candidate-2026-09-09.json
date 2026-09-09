@@ -1,0 +1,62 @@
+{
+  "contract": "EvaProductEvidence/v1",
+  "taskId": "VB-001",
+  "observedAt": "2026-09-09T01:36:51.795425+00:00",
+  "previousGoalTurnClassification": "progress",
+  "status": "complete_candidate_built_scanned_required_gate_running",
+  "sourceCommit": "5eb98f8336fa22a586d2accd514dde37774d4186",
+  "imageId": "sha256:e6e33b0be32b7f4a1c3d04da55f8c903998d00fea88e50d817897111e92a35cc",
+  "archiveSha256": "1f6c8e53da6a539d6e6755851c857914355dcef5005b1f37cc016fd8d9b99034",
+  "scan": {
+    "imageId": "sha256:e6e33b0be32b7f4a1c3d04da55f8c903998d00fea88e50d817897111e92a35cc",
+    "sourceCommit": "5eb98f8336fa22a586d2accd514dde37774d4186",
+    "archiveSha256": "1f6c8e53da6a539d6e6755851c857914355dcef5005b1f37cc016fd8d9b99034",
+    "counts": {
+      "HIGH": 0,
+      "CRITICAL": 0
+    },
+    "sbomPackageCount": 75,
+    "databaseUpdatedAt": "2026-08-31T07:08:27.708070973Z"
+  },
+  "licenseInventory": {
+    "status": "component_versions_and_license_declarations_unchanged",
+    "comparedComponentCount": 74,
+    "boundary": "Archive wrapper excluded; existing license exceptions apply."
+  },
+  "packagedWorkers": {
+    "status": "passed",
+    "results": [
+      {
+        "enabled": false,
+        "cycles": 2,
+        "outboxReads": 0,
+        "threadsCleaned": true
+      },
+      {
+        "enabled": true,
+        "cycles": 2,
+        "outboxReads": 2,
+        "threadsCleaned": true
+      }
+    ],
+    "imageId": "sha256:e6e33b0be32b7f4a1c3d04da55f8c903998d00fea88e50d817897111e92a35cc",
+    "sourceCommit": "5eb98f8336fa22a586d2accd514dde37774d4186",
+    "probeSha256": "61f435e407ab97d4fd94a48ab12869f65bc439e5ef58189a2514d979e06e7caf",
+    "boundary": "Real packaged worker threads; synthetic event source/outbox, no network, database or HA."
+  },
+  "review": "co006_review verified exact source/image/archive, all input pins, scans and prepared env delta. Conditional reserve-only GO after terminal green full gate and cleanup.",
+  "gateObserverSha256": "0ac95f2de38eed28a15a187aca5baff59f5d482194ba1d2c81bacd9791969a09",
+  "reserveUpdateScriptSha256": "d7495f40d6d76e3f6bdfd234c4960c9e1f8ab977f55914a20b7b032f32b9f61c",
+  "reserveBackup": "Fresh stopped-writer snapshot and private candidate.env preserved.",
+  "runtimeState": {
+    "activeSlot": 3,
+    "reserveSlot": 4,
+    "reserveCoreAndHindsight": "stopped"
+  },
+  "next": "Await the same running complete gate, then execute the reviewed reserve restart and database preservation proof.",
+  "boundaries": [
+    "No active route or HA pipeline change.",
+    "Windows HA firewall rule remains absent; acoustic interruption unproven.",
+    "Standalone worker probe uses synthetic source/outbox; real reserve preservation remains to be tested."
+  ]
+}

@@ -2353,6 +2353,12 @@
       "evidence": "eva2/evidence/product/VB-001-reserve-background-isolation-2026-09-09.json",
       "result": "Uitrolcorrectie gebouwd; echte workerproef geslaagd. Volledige gate vond twee verouderde manifestpinnen. Beide hersteld; 70 gerichte controles groen. Kandidaat nog niet toegelaten.",
       "next": "Reseal the corrected template and test pins from clean committed source, rebuild the exact candidate and rerun the complete gate while retaining raw test results."
+    },
+    "vb001ReserveCandidate": {
+      "status": "complete_candidate_built_scanned_required_gate_running",
+      "evidence": "eva2/evidence/product/VB-001-reserve-candidate-2026-09-09.json",
+      "result": "Kandidaat 5eb98f8/e6e33b0 gebouwd en gescand; volledige gate loopt. Verse reserveback-up gereed; reserve staat stil.",
+      "next": "Await the same running complete gate, then execute the reviewed reserve restart and database preservation proof."
     }
   },
   "activeTaskId": "VB-001",
