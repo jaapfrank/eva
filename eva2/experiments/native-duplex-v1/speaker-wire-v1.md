@@ -41,3 +41,25 @@ De firmwareontvanger moet voor STOP onmiddellijk de generatie ongeldig maken, al
 `SpeakerEndpoint` bindt de verbinding aan een vooraf geconfigureerd apparaat via TLS en een afzonderlijke apparaatsleutel. Hij levert aan de zender uitsluitend de maximaal acht voorgaande nonces van hetzelfde geauthenticeerde apparaat. De zender mag maximaal acht oude receipts uit deze historie negeren. Een onbekende sessie blijft een fout; oude receipts voldoen nooit aan een nieuwe opdracht. Dit is een begrensde oplossing voor een reeds opgehaalde receipt die tijdens reconnect op de nieuwe verbinding aankomt. De historie overleeft een herstart van de service niet. Firmware-send/reset-fouten en fysieke reconnect moeten nog worden beproefd.
 
 Open voor de complete gebruikersroute: live apparaatprovisioning, aansluiting van continue microfooninvoer, native-VA/wakeword/mute-arbitrage, behoud van gehoorde gesprekcontext en veilige fysieke kandidaatproeven. Host- en loopbackproeven bewijzen geen akoestische stilte, echo-onderdrukking, p95 of menselijke acceptatie.
+
+
+## Optionele microfoonroute op dezelfde verbinding
+
+De serverextensie vereist expliciete activering van microphone_enabled. De bestaande uitvoerheader blijft gelijk. Het veld generation is voor invoer een opname-epoch en voor uitvoer de antwoordgeneratie; deze tellers zijn onafhankelijk. De bestaande gebouwde uitvoerfirmware ondersteunt deze extensie nog niet.
+
+| Richting | Code | Naam | generation | sequence | Payload |
+|---|---:|---|---|---|---|
+| apparaat naar server | 144 | WAKE | 0 | 0 | leeg |
+| server naar apparaat | 6 | CAPTURE | volgend epoch vanaf 1 | 0 | leeg |
+| apparaat naar server | 148 | CAPTURED | hetzelfde epoch | 0 | leeg |
+| apparaat naar server | 145 | MICROPHONE | hetzelfde epoch | oplopend vanaf 1 | exact 640 bytes PCM16LE mono 16 kHz, 20 ms |
+| apparaat naar server | 146 | LOCAL_STOP | actief epoch | laatst verstuurde PCM-volgnummer | leeg |
+| apparaat naar server | 147 | MUTED | actief epoch | laatst verstuurde PCM-volgnummer | leeg |
+| server naar apparaat | 7 | CAPTURE_END | actief epoch | 0 | leeg |
+| apparaat naar server | 149 | CAPTURE_ENDED | hetzelfde epoch | 0 | leeg |
+
+WAKE is alleen geldig na OPENED en maximaal eenmaal per verbinding. De server mag zonder die lokale grant geen opname starten. MICROPHONE mag pas na CAPTURED volgen. Een LOCAL_STOP maakt een volgende CAPTURE mogelijk nadat CAPTURE_ENDED is bevestigd; dit vereist geen nieuwe WAKE. MUTED staat geen nieuwe opname toe en sluit de sessie. Een normaal afgerond gesprek sluit eveneens de verbinding; opnieuw beginnen vereist een lokale wake.
+
+De apparaatimplementatie moet lokale stop/mute meteen toepassen. Een enkele geordende zender moet controlerecords en PCM ordenen. Geen oude PCM mag na CAPTURE_ENDED volgen en geen PCM mag door een nieuwe opname-epoch heen lekken. CAPTURE_ENDED is pas geldig als lokale toelating is gesloten en alle eerdere writes zijn afgehandeld. Opnamebuffer-overloop mag niet ongemerkt woorden verwijderen. Tijdens bewust sluiten negeert de server nog onderweg zijnde PCM tot CAPTURE_ENDED, maar controleert wel epoch en volgorde. Een vertraagde microfoonbevestiging blokkeert de afzonderlijke STOP/STOPPED-route niet.
+
+Reconnect maakt een nieuwe verbindingsnonce en vereist een nieuwe lokale WAKE; oude microfoonaudio kan nooit door de historie voor oude uitvoerreceipts worden toegelaten. De server staat maximaal 512 opname-epochs per verbinding toe; daarnaast blijven de bestaande sessieduur en gespreksgrenzen gelden. De native hardwaregate, echo en fysieke stop-/herstelbevestiging zijn nog niet door de localhost-proeven bewezen.

@@ -55,11 +55,13 @@ class HouseholdDuplexReplyLane:
     No alternate memory, person identity, model or tool execution is created.
     """
     def __init__(self, *, binding: HouseholdBinding, client: NativeClient,
-                 output: MediaOutput) -> None:
+                 output: MediaOutput, initial_generation: int = 0) -> None:
+        if type(initial_generation) is not int or not 0 <= initial_generation < 0xFFFFFFFF:
+            raise ValueError("invalid initial reply generation")
         self.binding = binding
         self._client = client
         self._output = output
-        self._generation = 0
+        self._generation = initial_generation
         self._submitted = False
         self._closed = False
         self._transition = asyncio.Lock()

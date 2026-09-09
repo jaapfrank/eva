@@ -157,7 +157,7 @@
         {
           "label": "IN ONTWIKKELING · SP-03",
           "value": "Eva met gewone spraak onderbreken",
-          "detail": "Speakeruitvoer en doorlopende microfoon-/gespreksregeling zijn technisch gecontroleerd. Aansluiting op de echte microfoon en native bediening volgt; nog geen nieuwe praktijktest."
+          "detail": "De serverroute doorloopt wakeword, onderbreken, stop en hervatten zonder nieuw wakeword, en mute in een netwerkproef met nagebootste speaker. De firmware-aansluiting en hardwareproef volgen."
         },
         {
           "label": "APART PROBLEEM",
@@ -438,8 +438,8 @@
           "updatedOn": "9 september",
           "status": "working",
           "title": "Onderbreken met gewone spraak",
-          "change": "Technisch afgerond: audio voor een volgende vraag blijft bewaard en stilte tijdens het antwoord start geen overbodige spraakherkenning. Stop en gelijktijdige nieuwe spraak gecontroleerd; 120 tests en onafhankelijke review groen.",
-          "result": "Nog geen praktijktest: de geteste gesprekslaag wordt aangesloten op de echte microfoon en native wakeword/stop/mute. Daarna volgen herstel en de complete speakerproef. SP-01 en SP-02 blijven geaccepteerd."
+          "change": "Serverroute aangesloten en getest: nieuwe spraak onderbreekt het antwoord; stop laat daarna een nieuwe vraag toe zonder Hey Eva; mute sluit de sessie. Netwerkproef met nagebootste speaker, 135 gerichte controles en onafhankelijke review groen.",
+          "result": "Nog geen praktijktest: dezelfde microfoon- en bedieningsregeling moet nu in de speakerfirmware komen. Daarna volgen fysiek herstel en de complete woonkamerproef. SP-01 en SP-02 blijven geaccepteerd."
         },
         {
           "id": "SP-04",
@@ -526,9 +526,9 @@
       "document": "eva2/PROJECTDOEL.md",
       "scope": "Digitale huisgenoot: zelfstandig redeneren, initiatief, onbekende vaardigheden leren, handelen, zelfverbetering en aantoonbare concurrentiewinst met open-sourcehergebruik.",
       "sessionGoal": "Het volledige doel blijft actief. Nu VB-001: doorlopende gesprekken via Home Assistant, inclusief onderbreken met gewone spraak.",
-      "currentWork": "VB-001: continue microfoonbuffer en gespreksregeling technisch afgerond als kandidaat. Eerste woorden bij vervolgvraag behouden; geen STT-sessies voor stilte tijdens afspelen; 120 gerichte controles en onafhankelijke review groen. SP-01 en SP-02 blijven geaccepteerd.",
-      "currentEvidence": "eva2/evidence/product/VB-001-continuous-microphone-session-2026-09-09.json",
-      "nextStep": "De geteste gesprekslaag aansluiten op geauthenticeerde microfooninvoer en native wakeword/stop/mute. Daarna gehoorde context, bruikbaar fysiek herstel en complete SP-03-praktijkproef.",
+      "currentWork": "VB-001: microfoontransport aangesloten op de gespreksregeling. Echte TLS-proef met nagebootste speaker doorloopt nieuwe spraak, stop zonder nieuw wakeword en mute; 135 gerichte controles en onafhankelijke review groen. SP-01 en SP-02 blijven geaccepteerd.",
+      "currentEvidence": "eva2/evidence/product/VB-001-authenticated-microphone-route-2026-09-09.json",
+      "nextStep": "Het invoerprotocol en de lokale wakeword/stop/mute-gate in de speakerfirmware opnemen, met geordende audio en bevestigingen. Daarna gehoorde context, bruikbaar fysiek herstel en complete SP-03-praktijkproef.",
       "usageClarification": {
         "date": "2026-09-07",
         "authorizedBy": "Jaap",
@@ -3959,7 +3959,11 @@
         "eva2/evidence/product/VB-001-authenticated-speaker-candidate-2026-09-09.json",
         "eva2/experiments/native-duplex-v1/microphone_session.py",
         "eva2/tests/operations/test_native_duplex_microphone_session.py",
-        "eva2/evidence/product/VB-001-continuous-microphone-session-2026-09-09.json"
+        "eva2/evidence/product/VB-001-continuous-microphone-session-2026-09-09.json",
+        "eva2/experiments/native-duplex-v1/speaker_input.py",
+        "eva2/experiments/native-duplex-v1/speaker_session.py",
+        "eva2/tests/operations/test_native_duplex_speaker_input.py",
+        "eva2/evidence/product/VB-001-authenticated-microphone-route-2026-09-09.json"
       ],
       "componentIds": [
         "api-and-runtime-composition",
@@ -4005,7 +4009,8 @@
         "pytest -q tests/operations/test_native_duplex_speaker_wire.py tests/operations/test_native_duplex_ha_pcm.py tests/operations/test_native_duplex_reply_lane.py",
         "pytest -q tests/operations/test_native_duplex_speaker_protocol.py tests/operations/test_native_duplex_speaker_stop.py",
         "pytest -q tests/operations/test_native_duplex_speaker_endpoint.py tests/operations/test_native_duplex_speaker_wire.py",
-        "pytest -q tests/operations/test_native_duplex_microphone_session.py tests/operations/test_native_duplex_reply_lane.py tests/connectors/test_home_assistant_voice.py tests/operations/test_native_duplex_speaker_endpoint.py tests/operations/test_native_duplex_speaker_wire.py"
+        "pytest -q tests/operations/test_native_duplex_microphone_session.py tests/operations/test_native_duplex_reply_lane.py tests/connectors/test_home_assistant_voice.py tests/operations/test_native_duplex_speaker_endpoint.py tests/operations/test_native_duplex_speaker_wire.py",
+        "pytest -q tests/operations/test_native_duplex_speaker_input.py tests/operations/test_native_duplex_speaker_wire.py tests/operations/test_native_duplex_speaker_endpoint.py tests/operations/test_native_duplex_reply_lane.py tests/operations/test_native_duplex_microphone_session.py tests/connectors/test_home_assistant_voice.py"
       ],
       "evidenceRequired": [
         "Onderzoek bestaande Eva2-voicebouwstenen en Bottie/HA-route; leg concrete ontbrekende media-aansluiting, providerkeuze, bestaand mandaat en verbruik vast.",

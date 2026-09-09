@@ -1,0 +1,77 @@
+{
+  "taskId": "VB-001",
+  "practiceTestId": "SP-03",
+  "recordedAt": "2026-09-09T14:22:19.297699+00:00",
+  "baseCommit": "5db9159",
+  "previousGoalTurn": "progress: committed and verified continuous microphone/session composition",
+  "status": "authenticated-server-route-tested-not-live",
+  "sourceSha256": {
+    "experiments/native-duplex-v1/speaker_input.py": "44ba94261fa2547c5e622670d5f96e30aea5f03f06a697e04447ac4641113f84",
+    "experiments/native-duplex-v1/speaker_session.py": "6874295a4c2770ddd67c0f5131ff9f97f1e585edcd3528ade46458dda7fdce8b",
+    "experiments/native-duplex-v1/speaker_wire.py": "b06a89857e96c837b5c0156a2d46b2643debc4cdb35ffb4d3977cafec0aba12f",
+    "experiments/native-duplex-v1/speaker_endpoint.py": "bf18ddbc29a333462ec2b4a895bfbc74031ae38ccace2d4af7637f510739eca7",
+    "experiments/native-duplex-v1/reply_lane.py": "e7f01b2f6ce25858e803f8fe47a09fa9a36ccc19cc637328fea4f4f8b4ce3835",
+    "tests/operations/test_native_duplex_speaker_input.py": "4ba623b8796e38e8df3563634b84ce63d25d71d2a79532db202d29f8982563ac"
+  },
+  "ownerAcceptances": {
+    "SP-01": "accepted",
+    "SP-02": "accepted",
+    "SP-03": "not-ready-for-practice"
+  },
+  "networkScenario": [
+    "Real TLS with per-device credential and existing household binding.",
+    "No CAPTURE before local WAKE; confirmed CAPTURE admits sequence-bound PCM.",
+    "Speech during pending playback interrupts answer1 and answers question2.",
+    "LOCAL_STOP stops answer2, closes capture1 and starts capture2 without another WAKE.",
+    "Question3 uses increasing output generation3 and the same configured household.",
+    "MUTED ends capture2 and connection; server rearm rejected."
+  ],
+  "targetedTests": {
+    "command": "pytest -q tests/operations/test_native_duplex_speaker_input.py tests/operations/test_native_duplex_speaker_wire.py tests/operations/test_native_duplex_speaker_endpoint.py tests/operations/test_native_duplex_reply_lane.py tests/operations/test_native_duplex_microphone_session.py tests/connectors/test_home_assistant_voice.py",
+    "passed": 135,
+    "durationSeconds": 8.09,
+    "scope": "Real localhost TLS/WebSocket. Device, detector, STT, responder and playback in the complete microphone scenario are explicit test doubles. Existing adapter tests separately use real network clients against stub servers.",
+    "negativeCases": [
+      "PCM before wake/capture confirmation",
+      "wrong nonce",
+      "sequence gap/replay",
+      "101-frame active queue overflow",
+      "wrong PCM record size",
+      "mute rearm",
+      "revoke while STOPPED and CAPTURE_ENDED delayed, with101 extra PCM frames",
+      "invalid STOPPED count with delayed CAPTURE_ENDED: all owned tasks terminal before delayed device receipt"
+    ]
+  },
+  "reviewFindingsFixed": [
+    "Close capture admission synchronously before waiting for speakerstop, preventing queue overflow during authorized3.5s stop window.",
+    "Always join microphone closure after speakerstop failure; fail pending exchanges on invalid stop counts."
+  ],
+  "independentReview": {
+    "reviewer": "co006_review",
+    "decision": "bounded GO for authenticated microphone/control server slice",
+    "previousFullSelectedTestsPassed": 134,
+    "finalDeltaInputWireEndpointTestsPassed": 45,
+    "excludes": "Physical firmware, audio, stop latency, deployment and owner acceptance."
+  },
+  "hardwareDiscovery": {
+    "source": "pinned prepared va_pipecat a538d1d1bacc8609061719f0b05c1622147ccb4b",
+    "observation": "Existing microphone path sends unframed PCM and discards old bytes on overflow; it cannot be connected unchanged to the new framed server.",
+    "historicalStutterCauseEstablished": false
+  },
+  "runtimeChange": false,
+  "speakerFlashed": false,
+  "additionalModelOrProviderCalls": 0,
+  "remaining": [
+    "Implement the framed input protocol and local wake/stop/mute gate in the firmware; existing output firmware does not understand CAPTURE.",
+    "Serialize device control/PCM writes and reject old capture epochs without silent loss.",
+    "Actually heard conversation context.",
+    "Usable physical recovery, physical echo/latency/reconnect and complete SP-03 owner test.",
+    "SP-04 false wakewords remains open."
+  ],
+  "dashboardReadback": {
+    "url": "http://127.0.0.1:44712/project-state",
+    "projectMatchesCanonicalBoard": true,
+    "SP-02": "accepted",
+    "SP-03": "working-not-ready-for-practice"
+  }
+}

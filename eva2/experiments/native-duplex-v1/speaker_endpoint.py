@@ -1,8 +1,9 @@
-"""TLS/device admission for the experimental output; no installed listening service.
+"""TLS/device admission for the experimental speaker; no installed service.
 
 The composition root supplies verified HA household bindings, credential hashes,
 existing HA PCM synthesis and a session coroutine. Remote fields cannot select
-a person, device or conversation. Continuous microphone routing is not provided.
+a person, device or conversation. Microphone routing requires explicit opt-in
+and a session owner, such as HouseholdSpeakerSession, that handles native controls.
 """
 from __future__ import annotations
 
@@ -49,7 +50,10 @@ class SpeakerEndpoint:
     def __init__(self, *, grants: tuple[SpeakerGrant, ...],
                  pcm: Callable[[str], AsyncIterator[bytes]],
                  session: Callable[[HouseholdBinding, FramedSpeakerOutput], Awaitable[None]],
-                 max_session_seconds: float = 1800, receipt_timeout: float = 3.5):
+                 max_session_seconds: float = 1800, receipt_timeout: float = 3.5,
+                 microphone_enabled: bool = False):
+        if type(microphone_enabled) is not bool:
+            raise ValueError("microphone enablement must be explicit")
         if not 1 <= len(grants) <= 64:
             raise ValueError("configure between one and 64 household speakers")
         for values in ([g.binding.device_id for g in grants],
@@ -63,6 +67,7 @@ class SpeakerEndpoint:
             raise ValueError("invalid receipt deadline")
         self._grants = tuple(grants)
         self._pcm, self._session = pcm, session
+        self._microphone_enabled = microphone_enabled
         self._max_session_seconds = max_session_seconds
         self._receipt_timeout = receipt_timeout
         self._admitted = WeakKeyDictionary()
@@ -127,7 +132,8 @@ class SpeakerEndpoint:
     async def _run(self, socket, grant):
         device = grant.binding.device_id
         output = FramedSpeakerOutput(socket=socket, pcm=self._pcm,
-                    retired_sessions=tuple(self._history[device]), receipt_timeout=self._receipt_timeout)
+                    retired_sessions=tuple(self._history[device]), receipt_timeout=self._receipt_timeout,
+                    microphone_enabled=self._microphone_enabled)
         work = disconnected = None
         try:
             async with asyncio.timeout(self._max_session_seconds):

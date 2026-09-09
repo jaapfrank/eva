@@ -23,12 +23,20 @@ class Kind(IntEnum):
     AUDIO = 3
     END = 4
     STOP = 5
+    CAPTURE = 6
+    CAPTURE_END = 7
     OPENED = 129
     BEGUN = 130
     ACCEPTED = 131
     FINISHED = 132
     STOPPED = 133
     ERROR = 134
+    WAKE = 144
+    MICROPHONE = 145
+    LOCAL_STOP = 146
+    MUTED = 147
+    CAPTURED = 148
+    CAPTURE_ENDED = 149
 
 
 HEADER = struct.Struct("!4sB3x8sIII")
@@ -63,6 +71,9 @@ class Packet:
         if self.kind == Kind.AUDIO:
             if not self.payload or len(self.payload) % 2:
                 raise WireError("invalid PCM record")
+        elif self.kind == Kind.MICROPHONE:
+            if len(self.payload) != 640:
+                raise WireError("microphone record must be 20ms PCM16 mono at 16kHz")
         elif self.kind in {Kind.ACCEPTED, Kind.FINISHED, Kind.STOPPED}:
             if len(self.payload) != 4:
                 raise WireError("receipt must contain a frame count")
@@ -102,7 +113,10 @@ class FramedSpeakerOutput:
     """
     def __init__(self, *, socket: Socket, pcm: Callable[[str], AsyncIterator[bytes]],
                  session: bytes | None = None, receipt_timeout: float = 3.5,
-                 send_timeout: float = 0.5, retired_sessions: tuple[bytes, ...] = ()) -> None:
+                 send_timeout: float = 0.5, retired_sessions: tuple[bytes, ...] = (),
+                 microphone_enabled: bool = False) -> None:
+        if type(microphone_enabled) is not bool:
+            raise ValueError("microphone enablement must be explicit")
         self._socket, self._pcm = socket, pcm
         self.session = session if session is not None else secrets.token_bytes(8)
         Packet(Kind.OPEN, self.session).encode()
@@ -127,6 +141,10 @@ class FramedSpeakerOutput:
         self._active_generation = 0
         self._open = False
         self._closing = False
+        self.microphone = None
+        if microphone_enabled:
+            from speaker_input import SpeakerMicrophone
+            self.microphone = SpeakerMicrophone(self)
 
     async def start(self) -> None:
         if self._reader is not None or self._closing:
@@ -144,6 +162,8 @@ class FramedSpeakerOutput:
     def _fail(self, error: BaseException) -> None:
         self._failure = self._failure or error
         self._open = False
+        if self.microphone is not None:
+            self.microphone.fail(error)
         for task in self._renderers.values():
             if task is not asyncio.current_task() and not task.done() and not task.cancelling():
                 task.cancel()
@@ -165,6 +185,8 @@ class FramedSpeakerOutput:
                         self._retired_receipts += 1
                         continue
                     raise WireError("speaker receipt belongs to another session")
+                if self.microphone is not None and self.microphone.receive(reply):
+                    continue
                 if reply.kind == Kind.ERROR:
                     raise WireError("speaker reported output failure")
                 key = reply.kind, reply.generation, reply.sequence
@@ -239,7 +261,9 @@ class FramedSpeakerOutput:
         try:
             reply = await self._exchange(Packet(Kind.STOP, self.session, generation), Kind.STOPPED)
             if struct.unpack("!I", reply.payload)[0] > self._sent_frames.get(generation, 0):
-                raise WireError("speaker stop frame count exceeds supplied audio")
+                error = WireError("speaker stop frame count exceeds supplied audio")
+                self._fail(error)
+                raise error
         finally:
             # Stop the hardware before joining decoder/HA cleanup. The owned
             # renderer never waits on this stop, so this cannot cancel itself.
@@ -309,6 +333,8 @@ class FramedSpeakerOutput:
 
     async def close(self) -> None:
         self._closing = True
+        if self.microphone is not None:
+            self.microphone.start_close()
         if self._closer is None:
             self._closer = asyncio.create_task(self._close())
             self._closer.add_done_callback(lambda t: t.exception() if not t.cancelled() else None)
@@ -321,12 +347,19 @@ class FramedSpeakerOutput:
                 self._owned_stop(self._highest)
             await asyncio.gather(*(asyncio.shield(t) for t in self._stops.values()))
         finally:
-            self._open = False
-            for task in self._renderers.values():
-                if not task.done() and not task.cancelling():
-                    task.cancel()
-            await asyncio.gather(*self._renderers.values(), return_exceptions=True)
-            if self._reader is not None:
-                self._reader.cancel()
-                await asyncio.gather(self._reader, return_exceptions=True)
-            await self._socket.close()
+            try:
+                if self.microphone is not None:
+                    await self.microphone.close()
+            finally:
+                await self._close_transport()
+
+    async def _close_transport(self) -> None:
+        self._open = False
+        for task in self._renderers.values():
+            if not task.done() and not task.cancelling():
+                task.cancel()
+        await asyncio.gather(*self._renderers.values(), return_exceptions=True)
+        if self._reader is not None:
+            self._reader.cancel()
+            await asyncio.gather(self._reader, return_exceptions=True)
+        await self._socket.close()
