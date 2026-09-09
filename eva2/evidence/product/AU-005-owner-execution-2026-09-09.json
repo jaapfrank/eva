@@ -1,0 +1,121 @@
+{
+  "taskId": "AU-005",
+  "implementationCommit": "39b7aa79778d2f11937ae472451f5a7ae87c7fad",
+  "status": "live_owner_route_verified_human_acceptance_pending",
+  "result": [
+    "Eigen initiatief heeft een eigenaarsoverzicht met motivatie en voortgang.",
+    "Gemaakt Markdown-bestand is via eigenaarslogin beschikbaar met inhoudshash.",
+    "Stop wordt duurzaam vastgelegd; een reeds geclaimde werker kan niet met een verouderde versie verdergaan.",
+    "Eigenaarsbinding wordt bij lezen, downloaden en stoppen opnieuw gecontroleerd."
+  ],
+  "verification": {
+    "postgres": {
+      "testsPassed": 1,
+      "seconds": 8.38,
+      "receiptDirectory": "/home/administrator/project/.eva2-artifacts/au005-owner-eslwa72a",
+      "covers": [
+        "read owner initiative",
+        "stop in-flight claim",
+        "repeat stop",
+        "stale completion rejected",
+        "no worker resurrection",
+        "new distinct initiative admitted",
+        "exact artifact content and hash",
+        "other owner denied",
+        "missing intent denied",
+        "revoked owner denied"
+      ]
+    },
+    "api": {
+      "testsPassed": 1,
+      "seconds": 1.1,
+      "covers": [
+        "authentication",
+        "reject browser-provided ownership scope",
+        "no-store response",
+        "artifact download"
+      ]
+    },
+    "candidateImport": "passed in exact image; runtime and packaged dashboard load",
+    "fullSuiteRepeated": false,
+    "externalModelCallsInTests": 0,
+    "browser": {
+      "browser": "Chromium headless",
+      "runtime": "live slot 4",
+      "owner_dashboard_rendered": null,
+      "status": "harness_timeout_30_seconds",
+      "mutations": 0,
+      "rerun": false
+    }
+  },
+  "candidate": {
+    "source_commit": "39b7aa79778d2f11937ae472451f5a7ae87c7fad",
+    "base_image": "sha256:cb31295d926e85e7d0328abe611f1cfff522324668991c837270f65e8d4dcfec",
+    "image_id": "sha256:13565aff75355c73f3df532c86da010f6965b8bfa091aff8d93b9c753f48d9ec",
+    "method": "existing_runtime_with_git_archived_source",
+    "dependencies_changed": false,
+    "network": "none"
+  },
+  "remaining": [
+    "Een werkelijk bruikbaar spontaan resultaat en menselijke waardering; eerste live readback had nul initiatieven.",
+    "Brede vergelijking met Bottie en concurrenten blijft een afzonderlijke praktijkproef."
+  ],
+  "scope": "Technische uitvoerroute; geen bewijs dat Eva de concurrenten of Bottie al verslaat.",
+  "processChange": "Jaap vraagt levering en voortgang. Gerichte controles voor deze wijziging; geen herhaling van de brede releaseproeven zonder aanleiding.",
+  "live": {
+    "image_id": "sha256:13565aff75355c73f3df532c86da010f6965b8bfa091aff8d93b9c753f48d9ec",
+    "initiative_route_status": 200,
+    "anonymous_status": 401,
+    "contract": "EvaOwnerInitiatives/v1",
+    "card_count": 0,
+    "no_store": true,
+    "dashboard_status": 200,
+    "dashboard_html_status": 200
+  },
+  "cutover": {
+    "backgroundIsolationBoundary": "Legacy images may ignore the switch; configuration readback is not worker isolation proof.",
+    "backgroundWorkConfiguredAfterActivation": true,
+    "backgroundWorkConfiguredDuringStaging": false,
+    "contract": "Eva2QuiescentCutoverReceipt/v1",
+    "eva1Backup": {
+      "bytes": 311050240,
+      "filename": "eva1-before-slot3-to-slot4-20260909T190435Z.db",
+      "quickCheck": "ok",
+      "sha256": "0926f56dfbb3d49f70cf69f249b20ef0db26f2526468bf3a95fffbb1874f49c8"
+    },
+    "eva1HttpStatuses": {
+      "/": 200,
+      "/api/capabilities": 200,
+      "/api/health": 200,
+      "/api/overview": 200,
+      "/api/workstatus": 200
+    },
+    "issuedAt": "2026-09-09T19:06:08.521049+00:00",
+    "previousDropinSha256": "81f1b2b687a641ae5349aa3c13198f6ad3ac1d7c88ee351bc3c559f22eee28a1",
+    "proactiveCredentialWithheldDuringStaging": true,
+    "proactiveDeliveryEnabled": true,
+    "sourcePort": 44710,
+    "sourceWritersStopped": true,
+    "status": "switched",
+    "synchronizedDatabases": {
+      "memory": {
+        "countDigest": "103e45cc4a1340ea4cd286174347163750eb7bbe10a68f3e79ffe70145f64e9c",
+        "dataDigest": "6b10f9aa347a8406a073cdfb28d86104389ba14bea5682ce954e195d7d08578e",
+        "dumpBytes": 2416807,
+        "dumpSha256": "c1b36d15468ab8f05cab559964d6f546598159bd278aa34973c76df3d716a7b4",
+        "schemaDigest": "d89bfebdbfeb55e8618e81286bf24a42b838bfe577e84f6db9b93b43f5832172",
+        "tableCount": 23
+      },
+      "operational": {
+        "countDigest": "dd98b59cbc4623a2126466910686a869082fff685fe87f6196549cdf2612a19a",
+        "dataDigest": "52459bede1ed0e38201c0c1b359f9c5d4156ffef0c4004861dd72922eb3add57",
+        "dumpBytes": 12489819,
+        "dumpSha256": "2ee28465ea831d474c25c6ca28db19049ae91881a94949a1d080a800f9d933a7",
+        "schemaDigest": "32acc5b66e349dfd5b385e4828897575ad543ebb5f2638b8880dff1cacb7fb39",
+        "tableCount": 48
+      }
+    },
+    "targetPort": 44711,
+    "targetReady": true
+  }
+}

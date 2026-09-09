@@ -30,8 +30,8 @@
       "nonclaims": "No new deployment or model calls for this closure. Human usefulness/timing, full backlog completion, streaming and all later product outcomes remain open."
     },
     "projectDashboard": {
-      "runtimePort": 44710,
-      "runtimeLabel": "Slot 3",
+      "runtimePort": 44711,
+      "runtimeLabel": "Slot 4",
       "roadmap": [
         {
           "id": "daily",
@@ -47,6 +47,7 @@
             "CO-006",
             "TL-001",
             "TL-002",
+            "AU-001",
             "AU-005",
             "VB-001",
             "VB-002",
@@ -59,7 +60,6 @@
           "outcome": "Eén algemene toolroute, ook voor onbekende diensten en browserwerk.",
           "acceptance": "Twee echte diensten en een onbekende connector werken zonder nieuwe taakspecifieke kerncode; resultaat apart gecontroleerd, mandaat intrekbaar.",
           "taskIds": [
-            "AU-001",
             "TL-003",
             "VB-003",
             "VB-004"
@@ -111,7 +111,7 @@
           ]
         }
       ],
-      "priorityDecision": "Jaap wil voortgang op het volledige project. Spraakinstallatie is apart open; nu AU-005: eigen initiatief daadwerkelijk tot resultaat brengen.",
+      "priorityDecision": "Jaap vraagt complete mogelijkheden en voortgang. Eigen initiatief is technisch opgeleverd; praktijkbeoordeling houdt algemene taakuitvoering niet tegen.",
       "dashboardVerification": {
         "status": "local_browser_verified_not_full_product_acceptance",
         "priorityRevision": {
@@ -150,9 +150,14 @@
       },
       "summary": [
         {
-          "label": "ACTIEF · AU-005",
-          "value": "Eigen idee wordt uitgevoerd",
-          "detail": "Gebouwd en gericht getest: spontaan idee → onderzoek → gemaakt bestand. Nog niet live; eigenaarsinzage en stoppen worden aangesloten."
+          "label": "OPGELEVERD · LIVE",
+          "value": "Eigen idee → uitgevoerd werk",
+          "detail": "Eigen initiatieven kunnen onderzoek en een bestand opleveren. Inzage, download en duurzaam stoppen staan live in het eigenaarsdashboard. Praktijkwaardering blijft open."
+        },
+        {
+          "label": "NU · AU-001",
+          "value": "Handelen binnen jouw mandaat",
+          "detail": "De bestaande algemene actieroute bruikbaar afronden; geen herhaling van gesloten spraak- of initiatiefwerk zonder nieuwe fout."
         },
         {
           "label": "BEVESTIGD · SP-01 + SP-02",
@@ -182,8 +187,8 @@
       ],
       "nextOutcomes": [
         {
-          "title": "Met Eva praten via Telegram of Home Assistant",
-          "detail": "De stemfunctie aansluiten op jouw Telegram en de bestaande Home Assistant-spraakapparaten. De losse browserpagina was een technische proef en sluit deze opdracht niet af."
+          "title": "Eigen initiatieven bekijken",
+          "detail": "Open het eigenaarsdashboard op localhost:44711/internal/v1/dashboard. Hier verschijnen Eva’s zelfgekozen werk, gemaakte bestanden en de stopknop; er is geen extra test van spraak nodig."
         },
         {
           "title": "Laat Eva een document bewaren",
@@ -220,7 +225,7 @@
           "live": "yes",
           "accepted": "no",
           "gap": "Jouw zichtbare ervaring bevestigen",
-          "detail": "Nu actief op slot 3; eerdere proef op slot 4: bestaande antwoordherhaling na omschakeling exact behouden. De echte privéclient ontving 17 tekststukjes en las het eindantwoord exact terug zonder nieuwe modelcall. Een afzonderlijke gelabelde ontwikkelcontrole kreeg vier Telegram-draftbevestigingen en één definitief bericht. Interne tussenstappen blijven verborgen; serverbevestiging is geen menselijke acceptatie.",
+          "detail": "Nu actief op slot 4; eerdere proef op slot 4: bestaande antwoordherhaling na omschakeling exact behouden. De echte privéclient ontving 17 tekststukjes en las het eindantwoord exact terug zonder nieuwe modelcall. Een afzonderlijke gelabelde ontwikkelcontrole kreeg vier Telegram-draftbevestigingen en één definitief bericht. Interne tussenstappen blijven verborgen; serverbevestiging is geen menselijke acceptatie.",
           "evidence": "CO-007 · livecontrole 8 september · onafhankelijke technische GO"
         },
         {
@@ -258,9 +263,9 @@
           "tested": "partial",
           "live": "partial",
           "accepted": "no",
-          "gap": "Nut en tijdigheid beoordelen",
-          "detail": "Om 23:34 bundelde Eva twaalf oude voedingswaarschuwingen: één modelaanroep, 2799 gemeten tokens, één door Telegram bevestigde samenvatting. Zij vermeldde dat de waarschuwing nu niet actief is. Een gewone bewegingsmelding bleef stil (683 tokens). Dit bewijst de werkende route, niet dat de historische melding nog nuttig was of de hele achterstand is verwerkt.",
-          "evidence": "RT-001 · livecontrole 7 september 23:41 · groepsbesluit, Telegrambewijs en stiltecontrole"
+          "gap": "Praktijkresultaat en waardering; uitvoerroute is live",
+          "detail": "De spontane beslisser is live verbonden met duurzaam onderzoek en het maken van een bestand. Het eigenaarsdashboard toont de initiatieven en biedt downloaden en stoppen. Stop tijdens een lopende taak en hervatten zijn gericht gecontroleerd. De eerste live uitlezing bevatte nog geen initiatief; nut, eigenheid en voorsprong op Bottie zijn nog niet beoordeeld.",
+          "evidence": "AU-005 · live op slot 4 · eigenaarsoverzicht en stop gecontroleerd"
         },
         {
           "id": "tools",
@@ -530,10 +535,10 @@
       "authorizedBy": "Jaap",
       "document": "eva2/PROJECTDOEL.md",
       "scope": "Digitale huisgenoot: zelfstandig redeneren, initiatief, onbekende vaardigheden leren, handelen, zelfverbetering en aantoonbare concurrentiewinst met open-sourcehergebruik.",
-      "sessionGoal": "Het volledige projectdoel blijft actief. AU-005 verbindt eigen initiatief met daadwerkelijk uitgevoerd werk; open spraakinstallatie blokkeert dit niet.",
-      "currentWork": "AU-005: spontaan idee naar duurzaam onderzoek en gemaakt bestand gebouwd en gericht getest; nog niet live. Nu eigenaarsinzage en stoppen aansluiten.",
-      "currentEvidence": "eva2/evidence/product/AU-005-spontaneous-followthrough-2026-09-09.json",
-      "nextStep": "Maak eigen initiatieven zichtbaar en stopbaar via de bestaande eigenaarsroute; daarna complete kandidaat uitrollen en werkelijk resultaat controleren.",
+      "sessionGoal": "Het volledige projectdoel blijft actief. Eigen initiatief is technisch live; nu toegestane algemene handelingen bruikbaar afronden.",
+      "currentWork": "AU-001: bestaande eigenaarmandaten en algemene actieroute naar werkelijke gebruikersopdrachten brengen. AU-005-uitvoerroute live; praktijkbeoordeling staat apart.",
+      "currentEvidence": "eva2/evidence/product/AU-005-owner-execution-2026-09-09.json",
+      "nextStep": "De live catalogus bevat 10 Home Assistant-acties en alleen document opslaan via de algemene connectorroute. Breid de bruikbare bestaande aansluiting uit voor dagelijks computerwerk binnen hetzelfde mandaat.",
       "usageClarification": {
         "date": "2026-09-07",
         "authorizedBy": "Jaap",
@@ -2525,7 +2530,12 @@
           "boundary": "Definitieve firmware en serviceconfiguratie voorbereid en gereviewd; nog niet geïnstalleerd of door gezin geaccepteerd."
         }
       ],
-      "hardwareDoesNotBlockProject": true
+      "hardwareDoesNotBlockProject": true,
+      "latestOwnerDirection": {
+        "date": "2026-09-09",
+        "meaning": "Complete mogelijkheden opleveren en doorgaan; geen herhaalde brede controles of heropening van afgerond werk zonder concrete fout.",
+        "implementation": "Eigen initiatief technisch live geleverd; praktijkbeoordeling apart en AU-001 actief. Twee gerichte controles voor de nieuwe bediening, bestaande runtime hergebruikt."
+      }
     },
     "deferredVoiceWork": {
       "reason": "Jaap weigert USB en vraagt door te werken aan het volledige project; hardware-installatie is geen projectbrede afhankelijkheid.",
@@ -2769,9 +2779,106 @@
         ]
       },
       "doNotRequestUsbAgain": true
+    },
+    "initiativeDelivery": {
+      "task": {
+        "id": "AU-005",
+        "order": 138,
+        "area": "Initiatief",
+        "title": "Passend initiatief en kansen bewijzen",
+        "outcome": "Meer gewaardeerd eigen initiatief dan Bottie: humor, nieuwsgierigheid, zelfgekozen onderzoek, creatieve bijdragen en kansen. Eva begint en vervolgt zelf werk, voert binnen bestaand mandaat uit en controleert het resultaat. Gezin beoordeelt eigenheid, plezier, nut en hinder; alleen meer berichten telt niet als winst.",
+        "status": "in_progress",
+        "stateDetails": {
+          "baseCommit": null,
+          "implementationCommit": null,
+          "evidenceCommit": null,
+          "reviewEvidencePaths": [],
+          "blockerReason": null
+        },
+        "ownerRole": "architecturelead",
+        "reviewerRole": "memoryreviewer",
+        "dependsOn": [
+          "TL-002"
+        ],
+        "changePaths": [
+          "eva2/src/eva/application/free_will.py",
+          "eva2/src/eva/application/personal_interests.py",
+          "eva2/src/eva/adapters/postgres/conversation_actions.py",
+          "eva2/src/eva/adapters/postgres/sensory_events.py",
+          "eva2/src/eva/adapters/model/pydantic_conversation.py",
+          "eva2/src/eva/bootstrap/runtime.py",
+          "eva2/tests/application/test_free_will.py",
+          "eva2/tests/application/test_personal_interests.py",
+          "eva2/tests/model/test_conversation_model.py",
+          "eva2/tests/postgres/test_sensory_admission.py",
+          "eva2/evidence/product/AU-005-spontaneous-followthrough-2026-09-09.json",
+          "eva2/src/eva/adapters/postgres/owner_initiatives.py",
+          "eva2/src/eva/adapters/api/dashboard_initiatives.py",
+          "eva2/src/eva/adapters/api/app.py",
+          "eva2/experiments/react-admin-dashboard-v1/src/owner-initiatives.jsx",
+          "eva2/experiments/react-admin-dashboard-v1/src/main.jsx",
+          "eva2/tests/postgres/test_owner_initiatives.py",
+          "eva2/tests/api/test_dashboard_initiatives.py",
+          "eva2/evidence/product/AU-005-owner-execution-2026-09-09.json",
+          "eva2/src/eva/adapters/api/dashboard_static/assets/index-BUCrzRot.css",
+          "eva2/src/eva/adapters/api/dashboard_static/assets/index-DEVkS50K.js",
+          "eva2/src/eva/adapters/api/dashboard_static/eva-dashboard-assets.json",
+          "eva2/src/eva/adapters/api/dashboard_static/index.html"
+        ],
+        "componentIds": [
+          "api-and-runtime-composition",
+          "conversation-model-adapter",
+          "core-behavior-tests",
+          "core-semantics",
+          "durable-persistence",
+          "integration-and-storage-tests"
+        ],
+        "inventoryOwners": [
+          "eva-runtime",
+          "verification"
+        ],
+        "testCommands": [
+          "pytest -q tests/application/test_free_will.py tests/application/test_personal_interests.py",
+          "python3 tools/check_current_workboard.py"
+        ],
+        "evidenceRequired": [
+          "Spontaan gekozen initiatief krijgt duurzame eigen herkomst, zonder gefingeerde gebruikersopdracht of verruimd mandaat.",
+          "Bestaande onderzoeks-/artefactroute levert resultaat; bewijs hervatten, stop en werkelijk verbruik. Menselijke waardering blijft apart."
+        ],
+        "doneWhen": [
+          "Eva kan een spontaan gekozen initiatief duurzaam aannemen en via de bestaande uitvoerroute een controleerbaar resultaat leveren.",
+          "Gerichte regressies, veilige ingebruikname en onafhankelijke beoordeling zijn afgerond; gezinswaardering en concurrentiewinst worden niet verzonnen."
+        ]
+      },
+      "status": "technical_route_live_practice_pending",
+      "evidence": "eva2/evidence/product/AU-005-owner-execution-2026-09-09.json",
+      "rule": "De opgeleverde uitvoerroute blijft gesloten zonder nieuwe fout; praktijkbeoordeling blokkeert geen ander bouwwerk.",
+      "humanAccepted": false
+    },
+    "liveCapabilityFinding": {
+      "date": "2026-09-09",
+      "method": "Read-only provider catalog construction inside active slot 4; no model call or tool execution.",
+      "providers": [
+        "home_assistant",
+        "mcp_gateway"
+      ],
+      "externalToolNames": [
+        "read_home_assistant_inventory",
+        "set_home_assistant_light",
+        "set_home_assistant_switch",
+        "read_home_assistant_history",
+        "read_home_assistant_state",
+        "create_home_assistant_state_automation",
+        "create_home_assistant_advanced_state_automation",
+        "plan_tuya_to_localtuya_migration",
+        "register_approved_localtuya_repository",
+        "install_approved_localtuya_package",
+        "save_workspace_document"
+      ],
+      "implication": "General gateway is present but only one workspace tool is exposed. This is the next useful delivery gap."
     }
   },
-  "activeTaskId": "AU-005",
+  "activeTaskId": "AU-001",
   "maxActiveImplementationTasks": 1,
   "statusValues": [
     "queued",
@@ -4107,11 +4214,11 @@
       ]
     },
     {
-      "id": "AU-005",
+      "id": "AU-001",
       "order": 138,
-      "area": "Initiatief",
-      "title": "Passend initiatief en kansen bewijzen",
-      "outcome": "Meer gewaardeerd eigen initiatief dan Bottie: humor, nieuwsgierigheid, zelfgekozen onderzoek, creatieve bijdragen en kansen. Eva begint en vervolgt zelf werk, voert binnen bestaand mandaat uit en controleert het resultaat. Gezin beoordeelt eigenheid, plezier, nut en hinder; alleen meer berichten telt niet als winst.",
+      "area": "Zelfstandigheid",
+      "title": "Eigenaarmandaat uitvoeren",
+      "outcome": "Eva handelt binnen het afgesproken mandaat zonder steeds opnieuw te vragen.",
       "status": "in_progress",
       "stateDetails": {
         "baseCommit": null,
@@ -4126,72 +4233,64 @@
         "TL-002"
       ],
       "changePaths": [
-        "eva2/src/eva/application/free_will.py",
-        "eva2/src/eva/application/personal_interests.py",
+        "eva2/src/eva/operations/action_chain_effect_authority.py",
         "eva2/src/eva/adapters/postgres/conversation_actions.py",
-        "eva2/src/eva/adapters/postgres/sensory_events.py",
-        "eva2/src/eva/adapters/model/pydantic_conversation.py",
         "eva2/src/eva/bootstrap/runtime.py",
-        "eva2/tests/application/test_free_will.py",
-        "eva2/tests/application/test_personal_interests.py",
-        "eva2/tests/model/test_conversation_model.py",
-        "eva2/tests/postgres/test_sensory_admission.py",
-        "eva2/evidence/product/AU-005-spontaneous-followthrough-2026-09-09.json"
+        "eva2/tools/persist_home_effect_policy.py",
+        "eva2/tests/tools/test_persist_home_effect_policy.py"
       ],
       "componentIds": [
         "api-and-runtime-composition",
-        "conversation-model-adapter",
-        "core-behavior-tests",
-        "core-semantics",
         "durable-persistence",
-        "integration-and-storage-tests"
+        "operations-and-release-tests",
+        "operator-workflows"
       ],
       "inventoryOwners": [
         "eva-runtime",
         "verification"
       ],
       "testCommands": [
-        "pytest -q tests/application/test_free_will.py tests/application/test_personal_interests.py",
+        "pytest -q tests/tools/test_persist_home_effect_policy.py",
         "python3 tools/check_current_workboard.py"
       ],
       "evidenceRequired": [
-        "Spontaan gekozen initiatief krijgt duurzame eigen herkomst, zonder gefingeerde gebruikersopdracht of verruimd mandaat.",
-        "Bestaande onderzoeks-/artefactroute levert resultaat; bewijs hervatten, stop en werkelijk verbruik. Menselijke waardering blijft apart."
+        "Werkelijke gebruikersopdracht uitvoeren binnen bestaand mandaat zonder onnodige toestemmingsvraag.",
+        "Effect apart teruglezen; intrekking en stoppen blijven werken."
       ],
       "doneWhen": [
-        "Eva kan een spontaan gekozen initiatief duurzaam aannemen en via de bestaande uitvoerroute een controleerbaar resultaat leveren.",
-        "Gerichte regressies, veilige ingebruikname en onafhankelijke beoordeling zijn afgerond; gezinswaardering en concurrentiewinst worden niet verzonnen."
+        "De bestaande mandaat- en actieroute voert toegestane gebruikersopdrachten daadwerkelijk uit.",
+        "Resultaat is live teruggelezen en de gebruiker ziet welke mogelijkheden beschikbaar zijn."
       ]
     }
   ],
   "milestones": [
     {
+      "id": "AU-005",
+      "area": "Initiatief",
+      "title": "Passend initiatief en kansen bewijzen",
+      "outcome": "Meer gewaardeerd eigen initiatief dan Bottie: humor, nieuwsgierigheid, zelfgekozen onderzoek, creatieve bijdragen en kansen. Eva begint en vervolgt zelf werk, voert binnen bestaand mandaat uit en controleert het resultaat. Gezin beoordeelt eigenheid, plezier, nut en hinder; alleen meer berichten telt niet als winst.",
+      "order": 139
+    },
+    {
       "id": "VB-001",
       "area": "Voice",
       "title": "Full-duplex voice leveren",
       "outcome": "Met Eva2 praten via de bestaande Telegram- of Home Assistant-aansluiting, waarbij Eva hoorbaar onderbroken kan worden en het gesprek daarna doorgaat.",
-      "order": 139
+      "order": 140
     },
     {
       "id": "VB-002",
-      "order": 140,
+      "order": 141,
       "area": "Voice",
       "title": "Passende aanwezigheid leveren",
       "outcome": "Eva zoekt spontaan contact via de beschikbare speakers en deurbel, met herkenbare identiteit en gevoel voor het moment. Gezin beoordeelt plezier, betrokkenheid en hinder; onderbreken en stop werken."
     },
     {
       "id": "CO-008",
-      "order": 141,
+      "order": 142,
       "area": "Geheugen",
       "title": "Autonoom geheugen in gezinsgesprekken bewijzen",
       "outcome": "De oorspronkelijke brede geheugenuitkomst blijft open: relevante kennis zelfstandig kiezen, gewijzigde en tijdelijke informatie goed gebruiken in gewone gesprekken en langere gezinspraktijk. Geen handmatig geheugenbeheer; familie beoordeelt continuïteit en vertrouwen."
-    },
-    {
-      "id": "AU-001",
-      "order": 142,
-      "area": "Zelfstandigheid",
-      "title": "Eigenaarmandaat uitvoeren",
-      "outcome": "Eva handelt binnen het afgesproken mandaat zonder steeds opnieuw te vragen."
     },
     {
       "id": "TL-003",

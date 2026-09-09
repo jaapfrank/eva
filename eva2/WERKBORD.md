@@ -5,42 +5,36 @@ Laatst bijgewerkt: 2026-09-09.
 Doel: [Eva als zelfstandig lerende digitale huisgenoot](PROJECTDOEL.md).
 Gebouwd, getest, live en door jou geaccepteerd zijn verschillende stappen.
 
-AU-005: spontaan idee naar duurzaam onderzoek en gemaakt bestand gebouwd en gericht getest; nog niet live. Nu eigenaarsinzage en stoppen aansluiten.
-[Actueel bewijs](evidence/product/AU-005-spontaneous-followthrough-2026-09-09.json).
+AU-001: bestaande eigenaarmandaten en algemene actieroute naar werkelijke gebruikersopdrachten brengen. AU-005-uitvoerroute live; praktijkbeoordeling staat apart.
+[Actueel bewijs](evidence/product/AU-005-owner-execution-2026-09-09.json).
 
-Maak eigen initiatieven zichtbaar en stopbaar via de bestaande eigenaarsroute; daarna complete kandidaat uitrollen en werkelijk resultaat controleren.
+De live catalogus bevat 10 Home Assistant-acties en alleen document opslaan via de algemene connectorroute. Breid de bruikbare bestaande aansluiting uit voor dagelijks computerwerk binnen hetzelfde mandaat.
 
 ## Nu
 
 | Volgorde | Kaart | Resultaat | Status |
 |---:|---|---|---|
-| 138 | `AU-005` — Passend initiatief en kansen bewijzen | Meer gewaardeerd eigen initiatief dan Bottie: humor, nieuwsgierigheid, zelfgekozen onderzoek, creatieve bijdragen en kansen. Eva begint en vervolgt zelf werk, voert binnen bestaand mandaat uit en controleert het resultaat. Gezin beoordeelt eigenheid, plezier, nut en hinder; alleen meer berichten telt niet als winst. | 🟡 BEZIG |
+| 138 | `AU-001` — Eigenaarmandaat uitvoeren | Eva handelt binnen het afgesproken mandaat zonder steeds opnieuw te vragen. | 🟡 BEZIG |
 
 Klaar betekent:
 
-- Eva kan een spontaan gekozen initiatief duurzaam aannemen en via de bestaande uitvoerroute een controleerbaar resultaat leveren.
-- Gerichte regressies, veilige ingebruikname en onafhankelijke beoordeling zijn afgerond; gezinswaardering en concurrentiewinst worden niet verzonnen.
+- De bestaande mandaat- en actieroute voert toegestane gebruikersopdrachten daadwerkelijk uit.
+- Resultaat is live teruggelezen en de gebruiker ziet welke mogelijkheden beschikbaar zijn.
 
 <details>
 <summary>Technische uitvoering: bestanden en controles</summary>
 
-### Exact werk voor `AU-005`
+### Exact werk voor `AU-001`
 
-- `eva2/src/eva/application/free_will.py`
-- `eva2/src/eva/application/personal_interests.py`
+- `eva2/src/eva/operations/action_chain_effect_authority.py`
 - `eva2/src/eva/adapters/postgres/conversation_actions.py`
-- `eva2/src/eva/adapters/postgres/sensory_events.py`
-- `eva2/src/eva/adapters/model/pydantic_conversation.py`
 - `eva2/src/eva/bootstrap/runtime.py`
-- `eva2/tests/application/test_free_will.py`
-- `eva2/tests/application/test_personal_interests.py`
-- `eva2/tests/model/test_conversation_model.py`
-- `eva2/tests/postgres/test_sensory_admission.py`
-- `eva2/evidence/product/AU-005-spontaneous-followthrough-2026-09-09.json`
+- `eva2/tools/persist_home_effect_policy.py`
+- `eva2/tests/tools/test_persist_home_effect_policy.py`
 
 Echte controles:
 
-- `pytest -q tests/application/test_free_will.py tests/application/test_personal_interests.py`
+- `pytest -q tests/tools/test_persist_home_effect_policy.py`
 - `python3 tools/check_current_workboard.py`
 
 </details>
@@ -50,10 +44,10 @@ Echte controles:
 Deze onderwerpen zijn alleen mijlpalen. Een mijlpaal wordt pas uitvoerbaar
 nadat zij als eerstvolgende kleine kaart exacte bestanden en tests heeft.
 
+- [ ] `AU-005` — Passend initiatief en kansen bewijzen: Meer gewaardeerd eigen initiatief dan Bottie: humor, nieuwsgierigheid, zelfgekozen onderzoek, creatieve bijdragen en kansen. Eva begint en vervolgt zelf werk, voert binnen bestaand mandaat uit en controleert het resultaat. Gezin beoordeelt eigenheid, plezier, nut en hinder; alleen meer berichten telt niet als winst.
 - [ ] `VB-001` — Full-duplex voice leveren: Met Eva2 praten via de bestaande Telegram- of Home Assistant-aansluiting, waarbij Eva hoorbaar onderbroken kan worden en het gesprek daarna doorgaat.
 - [ ] `VB-002` — Passende aanwezigheid leveren: Eva zoekt spontaan contact via de beschikbare speakers en deurbel, met herkenbare identiteit en gevoel voor het moment. Gezin beoordeelt plezier, betrokkenheid en hinder; onderbreken en stop werken.
 - [ ] `CO-008` — Autonoom geheugen in gezinsgesprekken bewijzen: De oorspronkelijke brede geheugenuitkomst blijft open: relevante kennis zelfstandig kiezen, gewijzigde en tijdelijke informatie goed gebruiken in gewone gesprekken en langere gezinspraktijk. Geen handmatig geheugenbeheer; familie beoordeelt continuïteit en vertrouwen.
-- [ ] `AU-001` — Eigenaarmandaat uitvoeren: Eva handelt binnen het afgesproken mandaat zonder steeds opnieuw te vragen.
 - [ ] `TL-003` — Onbekende connector zelfstandig toevoegen: Eva kiest onderhouden software uit documentatie en bewijst de adapter.
 - [ ] `VB-003` — Veilige browsercomputer kiezen: Eén onderhouden browsermotor ondersteunt accounts, meekijken en overname.
 - [ ] `VB-004` — Browserherstel bewijzen: Een crash herhaalt geen externe mutatie blind.
@@ -143,7 +137,7 @@ Afgevinkt betekent alleen: de vastgelegde kaart is afgerond, niet het hele produ
   [Bewijs](evidence/product/TL-001-turn-limit-2026-09-08.json).
 - [x] `TL-002` — Handelingen via twee providers echt afmaken (done).
   [Bewijs](evidence/product/TL-002-completion-2026-09-08.json).
-- [ ] `AU-005` — Passend initiatief en kansen bewijzen (in_progress).
+- [ ] `AU-001` — Eigenaarmandaat uitvoeren (in_progress).
 
 </details>
 
