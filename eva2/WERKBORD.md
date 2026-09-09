@@ -5,10 +5,10 @@ Laatst bijgewerkt: 2026-09-09.
 Doel: [Eva als zelfstandig lerende digitale huisgenoot](PROJECTDOEL.md).
 Gebouwd, getest, live en door jou geaccepteerd zijn verschillende stappen.
 
-VB-001: beveiligde speakerverbinding, langere antwoorden en opruiming bij sessieverloop getest; 55 gerichte controles geslaagd. Firmware met endpoint- en logbeveiliging gebouwd. SP-01 en SP-02 blijven geaccepteerd.
-[Actueel bewijs](evidence/product/VB-001-authenticated-speaker-candidate-2026-09-09.json).
+VB-001: continue microfoonbuffer en gespreksregeling technisch afgerond als kandidaat. Eerste woorden bij vervolgvraag behouden; geen STT-sessies voor stilte tijdens afspelen; 120 gerichte controles en onafhankelijke review groen. SP-01 en SP-02 blijven geaccepteerd.
+[Actueel bewijs](evidence/product/VB-001-continuous-microphone-session-2026-09-09.json).
 
-Continue microfooninvoer en native wakeword/mute-bediening aansluiten op de bestaande HA/Eva-route. Daarna gehoorde context, bruikbaar fysiek herstel en complete SP-03-praktijkproef.
+De geteste gesprekslaag aansluiten op geauthenticeerde microfooninvoer en native wakeword/stop/mute. Daarna gehoorde context, bruikbaar fysiek herstel en complete SP-03-praktijkproef.
 
 ## Nu
 
@@ -146,6 +146,9 @@ Klaar betekent:
 - `eva2/experiments/native-duplex-v1/verify_speaker_auth.py`
 - `eva2/tests/operations/test_native_duplex_speaker_endpoint.py`
 - `eva2/evidence/product/VB-001-authenticated-speaker-candidate-2026-09-09.json`
+- `eva2/experiments/native-duplex-v1/microphone_session.py`
+- `eva2/tests/operations/test_native_duplex_microphone_session.py`
+- `eva2/evidence/product/VB-001-continuous-microphone-session-2026-09-09.json`
 
 Echte controles:
 
@@ -172,6 +175,7 @@ Echte controles:
 - `pytest -q tests/operations/test_native_duplex_speaker_wire.py tests/operations/test_native_duplex_ha_pcm.py tests/operations/test_native_duplex_reply_lane.py`
 - `pytest -q tests/operations/test_native_duplex_speaker_protocol.py tests/operations/test_native_duplex_speaker_stop.py`
 - `pytest -q tests/operations/test_native_duplex_speaker_endpoint.py tests/operations/test_native_duplex_speaker_wire.py`
+- `pytest -q tests/operations/test_native_duplex_microphone_session.py tests/operations/test_native_duplex_reply_lane.py tests/connectors/test_home_assistant_voice.py tests/operations/test_native_duplex_speaker_endpoint.py tests/operations/test_native_duplex_speaker_wire.py`
 
 </details>
 

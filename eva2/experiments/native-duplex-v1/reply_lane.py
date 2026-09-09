@@ -21,6 +21,12 @@ class HouseholdBinding:
     language: str
 
 
+@dataclass(frozen=True)
+class PlaybackCompleted:
+    generation: int
+    continue_conversation: bool
+
+
 class Answer(Protocol):
     text: str
     continue_conversation: bool
@@ -63,6 +69,8 @@ class HouseholdDuplexReplyLane:
         self._failure: BaseException | None = None
         self._closed_event = asyncio.Event()
         self._stops: dict[int, asyncio.Task] = {}
+        self._completed: PlaybackCompleted | None = None
+        self._completion_event = asyncio.Event()
 
     @property
     def failure(self) -> BaseException | None:
@@ -71,6 +79,19 @@ class HouseholdDuplexReplyLane:
     @property
     def closed(self) -> bool:
         return self._closed
+
+    @property
+    def generation(self) -> int:
+        return self._generation
+
+    async def playback_completed(self) -> PlaybackCompleted:
+        """Only the latest current generation can change continuation policy."""
+        while True:
+            await self._completion_event.wait()
+            self._completion_event.clear()
+            completed, self._completed = self._completed, None
+            if completed is not None and completed.generation == self._generation and not self._closed:
+                return completed
 
     async def wait_closed(self) -> None:
         await self._closed_event.wait()
@@ -100,6 +121,8 @@ class HouseholdDuplexReplyLane:
                 raise RuntimeError("duplex lane is closed")
             previous = self._generation
             self._generation += 1
+            self._completed = None
+            self._completion_event.clear()
             self._submitted = False
             self._cancel_worker()
             try:
@@ -142,8 +165,13 @@ class HouseholdDuplexReplyLane:
                 self._record_failure(error)
             await asyncio.shield(self._ensure_stop(generation))
             raise
-        # Continuation policy belongs to the session owner. A late callback
-        # must never reopen the microphone or start another model request here.
+        # Publish only after confirmed playback, and recheck after the await.
+        # Cancel-resistant old output must not close a newer listening turn.
+        if not self._closed and generation == self._generation:
+            if type(answer.continue_conversation) is not bool:
+                raise ValueError("invalid conversation continuation policy")
+            self._completed = PlaybackCompleted(generation, answer.continue_conversation)
+            self._completion_event.set()
 
     def _observe_stop(self, task: asyncio.Task) -> None:
         # Stop failure is fatal even for an old generation: silence is unknown.

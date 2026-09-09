@@ -1,0 +1,95 @@
+{
+  "taskId": "VB-001",
+  "practiceTestId": "SP-03",
+  "recordedOn": "2026-09-09",
+  "status": "session-composition-tested-not-live",
+  "baseCommit": "fc61ef6",
+  "sourceSha256": {
+    "experiments/native-duplex-v1/microphone_session.py": "1f2dbc137b2ccd3b7157281b8f5d5378eb5cfd9b4ce622c40a5e860d8d4ca97a",
+    "experiments/native-duplex-v1/reply_lane.py": "279c795afdc11ceccef48b7c252c3a818f61a77fc80ad8a299e4e4dfffebff3f",
+    "src/eva/adapters/connectors/home_assistant_voice.py": "6e3c7e1fc8e9126a5e9385eacd03a94f8cfad998d2af935272c9e9bee0790135",
+    "tests/operations/test_native_duplex_microphone_session.py": "5ab45f96ae8344d7be4dd753c75ce92e456fe4fb3e5c4e0f4a6f8330763c0082",
+    "tests/connectors/test_home_assistant_voice.py": "d4353c9baeb624bc57e96dca4af24b098ece2974c959d86561ff5ac70abaa242"
+  },
+  "ownerAcceptances": {
+    "SP-01": "accepted",
+    "SP-02": "accepted",
+    "SP-03": "not-ready-for-practice"
+  },
+  "implemented": [
+    "Session owns bounded PCM capture; HA reader closure does not close the microphone.",
+    "Local onset opens HA STT; no idle STT during playback.",
+    "HA audio-relative boundary preserves already transmitted following speech.",
+    "Current-generation confirmed playback governs follow-up listening.",
+    "Detected onset precedes old completion even before waiter delivery.",
+    "Owned cleanup tolerates repeated cancellation; capture failure stops playback before slow cleanup."
+  ],
+  "sourceReference": {
+    "pipeline": "https://raw.githubusercontent.com/home-assistant/core/2026.8.1/homeassistant/components/assist_pipeline/pipeline.py",
+    "constants": "https://raw.githubusercontent.com/home-assistant/core/2026.8.1/homeassistant/components/assist_pipeline/const.py",
+    "interpretation": "STT-only preprocessing starts at timestamp0; STT_VAD_END.timestamp marks the first 10ms chunk not yielded to STT.",
+    "copiedUpstreamCode": false
+  },
+  "targetedTests": {
+    "command": "pytest -q tests/operations/test_native_duplex_microphone_session.py tests/operations/test_native_duplex_reply_lane.py tests/connectors/test_home_assistant_voice.py tests/operations/test_native_duplex_speaker_endpoint.py tests/operations/test_native_duplex_speaker_wire.py",
+    "passed": 120,
+    "durationSeconds": 5.09,
+    "scope": "Real localhost WebSocket/TLS adapters where indicated. Session audio source, detector, responder and playback are test doubles. Existing reply-lane tests separately exercise actual EvaVoiceClient against local HTTP.",
+    "exactTailReadback": {
+      "firstPipelineFrameMarkers": [
+        1,
+        0,
+        0,
+        0,
+        2,
+        0,
+        0,
+        0
+      ],
+      "firstBoundaryMilliseconds": 40,
+      "secondPipelineFrameMarkers": [
+        2,
+        0,
+        0,
+        0
+      ],
+      "secondFinalBeforeFirst": true,
+      "microphoneRemainedOpen": true
+    },
+    "regressions": [
+      "Long playback exceeds two listening windows without idle STT/stop.",
+      "Late STT final and old playback cannot override newer speech.",
+      "Pending onset precedes old False continuation.",
+      "Overrun, disconnect, malformed PCM and detector error stop playback.",
+      "Repeated cancellation preserves provider/source cleanup.",
+      "Failure stops playback before slow cleanup; startup cancellation closes source.",
+      "Source cleanup errors reach owner."
+    ]
+  },
+  "independentReview": {
+    "reviewer": "co006_review",
+    "decision": "bounded GO for microphone/session composition",
+    "independentlyPassed": 120,
+    "foundAndFixed": [
+      "Repeated cancellation of retired STT cleanup.",
+      "Detected onset could lose to old False continuation before waiter delivery."
+    ],
+    "excludes": "Physical audio, latency, device wake/mute, deployment and human acceptance."
+  },
+  "runtimeChange": false,
+  "speakerFlashed": false,
+  "additionalModelOrProviderCalls": 0,
+  "remaining": [
+    "Authenticated microphone transport and native wake/stop/mute.",
+    "Actually heard context from interrupted playback receipts.",
+    "Usable physical recovery before firmware rollout.",
+    "Physical echo, latency, reconnect and SP-03 owner practice.",
+    "Separate SP-04 false wakeword issue."
+  ],
+  "dashboardReadback": {
+    "url": "http://127.0.0.1:44712/project-state",
+    "projectMatchesCanonicalBoard": true,
+    "SP-02": "accepted",
+    "SP-03": "working-not-ready-for-practice"
+  }
+}

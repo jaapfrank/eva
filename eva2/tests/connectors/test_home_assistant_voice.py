@@ -172,6 +172,35 @@ async def _event(socket, kind, data=None):
         "type": kind, "data": None if kind == "run-end" else (data or {})}}))
 
 
+@pytest.mark.parametrize("boundary", [None, True, -10, 15, "10", "missing", "duplicate"])
+def test_requested_audio_boundary_must_be_valid_unique_and_present(boundary):
+    async def run():
+        observed = []
+        async def end(timestamp):
+            observed.append(timestamp)
+        async def handler(socket):
+            await _handshake(socket)
+            await _event(socket, "stt-start")
+            await socket.recv()
+            await _event(socket, "stt-vad-start", {"timestamp": 0})
+            if boundary != "missing":
+                await _event(socket, "stt-vad-end", {
+                    "timestamp": 10 if boundary == "duplicate" else boundary})
+                if boundary == "duplicate":
+                    await _event(socket, "stt-vad-end", {"timestamp": 10})
+            await _event(socket, "stt-end", {"stt_output": {"text": "Dag Eva"}})
+            await _event(socket, "run-end")
+            await socket.wait_closed()
+        async with serve(handler, "127.0.0.1", 0) as server:
+            adapter = HomeAssistantSpeechInput(
+                base_url=f"http://127.0.0.1:{server.sockets[0].getsockname()[1]}",
+                token="synthetic", pipeline_id="test-pipeline")
+            with pytest.raises(VoiceMediaError):
+                await adapter.transcribe(_audio(b"12"), on_speech_end=end)
+        assert observed == ([10] if boundary == "duplicate" else [])
+    asyncio.run(run())
+
+
 def test_real_wire_stt_only_stream_and_final_text():
     async def run():
         observed = []
