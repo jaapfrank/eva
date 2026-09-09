@@ -568,7 +568,7 @@ def test_runtime_budget_rejects_oversized_input_before_auth_or_network(
 
         with pytest.raises(ConversationModelError, match="input budget"):
             model._request(  # noqa: SLF001 - this is the provider admission boundary
-                {"input": [{"content": "x" * 4_000, "role": "user"}]}
+                {"input": [{"content": " woord" * 4_000, "role": "user"}]}
             )
 
     assert requests == []
@@ -593,7 +593,7 @@ def test_long_conversation_selects_recent_complete_context_before_model_call(
     )
     identity = IdentityProfile("Eva", "Digitale huisgenoot.", ("Wees eerlijk.",), 80)
     history = tuple(
-        RecentConversationMessage(role, f"oude beurt {n} " + "verhaal " * 180, NOW)
+        RecentConversationMessage(role, f"oude beurt {n} " + "verhaal " * 2000, NOW)
         for n in range(5) for role in ("user", "assistant")
     ) + (
         RecentConversationMessage("user", "Kun je een plan voor morgen maken?", NOW),
@@ -640,7 +640,7 @@ def test_context_selection_never_discards_required_content_to_admit_request(
         auth_file=tmp_path / "unused-auth.json", model_backend=scripted.model,
         resource_budget=_runtime_budget(),
     )
-    long_text = "belangrijk " * 2000
+    long_text = " x" * 12000
     turn = ConversationTurn.private(
         "tenant", "installation", "jaap", "conversation", "message",
         long_text if oversized_section == "current_question" else "Ja, doe dat.", NOW,
@@ -2437,3 +2437,46 @@ def test_sensory_model_parses_only_bounded_own_initiative(monkeypatch, tmp_path,
     schema = observed[0]["tools"][0]["parameters"]
     assert "initiative" in schema["required"]
     assert schema["properties"]["initiative"]["additionalProperties"] is False
+
+
+def test_multistep_dutch_receipts_use_token_admission_without_losing_content(tmp_path: Path) -> None:
+    """A real-shaped list/read/read/save context must fit the unchanged owner budget."""
+    import copy
+    model = PydanticConversationModel(
+        auth_file=tmp_path / "unused-auth.json", model="gpt-6-astra",
+        resource_budget=_runtime_budget(max_input_tokens=12_000),
+    )
+    receipts = tuple(
+        ConversationActionReceipt(
+            ConversationActionCall(f"call-{i}", name, {"path": f"/proof-state/{i}.md"}),
+            {
+                "contract": "EvaConversationActionReceipt/v1", "durable": True,
+                "status": "verified", "result": {"content": content},
+                "proof": {"evidence": {"observation": {"content": content},
+                                       "source": "mcp_gateway_read"}},
+            },
+        )
+        for i, (name, content) in enumerate((
+            ("find_workspace_files", "/proof-state/1.md\n/proof-state/2.md"),
+            ("read_workspace_document", "Duurzaam onthouden wat voor het gezin nuttig is. " * 50),
+            ("read_workspace_document", "Maak iets bruikbaars en gebruik wat er al staat. " * 50),
+        ))
+    )
+    body = model._phase_admission_body(
+        prompt="Lees de gevonden documenten en sla een gezamenlijk plan op.",
+        instructions="Werk binnen het bestaande mandaat en controleer het resultaat. " * 80,
+        tools=(conversation_module._MEMORY_SEARCH_TOOL,),
+        completed_action=receipts[-1], prior_actions=receipts[:-1],
+    )
+    original = copy.deepcopy(body)
+    assert len(canonical_json_bytes(body)) > 12_000
+    model._admit_request(body, autonomous=False)
+    assert body == original
+    assert body["input"][-1]["output"] == canonical_json_bytes(receipts[-1].output).decode().rstrip("\n")
+    tokens = len(conversation_module._input_tokenizer().encode_ordinary(
+        canonical_json_bytes(body).decode()))
+    assert tokens + conversation_module._INPUT_FRAMING_RESERVE_TOKENS <= 12_000
+    with pytest.raises(ConversationModelError, match="provider exceeded the runtime input budget"):
+        model._enforce_reported_usage(ConversationModelUsage.measured(
+            model_attempts=1, tool_calls=0, input_tokens=12_001, output_tokens=1,
+        ))

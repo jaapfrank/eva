@@ -5,8 +5,10 @@ from __future__ import annotations
 import asyncio
 import base64
 from datetime import UTC, datetime
+from functools import lru_cache
 import hashlib
 import json
+import os
 from pathlib import Path
 import re
 import socket
@@ -111,6 +113,35 @@ class _ProviderUsageError(ConversationModelError):
 
 class _InputBudgetError(ConversationModelError):
     """The local request envelope does not fit; no provider request was made."""
+
+
+# A local envelope estimate, not a claim about a private model's tokenizer or
+# wire framing. In particular, tiktoken does not map gpt-6-astra. Keep the
+# provider's reported usage as the authoritative token measurement.
+_INPUT_ENCODING = "o200k_base"
+_INPUT_ENCODING_URL = "https://openaipublic.blob.core.windows.net/encodings/o200k_base.tiktoken"
+_INPUT_ENCODING_SHA256 = "446a9538cb6c348e3516120d7c08b09f57c36495e2acfffe59a5bf8b0cfb1a2d"
+_INPUT_FRAMING_RESERVE_TOKENS = 256
+
+
+@lru_cache(maxsize=1)
+def _input_tokenizer() -> Any:
+    """Load pinned local tokenizer data; admission never downloads a vocabulary."""
+    import tiktoken
+
+    cache_directory = os.environ.get("TIKTOKEN_CACHE_DIR") or str(
+        Path(__file__).with_name("tokenizer_data")
+    )
+    cache_path = Path(cache_directory) / hashlib.sha1(_INPUT_ENCODING_URL.encode()).hexdigest()
+    try:
+        if hashlib.sha256(cache_path.read_bytes()).hexdigest() != _INPUT_ENCODING_SHA256:
+            raise ValueError("tokenizer data hash differs")
+    except (OSError, ValueError) as error:
+        raise ConversationModelError("conversation input tokenizer data is unavailable or differs") from error
+    # tiktoken's public loader honors this cache. Its data has already been
+    # verified, so it cannot enter the runtime download path.
+    os.environ["TIKTOKEN_CACHE_DIR"] = cache_directory
+    return tiktoken.get_encoding(_INPUT_ENCODING)
 
 
 _MODEL_LEASE_READER_GID = 65532
@@ -1783,8 +1814,6 @@ class PydanticConversationModel:
         if autonomous and self.autonomous_admission_blocker() is not None:
             raise ConversationModelError("autonomous model spend has no verified price")
         try:
-            admission_body = body
-            deferred_catalog_tokens = 0
             tools = body.get("tools")
             tool_search = {"execution": "server", "type": "tool_search"}
             if isinstance(tools, list) and tools[:1] == [tool_search]:
@@ -1811,18 +1840,20 @@ class PydanticConversationModel:
                     raise ConversationModelError(
                         "conversation deferred tool catalog is invalid"
                     )
-                admission_body = {**body, "tools": []}
-                deferred_catalog_tokens = 4_000
-            conservative_input_tokens = (
-                len(canonical_json_bytes(admission_body))
-                + deferred_catalog_tokens
-                + 256
+            # Count the complete, unchanged envelope with real BPE rather than
+            # treating each UTF-8 byte as a token. Include the entire deferred
+            # catalog conservatively; never drop receipts to make it fit.
+            local_input_token_estimate = (
+                len(_input_tokenizer().encode_ordinary(
+                    canonical_json_bytes(body).decode("utf-8")
+                ))
+                + _INPUT_FRAMING_RESERVE_TOKENS
             )
         except (TypeError, ValueError) as error:
             raise ConversationModelError(
                 "conversation request is not a bounded canonical payload"
             ) from error
-        if conservative_input_tokens > budget.max_input_tokens:
+        if local_input_token_estimate > budget.max_input_tokens:
             raise _InputBudgetError(
                 "conversation request exceeds the runtime input budget"
             )

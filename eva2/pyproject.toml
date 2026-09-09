@@ -18,6 +18,7 @@ dependencies = [
   "pydantic==2.12.5",
   "pydantic-ai-slim==2.37.0",
   "SQLAlchemy==2.0.52",
+  "tiktoken==0.14.0",
   "uvicorn==0.41.0",
   "websockets==17.0.1",
 ]
@@ -30,6 +31,7 @@ where = ["src"]
 include = ["eva*"]
 
 [tool.setuptools.package-data]
+"eva.adapters.model" = ["tokenizer_data/*"]
 "eva.adapters.api" = [
   "dashboard_static/*.html",
   "dashboard_static/*.json",
