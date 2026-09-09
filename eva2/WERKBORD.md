@@ -5,10 +5,10 @@ Laatst bijgewerkt: 2026-09-09.
 Doel: [Eva als zelfstandig lerende digitale huisgenoot](PROJECTDOEL.md).
 Gebouwd, getest, live en door jou geaccepteerd zijn verschillende stappen.
 
-VB-001: afzonderlijke spraakdienst voorbereid en de opstart op deze computer gecontroleerd. Afhankelijkheden vastgelegd; private instellingen laden correct. Opstartfout in serviceaccount hersteld. 96 gerichte controles groen, 15 herhaald na de correctie; onafhankelijke review akkoord. SP-01 en SP-02 blijven geaccepteerd.
-[Actueel bewijs](evidence/product/VB-001-speaker-bundle-systemd-2026-09-09.json).
+VB-001: opwarmfout in echte spraakdetectie hersteld. De afgebakende systeemproef is klaar: vijf onderbroken testantwoorden, stop/herstart en wisselen naar een andere gesimuleerde core en terug geslaagd. 52 gerichte tests groen. Dit is kandidaatsbewijs; SP-03 is nog niet live opgeleverd.
+[Actueel bewijs](evidence/product/VB-001-speaker-lifecycle-2026-09-09.json).
 
-Volledige stop-, herstart- en terugrolproef van de dienst en complete corekandidaat afronden. Daarna veilige A/B-uitrol, speakerinrichting en fysiek herstel; pas vervolgens SP-03 in de woonkamer aanbieden. SP-04 blijft apart open.
+Bestaande SP-03-kandidaat naar oplevering brengen: complete core-releasepoort, bruikbaar speakerherstel en gecontroleerde ingebruikname. Geen nieuwe spraakuitbreidingen of herhaling van geslaagde controles zonder concrete aanleiding. Daarna één duidelijke woonkamerproef.
 
 ## Nu
 
@@ -175,6 +175,8 @@ Klaar betekent:
 - `eva2/deploy/home-assistant/eva2-native-speaker.sysusers.conf`
 - `eva2/tests/operations/test_native_duplex_service_bundle.py`
 - `eva2/evidence/product/VB-001-speaker-bundle-systemd-2026-09-09.json`
+- `eva2/experiments/native-duplex-v1/verify_service_lifecycle.py`
+- `eva2/evidence/product/VB-001-speaker-lifecycle-2026-09-09.json`
 
 Echte controles:
 

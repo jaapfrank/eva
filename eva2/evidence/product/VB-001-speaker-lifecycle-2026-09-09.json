@@ -1,0 +1,256 @@
+{
+  "contract": "EvaProductEvidence/v1",
+  "taskId": "VB-001",
+  "date": "2026-09-09",
+  "result": "Exact candidate service lifecycle passed in an isolated network; physical SP-03 remains undelivered.",
+  "sourceCommit": "eb6dfff16d04c01536746d040de9859e35951d59",
+  "probe": {
+    "sourceCommit": "eb6dfff16d04c01536746d040de9859e35951d59",
+    "manifestSha256": "49bfbdaaac37e893707f818c63dfdc8ef596884069d9fd07462832bd57d0c10f",
+    "bundle": "/opt/eva2/native-speaker/releases/eb6dfff16d04c01536746d040de9859e35951d59",
+    "isolatedNetwork": true,
+    "physicalSpeaker": false,
+    "providerCalls": 0,
+    "parentUnit": "eva2-speaker-lifecycle-c3b35987.service",
+    "childUnit": "eva2-speaker-lifecycle-c3b35987-speaker.service",
+    "steps": [
+      {
+        "action": "initial-start",
+        "slot": 44710,
+        "effectiveProperties": {
+          "MainPID": "413537",
+          "User": "eva2-speaker",
+          "DynamicUser": "yes",
+          "ProtectHome": "yes",
+          "ProtectSystem": "strict",
+          "NoNewPrivileges": "yes",
+          "RuntimeDirectoryMode": "0700",
+          "KillMode": "mixed",
+          "ActiveState": "active"
+        }
+      },
+      {
+        "action": "stop",
+        "fromPid": 413537,
+        "waitedForBothStopReceipts": true,
+        "oldProcessGone": true,
+        "elapsedMs": 178.97,
+        "runtimeRemoved": true
+      },
+      {
+        "action": "restart",
+        "fromPid": 419253,
+        "waitedForBothStopReceipts": true,
+        "oldProcessGone": true,
+        "elapsedMs": 193.64,
+        "toSlot": 44710,
+        "effectiveProperties": {
+          "MainPID": "424969",
+          "User": "eva2-speaker",
+          "DynamicUser": "yes",
+          "ProtectHome": "yes",
+          "ProtectSystem": "strict",
+          "NoNewPrivileges": "yes",
+          "RuntimeDirectoryMode": "0700",
+          "KillMode": "mixed",
+          "ActiveState": "active"
+        }
+      },
+      {
+        "action": "restart",
+        "fromPid": 424969,
+        "waitedForBothStopReceipts": true,
+        "oldProcessGone": true,
+        "elapsedMs": 250.5,
+        "toSlot": 44711,
+        "effectiveProperties": {
+          "MainPID": "430832",
+          "User": "eva2-speaker",
+          "DynamicUser": "yes",
+          "ProtectHome": "yes",
+          "ProtectSystem": "strict",
+          "NoNewPrivileges": "yes",
+          "RuntimeDirectoryMode": "0700",
+          "KillMode": "mixed",
+          "ActiveState": "active"
+        }
+      },
+      {
+        "action": "restart",
+        "fromPid": 430832,
+        "waitedForBothStopReceipts": true,
+        "oldProcessGone": true,
+        "elapsedMs": 195.4,
+        "toSlot": 44710,
+        "effectiveProperties": {
+          "MainPID": "433316",
+          "User": "eva2-speaker",
+          "DynamicUser": "yes",
+          "ProtectHome": "yes",
+          "ProtectSystem": "strict",
+          "NoNewPrivileges": "yes",
+          "RuntimeDirectoryMode": "0700",
+          "KillMode": "mixed",
+          "ActiveState": "active"
+        }
+      },
+      {
+        "action": "stop",
+        "fromPid": 433316,
+        "waitedForBothStopReceipts": true,
+        "oldProcessGone": true,
+        "elapsedMs": 193.1,
+        "runtimeRemoved": true
+      }
+    ],
+    "syntheticAudioSha256": "a92cbffc3cdbf23d0a9df945d4815083f5511f3bad19de3fa1e7df5de6ff0dcd",
+    "status": "passed",
+    "capabilityRoutes": [
+      44710,
+      44710,
+      44710,
+      44711,
+      44710
+    ],
+    "coreTurns": 5,
+    "playbackReports": 5,
+    "playbackStatuses": [
+      "interrupted",
+      "interrupted",
+      "interrupted",
+      "interrupted",
+      "interrupted"
+    ],
+    "proxyRequests": [
+      {
+        "slot": 44710,
+        "method": "GET",
+        "path": "/internal/v1/ha-voice/capabilities"
+      },
+      {
+        "slot": 44710,
+        "method": "POST",
+        "path": "/internal/v1/ha-voice/turns"
+      },
+      {
+        "slot": 44710,
+        "method": "POST",
+        "path": "/internal/v1/ha-voice/turns/0b5b506afd4446c7a34eaeaece91d2fd/playback"
+      },
+      {
+        "slot": 44710,
+        "method": "GET",
+        "path": "/internal/v1/ha-voice/capabilities"
+      },
+      {
+        "slot": 44710,
+        "method": "POST",
+        "path": "/internal/v1/ha-voice/turns"
+      },
+      {
+        "slot": 44710,
+        "method": "POST",
+        "path": "/internal/v1/ha-voice/turns/93e4a2fc4b294a8ca348a39cb44223e4/playback"
+      },
+      {
+        "slot": 44710,
+        "method": "GET",
+        "path": "/internal/v1/ha-voice/capabilities"
+      },
+      {
+        "slot": 44710,
+        "method": "POST",
+        "path": "/internal/v1/ha-voice/turns"
+      },
+      {
+        "slot": 44710,
+        "method": "POST",
+        "path": "/internal/v1/ha-voice/turns/0464e06a23314119946d6cc3edcbeada/playback"
+      },
+      {
+        "slot": 44711,
+        "method": "GET",
+        "path": "/internal/v1/ha-voice/capabilities"
+      },
+      {
+        "slot": 44711,
+        "method": "POST",
+        "path": "/internal/v1/ha-voice/turns"
+      },
+      {
+        "slot": 44711,
+        "method": "POST",
+        "path": "/internal/v1/ha-voice/turns/625ce9405ee047fdbcc3f40d99d13147/playback"
+      },
+      {
+        "slot": 44710,
+        "method": "GET",
+        "path": "/internal/v1/ha-voice/capabilities"
+      },
+      {
+        "slot": 44710,
+        "method": "POST",
+        "path": "/internal/v1/ha-voice/turns"
+      },
+      {
+        "slot": 44710,
+        "method": "POST",
+        "path": "/internal/v1/ha-voice/turns/3668cc14acf449079e3251e54028bbe2/playback"
+      }
+    ],
+    "temporaryUnitsRemoved": true,
+    "runtimeRemoved": true,
+    "harnessSha256": "dbc8b884eaaf7be0d2fe2f5cb8b36073dd503a2ab76e290fceacad2a890ea99b",
+    "testSupportSha256": {
+      "test_native_duplex_speaker_protocol.py": "331147b90d331e7256bc80a93c6413d6fa9361ae92414780b718dfac6827219a",
+      "test_native_duplex_speaker_wire.py": "83227852cd35926e28cdc5041be5d1ff9dd949aaf1a340bba65b277c7e8ea6f8",
+      "test_native_duplex_speaker_endpoint.py": "180023af32cf7546e098c0f6086cbda5162b13d34c2007b6a446de551eb4dc3c",
+      "test_native_duplex_speaker_service.py": "983bdf44cfbc76b98af69375f27f34fcea3833c15d885392d01f18fa45549c29",
+      "test_native_duplex_speaker_input.py": "4ba623b8796e38e8df3563634b84ce63d25d71d2a79532db202d29f8982563ac",
+      "test_native_duplex_speaker_stop.py": "bf3c4350a6fb02afcc53e75b7ebe92a82005e8c8bce32ed108adfd709425e24f"
+    }
+  },
+  "probeArtifact": "/opt/eva2/native-speaker/probes/lifecycle-20260909-c/result.json",
+  "probeSha256": "ceeb6d52f4b05a6b9be1e6c9cb1253e55c2bc96d620d4185f945239340bc9d82",
+  "targetedTests": {
+    "passed": 52,
+    "durationSeconds": 2.29,
+    "command": "PYTHONPATH=src pytest -q tests/operations/test_native_duplex_service_bundle.py tests/operations/test_native_duplex_local_onset.py tests/operations/test_native_duplex_microphone_session.py tests/operations/test_native_duplex_speaker_service.py"
+  },
+  "fixedFinding": {
+    "cause": "Silero10msDetector returned -1 during its first three buffered 10ms blocks; continuous microphone rejects probabilities outside [0,1], closing capture before recognition.",
+    "repair": "Return no onset (0.0) until the first 32ms model window; preserve all buffered PCM.",
+    "regressionBeforeFix": "One failed test: actual adapter warmup returned -1.0, expected 0.0.",
+    "earlierProbes": [
+      "/opt/eva2/native-speaker/probes/lifecycle-20260909-a/result.json",
+      "/opt/eva2/native-speaker/probes/lifecycle-20260909-b/result.json"
+    ],
+    "fixtureAdjustment": "STT network double consumes the complete synthetic phrase, rather than treating the phrase as repeated 180ms utterances."
+  },
+  "scope": {
+    "real": [
+      "Immutable launcher and systemd child lifecycle",
+      "TLS, network protocol, Home Assistant adapters, native HTTP client, FFmpeg and Silero",
+      "Active route readback after restart and switching simulated cores 44710 to 44711 and back",
+      "Five interrupted answers with five playback reports and old processes removed"
+    ],
+    "simulated": [
+      "Home Assistant API and STT text",
+      "Core answers and persistence",
+      "Speaker audio playback and stop receipts"
+    ],
+    "notProved": [
+      "Physical speaker stop latency or AEC",
+      "Real core database A/B deployment and rollback",
+      "Household SP-03 acceptance"
+    ]
+  },
+  "speakerFlashed": false,
+  "productionServiceChanged": false,
+  "additionalProviderCalls": 0,
+  "ownerAcceptances": {
+    "SP-01": "accepted",
+    "SP-02": "accepted",
+    "SP-03": "not-ready-for-practice"
+  }
+}

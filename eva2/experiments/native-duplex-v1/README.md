@@ -182,3 +182,12 @@ De unit koppelt stop en herstart aan `eva.service`; de uiteindelijke activering 
 96 gerichte bundel-, connector- en servicetests slaagden vóór de vaste-identiteitscorrectie; de 15 bundeltests en unitverificatie slagen opnieuw na die correctie. De echte systeemproeven gebruiken geen STT/TTS/corebeurt en openen geen huishoudelijke opname. ONNX-telemetrie wordt vóór modelconstructie uitgeschakeld; een waarschuwing over een tijdelijk device-ID blijft zichtbaar. Er is geen gemeten claim over nul telemetrieverkeer.
 
 Zie `evidence/product/VB-001-speaker-bundle-systemd-2026-09-09.json` voor exacte bronnen, bundelhash en opstartreadbacks. SP-01 en SP-02 blijven geaccepteerd. Volledige kandidaatuitrol, bruikbaar fysiek speakerherstel en de SP-03-praktijkproef blijven nodig.
+
+
+### Afgebakende systeemproef afgerond; SP-03 niet opgeleverd
+
+`verify_service_lifecycle.py` draait uitsluitend als root binnen `unshare --net` met alleen loopback. De exacte bundel en conceptunit draaien onder systemd; de bestaande HA/core/peer-testfixtures blijven expliciete dubbels. Lokaal door FFmpeg gegenereerde spraak doorloopt de echte Silero-detector. De eerste uitvoering legde een integratiefout bloot: de eerste drie gebufferde blokken gaven -1 terug, terwijl de doorlopende microfoon alleen geldige waarschijnlijkheden accepteert. De adapter bewaart deze PCM nu met 0.0 tot het eerste modelvenster gereed is. Een regressie faalt vóór en slaagt na de correctie.
+
+De herhaling op bundel `eb6dfff16d04c01536746d040de9859e35951d59` slaagt: vijf vragen en vijf onderbroken afspeelrapporten, wachten op beide stopbevestigingen, oude processen weg, herstart, gesimuleerde corewissel 44710→44711→44710 en verwijderde tijdelijke units/runtime-mappen. 52 gerichte tests slagen. De vermelde systeemlooptijden zijn geen fysieke stoplatentie. Dit bewijst ook geen databaseoverdracht of echte A/B-core-uitrol.
+
+Bewijs: `evidence/product/VB-001-speaker-lifecycle-2026-09-09.json`. Deze controle is afgesloten. Alleen een concrete fout of relevante wijziging is reden om haar te herhalen. De gebruikersoplevering van SP-03 vereist nog de complete corekandidaat, speakerherstel, gecontroleerde ingebruikname en fysieke acceptatie; de test sluit die opdracht niet af.

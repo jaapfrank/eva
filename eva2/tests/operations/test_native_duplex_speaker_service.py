@@ -35,7 +35,7 @@ def config(tmp_path, origin):
 
 
 @asynccontextmanager
-async def upstream(*, fault=None):
+async def upstream(*, fault=None, stt_frames=20):
     observed = {"stt": [], "tts": [], "core": [], "interrupts": [], "playback": []}
     async def websocket(request):
         socket = web.WebSocketResponse()
@@ -55,7 +55,7 @@ async def upstream(*, fault=None):
                 await event("run-start", {"pipeline": "pipeline-test", "language": "nl", "runner_data": {"stt_binary_handler_id": 7}})
                 await event("stt-start", {"engine": "stt.cloud"})
                 frames = []
-                while len(frames) < 20:
+                while len(frames) < stt_frames:
                     message = await socket.receive()
                     if message.type != web.WSMsgType.BINARY:
                         return socket
@@ -63,7 +63,7 @@ async def upstream(*, fault=None):
                     frames.append(message.data[1:])
                 observed["stt"].append(frames)
                 await event("stt-vad-start", {"timestamp": 0})
-                await event("stt-vad-end", {"timestamp": 180})
+                await event("stt-vad-end", {"timestamp": (stt_frames - 2) * 10})
                 await event("stt-end", {"stt_output": {"text": "vraag " + str(len(observed["stt"]))}})
                 await event("run-end", None)
                 await socket.close()
