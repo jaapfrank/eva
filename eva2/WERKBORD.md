@@ -5,16 +5,16 @@ Laatst bijgewerkt: 2026-09-09.
 Doel: [Eva als zelfstandig lerende digitale huisgenoot](PROJECTDOEL.md).
 Gebouwd, getest, live en door jou geaccepteerd zijn verschillende stappen.
 
-VB-001: core-uitrol naar slot3 afgerond en live teruggelezen, met behoud van actuele gegevens en Home Assistant-spraakbeleid. De ontbrekende configuratie bij de eerste poging is hersteld na terugrol. Nog open: speakerinstallatie en SP-03-praktijk.
-[Actueel bewijs](evidence/product/VB-001-core-release-candidate-2026-09-09.json).
+VB-001: core-uitrol en definitief speakerinstallatiepakket afgesloten. Firmware met juiste serverbinding gebouwd en onafhankelijk gecontroleerd. Installatie wacht op USB-toegang tot de woonkamer-speaker voor backup en herstel.
+[Actueel bewijs](evidence/product/VB-001-speaker-install-package-2026-09-09.json).
 
-Bereid de definitieve native-speakerconfiguratie voor; installeer de woonkamerkandidaat zodra bruikbaar fysiek USB-herstel beschikbaar is. Daarna één SP-03-praktijkproef. Corebouw, releasecontrole en geslaagde uitrol zijn afgesloten.
+Jaap sluit de woonkamer-speaker met een USB-datakabel aan en meldt aangesloten. Identificeer daarna het apparaat, bewaar de huidige flash, installeer het voorbereide pakket en lever één SP-03-praktijkproef. Geslaagde core-/pakketproeven blijven afgesloten.
 
 ## Nu
 
 | Volgorde | Kaart | Resultaat | Status |
 |---:|---|---|---|
-| 138 | `VB-001` — Full-duplex voice leveren | Met Eva2 praten via de bestaande Telegram- of Home Assistant-aansluiting, waarbij Eva hoorbaar onderbroken kan worden en het gesprek daarna doorgaat. | 🟡 BEZIG |
+| 138 | `VB-001` — Full-duplex voice leveren | Met Eva2 praten via de bestaande Telegram- of Home Assistant-aansluiting, waarbij Eva hoorbaar onderbroken kan worden en het gesprek daarna doorgaat. | 🔴 GEBLOKKEERD |
 
 Klaar betekent:
 
@@ -178,6 +178,9 @@ Klaar betekent:
 - `eva2/experiments/native-duplex-v1/verify_service_lifecycle.py`
 - `eva2/evidence/product/VB-001-speaker-lifecycle-2026-09-09.json`
 - `eva2/evidence/product/VB-001-core-release-candidate-2026-09-09.json`
+- `eva2/deploy/home-assistant/allow-native-speaker-wsl.ps1`
+- `eva2/deploy/home-assistant/native-speaker-installation.md`
+- `eva2/evidence/product/VB-001-speaker-install-package-2026-09-09.json`
 
 Echte controles:
 
@@ -311,7 +314,7 @@ Afgevinkt betekent alleen: de vastgelegde kaart is afgerond, niet het hele produ
   [Bewijs](evidence/product/TL-001-turn-limit-2026-09-08.json).
 - [x] `TL-002` — Handelingen via twee providers echt afmaken (done).
   [Bewijs](evidence/product/TL-002-completion-2026-09-08.json).
-- [ ] `VB-001` — Full-duplex voice leveren (in_progress).
+- [ ] `VB-001` — Full-duplex voice leveren (blocked).
 
 </details>
 

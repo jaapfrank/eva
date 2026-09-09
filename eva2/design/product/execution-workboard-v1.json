@@ -157,7 +157,7 @@
         {
           "label": "IN ONTWIKKELING · SP-03",
           "value": "Eva met gewone spraak onderbreken",
-          "detail": "Core-uitrol afgerond: afspeelstatus beschikbaar, Home Assistant-toegang behouden en actuele gegevens overgezet. Speakerinstallatie en SP-03-praktijk staan nog open."
+          "detail": "Core live; definitief speakerpakket gebouwd en onafhankelijk gecontroleerd. Actie voor Jaap: sluit de woonkamer-speaker via USB-datakabel aan voor backup en installatie. SP-03 nog niet testklaar."
         },
         {
           "label": "APART PROBLEEM",
@@ -438,8 +438,8 @@
           "updatedOn": "9 september",
           "status": "working",
           "title": "Onderbreken met gewone spraak",
-          "change": "Core live: Eva kan afspeelstatus bewaren voor het volgende antwoord. De speakerkandidaat voor onderbreken is technisch gecontroleerd.",
-          "result": "Nog niet testklaar in de woonkamer. Core-uitrol is afgesloten; speakerinstallatie, bruikbaar USB-herstel en fysieke proef staan open. SP-01 en SP-02 blijven geaccepteerd."
+          "change": "Core-uitrol en definitief installatiepakket zijn afgesloten. De firmware bevat de eigen beveiligde woonkamerverbinding.",
+          "result": "Wacht op USB-toegang: sluit de woonkamer-speaker met een USB-datakabel op de pc aan en meld aangesloten. Eerst backup van huidige firmware, daarna installatie en SP-03-proef. Nog niet geflasht."
         },
         {
           "id": "SP-04",
@@ -526,9 +526,9 @@
       "document": "eva2/PROJECTDOEL.md",
       "scope": "Digitale huisgenoot: zelfstandig redeneren, initiatief, onbekende vaardigheden leren, handelen, zelfverbetering en aantoonbare concurrentiewinst met open-sourcehergebruik.",
       "sessionGoal": "Het volledige doel blijft actief. Nu VB-001: doorlopende gesprekken via Home Assistant, inclusief onderbreken met gewone spraak.",
-      "currentWork": "VB-001: core-uitrol naar slot3 afgerond en live teruggelezen, met behoud van actuele gegevens en Home Assistant-spraakbeleid. De ontbrekende configuratie bij de eerste poging is hersteld na terugrol. Nog open: speakerinstallatie en SP-03-praktijk.",
-      "currentEvidence": "eva2/evidence/product/VB-001-core-release-candidate-2026-09-09.json",
-      "nextStep": "Bereid de definitieve native-speakerconfiguratie voor; installeer de woonkamerkandidaat zodra bruikbaar fysiek USB-herstel beschikbaar is. Daarna één SP-03-praktijkproef. Corebouw, releasecontrole en geslaagde uitrol zijn afgesloten.",
+      "currentWork": "VB-001: core-uitrol en definitief speakerinstallatiepakket afgesloten. Firmware met juiste serverbinding gebouwd en onafhankelijk gecontroleerd. Installatie wacht op USB-toegang tot de woonkamer-speaker voor backup en herstel.",
+      "currentEvidence": "eva2/evidence/product/VB-001-speaker-install-package-2026-09-09.json",
+      "nextStep": "Jaap sluit de woonkamer-speaker met een USB-datakabel aan en meldt aangesloten. Identificeer daarna het apparaat, bewaar de huidige flash, installeer het voorbereide pakket en lever één SP-03-praktijkproef. Geslaagde core-/pakketproeven blijven afgesloten.",
       "usageClarification": {
         "date": "2026-09-07",
         "authorizedBy": "Jaap",
@@ -2511,6 +2511,12 @@
           "status": "closed",
           "evidence": "eva2/evidence/product/VB-001-core-release-candidate-2026-09-09.json",
           "boundary": "Core live en spraakcontract gecontroleerd; dit is geen SP-03-gebruikersacceptatie."
+        },
+        {
+          "id": "VB-001-speaker-package",
+          "status": "closed",
+          "evidence": "eva2/evidence/product/VB-001-speaker-install-package-2026-09-09.json",
+          "boundary": "Definitieve firmware en serviceconfiguratie voorbereid en gereviewd; nog niet geïnstalleerd of door gezin geaccepteerd."
         }
       ]
     }
@@ -3856,13 +3862,13 @@
       "area": "Voice",
       "title": "Full-duplex voice leveren",
       "outcome": "Met Eva2 praten via de bestaande Telegram- of Home Assistant-aansluiting, waarbij Eva hoorbaar onderbroken kan worden en het gesprek daarna doorgaat.",
-      "status": "in_progress",
+      "status": "blocked",
       "stateDetails": {
         "baseCommit": null,
         "implementationCommit": null,
         "evidenceCommit": null,
         "reviewEvidencePaths": [],
-        "blockerReason": null
+        "blockerReason": "Het complete speakerinstallatiepakket is voorbereid en onafhankelijk goedgekeurd. De woonkamer-speaker is niet via USB zichtbaar; fysieke identificatie en backup van zijn huidige flash zijn nodig voor herstel vóór firmware-installatie. Jaap is gevraagd hem met een USB-datakabel aan te sluiten."
       },
       "ownerRole": "architecturelead",
       "reviewerRole": "proofreviewer",
@@ -4021,7 +4027,10 @@
         "eva2/evidence/product/VB-001-speaker-bundle-systemd-2026-09-09.json",
         "eva2/experiments/native-duplex-v1/verify_service_lifecycle.py",
         "eva2/evidence/product/VB-001-speaker-lifecycle-2026-09-09.json",
-        "eva2/evidence/product/VB-001-core-release-candidate-2026-09-09.json"
+        "eva2/evidence/product/VB-001-core-release-candidate-2026-09-09.json",
+        "eva2/deploy/home-assistant/allow-native-speaker-wsl.ps1",
+        "eva2/deploy/home-assistant/native-speaker-installation.md",
+        "eva2/evidence/product/VB-001-speaker-install-package-2026-09-09.json"
       ],
       "componentIds": [
         "api-and-runtime-composition",

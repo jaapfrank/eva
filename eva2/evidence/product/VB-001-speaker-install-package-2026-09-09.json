@@ -1,0 +1,106 @@
+{
+  "contract": "EvaProductEvidence/v1",
+  "taskId": "VB-001",
+  "date": "2026-09-09",
+  "result": "Final Woonkamer installation package compiled and independently reviewed. Package preparation closed; installation waits for physical USB identification and current-flash backup.",
+  "preparedArtifacts": {
+    "owner": "VB-001 architecturelead",
+    "path": "/home/administrator/project/.eva2-artifacts/woonkamer-speaker-install-hnd0_fwq",
+    "purpose": "Private speaker credentials, final firmware and recoverable installation",
+    "cleanupWhen": "Retain until physical acceptance and expiry of the rollback retention period; do not remove active credentials or CA."
+  },
+  "coreDeploymentClosed": true,
+  "serviceActivated": false,
+  "speakerFlashed": false,
+  "firmwareBuild": {
+    "contract": "EvaWoonkamerFirmwareInstallationCandidate/v1",
+    "status": "compiled_not_flashed",
+    "esphomeVersion": "2026.6.2",
+    "compileExitCode": 0,
+    "compileSeconds": 396.8,
+    "images": [
+      {
+        "file": "firmware.ota.bin",
+        "bytes": 2936000,
+        "sha256": "336faf8b0ca4de6883217011d0c456f3738b6f8aeaf69b959a5eb8114f99e961",
+        "bindingChecks": {
+          "containsFinalEndpoint": true,
+          "containsFinalSpeakerCredential": true,
+          "containsPinnedCa": true,
+          "containsCompileOnlyEndpoint": false
+        }
+      },
+      {
+        "file": "firmware.factory.bin",
+        "bytes": 3001536,
+        "sha256": "441482d07674f833ecc8f3fc5f372b00c01652719de9ec787db84317d1d25162",
+        "bindingChecks": {
+          "containsFinalEndpoint": true,
+          "containsFinalSpeakerCredential": true,
+          "containsPinnedCa": true,
+          "containsCompileOnlyEndpoint": false
+        }
+      }
+    ],
+    "source": {
+      "configSha256": "070f725dd32c916adfcf19f806a0f8288b03747e98c40ceca7ce4bfbf3eab75b",
+      "generatedMainSha256": "cacd9f99b5c4c90bed6cb2c518788297b21abb9aea9c18559f36182194770fb3",
+      "vendorReceiptSha256": "149c6dc588dafd830b96ba7a40d79e0dee481eb0853c722ef59dff393af82ef9"
+    },
+    "speakerFlashed": false,
+    "serviceActivated": false,
+    "physicalRecoveryVerified": false,
+    "boundary": "Compiled final Woonkamer credentials, CA and endpoint; no physical interruption, sound quality or firmware rollback proof."
+  },
+  "independentReview": {
+    "reviewer": "/root/co006_review",
+    "decision": "GO: package preparation closed after independent final binary hashes, endpoint/credential/CA binding, vendor-source and recovery-image verification. No activation or physical acceptance."
+  },
+  "ownerAcceptances": {
+    "SP-01": "accepted",
+    "SP-02": "accepted",
+    "SP-03": "not-ready-for-practice"
+  },
+  "receipts": {
+    "preparation.json": {
+      "path": "/home/administrator/project/.eva2-artifacts/woonkamer-speaker-install-hnd0_fwq/preparation.json",
+      "sha256": "2a74f87566eee1d0d4f6d98ef8169bd5bd393fd5f0320ac9caea867912e2afcc"
+    },
+    "service-preflight.json": {
+      "path": "/home/administrator/project/.eva2-artifacts/woonkamer-speaker-install-hnd0_fwq/service-preflight.json",
+      "sha256": "ba75e8d330f2318f8b3dba16974624e22b0c487395ff903618088b4bc39930a6"
+    },
+    "vendor-binding.json": {
+      "path": "/home/administrator/project/.eva2-artifacts/woonkamer-speaker-install-hnd0_fwq/vendor-binding.json",
+      "sha256": "149c6dc588dafd830b96ba7a40d79e0dee481eb0853c722ef59dff393af82ef9"
+    },
+    "firmware-build-receipt.json": {
+      "path": "/home/administrator/project/.eva2-artifacts/woonkamer-speaker-install-hnd0_fwq/firmware-build-receipt.json",
+      "sha256": "0c0eb1093b5d745b18bf2f80f1fe13d573156ebf28b42a7e27a44fcf58f103fa"
+    },
+    "recovery/receipt.json": {
+      "path": "/home/administrator/project/.eva2-artifacts/woonkamer-speaker-install-hnd0_fwq/recovery/receipt.json",
+      "sha256": "1477273787e68748367a67eccd1e9c61fee6d4656bf6953c2f7bc2774403c8db"
+    }
+  },
+  "firewall": {
+    "script": "eva2/deploy/home-assistant/allow-native-speaker-wsl.ps1",
+    "syntaxValidated": true,
+    "source": "10.0.20.202",
+    "destination": "10.0.20.46:44715",
+    "applied": false
+  },
+  "remaining": [
+    "Physical USB identification of Woonkamer and backup of current flash",
+    "Install and activate prepared service, narrow firewall rule and exact firmware",
+    "SP-03 interruption/follow-up practice and Jaap acceptance"
+  ],
+  "physicalDeviceObservation": {
+    "speakerUsbPresent": false,
+    "observedSerialDevices": [
+      "COM3 Bluetooth",
+      "COM4 Bluetooth"
+    ],
+    "ownerActionRequested": true
+  }
+}
