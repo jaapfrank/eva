@@ -90,6 +90,11 @@ Klaar betekent:
 - `eva2/release/gate-toolchain.requirements.lock`
 - `eva2/release/gate-toolchain.lock.json`
 - `eva2/release/gate-toolchain-license-inventory.json`
+- `eva2/tools/render_household_voice_ingress.py`
+- `eva2/tools/verify_household_voice_ingress.py`
+- `eva2/deploy/home-assistant/eva2-voice-ingress.service`
+- `eva2/deploy/home-assistant/allow-native-voice-wsl.ps1`
+- `eva2/deploy/home-assistant/native-voice-ingress.md`
 
 Echte controles:
 

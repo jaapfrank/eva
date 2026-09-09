@@ -2319,6 +2319,13 @@
       "result": "Two live-registry devices bound to signedruntimeidentity and separatehouseholdmemory; exactimage validationpassed; preparedoverlay renderpassed; stillnotactive",
       "review": "co006_review bounded preparation GO: hashes/private rights/two registrybindings/exactruntimeownerbinding confirmed; separatehousehold/deviceactors/30dayvalidity; no privateownerfallback. Exactimage validation confirms signedidentity and actorrefusal; running core has nohouseholdmount/env. No installation/cutover/liveGO. Overlay render and subsequent env preparation recorded separately.",
       "next": "Install staged native HA custom component with rollback and load/configure integration."
+    },
+    "vb001NativeVoiceIngress": {
+      "status": "host_ingress_installed_tested_running_ha_network_waits_for_windows_admin",
+      "evidence": "eva2/evidence/product/VB-001-native-voice-ingress-2026-09-09.json",
+      "result": "Native HA component loaded; Home Assistant RUNNING. Actual nginx 18 checks and systemd 7 checks passed, including disconnect, next question, slot switch, rollback and failed startup. Gateway listens on LAN44714; only HA and native voice routes admitted.",
+      "blocker": "Windows refused the narrow Hyper-V firewall rule with Access is denied; current session is not administrator. HA connection still times out.",
+      "next": "Run deploy/home-assistant/allow-native-voice-wsl.ps1 in administrator PowerShell, verify from HA, configure native integration and execute reviewed current-data A/B activation. Speaker interruption remains unproven."
     }
   },
   "activeTaskId": "VB-001",
@@ -3739,7 +3746,12 @@
         "eva2/release/gate-toolchain-roots.in",
         "eva2/release/gate-toolchain.requirements.lock",
         "eva2/release/gate-toolchain.lock.json",
-        "eva2/release/gate-toolchain-license-inventory.json"
+        "eva2/release/gate-toolchain-license-inventory.json",
+        "eva2/tools/render_household_voice_ingress.py",
+        "eva2/tools/verify_household_voice_ingress.py",
+        "eva2/deploy/home-assistant/eva2-voice-ingress.service",
+        "eva2/deploy/home-assistant/allow-native-voice-wsl.ps1",
+        "eva2/deploy/home-assistant/native-voice-ingress.md"
       ],
       "componentIds": [
         "api-and-runtime-composition",

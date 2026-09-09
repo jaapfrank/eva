@@ -1,0 +1,149 @@
+{
+  "contract": "EvaProductEvidence/v1",
+  "taskId": "VB-001",
+  "observedAt": "2026-09-09T00:05:59.151441+00:00",
+  "status": "native_ha_component_discovered_and_host_ingress_tested_windows_admin_rule_pending",
+  "previousGoalTurnClassification": "progress",
+  "coreCandidateSource": "cab9227356cb68b81edb9d27aab3d160dc959643",
+  "coreCandidateUnchanged": true,
+  "haStartup": {
+    "observedAt": "2026-09-08T23:50:45.691765+00:00",
+    "state": "RUNNING",
+    "version": "2026.8.1",
+    "pipelineListReadable": true,
+    "pipelineCount": 3,
+    "secondRestartIssued": false,
+    "boundary": "Startup recovered; this is not speaker interruption proof."
+  },
+  "haComponent": {
+    "path": "/config/custom_components/eva2_voice",
+    "source": "cab9227356cb68b81edb9d27aab3d160dc959643",
+    "filesHashVerified": 6,
+    "configurationCheck": "passed",
+    "discoveredAfterRestart": true,
+    "configEntryCreated": false,
+    "pipelineChanged": false,
+    "privateInstallReceiptSha256": "250639eca45186b33dc96566510d1bea59100ac32759b7efb350a6dd65ed27ab"
+  },
+  "transport": {
+    "status": "passed",
+    "checks": [
+      "nginx_configuration_valid",
+      "allowed_turn_reaches_upstream",
+      "only_voice_credential_forwarded",
+      "exact_interrupt_reaches_upstream",
+      "other_network_peer_denied",
+      "dashboard_not_exposed",
+      "arbitrary_core_route_not_exposed",
+      "invalid_interrupt_not_exposed",
+      "query_not_forwarded",
+      "method_not_forwarded",
+      "oversized_body_rejected",
+      "denied_requests_never_reached_core",
+      "pending_request_reached_core",
+      "disconnect_closes_core_request",
+      "next_question_still_works",
+      "no_transcript_spilled_to_disk",
+      "ambiguous_and_nonlocal_routes_rejected",
+      "other_retained_slot_rendered"
+    ],
+    "passed": 18,
+    "nginxSha256": "1f16b72bea2f44e5d04fe6cf9e3e4b0dec53a82c50c7c1533c302a8ecaeccacf",
+    "boundary": "Actual nginx and HTTP in isolated network; no HA audio or model."
+  },
+  "lifecycle": {
+    "status": "passed",
+    "checks": [
+      "parent_start_opens_slot3",
+      "parent_stop_closes_ingress",
+      "slot_switch_opens_slot4",
+      "rollback_reopens_slot3",
+      "parent_restart_recreates_ingress",
+      "parent_failure_closes_ingress",
+      "invalid_route_prestart_stays_closed"
+    ],
+    "sourceHashes": {
+      "tools/render_household_voice_ingress.py": "b98cb8a2eec2c86291d43676991a3be0510f5346a56934b0f747cc8a249a4d5c",
+      "tools/verify_household_voice_ingress.py": "27a2c4d33c89c469cde286127cacf1e7bc5ca3e7bdd9f659eb5068ca28ca472d",
+      "deploy/home-assistant/eva2-voice-ingress.service": "8e6a7466e0ee0750543d54cf141028753f47735ba530e760fa669829913f2c02"
+    },
+    "probeUnitSha256": "3e01dcf209fd8e7461b50ec776179407623b38b6a37b40b79c4ba118f242f82f",
+    "boundary": "Actual systemd and installed renderer/nginx with temporary parent/child units and explicit source-service option; production Eva service not restarted."
+  },
+  "package": {
+    "package": "nginx",
+    "version": "1.24.0-2ubuntu7.17",
+    "debSha256": "84bd95140500fa4d10e11383eac5c864ea7dff24fcca80c442b8449fcc65240c",
+    "aptMetadataMatches": true
+  },
+  "installation": {
+    "status": "installed_not_started",
+    "files": {
+      "/etc/systemd/system/eva2-voice-ingress.service": {
+        "sha256": "8e6a7466e0ee0750543d54cf141028753f47735ba530e760fa669829913f2c02",
+        "uid": 0,
+        "mode": "0o644"
+      },
+      "/etc/eva2/voice-ingress.env": {
+        "sha256": "95cabedb4e24d37fd131f23df6723ef972c0174d3d7f8826f8c175b89d5e548c",
+        "uid": 0,
+        "mode": "0o644"
+      },
+      "/etc/systemd/system/eva.service.d/35-eva2-voice-ingress.conf": {
+        "sha256": "6a4dd1a15c40f2605c833486eb5db1758deb30caee0299aeb5b42b0d69b2d471",
+        "uid": 0,
+        "mode": "0o644"
+      },
+      "/opt/eva2/voice-ingress/nginx": {
+        "sha256": "1f16b72bea2f44e5d04fe6cf9e3e4b0dec53a82c50c7c1533c302a8ecaeccacf",
+        "uid": 0,
+        "mode": "0o755"
+      },
+      "/opt/eva2/voice-ingress/render_household_voice_ingress.py": {
+        "sha256": "b98cb8a2eec2c86291d43676991a3be0510f5346a56934b0f747cc8a249a4d5c",
+        "uid": 0,
+        "mode": "0o644"
+      }
+    }
+  },
+  "activation": {
+    "status": "active",
+    "route": "http://127.0.0.1:44710",
+    "listen": "10.0.20.46:44714",
+    "configSha256": "c91f5f98d42601fb9842158e7de84308226114f0d5d5d2d1033fcd8a753e21d4",
+    "serviceReadback": "MainPID=1967462\nUser=eva2-voice\nBindsTo=eva.service\nAfter=tmp.mount -.mount sysinit.target network-online.target systemd-journald.socket systemd-tmpfiles-setup.service eva.service basic.target system.slice\nActiveState=active\n",
+    "boundary": "Native household service remains disabled; no voice pipeline changed."
+  },
+  "networkReadbacks": {
+    "listenerVerified": "10.0.20.46:44714",
+    "nonHaPeerStatus": 403,
+    "homeAssistantStatus": "timeout",
+    "existingHost8420FromHa": "timeout",
+    "linuxInputPolicy": "ACCEPT",
+    "windowsSessionAdministrator": false,
+    "hyperVRuleAttempt": "Access is denied",
+    "requestedRule": {
+      "name": "Eva2-NativeVoice-HA",
+      "localAddress": "10.0.20.46",
+      "localPort": 44714,
+      "remoteAddress": "10.0.20.74",
+      "protocol": "TCP"
+    },
+    "firewallScriptSyntax": "passed"
+  },
+  "sourceHashes": {
+    "eva2/tools/render_household_voice_ingress.py": "b98cb8a2eec2c86291d43676991a3be0510f5346a56934b0f747cc8a249a4d5c",
+    "eva2/tools/verify_household_voice_ingress.py": "27a2c4d33c89c469cde286127cacf1e7bc5ca3e7bdd9f659eb5068ca28ca472d",
+    "eva2/deploy/home-assistant/eva2-voice-ingress.service": "8e6a7466e0ee0750543d54cf141028753f47735ba530e760fa669829913f2c02",
+    "eva2/deploy/home-assistant/allow-native-voice-wsl.ps1": "2088d0bd2963368c667c4efb8af689e3342675fa7847a1c02d706f2d9057284e",
+    "eva2/deploy/home-assistant/native-voice-ingress.md": "b6abcfc4aeee014b8dff9fd0eef41e5c20b3041d1be8a1d3924377cd9662ad2b"
+  },
+  "review": "Independent co006_review bounded ingress activation GO after lifecycle verification and bounded administrator-script GO after source inspection. Exact production installation hashes recorded before start. The firewall is a suspected cause of network timeout and requires independent HA readback after adding the rule. No native conversation, core cutover or acoustic GO.",
+  "next": "Owner runs the exact administrator-only Windows firewall script; independently verify from HA, then configure native entry and reviewed quiescent candidate activation.",
+  "boundaries": [
+    "Host ingress is running; native household service remains disabled on active core slot3.",
+    "No native conversation, paid model call, speaker output, microphone unmute, firmware flash or pipeline switch performed in this turn.",
+    "18 transport checks and 7 lifecycle checks do not prove audible interruption or p95 latency.",
+    "Candidate image source remains cab9227; active slot3 still uses the previous core image. The candidate image gate does not cover this separately tested host ingress."
+  ]
+}
