@@ -2576,7 +2576,7 @@ def test_multistep_dutch_receipts_use_token_admission_without_losing_content(tmp
     assert len(canonical_json_bytes(body)) > 12_000
     model._admit_request(body, autonomous=False)
     assert body == original
-    assert body["input"][-1]["output"] == canonical_json_bytes(receipts[-1].output).decode().rstrip("\n")
+    assert body["input"][-1]["output"] == canonical_json_bytes(model._receipt_model_view(receipts[-1].output)).decode().rstrip("\n")
     tokens = len(conversation_module._input_tokenizer().encode_ordinary(
         canonical_json_bytes(body).decode()))
     assert tokens + conversation_module._INPUT_FRAMING_RESERVE_TOKENS <= 12_000
@@ -2586,3 +2586,44 @@ def test_multistep_dutch_receipts_use_token_admission_without_losing_content(tmp
         ))
     assert "measured_input=12001 measured_output=1 limit=12000" in caplog.text
     assert "Duurzaam onthouden" not in caplog.text
+
+def test_duplicate_observation_model_view_matches_admission_and_actual_tool_returns(tmp_path: Path) -> None:
+    import copy
+    from tests.support.scripted_pydantic_conversation import tool_returns
+
+    backend = ScriptedPydanticConversation([ScriptedPhase.text("Klaar.")])
+    model = PydanticConversationModel(auth_file=tmp_path / "unused", model_backend=backend.model)
+    original = {
+        "contract": "EvaConversationActionReceipt/v1", "durable": True, "status": "verified",
+        "result": {"content": "Volledige documentatie." * 100},
+        "proof": {"expected": {}, "observed": {},
+                  "evidence": {"observation": {"content": "Volledige documentatie." * 100},
+                               "source": "mcp"}},
+    }
+    saved = copy.deepcopy(original)
+    original_hash = canonical_sha256(original)
+    view = model._receipt_model_view(original)
+    ref = view["proof"]["evidence"]["observation"]
+    assert view["result"] == original["result"]
+    assert ref["model_view_reference"] == "/result"
+    assert ref["observation_sha256"] == canonical_sha256(original["result"])
+    assert ref["durable_proof_sha256"] == canonical_sha256(original["proof"])
+    receipts = tuple(ConversationActionReceipt(
+        ConversationActionCall(f"c{i}", "read_document", {"i": i}), original
+    ) for i in range(2))
+    args = dict(prompt="Lees beide.", instructions="Gebruik de resultaten.",
+                prior_actions=receipts[:-1], completed_action=receipts[-1])
+    admitted = model._phase_admission_body(**args)
+    model._run_pydantic_phase(**args)
+    actual = tool_returns(backend.captures[0].messages)
+    assert len(actual) == 2
+    for wire, part in zip(admitted["input"][2::2], actual, strict=True):
+        assert json.loads(wire["output"]) == part.content == view
+    assert original == saved and canonical_sha256(original) == original_hash
+    different = copy.deepcopy(original)
+    different["proof"]["evidence"]["observation"]["content"] += " Extra bewijs."
+    assert model._receipt_model_view(different) == different
+    numeric = copy.deepcopy(original)
+    numeric["result"] = {"value": True}
+    numeric["proof"]["evidence"]["observation"] = {"value": 1}
+    assert model._receipt_model_view(numeric) == numeric

@@ -609,6 +609,36 @@ class PydanticConversationModel:
         return ConversationCredentialStatus(True, "ready", expires_at)
 
     @staticmethod
+    def _receipt_model_view(output: dict[str, Any]) -> dict[str, Any]:
+        """Reference an exact duplicated observation; keep durable receipts intact."""
+        proof = output.get("proof")
+        evidence = proof.get("evidence") if isinstance(proof, dict) else None
+        observation = evidence.get("observation") if isinstance(evidence, dict) else None
+        result = output.get("result")
+        if (
+            output.get("contract") != "EvaConversationActionReceipt/v1"
+            or output.get("durable") is not True
+            or output.get("status") != "verified"
+            or not isinstance(observation, dict)
+            or not isinstance(result, dict)
+            or canonical_json_bytes(observation) != canonical_json_bytes(result)
+        ):
+            return output
+        reference = {
+            "model_view_reference": "/result",
+            "observation_sha256": hashlib.sha256(
+                canonical_json_bytes(observation)
+            ).hexdigest(),
+            "durable_proof_sha256": hashlib.sha256(
+                canonical_json_bytes(proof)
+            ).hexdigest(),
+        }
+        return {
+            **output,
+            "proof": {**proof, "evidence": {**evidence, "observation": reference}},
+        }
+
+    @staticmethod
     def _phase_admission_body(
         *,
         prompt: str,
@@ -637,7 +667,7 @@ class PydanticConversationModel:
                     },
                     {
                         "call_id": receipt.call.call_id,
-                        "output": canonical_json_bytes(receipt.output)
+                        "output": canonical_json_bytes(PydanticConversationModel._receipt_model_view(receipt.output))
                         .decode("utf-8")
                         .rstrip("\n"),
                         "type": "function_call_output",
@@ -771,14 +801,14 @@ class PydanticConversationModel:
                             previous.name, previous.arguments, previous.call_id,
                         )]),
                         ModelRequest(parts=[ToolReturnPart(
-                            previous.name, receipt.output, previous.call_id,
+                            previous.name, self._receipt_model_view(receipt.output), previous.call_id,
                         )]),
                     ])
                 message_history.append(ModelResponse(
                     parts=[ToolCallPart(call.name, call.arguments, call.call_id)]
                 ))
                 deferred_results = DeferredToolResults(
-                    calls={call.call_id: completed_action.output}
+                    calls={call.call_id: self._receipt_model_view(completed_action.output)}
                 )
                 user_prompt = None
             agent = Agent(model_backend, instructions=instructions, retries=0)
