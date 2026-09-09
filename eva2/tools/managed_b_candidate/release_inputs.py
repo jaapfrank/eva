@@ -39,10 +39,10 @@ _PORTABLE_V1_PROFILE_PATH = (
     f"{_PORTABLE_V1_CONTRACT_ROOT}/canonical-json-profile-v1.json"
 )
 _EXPECTED_INPUT_PATHS_SHA256 = (
-    "bd37c453d2f3506bde454441af3807978c2bdb15136083e9f8661e8d908cafc0"
+    "49fb1ed5fe756dea5ddffa708e838986f42db6a77f2575c7980bb1c55b85bb61"
 )
 _EXPECTED_TEST_PATHS_SHA256 = (
-    "2f5f52209a7f931d3237ae0211f55696be4dde922e1965fdab726e3502a4f723"
+    "b1f632012799f95f3630f529929c59b9058dc575dfeb06f6453dc9e94164a9a1"
 )
 _EXPECTED_TEST_SUPPORT_PATHS_SHA256 = (
     "01b4594668e68d2938df3eabaf5a5b71333eda320b859f5eec524ea21bd0ce43"
@@ -61,6 +61,7 @@ _VOICE_INPUTS = {
     'tests/api/test_dashboard_voice_client.cjs',
 }
 _NATIVE_VOICE_INPUTS = {
+    'src/eva/application/audio_playback.py',
     'deploy/home-assistant/custom_components/eva2_voice/__init__.py',
     'deploy/home-assistant/custom_components/eva2_voice/client.py',
     'deploy/home-assistant/custom_components/eva2_voice/config_flow.py',
@@ -77,6 +78,7 @@ _NATIVE_VOICE_INPUTS = {
     'src/eva/bootstrap/native_voice.py',
 }
 _NATIVE_VOICE_TESTS = {
+    'tests/application/test_audio_playback.py',
     'tests/api/test_native_voice.py',
     'tests/application/test_cancellation.py',
     'tests/bootstrap/test_household_voice_authority.py',

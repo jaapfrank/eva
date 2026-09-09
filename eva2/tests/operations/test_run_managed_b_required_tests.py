@@ -115,7 +115,7 @@ def test_authority_distinguishes_executable_tests_from_bound_support() -> None:
     )
     required_inputs = {row["path"] for row in authority["requiredInputs"]}
 
-    assert len(inputs.executable) == 161
+    assert len(inputs.executable) == 162
     assert "tests/application/test_free_will.py" in inputs.executable
     assert "tests/postgres/test_sensory_admission.py" in inputs.executable
     assert "tests/operations/test_two_builder_reproducibility.py" in inputs.executable
@@ -414,7 +414,7 @@ def test_runner_executes_seven_closed_groups_and_redacts_dsns(
     }
     assert len(receipt["groups"]) == 7
     assert len(calls) == 22
-    assert sum(group["executableModuleCount"] for group in receipt["groups"]) == 161
+    assert sum(group["executableModuleCount"] for group in receipt["groups"]) == 162
     postgres = next(
         group for group in receipt["groups"] if group["group"] == "postgres"
     )
