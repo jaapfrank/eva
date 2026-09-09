@@ -3,6 +3,7 @@
 // and drain/flush methods by verify_speaker_wire.py. No physical timing claim.
 #include "playback_stop_barrier.h"
 #include "eva_output_protocol.h"
+#include "eva_input_protocol.h"
 #include <algorithm>
 #include <atomic>
 #include <cassert>
@@ -41,6 +42,12 @@ struct HostSpeaker {
   }
 };
 
+struct EvaMicrophoneSource {
+  bool enabled=false;
+  void enable(bool value) { enabled=value; }
+  bool running() const { return enabled; }
+};
+
 class VaPipecat {
  public:
   HostSpeaker sp;
@@ -66,6 +73,25 @@ class VaPipecat {
   bool ws_connected_=true;
   void *ws_handle_=reinterpret_cast<void *>(1);
   std::atomic<float> volume_{1.0f};
+  std::string eva_phase_;
+  void fire_phase_led_(const std::string &) {}
+  bool eva_session_active();
+  EvaInputProtocol eva_input_;
+  EvaMicrophoneSource mic;
+  EvaMicrophoneSource *eva_mic_source_=&mic;
+  std::atomic<bool> eva_mic_running_{false};
+  uint32_t eva_connection_serial_{0};
+  size_t eva_mic_head_=0,eva_mic_tail_=0,eva_mic_fill_=0;
+  static constexpr size_t kMicTxMaxQueuedBytes=16384;
+  std::array<uint8_t,kMicTxMaxQueuedBytes> mic_storage{};
+  uint8_t *mic_tx_buf_=mic_storage.data();
+  void eva_local_wake();
+  void eva_local_stop();
+  void eva_set_muted(bool);
+  void eva_update_microphone_();
+  void eva_pump_input_();
+  uint64_t eva_capture_token_();
+  void eva_mic_data_(uint64_t,const std::vector<uint8_t> &);
   EvaOutputProtocol eva_output_;
   EvaWireAssembler eva_assembler_;
   std::array<uint8_t,EvaOutputProtocol::MAX_RECORD> eva_held_record_{};
@@ -84,7 +110,9 @@ class VaPipecat {
   void eva_service_output_();
   void eva_output_frames_(uint32_t,int64_t);
   void eva_pump_receipts_();
+  std::function<void()> during_send;
   int ws_send_bin_(const char *data, int size, int) {
+    if (during_send) { auto hook=during_send; during_send=nullptr; hook(); }
     uint8_t prefix[4]; EvaOutputProtocol::write32(prefix,size);
     std::cout.write(reinterpret_cast<const char *>(prefix),4);
     std::cout.write(data,size); std::cout.flush(); return size;

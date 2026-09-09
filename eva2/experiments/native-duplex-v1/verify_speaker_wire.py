@@ -17,7 +17,7 @@ HERE = Path(__file__).resolve().parent
 
 def build_host(component: Path, target: Path) -> Path:
     fixture = HERE.parents[1] / "tests/fixtures"
-    for name in ["eva_output_driver.cpp", "eva_output_protocol.h", "playback_stop_barrier.h"]:
+    for name in ["eva_output_driver.cpp", "eva_output_protocol.h", "playback_stop_barrier.h", "eva_input_protocol.h"]:
         shutil.copyfile(component / name, target / name)
     shutil.copyfile(fixture / "native_duplex_speaker_host.h", target / "va_pipecat.h")
     (target / "esp_timer.h").write_text('#pragma once\n#include <cstdint>\nextern uint32_t host_ms;\ninline int64_t esp_timer_get_time() { return int64_t(host_ms)*1000; }\n')

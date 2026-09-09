@@ -30,7 +30,7 @@ class EvaOutputProtocol {
   static constexpr uint32_t MAX_FRAMES = 24000 * 180;
   enum Kind : uint8_t { OPEN=1, BEGIN=2, AUDIO=3, END=4, STOP=5,
     OPENED=129, BEGUN=130, ACCEPTED=131, FINISHED=132, STOPPED=133, ERROR=134 };
-  enum class State { FRESH, OPENING, IDLE, ACTIVE, DRAINING, FINISHING, STOPPING, FAILED };
+  enum class State { FRESH, OPENING, IDLE, ACTIVE, DRAINING, FINISHING, STOPPING, LOCAL_STOPPING, FAILED };
 
   static uint32_t read32(const uint8_t *p) {
     return (uint32_t(p[0])<<24) | (uint32_t(p[1])<<16) | (uint32_t(p[2])<<8) | p[3];
@@ -48,6 +48,14 @@ class EvaOutputProtocol {
     state_ = State::FAILED;
     action.stop = action.failed = true;
     if (session_set_) action.receipt = receipt_(ERROR, current_, 0);
+    return action;
+  }
+
+  EvaOutputAction local_stop() {
+    EvaOutputAction action;
+    if (state_==State::FAILED || state_==State::FRESH || state_==State::OPENING) return action;
+    action.stop=true;
+    if (state_!=State::STOPPING) state_=State::LOCAL_STOPPING;
     return action;
   }
 
@@ -100,7 +108,7 @@ class EvaOutputProtocol {
     }
     if (kind != AUDIO && kind != END) return fail();
     if (generation < current_ || (generation <= maximum_ &&
-        (state_ == State::STOPPING || state_ == State::IDLE))) return action;
+        (state_ == State::STOPPING || state_ == State::LOCAL_STOPPING || state_ == State::IDLE))) return action;
     if (generation != current_ || state_ != State::ACTIVE) return fail();
     if (kind == AUDIO) {
       if (!payload || payload%2 || sequence != sequence_+1 || frames_+payload/2 > MAX_FRAMES) return fail();
@@ -132,6 +140,10 @@ class EvaOutputProtocol {
       state_=State::IDLE;
       remember_(current_, frames_);
       action.receipt=receipt_(FINISHED, current_, sequence_, frames_);
+    } else if (state_ == State::LOCAL_STOPPING && stopped_confirmed) {
+      const auto heard=std::min(frames_, played_frames>prime_frames ? played_frames-prime_frames : 0);
+      if (current_) remember_(current_,heard);
+      state_=State::IDLE;
     } else if (state_ == State::STOPPING && stopped_confirmed) {
       const auto heard=std::min(frames_, played_frames>prime_frames ? played_frames-prime_frames : 0);
       if (current_) remember_(current_, heard);

@@ -1,0 +1,104 @@
+--- a/va_pipecat.h
++++ b/va_pipecat.h
+@@ -7,6 +7,8 @@
+ 
+ #include "playback_stop_barrier.h"
+ #include "eva_output_protocol.h"
++#include "eva_input_protocol.h"
++#include "eva_microphone_source.h"
+ 
+ #include <atomic>
+ #include <cstdint>
+@@ -74,6 +76,10 @@
+   float get_setup_priority() const override { return setup_priority::AFTER_WIFI; }
+ 
+   // YAML-callable actions.
++  bool eva_session_active();
++  void eva_local_wake();
++  void eva_local_stop();
++  void eva_set_muted(bool muted);
+   void start_session();
+   void send_interrupt();
+   void end_session();
+@@ -102,6 +107,16 @@
+   void eva_service_output_();
+   void eva_output_frames_(uint32_t frames, int64_t timestamp);
+   void eva_pump_receipts_();
++  void eva_update_microphone_();
++  void eva_pump_input_();
++  uint64_t eva_capture_token_();
++  void eva_mic_data_(uint64_t token,const std::vector<uint8_t> &samples);
++  std::string eva_phase_;
++  EvaInputProtocol eva_input_;
++  EvaMicrophoneSource *eva_mic_source_{nullptr};
++  std::atomic<bool> eva_mic_running_{false};
++  uint32_t eva_connection_serial_{0};
++  size_t eva_mic_head_{0},eva_mic_tail_{0},eva_mic_fill_{0};
+   bool eva_pcm_protocol_{false};
+   std::string eva_authorization_, eva_server_ca_;
+   EvaOutputProtocol eva_output_;
+--- a/va_pipecat.cpp
++++ b/va_pipecat.cpp
+@@ -212,8 +212,14 @@
+     return;
+   }
+ 
+-  this->mic_source_->add_data_callback(
+-      [this](const std::vector<uint8_t> &data) { this->on_mic_data_(data); });
++  if (this->eva_pcm_protocol_) {
++    this->eva_mic_source_=new EvaMicrophoneSource(*this->mic_source_);
++    this->eva_mic_source_->subscribe([this]() { return this->eva_capture_token_(); },
++      [this](uint64_t token,const std::vector<uint8_t> &data) { this->eva_mic_data_(token,data); });
++  } else {
++    this->mic_source_->add_data_callback(
++        [this](const std::vector<uint8_t> &data) { this->on_mic_data_(data); });
++  }
+   this->setup_complete_ = true;
+   this->connect_();
+ }
+@@ -423,6 +429,15 @@
+ }
+ 
+ void VaPipecat::mic_tx_task_() {
++  if (this->eva_pcm_protocol_) {
++    while (true) {
++      if (this->ws_connected_ && this->ws_handle_) {
++        this->eva_pump_receipts_();
++        this->eva_pump_input_();
++      }
++      vTaskDelay(pdMS_TO_TICKS(1));
++    }
++  }
+   uint8_t chunk[kMicTxChunkBytes];
+   while (true) {
+     if (!this->streaming_ || !this->ws_connected_ || this->ws_handle_ == nullptr) {
+@@ -457,7 +472,7 @@
+ void VaPipecat::loop() {
+   this->playback_main_loop_.fetch_add(1, std::memory_order_release);
+   if (this->eva_pcm_protocol_) {
+-    this->eva_pump_receipts_();
++    this->eva_update_microphone_();
+     return;  // Legacy followup/has_buffered_data completion cannot emit wire receipts.
+   }
+   this->publish_audio_levels_();
+@@ -1546,6 +1561,7 @@
+ }
+ 
+ void VaPipecat::start_session() {
++  if (this->eva_pcm_protocol_) { this->eva_local_wake(); return; }
+   // Open the streaming window. on_mic_data_ will start forwarding frames to
+   // the backend until the conversation reaches a terminal phase.
+ 
+@@ -1922,10 +1938,12 @@
+ }
+ 
+ void VaPipecat::send_interrupt() {
++  if (this->eva_pcm_protocol_) { this->eva_local_stop(); return; }
+   this->cancel_turn_("interrupt");
+ }
+ 
+ void VaPipecat::end_session() {
++  if (this->eva_pcm_protocol_) { this->eva_set_muted(true); return; }
+   this->cancel_turn_("stop");
+   this->set_streaming_(false);
+   this->followup_pending_ = false;

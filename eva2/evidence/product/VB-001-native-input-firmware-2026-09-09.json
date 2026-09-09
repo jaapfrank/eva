@@ -1,0 +1,161 @@
+{
+  "taskId": "VB-001",
+  "practiceTestId": "SP-03",
+  "recordedAt": "2026-09-09T14:56:36.082300+00:00",
+  "baseCommit": "f6977b8f6347ea195d1b050641709946f0f9936d",
+  "status": "native-input-firmware-built-not-live",
+  "sourceSha256": {
+    "experiments/native-duplex-v1/eva_input_driver.cpp": "05c306740b214caa44a6e90bc7a8a4e5262409ea3b16f0c21e7ef8781460573f",
+    "experiments/native-duplex-v1/eva_input_protocol.h": "a6ba700dbf269845c1b0392cd4ffcb35c97935808da357301aa62d4631852869",
+    "experiments/native-duplex-v1/eva_microphone_source.h": "36171c26ad5069a4e7d9962d3525522149eb6fe4f8c8db63f0122fd6b70e5fca",
+    "experiments/native-duplex-v1/eva_output_driver.cpp": "b1f80d88eb68983509c5f58480aa040556b03ce39d1b9ba3ff89313872504b7d",
+    "experiments/native-duplex-v1/eva_output_protocol.h": "4ded352f12a25fb72654de20452d67fcf723353a0c1c6095ee6d0a888e997990",
+    "experiments/native-duplex-v1/prepare_native_controls.py": "c587186819338e452fc7afece6890c6b1cf53fb094187f34e5916207a22588bf",
+    "experiments/native-duplex-v1/prepare_speaker.py": "c20a47bc729e03b8a8bd66aa12d49bff26e3eb25038c5330c59fbee413cad1d9",
+    "experiments/native-duplex-v1/speaker-input.patch": "f2e16b5aeb711ad169f197a19243f9cfc030b8cbc35c0fced0f4e9a8179ac1fe",
+    "experiments/native-duplex-v1/speaker-wire-v1.md": "08bdc4e50a5356ab8070de50ae376f9e1cdb9622aabc0aed6992e99e484afbff",
+    "experiments/native-duplex-v1/verify_speaker_wire.py": "22a8dba46cd43c7e6aa89b6e079872b00d425530f15cb21e37ebf8ccaa8668b6",
+    "experiments/native-duplex-v1/README.md": "c7859dcd3c948a99e2b64a5895b1e79054e6324f2ca70baa67d7becc5fe2e9ed",
+    "tests/fixtures/native_duplex_speaker_host.h": "8ed0d175c275bc9e3da53811068cd6f8c1095ba06edf5638ff8008f0a34f8728",
+    "tests/operations/test_native_duplex_input_firmware.py": "001e4ac78f900a5c428af764968debbb3eeaeba47eccc1a770f1f5b6746fed41"
+  },
+  "build": {
+    "originalBuildDirectory": "/tmp/eva-native-input-zh_mb3a3/candidate",
+    "esphomeVersion": "2026.6.2",
+    "compileExitCode": 0,
+    "compileSeconds": 243.38,
+    "firmwareOtaSha256": "0c1991924552bbee6975e28d01fe10d430192ce0bdd536bbaa5732fa7b24e152",
+    "compileOnlyTestEndpoint": true,
+    "deployed": false
+  },
+  "privateArtifactDirectory": "/home/administrator/project/.eva2-artifacts/ha-voice-native-input-built-20260909",
+  "prepared": {
+    "upstream": "a538d1d1bacc8609061719f0b05c1622147ccb4b",
+    "patchSha256": "e12526be6276ba99f2561dc29440e82b36cb061b83231dccd87097d493dc4d29",
+    "wirePatchSha256": "42232994c8d1876a5831b99adde4973213e091933cfd80bc47c0a029514bccb7",
+    "authPatchSha256": "09c583d5b05239a5682c365c10fccc9b743f9bba6b01ab7fd8e7b2715e77275d",
+    "inputPatchSha256": "f2e16b5aeb711ad169f197a19243f9cfc030b8cbc35c0fced0f4e9a8179ac1fe",
+    "files": {
+      "__init__.py": "4ef97184e72e24795598729122eb068601b85b01ef4f22206032d661140f5c61",
+      "automation.h": "62882ce3acce7f1e53c4e777543f5a89a57b7893cb6dd20e93878cfb25444035",
+      "eva_input_driver.cpp": "05c306740b214caa44a6e90bc7a8a4e5262409ea3b16f0c21e7ef8781460573f",
+      "eva_input_protocol.h": "a6ba700dbf269845c1b0392cd4ffcb35c97935808da357301aa62d4631852869",
+      "eva_microphone_source.h": "36171c26ad5069a4e7d9962d3525522149eb6fe4f8c8db63f0122fd6b70e5fca",
+      "eva_output_driver.cpp": "b1f80d88eb68983509c5f58480aa040556b03ce39d1b9ba3ff89313872504b7d",
+      "eva_output_protocol.h": "4ded352f12a25fb72654de20452d67fcf723353a0c1c6095ee6d0a888e997990",
+      "playback_stop_barrier.h": "74836cf2f3c0629b721e0d7b0d3dc824455a42f712cce00678b686b8e7518205",
+      "va_pipecat.cpp": "41bc42ee30b2e96b86db83f0135edf6a12e2d856a6318fd69d081e0ad03e138b",
+      "va_pipecat.h": "2ba690d876f2d1a885b5bbffeee0b90e9ed0f3393e037a46692842988b1ec170"
+    },
+    "transport": {
+      "revision": "b385915ca011094238f5e8ebc45d539183b09cf2",
+      "patchSha256": "732a98c9933d848e9855d3e841268204bbe67cffc85483abb7552c7579a4219d",
+      "files": {
+        "CMakeLists.txt": "2d26aec8d9f48972e451b7d74c4f2295cd8acd8494e4a33219af6325daf81399",
+        "Kconfig": "b56c434dfbc1958090e26ca86a11f6909894cf77d33a28b26a6d5eb8787e5651",
+        "LICENSE": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+        "esp_websocket_client.c": "675e180c0bbde99159bb24efda4129081cdafd9d93095ea24b2bd12e1fe3942a",
+        "idf_component.yml": "bcea608b039cef4d344fdccb5a949e34ea1fc8fc7a9a880dae9f3d84e41d52fd",
+        "include/esp_websocket_client.h": "c0d40ef8ba452cc24269d5cd12312db9b548c5547ae3946029069ebce052fac4"
+      }
+    },
+    "deployable": false
+  },
+  "nativeControls": {
+    "base": {
+      "sourceSha256": "87b9c4476dfee28c939b8f2578a6dc6f1fe3397368dd62f2268c50f753a1f1c1",
+      "candidateSha256": "e946da6592d42ca178771656f0ea661a87b95f3862d74e8c30ab9eee36f8fb50",
+      "replacedNativeActionCounts": {
+        "start": 2,
+        "stop": 3,
+        "running": 4
+      },
+      "microphoneInitiallyMutedUntilPhysicalStateRead": true,
+      "hardwareAndSoftwareMuteBound": true,
+      "stopModelMustBeEnabledDuringEvaSession": true,
+      "sourceModified": false,
+      "deployed": false
+    },
+    "overlay": {
+      "candidateSha256": "0cf57ea0c103919ef83fa4289d7530a3f797104a670173221e02ac315bf8d2e8",
+      "nativeControls": true,
+      "phaseLedAndMediaDucking": true,
+      "stopModelEnabledThroughoutConversation": true,
+      "deployed": false
+    }
+  },
+  "generatedBindings": {
+    "eva_input_protocol.h": true,
+    "va_pipecat.h": true,
+    "eva_output_driver.cpp": true,
+    "va_pipecat.cpp": true,
+    "eva_input_driver.cpp": true,
+    "playback_stop_barrier.h": true,
+    "automation.h": true,
+    "eva_output_protocol.h": true,
+    "eva_microphone_source.h": true,
+    "nativeComponent": true,
+    "wakeBound": true,
+    "muteBound": true,
+    "stopBound": true,
+    "nativeHaStartAbsent": true,
+    "phaseAutomation": true
+  },
+  "targetedTests": {
+    "command": "pytest -q tests/operations/test_native_duplex_input_firmware.py tests/operations/test_native_duplex_speaker_protocol.py tests/operations/test_native_duplex_speaker_stop.py tests/operations/test_native_duplex_speaker_input.py tests/operations/test_native_duplex_speaker_wire.py tests/operations/test_native_duplex_speaker_endpoint.py tests/operations/test_native_duplex_reply_lane.py tests/operations/test_native_duplex_microphone_session.py tests/connectors/test_home_assistant_voice.py",
+    "passed": 139,
+    "durationSeconds": 21.71,
+    "scope": "Actual C++ input/output drivers, input state machine and raw wrapper under host stubs/UBSan; server regression suite uses localhost services and explicit device/provider doubles."
+  },
+  "hostScenarios": [
+    "Muted by default; wake ignored until physical state initialization.",
+    "Pre-CAPTURE audio retained locally; no wire PCM before CAPTURED.",
+    "Stop during a PCM write orders the last frame before LOCAL_STOP and drops remaining old queue.",
+    "Capture resumes without wake after confirmed capture end.",
+    "Raw conversion token predates conversion and survives concurrent stop/restart.",
+    "Old callback from prior connection epoch1 cannot enter new connection epoch1.",
+    "Mute cannot be undone by server CAPTURE.",
+    "Buffer overrun fails closed instead of dropping words.",
+    "Stop during ARMED invalidates local admission and rejects delayed CAPTURE.",
+    "Local output stop does not fabricate STOPPED before the actual stop barrier."
+  ],
+  "preparedDriverVerification": {
+    "speakerWire": "passed; real prepared C++ driver/drain with host speaker and Python sender",
+    "speakerAuth": "passed; redirect rejection and unsafe configuration checks; actual prepared C under host stubs"
+  },
+  "independentReview": {
+    "reviewer": "co006_review",
+    "decision": "bounded candidate GO",
+    "verified": [
+      "Nine generated source hashes",
+      "Both private configuration hashes",
+      "Original native YAML unchanged",
+      "Wire and auth probes",
+      "Patched WebSocket transport and dynamic log guard compiled",
+      "Successful build and exact OTA hash"
+    ],
+    "fixedFinding": "ARMED stop previously preserved pending admission; now fails closed before any delayed CAPTURE.",
+    "excludes": "Physical audio, echo, stop latency, recovery, deployment and owner acceptance."
+  },
+  "ownerAcceptances": {
+    "SP-01": "accepted",
+    "SP-02": "accepted",
+    "SP-03": "not-ready-for-practice"
+  },
+  "runtimeChange": false,
+  "speakerFlashed": false,
+  "additionalModelOrProviderCalls": 0,
+  "remaining": [
+    "Compose actual authenticated household endpoint with HA providers and Eva core; candidate uses unreachable test endpoint.",
+    "Actually heard conversation context.",
+    "Usable physical recovery before speaker rollout.",
+    "Physical microphone/AEC/shared-task scheduling, simultaneous speech, local stop then immediate question, reconnect, latency and complete SP-03 owner test.",
+    "SP-04 false wakewords remains open."
+  ],
+  "dashboardReadback": {
+    "url": "http://127.0.0.1:44712/project-state",
+    "projectMatchesCanonicalBoard": true,
+    "SP-02": "accepted",
+    "SP-03": "working-not-ready-for-practice"
+  }
+}

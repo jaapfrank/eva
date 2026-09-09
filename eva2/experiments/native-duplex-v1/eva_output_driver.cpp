@@ -15,7 +15,11 @@ void VaPipecat::eva_flush_locked_() {
 
 void VaPipecat::eva_apply_locked_(const EvaOutputAction &action, const uint8_t *record, size_t size) {
   if (action.stop) this->eva_flush_locked_();
-  if (action.failed) this->eva_close_requested_.store(true, std::memory_order_release);
+  if (action.failed) {
+    this->eva_input_.fail();
+    this->eva_mic_head_=this->eva_mic_tail_=this->eva_mic_fill_=0;
+    this->eva_close_requested_.store(true, std::memory_order_release);
+  }
   if (action.reset_frames) {
     this->eva_written_frames_=this->eva_played_frames_=this->eva_prime_frames_=0;
     // DMA timestamps identify callbacks for the previous source lifetime even
@@ -44,6 +48,7 @@ void VaPipecat::eva_apply_locked_(const EvaOutputAction &action, const uint8_t *
     this->audio_fill_+=bytes;
   }
   if (action.receipt.size) {
+    this->eva_input_.opened(action.receipt);
     if (this->eva_ack_count_ == this->eva_ack_queue_.size()) {
       // A stalled receiver cannot create an unbounded defer/task queue.
       this->eva_output_.fail();
@@ -62,6 +67,9 @@ void VaPipecat::eva_reset_connection_() {
   this->eva_assembler_.reset();  // WS task owns message assembly
   portENTER_CRITICAL(&this->ring_mux_);
   this->eva_output_.reset_connection();
+  this->eva_input_.reset();
+  ++this->eva_connection_serial_;
+  this->eva_mic_head_=this->eva_mic_tail_=this->eva_mic_fill_=0;
   this->eva_ack_head_=this->eva_ack_count_=0;
   this->eva_epoch_us_=0;
   this->eva_flush_locked_();
@@ -86,6 +94,10 @@ void VaPipecat::eva_ws_data_(uint8_t opcode, bool fin, int offset, int total,
     // be overwritten, while STOP/control still need prompt access to the parser.
     if (this->eva_held_size_ && length>=EvaOutputProtocol::HEADER && record[4]==EvaOutputProtocol::AUDIO) {
       this->eva_apply_locked_(this->eva_output_.fail(), nullptr, 0);
+    } else if (length>=EvaOutputProtocol::HEADER && (record[4]==EvaInputProtocol::CAPTURE || record[4]==EvaInputProtocol::CAPTURE_END)) {
+      if (!this->eva_input_.receive(record,length)) this->eva_apply_locked_(this->eva_output_.fail(),nullptr,0);
+      if (record[4]==EvaInputProtocol::CAPTURE_END)
+        this->eva_mic_head_=this->eva_mic_tail_=this->eva_mic_fill_=0;
     } else {
       auto action=this->eva_output_.receive(record, length, this->audio_buf_bytes_-this->audio_fill_);
       this->eva_apply_locked_(action, record, length);

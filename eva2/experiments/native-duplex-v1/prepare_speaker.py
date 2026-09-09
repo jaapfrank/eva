@@ -50,11 +50,11 @@ def prepare(upstream: Path, destination: Path, *, websocket_upstream: Path) -> P
         component.mkdir(parents=True)
         for name, data in contents.items():
             (component / name).write_bytes(data)
-        for name in ["speaker-stop.patch", "speaker-wire.patch", "speaker-auth.patch"]:
+        for name in ["speaker-stop.patch", "speaker-wire.patch", "speaker-auth.patch", "speaker-input.patch"]:
             patch = str(HERE / name)
             for args in [["--check", patch], [patch]]:
                 subprocess.run(["git", "apply", *args], cwd=component, check=True, capture_output=True, text=True)
-        for name in ["playback_stop_barrier.h", "eva_output_protocol.h", "eva_output_driver.cpp"]:
+        for name in ["playback_stop_barrier.h", "eva_output_protocol.h", "eva_output_driver.cpp", "eva_input_protocol.h", "eva_microphone_source.h", "eva_input_driver.cpp"]:
             shutil.copyfile(HERE / name, component / name)
         transport = component / "esp_websocket_client"
         for name, data in transport_contents.items():
@@ -70,6 +70,7 @@ def prepare(upstream: Path, destination: Path, *, websocket_upstream: Path) -> P
             "patchSha256": hashlib.sha256((HERE / "speaker-stop.patch").read_bytes()).hexdigest(),
             "wirePatchSha256": hashlib.sha256((HERE / "speaker-wire.patch").read_bytes()).hexdigest(),
             "authPatchSha256": hashlib.sha256((HERE / "speaker-auth.patch").read_bytes()).hexdigest(),
+            "inputPatchSha256": hashlib.sha256((HERE / "speaker-input.patch").read_bytes()).hexdigest(),
             "files": {p.name: hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted(component.iterdir()) if p.is_file()},
             "transport": {"revision": transport_manifest["revision"],
                           "patchSha256": hashlib.sha256((HERE / "websocket-no-redirect.patch").read_bytes()).hexdigest(),
