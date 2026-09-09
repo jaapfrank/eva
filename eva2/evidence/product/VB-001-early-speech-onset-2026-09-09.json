@@ -1,0 +1,44 @@
+{
+  "contract": "EvaEarlyHaOnsetProbe/v1",
+  "recordedAt": "2026-09-09T11:38:15.933791+00:00",
+  "status": "microvad_not_selected_for_fast_barge_in",
+  "events": [
+    {
+      "event": "early_callback",
+      "elapsedMs": 1520
+    },
+    {
+      "event": "ha_speech_start",
+      "elapsedMs": 1526
+    },
+    {
+      "event": "microphone_source_closed",
+      "elapsedMs": 5429
+    },
+    {
+      "event": "final_text",
+      "elapsedMs": 5429
+    }
+  ],
+  "localLeadMs": 6,
+  "detector": "pymicro-vad==1.0.1",
+  "confidence": 0.7,
+  "requiredSpeechFrames": 12,
+  "frameStatistics": {
+    "total": 150,
+    "firstHighFrame": 132,
+    "firstAvailableFrame": 77
+  },
+  "syntheticText": "Dit is een technische proef van de spraakherkenning van Eva.",
+  "recognizedSyntheticText": "Dit is een technische proef van de spraakherkenning van Eva.",
+  "sourceSha256": "f13eaae0f3cebe9a598bd55db747e8bdf2690ee2b577bb3b8203bcb67d362362",
+  "audioPersisted": false,
+  "hardwareChanged": false,
+  "speakerPlaybackRequested": false,
+  "limitations": [
+    "Synthetic paced PCM only; no acoustic echo or actual microphone",
+    "Not physical stop or p95 evidence",
+    "No active runtime deployment"
+  ],
+  "decision": "Only 6ms lead in initial probe; follow-up diagnostic comparison found 390–770ms after energy proxy. Select measured Silero candidate instead, subject to hardware validation."
+}

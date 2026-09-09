@@ -1,0 +1,25 @@
+{
+  "pipecatCommit": "daf5902d98c389127ee0944cb7dcb9c26fa8a96b",
+  "files": {
+    "src/pipecat/audio/vad/silero.py": {
+      "url": "https://raw.githubusercontent.com/pipecat-ai/pipecat/daf5902d98c389127ee0944cb7dcb9c26fa8a96b/src/pipecat/audio/vad/silero.py",
+      "sha256": "9eec0ae79d63341e010fd1351031f2ea73a76204bc9ade57d3107ba5d31740a3"
+    },
+    "src/pipecat/audio/vad/data/silero_vad.onnx": {
+      "url": "https://raw.githubusercontent.com/pipecat-ai/pipecat/daf5902d98c389127ee0944cb7dcb9c26fa8a96b/src/pipecat/audio/vad/data/silero_vad.onnx",
+      "sha256": "597d30b3ec076608d059477bb14cfeffdf951bf5cae370d38f65d33bbfe82004"
+    },
+    "LICENSE": {
+      "url": "https://raw.githubusercontent.com/pipecat-ai/pipecat/daf5902d98c389127ee0944cb7dcb9c26fa8a96b/LICENSE",
+      "sha256": "e31a733ecb79cbffafd5474e964e5eca15e0a0876a42b1d7253b51b198eb61aa"
+    }
+  },
+  "wrapperExtraction": "SileroOnnxModel class body unchanged; imports narrowed to numpy, onnxruntime and typing.cast",
+  "runtime": "numpy==2.5.3; onnxruntime==1.29.0; CPU only, one thread",
+  "modelStoredInRepository": false,
+  "sileroLicense": {
+    "url": "https://raw.githubusercontent.com/snakers4/silero-vad/867c2aa692646a1f1de3e94a15c9dd9f614c0acb/LICENSE",
+    "sha256": "2e63e9a38b6e8fc0c7bc37ce174caca1862870856c6daf5697cfb785e925520b"
+  },
+  "adapter": "Silero10msDetector appended by Eva; model wrapper retained verbatim"
+}

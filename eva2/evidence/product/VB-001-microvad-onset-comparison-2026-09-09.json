@@ -1,0 +1,189 @@
+{
+  "status": "offline_detector_comparison_not_hardware",
+  "detector": "pymicro-vad==1.0.1",
+  "energyReference": "first 10ms frame RMS > 0.01 full-scale; diagnostic proxy, not human-labeled onset",
+  "measurements": [
+    {
+      "syntheticText": "Dit is een technische proef van de spraakherkenning van Eva.",
+      "energyReferenceMs": 730,
+      "grid": [
+        {
+          "confidence": 0.2,
+          "requiredFrames": 3,
+          "onsetMs": 1250,
+          "relativeToEnergyMs": 520
+        },
+        {
+          "confidence": 0.2,
+          "requiredFrames": 6,
+          "onsetMs": 1280,
+          "relativeToEnergyMs": 550
+        },
+        {
+          "confidence": 0.2,
+          "requiredFrames": 12,
+          "onsetMs": 1340,
+          "relativeToEnergyMs": 610
+        },
+        {
+          "confidence": 0.5,
+          "requiredFrames": 3,
+          "onsetMs": 1280,
+          "relativeToEnergyMs": 550
+        },
+        {
+          "confidence": 0.5,
+          "requiredFrames": 6,
+          "onsetMs": 1310,
+          "relativeToEnergyMs": 580
+        },
+        {
+          "confidence": 0.5,
+          "requiredFrames": 12,
+          "onsetMs": 1370,
+          "relativeToEnergyMs": 640
+        },
+        {
+          "confidence": 0.7,
+          "requiredFrames": 3,
+          "onsetMs": 1340,
+          "relativeToEnergyMs": 610
+        },
+        {
+          "confidence": 0.7,
+          "requiredFrames": 6,
+          "onsetMs": 1370,
+          "relativeToEnergyMs": 640
+        },
+        {
+          "confidence": 0.7,
+          "requiredFrames": 12,
+          "onsetMs": 1500,
+          "relativeToEnergyMs": 770
+        }
+      ]
+    },
+    {
+      "syntheticText": "Ik wil graag iets anders vragen.",
+      "energyReferenceMs": 720,
+      "grid": [
+        {
+          "confidence": 0.2,
+          "requiredFrames": 3,
+          "onsetMs": 1120,
+          "relativeToEnergyMs": 400
+        },
+        {
+          "confidence": 0.2,
+          "requiredFrames": 6,
+          "onsetMs": 1150,
+          "relativeToEnergyMs": 430
+        },
+        {
+          "confidence": 0.2,
+          "requiredFrames": 12,
+          "onsetMs": 1210,
+          "relativeToEnergyMs": 490
+        },
+        {
+          "confidence": 0.5,
+          "requiredFrames": 3,
+          "onsetMs": 1130,
+          "relativeToEnergyMs": 410
+        },
+        {
+          "confidence": 0.5,
+          "requiredFrames": 6,
+          "onsetMs": 1160,
+          "relativeToEnergyMs": 440
+        },
+        {
+          "confidence": 0.5,
+          "requiredFrames": 12,
+          "onsetMs": 1220,
+          "relativeToEnergyMs": 500
+        },
+        {
+          "confidence": 0.7,
+          "requiredFrames": 3,
+          "onsetMs": 1140,
+          "relativeToEnergyMs": 420
+        },
+        {
+          "confidence": 0.7,
+          "requiredFrames": 6,
+          "onsetMs": 1170,
+          "relativeToEnergyMs": 450
+        },
+        {
+          "confidence": 0.7,
+          "requiredFrames": 12,
+          "onsetMs": 1230,
+          "relativeToEnergyMs": 510
+        }
+      ]
+    },
+    {
+      "syntheticText": "Wat gaan we morgen eten?",
+      "energyReferenceMs": 740,
+      "grid": [
+        {
+          "confidence": 0.2,
+          "requiredFrames": 3,
+          "onsetMs": 1130,
+          "relativeToEnergyMs": 390
+        },
+        {
+          "confidence": 0.2,
+          "requiredFrames": 6,
+          "onsetMs": 1160,
+          "relativeToEnergyMs": 420
+        },
+        {
+          "confidence": 0.2,
+          "requiredFrames": 12,
+          "onsetMs": 1220,
+          "relativeToEnergyMs": 480
+        },
+        {
+          "confidence": 0.5,
+          "requiredFrames": 3,
+          "onsetMs": 1150,
+          "relativeToEnergyMs": 410
+        },
+        {
+          "confidence": 0.5,
+          "requiredFrames": 6,
+          "onsetMs": 1180,
+          "relativeToEnergyMs": 440
+        },
+        {
+          "confidence": 0.5,
+          "requiredFrames": 12,
+          "onsetMs": 1240,
+          "relativeToEnergyMs": 500
+        },
+        {
+          "confidence": 0.7,
+          "requiredFrames": 3,
+          "onsetMs": 1160,
+          "relativeToEnergyMs": 420
+        },
+        {
+          "confidence": 0.7,
+          "requiredFrames": 6,
+          "onsetMs": 1190,
+          "relativeToEnergyMs": 450
+        },
+        {
+          "confidence": 0.7,
+          "requiredFrames": 12,
+          "onsetMs": 1250,
+          "relativeToEnergyMs": 510
+        }
+      ]
+    }
+  ],
+  "audioPersisted": false,
+  "parametersNotYetSelected": true
+}

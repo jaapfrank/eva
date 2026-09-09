@@ -1,0 +1,149 @@
+{
+  "contract": "EvaSileroHaOnsetProbe/v1",
+  "recordedAt": "2026-09-09T11:43:37.653108+00:00",
+  "status": "measured_not_hardware",
+  "measurements": [
+    {
+      "syntheticText": "Dit is een technische proef van de spraakherkenning van Eva.",
+      "recognizedSyntheticText": "Dit is een technische proef van de spraakherkenning van Eva.",
+      "events": [
+        {
+          "event": "energy_reference",
+          "elapsedMs": 792
+        },
+        {
+          "event": "early_callback",
+          "elapsedMs": 977
+        },
+        {
+          "event": "ha_speech_start",
+          "elapsedMs": 1580
+        },
+        {
+          "event": "microphone_source_closed",
+          "elapsedMs": 5474
+        },
+        {
+          "event": "final_text",
+          "elapsedMs": 5476
+        }
+      ],
+      "leadOverHaMs": 603,
+      "energyToCallbackMs": 185
+    },
+    {
+      "syntheticText": "Ik wil graag iets anders vragen.",
+      "recognizedSyntheticText": "Ik wil graag iets anders vragen.",
+      "events": [
+        {
+          "event": "energy_reference",
+          "elapsedMs": 765
+        },
+        {
+          "event": "early_callback",
+          "elapsedMs": 930
+        },
+        {
+          "event": "ha_speech_start",
+          "elapsedMs": 1465
+        },
+        {
+          "event": "microphone_source_closed",
+          "elapsedMs": 3926
+        },
+        {
+          "event": "final_text",
+          "elapsedMs": 3929
+        }
+      ],
+      "leadOverHaMs": 535,
+      "energyToCallbackMs": 165
+    },
+    {
+      "syntheticText": "Wat gaan we morgen eten?",
+      "recognizedSyntheticText": "Wat gaan we morgeneten?",
+      "events": [
+        {
+          "event": "energy_reference",
+          "elapsedMs": 781
+        },
+        {
+          "event": "early_callback",
+          "elapsedMs": 1009
+        },
+        {
+          "event": "ha_speech_start",
+          "elapsedMs": 1610
+        },
+        {
+          "event": "microphone_source_closed",
+          "elapsedMs": 3435
+        },
+        {
+          "event": "final_text",
+          "elapsedMs": 3438
+        }
+      ],
+      "leadOverHaMs": 601,
+      "energyToCallbackMs": 228
+    }
+  ],
+  "confidence": 0.7,
+  "requiredSpeechFrames": 12,
+  "sourceHashes": {
+    "experiments/native-duplex-v1/local_onset.py": "f84d3415ba2410530f801011e5fbffa8218dd75d0555cdbe133e014beabfff6e",
+    "experiments/native-duplex-v1/silero_onnx.py": "3432725e1b96b9e336dec963c7b46eeb967d3fe55f90216a625e06a224050ce2"
+  },
+  "modelSha256": "597d30b3ec076608d059477bb14cfeffdf951bf5cae370d38f65d33bbfe82004",
+  "audioPersisted": false,
+  "hardwareChanged": false,
+  "limitations": [
+    "Three synthetic TTS utterances only; not human-labeled onset or p95",
+    "Energy reference is first 20ms frame RMS > 0.01 full-scale",
+    "No acoustic echo handling, real speaker stop or firmware deployment"
+  ],
+  "negativeControls": [
+    {
+      "input": "silence",
+      "durationSeconds": 10,
+      "triggered": false,
+      "peakProbability": 0.0238,
+      "processingP95MsPer10msFrame": 0.266
+    },
+    {
+      "input": "constant_440hz",
+      "durationSeconds": 10,
+      "triggered": false,
+      "peakProbability": 0.0063,
+      "processingP95MsPer10msFrame": 0.243
+    },
+    {
+      "input": "white_noise",
+      "durationSeconds": 10,
+      "triggered": false,
+      "peakProbability": 0.176,
+      "processingP95MsPer10msFrame": 0.357
+    }
+  ],
+  "negativeControlLimit": "Generated silence, 440Hz tone and seeded white noise only; not household TV, echo or other speakers. Measurement completed; first receipt write failed due to root ownership and was recovered from captured output.",
+  "independentReview": {
+    "reviewer": "/root/co006_review",
+    "verdict": "GO_experimental_model_binding_only",
+    "confirmed": [
+      "upstream wrapper class copied verbatim",
+      "model and source digests match",
+      "Pipecat and Silero license files match",
+      "no samples skipped in 512-sample model batches",
+      "reported synthetic timings do not imply physical stop or p95"
+    ]
+  },
+  "modelPreparation": {
+    "file": "experiments/native-duplex-v1/prepare_vad.py",
+    "verified": [
+      "actual pinned download succeeded",
+      "matching existing model reused",
+      "corrupt existing file rejected without replacement"
+    ],
+    "factory": "verified_detector verifies the configured file before constructing the detector"
+  }
+}

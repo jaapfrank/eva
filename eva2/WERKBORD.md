@@ -5,10 +5,10 @@ Laatst bijgewerkt: 2026-09-09.
 Doel: [Eva als zelfstandig lerende digitale huisgenoot](PROJECTDOEL.md).
 Gebouwd, getest, live en door jou geaccepteerd zijn verschillende stappen.
 
-TL-002: huisinventarisatie blijft live. Documentendienst-activering is teruggerold na een Uvicorn-opstartfout. Reparatie gericht getest en onafhankelijk goedgekeurd; nieuwe volledige kandidaatcontrole volgt.
-[Actueel bewijs](evidence/product/TL-002-workspace-candidate-2026-09-08.json).
+SP-01 en SP-02 zijn door Jaap geaccepteerd. Voor SP-03 werkt de experimentele detectie vóór de definitieve transcriptie. Silero reageerde in drie synthetische HA Cloud-proeven ruim een halve seconde eerder dan HA; de fysieke speakeronderbreking is nog in uitvoering.
+[Actueel bewijs](evidence/product/VB-001-silero-speech-onset-2026-09-09.json).
 
-Independent admission review, then prepare stopped slot4 and lossless slot3-to4 cutover.
+De bestaande speakercomponent krijgt een eigen audiobron en bevestigde, generatiegebonden stop. Daarna volgt de complete kandidaat en de echte praktijktest.
 
 ## Nu
 
@@ -104,6 +104,17 @@ Klaar betekent:
 - `eva2/tests/operations/test_native_duplex_reply_lane.py`
 - `eva2/evidence/product/VB-001-duplex-reply-coordination-2026-09-09.json`
 - `eva2/evidence/product/VB-001-ha-speech-onset-2026-09-09.json`
+- `eva2/experiments/native-duplex-v1/local_onset.py`
+- `eva2/experiments/native-duplex-v1/silero_onnx.py`
+- `eva2/experiments/native-duplex-v1/prepare_vad.py`
+- `eva2/experiments/native-duplex-v1/vad-upstream.json`
+- `eva2/experiments/native-duplex-v1/vad-requirements.lock`
+- `eva2/experiments/native-duplex-v1/LICENSE.pipecat`
+- `eva2/experiments/native-duplex-v1/LICENSE.silero`
+- `eva2/tests/operations/test_native_duplex_local_onset.py`
+- `eva2/evidence/product/VB-001-early-speech-onset-2026-09-09.json`
+- `eva2/evidence/product/VB-001-microvad-onset-comparison-2026-09-09.json`
+- `eva2/evidence/product/VB-001-silero-speech-onset-2026-09-09.json`
 
 Echte controles:
 
@@ -125,6 +136,7 @@ Echte controles:
 - `pytest -q tests/application/test_cancellation.py tests/bootstrap/test_native_household_responder.py tests/model/test_pydantic_conversation_model.py`
 - `pytest -q tests/bootstrap/test_household_voice_authority.py`
 - `pytest -q tests/operations/test_native_duplex_reply_lane.py tests/operations/test_ha_voice_native_client.py tests/connectors/test_home_assistant_voice.py`
+- `pytest -q tests/operations/test_native_duplex_local_onset.py`
 
 </details>
 
