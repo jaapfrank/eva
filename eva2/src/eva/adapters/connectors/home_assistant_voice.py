@@ -6,7 +6,7 @@ ordinary Eva conversation admission remain the caller's responsibility.
 from __future__ import annotations
 
 import asyncio
-from collections.abc import AsyncIterable, AsyncIterator
+from collections.abc import AsyncIterable, AsyncIterator, Awaitable
 from dataclasses import dataclass
 from datetime import datetime, timedelta, timezone
 import json
@@ -177,11 +177,16 @@ class HomeAssistantSpeechInput:
         self._expected_stt_engine = expected_stt_engine
         self._expected_pipeline_language = expected_pipeline_language
 
-    async def transcribe(self, chunks: AsyncIterable[bytes]) -> str:
+    async def transcribe(
+        self, chunks: AsyncIterable[bytes], *,
+        on_speech_start: Callable[[], Awaitable[None]] | None = None,
+    ) -> str:
         """Return final text only after successful STT and pipeline termination.
 
         Pipeline/provider failures discard partial results. Disconnect/cancel
         closes media transport and its producer; raw audio is never persisted.
+        An optional server-owned callback observes the first HA VAD start,
+        before final text. It is not evidence of physical speaker silence.
         """
         try:
             iterator = aiter(chunks)
@@ -189,7 +194,7 @@ class HomeAssistantSpeechInput:
                 async with asyncio.timeout(self._timeout):
                     async with connect(self._url, open_timeout=10, close_timeout=2,
                                        max_size=65_536, proxy=None) as socket:
-                        return await self._transcribe(socket, iterator)
+                        return await self._transcribe(socket, iterator, on_speech_start=on_speech_start)
             finally:
                 close = getattr(iterator, "aclose", None)
                 if close is not None:
@@ -211,7 +216,10 @@ class HomeAssistantSpeechInput:
             raise VoiceMediaError("speech provider sent an invalid message")
         return value
 
-    async def _transcribe(self, socket, chunks: AsyncIterable[bytes]) -> str:
+    async def _transcribe(
+        self, socket, chunks: AsyncIterable[bytes], *,
+        on_speech_start: Callable[[], Awaitable[None]] | None = None,
+    ) -> str:
         if (await self._message(socket)).get("type") != "auth_required":
             raise VoiceMediaError("speech provider authentication failed")
         await socket.send(json.dumps({"type": "auth", "access_token": self._token}))
@@ -225,6 +233,7 @@ class HomeAssistantSpeechInput:
         handler = None
         started = False
         acknowledged = False
+        speech_observed = False
         transcript = None
         try:
             while True:
@@ -279,6 +288,10 @@ class HomeAssistantSpeechInput:
                 elif kind in {"stt-vad-start", "stt-vad-end"}:
                     if not started or transcript is not None:
                         raise VoiceMediaError("speech provider activity order differs")
+                    if kind == "stt-vad-start" and not speech_observed:
+                        speech_observed = True
+                        if on_speech_start is not None:
+                            await on_speech_start()
                 elif kind == "stt-end":
                     text = data.get("stt_output", {}).get("text")
                     if (not started or transcript is not None or not isinstance(text, str)

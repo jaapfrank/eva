@@ -1,0 +1,61 @@
+{
+  "status": "experimental_reply_coordination_tested_not_live",
+  "observedAt": "2026-09-09T11:26:17.388085+00:00",
+  "tests": {
+    "new": 15,
+    "existingNativeClient": 17,
+    "existingHaMedia": 45,
+    "passed": 77,
+    "failed": 0,
+    "command": "PYTHONPATH=src python -m pytest -q tests/operations/test_native_duplex_reply_lane.py tests/operations/test_ha_voice_native_client.py tests/connectors/test_home_assistant_voice.py"
+  },
+  "verified": [
+    "Real native HTTP cancellation does not delay local output invalidation or next question",
+    "Late cancellation-resistant response cannot start old audio",
+    "Stale and duplicate final transcripts rejected",
+    "Partial output failure invalidates audio generation and closes lane",
+    "Local HA WebSocket VAD starts generation before final STT",
+    "Missing VAD, STT error or cancellation cannot submit new core turn",
+    "Owned stop survives cancelled playback worker, speech-start callback and close",
+    "Closed lane or current reply failure terminates supervised STT",
+    "Superseded client and playback failures preserve new input after confirmed old stop"
+  ],
+  "fixedDuringVerification": [
+    "Completed worker failure observable before close returns",
+    "Independent review found close cancelling and skipping pending stop: owned shielded stop tasks now joined",
+    "Independent review found late old failure closing new input: reply failures now generation-bound",
+    "Observable closure terminates supervised STT",
+    "Transient renamed watcher variable NameError corrected before passing run"
+  ],
+  "sourceHashes": {
+    "experiments/native-duplex-v1/reply_lane.py": "74ecdf3ecd099e79d7d378d18bdeaae7870933ee50c88ab1bb763910bafdd693",
+    "tests/operations/test_native_duplex_reply_lane.py": "0f0302975eaf06031af7865c3d85df7f0e5d0dce317a163c2c2808cc91c110de",
+    "src/eva/adapters/connectors/home_assistant_voice.py": "7102834f8eb5a2a053c0378aeebca3bf8a6e6181ac9cadef2c1e982f1a8a9a34"
+  },
+  "unproven": [
+    "Fast VAD and acoustic echo handling",
+    "Authenticated speaker transport and physical buffer flushing",
+    "TTS playback adapter",
+    "Played versus unheard context",
+    "Physical p95 stop latency"
+  ],
+  "hardwareChanged": false,
+  "liveSpeechProbe": "eva2/evidence/product/VB-001-ha-speech-onset-2026-09-09.json",
+  "reviewStatus": "GO for experimental coordination only",
+  "independentReview": {
+    "reviewer": "/root/co006_review",
+    "verdict": "GO_experimental_only",
+    "independentTestsPassed": 15,
+    "sourceHashes": {
+      "experiments/native-duplex-v1/reply_lane.py": "74ecdf3ecd099e79d7d378d18bdeaae7870933ee50c88ab1bb763910bafdd693",
+      "tests/operations/test_native_duplex_reply_lane.py": "0f0302975eaf06031af7865c3d85df7f0e5d0dce317a163c2c2808cc91c110de",
+      "src/eva/adapters/connectors/home_assistant_voice.py": "7102834f8eb5a2a053c0378aeebca3bf8a6e6181ac9cadef2c1e982f1a8a9a34"
+    },
+    "priorFindings": [
+      "close cancelled then skipped pending physical stop",
+      "superseded reply failure closed valid new input"
+    ],
+    "resolved": true,
+    "deploymentApproved": false
+  }
+}

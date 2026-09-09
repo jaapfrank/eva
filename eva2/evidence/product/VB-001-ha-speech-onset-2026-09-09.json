@@ -1,0 +1,39 @@
+{
+  "contract": "EvaVoiceHaSpeechOnsetProbe/v1",
+  "recordedAt": "2026-09-09T11:18:58.677369+00:00",
+  "status": "real_ha_cloud_vad_callback_before_final_text",
+  "pipelineId": "01m22dc2hyd9rcyv3zq935ay1g",
+  "sttEngine": "stt.home_assistant_cloud",
+  "ttsEngine": "tts.home_assistant_cloud",
+  "syntheticText": "Dit is een technische proef van de spraakherkenning van Eva.",
+  "recognizedSyntheticText": "Dit is een technische proef van de spraakherkenning van Eva.",
+  "events": [
+    {
+      "event": "speech_start_callback",
+      "elapsedMs": 1527
+    },
+    {
+      "event": "input_closed",
+      "elapsedMs": 5440
+    },
+    {
+      "event": "final_text",
+      "elapsedMs": 5443
+    }
+  ],
+  "sourceSha256": "7102834f8eb5a2a053c0378aeebca3bf8a6e6181ac9cadef2c1e982f1a8a9a34",
+  "audioPersisted": false,
+  "speakerPlaybackRequested": false,
+  "coreTurnSubmitted": false,
+  "priorAttempt": {
+    "result": "recognition ended at the first sentence pause",
+    "syntheticRecognizedText": "Dit is een technische proef.",
+    "pipelineRunId": "01M22Y5W3171XGEKFWBCJY55G2",
+    "interpretation": "Expected a two-sentence transcript incorrectly; use one utterance for onset probe."
+  },
+  "limitations": [
+    "Synthetic Cloud TTS decoded to 16kHz mono PCM in memory and sent as paced 20ms frames.",
+    "Not physical microphone, speaker interruption or p95 latency evidence.",
+    "No firmware or runtime deployment."
+  ]
+}

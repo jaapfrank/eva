@@ -157,7 +157,7 @@
         {
           "label": "IN ONTWIKKELING · SP-03",
           "value": "Eva met gewone spraak onderbreken",
-          "detail": "Compatibiliteitsbouw geslaagd. Gesprekskoppeling en veilige audio-overname nog in ontwikkeling; geen nieuwe firmware geïnstalleerd."
+          "detail": "Annulering en afwijzen van oude antwoorden getest via bestaande Eva-client. Nu de echte audio-aansluiting en gelijktijdige microfooninvoer uitwerken; nog niet testbaar op de speaker."
         },
         {
           "label": "APART PROBLEEM",
@@ -438,8 +438,8 @@
           "updatedOn": "9 september",
           "status": "working",
           "title": "Onderbreken met gewone spraak",
-          "change": "Bestaande Pipecat-audiocomponent bouwt succesvol met Voice PE en ESPHome 2026.6.2. Koppeling met Eva en veilige audio-overname worden nog uitgewerkt.",
-          "result": "Nog niet beschikbaar. Tijdens een antwoord werkt nu het aparte stopwoord; gewone spraak wordt nog niet als onderbreking verwerkt."
+          "change": "Bestaande Home Assistant-spraakherkenning gekoppeld aan antwoordonderbreking. Startmelding met echte HA Cloud bewezen; 77 gerichte controles slagen. Speakertransport en snellere detectie nog nodig.",
+          "result": "Nog niet beschikbaar als praktijktest. Twee fouten bij gelijktijdig stoppen/sluiten hersteld en onafhankelijk herbeoordeeld. SP-01 en SP-02 blijven geaccepteerd."
         },
         {
           "id": "SP-04",
@@ -2465,6 +2465,13 @@
       "status": "compiled_not_deployable",
       "evidence": "eva2/evidence/product/VB-001-duplex-component-build-2026-09-09.json",
       "next": "Implement and verify controlled speaker ownership and existing Eva session/cancellation adapter before any hardware candidate."
+    },
+    "vb001DuplexReplyCoordination": {
+      "status": "experimental_ha_stt_onset_and_reply_coordination_tested_not_live",
+      "evidence": "eva2/evidence/product/VB-001-duplex-reply-coordination-2026-09-09.json",
+      "next": "Connect authenticated speaker transport and fast local VAD. HA onset alone waits 300ms. Reconcile output reuse and unheard context before a deployable candidate.",
+      "haSpeechProbe": "eva2/evidence/product/VB-001-ha-speech-onset-2026-09-09.json",
+      "independentReview": "GO for experimental coordination only; no speaker deployment"
     }
   },
   "activeTaskId": "VB-001",
@@ -3894,7 +3901,12 @@
         "eva2/tests/bootstrap/test_runtime_settings.py",
         "eva2/deploy/living-core/managed-b.compose.yml",
         "eva2/deploy/living-core/runtime.env.example",
-        "eva2/tests/tools/test_persist_delegated_work_activation.py"
+        "eva2/tests/tools/test_persist_delegated_work_activation.py",
+        "eva2/experiments/native-duplex-v1/reply_lane.py",
+        "eva2/experiments/native-duplex-v1/README.md",
+        "eva2/tests/operations/test_native_duplex_reply_lane.py",
+        "eva2/evidence/product/VB-001-duplex-reply-coordination-2026-09-09.json",
+        "eva2/evidence/product/VB-001-ha-speech-onset-2026-09-09.json"
       ],
       "componentIds": [
         "api-and-runtime-composition",
@@ -3913,7 +3925,8 @@
         "documentation",
         "eva-runtime",
         "repository",
-        "verification"
+        "verification",
+        "experimental"
       ],
       "testCommands": [
         "pytest -q tests/application/test_voice_playback.py",
@@ -3932,7 +3945,8 @@
         "pytest -q tests/api/test_native_voice.py",
         "pytest -q tests/application/test_memory_audience.py tests/projection/test_hindsight.py tests/application/test_conversation.py",
         "pytest -q tests/application/test_cancellation.py tests/bootstrap/test_native_household_responder.py tests/model/test_pydantic_conversation_model.py",
-        "pytest -q tests/bootstrap/test_household_voice_authority.py"
+        "pytest -q tests/bootstrap/test_household_voice_authority.py",
+        "pytest -q tests/operations/test_native_duplex_reply_lane.py tests/operations/test_ha_voice_native_client.py tests/connectors/test_home_assistant_voice.py"
       ],
       "evidenceRequired": [
         "Onderzoek bestaande Eva2-voicebouwstenen en Bottie/HA-route; leg concrete ontbrekende media-aansluiting, providerkeuze, bestaand mandaat en verbruik vast.",

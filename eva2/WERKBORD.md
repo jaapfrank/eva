@@ -99,6 +99,11 @@ Klaar betekent:
 - `eva2/deploy/living-core/managed-b.compose.yml`
 - `eva2/deploy/living-core/runtime.env.example`
 - `eva2/tests/tools/test_persist_delegated_work_activation.py`
+- `eva2/experiments/native-duplex-v1/reply_lane.py`
+- `eva2/experiments/native-duplex-v1/README.md`
+- `eva2/tests/operations/test_native_duplex_reply_lane.py`
+- `eva2/evidence/product/VB-001-duplex-reply-coordination-2026-09-09.json`
+- `eva2/evidence/product/VB-001-ha-speech-onset-2026-09-09.json`
 
 Echte controles:
 
@@ -119,6 +124,7 @@ Echte controles:
 - `pytest -q tests/application/test_memory_audience.py tests/projection/test_hindsight.py tests/application/test_conversation.py`
 - `pytest -q tests/application/test_cancellation.py tests/bootstrap/test_native_household_responder.py tests/model/test_pydantic_conversation_model.py`
 - `pytest -q tests/bootstrap/test_household_voice_authority.py`
+- `pytest -q tests/operations/test_native_duplex_reply_lane.py tests/operations/test_ha_voice_native_client.py tests/connectors/test_home_assistant_voice.py`
 
 </details>
 
