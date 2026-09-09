@@ -17,7 +17,7 @@ from time import monotonic
 import unicodedata
 import urllib.error
 import urllib.request
-from urllib.parse import urlparse
+from urllib.parse import unquote, urlparse
 from typing import Any, AsyncIterator, Iterator, Literal
 from uuid import uuid4
 
@@ -1339,6 +1339,10 @@ class PydanticConversationModel:
                 "onderzoeksdocument in Markdown. Zoek actuele informatie op het web. "
                 "Onderzoek exact de opgegeven onderwerpen; vergelijk ze wanneer de "
                 "vraag daarom vraagt. Verzin geen alternatieven bij één onderwerp. "
+                "Open eerst de expliciet opgegeven primaire URLs. Lees alleen de "
+                "passages die de concrete vraag beantwoorden; zoek gericht verder "
+                "uitsluitend als zo'n antwoord daar ontbreekt. Geen brede marktverkenning "
+                "of achtergrondonderzoek buiten de vraag. "
                 "Gebruik voor ieder onderwerp "
                 "minstens één primaire bron: officiële productdocumentatie, de maker, "
                 "een overheid, een register of oorspronkelijk onderzoek; gebruik geen "
@@ -1346,14 +1350,15 @@ class PydanticConversationModel:
                 "welke uitspraken bronfeiten zijn en welke jouw gevolgtrekking of advies "
                 "zijn. Neem concrete criteria, beperkingen en een korte conclusie op. "
                 "Alle actuele claims krijgen zichtbare inline bronverwijzingen. Verzin "
-                "geen ontbrekende feiten. Maximaal 900 woorden."
+                "geen ontbrekende feiten. Maximaal 450 woorden."
             ),
             "model": self._model,
             "reasoning": {"effort": "low", "summary": "auto"},
             "store": False,
             "stream": True,
             "tool_choice": "auto",
-            "tools": [{"search_context_size": "medium", "type": "web_search"}],
+            "tools": [{"search_context_size": "low", "type": "web_search"}],
+            "max_tool_calls": 2 * len(options),
         }
         content, cited, consulted = self._request_research(body)
         selected: list[ResearchSource] = []
@@ -2395,6 +2400,35 @@ class PydanticConversationModel:
 
 def _source_matches_named_option(url: str, option: str) -> bool:
     """Admit only a source whose host or canonical repository names the option."""
+
+    explicit_urls = re.findall(r"https?://[^\s<>()]+", option)
+    if explicit_urls:
+        # A supplied primary URL is stronger than the surrounding display name.
+        # Preserve its owner/repository or documentation path, not just a slug.
+        if len(explicit_urls) != 1:
+            return False
+        expected = urlparse(explicit_urls[0].rstrip(".,;"))
+        actual = urlparse(url)
+        try:
+            if (actual.scheme != expected.scheme or actual.hostname != expected.hostname
+                    or not expected.hostname or actual.username or actual.password
+                    or expected.username or expected.password
+                    or (actual.port or (443 if actual.scheme == "https" else 80))
+                    != (expected.port or (443 if expected.scheme == "https" else 80))):
+                return False
+        except ValueError:
+            return False
+        wanted = unquote(expected.path).rstrip("/")
+        found = unquote(actual.path).rstrip("/")
+        if any(part in {".", ".."} for path in (wanted, found) for part in path.split("/")):
+            return False
+        if expected.hostname in {"github.com", "www.github.com"}:
+            expected_parts = wanted.split("/")
+            actual_parts = found.split("/")
+            return (len(expected_parts) >= 3 and len(actual_parts) >= 3
+                    and all(expected_parts[1:3])
+                    and actual_parts[1:3] == expected_parts[1:3])
+        return found == wanted or found.startswith(wanted + "/")
 
     normalized_option = "".join(
         character for character in option.casefold() if character.isalnum()

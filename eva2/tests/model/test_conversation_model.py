@@ -2370,8 +2370,9 @@ def test_web_research_uses_built_in_search_and_requires_cited_sources(
     assert artifact.content_sha256
     assert len(artifact.sources) == 3
     assert bodies[0]["tools"] == [
-        {"search_context_size": "medium", "type": "web_search"}
+        {"search_context_size": "low", "type": "web_search"}
     ]
+    assert bodies[0]["max_tool_calls"] == 6
     assert bodies[0]["include"] == ["web_search_call.action.sources"]
     assert "primaire bron" in bodies[0]["instructions"]
     assert "gevolgtrekking" in bodies[0]["instructions"]
@@ -2405,6 +2406,38 @@ def test_web_research_supports_one_named_primary_document(monkeypatch, tmp_path)
         with pytest.raises(ValueError):
             model.research_current_options(question="Read docs", title="Docs",
                                            options=tuple(invalid), researched_at=NOW)
+
+
+def test_web_research_preserves_explicit_repository_identity(monkeypatch, tmp_path):
+    labels = ("GitMCP — https://github.com/idosal/git-mcp",
+              "Microsoft Playwright MCP — https://github.com/microsoft/playwright-mcp")
+    sources = (ResearchSource("GitMCP", "https://github.com/idosal/git-mcp#readme"),
+               ResearchSource("Playwright MCP", "https://github.com/microsoft/playwright-mcp/blob/main/README.md"))
+    model = PydanticConversationModel(auth_file=tmp_path / "unused-auth.json")
+    monkeypatch.setattr(model, "_request_research", lambda body: ("# Bronnenonderzoek", sources, ()))
+    artifact = model.research_current_options(question="Lees beide officiële bronnen.",
+        title="GitMCP en Playwright MCP", options=labels, researched_at=NOW)
+    assert artifact.sources == sources
+    monkeypatch.setattr(model, "_request_research", lambda body: ("# Onvolledig", sources[:1], ()))
+    with pytest.raises(ConversationModelError, match="primary source for Microsoft Playwright MCP"):
+        model.research_current_options(question="Lees beide bronnen.", title="Bronnen",
+                                       options=labels, researched_at=NOW)
+
+
+@pytest.mark.parametrize("url", [
+    "https://github.com.evil.example/idosal/git-mcp",
+    "https://github.com/another-owner/git-mcp",
+    "https://github.com/idosal/git-mcp-extra",
+    "https://github.com/idosal/other",
+    "http://github.com/idosal/git-mcp",
+    "https://user:password@github.com/idosal/git-mcp",
+    "https://github.com:444/idosal/git-mcp",
+    "https://github.com/idosal/git-mcp/../../another-owner/other",
+    "https://github.com/idosal/git-mcp/%2e%2e/%2e%2e/another-owner/other",
+])
+def test_web_research_explicit_source_rejects_lookalikes(url):
+    assert not conversation_module._source_matches_named_option(
+        url, "GitMCP — https://github.com/idosal/git-mcp")
 
 
 def test_web_research_sse_parser_preserves_clickable_citations() -> None:
