@@ -2357,7 +2357,7 @@ def test_web_research_uses_built_in_search_and_requires_cited_sources(
                 ResearchSource("Maker C", "https://c.example/docs"),
             ),
             (),
-        )
+        ), ConversationModelUsage.unmeasured()
 
     monkeypatch.setattr(model, "_request_research", request)
     artifact = model.research_current_options(
@@ -2387,7 +2387,7 @@ def test_web_research_supports_one_named_primary_document(monkeypatch, tmp_path)
 
     def request(body):
         bodies.append(body)
-        return "# GitMCP\n\nControleer het officiële endpoint en de beperkingen.", (source,), ()
+        return ("# GitMCP\n\nControleer het officiële endpoint en de beperkingen.", (source,), ()), ConversationModelUsage.unmeasured()
 
     monkeypatch.setattr(model, "_request_research", request)
     arguments = {"question": "Lees de officiële GitMCP-documentatie.",
@@ -2414,11 +2414,11 @@ def test_web_research_preserves_explicit_repository_identity(monkeypatch, tmp_pa
     sources = (ResearchSource("GitMCP", "https://github.com/idosal/git-mcp#readme"),
                ResearchSource("Playwright MCP", "https://github.com/microsoft/playwright-mcp/blob/main/README.md"))
     model = PydanticConversationModel(auth_file=tmp_path / "unused-auth.json")
-    monkeypatch.setattr(model, "_request_research", lambda body: ("# Bronnenonderzoek", sources, ()))
+    monkeypatch.setattr(model, "_request_research", lambda body: (("# Bronnenonderzoek", sources, ()), ConversationModelUsage.unmeasured()))
     artifact = model.research_current_options(question="Lees beide officiële bronnen.",
         title="GitMCP en Playwright MCP", options=labels, researched_at=NOW)
     assert artifact.sources == sources
-    monkeypatch.setattr(model, "_request_research", lambda body: ("# Onvolledig", sources[:1], ()))
+    monkeypatch.setattr(model, "_request_research", lambda body: (("# Onvolledig", sources[:1], ()), ConversationModelUsage.unmeasured()))
     with pytest.raises(ConversationModelError, match="primary source for Microsoft Playwright MCP"):
         model.research_current_options(question="Lees beide bronnen.", title="Bronnen",
                                        options=labels, researched_at=NOW)
@@ -2438,6 +2438,47 @@ def test_web_research_preserves_explicit_repository_identity(monkeypatch, tmp_pa
 def test_web_research_explicit_source_rejects_lookalikes(url):
     assert not conversation_module._source_matches_named_option(
         url, "GitMCP — https://github.com/idosal/git-mcp")
+
+
+@pytest.mark.parametrize("include_usage,output_tokens,error", [
+    (True, 1092, None), (False, 1092, "usage is invalid"),
+    (True, 1201, "output budget"),
+])
+def test_builtin_research_retains_provider_context_usage_without_changing_chat_budget(
+    monkeypatch, tmp_path, include_usage, output_tokens, error,
+):
+    auth = tmp_path / "research-lease.json"
+    _write_access_lease(auth)
+    model = PydanticConversationModel(auth_file=auth, resource_budget=_runtime_budget(
+        max_input_tokens=12000, max_output_tokens=1200))
+    citation = {"type": "response.output_item.done", "item": {"type": "message", "content": [{
+        "type": "output_text", "text": "GitMCP documentatie.", "annotations": [{
+            "type": "url_citation", "title": "GitMCP", "url": "https://github.com/idosal/git-mcp"}]}]}}
+    frames = ("data: " + json.dumps(citation) + "\n\n").encode() + _budget_frames(
+        input_tokens=27040, output_tokens=output_tokens, include_usage=include_usage)
+    requests = []
+    def respond(request, **kwargs):
+        requests.append(request)
+        return BytesIO(frames)
+    monkeypatch.setattr(conversation_module.urllib.request, "urlopen", respond)
+    def research():
+        return model.research_current_options(question="Lees de officiële documentatie.",
+            title="GitMCP", options=("GitMCP — https://github.com/idosal/git-mcp",), researched_at=NOW)
+    if error:
+        with pytest.raises(ConversationModelError, match=error):
+            research()
+    else:
+        artifact = research()
+        assert artifact.usage.input_tokens == 27040
+        assert artifact.usage.output_tokens == 1092
+        assert artifact.usage.measurement == "measured"
+        with pytest.raises(ConversationModelError, match="input budget"):
+            model._enforce_reported_usage(artifact.usage)
+        body = json.loads(requests[0].data)
+        body["input"] = [{"role": "user", "content": "envelop "+"x " * 14000}]
+        with pytest.raises(ConversationModelError, match="request exceeds the runtime input budget"):
+            model._request_research(body)
+    assert len(requests) == 1
 
 
 def test_web_research_sse_parser_preserves_clickable_citations() -> None:

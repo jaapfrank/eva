@@ -2,11 +2,13 @@
 
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from datetime import datetime
 import hashlib
 from typing import Protocol
 from urllib.parse import urlparse
+
+from eva.application.conversation import ConversationModelUsage
 
 
 @dataclass(frozen=True, slots=True)
@@ -38,8 +40,11 @@ class ResearchArtifact:
     sources: tuple[ResearchSource, ...]
     researched_at: str
     provider: str
+    usage: ConversationModelUsage = field(default_factory=ConversationModelUsage.unmeasured)
 
     def __post_init__(self) -> None:
+        if not isinstance(self.usage, ConversationModelUsage):
+            raise ValueError("research usage is invalid")
         if not self.title.strip() or len(self.title) > 200:
             raise ValueError("research title is invalid")
         if not self.question.strip() or len(self.question) > 2_000:

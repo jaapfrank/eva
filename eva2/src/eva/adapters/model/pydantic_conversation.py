@@ -1360,7 +1360,7 @@ class PydanticConversationModel:
             "tool_choice": "auto",
             "tools": [{"search_context_size": "low", "type": "web_search"}],
         }
-        content, cited, consulted = self._request_research(body)
+        (content, cited, consulted), usage = self._request_research(body)
         selected: list[ResearchSource] = []
         for option in options:
             matches = [
@@ -1390,6 +1390,7 @@ class PydanticConversationModel:
                 sources=sources,
                 researched_at=researched_at,
                 provider=f"chatgpt-codex-web-search:{self._model}",
+                usage=usage,
             )
         except ValueError as error:
             raise ConversationModelError("web research artifact is invalid") from error
@@ -1685,11 +1686,13 @@ class PydanticConversationModel:
 
     def _request_research(
         self, body: dict[str, Any]
-    ) -> tuple[str, tuple[ResearchSource, ...], tuple[ResearchSource, ...]]:
+    ) -> tuple[tuple[str, tuple[ResearchSource, ...], tuple[ResearchSource, ...]], ConversationModelUsage]:
         return self._request_using(
             body,
             self._parse_research_sse,
             timeout_seconds=self._research_timeout_seconds,
+            include_usage=True,
+            provider_managed_research_input=True,
         )
 
     def _request_using(
@@ -1701,7 +1704,14 @@ class PydanticConversationModel:
         autonomous: bool = False,
         include_usage: bool = False,
         include_timing: bool = False,
+        provider_managed_research_input: bool = False,
     ) -> Any:
+        if provider_managed_research_input and (
+            parser != self._parse_research_sse or not include_usage or autonomous
+            or body.get("tools") != [{"search_context_size": "low", "type": "web_search"}]
+            or self._endpoint != "https://chatgpt.com/backend-api/codex/responses"
+        ):
+            raise ConversationModelError("provider-managed research input scope is invalid")
         self._admit_request(body, autonomous=autonomous)
         last_auth: tuple[str, str] | None = None
         for attempt in range(2):
@@ -1785,7 +1795,9 @@ class PydanticConversationModel:
                         input_tokens=terminal_usage[0][0],
                         output_tokens=terminal_usage[0][1],
                     )
-                    self._enforce_reported_usage(usage)
+                    self._enforce_reported_usage(
+                        usage, provider_managed_research_input=provider_managed_research_input,
+                    )
                     return (parsed, usage) if include_usage else parsed
                 except (TimeoutError, socket.timeout, urllib.error.URLError) as error:
                     raise ConversationModelError(
@@ -1870,6 +1882,7 @@ class PydanticConversationModel:
         usage: ConversationModelUsage,
         *,
         maximum_model_attempts: int = 2,
+        provider_managed_research_input: bool = False,
     ) -> None:
         budget = self._resource_budget
         if budget is None:
@@ -1882,7 +1895,11 @@ class PydanticConversationModel:
             or usage.output_tokens is None
         ):
             raise ConversationModelError("conversation provider usage is unmeasured")
-        if usage.input_tokens > budget.max_input_tokens:
+        # This limit bounds Eva's submitted envelope. Built-in web research
+        # adds provider-owned retrieval context after admission; retain its full
+        # measured usage in the artifact instead of discarding paid-for work.
+        # Ordinary response enforcement remains unchanged.
+        if not provider_managed_research_input and usage.input_tokens > budget.max_input_tokens:
             logging.getLogger(__name__).warning(
                 "Model input budget exceeded: measured_input=%d measured_output=%d limit=%d",
                 usage.input_tokens, usage.output_tokens, budget.max_input_tokens,

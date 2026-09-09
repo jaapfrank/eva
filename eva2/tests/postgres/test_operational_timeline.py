@@ -2303,6 +2303,7 @@ def test_current_research_artifact_is_durable_and_reopens_without_repeat(
     timeline_engine: Engine,
 ) -> None:
     calls: list[str] = []
+    from eva.application.conversation import ConversationModelUsage
 
     class Research:
         def research_current_options(  # type: ignore[no-untyped-def]
@@ -2320,6 +2321,8 @@ def test_current_research_artifact_is_durable_and_reopens_without_repeat(
                 ),
                 researched_at,
                 "live-search-model",
+                usage=ConversationModelUsage.measured(model_attempts=1, tool_calls=0,
+                    input_tokens=27040, output_tokens=1092),
             )
 
     turn = ConversationTurn.private(
@@ -2349,6 +2352,8 @@ def test_current_research_artifact_is_durable_and_reopens_without_repeat(
     artifact = receipt.output["artifact"]
     assert artifact["content_sha256"]
     assert len(artifact["sources"]) == 3
+    assert artifact["model_usage"]["input_tokens"] == 27040
+    assert artifact["model_usage"]["output_tokens"] == 1092
     restarted = PostgresConversationActions(timeline_engine, research=Research())
     assert restarted.pending(turn) == receipt
     assert calls == ["Vergelijk drie actuele opties op prijs en privacy."]

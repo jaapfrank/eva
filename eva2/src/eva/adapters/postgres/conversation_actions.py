@@ -23,6 +23,7 @@ from eva.adapters.postgres.operational_timeline import (
     TimelineScope,
 )
 from eva.application.conversation import (
+    ConversationModelUsage,
     ConversationActionCall,
     ConversationActionReceipt,
     ConversationConflict,
@@ -1955,6 +1956,7 @@ class PostgresConversationActions:
             ],
             "title": artifact.title,
             "utf8_byte_length": len(artifact.content.encode("utf-8")),
+            "model_usage": artifact.usage.to_wire(),
         }
         timeline.transition(
             thread_id=thread_id,
@@ -2006,6 +2008,7 @@ class PostgresConversationActions:
                         for source in artifact.sources
                     ],
                     "title": artifact.title,
+                    "model_usage": artifact.usage.to_wire(),
                 },
                 "contract": "EvaConversationActionReceipt/v1",
                 "durable": True,
@@ -2535,6 +2538,8 @@ class PostgresConversationActions:
                 ),
                 researched_at=str(data["researched_at"]),
                 provider=str(data["provider"]),
+                usage=ConversationModelUsage.from_wire(data["model_usage"])
+                if "model_usage" in data else ConversationModelUsage.unmeasured(),
             )
         except (KeyError, ValueError) as error:
             raise ConversationConflict(
