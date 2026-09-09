@@ -5,214 +5,43 @@ Laatst bijgewerkt: 2026-09-09.
 Doel: [Eva als zelfstandig lerende digitale huisgenoot](PROJECTDOEL.md).
 Gebouwd, getest, live en door jou geaccepteerd zijn verschillende stappen.
 
-VB-001: core-uitrol en definitief speakerinstallatiepakket afgesloten. Firmware met juiste serverbinding gebouwd en onafhankelijk gecontroleerd. Installatie wacht op USB-toegang tot de woonkamer-speaker voor backup en herstel.
-[Actueel bewijs](evidence/product/VB-001-speaker-install-package-2026-09-09.json).
+AU-005: spontaan idee naar duurzaam onderzoek en gemaakt bestand gebouwd en gericht getest; nog niet live. Nu eigenaarsinzage en stoppen aansluiten.
+[Actueel bewijs](evidence/product/AU-005-spontaneous-followthrough-2026-09-09.json).
 
-Jaap sluit de woonkamer-speaker met een USB-datakabel aan en meldt aangesloten. Identificeer daarna het apparaat, bewaar de huidige flash, installeer het voorbereide pakket en lever één SP-03-praktijkproef. Geslaagde core-/pakketproeven blijven afgesloten.
+Maak eigen initiatieven zichtbaar en stopbaar via de bestaande eigenaarsroute; daarna complete kandidaat uitrollen en werkelijk resultaat controleren.
 
 ## Nu
 
 | Volgorde | Kaart | Resultaat | Status |
 |---:|---|---|---|
-| 138 | `VB-001` — Full-duplex voice leveren | Met Eva2 praten via de bestaande Telegram- of Home Assistant-aansluiting, waarbij Eva hoorbaar onderbroken kan worden en het gesprek daarna doorgaat. | 🔴 GEBLOKKEERD |
+| 138 | `AU-005` — Passend initiatief en kansen bewijzen | Meer gewaardeerd eigen initiatief dan Bottie: humor, nieuwsgierigheid, zelfgekozen onderzoek, creatieve bijdragen en kansen. Eva begint en vervolgt zelf werk, voert binnen bestaand mandaat uit en controleert het resultaat. Gezin beoordeelt eigenheid, plezier, nut en hinder; alleen meer berichten telt niet als winst. | 🟡 BEZIG |
 
 Klaar betekent:
 
-- De gevraagde doorlopende spraakroute naar Eva2 werkt op het gekozen kanaal inclusief hoorbaar onderbreken en hervatten; p95 stoplatentie maximaal250ms gemeten. Eva1-aansluitingen mogen worden hergebruikt, maar zonder bewezen onderbreking op het echte kanaal is VB-001 niet af. Browserproeven of losse spraakberichten sluiten dit niet af.
-- Persoonsbinding, privacy, gesprekcontinuiteit, toolstopgrenzen en herstel zijn getest; complete gebruikersroute veilig live met onafhankelijke beoordeling. Menselijke ervaringsacceptatie wordt apart vastgelegd.
+- Eva kan een spontaan gekozen initiatief duurzaam aannemen en via de bestaande uitvoerroute een controleerbaar resultaat leveren.
+- Gerichte regressies, veilige ingebruikname en onafhankelijke beoordeling zijn afgerond; gezinswaardering en concurrentiewinst worden niet verzonnen.
 
 <details>
 <summary>Technische uitvoering: bestanden en controles</summary>
 
-### Exact werk voor `VB-001`
+### Exact werk voor `AU-005`
 
-- `eva2/src/eva/application/voice.py`
-- `eva2/src/eva/contracts/voice.py`
-- `eva2/tests/application/test_voice_playback.py`
-- `eva2/tests/contract/test_voice.py`
-- `eva2/design/product/conversational-voice-v1.md`
-- `eva2/src/eva/adapters/connectors/home_assistant_voice.py`
-- `eva2/tests/connectors/test_home_assistant_voice.py`
-- `eva2/src/eva/adapters/api/dashboard_voice.py`
-- `eva2/tests/api/test_dashboard_voice.py`
-- `eva2/src/eva/adapters/api/app.py`
-- `eva2/src/eva/adapters/api/dashboard_voice_client.py`
-- `eva2/src/eva/adapters/api/dashboard_conversation.py`
-- `eva2/tests/api/test_dashboard_voice_client.cjs`
-- `eva2/src/eva/bootstrap/dashboard_voice.py`
-- `eva2/src/eva/bootstrap/runtime.py`
-- `eva2/tests/bootstrap/test_dashboard_voice_bootstrap.py`
-- `eva2/release/managed-b-release-input-authority-v1.json`
-- `eva2/release/eva-cockpit-evidence-index-v1.json`
-- `eva2/tools/managed_b_candidate/release_inputs.py`
-- `eva2/tools/run_managed_b_required_tests.py`
-- `eva2/tests/operations/test_managed_b_release_inputs.py`
-- `eva2/tests/operations/test_run_managed_b_required_tests.py`
-- `eva2/deploy/living-core/dashboard-voice.compose.yml`
-- `eva2/tools/eva2_quiescent_cutover.py`
-- `eva2/tools/managed_b_render.py`
-- `eva2/tests/operations/test_eva2_quiescent_cutover.py`
-- `eva2/tests/operations/test_managed_b_render.py`
-- `eva2/tools/plan_home_assistant_voice_bridge.py`
-- `eva2/tests/operations/test_plan_home_assistant_voice_bridge.py`
-- `eva2/deploy/home-assistant/voice-pe-interruption.yaml`
-- `eva2/deploy/home-assistant/README.md`
-- `eva2/design/architecture/component-catalog-v1.json`
-- `eva2/deploy/home-assistant/custom_components/eva2_voice/conversation.py`
-- `eva2/deploy/home-assistant/custom_components/eva2_voice/__init__.py`
-- `eva2/deploy/home-assistant/custom_components/eva2_voice/client.py`
-- `eva2/deploy/home-assistant/custom_components/eva2_voice/config_flow.py`
-- `eva2/deploy/home-assistant/custom_components/eva2_voice/manifest.json`
-- `eva2/deploy/home-assistant/custom_components/eva2_voice/strings.json`
-- `eva2/tests/operations/test_ha_voice_native_client.py`
-- `eva2/src/eva/adapters/postgres/voice_requests.py`
-- `eva2/src/eva/adapters/postgres/operational_timeline.py`
-- `eva2/tests/postgres/test_operational_timeline.py`
-- `eva2/src/eva/adapters/api/native_voice.py`
-- `eva2/tests/api/test_native_voice.py`
-- `eva2/src/eva/application/memory_audience.py`
-- `eva2/src/eva/application/conversation.py`
-- `eva2/src/eva/application/memory.py`
-- `eva2/src/eva/adapters/projection/hindsight.py`
-- `eva2/tests/application/test_memory_audience.py`
-- `eva2/tests/projection/test_hindsight.py`
-- `eva2/src/eva/application/cancellation.py`
+- `eva2/src/eva/application/free_will.py`
+- `eva2/src/eva/application/personal_interests.py`
+- `eva2/src/eva/adapters/postgres/conversation_actions.py`
+- `eva2/src/eva/adapters/postgres/sensory_events.py`
 - `eva2/src/eva/adapters/model/pydantic_conversation.py`
-- `eva2/src/eva/bootstrap/native_voice.py`
-- `eva2/src/eva/adapters/postgres/external_conversation_tools.py`
-- `eva2/tests/application/test_cancellation.py`
-- `eva2/tests/bootstrap/test_native_household_responder.py`
-- `eva2/tests/model/test_pydantic_conversation_model.py`
-- `eva2/src/eva/bootstrap/household_voice.py`
-- `eva2/tests/bootstrap/test_household_voice_authority.py`
-- `eva2/deploy/living-core/household-voice.compose.yml`
-- `eva2/release/gate-toolchain-roots.in`
-- `eva2/release/gate-toolchain.requirements.lock`
-- `eva2/release/gate-toolchain.lock.json`
-- `eva2/release/gate-toolchain-license-inventory.json`
-- `eva2/tools/render_household_voice_ingress.py`
-- `eva2/tools/verify_household_voice_ingress.py`
-- `eva2/deploy/home-assistant/eva2-voice-ingress.service`
-- `eva2/deploy/home-assistant/allow-native-voice-wsl.ps1`
-- `eva2/deploy/home-assistant/native-voice-ingress.md`
-- `eva2/tests/bootstrap/test_runtime_settings.py`
-- `eva2/deploy/living-core/managed-b.compose.yml`
-- `eva2/deploy/living-core/runtime.env.example`
-- `eva2/tests/tools/test_persist_delegated_work_activation.py`
-- `eva2/experiments/native-duplex-v1/reply_lane.py`
-- `eva2/experiments/native-duplex-v1/README.md`
-- `eva2/tests/operations/test_native_duplex_reply_lane.py`
-- `eva2/evidence/product/VB-001-duplex-reply-coordination-2026-09-09.json`
-- `eva2/evidence/product/VB-001-ha-speech-onset-2026-09-09.json`
-- `eva2/experiments/native-duplex-v1/local_onset.py`
-- `eva2/experiments/native-duplex-v1/silero_onnx.py`
-- `eva2/experiments/native-duplex-v1/prepare_vad.py`
-- `eva2/experiments/native-duplex-v1/vad-upstream.json`
-- `eva2/experiments/native-duplex-v1/vad-requirements.lock`
-- `eva2/experiments/native-duplex-v1/LICENSE.pipecat`
-- `eva2/experiments/native-duplex-v1/LICENSE.silero`
-- `eva2/tests/operations/test_native_duplex_local_onset.py`
-- `eva2/evidence/product/VB-001-early-speech-onset-2026-09-09.json`
-- `eva2/evidence/product/VB-001-microvad-onset-comparison-2026-09-09.json`
-- `eva2/evidence/product/VB-001-silero-speech-onset-2026-09-09.json`
-- `eva2/experiments/native-duplex-v1/playback_stop_barrier.h`
-- `eva2/experiments/native-duplex-v1/speaker-stop.patch`
-- `eva2/experiments/native-duplex-v1/prepare_speaker.py`
-- `eva2/experiments/native-duplex-v1/verify_speaker_stop.py`
-- `eva2/experiments/native-duplex-v1/speaker-upstream.json`
-- `eva2/experiments/native-duplex-v1/LICENSE.va_pipecat`
-- `eva2/experiments/native-duplex-v1/speaker-output.example.yaml`
-- `eva2/tests/operations/test_native_duplex_speaker_stop.py`
-- `eva2/evidence/product/VB-001-speaker-stop-candidate-2026-09-09.json`
-- `eva2/experiments/native-duplex-v1/speaker_wire.py`
-- `eva2/experiments/native-duplex-v1/ha_pcm.py`
-- `eva2/experiments/native-duplex-v1/speaker-wire-v1.md`
-- `eva2/tests/operations/test_native_duplex_speaker_wire.py`
-- `eva2/tests/operations/test_native_duplex_ha_pcm.py`
-- `eva2/evidence/product/VB-001-ha-pcm-wire-2026-09-09.json`
-- `eva2/experiments/native-duplex-v1/eva_output_protocol.h`
-- `eva2/experiments/native-duplex-v1/eva_output_driver.cpp`
-- `eva2/experiments/native-duplex-v1/speaker-wire.patch`
-- `eva2/experiments/native-duplex-v1/verify_speaker_wire.py`
-- `eva2/tests/fixtures/native_duplex_speaker_host.h`
-- `eva2/tests/fixtures/native_duplex_speaker_host.cpp`
-- `eva2/tests/operations/test_native_duplex_speaker_protocol.py`
-- `eva2/evidence/product/VB-001-firmware-wire-candidate-2026-09-09.json`
-- `eva2/experiments/native-duplex-v1/speaker_endpoint.py`
-- `eva2/experiments/native-duplex-v1/speaker-auth.patch`
-- `eva2/experiments/native-duplex-v1/websocket-no-redirect.patch`
-- `eva2/experiments/native-duplex-v1/websocket-upstream.json`
-- `eva2/experiments/native-duplex-v1/LICENSE.esp_websocket_client`
-- `eva2/experiments/native-duplex-v1/verify_speaker_auth.py`
-- `eva2/tests/operations/test_native_duplex_speaker_endpoint.py`
-- `eva2/evidence/product/VB-001-authenticated-speaker-candidate-2026-09-09.json`
-- `eva2/experiments/native-duplex-v1/microphone_session.py`
-- `eva2/tests/operations/test_native_duplex_microphone_session.py`
-- `eva2/evidence/product/VB-001-continuous-microphone-session-2026-09-09.json`
-- `eva2/experiments/native-duplex-v1/speaker_input.py`
-- `eva2/experiments/native-duplex-v1/speaker_session.py`
-- `eva2/tests/operations/test_native_duplex_speaker_input.py`
-- `eva2/evidence/product/VB-001-authenticated-microphone-route-2026-09-09.json`
-- `eva2/experiments/native-duplex-v1/eva_input_driver.cpp`
-- `eva2/experiments/native-duplex-v1/eva_input_protocol.h`
-- `eva2/experiments/native-duplex-v1/eva_microphone_source.h`
-- `eva2/experiments/native-duplex-v1/prepare_native_controls.py`
-- `eva2/experiments/native-duplex-v1/speaker-input.patch`
-- `eva2/tests/operations/test_native_duplex_input_firmware.py`
-- `eva2/evidence/product/VB-001-native-input-firmware-2026-09-09.json`
-- `eva2/experiments/native-duplex-v1/speaker_service.py`
-- `eva2/tests/operations/test_native_duplex_speaker_service.py`
-- `eva2/evidence/product/VB-001-speaker-service-composition-2026-09-09.json`
-- `eva2/src/eva/application/audio_playback.py`
-- `eva2/src/eva/adapters/postgres/conversation_journal.py`
-- `eva2/tests/application/test_audio_playback.py`
-- `eva2/evidence/product/VB-001-playback-conversation-context-2026-09-09.json`
-- `eva2/experiments/native-duplex-v1/service-requirements.lock`
-- `eva2/experiments/native-duplex-v1/service_bundle.py`
-- `eva2/experiments/native-duplex-v1/service_launcher.py`
-- `eva2/src/eva/adapters/connectors/__init__.py`
-- `eva2/deploy/home-assistant/eva2-native-speaker.service`
-- `eva2/deploy/home-assistant/eva2-native-speaker.sysusers.conf`
-- `eva2/tests/operations/test_native_duplex_service_bundle.py`
-- `eva2/evidence/product/VB-001-speaker-bundle-systemd-2026-09-09.json`
-- `eva2/experiments/native-duplex-v1/verify_service_lifecycle.py`
-- `eva2/evidence/product/VB-001-speaker-lifecycle-2026-09-09.json`
-- `eva2/evidence/product/VB-001-core-release-candidate-2026-09-09.json`
-- `eva2/deploy/home-assistant/allow-native-speaker-wsl.ps1`
-- `eva2/deploy/home-assistant/native-speaker-installation.md`
-- `eva2/evidence/product/VB-001-speaker-install-package-2026-09-09.json`
+- `eva2/src/eva/bootstrap/runtime.py`
+- `eva2/tests/application/test_free_will.py`
+- `eva2/tests/application/test_personal_interests.py`
+- `eva2/tests/model/test_conversation_model.py`
+- `eva2/tests/postgres/test_sensory_admission.py`
+- `eva2/evidence/product/AU-005-spontaneous-followthrough-2026-09-09.json`
 
 Echte controles:
 
-- `pytest -q tests/application/test_voice_playback.py`
-- `pytest -q tests/contract/test_voice.py`
+- `pytest -q tests/application/test_free_will.py tests/application/test_personal_interests.py`
 - `python3 tools/check_current_workboard.py`
-- `pytest -q tests/connectors/test_home_assistant_voice.py`
-- `pytest -q tests/api/test_dashboard_voice.py`
-- `pytest -q tests/bootstrap/test_dashboard_voice_bootstrap.py`
-- `pytest -q tests/bootstrap/test_runtime_settings.py`
-- `pytest -q tests/operations/test_managed_b_release_inputs.py tests/operations/test_run_managed_b_required_tests.py`
-- `pytest -q tests/operations/test_eva2_quiescent_cutover.py`
-- `pytest -q tests/operations/test_managed_b_render.py`
-- `pytest -q tests/operations/test_plan_home_assistant_voice_bridge.py`
-- `pytest -q tests/operations/test_ha_voice_native_client.py`
-- `pytest -q tests/postgres/test_operational_timeline.py`
-- `pytest -q tests/api/test_native_voice.py`
-- `pytest -q tests/application/test_memory_audience.py tests/projection/test_hindsight.py tests/application/test_conversation.py`
-- `pytest -q tests/application/test_cancellation.py tests/bootstrap/test_native_household_responder.py tests/model/test_pydantic_conversation_model.py`
-- `pytest -q tests/bootstrap/test_household_voice_authority.py`
-- `pytest -q tests/operations/test_native_duplex_reply_lane.py tests/operations/test_ha_voice_native_client.py tests/connectors/test_home_assistant_voice.py`
-- `pytest -q tests/operations/test_native_duplex_local_onset.py`
-- `pytest -q tests/operations/test_native_duplex_speaker_stop.py`
-- `pytest -q tests/operations/test_native_duplex_speaker_wire.py tests/operations/test_native_duplex_ha_pcm.py tests/operations/test_native_duplex_reply_lane.py`
-- `pytest -q tests/operations/test_native_duplex_speaker_protocol.py tests/operations/test_native_duplex_speaker_stop.py`
-- `pytest -q tests/operations/test_native_duplex_speaker_endpoint.py tests/operations/test_native_duplex_speaker_wire.py`
-- `pytest -q tests/operations/test_native_duplex_microphone_session.py tests/operations/test_native_duplex_reply_lane.py tests/connectors/test_home_assistant_voice.py tests/operations/test_native_duplex_speaker_endpoint.py tests/operations/test_native_duplex_speaker_wire.py`
-- `pytest -q tests/operations/test_native_duplex_speaker_input.py tests/operations/test_native_duplex_speaker_wire.py tests/operations/test_native_duplex_speaker_endpoint.py tests/operations/test_native_duplex_reply_lane.py tests/operations/test_native_duplex_microphone_session.py tests/connectors/test_home_assistant_voice.py`
-- `pytest -q tests/operations/test_native_duplex_input_firmware.py tests/operations/test_native_duplex_speaker_protocol.py tests/operations/test_native_duplex_speaker_stop.py`
-- `pytest -q tests/operations/test_native_duplex_speaker_service.py tests/connectors/test_home_assistant_voice.py`
-- `pytest -q tests/application/test_audio_playback.py`
-- `pytest -q tests/operations/test_native_duplex_service_bundle.py tests/operations/test_native_duplex_speaker_service.py tests/connectors/test_process.py tests/connectors/test_home_assistant_voice.py`
 
 </details>
 
@@ -221,8 +50,8 @@ Echte controles:
 Deze onderwerpen zijn alleen mijlpalen. Een mijlpaal wordt pas uitvoerbaar
 nadat zij als eerstvolgende kleine kaart exacte bestanden en tests heeft.
 
+- [ ] `VB-001` — Full-duplex voice leveren: Met Eva2 praten via de bestaande Telegram- of Home Assistant-aansluiting, waarbij Eva hoorbaar onderbroken kan worden en het gesprek daarna doorgaat.
 - [ ] `VB-002` — Passende aanwezigheid leveren: Eva zoekt spontaan contact via de beschikbare speakers en deurbel, met herkenbare identiteit en gevoel voor het moment. Gezin beoordeelt plezier, betrokkenheid en hinder; onderbreken en stop werken.
-- [ ] `AU-005` — Passend initiatief en kansen bewijzen: Meer gewaardeerd eigen initiatief dan Bottie: humor, nieuwsgierigheid, zelfgekozen onderzoek, creatieve bijdragen en kansen. Eva begint en vervolgt zelf werk, voert binnen bestaand mandaat uit en controleert het resultaat. Gezin beoordeelt eigenheid, plezier, nut en hinder; alleen meer berichten telt niet als winst.
 - [ ] `CO-008` — Autonoom geheugen in gezinsgesprekken bewijzen: De oorspronkelijke brede geheugenuitkomst blijft open: relevante kennis zelfstandig kiezen, gewijzigde en tijdelijke informatie goed gebruiken in gewone gesprekken en langere gezinspraktijk. Geen handmatig geheugenbeheer; familie beoordeelt continuïteit en vertrouwen.
 - [ ] `AU-001` — Eigenaarmandaat uitvoeren: Eva handelt binnen het afgesproken mandaat zonder steeds opnieuw te vragen.
 - [ ] `TL-003` — Onbekende connector zelfstandig toevoegen: Eva kiest onderhouden software uit documentatie en bewijst de adapter.
@@ -314,7 +143,7 @@ Afgevinkt betekent alleen: de vastgelegde kaart is afgerond, niet het hele produ
   [Bewijs](evidence/product/TL-001-turn-limit-2026-09-08.json).
 - [x] `TL-002` — Handelingen via twee providers echt afmaken (done).
   [Bewijs](evidence/product/TL-002-completion-2026-09-08.json).
-- [ ] `VB-001` — Full-duplex voice leveren (blocked).
+- [ ] `AU-005` — Passend initiatief en kansen bewijzen (in_progress).
 
 </details>
 

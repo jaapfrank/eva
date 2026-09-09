@@ -1,0 +1,73 @@
+{
+  "contract": "EvaProductEvidence/v1",
+  "taskId": "AU-005",
+  "date": "2026-09-09",
+  "result": "Spontaneous proposal connects atomically to existing research, prototype and release workers in development; not live.",
+  "sourceCommit": "c34633ab2f65c882c33b060bdfcad47a7c21545a",
+  "baseline": "Free-will decisions could only silence/respond; existing personal-work stages were reachable from conversation adoption only.",
+  "implementation": [
+    "Optional bounded personal initiative in model decision, explicit Eva origin and private research/draft authority.",
+    "Configured principal supplies owner scope; model proposal cannot specify another principal.",
+    "Decision and initial intent commit in one database transaction, rollback together.",
+    "One unfinished spontaneous initiative per owner, serialized across workers. Existing release_ready phase permits later initiatives.",
+    "Notification cooldown suppresses the message while preserving private initiative."
+  ],
+  "tests": {
+    "applicationAndGeneralModel": {
+      "passed": 61
+    },
+    "legacySensoryUsage": {
+      "passed": 6
+    },
+    "newSensoryModelValidation": {
+      "passed": 4
+    },
+    "initialPostgresSensorySuite": {
+      "passed": 76,
+      "beforeReviewCorrections": true
+    },
+    "postReviewFollowthrough": {
+      "passed": 4,
+      "durationSeconds": 6.9,
+      "covers": [
+        "real PostgreSQL rollback",
+        "configured owner admission",
+        "existing exploration/prototype/release workers and next initiative",
+        "cooldown with private initiative"
+      ]
+    },
+    "testDatabasesDropped": true,
+    "testContainerStopped": true,
+    "externalModelCalls": 0
+  },
+  "independentReview": {
+    "reviewer": "/root/co006_review",
+    "decision": "Bounded source GO after release phase and cooldown fixes; no live or complete acceptance claim."
+  },
+  "preparedArtifacts": {
+    "owner": "AU-005 architecturelead",
+    "path": "/home/administrator/project/.eva2-artifacts/au005-initiative-wfh5otr6",
+    "purpose": "PostgreSQL result receipts for spontaneous initiative implementation",
+    "cleanupWhen": "After AU-005 acceptance and expiry of retained release/rollback evidence; retain while candidate is pending."
+  },
+  "receipts": {
+    "initial-storage": {
+      "path": "/home/administrator/project/.eva2-artifacts/au005-initiative-wfh5otr6/initial-storage/junit.xml",
+      "sha256": "fcaf339b063672808461830e0d0a1888513c929258d9b689ceec3f5c4237fcd3"
+    },
+    "followthrough": {
+      "path": "/home/administrator/project/.eva2-artifacts/au005-initiative-wfh5otr6/followthrough/junit.xml",
+      "sha256": "641403560ad09d7c3598835ca855c9cb4be1f267b804a5d4cd2c970216a4193b"
+    }
+  },
+  "built": true,
+  "tested": "targeted_development",
+  "live": false,
+  "accepted": false,
+  "remaining": [
+    "Owner stop and visibility across complete user route",
+    "Complete candidate release validation and safe deployment",
+    "Real spontaneous initiative with useful result, measured cost and owner feedback",
+    "Broad cross-domain initiative acceptance against Bottie remains open"
+  ]
+}
