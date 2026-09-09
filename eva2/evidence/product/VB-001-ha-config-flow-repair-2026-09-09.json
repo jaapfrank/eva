@@ -1,0 +1,78 @@
+{
+  "contract": "EvaProductEvidence/v1",
+  "taskId": "VB-001",
+  "observedAt": "2026-09-09T00:16:01.360867+00:00",
+  "status": "actual_configflow_repaired_and_native_entry_loaded_not_selected",
+  "previousGoalTurnClassification": "progress",
+  "failure": {
+    "request": "POST /api/config/config_entries/flow handler eva2_voice",
+    "status": 500,
+    "exception": "ValueError: Unable to convert schema: <function Url>",
+    "logSha256": "44ac2c48226efc37185534573b19ab183fcb16aa403b625ef5f99bda53a47bf6"
+  },
+  "repair": {
+    "oldSha256": "b3b14d7b50ec08c0f7af437973b9d7da3b72e553f44435b9bee246610423da13",
+    "newSha256": "2dc1a989207cbfdc856fb61ced7c91f8a094efa10dd0f3d842d0087b217b074d",
+    "remoteReadback": "2dc1a989207cbfdc856fb61ced7c91f8a094efa10dd0f3d842d0087b217b074d  /config/custom_components/eva2_voice/config_flow.py\n",
+    "status": "one_file_installed_reloaded_and_actual_form_verified",
+    "rollbackPath": "/share/eva2_voice_rollback/config-flow-2dc1a989207c"
+  },
+  "configCheck": {
+    "status": "passed",
+    "output": "Command completed successfully.\n"
+  },
+  "review": "co006_review bounded one-file repair GO: HA serializable URL selector; shared validation before storage unchanged; backup/config check/one restart then actual form proof. External component hash distinct from cab9227 core candidate.",
+  "boundaries": [
+    "Native HA entry is loaded, but no pipeline selects it and no model/audio probe was made.",
+    "Candidate core image and source remain unchanged; patched external HA component is separately hash-bound. Earlier cab9227 exact-component evidence does not cover this repaired external file.",
+    "Windows administrator rule is still absent; no new firewall mutation attempted in this turn."
+  ],
+  "next": "Owner applies the prepared Windows administrator rule; verify HA network access, bind the repaired external component into release evidence, then reviewed current-data A/B activation and actual native voice interruption proof.",
+  "restart": {
+    "status": "command_completed",
+    "startedEpoch": 1788912714.4611151,
+    "reason": "Load one-file native configflow serialization fix",
+    "output": "Command completed successfully.\n"
+  },
+  "actualFormProof": {
+    "status": "passed",
+    "formOpens": true,
+    "urlSelector": "url",
+    "credentialSelector": "password",
+    "satelliteSelector": "assist_satellite_multiple",
+    "invalidConnectionRejected": true,
+    "invalidResultType": "form",
+    "invalidErrors": {
+      "base": "invalid_connection"
+    },
+    "boundary": "Actual HA2026.8.1 HTTP configflow, no model or audio"
+  },
+  "readiness": {
+    "state": "RUNNING",
+    "preferredPipeline": "01kvntd32y8bfxdqmhkzychqxc",
+    "pipelineCount": 3
+  },
+  "entryReadback": {
+    "status": "loaded",
+    "entryState": "loaded",
+    "entryId": "01M21R8KNJ7HCF4W3M6BP8V5JS",
+    "entities": [
+      {
+        "entity_id": "conversation.eva2",
+        "disabled_by": null
+      }
+    ],
+    "preferredPipeline": "01kvntd32y8bfxdqmhkzychqxc",
+    "pipelineCount": 3,
+    "selectedByAnyPipeline": false
+  },
+  "entrySetup": {
+    "status": "created",
+    "satelliteCount": 2,
+    "currentRegistryBindingsChecked": true,
+    "policyTokenDigestChecked": true,
+    "privateBackupBeforeCreation": true,
+    "url": "http://10.0.20.46:44714"
+  },
+  "postSetupReview": "co006_review bounded setup GO: actual form, invalid URL rejection, loaded conversation.eva2, entry token digest matching policy/token, no selected pipeline and preserved preferred route. Changed HA-file hash confirmed separately from cab9227. No network, spoken response or interruption proof."
+}

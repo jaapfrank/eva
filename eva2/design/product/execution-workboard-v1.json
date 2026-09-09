@@ -2326,6 +2326,13 @@
       "result": "Native HA component loaded; Home Assistant RUNNING. Actual nginx 18 checks and systemd 7 checks passed, including disconnect, next question, slot switch, rollback and failed startup. Gateway listens on LAN44714; only HA and native voice routes admitted.",
       "blocker": "Windows refused the narrow Hyper-V firewall rule with Access is denied; current session is not administrator. HA connection still times out.",
       "next": "Run deploy/home-assistant/allow-native-voice-wsl.ps1 in administrator PowerShell, verify from HA, configure native integration and execute reviewed current-data A/B activation. Speaker interruption remains unproven."
+    },
+    "vb001HaConfigFlowRepair": {
+      "status": "actual_ha_form_repaired_and_native_entry_loaded_not_selected",
+      "evidence": "eva2/evidence/product/VB-001-ha-config-flow-repair-2026-09-09.json",
+      "result": "Echte HA-configflow500 gerepareerd: serialiseerbareURLselector, ongeldigeURLnoggeweigerd. Na configcheck en éénherstart HA RUNNING. conversation.eva2 geladen met2registrygebonden speakers; bestaande3pipelines en voorkeursEva behouden, geenpipelineomgezet.",
+      "boundary": "Gewijzigde externeHAfile heeft eigenhash/proef; oude cab9227-kandidaatbinding bewijst deze wijziging niet. Geenmodelcall/audio/akoestischeonderbreking getest.",
+      "next": "Windowsadministratorregel uitvoeren, bereikbaarheid vanuitHA bewijzen en gewijzigde externecomponent meenemen in releasebewijs vóór nativeingebruikname."
     }
   },
   "activeTaskId": "VB-001",

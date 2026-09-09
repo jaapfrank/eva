@@ -24,7 +24,8 @@ class EvaVoiceConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
             else:
                 return self.async_create_entry(title="Eva2", data=user_input)
         return self.async_show_form(step_id="user", errors=errors, data_schema=vol.Schema({
-            vol.Required("url"): vol.Url(),
+            vol.Required("url"): selector.TextSelector(
+                selector.TextSelectorConfig(type=selector.TextSelectorType.URL)),
             vol.Required("token"): selector.TextSelector(
                 selector.TextSelectorConfig(type=selector.TextSelectorType.PASSWORD)),
             vol.Required("satellite_ids"): selector.EntitySelector(
