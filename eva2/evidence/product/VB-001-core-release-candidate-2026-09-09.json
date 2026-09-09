@@ -2,7 +2,7 @@
   "contract": "EvaProductEvidence/v1",
   "taskId": "VB-001",
   "date": "2026-09-09",
-  "result": "Complete core candidate built; full release gate in progress, not deployed.",
+  "result": "Complete core candidate built; full release gate passed. SP-03 remains not delivered.",
   "sourceCommit": "32fb12d75f3f78410d1c1e591bc12a93d618f472",
   "candidateImageId": "sha256:cb31295d926e85e7d0328abe611f1cfff522324668991c837270f65e8d4dcfec",
   "candidateReceipt": "/home/administrator/project/.eva2-artifacts/native-voice-playback-candidate-uts1rdjj/eva2-candidate-image-9jyja61v/candidate-image-receipt.json",
@@ -27,12 +27,27 @@
     "decision": "Bounded GO for source fix and release-input binding; full release gate and physical speaker acceptance remain required."
   },
   "releaseGate": {
-    "status": "running",
+    "status": "passed",
     "artifactDirectory": "/home/administrator/project/.eva2-artifacts/native-voice-playback-candidate-uts1rdjj",
     "sourceSnapshot": "/home/administrator/project/.eva2-artifacts/native-voice-playback-final-src-7cdf95qo",
-    "toolSessionId": 92126,
     "successReceipt": "/home/administrator/project/.eva2-artifacts/native-voice-playback-candidate-uts1rdjj/complete-required-tests-receipt.json",
-    "progressObservation": "Pure test group ended; PostgreSQL action-chain subgroup process active. Full result remains pending."
+    "successReceiptSha256": "5dbdee6cc0f6d3c5610be9611342d86a3e20075312ec19ee08969ede16f76617",
+    "results": {
+      "tests": 2482,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0
+    },
+    "groupCount": 7,
+    "executionScope": [
+      "Only the postgres-browser-physical subgroup starts and inspects the candidate image; every other subgroup tests the sealed source and wheelhouse inputs.",
+      "The sourceCommit field is physically verified by the browser subgroup and is not a claim that every test executes inside the candidate image."
+    ],
+    "cleanup": {
+      "databasesCreated": 12,
+      "databasesDropped": 12,
+      "testContainerStopped": true
+    }
   },
   "preparedArtifacts": {
     "owner": "VB-001 architecturelead",

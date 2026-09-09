@@ -157,7 +157,7 @@
         {
           "label": "IN ONTWIKKELING · SP-03",
           "value": "Eva met gewone spraak onderbreken",
-          "detail": "Complete core gebouwd; volledige releasecontrole draait. Nog geen live omschakeling en nog geen SP-03-praktijktest."
+          "detail": "Complete core gebouwd en releasecontrole geslaagd. SP-03 is nog niet opgeleverd: ingebruikname en de woonkamerproef staan nog open. Geslaagde controles worden niet zonder concrete aanleiding herhaald."
         },
         {
           "label": "APART PROBLEEM",
@@ -526,7 +526,7 @@
       "document": "eva2/PROJECTDOEL.md",
       "scope": "Digitale huisgenoot: zelfstandig redeneren, initiatief, onbekende vaardigheden leren, handelen, zelfverbetering en aantoonbare concurrentiewinst met open-sourcehergebruik.",
       "sessionGoal": "Het volledige doel blijft actief. Nu VB-001: doorlopende gesprekken via Home Assistant, inclusief onderbreken met gewone spraak.",
-      "currentWork": "VB-001 oplevering: complete corekandidaat 32fb12d is gebouwd. De volledige releasecontrole draait op tijdelijke testdatabases en de bestaande browserproef. Geen live omschakeling; SP-01 en SP-02 blijven geaccepteerd.",
+      "currentWork": "VB-001 oplevering: complete corekandidaat 32fb12d is gebouwd en de volledige releasecontrole is geslaagd (2482 tests). Dit is een technische tussenstap; SP-03 is nog niet opgeleverd. SP-01 en SP-02 blijven geaccepteerd en afgesloten.",
       "currentEvidence": "eva2/evidence/product/VB-001-core-release-candidate-2026-09-09.json",
       "nextStep": "Bestaande SP-03-kandidaat naar oplevering brengen: complete core-releasepoort, bruikbaar speakerherstel en gecontroleerde ingebruikname. Geen nieuwe spraakuitbreidingen of herhaling van geslaagde controles zonder concrete aanleiding. Daarna één duidelijke woonkamerproef.",
       "usageClarification": {
@@ -2498,7 +2498,13 @@
         "Geen nieuwe zijtaken toevoegen tijdens afronding; extra wensen apart bewaren.",
         "Een afgesloten resultaat alleen heropenen met een expliciete concrete reden."
       ],
-      "priorityChange": false
+      "priorityChange": false,
+      "closedResults": [
+        "SP-01: verstaanbare audio, door Jaap geaccepteerd.",
+        "SP-02: doorpraten na het antwoord, door Jaap geaccepteerd."
+      ],
+      "currentDeliveryBoundary": "SP-03: Eva tijdens haar antwoord met gewone spraak onderbreken en direct een nieuwe vraag stellen op de woonkamer-speaker. Opgeleverd betekent bruikbaar en klaar voor Jaaps praktijkproef; geaccepteerd volgt pas op zijn bevestiging.",
+      "reopenRequirement": "Vermeld vooraf het afgesloten resultaat, de concrete nieuwe fout of relevante wijziging en de noodzakelijke beperkte hercontrole. Geen heropening voor vrijblijvende verbetering."
     }
   },
   "activeTaskId": "VB-001",

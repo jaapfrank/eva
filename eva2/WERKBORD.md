@@ -5,7 +5,7 @@ Laatst bijgewerkt: 2026-09-09.
 Doel: [Eva als zelfstandig lerende digitale huisgenoot](PROJECTDOEL.md).
 Gebouwd, getest, live en door jou geaccepteerd zijn verschillende stappen.
 
-VB-001 oplevering: complete corekandidaat 32fb12d is gebouwd. De volledige releasecontrole draait op tijdelijke testdatabases en de bestaande browserproef. Geen live omschakeling; SP-01 en SP-02 blijven geaccepteerd.
+VB-001 oplevering: complete corekandidaat 32fb12d is gebouwd en de volledige releasecontrole is geslaagd (2482 tests). Dit is een technische tussenstap; SP-03 is nog niet opgeleverd. SP-01 en SP-02 blijven geaccepteerd en afgesloten.
 [Actueel bewijs](evidence/product/VB-001-core-release-candidate-2026-09-09.json).
 
 Bestaande SP-03-kandidaat naar oplevering brengen: complete core-releasepoort, bruikbaar speakerherstel en gecontroleerde ingebruikname. Geen nieuwe spraakuitbreidingen of herhaling van geslaagde controles zonder concrete aanleiding. Daarna één duidelijke woonkamerproef.
