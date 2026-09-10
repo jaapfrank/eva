@@ -1192,7 +1192,8 @@ def test_voice_continuity_allows_distinct_slot_paths_with_same_authority(tmp_pat
     SystemBackend._verify_voice_continuity(*environments)
 
 
-def test_connector_autonomy_seals_the_two_additional_files_without_extra_mount(monkeypatch, tmp_path):
+@pytest.mark.parametrize("initiative", [False, True])
+def test_connector_autonomy_seals_the_two_additional_files_without_extra_mount(monkeypatch, tmp_path, initiative):
     import hashlib
     import json
     from types import SimpleNamespace
@@ -1202,6 +1203,8 @@ def test_connector_autonomy_seals_the_two_additional_files_without_extra_mount(m
     directory.mkdir(mode=0o700)
     files = {"token": "TOKEN_SHA256", "catalog.json": "CATALOG_SHA256",
              "mandate.json": "AUTONOMY_MANDATE_SHA256", "registration-token": "REGISTRATION_TOKEN_SHA256"}
+    if initiative:
+        files["initiative-mandate.json"] = "INITIATIVE_MANDATE_SHA256"
     values = {CONNECTOR_FLAG: "true", "EVA_MCP_GATEWAY_URL": "http://eva2-mcp-gateway:4444",
               "EVA_MCP_GATEWAY_IMAGE_ID": guard["upstreamImage"],
               "EVA_MCP_GATEWAY_GUARD_RECEIPT_FILE": str(guard_path),
@@ -1266,7 +1269,7 @@ def test_connector_autonomy_seals_the_two_additional_files_without_extra_mount(m
     ):
         with pytest.raises(QuiescentCutoverError, match="connector"):
             SystemBackend._connector_settings({**values, **changes})
-    for name in ("mandate.json", "registration-token"):
+    for name in ("mandate.json", "registration-token", *(("initiative-mandate.json",) if initiative else ())):
         path = directory / name
         content = path.read_bytes()
         path.write_text("changed-after-sealing")
@@ -1285,10 +1288,11 @@ def test_connector_autonomy_seals_the_two_additional_files_without_extra_mount(m
     for key in ("EVA_MCP_GATEWAY_AUTONOMY_MANDATE_SHA256", "EVA_MCP_GATEWAY_REGISTRATION_TOKEN_SHA256",
                 "EVA_MCP_GATEWAY_GUARD_RECEIPT_FILE", "EVA_MCP_GATEWAY_GUARD_RECEIPT_SHA256"):
         disabled.pop(key)
+    disabled.pop("EVA_MCP_GATEWAY_INITIATIVE_MANDATE_SHA256", None)
     with pytest.raises(QuiescentCutoverError, match="unexpected files"):
         SystemBackend._connector_settings(disabled)
     assert len(inspections) == 3  # all altered configurations failed before Docker inspection
-    for name in ("mandate.json", "registration-token"):
+    for name in ("mandate.json", "registration-token", *(("initiative-mandate.json",) if initiative else ())):
         (directory / name).unlink()
     assert SystemBackend._connector_settings(disabled) is not None
 

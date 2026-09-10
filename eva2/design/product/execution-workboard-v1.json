@@ -3498,7 +3498,7 @@
       "tested": true,
       "live": false,
       "ownerAccepted": false,
-      "currentWork": "Algemene uitvoerder en hostcontroles gebouwd. Gerichte uitvoerings-, herstel-, stop/correct/intrekkings-, race- en herkomstcontroles geslaagd. Onafhankelijke review afgerond op code; exacte bronbinding en liveproef volgen.",
+      "currentWork": "Reserve-image importeert alle14modules correct. Gerichtecontroles groen. Bestaande uitrolpoort uitgebreid met exacte hash/metadata van het nieuwe private mandaatbestand; geen ruimere directorytoelating. Preflight en liveproef volgen.",
       "authorization": "Jaap: in eerste instantie mag ze wel gewoon alles doen wat ze wil, zolang het maar inderdaad geen geld kost. Implementatie expliciet bevestigd.",
       "boundaries": "Geen nieuwe kosten of verplichtingen; onbekend is niet gratis. Bestaand toegelaten modelgebruik blijft binnen bestaande grenzen. Privacy, personen, communicatie en stoppen blijven gelden.",
       "artifactRetention": {
@@ -5164,7 +5164,9 @@
         "eva2/tests/application/test_free_will.py",
         "eva2/tests/application/test_personal_interests.py",
         "eva2/tests/model/test_conversation_model.py",
-        "eva2/tests/postgres/test_owner_initiatives.py"
+        "eva2/tests/operations/test_eva2_quiescent_cutover.py",
+        "eva2/tests/postgres/test_owner_initiatives.py",
+        "eva2/tools/eva2_quiescent_cutover.py"
       ],
       "componentIds": [
         "api-and-runtime-composition",
@@ -5173,7 +5175,8 @@
         "core-semantics",
         "durable-persistence",
         "external-capability-adapters",
-        "integration-and-storage-tests"
+        "integration-and-storage-tests",
+        "operations-and-release-tests"
       ],
       "inventoryOwners": [
         "architecture",
@@ -5183,7 +5186,8 @@
       ],
       "testCommands": [
         "pytest -q tests/application/test_free_will.py tests/application/test_personal_interests.py tests/application/test_conversation.py tests/postgres/test_owner_initiatives.py",
-        "pytest -q tests/model/test_conversation_model.py::test_sensory_model_parses_only_bounded_own_initiative tests/model/test_conversation_model.py::test_native_context_preserves_unknown_model_cost_block_on_every_request"
+        "pytest -q tests/model/test_conversation_model.py::test_sensory_model_parses_only_bounded_own_initiative tests/model/test_conversation_model.py::test_native_context_preserves_unknown_model_cost_block_on_every_request",
+        "pytest -q tests/operations/test_eva2_quiescent_cutover.py::test_connector_autonomy_seals_the_two_additional_files_without_extra_mount"
       ],
       "evidenceRequired": [
         "Representatieve situaties bewijzen stilte, toegelaten uitvoering en weigering bij onbekende kosten of ontbrekende bevoegdheid.",

@@ -62,12 +62,15 @@ Klaar betekent:
 - `eva2/tests/application/test_free_will.py`
 - `eva2/tests/application/test_personal_interests.py`
 - `eva2/tests/model/test_conversation_model.py`
+- `eva2/tests/operations/test_eva2_quiescent_cutover.py`
 - `eva2/tests/postgres/test_owner_initiatives.py`
+- `eva2/tools/eva2_quiescent_cutover.py`
 
 Echte controles:
 
 - `pytest -q tests/application/test_free_will.py tests/application/test_personal_interests.py tests/application/test_conversation.py tests/postgres/test_owner_initiatives.py`
 - `pytest -q tests/model/test_conversation_model.py::test_sensory_model_parses_only_bounded_own_initiative tests/model/test_conversation_model.py::test_native_context_preserves_unknown_model_cost_block_on_every_request`
+- `pytest -q tests/operations/test_eva2_quiescent_cutover.py::test_connector_autonomy_seals_the_two_additional_files_without_extra_mount`
 
 </details>
 

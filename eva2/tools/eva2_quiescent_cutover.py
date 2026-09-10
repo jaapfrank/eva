@@ -400,9 +400,10 @@ class SystemBackend:
         guard_keys = {"EVA_MCP_GATEWAY_GUARD_RECEIPT_FILE", "EVA_MCP_GATEWAY_GUARD_RECEIPT_SHA256"}
         managed_hash_key = "EVA_MCP_GATEWAY_MANAGED_ENDPOINTS_SHA256"
         browser_hash_key = "EVA_BROWSER_CONTROL_TOKEN_SHA256"
+        initiative_hash_key = "EVA_MCP_GATEWAY_INITIATIVE_MANDATE_SHA256"
         allowed_keys = (required_keys | set(MCP_AUTONOMY_ENVIRONMENT_KEYS)
                         | set(BROWSER_ENVIRONMENT_KEYS) | autonomy_hash_keys
-                        | guard_keys | {managed_hash_key, browser_hash_key})
+                        | guard_keys | {managed_hash_key, browser_hash_key, initiative_hash_key})
         if (not required_keys.issubset(values) or not set(values).issubset(allowed_keys)
                 or not all(values[key] for key in required_keys)):
             raise QuiescentCutoverError("connector configuration is incomplete")
@@ -429,6 +430,10 @@ class SystemBackend:
         digests = ["CATALOG_SHA256", "TOKEN_SHA256", "OVERLAY_SHA256", "BASE_MANIFEST_SHA256", "DELIVERY_OVERLAY_SHA256"]
         if autonomy_enabled:
             digests.extend(("AUTONOMY_MANDATE_SHA256", "REGISTRATION_TOKEN_SHA256", "GUARD_RECEIPT_SHA256"))
+        if values.get(initiative_hash_key):
+            if not autonomy_enabled:
+                raise QuiescentCutoverError("initiative mandate requires connector autonomy")
+            digests.append("INITIATIVE_MANDATE_SHA256")
         if managed_enabled:
             digests.append("MANAGED_ENDPOINTS_SHA256")
         for key in digests:
@@ -461,6 +466,8 @@ class SystemBackend:
             files.append(("managed-endpoints.json", "EVA_MCP_GATEWAY_MANAGED_ENDPOINTS_SHA256"))
         if browser_enabled:
             files.append(("browser-control-token", browser_hash_key))
+        if values.get(initiative_hash_key):
+            files.append(("initiative-mandate.json", initiative_hash_key))
         if {item.name for item in directory.iterdir()} != {name for name, _ in files}:
             raise QuiescentCutoverError("connector directory contains unexpected files")
         for name, key in files:
