@@ -21,6 +21,31 @@ BINDING = "44444444-4444-4444-8444-444444444444"
 TELEGRAM_USER = 101
 
 
+def test_retained_slot_activates_exact_local_image_without_new_telegram_authority(tmp_path):
+    path = tmp_path / "candidate.env"
+    _environment(path)
+    raw = "\n".join(line for line in path.read_text().splitlines()
+                    if not line.startswith("EVA_B_MANAGED_MANIFEST_SHA256="))
+    path.write_text(raw + f"\nEVA_RUNTIME_PRINCIPAL_ID={PRINCIPAL}\nEVA_DASHBOARD_PRINCIPAL_BINDING_ID={BINDING}\n")
+    bindings = (path.parent / "secrets/telegram-bindings").read_bytes()
+    image = "sha256:" + "1" * 64
+
+    def inspect(arguments):
+        assert arguments[-1] == image
+        return json.dumps([{"Id": image, "RepoDigests": [], "Config": {
+            "Labels": {"io.eva2.source-commit": COMMIT}, "User": "65532:65532",
+        }}]).encode()
+
+    receipt = persist_delegated_work_activation(
+        path, core_image=image, worker_image=image, owner_principal_id=PRINCIPAL,
+        owner_binding_id=BINDING, runner=inspect,
+    )
+    assert "EVA_DELEGATED_WORK_ENABLED=true" in path.read_text()
+    assert "EVA_B_MANAGED_MANIFEST_SHA256=" in path.read_text()
+    assert (path.parent / "secrets/telegram-bindings").read_bytes() == bindings
+    assert receipt["bindingsBeforeSha256"] == receipt["bindingsAfterSha256"]
+
+
 def _environment(path: Path) -> None:
     secrets = path.parent / "secrets"
     secrets.mkdir()

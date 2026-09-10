@@ -20,7 +20,7 @@ DOCKER = "/usr/bin/docker"
 _MANAGED_ENVIRONMENT = re.compile(
     r"^/var/lib/eva2/managed-b-slot[34]/candidate\.env$"
 )
-_IMAGE_REFERENCE = re.compile(r"^[^\s@]+@sha256:[0-9a-f]{64}$")
+_IMAGE_REFERENCE = re.compile(r"^(?:[^\s@]+@)?sha256:[0-9a-f]{64}$")
 _MAX_ENVIRONMENT_BYTES = 64 * 1024
 _MAX_TELEGRAM_USER_ID = 9_007_199_254_740_991
 _CORE_IMAGE_KEY = "EVA_LIVING_CORE_IMAGE"
@@ -124,9 +124,9 @@ def _image_source(image: str, *, runner: Runner) -> str:
         json.JSONDecodeError,
     ) as error:
         raise DelegatedWorkActivationError("managed image metadata differs") from error
-    digest = image.rsplit("@", 1)[1]
+    digest = image.rsplit("@", 1)[-1]
     if (
-        image not in references
+        ("@" in image and image not in references)
         or image_id != digest
         or not re.fullmatch(r"[0-9a-f]{40}", source_commit or "")
         or user not in {"65532", "65532:65532"}
@@ -173,10 +173,9 @@ def _updated_environment(
     if (
         counts[_CORE_IMAGE_KEY] != 1
         or counts[_DASHBOARD_RELEASE_KEY] != 1
-        or counts[_MANIFEST_KEY] != 1
     ):
         raise DelegatedWorkActivationError("managed environment core keys differ")
-    for key in _DELEGATED_KEYS:
+    for key in (_MANIFEST_KEY, *_DELEGATED_KEYS):
         if counts[key] == 0:
             result.append(f"{key}={replacements[key]}")
     return ("\n".join(result) + "\n").encode("utf-8")
