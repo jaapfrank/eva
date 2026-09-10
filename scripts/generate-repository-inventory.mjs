@@ -94,6 +94,7 @@ const EXCLUSIONS = Object.freeze([
   { path: '/eva2/experiments/distroless-hindsight-api-v1/offline-artifacts/*.tar', readPolicy: 'never-read', reason: 'locally materialized sealed source artifact' },
   { path: '/eva2/experiments/distroless-hindsight-api-v1/wheelhouse/*.whl', readPolicy: 'never-read', reason: 'locally materialized sealed wheelhouse' },
   { path: '/eva2/build/', readPolicy: 'never-read', reason: 'generated Python build output' },
+  { path: '/eva2/deploy/voice-session/vendor/', readPolicy: 'never-read', reason: 'locally materialized pinned voice upstream artifacts' },
 ]);
 const GITIGNORE_NEGATIONS = Object.freeze([
   '!.env.example',
