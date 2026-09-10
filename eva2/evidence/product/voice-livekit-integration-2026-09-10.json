@@ -825,10 +825,10 @@
   ],
   "initial_voice_source_commit": "af7f65265a9a514083ea3a095edad772c586cb63",
   "current_runtime": {
-    "coreUrl": "http://127.0.0.1:44710",
-    "coreSlot": "managed-b-slot3",
-    "coreImage": "sha256:9d88df14a2975c6fc276d4b8ca23a1e942ba9144367cdbe2b694f3711d090f86",
-    "coreSource": "519a03a88c02e64d3ab8bb005d9a2168c0f9ac95",
+    "coreUrl": "http://127.0.0.1:44711",
+    "coreSlot": "managed-b-slot4",
+    "coreImage": "sha256:1afe349621b23c3c9101147d94a144316c33201b5e4148b3ef83a9a455d04014",
+    "coreSource": "64101d5d7dcbbf75f49bb130f9d769aa9c32cdb6",
     "mediaImage": "sha256:57ae55645ab47d93c27f42c220eb55e2794f8877aff243791513f71e578aca40",
     "mediaSource": "efa32d5c3e0d5d134143006ef85ffc223856a068",
     "livekitImage": "sha256:770bc61bc6ec4dcccbd3e05082d8f6bdafbee4179acab7014cc97202a9e2910b",
@@ -845,18 +845,28 @@
     "ownerUrl": "http://localhost:44716",
     "ownerAcceptance": false,
     "bindingUpdate": {
-      "reason": "AU008 periodic initiative cutover at 2026-09-10T20:27:58Z; voice media and relay unchanged",
-      "browserProofScope": "Recorded browser speech/audio proof predates this core cutover; not repeated"
+      "reason": "AU002 provider repair cutover at 2026-09-10T22:09:57Z; voice media and relay unchanged",
+      "browserProofScope": "Recorded browser speech/audio proof predates this core cutover; not repeated",
+      "readbackArtifact": "../.eva2-artifacts/voice-livekit-20260910/au002-binding-readback.json",
+      "readbackSha256": "1fc865aac3db24e07e7b73fff45bdc35d883eb790652b782b9af9ab6f07229e8",
+      "checkedAt": "2026-09-10T22:11:40.143140+00:00",
+      "authenticatedMediaReadiness": {
+        "status": 200,
+        "body": {
+          "ready": true
+        }
+      },
+      "coreImportReadback": "Pending separate execution-task verification; previous source evidence is historical"
     },
-    "coreImageRevisionLabel": "519a03a88c02e64d3ab8bb005d9a2168c0f9ac95",
-    "coreSourceEvidence": {
+    "coreImageRevisionLabel": "64101d5d7dcbbf75f49bb130f9d769aa9c32cdb6",
+    "coreExplicitSourceLabel": "64101d5d7dcbbf75f49bb130f9d769aa9c32cdb6",
+    "previousCoreSourceEvidence": {
       "artifact": "../.eva2-artifacts/au008-costless-initiative-20260910/opportunity-live-imports.json",
       "loadedModuleCount": 19,
       "loadedMatchesFrozenSource": true,
       "liveImportsSha256": "b1b5ccac2228bdafb20f01279d88b8c6faa46878090bd342113b36b4ab18a763",
       "note": "Both explicit source and OCI revision labels verified"
-    },
-    "coreExplicitSourceLabel": "519a03a88c02e64d3ab8bb005d9a2168c0f9ac95"
+    }
   },
   "browser_relay_verification": {
     "date": "2026-09-10",
