@@ -3497,7 +3497,7 @@
       "tested": true,
       "live": true,
       "ownerAccepted": false,
-      "currentWork": "Live op slot4/core44711; actuele gegevens en bestaande stemroute behouden. Code-GO en14werkelijke imports gecontroleerd. Nu echte bijdrage via normale native cyclus; product-GO en eigenaarbeoordeling nog open.",
+      "currentWork": "Bestandsuitvoering live en uitrol onafhankelijk GO. Twee normale cycli kozen stilte. Bestaande HA-inventaris/toestand/geschiedenis nu op dezelfde uitvoerroute aangesloten in bron;11gerichte controles groen, bronreview en livegang uitbreiding volgen. Geen brede initiatiefafronding geclaimd.",
       "authorization": "Jaap: in eerste instantie mag ze wel gewoon alles doen wat ze wil, zolang het maar inderdaad geen geld kost. Implementatie expliciet bevestigd.",
       "boundaries": "Geen nieuwe kosten of verplichtingen; onbekend is niet gratis. Bestaand toegelaten modelgebruik blijft binnen bestaande grenzen. Privacy, personen, communicatie en stoppen blijven gelden.",
       "artifactRetention": {
@@ -3511,7 +3511,8 @@
       "liveImage": "sha256:0dce3f0203ad2ab24f2c386af5390cd1a47d26469718a48fdeb6e8f02dec7dbc",
       "implementationCommit": "6ebb0da2adecebb3d2486f8ebef185d32405b8df",
       "livePort": 44711,
-      "technicalProductAccepted": false
+      "technicalProductAccepted": false,
+      "remainingScope": "Brede bestaande taakroutes beoordelen; eigen onderzoek via internet en overige reeds toegestane acties nog niet aan native profielen verbonden. Geen nieuwe externe communicatiebevoegdheid."
     }
   },
   "activeTaskId": "AU-008",
@@ -5163,6 +5164,7 @@
         "eva2/src/eva/application/initiative_execution.py",
         "eva2/src/eva/application/personal_interests.py",
         "eva2/src/eva/bootstrap/runtime.py",
+        "eva2/src/eva/providers/home_assistant.py",
         "eva2/src/eva/providers/mcp_autonomy.py",
         "eva2/tests/application/test_free_will.py",
         "eva2/tests/application/test_personal_interests.py",

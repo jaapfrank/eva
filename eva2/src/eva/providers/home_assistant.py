@@ -33,6 +33,7 @@ from eva.adapters.postgres.external_conversation_tools import (
 from eva.application.conversation import ConversationExternalToolPort, ConversationConflict
 from eva.providers.home_assistant_advanced_store import PostgresAdvancedTaskStore
 from eva.providers.contracts import ProviderContribution
+from eva.contracts.canonical_json import canonical_sha256
 
 
 def _value(name: str, default: str = "") -> str:
@@ -60,6 +61,12 @@ class HomeAssistantProviderSettings:
     effect_allowlist: tuple[str, ...]
     effect_principal_sha256_allowlist: tuple[str, ...]
     event_domains: tuple[str, ...]
+
+
+def home_assistant_read_configuration_sha256(endpoint_url: str) -> str:
+    """Host-selected destination and read protocol; no token or model-supplied scope."""
+    return canonical_sha256({"provider": "home_assistant", "protocol": "existing-read-v1",
+                             "endpoint_url": endpoint_url.rstrip("/")})
 
 
 class HomeAssistantProviderFactory:
@@ -184,6 +191,7 @@ class HomeAssistantProviderFactory:
                 engine,
                 provider.conversation_read_planner(),
                 provider,
+                configuration_sha256=home_assistant_read_configuration_sha256(settings.endpoint_url),
             )
         ]
         household = HomeAssistantHouseholdTool(HomeAssistantAdminAdapter(
@@ -200,6 +208,7 @@ class HomeAssistantProviderFactory:
 
         external_tools.append(PostgresExternalConversationTools(
             engine, household, household, authorize_turn=authorize_household,
+            configuration_sha256=home_assistant_read_configuration_sha256(settings.endpoint_url),
         ))
         if settings.effects_enabled:
             external_tools.append(

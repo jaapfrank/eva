@@ -292,3 +292,60 @@ def test_costless_schema_enforces_patterns_and_rejects_unsupported_constraints()
     schema["properties"]["path"]["format"] = "uri"
     with pytest.raises(InitiativeMandateDenied, match="unsupported"):
         _check_profile_schema(schema)
+
+
+def test_native_existing_household_reader_keeps_host_binding_and_stop(costless_native):
+    import json
+    from eva.adapters.connectors.home_assistant_admin import HomeAssistantHouseholdTool
+    from eva.providers.home_assistant import home_assistant_read_configuration_sha256
+    from eva.adapters.postgres.external_conversation_tools import PostgresExternalConversationTools
+    from eva.application.initiative_execution import initiative_execution
+    from eva.application.conversation import ConversationActionCall, ConversationConflict
+    from eva.application.orchestration import ToolDispatchResult
+    from eva.adapters.postgres.conversation_journal import PostgresConversationJournal
+    auth, claim, store, control, source, path, policy = costless_native
+    digest = home_assistant_read_configuration_sha256("http://existing-home:8123/")
+    schema = {"type": "object", "properties": {
+        "section": {"type": "string", "enum": ["overview", "entities"]},
+        "area_id": {"type": "string", "maxLength": 100},
+        "offset": {"type": "integer", "minimum": 0, "maximum": 10000},
+        "snapshot_sha256": {"type": "string", "maxLength": 64},
+        "automation_ids": {"type": "array", "items": {"type": "string"}, "maxItems": 0}},
+        "required": ["section", "area_id", "offset", "snapshot_sha256", "automation_ids"],
+        "additionalProperties": False}
+    cap = {**policy["capabilities"][0], "action_name": "read_home_assistant_inventory",
+           "configuration_sha256": digest, "tool_name": "read_home_assistant_inventory",
+           "observation_tool_name": None, "execute_schema": schema, "observe_schema": schema,
+           "cost_evidence": "Existing authenticated local HA read; no service calls or metered service"}
+    policy["capabilities"] = [cap]; path.write_text(json.dumps(policy))
+    class Reader:
+        reads = 0
+        async def household_page(self, **arguments):
+            self.reads += 1
+            return {"section": arguments["section"], "entities": [{"entity_id": "light.study", "state": "off"}], "has_more": False}
+    reader = Reader(); provider = HomeAssistantHouseholdTool(reader)
+    tools = PostgresExternalConversationTools(auth.owner._engine, provider, provider,
+                                             configuration_sha256=digest)
+    guard, turn = auth.bind(claim)
+    arguments = {"section": "entities", "area_id": "", "offset": 0, "snapshot_sha256": "", "automation_ids": []}
+    call = ConversationActionCall("read-house", "read_home_assistant_inventory", arguments)
+    with initiative_execution(guard):
+        PostgresConversationJournal(auth.owner._engine, control._scope).admit(turn)
+        receipt = tools.execute(turn, call)
+        assert "light.study" in json.dumps(receipt.output)
+        assert reader.reads == 1
+        assert tools.execute(turn, call) == receipt
+        assert reader.reads == 1
+        assert not guard.action_allowed("control_home_assistant_light")
+        # A saved request cannot be dispatched against a changed host destination.
+        request = tools._request(turn, call.name, __import__("asyncio").run(provider.prepare(turn, call)))
+        changed = PostgresExternalConversationTools(auth.owner._engine, provider, provider,
+            configuration_sha256=home_assistant_read_configuration_sha256("http://other-home:8123"))
+        wrapped = changed._orchestrator(turn, changed._timeline(turn))._tool
+        with pytest.raises(ConversationConflict, match="configuration changed"):
+            __import__("asyncio").run(wrapped.observe(request, ToolDispatchResult(True, "unused", {})))
+        assert reader.reads == 1
+        control.stop(claim.intent_id, now=NOW)
+        with pytest.raises(ConversationConflict):
+            tools.execute(turn, call, step_index=1)
+        assert reader.reads == 1
