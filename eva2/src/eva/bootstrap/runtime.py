@@ -1681,9 +1681,16 @@ def create_runtime_app() -> FastAPI:
             allow_insecure_http=settings.fanout_allow_insecure_http,
         )
     )
+    native_research = None
+    if callable(getattr(model, "research_configuration_sha256", None)):
+        from eva.adapters.model.research_tools import NativeResearchTool
+        from eva.adapters.postgres.external_conversation_tools import PostgresExternalConversationTools
+        research_adapter = NativeResearchTool(model, PostgresConversationActions._validated_research_arguments)
+        native_research = PostgresExternalConversationTools(engine, research_adapter, research_adapter)
     conversation_actions = PostgresConversationActions(
         engine,
         research=model,
+        native_research=native_research,
         file_batch=file_batch,
         validated_file_edit=validated_file_edit,
         repository_improvement=repository_improvement,

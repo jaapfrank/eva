@@ -2647,3 +2647,35 @@ def test_native_context_preserves_unknown_model_cost_block_on_every_request():
             with pytest.raises(ConversationModelError, match="verified price"):
                 PydanticConversationModel._admit_request(model, {}, autonomous=False)
     PydanticConversationModel._admit_request(model, {}, autonomous=False)
+
+
+def test_native_research_configuration_binds_model_budget_and_prompt(tmp_path, monkeypatch):
+    model = PydanticConversationModel(auth_file=tmp_path / "unused", resource_budget=_runtime_budget())
+    digest = model.research_configuration_sha256()
+    model._model = "another-model"
+    assert model.research_configuration_sha256() != digest
+    model._model = "gpt-5.4-mini"
+    assert model.research_configuration_sha256() == digest
+    monkeypatch.setattr(conversation_module, "_CURRENT_RESEARCH_INSTRUCTIONS", "changed host research policy")
+    assert model.research_configuration_sha256() != digest
+    model._endpoint = "https://unverified.example/responses"
+    with pytest.raises(ConversationModelError, match="subscription"):
+        model.research_configuration_sha256()
+
+
+def test_native_research_permits_only_one_http_attempt(tmp_path, monkeypatch):
+    from urllib.error import HTTPError
+    from eva.application.initiative_execution import initiative_execution
+    model = PydanticConversationModel(auth_file=tmp_path / "unused", resource_budget=_runtime_budget())
+    calls = []
+    monkeypatch.setattr(model, "_load_auth", lambda: (str(len(calls)), "account"))
+    monkeypatch.setattr(model, "_jwt_expiry", lambda token: None)
+    def failed(request, timeout):
+        calls.append({"body": json.loads(request.data), "timeout": timeout})
+        raise HTTPError(request.full_url, 401, "expired", {}, BytesIO(b"expired"))
+    monkeypatch.setattr(conversation_module.urllib.request, "urlopen", failed)
+    with initiative_execution(object()), pytest.raises(ConversationModelError):
+        model.research_current_options(question="Read public documentation", title="Docs",
+            options=("https://playwright.dev/docs/intro",), researched_at=NOW)
+    assert len(calls) == 1 and calls[0]["timeout"] <= 55
+    assert "Read public documentation" in calls[0]["body"]["input"][0]["content"]

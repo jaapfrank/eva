@@ -535,6 +535,9 @@ _FREE_WILL_TOOL: dict[str, Any] = _tool(
 _CODEX_SUBSCRIPTION_ENDPOINT = "https://chatgpt.com/backend-api/codex/responses"
 
 
+_CURRENT_RESEARCH_INSTRUCTIONS = "Je bent Eva en maakt een zelfstandig bruikbaar Nederlandstalig onderzoeksdocument in Markdown. Zoek actuele informatie op het web. Onderzoek exact de opgegeven onderwerpen; vergelijk ze wanneer de vraag daarom vraagt. Verzin geen alternatieven bij één onderwerp. Open eerst de expliciet opgegeven primaire URLs. Lees alleen de passages die de concrete vraag beantwoorden; zoek gericht verder uitsluitend als zo'n antwoord daar ontbreekt. Geen brede marktverkenning of achtergrondonderzoek buiten de vraag. Gebruik voor ieder onderwerp minstens één primaire bron: officiële productdocumentatie, de maker, een overheid, een register of oorspronkelijk onderzoek; gebruik geen vergelijkingssite als bewijs voor een primaire claim. Benoem expliciet welke uitspraken bronfeiten zijn en welke jouw gevolgtrekking of advies zijn. Neem concrete criteria, beperkingen en een korte conclusie op. Alle actuele claims krijgen zichtbare inline bronverwijzingen. Verzin geen ontbrekende feiten. Maximaal 450 woorden."
+
+
 class PydanticConversationModel:
     """One stateless Eva generation after Hindsight has recalled context."""
 
@@ -1335,6 +1338,20 @@ class PydanticConversationModel:
             )
         return proposal
 
+    def research_configuration_sha256(self) -> str:
+        from dataclasses import asdict
+        if self._resource_budget is None or self.autonomous_admission_blocker() is not None:
+            raise ConversationModelError("research has no bounded subscription authority")
+        return hashlib.sha256(canonical_json_bytes({
+            "protocol": "existing-public-web-research-v1",
+            "endpoint": self._endpoint, "model": self._model,
+            "instructions": _CURRENT_RESEARCH_INSTRUCTIONS,
+            "tools": [{"search_context_size": "low", "type": "web_search"}],
+            "timeout_milliseconds": int(min(self._research_timeout_seconds, 55.0) * 1000),
+            "authentication_attempts": 1,
+            "budget": asdict(self._resource_budget),
+        })).hexdigest()
+
     def research_current_options(
         self,
         *,
@@ -1369,22 +1386,7 @@ class PydanticConversationModel:
                 }
             ],
             "instructions": (
-                "Je bent Eva en maakt een zelfstandig bruikbaar Nederlandstalig "
-                "onderzoeksdocument in Markdown. Zoek actuele informatie op het web. "
-                "Onderzoek exact de opgegeven onderwerpen; vergelijk ze wanneer de "
-                "vraag daarom vraagt. Verzin geen alternatieven bij één onderwerp. "
-                "Open eerst de expliciet opgegeven primaire URLs. Lees alleen de "
-                "passages die de concrete vraag beantwoorden; zoek gericht verder "
-                "uitsluitend als zo'n antwoord daar ontbreekt. Geen brede marktverkenning "
-                "of achtergrondonderzoek buiten de vraag. "
-                "Gebruik voor ieder onderwerp "
-                "minstens één primaire bron: officiële productdocumentatie, de maker, "
-                "een overheid, een register of oorspronkelijk onderzoek; gebruik geen "
-                "vergelijkingssite als bewijs voor een primaire claim. Benoem expliciet "
-                "welke uitspraken bronfeiten zijn en welke jouw gevolgtrekking of advies "
-                "zijn. Neem concrete criteria, beperkingen en een korte conclusie op. "
-                "Alle actuele claims krijgen zichtbare inline bronverwijzingen. Verzin "
-                "geen ontbrekende feiten. Maximaal 450 woorden."
+                _CURRENT_RESEARCH_INSTRUCTIONS
             ),
             "model": self._model,
             "reasoning": {"effort": "low", "summary": "auto"},
@@ -1753,7 +1755,8 @@ class PydanticConversationModel:
         return self._request_using(
             body,
             self._parse_research_sse,
-            timeout_seconds=self._research_timeout_seconds,
+            timeout_seconds=(min(self._research_timeout_seconds, 55.0)
+                if _native_research_context() else self._research_timeout_seconds),
             include_usage=True,
             provider_managed_research_input=True,
         )
@@ -1777,7 +1780,8 @@ class PydanticConversationModel:
             raise ConversationModelError("provider-managed research input scope is invalid")
         self._admit_request(body, autonomous=autonomous)
         last_auth: tuple[str, str] | None = None
-        for attempt in range(2):
+        attempts = 1 if provider_managed_research_input and _native_research_context() else 2
+        for attempt in range(attempts):
             auth = self._load_auth()
             expires_at = self._jwt_expiry(auth[0])
             if expires_at is not None and expires_at <= datetime.now(tz=UTC):
@@ -2593,3 +2597,8 @@ __all__ = [
     "ConversationCredentialStatus",
     "ConversationModelError",
 ]
+
+
+def _native_research_context() -> bool:
+    from eva.application.initiative_execution import current_initiative
+    return current_initiative() is not None

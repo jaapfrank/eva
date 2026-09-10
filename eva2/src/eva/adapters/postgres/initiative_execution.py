@@ -59,6 +59,17 @@ def _matches_profile(value, schema):
         return False
 
 
+def _public_input_is_host_selected(schema):
+    """Public routes accept only host-listed values, never free private text."""
+    if "const" in schema or "enum" in schema:
+        return True
+    if schema.get("type") == "object":
+        return all(_public_input_is_host_selected(v) for v in schema["properties"].values())
+    if schema.get("type") == "array":
+        return "maxItems" in schema and _public_input_is_host_selected(schema["items"])
+    return False
+
+
 class InitiativeMandateDenied(ConversationConflict):
     """No execution permission; keep a concrete blocker instead of guessing."""
 
@@ -124,6 +135,9 @@ class PostgresInitiativeAuthority:
                         or '"$ref"' in json.dumps(schema)):
                     raise InitiativeMandateDenied("capability argument boundary is invalid")
                 _check_profile_schema(schema)
+                if (cap["data_scope"] == "public_no_private_input"
+                        and not _public_input_is_host_selected(schema)):
+                    raise InitiativeMandateDenied("public capability requires host-selected input values")
         return data
 
     def policy(self):

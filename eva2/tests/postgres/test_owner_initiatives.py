@@ -448,3 +448,86 @@ def test_native_dispatch_serializes_owner_mandate_revision(costless_native, monk
     with pytest.raises(InitiativeMandateDenied, match="revised before dispatch"):
         guard.authorize_request(request, phase="execute")
     assert not any(e.event_type == "INITIATIVE_DISPATCH_ADMITTED" for e in auth.timeline.events(guard.thread))
+
+
+@pytest.mark.parametrize("interrupted", [False, True])
+def test_native_public_research_uses_indexed_journal_and_never_repeats_uncertain_call(costless_native, interrupted):
+    import json
+    from eva.adapters.model.research_tools import NativeResearchTool
+    from eva.adapters.postgres.conversation_actions import PostgresConversationActions
+    from eva.adapters.postgres.external_conversation_tools import PostgresExternalConversationTools
+    from eva.adapters.postgres.conversation_journal import PostgresConversationJournal
+    from eva.application.conversation import ConversationActionCall, ConversationModelUsage
+    from eva.application.initiative_execution import initiative_execution
+    from eva.application.research import ResearchArtifact, ResearchSource
+    from eva.adapters.postgres.initiative_execution import InitiativeMandateDenied
+    auth, claim, store, control, source, path, policy = costless_native
+    question = "Welke mogelijkheden en beperkingen beschrijven deze openbare bronnen?"
+    title = "Openbare documentatie onderzoeken"
+    url = "https://playwright.dev/docs/intro"
+    args = {"question": question, "title": title, "options": [url]}
+    schema = {"type": "object", "properties": {
+        "question": {"type": "string", "const": question},
+        "title": {"type": "string", "const": title},
+        "options": {"type": "array", "minItems": 1, "maxItems": 5,
+                    "items": {"type": "string", "enum": [url]}}},
+        "required": ["question", "title", "options"], "additionalProperties": False}
+    policy["capabilities"].append({**policy["capabilities"][0],
+        "action_name": "research_current_options", "configuration_sha256": "b" * 64,
+        "tool_name": "research.public_sources", "observation_tool_name": "research.public_sources",
+        "data_scope": "public_no_private_input", "execute_schema": schema, "observe_schema": schema})
+    path.write_text(json.dumps(policy))
+    class Research:
+        calls = 0
+        def research_configuration_sha256(self): return "b" * 64
+        def research_current_options(self, **kwargs):
+            self.calls += 1
+            assert kwargs["question"] == question and kwargs["options"] == (url,)
+            if interrupted: raise RuntimeError("response lost after provider may have run")
+            return ResearchArtifact(title=kwargs["title"], question=kwargs["question"],
+                content="Publieke documentatie beschrijft browserautomatisering.",
+                sources=(ResearchSource("Playwright", url),), researched_at=kwargs["researched_at"],
+                provider="fixture", usage=ConversationModelUsage.measured(
+                    model_attempts=1, tool_calls=1, input_tokens=150, output_tokens=40))
+    research = Research()
+    adapter = NativeResearchTool(research, PostgresConversationActions._validated_research_arguments)
+    tools = PostgresExternalConversationTools(auth.owner._engine, adapter, adapter)
+    actions = PostgresConversationActions(auth.owner._engine, research=research, native_research=tools)
+    guard, turn = auth.bind(claim)
+    PostgresConversationJournal(auth.owner._engine, auth.owner._scope).admit(turn)
+    assert actions.action_names.count("research_current_options") == 1
+    with initiative_execution(guard):
+        assert "research_current_options" in actions.continuation_action_names(turn)
+        private = ConversationActionCall("private", "research_current_options", {**args, "question": "Private secret from memory"})
+        denied = actions.execute_step(turn, private, step_index=1)
+        assert denied.output["status"] in {"failed", "needs_help"}
+        assert research.calls == 0
+    # A rejected operation remains bound to its original arguments: use a later step.
+    call = ConversationActionCall("public", "research_current_options", args)
+    with initiative_execution(guard):
+        try:
+            receipt = actions.execute_step(turn, call, step_index=2)
+        except RuntimeError:
+            assert interrupted
+            receipt = actions.pending_step(turn, step_index=2)
+        recovered = actions.pending_step(turn, step_index=2)
+    assert research.calls == 1
+    assert receipt == recovered
+    if interrupted:
+        assert receipt.output["status"] in {"failed", "needs_help"}
+    else:
+        assert receipt.output["status"] == "verified"
+        assert receipt.output["result"]["model_usage"]["input_tokens"] == 150
+        assert receipt.output["result"]["sources"][0]["url"] == url
+    ordinary = replace(turn, conversation_id="owner-research", message_id="owner-research")
+    assert "research_current_options" not in actions.continuation_action_names(ordinary)
+
+
+def test_public_native_profile_rejects_free_text_even_when_labelled_public(costless_native):
+    import json
+    from eva.adapters.postgres.initiative_execution import InitiativeMandateDenied
+    auth, claim, store, control, source, path, policy = costless_native
+    policy["capabilities"][0]["data_scope"] = "public_no_private_input"
+    path.write_text(json.dumps(policy))
+    with pytest.raises(InitiativeMandateDenied, match="host-selected"):
+        auth.policy()

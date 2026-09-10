@@ -184,9 +184,11 @@ class PostgresConversationActions:
         durable_goal_provider: str | None = None,
         durable_goal_recipients: tuple[str, ...] = (),
         external_tools: tuple[ConversationExternalToolPort, ...] = (),
+        native_research: ConversationExternalToolPort | None = None,
     ) -> None:
         self._engine = engine
         self._external_tools = external_tools
+        self._native_research = native_research
         external_action_names = tuple(
             action_name
             for provider in external_tools
@@ -261,11 +263,17 @@ class PostgresConversationActions:
         guard = require_initiative_context(turn)
         return tuple(name for name in actions if guard is None or guard.action_allowed(name))
 
+    def _step_tools(self, turn: ConversationTurn):
+        from eva.application.initiative_execution import require_initiative_context
+        native = require_initiative_context(turn)
+        return self._external_tools + ((self._native_research,)
+            if native is not None and self._native_research is not None else ())
+
     def continuation_action_names(self, turn: ConversationTurn) -> tuple[str, ...]:
         allowed = set(self.available_action_names(turn))
         return tuple(
             name
-            for provider in self._external_tools
+            for provider in self._step_tools(turn)
             if getattr(provider, "supports_indexed_steps", False)
             for name in provider.action_names
             if name in allowed
@@ -276,7 +284,7 @@ class PostgresConversationActions:
     ) -> ConversationActionReceipt | None:
         if type(step_index) is not int or step_index < 1:
             raise ValueError("continuation step index must be a positive integer")
-        for provider in self._external_tools:
+        for provider in self._step_tools(turn):
             if getattr(provider, "supports_indexed_steps", False):
                 receipt = provider.pending(turn, step_index=step_index)
                 if receipt is not None:
@@ -290,7 +298,8 @@ class PostgresConversationActions:
             raise ValueError("continuation step index must be a positive integer")
         if call.name not in self.continuation_action_names(turn):
             raise ConversationConflict("conversation continuation action is unavailable")
-        return self._external_tool_by_action[call.name].execute(
+        provider = next(p for p in self._step_tools(turn) if call.name in p.action_names)
+        return provider.execute(
             turn, call, step_index=step_index,
         )
 
@@ -334,7 +343,7 @@ class PostgresConversationActions:
         fanout_receipt = self._pending_fanout(turn)
         if fanout_receipt is not None:
             return fanout_receipt
-        for provider in self._external_tools:
+        for provider in self._step_tools(turn):
             external_receipt = provider.pending(turn)
             if external_receipt is not None:
                 return external_receipt
@@ -572,6 +581,12 @@ class PostgresConversationActions:
     ) -> ConversationActionReceipt:
         from eva.application.initiative_execution import authorize_initiative_action
         authorize_initiative_action(turn, call.name)
+        from eva.application.initiative_execution import require_initiative_context
+        if (require_initiative_context(turn) is not None
+                and call.name == _CURRENT_RESEARCH_ACTION):
+            if self._native_research is None:
+                raise ConversationConflict("native research route is unavailable")
+            return self._native_research.execute(turn, call)
         external_tool = self._external_tool_by_action.get(call.name)
         if external_tool is not None:
             return external_tool.execute(turn, call)
