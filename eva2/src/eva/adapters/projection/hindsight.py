@@ -55,6 +55,19 @@ _SHA256 = re.compile(r"[0-9a-f]{64}")
 _OBSERVATION_EVIDENCE_PREFIX = "observation-binding:"
 
 
+def _bounded_memory_reference(reference: str) -> str:
+    """Project long stored references into Identifier without losing their source.
+
+    Audience/provenance checks must run on the original reference first. The
+    caller retains it alongside the fact; this never rewrites stored memory.
+    """
+    if len(reference) <= 192:
+        return reference
+    if not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9:._/@+\-=]*", reference):
+        raise HindsightProjectionProtocolError("Hindsight memory reference is invalid")
+    return "hindsight-ref:sha256:" + hashlib.sha256(reference.encode("utf-8")).hexdigest()
+
+
 class HindsightProjectionError(SemanticMemoryProviderError):
     """Base error for the replaceable Hindsight projection."""
 
@@ -1364,6 +1377,13 @@ class HindsightMemoryEngine:
                 source_ref = fact_id
             if not isinstance(evidence_ref, str) or not evidence_ref:
                 evidence_ref = fact_id
+            original_references = {"source_ref": source_ref, "evidence_ref": evidence_ref}
+            source_ref = _bounded_memory_reference(source_ref)
+            evidence_ref = _bounded_memory_reference(evidence_ref)
+            reference_provenance = {
+                key: original for key, original in original_references.items()
+                if original != {"source_ref": source_ref, "evidence_ref": evidence_ref}[key]
+            }
             rank = len(selected) + 1
             selected.append(
                 RecalledFact(
@@ -1392,6 +1412,8 @@ class HindsightMemoryEngine:
                         "memory_type": memory_type,
                         "semantic_trust": trust,
                         "text": text,
+                        **({"reference_provenance": reference_provenance}
+                           if reference_provenance else {}),
                     },
                     source_ref=source_ref,
                     evidence_ref=evidence_ref,

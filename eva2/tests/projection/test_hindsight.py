@@ -1419,28 +1419,28 @@ def test_invalid_hindsight_response_fails_closed_instead_of_falling_back(
 
 
 
-def _household_memory_fixture(base_url, state):
+def _household_memory_fixture(base_url, state, household_id="home"):
     from eva.application.memory_audience import HouseholdConsentReference
     actor = "household-device:" + "a" * 32
     other = "household-device:" + "c" * 32
-    grants = {p: HouseholdConsentReference(p, "home", "household-consent:" + str(i))
+    grants = {p: HouseholdConsentReference(p, household_id, "household-consent:" + str(i))
               for i, p in enumerate((actor, other))}
-    audience = MemoryAudience.household(principal_id=actor, household_id="home", consent_ref=grants[actor])
-    conversation = "household:home:conversation:room"
+    audience = MemoryAudience.household(principal_id=actor, household_id=household_id, consent_ref=grants[actor])
+    conversation = f"household:{household_id}:conversation:room"
     doc = replace(_conversation_document(), principal_id=actor, audience=audience,
                   conversation_id=conversation, document_id=conversation + ":document:1",
                   source_ref=conversation + ":message:1", evidence_ref=conversation + ":evidence:1")
     query = replace(_query(), principal_id=actor, subject_ids=(actor,), audience=audience,
-                    conversation_id=conversation, scope={"kind": "household", "household_id": "home"})
+                    conversation_id=conversation, scope={"kind": "household", "household_id": household_id})
     class Resolver:
         def active_reference(self, *, principal_id, household_id, now):
-            assert household_id == "home"
+            assert household_id == audience.household_id
             return grants.get(principal_id)
     engine = HindsightMemoryEngine(HindsightProjectionConfig(base_url),
                                   active_household_consent_resolver=Resolver())
-    source_conversation = "household:home:conversation:garden"
-    metadata = {"audience_kind": "household", "audience_id": "household:home",
-                "household_id": "home", "principal_id": other,
+    source_conversation = f"household:{household_id}:conversation:garden"
+    metadata = {"audience_kind": "household", "audience_id": f"household:{household_id}",
+                "household_id": household_id, "principal_id": other,
                 "consent_operation_id": grants[other].operation_id,
                 "conversation_id": source_conversation,
                 "source_ref": source_conversation + ":message:2",
@@ -1506,6 +1506,51 @@ def test_household_memory_has_no_unconfigured_private_fallback(hindsight_server)
             replace(query, **change)
     with pytest.raises(ValueError):
         replace(doc, source_ref="telegram:101:private")
+
+
+@pytest.mark.parametrize("memory_type", ["world", "observation"])
+@pytest.mark.parametrize("long_source", [False, True])
+def test_existing_long_household_references_remain_traceable(hindsight_server, memory_type, long_source):
+    base_url, state = hindsight_server
+    engine, _, query, grants, metadata = _household_memory_fixture(base_url, state, "eva-family")
+    conversation = "household:eva-family:conversation:" + "a" * 64
+    message = conversation + ":request:" + "b" * 32
+    metadata.update(conversation_id=conversation,
+                    source_ref=conversation + ":exchange:" + message if long_source else message,
+                    evidence_ref=conversation + ":evidence:" + message)
+    original = dict(metadata)
+    assert len(original["evidence_ref"]) == 247
+    item = state.group_recall_response["results"][0]
+    item["type"] = memory_type
+    if memory_type == "observation":
+        item["source_fact_ids"] = ["source-1"]
+        state.group_recall_response["source_facts"] = {
+            "source-1": {"metadata": metadata, "mentioned_at": NOW}}
+    result = engine.recall_for_presence_fast(query)
+    fact = result.confirmed_facts[0]
+    assert fact.value["text"] == "De barbecue begint om zes uur."
+    for key in ("source_ref", "evidence_ref"):
+        assert len(getattr(fact, key)) <= 192
+        if len(original[key]) > 192:
+            assert fact.value["reference_provenance"][key] == original[key]
+        else:
+            assert getattr(fact, key) == original[key]
+            assert key not in fact.value["reference_provenance"]
+    assert result.recall.selected[0].source_event_ids == [fact.source_ref]
+    again = engine.recall_for_presence_fast(query).confirmed_facts[0]
+    assert (again.source_ref, again.evidence_ref) == (fact.source_ref, fact.evidence_ref)
+    assert metadata == original  # No stored reference is rewritten.
+    grants.pop(metadata["principal_id"])
+    assert engine.recall_for_presence_fast(query).confirmed_facts == ()
+
+
+def test_private_short_references_remain_unchanged(hindsight_server):
+    base_url, _ = hindsight_server
+    result = HindsightMemoryEngine(HindsightProjectionConfig(base_url)).recall_for_presence(_query())
+    fact = result.confirmed_facts[0]
+    assert fact.source_ref == "telegram:message:5001"
+    assert fact.evidence_ref == "evidence:message:5001"
+    assert "reference_provenance" not in fact.value
 
 
 
