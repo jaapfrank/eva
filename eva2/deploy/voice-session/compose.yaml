@@ -1,7 +1,7 @@
 services:
   livekit:
     image: ${EVA_LIVEKIT_IMAGE:?pin a verified local image digest}
-    network_mode: host
+    ports: ["127.0.0.1:7880:7880"]
     user: "65532:65532"
     read_only: true
     cap_drop: [ALL]

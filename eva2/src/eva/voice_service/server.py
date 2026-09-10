@@ -20,7 +20,7 @@ from livekit.plugins import silero
 
 from eva.adapters.connectors.home_assistant_voice import HomeAssistantSpeechInput, HomeAssistantSpeechOutput
 from eva.voice_service.agent import BridgeState, CoreClient, EvaAgent
-from eva.voice_service.media import HomeAssistantSTT, HomeAssistantTTS
+from eva.voice_service.media import HomeAssistantSTT, HomeAssistantTTS, home_assistant_ice_servers
 from eva.voice_service.lifecycle import SessionLease
 
 
@@ -149,6 +149,13 @@ def create_app():
                     .with_ttl(timedelta(minutes=30))
                     .with_grants(api.VideoGrants(room_join=True, room=room_name,
                         can_publish=True, can_subscribe=True, can_publish_data=True, agent=agent)).to_jwt())
+            ice_servers = []
+            if config.get("cloud_relay", False):
+                try:
+                    ice_servers = await home_assistant_ice_servers(config["ha_url"], ha_token)
+                    check()
+                except Exception:
+                    raise HTTPException(503, "De bestaande Home Assistant Cloud-spraakverbinding is niet beschikbaar.") from None
             room = rtc.Room()
             tasks = set()
             def notify(value):
@@ -187,7 +194,11 @@ def create_app():
             sessions[room_name] = lease
             try:
                 async with asyncio.timeout(20):
-                    await room.connect(config["livekit_url"], credential("eva", agent=True))
+                    options = rtc.RoomOptions()
+                    if ice_servers:
+                        options.rtc_config = rtc.RtcConfiguration(ice_transport_type=rtc.IceTransportType.TRANSPORT_RELAY,
+                            ice_servers=[rtc.IceServer(urls=row["urls"], username=row.get("username", ""), password=row.get("credential", "")) for row in ice_servers])
+                    await room.connect(config["livekit_url"], credential("eva", agent=True), options=options)
                     await session.start(EvaAgent(state), room=room, room_options=room_io.RoomOptions(
                         participant_identity="owner", close_on_disconnect=True,
                         audio_input=room_io.AudioInputOptions(), video_input=False))
@@ -220,6 +231,6 @@ def create_app():
                         await lease.close()
                         return
             lease.timers.add(asyncio.create_task(watch()))
-            return {"url": config["public_livekit_url"], "token": credential("owner"), "room": room_name}
+            return {"url": config["public_livekit_url"], "token": credential("owner"), "room": room_name, "rtc_config": ({"iceTransportPolicy": "relay", "iceServers": ice_servers} if ice_servers else {})}
 
     return app

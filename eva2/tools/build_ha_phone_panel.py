@@ -30,13 +30,13 @@ def panel_script(html):
       return {ok:result.status===200,json:async()=>result.body};
     }""")
     script = script.replace("adaptiveStream:true,dynacast:true", "adaptiveStream:true,dynacast:true,singlePeerConnection:false")
-    connect = "await r.connect(connection.url,connection.token);"
+    connect = "await r.connect(connection.url,connection.token,{rtcConfig:connection.rtc_config||{}});"
     if connect not in script:
         raise ValueError("Voice connect options changed; review HA relay options")
     script = script.replace(connect, """const signal=new URL(connection.url,location.origin);signal.protocol=location.protocol==='https:'?'wss:':'ws:';
     const iceServers=await panel.hass.callWS({type:'cloud/webrtc/ice_servers'});
     if(panel._disposed){await ownerRequest('/session/end',{method:'POST'});throw new Error('Het paneel is gesloten.');}
-    await r.connect(signal.href,connection.token,{rtcConfig:{iceServers}});""")
+    await r.connect(signal.href,connection.token,{rtcConfig:{iceServers,iceTransportPolicy:'relay'}});""")
     body = re.sub(r"<script.*?</script>", "", html, flags=re.S)
     body = re.sub(r"<!doctype html>|</?html[^>]*>|<meta[^>]*>|<title>.*?</title>", "", body, flags=re.S)
     body = body.replace(":root{", ":host{").replace("body{", ".eva-panel{")

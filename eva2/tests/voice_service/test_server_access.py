@@ -64,7 +64,7 @@ def test_room_bound_close_and_phone_lease_expires_without_renewal(voice_config, 
     class Room:
         remote_participants = {"owner": object()}
         def on(self, event): return lambda callback: callback
-        async def connect(self, *args): pass
+        async def connect(self, *args, **kwargs): pass
         async def disconnect(self): pass
     class Control:
         def __init__(self, *args, **kwargs): self.room = self
@@ -89,3 +89,17 @@ def test_room_bound_close_and_phone_lease_expires_without_renewal(voice_config, 
             time.sleep(.1)
         assert second in closed  # Connected owner still expires without renewal.
         assert client.post("/session/renew/"+second, headers=auth).status_code == 410
+
+
+def test_relay_failure_does_not_create_a_room_or_leak_credentials(voice_config,monkeypatch):
+    from pathlib import Path
+    config_file=Path(__import__("os").environ["EVA_VOICE_CONFIG"])
+    config_file.write_text(json.dumps({**voice_config,"cloud_relay":True}))
+    async def failed(*args):raise ValueError("provider-private-token")
+    monkeypatch.setattr(server,"home_assistant_ice_servers",failed)
+    def forbidden():raise AssertionError("Room created despite unavailable relay")
+    monkeypatch.setattr(server.rtc,"Room",forbidden)
+    with TestClient(server.create_app()) as client:
+        response=client.post("/session",headers={"Authorization":"Bearer test-owner-secret","Origin":voice_config["origin"]})
+        assert response.status_code==503
+        assert "provider-private-token" not in response.text
