@@ -380,3 +380,71 @@ def test_native_household_target_planning_performs_no_unadmitted_network_read(co
         assert (prepared.arguments.get("entity_id") or prepared.arguments.get("entity_ids")) in ("light.study", ["light.study"])
         with pytest.raises(ConversationConflict, match="exact entity ID"):
             asyncio.run(planner.prepare(turn, ConversationActionCall("native-name", action, {**args, "target": "study"})))
+
+
+def test_owner_mandate_revision_is_append_only_and_does_not_upgrade_running_work(costless_native):
+    import json
+    from eva.application.conversation import ConversationConflict
+    from eva.adapters.postgres.initiative_execution import InitiativeMandateDenied
+    from eva.application.initiative_execution import initiative_execution
+    from eva.contracts.canonical_json import canonical_sha256
+    auth, claim, store, control, source, path, policy = costless_native
+    guard, turn = auth.bind(claim)
+    original = auth.timeline.events(auth.thread)
+    previous = guard.mandate_sha
+    policy["authorization_source"] = "Owner explicitly extends existing costless mandate"
+    policy["capabilities"][0]["execute_schema"]["properties"]["content"]["maxLength"] = 1100
+    candidate = canonical_sha256({k: v for k, v in policy.items() if k != "enabled"})
+    path.write_text(json.dumps(policy))
+    with pytest.raises(InitiativeMandateDenied, match="revision changed"):
+        auth.policy()
+    with pytest.raises(InitiativeMandateDenied, match="host file"):
+        auth.admit_revision(previous, "b" * 64)
+    with pytest.raises(InitiativeMandateDenied, match="previous"):
+        auth.admit_revision("b" * 64, candidate)
+    with initiative_execution(guard), pytest.raises(InitiativeMandateDenied, match="own mandate"):
+        auth.admit_revision(previous, candidate)
+    assert auth.admit_revision(previous, candidate)["status"] == "revised"
+    assert auth.admit_revision(previous, candidate)["status"] == "unchanged"
+    events = auth.timeline.events(auth.thread)
+    assert events[:len(original)] == original and len(events) == len(original) + 1
+    assert events[-1].payload["data"]["previous_mandate_sha256"] == previous
+    assert auth.policy()[1] == candidate
+    with pytest.raises(InitiativeMandateDenied, match="changed"):
+        guard.check(turn)
+    with pytest.raises(ConversationConflict):
+        auth.bind(claim)
+    auth.revoke()
+    with pytest.raises(InitiativeMandateDenied, match="revoked"):
+        auth.admit_revision(candidate, candidate)
+    with pytest.raises(InitiativeMandateDenied, match="revoked"):
+        auth.policy()
+
+
+def test_native_dispatch_serializes_owner_mandate_revision(costless_native, monkeypatch):
+    import json
+    from eva.adapters.postgres.initiative_execution import InitiativeMandateDenied
+    from eva.application.orchestration import ToolRequest
+    from eva.contracts.canonical_json import canonical_sha256
+    auth, claim, store, control, source, path, policy = costless_native
+    guard, turn = auth.bind(claim)
+    read_policy = auth.policy
+    calls = 0
+    def revise_between_check_and_dispatch():
+        nonlocal calls
+        snapshot = read_policy()
+        calls += 1
+        if calls == 2:
+            policy["authorization_source"] = "Owner revises during admission"
+            path.write_text(json.dumps(policy))
+            candidate = canonical_sha256({k: v for k, v in policy.items() if k != "enabled"})
+            auth.admit_revision(guard.mandate_sha, candidate)
+        return snapshot
+    monkeypatch.setattr(auth, "policy", revise_between_check_and_dispatch)
+    arguments = {"path": policy["capabilities"][0]["execute_schema"]["properties"]["path"]["const"], "content": "safe"}
+    request = ToolRequest("tools:test", "operation:test", "checkpoint:test", "private.write",
+        arguments, {}, observation_tool_name="private.read", observation_arguments=arguments,
+        tool_configuration_sha256="a" * 64)
+    with pytest.raises(InitiativeMandateDenied, match="revised before dispatch"):
+        guard.authorize_request(request, phase="execute")
+    assert not any(e.event_type == "INITIATIVE_DISPATCH_ADMITTED" for e in auth.timeline.events(guard.thread))

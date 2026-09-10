@@ -876,6 +876,9 @@ class PostgresHindsightMemoryRuntime:
     def dashboard_revoke_initiative_mandate(self):
         return self._initiative_authority().revoke()
 
+    def dashboard_revise_initiative_mandate(self, expected_sha256, candidate_sha256):
+        return self._initiative_authority().admit_revision(expected_sha256, candidate_sha256)
+
     def dashboard_initiative_feedback(self, intent_id, feedback):
         return self._owner_initiatives().feedback(intent_id, feedback, now=datetime.now(UTC).replace(microsecond=0))
 
