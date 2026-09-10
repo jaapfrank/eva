@@ -3497,7 +3497,7 @@
       "tested": true,
       "live": true,
       "ownerAccepted": false,
-      "currentWork": "Algemeen publiek onderzoek en een private beoordeling op rustige momenten zijn live. Eva gebruikt haar toegestane context, kiest zelf een nuttige bijdrage of stilte en voert gekozen werk via de normale taakuitvoerder uit. Het bestaande achtergrondbudget voor deze eigenaar is vandaag 4/4 verbruikt; geen echte nieuwe bijdrage bewezen.",
+      "currentWork": "Algemeen publiek onderzoek en private initiatiefbeoordeling zijn live. Eerste normale idlecyclus om20:32:45UTC bewezen: eigenaarbudget4/4, daarom geen modelaanroep en geen geforceerde bijdrage. De technische aansluiting is afgerond; het echte bruikbare initiatiefresultaat blijft open.",
       "authorization": "Jaap: in eerste instantie mag ze wel gewoon alles doen wat ze wil, zolang het maar inderdaad geen geld kost. Implementatie expliciet bevestigd.",
       "boundaries": "Geen nieuwe kosten of verplichtingen; onbekend is niet gratis. Bestaand toegelaten modelgebruik blijft binnen bestaande grenzen. Privacy, personen, communicatie en stoppen blijven gelden.",
       "artifactRetention": {
@@ -3571,7 +3571,21 @@
         "personLimit": 4
       },
       "privacy": "Private eigenaarcontext met actuele alias/audience; klokprikkel is geen huiswaarneming. Host bereidt geen proactief bericht voor.",
-      "evidencePath": "evidence/product/AU-008-private-review-live-2026-09-10.json"
+      "evidencePath": "evidence/product/AU-008-private-review-live-2026-09-10.json",
+      "normalCycleObserved": true,
+      "normalCycleResult": {
+        "source": "regular cold-path idle worker",
+        "observedAt": "2026-09-10T20:32:47.696304+00:00",
+        "threadId": "sensory:initiative-review:547262a5e00deb3ed2a6b3c5:496964",
+        "eventType": "WILL_DECIDED",
+        "decidedAt": "2026-09-10 20:32:45+00:00",
+        "result": "wait_for_existing_daily_budget",
+        "provider": "eva:background-budget",
+        "reason": "Het bestaande achtergrondbudget laat nu geen nieuwe beoordeling toe.",
+        "modelCallIssued": false,
+        "artifactProduced": false,
+        "manualTriggerUsed": false
+      }
     }
   },
   "activeTaskId": "AU-008",

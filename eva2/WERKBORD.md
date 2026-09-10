@@ -8,7 +8,7 @@ Gebouwd, getest, live en door jou geaccepteerd zijn verschillende stappen.
 CO-008 / GE-01 is afgerond en door Jaap geaccepteerd. AU-007 blijft afgesloten met beperkte kaartwaardering. AU-008: algemeen publiek onderzoek en private initiatiefbeoordeling op rustige momenten zijn live. De echte zelfstandige bijdrage wacht nog op bewijs; het huidige achtergrondbudget is 4/4 verbruikt.
 [Actueel bewijs](reviews/AU-007-technical-closure-f99b5a2.md).
 
-Algemeen publiek onderzoek en private initiatiefbeoordeling op rustige momenten zijn live. [Technisch bewijs](evidence/product/AU-008-private-review-live-2026-09-10.json). Het huidige eigenaarachtergrondbudget is 4/4. De echte zelfgekozen bijdrage blijft open; deze volgt uitsluitend uit de gewone cyclus binnen de bestaande grenzen.
+Algemeen publiek onderzoek en private initiatiefbeoordeling op rustige momenten zijn live. [Technisch bewijs](evidence/product/AU-008-private-review-live-2026-09-10.json). De eerste gewone cyclus is om20:32:45UTC teruggelezen: eigenaarachtergrondbudget4/4, geen modelaanroep. De technische aansluiting is afgerond. De echte zelfgekozen bijdrage blijft open en volgt uitsluitend uit de gewone cyclus binnen de bestaande grenzen.
 
 ### Afzonderlijk stemwerk
 

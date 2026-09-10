@@ -93,7 +93,21 @@
     "opportunity-admission-tests.txt": "f76bfde4558d9eda08b3b6a2f48376986506f3ceb91cadcf3faa3da5c8fddef7",
     "opportunity-image-imports.json": "b1b5ccac2228bdafb20f01279d88b8c6faa46878090bd342113b36b4ab18a763",
     "opportunity-live-imports.json": "b1b5ccac2228bdafb20f01279d88b8c6faa46878090bd342113b36b4ab18a763",
-    "opportunity-native-baseline.json": "1ec00f9b3f29b63be9b0b22bb1b37643c5aefe537da5b8270cce0d38de417e82"
+    "opportunity-native-baseline.json": "1ec00f9b3f29b63be9b0b22bb1b37643c5aefe537da5b8270cce0d38de417e82",
+    "opportunity-native-observed.json": "246f1d84f5982f837339bfd666a3e394b03090015ff7c8841a12885d8eed702c"
   },
-  "normalCycleObserved": false
+  "normalCycleObserved": true,
+  "normalCycleResult": {
+    "source": "regular cold-path idle worker",
+    "observedAt": "2026-09-10T20:32:47.696304+00:00",
+    "threadId": "sensory:initiative-review:547262a5e00deb3ed2a6b3c5:496964",
+    "eventType": "WILL_DECIDED",
+    "decidedAt": "2026-09-10 20:32:45+00:00",
+    "result": "wait_for_existing_daily_budget",
+    "provider": "eva:background-budget",
+    "reason": "Het bestaande achtergrondbudget laat nu geen nieuwe beoordeling toe.",
+    "modelCallIssued": false,
+    "artifactProduced": false,
+    "manualTriggerUsed": false
+  }
 }
