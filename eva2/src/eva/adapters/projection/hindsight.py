@@ -471,10 +471,10 @@ class HindsightMemoryEngine:
             copied["_eva_memory_observation_binding_sha256"] = (
                 memory_observation_binding_sha256
             )
-            if (
-                response.get("source_facts_truncated") is not True
-                and copied.get("type") == "observation"
-            ):
+            # The response-wide flag means some map entries were omitted, not
+            # that every observation is incomplete. Validate every referenced
+            # source below; complete observations retain their own authority.
+            if copied.get("type") == "observation":
                 source_metadata = self._observation_source_metadata(
                     copied, source_facts
                 )

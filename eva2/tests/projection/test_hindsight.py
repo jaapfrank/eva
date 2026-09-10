@@ -1554,7 +1554,7 @@ def test_private_short_references_remain_unchanged(hindsight_server):
 
 
 
-@pytest.mark.parametrize("corruption", ["private", "other_household", "old_mandate", "bad_provenance", "missing", "truncated", "injected", None])
+@pytest.mark.parametrize("corruption", ["private", "other_household", "old_mandate", "bad_provenance", "missing", "truncated_missing", "truncated_complete", "injected", None])
 def test_household_observations_require_every_source_authority(hindsight_server, corruption):
     base_url, state = hindsight_server
     engine, doc, query, grants, metadata = _household_memory_fixture(base_url, state)
@@ -1570,7 +1570,7 @@ def test_household_observations_require_every_source_authority(hindsight_server,
         earlier["evidence_ref"] = "private:1"
     source_facts = {"one": {"metadata": earlier, "mentioned_at": "2026-08-22T10:00:00Z"},
                     "two": {"metadata": good, "mentioned_at": NOW}}
-    if corruption in {"missing", "injected"}:
+    if corruption in {"missing", "truncated_missing", "injected"}:
         source_facts.pop("one")
     state.group_recall_response = {
         "results": [{"id": "derived", "scores": {"final": 0.95}, "type": "observation",
@@ -1578,10 +1578,10 @@ def test_household_observations_require_every_source_authority(hindsight_server,
                      "source_fact_ids": ["one", "two"], "metadata": good,
                      "_eva_source_metadata": good}],
         "source_facts": source_facts,
-        "source_facts_truncated": corruption == "truncated",
+        "source_facts_truncated": corruption in {"truncated_missing", "truncated_complete"},
     }
     result = engine.recall_for_presence(query)
-    if corruption is None:
+    if corruption in {None, "truncated_complete"}:
         assert len(result.confirmed_facts) == 1
         assert result.confirmed_facts[0].trust == "direct_user"
     else:

@@ -114,6 +114,10 @@ def test_sensory_worker_recalls_then_commits_one_shadow_decision(current_state, 
     assert completed[0].disposition == "silence"
     assert recalled[0].query_purpose == "passive_event_decision"
     assert recalled[0].maximum_facts == 8
+    assert recalled[0].principal_id == "jaap"
+    assert recalled[0].subject_ids == ("jaap",)
+    assert "Persoonlijke plannen, interesses en open wensen" in recalled[0].query_text
+    assert "binary_sensor.achterdeur" in recalled[0].query_text
     assert recalled[0].conversation_id == "sensory:home-assistant"
     if current_state is None:
         assert recalled[0].query_text.endswith("off naar on")

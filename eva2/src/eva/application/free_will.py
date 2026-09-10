@@ -337,6 +337,8 @@ class SensoryDecisionWorker:
                     },
                     subject_ids=(self._principal_id,),
                     query_text=(
+                        "Persoonlijke plannen, interesses en open wensen die passen bij "
+                        "deze huiswaarneming: "
                         f"{event.source} {event.event_type} "
                         f"{event.payload.get('entity_id', '')} "
                         f"{state_description}"

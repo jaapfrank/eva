@@ -2537,6 +2537,7 @@ def test_sensory_model_parses_only_bounded_own_initiative(monkeypatch, tmp_path,
     else:
         result = model.evaluate_sensory_event(event, identity, _memory())
         assert result.initiative == (None if proposal is None else PersonalInitiativeProposal(**proposal))
+        assert result.disposition == "silence" and result.expression is None
         assert result.usage.input_tokens == 100
     schema = observed[0]["tools"][0]["parameters"]
     assert "initiative" in schema["required"]
