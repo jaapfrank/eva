@@ -29,6 +29,12 @@ async function main() {
     } else if (capability.id === 'initiative' && board.audit.au008GeneralResearch20260910?.status === 'live') {
       assert.match(capability.visibleResult, /Algemeen publiek onderzoek is live/);
       assert.equal(capability.gap, board.audit.au008GeneralResearch20260910.remaining);
+    } else if (capability.id === 'projects' && board.audit.au002Delivery) {
+      const delivery = board.audit.au002Delivery;
+      assert.equal(capability.visibleResult, delivery.currentWork || delivery.pendingSourceChange || delivery.result || finding.visibleResult);
+      assert.equal(capability.gap, delivery.remaining || delivery.next || finding.gap);
+      assert.ok(capability.historyNote.includes(finding.visibleResult));
+      continue;
     } else assert.equal(capability.visibleResult, finding.visibleResult);
     for (const step of ['built','tested','live','accepted']) assert.equal(capability[step], finding.states[step]);
   }
@@ -60,7 +66,7 @@ async function main() {
       'Zichtbare streamervaring nog te beoordelen', 'Privégesprekken werken; continuïteit nog te bewijzen',
       'Voorkeurfunctie afgerond en geaccepteerd', 'Eerste zelfstandige bijdrage ontbreekt',
       'Documenttaak bewezen; zelfstandig toolgebruik nog open', 'Natuurlijke gespreksproef nog open',
-      'Stopproef mislukt; herstel loopt', 'Koppeling met Eva ontbreekt',
+      payload.project.capabilities.find(item => item.id === 'projects').userOutcomeStatus || 'Stopproef mislukt; herstel loopt', 'Koppeling met Eva ontbreekt',
       'Beheerde wissel bewezen; zelf installeren nog open',
     ]);
     for (const finding of payload.project.capabilities) await page.getByText(finding.visibleResult,{exact:true}).first().waitFor();

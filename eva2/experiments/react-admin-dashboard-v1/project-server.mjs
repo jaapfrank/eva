@@ -60,6 +60,30 @@ export function applyReviewedCapabilities(project, board, audit) {
         row.evidence += ' · ' + privateReview.evidencePath;
       }
     }
+    const delegatedWork = board.audit?.au002Delivery;
+    if (item.id === 'projects' && delegatedWork) {
+      row.userOutcomeStatus = delegatedWork.userOutcomeStatus || (delegatedWork.providerRepairCandidateImage
+        ? 'Reparatiekandidaat gereed; live gebruikersroute nog open'
+        : 'Herstel loopt; live gebruikersroute nog open');
+      row.visibleResult = delegatedWork.currentWork || delegatedWork.pendingSourceChange || delegatedWork.result || row.visibleResult;
+      row.works = row.visibleResult;
+      row.gap = delegatedWork.remaining || delegatedWork.next || row.gap;
+      row.historyNote = `Eerdere proef: ${finding.visibleResult}`;
+      row.detail = [finding.intendedOutcome, delegatedWork.lastActualResult].filter(Boolean).join(' ');
+      // Images and preparation checks never imply a proven live owner lifecycle.
+      for (const stage of ['built', 'tested', 'live']) {
+        if (typeof delegatedWork[stage] === 'boolean') row[stage] = delegatedWork[stage] ? 'yes' : 'no';
+      }
+      row.accepted = delegatedWork.ownerAccepted === true ? 'yes' : 'no';
+      row.stageLabels = { ...row.stageLabels,
+        tested: delegatedWork.tested === undefined ? 'Levenscyclus nog open' : (row.tested === 'yes' ? 'Getest' : 'Nog niet bewezen'),
+        live: row.live === 'yes' ? 'Gebruikersroute bewezen' : 'Gebruikersroute nog open',
+        accepted: row.accepted === 'yes' ? 'Geaccepteerd' : 'Nog open' };
+      row.stageNotes = { ...row.stageNotes, tested: delegatedWork.sourceChecks || row.stageNotes.tested,
+        live: delegatedWork.lastActualResult || row.stageNotes.live };
+      row.resultBasis = `Centrale AU-002-audit${delegatedWork.preparationRecordedAt ? ` · ${delegatedWork.preparationRecordedAt}` : ''}`;
+      if (delegatedWork.providerEvidencePath) row.evidence += ' · ' + delegatedWork.providerEvidencePath;
+    }
     return row;
   });
 }

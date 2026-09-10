@@ -22,3 +22,23 @@ board.audit.au008GeneralResearch20260910={status:'live',sourceCommit:'af9a049',r
 const research=make();applyReviewedCapabilities(research,board,audit);
 assert.match(research.capabilities.find(x=>x.id==='initiative').visibleResult,/Algemeen publiek onderzoek is live/);
 assert.equal(research.capabilities.find(x=>x.id==='initiative').accepted,'no');
+
+// Live images and successful preparation must not upgrade the owner lifecycle.
+board.audit.au002Delivery = {providerRepairCandidateImage:'candidate', liveImage:'old-live', pendingSourceChange:'Reparatie getest; kandidaat gereed', next:'Gewone chatroute beproeven', sourceChecks:'Gerichte tests geslaagd', ownerAccepted:false};
+const preparation=make();applyReviewedCapabilities(preparation,board,audit);
+const work=preparation.capabilities.find(x=>x.id==='projects');
+assert.match(work.userOutcomeStatus,/live gebruikersroute nog open/);
+assert.equal(work.visibleResult,'Reparatie getest; kandidaat gereed');
+assert.notEqual(work.live,'yes');
+assert.equal(work.accepted,'no');
+assert.match(work.historyNote,/mislukte/);
+board.audit.au002Delivery={...board.audit.au002Delivery,userOutcomeStatus:'Nieuwe voortgang uit bron',currentWork:'Bijgewerkt resultaat',remaining:'Nieuwe proef nodig',live:false,tested:true};
+const updatedWork=make();applyReviewedCapabilities(updatedWork,board,audit);
+const updated=updatedWork.capabilities.find(x=>x.id==='projects');
+assert.equal(updated.userOutcomeStatus,'Nieuwe voortgang uit bron');
+assert.equal(updated.visibleResult,'Bijgewerkt resultaat');
+assert.equal(updated.gap,'Nieuwe proef nodig');
+assert.equal(updated.live,'no');
+assert.equal(updated.tested,'yes');
+assert.equal(updated.accepted,'no');
+console.log('AU-002 audit updates, historical failure and lifecycle boundary: passed');
