@@ -1569,3 +1569,37 @@ def test_private_recall_cannot_hide_shared_observation_sources(hindsight_server,
             engine.recall_for_presence(_query())
     else:
         assert engine.recall_for_presence(_query()).confirmed_facts == ()
+
+
+@pytest.mark.parametrize(
+    "statuses,retries,succeeds",
+    [
+        (["failed", "pending", "completed"], 1, True),
+        (["failed", "failed"], 1, False),
+        (["pending", "failed"], 0, False),
+        (["cancelled"], 0, False),
+    ],
+)
+def test_retain_retries_only_preexisting_failure_once(
+    monkeypatch: pytest.MonkeyPatch, statuses: list[str], retries: int, succeeds: bool,
+) -> None:
+    from eva.adapters.projection.hindsight import HindsightProjectionError
+
+    engine = HindsightMemoryEngine(HindsightProjectionConfig("http://localhost:8888"))
+    remaining = iter(statuses)
+    calls = []
+
+    def request(method, path, *args, **kwargs):  # type: ignore[no-untyped-def]
+        calls.append((method, path))
+        if method == "POST":
+            assert path == "/v1/default/banks/bank/operations/op/retry"
+            return 200, {"success": True, "operation_id": "op"}
+        return 200, {"operation_id": "op", "status": next(remaining)}
+
+    monkeypatch.setattr(engine, "_request", request)
+    if succeeds:
+        engine._wait_for_operation("bank", "op", retry_existing_failure=True)
+    else:
+        with pytest.raises(HindsightProjectionError, match="ended as"):
+            engine._wait_for_operation("bank", "op", retry_existing_failure=True)
+    assert sum(method == "POST" for method, _ in calls) == retries

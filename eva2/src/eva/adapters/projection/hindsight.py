@@ -950,7 +950,7 @@ class HindsightMemoryEngine:
             raise HindsightProjectionProtocolError(
                 "Hindsight did not acknowledge exactly one memory document"
         )
-        self._wait_for_operation(bank_id, operation_id)
+        self._wait_for_operation(bank_id, operation_id, retry_existing_failure=True)
         with self._cache_lock:
             # A completed retain may correct a previously recalled preference.
             # Drop this audience's old snapshot and fence any earlier read still
@@ -1006,8 +1006,11 @@ class HindsightMemoryEngine:
                 self._fast_presence_generation += 1
                 self._fast_presence_cache.clear()
 
-    def _wait_for_operation(self, bank_id: str, operation_id: str) -> None:
+    def _wait_for_operation(
+        self, bank_id: str, operation_id: str, *, retry_existing_failure: bool = False
+    ) -> None:
         deadline = time.monotonic() + self._config.timeout_seconds
+        first_poll = True
         while True:
             _, response = self._request(
                 "GET",
@@ -1020,6 +1023,25 @@ class HindsightMemoryEngine:
             status = response.get("status")
             if status == "completed":
                 return
+            if status == "failed" and first_poll and retry_existing_failure:
+                # Reposting an idempotent retain only replays its failed operation.
+                # Resume that exact operation once; never revive cancellations or
+                # restart work already observed pending/processing in this attempt.
+                retry_status, retry = self._request(
+                    "POST",
+                    f"/v1/default/banks/{bank_id}/operations/{operation_id}/retry",
+                    allowed_statuses=frozenset({409}),
+                )
+                if retry_status != 409 and (
+                    retry.get("success") is not True
+                    or retry.get("operation_id") != operation_id
+                ):
+                    raise HindsightProjectionProtocolError(
+                        "Hindsight did not acknowledge the exact operation retry"
+                    )
+                first_poll = False
+                continue
+            first_poll = False
             if status in {"cancelled", "failed"}:
                 raise HindsightProjectionError(
                     f"Hindsight retain operation ended as {status}"

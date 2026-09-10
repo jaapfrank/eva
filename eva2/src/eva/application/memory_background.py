@@ -464,7 +464,8 @@ class SemanticMemoryColdPathWorker:
                         self._retry_delay_seconds
                     ):
                         self._queue.put_nowait(
-                            _RetainJob(job.document, durable_job=state)
+                            # begin() reloads the persisted checkpoint from the job.
+                            active_job
                         )
                 elif job.attempt < 3 and not self._stop.wait(self._retry_delay_seconds):
                     self._queue.put_nowait(_RetainJob(job.document, job.attempt + 1))

@@ -201,7 +201,7 @@ services:
       HINDSIGHT_API_DATABASE_URL_FILE: /run/secrets/hindsight_database_dsn
       HINDSIGHT_ENABLE_CP: "false"
       HINDSIGHT_API_LLM_PROVIDER: openai-codex
-      HINDSIGHT_API_LLM_MODEL: gpt-5.4-mini
+      HINDSIGHT_API_LLM_MODEL: gpt-5.6-luna
       HINDSIGHT_API_LLM_REASONING_EFFORT: low
       # Provider connectivity is checked by an explicit bounded operation after
       # readiness. Do not let Hindsight's upstream five-minute verification

@@ -34,7 +34,7 @@ services:
     environment:
       HINDSIGHT_ENABLE_CP: "false"
       HINDSIGHT_API_LLM_PROVIDER: openai-codex
-      HINDSIGHT_API_LLM_MODEL: gpt-5.4-mini
+      HINDSIGHT_API_LLM_MODEL: gpt-5.6-luna
       HINDSIGHT_API_LLM_REASONING_EFFORT: low
       # The bundled local BGE-small model is English-only and missed Dutch
       # corrections on the low-latency recall path. Reuse the same read-only,

@@ -854,3 +854,75 @@ def test_durable_pending_job_is_rehydrated_on_worker_start() -> None:
     assert retained.wait(1)
     assert succeeded.wait(1)
     worker.stop()
+
+
+@pytest.mark.parametrize("failures", [1, 9])
+def test_durable_retain_retries_with_job_and_preserves_attempt_limit(failures: int) -> None:
+    from eva.adapters.postgres.memory_outbox import (
+        DurableMemoryRetentionJob,
+        PostgresMemoryOutbox,
+    )
+    from eva.adapters.postgres.operational_timeline import CheckpointState
+
+    document = _document()
+    finished = Event()
+    attempts = 0
+    state = CheckpointState(
+        thread_id="memory-retain:test", checkpoint_id="queued", operation_id=None,
+        phase="memory_queued", status="active", retry_count=0,
+        last_error_fingerprint=None, deadline=None, revision=1,
+        updated_at=datetime.now(UTC),
+    )
+
+    class Timeline:
+        def load(self, thread_id):  # type: ignore[no-untyped-def]
+            assert thread_id == state.thread_id
+            return state
+
+        def transition(self, **fields):  # type: ignore[no-untyped-def]
+            nonlocal state
+            assert fields["expected_revision"] == state.revision
+            state = replace(
+                state, checkpoint_id=fields["checkpoint_id"],
+                phase=fields["phase"], status=fields["status"],
+                retry_count=fields["retry_count"], revision=state.revision + 1,
+                last_error_fingerprint=fields.get("last_error_fingerprint"),
+            )
+            if state.status in {"completed", "needs_help"}:
+                finished.set()
+            return state
+
+    class Outbox(PostgresMemoryOutbox):
+        def __init__(self) -> None:
+            self._timeline = Timeline()  # type: ignore[assignment]
+            self.loaded = False
+
+        def pending(self, *, limit=256):  # type: ignore[no-untyped-def]
+            if self.loaded:
+                return ()
+            self.loaded = True
+            return (DurableMemoryRetentionJob(document, state),)
+
+    class Memory:
+        def retain_conversation(self, submitted):  # type: ignore[no-untyped-def]
+            nonlocal attempts
+            assert submitted == document
+            attempts += 1
+            if attempts <= failures:
+                raise RuntimeError("temporary provider failure")
+            return MemoryRetentionReceipt(
+                bank_id="bank", document_id=document.document_id,
+                content_sha256=hashlib.sha256(document.content.encode()).hexdigest(),
+            )
+
+    worker = HindsightColdPathWorker(
+        Memory(), outbox=Outbox(), idle_seconds=60, retry_delay_seconds=0.01,
+    )
+    worker.start()
+    try:
+        assert finished.wait(2), worker.last_error
+    finally:
+        worker.stop()
+    assert attempts == min(failures + 1, 3)
+    assert state.retry_count == attempts
+    assert state.status == ("completed" if failures == 1 else "needs_help")
