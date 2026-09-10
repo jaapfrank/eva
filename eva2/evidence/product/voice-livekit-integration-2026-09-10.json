@@ -14,6 +14,10 @@
     },
     "livekit_bridge_regressions": {
       "passed": 8
+    },
+    "rebased_current_core": {
+      "passed": 42,
+      "base_image": "sha256:35fdc82c8d041a58d9da8be1fdf59d60844e8499a37e7fbd1ad6a261491b515e"
     }
   },
   "real_file_task": {
@@ -415,5 +419,151 @@
       "first_stt_prefix_clipped": true,
       "natural_conversation_latency_accepted": false
     }
+  },
+  "audio_barge_in_after_aec_fix": {
+    "synthetic_audio_input": true,
+    "physical_microphone_test": false,
+    "raw_audio_saved": false,
+    "input_end_ms": 7725,
+    "correction_start_ms": 34422,
+    "correction_end_ms": 38743,
+    "first_output_speech_ms": 33721,
+    "agent_states": [
+      {
+        "type": "user_voice_state",
+        "state": "speaking",
+        "at_ms": 3927
+      },
+      {
+        "type": "user_voice_state",
+        "state": "listening",
+        "at_ms": 7476
+      },
+      {
+        "type": "voice_state",
+        "state": "thinking",
+        "at_ms": 8467
+      },
+      {
+        "type": "work_started",
+        "message_id": "8be65986-5e01-5276-90cb-7eb031bbf5d0",
+        "text": "Leg in 6 zinnen uit hoe een regenboog ontstaat.",
+        "at_ms": 8493
+      },
+      {
+        "type": "voice_state",
+        "state": "listening",
+        "at_ms": 8522
+      },
+      {
+        "type": "work_finished",
+        "message_id": "8be65986-5e01-5276-90cb-7eb031bbf5d0",
+        "text": "Een regenboog ontstaat wanneer zonlicht op waterdruppels in de lucht valt. Als het licht een druppel binnengaat, verandert het van richting: dat heet breking. Daarbij splitst het witte zonlicht zich in kleuren, doordat elke kleur net anders wordt afgebogen. Binnen in de druppel wordt een deel van het licht teruggekaatst. Bij het verlaten van de druppel wordt dat licht opnieuw gebroken, waardoor de kleuren gescheiden naar je ogen komen. Met de zon achter je en de regendruppels voor je zie je zo een gekleurde boog, met rood aan de buitenkant en violet aan de binnenkant.",
+        "at_ms": 33334
+      },
+      {
+        "type": "voice_state",
+        "state": "speaking",
+        "at_ms": 33502
+      },
+      {
+        "type": "user_voice_state",
+        "state": "speaking",
+        "at_ms": 34876
+      },
+      {
+        "type": "voice_state",
+        "state": "listening",
+        "at_ms": 34879
+      },
+      {
+        "type": "user_voice_state",
+        "state": "listening",
+        "at_ms": 38527
+      },
+      {
+        "type": "voice_state",
+        "state": "thinking",
+        "at_ms": 39539
+      },
+      {
+        "type": "work_started",
+        "message_id": "c832f52a-0834-5b31-8b05-8f8999e91bc3",
+        "text": "Wacht, ik bedoel, leg het uit in één korte zin.",
+        "at_ms": 39568
+      },
+      {
+        "type": "voice_state",
+        "state": "listening",
+        "at_ms": 39591
+      },
+      {
+        "type": "voice_state",
+        "state": "thinking",
+        "at_ms": 39608
+      },
+      {
+        "type": "voice_state",
+        "state": "listening",
+        "at_ms": 39617
+      },
+      {
+        "type": "work_finished",
+        "message_id": "c832f52a-0834-5b31-8b05-8f8999e91bc3",
+        "text": "Een regenboog ontstaat doordat waterdruppels zonlicht breken, terugkaatsen en in kleuren splitsen.",
+        "at_ms": 50565
+      },
+      {
+        "type": "voice_state",
+        "state": "speaking",
+        "at_ms": 50974
+      }
+    ],
+    "transcripts": [
+      {
+        "participant": "owner",
+        "text": "Leg in 6 zinnen uit hoe een regenboog ontstaat.",
+        "at_ms": 8508
+      },
+      {
+        "participant": "eva",
+        "text": "Een regenboog ontstaat wanneer",
+        "at_ms": 39531
+      },
+      {
+        "participant": "owner",
+        "text": "Wacht, ik bedoel, leg het uit in één korte zin.",
+        "at_ms": 39567
+      },
+      {
+        "participant": "eva",
+        "text": "Een regenboog ontstaat doordat waterdruppels zonlicht breken, terugkaatsen en in kleuren splitsen.",
+        "at_ms": 56850
+      }
+    ],
+    "elapsed_ms": 58023,
+    "assessment": {
+      "prefix_preserved": true,
+      "old_tail_resumed": false,
+      "correction_start_to_listening_ms": 457,
+      "initial_input_end_to_first_audio_ms": 25996,
+      "physical_microphone_test": false,
+      "natural_latency_accepted": false
+    },
+    "raw_evidence_sha256": "8a18e119a78690be24f6044743b0dc154d3a48813dd53452ed72c8c62371d4bb"
+  },
+  "media_scan": {
+    "image": "sha256:c346c12158504cf74884cbc93166c8efc3eeba41bdc98fe49fc65e8977690f87",
+    "high": 0,
+    "critical": 0,
+    "database_updated_at": "2026-09-10T13:49:36.447576998Z",
+    "report_sha256": "f1a9c7a9f9049326aece657974e0d6e9448c170d32af35d316e3bd8df1aca494",
+    "copied_runtime_components": [
+      "libffi8",
+      "zlib1g",
+      "dash"
+    ],
+    "runtime_components_source": "python@sha256:09f7da3bc104798d0afb40bc08d23ab2da20a76130cec1f2ef170848f5d85217",
+    "copied_components_high_critical_in_source_scan": 0
   }
 }

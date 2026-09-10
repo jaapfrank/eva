@@ -40,10 +40,11 @@ blijven open; geen nieuwe stemervaring live of geaccepteerd.
 Echte bestandsopdracht, brononderzoek tijdens doorpraten en een stopopdracht zijn
 getoetst via dezelfde Eva-kern. De synthetische audioproef bevestigt nu onderbreken
 zonder hervatting van oude zinnen en daarna de gecorrigeerde korte reactie.
-Nog te verbeteren: eerste antwoord circa 35 seconden en verlies van de aanhef bij
-de correctie in deze proef. De losse HA-spraakherkenning behoudt diezelfde aanhef;
-de resterende diagnose ligt in de sessieketen. Installatieverpakking en actuele
-pakketscan lopen; fysieke microfoonproef en Jaaps beoordeling staan open.
+De gevonden LiveKit-opwarmblokkade van drie seconden is verholpen: de herproef
+behoudt de volledige correctie en onderbreekt zonder oude staart. De kernwachttijd
+blijft nog te verbeteren (korte losse antwoorden 11–13 seconden in deze meting).
+Minimale media-installatie: actuele scan zonder HIGH/CRITICAL. Fysieke
+microfoon-/echoproef, uitrol en Jaaps beoordeling staan open.
 [Meetbewijs](evidence/product/voice-livekit-integration-2026-09-10.json).
 
 ## Nu
