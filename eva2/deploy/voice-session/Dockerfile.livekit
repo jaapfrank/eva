@@ -1,0 +1,5 @@
+FROM gcr.io/distroless/cc-debian13@sha256:9b615fff20e1a4fad29c2b30562580b212c7dd5e2225236735cca0070ed11c78
+COPY deploy/voice-session/vendor/livekit-server /usr/local/bin/livekit-server
+USER 65532:65532
+ENTRYPOINT ["/usr/local/bin/livekit-server"]
+CMD ["--config", "/run/eva/livekit.yaml"]

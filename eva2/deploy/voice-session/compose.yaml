@@ -1,0 +1,30 @@
+services:
+  livekit:
+    image: ${EVA_LIVEKIT_IMAGE:?pin a verified local image digest}
+    network_mode: host
+    user: "65532:65532"
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    restart: unless-stopped
+    tmpfs: [/tmp]
+    volumes:
+      - ${EVA_VOICE_STATE:?}/livekit.yaml:/run/eva/livekit.yaml:ro
+  media:
+    image: ${EVA_VOICE_MEDIA_IMAGE:?pin a verified local image digest}
+    network_mode: host
+    user: "65532:65532"
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    restart: unless-stopped
+    tmpfs: [/tmp]
+    environment:
+      EVA_VOICE_CONFIG: /run/eva/config.json
+    volumes:
+      - ${EVA_VOICE_STATE:?}/media-config.json:/run/eva/config.json:ro
+      - ${EVA_VOICE_STATE:?}/livekit-secret:/run/secrets/livekit-secret:ro
+      - ${EVA_VOICE_STATE:?}/policy:/run/eva/voice:ro
+      - ${EVA_VOICE_CORE_SLOT_DIRECTORY:?}/identity:/run/identity:ro
+      - ${EVA_VOICE_CORE_SLOT_DIRECTORY:?}/secrets/dashboard-token:/run/secrets/owner-token:ro
+      - ${EVA_VOICE_CORE_SLOT_DIRECTORY:?}/secrets/home-assistant-token:/run/secrets/home-assistant-token:ro

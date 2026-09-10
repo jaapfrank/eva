@@ -1,0 +1,419 @@
+{
+  "contract": "EvaVoiceIntegrationEvidence/v1",
+  "status": "in_progress",
+  "source_commit": "af7f65265a9a514083ea3a095edad772c586cb63",
+  "owner_acceptance": false,
+  "physical_microphone_test": false,
+  "checks": {
+    "core_voice_regressions": {
+      "passed": 146
+    },
+    "existing_research_regressions": {
+      "passed": 16,
+      "deselected": 67
+    },
+    "livekit_bridge_regressions": {
+      "passed": 8
+    }
+  },
+  "real_file_task": {
+    "session_id": "668dc9b5-8789-459a-8904-ab93b702f278",
+    "overlapping_at_second_input": true,
+    "events": [
+      {
+        "type": "work_started",
+        "message_id": "32fd85ae-9c99-4fbb-a5a7-9f45e38ce435",
+        "text": "Dit is een technische proef. Schrijf in je werkmap het bestand voice-livekit-bestandsproef-20260910.md met exact deze tekst: De echte voiceketen schrijft dit bestand via Eva. Lees het opgeslagen bestand daarna terug om het resultaat te controleren en vertel of het klopt.",
+        "at_ms": 368
+      },
+      {
+        "type": "action_started",
+        "name": "save_workspace_document",
+        "message_id": "32fd85ae-9c99-4fbb-a5a7-9f45e38ce435",
+        "at_ms": 21653
+      },
+      {
+        "type": "work_started",
+        "message_id": "72da966f-18e2-4ca7-ab72-a0feca392623",
+        "text": "Terwijl je daaraan werkt: hoeveel is zeventien keer negen?",
+        "at_ms": 21785
+      },
+      {
+        "type": "action_finished",
+        "name": "save_workspace_document",
+        "status": "verified",
+        "message_id": "32fd85ae-9c99-4fbb-a5a7-9f45e38ce435",
+        "at_ms": 21936
+      },
+      {
+        "type": "action_started",
+        "name": "read_workspace_document",
+        "message_id": "32fd85ae-9c99-4fbb-a5a7-9f45e38ce435",
+        "at_ms": 29993
+      },
+      {
+        "type": "action_finished",
+        "name": "read_workspace_document",
+        "status": "verified",
+        "message_id": "32fd85ae-9c99-4fbb-a5a7-9f45e38ce435",
+        "at_ms": 30483
+      },
+      {
+        "type": "work_finished",
+        "message_id": "32fd85ae-9c99-4fbb-a5a7-9f45e38ce435",
+        "text": "Het bestand is opgeslagen en teruggelezen. De inhoud klopt exact: De echte voiceketen schrijft dit bestand via Eva.",
+        "at_ms": 34290
+      },
+      {
+        "type": "work_finished",
+        "message_id": "72da966f-18e2-4ca7-ab72-a0feca392623",
+        "text": "Zeventien keer negen is 153.",
+        "at_ms": 37884
+      }
+    ],
+    "spoken": [
+      {
+        "text": "Het bestand is opgeslagen en teruggelezen. ",
+        "at_ms": 33427
+      },
+      {
+        "text": "De inhoud klopt exact: De echte voiceketen schrijft dit bestand via Eva. ",
+        "at_ms": 34297
+      },
+      {
+        "text": "Zeventien keer negen is 153. ",
+        "at_ms": 37890
+      }
+    ],
+    "active_at_end": {},
+    "elapsed_ms": 37895,
+    "physical_audio_test": false
+  },
+  "real_research_task": {
+    "session_id": "33a23e14-fb81-42dd-a075-f896cdbeb0f6",
+    "overlapping_at_second_input": true,
+    "events": [
+      {
+        "type": "work_started",
+        "message_id": "dfaa100f-4df0-4a05-8502-39dc8003bb05",
+        "text": "Dit is een technische proef. Zoek op de officiële websites de huidige stabiele releases van https://github.com/livekit/agents en https://github.com/pipecat-ai/pipecat (behoud deze officiële URLs bij de onderzoeksopties). Schrijf in je werkmap het bestand voice-livekit-proef-20260910.md met beide versies, twee bronlinks en kort wat je hebt gecontroleerd. Lees het opgeslagen bestand terug om het resultaat te controleren.",
+        "at_ms": 292
+      },
+      {
+        "type": "action_started",
+        "name": "research_current_options",
+        "message_id": "dfaa100f-4df0-4a05-8502-39dc8003bb05",
+        "at_ms": 29455
+      },
+      {
+        "type": "work_started",
+        "message_id": "00012a24-3f17-4761-986a-f4c9d21996c0",
+        "text": "Terwijl je daaraan werkt: hoeveel is zeventien keer negen?",
+        "at_ms": 29585
+      },
+      {
+        "type": "work_finished",
+        "message_id": "00012a24-3f17-4761-986a-f4c9d21996c0",
+        "text": "Zeventien keer negen is 153.",
+        "at_ms": 45268
+      },
+      {
+        "type": "action_finished",
+        "name": "research_current_options",
+        "status": "verified",
+        "message_id": "dfaa100f-4df0-4a05-8502-39dc8003bb05",
+        "at_ms": 67595
+      },
+      {
+        "type": "action_started",
+        "name": "save_workspace_document",
+        "message_id": "dfaa100f-4df0-4a05-8502-39dc8003bb05",
+        "at_ms": 81682
+      },
+      {
+        "type": "action_finished",
+        "name": "save_workspace_document",
+        "status": "verified",
+        "message_id": "dfaa100f-4df0-4a05-8502-39dc8003bb05",
+        "at_ms": 81968
+      },
+      {
+        "type": "action_started",
+        "name": "read_workspace_document",
+        "message_id": "dfaa100f-4df0-4a05-8502-39dc8003bb05",
+        "at_ms": 87188
+      },
+      {
+        "type": "action_finished",
+        "name": "read_workspace_document",
+        "status": "verified",
+        "message_id": "dfaa100f-4df0-4a05-8502-39dc8003bb05",
+        "at_ms": 87392
+      },
+      {
+        "type": "work_finished",
+        "message_id": "dfaa100f-4df0-4a05-8502-39dc8003bb05",
+        "text": "Opgeslagen in /proof-state/voice-livekit-proef-20260910.md en teruggelezen: de inhoud klopt.\n\nVolgens de officiële GitHub-releasepagina’s zijn LiveKit Agents 1.8.0 en Pipecat 1.8.1 de huidige stabiele releases. Het bestand bevat beide officiële repository-URLs, twee bronlinks en kort de uitgevoerde controles en beperkingen.",
+        "at_ms": 93516
+      }
+    ],
+    "spoken": [
+      {
+        "text": "Zeventien keer negen is 153. ",
+        "at_ms": 45275
+      },
+      {
+        "text": "Opgeslagen in /proof-state/voice-livekit-proef-20260910. ",
+        "at_ms": 91110
+      },
+      {
+        "text": "md en teruggelezen: de inhoud klopt. ",
+        "at_ms": 91420
+      },
+      {
+        "text": "Volgens de officiële GitHub-releasepagina’s zijn LiveKit Agents 1.8. ",
+        "at_ms": 91952
+      },
+      {
+        "text": "0 en Pipecat 1.8. ",
+        "at_ms": 92217
+      },
+      {
+        "text": "1 de huidige stabiele releases. ",
+        "at_ms": 92436
+      },
+      {
+        "text": "Het bestand bevat beide officiële repository-URLs, twee bronlinks en kort de uitgevoerde controles en beperkingen. ",
+        "at_ms": 93525
+      }
+    ],
+    "active_at_end": {},
+    "elapsed_ms": 93640,
+    "physical_audio_test": false
+  },
+  "audio_roundtrip": {
+    "synthetic_audio_input": true,
+    "physical_microphone_test": false,
+    "raw_audio_saved": false,
+    "input_end_ms": 6813,
+    "first_output_audio_ms": 2420,
+    "output_audio_seconds": 22.68,
+    "transcripts": [
+      {
+        "participant": "owner",
+        "text": "Hoeveel is 17 keer 9?",
+        "at_ms": 7365
+      },
+      {
+        "participant": "eva",
+        "text": "17 keer 9 is 153. ",
+        "at_ms": 26373
+      }
+    ],
+    "passed": true
+  },
+  "limitations": [
+    "Audio roundtrip first_output_audio_ms included codec comfort noise and is not a speech latency measurement.",
+    "The first two barge-in scripts closed on the old interrupted transcript; they do not prove corrected-answer delivery.",
+    "No physical microphone or owner acceptance yet.",
+    "No phone or VoicePE natural-barge-in rollout yet."
+  ],
+  "independent_workspace_readbacks": [
+    {
+      "path": "voice-livekit-bestandsproef-20260910.md",
+      "sha256": "e7a73e4ed12f0cb8d9b37f565babcd6e89bb63c7d34ac62e15504aed743b8537",
+      "text": "De echte voiceketen schrijft dit bestand via Eva."
+    },
+    {
+      "path": "voice-livekit-proef-20260910.md",
+      "sha256": "3689adb49c1ae52437cf3f2f6d01b7c12a650b601021acf0f583543077978d51",
+      "text": "# Stabiele releases — technische voiceproef\n\nGecontroleerd op 10 september 2026.\n\n- LiveKit Agents: versie 1.8.0 (tag `livekit-agents@1.8.0`). Officiële repository: https://github.com/livekit/agents\n  Bron: https://github.com/livekit/agents/releases/latest\n- Pipecat: versie 1.8.1 (tag `v1.8.1`). Officiële repository: https://github.com/pipecat-ai/pipecat\n  Bron: https://github.com/pipecat-ai/pipecat/releases/latest\n\n## Controle\n\nDe officiële repositories, releaseoverzichten en `/releases/latest`-pagina's zijn geraadpleegd. Beide latest-routes verwezen naar de genoemde releases, die ook bovenaan de releaseoverzichten stonden. De openbare releasepagina's toonden Latest en een publicatiemelding, zonder Draft- of Pre-release-markering. Daarmee zijn dit volgens de zichtbare GitHub-releasestatus de nieuwste gepubliceerde stabiele releases.\n\nDe API-velden draft en prerelease zijn niet afzonderlijk gecontroleerd. Enkele dynamische paginaonderdelen gaven laadfouten; versietitels, Latest-labels en publicatiemeldingen waren leesbaar. De software is niet functioneel getest.\n"
+    }
+  ],
+  "real_stop_task": {
+    "session_id": "e680dc93-b50d-41b9-94df-797f6e57ff89",
+    "overlapping_at_second_input": true,
+    "events": [
+      {
+        "type": "work_started",
+        "message_id": "9d9760a0-d57a-5a2a-a1f5-acc2a3851c83",
+        "text": "Dit is een technische proef. Zoek op de officiële websites de huidige stabiele releases van https://github.com/livekit/agents en https://github.com/pipecat-ai/pipecat (behoud deze officiële URLs bij de onderzoeksopties). Schrijf in je werkmap het bestand voice-stop-proef-20260910.md met beide versies, twee bronlinks en kort wat je hebt gecontroleerd. Lees het opgeslagen bestand terug om het resultaat te controleren.",
+        "at_ms": 1974
+      },
+      {
+        "type": "action_started",
+        "name": "research_current_options",
+        "message_id": "9d9760a0-d57a-5a2a-a1f5-acc2a3851c83",
+        "at_ms": 32207
+      },
+      {
+        "type": "work_started",
+        "message_id": "d73359d1-32f0-5660-94dc-5dfaa1a74556",
+        "text": "Stop dit onderzoek nu en schrijf het bestand niet. Geef alleen kort aan of het stopverzoek is opgeslagen.",
+        "at_ms": 32347
+      },
+      {
+        "type": "task_stop_requested",
+        "message_id": "9d9760a0-d57a-5a2a-a1f5-acc2a3851c83",
+        "at_ms": 55231
+      },
+      {
+        "type": "work_finished",
+        "message_id": "d73359d1-32f0-5660-94dc-5dfaa1a74556",
+        "text": "Het stopverzoek is opgeslagen.",
+        "at_ms": 57950
+      },
+      {
+        "type": "action_finished",
+        "name": "research_current_options",
+        "status": "verified",
+        "message_id": "9d9760a0-d57a-5a2a-a1f5-acc2a3851c83",
+        "at_ms": 67293
+      }
+    ],
+    "spoken": [
+      {
+        "text": "Het stopverzoek is opgeslagen. ",
+        "at_ms": 57957
+      }
+    ],
+    "active_at_end": {},
+    "elapsed_ms": 67509,
+    "physical_audio_test": false,
+    "independent_stopped_file_exists": false,
+    "raw_evidence_sha256": "9c157d75ca1604ac334709b19596550e04f2f6819005eb142286bb639b861dc0"
+  },
+  "audio_barge_in": {
+    "synthetic_audio_input": true,
+    "physical_microphone_test": false,
+    "raw_audio_saved": false,
+    "input_end_ms": 9467,
+    "correction_start_ms": 45021,
+    "correction_end_ms": 49342,
+    "first_output_speech_ms": 44320,
+    "agent_states": [
+      {
+        "type": "user_voice_state",
+        "state": "speaking",
+        "at_ms": 5714
+      },
+      {
+        "type": "user_voice_state",
+        "state": "listening",
+        "at_ms": 9289
+      },
+      {
+        "type": "voice_state",
+        "state": "thinking",
+        "at_ms": 10429
+      },
+      {
+        "type": "work_started",
+        "message_id": "75ed6455-f4b6-51ea-9ba7-817f2fe90670",
+        "text": "Leg in 6 zinnen uit hoe een regenboog ontstaat.",
+        "at_ms": 10551
+      },
+      {
+        "type": "voice_state",
+        "state": "listening",
+        "at_ms": 10610
+      },
+      {
+        "type": "work_finished",
+        "message_id": "75ed6455-f4b6-51ea-9ba7-817f2fe90670",
+        "text": "Een regenboog ontstaat wanneer zonlicht op waterdruppels in de lucht valt. Bij het binnengaan van een druppel buigt het licht af, wat breking heet. Wit zonlicht bevat verschillende kleuren, die elk onder een iets andere hoek afbuigen. Het licht wordt aan de achterkant van de druppel teruggekaatst en buigt bij het verlaten opnieuw af. Zo komen de kleuren gescheiden bij je ogen aan, met rood aan de buitenkant van de boog en violet aan de binnenkant. Je ziet de regenboog wanneer de zon achter je staat en de regendruppels vóór je hangen.",
+        "at_ms": 43565
+      },
+      {
+        "type": "voice_state",
+        "state": "speaking",
+        "at_ms": 44095
+      },
+      {
+        "type": "user_voice_state",
+        "state": "speaking",
+        "at_ms": 45537
+      },
+      {
+        "type": "voice_state",
+        "state": "listening",
+        "at_ms": 47105
+      },
+      {
+        "type": "user_voice_state",
+        "state": "listening",
+        "at_ms": 49152
+      },
+      {
+        "type": "voice_state",
+        "state": "thinking",
+        "at_ms": 49871
+      },
+      {
+        "type": "work_started",
+        "message_id": "e8f32e92-0574-5fe3-be44-101e487f5b9a",
+        "text": "Het uit in één korte zin.",
+        "at_ms": 49893
+      },
+      {
+        "type": "voice_state",
+        "state": "listening",
+        "at_ms": 49912
+      },
+      {
+        "type": "voice_state",
+        "state": "thinking",
+        "at_ms": 49921
+      },
+      {
+        "type": "voice_state",
+        "state": "listening",
+        "at_ms": 49927
+      },
+      {
+        "type": "work_finished",
+        "message_id": "e8f32e92-0574-5fe3-be44-101e487f5b9a",
+        "text": "Een regenboog ontstaat doordat regendruppels zonlicht breken, weerkaatsen en in verschillende kleuren splitsen.",
+        "at_ms": 56913
+      },
+      {
+        "type": "voice_state",
+        "state": "speaking",
+        "at_ms": 57301
+      }
+    ],
+    "transcripts": [
+      {
+        "participant": "owner",
+        "text": "Leg in 6 zinnen uit hoe een regenboog ontstaat.",
+        "at_ms": 10445
+      },
+      {
+        "participant": "eva",
+        "text": "Een regenboog ontstaat wanneer zonlicht op waterdruppels",
+        "at_ms": 49860
+      },
+      {
+        "participant": "owner",
+        "text": "Het uit in één korte zin.",
+        "at_ms": 49898
+      },
+      {
+        "participant": "eva",
+        "text": "Een regenboog ontstaat doordat regendruppels zonlicht breken, weerkaatsen en in verschillende kleuren splitsen.",
+        "at_ms": 63830
+      }
+    ],
+    "elapsed_ms": 65013,
+    "raw_evidence_sha256": "f6b8fdf68cf473c20023185e64d8dc15e6d05df26c3688ff95266f0bac1df97a",
+    "assessment": {
+      "old_tail_resumed": false,
+      "corrected_final_transcribed": true,
+      "initial_input_end_to_first_speech_ms": 34853,
+      "correction_start_to_agent_listening_ms": 2084,
+      "physical_microphone_test": false,
+      "first_stt_prefix_clipped": true,
+      "natural_conversation_latency_accepted": false
+    }
+  }
+}

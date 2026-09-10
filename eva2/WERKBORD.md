@@ -21,15 +21,14 @@ review en gecontroleerde uitrol zijn vastgelegd in het
 Natuurlijk doorpraten tijdens werk en gewone spraakonderbreking zijn niet
 geaccepteerd: de huidige route blijft opeenvolgende vraag/antwoordbeurten gebruiken.
 [Begrensde diagnose en voorstel](design/product/voice-session-diagnosis-2026-09-10.md).
-GE-01 blijft geaccepteerd; geen nieuw projectgoal of brede voice-implementatie gestart.
+GE-01 blijft geaccepteerd. De onderstaande latere eigenaaropdracht hervat de voice-uitvoering.
 
 Het [OSS-onderzoek van 10 september](design/product/voice-oss-selection-2026-09-10.md)
 is afgerond onder Jaaps harde eis dat de volledige gespreksmechanismen al samen
 in een onderhouden applicatie zitten. Geen onderzochte applicatie is volledig
 gekwalificeerd. LiveKit 1.8.0: 19 bestaande upstreamtests geslaagd, zonder fysieke
 spraakproef. Pipecat heeft uitvoerbare asyncdemo's, maar de onderzochte taken zijn
-gesimuleerd en/of alleen via het scherm opgevolgd. Geen eigen gesprekssysteem,
-nieuwe dienst of runtimewijziging gestart. Telefoon/laptop gaat bij eventuele
+gesimuleerd en/of alleen via het scherm opgevolgd. Dit was de onderzoeksstatus vóór de latere uitvoeringsopdracht. Telefoon/laptop gaat bij eventuele
 vervolgverificatie voorop; HA is geen selectievoorwaarde. `openai_tts` 3.9.1 heeft
 gepubliceerde zinsstreaming, is hier niet geïnstalleerd en blijft ondersteunend.
 
@@ -38,6 +37,14 @@ Jaap heeft de uitvoering expliciet hervat: ontbreken van een complete OSS-app is
 geen stopvoorwaarde. [Actieve LiveKit-integratie](design/product/voice-livekit-delivery-2026-09-10.md)
 gebruikt de bestaande Eva-kern en providers. Laptop eerst, telefoon/huisapparaten
 blijven open; geen nieuwe stemervaring live of geaccepteerd.
+Echte bestandsopdracht, brononderzoek tijdens doorpraten en een stopopdracht zijn
+getoetst via dezelfde Eva-kern. De synthetische audioproef bevestigt nu onderbreken
+zonder hervatting van oude zinnen en daarna de gecorrigeerde korte reactie.
+Nog te verbeteren: eerste antwoord circa 35 seconden en verlies van de aanhef bij
+de correctie in deze proef. De losse HA-spraakherkenning behoudt diezelfde aanhef;
+de resterende diagnose ligt in de sessieketen. Installatieverpakking en actuele
+pakketscan lopen; fysieke microfoonproef en Jaaps beoordeling staan open.
+[Meetbewijs](evidence/product/voice-livekit-integration-2026-09-10.json).
 
 ## Nu
 

@@ -7,7 +7,7 @@ from typing import AsyncIterator, Callable
 from uuid import UUID, uuid4, uuid5
 
 import httpx
-from livekit.agents import Agent, RunContext, function_tool, llm, tokenize
+from livekit.agents import Agent, RunContext, function_tool, llm
 from livekit.agents.types import DEFAULT_API_CONNECT_OPTIONS
 
 class CoreClient:
@@ -37,9 +37,10 @@ class BridgeState:
         self.session_id = str(uuid4())
         self.dispatched: set[str] = set()
         self.message_users: dict[str, str] = {}
-        self.emitted: set[str] = set()
         self.active: dict[str, str] = {}
         self.suppressed: set[str] = set()
+        self.deliveries: dict[str, object] = {}
+        self.delivery_text: dict[str, str] = {}
         self.snapshots: dict[str, list[dict]] = {}
         self.results: dict[str, str] = {}
 
@@ -77,23 +78,33 @@ class EvaStream(llm.LLMStream):
                     arguments=json.dumps({"message_id": message_id, "text": user.text_content}),
                 )])))
             return
-        for item in self._chat_ctx.items:
-            if item.type != "function_call_output" or item.name != "eva_turn" or item.id in state.emitted:
-                continue
-            state.emitted.add(item.id)
-            try:
-                data = json.loads(item.output)
-            except (ValueError, TypeError):
-                continue
-            if (isinstance(data, dict) and data.get("type") == "speech"
-                    and data.get("message_id") not in state.suppressed):
-                self._event_ch.send_nowait(llm.ChatChunk(id=item.id, delta=llm.ChoiceDelta(
-                    role="assistant", content=data["text"] + " ")))
 
 class EvaAgent(Agent):
     def __init__(self, state: BridgeState):
         super().__init__(instructions="Eva's bestaande kern levert ieder inhoudelijk antwoord.", llm=EvaLLM(state))
         self.state = state
+
+    def deliver(self, session, message_id: str, text: str):
+        if message_id in self.state.suppressed:
+            return
+        self.state.delivery_text[message_id] = text
+        try:
+            self.state.deliveries[message_id] = session.say(text, allow_interruptions=True)
+        except RuntimeError:
+            self.state.notify({"type": "voice_delivery_failed", "message_id": message_id})
+
+    def replay_unheard(self, session):
+        # Native interruption cancels queued handles too. Restore only a result
+        # with no played text in its own handle, never the tail of a spoken reply.
+        for message_id, handle in list(self.state.deliveries.items()):
+            if (handle.interrupted and handle.done()
+                    and not any(item.type == "message" and item.role == "assistant"
+                                and item.text_content.strip() for item in handle.chat_items)
+                    and message_id not in self.state.suppressed):
+                self.deliver(session, message_id, self.state.delivery_text[message_id])
+
+    async def on_user_turn_completed(self, turn_ctx, new_message):
+        self.replay_unheard(self.session)
 
     @function_tool
     async def eva_turn(self, ctx: RunContext, message_id: str, text: str) -> str:
@@ -104,19 +115,11 @@ class EvaAgent(Agent):
             if user_id in state.dispatched:
                 return json.dumps({"type": "done", "message_id": message_id})
             state.dispatched.add(user_id)
-        # Native non-blocking tool semantics; this synthetic result produces no filler speech.
         active = [{"message_id": key, "text": value} for key, value in state.active.items()]
         state.active[message_id] = text
         state.notify({"type": "work_started", "message_id": message_id, "text": text})
         await ctx.update(json.dumps({"type": "running", "message_id": message_id}), template="{message}")
-        sentences = tokenize.basic.SentenceTokenizer(min_sentence_len=10, stream_context_len=1).stream()
         import asyncio
-        async def speak_sentences():
-            async for sentence in sentences:
-                if message_id not in state.suppressed:
-                    await ctx.update(json.dumps({"type": "speech", "message_id": message_id, "text": sentence.token}), template="{message}")
-        speech = asyncio.create_task(speak_sentences())
-        accumulated = ""
         final_seen = False
         try:
             async for event in state.backend.events({
@@ -127,11 +130,15 @@ class EvaAgent(Agent):
             }):
                 kind = event.get("type")
                 if kind == "delta":
-                    accumulated += event["text"]
-                    sentences.push_text(event["text"])
-                elif kind == "task_stop_requested":
+                    # Speak one confirmed answer through one native speech handle.
+                    # This avoids separate sentence updates restarting after barge-in.
+                    continue
+                if kind == "task_stop_requested":
                     target = event["message_id"].rsplit(":", 1)[-1]
                     state.suppressed.add(target)
+                    handle = state.deliveries.get(target)
+                    if handle is not None:
+                        handle.interrupt()
                     state.notify({"type": kind, "message_id": target})
                 elif kind == "final":
                     final_seen = True
@@ -139,16 +146,7 @@ class EvaAgent(Agent):
                     state.results[message_id] = final
                     if message_id not in state.suppressed:
                         state.notify({"type": "work_finished", "message_id": message_id, "text": final})
-                    if not accumulated:
-                        sentences.push_text(final)
-                    elif final.startswith(accumulated):
-                        sentences.push_text(final[len(accumulated):])
-                    else:
-                        # The authoritative final replaces an inconsistent draft.
-                        speech.cancel()
-                        await asyncio.gather(speech, return_exceptions=True)
-                        if message_id not in state.suppressed:
-                            await ctx.update(json.dumps({"type": "speech", "message_id": message_id, "text": final}), template="{message}")
+                        self.deliver(ctx.session, message_id, final)
                 elif kind == "error":
                     raise RuntimeError("core response failed")
                 else:
@@ -157,18 +155,12 @@ class EvaAgent(Agent):
                 raise RuntimeError("core stream ended before its final result")
         except asyncio.CancelledError:
             # Session closure stops delivery; core retains admitted work and effects.
-            speech.cancel()
             raise
         except Exception:
-            speech.cancel()
-            await asyncio.gather(speech, return_exceptions=True)
             if message_id not in state.suppressed:
                 state.notify({"type": "work_failed", "message_id": message_id})
-                await ctx.update(json.dumps({"type": "speech", "message_id": message_id,
-                                  "text": "Het antwoord is niet bevestigd. Controleer de taak voordat je haar opnieuw start."}), template="{message}")
+                self.deliver(ctx.session, message_id,
+                             "Het antwoord is niet bevestigd. Controleer de taak voordat je haar opnieuw start.")
         finally:
-            sentences.end_input()
-            await asyncio.gather(speech, return_exceptions=True)
-            await sentences.aclose()
             state.active.pop(message_id, None)
         return json.dumps({"type": "done", "message_id": message_id})

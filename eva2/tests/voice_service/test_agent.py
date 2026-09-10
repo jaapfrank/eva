@@ -3,6 +3,13 @@ import pytest
 from livekit.agents import AgentSession
 from eva.voice_service.agent import BridgeState, EvaAgent
 
+class SpeechCapture:
+    def __init__(self): self.spoken = []
+    def say(self, text, **kwargs):
+        from types import SimpleNamespace
+        self.spoken.append(text)
+        return SimpleNamespace(interrupted=False, done=lambda: True, chat_items=[])
+
 class Backend:
     def __init__(self):
         self.release = asyncio.Event()
@@ -61,10 +68,12 @@ async def test_pending_draft_is_discarded_on_error_or_changed_final(ending):
                 yield {"type": "final", "reply": {"text": "Het bestand is niet gewijzigd."}}
     updates = []
     class Context:
+        session = SpeechCapture()
         async def update(self, value, **kwargs): updates.append(json.loads(value))
     state = BridgeState(PartialBackend())
-    await EvaAgent(state).eva_turn(Context(), "test-message", "Test")
-    speech = [item["text"] for item in updates if item["type"] == "speech"]
+    ctx = Context()
+    await EvaAgent(state).eva_turn(ctx, "test-message", "Test")
+    speech = ctx.session.spoken
     assert len(speech) == 1, speech
     assert "definitief gewijzigd" not in speech[0]
     assert speech[0].startswith("Het antwoord is niet bevestigd" if ending == "error" else "Het bestand is niet gewijzigd.")
@@ -81,9 +90,12 @@ async def test_stopped_work_keeps_stop_status_when_backend_terminates():
             yield {"type": "error"}
     updates, events = [], []
     class Context:
+        session = SpeechCapture()
         async def update(self, value, **kwargs): updates.append(json.loads(value))
     state = BridgeState(StoppedBackend(), events.append)
-    await EvaAgent(state).eva_turn(Context(), "target", "Test")
+    ctx = Context()
+    await EvaAgent(state).eva_turn(ctx, "target", "Test")
+    assert not ctx.session.spoken
     assert events[-1] == {"type": "task_stop_requested", "message_id": "target"}
     assert not any(item["type"] == "speech" for item in updates)
     assert not state.active
@@ -109,6 +121,7 @@ async def test_cancelled_generation_does_not_consume_user_before_tool_admission(
     assert len(calls) == 2
     assert calls[0].arguments == calls[1].arguments
     class Context:
+        session = SpeechCapture()
         async def update(self, value, **kwargs): pass
     agent = EvaAgent(state)
     arguments = json.loads(calls[0].arguments)
@@ -116,3 +129,25 @@ async def test_cancelled_generation_does_not_consume_user_before_tool_admission(
     await agent.eva_turn(Context(), **arguments)
     assert len(backend.calls) == 1
     assert state.dispatched
+
+
+@pytest.mark.asyncio
+async def test_barge_in_drops_spoken_tail_and_replays_only_unheard_queued_result():
+    from types import SimpleNamespace
+    from livekit.agents import llm
+    state = BridgeState(Backend())
+    agent = EvaAgent(state)
+    session = SpeechCapture()
+    agent.deliver(session, "first", "De lange eerste uitleg.")
+    agent.deliver(session, "second", "Het andere onderzoek is klaar.")
+    state.active["still-running"] = "Nog een onderzoek"
+    state.deliveries["first"] = SimpleNamespace(interrupted=True, done=lambda: True,
+        chat_items=[llm.ChatMessage(role="assistant", content=["De lange"], interrupted=True)])
+    state.deliveries["second"] = SimpleNamespace(interrupted=True, done=lambda: True, chat_items=[])
+    agent.replay_unheard(session)
+    assert session.spoken == ["De lange eerste uitleg.", "Het andere onderzoek is klaar.",
+                              "Het andere onderzoek is klaar."]
+    assert state.active == {"still-running": "Nog een onderzoek"}
+    assert not state.suppressed
+    agent.replay_unheard(session)
+    assert len(session.spoken) == 3
