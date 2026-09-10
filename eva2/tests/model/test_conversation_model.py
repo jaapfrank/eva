@@ -2536,9 +2536,11 @@ def test_sensory_model_parses_only_bounded_own_initiative(monkeypatch, tmp_path,
             model.evaluate_sensory_event(event, identity, _memory())
     else:
         history = ({"title": "Old request", "question": "Already handled", "phase": "personal_stopped"},)
-        result = model.evaluate_sensory_event(event, identity, _memory(), initiative_history=history)
+        result = model.evaluate_sensory_event(event, identity, _memory(), initiative_history=history,
+            initiative_capabilities=("read_home_assistant_inventory", "save_workspace_document"))
         import json
         assert json.loads(observed[0]["input"][0]["content"])["prior_private_initiatives"] == list(history)
+        assert json.loads(observed[0]["input"][0]["content"])["available_native_actions"] == ["read_home_assistant_inventory", "save_workspace_document"]
         assert result.initiative == (None if proposal is None else PersonalInitiativeProposal(**proposal))
         assert result.disposition == "silence" and result.expression is None
         assert result.usage.input_tokens == 100
