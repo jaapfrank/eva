@@ -61,3 +61,54 @@ async def open_livekit_service(config, *, authority):
             except asyncio.CancelledError: cancelled=True
         await owned
         if cancelled: raise asyncio.CancelledError
+
+
+
+def load_media_authority(*, policy_file, token_file, identity_file):
+    """Reuse current household policy checking without starting a core runtime.
+
+    The private policy pins the canonical IdentityPack hash. The core verifies
+    its signed identity independently at readiness and every admitted turn.
+    """
+    from datetime import datetime, UTC
+    from eva.bootstrap.household_voice import HouseholdVoiceAuthority, _read_policy
+    from eva.adapters.credentials.runtime_files import read_private_runtime_file_bytes
+    from eva.contracts.identity import IdentityPack
+    def identity():
+        return IdentityPack.model_validate_json(read_private_runtime_file_bytes(
+            str(identity_file),setting_name="speaker_identity_file"))
+    token=read_private_runtime_file_bytes(str(token_file),setting_name="speaker_household_token").decode().strip()
+    policy=_read_policy(str(policy_file))
+    authority=HouseholdVoiceAuthority(path=str(policy_file),token_path=str(token_file),
+        policy=policy,token=token,identity_loader=identity,clock=lambda:datetime.now(UTC))
+    authority.validate_current()
+    return authority
+
+
+async def main(args):
+    import signal
+    from speaker_service import ServiceConfig
+    config=ServiceConfig.load(args.config)
+    authority=load_media_authority(policy_file=args.policy,token_file=args.household_token,
+                                   identity_file=args.identity)
+    stop=asyncio.Event()
+    loop=asyncio.get_running_loop()
+    for kind in (signal.SIGTERM,signal.SIGINT):loop.add_signal_handler(kind,stop.set)
+    try:
+        async with open_livekit_service(config,authority=authority):
+            print('{"state":"listening","transport":"household-livekit"}',flush=True)
+            await stop.wait()
+    finally:
+        for kind in (signal.SIGTERM,signal.SIGINT):loop.remove_signal_handler(kind)
+
+
+if __name__=="__main__":
+    import argparse
+    from pathlib import Path
+    parser=argparse.ArgumentParser(description=__doc__)
+    for name in ("config","policy","household-token","identity"):
+        parser.add_argument("--"+name,required=True,type=Path)
+    try:asyncio.run(main(parser.parse_args()))
+    except Exception:
+        print('{"state":"failed","detail":"Household speaker configuration or transport unavailable"}',flush=True)
+        raise SystemExit(1) from None

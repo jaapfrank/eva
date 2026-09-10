@@ -107,3 +107,29 @@ async def test_service_rejects_unbound_authority_before_tls_or_network(fault, mo
     with pytest.raises(ValueError):
         async with service.open_livekit_service(config,authority=authority):
             raise AssertionError("Unbound service started")
+
+
+
+def test_media_authority_reuses_pinned_identity_and_detects_file_rotation(tmp_path):
+    import hashlib,json
+    from eva.contracts.canonical_json import canonical_sha256
+    from eva.contracts.identity import IdentityPack
+    from speaker_livekit_service import load_media_authority
+    identity_path=tmp_path/"identity.json"
+    identity_path.write_bytes((Path(__file__).parents[2]/"src/eva/application/default_identity_pack.json").read_bytes())
+    identity=IdentityPack.model_validate_json(identity_path.read_bytes())
+    token_path=tmp_path/"token";token_path.write_text("synthetic-household-key")
+    policy_path=tmp_path/"policy.json"
+    policy_path.write_text(json.dumps(dict(contract="HouseholdVoicePolicy/v1",schema_version=1,
+        policy_id="home-voice",policy_version=1,state="enabled",tenant_id="tenant",installation_id="installation",
+        owner_principal_id="00000000-0000-0000-0000-000000000001",
+        principal_binding_id="00000000-0000-0000-0000-000000000002",
+        identity_sha256=canonical_sha256(identity.model_dump(mode="json")),
+        token_sha256=hashlib.sha256(token_path.read_bytes()).hexdigest(),household_id="home",
+        consent_operation_id="household-consent:owner-1",devices={"assist_satellite.room":"a"*32},
+        effective_at="2026-01-01T00:00:00Z",expires_at="2099-01-01T00:00:00Z")))
+    for path in (identity_path,token_path,policy_path):path.chmod(0o600)
+    authority=load_media_authority(policy_file=policy_path,token_file=token_path,identity_file=identity_path)
+    authority.validate_current()
+    token_path.write_text("different-key")
+    with pytest.raises(ValueError):authority.validate_current()

@@ -38,6 +38,8 @@ def native_client_class():
     name = "eva_native_speaker_http_client"
     if name not in sys.modules:
         path = HERE.parents[1] / "deploy/home-assistant/custom_components/eva2_voice/client.py"
+        if not path.is_file() and HERE == Path("/app/speaker"):
+            path = Path("/app/deploy/home-assistant/custom_components/eva2_voice/client.py")
         spec = importlib.util.spec_from_file_location(name, path)
         module = importlib.util.module_from_spec(spec)
         sys.modules[name] = module

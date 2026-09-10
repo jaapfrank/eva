@@ -1,0 +1,10 @@
+# Supply an already verified media image by immutable digest. No new providers.
+ARG EVA_VOICE_MEDIA_BASE
+FROM ${EVA_VOICE_MEDIA_BASE}
+ARG EVA_SOURCE_REVISION
+LABEL org.opencontainers.image.revision=$EVA_SOURCE_REVISION
+COPY src/eva /app/eva
+COPY experiments/native-duplex-v1 /app/speaker
+COPY deploy/home-assistant/custom_components/eva2_voice/client.py /app/deploy/home-assistant/custom_components/eva2_voice/client.py
+ENV PYTHONPATH=/app:/app/speaker
+CMD ["/app/speaker/speaker_livekit_service.py", "--config", "/run/speaker/config.json", "--policy", "/run/speaker/policy/current.json", "--household-token", "/run/speaker/household-token", "--identity", "/run/speaker/identity/identity-pack.json"]

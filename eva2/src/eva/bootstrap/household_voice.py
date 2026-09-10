@@ -14,11 +14,8 @@ from uuid import UUID
 
 from pydantic import Field, StringConstraints, model_validator
 
-from eva.adapters.api.native_voice import NativeVoiceService
 from eva.adapters.credentials.runtime_files import read_private_runtime_file_bytes
-from eva.adapters.postgres.voice_requests import PostgresVoiceRequests
 from eva.application.memory_audience import HouseholdConsentReference
-from eva.bootstrap.native_voice import NativeHouseholdResponder
 from eva.contracts.base import Identifier, Sha256, Timestamp, Version1Contract
 from eva.contracts.canonical_json import canonical_sha256
 
@@ -104,6 +101,9 @@ class HouseholdVoiceAuthority:
                                          operation_id=self.policy.consent_operation_id)
 
     def build_service(self, *, runtime, engine) -> NativeVoiceService:
+        from eva.adapters.api.native_voice import NativeVoiceService
+        from eva.adapters.postgres.voice_requests import PostgresVoiceRequests
+        from eva.bootstrap.native_voice import NativeHouseholdResponder
         self.validate_current()
         policy = self.policy
         return NativeVoiceService(
