@@ -58,12 +58,15 @@ Klaar betekent:
 - `eva2/src/eva/application/free_will.py`
 - `eva2/src/eva/adapters/model/pydantic_conversation.py`
 - `eva2/tests/application/test_free_will.py`
-- `eva2/tests/model/test_pydantic_conversation_model.py`
+- `eva2/tests/model/test_conversation_model.py`
+- `eva2/src/eva/adapters/projection/hindsight.py`
+- `eva2/tests/projection/test_hindsight.py`
 
 Echte controles:
 
 - `pytest -q tests/application/test_free_will.py`
-- `pytest -q tests/model/test_pydantic_conversation_model.py`
+- `pytest -q tests/model/test_conversation_model.py::test_sensory_model_parses_only_bounded_own_initiative tests/model/test_conversation_model.py::test_passive_house_event_retains_provider_usage_with_bounded_decision`
+- `pytest -q tests/projection/test_hindsight.py::test_observation_inherits_authority_from_complete_bounded_source_facts tests/projection/test_hindsight.py::test_household_observations_require_every_source_authority tests/projection/test_hindsight.py::test_private_recall_cannot_hide_shared_observation_sources`
 
 </details>
 

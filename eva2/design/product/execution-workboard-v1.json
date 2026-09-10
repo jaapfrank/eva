@@ -3383,7 +3383,30 @@
         "Bestaande trigger, geen handmatig ingevoegde initiatiefclaim als bewijs."
       ],
       "next": "Controleer relevante context en initiatiefselectie; verbeter alleen de ontbrekende schakel en bewijs één resultaat.",
-      "ownerAccepted": false
+      "ownerAccepted": false,
+      "necessaryDependency": {
+        "finding": "Live broad owner context recall selected zero facts. All responses had source_facts_truncated=true, including observations whose complete source IDs were present. Hindsight documents this as partial response map, not incomplete source IDs for every observation.",
+        "change": "Validate completeness and authority per observation with the existing all-source check; preserve rejection of missing, mixed, private/shared or stale-authority sources. Add personal plans/interests to passive recall context.",
+        "source": "https://hindsight.vectorize.io/api-reference",
+        "acceptedMemoryOutcome": "CO-008 / GE-01 remains closed; this is a concrete dependency of initiative context."
+      },
+      "implementation": {
+        "commit": "2670ee31e6ddd1b767a518beadd508bb1199800b",
+        "built": true,
+        "tested": "34 gerichte controles geslaagd; kandidaatimports en bronhashes bevestigd.",
+        "live": true,
+        "ownerAccepted": false,
+        "next": "Echte HA-gebeurtenissen komen binnen; bestaande achtergrondcyclus wacht vijf minuten rust. Eigen keuze en privaat resultaat nog te bewijzen."
+      },
+      "liveCandidate": {
+        "image": "sha256:12086bdaa63bdc96a4abd3ca8b99a0e253fc9b643cae6d8bbb04d06362cf20c8",
+        "slot": 3,
+        "port": 44710,
+        "cutover": "Quiescent4→3: actuele operational/memory data, back-up en digests bevestigd.",
+        "voiceGateway": "44714→44710 teruggelezen",
+        "ownerInitiativesReadback": "HTTP200; nog geen initiatief/resultaat",
+        "coldPathIdleSeconds": 300
+      }
     }
   },
   "activeTaskId": "AU-007",
@@ -4955,11 +4978,14 @@
         "eva2/src/eva/application/free_will.py",
         "eva2/src/eva/adapters/model/pydantic_conversation.py",
         "eva2/tests/application/test_free_will.py",
-        "eva2/tests/model/test_pydantic_conversation_model.py"
+        "eva2/tests/model/test_conversation_model.py",
+        "eva2/src/eva/adapters/projection/hindsight.py",
+        "eva2/tests/projection/test_hindsight.py"
       ],
       "testCommands": [
         "pytest -q tests/application/test_free_will.py",
-        "pytest -q tests/model/test_pydantic_conversation_model.py"
+        "pytest -q tests/model/test_conversation_model.py::test_sensory_model_parses_only_bounded_own_initiative tests/model/test_conversation_model.py::test_passive_house_event_retains_provider_usage_with_bounded_decision",
+        "pytest -q tests/projection/test_hindsight.py::test_observation_inherits_authority_from_complete_bounded_source_facts tests/projection/test_hindsight.py::test_household_observations_require_every_source_authority tests/projection/test_hindsight.py::test_private_recall_cannot_hide_shared_observation_sources"
       ],
       "evidenceRequired": [
         "Een echte bestaande passieve trigger en een door Eva gekozen initiatief zijn met afzonderlijke opslagreceipts aan elkaar gekoppeld; geen rechtstreeks handmatig aangemaakte initiatiefclaim als productbewijs.",
@@ -4977,7 +5003,8 @@
       "componentIds": [
         "conversation-model-adapter",
         "core-behavior-tests",
-        "core-semantics"
+        "core-semantics",
+        "supporting-runtime-adapters"
       ]
     }
   ],
