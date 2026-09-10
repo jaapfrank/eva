@@ -863,6 +863,12 @@ class LivingConversation:
         self_context = (
             () if self._actions is None else self._actions.active_context(turn)
         )
+        from eva.application.voice_context import current_voice_context, STOP_VOICE_WORK
+        voice = current_voice_context()
+        if voice is not None:
+            self_context = (*self_context, *voice.instructions())
+            if voice.active_work:
+                available_names = (*available_names, STOP_VOICE_WORK)
         memory = recall(turn.text, fast=True)
         memory_searched = False
         seen_call_ids = {item.call.call_id for item in receipts}
@@ -914,14 +920,21 @@ class LivingConversation:
                 )
                 memory_searched = True
                 continue
+            if voice is not None and call.name == STOP_VOICE_WORK and call.name in available_names:
+                completed = voice.stop_work(call)
+                receipts.append(completed)
+                # Keep the usual tools available to implement a corrected request.
+                continue
             if self._actions is None or call.name not in available_names:
                 raise RuntimeError("conversation model requested an unavailable action")
+            if voice is not None:
+                voice.event({"type": "action_started", "name": call.name})
             try:
-                if receipts:
+                if any(item.call.name != STOP_VOICE_WORK for item in receipts):
                     execute_step = getattr(self._actions, "execute_step", None)
                     if not callable(execute_step):
                         raise ConversationConflict("conversation continuation is unavailable")
-                    completed = execute_step(turn, call, step_index=len(receipts))
+                    completed = execute_step(turn, call, step_index=sum(item.call.name != STOP_VOICE_WORK for item in receipts))
                     if completed.call != call:
                         raise ConversationConflict("conversation step returned another call")
                 else:
@@ -940,7 +953,12 @@ class LivingConversation:
                     model_timing=ConversationModelTiming.aggregate(tuple(timings)),
                 )
             receipts.append(completed)
+            if voice is not None:
+                voice.event({"type": "action_finished", "name": call.name,
+                             "status": completed.output.get("status", "unknown")})
             available_names = continuation_names(completed)
+            if voice is not None and voice.active_work:
+                available_names = (*available_names, STOP_VOICE_WORK)
         text = "" if generated.text is None else generated.text.strip()
         if not text:
             raise RuntimeError("conversation model returned an empty reply")

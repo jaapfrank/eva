@@ -1007,7 +1007,9 @@ class PostgresHindsightMemoryRuntime:
             committed = journal.committed_reply(turn)
             if committed is not None:
                 return committed
-            if turn.text.strip().casefold() in {"/stop", "stop deze opdracht", "stop deze opdracht."}:
+            from eva.application.voice_context import current_voice_context
+            voice = current_voice_context()
+            if voice is None and turn.text.strip().casefold() in {"/stop", "stop deze opdracht", "stop deze opdracht."}:
                 count = journal.request_conversation_stop(
                     principal_id=turn.principal_id, conversation_id=turn.conversation_id,
                     request_message_id=turn.message_id,
@@ -1020,7 +1022,8 @@ class PostgresHindsightMemoryRuntime:
                     provider="runtime:conversation-stop-command",
                 ))
             durable_recent = journal.recent(turn, exclude_message_id=turn.message_id)
-            recent = tuple((*recent_messages, *durable_recent)[-12:])
+            recent = (voice.recent if voice is not None
+                      else tuple((*recent_messages, *durable_recent)[-12:]))
             latest_usage = ConversationModelUsage.unmeasured()
 
             def checkpoint(current, usage):

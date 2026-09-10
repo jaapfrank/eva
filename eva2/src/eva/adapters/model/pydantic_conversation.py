@@ -1079,7 +1079,10 @@ class PydanticConversationModel:
                 "Kanaalcontext: dit is een gedeeld huishoudelijk gesprek. De spreker is niet "
                 "geauthenticeerd; een speakerapparaat is geen persoon. Een genoemde naam is "
                 "gespreksinformatie, geen toegangsbewijs voor privégegevens of eigenaarbevoegdheden.")
+        from eva.application.voice_context import current_voice_context, STOP_DESCRIPTOR
         action_tools = {**_ACTION_TOOLS, **self._conversation_tools}
+        if current_voice_context() is not None:
+            action_tools[STOP_DESCRIPTOR.name] = _descriptor_tool(STOP_DESCRIPTOR)
         unknown = set(available_actions) - set(action_tools)
         if unknown:
             raise ValueError(f"unknown conversation actions: {sorted(unknown)!r}")
@@ -1890,6 +1893,14 @@ class PydanticConversationModel:
                     **_ACTION_TOOLS,
                     **self._conversation_tools,
                 }
+                from eva.application.voice_context import current_voice_context, STOP_DESCRIPTOR
+                catalog_limit = 20_000
+                if current_voice_context() is not None:
+                    control = _descriptor_tool(STOP_DESCRIPTOR)
+                    expected[STOP_DESCRIPTOR.name] = control
+                    # Preserve the normal catalog allowance for the extra local
+                    # control. The complete envelope still obeys the token budget.
+                    catalog_limit += len(canonical_json_bytes({**control, "defer_loading": True})) + 1
                 deferred = tools[1:]
                 names = [
                     item.get("name") for item in deferred if isinstance(item, dict)
@@ -1903,7 +1914,7 @@ class PydanticConversationModel:
                         or item != {**expected[name], "defer_loading": True}
                         for name, item in zip(names, deferred, strict=True)
                     )
-                    or len(canonical_json_bytes(tools)) > 20_000
+                    or len(canonical_json_bytes(tools)) > catalog_limit
                 ):
                     raise ConversationModelError(
                         "conversation deferred tool catalog is invalid"
@@ -2165,6 +2176,13 @@ class PydanticConversationModel:
                 raw_sources = (
                     action.get("sources") if isinstance(action, dict) else None
                 )
+                # The provider reports directly opened pages as action.url,
+                # without the sources array used by a search action.
+                if (item.get("status") == "completed" and isinstance(action, dict)
+                        and action.get("type") == "open_page"
+                        and isinstance(action.get("url"), str)):
+                    url = action["url"]
+                    consulted.setdefault(url, urlparse(url).hostname or "Bron")
                 if isinstance(raw_sources, list):
                     for source in raw_sources:
                         if not isinstance(source, dict):
@@ -2318,7 +2336,13 @@ class PydanticConversationModel:
                 "smalltalk en aanwezige context direct zonder tool."
             )
         if completed_action is not None:
-            if completed_action.call.name == MEMORY_SEARCH_ACTION:
+            if completed_action.call.name == "stop_spoken_task":
+                action_guidance_parts.append(
+                    "Het stopverzoek voor de genoemde opdracht is opgeslagen. Een begonnen "
+                    "stap kan nog afronden. Claim geen terugdraaiing. Voer bij een doelcorrectie "
+                    "alleen de noodzakelijke aangepaste stappen uit via de gewone tools."
+                )
+            elif completed_action.call.name == MEMORY_SEARCH_ACTION:
                 action_guidance_parts.append(
                     "De extra persoonsgebonden geheugenzoeking is afgerond. Gebruik alleen "
                     "de zichtbare bevestigde herinneringen. Kies nu zo nodig één aangeboden "
@@ -2522,7 +2546,10 @@ def _source_matches_named_option(url: str, option: str) -> bool:
         repository = "".join(
             character for character in segments[1].casefold() if character.isalnum()
         )
-        return repository == normalized_option
+        owner = "".join(
+            character for character in segments[0].casefold() if character.isalnum()
+        )
+        return normalized_option in {repository, owner + repository}
     return normalized_option in normalized_host
 
 

@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="nl"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Praten met Eva</title>
+<style>
+:root{color-scheme:dark;font:17px/1.5 system-ui;background:#101b20;color:#eef5ef}body{max-width:820px;margin:auto;padding:2rem 1rem}h1{font-size:2.6rem;font-weight:600;margin:.5rem 0}button{font:inherit;border:0;border-radius:2rem;padding:.8rem 1.3rem;background:#b9e3cb;color:#10291d;cursor:pointer;margin:.3rem}button:disabled{opacity:.5}#state{color:#b8c9c5;min-height:2rem}.row{padding:.8rem 1rem;border-radius:1rem;background:#1b2c32;margin:.7rem 0;white-space:pre-wrap}.user{background:#244035}.label{color:#b9e3cb;font-size:.8rem}input{font:inherit;background:#1b2c32;color:inherit;border:1px solid #567268;border-radius:.8rem;padding:.8rem;width:calc(100% - 2rem)}details{color:#b8c9c5;margin:1rem 0}#work .row{font-size:.9rem}#audio{display:none}</style>
+<h1>Praten met Eva</h1><p>Stel een vraag of geef een opdracht. Je kunt verder praten terwijl Eva werkt en haar met je stem onderbreken.</p>
+<button id="start">Begin gesprek</button><button id="end" disabled>Gesprek beëindigen</button>
+<p id="state" role="status">De microfoon staat uit.</p>
+<section id="chat" aria-live="polite"></section>
+<form id="form"><label for="text">Of typ je bericht</label><input id="text" maxlength="4096" disabled autocomplete="off"><button id="send" disabled>Verstuur</button></form>
+<details open><summary>Opdrachten</summary><section id="work"></section></details>
+<p>Vraag Eva om een opdracht te stoppen. Alleen het gesprek beëindigen stopt de audio; werk dat al is gestart kan nog afronden.</p><div id="audio"></div>
+<script src="/livekit-client.js"></script><script>
+const $=id=>document.getElementById(id);let room=null,closing=false;const messages=new Map(),jobs=new Map();
+function row(parent,key,text,kind=''){let node=parent=== 'chat'?messages.get(key):jobs.get(key);if(!node){node=document.createElement('div');node.className='row '+kind;$(parent).append(node);(parent==='chat'?messages:jobs).set(key,node);}node.textContent=text;}
+function reset(text){$('state').textContent=text;$('start').disabled=closing;$('end').disabled=true;$('text').disabled=true;$('send').disabled=true;room=null;$('audio').replaceChildren();}
+$('start').onclick=async()=>{if(room)return;$('start').disabled=true;$('state').textContent='Verbinding maken…';try{const response=await fetch('/session',{method:'POST'});if(!response.ok){let data=await response.json();throw new Error(data.detail||'Verbinding mislukt');}const connection=await response.json();const r=new LivekitClient.Room({adaptiveStream:true,dynacast:true});room=r;
+r.on(LivekitClient.RoomEvent.TrackSubscribed,track=>{if(track.kind==='audio')$('audio').append(track.attach());});
+r.on(LivekitClient.RoomEvent.TranscriptionReceived,(segments,participant)=>{for(const seg of segments)row('chat',seg.id,(participant?.identity==='eva'?'Eva: ':'Jij: ')+seg.text,participant?.identity==='owner'?'user':'');});
+r.on(LivekitClient.RoomEvent.DataReceived,(payload,participant,kind,topic)=>{if(topic!=='eva.work'||participant?.identity!=='eva')return;try{const e=JSON.parse(new TextDecoder().decode(payload));if(e.type==='voice_state')$('state').textContent=({listening:'Eva luistert.',thinking:'Eva denkt na.',speaking:'Eva spreekt. Je kunt haar onderbreken.'})[e.state]||'Verbinding maken…';if(e.type==='work_started')row('work',e.message_id,'Bezig: '+e.text);if(e.type==='work_finished')row('work',e.message_id,e.text);if(e.type==='task_stop_requested')row('work',e.message_id,'Stopverzoek opgeslagen. Een begonnen stap kan nog afronden.');if(e.type==='work_failed')row('work',e.message_id,'Het resultaat kon niet worden bevestigd.');}catch(_){}});
+r.on(LivekitClient.RoomEvent.Reconnecting,()=>{$('state').textContent='Verbinding herstellen…';});r.on(LivekitClient.RoomEvent.Reconnected,()=>{$('state').textContent='Je kunt weer praten.';});r.on(LivekitClient.RoomEvent.Disconnected,()=>reset('Het gesprek is beëindigd.'));
+await r.connect(connection.url,connection.token);await r.startAudio();await r.localParticipant.setMicrophoneEnabled(true,{echoCancellation:true,noiseSuppression:true,autoGainControl:true});$('state').textContent='Eva luistert. Je kunt haar onderbreken door te praten.';$('end').disabled=false;$('text').disabled=false;$('send').disabled=false;
+}catch(error){if(room)await room.disconnect();reset(error.message||'Verbinding mislukt.');}};
+$('end').onclick=async()=>{closing=true;$('start').disabled=true;try{if(room)await room.disconnect();await fetch('/session/end',{method:'POST'});}finally{closing=false;reset('Het gesprek is beëindigd.');}};
+$('form').onsubmit=async event=>{event.preventDefault();const text=$('text').value.trim();if(!text||!room)return;await room.localParticipant.sendText(text,{topic:'lk.chat'});row('chat',crypto.randomUUID(),'Jij: '+text,'user');$('text').value='';};
+</script></html>

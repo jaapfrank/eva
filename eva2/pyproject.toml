@@ -31,6 +31,7 @@ where = ["src"]
 include = ["eva*"]
 
 [tool.setuptools.package-data]
+"eva.voice_service" = ["client.html"]
 "eva.adapters.model" = ["tokenizer_data/*"]
 "eva.adapters.api" = [
   "dashboard_static/*.html",

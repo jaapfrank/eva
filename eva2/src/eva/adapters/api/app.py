@@ -620,6 +620,8 @@ def create_app(
     install_browser_session_routes(app, access=dashboard_access, session=browser_session)
     install_dashboard_initiatives(app, access=dashboard_access, runtime=runtime)
     install_dashboard_voice(app, access=dashboard_access, runtime=runtime, config=dashboard_voice)
+    from eva.adapters.api.voice_turns import install_voice_turns
+    install_voice_turns(app, access=dashboard_access, runtime=runtime, config=dashboard_voice)
 
     @app.get("/healthz")
     def health() -> dict[str, str]:
