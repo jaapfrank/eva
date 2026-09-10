@@ -5,10 +5,10 @@ Laatst bijgewerkt: 2026-09-10.
 Doel: [Eva als zelfstandig lerende digitale huisgenoot](PROJECTDOEL.md).
 Gebouwd, getest, live en door jou geaccepteerd zijn verschillende stappen.
 
-CO-008 / GE-01 is afgerond en door Jaap geaccepteerd. AU-007 blijft afgesloten met beperkte kaartwaardering. AU-008 loopt: negen toegelaten routes zijn live. Algemeen onderzoek en een echte zelfstandige bijdrage blijven open.
+CO-008 / GE-01 is afgerond en door Jaap geaccepteerd. AU-007 blijft afgesloten met beperkte kaartwaardering. AU-008 loopt: bestandswerk, huisinformatie en algemeen publiek onderzoek zijn live. Een echte zelfstandige bijdrage blijft open.
 [Actueel bewijs](reviews/AU-007-technical-closure-f99b5a2.md).
 
-Bestaande onderzoeks- en toolroutes verbinden binnen het kosteloze mandaat. Normale initiatiefcyclus volgen; pas een echt uitgevoerd en gecontroleerd resultaat als oplevering tonen.
+Algemeen publiek onderzoek is live: eigen vragen, brongebonden antwoorden en lokaal bewaren via de bestaande taakuitvoerder. [Technisch bewijs](evidence/product/AU-008-general-research-live-2026-09-10.json). Nu: initiatief ook op rustige momenten vanuit toegestane context beoordelen; pas een echt uitgevoerd en teruggelezen resultaat als oplevering tonen.
 
 ### Afzonderlijk stemwerk
 

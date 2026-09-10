@@ -1,0 +1,88 @@
+{
+  "status": "live",
+  "sourceCommit": "af9a049a5dcd9b739b74e10252f6688d7b90bb14",
+  "image": "sha256:908af641e5f81f3e363807dfa284376cb19dd5ba6b58699cf2a785a72996d5c7",
+  "activePort": 44711,
+  "profileDigest": "5d3606336f931c3d355ff8a308741072615379827851d3bf9d45f7bc5b2d4b49",
+  "technicalChecks": "50 gerichte tests; 8 aanvullende bronbindingchecks; onafhankelijke source/profiel GO; 18 live importhashes gelijk aan kandidaat.",
+  "usefulOutcome": "Zelfgekozen algemene publieke vragen kunnen via de gewone taakuitvoerder brongebonden onderzoek opleveren en lokaal worden bewaard.",
+  "ownerAccepted": false,
+  "productResultProven": false,
+  "remaining": "Eigen initiatief ook vanuit toegestane context op rustige momenten beoordelen; echte native bijdrage uitvoeren en teruglezen.",
+  "evidencePath": "evidence/product/AU-008-general-research-live-2026-09-10.json",
+  "contract": "EvaInitiativeResearchRouteEvidence/v1",
+  "cutover": {
+    "backgroundIsolationBoundary": "Legacy images may ignore the switch; configuration readback is not worker isolation proof.",
+    "backgroundWorkConfiguredAfterActivation": true,
+    "backgroundWorkConfiguredDuringStaging": false,
+    "contract": "Eva2QuiescentCutoverReceipt/v1",
+    "dashboardVoiceFirstActivation": false,
+    "eva1Backup": {
+      "bytes": 316551168,
+      "filename": "eva1-before-slot3-to-slot4-20260910T200831Z.db",
+      "quickCheck": "ok",
+      "sha256": "6e4d85d07637463dcc3094e4cca71dccb0a36945774e0e25c15fecef6eb4b240"
+    },
+    "eva1HttpStatuses": {
+      "/": 200,
+      "/api/capabilities": 200,
+      "/api/health": 200,
+      "/api/overview": 200,
+      "/api/workstatus": 200
+    },
+    "issuedAt": "2026-09-10T20:09:59.674548+00:00",
+    "previousDropinSha256": "81f1b2b687a641ae5349aa3c13198f6ad3ac1d7c88ee351bc3c559f22eee28a1",
+    "proactiveCredentialWithheldDuringStaging": true,
+    "proactiveDeliveryEnabled": true,
+    "sourcePort": 44710,
+    "sourceWritersStopped": true,
+    "status": "switched",
+    "synchronizedDatabases": {
+      "memory": {
+        "countDigest": "b709d1a3adddea85cd64952899116d1579358e8731c8487479e24f5a3c269fc1",
+        "dataDigest": "65a15d1d86bfe364712b1e4e67d786073190d5a2c5941eb812a3834d04f29d21",
+        "dumpBytes": 2858977,
+        "dumpSha256": "c5fa06af6199bcac662485540208a4dab1da9faf9f90aefb837f3de19e3406f0",
+        "schemaDigest": "d89bfebdbfeb55e8618e81286bf24a42b838bfe577e84f6db9b93b43f5832172",
+        "tableCount": 23
+      },
+      "operational": {
+        "countDigest": "a3d2f546783b92989c62b85e54d22be2fd53efe56975adb3801ff0653edb5989",
+        "dataDigest": "ea16d7bb4b803f7039336a5ed90a8f521fb24b69b47b5c4f2c2b760795063fc5",
+        "dumpBytes": 14170752,
+        "dumpSha256": "4a63c9d31c6f2662908483181a6c200f5147d26eb4fe0c94669df5fa5d14a36e",
+        "schemaDigest": "32acc5b66e349dfd5b385e4828897575ad543ebb5f2638b8880dff1cacb7fb39",
+        "tableCount": 48
+      }
+    },
+    "targetPort": 44711,
+    "targetReady": true
+  },
+  "voice": {
+    "coreUrl": "http://127.0.0.1:44711",
+    "coreSlotDirectory": "/var/lib/eva2/managed-b-slot4",
+    "preservedImage": "sha256:57ae55645ab47d93c27f42c220eb55e2794f8877aff243791513f71e578aca40",
+    "cloudRelay": true,
+    "readiness": {
+      "44711": {
+        "contract": "EvaVoiceSessionReady/v1"
+      },
+      "44716": {
+        "ready": true
+      }
+    }
+  },
+  "limits": [
+    "Public-input checks reduce disclosure risk, not proof of anonymity.",
+    "Provider internal searches are provider-managed.",
+    "A native chosen and completed initiative has not yet been proven for AU-008."
+  ],
+  "artifacts": {
+    "general-research-tests-final.txt": "a9319f5027c9337de1aae7d42d9a83b8dadca465c742fd0c5b957a39c1da4de4",
+    "general-source-binding-tests.txt": "f0b5df43be830b88ad8b03824a30c0e4a31743c03b9ce444d7b3fe779445bcc5",
+    "general-image-imports.json": "d8e8425412640484196941316f33602d94ec72d1c2440d4261e30d865e5c49cc",
+    "general-live-imports.json": "d8e8425412640484196941316f33602d94ec72d1c2440d4261e30d865e5c49cc",
+    "general-owner-revision.json": "f608e367a16cd0da271f88c93193c43e44ff9329d32df21a9ca4bc3753fa542c",
+    "general-live-policy.json": "f9731c30f367b03fd7a5134b74b74f57a7193ae3ef8a210f48806b09fcd601b6"
+  }
+}
