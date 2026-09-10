@@ -129,7 +129,7 @@ def costless_native(postgres_engine, tmp_path, monkeypatch):
         def now(cls, tz=None):
             return NOW
     monkeypatch.setattr(native, "datetime", FixedTime)
-    args = {"type": "object", "properties": {"path": {"const": str(tmp_path / "result.txt")},
+    args = {"type": "object", "properties": {"path": {"type": "string", "const": str(tmp_path / "result.txt")},
         "content": {"type": "string", "maxLength": 1000}}, "required": ["path", "content"], "additionalProperties": False}
     policy = {"contract": "EvaCostlessInitiativeMandate/v1", "mandate_id": "owner-costless-v1",
         "owner_principal_id": str(owner), "tenant_scope": str(control._scope.tenant_id),
@@ -279,3 +279,16 @@ def test_native_dispatch_rechecks_stop_inside_admission_transaction(costless_nat
     with pytest.raises(InitiativeMandateDenied, match="before dispatch"):
         guard.authorize_request(request, phase="execute")
     assert not any(e.event_type == "INITIATIVE_DISPATCH_ADMITTED" for e in auth.timeline.events(guard.thread))
+
+
+def test_costless_schema_enforces_patterns_and_rejects_unsupported_constraints():
+    from eva.adapters.postgres.initiative_execution import _matches_profile, _check_profile_schema, InitiativeMandateDenied
+    schema = {"type": "object", "properties": {"path": {"type": "string", "pattern": r"^/private/[a-z0-9_-]+\.md$"}},
+              "required": ["path"], "additionalProperties": False}
+    _check_profile_schema(schema)
+    assert _matches_profile({"path": "/private/result.md"}, schema)
+    for path in ["/private/../other.md", "/another/result.md", "/private/result.md\n"]:
+        assert not _matches_profile({"path": path}, schema)
+    schema["properties"]["path"]["format"] = "uri"
+    with pytest.raises(InitiativeMandateDenied, match="unsupported"):
+        _check_profile_schema(schema)

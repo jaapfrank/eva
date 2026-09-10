@@ -3,9 +3,10 @@ from __future__ import annotations
 
 from datetime import UTC, datetime
 import json
+import re
 
 import sqlalchemy as sa
-from jsonschema import Draft202012Validator
+from eva.adapters.connectors.mcp_gateway import _validate_schema_value
 
 from eva.adapters.credentials.runtime_files import read_runtime_secret_file
 from eva.adapters.postgres.operational_timeline import (
@@ -15,6 +16,47 @@ from eva.adapters.postgres.operational_timeline import (
 from eva.application.conversation import ConversationConflict, ConversationTurn
 from eva.application.memory_audience import MemoryAudience
 from eva.contracts.canonical_json import canonical_sha256
+
+
+def _check_profile_schema(schema):
+    """Closed subset already understood by Eva's provider argument validator."""
+    common = {"type", "const", "enum"}
+    by_type = {"object": {"properties", "required", "additionalProperties"},
+               "array": {"items", "minItems", "maxItems"},
+               "string": {"minLength", "maxLength", "pattern"},
+               "integer": {"minimum", "maximum"}, "number": {"minimum", "maximum"},
+               "boolean": set(), "null": set()}
+    kind = schema.get("type") if isinstance(schema, dict) else None
+    if kind not in by_type or set(schema) - common - by_type[kind]:
+        raise InitiativeMandateDenied("unsupported capability schema constraint")
+    if kind == "object":
+        if (schema.get("additionalProperties") is not False
+                or not isinstance(schema.get("properties"), dict)
+                or not isinstance(schema.get("required"), list)
+                or not all(isinstance(k, str) and k in schema["properties"] for k in schema["required"])):
+            raise InitiativeMandateDenied("capability object boundary is invalid")
+        for child in schema["properties"].values(): _check_profile_schema(child)
+    elif kind == "array":
+        _check_profile_schema(schema.get("items"))
+    if "pattern" in schema:
+        try:
+            re.compile(schema["pattern"])
+        except (TypeError, re.error) as error:
+            raise InitiativeMandateDenied("capability path pattern is invalid") from error
+
+
+def _matches_profile(value, schema):
+    try:
+        _validate_schema_value(value, schema, "initiative arguments")
+        if isinstance(value, str) and "pattern" in schema:
+            return re.fullmatch(schema["pattern"], value) is not None
+        if isinstance(value, dict):
+            return all(_matches_profile(v, schema["properties"][k]) for k, v in value.items())
+        if isinstance(value, list):
+            return all(_matches_profile(v, schema["items"]) for v in value)
+        return True
+    except (ConversationConflict, TypeError, ValueError):
+        return False
 
 
 class InitiativeMandateDenied(ConversationConflict):
@@ -81,7 +123,7 @@ class PostgresInitiativeAuthority:
                         or schema.get("additionalProperties") is not False
                         or '"$ref"' in json.dumps(schema)):
                     raise InitiativeMandateDenied("capability argument boundary is invalid")
-                Draft202012Validator.check_schema(schema)
+                _check_profile_schema(schema)
         return data
 
     def policy(self):
@@ -199,7 +241,7 @@ class NativeInitiativeGuard:
         arguments = request.arguments if phase == "execute" else request.observation_arguments
         if arguments is None:
             arguments = request.arguments
-        if not any(Draft202012Validator(self._schema(c[phase + "_schema"])).is_valid(arguments) for c in caps):
+        if not any(_matches_profile(arguments, self._schema(c[phase + "_schema"])) for c in caps):
             raise InitiativeMandateDenied("tool cost, data destination or arguments outside initiative mandate")
         # Stop and revoke serialize on these same owner-controlled rows. An
         # effect admitted before stop may finish; after stop no new dispatch or
