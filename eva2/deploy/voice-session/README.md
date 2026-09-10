@@ -18,7 +18,7 @@ De mediaserver luistert uitsluitend op 127.0.0.1:44716. De lokale LiveKit-server
 
 ## Gebruik en beheer
 
-Open de lokale pagina, meld aan als eva-owner met het bestaande eigenaar-dashboardtoken en kies Begin gesprek. Sta microfoontoegang toe. Eindig met Einde gesprek. Deze knop sluit de mediaruimte; reeds toegelaten Eva-taken kunnen doorlopen. Vraag Eva expliciet om een taak te stoppen als ook het werk moet stoppen.
+Open de lokale pagina, plak het bestaande eigenaar-dashboardtoken in het aanmeldveld en kies Aanmelden en kies Begin gesprek. Sta microfoontoegang toe. Eindig met Einde gesprek. Deze knop sluit de mediaruimte; reeds toegelaten Eva-taken kunnen doorlopen. Vraag Eva expliciet om een taak te stoppen als ook het werk moet stoppen.
 
 Bij een kernslotwissel: sluit de audiosessie, pas core_url en EVA_VOICE_CORE_SLOT_DIRECTORY aan, controleer de identiteit- en beleidshashes en herstart de mediadienst. Laat geen afzonderlijke proefkern met schrijfrechten aan dezelfde databases draaien. De kern-readinesscontrole moet slagen voordat een sessie opent.
 

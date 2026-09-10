@@ -1,0 +1,20 @@
+{
+  "status": "live_browser_landing_verified_owner_audio_acceptance_open",
+  "source_commit": "661de8dd35f518ccafa8698f37ad6931e9f89c30",
+  "media_image": "sha256:05c62d4cce4f50e7574e994b34186528664baa56a10b93a5dd67c9636d17ea7a",
+  "browser_proof": {
+    "url": "http://localhost:44716/",
+    "visible_title": "Praten met Eva",
+    "login_field_visible": true,
+    "previous_result": "ERR_BLOCKED_BY_CLIENT"
+  },
+  "access": {
+    "landing": 200,
+    "anonymous_session_readiness": 401,
+    "owner_session_readiness": 200
+  },
+  "tests": "10 passed",
+  "independent_review": "review_voice_reference GO",
+  "owner_acceptance": false,
+  "clipboard": "Existing owner token placed on Windows clipboard at explicit owner request; history and roaming disabled; no secret retained in this evidence."
+}

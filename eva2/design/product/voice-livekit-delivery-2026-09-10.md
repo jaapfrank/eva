@@ -36,7 +36,7 @@ Meet eerste hoorbare reactie en onderbrekingsvertraging; Jaap beoordeelt vloeien
 Gebouwd, getest, live en menselijk geaccepteerd worden afzonderlijk vastgelegd.
 
 Status: de laptoproute is gebouwd, getest en live op http://localhost:44716.
-Aanmelden: eva-owner met het bestaande eigenaar-dashboardtoken; Begin gesprek en
+Aanmelden: plak het bestaande eigenaar-dashboardtoken in het aanmeldveld; kies Aanmelden, Begin gesprek en
 microfoontoegang toestaan. Probeer een opdracht, een tweede vraag tijdens uitvoering
 en “Wacht, ik bedoel…” tijdens het antwoord. Gesprek beëindigen sluit de audioruimte;
 expliciet een taak stoppen gebruikt de duurzame stopgrens van de kern.
@@ -53,3 +53,11 @@ antwoord in de live audioproef 17,7 seconden). Telefoon en de volledige natuurli
 VoicePE-route blijven open opleverwerk. Het algemene voice-doel is niet afgerond.
 [Technisch meetbewijs](../../evidence/product/voice-livekit-integration-2026-09-10.json).
 [Installatie en beheer](../../deploy/voice-session/README.md).
+
+Loginherstel 661de8d: de zichtbare browser opent de pagina nu zonder HTTP Basic-
+blokkade. Lege pagina 200, beschermde readiness zonder token 401, eigenaar 200.
+Tien gerichte tests en onafhankelijke review GO. Media-image
+`sha256:05c62d4cce4f50e7574e994b34186528664baa56a10b93a5dd67c9636d17ea7a`.
+Nieuwe profielmeting lokaliseert 9,738 seconden bij Hindsight-geheugenophalen;
+active_context 92 ms en modelgeneratie 5,035 seconden. Verbetering wordt gemeten
+zonder relevante herinneringen of privacycontroles over te slaan.

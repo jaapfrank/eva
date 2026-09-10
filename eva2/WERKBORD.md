@@ -45,8 +45,10 @@ behoudt de volledige correctie en onderbreekt zonder oude staart. De kernwachtti
 blijft nog te verbeteren (korte losse antwoorden 11–13 seconden in deze meting).
 Media en herbouwde LiveKit-server: actuele scans zonder HIGH/CRITICAL. Gecontroleerde
 uitrol naar slot3 geslaagd; bestaande huisingang en beide databases behouden.
-Open http://localhost:44716 in de laptopbrowser, meld aan als eva-owner met het
-bestaande eigenaar-dashboardtoken en kies Begin gesprek. De live audioproef
+Open http://localhost:44716 in de laptopbrowser, plak het bestaande
+eigenaar-dashboardtoken in de aanmeldpagina en kies Aanmelden en Begin gesprek.
+De eerder geblokkeerde HTTP-aanmelding is vervangen; de pagina opent aantoonbaar
+in de zichtbare browser (loginherstel 661de8d, 10 gerichte tests en review GO). De live audioproef
 bevestigt onderbreken en de volledige correctie; intrekken sluit ook de ruimte.
 Fysieke microfoon-/echoproef, wachttijdverbetering en Jaaps beoordeling staan open.
 Telefoon en natuurlijke VoicePE-toegang zijn nog niet opgeleverd.
