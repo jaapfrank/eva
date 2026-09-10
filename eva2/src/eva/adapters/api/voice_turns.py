@@ -74,65 +74,75 @@ def install_voice_turns(app: FastAPI, *, access: DashboardAccess,
             grant.tenant_id, grant.installation_id, grant.principal_id,
             conversation_id, message_id(payload.message_id), payload.text, stamp,
         )
+        return stream_voice_turn(runtime=runtime, payload=payload, turn=turn,
+                                 message_id=message_id, check=lambda: config.check(grant))
+
+
+def stream_voice_turn(*, runtime, payload: VoiceRequest, turn: ConversationTurn,
+                      message_id, check, user_label: str = "Jaap"):
+    """Shared task/context stream; callers must supply a server-admitted turn."""
+    try:
+        recent = tuple(RecentConversationMessage(
+            role=user_label if item.role == "user" else "Eva",
+            text=item.text, occurred_at=item.occurred_at,
+            playback_status=(None if item.role == "user" else
+                             "interrupted" if item.interrupted else "completed"),
+        ) for item in payload.recent)
+        if len({item.message_id for item in payload.active_work}) != len(payload.active_work):
+            raise ValueError("duplicate work")
+        if any(item.message_id == payload.message_id for item in payload.active_work):
+            raise ValueError("self work")
+    except ValueError:
+        raise HTTPException(422, "voice context invalid") from None
+    events: SimpleQueue = SimpleQueue()
+    delivery_closed = False
+    def event(value):
+        nonlocal delivery_closed
+        if delivery_closed:
+            return
         try:
-            recent = tuple(RecentConversationMessage(
-                role="Jaap" if item.role == "user" else "Eva",
-                text=item.text, occurred_at=item.occurred_at,
-                playback_status=(None if item.role == "user" else
-                                 "interrupted" if item.interrupted else "completed"),
-            ) for item in payload.recent)
-            if len({item.message_id for item in payload.active_work}) != len(payload.active_work):
-                raise ValueError("duplicate work")
-            if any(item.message_id == payload.message_id for item in payload.active_work):
-                raise ValueError("self work")
-        except ValueError:
-            raise HTTPException(422, "voice context invalid") from None
-        events: SimpleQueue = SimpleQueue()
-        delivery_closed = False
-        def event(value):
-            nonlocal delivery_closed
-            if delivery_closed:
-                return
+            check()
+        except (ValueError, RuntimeError, OSError):
+            delivery_closed = True
+            events.put({"type": "error", "code": "voice_authority_changed"})
+            return
+        events.put(value)
+    def stop(target):
+        check()
+        runtime.request_turn_stop(replace(turn, message_id=target),
+                                  request_message_id=turn.message_id + ":" + target[-36:])
+    context = VoiceContext(recent=recent,
+        active_work=tuple((message_id(item.message_id), item.text) for item in payload.active_work),
+        stop=stop, event=event,
+        known_results=tuple((message_id(item.message_id), item.text) for item in payload.work_results))
+    def run():
+        stage = "respond"
+        try:
+            check()
+            with voice_context(context), stream_conversation_text(
+                lambda text: event({"type": "delta", "text": text})
+            ):
+                reply = runtime.respond(turn)
+            if reply.conversation_id != turn.conversation_id or reply.message_id != turn.message_id:
+                raise ValueError("Voice reply crossed its request binding")
+            event({"type": "final", "reply": grounded_reply_wire(reply)})
+            stage = "after_response"
+            check()
+            runtime.after_response(turn, reply)
+        except Exception as error:
+            if stage == "respond":
+                event({"type": "error", "code": "voice_turn_failed"})
+            _record_stream_failure(error, turn, stage)
+    def stream():
+        Thread(target=run, daemon=True, name="eva-voice-turn").start()
+        while True:
+            item = events.get()
             try:
-                config.check(grant)
-            except (ValueError, RuntimeError):
-                delivery_closed = True
-                events.put({"type": "error", "code": "voice_authority_changed"})
+                check()
+            except (ValueError, RuntimeError, OSError):
+                item = {"type": "error", "code": "voice_authority_changed"}
+            yield json.dumps(item, ensure_ascii=False).encode() + b"\n"
+            if item["type"] in {"final", "error"}:
                 return
-            events.put(value)
-        def stop(target):
-            config.check(grant)
-            runtime.request_turn_stop(replace(turn, message_id=target),
-                                      request_message_id=turn.message_id + ":" + target[-36:])
-        context = VoiceContext(recent=recent,
-            active_work=tuple((message_id(item.message_id), item.text) for item in payload.active_work),
-            stop=stop, event=event,
-            known_results=tuple((message_id(item.message_id), item.text) for item in payload.work_results))
-        def run():
-            stage = "respond"
-            try:
-                config.check(grant)
-                with voice_context(context), stream_conversation_text(
-                    lambda text: event({"type": "delta", "text": text})
-                ):
-                    reply = runtime.respond(turn)
-                event({"type": "final", "reply": grounded_reply_wire(reply)})
-                stage = "after_response"
-                runtime.after_response(turn, reply)
-            except Exception as error:
-                if stage == "respond":
-                    event({"type": "error", "code": "voice_turn_failed"})
-                _record_stream_failure(error, turn, stage)
-        def stream():
-            Thread(target=run, daemon=True, name="eva-voice-turn").start()
-            while True:
-                item = events.get()
-                try:
-                    config.check(grant)
-                except (ValueError, RuntimeError):
-                    item = {"type": "error", "code": "voice_authority_changed"}
-                yield json.dumps(item, ensure_ascii=False).encode() + b"\n"
-                if item["type"] in {"final", "error"}:
-                    return
-        return StreamingResponse(stream(), media_type="application/x-ndjson",
-                                 headers={"Cache-Control": "no-store"})
+    return StreamingResponse(stream(), media_type="application/x-ndjson",
+                             headers={"Cache-Control": "no-store"})

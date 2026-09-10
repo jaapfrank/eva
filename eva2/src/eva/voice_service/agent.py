@@ -20,10 +20,14 @@ class CoreClient:
                 headers={"Authorization": "Bearer " + self.token})
             return response.status_code == 200 and response.json().get("contract") == "EvaVoiceSessionReady/v1"
 
+    def request(self, payload):
+        return "/internal/v1/voice-session/respond", payload
+
     async def events(self, payload: dict) -> AsyncIterator[dict]:
+        path, body = self.request(payload)
         async with httpx.AsyncClient(timeout=httpx.Timeout(600, connect=10), trust_env=False) as client:
-            async with client.stream("POST", self.url + "/internal/v1/voice-session/respond",
-                headers={"Authorization": "Bearer " + self.token}, json=payload) as response:
+            async with client.stream("POST", self.url + path,
+                headers={"Authorization": "Bearer " + self.token}, json=body) as response:
                 response.raise_for_status()
                 async for line in response.aiter_lines():
                     if len(line) > 131072:
@@ -31,9 +35,30 @@ class CoreClient:
                     if line:
                         yield json.loads(line)
 
+class HouseholdCoreClient(CoreClient):
+    """Fixed provisioned speaker binding; cannot fall back to owner endpoints."""
+    def __init__(self, url, token, *, satellite_id, device_id):
+        import re
+        if not re.fullmatch(r"assist_satellite\.[a-z0-9_]+", satellite_id) or not re.fullmatch(r"[0-9a-f]{32}", device_id):
+            raise ValueError("Invalid provisioned household device")
+        super().__init__(url, token)
+        self._device = {"satellite_id": satellite_id, "device_id": device_id}
+
+    async def ready(self):
+        async with httpx.AsyncClient(timeout=10, trust_env=False) as client:
+            response = await client.post(self.url + "/internal/v1/ha-voice/session/ready",
+                headers={"Authorization": "Bearer " + self.token}, json=self._device)
+            return response.status_code == 200 and response.json().get("contract") == "EvaHouseholdVoiceSessionReady/v1"
+
+    def request(self, payload):
+        if {"satellite_id", "device_id", "principal_id", "audience"} & payload.keys():
+            raise ValueError("Voice content cannot select authority")
+        return "/internal/v1/ha-voice/session/respond", {**payload, **self._device}
+
 class BridgeState:
-    def __init__(self, backend, notify: Callable[[dict], None] = lambda value: None):
+    def __init__(self, backend, notify: Callable[[dict], None] = lambda value: None, *, replay_unheard: bool = True):
         self.backend, self.notify = backend, notify
+        self.replay_unheard = replay_unheard
         self.session_id = str(uuid4())
         self.dispatched: set[str] = set()
         self.message_users: dict[str, str] = {}
@@ -94,6 +119,8 @@ class EvaAgent(Agent):
             self.state.notify({"type": "voice_delivery_failed", "message_id": message_id})
 
     def replay_unheard(self, session):
+        if not self.state.replay_unheard:
+            return  # A hardware STOPPED lower bound cannot prove silence.
         # Native interruption cancels queued handles too. Restore only a result
         # with no played text in its own handle, never the tail of a spoken reply.
         for message_id, handle in list(self.state.deliveries.items()):
@@ -135,6 +162,10 @@ class EvaAgent(Agent):
                     continue
                 if kind == "task_stop_requested":
                     target = event["message_id"].rsplit(":", 1)[-1]
+                    try:
+                        target = str(UUID(target))
+                    except ValueError:
+                        pass
                     state.suppressed.add(target)
                     handle = state.deliveries.get(target)
                     if handle is not None:

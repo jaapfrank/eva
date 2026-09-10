@@ -53,6 +53,7 @@ class SpeakerMicrophone:
     def __init__(self, output):
         self._output = output
         self._wake = asyncio.Event()
+        self.control_observer = None  # Optional synchronous admission barrier.
         self._controls: asyncio.Queue[Kind] = asyncio.Queue(1)
         self._changed = asyncio.Event()
         self._failure: BaseException | None = None
@@ -123,6 +124,8 @@ class SpeakerMicrophone:
         capture.state = "interrupted"
         capture.frames.clear()
         self._muted = record.kind == Kind.MUTED
+        if self.control_observer is not None:
+            self.control_observer(record.kind)
         self._armed = not self._muted  # Stop permits a fresh capture without wake.
         try:
             self._controls.put_nowait(record.kind)

@@ -37,32 +37,36 @@ class NativeHouseholdResponder:
         self._devices = dict(devices)
         self._consent = consent
 
+    def make_turn(self, request: VoiceRequest) -> ConversationTurn:
+        if self._devices.get(request.satellite_id) != request.device_id:
+            raise ValueError("Native household device is not admitted")
+        actor = "household-device:" + request.device_id
+        now = datetime.now(UTC).replace(microsecond=0)
+        reference = self._consent.active_reference(
+            principal_id=actor, household_id=self._household, now=now,
+        )
+        if reference is None:
+            raise ValueError("Native household mandate is not active")
+        audience = MemoryAudience.household(principal_id=actor, household_id=self._household,
+                                            consent_ref=reference)
+        # HA's conversation ID is continuity data, never an Eva principal or
+        # a raw private conversation ID. Each device owns its own short log.
+        digest = hashlib.sha256(canonical_json_bytes(
+            [request.device_id, request.conversation_id])).hexdigest()
+        conversation = f"household:{self._household}:conversation:{digest}"
+        turn = ConversationTurn(
+            tenant_id=self._tenant, installation_id=self._installation, principal_id=actor,
+            conversation_id=conversation, message_id=f"{conversation}:request:{request.request_id}",
+            text=request.text, occurred_at=now.strftime("%Y-%m-%dT%H:%M:%SZ"), audience=audience,
+        )
+        self._runtime.admit_turn_audience(turn)
+        check_cancellation()
+        return turn
+
     async def __call__(self, request: VoiceRequest) -> VoiceReply:
         def execute() -> VoiceReply:
             check_cancellation()
-            if self._devices.get(request.satellite_id) != request.device_id:
-                raise ValueError("Native household device is not admitted")
-            actor = "household-device:" + request.device_id
-            now = datetime.now(UTC).replace(microsecond=0)
-            reference = self._consent.active_reference(
-                principal_id=actor, household_id=self._household, now=now,
-            )
-            if reference is None:
-                raise ValueError("Native household mandate is not active")
-            audience = MemoryAudience.household(principal_id=actor, household_id=self._household,
-                                                consent_ref=reference)
-            # HA's conversation ID is continuity data, never an Eva principal or
-            # a raw private conversation ID. Each device owns its own short log.
-            digest = hashlib.sha256(canonical_json_bytes(
-                [request.device_id, request.conversation_id])).hexdigest()
-            conversation = f"household:{self._household}:conversation:{digest}"
-            turn = ConversationTurn(
-                tenant_id=self._tenant, installation_id=self._installation, principal_id=actor,
-                conversation_id=conversation, message_id=f"{conversation}:request:{request.request_id}",
-                text=request.text, occurred_at=now.strftime("%Y-%m-%dT%H:%M:%SZ"), audience=audience,
-            )
-            self._runtime.admit_turn_audience(turn)
-            check_cancellation()
+            turn = self.make_turn(request)
             reply = self._runtime.respond(turn)
             check_cancellation()
             if (not isinstance(reply, GroundedReply) or reply.conversation_id != turn.conversation_id

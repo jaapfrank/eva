@@ -1,0 +1,34 @@
+{
+  "date": "2026-09-10",
+  "status": "source_candidate_not_live",
+  "ownerAcceptance": false,
+  "outcome": "Continuous VoicePE conversation through the same EvaAgent and household-scoped core runtime",
+  "implemented": [
+    "Fixed device and household authority; no owner fallback",
+    "Shared streamed voice context, background work and exact task stop",
+    "LiveKit PCM input/output with FINISHED and STOPPED receipts",
+    "Local stop preserves AgentSession; mute rejects new and already-waiting audio",
+    "Explicit service composition reuses TLS, HA registry and existing speech providers"
+  ],
+  "verification": {
+    "coreTests": 10,
+    "coreIndependentReview": "GO",
+    "mediaAndWireTests": 56,
+    "hardware": "simulated receipts over real TLS/WebSocket; real LiveKit AgentSession",
+    "physicalAcceptance": false
+  },
+  "phone": {
+    "sourceCommit": "56346b6",
+    "status": "reviewed_not_installed",
+    "missing": "Existing Home Assistant configuration management route; requested from owner",
+    "remoteIceTrial": false,
+    "refreshedJwtReconnect": "Open limitation"
+  },
+  "remaining": [
+    "Core candidate deployment with existing data preservation procedure",
+    "Package/provision speaker runtime with fixed LiveKit dependencies",
+    "Identify exact VoicePE and verified firmware rollback before flash",
+    "Physical wakeword, echo, interruption, mute and concurrent task trial"
+  ],
+  "liveUnchanged": "Existing laptop and HA house routes remain in service; no firmware flashed; no new listener or public exposure"
+}

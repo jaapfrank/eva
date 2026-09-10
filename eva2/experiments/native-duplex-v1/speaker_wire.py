@@ -113,7 +113,7 @@ class FramedSpeakerOutput:
     The receiver must issue that receipt from actual downstream playback and
     must reject every late batch of a stopped generation indefinitely.
     """
-    def __init__(self, *, socket: Socket, pcm: Callable[[str], AsyncIterator[bytes]],
+    def __init__(self, *, socket: Socket, pcm: Callable[[str], AsyncIterator[bytes]] | None = None,
                  session: bytes | None = None, receipt_timeout: float = 3.5,
                  send_timeout: float = 0.5, retired_sessions: tuple[bytes, ...] = (),
                  microphone_enabled: bool = False) -> None:
@@ -286,11 +286,14 @@ class FramedSpeakerOutput:
             # renderer never waits on this stop, so this cannot cancel itself.
             await asyncio.gather(*renderers, return_exceptions=True)
 
-    async def interrupt(self, *, generation: int) -> None:
+    def start_interrupt(self, *, generation: int) -> asyncio.Task:
         if type(generation) is not int or not 1 <= generation <= 0xFFFFFFFF:
             raise WireError("invalid stop generation")
+        return self._owned_stop(generation)
+
+    async def interrupt(self, *, generation: int) -> None:
         # Shield the physical stop from cancellation of speak/new-speech/close.
-        await asyncio.shield(self._owned_stop(generation))
+        await asyncio.shield(self.start_interrupt(generation=generation))
 
     def playback_result(self, generation: int) -> AudioPlaybackResult:
         return self._playback_results.get(generation) or AudioPlaybackResult(
@@ -298,6 +301,12 @@ class FramedSpeakerOutput:
             self._sent_frames.get(generation, 0), None)
 
     async def speak(self, *, generation: int, text: str) -> None:
+        if not isinstance(text, str) or not text.strip() or len(text) > 16_384 or self._pcm is None:
+            raise WireError("invalid reply text or missing speech provider")
+        await self.speak_pcm(generation=generation, source=self._pcm(text))
+
+    async def speak_pcm(self, *, generation: int, source: AsyncIterator[bytes]) -> None:
+        """Send existing synthesized PCM using the same generation/receipt barrier."""
         if not self._open or self._closing:
             raise WireError("speaker connection is not ready")
         if type(generation) is not int or not self._highest < generation <= 0xFFFFFFFF:
@@ -306,10 +315,10 @@ class FramedSpeakerOutput:
             raise PlaybackInterrupted("answer was already interrupted")
         if self._active_generation > self._cancelled_through:
             raise WireError("previous answer is still active")
-        if not isinstance(text, str) or not text.strip() or len(text) > 16_384:
-            raise WireError("invalid reply text")
+        if not hasattr(source, "__aiter__"):
+            raise WireError("PCM source must be an async iterator")
         self._highest = self._active_generation = generation
-        renderer = asyncio.create_task(self._render(generation, text))
+        renderer = asyncio.create_task(self._render(generation, source))
         self._renderers[generation] = renderer
         try:
             await asyncio.shield(renderer)
@@ -324,13 +333,13 @@ class FramedSpeakerOutput:
             if renderer.done():
                 self._renderers.pop(generation, None)
 
-    async def _render(self, generation: int, text: str) -> None:
+    async def _render(self, generation: int, pcm_source: AsyncIterator[bytes]) -> None:
         # A previous incomplete physical stop must never be bypassed.
         source = None
         try:
             await asyncio.gather(*(asyncio.shield(t) for t in self._stops.values()))
             await self._exchange(Packet(Kind.BEGIN, self.session, generation), Kind.BEGUN)
-            source = self._pcm(text).__aiter__()
+            source = pcm_source.__aiter__()
             frames = sequence = 0
             async for chunk in source:
                 frames += len(chunk) // 2

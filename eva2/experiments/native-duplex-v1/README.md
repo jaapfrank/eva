@@ -191,3 +191,29 @@ Zie `evidence/product/VB-001-speaker-bundle-systemd-2026-09-09.json` voor exacte
 De herhaling op bundel `eb6dfff16d04c01536746d040de9859e35951d59` slaagt: vijf vragen en vijf onderbroken afspeelrapporten, wachten op beide stopbevestigingen, oude processen weg, herstart, gesimuleerde corewissel 44710→44711→44710 en verwijderde tijdelijke units/runtime-mappen. 52 gerichte tests slagen. De vermelde systeemlooptijden zijn geen fysieke stoplatentie. Dit bewijst ook geen databaseoverdracht of echte A/B-core-uitrol.
 
 Bewijs: `evidence/product/VB-001-speaker-lifecycle-2026-09-09.json`. Deze controle is afgesloten. Alleen een concrete fout of relevante wijziging is reden om haar te herhalen. De gebruikersoplevering van SP-03 vereist nog de complete corekandidaat, speakerherstel, gecontroleerde ingebruikname en fysieke acceptatie; de test sluit die opdracht niet af.
+
+
+## LiveKit-continuïteit — bronkandidaat 10 september 2026
+
+`speaker_livekit_service.open_livekit_service(config, authority=...)` hergebruikt
+ServiceConfig, TLS- en HA-registercontrole. Geef de bestaande geladen
+HouseholdVoiceAuthority mee; de apparaten en huishoudsleutel moeten exact
+passen. De kern moet de nieuwe `/internal/v1/ha-voice/session/ready` en
+`respond` routes bevatten. Het aparte LiveKit-media-runtime met de gepinde
+`deploy/voice-session/requirements.lock` is nodig; de oude native bundle bevat
+deze dependencies niet en activeert deze route niet automatisch.
+
+Deze kandidaat gebruikt dezelfde EvaAgent/AgentSession als de laptop, met
+apparaatgebonden householdgeheugen. Lokale stop vernieuwt de capture zonder
+lopende taken te annuleren; mute sluit audioadmissie direct in de ontvangende
+transportlaag. FINISHED bepaalt voltooiing. STOPPED is een ondergrens en bewijst
+niet dat niets gehoord is: automatisch herhalen op basis van lege tekst staat
+voor deze hardware uit. Nieuwe en reeds wachtende audio worden na mute geweigerd.
+
+Om deze kandidaat te proberen zijn eerst nodig: een aan het bestaande
+HA-device-ID gebonden VoicePE, de gecontroleerde firmware met dit protocol,
+een vastgelegde bestaande firmware/terugweg, TLS-certificaat en provisioned
+apparaatsleutel. Er is niets geflasht of live gestart. De echte proef omvat
+wakeword, tegelijk spreken/echo, lokale stop/mute, een tweede vraag tijdens
+onderzoek en de latere aflevering van het resultaat. Synthetische TLS/PCM-
+proeven bewijzen deze fysieke kwaliteit of eigenaaracceptatie niet.

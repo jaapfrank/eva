@@ -1931,7 +1931,7 @@ def create_runtime_app() -> FastAPI:
     native_voice = (None if household_voice is None else household_voice.build_service(
         runtime=runtime, engine=engine,
     ))
-    return create_app(
+    app = create_app(
         runtime,
         native_voice=native_voice,
         dashboard_access_token=settings.dashboard_access_token,
@@ -1939,6 +1939,10 @@ def create_runtime_app() -> FastAPI:
         dashboard_voice=dashboard_voice,
         browser_session=browser_session_from_environment(),
     )
+    if household_voice is not None:
+        from eva.adapters.api.household_voice_session import install_household_voice_session
+        install_household_voice_session(app, runtime=runtime, authority=household_voice)
+    return app
 
 
 __all__ = [
