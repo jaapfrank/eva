@@ -43,9 +43,9 @@
     "ready": 200
   },
   "currentRuntime": {
-    "coreUrl": "http://127.0.0.1:44711",
-    "coreSlot": "managed-b-slot4",
-    "coreImage": "sha256:41179aff25d51738ddf7033af90e9b9ee250dd43435aaf1cd9af7832dc914078",
+    "coreUrl": "http://127.0.0.1:44710",
+    "coreSlot": "managed-b-slot3",
+    "coreImage": "sha256:76715a7de32c30b1c21258a427286e854cd612f6a86e25c32885b5d905da8263",
     "coreSource": "d8054d4de8278b08533177410076b9a70496cf83",
     "mediaImage": "sha256:57ae55645ab47d93c27f42c220eb55e2794f8877aff243791513f71e578aca40",
     "mediaSource": "efa32d5c3e0d5d134143006ef85ffc223856a068",
@@ -61,7 +61,11 @@
     },
     "cloudRelay": true,
     "ownerUrl": "http://localhost:44716",
-    "ownerAcceptance": false
+    "ownerAcceptance": false,
+    "bindingUpdate": {
+      "reason": "AU008 core cutover; voice media and relay configuration unchanged",
+      "browserProofScope": "Recorded browser speech/audio proof predates this core cutover; not repeated"
+    }
   },
   "browserTypedToCoreToAudio": {
     "passed": true,
