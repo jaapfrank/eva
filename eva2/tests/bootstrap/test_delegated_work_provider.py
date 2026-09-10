@@ -37,7 +37,7 @@ EVA2_ROOT = Path(__file__).resolve().parents[2]
 
 
 def test_release_profile_is_closed_and_hash_bound() -> None:
-    assert MODEL_PROFILE_ID == "model:codex:gpt-5.4-mini:v1"
+    assert MODEL_PROFILE_ID == "model:codex:gpt-5.6-luna:v1"
     assert WORKER_PROFILE_ID == "worker:research:v1"
     for value in (
         MODEL_PROFILE_RELEASE_SHA256,
@@ -167,7 +167,7 @@ class _ResponseStream(httpx2.AsyncByteStream):
         text = json.dumps({"summary": "Eén bevinding.", "findings": ["Controleer later."]})
         response = {
             "id": "resp_child", "object": "response", "created_at": 1_777_111_200,
-            "model": "gpt-5.4-mini", "status": "completed",
+            "model": "gpt-5.6-luna", "status": "completed",
             "output": [{"id": "msg_child", "type": "message", "role": "assistant",
                         "status": "completed", "content": [{"type": "output_text",
                         "text": text, "annotations": [], "logprobs": []}]}],
@@ -210,7 +210,7 @@ def test_each_child_gets_a_fresh_shared_provider_with_grant_and_cancellation(
 
     @asynccontextmanager
     async def provider(settings, *, credential_loader):
-        assert settings.model_name == "gpt-5.4-mini"
+        assert settings.model_name == "gpt-5.6-luna"
         assert settings.endpoint == "https://chatgpt.com/backend-api/codex/responses"
         assert settings.reasoning_effort == "low"
         async with OpenAICodexProvider(

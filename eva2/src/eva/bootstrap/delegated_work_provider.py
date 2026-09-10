@@ -36,21 +36,27 @@ _MODEL_LEASE_READER_GID = 65532
 _MODEL_LEASE_FILE_MODE = 0o640
 _SHA256 = re.compile(r"[0-9a-f]{64}")
 
-MODEL_PROFILE_ID = "model:codex:gpt-5.4-mini:v1"
+# ChatGPT-sign-in replacement for retired GPT-5.4 mini:
+# https://learn.chatgpt.com/docs/models
+# API-equivalent accounting rates, not a ChatGPT subscription invoice:
+# https://developers.openai.com/api/docs/models/gpt-5.6-luna
+MODEL_PROFILE_ID = "model:codex:gpt-5.6-luna:v1"
 WORKER_PROFILE_ID = "worker:research:v1"
-MODEL_NAME = "gpt-5.4-mini"
+MODEL_NAME = "gpt-5.6-luna"
 MODEL_ENDPOINT = "https://chatgpt.com/backend-api/codex/responses"
 MODEL_TIMEOUT_SECONDS = 30
 MODEL_MAXIMUM_REQUEST_BYTES = 256 * 1024
 MODEL_MAXIMUM_RESPONSE_BYTES = 256 * 1024
-INPUT_PRICE_USD_MICROS_PER_MILLION = 750_000
-OUTPUT_PRICE_USD_MICROS_PER_MILLION = 4_500_000
+INPUT_PRICE_USD_MICROS_PER_MILLION = 200_000
+OUTPUT_PRICE_USD_MICROS_PER_MILLION = 1_200_000
 PYDANTIC_AI_VERSION = "2.37.0"
 OPENAI_SDK_VERSION = "3.6.0"
 WORKER_INSTRUCTIONS = (
     "Werk als een afgeschermde onderzoeker voor Eva. Gebruik geen tools of externe "
     "bronnen. Scheid controleerbare bevindingen van aannames, blijf bij de gegeven "
-    "taak en geef compact geldig JSON volgens het gevraagde schema."
+    "taak en geef compact geldig JSON volgens het gevraagde schema. "
+    "Houd samenvatting en bevindingen samen rond 120 woorden, ook als de opdracht "
+    "een ruimer maximum noemt. Je uitvoerbudget is 500 tokens inclusief JSON."
 )
 
 MODEL_PROFILE_RELEASE_SHA256 = canonical_sha256(
