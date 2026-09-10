@@ -16,6 +16,7 @@ from dataclasses import dataclass
 from datetime import UTC, datetime
 from pathlib import Path
 from typing import Literal
+from uuid import UUID
 import sqlalchemy as sa
 
 from eva.adapters.postgres.delegated_work import (
@@ -95,11 +96,19 @@ class DelegatedWorkServiceSettings:
             return value
 
         try:
-            scope = external_timeline_scope(
-                required("EVA_RUNTIME_TENANT_ID"),
-                required("EVA_RUNTIME_INSTALLATION_ID"),
-                "delegated worker scope is required",
-            )
+            # Managed owner work is stored in the dashboard authority namespace.
+            # Older standalone workers retain their normalized runtime namespace.
+            storage_ids = (values.get("EVA_DASHBOARD_TENANT_ID", "").strip(),
+                           values.get("EVA_DASHBOARD_INSTALLATION_ID", "").strip())
+            if any(storage_ids):
+                scope = TimelineScope(UUID(required("EVA_DASHBOARD_TENANT_ID")),
+                                      UUID(required("EVA_DASHBOARD_INSTALLATION_ID")))
+            else:
+                scope = external_timeline_scope(
+                    required("EVA_RUNTIME_TENANT_ID"),
+                    required("EVA_RUNTIME_INSTALLATION_ID"),
+                    "delegated worker scope is required",
+                )
             interval = float(values.get("EVA_DELEGATED_WORK_POLL_SECONDS", "0.25"))
         except ValueError as error:
             raise RuntimeError("delegated worker process settings are invalid") from error

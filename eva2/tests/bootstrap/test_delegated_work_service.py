@@ -262,3 +262,15 @@ def test_provider_entrypoint_uses_one_async_lifecycle(
         "service": settings.service,
         "once": True,
     }
+
+
+def test_partial_or_invalid_owner_storage_scope_is_rejected():
+    base = {"EVA_DATABASE_DSN_FILE": "/run/secrets/database_dsn",
+            "EVA_DELEGATED_WORKER_ID": "worker:owner",
+            "EVA_RUNTIME_TENANT_ID": "runtime-tenant",
+            "EVA_RUNTIME_INSTALLATION_ID": "runtime-installation"}
+    for extra in ({"EVA_DASHBOARD_TENANT_ID": "11111111-1111-1111-8111-111111111111"},
+                  {"EVA_DASHBOARD_INSTALLATION_ID": "22222222-2222-2222-8222-222222222222"},
+                  {"EVA_DASHBOARD_TENANT_ID": "not-a-uuid", "EVA_DASHBOARD_INSTALLATION_ID": "not-a-uuid"}):
+        with pytest.raises(RuntimeError):
+            DelegatedWorkServiceSettings.from_environment(base | extra)

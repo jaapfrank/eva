@@ -180,7 +180,20 @@ def test_configured_conversation_scope_can_differ_from_storage_authority(delegat
     assert service.conversation_scope != store.scope
     assert service.available_for(turn)
     work = service.execute("start", turn, task="Schrijf drie ideeën", request_key="distinct-scope")["work"]
-    assert store.load(work["work_id"], owner_principal_id=owner, principal_binding_id=binding)
+    stored = store.load(work["work_id"], owner_principal_id=owner, principal_binding_id=binding)
+    from eva.bootstrap.delegated_work_service import DelegatedWorkServiceSettings
+    settings = DelegatedWorkServiceSettings.from_environment({
+        "EVA_DATABASE_DSN_FILE": "/run/secrets/database_dsn",
+        "EVA_DELEGATED_WORKER_ID": "worker:distinct-scope",
+        "EVA_RUNTIME_TENANT_ID": turn.tenant_id,
+        "EVA_RUNTIME_INSTALLATION_ID": turn.installation_id,
+        "EVA_DASHBOARD_TENANT_ID": str(scope.tenant_id),
+        "EVA_DASHBOARD_INSTALLATION_ID": str(scope.installation_id),
+    })
+    worker_store = PostgresDelegatedWorkStore(delegated_engine, settings.scope)
+    claim = worker_store.claim_next(worker_id=settings.worker_id, release=_release(stored.spec),
+                                   now=NOW + timedelta(seconds=1))
+    assert claim.work_id == work["work_id"]
     assert not service.available_for(_turn(label, owner, 1))
     assert not service.available_for(_turn("other-runtime", owner, 1))
     assert not service.available_for(_turn("runtime-namespace", _id(label, "stranger"), 1))
