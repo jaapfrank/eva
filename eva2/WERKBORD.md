@@ -5,10 +5,10 @@ Laatst bijgewerkt: 2026-09-10.
 Doel: [Eva als zelfstandig lerende digitale huisgenoot](PROJECTDOEL.md).
 Gebouwd, getest, live en door jou geaccepteerd zijn verschillende stappen.
 
-CO-008 is afgerond met onafhankelijke GO en geaccepteerde GE-01. Nu AU-007: Eva werkt vanuit bestaande toegestane context zelf één relevant privaat voorstel uit.
-[Actueel bewijs](reviews/CO-008-automatic-memory-ddb0267.md).
+CO-008 is afgerond en GE-01 geaccepteerd. AU-007 is nu technisch afgerond met onafhankelijke GO: Eva koos en maakte zelf een private beoordelingskaart voor huisautomatiseringen. Alleen Jaaps gebruiksbeoordeling staat open.
+[Actueel bewijs](reviews/AU-007-private-initiative-34ed766.md).
 
-Bestaande initiatiefroute compleet gebruiken: echte trigger → eigen keuze → controleerbaar resultaat → Jaaps beoordeling.
+Lees de [beoordelingskaart](evidence/product/AU-007-beoordelingskaart-huisautomatisering-2026-09-10.md) wanneer het uitkomt. IN-01: laat weten of dit soort eigen bijdrage nuttig is. Er is geen volgend implementatiegoal gestart.
 
 ### Afzonderlijke storing: bestaande Voice PE-route
 
@@ -43,7 +43,7 @@ blijven open; geen nieuwe stemervaring live of geaccepteerd.
 
 | Volgorde | Kaart | Resultaat | Status |
 |---:|---|---|---|
-| 142 | `AU-007` — Zelf een relevant privaat voorstel uitwerken | Eva ziet via een bestaande huiswaarneming een passende kans bij toegestane persoonlijke context, kiest zelf een concrete vervolgstap en werkt één controleerbaar privaat voorstel of hulpmiddel uit. Jaap hoeft de stappen niet voor te zeggen. | 🟡 BEZIG |
+| 142 | `AU-007` — Zelf een relevant privaat voorstel uitwerken | Eva ziet via een bestaande huiswaarneming een passende kans bij toegestane persoonlijke context, kiest zelf een concrete vervolgstap en werkt één controleerbaar privaat voorstel of hulpmiddel uit. Jaap hoeft de stappen niet voor te zeggen. | 🔵 REVIEW |
 
 Klaar betekent:
 
@@ -180,7 +180,7 @@ Afgevinkt betekent alleen: de vastgelegde kaart is afgerond, niet het hele produ
   [Bewijs](evidence/product/VB-003-completion-2026-09-10.json).
 - [x] `CO-008` — Zelf relevant geheugen kiezen en bijwerken (done).
   [Bewijs](evidence/product/CO-008-automatic-personal-memory-2026-09-10.json).
-- [ ] `AU-007` — Zelf een relevant privaat voorstel uitwerken (in_progress).
+- [ ] `AU-007` — Zelf een relevant privaat voorstel uitwerken (review).
 
 </details>
 

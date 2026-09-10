@@ -271,9 +271,9 @@
           "tested": "partial",
           "live": "partial",
           "accepted": "partial",
-          "gap": "Onafhankelijke CO-008-review; bredere langetermijn- en gezinskwaliteit blijven apart.",
+          "gap": "Bredere langetermijn- en gezinskwaliteit blijven open; CO-008 en GE-01 zijn afgerond.",
           "detail": "De reparatie voor gewijzigde geheugenbronnen en verouderde recall is live. Selectie en broncorrectie zijn gericht bewezen; bestaand gesprek blijft na omschakeling beschikbaar. Volledige langetermijnkwaliteit en historische needs_help blijven open.",
-          "evidence": "CO-006 · technisch afgerond en live 8 september; volledige gezinsacceptatie open",
+          "evidence": "CO-008 · onafhankelijke GO · GE-01 door Jaap geaccepteerd",
           "outcomes": [
             {
               "id": "memory-source",
@@ -301,7 +301,7 @@
               "accepted": "yes",
               "works": "Eva past advies aan van blauw naar groen nadat Jaap zijn voorkeur verandert.",
               "tryIt": "GE-01 is door Jaap geaccepteerd. Gewoon blijven gebruiken via Telegram.",
-              "gap": "Deze gebruikersproef is afgerond; onafhankelijke technische review staat apart open.",
+              "gap": "Voorkeur onthouden, wijzigen en gebruiken: technisch afgerond met onafhankelijke GO en door Jaap geaccepteerd.",
               "evidence": "CO-008-GE-01-owner-acceptance-2026-09-10.json",
               "detail": "Jaap bevestigt: Dit lijkt perfect te werken. Screenshot toont voorkeur onthouden, wijziging verwerken en toepassen bij een andere adviesvraag. Langetermijn- en herstartbewijs zijn afzonderlijke technische proeven."
             }
@@ -317,11 +317,27 @@
           "tested": "partial",
           "live": "partial",
           "accepted": "no",
-          "gap": "Praktijkresultaat en waardering; uitvoerroute is live",
-          "detail": "De spontane beslisser is live verbonden met duurzaam onderzoek en het maken van een bestand. Het eigenaarsdashboard toont de initiatieven en biedt downloaden en stoppen. Stop tijdens een lopende taak en hervatten zijn gericht gecontroleerd. De eerste live uitlezing bevatte nog geen initiatief; nut, eigenheid en voorsprong op Bottie zijn nog niet beoordeeld.",
-          "evidence": "AU-005 · live op slot 4 · eigenaarsoverzicht en stop gecontroleerd",
-          "outcomes": [],
-          "works": "De uitvoerroute voor eigen onderzoek en een bestand staat live; bruikbare spontane resultaten nog niet volledig beoordeeld."
+          "gap": "Jaaps waardering en herhaalde bruikbare bijdragen; eerste concrete oplevering technisch klaar.",
+          "detail": "AU-007 is via een echte huiswaarneming, eigen keuze en normale achtergrondwerkers opgeleverd. Eigenaarroute, opgeslagen inhoud en controlehash komen overeen; onafhankelijke technische GO. Jaap beoordeelt het nut later.",
+          "evidence": "AU-007 · technisch afgerond en live · onafhankelijke GO · IN-01 klaar voor beoordeling",
+          "outcomes": [
+            {
+              "id": "initiative-private-result",
+              "icon": "✓",
+              "title": "Zelf een privaat hulpmiddel kiezen en maken",
+              "subtitle": "Eigen initiatief · AU-007 / IN-01",
+              "built": "yes",
+              "tested": "yes",
+              "live": "yes",
+              "accepted": "no",
+              "works": "Beoordelingskaart voor huisautomatiseringen met beslisregels en drie fictieve voorbeelden, door Eva zelf gekozen en gemaakt.",
+              "tryIt": "Open de beoordelingskaart bij de actuele oplevering en beoordeel of dit een nuttige eigen bijdrage is.",
+              "gap": "Alleen Jaaps gebruiksbeoordeling is nog open.",
+              "evidence": "AU-007-private-initiative-2026-09-10.json · onafhankelijke GO",
+              "detail": "AU-007 is via een echte huiswaarneming, eigen keuze en normale achtergrondwerkers opgeleverd. Eigenaarroute, opgeslagen inhoud en controlehash komen overeen; onafhankelijke technische GO. Jaap beoordeelt het nut later."
+            }
+          ],
+          "works": "Eva koos vanuit jouw bestaande huiswens zelfstandig een beoordelingskaart en leverde deze als privaat document op."
         },
         {
           "id": "tools",
@@ -617,6 +633,20 @@
           "expected": "Eva gebruikt de nieuwe voorkeur.",
           "report": "Geaccepteerd door Jaap.",
           "result": "Dit lijkt perfect te werken. Screenshot toont eerst blauw in deuradvies en na wijziging groen in schuttingadvies."
+        },
+        {
+          "id": "IN-01",
+          "updatedOn": "2026-09-10",
+          "status": "ready",
+          "title": "Eva maakt uit eigen initiatief een privaat hulpmiddel",
+          "change": "Eva koos en maakte zelf de beoordelingskaart voor gezinsvriendelijke automatiseringen.",
+          "steps": [
+            "Lees de beoordelingskaart bij de actuele oplevering.",
+            "Beoordeel of je deze bijdrage nuttig vindt en of Eva zulke ideeën vaker mag uitwerken."
+          ],
+          "expected": "Een volledig leesbaar document met vier afwegingen, beslisregels en drie duidelijk fictieve voorbeelden.",
+          "report": "IN-01: nuttig / niet nuttig, eventueel met wat je anders zou willen.",
+          "result": "Technisch afgerond, live teruggelezen en onafhankelijk beoordeeld. Jaaps acceptatie staat open."
         }
       ]
     },
@@ -694,10 +724,10 @@
       "authorizedBy": "Jaap",
       "document": "eva2/PROJECTDOEL.md",
       "scope": "Digitale huisgenoot: zelfstandig redeneren, initiatief, onbekende vaardigheden leren, handelen, zelfverbetering en aantoonbare concurrentiewinst met open-sourcehergebruik.",
-      "sessionGoal": "Het volledige projectdoel blijft actief. Eigen initiatief is technisch live; nu toegestane algemene handelingen bruikbaar afronden.",
-      "currentWork": "CO-008 is afgerond met onafhankelijke GO en geaccepteerde GE-01. Nu AU-007: Eva werkt vanuit bestaande toegestane context zelf één relevant privaat voorstel uit.",
-      "currentEvidence": "eva2/reviews/CO-008-automatic-memory-ddb0267.md",
-      "nextStep": "Bestaande initiatiefroute compleet gebruiken: echte trigger → eigen keuze → controleerbaar resultaat → Jaaps beoordeling.",
+      "sessionGoal": "Eén begrensd deelgoal: AU-007. Technische oplevering gereed; eigenaarsbeoordeling blijft open.",
+      "currentWork": "CO-008 is afgerond en GE-01 geaccepteerd. AU-007 is nu technisch afgerond met onafhankelijke GO: Eva koos en maakte zelf een private beoordelingskaart voor huisautomatiseringen. Alleen Jaaps gebruiksbeoordeling staat open.",
+      "currentEvidence": "eva2/reviews/AU-007-private-initiative-34ed766.md",
+      "nextStep": "Lees de [beoordelingskaart](evidence/product/AU-007-beoordelingskaart-huisautomatisering-2026-09-10.md) wanneer het uitkomt. IN-01: laat weten of dit soort eigen bijdrage nuttig is. Er is geen volgend implementatiegoal gestart.",
       "usageClarification": {
         "date": "2026-09-07",
         "authorizedBy": "Jaap",
@@ -3371,7 +3401,7 @@
     },
     "parallelWorkNotes": "### Afzonderlijke storing: bestaande Voice PE-route\n\nJaap bevestigde op 10 september dat Eva na de reparatie weer hoorbaar antwoordt.\nDe specifieke onbereikbaarheidsfout door een geheugenbronverwijzing van 247 tekens\nis daarmee in de praktijk hersteld. De originele bron blijft behouden; de\npersoons- en mandaatcontroles zijn niet verruimd. 108 gerichte tests, onafhankelijke\nreview en gecontroleerde uitrol zijn vastgelegd in het\n[herstelbewijs](evidence/product/VOICE-REF-247-repair-2026-09-10.json).\nNatuurlijk doorpraten tijdens werk en gewone spraakonderbreking zijn niet\ngeaccepteerd: de huidige route blijft opeenvolgende vraag/antwoordbeurten gebruiken.\n[Begrensde diagnose en voorstel](design/product/voice-session-diagnosis-2026-09-10.md).\nGE-01 blijft geaccepteerd; geen nieuw projectgoal of brede voice-implementatie gestart.\n\nHet [OSS-onderzoek van 10 september](design/product/voice-oss-selection-2026-09-10.md)\nis afgerond onder Jaaps harde eis dat de volledige gespreksmechanismen al samen\nin een onderhouden applicatie zitten. Geen onderzochte applicatie is volledig\ngekwalificeerd. LiveKit 1.8.0: 19 bestaande upstreamtests geslaagd, zonder fysieke\nspraakproef. Pipecat heeft uitvoerbare asyncdemo's, maar de onderzochte taken zijn\ngesimuleerd en/of alleen via het scherm opgevolgd. Geen eigen gesprekssysteem,\nnieuwe dienst of runtimewijziging gestart. Telefoon/laptop gaat bij eventuele\nvervolgverificatie voorop; HA is geen selectievoorwaarde. `openai_tts` 3.9.1 heeft\ngepubliceerde zinsstreaming, is hier niet geïnstalleerd en blijft ondersteunend.\n\n\nJaap heeft de uitvoering expliciet hervat: ontbreken van een complete OSS-app is\ngeen stopvoorwaarde. [Actieve LiveKit-integratie](design/product/voice-livekit-delivery-2026-09-10.md)\ngebruikt de bestaande Eva-kern en providers. Laptop eerst, telefoon/huisapparaten\nblijven open; geen nieuwe stemervaring live of geaccepteerd.",
     "initiativeDeliveryAU007": {
-      "status": "in_progress",
+      "status": "technical_done_owner_review",
       "scope": "Eva ziet via een bestaande huiswaarneming een passende kans bij toegestane persoonlijke context, kiest zelf een concrete vervolgstap en werkt één controleerbaar privaat voorstel of hulpmiddel uit. Jaap hoeft de stappen niet voor te zeggen.",
       "situation": "Bestaande passieve huiswaarneming plus toegestane eigenaarskennis; één privaat uitgewerkt idee.",
       "reuse": "Bestaande SensoryDecisionWorker, PersonalInitiativeProposal, duurzame interesse-/prototypewerkers en eigenaarsinzage.",
@@ -3382,7 +3412,7 @@
         "Geen nieuwe spraak- of dashboardimplementatie.",
         "Bestaande trigger, geen handmatig ingevoegde initiatiefclaim als bewijs."
       ],
-      "next": "Eerste normale achtergrondcyclus met gekoppeld eigenaarsgeheugen afwachten; nog geen bruikbaar privaat resultaat opgeleverd.",
+      "next": "Technisch afgerond met onafhankelijke GO. Eva maakte zelf de beoordelingskaart met drie fictieve voorbeelden. Alleen Jaaps beoordeling van het nut staat nog open; geen nieuw implementatiegoal gestart.",
       "ownerAccepted": false,
       "necessaryDependency": {
         "finding": "Live broad owner context recall selected zero facts. All responses had source_facts_truncated=true, including observations whose complete source IDs were present. Hindsight documents this as partial response map, not incomplete source IDs for every observation.",
@@ -3396,15 +3426,15 @@
         "tested": "Eerste contextfix34 checks; vervolg16 model/workerchecks; finale2 PostgreSQLchecks onder beperkte runtime-rol. Onafhankelijke technischeGO.",
         "live": true,
         "ownerAccepted": false,
-        "next": "Eerste normale achtergrondcyclus met gekoppeld eigenaarsgeheugen afwachten; nog geen bruikbaar privaat resultaat opgeleverd."
+        "next": "Technisch afgerond met onafhankelijke GO. Eva maakte zelf de beoordelingskaart met drie fictieve voorbeelden. Alleen Jaaps beoordeling van het nut staat nog open; geen nieuw implementatiegoal gestart."
       },
       "liveCandidate": {
-        "image": "sha256:17c7bb1a2ad81d1f8ff873ba227649a5011c5013b76b93d8a2f2d108b0034c61",
+        "image": "sha256:35fdc82c8d041a58d9da8be1fdf59d60844e8499a37e7fbd1ad6a261491b515e",
         "sourceCommit": "34ed766a1947e78a268b800728d227218aaa8f14",
-        "slot": 3,
-        "port": 44710,
-        "cutover": "A/B4→3 geslaagd152.9s; beideDBsactueelmetdigests; vorige versie gestopt en behouden.",
-        "voiceGateway": "44714→44710 teruggelezen",
+        "slot": 4,
+        "port": 44711,
+        "cutover": "Herstel A/B3→4 geslaagd133.2s; beideDBsactueelmetdigests en geladenmodulesafzonderlijkgecontroleerd.",
+        "voiceGateway": "44714→44711 teruggelezen",
         "ownerAccepted": false
       },
       "nativeTrial": {
@@ -3432,11 +3462,32 @@
       },
       "ownerContextRepair": {
         "sourceCommit": "34ed766a1947e78a268b800728d227218aaa8f14",
-        "status": "live",
+        "status": "live_loaded_modules_verified",
         "finding": "Initiatief zocht canonical eigenaar terwijl gewone Telegrambridge onder gekoppelde private alias onthoudt. Bestaande vertrouwde accountkoppeling wordt nu per recall opnieuw gelezen.",
         "checks": "12 workerchecks geslaagd; intrekken koppeling getest; onafhankelijke technische GO.",
-        "next": "Koppeling staat live. Eva kiest en werkt via haar normale achtergrondcyclus zelf een privaat voorstel uit; het concrete resultaat moet nog worden gecontroleerd."
-      }
+        "next": "Technisch afgerond met onafhankelijke GO. Eva maakte zelf de beoordelingskaart met drie fictieve voorbeelden. Alleen Jaaps beoordeling van het nut staat nog open; geen nieuw implementatiegoal gestart.",
+        "deploymentFailure": "17c7bb copied into /app/src while imported modules live at /opt/eva/src. Source34ed766 is valid; repair was not yet active. No product success claimed."
+      },
+      "currentNativeInitiative": {
+        "intentId": "personal-interest:cada69200eaeb407c344763126d24df0307dc9254eccbb7a851522082c764794",
+        "title": "Beoordelingskaart voor gezinsvriendelijke automatiseringen",
+        "adoptedAt": "2026-09-10T16:32:31Z",
+        "sourceEventId": "home-assistant:f3fbd7aeaab70e63c9765df38f120d143adac6f031c1c6c61bad07e29f1d3109",
+        "status": "done",
+        "origin": "eva_initiative",
+        "manualAdoption": false,
+        "artifactPath": "eva2/evidence/product/AU-007-beoordelingskaart-huisautomatisering-2026-09-10.md",
+        "sha256": "9f351ab6f928fbf0a7010e44d95e8ce520374b7a34b65990f8abbf312d520522"
+      },
+      "technicalComplete": true,
+      "independentProductReview": {
+        "decision": "GO",
+        "reviewer": "/root/au002_release_review",
+        "path": "eva2/reviews/AU-007-private-initiative-34ed766.md",
+        "commit": "f99b5a2e9561ce96d4b77668b3caf9b813339239"
+      },
+      "resultEvidence": "eva2/evidence/product/AU-007-private-initiative-2026-09-10.json",
+      "administrativeStatus": "Review betekent hier de nog open gebruikersbeoordeling. Technisch werk en onafhankelijke technische productreview zijn afgerond. Er is geen volgende implementatiekaart gestart."
     }
   },
   "activeTaskId": "AU-007",
@@ -4991,12 +5042,15 @@
       "area": "Eigen initiatief",
       "title": "Zelf een relevant privaat voorstel uitwerken",
       "outcome": "Eva ziet via een bestaande huiswaarneming een passende kans bij toegestane persoonlijke context, kiest zelf een concrete vervolgstap en werkt één controleerbaar privaat voorstel of hulpmiddel uit. Jaap hoeft de stappen niet voor te zeggen.",
-      "status": "in_progress",
+      "status": "review",
       "stateDetails": {
-        "baseCommit": null,
-        "implementationCommit": null,
-        "evidenceCommit": null,
-        "reviewEvidencePaths": [],
+        "baseCommit": "ff8071c08a41c5e73036acc43a1d642f99a08f1b",
+        "implementationCommit": "34ed766a1947e78a268b800728d227218aaa8f14",
+        "evidenceCommit": "f99b5a2e9561ce96d4b77668b3caf9b813339239",
+        "reviewEvidencePaths": [
+          "eva2/evidence/product/AU-007-private-initiative-2026-09-10.json",
+          "eva2/reviews/AU-007-private-initiative-34ed766.md"
+        ],
         "blockerReason": null
       },
       "ownerRole": "architecturelead",
