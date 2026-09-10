@@ -438,7 +438,7 @@ services:
     healthcheck:
       test: ["CMD", "/usr/local/bin/python", "-m", "eva.bootstrap.delegated_work_service", "--check"]
       interval: 10s
-      timeout: 3s
+      timeout: 10s
       retries: 6
     environment:
       EVA_DATABASE_DSN_FILE: /run/secrets/database_dsn
