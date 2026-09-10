@@ -138,6 +138,7 @@ def test_invalid_token_rejected_before_any_cutover_command(
 def test_start_writers_withholds_token_even_for_enabled_slot(
     monkeypatch: pytest.MonkeyPatch, tmp_path: Path,
 ) -> None:
+    monkeypatch.setattr(SystemBackend, "_is_running", staticmethod(lambda _: False))
     commands = []
     image = "sha256:" + "a" * 64
     token = tmp_path / "telegram-token"
@@ -197,6 +198,7 @@ def test_rollback_disabled_slot_cannot_keep_proactive_token(document: dict) -> N
 def test_activation_requires_staged_image_route_and_quiescence(
     monkeypatch: pytest.MonkeyPatch, tmp_path: Path, failure: str | None,
 ) -> None:
+    monkeypatch.setattr(SystemBackend, "_is_running", staticmethod(lambda _: False))
     slot = _slot(4)
     token = tmp_path / "telegram-token"
     token.write_text("123456:synthetic-test")
@@ -1095,6 +1097,7 @@ def test_voice_only_cutover_failure_preserves_new_data_before_disabling_voice(tm
 
 @pytest.mark.parametrize("configured", ["true", "false"])
 def test_connector_free_staging_activation_and_reverse_path_force_background_phase(monkeypatch, tmp_path, configured):
+    monkeypatch.setattr(SystemBackend, "_is_running", staticmethod(lambda _: False))
     image = "sha256:" + "a" * 64
     slot = _slot(4)
     dropin = tmp_path / "route"
@@ -1496,3 +1499,68 @@ def test_delegated_worker_quiesces_stages_disabled_and_activates_with_health(mon
         backend._verify_delegated_worker(slot, environment)
     backend.stop_writers(slot)
     assert not running
+
+
+@pytest.mark.parametrize("mutation", ["valid", "missing", "revoked", "expired", "future", "prior_source", "household", "disable_existing"])
+def test_explicit_first_voice_activation_preserves_existing_authority(tmp_path, mutation):
+    from datetime import UTC, datetime, timedelta
+    from tests.bootstrap.test_dashboard_voice_bootstrap import setup
+    import json
+    path, policy, _, _ = setup(tmp_path)
+    now = datetime.now(UTC)
+    policy.update(effective_at=(now-timedelta(hours=1)).strftime("%Y-%m-%dT%H:%M:%SZ"),
+                  expires_at=(now+timedelta(hours=1)).strftime("%Y-%m-%dT%H:%M:%SZ"))
+    prefix = "EVA_DASHBOARD_VOICE_"
+    source = {}
+    target = {prefix+"ENABLED": "true", prefix+"POLICY_DIR_HOST": str(tmp_path)}
+    if mutation == "revoked": policy["state"] = "revoked"
+    if mutation == "expired": policy["expires_at"] = now.strftime("%Y-%m-%dT%H:%M:%SZ")
+    if mutation == "future": policy["effective_at"] = (now+timedelta(minutes=1)).strftime("%Y-%m-%dT%H:%M:%SZ")
+    if mutation == "prior_source": source[prefix+"POLICY_SHA256"] = "a"*64
+    if mutation == "household": target["EVA_HOUSEHOLD_VOICE_ENABLED"] = "true"
+    if mutation == "disable_existing": source, target = target, source
+    grant = tmp_path / "current.json"
+    grant.write_text(json.dumps(policy))
+    if mutation == "missing": grant.unlink()
+    with pytest.raises(QuiescentCutoverError):
+        SystemBackend._verify_voice_continuity(source, target)
+    if mutation == "valid":
+        SystemBackend._verify_voice_continuity(source, target, activate_dashboard_voice=True)
+    else:
+        with pytest.raises(QuiescentCutoverError):
+            SystemBackend._verify_voice_continuity(source, target, activate_dashboard_voice=True)
+
+
+def test_new_voice_readiness_failure_rolls_back_before_route(monkeypatch, tmp_path):
+    from dataclasses import replace
+    from io import BytesIO
+    from urllib import error
+    from tools import eva2_quiescent_cutover as module
+    token = tmp_path / "owner-token"
+    token.write_text("x" * 40)
+    checks = []
+    class Response(BytesIO):
+        status = 200
+    def open_request(req, **kwargs):
+        checks.append(req.full_url)
+        if req.full_url.endswith("/voice-session/ready"):
+            raise error.HTTPError(req.full_url, 503, "not ready", {}, None)
+        if req.get_header("Authorization") is None:
+            raise error.HTTPError(req.full_url, 401, "owner required", {}, None)
+        return Response(b"{}")
+    monkeypatch.setattr(module.request, "urlopen", open_request)
+    monkeypatch.setattr(SystemBackend, "_ready", staticmethod(lambda _: True))
+    verifier = SystemBackend(activate_dashboard_voice=True)
+    verifier._voice_activation_slot = 4
+    class Backend(FakeBackend):
+        def verify_runtime(self, slot):
+            super().verify_runtime(slot)
+            verifier.verify_runtime(replace(slot, dashboard_token=token))
+    backend = Backend(tmp_path)
+    with pytest.raises(QuiescentCutoverError, match="new voice channel is not ready"):
+        quiescent_cutover(source_slot=3, target_slot=4, backend=backend,
+                          dropin=tmp_path/"dropin", workspace=tmp_path)
+    assert not any(call.startswith("route:") for call in backend.calls)
+    assert backend.calls[-7:] == ["stop:4", "snapshot:4:automatic-rollback", "restore:3:reverse",
+                                 "start:3", "verify:3", "activate-delivery:3", "start-eva1:3"]
+    assert sum(url.endswith("/voice-session/ready") for url in checks) == 1

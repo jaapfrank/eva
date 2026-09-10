@@ -267,8 +267,10 @@ def _shared_database_consumers(
 class SystemBackend:
     """Strict local implementation for the two retained host slots."""
 
-    def __init__(self, *, owner_uid: int = 0) -> None:
+    def __init__(self, *, owner_uid: int = 0, activate_dashboard_voice: bool = False) -> None:
         self.owner_uid = owner_uid
+        self.activate_dashboard_voice = activate_dashboard_voice
+        self._voice_activation_slot: int | None = None
 
     @staticmethod
     def _run(
@@ -818,11 +820,26 @@ class SystemBackend:
         return environment
 
     @staticmethod
-    def _verify_voice_continuity(source: dict[str, str], target: dict[str, str]) -> None:
+    def _verify_voice_continuity(source: dict[str, str], target: dict[str, str],
+                                 *, activate_dashboard_voice: bool = False) -> None:
         """A core replacement must retain admitted voice channels and revocations."""
         for prefix in ("EVA_DASHBOARD_VOICE_", "EVA_HOUSEHOLD_VOICE_"):
             left_enabled = source.get(prefix + "ENABLED", "false")
             right_enabled = target.get(prefix + "ENABLED", "false")
+            if (activate_dashboard_voice and prefix == "EVA_DASHBOARD_VOICE_"
+                    and left_enabled == "false" and right_enabled == "true"):
+                if any(k.startswith(prefix) and k != prefix + "ENABLED" for k in source):
+                    raise QuiescentCutoverError("voice continuity: source has prior authority")
+                from eva.bootstrap.dashboard_voice import DashboardVoicePolicy
+                try:
+                    policy = DashboardVoicePolicy.model_validate_json(
+                        (Path(target[prefix + "POLICY_DIR_HOST"]) / "current.json").read_bytes())
+                    now = datetime.now(UTC).strftime("%Y-%m-%dT%H:%M:%SZ")
+                    if not (policy.state == "enabled" and policy.effective_at <= now < policy.expires_at):
+                        raise ValueError("inactive grant")
+                except (OSError, ValueError, KeyError) as exc:
+                    raise QuiescentCutoverError("voice activation requires a current grant") from exc
+                continue
             if left_enabled != right_enabled:
                 raise QuiescentCutoverError("voice continuity: enabled channel differs")
             if left_enabled != "true":
@@ -848,7 +865,11 @@ class SystemBackend:
         previous = _read_exact_dropin(dropin, source.url, owner_uid=self.owner_uid)
         source_environment = self._verify_slot(source, source=True)
         target_environment = self._verify_slot(target, source=False)
-        self._verify_voice_continuity(source_environment, target_environment)
+        self._verify_voice_continuity(source_environment, target_environment,
+                                      activate_dashboard_voice=self.activate_dashboard_voice)
+        self._voice_activation_slot = (target.number if self.activate_dashboard_voice
+            and source_environment.get("EVA_DASHBOARD_VOICE_ENABLED", "false") == "false"
+            and target_environment.get("EVA_DASHBOARD_VOICE_ENABLED") == "true" else None)
         inspected = self._inspect_all()
         for slot in (source, target):
             consumers = _shared_database_consumers(
@@ -1582,6 +1603,16 @@ class SystemBackend:
             raise QuiescentCutoverError(
                 "retained target owner route is unavailable"
             ) from exc
+        if self._voice_activation_slot == slot.number:
+            voice_request = request.Request(
+                f"{slot.url}/internal/v1/voice-session/ready",
+                headers={"Authorization": f"Bearer {token}"}, method="GET")
+            try:
+                with request.urlopen(voice_request, timeout=10) as response:
+                    if response.status != 200 or json.load(response).get("contract") != "EvaVoiceSessionReady/v1":
+                        raise ValueError("voice readiness differs")
+            except (OSError, ValueError) as exc:
+                raise QuiescentCutoverError("new voice channel is not ready") from exc
         try:
             request.urlopen(request.Request(url, method="GET"), timeout=10)
         except error.HTTPError as exc:
@@ -1750,6 +1781,8 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--source-slot", type=int, required=True, choices=(3, 4))
     parser.add_argument("--target-slot", type=int, required=True, choices=(3, 4))
     parser.add_argument("--dropin", type=Path, default=DROPIN)
+    parser.add_argument("--activate-dashboard-voice", action="store_true",
+                        help="explicitly admit a first owner dashboard voice grant")
     mode = parser.add_mutually_exclusive_group(required=True)
     mode.add_argument("--preflight-only", action="store_true")
     mode.add_argument("--execute", action="store_true")
@@ -1767,7 +1800,7 @@ def main(argv: list[str] | None = None) -> int:
                 json.dumps({"error": "another cutover is active", "status": "failed"})
             )
             return 2
-        backend = SystemBackend()
+        backend = SystemBackend(activate_dashboard_voice=arguments.activate_dashboard_voice)
         if arguments.preflight_only:
             source = _slot(arguments.source_slot)
             target = _slot(arguments.target_slot)
@@ -1790,6 +1823,7 @@ def main(argv: list[str] | None = None) -> int:
                 dropin=arguments.dropin,
                 workspace=workspace,
             )
+        receipt["dashboardVoiceFirstActivation"] = backend._voice_activation_slot is not None
         success = True
     except QuiescentCutoverError as exc:
         retain_workspace = "rollback both failed" in str(exc) or (
