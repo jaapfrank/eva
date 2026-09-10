@@ -546,8 +546,9 @@ class PostgresSensoryEventStore:
             return ()
         scope = self._timeline._scope_value
         c, e = operational_checkpoints.c, operational_events.c
-        with self._timeline._engine.connect() as connection:
-            rows = connection.execute(sa.select(c.phase, e.payload).join(
+        with self._timeline._engine.begin() as connection:
+            self._timeline._scope(connection)
+            rows = connection.execute(sa.select(c.phase, e.payload, e.payload_sha256).join(
                 operational_events, sa.and_(c.tenant_id == e.tenant_id,
                     c.installation_id == e.installation_id, c.thread_id == e.thread_id)
             ).where(c.tenant_id == scope.tenant_id, c.installation_id == scope.installation_id,
@@ -555,6 +556,8 @@ class PostgresSensoryEventStore:
                 e.payload["data"]["principal_id"].astext == self._initiative_principal_id,
                 e.payload["data"]["origin"].astext == "eva_initiative"
             ).order_by(c.updated_at.desc()).limit(16)).all()
+        if any(canonical_sha256(row.payload) != bytes(row.payload_sha256).hex() for row in rows):
+            raise RuntimeError("initiative history payload hash differs")
         return tuple({"title": row.payload["data"]["title"],
                       "question": row.payload["data"]["next_exploration"],
                       "phase": row.phase} for row in rows)

@@ -87,11 +87,17 @@ def test_stopped_initiative_context_is_owner_scoped_and_same_title_cannot_restar
         installation_id=installation, owner=owner, binding=binding, authority_scope=authority)
     intent_id = control.page(now=NOW)["cards"][0]["intent_id"]
     control.stop(intent_id, now=NOW + timedelta(seconds=1))
-    assert source.recent_initiatives() == ({"title": "A useful plan",
-        "question": "Create a proposal", "phase": "personal_stopped"},)
-    other = PostgresSensoryEventStore(postgres_engine, tenant_id=tenant,
-        installation_id=installation, initiative_principal_id=str(_id(label, "other")))
-    assert other.recent_initiatives() == ()
+    def runtime_role(connection):
+        connection.exec_driver_sql("SET LOCAL ROLE eva_dbos")
+    sa.event.listen(postgres_engine, "begin", runtime_role)
+    try:
+        assert source.recent_initiatives() == ({"title": "A useful plan",
+            "question": "Create a proposal", "phase": "personal_stopped"},)
+        other = PostgresSensoryEventStore(postgres_engine, tenant_id=tenant,
+            installation_id=installation, initiative_principal_id=str(_id(label, "other")))
+        assert other.recent_initiatives() == ()
+    finally:
+        sa.event.remove(postgres_engine, "begin", runtime_role)
     source.retain(replace(_event("no-replay-next"), occurred_at=NOW + timedelta(seconds=2)))
     claim = source.claim_next(now=NOW + timedelta(seconds=2))
     source.complete(claim, replace(decision, initiative=PersonalInitiativeProposal(
