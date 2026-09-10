@@ -1602,6 +1602,8 @@ class PydanticConversationModel:
                 "later te doen. Een privaat advies of voorstel werk je concreet uit met "
                 "keuzes en argumenten; lever geen leeg invulformulier voor zo'n doel. "
                 "Maak alleen een invulbaar sjabloon als juist dat het gekozen product is. "
+                "Houd de inhoud binnen 220 woorden zodat het complete resultaat binnen "
+                "het bestaande uitvoerbudget past. "
                 "De Markdown-download moet compact, verzorgd en direct bruikbaar zijn, "
                 "zonder verzonnen testimonials, prijzen, marktcijfers of externe feiten. "
                 "Beweer niet dat ontbrekende bronnen zijn gelezen of externe acties zijn "
