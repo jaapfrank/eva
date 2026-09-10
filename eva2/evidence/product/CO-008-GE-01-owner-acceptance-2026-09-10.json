@@ -1,0 +1,21 @@
+{
+  "contract": "EvaOwnerAcceptance/v1",
+  "taskId": "CO-008",
+  "trialId": "GE-01",
+  "recordedAt": "2026-09-10T11:13:50.701706+00:00",
+  "accepted": true,
+  "ownerStatement": "Dit lijkt perfect te werken:",
+  "source": "Eigenaarsbericht in deze taak met Telegram-screenshot",
+  "attachmentName": "codex-clipboard-44f8803a-7357-4847-acff-57e3d928ccc8.png",
+  "attachmentSha256": "60e30748d838793ceba12a51dad2a21c12cf06177d04be1eadbc26f3ddce3548",
+  "observed": [
+    "Eigenaar noemt blauw als favoriete kleur; Eva gebruikt blauw bij advies voor de deur.",
+    "Eigenaar verandert favoriete kleur naar groen; Eva bevestigt dat blauw niet meer actueel is.",
+    "Bij een andere adviesvraag over de schutting gebruikt Eva groen zonder dat de voorkeur opnieuw in de vraag staat."
+  ],
+  "scope": "Eigenaar accepteert voorkeur onthouden, wijzigen en toepassen in normaal Telegram-gesprek.",
+  "boundary": "Screenshot toont hetzelfde gesprek over enkele minuten. Bewijs van duurzaam geheugen na herstart staat afzonderlijk in de technische oplevering; geen volledige gezinsacceptatie afgeleid uit dit screenshot.",
+  "technicalEvidence": "eva2/evidence/product/CO-008-automatic-personal-memory-2026-09-10.json",
+  "implementationCommit": "ddb0267852c56c95ccde4270d821e3192ba56b70",
+  "independentReview": "pending"
+}
