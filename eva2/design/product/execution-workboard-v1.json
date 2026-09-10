@@ -317,10 +317,10 @@
           "built": "partial",
           "tested": "partial",
           "live": "partial",
-          "accepted": "no",
-          "gap": "Jaaps waardering en herhaalde bruikbare bijdragen; eerste concrete oplevering technisch klaar.",
-          "detail": "AU-007 is via een echte huiswaarneming, eigen keuze en normale achtergrondwerkers opgeleverd. Eigenaarroute, opgeslagen inhoud en controlehash komen overeen; onafhankelijke technische GO. Jaap beoordeelt het nut later.",
-          "evidence": "AU-007 · technisch afgerond en live · onafhankelijke GO · IN-01 klaar voor beoordeling",
+          "accepted": "partial",
+          "gap": "Herhaalde nuttige bijdragen en brede zelfstandige uitvoering. AU-008 is live; echte uitvoerproef loopt.",
+          "detail": "AU-007 leverde zelfstandig een beoordelingskaart op. Jaap noemt die op zich wel bruikbaar; dat oordeel geldt alleen voor die kaart. AU-008 voegt gewone taakuitvoering binnen het kosteloze mandaat toe, momenteel met vijf bestaande lokale bestandstools.",
+          "evidence": "AU-007 afgerond en beperkt geaccepteerd · AU-008 gebouwd, gericht getest en live; productproef open",
           "outcomes": [
             {
               "id": "initiative-private-result",
@@ -332,10 +332,10 @@
               "live": "yes",
               "accepted": "yes",
               "works": "Beoordelingskaart voor huisautomatiseringen met beslisregels en drie fictieve voorbeelden, door Eva zelf gekozen en gemaakt.",
-              "tryIt": "Open de beoordelingskaart bij de actuele oplevering en beoordeel of dit een nuttige eigen bijdrage is.",
-              "gap": "Alleen Jaaps gebruiksbeoordeling is nog open.",
+              "tryIt": "De beoordelingskaart blijft beschikbaar bij de opgeleverde resultaten.",
+              "gap": "Deze beperkte oplevering is afgerond; bredere initiatiefuitvoering is vervolgwerk.",
               "evidence": "AU-007-private-initiative-2026-09-10.json · onafhankelijke GO",
-              "detail": "AU-007 is via een echte huiswaarneming, eigen keuze en normale achtergrondwerkers opgeleverd. Eigenaarroute, opgeslagen inhoud en controlehash komen overeen; onafhankelijke technische GO. Jaap beoordeelt het nut later."
+              "detail": "Technisch afgerond en onafhankelijk gecontroleerd. Jaap: op zich wel bruikbaar. Deze acceptatie betreft alleen de beoordelingskaart."
             }
           ],
           "works": "Eva koos vanuit jouw bestaande huiswens zelfstandig een beoordelingskaart en leverde deze als privaat document op."
@@ -642,12 +642,11 @@
           "title": "Eva maakt uit eigen initiatief een privaat hulpmiddel",
           "change": "Eva koos en maakte zelf de beoordelingskaart voor gezinsvriendelijke automatiseringen.",
           "steps": [
-            "Lees de beoordelingskaart bij de actuele oplevering.",
-            "Beoordeel of je deze bijdrage nuttig vindt en of Eva zulke ideeën vaker mag uitwerken."
+            "De opgeleverde beoordelingskaart blijft beschikbaar om terug te lezen."
           ],
           "expected": "Een volledig leesbaar document met vier afwegingen, beslisregels en drie duidelijk fictieve voorbeelden.",
           "report": "IN-01: nuttig / niet nuttig, eventueel met wat je anders zou willen.",
-          "result": "Technisch afgerond, live teruggelezen en onafhankelijk beoordeeld. Jaaps acceptatie staat open.",
+          "result": "Afgerond en door Jaap beperkt geaccepteerd: op zich wel bruikbaar. Geen algemene initiatiefacceptatie.",
           "ownerFeedback": "Op zich wel bruikbaar; uitsluitend de opgeleverde beoordelingskaart, geen algemene initiatiefacceptatie."
         }
       ]
@@ -3414,7 +3413,7 @@
         "Geen nieuwe spraak- of dashboardimplementatie.",
         "Bestaande trigger, geen handmatig ingevoegde initiatiefclaim als bewijs."
       ],
-      "next": "Technisch afgerond met onafhankelijke GO. Eva maakte zelf de beoordelingskaart met drie fictieve voorbeelden. Alleen Jaaps beoordeling van het nut staat nog open; geen nieuw implementatiegoal gestart.",
+      "next": "Afgerond. Jaap vindt uitsluitend de beoordelingskaart op zich wel bruikbaar. Vervolgwerk loopt onder AU-008.",
       "ownerAccepted": true,
       "necessaryDependency": {
         "finding": "Live broad owner context recall selected zero facts. All responses had source_facts_truncated=true, including observations whose complete source IDs were present. Hindsight documents this as partial response map, not incomplete source IDs for every observation.",
@@ -3427,8 +3426,8 @@
         "built": true,
         "tested": "Eerste contextfix34 checks; vervolg16 model/workerchecks; finale2 PostgreSQLchecks onder beperkte runtime-rol. Onafhankelijke technischeGO.",
         "live": true,
-        "ownerAccepted": false,
-        "next": "Technisch afgerond met onafhankelijke GO. Eva maakte zelf de beoordelingskaart met drie fictieve voorbeelden. Alleen Jaaps beoordeling van het nut staat nog open; geen nieuw implementatiegoal gestart."
+        "ownerAccepted": true,
+        "next": "Afgerond. Jaap vindt uitsluitend de beoordelingskaart op zich wel bruikbaar. Vervolgwerk loopt onder AU-008."
       },
       "liveCandidate": {
         "image": "sha256:35fdc82c8d041a58d9da8be1fdf59d60844e8499a37e7fbd1ad6a261491b515e",
@@ -3467,7 +3466,7 @@
         "status": "live_loaded_modules_verified",
         "finding": "Initiatief zocht canonical eigenaar terwijl gewone Telegrambridge onder gekoppelde private alias onthoudt. Bestaande vertrouwde accountkoppeling wordt nu per recall opnieuw gelezen.",
         "checks": "12 workerchecks geslaagd; intrekken koppeling getest; onafhankelijke technische GO.",
-        "next": "Technisch afgerond met onafhankelijke GO. Eva maakte zelf de beoordelingskaart met drie fictieve voorbeelden. Alleen Jaaps beoordeling van het nut staat nog open; geen nieuw implementatiegoal gestart.",
+        "next": "Afgerond. Jaap vindt uitsluitend de beoordelingskaart op zich wel bruikbaar. Vervolgwerk loopt onder AU-008.",
         "deploymentFailure": "17c7bb copied into /app/src while imported modules live at /opt/eva/src. Source34ed766 is valid; repair was not yet active. No product success claimed."
       },
       "currentNativeInitiative": {
@@ -3489,16 +3488,16 @@
         "commit": "f99b5a2e9561ce96d4b77668b3caf9b813339239"
       },
       "resultEvidence": "eva2/evidence/product/AU-007-private-initiative-2026-09-10.json",
-      "administrativeStatus": "Review betekent hier de nog open gebruikersbeoordeling. Technisch werk en onafhankelijke technische productreview zijn afgerond. Er is geen volgende implementatiekaart gestart.",
+      "administrativeStatus": "Afgerond. Jaap vindt uitsluitend de beoordelingskaart op zich wel bruikbaar. Vervolgwerk loopt onder AU-008.",
       "ownerAcceptanceScope": "Uitsluitend de opgeleverde beoordelingskaart: op zich wel bruikbaar. Geen algemene acceptatie van eigen initiatief."
     },
     "initiativeDeliveryAU008": {
       "status": "in_progress",
       "built": true,
       "tested": true,
-      "live": false,
+      "live": true,
       "ownerAccepted": false,
-      "currentWork": "Reserve-image importeert alle14modules correct. Gerichtecontroles groen. Bestaande uitrolpoort uitgebreid met exacte hash/metadata van het nieuwe private mandaatbestand; geen ruimere directorytoelating. Preflight en liveproef volgen.",
+      "currentWork": "Bestandsuitvoering live en uitrol onafhankelijk GO. Twee normale cycli kozen stilte. Bestaande HA-inventaris/toestand/geschiedenis nu op dezelfde uitvoerroute aangesloten in bron;11gerichte controles groen, bronreview en livegang uitbreiding volgen. Geen brede initiatiefafronding geclaimd.",
       "authorization": "Jaap: in eerste instantie mag ze wel gewoon alles doen wat ze wil, zolang het maar inderdaad geen geld kost. Implementatie expliciet bevestigd.",
       "boundaries": "Geen nieuwe kosten of verplichtingen; onbekend is niet gratis. Bestaand toegelaten modelgebruik blijft binnen bestaande grenzen. Privacy, personen, communicatie en stoppen blijven gelden.",
       "artifactRetention": {
@@ -3508,7 +3507,12 @@
         "cleanup": "Na eigenaarbeoordeling plus 30 dagen: canoniek bewijs behouden, overige tijdelijke kandidaatbestanden gericht verwijderen."
       },
       "inventoryNote": "Twee nieuwe runtimepaden toegevoegd onder bestaande eva-runtime classificaties met actuele inhoudshashes. Dit is een gerichte eigenaarsregistratie, geen volledige hergeneratie of release-inventarisbewijs; de bestaande generator stuit op ongeclassificeerd root-AGENTS.md.",
-      "testEvidence": "28 gerichte controles groen; bestaande gesprekstests uit voorgaande run groen. Geen echte zelfstandige livebijdrage voor AU008 geclaimd."
+      "testEvidence": "28 gerichte controles; daarna10 controles op de gebruikte validator en2 op de optionele mandaat-uitrolpoort. Onafhankelijke code-GO. Productbewijs volgt uit de normale native cyclus.",
+      "liveImage": "sha256:0dce3f0203ad2ab24f2c386af5390cd1a47d26469718a48fdeb6e8f02dec7dbc",
+      "implementationCommit": "6ebb0da2adecebb3d2486f8ebef185d32405b8df",
+      "livePort": 44711,
+      "technicalProductAccepted": false,
+      "remainingScope": "Brede bestaande taakroutes beoordelen; eigen onderzoek via internet en overige reeds toegestane acties nog niet aan native profielen verbonden. Geen nieuwe externe communicatiebevoegdheid."
     }
   },
   "activeTaskId": "AU-008",
@@ -5160,6 +5164,7 @@
         "eva2/src/eva/application/initiative_execution.py",
         "eva2/src/eva/application/personal_interests.py",
         "eva2/src/eva/bootstrap/runtime.py",
+        "eva2/src/eva/providers/home_assistant.py",
         "eva2/src/eva/providers/mcp_autonomy.py",
         "eva2/tests/application/test_free_will.py",
         "eva2/tests/application/test_personal_interests.py",

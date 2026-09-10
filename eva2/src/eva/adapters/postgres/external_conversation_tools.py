@@ -7,6 +7,7 @@ from contextlib import contextmanager
 from collections.abc import Callable, Iterator
 from datetime import datetime
 import hashlib
+import re
 from uuid import NAMESPACE_URL, uuid5
 
 import sqlalchemy as sa
@@ -62,6 +63,7 @@ class PostgresExternalConversationTools:
         provider: AsyncToolPort,
         *,
         authorize_turn: Callable[[ConversationTurn], None] | None = None,
+        configuration_sha256: str | None = None,
     ) -> None:
         action_names = planner.action_names
         if (
@@ -74,6 +76,9 @@ class PostgresExternalConversationTools:
         self._planner = planner
         self._provider = provider
         self._authorize_turn = authorize_turn
+        if configuration_sha256 is not None and not re.fullmatch(r"[0-9a-f]{64}", configuration_sha256):
+            raise ValueError("provider configuration fingerprint is invalid")
+        self._configuration_sha256 = configuration_sha256
         self._action_names = action_names
 
     @property
@@ -402,7 +407,7 @@ class PostgresExternalConversationTools:
             expected_proof=preparation.expected_proof,
             observation_tool_name=preparation.observation_tool_name,
             observation_arguments=preparation.observation_arguments,
-            tool_configuration_sha256=preparation.tool_configuration_sha256,
+            tool_configuration_sha256=(preparation.tool_configuration_sha256 or self._configuration_sha256),
             execution_timeout_seconds=preparation.execution_timeout_seconds,
             verification_timeout_seconds=preparation.verification_timeout_seconds,
         )
@@ -412,12 +417,21 @@ class PostgresExternalConversationTools:
     ) -> VerifiedToolOrchestrator:
         provider = self._provider
         authorize = self._authorize
+        configuration_sha256 = self._configuration_sha256
+
+        def verify_configuration(request):
+            # Old ordinary-turn receipts without fingerprints retain compatibility.
+            # Native requests already require a non-null pinned mandate profile.
+            if (configuration_sha256 is not None and request.tool_configuration_sha256 is not None
+                    and request.tool_configuration_sha256 != configuration_sha256):
+                raise ConversationConflict("provider configuration changed since admission")
         journal = PostgresConversationJournal(self._engine, external_timeline_scope(
             turn.tenant_id, turn.installation_id, "conversation stop scope is required",
         ))
 
         class StopCheckedProvider:
             async def execute(self, request: ToolRequest) -> ToolDispatchResult:
+                verify_configuration(request)
                 check_cancellation()
                 # Also covers a recovery dispatch after an observation. Readback
                 # itself remains possible for an effect that already started.
@@ -433,6 +447,7 @@ class PostgresExternalConversationTools:
             async def observe(
                 self, request: ToolRequest, dispatch: ToolDispatchResult | None
             ) -> ToolProofObservation:
+                verify_configuration(request)
                 await asyncio.to_thread(authorize, turn)
                 from eva.application.initiative_execution import require_initiative_context
                 guard = require_initiative_context(turn)

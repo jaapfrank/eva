@@ -290,6 +290,6 @@ class NativeInitiativeGuard:
                 "Geen nieuwe kosten, verplichtingen, identificatie of communicatie naar derden. "
                 "Onbekende kosten of ontbrekende mogelijkheden zijn een concrete beperking, geen toestemming. "
                 "Bestaand modelverbruik blijft begrensd. Maak geen herhaling van afgerond of gestopt werk. "
-                "Beschikbare kosteloze capabilities en invoergrenzen: " + json.dumps([
+                "Beschikbare kosteloze capabilities en hostgrenzen op de uitgewerkte providerinvoer (gebruik het gewone toolschema voor je toolargumenten): " + json.dumps([
                     {"action": c["action_name"], "arguments": self._schema(c["execute_schema"])}
                     for c in policy["capabilities"]], ensure_ascii=False))

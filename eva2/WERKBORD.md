@@ -58,6 +58,7 @@ Klaar betekent:
 - `eva2/src/eva/application/initiative_execution.py`
 - `eva2/src/eva/application/personal_interests.py`
 - `eva2/src/eva/bootstrap/runtime.py`
+- `eva2/src/eva/providers/home_assistant.py`
 - `eva2/src/eva/providers/mcp_autonomy.py`
 - `eva2/tests/application/test_free_will.py`
 - `eva2/tests/application/test_personal_interests.py`
