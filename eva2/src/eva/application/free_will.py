@@ -216,6 +216,7 @@ class FreeWillModelPort(Protocol):
         identity: IdentityProfile,
         memory: PresenceMemory,
         attention: ResidentAttentionDecision | None = None,
+        initiative_history: tuple[dict[str, str], ...] = (),
     ) -> FreeWillDecision: ...
 
 
@@ -337,7 +338,7 @@ class SensoryDecisionWorker:
                     },
                     subject_ids=(self._principal_id,),
                     query_text=(
-                        "Persoonlijke plannen, interesses en open wensen die passen bij "
+                        "Persoonlijke plannen, interesses en voorkeuren die passen bij "
                         "deze huiswaarneming: "
                         f"{event.source} {event.event_type} "
                         f"{event.payload.get('entity_id', '')} "
@@ -346,6 +347,8 @@ class SensoryDecisionWorker:
                     maximum_facts=8,
                 )
             )
+            history_reader = getattr(self._store, "recent_initiatives", None)
+            history = () if not callable(history_reader) else history_reader()
             # Persist the ambiguity boundary before entering the model adapter.
             # A process can die without calling fail(), including after the
             # provider response but before complete() records the decision.
@@ -359,6 +362,7 @@ class SensoryDecisionWorker:
                 self._identity,
                 memory,
                 attention,
+                **({"initiative_history": history} if history else {}),
             )
             if attention is not None and (
                 decision.disposition != "respond"

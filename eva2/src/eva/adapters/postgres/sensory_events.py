@@ -540,6 +540,25 @@ class PostgresSensoryEventStore:
                 self._complete_group_members(connection, original, group_thread_id=claim.thread_id,
                     decision_revision=claim.revision + 1, disposition=decision.disposition, now=now)
 
+    def recent_initiatives(self) -> tuple[dict[str, str], ...]:
+        """Bounded, owner-scoped context for avoiding completed/stopped work."""
+        if self._initiative_principal_id is None:
+            return ()
+        scope = self._timeline._scope_value
+        c, e = operational_checkpoints.c, operational_events.c
+        with self._timeline._engine.connect() as connection:
+            rows = connection.execute(sa.select(c.phase, e.payload).join(
+                operational_events, sa.and_(c.tenant_id == e.tenant_id,
+                    c.installation_id == e.installation_id, c.thread_id == e.thread_id)
+            ).where(c.tenant_id == scope.tenant_id, c.installation_id == scope.installation_id,
+                e.event_type == "PERSONAL_INTENT_ADOPTED",
+                e.payload["data"]["principal_id"].astext == self._initiative_principal_id,
+                e.payload["data"]["origin"].astext == "eva_initiative"
+            ).order_by(c.updated_at.desc()).limit(16)).all()
+        return tuple({"title": row.payload["data"]["title"],
+                      "question": row.payload["data"]["next_exploration"],
+                      "phase": row.phase} for row in rows)
+
     def _adopt_initiative(self, connection, claim, decision, *, now):
         proposal = decision.initiative
         principal = self._initiative_principal_id
@@ -564,6 +583,17 @@ class PostgresSensoryEventStore:
             ).limit(1)).scalar_one_or_none()
         if pending is not None:
             return {"status": "not_admitted", "reason": "active_initiative_exists", "thread_id": pending}
+        previous = connection.execute(sa.select(operational_events.c.thread_id).where(
+            operational_events.c.tenant_id == scope.tenant_id,
+            operational_events.c.installation_id == scope.installation_id,
+            operational_events.c.event_type == "PERSONAL_INTENT_ADOPTED",
+            operational_events.c.payload["data"]["principal_id"].astext == principal,
+            operational_events.c.payload["data"]["origin"].astext == "eva_initiative",
+            sa.func.lower(sa.func.btrim(operational_events.c.payload["data"]["title"].astext))
+                == proposal.title.strip().lower(),
+        ).limit(1)).scalar_one_or_none()
+        if previous is not None:
+            return {"status": "not_admitted", "reason": "initiative_already_attempted", "thread_id": previous}
         data = proposal.adoption(claim, principal_id=principal)
         thread_id = "intent:" + data["intent_id"]
         insert_initial_timeline_thread(connection, scope, thread_id=thread_id,

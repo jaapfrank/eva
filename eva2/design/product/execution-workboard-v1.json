@@ -3406,6 +3406,13 @@
         "voiceGateway": "44714→44710 teruggelezen",
         "ownerInitiativesReadback": "HTTP200; nog geen initiatief/resultaat",
         "coldPathIdleSeconds": 300
+      },
+      "nativeTrial": {
+        "sourceEvent": "home-assistant:ccffb4272e8e01fcdfdb23eccb633f9c589c4b284f106de1f4286f29901c02b8",
+        "adoptedAt": "2026-09-10T15:31:40Z",
+        "result": "A real native event led to an independently selected initiative, but it repeated a completed VB-003 request. Operator stopped it through owner API; not accepted.",
+        "correction": "Bounded owner-scoped history of previous initiatives; reject same normalized title; remembered request is not proof of open work; build a concrete proposal rather than always a blank template.",
+        "checks": "16 targeted model/worker checks + 2 PostgreSQL stop/readback/isolation tests passed; code review of first candidate GO, product result still pending."
       }
     }
   },
@@ -4975,17 +4982,23 @@
         "CO-008"
       ],
       "changePaths": [
-        "eva2/src/eva/application/free_will.py",
+        "eva2/WERKBORD.md",
+        "eva2/design/product/execution-workboard-v1.json",
         "eva2/src/eva/adapters/model/pydantic_conversation.py",
+        "eva2/src/eva/adapters/postgres/sensory_events.py",
+        "eva2/src/eva/adapters/projection/hindsight.py",
+        "eva2/src/eva/application/free_will.py",
         "eva2/tests/application/test_free_will.py",
         "eva2/tests/model/test_conversation_model.py",
-        "eva2/src/eva/adapters/projection/hindsight.py",
+        "eva2/tests/postgres/test_owner_initiatives.py",
         "eva2/tests/projection/test_hindsight.py"
       ],
       "testCommands": [
         "pytest -q tests/application/test_free_will.py",
         "pytest -q tests/model/test_conversation_model.py::test_sensory_model_parses_only_bounded_own_initiative tests/model/test_conversation_model.py::test_passive_house_event_retains_provider_usage_with_bounded_decision",
-        "pytest -q tests/projection/test_hindsight.py::test_observation_inherits_authority_from_complete_bounded_source_facts tests/projection/test_hindsight.py::test_household_observations_require_every_source_authority tests/projection/test_hindsight.py::test_private_recall_cannot_hide_shared_observation_sources"
+        "pytest -q tests/projection/test_hindsight.py::test_observation_inherits_authority_from_complete_bounded_source_facts tests/projection/test_hindsight.py::test_household_observations_require_every_source_authority tests/projection/test_hindsight.py::test_private_recall_cannot_hide_shared_observation_sources",
+        "pytest -q tests/postgres/test_owner_initiatives.py",
+        "pytest -q tests/model/test_conversation_model.py::test_model_builds_complete_download_instead_of_another_plan"
       ],
       "evidenceRequired": [
         "Een echte bestaande passieve trigger en een door Eva gekozen initiatief zijn met afzonderlijke opslagreceipts aan elkaar gekoppeld; geen rechtstreeks handmatig aangemaakte initiatiefclaim als productbewijs.",
@@ -4997,6 +5010,7 @@
         "Resultaat en herkomst zijn beschikbaar voor Jaap; technische oplevering en subjectieve acceptatie zijn apart zichtbaar."
       ],
       "inventoryOwners": [
+        "documentation",
         "eva-runtime",
         "verification"
       ],
@@ -5004,6 +5018,8 @@
         "conversation-model-adapter",
         "core-behavior-tests",
         "core-semantics",
+        "durable-persistence",
+        "integration-and-storage-tests",
         "supporting-runtime-adapters"
       ]
     }

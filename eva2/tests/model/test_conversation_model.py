@@ -2276,7 +2276,7 @@ def test_model_builds_complete_download_instead_of_another_plan(
         "name": "submit_personal_prototype",
         "type": "function",
     }
-    assert "volledige inhoud, niet een plan" in bodies[0]["instructions"]
+    assert "volledige inhoud" in bodies[0]["instructions"]
 
 
 def test_model_listing_cannot_claim_unproven_sales_or_product_features(
@@ -2535,7 +2535,10 @@ def test_sensory_model_parses_only_bounded_own_initiative(monkeypatch, tmp_path,
         with pytest.raises(ConversationModelError):
             model.evaluate_sensory_event(event, identity, _memory())
     else:
-        result = model.evaluate_sensory_event(event, identity, _memory())
+        history = ({"title": "Old request", "question": "Already handled", "phase": "personal_stopped"},)
+        result = model.evaluate_sensory_event(event, identity, _memory(), initiative_history=history)
+        import json
+        assert json.loads(observed[0]["input"][0]["content"])["prior_private_initiatives"] == list(history)
         assert result.initiative == (None if proposal is None else PersonalInitiativeProposal(**proposal))
         assert result.disposition == "silence" and result.expression is None
         assert result.usage.input_tokens == 100

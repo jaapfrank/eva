@@ -1431,6 +1431,7 @@ class PydanticConversationModel:
         identity: IdentityProfile,
         memory: PresenceMemory,
         attention: ResidentAttentionDecision | None = None,
+        initiative_history: tuple[dict[str, str], ...] = (),
     ) -> FreeWillDecision:
         """Decide in shadow mode whether one passive event deserves expression."""
 
@@ -1456,6 +1457,7 @@ class PydanticConversationModel:
                                 "source_event_id": event.source_event_id,
                             },
                             "recalled_context": remembered,
+                            "prior_private_initiatives": initiative_history,
                             "resident_attention": (
                                 None
                                 if attention is None
@@ -1493,9 +1495,16 @@ class PydanticConversationModel:
                 "bij silence is expression null. Geef geen aanbod, slotvraag of technisch "
                 "logboek. Beslis daarnaast afzonderlijk of je zelf iets nuttigs privé kunt "
                 "uitwerken: silence sluit een initiative niet uit. Gebruik bevestigde "
-                "persoonlijke plannen, interesses of open wensen als aanknopingspunt voor "
+                "persoonlijke plannen, interesses of voorkeuren als aanknopingspunt voor "
                 "een klein concreet resultaat, ook als de waarneming geen bericht verdient. "
                 "Kies zelf één vervolgstap en leg uit welke context die nuttig maakt. "
+                "Een herinnerd verzoek is GEEN bewijs dat die opdracht nog openstaat: "
+                "herhaal of hervat oude opdrachten niet op basis van alleen zo'n herinnering. "
+                "Kies een nieuwe kleine bijdrage die met de beschikbare bevestigde informatie "
+                "volledig als privaat voorstel kan worden uitgewerkt. De vervolgstap heeft "
+                "geen externe actuele feiten, apparaatbediening of uitvoering van oude "
+                "opdrachten nodig. prior_private_initiatives bevat eerder gekozen werk; "
+                "herhaal afgerond of gestopt werk niet, ook niet onder een andere titel. "
                 "Leid uit een sensorsignaal geen persoonlijke wens af. Je mag in initiative "
                 "een eigen onderzoek of concreet privaat maakidee kiezen. Gebruik null als er "
                 "geen goed idee is; forceer geen idee bij elke gebeurtenis. Het is jouw "
@@ -1589,11 +1598,14 @@ class PydanticConversationModel:
             "instructions": (
                 "Je bent Eva. Maak nu zelf één werkelijk bruikbaar eerste digitaal "
                 "product op basis van je duurzame doel en afgeronde verkenning. Lever de "
-                "volledige inhoud, niet een plan, samenvatting of belofte. Het product moet "
-                "zonder uitleg als invulbare Markdown-download bruikbaar zijn, compact en "
-                "verzorgd, zonder verzonnen testimonials, prijzen, marktcijfers of externe "
-                "feiten. Gebruik duidelijke lege invulvelden en één kort ingevuld voorbeeld "
-                "waar dat helpt. Roep exact de aangeboden submit-functie aan."
+                "volledige inhoud die het gekozen doel waarmaakt, niet een belofte om dat "
+                "later te doen. Een privaat advies of voorstel werk je concreet uit met "
+                "keuzes en argumenten; lever geen leeg invulformulier voor zo'n doel. "
+                "Maak alleen een invulbaar sjabloon als juist dat het gekozen product is. "
+                "De Markdown-download moet compact, verzorgd en direct bruikbaar zijn, "
+                "zonder verzonnen testimonials, prijzen, marktcijfers of externe feiten. "
+                "Beweer niet dat ontbrekende bronnen zijn gelezen of externe acties zijn "
+                "uitgevoerd. Benoem ontbrekend bewijs. Roep exact de aangeboden submit-functie aan."
             ),
             "model": self._model,
             "parallel_tool_calls": False,

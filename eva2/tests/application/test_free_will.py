@@ -67,6 +67,9 @@ def test_sensory_worker_recalls_then_commits_one_shadow_decision(current_state, 
         def claim_next(self, *, now, include_waiting=True):  # type: ignore[no-untyped-def]
             return claim
 
+        def recent_initiatives(self):
+            return ({"title": "Prior plan", "question": "Done", "phase": "personal_stopped"},)
+
         def mark_model_started(self, actual, *, now):
             assert actual == claim and len(recalled) == 1
             return claim if admit_dispatch else None
@@ -84,7 +87,8 @@ def test_sensory_worker_recalls_then_commits_one_shadow_decision(current_state, 
             return object()
 
     class Model:
-        def evaluate_sensory_event(self, actual, identity, memory, attention=None):  # type: ignore[no-untyped-def]
+        def evaluate_sensory_event(self, actual, identity, memory, attention=None, initiative_history=()):
+            assert initiative_history == ({"title": "Prior plan", "question": "Done", "phase": "personal_stopped"},)
             assert admit_dispatch
             assert actual == event
             assert identity.name == "Eva"
@@ -116,7 +120,7 @@ def test_sensory_worker_recalls_then_commits_one_shadow_decision(current_state, 
     assert recalled[0].maximum_facts == 8
     assert recalled[0].principal_id == "jaap"
     assert recalled[0].subject_ids == ("jaap",)
-    assert "Persoonlijke plannen, interesses en open wensen" in recalled[0].query_text
+    assert "Persoonlijke plannen, interesses en voorkeuren" in recalled[0].query_text
     assert "binary_sensor.achterdeur" in recalled[0].query_text
     assert recalled[0].conversation_id == "sensory:home-assistant"
     if current_state is None:

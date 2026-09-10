@@ -55,11 +55,15 @@ Klaar betekent:
 
 ### Exact werk voor `AU-007`
 
-- `eva2/src/eva/application/free_will.py`
+- `eva2/WERKBORD.md`
+- `eva2/design/product/execution-workboard-v1.json`
 - `eva2/src/eva/adapters/model/pydantic_conversation.py`
+- `eva2/src/eva/adapters/postgres/sensory_events.py`
+- `eva2/src/eva/adapters/projection/hindsight.py`
+- `eva2/src/eva/application/free_will.py`
 - `eva2/tests/application/test_free_will.py`
 - `eva2/tests/model/test_conversation_model.py`
-- `eva2/src/eva/adapters/projection/hindsight.py`
+- `eva2/tests/postgres/test_owner_initiatives.py`
 - `eva2/tests/projection/test_hindsight.py`
 
 Echte controles:
@@ -67,6 +71,8 @@ Echte controles:
 - `pytest -q tests/application/test_free_will.py`
 - `pytest -q tests/model/test_conversation_model.py::test_sensory_model_parses_only_bounded_own_initiative tests/model/test_conversation_model.py::test_passive_house_event_retains_provider_usage_with_bounded_decision`
 - `pytest -q tests/projection/test_hindsight.py::test_observation_inherits_authority_from_complete_bounded_source_facts tests/projection/test_hindsight.py::test_household_observations_require_every_source_authority tests/projection/test_hindsight.py::test_private_recall_cannot_hide_shared_observation_sources`
+- `pytest -q tests/postgres/test_owner_initiatives.py`
+- `pytest -q tests/model/test_conversation_model.py::test_model_builds_complete_download_instead_of_another_plan`
 
 </details>
 
