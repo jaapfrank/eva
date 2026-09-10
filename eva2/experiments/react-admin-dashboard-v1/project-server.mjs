@@ -47,6 +47,18 @@ export function applyReviewedCapabilities(project, board, audit) {
         row.stageNotes = { ...row.stageNotes, tested: research.technicalChecks, live: `Centrale onderzoeksroute: ${research.image}; ${research.sourceCommit}.` };
         row.evidence += ' · ' + research.evidencePath;
       }
+      const privateReview = board.audit?.au008PrivateReview20260910;
+      if (privateReview?.live === true) {
+        const budget = privateReview.budgetAtReadback;
+        row.scope = 'AU-008 · onderzoek en private beoordeling';
+        row.visibleResult = 'Algemeen publiek onderzoek en private beoordeling op rustige momenten zijn live.';
+        row.works = row.visibleResult;
+        row.gap = `Eerste bruikbare eigen bijdrage en jouw beoordeling blijven open. Laatste budgetmeting: ${budget?.personUsed ?? '?'} / ${budget?.personLimit ?? '?'}; volgende beoordeling wacht op budgetruimte.`;
+        row.resultBasis = `Live bron ${privateReview.sourceCommit.slice(0,7)} · 10 sep`;
+        row.accepted = privateReview.ownerAccepted === true ? 'yes' : 'no';
+        row.stageNotes = { ...row.stageNotes, live: `Centrale private beoordelingsroute: ${privateReview.image}; ${privateReview.sourceCommit}.`, accepted: privateReview.remaining };
+        row.evidence += ' · ' + privateReview.evidencePath;
+      }
     }
     return row;
   });
@@ -155,7 +167,7 @@ export function projectServer() {
         project.summary = [];
         const card = (task) => ({ id: task.id, title: task.title, outcome: task.outcome,
           status: task.status, doneWhen: task.doneWhen, area: task.area,
-          ...(task.id === 'AU-008' && board.audit?.initiativeDeliveryAU008 ? { displayOutcome: board.audit.au008GeneralResearch20260910?.status === 'live' ? `${board.audit.au008GeneralResearch20260910.usefulOutcome} ${board.audit.au008GeneralResearch20260910.remaining}` : board.audit.initiativeDeliveryAU008.currentWork } : {}),
+          ...(task.id === 'AU-008' && board.audit?.initiativeDeliveryAU008 ? { displayOutcome: board.audit.au008PrivateReview20260910?.live === true ? board.audit.au008PrivateReview20260910.currentWork : board.audit.au008GeneralResearch20260910?.status === 'live' ? `${board.audit.au008GeneralResearch20260910.usefulOutcome} ${board.audit.au008GeneralResearch20260910.remaining}` : board.audit.initiativeDeliveryAU008.currentWork } : {}),
           ...(task.id === 'AU-007' && board.audit?.initiativeDeliveryAU007?.ownerContextRepair ? {
             progress: {
               works: 'Een echte huiswaarneming leidde tot een eigen keuze; stoppen via de eigenaarroute werkte. De eerdere keuze herhaalde een al afgeronde opdracht.',

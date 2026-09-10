@@ -23,7 +23,10 @@ async function main() {
   for (const capability of payload.project.capabilities) {
     const finding = audit.findings.find(item => item.id === capability.id);
     assert.ok(capability.scope, 'each status must name its delivery scope');
-    if (capability.id === 'initiative' && board.audit.au008GeneralResearch20260910?.status === 'live') {
+    if (capability.id === 'initiative' && board.audit.au008PrivateReview20260910?.live === true) {
+      assert.match(capability.visibleResult, /private beoordeling/);
+      assert.match(capability.gap, /Laatste budgetmeting/);
+    } else if (capability.id === 'initiative' && board.audit.au008GeneralResearch20260910?.status === 'live') {
       assert.match(capability.visibleResult, /Algemeen publiek onderzoek is live/);
       assert.equal(capability.gap, board.audit.au008GeneralResearch20260910.remaining);
     } else assert.equal(capability.visibleResult, finding.visibleResult);
