@@ -849,7 +849,15 @@
       "browserProofScope": "Recorded browser speech/audio proof predates this core cutover; not repeated"
     },
     "coreImageRevisionLabel": "d8054d4de8278b08533177410076b9a70496cf83",
-    "coreSourceEvidence": "Deployment agent reports source af9a049 and18 verified loaded modules; image label is inherited d805 and is not source verification"
+    "coreSourceEvidence": {
+      "canonicalEvidence": "AU-008-general-research-live-2026-09-10.json",
+      "loadedModuleCount": 18,
+      "loadedMatchesCandidateEvidence": true,
+      "loadedMatchesFrozenSource": true,
+      "liveImportsSha256": "d8e8425412640484196941316f33602d94ec72d1c2440d4261e30d865e5c49cc",
+      "note": "io.eva2.source-commit verified; OCI revision remains inherited and is not the source assertion"
+    },
+    "coreExplicitSourceLabel": "af9a049a5dcd9b739b74e10252f6688d7b90bb14"
   },
   "browser_relay_verification": {
     "date": "2026-09-10",
