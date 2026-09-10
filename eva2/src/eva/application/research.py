@@ -75,6 +75,7 @@ class CurrentResearchPort(Protocol):
         title: str,
         options: tuple[str, ...],
         researched_at: str,
+        research_mode: str = "comparison",
     ) -> ResearchArtifact: ...
 
 

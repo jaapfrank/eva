@@ -451,7 +451,8 @@ def test_native_dispatch_serializes_owner_mandate_revision(costless_native, monk
 
 
 @pytest.mark.parametrize("interrupted", [False, True])
-def test_native_public_research_uses_indexed_journal_and_never_repeats_uncertain_call(costless_native, interrupted):
+@pytest.mark.parametrize("general", [False, True])
+def test_native_public_research_uses_indexed_journal_and_never_repeats_uncertain_call(costless_native, interrupted, general):
     import json
     from eva.adapters.model.research_tools import NativeResearchTool
     from eva.adapters.postgres.conversation_actions import PostgresConversationActions
@@ -472,17 +473,30 @@ def test_native_public_research_uses_indexed_journal_and_never_repeats_uncertain
         "options": {"type": "array", "minItems": 1, "maxItems": 5,
                     "items": {"type": "string", "enum": [url]}}},
         "required": ["question", "title", "options"], "additionalProperties": False}
+    if general:
+        question = "Hoe kunnen betaalbare vegetarische gezinsmaaltijden gevarieerd blijven?"
+        args = {"question": question, "title": title, "options": ["Voedingscentrum"],
+                "public_review": "public_unlinked", "research_mode": "topic"}
+        schema["properties"]["question"] = {"type": "string", "minLength": 1, "maxLength": 2000}
+        schema["properties"]["title"] = {"type": "string", "minLength": 1, "maxLength": 200}
+        schema["properties"]["options"]["items"] = {"type": "string", "minLength": 1, "maxLength": 120}
+        schema["properties"]["public_review"] = {"type": "string", "const": "public_unlinked"}
+        schema["properties"]["research_mode"] = {"type": "string", "enum": ["topic", "comparison"]}
+        schema["required"].extend(["public_review", "research_mode"])
     policy["capabilities"].append({**policy["capabilities"][0],
         "action_name": "research_current_options", "configuration_sha256": "b" * 64,
         "tool_name": "research.public_sources", "observation_tool_name": "research.public_sources",
-        "data_scope": "public_no_private_input", "execute_schema": schema, "observe_schema": schema})
+        "data_scope": "public_research_minimized" if general else "public_no_private_input",
+        "execute_schema": schema, "observe_schema": schema})
     path.write_text(json.dumps(policy))
     class Research:
         calls = 0
         def research_configuration_sha256(self): return "b" * 64
+        def research_request_payload(self, *, question, options, research_mode="comparison"):
+            return {"input": question, "sources": list(options), "mode": research_mode, "tools": [{"type": "web_search"}]}
         def research_current_options(self, **kwargs):
             self.calls += 1
-            assert kwargs["question"] == question and kwargs["options"] == (url,)
+            assert kwargs["question"] == question and kwargs["options"] == tuple(args["options"])
             if interrupted: raise RuntimeError("response lost after provider may have run")
             return ResearchArtifact(title=kwargs["title"], question=kwargs["question"],
                 content="Publieke documentatie beschrijft browserautomatisering.",
@@ -499,8 +513,13 @@ def test_native_public_research_uses_indexed_journal_and_never_repeats_uncertain
     with initiative_execution(guard):
         assert "research_current_options" in actions.continuation_action_names(turn)
         private = ConversationActionCall("private", "research_current_options", {**args, "question": "Private secret from memory"})
-        denied = actions.execute_step(turn, private, step_index=1)
-        assert denied.output["status"] in {"failed", "needs_help"}
+        from eva.application.conversation import ConversationConflict
+        try:
+            denied = actions.execute_step(turn, private, step_index=1)
+        except ConversationConflict:
+            assert general
+        else:
+            assert denied.output["status"] in {"failed", "needs_help"}
         assert research.calls == 0
     # A rejected operation remains bound to its original arguments: use a later step.
     call = ConversationActionCall("public", "research_current_options", args)
@@ -519,6 +538,9 @@ def test_native_public_research_uses_indexed_journal_and_never_repeats_uncertain
         assert receipt.output["status"] == "verified"
         assert receipt.output["result"]["model_usage"]["input_tokens"] == 150
         assert receipt.output["result"]["sources"][0]["url"] == url
+        assert receipt.output["provider_request_body"] == research.research_request_payload(
+            question=question, options=tuple(args["options"]), research_mode="topic" if general else "comparison")
+        assert "public_review" not in receipt.output["provider_request_body"]
     ordinary = replace(turn, conversation_id="owner-research", message_id="owner-research")
     assert "research_current_options" not in actions.continuation_action_names(ordinary)
 

@@ -2679,3 +2679,89 @@ def test_native_research_permits_only_one_http_attempt(tmp_path, monkeypatch):
             options=("https://playwright.dev/docs/intro",), researched_at=NOW)
     assert len(calls) == 1 and calls[0]["timeout"] <= 55
     assert "Read public documentation" in calls[0]["body"]["input"][0]["content"]
+
+
+@pytest.mark.parametrize("question", [
+    "Vergelijk mogelijkheden voor betaalbare vegetarische gezinsmaaltijden.",
+    "Welke kosteloze manieren zijn er om een zakelijke dienst te valideren?",
+    "Hoe werkt betrouwbare aanwezigheidsdetectie voor verlichting?",
+])
+def test_generic_public_projection_admits_topics_without_a_topic_list(question):
+    from eva.adapters.model.research_tools import validate_public_projection
+    result = validate_public_projection({"question": question, "title": "Publiek onderzoek",
+        "options": ["https://www.example.com/docs"], "public_review": "public_unlinked"})
+    assert result["host_checks"] == "passed"
+
+
+@pytest.mark.parametrize("question", [
+    "Stuur advies naar familie@example.com", "Onderzoek mijn dochter en haar planning",
+    "Controleer 10.0.20.46", "Lees /home/administrator/private.txt",
+    "Zoek op https://example.com/?family=private", "Open https://user:password@example.com/",
+    "Open https://router.local/docs", "Gebruik api_key=not-a-public-value",
+    "Adres van een bewoner", "Bekijk Dorpsstraat 42", "Vertrek om 08:30",
+    "Open https://example.com:wrong/", "Open https://2130706433/",
+    "Input%00tekst", "Input%0Dtekst", "Controleer fd12:3456:789a::1",
+    "Controleer fe80::abcd%eth0",
+])
+def test_generic_public_projection_blocks_concrete_disclosure_inputs(question):
+    from eva.adapters.model.research_tools import validate_public_projection
+    from eva.application.conversation import ConversationConflict
+    with pytest.raises(ConversationConflict):
+        validate_public_projection({"question": question, "title": "Onderzoek",
+            "options": ["Documentatie"], "public_review": "public_unlinked"})
+
+
+def test_generic_public_projection_requires_positive_model_judgment():
+    from eva.adapters.model.research_tools import validate_public_projection
+    from eva.application.conversation import ConversationConflict
+    with pytest.raises(ConversationConflict, match="uncertain"):
+        validate_public_projection({"question": "Een publieke vraag", "title": "Onderzoek",
+            "options": ["Bron"], "public_review": "uncertain"})
+
+
+def test_recorded_research_body_is_the_body_given_to_the_provider(tmp_path, monkeypatch):
+    model = PydanticConversationModel(auth_file=tmp_path / "unused", resource_budget=_runtime_budget())
+    question = "Welke mogelijkheden beschrijft de openbare documentatie?"
+    options = ("https://www.example.com/docs",)
+    projected = model.research_request_payload(question=question, options=options)
+    captured = []
+    def request(body):
+        captured.append(body)
+        return ("Openbare mogelijkheden.", (ResearchSource("Documentatie", options[0]),), ()), ConversationModelUsage.unmeasured()
+    monkeypatch.setattr(model, "_request_research", request)
+    model.research_current_options(question=question, title="Onderzoek", options=options, researched_at=NOW)
+    assert canonical_json_bytes(projected) == canonical_json_bytes(captured[0])
+    assert "public_review" not in str(projected) and "private_motivation" not in str(projected)
+
+
+@pytest.mark.parametrize("mode,option,url,accepted", [
+    ("topic", "aanwezigheidsdetectie", "https://www.home-assistant.io/docs/", True),
+    ("topic", "HTTPS://www.home-assistant.io/docs/", "https://other.example/docs/", False),
+    ("topic", "HTTPS://www.home-assistant.io/docs/", "https://www.home-assistant.io/docs/", True),
+    ("comparison", "HTTPS://www.home-assistant.io/docs/", "https://other.example/docs/", False),
+    ("comparison", "aanwezigheidsdetectie", "https://www.home-assistant.io/docs/", False),
+    ("topic", "https://github.com/microsoft/playwright-mcp", "https://github.com/other/playwright-mcp", False),
+    ("topic", "https://github.com/microsoft/playwright-mcp", "https://github.com/microsoft/playwright-mcp", True),
+])
+def test_topic_research_preserves_explicit_source_binding(tmp_path, monkeypatch, mode, option, url, accepted):
+    model = PydanticConversationModel(auth_file=tmp_path / "unused")
+    monkeypatch.setattr(model, "_request_research", lambda body: (
+        ("Brongebonden antwoord.", (ResearchSource("Primaire bron", url),), ()),
+        ConversationModelUsage.unmeasured()))
+    arguments = dict(question="Hoe werkt aanwezigheidsdetectie?", title="Detectie",
+                     options=(option,), researched_at=NOW, research_mode=mode)
+    if accepted:
+        assert model.research_current_options(**arguments).sources[0].url == url
+    else:
+        with pytest.raises(ConversationModelError, match="primary source"):
+            model.research_current_options(**arguments)
+
+
+def test_topic_research_requires_citations_not_only_consulted_sources(tmp_path, monkeypatch):
+    model = PydanticConversationModel(auth_file=tmp_path / "unused")
+    monkeypatch.setattr(model, "_request_research", lambda body: (
+        ("Ongeciteerd antwoord.", (), (ResearchSource("Bron", "https://example.com"),)),
+        ConversationModelUsage.unmeasured()))
+    with pytest.raises(ConversationModelError, match="cited sources"):
+        model.research_current_options(question="Een algemeen onderwerp", title="Onderzoek",
+            options=("Onderwerp",), researched_at=NOW, research_mode="topic")

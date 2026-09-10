@@ -1957,6 +1957,7 @@ class PostgresConversationActions:
                 title=arguments["title"],
                 options=tuple(arguments["options"]),  # type: ignore[arg-type]
                 researched_at=turn.occurred_at,
+                **({"research_mode": arguments["research_mode"]} if "research_mode" in arguments else {}),
             )
         except Exception as error:
             failed = timeline.record_recovery_failure(
@@ -2510,7 +2511,14 @@ class PostgresConversationActions:
     def _validated_research_arguments(
         raw: dict[str, JsonValue],
     ) -> dict[str, JsonValue]:
-        keys = set(raw)
+        research_mode = raw.get("research_mode")
+        if "research_mode" in raw and research_mode not in ("topic", "comparison"):
+            raise ConversationConflict("current research mode is invalid")
+        public_review = raw.get("public_review")
+        if "public_review" in raw and (not isinstance(public_review, str)
+                or public_review not in {"public_unlinked", "uncertain", "not_applicable"}):
+            raise ConversationConflict("current research public input review is invalid")
+        keys = set(raw) - {"public_review", "research_mode"}
         if keys not in {
             frozenset(_CURRENT_RESEARCH_ARGUMENT_KEYS),
             frozenset(_CURRENT_RESEARCH_LEGACY_ARGUMENT_KEYS),
@@ -2531,6 +2539,10 @@ class PostgresConversationActions:
             "question": question.strip(),
             "title": title.strip(),
         }
+        if "research_mode" in raw:
+            result["research_mode"] = research_mode
+        if "public_review" in raw:
+            result["public_review"] = public_review
         if keys == _CURRENT_RESEARCH_ARGUMENT_KEYS:
             options = raw.get("options")
             if (
