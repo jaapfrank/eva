@@ -13,7 +13,7 @@ export const projectProvider = {
 };
 
 export function ProjectLayout({ children }) { return <div className="project-app">{children}</div>; }
-const stages = [['built', 'Gebouwd'], ['tested', 'Getest'], ['live', 'In gebruik'], ['accepted', 'Geaccepteerd']];
+const stages = [['built', 'Gebouwd'], ['tested', 'Getest'], ['live', 'Live bewezen'], ['accepted', 'Geaccepteerd']];
 const names = { yes: 'Bewezen', partial: 'Gedeeltelijk', no: 'Nog niet', unknown: 'Onbekend' };
 const time = (value) => new Date(value).toLocaleTimeString('nl-NL', { hour: '2-digit', minute: '2-digit' });
 
@@ -23,24 +23,53 @@ function Stage({ state, label }) {
   </span>;
 }
 
-function PracticeTests({ tests = [] }) {
+function PracticeTests({ tests = [], browserAccess, stale, ownerBrowserUpdate }) {
   if (!tests.length) return null;
   const labels = { ready: 'Klaar om te testen', accepted: 'Door jou bevestigd', working: 'In ontwikkeling — nog niet testen' };
   return <section className="practice-section" aria-label="Jouw praktijktests">
     <div className="section-title"><div><h2>Jouw praktijktests</h2><p>Geef hier in de chat het testnummer en je ervaring door. Ik werk de uitslag bij.</p></div></div>
-    <div className="practice-grid">{tests.map((test) => <article className={`practice-card ${test.status}`} key={test.id}>
-      <span className="task-id">{test.id} · {test.updatedOn}</span><span className="task-status">{labels[test.status] || 'Status onbekend'}</span>
+    <div className="practice-grid">{tests.map((test) => <article className={`practice-card ${test.id === 'BR-01' ? 'access-check' : test.status}`} key={test.id}>
+      <span className="task-id">{test.id} · {test.updatedOn}</span><span className="task-status">{test.id === 'BR-01' ? (ownerBrowserUpdate?.viewerTrial === 'failed' ? 'Login gelukt · beeldproef mislukt' : stale ? 'Toegangscontrole niet actueel' : browserAccess?.state === 'login_required' ? 'Aanmelden nodig — jouw proef nog open' : 'Toegang nog niet bevestigd') : labels[test.status] || 'Status onbekend'}</span>
       <h3>{test.title}</h3><p>{test.change}</p>
-      {test.status === 'ready' && <><h4>Zo test je</h4><ol>{test.steps.map((step) => <li key={step}>{step}</li>)}</ol><p><b>Geslaagd als:</b> {test.expected}</p><p><b>Bericht hier:</b> {test.report}</p></>}
-      {test.result && <p className="practice-result"><b>Uitslag:</b> {test.result}</p>}
+      {test.id === 'BR-01' ? <>
+        {ownerBrowserUpdate?.viewerTrial === 'failed' ? <><p>Jouw aanmelding is gelukt. Na overnemen bleef het beeld zwart met een WebSocket-fout; na teruggeven verdween het beeld. De eerdere technische proef bewijst geen werkende huidige kijkverbinding.</p><p><b>Gewenste route:</b> jouw bestaande Google Chrome en een door jou beschikbaar gesteld tabblad, met zichtbaar werken en overnemen. Die koppeling is nog niet geleverd.</p><p>We onderzoeken de officiële Playwright-extensie. De aparte browser is aanvullend en vervangt jouw werkbrowser niet.</p></> : <p>De eerdere technische browserproef is geslaagd. Dat bevestigt nog niet dat jij nu kunt meekijken of overnemen.</p>}
+        {!stale && browserAccess?.state === 'login_required' ? <><a className="owner-dashboard-link" href={browserAccess.url} target="_blank" rel="noreferrer">Open eigenaarsdashboard ↗</a>{!ownerBrowserUpdate?.loginAccepted && <p>Meld je aan als <b>eva-owner</b> met het privé lokaal overgedragen wachtwoord.</p>}</> : <p>De juiste dashboardtoegang kan momenteel niet worden bevestigd. Wacht met deze proef.</p>}
+        <small>Bereikbaarheid gecontroleerd om {browserAccess?.checkedAt ? time(browserAccess.checkedAt) : '—'}. Dit controleert geen beeldverbinding of gebruikersacceptatie.</small>
+      </> : <>{test.status === 'ready' && <><h4>Zo test je</h4><ol>{test.steps.map((step) => <li key={step}>{step}</li>)}</ol><p><b>Geslaagd als:</b> {test.expected}</p><p><b>Bericht hier:</b> {test.report}</p></>}{test.result && <p className="practice-result"><b>Uitslag:</b> {test.result}</p>}</>}
     </article>)}</div>
   </section>;
+}
+
+function CapabilityMatrix({ capabilities, onEvidence }) {
+  const [expanded, setExpanded] = useState({});
+  return <>
+    <p className="matrix-mobile-hint">Veeg de tabel opzij voor alle kolommen. Tik op een onderdeel voor de details.</p>
+    <div className="matrix-scroll" role="region" aria-label="Statusmatrix, horizontaal scrollbaar" tabIndex={0}>
+      <table className="compact-matrix">
+        <caption className="visually-hidden">Negen hoofdonderdelen. Gebouwd, getest, in gebruik en door jou geaccepteerd zijn afzonderlijke stappen.</caption>
+        <thead><tr><th scope="col">Onderdeel · concreet resultaat</th>{stages.map(([key, label]) => <th key={key} scope="col">{label}</th>)}<th scope="col">Wat nog openstaat</th></tr></thead>
+        {capabilities.map(category => <tbody key={category.id}>
+          <tr className="matrix-category">
+            <th scope="row"><button className="matrix-toggle" aria-expanded={Boolean(expanded[category.id])} aria-controls={`details-${category.id}`} onClick={() => setExpanded(value => ({ ...value, [category.id]: !value[category.id] }))}><span aria-hidden="true">{expanded[category.id] ? '−' : '+'}</span><span>{category.title}</span></button><p className="matrix-scope">{category.scope}</p><p className="matrix-result">{category.visibleResult || category.works}</p>{category.historyNote && <p className="matrix-history">{category.historyNote}</p>}<small className="matrix-basis">{category.resultBasis || 'Volgens werkbord'}</small></th>
+            {stages.map(([key, label]) => <td key={key} title={category.stageNotes?.[key]}><Stage state={category[key]} label={label}/><small className="matrix-stage-label">{category.stageLabels?.[key] || (key === 'accepted' && category[key] === 'no' ? 'Niet beoordeeld' : names[category[key]])}</small></td>)}
+            <td className="matrix-gap"><small className="matrix-gap-kind">{category.gapKind || 'Open'}</small><span>{category.gap}</span>{category.links?.map(link => <a className="matrix-result-link" href={link.url} target="_blank" rel="noreferrer" key={link.url}>{link.title} ↗</a>)}</td>
+          </tr>
+          <tr id={`details-${category.id}`} hidden={!expanded[category.id]} className="matrix-details"><td colSpan={6}>
+            <div className="matrix-detail-intro"><p><b>Wat werkt:</b> {category.works || category.subtitle}</p><p><b>Open:</b> {category.gap}</p>{category.tryIt && <p><b>Probeer:</b> {category.tryIt}</p>}<button onClick={() => onEvidence(category.id)}>Bewijs en grenzen</button></div>
+            {!!category.outcomes?.length && <table className="matrix-outcomes"><caption>Concrete deelresultaten binnen {category.title}</caption><thead><tr><th scope="col">Deelresultaat</th>{stages.map(([key,label]) => <th scope="col" key={key}>{label}</th>)}<th scope="col">Open werk</th></tr></thead><tbody>{category.outcomes.map(item => <tr key={item.id}><th scope="row"><button onClick={() => onEvidence(item.id)}>{item.title}</button><small>{item.works}</small></th>{stages.map(([key,label]) => <td key={key}><Stage state={item[key]} label={label}/></td>)}<td className="matrix-gap">{item.gap}</td></tr>)}</tbody></table>}
+          </td></tr>
+        </tbody>)}
+      </table>
+    </div>
+    <div className="proof-legend">{Object.entries(names).map(([state,label]) => <span key={state}><Stage state={state} label={label}/>{label}</span>)}</div>
+    <p className="outcome-help">Klap een rij open voor bewijs en deelresultaten. Groen geldt uitsluitend voor de benoemde oplevering; jouw acceptatie blijft afzonderlijk.</p>
+  </>;
 }
 
 function Roadmap({ phases, tasks, searching }) {
   return <div className="project-roadmap" aria-label="Route naar een complete Eva">{phases.map((phase, index) => {
     const cards = tasks.filter((task) => phase.taskIds.includes(task.id));
-    if (searching && !cards.length) return null;
+    if (!cards.length) return null;
     return <details className="roadmap-phase" key={phase.id} open={searching || undefined}>
       <summary><span className="roadmap-number">{index + 1}</span><span><strong>{phase.title}</strong><small>{phase.outcome}</small></span><span className="roadmap-expand" aria-hidden="true">+</span></summary>
       <p className="roadmap-acceptance"><b>Bruikbaar wanneer:</b> {phase.acceptance}</p>
@@ -55,8 +84,8 @@ export default function ProjectDashboard() {
   const [filter, setFilter] = useState('');
   const query = useGetOne('project', { id: 'project' }, { refetchInterval: 5000, retry: false });
   if (!query.data) return <div className="project-loading"><h1>Eva, in één oogopslag.</h1><p role={query.error ? 'alert' : undefined}>{query.error ? 'De projectbron is niet bereikbaar. Er wordt geen groene status verzonnen.' : 'Actuele projectbron ophalen…'}</p><button onClick={() => query.refetch()}>Opnieuw ophalen</button></div>;
-  const { project, active, milestones, queued, completed, runtime, updatedAt, readAt, revision } = query.data;
-  const capability = project.capabilities.find((item) => item.id === selected);
+  const { project, active, milestones, queued, completed, runtime, browserAccess, updatedAt, readAt, revision } = query.data;
+  const capability = project.capabilities.flatMap(item => [item, ...(item.outcomes || [])]).find((item) => item.id === selected);
   const visibleTasks = [...queued, ...milestones].filter((task) => `${task.id} ${task.title} ${task.area}`.toLowerCase().includes(filter.toLowerCase()));
   return <div className="project-frame">
     <aside className="project-sidebar">
@@ -70,25 +99,20 @@ export default function ProjectDashboard() {
       {query.error && <div className="project-warning" role="alert">Verbinding met de projectbron verloren. Onderstaande gegevens zijn van de vorige controle.</div>}
       <section className="project-heading"><div><p className="eyebrow">VAN AMBITIE NAAR DAGELIJKS GEBRUIK</p><h1>{tab === 'overzicht' ? 'Waar staat Eva écht?' : tab === 'werk' ? 'Eén richting. Zichtbaar werk.' : 'Leren van de besten.'}</h1><p>{tab === 'overzicht' ? 'Wat werkt, wat ontbreekt en wat je als volgende krijgt.' : tab === 'werk' ? 'Dit is de werklijst waaruit ik werk. Een technische kaart is geen af product.' : 'Actuele bronnen, open keuzes en bewijs. Geen verzonnen voorsprong.'}</p></div><span className="phase-tag">In ontwikkeling</span></section>
       {tab === 'overzicht' && <>
-        <section className="project-summary" aria-label="Samenvatting">
-          {project.summary.map((item) => <article key={item.label}><span className="stat-label">{item.label}</span><strong>{item.value}</strong><span className="stat-foot">{item.detail}</span></article>)}
-        </section>
-        <PracticeTests tests={project.practiceTests}/>
-        <section className="focus-grid">
-          <article className="project-focus"><div className="focus-kicker"><span className="pulse-dot"/> HUIDIGE OPDRACHT <span>{active.id}</span></div><h2>{active.title}</h2><p>{active.outcome}</p><div className="focus-footer"><span>Kaart: {active.status === 'in_progress' ? 'in uitvoering' : active.status}</span><button onClick={() => setTab('werk')}>Bekijk werk →</button></div></article>
+        <section className="focus-grid">{project.acceptedDelivery && <article className="accepted-delivery"><p className="eyebrow">✓ AFGEROND EN DOOR JOU GEACCEPTEERD</p><h2>{project.acceptedDelivery.title}</h2><p>{project.acceptedDelivery.result}</p><small>{project.acceptedDelivery.review}</small></article>}
+          <article className="project-focus"><div className="focus-kicker"><span className="pulse-dot"/> {active.displayKicker || 'HUIDIGE OPDRACHT'} <span>{active.id}</span></div><h2>{active.displayTitle || active.title}</h2><p>{active.displayOutcome || active.outcome}</p>{active.resultArtifact && <p className="active-artifact"><a href={active.resultArtifact.url} target="_blank" rel="noreferrer">Open resultaat: {active.resultArtifact.title} ↗</a><small>{active.resultArtifact.status}</small></p>}{active.progress && <dl className="focus-progress"><dt>Werkt</dt><dd>{active.progress.works}</dd><dt>Herstel</dt><dd>{active.progress.repair} {active.progress.next}</dd><dt>Nog open</dt><dd>{active.progress.open}</dd></dl>}<div className="focus-footer"><span>{active.displayStatus || `Kaart: ${active.status === 'in_progress' ? 'in uitvoering' : active.status}`}</span><button onClick={() => setTab('werk')}>Bekijk werk →</button></div></article>
           <article className="project-next"><p className="eyebrow">EERST DUIDELIJK, DAN VERDER</p>{project.nextOutcomes.map((item, index) => <div className="next-outcome" key={item.title}><span>{String(index + 1).padStart(2, '0')}</span><div><strong>{item.title}</strong><small>{item.detail}</small></div></div>)}</article>
         </section>
-        <section className="capability-section"><div className="section-title"><div><h2>Van code naar iets wat jij kunt gebruiken</h2><p>Een groen vinkje geldt alleen voor die stap. Geen misleidend totaalpercentage.</p></div><span className="section-note">Klik op een onderdeel voor de grens</span></div>
-          <div className="capability-table"><div className="capability-row table-head"><span>Onderdeel</span>{stages.map(([key, label]) => <span key={key}>{label}</span>)}<span>Wat ontbreekt</span></div>
-            {project.capabilities.map((item) => <button className="capability-row" key={item.id} onClick={() => setSelected(item.id)}><span className="capability-name"><span className="capability-icon">{item.icon}</span><span><strong>{item.title}</strong><small>{item.subtitle}</small></span></span>{stages.map(([key, label]) => <Stage key={key} state={item[key]} label={label}/>)}<span className="capability-gap">{item.gap}<b>↗</b></span></button>)}
-          </div><div className="proof-legend"><span><Stage state="yes" label="Bewezen"/> Bewezen</span><span><Stage state="partial" label="Gedeeltelijk"/> Gedeeltelijk</span><span><Stage state="no" label="Nog niet"/> Nog niet</span><span><Stage state="unknown" label="Onbekend"/> Onbekend</span></div>
+        <section className="capability-section" aria-label="Mogelijkheden en open werk"><div className="section-title"><div><h2>Wat werkt en wat nog mist</h2><p>De vier statussen gelden voor de benoemde oplevering in iedere rij. Bredere ambities en ontbrekende proeven staan rechts; ze maken een afgeronde oplevering niet ongedaan.</p><p className="audit-caption">Live bewezen = uitgevoerd op de vermelde datum. Huidige bereikbaarheid is apart gecontroleerd; een latere kernversie is niet automatisch opnieuw beproefd.</p>{project.capabilityAudit?.unavailable && <p role="alert">Feitencontrole niet beschikbaar; onderstaande statussen komen uit het werkbord.</p>}</div></div>
+          <CapabilityMatrix capabilities={project.capabilities} onEvidence={setSelected}/>
         </section>
+        <PracticeTests tests={project.practiceTests} browserAccess={browserAccess} stale={Boolean(query.error)} ownerBrowserUpdate={project.capabilityAudit?.ownerBrowserUpdate}/>
         <section className="project-bottom"><article><p className="eyebrow">INSTALLATIECONTROLE</p><h3>{query.error ? 'Niet actueel' : runtime.state === 'ready' ? 'Kern bereikbaar' : runtime.state === 'not_ready' ? 'Kern vraagt aandacht' : 'Kern niet bereikbaar'}</h3><p>{project.runtimeLabel} · controle om {time(runtime.checkedAt)}<br/>Bereikbaar betekent niet dat Eva als product af is.</p></article><article><p className="eyebrow">WAT NU EERLIJK OPENSTAAT</p><ul>{project.openRisks.map((risk) => <li key={risk}>{risk}</li>)}</ul></article></section>
       </>}
-      {tab === 'werk' && <section className="project-work"><article className="work-active"><span className="eyebrow">NU · {active.id}</span><h2>{active.title}</h2><p>{active.outcome}</p><h3>Klaar wanneer</h3><ul>{active.doneWhen.map((item) => <li key={item}>{item}</li>)}</ul></article><div className="section-title"><h2>Komt daarna</h2><input aria-label="Zoek een taak" placeholder="Zoek een onderdeel…" value={filter} onChange={(event) => setFilter(event.target.value)}/></div><p className="priority-decision">{project.priorityDecision}</p><Roadmap phases={project.roadmap} tasks={visibleTasks} searching={Boolean(filter)}/>{filter && !visibleTasks.length && <p role="status">Geen taken gevonden.</p>}<details className="past-work"><summary>{completed.length} afgeronde technische kaarten — geen productpercentage</summary>{completed.map((task) => <p key={task.id}>✓ {task.id} · {task.title}</p>)}</details></section>}
+      {tab === 'werk' && <section className="project-work"><article className="work-active"><span className="eyebrow">NU · {active.id}</span><h2>{active.displayTitle || active.title}</h2><p>{active.displayOutcome || active.outcome}</p>{active.resultArtifact && <p className="active-artifact"><a href={active.resultArtifact.url} target="_blank" rel="noreferrer">Open resultaat: {active.resultArtifact.title} ↗</a><small>{active.resultArtifact.status}</small></p>}{active.progress && <dl className="focus-progress"><dt>Werkt</dt><dd>{active.progress.works}</dd><dt>Herstel</dt><dd>{active.progress.repair} {active.progress.next}</dd><dt>Nog open</dt><dd>{active.progress.open}</dd></dl>}{!active.displayStatus && <><h3>Klaar wanneer</h3><ul>{active.doneWhen.map((item) => <li key={item}>{item}</li>)}</ul></>}{active.displayStatus && <p>{active.displayStatus}</p>}</article><div className="section-title"><h2>Komt daarna</h2><input aria-label="Zoek een taak" placeholder="Zoek een onderdeel…" value={filter} onChange={(event) => setFilter(event.target.value)}/></div><p className="priority-decision">{project.priorityDecision}</p><Roadmap phases={project.roadmap} tasks={visibleTasks} searching={Boolean(filter)}/>{filter && !visibleTasks.length && <p role="status">Geen taken gevonden.</p>}<details className="past-work"><summary>{completed.length} afgeronde technische kaarten — geen productpercentage</summary>{completed.map((task) => <p key={task.id}>✓ {task.id} · {task.title}</p>)}</details></section>}
       {tab === 'keuzes' && <><div className="project-warning">Bronnen bekeken op {project.competitorCheckedAt}. Gedocumenteerde functies zijn nog geen gelijke praktijktest. De rootlicenties zijn gecontroleerd; hergebruik vereist nog controle per bestand, dependency en integratie.</div><section className="competitor-grid">{project.competitors.map((item) => <article key={item.name}><div className="competitor-top"><span className="competitor-monogram">{item.name[0]}</span><span className="task-status">{item.version}</span></div><h2>{item.name}</h2><span className="eyebrow">WAAR WE VAN KUNNEN LEREN</span><p>{item.strength}</p><span className="eyebrow">NOG TE TOETSEN</span><p>{item.question}</p><a href={item.source} target="_blank" rel="noreferrer">Officiële releasebron ↗</a><hr/><span className="eyebrow">EERSTE HERGEBRUIKPROEF · {item.taskId}</span><p>{item.reuse}</p><p>{item.trial}</p><a href={item.licenseSource} target="_blank" rel="noreferrer">{item.license} ↗</a></article>)}</section><section className="module-section"><h2>Eén modulaire Eva</h2><p>Eva houdt identiteit, personen en bevoegdheden. Algemene techniek komt uit onderhouden open source.</p><div className="module-grid">{project.modules.map((item) => <article key={item.name}><span className="eyebrow">{item.name}</span><h3>{item.candidate}</h3><span className="module-state">{item.state}</span><p>{item.next}</p></article>)}</div></section></>}
       <footer className="project-footer"><span>Werklijst gewijzigd: {new Date(updatedAt).toLocaleString('nl-NL')} · versie {revision.slice(0, 8)}</span><span>Geen extra modelcalls voor dit dashboard</span></footer>
     </main>
-    {capability && <div className="detail-backdrop" onClick={() => setSelected(null)}><section className="capability-detail" role="dialog" aria-modal="true" aria-label={capability.title} onClick={(event) => event.stopPropagation()}><button className="detail-close" autoFocus onClick={() => setSelected(null)}>Sluiten ×</button><p className="eyebrow">BEWIJS EN GRENZEN</p><h2>{capability.title}</h2><p>{capability.detail}</p><dl>{stages.map(([key, label]) => <div key={key}><dt>{label}</dt><dd><Stage state={capability[key]} label={label}/>{names[capability[key]]}</dd></div>)}</dl><h3>Volgende gebruikersuitkomst</h3><p>{capability.gap}</p><small>Basis: {capability.evidence}</small></section></div>}
+    {capability && <div className="detail-backdrop" onClick={() => setSelected(null)}><section className="capability-detail" role="dialog" aria-modal="true" aria-label={capability.title} onClick={(event) => event.stopPropagation()}><button className="detail-close" autoFocus onClick={() => setSelected(null)}>Sluiten ×</button><p className="eyebrow">BEWIJS EN GRENZEN</p><h2>{capability.title}</h2><p>{capability.detail}</p><dl>{stages.map(([key, label]) => <div key={key}><dt>{label}</dt><dd><Stage state={capability[key]} label={label}/><span>{capability.stageLabels?.[key] || names[capability[key]]}{capability.stageNotes?.[key] && <small>{capability.stageNotes[key]}</small>}</span></dd></div>)}</dl><h3>Wat werkt</h3><p>{capability.works || capability.detail}</p>{capability.tryIt && <><h3>Zelf proberen</h3><p>{capability.tryIt}</p></>}<h3>Resterend werk</h3><p>{capability.gap}</p>{capability.evidence && <small>Basis: {capability.evidence}</small>}</section></div>}
   </div>;
 }

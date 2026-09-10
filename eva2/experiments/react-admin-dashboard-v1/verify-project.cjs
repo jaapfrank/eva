@@ -2,15 +2,33 @@ const assert = require('node:assert/strict');
 const path = require('node:path');
 const fs = require('node:fs');
 const { chromium } = require(process.env.EVA_DASHBOARD_PLAYWRIGHT_PACKAGE);
-const origin = 'http://127.0.0.1:44712';
+const origin = process.env.EVA_PROJECT_ORIGIN || 'http://127.0.0.1:44712';
 const output = process.env.EVA_PROJECT_SCREENSHOTS;
 
 async function main() {
   const payload = await (await fetch(`${origin}/project-state`)).json();
   assert.equal(payload.contract, 'EvaProjectOverview/v1');
-  const board = JSON.parse(fs.readFileSync(path.resolve(__dirname, '../../design/product/execution-workboard-v1.json')));
+  const board = JSON.parse(fs.readFileSync(process.env.EVA_PROJECT_BOARD_FILE || path.resolve(__dirname, '../../design/product/execution-workboard-v1.json')));
   assert.equal(payload.active.id, board.activeTaskId);
-  assert.deepEqual(payload.project, board.audit.projectDashboard);
+  assert.equal(payload.project.acceptedDelivery?.taskId, 'CO-008');
+  assert.equal(payload.project.nextOutcomes.some(item=>item.title==='Geheugen afronden'), false);
+  const plannedPhases = payload.project.roadmap.filter(phase => [...payload.queued, ...payload.milestones].some(task => phase.taskIds.includes(task.id)));
+  assert.deepEqual(payload.project.capabilities.map(item => item.id), ['answer-stream','conversation','memory','initiative','tools','voice','projects','browser','installation']);
+  for (const id of ['voice','projects','installation']) {
+    assert.notEqual(payload.project.capabilities.find(item => item.id === id).accepted, 'yes');
+  }
+  assert.equal(payload.completed.some(task => task.id === 'CO-008'), board.executionTasks.find(task => task.id === 'CO-008').status === 'done');
+  const audit = JSON.parse(fs.readFileSync(path.join(__dirname, 'capability-audit.json')));
+  assert.equal(payload.project.capabilityAudit.unavailable, undefined);
+  for (const capability of payload.project.capabilities) {
+    const finding = audit.findings.find(item => item.id === capability.id);
+    assert.ok(capability.scope, 'each status must name its delivery scope');
+    assert.equal(capability.visibleResult, finding.visibleResult);
+    for (const step of ['built','tested','live','accepted']) assert.equal(capability[step], finding.states[step]);
+  }
+  assert.deepEqual(payload.project.roadmap, board.audit.projectDashboard.roadmap);
+  assert.notEqual(payload.project.practiceTests.find(test => test.id === 'BR-01').status, 'ready');
+  assert.equal(JSON.stringify(payload.project.practiceTests).includes('localhost:44710'), false);
   assert.equal((await fetch(`${origin}/project-state`, { method: 'POST' })).status, 405);
   assert.equal((await fetch(`${origin}/project-state`, { headers: { Origin: 'https://external.invalid' } })).status, 403);
   const browser = await chromium.launch({ executablePath: process.env.EVA_DASHBOARD_CHROMIUM, headless: true });
@@ -22,22 +40,39 @@ async function main() {
     page.on('request', (request) => { if (!request.url().startsWith(origin)) external.push(request.url()); });
     await page.goto(origin);
     await page.getByRole('heading', { name: 'Waar staat Eva écht?' }).waitFor();
-    await page.getByRole('heading', { name: payload.active.title }).waitFor();
-    assert.equal(await page.locator('button.capability-row').count(), payload.project.capabilities.length);
+    await page.getByRole('heading', { name:'Geheugenresultaat afgerond',exact:true }).waitFor();
+    await page.getByRole('heading', { name: payload.active.displayTitle || payload.active.title }).waitFor();
+    assert.equal(await page.locator('.matrix-toggle').count(), 9);
+    assert.equal(await page.locator('.matrix-details:visible').count(), 0);
+    assert.equal(await page.locator('.matrix-scope:visible').count(), 9);
+    assert.equal(await page.getByText('Bron gewijzigd sinds feitencontrole',{exact:true}).count(),0);
+    assert.deepEqual(await page.locator('.compact-matrix > thead th').allTextContents(), ['Onderdeel · concreet resultaat', 'Gebouwd', 'Getest', 'Live bewezen', 'Geaccepteerd', 'Wat nog openstaat']);
+    assert.ok((await page.locator('.matrix-scroll').boundingBox()).height < 1150, 'nine rows show results without stacked status cards');
+    assert.equal(await page.locator('.matrix-result:visible').count(),9);
+    assert.equal(await page.locator('.matrix-gap-kind:visible').count(),9);
+    for (const finding of audit.findings) await page.getByText(finding.visibleResult,{exact:true}).first().waitFor();
     if (output) await page.screenshot({ path: path.join(output, 'eva-project-desktop.png'), fullPage: true });
-    await page.getByRole('button', { name: /Gesprekken.*Warmte/ }).click();
+    await page.locator('.matrix-toggle').filter({hasText: 'Geheugen'}).click();
+    await page.getByRole('button', {name: 'Een gewijzigde geheugenbron verwerken', exact: true}).waitFor();
+    assert.equal(await page.locator('#details-memory .proof-dot.yes').count(), 7);
+    assert.equal(await page.locator('.matrix-category').nth(2).locator('.proof-dot.yes').count(), 4);
+    if (output) await page.screenshot({path: path.join(output, 'eva-project-expanded.png'), fullPage: true});
+    await page.locator('.matrix-toggle').filter({hasText: 'Geheugen'}).click();
+    await page.locator('.matrix-toggle').filter({hasText: 'Gesprekken'}).click();
+    await page.locator('#details-conversation').getByRole('button', {name: 'Bewijs en grenzen'}).click();
     await page.getByRole('dialog', { name: 'Gesprekken' }).waitFor();
     await page.getByRole('button', { name: 'Sluiten ×' }).click();
+    await page.locator('.matrix-toggle').filter({hasText: 'Gesprekken'}).click();
     await page.getByRole('button', { name: /Concurrenten & keuzes/ }).click();
     for (const name of ['Hermes', 'OpenClaw', 'Agent Zero']) await page.getByRole('heading', { name, exact: true }).waitFor();
     if (output) await page.screenshot({ path: path.join(output, 'eva-project-keuzes.png'), fullPage: true });
     await page.getByRole('button', { name: /Werk & volgorde/ }).click();
-    assert.equal(await page.locator('.roadmap-phase').count(), payload.project.roadmap.length);
+    assert.equal(await page.locator('.roadmap-phase').count(), plannedPhases.length);
     assert.equal(await page.locator('.roadmap-phase[open]').count(), 0);
     if (output) await page.screenshot({ path: path.join(output, 'eva-project-werk.png'), fullPage: true });
     const nextTask = [...payload.queued, ...payload.milestones][0];
     assert.ok(nextTask);
-    const nextPhase = payload.project.roadmap.findIndex(phase => phase.taskIds.includes(nextTask.id));
+    const nextPhase = plannedPhases.findIndex(phase => phase.taskIds.includes(nextTask.id));
     assert.notEqual(nextPhase, -1);
     const phase = page.locator('.roadmap-phase').nth(nextPhase);
     await phase.locator('summary').click();
@@ -49,11 +84,18 @@ async function main() {
     await page.getByRole('textbox', { name: 'Zoek een taak' }).fill('bestaat-niet');
     await page.getByRole('status').filter({ hasText: 'Geen taken gevonden.' }).waitFor();
     await page.getByRole('textbox', { name: 'Zoek een taak' }).fill('');
-    assert.equal(await page.locator('.roadmap-phase').count(), payload.project.roadmap.length);
+    assert.equal(await page.locator('.roadmap-phase').count(), plannedPhases.length);
     await page.getByRole('button', { name: /Overzicht/ }).click();
     await page.setViewportSize({ width: 390, height: 844 });
     assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth), false);
     if (output) await page.screenshot({ path: path.join(output, 'eva-project-mobile.png'), fullPage: true });
+    await page.locator('.matrix-toggle').filter({hasText: 'Stem & aanwezigheid'}).click();
+    await page.getByRole('button', {name: 'Verstaanbare audio in de woonkamer', exact: true}).waitFor();
+    assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth), false);
+    assert.equal(await page.locator('#details-voice .proof-dot.yes').count(), 8);
+    await page.locator('.matrix-scroll').evaluate(el => { el.scrollLeft = el.scrollWidth; });
+    if (output) await page.screenshot({path: path.join(output, 'eva-project-mobile-expanded.png'), fullPage: true});
+    await page.locator('.matrix-toggle').filter({hasText: 'Stem & aanwezigheid'}).click();
     await page.getByRole('button', { name: /Werk & volgorde/ }).click();
     assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth), false);
     if (output) await page.screenshot({ path: path.join(output, 'eva-project-werk-mobile.png'), fullPage: true });
@@ -62,10 +104,13 @@ async function main() {
     // not hardcoded task text; the actual workboard is never changed by this test.
     await page.route('**/project-state', (route) => route.fulfill({ json: { ...payload,
       project: { ...payload.project, runtimeLabel: 'Synchronisatie-slot' },
-      active: { ...payload.active, title: 'Synchronisatiecontrole' }, revision: 'f'.repeat(64),
+      active: { ...payload.active, id:'TEST-NEXT', title: 'Synchronisatiecontrole', displayTitle:undefined, displayOutcome:undefined, displayKicker:undefined, displayStatus:undefined }, revision: 'f'.repeat(64),
     } }));
     await page.getByRole('heading', { name: 'Synchronisatiecontrole' }).waitFor({ timeout: 12000 });
     await page.getByText(/Synchronisatie-slot · controle/).waitFor();
+    await page.route('**/project-state', (route) => route.fulfill({ json: { ...payload, browserAccess: { state: 'unavailable', checkedAt: payload.readAt, url: null } } }));
+    await page.getByText('De juiste dashboardtoegang kan momenteel niet worden bevestigd. Wacht met deze proef.').waitFor({timeout: 12000});
+    assert.equal(await page.locator('.owner-dashboard-link').count(), 0);
     await page.unroute('**/project-state');
     await page.route('**/project-state', (route) => route.fulfill({ status: 503, json: {} }));
     await page.getByRole('alert').waitFor({ timeout: 12000 });
