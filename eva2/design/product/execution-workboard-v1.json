@@ -46,8 +46,8 @@
         },
         {
           "id": "paused-followup",
-          "title": "Later: hulpagenten en browserherstel",
-          "outcome": "Afzonderlijke vervolgopleveringen; ze houden het geheugengoal niet open.",
+          "title": "Hulpagenten en browserherstel",
+          "outcome": "Hulpagentlevenscyclus technisch afgerond; browserherstel volgt afzonderlijk.",
           "acceptance": "Starten, volgen, stoppen en hervatten via de gebruikersroute; browserherstel met behouden profiel.",
           "taskIds": [
             "AU-002",
@@ -728,7 +728,7 @@
       "sessionGoal": "AU-008: één zelfstandige kosteloze bijdrage via de algemene uitvoerder.",
       "currentWork": "CO-008 / GE-01 is afgerond en door Jaap geaccepteerd. AU-007 blijft afgesloten met beperkte kaartwaardering. AU-008: algemeen publiek onderzoek en private initiatiefbeoordeling op rustige momenten zijn live. De echte zelfstandige bijdrage wacht nog op bewijs; het huidige achtergrondbudget is 4/4 verbruikt.",
       "currentEvidence": "eva2/reviews/AU-007-technical-closure-f99b5a2.md",
-      "nextStep": "Bestaande onderzoeks- en toolroutes verbinden binnen het kosteloze mandaat. Normale initiatiefcyclus volgen; pas een echt uitgevoerd en gecontroleerd resultaat als oplevering tonen.",
+      "nextStep": "Algemeen publiek onderzoek en private initiatiefbeoordeling op rustige momenten zijn live. [Technisch bewijs](evidence/product/AU-008-private-review-live-2026-09-10.json). De eerste gewone cyclus is om20:32:45UTC teruggelezen: eigenaarachtergrondbudget4/4, geen modelaanroep. De technische aansluiting is afgerond. De echte zelfgekozen bijdrage blijft open en volgt uitsluitend uit de gewone cyclus binnen de bestaande grenzen.",
       "usageClarification": {
         "date": "2026-09-07",
         "authorizedBy": "Jaap",
@@ -3247,26 +3247,48 @@
       "retryPolicy": "Geen herverpakking of alternatieve uitvoerroute voor de geweigerde installatie. Onafhankelijk productwerk gaat door."
     },
     "au002Delivery": {
-      "status": "paused_by_owner",
+      "status": "completed",
       "ownerRole": "architecturelead",
       "artifactArchive": "/home/administrator/project/.eva2-artifacts/au002-owner-work-20260910",
       "purpose": "Eén gewone eigenaarroute met duurzame hulpagent: starten, stoppen, hervatten en resultaat; bron-, image-, verbruik- en readbackreceipts.",
       "retention": "Bewaren tot AU-002 onafhankelijk gesloten en de zeven dagen eindacceptatie verstreken zijn; daarna privérequests verwijderen en gehashte samenvatting behouden.",
-      "sourceChecks": "2 nieuwe adapterchecks en bestaande eigenaar-dashboardroute groen; gedeelde provider/service 17 checks groen. Geen nieuwe spraakproef.",
+      "sourceChecks": "14 provider/commandotests en 6 PostgreSQL levenscyclus/rechtencontroles groen. Echte providerproef succeeded: 315 tokens, 1 call, geen tools.",
       "implementationCommit": "0126ac0a1e0c3962ae4f0863f2d695e6206bdabc",
       "candidateImage": "sha256:2f267ed94b41ed0aeb1f60ef3597272604149a8fc82617abeecfea3f7cd6a58c",
       "result": "Gebouwd: hulpwerk starten, volgen, stoppen, hervatten en resultaat ophalen via gewone chat. Gerichte controles klaar; live eigenaarroute volgt na omzetting.",
       "deploymentFinding": "Eerste omzetting en automatische terugrol liepen vast op de bestaande bestandskoppeling die na herstart onbereikbaar was gemarkeerd. Koppeling hersteld via herontdekking; vorige Eva en browser weer bereikbaar. Nieuwe omzetting gestart met actuele gegevens.",
-      "liveSlot": 4,
+      "liveSlot": 3,
       "cutoverReceipt": "cutover-after-recovery.stdout",
       "ownerFlowFinding": "Eerste gewone gesprek gaf terecht aan geen hulpagenttools te hebben: runtime-gespreksscope verschilde van opslag-UUIDs. Koppeling in eigenaarservice én worker gecorrigeerd; onafhankelijke bronreview akkoord. Eén echte databasecontrole bevestigt dat de worker de eigenaaropdracht claimt.",
-      "next": "Wacht op Jaaps nieuwe goal; geen verdere implementatie, tests of deployment totdat hij opdracht geeft.",
+      "next": "Technisch afgerond; AU-008 blijft bij zijn bestaande eigenaar. Eerstvolgende vrije vervolgkaart: VB-004.",
       "pausedAt": "2026-09-10T08:51:40.466401+00:00",
       "pauseReason": "Jaap splitst het grote goal op in kleinere doelen en geeft daarna opnieuw opdracht om verder te gaan.",
-      "liveImplementationCommit": "0126ac0a1e0c3962ae4f0863f2d695e6206bdabc",
-      "liveImage": "sha256:2f267ed94b41ed0aeb1f60ef3597272604149a8fc82617abeecfea3f7cd6a58c",
-      "lastActualResult": "Gewone chat maakt een duurzame hulpopdracht aan; worker pakt haar op. Uitvoering faalt doordat gpt-5.4-mini niet meer door ChatGPT-aanmelding wordt ondersteund. Taak is als ambiguous bewaard; stop, hervatten en voltooid resultaat zijn nog niet live bewezen.",
-      "pendingSourceChange": "Hulpagentprofiel aangepast naar officieel vervangend gpt-5.6-luna, bijbehorende referentietarieven en compacte uitvoerinstructie. Vier gerichte adaptercontroles geslaagd. Deze twee bronbestanden zijn nog niet gecommit of uitgerold."
+      "liveImplementationCommit": "81d4306166cf9c13456fe46e0911dcfbd66baee2",
+      "liveImage": "sha256:54c3f886a3b1bdcb2a8be8598b02a043238b926a40a3752b7a3d4099a37d6528",
+      "lastActualResult": "Gekoppelde tweede poging succeeded; drie concrete gezinsideeën opgeslagen en via gewone chat teruggelezen. Eerste poging stopped en historische ambiguous poging behouden.",
+      "pendingSourceChange": "Providerreparatie afzonderlijk gecommit en kandidaat gebouwd; live worker gebruikt nog gpt-5.4-mini. Geen volledige gebruikersroute of menselijke acceptatie geclaimd.",
+      "activeExecutionThread": "01a08d52-31b1-7091-be45-812c0b6e6c9f",
+      "resumeReason": "Jaap gaf via coördinator expliciet opdracht de eerstvolgende vrije gebruikersuitkomst op te leveren.",
+      "providerRepairCommit": "64101d5d7dcbbf75f49bb130f9d769aa9c32cdb6",
+      "providerRepairCandidateImage": "sha256:1afe349621b23c3c9101147d94a144316c33201b5e4148b3ef83a9a455d04014",
+      "providerEvidencePath": "eva2/evidence/product/AU-002-provider-preparation-2026-09-11.json",
+      "preparationRecordedAt": "2026-09-10T22:05:47.181411+00:00",
+      "userOutcomeStatus": "Hulpagent via chat starten, stoppen en hervatten werkt",
+      "currentWork": "Technisch afgerond en onafhankelijk gecontroleerd: gewone chat start, stopt, hervat en leest het opgeslagen resultaat terug. Hulpagent blijft toolvrij.",
+      "remaining": "Jaap kan de bruikbaarheid beoordelen. Losse onderbrekingsbeurt en strikte uitvoerlengte blijven vervolgwerk; brede projectautonomie is niet bewezen.",
+      "built": true,
+      "tested": true,
+      "live": true,
+      "ownerAccepted": false,
+      "technicalReview": "Onafhankelijke technische GO door taak01a07e5b-3ef4-7ef3-8a68-3197a780694e; exact reviewdocument eva2/reviews/AU-002-final-81d43061.md",
+      "catalogRepairCommit": "81d4306166cf9c13456fe46e0911dcfbd66baee2",
+      "catalogRepairImage": "sha256:54c3f886a3b1bdcb2a8be8598b02a043238b926a40a3752b7a3d4099a37d6528",
+      "evidencePath": "eva2/evidence/product/AU-002-owner-lifecycle-2026-09-11.json",
+      "qualityFollowup": "De hulpopdracht vroeg maximaal100woorden; het natuurlijke opgeslagen resultaat telt126woorden volgens onafhankelijke review. Levenscyclus werkt, strikte lengteconformiteit blijft kwaliteitsvervolg.",
+      "reviewPath": "eva2/reviews/AU-002-final-81d43061.md",
+      "completedAt": "2026-09-10T22:32:06.761450+00:00",
+      "rawEvidenceArchive": "/home/administrator/project/.eva2-artifacts/au002-owner-work-20260910/delivery-20260911",
+      "finalWorkboardChecks": "check_current_workboard valid:30 execution cards,24 milestones,AU008 solely active;23 workboard regression tests passed."
     },
     "au002PausedCard": {
       "id": "AU-002",
@@ -3400,7 +3422,7 @@
       "ownerCorrection": "Vaste oorspronkelijke hoofdcategorieën met eigen status; concrete bewezen deeluitkomsten eronder in dezelfde tabel. Hoofdomvang behouden.",
       "verification": "Desktop en 390px mobiel gecontroleerd: negen vaste hoofdcategorieën met eigen status, vijf zichtbare deeluitkomsten, bewijsdetail en menselijke acceptatie apart. Geen horizontale pagina-overloop. Bestaande aantallen afgeronde kaarten niet als percentage gebruikt."
     },
-    "parallelWorkNotes": "### Afzonderlijk stemwerk\n\nDe laptoproute met LiveKit is live op http://localhost:44716. Plak het bestaande\neigenaar-dashboardtoken in het aanmeldformulier en kies Begin gesprek.\nBestandswerk, brononderzoek, stoppen en synthetische spraakonderbreking zijn\ngecontroleerd via dezelfde Eva-kern. De huisingang en bestaande gegevens blijven\nbehouden. Fysieke microfoon-/echoproef en Jaaps beoordeling staan open.\n\nDe voicetaak onderzoekt de resterende wachttijd: de gemeten geheugenraadpleging\nis de grootste vertraging. Een threadinstelling gaf geen herhaalbare verbetering\nen is daarom niet uitgerold. Telefoon en natuurlijke Voice PE-toegang zijn nog\nniet opgeleverd. [Actueel voicebewijs](evidence/product/voice-livekit-integration-2026-09-10.json).\nDe eerdere Voice PE-onbereikbaarheidsfout is hersteld en door Jaap bevestigd;\n[herstelbewijs](evidence/product/VOICE-REF-247-repair-2026-09-10.json).\n",
+    "parallelWorkNotes": "### Afzonderlijk stemwerk\n\nDe laptoproute met LiveKit is live op http://localhost:44716. Plak het bestaande\neigenaar-dashboardtoken in het aanmeldformulier en kies Begin gesprek.\nBestandswerk, brononderzoek, stoppen en synthetische spraakonderbreking zijn\ngecontroleerd via dezelfde Eva-kern. De huisingang en bestaande gegevens blijven\nbehouden. Fysieke microfoon-/echoproef en Jaaps beoordeling staan open.\n\nDe voicetaak onderzoekt de resterende wachttijd: de gemeten geheugenraadpleging\nis de grootste vertraging. Een threadinstelling gaf geen herhaalbare verbetering\nen is daarom niet uitgerold. Telefoon en natuurlijke Voice PE-toegang zijn nog\nniet opgeleverd. [Actueel voicebewijs](evidence/product/voice-livekit-integration-2026-09-10.json).\nDe eerdere Voice PE-onbereikbaarheidsfout is hersteld en door Jaap bevestigd;\n[herstelbewijs](evidence/product/VOICE-REF-247-repair-2026-09-10.json).\n\n### Afzonderlijk hulpagentwerk — AU-002\n\nDe gewone eigenaar-chat start, volgt, stopt en hervat nu een duurzame hulpagent.\nDe hervatte poging leverde drie gezinsideeën op; Eva las het opgeslagen resultaat\nvia dezelfde chat terug. De eerdere gestopte poging en haar onzekere verbruik\nblijven bewaard. Kern en helper zijn live op slot3; de stemroute blijft gereed.\nOnafhankelijke technische eindreview: GO. Jaaps beoordeling blijft open.\n[Echte chatproef en opslagbewijs](evidence/product/AU-002-owner-lifecycle-2026-09-11.json).\n",
     "initiativeDeliveryAU007": {
       "status": "done_limited_card_appreciation",
       "scope": "Eva ziet via een bestaande huiswaarneming een passende kans bij toegestane persoonlijke context, kiest zelf een concrete vervolgstap en werkt één controleerbaar privaat voorstel of hulpmiddel uit. Jaap hoeft de stappen niet voor te zeggen.",
@@ -3585,7 +3607,12 @@
         "modelCallIssued": false,
         "artifactProduced": false,
         "manualTriggerUsed": false
-      }
+      },
+      "reviewEvidencePaths": [
+        "reviews/AU-008-private-review-519a03a.md"
+      ],
+      "practiceEvidenceLimitation": "Praktijkbewijs open: huidige eigenaarachtergrondbudget 4/4; volgende gewone beoordeling vereist budgetruimte.",
+      "administrativeCorrection": "Reviewverwijzing en praktijkbeperking horen bij technische voortgang, niet bij stateDetails van de nog lopende productkaart. Drie bestaande bewijsbestanden gericht onder bestaande inventariseigenaren geregistreerd; geen nieuwe productacceptatie."
     }
   },
   "activeTaskId": "AU-008",
@@ -3617,7 +3644,8 @@
     "workboardreviewer": "/root/workboard_review",
     "dashboardreviewer": "/root/identity_pair_review",
     "memoryreviewer": "/root/co006_review",
-    "memorydeliveryreviewer": "/root/au002_release_review"
+    "memorydeliveryreviewer": "/root/au002_release_review",
+    "au002deliveryreviewer": "task:01a07e5b-3ef4-7ef3-8a68-3197a780694e"
   },
   "executionTasks": [
     {
@@ -5201,8 +5229,60 @@
       ]
     },
     {
-      "id": "AU-008",
+      "id": "AU-002",
       "order": 143,
+      "area": "Zelfstandigheid",
+      "title": "Duurzame hulpagent bedienen",
+      "outcome": "Een toolvrije duurzame hulpagent via gewone eigenaar-chat starten, volgen, stoppen, expliciet hervatten en het opgeslagen resultaat terugkrijgen.",
+      "status": "done",
+      "stateDetails": {
+        "baseCommit": "e267e56865b66544e2d661f71da384243a6046ca",
+        "implementationCommit": "81d4306166cf9c13456fe46e0911dcfbd66baee2",
+        "evidenceCommit": "8cdcff28cdce1d3e2fa9bebc0461e50a5fb2fa5d",
+        "reviewEvidencePaths": [
+          "eva2/evidence/product/AU-002-owner-lifecycle-2026-09-11.json"
+        ],
+        "blockerReason": null
+      },
+      "ownerRole": "architecturelead",
+      "reviewerRole": "au002deliveryreviewer",
+      "dependsOn": [
+        "VB-003"
+      ],
+      "changePaths": [
+        "eva2/src/eva/bootstrap/delegated_work_provider.py",
+        "eva2/tests/bootstrap/test_delegated_work_provider.py",
+        "eva2/src/eva/adapters/model/pydantic_conversation.py",
+        "eva2/tests/model/test_conversation_model.py"
+      ],
+      "testCommands": [
+        "pytest -q tests/bootstrap/test_delegated_work_provider.py tests/bootstrap/test_delegated_work_commands.py",
+        "pytest -q tests/postgres/test_delegated_work_owner_service.py tests/postgres/test_delegated_work_actions.py",
+        "pytest -q tests/model/test_conversation_model.py::test_runtime_budget_admits_only_the_exact_deferred_catalog tests/model/test_conversation_model.py::test_runtime_budget_rejects_oversized_input_before_auth_or_network",
+        "pytest -q tests/application/test_voice_context.py"
+      ],
+      "evidenceRequired": [
+        "Via de gewone eigenaar-chat een herkenbare hulpopdracht starten, voortgang opvragen, stoppen en expliciet hervatten, en het duurzaam opgeslagen resultaat ontvangen.",
+        "Eén gedeelde provideradapter, eigenaarafscherming en bestaand verbruik behouden; onzekere vorige calls worden niet stilzwijgend herhaald."
+      ],
+      "doneWhen": [
+        "De complete eigenaarroute start, volgt, stopt en hervat hulpwerk en geeft een bruikbaar opgeslagen resultaat terug.",
+        "Gerichte levenscycluscontrole en één echte gebruikersroute slagen; live ingebruikname en onafhankelijke review zijn vastgelegd."
+      ],
+      "inventoryOwners": [
+        "eva-runtime",
+        "verification"
+      ],
+      "componentIds": [
+        "conversation-model-adapter",
+        "api-and-runtime-composition",
+        "core-behavior-tests",
+        "operations-and-release-tests"
+      ]
+    },
+    {
+      "id": "AU-008",
+      "order": 144,
       "area": "Eigen initiatief",
       "title": "Zelf kosteloos handelen binnen eigenaarmandaat",
       "outcome": "Eva kiest uit toegestane context een nuttige bijdrage, voert passende kosteloze stappen via haar gewone taakuitvoerder uit en toont resultaat of concrete blokkade. Stilte blijft een geldige keuze.",
@@ -5211,10 +5291,8 @@
         "baseCommit": null,
         "implementationCommit": null,
         "evidenceCommit": null,
-        "reviewEvidencePaths": [
-          "reviews/AU-008-private-review-519a03a.md"
-        ],
-        "blockerReason": "Praktijkbewijs open: huidige eigenaarachtergrondbudget 4/4; volgende gewone beoordeling vereist budgetruimte."
+        "reviewEvidencePaths": [],
+        "blockerReason": null
       },
       "ownerRole": "architecturelead",
       "reviewerRole": "memorydeliveryreviewer",
@@ -5288,13 +5366,6 @@
     }
   ],
   "milestones": [
-    {
-      "id": "AU-002",
-      "order": 144,
-      "area": "Zelfstandigheid",
-      "title": "Duurzame hulpagent bedienen",
-      "outcome": "Starten, volgen, stoppen en hervatten werken via de gebruikersroute; hoofd- en hulpagent delen één provideradapter."
-    },
     {
       "id": "VB-004",
       "order": 145,
@@ -5881,6 +5952,21 @@
       ],
       "evidencePaths": [
         "eva2/reviews/AU-007-technical-closure-f99b5a2.md"
+      ]
+    },
+    "AU-002": {
+      "baseCommit": "e267e56865b66544e2d661f71da384243a6046ca",
+      "commit": "81d4306166cf9c13456fe46e0911dcfbd66baee2",
+      "evidenceCommit": "8cdcff28cdce1d3e2fa9bebc0461e50a5fb2fa5d",
+      "reviewCommit": "5084077bf76f5756534382101cd7c0d4f6f9ace5",
+      "decision": "GO",
+      "implementedBy": "/root",
+      "reviewedBy": "task:01a07e5b-3ef4-7ef3-8a68-3197a780694e",
+      "testReceiptPaths": [
+        "eva2/evidence/product/AU-002-owner-lifecycle-2026-09-11.json"
+      ],
+      "evidencePaths": [
+        "eva2/reviews/AU-002-final-81d43061.md"
       ]
     }
   }

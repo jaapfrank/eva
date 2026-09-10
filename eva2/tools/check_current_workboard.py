@@ -119,6 +119,7 @@ TEAM = {
     "dashboardreviewer": "/root/identity_pair_review",
     "memoryreviewer": "/root/co006_review",
     "memorydeliveryreviewer": "/root/au002_release_review",
+    "au002deliveryreviewer": "task:01a07e5b-3ef4-7ef3-8a68-3197a780694e",
 }
 
 

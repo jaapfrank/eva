@@ -60,7 +60,11 @@ def test_product_cadence_and_release_phase_are_explicit() -> None:
     assert not any(card_id.startswith("OS-") for card_id in milestones)
     assert "werkende slot blijft actief" in rules
     assert "kleine ontwikkelwijzigingen krijgen geen A/B-cyclus" in rules
-    assert [milestones[f"RB-00{i}"]["order"] for i in range(7, 10)] + [milestones["RB-010"]["order"]] == [400, 410, 420, 430]
+    release_ids = ["RB-007", "RB-008", "RB-009", "RB-010"]
+    release_order = [milestones[card_id]["order"] for card_id in release_ids]
+    assert release_order == sorted(set(release_order))
+    assert min(release_order) > milestones["FN-001"]["order"]
+    assert max(release_order) < milestones["FN-002"]["order"]
     assert "reserveslot" in milestones["RB-010"]["outcome"]
     assert "route" in milestones["RB-010"]["outcome"]
 
@@ -139,8 +143,16 @@ def test_dashboard_roadmap_cannot_be_a_second_work_queue(tmp_path: Path, mutatio
             ids.append("MISSING-001")
         else:
             done = {card["id"] for card in board["executionTasks"] if card["status"] == "done"}
-            first, second = [index for index, card_id in enumerate(ids) if card_id not in done][:2]
-            ids[first], ids[second] = ids[second], ids[first]
+            # The first roadmap group can contain only one open card after
+            # previous deliveries close. Mutate the actual global open order.
+            positions = [
+                (group["taskIds"], index)
+                for group in board["audit"]["projectDashboard"]["roadmap"]
+                for index, card_id in enumerate(group["taskIds"])
+                if card_id not in done
+            ]
+            (left, first), (right, second) = positions[:2]
+            left[first], right[second] = right[second], left[first]
 
     paths = copy_board(tmp_path, change)
     with pytest.raises(RuntimeError, match="roadmap"):

@@ -25,11 +25,20 @@ niet opgeleverd. [Actueel voicebewijs](evidence/product/voice-livekit-integratio
 De eerdere Voice PE-onbereikbaarheidsfout is hersteld en door Jaap bevestigd;
 [herstelbewijs](evidence/product/VOICE-REF-247-repair-2026-09-10.json).
 
+### Afzonderlijk hulpagentwerk — AU-002
+
+De gewone eigenaar-chat start, volgt, stopt en hervat nu een duurzame hulpagent.
+De hervatte poging leverde drie gezinsideeën op; Eva las het opgeslagen resultaat
+via dezelfde chat terug. De eerdere gestopte poging en haar onzekere verbruik
+blijven bewaard. Kern en helper zijn live op slot3; de stemroute blijft gereed.
+Onafhankelijke technische eindreview: GO. Jaaps beoordeling blijft open.
+[Echte chatproef en opslagbewijs](evidence/product/AU-002-owner-lifecycle-2026-09-11.json).
+
 ## Nu
 
 | Volgorde | Kaart | Resultaat | Status |
 |---:|---|---|---|
-| 143 | `AU-008` — Zelf kosteloos handelen binnen eigenaarmandaat | Eva kiest uit toegestane context een nuttige bijdrage, voert passende kosteloze stappen via haar gewone taakuitvoerder uit en toont resultaat of concrete blokkade. Stilte blijft een geldige keuze. | 🟡 BEZIG |
+| 144 | `AU-008` — Zelf kosteloos handelen binnen eigenaarmandaat | Eva kiest uit toegestane context een nuttige bijdrage, voert passende kosteloze stappen via haar gewone taakuitvoerder uit en toont resultaat of concrete blokkade. Stilte blijft een geldige keuze. | 🟡 BEZIG |
 
 Klaar betekent:
 
@@ -68,6 +77,11 @@ Klaar betekent:
 - `eva2/tests/postgres/test_owner_initiatives.py`
 - `eva2/tools/eva2_quiescent_cutover.py`
 - `eva2/src/eva/adapters/model/research_tools.py`
+- `eva2/src/eva/application/research.py`
+- `eva2/src/eva/adapters/postgres/runtime_resource_usage.py`
+- `eva2/evidence/product/AU-008-private-review-live-2026-09-10.json`
+- `eva2/evidence/product/AU-008-general-research-live-2026-09-10.json`
+- `eva2/reviews/AU-008-private-review-519a03a.md`
 
 Echte controles:
 
@@ -82,7 +96,6 @@ Echte controles:
 Deze onderwerpen zijn alleen mijlpalen. Een mijlpaal wordt pas uitvoerbaar
 nadat zij als eerstvolgende kleine kaart exacte bestanden en tests heeft.
 
-- [ ] `AU-002` — Duurzame hulpagent bedienen: Starten, volgen, stoppen en hervatten werken via de gebruikersroute; hoofd- en hulpagent delen één provideradapter.
 - [ ] `VB-004` — Browser na onderbreking veilig hervatten: Herstelbestanden gebouwd; systeeminstallatie automatisch geblokkeerd. Bestaande browser blijft live. Herstel na herstart nog niet uitgevoerd of bewezen.
 - [ ] `AU-005` — Passend initiatief en kansen bewijzen: Meer gewaardeerd eigen initiatief dan Bottie: humor, nieuwsgierigheid, zelfgekozen onderzoek, creatieve bijdragen en kansen. Eva begint en vervolgt zelf werk, voert binnen bestaand mandaat uit en controleert het resultaat. Gezin beoordeelt eigenheid, plezier, nut en hinder; alleen meer berichten telt niet als winst.
 - [ ] `VB-001` — Full-duplex voice leveren: Met Eva2 praten via de bestaande Telegram- of Home Assistant-aansluiting, waarbij Eva hoorbaar onderbroken kan worden en het gesprek daarna doorgaat.
@@ -183,6 +196,8 @@ Afgevinkt betekent alleen: de vastgelegde kaart is afgerond, niet het hele produ
 - [x] `AU-007` — Zelf een relevant privaat voorstel uitwerken (done).
   [Bewijs](evidence/product/AU-007-private-initiative-2026-09-10.json).
   [Bewijs](reviews/AU-007-private-initiative-34ed766.md).
+- [x] `AU-002` — Duurzame hulpagent bedienen (done).
+  [Bewijs](evidence/product/AU-002-owner-lifecycle-2026-09-11.json).
 - [ ] `AU-008` — Zelf kosteloos handelen binnen eigenaarmandaat (in_progress).
 
 </details>
