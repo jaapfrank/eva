@@ -1415,14 +1415,15 @@ def test_connector_guard_refuses_recreated_gateway_or_changed_policy_and_source(
         SystemBackend._verify_connector_guard(inspected, settings)
 
 
-def test_delegated_worker_quiesces_stages_disabled_and_activates_with_health(monkeypatch, tmp_path):
+@pytest.mark.parametrize("image_prefix", ["", "eva2/core@"])
+def test_delegated_worker_quiesces_stages_disabled_and_activates_with_health(monkeypatch, tmp_path, image_prefix):
     from tools.eva2_quiescent_cutover import DELEGATED_FLAG
 
     slot = _slot(3)
     image = "sha256:" + "a" * 64
     environment = {
-        DELEGATED_FLAG: "true", "EVA_LIVING_CORE_IMAGE": "eva2/core@" + image,
-        "EVA_DELEGATED_WORK_IMAGE": "eva2/core@" + image,
+        DELEGATED_FLAG: "true", "EVA_LIVING_CORE_IMAGE": image_prefix + image,
+        "EVA_DELEGATED_WORK_IMAGE": image_prefix + image,
         "EVA_RUNTIME_PRINCIPAL_ID": "owner", "EVA_DASHBOARD_PRINCIPAL_BINDING_ID": "binding",
         "EVA_DELEGATED_WORK_OWNER_PRINCIPAL_ID": "owner", "EVA_DELEGATED_WORK_OWNER_BINDING_ID": "binding",
         "EVA_DATABASE_DSN_FILE_HOST": "/private/database-dsn",

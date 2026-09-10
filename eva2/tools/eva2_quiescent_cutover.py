@@ -1004,7 +1004,7 @@ class SystemBackend:
         if enabled == "false":
             return None
         image = environment.get("EVA_DELEGATED_WORK_IMAGE", "")
-        if (re.fullmatch(r"[^\s@]+@sha256:[0-9a-f]{64}", image) is None
+        if (re.fullmatch(r"(?:[^\s@]+@)?sha256:[0-9a-f]{64}", image) is None
                 or image != environment.get("EVA_LIVING_CORE_IMAGE")):
             raise QuiescentCutoverError("delegated work requires the exact core image")
         for worker_key, owner_key in (
