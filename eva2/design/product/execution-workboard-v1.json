@@ -30,8 +30,8 @@
       "nonclaims": "No new deployment or model calls for this closure. Human usefulness/timing, full backlog completion, streaming and all later product outcomes remain open."
     },
     "projectDashboard": {
-      "runtimePort": 44711,
-      "runtimeLabel": "Slot 4",
+      "runtimePort": 44710,
+      "runtimeLabel": "Slot 3",
       "roadmap": [
         {
           "id": "actions",
@@ -726,7 +726,7 @@
       "document": "eva2/PROJECTDOEL.md",
       "scope": "Digitale huisgenoot: zelfstandig redeneren, initiatief, onbekende vaardigheden leren, handelen, zelfverbetering en aantoonbare concurrentiewinst met open-sourcehergebruik.",
       "sessionGoal": "AU-008: één zelfstandige kosteloze bijdrage via de algemene uitvoerder.",
-      "currentWork": "CO-008 / GE-01 is afgerond en door Jaap geaccepteerd. AU-007 blijft afgesloten met beperkte acceptatie van de beoordelingskaart. AU-008 loopt: zelfstandig kosteloos handelen. Acht routes zijn live, inclusief herstelde huisinventaris; bredere taakuitvoering en een echte zelfstandige bijdrage zijn nog open.",
+      "currentWork": "CO-008 / GE-01 is afgerond en door Jaap geaccepteerd. AU-007 blijft afgesloten met beperkte kaartwaardering. AU-008 loopt: negen toegelaten routes zijn live. Algemeen onderzoek en een echte zelfstandige bijdrage blijven open.",
       "currentEvidence": "eva2/reviews/AU-007-technical-closure-f99b5a2.md",
       "nextStep": "Bestaande onderzoeks- en toolroutes verbinden binnen het kosteloze mandaat. Normale initiatiefcyclus volgen; pas een echt uitgevoerd en gecontroleerd resultaat als oplevering tonen.",
       "usageClarification": {
@@ -3497,7 +3497,7 @@
       "tested": true,
       "live": true,
       "ownerAccepted": false,
-      "currentWork": "Native huisinventaris-leesroute gerepareerd en live. Acht toegelaten routes beschikbaar; normale cycli kozen tot nu stilte. Vervolg: bestaande onderzoeks- en toolroutes verbinden; echte zelfstandige bijdrage en beoordeling blijven open.",
+      "currentWork": "Negen routes live, inclusief bestaand documentatieonderzoek met hergebruik van resultaat en blokkade op herhalen bij onzekerheid. Vervolg binnen AU-008: algemene publieke onderzoeksvragen toelaten met gegevensminimalisatie en controles, zonder nieuwe onderwerpenkaart per vraag. Normale eigen initiatiefbijdrage blijft nog onbewezen.",
       "authorization": "Jaap: in eerste instantie mag ze wel gewoon alles doen wat ze wil, zolang het maar inderdaad geen geld kost. Implementatie expliciet bevestigd.",
       "boundaries": "Geen nieuwe kosten of verplichtingen; onbekend is niet gratis. Bestaand toegelaten modelgebruik blijft binnen bestaande grenzen. Privacy, personen, communicatie en stoppen blijven gelden.",
       "artifactRetention": {
@@ -3508,12 +3508,12 @@
       },
       "inventoryNote": "Twee nieuwe runtimepaden toegevoegd onder bestaande eva-runtime classificaties met actuele inhoudshashes. Dit is een gerichte eigenaarsregistratie, geen volledige hergeneratie of release-inventarisbewijs; de bestaande generator stuit op ongeclassificeerd root-AGENTS.md.",
       "testEvidence": "28 gerichte controles; daarna10 controles op de gebruikte validator en2 op de optionele mandaat-uitrolpoort. Onafhankelijke code-GO. Productbewijs volgt uit de normale native cyclus.",
-      "liveImage": "sha256:41179aff25d51738ddf7033af90e9b9ee250dd43435aaf1cd9af7832dc914078",
-      "implementationCommit": "d8054d4de8278b08533177410076b9a70496cf83",
-      "livePort": 44711,
+      "liveImage": "sha256:76715a7de32c30b1c21258a427286e854cd612f6a86e25c32885b5d905da8263",
+      "implementationCommit": "344b6b8cf88f577cc684bd077937981a522c4441",
+      "livePort": 44710,
       "technicalProductAccepted": false,
       "remainingScope": "Brede bestaande taakroutes beoordelen; eigen onderzoek via internet en overige reeds toegestane acties nog niet aan native profielen verbonden. Geen nieuwe externe communicatiebevoegdheid.",
-      "liveCapabilityCount": 8,
+      "liveCapabilityCount": 9,
       "inventoryReadRepair": {
         "built": true,
         "tested": true,
@@ -3522,6 +3522,21 @@
         "review": "GO; daadwerkelijke providerfactory, native leesmandaat en stoppen gecontroleerd",
         "liveAt": "2026-09-10T19:19:18Z",
         "proof": "16 geladen modules gelijk aan kandidaat; actuele operationele en geheugen-DB behouden en vergeleken"
+      },
+      "researchCandidate": {
+        "sourceCommit": "344b6b8cf88f577cc684bd077937981a522c4441",
+        "image": "sha256:76715a7de32c30b1c21258a427286e854cd612f6a86e25c32885b5d905da8263",
+        "built": true,
+        "tested": true,
+        "live": true,
+        "ownerAccepted": false,
+        "scope": "Openbare documentatie uit vooraf gecontroleerde bronkeuze; nog geen willekeurige webvragen",
+        "checks": "Onderzoek/herstel/privacy:20 controles geslaagd; één fingerprintfout hersteld en2modelcontroles daarna geslaagd.17 imageimports gelijk aan bron.",
+        "policyAdmission": {
+          "fileSha256": "95bddf6e1c1cd6ea003b84fd98c366900b42c06af3695692b524bdc656197689",
+          "mandateSha256": "a233744a0b4590c876ca518b40d8a625a66bc7645c610ed5f68f8fb6f1b6b1f1",
+          "status": "revised and loaded after restart"
+        }
       }
     }
   },
@@ -5182,7 +5197,8 @@
         "eva2/tests/model/test_conversation_model.py",
         "eva2/tests/operations/test_eva2_quiescent_cutover.py",
         "eva2/tests/postgres/test_owner_initiatives.py",
-        "eva2/tools/eva2_quiescent_cutover.py"
+        "eva2/tools/eva2_quiescent_cutover.py",
+        "eva2/src/eva/adapters/model/research_tools.py"
       ],
       "componentIds": [
         "api-and-runtime-composition",

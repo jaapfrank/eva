@@ -5,35 +5,25 @@ Laatst bijgewerkt: 2026-09-10.
 Doel: [Eva als zelfstandig lerende digitale huisgenoot](PROJECTDOEL.md).
 Gebouwd, getest, live en door jou geaccepteerd zijn verschillende stappen.
 
-CO-008 / GE-01 is afgerond en door Jaap geaccepteerd. AU-007 blijft afgesloten met beperkte acceptatie van de beoordelingskaart. AU-008 loopt: zelfstandig kosteloos handelen. Acht routes zijn live, inclusief herstelde huisinventaris; bredere taakuitvoering en een echte zelfstandige bijdrage zijn nog open.
+CO-008 / GE-01 is afgerond en door Jaap geaccepteerd. AU-007 blijft afgesloten met beperkte kaartwaardering. AU-008 loopt: negen toegelaten routes zijn live. Algemeen onderzoek en een echte zelfstandige bijdrage blijven open.
 [Actueel bewijs](reviews/AU-007-technical-closure-f99b5a2.md).
 
 Bestaande onderzoeks- en toolroutes verbinden binnen het kosteloze mandaat. Normale initiatiefcyclus volgen; pas een echt uitgevoerd en gecontroleerd resultaat als oplevering tonen.
 
 ### Afzonderlijk stemwerk
 
-De laptoproute is live op http://localhost:44716. Meld aan met het bestaande
-eigenaar-dashboardtoken en kies Begin gesprek. De echte Windows-browser heeft
-via Home Assistant Cloud synthetische Nederlandse spraak laten herkennen,
-een antwoord van dezelfde Eva-kern ontvangen en de teruggesproken audio gemeten.
-De proefzin leverde “De verbinding werkt.” op. Fysieke microfoon/echo en Jaaps
-beoordeling zijn nog niet vastgelegd. Bestandswerk, onderzoek en synthetisch
-onderbreken hebben daarnaast eerder technisch bewijs.
+De laptoproute met LiveKit is live op http://localhost:44716. Plak het bestaande
+eigenaar-dashboardtoken in het aanmeldformulier en kies Begin gesprek.
+Bestandswerk, brononderzoek, stoppen en synthetische spraakonderbreking zijn
+gecontroleerd via dezelfde Eva-kern. De huisingang en bestaande gegevens blijven
+behouden. Fysieke microfoon-/echoproef en Jaaps beoordeling staan open.
 
-De telefoonroutes en relay zijn live; het gecontroleerde HA-paneelpakket is
-klaar. Installatie in Home Assistant wacht op de bestaande configbeheerroute.
-De nieuwe continue VoicePE-route heeft een gebouwde image en gecontroleerde
-apparaatgebonden huisrechten, stop/mute en audioafhandeling. Zij is nog niet live:
-de bestaande apparaatconfiguratie, firmwareterugweg en provisioning ontbreken.
-De bestaande huisingang blijft werken; de beperkte eerdere herstelacceptatie
-wordt niet uitgebreid tot deze nieuwe route.
-
-Wachttijd blijft vervolgwerk: één browserproef bevestigde audio ongeveer 10,5 s
-na spraakeinde. Eerdere diagnose wees geheugenraadpleging aan als grote kostenpost;
-threadtuning gaf geen herhaalbare winst en is niet uitgerold.
-[Actueel bewijs en runtimebinding](evidence/product/voice-livekit-integration-2026-09-10.json),
-[telefoon/relay](evidence/product/voice-phone-relay-candidate-2026-09-10.json),
-[VoicePE-kandidaat](evidence/product/voice-household-livekit-candidate-2026-09-10.json).
+De voicetaak onderzoekt de resterende wachttijd: de gemeten geheugenraadpleging
+is de grootste vertraging. Een threadinstelling gaf geen herhaalbare verbetering
+en is daarom niet uitgerold. Telefoon en natuurlijke Voice PE-toegang zijn nog
+niet opgeleverd. [Actueel voicebewijs](evidence/product/voice-livekit-integration-2026-09-10.json).
+De eerdere Voice PE-onbereikbaarheidsfout is hersteld en door Jaap bevestigd;
+[herstelbewijs](evidence/product/VOICE-REF-247-repair-2026-09-10.json).
 
 ## Nu
 
@@ -77,6 +67,7 @@ Klaar betekent:
 - `eva2/tests/operations/test_eva2_quiescent_cutover.py`
 - `eva2/tests/postgres/test_owner_initiatives.py`
 - `eva2/tools/eva2_quiescent_cutover.py`
+- `eva2/src/eva/adapters/model/research_tools.py`
 
 Echte controles:
 
