@@ -77,8 +77,7 @@ def create_app():
         except (ValueError, UnicodeError):
             pass
         if not candidate or not secrets.compare_digest(candidate, token):
-            raise HTTPException(401, "Eigenaarsaanmelding vereist", headers={
-                "WWW-Authenticate": 'Basic realm="Eva cockpit", charset="UTF-8"'})
+            raise HTTPException(401, "Eigenaarsaanmelding vereist")
         try:
             check()
         except ValueError:
@@ -88,14 +87,21 @@ def create_app():
 
     @app.get("/")
     def home(request: Request):
-        admit(request)
+        # The empty sign-in page contains no owner data. Browser navigation must
+        # not depend on an HTTP Basic dialog (blocked by embedded browsers).
         return HTMLResponse(Path(__file__).with_name("client.html").read_text(),
                             headers={"Cache-Control": "no-store"})
 
     @app.get("/livekit-client.js")
     def script(request: Request):
-        admit(request)
         return FileResponse(config["client_js"], media_type="text/javascript")
+
+    @app.get("/session/ready")
+    async def session_ready(request: Request):
+        admit(request)
+        if not await backend.ready():
+            raise HTTPException(503, "Eva's stemverbinding is nog niet beschikbaar.")
+        return {"ready": True}
 
     @app.post("/session/end")
     async def end(request: Request):
