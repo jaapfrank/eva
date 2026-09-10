@@ -50,18 +50,25 @@ async function main() {
     await page.getByRole('heading', { name: payload.active.displayTitle || payload.active.title }).waitFor();
     assert.equal(await page.locator('.matrix-toggle').count(), 9);
     assert.equal(await page.locator('.matrix-details:visible').count(), 0);
-    assert.equal(await page.locator('.matrix-scope:visible').count(), 9);
+    assert.equal(await page.locator('.matrix-user-outcome:visible').count(), 9);
     assert.equal(await page.getByText('Bron gewijzigd sinds feitencontrole',{exact:true}).count(),0);
-    assert.deepEqual(await page.locator('.compact-matrix > thead th').allTextContents(), ['Onderdeel · concreet resultaat', 'Gebouwd', 'Getest', 'Live bewezen', 'Geaccepteerd', 'Wat nog openstaat']);
+    assert.deepEqual(await page.locator('.compact-matrix > thead th').allTextContents(), ['Onderdeel · gebruikersuitkomst', 'Wat nu werkt', 'Wat nog nodig is']);
     assert.ok((await page.locator('.matrix-scroll').boundingBox()).height < 1150, 'nine rows show results without stacked status cards');
     assert.equal(await page.locator('.matrix-result:visible').count(),9);
-    assert.equal(await page.locator('.matrix-gap-kind:visible').count(),9);
+    assert.equal(await page.locator('.matrix-category .proof-dot').count(),0);
+    assert.deepEqual(await page.locator('.matrix-user-outcome').allTextContents(), [
+      'Zichtbare streamervaring nog te beoordelen', 'Privégesprekken werken; continuïteit nog te bewijzen',
+      'Voorkeurfunctie afgerond en geaccepteerd', 'Eerste zelfstandige bijdrage ontbreekt',
+      'Documenttaak bewezen; zelfstandig toolgebruik nog open', 'Natuurlijke gespreksproef nog open',
+      'Stopproef mislukt; herstel loopt', 'Koppeling met Eva ontbreekt',
+      'Beheerde wissel bewezen; zelf installeren nog open',
+    ]);
     for (const finding of payload.project.capabilities) await page.getByText(finding.visibleResult,{exact:true}).first().waitFor();
     if (output) await page.screenshot({ path: path.join(output, 'eva-project-desktop.png'), fullPage: true });
     await page.locator('.matrix-toggle').filter({hasText: 'Geheugen'}).click();
     await page.getByRole('button', {name: 'Een gewijzigde geheugenbron verwerken', exact: true}).waitFor();
     assert.equal(await page.locator('#details-memory .proof-dot.yes').count(), 7);
-    assert.equal(await page.locator('.matrix-category').nth(2).locator('.proof-dot.yes').count(), 4);
+    assert.ok((await page.locator('#details-memory .matrix-technical').textContent()).includes('Geaccepteerd'));
     if (output) await page.screenshot({path: path.join(output, 'eva-project-expanded.png'), fullPage: true});
     await page.locator('.matrix-toggle').filter({hasText: 'Geheugen'}).click();
     await page.locator('.matrix-toggle').filter({hasText: 'Gesprekken'}).click();

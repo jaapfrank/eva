@@ -40,29 +40,40 @@ function PracticeTests({ tests = [], browserAccess, stale, ownerBrowserUpdate })
   </section>;
 }
 
+const userOutcomeStatus = {
+  'answer-stream': 'Zichtbare streamervaring nog te beoordelen',
+  conversation: 'Privégesprekken werken; continuïteit nog te bewijzen',
+  memory: 'Voorkeurfunctie afgerond en geaccepteerd',
+  initiative: 'Eerste zelfstandige bijdrage ontbreekt',
+  tools: 'Documenttaak bewezen; zelfstandig toolgebruik nog open',
+  voice: 'Natuurlijke gespreksproef nog open',
+  projects: 'Stopproef mislukt; herstel loopt',
+  browser: 'Koppeling met Eva ontbreekt',
+  installation: 'Beheerde wissel bewezen; zelf installeren nog open',
+};
+
 function CapabilityMatrix({ capabilities, onEvidence }) {
   const [expanded, setExpanded] = useState({});
   return <>
     <p className="matrix-mobile-hint">Veeg de tabel opzij voor alle kolommen. Tik op een onderdeel voor de details.</p>
     <div className="matrix-scroll" role="region" aria-label="Statusmatrix, horizontaal scrollbaar" tabIndex={0}>
       <table className="compact-matrix">
-        <caption className="visually-hidden">Negen hoofdonderdelen. Gebouwd, getest, in gebruik en door jou geaccepteerd zijn afzonderlijke stappen.</caption>
-        <thead><tr><th scope="col">Onderdeel · concreet resultaat</th>{stages.map(([key, label]) => <th key={key} scope="col">{label}</th>)}<th scope="col">Wat nog openstaat</th></tr></thead>
+        <caption className="visually-hidden">Negen hoofdonderdelen met de gebruikersuitkomst voorop. Technische proefresultaten staan in de details.</caption>
+        <thead><tr><th scope="col">Onderdeel · gebruikersuitkomst</th><th scope="col">Wat nu werkt</th><th scope="col">Wat nog nodig is</th></tr></thead>
         {capabilities.map(category => <tbody key={category.id}>
           <tr className="matrix-category">
-            <th scope="row"><button className="matrix-toggle" aria-expanded={Boolean(expanded[category.id])} aria-controls={`details-${category.id}`} onClick={() => setExpanded(value => ({ ...value, [category.id]: !value[category.id] }))}><span aria-hidden="true">{expanded[category.id] ? '−' : '+'}</span><span>{category.title}</span></button><p className="matrix-scope">{category.scope}</p><p className="matrix-result">{category.visibleResult || category.works}</p>{category.historyNote && <p className="matrix-history">{category.historyNote}</p>}<small className="matrix-basis">{category.resultBasis || 'Volgens werkbord'}</small></th>
-            {stages.map(([key, label]) => <td key={key} title={category.stageNotes?.[key]}><Stage state={category[key]} label={label}/><small className="matrix-stage-label">{category.stageLabels?.[key] || (key === 'accepted' && category[key] === 'no' ? 'Niet beoordeeld' : names[category[key]])}</small></td>)}
-            <td className="matrix-gap"><small className="matrix-gap-kind">{category.gapKind || 'Open'}</small><span>{category.gap}</span>{category.links?.map(link => <a className="matrix-result-link" href={link.url} target="_blank" rel="noreferrer" key={link.url}>{link.title} ↗</a>)}</td>
+            <th scope="row"><button className="matrix-toggle" aria-expanded={Boolean(expanded[category.id])} aria-controls={`details-${category.id}`} onClick={() => setExpanded(value => ({ ...value, [category.id]: !value[category.id] }))}><span aria-hidden="true">{expanded[category.id] ? '−' : '+'}</span><span>{category.title}</span></button><p className={`matrix-user-outcome ${category.id === 'memory' && category.accepted === 'yes' ? 'completed' : ''}`}>{category.id === 'memory' && category.accepted !== 'yes' ? 'Voorkeurfunctie nog te beoordelen' : userOutcomeStatus[category.id] || 'Gebruikersuitkomst nog te beoordelen'}</p></th>
+            <td className="matrix-current"><p className="matrix-result">{category.visibleResult || category.works}</p>{category.historyNote && <p className="matrix-history">{category.historyNote}</p>}</td>
+            <td className="matrix-gap"><span>{category.gap}</span>{category.links?.map(link => <a className="matrix-result-link" href={link.url} target="_blank" rel="noreferrer" key={link.url}>{link.title} ↗</a>)}</td>
           </tr>
-          <tr id={`details-${category.id}`} hidden={!expanded[category.id]} className="matrix-details"><td colSpan={6}>
-            <div className="matrix-detail-intro"><p><b>Wat werkt:</b> {category.works || category.subtitle}</p><p><b>Open:</b> {category.gap}</p>{category.tryIt && <p><b>Probeer:</b> {category.tryIt}</p>}<button onClick={() => onEvidence(category.id)}>Bewijs en grenzen</button></div>
+          <tr id={`details-${category.id}`} hidden={!expanded[category.id]} className="matrix-details"><td colSpan={3}>
+            <div className="matrix-detail-intro"><p className="matrix-scope"><b>Technische oplevering:</b> {category.scope}</p><p className="matrix-technical">{stages.map(([key, label]) => `${label}: ${category.stageLabels?.[key] || names[category[key]]}`).join(' · ')}</p><p>{category.resultBasis || 'Volgens werkbord'}</p><p><b>Wat werkt:</b> {category.works || category.subtitle}</p><p><b>Open:</b> {category.gap}</p>{category.tryIt && <p><b>Probeer:</b> {category.tryIt}</p>}<button onClick={() => onEvidence(category.id)}>Bewijs en grenzen</button></div>
             {!!category.outcomes?.length && <table className="matrix-outcomes"><caption>Concrete deelresultaten binnen {category.title}</caption><thead><tr><th scope="col">Deelresultaat</th>{stages.map(([key,label]) => <th scope="col" key={key}>{label}</th>)}<th scope="col">Open werk</th></tr></thead><tbody>{category.outcomes.map(item => <tr key={item.id}><th scope="row"><button onClick={() => onEvidence(item.id)}>{item.title}</button><small>{item.works}</small></th>{stages.map(([key,label]) => <td key={key}><Stage state={item[key]} label={label}/></td>)}<td className="matrix-gap">{item.gap}</td></tr>)}</tbody></table>}
           </td></tr>
         </tbody>)}
       </table>
     </div>
-    <div className="proof-legend">{Object.entries(names).map(([state,label]) => <span key={state}><Stage state={state} label={label}/>{label}</span>)}</div>
-    <p className="outcome-help">Klap een rij open voor bewijs en deelresultaten. Groen geldt uitsluitend voor de benoemde oplevering; jouw acceptatie blijft afzonderlijk.</p>
+    <p className="outcome-help">Klap een rij open voor de technische oplevering, gebouwd/getest/live/acceptatie en eerder behaalde deelresultaten.</p>
   </>;
 }
 
@@ -103,7 +114,7 @@ export default function ProjectDashboard() {
           <article className="project-focus"><div className="focus-kicker"><span className="pulse-dot"/> {active.displayKicker || 'HUIDIGE OPDRACHT'} <span>{active.id}</span></div><h2>{active.displayTitle || active.title}</h2><p>{active.displayOutcome || active.outcome}</p>{active.resultArtifact && <p className="active-artifact"><a href={active.resultArtifact.url} target="_blank" rel="noreferrer">Open resultaat: {active.resultArtifact.title} ↗</a><small>{active.resultArtifact.status}</small></p>}{active.progress && <dl className="focus-progress"><dt>Werkt</dt><dd>{active.progress.works}</dd><dt>Herstel</dt><dd>{active.progress.repair} {active.progress.next}</dd><dt>Nog open</dt><dd>{active.progress.open}</dd></dl>}<div className="focus-footer"><span>{active.displayStatus || `Kaart: ${active.status === 'in_progress' ? 'in uitvoering' : active.status}`}</span><button onClick={() => setTab('werk')}>Bekijk werk →</button></div></article>
           <article className="project-next"><p className="eyebrow">EERST DUIDELIJK, DAN VERDER</p>{project.nextOutcomes.map((item, index) => <div className="next-outcome" key={item.title}><span>{String(index + 1).padStart(2, '0')}</span><div><strong>{item.title}</strong><small>{item.detail}</small></div></div>)}</article>
         </section>
-        <section className="capability-section" aria-label="Mogelijkheden en open werk"><div className="section-title"><div><h2>Wat werkt en wat nog mist</h2><p>De vier statussen gelden voor de benoemde oplevering in iedere rij. Bredere ambities en ontbrekende proeven staan rechts; ze maken een afgeronde oplevering niet ongedaan.</p><p className="audit-caption">Live bewezen = uitgevoerd op de vermelde datum. Huidige bereikbaarheid is apart gecontroleerd; een latere kernversie is niet automatisch opnieuw beproefd.</p>{project.capabilityAudit?.unavailable && <p role="alert">Feitencontrole niet beschikbaar; onderstaande statussen komen uit het werkbord.</p>}</div></div>
+        <section className="capability-section" aria-label="Mogelijkheden en open werk"><div className="section-title"><div><h2>Wat werkt en wat nog mist</h2><p>De gebruikersuitkomst staat voorop. Per onderdeel zie je wat nu werkt en wat nog nodig is; een geslaagde technische proef betekent niet dat de gebruikersuitkomst af is.</p><p className="audit-caption">Live bewezen = uitgevoerd op de vermelde datum. Huidige bereikbaarheid is apart gecontroleerd; een latere kernversie is niet automatisch opnieuw beproefd.</p>{project.capabilityAudit?.unavailable && <p role="alert">Feitencontrole niet beschikbaar; onderstaande statussen komen uit het werkbord.</p>}</div></div>
           <CapabilityMatrix capabilities={project.capabilities} onEvidence={setSelected}/>
         </section>
         <PracticeTests tests={project.practiceTests} browserAccess={browserAccess} stale={Boolean(query.error)} ownerBrowserUpdate={project.capabilityAudit?.ownerBrowserUpdate}/>

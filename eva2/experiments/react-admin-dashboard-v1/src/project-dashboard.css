@@ -51,3 +51,18 @@
 .matrix-scope{font-size:10px;font-weight:650;color:#3f5b36!important;margin:3px 6px 3px 30px!important}.matrix-history{font-size:10px;font-weight:400;color:#65735e!important;line-height:1.4;margin:5px 6px 3px 30px!important}.matrix-result-link{display:block;font-size:10px;margin-top:5px;color:#3e6230;font-weight:600}
 
 .matrix-category th{padding-top:8px;padding-bottom:8px}.matrix-result{line-height:1.35}.matrix-scope{margin-top:2px!important;margin-bottom:2px!important}.matrix-history{margin-top:3px!important;line-height:1.3}
+
+/* Lead with user outcomes; technical stages remain in expandable evidence. */
+.compact-matrix>thead th:first-child,.compact-matrix>tbody>.matrix-category>th:first-child{width:29%}
+.compact-matrix>thead th:nth-child(2){width:35%;text-align:left}
+.compact-matrix>thead th:last-child{width:36%}
+.matrix-user-outcome{margin:5px 4px 0 30px!important;font-size:13px!important;font-weight:650;line-height:1.35;color:#273c36!important}
+.matrix-user-outcome.completed{color:#3f6534!important}
+.compact-matrix .matrix-current{text-align:left;vertical-align:top}
+.matrix-current .matrix-result{margin:0!important;color:#42504b!important}
+.matrix-current .matrix-history{margin:5px 0 0!important;color:#6c756f!important;font-weight:400}
+.matrix-category>th,.matrix-category>td{vertical-align:top;padding-top:13px;padding-bottom:13px}
+.compact-matrix .matrix-gap{color:#42504b}
+.matrix-detail-intro .matrix-scope{margin-left:0!important;font-size:12px}
+.matrix-technical{color:#69716d}
+@media(max-width:800px){.compact-matrix{min-width:850px}.compact-matrix>thead th:first-child,.compact-matrix>tbody>.matrix-category>th:first-child{width:210px}.matrix-user-outcome{margin-left:28px!important;font-size:12px!important}}
