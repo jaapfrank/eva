@@ -10,8 +10,12 @@ LiveKit client 2.22.3. It records each output hash in phone-build.json.
 
 The selected SDK uses its supported dual peer connection mode so signaling stays
 on /rtc with access_token. The HA capability is bound to the admitted admin and
-exact issued room JWT. A refreshed JWT may currently require starting a new
-session; reconnect compatibility remains follow-up verification.
+issued room JWT scope. A refreshed JWT may change validity times; issuer,
+participant, room, permissions and metadata must match. Standard kind/identity
+defaults emitted by LiveKit are normalized. This proxy filter never authenticates
+a JWT: the upstream LiveKit server still checks every signature. A real server
+probe accepted its refreshed token and rejected a tampered signature. Full phone
+reconnection remains an installation/physical trial.
 
 The gateway is opt-in: render_household_voice_ingress.py --owner-voice adds only
 fixed media/session and LiveKit signaling paths to the existing HA-IP-only port.

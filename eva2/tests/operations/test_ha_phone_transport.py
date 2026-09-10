@@ -53,6 +53,7 @@ def test_owner_transport_and_bound_signaling_over_real_http():
                 assert (await client.get(f"/{cap}/rtc/validate?access_token=wrong" )).status == 403
                 assert (await client.get(f"/{cap}/admin?access_token=room-jwt")).status == 404
                 assert (await client.get(f"/{cap}/rtc/validate?access_token=room-jwt")).status == 200
+                assert (await client.get(f"/{cap}/rtc/validate?access_token=room-jwt&access_token=other")).status == 403
                 async with client.ws_connect(f"/{cap}/rtc?access_token=room-jwt") as socket:
                     await socket.send_bytes(b"real-protobuf-frame")
                     assert (await socket.receive()).data == b"real-protobuf-frame"
@@ -168,3 +169,20 @@ def test_cleanup_retry_and_unload_during_creation():
             except web.HTTPServiceUnavailable: pass
             else: raise AssertionError("Closed transport admitted a request")
     asyncio.run(run())
+
+
+
+def test_refresh_scope_allows_only_validity_and_standard_identity_defaults():
+    import base64,json
+    def jwt(claims):
+        def encode(value):return base64.urlsafe_b64encode(json.dumps(value).encode()).decode().rstrip("=")
+        return encode({"alg":"HS256"})+"."+encode(claims)+".signature"
+    original={"iss":"test-key","sub":"owner","video":{"room":"room-one","roomJoin":True},"exp":1,"nbf":0}
+    expected=module.token_scope(jwt(original))
+    refreshed={**original,"exp":999,"nbf":10,"iat":10,"identity":"owner","kind":"standard"}
+    assert expected is not None and module.token_scope(jwt(refreshed))==expected
+    for delta in ({"sub":"other"},{"identity":"other"},{"iss":"other-key"},
+                  {"video":{"room":"room-two","roomJoin":True}},
+                  {"video":{**original["video"],"roomAdmin":True}}):
+        assert module.token_scope(jwt({**refreshed,**delta}))!=expected
+    assert module.token_scope("not.a.jwt") is None

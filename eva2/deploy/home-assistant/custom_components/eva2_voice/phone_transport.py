@@ -1,6 +1,8 @@
 """Room-bound HA owner transport with leased media and owned cleanup."""
 from __future__ import annotations
 import asyncio
+import base64
+import json
 from dataclasses import dataclass, field
 import hashlib
 import re
@@ -11,6 +13,27 @@ import aiohttp
 from aiohttp import web
 
 
+def token_scope(token):
+    """Comparison filter only. LiveKit still verifies every JWT signature.
+
+    A refreshed token may change its validity times, but cannot use this lease
+    for a different issuer, participant, room, permission or metadata scope.
+    """
+    try:
+        if not isinstance(token,str) or len(token)>16384 or len(token.split("."))!=3: return None
+        header,payload,_=token.split(".")
+        def decode(part):
+            return json.loads(base64.urlsafe_b64decode(part+"="*(-len(part)%4)))
+        if decode(header).get("alg")!="HS256": return None
+        claims=decode(payload)
+        if not all(claims.get(key) for key in ("iss","sub")) or not claims.get("video",{}).get("room"): return None
+        for key in ("iat","nbf","exp"): claims.pop(key,None)
+        claims.setdefault("kind","standard")
+        claims.setdefault("identity",claims["sub"])
+        return json.dumps(claims,sort_keys=True,separators=(",",":"))
+    except (ValueError,TypeError,AttributeError): return None
+
+
 @dataclass
 class SignalLease:
     user_id: str
@@ -18,6 +41,7 @@ class SignalLease:
     expires: float
     room: str
     owner_token: str = field(repr=False)
+    token_scope: str | None = field(default=None, repr=False)
     revoked: bool = False
     cleanup: asyncio.Task | None = field(default=None, repr=False)
 
@@ -87,7 +111,7 @@ class PhoneTransport:
         if not isinstance(token, str) or not token or not isinstance(room, str) or not re.fullmatch(r"eva-voice-[0-9a-f]{32}", room):
             raise web.HTTPBadGateway()  # Unrenewed media expires independently in 10s.
         capability = secrets.token_urlsafe(32)
-        self.leases[capability] = SignalLease(user_id, hashlib.sha256(token.encode()).hexdigest(), time.monotonic()+1800, room, owner_token)
+        self.leases[capability] = SignalLease(user_id, hashlib.sha256(token.encode()).hexdigest(), time.monotonic()+1800, room, owner_token, token_scope(token))
         if self.closed or not await self.user_allowed(user_id):
             await asyncio.wait([self._revoke(capability)], timeout=6)
             raise web.HTTPForbidden()
@@ -138,9 +162,12 @@ class PhoneTransport:
     async def signal(self, request, capability, tail):
         lease = self.leases.get(capability)
         token = request.query.get("access_token", "")
+        scope = token_scope(token)
+        matching = lease is not None and (secrets.compare_digest(lease.token_digest,hashlib.sha256(token.encode()).hexdigest())
+            or (scope is not None and lease.token_scope is not None and secrets.compare_digest(scope,lease.token_scope)))
         if (self.closed or lease is None or lease.revoked or lease.expires <= time.monotonic()
                 or not await self.user_allowed(lease.user_id)
-                or not secrets.compare_digest(lease.token_digest, hashlib.sha256(token.encode()).hexdigest())):
+                or len(request.query.getall("access_token",[]))!=1 or not matching):
             if lease is not None and (lease.expires <= time.monotonic() or not await self.user_allowed(lease.user_id)):
                 self._revoke(capability)
             raise web.HTTPForbidden()

@@ -1,0 +1,17 @@
+{
+  "status": "source_candidate_not_live",
+  "date": "2026-09-10",
+  "independentReview": "GO",
+  "transportTests": 4,
+  "actualLiveKitServer": {
+    "liveServer": true,
+    "room": "isolated-test-room",
+    "refreshReceived": true,
+    "scopeMatches": true,
+    "differingClaimNames": [],
+    "refreshedStatus": 200,
+    "tamperedSignatureStatus": 401
+  },
+  "security": "Scope comparison is not authentication; upstream signature verification remains mandatory",
+  "remaining": "HA installation, full reconnect and remote media route"
+}
