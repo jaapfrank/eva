@@ -5,10 +5,10 @@ Laatst bijgewerkt: 2026-09-10.
 Doel: [Eva als zelfstandig lerende digitale huisgenoot](PROJECTDOEL.md).
 Gebouwd, getest, live en door jou geaccepteerd zijn verschillende stappen.
 
-CO-008 blijft afgerond. AU-007 is technisch afgerond; Jaap vindt de beoordelingskaart op zich wel bruikbaar. Nu AU-008: zelfstandige uitvoering binnen het kosteloze eigenaarmandaat.
+CO-008 / GE-01 is afgerond en door Jaap geaccepteerd. AU-007 blijft afgesloten met beperkte acceptatie van de beoordelingskaart. AU-008 loopt: zelfstandig kosteloos handelen. Acht routes zijn live, inclusief herstelde huisinventaris; bredere taakuitvoering en een echte zelfstandige bijdrage zijn nog open.
 [Actueel bewijs](reviews/AU-007-technical-closure-f99b5a2.md).
 
-AU-008 wordt gebouwd: gewone taakuitvoering aansluiten, kosten en bevoegdheden bij iedere echte handeling controleren, daarna één bijdrage uit de normale cyclus opleveren.
+Bestaande onderzoeks- en toolroutes verbinden binnen het kosteloze mandaat. Normale initiatiefcyclus volgen; pas een echt uitgevoerd en gecontroleerd resultaat als oplevering tonen.
 
 ### Afzonderlijk stemwerk
 

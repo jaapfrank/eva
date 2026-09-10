@@ -30,8 +30,8 @@
       "nonclaims": "No new deployment or model calls for this closure. Human usefulness/timing, full backlog completion, streaming and all later product outcomes remain open."
     },
     "projectDashboard": {
-      "runtimePort": 44710,
-      "runtimeLabel": "Slot 3",
+      "runtimePort": 44711,
+      "runtimeLabel": "Slot 4",
       "roadmap": [
         {
           "id": "actions",
@@ -726,9 +726,9 @@
       "document": "eva2/PROJECTDOEL.md",
       "scope": "Digitale huisgenoot: zelfstandig redeneren, initiatief, onbekende vaardigheden leren, handelen, zelfverbetering en aantoonbare concurrentiewinst met open-sourcehergebruik.",
       "sessionGoal": "AU-008: één zelfstandige kosteloze bijdrage via de algemene uitvoerder.",
-      "currentWork": "CO-008 blijft afgerond. AU-007 is technisch afgerond; Jaap vindt de beoordelingskaart op zich wel bruikbaar. Nu AU-008: zelfstandige uitvoering binnen het kosteloze eigenaarmandaat.",
+      "currentWork": "CO-008 / GE-01 is afgerond en door Jaap geaccepteerd. AU-007 blijft afgesloten met beperkte acceptatie van de beoordelingskaart. AU-008 loopt: zelfstandig kosteloos handelen. Acht routes zijn live, inclusief herstelde huisinventaris; bredere taakuitvoering en een echte zelfstandige bijdrage zijn nog open.",
       "currentEvidence": "eva2/reviews/AU-007-technical-closure-f99b5a2.md",
-      "nextStep": "AU-008 wordt gebouwd: gewone taakuitvoering aansluiten, kosten en bevoegdheden bij iedere echte handeling controleren, daarna één bijdrage uit de normale cyclus opleveren.",
+      "nextStep": "Bestaande onderzoeks- en toolroutes verbinden binnen het kosteloze mandaat. Normale initiatiefcyclus volgen; pas een echt uitgevoerd en gecontroleerd resultaat als oplevering tonen.",
       "usageClarification": {
         "date": "2026-09-07",
         "authorizedBy": "Jaap",
@@ -3497,7 +3497,7 @@
       "tested": true,
       "live": true,
       "ownerAccepted": false,
-      "currentWork": "Gecombineerde kandidaat live; eerste normale cyclus koos stilte. Huisinventaris bleek de native eigenaar niet via de gewone effect/aliaslijst te herkennen. Gerichte aansluiting op apart native leesmandaat gebouwd en gecontroleerd; geen ruimere apparaatbediening. Bronreview volgt.",
+      "currentWork": "Native huisinventaris-leesroute gerepareerd en live. Acht toegelaten routes beschikbaar; normale cycli kozen tot nu stilte. Vervolg: bestaande onderzoeks- en toolroutes verbinden; echte zelfstandige bijdrage en beoordeling blijven open.",
       "authorization": "Jaap: in eerste instantie mag ze wel gewoon alles doen wat ze wil, zolang het maar inderdaad geen geld kost. Implementatie expliciet bevestigd.",
       "boundaries": "Geen nieuwe kosten of verplichtingen; onbekend is niet gratis. Bestaand toegelaten modelgebruik blijft binnen bestaande grenzen. Privacy, personen, communicatie en stoppen blijven gelden.",
       "artifactRetention": {
@@ -3508,12 +3508,21 @@
       },
       "inventoryNote": "Twee nieuwe runtimepaden toegevoegd onder bestaande eva-runtime classificaties met actuele inhoudshashes. Dit is een gerichte eigenaarsregistratie, geen volledige hergeneratie of release-inventarisbewijs; de bestaande generator stuit op ongeclassificeerd root-AGENTS.md.",
       "testEvidence": "28 gerichte controles; daarna10 controles op de gebruikte validator en2 op de optionele mandaat-uitrolpoort. Onafhankelijke code-GO. Productbewijs volgt uit de normale native cyclus.",
-      "liveImage": "sha256:3198fc63eee36e849a06c40306f591aac8b3f3c8bec474eeaf988f0ce12a0e72",
-      "implementationCommit": "b340925ab73aa7946908f8bca06e2a0b1f7bdfe0",
-      "livePort": 44710,
+      "liveImage": "sha256:41179aff25d51738ddf7033af90e9b9ee250dd43435aaf1cd9af7832dc914078",
+      "implementationCommit": "d8054d4de8278b08533177410076b9a70496cf83",
+      "livePort": 44711,
       "technicalProductAccepted": false,
       "remainingScope": "Brede bestaande taakroutes beoordelen; eigen onderzoek via internet en overige reeds toegestane acties nog niet aan native profielen verbonden. Geen nieuwe externe communicatiebevoegdheid.",
-      "liveCapabilityCount": 8
+      "liveCapabilityCount": 8,
+      "inventoryReadRepair": {
+        "built": true,
+        "tested": true,
+        "live": true,
+        "ownerAccepted": false,
+        "review": "GO; daadwerkelijke providerfactory, native leesmandaat en stoppen gecontroleerd",
+        "liveAt": "2026-09-10T19:19:18Z",
+        "proof": "16 geladen modules gelijk aan kandidaat; actuele operationele en geheugen-DB behouden en vergeleken"
+      }
     }
   },
   "activeTaskId": "AU-008",
