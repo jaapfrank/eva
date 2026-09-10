@@ -3,6 +3,10 @@
 from __future__ import annotations
 
 import asyncio
+from contextlib import asynccontextmanager
+from types import SimpleNamespace
+
+import httpx2
 import hashlib
 import json
 import re
@@ -25,7 +29,9 @@ from eva.bootstrap.delegated_work_provider import (
     validate_delegated_model_access_lease,
 )
 from eva.contracts.canonical_json import canonical_sha256
-from pydantic_ai.models.function import FunctionModel
+from eva.adapters.model.openai_codex_provider import (
+    OpenAICodexProvider, RawUsageAttestation,
+)
 
 EVA2_ROOT = Path(__file__).resolve().parents[2]
 
@@ -48,7 +54,8 @@ def test_worker_and_engine_release_bind_real_source_and_lock_bytes() -> None:
         path: hashlib.sha256((package_root / path).read_bytes()).hexdigest()
         for path in (
             "adapters/model/__init__.py",
-            "adapters/model/openai_child_provider.py",
+            "adapters/model/openai_codex_provider.py",
+            "adapters/model/openai_endpoint.py",
             "adapters/postgres/delegated_work.py",
             "adapters/subagents/tool_free_child.py",
             "bootstrap/__init__.py",
@@ -63,7 +70,7 @@ def test_worker_and_engine_release_bind_real_source_and_lock_bytes() -> None:
         {"contract": "EvaDelegatedWorkerProgram/v1", "source_sha256": sources}
     )
     lock_sha256 = hashlib.sha256(
-        (EVA2_ROOT / "requirements-delegated-work.lock").read_bytes()
+        (EVA2_ROOT / "requirements-4d.lock").read_bytes()
     ).hexdigest()
     assert DEPENDENCY_LOCK_SHA256 == lock_sha256
     assert ENGINE_RELEASE_SHA256 == canonical_sha256(
@@ -71,41 +78,19 @@ def test_worker_and_engine_release_bind_real_source_and_lock_bytes() -> None:
             "contract": "EvaDelegatedEngineRelease/v1",
             "dependency_lock_sha256": lock_sha256,
             "openai_sdk": "3.6.0",
-            "pydantic_ai": "2.32.1",
+            "pydantic_ai": "2.37.0",
         }
     )
 
 
-def test_isolated_worker_lock_has_only_its_narrow_direct_roots() -> None:
-    actual = (EVA2_ROOT / "requirements-delegated-work.lock").read_text(
-        encoding="utf-8"
-    )
-    roots = (
-        EVA2_ROOT / "release/delegated-work-dependency-roots.in"
-    ).read_text(encoding="utf-8")
-    assert {
-        line for line in roots.splitlines() if line and not line.startswith("#")
-    } == {
-        "openai==3.6.0",
-        "psycopg[binary]==3.3.4",
-        "pydantic==2.12.5",
-        "pydantic-ai-slim==2.32.1",
-        "SQLAlchemy==2.0.52",
-    }
-    for required in (
-        "openai==3.6.0 \\\n",
-        "psycopg==3.3.4 \\\n",
-        "psycopg-binary==3.3.4 \\\n",
-        "pydantic-ai-slim==2.32.1 \\\n",
-        "sqlalchemy==2.0.52 \\\n",
-    ):
-        assert required in actual
-    for forbidden in ("alembic==", "cryptography==", "dbos==", "fastapi==", "uvicorn=="):
-        assert forbidden not in actual
+def test_shared_worker_uses_the_existing_core_dependency_release() -> None:
+    lock = (EVA2_ROOT / "requirements-4d.lock").read_text()
+    assert "openai==3.6.0 " in lock
+    assert "pydantic-ai-slim==2.37.0 " in lock
 
 
 def test_dependency_versions_fail_closed(monkeypatch: pytest.MonkeyPatch) -> None:
-    installed = {"openai": "3.6.0", "pydantic-ai-slim": "2.32.1"}
+    installed = {"openai": "3.6.0", "pydantic-ai-slim": "2.37.0"}
     monkeypatch.setattr(provider_module, "version", installed.__getitem__)
     verify_delegated_provider_dependencies()
 
@@ -174,41 +159,116 @@ def test_bootstrap_reads_exact_shared_access_lease_contract(
     assert validate_delegated_model_access_lease(lease) is None
 
 
-def test_factory_uses_only_the_sealed_provider_profile(
-    monkeypatch: pytest.MonkeyPatch,
+class _ResponseStream(httpx2.AsyncByteStream):
+    def __init__(self, output_tokens: int) -> None:
+        self.output_tokens = output_tokens
+
+    async def __aiter__(self):
+        text = json.dumps({"summary": "Eén bevinding.", "findings": ["Controleer later."]})
+        response = {
+            "id": "resp_child", "object": "response", "created_at": 1_777_111_200,
+            "model": "gpt-5.4-mini", "status": "completed",
+            "output": [{"id": "msg_child", "type": "message", "role": "assistant",
+                        "status": "completed", "content": [{"type": "output_text",
+                        "text": text, "annotations": [], "logprobs": []}]}],
+            "parallel_tool_calls": False, "tools": [], "tool_choice": "none",
+            "usage": {"input_tokens": 17, "output_tokens": self.output_tokens,
+                      "total_tokens": 17 + self.output_tokens,
+                      "input_tokens_details": {"cached_tokens": 0},
+                      "output_tokens_details": {"reasoning_tokens": 0}},
+        }
+        events = [
+            {"type": "response.created", "response": response | {
+                "status": "in_progress", "output": []}},
+            {"type": "response.output_text.delta", "item_id": "msg_child",
+             "output_index": 0, "content_index": 0, "delta": text, "logprobs": []},
+            {"type": "response.completed", "response": response},
+        ]
+        for event in events:
+            yield f"data: {json.dumps(event)}\n\n".encode()
+        yield b"data: [DONE]\n\n"
+
+
+@pytest.mark.parametrize("mode", ["success", "invalid_usage", "budget_exceeded", "cancelled"])
+def test_each_child_gets_a_fresh_shared_provider_with_grant_and_cancellation(
+    monkeypatch: pytest.MonkeyPatch, mode: str,
 ) -> None:
-    observed: dict[str, object] = {}
-    model = FunctionModel(lambda _messages, _info: "unused")
+    sessions = []
+    requests = []
+    cancellation = None
+    created = datetime(2026, 9, 10, tzinfo=UTC)
 
-    class Provider:
-        def __init__(self, settings, *, credential_loader) -> None:  # type: ignore[no-untyped-def]
-            observed["settings"] = settings
-            observed["credential_loader"] = credential_loader
-
-        async def __aenter__(self):  # type: ignore[no-untyped-def]
-            return model
-
-        async def __aexit__(self, *_args):  # type: ignore[no-untyped-def]
-            return None
-
-    monkeypatch.setattr(
-        provider_module,
-        "version",
-        {"openai": "3.6.0", "pydantic-ai-slim": "2.32.1"}.__getitem__,
-    )
-    monkeypatch.setattr(provider_module, "OpenAIChildProvider", Provider)
-
-    async def open_runner() -> None:
-        async with open_delegated_work_runner(
-            model_access_lease_file=Path("/run/eva/model-lease/auth.json")
-        ) as runner:
-            assert runner._registry.resolve  # noqa: SLF001
-        settings = observed["settings"]
-        assert settings.model_name == "gpt-5.4-mini"
-        assert settings.endpoint == (
-            "https://chatgpt.com/backend-api/codex/responses"
+    async def respond(request):
+        requests.append(json.loads(request.content))
+        if mode == "cancelled":
+            cancellation.set()
+            await asyncio.Event().wait()
+        return httpx2.Response(
+            200, headers={"content-type": "text/event-stream"}, request=request,
+            stream=_ResponseStream(501 if mode == "budget_exceeded" else 7),
         )
-        assert settings.reasoning_effort == "low"
-        assert callable(observed["credential_loader"])
 
-    asyncio.run(open_runner())
+    @asynccontextmanager
+    async def provider(settings, *, credential_loader):
+        assert settings.model_name == "gpt-5.4-mini"
+        assert settings.endpoint == "https://chatgpt.com/backend-api/codex/responses"
+        assert settings.reasoning_effort == "low"
+        async with OpenAICodexProvider(
+            settings, credential_loader=credential_loader,
+            network_transport=httpx2.MockTransport(respond),
+        ) as session:
+            sessions.append(session)
+            if mode == "invalid_usage":
+                yield SimpleNamespace(
+                    model=session.model,
+                    consume_raw_usage=lambda: RawUsageAttestation(18, 7, 25),
+                )
+            else:
+                yield session
+
+    monkeypatch.setattr(provider_module, "OpenAICodexProvider", provider)
+    monkeypatch.setattr(provider_module, "_read_access_lease", lambda _: ("access", "account"))
+
+    async def run() -> None:
+        nonlocal cancellation
+        async with open_delegated_work_runner(
+            model_access_lease_file=Path("/run/eva/model-lease/auth.json"),
+            clock=lambda: created,
+        ) as runner:
+            assert sessions == []  # Idle workers have no aging provider session.
+            for index in range(2):
+                cancellation = asyncio.Event()
+                spec = build_unadmitted_delegated_work_spec(
+                    work_id=f"work:shared:{index}", episode_id="context:shared",
+                    generation=1, parent_task_id="task:shared",
+                    owner_principal_id="owner:shared", principal_binding_id="binding:shared",
+                    task="Noem één aandachtspunt.", created_at=created,
+                    deadline=created + timedelta(minutes=5),
+                )
+                outcome = await runner.run(
+                    spec, call_id=f"call:shared:{index}", cancellation_event=cancellation,
+                )
+                assert outcome.status == ("succeeded" if mode == "success" else mode)
+                if mode == "success":
+                    assert outcome.result.work_id == spec.work_id
+                    assert outcome.result.call_id == f"call:shared:{index}"
+                    assert outcome.result.spec_sha256 == spec.sha256
+                    assert outcome.usage.input_tokens == 17
+                    assert outcome.usage.output_tokens == 7
+                    assert outcome.usage.tool_calls == 0
+                else:
+                    assert outcome.result is None
+                    assert outcome.retryable is False
+                    assert outcome.error_fingerprint
+                    if mode == "invalid_usage":
+                        assert outcome.usage.input_tokens == 17
+                    if mode == "budget_exceeded":
+                        assert outcome.usage.output_tokens == 501
+        assert len(sessions) == 2
+        assert [session.model_requests for session in sessions] == [1, 1]
+        assert len(requests) == 2
+        assert all(not request.get("tools") for request in requests)
+        assert all(request["store"] is False for request in requests)
+        assert all(request["stream"] is True for request in requests)
+
+    asyncio.run(asyncio.wait_for(run(), timeout=5))

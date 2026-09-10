@@ -254,7 +254,7 @@ async def serve_openai_delegated_work(
     *,
     once: bool = False,
 ) -> Literal["stopped", "completed"]:
-    """Keep provider, model runner and PostgreSQL worker on one event loop."""
+    """Run one worker loop; each admitted task opens its own provider session."""
 
     async with _open_provider_runner(settings.model_access_lease_file) as runner:
         return await serve_delegated_work_service(

@@ -368,6 +368,7 @@ def render_managed_b(plan: CoreBPlan) -> RenderedBManifest:
     environment = {
         "EVA_B_CONFIGURATION_SHA256": plan.snapshot_sha256,
         "EVA_BACKGROUND_WORK_ENABLED": "false",
+        "EVA_DELEGATED_WORK_ENABLED": "false",
         "LC_ALL": "C",
     }
     prefix = [
@@ -404,6 +405,8 @@ def render_managed_b(plan: CoreBPlan) -> RenderedBManifest:
     graph = _validate_rendered_graph(rendered, plan)
     if graph["services"]["core"].get("environment", {}).get("EVA_BACKGROUND_WORK_ENABLED") != "false":
         raise RuntimeError("managed B staging must disable background work")
+    if graph["services"]["core"].get("environment", {}).get("EVA_DELEGATED_WORK_ENABLED") != "false":
+        raise RuntimeError("managed B staging must disable delegated work")
     return RenderedBManifest(
         configuration_sha256=plan.snapshot_sha256,
         compose_version=compose_version,

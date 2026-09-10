@@ -4,6 +4,7 @@ from datetime import UTC, datetime
 from types import SimpleNamespace
 from uuid import UUID
 
+from eva.adapters.postgres.operational_timeline import external_timeline_scope
 from eva.application.conversation import ConversationTurn
 from eva.bootstrap.delegated_work_commands import DelegatedWorkConversationCommands
 
@@ -14,6 +15,10 @@ NOW = datetime(2026, 8, 26, 14, 0, tzinfo=UTC)
 
 class FakeStore:
     def __init__(self) -> None:
+        self.scope = external_timeline_scope(
+            "11111111-1111-1111-1111-111111111111",
+            "22222222-2222-2222-2222-222222222222", "test scope",
+        )
         self.admitted: list[dict[str, object]] = []
         self.cards: list[SimpleNamespace] = []
         self.active_work_id: str | None = None
@@ -27,7 +32,8 @@ class FakeStore:
     def admit(self, **values: object) -> SimpleNamespace:
         self.admitted.append(values)
         return SimpleNamespace(
-            disposition="already_present" if len(self.admitted) > 1 else "inserted"
+            disposition="already_present" if len(self.admitted) > 1 else "inserted",
+            work=self._work(spec=values["spec"]),
         )
 
     def workboard(self, **_values: object) -> SimpleNamespace:
@@ -38,11 +44,23 @@ class FakeStore:
 
     def request_stop(self, work_id: str, **values: object) -> SimpleNamespace:
         self.stopped.append({"work_id": work_id} | values)
-        return SimpleNamespace(
+        return self._work(
             state="call_started" if self.call_started else "stopped",
             stop_requested_at=NOW if self.call_started else None,
             call_id="call:active" if self.call_started else None,
         )
+
+    @staticmethod
+    def _work(**values: object) -> SimpleNamespace:
+        defaults = {
+            "spec": SimpleNamespace(work_id="work:fake", generation=1, parent_task_id="parent:fake",
+                                    task="Test", created_at="2026-08-26T14:00:00Z",
+                                    deadline="2026-08-26T14:05:00Z"),
+            "title": "Onderzoek", "state": "admitted", "call_id": None,
+            "stop_requested_at": None, "result": None, "usage": None,
+            "error_code": None, "error_fingerprint": None,
+        }
+        return SimpleNamespace(**(defaults | values))
 
 
 def _turn(

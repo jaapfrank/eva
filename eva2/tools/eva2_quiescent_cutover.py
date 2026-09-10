@@ -57,6 +57,7 @@ CONNECTOR_TARGET = "/run/eva/connectors/mcp"
 CONNECTOR_FLAG = "EVA_MCP_GATEWAY_ENABLED"
 PROACTIVE_FLAG = "EVA_TELEGRAM_PROACTIVE_DELIVERY_ENABLED"
 BACKGROUND_FLAG = "EVA_BACKGROUND_WORK_ENABLED"
+DELEGATED_FLAG = "EVA_DELEGATED_WORK_ENABLED"
 PROACTIVE_TOKEN_TARGET = "/run/secrets/telegram_bot_token"
 
 _SCHEMA_HEAD_SCRIPT = (
@@ -106,6 +107,10 @@ class SlotSpec:
     operational_volume: str
     memory_volume: str
     dashboard_token: Path
+
+    @property
+    def delegated_worker(self) -> str:
+        return f"{self.project}-delegated-work-worker-1"
 
     @property
     def url(self) -> str:
@@ -726,6 +731,7 @@ class SystemBackend:
 
     def _verify_slot(self, slot: SlotSpec, *, source: bool) -> dict[str, str]:
         environment = self._environment(slot.environment)
+        delegated = self._delegated_work_image(environment)
         self._proactive_token(environment)
         connector = self._connector_settings(environment)
         voice = self._voice_settings(environment)
@@ -782,6 +788,9 @@ class SystemBackend:
             "model-access-lease",
             "postgres",
         }
+        if source and delegated is not None:
+            self._verify_delegated_worker(slot, environment)
+            allowed_running.add("delegated-work-worker")
         if not running_services <= allowed_running:
             raise QuiescentCutoverError(
                 "retained slot has another active database writer"
@@ -842,10 +851,13 @@ class SystemBackend:
         self._verify_voice_continuity(source_environment, target_environment)
         inspected = self._inspect_all()
         for slot in (source, target):
-            if _shared_database_consumers(
+            consumers = _shared_database_consumers(
                 retained_core=slot.core,
                 inspected=inspected,
-            ):
+            )
+            if slot == source and self._delegated_work_image(source_environment) is not None:
+                consumers = [name for name in consumers if name != slot.delegated_worker]
+            if consumers:
                 raise QuiescentCutoverError(
                     "another retained-slot database consumer is still running"
                 )
@@ -901,10 +913,11 @@ class SystemBackend:
         }
 
     def stop_writers(self, slot: SlotSpec) -> None:
-        for container in (slot.core, slot.hindsight):
+        writers = (slot.core, slot.delegated_worker, slot.hindsight)
+        for container in writers:
             if self._is_running(container):
                 self._run([DOCKER, "stop", "--time", "30", container], timeout=60)
-        if any(self._is_running(item) for item in (slot.core, slot.hindsight)):
+        if any(self._is_running(item) for item in writers):
             raise QuiescentCutoverError("retained slot writers did not stop")
 
     @staticmethod
@@ -983,9 +996,63 @@ class SystemBackend:
         if values != [BACKGROUND_FLAG + "=" + str(enabled).lower()]:
             raise QuiescentCutoverError("core background work setting differs")
 
+    @staticmethod
+    def _delegated_work_image(environment: dict[str, str]) -> str | None:
+        enabled = environment.get(DELEGATED_FLAG, "false")
+        if enabled not in {"true", "false"}:
+            raise QuiescentCutoverError("delegated work flag must be true or false")
+        if enabled == "false":
+            return None
+        image = environment.get("EVA_DELEGATED_WORK_IMAGE", "")
+        if (re.fullmatch(r"[^\s@]+@sha256:[0-9a-f]{64}", image) is None
+                or image != environment.get("EVA_LIVING_CORE_IMAGE")):
+            raise QuiescentCutoverError("delegated work requires the exact core image")
+        for worker_key, owner_key in (
+            ("EVA_DELEGATED_WORK_OWNER_PRINCIPAL_ID", "EVA_RUNTIME_PRINCIPAL_ID"),
+            ("EVA_DELEGATED_WORK_OWNER_BINDING_ID", "EVA_DASHBOARD_PRINCIPAL_BINDING_ID"),
+        ):
+            if not environment.get(owner_key) or environment.get(worker_key) != environment[owner_key]:
+                raise QuiescentCutoverError("delegated work owner authority differs")
+        return image
+
+    @staticmethod
+    def _verify_delegated_setting(document: dict[str, Any], *, enabled: bool) -> None:
+        values = [row.partition("=")[2] for row in document.get("Config", {}).get("Env", [])
+                  if row.startswith(DELEGATED_FLAG + "=")]
+        # Legacy disabled source images predate this opt-in flag.
+        if values != [str(enabled).lower()] and (enabled or values):
+            raise QuiescentCutoverError("core delegated work setting differs")
+
+    def _verify_delegated_worker(self, slot: SlotSpec, environment: dict[str, str]) -> None:
+        image = self._delegated_work_image(environment)
+        document = self._inspect(slot.delegated_worker)
+        config = document.get("Config", {})
+        labels = config.get("Labels", {})
+        mounts = document.get("Mounts", [])
+        expected_mounts = {
+            "/run/secrets/database_dsn": environment.get("EVA_DATABASE_DSN_FILE_HOST"),
+            "/run/eva/model-lease": environment.get("EVA_MODEL_ACCESS_LEASE_DIR"),
+        }
+        if (image is None or document.get("Image") != image.rsplit("@", 1)[-1]
+                or labels.get("com.docker.compose.project") != slot.project
+                or labels.get("com.docker.compose.service") != "delegated-work-worker"
+                or config.get("User") != "65532:65532"
+                or config.get("Entrypoint") != ["/usr/local/bin/python"]
+                or config.get("Cmd") != ["-m", "eva.bootstrap.delegated_work_service"]
+                or document.get("State", {}).get("Running") is not True
+                or document.get("State", {}).get("Health", {}).get("Status") != "healthy"
+                or len(mounts) != len(expected_mounts)
+                or any(m.get("Type") != "bind" or m.get("RW") is not False
+                       or m.get("Source") != expected_mounts.get(m.get("Destination")) for m in mounts)
+                or {m.get("Destination") for m in mounts} != set(expected_mounts)):
+            raise QuiescentCutoverError("delegated worker image, identity, health or mounts differ")
+
     def start_writers(self, slot: SlotSpec) -> None:
         """Stage without outgoing credentials; disable supported background workers."""
         environment = self._environment(slot.environment)
+        self._delegated_work_image(environment)
+        if self._is_running(slot.delegated_worker):
+            raise QuiescentCutoverError("staged slot has an active delegated worker")
         self._proactive_token(environment)
         self._connector_settings(environment)
         self._voice_settings(environment)
@@ -1001,9 +1068,9 @@ class SystemBackend:
             str(MANIFEST),
         ]
         start = ["up", "--detach", "--no-deps"]
-        self._run([*compose, *start, "hindsight"], extra_env={BACKGROUND_FLAG: "false"})
+        self._run([*compose, *start, "hindsight"], extra_env={BACKGROUND_FLAG: "false", DELEGATED_FLAG: "false"})
         self._wait_container(slot.hindsight)
-        self._run([*compose, *start, "core"], extra_env={BACKGROUND_FLAG: "false"})
+        self._run([*compose, *start, "core"], extra_env={BACKGROUND_FLAG: "false", DELEGATED_FLAG: "false"})
         self._wait_container(slot.core)
         expected = environment.get("EVA_LIVING_CORE_IMAGE", "").rsplit("@", 1)[-1]
         inspected = self._inspect(slot.core)
@@ -1016,6 +1083,7 @@ class SystemBackend:
         self._verify_voice(inspected, None)
         self._verify_voice(inspected, None, household=True)
         self._verify_background_setting(inspected, enabled=False)
+        self._verify_delegated_setting(inspected, enabled=False)
 
     def activate_delivery(self, slot: SlotSpec, dropin: Path) -> bool:
         """Activate background work and credentials after runtime and route checks.
@@ -1025,6 +1093,7 @@ class SystemBackend:
         must stop the target and preserve its new durable state during rollback.
         """
         environment = self._environment(slot.environment)
+        delegated = self._delegated_work_image(environment)
         token = self._proactive_token(environment)
         connector = self._connector_settings(environment)
         voice = self._voice_settings(environment)
@@ -1045,6 +1114,9 @@ class SystemBackend:
         self._verify_voice(staged, None)
         self._verify_voice(staged, None, household=True)
         self._verify_background_setting(staged, enabled=False)
+        self._verify_delegated_setting(staged, enabled=False)
+        if self._is_running(slot.delegated_worker):
+            raise QuiescentCutoverError("delegated worker ran before target activation")
         overlays = []
         if token is not None:
             overlays.extend(["--file", str(PROACTIVE_MANIFEST)])
@@ -1058,7 +1130,7 @@ class SystemBackend:
             DOCKER, "compose", "--env-file", str(slot.environment),
             "--project-name", slot.project, "--file", str(MANIFEST),
             *overlays, "up", "--detach", "--no-deps", "core",
-        ], extra_env={BACKGROUND_FLAG: "true"})
+        ], extra_env={BACKGROUND_FLAG: "true", DELEGATED_FLAG: str(delegated is not None).lower()})
         self._wait_container(slot.core)
         activated = self._inspect(slot.core)
         if activated.get("Image") != expected:
@@ -1068,6 +1140,16 @@ class SystemBackend:
         self._verify_voice(activated, voice)
         self._verify_voice(activated, household_voice, household=True)
         self._verify_background_setting(activated, enabled=True)
+        self._verify_delegated_setting(activated, enabled=delegated is not None)
+        if delegated is not None:
+            self._run([
+                DOCKER, "compose", "--env-file", str(slot.environment),
+                "--project-name", slot.project, "--file", str(MANIFEST),
+                "--profile", "delegated-work", "up", "--detach", "--no-deps",
+                "delegated-work-worker",
+            ], extra_env={BACKGROUND_FLAG: "true", DELEGATED_FLAG: "true"})
+            self._wait_container(slot.delegated_worker)
+            self._verify_delegated_worker(slot, environment)
         if self._household_voice_settings(environment) != household_voice:
             raise QuiescentCutoverError("household voice activation binding changed")
         if self._environment(slot.environment) != environment or self._voice_settings(environment) != voice:

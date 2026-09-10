@@ -47,7 +47,7 @@ def _rendered_graph(
     }
     return {
         "services": {
-            name: {"labels": dict(labels), **({"environment": {"EVA_BACKGROUND_WORK_ENABLED": "false"}} if name == "core" else {})} for name in sorted(EXPECTED_SERVICES)
+            name: {"labels": dict(labels), **({"environment": {"EVA_BACKGROUND_WORK_ENABLED": "false", "EVA_DELEGATED_WORK_ENABLED": "false"}} if name == "core" else {})} for name in sorted(EXPECTED_SERVICES)
         },
         "x-note": "${LEFT_OPEN}" if include_unresolved else "sealed",
     }
@@ -126,7 +126,7 @@ def test_renderer_binds_template_snapshot_and_compose_graph(
     for _, environment in calls:
         assert environment == {
             "EVA_B_CONFIGURATION_SHA256": plan.snapshot_sha256,
-            "EVA_BACKGROUND_WORK_ENABLED": "false",
+            "EVA_BACKGROUND_WORK_ENABLED": "false", "EVA_DELEGATED_WORK_ENABLED": "false",
             "LC_ALL": "C",
         }
     assert environment_files == [

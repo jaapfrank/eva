@@ -48,6 +48,8 @@ from eva.adapters.postgres.people_memory_overview import (
     PostgresPeopleMemoryOverview,
 )
 from eva.adapters.postgres.delegated_work import PostgresDelegatedWorkStore
+from eva.adapters.postgres.delegated_work_actions import PostgresDelegatedWorkActions
+from eva.bootstrap.delegated_work_owner_service import DelegatedWorkOwnerService
 from eva.adapters.postgres.durable_goals import PostgresDurableGoalStore
 from eva.adapters.postgres.telegram_group_consent import (
     PostgresTelegramGroupConsentStore,
@@ -230,6 +232,7 @@ class RuntimeSettings:
     conversation_reasoning_effort: str = "medium"
     runtime_resource_budget: RuntimeResourceBudget | None = None
     background_work_enabled: bool = True
+    delegated_work_enabled: bool = False
     background_tenant_id: str | None = None
     background_installation_id: str | None = None
     background_principal_id: str | None = None
@@ -261,6 +264,10 @@ class RuntimeSettings:
     def __post_init__(self) -> None:
         if type(self.background_work_enabled) is not bool:
             raise ValueError("background work switch must be a boolean")
+        if type(self.delegated_work_enabled) is not bool:
+            raise ValueError("delegated work switch must be a boolean")
+        if self.delegated_work_enabled and self.dashboard_principal_binding_id is None:
+            raise ValueError("delegated work requires a configured owner binding")
         if type(self.conversation_maximum_requests) is not int or self.conversation_maximum_requests < 1:
             raise ValueError("conversation request limit must be a positive integer")
 
@@ -531,6 +538,7 @@ class RuntimeSettings:
             ),
             runtime_resource_budget=runtime_resource_budget,
             background_work_enabled=_environment_bool("EVA_BACKGROUND_WORK_ENABLED", True),
+            delegated_work_enabled=_environment_bool("EVA_DELEGATED_WORK_ENABLED", False),
             background_tenant_id=background_tenant_id,
             background_installation_id=background_installation_id,
             background_principal_id=background_principal_id,
@@ -1525,6 +1533,56 @@ def create_runtime_app() -> FastAPI:
         maximum_reply_words=110,
         identity_pack=identity_pack,
     )
+    delegated_work_store = None
+    delegated_work_commands = None
+    delegated_work_actions = None
+    dashboard_effect_controller = None
+    dashboard_owner_principal_id = None
+    dashboard_principal_binding_id = None
+    dashboard_authority_scope = None
+    if settings.dashboard_principal_binding_id is not None:
+        assert settings.dashboard_tenant_id is not None
+        assert settings.dashboard_installation_id is not None
+        assert settings.background_principal_id is not None
+        dashboard_owner_principal_id = UUID(settings.background_principal_id)
+        dashboard_principal_binding_id = UUID(settings.dashboard_principal_binding_id)
+        dashboard_authority_scope = TimelineScope(
+            UUID(settings.dashboard_tenant_id), UUID(settings.dashboard_installation_id),
+        )
+        delegated_work_store = PostgresDelegatedWorkStore(
+            engine,
+            TimelineScope(
+                UUID(settings.dashboard_tenant_id),
+                UUID(settings.dashboard_installation_id),
+            ),
+        )
+        if settings.delegated_work_enabled:
+            if telegram_principal_bindings is not None and not telegram_principal_bindings.contains_binding(
+                principal_id=str(dashboard_owner_principal_id),
+                principal_binding_id=dashboard_principal_binding_id,
+            ):
+                raise RuntimeError("delegated owner differs from trusted Telegram bindings")
+            delegated_work_service = DelegatedWorkOwnerService(
+                delegated_work_store,
+                owner_principal_id=dashboard_owner_principal_id,
+                principal_binding_id=dashboard_principal_binding_id,
+            )
+            delegated_work_actions = PostgresDelegatedWorkActions(engine, delegated_work_service)
+            if telegram_principal_bindings is not None:
+                delegated_work_commands = DelegatedWorkConversationCommands(
+                    service=delegated_work_service,
+                )
+        dashboard_effect_controller = DashboardActionChainEffectController(
+            engine,
+            TimelineScope(
+                UUID(settings.dashboard_tenant_id),
+                UUID(settings.dashboard_installation_id),
+            ),
+            owner_principal_id=dashboard_owner_principal_id,
+            principal_binding_id=dashboard_principal_binding_id,
+        )
+    if settings.delegated_work_enabled and delegated_work_actions is None:
+        raise RuntimeError("delegated work requires the configured dashboard owner")
     provider_bundle = build_external_provider_bundle(settings.external_provider, engine)
     model = PydanticConversationModel(
         auth_file=Path(settings.conversation_auth_file),
@@ -1532,7 +1590,8 @@ def create_runtime_app() -> FastAPI:
         reasoning_effort=settings.conversation_reasoning_effort,  # type: ignore[arg-type]
         resource_budget=settings.runtime_resource_budget,
         conversation_tools=(
-            () if provider_bundle is None else provider_bundle.conversation_tools
+            (() if provider_bundle is None else provider_bundle.conversation_tools)
+            + (() if delegated_work_actions is None else delegated_work_actions.conversation_tools())
         ),
     )
     stripe_publication = (
@@ -1594,7 +1653,8 @@ def create_runtime_app() -> FastAPI:
         durable_goal_provider=settings.durable_goal_provider,
         durable_goal_recipients=settings.durable_goal_recipients,
         external_tools=(
-            () if provider_bundle is None else provider_bundle.external_tools
+            (() if provider_bundle is None else provider_bundle.external_tools)
+            + (() if delegated_work_actions is None else (delegated_work_actions,))
         ),
     )
     conversation = LivingConversation(memory, model, identity, conversation_actions)
@@ -1770,50 +1830,6 @@ def create_runtime_app() -> FastAPI:
             prepare_one_release,
             evaluate_one_sensory_event,
             deliver_one_proactive_expression,
-        )
-    delegated_work_store = None
-    delegated_work_commands = None
-    dashboard_effect_controller = None
-    dashboard_owner_principal_id = None
-    dashboard_principal_binding_id = None
-    dashboard_authority_scope = None
-    if settings.dashboard_principal_binding_id is not None:
-        assert settings.dashboard_tenant_id is not None
-        assert settings.dashboard_installation_id is not None
-        assert settings.background_principal_id is not None
-        dashboard_owner_principal_id = UUID(settings.background_principal_id)
-        dashboard_principal_binding_id = UUID(settings.dashboard_principal_binding_id)
-        dashboard_authority_scope = TimelineScope(
-            UUID(settings.dashboard_tenant_id), UUID(settings.dashboard_installation_id),
-        )
-        delegated_work_store = PostgresDelegatedWorkStore(
-            engine,
-            TimelineScope(
-                UUID(settings.dashboard_tenant_id),
-                UUID(settings.dashboard_installation_id),
-            ),
-        )
-        if telegram_principal_bindings is not None:
-            if not telegram_principal_bindings.contains_binding(
-                principal_id=str(dashboard_owner_principal_id),
-                principal_binding_id=dashboard_principal_binding_id,
-            ):
-                raise RuntimeError(
-                    "delegated owner is absent from trusted Telegram bindings"
-                )
-            delegated_work_commands = DelegatedWorkConversationCommands(
-                delegated_work_store,
-                owner_principal_id=dashboard_owner_principal_id,
-                principal_binding_id=dashboard_principal_binding_id,
-            )
-        dashboard_effect_controller = DashboardActionChainEffectController(
-            engine,
-            TimelineScope(
-                UUID(settings.dashboard_tenant_id),
-                UUID(settings.dashboard_installation_id),
-            ),
-            owner_principal_id=dashboard_owner_principal_id,
-            principal_binding_id=dashboard_principal_binding_id,
         )
     runtime = PostgresHindsightMemoryRuntime(
         engine,

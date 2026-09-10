@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import hashlib
 from pathlib import Path
 
 import pytest
@@ -74,7 +75,7 @@ def test_activation_is_atomic_exact_and_idempotent(tmp_path: Path) -> None:
     assert f"EVA_DASHBOARD_RELEASE_SHA256={'1' * 64}\n" in raw
     assert (
         "EVA_B_MANAGED_MANIFEST_SHA256="
-        "6720cfe2eca7b14c494542b3597202cc568d2861fbdbc02bc14e0a10fa99e017\n"
+        + hashlib.sha256((Path(__file__).resolve().parents[2] / "deploy/living-core/managed-b.compose.yml").read_bytes()).hexdigest() + "\n"
     ) in raw
     assert f"EVA_DELEGATED_WORK_IMAGE={WORKER}\n" in raw
     assert f"EVA_DELEGATED_WORK_OWNER_PRINCIPAL_ID={PRINCIPAL}\n" in raw
@@ -317,3 +318,25 @@ def test_activation_refuses_duplicate_or_non_private_environment(
             telegram_user_id=TELEGRAM_USER,
             runner=_runner(),
         )
+
+
+def test_dashboard_activation_preserves_existing_telegram_bytes(tmp_path: Path) -> None:
+    path = tmp_path / "candidate.env"
+    _environment(path)
+    with path.open("a") as stream:
+        stream.write(f"EVA_RUNTIME_PRINCIPAL_ID={PRINCIPAL}\n")
+        stream.write(f"EVA_DASHBOARD_PRINCIPAL_BINDING_ID={BINDING}\n")
+    bindings = path.parent / "secrets/telegram-bindings"
+    before = b'{ "contract": "EvaTelegramPrincipalBindings/v2", "bindings": [] }\n'
+    bindings.write_bytes(before)
+    metadata = bindings.stat()
+    receipt = persist_delegated_work_activation(
+        path, core_image=CORE, worker_image=CORE,
+        owner_principal_id=PRINCIPAL, owner_binding_id=BINDING, runner=_runner(),
+    )
+    assert bindings.read_bytes() == before
+    assert bindings.stat().st_ino == metadata.st_ino
+    assert bindings.stat().st_mtime_ns == metadata.st_mtime_ns
+    assert receipt["bindingsBeforeSha256"] == receipt["bindingsAfterSha256"]
+    assert receipt["ownerBindingReplaced"] is False
+    assert "EVA_DELEGATED_WORK_ENABLED=true\n" in path.read_text()

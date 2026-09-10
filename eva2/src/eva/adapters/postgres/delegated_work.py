@@ -13,7 +13,9 @@ import sqlalchemy as sa
 from sqlalchemy.engine import Engine
 
 from eva.adapters.postgres.current_catalog import delegated_work_runs, metadata
-from eva.adapters.postgres.operational_timeline import TimelineScope
+from eva.adapters.postgres.operational_timeline import (
+    TimelineScope, insert_initial_timeline_thread, operational_events,
+)
 from eva.adapters.postgres.scope import PostgresScopedRole
 from eva.contracts.canonical_json import canonical_sha256
 from eva.contracts.delegated_work import (
@@ -37,6 +39,14 @@ class DelegatedWorkStoreError(RuntimeError):
 
 class DelegatedWorkConflict(DelegatedWorkStoreError):
     """Existing authority differs from the requested immutable bytes."""
+
+
+class DelegatedWorkNotResumable(DelegatedWorkConflict):
+    """An authorized owner requested a successor of active or successful work."""
+
+    def __init__(self, work: StoredDelegatedWork) -> None:
+        super().__init__("previous delegated attempt is still active or already succeeded")
+        self.work = work
 
 
 class DelegatedWorkNotFound(DelegatedWorkStoreError):
@@ -140,6 +150,10 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
         self._scope_value = scope
         self._role = role
 
+    @property
+    def scope(self) -> TimelineScope:
+        return self._scope_value
+
     def validate_admission_authority(
         self,
         *,
@@ -170,6 +184,7 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
         retention_policy_id: str,
         retention_until: datetime,
         occurred_at: datetime,
+        resumes_work_id: str | None = None,
     ) -> DelegatedWorkAdmission:
         # These three values are trusted operator-display labels, not task text.
         # The local cockpit remains unauthenticated until its own product gate.
@@ -202,6 +217,28 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
         spec_sha256 = canonical_sha256(spec_payload)
         with self._engine.begin() as connection:
             self._scope(connection)
+            self._validate_owner_binding(
+                connection, owner_principal_id=owner_principal_id,
+                principal_binding_id=principal_binding_id,
+            )
+            previous = None
+            if resumes_work_id is not None:
+                previous = self._load_terminal_locked(
+                    connection, work_id=resumes_work_id,
+                    missing_message="previous delegated work is absent",
+                )
+                if (previous.spec.owner_principal_id != str(owner_principal_id)
+                        or previous.spec.principal_binding_id != str(principal_binding_id)):
+                    raise DelegatedWorkNotFound("previous delegated work is absent")
+                expected_id = "work:eva-resume:" + str(uuid5(
+                    self._scope_value.installation_id,
+                    f"{previous.spec.work_id}:{previous.spec.generation + 1}",
+                ))
+                if (spec.work_id != expected_id or spec.parent_task_id != previous.spec.work_id
+                        or spec.generation != previous.spec.generation + 1
+                        or spec.episode_id != previous.spec.episode_id
+                        or spec.task != previous.spec.task or spec.grant != previous.spec.grant):
+                    raise DelegatedWorkConflict("resumed work differs from its bounded previous attempt")
             connection.execute(
                 sa.text("SELECT pg_advisory_xact_lock(hashtextextended(:key, 0))"),
                 {
@@ -225,6 +262,15 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
             )
             if existing is not None:
                 loaded = self._validated(connection, existing)
+                if previous is not None:
+                    # The first explicit resume owns this successor. Later owner
+                    # retries return it, including its original clock and release;
+                    # a newer ingress never creates a parallel successor.
+                    fields = ("episode_id", "generation", "parent_task_id", "owner_principal_id",
+                              "principal_binding_id", "task", "grant")
+                    if any(getattr(loaded.spec, key) != getattr(spec, key) for key in fields):
+                        raise DelegatedWorkConflict("resumed work id owns another attempt")
+                    return DelegatedWorkAdmission("already_present", loaded)
                 if (
                     loaded.spec != spec
                     or loaded.title != title
@@ -238,11 +284,12 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
                     )
                 return DelegatedWorkAdmission("already_present", loaded)
 
-            self._validate_owner_binding(
-                connection,
-                owner_principal_id=owner_principal_id,
-                principal_binding_id=principal_binding_id,
-            )
+            if previous is not None and not (
+                previous.state in {"failed", "ambiguous", "needs_help", "stopped"}
+                or (previous.state in {"admitted", "call_started"}
+                    and occurred_at > _parse_timestamp(previous.spec.deadline))
+            ):
+                raise DelegatedWorkNotResumable(previous)
             connection.execute(
                 sa.insert(delegated_work_runs).values(
                     tenant_id=self._scope_value.tenant_id,
@@ -749,39 +796,73 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
         *,
         owner_principal_id: UUID,
         principal_binding_id: UUID,
+        request_key: str | None = None,
+        now: datetime | None = None,
     ) -> str | None:
         """Find the latest stoppable task, retaining stopped work for exact replay."""
 
-        with self._engine.connect() as connection:
-            transaction = connection.begin()
-            try:
-                self._scope(connection)
-                self._validate_owner_binding(
-                    connection,
-                    owner_principal_id=owner_principal_id,
-                    principal_binding_id=principal_binding_id,
+        if request_key is not None:
+            if not request_key or len(request_key) > 2048 or now is None:
+                raise ValueError("stop target requires a bounded request and time")
+            now = _whole_second(now, label="stop target time")
+        with self._engine.begin() as connection:
+            self._scope(connection)
+            self._validate_owner_binding(
+                connection,
+                owner_principal_id=owner_principal_id,
+                principal_binding_id=principal_binding_id,
+            )
+            target_thread = None
+            if request_key is not None:
+                target_thread = "delegated:stop-target:" + canonical_sha256({
+                    "owner": str(owner_principal_id), "binding": str(principal_binding_id),
+                    "request": request_key,
+                })
+                connection.execute(sa.text("SELECT pg_advisory_xact_lock(hashtextextended(:key, 0))"),
+                                   {"key": target_thread})
+                saved = connection.execute(sa.select(operational_events).where(
+                    operational_events.c.tenant_id == self._scope_value.tenant_id,
+                    operational_events.c.installation_id == self._scope_value.installation_id,
+                    operational_events.c.thread_id == target_thread,
+                    operational_events.c.sequence == 1,
+                )).mappings().one_or_none()
+                if saved is not None:
+                    if (saved["event_type"] != "DELEGATED_STOP_TARGET_BOUND"
+                            or canonical_sha256(saved["payload"]) != bytes(saved["payload_sha256"]).hex()):
+                        raise DelegatedWorkConflict("saved stop target is corrupt")
+                    data = saved["payload"]["data"]
+                    if data["owner"] != str(owner_principal_id) or data["binding"] != str(principal_binding_id):
+                        raise DelegatedWorkConflict("saved stop target authority differs")
+                    return data["work_id"]
+            selected = connection.scalar(
+                sa.select(delegated_work_runs.c.work_id)
+                .where(
+                    delegated_work_runs.c.tenant_id == self._scope_value.tenant_id,
+                    delegated_work_runs.c.installation_id
+                    == self._scope_value.installation_id,
+                    delegated_work_runs.c.owner_principal_id == owner_principal_id,
+                    delegated_work_runs.c.principal_binding_id
+                    == principal_binding_id,
+                    delegated_work_runs.c.state.in_(
+                        ("admitted", "call_started", "stopped")
+                    ),
                 )
-                return connection.scalar(
-                    sa.select(delegated_work_runs.c.work_id)
-                    .where(
-                        delegated_work_runs.c.tenant_id == self._scope_value.tenant_id,
-                        delegated_work_runs.c.installation_id
-                        == self._scope_value.installation_id,
-                        delegated_work_runs.c.owner_principal_id == owner_principal_id,
-                        delegated_work_runs.c.principal_binding_id
-                        == principal_binding_id,
-                        delegated_work_runs.c.state.in_(
-                            ("admitted", "call_started", "stopped")
-                        ),
-                    )
-                    .order_by(
-                        delegated_work_runs.c.created_at.desc(),
-                        delegated_work_runs.c.work_id.desc(),
-                    )
-                    .limit(1)
+                .order_by(
+                    delegated_work_runs.c.created_at.desc(),
+                    delegated_work_runs.c.work_id.desc(),
                 )
-            finally:
-                transaction.rollback()
+                .limit(1)
+            )
+            if target_thread is not None:
+                insert_initial_timeline_thread(
+                    connection, self._scope_value, thread_id=target_thread,
+                    checkpoint_id=target_thread, occurred_at=now,
+                    event_type="DELEGATED_STOP_TARGET_BOUND", phase="target_selected",
+                    status="completed", data={"owner": str(owner_principal_id),
+                                              "binding": str(principal_binding_id),
+                                              "work_id": selected},
+                )
+            return selected
 
     def load(
         self,
@@ -805,6 +886,30 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
                 ) or loaded.spec.principal_binding_id != str(principal_binding_id):
                     raise DelegatedWorkNotFound("delegated work is absent")
                 return loaded
+            finally:
+                transaction.rollback()
+
+    def list_owned(
+        self, *, owner_principal_id: UUID, principal_binding_id: UUID,
+        limit: int = 21,
+    ) -> tuple[StoredDelegatedWork, ...]:
+        """Return bounded private job identifiers/results from this exact binding."""
+        if type(limit) is not int or not 1 <= limit <= 65:
+            raise ValueError("delegated work listing limit is invalid")
+        with self._engine.connect() as connection:
+            transaction = connection.begin()
+            try:
+                self._scope(connection)
+                self._validate_owner_binding(connection, owner_principal_id=owner_principal_id,
+                                             principal_binding_id=principal_binding_id)
+                rows = connection.execute(sa.select(delegated_work_runs).where(
+                    delegated_work_runs.c.tenant_id == self._scope_value.tenant_id,
+                    delegated_work_runs.c.installation_id == self._scope_value.installation_id,
+                    delegated_work_runs.c.owner_principal_id == owner_principal_id,
+                    delegated_work_runs.c.principal_binding_id == principal_binding_id,
+                ).order_by(delegated_work_runs.c.created_at.desc(),
+                           delegated_work_runs.c.work_id.desc()).limit(limit)).mappings().all()
+                return tuple(self._validated(connection, row) for row in rows)
             finally:
                 transaction.rollback()
 
@@ -1292,6 +1397,7 @@ __all__ = [
     "DelegatedWorkClaim",
     "DelegatedWorkConflict",
     "DelegatedWorkNotFound",
+    "DelegatedWorkNotResumable",
     "DelegatedWorkStoreError",
     "PostgresDelegatedWorkStore",
     "StoredDelegatedWork",

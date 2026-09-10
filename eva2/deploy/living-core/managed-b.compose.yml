@@ -280,6 +280,7 @@ services:
       EVA_DASHBOARD_INSTALLATION_ID: ${EVA_DASHBOARD_INSTALLATION_ID:?set the dashboard installation scope}
       EVA_DASHBOARD_PRINCIPAL_BINDING_ID: ${EVA_DASHBOARD_PRINCIPAL_BINDING_ID:?set the dashboard owner binding}
       EVA_DASHBOARD_TENANT_ID: ${EVA_DASHBOARD_TENANT_ID:?set the dashboard tenant scope}
+      EVA_DELEGATED_WORK_ENABLED: ${EVA_DELEGATED_WORK_ENABLED:-false}
       # Admission is separate from the worker's provider configuration.  A
       # prepared but inactive/dummy worker must never make the conversation
       # core promise durable work that nobody can execute.
@@ -434,6 +435,11 @@ services:
       - /tmp:rw,nosuid,nodev,noexec,size=32m
     entrypoint: ["/usr/local/bin/python"]
     command: ["-m", "eva.bootstrap.delegated_work_service"]
+    healthcheck:
+      test: ["CMD", "/usr/local/bin/python", "-m", "eva.bootstrap.delegated_work_service", "--check"]
+      interval: 10s
+      timeout: 3s
+      retries: 6
     environment:
       EVA_DATABASE_DSN_FILE: /run/secrets/database_dsn
       EVA_DELEGATED_WORKER_ID: ${EVA_DELEGATED_WORKER_ID:-eva2-delegated-work}

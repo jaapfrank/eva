@@ -2,7 +2,9 @@
 
 from __future__ import annotations
 
+import asyncio
 from collections.abc import AsyncIterator, Callable
+from dataclasses import replace
 from contextlib import asynccontextmanager
 from datetime import UTC, datetime
 import hashlib
@@ -11,19 +13,23 @@ import json
 from pathlib import Path
 import re
 
-from eva.adapters.model.openai_child_provider import (
-    OpenAIChildProvider,
-    OpenAIChildProviderSettings,
+from eva.adapters.model.openai_codex_provider import (
+    CodexProviderError,
+    OpenAICodexProvider,
+    OpenAICodexProviderSettings,
 )
 from eva.adapters.subagents.tool_free_child import (
     OUTPUT_SCHEMA_SHA256,
     ClosedModelRegistry,
     PydanticToolFreeChildRunner,
+    ToolFreeChildOutcome,
     ToolFreeChildProfile,
 )
 from eva.contracts.canonical_json import canonical_sha256
 from eva.adapters.credentials.runtime_files import read_shared_runtime_file_bytes
-from eva.contracts.delegated_work import DelegatedWorkGrant, DelegatedWorkSpec
+from eva.contracts.delegated_work import (
+    DelegatedWorkGrant, DelegatedWorkSpec, DelegatedWorkUsage,
+)
 
 _MODEL_LEASE_OWNER_UID = 1000
 _MODEL_LEASE_READER_GID = 65532
@@ -39,7 +45,7 @@ MODEL_MAXIMUM_REQUEST_BYTES = 256 * 1024
 MODEL_MAXIMUM_RESPONSE_BYTES = 256 * 1024
 INPUT_PRICE_USD_MICROS_PER_MILLION = 750_000
 OUTPUT_PRICE_USD_MICROS_PER_MILLION = 4_500_000
-PYDANTIC_AI_VERSION = "2.32.1"
+PYDANTIC_AI_VERSION = "2.37.0"
 OPENAI_SDK_VERSION = "3.6.0"
 WORKER_INSTRUCTIONS = (
     "Werk als een afgeschermde onderzoeker voor Eva. Gebruik geen tools of externe "
@@ -52,6 +58,8 @@ MODEL_PROFILE_RELEASE_SHA256 = canonical_sha256(
         "contract": "EvaDelegatedModelProfile/v1",
         "endpoint": MODEL_ENDPOINT,
         "input_preflight": "conservative_wire_byte_preflight_v1",
+        "provider_adapter": "OpenAICodexProvider",
+        "usage_attestation": "raw_response_completed_v1",
         "maximum_request_bytes": MODEL_MAXIMUM_REQUEST_BYTES,
         "maximum_response_bytes": MODEL_MAXIMUM_RESPONSE_BYTES,
         "model": MODEL_NAME,
@@ -76,14 +84,15 @@ WORKER_PROFILE_RELEASE_SHA256 = canonical_sha256(
 )
 _EVA_PACKAGE_ROOT = Path(__file__).resolve().parents[1]
 DEPENDENCY_LOCK_SHA256 = (
-    "24b2ac80e15e33dab5368fe79d255cb1bf23fe947c9e151b5056412f31f556fb"
+    "036e2463be9fea6b3adb8528e8e0288b0985f65f958d4abdbf371c21d828693e"
 )
 
 
 def _source_hashes() -> dict[str, str]:
     relative_paths = (
         "adapters/model/__init__.py",
-        "adapters/model/openai_child_provider.py",
+        "adapters/model/openai_codex_provider.py",
+        "adapters/model/openai_endpoint.py",
         "adapters/postgres/delegated_work.py",
         "adapters/subagents/tool_free_child.py",
         "adapters/credentials/runtime_files.py",
@@ -230,47 +239,92 @@ def validate_delegated_model_access_lease(auth_file: Path) -> None:
     _read_access_lease(auth_file)
 
 
+class _CodexDelegatedWorkRunner:
+    """Give each durably admitted child a fresh shared-provider deadline."""
+
+    def __init__(self, lease_file: Path, clock: Callable[[], datetime] | None):
+        self._lease_file = lease_file
+        self._clock = clock
+
+    async def run(
+        self, spec: DelegatedWorkSpec, *, call_id: str,
+        cancellation_event: asyncio.Event | None = None,
+    ) -> ToolFreeChildOutcome:
+        provider = OpenAICodexProvider(
+            OpenAICodexProviderSettings(
+                endpoint=MODEL_ENDPOINT,
+                model_name=MODEL_NAME,
+                timeout_seconds=MODEL_TIMEOUT_SECONDS,
+                reasoning_effort="low",
+                maximum_request_bytes=MODEL_MAXIMUM_REQUEST_BYTES,
+                maximum_response_bytes=MODEL_MAXIMUM_RESPONSE_BYTES,
+            ),
+            credential_loader=lambda: _read_access_lease(self._lease_file),
+        )
+        outcome = None
+        try:
+            async with provider as session:
+                profile = ToolFreeChildProfile(
+                    model_profile_id=MODEL_PROFILE_ID,
+                    model_profile_release_sha256=MODEL_PROFILE_RELEASE_SHA256,
+                    worker_profile_id=WORKER_PROFILE_ID,
+                    worker_profile_release_sha256=WORKER_PROFILE_RELEASE_SHA256,
+                    instructions=WORKER_INSTRUCTIONS,
+                    model=session.model,
+                    input_cost_usd_micros_per_million_tokens=(
+                        INPUT_PRICE_USD_MICROS_PER_MILLION
+                    ),
+                    output_cost_usd_micros_per_million_tokens=(
+                        OUTPUT_PRICE_USD_MICROS_PER_MILLION
+                    ),
+                )
+                runner = PydanticToolFreeChildRunner(
+                    ClosedModelRegistry({MODEL_PROFILE_ID: profile}),
+                    worker_program_sha256=WORKER_PROGRAM_SHA256,
+                    engine_release_sha256=ENGINE_RELEASE_SHA256,
+                    clock=self._clock,
+                )
+                outcome = await runner.run(
+                    spec, call_id=call_id, cancellation_event=cancellation_event,
+                )
+                if outcome.result is not None:
+                    raw = session.consume_raw_usage()
+                    if (
+                        outcome.usage.input_tokens != raw.input_tokens
+                        or outcome.usage.output_tokens != raw.output_tokens
+                        or outcome.usage.total_tokens != raw.total_tokens
+                    ):
+                        raise CodexProviderError("protocol")
+                return outcome
+        except CodexProviderError as error:
+            # No retry after the durable call fence; preserve measured usage if
+            # a completed response failed the independent raw-usage comparison.
+            fingerprint = hashlib.sha256(
+                ("delegated-shared-provider:" + error.category).encode()
+            ).hexdigest()
+            if outcome is not None:
+                return replace(
+                    outcome, status="invalid_usage", result=None,
+                    retryable=False, error_fingerprint=fingerprint,
+                )
+            return ToolFreeChildOutcome(
+                status="misconfigured" if error.category == "configuration"
+                else "internal_error",
+                result=None, usage=DelegatedWorkUsage.unmeasured(),
+                retryable=False, error_fingerprint=fingerprint,
+            )
+
+
 @asynccontextmanager
 async def open_delegated_work_runner(
     *,
     model_access_lease_file: Path,
     clock: Callable[[], datetime] | None = None,
-) -> AsyncIterator[PydanticToolFreeChildRunner]:
-    """Open one closed official-SDK provider and return Eva's existing runner."""
+) -> AsyncIterator[_CodexDelegatedWorkRunner]:
+    """Keep the worker idle without opening or aging a provider session."""
 
     verify_delegated_provider_dependencies()
-    provider = OpenAIChildProvider(
-        OpenAIChildProviderSettings(
-            endpoint=MODEL_ENDPOINT,
-            model_name=MODEL_NAME,
-            timeout_seconds=MODEL_TIMEOUT_SECONDS,
-            reasoning_effort="low",
-            maximum_request_bytes=MODEL_MAXIMUM_REQUEST_BYTES,
-            maximum_response_bytes=MODEL_MAXIMUM_RESPONSE_BYTES,
-        ),
-        credential_loader=lambda: _read_access_lease(model_access_lease_file),
-    )
-    async with provider as model:
-        profile = ToolFreeChildProfile(
-            model_profile_id=MODEL_PROFILE_ID,
-            model_profile_release_sha256=MODEL_PROFILE_RELEASE_SHA256,
-            worker_profile_id=WORKER_PROFILE_ID,
-            worker_profile_release_sha256=WORKER_PROFILE_RELEASE_SHA256,
-            instructions=WORKER_INSTRUCTIONS,
-            model=model,
-            input_cost_usd_micros_per_million_tokens=(
-                INPUT_PRICE_USD_MICROS_PER_MILLION
-            ),
-            output_cost_usd_micros_per_million_tokens=(
-                OUTPUT_PRICE_USD_MICROS_PER_MILLION
-            ),
-        )
-        yield PydanticToolFreeChildRunner(
-            ClosedModelRegistry({MODEL_PROFILE_ID: profile}),
-            worker_program_sha256=WORKER_PROGRAM_SHA256,
-            engine_release_sha256=ENGINE_RELEASE_SHA256,
-            clock=clock,
-        )
+    yield _CodexDelegatedWorkRunner(model_access_lease_file, clock)
 
 
 __all__ = [

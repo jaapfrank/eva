@@ -33,6 +33,7 @@ _DELEGATED_KEYS = (
     "EVA_DELEGATED_WORK_IMAGE",
     "EVA_DELEGATED_WORK_OWNER_PRINCIPAL_ID",
     "EVA_DELEGATED_WORK_OWNER_BINDING_ID",
+    "EVA_DELEGATED_WORK_ENABLED",
 )
 
 
@@ -153,6 +154,7 @@ def _updated_environment(
         _DELEGATED_KEYS[0]: worker_image,
         _DELEGATED_KEYS[1]: owner_principal_id,
         _DELEGATED_KEYS[2]: owner_binding_id,
+        _DELEGATED_KEYS[3]: "true",
     }
     counts = {key: 0 for key in replacements}
     result: list[str] = []
@@ -327,11 +329,11 @@ def persist_delegated_work_activation(
     worker_image: str,
     owner_principal_id: str,
     owner_binding_id: str,
-    telegram_user_id: int,
+    telegram_user_id: int | None = None,
     replace_existing_owner_binding: bool = False,
     runner: Runner = _run,
 ) -> dict[str, object]:
-    if (
+    if telegram_user_id is not None and (
         isinstance(telegram_user_id, bool)
         or not isinstance(telegram_user_id, int)
         or not 1 <= telegram_user_id <= _MAX_TELEGRAM_USER_ID
@@ -347,6 +349,13 @@ def persist_delegated_work_activation(
     if core_source != worker_source:
         raise DelegatedWorkActivationError("managed images use different source commits")
     before, metadata = _private_environment(environment_path)
+    if telegram_user_id is None:
+        values = dict(line.split("=", 1) for line in before.decode("utf-8").splitlines()
+                      if "=" in line and not line.startswith("#"))
+        if (replace_existing_owner_binding
+                or values.get("EVA_RUNTIME_PRINCIPAL_ID") != owner_principal_id
+                or values.get("EVA_DASHBOARD_PRINCIPAL_BINDING_ID") != owner_binding_id):
+            raise DelegatedWorkActivationError("managed dashboard owner authority differs")
     bindings_path = environment_path.parent / "secrets/telegram-bindings"
     bindings_before, bindings_metadata = _private_bindings(bindings_path)
     after = _updated_environment(
@@ -356,19 +365,22 @@ def persist_delegated_work_activation(
         owner_principal_id=owner_principal_id,
         owner_binding_id=owner_binding_id,
     )
-    bindings_after = _owner_binding_payload(
-        telegram_user_id=telegram_user_id,
-        owner_principal_id=owner_principal_id,
-        owner_binding_id=owner_binding_id,
-    )
-    replaceable = replace_existing_owner_binding and _replaceable_owner_binding(
-        bindings_before,
-        owner_principal_id=owner_principal_id,
-        owner_binding_id=owner_binding_id,
-    )
-    if bindings_before.strip() not in {b"{}", bindings_after.strip()} and not replaceable:
-        raise DelegatedWorkActivationError("Telegram bindings already carry authority")
-    _atomic_write(bindings_path, bindings_after, bindings_metadata)
+    bindings_after = bindings_before
+    replaceable = False
+    if telegram_user_id is not None:
+        bindings_after = _owner_binding_payload(
+            telegram_user_id=telegram_user_id,
+            owner_principal_id=owner_principal_id,
+            owner_binding_id=owner_binding_id,
+        )
+        replaceable = replace_existing_owner_binding and _replaceable_owner_binding(
+            bindings_before,
+            owner_principal_id=owner_principal_id,
+            owner_binding_id=owner_binding_id,
+        )
+        if bindings_before.strip() not in {b"{}", bindings_after.strip()} and not replaceable:
+            raise DelegatedWorkActivationError("Telegram bindings already carry authority")
+        _atomic_write(bindings_path, bindings_after, bindings_metadata)
     _atomic_write(environment_path, after, metadata)
     return {
         "afterSha256": _sha256(after),
@@ -380,7 +392,7 @@ def persist_delegated_work_activation(
         "ownerAuthorityFieldCount": 2,
         "ownerBindingReplaced": replaceable,
         "status": "persisted",
-        "telegramBindingCount": 1,
+        "telegramBindingCount": len(json.loads(bindings_after).get("bindings", [])),
     }
 
 
@@ -391,7 +403,8 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--worker-image", required=True)
     parser.add_argument("--owner-principal-id", required=True)
     parser.add_argument("--owner-binding-id", required=True)
-    parser.add_argument("--telegram-user-id", required=True, type=int)
+    parser.add_argument("--telegram-user-id", type=int,
+                        help="Only for explicit Telegram binding setup; omitted preserves existing bindings")
     parser.add_argument("--replace-existing-owner-binding", action="store_true")
     arguments = parser.parse_args(argv)
     if _MANAGED_ENVIRONMENT.fullmatch(str(arguments.environment)) is None:

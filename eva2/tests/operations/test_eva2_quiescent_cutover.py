@@ -1413,3 +1413,85 @@ def test_connector_guard_refuses_recreated_gateway_or_changed_policy_and_source(
     path.write_text(path.read_text() + "\n")
     with pytest.raises(QuiescentCutoverError, match="transport guard"):
         SystemBackend._verify_connector_guard(inspected, settings)
+
+
+def test_delegated_worker_quiesces_stages_disabled_and_activates_with_health(monkeypatch, tmp_path):
+    from tools.eva2_quiescent_cutover import DELEGATED_FLAG
+
+    slot = _slot(3)
+    image = "sha256:" + "a" * 64
+    environment = {
+        DELEGATED_FLAG: "true", "EVA_LIVING_CORE_IMAGE": "eva2/core@" + image,
+        "EVA_DELEGATED_WORK_IMAGE": "eva2/core@" + image,
+        "EVA_RUNTIME_PRINCIPAL_ID": "owner", "EVA_DASHBOARD_PRINCIPAL_BINDING_ID": "binding",
+        "EVA_DELEGATED_WORK_OWNER_PRINCIPAL_ID": "owner", "EVA_DELEGATED_WORK_OWNER_BINDING_ID": "binding",
+        "EVA_DATABASE_DSN_FILE_HOST": "/private/database-dsn",
+        "EVA_MODEL_ACCESS_LEASE_DIR": "/private/model-access-lease",
+    }
+    running = {slot.core, slot.delegated_worker, slot.hindsight}
+    calls = []
+    active = False
+    healthy = True
+
+    def inspect(container):
+        if container == slot.delegated_worker:
+            return {"Image": image, "Config": {
+                "User": "65532:65532", "Entrypoint": ["/usr/local/bin/python"],
+                "Cmd": ["-m", "eva.bootstrap.delegated_work_service"],
+                "Labels": {"com.docker.compose.project": slot.project,
+                           "com.docker.compose.service": "delegated-work-worker"}},
+                "State": {"Running": container in running,
+                          "Health": {"Status": "healthy" if healthy else "unhealthy"}},
+                "Mounts": [{"Type": "bind", "Source": source, "Destination": target, "RW": False}
+                           for source, target in [("/private/database-dsn", "/run/secrets/database_dsn"),
+                                                  ("/private/model-access-lease", "/run/eva/model-lease")]]}
+        return {"Image": image, "Config": {"Env": [
+            BACKGROUND_FLAG + "=" + str(active).lower(),
+            DELEGATED_FLAG + "=" + str(active).lower()]}}
+
+    def run(command, **kwargs):
+        nonlocal active
+        calls.append(command)
+        if "stop" in command:
+            running.remove(command[-1])
+        elif "--property=Environment" in command:
+            return "EVA2_CANARY_URL=" + slot.url
+        elif "--property=ActiveState" in command:
+            return "inactive"
+        elif "up" in command:
+            enabled = kwargs["extra_env"][DELEGATED_FLAG]
+            if command[-1] == "core":
+                active = enabled == "true"
+                running.add(slot.core)
+            elif command[-1] == "delegated-work-worker":
+                assert active and enabled == "true"
+                assert command[command.index("--profile") + 1] == "delegated-work"
+                running.add(slot.delegated_worker)
+            else:
+                assert enabled == "false"
+                running.add(slot.hindsight)
+        return ""
+
+    monkeypatch.setattr(SystemBackend, "_environment", staticmethod(lambda _: environment))
+    monkeypatch.setattr(SystemBackend, "_is_running", staticmethod(lambda name: name in running))
+    monkeypatch.setattr(SystemBackend, "_inspect", staticmethod(inspect))
+    monkeypatch.setattr(SystemBackend, "_run", staticmethod(run))
+    monkeypatch.setattr(SystemBackend, "_wait_container", staticmethod(lambda _: None))
+    monkeypatch.setattr(SystemBackend, "_ready", staticmethod(lambda _: True))
+    monkeypatch.setattr(SystemBackend, "verify_runtime", lambda *_: None)
+    backend = SystemBackend(owner_uid=os.getuid())
+    backend.stop_writers(slot)
+    assert running == set()
+    assert [command[-1] for command in calls] == [slot.core, slot.delegated_worker, slot.hindsight]
+    backend.start_writers(slot)
+    assert not active and slot.delegated_worker not in running
+    dropin = tmp_path / "route"
+    dropin.write_bytes(canonical_dropin(slot.url))
+    dropin.chmod(0o644)
+    assert backend.activate_delivery(slot, dropin) is False
+    assert active and slot.delegated_worker in running
+    healthy = False
+    with pytest.raises(QuiescentCutoverError, match="health"):
+        backend._verify_delegated_worker(slot, environment)
+    backend.stop_writers(slot)
+    assert not running
