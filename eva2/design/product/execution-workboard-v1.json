@@ -3391,12 +3391,12 @@
         "acceptedMemoryOutcome": "CO-008 / GE-01 remains closed; this is a concrete dependency of initiative context."
       },
       "implementation": {
-        "commit": "2670ee31e6ddd1b767a518beadd508bb1199800b",
+        "commit": "24e3754fb3365df8622ef899d96d933b03bf9d58",
         "built": true,
-        "tested": "34 gerichte controles geslaagd; kandidaatimports en bronhashes bevestigd.",
-        "live": true,
+        "tested": "Eerste contextfix34 checks; vervolg16 model/workerchecks; finale2 PostgreSQLchecks onder beperkte runtime-rol. Onafhankelijke technischeGO.",
+        "live": false,
         "ownerAccepted": false,
-        "next": "Echte HA-gebeurtenissen komen binnen; bestaande achtergrondcyclus wacht vijf minuten rust. Eigen keuze en privaat resultaat nog te bewijzen."
+        "next": "A/B-wissel3→4 loopt na afsluiten voiceproef; daarna bestaande native cyclus tot gecontroleerd privévoorstel volgen."
       },
       "liveCandidate": {
         "image": "sha256:12086bdaa63bdc96a4abd3ca8b99a0e253fc9b643cae6d8bbb04d06362cf20c8",
@@ -3413,6 +3413,22 @@
         "result": "A real native event led to an independently selected initiative, but it repeated a completed VB-003 request. Operator stopped it through owner API; not accepted.",
         "correction": "Bounded owner-scoped history of previous initiatives; reject same normalized title; remembered request is not proof of open work; build a concrete proposal rather than always a blank template.",
         "checks": "16 targeted model/worker checks + 2 PostgreSQL stop/readback/isolation tests passed; code review of first candidate GO, product result still pending."
+      },
+      "candidateCorrection": {
+        "image": "sha256:60527822843bd0555e29a070e06eae098c210b55c88c1e1302e0704ff2a3b056",
+        "sourceCommit": "24e3754fb3365df8622ef899d96d933b03bf9d58",
+        "codeReview": "GO by /root/au002_release_review; missing RLS scope fixed and tested under eva_dbos",
+        "productAccepted": false,
+        "practiceFailures": [
+          "Completed browser task repeated; stopped through owner API.",
+          "Old note-comparison selected without available notes; prototype exceeded unchanged1200-token budget; stopped through owner API."
+        ],
+        "fixes": [
+          "Confirmed interest is not an open task mandate.",
+          "Last16 owner initiatives, complete/stopped phase, RLS scope and payload hashes.",
+          "Same normalized title cannot be automatically adopted again.",
+          "Concrete private proposal,220-word content target, unchanged runtime output cap."
+        ]
       }
     }
   },
