@@ -64,3 +64,4 @@ Thumbs.db
 /eva2/experiments/distroless-hindsight-api-v1/offline-artifacts/*.tar
 /eva2/experiments/distroless-hindsight-api-v1/wheelhouse/*.whl
 /eva2/build/
+/eva2/deploy/voice-session/vendor/
