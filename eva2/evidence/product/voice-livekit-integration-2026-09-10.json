@@ -1,6 +1,6 @@
 {
   "contract": "EvaVoiceIntegrationEvidence/v1",
-  "status": "in_progress",
+  "status": "live_laptop_owner_trial_pending",
   "source_commit": "af7f65265a9a514083ea3a095edad772c586cb63",
   "owner_acceptance": false,
   "physical_microphone_test": false,
@@ -13,7 +13,7 @@
       "deselected": 67
     },
     "livekit_bridge_regressions": {
-      "passed": 8
+      "passed": 9
     },
     "rebased_current_core": {
       "passed": 42,
@@ -21,7 +21,7 @@
     },
     "voice_activation_operator": {
       "passed": 143,
-      "independent_focused_passed": 10,
+      "independent_focused_passed": 11,
       "review": "GO",
       "first_activation_explicit": true
     }
@@ -584,5 +584,242 @@
       "google.golang.org/grpc": "1.83.2"
     },
     "report_sha256": "4e06b1a0b5a1559cc27b7b41d57665a72c231a57fb6468fe28054aa429c91383"
-  }
+  },
+  "live_audio_proof": {
+    "synthetic_audio_input": true,
+    "physical_microphone_test": false,
+    "raw_audio_saved": false,
+    "input_end_ms": 6820,
+    "correction_start_ms": 25178,
+    "correction_end_ms": 29498,
+    "first_output_speech_ms": 24477,
+    "agent_states": [
+      {
+        "type": "user_voice_state",
+        "state": "speaking",
+        "at_ms": 2995
+      },
+      {
+        "type": "user_voice_state",
+        "state": "listening",
+        "at_ms": 6545
+      },
+      {
+        "type": "voice_state",
+        "state": "thinking",
+        "at_ms": 7462
+      },
+      {
+        "type": "work_started",
+        "message_id": "536ebe6b-6c83-5641-b32b-e7910db48c2d",
+        "text": "Leg in 6 zinnen uit hoe een regenboog ontstaat.",
+        "at_ms": 7475
+      },
+      {
+        "type": "voice_state",
+        "state": "listening",
+        "at_ms": 7485
+      },
+      {
+        "type": "work_finished",
+        "message_id": "536ebe6b-6c83-5641-b32b-e7910db48c2d",
+        "text": "Een regenboog ontstaat wanneer zonlicht op regendruppels schijnt.\nAls het licht een druppel binnengaat, verandert het van richting: dat heet breking.\nDaarbij valt het witte zonlicht uiteen in verschillende kleuren, omdat elke kleur net anders afbuigt.\nHet licht wordt vervolgens tegen de binnenkant van de druppel teruggekaatst.\nWanneer het de druppel verlaat, wordt het opnieuw gebroken en kan het jouw ogen bereiken.\nMet de zon achter je zie je daardoor een gekleurde boog, met rood aan de buitenkant en violet aan de binnenkant.",
+        "at_ms": 23944
+      },
+      {
+        "type": "voice_state",
+        "state": "speaking",
+        "at_ms": 24275
+      },
+      {
+        "type": "user_voice_state",
+        "state": "speaking",
+        "at_ms": 25597
+      },
+      {
+        "type": "voice_state",
+        "state": "listening",
+        "at_ms": 25645
+      },
+      {
+        "type": "user_voice_state",
+        "state": "listening",
+        "at_ms": 29295
+      },
+      {
+        "type": "voice_state",
+        "state": "thinking",
+        "at_ms": 30178
+      },
+      {
+        "type": "work_started",
+        "message_id": "fc3144bc-3ea0-5200-afdf-3f2fe9fad1bd",
+        "text": "Wacht, ik bedoel, leg het uit in één korte zin.",
+        "at_ms": 30190
+      },
+      {
+        "type": "voice_state",
+        "state": "listening",
+        "at_ms": 30202
+      },
+      {
+        "type": "voice_state",
+        "state": "thinking",
+        "at_ms": 30208
+      },
+      {
+        "type": "voice_state",
+        "state": "listening",
+        "at_ms": 30211
+      },
+      {
+        "type": "work_finished",
+        "message_id": "fc3144bc-3ea0-5200-afdf-3f2fe9fad1bd",
+        "text": "Een regenboog ontstaat doordat regendruppels zonlicht breken, weerkaatsen en in verschillende kleuren splitsen.",
+        "at_ms": 36991
+      },
+      {
+        "type": "voice_state",
+        "state": "speaking",
+        "at_ms": 37333
+      }
+    ],
+    "transcripts": [
+      {
+        "participant": "owner",
+        "text": "Leg in 6 zinnen uit hoe een regenboog ontstaat.",
+        "at_ms": 7478
+      },
+      {
+        "participant": "eva",
+        "text": "Een regenboog ontstaat wanneer",
+        "at_ms": 30172
+      },
+      {
+        "participant": "owner",
+        "text": "Wacht, ik bedoel, leg het uit in één korte zin.",
+        "at_ms": 30192
+      },
+      {
+        "participant": "eva",
+        "text": "Een regenboog ontstaat doordat regendruppels zonlicht breken, weerkaatsen en in verschillende kleuren splitsen.",
+        "at_ms": 43848
+      }
+    ],
+    "elapsed_ms": 44973
+  },
+  "live_access_proof": {
+    "page_requires_owner": 401,
+    "owner_page": 200,
+    "wrong_origin_refused": 403,
+    "core_requires_owner": 401,
+    "core_owner_ready": 200,
+    "browser_basic_login": 200
+  },
+  "live_revocation_proof": {
+    "page_revoked": 403,
+    "core_revoked": 403,
+    "room_closed_ms": 2311,
+    "core_restored": 200,
+    "reopened": 200,
+    "explicit_end": 200
+  },
+  "live_deployment": {
+    "core_slot": 3,
+    "core_url": "http://127.0.0.1:44710",
+    "owner_url": "http://localhost:44716",
+    "core_image": "sha256:9cd895461499b3218d850e44aa8389c8096a889005aa2e391d09aaffdb1a8002",
+    "core_source_commit": "eeb13395738f40026a90f7cbddc8549ce7ca85fc",
+    "media_image": "sha256:80c306703d66508eb8e4bb525ba260f27f6d1f472e3fd659c66fd0e61d3c3f83",
+    "media_source_commit": "dc90b722bc0a989917c01f413fbe41f28bc8f100",
+    "livekit_image": "sha256:770bc61bc6ec4dcccbd3e05082d8f6bdafbee4179acab7014cc97202a9e2910b",
+    "private_configuration": "/var/lib/eva2/voice-session",
+    "restart_policy": "unless-stopped",
+    "cutover": {
+      "backgroundIsolationBoundary": "Legacy images may ignore the switch; configuration readback is not worker isolation proof.",
+      "backgroundWorkConfiguredAfterActivation": true,
+      "backgroundWorkConfiguredDuringStaging": false,
+      "contract": "Eva2QuiescentCutoverReceipt/v1",
+      "dashboardVoiceFirstActivation": true,
+      "eva1Backup": {
+        "bytes": 315912192,
+        "filename": "eva1-before-slot4-to-slot3-20260910T171026Z.db",
+        "quickCheck": "ok",
+        "sha256": "34f7eab70d6dc3ef2797b59731cc9a71260fee842c7af40919a7d9ab7fb6b06c"
+      },
+      "eva1HttpStatuses": {
+        "/": 200,
+        "/api/capabilities": 200,
+        "/api/health": 200,
+        "/api/overview": 200,
+        "/api/workstatus": 200
+      },
+      "issuedAt": "2026-09-10T17:11:57.804608+00:00",
+      "previousDropinSha256": "697494ce129c08b712d2e5ef7e62f5e1a6a81931280c32465bc0db0ad76d15c8",
+      "proactiveCredentialWithheldDuringStaging": true,
+      "proactiveDeliveryEnabled": true,
+      "sourcePort": 44711,
+      "sourceWritersStopped": true,
+      "status": "switched",
+      "synchronizedDatabases": {
+        "memory": {
+          "countDigest": "9ff13e204b04ec06652db40d1ef54cb61bca951bebefb58cd49277bed01a2d5c",
+          "dataDigest": "d4d5feafbc47764069c8cb6622be49ec647d5b01d68c2bf4f1817357d3da9734",
+          "dumpBytes": 2830330,
+          "dumpSha256": "81e4386243b238f02a50ea9b4473ac5cac71d1c29d4c5446682da29809af446a",
+          "schemaDigest": "d89bfebdbfeb55e8618e81286bf24a42b838bfe577e84f6db9b93b43f5832172",
+          "tableCount": 23
+        },
+        "operational": {
+          "countDigest": "62ddac01f1bb6b2342bb4b81cb63224a6dce2e2e4c1c876a9b41ecde5551affb",
+          "dataDigest": "859ee4f773c7384c0a32d88800b188fe2f92baf541a8933a7ae8979a00282157",
+          "dumpBytes": 13901910,
+          "dumpSha256": "08a72b5effcf80597baf9bb21788aeda651bde9bdf99e1ccb747e9e931965a5b",
+          "schemaDigest": "32acc5b66e349dfd5b385e4828897575ad543ebb5f2638b8880dff1cacb7fb39",
+          "tableCount": 48
+        }
+      },
+      "targetPort": 44710,
+      "targetReady": true
+    },
+    "first_attempt": {
+      "result": "rolled_back",
+      "reason": "voice readiness was checked during intentionally unauthorised staging",
+      "duration_seconds": 164.3
+    },
+    "source_writers_stopped": true,
+    "probe_writers_stopped": true,
+    "loaded_modules_verified": {
+      "eva/application/conversation.py": {
+        "path": "/opt/eva/src/eva/application/conversation.py",
+        "sha256": "3573cbb503166e04ce08f0a833795d4c8f1a63335c37a395c6101b275d72f012"
+      },
+      "eva/application/voice_context.py": {
+        "path": "/opt/eva/src/eva/application/voice_context.py",
+        "sha256": "6a66c8747578780a6b01dc9170ac6fb25eab95dbeb11bfb8c0819e54e553627a"
+      },
+      "eva/bootstrap/runtime.py": {
+        "path": "/opt/eva/src/eva/bootstrap/runtime.py",
+        "sha256": "7b4b286060135f1e6a48e04c54b26b1a814430e2b22a51fb69bcffaf306e144b"
+      },
+      "eva/adapters/model/pydantic_conversation.py": {
+        "path": "/opt/eva/src/eva/adapters/model/pydantic_conversation.py",
+        "sha256": "bc82f31a41d1d6cf7ad7b5fafdb866ad8ec946d3d303403c654c4cc670c55ee3"
+      },
+      "eva/adapters/api/voice_turns.py": {
+        "path": "/opt/eva/src/eva/adapters/api/voice_turns.py",
+        "sha256": "75df2d1f5ec6242f5031ff95f88b09ff0d9f0311b6f649bacd1bbe25b1199bfc"
+      },
+      "eva/adapters/api/app.py": {
+        "path": "/opt/eva/src/eva/adapters/api/app.py",
+        "sha256": "35a9cd064ab208300d1ef8f0869c28272bf35f9b046028caf10003f25d9b648d"
+      }
+    }
+  },
+  "remaining_acceptance_work": [
+    "Physical owner microphone/speaker and browser trial, including echo and interrupted conversation",
+    "Reduce measured core response waiting time: short isolated replies took 11–13 seconds; six-sentence live audio reply started 17.7 seconds after question end",
+    "Phone and natural continuous VoicePE access",
+    "Owner assessment of usefulness and conversational flow"
+  ]
 }

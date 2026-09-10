@@ -36,15 +36,20 @@ gepubliceerde zinsstreaming, is hier niet geïnstalleerd en blijft ondersteunend
 Jaap heeft de uitvoering expliciet hervat: ontbreken van een complete OSS-app is
 geen stopvoorwaarde. [Actieve LiveKit-integratie](design/product/voice-livekit-delivery-2026-09-10.md)
 gebruikt de bestaande Eva-kern en providers. Laptop eerst, telefoon/huisapparaten
-blijven open; geen nieuwe stemervaring live of geaccepteerd.
+blijven open. De nieuwe laptoproute is nu live; eigenaaracceptatie staat open.
 Echte bestandsopdracht, brononderzoek tijdens doorpraten en een stopopdracht zijn
 getoetst via dezelfde Eva-kern. De synthetische audioproef bevestigt nu onderbreken
 zonder hervatting van oude zinnen en daarna de gecorrigeerde korte reactie.
 De gevonden LiveKit-opwarmblokkade van drie seconden is verholpen: de herproef
 behoudt de volledige correctie en onderbreekt zonder oude staart. De kernwachttijd
 blijft nog te verbeteren (korte losse antwoorden 11–13 seconden in deze meting).
-Minimale media-installatie: actuele scan zonder HIGH/CRITICAL. Fysieke
-microfoon-/echoproef, uitrol en Jaaps beoordeling staan open.
+Media en herbouwde LiveKit-server: actuele scans zonder HIGH/CRITICAL. Gecontroleerde
+uitrol naar slot3 geslaagd; bestaande huisingang en beide databases behouden.
+Open http://localhost:44716 in de laptopbrowser, meld aan als eva-owner met het
+bestaande eigenaar-dashboardtoken en kies Begin gesprek. De live audioproef
+bevestigt onderbreken en de volledige correctie; intrekken sluit ook de ruimte.
+Fysieke microfoon-/echoproef, wachttijdverbetering en Jaaps beoordeling staan open.
+Telefoon en natuurlijke VoicePE-toegang zijn nog niet opgeleverd.
 [Meetbewijs](evidence/product/voice-livekit-integration-2026-09-10.json).
 
 ## Nu

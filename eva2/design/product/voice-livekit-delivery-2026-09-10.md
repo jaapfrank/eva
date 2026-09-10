@@ -35,4 +35,21 @@ eigenaarsgrenzen en herstel getest. Geïsoleerde tests vóór gecontroleerde uit
 Meet eerste hoorbare reactie en onderbrekingsvertraging; Jaap beoordeelt vloeiendheid.
 Gebouwd, getest, live en menselijk geaccepteerd worden afzonderlijk vastgelegd.
 
-Status: in uitvoering. Geen nieuwe stemervaring live of geaccepteerd.
+Status: de laptoproute is gebouwd, getest en live op http://localhost:44716.
+Aanmelden: eva-owner met het bestaande eigenaar-dashboardtoken; Begin gesprek en
+microfoontoegang toestaan. Probeer een opdracht, een tweede vraag tijdens uitvoering
+en “Wacht, ik bedoel…” tijdens het antwoord. Gesprek beëindigen sluit de audioruimte;
+expliciet een taak stoppen gebruikt de duurzame stopgrens van de kern.
+
+De live synthetische proef behoudt de hele correctie en gaat binnen circa 0,47 seconde
+naar luisteren; alleen de gecorrigeerde korte zin volgt. Intrekken weigert nieuwe
+spraak en sluit de bestaande ruimte (2,3 seconden gemeten); opnieuw openen werkt.
+Bestaande huisingang is behouden via slot3. Beide databases zijn bij de gecontroleerde
+uitrol gesynchroniseerd; actuele AU-007-uitkomsten en eigenaargeheugenresolver blijven behouden.
+
+Menselijke acceptatie en fysieke echo-/microfoonproef staan open. De kernwachttijd
+is nog onvoldoende voor bewezen vloeiendheid (korte vragen 11–13 seconden, zeszinnen-
+antwoord in de live audioproef 17,7 seconden). Telefoon en de volledige natuurlijke
+VoicePE-route blijven open opleverwerk. Het algemene voice-doel is niet afgerond.
+[Technisch meetbewijs](../../evidence/product/voice-livekit-integration-2026-09-10.json).
+[Installatie en beheer](../../deploy/voice-session/README.md).
