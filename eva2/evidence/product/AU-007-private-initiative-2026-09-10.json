@@ -1,0 +1,247 @@
+{
+  "contract": "EvaPrivateInitiativeDelivery/v1",
+  "taskId": "AU-007",
+  "sourceCommit": "34ed766a1947e78a268b800728d227218aaa8f14",
+  "baseCommit": "ff8071c08a41c5e73036acc43a1d642f99a08f1b",
+  "outcome": "Eva koos zelf en leverde een private beoordelingskaart voor gezinsvriendelijke huisautomatiseringen op.",
+  "implementation": {
+    "contract": "EvaScopedTechnicalDelivery/v1",
+    "taskId": "AU-007",
+    "baseCommit": "ff8071c08a41c5e73036acc43a1d642f99a08f1b",
+    "sourceCommit": "34ed766a1947e78a268b800728d227218aaa8f14",
+    "integrationCommit": "e1d46c0b22aed7d515c4778a1964adfc3ebacc38",
+    "technicalReview": {
+      "decision": "GO",
+      "reviewer": "/root/au002_release_review",
+      "scope": "Code, RLS, owner alias and revocation; product result not yet proven"
+    },
+    "liveImage": "sha256:35fdc82c8d041a58d9da8be1fdf59d60844e8499a37e7fbd1ad6a261491b515e",
+    "slot": 4,
+    "port": 44711,
+    "deploymentCorrection": "First alias image17c7 wrote /app/src and did not activate the code. Replaced by35fd at actual imported /opt/eva/src; all5 modules verified on live runtime.",
+    "productReady": true,
+    "ownerAccepted": false,
+    "evidence": {
+      "implementation.json": {
+        "path": "/home/administrator/project/.eva2-artifacts/au007-initiative-20260910/implementation.json",
+        "sha256": "9c861a56ab27db075503b0048c46ac7b38f1c5bdb99fcd2ae2e1a4c0a96126c9"
+      },
+      "context-correction-tests.txt": {
+        "path": "/home/administrator/project/.eva2-artifacts/au007-initiative-20260910/context-correction-tests.txt",
+        "sha256": "4dab7acb6e1339c34befc036b7438b350e53854abef712ae88912432fc6a35a1"
+      },
+      "final-postgres-tests.txt": {
+        "path": "/home/administrator/project/.eva2-artifacts/au007-initiative-20260910/final-postgres-tests.txt",
+        "sha256": "4736ffb6e0d9ec136f5168dcfb123f9c1e3d136647bab8942871614ed5946358"
+      },
+      "owner-context-tests.txt": {
+        "path": "/home/administrator/project/.eva2-artifacts/au007-initiative-20260910/owner-context-tests.txt",
+        "sha256": "df6ea1e5fb7a413e887dc5464efedff3af0a16337b9e65f4767bdbcfd923c62e"
+      },
+      "owner-context-runtime-image.json": {
+        "path": "/home/administrator/project/.eva2-artifacts/au007-initiative-20260910/owner-context-runtime-image.json",
+        "sha256": "ff226fa220fb9a4ce412f0c971b64ce0d91213a3988a70f01173a466f7633cd1"
+      },
+      "all-loaded-au007-source-validation.json": {
+        "path": "/home/administrator/project/.eva2-artifacts/au007-initiative-20260910/all-loaded-au007-source-validation.json",
+        "sha256": "32e4ada46a41f780c9e0fca95297d10dbd97e75af66b13d8a5857d5f63c3ac8f"
+      },
+      "loaded-context-live-import-readback.json": {
+        "path": "/home/administrator/project/.eva2-artifacts/au007-initiative-20260910/loaded-context-live-import-readback.json",
+        "sha256": "b24012ffc1b7bc11211224cdf5319ac4373af9dae09b1b0b05724c2e6532a1e4"
+      },
+      "loaded-context-cutover.stdout": {
+        "path": "/home/administrator/project/.eva2-artifacts/au007-initiative-20260910/loaded-context-cutover.stdout",
+        "sha256": "f253764a9433f9136739e165565b6db6e21753fe56fa596e07dd4ee2046f2bd8"
+      },
+      "loaded-context-gateway-readback.txt": {
+        "path": "/home/administrator/project/.eva2-artifacts/au007-initiative-20260910/loaded-context-gateway-readback.txt",
+        "sha256": "a0a2e7dcdf63e26b5d6864fe91fae17ec4ae070e4895bdd93057a1d2d1e80374"
+      }
+    }
+  },
+  "nativeRun": {
+    "intentId": "personal-interest:cada69200eaeb407c344763126d24df0307dc9254eccbb7a851522082c764794",
+    "title": "Beoordelingskaart voor gezinsvriendelijke automatiseringen",
+    "origin": "eva_initiative",
+    "sourceEventId": "home-assistant:f3fbd7aeaab70e63c9765df38f120d143adac6f031c1c6c61bad07e29f1d3109",
+    "manualAdoption": false,
+    "manualWorkerRun": false,
+    "scheduledRuntimePath": true,
+    "ownerStatus": "done",
+    "phase": "release_ready",
+    "events": [
+      {
+        "threadId": "intent:personal-interest:cada69200eaeb407c344763126d24df0307dc9254eccbb7a851522082c764794",
+        "sequence": 1,
+        "type": "PERSONAL_INTENT_ADOPTED",
+        "occurredAt": "2026-09-10 16:32:31+00:00",
+        "payloadSha256": "bc312ef37c16753151f781c922006f60c3e4b70864baf0f5e4a41433a17662ec",
+        "payloadHashVerified": true
+      },
+      {
+        "threadId": "intent:personal-interest:cada69200eaeb407c344763126d24df0307dc9254eccbb7a851522082c764794",
+        "sequence": 2,
+        "type": "PERSONAL_EXPLORATION_CLAIMED",
+        "occurredAt": "2026-09-10 16:37:31+00:00",
+        "payloadSha256": "3d315bec633e9686b5f30400d3225e9b3b8e2bfbdb8613490499adf60d7648ae",
+        "payloadHashVerified": true
+      },
+      {
+        "threadId": "intent:personal-interest:cada69200eaeb407c344763126d24df0307dc9254eccbb7a851522082c764794",
+        "sequence": 3,
+        "type": "PERSONAL_EXPLORATION_COMPLETED",
+        "occurredAt": "2026-09-10 16:37:31+00:00",
+        "payloadSha256": "b9c284635035da5d6ae4ab8063c6b8432cdf6e3f821747f08617d7d0486d5c58",
+        "payloadHashVerified": true
+      },
+      {
+        "threadId": "intent:personal-interest:cada69200eaeb407c344763126d24df0307dc9254eccbb7a851522082c764794",
+        "sequence": 4,
+        "type": "PERSONAL_EXPLORATION_PROJECTED",
+        "occurredAt": "2026-09-10 16:37:31+00:00",
+        "payloadSha256": "02f6ff436e5e922746febe35972c242d4537c5a633aac279766279621151bd61",
+        "payloadHashVerified": true
+      },
+      {
+        "threadId": "intent:personal-interest:cada69200eaeb407c344763126d24df0307dc9254eccbb7a851522082c764794",
+        "sequence": 5,
+        "type": "PERSONAL_PROTOTYPE_CLAIMED",
+        "occurredAt": "2026-09-10 16:37:55+00:00",
+        "payloadSha256": "4c60fc93cbb38879f6a4302b6c6042b963a9507e67a9541c683bb537d23176cb",
+        "payloadHashVerified": true
+      },
+      {
+        "threadId": "intent:personal-interest:cada69200eaeb407c344763126d24df0307dc9254eccbb7a851522082c764794",
+        "sequence": 6,
+        "type": "PERSONAL_PROTOTYPE_COMPLETED",
+        "occurredAt": "2026-09-10 16:37:55+00:00",
+        "payloadSha256": "afa0d31ee45b6fbc001dd55b5661508f531d323a087f57492dd81e9bcd41fdc0",
+        "payloadHashVerified": true
+      },
+      {
+        "threadId": "intent:personal-interest:cada69200eaeb407c344763126d24df0307dc9254eccbb7a851522082c764794",
+        "sequence": 7,
+        "type": "PERSONAL_PROTOTYPE_PROJECTED",
+        "occurredAt": "2026-09-10 16:37:55+00:00",
+        "payloadSha256": "f0bb233fabbce8c132ecdd182477ae5976bb42a75dce4e6b45792000f1255161",
+        "payloadHashVerified": true
+      },
+      {
+        "threadId": "intent:personal-interest:cada69200eaeb407c344763126d24df0307dc9254eccbb7a851522082c764794",
+        "sequence": 8,
+        "type": "PERSONAL_PRODUCT_RELEASE_CLAIMED",
+        "occurredAt": "2026-09-10 16:38:24+00:00",
+        "payloadSha256": "eff86a0f765bace0848b608a9fc1bbed15511b0d20dbc51b1adaf6e490bdd662",
+        "payloadHashVerified": true
+      },
+      {
+        "threadId": "intent:personal-interest:cada69200eaeb407c344763126d24df0307dc9254eccbb7a851522082c764794",
+        "sequence": 9,
+        "type": "PERSONAL_PRODUCT_RELEASE_COMPLETED",
+        "occurredAt": "2026-09-10 16:38:24+00:00",
+        "payloadSha256": "24f9a432d680e3de1e653928d8004264e9d1d393d0d0748744fc7acb8b472f75",
+        "payloadHashVerified": true
+      },
+      {
+        "threadId": "intent:personal-interest:cada69200eaeb407c344763126d24df0307dc9254eccbb7a851522082c764794",
+        "sequence": 10,
+        "type": "PERSONAL_PRODUCT_RELEASE_READY",
+        "occurredAt": "2026-09-10 16:38:24+00:00",
+        "payloadSha256": "c8960d29fcce458d77d769100274f768c38d5fc3dd051b248cf940befe5f94b5",
+        "payloadHashVerified": true
+      },
+      {
+        "threadId": "sensory:home-assistant:f3fbd7aeaab70e63c9765df38f120d143adac6f031c1c6c61bad07e29f1d3109",
+        "sequence": 1,
+        "type": "SENSORY_EVENT_OBSERVED",
+        "occurredAt": "2026-09-10 16:27:13+00:00",
+        "payloadSha256": "01c575b08d72db11d493225196ca1d0f6c867dd026971c7bac9e0920586b1c5d",
+        "payloadHashVerified": true
+      },
+      {
+        "threadId": "sensory:home-assistant:f3fbd7aeaab70e63c9765df38f120d143adac6f031c1c6c61bad07e29f1d3109",
+        "sequence": 2,
+        "type": "WILL_EVALUATION_CLAIMED",
+        "occurredAt": "2026-09-10 16:32:13+00:00",
+        "payloadSha256": "51959f965d412156c30887b4a200fad1cf0b6b3db57e28a7ee6f8cab95051401",
+        "payloadHashVerified": true
+      },
+      {
+        "threadId": "sensory:home-assistant:f3fbd7aeaab70e63c9765df38f120d143adac6f031c1c6c61bad07e29f1d3109",
+        "sequence": 3,
+        "type": "WILL_MODEL_STARTED",
+        "occurredAt": "2026-09-10 16:32:22+00:00",
+        "payloadSha256": "ee204a43e414d22fca3eafe9e5e2ab6dea63bde77658e29084484ed1113fa838",
+        "payloadHashVerified": true
+      },
+      {
+        "threadId": "sensory:home-assistant:f3fbd7aeaab70e63c9765df38f120d143adac6f031c1c6c61bad07e29f1d3109",
+        "sequence": 4,
+        "type": "WILL_DECIDED",
+        "occurredAt": "2026-09-10 16:32:31+00:00",
+        "payloadSha256": "1753bb7f4328adfb35c82da4683bc39cb5fb37692152547dc3383f70fb8810d0",
+        "payloadHashVerified": true
+      }
+    ]
+  },
+  "artifact": {
+    "path": "eva2/evidence/product/AU-007-beoordelingskaart-huisautomatisering-2026-09-10.md",
+    "filename": "beoordelingskaart-huisautomatisering.md",
+    "sha256": "9f351ab6f928fbf0a7010e44d95e8ce520374b7a34b65990f8abbf312d520522",
+    "bytes": 1895,
+    "httpReadbackSha256": "9f351ab6f928fbf0a7010e44d95e8ce520374b7a34b65990f8abbf312d520522",
+    "httpReportedSha256": "9f351ab6f928fbf0a7010e44d95e8ce520374b7a34b65990f8abbf312d520522",
+    "storedPrototypeSha256": "9f351ab6f928fbf0a7010e44d95e8ce520374b7a34b65990f8abbf312d520522",
+    "httpContentType": "text/markdown; charset=utf-8",
+    "commit": "0b852229cf8667c6c92a98440c3d703bf9fe1b63"
+  },
+  "contentAssessment": {
+    "completePrivateHelper": true,
+    "containsDecisionRules": true,
+    "containsThreeLabeledFictionalExamples": true,
+    "claimsCurrentHouseAudit": false,
+    "claimsExternalExecution": false,
+    "ownerJudgementPending": true
+  },
+  "ownerAccepted": false,
+  "boundaries": [
+    "Eén concrete mogelijkheid bewezen; geen algemene voorsprong op Bottie of concurrenten.",
+    "De voorbeelden zijn fictief; geen bestaande huisautomatisering geanalyseerd of gewijzigd.",
+    "Deze kaart is door Eva zelf geschreven; nut en gewenste mate van initiatief worden door Jaap beoordeeld."
+  ],
+  "privateReceipts": {
+    "native-delivery-complete-timeline.json": {
+      "path": "/home/administrator/project/.eva2-artifacts/au007-initiative-20260910/native-delivery-complete-timeline.json",
+      "sha256": "a0d1db3d7a07d82e072ac1270e4e38deb351f2c12e4b26d5899d9d10de9e9152"
+    },
+    "native-owner-final-receipt.json": {
+      "path": "/home/administrator/project/.eva2-artifacts/au007-initiative-20260910/native-owner-final-receipt.json",
+      "sha256": "86c100461f27409356c4c9941623667656a1c602f641cc47658eef0c47b3ef2b"
+    },
+    "loaded-context-live-import-readback.json": {
+      "path": "/home/administrator/project/.eva2-artifacts/au007-initiative-20260910/loaded-context-live-import-readback.json",
+      "sha256": "b24012ffc1b7bc11211224cdf5319ac4373af9dae09b1b0b05724c2e6532a1e4"
+    },
+    "loaded-context-cutover.stdout": {
+      "path": "/home/administrator/project/.eva2-artifacts/au007-initiative-20260910/loaded-context-cutover.stdout",
+      "sha256": "f253764a9433f9136739e165565b6db6e21753fe56fa596e07dd4ee2046f2bd8"
+    },
+    "loaded-context-container-image-readback.json": {
+      "path": "/home/administrator/project/.eva2-artifacts/au007-initiative-20260910/loaded-context-container-image-readback.json",
+      "sha256": "441ba6c1376b82a4c224e88ee7d8760821435d58de65cbb2a95fe889cf3d8790"
+    }
+  },
+  "independentReview": {
+    "decision": "GO",
+    "reviewer": "/root/au002_release_review",
+    "scope": "Technische productoplevering AU-007; menselijke beoordeling apart open",
+    "sourceCommit": "34ed766a1947e78a268b800728d227218aaa8f14"
+  },
+  "privateArtifactRetention": {
+    "owner": "AU-007 / architecturelead",
+    "path": "/home/administrator/project/.eva2-artifacts/au007-initiative-20260910",
+    "purpose": "Herleidbare uitrol- en praktijkreceipts",
+    "cleanup": "Na eigenaarsacceptatie plus30dagen: alleen canoniek vastgelegde bewijsstukken behouden; overige ontwikkelartefacten gericht opruimen."
+  }
+}
