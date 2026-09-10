@@ -1,0 +1,203 @@
+{
+  "contract": "EvaProductOwnerLifecycleEvidence/v1",
+  "taskId": "AU-002",
+  "implementationCommit": "81d4306166cf9c13456fe46e0911dcfbd66baee2",
+  "baseCommit": "e267e56865b66544e2d661f71da384243a6046ca",
+  "built": true,
+  "tested": true,
+  "live": true,
+  "humanAccepted": false,
+  "status": "ready_for_independent_final_review",
+  "outcome": "Een toolvrije duurzame hulpagent vanuit gewone eigenaar-chat starten, volgen, stoppen, expliciet hervatten en het opgeslagen resultaat terugkrijgen.",
+  "imageId": "sha256:54c3f886a3b1bdcb2a8be8598b02a043238b926a40a3752b7a3d4099a37d6528",
+  "activeSlot": 3,
+  "origin": "http://localhost:44710",
+  "compositeSource": {
+    "baseImage": "sha256:9d88df14a2975c6fc276d4b8ca23a1e942ba9144367cdbe2b694f3711d090f86",
+    "baseSource": "519a03a88c02e64d3ab8bb005d9a2168c0f9ac95",
+    "overlays": {
+      "eva/bootstrap/delegated_work_provider.py": "64101d5d7dcbbf75f49bb130f9d769aa9c32cdb6",
+      "eva/adapters/model/pydantic_conversation.py": "81d4306166cf9c13456fe46e0911dcfbd66baee2"
+    },
+    "fullSourceTreeRefresh": false
+  },
+  "http": {
+    "start-stop": {
+      "case": "start-stop",
+      "httpStatus": 200,
+      "elapsedSeconds": 37.61794272903353,
+      "errorType": null,
+      "responseSha256": "6f946af02375433c8bddfbfe35230a8fc346aa7e1d7469113323f5cc1ce0679e",
+      "messageId": "dashboard:de74d440-d502-4bc5-bb3a-b31db74cb7e1",
+      "requestCount": 1,
+      "automaticRetries": 0
+    },
+    "resume": {
+      "case": "resume",
+      "httpStatus": 200,
+      "elapsedSeconds": 21.426739343092777,
+      "errorType": null,
+      "responseSha256": "c13720d561efe178d881c08faa7a340bf935ef9633888716622eac7c2825c83a",
+      "messageId": "dashboard:fb9b4cf5-c8bc-4b59-9959-20f16e3abfc5",
+      "requestCount": 1,
+      "automaticRetries": 0
+    },
+    "result": {
+      "case": "result",
+      "httpStatus": 200,
+      "elapsedSeconds": 24.900856448919512,
+      "errorType": null,
+      "responseSha256": "a698e05ca30908540fa3933bd070af8f3aa1a55e6bec0689401e0bedd36879b5",
+      "messageId": "dashboard:07becb29-b13c-400f-934d-77823d7f9c1b",
+      "requestCount": 1,
+      "automaticRetries": 0
+    }
+  },
+  "stoppedAttempt": {
+    "work_id": "work:eva-chat:0fe3a5a8-d33d-5929-9afc-a346ffc24729",
+    "generation": 1,
+    "state": "stopped",
+    "call_id": "child-call:bd85fec9-d639-4c53-955c-80f32b16abc9",
+    "stop_requested": true,
+    "usage": {
+      "schema_version": 1,
+      "contract": "DelegatedWorkUsage/v1",
+      "measurement": "unmeasured",
+      "completed_model_responses": null,
+      "tool_calls": null,
+      "input_tokens": null,
+      "output_tokens": null,
+      "total_tokens": null,
+      "cost_usd_micros": null
+    },
+    "result_available": false
+  },
+  "resumedAttempt": {
+    "work_id": "work:eva-resume:9010f223-1141-5368-886c-5dd07fd4f16c",
+    "parent_work_id": "work:eva-chat:0fe3a5a8-d33d-5929-9afc-a346ffc24729",
+    "generation": 2,
+    "state": "succeeded",
+    "call_id": "child-call:189c1902-b6bf-4b58-9711-625a7743cf5f",
+    "usage": {
+      "schema_version": 1,
+      "contract": "DelegatedWorkUsage/v1",
+      "measurement": "measured",
+      "completed_model_responses": 1,
+      "tool_calls": 0,
+      "input_tokens": 357,
+      "output_tokens": 267,
+      "total_tokens": 624,
+      "cost_usd_micros": 393
+    },
+    "result": {
+      "output": "{\"findings\":[\"1. Familie-awardshow: Eva maakt grappige, lieve categorieën op basis van gedeelde gespreksonderwerpen. Resultaat: een digitaal programma met nominaties. Eerste stap: Eva vraagt welke momenten dit jaar iedereen wil vieren. Feedback: ieder geeft een cijfer van 1–5 en noemt een favoriet moment.\",\"2. Raad-de-familiequiz: Eva maakt een quiz met alleen eerder gedeelde, onschuldige weetjes. Resultaat: een speelklare quiz met antwoorden. Eerste stap: Eva vraagt welke onderwerpen niet gebruikt mogen worden. Feedback: duimen omhoog/omlaag en één leukste vraag.\",\"3. Weekend-sloganmaker: Eva bedenkt vrolijke slogans en mini-opdrachten voor een gekozen familiethema. Resultaat: een digitaal ‘weekendpaspoort’. Eerste stap: het gezin kiest een thema. Feedback: iedereen kiest de leukste slogan en zegt waarom.\"],\"summary\":\"Drie voorstellen die Eva met bestaand geheugen, gesprekken en browser kan voorbereiden, zonder zelf fysiek aanwezig te zijn.\"}",
+      "output_sha256": "9e4d20f7d005bcb59db0b7092976178a13acc7d02456b035b692455f081c18c0",
+      "completed_at": "2026-09-10T22:25:56Z",
+      "verified": false
+    }
+  },
+  "ownerReply": "De hulpopdracht is klaar: status succeeded. Het opgeslagen resultaat bevat drie voorstellen:\n\n• Familie-awardshow: een digitaal programma met lieve, grappige nominaties. Eerst vragen welke momenten het gezin wil vieren. Achteraf geeft iedereen een cijfer en kiest een favoriet moment.\n• Familiequiz: een speelklare quiz met gedeelde, onschuldige weetjes. Eerst afspreken welke onderwerpen buiten beschouwing blijven. Feedback: duim omhoog of omlaag en de leukste vraag.\n• Weekendpaspoort: vrolijke slogans en mini-opdrachten rond een gezinsthema. Eerst een thema kiezen. Achteraf kiest iedereen de leukste slogan en vertelt waarom.\n\nTaaknummer: work:eva-resume:9010f223-1141-5368-886c-5dd07fd4f16c",
+  "oldUncertainAttemptPreserved": true,
+  "checks": {
+    "providerAndCommands": 14,
+    "databaseLifecycleAndRights": 6,
+    "catalogAndBudget": 6,
+    "voiceContext": 6,
+    "coreAndWorkerSameImage": true,
+    "voiceAuthenticatedReady": true,
+    "parentLayerPreserved": true,
+    "imports": 19,
+    "researchConfigurationUnchanged": true
+  },
+  "limitations": [
+    "Human acceptance has not been given.",
+    "The helper is a bounded tool-free thinking/writing worker, not a general browser agent.",
+    "The stopped in-flight call has unmeasured usage; it is not counted as zero.",
+    "393 USD-micros is API-equivalent reference accounting for the completed helper call, not actual billed subscription cost; main conversation usage is not included in that amount."
+  ],
+  "earlierFailure": "First HTTP request on provider-only image failed before modelcall because the registered tool catalog exceeded an obsolete fixed byte cap. Original ingress and historical ambiguous work retained.",
+  "rawEvidence": {
+    "resume-attempt.json": {
+      "path": "/tmp/eva2-au002-delivery-YvbgAx/eva2/.au002-final-owner-flow/resume-attempt.json",
+      "sha256": "957983c3376d97d17eb08c5a7f4ec601756d5a329c9dec4bafb6fba36b8eb2d9"
+    },
+    "start-stop-response.private.json": {
+      "path": "/tmp/eva2-au002-delivery-YvbgAx/eva2/.au002-final-owner-flow/start-stop-response.private.json",
+      "sha256": "e88497489bfe5e2efe1ce14a844a02d9b0b675a614b5b16dc78755dbcd3d7060"
+    },
+    "result-before.private.json": {
+      "path": "/tmp/eva2-au002-delivery-YvbgAx/eva2/.au002-final-owner-flow/result-before.private.json",
+      "sha256": "5f840a0219e062159035534a7f1398af0b9908df3bf6ab7a1465a5814ced3ffc"
+    },
+    "resume-before.private.json": {
+      "path": "/tmp/eva2-au002-delivery-YvbgAx/eva2/.au002-final-owner-flow/resume-before.private.json",
+      "sha256": "68ad0965eeed4d385b66affc021c54370dd1d81093b207da1f8ce06957f9812a"
+    },
+    "start-stop-attempt.json": {
+      "path": "/tmp/eva2-au002-delivery-YvbgAx/eva2/.au002-final-owner-flow/start-stop-attempt.json",
+      "sha256": "f0227f58aee1ca1a9b5604c983b4797933b7c09a0006314efafbded74db1aceb"
+    },
+    "resume-after.private.json": {
+      "path": "/tmp/eva2-au002-delivery-YvbgAx/eva2/.au002-final-owner-flow/resume-after.private.json",
+      "sha256": "5f840a0219e062159035534a7f1398af0b9908df3bf6ab7a1465a5814ced3ffc"
+    },
+    "result-attempt.json": {
+      "path": "/tmp/eva2-au002-delivery-YvbgAx/eva2/.au002-final-owner-flow/result-attempt.json",
+      "sha256": "9a6f6da6cec0ef08c9945ffb9c79b1dc143b455c1a1be74bc174421d0725e33d"
+    },
+    "resume-request.private.json": {
+      "path": "/tmp/eva2-au002-delivery-YvbgAx/eva2/.au002-final-owner-flow/resume-request.private.json",
+      "sha256": "e6f6443a5bea6206a30a0ace562cbb38716aa662b0d66619d8d7c1f5ead52392"
+    },
+    "resume-response.private.json": {
+      "path": "/tmp/eva2-au002-delivery-YvbgAx/eva2/.au002-final-owner-flow/resume-response.private.json",
+      "sha256": "7e019798e38db0f1a1f37ff0292ac909b2e74a6ad204a83140adc6539fda2bdc"
+    },
+    "start-stop-after.private.json": {
+      "path": "/tmp/eva2-au002-delivery-YvbgAx/eva2/.au002-final-owner-flow/start-stop-after.private.json",
+      "sha256": "68ad0965eeed4d385b66affc021c54370dd1d81093b207da1f8ce06957f9812a"
+    },
+    "start-stop-http-receipt.json": {
+      "path": "/tmp/eva2-au002-delivery-YvbgAx/eva2/.au002-final-owner-flow/start-stop-http-receipt.json",
+      "sha256": "3bbfb03ec4b9c0d911115f561225adda4151440effc92a63bc3e473aa56cd04f"
+    },
+    "start-stop-request.private.json": {
+      "path": "/tmp/eva2-au002-delivery-YvbgAx/eva2/.au002-final-owner-flow/start-stop-request.private.json",
+      "sha256": "b938b12f1c7775e846e8d36891f7ba577d56b0387e2016112ef1ee623a447239"
+    },
+    "start-stop-before.private.json": {
+      "path": "/tmp/eva2-au002-delivery-YvbgAx/eva2/.au002-final-owner-flow/start-stop-before.private.json",
+      "sha256": "f060b439fdde1f5e15154b3214a28ccbfce144130d5421d2d46de5993b776931"
+    },
+    "result-http-receipt.json": {
+      "path": "/tmp/eva2-au002-delivery-YvbgAx/eva2/.au002-final-owner-flow/result-http-receipt.json",
+      "sha256": "a79ad72ed66ab991924348c142e115dad419cf0f3c7e5a0a6175509e889ead75"
+    },
+    "result-after.private.json": {
+      "path": "/tmp/eva2-au002-delivery-YvbgAx/eva2/.au002-final-owner-flow/result-after.private.json",
+      "sha256": "5f840a0219e062159035534a7f1398af0b9908df3bf6ab7a1465a5814ced3ffc"
+    },
+    "latest-work-readback.private.json": {
+      "path": "/tmp/eva2-au002-delivery-YvbgAx/eva2/.au002-final-owner-flow/latest-work-readback.private.json",
+      "sha256": "5f840a0219e062159035534a7f1398af0b9908df3bf6ab7a1465a5814ced3ffc"
+    },
+    "resume-http-receipt.json": {
+      "path": "/tmp/eva2-au002-delivery-YvbgAx/eva2/.au002-final-owner-flow/resume-http-receipt.json",
+      "sha256": "7acd8432ea3e8b93421b695f1aedbd18c528d4d9ea7c3e31ad12c7157a02a6c5"
+    },
+    "result-request.private.json": {
+      "path": "/tmp/eva2-au002-delivery-YvbgAx/eva2/.au002-final-owner-flow/result-request.private.json",
+      "sha256": "29c9fd9de36cd6fd5d75eafae34c4dd984b8d6d1e82d562b047d0aa44b0d356c"
+    },
+    "result-response.private.json": {
+      "path": "/tmp/eva2-au002-delivery-YvbgAx/eva2/.au002-final-owner-flow/result-response.private.json",
+      "sha256": "fb501eef330466bd067f3b000f85bacd017a99ca7e63ad14ab246e95f5acc184"
+    }
+  },
+  "sourceReviews": [
+    "eva2/reviews/AU-002-provider-64101d5d.md",
+    "eva2/reviews/AU-002-catalog-81d43061.md"
+  ],
+  "installedEvidence": "eva2/evidence/product/AU-002-final-installed-2026-09-11.json",
+  "importEvidence": "eva2/evidence/product/AU-002-final-live-imports-2026-09-11.json"
+}
