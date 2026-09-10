@@ -1600,3 +1600,50 @@ def test_retain_retries_only_preexisting_failure_once(
         with pytest.raises(HindsightProjectionError, match="ended as"):
             engine._wait_for_operation("bank", "op", retry_existing_failure=True)
     assert sum(method == "POST" for method, _ in calls) == retries
+
+
+@pytest.mark.parametrize("score", [0.0004, 0.024])
+def test_conversational_recall_keeps_best_low_scoring_candidate(
+    hindsight_server: tuple[str, _State], score: float,
+) -> None:
+    base_url, state = hindsight_server
+    state.group_recall_response = {"results": [
+        {"id": "best", "text": "De gebruiker wandelt graag langs het water.",
+         "type": "world", "scores": {"final": score}, "mentioned_at": NOW,
+         "document_id": "walking-preference", "metadata": {
+             "principal_id": PRINCIPAL, "privacy_class": "internal",
+             "trust": "direct_user"}},
+        {"id": "unrelated", "text": "Een eerdere computerreparatie.",
+         "type": "world", "scores": {"final": score / 10}, "mentioned_at": NOW,
+         "document_id": "computer", "metadata": {
+             "principal_id": PRINCIPAL, "privacy_class": "internal",
+             "trust": "direct_user"}},
+    ]}
+    engine = HindsightMemoryEngine(HindsightProjectionConfig(base_url))
+    memory = engine.recall_for_presence_fast(
+        replace(_query(), query_text="Ik ga even naar buiten. Welke route is fijn?")
+    )
+    assert [fact.fact_id for fact in memory.confirmed_facts] == ["hindsight:best"]
+    assert memory.confirmed_facts[0].source_ref == "walking-preference"
+
+
+@pytest.mark.parametrize("boundary", ["zero", "other_person", "missing_source"])
+def test_low_score_candidate_preserves_admission_boundaries(
+    hindsight_server: tuple[str, _State], boundary: str,
+) -> None:
+    base_url, state = hindsight_server
+    item = {"id": "best", "text": "Een herinnering.", "type": "world",
+            "scores": {"final": 0 if boundary == "zero" else 0.001},
+            "mentioned_at": NOW, "document_id": "source", "metadata": {
+                "principal_id": "another-person" if boundary == "other_person" else PRINCIPAL,
+                "privacy_class": "internal", "trust": "direct_user"}}
+    if boundary == "missing_source":
+        item["type"] = "observation"
+        item["metadata"] = {}
+    state.group_recall_response = {"results": [item]}
+    engine = HindsightMemoryEngine(HindsightProjectionConfig(base_url))
+    if boundary == "other_person":
+        with pytest.raises(HindsightMemoryScopeError):
+            engine.recall_for_presence_fast(_query())
+    else:
+        assert engine.recall_for_presence_fast(_query()).confirmed_facts == ()

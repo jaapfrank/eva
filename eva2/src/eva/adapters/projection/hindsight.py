@@ -1162,6 +1162,13 @@ class HindsightMemoryEngine:
             reverse=True,
         )
 
+        # Native reranker scores are query-relative, not calibrated relevance
+        # probabilities. A conversational paraphrase can rank the correct memory
+        # first while every score falls below our normal noise floor. Preserve
+        # only that best candidate in this case; source, audience and privacy
+        # checks below still apply, and the reply model decides whether to use it.
+        best_candidate_id = results[0]["id"] if results else None
+
         selected: list[RecalledFact] = []
         confirmed: list[ConfirmedFact] = []
         seen: set[str] = set()
@@ -1212,7 +1219,9 @@ class HindsightMemoryEngine:
                 # safely use a narrower floor without admitting weak matches from
                 # the person's global or project memories.
                 score_floor = self._config.exact_binding_minimum_final_score
-            if final_score < score_floor:
+            if final_score < score_floor and (
+                memory_id != best_candidate_id or final_score == 0
+            ):
                 continue
             fact_id = f"hindsight:{memory_id}"
             if fact_id in seen:
