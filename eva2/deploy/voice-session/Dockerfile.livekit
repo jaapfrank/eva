@@ -1,5 +1,11 @@
+FROM golang@sha256:3b4a11519ad929d1e1d261a12cff056f0c85b735253d7d861346b9c6f8b36437 AS build
+ENV GOTOOLCHAIN=go1.26.8 CGO_ENABLED=0
+WORKDIR /build
+COPY deploy/voice-session/vendor/livekit-1.13.6/ /build/
+COPY deploy/voice-session/livekit-source/go.mod deploy/voice-session/livekit-source/go.sum /build/
+RUN go build -mod=readonly -trimpath -o /livekit-server ./cmd/server
 FROM gcr.io/distroless/cc-debian13@sha256:9b615fff20e1a4fad29c2b30562580b212c7dd5e2225236735cca0070ed11c78
-COPY deploy/voice-session/vendor/livekit-server /usr/local/bin/livekit-server
+COPY --from=build /livekit-server /usr/local/bin/livekit-server
 USER 65532:65532
 ENTRYPOINT ["/usr/local/bin/livekit-server"]
 CMD ["--config", "/run/eva/livekit.yaml"]

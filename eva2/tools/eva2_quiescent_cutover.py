@@ -1176,6 +1176,7 @@ class SystemBackend:
         if self._environment(slot.environment) != environment or self._voice_settings(environment) != voice:
             raise QuiescentCutoverError("voice activation binding changed during recreation")
         self.verify_runtime(slot)
+        self._verify_new_voice_readiness(slot)
         return token is not None
 
     @staticmethod
@@ -1603,16 +1604,6 @@ class SystemBackend:
             raise QuiescentCutoverError(
                 "retained target owner route is unavailable"
             ) from exc
-        if self._voice_activation_slot == slot.number:
-            voice_request = request.Request(
-                f"{slot.url}/internal/v1/voice-session/ready",
-                headers={"Authorization": f"Bearer {token}"}, method="GET")
-            try:
-                with request.urlopen(voice_request, timeout=10) as response:
-                    if response.status != 200 or json.load(response).get("contract") != "EvaVoiceSessionReady/v1":
-                        raise ValueError("voice readiness differs")
-            except (OSError, ValueError) as exc:
-                raise QuiescentCutoverError("new voice channel is not ready") from exc
         try:
             request.urlopen(request.Request(url, method="GET"), timeout=10)
         except error.HTTPError as exc:
@@ -1626,6 +1617,21 @@ class SystemBackend:
                 "retained target anonymous route unavailable"
             ) from exc
         raise QuiescentCutoverError("retained target accepted anonymous access")
+
+    def _verify_new_voice_readiness(self, slot: SlotSpec) -> None:
+        # Staging deliberately has no voice mount. Check the newly activated
+        # grant only after active recreation, while user ingress is still shut.
+        token = slot.dashboard_token.read_text(encoding="utf-8").strip() if self._voice_activation_slot == slot.number else ""
+        if self._voice_activation_slot == slot.number:
+            voice_request = request.Request(
+                f"{slot.url}/internal/v1/voice-session/ready",
+                headers={"Authorization": f"Bearer {token}"}, method="GET")
+            try:
+                with request.urlopen(voice_request, timeout=10) as response:
+                    if response.status != 200 or json.load(response).get("contract") != "EvaVoiceSessionReady/v1":
+                        raise ValueError("voice readiness differs")
+            except (OSError, ValueError) as exc:
+                raise QuiescentCutoverError("new voice channel is not ready") from exc
 
     def write_route(self, dropin: Path, content: bytes) -> None:
         _atomic_dropin(dropin, content, owner_uid=self.owner_uid)

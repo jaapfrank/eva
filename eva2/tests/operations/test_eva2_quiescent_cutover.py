@@ -1531,7 +1531,7 @@ def test_explicit_first_voice_activation_preserves_existing_authority(tmp_path, 
             SystemBackend._verify_voice_continuity(source, target, activate_dashboard_voice=True)
 
 
-def test_new_voice_readiness_failure_rolls_back_before_route(monkeypatch, tmp_path):
+def test_new_voice_readiness_failure_rolls_back_before_ingress(monkeypatch, tmp_path):
     from dataclasses import replace
     from io import BytesIO
     from urllib import error
@@ -1556,11 +1556,15 @@ def test_new_voice_readiness_failure_rolls_back_before_route(monkeypatch, tmp_pa
         def verify_runtime(self, slot):
             super().verify_runtime(slot)
             verifier.verify_runtime(replace(slot, dashboard_token=token))
+        def activate_delivery(self, slot, dropin):
+            result = super().activate_delivery(slot, dropin)
+            verifier._verify_new_voice_readiness(replace(slot, dashboard_token=token))
+            return result
     backend = Backend(tmp_path)
     with pytest.raises(QuiescentCutoverError, match="new voice channel is not ready"):
         quiescent_cutover(source_slot=3, target_slot=4, backend=backend,
                           dropin=tmp_path/"dropin", workspace=tmp_path)
-    assert not any(call.startswith("route:") for call in backend.calls)
-    assert backend.calls[-7:] == ["stop:4", "snapshot:4:automatic-rollback", "restore:3:reverse",
-                                 "start:3", "verify:3", "activate-delivery:3", "start-eva1:3"]
+    assert "start-eva1:4" not in backend.calls
+    assert backend.calls[-8:] == ["stop:4", "snapshot:4:automatic-rollback", "restore:3:reverse",
+                                 "start:3", "verify:3", "route:44710", "activate-delivery:3", "start-eva1:3"]
     assert sum(url.endswith("/voice-session/ready") for url in checks) == 1
