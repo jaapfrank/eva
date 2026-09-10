@@ -104,3 +104,178 @@ def test_stopped_initiative_context_is_owner_scoped_and_same_title_cannot_restar
         " A USEFUL PLAN ", "Another trigger", "Do it again")), now=NOW + timedelta(seconds=2))
     cards = control.page(now=NOW + timedelta(seconds=2))["cards"]
     assert len(cards) == 1 and cards[0]["status"] == "stopped"
+
+
+@pytest.fixture
+def costless_native(postgres_engine, tmp_path, monkeypatch):
+    import json
+    from eva.adapters.postgres import initiative_execution as native
+    label = "costless-" + tmp_path.name
+    authority, _, binding = _seed_authority(postgres_engine, label)
+    owner = _id(label, "principal")
+    tenant, installation = "native-" + label, "home"
+    source = PostgresSensoryEventStore(postgres_engine, tenant_id=tenant,
+        installation_id=installation, initiative_principal_id=str(owner))
+    source.retain(replace(_event(label), occurred_at=NOW))
+    sensory_claim = source.claim_next(now=NOW)
+    source.complete(sensory_claim, FreeWillDecision("silence", "Relevant idea", 0, "fixture",
+        initiative=PersonalInitiativeProposal("Useful contribution", "Known owner context", "Prepare useful material")), now=NOW)
+    store = PostgresPersonalInterestStore(postgres_engine)
+    claim = store.claim_next(tenant_id=tenant, installation_id=installation, now=NOW)
+    control = PostgresOwnerInitiatives(postgres_engine, tenant_id=tenant,
+        installation_id=installation, owner=owner, binding=binding, authority_scope=authority)
+    class FixedTime(datetime):
+        @classmethod
+        def now(cls, tz=None):
+            return NOW
+    monkeypatch.setattr(native, "datetime", FixedTime)
+    args = {"type": "object", "properties": {"path": {"const": str(tmp_path / "result.txt")},
+        "content": {"type": "string", "maxLength": 1000}}, "required": ["path", "content"], "additionalProperties": False}
+    policy = {"contract": "EvaCostlessInitiativeMandate/v1", "mandate_id": "owner-costless-v1",
+        "owner_principal_id": str(owner), "tenant_scope": str(control._scope.tenant_id),
+        "installation_scope": str(control._scope.installation_id), "enabled": True,
+        "authorization_source": "explicit owner test mandate", "capabilities": [{
+            "action_name": "save_private_result", "configuration_sha256": "a" * 64,
+            "tool_name": "private.write", "observation_tool_name": "private.read",
+            "new_cost_eur_cents": 0, "new_obligation": False,
+            "data_scope": "owner_private_local", "communication_scope": "none",
+            "cost_evidence": "local filesystem, no metered provider or external recipient",
+            "execute_schema": args, "observe_schema": args}]}
+    path = tmp_path / "mandate.json"
+    path.write_text(json.dumps(policy)); path.chmod(0o600)
+    auth = native.PostgresInitiativeAuthority(control, str(path))
+    return auth, claim, store, control, source, path, policy
+
+
+@pytest.mark.parametrize("content", [
+    "Boodschappen voorbereiden: vergelijk voorraad voordat je iets koopt.",
+    "Creatief gezinsidee: laat ieder een eigen spelregel toevoegen.",
+    "Ondernemingsverkenning: bespreek eerst probleem en doelgroep; geen inkomstenclaim.",
+])
+def test_native_executes_profiled_tool_and_recovery_reads_same_result(costless_native, content):
+    import json
+    from pathlib import Path
+    from types import SimpleNamespace
+    from eva.application.initiative_execution import initiative_execution
+    from eva.application.conversation import ConversationActionCall, ConversationToolPreparation, GroundedReply
+    from eva.application.orchestration import ToolDispatchResult, ToolProofObservation
+    from eva.adapters.postgres.external_conversation_tools import PostgresExternalConversationTools
+    from eva.adapters.postgres.conversation_journal import PostgresConversationJournal
+    auth, claim, store, control, source, path, policy = costless_native
+    guard, turn = auth.bind(claim)
+    output_path = policy["capabilities"][0]["execute_schema"]["properties"]["path"]["const"]
+    arguments = {"path": output_path, "content": content}
+    class Planner:
+        action_names = ("save_private_result",)
+        async def prepare(self, turn, call):
+            return ConversationToolPreparation(tool_name="private.write", arguments=call.arguments,
+                expected_proof={"content": call.arguments["content"]},
+                observation_tool_name="private.read", observation_arguments=call.arguments,
+                tool_configuration_sha256="a" * 64, receipt_output={})
+    class Provider:
+        writes = 0
+        async def execute(self, request):
+            self.writes += 1
+            Path(request.arguments["path"]).write_text(request.arguments["content"])
+            return ToolDispatchResult(True, "local-result", {})
+        async def observe(self, request, dispatch):
+            text = Path(request.observation_arguments["path"]).read_text()
+            return ToolProofObservation("verified", {"content": text}, {"readback": True})
+    provider = Provider()
+    journal = PostgresConversationJournal(auth.owner._engine, auth.owner._scope)
+    journal.admit(turn)
+    tools = PostgresExternalConversationTools(auth.owner._engine, Planner(), provider)
+    call = ConversationActionCall("native-call", "save_private_result", arguments)
+    with initiative_execution(guard):
+        receipt = tools.execute(turn, call)
+        assert receipt.output["status"] == "verified"
+    # A new context is reconstructed from durable intent and mandate, not model text.
+    recovered, recovered_turn = auth.bind(claim)
+    with initiative_execution(recovered):
+        assert tools.execute(recovered_turn, call) == receipt
+    assert provider.writes == 1 and Path(output_path).read_text() == content
+    reply = GroundedReply(turn.conversation_id, turn.message_id, content, (), turn.occurred_at, "fixture")
+    store.complete_native(claim, reply, now=NOW)
+    assert control.page(now=NOW)["cards"][0]["status"] == "done"
+    assert control.artifact(claim.intent_id, now=NOW)["content"] == content
+    assert PostgresPersonalPrototypeStore(auth.owner._engine).claim_next(
+        tenant_id=claim.tenant_id, installation_id=claim.installation_id, now=NOW) is None
+
+
+def test_native_mandate_denies_unknown_cost_destination_and_rebinding(costless_native):
+    import json
+    from eva.adapters.postgres.initiative_execution import InitiativeMandateDenied
+    from eva.application.orchestration import ToolRequest
+    auth, claim, store, control, source, path, policy = costless_native
+    guard, turn = auth.bind(claim)
+    assert not guard.action_allowed("adopt_personal_interest")
+    assert not guard.action_allowed("register_connector")
+    assert not guard.action_allowed("send_message")
+    request = ToolRequest("tools:test", "operation:test", "checkpoint:test", "private.write",
+        {"path": "/private/someone-else", "content": "secret"}, {},
+        observation_tool_name="private.read", observation_arguments={}, tool_configuration_sha256="a"*64)
+    with pytest.raises(InitiativeMandateDenied, match="outside"):
+        guard.authorize_request(request, phase="execute")
+    with pytest.raises(InitiativeMandateDenied, match="differs"):
+        guard.check(replace(turn, text="new instructions"))
+    policy["capabilities"][0]["new_cost_eur_cents"] = None
+    path.write_text(json.dumps(policy))
+    with pytest.raises(InitiativeMandateDenied, match="zero-cost"):
+        guard.check(turn)
+    policy["capabilities"][0]["new_cost_eur_cents"] = 1
+    path.write_text(json.dumps(policy))
+    with pytest.raises(InitiativeMandateDenied, match="zero-cost"):
+        guard.check(turn)
+    policy["capabilities"][0]["new_cost_eur_cents"] = 0
+    policy["capabilities"][0]["execute_schema"]["properties"]["path"] = {"type": "string"}
+    path.write_text(json.dumps(policy))
+    with pytest.raises(InitiativeMandateDenied, match="revision changed"):
+        guard.check(turn)
+
+
+def test_native_stop_feedback_and_revocation_survive_new_context(costless_native):
+    from eva.adapters.postgres.initiative_execution import InitiativeMandateDenied
+    from eva.adapters.postgres.conversation_journal import PostgresConversationJournal
+    from eva.application.conversation import ConversationStopped
+    auth, claim, store, control, source, path, policy = costless_native
+    guard, turn = auth.bind(claim)
+    journal = PostgresConversationJournal(auth.owner._engine, auth.owner._scope)
+    journal.admit(turn)
+    control.feedback(claim.intent_id, "Dit onderwerp liever niet opnieuw; liever een creatief idee.", now=NOW)
+    with pytest.raises(InitiativeMandateDenied, match="stopped"):
+        guard.check(turn)
+    with pytest.raises(ConversationStopped):
+        journal.ensure_running(turn)
+    assert source.recent_initiatives()[0]["owner_feedback"].startswith("Dit onderwerp")
+    with pytest.raises(InitiativeMandateDenied):
+        auth.bind(claim)
+    auth.revoke()
+    with pytest.raises(InitiativeMandateDenied, match="revoked"):
+        auth.policy()
+    assert store.claim_next(tenant_id=claim.tenant_id, installation_id=claim.installation_id, now=NOW) is None
+
+
+@pytest.mark.parametrize("interruption", ["stop", "revoke"])
+def test_native_dispatch_rechecks_stop_inside_admission_transaction(costless_native, monkeypatch, interruption):
+    from eva.adapters.postgres.initiative_execution import InitiativeMandateDenied
+    from eva.application.orchestration import ToolRequest
+    auth, claim, store, control, source, path, policy = costless_native
+    guard, turn = auth.bind(claim)
+    read_policy = auth.policy
+    calls = 0
+    def stop_between_check_and_admission():
+        nonlocal calls
+        snapshot = read_policy()
+        calls += 1
+        if calls == 2:
+            if interruption == "stop": control.stop(claim.intent_id, now=NOW)
+            else: auth.revoke()
+        return snapshot
+    monkeypatch.setattr(auth, "policy", stop_between_check_and_admission)
+    arguments = {"path": policy["capabilities"][0]["execute_schema"]["properties"]["path"]["const"], "content": "safe"}
+    request = ToolRequest("tools:test", "operation:test", "checkpoint:test", "private.write",
+        arguments, {}, observation_tool_name="private.read", observation_arguments=arguments,
+        tool_configuration_sha256="a"*64)
+    with pytest.raises(InitiativeMandateDenied, match="before dispatch"):
+        guard.authorize_request(request, phase="execute")
+    assert not any(e.event_type == "INITIATIVE_DISPATCH_ADMITTED" for e in auth.timeline.events(guard.thread))

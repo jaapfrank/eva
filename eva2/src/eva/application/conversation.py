@@ -869,6 +869,10 @@ class LivingConversation:
             self_context = (*self_context, *voice.instructions())
             if voice.active_work:
                 available_names = (*available_names, STOP_VOICE_WORK)
+        from eva.application.initiative_execution import require_initiative_context
+        initiative = require_initiative_context(turn)
+        if initiative is not None:
+            self_context = (*self_context, initiative.instructions())
         memory = recall(turn.text, fast=True)
         memory_searched = False
         seen_call_ids = {item.call.call_id for item in receipts}

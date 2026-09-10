@@ -125,6 +125,8 @@ class PostgresExternalConversationTools:
         *, step_index: int = 0,
     ) -> ConversationActionReceipt:
         check_cancellation()
+        from eva.application.initiative_execution import authorize_initiative_action
+        authorize_initiative_action(turn, call.name)
         self._validate_step_index(step_index)
         if call.name not in self.action_names:
             raise ConversationConflict(f"external tool {call.name!r} is unavailable")
@@ -422,17 +424,27 @@ class PostgresExternalConversationTools:
                 await asyncio.to_thread(authorize, turn)
                 await asyncio.to_thread(journal.admit_dispatch, turn, request.operation_id)
                 check_cancellation()
+                from eva.application.initiative_execution import require_initiative_context
+                guard = require_initiative_context(turn)
+                if guard is not None:
+                    await asyncio.to_thread(guard.authorize_request, request, phase="execute")
                 return await provider.execute(request)
 
             async def observe(
                 self, request: ToolRequest, dispatch: ToolDispatchResult | None
             ) -> ToolProofObservation:
                 await asyncio.to_thread(authorize, turn)
+                from eva.application.initiative_execution import require_initiative_context
+                guard = require_initiative_context(turn)
+                if guard is not None:
+                    await asyncio.to_thread(guard.authorize_request, request, phase="observe")
                 return await provider.observe(request, dispatch)
 
         return VerifiedToolOrchestrator(timeline, StopCheckedProvider())
 
     def _authorize(self, turn: ConversationTurn) -> None:
+        from eva.application.initiative_execution import require_initiative_context
+        require_initiative_context(turn)
         if self._authorize_turn is not None:
             self._authorize_turn(turn)
 

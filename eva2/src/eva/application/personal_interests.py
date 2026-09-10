@@ -29,6 +29,7 @@ class PersonalInterestClaim:
     question: str
     occurred_at: str
     revision: int
+    execution_mode: str = "private_prototype"
 
 
 @dataclass(frozen=True, slots=True)
@@ -228,6 +229,10 @@ class _PersonalWorkerBase(Generic[_StoreT]):
 class PersonalInterestWorker(_PersonalWorkerBase[PersonalInterestStore]):
     """Finish or project one durable interest without blocking conversation."""
 
+    def __init__(self, store, model, memory, *, execute_native=None):
+        super().__init__(store, model, memory)
+        self._execute_native = execute_native
+
     def run_once(self, *, tenant_id: str, installation_id: str, now: datetime) -> str:
         completed = self._store.completed_unprojected(
             tenant_id=tenant_id, installation_id=installation_id, now=now
@@ -240,6 +245,16 @@ class PersonalInterestWorker(_PersonalWorkerBase[PersonalInterestStore]):
         )
         if claim is None:
             return "idle"
+        if claim.execution_mode == "autonomous_task":
+            try:
+                if self._execute_native is None:
+                    raise RuntimeError("native initiative executor unavailable")
+                reply = self._execute_native(claim)
+                result = self._store.complete_native(claim, reply, now=now)
+                return "completed" if result is not None and result.phase == "initiative_completed" else "blocked"
+            except Exception as error:
+                self._store.block_native(claim, error, now=now)
+                return "blocked"
         try:
             exploration = self._model.explore(claim)
         except Exception as error:

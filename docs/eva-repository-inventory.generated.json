@@ -56722,6 +56722,41 @@
       }
     },
     {
+      "path": "eva2/src/eva/adapters/postgres/initiative_execution.py",
+      "gitState": "tracked",
+      "present": true,
+      "bytes": 15264,
+      "contentSha256": "bb8c6bae00e6f5ac556ca950da2db276839122a300e8cf4b589bfa3d567bb335",
+      "hashMode": "exact-bytes",
+      "role": "product-runtime",
+      "roleRuleId": "eva2-runtime",
+      "matchingRuleIds": [
+        "eva2-runtime"
+      ],
+      "owner": "eva-runtime",
+      "inputs": [
+        "issued runtime input and dependencies"
+      ],
+      "outputs": [
+        "runtime result or capability"
+      ],
+      "state": [
+        "runtime-owned durable or process state"
+      ],
+      "effects": [
+        "module-specific runtime effects"
+      ],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": true,
+        "runtimeCritical": true,
+        "status": "included-tracked-critical"
+      }
+    },
+    {
       "path": "eva2/src/eva/adapters/postgres/mcp_connector_registry.py",
       "gitState": "tracked",
       "present": true,
@@ -58092,6 +58127,41 @@
       "present": true,
       "bytes": 5879,
       "contentSha256": "3e77927c3cb850464ce358980713970820256da6bdb63ad59d928f8ae8831c71",
+      "hashMode": "exact-bytes",
+      "role": "product-runtime",
+      "roleRuleId": "eva2-runtime",
+      "matchingRuleIds": [
+        "eva2-runtime"
+      ],
+      "owner": "eva-runtime",
+      "inputs": [
+        "issued runtime input and dependencies"
+      ],
+      "outputs": [
+        "runtime result or capability"
+      ],
+      "state": [
+        "runtime-owned durable or process state"
+      ],
+      "effects": [
+        "module-specific runtime effects"
+      ],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": true,
+        "runtimeCritical": true,
+        "status": "included-tracked-critical"
+      }
+    },
+    {
+      "path": "eva2/src/eva/application/initiative_execution.py",
+      "gitState": "tracked",
+      "present": true,
+      "bytes": 1667,
+      "contentSha256": "2ec0af21bff149e3d55bc6e9eee2bba34994cc40e6f611b6a2b2163c8d89ca58",
       "hashMode": "exact-bytes",
       "role": "product-runtime",
       "roleRuleId": "eva2-runtime",

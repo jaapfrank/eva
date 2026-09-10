@@ -8,8 +8,9 @@ Oudere planningen en vergelijkingen blijven historische bewijsbronnen.
 
 We werken met kleine actieve doelen binnen deze blijvende projectvisie.
 De eerste geheugenuitkomst (CO-008) is technisch afgerond en GE-01 door Jaap
-geaccepteerd. Op zijn verzoek staat nu AU-007 centraal: vanuit bestaande
-toegestane context zelf één relevant privaat voorstel uitwerken. De voortgang en technische afronding staan in de
+geaccepteerd. AU-007 is technisch afgerond; Jaap vindt de opgeleverde
+beoordelingskaart "op zich wel bruikbaar". Dit is geen algemene acceptatie van initiatief.
+Nu staat AU-008 centraal: zelf passende kosteloze acties kiezen en uitvoeren. De voortgang en technische afronding staan in de
 ene uitvoerbron achter het dashboard en WERKBORD.md. Afgeronde deelresultaten
 blijven zichtbaar naast de nog onvolledige hoofduitkomsten; menselijke
 acceptatie blijft afzonderlijk.
@@ -42,6 +43,27 @@ raadplegen betekent niet een deur openen. Er worden hiermee geen personen
 uitgenodigd of rechten verleend. Eerste vervolgoplevering: eigenaar mobiel
 in spraak en chat; daarna andere toegelaten personen en expliciet gedeelde
 huisinformatie. Tests bevatten ook ongeziene vragen en geweigerde situaties.
+
+## Kosteloos initiatief — eigenaarbesluit 10 september 2026
+
+Jaap geeft Eva breed initiatief: in eerste instantie mag zij zelf handelen zolang
+het geen nieuwe geldelijke kosten veroorzaakt. Dit is expliciet ter implementatie
+opgedragen. Bestaand toegelaten runtime- en modelgebruik blijft binnen bestaande
+limieten; nieuwe aankopen, abonnementen, advertenties en externe verplichtingen
+vallen erbuiten. Onbekende kosten zijn geen nul kosten.
+
+Eva ontdekt behoeften en kansen in toegestane context, beoordeelt relevantie en
+timing, handelt of blijft stil, controleert het resultaat en gebruikt feedback.
+Gezinsondersteuning, boodschappen voorbereiden, passend begroeten, gerichte vragen
+en onderzoek naar inkomsten zijn voorbeelden; geen vaste functielijst.
+Privacy, persoonsgrenzen, bestaande communicatiebevoegdheden en stoppen blijven
+gelden. Kosteloosheid verleent geen nieuwe rechten, recht op identificatie of
+toestemming om privégegevens te delen. Inkomsten zijn nooit gegarandeerd.
+
+De host controleert concrete tools en invoer tegen toegelaten kosten- en
+bevoegdheidsprofielen. Model- of providertekst kan die profielen niet verruimen.
+Ontbrekende profielen blijven zichtbare beperkingen; voortgang binnen bewezen
+bevoegdheid vereist geen herhaalde eigenaarstoestemming.
 
 ## Het doel
 

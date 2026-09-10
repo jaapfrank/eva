@@ -52,6 +52,8 @@ class _SourceTurnLoader:
         if (not isinstance(source, dict) or set(source) != fields | {"audience"}
                 or any(not isinstance(source[key], str) or not source[key] for key in fields)):
             raise ConversationConflict("connector source reference is invalid")
+        if source["conversation_id"].startswith("initiative-task:"):
+            raise ConversationConflict("native initiative is not an owner connector instruction")
         # The ingress journal predates audience storage. The real-turn planner
         # authorizes this private audience before sealing the durable request;
         # replay retains that attestation rather than inferring it from names.

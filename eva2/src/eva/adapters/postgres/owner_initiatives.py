@@ -18,6 +18,7 @@ class PostgresOwnerInitiatives:
     def __init__(self, engine: sa.Engine, *, tenant_id: str, installation_id: str,
                  owner: UUID, binding: UUID, authority_scope: TimelineScope) -> None:
         self._engine, self._owner, self._binding = engine, owner, binding
+        self._tenant_id, self._installation_id = tenant_id, installation_id
         self._authority = authority_scope
         self._scope = external_timeline_scope(tenant_id, installation_id, "initiative scope required")
 
@@ -68,21 +69,22 @@ class PostgresOwnerInitiatives:
                 data = row.adoption["data"]
                 phase = row.phase
                 status = ("stopped" if phase == "personal_stopped" else
-                          "done" if phase == "release_ready" else
+                          "done" if phase in {"release_ready", "initiative_completed"} else
                           "attention" if row.status in ("failed", "needs_help") else "working")
                 cards.append({"intent_id": data["intent_id"], "title": data["title"],
                     "motivation": data["motivation"], "question": data["next_exploration"],
                     "status": status, "phase": phase,
                     "updated_at": row.updated_at.isoformat(),
                     "can_stop": status not in ("stopped", "done"),
-                    "has_artifact": self._artifact(conn, row.thread_id) is not None})
+                    "has_artifact": self._artifact(conn, row.thread_id) is not None,
+                    "feedback": self._feedback(conn, row.thread_id)})
         return {"contract": "EvaOwnerInitiatives/v1", "cards": cards, "truncated": len(rows) > 64}
 
     def _artifact(self, conn, thread_id):
         e = operational_events.c
         payload = conn.execute(sa.select(e.payload).where(
             e.tenant_id == self._scope.tenant_id, e.installation_id == self._scope.installation_id,
-            e.thread_id == thread_id, e.event_type == "PERSONAL_PROTOTYPE_COMPLETED"
+            e.thread_id == thread_id, e.event_type.in_(("PERSONAL_PROTOTYPE_COMPLETED", "PERSONAL_INITIATIVE_COMPLETED"))
         ).order_by(e.sequence.desc()).limit(1)).scalar_one_or_none()
         if payload is None:
             return None
@@ -118,7 +120,7 @@ class PostgresOwnerInitiatives:
             ).with_for_update(of=operational_checkpoints)).one_or_none()
             if row is None:
                 raise LookupError("initiative unavailable")
-            if row.phase == "release_ready":
+            if row.phase in {"release_ready", "initiative_completed"}:
                 status = "already_completed"
             elif row.phase == "personal_stopped":
                 status = "stopped"
@@ -132,5 +134,52 @@ class PostgresOwnerInitiatives:
                     data={"intent_id": intent_id, "owner_principal_id": str(self._owner),
                           "principal_binding_id": str(self._binding), "reason": "owner_stop"})
                 status = "stopped"
+        if status == "stopped":
+            self._stop_execution(intent_id)
         return {"contract": "EvaOwnerInitiativeStop/v1", "intent_id": intent_id,
-                "status": status}
+                "status": status, "in_flight_effects_may_complete": status == "stopped"}
+
+    def _feedback(self, conn, thread_id):
+        e = operational_events.c
+        payload = conn.execute(sa.select(e.payload).where(
+            e.tenant_id == self._scope.tenant_id, e.installation_id == self._scope.installation_id,
+            e.thread_id == thread_id, e.event_type == "PERSONAL_INITIATIVE_FEEDBACK"
+        ).order_by(e.sequence.desc()).limit(1)).scalar_one_or_none()
+        return None if payload is None else payload["data"]["feedback"]
+
+    def feedback(self, intent_id, feedback, *, now):
+        intent_id = self._intent_id(intent_id)
+        if not isinstance(feedback, str) or not 1 <= len(feedback.strip()) <= 800:
+            raise ValueError("initiative feedback must contain 1..800 characters")
+        with self._engine.begin() as conn:
+            self._authorize(conn, now)
+            row = conn.execute(self._query().where(
+                operational_checkpoints.c.thread_id == "intent:" + intent_id
+            ).with_for_update(of=operational_checkpoints)).one_or_none()
+            if row is None:
+                raise LookupError("initiative unavailable")
+            terminal = row.phase in {"release_ready", "initiative_completed", "personal_stopped", "initiative_blocked"}
+            transition_timeline_thread(conn, self._scope, thread_id=row.thread_id,
+                expected_revision=row.revision,
+                checkpoint_id=f"{row.thread_id}:feedback:{row.revision + 1}",
+                phase=row.phase if terminal else "personal_stopped",
+                status=row.status if terminal else "completed",
+                event_type="PERSONAL_INITIATIVE_FEEDBACK", occurred_at=now,
+                operation_id=intent_id,
+                data={"intent_id": intent_id, "owner_principal_id": str(self._owner),
+                      "principal_binding_id": str(self._binding), "feedback": feedback.strip(),
+                      "execution_stopped": not terminal})
+        if not terminal:
+            self._stop_execution(intent_id)
+        return {"status": "recorded", "intent_id": intent_id,
+                "execution_stopped": not terminal}
+
+    def _stop_execution(self, intent_id):
+        from eva.adapters.postgres.conversation_actions import PostgresPersonalInterestStore
+        from eva.adapters.postgres.conversation_journal import PostgresConversationJournal
+        from eva.adapters.postgres.initiative_execution import execution_turn
+        timeline = PostgresOperationalTimeline(self._engine, self._scope)
+        claim = PostgresPersonalInterestStore._claim_from_events(self._tenant_id,
+            self._installation_id, timeline.events("intent:" + intent_id), 0)
+        if claim.execution_mode == "autonomous_task":
+            PostgresConversationJournal(self._engine, self._scope).request_turn_stop(execution_turn(claim))

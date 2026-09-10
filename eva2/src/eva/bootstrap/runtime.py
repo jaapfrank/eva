@@ -855,6 +855,30 @@ class PostgresHindsightMemoryRuntime:
             binding=self._dashboard_principal_binding_id,
             authority_scope=self._dashboard_authority_scope)
 
+    def _initiative_authority(self):
+        from eva.adapters.postgres.initiative_execution import PostgresInitiativeAuthority
+        path = os.environ.get("EVA_INITIATIVE_MANDATE_FILE")
+        if not path:
+            base = os.environ.get("EVA_MCP_AUTONOMY_MANDATE_FILE")
+            if not base:
+                raise RuntimeError("initiative mandate unavailable")
+            path = str(Path(base).with_name("initiative-mandate.json"))
+        return PostgresInitiativeAuthority(self._owner_initiatives(), path)
+
+    def execute_native_initiative(self, claim):
+        from eva.application.initiative_execution import initiative_execution
+        guard, turn = self._initiative_authority().bind(claim)
+        with initiative_execution(guard):
+            # Same durable journal, actual effects and model limits as conversations.
+            # Do not invoke after_response: this is not a direct user assertion.
+            return self.respond(turn)
+
+    def dashboard_revoke_initiative_mandate(self):
+        return self._initiative_authority().revoke()
+
+    def dashboard_initiative_feedback(self, intent_id, feedback):
+        return self._owner_initiatives().feedback(intent_id, feedback, now=datetime.now(UTC).replace(microsecond=0))
+
     def dashboard_initiatives(self):
         return self._owner_initiatives().page(now=datetime.now(tz=UTC).replace(microsecond=0))
 
@@ -998,6 +1022,8 @@ class PostgresHindsightMemoryRuntime:
         turn: ConversationTurn,
         recent_messages: tuple[RecentConversationMessage, ...] = (),
     ) -> GroundedReply:
+        from eva.application.initiative_execution import require_initiative_context
+        require_initiative_context(turn)
         check_cancellation()
         self.admit_turn_audience(turn)
         journal = self._journal(turn)
@@ -1031,6 +1057,7 @@ class PostgresHindsightMemoryRuntime:
                 if isinstance(usage, ConversationModelUsage):
                     latest_usage = usage
                 check_cancellation()
+                require_initiative_context(current)
                 self.admit_turn_audience(current)
                 journal.ensure_running(current)
 
@@ -1108,6 +1135,9 @@ class PostgresHindsightMemoryRuntime:
     def after_response(self, turn: ConversationTurn, reply: GroundedReply) -> None:
         """Queue semantic retention only after the reply is durably committed."""
 
+        if turn.conversation_id.startswith("initiative-task:"):
+            # Native proposals and model results are not direct owner testimony.
+            return
         if turn.audience.kind == "household":
             self.admit_turn_audience(turn)
 
@@ -1677,6 +1707,7 @@ def create_runtime_app() -> FastAPI:
             recovery_started_at=datetime.now(tz=UTC).replace(microsecond=0),
             historical_group_size=16,
             initiative_principal_id=settings.background_principal_id,
+            initiative_authorizer=lambda: runtime._initiative_authority().policy(),
         )
     )
     sensory_worker = (
@@ -1754,6 +1785,7 @@ def create_runtime_app() -> FastAPI:
             ),
             model,
             memory_writer,
+            execute_native=lambda claim: runtime.execute_native_initiative(claim),
         )
         prototype_worker = PersonalPrototypeWorker(
             prototype_store,

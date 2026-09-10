@@ -40,7 +40,8 @@
           "acceptance": "Gewone gesprekken tonen zelfstandig onthouden, correct bijwerken en passend terughalen; opgeslagen bewijs en menselijke acceptatie apart zichtbaar.",
           "taskIds": [
             "CO-008",
-            "AU-007"
+            "AU-007",
+            "AU-008"
           ]
         },
         {
@@ -329,7 +330,7 @@
               "built": "yes",
               "tested": "yes",
               "live": "yes",
-              "accepted": "no",
+              "accepted": "yes",
               "works": "Beoordelingskaart voor huisautomatiseringen met beslisregels en drie fictieve voorbeelden, door Eva zelf gekozen en gemaakt.",
               "tryIt": "Open de beoordelingskaart bij de actuele oplevering en beoordeel of dit een nuttige eigen bijdrage is.",
               "gap": "Alleen Jaaps gebruiksbeoordeling is nog open.",
@@ -637,7 +638,7 @@
         {
           "id": "IN-01",
           "updatedOn": "2026-09-10",
-          "status": "ready",
+          "status": "accepted",
           "title": "Eva maakt uit eigen initiatief een privaat hulpmiddel",
           "change": "Eva koos en maakte zelf de beoordelingskaart voor gezinsvriendelijke automatiseringen.",
           "steps": [
@@ -646,7 +647,8 @@
           ],
           "expected": "Een volledig leesbaar document met vier afwegingen, beslisregels en drie duidelijk fictieve voorbeelden.",
           "report": "IN-01: nuttig / niet nuttig, eventueel met wat je anders zou willen.",
-          "result": "Technisch afgerond, live teruggelezen en onafhankelijk beoordeeld. Jaaps acceptatie staat open."
+          "result": "Technisch afgerond, live teruggelezen en onafhankelijk beoordeeld. Jaaps acceptatie staat open.",
+          "ownerFeedback": "Op zich wel bruikbaar; uitsluitend de opgeleverde beoordelingskaart, geen algemene initiatiefacceptatie."
         }
       ]
     },
@@ -724,10 +726,10 @@
       "authorizedBy": "Jaap",
       "document": "eva2/PROJECTDOEL.md",
       "scope": "Digitale huisgenoot: zelfstandig redeneren, initiatief, onbekende vaardigheden leren, handelen, zelfverbetering en aantoonbare concurrentiewinst met open-sourcehergebruik.",
-      "sessionGoal": "Eén begrensd deelgoal: AU-007. Technische oplevering gereed; eigenaarsbeoordeling blijft open.",
-      "currentWork": "CO-008 is afgerond en GE-01 geaccepteerd. AU-007 is nu technisch afgerond met onafhankelijke GO: Eva koos en maakte zelf een private beoordelingskaart voor huisautomatiseringen. Alleen Jaaps gebruiksbeoordeling staat open.",
-      "currentEvidence": "eva2/reviews/AU-007-private-initiative-34ed766.md",
-      "nextStep": "Lees de [beoordelingskaart](evidence/product/AU-007-beoordelingskaart-huisautomatisering-2026-09-10.md) wanneer het uitkomt. IN-01: laat weten of dit soort eigen bijdrage nuttig is. Er is geen volgend implementatiegoal gestart.",
+      "sessionGoal": "AU-008: één zelfstandige kosteloze bijdrage via de algemene uitvoerder.",
+      "currentWork": "CO-008 blijft afgerond. AU-007 is technisch afgerond; Jaap vindt de beoordelingskaart op zich wel bruikbaar. Nu AU-008: zelfstandige uitvoering binnen het kosteloze eigenaarmandaat.",
+      "currentEvidence": "eva2/reviews/AU-007-technical-closure-f99b5a2.md",
+      "nextStep": "AU-008 wordt gebouwd: gewone taakuitvoering aansluiten, kosten en bevoegdheden bij iedere echte handeling controleren, daarna één bijdrage uit de normale cyclus opleveren.",
       "usageClarification": {
         "date": "2026-09-07",
         "authorizedBy": "Jaap",
@@ -3399,9 +3401,9 @@
       "ownerCorrection": "Vaste oorspronkelijke hoofdcategorieën met eigen status; concrete bewezen deeluitkomsten eronder in dezelfde tabel. Hoofdomvang behouden.",
       "verification": "Desktop en 390px mobiel gecontroleerd: negen vaste hoofdcategorieën met eigen status, vijf zichtbare deeluitkomsten, bewijsdetail en menselijke acceptatie apart. Geen horizontale pagina-overloop. Bestaande aantallen afgeronde kaarten niet als percentage gebruikt."
     },
-    "parallelWorkNotes": "### Afzonderlijke storing: bestaande Voice PE-route\n\nJaap bevestigde op 10 september dat Eva na de reparatie weer hoorbaar antwoordt.\nDe specifieke onbereikbaarheidsfout door een geheugenbronverwijzing van 247 tekens\nis daarmee in de praktijk hersteld. De originele bron blijft behouden; de\npersoons- en mandaatcontroles zijn niet verruimd. 108 gerichte tests, onafhankelijke\nreview en gecontroleerde uitrol zijn vastgelegd in het\n[herstelbewijs](evidence/product/VOICE-REF-247-repair-2026-09-10.json).\nNatuurlijk doorpraten tijdens werk en gewone spraakonderbreking zijn niet\ngeaccepteerd: de huidige route blijft opeenvolgende vraag/antwoordbeurten gebruiken.\n[Begrensde diagnose en voorstel](design/product/voice-session-diagnosis-2026-09-10.md).\nGE-01 blijft geaccepteerd; geen nieuw projectgoal of brede voice-implementatie gestart.\n\nHet [OSS-onderzoek van 10 september](design/product/voice-oss-selection-2026-09-10.md)\nis afgerond onder Jaaps harde eis dat de volledige gespreksmechanismen al samen\nin een onderhouden applicatie zitten. Geen onderzochte applicatie is volledig\ngekwalificeerd. LiveKit 1.8.0: 19 bestaande upstreamtests geslaagd, zonder fysieke\nspraakproef. Pipecat heeft uitvoerbare asyncdemo's, maar de onderzochte taken zijn\ngesimuleerd en/of alleen via het scherm opgevolgd. Geen eigen gesprekssysteem,\nnieuwe dienst of runtimewijziging gestart. Telefoon/laptop gaat bij eventuele\nvervolgverificatie voorop; HA is geen selectievoorwaarde. `openai_tts` 3.9.1 heeft\ngepubliceerde zinsstreaming, is hier niet geïnstalleerd en blijft ondersteunend.\n\n\nJaap heeft de uitvoering expliciet hervat: ontbreken van een complete OSS-app is\ngeen stopvoorwaarde. [Actieve LiveKit-integratie](design/product/voice-livekit-delivery-2026-09-10.md)\ngebruikt de bestaande Eva-kern en providers. Laptop eerst, telefoon/huisapparaten\nblijven open; geen nieuwe stemervaring live of geaccepteerd.",
+    "parallelWorkNotes": "### Afzonderlijk stemwerk\n\nDe laptoproute met LiveKit is live op http://localhost:44716. Plak het bestaande\neigenaar-dashboardtoken in het aanmeldformulier en kies Begin gesprek.\nBestandswerk, brononderzoek, stoppen en synthetische spraakonderbreking zijn\ngecontroleerd via dezelfde Eva-kern. De huisingang en bestaande gegevens blijven\nbehouden. Fysieke microfoon-/echoproef en Jaaps beoordeling staan open.\n\nDe voicetaak onderzoekt de resterende wachttijd: de gemeten geheugenraadpleging\nis de grootste vertraging. Een threadinstelling gaf geen herhaalbare verbetering\nen is daarom niet uitgerold. Telefoon en natuurlijke Voice PE-toegang zijn nog\nniet opgeleverd. [Actueel voicebewijs](evidence/product/voice-livekit-integration-2026-09-10.json).\nDe eerdere Voice PE-onbereikbaarheidsfout is hersteld en door Jaap bevestigd;\n[herstelbewijs](evidence/product/VOICE-REF-247-repair-2026-09-10.json).\n",
     "initiativeDeliveryAU007": {
-      "status": "technical_done_owner_review",
+      "status": "done_limited_card_appreciation",
       "scope": "Eva ziet via een bestaande huiswaarneming een passende kans bij toegestane persoonlijke context, kiest zelf een concrete vervolgstap en werkt één controleerbaar privaat voorstel of hulpmiddel uit. Jaap hoeft de stappen niet voor te zeggen.",
       "situation": "Bestaande passieve huiswaarneming plus toegestane eigenaarskennis; één privaat uitgewerkt idee.",
       "reuse": "Bestaande SensoryDecisionWorker, PersonalInitiativeProposal, duurzame interesse-/prototypewerkers en eigenaarsinzage.",
@@ -3413,7 +3415,7 @@
         "Bestaande trigger, geen handmatig ingevoegde initiatiefclaim als bewijs."
       ],
       "next": "Technisch afgerond met onafhankelijke GO. Eva maakte zelf de beoordelingskaart met drie fictieve voorbeelden. Alleen Jaaps beoordeling van het nut staat nog open; geen nieuw implementatiegoal gestart.",
-      "ownerAccepted": false,
+      "ownerAccepted": true,
       "necessaryDependency": {
         "finding": "Live broad owner context recall selected zero facts. All responses had source_facts_truncated=true, including observations whose complete source IDs were present. Hindsight documents this as partial response map, not incomplete source IDs for every observation.",
         "change": "Validate completeness and authority per observation with the existing all-source check; preserve rejection of missing, mixed, private/shared or stale-authority sources. Add personal plans/interests to passive recall context.",
@@ -3487,10 +3489,29 @@
         "commit": "f99b5a2e9561ce96d4b77668b3caf9b813339239"
       },
       "resultEvidence": "eva2/evidence/product/AU-007-private-initiative-2026-09-10.json",
-      "administrativeStatus": "Review betekent hier de nog open gebruikersbeoordeling. Technisch werk en onafhankelijke technische productreview zijn afgerond. Er is geen volgende implementatiekaart gestart."
+      "administrativeStatus": "Review betekent hier de nog open gebruikersbeoordeling. Technisch werk en onafhankelijke technische productreview zijn afgerond. Er is geen volgende implementatiekaart gestart.",
+      "ownerAcceptanceScope": "Uitsluitend de opgeleverde beoordelingskaart: op zich wel bruikbaar. Geen algemene acceptatie van eigen initiatief."
+    },
+    "initiativeDeliveryAU008": {
+      "status": "in_progress",
+      "built": true,
+      "tested": true,
+      "live": false,
+      "ownerAccepted": false,
+      "currentWork": "Algemene uitvoerder en hostcontroles gebouwd. Gerichte uitvoerings-, herstel-, stop/correct/intrekkings-, race- en herkomstcontroles geslaagd. Onafhankelijke review afgerond op code; exacte bronbinding en liveproef volgen.",
+      "authorization": "Jaap: in eerste instantie mag ze wel gewoon alles doen wat ze wil, zolang het maar inderdaad geen geld kost. Implementatie expliciet bevestigd.",
+      "boundaries": "Geen nieuwe kosten of verplichtingen; onbekend is niet gratis. Bestaand toegelaten modelgebruik blijft binnen bestaande grenzen. Privacy, personen, communicatie en stoppen blijven gelden.",
+      "artifactRetention": {
+        "owner": "architecturelead",
+        "purpose": "AU-008 gerichte test- en uitrolreceipts",
+        "path": "/home/administrator/project/.eva2-artifacts/au008-costless-initiative-20260910",
+        "cleanup": "Na eigenaarbeoordeling plus 30 dagen: canoniek bewijs behouden, overige tijdelijke kandidaatbestanden gericht verwijderen."
+      },
+      "inventoryNote": "Twee nieuwe runtimepaden toegevoegd onder bestaande eva-runtime classificaties met actuele inhoudshashes. Dit is een gerichte eigenaarsregistratie, geen volledige hergeneratie of release-inventarisbewijs; de bestaande generator stuit op ongeclassificeerd root-AGENTS.md.",
+      "testEvidence": "28 gerichte controles groen; bestaande gesprekstests uit voorgaande run groen. Geen echte zelfstandige livebijdrage voor AU008 geclaimd."
     }
   },
-  "activeTaskId": "AU-007",
+  "activeTaskId": "AU-008",
   "maxActiveImplementationTasks": 1,
   "statusValues": [
     "queued",
@@ -5042,7 +5063,7 @@
       "area": "Eigen initiatief",
       "title": "Zelf een relevant privaat voorstel uitwerken",
       "outcome": "Eva ziet via een bestaande huiswaarneming een passende kans bij toegestane persoonlijke context, kiest zelf een concrete vervolgstap en werkt één controleerbaar privaat voorstel of hulpmiddel uit. Jaap hoeft de stappen niet voor te zeggen.",
-      "status": "review",
+      "status": "done",
       "stateDetails": {
         "baseCommit": "ff8071c08a41c5e73036acc43a1d642f99a08f1b",
         "implementationCommit": "34ed766a1947e78a268b800728d227218aaa8f14",
@@ -5101,19 +5122,91 @@
         "integration-and-storage-tests",
         "supporting-runtime-adapters"
       ]
+    },
+    {
+      "id": "AU-008",
+      "order": 143,
+      "area": "Eigen initiatief",
+      "title": "Zelf kosteloos handelen binnen eigenaarmandaat",
+      "outcome": "Eva kiest uit toegestane context een nuttige bijdrage, voert passende kosteloze stappen via haar gewone taakuitvoerder uit en toont resultaat of concrete blokkade. Stilte blijft een geldige keuze.",
+      "status": "in_progress",
+      "stateDetails": {
+        "baseCommit": null,
+        "implementationCommit": null,
+        "evidenceCommit": null,
+        "reviewEvidencePaths": [],
+        "blockerReason": null
+      },
+      "ownerRole": "architecturelead",
+      "reviewerRole": "memorydeliveryreviewer",
+      "dependsOn": [
+        "AU-007"
+      ],
+      "changePaths": [
+        "docs/eva-repository-inventory.generated.json",
+        "eva2/PROJECTDOEL.md",
+        "eva2/WERKBORD.md",
+        "eva2/design/product/execution-workboard-v1.json",
+        "eva2/src/eva/adapters/api/dashboard_initiatives.py",
+        "eva2/src/eva/adapters/model/pydantic_conversation.py",
+        "eva2/src/eva/adapters/postgres/conversation_actions.py",
+        "eva2/src/eva/adapters/postgres/conversation_journal.py",
+        "eva2/src/eva/adapters/postgres/external_conversation_tools.py",
+        "eva2/src/eva/adapters/postgres/initiative_execution.py",
+        "eva2/src/eva/adapters/postgres/owner_initiatives.py",
+        "eva2/src/eva/adapters/postgres/sensory_events.py",
+        "eva2/src/eva/application/conversation.py",
+        "eva2/src/eva/application/free_will.py",
+        "eva2/src/eva/application/initiative_execution.py",
+        "eva2/src/eva/application/personal_interests.py",
+        "eva2/src/eva/bootstrap/runtime.py",
+        "eva2/src/eva/providers/mcp_autonomy.py",
+        "eva2/tests/application/test_free_will.py",
+        "eva2/tests/application/test_personal_interests.py",
+        "eva2/tests/model/test_conversation_model.py",
+        "eva2/tests/postgres/test_owner_initiatives.py"
+      ],
+      "componentIds": [
+        "api-and-runtime-composition",
+        "conversation-model-adapter",
+        "core-behavior-tests",
+        "core-semantics",
+        "durable-persistence",
+        "external-capability-adapters",
+        "integration-and-storage-tests"
+      ],
+      "inventoryOwners": [
+        "architecture",
+        "documentation",
+        "eva-runtime",
+        "verification"
+      ],
+      "testCommands": [
+        "pytest -q tests/application/test_free_will.py tests/application/test_personal_interests.py tests/application/test_conversation.py tests/postgres/test_owner_initiatives.py",
+        "pytest -q tests/model/test_conversation_model.py::test_sensory_model_parses_only_bounded_own_initiative tests/model/test_conversation_model.py::test_native_context_preserves_unknown_model_cost_block_on_every_request"
+      ],
+      "evidenceRequired": [
+        "Representatieve situaties bewijzen stilte, toegelaten uitvoering en weigering bij onbekende kosten of ontbrekende bevoegdheid.",
+        "Eén werkelijk door Eva gekozen bijdrage via de normale cyclus, met journal en teruggelezen resultaat; geen geforceerde adoptie.",
+        "Stop, correctie, intrekking, herstel en native herkomst worden gericht gecontroleerd."
+      ],
+      "doneWhen": [
+        "Een natuurlijk gekozen initiatief levert via de gewone uitvoerder een bruikbaar resultaat op binnen het actuele kosteloze mandaat.",
+        "Resultaat en beperkingen staan op het dashboard; technische GO en Jaaps beoordeling blijven afzonderlijk."
+      ]
     }
   ],
   "milestones": [
     {
       "id": "AU-002",
-      "order": 143,
+      "order": 144,
       "area": "Zelfstandigheid",
       "title": "Duurzame hulpagent bedienen",
       "outcome": "Starten, volgen, stoppen en hervatten werken via de gebruikersroute; hoofd- en hulpagent delen één provideradapter."
     },
     {
       "id": "VB-004",
-      "order": 144,
+      "order": 145,
       "area": "Browser",
       "title": "Browser na onderbreking veilig hervatten",
       "outcome": "Herstelbestanden gebouwd; systeeminstallatie automatisch geblokkeerd. Bestaande browser blijft live. Herstel na herstart nog niet uitgevoerd of bewezen."
@@ -5123,158 +5216,158 @@
       "area": "Initiatief",
       "title": "Passend initiatief en kansen bewijzen",
       "outcome": "Meer gewaardeerd eigen initiatief dan Bottie: humor, nieuwsgierigheid, zelfgekozen onderzoek, creatieve bijdragen en kansen. Eva begint en vervolgt zelf werk, voert binnen bestaand mandaat uit en controleert het resultaat. Gezin beoordeelt eigenheid, plezier, nut en hinder; alleen meer berichten telt niet als winst.",
-      "order": 145
+      "order": 146
     },
     {
       "id": "VB-001",
       "area": "Voice",
       "title": "Full-duplex voice leveren",
       "outcome": "Met Eva2 praten via de bestaande Telegram- of Home Assistant-aansluiting, waarbij Eva hoorbaar onderbroken kan worden en het gesprek daarna doorgaat.",
-      "order": 146
+      "order": 147
     },
     {
       "id": "VB-002",
-      "order": 147,
+      "order": 148,
       "area": "Voice",
       "title": "Passende aanwezigheid leveren",
       "outcome": "Eva zoekt spontaan contact via de beschikbare speakers en deurbel, met herkenbare identiteit en gevoel voor het moment. Gezin beoordeelt plezier, betrokkenheid en hinder; onderbreken en stop werken."
     },
     {
       "id": "UX-001",
-      "order": 148,
+      "order": 149,
       "area": "Bediening",
       "title": "Eigenaar-dashboard leveren",
       "outcome": "Een onderhouden adminframework toont status, mensen, geheugen, kosten en bewijs."
     },
     {
       "id": "UX-002",
-      "order": 149,
+      "order": 150,
       "area": "Bediening",
       "title": "Kanban bedienbaar maken",
       "outcome": "Taken zijn te starten, volgen en stoppen met bewijs per kaart."
     },
     {
       "id": "AU-004",
-      "order": 150,
+      "order": 151,
       "area": "Leren",
       "title": "Zelf tools en skills leren maken",
       "outcome": "Een ongeziene digitale taak leren uit documentatie; zelf een tool of skill maken, testen en bij een andere taak hergebruiken zonder nieuwe taakspecifieke kerncode. Fouten en menselijke hulp meetellen."
     },
     {
       "id": "AU-006",
-      "order": 151,
+      "order": 152,
       "area": "Langdurig werk",
       "title": "Project zelfstandig tot resultaat brengen",
       "outcome": "Een meerdaags cross-domainproject plannen, uitvoeren, bijsturen en na herstart hervatten met zichtbare kosten en stop. Een bedrijfspilot kan als afgesproken project; geen echte betalingen, publicatie of verplichtingen zonder passend mandaat."
     },
     {
       "id": "AU-003",
-      "order": 152,
+      "order": 153,
       "area": "Zelfstandigheid",
       "title": "Eigen onderdelen beoordelen en verbeteren",
       "outcome": "Eva ontdekt een overbodig of zwak onderdeel, vergelijkt onderhouden upstream, maakt een geïsoleerde verbetering en bewijst voor/na voordeel en terugrol. Alleen gemeten winst mag promoveren; geen zelfverruiming van rechten."
     },
     {
       "id": "CO-004",
-      "order": 153,
+      "order": 154,
       "area": "Mensen en geheugen",
       "title": "Optioneel geheugen inzien",
       "outcome": "Alleen een optionele inzagefunctie; geen voorwaarde voor dagelijks gebruik. Begonnen bronwerk blijft bewaard, niet afgevinkt of live gezet."
     },
     {
       "id": "CO-005",
-      "order": 154,
+      "order": 155,
       "area": "Mensen en geheugen",
       "title": "Optioneel expliciet vergeten of corrigeren",
       "outcome": "Alleen op uitdrukkelijk verzoek kunnen corrigeren of vergeten. Geen onderhoudstaak voor Jaap en geen blokkade voor autonoom geheugen."
     },
     {
       "id": "IN-001",
-      "order": 155,
+      "order": 156,
       "area": "Installatie",
       "title": "Fresh install voor gebruikers",
       "outcome": "Een gewone gebruiker installeert Eva zonder terminal of configuratiebestanden."
     },
     {
       "id": "IN-002",
-      "order": 156,
+      "order": 157,
       "area": "Installatie",
       "title": "Naar andere computer verplaatsen",
       "outcome": "Identiteit en data herstellen; connectoren veilig opnieuw koppelen."
     },
     {
       "id": "IN-003",
-      "order": 157,
+      "order": 158,
       "area": "Installatie",
       "title": "Consumentenupdates leveren",
       "outcome": "Renovate stelt onderhouden dependencies voor; updates doorlopen dezelfde poort en rollen verliesloos terug."
     },
     {
       "id": "CP-001",
-      "order": 158,
+      "order": 159,
       "area": "Eindvergelijking",
       "title": "Volledige productmatrix opnieuw uitvoeren",
       "outcome": "De tussentijdse gelijke proeven worden op de gezamenlijke releasekandidaat en actuele concurrenten als één geheel herhaald."
     },
     {
       "id": "CP-002",
-      "order": 159,
+      "order": 160,
       "area": "Eindvergelijking",
       "title": "Cross-domainwinst aantonen",
       "outcome": "Herhaalde ongeziene gesprekken en handelingen toetsen de vooraf vastgelegde drempels tegen alle drie concurrenten. Resultaat, menselijk oordeel, hulp, tijd, kosten en herstel bepalen de uitkomst; winst is niet verondersteld."
     },
     {
       "id": "CP-003",
-      "order": 160,
+      "order": 161,
       "area": "Vergelijking",
       "title": "Officiële benchmarks uitvoeren",
       "outcome": "AgentBench, GAIA en OSWorld gebruiken officiële scorers en trajecten."
     },
     {
       "id": "FN-001",
-      "order": 161,
+      "order": 162,
       "area": "Eindacceptatie",
       "title": "Eindkandidaat bevriezen",
       "outcome": "Image, configuratie en bewijsset zijn onveranderlijk gebonden; daarna volgen de releasepoort en pas na veilige installatie de eindpraktijkproeven."
     },
     {
       "id": "RB-007",
-      "order": 162,
+      "order": 163,
       "area": "Release-eindfase",
       "title": "Verplichte testgroepen uitvoeren",
       "outcome": "Pas na functionele productkaarten slaagt iedere testgroep tegen dezelfde kandidaat."
     },
     {
       "id": "RB-008",
-      "order": 163,
+      "order": 164,
       "area": "Release-eindfase",
       "title": "Wegwerpstack testen",
       "outcome": "De kandidaat migreert, antwoordt, onthoudt, herstart en ruimt volledig op."
     },
     {
       "id": "RB-009",
-      "order": 164,
+      "order": 165,
       "area": "Release-eindfase",
       "title": "Bewijsset onafhankelijk beoordelen",
       "outcome": "Een onafhankelijke reviewer controleert de volledige releaseketen."
     },
     {
       "id": "RB-010",
-      "order": 165,
+      "order": 166,
       "area": "Release-eindfase",
       "title": "Actief en reserveslot beheren",
       "outcome": "Alleen groen werk gaat naar het reserveslot; controleer het daarna en wissel de route. Bij problemen blijft het huidige slot actief."
     },
     {
       "id": "FN-002",
-      "order": 166,
+      "order": 167,
       "area": "Eindacceptatie",
       "title": "Computerherstart bewijzen",
       "outcome": "De veilig geïnstalleerde eindkandidaat komt zonder handmatige reparatie terug met dezelfde gegevens en zonder dubbele acties."
     },
     {
       "id": "FN-003",
-      "order": 167,
+      "order": 168,
       "area": "Eindacceptatie",
       "title": "Zeven dagen praktijk en eindacceptatie bewijzen",
       "outcome": "Een ongewijzigde kandidaat doorstaat zeven dagen gezinspraktijk. De volledige bewijsset, vergelijking en menselijke beoordeling zijn groen vóór vervangbeslissing; geraakt bewijs wordt na relevante wijzigingen opnieuw uitgevoerd."
@@ -5681,6 +5774,22 @@
       ],
       "evidencePaths": [
         "eva2/reviews/CO-008-automatic-memory-ddb0267.md"
+      ]
+    },
+    "AU-007": {
+      "baseCommit": "ff8071c08a41c5e73036acc43a1d642f99a08f1b",
+      "commit": "34ed766a1947e78a268b800728d227218aaa8f14",
+      "evidenceCommit": "f99b5a2e9561ce96d4b77668b3caf9b813339239",
+      "reviewCommit": "99817db87e70afc39e2928e3e9b5046007f299e9",
+      "decision": "GO",
+      "implementedBy": "/root",
+      "reviewedBy": "/root/au002_release_review",
+      "testReceiptPaths": [
+        "eva2/evidence/product/AU-007-private-initiative-2026-09-10.json",
+        "eva2/reviews/AU-007-private-initiative-34ed766.md"
+      ],
+      "evidencePaths": [
+        "eva2/reviews/AU-007-technical-closure-f99b5a2.md"
       ]
     }
   }

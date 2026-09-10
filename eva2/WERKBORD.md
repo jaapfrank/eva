@@ -5,90 +5,69 @@ Laatst bijgewerkt: 2026-09-10.
 Doel: [Eva als zelfstandig lerende digitale huisgenoot](PROJECTDOEL.md).
 Gebouwd, getest, live en door jou geaccepteerd zijn verschillende stappen.
 
-CO-008 is afgerond en GE-01 geaccepteerd. AU-007 is nu technisch afgerond met onafhankelijke GO: Eva koos en maakte zelf een private beoordelingskaart voor huisautomatiseringen. Alleen Jaaps gebruiksbeoordeling staat open.
-[Actueel bewijs](reviews/AU-007-private-initiative-34ed766.md).
+CO-008 blijft afgerond. AU-007 is technisch afgerond; Jaap vindt de beoordelingskaart op zich wel bruikbaar. Nu AU-008: zelfstandige uitvoering binnen het kosteloze eigenaarmandaat.
+[Actueel bewijs](reviews/AU-007-technical-closure-f99b5a2.md).
 
-Lees de [beoordelingskaart](evidence/product/AU-007-beoordelingskaart-huisautomatisering-2026-09-10.md) wanneer het uitkomt. IN-01: laat weten of dit soort eigen bijdrage nuttig is. Er is geen volgend implementatiegoal gestart.
+AU-008 wordt gebouwd: gewone taakuitvoering aansluiten, kosten en bevoegdheden bij iedere echte handeling controleren, daarna één bijdrage uit de normale cyclus opleveren.
 
-### Afzonderlijke storing: bestaande Voice PE-route
+### Afzonderlijk stemwerk
 
-Jaap bevestigde op 10 september dat Eva na de reparatie weer hoorbaar antwoordt.
-De specifieke onbereikbaarheidsfout door een geheugenbronverwijzing van 247 tekens
-is daarmee in de praktijk hersteld. De originele bron blijft behouden; de
-persoons- en mandaatcontroles zijn niet verruimd. 108 gerichte tests, onafhankelijke
-review en gecontroleerde uitrol zijn vastgelegd in het
+De laptoproute met LiveKit is live op http://localhost:44716. Plak het bestaande
+eigenaar-dashboardtoken in het aanmeldformulier en kies Begin gesprek.
+Bestandswerk, brononderzoek, stoppen en synthetische spraakonderbreking zijn
+gecontroleerd via dezelfde Eva-kern. De huisingang en bestaande gegevens blijven
+behouden. Fysieke microfoon-/echoproef en Jaaps beoordeling staan open.
+
+De voicetaak onderzoekt de resterende wachttijd: de gemeten geheugenraadpleging
+is de grootste vertraging. Een threadinstelling gaf geen herhaalbare verbetering
+en is daarom niet uitgerold. Telefoon en natuurlijke Voice PE-toegang zijn nog
+niet opgeleverd. [Actueel voicebewijs](evidence/product/voice-livekit-integration-2026-09-10.json).
+De eerdere Voice PE-onbereikbaarheidsfout is hersteld en door Jaap bevestigd;
 [herstelbewijs](evidence/product/VOICE-REF-247-repair-2026-09-10.json).
-Natuurlijk doorpraten tijdens werk en gewone spraakonderbreking zijn niet
-geaccepteerd: de huidige route blijft opeenvolgende vraag/antwoordbeurten gebruiken.
-[Begrensde diagnose en voorstel](design/product/voice-session-diagnosis-2026-09-10.md).
-GE-01 blijft geaccepteerd. De onderstaande latere eigenaaropdracht hervat de voice-uitvoering.
-
-Het [OSS-onderzoek van 10 september](design/product/voice-oss-selection-2026-09-10.md)
-is afgerond onder Jaaps harde eis dat de volledige gespreksmechanismen al samen
-in een onderhouden applicatie zitten. Geen onderzochte applicatie is volledig
-gekwalificeerd. LiveKit 1.8.0: 19 bestaande upstreamtests geslaagd, zonder fysieke
-spraakproef. Pipecat heeft uitvoerbare asyncdemo's, maar de onderzochte taken zijn
-gesimuleerd en/of alleen via het scherm opgevolgd. Dit was de onderzoeksstatus vóór de latere uitvoeringsopdracht. Telefoon/laptop gaat bij eventuele
-vervolgverificatie voorop; HA is geen selectievoorwaarde. `openai_tts` 3.9.1 heeft
-gepubliceerde zinsstreaming, is hier niet geïnstalleerd en blijft ondersteunend.
-
-
-Jaap heeft de uitvoering expliciet hervat: ontbreken van een complete OSS-app is
-geen stopvoorwaarde. [Actieve LiveKit-integratie](design/product/voice-livekit-delivery-2026-09-10.md)
-gebruikt de bestaande Eva-kern en providers. Laptop eerst, telefoon/huisapparaten
-blijven open. De nieuwe laptoproute is nu live; eigenaaracceptatie staat open.
-Echte bestandsopdracht, brononderzoek tijdens doorpraten en een stopopdracht zijn
-getoetst via dezelfde Eva-kern. De synthetische audioproef bevestigt nu onderbreken
-zonder hervatting van oude zinnen en daarna de gecorrigeerde korte reactie.
-De gevonden LiveKit-opwarmblokkade van drie seconden is verholpen: de herproef
-behoudt de volledige correctie en onderbreekt zonder oude staart. De kernwachttijd
-blijft nog te verbeteren (korte losse antwoorden 11–13 seconden in deze meting).
-Media en herbouwde LiveKit-server: actuele scans zonder HIGH/CRITICAL. Gecontroleerde
-uitrol naar slot3 geslaagd; bestaande huisingang en beide databases behouden.
-Open http://localhost:44716 in de laptopbrowser, plak het bestaande
-eigenaar-dashboardtoken in de aanmeldpagina en kies Aanmelden en Begin gesprek.
-De eerder geblokkeerde HTTP-aanmelding is vervangen; de pagina opent aantoonbaar
-in de zichtbare browser (loginherstel 661de8d, 10 gerichte tests en review GO). De live audioproef
-bevestigt onderbreken en de volledige correctie; intrekken sluit ook de ruimte.
-Fysieke microfoon-/echoproef, wachttijdverbetering en Jaaps beoordeling staan open.
-Telefoon en natuurlijke VoicePE-toegang zijn nog niet opgeleverd.
-[Meetbewijs](evidence/product/voice-livekit-integration-2026-09-10.json).
 
 ## Nu
 
 | Volgorde | Kaart | Resultaat | Status |
 |---:|---|---|---|
-| 142 | `AU-007` — Zelf een relevant privaat voorstel uitwerken | Eva ziet via een bestaande huiswaarneming een passende kans bij toegestane persoonlijke context, kiest zelf een concrete vervolgstap en werkt één controleerbaar privaat voorstel of hulpmiddel uit. Jaap hoeft de stappen niet voor te zeggen. | 🔵 REVIEW |
+| 143 | `AU-008` — Zelf kosteloos handelen binnen eigenaarmandaat | Eva kiest uit toegestane context een nuttige bijdrage, voert passende kosteloze stappen via haar gewone taakuitvoerder uit en toont resultaat of concrete blokkade. Stilte blijft een geldige keuze. | 🟡 BEZIG |
 
 Klaar betekent:
 
-- Een bestaande toegestane trigger leidt zonder stapsgewijze gebruikersopdracht tot één relevant, controleerbaar privaat resultaat.
-- Resultaat en herkomst zijn beschikbaar voor Jaap; technische oplevering en subjectieve acceptatie zijn apart zichtbaar.
+- Een natuurlijk gekozen initiatief levert via de gewone uitvoerder een bruikbaar resultaat op binnen het actuele kosteloze mandaat.
+- Resultaat en beperkingen staan op het dashboard; technische GO en Jaaps beoordeling blijven afzonderlijk.
 
 <details>
 <summary>Technische uitvoering: bestanden en controles</summary>
 
-### Exact werk voor `AU-007`
+### Exact werk voor `AU-008`
 
+- `docs/eva-repository-inventory.generated.json`
+- `eva2/PROJECTDOEL.md`
 - `eva2/WERKBORD.md`
 - `eva2/design/product/execution-workboard-v1.json`
+- `eva2/src/eva/adapters/api/dashboard_initiatives.py`
 - `eva2/src/eva/adapters/model/pydantic_conversation.py`
+- `eva2/src/eva/adapters/postgres/conversation_actions.py`
+- `eva2/src/eva/adapters/postgres/conversation_journal.py`
+- `eva2/src/eva/adapters/postgres/external_conversation_tools.py`
+- `eva2/src/eva/adapters/postgres/initiative_execution.py`
+- `eva2/src/eva/adapters/postgres/owner_initiatives.py`
 - `eva2/src/eva/adapters/postgres/sensory_events.py`
-- `eva2/src/eva/adapters/projection/hindsight.py`
+- `eva2/src/eva/application/conversation.py`
 - `eva2/src/eva/application/free_will.py`
+- `eva2/src/eva/application/initiative_execution.py`
+- `eva2/src/eva/application/personal_interests.py`
 - `eva2/src/eva/bootstrap/runtime.py`
+- `eva2/src/eva/providers/mcp_autonomy.py`
 - `eva2/tests/application/test_free_will.py`
+- `eva2/tests/application/test_personal_interests.py`
 - `eva2/tests/model/test_conversation_model.py`
 - `eva2/tests/postgres/test_owner_initiatives.py`
-- `eva2/tests/projection/test_hindsight.py`
 
 Echte controles:
 
-- `pytest -q tests/application/test_free_will.py`
-- `pytest -q tests/model/test_conversation_model.py::test_sensory_model_parses_only_bounded_own_initiative tests/model/test_conversation_model.py::test_passive_house_event_retains_provider_usage_with_bounded_decision`
-- `pytest -q tests/projection/test_hindsight.py::test_observation_inherits_authority_from_complete_bounded_source_facts tests/projection/test_hindsight.py::test_household_observations_require_every_source_authority tests/projection/test_hindsight.py::test_private_recall_cannot_hide_shared_observation_sources`
-- `pytest -q tests/postgres/test_owner_initiatives.py`
-- `pytest -q tests/model/test_conversation_model.py::test_model_builds_complete_download_instead_of_another_plan`
+- `pytest -q tests/application/test_free_will.py tests/application/test_personal_interests.py tests/application/test_conversation.py tests/postgres/test_owner_initiatives.py`
+- `pytest -q tests/model/test_conversation_model.py::test_sensory_model_parses_only_bounded_own_initiative tests/model/test_conversation_model.py::test_native_context_preserves_unknown_model_cost_block_on_every_request`
 
 </details>
 
@@ -195,7 +174,10 @@ Afgevinkt betekent alleen: de vastgelegde kaart is afgerond, niet het hele produ
   [Bewijs](evidence/product/VB-003-completion-2026-09-10.json).
 - [x] `CO-008` — Zelf relevant geheugen kiezen en bijwerken (done).
   [Bewijs](evidence/product/CO-008-automatic-personal-memory-2026-09-10.json).
-- [ ] `AU-007` — Zelf een relevant privaat voorstel uitwerken (review).
+- [x] `AU-007` — Zelf een relevant privaat voorstel uitwerken (done).
+  [Bewijs](evidence/product/AU-007-private-initiative-2026-09-10.json).
+  [Bewijs](reviews/AU-007-private-initiative-34ed766.md).
+- [ ] `AU-008` — Zelf kosteloos handelen binnen eigenaarmandaat (in_progress).
 
 </details>
 

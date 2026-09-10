@@ -120,7 +120,8 @@ def test_sensory_worker_recalls_then_commits_one_shadow_decision(current_state, 
     assert recalled[0].maximum_facts == 8
     assert recalled[0].principal_id == "jaap"
     assert recalled[0].subject_ids == ("jaap",)
-    assert "Persoonlijke plannen, interesses en voorkeuren" in recalled[0].query_text
+    assert "Persoonlijke plannen" in recalled[0].query_text
+    assert "interesses en voorkeuren" in recalled[0].query_text
     assert "binary_sensor.achterdeur" in recalled[0].query_text
     assert recalled[0].conversation_id == "sensory:home-assistant"
     if current_state is None:
@@ -249,7 +250,8 @@ def test_spontaneous_initiative_retains_own_origin_and_event_identity():
     assert first == proposal.adoption(claim, principal_id="owner")
     assert first["origin"] == "eva_initiative"
     assert first["source_message_id"] == "sensory:event-1"
-    assert first["authority"] == "private_research_and_draft_only"
+    assert first["authority"] == "current_host_costless_mandate_required"
+    assert first["execution_mode"] == "autonomous_task"
     assert first["intent_id"] != proposal.adoption(claim, principal_id="another-owner")["intent_id"]
     claim.event.source_event_id = "event-2"
     assert first["intent_id"] != proposal.adoption(claim, principal_id="owner")["intent_id"]
@@ -312,3 +314,26 @@ def test_initiative_memory_uses_trusted_owner_alias_and_rechecks_revocation(tmp_
     assert [q.subject_ids for q in queries] == [("telegram:123",), (owner,)]
     assert [q.audience.principal_id for q in queries] == ["telegram:123", owner]
     assert worker._principal_id == owner  # Initiative ownership is not rewritten.
+
+
+def test_native_work_cannot_forge_user_ingress_or_direct_user_memory():
+    from eva.application.conversation import ConversationTurn, ConversationConflict
+    from eva.application.initiative_execution import require_initiative_context
+    from eva.bootstrap.runtime import PostgresHindsightMemoryRuntime
+    turn = ConversationTurn.private("tenant", "installation", "owner",
+        "initiative-task:" + "a"*64, "initiative-execute:" + "a"*64,
+        "Eva koos dit zelf", "2026-09-10T12:00:00Z")
+    import pytest
+    with pytest.raises(ConversationConflict, match="durable host"):
+        require_initiative_context(turn)
+    # No initialized memory writer exists: native output must return before it.
+    runtime = object.__new__(PostgresHindsightMemoryRuntime)
+    runtime.after_response(turn, None)
+    from eva.adapters.postgres.conversation_journal import PostgresConversationJournal
+    assert PostgresConversationJournal._ingress_data(turn)["origin"] == "eva_initiative"
+    from eva.providers.mcp_autonomy import _SourceTurnLoader
+    with pytest.raises(ConversationConflict, match="not an owner"):
+        _SourceTurnLoader.__call__(object(), {
+            "tenant_id": turn.tenant_id, "installation_id": turn.installation_id,
+            "principal_id": turn.principal_id, "conversation_id": turn.conversation_id,
+            "message_id": turn.message_id, "audience": {"kind": "private_person"}})

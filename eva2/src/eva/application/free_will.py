@@ -66,7 +66,8 @@ class PersonalInitiativeProposal:
             "title": self.title.strip(),
             "motivation": self.motivation.strip(),
             "next_exploration": self.next_exploration.strip(),
-            "authority": "private_research_and_draft_only",
+            "authority": "current_host_costless_mandate_required",
+            "execution_mode": "autonomous_task",
         }
 
 
@@ -344,8 +345,8 @@ class SensoryDecisionWorker:
                     },
                     subject_ids=(memory_principal,),
                     query_text=(
-                        "Persoonlijke plannen, interesses en voorkeuren die passen bij "
-                        "deze huiswaarneming: "
+                        "Persoonlijke plannen, dagelijkse behoeften, interesses en voorkeuren "
+                        "voor een nuttige eigen bijdrage. Context bij deze waarneming: "
                         f"{event.source} {event.event_type} "
                         f"{event.payload.get('entity_id', '')} "
                         f"{state_description}"

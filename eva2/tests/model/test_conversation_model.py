@@ -2631,3 +2631,17 @@ def test_duplicate_observation_model_view_matches_admission_and_actual_tool_retu
     numeric["result"] = {"value": True}
     numeric["proof"]["evidence"]["observation"] = {"value": 1}
     assert model._receipt_model_view(numeric) == numeric
+
+
+def test_native_context_preserves_unknown_model_cost_block_on_every_request():
+    from types import SimpleNamespace
+    from eva.application.initiative_execution import initiative_execution
+    model = SimpleNamespace(_resource_budget=None,
+        autonomous_admission_blocker=lambda: "unverified_model_cost")
+    # Ordinary user request behavior is unchanged; native work cannot borrow it.
+    PydanticConversationModel._admit_request(model, {}, autonomous=False)
+    with initiative_execution(object()):
+        for _ in range(2):
+            with pytest.raises(ConversationModelError, match="verified price"):
+                PydanticConversationModel._admit_request(model, {}, autonomous=False)
+    PydanticConversationModel._admit_request(model, {}, autonomous=False)

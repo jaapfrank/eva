@@ -630,6 +630,8 @@ class PostgresConversationJournal(PostgresScopedRole):
             "principal_id": turn.principal_id,
             "text": turn.text,
         }
+        if turn.conversation_id.startswith("initiative-task:"):
+            data["origin"] = "eva_initiative"
         if turn.project_id is not None:
             data["project_id"] = turn.project_id
         if turn.observation_binding is not None:

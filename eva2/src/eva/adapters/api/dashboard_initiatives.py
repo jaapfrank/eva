@@ -44,3 +44,19 @@ def install_dashboard_initiatives(app, *, access, runtime):
             "Content-Disposition": "attachment; filename*=UTF-8''" + quote(result["filename"], safe=""),
             "X-Content-SHA256": result["sha256"],
         })
+
+    @app.post("/internal/v1/dashboard/initiatives/feedback")
+    def feedback(request: Request, payload: dict):
+        access.require(request)
+        if request.query_params or set(payload) != {"intent_id", "feedback"}:
+            raise HTTPException(422, "invalid initiative feedback")
+        return JSONResponse(invoke("dashboard_initiative_feedback", payload["intent_id"], payload["feedback"]),
+                            headers={"Cache-Control": "no-store"})
+
+    @app.post("/internal/v1/dashboard/initiatives/revoke")
+    def revoke(request: Request, payload: dict):
+        access.require(request)
+        if request.query_params or payload:
+            raise HTTPException(422, "initiative mandate scope is server-bound")
+        return JSONResponse(invoke("dashboard_revoke_initiative_mandate"),
+                            headers={"Cache-Control": "no-store"})

@@ -257,7 +257,9 @@ class PostgresConversationActions:
                 actions = [name for name in actions if name not in blocked]
         if turn.observation_binding is not None:
             actions.append(_OBSERVATION_IDENTITY_CORRECTION_ACTION)
-        return tuple(actions)
+        from eva.application.initiative_execution import require_initiative_context
+        guard = require_initiative_context(turn)
+        return tuple(name for name in actions if guard is None or guard.action_allowed(name))
 
     def continuation_action_names(self, turn: ConversationTurn) -> tuple[str, ...]:
         allowed = set(self.available_action_names(turn))
@@ -336,6 +338,9 @@ class PostgresConversationActions:
             external_receipt = provider.pending(turn)
             if external_receipt is not None:
                 return external_receipt
+        from eva.application.initiative_execution import require_initiative_context
+        if require_initiative_context(turn) is not None:
+            return None
         timeline = self._timeline(turn)
         correction_events = timeline.events(
             self._observation_identity_correction_thread_id(turn)
@@ -385,6 +390,11 @@ class PostgresConversationActions:
         return self._receipt_from_event(turn, events[0], disposition="already_adopted")
 
     def active_context(self, turn: ConversationTurn) -> tuple[str, ...]:
+        from eva.application.initiative_execution import require_initiative_context
+        if require_initiative_context(turn) is not None:
+            # The durable native claim is already supplied by guard.instructions().
+            # Never relabel completed/stopped owner work as an active new goal.
+            return ()
         timeline = self._timeline(turn)
         document_events = timeline.events(self._document_episode_thread_id(turn))
         current_document = self._current_document_task(document_events)
@@ -560,6 +570,8 @@ class PostgresConversationActions:
     def execute(
         self, turn: ConversationTurn, call: ConversationActionCall
     ) -> ConversationActionReceipt:
+        from eva.application.initiative_execution import authorize_initiative_action
+        authorize_initiative_action(turn, call.name)
         external_tool = self._external_tool_by_action.get(call.name)
         if external_tool is not None:
             return external_tool.execute(turn, call)
@@ -2961,6 +2973,29 @@ class PostgresPersonalInterestStore(_PostgresPersonalClaimStore):
 
     _stage = "exploration"
 
+    def complete_native(self, claim, reply, *, now):
+        if reply.provider in {"runtime:conversation-limit", "runtime:conversation-stop"}:
+            return self.block_native(claim, RuntimeError(reply.text), now=now)
+        return self._transition(claim, expected_revision=claim.revision,
+            checkpoint="initiative-completed", phase="initiative_completed", status="completed",
+            event_type="PERSONAL_INITIATIVE_COMPLETED", now=now,
+            data={"intent_id": claim.intent_id, "origin": "eva_initiative",
+                  "content": reply.text, "content_sha256": reply.text_sha256,
+                  "filename": "initiatief-resultaat.md", "provider": reply.provider,
+                  "conversation_id": reply.conversation_id, "message_id": reply.message_id,
+                  "model_usage": reply.model_usage.to_wire()})
+
+    def block_native(self, claim, error, *, now):
+        try:
+            return self._transition(claim, expected_revision=claim.revision,
+                checkpoint="initiative-blocked", phase="initiative_blocked", status="needs_help",
+                event_type="PERSONAL_INITIATIVE_BLOCKED", now=now,
+                data={"intent_id": claim.intent_id, "reason": str(error)[:800],
+                      "origin": "eva_initiative"})
+        except CheckpointConflict:
+            # Owner stop or a newer lease won; never overwrite that decision.
+            return None
+
     def completed_unprojected(
         self, *, tenant_id: str, installation_id: str, now: datetime
     ) -> CompletedPersonalExploration | None:
@@ -3061,6 +3096,7 @@ class PostgresPersonalInterestStore(_PostgresPersonalClaimStore):
             question=str(required["next_exploration"]),
             occurred_at=adopted.occurred_at.strftime("%Y-%m-%dT%H:%M:%SZ"),
             revision=revision,
+            execution_mode=str(data.get("execution_mode", "private_prototype")),
         )
 
 

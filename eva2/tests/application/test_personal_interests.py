@@ -261,3 +261,20 @@ def test_release_bundle_is_reproducible_and_committed_before_claim() -> None:
         payload = json.loads(archive.read("listing.json"))
         assert payload["price_minor_units"] == 499
         assert payload["publication_status"] == "unpublished_release_candidate"
+
+
+def test_native_worker_uses_general_executor_and_keeps_blocked_status():
+    from dataclasses import replace
+    from types import SimpleNamespace
+    claim = replace(_claim(), execution_mode="autonomous_task")
+    calls = []
+    class Store:
+        def completed_unprojected(self, **kwargs): return None
+        def claim_next(self, **kwargs): return claim
+        def complete_native(self, selected, result, **kwargs):
+            calls.append((selected, result))
+            return SimpleNamespace(phase="initiative_blocked")
+    worker = PersonalInterestWorker(Store(), object(), object(),
+        execute_native=lambda selected: "concrete blocked result")
+    assert worker.run_once(tenant_id="tenant", installation_id="installation", now=NOW) == "blocked"
+    assert calls == [(claim, "concrete blocked result")]

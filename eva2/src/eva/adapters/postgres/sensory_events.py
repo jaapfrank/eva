@@ -49,6 +49,7 @@ class PostgresSensoryEventStore:
         recovery_started_at: datetime | None = None,
         historical_group_size: int = 1,
         initiative_principal_id: str | None = None,
+        initiative_authorizer=None,
     ) -> None:
         self._timeline = PostgresOperationalTimeline(
             engine,
@@ -76,6 +77,7 @@ class PostgresSensoryEventStore:
             raise ValueError("historical group size is outside 1..16")
         self._historical_group_size = historical_group_size
         self._initiative_principal_id = initiative_principal_id
+        self._initiative_authorizer = initiative_authorizer
 
     def retain(self, event: SensoryEvent) -> str:
         thread_id = f"sensory:{event.source_event_id}"
@@ -548,7 +550,7 @@ class PostgresSensoryEventStore:
         c, e = operational_checkpoints.c, operational_events.c
         with self._timeline._engine.begin() as connection:
             self._timeline._scope(connection)
-            rows = connection.execute(sa.select(c.phase, e.payload, e.payload_sha256).join(
+            rows = connection.execute(sa.select(c.phase, c.thread_id, e.payload, e.payload_sha256).join(
                 operational_events, sa.and_(c.tenant_id == e.tenant_id,
                     c.installation_id == e.installation_id, c.thread_id == e.thread_id)
             ).where(c.tenant_id == scope.tenant_id, c.installation_id == scope.installation_id,
@@ -558,15 +560,26 @@ class PostgresSensoryEventStore:
             ).order_by(c.updated_at.desc()).limit(16)).all()
         if any(canonical_sha256(row.payload) != bytes(row.payload_sha256).hex() for row in rows):
             raise RuntimeError("initiative history payload hash differs")
-        return tuple({"title": row.payload["data"]["title"],
-                      "question": row.payload["data"]["next_exploration"],
-                      "phase": row.phase} for row in rows)
+        result = []
+        for row in rows:
+            feedback = next((event.payload["data"].get("feedback")
+                for event in reversed(self._timeline.events(row.thread_id))
+                if event.event_type == "PERSONAL_INITIATIVE_FEEDBACK"), None)
+            result.append({"title": row.payload["data"]["title"],
+                "question": row.payload["data"]["next_exploration"], "phase": row.phase,
+                **({"owner_feedback": feedback} if feedback else {})})
+        return tuple(result)
 
     def _adopt_initiative(self, connection, claim, decision, *, now):
         proposal = decision.initiative
         principal = self._initiative_principal_id
         if proposal is None or principal is None:
             return {"status": "not_admitted", "reason": "owner_scope_unavailable"}
+        if self._initiative_authorizer is not None:
+            try:
+                self._initiative_authorizer()
+            except Exception:
+                return {"status": "not_admitted", "reason": "initiative_mandate_unavailable"}
         scope = self._timeline._scope_value
         # Serialize admission for one owner's background work, across workers.
         key = f"eva-initiative:{scope.tenant_id}:{scope.installation_id}:{principal}"
@@ -582,7 +595,7 @@ class PostgresSensoryEventStore:
                 operational_events.c.event_type == "PERSONAL_INTENT_ADOPTED",
                 operational_events.c.payload["data"]["principal_id"].astext == principal,
                 operational_events.c.payload["data"]["origin"].astext == "eva_initiative",
-                operational_checkpoints.c.phase.not_in(("release_ready", "personal_stopped")),
+                operational_checkpoints.c.phase.not_in(("release_ready", "personal_stopped", "initiative_completed", "initiative_blocked")),
             ).limit(1)).scalar_one_or_none()
         if pending is not None:
             return {"status": "not_admitted", "reason": "active_initiative_exists", "thread_id": pending}
