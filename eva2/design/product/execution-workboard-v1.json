@@ -319,7 +319,7 @@
           "live": "partial",
           "accepted": "partial",
           "gap": "Herhaalde nuttige bijdragen en brede zelfstandige uitvoering. AU-008 is live; echte uitvoerproef loopt.",
-          "detail": "AU-007 leverde zelfstandig een beoordelingskaart op. Jaap noemt die op zich wel bruikbaar; dat oordeel geldt alleen voor die kaart. AU-008 voegt gewone taakuitvoering binnen het kosteloze mandaat toe, momenteel met vijf bestaande lokale bestandstools.",
+          "detail": "AU-007 is beperkt geaccepteerd. AU-008 is live met vijf bestaande werkmapfuncties en drie Home Assistant-leesfuncties, onder hetzelfde kosteloze mandaat. Eén echte zelfstandige bijdrage en bredere taakroutes blijven open.",
           "evidence": "AU-007 afgerond en beperkt geaccepteerd · AU-008 gebouwd, gericht getest en live; productproef open",
           "outcomes": [
             {
@@ -3497,7 +3497,7 @@
       "tested": true,
       "live": true,
       "ownerAccepted": false,
-      "currentWork": "HA-uitbreiding heeft code-GO. Beslisser krijgt nu de actuele toegelaten capabilities en mag ook een algemeen nuttig eigen idee kiezen;17gerichte model/workerchecks groen. Geheugen niet gewijzigd na diagnostiek. Eén gecombineerde kandidaat gaat naar bronreview en vervolgens de normale praktijkcyclus.",
+      "currentWork": "Live op slot3/44710:5werkmapfuncties en3bestaande HA-leesfuncties. Beslisser kent actuele capabilities en mag een algemeen nuttig eigen idee kiezen. Bronreview GO;16actuele imports en HA-bestemming teruggelezen. Normale cyclus loopt voor één echte bijdrage; bredere uitvoerroutes blijven open.",
       "authorization": "Jaap: in eerste instantie mag ze wel gewoon alles doen wat ze wil, zolang het maar inderdaad geen geld kost. Implementatie expliciet bevestigd.",
       "boundaries": "Geen nieuwe kosten of verplichtingen; onbekend is niet gratis. Bestaand toegelaten modelgebruik blijft binnen bestaande grenzen. Privacy, personen, communicatie en stoppen blijven gelden.",
       "artifactRetention": {
@@ -3508,11 +3508,12 @@
       },
       "inventoryNote": "Twee nieuwe runtimepaden toegevoegd onder bestaande eva-runtime classificaties met actuele inhoudshashes. Dit is een gerichte eigenaarsregistratie, geen volledige hergeneratie of release-inventarisbewijs; de bestaande generator stuit op ongeclassificeerd root-AGENTS.md.",
       "testEvidence": "28 gerichte controles; daarna10 controles op de gebruikte validator en2 op de optionele mandaat-uitrolpoort. Onafhankelijke code-GO. Productbewijs volgt uit de normale native cyclus.",
-      "liveImage": "sha256:0dce3f0203ad2ab24f2c386af5390cd1a47d26469718a48fdeb6e8f02dec7dbc",
-      "implementationCommit": "6ebb0da2adecebb3d2486f8ebef185d32405b8df",
-      "livePort": 44711,
+      "liveImage": "sha256:3198fc63eee36e849a06c40306f591aac8b3f3c8bec474eeaf988f0ce12a0e72",
+      "implementationCommit": "b340925ab73aa7946908f8bca06e2a0b1f7bdfe0",
+      "livePort": 44710,
       "technicalProductAccepted": false,
-      "remainingScope": "Brede bestaande taakroutes beoordelen; eigen onderzoek via internet en overige reeds toegestane acties nog niet aan native profielen verbonden. Geen nieuwe externe communicatiebevoegdheid."
+      "remainingScope": "Brede bestaande taakroutes beoordelen; eigen onderzoek via internet en overige reeds toegestane acties nog niet aan native profielen verbonden. Geen nieuwe externe communicatiebevoegdheid.",
+      "liveCapabilityCount": 8
     }
   },
   "activeTaskId": "AU-008",
