@@ -59,7 +59,7 @@
     "built": true,
     "tested": true,
     "live": true,
-    "ownerRetest": "pending"
+    "ownerRetest": "passed_specific_unreachability_repair"
   },
   "artifacts": {
     "temporaryDirectory": "/tmp/eva-voice-reference-lgud_m4e",
@@ -76,11 +76,10 @@
     }
   },
   "limits": [
-    "Actual microphone/speaker retest remains open.",
-    "Historical successful audio tests do not make this failed current trial pass.",
-    "GE-01 owner preference acceptance remains intact."
+    "GE-01 owner preference acceptance remains intact.",
+    "Owner confirms audible answer after repair; natural realtime voice remains unaccepted."
   ],
-  "updatedAt": "2026-09-10T11:53:58.666080+00:00",
+  "updatedAt": "2026-09-10T12:57:55.550813+00:00",
   "deployment": {
     "procedure": "Existing eva2_quiescent_cutover.py, immutable source snapshot, slot3 to slot4",
     "receipt": {
@@ -163,8 +162,43 @@
     "audioPlayed": false
   },
   "ownerRetest": {
-    "instruction": "Zeg bij de Voice PE hey Eva en daarna Hoe gaat het met je? Meld het hoorbare antwoord.",
-    "status": "requested_pending",
-    "cannotInferAcceptanceFromHttp": true
+    "status": "owner_confirmed_audible_answer",
+    "source": "Jaap via originating task on 2026-09-10",
+    "acceptedScope": "Specific cannot-reach-Eva failure repaired in actual Voice PE use.",
+    "remaining": "Ordinary speech interruption and natural conversation during work do not work; not accepted as realtime voice."
+  },
+  "followupDiagnosis": {
+    "document": "eva2/design/product/voice-session-diagnosis-2026-09-10.md",
+    "ownerClarification": "Natural turn-taking during ongoing work, useful intermediate speech, ordinary interruption and context preservation; not merely faster answers.",
+    "runsLocal": [
+      "2026-09-10T14:50:11+02:00",
+      "2026-09-10T14:50:29+02:00"
+    ],
+    "sameConversation": true,
+    "metrics": [
+      {
+        "sttAfterVadSeconds": 0.019,
+        "intentSeconds": 6.635,
+        "householdRecallSecondsApprox": 2.206,
+        "modelFirstContentMs": 1846,
+        "modelCompletedMs": 3118,
+        "replyWords": 17,
+        "replyCharacters": 93
+      },
+      {
+        "sttAfterVadSeconds": 0.016,
+        "intentSeconds": 8.777,
+        "householdRecallSecondsApprox": 0.968,
+        "modelFirstContentMs": 6779,
+        "modelCompletedMs": 6861,
+        "replyWords": 14,
+        "replyCharacters": 68
+      }
+    ],
+    "audioFirstSoundAndDurationMeasured": false,
+    "traceSha256": "7f60de0cbb491d49fe9d5bfabaa7dbd2e24676aaa66d4dc57c309485743f3c1d",
+    "firmwareReported": "ESPHome 2026.6.2 on both devices; binary not independently read",
+    "status": "diagnosis_and_proposal_only",
+    "runtimeChangesDuringDiagnosis": false
   }
 }
