@@ -36,6 +36,17 @@ export function applyReviewedCapabilities(project, board, audit) {
       row.scope = `AU-008 · ${initiative.liveCapabilityCount ?? 'toegelaten'} kosteloze taakroutes`;
       row.currentWork = initiative.currentWork;
       row.stageNotes = { ...row.stageNotes, tested: initiative.testEvidence, live: `Centrale bron: ${initiative.liveImage}; ${initiative.implementationCommit}.`, accepted: 'Dit betreft AU-008. De beperkte waardering van de eerdere AU-007-kaart staat afzonderlijk.' };
+      const research = board.audit?.au008GeneralResearch20260910;
+      if (research?.status === 'live') {
+        row.scope = 'AU-008 · kosteloze taakroutes en publiek onderzoek';
+        row.visibleResult = 'Algemeen publiek onderzoek is live naast de bestaande werkmap- en huisleesroutes.';
+        row.works = row.visibleResult;
+        row.gap = research.remaining;
+        row.resultBasis = `Live bron ${research.sourceCommit.slice(0,7)} · 10 sep`;
+        row.accepted = research.ownerAccepted === true ? 'yes' : 'no';
+        row.stageNotes = { ...row.stageNotes, tested: research.technicalChecks, live: `Centrale onderzoeksroute: ${research.image}; ${research.sourceCommit}.` };
+        row.evidence += ' · ' + research.evidencePath;
+      }
     }
     return row;
   });
@@ -144,7 +155,7 @@ export function projectServer() {
         project.summary = [];
         const card = (task) => ({ id: task.id, title: task.title, outcome: task.outcome,
           status: task.status, doneWhen: task.doneWhen, area: task.area,
-          ...(task.id === 'AU-008' && board.audit?.initiativeDeliveryAU008 ? { displayOutcome: board.audit.initiativeDeliveryAU008.currentWork } : {}),
+          ...(task.id === 'AU-008' && board.audit?.initiativeDeliveryAU008 ? { displayOutcome: board.audit.au008GeneralResearch20260910?.status === 'live' ? `${board.audit.au008GeneralResearch20260910.usefulOutcome} ${board.audit.au008GeneralResearch20260910.remaining}` : board.audit.initiativeDeliveryAU008.currentWork } : {}),
           ...(task.id === 'AU-007' && board.audit?.initiativeDeliveryAU007?.ownerContextRepair ? {
             progress: {
               works: 'Een echte huiswaarneming leidde tot een eigen keuze; stoppen via de eigenaarroute werkte. De eerdere keuze herhaalde een al afgeronde opdracht.',

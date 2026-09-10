@@ -17,3 +17,8 @@ const unavailable=make();applyReviewedCapabilities(unavailable,board,audit);
 assert.notEqual(unavailable.capabilities.find(x=>x.id==='initiative').live,'yes');
 assert.equal(unavailable.capabilities.find(x=>x.id==='memory').accepted,'yes');
 console.log('Scoped evidence, retained acceptance and updated live route: passed');
+
+board.audit.au008GeneralResearch20260910={status:'live',sourceCommit:'af9a049',remaining:'Native resultaat nog open',ownerAccepted:false,technicalChecks:'tested',image:'research-image',evidencePath:'research-proof'};
+const research=make();applyReviewedCapabilities(research,board,audit);
+assert.match(research.capabilities.find(x=>x.id==='initiative').visibleResult,/Algemeen publiek onderzoek is live/);
+assert.equal(research.capabilities.find(x=>x.id==='initiative').accepted,'no');
