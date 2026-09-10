@@ -1,0 +1,99 @@
+{
+  "built": true,
+  "tested": true,
+  "live": true,
+  "ownerAccepted": false,
+  "productResultProven": false,
+  "sourceCommit": "519a03a88c02e64d3ab8bb005d9a2168c0f9ac95",
+  "image": "sha256:9d88df14a2975c6fc276d4b8ca23a1e942ba9144367cdbe2b694f3711d090f86",
+  "activePort": 44710,
+  "currentWork": "Algemeen publiek onderzoek en een private beoordeling op rustige momenten zijn live. Eva gebruikt haar toegestane context, kiest zelf een nuttige bijdrage of stilte en voert gekozen werk via de normale taakuitvoerder uit. Het bestaande achtergrondbudget voor deze eigenaar is vandaag 4/4 verbruikt; geen echte nieuwe bijdrage bewezen.",
+  "remaining": "Eerste bruikbare bijdrage uit de normale idlecyclus teruglezen en laten beoordelen. De volgende modelbeoordeling wacht op ruimte in het bestaande achtergrondbudget; geen geforceerde opdracht of limietverruiming.",
+  "cadence": "Maximaal één private beoordeling per uur; bestaand dagbudget gedeeld, geen inhaalwerk na herstart.",
+  "budgetAtReadback": {
+    "personUsed": 4,
+    "personLimit": 4
+  },
+  "privacy": "Private eigenaarcontext met actuele alias/audience; klokprikkel is geen huiswaarneming. Host bereidt geen proactief bericht voor.",
+  "evidencePath": "evidence/product/AU-008-private-review-live-2026-09-10.json",
+  "contract": "EvaPrivateOpportunityReviewEvidence/v1",
+  "cutover": {
+    "backgroundIsolationBoundary": "Legacy images may ignore the switch; configuration readback is not worker isolation proof.",
+    "backgroundWorkConfiguredAfterActivation": true,
+    "backgroundWorkConfiguredDuringStaging": false,
+    "contract": "Eva2QuiescentCutoverReceipt/v1",
+    "dashboardVoiceFirstActivation": false,
+    "eva1Backup": {
+      "bytes": 316571648,
+      "filename": "eva1-before-slot4-to-slot3-20260910T202628Z.db",
+      "quickCheck": "ok",
+      "sha256": "a810da76d2bdd249589e81fda01ae4a772742640a4593b41ba31a84af36c1266"
+    },
+    "eva1HttpStatuses": {
+      "/": 200,
+      "/api/capabilities": 200,
+      "/api/health": 200,
+      "/api/overview": 200,
+      "/api/workstatus": 200
+    },
+    "issuedAt": "2026-09-10T20:27:58.363994+00:00",
+    "previousDropinSha256": "697494ce129c08b712d2e5ef7e62f5e1a6a81931280c32465bc0db0ad76d15c8",
+    "proactiveCredentialWithheldDuringStaging": true,
+    "proactiveDeliveryEnabled": true,
+    "sourcePort": 44711,
+    "sourceWritersStopped": true,
+    "status": "switched",
+    "synchronizedDatabases": {
+      "memory": {
+        "countDigest": "d425116065b310d886b0358b0ef142683f1177e3d7d60f26a62f38b092335174",
+        "dataDigest": "fa0295ca79b06659b0cc09002a26259d3ebdd0a3964c37ed5e5a856693c7be93",
+        "dumpBytes": 2857807,
+        "dumpSha256": "1a0a7ffa3c4f85ed7507d16e0b6e77e52d2d5364e114881453bb45239ddba9eb",
+        "schemaDigest": "d89bfebdbfeb55e8618e81286bf24a42b838bfe577e84f6db9b93b43f5832172",
+        "tableCount": 23
+      },
+      "operational": {
+        "countDigest": "5c83b5f036de24f121a39987c8d2fb26077d066fd6b1b8a0f8e371e4fc8f974a",
+        "dataDigest": "8b35f9193e163e9411f3a9bba45330ecbd28fcc2cb7b52da19316ebae5f2157d",
+        "dumpBytes": 14171026,
+        "dumpSha256": "ce059ae8db00e8dc1af7424044a4874f9784ac918d487e6de887729d10781801",
+        "schemaDigest": "32acc5b66e349dfd5b385e4828897575ad543ebb5f2638b8880dff1cacb7fb39",
+        "tableCount": 48
+      }
+    },
+    "targetPort": 44710,
+    "targetReady": true
+  },
+  "voice": {
+    "coreUrl": "http://127.0.0.1:44710",
+    "coreSlotDirectory": "/var/lib/eva2/managed-b-slot3",
+    "preservedImage": "sha256:57ae55645ab47d93c27f42c220eb55e2794f8877aff243791513f71e578aca40",
+    "cloudRelay": true,
+    "readiness": {
+      "44710": {
+        "contract": "EvaVoiceSessionReady/v1"
+      },
+      "44716": {
+        "ready": true
+      }
+    }
+  },
+  "sourceReview": {
+    "result": "GO",
+    "scope": "seven source/test paths; generated inventory excluded",
+    "diffSha256": "195c10be6103644a7e02c5b784059507f6d1327338ce4f4c94ba59612b720a4f"
+  },
+  "checks": {
+    "claimCases": 6,
+    "admissionRecoveryCases": 1,
+    "liveImportHashes": 19
+  },
+  "artifacts": {
+    "opportunity-claim-tests.txt": "02fbf6a89a2a4b6accbc75fb5b31ae4ba6e362d5ea09950dd9ee03bc3377992e",
+    "opportunity-admission-tests.txt": "f76bfde4558d9eda08b3b6a2f48376986506f3ceb91cadcf3faa3da5c8fddef7",
+    "opportunity-image-imports.json": "b1b5ccac2228bdafb20f01279d88b8c6faa46878090bd342113b36b4ab18a763",
+    "opportunity-live-imports.json": "b1b5ccac2228bdafb20f01279d88b8c6faa46878090bd342113b36b4ab18a763",
+    "opportunity-native-baseline.json": "1ec00f9b3f29b63be9b0b22bb1b37643c5aefe537da5b8270cce0d38de417e82"
+  },
+  "normalCycleObserved": false
+}

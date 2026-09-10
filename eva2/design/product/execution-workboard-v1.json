@@ -726,7 +726,7 @@
       "document": "eva2/PROJECTDOEL.md",
       "scope": "Digitale huisgenoot: zelfstandig redeneren, initiatief, onbekende vaardigheden leren, handelen, zelfverbetering en aantoonbare concurrentiewinst met open-sourcehergebruik.",
       "sessionGoal": "AU-008: één zelfstandige kosteloze bijdrage via de algemene uitvoerder.",
-      "currentWork": "CO-008 / GE-01 is afgerond en door Jaap geaccepteerd. AU-007 blijft afgesloten met beperkte kaartwaardering. AU-008 loopt: bestandswerk, huisinformatie en algemeen publiek onderzoek zijn live. Een echte zelfstandige bijdrage blijft open.",
+      "currentWork": "CO-008 / GE-01 is afgerond en door Jaap geaccepteerd. AU-007 blijft afgesloten met beperkte kaartwaardering. AU-008: algemeen publiek onderzoek en private initiatiefbeoordeling op rustige momenten zijn live. De echte zelfstandige bijdrage wacht nog op bewijs; het huidige achtergrondbudget is 4/4 verbruikt.",
       "currentEvidence": "eva2/reviews/AU-007-technical-closure-f99b5a2.md",
       "nextStep": "Bestaande onderzoeks- en toolroutes verbinden binnen het kosteloze mandaat. Normale initiatiefcyclus volgen; pas een echt uitgevoerd en gecontroleerd resultaat als oplevering tonen.",
       "usageClarification": {
@@ -3497,7 +3497,7 @@
       "tested": true,
       "live": true,
       "ownerAccepted": false,
-      "currentWork": "Negen routes live, inclusief bestaand documentatieonderzoek met hergebruik van resultaat en blokkade op herhalen bij onzekerheid. Vervolg binnen AU-008: algemene publieke onderzoeksvragen toelaten met gegevensminimalisatie en controles, zonder nieuwe onderwerpenkaart per vraag. Normale eigen initiatiefbijdrage blijft nog onbewezen.",
+      "currentWork": "Algemeen publiek onderzoek en een private beoordeling op rustige momenten zijn live. Eva gebruikt haar toegestane context, kiest zelf een nuttige bijdrage of stilte en voert gekozen werk via de normale taakuitvoerder uit. Het bestaande achtergrondbudget voor deze eigenaar is vandaag 4/4 verbruikt; geen echte nieuwe bijdrage bewezen.",
       "authorization": "Jaap: in eerste instantie mag ze wel gewoon alles doen wat ze wil, zolang het maar inderdaad geen geld kost. Implementatie expliciet bevestigd.",
       "boundaries": "Geen nieuwe kosten of verplichtingen; onbekend is niet gratis. Bestaand toegelaten modelgebruik blijft binnen bestaande grenzen. Privacy, personen, communicatie en stoppen blijven gelden.",
       "artifactRetention": {
@@ -3507,12 +3507,12 @@
         "cleanup": "Na eigenaarbeoordeling plus 30 dagen: canoniek bewijs behouden, overige tijdelijke kandidaatbestanden gericht verwijderen."
       },
       "inventoryNote": "Twee nieuwe runtimepaden toegevoegd onder bestaande eva-runtime classificaties met actuele inhoudshashes. Dit is een gerichte eigenaarsregistratie, geen volledige hergeneratie of release-inventarisbewijs; de bestaande generator stuit op ongeclassificeerd root-AGENTS.md.",
-      "testEvidence": "28 gerichte controles; daarna10 controles op de gebruikte validator en2 op de optionele mandaat-uitrolpoort. Onafhankelijke code-GO. Productbewijs volgt uit de normale native cyclus.",
-      "liveImage": "sha256:76715a7de32c30b1c21258a427286e854cd612f6a86e25c32885b5d905da8263",
-      "implementationCommit": "344b6b8cf88f577cc684bd077937981a522c4441",
+      "testEvidence": "Gerichte onderzoek-, herstel-, gegevens- en bronbindingchecks geslaagd. Private periodieke beoordeling: zes claimgevallen en één admission-herstelgeval geslaagd; onafhankelijke source-GO en19liveimports gelijk aan kandidaat.",
+      "liveImage": "sha256:9d88df14a2975c6fc276d4b8ca23a1e942ba9144367cdbe2b694f3711d090f86",
+      "implementationCommit": "519a03a88c02e64d3ab8bb005d9a2168c0f9ac95",
       "livePort": 44710,
       "technicalProductAccepted": false,
-      "remainingScope": "Brede bestaande taakroutes beoordelen; eigen onderzoek via internet en overige reeds toegestane acties nog niet aan native profielen verbonden. Geen nieuwe externe communicatiebevoegdheid.",
+      "remainingScope": "Eerste bruikbare bijdrage uit de normale idlecyclus teruglezen en laten beoordelen. De volgende modelbeoordeling wacht op ruimte in het bestaande achtergrondbudget; geen geforceerde opdracht of limietverruiming.",
       "liveCapabilityCount": 9,
       "inventoryReadRepair": {
         "built": true,
@@ -3524,33 +3524,54 @@
         "proof": "16 geladen modules gelijk aan kandidaat; actuele operationele en geheugen-DB behouden en vergeleken"
       },
       "researchCandidate": {
-        "sourceCommit": "344b6b8cf88f577cc684bd077937981a522c4441",
-        "image": "sha256:76715a7de32c30b1c21258a427286e854cd612f6a86e25c32885b5d905da8263",
+        "sourceCommit": "519a03a88c02e64d3ab8bb005d9a2168c0f9ac95",
+        "image": "sha256:9d88df14a2975c6fc276d4b8ca23a1e942ba9144367cdbe2b694f3711d090f86",
         "built": true,
         "tested": true,
         "live": true,
         "ownerAccepted": false,
-        "scope": "Openbare documentatie uit vooraf gecontroleerde bronkeuze; nog geen willekeurige webvragen",
-        "checks": "Onderzoek/herstel/privacy:20 controles geslaagd; één fingerprintfout hersteld en2modelcontroles daarna geslaagd.17 imageimports gelijk aan bron.",
+        "scope": "Algemene publieke kennisvragen en benoemde vergelijkingen met gegevensminimalisatie, bronbinding en vastgelegde providerinvoer.",
+        "checks": "Onderzoek50gerichtechecks, daarna8bronbindingchecks; huidige image19imports exact aan bron gebonden.",
         "policyAdmission": {
-          "fileSha256": "95bddf6e1c1cd6ea003b84fd98c366900b42c06af3695692b524bdc656197689",
-          "mandateSha256": "a233744a0b4590c876ca518b40d8a625a66bc7645c610ed5f68f8fb6f1b6b1f1",
-          "status": "revised and loaded after restart"
-        }
+          "fileSha256": "6e61f44d3d18c03531ce0cf17a6aab379cecb82121494f978390bf731995e105",
+          "mandateSha256": "5d3606336f931c3d355ff8a308741072615379827851d3bf9d45f7bc5b2d4b49",
+          "status": "revised and loaded; unchanged in periodic-review deployment"
+        },
+        "introducedCommit": "af9a049a5dcd9b739b74e10252f6688d7b90bb14"
       }
     },
     "au008GeneralResearch20260910": {
       "status": "live",
-      "sourceCommit": "af9a049a5dcd9b739b74e10252f6688d7b90bb14",
-      "image": "sha256:908af641e5f81f3e363807dfa284376cb19dd5ba6b58699cf2a785a72996d5c7",
-      "activePort": 44711,
+      "sourceCommit": "519a03a88c02e64d3ab8bb005d9a2168c0f9ac95",
+      "image": "sha256:9d88df14a2975c6fc276d4b8ca23a1e942ba9144367cdbe2b694f3711d090f86",
+      "activePort": 44710,
       "profileDigest": "5d3606336f931c3d355ff8a308741072615379827851d3bf9d45f7bc5b2d4b49",
       "technicalChecks": "50 gerichte tests; 8 aanvullende bronbindingchecks; onafhankelijke source/profiel GO; 18 live importhashes gelijk aan kandidaat.",
       "usefulOutcome": "Zelfgekozen algemene publieke vragen kunnen via de gewone taakuitvoerder brongebonden onderzoek opleveren en lokaal worden bewaard.",
       "ownerAccepted": false,
       "productResultProven": false,
-      "remaining": "Eigen initiatief ook vanuit toegestane context op rustige momenten beoordelen; echte native bijdrage uitvoeren en teruglezen.",
-      "evidencePath": "evidence/product/AU-008-general-research-live-2026-09-10.json"
+      "remaining": "Eerste bruikbare bijdrage uit de normale idlecyclus teruglezen en laten beoordelen. De volgende modelbeoordeling wacht op ruimte in het bestaande achtergrondbudget; geen geforceerde opdracht of limietverruiming.",
+      "evidencePath": "evidence/product/AU-008-general-research-live-2026-09-10.json",
+      "currentLiveEvidencePath": "evidence/product/AU-008-private-review-live-2026-09-10.json"
+    },
+    "au008PrivateReview20260910": {
+      "built": true,
+      "tested": true,
+      "live": true,
+      "ownerAccepted": false,
+      "productResultProven": false,
+      "sourceCommit": "519a03a88c02e64d3ab8bb005d9a2168c0f9ac95",
+      "image": "sha256:9d88df14a2975c6fc276d4b8ca23a1e942ba9144367cdbe2b694f3711d090f86",
+      "activePort": 44710,
+      "currentWork": "Algemeen publiek onderzoek en een private beoordeling op rustige momenten zijn live. Eva gebruikt haar toegestane context, kiest zelf een nuttige bijdrage of stilte en voert gekozen werk via de normale taakuitvoerder uit. Het bestaande achtergrondbudget voor deze eigenaar is vandaag 4/4 verbruikt; geen echte nieuwe bijdrage bewezen.",
+      "remaining": "Eerste bruikbare bijdrage uit de normale idlecyclus teruglezen en laten beoordelen. De volgende modelbeoordeling wacht op ruimte in het bestaande achtergrondbudget; geen geforceerde opdracht of limietverruiming.",
+      "cadence": "Maximaal één private beoordeling per uur; bestaand dagbudget gedeeld, geen inhaalwerk na herstart.",
+      "budgetAtReadback": {
+        "personUsed": 4,
+        "personLimit": 4
+      },
+      "privacy": "Private eigenaarcontext met actuele alias/audience; klokprikkel is geen huiswaarneming. Host bereidt geen proactief bericht voor.",
+      "evidencePath": "evidence/product/AU-008-private-review-live-2026-09-10.json"
     }
   },
   "activeTaskId": "AU-008",
@@ -5176,8 +5197,10 @@
         "baseCommit": null,
         "implementationCommit": null,
         "evidenceCommit": null,
-        "reviewEvidencePaths": [],
-        "blockerReason": null
+        "reviewEvidencePaths": [
+          "reviews/AU-008-private-review-519a03a.md"
+        ],
+        "blockerReason": "Praktijkbewijs open: huidige eigenaarachtergrondbudget 4/4; volgende gewone beoordeling vereist budgetruimte."
       },
       "ownerRole": "architecturelead",
       "reviewerRole": "memorydeliveryreviewer",
@@ -5212,7 +5235,11 @@
         "eva2/tests/postgres/test_owner_initiatives.py",
         "eva2/tools/eva2_quiescent_cutover.py",
         "eva2/src/eva/adapters/model/research_tools.py",
-        "eva2/src/eva/application/research.py"
+        "eva2/src/eva/application/research.py",
+        "eva2/src/eva/adapters/postgres/runtime_resource_usage.py",
+        "eva2/evidence/product/AU-008-private-review-live-2026-09-10.json",
+        "eva2/evidence/product/AU-008-general-research-live-2026-09-10.json",
+        "eva2/reviews/AU-008-private-review-519a03a.md"
       ],
       "componentIds": [
         "api-and-runtime-composition",
