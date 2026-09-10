@@ -3382,7 +3382,7 @@
         "Geen nieuwe spraak- of dashboardimplementatie.",
         "Bestaande trigger, geen handmatig ingevoegde initiatiefclaim als bewijs."
       ],
-      "next": "Controleer relevante context en initiatiefselectie; verbeter alleen de ontbrekende schakel en bewijs één resultaat.",
+      "next": "Eerste normale achtergrondcyclus met gekoppeld eigenaarsgeheugen afwachten; nog geen bruikbaar privaat resultaat opgeleverd.",
       "ownerAccepted": false,
       "necessaryDependency": {
         "finding": "Live broad owner context recall selected zero facts. All responses had source_facts_truncated=true, including observations whose complete source IDs were present. Hindsight documents this as partial response map, not incomplete source IDs for every observation.",
@@ -3391,21 +3391,21 @@
         "acceptedMemoryOutcome": "CO-008 / GE-01 remains closed; this is a concrete dependency of initiative context."
       },
       "implementation": {
-        "commit": "24e3754fb3365df8622ef899d96d933b03bf9d58",
+        "commit": "34ed766a1947e78a268b800728d227218aaa8f14",
         "built": true,
         "tested": "Eerste contextfix34 checks; vervolg16 model/workerchecks; finale2 PostgreSQLchecks onder beperkte runtime-rol. Onafhankelijke technischeGO.",
-        "live": false,
+        "live": true,
         "ownerAccepted": false,
-        "next": "A/B-wissel3→4 loopt na afsluiten voiceproef; daarna bestaande native cyclus tot gecontroleerd privévoorstel volgen."
+        "next": "Eerste normale achtergrondcyclus met gekoppeld eigenaarsgeheugen afwachten; nog geen bruikbaar privaat resultaat opgeleverd."
       },
       "liveCandidate": {
-        "image": "sha256:12086bdaa63bdc96a4abd3ca8b99a0e253fc9b643cae6d8bbb04d06362cf20c8",
+        "image": "sha256:17c7bb1a2ad81d1f8ff873ba227649a5011c5013b76b93d8a2f2d108b0034c61",
+        "sourceCommit": "34ed766a1947e78a268b800728d227218aaa8f14",
         "slot": 3,
         "port": 44710,
-        "cutover": "Quiescent4→3: actuele operational/memory data, back-up en digests bevestigd.",
+        "cutover": "A/B4→3 geslaagd152.9s; beideDBsactueelmetdigests; vorige versie gestopt en behouden.",
         "voiceGateway": "44714→44710 teruggelezen",
-        "ownerInitiativesReadback": "HTTP200; nog geen initiatief/resultaat",
-        "coldPathIdleSeconds": 300
+        "ownerAccepted": false
       },
       "nativeTrial": {
         "sourceEvent": "home-assistant:ccffb4272e8e01fcdfdb23eccb633f9c589c4b284f106de1f4286f29901c02b8",
@@ -3429,6 +3429,13 @@
           "Same normalized title cannot be automatically adopted again.",
           "Concrete private proposal,220-word content target, unchanged runtime output cap."
         ]
+      },
+      "ownerContextRepair": {
+        "sourceCommit": "34ed766a1947e78a268b800728d227218aaa8f14",
+        "status": "live",
+        "finding": "Initiatief zocht canonical eigenaar terwijl gewone Telegrambridge onder gekoppelde private alias onthoudt. Bestaande vertrouwde accountkoppeling wordt nu per recall opnieuw gelezen.",
+        "checks": "12 workerchecks geslaagd; intrekken koppeling getest; onafhankelijke technische GO.",
+        "next": "Koppeling staat live. Eva kiest en werkt via haar normale achtergrondcyclus zelf een privaat voorstel uit; het concrete resultaat moet nog worden gecontroleerd."
       }
     }
   },
@@ -5004,6 +5011,7 @@
         "eva2/src/eva/adapters/postgres/sensory_events.py",
         "eva2/src/eva/adapters/projection/hindsight.py",
         "eva2/src/eva/application/free_will.py",
+        "eva2/src/eva/bootstrap/runtime.py",
         "eva2/tests/application/test_free_will.py",
         "eva2/tests/model/test_conversation_model.py",
         "eva2/tests/postgres/test_owner_initiatives.py",
@@ -5031,6 +5039,7 @@
         "verification"
       ],
       "componentIds": [
+        "api-and-runtime-composition",
         "conversation-model-adapter",
         "core-behavior-tests",
         "core-semantics",
