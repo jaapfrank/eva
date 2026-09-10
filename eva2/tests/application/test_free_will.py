@@ -248,7 +248,7 @@ def test_spontaneous_initiative_retains_own_origin_and_event_identity():
     from types import SimpleNamespace
     from eva.application.free_will import PersonalInitiativeProposal
     proposal = PersonalInitiativeProposal("Gezinsidee", "Zelf gekozen", "Maak iets bruikbaars")
-    claim = SimpleNamespace(event=SimpleNamespace(source_event_id="event-1"),
+    claim = SimpleNamespace(event=SimpleNamespace(source="home-assistant", source_event_id="event-1"),
                             thread_id="sensory:event-1", operation_id="decision-1")
     first = proposal.adoption(claim, principal_id="owner")
     assert first == proposal.adoption(claim, principal_id="owner")

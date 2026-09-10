@@ -58,7 +58,7 @@ class PersonalInitiativeProposal:
             "kind": "personal_interest",
             "origin": "eva_initiative",
             "principal_id": principal_id,
-            "conversation_id": "initiative:home-assistant",
+            "conversation_id": "initiative:" + claim.event.source,
             "source_message_id": "sensory:" + source_id,
             "source_event_id": source_id,
             "source_thread_id": claim.thread_id,
@@ -248,6 +248,8 @@ class SensoryDecisionWorker:
         admission_blocker: Callable[[], AutonomousAdmissionBlocker | None] | None = None,
         revalidator: SensoryEventRevalidatorPort | None = None,
         clock: Callable[[], datetime] | None = None,
+        context_review_budget=None,
+        context_review_authorizer=None,
     ) -> None:
         self._store = store
         self._model = model
@@ -263,6 +265,8 @@ class SensoryDecisionWorker:
         # Runtime supplies a live UTC clock. Without one, run_once(now=...)
         # deliberately operates on the caller's fixed logical/test clock.
         self._clock = clock
+        self._context_review_budget = context_review_budget
+        self._context_review_authorizer = context_review_authorizer
         self._prefer_revalidation = False
 
     def _current_time(self, previous: datetime) -> datetime:
@@ -292,7 +296,12 @@ class SensoryDecisionWorker:
         blocker: AutonomousAdmissionBlocker | None,
     ) -> str:
         event = claim.event
+        context_review = event.source == "initiative-review"
         try:
+            if context_review:
+                if self._context_review_authorizer is None:
+                    raise RuntimeError("private review authority is unavailable")
+                self._context_review_authorizer()
             bounded_decision = _bounded_routine_decision(event)
             if bounded_decision is not None:
                 self._store.complete(claim, bounded_decision, now=now)
@@ -314,6 +323,23 @@ class SensoryDecisionWorker:
             if blocker is not None:
                 self._store.wait_for_admission(claim, blocker, now=now)
                 return "waiting_for_admission"
+            if context_review:
+                # Claim the dispatch boundary before reserving or recalling. Recovery never
+                # spends another slot or issues another request after this ambiguous boundary.
+                started = self._store.mark_model_started(claim, now=self._current_time(now))
+                if started is None:
+                    return "idle"
+                claim = started
+                admission = None if self._context_review_budget is None else self._context_review_budget.admit_background_reflection(
+                    tenant_id=self._tenant_id, installation_id=self._installation_id,
+                    principal_id=self._principal_id, now=self._current_time(now),
+                    reservation_id=claim.thread_id)
+                if admission is None or not admission.admitted:
+                    self._store.complete(claim, FreeWillDecision("silence",
+                        "Het bestaande achtergrondbudget laat nu geen nieuwe beoordeling toe.",
+                        0, "eva:background-budget"),
+                        now=self._current_time(now))
+                    return "waiting_for_budget"
             current_state = event.payload.get("current_state")
             state_description = (
                 f"actuele toestand: {current_state}"
@@ -335,13 +361,13 @@ class SensoryDecisionWorker:
                     audience=MemoryAudience.private_person(
                         principal_id=memory_principal
                     ),
-                    conversation_id="sensory:home-assistant",
+                    conversation_id="sensory:" + event.source,
                     project_id=None,
-                    query_purpose="passive_event_decision",
+                    query_purpose="private_opportunity_review" if event.source == "initiative-review" else "passive_event_decision",
                     requested_valid_at=now.strftime("%Y-%m-%dT%H:%M:%SZ"),
                     scope={
                         "event_type": event.event_type,
-                        "kind": "household_event",
+                        "kind": "private_opportunity" if event.source == "initiative-review" else "household_event",
                         "source": event.source,
                     },
                     subject_ids=(memory_principal,),
@@ -363,10 +389,15 @@ class SensoryDecisionWorker:
             # A process can die without calling fail(), including after the
             # provider response but before complete() records the decision.
             now = self._current_time(now)
-            started = self._store.mark_model_started(claim, now=now)
-            if started is None:
-                return "idle"  # Expired or competing owner: never dispatch.
-            claim = started
+            if context_review:
+                self._context_review_authorizer()
+                if not self._store.context_review_claim_is_current(claim, now=now):
+                    return "idle"
+            else:
+                started = self._store.mark_model_started(claim, now=now)
+                if started is None:
+                    return "idle"  # Expired or competing owner: never dispatch.
+                claim = started
             decision = self._model.evaluate_sensory_event(
                 event,
                 self._identity,

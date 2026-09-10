@@ -1838,6 +1838,45 @@ def create_runtime_app() -> FastAPI:
                 ),
             )
         )
+        context_review_store = (
+            None if settings.background_principal_id is None else PostgresSensoryEventStore(
+                engine, tenant_id=settings.background_tenant_id,
+                installation_id=settings.background_installation_id,
+                initiative_principal_id=settings.background_principal_id,
+                initiative_authorizer=lambda: runtime._initiative_authority().policy(),
+                context_reviews_only=True, decision_lease_seconds=300,
+            )
+        )
+        context_decision_worker = (
+            None
+            if settings.background_principal_id is None or context_review_store is None
+            else SensoryDecisionWorker(
+                context_review_store,
+                model,
+                memory,
+                identity,
+                tenant_id=settings.background_tenant_id,
+                installation_id=settings.background_installation_id,
+                principal_id=settings.background_principal_id,
+                memory_principal_resolver=(
+                    None
+                    if settings.telegram_principal_bindings_file is None
+                    or settings.dashboard_principal_binding_id is None
+                    else lambda: (
+                        load_principal_bindings(settings.telegram_principal_bindings_file)
+                        .private_bridge_principal(
+                            principal_id=settings.background_principal_id,
+                            principal_binding_id=UUID(settings.dashboard_principal_binding_id),
+                        ) or settings.background_principal_id
+                    )
+                ),
+                admission_blocker=model.autonomous_admission_blocker,
+                context_review_budget=reflection_budget,
+                context_review_authorizer=lambda: runtime._initiative_authority().policy(),
+                clock=lambda: datetime.now(tz=UTC).replace(microsecond=0),
+
+            )
+        )
         expression_worker = (
             None
             if sensory_store is None or proactive_delivery is None
@@ -1886,12 +1925,27 @@ def create_runtime_app() -> FastAPI:
                 now=datetime.now(tz=UTC).replace(microsecond=0)
             )
 
+        def consider_one_private_opportunity() -> str:
+            if context_review_store is None or context_decision_worker is None:
+                return "idle"
+            # Check current authority before private recall as well as at adoption/dispatch.
+            try:
+                runtime._initiative_authority().policy()
+            except Exception:
+                return "idle"
+            if model.autonomous_admission_blocker() is not None:
+                return "idle"
+            now = datetime.now(tz=UTC).replace(microsecond=0)
+            context_review_store.schedule_context_review(now=now)
+            return context_decision_worker.run_once(now=now)
+
         idle_tasks = (
             explore_one_interest,
             build_one_prototype,
             prepare_one_release,
             evaluate_one_sensory_event,
             deliver_one_proactive_expression,
+            consider_one_private_opportunity,
         )
     runtime = PostgresHindsightMemoryRuntime(
         engine,
