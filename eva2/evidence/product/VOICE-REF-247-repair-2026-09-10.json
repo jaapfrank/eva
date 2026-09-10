@@ -1,0 +1,170 @@
+{
+  "contract": "EvaVoiceReferenceRepair/v1",
+  "issuedAt": "2026-09-10T11:51:35.534867+00:00",
+  "scope": "Restore existing HA Voice PE conversation after long stored provenance breaks recall; no new voice architecture or memory-goal change.",
+  "sourceCommit": "4c24a7f6a5c767ad0c116b23bb4251d9908908d4",
+  "candidateImage": "sha256:e172d08df6a4981e12676abb4cf673aaa5f87323f687c6164a1ab1148a749298",
+  "baseline": {
+    "image": "sha256:3a508a55df506646cb02b26e1944d3b34d7588a2b5ca57a34902fd1c649c9e23",
+    "source": "ddb0267852c56c95ccde4270d821e3192ba56b70",
+    "head": "4564bfdf3f1ff54da744eb7a837c3cd5111e8a2b"
+  },
+  "diagnosis": {
+    "date": "2026-09-10",
+    "voiceRequestsLocal": [
+      "13:19:11",
+      "13:19:26"
+    ],
+    "ledger": "VOICE_REQUEST_STARTED and INGRESS_COMMITTED, then VOICE_REQUEST_INTERRUPTED about one second later; no voice reply claimed.",
+    "hindsight": "Both actual questions recalled one existing household observation.",
+    "reproducedException": "ConfirmedFact.evidence_ref ValidationError: string_too_long",
+    "originalReferenceLength": 247,
+    "contractMaximum": 192,
+    "originalHttpExceptionLogged": false,
+    "boundary": "Exact original HTTP exception suppressed; isolated read-only recall reproduces the concrete failure against existing data."
+  },
+  "repair": {
+    "sourceDelta": [
+      "eva2/src/eva/adapters/projection/hindsight.py"
+    ],
+    "behavior": "After original scope and authority validation, long source/evidence references become deterministic SHA256 aliases; full originals remain in fact.value.reference_provenance. Existing stored data and short references unchanged.",
+    "schemaChange": false,
+    "dependencyChange": false,
+    "dataMigration": false,
+    "authorityExpansion": false
+  },
+  "tests": {
+    "before": "Two added household cases failed; private short reference case passed.",
+    "source": "108 passed in 35.40s",
+    "installedCandidate": "108 passed in 36.70s",
+    "modules": [
+      "tests/projection/test_hindsight.py",
+      "tests/api/test_native_voice.py",
+      "tests/bootstrap/test_household_voice_authority.py"
+    ],
+    "liveDataReadOnlyCandidate": {
+      "facts": 1,
+      "originalReferenceLength": 247,
+      "aliasLength": 85,
+      "status": "passed",
+      "mutationGuard": "No ensure-bank write; only GET and semantic recall requests allowed."
+    }
+  },
+  "independentReview": {
+    "reviewer": "review_voice_reference",
+    "result": "GO",
+    "scope": "Bounded code/provenance/privacy review; not owner acceptance."
+  },
+  "status": {
+    "built": true,
+    "tested": true,
+    "live": true,
+    "ownerRetest": "pending"
+  },
+  "artifacts": {
+    "temporaryDirectory": "/tmp/eva-voice-reference-lgud_m4e",
+    "sha256": {
+      "tests.txt": "9b5c0be3aa10dfa95cd9a4a244b0876406e33720f932afce225dbd53cffe699a",
+      "candidate-tests.txt": "375e0e9857b6b77cacd977e2fb5c2d55bb6fba8b2fdc7c9c328199914c19bd34",
+      "candidate-recall.txt": "aa96bb79ce187e63acb5722ffe09f2e612c342a1aef8c77cd5570b55edb1c626",
+      "build.txt": "f4203b0e5fe5d6a64480713f2fab2ac42724caa6b12b8a74e3081a558e1489d1",
+      "cutover.stdout": "e0306c84b8f135b3a3a332aeb7309958a3f1d68be9c8549755a49bd329e8ce72",
+      "cutover-process.json": "efb32a77d2b958eae9d96cc04800eaf7a337bdf008291a8bde6c42c508b84298",
+      "final-readback.json": "296d3356da2dfca19e42981f2c481e798b05d1dfb3950595f7adf676726717ba",
+      "image-readback.json": "15c03481ab9d12a090dfd87ecfba718eed1e5bec6fb8f0f239424998d0ea29ef",
+      "voice-ledger.txt": "d75a67be75e62b2954f16aea30d6e40a0fbdccdb6592cd24382753cecdf87f56"
+    }
+  },
+  "limits": [
+    "Actual microphone/speaker retest remains open.",
+    "Historical successful audio tests do not make this failed current trial pass.",
+    "GE-01 owner preference acceptance remains intact."
+  ],
+  "updatedAt": "2026-09-10T11:53:58.666080+00:00",
+  "deployment": {
+    "procedure": "Existing eva2_quiescent_cutover.py, immutable source snapshot, slot3 to slot4",
+    "receipt": {
+      "backgroundIsolationBoundary": "Legacy images may ignore the switch; configuration readback is not worker isolation proof.",
+      "backgroundWorkConfiguredAfterActivation": true,
+      "backgroundWorkConfiguredDuringStaging": false,
+      "contract": "Eva2QuiescentCutoverReceipt/v1",
+      "eva1Backup": {
+        "bytes": 314593280,
+        "filename": "eva1-before-slot3-to-slot4-20260910T114934Z.db",
+        "quickCheck": "ok",
+        "sha256": "290c891fc854a2a61198945fc295cacd24783c0969d0808f694c9870dee2176b"
+      },
+      "eva1HttpStatuses": {
+        "/": 200,
+        "/api/capabilities": 200,
+        "/api/health": 200,
+        "/api/overview": 200,
+        "/api/workstatus": 200
+      },
+      "issuedAt": "2026-09-10T11:51:58.219743+00:00",
+      "previousDropinSha256": "81f1b2b687a641ae5349aa3c13198f6ad3ac1d7c88ee351bc3c559f22eee28a1",
+      "proactiveCredentialWithheldDuringStaging": true,
+      "proactiveDeliveryEnabled": true,
+      "sourcePort": 44710,
+      "sourceWritersStopped": true,
+      "status": "switched",
+      "synchronizedDatabases": {
+        "memory": {
+          "countDigest": "2ff1342b6ad52b770807924aa06095dcf66d28c7937023cd63821e265e87e0cc",
+          "dataDigest": "9074a451c65da2d6ef2fb07c4d78f2751ce7d84cfac0bbd12886c76c35d54e4d",
+          "dumpBytes": 2667735,
+          "dumpSha256": "e1e8bbb24ea883c64256cb33860a8bca89766229412aadfe5e622b9d24418a47",
+          "schemaDigest": "d89bfebdbfeb55e8618e81286bf24a42b838bfe577e84f6db9b93b43f5832172",
+          "tableCount": 23
+        },
+        "operational": {
+          "countDigest": "88339bddb816cd63259c98f0dc01ed91544b70de128470f73a173c15bfde8db2",
+          "dataDigest": "8b17b5620426a390e8e9f72cc7bb789acfce43d9ad270105a06ee0bc5e55b60c",
+          "dumpBytes": 13278238,
+          "dumpSha256": "86786dfd29321f80efafe27a5024fb56ca1af1a754d446b424c61fafdfddaca3",
+          "schemaDigest": "32acc5b66e349dfd5b385e4828897575ad543ebb5f2638b8880dff1cacb7fb39",
+          "tableCount": 48
+        }
+      },
+      "targetPort": 44711,
+      "targetReady": true
+    },
+    "process": {
+      "returncode": 0,
+      "seconds": 149.0
+    },
+    "readback": {
+      "services": {
+        "eva.service": "active",
+        "eva2-voice-ingress.service": "active"
+      },
+      "gatewayUpstream": "127.0.0.1:44711",
+      "installedSourceHashMatches": true,
+      "sourceSha256": "182937b50dc981d6b4f79a88ca47897eca2382ff500972f5abff3916f4258406",
+      "voiceLedgerReplyClaimed": true
+    },
+    "imageReadback": {
+      "candidateMatch": true,
+      "workerMatch": true,
+      "coreImage": "sha256:e172d08df6a4981e12676abb4cf673aaa5f87323f687c6164a1ab1148a749298",
+      "sourceCommit": "4c24a7f6a5c767ad0c116b23bb4251d9908908d4"
+    },
+    "rollback": "Existing inverse quiescent-cutover retains and copies intervening writes back to slot3; not executed for this fix."
+  },
+  "homeAssistantProbe": {
+    "status": 200,
+    "seconds": 9.99,
+    "request_id": "76b2147f94cf4f15a0a3c9cafd0b757f",
+    "reply_nonempty": true,
+    "request_binding": true,
+    "continue_conversation": true,
+    "replySha256": "305216537f277eb1b2a64f6e7b021a483b1f57dc6a7ee35e416342d7c2315ca3",
+    "replyCharacters": 96,
+    "audioPlayed": false
+  },
+  "ownerRetest": {
+    "instruction": "Zeg bij de Voice PE hey Eva en daarna Hoe gaat het met je? Meld het hoorbare antwoord.",
+    "status": "requested_pending",
+    "cannotInferAcceptanceFromHttp": true
+  }
+}
