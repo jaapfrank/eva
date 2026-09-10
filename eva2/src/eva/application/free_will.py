@@ -218,6 +218,7 @@ class FreeWillModelPort(Protocol):
         memory: PresenceMemory,
         attention: ResidentAttentionDecision | None = None,
         initiative_history: tuple[dict[str, str], ...] = (),
+        initiative_capabilities: tuple[str, ...] = (),
     ) -> FreeWillDecision: ...
 
 
@@ -356,6 +357,8 @@ class SensoryDecisionWorker:
             )
             history_reader = getattr(self._store, "recent_initiatives", None)
             history = () if not callable(history_reader) else history_reader()
+            capability_reader = getattr(self._store, "native_capabilities", None)
+            capabilities = () if not callable(capability_reader) else capability_reader()
             # Persist the ambiguity boundary before entering the model adapter.
             # A process can die without calling fail(), including after the
             # provider response but before complete() records the decision.
@@ -370,6 +373,7 @@ class SensoryDecisionWorker:
                 memory,
                 attention,
                 **({"initiative_history": history} if history else {}),
+                **({"initiative_capabilities": capabilities} if callable(capability_reader) else {}),
             )
             if attention is not None and (
                 decision.disposition != "respond"

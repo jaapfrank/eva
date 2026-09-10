@@ -3497,7 +3497,7 @@
       "tested": true,
       "live": true,
       "ownerAccepted": false,
-      "currentWork": "HA-uitbreiding: review vond netwerkwerk vóór toelating bij naamresolutie. Native state/history plannen nu zonder netwerk met bekende entiteit-ID;3gerichte controles groen. Bestandsroute blijft live, normale cycli kiezen tot nu toe stilte. Geen brede afronding geclaimd.",
+      "currentWork": "HA-uitbreiding heeft code-GO. Beslisser krijgt nu de actuele toegelaten capabilities en mag ook een algemeen nuttig eigen idee kiezen;17gerichte model/workerchecks groen. Geheugen niet gewijzigd na diagnostiek. Eén gecombineerde kandidaat gaat naar bronreview en vervolgens de normale praktijkcyclus.",
       "authorization": "Jaap: in eerste instantie mag ze wel gewoon alles doen wat ze wil, zolang het maar inderdaad geen geld kost. Implementatie expliciet bevestigd.",
       "boundaries": "Geen nieuwe kosten of verplichtingen; onbekend is niet gratis. Bestaand toegelaten modelgebruik blijft binnen bestaande grenzen. Privacy, personen, communicatie en stoppen blijven gelden.",
       "artifactRetention": {

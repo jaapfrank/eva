@@ -1435,6 +1435,7 @@ class PydanticConversationModel:
         memory: PresenceMemory,
         attention: ResidentAttentionDecision | None = None,
         initiative_history: tuple[dict[str, str], ...] = (),
+        initiative_capabilities: tuple[str, ...] = (),
     ) -> FreeWillDecision:
         """Decide in shadow mode whether one passive event deserves expression."""
 
@@ -1461,6 +1462,7 @@ class PydanticConversationModel:
                             },
                             "recalled_context": remembered,
                             "prior_private_initiatives": initiative_history,
+                            "available_native_actions": initiative_capabilities,
                             "resident_attention": (
                                 None
                                 if attention is None
@@ -1500,7 +1502,11 @@ class PydanticConversationModel:
                 "uitwerken: silence sluit een initiative niet uit. Gebruik bevestigde "
                 "persoonlijke plannen, interesses of voorkeuren als aanknopingspunt voor "
                 "een klein concreet resultaat, ook als de waarneming geen bericht verdient. "
-                "Kies zelf één vervolgstap en leg uit welke context die nuttig maakt. "
+                "Je mag ook vanuit eigen belangstelling of een algemeen nuttig idee een bijdrage "
+                "kiezen; persoonlijke informatie is daarvoor geen verplichte voorwaarde. "
+                "available_native_actions zijn de huidige door de host toegelaten mogelijkheden. "
+                "Gebruik ze als aanknopingspunt, niet als bewijs van een persoonlijke wens. "
+                "Kies zelf één vervolgstap en leg uit waarom die nuttig kan zijn. "
                 "Een herinnerd verzoek is GEEN bewijs dat die opdracht nog openstaat: "
                 "herhaal of hervat oude opdrachten niet op basis van alleen zo'n herinnering. "
                 "Kies een passende nieuwe bijdrage: een behoefte helpen oplossen, iets voorbereiden, "

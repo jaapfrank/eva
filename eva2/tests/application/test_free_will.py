@@ -70,6 +70,9 @@ def test_sensory_worker_recalls_then_commits_one_shadow_decision(current_state, 
         def recent_initiatives(self):
             return ({"title": "Prior plan", "question": "Done", "phase": "personal_stopped"},)
 
+        def native_capabilities(self):
+            return ("read_home_assistant_inventory", "save_workspace_document")
+
         def mark_model_started(self, actual, *, now):
             assert actual == claim and len(recalled) == 1
             return claim if admit_dispatch else None
@@ -87,7 +90,8 @@ def test_sensory_worker_recalls_then_commits_one_shadow_decision(current_state, 
             return object()
 
     class Model:
-        def evaluate_sensory_event(self, actual, identity, memory, attention=None, initiative_history=()):
+        def evaluate_sensory_event(self, actual, identity, memory, attention=None, initiative_history=(), initiative_capabilities=()):
+            assert initiative_capabilities == ("read_home_assistant_inventory", "save_workspace_document")
             assert initiative_history == ({"title": "Prior plan", "question": "Done", "phase": "personal_stopped"},)
             assert admit_dispatch
             assert actual == event

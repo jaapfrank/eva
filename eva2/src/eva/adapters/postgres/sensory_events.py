@@ -79,6 +79,16 @@ class PostgresSensoryEventStore:
         self._initiative_principal_id = initiative_principal_id
         self._initiative_authorizer = initiative_authorizer
 
+    def native_capabilities(self) -> tuple[str, ...]:
+        """Expose the current owner mandate, never capability guesses from memory."""
+        if self._initiative_authorizer is None:
+            return ()
+        try:
+            policy, _ = self._initiative_authorizer()
+            return tuple(sorted({cap["action_name"] for cap in policy["capabilities"]}))
+        except Exception:
+            return ()  # Missing or revoked mandate is not execution authority.
+
     def retain(self, event: SensoryEvent) -> str:
         thread_id = f"sensory:{event.source_event_id}"
         data: dict[str, JsonValue] = {
