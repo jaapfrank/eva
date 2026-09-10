@@ -60,3 +60,12 @@ def install_dashboard_initiatives(app, *, access, runtime):
             raise HTTPException(422, "initiative mandate scope is server-bound")
         return JSONResponse(invoke("dashboard_revoke_initiative_mandate"),
                             headers={"Cache-Control": "no-store"})
+
+    @app.post("/internal/v1/dashboard/initiatives/mandate/revise")
+    def revise(request: Request, payload: dict):
+        access.require(request)
+        if request.query_params or set(payload) != {"expected_sha256", "candidate_sha256"}:
+            raise HTTPException(422, "invalid initiative mandate revision")
+        return JSONResponse(invoke("dashboard_revise_initiative_mandate",
+            payload["expected_sha256"], payload["candidate_sha256"]),
+            headers={"Cache-Control": "no-store"})

@@ -141,8 +141,10 @@ class PostgresInitiativeAuthority:
                     data={"mandate_sha256": digest, "authorization_source": data["authorization_source"]})
             except CheckpointConflict:
                 state = self.timeline.load(self.thread)
-        first = self.timeline.events(self.thread)[0].payload["data"]
-        if first.get("mandate_sha256") != digest:
+        if state.phase == "initiative_mandate_revoked":
+            raise InitiativeMandateDenied("initiative mandate was durably revoked")
+        latest = self.timeline.events(self.thread)[-1].payload["data"]
+        if latest.get("mandate_sha256") != digest:
             raise InitiativeMandateDenied("initiative mandate revision changed; owner admission required")
         if not data["enabled"]:
             self.revoke()
@@ -150,6 +152,53 @@ class PostgresInitiativeAuthority:
         if state.phase == "initiative_mandate_revoked":
             raise InitiativeMandateDenied("initiative mandate was durably revoked")
         return data, digest
+
+    def _admitted_digest(self, conn):
+        c = operational_events.c
+        row = conn.execute(sa.select(c.payload, c.payload_sha256).where(
+            c.tenant_id == self.owner._scope.tenant_id,
+            c.installation_id == self.owner._scope.installation_id,
+            c.thread_id == self.thread).order_by(c.sequence.desc()).limit(1)).one()
+        if canonical_sha256(row.payload) != bytes(row.payload_sha256).hex():
+            raise InitiativeMandateDenied("admitted mandate evidence hash differs")
+        return row.payload["data"].get("mandate_sha256")
+
+    def admit_revision(self, expected_sha256, candidate_sha256):
+        """Owner-only CAS over the host file; never accepts model-supplied policy."""
+        from eva.application.initiative_execution import current_initiative
+        if current_initiative() is not None:
+            raise InitiativeMandateDenied("initiative cannot revise its own mandate")
+        if any(not isinstance(v, str) or re.fullmatch(r"[0-9a-f]{64}", v) is None
+               for v in (expected_sha256, candidate_sha256)):
+            raise ValueError("mandate revision requires two SHA256 digests")
+        data = self._read()
+        digest = canonical_sha256({k: v for k, v in data.items() if k != "enabled"})
+        if not data["enabled"] or digest != candidate_sha256:
+            raise InitiativeMandateDenied("candidate mandate does not match enabled host file")
+        now = datetime.now(UTC).replace(microsecond=0)
+        with self.owner._engine.begin() as conn:
+            self.owner._authorize(conn, now)
+            c = operational_checkpoints.c
+            row = conn.execute(sa.select(operational_checkpoints).where(
+                c.tenant_id == self.owner._scope.tenant_id,
+                c.installation_id == self.owner._scope.installation_id,
+                c.thread_id == self.thread).with_for_update()).one_or_none()
+            if row is None or row.phase == "initiative_mandate_revoked":
+                raise InitiativeMandateDenied("unadmitted or revoked mandate cannot be revised")
+            current = self._admitted_digest(conn)
+            if current == digest:
+                return {"status": "unchanged", "mandate_sha256": digest}
+            if current != expected_sha256:
+                raise InitiativeMandateDenied("previous mandate revision differs")
+            transition_timeline_thread(conn, self.owner._scope, thread_id=self.thread,
+                expected_revision=row.revision,
+                checkpoint_id=self.thread + f":revision:{row.revision + 1}",
+                phase="initiative_mandate_admitted", status="active",
+                event_type="INITIATIVE_MANDATE_REVISED", occurred_at=now,
+                data={"previous_mandate_sha256": current, "mandate_sha256": digest,
+                      "authorization_source": data["authorization_source"],
+                      "owner_principal_id": str(self.owner._owner)})
+        return {"status": "revised", "mandate_sha256": digest}
 
     def revoke(self):
         now = datetime.now(UTC).replace(microsecond=0)
@@ -257,6 +306,8 @@ class NativeInitiativeGuard:
                 *scope_filter, c.thread_id == self.authority.thread).with_for_update()).one()
             if mandate.phase == "initiative_mandate_revoked":
                 raise InitiativeMandateDenied("initiative mandate revoked before dispatch")
+            if self.authority._admitted_digest(conn) != self.mandate_sha:
+                raise InitiativeMandateDenied("initiative mandate revised before dispatch")
             intent = conn.execute(owner._query().where(c.thread_id == self.claim.thread_id)
                 .with_for_update(of=operational_checkpoints)).one_or_none()
             if (intent is None or intent.revision != self.claim.revision
