@@ -187,6 +187,7 @@ class PostgresDailyReflectionBudget:
         installation_id: str,
         principal_id: str,
         now: datetime,
+        reservation_id: str | None = None,
     ) -> BackgroundReflectionAdmission:
         """Consume at most one slot; revision conflicts are retried, never widened."""
 
@@ -255,6 +256,7 @@ class PostgresDailyReflectionBudget:
                         thread_id=thread_id,
                         checkpoint_id=f"{thread_id}:1",
                         occurred_at=now.astimezone(UTC),
+                        operation_id=reservation_id,
                         data=data,
                         event_type=(
                             "RUNTIME_REFLECTION_RESERVED"
@@ -276,6 +278,7 @@ class PostgresDailyReflectionBudget:
                             else "RUNTIME_REFLECTION_BLOCKED"
                         ),
                         occurred_at=now.astimezone(UTC),
+                        operation_id=reservation_id,
                         data=data,
                     )
             except CheckpointConflict:

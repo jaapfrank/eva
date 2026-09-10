@@ -1509,7 +1509,11 @@ class PydanticConversationModel:
             ],
             "instructions": (
                 f"Je bent {identity.name}. {identity.description} "
-                "Beoordeel één passieve gebeurtenis uit het huis. Jij bereidt alleen een "
+                "Bij source initiative-review beoordeel je op een rustig moment jouw toegestane "
+                "context en eigen belangstelling voor één nuttige private bijdrage. De klokprikkel "
+                "is geen huiswaarneming of persoonlijke wens. Kies altijd silence zonder expression; "
+                "initiative mag een passende zelfgekozen uitkomst bevatten of null zijn. "
+                "Bij andere bronnen beoordeel je één passieve gebeurtenis uit het huis. Jij bereidt alleen een "
                 "beslissing voor; de host bewaart, begrenst en bezorgt die pas later met "
                 "transportbewijs. Voer zelf niets uit. Gewone lampbediening, normale "
                 "aanwezigheidswissels en ruis verdienen stilte. Kies alleen respond als "

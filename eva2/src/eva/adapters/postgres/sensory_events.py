@@ -50,6 +50,7 @@ class PostgresSensoryEventStore:
         historical_group_size: int = 1,
         initiative_principal_id: str | None = None,
         initiative_authorizer=None,
+        context_reviews_only: bool = False,
     ) -> None:
         self._timeline = PostgresOperationalTimeline(
             engine,
@@ -78,6 +79,66 @@ class PostgresSensoryEventStore:
         self._historical_group_size = historical_group_size
         self._initiative_principal_id = initiative_principal_id
         self._initiative_authorizer = initiative_authorizer
+        if context_reviews_only and (initiative_principal_id is None or initiative_authorizer is None):
+            raise ValueError("private context reviews require the current owner mandate")
+        self._context_reviews_only = context_reviews_only
+        self._decision_prefix = ("sensory:initiative-review:" + hashlib.sha256(
+            initiative_principal_id.encode()).hexdigest()[:24] + ":"
+            if context_reviews_only else "sensory:home-assistant:")
+
+    def schedule_context_review(self, *, now: datetime) -> str:
+        """At most one durable private opportunity review per hour, without catch-up."""
+        if not self._context_reviews_only:
+            raise ValueError("context review scheduler requires its private source")
+        try:
+            self._initiative_authorizer()
+        except Exception:
+            return "mandate_unavailable"
+        scope = self._timeline._scope_value
+        with self._timeline._engine.begin() as connection:
+            self._timeline._scope(connection)
+            connection.execute(sa.text("SELECT pg_advisory_xact_lock(hashtextextended(:key, 0))"),
+                {"key": self._decision_prefix})
+            c, e = operational_checkpoints.c, operational_events.c
+            latest = connection.execute(sa.select(c.phase, c.updated_at).where(
+                c.tenant_id == scope.tenant_id, c.installation_id == scope.installation_id,
+                c.thread_id.startswith(self._decision_prefix)).order_by(c.updated_at.desc()).limit(1)).first()
+            # A lost decision remains unresolved, never retried as a new hourly request.
+            if latest is not None and (latest.phase != "will_decided"
+                    or now - latest.updated_at < timedelta(hours=1)):
+                return "idle"
+            pending = connection.execute(sa.select(c.thread_id).join(operational_events, sa.and_(
+                c.tenant_id == e.tenant_id, c.installation_id == e.installation_id,
+                c.thread_id == e.thread_id)).where(
+                c.tenant_id == scope.tenant_id, c.installation_id == scope.installation_id,
+                e.event_type == "PERSONAL_INTENT_ADOPTED",
+                e.payload["data"]["principal_id"].astext == self._initiative_principal_id,
+                e.payload["data"]["origin"].astext == "eva_initiative",
+                c.phase.not_in(("release_ready", "personal_stopped", "initiative_completed", "initiative_blocked"))
+            ).limit(1)).first()
+            if pending is not None:
+                return "idle"
+            window = int(now.timestamp()) // 3600
+            source_id = self._decision_prefix.removeprefix("sensory:") + str(window)
+            thread_id = "sensory:" + source_id
+            data = {"event_type": "private_opportunity_review", "source": "initiative-review",
+                    "source_event_id": source_id, "payload": {"review_window": window}}
+            try:
+                insert_initial_timeline_thread(connection, scope, thread_id=thread_id,
+                    checkpoint_id=f"checkpoint:{source_id}:observed", occurred_at=now,
+                    data=data, event_type="SENSORY_EVENT_OBSERVED", phase="sensory_observed",
+                    status="completed", operation_id=source_id)
+            except CheckpointConflict:
+                return "idle"
+        return "scheduled"
+
+    def context_review_claim_is_current(self, claim, *, now: datetime) -> bool:
+        if not self._context_reviews_only or not claim.thread_id.startswith(self._decision_prefix):
+            return False
+        state = self._timeline.load(claim.thread_id)
+        return (state.phase == "will_model_started" and state.status == "active"
+                and state.revision == claim.revision and state.deadline is not None
+                and state.deadline > now)
 
     def native_capabilities(self) -> tuple[str, ...]:
         """Expose the current owner mandate, never capability guesses from memory."""
@@ -119,10 +180,11 @@ class PostgresSensoryEventStore:
     def claim_next(
         self, *, now: datetime, include_waiting: bool = True
     ) -> SensoryDecisionClaim | None:
-        self._restore_group_completions(now=now)
-        self._restore_cost_waits(now=now, admission_open=include_waiting)
+        if not self._context_reviews_only:
+            self._restore_group_completions(now=now)
+            self._restore_cost_waits(now=now, admission_open=include_waiting)
         states = self._timeline.list_checkpoints(
-            thread_prefix="sensory:home-assistant:",
+            thread_prefix=self._decision_prefix,
             phases=("sensory_observed", "will_claimed", "will_model_started", "will_revalidated") + (
                 ("will_waiting_admission",) if include_waiting else ()
             ),
@@ -165,7 +227,7 @@ class PostgresSensoryEventStore:
             if state.status == "failed" and state.retry_count >= 3:
                 continue
             event = self._event_from_thread(state.thread_id, latest=True)
-            if state.phase == "will_waiting_admission" or self._requires_revalidation(event, now=now):
+            if (state.phase == "will_waiting_admission" and not self._context_reviews_only) or self._requires_revalidation(event, now=now):
                 # Permission to use the model says nothing about whether the
                 # observation is still relevant. Keep recovery separate from a
                 # fresh decision, including after a process restart.
@@ -248,6 +310,10 @@ class PostgresSensoryEventStore:
             return None
 
     def _requires_revalidation(self, event: SensoryEvent, *, now: datetime) -> bool:
+        if self._context_reviews_only:
+            if event.source != "initiative-review" or event.event_type != "private_opportunity_review":
+                raise ValueError("private review source differs")
+            return False  # It claims no external state; memory is recalled at evaluation time.
         return (
             now - event.occurred_at > self._observation_freshness
             or (self._recovery_started_at is not None
@@ -496,6 +562,9 @@ class PostgresSensoryEventStore:
         *,
         now: datetime,
     ) -> None:
+        if self._context_reviews_only and decision.disposition == "respond":
+            decision = FreeWillDecision("silence", decision.reason, 0, decision.provider,
+                usage=decision.usage, initiative=decision.initiative)
         if decision.disposition == "respond" and self._cooldown_applies(
             claim, decision, now=now
         ):

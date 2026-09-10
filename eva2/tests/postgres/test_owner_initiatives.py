@@ -553,3 +553,107 @@ def test_public_native_profile_rejects_free_text_even_when_labelled_public(costl
     path.write_text(json.dumps(policy))
     with pytest.raises(InitiativeMandateDenied, match="host-selected"):
         auth.policy()
+
+
+@pytest.mark.parametrize("outcome", ["idea", "silence", "unknown", "budget_denied", "revoked_during_recall", "expired_during_recall"])
+def test_periodic_private_review_reuses_native_claim_budget_and_owner_context(costless_native, outcome):
+    from concurrent.futures import ThreadPoolExecutor
+    from eva.application.free_will import SensoryDecisionWorker
+    from eva.application.conversation import IdentityProfile, ConversationModelUsage
+    from eva.adapters.postgres.runtime_resource_usage import PostgresDailyReflectionBudget
+    from tests.postgres.test_runtime_resource_usage import _budget
+    auth, old_claim, interests, control, source, path, policy = costless_native
+    def review_store():
+        return PostgresSensoryEventStore(auth.owner._engine,
+            tenant_id=old_claim.tenant_id, installation_id=old_claim.installation_id,
+            initiative_principal_id=old_claim.principal_id, initiative_authorizer=auth.policy,
+            context_reviews_only=True)
+    reviews = review_store()
+    assert reviews.schedule_context_review(now=NOW) == "idle"  # Existing native work wins.
+    control.stop(old_claim.intent_id, now=NOW)
+    auth.policy()
+    with ThreadPoolExecutor(max_workers=2) as pool:
+        scheduled = list(pool.map(lambda _: review_store().schedule_context_review(now=NOW), range(2)))
+    assert sorted(scheduled) == ["idle", "scheduled"]
+    restarted = review_store()
+    assert restarted.schedule_context_review(now=NOW + timedelta(minutes=20)) == "idle"
+    budget = PostgresDailyReflectionBudget(auth.owner._engine,
+        tenant_id=old_claim.tenant_id, installation_id=old_claim.installation_id,
+        resource_budget=replace(_budget(), tenant_id=old_claim.tenant_id, installation_id=old_claim.installation_id))
+    if outcome == "budget_denied":
+        for _ in range(4):
+            assert budget.admit_background_reflection(tenant_id=old_claim.tenant_id,
+                installation_id=old_claim.installation_id, principal_id=old_claim.principal_id, now=NOW).admitted
+    recalled, calls = [], []
+    clock = [NOW + timedelta(minutes=20)]
+    class Memory:
+        def recall_for_presence(self, query):
+            recalled.append(query)
+            assert query.principal_id == old_claim.principal_id
+            assert query.conversation_id == "sensory:initiative-review"
+            assert query.scope["kind"] == "private_opportunity"
+            if outcome == "revoked_during_recall": auth.revoke()
+            if outcome == "expired_during_recall": clock[0] += timedelta(minutes=2)
+            return object()
+    class Model:
+        def evaluate_sensory_event(self, event, identity, memory, attention=None, **kwargs):
+            calls.append(event)
+            assert event.source == "initiative-review"
+            assert event.event_type == "private_opportunity_review"
+            assert set(event.payload) == {"review_window"}
+            if outcome == "unknown": raise RuntimeError("lost model response")
+            return FreeWillDecision("respond", "Eigen nuttig idee" if outcome == "idea" else "Nu niets nodig", 1,
+                "fixture", expression="This must never be delivered",
+                usage=ConversationModelUsage.measured(model_attempts=1, tool_calls=1, input_tokens=100, output_tokens=30),
+                initiative=PersonalInitiativeProposal("Nieuwe eigen bijdrage", "Zelf gekozen", "Maak bruikbaar resultaat")
+                    if outcome == "idea" else None)
+    worker = SensoryDecisionWorker(restarted, Model(), Memory(), IdentityProfile("Eva", "Huisgenoot", ("Eerlijk",), 80),
+        tenant_id=old_claim.tenant_id, installation_id=old_claim.installation_id,
+        principal_id=old_claim.principal_id, context_review_budget=budget,
+        context_review_authorizer=auth.policy, clock=lambda: clock[0])
+    result = worker.run_once(now=NOW + timedelta(minutes=20))
+    assert len(calls) == (0 if outcome in {"budget_denied", "revoked_during_recall", "expired_during_recall"} else 1)
+    assert len(recalled) == (0 if outcome == "budget_denied" else 1)
+    assert worker.run_once(now=NOW + timedelta(minutes=21)) == "idle"
+    assert review_store().schedule_context_review(now=NOW + timedelta(minutes=50)) in {"idle", "mandate_unavailable"}
+    rows = restarted._timeline.list_checkpoints(thread_prefix=restarted._decision_prefix, limit=10)
+    assert len(rows) == 1
+    events = restarted._timeline.events(rows[0].thread_id)
+    assert not any(e.event_type == "PROACTIVE_EXPRESSION_PREPARED" for e in events)
+    if outcome in {"unknown", "revoked_during_recall", "expired_during_recall"}:
+        assert rows[0].phase == "will_usage_uncertain"
+        assert review_store().schedule_context_review(now=NOW + timedelta(days=1)) in {"idle", "mandate_unavailable"}
+    else:
+        assert rows[0].phase == "will_decided"
+        assert events[-1].payload["data"]["expression"] is None
+    if outcome == "idea":
+        claim = interests.claim_next(tenant_id=old_claim.tenant_id, installation_id=old_claim.installation_id,
+                                     now=NOW + timedelta(minutes=21))
+        assert claim.execution_mode == "autonomous_task"
+        guard, turn = auth.bind(claim)
+        assert turn.conversation_id.startswith("initiative-task:")
+        adoption = auth.timeline.events(claim.thread_id)[0].payload["data"]
+        assert adoption["conversation_id"] == "initiative:initiative-review"
+        assert review_store().schedule_context_review(now=NOW + timedelta(hours=2)) == "idle"
+    if outcome == "silence":
+        assert review_store().schedule_context_review(now=NOW + timedelta(days=3)) == "scheduled"
+        assert len(restarted._timeline.list_checkpoints(thread_prefix=restarted._decision_prefix, limit=10)) == 2
+    reservation_events = budget._timeline.events("runtime-reflections:" + NOW.date().isoformat())
+    assert reservation_events[-1].operation_id == rows[0].thread_id
+
+
+def test_context_review_resumes_model_admission_without_ha_revalidation(costless_native):
+    auth, old_claim, interests, control, source, path, policy = costless_native
+    control.stop(old_claim.intent_id, now=NOW)
+    reviews = PostgresSensoryEventStore(auth.owner._engine,
+        tenant_id=old_claim.tenant_id, installation_id=old_claim.installation_id,
+        initiative_principal_id=old_claim.principal_id, initiative_authorizer=auth.policy,
+        context_reviews_only=True)
+    assert reviews.schedule_context_review(now=NOW) == "scheduled"
+    claim = reviews.claim_next(now=NOW)
+    reviews.wait_for_admission(claim, "unverified_model_cost", now=NOW)
+    assert reviews.claim_next(now=NOW, include_waiting=False) is None
+    reclaimed = reviews.claim_next(now=NOW + timedelta(days=1), include_waiting=True)
+    assert reclaimed is not None and reclaimed.event.source == "initiative-review"
+    assert reviews._timeline.load(reclaimed.thread_id).phase == "will_claimed"
+    assert reviews.claim_next_revalidation(now=NOW + timedelta(days=1)) is None
