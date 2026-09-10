@@ -1,0 +1,57 @@
+{
+  "status": "bottleneck_measured_no_optimization_deployed",
+  "current_core_slot": 3,
+  "short_turns_ms": [
+    14235,
+    12853
+  ],
+  "journal_model_completed_ms": [
+    4958,
+    3623
+  ],
+  "profile_ms": {
+    "total": 15260,
+    "memory_recall": 9738,
+    "parallel_recall_calls": [
+      8083,
+      9668,
+      9676
+    ],
+    "pending_actions": 120,
+    "active_context": 92,
+    "model_generate": 5035
+  },
+  "reranker_experiment": {
+    "same_model": "cross-encoder/ms-marco-MiniLM-L-6-v2",
+    "workload": "three concurrent batches of 32 synthetic public question/document pairs",
+    "within_process_threads_18_2_4_1_ms": [
+      9218,
+      6818,
+      7166,
+      5611
+    ],
+    "fresh_process_omp_mkl_1_ms": [
+      10009,
+      9095
+    ],
+    "score_difference": 0,
+    "conclusion": "No repeatable improvement demonstrated; no runtime configuration changed."
+  },
+  "phone_readonly_probe": {
+    "existing_ha_remote_enabled": true,
+    "remote_domain_present": true,
+    "cloud_webrtc_ice_servers_success": true,
+    "remote_domain_and_credentials_omitted": true,
+    "remaining": "Implement and test authenticated HA ingress bridge with relative signaling paths and admitted owner session; current laptop loopback URL is not phone access."
+  },
+  "voicepe_reuse": {
+    "candidate": "experiments/native-duplex-v1 speaker_endpoint/input/wire as LiveKit audio input/output",
+    "requirements": [
+      "Preserve household admission; never elevate speaker to private owner",
+      "Use FINISHED/STOPPED playback acknowledgements; zero played lower bound is not proof of silence",
+      "Physical firmware/echo/wake/media arbitration remain unproven"
+    ],
+    "status": "design reuse reviewed; no firmware flashed"
+  },
+  "artifact_directory": "/home/administrator/project/.eva2-artifacts/voice-livekit-20260910"
+}
