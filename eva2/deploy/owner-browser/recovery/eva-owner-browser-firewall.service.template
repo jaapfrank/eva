@@ -1,0 +1,26 @@
+[Unit]
+Description=Restore the pinned Eva browser firewall before owner controls
+Requires=docker.service
+After=docker.service
+PartOf=docker.service
+Before=eva-owner-browser.service
+
+[Service]
+Type=oneshot
+User=root
+RemainAfterExit=yes
+ExecStartPre=/usr/bin/sha256sum --check --strict /etc/eva/owner-browser/recovery.sha256
+ExecStart=/usr/bin/python3 -I /usr/local/lib/eva-owner-browser/recover_firewall.py --config /etc/eva/owner-browser/firewall.json --receipt /var/lib/eva-owner-browser/firewall-recovery.json
+StateDirectory=eva-owner-browser
+StateDirectoryMode=0700
+UMask=0077
+NoNewPrivileges=yes
+ProtectHome=yes
+ProtectSystem=full
+PrivateTmp=yes
+TimeoutStartSec=90
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

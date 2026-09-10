@@ -1,0 +1,25 @@
+[Unit]
+Description=Eva owner browser controls with retained profile and state
+Requires=docker.service eva-owner-browser-firewall.service
+After=docker.service eva-owner-browser-firewall.service
+BindsTo=docker.service eva-owner-browser-firewall.service
+PartOf=docker.service eva-owner-browser-firewall.service
+
+[Service]
+Type=simple
+User=administrator
+Group=administrator
+SupplementaryGroups=docker
+WorkingDirectory=${HOST_SOURCE_DIR}
+Environment="PYTHONPATH=${HOST_SOURCE_DIR}/src"
+Environment=PYTHONNOUSERSITE=1
+Environment=PYTHONUNBUFFERED=1
+ExecStart=${EVA_PYTHON} -m eva.operations.browser_session --config ${HOST_CONFIG}
+Restart=on-failure
+RestartSec=3
+TimeoutStopSec=30
+UMask=0077
+NoNewPrivileges=yes
+
+[Install]
+WantedBy=multi-user.target
