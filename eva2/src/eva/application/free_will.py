@@ -241,6 +241,7 @@ class SensoryDecisionWorker:
         tenant_id: str,
         installation_id: str,
         principal_id: str,
+        memory_principal_resolver: Callable[[], str] | None = None,
         resident_attention: ResidentAttentionPort | None = None,
         admission_blocker: Callable[[], AutonomousAdmissionBlocker | None] | None = None,
         revalidator: SensoryEventRevalidatorPort | None = None,
@@ -253,6 +254,7 @@ class SensoryDecisionWorker:
         self._tenant_id = tenant_id
         self._installation_id = installation_id
         self._principal_id = principal_id
+        self._memory_principal_resolver = memory_principal_resolver
         self._resident_attention = resident_attention
         self._admission_blocker = admission_blocker
         self._revalidator = revalidator
@@ -318,14 +320,18 @@ class SensoryDecisionWorker:
                 else f"{event.payload.get('old_state', '')} naar "
                 f"{event.payload.get('new_state', '')}"
             )
+            # Resolve the trusted owner alias afresh so revocation takes effect
+            # without rewriting existing private memories or widening their audience.
+            memory_principal = (self._principal_id if self._memory_principal_resolver is None
+                                else self._memory_principal_resolver())
             memory = self._memory.recall_for_presence(
                 RecallCurrentFacts(
                     recall_id=f"free-will:{event.source_event_id}",
                     installation_id=self._installation_id,
                     tenant_id=self._tenant_id,
-                    principal_id=self._principal_id,
+                    principal_id=memory_principal,
                     audience=MemoryAudience.private_person(
-                        principal_id=self._principal_id
+                        principal_id=memory_principal
                     ),
                     conversation_id="sensory:home-assistant",
                     project_id=None,
@@ -336,7 +342,7 @@ class SensoryDecisionWorker:
                         "kind": "household_event",
                         "source": event.source,
                     },
-                    subject_ids=(self._principal_id,),
+                    subject_ids=(memory_principal,),
                     query_text=(
                         "Persoonlijke plannen, interesses en voorkeuren die passen bij "
                         "deze huiswaarneming: "

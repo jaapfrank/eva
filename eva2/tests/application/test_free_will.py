@@ -265,3 +265,50 @@ def test_spontaneous_initiative_rejects_missing_owner_or_unbounded_proposal():
         PersonalInitiativeProposal("x" * 161, "why", "what")
     with pytest.raises(ValueError):
         PersonalInitiativeProposal("title", "why", "what").adoption(SimpleNamespace(), principal_id="")
+
+
+def test_initiative_memory_uses_trusted_owner_alias_and_rechecks_revocation(tmp_path):
+    from uuid import UUID
+    import json
+    from eva.bootstrap.telegram_ingress import load_principal_bindings
+
+    owner = "33333333-3333-3333-8333-333333333333"
+    binding_id = "44444444-4444-4444-8444-444444444444"
+    binding_file = tmp_path / "bindings.json"
+    def write_binding(bound_owner):
+        binding_file.write_text(json.dumps({"contract": "EvaTelegramPrincipalBindings/v2", "bindings": [{
+            "telegram_user_id": 123, "allowed_chat_ids": ["123"],
+            "principal_id": bound_owner, "principal_binding_id": binding_id,
+        }]}))
+    write_binding(owner)
+    binding_file.chmod(0o600)
+    def resolve():
+        return load_principal_bindings(str(binding_file)).private_bridge_principal(
+            principal_id=owner, principal_binding_id=UUID(binding_id)) or owner
+    event = SensoryEvent("home-assistant", "alias-event", "state_changed", NOW,
+                         {"entity_id": "binary_sensor.door", "old_state": "off", "new_state": "on"})
+    claim = SensoryDecisionClaim(event, "sensory:alias-event", "alias-event", 2, 0)
+    queries = []
+    class Store:
+        def claim_next(self, **kwargs): return claim
+        def mark_model_started(self, actual, **kwargs): return actual
+        def complete(self, actual, decision, **kwargs): pass
+        def fail(self, actual, error, **kwargs): raise error
+    class Memory:
+        def recall_for_presence(self, query):
+            queries.append(query)
+            return object()
+    class Model:
+        def evaluate_sensory_event(self, *args):
+            return FreeWillDecision("silence", "Privately considered", 0, "test")
+    worker = SensoryDecisionWorker(Store(), Model(), Memory(),
+        IdentityProfile("Eva", "Fixture", ("Be honest",), 80),
+        tenant_id="tenant", installation_id="home", principal_id=owner,
+        memory_principal_resolver=resolve)
+    assert worker.run_once(now=NOW) == "silence"
+    write_binding("55555555-5555-5555-8555-555555555555")
+    assert worker.run_once(now=NOW) == "silence"
+    assert [q.principal_id for q in queries] == ["telegram:123", owner]
+    assert [q.subject_ids for q in queries] == [("telegram:123",), (owner,)]
+    assert [q.audience.principal_id for q in queries] == ["telegram:123", owner]
+    assert worker._principal_id == owner  # Initiative ownership is not rewritten.
