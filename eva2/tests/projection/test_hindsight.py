@@ -524,7 +524,7 @@ def test_hindsight_owns_conversation_memory_and_style_observations(
     assert retained["async"] is True
 
 
-def test_private_fast_recall_returns_immediately_then_reuses_scoped_refresh(
+def test_private_recall_includes_memory_on_first_turn_and_reuses_same_question(
     hindsight_server: tuple[str, _State],
 ) -> None:
     base_url, _state = hindsight_server
@@ -532,17 +532,12 @@ def test_private_fast_recall_returns_immediately_then_reuses_scoped_refresh(
     query = _query()
 
     cold = engine.recall_for_presence_fast(query)
-    deadline = time.monotonic() + 2
-    warm = cold
-    while not warm.confirmed_facts and time.monotonic() < deadline:
-        time.sleep(0.01)
-        warm = engine.recall_for_presence_fast(query)
-
-    assert cold.confirmed_facts == ()
-    assert [fact.predicate for fact in warm.confirmed_facts] == [
-        "memory.world",
-        "memory.observation",
-    ]
+    warm = engine.recall_for_presence_fast(query)
+    assert cold.confirmed_facts
+    assert warm is cold
+    changed = replace(query, query_text="Een andere vraag over persoonlijke voorkeuren")
+    assert engine._fast_presence_key(changed) != engine._fast_presence_key(query)
+    assert engine.recall_for_presence_fast(changed) is not cold
 
 
 @pytest.mark.parametrize("changed_field", ["content", "occurred_at", "principal_id", "installation_id"])
@@ -590,9 +585,11 @@ def test_retained_correction_discards_stale_context_and_fences_inflight_recall(
     assert key not in engine._fast_presence_cache
     assert "other-person" in engine._fast_presence_cache
     assert engine._fast_presence_generation > generation
-    monkeypatch.setattr(engine, "recall_for_presence", lambda _query: memory)
-    assert engine._fast_presence_slots.acquire(blocking=False)
-    engine._refresh_fast_presence(key, query, generation)
+    def recall_during_correction(_query):
+        engine._fast_presence_generation += 1
+        return memory
+    monkeypatch.setattr(engine, "recall_for_presence", recall_during_correction)
+    engine.recall_for_presence_fast(query)
     assert key not in engine._fast_presence_cache
 
 
