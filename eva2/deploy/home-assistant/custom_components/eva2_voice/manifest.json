@@ -1,10 +1,15 @@
 {
   "domain": "eva2_voice",
   "name": "Eva2 Voice",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "config_flow": true,
   "documentation": "https://github.com/jaapfrank/eva",
-  "dependencies": ["conversation"],
+  "dependencies": [
+    "conversation",
+    "frontend",
+    "websocket_api",
+    "panel_custom"
+  ],
   "codeowners": [],
   "requirements": [],
   "iot_class": "local_push"

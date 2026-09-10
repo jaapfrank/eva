@@ -31,6 +31,7 @@ def create_app():
     key = config["livekit_api_key"]
     secret = Path(config["livekit_secret_file"]).read_text().strip()
     sessions = {}
+    heartbeats = {}
     lock = asyncio.Lock()
     vad = silero.VAD.load(min_speech_duration=.1, min_silence_duration=.45)
     backend = CoreClient(config["core_url"], token)
@@ -111,6 +112,29 @@ def create_app():
                 await lease.close()
         return {"closed": True, "ongoing_core_work_cancelled": False}
 
+    @app.post("/session/end/{session_id}")
+    async def end_one(request: Request, session_id: str):
+        admit(request, mutation=True)
+        async with lock:
+            lease = sessions.get(session_id)
+            if lease is not None:
+                await lease.close()
+        return {"closed": True, "ongoing_core_work_cancelled": False}
+
+    @app.post("/session/renew/{session_id}")
+    async def renew(request: Request, session_id: str):
+        admit(request, mutation=True)
+        async with lock:
+            deadline = heartbeats.get(session_id)
+            if deadline is None or deadline <= asyncio.get_running_loop().time():
+                lease = sessions.get(session_id)
+                if deadline is not None and lease is not None:
+                    await lease.close()
+                raise HTTPException(410, "Stemverbinding is verlopen.")
+            heartbeats[session_id] = asyncio.get_running_loop().time() + 10
+        return {"renewed": True, "expires_in": 10}
+
+    @app.post("/session/leased")
     @app.post("/session")
     async def start(request: Request):
         admit(request, mutation=True)
@@ -156,13 +180,17 @@ def create_app():
                     except api.TwirpError as error:
                         if error.code != "not_found":
                             raise
-            lease = SessionLease(session, room, lambda: sessions.pop(room_name, None), delete_room)
+            def forget():
+                sessions.pop(room_name, None)
+                heartbeats.pop(room_name, None)
+            lease = SessionLease(session, room, forget, delete_room)
             sessions[room_name] = lease
             try:
-                await room.connect(config["livekit_url"], credential("eva", agent=True))
-                await session.start(EvaAgent(state), room=room, room_options=room_io.RoomOptions(
-                    participant_identity="owner", close_on_disconnect=True,
-                    audio_input=room_io.AudioInputOptions(), video_input=False))
+                async with asyncio.timeout(20):
+                    await room.connect(config["livekit_url"], credential("eva", agent=True))
+                    await session.start(EvaAgent(state), room=room, room_options=room_io.RoomOptions(
+                        participant_identity="owner", close_on_disconnect=True,
+                        audio_input=room_io.AudioInputOptions(), video_input=False))
             except BaseException:
                 await lease.close()
                 raise
@@ -173,6 +201,8 @@ def create_app():
             def participant_left(participant):
                 if participant.identity == "owner":
                     asyncio.create_task(lease.close())
+            if request.url.path == "/session/leased":
+                heartbeats[room_name] = asyncio.get_running_loop().time() + 10
             async def watch():
                 started = asyncio.get_running_loop().time()
                 while True:
@@ -181,6 +211,9 @@ def create_app():
                     try:
                         check()
                     except ValueError:
+                        await lease.close()
+                        return
+                    if (room_name in heartbeats and heartbeats[room_name] <= asyncio.get_running_loop().time()):
                         await lease.close()
                         return
                     if elapsed >= 1800 or (elapsed >= 30 and "owner" not in room.remote_participants):

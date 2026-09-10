@@ -14,5 +14,16 @@
         }
       }
     }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Praten met Eva",
+        "description": "Optioneel eigenaarspaneel voor laptop en telefoon. Vereist de geïnstalleerde telefoonassets en de private Eva-stemingang.",
+        "data": {
+          "owner_voice_panel": "Eigenaarspaneel inschakelen"
+        }
+      }
+    }
   }
 }

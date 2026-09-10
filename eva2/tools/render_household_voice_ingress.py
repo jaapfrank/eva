@@ -14,7 +14,8 @@ import subprocess
 
 
 def render(*, environment: str, listen: str, home_assistant: str,
-           port: int = 44714, runtime: str = "/run/eva2-voice-ingress") -> str:
+           port: int = 44714, runtime: str = "/run/eva2-voice-ingress",
+           owner_voice: bool = False) -> str:
     addresses = [ipaddress.ip_address(value) for value in (listen, home_assistant)]
     if any(address.version != 4 or not address.is_private
            or address.is_unspecified or address.is_multicast for address in addresses):
@@ -26,6 +27,45 @@ def render(*, environment: str, listen: str, home_assistant: str,
         "http://127.0.0.1:44710", "http://127.0.0.1:44711"
     }:
         raise ValueError("loaded Eva route is not one exact retained slot")
+    owner_routes = ""
+    if owner_voice:
+        owner_routes = r'''
+        location ~ "^/owner-voice/session(?:/ready|/leased|/(?:end|renew)/eva-voice-[0-9a-f]{32})?$" {
+            if ($is_args != "") { return 400; }
+            rewrite ^/owner-voice/(.*)$ /$1 break;
+            proxy_pass http://127.0.0.1:44716;
+            proxy_http_version 1.1;
+            proxy_pass_request_headers off;
+            proxy_set_header Host localhost:44716;
+            proxy_set_header Origin http://localhost:44716;
+            proxy_set_header Authorization $http_authorization;
+            proxy_set_header Content-Type application/json;
+            proxy_buffering off;
+            proxy_request_buffering off;
+            proxy_max_temp_file_size 0;
+            proxy_next_upstream off;
+            proxy_connect_timeout 2s;
+            proxy_read_timeout 45s;
+        }
+        location ~ "^/owner-voice/livekit/rtc(?:/validate)?$" {
+            if ($request_method != GET) { return 405; }
+            rewrite ^/owner-voice/livekit/(.*)$ /$1 break;
+            proxy_pass http://127.0.0.1:7880;
+            proxy_http_version 1.1;
+            proxy_pass_request_headers off;
+            proxy_set_header Host localhost:7880;
+            proxy_set_header Upgrade $http_upgrade;
+            proxy_set_header Connection "upgrade";
+            proxy_set_header Sec-WebSocket-Key $http_sec_websocket_key;
+            proxy_set_header Sec-WebSocket-Version $http_sec_websocket_version;
+            proxy_set_header Sec-WebSocket-Protocol $http_sec_websocket_protocol;
+            proxy_buffering off;
+            proxy_max_temp_file_size 0;
+            proxy_next_upstream off;
+            proxy_connect_timeout 2s;
+            proxy_read_timeout 45s;
+        }
+'''
     return f"""# Generated from the loaded eva.service route; contains no credentials.
 daemon off;
 master_process off;
@@ -70,7 +110,7 @@ http {{
             proxy_read_timeout 35s;
             proxy_send_timeout 5s;
         }}
-        location / {{ return 404; }}
+{owner_routes}        location / {{ return 404; }}
     }}
 }}
 """
@@ -78,6 +118,7 @@ http {{
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--owner-voice", action="store_true")
     parser.add_argument("--listen", required=True)
     parser.add_argument("--home-assistant", required=True)
     parser.add_argument("--runtime", default="/run/eva2-voice-ingress")
@@ -96,7 +137,7 @@ def main() -> None:
         check=True, capture_output=True, text=True,
     ).stdout
     config = render(environment=environment, listen=args.listen,
-                    home_assistant=args.home_assistant, runtime=args.runtime)
+                    home_assistant=args.home_assistant, runtime=args.runtime, owner_voice=args.owner_voice)
     directory = Path(args.runtime)
     for name in ("body", "proxy"):
         (directory / name).mkdir(mode=0o700, exist_ok=True)
