@@ -1,0 +1,101 @@
+{
+  "date": "2026-09-10",
+  "status": "live_laptop_browser_speech_audio_proven_phone_install_pending",
+  "existingLiveKit": {
+    "relayOnly": true,
+    "signaling": "local-direct-test",
+    "phoneOrHaPanel": false,
+    "iceServerCount": 2,
+    "phase": "relay-connect",
+    "passed": false,
+    "failureType": "TimeoutError"
+  },
+  "isolatedSfu": {
+    "relayOnly": true,
+    "signaling": "isolated-SFU-Docker-network-no-published-ports",
+    "phoneOrHaPanel": false,
+    "iceServerCount": 2,
+    "phase": "relay-connect",
+    "relayConnected": true,
+    "audioFramesReceived": 204,
+    "audioSamplesReceived": 97920,
+    "passed": true
+  },
+  "finding": "Live SFU advertises only loopback; isolated routable SFU relays synthetic audio through existing HA Cloud",
+  "noPublishedProbePorts": true,
+  "probeResourcesRemoved": true,
+  "phonePhysicalAcceptance": false,
+  "isolatedWindowsBrowser": {
+    "windowsBrowser": true,
+    "relayOnly": true,
+    "passed": true
+  },
+  "routableHostNodeChange": "Attempted and rolled back; host-network ICE failed in browser as did original loopback baseline",
+  "relaySource": "efa32d5c3e0d5d134143006ef85ffc223856a068",
+  "liveRollout": {
+    "live": true,
+    "core_url": "http://127.0.0.1:44711",
+    "coreDirectory": "/var/lib/eva2/managed-b-slot4",
+    "mediaImage": "sha256:57ae55645ab47d93c27f42c220eb55e2794f8877aff243791513f71e578aca40",
+    "cloudRelay": true,
+    "signaling": "127.0.0.1:7880",
+    "publishedUdpPorts": [],
+    "ready": 200
+  },
+  "currentRuntime": {
+    "coreUrl": "http://127.0.0.1:44711",
+    "coreSlot": "managed-b-slot4",
+    "coreImage": "sha256:41179aff25d51738ddf7033af90e9b9ee250dd43435aaf1cd9af7832dc914078",
+    "coreSource": "d8054d4de8278b08533177410076b9a70496cf83",
+    "mediaImage": "sha256:57ae55645ab47d93c27f42c220eb55e2794f8877aff243791513f71e578aca40",
+    "mediaSource": "efa32d5c3e0d5d134143006ef85ffc223856a068",
+    "livekitImage": "sha256:770bc61bc6ec4dcccbd3e05082d8f6bdafbee4179acab7014cc97202a9e2910b",
+    "livekitNetworkMode": "eva2-owner-voice_default",
+    "publishedPorts": {
+      "7880/tcp": [
+        {
+          "HostIp": "127.0.0.1",
+          "HostPort": "7880"
+        }
+      ]
+    },
+    "cloudRelay": true,
+    "ownerUrl": "http://localhost:44716",
+    "ownerAcceptance": false
+  },
+  "browserTypedToCoreToAudio": {
+    "passed": true,
+    "actualBrowser": true,
+    "actualCore": true,
+    "microphoneUsed": false,
+    "answer": "de verbinding werkt.",
+    "audioEnergyFrames": 5
+  },
+  "browserSpeechToSttToCoreToAudio": {
+    "passed": true,
+    "actualBrowser": true,
+    "actualCore": true,
+    "microphoneUsed": false,
+    "syntheticSpeechInput": true,
+    "answer": "De verbinding werkt.",
+    "audioEnergyFrames": 5,
+    "recognizedUserText": [
+      "Zeg Alleen dat de verbinding werkt?"
+    ],
+    "speechEndToAudioMs": 10485
+  },
+  "phoneGateway": {
+    "live": true,
+    "source": "56346b6",
+    "rendererSha256": "127f74f5b40873d283fa41b6f9ae07b3cdc478018c3509574c31108b8b4da349",
+    "existingHaIpRestriction": true,
+    "newFirewallRules": false,
+    "reload": "graceful",
+    "coreIngress": "preserved",
+    "haPanelInstalled": false
+  },
+  "phoneHaPanelInstalled": false,
+  "physicalOwnerAcceptance": false,
+  "independentSourceReview": "GO",
+  "targetedTests": 9
+}

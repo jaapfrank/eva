@@ -22,7 +22,7 @@
     "status": "reviewed_not_installed",
     "missing": "Existing Home Assistant configuration management route; requested from owner",
     "remoteIceTrial": false,
-    "refreshedJwtReconnect": "Open limitation"
+    "refreshedJwtReconnect": "Scope-preserving refreshed tokens supported by b0a0730; real SFU validates signature; full phone reconnect trial still open"
   },
   "remaining": [
     "Core candidate deployment with existing data preservation procedure",
@@ -30,5 +30,26 @@
     "Identify exact VoicePE and verified firmware rollback before flash",
     "Physical wakeword, echo, interruption, mute and concurrent task trial"
   ],
-  "liveUnchanged": "Existing laptop and HA house routes remain in service; no firmware flashed; no new listener or public exposure"
+  "liveUnchanged": "Existing laptop and HA house routes remain in service; no firmware flashed; no new listener or public exposure",
+  "packagedImage": "sha256:8e29ceeee9b285987cd6234022a14159d0f0ba0821fdc3a6a74eb3700a8feb4a",
+  "packagedSource": "8c2e872e0184265f757f3ff5da9b70d16917dac2",
+  "packageVerification": {
+    "offlineHelp": true,
+    "offlineAuthorityImports": true,
+    "offlineNativeClientAsset": true,
+    "offlineVadLoad": true,
+    "runtimeUid": 65532,
+    "additionalTargetedTests": 35,
+    "independentPackagingReview": "GO"
+  },
+  "hardwareReadback": {
+    "registeredDevicesMatched": 2,
+    "devices": [
+      "Eva woonkamer voice",
+      "Eva overkapping Voice"
+    ],
+    "installedFirmware": "ESPHome2026.6.2; build timestamps2026-06-21",
+    "candidateFirmwareFlashed": false,
+    "missing": "Existing complete device configuration, verified firmware rollback and credential provisioning through the existing HA management route"
+  }
 }

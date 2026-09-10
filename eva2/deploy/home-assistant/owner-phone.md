@@ -29,9 +29,10 @@ bound to the panel capability and exact room. Pending cleanup survives caller
 cancellation, and backend close failures are retried. Ordinary laptop rooms do
 not require these renewals.
 
-Install prerequisites still open: a verified existing HA configuration deployment
-route, installed reviewed media image with leased endpoints, explicit gateway
-flag, and copied component bundle. Then reload the existing integration and enable
+Status 2026-09-10: reviewed media with leased endpoints and Cloud relay is live;
+the existing HA-IP-only gateway has owner routes enabled through the versioned
+owner-phone-ingress.conf drop-in. A verified existing HA configuration deployment
+route and installation of the prepared component bundle are still needed. Then reload the existing integration and enable
 Eigenaarspaneel inschakelen in its options. A failed optional panel setup preserves
 the existing household conversation platform. Disable removes the loaded panel,
 closes its leases, and leaves the household agent usable.
@@ -39,6 +40,7 @@ closes its leases, and leaves the household agent usable.
 Evidence so far: real HTTP and binary WebSocket transport, an actual nginx proxy
 inside an isolated network namespace, cancellation/revocation/unload regressions,
 room-bound close and heartbeat expiry, and a real browser UI login/remount trial.
-The UI trial used synthetic readiness, not actual HA authentication. Neither
-installation in HA nor physical phone microphone/audio or remote TURN transport
-has yet been proved. Do not describe this route as live or accepted.
+The UI trial used synthetic readiness, not actual HA authentication. The existing Cloud relay now carries synthetic audio in an isolated test, and
+the actual Windows browser completed speech recognition, an Eva core answer and
+received audio on the live relay route. Installation in HA and physical phone
+microphone/audio have not been proved. Do not describe this route as live or accepted.

@@ -1,7 +1,7 @@
 {
   "contract": "EvaVoiceIntegrationEvidence/v1",
-  "status": "live_laptop_owner_trial_pending",
-  "source_commit": "af7f65265a9a514083ea3a095edad772c586cb63",
+  "status": "live_laptop_browser_speech_audio_proven_owner_trial_pending",
+  "source_commit": "efa32d5c3e0d5d134143006ef85ffc223856a068",
   "owner_acceptance": false,
   "physical_microphone_test": false,
   "checks": {
@@ -817,9 +817,59 @@
     }
   },
   "remaining_acceptance_work": [
-    "Physical owner microphone/speaker and browser trial, including echo and interrupted conversation",
-    "Reduce measured core response waiting time: short isolated replies took 11–13 seconds; six-sentence live audio reply started 17.7 seconds after question end",
-    "Phone and natural continuous VoicePE access",
+    "Physical owner microphone, speaker/echo and interrupted conversation trial",
+    "Reduce remaining response delay; one current browser sample confirms audio about 10.5 seconds after synthetic speech end",
+    "Install prepared HA phone panel using the existing HA configuration management route, which is not yet available to this task",
+    "Provision continuous VoicePE firmware only after exact existing configuration and working rollback are available",
     "Owner assessment of usefulness and conversational flow"
-  ]
+  ],
+  "initial_voice_source_commit": "af7f65265a9a514083ea3a095edad772c586cb63",
+  "current_runtime": {
+    "coreUrl": "http://127.0.0.1:44711",
+    "coreSlot": "managed-b-slot4",
+    "coreImage": "sha256:41179aff25d51738ddf7033af90e9b9ee250dd43435aaf1cd9af7832dc914078",
+    "coreSource": "d8054d4de8278b08533177410076b9a70496cf83",
+    "mediaImage": "sha256:57ae55645ab47d93c27f42c220eb55e2794f8877aff243791513f71e578aca40",
+    "mediaSource": "efa32d5c3e0d5d134143006ef85ffc223856a068",
+    "livekitImage": "sha256:770bc61bc6ec4dcccbd3e05082d8f6bdafbee4179acab7014cc97202a9e2910b",
+    "livekitNetworkMode": "eva2-owner-voice_default",
+    "publishedPorts": {
+      "7880/tcp": [
+        {
+          "HostIp": "127.0.0.1",
+          "HostPort": "7880"
+        }
+      ]
+    },
+    "cloudRelay": true,
+    "ownerUrl": "http://localhost:44716",
+    "ownerAcceptance": false
+  },
+  "browser_relay_verification": {
+    "date": "2026-09-10",
+    "typed": {
+      "passed": true,
+      "actualBrowser": true,
+      "actualCore": true,
+      "microphoneUsed": false,
+      "answer": "de verbinding werkt.",
+      "audioEnergyFrames": 5
+    },
+    "spoken": {
+      "passed": true,
+      "actualBrowser": true,
+      "actualCore": true,
+      "microphoneUsed": false,
+      "syntheticSpeechInput": true,
+      "answer": "De verbinding werkt.",
+      "audioEnergyFrames": 5,
+      "recognizedUserText": [
+        "Zeg Alleen dat de verbinding werkt?"
+      ],
+      "speechEndToAudioMs": 10485
+    },
+    "scope": "Actual Windows Codex browser; synthetic speech, not physical microphone or human hearing acceptance",
+    "latencyMetric": "Speech end to five above-threshold browser audio-energy frames; one sample, not a latency benchmark",
+    "detail": "voice-phone-relay-candidate-2026-09-10.json"
+  }
 }
