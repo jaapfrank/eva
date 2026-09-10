@@ -199,6 +199,13 @@ class HomeAssistantProviderFactory:
         ))
 
         def authorize_household(turn):
+            from eva.application.initiative_execution import require_initiative_context
+            native = require_initiative_context(turn)
+            if native is not None and native.action_allowed("read_home_assistant_inventory"):
+                # The distinct host-owned native read grant verifies the current
+                # owner binding; actual destination/arguments are checked at dispatch.
+                # It does not add the owner to the ordinary HA effect allowlist.
+                return
             if (
                 turn.audience.kind != "private_person"
                 or turn.audience.principal_id != turn.principal_id
