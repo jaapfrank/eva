@@ -23,7 +23,10 @@ async function main() {
   for (const capability of payload.project.capabilities) {
     const finding = audit.findings.find(item => item.id === capability.id);
     assert.ok(capability.scope, 'each status must name its delivery scope');
-    assert.equal(capability.visibleResult, finding.visibleResult);
+    if (capability.id === 'initiative' && board.audit.au008GeneralResearch20260910?.status === 'live') {
+      assert.match(capability.visibleResult, /Algemeen publiek onderzoek is live/);
+      assert.equal(capability.gap, board.audit.au008GeneralResearch20260910.remaining);
+    } else assert.equal(capability.visibleResult, finding.visibleResult);
     for (const step of ['built','tested','live','accepted']) assert.equal(capability[step], finding.states[step]);
   }
   assert.deepEqual(payload.project.roadmap, board.audit.projectDashboard.roadmap);
@@ -50,7 +53,7 @@ async function main() {
     assert.ok((await page.locator('.matrix-scroll').boundingBox()).height < 1150, 'nine rows show results without stacked status cards');
     assert.equal(await page.locator('.matrix-result:visible').count(),9);
     assert.equal(await page.locator('.matrix-gap-kind:visible').count(),9);
-    for (const finding of audit.findings) await page.getByText(finding.visibleResult,{exact:true}).first().waitFor();
+    for (const finding of payload.project.capabilities) await page.getByText(finding.visibleResult,{exact:true}).first().waitFor();
     if (output) await page.screenshot({ path: path.join(output, 'eva-project-desktop.png'), fullPage: true });
     await page.locator('.matrix-toggle').filter({hasText: 'Geheugen'}).click();
     await page.getByRole('button', {name: 'Een gewijzigde geheugenbron verwerken', exact: true}).waitFor();
