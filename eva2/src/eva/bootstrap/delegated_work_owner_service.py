@@ -10,7 +10,7 @@ from eva.adapters.postgres.delegated_work import (
     PostgresDelegatedWorkStore,
     StoredDelegatedWork,
 )
-from eva.adapters.postgres.operational_timeline import external_timeline_scope
+from eva.adapters.postgres.operational_timeline import TimelineScope, external_timeline_scope
 from eva.application.conversation import ConversationTurn
 from eva.bootstrap.delegated_work_provider import build_unadmitted_delegated_work_spec
 from eva.contracts.canonical_json import canonical_sha256
@@ -19,8 +19,11 @@ from eva.contracts.timestamps import parse_utc_timestamp
 
 class DelegatedWorkOwnerService:
     def __init__(self, store: PostgresDelegatedWorkStore, *, owner_principal_id: UUID,
-                 principal_binding_id: UUID, clock: Callable[[], datetime] | None = None):
+                 principal_binding_id: UUID, clock: Callable[[], datetime] | None = None,
+                 conversation_scope: TimelineScope | None = None):
         self.store = store
+        # Runtime binds the conversation namespace separately from storage authority.
+        self.conversation_scope = conversation_scope or store.scope
         self.owner_principal_id = owner_principal_id
         self.principal_binding_id = principal_binding_id
         self._clock = clock or (lambda: datetime.now(UTC).replace(microsecond=0))
@@ -34,7 +37,7 @@ class DelegatedWorkOwnerService:
                 or turn.audience.principal_id != str(self.owner_principal_id)):
             return False
         return external_timeline_scope(turn.tenant_id, turn.installation_id,
-                                       "delegated owner scope is required") == self.store.scope
+                                       "delegated owner scope is required") == self.conversation_scope
 
     def validate_authority(self, turn: ConversationTurn) -> None:
         """Recheck the current binding before returning even a saved action receipt."""

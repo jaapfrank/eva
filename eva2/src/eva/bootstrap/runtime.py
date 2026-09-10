@@ -1566,6 +1566,11 @@ def create_runtime_app() -> FastAPI:
                 delegated_work_store,
                 owner_principal_id=dashboard_owner_principal_id,
                 principal_binding_id=dashboard_principal_binding_id,
+                conversation_scope=external_timeline_scope(
+                    settings.background_tenant_id or "",
+                    settings.background_installation_id or "",
+                    "delegated work requires the configured conversation scope",
+                ),
             )
             delegated_work_actions = PostgresDelegatedWorkActions(engine, delegated_work_service)
             if telegram_principal_bindings is not None:

@@ -164,3 +164,30 @@ def test_legacy_stop_keeps_its_first_target_when_delivery_is_replayed(delegated_
     assert store.load(second["work_id"], owner_principal_id=owner, principal_binding_id=binding).state == "admitted"
     # Resume belongs to the ordinary conversation journal, which binds its exact work_id.
     assert commands.handle(_turn(label, owner, 4, "Hervat mijn onderzoek"), principal_binding_id=binding) is None
+
+
+def test_configured_conversation_scope_can_differ_from_storage_authority(delegated_engine: Engine):
+    from eva.adapters.postgres.operational_timeline import external_timeline_scope
+    label = "owner-distinct-scope"
+    scope, _, binding = _seed_authority(delegated_engine, label)
+    owner = _id(label, "principal")
+    store = PostgresDelegatedWorkStore(delegated_engine, scope)
+    turn = _turn("runtime-namespace", owner, 0)
+    service = DelegatedWorkOwnerService(
+        store, owner_principal_id=owner, principal_binding_id=binding,
+        conversation_scope=external_timeline_scope(turn.tenant_id, turn.installation_id, "required"),
+    )
+    assert service.conversation_scope != store.scope
+    assert service.available_for(turn)
+    work = service.execute("start", turn, task="Schrijf drie ideeën", request_key="distinct-scope")["work"]
+    assert store.load(work["work_id"], owner_principal_id=owner, principal_binding_id=binding)
+    assert not service.available_for(_turn(label, owner, 1))
+    assert not service.available_for(_turn("other-runtime", owner, 1))
+    assert not service.available_for(_turn("runtime-namespace", _id(label, "stranger"), 1))
+    with delegated_engine.begin() as connection:
+        connection.execute(sa.update(principal_bindings).where(
+            principal_bindings.c.tenant_id == scope.tenant_id,
+            principal_bindings.c.principal_binding_id == binding,
+        ).values(status="revoked"))
+    with pytest.raises(DelegatedWorkConflict, match="binding is not current"):
+        service.execute("get", turn, work_id=work["work_id"], request_key="revoked")
