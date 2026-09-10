@@ -1,0 +1,440 @@
+{
+  "contract": "EvaAutomaticPersonalMemoryDelivery/v1",
+  "taskId": "CO-008",
+  "issuedAt": "2026-09-10T10:20:05.865117+00:00",
+  "baseCommit": "0126ac0a1e0c3962ae4f0863f2d695e6206bdabc",
+  "implementationCommit": "ddb0267852c56c95ccde4270d821e3192ba56b70",
+  "outcome": "Relevante kennis uit gewone gesprekken onthouden, wijzigingen toepassen en later zonder geheugencommando gebruiken.",
+  "status": {
+    "built": true,
+    "tested": true,
+    "live": true,
+    "ownerAccepted": false,
+    "independentReview": "pending"
+  },
+  "changes": [
+    "Duurzame retentietaak na fout correct hervatten, met begrensde retries.",
+    "Geheugenmodel vervangen nadat de oude modelnaam live werd geweigerd.",
+    "Bestaande mislukte native operatie exact hervatten; annuleringen niet herstarten.",
+    "Geheugen vóór het eerste antwoord ophalen en cache aan de concrete vraag binden.",
+    "Beste gerangschikte kandidaat behouden bij lage zoekscore, met bestaande bron- en persoonscontroles."
+  ],
+  "targetedTests": {
+    "durableWorker": {
+      "before": "2 regression cases failed: CheckpointState has no state",
+      "afterWorker": "7 passed in 0.89s",
+      "afterAdapter": "9 passed in 4.11s"
+    },
+    "finalAdapter": {
+      "command": "python -m pytest tests/projection/test_hindsight.py -q",
+      "result": "..............................................................           [100%]\n62 passed in 31.34s",
+      "scope": "Ook lage scores, nulscore, persoonsgrens, ontbrekende bron en koude cache."
+    }
+  },
+  "liveRuntime": {
+    "name": "/eva2-managed-b-slot3-core",
+    "imageId": "sha256:3a508a55df506646cb02b26e1944d3b34d7588a2b5ca57a34902fd1c649c9e23",
+    "sourceCommit": "ddb0267852c56c95ccde4270d821e3192ba56b70",
+    "startedAt": "2026-09-10T10:11:19.736762741Z",
+    "health": "healthy",
+    "sourceHashes": {
+      "adapters/projection/hindsight.py": "1502be7c16733ee0e998aa6d547eae9b901a23d2219cbe34beb961af12fbdd24",
+      "application/memory_background.py": "aea29fd28a56d43977ee63767ee2cee972b266f8acede1ff2cb4569a1cfd173d"
+    }
+  },
+  "deployment": {
+    "backgroundIsolationBoundary": "Legacy images may ignore the switch; configuration readback is not worker isolation proof.",
+    "backgroundWorkConfiguredAfterActivation": true,
+    "backgroundWorkConfiguredDuringStaging": false,
+    "contract": "Eva2QuiescentCutoverReceipt/v1",
+    "eva1Backup": {
+      "bytes": 314032128,
+      "filename": "eva1-before-slot4-to-slot3-20260910T100925Z.db",
+      "quickCheck": "ok",
+      "sha256": "fe470836f2789070a7be53365d3813c58e08f153cd100e0d555c74ccc5be7721"
+    },
+    "eva1HttpStatuses": {
+      "/": 200,
+      "/api/capabilities": 200,
+      "/api/health": 200,
+      "/api/overview": 200,
+      "/api/workstatus": 200
+    },
+    "issuedAt": "2026-09-10T10:11:50.541544+00:00",
+    "previousDropinSha256": "697494ce129c08b712d2e5ef7e62f5e1a6a81931280c32465bc0db0ad76d15c8",
+    "proactiveCredentialWithheldDuringStaging": true,
+    "proactiveDeliveryEnabled": true,
+    "sourcePort": 44711,
+    "sourceWritersStopped": true,
+    "status": "switched",
+    "synchronizedDatabases": {
+      "memory": {
+        "countDigest": "2fe043229e920f11a20a4a9670c6cce79d328380f8243742f26aa2234566a811",
+        "dataDigest": "cf67db858d6155dd9975088719d2c2011f534c978668cceddc82f32c2256bee9",
+        "dumpBytes": 2660277,
+        "dumpSha256": "0f763e4d29e3929acd7a38e0f800da6f167ced8a869d61ddce13c41db745b57a",
+        "schemaDigest": "d89bfebdbfeb55e8618e81286bf24a42b838bfe577e84f6db9b93b43f5832172",
+        "tableCount": 23
+      },
+      "operational": {
+        "countDigest": "beff85e64d8a39d588c24200a373346afab95227caac31c01c50f2c41c48204b",
+        "dataDigest": "e31413d30cf6b06d657202cf1244cfdc276a688ddce2c06f646be09c18e9fbc5",
+        "dumpBytes": 13121979,
+        "dumpSha256": "f1e70b5fb20ad724259cef3049ff35d4cfeb0d31a1a4972797b1b7860e50c506",
+        "schemaDigest": "32acc5b66e349dfd5b385e4828897575ad543ebb5f2638b8880dff1cacb7fb39",
+        "tableCount": 48
+      }
+    },
+    "targetPort": 44710,
+    "targetReady": true
+  },
+  "liveCases": [
+    {
+      "case": "automatic_preference_and_correction",
+      "route": "POST /internal/v1/turns/respond, afzonderlijke gesprekken, geen expliciete retain-aanroep",
+      "before": {
+        "contract": "EvaInternalGroundedReply/v1",
+        "conversation_id": "co008:recall-stored",
+        "evidence_memory_ids": [
+          "hindsight:68ce3fc1-b8bd-454a-b77b-1a9a0c779543",
+          "hindsight:09cab3cb-43a7-4a3b-a0d8-21bf04ca4132"
+        ],
+        "generated_at": "2026-09-10T09:13:08Z",
+        "message_id": "co008:55b09340-1e20-42f8-89de-d486c5a16e25",
+        "provider": "chatgpt-codex:gpt-6-astra",
+        "text": "Tijdens het lezen ’s avonds drink je het liefst jasmijnthee. Je normale werkplek is Delft; van 1 tot en met 3 september 2026 werkte je tijdelijk in Gouda.",
+        "text_sha256": "872a98b6ca2c0169bc1da9ff64680df1db23f2eca56ff1c57ea610fb483ed22d"
+      },
+      "after": {
+        "contract": "EvaInternalGroundedReply/v1",
+        "conversation_id": "co008:recall-corrected",
+        "evidence_memory_ids": [
+          "hindsight:5de6e965-462d-4e06-a839-e218c9a2e2e0",
+          "hindsight:09cab3cb-43a7-4a3b-a0d8-21bf04ca4132"
+        ],
+        "generated_at": "2026-09-10T09:16:08Z",
+        "message_id": "co008:44504cb6-79fb-4a1f-bc7e-5def5531b570",
+        "provider": "chatgpt-codex:gpt-6-astra",
+        "text": "Je drinkt tegenwoordig het liefst citroenmelissethee bij het lezen, in plaats van jasmijnthee.",
+        "text_sha256": "76eb28b9356efca56cf7a73fb5ca2a45dce2b99785f4c60d7a5055925ff72776"
+      },
+      "result": "passed"
+    },
+    {
+      "case": "implicit_recall_after_restart",
+      "request": {
+        "tenant_id": "live-test-tenant",
+        "installation_id": "live-test-installation",
+        "principal_id": "co008-person-20260910",
+        "conversation_id": "co008:implicit-live-complete",
+        "message_id": "co008:a21bc399-2608-47c6-a63b-fc2f175d8e37",
+        "text": "Ik pak mijn boek erbij. Wat zal ik erbij drinken?",
+        "occurred_at": "2026-09-10T10:12:22Z",
+        "audience": {
+          "audience_id": "person:co008-person-20260910",
+          "kind": "private_person",
+          "principal_id": "co008-person-20260910"
+        },
+        "recent_messages": []
+      },
+      "reply": {
+        "contract": "EvaInternalGroundedReply/v1",
+        "conversation_id": "co008:implicit-live-complete",
+        "evidence_memory_ids": [
+          "hindsight:09cab3cb-43a7-4a3b-a0d8-21bf04ca4132"
+        ],
+        "generated_at": "2026-09-10T10:12:22Z",
+        "message_id": "co008:a21bc399-2608-47c6-a63b-fc2f175d8e37",
+        "provider": "chatgpt-codex:gpt-6-astra",
+        "text": "Citroenmelissethee, die drink je tegenwoordig het liefst bij het lezen. Lekker met je boek erbij.",
+        "text_sha256": "668f42f83e3f9174cc35c402589944075ff03872ca10342916f69d66c39f3a98"
+      },
+      "previousFailedReply": {
+        "contract": "EvaInternalGroundedReply/v1",
+        "conversation_id": "co008:implicit-final",
+        "evidence_memory_ids": [],
+        "generated_at": "2026-09-10T10:02:49Z",
+        "message_id": "co008:c20190a4-6a10-471b-85fe-5e66ff941e46",
+        "provider": "chatgpt-codex:gpt-6-astra",
+        "text": "Ik zou rooibosthee nemen. Lekker warm, zacht van smaak en zonder cafeïne. Fijn voor bij je boek, ook als je toch nog een hoofdstuk langer doorleest.",
+        "text_sha256": "cd0c3720e1e01f153a0f111008c6b32848a88d63b950e73f6b9438a9cdc18a4f"
+      },
+      "result": "passed_on_final_image"
+    },
+    {
+      "case": "expired_temporary_location",
+      "request": {
+        "tenant_id": "live-test-tenant",
+        "installation_id": "live-test-installation",
+        "principal_id": "co008-person-20260910",
+        "conversation_id": "co008:temporary-final",
+        "message_id": "co008:05115297-f04b-4a2f-b14f-f24ebe2211ea",
+        "text": "Ik vertrek zo naar mijn werk. In welke stad werk ik vandaag normaal?",
+        "occurred_at": "2026-09-10T10:13:59Z",
+        "audience": {
+          "audience_id": "person:co008-person-20260910",
+          "kind": "private_person",
+          "principal_id": "co008-person-20260910"
+        },
+        "recent_messages": []
+      },
+      "reply": {
+        "contract": "EvaInternalGroundedReply/v1",
+        "conversation_id": "co008:temporary-final",
+        "evidence_memory_ids": [
+          "hindsight:68ce3fc1-b8bd-454a-b77b-1a9a0c779543"
+        ],
+        "generated_at": "2026-09-10T10:13:59Z",
+        "message_id": "co008:05115297-f04b-4a2f-b14f-f24ebe2211ea",
+        "provider": "chatgpt-codex:gpt-6-astra",
+        "text": "Normaal werk je in Delft.",
+        "text_sha256": "f2e0fa911b349addf7ba69525048c0bcb97b0857534d5675c1415cc59cc966b0"
+      },
+      "result": "passed_on_final_image"
+    },
+    {
+      "case": "noise_not_semantic_memory",
+      "source": "Hmm. Oke, oke. Ja, duidelijk. Hmm.",
+      "semanticFactCount": 0,
+      "rawSourcePreserved": true,
+      "result": "passed"
+    },
+    {
+      "case": "different_person",
+      "request": {
+        "tenant_id": "live-test-tenant",
+        "installation_id": "live-test-installation",
+        "principal_id": "co008-other-person-20260910",
+        "conversation_id": "co008:other-person-final",
+        "message_id": "co008:b207cb2c-7d42-45cf-b169-d4de84ea15c9",
+        "text": "Wat weet je over mijn favoriete thee en mijn normale werkstad?",
+        "occurred_at": "2026-09-10T10:12:44Z",
+        "audience": {
+          "audience_id": "person:co008-other-person-20260910",
+          "kind": "private_person",
+          "principal_id": "co008-other-person-20260910"
+        },
+        "recent_messages": []
+      },
+      "reply": {
+        "contract": "EvaInternalGroundedReply/v1",
+        "conversation_id": "co008:other-person-final",
+        "evidence_memory_ids": [],
+        "generated_at": "2026-09-10T10:12:44Z",
+        "message_id": "co008:b207cb2c-7d42-45cf-b169-d4de84ea15c9",
+        "provider": "chatgpt-codex:gpt-6-astra",
+        "text": "Ik heb geen betrouwbare herinnering aan je favoriete thee of de stad waar je normaal werkt.",
+        "text_sha256": "c3b6a9875b39ba363784867880b7ddb721ccc4aee6906df57eaa208a277ed90f"
+      },
+      "nativeRecallSelected": [],
+      "result": "passed_after_recovery",
+      "attempts": [
+        {
+          "httpStatus": 503
+        },
+        {
+          "httpStatus": 503
+        },
+        {
+          "route": "same committed turn retried through composed runtime in diagnostic process",
+          "result": "reply committed with zero memory ids"
+        },
+        {
+          "route": "HTTP readback of same turn",
+          "httpStatus": 200
+        }
+      ]
+    }
+  ],
+  "independentDatabaseReadback": {
+    "bank": "eva2_candidate_be70ec4-e843a7e30875b90ef469c0258d515eb0",
+    "facts": [
+      {
+        "id": "5de6e965-462d-4e06-a839-e218c9a2e2e0",
+        "document_id": null,
+        "text": "De gebruiker heet Mira.",
+        "fact_type": "observation",
+        "mentioned_at": "2026-09-10 09:08:18+00:00",
+        "tags": [
+          "eva-person-e36123a480c7d72934d0da01e739ebd0"
+        ]
+      },
+      {
+        "id": "bab34ec0-b492-4d80-bed9-38d912295b13",
+        "document_id": "co008:preference:exchange:co008:0fe78e90-e080-4688-9386-f0aef03d6c77",
+        "text": "De gebruiker heet Mira en drinkt tijdens het lezen 's avonds het liefst jasmijnthee. | Involving: Mira (gebruiker)",
+        "fact_type": "world",
+        "mentioned_at": "2026-09-10 09:08:18+00:00",
+        "tags": [
+          "eva-person-e36123a480c7d72934d0da01e739ebd0",
+          "eva-memory"
+        ]
+      },
+      {
+        "id": "36160266-504a-4699-8fd7-0b81f0354e03",
+        "document_id": "co008:preference:exchange:co008:0fe78e90-e080-4688-9386-f0aef03d6c77",
+        "text": "Mira werkt op werkdagen normaal in Delft; van 1 tot en met 3 september 2026 werkte ze tijdelijk in Gouda. | When: 1 tot en met 3 september 2026 | Involving: Mira (gebruiker) | De werkzaamheden in Gouda waren een tijdelijke afwijking van haar normale werkplek in Delft.",
+        "fact_type": "world",
+        "mentioned_at": "2026-09-10 09:08:18.010000+00:00",
+        "tags": [
+          "eva-person-e36123a480c7d72934d0da01e739ebd0",
+          "eva-memory"
+        ]
+      },
+      {
+        "id": "68ce3fc1-b8bd-454a-b77b-1a9a0c779543",
+        "document_id": null,
+        "text": "Mira werkt normaal op werkdagen in Delft; van 1 tot en met 3 september 2026 werkte ze tijdelijk in Gouda als afwijking van haar normale werkplek.",
+        "fact_type": "observation",
+        "mentioned_at": "2026-09-10 09:08:18.010000+00:00",
+        "tags": [
+          "eva-person-e36123a480c7d72934d0da01e739ebd0"
+        ]
+      },
+      {
+        "id": "09cab3cb-43a7-4a3b-a0d8-21bf04ca4132",
+        "document_id": null,
+        "text": "Mira drinkt tijdens het lezen sinds 9 september 2026 het liefst citroenmelissethee in plaats van jasmijnthee.",
+        "fact_type": "observation",
+        "mentioned_at": "2026-09-10 09:13:53+00:00",
+        "tags": [
+          "eva-person-e36123a480c7d72934d0da01e739ebd0"
+        ]
+      },
+      {
+        "id": "1969dda5-b595-4829-9bc1-e1fa0b7badaa",
+        "document_id": "co008:correction:exchange:co008:3cdfdafe-a6cb-4597-88b9-d08209ae3e5f",
+        "text": "De gebruiker drinkt tijdens het lezen geen jasmijnthee meer; citroenmelissethee is sinds 9 september 2026 de favoriet voor een leesavond. | When: Sinds 9 september 2026 | Involving: user | Voorkeur voor thee tijdens het lezen is veranderd.",
+        "fact_type": "world",
+        "mentioned_at": "2026-09-10 09:13:53+00:00",
+        "tags": [
+          "eva-person-e36123a480c7d72934d0da01e739ebd0",
+          "eva-memory"
+        ]
+      }
+    ],
+    "documents": [
+      {
+        "id": "co008:after-restart:exchange:co008:02ed48b5-b694-4718-8818-2422a736a5e6",
+        "original_text": "Gebruiker (directe bron): Wat past nu bij mijn leesavond en in welke stad werk ik normaal?",
+        "semantic_facts": 0
+      },
+      {
+        "id": "co008:after-restart-reading:exchange:co008:57b8c29f-27c8-45fb-a566-e04e939f14ab",
+        "original_text": "Gebruiker (directe bron): Ik pak mijn boek erbij. Wat zal ik erbij drinken?",
+        "semantic_facts": 0
+      },
+      {
+        "id": "co008:correction:exchange:co008:3cdfdafe-a6cb-4597-88b9-d08209ae3e5f",
+        "original_text": "Gebruiker (directe bron): Jasmijnthee drink ik niet meer tijdens het lezen. Sinds gisteren is citroenmelissethee mijn favoriet voor een leesavond. Op mijn werk is verder niets veranderd.",
+        "semantic_facts": 1
+      },
+      {
+        "id": "co008:implicit-final:exchange:co008:c20190a4-6a10-471b-85fe-5e66ff941e46",
+        "original_text": "Gebruiker (directe bron): Ik pak mijn boek erbij. Wat zal ik erbij drinken?",
+        "semantic_facts": 0
+      },
+      {
+        "id": "co008:noise:exchange:co008:71b18f58-68db-4ca6-b924-bfd79a52abe1",
+        "original_text": "Gebruiker (directe bron): Hmm. Oke, oke. Ja, duidelijk. Hmm.",
+        "semantic_facts": 0
+      },
+      {
+        "id": "co008:other-person:exchange:co008:ade42785-e5d0-49c5-8d84-3116804aebf5",
+        "original_text": "Gebruiker (directe bron): Wat weet je over mijn favoriete thee en mijn normale werkstad?",
+        "semantic_facts": 0
+      },
+      {
+        "id": "co008:preference:exchange:co008:0fe78e90-e080-4688-9386-f0aef03d6c77",
+        "original_text": "Gebruiker (directe bron): Ik ben Mira. Als ik 's avonds lees drink ik het liefst jasmijnthee. Op werkdagen werk ik normaal in Delft; alleen van 1 tot en met 3 september 2026 werkte ik tijdelijk in Gouda.",
+        "semantic_facts": 2
+      },
+      {
+        "id": "co008:recall-before:exchange:co008:144e3621-fd36-4987-b94b-3269f4e774cc",
+        "original_text": "Gebruiker (directe bron): Welke thee past bij mijn leesavond en waar werk ik normaal?",
+        "semantic_facts": 0
+      },
+      {
+        "id": "co008:recall-corrected:exchange:co008:44504cb6-79fb-4a1f-bc7e-5def5531b570",
+        "original_text": "Gebruiker (directe bron): Welke thee drink ik tegenwoordig het liefst bij een leesavond?",
+        "semantic_facts": 0
+      },
+      {
+        "id": "co008:recall-stored:exchange:co008:55b09340-1e20-42f8-89de-d486c5a16e25",
+        "original_text": "Gebruiker (directe bron): Welke thee drink ik het liefst tijdens het lezen? En in welke stad werk ik vandaag normaal, vergeleken met mijn tijdelijke werkplek begin september?",
+        "semantic_facts": 0
+      }
+    ]
+  },
+  "recoveredBacklog": {
+    "currentOwnerPrivateSources": 8,
+    "authorizedHouseholdSources": 18,
+    "reservationAndContentChecksPreserved": true,
+    "historicalNeedsHelpRecordsRetained": 34,
+    "allHistoricalRecordsRepaired": false
+  },
+  "outboxReadback": {
+    "at": "2026-09-10T10:15:58.889453+00:00",
+    "all": {
+      "needs_help": 34,
+      "completed": 1099
+    },
+    "updatedSinceFirstRecallDeployment": {
+      "completed": 3
+    }
+  },
+  "userTrial": {
+    "id": "GE-01",
+    "channel": "Bestaande eigen Telegram-gesprek met Eva2",
+    "instructions": [
+      "Vertel een nieuwe persoonlijke voorkeur in een gewoon gesprek, zonder opdracht om die te onthouden.",
+      "Vertel later dat die voorkeur is veranderd.",
+      "Vraag in een later gesprek om advies waarbij die voorkeur relevant is, zonder het antwoord zelf te noemen."
+    ],
+    "expected": "Eva gebruikt de nieuwe voorkeur; de oude geldt niet meer als actueel.",
+    "replyHere": "GE-01: werkt / werkt niet, met het betreffende antwoord.",
+    "accepted": false
+  },
+  "limits": [
+    "Gecontroleerde proefpersoon; geen gezinsacceptatie of algemene winst op Eva1/concurrenten geclaimd.",
+    "Twee HTTP 503-antwoorden tijdens de persoonsproef; de oorzaak is niet bewezen en wordt niet als opgelost geclaimd.",
+    "34 oudere terminale needs_help-records blijven bewaard; niet voorgesteld als allemaal hersteld.",
+    "Onafhankelijke technische review en echte eigenaarsproef staan nog open."
+  ],
+  "privateArtifactDirectory": "/home/administrator/project/.eva2-artifacts/co008-memory-20260910",
+  "artifactHashes": {
+    "implementation.json": "4fb47b2177f1e7c7b4de63b622fbcf51de0ed787572f9b68d68a5a375b966eaf",
+    "recall-ranking-tests.txt": "fcd21a6f3bd0fd6f17a4669605b7abd48f330a640f71ed1e3ea139e06bd8f617",
+    "ranking-image.json": "9644d4d5b246be19baaf7f745a1e1cfac418ebea6dc55774b198e2833fcd68d3",
+    "ranking-cutover.stdout": "02be22cba2cb1faa71e845c0d2908783b46c7aa47b50cbdb8bdbdb0d8a1ff678",
+    "ranking-cutover-process.json": "bb6a117c55d1de26e8afa921528704636424ae03f5695f96e2d382c2059c8782",
+    "final-runtime.json": "42d66d2403a19db7597a63ff5179e021c03c30b2a5042f5abfe10f2d541db09d",
+    "final-memory-readback.json": "2b6816885744ccd7cc2bb5566078e99de0779d4a59e82dd6c35dd7be6a574dc5",
+    "final-outbox.json": "e553f5da8edc4d0f53315778e4c8df9c88b9e4f590e05d8fa2f9a2dd7738b366",
+    "owner-recovery.jsonl": "800e2182cddb2687aa6cf2e33916651417b9981683159907764e6a20aa043557",
+    "household-recovery.jsonl": "a359f8e1e70713d8ea6f159916168ec423b8b160f8f420656a5ef827b0b72e8d",
+    "candidate-ranking-readback.jsonl": "d23278d8493c53604872e2708421dd2fca5b284cbd3538bbafed8c5290398a92",
+    "final-other-person-recall.jsonl": "04cd915a5b3f1dc98ecf7cac16d4dc30cc632dda0a20051130cfe633a41fec57",
+    "empty-reply-diagnostic.txt": "cd908b398c72a0819da8295a4cac6e4ebe805c46bd43a0641d8bf88546107b7f",
+    "preference.request.json": "a5643b11bde9f407a462728cddc372033f2af5c5c83a3135be656f09b85bbed6",
+    "preference.response.json": "d58263c7d77fb75f5331ee03ab29927ea26121392f05f0feaaba8bb2ea2011bc",
+    "correction.request.json": "144f4b478aa9d8474aa867a4f9babeaabf502a15220e4a67ca22a1894dfdf460",
+    "correction.response.json": "7ce02dbf84e8cac85648f71fde106deeff3e260cbeb0ca99b08f9b9866e58517",
+    "recall-stored.request.json": "4b267906405bc5f9d775797a5e88d0e82a4f9c32528ac96ea814b81fa385d1a2",
+    "recall-stored.response.json": "54993aca0939f280bafce1fb255b1badfaceda74a590a6bf0d2064cb74b68a7e",
+    "recall-corrected.request.json": "ef4a718904bd0197911f5a6513f31d77b3ace1c969609b0ed0424778f3e18659",
+    "recall-corrected.response.json": "f54085985b66779f770e23787c2e03cfb9fed1fe6bd43d2e50b6bf2362389d75",
+    "noise.request.json": "12e07ed1b30bbc78f2f275066c42bd2089dbf35f3eb15dc6cc820bc3ed6aec84",
+    "noise.response.json": "615f5766e6221c3a60b4448abf28c72cf914d3666f9f72160a0e136a30534445",
+    "implicit-final.request.json": "4e288a1b7fadfe7c50766a16b74d5532d00bdf74ae36751156dc47c189d9d6d0",
+    "implicit-final.response.json": "219c68c98391a9d7f9053b13c7f1cc696c1184a4a6c14961d9526f16129fe42b",
+    "implicit-live-complete.request.json": "f11dc42a5e15be7b2b09a5a3c83d22fd2bf6a19ece51f5ea3ffa15f61baee3bd",
+    "implicit-live-complete.response.json": "0215d0c8cc9e112b931d56eea1beca13183615674744f25a9e243cdd11dc7491",
+    "temporary-final.request.json": "a295f269e7c6a759ff316c4ae54d5eddd114c13a948a2b0ec87fe3784b38cae0",
+    "temporary-final.response.json": "b03477d3f55f55307ec739b9fb8d89c6a31720bb256a4c2301f34b7640d792bd",
+    "other-person-final.request.json": "11ecc9284328a3d83012b992163aad6e7e8c2c1d1a07e15fac65a4ee4897fa93",
+    "other-person-final.response.json": "7bcf2bc5a99930597ed4171b7049818bb2a19e847dd7e4b5d56a1af084b1eee9",
+    "other-person-final-retry.response.json": "7bcf2bc5a99930597ed4171b7049818bb2a19e847dd7e4b5d56a1af084b1eee9",
+    "other-person-final-readback.response.json": "78c1ef4df58296d0c1fb8fb3f687ffd004e4f49c976d68e6e64b9f34897a543e"
+  }
+}
