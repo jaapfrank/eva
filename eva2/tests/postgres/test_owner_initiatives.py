@@ -329,7 +329,14 @@ def test_native_existing_household_reader_keeps_host_binding_and_stop(costless_n
     guard, turn = auth.bind(claim)
     arguments = {"section": "entities", "area_id": "", "offset": 0, "snapshot_sha256": "", "automation_ids": []}
     call = ConversationActionCall("read-house", "read_home_assistant_inventory", arguments)
+    from eva.providers.home_assistant import HomeAssistantProviderFactory, HomeAssistantProviderSettings
+    contribution = HomeAssistantProviderFactory.build(HomeAssistantProviderSettings(
+        endpoint_url="http://existing-home:8123", credential="fixture-only", effects_enabled=False,
+        effect_allowlist=(), effect_principal_sha256_allowlist=("0" * 64,), event_domains=("light",)), auth.owner._engine)
+    inventory = next(tool for tool in contribution.external_tools if tool.action_names == ("read_home_assistant_inventory",))
     with initiative_execution(guard):
+        # Native owner authority is distinct from ordinary effect/alias authority.
+        inventory._authorize(turn)
         PostgresConversationJournal(auth.owner._engine, control._scope).admit(turn)
         receipt = tools.execute(turn, call)
         assert "light.study" in json.dumps(receipt.output)
@@ -346,6 +353,8 @@ def test_native_existing_household_reader_keeps_host_binding_and_stop(costless_n
             __import__("asyncio").run(wrapped.observe(request, ToolDispatchResult(True, "unused", {})))
         assert reader.reads == 1
         control.stop(claim.intent_id, now=NOW)
+        with pytest.raises(ConversationConflict):
+            inventory._authorize(turn)
         with pytest.raises(ConversationConflict):
             tools.execute(turn, call, step_index=1)
         assert reader.reads == 1
