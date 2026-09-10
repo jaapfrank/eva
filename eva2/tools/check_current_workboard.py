@@ -118,6 +118,7 @@ TEAM = {
     "workboardreviewer": "/root/workboard_review",
     "dashboardreviewer": "/root/identity_pair_review",
     "memoryreviewer": "/root/co006_review",
+    "memorydeliveryreviewer": "/root/au002_release_review",
 }
 
 
@@ -359,14 +360,29 @@ def _validate_implementation_scope(
     _commit_exists(root, implementation_commit, f"{task_id} implementationCommit")
     assert isinstance(base_commit, str)
     assert isinstance(implementation_commit, str)
-    parent = subprocess.run(
-        ["git", "rev-parse", f"{implementation_commit}^"],
-        cwd=root,
-        capture_output=True,
-        text=True,
-    )
-    if parent.returncode != 0 or parent.stdout.strip() != base_commit:
-        raise RuntimeError(f"{task_id} implementationCommit is not directly based on baseCommit")
+    # An outcome may require successive fixes. Bind the entire linear series,
+    # including intermediate changes that were later reverted, to its exact scope.
+    series = subprocess.run(
+        ["git", "rev-list", "--reverse", "--topo-order", "--parents",
+         f"{base_commit}..{implementation_commit}"],
+        cwd=root, check=True, capture_output=True, text=True,
+    ).stdout.splitlines()
+    previous = base_commit
+    if not series:
+        raise RuntimeError(f"{task_id} implementation range is empty")
+    for line in series:
+        revision, *parents = line.split()
+        if parents != [previous]:
+            raise RuntimeError(f"{task_id} implementation range is not linear from baseCommit")
+        touched = subprocess.run(
+            ["git", "diff", "--name-only", "--no-renames", previous, revision],
+            cwd=root, check=True, capture_output=True, text=True,
+        ).stdout.splitlines()
+        if not set(touched) <= set(change_paths):
+            raise RuntimeError(f"{task_id} implementation range contains out-of-scope changes")
+        previous = revision
+    if previous != implementation_commit:
+        raise RuntimeError(f"{task_id} implementation range does not reach its bound commit")
     changed = subprocess.run(
         ["git", "diff", "--name-only", "--no-renames", base_commit, implementation_commit],
         cwd=root,
@@ -379,7 +395,7 @@ def _validate_implementation_scope(
     return base_commit, implementation_commit
 
 
-def _validate_direct_proof_commit(
+def _validate_bound_proof_commit(
     root: Path,
     task_id: str,
     parent_commit: str,
@@ -389,16 +405,20 @@ def _validate_direct_proof_commit(
 ) -> str:
     _commit_exists(root, proof_commit, f"{task_id} {label}")
     assert isinstance(proof_commit, str)
-    parent = subprocess.run(
-        ["git", "rev-parse", f"{proof_commit}^"],
-        cwd=root,
-        capture_output=True,
-        text=True,
+    parents = subprocess.run(
+        ["git", "rev-list", "--parents", "-n", "1", proof_commit],
+        cwd=root, check=True, capture_output=True, text=True,
+    ).stdout.split()[1:]
+    ancestry = subprocess.run(
+        ["git", "merge-base", "--is-ancestor", parent_commit, proof_commit],
+        cwd=root, capture_output=True,
     )
-    if parent.returncode != 0 or parent.stdout.strip() != parent_commit:
-        raise RuntimeError(f"{task_id} {label} is not directly based on its predecessor")
+    if len(parents) != 1 or parent_commit == proof_commit or ancestry.returncode != 0:
+        raise RuntimeError(f"{task_id} {label} is not based on its bound predecessor")
+    # Independent review can arrive after other work. Its own commit must still
+    # contain only the named proof files, and the proof text binds the exact code.
     changed = subprocess.run(
-        ["git", "diff", "--name-only", "--no-renames", parent_commit, proof_commit],
+        ["git", "diff", "--name-only", "--no-renames", parents[0], proof_commit],
         cwd=root,
         check=True,
         capture_output=True,
@@ -434,7 +454,7 @@ def _validate_completion(
         task["changePaths"],
     )
     test_paths = _strings(completion.get("testReceiptPaths"), f"{task_id} testReceiptPaths")
-    evidence_commit = _validate_direct_proof_commit(
+    evidence_commit = _validate_bound_proof_commit(
         root,
         task_id,
         implementation_commit,
@@ -443,7 +463,7 @@ def _validate_completion(
         "evidenceCommit",
     )
     review_paths = _strings(completion.get("evidencePaths"), f"{task_id} evidencePaths")
-    review_commit = _validate_direct_proof_commit(
+    review_commit = _validate_bound_proof_commit(
         root,
         task_id,
         evidence_commit,
@@ -517,7 +537,7 @@ def _validate_state_details(
         task["changePaths"],
     )
     paths = _strings(evidence, f"{task_id} reviewEvidencePaths")
-    bound_evidence_commit = _validate_direct_proof_commit(
+    bound_evidence_commit = _validate_bound_proof_commit(
         root,
         task_id,
         implementation_commit,
@@ -567,6 +587,8 @@ def render_human(board: dict[str, Any]) -> str:
         f"[Actueel bewijs]({board['audit']['goalRevision']['currentEvidence'].removeprefix('eva2/')}).",
         "",
         board["audit"]["goalRevision"]["nextStep"],
+        *(["", board["audit"]["parallelWorkNotes"].strip()]
+          if board["audit"].get("parallelWorkNotes") else []),
         "",
         "## Nu",
         "",

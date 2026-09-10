@@ -206,3 +206,74 @@ def test_only_completed_bound_deletions_use_historical_inventory(tmp_path: Path)
     kept.unlink()
     with pytest.raises(RuntimeError, match="not a verified implementation deletion"):
         _task_inventory_entry(tmp_path, "eva2/kept.js", task, {})
+
+
+@pytest.mark.parametrize("case", ["linear", "reverted_outside", "merge", "unrelated"])
+def test_implementation_series_preserves_exact_scope(tmp_path: Path, case: str) -> None:
+    from tools.check_current_workboard import _validate_implementation_scope
+
+    def git(*args: str) -> str:
+        return subprocess.check_output(["git", *args], cwd=tmp_path, text=True).strip()
+
+    git("init", "-q")
+    git("config", "user.name", "Review fixture")
+    git("config", "user.email", "review@example.invalid")
+    file = tmp_path / "feature.py"
+    file.write_text("before\n")
+    git("add", ".")
+    git("commit", "-qm", "base")
+    base = git("rev-parse", "HEAD")
+    file.write_text("first\n")
+    git("commit", "-qam", "first implementation")
+    if case == "reverted_outside":
+        outside = tmp_path / "outside.txt"
+        outside.write_text("not in scope\n")
+        git("add", ".")
+        git("commit", "-qm", "outside scope")
+        outside.unlink()
+        git("commit", "-qam", "revert outside")
+    elif case == "merge":
+        git("checkout", "-qb", "side", base)
+        (tmp_path / "side.txt").write_text("side\n")
+        git("add", ".")
+        git("commit", "-qm", "side")
+        git("checkout", "-")
+        git("merge", "--no-ff", "-qm", "merge", "side")
+    elif case == "unrelated":
+        git("checkout", "--orphan", "unrelated")
+        git("commit", "-qm", "unrelated root")
+    file.write_text("final\n")
+    git("commit", "-qam", "final implementation")
+    final = git("rev-parse", "HEAD")
+    if case == "linear":
+        assert _validate_implementation_scope(tmp_path, "CO-008", base, final, ["feature.py"]) == (base, final)
+    else:
+        with pytest.raises(RuntimeError, match="range"):
+            _validate_implementation_scope(tmp_path, "CO-008", base, final, ["feature.py"])
+
+
+def test_later_proof_commit_stays_bound_and_proof_only(tmp_path: Path) -> None:
+    from tools.check_current_workboard import _validate_bound_proof_commit
+
+    def git(*args: str) -> str:
+        return subprocess.check_output(["git", *args], cwd=tmp_path, text=True).strip()
+
+    git("init", "-q")
+    git("config", "user.name", "Review fixture")
+    git("config", "user.email", "review@example.invalid")
+    (tmp_path / "feature.py").write_text("implemented\n")
+    git("add", ".")
+    git("commit", "-qm", "implementation")
+    implementation = git("rev-parse", "HEAD")
+    (tmp_path / "other.py").write_text("separate work\n")
+    git("add", ".")
+    git("commit", "-qm", "other task")
+    (tmp_path / "review.md").write_text("review of " + implementation)
+    git("add", ".")
+    git("commit", "-qm", "independent review")
+    proof = git("rev-parse", "HEAD")
+    assert _validate_bound_proof_commit(tmp_path, "CO-008", implementation, proof, ["review.md"], "reviewCommit") == proof
+    with pytest.raises(RuntimeError, match="exact proof paths"):
+        _validate_bound_proof_commit(tmp_path, "CO-008", implementation, proof, ["other.py"], "reviewCommit")
+    with pytest.raises(RuntimeError, match="bound predecessor"):
+        _validate_bound_proof_commit(tmp_path, "CO-008", proof, implementation, ["feature.py"], "reviewCommit")
