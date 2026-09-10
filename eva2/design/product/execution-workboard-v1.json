@@ -3497,7 +3497,7 @@
       "tested": true,
       "live": true,
       "ownerAccepted": false,
-      "currentWork": "Bestandsuitvoering live en uitrol onafhankelijk GO. Twee normale cycli kozen stilte. Bestaande HA-inventaris/toestand/geschiedenis nu op dezelfde uitvoerroute aangesloten in bron;11gerichte controles groen, bronreview en livegang uitbreiding volgen. Geen brede initiatiefafronding geclaimd.",
+      "currentWork": "HA-uitbreiding: review vond netwerkwerk vóór toelating bij naamresolutie. Native state/history plannen nu zonder netwerk met bekende entiteit-ID;3gerichte controles groen. Bestandsroute blijft live, normale cycli kiezen tot nu toe stilte. Geen brede afronding geclaimd.",
       "authorization": "Jaap: in eerste instantie mag ze wel gewoon alles doen wat ze wil, zolang het maar inderdaad geen geld kost. Implementatie expliciet bevestigd.",
       "boundaries": "Geen nieuwe kosten of verplichtingen; onbekend is niet gratis. Bestaand toegelaten modelgebruik blijft binnen bestaande grenzen. Privacy, personen, communicatie en stoppen blijven gelden.",
       "artifactRetention": {
@@ -5152,6 +5152,7 @@
         "eva2/WERKBORD.md",
         "eva2/design/product/execution-workboard-v1.json",
         "eva2/src/eva/adapters/api/dashboard_initiatives.py",
+        "eva2/src/eva/adapters/connectors/home_assistant.py",
         "eva2/src/eva/adapters/model/pydantic_conversation.py",
         "eva2/src/eva/adapters/postgres/conversation_actions.py",
         "eva2/src/eva/adapters/postgres/conversation_journal.py",

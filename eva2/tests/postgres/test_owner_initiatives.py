@@ -349,3 +349,25 @@ def test_native_existing_household_reader_keeps_host_binding_and_stop(costless_n
         with pytest.raises(ConversationConflict):
             tools.execute(turn, call, step_index=1)
         assert reader.reads == 1
+
+
+@pytest.mark.parametrize("action", ["read_home_assistant_state", "read_home_assistant_history"])
+def test_native_household_target_planning_performs_no_unadmitted_network_read(costless_native, action):
+    import asyncio
+    from eva.adapters.connectors.home_assistant import HomeAssistantConversationReadPlanner
+    from eva.application.initiative_execution import initiative_execution
+    from eva.application.conversation import ConversationActionCall, ConversationConflict
+    auth, claim, *_ = costless_native
+    guard, turn = auth.bind(claim)
+    class Provider:
+        async def resolve_light(self, *args): raise AssertionError("unadmitted network resolution")
+        async def resolve_switch(self, *args): raise AssertionError("unadmitted network resolution")
+        async def resolve_history_targets(self, *args): raise AssertionError("unadmitted network resolution")
+    planner = HomeAssistantConversationReadPlanner(Provider())
+    args = {"target": "light.study", "entity_kind": "light"}
+    if action.endswith("history"): args.update(period="today", transition_to="any")
+    with initiative_execution(guard):
+        prepared = asyncio.run(planner.prepare(turn, ConversationActionCall("native-id", action, args)))
+        assert (prepared.arguments.get("entity_id") or prepared.arguments.get("entity_ids")) in ("light.study", ["light.study"])
+        with pytest.raises(ConversationConflict, match="exact entity ID"):
+            asyncio.run(planner.prepare(turn, ConversationActionCall("native-name", action, {**args, "target": "study"})))

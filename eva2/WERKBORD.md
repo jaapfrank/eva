@@ -46,6 +46,7 @@ Klaar betekent:
 - `eva2/WERKBORD.md`
 - `eva2/design/product/execution-workboard-v1.json`
 - `eva2/src/eva/adapters/api/dashboard_initiatives.py`
+- `eva2/src/eva/adapters/connectors/home_assistant.py`
 - `eva2/src/eva/adapters/model/pydantic_conversation.py`
 - `eva2/src/eva/adapters/postgres/conversation_actions.py`
 - `eva2/src/eva/adapters/postgres/conversation_journal.py`

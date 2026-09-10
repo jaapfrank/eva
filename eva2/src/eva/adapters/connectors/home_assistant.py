@@ -290,9 +290,10 @@ class HomeAssistantConversationReadPlanner:
         if call.name == "read_home_assistant_history":
             arguments = _validated_history_arguments(call.arguments)
             try:
-                resolved = await self._provider.resolve_history_targets(
-                    arguments["target"], arguments["entity_kind"]
-                )
+                native = self._native_target(turn, arguments)
+                resolved = ([native] if native is not None else
+                    await self._provider.resolve_history_targets(
+                        arguments["target"], arguments["entity_kind"]))
             except ValueError as error:
                 subject = (
                     "lamp" if arguments["entity_kind"] == "light" else "apparaat"
@@ -328,7 +329,9 @@ class HomeAssistantConversationReadPlanner:
                 else self._provider.resolve_switch
             )
             try:
-                resolved = await resolver(arguments["target"])
+                resolved = self._native_target(turn, arguments)
+                if resolved is None:
+                    resolved = await resolver(arguments["target"])
             except ValueError as error:
                 subject = (
                     "lamp" if arguments["entity_kind"] == "light" else "apparaat"
@@ -344,6 +347,20 @@ class HomeAssistantConversationReadPlanner:
                 observation_output_key="state",
             )
         raise ConversationConflict(f"unsupported provider action {call.name!r}")
+
+    @staticmethod
+    def _native_target(turn, arguments):
+        from eva.application.initiative_execution import require_initiative_context
+        if require_initiative_context(turn) is None:
+            return None
+        # Native planning must perform no network work before dispatch admission.
+        # The existing inventory tool supplies actual IDs through its sealed read.
+        target = arguments["target"]
+        if (_ENTITY.fullmatch(target) is None
+                or target.split(".", 1)[0] != arguments["entity_kind"]):
+            raise ConversationConflict(
+                "Native HA reads require an exact entity ID from an observation or inventory")
+        return {"entity_id": target, "friendly_name": target}
 
 
 @dataclass(frozen=True, slots=True)
