@@ -22,14 +22,6 @@ De voicetaak onderzoekt de resterende wachttijd: de gemeten geheugenraadpleging
 is de grootste vertraging. Een threadinstelling gaf geen herhaalbare verbetering
 en is daarom niet uitgerold. Telefoon en natuurlijke Voice PE-toegang zijn nog
 niet opgeleverd. [Actueel voicebewijs](evidence/product/voice-livekit-integration-2026-09-10.json).
-Telefoon: het optionele HA-paneel en de kamergebonden signalingroute zijn
-gebouwd en gecontroleerd; installatie wacht op de bestaande HA-configbeheerroute.
-VoicePE: dezelfde LiveKit-gespreksmotor is als bronkandidaat verbonden met de
-apparaatgebonden huisroute. Stop, mute en late audio zijn met echte TLS/WebSocket
-plus een gesimuleerd apparaat gecontroleerd. Hardwareprovisioning, terugweg en
-fysieke audioproef staan open; deze kandidaat is niet live.
-[Bewijs en resterende stappen](evidence/product/voice-household-livekit-candidate-2026-09-10.json).
-
 De eerdere Voice PE-onbereikbaarheidsfout is hersteld en door Jaap bevestigd;
 [herstelbewijs](evidence/product/VOICE-REF-247-repair-2026-09-10.json).
 
@@ -54,6 +46,7 @@ Klaar betekent:
 - `eva2/WERKBORD.md`
 - `eva2/design/product/execution-workboard-v1.json`
 - `eva2/src/eva/adapters/api/dashboard_initiatives.py`
+- `eva2/src/eva/adapters/connectors/home_assistant.py`
 - `eva2/src/eva/adapters/model/pydantic_conversation.py`
 - `eva2/src/eva/adapters/postgres/conversation_actions.py`
 - `eva2/src/eva/adapters/postgres/conversation_journal.py`
