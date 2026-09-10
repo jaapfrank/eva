@@ -2,8 +2,9 @@
 import asyncio
 
 class SessionLease:
-    def __init__(self, session, room, remove):
+    def __init__(self, session, room, remove, delete_room=None):
         self.session, self.room, self.remove = session, room, remove
+        self.delete_room = delete_room
         self.timers = set()
         self._closing = None
 
@@ -22,4 +23,8 @@ class SessionLease:
         try:
             await self.session.aclose()
         finally:
-            await self.room.disconnect()
+            try:
+                await self.room.disconnect()
+            finally:
+                if self.delete_room is not None:
+                    await self.delete_room()

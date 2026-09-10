@@ -33,3 +33,17 @@ async def test_room_disconnects_even_if_session_cleanup_fails():
     lease = SessionLease(Session(), Room(), lambda: None)
     with pytest.raises(RuntimeError): await lease.close()
     assert calls == ["room"]
+
+
+@pytest.mark.asyncio
+async def test_owned_room_is_deleted_even_when_local_disconnect_fails():
+    calls = []
+    class Session:
+        async def aclose(self): calls.append("session")
+    class Room:
+        async def disconnect(self): raise RuntimeError("local transport failed")
+    async def delete(): calls.append("delete-owned-room")
+    lease = SessionLease(Session(), Room(), lambda: calls.append("removed"), delete)
+    with pytest.raises(RuntimeError): await lease.close()
+    with pytest.raises(RuntimeError): await lease.close()
+    assert calls == ["removed", "session", "delete-owned-room"]

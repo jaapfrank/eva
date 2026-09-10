@@ -143,7 +143,14 @@ def create_app():
             @session.on("user_state_changed")
             def user_state_changed(event):
                 notify({"type": "user_voice_state", "state": event.new_state})
-            lease = SessionLease(session, room, lambda: sessions.pop(room_name, None))
+            async def delete_room():
+                async with api.LiveKitAPI(config["livekit_url"], api_key=key, api_secret=secret) as control:
+                    try:
+                        await control.room.delete_room(api.DeleteRoomRequest(room=room_name))
+                    except api.TwirpError as error:
+                        if error.code != "not_found":
+                            raise
+            lease = SessionLease(session, room, lambda: sessions.pop(room_name, None), delete_room)
             sessions[room_name] = lease
             try:
                 await room.connect(config["livekit_url"], credential("eva", agent=True))
