@@ -403,7 +403,15 @@ _ACTION_TOOLS: dict[str, dict[str, Any]] = {
             "document. Gebruik dit wanneer actualiteit of externe broncontrole "
             "wezenlijk is."
         ),
-        required=("options", "question", "title"),
+        required=("options", "question", "title", "public_review", "research_mode"),
+        research_mode=_schema("topic voor een algemene kennisvraag; comparison voor benoemde producten of routes. Expliciete bron-URLs blijven in beide gevallen gebonden.", enum=("topic", "comparison")),
+        public_review=_schema(
+            "Bij eigen initiatief: formuleer eerst een abstracte publieke vraag. "
+            "Beoordeel namen, privélocaties, tijden, gezin, geheugenfragmenten en indirecte "
+            "identificatie. Geef public_unlinked uitsluitend als de vraag noodzakelijke "
+            "publieke informatie bevat zonder persoonlijke context; bij twijfel uncertain. "
+            "Dit oordeel verleent geen bevoegdheden. Gewone gebruikersopdracht: not_applicable.",
+            enum=("public_unlinked", "uncertain", "not_applicable")),
         question=_schema(
             (
                 "De volledige concrete onderzoeksvraag, inclusief gewenste "
@@ -412,8 +420,8 @@ _ACTION_TOOLS: dict[str, dict[str, Any]] = {
         ),
         options=_schema(
             (
-                "De één tot vijf concrete producten, projecten of routes die "
-                "afzonderlijk met hun eigen primaire bron moeten worden getoetst."
+                "Eén tot vijf onderwerpen bij topic; bij comparison concrete producten, "
+                "projecten of routes die elk een eigen primaire bron vereisen."
             ),
             type_="array",
             items={"type": "string", "minLength": 1, "maxLength": 120},
@@ -1343,7 +1351,9 @@ class PydanticConversationModel:
         if self._resource_budget is None or self.autonomous_admission_blocker() is not None:
             raise ConversationModelError("research has no bounded subscription authority")
         return hashlib.sha256(canonical_json_bytes({
-            "protocol": "existing-public-web-research-v1",
+            "protocol": "existing-public-web-research-v2",
+            "public_input_policy": "abstract-projection-host-checks-v1",
+            "research_descriptor": _ACTION_TOOLS[_CURRENT_RESEARCH_ACTION],
             "endpoint": self._endpoint, "model": self._model,
             "instructions": _CURRENT_RESEARCH_INSTRUCTIONS,
             "tools": [{"search_context_size": "low", "type": "web_search"}],
@@ -1352,6 +1362,34 @@ class PydanticConversationModel:
             "budget": asdict(self._resource_budget),
         })).hexdigest()
 
+    def research_request_payload(self, *, question: str, options: tuple[str, ...], research_mode: str = "comparison"):
+        """Exact provider body; private motivation and review fields are never included."""
+        if research_mode not in {"topic", "comparison"}:
+            raise ValueError("research mode is invalid")
+        return {
+            "include": ["web_search_call.action.sources"],
+            "input": [
+                {
+                    "content": (
+                        f"Te onderzoeken onderwerpen: {', '.join(options)}\n\n{question}"
+                    ),
+                    "role": "user",
+                    "type": "message",
+                }
+            ],
+            "instructions": _CURRENT_RESEARCH_INSTRUCTIONS + (
+                " Dit is een algemene kennisvraag. Onderwerpen hoeven geen productnamen te zijn. "
+                "Onderbouw het antwoord met daadwerkelijk aangehaalde primaire bronnen; "
+                "claim geen automatische volledige dekking van alle aspecten."
+                if research_mode == "topic" else ""),
+            "model": self._model,
+            "reasoning": {"effort": "low", "summary": "auto"},
+            "store": False,
+            "stream": True,
+            "tool_choice": "auto",
+            "tools": [{"search_context_size": "low", "type": "web_search"}],
+        }
+
     def research_current_options(
         self,
         *,
@@ -1359,6 +1397,7 @@ class PydanticConversationModel:
         title: str,
         options: tuple[str, ...],
         researched_at: str,
+        research_mode: str = "comparison",
     ) -> ResearchArtifact:
         """Run one explicit web-grounded research task outside ordinary chat."""
 
@@ -1374,30 +1413,14 @@ class PydanticConversationModel:
         ):
             raise ValueError("research request is invalid")
         options = tuple(option.strip() for option in options)
-        body = {
-            "include": ["web_search_call.action.sources"],
-            "input": [
-                {
-                    "content": (
-                        f"Te onderzoeken onderwerpen: {', '.join(options)}\n\n{question}"
-                    ),
-                    "role": "user",
-                    "type": "message",
-                }
-            ],
-            "instructions": (
-                _CURRENT_RESEARCH_INSTRUCTIONS
-            ),
-            "model": self._model,
-            "reasoning": {"effort": "low", "summary": "auto"},
-            "store": False,
-            "stream": True,
-            "tool_choice": "auto",
-            "tools": [{"search_context_size": "low", "type": "web_search"}],
-        }
+        body = self.research_request_payload(question=question, options=options, research_mode=research_mode)
         (content, cited, consulted), usage = self._request_research(body)
         selected: list[ResearchSource] = []
+        if research_mode == "topic" and not cited:
+            raise ConversationModelError("topic research lacks cited sources")
         for option in options:
+            if research_mode == "topic" and not re.search(r"https?://", option, re.IGNORECASE):
+                continue
             matches = [
                 source
                 for source in (*cited, *consulted)
@@ -2519,7 +2542,7 @@ class PydanticConversationModel:
 def _source_matches_named_option(url: str, option: str) -> bool:
     """Admit only a source whose host or canonical repository names the option."""
 
-    explicit_urls = re.findall(r"https?://[^\s<>()]+", option)
+    explicit_urls = re.findall(r"https?://[^\s<>()]+", option, re.IGNORECASE)
     if explicit_urls:
         # A supplied primary URL is stronger than the surrounding display name.
         # Preserve its owner/repository or documentation path, not just a slug.

@@ -119,7 +119,7 @@ class PostgresInitiativeAuthority:
             if (not isinstance(cap, dict) or set(cap) != required
                     or type(cap["new_cost_eur_cents"]) is not int
                     or cap["new_cost_eur_cents"] != 0 or cap["new_obligation"] is not False
-                    or cap["data_scope"] not in {"owner_private_local", "public_no_private_input"}
+                    or cap["data_scope"] not in {"owner_private_local", "public_no_private_input", "public_research_minimized"}
                     or cap["communication_scope"] != "none"
                     or not isinstance(cap["cost_evidence"], str) or not cap["cost_evidence"].strip()
                     or not isinstance(cap["action_name"], str) or not cap["action_name"].strip()
@@ -134,6 +134,13 @@ class PostgresInitiativeAuthority:
                         or schema.get("additionalProperties") is not False
                         or '"$ref"' in json.dumps(schema)):
                     raise InitiativeMandateDenied("capability argument boundary is invalid")
+                if cap["data_scope"] == "public_research_minimized" and (
+                        cap["action_name"] != "research_current_options"
+                        or cap["tool_name"] != "research.public_sources"
+                        or cap["observation_tool_name"] != "research.public_sources"
+                        or schema.get("properties", {}).get("public_review") != {"type": "string", "const": "public_unlinked"}
+                        or "public_review" not in schema.get("required", ())):
+                    raise InitiativeMandateDenied("minimized public scope is only for reviewed research input")
                 _check_profile_schema(schema)
                 if (cap["data_scope"] == "public_no_private_input"
                         and not _public_input_is_host_selected(schema)):
@@ -355,6 +362,10 @@ class NativeInitiativeGuard:
                 "Geen nieuwe kosten, verplichtingen, identificatie of communicatie naar derden. "
                 "Onbekende kosten of ontbrekende mogelijkheden zijn een concrete beperking, geen toestemming. "
                 "Bestaand modelverbruik blijft begrensd. Maak geen herhaling van afgerond of gestopt werk. "
+                "Voor algemeen publiek onderzoek: abstraheer de behoefte, verwijder persoonlijke "
+                "en indirect identificerende details, beoordeel de minimale publieke vraag en "
+                "gebruik public_review=public_unlinked alleen als dat oordeel positief is. "
+                "Twijfel is geen toestemming. Stuur nooit privéaanleiding of geheugenfragmenten mee. "
                 "Beschikbare kosteloze capabilities en hostgrenzen op de uitgewerkte providerinvoer (gebruik het gewone toolschema voor je toolargumenten): " + json.dumps([
                     {"action": c["action_name"], "arguments": self._schema(c["execute_schema"])}
                     for c in policy["capabilities"]], ensure_ascii=False))
