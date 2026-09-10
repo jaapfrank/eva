@@ -1,0 +1,19 @@
+{
+  "imageId": "sha256:1afe349621b23c3c9101147d94a144316c33201b5e4148b3ef83a9a455d04014",
+  "parentImageId": "sha256:9d88df14a2975c6fc276d4b8ca23a1e942ba9144367cdbe2b694f3711d090f86",
+  "parentLayersUnchanged": true,
+  "extraFilesystemLayers": 1,
+  "workerSourceHashes": {
+    "adapters/credentials/runtime_files.py": "4c9012decf849405d3ef6f1fa74f5c399cdf2dece2ec81f27602ddea90337d28",
+    "adapters/model/__init__.py": "1c179d216a8a9887549cf18d0812c4b52eee8490596e5d4215b8e081304423f5",
+    "adapters/model/openai_codex_provider.py": "b487a7e15101ef84131bed9b3c2b1a303ea45a180aa334981a698e7f611dd17d",
+    "adapters/model/openai_endpoint.py": "0755b79541520be4d11b190e56899133685d8fbda85a14836fb2d952153403a4",
+    "adapters/postgres/delegated_work.py": "83ffc3e7673399249dc3385e0df7577c2fa6a1820c11337bda74f6d48430541e",
+    "adapters/subagents/tool_free_child.py": "292c79c002c5cc659d9e5be98cb657dc90d1d59f16de4f582bfd8523b9439af2",
+    "bootstrap/__init__.py": "cbece12d003c6dca5248aef7b90ee7c2035b7fe22ae734d6c403a34127f26caa",
+    "bootstrap/delegated_work_provider.py": "e0837229a16fdf169f30bfafa85ea2ff6571d78c390502a3217c5e5ce11b39f8",
+    "bootstrap/delegated_work_service.py": "03322d2c2bc6b5f01daae5bdcfb224b3616a3b66e525c7516cd47d88093f8da4",
+    "contracts/delegated_work.py": "a804c07d72eda09e94b20666b589422583a4e862b7295e2f22facb21bb7f965c",
+    "operations/delegated_work_worker.py": "4c034a39311a407ddb5407f55ac4175482426704c5cd0b3393b222bbf41fa763"
+  }
+}

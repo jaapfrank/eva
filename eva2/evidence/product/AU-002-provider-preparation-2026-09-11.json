@@ -1,0 +1,44 @@
+{
+  "contract": "EvaAU002ProviderPreparation/v1",
+  "taskId": "AU-002",
+  "implementationCommit": "64101d5d",
+  "baseCommit": "e267e568",
+  "built": true,
+  "tested": true,
+  "live": false,
+  "humanAccepted": false,
+  "sourceSha256": "e0837229a16fdf169f30bfafa85ea2ff6571d78c390502a3217c5e5ce11b39f8",
+  "testRuns": [
+    {
+      "command": "PYTHONPATH=src python -m pytest -q tests/bootstrap/test_delegated_work_provider.py tests/bootstrap/test_delegated_work_commands.py",
+      "passed": 14,
+      "seconds": 5.81
+    },
+    {
+      "command": "EVA2_TEST_POSTGRES_DSN=<disposable PostgreSQL 16.13> PYTHONPATH=src python -m pytest -q tests/postgres/test_delegated_work_owner_service.py tests/postgres/test_delegated_work_actions.py",
+      "passed": 6,
+      "seconds": 12.24
+    }
+  ],
+  "runtime": "/home/administrator/project/.eva2-artifacts/pydantic-ai-2.37-gate-env.NWD66e/venv/bin/python",
+  "providerProbe": {
+    "status": "succeeded",
+    "inputTokens": 275,
+    "outputTokens": 40,
+    "totalTokens": 315,
+    "completedModelResponses": 1,
+    "toolCalls": 0,
+    "referenceCostUsdMicros": 103,
+    "actualAdditionalCost": "not measured; existing subscription route",
+    "output": {
+      "findings": [],
+      "summary": "Hoi! Morgen gaan we samen koken: we maken pasta en salade. Wie wil helpen met het snijden? Leuk als je erbij bent!"
+    }
+  },
+  "limitations": [
+    "Provider probe is not the complete ordinary owner chat lifecycle.",
+    "Live worker still uses gpt-5.4-mini.",
+    "Independent review and coordinated core/worker installation pending."
+  ],
+  "provenance": "Observed tool results in task 01a08d52-31b1-7091-be45-812c0b6e6c9f; no reconstructed raw test logs."
+}

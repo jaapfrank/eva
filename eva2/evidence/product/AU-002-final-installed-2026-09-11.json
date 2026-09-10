@@ -1,0 +1,69 @@
+{
+  "taskId": "AU-002",
+  "commit": "81d4306166cf9c13456fe46e0911dcfbd66baee2",
+  "imageId": "sha256:54c3f886a3b1bdcb2a8be8598b02a043238b926a40a3752b7a3d4099a37d6528",
+  "cutover": {
+    "backgroundIsolationBoundary": "Legacy images may ignore the switch; configuration readback is not worker isolation proof.",
+    "backgroundWorkConfiguredAfterActivation": true,
+    "backgroundWorkConfiguredDuringStaging": false,
+    "contract": "Eva2QuiescentCutoverReceipt/v1",
+    "dashboardVoiceFirstActivation": false,
+    "eva1Backup": {
+      "bytes": 316850176,
+      "filename": "eva1-before-slot4-to-slot3-20260910T222129Z.db",
+      "quickCheck": "ok",
+      "sha256": "8873f05cbccf0b6478d5b81745271f3a0e18bcb85d1254a6bb02005baa40bc98"
+    },
+    "eva1HttpStatuses": {
+      "/": 200,
+      "/api/capabilities": 200,
+      "/api/health": 200,
+      "/api/overview": 200,
+      "/api/workstatus": 200
+    },
+    "issuedAt": "2026-09-10T22:23:35.359518+00:00",
+    "previousDropinSha256": "697494ce129c08b712d2e5ef7e62f5e1a6a81931280c32465bc0db0ad76d15c8",
+    "proactiveCredentialWithheldDuringStaging": true,
+    "proactiveDeliveryEnabled": true,
+    "sourcePort": 44711,
+    "sourceWritersStopped": true,
+    "status": "switched",
+    "synchronizedDatabases": {
+      "memory": {
+        "countDigest": "d94c7367b59c7d186da3707049e719486c7175369321294dcaa7f8b6a4a8ef0e",
+        "dataDigest": "f424cc2d7f26dad54bf0b17850053145918db2dc3bf1303e106d66fe37794d83",
+        "dumpBytes": 2848035,
+        "dumpSha256": "c67925c61bdd6aa23634a9326a33f3008d257b0740653f000c5aff0e91c28e0f",
+        "schemaDigest": "d89bfebdbfeb55e8618e81286bf24a42b838bfe577e84f6db9b93b43f5832172",
+        "tableCount": 23
+      },
+      "operational": {
+        "countDigest": "1480f50b593dd387cb7a2d6f9d8950799bb3cd2d0c236299ae114abb90d188c4",
+        "dataDigest": "07389600e9825a3efa4cd265d422b5da8a151e0f9f368b266b1342ace856a48f",
+        "dumpBytes": 14384066,
+        "dumpSha256": "938bfcd1153580b9cbc1a6cf534126006aedefd173e02ee026774aaf9aef7e57",
+        "schemaDigest": "32acc5b66e349dfd5b385e4828897575ad543ebb5f2638b8880dff1cacb7fb39",
+        "tableCount": 48
+      }
+    },
+    "targetPort": 44710,
+    "targetReady": true
+  },
+  "voiceReadiness": {
+    "44710": {
+      "status": 200,
+      "body": {
+        "contract": "EvaVoiceSessionReady/v1"
+      }
+    },
+    "44716": {
+      "status": 200,
+      "body": {
+        "ready": true
+      }
+    }
+  },
+  "voiceCoreSlot": 3,
+  "voiceCoreUrl": "http://127.0.0.1:44710",
+  "humanAccepted": false
+}

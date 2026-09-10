@@ -664,9 +664,18 @@ def test_context_selection_never_discards_required_content_to_admit_request(
 
 def test_runtime_budget_admits_only_the_exact_deferred_catalog(tmp_path: Path) -> None:
     budget = _runtime_budget()
+    from eva.adapters.postgres.delegated_work_actions import PostgresDelegatedWorkActions
+    from eva.providers.mcp_discovery import McpDiscoveryToolAdapter
+    from eva.providers.mcp_registration import registration_descriptors
+
     provider_tools = (
         *HomeAssistantToolAdapter.conversation_tools(),
         *HomeAssistantConversationAutomationPlanner.conversation_tools(),
+        *HomeAssistantConversationMigrationPlanner.conversation_tools(),
+        *HomeAssistantConversationHacsPlanner.conversation_tools(),
+        *McpDiscoveryToolAdapter.conversation_tools(),
+        *registration_descriptors(),
+        *PostgresDelegatedWorkActions.conversation_tools(),
     )
     model = PydanticConversationModel(
         auth_file=tmp_path / "missing-auth.json",
@@ -688,6 +697,7 @@ def test_runtime_budget_admits_only_the_exact_deferred_catalog(tmp_path: Path) -
         ],
     ]
     body = {"input": [{"content": "hoi", "role": "user"}], "tools": catalog}
+    assert len(canonical_json_bytes(catalog)) > 20_000
     assert len(canonical_json_bytes(body)) + 256 > budget.max_input_tokens
 
     model._admit_request(body, autonomous=False)  # noqa: SLF001
@@ -696,6 +706,20 @@ def test_runtime_budget_admits_only_the_exact_deferred_catalog(tmp_path: Path) -
     tampered["tools"][1]["description"] += " gewijzigd"
     with pytest.raises(ConversationModelError, match="deferred tool catalog"):
         model._admit_request(tampered, autonomous=False)  # noqa: SLF001
+
+    duplicated = json.loads(json.dumps(body))
+    duplicated["tools"].append(duplicated["tools"][1])
+    unknown = json.loads(json.dumps(body))
+    unknown["tools"][1]["name"] = "unregistered_owner_tool"
+    oversized = json.loads(json.dumps(body))
+    oversized["tools"][1]["description"] += "x" * 100_000
+    for rejected in (duplicated, unknown, oversized):
+        with pytest.raises(ConversationModelError, match="deferred tool catalog"):
+            model._admit_request(rejected, autonomous=False)  # noqa: SLF001
+
+    over_budget = {**body, "input": [{"content": "woord " * 50_000, "role": "user"}]}
+    with pytest.raises(ConversationModelError, match="input budget"):
+        model._admit_request(over_budget, autonomous=False)  # noqa: SLF001
 
 
 def test_runtime_budget_blocks_unknown_autonomous_spend_before_network(

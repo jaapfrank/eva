@@ -1938,13 +1938,17 @@ class PydanticConversationModel:
                     **self._conversation_tools,
                 }
                 from eva.application.voice_context import current_voice_context, STOP_DESCRIPTOR
-                catalog_limit = 20_000
                 if current_voice_context() is not None:
                     control = _descriptor_tool(STOP_DESCRIPTOR)
                     expected[STOP_DESCRIPTOR.name] = control
-                    # Preserve the normal catalog allowance for the extra local
-                    # control. The complete envelope still obeys the token budget.
-                    catalog_limit += len(canonical_json_bytes({**control, "defer_loading": True})) + 1
+                # Bound catalog bytes by the trusted registered descriptors. A fixed
+                # byte cap rejected valid owner catalogs as maintained tools grew.
+                # Exact descriptor checks below precede input BPE accounting; neither
+                # caller-supplied tools nor their bytes can enlarge this allowance.
+                catalog_limit = len(canonical_json_bytes([
+                    tool_search,
+                    *[{**tool, "defer_loading": True} for tool in expected.values()],
+                ]))
                 deferred = tools[1:]
                 names = [
                     item.get("name") for item in deferred if isinstance(item, dict)

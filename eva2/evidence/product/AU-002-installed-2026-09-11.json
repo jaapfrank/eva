@@ -1,0 +1,91 @@
+{
+  "taskId": "AU-002",
+  "status": "installed_lifecycle_pending",
+  "sourceCommit": "64101d5d7dcbbf75f49bb130f9d769aa9c32cdb6",
+  "cutover": {
+    "backgroundIsolationBoundary": "Legacy images may ignore the switch; configuration readback is not worker isolation proof.",
+    "backgroundWorkConfiguredAfterActivation": true,
+    "backgroundWorkConfiguredDuringStaging": false,
+    "contract": "Eva2QuiescentCutoverReceipt/v1",
+    "dashboardVoiceFirstActivation": false,
+    "eva1Backup": {
+      "bytes": 316841984,
+      "filename": "eva1-before-slot3-to-slot4-20260910T220748Z.db",
+      "quickCheck": "ok",
+      "sha256": "bf583600e41f93ba2a8c38ea8c942bc8dc5d7d72ebb364ce8a70074f0d34fd5d"
+    },
+    "eva1HttpStatuses": {
+      "/": 200,
+      "/api/capabilities": 200,
+      "/api/health": 200,
+      "/api/overview": 200,
+      "/api/workstatus": 200
+    },
+    "issuedAt": "2026-09-10T22:09:57.867186+00:00",
+    "previousDropinSha256": "81f1b2b687a641ae5349aa3c13198f6ad3ac1d7c88ee351bc3c559f22eee28a1",
+    "proactiveCredentialWithheldDuringStaging": true,
+    "proactiveDeliveryEnabled": true,
+    "sourcePort": 44710,
+    "sourceWritersStopped": true,
+    "status": "switched",
+    "synchronizedDatabases": {
+      "memory": {
+        "countDigest": "d425116065b310d886b0358b0ef142683f1177e3d7d60f26a62f38b092335174",
+        "dataDigest": "40b13659d427630f9617a7dd5922a4f91651c70643c5d9f34555c1789b3dfab1",
+        "dumpBytes": 2849888,
+        "dumpSha256": "c4a62d47fa1b66407c1428bf04a53eda7382f2e9a7c217c21a61ad248e1a11e4",
+        "schemaDigest": "d89bfebdbfeb55e8618e81286bf24a42b838bfe577e84f6db9b93b43f5832172",
+        "tableCount": 23
+      },
+      "operational": {
+        "countDigest": "00d231737d3b400f1bf8cdd323a0bc176edd43bbdb11b2a33c7eadcac8ad8f59",
+        "dataDigest": "df6ff9bc0871364ae921944425108844e9b9459ce142aa07dd2120a636515107",
+        "dumpBytes": 14364513,
+        "dumpSha256": "5239686c1567ea02a594c1a95b2e5f0786086b059da67a20fed5fabd3b2c9415",
+        "schemaDigest": "32acc5b66e349dfd5b385e4828897575ad543ebb5f2638b8880dff1cacb7fb39",
+        "tableCount": 48
+      }
+    },
+    "targetPort": 44711,
+    "targetReady": true
+  },
+  "images": {
+    "eva2-managed-b-slot4-core": {
+      "imageId": "sha256:1afe349621b23c3c9101147d94a144316c33201b5e4148b3ef83a9a455d04014",
+      "status": "running",
+      "health": "healthy"
+    },
+    "eva2-managed-b-slot4-delegated-work-worker-1": {
+      "imageId": "sha256:1afe349621b23c3c9101147d94a144316c33201b5e4148b3ef83a9a455d04014",
+      "status": "running",
+      "health": "healthy"
+    },
+    "eva2-owner-voice-media-1": {
+      "imageId": "sha256:57ae55645ab47d93c27f42c220eb55e2794f8877aff243791513f71e578aca40",
+      "status": "running",
+      "health": null
+    },
+    "eva2-owner-voice-livekit-1": {
+      "imageId": "sha256:770bc61bc6ec4dcccbd3e05082d8f6bdafbee4179acab7014cc97202a9e2910b",
+      "status": "running",
+      "health": null
+    }
+  },
+  "voiceReadiness": {
+    "44711": {
+      "status": 200,
+      "body": {
+        "contract": "EvaVoiceSessionReady/v1"
+      }
+    },
+    "44716": {
+      "status": 200,
+      "body": {
+        "ready": true
+      }
+    }
+  },
+  "voiceCoreUrl": "http://127.0.0.1:44711",
+  "voiceCoreSlotDirectory": "/var/lib/eva2/managed-b-slot4",
+  "humanAccepted": false
+}

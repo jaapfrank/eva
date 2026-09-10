@@ -1,0 +1,20 @@
+{
+  "taskId": "AU-002",
+  "commit": "81d4306166cf9c13456fe46e0911dcfbd66baee2",
+  "imageId": "sha256:54c3f886a3b1bdcb2a8be8598b02a043238b926a40a3752b7a3d4099a37d6528",
+  "parentImageId": "sha256:1afe349621b23c3c9101147d94a144316c33201b5e4148b3ef83a9a455d04014",
+  "parentLayersUnchanged": true,
+  "finding": "Trusted owner catalog 35 tools / 24136 bytes exceeded obsolete fixed 20000-byte cap before any modelcall.",
+  "fix": "Limit derived only from trusted registered catalog. Exact descriptor checks and full BPE input budget unchanged.",
+  "tests": {
+    "modelChecks": 6,
+    "voiceContextChecks": 6
+  },
+  "live": false,
+  "humanAccepted": false,
+  "rawLogs": [
+    ".au002-owner-flow/catalog-tests.log",
+    ".au002-owner-flow/voice-context-tests.log",
+    ".au002-owner-flow/catalog-runtime-probe.log"
+  ]
+}
