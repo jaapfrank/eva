@@ -55357,6 +55357,41 @@
       }
     },
     {
+      "path": "eva2/src/eva/adapters/model/research_tools.py",
+      "gitState": "tracked",
+      "present": true,
+      "bytes": 5026,
+      "contentSha256": "e632d5506d16d65d565e83ce90a813d50ae0d58af6da8b9fdb2b7c5a8644451e",
+      "hashMode": "exact-bytes",
+      "role": "product-runtime",
+      "roleRuleId": "eva2-runtime",
+      "matchingRuleIds": [
+        "eva2-runtime"
+      ],
+      "owner": "eva-runtime",
+      "inputs": [
+        "issued runtime input and dependencies"
+      ],
+      "outputs": [
+        "runtime result or capability"
+      ],
+      "state": [
+        "runtime-owned durable or process state"
+      ],
+      "effects": [
+        "module-specific runtime effects"
+      ],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": true,
+        "runtimeCritical": true,
+        "status": "included-tracked-critical"
+      }
+    },
+    {
       "path": "eva2/src/eva/adapters/model/tokenizer_data/LICENSE.tiktoken",
       "gitState": "tracked",
       "present": true,
