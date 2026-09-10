@@ -825,10 +825,10 @@
   ],
   "initial_voice_source_commit": "af7f65265a9a514083ea3a095edad772c586cb63",
   "current_runtime": {
-    "coreUrl": "http://127.0.0.1:44710",
-    "coreSlot": "managed-b-slot3",
-    "coreImage": "sha256:76715a7de32c30b1c21258a427286e854cd612f6a86e25c32885b5d905da8263",
-    "coreSource": "d8054d4de8278b08533177410076b9a70496cf83",
+    "coreUrl": "http://127.0.0.1:44711",
+    "coreSlot": "managed-b-slot4",
+    "coreImage": "sha256:908af641e5f81f3e363807dfa284376cb19dd5ba6b58699cf2a785a72996d5c7",
+    "coreSource": "af9a049a5dcd9b739b74e10252f6688d7b90bb14",
     "mediaImage": "sha256:57ae55645ab47d93c27f42c220eb55e2794f8877aff243791513f71e578aca40",
     "mediaSource": "efa32d5c3e0d5d134143006ef85ffc223856a068",
     "livekitImage": "sha256:770bc61bc6ec4dcccbd3e05082d8f6bdafbee4179acab7014cc97202a9e2910b",
@@ -845,9 +845,11 @@
     "ownerUrl": "http://localhost:44716",
     "ownerAcceptance": false,
     "bindingUpdate": {
-      "reason": "AU008 core cutover; voice media and relay configuration unchanged",
+      "reason": "AU008 general research cutover at 2026-09-10T20:09:59Z; voice media and relay unchanged",
       "browserProofScope": "Recorded browser speech/audio proof predates this core cutover; not repeated"
-    }
+    },
+    "coreImageRevisionLabel": "d8054d4de8278b08533177410076b9a70496cf83",
+    "coreSourceEvidence": "Deployment agent reports source af9a049 and18 verified loaded modules; image label is inherited d805 and is not source verification"
   },
   "browser_relay_verification": {
     "date": "2026-09-10",
