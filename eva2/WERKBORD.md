@@ -5,39 +5,65 @@ Laatst bijgewerkt: 2026-09-10.
 Doel: [Eva als zelfstandig lerende digitale huisgenoot](PROJECTDOEL.md).
 Gebouwd, getest, live en door jou geaccepteerd zijn verschillende stappen.
 
-VB-003 is technisch afgerond en live: Eva maakt een gewone browseropdracht af; de eigenaar ziet dezelfde browser, neemt over en geeft exclusief terug. Herstel na een onderbreking volgt nu.
-[Actueel bewijs](evidence/product/VB-003-completion-2026-09-10.json).
+CO-008 is afgerond met onafhankelijke GO en geaccepteerde GE-01. Nu AU-007: Eva werkt vanuit bestaande toegestane context zelf één relevant privaat voorstel uit.
+[Actueel bewijs](reviews/CO-008-automatic-memory-ddb0267.md).
 
-VB-004: bestaand browserprofiel, hostbeheer en netwerkbeperking betrouwbaar terugbrengen na een gerichte onderbreking, zonder dubbele handeling.
+Bestaande initiatiefroute compleet gebruiken: echte trigger → eigen keuze → controleerbaar resultaat → Jaaps beoordeling.
+
+### Afzonderlijke storing: bestaande Voice PE-route
+
+Jaap bevestigde op 10 september dat Eva na de reparatie weer hoorbaar antwoordt.
+De specifieke onbereikbaarheidsfout door een geheugenbronverwijzing van 247 tekens
+is daarmee in de praktijk hersteld. De originele bron blijft behouden; de
+persoons- en mandaatcontroles zijn niet verruimd. 108 gerichte tests, onafhankelijke
+review en gecontroleerde uitrol zijn vastgelegd in het
+[herstelbewijs](evidence/product/VOICE-REF-247-repair-2026-09-10.json).
+Natuurlijk doorpraten tijdens werk en gewone spraakonderbreking zijn niet
+geaccepteerd: de huidige route blijft opeenvolgende vraag/antwoordbeurten gebruiken.
+[Begrensde diagnose en voorstel](design/product/voice-session-diagnosis-2026-09-10.md).
+GE-01 blijft geaccepteerd; geen nieuw projectgoal of brede voice-implementatie gestart.
+
+Het [OSS-onderzoek van 10 september](design/product/voice-oss-selection-2026-09-10.md)
+is afgerond onder Jaaps harde eis dat de volledige gespreksmechanismen al samen
+in een onderhouden applicatie zitten. Geen onderzochte applicatie is volledig
+gekwalificeerd. LiveKit 1.8.0: 19 bestaande upstreamtests geslaagd, zonder fysieke
+spraakproef. Pipecat heeft uitvoerbare asyncdemo's, maar de onderzochte taken zijn
+gesimuleerd en/of alleen via het scherm opgevolgd. Geen eigen gesprekssysteem,
+nieuwe dienst of runtimewijziging gestart. Telefoon/laptop gaat bij eventuele
+vervolgverificatie voorop; HA is geen selectievoorwaarde. `openai_tts` 3.9.1 heeft
+gepubliceerde zinsstreaming, is hier niet geïnstalleerd en blijft ondersteunend.
+
+
+Jaap heeft de uitvoering expliciet hervat: ontbreken van een complete OSS-app is
+geen stopvoorwaarde. [Actieve LiveKit-integratie](design/product/voice-livekit-delivery-2026-09-10.md)
+gebruikt de bestaande Eva-kern en providers. Laptop eerst, telefoon/huisapparaten
+blijven open; geen nieuwe stemervaring live of geaccepteerd.
 
 ## Nu
 
 | Volgorde | Kaart | Resultaat | Status |
 |---:|---|---|---|
-| 141 | `VB-004` — Browser na onderbreking veilig hervatten | Na een browser- of beheeronderbreking blijft het profiel behouden en hervat Eva pas vanuit de werkelijk teruggelezen toestand, zonder vorige handeling blind te herhalen. | 🟡 BEZIG |
+| 142 | `AU-007` — Zelf een relevant privaat voorstel uitwerken | Eva ziet via een bestaande huiswaarneming een passende kans bij toegestane persoonlijke context, kiest zelf een concrete vervolgstap en werkt één controleerbaar privaat voorstel of hulpmiddel uit. Jaap hoeft de stappen niet voor te zeggen. | 🟡 BEZIG |
 
 Klaar betekent:
 
-- Dezelfde profielgegevens komen terug na een gerichte browser-/hostbeheerherstart; de eigenaar krijgt een bruikbare herstelstatus.
-- Nieuwe browseracties beginnen pas na herstel van de vaste netwerkbeperking en een actuele waarneming; de vorige mutatie wordt niet herhaald.
-- Een bestaande eigenaarverbinding en Eva krijgen na herstel nooit tegelijk bediening. Eén praktische herstelproef en onafhankelijke GO sluiten deze kaart af.
+- Een bestaande toegestane trigger leidt zonder stapsgewijze gebruikersopdracht tot één relevant, controleerbaar privaat resultaat.
+- Resultaat en herkomst zijn beschikbaar voor Jaap; technische oplevering en subjectieve acceptatie zijn apart zichtbaar.
 
 <details>
 <summary>Technische uitvoering: bestanden en controles</summary>
 
-### Exact werk voor `VB-004`
+### Exact werk voor `AU-007`
 
-- `eva2/src/eva/operations/browser_session.py`
-- `eva2/tests/operations/test_browser_session.py`
-- `eva2/deploy/owner-browser/README.md`
-- `eva2/deploy/owner-browser/configure-egress.py`
-- `eva2/deploy/owner-browser/browser-firewall.py`
-- `eva2/deploy/owner-browser/host-config.template.json`
+- `eva2/src/eva/application/free_will.py`
+- `eva2/src/eva/adapters/model/pydantic_conversation.py`
+- `eva2/tests/application/test_free_will.py`
+- `eva2/tests/model/test_pydantic_conversation_model.py`
 
 Echte controles:
 
-- `pytest -q tests/operations/test_browser_session.py`
-- `python3 tools/check_current_workboard.py`
+- `pytest -q tests/application/test_free_will.py`
+- `pytest -q tests/model/test_pydantic_conversation_model.py`
 
 </details>
 
@@ -46,11 +72,11 @@ Echte controles:
 Deze onderwerpen zijn alleen mijlpalen. Een mijlpaal wordt pas uitvoerbaar
 nadat zij als eerstvolgende kleine kaart exacte bestanden en tests heeft.
 
+- [ ] `AU-002` — Duurzame hulpagent bedienen: Starten, volgen, stoppen en hervatten werken via de gebruikersroute; hoofd- en hulpagent delen één provideradapter.
+- [ ] `VB-004` — Browser na onderbreking veilig hervatten: Herstelbestanden gebouwd; systeeminstallatie automatisch geblokkeerd. Bestaande browser blijft live. Herstel na herstart nog niet uitgevoerd of bewezen.
 - [ ] `AU-005` — Passend initiatief en kansen bewijzen: Meer gewaardeerd eigen initiatief dan Bottie: humor, nieuwsgierigheid, zelfgekozen onderzoek, creatieve bijdragen en kansen. Eva begint en vervolgt zelf werk, voert binnen bestaand mandaat uit en controleert het resultaat. Gezin beoordeelt eigenheid, plezier, nut en hinder; alleen meer berichten telt niet als winst.
 - [ ] `VB-001` — Full-duplex voice leveren: Met Eva2 praten via de bestaande Telegram- of Home Assistant-aansluiting, waarbij Eva hoorbaar onderbroken kan worden en het gesprek daarna doorgaat.
 - [ ] `VB-002` — Passende aanwezigheid leveren: Eva zoekt spontaan contact via de beschikbare speakers en deurbel, met herkenbare identiteit en gevoel voor het moment. Gezin beoordeelt plezier, betrokkenheid en hinder; onderbreken en stop werken.
-- [ ] `CO-008` — Autonoom geheugen in gezinsgesprekken bewijzen: De oorspronkelijke brede geheugenuitkomst blijft open: relevante kennis zelfstandig kiezen, gewijzigde en tijdelijke informatie goed gebruiken in gewone gesprekken en langere gezinspraktijk. Geen handmatig geheugenbeheer; familie beoordeelt continuïteit en vertrouwen.
-- [ ] `AU-002` — Duurzame hulpagent bedienen: Starten, volgen, stoppen en hervatten werken via de gebruikersroute; hoofd- en hulpagent delen één provideradapter.
 - [ ] `UX-001` — Eigenaar-dashboard leveren: Een onderhouden adminframework toont status, mensen, geheugen, kosten en bewijs.
 - [ ] `UX-002` — Kanban bedienbaar maken: Taken zijn te starten, volgen en stoppen met bewijs per kaart.
 - [ ] `AU-004` — Zelf tools en skills leren maken: Een ongeziene digitale taak leren uit documentatie; zelf een tool of skill maken, testen en bij een andere taak hergebruiken zonder nieuwe taakspecifieke kerncode. Fouten en menselijke hulp meetellen.
@@ -142,7 +168,9 @@ Afgevinkt betekent alleen: de vastgelegde kaart is afgerond, niet het hele produ
   [Bewijs](evidence/product/TL-003-completion-2026-09-10.json).
 - [x] `VB-003` — Browser bedienen en overnemen (done).
   [Bewijs](evidence/product/VB-003-completion-2026-09-10.json).
-- [ ] `VB-004` — Browser na onderbreking veilig hervatten (in_progress).
+- [x] `CO-008` — Zelf relevant geheugen kiezen en bijwerken (done).
+  [Bewijs](evidence/product/CO-008-automatic-personal-memory-2026-09-10.json).
+- [ ] `AU-007` — Zelf een relevant privaat voorstel uitwerken (in_progress).
 
 </details>
 

@@ -360,29 +360,37 @@ def _validate_implementation_scope(
     _commit_exists(root, implementation_commit, f"{task_id} implementationCommit")
     assert isinstance(base_commit, str)
     assert isinstance(implementation_commit, str)
-    # An outcome may require successive fixes. Bind the entire linear series,
-    # including intermediate changes that were later reverted, to its exact scope.
-    series = subprocess.run(
-        ["git", "rev-list", "--reverse", "--topo-order", "--parents",
-         f"{base_commit}..{implementation_commit}"],
-        cwd=root, check=True, capture_output=True, text=True,
-    ).stdout.splitlines()
-    previous = base_commit
-    if not series:
-        raise RuntimeError(f"{task_id} implementation range is empty")
-    for line in series:
-        revision, *parents = line.split()
-        if parents != [previous]:
-            raise RuntimeError(f"{task_id} implementation range is not linear from baseCommit")
-        touched = subprocess.run(
-            ["git", "diff", "--name-only", "--no-renames", previous, revision],
+    direct_parent = subprocess.run(
+        ["git", "rev-parse", f"{implementation_commit}^"],
+        cwd=root, capture_output=True, text=True,
+    )
+    # Preserve the already-established direct-parent contract, including old
+    # reviewed merge commits. Only the new multi-commit form requires a linear
+    # series and checks every intermediate path.
+    if direct_parent.returncode != 0 or direct_parent.stdout.strip() != base_commit:
+        # An outcome may require successive fixes. Bind the entire linear series,
+        # including intermediate changes that were later reverted, to its exact scope.
+        series = subprocess.run(
+            ["git", "rev-list", "--reverse", "--topo-order", "--parents",
+             f"{base_commit}..{implementation_commit}"],
             cwd=root, check=True, capture_output=True, text=True,
         ).stdout.splitlines()
-        if not set(touched) <= set(change_paths):
-            raise RuntimeError(f"{task_id} implementation range contains out-of-scope changes")
-        previous = revision
-    if previous != implementation_commit:
-        raise RuntimeError(f"{task_id} implementation range does not reach its bound commit")
+        previous = base_commit
+        if not series:
+            raise RuntimeError(f"{task_id} implementation range is empty")
+        for line in series:
+            revision, *parents = line.split()
+            if parents != [previous]:
+                raise RuntimeError(f"{task_id} implementation range is not linear from baseCommit")
+            touched = subprocess.run(
+                ["git", "diff", "--name-only", "--no-renames", previous, revision],
+                cwd=root, check=True, capture_output=True, text=True,
+            ).stdout.splitlines()
+            if not set(touched) <= set(change_paths):
+                raise RuntimeError(f"{task_id} implementation range contains out-of-scope changes")
+            previous = revision
+        if previous != implementation_commit:
+            raise RuntimeError(f"{task_id} implementation range does not reach its bound commit")
     changed = subprocess.run(
         ["git", "diff", "--name-only", "--no-renames", base_commit, implementation_commit],
         cwd=root,
@@ -413,7 +421,10 @@ def _validate_bound_proof_commit(
         ["git", "merge-base", "--is-ancestor", parent_commit, proof_commit],
         cwd=root, capture_output=True,
     )
-    if len(parents) != 1 or parent_commit == proof_commit or ancestry.returncode != 0:
+    directly_bound = bool(parents) and parents[0] == parent_commit
+    if not directly_bound and (
+        len(parents) != 1 or parent_commit == proof_commit or ancestry.returncode != 0
+    ):
         raise RuntimeError(f"{task_id} {label} is not based on its bound predecessor")
     # Independent review can arrive after other work. Its own commit must still
     # contain only the named proof files, and the proof text binds the exact code.

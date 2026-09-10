@@ -4,6 +4,45 @@ Vastgesteld door Jaap op 7 september 2026. Dit vervangt de eerdere
 projectdoelformulering; [WERKBORD.md](WERKBORD.md) is de enige uitvoerwachtrij.
 Oudere planningen en vergelijkingen blijven historische bewijsbronnen.
 
+## Verduidelijking door Jaap op 10 september 2026
+
+We werken met kleine actieve doelen binnen deze blijvende projectvisie.
+De eerste geheugenuitkomst (CO-008) is technisch afgerond en GE-01 door Jaap
+geaccepteerd. Op zijn verzoek staat nu AU-007 centraal: vanuit bestaande
+toegestane context zelf één relevant privaat voorstel uitwerken. De voortgang en technische afronding staan in de
+ene uitvoerbron achter het dashboard en WERKBORD.md. Afgeronde deelresultaten
+blijven zichtbaar naast de nog onvolledige hoofduitkomsten; menselijke
+acceptatie blijft afzonderlijk.
+
+Eva moet overal bereikbaar zijn in spraak en chat: via telefoon en laptop,
+en vrij aanspreekbaar via de bestaande microfoon-/speakerapparaten thuis.
+De auto is een gebruikssituatie van de telefoonroute; dit vereist niet
+vooraf een aparte auto-integratie. Home Assistant is een mogelijke
+aansluiting, geen verplichte techniek voor de gesprekservaring. Compatibiliteit
+van de apparaten is nog te onderzoeken; deze visie geeft geen opdracht ze
+nu om te configureren of een dienst publiek te ontsluiten.
+
+De gewenste stemervaring is één doorlopende sessie in natuurlijk Nederlands,
+met gewone spraakonderbreking, verwerken van de nieuwe inbreng, samenhangend
+geheugen, zichtbare tekst/resultaten en doorgaan met praten tijdens lang werk.
+Beëindigen en gecontroleerd herstellen na verbindingsverlies zijn herkenbaar.
+Acceptatie vereist een echte demonstratie, gemeten antwoord- en
+onderbrekingsvertraging en Jaaps oordeel over vloeiendheid. Verstaanbare TTS
+of losse spraakberichten bewijzen deze volledige ervaring niet.
+
+Eigenaar, dochter en eventueel toegelaten vrienden moeten kunnen praten en
+chatten, met eigen context en persoonsgrenzen. Genoemde vragen over advies,
+aanwezigheid of deurstatus zijn voorbeelden, geen uitputtende functielijst.
+Eva bepaalt ook bij ongeziene vragen en combinatietaken welke informatie en
+tools nodig zijn, handelt binnen rechten en controleert het resultaat.
+Gesprek/advies, privégegevens en acties hebben afzonderlijke, herbruikbare
+bevoegdheidsgrenzen op personen, bronnen en actietypen. Onbekende identiteit
+of ontbrekende rechten geven geen toegang tot privégegevens. Deurstatus
+raadplegen betekent niet een deur openen. Er worden hiermee geen personen
+uitgenodigd of rechten verleend. Eerste vervolgoplevering: eigenaar mobiel
+in spraak en chat; daarna andere toegelaten personen en expliciet gedeelde
+huisinformatie. Tests bevatten ook ongeziene vragen en geweigerde situaties.
+
 ## Het doel
 
 Ontwikkel Eva2, uiteindelijk Eva, tot een herkenbare digitale huisgenoot die

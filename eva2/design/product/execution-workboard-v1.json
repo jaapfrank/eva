@@ -30,15 +30,26 @@
       "nonclaims": "No new deployment or model calls for this closure. Human usefulness/timing, full backlog completion, streaming and all later product outcomes remain open."
     },
     "projectDashboard": {
-      "runtimePort": 44711,
-      "runtimeLabel": "Slot 4",
+      "runtimePort": 44710,
+      "runtimeLabel": "Slot 3",
       "roadmap": [
         {
           "id": "actions",
-          "title": "Handelen op jouw verzoek",
-          "outcome": "Eén algemene toolroute, ook voor onbekende diensten en browserwerk.",
-          "acceptance": "Twee echte diensten en een onbekende connector werken zonder nieuwe taakspecifieke kerncode; resultaat apart gecontroleerd, mandaat intrekbaar.",
+          "title": "Geheugen afronden",
+          "outcome": "Eva onthoudt relevante persoonlijke kennis uit gewone gesprekken, verwerkt wijzigingen, gebruikt tijdelijke informatie op het juiste moment en laat irrelevante herhaling buiten blijvende kennis. Bestaande gegevens en persoonsgrenzen blijven behouden.",
+          "acceptance": "Gewone gesprekken tonen zelfstandig onthouden, correct bijwerken en passend terughalen; opgeslagen bewijs en menselijke acceptatie apart zichtbaar.",
           "taskIds": [
+            "CO-008",
+            "AU-007"
+          ]
+        },
+        {
+          "id": "paused-followup",
+          "title": "Later: hulpagenten en browserherstel",
+          "outcome": "Afzonderlijke vervolgopleveringen; ze houden het geheugengoal niet open.",
+          "acceptance": "Starten, volgen, stoppen en hervatten via de gebruikersroute; browserherstel met behouden profiel.",
+          "taskIds": [
+            "AU-002",
             "VB-004"
           ]
         },
@@ -61,8 +72,7 @@
             "VB-003",
             "AU-005",
             "VB-001",
-            "VB-002",
-            "CO-008"
+            "VB-002"
           ]
         },
         {
@@ -71,7 +81,6 @@
           "outcome": "Een zichtbaar project afronden, met hulpagenten en herbruikbare vaardigheden.",
           "acceptance": "Een ongezien meerdaags project hervat na herstart; aangeleerde skill opnieuw gebruikt; kosten, stop en gecontroleerde verbetering zichtbaar.",
           "taskIds": [
-            "AU-002",
             "UX-001",
             "UX-002",
             "AU-004",
@@ -111,7 +120,7 @@
           ]
         }
       ],
-      "priorityDecision": "Browserbediening en exclusieve overname zijn technisch klaar. Nu één gerichte herstelstap voor dezelfde browser; bestaande spraakacceptatie blijft ongewijzigd.",
+      "priorityDecision": "Nieuw doel van Jaap: eerst het geheugen afronden. CO-008 is actief; AU-002 blijft bewaard en gepauzeerd.",
       "dashboardVerification": {
         "status": "local_browser_verified_not_full_product_acceptance",
         "priorityRevision": {
@@ -150,9 +159,9 @@
       },
       "summary": [
         {
-          "label": "IN UITVOERING · VB-004",
-          "value": "Browser veilig hervatten",
-          "detail": "Profiel, hostbeheer en netwerkbeperking herstellen na een onderbreking; geen vorige actie blind herhalen."
+          "label": "IN UITVOERING · GEHEUGEN",
+          "value": "Zelf relevant geheugen kiezen en bijwerken",
+          "detail": "Opslagfout en geweigerd geheugenmodel hersteld en live. Gewone gespreksproef loopt; jouw acceptatie is nog open."
         },
         {
           "label": "OPGELEVERD · LIVE · VB-003",
@@ -202,36 +211,16 @@
       ],
       "nextOutcomes": [
         {
-          "title": "Browser bekijken en overnemen",
-          "detail": "Open Browser in het eigenaarsdashboard, neem de huidige sessie over en geef hem terug. Of laat Eva drie recente Home Assistant-berichten lezen en een korte samenvatting opslaan; die gewone opdracht is al technisch bewezen."
+          "title": "Geheugen afronden",
+          "detail": "Nu: automatisch onthouden, gewijzigde voorkeur gebruiken, tijdelijke informatie juist plaatsen en persoonsgrenzen controleren."
         },
         {
-          "title": "Een nieuwe MCP-dienst laten gebruiken",
-          "detail": "Vraag via /eva2 of het eigenaarsgesprek een openbare MCP-dienst aan te sluiten en er een concrete opdracht mee uit te voeren. Het ontwikkelvoorbeeld staat in /proof-state/tl003-browseronderzoek.md."
+          "title": "Bestaande resultaten proberen",
+          "detail": "De mogelijkheden hieronder zijn afzonderlijk opgeleverd. BR-01 en de bevestigde speakerproeven blijven beschikbaar."
         },
         {
-          "title": "Laat Eva bestaande documenten verwerken",
-          "detail": "Vraag via /eva2 of het eigenaarsdashboard: Zoek in je werkmap de twee au001-ea1ac62d-notities, lees ze en leg uit welke optie past binnen 30 euro en 2 uur. Het al gemaakte advies staat in /proof-state/au001-ea1ac62d-advies.md."
-        },
-        {
-          "title": "Eigen initiatieven bekijken",
-          "detail": "Open het eigenaarsdashboard op localhost:44711/internal/v1/dashboard. Hier verschijnen Eva’s zelfgekozen werk, gemaakte bestanden en de stopknop; er is geen extra test van spraak nodig."
-        },
-        {
-          "title": "Laat Eva een document bewaren",
-          "detail": "Vraag via /eva2: Bewaar een kort plan in /proof-state/mijn-plan.txt en controleer de opgeslagen inhoud. Dit werkt in de toegestane privéwerkmap."
-        },
-        {
-          "title": "Laat Eva je huis onderzoeken",
-          "detail": "Vraag via /eva2: Analyseer Home Assistant, lees de bestaande automatiseringen en stel maximaal vijf verbeteringen voor ons gezin voor. Benoem wat je niet kon lezen; verander nog niets."
-        },
-        {
-          "title": "Zien wat Eva van jou onthoudt",
-          "detail": "CO-004: het bestaande React-admin-dashboard gaat je eigen afgeschermde geheugenbronnen tonen. Geen tweede geheugensysteem of nieuwe webstack."
-        },
-        {
-          "title": "Geheugen en stem verbinden",
-          "detail": "Jou onthouden, laten corrigeren, luisteren en passend reageren."
+          "title": "Vervolgwerk blijft apart",
+          "detail": "Hulpagenten, browserherstel en volledig realtime voice houden het huidige geheugendoel niet open."
         }
       ],
       "openRisks": [
@@ -239,7 +228,7 @@
         "Een beter gesprek is nog geen complete digitale huisgenoot.",
         "Volledige stem-/hardwareacceptatie en zelfstandig werk blijven open. Home Assistant-inventarisatie is live; jouw beoordeling van het advies blijft open.",
         "Er is nog geen bewezen concurrentiewinst.",
-        "CO-006 is live; volledige geheugengezondheid en gezinsacceptatie zijn niet bewezen. De eerdere wisselende browseruitkomst blijft apart open."
+        "CO-006 is live; volledige geheugengezondheid en gezinsacceptatie zijn niet bewezen. Browserherstel blijft afzonderlijk vervolgwerk."
       ],
       "capabilities": [
         {
@@ -252,8 +241,11 @@
           "live": "yes",
           "accepted": "no",
           "gap": "Jouw zichtbare ervaring bevestigen",
-          "detail": "Nu actief op slot 4; eerdere proef op slot 4: bestaande antwoordherhaling na omschakeling exact behouden. De echte privéclient ontving 17 tekststukjes en las het eindantwoord exact terug zonder nieuwe modelcall. Een afzonderlijke gelabelde ontwikkelcontrole kreeg vier Telegram-draftbevestigingen en één definitief bericht. Interne tussenstappen blijven verborgen; serverbevestiging is geen menselijke acceptatie.",
-          "evidence": "CO-007 · livecontrole 8 september · onafhankelijke technische GO"
+          "detail": "Nu actief op slot 3; eerdere proef op slot 4: bestaande antwoordherhaling na omschakeling exact behouden. De echte privéclient ontving 17 tekststukjes en las het eindantwoord exact terug zonder nieuwe modelcall. Een afzonderlijke gelabelde ontwikkelcontrole kreeg vier Telegram-draftbevestigingen en één definitief bericht. Interne tussenstappen blijven verborgen; serverbevestiging is geen menselijke acceptatie.",
+          "evidence": "CO-007 · livecontrole 8 september · onafhankelijke technische GO",
+          "outcomes": [],
+          "works": "Tekstupdates en een volledig eindantwoord via de bestaande Telegram-route.",
+          "tryIt": "Stel Eva via /eva2 een vraag en volg het antwoord."
         },
         {
           "id": "conversation",
@@ -266,7 +258,9 @@
           "accepted": "partial",
           "gap": "Volledige gezinsbeoordeling en langdurige stabiliteit",
           "detail": "Privégesprekken werken; Jaap meldde dat de gesprekken echt beter zijn. De antwoordstream is nu afzonderlijk groen en live. Deze bredere kaart omvat ook menselijke warmte, eigen oordeel en langdurige continuïteit: daarom is de volledige acceptatie nog niet af.",
-          "evidence": "RT-001 · CO-007 · eerdere positieve feedback Jaap; volledige gezinsacceptatie open"
+          "evidence": "RT-001 · CO-007 · eerdere positieve feedback Jaap; volledige gezinsacceptatie open",
+          "outcomes": [],
+          "works": "Privégesprekken werken; Jaap meldde dat het gesprek prima loopt."
         },
         {
           "id": "memory",
@@ -276,10 +270,43 @@
           "built": "partial",
           "tested": "partial",
           "live": "partial",
-          "accepted": "no",
-          "gap": "Zelf relevant geheugen kiezen en bijwerken",
+          "accepted": "partial",
+          "gap": "Onafhankelijke CO-008-review; bredere langetermijn- en gezinskwaliteit blijven apart.",
           "detail": "De reparatie voor gewijzigde geheugenbronnen en verouderde recall is live. Selectie en broncorrectie zijn gericht bewezen; bestaand gesprek blijft na omschakeling beschikbaar. Volledige langetermijnkwaliteit en historische needs_help blijven open.",
-          "evidence": "CO-006 · technisch afgerond en live 8 september; volledige gezinsacceptatie open"
+          "evidence": "CO-006 · technisch afgerond en live 8 september; volledige gezinsacceptatie open",
+          "outcomes": [
+            {
+              "id": "memory-source",
+              "icon": "✓",
+              "title": "Een gewijzigde geheugenbron verwerken",
+              "subtitle": "Geheugen · CO-006",
+              "built": "yes",
+              "tested": "yes",
+              "live": "yes",
+              "accepted": "no",
+              "works": "Gewijzigde broninhoud vervangt de oude versie; oude opgehaalde context wordt ongeldig.",
+              "tryIt": "Deze reparatie werkt onder de motorkap. De volledige gespreksproef loopt bij CO-008.",
+              "gap": "Zelfstandig onthouden en bijwerken in gewone gesprekken: huidige oplevering CO-008.",
+              "evidence": "CO-006-autonomous-memory-2026-09-08.json · bronreparatie technisch afgerond en live",
+              "detail": "De reparatie voor gewijzigde geheugenbronnen en verouderde recall is live. Selectie en broncorrectie zijn gericht bewezen; bestaand gesprek blijft na omschakeling beschikbaar. Volledige langetermijnkwaliteit en historische needs_help blijven open."
+            },
+            {
+              "id": "memory-preference",
+              "icon": "✓",
+              "title": "Voorkeur onthouden, wijzigen en gebruiken",
+              "subtitle": "Geheugen · CO-008 / GE-01",
+              "built": "yes",
+              "tested": "yes",
+              "live": "yes",
+              "accepted": "yes",
+              "works": "Eva past advies aan van blauw naar groen nadat Jaap zijn voorkeur verandert.",
+              "tryIt": "GE-01 is door Jaap geaccepteerd. Gewoon blijven gebruiken via Telegram.",
+              "gap": "Deze gebruikersproef is afgerond; onafhankelijke technische review staat apart open.",
+              "evidence": "CO-008-GE-01-owner-acceptance-2026-09-10.json",
+              "detail": "Jaap bevestigt: Dit lijkt perfect te werken. Screenshot toont voorkeur onthouden, wijziging verwerken en toepassen bij een andere adviesvraag. Langetermijn- en herstartbewijs zijn afzonderlijke technische proeven."
+            }
+          ],
+          "works": "Voorkeuren uit gewone gesprekken onthouden, wijzigen en gebruiken is live bewezen en door Jaap geaccepteerd (GE-01)."
         },
         {
           "id": "initiative",
@@ -292,7 +319,9 @@
           "accepted": "no",
           "gap": "Praktijkresultaat en waardering; uitvoerroute is live",
           "detail": "De spontane beslisser is live verbonden met duurzaam onderzoek en het maken van een bestand. Het eigenaarsdashboard toont de initiatieven en biedt downloaden en stoppen. Stop tijdens een lopende taak en hervatten zijn gericht gecontroleerd. De eerste live uitlezing bevatte nog geen initiatief; nut, eigenheid en voorsprong op Bottie zijn nog niet beoordeeld.",
-          "evidence": "AU-005 · live op slot 4 · eigenaarsoverzicht en stop gecontroleerd"
+          "evidence": "AU-005 · live op slot 4 · eigenaarsoverzicht en stop gecontroleerd",
+          "outcomes": [],
+          "works": "De uitvoerroute voor eigen onderzoek en een bestand staat live; bruikbare spontane resultaten nog niet volledig beoordeeld."
         },
         {
           "id": "tools",
@@ -303,22 +332,88 @@
           "tested": "partial",
           "live": "partial",
           "accepted": "no",
-          "gap": "Browserbediening en bredere praktijk met diensten die aanmelding vragen",
-          "detail": "Eva kan Home Assistant onderzoeken en in haar duurzame privéwerkmap bestanden zoeken, lezen, de mapinhoud en bestandsgegevens opvragen, en documenten bewaren. Een complete eigenaarsopdracht vond twee notities, las beide, vergeleek budget en tijd en sloeg gecontroleerd advies op in 40 seconden. Onbekende connectors en algemene computerbediening volgen nog.",
-          "evidence": "TL-001, TL-002 en AU-001 · vierstapsopdracht live bewezen 9 september; gezinsacceptatie open"
+          "gap": "Persoonlijke aanmeldingen, andere computerprogramma’s en bredere combinatietaken.",
+          "detail": "De deeluitkomsten hieronder zijn opgeleverd. Browserbediening staat als eigen onderdeel in hetzelfde overzicht. Algemene digitale bekwaamheid blijft verder te bewijzen.",
+          "evidence": "TL-001, TL-002 en AU-001 · vierstapsopdracht live bewezen 9 september; gezinsacceptatie open",
+          "outcomes": [
+            {
+              "id": "documents",
+              "icon": "✓",
+              "title": "Documenten vergelijken en bewaren",
+              "subtitle": "Werkmap · AU-001 / TL-002",
+              "built": "yes",
+              "tested": "yes",
+              "live": "yes",
+              "accepted": "no",
+              "works": "Eva zoekt en leest documenten, vergelijkt ze en bewaart een gecontroleerd resultaat.",
+              "tryIt": "Laat Eva twee bestaande notities in haar werkmap vergelijken en het advies opslaan.",
+              "gap": "Andere programma’s en bestanden buiten de toegestane werkmap zijn vervolgwerk.",
+              "evidence": "AU-001-completion-2026-09-09.json · gewone vierstapsopdracht en onafhankelijke bestandscontrole",
+              "detail": "Eva zoekt en leest documenten, vergelijkt ze en bewaart een gecontroleerd resultaat."
+            },
+            {
+              "id": "connector",
+              "icon": "✓",
+              "title": "Een nieuwe openbare dienst gebruiken",
+              "subtitle": "Connectors · TL-003",
+              "built": "yes",
+              "tested": "yes",
+              "live": "yes",
+              "accepted": "no",
+              "works": "Een onbekende openbare MCP-dienst aansluiten en gebruiken voor een opdracht.",
+              "tryIt": "Laat Eva documentatie via GitMCP onderzoeken en een korte uitleg bewaren.",
+              "gap": "Diensten met persoonlijke aanmelding en bredere praktijktaken.",
+              "evidence": "TL-003-completion-2026-09-10.json · GitMCP, onderzoek en teruggelezen document; ontwikkelhulp vastgelegd",
+              "detail": "Een onbekende openbare MCP-dienst aansluiten en gebruiken voor een opdracht."
+            }
+          ],
+          "works": "Documenten verwerken, openbare MCP-diensten aansluiten en browserbediening zijn afzonderlijk bewezen."
         },
         {
           "id": "voice",
           "icon": "≋",
           "title": "Stem & aanwezigheid",
-          "subtitle": "Praten via Telegram en Home Assistant",
+          "subtitle": "Eén gesprekservaring in spraak en chat, op passende apparaten",
           "built": "partial",
           "tested": "partial",
           "live": "partial",
           "accepted": "partial",
-          "gap": "Onderbreken met gewone spraak tijdens Eva’s antwoord",
-          "detail": "Jaap accepteert verstaanbare woonkamer-audio (SP-01) en doorpraten na het antwoord zonder nieuw Hey Eva (SP-02). Onderbreken met een gewone nieuwe vraag is nog niet opgeleverd; de speakerkandidaat is gebouwd en met hostproeven gecontroleerd. Telegram-spraak en volledige gezinsacceptatie blijven apart open.",
-          "evidence": "VB-001 · SP-01 en SP-02 geaccepteerd · SP-03 gebouwd als kandidaat, nog niet live"
+          "gap": "Een overal bereikbaar realtime gesprek: gewone spraakonderbreking, mobiel gebruik en toegelaten personen.",
+          "detail": "Eén digitale huisgenote, bereikbaar in spraak en chat via telefoon en laptop en vrij aanspreekbaar via bestaande thuisapparaten. De auto gebruikt als uitgangspunt de telefoonroute. Home Assistant is een mogelijke aansluiting, geen transportvereiste. Eva begrijpt ook ongeziene vragen en opdrachten, kiest passende informatie en tools, handelt binnen herbruikbare rechten en controleert het resultaat. Gesprek en advies, privégegevens raadplegen en acties uitvoeren zijn afzonderlijke bevoegdheden; voorbeelden als aanwezigheid en deurstatus zijn geen uitputtende featurelijst. Eigenaar, dochter en eventueel toegelaten vrienden houden eigen context en persoonsgeheugen. Onbekende identiteit of toegang geeft geen privégegevens. Eerste oplevering: eigenaar mobiel spraak/chat; daarna andere toegelaten personen en expliciet gedeelde huisinformatie. Gewenste stemervaring: natuurlijk Nederlands, doorlopende sessie, gewone spraakonderbreking en nieuwe inbreng verwerken, context/geheugen behouden, tekst of artifact zichtbaar terwijl gesprek en lang werk doorgaan, duidelijk beëindigen en herstellen bij verbindingsverlies. Huisapparaten en telefoonverbinding zijn nog niet op compatibiliteit gecontroleerd; geen CarPlay/Android Auto-claim. Acceptatie: live demonstratie, gemeten antwoord- en onderbrekingsvertraging, Jaaps oordeel, ongeziene vragen en toegestane én geweigerde combinatietaken. SP-01 en SP-02 bewijzen alleen hun beperkte uitkomst. Geen uitnodigingen, publieke ontsluiting, apparaten- of rechtenwijzigingen binnen deze dashboardopdracht.",
+          "evidence": "VB-001 · SP-01 en SP-02 geaccepteerd · SP-03 gebouwd als kandidaat, nog niet live",
+          "outcomes": [
+            {
+              "id": "voice-audio",
+              "icon": "✓",
+              "title": "Verstaanbare audio in de woonkamer",
+              "subtitle": "Home Assistant · SP-01",
+              "built": "yes",
+              "tested": "yes",
+              "live": "yes",
+              "accepted": "yes",
+              "works": "Eva’s antwoord is verstaanbaar via de woonkamer-speaker.",
+              "tryIt": "Stel een gewone vraag via de woonkamer-speaker.",
+              "gap": "Stemkeuze en langdurige stabiliteit blijven apart beoordeeld.",
+              "evidence": "SP-01 · Jaap bevestigde FLAC, MP3 en langer antwoord zonder stotteren",
+              "detail": "Eva’s antwoord is verstaanbaar via de woonkamer-speaker."
+            },
+            {
+              "id": "voice-followup",
+              "icon": "✓",
+              "title": "Doorpraten nadat Eva klaar is",
+              "subtitle": "Home Assistant · SP-02",
+              "built": "yes",
+              "tested": "yes",
+              "live": "yes",
+              "accepted": "yes",
+              "works": "Na het antwoord een vervolgvraag stellen zonder opnieuw Hey Eva.",
+              "tryIt": "Wacht op het luistersignaal en stel je vervolgvraag.",
+              "gap": "Onderbreken tijdens het antwoord is hiermee niet bewezen.",
+              "evidence": "SP-02 · expliciet door Jaap bevestigd: werkt",
+              "detail": "Na het antwoord een vervolgvraag stellen zonder opnieuw Hey Eva."
+            }
+          ],
+          "works": "Verstaanbare woonkamer-audio en doorpraten na het antwoord zijn door Jaap bevestigd."
         },
         {
           "id": "projects",
@@ -331,7 +426,9 @@
           "accepted": "no",
           "gap": "Een project via de gebruikersroute afronden",
           "detail": "Duurzame taken en begrensde workers zijn beproefd. Zelf nieuwe skills leren, een meerdaags project uitvoeren en alles normaal kunnen starten/volgen/stoppen zijn geen afgeronde gebruikersfuncties.",
-          "evidence": "AU-002, AU-003, AU-004, AU-006"
+          "evidence": "AU-002, AU-003, AU-004, AU-006",
+          "outcomes": [],
+          "works": "Duurzame taken en workers bestaan; een volledig zelfstandig project via de gebruikersroute ontbreekt."
         },
         {
           "id": "browser",
@@ -342,9 +439,12 @@
           "tested": "yes",
           "live": "yes",
           "accepted": "no",
-          "gap": "Herstel na onderbreking en persoonlijke acceptatie",
+          "gap": "Herstel na onderbreking is afzonderlijk vervolgwerk (VB-004).",
           "detail": "Playwright MCP bedient dezelfde zichtbare Chromium met blijvend profiel. Overname sluit Eva af; teruggeven sluit eerst de eigenaarverbinding. Een gewone browseropdracht en opgeslagen resultaat zijn werkelijk teruggelezen. Deze groene stappen gelden voor de browser; algemene bediening van andere computerprogramma’s is nog niet aangetoond.",
-          "evidence": "VB-003 · technisch live; VB-004 · herstel volgt"
+          "evidence": "VB-003 · technisch live; VB-004 · herstel volgt",
+          "outcomes": [],
+          "works": "Websites bedienen in dezelfde browser die jij kunt bekijken en overnemen.",
+          "tryIt": "Open Browser in het eigenaarsdashboard; neem over en geef terug."
         },
         {
           "id": "installation",
@@ -357,7 +457,9 @@
           "accepted": "no",
           "gap": "Eenvoudige installatie + zeven dagen praktijk",
           "detail": "Bestaande gegevens zijn behouden bij herstart en slotwissels. Een consumentenwizard, volledige verhuizing naar een andere computer en zeven dagen eindpraktijk zijn niet afgerond.",
-          "evidence": "IN-001, IN-002, IN-003 · FN-002, FN-003"
+          "evidence": "IN-001, IN-002, IN-003 · FN-002, FN-003",
+          "outcomes": [],
+          "works": "Gegevens blijven behouden bij gecontroleerde herstart en slotwissels."
         }
       ],
       "competitorCheckedAt": "7 september 2026",
@@ -494,12 +596,27 @@
           "change": "De browser staat in het bestaande eigenaarsdashboard.",
           "steps": [
             "Laat Eva een openbare pagina openen en kort samenvatten.",
-            "Open http://localhost:44711/internal/v1/dashboard/ met je eigenaarslogin, klik bij Browser op Neem over en scroll in de pagina.",
+            "Open http://localhost:44710/internal/v1/dashboard/ met je eigenaarslogin, klik bij Browser op Neem over en scroll in de pagina.",
             "Geef de browser terug en laat Eva de huidige pagina beschrijven."
           ],
           "expected": "Het beeld en de pagina blijven gelijk; Eva en jij bedienen nooit tegelijk.",
           "report": "BR-01: werkt / werkt niet, met waar het eventueel misgaat.",
           "result": "Technisch gecontroleerd; persoonlijke acceptatie is nog niet gevraagd of geclaimd."
+        },
+        {
+          "id": "GE-01",
+          "updatedOn": "2026-09-10",
+          "status": "accepted",
+          "title": "Voorkeur onthouden, wijzigen en gebruiken",
+          "change": "Automatische geheugenroute hersteld en live gecontroleerd.",
+          "steps": [
+            "Vertel in een gewoon Telegram-gesprek een voorkeur.",
+            "Vertel later dat die voorkeur is veranderd.",
+            "Vraag om relevant advies zonder de voorkeur zelf te noemen."
+          ],
+          "expected": "Eva gebruikt de nieuwe voorkeur.",
+          "report": "Geaccepteerd door Jaap.",
+          "result": "Dit lijkt perfect te werken. Screenshot toont eerst blauw in deuradvies en na wijziging groen in schuttingadvies."
         }
       ]
     },
@@ -578,9 +695,9 @@
       "document": "eva2/PROJECTDOEL.md",
       "scope": "Digitale huisgenoot: zelfstandig redeneren, initiatief, onbekende vaardigheden leren, handelen, zelfverbetering en aantoonbare concurrentiewinst met open-sourcehergebruik.",
       "sessionGoal": "Het volledige projectdoel blijft actief. Eigen initiatief is technisch live; nu toegestane algemene handelingen bruikbaar afronden.",
-      "currentWork": "VB-003 is technisch afgerond en live: Eva maakt een gewone browseropdracht af; de eigenaar ziet dezelfde browser, neemt over en geeft exclusief terug. Herstel na een onderbreking volgt nu.",
-      "currentEvidence": "eva2/evidence/product/VB-003-completion-2026-09-10.json",
-      "nextStep": "VB-004: bestaand browserprofiel, hostbeheer en netwerkbeperking betrouwbaar terugbrengen na een gerichte onderbreking, zonder dubbele handeling.",
+      "currentWork": "CO-008 is afgerond met onafhankelijke GO en geaccepteerde GE-01. Nu AU-007: Eva werkt vanuit bestaande toegestane context zelf één relevant privaat voorstel uit.",
+      "currentEvidence": "eva2/reviews/CO-008-automatic-memory-ddb0267.md",
+      "nextStep": "Bestaande initiatiefroute compleet gebruiken: echte trigger → eigen keuze → controleerbaar resultaat → Jaaps beoordeling.",
       "usageClarification": {
         "date": "2026-09-07",
         "authorizedBy": "Jaap",
@@ -3037,9 +3154,239 @@
       "ownerOrigin": "http://localhost:44711",
       "next": "VB-004",
       "scope": "Browser bedienen, meekijken en exclusief overnemen. Herstartbestendigheid en herstel worden niet als voltooid opgevoerd."
+    },
+    "vb004InstallationDeferred": {
+      "task": {
+        "id": "VB-004",
+        "order": 141,
+        "area": "Browser",
+        "title": "Browser na onderbreking veilig hervatten",
+        "outcome": "Na een browser- of beheeronderbreking blijft het profiel behouden en hervat Eva pas vanuit de werkelijk teruggelezen toestand, zonder vorige handeling blind te herhalen.",
+        "status": "in_progress",
+        "stateDetails": {
+          "baseCommit": null,
+          "implementationCommit": null,
+          "evidenceCommit": null,
+          "reviewEvidencePaths": [],
+          "blockerReason": null
+        },
+        "ownerRole": "architecturelead",
+        "reviewerRole": "proofreviewer",
+        "dependsOn": [
+          "VB-003"
+        ],
+        "changePaths": [
+          "eva2/src/eva/operations/browser_session.py",
+          "eva2/tests/operations/test_browser_session.py",
+          "eva2/deploy/owner-browser/README.md",
+          "eva2/deploy/owner-browser/configure-egress.py",
+          "eva2/deploy/owner-browser/browser-firewall.py",
+          "eva2/deploy/owner-browser/host-config.template.json"
+        ],
+        "testCommands": [
+          "pytest -q tests/operations/test_browser_session.py",
+          "python3 tools/check_current_workboard.py"
+        ],
+        "evidenceRequired": [
+          "Eén begrensde onderbreking met een herkenbare lokale profielmarkering; toestand en resultaat daarna apart teruglezen.",
+          "Bestaande hostservice en exacte-IP-firewall komen in de juiste volgorde terug voordat browserbediening beschikbaar wordt; geen algemene Dockerrechten voor de core."
+        ],
+        "doneWhen": [
+          "Dezelfde profielgegevens komen terug na een gerichte browser-/hostbeheerherstart; de eigenaar krijgt een bruikbare herstelstatus.",
+          "Nieuwe browseracties beginnen pas na herstel van de vaste netwerkbeperking en een actuele waarneming; de vorige mutatie wordt niet herhaald.",
+          "Een bestaande eigenaarverbinding en Eva krijgen na herstel nooit tegelijk bediening. Eén praktische herstelproef en onafhankelijke GO sluiten deze kaart af."
+        ],
+        "inventoryOwners": [
+          "deployment",
+          "eva-runtime",
+          "verification"
+        ],
+        "componentIds": [
+          "managed-deployment",
+          "operations-and-release-tests",
+          "operator-workflows"
+        ]
+      },
+      "status": "installation_blocked",
+      "implementationCommit": "6c159e6ea41c1185a55ca7b4f07bc9e6ac48da78",
+      "reason": "Automatische toolcontrole weigerde het installeren van twee systeemdiensten en overdragen van het beheerproces: blocked by policy. Geen nadere reden; opdracht heeft niets uitgevoerd. Bestaande browserfunctie blijft live.",
+      "prepared": true,
+      "installed": false,
+      "recoveryTestExecuted": false,
+      "retryPolicy": "Geen herverpakking of alternatieve uitvoerroute voor de geweigerde installatie. Onafhankelijk productwerk gaat door."
+    },
+    "au002Delivery": {
+      "status": "paused_by_owner",
+      "ownerRole": "architecturelead",
+      "artifactArchive": "/home/administrator/project/.eva2-artifacts/au002-owner-work-20260910",
+      "purpose": "Eén gewone eigenaarroute met duurzame hulpagent: starten, stoppen, hervatten en resultaat; bron-, image-, verbruik- en readbackreceipts.",
+      "retention": "Bewaren tot AU-002 onafhankelijk gesloten en de zeven dagen eindacceptatie verstreken zijn; daarna privérequests verwijderen en gehashte samenvatting behouden.",
+      "sourceChecks": "2 nieuwe adapterchecks en bestaande eigenaar-dashboardroute groen; gedeelde provider/service 17 checks groen. Geen nieuwe spraakproef.",
+      "implementationCommit": "0126ac0a1e0c3962ae4f0863f2d695e6206bdabc",
+      "candidateImage": "sha256:2f267ed94b41ed0aeb1f60ef3597272604149a8fc82617abeecfea3f7cd6a58c",
+      "result": "Gebouwd: hulpwerk starten, volgen, stoppen, hervatten en resultaat ophalen via gewone chat. Gerichte controles klaar; live eigenaarroute volgt na omzetting.",
+      "deploymentFinding": "Eerste omzetting en automatische terugrol liepen vast op de bestaande bestandskoppeling die na herstart onbereikbaar was gemarkeerd. Koppeling hersteld via herontdekking; vorige Eva en browser weer bereikbaar. Nieuwe omzetting gestart met actuele gegevens.",
+      "liveSlot": 4,
+      "cutoverReceipt": "cutover-after-recovery.stdout",
+      "ownerFlowFinding": "Eerste gewone gesprek gaf terecht aan geen hulpagenttools te hebben: runtime-gespreksscope verschilde van opslag-UUIDs. Koppeling in eigenaarservice én worker gecorrigeerd; onafhankelijke bronreview akkoord. Eén echte databasecontrole bevestigt dat de worker de eigenaaropdracht claimt.",
+      "next": "Wacht op Jaaps nieuwe goal; geen verdere implementatie, tests of deployment totdat hij opdracht geeft.",
+      "pausedAt": "2026-09-10T08:51:40.466401+00:00",
+      "pauseReason": "Jaap splitst het grote goal op in kleinere doelen en geeft daarna opnieuw opdracht om verder te gaan.",
+      "liveImplementationCommit": "0126ac0a1e0c3962ae4f0863f2d695e6206bdabc",
+      "liveImage": "sha256:2f267ed94b41ed0aeb1f60ef3597272604149a8fc82617abeecfea3f7cd6a58c",
+      "lastActualResult": "Gewone chat maakt een duurzame hulpopdracht aan; worker pakt haar op. Uitvoering faalt doordat gpt-5.4-mini niet meer door ChatGPT-aanmelding wordt ondersteund. Taak is als ambiguous bewaard; stop, hervatten en voltooid resultaat zijn nog niet live bewezen.",
+      "pendingSourceChange": "Hulpagentprofiel aangepast naar officieel vervangend gpt-5.6-luna, bijbehorende referentietarieven en compacte uitvoerinstructie. Vier gerichte adaptercontroles geslaagd. Deze twee bronbestanden zijn nog niet gecommit of uitgerold."
+    },
+    "au002PausedCard": {
+      "id": "AU-002",
+      "order": 141,
+      "area": "Zelfstandigheid",
+      "title": "Duurzame hulpagent bedienen",
+      "outcome": "Starten, volgen, stoppen en hervatten werken via de gebruikersroute; hoofd- en hulpagent delen één provideradapter.",
+      "status": "in_progress",
+      "stateDetails": {
+        "baseCommit": null,
+        "implementationCommit": null,
+        "evidenceCommit": null,
+        "reviewEvidencePaths": [],
+        "blockerReason": null
+      },
+      "ownerRole": "architecturelead",
+      "reviewerRole": "proofreviewer",
+      "dependsOn": [
+        "VB-003"
+      ],
+      "changePaths": [
+        "eva2/src/eva/adapters/postgres/delegated_work.py",
+        "eva2/src/eva/bootstrap/delegated_work_commands.py",
+        "eva2/src/eva/bootstrap/delegated_work_provider.py",
+        "eva2/src/eva/bootstrap/delegated_work_service.py",
+        "eva2/src/eva/bootstrap/runtime.py",
+        "eva2/deploy/living-core/managed-b.compose.yml"
+      ],
+      "testCommands": [
+        "pytest -q tests/bootstrap/test_delegated_work_commands.py",
+        "python3 tools/check_current_workboard.py"
+      ],
+      "evidenceRequired": [
+        "Via de gewone eigenaar-chat een herkenbare hulpopdracht starten, voortgang opvragen, stoppen en expliciet hervatten, en het duurzaam opgeslagen resultaat ontvangen.",
+        "Eén gedeelde provideradapter, eigenaarafscherming en bestaand verbruik behouden; onzekere vorige calls worden niet stilzwijgend herhaald."
+      ],
+      "doneWhen": [
+        "De complete eigenaarroute start, volgt, stopt en hervat hulpwerk en geeft een bruikbaar opgeslagen resultaat terug.",
+        "Gerichte levenscycluscontrole en één echte gebruikersroute slagen; live ingebruikname en onafhankelijke review zijn vastgelegd."
+      ],
+      "inventoryOwners": [
+        "deployment",
+        "eva-runtime",
+        "verification"
+      ],
+      "componentIds": [
+        "api-and-runtime-composition",
+        "durable-persistence",
+        "managed-deployment"
+      ]
+    },
+    "memoryGoal20260910": {
+      "status": "completed",
+      "scope": "Eva onthoudt relevante persoonlijke kennis uit gewone gesprekken, verwerkt wijzigingen, gebruikt tijdelijke informatie op het juiste moment en laat irrelevante herhaling buiten blijvende kennis. Bestaande gegevens en persoonsgrenzen blijven behouden.",
+      "previousTurnClassification": "progress: hervatting expliciet bevestigd; impliciete terughaalproef faalde, oorzaak vastgesteld en reparatie gecontroleerd",
+      "sourceRepairRemainsDone": "CO-006",
+      "next": "Afgerond; GE-01 blijft geaccepteerd. Nieuw begrensd initiatiefdoel AU-007.",
+      "repair": {
+        "status": "live_verified",
+        "implementationCommit": "003927fec1c2dfe573bcb25fd55fdf12b465864e",
+        "findings": [
+          "Geheugenmodel gpt-5.4-mini wordt live geweigerd; vervangen door gpt-5.6-luna.",
+          "Na opslagfout ontving begin() CheckpointState in plaats van een duurzame taak; hersteld.",
+          "Bestaande mislukte Hindsight-operatie wordt via native retry hervat; annuleringen blijven gestopt."
+        ],
+        "checks": "Duurzame werker: 7 gerichte controles. Definitieve geheugenadapter: 62 controles geslaagd. Live voorkeur, wijziging, impliciete vraag na herstart, tijdelijke informatie en persoonsgrens gecontroleerd.",
+        "deployment": "Definitieve geheugenkandidaat live op slot3, poort44710; gegevensbehoud gecontroleerd.",
+        "acceptance": "GE-01 door Jaap geaccepteerd op 10 september: voorkeur blauw → groen, toegepast op een nieuwe adviesvraag.",
+        "recallRepair": "Lege cache gaf ten onrechte leeg geheugen mee aan eerste antwoord. Nu vraaggebonden ophalen voordat Eva antwoordt; 57 adaptercontroles geslaagd.",
+        "backlog": "8 recente private eigenaarsbronnen en 18 toegelaten huisgespreksbronnen hersteld. Oude losse proefdata blijft afzonderlijk behouden.",
+        "recallRankingRepair": {
+          "implementationCommit": "ddb0267852c56c95ccde4270d821e3192ba56b70",
+          "finding": "Native geheugen vindt de juiste voorkeur; absolute 0,05-filter liet geen enkele kandidaat door. Beste brongecontroleerde kandidaat blijft nu beschikbaar bij lage scores.",
+          "checks": "62 adaptercontroles geslaagd in 31,34 seconden; persoonsgrens, nulscore en ontbrekende bron blijven gecontroleerd.",
+          "liveStatus": "verified",
+          "humanAccepted": true
+        }
+      },
+      "evidencePath": "eva2/evidence/product/CO-008-automatic-personal-memory-2026-09-10.json",
+      "technicalCompletedAt": "2026-09-10T10:20:00Z",
+      "ownerAccepted": true,
+      "userTrial": {
+        "id": "GE-01",
+        "status": "accepted",
+        "instructions": "Vertel Eva2 via je eigen Telegram-gesprek een nieuwe voorkeur, wijzig die later en vraag in een later gesprek om relevant advies zonder de voorkeur zelf te noemen. Verwacht de nieuwe voorkeur.",
+        "feedback": "GE-01: werkt / werkt niet, met het betreffende antwoord.",
+        "accepted": true,
+        "result": "Jaap: Dit lijkt perfect te werken. Telegram-screenshot toont blauw → groen en passend nieuw advies.",
+        "evidencePath": "eva2/evidence/product/CO-008-GE-01-owner-acceptance-2026-09-10.json"
+      },
+      "technicalReview": "GO door /root/au002_release_review; bron, bewijsbindingen en grenzen onafhankelijk gecontroleerd.",
+      "reviewBinding": {
+        "baseCommit": "0126ac0a1e0c3962ae4f0863f2d695e6206bdabc",
+        "implementationCommit": "ddb0267852c56c95ccde4270d821e3192ba56b70",
+        "evidenceCommit": "ef600df0810c0ed5c59056bf22e683513eabebb0",
+        "reviewEvidencePaths": [
+          "eva2/evidence/product/CO-008-automatic-personal-memory-2026-09-10.json"
+        ],
+        "blockerReason": null
+      },
+      "reviewStateBlocker": null,
+      "ownerAcceptanceEvidence": "eva2/evidence/product/CO-008-GE-01-owner-acceptance-2026-09-10.json",
+      "reviewPath": "eva2/reviews/CO-008-automatic-memory-ddb0267.md",
+      "completedAt": "2026-09-10T15:07:01.548616+00:00"
+    },
+    "voiceRealtimeOwnerClarification20260910": {
+      "source": "Expliciete opdracht Jaap via voice-taak",
+      "status": "scope_recorded_not_implemented",
+      "reference": "Soepele realtime gesprekservaring zoals Codex voice, geen eis aan identieke techniek.",
+      "requirements": "Eén digitale huisgenote, bereikbaar in spraak en chat via telefoon en laptop en vrij aanspreekbaar via bestaande thuisapparaten. De auto gebruikt als uitgangspunt de telefoonroute. Home Assistant is een mogelijke aansluiting, geen transportvereiste. Eva begrijpt ook ongeziene vragen en opdrachten, kiest passende informatie en tools, handelt binnen herbruikbare rechten en controleert het resultaat. Gesprek en advies, privégegevens raadplegen en acties uitvoeren zijn afzonderlijke bevoegdheden; voorbeelden als aanwezigheid en deurstatus zijn geen uitputtende featurelijst. Eigenaar, dochter en eventueel toegelaten vrienden houden eigen context en persoonsgeheugen. Onbekende identiteit of toegang geeft geen privégegevens. Eerste oplevering: eigenaar mobiel spraak/chat; daarna andere toegelaten personen en expliciet gedeelde huisinformatie. Gewenste stemervaring: natuurlijk Nederlands, doorlopende sessie, gewone spraakonderbreking en nieuwe inbreng verwerken, context/geheugen behouden, tekst of artifact zichtbaar terwijl gesprek en lang werk doorgaan, duidelijk beëindigen en herstellen bij verbindingsverlies. Huisapparaten en telefoonverbinding zijn nog niet op compatibiliteit gecontroleerd; geen CarPlay/Android Auto-claim. Acceptatie: live demonstratie, gemeten antwoord- en onderbrekingsvertraging, Jaaps oordeel, ongeziene vragen en toegestane én geweigerde combinatietaken. SP-01 en SP-02 bewijzen alleen hun beperkte uitkomst. Geen uitnodigingen, publieke ontsluiting, apparaten- of rechtenwijzigingen binnen deze dashboardopdracht.",
+      "memoryGoalUnchanged": true,
+      "endpointsAreExamplesNotSeparateProducts": true,
+      "deliverySequence": [
+        "Eigenaar mobiel in spraak en chat",
+        "Andere toegelaten personen met eigen context",
+        "Expliciet gedeelde huisinformatie"
+      ]
+    },
+    "dashboardOutcomePresentation20260910": {
+      "status": "built_and_visually_verified",
+      "request": "Toon concrete afgeronde gebruikersmogelijkheden prominent; aparte open vervolgtaken en menselijke acceptatie.",
+      "evidenceChecked": [
+        "CO-006",
+        "AU-001",
+        "TL-003",
+        "VB-003",
+        "SP-01",
+        "SP-02"
+      ],
+      "noProductPercentage": true,
+      "ownerCorrection": "Vaste oorspronkelijke hoofdcategorieën met eigen status; concrete bewezen deeluitkomsten eronder in dezelfde tabel. Hoofdomvang behouden.",
+      "verification": "Desktop en 390px mobiel gecontroleerd: negen vaste hoofdcategorieën met eigen status, vijf zichtbare deeluitkomsten, bewijsdetail en menselijke acceptatie apart. Geen horizontale pagina-overloop. Bestaande aantallen afgeronde kaarten niet als percentage gebruikt."
+    },
+    "parallelWorkNotes": "### Afzonderlijke storing: bestaande Voice PE-route\n\nJaap bevestigde op 10 september dat Eva na de reparatie weer hoorbaar antwoordt.\nDe specifieke onbereikbaarheidsfout door een geheugenbronverwijzing van 247 tekens\nis daarmee in de praktijk hersteld. De originele bron blijft behouden; de\npersoons- en mandaatcontroles zijn niet verruimd. 108 gerichte tests, onafhankelijke\nreview en gecontroleerde uitrol zijn vastgelegd in het\n[herstelbewijs](evidence/product/VOICE-REF-247-repair-2026-09-10.json).\nNatuurlijk doorpraten tijdens werk en gewone spraakonderbreking zijn niet\ngeaccepteerd: de huidige route blijft opeenvolgende vraag/antwoordbeurten gebruiken.\n[Begrensde diagnose en voorstel](design/product/voice-session-diagnosis-2026-09-10.md).\nGE-01 blijft geaccepteerd; geen nieuw projectgoal of brede voice-implementatie gestart.\n\nHet [OSS-onderzoek van 10 september](design/product/voice-oss-selection-2026-09-10.md)\nis afgerond onder Jaaps harde eis dat de volledige gespreksmechanismen al samen\nin een onderhouden applicatie zitten. Geen onderzochte applicatie is volledig\ngekwalificeerd. LiveKit 1.8.0: 19 bestaande upstreamtests geslaagd, zonder fysieke\nspraakproef. Pipecat heeft uitvoerbare asyncdemo's, maar de onderzochte taken zijn\ngesimuleerd en/of alleen via het scherm opgevolgd. Geen eigen gesprekssysteem,\nnieuwe dienst of runtimewijziging gestart. Telefoon/laptop gaat bij eventuele\nvervolgverificatie voorop; HA is geen selectievoorwaarde. `openai_tts` 3.9.1 heeft\ngepubliceerde zinsstreaming, is hier niet geïnstalleerd en blijft ondersteunend.\n\n\nJaap heeft de uitvoering expliciet hervat: ontbreken van een complete OSS-app is\ngeen stopvoorwaarde. [Actieve LiveKit-integratie](design/product/voice-livekit-delivery-2026-09-10.md)\ngebruikt de bestaande Eva-kern en providers. Laptop eerst, telefoon/huisapparaten\nblijven open; geen nieuwe stemervaring live of geaccepteerd.",
+    "initiativeDeliveryAU007": {
+      "status": "in_progress",
+      "scope": "Eva ziet via een bestaande huiswaarneming een passende kans bij toegestane persoonlijke context, kiest zelf een concrete vervolgstap en werkt één controleerbaar privaat voorstel of hulpmiddel uit. Jaap hoeft de stappen niet voor te zeggen.",
+      "situation": "Bestaande passieve huiswaarneming plus toegestane eigenaarskennis; één privaat uitgewerkt idee.",
+      "reuse": "Bestaande SensoryDecisionWorker, PersonalInitiativeProposal, duurzame interesse-/prototypewerkers en eigenaarsinzage.",
+      "baseline": "Huiswaarnemingen en beslissingen lopen live; nog geen PERSONAL_INTENT_ADOPTED in huidige gegevensbank.",
+      "constraints": [
+        "Geen berichten aan derden.",
+        "Geen nieuwe kosten, rechten, accounts, publicatie of nachtschema.",
+        "Geen nieuwe spraak- of dashboardimplementatie.",
+        "Bestaande trigger, geen handmatig ingevoegde initiatiefclaim als bewijs."
+      ],
+      "next": "Controleer relevante context en initiatiefselectie; verbeter alleen de ontbrekende schakel en bewijs één resultaat.",
+      "ownerAccepted": false
     }
   },
-  "activeTaskId": "VB-004",
+  "activeTaskId": "AU-007",
   "maxActiveImplementationTasks": 1,
   "statusValues": [
     "queued",
@@ -3067,7 +3414,8 @@
     "proofreviewer": "/root/proof_review",
     "workboardreviewer": "/root/workboard_review",
     "dashboardreviewer": "/root/identity_pair_review",
-    "memoryreviewer": "/root/co006_review"
+    "memoryreviewer": "/root/co006_review",
+    "memorydeliveryreviewer": "/root/au002_release_review"
   },
   "executionTasks": [
     {
@@ -4530,11 +4878,66 @@
       ]
     },
     {
-      "id": "VB-004",
+      "id": "CO-008",
       "order": 141,
-      "area": "Browser",
-      "title": "Browser na onderbreking veilig hervatten",
-      "outcome": "Na een browser- of beheeronderbreking blijft het profiel behouden en hervat Eva pas vanuit de werkelijk teruggelezen toestand, zonder vorige handeling blind te herhalen.",
+      "area": "Geheugen",
+      "title": "Zelf relevant geheugen kiezen en bijwerken",
+      "outcome": "Eva onthoudt relevante persoonlijke kennis uit gewone gesprekken, verwerkt wijzigingen, gebruikt tijdelijke informatie op het juiste moment en laat irrelevante herhaling buiten blijvende kennis. Bestaande gegevens en persoonsgrenzen blijven behouden.",
+      "status": "done",
+      "stateDetails": {
+        "baseCommit": "0126ac0a1e0c3962ae4f0863f2d695e6206bdabc",
+        "implementationCommit": "ddb0267852c56c95ccde4270d821e3192ba56b70",
+        "evidenceCommit": "ef600df0810c0ed5c59056bf22e683513eabebb0",
+        "reviewEvidencePaths": [
+          "eva2/evidence/product/CO-008-automatic-personal-memory-2026-09-10.json"
+        ],
+        "blockerReason": null
+      },
+      "ownerRole": "architecturelead",
+      "reviewerRole": "memorydeliveryreviewer",
+      "dependsOn": [
+        "CO-006"
+      ],
+      "changePaths": [
+        "eva2/src/eva/application/memory_background.py",
+        "eva2/src/eva/adapters/projection/hindsight.py",
+        "eva2/tests/application/test_memory_background.py",
+        "eva2/tests/projection/test_hindsight.py",
+        "eva2/deploy/living-core/managed-b.compose.yml",
+        "eva2/deploy/living-core/hindsight.compose.yml",
+        "eva2/deploy/living-core/stack.compose.yml",
+        "eva2/deploy/living-core/telegram-test-conversation.compose.yml"
+      ],
+      "testCommands": [
+        "pytest -q tests/application/test_memory_background.py::test_raw_erasure_failure_keeps_the_durable_lease_unfinished tests/application/test_memory_background.py::test_outbox_erasure_failure_keeps_the_durable_lease_unfinished tests/application/test_memory_background.py::test_explicit_erasure_keeps_durable_lease_when_provider_fails tests/application/test_memory_background.py::test_poison_retain_stops_after_three_attempts tests/application/test_memory_background.py::test_durable_pending_job_is_rehydrated_on_worker_start tests/application/test_memory_background.py::test_durable_retain_retries_with_job_and_preserves_attempt_limit",
+        "pytest -q tests/projection/test_hindsight.py"
+      ],
+      "evidenceRequired": [
+        "Gewone gespreksroute: relevante voorkeur, gewijzigde voorkeur, afgelopen tijdelijke afspraak en betekenisloze herhaling; opgeslagen bronnen en later antwoord afzonderlijk teruglezen.",
+        "Geheugen blijft persoonsgebonden en na herstart bruikbaar; werkelijke beperkingen en menselijke acceptatie zichtbaar."
+      ],
+      "doneWhen": [
+        "De volledige automatische geheugenroute werkt zonder handmatig bronnenbeheer; concrete fouten zijn hersteld en gericht gecontroleerd.",
+        "De werkende route is live; dashboard onderscheidt de afgeronde bronreparatie, nieuwe geheugenuitkomst en echte gebruikersacceptatie."
+      ],
+      "inventoryOwners": [
+        "deployment",
+        "eva-runtime",
+        "verification"
+      ],
+      "componentIds": [
+        "core-behavior-tests",
+        "core-semantics",
+        "managed-deployment",
+        "supporting-runtime-adapters"
+      ]
+    },
+    {
+      "id": "AU-007",
+      "order": 142,
+      "area": "Eigen initiatief",
+      "title": "Zelf een relevant privaat voorstel uitwerken",
+      "outcome": "Eva ziet via een bestaande huiswaarneming een passende kans bij toegestane persoonlijke context, kiest zelf een concrete vervolgstap en werkt één controleerbaar privaat voorstel of hulpmiddel uit. Jaap hoeft de stappen niet voor te zeggen.",
       "status": "in_progress",
       "stateDetails": {
         "baseCommit": null,
@@ -4544,215 +4947,212 @@
         "blockerReason": null
       },
       "ownerRole": "architecturelead",
-      "reviewerRole": "proofreviewer",
+      "reviewerRole": "memorydeliveryreviewer",
       "dependsOn": [
-        "VB-003"
+        "CO-008"
       ],
       "changePaths": [
-        "eva2/src/eva/operations/browser_session.py",
-        "eva2/tests/operations/test_browser_session.py",
-        "eva2/deploy/owner-browser/README.md",
-        "eva2/deploy/owner-browser/configure-egress.py",
-        "eva2/deploy/owner-browser/browser-firewall.py",
-        "eva2/deploy/owner-browser/host-config.template.json"
+        "eva2/src/eva/application/free_will.py",
+        "eva2/src/eva/adapters/model/pydantic_conversation.py",
+        "eva2/tests/application/test_free_will.py",
+        "eva2/tests/model/test_pydantic_conversation_model.py"
       ],
       "testCommands": [
-        "pytest -q tests/operations/test_browser_session.py",
-        "python3 tools/check_current_workboard.py"
+        "pytest -q tests/application/test_free_will.py",
+        "pytest -q tests/model/test_pydantic_conversation_model.py"
       ],
       "evidenceRequired": [
-        "Eén begrensde onderbreking met een herkenbare lokale profielmarkering; toestand en resultaat daarna apart teruglezen.",
-        "Bestaande hostservice en exacte-IP-firewall komen in de juiste volgorde terug voordat browserbediening beschikbaar wordt; geen algemene Dockerrechten voor de core."
+        "Een echte bestaande passieve trigger en een door Eva gekozen initiatief zijn met afzonderlijke opslagreceipts aan elkaar gekoppeld; geen rechtstreeks handmatig aangemaakte initiatiefclaim als productbewijs.",
+        "Een privaat resultaat is via de gewone eigenaarsroute teruggelezen; bron, inhoud en checksum zijn afzonderlijk gecontroleerd.",
+        "Persoonsgrenzen, stil blijven bij ruis, één actief initiatief, stoppen en correctie blijven behouden; Jaap beoordeelt nut pas bij een concreet resultaat."
       ],
       "doneWhen": [
-        "Dezelfde profielgegevens komen terug na een gerichte browser-/hostbeheerherstart; de eigenaar krijgt een bruikbare herstelstatus.",
-        "Nieuwe browseracties beginnen pas na herstel van de vaste netwerkbeperking en een actuele waarneming; de vorige mutatie wordt niet herhaald.",
-        "Een bestaande eigenaarverbinding en Eva krijgen na herstel nooit tegelijk bediening. Eén praktische herstelproef en onafhankelijke GO sluiten deze kaart af."
+        "Een bestaande toegestane trigger leidt zonder stapsgewijze gebruikersopdracht tot één relevant, controleerbaar privaat resultaat.",
+        "Resultaat en herkomst zijn beschikbaar voor Jaap; technische oplevering en subjectieve acceptatie zijn apart zichtbaar."
       ],
       "inventoryOwners": [
-        "deployment",
         "eva-runtime",
         "verification"
       ],
       "componentIds": [
-        "managed-deployment",
-        "operations-and-release-tests",
-        "operator-workflows"
+        "conversation-model-adapter",
+        "core-behavior-tests",
+        "core-semantics"
       ]
     }
   ],
   "milestones": [
     {
+      "id": "AU-002",
+      "order": 143,
+      "area": "Zelfstandigheid",
+      "title": "Duurzame hulpagent bedienen",
+      "outcome": "Starten, volgen, stoppen en hervatten werken via de gebruikersroute; hoofd- en hulpagent delen één provideradapter."
+    },
+    {
+      "id": "VB-004",
+      "order": 144,
+      "area": "Browser",
+      "title": "Browser na onderbreking veilig hervatten",
+      "outcome": "Herstelbestanden gebouwd; systeeminstallatie automatisch geblokkeerd. Bestaande browser blijft live. Herstel na herstart nog niet uitgevoerd of bewezen."
+    },
+    {
       "id": "AU-005",
       "area": "Initiatief",
       "title": "Passend initiatief en kansen bewijzen",
       "outcome": "Meer gewaardeerd eigen initiatief dan Bottie: humor, nieuwsgierigheid, zelfgekozen onderzoek, creatieve bijdragen en kansen. Eva begint en vervolgt zelf werk, voert binnen bestaand mandaat uit en controleert het resultaat. Gezin beoordeelt eigenheid, plezier, nut en hinder; alleen meer berichten telt niet als winst.",
-      "order": 142
+      "order": 145
     },
     {
       "id": "VB-001",
       "area": "Voice",
       "title": "Full-duplex voice leveren",
       "outcome": "Met Eva2 praten via de bestaande Telegram- of Home Assistant-aansluiting, waarbij Eva hoorbaar onderbroken kan worden en het gesprek daarna doorgaat.",
-      "order": 143
+      "order": 146
     },
     {
       "id": "VB-002",
-      "order": 144,
+      "order": 147,
       "area": "Voice",
       "title": "Passende aanwezigheid leveren",
       "outcome": "Eva zoekt spontaan contact via de beschikbare speakers en deurbel, met herkenbare identiteit en gevoel voor het moment. Gezin beoordeelt plezier, betrokkenheid en hinder; onderbreken en stop werken."
     },
     {
-      "id": "CO-008",
-      "order": 145,
-      "area": "Geheugen",
-      "title": "Autonoom geheugen in gezinsgesprekken bewijzen",
-      "outcome": "De oorspronkelijke brede geheugenuitkomst blijft open: relevante kennis zelfstandig kiezen, gewijzigde en tijdelijke informatie goed gebruiken in gewone gesprekken en langere gezinspraktijk. Geen handmatig geheugenbeheer; familie beoordeelt continuïteit en vertrouwen."
-    },
-    {
-      "id": "AU-002",
-      "order": 146,
-      "area": "Zelfstandigheid",
-      "title": "Duurzame hulpagent bedienen",
-      "outcome": "Starten, volgen, stoppen en hervatten werken via de gebruikersroute; hoofd- en hulpagent delen één provideradapter."
-    },
-    {
       "id": "UX-001",
-      "order": 147,
+      "order": 148,
       "area": "Bediening",
       "title": "Eigenaar-dashboard leveren",
       "outcome": "Een onderhouden adminframework toont status, mensen, geheugen, kosten en bewijs."
     },
     {
       "id": "UX-002",
-      "order": 148,
+      "order": 149,
       "area": "Bediening",
       "title": "Kanban bedienbaar maken",
       "outcome": "Taken zijn te starten, volgen en stoppen met bewijs per kaart."
     },
     {
       "id": "AU-004",
-      "order": 149,
+      "order": 150,
       "area": "Leren",
       "title": "Zelf tools en skills leren maken",
       "outcome": "Een ongeziene digitale taak leren uit documentatie; zelf een tool of skill maken, testen en bij een andere taak hergebruiken zonder nieuwe taakspecifieke kerncode. Fouten en menselijke hulp meetellen."
     },
     {
       "id": "AU-006",
-      "order": 150,
+      "order": 151,
       "area": "Langdurig werk",
       "title": "Project zelfstandig tot resultaat brengen",
       "outcome": "Een meerdaags cross-domainproject plannen, uitvoeren, bijsturen en na herstart hervatten met zichtbare kosten en stop. Een bedrijfspilot kan als afgesproken project; geen echte betalingen, publicatie of verplichtingen zonder passend mandaat."
     },
     {
       "id": "AU-003",
-      "order": 151,
+      "order": 152,
       "area": "Zelfstandigheid",
       "title": "Eigen onderdelen beoordelen en verbeteren",
       "outcome": "Eva ontdekt een overbodig of zwak onderdeel, vergelijkt onderhouden upstream, maakt een geïsoleerde verbetering en bewijst voor/na voordeel en terugrol. Alleen gemeten winst mag promoveren; geen zelfverruiming van rechten."
     },
     {
       "id": "CO-004",
-      "order": 152,
+      "order": 153,
       "area": "Mensen en geheugen",
       "title": "Optioneel geheugen inzien",
       "outcome": "Alleen een optionele inzagefunctie; geen voorwaarde voor dagelijks gebruik. Begonnen bronwerk blijft bewaard, niet afgevinkt of live gezet."
     },
     {
       "id": "CO-005",
-      "order": 153,
+      "order": 154,
       "area": "Mensen en geheugen",
       "title": "Optioneel expliciet vergeten of corrigeren",
       "outcome": "Alleen op uitdrukkelijk verzoek kunnen corrigeren of vergeten. Geen onderhoudstaak voor Jaap en geen blokkade voor autonoom geheugen."
     },
     {
       "id": "IN-001",
-      "order": 154,
+      "order": 155,
       "area": "Installatie",
       "title": "Fresh install voor gebruikers",
       "outcome": "Een gewone gebruiker installeert Eva zonder terminal of configuratiebestanden."
     },
     {
       "id": "IN-002",
-      "order": 155,
+      "order": 156,
       "area": "Installatie",
       "title": "Naar andere computer verplaatsen",
       "outcome": "Identiteit en data herstellen; connectoren veilig opnieuw koppelen."
     },
     {
       "id": "IN-003",
-      "order": 156,
+      "order": 157,
       "area": "Installatie",
       "title": "Consumentenupdates leveren",
       "outcome": "Renovate stelt onderhouden dependencies voor; updates doorlopen dezelfde poort en rollen verliesloos terug."
     },
     {
       "id": "CP-001",
-      "order": 157,
+      "order": 158,
       "area": "Eindvergelijking",
       "title": "Volledige productmatrix opnieuw uitvoeren",
       "outcome": "De tussentijdse gelijke proeven worden op de gezamenlijke releasekandidaat en actuele concurrenten als één geheel herhaald."
     },
     {
       "id": "CP-002",
-      "order": 158,
+      "order": 159,
       "area": "Eindvergelijking",
       "title": "Cross-domainwinst aantonen",
       "outcome": "Herhaalde ongeziene gesprekken en handelingen toetsen de vooraf vastgelegde drempels tegen alle drie concurrenten. Resultaat, menselijk oordeel, hulp, tijd, kosten en herstel bepalen de uitkomst; winst is niet verondersteld."
     },
     {
       "id": "CP-003",
-      "order": 159,
+      "order": 160,
       "area": "Vergelijking",
       "title": "Officiële benchmarks uitvoeren",
       "outcome": "AgentBench, GAIA en OSWorld gebruiken officiële scorers en trajecten."
     },
     {
       "id": "FN-001",
-      "order": 160,
+      "order": 161,
       "area": "Eindacceptatie",
       "title": "Eindkandidaat bevriezen",
       "outcome": "Image, configuratie en bewijsset zijn onveranderlijk gebonden; daarna volgen de releasepoort en pas na veilige installatie de eindpraktijkproeven."
     },
     {
       "id": "RB-007",
-      "order": 161,
+      "order": 162,
       "area": "Release-eindfase",
       "title": "Verplichte testgroepen uitvoeren",
       "outcome": "Pas na functionele productkaarten slaagt iedere testgroep tegen dezelfde kandidaat."
     },
     {
       "id": "RB-008",
-      "order": 162,
+      "order": 163,
       "area": "Release-eindfase",
       "title": "Wegwerpstack testen",
       "outcome": "De kandidaat migreert, antwoordt, onthoudt, herstart en ruimt volledig op."
     },
     {
       "id": "RB-009",
-      "order": 163,
+      "order": 164,
       "area": "Release-eindfase",
       "title": "Bewijsset onafhankelijk beoordelen",
       "outcome": "Een onafhankelijke reviewer controleert de volledige releaseketen."
     },
     {
       "id": "RB-010",
-      "order": 164,
+      "order": 165,
       "area": "Release-eindfase",
       "title": "Actief en reserveslot beheren",
       "outcome": "Alleen groen werk gaat naar het reserveslot; controleer het daarna en wissel de route. Bij problemen blijft het huidige slot actief."
     },
     {
       "id": "FN-002",
-      "order": 165,
+      "order": 166,
       "area": "Eindacceptatie",
       "title": "Computerherstart bewijzen",
       "outcome": "De veilig geïnstalleerde eindkandidaat komt zonder handmatige reparatie terug met dezelfde gegevens en zonder dubbele acties."
     },
     {
       "id": "FN-003",
-      "order": 166,
+      "order": 167,
       "area": "Eindacceptatie",
       "title": "Zeven dagen praktijk en eindacceptatie bewijzen",
       "outcome": "Een ongewijzigde kandidaat doorstaat zeven dagen gezinspraktijk. De volledige bewijsset, vergelijking en menselijke beoordeling zijn groen vóór vervangbeslissing; geraakt bewijs wordt na relevante wijzigingen opnieuw uitgevoerd."
@@ -5144,6 +5544,21 @@
       "reviewedBy": "/root/proof_review",
       "testReceiptPaths": [
         "eva2/evidence/product/VB-003-completion-2026-09-10.json"
+      ]
+    },
+    "CO-008": {
+      "baseCommit": "0126ac0a1e0c3962ae4f0863f2d695e6206bdabc",
+      "commit": "ddb0267852c56c95ccde4270d821e3192ba56b70",
+      "evidenceCommit": "ef600df0810c0ed5c59056bf22e683513eabebb0",
+      "reviewCommit": "787b0fb2ca95e8c503eb69518a88d708c95e3194",
+      "decision": "GO",
+      "implementedBy": "/root",
+      "reviewedBy": "/root/au002_release_review",
+      "testReceiptPaths": [
+        "eva2/evidence/product/CO-008-automatic-personal-memory-2026-09-10.json"
+      ],
+      "evidencePaths": [
+        "eva2/reviews/CO-008-automatic-memory-ddb0267.md"
       ]
     }
   }
