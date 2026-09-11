@@ -68,5 +68,10 @@ export function applyProductCompletion(project, board) {
       comparison:{state:'unknown',label:row.id === 'conversation' ? 'Beperkt · onbekend' : 'Niet vergeleken',detail:row.id === 'conversation' ? 'EV-002: één casus, Eva en Hermes voldoen aan dezelfde drie criteria; twee deelnemers geblokkeerd. Geen representatieve rangorde. Brononderzoek UP-001 bewijst geen concurrentiewinst.' : 'Geen representatieve vergelijking met uitkomst beter, even of slechter vastgelegd. CP-001/002/003 blijven aparte werkkaarten.'},
     };
   }
+  const feedback = board.audit?.voiceLaptopOwnerFeedback20260911;
+  if (feedback?.laptopInterruptionAccepted === true) {
+    const voice = project.capabilities.find(row => row.id === 'voice');
+    voice.product.jaap = {state:'partial_passed',label:'Onderbreken geslaagd',detail:`Alleen laptoponderbreken fysiek geaccepteerd. ${feedback.remaining} SP-01/SP-02 blijven geaccepteerd; onterechte wakewords blijven apart open.`};
+  }
   project.completionSource = {unmappedTaskIds:tasks.filter(task => !included.has(task.id)).map(task => task.id), source:'execution-workboard-v1.json + PROJECTDOEL.md', note:'Teller: afgeronde vereiste stappen, geen productpercentage. Optionele stappen tellen niet mee. Kaart klaar is geen algemene gebruikersacceptatie.'};
 }

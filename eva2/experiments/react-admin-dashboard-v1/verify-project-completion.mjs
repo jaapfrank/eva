@@ -28,3 +28,10 @@ updatedBoard.milestones.find(task=>task.id==='AU-006').status='paused';
 applyProductCompletion(project,updatedBoard);
 assert.equal(project.capabilities.find(row=>row.id==='projects').product.steps.find(step=>step.id==='AU-006').status,'Gepauzeerd');
 console.log('Full scope aggregation, all workboard tasks, paused updates, optional exclusions, failed Telegram and retained acceptance: passed');
+
+if(board.audit.voiceLaptopOwnerFeedback20260911?.laptopInterruptionAccepted){
+ assert.equal(voice.product.steps.find(step=>step.id==='SP-LAPTOP-INTERRUPT').accepted,true);
+ assert.equal(voice.product.complete,false);
+ assert.equal(voice.accepted,'no');
+ assert.equal(voice.product.jaap.label,'Onderbreken geslaagd');
+}

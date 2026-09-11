@@ -33,6 +33,9 @@ async function main() {
     } else if (capability.id === 'initiative' && board.audit.au008GeneralResearch20260910?.status === 'live') {
       assert.match(capability.visibleResult, /Algemeen publiek onderzoek is live/);
       assert.equal(capability.gap, board.audit.au008GeneralResearch20260910.remaining);
+    } else if (capability.id === 'voice' && board.audit.voiceLaptopOwnerFeedback20260911?.laptopInterruptionAccepted === true) {
+      assert.match(capability.visibleResult,/laptoponderbreken werkt/);
+      assert.equal(capability.accepted,'no');
     } else if (capability.id === 'projects' && board.audit.au002Delivery) {
       const delivery = board.audit.au002Delivery;
       assert.equal(capability.visibleResult, delivery.currentWork || delivery.pendingSourceChange || delivery.result || finding.visibleResult);

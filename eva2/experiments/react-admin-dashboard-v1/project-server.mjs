@@ -75,6 +75,17 @@ export function applyReviewedCapabilities(project, board, audit) {
       row.detail = row.currentWork;
       row.intendedOutcome = row.currentWork;
     }
+    const laptopFeedback = board.audit?.voiceLaptopOwnerFeedback20260911;
+    if (item.id === 'voice' && laptopFeedback?.laptopInterruptionAccepted === true) {
+      row.visibleResult = 'Jaap heeft fysiek bevestigd: laptoponderbreken werkt. De verhaalinhoud vindt hij leuk.';
+      row.works = row.visibleResult;
+      row.gap = laptopFeedback.remaining;
+      row.detail = `${row.visibleResult} ${row.gap}`;
+      row.stageNotes = { ...row.stageNotes, accepted: 'Alleen laptoponderbreken door Jaap geaccepteerd; volledige stemervaring blijft open.' };
+      row.historyNote = 'SP-01 en SP-02 blijven geaccepteerd. Telefoonpaneel en VoicePE zijn niet als geïnstalleerd of geaccepteerd bevestigd.';
+      row.stageLabels = { ...row.stageLabels, accepted: 'Volledige ervaring open' };
+      row.resultBasis = 'Fysieke Jaapfeedback · 11 september';
+    }
     const delegatedWork = board.audit?.au002Delivery;
     if (item.id === 'projects' && delegatedWork) {
       row.userOutcomeStatus = delegatedWork.userOutcomeStatus || (delegatedWork.providerRepairCandidateImage
