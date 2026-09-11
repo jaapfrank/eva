@@ -20,7 +20,7 @@ from livekit.plugins import silero
 
 from eva.adapters.connectors.home_assistant_voice import HomeAssistantSpeechInput, HomeAssistantSpeechOutput
 from eva.voice_service.agent import BridgeState, CoreClient, EvaAgent
-from eva.voice_service.media import HomeAssistantSTT, HomeAssistantTTS, home_assistant_ice_servers
+from eva.voice_service.media import HomeAssistantSTT, HomeAssistantTTS, home_assistant_ice_servers, streaming_speech_output
 from eva.voice_service.lifecycle import SessionLease
 
 
@@ -40,7 +40,8 @@ def create_app():
         expected_pipeline_language=config["language"])
     tts_source = HomeAssistantSpeechOutput(base_url=config["ha_url"], token=ha_token,
         pipeline_id=config["pipeline_id"], tts_engine=config["tts_engine"],
-        tts_language=config["tts_language"])
+        tts_language=config["tts_language"], tts_voice=config.get("tts_voice"),
+        audio_chunk_bytes=4096)
 
     @asynccontextmanager
     async def lifespan(app):
@@ -170,7 +171,7 @@ def create_app():
             state = BridgeState(backend, notify)
             # Browser capture already requests AEC. LiveKit's initial 3s warmup
             # would otherwise discard a real correction during the first answer.
-            session = AgentSession(stt=HomeAssistantSTT(stt_source, check), tts=HomeAssistantTTS(tts_source, check),
+            session = AgentSession(stt=HomeAssistantSTT(stt_source, check), tts=streaming_speech_output(tts_source, check),
                                    vad=vad, turn_detection="vad", allow_interruptions=True,
                                    min_interruption_duration=.15, false_interruption_timeout=1.5,
                                    aec_warmup_duration=0)

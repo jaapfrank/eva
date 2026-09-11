@@ -24,6 +24,23 @@ STOP_DESCRIPTOR = ConversationToolDescriptor(
                          "de gewone tools voor het aangepaste doel."),
 )
 
+SPEAK_AND_CONTINUE = "speak_and_continue"
+SPEAK_DESCRIPTOR = ConversationToolDescriptor(
+    name=SPEAK_AND_CONTINUE,
+    description=("Geef in een live stemgesprek een kort, inhoudelijk eerste antwoorddeel "
+                 "terwijl je daarna verder antwoordt of de echte tools gebruikt. Dit is "
+                 "definitieve spraak, geen concept. Gebruik alleen al bekende inhoud of "
+                 "een concrete bedoeling; beweer nooit dat een actie is uitgevoerd of "
+                 "een resultaat is gevonden zonder een ontvangen bewijs. Geen vaste "
+                 "opvulzin. Hoogstens eenmaal per beurt, maximaal 35 woorden. Voor een "
+                 "kort volledig antwoord gebruik je gewoon het eindantwoord."),
+    input_schema={"type": "object", "properties": {"text": {"type": "string"}},
+                  "required": ["text"], "additionalProperties": False},
+    completion_guidance=("Dit antwoorddeel is aan de spraakroute aangeboden, niet bewezen "
+                         "gehoord. Ga door met de benodigde echte tools of geef het "
+                         "inhoudelijke vervolg; herhaal het eerste deel niet."),
+)
+
 @dataclass(frozen=True)
 class VoiceContext:
     recent: tuple[RecentConversationMessage, ...]
@@ -45,10 +62,27 @@ class VoiceContext:
             "already_dispatched_steps_may_finish": True,
         })
 
+    def speak_and_continue(self, call: ConversationActionCall) -> ConversationActionReceipt:
+        if set(call.arguments) != {"text"}:
+            raise ValueError("invalid spoken response")
+        text = call.arguments["text"]
+        if not isinstance(text, str) or not text.strip() or len(text.split()) > 35 or len(text) > 1000:
+            raise ValueError("spoken response exceeds its bound")
+        text = text.strip()
+        if text[-1] not in ".!?":
+            text += "."
+        self.event({"type": "spoken_update", "text": text})
+        return ConversationActionReceipt(call=call, output={
+            "status": "offered_to_voice", "text": text, "heard": False,
+        })
+
     def instructions(self) -> tuple[str, ...]:
         return (
             "Dit is een live stemgesprek in natuurlijk Nederlands. Antwoord kort en "
-            "spreekbaar, zonder vaste opvulzinnen. De connectorcontext bevat alleen "
+            "spreekbaar, zonder vaste opvulzinnen. Geef bij een langere uitleg of opdracht "
+            "met speak_and_continue eerst een korte inhoudelijke reactie en daarna het "
+            "vervolg. Gebruik gewone spreekzinnen, zonder markdown, opsommingssymbolen "
+            "of uitgeschreven links. De connectorcontext bevat alleen "
             "spraak die LiveKit als afgespeeld synchroniseerde; dit is geen bewijs van "
             "menselijk horen. Een onderbrekingsgrens kan geschat zijn. "
             "Gegenereerde maar niet afgespeelde tekst is niet gehoord. "

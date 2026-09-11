@@ -1,7 +1,7 @@
 """Adapt the already permitted HA speech providers to LiveKit's media contracts."""
 from uuid import uuid4
 from livekit import rtc
-from livekit.agents import stt, tts
+from livekit.agents import stt, tts, tokenize
 from livekit.agents.types import DEFAULT_API_CONNECT_OPTIONS
 
 class HomeAssistantSTT(stt.STT):
@@ -37,6 +37,14 @@ class HomeAssistantTTS(tts.TTS):
     def synthesize(self, text, *, conn_options=DEFAULT_API_CONNECT_OPTIONS):
         self.check()
         return HAChunkedStream(tts=self, input_text=text, conn_options=conn_options)
+
+def streaming_speech_output(source, check=lambda: None):
+    """Stream explicit complete first sentences without the default 20-char wait."""
+    return tts.StreamAdapter(
+        tts=HomeAssistantTTS(source, check),
+        sentence_tokenizer=tokenize.blingfire.SentenceTokenizer(
+            min_sentence_len=1, stream_context_len=1, retain_format=True),
+    )
 
 class HAChunkedStream(tts.ChunkedStream):
     async def _run(self, output_emitter):

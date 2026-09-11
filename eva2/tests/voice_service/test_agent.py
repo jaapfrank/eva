@@ -151,3 +151,81 @@ async def test_barge_in_drops_spoken_tail_and_replays_only_unheard_queued_result
     assert not state.suppressed
     agent.replay_unheard(session)
     assert len(session.spoken) == 3
+
+
+@pytest.mark.asyncio
+async def test_explicit_first_part_arrives_before_work_finishes_on_one_speech_handle():
+    first_seen = asyncio.Event()
+    release = asyncio.Event()
+    class ProgressBackend:
+        async def events(self, payload):
+            yield {"type": "spoken_update", "text": "Een regenboog ontstaat door gebroken zonlicht."}
+            await release.wait()
+            yield {"type": "final", "reply": {"text": "Elke kleur buigt anders af."}}
+    class Session:
+        def __init__(self): self.sources = []
+        def say(self, source, **kwargs):
+            from types import SimpleNamespace
+            self.sources.append(source)
+            return SimpleNamespace(interrupted=False, done=lambda: False, chat_items=[])
+    class Context:
+        session = Session()
+        async def update(self, *args, **kwargs): pass
+    state = BridgeState(ProgressBackend())
+    ctx = Context()
+    work = asyncio.create_task(EvaAgent(state).eva_turn(ctx, "first", "Leg uit"))
+    for _ in range(100):
+        if ctx.session.sources: break
+        await asyncio.sleep(.01)
+    stream = ctx.session.sources[0]
+    assert "gebroken zonlicht" in await asyncio.wait_for(anext(stream), 1)
+    assert not work.done()
+    release.set()
+    await work
+    assert "anders af" in await asyncio.wait_for(anext(stream), 1)
+    with pytest.raises(StopAsyncIteration): await anext(stream)
+    assert len(ctx.session.sources) == 1
+
+
+@pytest.mark.asyncio
+async def test_interrupting_first_part_does_not_create_new_handle_for_continuation():
+    from types import SimpleNamespace
+    state = BridgeState(Backend())
+    agent = EvaAgent(state)
+    session = SpeechCapture()
+    agent.deliver(session, "first", "Een regenboog is gebroken zonlicht.", final=False)
+    first_handle = state.deliveries["first"]
+    first_handle.interrupted = True
+    agent.deliver(session, "first", "Dit is het vervolg.")
+    assert state.deliveries["first"] is first_handle
+    assert len(session.spoken) == 1
+
+
+@pytest.mark.asyncio
+async def test_real_tts_stream_emits_short_first_part_before_backend_continuation():
+    import struct
+    from types import SimpleNamespace
+    from eva.voice_service.media import streaming_speech_output
+    requested = asyncio.Event()
+    texts = []
+    class Source:
+        async def synthesize(self, text):
+            texts.append(text)
+            requested.set()
+            yield SimpleNamespace(data=struct.pack("<h", 1000) * 2400, mime_type="audio/pcm")
+    adapter = streaming_speech_output(Source())
+    stream = adapter.stream()
+    stream.push_text("Door lichtbreking. ")
+    async def consume():
+        return await anext(stream)
+    task = asyncio.create_task(consume())
+    try:
+        await asyncio.wait_for(requested.wait(), 2)
+        assert [text.strip() for text in texts] == ["Door lichtbreking."]
+        event = await asyncio.wait_for(task, 2)
+        assert event.frame.samples_per_channel > 0
+    finally:
+        await stream.aclose()
+        await adapter.aclose()
+        if not task.done(): task.cancel()
+        await asyncio.gather(task, return_exceptions=True)

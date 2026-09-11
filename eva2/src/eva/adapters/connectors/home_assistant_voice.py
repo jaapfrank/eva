@@ -374,7 +374,8 @@ class HomeAssistantSpeechOutput(HomeAssistantSpeechInput):
     """
 
     def __init__(self, *, tts_engine: str | None = None,
-                 tts_language: str | None = None, **kwargs):
+                 tts_language: str | None = None, tts_voice: str | None = None,
+                 audio_chunk_bytes: int = 16_384, **kwargs):
         super().__init__(**kwargs)
         if (tts_engine is None) != (tts_language is None):
             raise ValueError("speech output engine and language must be configured together")
@@ -382,6 +383,13 @@ class HomeAssistantSpeechOutput(HomeAssistantSpeechInput):
             raise ValueError("speech output engine and language cannot be empty")
         self._tts_engine = tts_engine
         self._tts_language = tts_language
+        if tts_voice is not None and (tts_engine is None or not isinstance(tts_voice, str)
+                                      or not tts_voice.strip() or len(tts_voice) > 120):
+            raise ValueError("speech output voice is invalid")
+        if not isinstance(audio_chunk_bytes, int) or not 1024 <= audio_chunk_bytes <= 16_384:
+            raise ValueError("speech output chunk size is invalid")
+        self._tts_voice = tts_voice
+        self._audio_chunk_bytes = audio_chunk_bytes
 
     async def synthesize(self, text: str) -> AsyncIterator[SpeechAudioChunk]:
         if not isinstance(text, str) or not text.strip() or len(text) > 16_384:
@@ -429,7 +437,7 @@ class HomeAssistantSpeechOutput(HomeAssistantSpeechInput):
                             raise VoiceMediaError("speech output retrieval failed")
                         mime_type = actual_type
                         total = 0
-                        async for chunk in response.aiter_bytes(chunk_size=16_384):
+                        async for chunk in response.aiter_bytes(chunk_size=self._audio_chunk_bytes):
                             total += len(chunk)
                             if total > 20_000_000:
                                 raise VoiceMediaError("speech output exceeds its session bound")
@@ -454,7 +462,8 @@ class HomeAssistantSpeechOutput(HomeAssistantSpeechInput):
             "POST", origin + "/api/tts_get_url",
             headers={"Authorization": "Bearer " + self._token},
             json={"engine_id": self._tts_engine, "message": text,
-                  "language": self._tts_language, "cache": False},
+                  "language": self._tts_language, "cache": False,
+                  **({"options": {"voice": self._tts_voice}} if self._tts_voice else {})},
         ) as response:
             if response.status_code != 200:
                 raise VoiceMediaError("speech output preparation failed")

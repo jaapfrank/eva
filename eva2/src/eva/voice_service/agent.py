@@ -68,6 +68,7 @@ class BridgeState:
         self.delivery_text: dict[str, str] = {}
         self.snapshots: dict[str, list[dict]] = {}
         self.results: dict[str, str] = {}
+        self.spoken_streams: dict[str, object] = {}
 
     def history(self, chat_ctx: llm.ChatContext, exclude: str) -> list[dict]:
         return [{"role": item.role, "text": item.text_content,
@@ -109,12 +110,35 @@ class EvaAgent(Agent):
         super().__init__(instructions="Eva's bestaande kern levert ieder inhoudelijk antwoord.", llm=EvaLLM(state))
         self.state = state
 
-    def deliver(self, session, message_id: str, text: str):
+    def deliver(self, session, message_id: str, text: str, *, final: bool = True):
         if message_id in self.state.suppressed:
+            return
+        import asyncio
+        stream = self.state.spoken_streams.get(message_id)
+        if stream is not None:
+            stream.put_nowait(text)
+            self.state.delivery_text[message_id] += " " + text
+            if final:
+                stream.put_nowait(None)
             return
         self.state.delivery_text[message_id] = text
         try:
-            self.state.deliveries[message_id] = session.say(text, allow_interruptions=True)
+            if final:
+                source = text
+            else:
+                stream = asyncio.Queue(maxsize=4)
+                self.state.spoken_streams[message_id] = stream
+                stream.put_nowait(text)
+                async def parts():
+                    while True:
+                        part = await stream.get()
+                        if part is None:
+                            return
+                        yield part + " "
+                source = parts()
+            # A first part and its continuation share one native speech handle:
+            # barge-in cancels the entire spoken tail, not only the first sentence.
+            self.state.deliveries[message_id] = session.say(source, allow_interruptions=True)
         except RuntimeError:
             self.state.notify({"type": "voice_delivery_failed", "message_id": message_id})
 
@@ -124,10 +148,13 @@ class EvaAgent(Agent):
         # Native interruption cancels queued handles too. Restore only a result
         # with no played text in its own handle, never the tail of a spoken reply.
         for message_id, handle in list(self.state.deliveries.items()):
+            if message_id in self.state.active and message_id in self.state.spoken_streams:
+                continue
             if (handle.interrupted and handle.done()
                     and not any(item.type == "message" and item.role == "assistant"
                                 and item.text_content.strip() for item in handle.chat_items)
                     and message_id not in self.state.suppressed):
+                self.state.spoken_streams.pop(message_id, None)
                 self.deliver(session, message_id, self.state.delivery_text[message_id])
 
     async def on_user_turn_completed(self, turn_ctx, new_message):
@@ -156,6 +183,11 @@ class EvaAgent(Agent):
                                  for key, value in list(state.results.items())[-4:] if key not in state.suppressed],
             }):
                 kind = event.get("type")
+                if kind == "spoken_update":
+                    if message_id not in state.spoken_streams:
+                        self.deliver(ctx.session, message_id, event["text"], final=False)
+                        state.notify({**event, "message_id": message_id})
+                    continue
                 if kind == "delta":
                     # Speak one confirmed answer through one native speech handle.
                     # This avoids separate sentence updates restarting after barge-in.
@@ -193,5 +225,8 @@ class EvaAgent(Agent):
                 self.deliver(ctx.session, message_id,
                              "Het antwoord is niet bevestigd. Controleer de taak voordat je haar opnieuw start.")
         finally:
+            stream = state.spoken_streams.get(message_id)
+            if stream is not None and not stream.full():
+                stream.put_nowait(None)
             state.active.pop(message_id, None)
         return json.dumps({"type": "done", "message_id": message_id})

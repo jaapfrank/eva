@@ -86,3 +86,55 @@ def test_voice_control_keeps_existing_catalog_allowance_and_token_budget(tmp_pat
     with pytest.raises(Exception, match="deferred tool catalog"):
         model._admit_request({"tools": [*catalog, control]}, autonomous=False)
 
+
+
+def test_meaningful_first_part_precedes_real_work_without_consuming_durable_step():
+    from tests.application.test_conversation import _Memory, NOW
+    from eva.application.conversation import ConversationActionReceipt, ConversationModelResult, ConversationTurn, IdentityProfile, LivingConversation
+    from eva.application.voice_context import SPEAK_AND_CONTINUE
+    events, steps = [], []
+    class Actions:
+        action_names = ("inspect_item",)
+        def pending(self, turn): return None
+        def active_context(self, turn): return ()
+        def continuation_action_names(self, turn): return self.action_names
+        def execute(self, turn, call):
+            assert events[0]["type"] == "spoken_update"
+            steps.append(0)
+            return ConversationActionReceipt(call, {"status": "verified", "value": "blue"})
+        def execute_step(self, turn, call, *, step_index):
+            steps.append(step_index)
+            return ConversationActionReceipt(call, {"status": "verified", "value": "green"})
+    class Model:
+        count = 0
+        def generate(self, *args, available_actions=(), **kwargs):
+            self.count += 1
+            if self.count == 1:
+                assert SPEAK_AND_CONTINUE in available_actions
+                call = ConversationActionCall("first", SPEAK_AND_CONTINUE, {"text": "Ik vergelijk de twee gevonden kleuren."})
+            elif self.count < 4:
+                assert SPEAK_AND_CONTINUE not in available_actions
+                call = ConversationActionCall(str(self.count), "inspect_item", {"item": str(self.count)})
+            else:
+                return ConversationModelResult("De kleuren zijn blauw en groen.", "test")
+            return ConversationModelResult(None, "test", call)
+    ctx = VoiceContext((), (), lambda _: None, events.append)
+    turn = ConversationTurn.private("tenant", "installation", "jaap", "voice", "one", "Vergelijk de kleuren", NOW)
+    with voice_context(ctx):
+        result = LivingConversation(_Memory(), Model(), IdentityProfile("Eva", "Huisgenoot.", ("Eerlijk.",), 80), Actions()).respond(turn)
+    assert steps == [0, 1]
+    assert result.text == "De kleuren zijn blauw en groen."
+    assert len([e for e in events if e["type"] == "spoken_update"]) == 1
+
+
+def test_first_part_is_bounded_and_never_claims_playback_receipt():
+    from eva.application.voice_context import SPEAK_AND_CONTINUE
+    events = []
+    ctx = VoiceContext((), (), lambda _: None, events.append)
+    for text in ["", "woord " * 36, 42]:
+        with pytest.raises(ValueError):
+            ctx.speak_and_continue(ConversationActionCall("first", SPEAK_AND_CONTINUE, {"text": text}))
+    assert not events
+    result = ctx.speak_and_continue(ConversationActionCall("first", SPEAK_AND_CONTINUE, {"text": "Een regenboog ontstaat door gebroken zonlicht."}))
+    assert result.output["heard"] is False
+    assert result.output["status"] == "offered_to_voice"
