@@ -1,6 +1,7 @@
 import { readFile, stat } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 import { fileURLToPath } from 'node:url';
+import { applyProductCompletion } from './project-completion.mjs';
 
 const boardFile = process.env.EVA_PROJECT_BOARD_FILE || fileURLToPath(new URL('../../design/product/execution-workboard-v1.json', import.meta.url));
 const auditFile = fileURLToPath(new URL('./capability-audit.json', import.meta.url));
@@ -83,7 +84,7 @@ export function applyReviewedCapabilities(project, board, audit) {
       row.works = row.visibleResult;
       row.gap = delegatedWork.remaining || delegatedWork.next || row.gap;
       row.historyNote = `Eerdere proef: ${finding.visibleResult}`;
-      row.scope = 'AU-002 · toolvrij hulpwerk starten, stoppen, hervatten en teruglezen';
+      row.scope = 'AU-002 · toolvrije hulpagent via dashboardchat; Telegram apart';
       row.detail = [row.visibleResult, delegatedWork.lastActualResult, row.gap].filter(Boolean).join(' ');
       row.intendedOutcome = row.detail;
       row.gapKind = delegatedWork.live === true ? 'Gebruikersbeoordeling en vervolg' : 'Gebruikersroute nog open';
@@ -225,6 +226,7 @@ export function projectServer() {
             displayTitle: 'Technische review van CO-008', displayOutcome: project.acceptedDelivery.review,
             displayKicker: 'REVIEW EN ADMINISTRATIEVE AFRONDING', displayStatus: 'Gebruikersresultaat afgerond · review nog open',
           } : {}) });
+        applyProductCompletion(project, board);
         response.end(JSON.stringify({
           id: 'project', contract: 'EvaProjectOverview/v1',
           revision: createHash('sha256').update(raw).digest('hex'),

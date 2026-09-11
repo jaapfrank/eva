@@ -56,36 +56,37 @@ async function main() {
     page.on('request', (request) => { if (!request.url().startsWith(origin)) external.push(request.url()); });
     await page.goto(origin);
     await page.getByRole('heading', { name: 'Waar staat Eva écht?' }).waitFor();
-    await page.getByRole('heading', { name:'Geheugenresultaat afgerond',exact:true }).waitFor();
-    await page.getByRole('heading', { name: payload.active.displayTitle || payload.active.title }).waitFor();
+    assert.equal(await page.getByRole('heading', { name:'Geheugenresultaat afgerond',exact:true,includeHidden:true }).count(),1);
+    assert.equal(await page.getByRole('heading', { name: payload.active.displayTitle || payload.active.title,includeHidden:true }).count(),1);
     assert.equal(await page.locator('.matrix-toggle').count(), 9);
     assert.equal(await page.locator('.matrix-details:visible').count(), 0);
-    assert.equal(await page.locator('.matrix-user-outcome:visible').count(), 9);
-    assert.equal(await page.getByText('Bron gewijzigd sinds feitencontrole',{exact:true}).count(),0);
-    assert.deepEqual(await page.locator('.compact-matrix > thead th').allTextContents(), ['Onderdeel · gebruikersuitkomst', 'Wat nu werkt', 'Wat nog nodig is']);
-    assert.ok((await page.locator('.matrix-scroll').boundingBox()).height < 1150, 'nine rows show results without stacked status cards');
-    assert.equal(await page.locator('.matrix-result:visible').count(),9);
+    assert.deepEqual(payload.project.completionSource.unmappedTaskIds, []);
+    assert.deepEqual(await page.locator('.compact-matrix > thead th').allTextContents(), ['Volledig onderdeel', 'Klaar?', 'Getest', 'Door Jaap getest', 'Beter dan concurrentie onderzocht']);
+    assert.ok((await page.locator('.matrix-scroll').boundingBox()).height < 850, 'compact nine-row overview');
+    assert.equal(await page.locator('.matrix-category .completion-mark.open').count(),9);
+    assert.equal(await page.locator('.matrix-category .completion-mark.done').count(),0);
     assert.equal(await page.locator('.matrix-category .proof-dot').count(),0);
-    assert.deepEqual(await page.locator('.matrix-user-outcome').allTextContents(), [
-      'Zichtbare streamervaring nog te beoordelen', 'Privégesprekken werken; continuïteit nog te bewijzen',
-      'Voorkeurfunctie afgerond en geaccepteerd', payload.project.capabilities.find(item => item.id === 'initiative').userOutcomeStatus || 'Eerste zelfstandige bijdrage ontbreekt',
-      'Documenttaak bewezen; zelfstandig toolgebruik nog open', 'Natuurlijke gespreksproef nog open',
-      payload.project.capabilities.find(item => item.id === 'projects').userOutcomeStatus || 'Stopproef mislukt; herstel loopt', 'Koppeling met Eva ontbreekt',
-      'Beheerde wissel bewezen; zelf installeren nog open',
-    ]);
-    for (const finding of payload.project.capabilities) await page.getByText(finding.visibleResult,{exact:true}).first().waitFor();
+    assert.equal(await page.locator('.step-count:visible').count(),9);
+    for (const category of payload.project.capabilities) {
+      assert.equal(category.product.complete, category.product.steps.filter(step=>step.required).every(step=>step.complete));
+      assert.equal(category.product.comparison.state,'unknown');
+    }
     if (output) await page.screenshot({ path: path.join(output, 'eva-project-desktop.png'), fullPage: true });
-    await page.locator('.matrix-toggle').filter({hasText: 'Geheugen'}).click();
-    await page.getByRole('button', {name: 'Een gewijzigde geheugenbron verwerken', exact: true}).waitFor();
-    assert.equal(await page.locator('#details-memory .proof-dot.yes').count(), 7);
-    assert.ok((await page.locator('#details-memory .matrix-technical').textContent()).includes('Geaccepteerd'));
-    if (output) await page.screenshot({path: path.join(output, 'eva-project-expanded.png'), fullPage: true});
-    await page.locator('.matrix-toggle').filter({hasText: 'Geheugen'}).click();
-    await page.locator('.matrix-toggle').filter({hasText: 'Gesprekken'}).click();
-    await page.locator('#details-conversation').getByRole('button', {name: 'Bewijs en grenzen'}).click();
-    await page.getByRole('dialog', { name: 'Gesprekken' }).waitFor();
-    await page.getByRole('button', { name: 'Sluiten ×' }).click();
-    await page.locator('.matrix-toggle').filter({hasText: 'Gesprekken'}).click();
+    await page.locator('.matrix-toggle').filter({hasText:'Geheugen'}).click();
+    assert.equal(await page.locator('#details-memory [data-step-id="CO-008"] .step-state.done').count(),1);
+    assert.match(await page.locator('#details-memory [data-step-id="CO-008"]').innerText(),/door Jaap geaccepteerd/);
+    assert.match(await page.locator('#details-memory [data-step-id="CO-004"]').innerText(),/optioneel, telt niet mee/);
+    await page.locator('#details-memory').getByRole('button',{name:'Bewijs en grenzen'}).click();
+    await page.getByRole('dialog',{name:'Geheugen'}).waitFor();
+    await page.getByRole('button',{name:'Sluiten ×'}).click();
+    await page.locator('.matrix-toggle').filter({hasText:'Geheugen'}).click();
+    await page.locator('.matrix-toggle').filter({hasText:'Eigen initiatief'}).click();
+    await page.getByRole('link',{name:'Open nieuwe storingschecklist ↗',exact:true}).waitFor();
+    await page.locator('.matrix-toggle').filter({hasText:'Eigen initiatief'}).click();
+    await page.locator('.matrix-toggle').filter({hasText:'Zelfstandig werk'}).click();
+    assert.match(await page.locator('#details-projects').innerText(),/Telegram/);
+    assert.equal(payload.project.capabilities.find(x=>x.id==='projects').product.jaap.state,'failed');
+    await page.locator('.matrix-toggle').filter({hasText:'Zelfstandig werk'}).click();
     await page.getByRole('button', { name: /Concurrenten & keuzes/ }).click();
     for (const name of ['Hermes', 'OpenClaw', 'Agent Zero']) await page.getByRole('heading', { name, exact: true }).waitFor();
     if (output) await page.screenshot({ path: path.join(output, 'eva-project-keuzes.png'), fullPage: true });
@@ -113,9 +114,10 @@ async function main() {
     assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth), false);
     if (output) await page.screenshot({ path: path.join(output, 'eva-project-mobile.png'), fullPage: true });
     await page.locator('.matrix-toggle').filter({hasText: 'Stem & aanwezigheid'}).click();
-    await page.getByRole('button', {name: 'Verstaanbare audio in de woonkamer', exact: true}).waitFor();
+    await page.locator('#details-voice [data-step-id="SP-01"]').waitFor();
     assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth), false);
-    assert.equal(await page.locator('#details-voice .proof-dot.yes').count(), 8);
+    assert.equal(await page.locator('#details-voice [data-step-id="SP-01"] .step-state.done').count(),1);
+    assert.equal(await page.locator('#details-voice [data-step-id="SP-02"] .step-state.done').count(),1);
     await page.locator('.matrix-scroll').evaluate(el => { el.scrollLeft = el.scrollWidth; });
     if (output) await page.screenshot({path: path.join(output, 'eva-project-mobile-expanded.png'), fullPage: true});
     await page.locator('.matrix-toggle').filter({hasText: 'Stem & aanwezigheid'}).click();
@@ -123,6 +125,7 @@ async function main() {
     assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth), false);
     if (output) await page.screenshot({ path: path.join(output, 'eva-project-werk-mobile.png'), fullPage: true });
     await page.getByRole('button', { name: /Overzicht/ }).click();
+    await page.locator('.focus-fold > summary').click();
     // Synthetic response change proves the mounted UI consumes fresh source data,
     // not hardcoded task text; the actual workboard is never changed by this test.
     await page.route('**/project-state', (route) => route.fulfill({ json: { ...payload,
