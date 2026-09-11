@@ -129,6 +129,118 @@
     "actualCore": true,
     "microphoneUsed": false,
     "syntheticSpeechInput": true,
+    "answer": "Home Assistant Cloud zet je spraak om naar tekst en maakt van antwoordtekst gesproken audio. Dat zit in het Cloud-abonnement en gebeurt standaard via Microsoft Azure: audio en antwoordtekst verlaten dus je huis.\n\nHet herkennen van het activeringswoord en het verwerken van opdrachten kunnen lokaal blijven. Cloud maakt Assist niet automatisch een AI-chatbot; een taalmodel is een aparte keuze. Nieuw is een optionele Soniox-preview voor spraakherkenning, waarvoor andere privacyvoorwaarden kunnen gelden.\n\nMijn onderzoek met bronlinks is bewaard. De [officiële uitleg van Home Assistant](https://www.home-assistant.io/voice_control/voice_remote_cloud_assistant/) beschrijft hoe je deze spraakfuncties instelt.",
+    "audioEnergyFrames": 848,
+    "recognizedUserText": [
+      "Zoek In de actuele officiële documentatie wat home Beslistent cloud doet voor spraak en vertel me eerst kort wat je gaat uitzoeken."
+    ],
+    "firstPart": "Ik zoek in de actuele officiële documentatie wat Home Assistant Cloud doet voor spraakherkenning en gesproken antwoorden, en wat daarbij lokaal blijft of via de cloud gaat.",
+    "targetMessage": "cc15c622-b953-5770-ad70-ae5ce6911ee8",
+    "speechEndToAudioMs": 15794,
+    "speechEndToFirstPartMs": 15153,
+    "speechEndToFinalMs": 81645,
+    "noSpeakerPlayback": true,
+    "timeline": [
+      {
+        "type": "user_voice_state",
+        "state": "speaking",
+        "at": 10441.899999976158
+      },
+      {
+        "type": "user_voice_state",
+        "state": "listening",
+        "at": 18892.700000047684
+      },
+      {
+        "type": "voice_state",
+        "state": "thinking",
+        "at": 21206.800000071526
+      },
+      {
+        "type": "work_started",
+        "message_id": "cc15c622-b953-5770-ad70-ae5ce6911ee8",
+        "at": 21228.700000047684
+      },
+      {
+        "type": "voice_state",
+        "state": "listening",
+        "at": 21241.899999976158
+      },
+      {
+        "type": "spoken_update",
+        "message_id": "cc15c622-b953-5770-ad70-ae5ce6911ee8",
+        "at": 34255.300000071526
+      },
+      {
+        "type": "voice_state",
+        "state": "speaking",
+        "at": 34611.300000071526
+      },
+      {
+        "type": "action_started",
+        "message_id": "cc15c622-b953-5770-ad70-ae5ce6911ee8",
+        "at": 42688.5
+      },
+      {
+        "type": "action_finished",
+        "message_id": "cc15c622-b953-5770-ad70-ae5ce6911ee8",
+        "at": 89855.70000004768
+      },
+      {
+        "type": "work_finished",
+        "message_id": "cc15c622-b953-5770-ad70-ae5ce6911ee8",
+        "at": 100746.89999997616
+      },
+      {
+        "type": "voice_state",
+        "state": "listening",
+        "at": 144191.20000004768
+      }
+    ],
+    "scope": "One synthetic spoken request through actual browser, STT, owner core, actual research and TTS. Muted browser output; no physical owner listening.",
+    "firstAudioBeforeActionFinishedMs": 55169
+  },
+  "excludedMeasurements": [
+    {
+      "artifact": "natural-browser-work-no-input.json",
+      "reason": "No STT, events or audio; fresh retry used."
+    },
+    {
+      "artifact": "natural-browser-work-split-invalid.json",
+      "reason": "Two STT turns; crossed message timings excluded."
+    },
+    {
+      "artifact": "natural-browser-work-probe-before-paragraph.json",
+      "reason": "Pre-fix first-part buffering caused measurement timeout; not a controlled speed comparison."
+    }
+  ],
+  "remainingEngineering": [
+    "Reduce initial latency: latest GPU-memory browser probe first audio 15.794 seconds; initial model phase remains a measured bottleneck. Actual arithmetic voice-adapter profile: recall 2.146 seconds and model 5.464 seconds.",
+    "General spontaneous first-part selection for ordinary stories remains unproven."
+  ],
+  "researchTimeline": [
+    "MEMORY_RETAIN_QUEUED|2026-09-11 08:50:35+00",
+    "MEMORY_RETAIN_QUEUED|2026-09-11 08:50:35+00",
+    "CURRENT_RESEARCH_ADMITTED|2026-09-11 08:50:35+00",
+    "INGRESS_COMMITTED|2026-09-11 08:50:35+00",
+    "REPLY_COMMITTED|2026-09-11 08:50:35+00",
+    "CONVERSATION_MODEL_ADMITTED|2026-09-11 08:50:43+00",
+    "CONVERSATION_MODEL_ADMITTED|2026-09-11 08:50:50+00",
+    "CONVERSATION_MODEL_RECORDED|2026-09-11 08:50:50+00",
+    "CONVERSATION_MODEL_RECORDED|2026-09-11 08:50:58+00",
+    "CONVERSATION_MODEL_ADMITTED|2026-09-11 08:51:43+00",
+    "CONVERSATION_MODEL_RECORDED|2026-09-11 08:51:54+00",
+    "MEMORY_RETAIN_ATTEMPTED|2026-09-11 08:51:55+00",
+    "MEMORY_STORAGE_RETAINED|2026-09-11 08:52:00+00",
+    "MEMORY_RETAIN_SUCCEEDED|2026-09-11 08:52:00+00"
+  ],
+  "memoryAccelerationEvidence": "voice-memory-cuda-2026-09-11.json",
+  "browserProofCpuMemoryBaseline": {
+    "passed": true,
+    "actualBrowser": true,
+    "actualCore": true,
+    "microphoneUsed": false,
+    "syntheticSpeechInput": true,
     "answer": "Home Assistant Cloud zet je gesproken opdracht om naar tekst en maakt van antwoorden weer gesproken geluid. Nederlands wordt ondersteund; dit zit in het Cloud-abonnement.\n\nBij de standaard Assist-instelling verwerkt Home Assistant de opdracht zelf lokaal. De spraakomzetting gebeurt wel buiten huis: audio gaat naar de cloud voor herkenning, antwoordtekst voor het maken van spraak. Het is dus niet volledig lokaal. Assist kan ook zonder Cloud werken, met lokale spraakverwerking.\n\nHet onderzoek is bewaard, met bronlinks en privacyverschillen tussen de spraakdiensten. Zie de [officiële uitleg](https://www.home-assistant.io/voice_control/voice_remote_cloud_assistant/).",
     "audioEnergyFrames": 788,
     "recognizedUserText": [
@@ -199,39 +311,5 @@
     ],
     "firstAudioBeforeActionFinishedMs": 51334,
     "scope": "One synthetic spoken request through actual browser, STT, owner core, actual research and TTS. Muted browser output; no physical owner listening."
-  },
-  "excludedMeasurements": [
-    {
-      "artifact": "natural-browser-work-no-input.json",
-      "reason": "No STT, events or audio; fresh retry used."
-    },
-    {
-      "artifact": "natural-browser-work-split-invalid.json",
-      "reason": "Two STT turns; crossed message timings excluded."
-    },
-    {
-      "artifact": "natural-browser-work-probe-before-paragraph.json",
-      "reason": "Pre-fix first-part buffering caused measurement timeout; not a controlled speed comparison."
-    }
-  ],
-  "remainingEngineering": [
-    "Reduce initial latency: current valid probe first audio18.611seconds; preceding core memory admission about8seconds, then model first-part decision about7seconds.",
-    "General spontaneous first-part selection for ordinary stories remains unproven."
-  ],
-  "researchTimeline": [
-    "MEMORY_RETAIN_QUEUED|2026-09-11 08:50:35+00",
-    "MEMORY_RETAIN_QUEUED|2026-09-11 08:50:35+00",
-    "CURRENT_RESEARCH_ADMITTED|2026-09-11 08:50:35+00",
-    "INGRESS_COMMITTED|2026-09-11 08:50:35+00",
-    "REPLY_COMMITTED|2026-09-11 08:50:35+00",
-    "CONVERSATION_MODEL_ADMITTED|2026-09-11 08:50:43+00",
-    "CONVERSATION_MODEL_ADMITTED|2026-09-11 08:50:50+00",
-    "CONVERSATION_MODEL_RECORDED|2026-09-11 08:50:50+00",
-    "CONVERSATION_MODEL_RECORDED|2026-09-11 08:50:58+00",
-    "CONVERSATION_MODEL_ADMITTED|2026-09-11 08:51:43+00",
-    "CONVERSATION_MODEL_RECORDED|2026-09-11 08:51:54+00",
-    "MEMORY_RETAIN_ATTEMPTED|2026-09-11 08:51:55+00",
-    "MEMORY_STORAGE_RETAINED|2026-09-11 08:52:00+00",
-    "MEMORY_RETAIN_SUCCEEDED|2026-09-11 08:52:00+00"
-  ]
+  }
 }

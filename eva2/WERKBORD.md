@@ -18,11 +18,14 @@ bestaande eigenaar-dashboardtoken en kies Begin gesprek. Jaap bevestigde op
 Natuurlijke uitspraak en korte wachttijd zijn nog niet geaccepteerd.
 
 Een eerste inhoudelijke zin tijdens langer werk is nu gebouwd, gericht getest
-en live bewezen: in één browserproef begon audio na 18,6 seconden en kwam het
+en live bewezen: in de nieuwste browserproef begon audio na 15,8 seconden en kwam het
 uitgezochte antwoord na 81,6 seconden. De eerste zin klonk vóór de afronding van
 het echte onderzoek; het vervolg kwam in dezelfde onderbreekbare spraakbeurt.
-De aanvangswachttijd is nog te lang. Geheugenraadpleging en de eerste modelbeurt
-blijven concreet vervolgwerk; algemene spontane toepassing is nog onbewezen.
+De aanvangswachttijd is nog te lang. GPU-versnelling van dezelfde geheugenrangschikker
+is live: 24 vergelijkingen behielden feiten, volgorde en bronnen. In een gerichte
+spraakmeting daalde geheugenraadpleging van 9,7 naar 2,1 seconden. De eerste
+modelbeurt blijft vervolgwerk; algemene spontane toepassing is nog onbewezen.
+[Geheugenversnelling en terugweg](evidence/product/voice-memory-cuda-2026-09-11.json).
 De Fenna-stem is een luisterkandidaat, nog zonder eigenaarsoordeel.
 Probeer: “Zoek uit wat Home Assistant Cloud doet voor spraak en vertel me eerst
 kort wat je gaat uitzoeken.” [Gericht bewijs](evidence/product/voice-natural-turn-candidate-2026-09-11.json).
