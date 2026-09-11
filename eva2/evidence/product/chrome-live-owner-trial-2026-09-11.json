@@ -1,0 +1,60 @@
+{
+  "contract": "EvaChromeOwnerTrial/v1",
+  "date": "2026-09-11",
+  "status": "partial",
+  "ownerAcceptance": "not_claimed",
+  "sharedPage": {"title": "Eva beheer", "kind": "existing local project dashboard"},
+  "normalEvaRoute": {
+    "snapshotOutputCompatibilityFixed": true,
+    "fixCommit": "6579a967",
+    "snapshotAndKeysMessage": "dashboard:3d3dd032-32c7-402d-b926-ea43d49c75e8",
+    "keyCallsReturned": true,
+    "visibleScrollEffectProven": false,
+    "toggleAttemptMessages": [
+      "dashboard:56ca5c19-80d8-47f8-b7fe-b15e526f04c8",
+      "dashboard:701d8a6f-e0ec-4de2-83a8-e615d66c5a8a"
+    ],
+    "toggleResult": "TOOL_REJECTED; stopped without replay",
+    "visibleReversibleActionProven": false
+  },
+  "directProxyDiagnostic": {
+    "statesExpanded": [false, true, false],
+    "restored": true,
+    "countsAsNormalEvaProof": false
+  },
+  "manualTakeover": {
+    "ownerConfirmed": true,
+    "bridgeState": "owner",
+    "connected": false,
+    "freshObservationRequired": true,
+    "normalEvaReadRejected": true,
+    "message": "dashboard:2bea36aa-2c9e-42a9-a5b7-059639c45604",
+    "liveActionInFlightAtTakeover": false,
+    "liveInFlightInterruptionProven": false
+  },
+  "manualReturn": {
+    "ownerConfirmed": true,
+    "newConnectionEpoch": true,
+    "freshObservationInitiallyRequired": true,
+    "normalEvaFreshSnapshot": true,
+    "beforeOwnerChange": "Geheugen expanded",
+    "afterOwnerChange": "Geheugen collapsed",
+    "message": "dashboard:fde0ca85-d5bf-4991-8401-769ce8e35764"
+  },
+  "manualRevocation": {
+    "ownerConfirmed": true,
+    "bridgeState": "disconnected",
+    "connected": false,
+    "busy": false,
+    "freshObservationRequired": true,
+    "normalEvaReadRejected": true,
+    "message": "dashboard:97c786ac-91e1-4550-97b2-195cf22fa1f3",
+    "reconnectionAttempted": false
+  },
+  "remaining": [
+    "Diagnose why an ordinary Eva click is rejected while the same direct proxy action succeeds.",
+    "Prove a visible reversible action through the ordinary Eva route.",
+    "Prove manual takeover interrupts an action actually in flight in the shared Chrome session.",
+    "Obtain owner acceptance separately."
+  ]
+}
