@@ -3,12 +3,34 @@ from __future__ import annotations
 
 from datetime import UTC, datetime
 import json
+import re
 from typing import AsyncIterator, Callable
 from uuid import UUID, uuid4, uuid5
 
 import httpx
 from livekit.agents import Agent, RunContext, function_tool, llm
 from livekit.agents.types import DEFAULT_API_CONNECT_OPTIONS
+
+def work_receipt_text(text: str) -> str | None:
+    """Conservative receipt for an explicit work request, never its result.
+
+    This is connector feedback after authenticated HTTP acceptance, not a
+    task classifier or execution decision. Questions and ambiguous phrasing
+    keep the ordinary model path without a canned acknowledgement.
+    """
+    words = " ".join(text.casefold().split())
+    if any(word in {"niet", "nooit", "geen", "stop", "wacht", "annuleer"}
+           for word in re.findall(r"\w+", words)[:6]):
+        return None
+    if re.search(r"\b(?:nee|laat maar)\b", words):
+        return None
+    command = r"(?:zoek|onderzoek|vergelijk|bekijk|controleer|analyseer|maak|schrijf|bouw|ontwerp)"
+    request = r"(?:kun|kan|wil|zou) je (?:even |eens |alsjeblieft |voor me |voor mij ){0,2}(?:zoeken|onderzoeken|vergelijken|bekijken|controleren|analyseren|maken|schrijven|bouwen|ontwerpen|uitzoeken|uitwerken)"
+    if re.match(rf"^{command} (?:je|jij|u)\b", words):
+        return None
+    if re.match(rf"^(?:{command}|{request})\b", words):
+        return "Ik kijk er even voor je naar."
+    return None
 
 class CoreClient:
     def __init__(self, url: str, token: str):
@@ -29,6 +51,11 @@ class CoreClient:
             async with client.stream("POST", self.url + path,
                 headers={"Authorization": "Bearer " + self.token}, json=body) as response:
                 response.raise_for_status()
+                if not response.headers.get("content-type", "").startswith("application/x-ndjson"):
+                    raise ValueError("voice core returned another response format")
+                receipt = work_receipt_text(payload["text"])
+                if receipt is not None:
+                    yield {"type": "request_acknowledged", "text": receipt}
                 async for line in response.aiter_lines():
                     if len(line) > 131072:
                         raise ValueError("voice response exceeds bound")
@@ -69,6 +96,8 @@ class BridgeState:
         self.snapshots: dict[str, list[dict]] = {}
         self.results: dict[str, str] = {}
         self.spoken_streams: dict[str, object] = {}
+        self.receipt_deliveries: dict[str, object] = {}
+        self.receipts_offered: set[str] = set()
 
     def history(self, chat_ctx: llm.ChatContext, exclude: str) -> list[dict]:
         return [{"role": item.role, "text": item.text_content,
@@ -177,6 +206,7 @@ class EvaAgent(Agent):
         await ctx.update(json.dumps({"type": "running", "message_id": message_id}), template="{message}")
         import asyncio
         final_seen = False
+        spoken_update_seen = False
         try:
             async for event in state.backend.events({
                 "session_id": state.session_id, "message_id": message_id, "text": text,
@@ -185,8 +215,21 @@ class EvaAgent(Agent):
                                  for key, value in list(state.results.items())[-4:] if key not in state.suppressed],
             }):
                 kind = event.get("type")
+                if kind == "request_acknowledged":
+                    if message_id not in state.receipts_offered and message_id not in state.suppressed:
+                        state.receipts_offered.add(message_id)
+                        # A receipt is a short, separate utterance. Interrupting
+                        # it must not suppress the eventual background result.
+                        try:
+                            state.receipt_deliveries[message_id] = ctx.session.say(
+                                event["text"], allow_interruptions=True)
+                            state.notify({**event, "message_id": message_id})
+                        except RuntimeError:
+                            state.notify({"type": "voice_delivery_failed", "message_id": message_id})
+                    continue
                 if kind == "spoken_update":
-                    if message_id not in state.spoken_streams:
+                    if not spoken_update_seen:
+                        spoken_update_seen = True
                         self.deliver(ctx.session, message_id, event["text"], final=False)
                         state.notify({**event, "message_id": message_id})
                     continue
@@ -201,9 +244,10 @@ class EvaAgent(Agent):
                     except ValueError:
                         pass
                     state.suppressed.add(target)
-                    handle = state.deliveries.get(target)
-                    if handle is not None:
-                        handle.interrupt()
+                    for deliveries in (state.deliveries, state.receipt_deliveries):
+                        handle = deliveries.get(target)
+                        if handle is not None:
+                            handle.interrupt()
                     state.notify({"type": kind, "message_id": target})
                 elif kind == "final":
                     final_seen = True
