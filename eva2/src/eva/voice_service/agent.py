@@ -134,7 +134,9 @@ class EvaAgent(Agent):
                         part = await stream.get()
                         if part is None:
                             return
-                        yield part + " "
+                        # LiveKit's maintained markdown/emoji transforms buffer
+                        # incomplete paragraphs, even after a sentence boundary.
+                        yield part + "\n\n"
                 source = parts()
             # A first part and its continuation share one native speech handle:
             # barge-in cancels the entire spoken tail, not only the first sentence.

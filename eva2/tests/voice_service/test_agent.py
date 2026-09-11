@@ -229,3 +229,96 @@ async def test_real_tts_stream_emits_short_first_part_before_backend_continuatio
         await adapter.aclose()
         if not task.done(): task.cancel()
         await asyncio.gather(task, return_exceptions=True)
+
+
+@pytest.mark.asyncio
+async def test_waiting_first_part_does_not_block_second_core_turn_after_interrupt():
+    class ProgressBackend(Backend):
+        async def events(self, payload):
+            self.calls.append(payload)
+            if payload["text"] == "Onderzoek het onderwerp":
+                yield {"type": "spoken_update", "text": "Ik vergelijk de openbare bronnen over dit onderwerp."}
+                self.started.set()
+                await self.release.wait()
+                text = "Het onderzoek is afgerond."
+            else:
+                text = "Je tweede vraag is ontvangen."
+            yield {"type": "final", "reply": {"text": text}}
+    backend = ProgressBackend()
+    state = BridgeState(backend)
+    async with AgentSession() as session:
+        await session.start(EvaAgent(state))
+        async def first_turn():
+            await session.run(user_input="Onderzoek het onderwerp")
+        first = asyncio.create_task(first_turn())
+        try:
+            await asyncio.wait_for(backend.started.wait(), 5)
+            await asyncio.wait_for(session.interrupt(), 5)
+            async def second_turn():
+                await session.run(user_input="Hoe gaat het?")
+            second = asyncio.create_task(second_turn())
+            for _ in range(100):
+                if len(backend.calls) == 2: break
+                await asyncio.sleep(.01)
+            assert len(backend.calls) == 2
+            assert backend.calls[1]["active_work"][0]["text"] == "Onderzoek het onderwerp"
+        finally:
+            backend.release.set()
+            await asyncio.wait_for(first, 5)
+            if "second" in locals(): await asyncio.wait_for(second, 5)
+        for _ in range(100):
+            if not state.active: break
+            await asyncio.sleep(.01)
+        assert not state.active
+        assert "Het onderzoek is afgerond." in state.results.values()
+
+
+@pytest.mark.asyncio
+async def test_native_session_outputs_first_audio_while_backend_is_still_waiting():
+    import struct
+    from types import SimpleNamespace
+    from livekit.agents.voice import io
+    from eva.voice_service.media import streaming_speech_output
+    first_audio = asyncio.Event()
+    release = asyncio.Event()
+    class Source:
+        async def synthesize(self, text):
+            yield SimpleNamespace(data=struct.pack("<h", 1000) * 2400, mime_type="audio/pcm")
+    class Sink(io.AudioOutput):
+        def __init__(self):
+            super().__init__(label="test", capabilities=io.AudioOutputCapabilities(pause=False), sample_rate=24000)
+            self.duration = 0
+            self.frames = 0
+        async def capture_frame(self, frame):
+            await super().capture_frame(frame)
+            self.duration += frame.samples_per_channel / frame.sample_rate
+            self.frames += 1
+            first_audio.set()
+        def flush(self):
+            super().flush()
+            self.on_playback_finished(playback_position=self.duration, interrupted=False)
+        def clear_buffer(self):
+            self.on_playback_finished(playback_position=self.duration, interrupted=True)
+    class WaitingBackend:
+        async def events(self, payload):
+            yield {"type": "spoken_update", "text": "Door lichtbreking."}
+            await release.wait()
+            yield {"type": "final", "reply": {"text": "Elke kleur buigt anders af."}}
+    adapter = streaming_speech_output(Source())
+    async with AgentSession(tts=adapter) as session:
+        sink = Sink()
+        session.output.audio = sink
+        await session.start(EvaAgent(BridgeState(WaitingBackend())))
+        async def run(): await session.run(user_input="Leg uit")
+        task = asyncio.create_task(run())
+        try:
+            await asyncio.wait_for(first_audio.wait(), 3)
+            assert not release.is_set()
+            await asyncio.wait_for(session.interrupt(), 3)
+            frames_after_interrupt = sink.frames
+        finally:
+            release.set()
+            await asyncio.wait_for(task, 5)
+        await asyncio.sleep(.05)
+        assert sink.frames == frames_after_interrupt
+    await adapter.aclose()
