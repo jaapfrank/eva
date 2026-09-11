@@ -4,13 +4,47 @@ Vastgesteld door Jaap op 7 september 2026. Dit vervangt de eerdere
 projectdoelformulering; [WERKBORD.md](WERKBORD.md) is de enige uitvoerwachtrij.
 Oudere planningen en vergelijkingen blijven historische bewijsbronnen.
 
+## Eigenaarbesluit 11 september 2026 — onderdelen afronden en opties kiezen
+
+Jaap wil een volledig onderdeel afronden voordat nieuw werk aan het volgende
+hoofdonderdeel begint. Het geheugenonderdeel heeft nu voorrang. CO-008 en GE-01
+blijven afgerond en geaccepteerd deelbewijs; daarmee is niet het volledige
+geheugenonderdeel geaccepteerd. Reeds afzonderlijk opgedragen stem-, wakeword-
+en herstelwerk blijft bij de bestaande taken.
+
+Voor elke optionele mogelijkheid krijgt Jaap eerst in het dashboard uitleg over
+betekenis en nut. Hij kiest daar zelf Opnemen of Afwijzen. Een onbesliste optie
+houdt de afronding van het onderdeel open. Opnemen maakt de optie vereist en
+betekent dat de gekozen gebruikersuitkomst afgemaakt moet worden. Een afgewezen
+optie verdwijnt uit de actieve zichtbare lijst en telling; het besluit blijft
+apart bewaard. Herstellen brengt de optie terug naar een onbesliste keuze.
+De coding-agent verwerkt echte keuzes actief, maar leidt geen keuze af uit
+stilte en bouwt geen optionele functie voordat die is opgenomen.
+
+Voor het geheugen gaat dit nu over CO-004 (inzage) en CO-005 (bewust aanpassen
+of vergeten). Gewone nieuwe informatie of correcties vertellen blijft onderdeel
+van het reeds werkende automatische geheugen. De extra bedieningsroutes zijn
+nog onbeslist. De centrale keuzegegevens komen uit
+`design/product/optional-scope-decisions.json`; een ontbrekend besluit is onbeslist.
+Er wordt geen tweede keuze- of acceptatieregister in het werkbord onderhouden.
+
+Langetermijn- en gezinskwaliteit worden gekoppeld aan concrete gebruikerssituaties,
+bestaand bewijs en echte oordelen. Een vaste onvoltooide UI-regel is geen bewijs
+van een ontbrekende functie en geen nieuwe acceptatievoorwaarde. Technische
+proeven met proefpersonen vervangen geen menselijk gezinsoordeel. Deze wijziging
+legt geen nieuwe zeven-dagenpoort voor alleen geheugen op en verleent geen nieuwe
+persoons-, account- of communicatierechten.
+
+Dit besluit gaat voor op oudere teksten die optionele kaarten zonder keuze
+oversloegen of AU-008 als het volgende actieve ontwikkelonderdeel aanwezen.
+
 ## Verduidelijking door Jaap op 10 september 2026
 
 We werken met kleine actieve doelen binnen deze blijvende projectvisie.
 De eerste geheugenuitkomst (CO-008) is technisch afgerond en GE-01 door Jaap
 geaccepteerd. AU-007 is technisch afgerond; Jaap vindt de opgeleverde
 beoordelingskaart "op zich wel bruikbaar". Dit is geen algemene acceptatie van initiatief.
-Nu staat AU-008 centraal: zelf passende kosteloze acties kiezen en uitvoeren. De voortgang en technische afronding staan in de
+Op 10 september werd AU-008 gekozen: zelf passende kosteloze acties kiezen en uitvoeren. De voortgang en technische afronding staan in de
 ene uitvoerbron achter het dashboard en WERKBORD.md. Afgeronde deelresultaten
 blijven zichtbaar naast de nog onvolledige hoofduitkomsten; menselijke
 acceptatie blijft afzonderlijk.

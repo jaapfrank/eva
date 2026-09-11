@@ -1,7 +1,7 @@
 {
   "contract": "EvaExecutionWorkboard/v1",
   "schemaVersion": 1,
-  "lastUpdated": "2026-09-10",
+  "lastUpdated": "2026-09-11",
   "sequencePolicy": "done_then_one_primary_then_queued",
   "commandWorkingDirectory": "eva2",
   "inventoryPath": "docs/eva-repository-inventory.generated.json",
@@ -749,9 +749,9 @@
       "document": "eva2/PROJECTDOEL.md",
       "scope": "Digitale huisgenoot: zelfstandig redeneren, initiatief, onbekende vaardigheden leren, handelen, zelfverbetering en aantoonbare concurrentiewinst met open-sourcehergebruik.",
       "sessionGoal": "AU-008: één zelfstandige kosteloze bijdrage via de algemene uitvoerder.",
-      "currentWork": "CO-008 / GE-01 is afgerond en door Jaap geaccepteerd. AU-007 blijft afgesloten met beperkte kaartwaardering. AU-008: algemeen publiek onderzoek en private initiatiefbeoordeling op rustige momenten zijn live. De echte zelfstandige bijdrage wacht nog op bewijs; het huidige achtergrondbudget is 4/4 verbruikt.",
-      "currentEvidence": "eva2/reviews/AU-007-technical-closure-f99b5a2.md",
-      "nextStep": "Algemeen publiek onderzoek en private initiatiefbeoordeling op rustige momenten zijn live. [Technisch bewijs](evidence/product/AU-008-private-review-live-2026-09-10.json). De eerste gewone cyclus is om20:32:45UTC teruggelezen: eigenaarachtergrondbudget4/4, geen modelaanroep. De technische aansluiting is afgerond. De echte zelfgekozen bijdrage blijft open en volgt uitsluitend uit de gewone cyclus binnen de bestaande grenzen.",
+      "currentWork": "Geheugenonderdeel eerst afronden. CO-008 / GE-01 blijft geaccepteerd deelbewijs. CO-004 en CO-005 wachten op Jaaps keuze in het dashboard; geen optie wordt vanzelf opgenomen of afgewezen. Nieuw initiatiefontwikkelwerk is gepauzeerd; bestaande live resultaten blijven behouden.",
+      "currentEvidence": "eva2/evidence/product/CO-008-GE-01-owner-acceptance-2026-09-10.json",
+      "nextStep": "Bekijk betekenis en nut van de geheugenopties in het dashboard en kies daar Opnemen of Afwijzen. De agent verwerkt echte keuzes en maakt het geheugenonderdeel af; onbetwiste bestaande geheugencriteria en bewijs worden ondertussen concreet gekoppeld.",
       "usageClarification": {
         "date": "2026-09-07",
         "authorizedBy": "Jaap",
@@ -3685,6 +3685,84 @@
       "fullVoiceAccepted": false,
       "positiveContentFeedback": "Jaap vindt de verhaalinhoud leuk.",
       "remaining": "Stem en uitspraak onnatuurlijk; 3–8 seconden stilte; snelle betekenisvolle reactie en vervolg tijdens werk ontbreken. Volledige context, tijdens-werkervaring, telefoon en VoicePE niet geaccepteerd."
+    },
+    "memoryComponentDecision20260911": {
+      "recordedAt": "2026-09-11T10:05:34.181545+00:00",
+      "ownerRule": "Eerst elk onderdeel afmaken. Optionele mogelijkheden eerst in het dashboard uitleggen; Jaap kiest opnemen of afwijzen. Onbeslist houdt onderdeel open; opgenomen wordt vereist; afgewezen verdwijnt uit actieve lijst met behoud besluittrace.",
+      "currentComponent": "memory",
+      "status": "preparing_required_evidence_and_waiting_for_optional_scope_choices",
+      "optionalDecisionSource": "eva2/design/product/optional-scope-decisions.json",
+      "preservedAcceptance": {
+        "taskId": "CO-008",
+        "trialId": "GE-01",
+        "scope": "Voorkeur onthouden, wijzigen en toepassen in normaal Telegramgesprek.",
+        "evidence": "eva2/evidence/product/CO-008-GE-01-owner-acceptance-2026-09-10.json"
+      },
+      "existingRoutes": [
+        {
+          "taskId": "CO-004",
+          "exists": "Ownergebonden bron-API, paginering en basisscherm met gespreksfragmenten.",
+          "gap": "Geen complete gekozen inzagefunctie of volledige actuele feitenlijst als live bewezen.",
+          "source": [
+            "eva2/src/eva/adapters/postgres/people_memory_overview.py",
+            "eva2/experiments/react-admin-dashboard-v1/src/main.jsx"
+          ]
+        },
+        {
+          "taskId": "CO-005",
+          "exists": "Cross-store erasure en wissen van een eigen dashboardbeurt; gewone gesprekscorrectie werkt al.",
+          "gap": "Bewuste correctie/verwijdering via een complete gekozen bedieningsroute, inclusief Telegrambronnen, niet bewezen.",
+          "source": [
+            "eva2/src/eva/application/memory_background.py",
+            "eva2/src/eva/bootstrap/runtime.py"
+          ]
+        }
+      ],
+      "requiredEvidenceInventory": [
+        {
+          "id": "memory-automatic-use",
+          "outcome": "Relevante voorkeur zonder onthoudcommando gebruiken; gewijzigde voorkeur vervangt oude.",
+          "evidence": [
+            "eva2/evidence/product/CO-008-GE-01-owner-acceptance-2026-09-10.json",
+            "eva2/reviews/CO-008-automatic-memory-ddb0267.md"
+          ],
+          "assessment": "Accepted CO-008 sub-outcome; do not reopen."
+        },
+        {
+          "id": "memory-continuity",
+          "outcome": "Relevante informatie in een nieuw gesprek en na herstart terughalen; verlopen tijdelijke informatie niet als actueel voorstellen.",
+          "evidence": [
+            "eva2/evidence/product/CO-008-automatic-personal-memory-2026-09-10.json"
+          ],
+          "assessment": "Historical bounded live proof exists; bind final selected delivery to preserved behavior, no new human acceptance inferred."
+        },
+        {
+          "id": "memory-person-boundaries",
+          "outcome": "Eigen privegegevens blijven bij de juiste persoon; andere persoon en niet-toegelaten gedeelde context krijgen ze niet.",
+          "evidence": [
+            "eva2/evidence/product/CO-008-automatic-personal-memory-2026-09-10.json"
+          ],
+          "assessment": "Synthetic other-person proof exists; not family acceptance or permission to add family identities."
+        },
+        {
+          "id": "memory-recovery",
+          "outcome": "Verwerking kan na onderbreking hervatten; oude fouten en onvolledig verwerkt geheugen worden niet als succes weergegeven.",
+          "evidence": [
+            "eva2/reviews/CO-008-automatic-memory-ddb0267.md"
+          ],
+          "assessment": "Bounded retry repair proved; 34 historical needs_help and two historical HTTP503 limitations retained for impact assessment."
+        },
+        {
+          "id": "memory-daily-experience",
+          "outcome": "Jaap beoordeelt of Eva in normaal gebruik relevante informatie passend toepast en correcties blijft volgen; eventueel toegelaten gezinsgebruik wordt afzonderlijk beoordeeld.",
+          "evidence": [
+            "eva2/evidence/product/CO-008-GE-01-owner-acceptance-2026-09-10.json"
+          ],
+          "assessment": "GE-01 accepted; no broader family acceptance inferred and no hardcoded UI false used as criterion."
+        }
+      ],
+      "preserveRuntime": "Current core bf5d7e575464ab3f40c52e87f2dc9a01752aab9172cbc8cad6145ef433d38df3 slot3 and existing Hindsight CUDA profile/bundle; coordinate any future cutover with voice owner.",
+      "next": "Read actual dashboard choices; execute only included optional routes. Continue concrete required-evidence assessment without new initiative expansion."
     }
   },
   "activeTaskId": "AU-008",
@@ -5356,13 +5434,13 @@
       "area": "Eigen initiatief",
       "title": "Zelf kosteloos handelen binnen eigenaarmandaat",
       "outcome": "Eva kiest uit toegestane context een nuttige bijdrage, voert passende kosteloze stappen via haar gewone taakuitvoerder uit en toont resultaat of concrete blokkade. Stilte blijft een geldige keuze.",
-      "status": "in_progress",
+      "status": "blocked",
       "stateDetails": {
         "baseCommit": null,
         "implementationCommit": null,
         "evidenceCommit": null,
         "reviewEvidencePaths": [],
-        "blockerReason": null
+        "blockerReason": "Ontwikkelwerk gepauzeerd op Jaaps prioriteitswijziging: eerst het geheugenonderdeel afronden en optionele keuzes in het dashboard afhandelen. Bestaande live resultaten en runtime blijven behouden."
       },
       "ownerRole": "architecturelead",
       "reviewerRole": "memorydeliveryreviewer",
