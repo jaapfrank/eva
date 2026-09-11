@@ -39,7 +39,10 @@ Een nieuwe proef door Jaap en zijn acceptatie staan open. De eerdere dashboardch
 
 Doel: minder onterechte Hé Eva-piepjes tijdens gewone gesprekken, met behoud van
 goede herkenning. Het bestaande model en de lokale trainingsdata zijn teruggevonden;
-dezelfde-set offline vergelijking loopt. Oude apparaatlogs bevestigen lokale
+dezelfde-set offline vergelijking is uitgevoerd. Geen geteste variant haalt de
+combinatie van minder valse activaties en goede herkenning. Een kleine doortraining
+met aparte Nederlandse negatieve proefdata is voorbereid; uitvoering wacht tot
+de lopende spraakmetingen op de gedeelde host klaar zijn. Oude apparaatlogs bevestigen lokale
 microWakeWord-detectie (0,98; venster 5); actuele HA-instellingen staan op Slightly
 sensitive. Beide apparaten zijn gedempt en blijven ongewijzigd. Een aantoonbaar betere
 kandidaat, onafhankelijke proef en firmwareherstelroute ontbreken nog.
