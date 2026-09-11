@@ -1,7 +1,7 @@
 {
   "contract": "EvaSharedChromeEvidence/v1",
   "recordedAt": "2026-09-11T10:57:34.367692+00:00",
-  "status": "integration_prepared_not_accepted",
+  "status": "gateway_activated_awaiting_core_and_owner_trial",
   "built": true,
   "technicalTestsPassed": true,
   "evaRuntimeIntegrated": false,
@@ -13,11 +13,12 @@
     "ownerUi": "desktop and390px mobile; no login; no overflow; invalid origins refused without connecting",
     "internalProxy": "seven tools read from actual proxy; disconnected call refused",
     "stagedGatewayPinning": "maintained client admitted exact endpoint; adjacent port and management host rejected; live policy unchanged",
-    "dashboard": "six required Chrome outcome steps visible, whole component incomplete"
+    "dashboard": "six required Chrome outcome steps visible, whole component incomplete",
+    "liveGatewayPinning": "Actual activated policy: seven tools through maintained HTTP client; adjacent port and management host denied; disconnected browser call refused."
   },
   "scope": "Technical tests use a separate headless browser and local fixture, not Jaaps shared Chrome tab or a normal Eva conversation.",
   "remaining": [
-    "Coordinate exact gateway/managed-endpoint configuration activation with memory core cutover",
+    "Confirm core loaded the coordinated endpoint configuration after memory activation",
     "Register/discover/invoke through normal Eva owner conversation",
     "Jaap explicitly shares an existing tab; earlier client was stopped",
     "Prove visible work, in-flight takeover, explicit fresh-context return and disconnect through real Eva route",
@@ -32,7 +33,7 @@
     "worker.cjs": "94f4a4ebbd70d1ee12c0d26a81a5839de09652c5767d777b679ba5734a9e39d9",
     "owner.html": "d20b476aa811ee44fb9f241901acb6326b64c3ce943ede6651cfdae4f87ec2a4",
     "browser-fixture.cjs": "2bd4ed8d25f9d371a8b932a9d20c575f754e79faed97cef692b15a42ce9131e8",
-    "README.md": "3d3c3a74b498cfa7bc5ca5c63db1da89182dc0013456bb733eee52252af00f05",
+    "README.md": "261ce022f133e7cee10119f949ca06eb3dae611a724c6b2ced5b706edc428a72",
     "gate.mjs": "73ed17eea9ea9fa356c1aea38675e7914d812a9e7229800aed1a3883e22343dc",
     "server.mjs": "57da542deac297b535c84928b37f4c266366a573595e0dd80825541d76a170e2",
     "package.json": "71b8058a9e74b686d6c34312e8aefcfad878f4b884a3b7d486054467ecf7ba6d"
@@ -43,8 +44,23 @@
     "unit": "eva-chrome-bridge.service",
     "internalProxy": "eva2-shared-chrome",
     "endpoint": "http://172.30.0.10:45164/mcp",
-    "gatewayPolicyActivated": false,
+    "gatewayPolicyActivated": true,
     "coreChanged": false,
-    "gpuProfileChanged": false
+    "gpuProfileChanged": false,
+    "managedEndpointFileActivated": true
+  },
+  "gatewayActivation": {
+    "status": "activated",
+    "managedSha256": "c5373563c8512625f5ab390dedbf4903e59fb481a7e81ebae5c7917fd242c2ba",
+    "pinningSha256": "6440fc4dd0ff6786a41d1bc33b1fbc46aa0de1882d47df6b974cb41cc2d04824",
+    "gatewayHealthy": true,
+    "gatewayImageUnchanged": true,
+    "unrelatedEnvironmentUnchanged": true,
+    "coreWorkerMediaHindsightChanged": false,
+    "endpoint": {
+      "endpoint": "http://172.30.0.10:45164/mcp",
+      "resolved_ip": "172.30.0.10"
+    },
+    "backup": "/home/administrator/.local/share/eva-chrome-bridge/activation-backup"
   }
 }

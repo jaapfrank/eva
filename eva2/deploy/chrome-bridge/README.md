@@ -58,7 +58,7 @@ niet in de UI, logs, broncode of taakgegevens.
 Het exact afgebakende endpoint is `http://172.30.0.10:45164/mcp`.
 De voorgestelde gateway-pinning en eigenaar-endpointlijst staan afzonderlijk
 in `/home/administrator/.local/share/eva-chrome-bridge/integration-plan.json`.
-Zij zijn **voorbereid, niet geactiveerd**. Bestaande owner-, tenant-, installatie-
+Gateway-pinning en endpointbestand zijn op 11 september **geactiveerd en teruggelezen**. Het inlezen door de core en de normale Eva-registratie worden nog afzonderlijk gecontroleerd. Bestaande owner-, tenant-, installatie-
 en mandaatbindingen blijven identiek. De eigenaarlijst wordt bij corestart
 ingelezen; activatie moet samenvallen met de gecoördineerde cutover. Geen
 verruiming van managementadressen, persoonsrechten of geheugenscope.
