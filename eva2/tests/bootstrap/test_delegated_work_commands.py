@@ -219,3 +219,94 @@ def test_commands_are_private_to_the_exact_owner_and_ignore_normal_chat() -> Non
         is None
     )
     assert store.admitted == []
+
+
+def test_private_bridge_command_reloads_binding_and_preserves_turn_identity():
+    from eva.bootstrap.runtime import PostgresHindsightMemoryRuntime
+    from eva.bootstrap.delegated_work_owner_service import DelegatedWorkOwnerService
+    from eva.application.telegram_ingress import TelegramPrincipalBinding, TelegramPrincipalBindings
+
+    original = TelegramPrincipalBindings((TelegramPrincipalBinding(
+        telegram_user_id=42, principal_id=str(OWNER), allowed_chat_ids=("42",),
+        principal_binding_id=str(BINDING),
+    ),))
+    current = [original]
+    store = FakeStore()
+    service = DelegatedWorkOwnerService(
+        store, owner_principal_id=OWNER, principal_binding_id=BINDING, clock=lambda: NOW,
+        private_bridge_principal_loader=lambda: current[0].private_bridge_principal(
+            principal_id=str(OWNER), principal_binding_id=BINDING,
+        ),
+    )
+    runtime = PostgresHindsightMemoryRuntime.__new__(PostgresHindsightMemoryRuntime)
+    runtime._telegram_principal_bindings = original
+    runtime._telegram_principal_bindings_loader = lambda: current[0]
+    runtime._delegated_work_commands = DelegatedWorkConversationCommands(service=service)
+    observed = []
+    runtime._journal = lambda turn: SimpleNamespace(
+        admit=lambda actual: observed.append(actual),
+        committed_reply=lambda actual: None,
+        commit_reply=lambda actual, reply: reply,
+    )
+    turn = _turn("Laat een onderzoeker drie ideeën bedenken", principal_id="telegram:42")
+    reply = runtime.respond_telegram_delegated_work(turn, telegram_user_id=42, chat_id="42")
+    assert reply is not None
+    assert observed == [turn] and observed[0].principal_id == "telegram:42"
+    assert store.admitted[0]["spec"].owner_principal_id == str(OWNER)
+    current[0] = TelegramPrincipalBindings((TelegramPrincipalBinding(
+        telegram_user_id=42, principal_id=str(OWNER), allowed_chat_ids=("-100",),
+        principal_binding_id=str(BINDING),
+    ),))
+    assert runtime.respond_telegram_delegated_work(turn, telegram_user_id=42, chat_id="42") is None
+    assert len(store.admitted) == 1
+
+
+def test_legacy_saved_reply_is_not_released_after_database_binding_revocation():
+    import pytest
+    from eva.adapters.postgres.delegated_work import DelegatedWorkConflict
+    from eva.bootstrap.runtime import PostgresHindsightMemoryRuntime
+    from eva.bootstrap.delegated_work_owner_service import DelegatedWorkOwnerService
+    from eva.application.telegram_ingress import TelegramPrincipalBinding, TelegramPrincipalBindings
+
+    class RevocableStore(FakeStore):
+        revoked = False
+        def validate_admission_authority(self, **values):
+            if self.revoked:
+                raise DelegatedWorkConflict("binding is not current")
+            super().validate_admission_authority(**values)
+
+    bindings = TelegramPrincipalBindings((TelegramPrincipalBinding(
+        telegram_user_id=42, principal_id=str(OWNER), allowed_chat_ids=("42",),
+        principal_binding_id=str(BINDING),
+    ),))
+    store = RevocableStore()
+    service = DelegatedWorkOwnerService(
+        store, owner_principal_id=OWNER, principal_binding_id=BINDING, clock=lambda: NOW,
+        private_bridge_principal_loader=lambda: bindings.private_bridge_principal(
+            principal_id=str(OWNER), principal_binding_id=BINDING),
+    )
+    runtime = PostgresHindsightMemoryRuntime.__new__(PostgresHindsightMemoryRuntime)
+    runtime._telegram_principal_bindings = bindings
+    runtime._telegram_principal_bindings_loader = lambda: bindings
+    runtime._delegated_work_commands = DelegatedWorkConversationCommands(service=service)
+    saved = []
+    journal_access = []
+    def commit(turn, reply):
+        saved.append(reply)
+        return reply
+    runtime._journal = lambda turn: SimpleNamespace(
+        admit=lambda actual: journal_access.append(actual),
+        committed_reply=lambda actual: saved[0] if saved else None,
+        commit_reply=commit,
+    )
+    turn = _turn("Laat een onderzoeker een voorstel schrijven", principal_id="telegram:42")
+    first = runtime.respond_telegram_delegated_work(turn, telegram_user_id=42, chat_id="42")
+    assert runtime.respond_telegram_delegated_work(turn, telegram_user_id=42, chat_id="42") == first
+    assert len(saved) == len(store.admitted) == 1
+    previous_access = list(journal_access)
+    store.revoked = True  # File and structural alias remain unchanged.
+    assert service.available_for(turn)
+    with pytest.raises(DelegatedWorkConflict, match="binding is not current"):
+        runtime.respond_telegram_delegated_work(turn, telegram_user_id=42, chat_id="42")
+    assert journal_access == previous_access
+    assert len(saved) == len(store.admitted) == 1

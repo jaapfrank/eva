@@ -20,12 +20,14 @@ from eva.contracts.timestamps import parse_utc_timestamp
 class DelegatedWorkOwnerService:
     def __init__(self, store: PostgresDelegatedWorkStore, *, owner_principal_id: UUID,
                  principal_binding_id: UUID, clock: Callable[[], datetime] | None = None,
-                 conversation_scope: TimelineScope | None = None):
+                 conversation_scope: TimelineScope | None = None,
+                 private_bridge_principal_loader: Callable[[], str | None] | None = None):
         self.store = store
         # Runtime binds the conversation namespace separately from storage authority.
         self.conversation_scope = conversation_scope or store.scope
         self.owner_principal_id = owner_principal_id
         self.principal_binding_id = principal_binding_id
+        self._private_bridge_principal_loader = private_bridge_principal_loader
         self._clock = clock or (lambda: datetime.now(UTC).replace(microsecond=0))
         store.validate_admission_authority(owner_principal_id=owner_principal_id,
                                            principal_binding_id=principal_binding_id)
@@ -33,9 +35,19 @@ class DelegatedWorkOwnerService:
     def available_for(self, turn: ConversationTurn) -> bool:
         """Structural owner gate; each store operation revalidates current authority."""
         if (turn.audience.kind != "private_person"
-                or turn.principal_id != str(self.owner_principal_id)
-                or turn.audience.principal_id != str(self.owner_principal_id)):
+                or turn.audience.principal_id != turn.principal_id):
             return False
+        if turn.principal_id != str(self.owner_principal_id):
+            # Keep the original Telegram conversation/memory identity. Only the
+            # current trusted binding can associate it with this durable owner.
+            if self._private_bridge_principal_loader is None:
+                return False
+            try:
+                alias = self._private_bridge_principal_loader()
+            except (OSError, ValueError, RuntimeError):
+                return False
+            if alias is None or turn.principal_id != alias:
+                return False
         return external_timeline_scope(turn.tenant_id, turn.installation_id,
                                        "delegated owner scope is required") == self.conversation_scope
 

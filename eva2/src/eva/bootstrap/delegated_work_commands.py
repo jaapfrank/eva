@@ -87,6 +87,10 @@ class DelegatedWorkConversationCommands:
         return (_SPAWN.fullmatch(text) is not None
                 or normalized in _STATUS | _STOP | _LIST | _RESULT)
 
+    def validate_authority(self, turn: ConversationTurn) -> None:
+        """Recheck current owner authority before releasing a saved command reply."""
+        self._service.validate_authority(turn)
+
     def _execute(self, operation: str, turn: ConversationTurn, **values) -> dict:
         return self._service.execute(operation, turn,
                                      request_key=self._service.command_key(turn), **values)

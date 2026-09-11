@@ -204,3 +204,86 @@ def test_configured_conversation_scope_can_differ_from_storage_authority(delegat
         ).values(status="revoked"))
     with pytest.raises(DelegatedWorkConflict, match="binding is not current"):
         service.execute("get", turn, work_id=work["work_id"], request_key="revoked")
+
+
+def test_trusted_private_bridge_alias_keeps_identity_and_rechecks_revocation(delegated_engine):
+    from dataclasses import replace
+    from eva.application.telegram_ingress import TelegramPrincipalBinding, TelegramPrincipalBindings
+    from eva.adapters.postgres.delegated_work_actions import PostgresDelegatedWorkActions
+    from eva.application.conversation import ConversationActionCall, ConversationConflict
+    from eva.application.memory_audience import MemoryAudience, TelegramGroupConsentReference
+
+    label = "owner-bridge-alias"
+    scope, _, binding = _seed_authority(delegated_engine, label)
+    owner = _id(label, "principal")
+    current = [TelegramPrincipalBindings((TelegramPrincipalBinding(
+        telegram_user_id=42, principal_id=str(owner), allowed_chat_ids=("42",),
+        principal_binding_id=str(binding),
+    ),))]
+    service = DelegatedWorkOwnerService(
+        PostgresDelegatedWorkStore(delegated_engine, scope), owner_principal_id=owner,
+        principal_binding_id=binding, clock=lambda: NOW + timedelta(seconds=4),
+        private_bridge_principal_loader=lambda: current[0].private_bridge_principal(
+            principal_id=str(owner), principal_binding_id=binding,
+        ),
+    )
+    actions = PostgresDelegatedWorkActions(delegated_engine, service)
+    turn = replace(_turn(label, "telegram:42", 0), conversation_id="telegram:42")
+    assert service.available_for(turn)
+    assert service.available_for(_turn(label, owner, 0))
+    assert not service.available_for(_turn(label, "telegram:43", 0))
+    assert not service.available_for(_turn("foreign-scope", "telegram:42", 0))
+    group = replace(turn, conversation_id="telegram:-100", message_id="telegram:-100:1",
+                    audience=MemoryAudience.telegram_group(principal_id=turn.principal_id,
+                    group_chat_id="-100", consent_ref=TelegramGroupConsentReference(
+                        turn.principal_id, "-100", "telegram-group-consent:test")))
+    assert not service.available_for(group)
+    call = ConversationActionCall("alias-start", "start_delegated_work", {"task": "Bedenk drie ideeën"})
+    receipt = actions.execute(turn, call)
+    work_id = receipt.output["operation_result"]["work"]["work_id"]
+    work = service.store.load(work_id, owner_principal_id=owner, principal_binding_id=binding)
+    assert work.spec.owner_principal_id == str(owner)
+    assert turn.principal_id == turn.audience.principal_id == "telegram:42"
+    assert turn.conversation_id == "telegram:42"
+    # Each later message keeps the real bridge identity, with a distinct request.
+    stopped = service.execute("stop", replace(turn, message_id="later-stop"), work_id=work_id, request_key="stop")
+    assert stopped["work"]["state"] == "stopped"
+    resumed = service.execute("resume", replace(turn, message_id="later-resume"), work_id=work_id, request_key="resume")
+    assert resumed["work"]["generation"] == 2 and resumed["work"]["parent_work_id"] == work_id
+    assert actions.pending(turn) == receipt
+    # A binding file change removes access even to an already saved action receipt.
+    current[0] = TelegramPrincipalBindings((TelegramPrincipalBinding(
+        telegram_user_id=42, principal_id=str(owner), allowed_chat_ids=("-100",),
+        principal_binding_id=str(binding),
+    ),))
+    assert not service.available_for(turn)
+    assert actions.pending(turn) is None
+    with pytest.raises(ConversationConflict, match="private owner"):
+        actions.execute(turn, call)
+    assert service.available_for(_turn(label, owner, 0))
+    current[0] = TelegramPrincipalBindings((TelegramPrincipalBinding(
+        telegram_user_id=42, principal_id=str(owner), allowed_chat_ids=("42",),
+        principal_binding_id=str(binding),
+    ),))
+    with delegated_engine.begin() as connection:
+        connection.execute(sa.update(principal_bindings).where(
+            principal_bindings.c.tenant_id == scope.tenant_id,
+            principal_bindings.c.principal_binding_id == binding,
+        ).values(status="revoked"))
+    with pytest.raises(DelegatedWorkConflict, match="binding is not current"):
+        actions.pending(turn)
+
+
+def test_unreadable_bridge_binding_never_grants_alias_access():
+    from types import SimpleNamespace
+    from eva.adapters.postgres.operational_timeline import external_timeline_scope
+    owner = _id("unreadable", "principal")
+    scope = external_timeline_scope("tenant:unreadable", "installation:unreadable", "scope")
+    def unavailable():
+        raise OSError("unavailable")
+    service = DelegatedWorkOwnerService(
+        SimpleNamespace(scope=scope, validate_admission_authority=lambda **_: None),
+        owner_principal_id=owner, principal_binding_id=_id("unreadable", "binding"),
+        private_bridge_principal_loader=unavailable,
+    )
+    assert not service.available_for(_turn("unreadable", "telegram:42", 0))
