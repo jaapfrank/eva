@@ -822,8 +822,8 @@ class PostgresHindsightMemoryRuntime:
             now=datetime.now(tz=UTC).replace(microsecond=0),
         )
 
-    def dashboard_memory_sources(self, *, limit: int = 20, before: str | None = None):
-        """Read existing owner sources without a model or memory-provider call."""
+    def _owner_memory_sources(self):
+        """Reload trusted bindings for every owner memory read or command."""
         from eva.adapters.postgres.people_memory_overview import PostgresOwnerMemorySources
 
         if (self._runtime_tenant_id is None or self._runtime_installation_id is None
@@ -840,7 +840,63 @@ class PostgresHindsightMemoryRuntime:
             binding=self._dashboard_principal_binding_id,
             authority_scope=self._dashboard_authority_scope,
             telegram_bindings=bindings,
-        ).page(now=datetime.now(tz=UTC).replace(microsecond=0), limit=limit, before=before)
+        )
+
+    def dashboard_memory_sources(self, *, limit: int = 20, before: str | None = None):
+        return self._owner_memory_sources().page(
+            now=datetime.now(UTC).replace(microsecond=0), limit=limit, before=before)
+
+    def dashboard_memory_source(self, source_id: str):
+        doc, state = self._owner_memory_sources().document(
+            source_id, now=datetime.now(UTC).replace(microsecond=0))
+        return {
+            "contract": "EvaOwnerMemorySource/v1", "source_id": source_id,
+            "content": doc.content, "occurred_at": doc.occurred_at,
+            "retention_state": state,
+            "origin": "Telegram" if doc.conversation_id.startswith("telegram:") else "Eigen gesprek",
+        }
+
+    def dashboard_forget_memory_source(self, source_id: str):
+        now = datetime.now(UTC).replace(microsecond=0)
+        doc, state = self._owner_memory_sources().document(source_id, now=now)
+        if state != "retained":
+            raise ConversationConflict("Deze bron is nog niet verwerkt. Probeer wissen na verwerking opnieuw.")
+        # Accept only a proven raw exchange binding; an arbitrary document/source
+        # reference must never authorize removal of a different conversation.
+        if doc.document_id != f"{doc.conversation_id}:exchange:{doc.source_ref}":
+            raise ConversationConflict("Deze bron heeft geen ondersteunde gesprekskoppeling.")
+        erased = self._cold_path.erase_document(principal_id=doc.principal_id,
+            document_id=doc.document_id, source_message_id=doc.source_ref, now=now)
+        return {"contract": "EvaOwnerMemoryChange/v1", "source_id": source_id,
+                "state": "erased" if erased else "erasure_requested"}
+
+    def dashboard_correct_memory_source(self, source_id: str, text: str):
+        from uuid import uuid4
+        if not isinstance(text, str) or not text.strip() or len(text) > 12000:
+            raise ValueError("memory correction is invalid")
+        now = datetime.now(UTC).replace(microsecond=0)
+        doc, _ = self._owner_memory_sources().document(source_id, now=now)
+        # A correction is new direct owner testimony, preserving the old source
+        # as history. Reuse the normal durable conversation and retention route,
+        # including its erasure and recovery bindings; no second memory store.
+        turn = ConversationTurn(tenant_id=doc.tenant_id, installation_id=doc.installation_id,
+            principal_id=doc.principal_id, conversation_id=doc.conversation_id,
+            message_id=f"dashboard-memory:{uuid4()}",
+            occurred_at=now.strftime("%Y-%m-%dT%H:%M:%SZ"), audience=doc.audience,
+            project_id=doc.project_id,
+            text=f"Correctie op eerdere informatie. Voortaan geldt: {text.strip()}")
+        journal = self._journal(turn)
+        journal.admit(turn)
+        reply = GroundedReply(conversation_id=turn.conversation_id, message_id=turn.message_id,
+            text="Je correctie is ontvangen voor verwerking in het geheugen.",
+            generated_at=turn.occurred_at, provider="owner-memory-controls",
+            evidence_memory_ids=())
+        reply = journal.commit_reply(turn, reply)
+        self.after_response(turn, reply)
+        if journal.load(turn).phase != "memory_queued":
+            raise ConversationConflict("De correctie is niet in het geheugen opgenomen; verwerking is geblokkeerd.")
+        return {"contract": "EvaOwnerMemoryChange/v1", "source_id": source_id,
+                "state": "correction_queued"}
 
     def _owner_initiatives(self):
         from eva.adapters.postgres.owner_initiatives import PostgresOwnerInitiatives

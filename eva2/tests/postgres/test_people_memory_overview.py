@@ -91,6 +91,13 @@ def test_owner_memory_sources_private_alias_pagination_erasure_and_revocation(pe
     assert {s.excerpt for s in items} == {canonical.content, "b"*2048}
     assert {s.retention_state for s in items} == {"retained", "pending"}
     assert next(s for s in items if s.excerpt.startswith("b")).truncated
+    for item in items:
+        full, state = reader().document(item.source_id, now=NOW)
+        assert full.content.startswith(item.excerpt)
+        assert state == item.retention_state
+    from uuid import uuid4
+    with pytest.raises(LookupError):
+        reader().document(str(uuid4()), now=NOW)
     assert reader().page(now=NOW).sources == tuple(sorted(items, key=lambda s:(s.occurred_at,s.source_id), reverse=True))
     with pytest.raises(RuntimeError, match="binding is not current"):
         PostgresOwnerMemorySources(people_memory_engine, tenant_id=tenant,
@@ -106,6 +113,8 @@ def test_owner_memory_sources_private_alias_pagination_erasure_and_revocation(pe
                   table.c.principal_binding_id==binding).values(status="revoked"))
     with pytest.raises(RuntimeError, match="binding is not current"):
         reader().page(now=NOW)
+    with pytest.raises(RuntimeError, match="binding is not current"):
+        reader().document(items[0].source_id, now=NOW)
 
 
 @pytest.mark.parametrize(

@@ -12,9 +12,27 @@ if (!chromiumBinary || !path.isAbsolute(chromiumBinary)) {
   throw new Error('EVA_DASHBOARD_CHROMIUM must be an absolute path');
 }
 const { chromium } = require(playwrightPackage);
-const dist = path.resolve(__dirname, 'dist');
+const dist = process.env.EVA_DASHBOARD_DIST
+  ? path.resolve(process.env.EVA_DASHBOARD_DIST) : path.resolve(__dirname, 'dist');
+const cursor = '2026-09-07T12:00:00Z|00000000-0000-0000-0000-000000000002';
+const memoryPage = (sources, next_cursor = null) => ({
+  contract: 'EvaOwnerMemorySources/v1', read_only: true,
+  meaning: 'Eigen gespreksbronnen, geen overzicht van alle afgeleide herinneringen.', sources, next_cursor,
+});
+const source = (id, excerpt, retention_state, truncated = false) => ({
+  source_id: `00000000-0000-0000-0000-${String(id).padStart(12, '0')}`,
+  occurred_at: '2026-09-07T12:00:00Z', excerpt, retention_state, truncated,
+});
+const firstMemoryPage = memoryPage([
+  source(1, 'Ik drink graag thee na het eten.', 'retained'),
+  source(2, '<img src="https://external.invalid/tracker" onerror="alert(1)">', 'pending', true),
+], cursor);
 
 const fixtures = {
+  '/internal/v1/dashboard/initiatives': { contract: 'EvaOwnerInitiatives/v1', cards: [] },
+  '/internal/v1/dashboard/browser/status': { contract: 'EvaBrowserSession/v1', state: 'stopped', revision: 0,
+    owner_control: false, eva_control: false, viewer_path: null, browser_ready: false },
+  '/internal/v1/dashboard/memory-sources': firstMemoryPage,
   '/internal/v1/dashboard/status': {
     contract: 'EvaDashboardStatus/v1', read_only: true,
     runtime: { ready: true, state: 'ready' },
@@ -49,10 +67,11 @@ const fixtures = {
   },
 };
 
-function serverFor(authorized, seen) {
+function serverFor(authorized, seen, memory = { mode: 'pages' }) {
   return http.createServer((request, response) => {
-    const pathname = new URL(request.url, 'http://127.0.0.1').pathname;
-    seen.push({ pathname, authorization: request.headers.authorization || null });
+    const url = new URL(request.url, 'http://127.0.0.1');
+    const pathname = url.pathname;
+    seen.push({ pathname, query: url.search, authorization: request.headers.authorization || null });
     if (pathname.startsWith('/internal/v1/dashboard/assets/')) {
       const name = pathname.slice('/internal/v1/dashboard/'.length);
       const file = path.resolve(dist, name);
@@ -73,6 +92,52 @@ function serverFor(authorized, seen) {
         response.statusCode = 401;
         response.end(JSON.stringify({ detail: 'owner access required' }));
         return;
+      }
+      if (pathname.startsWith('/internal/v1/dashboard/memory-sources/')) {
+        if (memory.mode === 'sourceRevoked') { response.statusCode = 404; response.end('{}'); return; }
+        const parts = pathname.split('/'); const id = parts[5]; const action = parts[6];
+        assert.equal(id, source(1, '', 'retained').source_id);
+        if (request.method === 'POST') {
+          let body = ''; request.on('data', chunk => { body += chunk; });
+          request.on('end', () => {
+            const payload = JSON.parse(body); memory.changes = (memory.changes || 0) + 1;
+            if (action === 'forget') assert.deepEqual(payload, { confirm: true });
+            else { assert.equal(action, 'correct'); assert.deepEqual(payload, { text: 'Ik drink nu liever koffie.' }); }
+            response.end(JSON.stringify({ contract: 'EvaOwnerMemoryChange/v1', source_id: id,
+              state: action === 'forget' ? 'erased' : 'correction_queued' }));
+          }); return;
+        }
+        response.end(JSON.stringify({ contract: 'EvaOwnerMemorySource/v1', source_id: id,
+          content: 'Volledige eigen gespreksbron: ik drink graag thee.', occurred_at: '2026-09-07T12:00:00Z',
+          retention_state: 'retained', origin: 'Telegram' })); return;
+      }
+      if (pathname === '/internal/v1/dashboard/memory-sources') {
+        assert.equal(request.method, 'GET');
+        assert.equal(url.searchParams.get('limit'), '20');
+        assert.ok([...url.searchParams.keys()].every(key => ['limit', 'before'].includes(key)));
+        if (memory.mode === 'denied' || memory.mode === 'error') {
+          response.statusCode = memory.mode === 'denied' ? 403 : 503;
+          response.end(JSON.stringify({ detail: 'PRIVATE FAILURE MUST NOT APPEAR' })); return;
+        }
+        if (memory.mode === 'empty') { response.end(JSON.stringify(memoryPage([]))); return; }
+        if (memory.mode === 'malformed') {
+          response.end(JSON.stringify({ ...firstMemoryPage, private_scope: 'PRIVATE FAILURE MUST NOT APPEAR' })); return;
+        }
+        const invalid = {
+          invalidDate: memoryPage([{ ...source(1, 'Niet tonen', 'retained'), occurred_at: '2026-02-30T12:00:00Z' }]),
+          invalidCursor: { ...firstMemoryPage, next_cursor: 'principal:other' },
+          duplicateId: memoryPage([source(1, 'Niet tonen', 'retained'), source(1, 'Dubbel', 'pending')]),
+          overlong: memoryPage([source(1, 'x'.repeat(2049), 'retained')]),
+          unknownState: memoryPage([source(1, 'Niet tonen', 'unknown')]),
+        };
+        if (invalid[memory.mode]) { response.end(JSON.stringify(invalid[memory.mode])); return; }
+        if (memory.mode === 'delayed') {
+          setTimeout(() => response.end(JSON.stringify(firstMemoryPage)), 800); return;
+        }
+        if (url.searchParams.has('before')) {
+          assert.equal(url.searchParams.get('before'), cursor);
+          response.end(JSON.stringify(memoryPage([source(3, 'Tweede pagina: een andere bron.', 'needs_help')]))); return;
+        }
       }
       const payload = fixtures[pathname];
       if (!payload) { response.statusCode = 404; response.end('{}'); return; }
@@ -122,7 +187,8 @@ async function main() {
   let deniedServer;
   try {
     const seen = [];
-    server = serverFor(true, seen);
+    const memory = { mode: 'pages' };
+    server = serverFor(true, seen, memory);
     await listen(server);
     const origin = `http://127.0.0.1:${server.address().port}`;
     const page = await browser.newPage();
@@ -153,6 +219,86 @@ async function main() {
       assert.ok(seen.some((row) => row.pathname === endpoint));
     }
     assert.ok(seen.every((row) => row.authorization === null));
+    await page.getByRole('heading', { name: 'Jouw geheugenbronnen', exact: true }).waitFor();
+    await page.getByText('Ik drink graag thee na het eten.', { exact: true }).waitFor();
+    assert.equal(await page.locator('.memory-list img').count(), 0);
+    assert.equal(await page.getByText('<img src="https://external.invalid/tracker" onerror="alert(1)">', { exact: true }).count(), 1);
+    await page.getByText('Fragment — deze bron is langer dan hier getoond.', { exact: true }).waitFor();
+    await page.getByRole('button', { name: 'Bekijken en aanpassen', exact: true }).first().click();
+    await page.getByText('Volledige eigen gespreksbron: ik drink graag thee.', { exact: true }).waitFor();
+    await page.getByRole('button', { name: 'Deze bron vergeten', exact: true }).click();
+    assert.equal(memory.changes || 0, 0);
+    await page.getByRole('button', { name: 'Annuleren', exact: true }).click();
+    assert.equal(memory.changes || 0, 0);
+    await page.getByRole('button', { name: 'Informatie corrigeren', exact: true }).click();
+    await page.getByLabel('Wat moet Eva voortaan onthouden?').fill('Ik drink nu liever koffie.');
+    await page.getByRole('button', { name: 'Correctie doorgeven', exact: true }).click();
+    await page.getByText(/Je correctie is ontvangen. De nieuwe bron/).waitFor();
+    assert.equal(memory.changes, 1);
+    await page.getByRole('button', { name: 'Bekijken en aanpassen', exact: true }).first().click();
+    await page.getByRole('button', { name: 'Deze bron vergeten', exact: true }).click();
+    await page.getByRole('button', { name: 'Bevestigen: deze bron vergeten', exact: true }).click();
+    await page.getByText('Deze bron en het daarvan afgeleide geheugen zijn gewist.', { exact: true }).waitFor();
+    assert.equal(memory.changes, 2);
+    assert.equal(await page.getByRole('button', { name: 'Vorige', exact: true }).isDisabled(), true);
+    await page.getByRole('button', { name: 'Volgende', exact: true }).click();
+    await page.getByText('Tweede pagina: een andere bron.', { exact: true }).waitFor();
+    assert.equal(await page.getByText('Ik drink graag thee na het eten.', { exact: true }).count(), 0);
+    await page.getByText('Hulp nodig', { exact: true }).waitFor();
+    assert.equal(await page.getByRole('button', { name: 'Volgende', exact: true }).isDisabled(), true);
+    await page.getByRole('button', { name: 'Vorige', exact: true }).click();
+    await page.getByText('Ik drink graag thee na het eten.', { exact: true }).waitFor();
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.keyboard.press('Escape');
+    await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+    assert.equal(await page.evaluate(() => document.documentElement.scrollWidth > innerWidth), false,
+      JSON.stringify(await page.evaluate(() => [...document.querySelectorAll('body *')]
+        .filter(element => element.getBoundingClientRect().right > innerWidth + 1)
+        .slice(0, 12).map(element => ({ tag: element.tagName, class: element.className, width: element.getBoundingClientRect().width })))));
+    if (process.env.EVA_DASHBOARD_SCREENSHOT) await page.screenshot({ path: process.env.EVA_DASHBOARD_SCREENSHOT, fullPage: true });
+    await page.setViewportSize({ width: 1280, height: 900 });
+    await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+    await page.getByRole('button', { name: 'Bekijken en aanpassen', exact: true }).first().click();
+    await page.getByText('Volledige eigen gespreksbron: ik drink graag thee.', { exact: true }).waitFor();
+    memory.mode = 'sourceRevoked';
+    await page.locator('.memory-sources').getByRole('button', { name: 'Vernieuwen', exact: true }).click();
+    await page.getByText('Deze bron is niet beschikbaar. Sluit dit venster en vernieuw de lijst.', { exact: true }).waitFor();
+    assert.equal(await page.getByText('Volledige eigen gespreksbron: ik drink graag thee.', { exact: true }).count(), 0);
+    await page.getByRole('button', { name: 'Sluiten', exact: true }).click();
+    memory.mode = 'pages';
+    const cases = [];
+    for (const [mode, message] of [
+      ['denied', 'Je eigenaarstoegang is niet meer geldig. De bronnen zijn verborgen.'],
+      ['error', 'Geheugenbronnen zijn nu niet beschikbaar. Probeer opnieuw; eerdere inhoud is verborgen.'],
+      ['malformed', 'Geheugenbronnen zijn nu niet beschikbaar. Probeer opnieuw; eerdere inhoud is verborgen.'],
+      ...['invalidDate', 'invalidCursor', 'duplicateId', 'overlong', 'unknownState'].map(mode =>
+        [mode, 'Geheugenbronnen zijn nu niet beschikbaar. Probeer opnieuw; eerdere inhoud is verborgen.']),
+      ['empty', 'Nog geen zichtbare geheugenbronnen.'],
+    ]) {
+      memory.mode = mode;
+      await page.locator('.memory-sources').getByRole('button', { name: 'Vernieuwen', exact: true }).click();
+      await page.getByText(message, { exact: true }).waitFor();
+      assert.equal(await page.locator('.memory-list li').count(), 0);
+      assert.equal((await page.locator('body').innerText()).includes('PRIVATE FAILURE MUST NOT APPEAR'), false);
+      cases.push(mode);
+      memory.mode = 'pages';
+      await page.locator('.memory-sources').getByRole('button', { name: 'Vernieuwen', exact: true }).click();
+      await page.getByText('Ik drink graag thee na het eten.', { exact: true }).waitFor();
+    }
+    memory.mode = 'delayed';
+    const delayed = page.waitForRequest(request => request.url().includes('/memory-sources?'));
+    await page.locator('.memory-sources').getByRole('button', { name: 'Vernieuwen', exact: true }).click();
+    await delayed;
+    assert.equal(await page.locator('.memory-list li').count(), 0);
+    memory.mode = 'denied';
+    await page.locator('.memory-sources').getByRole('button', { name: 'Vernieuwen', exact: true }).click();
+    await page.getByText('Je eigenaarstoegang is niet meer geldig. De bronnen zijn verborgen.', { exact: true }).waitFor();
+    await page.waitForTimeout(1000);
+    assert.equal(await page.locator('.memory-list li').count(), 0);
+    assert.deepEqual(external, []);
+    assert.deepEqual(errors, []);
+    assert.equal(await page.evaluate(() => localStorage.length + sessionStorage.length), 0);
+    assert.equal((await page.context().cookies()).length, 0);
     await page.close();
     await close(server);
     server = undefined;
@@ -170,6 +316,7 @@ async function main() {
     assert.ok(denied.some((row) => row.pathname === '/internal/v1/dashboard/status'));
     assert.equal(denied.some((row) => row.pathname === '/internal/v1/dashboard/identity'), false);
     assert.equal(denied.some((row) => row.pathname === '/internal/v1/dashboard/workboard'), false);
+    assert.equal(denied.some((row) => row.pathname === '/internal/v1/dashboard/memory-sources'), false);
     assert.equal(await deniedPage.evaluate(() => localStorage.length), 0);
     assert.equal(await deniedPage.evaluate(() => sessionStorage.length), 0);
     assert.equal((await deniedPage.context().cookies()).length, 0);
@@ -189,6 +336,8 @@ async function main() {
         statusRequestObserved: true,
         workboardRead: false,
       },
+      memorySources: { fullSource: true, staleDetailRevokedWhileListAvailable: true, explicitCorrection: true, eraseConfirmationAndCancellation: true, pagination: true, literalText: true, revokedAccessClearsContent: true,
+        negativeCases: cases, lateReplyCannotRestoreRevokedContent: true, mobileWidth: 390, serverScopeOnly: true },
       status: 'passed',
     }));
   } finally {
