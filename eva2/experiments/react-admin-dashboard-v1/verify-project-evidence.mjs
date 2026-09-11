@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
-import {applyReviewedCapabilities} from './project-server.mjs';
+import {applyReviewedCapabilities, applyVoiceTurnEvidence} from './project-server.mjs';
 const audit=JSON.parse(readFileSync(new URL('./capability-audit.json',import.meta.url)));
 delete audit.findings.find(x=>x.id==='initiative').latestObservation;
 const board={audit:{initiativeDeliveryAU008:{built:true,tested:true,live:true,ownerAccepted:false,liveCapabilityCount:8}}};
@@ -57,3 +57,11 @@ assert.equal(initiativeObserved.currentWork,'Checklist opgeslagen Jaap beoordeel
 assert.equal(initiativeObserved.accepted,'no');
 assert.equal(initiativeObserved.evidence.includes('dated-readback.json'),true);
 console.log('Dated initiative result and consistent technical states: passed');
+
+const turnProject=make();applyReviewedCapabilities(turnProject,board,audit);
+applyVoiceTurnEvidence(turnProject,{browserProof:{passed:true,speechEndToAudioMs:18611,speechEndToFinalMs:81605},limits:['No physical listening acceptance']});
+const turn=turnProject.capabilities.find(row=>row.id==='voice');
+assert.match(turn.visibleResult,/18,611 s/);
+assert.match(turn.gap,/te lang/);
+assert.equal(turn.accepted,'no');
+console.log('Explicit first-part voice proof retains latency and acceptance limits: passed');

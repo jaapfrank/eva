@@ -120,9 +120,28 @@ export function applyReviewedCapabilities(project, board, audit) {
   });
 }
 
+export function applyVoiceTurnEvidence(project, evidence) {
+  const proof = evidence.browserProof;
+  if (proof?.passed !== true || !Number.isFinite(proof.speechEndToAudioMs) || !Number.isFinite(proof.speechEndToFinalMs)) return;
+  const row = project.capabilities.find(item => item.id === 'voice');
+  if (!row) return;
+  const first = (proof.speechEndToAudioMs / 1000).toLocaleString('nl-NL', {maximumFractionDigits:3});
+  const final = (proof.speechEndToFinalMs / 1000).toLocaleString('nl-NL', {maximumFractionDigits:3});
+  const result = `Bij expliciet verzoek spreekt Eva een eerste zin terwijl echt onderzoek doorgaat. Browserproef: eerste audio na ${first} s; eindantwoord na ${final} s.`;
+  row.visibleResult += ` ${result}`;
+  row.works = row.visibleResult;
+  row.gap = `De beginstilte van ${first} s is te lang. Snelle betekenisvolle reactie, algemeen spontaan vervolg tijdens werk en natuurlijke stem/uitspraak blijven open. Fenna is nog niet door Jaap beoordeeld; telefoon en VoicePE niet opgeleverd.`;
+  row.detail = `${row.visibleResult} ${row.gap} ${evidence.limits?.join(' ') || ''}`;
+  row.resultBasis = `Browserdeelproef 11 september · kern ${evidence.initialBuild?.images?.core?.image?.slice(7,14) || 'volgens bewijs'}, media ${evidence.paragraphFix?.image?.slice(7,14) || 'volgens bewijs'}`;
+  row.stageNotes = { ...row.stageNotes, live:result, tested:'Echte browser en kern, synthetische spraakinvoer; geen nieuwe fysieke luisterproef.' };
+  row.evidence += ' · eva2/evidence/product/voice-natural-turn-candidate-2026-09-11.json';
+  row.firstPartProof = {title:'Eerste zin tijdens expliciet gevraagd onderzoek', detail:result, source:'voice-natural-turn-candidate-2026-09-11.json'};
+}
+
 async function applyCapabilityAudit(project, board) {
   try {
     applyReviewedCapabilities(project, board, JSON.parse(await readFile(auditFile, 'utf8')));
+    try { applyVoiceTurnEvidence(project, JSON.parse(await readFile(new URL('../../evidence/product/voice-natural-turn-candidate-2026-09-11.json', import.meta.url), 'utf8'))); } catch { /* Existing dated voice proof remains if this supplementary evidence is unavailable. */ }
   } catch { project.capabilityAudit = { unavailable: true }; }
 }
 

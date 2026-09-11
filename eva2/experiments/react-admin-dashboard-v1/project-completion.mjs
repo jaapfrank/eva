@@ -52,6 +52,7 @@ export function applyProductCompletion(project, board) {
     if (row.id === 'voice') for (const test of project.practiceTests.filter(item => item.id.startsWith('SP-'))) {
       steps.push({id:test.id,title:test.title,required:true,complete:test.status === 'accepted',accepted:test.status === 'accepted',status:test.status === 'accepted' ? 'Door Jaap geslaagd' : 'Open',detail:test.result || test.change,source:'audit.projectDashboard.practiceTests',criteria:test.steps || []});
     }
+    if (row.id === 'voice' && row.firstPartProof) steps.push({id:'voice-first-part',title:row.firstPartProof.title,required:true,complete:true,status:'Beperkte technische proef geslaagd',accepted:false,detail:row.firstPartProof.detail,source:row.firstPartProof.source,criteria:[]});
     // Keep narrow accepted results explicit even when a broader card has other requirements.
     if (row.id === 'memory') {
       const preference = steps.find(step => step.id === 'CO-008');
