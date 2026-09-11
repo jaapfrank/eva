@@ -1,0 +1,28 @@
+# Optional, measured compute profile for the existing Hindsight service.
+# Keep the original immutable image and database. The content-addressed bundle
+# must be root-owned and verified against its manifest before activation.
+# Requires native Docker CDI and the NVIDIA toolkit-generated device spec.
+services:
+  hindsight:
+    cpus: 4.0
+    mem_limit: 8g
+    memswap_limit: 8g
+    devices:
+      - nvidia.com/gpu=all
+    environment:
+      PYTHONPATH: /opt/eva-cuda
+      HINDSIGHT_API_EMBEDDINGS_LOCAL_FORCE_CPU: "true"
+      HINDSIGHT_API_RERANKER_LOCAL_FORCE_CPU: "false"
+      HINDSIGHT_API_RERANKER_LOCAL_FP16: "false"
+      OMP_NUM_THREADS: "2"
+      MKL_NUM_THREADS: "2"
+    volumes:
+      - type: bind
+        source: ${EVA_HINDSIGHT_CUDA_BUNDLE:?set the verified immutable CUDA dependency bundle}
+        target: /opt/eva-cuda
+        read_only: true
+        bind:
+          create_host_path: false
+    labels:
+      io.eva2.compute-profile: native-cuda-reranker-cpu-embeddings
+      io.eva2.cuda-bundle-sha256: ${EVA_HINDSIGHT_CUDA_BUNDLE_SHA256:?set the verified bundle manifest digest}
