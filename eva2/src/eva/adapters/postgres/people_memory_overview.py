@@ -60,6 +60,19 @@ class PostgresOwnerMemorySources:
 
     def page(self, *, now: datetime, limit: int = 20,
              before: str | None = None) -> MemorySourcePage:
+        return self._read(now=now, limit=limit, before=before)
+
+    def document(self, source_id: str, *, now: datetime):
+        """Resolve an exact source through the same current owner and audience checks."""
+        if not isinstance(source_id, str) or str(UUID(source_id)) != source_id:
+            raise ValueError("memory source identity is invalid")
+        found = self._read(now=now, limit=1, source_id=source_id)
+        if found is None:
+            raise LookupError("owner memory source unavailable")
+        return found
+
+    def _read(self, *, now: datetime, limit: int, before: str | None = None,
+              source_id: str | None = None):
         cursor = memory_source_page_request(limit, before)
         if now.tzinfo is None or now.utcoffset() != timedelta(0) or now.microsecond:
             raise ValueError("memory source time must be whole-second UTC")
@@ -116,6 +129,9 @@ class PostgresOwnerMemorySources:
                     e.event_type == "MEMORY_RETAIN_QUEUED", e.sequence == 1,
                     e.thread_id.startswith("memory-retain:"),
                     e.occurred_at <= now, owned, private,
+                    # Completed retain checkpoints stay completed after redaction.
+                    # The erasure receipt, not their old phase, hides the source.
+                    sa.not_(data.has_key("content_erasure")),
                     data["tenant_id"].astext == self._tenant,
                     data["installation_id"].astext == self._installation,
                     sa.not_(data["conversation_id"].astext.startswith("telegram:-")),
@@ -124,6 +140,8 @@ class PostgresOwnerMemorySources:
                     sa.or_(data["retention_until"].astext.is_(None),
                            data["retention_until"].astext > stamp),
                 )
+                if source_id is not None:
+                    query = query.where(e.event_id == UUID(source_id))
                 if cursor:
                     query = query.where(sa.tuple_(e.occurred_at, e.event_id) < cursor)
                 PostgresOperationalTimeline(self._engine, self._scope)._scope(conn)
@@ -141,9 +159,13 @@ class PostgresOwnerMemorySources:
                         raise PeopleMemoryOverviewError("memory source scope differs")
                     state = ("retained" if row.phase == "memory_retained" else
                              "needs_help" if row.phase == "memory_needs_help" else "pending")
+                    if source_id is not None:
+                        return doc, state
                     sources.append(MemorySource(str(row.event_id),
                         row.occurred_at.strftime("%Y-%m-%dT%H:%M:%SZ"),
                         doc.content[:2048], len(doc.content) > 2048, state))
+                if source_id is not None:
+                    return None
                 next_cursor = None
                 if len(rows) > limit:
                     last = sources[-1]
