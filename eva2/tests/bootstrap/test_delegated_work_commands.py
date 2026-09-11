@@ -219,3 +219,43 @@ def test_commands_are_private_to_the_exact_owner_and_ignore_normal_chat() -> Non
         is None
     )
     assert store.admitted == []
+
+
+def test_private_bridge_command_reloads_binding_and_preserves_turn_identity():
+    from eva.bootstrap.runtime import PostgresHindsightMemoryRuntime
+    from eva.bootstrap.delegated_work_owner_service import DelegatedWorkOwnerService
+    from eva.application.telegram_ingress import TelegramPrincipalBinding, TelegramPrincipalBindings
+
+    original = TelegramPrincipalBindings((TelegramPrincipalBinding(
+        telegram_user_id=42, principal_id=str(OWNER), allowed_chat_ids=("42",),
+        principal_binding_id=str(BINDING),
+    ),))
+    current = [original]
+    store = FakeStore()
+    service = DelegatedWorkOwnerService(
+        store, owner_principal_id=OWNER, principal_binding_id=BINDING, clock=lambda: NOW,
+        private_bridge_principal_loader=lambda: current[0].private_bridge_principal(
+            principal_id=str(OWNER), principal_binding_id=BINDING,
+        ),
+    )
+    runtime = PostgresHindsightMemoryRuntime.__new__(PostgresHindsightMemoryRuntime)
+    runtime._telegram_principal_bindings = original
+    runtime._telegram_principal_bindings_loader = lambda: current[0]
+    runtime._delegated_work_commands = DelegatedWorkConversationCommands(service=service)
+    observed = []
+    runtime._journal = lambda turn: SimpleNamespace(
+        admit=lambda actual: observed.append(actual),
+        committed_reply=lambda actual: None,
+        commit_reply=lambda actual, reply: reply,
+    )
+    turn = _turn("Laat een onderzoeker drie ideeën bedenken", principal_id="telegram:42")
+    reply = runtime.respond_telegram_delegated_work(turn, telegram_user_id=42, chat_id="42")
+    assert reply is not None
+    assert observed == [turn] and observed[0].principal_id == "telegram:42"
+    assert store.admitted[0]["spec"].owner_principal_id == str(OWNER)
+    current[0] = TelegramPrincipalBindings((TelegramPrincipalBinding(
+        telegram_user_id=42, principal_id=str(OWNER), allowed_chat_ids=("-100",),
+        principal_binding_id=str(BINDING),
+    ),))
+    assert runtime.respond_telegram_delegated_work(turn, telegram_user_id=42, chat_id="42") is None
+    assert len(store.admitted) == 1

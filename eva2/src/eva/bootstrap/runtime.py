@@ -1102,7 +1102,12 @@ class PostgresHindsightMemoryRuntime:
     ) -> GroundedReply | None:
         """Handle owner work commands on Eva1's existing private bridge."""
 
-        bindings = self._telegram_principal_bindings
+        try:
+            bindings = (self._telegram_principal_bindings_loader()
+                        if self._telegram_principal_bindings_loader is not None
+                        else self._telegram_principal_bindings)
+        except (OSError, ValueError, RuntimeError):
+            return None
         commands = self._delegated_work_commands
         if (
             bindings is None
@@ -1114,23 +1119,14 @@ class PostgresHindsightMemoryRuntime:
         authority_binding = bindings.resolve_binding_id(telegram_user_id, chat_id)
         if authority_principal is None or authority_binding is None:
             return None
-        authority_turn = ConversationTurn.private(
-            turn.tenant_id,
-            turn.installation_id,
-            authority_principal,
-            turn.conversation_id,
-            turn.message_id,
-            turn.text,
-            turn.occurred_at,
-        )
-        if not commands.matches(authority_turn, principal_binding_id=authority_binding):
+        if not commands.matches(turn, principal_binding_id=authority_binding):
             return None
         journal = self._journal(turn)
         journal.admit(turn)
         committed = journal.committed_reply(turn)
         if committed is not None:
             return committed
-        reply = commands.handle(authority_turn, principal_binding_id=authority_binding)
+        reply = commands.handle(turn, principal_binding_id=authority_binding)
         if reply is None:
             raise RuntimeError("delegated owner command disappeared after admission")
         return journal.commit_reply(turn, reply)
@@ -1606,6 +1602,15 @@ def create_runtime_app() -> FastAPI:
                     settings.background_tenant_id or "",
                     settings.background_installation_id or "",
                     "delegated work requires the configured conversation scope",
+                ),
+                private_bridge_principal_loader=(
+                    None if settings.telegram_principal_bindings_file is None
+                    else lambda: load_principal_bindings(
+                        settings.telegram_principal_bindings_file
+                    ).private_bridge_principal(
+                        principal_id=str(dashboard_owner_principal_id),
+                        principal_binding_id=dashboard_principal_binding_id,
+                    )
                 ),
             )
             delegated_work_actions = PostgresDelegatedWorkActions(engine, delegated_work_service)
