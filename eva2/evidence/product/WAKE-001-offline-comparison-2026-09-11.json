@@ -1,9 +1,9 @@
 {
   "contract": "EvaWakeWordOfflineComparison/v1",
-  "observedAt": "2026-09-11T08:44:43.013704+00:00",
-  "status": "bounded_finetune_tested_rejected",
-  "built": "original-model fine-tune candidate exported, offline comparison harness and phrase-separated corpus",
-  "tested": "100-step last-weights candidate compared on identical stored features and synthetic PCM; candidate fails recall gate",
+  "observedAt": "2026-09-11T09:00:36.373289+00:00",
+  "status": "two_candidates_rejected_requires_independent_labeled_audio_and_device_config",
+  "built": "Two local TFLite candidates exported, matching-corpus evaluation and validation calibration built",
+  "tested": "Both candidates rejected; no cutoff repairs recall/false-trigger tradeoff on current validation. Product acceptance unproven.",
   "installed": false,
   "accepted": false,
   "scope": "Separate Home Assistant wakeword work, not laptop voice or other active goals",
@@ -154,27 +154,34 @@
     "falseActivationReductionAtLeast": 0.5,
     "positiveRecallAtLeast": 0.9,
     "maxRecallLossPerScenario": 0.05,
-    "currentResult": "FAIL: old positive42/60→40/60, TTS262/350→128/350; clean synthetic12/12→1/12 despite negative29→2 and clean46/48→1/48",
+    "currentResult": "FAIL for both trained candidates and every calibrated cutoff; no installable winner",
     "independentHumanTrialRequired": true
   },
   "next": [
-    "Develop a better-balanced candidate; current negative-heavy100step fine-tune rejected, no further host training without coordination",
-    "Verify actual firmware YAML/package/model hash and retain known-good binary plus USB recovery",
-    "Freeze independent Dutch confusables/noise/distance/echo trials; no private household recordings without authorization",
-    "Install one device only after measured gain and recovery; ten-call/five-minute short owner trial plus longer rare-fault trial"
+    "Obtain above minimum labeled independent audio and actual configuration/recovery evidence; owner is away, no repeated request sent",
+    "Audit new labels and freeze recording-session splits before targeted next model work",
+    "No more blind training variants on current synthetic data; retain both rejected models as evidence",
+    "Only a gate-passing candidate can proceed to one-device reversible installation and actual owner acceptance"
   ],
   "artifacts": {
     "compare.py": "d17fccef1c42f309cb117235cbde59b8b48e2187fad1ed62931c0631305ecc2e",
-    "comparison.json": "8f6fe990d8c12b67966a79ae1f20f750cc5da6ff4d2be10b64a1d093d5fab2da",
-    "scenario-results.json": "125a3e470ccf5ecbff190cf3222acfcc1a158485f80f4d1e8f965bd00a967404",
+    "comparison.json": "7e4cb9f68a990ffb31d148455253bd0d03afa7555a5f139125b70fb764aaf980",
+    "scenario-results.json": "6fcc1e3f7aa0c62e9ab9bbf77ac41c636444b45876854fd9ee323ab9dd967416",
     "scenario-manifest.json": "27591796c43f1c52f8c01f26f5a274293b791624cc283f1112347fea25d80672",
     "hard-negative-manifest.json": "911b83e63062e87d349b919524223185b753a103bc05599522ebe0c34457d863",
     "audit_recordings.json": "6445f86ce789131943555b61995f3e5a133ed3fd1e5473b6712dc5912b3c57c9",
     "finetune_bounded_candidate.py": "bd4d4e16da1682c701b87eb5373d22de00a23fcc04dd546462958b1116a168bb",
-    "README.md": "70deb066f88586b1671f49c47f93c5a0580b69c27dae34dd537a2d6c3955dc7f",
+    "README.md": "94aa251009f07e8074b97b06c128c6bca07b868ebf7ec3c4f78a85f570680644",
     "compare_candidate.py": "6cf3740ac3c7f3d8c7b74a7ed2f2f40475e5c24781041bc832a072698704f1ed",
     "evaluate_candidate_scenarios.py": "d550ff02d5a63d4c53d8f7a7171a7d6692f9a87f197c678aea32bd0157f068d4",
-    "export_saved_candidate.py": "2879b24a23e0ec10cb591723018536f628064346dd9aa03f90836d7bea652975"
+    "export_saved_candidate.py": "2879b24a23e0ec10cb591723018536f628064346dd9aa03f90836d7bea652975",
+    "calibrate_validation.py": "1a4b0dae2883eb70b716c58a5829288a81917f758217ae9c481dcfa111f6c599",
+    "calibrate_balanced.py": "69f3af4286c8337227ff82d0749edaa909fc3f46243f72f0db89cc0b90e902c0",
+    "calibration-validation.json": "ba817b0391883a79a5d1a5b89ff058ee18f23f436cdc3abb72c80f4bca7dd97a",
+    "calibration-balanced.json": "06318f5ce4b3af6c2aa2d1c0d7f2610858ad8301460be799758237490b984f43",
+    "train_balanced_candidate.py": "149708f8be94747bfa11a393b0d8a8105ae06fc961735f1df55b83ec7d69cce3",
+    "export_balanced_candidate.py": "3ef875b725eefc9299630f815a026d5adedfd62a08325503b5d20fd24eff717c",
+    "balanced-training-receipt.json": "f00ac60882ef344a16ad63b7c2bdcfa7fdb0752a7067a51636c6ea4801559ff5"
   },
   "replayInstructions": "E:/Projecten/wakeword/experiments/20260911/README.md",
   "sources": [
@@ -236,5 +243,103 @@
       "negative_activated": 1,
       "negative_total": 48
     }
-  }
+  },
+  "balancedFollowup": {
+    "reason": "First fine-tune doubled weighted negative:positive ratio from500:6 to990:6. Followup preserves500:6, substitutes negative content only. Plausible imbalance mechanism investigated; not established as sole cause.",
+    "trainingReceipt": {
+      "steps": 100,
+      "status": "configured100steps_saved",
+      "validation": "Upstream bulk validation intentionally skipped; separate file-by-file evaluation required",
+      "negativeClassWeight": 20,
+      "positiveSamplingWeight": 6,
+      "negativeSamplingWeight": 25,
+      "positiveEffectiveWeight": 6,
+      "negativeEffectiveWeight": 500
+    },
+    "negativeSampling": {
+      "speech": 6,
+      "dinner_party": 6,
+      "no_speech": 5,
+      "newDutch": 8
+    },
+    "sha256": "6ab0981392a123931be31517acb7497a49f93c8999e574c619b5d0b26ccd8a9d",
+    "bulkValidation": "Skipped deliberately after saving exactly100steps; no OOM in this followup. Separate bounded export and file-by-file evaluation all completed.",
+    "comparisonAtCutoff098Window5": {
+      "real_positive": {
+        "clips": 60,
+        "missed": 24,
+        "events": 36,
+        "duration_hours": 0.05283333333333333
+      },
+      "tts_positive": {
+        "clips": 350,
+        "missed": 249,
+        "events": 101,
+        "duration_hours": 0.30819444444444444
+      },
+      "negative": {
+        "clips": 10,
+        "missed": 10,
+        "events": 0,
+        "duration_hours": 5.334719444444445
+      }
+    },
+    "syntheticScenarios": {
+      "clean": {
+        "positive_detected": 0,
+        "positive_total": 12,
+        "negative_activated": 0,
+        "negative_total": 48
+      },
+      "quiet": {
+        "positive_detected": 0,
+        "positive_total": 12,
+        "negative_activated": 0,
+        "negative_total": 48
+      },
+      "noise10dB": {
+        "positive_detected": 0,
+        "positive_total": 12,
+        "negative_activated": 1,
+        "negative_total": 48
+      },
+      "digital_reverb": {
+        "positive_detected": 0,
+        "positive_total": 12,
+        "negative_activated": 0,
+        "negative_total": 48
+      }
+    },
+    "decision": "REJECT; fewer false events accompanied by unacceptable true-call misses"
+  },
+  "validationCalibration": {
+    "method": "Fixed window5; exhaustive255uint8 cutoffs on validation only, not hyperparameter retraining or test-selected cutoff",
+    "positiveRealAugmentations": 600,
+    "positiveTtsAugmentations": 3500,
+    "phraseHeldOutNegativeClips": 32,
+    "firstCandidate": {
+      "chosen": null,
+      "bestMinimumPositiveRecallUnderFpGate": 0.7451428571428571,
+      "leastNegativeRateAtRecallGate": 1.0
+    },
+    "balancedCandidate": {
+      "chosen": null,
+      "bestMinimumPositiveRecallUnderFpGate": 0.67,
+      "leastNegativeRateAtRecallGate": 1.0
+    },
+    "conclusion": "Neither candidate has a cutoff meeting both recall>=90% for each positive group and at least50% fewer negative clips than baseline. At recall gate all32held-out synthetic negatives activate. Score calibration alone does not repair these candidates."
+  },
+  "minimumMissingInput": [
+    {
+      "item": "Fresh explicitly labeled local Jaap audio, held out from training",
+      "minimumTrial": "10intentional Hé Eva calls (5near,5normal speaking position), preferably followed by a request;20scripted negative lines including even,geven,Evelien and normal unrelated speech. Label exact intended wake interval vs no wake and distance. Separate later recording session for final acceptance.",
+      "why": "Existing80recordings have no persisted session membership; augmented positives and Piper-generated negative/test voice families do not demonstrate household false-trigger separation. Further synthetic-only tuning now lacks credible acceptance evidence.",
+      "privacy": "Only planned scripted speech after owner authorization. No recording/uploading family conversations. Keep audio local. No acoustic replay without explicit instruction."
+    },
+    {
+      "item": "Actual ESPHome configuration and recovery route",
+      "minimum": "Saved YAML including exact package refs, HeyEva model source/hash, microphone channel/gain/VAD and sensitivity behavior; known-good full firmware and verified USB restore capability. Provide path/access route, not secrets pasted into chat.",
+      "why": "Historical device logs show on-device detection but not current full firmware/model identity. Old bootloader explicitly lacks automatic OTA rollback. Cannot safely install or reproduce microphone/echo preprocessing without this."
+    }
+  ]
 }
