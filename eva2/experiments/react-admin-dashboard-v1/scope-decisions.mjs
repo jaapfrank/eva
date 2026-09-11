@@ -76,7 +76,7 @@ export async function authorizeOwner(url, authorization, request=fetch) {
   const response=await request(url,{headers:{Authorization:authorization},redirect:'error',signal:AbortSignal.timeout(3000)});
   return response.ok && (await response.json()).contract==='EvaDashboardStatus/v1';
 }
-export function decisionMiddleware({path,authorize}) {
+export function decisionMiddleware({path,authorize,localOwner=false}) {
   return async(request,response)=>{
     response.setHeader('Content-Type','application/json; charset=utf-8');response.setHeader('Cache-Control','no-store');
     const reject=(status,message)=>{response.writeHead(status);response.end(JSON.stringify({error:message}));};
@@ -86,8 +86,12 @@ export function decisionMiddleware({path,authorize}) {
       if(request.method!=='POST')return reject(405,'Alleen POST toegestaan.');
       if(!request.headers['content-type']?.startsWith('application/json'))return reject(415,'JSON vereist.');
       const authorization=request.headers.authorization || '';
-      if(!/^Bearer [^\s]{32,1024}$/.test(authorization))return reject(401,'Meld aan met je bestaande eigenaar-dashboardtoken.');
-      if(!await authorize(authorization))return reject(401,'Eigenaarsaanmelding niet bevestigd.');
+      if(localOwner) {
+        if(!['127.0.0.1','::1','::ffff:127.0.0.1'].includes(request.socket.remoteAddress))return reject(403,'Alleen lokale toegang toegestaan.');
+      } else {
+        if(!/^Bearer [^\s]{32,1024}$/.test(authorization))return reject(401,'Meld aan met je bestaande eigenaar-dashboardtoken.');
+        if(!await authorize(authorization))return reject(401,'Eigenaarsaanmelding niet bevestigd.');
+      }
       let raw='';for await(const chunk of request){raw+=chunk;if(raw.length>4096)return reject(413,'Besluit te groot.');}
       let input;try{input=JSON.parse(raw);}catch{return reject(400,'Ongeldige JSON.');}
       const result=await saveDecision(path,input);

@@ -161,7 +161,7 @@ async function runtimePort(project) {
 // No credentials, chat content, filesystem browsing or task mutation endpoint.
 export function projectServer() {
   const configure = (server) => {
-    server.middlewares.use('/scope-decisions', decisionMiddleware({path:decisionsFile, authorize:async authorization=>{
+    server.middlewares.use('/scope-decisions', decisionMiddleware({path:decisionsFile, localOwner:process.env.EVA_PROJECT_LOCAL_OWNER==='1', authorize:async authorization=>{
       const board=JSON.parse(await readFile(boardFile,'utf8'));
       const port=await runtimePort(board.audit.projectDashboard);
       const url=`http://127.0.0.1:${port}/internal/v1/dashboard/status`;
@@ -184,7 +184,7 @@ export function projectServer() {
         const decisions = await readDecisions(decisionsFile);
         board.audit.optionalScopeDecisions = decisions.data.decisions;
         const project = structuredClone(board.audit.projectDashboard);
-        project.scopeDecisions = {revision:decisions.revision,events:decisions.data.events,options:optionalOptions};
+        project.scopeDecisions = {localOwner:process.env.EVA_PROJECT_LOCAL_OWNER==='1',revision:decisions.revision,events:decisions.data.events,options:optionalOptions};
         if (!project || !Array.isArray(project.capabilities)) throw new Error('project state missing');
         await applyCapabilityAudit(project, board);
         const primary = board.executionTasks.find((task) => task.id === board.activeTaskId);

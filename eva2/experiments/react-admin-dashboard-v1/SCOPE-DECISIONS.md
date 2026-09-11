@@ -23,6 +23,8 @@ De verwerking bevat `consumer`, `updatedAt` en eventueel `taskId`. Schrijf dit b
 
 ## Toegang en bewijs
 
-POST `/scope-decisions` vereist het bestaande eigenaar-dashboardtoken, dat tegen de actieve core wordt gecontroleerd. Een onbeschermde of afwijkende core-statusroute geeft geen schrijfbevoegdheid. De herkomst moet exact overeenkomen met de lokale dashboardhost. Het token blijft uitsluitend in het geheugen van de geopende pagina; geen localStorage of besluitbestand bevat het token.
+Tijdelijk kan het lokale projectdashboard met `EVA_PROJECT_LOCAL_OWNER=1` zonder aanmelding keuzes opslaan. Deze modus vereist een echte loopbackverbinding, een lokale Host, exact dezelfde Origin en JSON. De dienst blijft op 127.0.0.1 gebonden. De pagina toont dan geen tokenveld. Verwijder de instelling om aanmelding weer te vereisen. Deze instelling verandert geen core- of stemaanmelding.
+
+Zonder deze instelling vereist POST `/scope-decisions` het bestaande eigenaar-dashboardtoken, dat tegen de actieve core wordt gecontroleerd. Een onbeschermde of afwijkende core-statusroute geeft geen schrijfbevoegdheid. De herkomst moet exact overeenkomen met de lokale dashboardhost. Het token blijft uitsluitend in het geheugen van de geopende pagina; geen localStorage of besluitbestand bevat het token.
 
 `verify-scope-decisions.mjs` gebruikt een tijdelijke besluitbron en test daadwerkelijk de knoppen, refresh, teller, afwijzen, heropenen, autorisatieafwijzing, request-idempotentie en exclusief claimen. Er worden geen testbesluiten in de productiebron aangemaakt.

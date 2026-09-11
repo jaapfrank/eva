@@ -20,7 +20,7 @@ const requirements = {
   tools: ['Onbekende dienst zonder ontwikkelhulp aansluiten en opdracht afmaken', 'Persoonlijke aanmeldingen en bredere combinatietaken bewijzen'],
   voice: ['Fysiek laptopgesprek, echo en antwoordvertraging beoordelen', 'Telefoonroute installeren en in spraak/chat beproeven', 'Bestaande thuisapparaten aansluiten met werkende terugweg', 'Doorlopend gesprek en geheugen tijdens lang werk behouden', 'Verbinding beëindigen en na uitval herstellen', 'Andere toegelaten personen met eigen context en geweigerde acties beproeven'],
   projects: ['Telegram: starten, later stoppen, hervatten en resultaat terugvragen'],
-  browser: ['Bestaande Chrome aan Eva koppelen', 'Meekijken en exclusieve overname door Jaap beproeven'],
+  browser: ['Gewone opdracht via Eva voert een omkeerbare taak uit in het expliciet gedeelde bestaande Chrome-tabblad', 'Jaap blijft meekijken in hetzelfde Chrome-tabblad terwijl Eva bedient', 'Overnemen blokkeert nieuwe acties en stopt een reeds lopende Eva-actie', 'Alleen expliciet teruggeven hervat met een nieuwe paginawaarneming; oude acties blijven ongeldig', 'Intrekken of wegvallen van de verbinding blokkeert Eva zichtbaar', 'Jaap beoordeelt de werkende Chrome-route; acceptatie blijft afzonderlijk'],
   installation: [],
 };
 const optional = new Set(Object.keys(optionalOptions));

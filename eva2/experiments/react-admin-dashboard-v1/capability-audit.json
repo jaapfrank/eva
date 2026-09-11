@@ -466,11 +466,13 @@
     "loginAccepted": true,
     "viewerTrial": "failed",
     "personalBrowser": "Google Chrome",
-    "personalBrowserConnected": true,
+    "personalBrowserConnected": false,
     "evaRuntimeIntegrated": false,
     "reversibleDemo": "Proces → Nu → Proces",
     "handoffTrial": "reconnected_and_reversible_action_passed_after_explicit_selection",
     "source": "Expliciete berichten Jaap en lokale Playwright MCP-extensieproef in deze taak.",
-    "trialClientStopped": true
+    "trialClientStopped": true,
+    "bridgeProgress": "Bewaakte koppeling gebouwd; gewone klik en afbreken van een wachtende klik in een afzonderlijke testbrowser geslaagd. Gatewayactivatie, echte Eva-route in jouw gedeelde Chrome-tabblad en jouw beoordeling staan open.",
+    "bridgeEvidence": "eva2/evidence/product/chrome-shared-bridge-2026-09-11.json"
   }
 }

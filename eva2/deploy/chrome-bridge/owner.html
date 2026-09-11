@@ -1,0 +1,15 @@
+<!doctype html><html lang="nl"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Eva — meekijken en overnemen</title>
+<style>body{font:18px/1.5 system-ui;max-width:750px;margin:50px auto;padding:20px;background:#f5f7fb;color:#182838}button{font:inherit;padding:12px;margin:6px;border:1px solid #526777;border-radius:8px;background:white;cursor:pointer}button:disabled{opacity:.5}#status{font-weight:bold;padding:16px;background:#e1eaf4;border-radius:8px}#error{color:#a22020}</style>
+<h1>Meekijken en overnemen</h1><p>Eva werkt in het bestaande Chrome-tabblad dat jij deelt. Houd dat tabblad in beeld om voortdurend mee te kijken.</p>
+<p id="status" role="status">Verbinding controleren…</p>
+<button id="connect">Deel een bestaand tabblad</button><button id="takeover">Neem over</button><button id="resume">Geef terug aan Eva</button><button id="disconnect">Verbinding intrekken</button>
+<p>Bij overnemen stopt de browseractie en wacht Eva. Reeds uitgevoerde klikken kunnen niet worden teruggedraaid. Bij teruggeven kies je opnieuw expliciet een tabblad in de officiële Playwright-extensie; Eva moet de pagina daarna opnieuw lezen.</p>
+<p id="error" role="alert"></p>
+<script>
+let state,reading=false;
+const labels={disconnected:'Geen tabblad gedeeld — Eva kan niet bedienen',connecting:'Kies zelf Allow & select bij één bestaand tabblad in Chrome',eva:'Eva mag het gedeelde tabblad bedienen',taking_over:'Eva-acties stoppen — wacht op bevestiging',owner:'Jij hebt de bediening — Eva is geblokkeerd',recovery_required:'Stop niet bevestigd — verbinding controleren'};
+function show(s){state=s;document.querySelector('#status').textContent=labels[s.state]+(s.busy?' · actie bezig':'');for(const id of ['connect','takeover','resume','disconnect'])document.getElementById(id).disabled=!({connect:['disconnected'],takeover:['eva','connecting','recovery_required'],resume:['owner'],disconnect:['eva','connecting','owner','recovery_required']}[id].includes(s.state));}
+async function read(){if(reading)return;reading=true;try{const r=await fetch('/status',{cache:'no-store'});if(!r.ok)throw Error();show(await r.json());document.querySelector('#error').textContent='';}catch{state=null;document.querySelector('#status').textContent='Verbinding met browserbediening weg — status niet bevestigd';for(const b of document.querySelectorAll('button'))b.disabled=true;document.querySelector('#error').textContent='Gebruik Disconnect in de Playwright-extensie om de tabdeling rechtstreeks in te trekken.';}finally{reading=false;}}
+for(const b of document.querySelectorAll('button'))b.onclick=async()=>{if(!state)return;try{const r=await fetch('/control',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({action:b.id,epoch:state.epoch})});if(!r.ok)throw Error();show(await r.json());}catch{document.querySelector('#error').textContent='Bediening niet bevestigd. Vernieuw de status of gebruik Disconnect in de extensie.';}};
+read();setInterval(read,1000);
+</script></html>
