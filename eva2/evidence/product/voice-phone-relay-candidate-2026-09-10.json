@@ -45,10 +45,6 @@
   "currentRuntime": {
     "coreUrl": "http://127.0.0.1:44710",
     "coreSlot": "managed-b-slot3",
-    "coreImage": "sha256:54c3f886a3b1bdcb2a8be8598b02a043238b926a40a3752b7a3d4099a37d6528",
-    "coreSource": "81d4306166cf9c13456fe46e0911dcfbd66baee2",
-    "mediaImage": "sha256:57ae55645ab47d93c27f42c220eb55e2794f8877aff243791513f71e578aca40",
-    "mediaSource": "efa32d5c3e0d5d134143006ef85ffc223856a068",
     "livekitImage": "sha256:770bc61bc6ec4dcccbd3e05082d8f6bdafbee4179acab7014cc97202a9e2910b",
     "livekitNetworkMode": "eva2-owner-voice_default",
     "publishedPorts": {
@@ -62,38 +58,23 @@
     "cloudRelay": true,
     "ownerUrl": "http://localhost:44716",
     "ownerAcceptance": false,
+    "coreImage": "sha256:bf5d7e575464ab3f40c52e87f2dc9a01752aab9172cbc8cad6145ef433d38df3",
+    "coreSource": "c856e32fbf6f68b9e01754409c353d3be22161fb",
+    "mediaImage": "sha256:d6f87962a1312526772d686450a22f313cdbef679dce260687afb15faee8f9dc",
+    "mediaSource": "8b32b0fd5c720952869b017167280d4ddfb2f761",
+    "ttsVoice": "FennaNeural",
+    "composite": true,
+    "sourceEvidence": "voice-natural-turn-candidate-2026-09-11.json",
     "bindingUpdate": {
-      "reason": "AU002 catalog boundary repair cutover at 2026-09-10T22:23:35Z; voice media and relay unchanged",
-      "browserProofScope": "Recorded browser speech/audio proof predates this core cutover; not repeated",
-      "readbackArtifact": "../.eva2-artifacts/voice-livekit-20260910/au002-final-binding-readback.json",
-      "readbackSha256": "8c347fd5995724d30e47af8a9aa644f697e39607b9f84b8ca4e3cc0bc68741b8",
-      "checkedAt": "2026-09-10T22:25:03.084595+00:00",
+      "checkedAt": "2026-09-11T08:48:44.522246+00:00",
       "authenticatedMediaReadiness": {
         "status": 200,
         "body": {
           "ready": true
         }
-      }
-    },
-    "coreImageRevisionLabel": "81d4306166cf9c13456fe46e0911dcfbd66baee2",
-    "coreExplicitSourceLabel": "81d4306166cf9c13456fe46e0911dcfbd66baee2",
-    "previousCoreSourceEvidence": {
-      "artifact": "../.eva2-artifacts/au008-costless-initiative-20260910/opportunity-live-imports.json",
-      "loadedModuleCount": 19,
-      "loadedMatchesFrozenSource": true,
-      "liveImportsSha256": "b1b5ccac2228bdafb20f01279d88b8c6faa46878090bd342113b36b4ab18a763",
-      "note": "Both explicit source and OCI revision labels verified"
-    },
-    "coreSourceEvidence": {
-      "artifact": "../.eva2-artifacts/voice-livekit-20260910/au002-final-live-imports.json",
-      "loadedModuleCount": 19,
-      "verifiedModuleCount": 19,
-      "defaultSourceCommit": "81d4306166cf9c13456fe46e0911dcfbd66baee2",
-      "sourceExceptions": {
-        "eva.bootstrap.runtime": "519a03a88c02e64d3ab8bb005d9a2168c0f9ac95"
       },
-      "liveImportsSha256": "1dbac90b13d4ec334a6bc0f1e207daff070a58f920c480cd240672067e660e3b",
-      "note": "Execution-task loaded-module receipt independently compared: 18 modules match repair commit; bootstrap.runtime retained from previous live parent. Image is a minimal overlay, not the full repair-commit tree."
+      "reason": "Natural first-part core installed on slot3; media paragraph release fix installed.",
+      "browserProofScope": "Current targeted browser proof tracked separately in voice-natural-turn-candidate-2026-09-11.json; historical phone proof unchanged."
     }
   },
   "browserTypedToCoreToAudio": {
@@ -130,5 +111,61 @@
   "phoneHaPanelInstalled": false,
   "physicalOwnerAcceptance": false,
   "independentSourceReview": "GO",
-  "targetedTests": 9
+  "targetedTests": 9,
+  "runtimeHistory": [
+    {
+      "coreUrl": "http://127.0.0.1:44710",
+      "coreSlot": "managed-b-slot3",
+      "coreImage": "sha256:54c3f886a3b1bdcb2a8be8598b02a043238b926a40a3752b7a3d4099a37d6528",
+      "coreSource": "81d4306166cf9c13456fe46e0911dcfbd66baee2",
+      "mediaImage": "sha256:57ae55645ab47d93c27f42c220eb55e2794f8877aff243791513f71e578aca40",
+      "mediaSource": "efa32d5c3e0d5d134143006ef85ffc223856a068",
+      "livekitImage": "sha256:770bc61bc6ec4dcccbd3e05082d8f6bdafbee4179acab7014cc97202a9e2910b",
+      "livekitNetworkMode": "eva2-owner-voice_default",
+      "publishedPorts": {
+        "7880/tcp": [
+          {
+            "HostIp": "127.0.0.1",
+            "HostPort": "7880"
+          }
+        ]
+      },
+      "cloudRelay": true,
+      "ownerUrl": "http://localhost:44716",
+      "ownerAcceptance": false,
+      "bindingUpdate": {
+        "reason": "AU002 catalog boundary repair cutover at 2026-09-10T22:23:35Z; voice media and relay unchanged",
+        "browserProofScope": "Recorded browser speech/audio proof predates this core cutover; not repeated",
+        "readbackArtifact": "../.eva2-artifacts/voice-livekit-20260910/au002-final-binding-readback.json",
+        "readbackSha256": "8c347fd5995724d30e47af8a9aa644f697e39607b9f84b8ca4e3cc0bc68741b8",
+        "checkedAt": "2026-09-10T22:25:03.084595+00:00",
+        "authenticatedMediaReadiness": {
+          "status": 200,
+          "body": {
+            "ready": true
+          }
+        }
+      },
+      "coreImageRevisionLabel": "81d4306166cf9c13456fe46e0911dcfbd66baee2",
+      "coreExplicitSourceLabel": "81d4306166cf9c13456fe46e0911dcfbd66baee2",
+      "previousCoreSourceEvidence": {
+        "artifact": "../.eva2-artifacts/au008-costless-initiative-20260910/opportunity-live-imports.json",
+        "loadedModuleCount": 19,
+        "loadedMatchesFrozenSource": true,
+        "liveImportsSha256": "b1b5ccac2228bdafb20f01279d88b8c6faa46878090bd342113b36b4ab18a763",
+        "note": "Both explicit source and OCI revision labels verified"
+      },
+      "coreSourceEvidence": {
+        "artifact": "../.eva2-artifacts/voice-livekit-20260910/au002-final-live-imports.json",
+        "loadedModuleCount": 19,
+        "verifiedModuleCount": 19,
+        "defaultSourceCommit": "81d4306166cf9c13456fe46e0911dcfbd66baee2",
+        "sourceExceptions": {
+          "eva.bootstrap.runtime": "519a03a88c02e64d3ab8bb005d9a2168c0f9ac95"
+        },
+        "liveImportsSha256": "1dbac90b13d4ec334a6bc0f1e207daff070a58f920c480cd240672067e660e3b",
+        "note": "Execution-task loaded-module receipt independently compared: 18 modules match repair commit; bootstrap.runtime retained from previous live parent. Image is a minimal overlay, not the full repair-commit tree."
+      }
+    }
+  ]
 }

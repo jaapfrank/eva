@@ -1,0 +1,237 @@
+{
+  "date": "2026-09-11",
+  "status": "installed and technically verified for explicit first-part research request; initial latency and owner listening acceptance remain open",
+  "userOutcome": "Eva can speak a meaningful first part while her real core continues a longer task.",
+  "changes": [
+    "Explicit model-selected speak_and_continue control, once per turn, without claiming heard or completed work.",
+    "One interruptible SpeechHandle carries first part and final continuation.",
+    "Short sentence tokenizer and complete paragraph boundaries release text through maintained LiveKit transforms.",
+    "FennaNeural listening candidate on existing Home Assistant TTS service."
+  ],
+  "initialBuild": {
+    "sourceCommit": "c856e32fbf6f68b9e01754409c353d3be22161fb",
+    "composite": true,
+    "images": {
+      "core": {
+        "parentImage": "sha256:563aff68d0cb4ea941a8b6c36d688e5430685654e35c955d739539ca0392cc05",
+        "files": {
+          "application/voice_context.py": "711705a461b4e82840b201182b0dbea2a765b03d161da14ca1f7727dd73abd64",
+          "application/conversation.py": "69cf2a16a4b5e7ccfe0ad0a4b699b4c46175a7494f29cdb47f9ab0f60a1fb427",
+          "adapters/model/pydantic_conversation.py": "da4b38a4982dae7a818ed80627f2730b1dbaad35151907414242ff6123d93186"
+        },
+        "image": "sha256:bf5d7e575464ab3f40c52e87f2dc9a01752aab9172cbc8cad6145ef433d38df3"
+      },
+      "media": {
+        "parentImage": "sha256:57ae55645ab47d93c27f42c220eb55e2794f8877aff243791513f71e578aca40",
+        "files": {
+          "voice_service/agent.py": "f7471c5b27410e3d3bd73a899715c149d675d9d2edc021091f82e3639e604944",
+          "voice_service/media.py": "ff45badedf18e5e15b33c7a6a4f9a33f3c88a9086e7109ddaeee026570c448ed",
+          "voice_service/server.py": "2dda373400744fe325dff5be775b81ae5e458bd2dff51bb87c09f7657d53b309",
+          "adapters/connectors/home_assistant_voice.py": "f86b535ced75d20567f6b0da7fdbb7c636cecfb1dd39f52526e4fae92a12bdfd"
+        },
+        "image": "sha256:b69b2578fd3c19f1febcf5aab169c86b87b1124e5a218b4a4fb6a4e06bffb3dd"
+      }
+    }
+  },
+  "paragraphFix": {
+    "source_commit": "8b32b0fd5c720952869b017167280d4ddfb2f761",
+    "parent_image": "sha256:b69b2578fd3c19f1febcf5aab169c86b87b1124e5a218b4a4fb6a4e06bffb3dd",
+    "image": "sha256:d6f87962a1312526772d686450a22f313cdbef679dce260687afb15faee8f9dc",
+    "agent_sha256": "7b65de7df7fe8474be4a6d6d6a8124ff9e5fadf6d42c8fa7959436e4e8fc8eb4"
+  },
+  "liveReadback": {
+    "checkedAt": "2026-09-11T08:48:44.522246+00:00",
+    "containers": [
+      {
+        "name": "/eva2-owner-voice-media-1",
+        "image": "sha256:d6f87962a1312526772d686450a22f313cdbef679dce260687afb15faee8f9dc",
+        "source": "8b32b0fd5c720952869b017167280d4ddfb2f761",
+        "status": "running",
+        "network": "host",
+        "ports": {}
+      },
+      {
+        "name": "/eva2-owner-voice-livekit-1",
+        "image": "sha256:770bc61bc6ec4dcccbd3e05082d8f6bdafbee4179acab7014cc97202a9e2910b",
+        "source": null,
+        "status": "running",
+        "network": "eva2-owner-voice_default",
+        "ports": {
+          "7880/tcp": [
+            {
+              "HostIp": "127.0.0.1",
+              "HostPort": "7880"
+            }
+          ]
+        }
+      },
+      {
+        "name": "/eva2-managed-b-slot3-core",
+        "image": "sha256:bf5d7e575464ab3f40c52e87f2dc9a01752aab9172cbc8cad6145ef433d38df3",
+        "source": "c856e32fbf6f68b9e01754409c353d3be22161fb",
+        "status": "running",
+        "network": "eva2-managed-b-slot3_default",
+        "ports": {
+          "8080/tcp": [
+            {
+              "HostIp": "127.0.0.1",
+              "HostPort": "44710"
+            }
+          ]
+        }
+      }
+    ],
+    "coreUrl": "http://127.0.0.1:44710",
+    "cloudRelay": true,
+    "ttsVoice": "FennaNeural",
+    "authenticatedMediaReady": true
+  },
+  "validation": {
+    "frozenCoreTestsPassed": 30,
+    "latestNativeMediaTestsPassed": 14,
+    "nativeSessionProof": [
+      "first PCM audio delivered while backend is still waiting",
+      "interrupt prevents old final tail",
+      "second turn runs while interrupted first backend is pending"
+    ],
+    "independentReview": "GO from review_voice_reference, including native AgentSession tests",
+    "imageImportAndSourceHashVerified": true
+  },
+  "ownerFeedback": {
+    "accepted": [
+      "physical laptop interruption works"
+    ],
+    "positive": [
+      "story content enjoyable"
+    ],
+    "fullExperienceAccepted": false,
+    "open": [
+      "natural voice and pronunciation",
+      "reported 3–8 seconds silence",
+      "fast meaningful response followed by continuation"
+    ]
+  },
+  "limits": [
+    "No new physical owner listening test performed.",
+    "Normal story and short answer probes did not select speak_and_continue; general spontaneous use unproven.",
+    "Earlier before/after timings had different host load and are not a controlled speed comparison.",
+    "Phone and Voice PE not delivered by this change."
+  ],
+  "rollback": {
+    "mediaParent": "sha256:b69b2578fd3c19f1febcf5aab169c86b87b1124e5a218b4a4fb6a4e06bffb3dd",
+    "privateRuntimeBackup": "natural-turn-candidate/private-backup-paragraph/runtime.env",
+    "coreMustRemainBoundToCurrentSlot": true
+  },
+  "try": "Open http://localhost:44716, sign in with existing owner token, begin conversation. Ask what Home Assistant Cloud does for speech and ask Eva first to say briefly what she will investigate.",
+  "browserProof": {
+    "passed": true,
+    "actualBrowser": true,
+    "actualCore": true,
+    "microphoneUsed": false,
+    "syntheticSpeechInput": true,
+    "answer": "Home Assistant Cloud zet je gesproken opdracht om naar tekst en maakt van antwoorden weer gesproken geluid. Nederlands wordt ondersteund; dit zit in het Cloud-abonnement.\n\nBij de standaard Assist-instelling verwerkt Home Assistant de opdracht zelf lokaal. De spraakomzetting gebeurt wel buiten huis: audio gaat naar de cloud voor herkenning, antwoordtekst voor het maken van spraak. Het is dus niet volledig lokaal. Assist kan ook zonder Cloud werken, met lokale spraakverwerking.\n\nHet onderzoek is bewaard, met bronlinks en privacyverschillen tussen de spraakdiensten. Zie de [officiële uitleg](https://www.home-assistant.io/voice_control/voice_remote_cloud_assistant/).",
+    "audioEnergyFrames": 788,
+    "recognizedUserText": [
+      "Zoek In de actuele officiële documentatie wat home Beslistent cloud doet voor spraak en vertel me eerst kort wat je gaat uitzoeken."
+    ],
+    "firstPart": "Ik zoek in de actuele officiële documentatie wat Home Assistant Cloud doet voor spraakherkenning en gesproken antwoorden, en wat daarbij lokaal blijft of via de cloud gaat.",
+    "targetMessage": "6a18a79c-f247-5c40-9729-00c2bcedce16",
+    "speechEndToAudioMs": 18611,
+    "speechEndToFirstPartMs": 17343,
+    "speechEndToFinalMs": 81605,
+    "noSpeakerPlayback": true,
+    "timeline": [
+      {
+        "type": "user_voice_state",
+        "state": "speaking",
+        "at": 10192.699999928474
+      },
+      {
+        "type": "user_voice_state",
+        "state": "listening",
+        "at": 18642
+      },
+      {
+        "type": "voice_state",
+        "state": "thinking",
+        "at": 20721.699999928474
+      },
+      {
+        "type": "work_started",
+        "message_id": "6a18a79c-f247-5c40-9729-00c2bcedce16",
+        "at": 20745.399999976158
+      },
+      {
+        "type": "voice_state",
+        "state": "listening",
+        "at": 20762.699999928474
+      },
+      {
+        "type": "spoken_update",
+        "message_id": "6a18a79c-f247-5c40-9729-00c2bcedce16",
+        "at": 36168.299999952316
+      },
+      {
+        "type": "voice_state",
+        "state": "speaking",
+        "at": 37169.699999928474
+      },
+      {
+        "type": "action_started",
+        "message_id": "6a18a79c-f247-5c40-9729-00c2bcedce16",
+        "at": 44574.89999997616
+      },
+      {
+        "type": "action_finished",
+        "message_id": "6a18a79c-f247-5c40-9729-00c2bcedce16",
+        "at": 88770.19999992847
+      },
+      {
+        "type": "work_finished",
+        "message_id": "6a18a79c-f247-5c40-9729-00c2bcedce16",
+        "at": 100430.5
+      },
+      {
+        "type": "voice_state",
+        "state": "listening",
+        "at": 142892.39999997616
+      }
+    ],
+    "firstAudioBeforeActionFinishedMs": 51334,
+    "scope": "One synthetic spoken request through actual browser, STT, owner core, actual research and TTS. Muted browser output; no physical owner listening."
+  },
+  "excludedMeasurements": [
+    {
+      "artifact": "natural-browser-work-no-input.json",
+      "reason": "No STT, events or audio; fresh retry used."
+    },
+    {
+      "artifact": "natural-browser-work-split-invalid.json",
+      "reason": "Two STT turns; crossed message timings excluded."
+    },
+    {
+      "artifact": "natural-browser-work-probe-before-paragraph.json",
+      "reason": "Pre-fix first-part buffering caused measurement timeout; not a controlled speed comparison."
+    }
+  ],
+  "remainingEngineering": [
+    "Reduce initial latency: current valid probe first audio18.611seconds; preceding core memory admission about8seconds, then model first-part decision about7seconds.",
+    "General spontaneous first-part selection for ordinary stories remains unproven."
+  ],
+  "researchTimeline": [
+    "MEMORY_RETAIN_QUEUED|2026-09-11 08:50:35+00",
+    "MEMORY_RETAIN_QUEUED|2026-09-11 08:50:35+00",
+    "CURRENT_RESEARCH_ADMITTED|2026-09-11 08:50:35+00",
+    "INGRESS_COMMITTED|2026-09-11 08:50:35+00",
+    "REPLY_COMMITTED|2026-09-11 08:50:35+00",
+    "CONVERSATION_MODEL_ADMITTED|2026-09-11 08:50:43+00",
+    "CONVERSATION_MODEL_ADMITTED|2026-09-11 08:50:50+00",
+    "CONVERSATION_MODEL_RECORDED|2026-09-11 08:50:50+00",
+    "CONVERSATION_MODEL_RECORDED|2026-09-11 08:50:58+00",
+    "CONVERSATION_MODEL_ADMITTED|2026-09-11 08:51:43+00",
+    "CONVERSATION_MODEL_RECORDED|2026-09-11 08:51:54+00",
+    "MEMORY_RETAIN_ATTEMPTED|2026-09-11 08:51:55+00",
+    "MEMORY_STORAGE_RETAINED|2026-09-11 08:52:00+00",
+    "MEMORY_RETAIN_SUCCEEDED|2026-09-11 08:52:00+00"
+  ]
+}

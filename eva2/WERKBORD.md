@@ -12,16 +12,23 @@ Algemeen publiek onderzoek en private initiatiefbeoordeling op rustige momenten 
 
 ### Afzonderlijk stemwerk
 
-De laptoproute met LiveKit is live op http://localhost:44716. Plak het bestaande
-eigenaar-dashboardtoken in het aanmeldformulier en kies Begin gesprek.
-Bestandswerk, brononderzoek, stoppen en synthetische spraakonderbreking zijn
-gecontroleerd via dezelfde Eva-kern. De huisingang en bestaande gegevens blijven
-behouden. Fysieke microfoon-/echoproef en Jaaps beoordeling staan open.
+De laptoproute met LiveKit is live op http://localhost:44716. Meld aan met het
+bestaande eigenaar-dashboardtoken en kies Begin gesprek. Jaap bevestigde op
+11 september dat fysiek onderbreken werkt en vond de verhaalinhoud leuk.
+Natuurlijke uitspraak en korte wachttijd zijn nog niet geaccepteerd.
 
-De voicetaak onderzoekt de resterende wachttijd: de gemeten geheugenraadpleging
-is de grootste vertraging. Een threadinstelling gaf geen herhaalbare verbetering
-en is daarom niet uitgerold. Telefoon en natuurlijke Voice PE-toegang zijn nog
-niet opgeleverd. [Actueel voicebewijs](evidence/product/voice-livekit-integration-2026-09-10.json).
+Een eerste inhoudelijke zin tijdens langer werk is nu gebouwd, gericht getest
+en live bewezen: in één browserproef begon audio na 18,6 seconden en kwam het
+uitgezochte antwoord na 81,6 seconden. De eerste zin klonk vóór de afronding van
+het echte onderzoek; het vervolg kwam in dezelfde onderbreekbare spraakbeurt.
+De aanvangswachttijd is nog te lang. Geheugenraadpleging en de eerste modelbeurt
+blijven concreet vervolgwerk; algemene spontane toepassing is nog onbewezen.
+De Fenna-stem is een luisterkandidaat, nog zonder eigenaarsoordeel.
+Probeer: “Zoek uit wat Home Assistant Cloud doet voor spraak en vertel me eerst
+kort wat je gaat uitzoeken.” [Gericht bewijs](evidence/product/voice-natural-turn-candidate-2026-09-11.json).
+
+Telefoon en natuurlijke Voice PE-toegang zijn nog niet opgeleverd.
+[Actueel voicebewijs](evidence/product/voice-livekit-integration-2026-09-10.json).
 De eerdere Voice PE-onbereikbaarheidsfout is hersteld en door Jaap bevestigd;
 [herstelbewijs](evidence/product/VOICE-REF-247-repair-2026-09-10.json).
 
