@@ -40,20 +40,22 @@
     "agent_sha256": "7b65de7df7fe8474be4a6d6d6a8124ff9e5fadf6d42c8fa7959436e4e8fc8eb4"
   },
   "liveReadback": {
-    "checkedAt": "2026-09-11T08:48:44.522246+00:00",
+    "checkedAt": "2026-09-11T10:12:14.101653+00:00",
     "containers": [
       {
-        "name": "/eva2-owner-voice-media-1",
-        "image": "sha256:d6f87962a1312526772d686450a22f313cdbef679dce260687afb15faee8f9dc",
-        "source": "8b32b0fd5c720952869b017167280d4ddfb2f761",
+        "name": "eva2-owner-voice-media-1",
+        "image": "sha256:91f29f125f1a8dd236e40bd4aca3af0e882c958a5f76d2397aeec6f1ffec81c0",
+        "source": "df8c4696754f46e9fc9bc9a9633723f7667d135d",
+        "startedAt": "2026-09-11T10:11:06.484376703Z",
         "status": "running",
         "network": "host",
         "ports": {}
       },
       {
-        "name": "/eva2-owner-voice-livekit-1",
+        "name": "eva2-owner-voice-livekit-1",
         "image": "sha256:770bc61bc6ec4dcccbd3e05082d8f6bdafbee4179acab7014cc97202a9e2910b",
         "source": null,
+        "startedAt": "2026-09-10T19:20:19.714597806Z",
         "status": "running",
         "network": "eva2-owner-voice_default",
         "ports": {
@@ -66,9 +68,10 @@
         }
       },
       {
-        "name": "/eva2-managed-b-slot3-core",
+        "name": "eva2-managed-b-slot3-core",
         "image": "sha256:bf5d7e575464ab3f40c52e87f2dc9a01752aab9172cbc8cad6145ef433d38df3",
         "source": "c856e32fbf6f68b9e01754409c353d3be22161fb",
+        "startedAt": "2026-09-11T08:19:30.274026959Z",
         "status": "running",
         "network": "eva2-managed-b-slot3_default",
         "ports": {
@@ -79,6 +82,20 @@
             }
           ]
         }
+      },
+      {
+        "name": "eva2-managed-b-slot3-hindsight-1",
+        "image": "sha256:20d72ad34164bd1a67906c4d61b57a51f2b255c49ddf8cb7ac5e901ebc3b3710",
+        "source": null,
+        "startedAt": "2026-09-11T09:35:07.850665568Z",
+        "status": "running",
+        "network": "eva2-managed-b-slot3_default",
+        "ports": {}
+      },
+      {
+        "name": "/eva2-managed-b-slot3-delegated-work-worker-1",
+        "image": "sha256:bf5d7e575464ab3f40c52e87f2dc9a01752aab9172cbc8cad6145ef433d38df3",
+        "startedAt": "2026-09-11T08:19:43.411117584Z"
       }
     ],
     "coreUrl": "http://127.0.0.1:44710",
@@ -129,76 +146,85 @@
     "actualCore": true,
     "microphoneUsed": false,
     "syntheticSpeechInput": true,
-    "answer": "Home Assistant Cloud zet je spraak om naar tekst en maakt van antwoordtekst gesproken audio. Dat zit in het Cloud-abonnement en gebeurt standaard via Microsoft Azure: audio en antwoordtekst verlaten dus je huis.\n\nHet herkennen van het activeringswoord en het verwerken van opdrachten kunnen lokaal blijven. Cloud maakt Assist niet automatisch een AI-chatbot; een taalmodel is een aparte keuze. Nieuw is een optionele Soniox-preview voor spraakherkenning, waarvoor andere privacyvoorwaarden kunnen gelden.\n\nMijn onderzoek met bronlinks is bewaard. De [officiële uitleg van Home Assistant](https://www.home-assistant.io/voice_control/voice_remote_cloud_assistant/) beschrijft hoe je deze spraakfuncties instelt.",
-    "audioEnergyFrames": 848,
+    "answer": "Volgens de [officiële documentatie](https://www.home-assistant.io/voice_control/voice_remote_cloud_assistant/) doet Home Assistant Cloud twee dingen voor spraak: je gesproken woorden omzetten naar tekst en antwoordtekst omzetten naar gesproken geluid. Nederlands wordt ondersteund. Deze functies zitten in het Cloud-abonnement en hebben internet nodig.\n\nAssist bepaalt vervolgens wat je opdracht betekent. Met Home Assistant als gespreksagent gebeurt dat lokaal, net als de bediening van je apparaten. Het herkennen van het activeringswoord is een aparte stap en kan ook lokaal gebeuren. Cloud maakt dus niet je hele assistent cloudgestuurd.\n\nIk heb het onderzoek met bronlinks bewaard.",
+    "audioEnergyFrames": 797,
     "recognizedUserText": [
       "Zoek In de actuele officiële documentatie wat home Beslistent cloud doet voor spraak en vertel me eerst kort wat je gaat uitzoeken."
     ],
     "firstPart": "Ik zoek in de actuele officiële documentatie wat Home Assistant Cloud doet voor spraakherkenning en gesproken antwoorden, en wat daarbij lokaal blijft of via de cloud gaat.",
-    "targetMessage": "cc15c622-b953-5770-ad70-ae5ce6911ee8",
-    "speechEndToAudioMs": 15794,
-    "speechEndToFirstPartMs": 15153,
-    "speechEndToFinalMs": 81645,
+    "targetMessage": "5814fed7-41ae-50e2-8612-4d93cf864bf9",
+    "speechEndToAudioMs": 11137,
+    "speechEndToFirstPartMs": 10448,
+    "speechEndToFinalMs": 76981,
     "noSpeakerPlayback": true,
     "timeline": [
       {
         "type": "user_voice_state",
         "state": "speaking",
-        "at": 10441.899999976158
+        "at": 6377
       },
       {
         "type": "user_voice_state",
         "state": "listening",
-        "at": 18892.700000047684
+        "at": 14809.900000095367
+      },
+      {
+        "type": "stt_final",
+        "at": 15313.100000023842
       },
       {
         "type": "voice_state",
         "state": "thinking",
-        "at": 21206.800000071526
+        "at": 15322.900000095367
       },
       {
         "type": "work_started",
-        "message_id": "cc15c622-b953-5770-ad70-ae5ce6911ee8",
-        "at": 21228.700000047684
+        "message_id": "5814fed7-41ae-50e2-8612-4d93cf864bf9",
+        "at": 15330.100000023842
       },
       {
         "type": "voice_state",
         "state": "listening",
-        "at": 21241.899999976158
+        "at": 15338.700000047684
       },
       {
         "type": "spoken_update",
-        "message_id": "cc15c622-b953-5770-ad70-ae5ce6911ee8",
-        "at": 34255.300000071526
+        "message_id": "5814fed7-41ae-50e2-8612-4d93cf864bf9",
+        "at": 25462.400000095367
       },
       {
         "type": "voice_state",
         "state": "speaking",
-        "at": 34611.300000071526
+        "at": 25901.300000071526
       },
       {
         "type": "action_started",
-        "message_id": "cc15c622-b953-5770-ad70-ae5ce6911ee8",
-        "at": 42688.5
+        "message_id": "5814fed7-41ae-50e2-8612-4d93cf864bf9",
+        "at": 33170.10000002384
       },
       {
         "type": "action_finished",
-        "message_id": "cc15c622-b953-5770-ad70-ae5ce6911ee8",
-        "at": 89855.70000004768
+        "message_id": "5814fed7-41ae-50e2-8612-4d93cf864bf9",
+        "at": 85836
       },
       {
         "type": "work_finished",
-        "message_id": "cc15c622-b953-5770-ad70-ae5ce6911ee8",
-        "at": 100746.89999997616
+        "message_id": "5814fed7-41ae-50e2-8612-4d93cf864bf9",
+        "at": 91995.30000007153
       },
       {
         "type": "voice_state",
         "state": "listening",
-        "at": 144191.20000004768
+        "at": 134363.20000004768
       }
     ],
-    "scope": "One synthetic spoken request through actual browser, STT, owner core, actual research and TTS. Muted browser output; no physical owner listening.",
-    "firstAudioBeforeActionFinishedMs": 55169
+    "clockDefinitions": {
+      "browserSpeechEndToFields": "Milliseconds from synthetic AudioBufferSource onended (clip end, including trailing silence); not native VAD end.",
+      "browserClipEndAtMs": 15014.600000023842,
+      "browserNativeVadEndAtMs": 14809.900000095367,
+      "vadEndToSttFinal": "Milliseconds from native user_voice_state=listening to stt_final event.",
+      "isolatedHaEndToFinal": "Final-transcript event time minus native END_OF_SPEECH event time."
+    }
   },
   "excludedMeasurements": [
     {
@@ -212,10 +238,14 @@
     {
       "artifact": "natural-browser-work-probe-before-paragraph.json",
       "reason": "Pre-fix first-part buffering caused measurement timeout; not a controlled speed comparison."
+    },
+    {
+      "artifact": "natural-browser-work-streaming-no-result.json",
+      "reason": "No browser receipt before helper timeout; cause not established."
     }
   ],
   "remainingEngineering": [
-    "Reduce initial latency: latest GPU-memory browser probe first audio 15.794 seconds; initial model phase remains a measured bottleneck. Actual arithmetic voice-adapter profile: recall 2.146 seconds and model 5.464 seconds.",
+    "Reduce initial latency: latest browser first audio 11.137 seconds despite GPU memory and streaming STT. Exploratory low reasoning and removing reasoning summary did not establish a reliable further model improvement.",
     "General spontaneous first-part selection for ordinary stories remains unproven."
   ],
   "researchTimeline": [
@@ -311,5 +341,83 @@
     ],
     "firstAudioBeforeActionFinishedMs": 51334,
     "scope": "One synthetic spoken request through actual browser, STT, owner core, actual research and TTS. Muted browser output; no physical owner listening."
-  }
+  },
+  "browserProofGpuMemoryBaseline": {
+    "passed": true,
+    "actualBrowser": true,
+    "actualCore": true,
+    "microphoneUsed": false,
+    "syntheticSpeechInput": true,
+    "answer": "Home Assistant Cloud zet je spraak om naar tekst en maakt van antwoordtekst gesproken audio. Dat zit in het Cloud-abonnement en gebeurt standaard via Microsoft Azure: audio en antwoordtekst verlaten dus je huis.\n\nHet herkennen van het activeringswoord en het verwerken van opdrachten kunnen lokaal blijven. Cloud maakt Assist niet automatisch een AI-chatbot; een taalmodel is een aparte keuze. Nieuw is een optionele Soniox-preview voor spraakherkenning, waarvoor andere privacyvoorwaarden kunnen gelden.\n\nMijn onderzoek met bronlinks is bewaard. De [officiële uitleg van Home Assistant](https://www.home-assistant.io/voice_control/voice_remote_cloud_assistant/) beschrijft hoe je deze spraakfuncties instelt.",
+    "audioEnergyFrames": 848,
+    "recognizedUserText": [
+      "Zoek In de actuele officiële documentatie wat home Beslistent cloud doet voor spraak en vertel me eerst kort wat je gaat uitzoeken."
+    ],
+    "firstPart": "Ik zoek in de actuele officiële documentatie wat Home Assistant Cloud doet voor spraakherkenning en gesproken antwoorden, en wat daarbij lokaal blijft of via de cloud gaat.",
+    "targetMessage": "cc15c622-b953-5770-ad70-ae5ce6911ee8",
+    "speechEndToAudioMs": 15794,
+    "speechEndToFirstPartMs": 15153,
+    "speechEndToFinalMs": 81645,
+    "noSpeakerPlayback": true,
+    "timeline": [
+      {
+        "type": "user_voice_state",
+        "state": "speaking",
+        "at": 10441.899999976158
+      },
+      {
+        "type": "user_voice_state",
+        "state": "listening",
+        "at": 18892.700000047684
+      },
+      {
+        "type": "voice_state",
+        "state": "thinking",
+        "at": 21206.800000071526
+      },
+      {
+        "type": "work_started",
+        "message_id": "cc15c622-b953-5770-ad70-ae5ce6911ee8",
+        "at": 21228.700000047684
+      },
+      {
+        "type": "voice_state",
+        "state": "listening",
+        "at": 21241.899999976158
+      },
+      {
+        "type": "spoken_update",
+        "message_id": "cc15c622-b953-5770-ad70-ae5ce6911ee8",
+        "at": 34255.300000071526
+      },
+      {
+        "type": "voice_state",
+        "state": "speaking",
+        "at": 34611.300000071526
+      },
+      {
+        "type": "action_started",
+        "message_id": "cc15c622-b953-5770-ad70-ae5ce6911ee8",
+        "at": 42688.5
+      },
+      {
+        "type": "action_finished",
+        "message_id": "cc15c622-b953-5770-ad70-ae5ce6911ee8",
+        "at": 89855.70000004768
+      },
+      {
+        "type": "work_finished",
+        "message_id": "cc15c622-b953-5770-ad70-ae5ce6911ee8",
+        "at": 100746.89999997616
+      },
+      {
+        "type": "voice_state",
+        "state": "listening",
+        "at": 144191.20000004768
+      }
+    ],
+    "scope": "One synthetic spoken request through actual browser, STT, owner core, actual research and TTS. Muted browser output; no physical owner listening.",
+    "firstAudioBeforeActionFinishedMs": 55169
+  },
+  "streamingInputEvidence": "voice-streaming-input-2026-09-11.json"
 }

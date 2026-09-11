@@ -842,22 +842,24 @@
     "ownerAcceptance": false,
     "coreImage": "sha256:bf5d7e575464ab3f40c52e87f2dc9a01752aab9172cbc8cad6145ef433d38df3",
     "coreSource": "c856e32fbf6f68b9e01754409c353d3be22161fb",
-    "mediaImage": "sha256:d6f87962a1312526772d686450a22f313cdbef679dce260687afb15faee8f9dc",
-    "mediaSource": "8b32b0fd5c720952869b017167280d4ddfb2f761",
+    "mediaImage": "sha256:91f29f125f1a8dd236e40bd4aca3af0e882c958a5f76d2397aeec6f1ffec81c0",
+    "mediaSource": "df8c4696754f46e9fc9bc9a9633723f7667d135d",
     "ttsVoice": "FennaNeural",
     "composite": true,
     "sourceEvidence": "voice-natural-turn-candidate-2026-09-11.json",
     "bindingUpdate": {
-      "checkedAt": "2026-09-11T08:48:44.522246+00:00",
+      "checkedAt": "2026-09-11T10:12:14.101653+00:00",
       "authenticatedMediaReadiness": {
         "status": 200,
         "body": {
           "ready": true
         }
       },
-      "reason": "Natural first-part core installed on slot3; media paragraph release fix installed.",
-      "browserProofScope": "Current targeted browser proof tracked separately in voice-natural-turn-candidate-2026-09-11.json; historical phone proof unchanged."
-    }
+      "reason": "Only media updated to stream PCM during speech; core/SFU/GPU profile preserved.",
+      "browserProofScope": "voice-streaming-input-2026-09-11.json; historical physical/phone acceptance unchanged."
+    },
+    "streamingInputEvidence": "voice-streaming-input-2026-09-11.json",
+    "memoryAccelerationEvidence": "voice-memory-cuda-2026-09-11.json"
   },
   "browser_relay_verification": {
     "date": "2026-09-10",
@@ -955,6 +957,41 @@
         },
         "liveImportsSha256": "1dbac90b13d4ec334a6bc0f1e207daff070a58f920c480cd240672067e660e3b",
         "note": "Execution-task loaded-module receipt independently compared: 18 modules match repair commit; bootstrap.runtime retained from previous live parent. Image is a minimal overlay, not the full repair-commit tree."
+      }
+    },
+    {
+      "coreUrl": "http://127.0.0.1:44710",
+      "coreSlot": "managed-b-slot3",
+      "livekitImage": "sha256:770bc61bc6ec4dcccbd3e05082d8f6bdafbee4179acab7014cc97202a9e2910b",
+      "livekitNetworkMode": "eva2-owner-voice_default",
+      "publishedPorts": {
+        "7880/tcp": [
+          {
+            "HostIp": "127.0.0.1",
+            "HostPort": "7880"
+          }
+        ]
+      },
+      "cloudRelay": true,
+      "ownerUrl": "http://localhost:44716",
+      "ownerAcceptance": false,
+      "coreImage": "sha256:bf5d7e575464ab3f40c52e87f2dc9a01752aab9172cbc8cad6145ef433d38df3",
+      "coreSource": "c856e32fbf6f68b9e01754409c353d3be22161fb",
+      "mediaImage": "sha256:d6f87962a1312526772d686450a22f313cdbef679dce260687afb15faee8f9dc",
+      "mediaSource": "8b32b0fd5c720952869b017167280d4ddfb2f761",
+      "ttsVoice": "FennaNeural",
+      "composite": true,
+      "sourceEvidence": "voice-natural-turn-candidate-2026-09-11.json",
+      "bindingUpdate": {
+        "checkedAt": "2026-09-11T08:48:44.522246+00:00",
+        "authenticatedMediaReadiness": {
+          "status": 200,
+          "body": {
+            "ready": true
+          }
+        },
+        "reason": "Natural first-part core installed on slot3; media paragraph release fix installed.",
+        "browserProofScope": "Current targeted browser proof tracked separately in voice-natural-turn-candidate-2026-09-11.json; historical phone proof unchanged."
       }
     }
   ]

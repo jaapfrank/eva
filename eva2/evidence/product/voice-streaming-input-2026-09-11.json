@@ -1,0 +1,446 @@
+{
+  "date": "2026-09-11",
+  "status": "live technical input-latency improvement; full voice outcome not accepted",
+  "userOutcome": "Audio reaches the existing HA recognizer during speech; only final verified transcripts reach Eva core.",
+  "manifest": {
+    "source_commit": "df8c4696754f46e9fc9bc9a9633723f7667d135d",
+    "parent_image": "sha256:d6f87962a1312526772d686450a22f313cdbef679dce260687afb15faee8f9dc",
+    "files": {
+      "media.py": "cee94a32ddbc74a3e32a5e7dd2bba7f8a00ff54a432ba6cf82b3cdff493a600b",
+      "server.py": "b4c6284544028fdce84b4ad79024a9ee52dc0129ce7c746c8f74f631efc17bb5",
+      "streaming_input.py": "2d7dee7193159d52246fbf72340b7ece44bcb6591c3372ab2d17643e7ca37796"
+    },
+    "image": "sha256:91f29f125f1a8dd236e40bd4aca3af0e882c958a5f76d2397aeec6f1ffec81c0"
+  },
+  "liveReadback": {
+    "checkedAt": "2026-09-11T10:12:14.101653+00:00",
+    "containers": [
+      {
+        "name": "eva2-owner-voice-media-1",
+        "image": "sha256:91f29f125f1a8dd236e40bd4aca3af0e882c958a5f76d2397aeec6f1ffec81c0",
+        "source": "df8c4696754f46e9fc9bc9a9633723f7667d135d",
+        "startedAt": "2026-09-11T10:11:06.484376703Z",
+        "status": "running",
+        "network": "host",
+        "ports": {}
+      },
+      {
+        "name": "eva2-owner-voice-livekit-1",
+        "image": "sha256:770bc61bc6ec4dcccbd3e05082d8f6bdafbee4179acab7014cc97202a9e2910b",
+        "source": null,
+        "startedAt": "2026-09-10T19:20:19.714597806Z",
+        "status": "running",
+        "network": "eva2-owner-voice_default",
+        "ports": {
+          "7880/tcp": [
+            {
+              "HostIp": "127.0.0.1",
+              "HostPort": "7880"
+            }
+          ]
+        }
+      },
+      {
+        "name": "eva2-managed-b-slot3-core",
+        "image": "sha256:bf5d7e575464ab3f40c52e87f2dc9a01752aab9172cbc8cad6145ef433d38df3",
+        "source": "c856e32fbf6f68b9e01754409c353d3be22161fb",
+        "startedAt": "2026-09-11T08:19:30.274026959Z",
+        "status": "running",
+        "network": "eva2-managed-b-slot3_default",
+        "ports": {
+          "8080/tcp": [
+            {
+              "HostIp": "127.0.0.1",
+              "HostPort": "44710"
+            }
+          ]
+        }
+      },
+      {
+        "name": "eva2-managed-b-slot3-hindsight-1",
+        "image": "sha256:20d72ad34164bd1a67906c4d61b57a51f2b255c49ddf8cb7ac5e901ebc3b3710",
+        "source": null,
+        "startedAt": "2026-09-11T09:35:07.850665568Z",
+        "status": "running",
+        "network": "eva2-managed-b-slot3_default",
+        "ports": {}
+      },
+      {
+        "name": "/eva2-managed-b-slot3-delegated-work-worker-1",
+        "image": "sha256:bf5d7e575464ab3f40c52e87f2dc9a01752aab9172cbc8cad6145ef433d38df3",
+        "startedAt": "2026-09-11T08:19:43.411117584Z"
+      }
+    ]
+  },
+  "transport": {
+    "microphoneToLivekit": "Realtime WebRTC, as before.",
+    "livekitToHa": "Native Silero onset plus prefix, then PCM inference frames streamed during speech. Local END closes this segment.",
+    "interimTranscriptsToCore": false,
+    "earlyProviderFinal": "Rejected if provider did not consume local segment EOF; no partial-command admission.",
+    "model": "Existing gpt-6-astra, medium reasoning, full existing memory and identity.",
+    "authorityOrProviderChanges": false
+  },
+  "tests": {
+    "targetedPassed": 22,
+    "independentReview": "GO review_voice_reference after fatal-stream propagation and original audio timestamps.",
+    "nativeAgentSessionFaults": [
+      "input backlog while final pending",
+      "revocation while final pending"
+    ],
+    "otherChecks": [
+      "PCM reaches source before END",
+      "no final before complete local EOF",
+      "next utterance during delayed first final",
+      "early provider final rejected",
+      "provider failure before END immediately terminates stream",
+      "provider cancelled and late input rejected on close",
+      "existing first-part output and interruption regressions"
+    ]
+  },
+  "samePcmHaComparison": [
+    {
+      "mode": "batch",
+      "events": [
+        {
+          "type": "start_of_speech",
+          "ms": 697,
+          "text": null
+        },
+        {
+          "type": "end_of_speech",
+          "ms": 9463,
+          "text": null
+        },
+        {
+          "type": "final_transcript",
+          "ms": 11459,
+          "text": "Zoek In de actuele officiële documentatie wat home Beslistent cloud doet voor spraak en vertel me eerst kort wat je gaat uitzoeken."
+        }
+      ],
+      "speechInputEndedMs": 9839,
+      "providerRunStartedMs": 9462,
+      "firstPcmToProviderMs": 9494,
+      "passed": true
+    },
+    {
+      "mode": "stream",
+      "events": [
+        {
+          "type": "start_of_speech",
+          "ms": 716,
+          "text": null
+        },
+        {
+          "type": "end_of_speech",
+          "ms": 9548,
+          "text": null
+        },
+        {
+          "type": "final_transcript",
+          "ms": 9782,
+          "text": "Zoek In de actuele officiële documentatie wat home Beslistent cloud doet voor spraak en vertel me eerst kort wat je gaat uitzoeken."
+        }
+      ],
+      "speechInputEndedMs": 9903,
+      "providerRunStartedMs": 716,
+      "firstPcmToProviderMs": 736,
+      "passed": true
+    }
+  ],
+  "twoUtteranceHaWithDelayedFirstFinal": [
+    {
+      "mode": "stream",
+      "events": [
+        {
+          "type": "start_of_speech",
+          "ms": 697,
+          "text": null
+        },
+        {
+          "type": "end_of_speech",
+          "ms": 9465,
+          "text": null
+        },
+        {
+          "type": "final_transcript",
+          "ms": 11189,
+          "text": "Zoek In de actuele officiële documentatie wat home Beslistent cloud doet voor spraak en vertel me eerst kort wat je gaat uitzoeken."
+        },
+        {
+          "type": "start_of_speech",
+          "ms": 11216,
+          "text": null
+        },
+        {
+          "type": "end_of_speech",
+          "ms": 19919,
+          "text": null
+        },
+        {
+          "type": "final_transcript",
+          "ms": 20361,
+          "text": "Zoek In de actuele officiële documentatie wat home Beslistent cloud doet voor spraak en vertel me eerst kort wat je gaat uitzoeken."
+        }
+      ],
+      "speechInputEndedMs": 20291,
+      "passed": true,
+      "lastProviderRunStartedMs": 11215,
+      "firstRunPcmMs": 715
+    }
+  ],
+  "syntheticAudioSha256": "4b1d125e8b853f2552cf091ca45a8ba3ee6ecded7c81d6d954b273f84b9e30a6",
+  "browserProof": {
+    "passed": true,
+    "actualBrowser": true,
+    "actualCore": true,
+    "microphoneUsed": false,
+    "syntheticSpeechInput": true,
+    "answer": "Volgens de [officiële documentatie](https://www.home-assistant.io/voice_control/voice_remote_cloud_assistant/) doet Home Assistant Cloud twee dingen voor spraak: je gesproken woorden omzetten naar tekst en antwoordtekst omzetten naar gesproken geluid. Nederlands wordt ondersteund. Deze functies zitten in het Cloud-abonnement en hebben internet nodig.\n\nAssist bepaalt vervolgens wat je opdracht betekent. Met Home Assistant als gespreksagent gebeurt dat lokaal, net als de bediening van je apparaten. Het herkennen van het activeringswoord is een aparte stap en kan ook lokaal gebeuren. Cloud maakt dus niet je hele assistent cloudgestuurd.\n\nIk heb het onderzoek met bronlinks bewaard.",
+    "audioEnergyFrames": 797,
+    "recognizedUserText": [
+      "Zoek In de actuele officiële documentatie wat home Beslistent cloud doet voor spraak en vertel me eerst kort wat je gaat uitzoeken."
+    ],
+    "firstPart": "Ik zoek in de actuele officiële documentatie wat Home Assistant Cloud doet voor spraakherkenning en gesproken antwoorden, en wat daarbij lokaal blijft of via de cloud gaat.",
+    "targetMessage": "5814fed7-41ae-50e2-8612-4d93cf864bf9",
+    "speechEndToAudioMs": 11137,
+    "speechEndToFirstPartMs": 10448,
+    "speechEndToFinalMs": 76981,
+    "noSpeakerPlayback": true,
+    "timeline": [
+      {
+        "type": "user_voice_state",
+        "state": "speaking",
+        "at": 6377
+      },
+      {
+        "type": "user_voice_state",
+        "state": "listening",
+        "at": 14809.900000095367
+      },
+      {
+        "type": "stt_final",
+        "at": 15313.100000023842
+      },
+      {
+        "type": "voice_state",
+        "state": "thinking",
+        "at": 15322.900000095367
+      },
+      {
+        "type": "work_started",
+        "message_id": "5814fed7-41ae-50e2-8612-4d93cf864bf9",
+        "at": 15330.100000023842
+      },
+      {
+        "type": "voice_state",
+        "state": "listening",
+        "at": 15338.700000047684
+      },
+      {
+        "type": "spoken_update",
+        "message_id": "5814fed7-41ae-50e2-8612-4d93cf864bf9",
+        "at": 25462.400000095367
+      },
+      {
+        "type": "voice_state",
+        "state": "speaking",
+        "at": 25901.300000071526
+      },
+      {
+        "type": "action_started",
+        "message_id": "5814fed7-41ae-50e2-8612-4d93cf864bf9",
+        "at": 33170.10000002384
+      },
+      {
+        "type": "action_finished",
+        "message_id": "5814fed7-41ae-50e2-8612-4d93cf864bf9",
+        "at": 85836
+      },
+      {
+        "type": "work_finished",
+        "message_id": "5814fed7-41ae-50e2-8612-4d93cf864bf9",
+        "at": 91995.30000007153
+      },
+      {
+        "type": "voice_state",
+        "state": "listening",
+        "at": 134363.20000004768
+      }
+    ]
+  },
+  "browserStageTimingsMs": {
+    "vadEndToSttFinal": 503,
+    "sttFinalToWorkStarted": 17
+  },
+  "previousBrowserFirstAudioMs": 15794,
+  "exploratoryModelSettings": {
+    "status": "not deployed; no convincing model latency improvement demonstrated",
+    "sameModel": "gpt-6-astra",
+    "fullIdentityAndMemoryRetained": true,
+    "liveReasoningUnchanged": "medium",
+    "probes": [
+      {
+        "artifact": "/home/administrator/project/.eva2-artifacts/voice-livekit-20260910/memory-speed/profile_current.stdout",
+        "variant": "medium baseline",
+        "elapsedMs": 7895,
+        "stages": [
+          {
+            "stage": "HindsightMemoryEngine.recall_for_presence",
+            "ms": 2146
+          },
+          {
+            "stage": "PydanticConversationModel.generate",
+            "ms": 5464
+          }
+        ]
+      },
+      {
+        "artifact": "/home/administrator/project/.eva2-artifacts/voice-livekit-20260910/memory-speed/profile_low_prototype.stdout",
+        "variant": "low arithmetic",
+        "elapsedMs": 7537,
+        "stages": [
+          {
+            "stage": "HindsightMemoryEngine.recall_for_presence",
+            "ms": 2379
+          },
+          {
+            "stage": "prototype_phase_settings",
+            "reasoning": "low",
+            "model": "gpt-6-astra",
+            "promptChars": 32,
+            "instructionChars": 8839
+          },
+          {
+            "stage": "PydanticConversationModel.generate",
+            "ms": 4846
+          }
+        ]
+      },
+      {
+        "artifact": "/home/administrator/project/.eva2-artifacts/voice-livekit-20260910/memory-speed/profile_low_research.stdout",
+        "variant": "low initial research phase",
+        "elapsedMs": 64179,
+        "stages": [
+          {
+            "stage": "HindsightMemoryEngine.recall_for_presence",
+            "ms": 2203
+          },
+          {
+            "stage": "prototype_phase_settings",
+            "reasoning": "low",
+            "model": "gpt-6-astra",
+            "promptChars": 130,
+            "instructionChars": 11749
+          },
+          {
+            "stage": "PydanticConversationModel.generate",
+            "ms": 9626
+          },
+          {
+            "stage": "event",
+            "type": "spoken_update",
+            "ms": 12121
+          },
+          {
+            "stage": "prototype_phase_settings",
+            "reasoning": "medium",
+            "model": "gpt-6-astra",
+            "promptChars": 130,
+            "instructionChars": 11625
+          },
+          {
+            "stage": "PydanticConversationModel.generate",
+            "ms": 8733
+          },
+          {
+            "stage": "prototype_phase_settings",
+            "reasoning": "medium",
+            "model": "gpt-6-astra",
+            "promptChars": 130,
+            "instructionChars": 12078
+          },
+          {
+            "stage": "PydanticConversationModel.generate",
+            "ms": 7187
+          }
+        ]
+      },
+      {
+        "artifact": "/home/administrator/project/.eva2-artifacts/voice-livekit-20260910/memory-speed/profile_no_summary.stdout",
+        "variant": "medium without reasoning summary",
+        "elapsedMs": 67479,
+        "stages": [
+          {
+            "stage": "HindsightMemoryEngine.recall_for_presence",
+            "ms": 2649
+          },
+          {
+            "stage": "prototype_provider_settings",
+            "reasoning": "medium",
+            "summaryRequested": false
+          },
+          {
+            "stage": "PydanticConversationModel.generate",
+            "ms": 7459
+          },
+          {
+            "stage": "event",
+            "type": "spoken_update",
+            "ms": 10460
+          },
+          {
+            "stage": "prototype_provider_settings",
+            "reasoning": "medium",
+            "summaryRequested": false
+          },
+          {
+            "stage": "PydanticConversationModel.generate",
+            "ms": 8765
+          },
+          {
+            "stage": "prototype_provider_settings",
+            "reasoning": "medium",
+            "summaryRequested": false
+          },
+          {
+            "stage": "PydanticConversationModel.generate",
+            "ms": 7578
+          }
+        ]
+      }
+    ],
+    "limitations": "Exploratory sequential observations with provider/load variation, not a controlled general performance result."
+  },
+  "rollback": {
+    "script": "/home/administrator/project/.eva2-artifacts/voice-livekit-20260910/natural-turn-candidate/rollback-streaming-input.py",
+    "parentImage": "sha256:d6f87962a1312526772d686450a22f313cdbef679dce260687afb15faee8f9dc",
+    "checkedWithoutMutation": true,
+    "scope": "Guard current media image; replace only its environment image field and recreate only media. Current core binding remains intact."
+  },
+  "ownerAcceptance": {
+    "fullVoiceExperience": false,
+    "earlierPhysicalInterruptionEvidence": "voice-livekit-integration-2026-09-10.json: physical_owner_feedback"
+  },
+  "limitations": [
+    "A matched synthetic browser run is not physical owner listening acceptance or a general latency guarantee.",
+    "Initial response remains too slow; first model phase remains open work.",
+    "No interim transcription or speculative actions added.",
+    "First browser attempt produced no measurement receipt before helper timeout; excluded, cause not established.",
+    "Fenna voice, spontaneous first-part selection, phone and Voice PE remain unaccepted or undelivered."
+  ],
+  "postBrowserReadiness": {
+    "checkedAt": "2026-09-11T10:20:10.344910+00:00",
+    "status": {
+      "core": 200,
+      "media": 200
+    },
+    "mediaImageMatches": true
+  },
+  "clockDefinitions": {
+    "browserSpeechEndToFields": "Milliseconds from synthetic AudioBufferSource onended (clip end, including trailing silence); not native VAD end.",
+    "browserClipEndAtMs": 15014.600000023842,
+    "browserNativeVadEndAtMs": 14809.900000095367,
+    "vadEndToSttFinal": "Milliseconds from native user_voice_state=listening to stt_final event.",
+    "isolatedHaEndToFinal": "Final-transcript event time minus native END_OF_SPEECH event time."
+  }
+}
