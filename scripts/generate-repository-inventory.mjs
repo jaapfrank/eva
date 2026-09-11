@@ -277,8 +277,8 @@ const ROLE_RULES = Object.freeze([
   },
   {
     id: 'documentation', role: 'documentation',
-    test: (file) => file.startsWith('docs/')
-      && !SELF_OUTPUTS.has(file) && !/^docs\/.+\.generated\.(?:json|md)$/u.test(file),
+    test: (file) => file === 'AGENTS.md' || (file.startsWith('docs/')
+      && !SELF_OUTPUTS.has(file) && !/^docs\/.+\.generated\.(?:json|md)$/u.test(file)),
   },
   {
     id: 'python-test', role: 'verification',

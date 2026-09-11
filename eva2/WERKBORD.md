@@ -5,10 +5,10 @@ Laatst bijgewerkt: 2026-09-11.
 Doel: [Eva als zelfstandig lerende digitale huisgenoot](PROJECTDOEL.md).
 Gebouwd, getest, live en door jou geaccepteerd zijn verschillende stappen.
 
-Geheugenonderdeel eerst afronden. CO-008 / GE-01 blijft geaccepteerd deelbewijs. CO-004 en CO-005 wachten op Jaaps keuze in het dashboard; geen optie wordt vanzelf opgenomen of afgewezen. Nieuw initiatiefontwikkelwerk is gepauzeerd; bestaande live resultaten blijven behouden.
-[Actueel bewijs](evidence/product/CO-008-GE-01-owner-acceptance-2026-09-10.json).
+CO-004 en CO-005 technisch afgerond en live: eigen geheugenbronnen bekijken, corrigeren en gericht vergeten. GE-02 staat klaar; GE-01 blijft geaccepteerd.
+[Actueel bewijs](evidence/product/CO-004-CO-005-owner-memory-controls-2026-09-11.json).
 
-Bekijk betekenis en nut van de geheugenopties in het dashboard en kies daar Opnemen of Afwijzen. De agent verwerkt echte keuzes en maakt het geheugenonderdeel af; onbetwiste bestaande geheugencriteria en bewijs worden ondertussen concreet gekoppeld.
+Probeer GE-02 via het projectdashboard wanneer het uitkomt. Jouw oordeel blijft apart van de afgeronde technische oplevering. AU-008 blijft gepauzeerd tot het volgende toegewezen deelgoal.
 
 ### Afzonderlijk stemwerk
 
@@ -70,7 +70,7 @@ Geen privégesprekken opnemen, geen installatie en geen gebruikersacceptatie.
 
 | Volgorde | Kaart | Resultaat | Status |
 |---:|---|---|---|
-| 144 | `AU-008` — Zelf kosteloos handelen binnen eigenaarmandaat | Eva kiest uit toegestane context een nuttige bijdrage, voert passende kosteloze stappen via haar gewone taakuitvoerder uit en toont resultaat of concrete blokkade. Stilte blijft een geldige keuze. | 🔴 GEBLOKKEERD |
+| 146 | `AU-008` — Zelf kosteloos handelen binnen eigenaarmandaat | Eva kiest uit toegestane context een nuttige bijdrage, voert passende kosteloze stappen via haar gewone taakuitvoerder uit en toont resultaat of concrete blokkade. Stilte blijft een geldige keuze. | 🔴 GEBLOKKEERD |
 
 Klaar betekent:
 
@@ -137,8 +137,6 @@ nadat zij als eerstvolgende kleine kaart exacte bestanden en tests heeft.
 - [ ] `AU-004` — Zelf tools en skills leren maken: Een ongeziene digitale taak leren uit documentatie; zelf een tool of skill maken, testen en bij een andere taak hergebruiken zonder nieuwe taakspecifieke kerncode. Fouten en menselijke hulp meetellen.
 - [ ] `AU-006` — Project zelfstandig tot resultaat brengen: Een meerdaags cross-domainproject plannen, uitvoeren, bijsturen en na herstart hervatten met zichtbare kosten en stop. Een bedrijfspilot kan als afgesproken project; geen echte betalingen, publicatie of verplichtingen zonder passend mandaat.
 - [ ] `AU-003` — Eigen onderdelen beoordelen en verbeteren: Eva ontdekt een overbodig of zwak onderdeel, vergelijkt onderhouden upstream, maakt een geïsoleerde verbetering en bewijst voor/na voordeel en terugrol. Alleen gemeten winst mag promoveren; geen zelfverruiming van rechten.
-- [ ] `CO-004` — Optioneel geheugen inzien: Alleen een optionele inzagefunctie; geen voorwaarde voor dagelijks gebruik. Begonnen bronwerk blijft bewaard, niet afgevinkt of live gezet.
-- [ ] `CO-005` — Optioneel expliciet vergeten of corrigeren: Alleen op uitdrukkelijk verzoek kunnen corrigeren of vergeten. Geen onderhoudstaak voor Jaap en geen blokkade voor autonoom geheugen.
 - [ ] `IN-001` — Fresh install voor gebruikers: Een gewone gebruiker installeert Eva zonder terminal of configuratiebestanden.
 - [ ] `IN-002` — Naar andere computer verplaatsen: Identiteit en data herstellen; connectoren veilig opnieuw koppelen.
 - [ ] `IN-003` — Consumentenupdates leveren: Renovate stelt onderhouden dependencies voor; updates doorlopen dezelfde poort en rollen verliesloos terug.
@@ -230,6 +228,10 @@ Afgevinkt betekent alleen: de vastgelegde kaart is afgerond, niet het hele produ
   [Bewijs](reviews/AU-007-private-initiative-34ed766.md).
 - [x] `AU-002` — Duurzame hulpagent bedienen (done).
   [Bewijs](evidence/product/AU-002-telegram-lifecycle-2026-09-11.json).
+- [x] `CO-004` — Eigen geheugenbronnen volledig inzien (done).
+  [Bewijs](evidence/product/CO-004-CO-005-owner-memory-controls-2026-09-11.json).
+- [x] `CO-005` — Bewaarde informatie bewust corrigeren of vergeten (done).
+  [Bewijs](evidence/product/CO-004-CO-005-owner-memory-controls-2026-09-11.json).
 - [ ] `AU-008` — Zelf kosteloos handelen binnen eigenaarmandaat (blocked).
 
 </details>

@@ -23,8 +23,8 @@ stilte en bouwt geen optionele functie voordat die is opgenomen.
 
 Voor het geheugen gaat dit nu over CO-004 (inzage) en CO-005 (bewust aanpassen
 of vergeten). Gewone nieuwe informatie of correcties vertellen blijft onderdeel
-van het reeds werkende automatische geheugen. De extra bedieningsroutes zijn
-nog onbeslist. De centrale keuzegegevens komen uit
+van het reeds werkende automatische geheugen. Jaap heeft beide extra bedieningsroutes opgenomen. CO-004 en CO-005 zijn
+technisch afgerond en live; GE-02 staat klaar voor zijn gebruikersbeoordeling. De centrale keuzegegevens komen uit
 `design/product/optional-scope-decisions.json`; een ontbrekend besluit is onbeslist.
 Er wordt geen tweede keuze- of acceptatieregister in het werkbord onderhouden.
 
