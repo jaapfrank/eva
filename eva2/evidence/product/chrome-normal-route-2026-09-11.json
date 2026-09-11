@@ -1,0 +1,65 @@
+{
+  "contract": "EvaChromeNormalRoute/v1",
+  "status": "registered_and_unshared_tab_refused",
+  "route": "POST /internal/v1/dashboard/conversation/respond",
+  "receipt": {
+    "httpStatus": 200,
+    "elapsedSeconds": 33.142,
+    "errorType": null,
+    "responseSha256": "832a78f36af77e488aa261cdb9f184faad051d468018db5d5fa45b20940e89a8",
+    "messageId": "dashboard:12e2465b-4665-4add-86dd-9cd07ce0dd32",
+    "conversationId": "dashboard:44444444-4444-4444-8444-444444444444",
+    "responseKeys": [
+      "contract",
+      "conversation_id",
+      "evidence_memory_ids",
+      "generated_at",
+      "message_id",
+      "provider",
+      "text",
+      "text_sha256"
+    ],
+    "bridgeStayedDisconnected": true,
+    "retry": false
+  },
+  "normalOwnerConversation": true,
+  "registrationVerified": true,
+  "registeredToolCount": 7,
+  "connectorId": "2fd0cb9e-f35e-513c-9f21-99c47a391a7b",
+  "gatewayId": "b2ed84b464b648089a382f9644e57cee",
+  "registrationSha256": "49527a6c63f7805cdf4face0397fdf468ce88ae0d5803878c71ca3ceb98404bf",
+  "durableSteps": [
+    {
+      "action": "connect_service",
+      "status": "STATE_VERIFIED"
+    },
+    {
+      "action": "discover_connector_tools",
+      "status": "STATE_VERIFIED"
+    },
+    {
+      "action": "use_connector_tool / chrome_snapshot",
+      "status": "TOOL_REJECTED",
+      "attempts": 1,
+      "reason": "MCP tool rejected the operation"
+    }
+  ],
+  "usage": {
+    "tool_calls": 3,
+    "measurement": "measured",
+    "input_tokens": 28070,
+    "output_tokens": 525,
+    "model_attempts": 4
+  },
+  "ownerResponseSummary": "Eva distinguishes registered connection from unavailable tab, reports the rejection, stops without retry and asks for explicit tab sharing. It does not claim a page was read.",
+  "bridgeEpochUnchanged": true,
+  "extensionInstalledVerifiedInWindowsServiceContext": true,
+  "browserConnectionRequested": false,
+  "positiveSharedTabTaskProven": false,
+  "humanAccepted": false,
+  "next": {
+    "url": "http://localhost:44718",
+    "action": "Klik Deel een bestaand tabblad en kies in Chrome Allow & select bij één gewenst bestaand tabblad. Meld daarna Gedeeld in deze taak."
+  },
+  "upstreamDocumentation": "https://github.com/microsoft/playwright/blob/main/packages/extension/README.md"
+}

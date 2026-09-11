@@ -365,9 +365,9 @@
     {
       "id": "browser",
       "intendedOutcome": "Chrome · gekozen bestaand tabblad bedienen/herverbinden. Aan Eva zelf koppelen en exclusieve overname bewijzen; eerdere lege pagina’s blijven onverklaard.",
-      "visibleResult": "Gekozen Eva-tab gelezen, omkeerbaar bediend en na nieuwe selectie herverbonden.",
+      "visibleResult": "Eva heeft de Chrome-koppeling geregistreerd en zeven tools ontdekt. Zonder gedeeld tabblad wordt bediening geweigerd en stopt Eva.",
       "resultBasis": "Jouw Chrome-proef · 10 sep 13:07",
-      "gap": "Aan Eva zelf koppelen en exclusieve overname bewijzen; eerdere lege pagina’s blijven onverklaard.",
+      "gap": "Expliciet één bestaand Chrome-tabblad delen; daarna echte Eva-bediening, voortdurend meekijken, overnemen en teruggeven beproeven. Jaaps beoordeling blijft open.",
       "gapKind": "Integratie open",
       "states": {
         "built": "yes",
@@ -399,7 +399,13 @@
       ],
       "statusCorrections": {},
       "scope": "Chrome · bestaand tabblad bedienen en herverbinden",
-      "historyNote": ""
+      "historyNote": "",
+      "links": [
+        {
+          "title": "Open Chrome-bediening",
+          "url": "http://localhost:44718"
+        }
+      ]
     },
     {
       "id": "installation",
@@ -472,7 +478,9 @@
     "handoffTrial": "reconnected_and_reversible_action_passed_after_explicit_selection",
     "source": "Expliciete berichten Jaap en lokale Playwright MCP-extensieproef in deze taak.",
     "trialClientStopped": true,
-    "bridgeProgress": "Bewaakte koppeling gebouwd; gewone klik en afbreken van een wachtende klik in een afzonderlijke testbrowser geslaagd. Gateway en endpointlijst geactiveerd. Echte Eva-route in jouw gedeelde Chrome-tabblad en jouw beoordeling staan open.",
-    "bridgeEvidence": "eva2/evidence/product/chrome-shared-bridge-2026-09-11.json"
+    "bridgeProgress": "Eva heeft via de normale gespreksroute de koppeling geregistreerd en zeven tools gevonden. Een enkele paginawaarneming zonder tabdeling is geweigerd; Eva stopte zonder herhaling of nieuwe verbinding. Deel nu zelf één bestaand Chrome-tabblad voor de echte bedienings- en overnameproef.",
+    "bridgeEvidence": "eva2/evidence/product/chrome-shared-bridge-2026-09-11.json",
+    "normalEvaDenialVerified": true,
+    "chromeControlUrl": "http://localhost:44718"
   }
 }

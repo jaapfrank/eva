@@ -1,7 +1,7 @@
 {
   "contract": "EvaSharedChromeEvidence/v1",
   "recordedAt": "2026-09-11T10:57:34.367692+00:00",
-  "status": "core_config_verified_awaiting_registration_and_owner_trial",
+  "status": "registered_and_denial_verified_awaiting_owner_tab",
   "built": true,
   "technicalTestsPassed": true,
   "evaRuntimeIntegrated": false,
@@ -18,7 +18,6 @@
   },
   "scope": "Technical tests use a separate headless browser and local fixture, not Jaaps shared Chrome tab or a normal Eva conversation.",
   "remaining": [
-    "Register/discover/invoke through normal Eva owner conversation",
     "Jaap explicitly shares an existing tab; earlier client was stopped",
     "Prove visible work, in-flight takeover, explicit fresh-context return and disconnect through real Eva route",
     "Record Jaaps acceptance separately"
@@ -32,7 +31,7 @@
     "worker.cjs": "94f4a4ebbd70d1ee12c0d26a81a5839de09652c5767d777b679ba5734a9e39d9",
     "owner.html": "d20b476aa811ee44fb9f241901acb6326b64c3ce943ede6651cfdae4f87ec2a4",
     "browser-fixture.cjs": "2bd4ed8d25f9d371a8b932a9d20c575f754e79faed97cef692b15a42ce9131e8",
-    "README.md": "261ce022f133e7cee10119f949ca06eb3dae611a724c6b2ced5b706edc428a72",
+    "README.md": "71f2c705c688eff54872c5d008dfdf5e47d3f2ba608f822ba6fcb73572ed2124",
     "gate.mjs": "73ed17eea9ea9fa356c1aea38675e7914d812a9e7229800aed1a3883e22343dc",
     "server.mjs": "57da542deac297b535c84928b37f4c266366a573595e0dd80825541d76a170e2",
     "package.json": "71b8058a9e74b686d6c34312e8aefcfad878f4b884a3b7d486054467ecf7ba6d"
@@ -74,5 +73,7 @@
     "modelCalls": 0,
     "tabSharingRequested": false,
     "limit": "Validated deployed parser, mounted settings and authenticated live status; no normal Eva browser task yet."
-  }
+  },
+  "normalEvaRegistrationAndDenialVerified": true,
+  "normalRouteEvidence": "eva2/evidence/product/chrome-normal-route-2026-09-11.json"
 }

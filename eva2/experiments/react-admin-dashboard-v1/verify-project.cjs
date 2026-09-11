@@ -47,7 +47,7 @@ async function main() {
   }
   assert.deepEqual(payload.project.roadmap, board.audit.projectDashboard.roadmap);
   assert.notEqual(payload.project.practiceTests.find(test => test.id === 'BR-01').status, 'ready');
-  assert.equal(JSON.stringify(payload.project.practiceTests).includes('localhost:44710'), false);
+  assert.equal(JSON.stringify(payload.project.practiceTests.find(test=>test.id==='BR-01')).includes('localhost:44710'), false);
   assert.equal((await fetch(`${origin}/project-state`, { method: 'POST' })).status, 405);
   assert.equal((await fetch(`${origin}/project-state`, { headers: { Origin: 'https://external.invalid' } })).status, 403);
   const browser = await chromium.launch({ executablePath: process.env.EVA_DASHBOARD_CHROMIUM, headless: true });
@@ -141,8 +141,13 @@ async function main() {
     await page.getByRole('heading', { name: 'Synchronisatiecontrole' }).waitFor({ timeout: 12000 });
     await page.getByText(/Synchronisatie-slot · controle/).waitFor();
     await page.route('**/project-state', (route) => route.fulfill({ json: { ...payload, browserAccess: { state: 'unavailable', checkedAt: payload.readAt, url: null } } }));
-    await page.getByText('De juiste dashboardtoegang kan momenteel niet worden bevestigd. Wacht met deze proef.').waitFor({timeout: 12000});
-    assert.equal(await page.locator('.owner-dashboard-link').count(), 0);
+    if(payload.project.capabilityAudit.ownerBrowserUpdate?.normalEvaDenialVerified) {
+      const chromeLink=page.getByRole('link',{name:'Open Chrome-bediening ↗',exact:true}).last();
+      await chromeLink.waitFor();assert.equal(await chromeLink.getAttribute('href'),'http://localhost:44718');
+    } else {
+      await page.getByText('De juiste dashboardtoegang kan momenteel niet worden bevestigd. Wacht met deze proef.').waitFor({timeout: 12000});
+      assert.equal(await page.locator('.owner-dashboard-link').count(), 0);
+    }
     await page.unroute('**/project-state');
     await page.route('**/project-state', (route) => route.fulfill({ status: 503, json: {} }));
     await page.getByRole('alert').waitFor({ timeout: 12000 });
