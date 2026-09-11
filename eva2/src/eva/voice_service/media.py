@@ -5,9 +5,16 @@ from livekit.agents import stt, tts, tokenize
 from livekit.agents.types import DEFAULT_API_CONNECT_OPTIONS
 
 class HomeAssistantSTT(stt.STT):
-    def __init__(self, source, check=lambda: None):
-        super().__init__(capabilities=stt.STTCapabilities(streaming=False, interim_results=False))
+    def __init__(self, source, check=lambda: None, *, vad=None):
+        super().__init__(capabilities=stt.STTCapabilities(streaming=vad is not None, interim_results=False))
         self.source, self.check = source, check
+        self._vad = vad
+
+    def stream(self, *, language=None, conn_options=DEFAULT_API_CONNECT_OPTIONS):
+        if self._vad is None:
+            return super().stream(language=language, conn_options=conn_options)
+        from eva.voice_service.streaming_input import HomeAssistantInputStream
+        return HomeAssistantInputStream(self, self._vad)
 
     async def _recognize_impl(self, buffer, *, language=None, conn_options=DEFAULT_API_CONNECT_OPTIONS):
         self.check()

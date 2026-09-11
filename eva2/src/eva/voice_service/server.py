@@ -171,10 +171,14 @@ def create_app():
             state = BridgeState(backend, notify)
             # Browser capture already requests AEC. LiveKit's initial 3s warmup
             # would otherwise discard a real correction during the first answer.
-            session = AgentSession(stt=HomeAssistantSTT(stt_source, check), tts=streaming_speech_output(tts_source, check),
+            session = AgentSession(stt=HomeAssistantSTT(stt_source, check, vad=vad), tts=streaming_speech_output(tts_source, check),
                                    vad=vad, turn_detection="vad", allow_interruptions=True,
                                    min_interruption_duration=.15, false_interruption_timeout=1.5,
                                    aec_warmup_duration=0)
+            @session.on("user_input_transcribed")
+            def user_input_transcribed(event):
+                if event.is_final:
+                    notify({"type": "stt_final"})
             @session.on("agent_state_changed")
             def agent_state_changed(event):
                 notify({"type": "voice_state", "state": event.new_state})
