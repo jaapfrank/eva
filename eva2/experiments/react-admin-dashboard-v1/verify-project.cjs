@@ -23,6 +23,12 @@ async function main() {
   for (const capability of payload.project.capabilities) {
     const finding = audit.findings.find(item => item.id === capability.id);
     assert.ok(capability.scope, 'each status must name its delivery scope');
+    if (capability.id === 'memory' && payload.project.practiceTests.some(test=>test.id==='GE-02')) {
+      const accepted=payload.project.practiceTests.find(test=>test.id==='GE-02').status==='accepted';
+      assert.equal(capability.accepted,accepted ? 'yes' : 'partial');
+      assert.match(capability.product.jaap.label,accepted ? /GE-02 geslaagd/ : /GE-02 open/);
+      continue;
+    }
     if (capability.id === 'initiative' && finding.latestObservation) {
       assert.equal(capability.visibleResult, finding.latestObservation.visibleResult);
       assert.equal(capability.gap, finding.latestObservation.remaining);
@@ -66,8 +72,8 @@ async function main() {
     assert.deepEqual(payload.project.completionSource.unmappedTaskIds, []);
     assert.deepEqual(await page.locator('.compact-matrix > thead th').allTextContents(), ['Volledig onderdeel', 'Klaar?', 'Getest', 'Door Jaap getest', 'Beter dan concurrentie onderzocht']);
     assert.ok((await page.locator('.matrix-scroll').boundingBox()).height < 850, 'compact nine-row overview');
-    assert.equal(await page.locator('.matrix-category .completion-mark.open').count(),9);
-    assert.equal(await page.locator('.matrix-category .completion-mark.done').count(),0);
+    assert.equal(await page.locator('.matrix-category .completion-mark.open').count(),payload.project.capabilities.filter(row=>!row.product.complete).length);
+    assert.equal(await page.locator('.matrix-category .completion-mark.done').count(),payload.project.capabilities.filter(row=>row.product.complete).length);
     assert.equal(await page.locator('.matrix-category .proof-dot').count(),0);
     assert.equal(await page.locator('.step-count:visible').count(),9);
     for (const category of payload.project.capabilities) {

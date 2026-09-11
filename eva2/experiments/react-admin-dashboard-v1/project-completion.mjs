@@ -1,3 +1,4 @@
+import {applyMemoryPresentation} from './memory-presentation.mjs';
 import {optionalOptions} from './scope-decisions.mjs';
 // Presentation of the existing workboard and product scope; never changes task state.
 const groups = {
@@ -32,6 +33,7 @@ export function aggregateCompletion(steps) {
 }
 
 export function applyProductCompletion(project, board) {
+  const memoryAcceptance = applyMemoryPresentation(project, board);
   const tasks = [...board.executionTasks, ...board.milestones];
   const included = new Set();
   for (const row of project.capabilities) {
@@ -87,6 +89,7 @@ export function applyProductCompletion(project, board) {
       comparison:{state:'unknown',label:row.id === 'conversation' ? 'Beperkt · onbekend' : 'Niet vergeleken',detail:row.id === 'conversation' ? 'EV-002: één casus, Eva en Hermes voldoen aan dezelfde drie criteria; twee deelnemers geblokkeerd. Geen representatieve rangorde. Brononderzoek UP-001 bewijst geen concurrentiewinst.' : 'Geen representatieve vergelijking met uitkomst beter, even of slechter vastgelegd. CP-001/002/003 blijven aparte werkkaarten.'},
     };
   }
+  if (memoryAcceptance) project.capabilities.find(row => row.id === 'memory').product.jaap = memoryAcceptance;
   const feedback = board.audit?.voiceLaptopOwnerFeedback20260911;
   if (feedback?.laptopInterruptionAccepted === true) {
     const voice = project.capabilities.find(row => row.id === 'voice');
