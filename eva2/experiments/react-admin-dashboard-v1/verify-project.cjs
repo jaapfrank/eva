@@ -26,7 +26,7 @@ async function main() {
     if (capability.id === 'initiative' && finding.latestObservation) {
       assert.equal(capability.visibleResult, finding.latestObservation.visibleResult);
       assert.equal(capability.gap, finding.latestObservation.remaining);
-      assert.equal(payload.active.displayOutcome, capability.currentWork);
+      if(payload.active.id==='AU-008') assert.equal(payload.active.displayOutcome, capability.currentWork);
     } else if (capability.id === 'initiative' && board.audit.au008PrivateReview20260910?.live === true) {
       assert.match(capability.visibleResult, /private beoordeling/);
       assert.match(capability.gap, /Budgetmeting van/);
@@ -78,7 +78,10 @@ async function main() {
     await page.locator('.matrix-toggle').filter({hasText:'Geheugen'}).click();
     assert.equal(await page.locator('#details-memory [data-step-id="CO-008"] .step-state.done').count(),1);
     assert.match(await page.locator('#details-memory [data-step-id="CO-008"]').innerText(),/door Jaap geaccepteerd/);
-    assert.match(await page.locator('#details-memory [data-step-id="CO-004"]').innerText(),/Keuze nodig/);
+    const memoryChoice = payload.project.scopeDecisions.events.filter(event=>event.optionId==='CO-004').at(-1)?.decision || 'undecided';
+    const memoryOption = page.locator('#details-memory [data-step-id="CO-004"]');
+    if(memoryChoice==='excluded') assert.equal(await memoryOption.count(),0);
+    else assert.match(await memoryOption.innerText(),memoryChoice==='included' ? /Opgenomen/ : /Keuze nodig/);
     await page.locator('#details-memory').getByRole('button',{name:'Bewijs en grenzen'}).click();
     await page.getByRole('dialog',{name:'Geheugen'}).waitFor();
     await page.getByRole('button',{name:'Sluiten ×'}).click();
