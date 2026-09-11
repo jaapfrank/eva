@@ -1121,6 +1121,7 @@ class PostgresHindsightMemoryRuntime:
             return None
         if not commands.matches(turn, principal_binding_id=authority_binding):
             return None
+        commands.validate_authority(turn)
         journal = self._journal(turn)
         journal.admit(turn)
         committed = journal.committed_reply(turn)
