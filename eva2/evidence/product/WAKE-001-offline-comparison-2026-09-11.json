@@ -1,0 +1,159 @@
+{
+  "contract": "EvaWakeWordOfflineComparison/v1",
+  "observedAt": "2026-09-11T08:20:50.957687+00:00",
+  "status": "local_evaluation_complete_no_accepted_candidate",
+  "built": "offline comparison harness; new phrase-separated Dutch negative corpus; bounded fine-tune script prepared",
+  "tested": "original model/legacy model/window comparison and synthetic scenarios executed; bounded fine-tune not run",
+  "installed": false,
+  "accepted": false,
+  "scope": "Separate Home Assistant wakeword work, not laptop voice or other active goals",
+  "baseline": {
+    "modelSha256": "073b1d14262817df548e6ee45267617204b260acdb828e080b901d340871267a",
+    "localExportMatchesV2": true,
+    "manifestCutoff": 0.98,
+    "manifestWindow": 5,
+    "featureStepMs": 10
+  },
+  "deviceEvidence": {
+    "historicalDeviceLog": "voice-pe-interruption-candidate/live-device-diagnostic.log, existing September9 artifact",
+    "detector": "on-device microWakeWord",
+    "cutoff": 0.98,
+    "window": 5,
+    "vadCutoff": 0.5,
+    "vadWindow": 5,
+    "xmosVersion": "1.3.1",
+    "bootloader": "too old for automatic OTA rollback",
+    "firmwareModelHash": "unknown",
+    "currentHA": "Both devices select Hey Eva and Slightly sensitive; both mute=on; preserved",
+    "echo": "not measured"
+  },
+  "comparison": {
+    "wakeword_v2:0.98/5": {
+      "positive_real": {
+        "detected": 42,
+        "total": 60
+      },
+      "positive_tts": {
+        "detected": 262,
+        "total": 350
+      },
+      "negative_diagnostic_events": 29,
+      "negative_nominal_hours": 5.334719444444445
+    },
+    "wakeword_v2:0.98/7": {
+      "positive_real": {
+        "detected": 33,
+        "total": 60
+      },
+      "positive_tts": {
+        "detected": 217,
+        "total": 350
+      },
+      "negative_diagnostic_events": 15,
+      "negative_nominal_hours": 5.334719444444445
+    },
+    "wakeword_v2:0.99/5": {
+      "positive_real": {
+        "detected": 39,
+        "total": 60
+      },
+      "positive_tts": {
+        "detected": 247,
+        "total": 350
+      },
+      "negative_diagnostic_events": 11,
+      "negative_nominal_hours": 5.334719444444445
+    },
+    "wakeword:0.98/5": {
+      "positive_real": {
+        "detected": 1,
+        "total": 60
+      },
+      "positive_tts": {
+        "detected": 223,
+        "total": 350
+      },
+      "negative_diagnostic_events": 4,
+      "negative_nominal_hours": 5.334719444444445
+    }
+  },
+  "comparisonBoundary": "Diagnostic two-second refractory counting without VAD/startup/reset emulation. Nominal feature duration follows existing10ms config, not measured household listening. No direct comparison with original upstream ROC protocol. Raw uint8 output thresholds reconstructed from TFLite quantization, not dequantized float thresholds. All models use exactly same feature hashes.",
+  "syntheticScenarios": {
+    "clean": {
+      "positive_detected": 12,
+      "positive_total": 12,
+      "negative_activated": 46,
+      "negative_total": 48
+    },
+    "quiet": {
+      "positive_detected": 12,
+      "positive_total": 12,
+      "negative_activated": 46,
+      "negative_total": 48
+    },
+    "noise10dB": {
+      "positive_detected": 12,
+      "positive_total": 12,
+      "negative_activated": 43,
+      "negative_total": 48
+    },
+    "digital_reverb": {
+      "positive_detected": 11,
+      "positive_total": 12,
+      "negative_activated": 45,
+      "negative_total": 48
+    }
+  },
+  "syntheticBoundary": "New local Piper NL phrases; clean/quiet/noise10dB/digital_reverb. Same synthesis voice family as original training. Digital proxies are not physical distance/echo or independent human acceptance. No audio playback or uploads.",
+  "trainingDataAudit": {
+    "rawRecordings": 80,
+    "uniqueProcessedPCM": 80,
+    "positiveTestAugmentations": 60,
+    "sessionIndependentSplit": "not proven; original membership not persisted, test/validation second split unseeded",
+    "newNegativeTrainingClips": 96,
+    "newNegativeValidationClips": 32,
+    "phraseDisjointTrainValidationAndEvaluation": true
+  },
+  "retraining": {
+    "firstAttempt": "500-step existing-split run interrupted after local slowdown; no candidate TFLite exported",
+    "stop": "SIGINT own PID2034208; clean KeyboardInterrupt traceback",
+    "hostReadback": "37.7GB available; core/worker healthy. 44GB vmmem mostly page cache; no proven OOM.",
+    "preparedOnly": "100steps, batch32, GPU4096MiB,2TFthreads, cgroup MemoryMax8G/CPUQuota200%; original best_weights plus new Dutch negative training data",
+    "executionDependency": "Do not train until voice cutover and latency measurements finish; coordinate host slot first"
+  },
+  "promotionGate": {
+    "falseActivationReductionAtLeast": 0.5,
+    "positiveRecallAtLeast": 0.9,
+    "maxRecallLossPerScenario": 0.05,
+    "currentResult": "FAIL / no selected improved candidate",
+    "independentHumanTrialRequired": true
+  },
+  "next": [
+    "Finish bounded fine-tune after shared-host voice measurements, then same-set baseline/candidate comparison",
+    "Verify actual firmware YAML/package/model hash and retain known-good binary plus USB recovery",
+    "Freeze independent Dutch confusables/noise/distance/echo trials; no private household recordings without authorization",
+    "Install one device only after measured gain and recovery; ten-call/five-minute short owner trial plus longer rare-fault trial"
+  ],
+  "artifacts": {
+    "compare.py": "d17fccef1c42f309cb117235cbde59b8b48e2187fad1ed62931c0631305ecc2e",
+    "comparison.json": "957cbb32e5cb63ec3ddfdbc4434c49759dee7334bc8fc3e54548fac89037898d",
+    "scenario-results.json": "6cd2f3b41f7173f3fe45d7446bbccda1704426da4b0da5ed8a747adbff81c558",
+    "scenario-manifest.json": "27591796c43f1c52f8c01f26f5a274293b791624cc283f1112347fea25d80672",
+    "hard-negative-manifest.json": "911b83e63062e87d349b919524223185b753a103bc05599522ebe0c34457d863",
+    "audit_recordings.json": "6445f86ce789131943555b61995f3e5a133ed3fd1e5473b6712dc5912b3c57c9",
+    "finetune_bounded_candidate.py": "bd4d4e16da1682c701b87eb5373d22de00a23fcc04dd546462958b1116a168bb",
+    "README.md": "de42a67a6381b5d8a8078642b234149b78e474978be2bc034b432a7262b1ac73"
+  },
+  "replayInstructions": "E:/Projecten/wakeword/experiments/20260911/README.md",
+  "sources": [
+    "https://esphome.io/components/micro_wake_word/",
+    "https://raw.githubusercontent.com/esphome/esphome/2026.6.2/esphome/components/micro_wake_word/streaming_model.cpp",
+    "https://raw.githubusercontent.com/esphome/home-assistant-voice-pe/26.6.0/home-assistant-voice.yaml"
+  ],
+  "verification": [
+    "All local scripts syntax-compiled without executing training",
+    "Training and validation phrase groups disjoint",
+    "Training and evaluation text sets disjoint",
+    "Original v2 export hash preserved"
+  ]
+}
