@@ -23,9 +23,13 @@ async function main() {
   for (const capability of payload.project.capabilities) {
     const finding = audit.findings.find(item => item.id === capability.id);
     assert.ok(capability.scope, 'each status must name its delivery scope');
-    if (capability.id === 'initiative' && board.audit.au008PrivateReview20260910?.live === true) {
+    if (capability.id === 'initiative' && finding.latestObservation) {
+      assert.equal(capability.visibleResult, finding.latestObservation.visibleResult);
+      assert.equal(capability.gap, finding.latestObservation.remaining);
+      assert.equal(payload.active.displayOutcome, capability.currentWork);
+    } else if (capability.id === 'initiative' && board.audit.au008PrivateReview20260910?.live === true) {
       assert.match(capability.visibleResult, /private beoordeling/);
-      assert.match(capability.gap, /Laatste budgetmeting/);
+      assert.match(capability.gap, /Budgetmeting van/);
     } else if (capability.id === 'initiative' && board.audit.au008GeneralResearch20260910?.status === 'live') {
       assert.match(capability.visibleResult, /Algemeen publiek onderzoek is live/);
       assert.equal(capability.gap, board.audit.au008GeneralResearch20260910.remaining);
@@ -64,7 +68,7 @@ async function main() {
     assert.equal(await page.locator('.matrix-category .proof-dot').count(),0);
     assert.deepEqual(await page.locator('.matrix-user-outcome').allTextContents(), [
       'Zichtbare streamervaring nog te beoordelen', 'Privégesprekken werken; continuïteit nog te bewijzen',
-      'Voorkeurfunctie afgerond en geaccepteerd', 'Eerste zelfstandige bijdrage ontbreekt',
+      'Voorkeurfunctie afgerond en geaccepteerd', payload.project.capabilities.find(item => item.id === 'initiative').userOutcomeStatus || 'Eerste zelfstandige bijdrage ontbreekt',
       'Documenttaak bewezen; zelfstandig toolgebruik nog open', 'Natuurlijke gespreksproef nog open',
       payload.project.capabilities.find(item => item.id === 'projects').userOutcomeStatus || 'Stopproef mislukt; herstel loopt', 'Koppeling met Eva ontbreekt',
       'Beheerde wissel bewezen; zelf installeren nog open',

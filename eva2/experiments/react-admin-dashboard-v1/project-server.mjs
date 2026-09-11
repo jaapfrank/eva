@@ -35,7 +35,7 @@ export function applyReviewedCapabilities(project, board, audit) {
       row.accepted = initiative.ownerAccepted === true ? 'yes' : 'no';
       row.scope = `AU-008 · ${initiative.liveCapabilityCount ?? 'toegelaten'} kosteloze taakroutes`;
       row.currentWork = initiative.currentWork;
-      row.stageNotes = { ...row.stageNotes, tested: initiative.testEvidence, live: `Centrale bron: ${initiative.liveImage}; ${initiative.implementationCommit}.`, accepted: 'Dit betreft AU-008. De beperkte waardering van de eerdere AU-007-kaart staat afzonderlijk.' };
+      row.stageNotes = { ...row.stageNotes, built: 'Toegelaten taakroutes gebouwd; actuele telling staat bij de technische oplevering.', tested: initiative.testEvidence, live: `Centrale bron: ${initiative.liveImage}; ${initiative.implementationCommit}.`, accepted: 'Dit betreft AU-008. De beperkte waardering van de eerdere AU-007-kaart staat afzonderlijk.' };
       const research = board.audit?.au008GeneralResearch20260910;
       if (research?.status === 'live') {
         row.scope = 'AU-008 · kosteloze taakroutes en publiek onderzoek';
@@ -53,12 +53,26 @@ export function applyReviewedCapabilities(project, board, audit) {
         row.scope = 'AU-008 · onderzoek en private beoordeling';
         row.visibleResult = 'Algemeen publiek onderzoek en private beoordeling op rustige momenten zijn live.';
         row.works = row.visibleResult;
-        row.gap = `Eerste bruikbare eigen bijdrage en jouw beoordeling blijven open. Laatste budgetmeting: ${budget?.personUsed ?? '?'} / ${budget?.personLimit ?? '?'}; volgende beoordeling wacht op budgetruimte.`;
+        row.gap = `Eerste bruikbare eigen bijdrage en jouw beoordeling blijven open. Budgetmeting van 10 sep: ${budget?.personUsed ?? '?'} / ${budget?.personLimit ?? '?'}; dit is geen actuele budgetcontrole.`;
         row.resultBasis = `Live bron ${privateReview.sourceCommit.slice(0,7)} · 10 sep`;
         row.accepted = privateReview.ownerAccepted === true ? 'yes' : 'no';
         row.stageNotes = { ...row.stageNotes, live: `Centrale private beoordelingsroute: ${privateReview.image}; ${privateReview.sourceCommit}.`, accepted: privateReview.remaining };
         row.evidence += ' · ' + privateReview.evidencePath;
       }
+      const observation = finding.latestObservation;
+      if (observation) {
+        row.userOutcomeStatus = observation.userOutcomeStatus;
+        row.visibleResult = observation.visibleResult;
+        row.works = row.visibleResult;
+        row.gap = observation.remaining;
+        row.resultBasis = `Praktijkcontrole · ${observation.checkedAt}`;
+        row.stageNotes = { ...row.stageNotes, live: observation.evidenceSummary, accepted: 'Jouw beoordeling van deze bijdrage is nog open.' };
+        if (observation.evidencePath) row.evidence += ' · ' + observation.evidencePath;
+      }
+      row.stageLabels = { ...row.stageLabels, built: `${initiative.liveCapabilityCount ?? 'Toegelaten'} routes`, accepted: row.accepted === 'yes' ? 'Geaccepteerd' : 'Niet beoordeeld' };
+      row.currentWork = `${row.visibleResult} ${row.gap}`;
+      row.detail = row.currentWork;
+      row.intendedOutcome = row.currentWork;
     }
     const delegatedWork = board.audit?.au002Delivery;
     if (item.id === 'projects' && delegatedWork) {
@@ -69,7 +83,10 @@ export function applyReviewedCapabilities(project, board, audit) {
       row.works = row.visibleResult;
       row.gap = delegatedWork.remaining || delegatedWork.next || row.gap;
       row.historyNote = `Eerdere proef: ${finding.visibleResult}`;
-      row.detail = [finding.intendedOutcome, delegatedWork.lastActualResult].filter(Boolean).join(' ');
+      row.scope = 'AU-002 · toolvrij hulpwerk starten, stoppen, hervatten en teruglezen';
+      row.detail = [row.visibleResult, delegatedWork.lastActualResult, row.gap].filter(Boolean).join(' ');
+      row.intendedOutcome = row.detail;
+      row.gapKind = delegatedWork.live === true ? 'Gebruikersbeoordeling en vervolg' : 'Gebruikersroute nog open';
       // Images and preparation checks never imply a proven live owner lifecycle.
       for (const stage of ['built', 'tested', 'live']) {
         if (typeof delegatedWork[stage] === 'boolean') row[stage] = delegatedWork[stage] ? 'yes' : 'no';
@@ -81,9 +98,12 @@ export function applyReviewedCapabilities(project, board, audit) {
         accepted: row.accepted === 'yes' ? 'Geaccepteerd' : 'Nog open' };
       row.stageNotes = { ...row.stageNotes, tested: delegatedWork.sourceChecks || row.stageNotes.tested,
         live: delegatedWork.lastActualResult || row.stageNotes.live };
-      row.resultBasis = `Centrale AU-002-audit${delegatedWork.preparationRecordedAt ? ` · ${delegatedWork.preparationRecordedAt}` : ''}`;
-      if (delegatedWork.providerEvidencePath) row.evidence += ' · ' + delegatedWork.providerEvidencePath;
+      row.resultBasis = `Centrale AU-002-audit${delegatedWork.completedAt || delegatedWork.preparationRecordedAt ? ` · ${delegatedWork.completedAt || delegatedWork.preparationRecordedAt}` : ''}`;
+      for (const path of [delegatedWork.providerEvidencePath, delegatedWork.evidencePath, delegatedWork.reviewPath]) {
+        if (path) row.evidence += ' · ' + path;
+      }
     }
+    row.states = Object.fromEntries(['built', 'tested', 'live', 'accepted'].map(stage => [stage, row[stage]]));
     return row;
   });
 }
@@ -191,7 +211,7 @@ export function projectServer() {
         project.summary = [];
         const card = (task) => ({ id: task.id, title: task.title, outcome: task.outcome,
           status: task.status, doneWhen: task.doneWhen, area: task.area,
-          ...(task.id === 'AU-008' && board.audit?.initiativeDeliveryAU008 ? { displayOutcome: board.audit.au008PrivateReview20260910?.live === true ? board.audit.au008PrivateReview20260910.currentWork : board.audit.au008GeneralResearch20260910?.status === 'live' ? `${board.audit.au008GeneralResearch20260910.usefulOutcome} ${board.audit.au008GeneralResearch20260910.remaining}` : board.audit.initiativeDeliveryAU008.currentWork } : {}),
+          ...(task.id === 'AU-008' && board.audit?.initiativeDeliveryAU008 ? { displayOutcome: project.capabilities.find(item => item.id === 'initiative')?.currentWork || board.audit.initiativeDeliveryAU008.currentWork } : {}),
           ...(task.id === 'AU-007' && board.audit?.initiativeDeliveryAU007?.ownerContextRepair ? {
             progress: {
               works: 'Een echte huiswaarneming leidde tot een eigen keuze; stoppen via de eigenaarroute werkte. De eerdere keuze herhaalde een al afgeronde opdracht.',

@@ -1,0 +1,64 @@
+{
+  "contract": "EvaDashboardMorningReadback/v1",
+  "checkedAt": "2026-09-11T07:13:00Z",
+  "method": "Dashboardbron en bestaande bewijsbestanden gelezen; Docker status/image gelezen. AU008 nachtjournal/bestandbinding en geauthenticeerde readiness onafhankelijk read-only gecontroleerd door oorspronkelijke projecteigenaartaak. Geen model-, microfoon-, huisactie of runtimewijziging door dashboardcontrole.",
+  "independentReadbackThread": "01a07e5b-3ef4-7ef3-8a68-3197a780694e",
+  "runtime": {
+    "coreImage": "sha256:54c3f886a3b1bdcb2a8be8598b02a043238b926a40a3752b7a3d4099a37d6528",
+    "coreRevision": "81d4306166cf9c13456fe46e0911dcfbd66baee2",
+    "port": 44710,
+    "coreAndWorkerHealthy": true,
+    "ownerVoiceLandingHttpStatus": 200
+  },
+  "initiative": {
+    "intentId": "e077174ac3ad039fffb98d16003575564e4293b25c773287b1f201530b6728f8",
+    "chosenAt": "2026-09-11T00:42:32Z",
+    "stateVerifiedAt": "2026-09-11T00:47:58Z",
+    "finalReplyAt": "2026-09-11T00:48:05Z",
+    "artifactName": "eva-initiatief-e077174ac3ad039fffb98d16003575564e4293b25c773287b1f201530b6728f8-storingschecklist.md",
+    "artifactBytes": 1615,
+    "artifactSha256": "f1c60bb77d7667d483e5b026200c32c35c0ce602e37e641c6a0437c3038e2c62",
+    "hashMatchesStateVerified": true,
+    "contentScope": "Algemene privacybewuste storingschecklist; geen huisgegevens opgehaald of internetonderzoek verricht",
+    "ownerAccepted": false,
+    "fullProductGO": false,
+    "afterUtcReset": {
+      "privateReviews": 4,
+      "adopted": 1,
+      "silent": 3,
+      "budgetUsed": 4,
+      "budgetLimit": 4,
+      "budgetBlockedAtUtc": [
+        "04:50",
+        "05:52",
+        "06:53"
+      ]
+    }
+  },
+  "unchangedDatedProof": [
+    "answer-stream",
+    "conversation",
+    "memory",
+    "tools",
+    "browser"
+  ],
+  "correctedEvidence": [
+    "AU002 finale levenscyclus en review in details",
+    "Stem actuele kernbinding, oude audio proefdatum behouden",
+    "Installatie 11sep00:23 receipt",
+    "AU008 eerste bijdrage en actuele gedateerde budgetmeting"
+  ],
+  "acceptancePreserved": [
+    "CO008/GE01",
+    "AU007 beperkte kaartwaardering",
+    "SP01",
+    "SP02"
+  ],
+  "open": [
+    "Jaaps beoordeling AU008 checklist",
+    "AU002 menselijke beoordeling, losse onderbrekingsbeurt en uitvoerlengte",
+    "Fysieke laptopspraak/echo/vloeiendheid",
+    "Telefoon/VoicePE installatie met HA-configuratie en terugweg",
+    "Eva-integratie bestaande Chrome en exclusieve overname"
+  ]
+}
