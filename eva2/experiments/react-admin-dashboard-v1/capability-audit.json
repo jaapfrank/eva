@@ -186,6 +186,10 @@
       "historyNote": "AU-007-kaart: door jou “op zich wel bruikbaar” gevonden.",
       "links": [
         {
+          "title": "Open nieuwe storingschecklist",
+          "url": "/results/au008-storingschecklist.html"
+        },
+        {
           "title": "Eerdere AU-007-kaart",
           "url": "/results/au007-beoordelingskaart.html"
         }
@@ -194,7 +198,7 @@
         "checkedAt": "2026-09-11T07:13:00Z",
         "userOutcomeStatus": "Eerste checklist geleverd; jouw beoordeling nog open",
         "visibleResult": "Op 11 sep om 02:48 een zelfgekozen algemene storingschecklist opgeslagen en teruggelezen. Geen huisgegevens opgehaald of internetonderzoek verricht.",
-        "remaining": "Jouw beoordeling van de checklist en verdere initiatiefkwaliteit. Budget op 11 sep 09:13: 4/4 beoordelingen gebruikt; verdere beoordelingen wachten op budgetruimte.",
+        "remaining": "Jouw beoordeling van de checklist en verdere initiatiefkwaliteit. Private beoordelingen: reset werkte; 1 bijdrage en 3 keer stilte. Sinds 11 sep 06:50 weer 4/4 gebruikt (controle 09:13); dit telt niet alle modelcalls.",
         "evidenceSummary": "Normale private cyclus koos de bijdrage om 00:42:32 UTC; bestand geschreven en teruggelezen om 00:47:58 UTC, eindantwoord 00:48:05 UTC (02:48 Nederlandse tijd). Bestandhash gelijk aan STATE_VERIFIED. Read-only gecontroleerd om 07:13 UTC; geen menselijke acceptatie.",
         "evidencePath": "eva2/experiments/react-admin-dashboard-v1/morning-readback-2026-09-11.json"
       }
