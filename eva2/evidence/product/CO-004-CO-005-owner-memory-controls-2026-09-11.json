@@ -1,0 +1,193 @@
+{
+  "contract": "EvaOwnerMemoryControlsDelivery/v1",
+  "tasks": [
+    "CO-004",
+    "CO-005"
+  ],
+  "date": "2026-09-11",
+  "baseCommit": "52247dc70982159ab2702b60037e58676cd8967c",
+  "implementationCommit": "ae832a9840e801cea821ac224bd0cb3e01aed1b5",
+  "status": "live_technical_delivery_owner_trial_pending",
+  "built": true,
+  "tested": true,
+  "live": true,
+  "ownerAccepted": false,
+  "outcome": "Eigen gespreksbronnen volledig bekijken; een actuele correctie via dezelfde persoonsgebonden geheugenroute doorgeven; verwerkte bron en afgeleid geheugen bewust wissen.",
+  "decisionSource": "eva2/design/product/optional-scope-decisions.json",
+  "decisionEventIds": [
+    "0f16a210-24db-4ca2-854d-863ed207ebbd",
+    "b7be4bc3-40f0-4f12-a8a8-fcc8a4b653d5"
+  ],
+  "reused": [
+    "PostgresOwnerMemorySources owner and alias authority",
+    "ordinary conversation journal and asynchronous retention",
+    "HindsightColdPathWorker durable cross-store erasure and restore authority"
+  ],
+  "tests": [
+    {
+      "command": "pytest -q tests/api/test_owner_memory_controls.py tests/bootstrap/test_owner_memory_commands.py tests/application/test_memory_background.py -k \"owner_memory or erasure\"",
+      "passed": 13,
+      "result": ".............                                                            [100%]\n13 passed, 16 deselected in 3.17s"
+    },
+    {
+      "command": "pytest -q tests/postgres/test_people_memory_overview.py -k \"owner_memory_sources or owner_sources\"",
+      "passed": 9,
+      "scope": "Disposable PostgreSQL, original owner source/alias pagination and authority cases"
+    },
+    {
+      "command": "pytest -q tests/postgres/test_owner_memory_delivery.py",
+      "passed": 1,
+      "result": ".                                                                        [100%]\n1 passed in 5.96s",
+      "provider": "deterministic test double; live provider tested separately"
+    }
+  ],
+  "browser": {
+    "contract": "EvaDashboardCandidateBrowserProof/v1",
+    "authenticated": {
+      "browserStorageEntries": 0,
+      "externalRequests": 0,
+      "pageErrors": 0,
+      "protectedEndpointsRead": [
+        "/internal/v1/dashboard/initiatives",
+        "/internal/v1/dashboard/browser/status",
+        "/internal/v1/dashboard/memory-sources",
+        "/internal/v1/dashboard/status",
+        "/internal/v1/dashboard/identity",
+        "/internal/v1/dashboard/workboard"
+      ]
+    },
+    "anonymous": {
+      "identityRead": false,
+      "statusRequestObserved": true,
+      "workboardRead": false
+    },
+    "memorySources": {
+      "fullSource": true,
+      "staleDetailRevokedWhileListAvailable": true,
+      "explicitCorrection": true,
+      "eraseConfirmationAndCancellation": true,
+      "pagination": true,
+      "literalText": true,
+      "revokedAccessClearsContent": true,
+      "negativeCases": [
+        "denied",
+        "error",
+        "malformed",
+        "invalidDate",
+        "invalidCursor",
+        "duplicateId",
+        "overlong",
+        "unknownState",
+        "empty"
+      ],
+      "lateReplyCannotRestoreRevokedContent": true,
+      "mobileWidth": 390,
+      "serverScopeOnly": true
+    },
+    "status": "passed"
+  },
+  "runtimeManifest": {
+    "sourceCommit": "ae832a9840e801cea821ac224bd0cb3e01aed1b5",
+    "parentImage": "sha256:bf5d7e575464ab3f40c52e87f2dc9a01752aab9172cbc8cad6145ef433d38df3",
+    "runtimePatch": "Only owner memory methods; all other installed parent runtime bytes preserved.",
+    "files": {
+      "adapters/api/app.py": "5dbd7a067443a64c09ead3a73f051431519fe060b64a6cac2a55acba78e51e03",
+      "adapters/api/dashboard_memory.py": "a90639f033d725df37109c22944e27bfa177c92a766a0e4ad34fc0e89ceb4c3e",
+      "adapters/postgres/people_memory_overview.py": "1dff2d6d93fe6b4b7771b0da7d9228fdb41f611a7dce5b01803ed8eb69a16a47",
+      "bootstrap/runtime.py": "e630dcd0cdf5aa061c3ecc204ade592851d12017b6a594623ddbdccd9cd530ad"
+    }
+  },
+  "imageImports": {
+    "adapters/api/app.py": "5dbd7a067443a64c09ead3a73f051431519fe060b64a6cac2a55acba78e51e03",
+    "adapters/api/dashboard_memory.py": "a90639f033d725df37109c22944e27bfa177c92a766a0e4ad34fc0e89ceb4c3e",
+    "adapters/postgres/people_memory_overview.py": "1dff2d6d93fe6b4b7771b0da7d9228fdb41f611a7dce5b01803ed8eb69a16a47",
+    "bootstrap/runtime.py": "e630dcd0cdf5aa061c3ecc204ade592851d12017b6a594623ddbdccd9cd530ad"
+  },
+  "activation": {
+    "startedAt": "2026-09-11T11:08:01.510455+00:00",
+    "parentImage": "sha256:bf5d7e575464ab3f40c52e87f2dc9a01752aab9172cbc8cad6145ef433d38df3",
+    "candidateImage": "sha256:bfb0d25abb7f4a1247d376050fdfd7b606e3a3285dcd19b9ee6831d3297b046d",
+    "databaseRestored": false,
+    "schemaChanged": false,
+    "voiceRooms": 0,
+    "recentInFlightOperations": 0,
+    "backup": {
+      "eva2": {
+        "sha256": "e39f2cbaadd8f26b4e01afc4208a40bb2bc221e578cf3862100493bfd11baa3b",
+        "bytes": 16049965,
+        "readable": true
+      },
+      "hindsight": {
+        "sha256": "65d34ce875408e8af0d512f3f5ab08afacb09e115dba5df657ac725e3e72ec91",
+        "bytes": 2880537,
+        "readable": true
+      }
+    },
+    "ownerSourceRead": true,
+    "status": "live",
+    "hindsightUnchanged": true,
+    "voiceMediaUnchanged": true,
+    "finishedAt": "2026-09-11T11:08:24.287314+00:00"
+  },
+  "liveProbe": {
+    "status": "complete",
+    "route": "authenticated owner HTTP and independent memory recall; no Telegram or voice delivery",
+    "syntheticSources": 2,
+    "sourceInspection": true,
+    "correctionQueuedAndRetained": true,
+    "correctedFactRecalled": true,
+    "relevantFactsBeforeErasure": 1,
+    "relevantFactsAfterErasure": 0,
+    "sourcesErased": 2,
+    "ownerAccepted": false,
+    "artifacts": {
+      "initial-reply.json": "66111dc5f6665e33b5cc48aa8f2b010a074c5220cacc42c975446f819f21b025",
+      "state.json": "f9aafb5b96f5069351dfac027834749c21c54e6f3abd0af0a75039424b458a6a",
+      "erasure-e419f26b-3e3e-4463-bb5b-15a1f88675ae.json": "1040c91678e0ad5397197078482a5ec3cec1011c46687873c30b34c9d511d0e5",
+      "recall-after-erasure.json": "6dda9cd08e2ea57bd73d583088f50281760347b82ca3985cba58dfb45efd1ae6",
+      "correction.json": "60d21422bdcc0da2d5863f0d3b5027d7a40e631c818343d0ca779854b6c80456",
+      "recall-before-erasure.json": "4f9d4cfb105d46e2f3c2a1aaea6d8e940e6362c89ecfcc52c8be3a4f7883ef7d",
+      "erasure-0b3e4a18-3ae7-4261-bd40-8c1e132a424b.json": "d426c29f37a8b58fb4ee2f8f0adb024b9a518d382adfaba8b94d74d14de28a5a"
+    },
+    "finishedAt": "2026-09-11T11:11:10.778552+00:00"
+  },
+  "liveUI": {
+    "status": "passed",
+    "liveOwnerUI": true,
+    "protectedSourceRead": true,
+    "fullSourceVisible": true,
+    "sourceClosed": true,
+    "mutations": 0,
+    "pageErrors": 0,
+    "persistentBrowserStorage": 0
+  },
+  "postErasureReadback": {
+    "syntheticLabelRemainingInOperationalPayloads": 0,
+    "outboxPhases": [
+      "memory_needs_help|needs_help|34",
+      "memory_retained|completed|1164"
+    ]
+  },
+  "preservedAcceptance": {
+    "task": "CO-008",
+    "trial": "GE-01",
+    "evidence": "eva2/evidence/product/CO-008-GE-01-owner-acceptance-2026-09-10.json"
+  },
+  "legacyRecoveryAssessment": {
+    "unchangedNeedsHelp": 34,
+    "ownerVisibleNeedsHelp": 2,
+    "ownerVisibleRetained": 136,
+    "ownerHistoricalFailureDate": "2026-08-28",
+    "ownerHistoricalFailureMeaning": "Two old technical test-word turns; not new failures or evidence that a current ordinary personal fact was lost. No historical source removed or retry budget widened."
+  },
+  "limits": [
+    "Source inspection is not an exhaustive display of every inferred semantic fact.",
+    "Correction is a new current owner statement; the historical statement stays visible until explicitly erased.",
+    "Erasure applies to the selected processed conversation source and its derived memory; other mentions and Telegram messages are not deleted.",
+    "Pending or failed retention is displayed honestly; erasure control waits for processed retention.",
+    "No new family acceptance or general superiority claim. GE-02 is awaiting the owner."
+  ],
+  "trialId": "GE-02",
+  "artifactRoot": "/home/administrator/project/.eva2-artifacts/memory-controls-image-20260911",
+  "privateArtifactPolicy": "Private backups and live payloads remain protected locally. No credentials or real conversation contents in this evidence. Keep current rollback backup until the next accepted release; erase obsolete private artifacts when no longer needed."
+}
