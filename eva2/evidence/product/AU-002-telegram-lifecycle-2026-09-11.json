@@ -1,0 +1,381 @@
+{
+  "contract": "EvaAU002TelegramLifecycleEvidence/v1",
+  "implementationCommit": "365128c160f247aa4291e36e85ba6d7ffe752134",
+  "baseCommit": "a9cc6abe7f4cb112eb9fc2fad172e8ce84fef5b8",
+  "recordedAt": "2026-09-11T08:04:15Z",
+  "historicalDashboardEvidence": "eva2/evidence/product/AU-002-owner-lifecycle-2026-09-11.json",
+  "humanTelegramTrial": {
+    "date": "2026-09-11",
+    "localTime": "09:40 Europe/Amsterdam",
+    "result": "start refused",
+    "reply": "Ik kan hier geen hulpagent inschakelen.",
+    "accepted": false
+  },
+  "repair": {
+    "cause": "Real Telegram bridge retains telegram alias; durable helper service advertised tools only to canonical owner UUID. Existing trusted private binding matched exactly.",
+    "change": "Resolve current exact private alias without rewriting conversation identity; revalidate durable authority before legacy replay and store operations.",
+    "authorityBroadened": false
+  },
+  "routeProbe": {
+    "kind": "internal Telegram bridge HTTP using existing trusted private binding and new explicit local QA message IDs",
+    "endpoint": "/internal/v1/telegram/canary/respond",
+    "sentExternalTelegramMessages": 0,
+    "humanAcceptance": false,
+    "concurrency": "Separate stop request after worker call_started, while first start response still pending.",
+    "steps": [
+      {
+        "stage": "beforeStop",
+        "work": {
+          "workId": "work:eva-chat:9f8786fc-d4a3-5d56-b4a6-0c909d737f52",
+          "state": "call_started",
+          "generation": 1,
+          "callId": "child-call:7400d313-b6c1-42b1-b572-0a106884a4c1",
+          "stopRequestedAt": null,
+          "resultAvailable": false,
+          "ownerUnchanged": true,
+          "bindingUnchanged": true
+        }
+      },
+      {
+        "stage": "separateStop",
+        "messageSha256": "20da29e66e6dfcb73a371fb19af82a79d2d65bd6de0fd94dc4bbaaba92207313",
+        "text": "De stopopdracht is bewaard. Het resultaat van deze actieve modelcall wordt niet aan Eva geleverd en Eva start hem niet opnieuw.",
+        "provider": "eva-delegated-work-command",
+        "at": "2026-09-11T08:03:45Z"
+      },
+      {
+        "stage": "start",
+        "messageSha256": "31ba38a0ae9f5b2f15c07200fcf3374a3e258130efc3278f7c9046ef1fda0eb2",
+        "text": "De hulpopdracht is aangemaakt en ingepland: een uitgebreid voorstel voor een gezellige gezinsdag, zonder boekingen of aankopen. Er is nog geen resultaat.\n\nTaaknummer: work:eva-chat:9f8786fc-d4a3-5d56-b4a6-0c909d737f52. Je losse stopopdracht zal ik op deze taak toepassen.",
+        "provider": "chatgpt-codex:gpt-6-astra",
+        "at": "2026-09-11T08:03:22Z"
+      },
+      {
+        "stage": "afterStop",
+        "work": {
+          "workId": "work:eva-chat:9f8786fc-d4a3-5d56-b4a6-0c909d737f52",
+          "state": "stopped",
+          "generation": 1,
+          "callId": "child-call:7400d313-b6c1-42b1-b572-0a106884a4c1",
+          "stopRequestedAt": "2026-09-11 08:03:45+00:00",
+          "resultAvailable": false,
+          "ownerUnchanged": true,
+          "bindingUnchanged": true
+        }
+      },
+      {
+        "stage": "status",
+        "messageSha256": "2c6fa595291e9ffa3a0bf3a8f7932ed564b2dc18a021d151efceef212bab8962",
+        "text": "Je werkbord: 0 wachtend, 0 bezig, 1 vraagt aandacht, 1 te controleren en 2 klaar.",
+        "provider": "eva-delegated-work-command",
+        "at": "2026-09-11T08:03:49Z"
+      },
+      {
+        "stage": "explicitResume",
+        "messageSha256": "9f6fe423cf9db85cef6cfe6fec82955ff32d82c595c59e215479b5967dfc00df",
+        "text": "De hervatfunctie heeft een nieuwe poging aangemaakt. Die is toegelaten, maar er is nog geen resultaat. Ik laat deze poging afmaken; de opdracht blijft zonder boekingen, aankopen of andere externe acties.\n\nNieuw taaknummer: work:eva-resume:0710eb87-57ae-5d9d-a20c-800554e75226.",
+        "provider": "chatgpt-codex:gpt-6-astra",
+        "at": "2026-09-11T08:03:49Z"
+      },
+      {
+        "stage": "result",
+        "messageSha256": "1f0552bc15cc6b6ff9bed6a2404fc2b4b3c602da17a9b0cdb4f2be94ed543418",
+        "text": "{\"findings\":[\"Gebruik alleen aanwezige spullen en ingrediënten; vervang alles eenvoudig door papier, knuffels, dekens, stoelen of keukengerei.\",\"Houd een losse dagindeling aan: ochtend, middag en avond zijn ankers, geen verplicht schema.\",\"Maak activiteiten samenwerkend en bied altijd een rustige keuze, zoals lezen, tekenen, muziek luisteren of even alleen zijn.\",\"Bij slecht weer: indoor-speurtocht, fort bouwen, bakken met bestaande ingrediënten, verhalen verzinnen of een huiskamershow.\",\"Bij droog weer: wandelen, natuurbingo, balspel, picknick, stoepkrijt of buiten tekenen.\",\"Laat leeftijden meedoen op eigen niveau: tellen en zoeken voor kleintjes, plannen en uitleggen voor oudere kinderen.\",\"Sluit af met opruimen als gezamenlijke korte taak en een vraag als: wat was vandaag fijn?\"],\"summary\":\"Een vrijblijvende gezinsdag zonder aankopen of reserveringen: kies per moment één activiteit en laat ruimte om over te slaan. Ochtend: rustig ontbijt, daarna een gezamenlijke wandeling of binnen een speurtocht door het huis met zelfbedachte opdrachten. Middag: maak samen een eenvoudige lunch met wat al aanwezig is; organiseer vervolgens een spelletjesmiddag, knutselopdracht of bouwproject met papier, karton, dekens en kussens. Bij regen blijven jullie binnen met een film, luisterverhaal, toneelstukje of picknick op de vloer. Bij droog weer kan de activiteit naar tuin, balkon of park: balspel, stoepkrijt, natuurbingo of wolken kijken. Plan na elk onderdeel een pauze met drinken, lezen, muziek of stilte. Avond: samen koken, tafelvragen of een herinneringsronde, gevolgd door een rustige afsluiting. Pas opdrachten aan: jongere kinderen krijgen korte, speelse taken; oudere kinderen kiezen, begeleiden of maken regels. Wie wil, kijkt toe of haakt later aan.\"}",
+        "provider": "eva-delegated-work-command",
+        "at": "2026-09-11T08:04:15Z"
+      },
+      {
+        "stage": "final",
+        "stopped": {
+          "workId": "work:eva-chat:9f8786fc-d4a3-5d56-b4a6-0c909d737f52",
+          "state": "stopped",
+          "generation": 1,
+          "callId": "child-call:7400d313-b6c1-42b1-b572-0a106884a4c1",
+          "stopRequestedAt": "2026-09-11 08:03:45+00:00",
+          "resultAvailable": false,
+          "ownerUnchanged": true,
+          "bindingUnchanged": true
+        },
+        "resumed": {
+          "workId": "work:eva-resume:0710eb87-57ae-5d9d-a20c-800554e75226",
+          "state": "succeeded",
+          "generation": 2,
+          "callId": "child-call:008a3d55-751b-417e-9938-1c946c9ba18e",
+          "stopRequestedAt": null,
+          "resultAvailable": true,
+          "ownerUnchanged": true,
+          "bindingUnchanged": true
+        },
+        "sentTelegramMessages": 0,
+        "humanAcceptance": false,
+        "probeRoute": "internal Telegram bridge HTTP"
+      }
+    ]
+  },
+  "catalogProbe": {
+    "actualIngressMatchesTrustedPrivateAlias": true,
+    "internalOwnerIdDiffers": true,
+    "ingressMessageSha256": "ce6643fbbe209c515e0017373322e6918a1c4cf0d69603bf3dee723606e8f466",
+    "availableHelperTools": [
+      "start_delegated_work",
+      "list_delegated_work",
+      "get_delegated_work",
+      "stop_delegated_work",
+      "resume_delegated_work"
+    ],
+    "toolCount": 27,
+    "modelCalls": 0,
+    "sentTelegramMessages": 0
+  },
+  "durableReadback": [
+    {
+      "workId": "work:eva-resume:0710eb87-57ae-5d9d-a20c-800554e75226",
+      "state": "succeeded",
+      "generation": 2,
+      "callId": "child-call:008a3d55-751b-417e-9938-1c946c9ba18e",
+      "stopRequestedAt": null,
+      "resultAvailable": true,
+      "ownerUnchanged": true,
+      "bindingUnchanged": true,
+      "specKeys": [
+        "schema_version",
+        "contract",
+        "work_id",
+        "episode_id",
+        "generation",
+        "parent_task_id",
+        "owner_principal_id",
+        "principal_binding_id",
+        "audience",
+        "worker_name",
+        "worker_profile_id",
+        "worker_profile_release_sha256",
+        "task",
+        "model_profile_id",
+        "model_profile_release_sha256",
+        "worker_program_sha256",
+        "engine_release_sha256",
+        "output_schema_sha256",
+        "grant",
+        "created_at",
+        "deadline"
+      ],
+      "usage": {
+        "schema_version": 1,
+        "contract": "DelegatedWorkUsage/v1",
+        "measurement": "measured",
+        "completed_model_responses": 1,
+        "tool_calls": 0,
+        "input_tokens": 391,
+        "output_tokens": 470,
+        "total_tokens": 861,
+        "cost_usd_micros": 643
+      },
+      "resultKeys": [
+        "schema_version",
+        "contract",
+        "work_id",
+        "call_id",
+        "output",
+        "output_sha256",
+        "spec_sha256",
+        "usage",
+        "completed_at"
+      ]
+    },
+    {
+      "workId": "work:eva-chat:9f8786fc-d4a3-5d56-b4a6-0c909d737f52",
+      "state": "stopped",
+      "generation": 1,
+      "callId": "child-call:7400d313-b6c1-42b1-b572-0a106884a4c1",
+      "stopRequestedAt": "2026-09-11 08:03:45+00:00",
+      "resultAvailable": false,
+      "ownerUnchanged": true,
+      "bindingUnchanged": true,
+      "specKeys": [
+        "schema_version",
+        "contract",
+        "work_id",
+        "episode_id",
+        "generation",
+        "parent_task_id",
+        "owner_principal_id",
+        "principal_binding_id",
+        "audience",
+        "worker_name",
+        "worker_profile_id",
+        "worker_profile_release_sha256",
+        "task",
+        "model_profile_id",
+        "model_profile_release_sha256",
+        "worker_program_sha256",
+        "engine_release_sha256",
+        "output_schema_sha256",
+        "grant",
+        "created_at",
+        "deadline"
+      ],
+      "usage": {
+        "schema_version": 1,
+        "contract": "DelegatedWorkUsage/v1",
+        "measurement": "unmeasured",
+        "completed_model_responses": null,
+        "tool_calls": null,
+        "input_tokens": null,
+        "output_tokens": null,
+        "total_tokens": null,
+        "cost_usd_micros": null
+      },
+      "resultKeys": []
+    }
+  ],
+  "deployment": {
+    "image": "sha256:563aff68d0cb4ea941a8b6c36d688e5430685654e35c955d739539ca0392cc05",
+    "parentImage": "sha256:54c3f886a3b1bdcb2a8be8598b02a043238b926a40a3752b7a3d4099a37d6528",
+    "composition": "Parent image plus owner_service.py, delegated_work_commands.py and exact cumulative runtime diff applied with fuzz=0; not a full source image.",
+    "installedFiles": {
+      "files": {
+        "runtime.py": "6922c7a1a4be7f8e6d3577f5a5483d3f41b5e4c36fb198802dd541948b320e90",
+        "delegated_work_owner_service.py": "934465533028e525ba75f062621d47ffcbf8e6d7eec6a1b53ef1d5edea0e1566",
+        "delegated_work_commands.py": "b2b5812f75d6d83b8bc38f15c51627a1e60919d5871188a51fbfc4df9dd44504"
+      },
+      "replayAuthorityMethodPresent": true
+    },
+    "cutover": {
+      "backgroundIsolationBoundary": "Legacy images may ignore the switch; configuration readback is not worker isolation proof.",
+      "backgroundWorkConfiguredAfterActivation": true,
+      "backgroundWorkConfiguredDuringStaging": false,
+      "contract": "Eva2QuiescentCutoverReceipt/v1",
+      "dashboardVoiceFirstActivation": false,
+      "eva1Backup": {
+        "bytes": 318214144,
+        "filename": "eva1-before-slot3-to-slot4-20260911T080025Z.db",
+        "quickCheck": "ok",
+        "sha256": "1693010ccc9278bbc571014fbde44aaf7b5e8086a2cf9982853fa425600c2c27"
+      },
+      "eva1HttpStatuses": {
+        "/": 200,
+        "/api/capabilities": 200,
+        "/api/health": 200,
+        "/api/overview": 200,
+        "/api/workstatus": 200
+      },
+      "issuedAt": "2026-09-11T08:02:31.882804+00:00",
+      "previousDropinSha256": "81f1b2b687a641ae5349aa3c13198f6ad3ac1d7c88ee351bc3c559f22eee28a1",
+      "proactiveCredentialWithheldDuringStaging": true,
+      "proactiveDeliveryEnabled": true,
+      "sourcePort": 44710,
+      "sourceWritersStopped": true,
+      "status": "switched",
+      "synchronizedDatabases": {
+        "memory": {
+          "countDigest": "892784f6915fff8b91dd66f5d8945266fc6b15a4655fd52bff0e204e4fd6d64d",
+          "dataDigest": "c6fe8e0670c831cd5b3bd71ffefbf99082a46696b789704c8fdaa5bb3615723f",
+          "dumpBytes": 2900541,
+          "dumpSha256": "215d95a33b2f65e89b29242f157087dc1b12d2af7d0abfdaeacf25c470ebb4b7",
+          "schemaDigest": "d89bfebdbfeb55e8618e81286bf24a42b838bfe577e84f6db9b93b43f5832172",
+          "tableCount": 23
+        },
+        "operational": {
+          "countDigest": "ff6f01ecf78c8111915936b1f467ceff0f1c948d7eeab2972b46c88b66cc3e8d",
+          "dataDigest": "3443283d0a0f6e703879b0921ba005ece6b2b37382647982f4a794aac614a7a5",
+          "dumpBytes": 15608547,
+          "dumpSha256": "5a4985e489175587f74fd103ba04a83eb4940e3c93224248d59968c4a6a11f99",
+          "schemaDigest": "32acc5b66e349dfd5b385e4828897575ad543ebb5f2638b8880dff1cacb7fb39",
+          "tableCount": 48
+        }
+      },
+      "targetPort": 44711,
+      "targetReady": true
+    },
+    "voice": {
+      "core": {
+        "httpStatus": 200,
+        "contract": "EvaVoiceSessionReady/v1"
+      },
+      "media": {
+        "httpStatus": 200,
+        "ready": true,
+        "status": null
+      }
+    },
+    "voiceBinding": "slot4 core44711; media44716; cloud_relay true; existing media and SFU images preserved"
+  },
+  "checks": [
+    {
+      "suite": "PostgreSQL owner service/actions + Telegram API",
+      "passed": 17,
+      "log": "telegram-tests-v2.log"
+    },
+    {
+      "suite": "Bootstrap commands before replay follow-up",
+      "passed": 5,
+      "log": "command-tests.log"
+    },
+    {
+      "suite": "Final bootstrap commands + Telegram API including replay revocation",
+      "passed": 15,
+      "log": "replay-tests.log"
+    }
+  ],
+  "limitations": [
+    "Internal bridge proof does not replace a new human Telegram trial or acceptance.",
+    "Stop persists a delivery fence; it does not prove upstream provider cancellation. Stopped call usage remains unmeasured, not zero.",
+    "Legacy result response exposes structured JSON text; friendly rendering and strict output length remain quality follow-ups."
+  ],
+  "archive": "/home/administrator/project/.eva2-artifacts/au002-owner-work-20260910/telegram-repair-20260911",
+  "archiveFiles": {
+    "telegram-tests-v2.log": {
+      "bytes": 100,
+      "sha256": "641c0ac3cda79903e72b54100d4e884feddab161cf47dea8a919cd574d2bceb1"
+    },
+    "command-tests.log": {
+      "bytes": 98,
+      "sha256": "f31b339a2910f630ea46bcb57f8fcf9703620a54966ff1081c1516473a1bf388"
+    },
+    "replay-tests.log": {
+      "bytes": 100,
+      "sha256": "e6554be799065a30fc5468529e8e3dd554aae0eec31690083d7bd185677e193d"
+    },
+    "catalog-probe.log": {
+      "bytes": 378,
+      "sha256": "21af89d82848fc1ecc7e35bec60bff2f99cbb2d4c3f3747833772e11a02ac76f"
+    },
+    "cutover.stdout": {
+      "bytes": 1767,
+      "sha256": "7e600d6e3c7639b2597623395715d380b15b9b82ab8a923bc4539d024db41c9b"
+    },
+    "voice-preflight.json": {
+      "bytes": 17,
+      "sha256": "ca593d22a533c05d71441d7943bd44321b4ae99522dbe3fe9ee12fa478483973"
+    },
+    "voice-readiness.json": {
+      "bytes": 122,
+      "sha256": "b4362ab6adf53e6ccbf28bf540d4c1ad372dc655bd51cec0b76a5c03587c665f"
+    },
+    "live-imports.json": {
+      "bytes": 333,
+      "sha256": "38d9cc8e1ec64149e6294ab74d95180984268f1eea709044ad4d4954e3843c27"
+    },
+    "bridge-lifecycle.log": {
+      "bytes": 4829,
+      "sha256": "2560c9f7db0a4e8449a44e93cf8edf190de8d3e04ccf2366efa99e583b996a37"
+    },
+    "durable-readback.json": {
+      "bytes": 1982,
+      "sha256": "0b201de6edc73f05bacd5a39951fbdd908b3140c344a03bece647e255b7f7703"
+    },
+    "bridge_lifecycle.py": {
+      "bytes": 4628,
+      "sha256": "9b343cea8b8fe9eb5f43ef026a282fb75038b54a8cb91810000dde1c3f2e517e"
+    },
+    "catalog_probe.py": {
+      "bytes": 2220,
+      "sha256": "219daa124ef1f310740d13fd84fdb8c4626b6dafcb4ab945b3891d337cd247e0"
+    },
+    "build-final.log": {
+      "bytes": 1216,
+      "sha256": "eda615449a1e5baf967660c9e7996c558651b1b3c20fd0d3242fd85ba49b4110"
+    }
+  }
+}
