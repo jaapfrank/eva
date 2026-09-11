@@ -269,10 +269,10 @@
     }
   ],
   "summary": {
-    "files": 2352,
-    "present": 2351,
-    "tracked": 2252,
-    "untracked": 99,
+    "files": 2356,
+    "present": 2355,
+    "tracked": 2254,
+    "untracked": 101,
     "tombstones": 1,
     "policyErrors": 107
   },
@@ -27177,6 +27177,41 @@
       }
     },
     {
+      "path": "eva2/evidence/product/AU-002-telegram-lifecycle-2026-09-11.json",
+      "gitState": "untracked",
+      "present": true,
+      "bytes": 16129,
+      "contentSha256": "23e219be82d6ff5f83fdefc406b49cafde02551d13ea127f39201c4c0392e0e3",
+      "hashMode": "exact-bytes",
+      "role": "verification",
+      "roleRuleId": "eva2-verification",
+      "matchingRuleIds": [
+        "eva2-verification"
+      ],
+      "owner": "verification",
+      "inputs": [
+        "production or fixture contract"
+      ],
+      "outputs": [
+        "test decision"
+      ],
+      "state": [
+        "temporary isolated test state"
+      ],
+      "effects": [
+        "may execute only inside its declared gate"
+      ],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": false,
+        "runtimeCritical": true,
+        "status": "blocked-untracked"
+      }
+    },
+    {
       "path": "eva2/evidence/product/AU-005-owner-execution-2026-09-09.json",
       "gitState": "tracked",
       "present": true,
@@ -44441,6 +44476,37 @@
       }
     },
     {
+      "path": "eva2/reviews/AU-002-telegram-365128c1.md",
+      "gitState": "untracked",
+      "present": true,
+      "bytes": 4633,
+      "contentSha256": "2d1df7cc79850900f963cb4ce0249e62ece803b99ef04035ab469f94e04882fc",
+      "hashMode": "exact-bytes",
+      "role": "documentation",
+      "roleRuleId": "eva2-documentation",
+      "matchingRuleIds": [
+        "eva2-documentation"
+      ],
+      "owner": "documentation",
+      "inputs": [
+        "design and evidence"
+      ],
+      "outputs": [
+        "human-readable contract"
+      ],
+      "state": [],
+      "effects": [],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": false,
+        "runtimeCritical": false,
+        "status": "blocked-untracked"
+      }
+    },
+    {
       "path": "eva2/reviews/AU-008-private-review-519a03a.md",
       "gitState": "untracked",
       "present": true,
@@ -59655,6 +59721,41 @@
       }
     },
     {
+      "path": "eva2/src/eva/bootstrap/delegated_work_owner_service.py",
+      "gitState": "tracked",
+      "present": true,
+      "bytes": 12170,
+      "contentSha256": "934465533028e525ba75f062621d47ffcbf8e6d7eec6a1b53ef1d5edea0e1566",
+      "hashMode": "exact-bytes",
+      "role": "product-runtime",
+      "roleRuleId": "eva2-runtime",
+      "matchingRuleIds": [
+        "eva2-runtime"
+      ],
+      "owner": "eva-runtime",
+      "inputs": [
+        "issued runtime input and dependencies"
+      ],
+      "outputs": [
+        "runtime result or capability"
+      ],
+      "state": [
+        "runtime-owned durable or process state"
+      ],
+      "effects": [
+        "module-specific runtime effects"
+      ],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": true,
+        "runtimeCritical": true,
+        "status": "tracked"
+      }
+    },
+    {
       "path": "eva2/src/eva/bootstrap/delegated_work_provider.py",
       "gitState": "tracked",
       "present": true,
@@ -72532,6 +72633,41 @@
         "includedInTrackedRelease": true,
         "runtimeCritical": true,
         "status": "included-tracked-critical"
+      }
+    },
+    {
+      "path": "eva2/tests/postgres/test_delegated_work_owner_service.py",
+      "gitState": "tracked",
+      "present": true,
+      "bytes": 18947,
+      "contentSha256": "98c56f47ab288ed249e982f66a327b9c3528262061695f3d2af91e74177d731e",
+      "hashMode": "exact-bytes",
+      "role": "verification",
+      "roleRuleId": "eva2-verification",
+      "matchingRuleIds": [
+        "eva2-verification"
+      ],
+      "owner": "verification",
+      "inputs": [
+        "production or fixture contract"
+      ],
+      "outputs": [
+        "test decision"
+      ],
+      "state": [
+        "temporary isolated test state"
+      ],
+      "effects": [
+        "may execute only inside its declared gate"
+      ],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": true,
+        "runtimeCritical": true,
+        "status": "tracked"
       }
     },
     {
@@ -93369,5 +93505,5 @@
       }
     }
   ],
-  "sourceDigest": "f810cc967524dd696aac8ce3838c6603bd4df8db78cccfac7eb6dbf7ad6ee6a8"
+  "sourceDigest": "076969f14b6205e08e72f36e3f2053b8cb8fd6b474d87e4418ccb49a76f6e418"
 }

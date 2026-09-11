@@ -27,12 +27,23 @@ De eerdere Voice PE-onbereikbaarheidsfout is hersteld en door Jaap bevestigd;
 
 ### Afzonderlijk hulpagentwerk — AU-002
 
-De gewone eigenaar-chat start, volgt, stopt en hervat nu een duurzame hulpagent.
-De hervatte poging leverde drie gezinsideeën op; Eva las het opgeslagen resultaat
-via dezelfde chat terug. De eerdere gestopte poging en haar onzekere verbruik
-blijven bewaard. Kern en helper zijn live op slot3; de stemroute blijft gereed.
-Onafhankelijke technische eindreview: GO. Jaaps beoordeling blijft open.
-[Echte chatproef en opslagbewijs](evidence/product/AU-002-owner-lifecycle-2026-09-11.json).
+Jaaps Telegramproef van 11 september om 09:40 mislukte bij het starten.
+De bestaande vertrouwde eigenaarbinding is hersteld. De interne Telegrambrug bewijst
+nu starten, een afzonderlijke stop tijdens de modelaanroep, status, expliciet hervatten
+en het opgeslagen resultaat ophalen. Er zijn geen externe Telegramtestberichten verstuurd.
+Een nieuwe proef door Jaap en zijn acceptatie staan open. De eerdere dashboardchatproef blijft behouden.
+[Telegrambrugbewijs](evidence/product/AU-002-telegram-lifecycle-2026-09-11.json) ·
+[Onafhankelijke review](reviews/AU-002-telegram-365128c1.md).
+
+### Afzonderlijk Home Assistant-wakewordwerk — WAKE-001
+
+Doel: minder onterechte Hé Eva-piepjes tijdens gewone gesprekken, met behoud van
+goede herkenning. Het bestaande model en de lokale trainingsdata zijn teruggevonden;
+dezelfde-set offline vergelijking loopt. Oude apparaatlogs bevestigen lokale
+microWakeWord-detectie (0,98; venster 5); actuele HA-instellingen staan op Slightly
+sensitive. Beide apparaten zijn gedempt en blijven ongewijzigd. Een aantoonbaar betere
+kandidaat, onafhankelijke proef en firmwareherstelroute ontbreken nog.
+[Wakewordbewijs](evidence/product/WAKE-001-offline-comparison-2026-09-11.json).
 
 ## Nu
 
@@ -197,7 +208,7 @@ Afgevinkt betekent alleen: de vastgelegde kaart is afgerond, niet het hele produ
   [Bewijs](evidence/product/AU-007-private-initiative-2026-09-10.json).
   [Bewijs](reviews/AU-007-private-initiative-34ed766.md).
 - [x] `AU-002` — Duurzame hulpagent bedienen (done).
-  [Bewijs](evidence/product/AU-002-owner-lifecycle-2026-09-11.json).
+  [Bewijs](evidence/product/AU-002-telegram-lifecycle-2026-09-11.json).
 - [ ] `AU-008` — Zelf kosteloos handelen binnen eigenaarmandaat (in_progress).
 
 </details>
