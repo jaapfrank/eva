@@ -1,7 +1,7 @@
 {
   "contract": "EvaSharedChromeEvidence/v1",
   "recordedAt": "2026-09-11T10:57:34.367692+00:00",
-  "status": "gateway_activated_awaiting_core_and_owner_trial",
+  "status": "core_config_verified_awaiting_registration_and_owner_trial",
   "built": true,
   "technicalTestsPassed": true,
   "evaRuntimeIntegrated": false,
@@ -18,7 +18,6 @@
   },
   "scope": "Technical tests use a separate headless browser and local fixture, not Jaaps shared Chrome tab or a normal Eva conversation.",
   "remaining": [
-    "Confirm core loaded the coordinated endpoint configuration after memory activation",
     "Register/discover/invoke through normal Eva owner conversation",
     "Jaap explicitly shares an existing tab; earlier client was stopped",
     "Prove visible work, in-flight takeover, explicit fresh-context return and disconnect through real Eva route",
@@ -62,5 +61,18 @@
       "resolved_ip": "172.30.0.10"
     },
     "backup": "/home/administrator/.local/share/eva-chrome-bridge/activation-backup"
+  },
+  "coreReadback": {
+    "image": "sha256:bfb0d25abb7f4a1247d376050fdfd7b606e3a3285dcd19b9ee6831d3297b046d",
+    "settingsParserAndOwnerBindingValidated": true,
+    "managedFileSha256": "c5373563c8512625f5ab390dedbf4903e59fb481a7e81ebae5c7917fd242c2ba",
+    "exactEndpointAdmitted": true,
+    "ownerApiStatus": 200,
+    "ownerApiContract": "EvaDashboardStatus/v1",
+    "ownerGatewayRegistrationPresent": false,
+    "readOnly": true,
+    "modelCalls": 0,
+    "tabSharingRequested": false,
+    "limit": "Validated deployed parser, mounted settings and authenticated live status; no normal Eva browser task yet."
   }
 }
