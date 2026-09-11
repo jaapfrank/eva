@@ -37,15 +37,14 @@ Een nieuwe proef door Jaap en zijn acceptatie staan open. De eerdere dashboardch
 
 ### Afzonderlijk Home Assistant-wakewordwerk — WAKE-001
 
-Doel: minder onterechte Hé Eva-piepjes tijdens gewone gesprekken, met behoud van
-goede herkenning. Het bestaande model en de lokale trainingsdata zijn teruggevonden;
-dezelfde-set offline vergelijking is uitgevoerd. Geen geteste variant haalt de
-combinatie van minder valse activaties en goede herkenning. Een kleine doortraining
-met aparte Nederlandse negatieve proefdata is voorbereid; uitvoering wacht tot
-de lopende spraakmetingen op de gedeelde host klaar zijn. Oude apparaatlogs bevestigen lokale
-microWakeWord-detectie (0,98; venster 5); actuele HA-instellingen staan op Slightly
-sensitive. Beide apparaten zijn gedempt en blijven ongewijzigd. Een aantoonbaar betere
-kandidaat, onafhankelijke proef en firmwareherstelroute ontbreken nog.
+Doel: minder onterechte Hé Eva-piepjes met behoud van goede herkenning.
+Het oorspronkelijke model is behouden. Een begrensde doortraining is geëxporteerd
+en op identieke lokale proefdata getest, maar afgewezen: valse treffers29→2,
+terwijl herkenning van TTS-oproepen262/350→128/350 en van nieuwe synthetische
+oproepen12/12→1/12 daalt. Dit is geen bruikbare verbetering.
+Alle trainings-/evaluatieprocessen zijn beëindigd; de spraaktaak heeft de host terug.
+Een beter gebalanceerde kandidaat, onafhankelijke echte audioproef en firmware-
+herstelroute blijven nodig. Geen installatie of gebruikersacceptatie.
 [Wakewordbewijs](evidence/product/WAKE-001-offline-comparison-2026-09-11.json).
 
 ## Nu
