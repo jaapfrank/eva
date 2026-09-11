@@ -1,9 +1,23 @@
 """Internal Docker HTTP endpoint forwards only MCP to the host's Unix socket."""
 import http.client
+import json
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 import socket
 from pathlib import Path
 TOKEN = Path('/run/secrets/chrome-token').read_text().strip()
+
+def normalize_tool_output(body):
+    """Preserve MCP blocks and expose plain text to Eva's object-result adapter."""
+    envelope = json.loads(body)
+    result = envelope.get('result')
+    if isinstance(result, dict) and not result.get('isError') and 'structuredContent' not in result:
+        content = result.get('content')
+        if isinstance(content, list) and content and all(
+            isinstance(item, dict) and item.get('type') == 'text'
+            and isinstance(item.get('text'), str) for item in content
+        ):
+            result['structuredContent'] = {'text': '\n\n'.join(item['text'] for item in content)}
+    return json.dumps(envelope, ensure_ascii=False).encode('utf-8')
 
 class UnixConnection(http.client.HTTPConnection):
     def connect(self):
@@ -36,6 +50,8 @@ class Handler(BaseHTTPRequestHandler):
             body = response.read(2_000_001)
             if len(body) > 2_000_000:
                 raise ValueError('Response too large')
+            if response.status == 200:
+                body = normalize_tool_output(body)
             self.send_response(response.status)
             self.send_header('Content-Type', 'application/json')
             self.send_header('Content-Length', str(len(body)))
