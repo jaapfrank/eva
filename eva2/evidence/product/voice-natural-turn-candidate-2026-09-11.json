@@ -40,13 +40,13 @@
     "agent_sha256": "7b65de7df7fe8474be4a6d6d6a8124ff9e5fadf6d42c8fa7959436e4e8fc8eb4"
   },
   "liveReadback": {
-    "checkedAt": "2026-09-11T10:12:14.101653+00:00",
+    "checkedAt": "2026-09-11T10:45:58.889510+00:00",
     "containers": [
       {
         "name": "eva2-owner-voice-media-1",
-        "image": "sha256:91f29f125f1a8dd236e40bd4aca3af0e882c958a5f76d2397aeec6f1ffec81c0",
-        "source": "df8c4696754f46e9fc9bc9a9633723f7667d135d",
-        "startedAt": "2026-09-11T10:11:06.484376703Z",
+        "image": "sha256:16ac10cd5a32fddd3163609f842754d46433c52534b3fea3bdc4fc3482a9913d",
+        "source": "c326d534ef7a2e23428481764842102f73669a05",
+        "startedAt": "2026-09-11T10:41:58.301714358Z",
         "status": "running",
         "network": "host",
         "ports": {}
@@ -124,9 +124,9 @@
     "fullExperienceAccepted": false,
     "open": [
       "natural voice and pronunciation",
-      "reported 3–8 seconds silence",
-      "fast meaningful response followed by continuation"
-    ]
+      "physical owner listening acceptance of fast receipt"
+    ],
+    "clarification": "10–30 seconds or a minute for actual research is acceptable if Eva immediately gives a short audible honest receipt/intention. No standard filler for every simple question."
   },
   "limits": [
     "No new physical owner listening test performed.",
@@ -135,9 +135,10 @@
     "Phone and Voice PE not delivered by this change."
   ],
   "rollback": {
-    "mediaParent": "sha256:b69b2578fd3c19f1febcf5aab169c86b87b1124e5a218b4a4fb6a4e06bffb3dd",
-    "privateRuntimeBackup": "natural-turn-candidate/private-backup-paragraph/runtime.env",
-    "coreMustRemainBoundToCurrentSlot": true
+    "script": "/home/administrator/project/.eva2-artifacts/voice-livekit-20260910/natural-turn-candidate/rollback-receipt.py",
+    "parentImage": "sha256:91f29f125f1a8dd236e40bd4aca3af0e882c958a5f76d2397aeec6f1ffec81c0",
+    "privateRuntimeBackup": "/home/administrator/project/.eva2-artifacts/voice-livekit-20260910/natural-turn-candidate/private-backup-receipt/runtime.env",
+    "scope": "Only media image is restored after exact current-image guards; no data/core/profile rollback."
   },
   "try": "Open http://localhost:44716, sign in with existing owner token, begin conversation. Ask what Home Assistant Cloud does for speech and ask Eva first to say briefly what she will investigate.",
   "browserProof": {
@@ -146,84 +147,101 @@
     "actualCore": true,
     "microphoneUsed": false,
     "syntheticSpeechInput": true,
-    "answer": "Volgens de [officiële documentatie](https://www.home-assistant.io/voice_control/voice_remote_cloud_assistant/) doet Home Assistant Cloud twee dingen voor spraak: je gesproken woorden omzetten naar tekst en antwoordtekst omzetten naar gesproken geluid. Nederlands wordt ondersteund. Deze functies zitten in het Cloud-abonnement en hebben internet nodig.\n\nAssist bepaalt vervolgens wat je opdracht betekent. Met Home Assistant als gespreksagent gebeurt dat lokaal, net als de bediening van je apparaten. Het herkennen van het activeringswoord is een aparte stap en kan ook lokaal gebeuren. Cloud maakt dus niet je hele assistent cloudgestuurd.\n\nIk heb het onderzoek met bronlinks bewaard.",
-    "audioEnergyFrames": 797,
+    "answer": "Volgens de [officiële documentatie](https://www.home-assistant.io/voice_control/voice_remote_cloud_assistant/) zet Home Assistant Cloud je spraak om in tekst en het antwoord weer in gesproken audio. Beide zitten in het abonnement. Met de standaardgespreksagent begrijpt en voert je eigen Home Assistant de opdrachten lokaal uit. Cloud voegt dus niet automatisch een AI-gesprekspartner toe.\n\nDe spraakomzetting gebeurt extern. Nabu Casa noemt Azure als verwerker en zegt dat audio en tekst daarbij niet worden bewaard. De officiële pagina’s spreken elkaar wel tegen over de precieze infrastructuur; dat blijft onzeker.\n\nHet onderzoek met bronlinks is bewaard.",
+    "audioEnergyFrames": 847,
     "recognizedUserText": [
       "Zoek In de actuele officiële documentatie wat home Beslistent cloud doet voor spraak en vertel me eerst kort wat je gaat uitzoeken."
     ],
-    "firstPart": "Ik zoek in de actuele officiële documentatie wat Home Assistant Cloud doet voor spraakherkenning en gesproken antwoorden, en wat daarbij lokaal blijft of via de cloud gaat.",
-    "targetMessage": "5814fed7-41ae-50e2-8612-4d93cf864bf9",
-    "speechEndToAudioMs": 11137,
-    "speechEndToFirstPartMs": 10448,
-    "speechEndToFinalMs": 76981,
+    "firstPart": "Ik zoek in de actuele officiële documentatie uit wat Home Assistant Cloud doet voor spraakherkenning en gesproken antwoorden, en wat daarbij lokaal blijft of via de cloud gaat.",
+    "receipt": "Ik kijk er even voor je naar.",
+    "targetMessage": "5b39b467-dbfe-5495-883e-41913488b575",
+    "speechEndToReceiptMs": 263,
+    "speechEndToAudioMs": 947,
+    "speechEndToFirstPartMs": 17482,
+    "speechEndToFinalMs": 72634,
     "noSpeakerPlayback": true,
     "timeline": [
       {
         "type": "user_voice_state",
         "state": "speaking",
-        "at": 6377
+        "at": 7879.199999928474
       },
       {
         "type": "user_voice_state",
         "state": "listening",
-        "at": 14809.900000095367
+        "at": 16338
       },
       {
         "type": "stt_final",
-        "at": 15313.100000023842
+        "at": 16629.699999928474
       },
       {
         "type": "voice_state",
         "state": "thinking",
-        "at": 15322.900000095367
+        "at": 16657.899999976158
       },
       {
         "type": "work_started",
-        "message_id": "5814fed7-41ae-50e2-8612-4d93cf864bf9",
-        "at": 15330.100000023842
+        "message_id": "5b39b467-dbfe-5495-883e-41913488b575",
+        "at": 16678
       },
       {
         "type": "voice_state",
         "state": "listening",
-        "at": 15338.700000047684
+        "at": 16738.299999952316
       },
       {
-        "type": "spoken_update",
-        "message_id": "5814fed7-41ae-50e2-8612-4d93cf864bf9",
-        "at": 25462.400000095367
+        "type": "request_acknowledged",
+        "message_id": "5b39b467-dbfe-5495-883e-41913488b575",
+        "at": 16739.799999952316
       },
       {
         "type": "voice_state",
         "state": "speaking",
-        "at": 25901.300000071526
-      },
-      {
-        "type": "action_started",
-        "message_id": "5814fed7-41ae-50e2-8612-4d93cf864bf9",
-        "at": 33170.10000002384
-      },
-      {
-        "type": "action_finished",
-        "message_id": "5814fed7-41ae-50e2-8612-4d93cf864bf9",
-        "at": 85836
-      },
-      {
-        "type": "work_finished",
-        "message_id": "5814fed7-41ae-50e2-8612-4d93cf864bf9",
-        "at": 91995.30000007153
+        "at": 17148.199999928474
       },
       {
         "type": "voice_state",
         "state": "listening",
-        "at": 134363.20000004768
+        "at": 19619.399999976158
+      },
+      {
+        "type": "spoken_update",
+        "message_id": "5b39b467-dbfe-5495-883e-41913488b575",
+        "at": 33958.299999952316
+      },
+      {
+        "type": "voice_state",
+        "state": "speaking",
+        "at": 34348
+      },
+      {
+        "type": "action_started",
+        "message_id": "5b39b467-dbfe-5495-883e-41913488b575",
+        "at": 43589.299999952316
+      },
+      {
+        "type": "action_finished",
+        "message_id": "5b39b467-dbfe-5495-883e-41913488b575",
+        "at": 82397.09999990463
+      },
+      {
+        "type": "work_finished",
+        "message_id": "5b39b467-dbfe-5495-883e-41913488b575",
+        "at": 89109.89999997616
+      },
+      {
+        "type": "voice_state",
+        "state": "listening",
+        "at": 132258.29999995232
       }
     ],
     "clockDefinitions": {
-      "browserSpeechEndToFields": "Milliseconds from synthetic AudioBufferSource onended (clip end, including trailing silence); not native VAD end.",
-      "browserClipEndAtMs": 15014.600000023842,
-      "browserNativeVadEndAtMs": 14809.900000095367,
-      "vadEndToSttFinal": "Milliseconds from native user_voice_state=listening to stt_final event.",
-      "isolatedHaEndToFinal": "Final-transcript event time minus native END_OF_SPEECH event time."
+      "speechEndToFields": "Milliseconds from synthetic AudioBufferSource onended; clip includes trailing silence.",
+      "firstAudio": "First analyser energy above threshold, sampled every 50 ms; not merely a speaking event.",
+      "receiptEvent": "Offered receipt, not proof heard or task effect started.",
+      "inputEndedAt": 16477.299999952316,
+      "vadEndToAudioMs": 1086
     }
   },
   "excludedMeasurements": [
@@ -245,8 +263,8 @@
     }
   ],
   "remainingEngineering": [
-    "Reduce initial latency: latest browser first audio 11.137 seconds despite GPU memory and streaming STT. Exploratory low reasoning and removing reasoning summary did not establish a reliable further model improvement.",
-    "General spontaneous first-part selection for ordinary stories remains unproven."
+    "Broaden natural request coverage only in a separate bounded delivery; current receipt covers conservative explicit work commands.",
+    "Natural voice/pronunciation still needs owner listening; phone and Voice PE are separate remaining work."
   ],
   "researchTimeline": [
     "MEMORY_RETAIN_QUEUED|2026-09-11 08:50:35+00",
@@ -419,5 +437,97 @@
     "scope": "One synthetic spoken request through actual browser, STT, owner core, actual research and TTS. Muted browser output; no physical owner listening.",
     "firstAudioBeforeActionFinishedMs": 55169
   },
-  "streamingInputEvidence": "voice-streaming-input-2026-09-11.json"
+  "streamingInputEvidence": "voice-streaming-input-2026-09-11.json",
+  "browserProofStreamingInputBaseline": {
+    "passed": true,
+    "actualBrowser": true,
+    "actualCore": true,
+    "microphoneUsed": false,
+    "syntheticSpeechInput": true,
+    "answer": "Volgens de [officiële documentatie](https://www.home-assistant.io/voice_control/voice_remote_cloud_assistant/) doet Home Assistant Cloud twee dingen voor spraak: je gesproken woorden omzetten naar tekst en antwoordtekst omzetten naar gesproken geluid. Nederlands wordt ondersteund. Deze functies zitten in het Cloud-abonnement en hebben internet nodig.\n\nAssist bepaalt vervolgens wat je opdracht betekent. Met Home Assistant als gespreksagent gebeurt dat lokaal, net als de bediening van je apparaten. Het herkennen van het activeringswoord is een aparte stap en kan ook lokaal gebeuren. Cloud maakt dus niet je hele assistent cloudgestuurd.\n\nIk heb het onderzoek met bronlinks bewaard.",
+    "audioEnergyFrames": 797,
+    "recognizedUserText": [
+      "Zoek In de actuele officiële documentatie wat home Beslistent cloud doet voor spraak en vertel me eerst kort wat je gaat uitzoeken."
+    ],
+    "firstPart": "Ik zoek in de actuele officiële documentatie wat Home Assistant Cloud doet voor spraakherkenning en gesproken antwoorden, en wat daarbij lokaal blijft of via de cloud gaat.",
+    "targetMessage": "5814fed7-41ae-50e2-8612-4d93cf864bf9",
+    "speechEndToAudioMs": 11137,
+    "speechEndToFirstPartMs": 10448,
+    "speechEndToFinalMs": 76981,
+    "noSpeakerPlayback": true,
+    "timeline": [
+      {
+        "type": "user_voice_state",
+        "state": "speaking",
+        "at": 6377
+      },
+      {
+        "type": "user_voice_state",
+        "state": "listening",
+        "at": 14809.900000095367
+      },
+      {
+        "type": "stt_final",
+        "at": 15313.100000023842
+      },
+      {
+        "type": "voice_state",
+        "state": "thinking",
+        "at": 15322.900000095367
+      },
+      {
+        "type": "work_started",
+        "message_id": "5814fed7-41ae-50e2-8612-4d93cf864bf9",
+        "at": 15330.100000023842
+      },
+      {
+        "type": "voice_state",
+        "state": "listening",
+        "at": 15338.700000047684
+      },
+      {
+        "type": "spoken_update",
+        "message_id": "5814fed7-41ae-50e2-8612-4d93cf864bf9",
+        "at": 25462.400000095367
+      },
+      {
+        "type": "voice_state",
+        "state": "speaking",
+        "at": 25901.300000071526
+      },
+      {
+        "type": "action_started",
+        "message_id": "5814fed7-41ae-50e2-8612-4d93cf864bf9",
+        "at": 33170.10000002384
+      },
+      {
+        "type": "action_finished",
+        "message_id": "5814fed7-41ae-50e2-8612-4d93cf864bf9",
+        "at": 85836
+      },
+      {
+        "type": "work_finished",
+        "message_id": "5814fed7-41ae-50e2-8612-4d93cf864bf9",
+        "at": 91995.30000007153
+      },
+      {
+        "type": "voice_state",
+        "state": "listening",
+        "at": 134363.20000004768
+      }
+    ],
+    "clockDefinitions": {
+      "browserSpeechEndToFields": "Milliseconds from synthetic AudioBufferSource onended (clip end, including trailing silence); not native VAD end.",
+      "browserClipEndAtMs": 15014.600000023842,
+      "browserNativeVadEndAtMs": 14809.900000095367,
+      "vadEndToSttFinal": "Milliseconds from native user_voice_state=listening to stt_final event.",
+      "isolatedHaEndToFinal": "Final-transcript event time minus native END_OF_SPEECH event time."
+    }
+  },
+  "workReceiptEvidence": "voice-work-receipt-2026-09-11.json",
+  "previousRollback": {
+    "mediaParent": "sha256:b69b2578fd3c19f1febcf5aab169c86b87b1124e5a218b4a4fb6a4e06bffb3dd",
+    "privateRuntimeBackup": "natural-turn-candidate/private-backup-paragraph/runtime.env",
+    "coreMustRemainBoundToCurrentSlot": true
+  }
 }

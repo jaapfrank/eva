@@ -15,21 +15,26 @@ Bekijk betekenis en nut van de geheugenopties in het dashboard en kies daar Opne
 De laptoproute met LiveKit is live op http://localhost:44716. Meld aan met het
 bestaande eigenaar-dashboardtoken en kies Begin gesprek. Jaap bevestigde op
 11 september dat fysiek onderbreken werkt en vond de verhaalinhoud leuk.
-Natuurlijke uitspraak en korte wachttijd zijn nog niet geaccepteerd.
+Natuurlijke uitspraak en de vernieuwde ontvangstbevestiging wachten nog op zijn luisteroordeel.
 
-Een eerste inhoudelijke zin tijdens langer werk is nu gebouwd, gericht getest
-en live bewezen: in de nieuwste browserproef begon audio na 11,1 seconden en kwam het
-uitgezochte antwoord na 77 seconden. De eerste zin klonk vóór de afronding van
-het echte onderzoek; het vervolg kwam in dezelfde onderbreekbare spraakbeurt.
-De aanvangswachttijd is nog te lang. GPU-versnelling van dezelfde geheugenrangschikker
-is live: 24 vergelijkingen behielden feiten, volgorde en bronnen. In een gerichte
-spraakmeting daalde geheugenraadpleging van 9,7 naar 2,1 seconden. De eerste
-modelbeurt blijft vervolgwerk; algemene spontane toepassing is nog onbewezen.
+Jaaps verduidelijking is leidend: echt onderzoek mag 10–30 seconden of een minuut
+duren, mits Eva meteen kort en eerlijk hoorbaar reageert. Voor duidelijke
+werkopdrachten zegt zij nu “Ik kijk er even voor je naar” zodra de kern het
+spraakverzoek heeft ontvangen. Geen uitvoerings- of succesclaim; eenvoudige
+vragen krijgen deze standaardzin niet. De bestaande Astra-kern doet het werk.
+
+Deze begrensde verbetering is gebouwd, gericht getest, beoordeeld en live in de
+browser bewezen: eerste audio na 0,95 seconde, onderzoeksantwoord na 73 seconden,
+volledige gesproken afronding ontvangen. Dit is één synthetische browserproef,
+geen algemene snelheidsgarantie. Onderbreken van de ontvangstbevestiging laat
+het latere resultaat intact; een tweede vraag tussendoor en expliciet stoppen
+zijn met de echte LiveKit-spraakafhandeling getest. [Ontvangstbewijs](evidence/product/voice-work-receipt-2026-09-11.json).
+
+GPU-versnelling van dezelfde geheugenrangschikker blijft live; 24 vergelijkingen
+behielden feiten, volgorde en bronnen. De microfoon stuurt tijdens het spreken
+PCM naar de bestaande HA-herkenner; alleen definitieve tekst gaat naar de kern.
 [Geheugenversnelling en terugweg](evidence/product/voice-memory-cuda-2026-09-11.json).
-De microfoon stuurt nu ook tijdens het spreken PCM naar de bestaande HA-herkenner.
-In de afzonderlijke dezelfde-audioproef daalde VAD-einde tot definitieve tekst van
-2,0 naar 0,23 seconde; in de volledige browserroute was dit 0,50 seconde. Alleen
-definitieve tekst gaat naar de kern. [Streaming-invoerbewijs](evidence/product/voice-streaming-input-2026-09-11.json).
+[Streaming-invoerbewijs](evidence/product/voice-streaming-input-2026-09-11.json).
 De Fenna-stem is een luisterkandidaat, nog zonder eigenaarsoordeel.
 Probeer: “Zoek uit wat Home Assistant Cloud doet voor spraak en vertel me eerst
 kort wat je gaat uitzoeken.” [Gericht bewijs](evidence/product/voice-natural-turn-candidate-2026-09-11.json).

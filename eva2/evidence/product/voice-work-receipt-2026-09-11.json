@@ -1,0 +1,176 @@
+{
+  "date": "2026-09-11",
+  "status": "built-tested-live-browser-proven; owner-listening-pending",
+  "userOutcome": "For an explicit work request Eva promptly says a short honest receipt while her existing core continues the work.",
+  "ownerClarification": "10–30 seconds or a minute for actual research is acceptable if Eva immediately gives a short audible honest receipt/intention. No standard filler for every simple question.",
+  "implementation": {
+    "source_commit": "c326d534ef7a2e23428481764842102f73669a05",
+    "parent_image": "sha256:91f29f125f1a8dd236e40bd4aca3af0e882c958a5f76d2397aeec6f1ffec81c0",
+    "agent_sha256": "08c3334bc4a180100852e8f41a88f0a50f74a6093e56566878e8761878ff9ff3",
+    "image": "sha256:16ac10cd5a32fddd3163609f842754d46433c52534b3fea3bdc4fc3482a9913d"
+  },
+  "receiptText": "Ik kijk er even voor je naar.",
+  "scope": [
+    "Conservative explicit Dutch command forms only; questions and ambiguous forms retain the ordinary core response.",
+    "Receipt requires authenticated successful HTTP response with NDJSON content type. It claims no started/completed effect.",
+    "Separate interruptible receipt handle; interrupting it does not suppress the later background result.",
+    "Explicit stop interrupts receipt and result handles and suppresses later result delivery.",
+    "Existing Astra model, rights, core, GPU memory profile and SFU unchanged."
+  ],
+  "validation": {
+    "targetedTestsPassed": 45,
+    "independentReview": "review_voice_reference GO; 34 ACK and agent tests independently passed",
+    "exactImageImportAndSourceHash": true,
+    "rollbackGuardsCheckOnly": true,
+    "physicalMicrophoneUsed": false,
+    "speakerPlayback": false
+  },
+  "browserProof": {
+    "passed": true,
+    "actualBrowser": true,
+    "actualCore": true,
+    "microphoneUsed": false,
+    "syntheticSpeechInput": true,
+    "answer": "Volgens de [officiële documentatie](https://www.home-assistant.io/voice_control/voice_remote_cloud_assistant/) zet Home Assistant Cloud je spraak om in tekst en het antwoord weer in gesproken audio. Beide zitten in het abonnement. Met de standaardgespreksagent begrijpt en voert je eigen Home Assistant de opdrachten lokaal uit. Cloud voegt dus niet automatisch een AI-gesprekspartner toe.\n\nDe spraakomzetting gebeurt extern. Nabu Casa noemt Azure als verwerker en zegt dat audio en tekst daarbij niet worden bewaard. De officiële pagina’s spreken elkaar wel tegen over de precieze infrastructuur; dat blijft onzeker.\n\nHet onderzoek met bronlinks is bewaard.",
+    "audioEnergyFrames": 847,
+    "recognizedUserText": [
+      "Zoek In de actuele officiële documentatie wat home Beslistent cloud doet voor spraak en vertel me eerst kort wat je gaat uitzoeken."
+    ],
+    "firstPart": "Ik zoek in de actuele officiële documentatie uit wat Home Assistant Cloud doet voor spraakherkenning en gesproken antwoorden, en wat daarbij lokaal blijft of via de cloud gaat.",
+    "receipt": "Ik kijk er even voor je naar.",
+    "targetMessage": "5b39b467-dbfe-5495-883e-41913488b575",
+    "speechEndToReceiptMs": 263,
+    "speechEndToAudioMs": 947,
+    "speechEndToFirstPartMs": 17482,
+    "speechEndToFinalMs": 72634,
+    "noSpeakerPlayback": true,
+    "timeline": [
+      {
+        "type": "user_voice_state",
+        "state": "speaking",
+        "at": 7879.199999928474
+      },
+      {
+        "type": "user_voice_state",
+        "state": "listening",
+        "at": 16338
+      },
+      {
+        "type": "stt_final",
+        "at": 16629.699999928474
+      },
+      {
+        "type": "voice_state",
+        "state": "thinking",
+        "at": 16657.899999976158
+      },
+      {
+        "type": "work_started",
+        "message_id": "5b39b467-dbfe-5495-883e-41913488b575",
+        "at": 16678
+      },
+      {
+        "type": "voice_state",
+        "state": "listening",
+        "at": 16738.299999952316
+      },
+      {
+        "type": "request_acknowledged",
+        "message_id": "5b39b467-dbfe-5495-883e-41913488b575",
+        "at": 16739.799999952316
+      },
+      {
+        "type": "voice_state",
+        "state": "speaking",
+        "at": 17148.199999928474
+      },
+      {
+        "type": "voice_state",
+        "state": "listening",
+        "at": 19619.399999976158
+      },
+      {
+        "type": "spoken_update",
+        "message_id": "5b39b467-dbfe-5495-883e-41913488b575",
+        "at": 33958.299999952316
+      },
+      {
+        "type": "voice_state",
+        "state": "speaking",
+        "at": 34348
+      },
+      {
+        "type": "action_started",
+        "message_id": "5b39b467-dbfe-5495-883e-41913488b575",
+        "at": 43589.299999952316
+      },
+      {
+        "type": "action_finished",
+        "message_id": "5b39b467-dbfe-5495-883e-41913488b575",
+        "at": 82397.09999990463
+      },
+      {
+        "type": "work_finished",
+        "message_id": "5b39b467-dbfe-5495-883e-41913488b575",
+        "at": 89109.89999997616
+      },
+      {
+        "type": "voice_state",
+        "state": "listening",
+        "at": 132258.29999995232
+      }
+    ],
+    "clockDefinitions": {
+      "speechEndToFields": "Milliseconds from synthetic AudioBufferSource onended; clip includes trailing silence.",
+      "firstAudio": "First analyser energy above threshold, sampled every 50 ms; not merely a speaking event.",
+      "receiptEvent": "Offered receipt, not proof heard or task effect started.",
+      "inputEndedAt": 16477.299999952316,
+      "vadEndToAudioMs": 1086
+    }
+  },
+  "liveReadback": {
+    "eva2-owner-voice-media-1": {
+      "image": "sha256:16ac10cd5a32fddd3163609f842754d46433c52534b3fea3bdc4fc3482a9913d",
+      "startedAt": "2026-09-11T10:41:58.301714358Z",
+      "status": "running",
+      "networkMode": "host"
+    },
+    "eva2-owner-voice-livekit-1": {
+      "image": "sha256:770bc61bc6ec4dcccbd3e05082d8f6bdafbee4179acab7014cc97202a9e2910b",
+      "startedAt": "2026-09-10T19:20:19.714597806Z",
+      "status": "running",
+      "networkMode": "eva2-owner-voice_default"
+    },
+    "eva2-managed-b-slot3-delegated-work-worker-1": {
+      "image": "sha256:bf5d7e575464ab3f40c52e87f2dc9a01752aab9172cbc8cad6145ef433d38df3",
+      "startedAt": "2026-09-11T08:19:43.411117584Z",
+      "status": "running",
+      "networkMode": "eva2-managed-b-slot3_default"
+    },
+    "eva2-managed-b-slot3-hindsight-1": {
+      "image": "sha256:20d72ad34164bd1a67906c4d61b57a51f2b255c49ddf8cb7ac5e901ebc3b3710",
+      "startedAt": "2026-09-11T09:35:07.850665568Z",
+      "status": "running",
+      "networkMode": "eva2-managed-b-slot3_default"
+    },
+    "eva2-managed-b-slot3-core": {
+      "image": "sha256:bf5d7e575464ab3f40c52e87f2dc9a01752aab9172cbc8cad6145ef433d38df3",
+      "startedAt": "2026-09-11T08:19:30.274026959Z",
+      "status": "running",
+      "networkMode": "eva2-managed-b-slot3_default"
+    }
+  },
+  "rollback": {
+    "script": "/home/administrator/project/.eva2-artifacts/voice-livekit-20260910/natural-turn-candidate/rollback-receipt.py",
+    "parentImage": "sha256:91f29f125f1a8dd236e40bd4aca3af0e882c958a5f76d2397aeec6f1ffec81c0",
+    "privateRuntimeBackup": "/home/administrator/project/.eva2-artifacts/voice-livekit-20260910/natural-turn-candidate/private-backup-receipt/runtime.env",
+    "scope": "Only media image is restored after exact current-image guards; no data/core/profile rollback."
+  },
+  "limitations": [
+    "One full synthetic browser research trial, not a general latency guarantee.",
+    "Receipt recognition intentionally covers limited explicit Dutch work request forms.",
+    "Natural voice/pronunciation and phone/Voice PE remain unaccepted."
+  ],
+  "excludedAttempt": "Probe launched during media startup failed to connect before a room existed; rerun only after authenticated readiness passed.",
+  "checkedAt": "2026-09-11T10:45:58.889510+00:00"
+}
