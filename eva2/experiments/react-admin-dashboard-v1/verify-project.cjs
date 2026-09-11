@@ -78,7 +78,7 @@ async function main() {
     await page.locator('.matrix-toggle').filter({hasText:'Geheugen'}).click();
     assert.equal(await page.locator('#details-memory [data-step-id="CO-008"] .step-state.done').count(),1);
     assert.match(await page.locator('#details-memory [data-step-id="CO-008"]').innerText(),/door Jaap geaccepteerd/);
-    assert.match(await page.locator('#details-memory [data-step-id="CO-004"]').innerText(),/optioneel, telt niet mee/);
+    assert.match(await page.locator('#details-memory [data-step-id="CO-004"]').innerText(),/Keuze nodig/);
     await page.locator('#details-memory').getByRole('button',{name:'Bewijs en grenzen'}).click();
     await page.getByRole('dialog',{name:'Geheugen'}).waitFor();
     await page.getByRole('button',{name:'Sluiten ×'}).click();

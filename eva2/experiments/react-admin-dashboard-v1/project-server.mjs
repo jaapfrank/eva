@@ -2,8 +2,10 @@ import { readFile, stat } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 import { applyProductCompletion } from './project-completion.mjs';
+import { readDecisions, decisionMiddleware, optionalOptions, authorizeOwner } from './scope-decisions.mjs';
 
 const boardFile = process.env.EVA_PROJECT_BOARD_FILE || fileURLToPath(new URL('../../design/product/execution-workboard-v1.json', import.meta.url));
+const decisionsFile = process.env.EVA_PROJECT_DECISIONS_FILE || fileURLToPath(new URL('../../design/product/optional-scope-decisions.json', import.meta.url));
 const auditFile = fileURLToPath(new URL('./capability-audit.json', import.meta.url));
 
 export function acceptedMemoryDelivery(board) {
@@ -159,6 +161,12 @@ async function runtimePort(project) {
 // No credentials, chat content, filesystem browsing or task mutation endpoint.
 export function projectServer() {
   const configure = (server) => {
+    server.middlewares.use('/scope-decisions', decisionMiddleware({path:decisionsFile, authorize:async authorization=>{
+      const board=JSON.parse(await readFile(boardFile,'utf8'));
+      const port=await runtimePort(board.audit.projectDashboard);
+      const url=`http://127.0.0.1:${port}/internal/v1/dashboard/status`;
+      return authorizeOwner(url,authorization);
+    }}));
     server.middlewares.use('/project-state', async (request, response) => {
       response.setHeader('Cache-Control', 'no-store');
       response.setHeader('Content-Type', 'application/json; charset=utf-8');
@@ -173,7 +181,10 @@ export function projectServer() {
         const raw = await readFile(boardFile);
         const board = JSON.parse(raw);
         const metadata = await stat(boardFile);
+        const decisions = await readDecisions(decisionsFile);
+        board.audit.optionalScopeDecisions = decisions.data.decisions;
         const project = structuredClone(board.audit.projectDashboard);
+        project.scopeDecisions = {revision:decisions.revision,events:decisions.data.events,options:optionalOptions};
         if (!project || !Array.isArray(project.capabilities)) throw new Error('project state missing');
         await applyCapabilityAudit(project, board);
         const primary = board.executionTasks.find((task) => task.id === board.activeTaskId);

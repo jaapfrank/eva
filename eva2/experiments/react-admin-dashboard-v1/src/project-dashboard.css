@@ -89,3 +89,7 @@
 .focus-fold{margin-bottom:16px}.focus-fold>summary{font-size:12px;color:#426044;cursor:pointer;padding:10px 0}.focus-fold[open]>.focus-grid{margin-top:12px}
 
 @media(max-width:800px){.completion-matrix{min-width:760px;width:760px}.completion-matrix>thead th:first-child,.completion-matrix>tbody>.matrix-category>th:first-child{width:180px!important}.completion-matrix>thead th:nth-child(2){width:105px!important}.completion-matrix>thead th:nth-child(3){width:130px!important}.completion-matrix>thead th:nth-child(4){width:140px!important}.completion-matrix>thead th:last-child{width:165px!important}.completion-matrix .matrix-toggle{white-space:normal}.completion-scope{overflow-wrap:anywhere}}
+
+.scope-choices{margin:12px 20px;font-size:12px}.scope-choices h3{font-size:14px}.scope-choices article{border:1px solid #d6dfd3;border-radius:6px;padding:12px;margin:10px 0}.scope-choices h4{font-size:13px;margin:0 0 6px}.scope-choices input{display:block;width:min(340px,90%);padding:8px;margin-top:5px}.scope-buttons{display:flex;gap:10px}.scope-buttons button{padding:7px 14px;border:1px solid #698361;border-radius:4px;background:white;color:#29462a;cursor:pointer}.scope-buttons button:disabled{opacity:.5;cursor:default}.scope-history{margin-top:12px}.scope-history summary{cursor:pointer}.scope-history small{display:block;overflow-wrap:anywhere;color:#758073}
+
+@media(max-width:800px){.scope-choices{max-width:calc(100vw - 78px)}}

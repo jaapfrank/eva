@@ -13,7 +13,7 @@ assert.equal(project.capabilities.length,9);
 assert.ok(project.capabilities.every(row=>!row.product.complete),'full component scope remains open');
 const memory=project.capabilities.find(row=>row.id==='memory');
 assert.equal(memory.product.steps.find(step=>step.id==='CO-008').accepted,true);
-assert.equal(memory.product.steps.find(step=>step.id==='CO-004').required,false);
+assert.equal(memory.product.steps.find(step=>step.id==='CO-004').required,true);
 const work=project.capabilities.find(row=>row.id==='projects');
 assert.equal(work.product.jaap.state,'failed');
 assert.equal(work.product.steps.find(step=>step.id==='AU-002').complete,true,'limited HTTP proof preserved');

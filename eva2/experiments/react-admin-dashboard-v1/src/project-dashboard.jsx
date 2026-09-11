@@ -46,8 +46,35 @@ function CompletionMark({ complete }) {
 function TestResult({ result }) {
   return <span className={`test-result ${result.state}`} title={result.detail}><span aria-hidden="true">{result.state === 'failed' ? '✕' : ['passed', 'partial_passed'].includes(result.state) ? '✓' : '—'}</span> {result.label}</span>;
 }
-function CapabilityMatrix({ capabilities, onEvidence }) {
+function ScopeChoices({ category, data, refresh, token, setToken }) {
+  const [busy, setBusy] = useState(false);
+  const [message, setMessage] = useState('');
+  const options = category.product.steps.filter(step => step.decision);
+  const archive = category.product.decisionArchive || [];
+  if (!options.length && !archive.length) return null;
+  const save = async (optionId, decision) => {
+    if (!token) { setMessage('Vul je bestaande eigenaar-dashboardtoken in om je keuze op te slaan.'); return; }
+    setBusy(true);setMessage('');
+    try {
+      const response = await fetch('/scope-decisions', {method:'POST',headers:{'Content-Type':'application/json',Authorization:`Bearer ${token}`},body:JSON.stringify({optionId,decision,revision:data.revision,requestId:crypto.randomUUID()})});
+      const result = await response.json();
+      if (!response.ok) throw new Error(result.error || 'Opslaan mislukt.');
+      await refresh();setMessage('Besluit opgeslagen. Codex verwerkt dit apart; het is geen bewijs dat de functie klaar of geaccepteerd is.');
+    } catch (error) { setMessage(error.message);await refresh(); }
+    finally { setBusy(false); }
+  };
+  const controls = (step, restored=false) => <div className="scope-buttons">{restored ? <button disabled={busy} onClick={() => save(step.id,'undecided')}>Keuze heropenen</button> : <><button disabled={busy || step.decision==='included'} onClick={() => save(step.id,'included')}>Opnemen</button><button disabled={busy} onClick={() => save(step.id,'excluded')}>Afwijzen</button></>}</div>;
+  return <section className="scope-choices" aria-label="Keuzes voor dit onderdeel">
+    <h3>Jouw keuzes</h3><p>Onbeslist houdt dit onderdeel open. Opnemen maakt de optie vereist; afwijzen haalt haar uit de actieve lijst. Dit verandert geen test- of acceptatiebewijs.</p>
+    <label>Eigenaarsaanmelding voor opslaan<input type="password" autoComplete="off" value={token} onChange={event=>setToken(event.target.value)} placeholder="Bestaand eigenaar-dashboardtoken"/></label>
+    {message && <p role="status">{message}</p>}
+    {options.map(step => { const info=data.options[step.id];const event=[...data.events].reverse().find(item=>item.optionId===step.id);return <article key={step.id} data-option-id={step.id}><h4>{step.id} · {info?.title || step.title}</h4><p>{info?.explanation || step.detail}</p><p><b>Nut:</b> {info?.benefit || 'Zie de omschrijving.'}</p><p><b>Keuze:</b> {step.decision==='included' ? 'Opgenomen — moet worden afgerond' : 'Onbeslist — eerst jouw keuze'}{event && <> · verwerking: {event.processing.status}</>}</p>{controls(step)}</article>;})}
+    <details className="scope-history"><summary>Besluitgeschiedenis en afgewezen opties</summary>{archive.map(step=><article key={step.id}><h4>{step.id} · {data.options[step.id]?.title || step.title}</h4><p>Afgewezen — buiten actieve lijst en teller.</p>{controls(step,true)}</article>)}<ul>{data.events.filter(event=>[...options,...archive].some(step=>step.id===event.optionId)).map(event=><li key={event.id}>{event.optionId} · {{included:'Opgenomen',excluded:'Afgewezen',undecided:'Heropend'}[event.decision]} · {new Date(event.createdAt).toLocaleString('nl-NL')} · {event.processing.status}<small>Besluit {event.id}</small></li>)}</ul></details>
+  </section>;
+}
+function CapabilityMatrix({ capabilities, onEvidence, scopeDecisions, refresh }) {
   const [expanded, setExpanded] = useState({});
+  const [ownerToken, setOwnerToken] = useState('');
   return <>
     <p className="matrix-mobile-hint">Veeg opzij voor de testkolommen. Tik op een onderdeel voor alle stappen.</p>
     <div className="matrix-scroll" role="region" aria-label="Statusmatrix, horizontaal scrollbaar" tabIndex={0}>
@@ -56,7 +83,7 @@ function CapabilityMatrix({ capabilities, onEvidence }) {
         <thead><tr><th scope="col">Volledig onderdeel</th><th scope="col">Klaar?</th><th scope="col">Getest</th><th scope="col">Door Jaap getest</th><th scope="col">Beter dan concurrentie onderzocht</th></tr></thead>
         {capabilities.map(category => <tbody key={category.id}>
           <tr className="matrix-category">
-            <th scope="row"><button className="matrix-toggle" aria-expanded={Boolean(expanded[category.id])} aria-controls={`details-${category.id}`} onClick={() => setExpanded(value => ({ ...value, [category.id]: !value[category.id] }))}><span aria-hidden="true">{expanded[category.id] ? '−' : '+'}</span><span>{category.title}</span></button><small className="completion-scope">{category.product.scope}</small><small className="step-count">{category.product.done}/{category.product.total} vereiste stappen · uitklappen</small></th>
+            <th scope="row"><button className="matrix-toggle" aria-expanded={Boolean(expanded[category.id])} aria-controls={`details-${category.id}`} onClick={() => setExpanded(value => ({ ...value, [category.id]: !value[category.id] }))}><span aria-hidden="true">{expanded[category.id] ? '−' : '+'}</span><span>{category.title}</span></button><small className="completion-scope">{category.product.scope}</small><small className="step-count">{category.product.done}/{category.product.total} stappen{category.product.undecided > 0 && ` · ${category.product.undecided} keuzes open`} · uitklappen</small></th>
             <td><CompletionMark complete={category.product.complete}/></td>
             <td><TestResult result={category.product.tested}/></td>
             <td><TestResult result={category.product.jaap}/></td>
@@ -64,12 +91,13 @@ function CapabilityMatrix({ capabilities, onEvidence }) {
           </tr>
           <tr id={`details-${category.id}`} hidden={!expanded[category.id]} className="matrix-details"><td colSpan={5}>
             <div className="matrix-detail-intro"><p><b>Werkt binnen bewezen scope:</b> {category.visibleResult}</p><p><b>Nog nodig:</b> {category.gap}</p>{category.historyNote && <p>{category.historyNote}</p>}<p><b>Jaaps proef:</b> {category.product.jaap.detail}</p><p><b>Concurrentie:</b> {category.product.comparison.detail}</p><p className="matrix-technical">{category.scope} · {stages.map(([key,label]) => `${label}: ${category.stageLabels?.[key] || names[category[key]]}`).join(' · ')}</p><p>{category.resultBasis}</p><button onClick={() => onEvidence(category.id)}>Bewijs en grenzen</button>{category.links?.map(link => <a className="matrix-result-link" href={link.url} target="_blank" rel="noreferrer" key={link.url}>{link.title} ↗</a>)}</div>
-            <ul className="completion-steps">{category.product.steps.map(step => <li key={step.id} data-step-id={step.id}><details><summary><span className={`step-state ${step.complete ? 'done' : 'open'}`}>{step.complete ? '✓' : '✕'}</span><span className="step-title">{step.id} · {step.title}<small>{step.status}{!step.required && ' · optioneel, telt niet mee'}{step.accepted && ' · door Jaap geaccepteerd'}</small></span></summary><p>{step.detail}</p>{!!step.criteria?.length && <ul>{step.criteria.map(criterion => <li key={criterion}>{criterion}</li>)}</ul>}<small>Bron: {step.source}</small></details></li>)}</ul>
+            <ScopeChoices category={category} data={scopeDecisions} refresh={refresh} token={ownerToken} setToken={setOwnerToken}/>
+            <ul className="completion-steps">{category.product.steps.map(step => <li key={step.id} data-step-id={step.id}><details><summary><span className={`step-state ${step.complete ? 'done' : 'open'}`}>{step.complete ? '✓' : '✕'}</span><span className="step-title">{step.id} · {step.title}<small>{step.status}{!step.required && (step.evidenceOnly ? ' · bewijsgrens, geen extra optie' : ' · telt niet mee')}{step.accepted && ' · door Jaap geaccepteerd'}</small></span></summary><p>{step.detail}</p>{!!step.criteria?.length && <ul>{step.criteria.map(criterion => <li key={criterion}>{criterion}</li>)}</ul>}<small>Bron: {step.source}</small></details></li>)}</ul>
           </td></tr>
         </tbody>)}
       </table>
     </div>
-    <p className="outcome-help">Klaar = alle vereiste stappen afgerond. De teller telt stappen, geen productpercentage. Deelproeven en optionele stappen blijven apart; geen bewijs betekent geen groene testclaim.</p>
+    <p className="outcome-help">Klaar = alle vereiste stappen afgerond en alle opties beslist. De teller telt stappen, geen productpercentage. Onbesliste opties blokkeren; afgewezen opties tellen niet mee; geen bewijs betekent geen groene testclaim.</p>
   </>;
 }
 
@@ -111,7 +139,7 @@ export default function ProjectDashboard() {
           <article className="project-next"><p className="eyebrow">EERST DUIDELIJK, DAN VERDER</p>{project.nextOutcomes.map((item, index) => <div className="next-outcome" key={item.title}><span>{String(index + 1).padStart(2, '0')}</span><div><strong>{item.title}</strong><small>{item.detail}</small></div></div>)}</article>
         </section></details>
         <section className="capability-section" aria-label="Mogelijkheden en open werk"><div className="section-title"><div><h2>Wat werkt en wat nog mist</h2><p>Status van het volledige onderdeel. Klap de rij open voor alle bestaande stappen, hun bewijs en opgeleverde resultaten.</p><p className="audit-caption">Feitencontrole: {project.capabilityAudit?.checkedAt ? new Date(project.capabilityAudit.checkedAt).toLocaleString('nl-NL') : 'niet beschikbaar'}. Live bewezen = uitgevoerd op de vermelde datum. Huidige bereikbaarheid is apart gecontroleerd; een latere kernversie is niet automatisch opnieuw beproefd.</p>{project.capabilityAudit?.unavailable && <p role="alert">Feitencontrole niet beschikbaar; onderstaande statussen komen uit het werkbord.</p>}</div></div>
-          <CapabilityMatrix capabilities={project.capabilities} onEvidence={setSelected}/>
+          <CapabilityMatrix capabilities={project.capabilities} onEvidence={setSelected} scopeDecisions={project.scopeDecisions} refresh={() => query.refetch()}/>
         </section>
         <PracticeTests tests={project.practiceTests} browserAccess={browserAccess} stale={Boolean(query.error)} ownerBrowserUpdate={project.capabilityAudit?.ownerBrowserUpdate}/>
         <section className="project-bottom"><article><p className="eyebrow">INSTALLATIECONTROLE</p><h3>{query.error ? 'Niet actueel' : runtime.state === 'ready' ? 'Kern bereikbaar' : runtime.state === 'not_ready' ? 'Kern vraagt aandacht' : 'Kern niet bereikbaar'}</h3><p>{project.runtimeLabel} · controle om {time(runtime.checkedAt)}<br/>Bereikbaar betekent niet dat Eva als product af is.</p></article><article><p className="eyebrow">WAT NU EERLIJK OPENSTAAT</p><ul>{project.openRisks.map((risk) => <li key={risk}>{risk}</li>)}</ul></article></section>
