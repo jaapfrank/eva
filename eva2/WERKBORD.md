@@ -681,6 +681,16 @@ De gebonden bronmeting25→24 is geen actuele live-imagetelling. Nog geen
 image of livegang; geen nieuwe library, bevoegdheid, ledger of databasewijziging.
 [Bronbewijs](evidence/architecture/initiative-mandate-reader-2026-09-13.json).
 
+### Directe modelpogingen — kandidaat wacht op gerichte correctie
+
+De nieuwe terminale pogingregistratie is nog niet geïntegreerd of uitgerold.
+De onafhankelijke reviewer vond dat een eenmalig leesbare providerattestatie
+bij een mismatch tweemaal kan worden geconsumeerd, waardoor bekende usage
+verloren gaat. De eigenaar corrigeert dit met hergebruik binnen dezelfde
+poging en een18/7-regressie. Daarna volgt beoordeling van de correctie.
+Dit is een bevinding in een niet-uitgerolde kandidaat, geen live incident;
+de afgeronde offline diagnose blijft afgerond.
+
 ## Nu
 
 | Volgorde | Kaart | Resultaat | Status |
