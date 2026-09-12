@@ -1,7 +1,7 @@
 # Owner phone panel
 
 The existing household conversation integration remains separate and enabled.
-This candidate adds an optional HA admin panel that also requires the existing
+The installed option adds an HA admin panel that also requires the existing
 Eva owner dashboard token. The household integration token never opens it.
 
 Build: `python tools/build_ha_phone_panel.py /new/output/eva2_voice` materializes
@@ -14,8 +14,8 @@ issued room JWT scope. A refreshed JWT may change validity times; issuer,
 participant, room, permissions and metadata must match. Standard kind/identity
 defaults emitted by LiveKit are normalized. This proxy filter never authenticates
 a JWT: the upstream LiveKit server still checks every signature. A real server
-probe accepted its refreshed token and rejected a tampered signature. Full phone
-reconnection remains an installation/physical trial.
+probe accepted its refreshed token and rejected a tampered signature. Physical phone
+reconnection remains an owner trial.
 
 The gateway is opt-in: render_household_voice_ingress.py --owner-voice adds only
 fixed media/session and LiveKit signaling paths to the existing HA-IP-only port.
@@ -36,7 +36,8 @@ microphone, echo, interruption and owner acceptance remain separate.
 
 The installed package preserves the previous household client.py and conversation.py
 bytes; it adds only the reviewed owner panel and its lifecycle/configuration.
-See voice-phone-installation-2026-09-12.json for the exact composite manifest.
+See voice-phone-installation-2026-09-12.json for the initial composite manifest;
+voice-client-lifecycle-2026-09-12.json records the subsequent panel asset update.
 
 The reviewed media with leased endpoints and Cloud relay is live;
 the existing HA-IP-only gateway has owner routes enabled through the versioned
