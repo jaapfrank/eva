@@ -196,7 +196,9 @@ Dezelfde uitvoerende taak maakt nu de opgedragen offline reparatiekandidaat:
 lengte-instructie uit bestaand budget afleiden en gemeten verbruik ook bij
 weigering duurzaam bewaren. De harde grens blijft staan; een prompt biedt
 geen tokengarantie. Geen nieuwe modelpoging, variant B of uitrol gestart.
-Jaap hoeft niets te doen. De onafhankelijke bewijsreview staat open.
+Jaap hoeft niets te doen. De onafhankelijke reviewer heeft de juistheid van
+het mislukkingsbewijs goedgekeurd; dit is geen product-GO. De reparatie blijft
+in uitvoering en AU-004 blijft onvoltooid.
 [Bewijs van de eerste mislukte proef](evidence/product/AU-004-procedure-trial-failure-2026-09-12.json).
 De AU-004-mijlpaal is niet afgerond of geaccepteerd. IN-02 en eerdere
 acceptaties blijven apart.
