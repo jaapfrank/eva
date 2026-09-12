@@ -216,9 +216,9 @@
     {
       "id": "tools",
       "intendedOutcome": "AU-001 · documenten vergelijken en bewaren. Nieuwe diensten zonder ontwikkelhulp; persoonlijke accounts en bredere combinatietaken.",
-      "visibleResult": "Twee notities vergeleken; advies opgeslagen en onafhankelijk teruggelezen.",
-      "resultBasis": "Live opdracht · 9 sep",
-      "gap": "Nieuwe diensten zonder ontwikkelhulp; persoonlijke accounts en bredere combinatietaken.",
+      "visibleResult": "Twee notities vergeleken en advies opgeslagen. Op 12 september ook een nieuwe CPython-endpoint bij GitMCP aangesloten en gebruikt: uitleg in één gewone beurt opgeslagen en teruggelezen, zonder ontwikkelaarshervatting.",
+      "resultBasis": "AU-001 liveproef en TL-003 ononderbroken proef met onafhankelijke GO",
+      "gap": "Onbekende aanbieders en protocollen, persoonlijke accounts en bredere combinatietaken blijven afzonderlijk te bewijzen. Jaaps beoordeling van het resultaat staat open.",
       "gapKind": "Bredere ambitie",
       "states": {
         "built": "yes",
@@ -234,8 +234,8 @@
       },
       "stageNotes": {
         "built": "Gebouwd. Bewijs geldt uitsluitend voor AU-001 · documenten vergelijken en bewaren. ",
-        "tested": "Echte opdracht. Bewijs geldt uitsluitend voor AU-001 · documenten vergelijken en bewaren. ",
-        "live": "9 sep bewezen. Bewijs geldt uitsluitend voor AU-001 · documenten vergelijken en bewaren. Live bewijs is gedateerd; een nieuwe kernversie is niet automatisch opnieuw beproefd.",
+        "tested": "Eén HTTP-ingang en eindantwoord, zeven gekoppelde toolstappen, exact bestand teruggelezen; onafhankelijke GO.",
+        "live": "TL-003-proef op 12 september via de gewone eigenaar-HTTP-route op image542597; geen code- of budgetwijziging tijdens de proef.",
         "accepted": "Nog open. Bewijs geldt uitsluitend voor AU-001 · documenten vergelijken en bewaren. "
       },
       "sources": [
@@ -250,11 +250,25 @@
         {
           "path": "eva2/evidence/product/TL-003-completion-2026-09-10.json",
           "sha256": "f9d5bb7e3637392c6b8945bc89d3095fdd0af8eade706a46cac1fd5a30f2b2e6"
+        },
+        {
+          "path": "eva2/evidence/product/TL-003-unassisted-2026-09-12.json",
+          "sha256": "b8eca32a92b337ade0645233e498b97286823e0b40f80b84fd5e82c248c2b835"
+        },
+        {
+          "path": "eva2/evidence/product/TL-003-unassisted-review-2026-09-12.json",
+          "sha256": "142ca560a6ead4c1b550a1991fb15a4806768c74e03672f36a43483fa0aeac82"
         }
       ],
       "statusCorrections": {},
-      "scope": "AU-001 · documenten vergelijken en bewaren",
-      "historyNote": "TL-003: resultaat met ontwikkelhulp."
+      "scope": "AU-001 documenten vergelijken; TL-003 één nieuwe repository-endpoint bij bekende GitMCP-aanbieder",
+      "historyNote": "De proef van 10 september vereiste ontwikkelhulp en blijft historisch bewijs. De afzonderlijke proef van 12 september slaagde zonder hulp tijdens de beurt; bestaande conversatie, bekende aanbieder, geen code-uitvoering of algemene voorsprong.",
+      "links": [
+        {
+          "title": "Lees Eva’s Python-uitleg",
+          "url": "/results/tl003-contextmanager"
+        }
+      ]
     },
     {
       "id": "voice",

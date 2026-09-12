@@ -32,6 +32,13 @@ export function applyReviewedCapabilities(project, board, audit) {
         ...(outcome.id === 'connector' ? { tested: 'partial', works: 'GitMCP-resultaat geleverd na ontwikkelreparaties en handmatige hervattingen.', gap: 'Een nieuwe dienst in één ononderbroken gewone opdracht aansluiten en gebruiken.' } : {}),
       })),
     };
+    const connector = board.audit?.tl003UnassistedPreparation20260912;
+    if (connector?.technicalComplete === true && connector.independentReview === 'GO') {
+      row.outcomes = row.outcomes?.map(outcome => outcome.id !== 'connector' ? outcome : {
+        ...outcome, tested:'yes', works:'Een nieuwe CPython-endpoint bij GitMCP in één gewone beurt aangesloten en gebruikt; uitleg opgeslagen en teruggelezen.',
+        gap:'Onbekende aanbieders/protocollen en eigenaaracceptatie blijven open.',
+      });
+    }
     const initiative = board.audit?.initiativeDeliveryAU008;
     if (item.id === 'initiative' && initiative) {
       for (const stage of ['built','tested','live']) row[stage] = initiative[stage] === true ? 'yes' : 'partial';
@@ -170,6 +177,17 @@ async function runtimePort(project) {
 // No credentials, chat content, filesystem browsing or task mutation endpoint.
 export function projectServer() {
   const configure = (server) => {
+    server.middlewares.use('/results/tl003-contextmanager', async (request, response) => {
+      response.setHeader('Cache-Control', 'no-store');
+      response.setHeader('Content-Type', 'text/html; charset=utf-8');
+      response.setHeader('X-Content-Type-Options', 'nosniff');
+      if (request.method !== 'GET') { response.writeHead(405, {Allow:'GET'}); response.end(); return; }
+      try {
+        const source = await readFile(new URL('../../design/product/TL-003-python-contextmanager-result-2026-09-12.md', import.meta.url), 'utf8');
+        const escaped = source.replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;');
+        response.end('<!doctype html><html lang="nl"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Eva — Python-uitleg</title><style>body{margin:24px auto;padding:0 20px;max-width:850px;background:#f5f7f2;color:#24372d;font:17px/1.65 system-ui}pre{white-space:pre-wrap;overflow-wrap:anywhere;font:inherit}a{color:#254f34}</style><main><a href="/">Terug naar het dashboard</a><p>TL-03 · Lees Eva’s resultaat en geef je oordeel in de chat. Het codevoorbeeld is niet uitgevoerd.</p><pre>' + escaped + '</pre></main></html>');
+      } catch { response.writeHead(503); response.end('Resultaat tijdelijk niet beschikbaar.'); }
+    });
     // Serve this public trial from its single maintained document, without copying it.
     server.middlewares.use('/owner-trials/voice', async (request, response) => {
       response.setHeader('Cache-Control', 'no-store');
