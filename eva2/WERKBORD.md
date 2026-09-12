@@ -144,6 +144,22 @@ spraak + geheugenwijziging + helperwerk samen, en herstel van de samengestelde
 installatie. De coördinator prioriteert dit vervolgwerk; de concurrentie-audit
 loopt nog. Er is geen algemene groene integratie- of releaseclaim.
 
+### Concurrentievergelijking — audit afgerond, uitvoering ontbreekt
+
+[Vergelijkingsaudit](reviews/comparison-readiness-2026-09-12.md) is opgenomen.
+EV-001 bewijst de brug met mockmodellen; EV-002 heeft twee echte antwoorden en
+twee toelatingsmislukkingen; EV-003 is een protocol zonder vergelijkingsrun.
+Eva1/Bottie is nog niet actueel gepaard vergeleken. Dit bewijst geen voorsprong.
+Vervolg binnen CP-001 en de bestaande EV-route: maak een uitvoerbare gepaarde
+proef met twee cases, elk tweemaal, eerst Eva2 tegenover Eva1/Bottie. Gebruik
+de bestaande Inspectbruggen, vooraf vastgezette grenzen en onafhankelijke
+readbacks. Deze runner en vergelijkingsrun zijn nog niet voltooid of uitgevoerd.
+
+De kandidaat voor twee adapter-naar-bootstrap-grenzen is gericht gecontroleerd:
+107 controles en op dezelfde bronbasis 27 naar 25 grensbevindingen, zonder
+beleid te versoepelen. Onafhankelijke review staat open; nog niet live. De
+eerdere audit met 29 bevindingen blijft een afzonderlijke historische meting.
+
 ## Nu
 
 | Volgorde | Kaart | Resultaat | Status |
