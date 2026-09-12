@@ -921,6 +921,20 @@ concrete invoegvolgorde/foreign-key- en nullable-JSON-bindingfouten. De
 bouwer herstelt die vóór onafhankelijke beoordeling van de wijziging.
 Nog geen technische afsluiting, live herstel of eigenaaracceptatie.
 
+### AU-006 — afzonderlijke technische oplevering actief
+
+De coördinator draagt aan01a08d52-31b1-7091-be45-812c0b6e6c9f de volgende
+begrensde uitkomst op: twee afhankelijke projectstappen duurzaam opslaan,
+na procesherstart alleen de ontbrekende stap uitvoeren en eenmaal opleveren.
+Bestaande durable_goals, store en worker worden hergebruikt; geen tweede
+goalsysteem. Stop, verbruik en voortgang blijven deel van de oplevering.
+Geïsoleerde bouw en tests, daarna onafhankelijke review. Exacte bestanden
+moet de eigenaar nog bevestigen; er is geen overlap geclaimd. Installer en
+portable herstel blijven exclusief IN-002; CP001/model/gesprekstooling en
+live cutover vallen erbuiten. Nog niet gebouwd/getest/live/geaccepteerd;
+geen meerdaagse praktijk of volledige AU-006-claim. Eén primaire kaart
+blijft focus houden terwijl dit expliciet toegewezen werk apart voortgaat.
+
 ## Nu
 
 | Volgorde | Kaart | Resultaat | Status |
