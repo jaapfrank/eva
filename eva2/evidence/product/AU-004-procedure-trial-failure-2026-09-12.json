@@ -1,0 +1,184 @@
+{
+  "taskId": "AU-004",
+  "status": "trial_failed_pending_independent_review",
+  "technicalComplete": false,
+  "ownerAccepted": false,
+  "scope": "Proposed two-turn reusable procedure trial; only first turn executed because research failed before a procedure existed.",
+  "fixtureSeal": {
+    "sealedAt": "2026-09-12T19:40:11.491045+00:00",
+    "fixturesSha256": "97628b5a02f04096e9a5cb2122c7c98d398c23e0a6b6c13b0f95cc8a4a18eeed",
+    "inputs": {
+      "A": "0d0760d81ac84a9e7ed219761a9248a85a6193486483fbdc4bb52e2c9daaf707",
+      "B": "fb83ff65ab3c3f689439186fa37409d16e3f93463a8d02d0bddcabf2c1316b98",
+      "invalid": "84fe836eb3720facf6cf5e2060866dbe186044e5ade5293718a777c81a05ef28"
+    },
+    "semantics": "Cue start/end milliseconds, cue count and exact Unicode/text lines; invalid end-before-start rejected. No conversion implementation supplied to Eva."
+  },
+  "firstTurn": {
+    "messageId": "dashboard:2c253fa4-5c92-474a-94fc-f3e596b3c8df",
+    "request": "Dit is een kleine synthetische leerproef. Onderzoek zelf de primaire W3C-specificatie voor WebVTT (https://www.w3.org/TR/2026/CRD-webvtt1-20260520/). Leer hoe je eenvoudige genummerde SRT-cues met HH:MM:SS,mmm-tijden en gewone tekst correct omzet naar WebVTT. Maak zelf een korte herbruikbare Nederlandse werkinstructie met bronnen, toepassingsgrenzen, afwijzingsgronden en controlelijst en bewaar haar in /proof-state/au004-srt-webvtt-procedure-20260912.md. Dit is een lokale procedurekandidaat, geen globale installatie of nieuwe bevoegdheid.\nPas je werkwijze toe op onderstaande invoer A en bewaar het resultaat in /proof-state/au004-subtitles-A-20260912.vtt. Bedenk daarnaast zelf een kleine controlevector en leg die, je werkelijke controles en eventuele fouten vast in /proof-state/au004-check-A-20260912.md. Lees de procedure, het resultaat en het controleverslag terug. Behoud de tekst en regels; vertaal niets. Meld eerlijk of je controles tekstueel zijn of daadwerkelijk door code zijn uitgevoerd. Rond deze opdracht af via je bestaande mogelijkheden. Geen accounts, aankopen, publicatie of berichten aan anderen.\nInvoer A:\n1\n00:00:01,250 --> 00:00:03,000\nHoi, Eva.\n\n2\n00:00:04,100 --> 00:00:06,900\nCafé om de hoek.\n",
+    "http": {
+      "httpStatus": 503,
+      "elapsedSeconds": 69.91414218299997,
+      "errorType": null,
+      "requestCount": 1,
+      "retry": false,
+      "messageId": null,
+      "responseSha256": "f42de64e941ed4f0cac21abf37f445a58f1dfc8bc7439d0e95e75a5742921c0a"
+    },
+    "ingressCount": 1,
+    "replyCommittedCount": 0,
+    "failure": {
+      "retry_count": 1,
+      "error_fingerprint": "0d463ef465741fa8376bc7c61373c62a94863fa36a862dbcd5bef22d5ed88fda"
+    },
+    "conversationUsage": {
+      "tool_calls": 1,
+      "measurement": "measured",
+      "input_tokens": 6896,
+      "output_tokens": 259,
+      "model_attempts": 1
+    },
+    "rejectedResearchUsage": {
+      "measurement": "measured_in_runtime_warning",
+      "input_tokens": 39122,
+      "output_tokens": 1267,
+      "output_limit": 1200,
+      "durableUsageEvent": false,
+      "warning": "Model output budget exceeded: measured_input=39122 measured_output=1267 limit=1200"
+    }
+  },
+  "secondTurn": {
+    "executed": false,
+    "reason": "No procedure or first result exists to reuse. No extra attempt/resume permitted during this trial."
+  },
+  "filesAfter": {
+    "procedure": {
+      "exists": false
+    },
+    "A": {
+      "exists": false
+    },
+    "A_report": {
+      "exists": false
+    },
+    "B": {
+      "exists": false
+    },
+    "B_report": {
+      "exists": false
+    },
+    "invalid": {
+      "exists": false
+    }
+  },
+  "imagesAtStart": {
+    "eva2-managed-b-slot3-core": "sha256:d2d58938ef58ce19bdfcd16aea745ae3d743cc409169db21e230c379ddc43081",
+    "eva2-managed-b-slot3-delegated-work-worker-1": "sha256:d2d58938ef58ce19bdfcd16aea745ae3d743cc409169db21e230c379ddc43081"
+  },
+  "configBefore": {
+    "EVA_RUNTIME_RESOURCE_BUDGET_FILE": {
+      "sha256": "88595a1704c1ad751008802873831f140a87ad967d14f015e56d1d4dc46a72a9",
+      "budget": {
+        "background_reflections_per_installation_day": 40,
+        "background_reflections_per_person_day": 4,
+        "contract": "EvaInstallerBudget/v2",
+        "external_monthly_spend_cap_eur_cents": 0,
+        "max_input_tokens": 65536,
+        "max_output_tokens": 1200,
+        "memory_bytes_per_group": 20971520,
+        "memory_bytes_per_installation": 209715200,
+        "memory_bytes_per_person": 20971520,
+        "memory_bytes_per_project": 20971520,
+        "memory_records_per_group": 2000,
+        "memory_records_per_installation": 20000,
+        "memory_records_per_person": 2000,
+        "memory_records_per_project": 2000,
+        "profile_context_tokens": 800,
+        "recall_context_tokens": 2048,
+        "retention_days": 365,
+        "retrieval_nodes": 40,
+        "unknown_cost_policy": "block_autonomous_spend"
+      }
+    },
+    "EVA_MCP_AUTONOMY_MANDATE_FILE": {
+      "sha256": "969e350b8cb582c7034a12e4c431e9e421d510afcf09fb76188cfac1770f4e89",
+      "budget": null
+    }
+  },
+  "configAfter": {
+    "EVA_RUNTIME_RESOURCE_BUDGET_FILE": {
+      "sha256": "88595a1704c1ad751008802873831f140a87ad967d14f015e56d1d4dc46a72a9",
+      "budget": {
+        "background_reflections_per_installation_day": 40,
+        "background_reflections_per_person_day": 4,
+        "contract": "EvaInstallerBudget/v2",
+        "external_monthly_spend_cap_eur_cents": 0,
+        "max_input_tokens": 65536,
+        "max_output_tokens": 1200,
+        "memory_bytes_per_group": 20971520,
+        "memory_bytes_per_installation": 209715200,
+        "memory_bytes_per_person": 20971520,
+        "memory_bytes_per_project": 20971520,
+        "memory_records_per_group": 2000,
+        "memory_records_per_installation": 20000,
+        "memory_records_per_person": 2000,
+        "memory_records_per_project": 2000,
+        "profile_context_tokens": 800,
+        "recall_context_tokens": 2048,
+        "retention_days": 365,
+        "retrieval_nodes": 40,
+        "unknown_cost_policy": "block_autonomous_spend"
+      }
+    },
+    "EVA_MCP_AUTONOMY_MANDATE_FILE": {
+      "sha256": "969e350b8cb582c7034a12e4c431e9e421d510afcf09fb76188cfac1770f4e89",
+      "budget": null
+    }
+  },
+  "budgetAndMandateUnchanged": true,
+  "operatorAssistanceDuringModelTurn": [],
+  "observerIssue": "Readback first matched untrimmed prompt; corrected to documented dashboard text.strip normalization. Read-only observer repair did not alter the request or resume Eva.",
+  "diagnosis": {
+    "boundary": "Host correctly refused measured research output1267 above existing1200 cap.",
+    "instructionGap": "Research prompt says static max450words and does not reflect configured token cap. Prompt guidance alone cannot guarantee a token ceiling.",
+    "measurementGap": "_request_using builds usage, then _enforce_reported_usage raises before returning it; research journal records only RECOVERY_FAILED fingerprint, so the measured failed-call consumption is absent from its durable usage.",
+    "unsupportedParameter": "Existing Codex adapters omit max_tokens because this subscription endpoint rejects max_output_tokens; no such parameter was added."
+  },
+  "limits": [
+    "No learned skill/tool or held-out reuse proved.",
+    "No output artifact or parser/code execution.",
+    "No retry, variant B, budget increase, new authority, external message or cutover during trial.",
+    "Research usage from diagnostic log rather than durable event; billing amount not measured."
+  ],
+  "privateEvidenceBindings": [
+    {
+      "path": "fixtures.private.json",
+      "sha256": "97628b5a02f04096e9a5cb2122c7c98d398c23e0a6b6c13b0f95cc8a4a18eeed"
+    },
+    {
+      "path": "A/attempt.json",
+      "sha256": "a27a5548f1ab68660245061b630e81a01ea9003b5833f7bd14cb7e8e8c4ee663"
+    },
+    {
+      "path": "A/request.json",
+      "sha256": "306781de823f8df64f1fc30f4e62d9471bb76e6f503190b4ee616203b90a6ec4"
+    },
+    {
+      "path": "A/http-receipt.json",
+      "sha256": "3622bfa0b034f97c8af73b551a55df8be56a9147ee49fc2cba3dff1d167d21ab"
+    },
+    {
+      "path": "A/events.private.json",
+      "sha256": "2a15de95cc3d42096f26d2fa8f4da56538bd01986fc1604d8ec95c81aaf0957a"
+    },
+    {
+      "path": "A/files.private.json",
+      "sha256": "91ad130e3d6215a4ae990205953965a3327da1e2df5881d1901841527905fb5b"
+    },
+    {
+      "path": "A/core-log.private.txt",
+      "sha256": "4abd0298ccdfcdb6978b57351ca2345602fffe6d3d9c126c86e6f137d63dcd32"
+    }
+  ]
+}

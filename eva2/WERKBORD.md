@@ -190,9 +190,14 @@ die in een tweede beurt met dezelfde hash. Bestaande grenzen blijven gelden;
 geen aangeleverde converter, extra retries, externe berichten of uitrol.
 De eerste gewone beurt eindigde na 69,914 seconden met HTTP503 /
 RECOVERY_FAILED. Er is geen procedure of uitvoer voor variant A gemaakt;
-variant B is niet gestart. Dezelfde uitvoerende taak onderzoekt alleen-lezen
-de oorzaak. Het definitieve bewijs wordt na ontvangst gekoppeld; geen
-herhaling of parallelle reparatie gestart. Jaap hoeft niets te doen.
+variant B is niet gestart. Oorzaak: het researchantwoord bevatte 1267
+uitvoertokens bij een bestaande grens van 1200. De host weigerde dit terecht.
+Dezelfde uitvoerende taak maakt nu de opgedragen offline reparatiekandidaat:
+lengte-instructie uit bestaand budget afleiden en gemeten verbruik ook bij
+weigering duurzaam bewaren. De harde grens blijft staan; een prompt biedt
+geen tokengarantie. Geen nieuwe modelpoging, variant B of uitrol gestart.
+Jaap hoeft niets te doen. De onafhankelijke bewijsreview staat open.
+[Bewijs van de eerste mislukte proef](evidence/product/AU-004-procedure-trial-failure-2026-09-12.json).
 De AU-004-mijlpaal is niet afgerond of geaccepteerd. IN-02 en eerdere
 acceptaties blijven apart.
 
