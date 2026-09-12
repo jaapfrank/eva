@@ -192,39 +192,34 @@ De eerste gewone beurt eindigde na 69,914 seconden met HTTP503 /
 RECOVERY_FAILED. Er is geen procedure of uitvoer voor variant A gemaakt;
 variant B is niet gestart. Oorzaak: het researchantwoord bevatte 1267
 uitvoertokens bij een bestaande grens van 1200. De host weigerde dit terecht.
-Dezelfde uitvoerende taak maakt nu de opgedragen offline reparatiekandidaat:
+De opgedragen reparatie is inmiddels technisch afgerond en live:
 lengte-instructie uit bestaand budget afleiden en gemeten verbruik ook bij
 weigering duurzaam bewaren. De harde grens blijft staan; een prompt biedt
 geen tokengarantie. Geen nieuwe modelpoging, variant B of uitrol gestart.
 Jaap hoeft niets te doen. De onafhankelijke reviewer heeft de juistheid van
-het mislukkingsbewijs goedgekeurd; dit is geen product-GO. De reparatie blijft
-in uitvoering en AU-004 blijft onvoltooid.
+het mislukkingsbewijs goedgekeurd; dit is geen product-GO. De gerichte reparatie
+is inmiddels live, terwijl de leerproef en AU-004 onvoltooid blijven.
 [Bewijs van de eerste mislukte proef](evidence/product/AU-004-procedure-trial-failure-2026-09-12.json).
 De AU-004-mijlpaal is niet afgerond of geaccepteerd. IN-02 en eerdere
 acceptaties blijven apart.
 
-### AU-004-reparatiekandidaat — bronreview GO, imagecontrole open
+### AU-004-gerelateerde reparatie — technisch afgerond en live
 
-De kandidaat leidt de researchlengte-instructie af van het bestaande budget
-en bewaart bekend gemeten verbruik in het bestaande RECOVERY_FAILED-event.
-De limiet blijft gelijk; promptinstructies geven geen tokengarantie.
-143 controles slagen. Eén catalogussnapshotcontrole faalt ook identiek op de
-ongewijzigde basis; de fixture is niet aangepast. Geen volledig groene suite
-geclaimd. Geen nieuw schema, extra modelpoging, variant B of uitrol. De
-eerdere onafhankelijke GO betreft uitsluitend het bewijs van de mislukte proef.
+De researchlengte-instructie volgt het bestaande budget. Bekend gemeten
+verbruik wordt ook bij weigering in het bestaande RECOVERY_FAILED-event
+bewaard. De uitvoerlimiet is niet verhoogd; een prompt geeft geen garantie
+dat het model onder de limiet blijft. Er is geen kostenaggregatieclaim.
 
-De onafhankelijke bronreview van deze reparatie is GO: 41 gerichte controles
-bevestigen limietbehoud, compatibiliteit, replay en verbruiksbehoud zonder
-antwoordinhoud of secrets op te slaan. De eerdere catalogusfixturefout blijft
-als baselinebevinding zichtbaar. Een begrensde image op d2d589 en geïsoleerde
-PostgreSQL-readback worden voorbereid. Geen image-GO, live-uitrol of garantie
-op modeluitvoerlengte of volledige kostenaggregatie geclaimd.
+Bron- en imagebeoordeling zijn GO. Exact vijf runtimebestanden zijn op kern
+en worker geïnstalleerd en teruggelezen. Gereedheid van kern en spraak is
+bevestigd; de zeven beschermde diensten en instellingen bleven behouden.
+De PostgreSQL-persistentieproef was geïsoleerd op16.13, niet op live18.6.
+De bestaande catalogusfixturefout blijft als afzonderlijke baselinebevinding
+vastgelegd. Geen modelaanroep of AU-004-herhaling bij deze uitrol.
 
-De reparatieimage is gereed voor onafhankelijke beoordeling: exact vijf
-beoordeelde runtimebestanden gewijzigd, configuratie en eerdere imagelagen
-behouden. Eén geïsoleerde PostgreSQL16.13-test slaagt voor opslaan, opnieuw
-verbinden en teruglezen van geweigerd verbruik. Dit is geen proef op de live
-PostgreSQL18.6. Image-GO en uitrol ontbreken; geen nieuwe modelpoging of B.
+Deze reparatie is klaar; de eerste leerproef blijft mislukt. Variant B is niet
+gestart en de volledige AU-004-mijlpaal is niet afgerond of geaccepteerd.
+[Livebewijs](evidence/product/Research-budget-failure-live-2026-09-12.json).
 
 ## Nu
 
