@@ -496,6 +496,22 @@ na verse quota-/budget-/imagecontrole en verificatie van ongewijzigde
 A-procedure/resultaathashes en afwezige B-uitvoer. B is nu in uitvoering;
 er is nog geen resultaat en hergebruik is nog niet afgerond.
 
+
+### AU-004 leerproef3B — uitvoering klaar, onafhankelijke review open
+
+De ene B-beurt gaf HTTP200 na69,604s. Aangeleverd bewijsd0355b7c toont
+de procedure als eerste gelezen actie en ongewijzigde hash bbae3082;
+B-semantiek voor uren, meerdere tekstregels en Unicode slaagt in de externe
+Python-check. Ongeldige invoer met negatieve500ms is geweigerd, zonder output.
+Deze checker is niet door Eva uitgevoerd.
+
+Gemeten B:7 modelcalls,62748 input/1257 outputtokens,6 geverifieerde acties
+en geen nieuw onderzoek. A+B:17 modelcalls,200441 input/4630 outputtokens
+en14 acties. Dezelfde bestaande conversatie is gebruikt; B was een nieuw
+bericht met vooraf verzegelde ongeziene invoer. Het bewijs wacht op review
+en is nog niet geïntegreerd. Geen globale skillinstallatie, volledige
+AU-004- of eigenaaracceptatie; er worden geen verdere proeven gestart.
+
 ## Nu
 
 | Volgorde | Kaart | Resultaat | Status |
