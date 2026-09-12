@@ -344,6 +344,19 @@ opgenomen; bronpariteit, image en livecontrole volgen bij de runtime-eigenaar.
 Geen fysieke spraak- of crashgarantie en geen eigenaaracceptatie.
 [Reparatiebewijs](evidence/product/voice-http-replay-fix-2026-09-12.json).
 
+
+### CP-001 — native adapters als offline kandidaat in review
+
+De kandidaat vormt bestaande Eva2- en Bottie-verzoeken en controleert een
+onafhankelijk gelezen resultaat. Eén geïnjecteerde transportcall is met lokale
+callbacks getest; de CLI heeft geen live transport. De maker rapporteert31
+gerichte tests en acht native preflightsamples die terecht onbekend blijven.
+
+Onafhankelijke review staat open. Actuele productprofielen, gelijke server-
+budgetten, volledig verbruik, stoppen na timeout en de echte bestands-/
+onderbrekingsketen moeten nog worden toegelaten. Geen echte modelcalls,
+bronintegratie, productrun of rangschikking door deze registratie.
+
 ## Nu
 
 | Volgorde | Kaart | Resultaat | Status |
