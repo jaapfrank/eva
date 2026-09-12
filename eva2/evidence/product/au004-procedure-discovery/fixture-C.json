@@ -1,0 +1,29 @@
+{
+  "C": {
+    "srt": "1\n00:00:08,045 --> 00:00:10,900\nZoë zegt: “Tot straks!”\nNeem café crème mee.\n\n2\n01:02:03,004 --> 01:02:05,670\nKlaar — zonder haast.\n",
+    "expected": [
+      {
+        "start_ms": 8045,
+        "end_ms": 10900,
+        "lines": [
+          "Zoë zegt: “Tot straks!”",
+          "Neem café crème mee."
+        ]
+      },
+      {
+        "start_ms": 3723004,
+        "end_ms": 3725670,
+        "lines": [
+          "Klaar — zonder haast."
+        ]
+      }
+    ]
+  },
+  "request": "Zet deze SRT-ondertitels om naar WebVTT. Bewaar het resultaat als /proof-state/au004-subtitles-C-discovery-20260913.vtt en controleer de opgeslagen inhoud.\n\n1\n00:00:08,045 --> 00:00:10,900\nZoë zegt: “Tot straks!”\nNeem café crème mee.\n\n2\n01:02:03,004 --> 01:02:05,670\nKlaar — zonder haast.\n",
+  "output_path": "/proof-state/au004-subtitles-C-discovery-20260913.vtt",
+  "procedure_path_observer_only": "/proof-state/au004-srt-webvtt-procedure-20260912-attempt3.md",
+  "procedure_sha256": "bbae3082ef113d6433ad0184fafc30ef2853e4d6b3798841ccef7ba0028016df",
+  "current_image": "sha256:2a5cc362fee325e4210524f200dde5de7b19ddb732642da5154d8e4d1cba441b",
+  "model_call_authorized": false,
+  "context_limit": "Existing owner conversation may already contain the procedure path; no fresh-context claim."
+}

@@ -759,6 +759,19 @@ Alleen de zes bundelbewijsbestanden zijn opgenomen; geen releasebaselinemerge.
 Volledige productaccounting, vergelijkingen en menselijke acceptatie blijven open.
 [Livebewijs](evidence/architecture/reviewed-runtime-bundle-live-2026-09-13.json).
 
+### AU-004 C — één vervolgproef toegestaan, startbewijs volgt
+
+De eerder afgeronde A/B-oplevering blijft afgerond. Voor het afzonderlijke
+terugvinden zonder procedurepad in de nieuwe opdracht is voorbereidingc38aacba
+beoordeeld: vier offline controles en hashes groen. De coördinator staat één
+C-baselinebeurt toe na een verse preflight die bij fouten verzending blokkeert.
+Criteria zijn zoekstap→exacte bestaande procedure lezen→C opslaan/teruglezen,
+onafhankelijke semantiek en onveranderde procedurehash. Dezelfde gesprekcontext
+blijft bestaan; dit bewijst geen blanco context. Geen automatische retry of
+ruimere limiet. De vier voorbereidingsbestanden zijn opgenomen; uitvoerings-
+start en uitkomst zijn nog niet gemeld. Geen volledige AU-004-acceptatie.
+[Verzegelde voorbereiding](evidence/product/au004-procedure-discovery/plan.md).
+
 ## Nu
 
 | Volgorde | Kaart | Resultaat | Status |

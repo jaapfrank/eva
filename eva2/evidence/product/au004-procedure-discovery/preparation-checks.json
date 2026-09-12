@@ -1,0 +1,28 @@
+{
+  "fixture_sha256": "f3803ad0c8ae197ead899a9c61b7d74b6be08cf5f1f623d7acd64ccde1cb3078",
+  "semantic_checker_reused_byte_exact": true,
+  "cases": [
+    {
+      "case": "valid",
+      "expected_accept": true,
+      "actual_accept": true
+    },
+    {
+      "case": "changed_unicode",
+      "expected_accept": false,
+      "actual_accept": false
+    },
+    {
+      "case": "wrong_interval",
+      "expected_accept": false,
+      "actual_accept": false
+    },
+    {
+      "case": "missing_header",
+      "expected_accept": false,
+      "actual_accept": false
+    }
+  ],
+  "model_calls": 0,
+  "runtime_changes": false
+}
