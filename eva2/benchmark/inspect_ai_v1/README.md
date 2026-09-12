@@ -111,3 +111,75 @@ nul tokens. Een geslaagd antwoord moet zijn native gebruik, antwoordhash en de
 drie losse semantische criteria bewaren. De validator accepteert geen ranglijst
 of algemene winnaar; twee bruikbare antwoorden en twee technische uitvallen
 blijven dus precies dat, geen verzonnen vierwegwinst.
+
+## CP-001: uitvoerbare offline gepaarde proef
+
+`cp001.py` voert twee taken elk tweemaal uit voor de labels Eva2 en Eva1/Bottie,
+in vooraf afgewisselde volgorde. Dit is **alleen een runner-dry-run**: beide
+labels gebruiken dezelfde expliciete `cp001_fixture_worker.py` testdouble.
+Er bestaat geen model-, product-, Docker- of netwerkstartoptie. De antwoorden
+van de testdouble zijn bewust vast. Een groene fixturecheck bewijst de
+uitvoerketen, geen kwaliteit van Eva of Bottie en geen concurrentiewinst.
+
+De runner hergebruikt Inspect 0.3.263, de bestaande EV-001-lock en
+bronverificatie uit `bridge_probe.py`. Inspect bezit samples, scoring en
+native `.eval`-logs; er is geen tweede benchmarkformaat of productruntime.
+De taakinput, rubric, volgorde en gemeenschappelijke offlinegrenzen staan in
+`cp001_fixtures.json`. Git commit/tree plus SHA-256 van runner, worker, fixtures,
+EV-001-bron en lock worden vóór uitvoering vastgelegd; gewijzigde bronbytes
+worden geweigerd. De outputmap moet nieuw zijn en wordt privé aangemaakt.
+
+Gebruik een omgeving met alle wheels uit `pylock.toml` (bestaande EV-001-omgeving
+of een afzonderlijke hashgecontroleerde installatie); geen runtime-dependencywijziging.
+Vanuit `eva2`, in de exact gecommitteerde checkout:
+
+```bash
+/path/to/locked-venv/bin/python benchmark/inspect_ai_v1/cp001.py \
+  --dry-run --source-commit "$(git rev-parse HEAD)" \
+  --output /duurzaam/prive/cp001-eerste-run
+python3 -m unittest discover -s tests/benchmark -p test_cp001_runner.py -v
+```
+
+`--fault unavailable`, `--fault failure` en `--fault timeout` voeren dezelfde
+matrix uit met zichtbare toelatings-/uitvoerings-/tijdsfouten. Gebruik per run
+een nieuwe map. Er is geen automatisch opnieuw proberen. De `unknown`-score
+bij uitval heeft geen aggregatiemetric en wordt geen verlies of nulscore.
+Ook alle echte productuitslagen blijven `unknown`. `receipt.json` verwijst met
+hash naar het oorspronkelijke native log en naar het vooraf geschreven manifest;
+alle samplemetingen en criteria staan in dat Inspect-log, niet in een extra
+scorebord. De afzonderlijke samplemappen bewaren bronbestanden, workeruitvoer,
+geheugenfixture en het teruggelezen advies.
+
+Taak A start per beurt een nieuw fixtureproces; de laatste beurt krijgt alleen
+de nieuwe vraag en gebruikt het bewaarde correctieresultaat. Taak B beëindigt
+de worker na opslaan maar vóór bevestiging (exit 75), start een nieuw proces en
+controleert adviesinhoud, hash vóór/na hervatten, één mutatie en bronbehoud.
+Dit is een procesonderbrekingsfixture, geen bewijs van product-/machinecrashherstel.
+De runner leest bestanden onafhankelijk van het antwoord terug. De exacte
+fixture-oracle vervangt geen semantische of menselijke beoordeling van echte
+antwoorden; menselijke rubricvelden blijven leeg.
+
+Registratie omvat afzonderlijke ontvangstreactie, eerste inhoud en geverifieerd
+einde (milliseconden vanaf samplestart), plus verstreken tijd bij fout.
+Een ontbrekende ontvangstreactie is `null`. Verbruik van de fixture is bewezen
+nul model-/token-/helper-/retry-/jurycalls; geld en logininspanning blijven
+onbekend. Nul tokens is uitsluitend de opgelegde offlinegrens, geen geschat
+productverbruik. Alle processen krijgen dezelfde byte-/fase-/tijdgrenzen en
+schone samplemappen. De testdouble is vertrouwde lokale code, geen sandbox voor
+willekeurige third-party agentcode. De vaste bestandswrites zijn beperkt door de
+fixture; deze runner levert geen generieke filesystem- of OS-resourcebeveiliging.
+
+Echte vergelijking blijft vervolgwerk: bind beide native bron/image/configversies,
+laat gelijke model- en toolbudgetten aantoonbaar toe en verbind bestaande native
+routes aan Inspect. De huidige `experiments/managed-b-clean-graph-v1/probe.py`
+heeft een single-promptprobe; die bewijst geen meergesprek-/hervatroute voor deze
+twee taken. Een native Bottie-route is hier niet toegelaten. Daarom start deze
+levering geen van beide en maakt zij CP-001's volledige productmatrix niet groen.
+
+Officiële documentatie gecontroleerd op 12 september 2026:
+[Agent Bridge](https://inspect.aisi.org.uk/agent-bridge.html) en
+[Custom Scorers](https://inspect.aisi.org.uk/custom-scorers.html). De lokale
+exact gelockte API blijft de uitgevoerde compatibiliteitscontrole; deze raadpleging
+claimt geen upgrade of nieuwste-versiestatus. Onafhankelijke technische review
+moet deze begrensde runner beoordelen vóór integratie; model-/liveproeven vallen
+buiten deze levering.

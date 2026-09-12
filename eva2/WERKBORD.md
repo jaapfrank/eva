@@ -314,6 +314,21 @@ worden. De onafhankelijke scopebeoordeling las de bron, zonder heruitvoering.
 De CP-001-vergelijkingsrunner is als offline kandidaat opgeleverd en staat in
 onafhankelijke review. Nog geen echte gepaarde agentrun of productrangschikking.
 
+
+### CP-001 — offline vergelijkingsrunner technisch afgerond
+
+De bestaande Inspect-taak voert nu de verzegelde proeven uit, bewaart logs,
+controleert resultaten afzonderlijk en registreert uitval als onbekend.
+De onafhankelijke reviewer herhaalde zeven gerichte controles en controleerde
+de native loghashes. Alle acht fixturechecks slagen; alle acht echte
+productuitslagen blijven onbekend en er is geen rangschikking.
+
+Beide deelnemerlabels gebruikten dezelfde testdouble. Dit sluit de offline
+runner af, niet de productvergelijking. Dezelfde taak bouwt nu de native Eva2-
+en Bottie-adapters met offline contracttests en preflight, zonder echte
+modelaanroepen, herstarts of gegevensresets.
+[Oplevering en bewijsgrens](reviews/cp001-offline-runner-delivery-2026-09-12.md).
+
 ## Nu
 
 | Volgorde | Kaart | Resultaat | Status |

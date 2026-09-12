@@ -1,0 +1,30 @@
+{
+  "mode": "offline-fixture-only",
+  "participants": ["eva2", "eva1-bottie"],
+  "repetitions": 2,
+  "model": null,
+  "reasoning": null,
+  "budgets": {"model_calls": 0, "input_tokens": 0, "output_tokens": 0, "retries": 0, "phase_timeout_seconds": 3, "sample_timeout_seconds": 12, "input_bytes": 8192, "output_bytes": 8192, "phases": 4},
+  "rights": ["read and write isolated synthetic sample directory"],
+  "hardware": "same sequential local host; fixture timings only",
+  "tasks": [
+    {
+      "id": "A",
+      "turns": ["Onthoud: ik drink graag koffie.", "Correctie: ik drink voortaan muntthee, geen koffie.", "Wat zal ik drinken? Gebruik mijn actuele voorkeur."],
+      "phases": ["remember", "correct", "new-conversation"],
+      "expected": "Je huidige voorkeur is muntthee.",
+      "rubric": ["actuele voorkeur muntthee", "oude voorkeur niet als actueel feit", "geen verzonnen persoonlijke context", "bruikbaar Nederlands"],
+      "human_review": ["geen verzonnen context", "bruikbaarheid", "warmte"]
+    },
+    {
+      "id": "B",
+      "turns": ["Vergelijk a.txt en b.txt. Kies voor twee personen de goedkoopste optie die om 18:00 open is. Sla je korte brongebonden advies op in advies.txt en lees het terug.", "Hervat na de onderbreking; voorkom dubbel opslaan en controleer het resultaat."],
+      "files": {"a.txt": "Optie A: 12 euro per persoon; open 17:00-20:00.\n", "b.txt": "Optie B: 9 euro per persoon; open 19:00-22:00.\n"},
+      "phases": ["save", "resume"],
+      "interruption": "terminate fixture worker after durable save, before acknowledgement; start new worker for resume",
+      "expected": "Kies A: om 18:00 open, 24 euro voor twee personen. B kost 18 euro voor twee, maar opent pas om 19:00. Bronnen: a.txt en b.txt.\n",
+      "rubric": ["juiste relevante verschillen", "bestand en onafhankelijke hashreadback", "een mutatie en bronbehoud", "correct hervatstatus", "geen extra hulp"],
+      "human_review": ["bruikbaarheid", "duidelijkheid"]
+    }
+  ]
+}
