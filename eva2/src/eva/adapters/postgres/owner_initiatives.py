@@ -7,6 +7,7 @@ import re
 import hashlib
 import sqlalchemy as sa
 
+from eva.contracts.canonical_json import canonical_sha256
 from eva.adapters.postgres.current_catalog import metadata
 from eva.adapters.postgres.operational_timeline import (
     PostgresOperationalTimeline, TimelineScope, external_timeline_scope,
@@ -64,6 +65,7 @@ class PostgresOwnerInitiatives:
             rows = conn.execute(self._query().order_by(
                 operational_checkpoints.c.updated_at.desc(), operational_checkpoints.c.thread_id
             ).limit(65)).all()
+            latest_review = self._latest_review(conn)
             cards = []
             for row in rows[:64]:
                 data = row.adoption["data"]
@@ -78,7 +80,52 @@ class PostgresOwnerInitiatives:
                     "can_stop": status not in ("stopped", "done"),
                     "has_artifact": self._artifact(conn, row.thread_id) is not None,
                     "feedback": self._feedback(conn, row.thread_id)})
-        return {"contract": "EvaOwnerInitiatives/v1", "cards": cards, "truncated": len(rows) > 64}
+        return {"contract": "EvaOwnerInitiatives/v1", "cards": cards, "truncated": len(rows) > 64,
+                "latest_review": latest_review, "checked_at": now.isoformat()}
+
+    def _latest_review(self, conn):
+        """Read the owner's ordinary private cycle, including decisions before adoption."""
+        c, e = operational_checkpoints.c, operational_events.c
+        prefix = "sensory:initiative-review:" + hashlib.sha256(str(self._owner).encode()).hexdigest()[:24] + ":"
+        row = conn.execute(sa.select(c.updated_at, c.phase, c.status, e.payload, e.payload_sha256)
+            .join(operational_events, sa.and_(c.tenant_id == e.tenant_id,
+                c.installation_id == e.installation_id, c.thread_id == e.thread_id,
+                c.checkpoint_id == e.checkpoint_id, c.revision == e.sequence))
+            .where(c.tenant_id == self._scope.tenant_id,
+                c.installation_id == self._scope.installation_id, c.thread_id.startswith(prefix))
+            .order_by(c.updated_at.desc(), c.thread_id.desc()).limit(1)).first()
+        if row is None:
+            return None
+        if canonical_sha256(row.payload) != bytes(row.payload_sha256).hex():
+            raise RuntimeError("initiative review payload hash differs")
+        data = row.payload["data"]
+        reason = data.get("reason")
+        if reason is not None and (not isinstance(reason, str) or len(reason) > 4000):
+            raise RuntimeError("initiative review reason differs")
+        state, blocker, intent_id = "unknown", None, None
+        if row.status in ("failed", "needs_help"):
+            state, blocker = "attention", "review_needs_help"
+        elif row.phase == "will_waiting_admission":
+            state, blocker = "waiting", "model_admission"
+        elif row.phase == "will_decided":
+            proposal = data.get("initiative")
+            if data.get("provider") == "eva:background-budget":
+                state, blocker = "waiting", "background_budget"
+            elif isinstance(proposal, dict) and proposal.get("status") == "adopted":
+                intent_id = self._intent_id(proposal.get("intent_id"))
+                state = "adopted"
+            elif isinstance(proposal, dict) and proposal.get("status") == "not_admitted":
+                state, blocker = "not_admitted", proposal.get("reason")
+                if not isinstance(blocker, str) or len(blocker) > 200:
+                    raise RuntimeError("initiative review blocker differs")
+            elif data.get("disposition") == "silence":
+                state = "silence"
+        elif row.phase == "sensory_observed":
+            state = "scheduled"
+        elif row.phase in ("will_claimed", "will_model_started", "will_revalidated"):
+            state = "working"
+        return {"updated_at": row.updated_at.isoformat(), "phase": row.phase,
+                "state": state, "reason": reason, "blocker": blocker, "intent_id": intent_id}
 
     def _artifact(self, conn, thread_id):
         e = operational_events.c
