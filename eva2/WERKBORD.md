@@ -115,14 +115,16 @@ SRT naar WebVTT en een tweede ongeziene variant. Geen modelproef gestart;
 geen gemaakte skill of eigenaaracceptatie geclaimd.
 [Audit en proefplan](design/product/AU-004-small-skill-trial-plan-2026-09-12.md).
 
-### Gatewaycatalogus — correctie in review
+### Gatewaycatalogus — technisch afgerond en live
 
-Een concreet opstartdefect gaat tijdelijk vooraf aan AU-004: de catalogus bevat
-53 tools, maar de standaardaanvraag geeft er slechts 50 terug. Daardoor mist
-een verse kernopbouw de verplichte bestandsleesfunctie. De bestaande kern
-blijft zijn eerder toegelaten catalogus gebruiken. De correctie haalt alle
-paginas op en heeft bronreview-GO. De kandidaatimage wordt voorbereid; nog niet
-geactiveerd. AU-004 blijft beperkt tot de afgesproken audit en het proefplan.
+De correctie haalt alle cataloguspaginas op. Na review en uitrol leest een
+verse kernopbouw 50 + 3 tools, inclusief de verplichte bestandsleesfunctie,
+en bouwt 62 routes. Registratiegroei gevolgd door nieuwe provideropbouw is
+gericht getest. Alleen kern en worker zijn vervangen; de zeven beschermde
+diensten en instellingen bleven behouden. Geen modelproef voor dit herstel.
+Dit sluit de paginatiefix af; bredere integratieproeven en eigenaaracceptatie
+blijven apart. AU-004 blijft bij het opgeleverde plan, zonder uitgevoerde proef.
+[Livebewijs](evidence/product/MCP-catalog-pagination-live-2026-09-12.json).
 
 ### Kwaliteitsborging en samenhang
 
