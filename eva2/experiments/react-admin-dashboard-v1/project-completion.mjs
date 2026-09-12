@@ -46,7 +46,9 @@ export function applyProductCompletion(project, board) {
       const accepted = outcome?.accepted === 'yes';
       return { id, title:task.title, required:!optional.has(id), complete:task.status === 'done', status:stateLabel(task.status || 'queued'), detail:task.outcome, criteria:task.doneWhen || [], accepted, source:'execution-workboard-v1.json',
         ...(id === 'AU-002' ? { title:'Hulpagent via dashboardchat bedienen', detail:`${row.visibleResult} ${row.gap}` } : {}),
-        ...(id === 'AU-008' ? { detail:`${row.visibleResult} ${row.gap}` } : {}),
+        ...(id === 'AU-008' ? { detail:`${row.visibleResult} ${row.gap}`,
+          ...(task.status === 'review' && board.audit?.initiativeDeliveryAU008?.technicalComplete === true
+            ? {complete:true,status:'Technisch afgerond · jouw beoordeling open'} : {}) } : {}),
       };
     });
     const memoryInventory = row.id === 'memory' && board.audit?.memoryComponentDecision20260911;

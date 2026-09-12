@@ -211,6 +211,7 @@ def test_only_completed_bound_deletions_use_historical_inventory(tmp_path: Path)
         "baseCommit": base, "implementationCommit": implementation,
     }}
     assert _task_inventory_entry(tmp_path, raw, task, {}) == entry
+    assert _task_inventory_entry(tmp_path, raw, {**task, "status": "review"}, {}) == entry
     for status in ("in_progress", "queued"):
         with pytest.raises(RuntimeError, match="does not exist"):
             _task_inventory_entry(tmp_path, raw, {**task, "status": status}, {})

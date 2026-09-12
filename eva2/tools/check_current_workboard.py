@@ -184,9 +184,9 @@ def _task_inventory_entry(
     try:
         _repo_file(root, raw, label)
     except RuntimeError as error:
-        # Completed replacement work may remove an old asset. Keep that path in
+        # Implemented replacement work, including owner review, may remove an asset. Keep it in
         # exact changePaths; only the bound implementation may prove its deletion.
-        if task["status"] != "done" or str(error) != f"{label} does not exist":
+        if task["status"] not in {"done", "review"} or str(error) != f"{label} does not exist":
             raise
         path = root / raw
         if path.is_symlink() or root not in path.resolve(strict=False).parents:
