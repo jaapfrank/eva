@@ -652,6 +652,22 @@ checker-, image- of livewijziging. De gebonden canonical meting ging27→26
 architectuur- en80→73 catalogusbevindingen; beide volledige poorten blijven open.
 [Bepaalde grens en bewijs](evidence/architecture/voice-service-boundary-2026-09-12.json).
 
+### CP-001 verbruiks- en budgetdiagnose — offline oplevering afgerond
+
+De bestaande native usage- en configuratievelden zijn uitleesbaar gemaakt via
+een offline CLI en de native Inspect-preflight. Ontbrekende of ongeldige velden
+blijven onbekend, overlappende usage wordt niet opgeteld en configuratie bewijst
+geen actieve handhaving. De onafhankelijke reviewer herhaalde52 controles,
+beoordeelde de volledige code en bronhashes en gaf GO binnen deze scope.
+Vijf bestanden zijn geïntegreerd;84 tests zijn in het opleverbewijs vastgelegd.
+De behouden synthetische PG-export geeft23/7, een lege Bottie-usage-export
+blijft onbekend. Geen nieuwe providercalls, migraties of runtimewijziging.
+Volledige productaccounting en echte vergelijkingen blijven open. De volgende
+noodzakelijke stap is duurzame request-/samplegebonden providerpogingen en
+usage voor de directe gespreksroute, inclusief fouten, retry en replay;
+helpers vallen buiten die beperkte bewijsclaim.
+[Diagnose en grenzen](reviews/cp001-native-accounting-admission-2026-09-12.md).
+
 ## Nu
 
 | Volgorde | Kaart | Resultaat | Status |

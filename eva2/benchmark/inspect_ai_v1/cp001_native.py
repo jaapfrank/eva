@@ -39,6 +39,9 @@ def digest(value: str) -> str:
 
 def preflight(root: Path = ROOT) -> dict:
     """Only inspect source files. Never discover hosts, credentials or data."""
+    import cp001_accounting
+
+    accounting = cp001_accounting.preflight(root=root)
     participants = {}
     for name, paths in NATIVE_SOURCES.items():
         hashes = {
@@ -67,6 +70,7 @@ def preflight(root: Path = ROOT) -> dict:
             "blockers": blockers,
         }
     return {
+        "accounting": accounting,
         "mode": "native-preflight-only",
         "participants": participants,
         "product_result": "unknown",

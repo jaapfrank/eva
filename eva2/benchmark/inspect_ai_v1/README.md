@@ -377,3 +377,48 @@ Deze vijfde Bottie-test bewijst uitsluitend herstel op de genoemde procescrashgr
 met behouden database en clientsleutel. Zij bewijst geen stroomuitval, OS-crash,
 crash midden in een schrijfoperatie, herstel zonder sleutel of algemene recovery.
 Serverbudgetten, volledige usage en productvergelijking blijven afzonderlijk unknown.
+
+
+### Offline usage- en serverbudgetpreflight
+
+Voer vanuit de repository uit:
+
+```bash
+python3 eva2/benchmark/inspect_ai_v1/cp001_accounting.py
+python3 eva2/benchmark/inspect_ai_v1/cp001_accounting.py --exports /private/exports.json
+```
+
+De JSON-uitvoer bevat per ontbrekend/ongeldig usage- en limietveld een blocker,
+bronbestandhashes en vergelijking van expliciete providergrenzen. Exitcode 2
+betekent niet toegelaten (ook bij ongeldige invoer, dan alleen stderr). De bestaande
+native Inspect-preflight bevat dezelfde accountingrapportage. Er is geen live-optie.
+
+De optionele lokale JSON heeft uitsluitend deelnemers `eva2` en `eva1-bottie`.
+Per deelnemer zijn dit de optionele exports, met ongewijzigde native veldnamen:
+
+- `provider_request`: provider-wirebody (`model`, `reasoning.effort`,
+  `max_output_tokens`). Dit zijn waargenomen grenzen van één call.
+- `provider_response`: response-object uit `response.completed`, met
+  `usage.input_tokens`, `output_tokens`, `total_tokens`. Ontbrekend blijft null;
+  total_tokens moet exact input+output zijn. Dit bewijst geen andere calls/retries.
+- Alleen EVA2: `request` en `journal_reply` uit de onafhankelijke readback. De
+  bestaande native binding/hashcontrole leest `model_usage` en `provider`.
+  `runtime_resource_budget` leest alleen de bestaande `max_input_tokens` en
+  `max_output_tokens` als configuratie, zonder enforcementclaim.
+- Alleen Bottie: `timeline_meta` uit één `llm_usage`-rij, uitsluitend diagnostiek.
+  De producer normaliseert sommige ontbrekende providervelden naar nul en logfouten
+  worden opgevangen. Daarom wordt deze rij nooit volledige gemeten usage.
+
+Gebruik alleen expliciete, geschoonde lokale exports; geen credentials. De CLI
+ontdekt geen hosts, databases of bestanden buiten de opgegeven export en vaste bronpaden.
+Zij echoot geen prompts/antwoordteksten. Een export is geen geauthenticeerd bewijs:
+herkomst, complete requestbinding en volledige dekking blijven aparte blockers.
+
+Gelijke bekende model/reasoning/outputwaarden geven `equal`; afwijkingen `mismatch`;
+ontbrekende waarden (ook null tegenover null) `unknown`. Provideroutputlimiet is
+geen samplebudget. Input-, call-, tool- en deadlinegrenzen voor de hele sample,
+servercancellation/quiescence, helper-/memory-/retrydekking en totaalusage zijn
+niet door deze native exports geattesteerd. `total_usage` en `server_sample_limits`
+blijven null en `live_enabled` false. Een aangeleverde `complete: true` of
+`live_enabled: true` kan dat niet veranderen. Bestaande ACK-/herstelbewijzen krijgen
+hierdoor geen nieuwe status en worden niet opnieuw getest als aparte randvarianten.
