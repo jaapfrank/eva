@@ -91,3 +91,58 @@ def test_typed_delegation_catalog_rejects_unexpected_authority_fields():
         }))
     with pytest.raises(ConversationConflict, match="arguments differ"):
         actions.execute(turn, ConversationActionCall("call", "get_delegated_work", {"work_id": ""}))
+
+
+@pytest.mark.parametrize("action", ["start_delegated_work", "resume_delegated_work"])
+def test_reply_guard_uses_exact_turn_receipt_and_rechecks_current_authority(monkeypatch, action):
+    from eva.application.conversation import ConversationActionReceipt
+    turn = ConversationTurn.private(
+        tenant_id="tenant:test", installation_id="install:test", principal_id="owner",
+        conversation_id="owner-chat", message_id="message-1", text="Schakel hulp in",
+        occurred_at="2026-09-10T10:00:00Z",
+    )
+    call = ConversationActionCall("call-1", action, {"task": "Een voorstel"} if action.startswith("start") else {"work_id": "work:previous"})
+    receipt = ConversationActionReceipt(call, {"status": "verified", "operation_result": {"work": {"work_id": "work:one", "state": "admitted"}}})
+    other = ConversationActionReceipt(ConversationActionCall("unrelated", "read_file", {}), {"status": "verified"})
+    events = {}
+    class Timeline:
+        def __init__(self, *_args): pass
+        def events(self, key): return tuple(events.get(key, ()))
+    class Service:
+        revoked = False
+        stopped = False
+        reads = []
+        def available_for(self, actual): return actual == turn and not self.revoked
+        def validate_authority(self, actual):
+            if not self.available_for(actual): raise ConversationConflict("private owner")
+        def execute(self, operation, actual, **values):
+            assert operation == "get" and actual == turn and values["work_id"] == "work:one"
+            self.reads.append(values["work_id"])
+            return {"work": {"work_id": "work:one", "state": "stopped" if self.stopped else "call_started", "stop_requested": self.stopped}}
+    monkeypatch.setattr(module, "PostgresOperationalTimeline", Timeline)
+    service = Service()
+    actions = module.PostgresDelegatedWorkActions(object(), service)
+    key = actions._thread_id(turn, 1)
+    events[key] = [SimpleNamespace(event_type="DELEGATED_ACTION_PREPARED", payload={"data": {"call_id": call.call_id, "name": call.name, "arguments": call.arguments}}),
+        SimpleNamespace(event_type="DELEGATED_ACTION_COMPLETED", payload={"data": {"output": receipt.output}})]
+    assert actions.reply_guard(turn, (other,)) is None
+    refused = ConversationActionReceipt(call, {"status": "verified", "operation_result": {"status": "not_resumable", "work": {"work_id": "work:previous"}}})
+    assert actions.reply_guard(turn, (refused,)) is None
+    guard = actions.reply_guard(turn, (other, receipt))
+    assert guard("Normaal antwoord") == "Normaal antwoord"
+    service.stopped = True
+    corrected = guard("Oud startantwoord")
+    assert "stopopdracht" in corrected and "work:one" in corrected
+    assert guard("Oud startantwoord") == corrected  # Replays do not admit new work.
+    assert service.reads == ["work:one"] * 3
+    service.revoked = True
+    with pytest.raises(ConversationConflict, match="private owner"):
+        guard("Mag niet worden vrijgegeven")
+    service.revoked = False
+    with pytest.raises(ConversationConflict, match="exact action receipt"):
+        actions.reply_guard(turn, (receipt,))("Wrong step index")
+    with pytest.raises(ConversationConflict, match="private owner"):
+        actions.reply_guard(replace(turn, installation_id="foreign-installation"), (other, receipt))("No access")
+    forged = ConversationActionReceipt(call, {"status": "verified", "operation_result": {"work": {"work_id": "work:foreign", "state": "admitted"}}})
+    with pytest.raises(ConversationConflict, match="exact action receipt"):
+        actions.reply_guard(turn, (other, forged))("No forged work")

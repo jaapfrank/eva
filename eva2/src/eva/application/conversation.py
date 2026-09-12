@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from contextlib import contextmanager
+from contextlib import contextmanager, nullcontext
 from contextvars import ContextVar
 from dataclasses import dataclass, field
 from datetime import datetime
@@ -883,7 +883,16 @@ class LivingConversation:
             individual_requests = getattr(self._model, "journals_provider_requests", False) is True
             request_id = (None if model_journal is None or individual_requests
                           else model_journal.begin_model_request(turn))
-            with observe_model_requests(turn, model_journal if individual_requests else None):
+            guard_factory = getattr(self._actions, "reply_guard", None)
+            reply_guard = (guard_factory(turn, tuple(
+                item for item in receipts if item.call.name not in {STOP_VOICE_WORK, SPEAK_AND_CONTINUE}
+            )) if callable(guard_factory) else None)
+            # A durable action may change while its acknowledgement is being
+            # generated. Do not publish provisional claims before its guard.
+            with observe_model_requests(turn, model_journal if individual_requests else None), (
+                stream_conversation_text(lambda _delta: None)
+                if reply_guard is not None else nullcontext()
+            ):
                 generated = self._model.generate(
                     turn,
                     self._identity,
@@ -974,6 +983,8 @@ class LivingConversation:
             raise RuntimeError("conversation model returned an empty reply")
         if len(text.split()) > self._identity.maximum_reply_words:
             raise RuntimeError("conversation model exceeded the reply word limit")
+        if reply_guard is not None:
+            text = reply_guard(text)
         return GroundedReply(
             conversation_id=turn.conversation_id,
             message_id=turn.message_id,
