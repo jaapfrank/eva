@@ -1,0 +1,32 @@
+{
+  "contract": "EvaProjectTelegramUpdateEvidence/v1",
+  "date": "2026-09-12",
+  "sourceCommit": "d9242ee9eaf5276eb681d14fc7ea554e703afc78",
+  "review": "reviews/telegram-project-update-review-2026-09-12.md",
+  "authorization": "Explicit owner request relayed by coordinator: hourly bundled private Telegram updates and one confirmation; no groups or other recipients.",
+  "delivery": {
+    "contract": "EvaProjectTelegramDelivery/v1",
+    "hour_key": "2026-09-12T20:00Z",
+    "message_sha256": "a75b73378cef97b88a8bde154e6642e3e5d469c5cf171969a1b2a676214fb29c",
+    "status": "delivered",
+    "claimed_at": "2026-09-12T20:40:07.732720+00:00",
+    "automatic_retry_allowed": false,
+    "provider_receipt_sha256": "a0eb8611d0fdde50663131a76090638bfd9e3bd478bdb276e71c6fa105f62271",
+    "private_chat_and_exact_text_verified": true,
+    "delivered_at": "2026-09-12T20:40:11.579153+00:00"
+  },
+  "tests": {
+    "focusedOffline": 6,
+    "independentReview": "GO; includes real process death and six concurrent processes"
+  },
+  "runtimeRestarted": false,
+  "newSchedulerCreated": false,
+  "heartbeatWiring": "Coordinator confirmed exact CLI, UTC idempotency key and receipt wired into existing heartbeat; first scheduled update not before 2026-09-12T21:40:11Z. No scheduled run yet proven.",
+  "ownerReadOrAccepted": false,
+  "privateReceiptPath": "/home/administrator/.local/state/eva2/project-telegram-updates/authorized-confirmation-20260912.receipt.json",
+  "limits": [
+    "Provider acceptance and exact private chat/text validation only; no reading or human acceptance proof.",
+    "At-most-once per preserved register, UTC key and Linux user.",
+    "Uncertain outcomes are never automatically resent."
+  ]
+}

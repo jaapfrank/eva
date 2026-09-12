@@ -12,6 +12,15 @@ Die bron is leidend; het beleid wordt hier niet gekopieerd. Gebruikersproeven
 mogen later plaatsvinden en blokkeren onafhankelijk technisch vervolgwerk niet.
 Een algemene voorsprong op concurrenten is nog niet bewezen.
 
+## Eigenaarbesluit 12 september 2026 — parallel werk en gebundelde updates
+
+Onafhankelijk technisch werk gaat parallel verder met unieke eigenaren,
+bestandsgrenzen en onafhankelijke review. Eén primaire uitvoerkaart is geen
+globale bouwstop. De coördinator bewaakt samenhang en houdt één werkbord bij.
+Jaap wil één gebundelde projectupdate per uur in zijn bestaande privé-Telegramchat
+via de bestaande Codex-heartbeat. Dat autoriseert geen berichten aan groepen of
+anderen. Technische oplevering, livecontrole en zijn acceptatie blijven apart.
+
 ## Eigenaarbesluit 12 september 2026 — doorwerken naast gebruikersproeven
 
 Jaap geeft expliciet opdracht: ga door met alle andere taken; rond werk af en meld

@@ -222,7 +222,7 @@ Deze reparatie is klaar; de eerste leerproef blijft mislukt. Variant B is niet
 gestart en de volledige AU-004-mijlpaal is niet afgerond of geaccepteerd.
 [Livebewijs](evidence/product/Research-budget-failure-live-2026-09-12.json).
 
-### AU-004 — tweede poging niet afgerond, review open
+### AU-004 — tweede poging niet afgerond; mislukkingsbewijs beoordeeld
 
 Een afzonderlijk geautoriseerde tweede poging gaf HTTP200 na44,743 seconden,
 maar slechts een eerlijk geblokkeerd antwoord. De CPython-GitMCP-ophaalroute
@@ -261,6 +261,41 @@ slagen. Gescripte keuzes bewijzen alleen koppeling en context, geen autonoom
 modelgedrag. Vervolgresultaten staan in geïndexeerde receipts; de oude
 latest_research-lijst is niet uitgebreid. Review staat open: nog niet
 geïntegreerd, gebouwd als image of live gezet. Geen poging3 uitgevoerd.
+
+
+### Parallel teamwerk en privé-uuruupdates — 12 september
+
+Onafhankelijke taken lopen parallel met unieke eigenaren: de runtimehelper
+werkt aan owneronderzoek, de browsertaak aan gecombineerde grant/herstelproeven,
+een aparte taak aan CP-001 en een reviewer aan echte PostgreSQL-integratie.
+De coördinator bewaakt samenhang; deze administratie blijft bij één schrijver.
+Open gebruikersproeven blokkeren deze technische opdrachten niet.
+
+De Telegrambeheerhelper is gebouwd, gericht getest en onafhankelijk beoordeeld.
+Eén toegestane bevestiging is naar de bestaande geverifieerde privéchat verzonden
+en exact door Telegram bevestigd. Een duurzaam uurslot voorkomt dubbele
+verzending; een onzekere afloop wordt niet automatisch herhaald. De coördinator
+heeft de bestaande heartbeat aangesloten; geen extra bot of scheduler toegevoegd.
+De eerste reguliere uurupdate volgt niet vóór 21:40:11 UTC. Dit bewijst geen
+gelezen bericht of reeds uitgevoerde geplande uurupdate.
+[Verzendbewijs](evidence/product/project-telegram-update-delivery-2026-09-12.json) ·
+[Beheerinstructie](design/product/project-telegram-updates.md).
+
+Renovate dekt nu ook de vier bestaande npm-projecten in de lokale configuratie.
+Validator, extractie en onafhankelijke configuratiereview zijn groen; geen
+update geïnstalleerd of bot geactiveerd. Actuele botactiviteit blijft onbewezen.
+[Configuratiebewijs](reviews/renovate-npm-coverage-2026-09-12.md).
+
+
+### Browserresultaat na intrekken en herstel — technisch deel afgerond
+
+Een echte geïsoleerde browserketen bewaart voltooide uitvoer bytegelijk na
+intrekken van toegang, een nieuw gatewayadres, nieuwe toegang en procesherstel.
+De taak is precies eenmaal uitgevoerd. De onafhankelijke review is groen.
+Alleen fixtures, test en uitleg zijn veranderd; geen runtime herstart.
+Dit bewijst de browserdeelketen, niet de complete core/helper/geheugen/spraak-
+herstartproef. De persoonlijke BR-01-proef blijft afzonderlijk open.
+[Bewijs](evidence/product/chrome-result-recovery-chain-2026-09-12.json).
 
 ## Nu
 
