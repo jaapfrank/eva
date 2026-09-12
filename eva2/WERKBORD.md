@@ -743,6 +743,22 @@ De coördinator meldt bron-, image- en activatiebeoordeling GO voor de
 gecombineerde kandidaat. Werkelijke omschakeling en livebewijs volgen nog;
 de geregistreerde huidige runtime is daarom nog niet aangepast.
 
+### Vier beoordeelde reparaties — gezamenlijk live om00:50Nederlandse tijd
+
+Op13september00:50NL draaiden core en werkworker de goedgekeurde2a5cc362-
+image. Daarmee zijn gedeelde schemavalidatie, actuele mandaatlezing, directe
+pogingregistratie en de inputgrens vóór taalherstel live. De beheerder heeft
+beide werkelijke containerimages/IDs, healthy/restart0 en zeven bronhashes
+per container teruggelezen. Zeven beschermde diensten bleven ongewijzigd.
+Core en voice waren ready200; configuratie bleef gelijk, achtergrondwerk aan.
+Er is geen modelproef of databaseherstel uitgevoerd. De voorafgaande rustige
+momentopname was geen globale requestlock. Terugwegc992 blijft beschikbaar.
+Zes bronbestanden zijn bytegelijk met canonical; runtime.py verschilt alleen
+in de apart gehouden household-routerinstallatie, met identieke mandaatfunctie.
+Alleen de zes bundelbewijsbestanden zijn opgenomen; geen releasebaselinemerge.
+Volledige productaccounting, vergelijkingen en menselijke acceptatie blijven open.
+[Livebewijs](evidence/architecture/reviewed-runtime-bundle-live-2026-09-13.json).
+
 ## Nu
 
 | Volgorde | Kaart | Resultaat | Status |

@@ -1,0 +1,256 @@
+{
+  "utc": "2026-09-12T22:50:15.918879+00:00",
+  "parent": "sha256:c992b0c3bf4977a101a813d6ee11d82d8821b76279e8dc5a71ced09d72426c79",
+  "image": "sha256:2a5cc362fee325e4210524f200dde5de7b19ddb732642da5154d8e4d1cba441b",
+  "only_services": [
+    "core",
+    "delegated-work-worker"
+  ],
+  "protected_before": {
+    "eva2-owner-voice-media-1": {
+      "id": "6ca020c3b9c5c532a3ccdf09654ac652a62d043e7ce3c3c86180744c6b526fc4",
+      "startedAt": "2026-09-12T18:27:00.356202841Z",
+      "image": "sha256:bf2148239bf009b1924d4134ba67fcdbf1ccae64f436add5e9f77e161226922b",
+      "state": "running",
+      "health": null
+    },
+    "eva2-owner-voice-livekit-1": {
+      "id": "dbe9c8396a3bd2974dd1a40264d7ad855d5077cc14235325b058cfa2dacd17dd",
+      "startedAt": "2026-09-12T18:27:00.243742236Z",
+      "image": "sha256:770bc61bc6ec4dcccbd3e05082d8f6bdafbee4179acab7014cc97202a9e2910b",
+      "state": "running",
+      "health": null
+    },
+    "eva2-managed-b-slot3-hindsight-1": {
+      "id": "8bd5bc29a82d6040a34a1f665872b8bc71aa0a9e4ed5d2b659a31e7f3b7f0e4c",
+      "startedAt": "2026-09-12T18:27:00.406300845Z",
+      "image": "sha256:20d72ad34164bd1a67906c4d61b57a51f2b255c49ddf8cb7ac5e901ebc3b3710",
+      "state": "running",
+      "health": "healthy"
+    },
+    "eva2-managed-b-slot3-postgres-1": {
+      "id": "a6a0de657f01d6792544863237cbbb03be407f0e3fa98f0dc9d317097051cb1b",
+      "startedAt": "2026-09-12T18:27:00.379142399Z",
+      "image": "sha256:7e641ed0cf38285bebfc6151ba48243439dfe9cf3306feab4023a812466cd6c1",
+      "state": "running",
+      "health": "healthy"
+    },
+    "eva2-managed-b-slot3-hindsight-postgres-1": {
+      "id": "3e97b7da44e125e5e4f2d6d1f824025fed5c33903729db9a3ef7edb9c0aa594b",
+      "startedAt": "2026-09-12T18:27:00.284536583Z",
+      "image": "sha256:7e641ed0cf38285bebfc6151ba48243439dfe9cf3306feab4023a812466cd6c1",
+      "state": "running",
+      "health": "healthy"
+    },
+    "eva2-managed-b-slot3-model-access-lease-1": {
+      "id": "7ac6a2e5d135d8f653233caa527fd80040cecf7927b789615b5bcd6551d2aa45",
+      "startedAt": "2026-09-12T18:27:00.31427344Z",
+      "image": "sha256:455be8e6f52adcf2f16288ad76793f150684c058753de3d8d84730a7ce623f7e",
+      "state": "running",
+      "health": null
+    },
+    "eva2-managed-b-slot3-hindsight-access-lease-1": {
+      "id": "71c0e737cce5a68bc5b7c1e4f48b587d0df5b5dc3fc93d720823bba85943f176",
+      "startedAt": "2026-09-12T18:27:00.240993055Z",
+      "image": "sha256:455be8e6f52adcf2f16288ad76793f150684c058753de3d8d84730a7ce623f7e",
+      "state": "running",
+      "health": null
+    }
+  },
+  "protected_after": {
+    "eva2-owner-voice-media-1": {
+      "id": "6ca020c3b9c5c532a3ccdf09654ac652a62d043e7ce3c3c86180744c6b526fc4",
+      "startedAt": "2026-09-12T18:27:00.356202841Z",
+      "image": "sha256:bf2148239bf009b1924d4134ba67fcdbf1ccae64f436add5e9f77e161226922b",
+      "state": "running",
+      "health": null
+    },
+    "eva2-owner-voice-livekit-1": {
+      "id": "dbe9c8396a3bd2974dd1a40264d7ad855d5077cc14235325b058cfa2dacd17dd",
+      "startedAt": "2026-09-12T18:27:00.243742236Z",
+      "image": "sha256:770bc61bc6ec4dcccbd3e05082d8f6bdafbee4179acab7014cc97202a9e2910b",
+      "state": "running",
+      "health": null
+    },
+    "eva2-managed-b-slot3-hindsight-1": {
+      "id": "8bd5bc29a82d6040a34a1f665872b8bc71aa0a9e4ed5d2b659a31e7f3b7f0e4c",
+      "startedAt": "2026-09-12T18:27:00.406300845Z",
+      "image": "sha256:20d72ad34164bd1a67906c4d61b57a51f2b255c49ddf8cb7ac5e901ebc3b3710",
+      "state": "running",
+      "health": "healthy"
+    },
+    "eva2-managed-b-slot3-postgres-1": {
+      "id": "a6a0de657f01d6792544863237cbbb03be407f0e3fa98f0dc9d317097051cb1b",
+      "startedAt": "2026-09-12T18:27:00.379142399Z",
+      "image": "sha256:7e641ed0cf38285bebfc6151ba48243439dfe9cf3306feab4023a812466cd6c1",
+      "state": "running",
+      "health": "healthy"
+    },
+    "eva2-managed-b-slot3-hindsight-postgres-1": {
+      "id": "3e97b7da44e125e5e4f2d6d1f824025fed5c33903729db9a3ef7edb9c0aa594b",
+      "startedAt": "2026-09-12T18:27:00.284536583Z",
+      "image": "sha256:7e641ed0cf38285bebfc6151ba48243439dfe9cf3306feab4023a812466cd6c1",
+      "state": "running",
+      "health": "healthy"
+    },
+    "eva2-managed-b-slot3-model-access-lease-1": {
+      "id": "7ac6a2e5d135d8f653233caa527fd80040cecf7927b789615b5bcd6551d2aa45",
+      "startedAt": "2026-09-12T18:27:00.31427344Z",
+      "image": "sha256:455be8e6f52adcf2f16288ad76793f150684c058753de3d8d84730a7ce623f7e",
+      "state": "running",
+      "health": null
+    },
+    "eva2-managed-b-slot3-hindsight-access-lease-1": {
+      "id": "71c0e737cce5a68bc5b7c1e4f48b587d0df5b5dc3fc93d720823bba85943f176",
+      "startedAt": "2026-09-12T18:27:00.240993055Z",
+      "image": "sha256:455be8e6f52adcf2f16288ad76793f150684c058753de3d8d84730a7ce623f7e",
+      "state": "running",
+      "health": null
+    }
+  },
+  "services": {
+    "eva2-managed-b-slot3-core": {
+      "id": "b39827eeadb13df1088a697546926f651f881428099b9c793acb36d8c3fb6dd2",
+      "startedAt": "2026-09-12T22:49:51.003784753Z",
+      "image": "sha256:2a5cc362fee325e4210524f200dde5de7b19ddb732642da5154d8e4d1cba441b",
+      "state": "running",
+      "health": "healthy"
+    },
+    "eva2-managed-b-slot3-delegated-work-worker-1": {
+      "id": "8a6b3463ef785f2c760eb1db633c16fb4d87f23c8bfb82bc7182bf2a7e3f69a0",
+      "startedAt": "2026-09-12T22:50:02.542912956Z",
+      "image": "sha256:2a5cc362fee325e4210524f200dde5de7b19ddb732642da5154d8e4d1cba441b",
+      "state": "running",
+      "health": "healthy"
+    }
+  },
+  "candidate_env_unchanged": true,
+  "background_work_enabled": true,
+  "readiness": {
+    "core": {
+      "status": 200,
+      "body": {
+        "database": "ready",
+        "detail": null,
+        "memory_projection": "ready",
+        "model_provider": "ready",
+        "ready": true
+      }
+    },
+    "voice": {
+      "status": 200,
+      "body": {
+        "ready": true
+      }
+    }
+  },
+  "database_restore": false,
+  "installed_source_sha256": {
+    "eva2-managed-b-slot3-core": {
+      "eva/adapters/connectors/mcp_gateway.py": "33f3c300b5c66bf150eb903de71159d886ca3905701e99e667897c46db896eb4",
+      "eva/adapters/model/pydantic_conversation.py": "a1f65d22783be3b8fdddb830b5ce9cb215158531e47d78eff9fb24c28a0272c4",
+      "eva/adapters/postgres/conversation_journal.py": "d90b05b2fa2da62bfddf1d9c65b4717d7d724430ffe7c067c2835548b3a07be5",
+      "eva/adapters/postgres/initiative_execution.py": "f1a83c3d2e260f505e8dc71d003e7a71cdad14fba46956cde05e04d9f8412fd7",
+      "eva/application/conversation.py": "bc855a0c3992fc47aabd7aa81ab6120e95654bac059407884267fdfac0e5e230",
+      "eva/application/schema_validation.py": "ca87d92bfa90ff8846c88cd762feb7e85d21b6bbd0463c5c4bf1dbaaf4921cb9",
+      "eva/bootstrap/runtime.py": "c4dc9d790b8d1eceb07607608060fd54ac47ed625824e5b180f701dd08c9fbcb"
+    },
+    "eva2-managed-b-slot3-delegated-work-worker-1": {
+      "eva/adapters/connectors/mcp_gateway.py": "33f3c300b5c66bf150eb903de71159d886ca3905701e99e667897c46db896eb4",
+      "eva/adapters/model/pydantic_conversation.py": "a1f65d22783be3b8fdddb830b5ce9cb215158531e47d78eff9fb24c28a0272c4",
+      "eva/adapters/postgres/conversation_journal.py": "d90b05b2fa2da62bfddf1d9c65b4717d7d724430ffe7c067c2835548b3a07be5",
+      "eva/adapters/postgres/initiative_execution.py": "f1a83c3d2e260f505e8dc71d003e7a71cdad14fba46956cde05e04d9f8412fd7",
+      "eva/application/conversation.py": "bc855a0c3992fc47aabd7aa81ab6120e95654bac059407884267fdfac0e5e230",
+      "eva/application/schema_validation.py": "ca87d92bfa90ff8846c88cd762feb7e85d21b6bbd0463c5c4bf1dbaaf4921cb9",
+      "eva/bootstrap/runtime.py": "c4dc9d790b8d1eceb07607608060fd54ac47ed625824e5b180f701dd08c9fbcb"
+    }
+  },
+  "quiescence_before": {
+    "utc": "2026-09-12T22:49:46.395391+00:00",
+    "owner_work": {
+      "owned_states": {
+        "succeeded": 2,
+        "stopped": 2,
+        "ambiguous": 1
+      },
+      "recent_15min_conversation_checkpoint_states": {}
+    },
+    "voice": {
+      "rooms": 0
+    },
+    "limitation": "Read-only snapshots; recent checkpoint window is 15 minutes, not a global request lock."
+  },
+  "model_calls": 0,
+  "au004_retry_performed": false,
+  "controller": {
+    "image": "sha256:2a5cc362fee325e4210524f200dde5de7b19ddb732642da5154d8e4d1cba441b",
+    "registry_and_override_match": true,
+    "background_work_enabled": true,
+    "services": {
+      "eva2-managed-b-slot3-core": {
+        "image": "sha256:2a5cc362fee325e4210524f200dde5de7b19ddb732642da5154d8e4d1cba441b",
+        "state": "running",
+        "health": "healthy",
+        "restart_count": 0,
+        "networks": [
+          "eva2-managed-b-slot3_default",
+          "eva2-workspace-connectors"
+        ]
+      },
+      "eva2-managed-b-slot3-delegated-work-worker-1": {
+        "image": "sha256:2a5cc362fee325e4210524f200dde5de7b19ddb732642da5154d8e4d1cba441b",
+        "state": "running",
+        "health": "healthy",
+        "restart_count": 0,
+        "networks": [
+          "eva2-managed-b-slot3_default"
+        ]
+      }
+    }
+  },
+  "canonical_parity": {
+    "canonical_head": "1d92625e8e576bf03ee797883c18c78e2361619e",
+    "files": {
+      "eva/adapters/connectors/mcp_gateway.py": {
+        "canonical_sha256": "33f3c300b5c66bf150eb903de71159d886ca3905701e99e667897c46db896eb4",
+        "installed_candidate_sha256": "33f3c300b5c66bf150eb903de71159d886ca3905701e99e667897c46db896eb4",
+        "exact_match": true
+      },
+      "eva/adapters/model/pydantic_conversation.py": {
+        "canonical_sha256": "a1f65d22783be3b8fdddb830b5ce9cb215158531e47d78eff9fb24c28a0272c4",
+        "installed_candidate_sha256": "a1f65d22783be3b8fdddb830b5ce9cb215158531e47d78eff9fb24c28a0272c4",
+        "exact_match": true
+      },
+      "eva/adapters/postgres/conversation_journal.py": {
+        "canonical_sha256": "d90b05b2fa2da62bfddf1d9c65b4717d7d724430ffe7c067c2835548b3a07be5",
+        "installed_candidate_sha256": "d90b05b2fa2da62bfddf1d9c65b4717d7d724430ffe7c067c2835548b3a07be5",
+        "exact_match": true
+      },
+      "eva/adapters/postgres/initiative_execution.py": {
+        "canonical_sha256": "f1a83c3d2e260f505e8dc71d003e7a71cdad14fba46956cde05e04d9f8412fd7",
+        "installed_candidate_sha256": "f1a83c3d2e260f505e8dc71d003e7a71cdad14fba46956cde05e04d9f8412fd7",
+        "exact_match": true
+      },
+      "eva/application/conversation.py": {
+        "canonical_sha256": "bc855a0c3992fc47aabd7aa81ab6120e95654bac059407884267fdfac0e5e230",
+        "installed_candidate_sha256": "bc855a0c3992fc47aabd7aa81ab6120e95654bac059407884267fdfac0e5e230",
+        "exact_match": true
+      },
+      "eva/application/schema_validation.py": {
+        "canonical_sha256": "ca87d92bfa90ff8846c88cd762feb7e85d21b6bbd0463c5c4bf1dbaaf4921cb9",
+        "installed_candidate_sha256": "ca87d92bfa90ff8846c88cd762feb7e85d21b6bbd0463c5c4bf1dbaaf4921cb9",
+        "exact_match": true
+      },
+      "eva/bootstrap/runtime.py": {
+        "canonical_sha256": "3ac87c7b4c340619f04faac3e538c2882dce8689605c0ee75dac07d7b6474229",
+        "installed_candidate_sha256": "c4dc9d790b8d1eceb07607608060fd54ac47ed625824e5b180f701dd08c9fbcb",
+        "exact_match": false
+      }
+    },
+    "runtime_py_expected_difference": "Canonical retains household route composition; live bundle includes only fresh mandate reader hunk.",
+    "runtime_freshreader_method_ast_identical": true
+  },
+  "source_commit": "702dfc1bfece74db7c222b2086142a5c6e1b1202",
+  "review": "Root final source/image/activation GO from timing_final_review before cutover",
+  "canonical_difference": "Only withheld household router installation in runtime.py; freshreader method AST identical, six other changed sourcefiles byte identical."
+}

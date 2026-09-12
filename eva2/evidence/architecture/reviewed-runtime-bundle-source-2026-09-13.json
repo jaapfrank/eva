@@ -1,0 +1,120 @@
+{
+  "parent": {
+    "image": "sha256:c992b0c3bf4977a101a813d6ee11d82d8821b76279e8dc5a71ced09d72426c79",
+    "source_base": "e7194d2566e7c40aa0cfeccf9098816b907fc118",
+    "all259source_files_identical": true
+  },
+  "source_count": 260,
+  "runtime_delta": [
+    "eva/adapters/connectors/mcp_gateway.py",
+    "eva/adapters/model/pydantic_conversation.py",
+    "eva/adapters/postgres/conversation_journal.py",
+    "eva/adapters/postgres/initiative_execution.py",
+    "eva/application/conversation.py",
+    "eva/application/schema_validation.py",
+    "eva/bootstrap/runtime.py"
+  ],
+  "source_sha256": {
+    "eva/adapters/connectors/mcp_gateway.py": "33f3c300b5c66bf150eb903de71159d886ca3905701e99e667897c46db896eb4",
+    "eva/adapters/model/pydantic_conversation.py": "73bd3d038f7d0757efa07992b0b69bf923f04d5fcb2a119095900500ffdd2f3c",
+    "eva/adapters/postgres/conversation_journal.py": "d90b05b2fa2da62bfddf1d9c65b4717d7d724430ffe7c067c2835548b3a07be5",
+    "eva/adapters/postgres/initiative_execution.py": "f1a83c3d2e260f505e8dc71d003e7a71cdad14fba46956cde05e04d9f8412fd7",
+    "eva/application/conversation.py": "bc855a0c3992fc47aabd7aa81ab6120e95654bac059407884267fdfac0e5e230",
+    "eva/application/schema_validation.py": "ca87d92bfa90ff8846c88cd762feb7e85d21b6bbd0463c5c4bf1dbaaf4921cb9",
+    "eva/bootstrap/runtime.py": "c4dc9d790b8d1eceb07607608060fd54ac47ed625824e5b180f701dd08c9fbcb"
+  },
+  "reviewed_full_file_matches": {
+    "eva/adapters/connectors/mcp_gateway.py": {
+      "reviewed_commit": "7d4d1e8",
+      "byte_identical": true
+    },
+    "eva/application/schema_validation.py": {
+      "reviewed_commit": "7d4d1e8",
+      "byte_identical": true
+    },
+    "eva/adapters/postgres/initiative_execution.py": {
+      "reviewed_commit": "5baccfb4",
+      "byte_identical": true
+    },
+    "eva/adapters/model/pydantic_conversation.py": {
+      "reviewed_commit": "084cdc82",
+      "byte_identical": true
+    },
+    "eva/adapters/postgres/conversation_journal.py": {
+      "reviewed_commit": "084cdc82",
+      "byte_identical": true
+    },
+    "eva/application/conversation.py": {
+      "reviewed_commit": "084cdc82",
+      "byte_identical": true
+    }
+  },
+  "runtime_py": "Only freshreader constructor hunk applied to exact live source; household router and shared voice stream absent.",
+  "private_alignment_commit_8f269_applied": false,
+  "tests": {
+    "offline": 140,
+    "initiative_pg": 37,
+    "direct_attempt_pg": 9,
+    "voice_pg": 16,
+    "research_pg": 7
+  },
+  "total_tests": 209,
+  "build": false,
+  "live": false,
+  "model_calls": 0,
+  "production_database_connections": 0,
+  "combined_source_commit": "ced9ce99213ec0ce69dc6da928a020e44abbe706",
+  "test_log_sha256": {
+    "offline-tests.log": "b848bc24420d272a039f38a84f928646406a9c98a34aa98fd97d8250e7e6eefd"
+  },
+  "pg_proofs": {
+    "voice-postgres-proof.json": {
+      "container_id": "1bb4ce6644efb25894e6da474fc22fcb5652ab86744b25c56d0cf947aabcc216",
+      "postgres_image": "sha256:5d143123fdf80462d1778cd4f24b9f7ca13c87174bca19141fb194c5a1ebca59",
+      "network_mode": "none",
+      "published_ports": [],
+      "data_storage": "tmpfs",
+      "connection": "local Unix socket only",
+      "pytest_exit_code": 0,
+      "model_calls": 0,
+      "production_database_connections": 0,
+      "disposable_container_removed": true
+    },
+    "postgres-proof.json": {
+      "container_id": "b45fdf1454f0c241173ef66b3033e27f63350b41e915474356ed4d4707eee9ea",
+      "postgres_image": "sha256:5d143123fdf80462d1778cd4f24b9f7ca13c87174bca19141fb194c5a1ebca59",
+      "network_mode": "none",
+      "published_ports": [],
+      "data_storage": "tmpfs",
+      "connection": "local Unix socket only",
+      "pytest_exit_code": 0,
+      "model_calls": 0,
+      "production_database_connections": 0,
+      "disposable_container_removed": true
+    },
+    "direct-postgres-proof.json": {
+      "container_id": "3b86e30259d3c4d6d00a91e761e9c1c2906af01af632e0e7ed7336925effae15",
+      "postgres_image": "sha256:5d143123fdf80462d1778cd4f24b9f7ca13c87174bca19141fb194c5a1ebca59",
+      "network_mode": "none",
+      "published_ports": [],
+      "data_storage": "tmpfs",
+      "connection": "local Unix socket only",
+      "pytest_exit_code": 0,
+      "model_calls": 0,
+      "production_database_connections": 0,
+      "disposable_container_removed": true
+    },
+    "native-postgres-proof.json": {
+      "container_id": "386dfebfeff5082c275278c49b398c3b6937d3b9b760ccec8d67346f4c64235e",
+      "postgres_image": "sha256:5d143123fdf80462d1778cd4f24b9f7ca13c87174bca19141fb194c5a1ebca59",
+      "network_mode": "none",
+      "published_ports": [],
+      "data_storage": "tmpfs",
+      "connection": "local Unix socket only",
+      "pytest_exit_code": 0,
+      "model_calls": 0,
+      "production_database_connections": 0,
+      "disposable_container_removed": true
+    }
+  }
+}

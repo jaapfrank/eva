@@ -1,0 +1,54 @@
+{
+  "parent": "sha256:c992b0c3bf4977a101a813d6ee11d82d8821b76279e8dc5a71ced09d72426c79",
+  "candidate": "sha256:2a5cc362fee325e4210524f200dde5de7b19ddb732642da5154d8e4d1cba441b",
+  "configuration_identical": true,
+  "parent_layers_preserved": true,
+  "source_file_count": 260,
+  "changed_files": [
+    "eva/adapters/connectors/mcp_gateway.py",
+    "eva/adapters/model/pydantic_conversation.py",
+    "eva/adapters/postgres/conversation_journal.py",
+    "eva/adapters/postgres/initiative_execution.py",
+    "eva/application/conversation.py",
+    "eva/application/schema_validation.py",
+    "eva/bootstrap/runtime.py"
+  ],
+  "reviewed_source_matches": true,
+  "source_sha256": {
+    "eva/adapters/connectors/mcp_gateway.py": "33f3c300b5c66bf150eb903de71159d886ca3905701e99e667897c46db896eb4",
+    "eva/adapters/model/pydantic_conversation.py": "a1f65d22783be3b8fdddb830b5ce9cb215158531e47d78eff9fb24c28a0272c4",
+    "eva/adapters/postgres/conversation_journal.py": "d90b05b2fa2da62bfddf1d9c65b4717d7d724430ffe7c067c2835548b3a07be5",
+    "eva/adapters/postgres/initiative_execution.py": "f1a83c3d2e260f505e8dc71d003e7a71cdad14fba46956cde05e04d9f8412fd7",
+    "eva/application/conversation.py": "bc855a0c3992fc47aabd7aa81ab6120e95654bac059407884267fdfac0e5e230",
+    "eva/application/schema_validation.py": "ca87d92bfa90ff8846c88cd762feb7e85d21b6bbd0463c5c4bf1dbaaf4921cb9",
+    "eva/bootstrap/runtime.py": "c4dc9d790b8d1eceb07607608060fd54ac47ed625824e5b180f701dd08c9fbcb"
+  },
+  "rollback_parent_image_present": true,
+  "live_cutover": false,
+  "imports_ok": true,
+  "activation_script_sha256": "fdbb539ba7da72a3bc3a12eec7f6c8d0b328037b6f18c6ae71554d1fc9669aad",
+  "activation_script_change": "Only parent/candidate digests and unique temporary preflight filename from previously reviewed c992 activation script.",
+  "offline_write_fault_tests": {
+    "cases": [
+      {
+        "fault": "before_override_write",
+        "exception_preserved": true,
+        "override_and_registry_restored": true,
+        "rollback_attempts": 1,
+        "rollback_exit_and_readiness_checked": true
+      },
+      {
+        "fault": "between_override_and_registry_writes",
+        "exception_preserved": true,
+        "override_and_registry_restored": true,
+        "rollback_attempts": 1,
+        "rollback_exit_and_readiness_checked": true
+      }
+    ],
+    "actual_docker_calls": 0,
+    "actual_network_calls": 0,
+    "production_writes": 0
+  },
+  "real_compose_preflight_passed": true,
+  "source_commit": "702dfc1bfece74db7c222b2086142a5c6e1b1202"
+}
