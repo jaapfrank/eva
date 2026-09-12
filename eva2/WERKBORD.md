@@ -220,6 +220,12 @@ als baselinebevinding zichtbaar. Een begrensde image op d2d589 en geïsoleerde
 PostgreSQL-readback worden voorbereid. Geen image-GO, live-uitrol of garantie
 op modeluitvoerlengte of volledige kostenaggregatie geclaimd.
 
+De reparatieimage is gereed voor onafhankelijke beoordeling: exact vijf
+beoordeelde runtimebestanden gewijzigd, configuratie en eerdere imagelagen
+behouden. Eén geïsoleerde PostgreSQL16.13-test slaagt voor opslaan, opnieuw
+verbinden en teruglezen van geweigerd verbruik. Dit is geen proef op de live
+PostgreSQL18.6. Image-GO en uitrol ontbreken; geen nieuwe modelpoging of B.
+
 ## Nu
 
 | Volgorde | Kaart | Resultaat | Status |
