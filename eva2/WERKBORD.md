@@ -475,6 +475,21 @@ uitgevoerd. Gemeten:137693 input- en3373 outputtokens over10 modelpogingen.
 Dit is aangeleverd bewijs in review, nog niet geïntegreerd of onafhankelijk
 goedgekeurd. B en ongeldige invoer zijn nog niet uitgevoerd.
 
+
+### AU-004 leerproef3A — technisch geslaagd en onafhankelijk goedgekeurd
+
+De reviewer heeft de voorbereidingsguard, verzegeling, hashes, readbacks,
+A-semantiek en het gemeten verbruik gecontroleerd. Ook de scheiding van de
+nog ongeziene B-variant is beoordeeld. De vier bewijs-/resultaatbestanden
+zijn exact opgenomen. Eva maakte zelf de procedure en eerste omzetting;
+de aparte semantiekcontrole is door de ontwikkelomgeving uitgevoerd.
+
+De coördinator heeft één B-beurt toegestaan, met vooraf verzegelde ongeldige
+invoer, dezelfde procedurehash en een leesbewijs. De daadwerkelijke start
+is nog niet bevestigd; B staat daarom nog niet in uitvoering. AU-004 als
+geheel en eigenaaracceptatie blijven open, eerdere mislukkingen blijven staan.
+[Goedgekeurd A-bewijs](evidence/product/AU-004-procedure-attempt3-A-2026-09-12.json).
+
 ## Nu
 
 | Volgorde | Kaart | Resultaat | Status |

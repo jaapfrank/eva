@@ -1,0 +1,329 @@
+{
+  "schema_version": 1,
+  "trial": "AU004-20260912-attempt3",
+  "phase": "A",
+  "status": "A_technical_checks_passed_pending_independent_review",
+  "scope": "Procedure creation and first application only; no reuse/wholeAU004/humanacceptance claim yet",
+  "request": {
+    "httpStatus": 200,
+    "elapsedSeconds": 160.33882146700125,
+    "errorType": null,
+    "requestCount": 1,
+    "retry": false,
+    "messageId": "dashboard:4211a2e7-f06c-44ba-b36d-7e07ec83c11a",
+    "responseSha256": "b524baa3db41d9a89e7fa21d77bba407ff08d822bc7ae7d9c0e4eb859a39960b"
+  },
+  "preflight": {
+    "config": {
+      "EVA_RUNTIME_RESOURCE_BUDGET_FILE": {
+        "sha256": "88595a1704c1ad751008802873831f140a87ad967d14f015e56d1d4dc46a72a9",
+        "budget": {
+          "background_reflections_per_installation_day": 40,
+          "background_reflections_per_person_day": 4,
+          "contract": "EvaInstallerBudget/v2",
+          "external_monthly_spend_cap_eur_cents": 0,
+          "max_input_tokens": 65536,
+          "max_output_tokens": 1200,
+          "memory_bytes_per_group": 20971520,
+          "memory_bytes_per_installation": 209715200,
+          "memory_bytes_per_person": 20971520,
+          "memory_bytes_per_project": 20971520,
+          "memory_records_per_group": 2000,
+          "memory_records_per_installation": 20000,
+          "memory_records_per_person": 2000,
+          "memory_records_per_project": 2000,
+          "profile_context_tokens": 800,
+          "recall_context_tokens": 2048,
+          "retention_days": 365,
+          "retrieval_nodes": 40,
+          "unknown_cost_policy": "block_autonomous_spend"
+        }
+      },
+      "EVA_MCP_AUTONOMY_MANDATE_FILE": {
+        "sha256": "969e350b8cb582c7034a12e4c431e9e421d510afcf09fb76188cfac1770f4e89",
+        "budget": null
+      }
+    },
+    "files": {
+      "procedure": false,
+      "A": false,
+      "A_report": false,
+      "B": false,
+      "B_report": false,
+      "invalid": false
+    },
+    "provider_rate_limit": {
+      "allowed": true,
+      "limit_reached": false,
+      "primary_window": {
+        "used_percent": 32,
+        "limit_window_seconds": 604800,
+        "reset_after_seconds": 557875,
+        "reset_at": 1789805404
+      },
+      "secondary_window": null
+    },
+    "image": "sha256:e1bb281cc772ab7a2f6ce747dce6a9ccec382ff357f5583e47882997a337217f"
+  },
+  "reviewed_guard": {
+    "reviewed_commit": "c977f7dccf35440bf91368bff8de07e520aabd8f",
+    "guard_byte_exact": true,
+    "preflight_only_expected_image_changed": true,
+    "guard_sha256": "d0c0233b133ee548428a9807d5297d0eb8f6d5e885be95963260694911a3378e",
+    "no_attempt_marker": true
+  },
+  "seal": {
+    "trial": "AU004-20260912-attempt3",
+    "prior_fixture_seal_sha256": "6e7bb20a02cd1647284923bf73e2c0c225960802765230611ad5134dd9641ac2",
+    "fixtures_sha256": "97628b5a02f04096e9a5cb2122c7c98d398c23e0a6b6c13b0f95cc8a4a18eeed",
+    "request_A_sha256": "4e640116cf5b4e8425dc5d1da8a995f010494c6a81065335572385f71579a11b",
+    "request_B_sha256": "63bab89078861634b7fa6dee4e671c155632dd62bb3804a733ab8f0d552f016b",
+    "paths_sha256": "1c86b3eb4eabcd5bf44693d6fd64b88c9721f338b7da8af601a18e1898d8c9fc",
+    "guard_byte_equal_to_reviewed_attempt2_harness": true,
+    "preflight_change_only_expected_image": true,
+    "attempt_dispatched": false
+  },
+  "chronology": {
+    "seal_mtime_ns": 1789247399308449476,
+    "preflight_mtime_ns": 1789247529841682524,
+    "attempt_mtime_ns": 1789247529921466606,
+    "preflight_completed_before_dispatch": true,
+    "attempt": {
+      "startedAt": "2026-09-12T21:12:09.921366+00:00",
+      "requestSha256": "4e640116cf5b4e8425dc5d1da8a995f010494c6a81065335572385f71579a11b",
+      "requestCount": 1,
+      "retry": false
+    }
+  },
+  "config_after_A_equals_preflight": true,
+  "live_image_unchanged": true,
+  "event_counts": {
+    "INGRESS_COMMITTED": 1,
+    "REPLY_COMMITTED": 1,
+    "MEMORY_RETAIN_QUEUED": 2,
+    "TOOL_REQUEST_ADMITTED": 8,
+    "CONVERSATION_MODEL_ADMITTED": 9,
+    "CONVERSATION_DISPATCH_ADMITTED": 8,
+    "CONVERSATION_MODEL_RECORDED": 9,
+    "TOOL_PREPARED": 8,
+    "TOOL_EXECUTED": 8,
+    "STATE_VERIFIED": 8,
+    "MEMORY_RETAIN_ATTEMPTED": 1,
+    "MEMORY_STORAGE_RESERVED": 1,
+    "MEMORY_RETAIN_SUCCEEDED": 1,
+    "MEMORY_STORAGE_RETAINED": 1
+  },
+  "ordered_actions": [
+    {
+      "step_index": 0,
+      "action": "find_workspace_files",
+      "path": "/proof-state"
+    },
+    {
+      "step_index": 1,
+      "action": "research_current_options",
+      "path": null
+    },
+    {
+      "step_index": 2,
+      "action": "save_workspace_document",
+      "path": "/proof-state/au004-srt-webvtt-procedure-20260912-attempt3.md"
+    },
+    {
+      "step_index": 3,
+      "action": "save_workspace_document",
+      "path": "/proof-state/au004-subtitles-A-20260912-attempt3.vtt"
+    },
+    {
+      "step_index": 4,
+      "action": "read_workspace_document",
+      "path": "/proof-state/au004-srt-webvtt-procedure-20260912-attempt3.md"
+    },
+    {
+      "step_index": 5,
+      "action": "read_workspace_document",
+      "path": "/proof-state/au004-subtitles-A-20260912-attempt3.vtt"
+    },
+    {
+      "step_index": 6,
+      "action": "save_workspace_document",
+      "path": "/proof-state/au004-check-A-20260912-attempt3.md"
+    },
+    {
+      "step_index": 7,
+      "action": "read_workspace_document",
+      "path": "/proof-state/au004-check-A-20260912-attempt3.md"
+    }
+  ],
+  "files": {
+    "procedure": {
+      "exists": true,
+      "bytes": 3575,
+      "sha256": "bbae3082ef113d6433ad0184fafc30ef2853e4d6b3798841ccef7ba0028016df"
+    },
+    "A": {
+      "exists": true,
+      "bytes": 101,
+      "sha256": "0d06244fd011696b672ae09297845dcc615fc083cc1a7bde2581ab3e439806bc"
+    },
+    "A_report": {
+      "exists": true,
+      "bytes": 2903,
+      "sha256": "7e5c5a72a5f6963b5f0cebb7ced586e05bc6796aa04b064a538c5d387d297b1b"
+    },
+    "B": {
+      "exists": false
+    },
+    "B_report": {
+      "exists": false
+    },
+    "invalid": {
+      "exists": false
+    }
+  },
+  "independent_semantics": {
+    "turn": "A",
+    "semantic_checks": "passed",
+    "cues": [
+      {
+        "start_ms": 1250,
+        "end_ms": 3000,
+        "lines": [
+          "Hoi, Eva."
+        ]
+      },
+      {
+        "start_ms": 4100,
+        "end_ms": 6900,
+        "lines": [
+          "Café om de hoek."
+        ]
+      }
+    ],
+    "file_sha256": "0d06244fd011696b672ae09297845dcc615fc083cc1a7bde2581ab3e439806bc",
+    "procedure_sha256": "bbae3082ef113d6433ad0184fafc30ef2853e4d6b3798841ccef7ba0028016df",
+    "checker": "Independent Python checker run by coordinator after Eva completed; not an Eva-executed test."
+  },
+  "research_artifacts": [
+    {
+      "title": "AU004-20260912-attempt3: primaire WebVTT-regels",
+      "content": "# SRT → WebVTT: kernregels\n\nDe opgegeven W3C-specificatie van **20 mei 2026** is daadwerkelijk gelezen; dit is een Candidate Recommendation Draft. ([w3.org](https://www.w3.org/TR/2026/CRD-webvtt1-20260520/))\n\n## Bronfeiten\n- **Bestandsstructuur (§4.1):** UTF-8; optionele BOM; begin met `WEBVTT`, gevolgd door minstens één lege regel. Scheid cues met minstens één lege regel; sluit de laatste tekstregel af met een regeleinde. LF, CRLF en CR zijn toegestaan. ([w3.org](https://www.w3.org/TR/2026/CRD-webvtt1-20260520/))\n- **Nummering:** numerieke cue-identifiers zijn optioneel, staan direct boven de timingregel en moeten, indien aanwezig, uniek zijn. ([w3.org](https://www.w3.org/TR/2026/CRD-webvtt1-20260520/))\n- **Timing:** `HH:MM:SS.mmm --> HH:MM:SS.mmm`; uren minstens twee ASCII-cijfers, zonder 23-uursgrens; minuten/seconden `00–59`; milliseconden precies drie cijfers (`000–999`). Rond `-->` staan spaties of tabs. ([w3.org](https://www.w3.org/TR/2026/CRD-webvtt1-20260520/))\n- **Volgorde:** eindtijd strikt na begintijd; begintijden niet-afnemend. Gelijke begintijden en overlap zijn toegestaan voor ondertitels. ([w3.org](https://www.w3.org/TR/2026/CRD-webvtt1-20260520/))\n- **Tekst:** regelafbrekingen worden gerespecteerd; spelers kunnen extra afbreken. Markup en tekenreferenties worden geïnterpreteerd; letterlijk `-->` is verboden in cue-tekst. ([w3.org](https://www.w3.org/TR/2026/CRD-webvtt1-20260520/))\n\n## Gevolgtrekking / advies\nVervang uitsluitend tijdstempelkomma’s door punten; behoud tekstregels, zonder interne lege regels. Escape letterlijke `&`, `<`, `>` als `&amp;`, `&lt;`, `&gt;`; neem SRT-markup niet blind over. **Conclusie:** eenvoudige omzetting vereist tevens validatie. ([w3.org](https://www.w3.org/TR/2026/CRD-webvtt1-20260520/))\n\nEr zijn geen bestanden geschreven of overschreven.\n\n## Bronnen\n\n- [WebVTT: The Web Video Text Tracks Format](https://www.w3.org/TR/2026/CRD-webvtt1-20260520/)",
+      "sources": [
+        {
+          "url": "https://www.w3.org/TR/2026/CRD-webvtt1-20260520/",
+          "title": "WebVTT: The Web Video Text Tracks Format"
+        }
+      ],
+      "provider": "chatgpt-codex-web-search:gpt-6-astra",
+      "question": "Onderzoek de primaire specificatie https://www.w3.org/TR/2026/CRD-webvtt1-20260520/ voor omzetting van eenvoudige genummerde SRT-cues HH:MM:SS,mmm met gewone tekst naar WebVTT. Geef brongebonden regels voor WEBVTT-header, lege regels, optionele numerieke cue-identifiers, tijdstempels met punt en geldige bereiken, eindtijd na begintijd, ordening/overlap, UTF-8 en behoud van tekstregels. Benoem grenzen bij speciale tekens en markup. Geen bestaande bestanden overschrijven; eventuele onderzoeksnotities alleen op een nieuw uniek pad. Meld expliciet als de opgegeven bron niet werkelijk kon worden gelezen.",
+      "model_usage": {
+        "tool_calls": 0,
+        "measurement": "measured",
+        "input_tokens": 29470,
+        "output_tokens": 731,
+        "model_attempts": 1
+      },
+      "researched_at": "2026-09-12T21:12:31Z",
+      "content_sha256": "ddc9dfcc463c78486a82d8ab355453aaf2f07135d5763c1a0f49be12b2e3a503",
+      "source_coverage": "cited_topic_sources",
+      "verification_scope": "research_artifact_only",
+      "semantic_claims_independently_verified": false
+    }
+  ],
+  "model_usage": {
+    "conversation_records": [
+      {
+        "tool_calls": 1,
+        "measurement": "measured",
+        "input_tokens": 7580,
+        "output_tokens": 66,
+        "model_attempts": 1
+      },
+      {
+        "tool_calls": 1,
+        "measurement": "measured",
+        "input_tokens": 6807,
+        "output_tokens": 234,
+        "model_attempts": 1
+      },
+      {
+        "tool_calls": 1,
+        "measurement": "measured",
+        "input_tokens": 8937,
+        "output_tokens": 982,
+        "model_attempts": 1
+      },
+      {
+        "tool_calls": 1,
+        "measurement": "measured",
+        "input_tokens": 11820,
+        "output_tokens": 122,
+        "model_attempts": 1
+      },
+      {
+        "tool_calls": 1,
+        "measurement": "measured",
+        "input_tokens": 12222,
+        "output_tokens": 81,
+        "model_attempts": 1
+      },
+      {
+        "tool_calls": 1,
+        "measurement": "measured",
+        "input_tokens": 13484,
+        "output_tokens": 67,
+        "model_attempts": 1
+      },
+      {
+        "tool_calls": 1,
+        "measurement": "measured",
+        "input_tokens": 13871,
+        "output_tokens": 846,
+        "model_attempts": 1
+      },
+      {
+        "tool_calls": 1,
+        "measurement": "measured",
+        "input_tokens": 16307,
+        "output_tokens": 61,
+        "model_attempts": 1
+      },
+      {
+        "tool_calls": 0,
+        "measurement": "measured",
+        "input_tokens": 17195,
+        "output_tokens": 183,
+        "model_attempts": 1
+      }
+    ],
+    "research_records": [
+      {
+        "tool_calls": 0,
+        "measurement": "measured",
+        "input_tokens": 29470,
+        "output_tokens": 731,
+        "model_attempts": 1
+      }
+    ],
+    "sum_measured": {
+      "input_tokens": 137693,
+      "output_tokens": 3373,
+      "model_attempts": 10
+    },
+    "provider_internal_web_call_count": "not independently measured",
+    "financial_amount": "not measured"
+  },
+  "B_sent": false,
+  "invalid_sent": false,
+  "automatic_retries": 0,
+  "old_attempts_preserved": true,
+  "limitations": [
+    "Research route was chosen by live model after first verified workspace search; one observed task does not prove general autonomous choice quality.",
+    "Eva checks were textual; the Python semantic checker was run independently after completion, not by Eva.",
+    "Artifact/source citations prove retained provider research output, not an independent audit of every source assertion.",
+    "Self-created control vector named B in Eva report is distinct from the still-held-out sealed B fixture.",
+    "Same existing owner conversation with new messageID, not an empty conversation.",
+    "No skill loader/global installation/new execution authority."
+  ],
+  "archive": "/home/administrator/project/.eva2-artifacts/au004-procedure-trial-20260912-attempt3"
+}
