@@ -177,6 +177,30 @@ async function runtimePort(project) {
 // No credentials, chat content, filesystem browsing or task mutation endpoint.
 export function projectServer() {
   const configure = (server) => {
+    // Public, synthetic trial artifacts only; request paths never become filesystem paths.
+    server.middlewares.use('/results/au004-procedure', async (request, response) => {
+      response.setHeader('Cache-Control', 'no-store');
+      response.setHeader('X-Content-Type-Options', 'nosniff');
+      if (request.method !== 'GET') { response.writeHead(405, {Allow:'GET'}); response.end(); return; }
+      const artifacts = new Map([
+        ['/', 'Resultaat-procedureleerproef.md'],
+        ['/procedure', 'au004-srt-webvtt-procedure-20260912-attempt3.md'],
+        ['/A.vtt', 'au004-subtitles-A-20260912-attempt3.vtt'],
+        ['/B.vtt', 'au004-subtitles-B-20260912-attempt3.vtt'],
+      ]);
+      const file = artifacts.get((request.url || '/').split('?')[0]);
+      if (!file) { response.writeHead(404); response.end('Resultaat niet gevonden.'); return; }
+      try {
+        const text = await readFile(new URL('../../evidence/product/au004-attempt3/' + file, import.meta.url), 'utf8');
+        if (file.endsWith('.vtt')) {
+          response.setHeader('Content-Type', 'text/vtt; charset=utf-8');
+          response.end(text); return;
+        }
+        response.setHeader('Content-Type', 'text/html; charset=utf-8');
+        const escaped = text.replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;');
+        response.end('<!doctype html><html lang="nl"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Eva — procedureleerproef</title><style>body{margin:24px auto;padding:0 20px;max-width:850px;background:#f5f7f2;color:#24372d;font:17px/1.65 system-ui}pre{white-space:pre-wrap;overflow-wrap:anywhere;font:inherit}a{color:#254f34}nav{display:flex;flex-wrap:wrap;gap:16px}</style><main><nav><a href="/">Dashboard</a><a href="/results/au004-procedure/">Resultaat</a><a href="/results/au004-procedure/procedure">Eva’s procedure</a><a href="/results/au004-procedure/A.vtt">Ondertitels A</a><a href="/results/au004-procedure/B.vtt">Ondertitels B</a></nav><pre>' + escaped + '</pre></main></html>');
+      } catch { response.writeHead(503); response.end('Resultaat tijdelijk niet beschikbaar.'); }
+    });
     server.middlewares.use('/results/tl003-contextmanager', async (request, response) => {
       response.setHeader('Cache-Control', 'no-store');
       response.setHeader('Content-Type', 'text/html; charset=utf-8');

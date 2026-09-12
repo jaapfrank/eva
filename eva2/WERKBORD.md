@@ -526,6 +526,23 @@ Er is geen echte client-ACK verstuurd: opslag/replay is geen bewezen aflevering
 aan een gebruiker. Bottie-productiecode en livegegevens zijn ongewijzigd;
 usage, serverbudgetten, herstel, kwaliteit en ranking blijven onbekend.
 
+
+### AU-004 kleine procedureleeroplevering — technisch afgerond
+
+De onafhankelijke eindreview is GO. Eva onderzocht een bron, maakte een lokale
+procedure, gebruikte die voor A en hergebruikte exact dezelfde procedure voor
+ongeziene variantB. Ongeldige invoer werd geweigerd zonder output. De reviewer
+controleerde voorafgaande A-goedkeuring, B-guard/seal, hashes, readbacks en
+semantiek. De vier definitieve B-bewijs-/resultaatbestanden zijn opgenomen.
+
+A+B kostten17 modelaanroepen,200441 inputtokens en4630 outputtokens; een
+geldbedrag is niet vastgesteld. De twee eerdere mislukte pogingen blijven
+zichtbaar. Deze kleine oplevering is klaar en wordt niet opnieuw getest;
+heel AU-004, een automatische skillloader, algemene autonomie en menselijke
+acceptatie zijn hiermee niet afgerond.
+[Lees het resultaat](http://localhost:44712/results/au004-procedure) ·
+[Bewijs](evidence/product/AU-004-procedure-attempt3-B-2026-09-12.json).
+
 ## Nu
 
 | Volgorde | Kaart | Resultaat | Status |

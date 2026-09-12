@@ -1,0 +1,329 @@
+{
+  "schema_version": 1,
+  "trial": "AU004-20260912-attempt3",
+  "phase": "B_and_invalid",
+  "status": "bounded_procedure_reuse_independently_reviewed_GO",
+  "whole_AU004_GO": false,
+  "human_accepted": false,
+  "A_reviewed_commit": "9a457baee2e21fc98b1f5a530d59bc9e3f2dc145",
+  "A_review": "Independent next_tools GO communicated by coordinator",
+  "B_authorization": "Coordinator explicitly authorized exactly one B turn plus sealed invalid fixture",
+  "request": {
+    "httpStatus": 200,
+    "elapsedSeconds": 69.60412685300071,
+    "errorType": null,
+    "requestCount": 1,
+    "retry": false,
+    "messageId": "dashboard:59b5f5f3-b0ac-4b7a-89d5-6fea51b4de69",
+    "responseSha256": "860d39bcd6ff387aafbd940c42de03fcc95dbac3388703811614e5d3f83f8fcf"
+  },
+  "request_body_matches_pre_A_seal": true,
+  "preflight": {
+    "config": {
+      "EVA_RUNTIME_RESOURCE_BUDGET_FILE": {
+        "sha256": "88595a1704c1ad751008802873831f140a87ad967d14f015e56d1d4dc46a72a9",
+        "budget": {
+          "background_reflections_per_installation_day": 40,
+          "background_reflections_per_person_day": 4,
+          "contract": "EvaInstallerBudget/v2",
+          "external_monthly_spend_cap_eur_cents": 0,
+          "max_input_tokens": 65536,
+          "max_output_tokens": 1200,
+          "memory_bytes_per_group": 20971520,
+          "memory_bytes_per_installation": 209715200,
+          "memory_bytes_per_person": 20971520,
+          "memory_bytes_per_project": 20971520,
+          "memory_records_per_group": 2000,
+          "memory_records_per_installation": 20000,
+          "memory_records_per_person": 2000,
+          "memory_records_per_project": 2000,
+          "profile_context_tokens": 800,
+          "recall_context_tokens": 2048,
+          "retention_days": 365,
+          "retrieval_nodes": 40,
+          "unknown_cost_policy": "block_autonomous_spend"
+        }
+      },
+      "EVA_MCP_AUTONOMY_MANDATE_FILE": {
+        "sha256": "969e350b8cb582c7034a12e4c431e9e421d510afcf09fb76188cfac1770f4e89",
+        "budget": null
+      }
+    },
+    "files": {
+      "procedure": true,
+      "A": true,
+      "A_report": true,
+      "B": false,
+      "B_report": false,
+      "invalid": false
+    },
+    "provider_rate_limit": {
+      "allowed": true,
+      "limit_reached": false,
+      "primary_window": {
+        "used_percent": 33,
+        "limit_window_seconds": 604800,
+        "reset_after_seconds": 557441,
+        "reset_at": 1789805404
+      },
+      "secondary_window": null
+    },
+    "image": "sha256:e1bb281cc772ab7a2f6ce747dce6a9ccec382ff357f5583e47882997a337217f",
+    "A_artifact_hashes": {
+      "procedure": "bbae3082ef113d6433ad0184fafc30ef2853e4d6b3798841ccef7ba0028016df",
+      "A": "0d06244fd011696b672ae09297845dcc615fc083cc1a7bde2581ab3e439806bc",
+      "A_report": "7e5c5a72a5f6963b5f0cebb7ced586e05bc6796aa04b064a538c5d387d297b1b"
+    }
+  },
+  "review_gate": {
+    "decision": "GO",
+    "A_commit": "9a457baee2e21fc98b1f5a530d59bc9e3f2dc145"
+  },
+  "chronology": {
+    "GO_mtime_ns": 1789247958371489985,
+    "preflight_mtime_ns": 1789247964619636638,
+    "attempt_mtime_ns": 1789247964679702202,
+    "preflight_before_dispatch": true
+  },
+  "B_guard": "Uses exact reviewed run(preflight,dispatch) function; adds required A GO, A artifact hash preservation and only B outputs absent; fresh same budget/mandate/image/provider allowance.",
+  "procedure_read_proof": {
+    "first_action": {
+      "thread_id": "tool:external-tool:8c4a4a758ef6dfd14f6b38dd4426c5fd",
+      "step_index": 0,
+      "action": "read_workspace_document",
+      "arguments": {
+        "head": 1000,
+        "path": "/proof-state/au004-srt-webvtt-procedure-20260912-attempt3.md"
+      }
+    },
+    "state_verified_event_id": "66ad2e31-0b08-4c54-baa0-655bf07482a1",
+    "complete_content_matches_A_except_last_newline": true,
+    "read_tool_normalization": "head read removes final newline only; physical file SHA checked separately",
+    "procedure_sha256": "bbae3082ef113d6433ad0184fafc30ef2853e4d6b3798841ccef7ba0028016df",
+    "procedure_A_and_Areport_unchanged_before_and_after_B": true
+  },
+  "ordered_actions": [
+    {
+      "thread_id": "tool:external-tool:8c4a4a758ef6dfd14f6b38dd4426c5fd",
+      "step_index": 0,
+      "action": "read_workspace_document",
+      "arguments": {
+        "head": 1000,
+        "path": "/proof-state/au004-srt-webvtt-procedure-20260912-attempt3.md"
+      }
+    },
+    {
+      "thread_id": "tool:external-tool:509df55cc59f83d92b627e5f54ef3501",
+      "step_index": 1,
+      "action": "find_workspace_files",
+      "arguments": {
+        "path": "/proof-state",
+        "pattern": "au004-*-20260912-attempt3.*"
+      }
+    },
+    {
+      "thread_id": "tool:external-tool:ca98342478896f599adde70de4af64ff",
+      "step_index": 2,
+      "action": "save_workspace_document",
+      "arguments": {
+        "path": "/proof-state/au004-subtitles-B-20260912-attempt3.vtt",
+        "content": "WEBVTT\n\n1\n00:59:59.900 --> 01:00:01.050\nEerste regel, met komma.\nTweede regel: café.\n\n2\n01:00:02.500 --> 01:00:04.000\nZoë sluit de deur.\n"
+      }
+    },
+    {
+      "thread_id": "tool:external-tool:d70a1ca60b3f55cfc646ba9c70efac9d",
+      "step_index": 3,
+      "action": "read_workspace_document",
+      "arguments": {
+        "head": 100,
+        "path": "/proof-state/au004-subtitles-B-20260912-attempt3.vtt"
+      }
+    },
+    {
+      "thread_id": "tool:external-tool:dc54a46c89a03f25e55e33ff32ff1d25",
+      "step_index": 4,
+      "action": "save_workspace_document",
+      "arguments": {
+        "path": "/proof-state/au004-check-B-20260912-attempt3.md",
+        "content": "# Controleverslag B — AU004-20260912-attempt3\n\nDe opgeslagen procedure /proof-state/au004-srt-webvtt-procedure-20260912-attempt3.md is daadwerkelijk volledig gelezen en ongewijzigd toegepast. Geen extra onderzoek of nieuwe procedure. Vooraf vond de bestandszoekactie alleen procedure en A-bestanden: resultaat B, dit verslag en het invalid-doelpad bestonden niet.\n\n## Geldige invoer B\nTekstueel gecontroleerd: twee unieke numerieke nummers (1, 2), twee correcte timingregels, drie niet-lege tekstregels verdeeld als 2 + 1. Geen verboden teksttekens &, < of >, instellingen of uitbreidingen. Alle minuten en seconden binnen 00–59, uren twee cijfers en milliseconden drie cijfers.\nTijden met de procedureformule handmatig beoordeeld:\n- Cue 1: begin 3599900 ms, einde 3601050 ms; duur 1150 ms. De uurgrens is geldig.\n- Cue 2: begin 3602500 ms, einde 3604000 ms; duur 1500 ms.\nBegintijden nemen toe; geen overlap; tussenruimte 1450 ms.\n\nOpgeslagen resultaat: /proof-state/au004-subtitles-B-20260912-attempt3.vtt. WEBVTT-header en lege regel toegevoegd, nummers behouden, alleen de vier timingkomma's vervangen door punten. Spaties rond de pijl en lege scheidingsregel gecontroleerd. Tekst exact behouden:\n```\nEerste regel, met komma.\nTweede regel: café.\n```\nen bij cue 2:\n```\nZoë sluit de deur.\n```\nGeen vertaling, trimmen of Unicode-normalisatie toegepast. De afzonderlijke teruglezing van B bevestigt alle zichtbare regels, interpunctie en Unicode. De opslagcontrole toont tevens het meegegeven afsluitende LF-regeleinde; de afzonderlijke leestool geeft dat laatste regeleinde niet weer. Geen onafhankelijke bytecontrole van UTF-8, BOM of regeleinden uitgevoerd.\n\n## Apart ongeldig testgeval\nBegin 9000 ms; einde 8500 ms; verschil -500 ms. Afgewezen volgens de expliciete proceduregrond eind <= begin: de eindtijd ligt 500 ms vóór de begintijd. Geen automatische reparatie. Geen geconverteerd bestand voor dit geval geschreven, ook niet /proof-state/au004-invalid-20260912-attempt3.vtt.\n\n## Methode, fouten en grenzen\nAlle controles zijn tekstueel en met handmatige tijdrekening uitgevoerd, niet door code. Geen parser-, browser-, afspeel- of bytevalidatie. Geen conversiefout in B aangetroffen; het ongeldige interval is een invoerfout en is geweigerd. Geldigheid van B is beoordeeld binnen de beperkte opgeslagen procedure, niet met een volledige WebVTT-validator. Dit verslag wordt na opslag afzonderlijk teruggelezen.\n"
+      }
+    },
+    {
+      "thread_id": "tool:external-tool:d8607b0539f70285e1791279be377605",
+      "step_index": 5,
+      "action": "read_workspace_document",
+      "arguments": {
+        "head": 100,
+        "path": "/proof-state/au004-check-B-20260912-attempt3.md"
+      }
+    }
+  ],
+  "write_targets_only": [
+    "/proof-state/au004-subtitles-B-20260912-attempt3.vtt",
+    "/proof-state/au004-check-B-20260912-attempt3.md"
+  ],
+  "research_actions": 0,
+  "files": {
+    "procedure": {
+      "exists": true,
+      "bytes": 3575,
+      "sha256": "bbae3082ef113d6433ad0184fafc30ef2853e4d6b3798841ccef7ba0028016df"
+    },
+    "A": {
+      "exists": true,
+      "bytes": 101,
+      "sha256": "0d06244fd011696b672ae09297845dcc615fc083cc1a7bde2581ab3e439806bc"
+    },
+    "A_report": {
+      "exists": true,
+      "bytes": 2903,
+      "sha256": "7e5c5a72a5f6963b5f0cebb7ced586e05bc6796aa04b064a538c5d387d297b1b"
+    },
+    "B": {
+      "exists": true,
+      "bytes": 139,
+      "sha256": "cc2f53033eb2d60fc8359ded840cc9df24dcef3b6a2b88ef5c23a48818c63be9"
+    },
+    "B_report": {
+      "exists": true,
+      "bytes": 2428,
+      "sha256": "f2b59b9970b247752f8c7bfc4e33b0a73b1710c71d71edf24dacac45aedc9c27"
+    },
+    "invalid": {
+      "exists": false
+    }
+  },
+  "independent_semantics": {
+    "turn": "B",
+    "semantic_checks": "passed",
+    "cues": [
+      {
+        "start_ms": 3599900,
+        "end_ms": 3601050,
+        "lines": [
+          "Eerste regel, met komma.",
+          "Tweede regel: café."
+        ]
+      },
+      {
+        "start_ms": 3602500,
+        "end_ms": 3604000,
+        "lines": [
+          "Zoë sluit de deur."
+        ]
+      }
+    ],
+    "file_sha256": "cc2f53033eb2d60fc8359ded840cc9df24dcef3b6a2b88ef5c23a48818c63be9",
+    "procedure_sha256": "bbae3082ef113d6433ad0184fafc30ef2853e4d6b3798841ccef7ba0028016df",
+    "checker": "Independent Python checker run by coordinator after Eva completed; not an Eva-executed test."
+  },
+  "invalid": {
+    "before_absent": true,
+    "after_absent": true,
+    "write_action_count": 0,
+    "expected_start_ms": 9000,
+    "expected_end_ms": 8500,
+    "expected_difference_ms": -500,
+    "recorded_report_reason": "Afgewezen volgens eind <= begin; einde500msvoorbegin",
+    "report_sha256": "f2b59b9970b247752f8c7bfc4e33b0a73b1710c71d71edf24dacac45aedc9c27"
+  },
+  "reply": "De opgeslagen procedure is daadwerkelijk gelezen en ongewijzigd toegepast. Resultaat B en het controleverslag zijn op de opgegeven attempt3-paden opgeslagen en volledig teruggelezen; niets is overschreven. Unicode, tekstkomma’s en meerregelige tekst zijn behouden. De uurgrens is correct verwerkt.\n\nHet aparte testgeval is geweigerd: de eindtijd ligt 500 milliseconden vóór de begintijd, terwijl de procedure eind > begin vereist. Hiervoor is geen geconverteerd bestand geschreven.\n\nDe controles waren tekstueel, met handmatige tijdrekening; geen code-, parser-, afspeel- of bytevalidatie. Binnen de procedure zijn geen conversiefouten in B aangetroffen. Er was geen extra onderzoek nodig.",
+  "event_counts": {
+    "INGRESS_COMMITTED": 1,
+    "REPLY_COMMITTED": 1,
+    "MEMORY_RETAIN_QUEUED": 2,
+    "TOOL_REQUEST_ADMITTED": 6,
+    "CONVERSATION_MODEL_ADMITTED": 7,
+    "CONVERSATION_DISPATCH_ADMITTED": 6,
+    "CONVERSATION_MODEL_RECORDED": 7,
+    "TOOL_PREPARED": 6,
+    "TOOL_EXECUTED": 6,
+    "STATE_VERIFIED": 6,
+    "MEMORY_RETAIN_ATTEMPTED": 1,
+    "MEMORY_STORAGE_RESERVED": 1,
+    "MEMORY_RETAIN_SUCCEEDED": 1,
+    "MEMORY_STORAGE_RETAINED": 1
+  },
+  "measured_conversation_usage_records": [
+    {
+      "tool_calls": 1,
+      "measurement": "measured",
+      "input_tokens": 7109,
+      "output_tokens": 75,
+      "model_attempts": 1
+    },
+    {
+      "tool_calls": 1,
+      "measurement": "measured",
+      "input_tokens": 7766,
+      "output_tokens": 65,
+      "model_attempts": 1
+    },
+    {
+      "tool_calls": 1,
+      "measurement": "measured",
+      "input_tokens": 8054,
+      "output_tokens": 132,
+      "model_attempts": 1
+    },
+    {
+      "tool_calls": 1,
+      "measurement": "measured",
+      "input_tokens": 8453,
+      "output_tokens": 67,
+      "model_attempts": 1
+    },
+    {
+      "tool_calls": 1,
+      "measurement": "measured",
+      "input_tokens": 8874,
+      "output_tokens": 699,
+      "model_attempts": 1
+    },
+    {
+      "tool_calls": 1,
+      "measurement": "measured",
+      "input_tokens": 10871,
+      "output_tokens": 61,
+      "model_attempts": 1
+    },
+    {
+      "tool_calls": 0,
+      "measurement": "measured",
+      "input_tokens": 11621,
+      "output_tokens": 158,
+      "model_attempts": 1
+    }
+  ],
+  "measured_B_totals": {
+    "input_tokens": 62748,
+    "output_tokens": 1257,
+    "model_attempts": 7,
+    "tool_calls": 6
+  },
+  "measured_attempt3_totals": {
+    "input_tokens": 200441,
+    "output_tokens": 4630,
+    "model_attempts": 17,
+    "verified_actions": 14,
+    "financial_amount": "not measured",
+    "provider_internal_web_call_count": "not independently measured"
+  },
+  "config_after_B_equals_preflight": true,
+  "live_image_unchanged": true,
+  "automatic_retries": 0,
+  "old_attempt1_and_2_failures_preserved": true,
+  "limits": [
+    "Bounded observed procedure learning and reuse, not a global installed skill/tool or complete AU004 milestone.",
+    "Eva controls are textual; independent Python semantic checks happened after completion and were not supplied to Eva.",
+    "Same existing owner conversation; B is a new message with sealed held-out input, not a fresh blank conversation.",
+    "No whole-WebVTT conformity, media playback, arbitrary code execution or broad autonomous-generalization claim."
+  ],
+  "archive": "/home/administrator/project/.eva2-artifacts/au004-procedure-trial-20260912-attempt3",
+  "independent_review": {
+    "decision": "GO",
+    "reviewed_commit": "d0355b7c995a93e462a49d71433cc04ca8e97086",
+    "reviewer": "next_tools",
+    "confirmation": "Coordinator confirms final independent reuse GO; bounded procedure delivery technically complete, no whole-AU004 or human acceptance implied."
+  }
+}
