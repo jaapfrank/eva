@@ -165,3 +165,19 @@ extensieproef of eigenaaracceptatie en herstart geen productieservices.
 Uitvoeren op Linux met een bestaande testbrowser:
 `EVA_CHROME_TEST_EXECUTABLE=/pad/naar/chromium node --test recovery.test.mjs`.
 Bewijs: `../../evidence/product/chrome-inflight-recovery-2026-09-12.json`.
+
+## Taakresultaat behouden bij intrekken en adresherstel
+
+De herstelregressie voltooit nu eerst via een echte browserklik een synthetisch
+taakrapport in een tijdelijk bestand van de testwebsite. Daarna wordt een tweede,
+werkelijk wachtende klik expliciet ingetrokken. De geautoriseerde gateway verhuist
+in de fixture van logisch adres .2 naar .4: de oude caller krijgt 403, de nieuwe
+caller krijgt pas browserbediening na expliciete nieuwe testtoestemming.
+Een verse browsersnapshot leest hetzelfde afgeronde rapport. De bestaande vijf
+uitvalgevallen volgen met dit rapport aanwezig; inhoud en eenmalige uitvoering
+blijven behouden, ook na de gecontroleerde brugherstart.
+
+Dit test browserherstel met een duurzaam resultaat bij de testwebsite. Het bewijst
+geen gezamenlijk herstel van de kern, helperresultaten, geheugen, voice of de
+persoonlijke Chrome-extensie. Er is geen productiecode gewijzigd of herstart.
+Bewijs: `../../evidence/product/chrome-result-recovery-chain-2026-09-12.json`.

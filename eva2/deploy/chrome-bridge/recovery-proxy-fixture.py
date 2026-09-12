@@ -13,7 +13,8 @@ proxy.UnixConnection=FixtureUnix
 original=proxy.gateway_peer_allowed
 def authorized(peer):
  address=pathlib.Path(config['addressFile']).read_text().strip()
- return peer=='127.0.0.1' and original('172.30.0.2',lambda *args:[(socket.AF_INET,socket.SOCK_STREAM,6,'',(address,0))])
+ caller=pathlib.Path(config['callerAddressFile']).read_text().strip() if config.get('callerAddressFile') else '172.30.0.2'
+ return peer=='127.0.0.1' and original(caller,lambda *args:[(socket.AF_INET,socket.SOCK_STREAM,6,'',(address,0))])
 proxy.gateway_peer_allowed=authorized
 server=proxy.ThreadingHTTPServer(('127.0.0.1',0),proxy.Handler)
 server.handle_error=lambda *args:None

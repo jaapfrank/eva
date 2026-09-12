@@ -1,0 +1,60 @@
+{
+  "contract": "EvaChromeResultRecoveryChain/v1",
+  "date": "2026-09-12",
+  "status": "test_only_browser_subchain_passed",
+  "existingEvidence": [
+    "chrome-inflight-recovery-2026-09-12.json",
+    "chrome-proxy-recovery-2026-09-12.json"
+  ],
+  "existingCommits": [
+    "e6f4252c",
+    "f71b1fea"
+  ],
+  "coverageRequest": "integration-coverage-2026-09-12.md regression 3; bounded browser contribution, not the entire shared installation recovery gate",
+  "fixture": "Existing real Linux headless Chromium, production Chrome worker/backend, isolated bridge and loopback proxy. Exact gateway authorization function receives logical caller and DNS addresses from fixture files.",
+  "chain": [
+    "Fresh fixture grant and snapshot",
+    "Real browser click completes one synthetic task and writes its result to the test website file",
+    "Second browser click waits on a disabled button; busy observed before explicit revoke",
+    "Revoke stops the pending action; releasing button later has no effect",
+    "DNS moves from 172.30.0.2 to 172.30.0.4; old caller gets HTTP403",
+    "New logical caller 172.30.0.4 can reach bridge but old grant/observation still rejected",
+    "Explicit new fixture grant plus fresh browser snapshot reads the same completed task report",
+    "Existing worker/HTTP/address/proxy/bridge-loss cases run while completed result remains available",
+    "Bridge process restart and fresh explicit grant read unchanged completed result"
+  ],
+  "result": {
+    "taskId": "task-browser-001",
+    "storage": "temporary file written by the isolated test website, outside browser/bridge process",
+    "sha256": "98c6a09d05e85edd7701e7a116126c2a069b4100c242b25bda8ec20b0a42aec0",
+    "completionAttempts": 1,
+    "exactBytesPreserved": true,
+    "freshBrowserReadVerified": true,
+    "lateClicks": 0
+  },
+  "validation": {
+    "command": "EVA_CHROME_TEST_EXECUTABLE=<existing test Chromium> node --test eva2/deploy/chrome-bridge/recovery.test.mjs",
+    "tests": 1,
+    "failed": 0,
+    "durationMs": 20678.753541,
+    "fullProcessDurationMs": 20811.233763,
+    "exitCode": 0
+  },
+  "scope": {
+    "runtimeCodeChanged": false,
+    "productionRestarted": false,
+    "personalGrantRestored": false,
+    "coreHelperFilesChanged": false,
+    "centralBoardChanged": false,
+    "ownerAcceptance": false
+  },
+  "remaining": [
+    "Combined candidate core/helper restart with genuine durable helper result, memory preservation and voice/owner/project state alignment requires the wider integration harness.",
+    "Personal BR-01 owner trial remains separate."
+  ],
+  "sourceSha256": {
+    "recovery.test.mjs": "46cc4e003114aa2b49a2804ca4e9c74ba7012a522cf1c285505b29590331e8ba",
+    "recovery-fixture.mjs": "b41feae9166761edc59b3cf166c521772078ae58a96c3c9c9fdc675b99866c3f",
+    "recovery-proxy-fixture.py": "c26b0738f90cb71c1fcbbd6f1e3f8579590a09c9bd6c18dd07320b1e81c6df95"
+  }
+}
