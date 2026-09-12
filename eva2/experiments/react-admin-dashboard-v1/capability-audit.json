@@ -195,13 +195,23 @@
         }
       ],
       "latestObservation": {
-        "checkedAt": "2026-09-11T07:13:00Z",
-        "userOutcomeStatus": "Eerste checklist geleverd; jouw beoordeling nog open",
-        "visibleResult": "Op 11 sep om 02:48 een zelfgekozen algemene storingschecklist opgeslagen en teruggelezen. Geen huisgegevens opgehaald of internetonderzoek verricht.",
-        "remaining": "Jouw beoordeling van de checklist en verdere initiatiefkwaliteit. Private beoordelingen: reset werkte; 1 bijdrage en 3 keer stilte. Sinds 11 sep 06:50 weer 4/4 gebruikt (controle 09:13); dit telt niet alle modelcalls.",
-        "evidenceSummary": "Normale private cyclus koos de bijdrage om 00:42:32 UTC; bestand geschreven en teruggelezen om 00:47:58 UTC, eindantwoord 00:48:05 UTC (02:48 Nederlandse tijd). Bestandhash gelijk aan STATE_VERIFIED. Read-only gecontroleerd om 07:13 UTC; geen menselijke acceptatie.",
-        "evidencePath": "eva2/experiments/react-admin-dashboard-v1/morning-readback-2026-09-11.json"
-      }
+        "checkedAt": "2026-09-12",
+        "userOutcomeStatus": "Eigen bijdrage teruggelezen; jouw oordeel open",
+        "visibleResult": "Eva koos en voltooide zelf API-toegang is niet hetzelfde als toestemming. Het bestaande bestand is onafhankelijk teruggelezen; IN-02 bevat de volledige tekst.",
+        "remaining": "Jaaps oordeel over deze bijdrage is open. De aanvullende laatste-beoordelingsweergave is klaar voor de afgestemde gezamenlijke uitrol; nog niet live.",
+        "evidenceSummary": "Gewone cyclus12sep: bijdrage00:28:17UTC voltooid, werkelijk bestand866bytes/hashgecontroleerd. Laatste uitgelezen beoordeling15:50:23UTC wachtte op bestaand dagbudget, geen nieuwe modelaanroep.",
+        "evidencePath": "eva2/evidence/product/artifacts/AU-008-api-toegang-en-toestemming-2026-09-12.md"
+      },
+      "observationHistory": [
+        {
+          "checkedAt": "2026-09-11T07:13:00Z",
+          "userOutcomeStatus": "Eerste checklist geleverd; jouw beoordeling nog open",
+          "visibleResult": "Op 11 sep om 02:48 een zelfgekozen algemene storingschecklist opgeslagen en teruggelezen. Geen huisgegevens opgehaald of internetonderzoek verricht.",
+          "remaining": "Jouw beoordeling van de checklist en verdere initiatiefkwaliteit. Private beoordelingen: reset werkte; 1 bijdrage en 3 keer stilte. Sinds 11 sep 06:50 weer 4/4 gebruikt (controle 09:13); dit telt niet alle modelcalls.",
+          "evidenceSummary": "Normale private cyclus koos de bijdrage om 00:42:32 UTC; bestand geschreven en teruggelezen om 00:47:58 UTC, eindantwoord 00:48:05 UTC (02:48 Nederlandse tijd). Bestandhash gelijk aan STATE_VERIFIED. Read-only gecontroleerd om 07:13 UTC; geen menselijke acceptatie.",
+          "evidencePath": "eva2/experiments/react-admin-dashboard-v1/morning-readback-2026-09-11.json"
+        }
+      ]
     },
     {
       "id": "tools",

@@ -700,6 +700,22 @@
           },
           "ownerAccepted": true,
           "acceptanceEvidence": "eva2/evidence/product/GE-02-owner-acceptance-2026-09-12.json"
+        },
+        {
+          "id": "IN-02",
+          "updatedOn": "2026-09-12",
+          "status": "ready",
+          "title": "Eva’s zelfgekozen bijdrage beoordelen",
+          "change": "Eva maakte uit zichzelf het onderstaande document op 12 september; het is niet opnieuw gemaakt voor deze proef.",
+          "steps": [
+            "Lees de teruggelezen bijdrage hieronder.",
+            "Beoordeel of dit voor jou nuttig, passend en voldoende zelfstandig is."
+          ],
+          "expected": "Je kunt de bijdrage lezen en zelf beoordelen. Technische controle bewijst bestaan en uitvoering; alleen jij beoordeelt het nut.",
+          "report": "IN-02: nuttig / niet nuttig, eventueel wat je anders wilt.",
+          "result": "# API-toegang is niet hetzelfde als toestemming\n\nAPI-functionaliteit bepaalt welke handelingen een dienst technisch aanbiedt. Tokenrechten begrenzen welke daarvan met een bepaald toegangsbewijs technisch toegankelijk zijn; aanvullende controles kunnen gelden. Toestemming bepaalt of ik een concrete handeling voor dit doel en binnen de actuele afspraken mag uitvoeren. Technische toegang bewijst die toestemming niet.\n\nFictief voorbeeld: een API kan een lamp uitschakelen en een token kan daarvoor schrijfrechten hebben. De vraag of die lamp aanstaat geeft alleen aanleiding om de toestand te lezen, niet om de lamp uit te zetten.\n\nIk controleer doel, reikwijdte en actuele toestemming vóór uitvoering; ontbrekende toestemming vul ik niet in met technische mogelijkheden. Voor deze uitleg zijn geen tokens, huisgegevens of werkelijke rechten opgevraagd of getest.\n",
+          "ownerAccepted": false,
+          "artifact": "eva2/evidence/product/artifacts/AU-008-api-toegang-en-toestemming-2026-09-12.md"
         }
       ]
     },
@@ -778,9 +794,9 @@
       "document": "eva2/PROJECTDOEL.md",
       "scope": "Digitale huisgenoot: zelfstandig redeneren, initiatief, onbekende vaardigheden leren, handelen, zelfverbetering en aantoonbare concurrentiewinst met open-sourcehergebruik.",
       "sessionGoal": "AU-008: één zelfstandige kosteloze bijdrage via de algemene uitvoerder.",
-      "currentWork": "Geheugen afgerond en door Jaap geaccepteerd: GE-01 en GE-02. AU-008 hervat: Eva kiest en voltooit een eigen kosteloze bijdrage binnen het mandaat.",
+      "currentWork": "Geheugen geaccepteerd en afgesloten. Eva’s bestaande zelfstandige bijdrage staat klaar als IN-02. De aanvullende initiatiefstatusweergave wacht op de gezamenlijke uitrol.",
       "currentEvidence": "eva2/evidence/product/GE-02-owner-acceptance-2026-09-12.json",
-      "nextStep": "Eerst actuele opgeslagen beoordelingen en resultaten lezen. Laatste beoordeling zichtbaar maken, concrete uitvoeringsfouten herstellen en een echte bijdrage tonen; geen bestaand resultaat opnieuw bouwen.",
+      "nextStep": "IN-02 beoordeelt de echte bestaande bijdrage. Er wordt geen nieuwe bijdrage geforceerd. De gecombineerde statusupdate wordt na afstemming met Home Assistant live gezet.",
       "usageClarification": {
         "date": "2026-09-07",
         "authorizedBy": "Jaap",
@@ -3606,12 +3622,12 @@
       "ownerAcceptanceScope": "Uitsluitend de opgeleverde beoordelingskaart: op zich wel bruikbaar. Geen algemene acceptatie van eigen initiatief."
     },
     "initiativeDeliveryAU008": {
-      "status": "in_progress",
+      "status": "candidate_ready_waiting_coordinated_cutover",
       "built": true,
       "tested": true,
       "live": true,
       "ownerAccepted": false,
-      "currentWork": "Algemeen publiek onderzoek en private initiatiefbeoordeling zijn live. Eerste normale idlecyclus om20:32:45UTC bewezen: eigenaarbudget4/4, daarom geen modelaanroep en geen geforceerde bijdrage. De technische aansluiting is afgerond; het echte bruikbare initiatiefresultaat blijft open.",
+      "currentWork": "Eva koos en voltooide op 12 september zelf het document API-toegang is niet hetzelfde als toestemming. Het echte bestand is teruggelezen. De nieuwe weergave van de laatste beoordeling is gebouwd en gecontroleerd; de gezamenlijke uitrol wacht op afstemming met Home Assistant.",
       "authorization": "Jaap: in eerste instantie mag ze wel gewoon alles doen wat ze wil, zolang het maar inderdaad geen geld kost. Implementatie expliciet bevestigd.",
       "boundaries": "Geen nieuwe kosten of verplichtingen; onbekend is niet gratis. Bestaand toegelaten modelgebruik blijft binnen bestaande grenzen. Privacy, personen, communicatie en stoppen blijven gelden.",
       "artifactRetention": {
@@ -3652,6 +3668,24 @@
           "status": "revised and loaded; unchanged in periodic-review deployment"
         },
         "introducedCommit": "af9a049a5dcd9b739b74e10252f6688d7b90bb14"
+      },
+      "technicalComplete": false,
+      "candidateSourceCommit": "e96b2054d4d40e5c502907e24c53fc25a553bbe0",
+      "candidateImage": "sha256:4a5fa7c1116d07f6037b9a02f82ba8f6c30d703e80bbf8c84a30fbf108ca8710",
+      "candidateStatusDisplayLive": false,
+      "latestExistingResult": {
+        "intentId": "personal-interest:7faedfcad4bb5f3359de127314095c3ca7921d52c259f68227b35a3842dd29f5",
+        "title": "API-toegang is niet hetzelfde als toestemming",
+        "completedAt": "2026-09-12T00:28:17Z",
+        "artifact": "eva2/evidence/product/artifacts/AU-008-api-toegang-en-toestemming-2026-09-12.md",
+        "sha256": "568e859f3f0e0d8dd09209b67e3b70e96cb57762f3fc9722851b1f32d2b1b1b1",
+        "ownerAccepted": false
+      },
+      "candidateArtifactRetention": {
+        "owner": "/root",
+        "purpose": "AU-008 statuskandidaat, gerichte proeven en teruggelezen bestaande bijdrage",
+        "path": "/home/administrator/project/.eva2-artifacts/au008-status-source-20260912",
+        "cleanup": "Na livebewijs en eigenaarbeoordeling plus30dagen: canoniek bewijs bewaren, tijdelijke kandidaatwerkboom gericht opruimen."
       }
     },
     "au008GeneralResearch20260910": {

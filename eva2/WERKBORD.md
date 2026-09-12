@@ -5,10 +5,10 @@ Laatst bijgewerkt: 2026-09-12.
 Doel: [Eva als zelfstandig lerende digitale huisgenoot](PROJECTDOEL.md).
 Gebouwd, getest, live en door jou geaccepteerd zijn verschillende stappen.
 
-Geheugen afgerond en door Jaap geaccepteerd: GE-01 en GE-02. AU-008 hervat: Eva kiest en voltooit een eigen kosteloze bijdrage binnen het mandaat.
+Geheugen geaccepteerd en afgesloten. Eva’s bestaande zelfstandige bijdrage staat klaar als IN-02. De aanvullende initiatiefstatusweergave wacht op de gezamenlijke uitrol.
 [Actueel bewijs](evidence/product/GE-02-owner-acceptance-2026-09-12.json).
 
-Eerst actuele opgeslagen beoordelingen en resultaten lezen. Laatste beoordeling zichtbaar maken, concrete uitvoeringsfouten herstellen en een echte bijdrage tonen; geen bestaand resultaat opnieuw bouwen.
+IN-02 beoordeelt de echte bestaande bijdrage. Er wordt geen nieuwe bijdrage geforceerd. De gecombineerde statusupdate wordt na afstemming met Home Assistant live gezet.
 
 ### Afzonderlijk stemwerk
 
