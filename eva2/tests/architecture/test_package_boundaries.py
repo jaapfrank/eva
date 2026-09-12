@@ -334,3 +334,22 @@ def test_provider_specific_core_debt_rejects_a_removed_registered_file(
     assert [(item.code, item.detail) for item in violations] == [
         ("stale_provider_debt_ceiling", stale_path)
     ]
+
+
+def test_adapters_cannot_import_bootstrap(tmp_path: Path) -> None:
+    checker = _checker()
+    policy = json.loads(
+        (ROOT / "design/architecture/package-boundaries-v1.json").read_text(encoding="utf-8")
+    )
+    _seed_policy_tree(tmp_path, policy)
+    for package in ("api", "postgres"):
+        (tmp_path / f"src/eva/adapters/{package}/bad.py").write_text(
+            "from eva.bootstrap import runtime\n", encoding="utf-8"
+        )
+    policy_path = tmp_path / "policy.json"
+    policy_path.write_text(json.dumps(policy), encoding="utf-8")
+    violations = checker.check(tmp_path, policy_path)
+    assert [(item.code, item.detail) for item in violations] == [
+        ("local_import_boundary", "eva.bootstrap"),
+        ("local_import_boundary", "eva.bootstrap"),
+    ]

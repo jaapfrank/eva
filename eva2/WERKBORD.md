@@ -599,6 +599,22 @@ slagen; een kopie van de echte onzekere registratie blijft identiek zonder
 sendercall. Onafhankelijke review is GO. Geen nieuw Telegramproefbericht.
 [Review](reviews/project-telegram-normalization-review-2026-09-12.md).
 
+
+### Kleine adapterafhankelijkheid — technisch afgerond en live
+
+Kern en worker draaien c992b0c3. De werkadapter gebruikt nu een bestaand
+application-protocol in plaats van de runtime-compositie te importeren.
+Dezelfde service, autorisatie, uitvoering en stopafhandeling blijven behouden.
+De twee bronbestanden, negatieve architectuurtest en vier bewijsbestanden
+zijn apart geïntegreerd; de releasebasis en household-DI zijn niet meegekopieerd.
+
+61 gerichte controles slagen; de volledige architectuurpoort blijft rood
+met24 bevindingen, één minder dan25. Kern/spraak zijn gereed, beide processen
+gezond en zeven beschermde diensten/env onveranderd. Geen modelproef of
+algemene architectuur-/eigenaargoedkeuring. De onzekere Telegram-uursleutel
+21:00 blijft onveranderd; deze uitrol maakt die niet alsnog succesvol.
+[Livebewijs](evidence/architecture/adapter-boundaries-live-2026-09-12.json).
+
 ## Nu
 
 | Volgorde | Kaart | Resultaat | Status |

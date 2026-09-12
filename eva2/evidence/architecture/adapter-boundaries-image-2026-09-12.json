@@ -1,0 +1,46 @@
+{
+  "parent": "sha256:e1bb281cc772ab7a2f6ce747dce6a9ccec382ff357f5583e47882997a337217f",
+  "candidate": "sha256:c992b0c3bf4977a101a813d6ee11d82d8821b76279e8dc5a71ced09d72426c79",
+  "configuration_identical": true,
+  "parent_layers_preserved": true,
+  "source_file_count": 259,
+  "changed_files": [
+    "eva/adapters/postgres/delegated_work_actions.py",
+    "eva/application/delegated_work_owner.py"
+  ],
+  "reviewed_source_matches": true,
+  "source_sha256": {
+    "eva/adapters/postgres/delegated_work_actions.py": "52d6c84a3794f82ebe83a5167fd007f9caf6d61ed86bcd96164ef3972f2b3028",
+    "eva/application/delegated_work_owner.py": "bfb103b1bf1304ef0ca3656017c0aa3dfa37966e3f903699f70f0fae37257622"
+  },
+  "rollback_parent_image_present": true,
+  "live_cutover": false,
+  "import_check": {
+    "imports_ok": true,
+    "adapter_service_annotation": "DelegatedWorkOwnerPort"
+  },
+  "activation_script_sha256": "3edeaea862a7c7e61fa8352f08f83b8d9177d13f036ddd7745e56f6bbb00beea",
+  "activation_script_changes": "Only old/new image digests and unique preflight filename; rollback guard remains before first active write.",
+  "offline_fault_tests": {
+    "cases": [
+      {
+        "fault": "before_override_write",
+        "exception_preserved": true,
+        "override_and_registry_restored": true,
+        "rollback_attempts": 1,
+        "rollback_exit_and_readiness_checked": true
+      },
+      {
+        "fault": "between_override_and_registry_writes",
+        "exception_preserved": true,
+        "override_and_registry_restored": true,
+        "rollback_attempts": 1,
+        "rollback_exit_and_readiness_checked": true
+      }
+    ],
+    "actual_docker_calls": 0,
+    "actual_network_calls": 0,
+    "production_writes": 0
+  },
+  "fault_fixture_correction": "Initial offline fixture retained old parent digest and failed before injected faults. Updated fixture parent to e1bb; both fault cases then passed. No live activation executed."
+}

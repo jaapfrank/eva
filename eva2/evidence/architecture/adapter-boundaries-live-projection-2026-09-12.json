@@ -1,0 +1,155 @@
+{
+  "parent_image": "sha256:e1bb281cc772ab7a2f6ce747dce6a9ccec382ff357f5583e47882997a337217f",
+  "baseline_commit": "7b03f820cd73325348536224d75d45329b0e1505",
+  "canonical_reference": "f7756540724f3c606232cc5a404ea4dbfc0a03fb",
+  "baseline_matches_live_all_files": true,
+  "baseline_count": 258,
+  "candidate_count": 259,
+  "runtime_delta": [
+    "eva/adapters/postgres/delegated_work_actions.py",
+    "eva/application/delegated_work_owner.py"
+  ],
+  "source_sha256": {
+    "eva/adapters/postgres/delegated_work_actions.py": "52d6c84a3794f82ebe83a5167fd007f9caf6d61ed86bcd96164ef3972f2b3028",
+    "eva/application/delegated_work_owner.py": "bfb103b1bf1304ef0ca3656017c0aa3dfa37966e3f903699f70f0fae37257622"
+  },
+  "architecture_baseline_count": 25,
+  "architecture_candidate_count": 24,
+  "removed": [
+    {
+      "path": "src/eva/adapters/postgres/delegated_work_actions.py",
+      "code": "local_import_boundary",
+      "detail": "eva.bootstrap.delegated_work_owner_service"
+    }
+  ],
+  "added": [],
+  "remaining_violations": [
+    {
+      "path": "src/eva/adapters/api/browser_session.py",
+      "code": "external_import_boundary",
+      "detail": "websockets.asyncio.client"
+    },
+    {
+      "path": "src/eva/adapters/api/browser_session.py",
+      "code": "local_import_boundary",
+      "detail": "eva.adapters.connectors.browser_session"
+    },
+    {
+      "path": "src/eva/adapters/api/browser_session.py",
+      "code": "local_import_boundary",
+      "detail": "eva.adapters.credentials.runtime_files"
+    },
+    {
+      "path": "src/eva/adapters/api/dashboard_voice.py",
+      "code": "local_import_boundary",
+      "detail": "eva.adapters.connectors.home_assistant_voice"
+    },
+    {
+      "path": "src/eva/adapters/api/native_voice.py",
+      "code": "external_import_boundary",
+      "detail": "pydantic"
+    },
+    {
+      "path": "src/eva/adapters/api/voice_turns.py",
+      "code": "external_import_boundary",
+      "detail": "pydantic"
+    },
+    {
+      "path": "src/eva/adapters/connectors/home_assistant_voice.py",
+      "code": "external_import_boundary",
+      "detail": "httpx2"
+    },
+    {
+      "path": "src/eva/adapters/model/pydantic_conversation.py",
+      "code": "external_import_boundary",
+      "detail": "tiktoken"
+    },
+    {
+      "path": "src/eva/adapters/postgres/conversation_actions.py",
+      "code": "local_import_boundary",
+      "detail": "eva.adapters.model.research_tools"
+    },
+    {
+      "path": "src/eva/adapters/postgres/initiative_execution.py",
+      "code": "local_import_boundary",
+      "detail": "eva.adapters.connectors.mcp_gateway"
+    },
+    {
+      "path": "src/eva/adapters/postgres/initiative_execution.py",
+      "code": "local_import_boundary",
+      "detail": "eva.adapters.credentials.runtime_files"
+    },
+    {
+      "path": "src/eva/adapters/postgres/mcp_connector_registry.py",
+      "code": "local_import_boundary",
+      "detail": "eva.adapters.connectors.mcp_gateway"
+    },
+    {
+      "path": "src/eva/adapters/postgres/mcp_connector_registry.py",
+      "code": "local_import_boundary",
+      "detail": "eva.providers.mcp_discovery"
+    },
+    {
+      "path": "src/eva/adapters/postgres/mcp_connector_registry.py",
+      "code": "local_import_boundary",
+      "detail": "eva.providers.mcp_gateway"
+    },
+    {
+      "path": "src/eva/bootstrap/dashboard_voice.py",
+      "code": "provider_specific_core_debt_new_file",
+      "detail": "9 provider-specific identifiers"
+    },
+    {
+      "path": "src/eva/bootstrap/dashboard_voice.py",
+      "code": "external_import_boundary",
+      "detail": "pydantic"
+    },
+    {
+      "path": "src/eva/bootstrap/household_voice.py",
+      "code": "external_import_boundary",
+      "detail": "pydantic"
+    },
+    {
+      "path": "src/eva/operations/browser_session.py",
+      "code": "external_import_boundary",
+      "detail": "fastapi"
+    },
+    {
+      "path": "src/eva/operations/browser_session.py",
+      "code": "external_import_boundary",
+      "detail": "uvicorn"
+    },
+    {
+      "path": "tools/check_two_builder_reproducibility.py",
+      "code": "external_import_boundary",
+      "detail": "managed_b_candidate.private_receipt"
+    },
+    {
+      "path": "tools/verify_household_voice_ingress.py",
+      "code": "external_import_boundary",
+      "detail": "render_household_voice_ingress"
+    },
+    {
+      "path": "tools/verify_owner_voice_ingress.py",
+      "code": "external_import_boundary",
+      "detail": "aiohttp"
+    },
+    {
+      "path": "tools/verify_owner_voice_ingress.py",
+      "code": "external_import_boundary",
+      "detail": "aiohttp"
+    },
+    {
+      "path": "tools/verify_owner_voice_ingress.py",
+      "code": "external_import_boundary",
+      "detail": "render_household_voice_ingress"
+    }
+  ],
+  "tests": {
+    "passed": 61,
+    "failed": 1,
+    "failure": "Existing full repository boundary gate: 24 violations; baseline 25."
+  },
+  "build": false,
+  "live": false
+}

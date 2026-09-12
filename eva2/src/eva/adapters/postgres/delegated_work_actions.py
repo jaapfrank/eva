@@ -19,7 +19,7 @@ from eva.application.conversation import (
     ConversationToolDescriptor,
     ConversationTurn,
 )
-from eva.bootstrap.delegated_work_owner_service import DelegatedWorkOwnerService
+from eva.application.delegated_work_owner import DelegatedWorkOwnerPort
 from eva.contracts.canonical_json import canonical_json_bytes
 
 
@@ -44,7 +44,7 @@ class PostgresDelegatedWorkActions:
 
     supports_indexed_steps = True
 
-    def __init__(self, engine: sa.Engine, service: DelegatedWorkOwnerService) -> None:
+    def __init__(self, engine: sa.Engine, service: DelegatedWorkOwnerPort) -> None:
         self._engine = engine
         self._service = service
 
