@@ -422,3 +422,30 @@ niet door deze native exports geattesteerd. `total_usage` en `server_sample_limi
 blijven null en `live_enabled` false. Een aangeleverde `complete: true` of
 `live_enabled: true` kan dat niet veranderen. Bestaande ACK-/herstelbewijzen krijgen
 hierdoor geen nieuwe status en worden niet opnieuw getest als aparte randvarianten.
+
+
+### Direct journal-admissionexport bij dezelfde preflight
+
+De optionele EVA2-export kan nu `direct_journal` bevatten: `scope` met interne
+PG tenant_id/installation_id, `source_files` met de drie exacte bronhashes uit
+`cp001_journal_admission.SOURCES`, en `events` met onafhankelijke SQL-rijen
+(`tenant_id`, `installation_id`, `event_type`, `payload`). `request` levert de
+principal/conversation/message-binding. Alleen bestaande MODEL_ADMITTED,
+MODEL_RECORDED en STOP_REQUESTED-events zijn toegestaan, inclusief hun bestaande
+checkpointfase/status/revision. De test `tests/benchmark/test_cp001_journal_admission.py`
+toont de exacte exportquery en draait één geïntegreerde PG-lifecycle.
+
+`direct_journal_admission` meldt opgeslagen maximum_requests, admission-/terminal-/
+onopgeloste aantallen, stopmarker en bekende directe usage. Bron-/scope-/identity-
+mismatch, dubbele events of malformed checkpoints worden geweigerd. Onbekende
+usage wordt nooit nul. `provider_attempt_contract` leest via Python AST de bestaande
+UsageLimits-expressies uit de gehashte bron; de daadwerkelijke per-attempt runtime-
+limieten blijven unknown wanneer de events die niet bevatten. Een preflight vóór
+de eerste admission heeft nog geen duurzaam maximum_requests om uit te lezen.
+
+Een export is geen geauthenticeerde of aantoonbaar volledige snapshot. Zelfs
+stop plus alle terminale events bewijst geen externe providerquiescence; een
+onopgeloste admission toont juist concreet de ontbrekende zekerheid. Deze beperkte
+bron-/rowbinding opent geen livevergelijking en claimt geen helper/geheugentotaal.
+De bestaande CLI `cp001_accounting.py --exports /private/native-exports.json`
+blijft exitcode 2 geven. Er is geen nieuwe runtimepolicy of databasemigratie.

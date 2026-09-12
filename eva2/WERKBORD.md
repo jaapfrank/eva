@@ -772,6 +772,22 @@ ruimere limiet. De vier voorbereidingsbestanden zijn opgenomen; uitvoerings-
 start en uitkomst zijn nog niet gemeld. Geen volledige AU-004-acceptatie.
 [Verzegelde voorbereiding](evidence/product/au004-procedure-discovery/plan.md).
 
+### CP-001 journaalinspectie — beperkte offline oplevering afgerond
+
+De native accounting-preflight leest nu de bestaande directe pogingevents
+met bronhash-, scope-, identiteit-, UUID- en checkpointbinding. Hij toont
+de duurzame requestgrens, admissions, terminale/onopgeloste pogingen, stop
+en bekende directe usage. De reviewer gaf GO na volledige bronlezing,
+controle van hashes/85JUnit en herberekening van acht SQLexports.
+De opgeslagen grens2 blijft gelden na reopen met configuratie99; stop
+blokkeert nieuwe admission en terminale replay telt niet dubbel. Een
+onbekende terminale poging of stop bewijst geen providerstilstand:
+server_quiescent blijft null en live toelating false. Vijf benchmark-,
+test- en documentatiebestanden geïntegreerd; geen runtimewijziging.
+Lokale streamafsluiting is afzonderlijk vervolgwerk, zonder nieuwe cap
+of claim over de externe provider.
+[Inspectie en grenzen](reviews/cp001-journal-admission-2026-09-13.md).
+
 ## Nu
 
 | Volgorde | Kaart | Resultaat | Status |

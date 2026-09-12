@@ -164,6 +164,18 @@ def preflight(exports=None, root=None):
         }
         if None in report["source_files"].values():
             report["blockers"].append("native_source_missing")
+        if participant == "eva2":
+            from cp001_journal_admission import inspect_export, provider_limit_contract
+
+            report["provider_attempt_contract"] = provider_limit_contract(
+                root / "eva2/src/eva/adapters/model/pydantic_conversation.py"
+            )
+            data = exports.get(participant, {})
+            report["direct_journal_admission"] = inspect_export(
+                data.get("direct_journal"),
+                request=data.get("request"),
+                sources=report["source_files"],
+            )
     equality = {}
     for field in LIMIT_FIELDS:
         a, b = (reports[p]["observed_provider_limits"][field] for p in PARTICIPANTS)
