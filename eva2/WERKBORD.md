@@ -490,6 +490,12 @@ is nog niet bevestigd; B staat daarom nog niet in uitvoering. AU-004 als
 geheel en eigenaaracceptatie blijven open, eerdere mislukkingen blijven staan.
 [Goedgekeurd A-bewijs](evidence/product/AU-004-procedure-attempt3-A-2026-09-12.json).
 
+
+De runtime-eigenaar bevestigt dat de ene B-beurt daadwerkelijk is verstuurd,
+na verse quota-/budget-/imagecontrole en verificatie van ongewijzigde
+A-procedure/resultaathashes en afwezige B-uitvoer. B is nu in uitvoering;
+er is nog geen resultaat en hergebruik is nog niet afgerond.
+
 ## Nu
 
 | Volgorde | Kaart | Resultaat | Status |
