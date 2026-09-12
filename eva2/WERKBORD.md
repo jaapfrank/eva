@@ -177,6 +177,16 @@ een spraakbeurt niet overnemen. Persistence, geheugenprovider en model zijn
 fakes. Dit bewijst geen echte Hindsight-recall, fysieke audio of duurzaam
 herstel en verandert niets aan de liveversie of eigenaaracceptatie.
 
+### AU-004 — twee-beurtenproef in uitvoering
+
+De coördinator heeft uitvoering van het bestaande plan expliciet opgedragen.
+Eerst worden twee kleine invoervarianten, ongeldige invoer en verwachte semantiek
+verzegeld. Eva maakt in de eerste gewone beurt zelf een procedure en gebruikt
+die in een tweede beurt met dezelfde hash. Bestaande grenzen blijven gelden;
+geen aangeleverde converter, extra retries, externe berichten of uitrol.
+De proefuitkomst is nog onbekend. Alleen procedurebewijs sluit de volledige
+AU-004-mijlpaal niet af. IN-02 en eerdere acceptaties blijven apart.
+
 ## Nu
 
 | Volgorde | Kaart | Resultaat | Status |
