@@ -377,6 +377,17 @@ De maker herstelt de volledige reply-identiteit en teksthash met regressies.
 Deze native kandidaat is niet geïntegreerd. De reeds afgeronde offline runner
 blijft staan; echte productvergelijking blijft open.
 
+
+### Gecombineerde releasebron — onafhankelijke GO, imagebouw loopt
+
+De onafhankelijke reviewer controleerde alle258 bronhashes van de livebasis
+en beoordeelde de zes aanpassingen, researchfoutinstructie en voicebinding.
+De gerichte16+7+4+94 controles horen bij dezelfde releasebron. De bronreview
+is GO; de runtime-eigenaar bouwt nu het image op df675. Geen activatie-GO,
+livewijziging of derde AU-004-poging. De volledige HTTP-context is niet duurzaam
+gefingerprint; gescripte researchproeven bewijzen geen autonome modelkwaliteit.
+De releasebasis blijft buiten de gedeelde bronintegratie.
+
 ## Nu
 
 | Volgorde | Kaart | Resultaat | Status |
