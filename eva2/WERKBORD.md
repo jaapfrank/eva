@@ -195,7 +195,8 @@ uitvoertokens bij een bestaande grens van 1200. De host weigerde dit terecht.
 De opgedragen reparatie is inmiddels technisch afgerond en live:
 lengte-instructie uit bestaand budget afleiden en gemeten verbruik ook bij
 weigering duurzaam bewaren. De harde grens blijft staan; een prompt biedt
-geen tokengarantie. Geen nieuwe modelpoging, variant B of uitrol gestart.
+geen tokengarantie. Geen nieuwe modelpoging of variant B gestart; de technische reparatie is
+later afzonderlijk uitgerold.
 Jaap hoeft niets te doen. De onafhankelijke reviewer heeft de juistheid van
 het mislukkingsbewijs goedgekeurd; dit is geen product-GO. De gerichte reparatie
 is inmiddels live, terwijl de leerproef en AU-004 onvoltooid blijven.
