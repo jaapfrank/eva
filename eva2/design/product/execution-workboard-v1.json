@@ -121,7 +121,7 @@
           ]
         }
       ],
-      "priorityDecision": "Jaap: doorwerken aan overige reeds gewenste taken terwijl gebruikersproeven openstaan. Geheugen afgesloten; technische afronding en eigenaaracceptatie blijven apart.",
+      "priorityDecision": "Onafhankelijk werk loopt parallel met unieke eigenaren: owneronderzoek, PostgreSQL-integratie en de CP-001-vergelijkingsrunner. Technische opleveringen en open gebruikersproeven blijven apart. De bestaande uurplanning bundelt de voortgang privé via Telegram.",
       "dashboardVerification": {
         "status": "local_browser_verified_not_full_product_acceptance",
         "priorityRevision": {
@@ -212,16 +212,20 @@
       ],
       "nextOutcomes": [
         {
-          "title": "Geheugen afronden",
-          "detail": "Nu: automatisch onthouden, gewijzigde voorkeur gebruiken, tijdelijke informatie juist plaatsen en persoonsgrenzen controleren."
+          "title": "Privé-uuruupdates aangesloten",
+          "detail": "Eén privébevestiging is door Telegram bevestigd. De bestaande uurplanning is aangesloten; eerste reguliere update niet vóór 23:40 lokale tijd. Onzekere verzending wordt niet herhaald."
         },
         {
-          "title": "Bestaande resultaten proberen",
-          "detail": "De mogelijkheden hieronder zijn afzonderlijk opgeleverd. BR-01 en de bevestigde speakerproeven blijven beschikbaar."
+          "title": "Browserherstelproef afgerond",
+          "detail": "Voltooide browseruitvoer blijft bewaard na intrekken, nieuw gatewayadres en procesherstel. Onafhankelijk beoordeeld; persoonlijke Chromeproef en volledige installatieketen blijven open."
         },
         {
-          "title": "Vervolgwerk blijft apart",
-          "detail": "Hulpagenten, browserherstel en volledig realtime voice houden het huidige geheugendoel niet open."
+          "title": "Dependencyvoorstellen uitgebreid",
+          "detail": "Renovate-configuratie dekt de vier bestaande npm-projecten. Validatie en review klaar; geen update geïnstalleerd en actieve bot nog niet bewezen."
+        },
+        {
+          "title": "Het team werkt parallel verder",
+          "detail": "Owneronderzoek: kandidaat in review. Daarnaast echte PostgreSQL-integratie en CP-001-vergelijkingsrunner. Geheugen blijft geaccepteerd; open gebruikersproeven blokkeren dit werk niet."
         }
       ],
       "openRisks": [
