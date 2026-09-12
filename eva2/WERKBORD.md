@@ -90,6 +90,16 @@ geen stopopdracht. De fysieke luister- en schermvergrendelingsproef staat open.
 [Gebruikersproef](design/product/VOICE-owner-trial-2026-09-12.md) ·
 [Livebewijs](evidence/product/voice-client-lifecycle-2026-09-12.json).
 
+### Connectorproef TL-003 — uitgevoerd, review open
+
+Eén gewone HTTP-beurt is afgerond zonder handmatige hervatting: een nieuwe
+CPython-endpoint bij de bekende aanbieder GitMCP aangesloten, documentatie
+gebruikt, uitleg opgeslagen en teruggelezen. De proef duurde 146 seconden.
+Dit is één synthetische opdracht in een bestaande conversatie; geen onbekende
+aanbieder, eigenaaracceptatie of algemene voorsprong bewezen. De onafhankelijke
+review staat open. Geen tweede proef gestart.
+[Uitvoeringsbewijs](evidence/product/TL-003-unassisted-2026-09-12.json).
+
 ## Nu
 
 | Volgorde | Kaart | Resultaat | Status |
