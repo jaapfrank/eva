@@ -907,6 +907,20 @@ releasebaselinemerge. De2a5cc362-terugweg blijft beschikbaar. Lokale
 afsluitobservatie bewijst geen remote providerstilstand of quota-afrekening.
 [Livebewijs](evidence/architecture/local-stream-live-2026-09-13.json).
 
+### Telegram — volgende reguliere uurupdate bevestigd
+
+Uurkey2026-09-12T23:00Z is bevestigd afgeleverd om23:50:42UTC,
+na claim23:50:39UTC. Bedoelde privéchat en exacte tekst zijn gecontroleerd;
+geen menselijke lezing geclaimd. Oudere21:00-onzekerheid blijft bewaard.
+Volgende reguliere poging niet vóór13september00:50:39UTC, minstens
+zestig minuten na de vastgelegde poging; geen extra verzending gestart.
+[Verzendbewijs](evidence/product/project-telegram-hourly-delivery-2026-09-12-23.json).
+
+IN-002 blijft in ontwikkeling. De geïsoleerde objectherstelproef vond
+concrete invoegvolgorde/foreign-key- en nullable-JSON-bindingfouten. De
+bouwer herstelt die vóór onafhankelijke beoordeling van de wijziging.
+Nog geen technische afsluiting, live herstel of eigenaaracceptatie.
+
 ## Nu
 
 | Volgorde | Kaart | Resultaat | Status |
