@@ -1,0 +1,21 @@
+{
+  "contract": "EvaOwnerAcceptance/v1",
+  "trialId": "GE-02",
+  "acceptedOn": "2026-09-12",
+  "acceptedBy": "Jaap",
+  "scope": [
+    "CO-004: eigen geheugenbronnen inzien",
+    "CO-005: bewust corrigeren en vergeten"
+  ],
+  "question": "Werkten inzien, corrigeren en vergeten alle drie goed? Dan kan ik jouw uitslag vastleggen en het geheugenonderdeel afsluiten",
+  "answer": "Klopt doe dat.",
+  "provenance": {
+    "sourceThreadId": "01a08a88-894c-7171-87fa-e681ed47c735",
+    "relayedBy": "coordinator",
+    "kind": "explicit_owner_reply"
+  },
+  "ownerAccepted": true,
+  "priorAcceptancePreserved": "CO-008 / GE-01",
+  "technicalEvidence": "eva2/evidence/product/CO-004-CO-005-owner-memory-controls-2026-09-11.json",
+  "meaning": "Het gekozen geheugenonderdeel is technisch opgeleverd en door de eigenaar geaccepteerd. Geen claim van volledige toekomstige gezins- of langetermijnambitie."
+}

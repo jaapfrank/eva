@@ -5,10 +5,10 @@ Laatst bijgewerkt: 2026-09-12.
 Doel: [Eva als zelfstandig lerende digitale huisgenoot](PROJECTDOEL.md).
 Gebouwd, getest, live en door jou geaccepteerd zijn verschillende stappen.
 
-CO-004 en CO-005 technisch afgerond en live. Jaap heeft GE-02 uitgevoerd; alleen zijn expliciete uitslag ontbreekt. GE-01 blijft geaccepteerd.
-[Actueel bewijs](evidence/product/CO-004-CO-005-owner-memory-controls-2026-09-11.json).
+Geheugen afgerond en door Jaap geaccepteerd: GE-01 en GE-02. AU-008 hervat: Eva kiest en voltooit een eigen kosteloze bijdrage binnen het mandaat.
+[Actueel bewijs](evidence/product/GE-02-owner-acceptance-2026-09-12.json).
 
-GE-02 hoeft niet opnieuw. Alleen nog bevestigen of inzien, corrigeren en vergeten alle drie goed werkten. Geen technisch restpunt binnen deze gekozen geheugenoplevering.
+Eerst actuele opgeslagen beoordelingen en resultaten lezen. Laatste beoordeling zichtbaar maken, concrete uitvoeringsfouten herstellen en een echte bijdrage tonen; geen bestaand resultaat opnieuw bouwen.
 
 ### Afzonderlijk stemwerk
 
@@ -70,7 +70,7 @@ Geen privégesprekken opnemen, geen installatie en geen gebruikersacceptatie.
 
 | Volgorde | Kaart | Resultaat | Status |
 |---:|---|---|---|
-| 146 | `AU-008` — Zelf kosteloos handelen binnen eigenaarmandaat | Eva kiest uit toegestane context een nuttige bijdrage, voert passende kosteloze stappen via haar gewone taakuitvoerder uit en toont resultaat of concrete blokkade. Stilte blijft een geldige keuze. | 🔴 GEBLOKKEERD |
+| 146 | `AU-008` — Zelf kosteloos handelen binnen eigenaarmandaat | Eva kiest uit toegestane context een nuttige bijdrage, voert passende kosteloze stappen via haar gewone taakuitvoerder uit en toont resultaat of concrete blokkade. Stilte blijft een geldige keuze. | 🟡 BEZIG |
 
 Klaar betekent:
 
@@ -232,7 +232,7 @@ Afgevinkt betekent alleen: de vastgelegde kaart is afgerond, niet het hele produ
   [Bewijs](evidence/product/CO-004-CO-005-owner-memory-controls-2026-09-11.json).
 - [x] `CO-005` — Bewaarde informatie bewust corrigeren of vergeten (done).
   [Bewijs](evidence/product/CO-004-CO-005-owner-memory-controls-2026-09-11.json).
-- [ ] `AU-008` — Zelf kosteloos handelen binnen eigenaarmandaat (blocked).
+- [ ] `AU-008` — Zelf kosteloos handelen binnen eigenaarmandaat (in_progress).
 
 </details>
 

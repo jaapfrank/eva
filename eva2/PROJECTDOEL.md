@@ -7,9 +7,8 @@ Oudere planningen en vergelijkingen blijven historische bewijsbronnen.
 ## Eigenaarbesluit 11 september 2026 — onderdelen afronden en opties kiezen
 
 Jaap wil een volledig onderdeel afronden voordat nieuw werk aan het volgende
-hoofdonderdeel begint. Het geheugenonderdeel heeft nu voorrang. CO-008 en GE-01
-blijven afgerond en geaccepteerd deelbewijs; daarmee is niet het volledige
-geheugenonderdeel geaccepteerd. Reeds afzonderlijk opgedragen stem-, wakeword-
+hoofdonderdeel begint. Op 12 september heeft hij naast GE-01 ook GE-02 expliciet
+geaccepteerd. Het gekozen geheugenonderdeel is afgesloten; AU-008 wordt hervat. Reeds afzonderlijk opgedragen stem-, wakeword-
 en herstelwerk blijft bij de bestaande taken.
 
 Voor elke optionele mogelijkheid krijgt Jaap eerst in het dashboard uitleg over
@@ -24,8 +23,7 @@ stilte en bouwt geen optionele functie voordat die is opgenomen.
 Voor het geheugen gaat dit nu over CO-004 (inzage) en CO-005 (bewust aanpassen
 of vergeten). Gewone nieuwe informatie of correcties vertellen blijft onderdeel
 van het reeds werkende automatische geheugen. Jaap heeft beide extra bedieningsroutes opgenomen. CO-004 en CO-005 zijn
-technisch afgerond en live. Jaap heeft GE-02 uitgevoerd; alleen zijn expliciete
-uitslag ontbreekt. De proef hoeft niet opnieuw. De centrale keuzegegevens komen uit
+technisch afgerond, live en door Jaap geaccepteerd (GE-02, 12 september). De centrale keuzegegevens komen uit
 `design/product/optional-scope-decisions.json`; een ontbrekend besluit is onbeslist.
 Er wordt geen tweede keuze- of acceptatieregister in het werkbord onderhouden.
 

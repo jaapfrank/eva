@@ -675,7 +675,7 @@
         {
           "id": "GE-02",
           "updatedOn": "2026-09-12",
-          "status": "awaiting_result",
+          "status": "accepted",
           "title": "Geheugen bekijken, corrigeren en vergeten",
           "change": "Live eigenaarsbediening bij Jouw geheugenbronnen: volledige tekst bekijken, nieuwe informatie doorgeven en een verwerkte bron bewust wissen.",
           "steps": [
@@ -686,16 +686,20 @@
             "Wis de twee proefbronnen met Deze bron vergeten en de bevestigingsknop. Controleer na vernieuwen dat ze uit de bronlijst verdwenen zijn. Wis ook de bron van je extra proefvraag als je die proefbeurt wilt verwijderen."
           ],
           "expected": "De volledige bron is zichtbaar; Eva gebruikt de nieuwe naam. Na het wissen verdwijnen de geselecteerde bronnen uit de lijst. Hun blijvende geheugen is technisch afzonderlijk teruggelezen: nul feiten na wissen. Andere vermeldingen en recente of Telegramberichten kunnen informatie nog bevatten en worden niet automatisch allemaal gewist.",
-          "report": "Alleen nog bevestigen of inzien, corrigeren en vergeten alle drie goed werkten; de proef hoeft niet opnieuw.",
-          "result": "Jaap meldde Gedaan en vroeg daarna het volgende te testen. De gebruikersproef is uitgevoerd; de uitslag is nog niet expliciet bevestigd. De technische oplevering blijft afgerond.",
+          "report": "Geaccepteerd door Jaap.",
+          "result": "Jaap bevestigt dat inzien, corrigeren en vergeten alle drie goed werkten: Klopt doe dat.",
           "ownerTrialPerformed": true,
           "ownerReportSource": {
             "threadId": "01a08a88-894c-7171-87fa-e681ed47c735",
             "reportedText": "Gedaan",
             "relayedBy": "coordinator",
             "registeredOn": "2026-09-12",
-            "outcomeConfirmed": false
-          }
+            "outcomeConfirmed": true,
+            "acceptanceReply": "Klopt doe dat.",
+            "acceptanceQuestion": "Werkten inzien, corrigeren en vergeten alle drie goed? Dan kan ik jouw uitslag vastleggen en het geheugenonderdeel afsluiten"
+          },
+          "ownerAccepted": true,
+          "acceptanceEvidence": "eva2/evidence/product/GE-02-owner-acceptance-2026-09-12.json"
         }
       ]
     },
@@ -774,9 +778,9 @@
       "document": "eva2/PROJECTDOEL.md",
       "scope": "Digitale huisgenoot: zelfstandig redeneren, initiatief, onbekende vaardigheden leren, handelen, zelfverbetering en aantoonbare concurrentiewinst met open-sourcehergebruik.",
       "sessionGoal": "AU-008: één zelfstandige kosteloze bijdrage via de algemene uitvoerder.",
-      "currentWork": "CO-004 en CO-005 technisch afgerond en live. Jaap heeft GE-02 uitgevoerd; alleen zijn expliciete uitslag ontbreekt. GE-01 blijft geaccepteerd.",
-      "currentEvidence": "eva2/evidence/product/CO-004-CO-005-owner-memory-controls-2026-09-11.json",
-      "nextStep": "GE-02 hoeft niet opnieuw. Alleen nog bevestigen of inzien, corrigeren en vergeten alle drie goed werkten. Geen technisch restpunt binnen deze gekozen geheugenoplevering.",
+      "currentWork": "Geheugen afgerond en door Jaap geaccepteerd: GE-01 en GE-02. AU-008 hervat: Eva kiest en voltooit een eigen kosteloze bijdrage binnen het mandaat.",
+      "currentEvidence": "eva2/evidence/product/GE-02-owner-acceptance-2026-09-12.json",
+      "nextStep": "Eerst actuele opgeslagen beoordelingen en resultaten lezen. Laatste beoordeling zichtbaar maken, concrete uitvoeringsfouten herstellen en een echte bijdrage tonen; geen bestaand resultaat opnieuw bouwen.",
       "usageClarification": {
         "date": "2026-09-07",
         "authorizedBy": "Jaap",
@@ -3794,7 +3798,7 @@
         }
       ],
       "preserveRuntime": "Core en worker bfb0d25abb7f4a1247d376050fdfd7b606e3a3285dcd19b9ee6831d3297b046d slot3 live; bestaand Hindsight CUDA-profiel en media behouden.",
-      "next": "GE-02 is uitgevoerd; alleen Jaaps expliciete uitslag ontbreekt. Geen herhaling van de volledige proef nodig. CO-004/CO-005 blijven technisch afgerond en GE-01 geaccepteerd.",
+      "next": "Het gekozen geheugenonderdeel is afgesloten en geaccepteerd. AU-008 wordt hervat.",
       "selectedDelivery": {
         "taskId": "01a07e5b-3ef4-7ef3-8a68-3197a780694e",
         "optionIds": [
@@ -3805,7 +3809,7 @@
           "0f16a210-24db-4ca2-854d-863ed207ebbd",
           "b7be4bc3-40f0-4f12-a8a8-fcc8a4b653d5"
         ],
-        "status": "technical_completed_owner_result_pending",
+        "status": "accepted",
         "outcome": "Eigen geheugenbronnen bekijken, informatie bewust corrigeren en een aangewezen bron met afgeleid geheugen vergeten; met terugmelding en behoud van persoonsgrenzen.",
         "doneWhen": [
           "Inzage en bediening werken via eigenaarsroute voor eigen Telegram- en dashboardbronnen.",
@@ -3818,7 +3822,7 @@
         "built": true,
         "tested": true,
         "live": true,
-        "ownerAccepted": false,
+        "ownerAccepted": true,
         "sourceReview": "Technische GO voor CO-004/CO-005 door /root/au002_release_review; geen resterende concrete blokker.",
         "result": "Live: volledige broninzage, actuele correctie en wissen van verwerkte bronnen. Echte proef: correctie teruggehaald, daarna nul geheugenfeiten en nul ruwe proefinhoud na wissen.",
         "evidence": "eva2/evidence/product/CO-004-CO-005-owner-memory-controls-2026-09-11.json",
@@ -3828,7 +3832,8 @@
         "reviewCommit": "4cf0efd257970425cbe9b12646630338dc5508b3",
         "integrationCommit": "8c8f011024e1feb04fea930245c7d45c49e20960",
         "technicalCompletedAt": "2026-09-11",
-        "ownerTrialPerformed": true
+        "ownerTrialPerformed": true,
+        "ownerAcceptanceEvidence": "eva2/evidence/product/GE-02-owner-acceptance-2026-09-12.json"
       },
       "legacyRecoveryAssessment": {
         "needsHelpTotal": 34,
@@ -3850,8 +3855,10 @@
         "runtimeReadinessHttpStatus": 200,
         "localOwnerMemorySourcesHttpStatus": 200,
         "verification": "Bestaande oplevering en onafhankelijke review gecontroleerd; alleen read-only bereikbaarheid gecontroleerd, geen modelaanroepen of nieuwe geheugentests.",
-        "remaining": "Expliciete GE-02-uitslag door Jaap; coordinator vraagt die eenmaal."
-      }
+        "remaining": "Geen: Jaap bevestigde GE-02 expliciet."
+      },
+      "ownerAccepted": true,
+      "ownerAcceptanceEvidence": "eva2/evidence/product/GE-02-owner-acceptance-2026-09-12.json"
     },
     "pausedInitiativeExecution20260911": {
       "id": "AU-008",
@@ -3936,6 +3943,13 @@
         "Een natuurlijk gekozen initiatief levert via de gewone uitvoerder een bruikbaar resultaat op binnen het actuele kosteloze mandaat.",
         "Resultaat en beperkingen staan op het dashboard; technische GO en Jaaps beoordeling blijven afzonderlijk."
       ]
+    },
+    "au008Resume20260912": {
+      "authorizedBy": "Jaap via coordinator",
+      "scope": "Laatste beoordeling met tijd, uitkomst, blokkade en echte bijdrage zichtbaar maken; bestaande cyclus en mandaat behouden.",
+      "noNewModelCallsForStatus": true,
+      "noBudgetIncrease": true,
+      "sourceThreadId": "01a08a88-894c-7171-87fa-e681ed47c735"
     }
   },
   "activeTaskId": "AU-008",
@@ -5737,13 +5751,13 @@
       "area": "Eigen initiatief",
       "title": "Zelf kosteloos handelen binnen eigenaarmandaat",
       "outcome": "Eva kiest uit toegestane context een nuttige bijdrage, voert passende kosteloze stappen via haar gewone taakuitvoerder uit en toont resultaat of concrete blokkade. Stilte blijft een geldige keuze.",
-      "status": "blocked",
+      "status": "in_progress",
       "stateDetails": {
         "baseCommit": null,
         "implementationCommit": null,
         "evidenceCommit": null,
         "reviewEvidencePaths": [],
-        "blockerReason": "Gepauzeerd volgens Jaaps geheugenprioriteit. CO-004/CO-005 zijn technisch afgerond en live; GE-02 staat klaar voor zijn beoordeling. Deze kaart wordt pas hervat bij het volgende toegewezen deelgoal."
+        "blockerReason": null
       },
       "ownerRole": "architecturelead",
       "reviewerRole": "memorydeliveryreviewer",
