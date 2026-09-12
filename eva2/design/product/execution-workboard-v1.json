@@ -318,9 +318,9 @@
           "tested": "partial",
           "live": "partial",
           "accepted": "partial",
-          "gap": "Herhaalde nuttige bijdragen en brede zelfstandige uitvoering. AU-008 is live; echte uitvoerproef loopt.",
-          "detail": "AU-007 is beperkt geaccepteerd. AU-008 is live met vijf bestaande werkmapfuncties en drie Home Assistant-leesfuncties, onder hetzelfde kosteloze mandaat. Eén echte zelfstandige bijdrage en bredere taakroutes blijven open.",
-          "evidence": "AU-007 afgerond en beperkt geaccepteerd · AU-008 gebouwd, gericht getest en live; productproef open",
+          "gap": "Herhaalde nuttige bijdragen en brede zelfstandige uitvoering blijven open. Verdere AU-008-ontwikkeling is na de geheugenacceptatie hervat; de actuele uitvoering en een nieuwe bijdrage vragen afzonderlijk bewijs.",
+          "detail": "AU-007 is beperkt geaccepteerd. De bestaande AU-008-implementatie en eerdere technische resultaten blijven behouden. Verdere ontwikkeling is hervat; de actuele uitvoering en eigenaarbeoordeling staan afzonderlijk.",
+          "evidence": "AU-007 afgerond en beperkt geaccepteerd · eerdere AU-008-implementatie en technische proeven behouden; verdere ontwikkeling hervat, actuele uitvoering afzonderlijk",
           "outcomes": [
             {
               "id": "initiative-private-result",
