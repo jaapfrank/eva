@@ -181,15 +181,20 @@ een spraakbeurt niet overnemen. Persistence, geheugenprovider en model zijn
 fakes. Dit bewijst geen echte Hindsight-recall, fysieke audio of duurzaam
 herstel en verandert niets aan de liveversie of eigenaaracceptatie.
 
-### AU-004 — twee-beurtenproef in uitvoering
+### AU-004 — eerste proefbeurt mislukt, oorzaakonderzoek loopt
 
 De coördinator heeft uitvoering van het bestaande plan expliciet opgedragen.
 Eerst worden twee kleine invoervarianten, ongeldige invoer en verwachte semantiek
 verzegeld. Eva maakt in de eerste gewone beurt zelf een procedure en gebruikt
 die in een tweede beurt met dezelfde hash. Bestaande grenzen blijven gelden;
 geen aangeleverde converter, extra retries, externe berichten of uitrol.
-De proefuitkomst is nog onbekend. Alleen procedurebewijs sluit de volledige
-AU-004-mijlpaal niet af. IN-02 en eerdere acceptaties blijven apart.
+De eerste gewone beurt eindigde na 69,914 seconden met HTTP503 /
+RECOVERY_FAILED. Er is geen procedure of uitvoer voor variant A gemaakt;
+variant B is niet gestart. Dezelfde uitvoerende taak onderzoekt alleen-lezen
+de oorzaak. Het definitieve bewijs wordt na ontvangst gekoppeld; geen
+herhaling of parallelle reparatie gestart. Jaap hoeft niets te doen.
+De AU-004-mijlpaal is niet afgerond of geaccepteerd. IN-02 en eerdere
+acceptaties blijven apart.
 
 ## Nu
 
