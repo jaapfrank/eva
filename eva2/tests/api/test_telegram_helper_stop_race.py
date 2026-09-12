@@ -20,9 +20,7 @@ from tests.application.test_conversation import _Memory
 from tests.bootstrap.test_delegated_work_commands import FakeStore, OWNER, BINDING, NOW
 
 
-@pytest.mark.parametrize("streaming", [False, True])
-@pytest.mark.parametrize("helper_count", [1, 2])
-def test_late_helper_start_reply_cannot_override_an_already_confirmed_stop(monkeypatch, streaming, helper_count):
+def helper_race_runtime(monkeypatch, helper_count=1):
     events = {}
     model_waiting = Event()
     release_model = Event()
@@ -96,7 +94,13 @@ def test_late_helper_start_reply_cannot_override_an_already_confirmed_stop(monke
         def commit(self, turn, reply):
             self.saved[turn.message_id] = reply
             return reply
-    runtime = Runtime()
+    return Runtime(), store, model_waiting, release_model
+
+
+@pytest.mark.parametrize("streaming", [False, True])
+@pytest.mark.parametrize("helper_count", [1, 2])
+def test_late_helper_start_reply_cannot_override_an_already_confirmed_stop(monkeypatch, streaming, helper_count):
+    runtime, store, model_waiting, release_model = helper_race_runtime(monkeypatch, helper_count)
     client = TestClient(create_app(runtime))
     with ThreadPoolExecutor() as pool:
         future = pool.submit(client.post, "/internal/v1/telegram/canary/respond", json=_payload(text="Laat een hulpagent een gezinsdag bedenken"),

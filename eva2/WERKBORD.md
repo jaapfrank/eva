@@ -162,6 +162,21 @@ De kandidaat voor twee adapter-naar-bootstrap-grenzen is gericht gecontroleerd:
 beleid te versoepelen. Onafhankelijke review staat open; nog niet live. De
 eerdere audit met 29 bevindingen blijft een afzonderlijke historische meting.
 
+### Documentatie en onderhouden opensource
+
+De actuele afspraak staat in [AGENTS.md](../AGENTS.md#onderhouden-opensource-en-bestaande-besluiten),
+met verwijzingen naar de bestaande opensourcekeuzes en documentatie-ingang.
+De documentatie-audit loopt; een selectie lezen betekent niet dat alle
+documentatie is beoordeeld. Er is geen tweede beleidsregister toegevoegd.
+
+### Spraak, geheugen en hulpwerk — beperkt aanvullend testbewijs
+
+Vijf onafhankelijk gecontroleerde tests zijn opgenomen voor gelijktijdige
+API/runtime-afhandeling: een geheugencorrectie mag de context of helper van
+een spraakbeurt niet overnemen. Persistence, geheugenprovider en model zijn
+fakes. Dit bewijst geen echte Hindsight-recall, fysieke audio of duurzaam
+herstel en verandert niets aan de liveversie of eigenaaracceptatie.
+
 ## Nu
 
 | Volgorde | Kaart | Resultaat | Status |
