@@ -77,6 +77,47 @@ def command(preparation):
     return ToolRequest(thread_id="thread", operation_id="operation", checkpoint_prefix="checkpoint", **kwargs)
 
 
+def test_registration_crosses_default_page_boundary_then_fresh_provider_composes():
+    import hashlib
+    import sqlalchemy as sa
+    from eva.providers.mcp_gateway import McpGatewayProviderFactory, McpGatewayProviderSettings
+    from tests.connectors.test_mcp_gateway import _gateway, _catalog_row, _spec
+
+    with _gateway() as (base_url, handler):
+        handler.catalog = [_catalog_row(f"existing-{i}") for i in range(48)] + [_catalog_row()]
+        settings = McpGatewayProviderSettings(
+            base_url=base_url, bearer_token="private-test-token", allow_plain_http=True,
+            specs=(_spec(),), principal_sha256_allowlist=(hashlib.sha256(b"owner").hexdigest(),),
+        )
+        engine = sa.create_engine("sqlite://")
+        before = McpGatewayProviderFactory.build(settings, engine)
+
+        class RegistrationClient(Client):
+            def register(self, *, owner_key, endpoint):
+                result = super().register(owner_key=owner_key, endpoint=endpoint)
+                handler.catalog[:0] = [_catalog_row(f"new-{i}") for i in range(4)]
+                return result
+
+        client, registry = RegistrationClient(), Registry()
+        adapter = McpRegistrationToolAdapter(client, registry, Authority(), "owner", lambda source: TURN)
+        preparation = asyncio.run(adapter.planner().prepare(TURN, ConversationActionCall(
+            "new-registration", "connect_service", {
+                "endpoint": "https://docs.example/mcp", "documentation_url": "https://docs.example/about",
+                "provenance": "Synthetic public documentation service in an offline integration fixture.",
+            },
+        )))
+        request = command(preparation)
+        dispatch = asyncio.run(adapter.execute(request))
+        assert dispatch.accepted
+        assert asyncio.run(adapter.observe(request, dispatch)).disposition == "verified"
+        assert client.registrations == 1 and len(handler.catalog) == 53
+        after = McpGatewayProviderFactory.build(settings, engine)
+        assert after is not before
+        assert after.conversation_tools == before.conversation_tools
+        assert after.external_tools[0].action_names == ("echo_proof",)
+        engine.dispose()
+
+
 def test_connect_readback_then_discover_uses_actual_source_and_host_catalog():
     client, registry, authority = Client(), Registry(), Authority()
     adapter = McpRegistrationToolAdapter(client, registry, authority, "owner", lambda source: TURN)

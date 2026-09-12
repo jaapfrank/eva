@@ -208,8 +208,8 @@ def test_parameterless_mcp_schema_keeps_original_catalog_pin(monkeypatch):
     assert spec.execute_catalog_sha256 == spec.observe_catalog_sha256 == original_hash
     adapter = McpGatewayToolAdapter(McpGatewayConfig("https://gateway.example", "fixture"), (spec,))
     def catalog_read(method, path, payload):
-        assert (method, path, payload) == ("GET", "/tools", None)
-        return [row]
+        assert (method, path, payload) == ("GET", "/tools?include_pagination=true&limit=50", None)
+        return {"tools": [row], "nextCursor": None}
     monkeypatch.setattr(adapter, "_request_json", catalog_read)
     asyncio.run(adapter.verify_catalog())
     prepared = asyncio.run(adapter.planner().prepare(source_turn(),

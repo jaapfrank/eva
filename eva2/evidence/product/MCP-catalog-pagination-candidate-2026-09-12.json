@@ -1,0 +1,50 @@
+{
+  "status": "pending_independent_review",
+  "baseCommit": "f8c21c1abb421176fd0ac91816ba423120066208",
+  "sourceCommit": "de689de95007c69a93397be022c9f2b2654c0af5",
+  "liveImage": "sha256:542597c376ef56c7a9aac49184ac7991b811f4b1c2b17e735844ce4af9719229",
+  "problem": "Default gateway /tools response truncates at 50 without pagination metadata, hiding required workspace read tool after total catalog reached 53. Fresh runtime composition fails while existing core keeps its admitted catalog.",
+  "observation": {
+    "default_count": 50,
+    "paginated_count": 53,
+    "pages": [
+      {
+        "rows": 50,
+        "has_next_cursor": true
+      },
+      {
+        "rows": 3,
+        "has_next_cursor": false
+      }
+    ],
+    "required": [
+      "eva-workspace-get-file-info",
+      "eva-workspace-list-directory",
+      "eva-workspace-read-text-file",
+      "eva-workspace-search-files",
+      "eva-workspace-write-file"
+    ],
+    "legacy_missing": [
+      "eva-workspace-read-text-file"
+    ],
+    "paginated_missing": [],
+    "registry_mutations": 0,
+    "model_calls": 0
+  },
+  "upstreamContract": "Installed ContextForge /app/mcpgateway/main.py list_tools supports include_pagination=true, limit and cursor; returns tools and nextCursor. Default page size is 50.",
+  "change": "Fetch all pages using escaped opaque cursors before original required schema/hash validation. Reject malformed/missing metadata, non-progress/repeated cursor, duplicate names, >1024 entries and later page failures. Prior admission cleared before first request.",
+  "tests": {
+    "passed": 124,
+    "baseline": "Required tool on page two fails before fix",
+    "baselineSha256": "8f3ac0899fb54f1499deb23fe8cded53c7f8c1ca3b76947f98fcb0ab570126ae",
+    "testLogSha256": "c88556e0c33cb74615d1ecd5563e5ac7290570349e3f4edd2277bd3f3d9316da"
+  },
+  "runtimeFilesChanged": [
+    "eva2/src/eva/adapters/connectors/mcp_gateway.py"
+  ],
+  "registryMutations": 0,
+  "gatewayRestarts": 0,
+  "coreRestarts": 0,
+  "modelCalls": 0,
+  "ownerAcceptance": false
+}

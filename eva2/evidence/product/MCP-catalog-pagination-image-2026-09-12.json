@@ -1,0 +1,46 @@
+{
+  "parent": "sha256:542597c376ef56c7a9aac49184ac7991b811f4b1c2b17e735844ce4af9719229",
+  "image": "sha256:d2d58938ef58ce19bdfcd16aea745ae3d743cc409169db21e230c379ddc43081",
+  "runtime_config_identical": true,
+  "parent_layers_preserved": true,
+  "changed_files": [
+    "eva/adapters/connectors/mcp_gateway.py"
+  ],
+  "source_file_count": 258,
+  "changed_file_sha256": "183db5ed63a2f4d6d857bb1d35718b7ffbe9789a4dfd7f56aef7cda135e78930",
+  "source_commit": "de689de95007c69a93397be022c9f2b2654c0af5",
+  "fresh_factory": {
+    "fresh_runtime_factory": "passed",
+    "route_count": 62,
+    "catalog_reads": [
+      {
+        "path_kind": "/tools",
+        "rows": 50
+      },
+      {
+        "path_kind": "/tools",
+        "rows": 3
+      }
+    ],
+    "lifespan_started": false,
+    "model_calls": 0,
+    "gateway_mutations": 0,
+    "database_mutations": 0,
+    "all_mounts_read_only": true
+  },
+  "review": {
+    "sourceDecision": "GO",
+    "sourceCommit": "de689de95007c69a93397be022c9f2b2654c0af5",
+    "reviewerTask": "01a08a88-894c-7171-87fa-e681ed47c735",
+    "independentTestsRerun": false
+  },
+  "testEvidence": {
+    "connectorSuitePassed": 124,
+    "additionalRegistrationProviderCompositionTestPassed": 1,
+    "suiteSha256": "c88556e0c33cb74615d1ecd5563e5ac7290570349e3f4edd2277bd3f3d9316da",
+    "integrationSha256": "324dfa2dcc8760aeed3f7462346e9ffd27f551b0bc34312d8feaa9653631d3e1"
+  },
+  "factoryGuardNote": "First attempt with PostgreSQL read-only transaction rejected the existing SELECT FOR SHARE owner authority check. Final proof retains SQL statement guard (SELECT/SET/SHOW only) and gateway GET-only guard, read-only mounts and no lifespan. No production change for this probe limitation.",
+  "activation": "pending coordinator imageGO and cutover",
+  "registryMutations": 0
+}

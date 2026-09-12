@@ -373,9 +373,30 @@ class McpGatewayToolAdapter:
         # A rejected re-admission must not leave an earlier catalog usable.
         self._verified_input_schemas = {}
         self._verified_output_schemas = {}
-        rows = await asyncio.to_thread(self._request_json, "GET", "/tools", None)
-        if not isinstance(rows, list) or len(rows) > 1_024:
-            raise RuntimeError("MCP gateway catalog is invalid")
+        rows: list[Any] = []
+        cursor: str | None = None
+        seen_cursors: set[str] = set()
+        while True:
+            query = {"include_pagination": "true", "limit": "50"}
+            if cursor is not None:
+                query["cursor"] = cursor
+            page = await asyncio.to_thread(
+                self._request_json, "GET", "/tools?" + parse.urlencode(query), None
+            )
+            if (not isinstance(page, dict) or "nextCursor" not in page
+                    or not isinstance(page.get("tools"), list)):
+                raise RuntimeError("MCP gateway catalog page is invalid")
+            rows.extend(page["tools"])
+            if len(rows) > 1_024:
+                raise RuntimeError("MCP gateway catalog is invalid")
+            cursor = page["nextCursor"]
+            if cursor is None:
+                break
+            if (not isinstance(cursor, str) or not cursor or len(cursor) > 4_096
+                    or cursor in seen_cursors or not page["tools"]
+                    or len(rows) == 1_024):
+                raise RuntimeError("MCP gateway catalog cursor is invalid")
+            seen_cursors.add(cursor)
         by_name: dict[str, dict[str, Any]] = {}
         for row in rows:
             if not isinstance(row, dict) or not isinstance(row.get("name"), str):

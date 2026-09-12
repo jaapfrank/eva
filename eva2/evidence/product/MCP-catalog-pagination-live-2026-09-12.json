@@ -1,0 +1,180 @@
+{
+  "utc": "2026-09-12T19:22:20.805379+00:00",
+  "parent": "sha256:542597c376ef56c7a9aac49184ac7991b811f4b1c2b17e735844ce4af9719229",
+  "image": "sha256:d2d58938ef58ce19bdfcd16aea745ae3d743cc409169db21e230c379ddc43081",
+  "only_services": [
+    "core",
+    "delegated-work-worker"
+  ],
+  "protected_before": {
+    "eva2-owner-voice-media-1": {
+      "id": "6ca020c3b9c5c532a3ccdf09654ac652a62d043e7ce3c3c86180744c6b526fc4",
+      "startedAt": "2026-09-12T18:27:00.356202841Z",
+      "image": "sha256:bf2148239bf009b1924d4134ba67fcdbf1ccae64f436add5e9f77e161226922b",
+      "state": "running",
+      "health": null
+    },
+    "eva2-owner-voice-livekit-1": {
+      "id": "dbe9c8396a3bd2974dd1a40264d7ad855d5077cc14235325b058cfa2dacd17dd",
+      "startedAt": "2026-09-12T18:27:00.243742236Z",
+      "image": "sha256:770bc61bc6ec4dcccbd3e05082d8f6bdafbee4179acab7014cc97202a9e2910b",
+      "state": "running",
+      "health": null
+    },
+    "eva2-managed-b-slot3-hindsight-1": {
+      "id": "8bd5bc29a82d6040a34a1f665872b8bc71aa0a9e4ed5d2b659a31e7f3b7f0e4c",
+      "startedAt": "2026-09-12T18:27:00.406300845Z",
+      "image": "sha256:20d72ad34164bd1a67906c4d61b57a51f2b255c49ddf8cb7ac5e901ebc3b3710",
+      "state": "running",
+      "health": "healthy"
+    },
+    "eva2-managed-b-slot3-postgres-1": {
+      "id": "a6a0de657f01d6792544863237cbbb03be407f0e3fa98f0dc9d317097051cb1b",
+      "startedAt": "2026-09-12T18:27:00.379142399Z",
+      "image": "sha256:7e641ed0cf38285bebfc6151ba48243439dfe9cf3306feab4023a812466cd6c1",
+      "state": "running",
+      "health": "healthy"
+    },
+    "eva2-managed-b-slot3-hindsight-postgres-1": {
+      "id": "3e97b7da44e125e5e4f2d6d1f824025fed5c33903729db9a3ef7edb9c0aa594b",
+      "startedAt": "2026-09-12T18:27:00.284536583Z",
+      "image": "sha256:7e641ed0cf38285bebfc6151ba48243439dfe9cf3306feab4023a812466cd6c1",
+      "state": "running",
+      "health": "healthy"
+    },
+    "eva2-managed-b-slot3-model-access-lease-1": {
+      "id": "7ac6a2e5d135d8f653233caa527fd80040cecf7927b789615b5bcd6551d2aa45",
+      "startedAt": "2026-09-12T18:27:00.31427344Z",
+      "image": "sha256:455be8e6f52adcf2f16288ad76793f150684c058753de3d8d84730a7ce623f7e",
+      "state": "running",
+      "health": null
+    },
+    "eva2-managed-b-slot3-hindsight-access-lease-1": {
+      "id": "71c0e737cce5a68bc5b7c1e4f48b587d0df5b5dc3fc93d720823bba85943f176",
+      "startedAt": "2026-09-12T18:27:00.240993055Z",
+      "image": "sha256:455be8e6f52adcf2f16288ad76793f150684c058753de3d8d84730a7ce623f7e",
+      "state": "running",
+      "health": null
+    }
+  },
+  "protected_after": {
+    "eva2-owner-voice-media-1": {
+      "id": "6ca020c3b9c5c532a3ccdf09654ac652a62d043e7ce3c3c86180744c6b526fc4",
+      "startedAt": "2026-09-12T18:27:00.356202841Z",
+      "image": "sha256:bf2148239bf009b1924d4134ba67fcdbf1ccae64f436add5e9f77e161226922b",
+      "state": "running",
+      "health": null
+    },
+    "eva2-owner-voice-livekit-1": {
+      "id": "dbe9c8396a3bd2974dd1a40264d7ad855d5077cc14235325b058cfa2dacd17dd",
+      "startedAt": "2026-09-12T18:27:00.243742236Z",
+      "image": "sha256:770bc61bc6ec4dcccbd3e05082d8f6bdafbee4179acab7014cc97202a9e2910b",
+      "state": "running",
+      "health": null
+    },
+    "eva2-managed-b-slot3-hindsight-1": {
+      "id": "8bd5bc29a82d6040a34a1f665872b8bc71aa0a9e4ed5d2b659a31e7f3b7f0e4c",
+      "startedAt": "2026-09-12T18:27:00.406300845Z",
+      "image": "sha256:20d72ad34164bd1a67906c4d61b57a51f2b255c49ddf8cb7ac5e901ebc3b3710",
+      "state": "running",
+      "health": "healthy"
+    },
+    "eva2-managed-b-slot3-postgres-1": {
+      "id": "a6a0de657f01d6792544863237cbbb03be407f0e3fa98f0dc9d317097051cb1b",
+      "startedAt": "2026-09-12T18:27:00.379142399Z",
+      "image": "sha256:7e641ed0cf38285bebfc6151ba48243439dfe9cf3306feab4023a812466cd6c1",
+      "state": "running",
+      "health": "healthy"
+    },
+    "eva2-managed-b-slot3-hindsight-postgres-1": {
+      "id": "3e97b7da44e125e5e4f2d6d1f824025fed5c33903729db9a3ef7edb9c0aa594b",
+      "startedAt": "2026-09-12T18:27:00.284536583Z",
+      "image": "sha256:7e641ed0cf38285bebfc6151ba48243439dfe9cf3306feab4023a812466cd6c1",
+      "state": "running",
+      "health": "healthy"
+    },
+    "eva2-managed-b-slot3-model-access-lease-1": {
+      "id": "7ac6a2e5d135d8f653233caa527fd80040cecf7927b789615b5bcd6551d2aa45",
+      "startedAt": "2026-09-12T18:27:00.31427344Z",
+      "image": "sha256:455be8e6f52adcf2f16288ad76793f150684c058753de3d8d84730a7ce623f7e",
+      "state": "running",
+      "health": null
+    },
+    "eva2-managed-b-slot3-hindsight-access-lease-1": {
+      "id": "71c0e737cce5a68bc5b7c1e4f48b587d0df5b5dc3fc93d720823bba85943f176",
+      "startedAt": "2026-09-12T18:27:00.240993055Z",
+      "image": "sha256:455be8e6f52adcf2f16288ad76793f150684c058753de3d8d84730a7ce623f7e",
+      "state": "running",
+      "health": null
+    }
+  },
+  "services": {
+    "eva2-managed-b-slot3-core": {
+      "id": "85e67c58d8029e2abf282460d8e88985ad7a794dc7aa8ac879584a51b610ceef",
+      "startedAt": "2026-09-12T19:21:55.318169393Z",
+      "image": "sha256:d2d58938ef58ce19bdfcd16aea745ae3d743cc409169db21e230c379ddc43081",
+      "state": "running",
+      "health": "healthy"
+    },
+    "eva2-managed-b-slot3-delegated-work-worker-1": {
+      "id": "13a269e38b223df95398bb3aa911e3b705c32f1b780aa2fb5d38889f38c26f41",
+      "startedAt": "2026-09-12T19:22:06.885382409Z",
+      "image": "sha256:d2d58938ef58ce19bdfcd16aea745ae3d743cc409169db21e230c379ddc43081",
+      "state": "running",
+      "health": "healthy"
+    }
+  },
+  "candidate_env_unchanged": true,
+  "background_work_enabled": true,
+  "readiness": {
+    "core": {
+      "status": 200,
+      "body": {
+        "database": "ready",
+        "detail": null,
+        "memory_projection": "ready",
+        "model_provider": "ready",
+        "ready": true
+      }
+    },
+    "voice": {
+      "status": 200,
+      "body": {
+        "ready": true
+      }
+    }
+  },
+  "database_restore": false,
+  "live_source_sha256": "183db5ed63a2f4d6d857bb1d35718b7ffbe9789a4dfd7f56aef7cda135e78930",
+  "fresh_factory": {
+    "fresh_runtime_factory": "passed",
+    "route_count": 62,
+    "catalog_reads": [
+      {
+        "path_kind": "/tools",
+        "rows": 50
+      },
+      {
+        "path_kind": "/tools",
+        "rows": 3
+      }
+    ],
+    "lifespan_started": false,
+    "model_calls": 0,
+    "gateway_mutations": 0,
+    "database_mutations": 0,
+    "probe_kind": "fresh process inside live core; no lifespan"
+  },
+  "review": {
+    "source": "GO",
+    "image": "GO",
+    "coordinator": "01a08a88-894c-7171-87fa-e681ed47c735",
+    "sourceCommit": "de689de95007c69a93397be022c9f2b2654c0af5"
+  },
+  "preflight": {
+    "voice_rooms": 0,
+    "active_owned_helpers": 0
+  },
+  "ownerAcceptance": false,
+  "candidate_mount_claim_qualification": "Candidate probe used Docker --read-only and --volumes-from core:ro; all_mounts_read_only in its output records invocation intent, not an independently retained Docker mount-inspection receipt."
+}
