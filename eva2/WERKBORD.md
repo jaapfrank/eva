@@ -557,6 +557,20 @@ met gecontroleerde providers. Er is geen client-ACK of echte gebruikersafleverin
 bewezen. Budgetten, volledig verbruik, herstel en productranking blijven open.
 [Contractbewijs](reviews/cp001-native-bottie-delivery-2026-09-12.md).
 
+
+### CP-001 lokale Bottie-ontvangstbevestiging — kandidaat in review
+
+De bestaande P-256-ACK-route is lokaal uitgevoerd met werkelijk ontvangen
+antwoordbytes. De maker rapporteert verkeerde sleutel400, gewijzigde correct
+ondertekende antwoordhash400, geldige ACK200 en identieke herhaling200.
+Een aparte SQLite-reader toont nul afleveringsregistraties na ongeldige ACK's
+en exact één na geldig plus herhaling; modelstubcalls blijven twee.
+
+Kandidaat7f5bc5fe/bewijs78aeda2c wacht op onafhankelijke review,36 tests
+gerapporteerd. Het gaat om een lokale cryptografische testclient; geen bewijs
+dat Jaap iets heeft ontvangen/geaccepteerd, geen live- of crashherstelclaim.
+Providerverbruik, budgetten, productadmission en ranking blijven onbekend.
+
 ## Nu
 
 | Volgorde | Kaart | Resultaat | Status |
