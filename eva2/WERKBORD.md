@@ -436,6 +436,20 @@ is niet gestart. Dit sluit de technische reparaties af, niet AU-004 als geheel.
 Geen fysieke spraak-, autonome modelkwaliteit- of eigenaaracceptatieclaim.
 [Installatiebewijs](evidence/product/Research-voice-combined-live-2026-09-12.json).
 
+
+### CP-001 echte ingang en PostgreSQL — contractproef in review
+
+De maker rapporteert vier echte databaseproeven groen: exact antwoord/replay,
+afwijzen van verkeerde conversation, historie per sessie en weigeren van een
+andere werkelijk opgeslagen journalrij. De echte FastAPI/runtime/journalketen
+en aparte read-only SQL-engine zijn gebruikt; model en semantisch geheugen
+blijven stubs. Samen met bestaande controles zijn36 tests gerapporteerd.
+
+De geïsoleerde PostgreSQL16.13-testomgeving is opgeruimd; geen productiegegevens
+of modellen benaderd. Kandidaat77664349/bewijs4cadbb75 wacht op onafhankelijke
+review en is nog niet geïntegreerd. Providerverbruik, productkwaliteit,
+Bottie, gelijke serverbudgetten en serverstop blijven open.
+
 ## Nu
 
 | Volgorde | Kaart | Resultaat | Status |
