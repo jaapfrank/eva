@@ -103,11 +103,12 @@ class DelegatedWorkConversationCommands:
         work = jobs[0]
         labels = {
             "admitted": "ingepland",
-            "call_started": "bezig",
+            "call_started": "gestart; er is nog geen bevestigde uitkomst",
             "stopped": "gestopt; wordt alleen op jouw verzoek hervat",
             "succeeded": "klaar; je kunt het resultaat opvragen",
             "verified": "klaar en gecontroleerd; je kunt het resultaat opvragen",
             "failed": "mislukt; er is geen geslaagd resultaat",
+            "needs_help": "vraagt aandacht; er is geen geslaagd resultaat",
             "ambiguous": "uitkomst onzeker; wordt niet automatisch opnieuw uitgevoerd",
             "expired": "verlopen; wordt niet automatisch opnieuw uitgevoerd",
         }

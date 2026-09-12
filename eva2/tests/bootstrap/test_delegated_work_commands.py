@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import json
-from datetime import UTC, datetime
+from datetime import UTC, datetime, timedelta
 from types import SimpleNamespace
 from uuid import UUID
 
@@ -68,6 +68,7 @@ class FakeStore:
                                     deadline="2026-08-26T14:05:00Z"),
             "title": "Onderzoek", "state": "admitted", "call_id": None,
             "stop_requested_at": None, "result": None, "usage": None,
+            "lease_expires_at": NOW + timedelta(seconds=30),
             "error_code": None, "error_fingerprint": None,
         }
         return SimpleNamespace(**(defaults | values))
@@ -316,7 +317,8 @@ def test_legacy_saved_reply_is_not_released_after_database_binding_revocation():
 
 
 @pytest.mark.parametrize(("state", "stop_requested", "expected"), [
-    ("call_started", False, "bezig"),
+    ("call_started", False, "gestart; er is nog geen bevestigde uitkomst"),
+    ("needs_help", False, "vraagt aandacht; er is geen geslaagd resultaat"),
     ("call_started", True, "stopopdracht bewaard; het resultaat wordt niet geleverd"),
     ("stopped", True, "gestopt; wordt alleen op jouw verzoek hervat"),
     ("succeeded", False, "klaar; je kunt het resultaat opvragen"),
@@ -345,3 +347,20 @@ def test_result_is_readable_without_changing_or_discarding_stored_content(output
     assert reply.text == expected
     assert result.output == output
     assert store.admitted == []
+
+
+@pytest.mark.parametrize("lease_expires_at", [None, NOW - timedelta(seconds=1), NOW, NOW + timedelta(seconds=30)])
+@pytest.mark.parametrize("stop_requested", [False, True])
+def test_status_does_not_infer_live_worker_activity_from_persisted_call(lease_expires_at, stop_requested):
+    store = FakeStore()
+    store.owned_work = [store._work(
+        state="call_started", lease_expires_at=lease_expires_at,
+        stop_requested_at=NOW if stop_requested else None,
+    )]
+    reply = _commands(store).handle(_turn("Hoe staat mijn onderzoek?"), principal_binding_id=BINDING)
+    assert "bezig" not in reply.text
+    assert "actief" not in reply.text
+    if stop_requested:
+        assert "stopopdracht bewaard; het resultaat wordt niet geleverd" in reply.text
+    else:
+        assert "gestart; er is nog geen bevestigde uitkomst" in reply.text
