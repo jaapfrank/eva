@@ -543,6 +543,20 @@ acceptatie zijn hiermee niet afgerond.
 [Lees het resultaat](http://localhost:44712/results/au004-procedure) ·
 [Bewijs](evidence/product/AU-004-procedure-attempt3-B-2026-09-12.json).
 
+
+### CP-001 Bottie-ingang en SQLite — begrensde contractproef afgerond
+
+Onafhankelijke GO:13 bron- en15 bewijshashes,35 JUnitresultaten en zes
+readbacks zijn gecontroleerd; drie SQLite-snapshots zijn immutable heropend.
+Exacte replay doet geen extra providerstubcalls, ontbrekende sleutel geeft400,
+gewijzigde intentie409 en een verkeerde sessierij wordt geweigerd. De vijf
+beoordeelde bron-/test-/documentatiebestanden zijn exact geïntegreerd.
+
+De Eva2/PG- en Bottie/SQLite-ingangscontracten zijn nu afzonderlijk bewezen
+met gecontroleerde providers. Er is geen client-ACK of echte gebruikersaflevering
+bewezen. Budgetten, volledig verbruik, herstel en productranking blijven open.
+[Contractbewijs](reviews/cp001-native-bottie-delivery-2026-09-12.md).
+
 ## Nu
 
 | Volgorde | Kaart | Resultaat | Status |

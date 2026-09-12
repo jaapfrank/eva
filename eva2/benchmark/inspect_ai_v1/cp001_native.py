@@ -55,7 +55,9 @@ def preflight(root: Path = ROOT) -> dict:
             "complete per-sample helper/memory/retry usage not bound",
         ]
         if name == "eva1-bottie":
-            blockers.append("public reply has no request-bound native usage receipt")
+            blockers.append(
+                "public reply has no request-bound native usage receipt; client ACK key/receipt not admitted"
+            )
         if any(value is None for value in hashes.values()):
             blockers.append("required native source missing")
         participants[name] = {
@@ -83,6 +85,7 @@ def request_for(
     step: int,
     text: str,
     occurred_at: str,
+    client_ack_public_key: dict | None = None,
 ) -> tuple[str, dict]:
     """Translate identical text into the real ingress contract; no history injection.
 
@@ -124,11 +127,14 @@ def request_for(
             "occurred_at": occurred_at,
             "text": text,
         }
-    return "/api/chat", {
+    body = {
         "conversation_id": f"web:{conversation}",
         "request_id": message,
         "text": text,
     }
+    if client_ack_public_key is not None:
+        body["client_ack_public_key"] = dict(client_ack_public_key)
+    return "/api/chat", body
 
 
 def response_text(participant: str, body: dict, response: dict) -> str:

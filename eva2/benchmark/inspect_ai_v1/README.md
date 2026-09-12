@@ -281,3 +281,50 @@ verkeerde echte journalrij met dezelfde eigenaar én antwoordtekst. De getallen
 23/7 tokens komen uit de gecontroleerde modelstub en bewijzen alleen dat de echte
 journal die velden bewaart. Zij meten geen productmodelkosten. Bottie, model-
 kwaliteitswinst, volledige usage en native liveadmission blijven open.
+
+## Native Bottie-route + echte SQLite-readback (offline contractproef)
+
+`test_cp001_native_bottie.py` verbindt dezelfde Python-adapter met de echte
+Bottie `/api/chat`, agentverwerking, modeltransportlaag en SQLite HTTP-journal.
+De kleine `cp001_bottie_worker.mjs` hergebruikt het gecontroleerde Responses-
+modelpatroon uit `test/web-agent-ingress.test.js`. Alleen provider-Responses zijn
+stubs; HTTP-antwoorden of journalrijen worden niet door de test geconstrueerd.
+Alle externe fetches zijn afgesloten. Iedere worker krijgt een aparte Linux
+user/network namespace met uitsluitend loopback, lege private tijdelijke
+SQLite-data en een beperkte omgeving zonder productiecredentials.
+
+De echte route maakte een ontbrekend contractdetail zichtbaar: een
+`client_ack_public_key` is verplicht. `request_for` accepteert die nu optioneel
+voor Bottie. De fixture genereert hiervoor een P-256-publieke sleutel via Node
+crypto, zoals de bestaande HTTP-tests. Zonder sleutel geeft de echte route
+HTTP 400 vóór een modelstubcall. De native voorcontrole blijft zonder toegelaten
+sleutel/ACK-route unknown. Een opgeslagen antwoord is hier **geen bevestigde
+gebruikersaflevering**: de proef voert geen client-ACK uit.
+
+Een onafhankelijke Python `sqlite3`-verbinding opent de database read-only,
+selecteert de persistente response via channel/conversation/request, en
+controleert de opgeslagen public_body_sha256. Daarna controleert de adapter
+de antwoordbinding. De SQLite-data wordt na afsluiten van de Node-worker opnieuw
+geopend; met optionele evidence-map blijven snapshots en echte readbacks behouden.
+
+Vanuit `eva2`, met Node >=22.22 en de bestaande lokaal beschikbare Bottie npm-
+dependencies in de checkout (geen symlink-root; runtime-herkomstcontrole weigert
+symbolische omleiding):
+
+```bash
+CP001_BOTTIE_EVIDENCE_DIR=/private/new-evidence \
+  python3 -m pytest -q tests/benchmark/test_cp001_native_bottie.py
+```
+
+De evidence-map moet vooraf bestaan. Tests dekken intacte reply/persistente
+replay zonder extra stubcalls, verplichte ACK-key, conflict bij veranderde
+tekst met dezelfde requestscope en weigering van een verkeerde echte rij uit
+een andere sessie met hetzelfde antwoord. De originele SQLite-scope bestaat uit
+channel + conversation + request; deze wordt niet tot EVA2's andere
+message-scope omgedefinieerd.
+
+Providerverbruik, totale model/toolcalls en runtimebudgetten zijn niet beschikbaar
+in deze publieke reply. Ze blijven null/unknown; fixture-stubcalltellingen zijn
+diagnostiek, geen gemeten productmodelkosten. Geen Bottie-productiecode is gewijzigd.
+Dit contractbewijs en het eerdere EVA2/PG-bewijs vormen nog geen gelijkwaardige
+productvergelijking, geheugenkwaliteit, volledige ACK/recovery-proef of winstclaim.
