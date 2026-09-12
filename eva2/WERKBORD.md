@@ -388,6 +388,13 @@ livewijziging of derde AU-004-poging. De volledige HTTP-context is niet duurzaam
 gefingerprint; gescripte researchproeven bewijzen geen autonome modelkwaliteit.
 De releasebasis blijft buiten de gedeelde bronintegratie.
 
+
+De CP-001-readbackcorrectie is aangeleverd als8f446c85 en wacht op herreview
+door dezelfde reviewer. Alle vijf replyvelden zijn nu vereist; de maker
+rapporteert32 gerichte tests groen. Het oorspronkelijke NO-GO blijft zichtbaar.
+Native toegang/queryscope, serverbudgetten en herstel zijn nog niet bewezen;
+geen kandidaatbron geïntegreerd of productaanroep uitgevoerd.
+
 ## Nu
 
 | Volgorde | Kaart | Resultaat | Status |
