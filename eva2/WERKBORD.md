@@ -615,6 +615,32 @@ algemene architectuur-/eigenaargoedkeuring. De onzekere Telegram-uursleutel
 21:00 blijft onveranderd; deze uitrol maakt die niet alsnog succesvol.
 [Livebewijs](evidence/architecture/adapter-boundaries-live-2026-09-12.json).
 
+
+### CP-001 Bottie-procesherstel — kleine herstelgrens afgerond
+
+De onafhankelijke reviewer geeft GO voor SIGKILL na voorbereide response
+en vóór ACK, met behouden database/WAL en clientsleutel. Een nieuw proces
+replayt zonder providerstubaanroep en geldig plus identiek ACK geeft één
+afleveringsregistratie. Bronhashes, JUnit37, SQLreadbacks, PID/netwerknamespace
+en de callreeks zijn gecontroleerd. De vier beoordeelde bestanden zijn opgenomen.
+Geen OS-/stroomuitval-/mid-write- of algemene recovery/gebruikersacceptatieclaim.
+[Herstelbewijs](reviews/cp001-bottie-restart-delivery-2026-09-12.md).
+
+### Gedeelde schemavalidator — bron technisch klaar, nog niet live
+
+Gateway en initiatiefopslag gebruiken nu dezelfde bestaande validator via de
+applicationlaag. Onafhankelijke review bevestigt dezelfde AST, recursie,
+fouten en defaults;81 gateway/profiel- en6 geïsoleerde PG-proeven slagen.
+De canonical baseline a0cd ging van28 naar27 bevindingen; dit is niet de
+live-imagetelling. Geen nieuwe schema-engine of ruimere toegelaten invoer.
+De zes bron-/test-/bewijsbestanden zijn geïntegreerd. Imagevoorbereiding kan
+afzonderlijk volgen; er is geen nieuw image of livegang geclaimd.
+[Bronbewijs](evidence/architecture/shared-schema-validation-2026-09-12.json).
+
+De volgende reguliere Telegramupdate is gepland niet vóór22:41:38UTC,
+minimaal60minuten na de onzekere poging.21:00 blijft uncertain; de laatst
+bevestigde verzending blijft20:40:11UTC.
+
 ## Nu
 
 | Volgorde | Kaart | Resultaat | Status |

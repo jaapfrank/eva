@@ -3,11 +3,16 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import readline from 'node:readline';
-import { generateKeyPairSync, sign } from 'node:crypto';
+import { generateKeyPairSync, sign, createPrivateKey, createPublicKey, createHash } from 'node:crypto';
 
 const dataDir = fs.realpathSync(process.argv[2]);
-if (!dataDir.startsWith('/tmp/cp001-bottie-') || fs.readdirSync(dataDir).length) {
+const resume = process.argv[3] === '--resume';
+if (!dataDir.startsWith('/tmp/cp001-bottie-') || (!resume && fs.readdirSync(dataDir).length)) {
   throw new Error('new private CP001 temporary directory required');
+}
+const keyFile = path.join(dataDir, '.cp001-client-key.pem');
+if (resume && (!fs.lstatSync(keyFile).isFile() || !fs.lstatSync(path.join(dataDir, 'eva.db')).isFile())) {
+  throw new Error('resume requires the fixture database and original private key');
 }
 process.env.EVA_DATA_DIR = dataDir;
 process.env.OPENAI_API_KEY = 'test-only';
@@ -30,6 +35,7 @@ globalThis.fetch = async (input) => {
     throw new Error('external network disabled in CP001 fixture');
   }
   providerCalls += 1;
+  if (resume) throw new Error('provider generation forbidden after fixture restart');
   if (providerCalls % 2 === 1) {
     return completed([{ type: 'function_call', call_id: 'cp001-understanding',
       name: 'commit_turn_understanding', arguments: JSON.stringify({
@@ -46,7 +52,16 @@ globalThis.fetch = async (input) => {
 };
 const { db } = await import('../../../src/db.js');
 const { startWeb } = await import('../../../src/web/server.js');
-const keyPair = generateKeyPairSync('ec', { namedCurve: 'prime256v1' });
+const privateKey = resume ? createPrivateKey(fs.readFileSync(keyFile))
+  : generateKeyPairSync('ec', { namedCurve: 'prime256v1' }).privateKey;
+if (!resume) {
+  const fd = fs.openSync(keyFile, 'wx', 0o600);
+  try {
+    fs.writeFileSync(fd, privateKey.export({ type: 'pkcs8', format: 'pem' }));
+    fs.fsyncSync(fd);
+  } finally { fs.closeSync(fd); }
+}
+const keyPair = { privateKey, publicKey: createPublicKey(privateKey) };
 const key = keyPair.publicKey.export({ format: 'jwk' });
 const { canonicalHttpClientAckPreimage, canonicalHttpWireSha256 } = await import('../../../src/web/httpack.js');
 let lastExchange = null;
@@ -54,7 +69,9 @@ const publicKey = { contract: 'HttpClientAckPublicKey/v3', algorithm: 'ES256', k
 const server = await startWeb();
 const base = `http://127.0.0.1:${server.address().port}`;
 const send = (value) => process.stdout.write(JSON.stringify(value) + '\n');
-send({ ready: true, database: path.join(dataDir, 'eva.db'), public_key: publicKey });
+send({ ready: true, database: path.join(dataDir, 'eva.db'), public_key: publicKey,
+  resumed: resume, pid: process.pid, network_namespace: fs.readlinkSync('/proc/self/ns/net'),
+  key_file_sha256: createHash('sha256').update(fs.readFileSync(keyFile)).digest('hex') });
 try {
   for await (const line of readline.createInterface({ input: process.stdin })) {
     const request = JSON.parse(line);

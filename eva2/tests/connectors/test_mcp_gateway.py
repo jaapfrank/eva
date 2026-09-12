@@ -22,6 +22,7 @@ from eva.adapters.connectors.mcp_gateway import (
     McpGatewayToolSpec,
     mcp_gateway_catalog_binding,
 )
+from eva.application.schema_validation import validate_schema_value
 from eva.application.conversation import (
     ConversationActionCall,
     ConversationConflict,
@@ -500,7 +501,7 @@ def test_nested_provider_object_accepts_valid_additional_properties_keyword(
         "type": "object",
     }
 
-    mcp_gateway_module._validate_schema_value(
+    validate_schema_value(
         {"nested": {"value": "begrensd"}},
         schema,
         "provider_arguments",
@@ -526,7 +527,7 @@ def test_nested_provider_object_rejects_invalid_additional_properties_keyword(
     }
 
     with pytest.raises(ConversationConflict, match="fields are invalid"):
-        mcp_gateway_module._validate_schema_value(
+        validate_schema_value(
             {"nested": {"value": "begrensd"}},
             schema,
             "provider_arguments",

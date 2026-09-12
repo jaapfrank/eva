@@ -27,29 +27,34 @@ def bottie(request):
     with tempfile.TemporaryDirectory(prefix="cp001-bottie-", dir="/tmp") as temp:
         data = Path(temp)
         diagnostics = tempfile.TemporaryFile(mode="w+t")
+
         # Fresh user/network namespace: only its loopback is enabled.
-        process = subprocess.Popen(
-            [
-                "unshare",
-                "--user",
-                "--map-root-user",
-                "--net",
-                "sh",
-                "-c",
-                'ip link set lo up && exec "$@"',
-                "cp001",
-                "node",
-                str(BENCHMARK / "cp001_bottie_worker.mjs"),
-                str(data),
-            ],
-            cwd=ROOT,
-            env={"PATH": os.defpath, "HOME": str(data)},
-            stdin=subprocess.PIPE,
-            stdout=subprocess.PIPE,
-            stderr=diagnostics,
-            text=True,
-            bufsize=1,
-        )
+        def launch(resume=False):
+            return subprocess.Popen(
+                [
+                    "unshare",
+                    "--user",
+                    "--map-root-user",
+                    "--net",
+                    "sh",
+                    "-c",
+                    'ip link set lo up && exec "$@"',
+                    "cp001",
+                    "node",
+                    str(BENCHMARK / "cp001_bottie_worker.mjs"),
+                    str(data),
+                ]
+                + (["--resume"] if resume else []),
+                cwd=ROOT,
+                env={"PATH": os.defpath, "HOME": str(data)},
+                stdin=subprocess.PIPE,
+                stdout=subprocess.PIPE,
+                stderr=diagnostics,
+                text=True,
+                bufsize=1,
+            )
+
+        process = launch()
         records = {
             "http": [],
             "readbacks": [],
@@ -68,8 +73,31 @@ def bottie(request):
         try:
             ready = receive()
             assert ready["ready"] and Path(ready["database"]).parent == data
+            records["processes"] = [ready]
             key = ready["public_key"]
             database = Path(ready["database"])
+
+            def crash_and_restart():
+                nonlocal process
+                old_pid = process.pid
+                process.kill()  # SIGKILL: no finally, SQLite checkpoint or graceful close.
+                process.wait(timeout=5)
+                assert process.returncode == -9
+                records["crash"] = {
+                    "signal": "SIGKILL",
+                    "returncode": process.returncode,
+                    "pid": old_pid,
+                    "boundary": "after response/readback before ACK",
+                }
+                process.stdin.close()
+                process.stdout.close()
+                process = launch(resume=True)
+                restored = receive()
+                assert restored["resumed"] is True and restored["pid"] != ready["pid"]
+                assert restored["network_namespace"] != ready["network_namespace"]
+                assert restored["public_key"] == key
+                assert restored["key_file_sha256"] == ready["key_file_sha256"]
+                records["processes"].append(restored)
 
             def turn(step=0, with_key=True):
                 return native.request_for(
@@ -180,6 +208,7 @@ def bottie(request):
                 post=post,
                 raw_post=raw_post,
                 signed_ack=signed_ack,
+                crash_and_restart=crash_and_restart,
                 delivery_readback=delivery_readback,
                 readback=readback,
                 records=records,
@@ -311,3 +340,43 @@ def test_bottie_actual_p256_ack_deduplicates_and_rejects_wrong_key_or_hash(botti
     assert bottie.delivery_readback(body, ref) == after
     assert duplicate["provider_stub_calls"] == calls
     assert len([h for h in bottie.records["http"] if h["path"] == "/api/chat"]) == 1
+
+
+def test_bottie_process_crash_before_ack_replays_and_delivers_once(bottie):
+    first = exchange(bottie)
+    assert first["status"] == "readback_verified"
+    original = bottie.records["http"][-1]
+    _, body = bottie.turn()
+    ref = original["body"]["_httpDelivery"]["requestRef"]
+    before = bottie.delivery_readback(body, ref)
+    assert before["receipts"] == []
+    assert before["counts"] == {"assistant_messages": 0, "chat_out": 0, "prepared": 1}
+    assert original["provider_stub_calls"] == 2
+    bottie.crash_and_restart()
+    replay = exchange(bottie)
+    assert (
+        replay["status"] == "readback_verified" and replay["answer"] == first["answer"]
+    )
+    replay_http = bottie.records["http"][-1]
+    assert replay_http["body"] == original["body"]
+    assert replay_http["replayed"] == "true" and replay_http["provider_stub_calls"] == 0
+    assert bottie.delivery_readback(body, ref) == before
+    for kind in ("wrong-key", "changed-hash"):
+        denied = bottie.raw_post("/api/http-delivery/ack", bottie.signed_ack(kind))
+        assert denied["status"] == 400 and denied["body"]["delivered"] is False
+        assert denied["provider_stub_calls"] == 0
+        assert bottie.delivery_readback(body, ref) == before
+    ack = bottie.signed_ack()
+    delivered = bottie.raw_post("/api/http-delivery/ack", ack)
+    assert delivered["status"] == 200 and delivered["body"]["delivered"] is True
+    after = bottie.delivery_readback(body, ref)
+    assert len(after["receipts"]) == 1
+    receipt = after["receipts"][0]
+    assert receipt["ack_receipt_ref"] == delivered["body"]["ack_receipt_ref"]
+    assert native.digest(receipt["receipt_json"]) == receipt["ack_receipt_sha256"]
+    assert json.loads(receipt["receipt_json"]) == delivered["body"]["ack_receipt"]
+    assert after["counts"] == {"assistant_messages": 1, "chat_out": 1, "prepared": 1}
+    duplicate = bottie.raw_post("/api/http-delivery/ack", ack)
+    assert duplicate["status"] == 200 and duplicate["body"] == delivered["body"]
+    assert bottie.delivery_readback(body, ref) == after
+    assert all(h["provider_stub_calls"] == 0 for h in bottie.records["http"][1:])

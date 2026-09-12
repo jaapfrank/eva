@@ -336,7 +336,8 @@ De eerdere opslagproeven versturen geen ACK. De aanvullende test
 nu de echte lokale `/api/http-delivery/ack` met het bestaande Bottie-protocol.
 De worker bewaart de echte responsebytes/writeheaders, gebruikt
 `canonicalHttpWireSha256` en `canonicalHttpClientAckPreimage` uit `src/web/httpack.js`
-en ondertekent met de P-256-fixturesleutel. Privésleutels verlaten het proces niet.
+en ondertekent met de P-256-fixturesleutel. De privésleutel staat alleen in de private tijdelijke fixturemap (0600);
+zij wordt na de test verwijderd en komt niet in evidence.
 Er is geen nieuwe ACK- of cryptografische implementatie in productcode.
 
 Vóór de geldige ACK worden een ACK met andere sleutel en een geldig ondertekende
@@ -352,3 +353,27 @@ Dit bewijst bevestiging door de lokale cryptografische testclient, **geen mensel
 ontvangst, Jaap-acceptatie of live-aflevering**. Volledige usage, serverbudgetten,
 herstel en productranking blijven unknown. Dezelfde testopdracht/evidence-optie
 hierboven voert ook deze vierde Bottie-contracttest uit.
+
+
+### Procescrash tussen prepared response en ACK
+
+`test_bottie_process_crash_before_ack_replays_and_delivers_once` stopt de echte
+Node-worker met SIGKILL na de HTTP-response en onafhankelijke SQLite-readback,
+maar vóór een ACK. Er vindt geen graceful close of checkpoint door die worker
+plaats. Dezelfde tijdelijke database inclusief WAL en de vooraf gefsyncte
+P-256-clientsleutel blijven beschikbaar voor een nieuw proces in een nieuwe
+private netwerknamespace. De test controleert verschillende proces- en namespace-
+identiteiten en gelijke publieke sleutel en sleutelbestandhash.
+
+Het nieuwe proces replayt hetzelfde opgeslagen antwoord; iedere poging tot
+providergeneratie is daar een harde fixturefout. De teller blijft nul bij replay
+en alle ACKs. Verkeerde sleutel en gewijzigde hash krijgen HTTP 400, zonder
+afleverregistratie. Geldige en herhaalde ACK geven dezelfde receipt en precies
+één assistentbericht en chat_out. Een onafhankelijke SQLite-readback controleert
+de inhoud, hash en aantallen. Evidence bewaart beide procesidentiteiten, de
+SIGKILL-status, HTTP-resultaten en database na normaal afsluiten van proces twee.
+
+Deze vijfde Bottie-test bewijst uitsluitend herstel op de genoemde procescrashgrens
+met behouden database en clientsleutel. Zij bewijst geen stroomuitval, OS-crash,
+crash midden in een schrijfoperatie, herstel zonder sleutel of algemene recovery.
+Serverbudgetten, volledige usage en productvergelijking blijven afzonderlijk unknown.

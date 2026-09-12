@@ -1,0 +1,34 @@
+{
+  "baseline_commit": "a0cd0ec9bb5ebc5481b2202043a9d69554e51f9e",
+  "function_ast_equal_after_public_rename": true,
+  "behavior": "Existing provider_schema flag, recursion, errors and defaults unchanged; initiative stricter schema/pattern checks stay in caller.",
+  "architecture_baseline": 28,
+  "architecture_candidate": 27,
+  "removed": [
+    {
+      "path": "src/eva/adapters/postgres/initiative_execution.py",
+      "code": "local_import_boundary",
+      "detail": "eva.adapters.connectors.mcp_gateway"
+    }
+  ],
+  "added": [],
+  "tests": {
+    "gateway_and_profile": 81,
+    "disposable_postgres": 6
+  },
+  "postgres": {
+    "container_id": "958178791b6478b72f68613936f7318fe35e41156af63118a9e58ef80160a225",
+    "postgres_image": "sha256:5d143123fdf80462d1778cd4f24b9f7ca13c87174bca19141fb194c5a1ebca59",
+    "network_mode": "none",
+    "published_ports": [],
+    "data_storage": "tmpfs",
+    "connection": "local Unix socket only",
+    "pytest_exit_code": 0,
+    "model_calls": 0,
+    "production_database_connections": 0,
+    "disposable_container_removed": true
+  },
+  "new_dependency": false,
+  "build": false,
+  "live": false
+}

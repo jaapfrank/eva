@@ -6,7 +6,7 @@ import json
 import re
 
 import sqlalchemy as sa
-from eva.adapters.connectors.mcp_gateway import _validate_schema_value
+from eva.application.schema_validation import validate_schema_value
 
 from eva.adapters.credentials.runtime_files import read_runtime_secret_file
 from eva.adapters.postgres.operational_timeline import (
@@ -47,7 +47,7 @@ def _check_profile_schema(schema):
 
 def _matches_profile(value, schema):
     try:
-        _validate_schema_value(value, schema, "initiative arguments")
+        validate_schema_value(value, schema, "initiative arguments")
         if isinstance(value, str) and "pattern" in schema:
             return re.fullmatch(schema["pattern"], value) is not None
         if isinstance(value, dict):

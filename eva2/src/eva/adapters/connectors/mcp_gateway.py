@@ -16,6 +16,7 @@ from eva.application.conversation import (
     ConversationToolPreparation,
     ConversationTurn,
 )
+from eva.application.schema_validation import validate_schema_value
 from eva.application.orchestration import (
     ToolDispatchResult,
     ToolExecutionRejected,
@@ -263,7 +264,7 @@ class McpGatewayToolPlanner:
         spec = self._specs.get(call.name)
         if spec is None:
             raise ConversationConflict("MCP gateway action is unavailable")
-        _validate_schema_value(
+        validate_schema_value(
             call.arguments, spec.descriptor.input_schema, "arguments"
         )
         execute_arguments = _project_arguments(
@@ -280,13 +281,13 @@ class McpGatewayToolPlanner:
         )
         if execute_schema is None or observe_schema is None:
             raise ConversationConflict("MCP gateway catalog was not verified")
-        _validate_schema_value(
+        validate_schema_value(
             execute_arguments,
             execute_schema,
             "execute_arguments",
             provider_schema=True,
         )
-        _validate_schema_value(
+        validate_schema_value(
             observe_arguments,
             observe_schema,
             "observe_arguments",
@@ -463,7 +464,7 @@ class McpGatewayToolAdapter:
         )
         if execute_schema is None:
             raise RuntimeError("MCP gateway execute catalog is not verified")
-        _validate_schema_value(
+        validate_schema_value(
             command.arguments,
             execute_schema,
             "execute_arguments",
@@ -487,7 +488,7 @@ class McpGatewayToolAdapter:
             _validate_bounded_output(output, operation_kind="invoke")
             output_schema = self._verified_output_schemas.get(spec.execute_tool_name)
             if output_schema is not None:
-                _validate_schema_value(
+                validate_schema_value(
                     output, output_schema, "invoke_output", provider_schema=True,
                 )
             return ToolDispatchResult(
@@ -531,7 +532,7 @@ class McpGatewayToolAdapter:
         )
         if observe_schema is None:
             raise RuntimeError("MCP gateway observe catalog is not verified")
-        _validate_schema_value(
+        validate_schema_value(
             observe_arguments,
             observe_schema,
             "observe_arguments",
@@ -547,7 +548,7 @@ class McpGatewayToolAdapter:
             _validate_bounded_output(output, operation_kind="read")
         output_schema = self._verified_output_schemas.get(observe_tool_name)
         if output_schema is not None:
-            _validate_schema_value(
+            validate_schema_value(
                 output,
                 output_schema,
                 "observe_output",
@@ -848,102 +849,6 @@ def _project_arguments(
     }
     validate_json_value(projected)
     return projected
-
-
-def _validate_schema_value(
-    value: JsonValue,
-    schema: object,
-    path: str,
-    *,
-    provider_schema: bool = False,
-) -> None:
-    if not isinstance(schema, dict):
-        raise ConversationConflict(f"{path} schema is invalid")
-    if "const" in schema and value != schema["const"]:
-        raise ConversationConflict(f"{path} differs from the sealed value")
-    if "enum" in schema and (
-        not isinstance(schema["enum"], list) or value not in schema["enum"]
-    ):
-        raise ConversationConflict(f"{path} is outside the admitted values")
-    kind = schema.get("type")
-    if kind == "object":
-        if not isinstance(value, dict):
-            raise ConversationConflict(f"{path} must be an object")
-        properties = schema.get("properties", {} if provider_schema else None)
-        required = schema.get("required", [] if provider_schema else None)
-        additional = schema.get("additionalProperties", True)
-        if (
-            not isinstance(properties, dict)
-            or not isinstance(required, list)
-            or any(not isinstance(item, str) for item in required)
-            or (provider_schema and not isinstance(additional, (bool, dict)))
-            or (
-                not provider_schema
-                and additional is not False
-            )
-            or not set(required).issubset(value)
-            or not set(value).issubset(properties)
-        ):
-            raise ConversationConflict(f"{path} fields are invalid")
-        for name, item in value.items():
-            _validate_schema_value(
-                item,
-                properties[name],
-                f"{path}.{name}",
-                provider_schema=provider_schema,
-            )
-        return
-    if kind == "array":
-        items = schema.get("items")
-        if not isinstance(value, list) or not isinstance(items, dict):
-            raise ConversationConflict(f"{path} must be an array")
-        minimum = schema.get("minItems", 0)
-        maximum = schema.get("maxItems", 1_000)
-        if (
-            not isinstance(minimum, int)
-            or not isinstance(maximum, int)
-            or not minimum <= len(value) <= maximum
-        ):
-            raise ConversationConflict(f"{path} array length is invalid")
-        for index, item in enumerate(value):
-            _validate_schema_value(
-                item,
-                items,
-                f"{path}[{index}]",
-                provider_schema=provider_schema,
-            )
-        return
-    expected_type = {
-        "boolean": bool,
-        "integer": int,
-        "null": type(None),
-        "number": int,
-        "string": str,
-    }.get(kind)
-    if (
-        expected_type is None
-        or not isinstance(value, expected_type)
-        or (kind in {"integer", "number"} and isinstance(value, bool))
-    ):
-        raise ConversationConflict(f"{path} has the wrong type")
-    if isinstance(value, str):
-        minimum = schema.get("minLength", 0)
-        maximum = schema.get("maxLength", 65_536)
-        if (
-            not isinstance(minimum, int)
-            or not isinstance(maximum, int)
-            or not minimum <= len(value) <= maximum
-        ):
-            raise ConversationConflict(f"{path} text length is invalid")
-    if isinstance(value, int) and not isinstance(value, bool):
-        minimum = schema.get("minimum", value)
-        maximum = schema.get("maximum", value)
-        if (
-            not isinstance(minimum, int)
-            or not isinstance(maximum, int)
-            or not minimum <= value <= maximum
-        ):
-            raise ConversationConflict(f"{path} number is invalid")
 
 
 __all__ = [
