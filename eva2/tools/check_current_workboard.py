@@ -31,7 +31,7 @@ ARTIFACT_RETENTION_RULE = (
 )
 RULES = [
     "Afgeronde uitvoerkaarten staan eerst, daarna exact één primaire kaart, daarna alleen wachtrijkaarten.",
-    "Alleen de primaire uitvoerkaart is nu uitvoerbaar; na afronding wordt precies één volgende productmijlpaal eerst tot een kleine kaart uitgewerkt.",
+    "Eén primaire uitvoerkaart bewaakt de focus; daarnaast gaat expliciet opgedragen onafhankelijk werk parallel verder met unieke eigenaren, begrensde bestanden en passende controles in ditzelfde werkbord.",
     "Een kaart noemt exacte bestanden, eigenaren en echte testcommando's.",
     "Een bouwer keurt zijn eigen taak niet goed; klaar vereist bewijs en onafhankelijke GO.",
     "Paden blijven in eva2 (of de twee gegenereerde inventory-uitgangen); tijdelijke data gaat via mktemp naar /tmp.",
@@ -651,8 +651,9 @@ def render_human(board: dict[str, Any]) -> str:
             "",
             "## Daarna",
             "",
-            "Deze onderwerpen zijn alleen mijlpalen. Een mijlpaal wordt pas uitvoerbaar",
-            "nadat zij als eerstvolgende kleine kaart exacte bestanden en tests heeft.",
+            "Deze onderwerpen zijn mijlpalen. Uitvoering vraagt een begrensde oplevering",
+            "met eigenaar, bestanden en passende controles. Expliciet opgedragen parallel",
+            "werk blijft in ditzelfde werkbord geregistreerd.",
             "",
         ]
     )
@@ -673,9 +674,13 @@ def render_human(board: dict[str, Any]) -> str:
     pending = board["audit"]["pendingHumanAcceptance"]["task"]
     technical = board["audit"].get("pendingTechnicalReview")
     if technical is not None:
-        lines.extend(["", "## Technische review blijft open", "",
+        heading = ("## Historische reviewregistratie" if technical.get("historical")
+                   else "## Technische review blijft open")
+        lines.extend(["", heading, "",
                       f"- [ ] `{technical['task']['id']}` — {technical['reason']}",
                       f"  [Bestaand bewijs]({technical['evidence'].removeprefix('eva2/')})."])
+        for evidence in technical.get("currentOutcomeEvidence", []):
+            lines.append(f"  [Latere oplevering of acceptatie]({evidence.removeprefix('eva2/')}).")
     lines.extend(["", "## Menselijke acceptatie blijft open", "",
                   f"- [ ] `{pending['id']}` — {pending['outcome']}"])
     lines.extend(

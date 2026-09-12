@@ -117,6 +117,12 @@ def test_checklist_preserves_evidence_and_open_product_outcomes() -> None:
         card["id"] for card in board["executionTasks"] if card["status"] != "done"
     }
     assert "- [ ] `CO-003`" in rendered
+    assert "## Historische reviewregistratie" in rendered
+    assert "geen actuele bouw- of acceptatieblokkade" in rendered
+    assert "GE-02-owner-acceptance-2026-09-12.json" in rendered
+    assert "Alleen de primaire uitvoerkaart is nu uitvoerbaar" not in rendered
+    assert board["audit"]["pendingTechnicalReview"]["task"]["status"] != "done"
+    assert board["audit"]["memoryComponentDecision20260911"]["ownerAccepted"] is True
     assert {"UP-001", "AU-004", "AU-005", "AU-006", "EV-003"} <= {
         card["id"] for card in board["executionTasks"] + board["milestones"]
     }

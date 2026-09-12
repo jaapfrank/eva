@@ -877,6 +877,22 @@ bestanden opgenomen; A/B blijft afgerond en C behoudt zijn eigen grenzen.
 Volledige AU-004 en eigenaaracceptatie blijven open.
 [D-resultaat](evidence/product/au004-procedure-discovery/fresh-D/result.md).
 
+### Werkbordteksten gecorrigeerd en IN-002-retentie vastgelegd
+
+De vaste regel en mijlpaaluitleg volgen nu het eigenaarbesluit: één primaire
+kaart bewaakt focus, expliciet opgedragen onafhankelijk werk mag parallel.
+De oude CO-003-review staat als historische registratie, zonder vervalst
+eindvinkje. Het oorspronkelijke bewijs had geen commitgebonden eindreview;
+de latere CO-004/CO-005-liveoplevering en expliciete GE-02-acceptatie sluiten
+het gekozen geheugenonderdeel wel af. Die acceptatie blijft behouden.
+IN-002 gebruikt het gecontroleerde pad
+/home/administrator/project/.eva2-artifacts/in002-restore-wizard-20260913,
+met eigenaar coordinator/timing_final_review voor implementatie en synthetisch
+herstelbewijs. Bewaren tot technische oplevering/review, duurzaam bewijs en
+terugweg én eigenaarproef of expliciete overdracht; daarna alleen die
+geregistreerde werkboom en wegwerpdata opruimen met padcontrole. Er is nu
+niets verwijderd; er komt geen tweede werkbord.
+
 ## Nu
 
 | Volgorde | Kaart | Resultaat | Status |
@@ -910,8 +926,9 @@ Echte controles:
 
 ## Daarna
 
-Deze onderwerpen zijn alleen mijlpalen. Een mijlpaal wordt pas uitvoerbaar
-nadat zij als eerstvolgende kleine kaart exacte bestanden en tests heeft.
+Deze onderwerpen zijn mijlpalen. Uitvoering vraagt een begrensde oplevering
+met eigenaar, bestanden en passende controles. Expliciet opgedragen parallel
+werk blijft in ditzelfde werkbord geregistreerd.
 
 - [ ] `VB-004` — Browser na onderbreking veilig hervatten: Herstelbestanden gebouwd; systeeminstallatie automatisch geblokkeerd. Bestaande browser blijft live. Herstel na herstart nog niet uitgevoerd of bewezen.
 - [ ] `AU-005` — Passend initiatief en kansen bewijzen: Meer gewaardeerd eigen initiatief dan Bottie: humor, nieuwsgierigheid, zelfgekozen onderzoek, creatieve bijdragen en kansen. Eva begint en vervolgt zelf werk, voert binnen bestaand mandaat uit en controleert het resultaat. Gezin beoordeelt eigenheid, plezier, nut en hinder; alleen meer berichten telt niet als winst.
@@ -1021,10 +1038,12 @@ Afgevinkt betekent alleen: de vastgelegde kaart is afgerond, niet het hele produ
 
 </details>
 
-## Technische review blijft open
+## Historische reviewregistratie
 
-- [ ] `CO-003` — CO-003 blijft onder onafhankelijke review, niet afgevinkt of live. RT-001 herstelt nu de verschillende eigenaars- en geheugenscopes en herlaadt de privékoppeling per pagina. Een verse PostgreSQL-proef en een alleen-lezen proef met twee echte bronpagina's plus geweigerde andere eigenaar zijn groen; het oorspronkelijke CO-003-bewijs blijft historisch bewaard.
+- [ ] `CO-003` — Historische CO-003-kandidaat van 7 september: het oorspronkelijke bewijs bevat geen commitgebonden definitieve review of livegang. Deze oude kaart wordt daarom niet alsnog afgevinkt. De gebruikersuitkomst is later opgenomen in CO-004/CO-005, live opgeleverd en door Jaap via GE-02 geaccepteerd op 12 september. Het gekozen geheugenonderdeel blijft afgesloten; deze historische registratie is geen actuele bouw- of acceptatieblokkade.
   [Bestaand bewijs](evidence/product/CO-003-owner-memory-sources-2026-09-07.json).
+  [Latere oplevering of acceptatie](evidence/product/CO-004-CO-005-owner-memory-controls-2026-09-11.json).
+  [Latere oplevering of acceptatie](evidence/product/GE-02-owner-acceptance-2026-09-12.json).
 
 ## Menselijke acceptatie blijft open
 
@@ -1036,7 +1055,7 @@ Afgevinkt betekent alleen: de vastgelegde kaart is afgerond, niet het hele produ
 ## Vaste regels
 
 - Afgeronde uitvoerkaarten staan eerst, daarna exact één primaire kaart, daarna alleen wachtrijkaarten.
-- Alleen de primaire uitvoerkaart is nu uitvoerbaar; na afronding wordt precies één volgende productmijlpaal eerst tot een kleine kaart uitgewerkt.
+- Eén primaire uitvoerkaart bewaakt de focus; daarnaast gaat expliciet opgedragen onafhankelijk werk parallel verder met unieke eigenaren, begrensde bestanden en passende controles in ditzelfde werkbord.
 - Een kaart noemt exacte bestanden, eigenaren en echte testcommando's.
 - Een bouwer keurt zijn eigen taak niet goed; klaar vereist bewijs en onafhankelijke GO.
 - Paden blijven in eva2 (of de twee gegenereerde inventory-uitgangen); tijdelijke data gaat via mktemp naar /tmp.
