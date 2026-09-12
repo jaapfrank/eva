@@ -12,19 +12,73 @@
 <details open><summary>Opdrachten</summary><section id="work"></section></details>
 <p>Vraag Eva om een opdracht te stoppen. Alleen het gesprek beëindigen stopt de audio; werk dat al is gestart kan nog afronden.</p><div id="audio"></div>
 <script src="/livekit-client.js"></script><script>
-const $=id=>document.getElementById(id);let room=null,closing=false,ownerToken="";const messages=new Map(),jobs=new Map();
-function row(parent,key,text,kind=''){let node=parent=== 'chat'?messages.get(key):jobs.get(key);if(!node){node=document.createElement('div');node.className='row '+kind;$(parent).append(node);(parent==='chat'?messages:jobs).set(key,node);}node.textContent=text;}
-function reset(text){$('state').textContent=text;$('start').disabled=closing||!ownerToken;$('end').disabled=true;$('text').disabled=true;$('send').disabled=true;room=null;$('audio').replaceChildren();}
-async function ownerRequest(path,options={}){return fetch(path,{...options,headers:{...options.headers,Authorization:'Bearer '+ownerToken}});}
-$('login').onsubmit=async event=>{event.preventDefault();$('login-submit').disabled=true;ownerToken=$('owner-key').value.trim();$('state').textContent='Aanmelding controleren…';try{const response=await ownerRequest('/session/ready');if(!response.ok){const data=await response.json();throw new Error(data.detail||'Aanmelden mislukt.');}$('owner-key').value='';$('login').hidden=true;reset('Aangemeld. Kies Begin gesprek om de microfoon te openen.');}catch(error){ownerToken='';reset(error.message||'Eva is niet bereikbaar.');}finally{$('login-submit').disabled=false;}};
-$('start').onclick=async()=>{if(room)return;$('start').disabled=true;$('state').textContent='Verbinding maken…';try{const response=await ownerRequest('/session',{method:'POST'});if(!response.ok){let data=await response.json();throw new Error(data.detail||'Verbinding mislukt');}const connection=await response.json();const r=new LivekitClient.Room({adaptiveStream:true,dynacast:true});room=r;
-r.on(LivekitClient.RoomEvent.ParticipantDisconnected,participant=>{if(participant.identity==='eva'){r.disconnect();reset('De stemverbinding met Eva is gesloten.');}});
-r.on(LivekitClient.RoomEvent.TrackSubscribed,track=>{if(track.kind==='audio')$('audio').append(track.attach());});
-r.on(LivekitClient.RoomEvent.TranscriptionReceived,(segments,participant)=>{for(const seg of segments)row('chat',seg.id,(participant?.identity==='eva'?'Eva: ':'Jij: ')+seg.text,participant?.identity==='owner'?'user':'');});
-r.on(LivekitClient.RoomEvent.DataReceived,(payload,participant,kind,topic)=>{if(topic!=='eva.work'||participant?.identity!=='eva')return;try{const e=JSON.parse(new TextDecoder().decode(payload));if(e.type==='voice_state')$('state').textContent=({listening:'Eva luistert.',thinking:'Eva denkt na.',speaking:'Eva spreekt. Je kunt haar onderbreken.'})[e.state]||'Verbinding maken…';if(e.type==='work_started')row('work',e.message_id,'Bezig: '+e.text);if(e.type==='work_finished')row('work',e.message_id,e.text);if(e.type==='task_stop_requested')row('work',e.message_id,'Stopverzoek opgeslagen. Een begonnen stap kan nog afronden.');if(e.type==='work_failed')row('work',e.message_id,'Het resultaat kon niet worden bevestigd.');}catch(_){}});
-r.on(LivekitClient.RoomEvent.Reconnecting,()=>{$('state').textContent='Verbinding herstellen…';});r.on(LivekitClient.RoomEvent.Reconnected,()=>{$('state').textContent='Je kunt weer praten.';});r.on(LivekitClient.RoomEvent.Disconnected,()=>reset('Het gesprek is beëindigd.'));
-await r.connect(connection.url,connection.token,{rtcConfig:connection.rtc_config||{}});await r.startAudio();await r.localParticipant.setMicrophoneEnabled(true,{echoCancellation:true,noiseSuppression:true,autoGainControl:true});$('state').textContent='Eva luistert. Je kunt haar onderbreken door te praten.';$('end').disabled=false;$('text').disabled=false;$('send').disabled=false;
-}catch(error){if(room)await room.disconnect();reset(error.message||'Verbinding mislukt.');}};
-$('end').onclick=async()=>{closing=true;$('start').disabled=true;try{if(room)await room.disconnect();await ownerRequest('/session/end',{method:'POST'});}finally{closing=false;reset('Het gesprek is beëindigd.');}};
-$('form').onsubmit=async event=>{event.preventDefault();const text=$('text').value.trim();if(!text||!room)return;await room.localParticipant.sendText(text,{topic:'lk.chat'});row('chat',crypto.randomUUID(),'Jij: '+text,'user');$('text').value='';};
+const $=id=>document.getElementById(id);
+let room=null,active=null,ownerToken="",visit=0,disposed=false;
+const messages=new Map(),jobs=new Map(),pendingCleanup=new Set();
+function row(parent,key,text,kind=''){let node=parent==='chat'?messages.get(key):jobs.get(key);if(!node){node=document.createElement('div');node.className='row '+kind;$(parent).append(node);(parent==='chat'?messages:jobs).set(key,node);}node.textContent=text;}
+function reset(text){$('state').textContent=text;$('start').disabled=disposed||document.hidden||navigator.onLine===false||!ownerToken||!!active;$('end').disabled=!active;$('text').disabled=true;$('send').disabled=true;$('audio').replaceChildren();}
+async function ownerRequest(path,options={},token=ownerToken){return fetch(path,{...options,headers:{...options.headers,Authorization:'Bearer '+token}});}
+async function closeConnection(connection,token){return ownerRequest('/session/end/'+encodeURIComponent(connection.room),{method:'POST',keepalive:true},token);}
+async function connectRoom(r,connection){await r.connect(connection.url,connection.token,{rtcConfig:connection.rtc_config||{}});}
+function current(attempt){return active===attempt&&!disposed&&!document.hidden&&navigator.onLine!==false;}
+function stopCapture(attempt){for(const track of attempt.stream?.getTracks()||[])track.stop();}
+async function cleanup(attempt){
+ stopCapture(attempt);
+ if(attempt.room)Promise.resolve(attempt.room.disconnect()).catch(()=>{});
+ if(!attempt.connection||attempt.cleaned||attempt.cleaning)return;
+ attempt.cleaning=true;pendingCleanup.add(attempt);
+ try{const response=await closeConnection(attempt.connection,attempt.token);if(response.ok){attempt.cleaned=true;pendingCleanup.delete(attempt);}}
+ catch(_){}finally{attempt.cleaning=false;}
+}
+function stopConversation(text='Het gesprek is beëindigd.'){
+ const old=active;active=null;room=null;visit++;
+ if(old)void cleanup(old);
+ reset(text);
+}
+function leave(){disposed=true;stopConversation('De microfoon staat uit.');ownerToken='';$('login').hidden=false;$('owner-key').value='';messages.clear();jobs.clear();$('chat').replaceChildren();$('work').replaceChildren();reset('De microfoon staat uit.');}
+function resume(){disposed=false;if(!active)reset('De microfoon staat uit. Kies Begin gesprek om weer te praten.');for(const attempt of pendingCleanup)void cleanup(attempt);}
+function visibilityChanged(){if(document.hidden)stopConversation('De microfoon staat uit omdat de pagina verborgen is.');else resume();}
+function wentOffline(){stopConversation('De verbinding is weg. De microfoon staat uit.');}
+function cameOnline(){for(const attempt of pendingCleanup)void cleanup(attempt);if(!disposed&&!active)reset('De microfoon staat uit. Kies Begin gesprek om weer te praten.');}
+function attachLifecycle(){document.addEventListener('visibilitychange',visibilityChanged);window.addEventListener('offline',wentOffline);window.addEventListener('online',cameOnline);window.addEventListener('pagehide',leave);window.addEventListener('pageshow',resume);}
+function detachLifecycle(){document.removeEventListener('visibilitychange',visibilityChanged);window.removeEventListener('offline',wentOffline);window.removeEventListener('online',cameOnline);window.removeEventListener('pagehide',leave);window.removeEventListener('pageshow',resume);}
+attachLifecycle();
+$('login').onsubmit=async event=>{
+ event.preventDefault();const generation=++visit,token=$('owner-key').value.trim();$('login-submit').disabled=true;$('state').textContent='Aanmelding controleren…';
+ try{const response=await ownerRequest('/session/ready',{},token);if(!response.ok){const data=await response.json();throw new Error(data.detail||'Aanmelden mislukt.');}if(generation!==visit||disposed)return;ownerToken=token;$('owner-key').value='';$('login').hidden=true;reset('Aangemeld. Kies Begin gesprek om de microfoon te openen.');}
+ catch(error){if(generation===visit&&!disposed){ownerToken='';reset(error.message||'Eva is niet bereikbaar.');}}
+ finally{$('login-submit').disabled=false;}
+};
+$('start').onclick=async()=>{
+ if(active||disposed||document.hidden||navigator.onLine===false||!ownerToken)return;
+ const attempt={token:ownerToken};active=attempt;reset('Verbinding maken…');
+ try{
+  const response=await ownerRequest('/session',{method:'POST'},attempt.token);
+  if(!response.ok){const data=await response.json();throw new Error(data.detail||'Verbinding mislukt.');}
+  const connection=attempt.connection=await response.json();
+  if(!current(attempt))return;
+  const r=attempt.room=new LivekitClient.Room({adaptiveStream:true,dynacast:true});room=r;
+  r.on(LivekitClient.RoomEvent.ParticipantDisconnected,p=>{if(current(attempt)&&p.identity==='eva')stopConversation('De stemverbinding met Eva is gesloten.');});
+  r.on(LivekitClient.RoomEvent.TrackSubscribed,track=>{if(current(attempt)&&track.kind==='audio')$('audio').append(track.attach());});
+  r.on(LivekitClient.RoomEvent.TranscriptionReceived,(segments,p)=>{if(current(attempt))for(const seg of segments)row('chat',seg.id,(p?.identity==='eva'?'Eva: ':'Jij: ')+seg.text,p?.identity==='owner'?'user':'');});
+  r.on(LivekitClient.RoomEvent.DataReceived,(payload,p,kind,topic)=>{
+   if(!current(attempt)||topic!=='eva.work'||p?.identity!=='eva')return;
+   try{const e=JSON.parse(new TextDecoder().decode(payload));if(e.type==='voice_state')$('state').textContent=({listening:'Eva luistert.',thinking:'Eva denkt na.',speaking:'Eva spreekt. Je kunt haar onderbreken.'})[e.state]||'Verbinding maken…';if(e.type==='work_started')row('work',e.message_id,'Bezig: '+e.text);if(e.type==='work_finished')row('work',e.message_id,e.text);if(e.type==='task_stop_requested')row('work',e.message_id,'Stopverzoek opgeslagen. Een begonnen stap kan nog afronden.');if(e.type==='work_failed')row('work',e.message_id,'Het resultaat kon niet worden bevestigd.');}catch(_){}
+  });
+  const interrupted=()=>{if(current(attempt))stopConversation('De verbinding is onderbroken. Kies Begin gesprek om weer te praten.');};
+  r.on(LivekitClient.RoomEvent.Reconnecting,interrupted);r.on(LivekitClient.RoomEvent.SignalReconnecting,interrupted);
+  r.on(LivekitClient.RoomEvent.Disconnected,()=>{if(active===attempt)stopConversation();});
+  await connectRoom(r,connection);if(!current(attempt))return;
+  await r.startAudio();if(!current(attempt))return;
+  // Own the raw tracks so a pending permission prompt cannot publish after leaving.
+  attempt.stream=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:true,noiseSuppression:true,autoGainControl:true},video:false});
+  if(!current(attempt))return;
+  await r.localParticipant.publishTrack(attempt.stream.getAudioTracks()[0],{source:LivekitClient.Track.Source.Microphone});
+  if(!current(attempt))return;
+  $('state').textContent='Eva luistert. Je kunt haar onderbreken door te praten.';$('text').disabled=false;$('send').disabled=false;
+ }catch(error){if(active===attempt)stopConversation(error.message||'Verbinding mislukt.');}
+ finally{if(!current(attempt))await cleanup(attempt);}
+};
+$('end').onclick=()=>stopConversation();
+$('form').onsubmit=async event=>{event.preventDefault();const text=$('text').value.trim(),attempt=active;if(!text||!attempt?.room||!current(attempt))return;try{await attempt.room.localParticipant.sendText(text,{topic:'lk.chat'});if(current(attempt)){row('chat',crypto.randomUUID(),'Jij: '+text,'user');$('text').value='';}}catch(_){if(current(attempt))$('state').textContent='Versturen niet bevestigd. Je tekst staat nog in het invoerveld.';}};
 </script></html>

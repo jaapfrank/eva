@@ -14,29 +14,32 @@ def panel_script(html):
     if len(scripts) != 2:
         raise ValueError("Voice client script layout changed")
     script = scripts[1]
-    expected = "async function ownerRequest(path,options={}){return fetch(path,{...options,headers:{...options.headers,Authorization:'Bearer '+ownerToken}});}"
+    script = script.replace("document.getElementById(id)", "root.getElementById(id)")
+    expected = "async function ownerRequest(path,options={},token=ownerToken){return fetch(path,{...options,headers:{...options.headers,Authorization:'Bearer '+token}});}"
     if expected not in script:
         raise ValueError("Voice owner transport changed; review HA adapter")
-    script = script.replace("document.getElementById(id)", "root.getElementById(id)")
-    script = script.replace(expected, r"""let phoneCapability=null; async function ownerRequest(path,options={}) {
-      const token=ownerToken,visit=panel._visit;
-      const result=await panel.hass.callWS({type:'eva2_voice/owner_session',path:path.replace(/^\//,''),owner_token:token,capability:phoneCapability});
-      if(panel._disposed||visit!==panel._visit){
-        if(path==='/session'&&result.status===200)await panel.hass.callWS({type:'eva2_voice/owner_session',path:'session/end',owner_token:token,capability:result.body.capability});
-        throw new Error('Het paneel is gesloten.');
-      }
-      if(path==='/session'&&result.status===200)phoneCapability=result.body.capability;
-      if(path==='/session/end'&&result.status===200)phoneCapability=null;
+    script = script.replace(expected, r"""async function ownerRequest(path,options={},token=ownerToken){
+      const result=await panel.hass.callWS({type:'eva2_voice/owner_session',path:path.replace(/^\//,''),owner_token:token});
       return {ok:result.status===200,json:async()=>result.body};
     }""")
+    close = "async function closeConnection(connection,token){return ownerRequest('/session/end/'+encodeURIComponent(connection.room),{method:'POST',keepalive:true},token);}"
+    if close not in script:
+        raise ValueError("Voice cleanup changed; review HA adapter")
+    script = script.replace(close, """async function closeConnection(connection,token){
+      const result=await panel.hass.callWS({type:'eva2_voice/owner_session',path:'session/end',owner_token:token,capability:connection.capability});
+      return {ok:result.status===200};
+    }""")
     script = script.replace("adaptiveStream:true,dynacast:true", "adaptiveStream:true,dynacast:true,singlePeerConnection:false")
-    connect = "await r.connect(connection.url,connection.token,{rtcConfig:connection.rtc_config||{}});"
+    connect = "async function connectRoom(r,connection){await r.connect(connection.url,connection.token,{rtcConfig:connection.rtc_config||{}});}"
     if connect not in script:
         raise ValueError("Voice connect options changed; review HA relay options")
-    script = script.replace(connect, """const signal=new URL(connection.url,location.origin);signal.protocol=location.protocol==='https:'?'wss:':'ws:';
-    const iceServers=await panel.hass.callWS({type:'cloud/webrtc/ice_servers'});
-    if(panel._disposed){await ownerRequest('/session/end',{method:'POST'});throw new Error('Het paneel is gesloten.');}
-    await r.connect(signal.href,connection.token,{rtcConfig:{iceServers,iceTransportPolicy:'relay'}});""")
+    script = script.replace(connect, """async function connectRoom(r,connection){
+      const attempt=active;
+      const signal=new URL(connection.url,location.origin);signal.protocol=location.protocol==='https:'?'wss:':'ws:';
+      const iceServers=await panel.hass.callWS({type:'cloud/webrtc/ice_servers'});
+      if(!current(attempt))return;
+      await r.connect(signal.href,connection.token,{rtcConfig:{iceServers,iceTransportPolicy:'relay'}});
+    }""")
     body = re.sub(r"<script.*?</script>", "", html, flags=re.S)
     body = re.sub(r"<!doctype html>|</?html[^>]*>|<meta[^>]*>|<title>.*?</title>", "", body, flags=re.S)
     body = body.replace(":root{", ":host{").replace("body{", ".eva-panel{")
@@ -44,20 +47,18 @@ def panel_script(html):
     return """let sdkReady;
 function loadSdk(){return sdkReady??=(new Promise((resolve,reject)=>{
  const script=document.createElement('script');script.src='/api/eva2_voice/assets/livekit-client.js';script.onload=resolve;script.onerror=reject;document.head.append(script);
-}));}
+})).catch(error=>{sdkReady=null;throw error;});}
 class EvaOwnerVoicePanel extends HTMLElement {
  set hass(value){this._hass=value;} get hass(){return this._hass;}
  async connectedCallback(){
-  this._disposed=false;this._visit=(this._visit||0)+1;if(this._mounted)return;this._mounted=true;
+  if(this._mounted){this._resume?.();return;}this._mounted=true;
   const root=this.attachShadow({mode:'open'});const panel=this;
-  root.innerHTML=""" + json.dumps(body) + ";\nawait loadSdk();\n" + script + """
-  this._stop=async()=>{const token=ownerToken,capability=phoneCapability,oldRoom=room;ownerToken='';phoneCapability=null;
-    $('login').hidden=false;$('owner-key').value='';messages.clear();jobs.clear();$('chat').replaceChildren();$('work').replaceChildren();reset('De microfoon staat uit.');
-    if(oldRoom)await oldRoom.disconnect();
-    if(capability)await panel.hass.callWS({type:'eva2_voice/owner_session',path:'session/end',owner_token:token,capability});
-  };
+  root.innerHTML=""" + json.dumps(body) + ";\n" + script.replace("  const response=await ownerRequest('/session'", "  await loadSdk();if(!current(attempt))return;\n  const response=await ownerRequest('/session'") + """
+  this._stop=()=>{leave();detachLifecycle();};
+  this._resume=()=>{attachLifecycle();resume();};
+  try{await loadSdk();}catch(_){if(!disposed)$('state').textContent='De spraakmodule kon niet worden geladen. Kies opnieuw Begin gesprek.';}
  }
- disconnectedCallback(){this._disposed=true;this._visit=(this._visit||0)+1;this._stop?.().catch(()=>{});}
+ disconnectedCallback(){this._stop?.();}
 }
 customElements.define('eva-owner-voice-panel',EvaOwnerVoicePanel);
 """

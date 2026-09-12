@@ -1,0 +1,93 @@
+{
+  "date": "2026-09-12",
+  "status": "built_tested_live_owner_acceptance_open",
+  "scope": "Stop voice capture and close only the owned audio room on hidden/offline/dispose/reconnect, without cancelling admitted core work. Require explicit start after returning.",
+  "source_files": {
+    "src/eva/voice_service/client.html": "9206bec4ea3aec0eb823ff3e82e5909247447524185ba2fbbbacc2e5ba526e6b",
+    "tools/build_ha_phone_panel.py": "dd6244f098949f3a7936067c55bd76f74b1b9ba30499765ad123b5802dedfc45",
+    "tests/voice_service/client-lifecycle.test.cjs": "493965bb63c6ab3c6f8a803bc5dcdb1907260721cb395ef387a850bee56efd4f"
+  },
+  "tests": {
+    "node_vm": {
+      "command": "node --test eva2/tests/voice_service/client-lifecycle.test.cjs",
+      "passed": 58,
+      "boundaries": [
+        "desktop and generated HA panel",
+        "hidden/offline/dispose/end during create/connect/startAudio/getUserMedia/publish",
+        "HA ICE and SDK waits",
+        "stale callbacks and old create versus replacement",
+        "exact room cleanup after network error",
+        "Reconnecting and SignalReconnecting",
+        "SDK download retry"
+      ],
+      "limitations": "DOM, HA and LiveKit boundaries stubbed; no physical capture or operating-system background execution proof"
+    },
+    "existing_ha_transport_entry": {
+      "passed": 5,
+      "command": "pytest eva2/tests/operations/test_ha_phone_entry.py eva2/tests/operations/test_ha_phone_transport.py -q"
+    }
+  },
+  "review": {
+    "agent": "/root/review_voice_reference",
+    "decision": "GO",
+    "independent_node_passed": 58,
+    "resolved_findings": [
+      "SignalReconnecting handling",
+      "retry rejected SDK loading promise"
+    ],
+    "sdk_compatibility": "Pinned LiveKit 2.22.3 accepts MediaStreamTrack via publishTrack as user-provided capture."
+  },
+  "browser_proof": {
+    "offline_fixture": "Actual Chromium custom element and synthetic silent MediaStreamTracks with stubbed SDK/HA: offline/online then remove/remount ends tracks, closes exact capabilities and does not restart capture.",
+    "real_relay": {
+      "ha_auth": "Existing owner credentials held by loopback fixture in process memory",
+      "sdk": "Pinned real LiveKit 2.22.3",
+      "transport": "Existing HA remote WSS + cloud relay",
+      "fixture_changes": [
+        "Synthetic silent getUserMedia, muted audio output",
+        "Loopback HA request adapter and remote URL/protocol normalization"
+      ],
+      "typed_request": "Zeg alleen: de verbinding werkt.",
+      "visible_answer": "Eva: de verbinding werkt.",
+      "offline_event": "Simulated event while real network available; raw track ended, UI idle, transcript and completed work preserved, actual room count zero.",
+      "not_a_physical_network_cut": true,
+      "explicit_restart_and_dispose": "Explicit Begin conversation created a second working relay connection. Removing the component ended the second track; remount showed empty login/history and no automatic microphone. Final LiveKit room count zero."
+    }
+  },
+  "activation": {
+    "ha_backup": "/config/.eva2-voice-lifecycle-20260912",
+    "ha_before": {
+      "phone-assets/panel.js": "d552b1e38b10d0475205bd16d600eb20eff080dbc953963704431e576ea4c3fc",
+      "phone-build.json": "7955e0c885dc63dbf470c609d60a32671675ce534ecc3ad9bdf811f92899c20c"
+    },
+    "ha_after": {
+      "phone-assets/panel.js": "cb4cd0204505187ef709d092e3657f74962a1f5a55fd7ff7acadb158be6e4b2e",
+      "phone-build.json": "897d0ed8c2cd3b3811d7a30952a9644792e0c30288b0639ef44cc06c01a3d8cd"
+    },
+    "media_before": "sha256:16ac10cd5a32fddd3163609f842754d46433c52534b3fea3bdc4fc3482a9913d",
+    "media_after": "sha256:bf2148239bf009b1924d4134ba67fcdbf1ccae64f436add5e9f77e161226922b",
+    "rooms_before": 0,
+    "ha_core_sfu_restart": false,
+    "ha_ready": 200,
+    "served_laptop_sha256": "9206bec4ea3aec0eb823ff3e82e5909247447524185ba2fbbbacc2e5ba526e6b",
+    "rooms_after": 0
+  },
+  "backend_reused": {
+    "changes": false,
+    "empty_owner_room_timeout_seconds": 30,
+    "media_lease_without_renewal_seconds": 10,
+    "ha_renew_failure_revokes_exact_capability": true,
+    "note": "Abrupt process loss is bounded by existing server cleanup; JavaScript is not guaranteed to run after OS termination."
+  },
+  "rollback": {
+    "ha": "Restore panel.js and phone-build.json from /config/.eva2-voice-lifecycle-20260912 via existing SSH/SFTP, reload frontend. Original integration backup remains unchanged.",
+    "media": "Restore /var/lib/eva2/voice-session/runtime.env.before-lifecycle-20260912 and recreate only media using existing compose. Previous image retained.",
+    "executed": false
+  },
+  "remaining_owner_trials": [
+    "Physical phone microphone/speaker/echo and pronunciation",
+    "Physical screen lock/background/return and mobile network interruption",
+    "OS browser/app termination"
+  ],
+  "core_work_preservation": "No task_stop sent by lifecycle handlers; existing core owns admitted work and result retention. No new long-running core task cancellation/recovery proof claimed."
+}

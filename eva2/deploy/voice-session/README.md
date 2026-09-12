@@ -27,3 +27,23 @@ Intrekken van policy/current.json sluit de audiosessie via de lopende autorisati
 ## Acceptatie
 
 Technische proeven gebruiken synthetische Nederlandse audio zonder ruwe audio-opslag. Werkelijke microfoon, luidspreker/echo, huisgebruik en eigenaaracceptatie moeten afzonderlijk worden vastgelegd. Een transcript bewijst geen hoorbare kwaliteit; gemeten audio-energie en de gebruikersproef horen bij de controle.
+
+## Lifecyclecorrectie 12 september 2026
+
+Het paneel en de laptopclient stoppen eigen microfoontracks bij verbergen,
+offline gaan, verbindingsherstel en afsluiten. Terugkeren opent de microfoon niet:
+kies opnieuw **Begin gesprek**. Een verwijderde pagina wist de aanmelding.
+Vertraagde verbindingen en microfoontoestemming ruimen alleen hun eigen room op.
+Alleen audio wordt beëindigd; reeds toegelaten werk blijft bij de kern.
+Bij tijdelijk mislukte afsluiting blijft de exacte room voor herstel bewaard;
+de bestaande backend bewaakt daarnaast verlopen en lege rooms.
+
+[Lifecyclebewijs](../../evidence/product/voice-client-lifecycle-2026-09-12.json)
+onderscheidt de deterministische tests, browserproeven en live assetcontrole.
+Fysieke telefoonmicrofoon, echo, schermvergrendeling, procesbeëindiging en
+het luisteroordeel zijn hiermee niet geaccepteerd of bewezen.
+
+Probeer: open een gesprek, verberg het paneel en keer terug. De microfoon hoort
+uit te blijven totdat je opnieuw Begin gesprek kiest. Bij verwijderen van het
+paneel moet opnieuw aanmelden nodig zijn. Werk dat al gestart was is geen
+stopopdracht gegeven; controleer het resultaat via het bestaande dashboard.
