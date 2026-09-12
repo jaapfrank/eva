@@ -248,7 +248,10 @@ class PostgresConversationJournal(PostgresScopedRole):
 
     def complete_model_request(
         self, turn: ConversationTurn, request_id: str, usage: ConversationModelUsage,
+        *, outcome: str = "succeeded",
     ) -> None:
+        if outcome not in ("succeeded", "failed"):
+            raise ValueError("model request outcome is invalid")
         # Recording already admitted work must remain possible after stop.
         identity = self._stop_identity(turn.principal_id, turn.conversation_id, turn.message_id)
         thread_id = f"conversation-model:{request_id}"
@@ -260,10 +263,13 @@ class PostgresConversationJournal(PostgresScopedRole):
         if (not events or events[0].event_type != "CONVERSATION_MODEL_ADMITTED"
                 or admitted_identity != admission):
             raise ConversationConflict("model request admission differs")
-        data = {**admission, "usage": usage.to_wire()}
+        data = {**admission, "usage": usage.to_wire(), "outcome": outcome}
         if len(events) > 1:
+            stored = events[1].payload.get("data", {})
+            # Prior successful records had no outcome field; preserve replay.
+            compatible = {"outcome": "succeeded", **stored} if isinstance(stored, dict) else None
             if (len(events) != 2 or events[1].event_type != "CONVERSATION_MODEL_RECORDED"
-                    or events[1].payload.get("data") != data):
+                    or compatible != data):
                 raise ConversationConflict("model request result differs")
             return
         state = self._timeline.load(thread_id)

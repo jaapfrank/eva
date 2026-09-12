@@ -673,6 +673,7 @@ class ConversationModelJournal(Protocol):
 
     def complete_model_request(
         self, turn: ConversationTurn, request_id: str, usage: ConversationModelUsage,
+        *, outcome: str = "succeeded",
     ) -> None: ...
 
     def model_usage(self, turn: ConversationTurn) -> ConversationModelUsage: ...
@@ -699,10 +700,15 @@ def begin_current_model_request() -> str | None:
     return None if context is None else context[1].begin_model_request(context[0])
 
 
-def complete_current_model_request(request_id: str | None, usage: ConversationModelUsage) -> None:
+def complete_current_model_request(
+    request_id: str | None, usage: ConversationModelUsage, *, outcome: str = "succeeded",
+) -> None:
     context = _MODEL_REQUEST_JOURNAL.get()
     if context is not None and request_id is not None:
-        context[1].complete_model_request(context[0], request_id, usage)
+        if outcome == "succeeded":
+            context[1].complete_model_request(context[0], request_id, usage)
+        else:
+            context[1].complete_model_request(context[0], request_id, usage, outcome=outcome)
 
 
 class LivingConversation:

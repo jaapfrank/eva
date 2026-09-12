@@ -691,6 +691,30 @@ poging en een18/7-regressie. Daarna volgt beoordeling van de correctie.
 Dit is een bevinding in een niet-uitgerolde kandidaat, geen live incident;
 de afgeronde offline diagnose blijft afgerond.
 
+### Directe modelpogingen — correctie goedgekeurd en bron afgerond
+
+Dezelfde reviewer herhaalde de one-shot-regressie: één uitlezing behoudt18
+input- en7 outputtokens als partial; de oorspronkelijke mismatchfout blijft
+zichtbaar en er volgt geen extra poging. De eerdere NO-GO is daarmee gesloten.
+Het bewijs bevat88 tests en9 afzonderlijke PG-eventexports. Alleen de echte
+63363793+084cdc82-codehunks en de bijgewerkte bewijsnotitie zijn geïntegreerd;
+privé-alignment8f2694c9 is niet opgenomen. Beëindigde directe modelpogingen
+krijgen een geslaagd/mislukt resultaat met bekende usage; onbekend blijft null.
+Bron technisch klaar, nog geen image/livegang/migratie. Volledige helper-,
+geheugen- en productaccounting blijven open.
+[Pogingregistratie en correctie](reviews/cp001-direct-model-attempts-2026-09-13.md).
+
+### Toolregistratie — opgeslagen antwoord na intrekken behouden
+
+Een gerichte echte PG-proef reconstrueert registry en adapters, trekt de
+connector in en herstelt het reeds opgeslagen antwoord zonder nieuwe dispatch.
+Nieuwe uitvoering/lezen en een andere eigenaar worden geweigerd; herhalen
+voegt geen events toe. De onafhankelijke reviewer geeft GO voor test en rapport
+zonder de databaseproef opnieuw uit te voeren. Gatewaytransport en eigenaarcallback
+zijn fixtures; external_state_verified blijft false. Twee bestanden geïntegreerd,
+geen runtimewijziging of volledige applicatie-/externe toestandclaim.
+[Herstelgrens](reviews/mcp-invocation-registry-recovery-2026-09-13.md).
+
 ## Nu
 
 | Volgorde | Kaart | Resultaat | Status |

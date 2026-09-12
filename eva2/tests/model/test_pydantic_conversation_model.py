@@ -1162,7 +1162,7 @@ def test_each_provider_attempt_is_journaled_and_stop_blocks_internal_repeat(tmp_
             starts.append(request_id)
             return request_id
 
-        def complete_model_request(self, turn, request_id, usage):
+        def complete_model_request(self, turn, request_id, usage, *, outcome="succeeded"):
             results[request_id] = usage
 
     identity = replace(_identity(), identity_pack=load_current_identity_pack())
@@ -1175,10 +1175,11 @@ def test_each_provider_attempt_is_journaled_and_stop_blocks_internal_repeat(tmp_
             assert result.text == "Hallo Jaap."
     assert len(scripted.captures) == (1 if stop else 2)
     assert len(starts) == len(scripted.captures)
-    # First successful usage survives a stop before language repair. Failed
-    # provider attempts keep their admission without invented completion usage.
-    assert len(results) == ((0 if stop else 1) if kind == "retry" else len(starts))
-    assert all(usage.model_attempts == 1 for usage in results.values())
+    # Every finished attempt is terminal, even when no usage was measured.
+    assert len(results) == len(starts)
+    if kind == "retry":
+        assert results["0"] == ConversationModelUsage.unmeasured()
+    assert all(usage.model_attempts in (None, 1) for usage in results.values())
     # Context teardown cannot leak one owner's journal into another request.
     from eva.application.conversation import begin_current_model_request
     assert begin_current_model_request() is None

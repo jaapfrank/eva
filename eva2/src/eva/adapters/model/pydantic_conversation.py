@@ -941,6 +941,38 @@ class PydanticConversationModel:
                 check_cancellation()
                 output_started = [False]
                 session = None
+                request_id = None
+                raw_usage = None
+                raw_usage_consumed = False
+
+                def record_failure(error: BaseException) -> None:
+                    nonlocal raw_usage, raw_usage_consumed
+                    if request_id is None:
+                        return
+                    usage = getattr(error, "model_usage", None)
+                    if usage is None and session is not None:
+                        if not raw_usage_consumed:
+                            raw_usage_consumed = True
+                            try:
+                                raw_usage = session.consume_raw_usage()
+                            except CodexProviderError:
+                                pass  # No unique terminal provider usage was attested.
+                        if raw_usage is not None:
+                            # Reuse an attestation consumed before a validation failure.
+                            # Tokens are known; failed parsing may leave tool count unknown.
+                            usage = ConversationModelUsage.partial(
+                                model_attempts=1, tool_calls=0,
+                                input_tokens=raw_usage.input_tokens, output_tokens=raw_usage.output_tokens,
+                            )
+                    try:
+                        complete_current_model_request(
+                            request_id, usage or ConversationModelUsage.unmeasured(),
+                            outcome="failed",
+                        )
+                    except Exception as journal_error:
+                        # Do not retry after a failed durable write, or hide the original failure.
+                        raise error from journal_error
+
                 try:
                     if injected_backend is not None:
                         request_id = begin_current_model_request()
@@ -962,6 +994,7 @@ class PydanticConversationModel:
                             request_id = begin_current_model_request()
                             dispatched_attempts += 1
                             phase = await run(session.model, output_started)
+                            raw_usage_consumed = True
                             raw_usage = session.consume_raw_usage()
                         usage = phase[2]
                         if (
@@ -973,6 +1006,7 @@ class PydanticConversationModel:
                                 "conversation provider usage attestation differs"
                             )
                 except CodexProviderError as error:
+                    record_failure(error)
                     if (
                         error.category == "credentials_rejected"
                         and session is not None
@@ -995,6 +1029,9 @@ class PydanticConversationModel:
                     else:
                         message = "conversation provider returned an invalid response"
                     raise ConversationModelError(message) from error
+                except (Exception, asyncio.CancelledError) as error:
+                    record_failure(error)
+                    raise
                 complete_current_model_request(request_id, phase[2])
                 if dispatched_attempts == 2:
                     usage = phase[2]
