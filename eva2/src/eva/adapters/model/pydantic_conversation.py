@@ -1218,6 +1218,13 @@ class PydanticConversationModel:
             and identity.identity_pack.language.startswith("nl")
             and _contains_foreign_script(text)
         ):
+            used = ConversationModelUsage.aggregate(tuple(usages))
+            if (self._resource_budget is not None
+                    and used.input_tokens is not None
+                    and used.input_tokens >= self._resource_budget.max_input_tokens):
+                raise ConversationModelError(
+                    "conversation input budget exhausted before language repair", model_usage=used,
+                )
             text, action_call, usage, timing = self._run_pydantic_phase(
                 prompt=turn.grounded_text,
                 instructions=(

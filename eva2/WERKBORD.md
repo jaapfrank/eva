@@ -715,6 +715,19 @@ zijn fixtures; external_state_verified blijft false. Twee bestanden geïntegreer
 geen runtimewijziging of volledige applicatie-/externe toestandclaim.
 [Herstelgrens](reviews/mcp-invocation-registry-recovery-2026-09-13.md).
 
+### Bestaande inputgrens — onnodig taalherstel voorkomen
+
+De reviewer geeft GO na vier zelf herhaalde grensproeven en controle van
+bron-/bewijshashes en83JUnitresultaten. Zeven regels vóór taalherstel
+voorkomen een extra modelpoging wanneer de bekende input de bestaande
+generategrens al bereikt. Bij16.000 blijft het één dispatch/admission;
+15.999+1 blijft toegestaan. Usage en oorspronkelijke fouten blijven behouden.
+Alleen modelhunk, gerichte test en bijgewerkte bewijsnotitie zijn geïntegreerd.
+De execute-loop en bestaande limieten blijven gelijk. Bron technisch klaar,
+nog geen image of livegang; geen volledige requestbrede budgetclaim. De
+runtimebeheerder bereidt een afzonderlijk gecontroleerde kandidaat voor.
+[Grens en bewijs](reviews/cp001-request-budget-contract-2026-09-13.md).
+
 ## Nu
 
 | Volgorde | Kaart | Resultaat | Status |
