@@ -1,0 +1,30 @@
+{
+  "contract": "EvaAU002PresentationReviewAndOverlay/v1",
+  "implementationCommit": "30905cf101599f075759d5980bb816dd246f822c",
+  "initialImplementationCommit": "417d05d458aee5f8aaeee48ab7ff5c00c6643eb3",
+  "review": {
+    "decision": "GO",
+    "reportedByCoordinatorTask": "01a08a88-894c-7171-87fa-e681ed47c735",
+    "findingResolved": "Persisted call_started no longer claims live worker activity; needs_help is explained.",
+    "scope": "Independent rereview GO relayed by coordinator; this receipt is written by the builder."
+  },
+  "tests": {
+    "passed": 34,
+    "command": "pytest -q tests/bootstrap/test_delegated_work_commands.py tests/api/test_telegram_canary_api.py",
+    "logSha256": "2024dff7ab45ec7e19976a26d20e68c513d1be61a6fa6662065f14d95cbe6424"
+  },
+  "overlayPlan": {
+    "parentImageObserved": "sha256:bfb0d25abb7f4a1247d376050fdfd7b606e3a3285dcd19b9ee6831d3297b046d",
+    "sourceAndWorkerSameImage": true,
+    "runtimePath": "/opt/eva/src/eva/bootstrap/delegated_work_commands.py",
+    "parentFileSha256": "b2b5812f75d6d83b8bc38f15c51627a1e60919d5871188a51fbfc4df9dd44504",
+    "candidateFileSha256": "bbedd8a320099e7ca9465fa495b269bb2615897ecd49c4d533ebf957b556e176",
+    "patchSha256": "99a560b68a212b92261b56eaa3d1d04ddab64eebbb5f88545d4157f2fa49b4cb",
+    "baseSourceEqualsObservedLiveBytes": true,
+    "action": "Combine this single runtime file with reviewed initiative-status changes on current live parent; recheck parent and hashes before build/deployment."
+  },
+  "deployment": "not deployed; no runtime cutover during HA phone installation",
+  "humanAcceptance": false,
+  "externalTelegramMessagesSent": 0,
+  "newModelCalls": 0
+}

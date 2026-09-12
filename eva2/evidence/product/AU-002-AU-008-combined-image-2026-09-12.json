@@ -1,0 +1,38 @@
+{
+  "contract": "EvaCombinedAU002AU008Image/v1",
+  "parentImage": "sha256:bfb0d25abb7f4a1247d376050fdfd7b606e3a3285dcd19b9ee6831d3297b046d",
+  "candidateImage": "sha256:4a5fa7c1116d07f6037b9a02f82ba8f6c30d703e80bbf8c84a30fbf108ca8710",
+  "helperImplementation": "30905cf101599f075759d5980bb816dd246f822c",
+  "initiativeImplementation": "e96b2054d4d40e5c502907e24c53fc25a553bbe0",
+  "parentLayersPreserved": true,
+  "runtimeConfigPreservedExceptLabels": true,
+  "imports": "imports passed",
+  "changedSourceFiles": {
+    "eva/adapters/api/dashboard_static/assets/index-Bv4zaQUs.js": {
+      "before": null,
+      "after": "02b13b469ebf8f0448f30fd3855dd4d5955465b937afcf4897d017e2d82785d6"
+    },
+    "eva/adapters/api/dashboard_static/assets/index-Ca8HuISF.js": {
+      "before": "302d7e677250a45359d7f8e2516575b86e3db25fe40e25626f3fdea39ac02937",
+      "after": null
+    },
+    "eva/adapters/api/dashboard_static/eva-dashboard-assets.json": {
+      "before": "8bcd37c8c0b3f6a96235ab299fcf33a84d24e2be632e51f3809612ce253a475d",
+      "after": "2e0db25b0e9f2494c915d268248a13640ed57cc277f859aca5b5a6f93e0357c4"
+    },
+    "eva/adapters/api/dashboard_static/index.html": {
+      "before": "f0fd73cf401bf52d677218fcd6ccd4323061ccc5a4676e7e6abd7810795cd348",
+      "after": "085ec940fecbd803a9d9045718f3e492b799664b4c1181d4bc248e061982b2d9"
+    },
+    "eva/adapters/postgres/owner_initiatives.py": {
+      "before": "4be2f792ea7fdb6ef6a562be387ff3aca37df6fb28731e22f1a2d2cbece577df",
+      "after": "cf7927a94fa6f46c8f2b3eb0a9265a12252e1b5d32796fe733da287f1282e157"
+    },
+    "eva/bootstrap/delegated_work_commands.py": {
+      "before": "b2b5812f75d6d83b8bc38f15c51627a1e60919d5871188a51fbfc4df9dd44504",
+      "after": "bbedd8a320099e7ca9465fa495b269bb2615897ecd49c4d533ebf957b556e176"
+    }
+  },
+  "deployment": "not activated; awaiting coordinator clearance",
+  "modelCalls": 0
+}

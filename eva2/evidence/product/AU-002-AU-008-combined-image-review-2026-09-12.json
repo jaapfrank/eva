@@ -1,0 +1,13 @@
+{
+  "contract": "EvaCombinedImageReviewReceipt/v1",
+  "image": "sha256:4a5fa7c1116d07f6037b9a02f82ba8f6c30d703e80bbf8c84a30fbf108ca8710",
+  "decision": "GO",
+  "reportedByCoordinatorTask": "01a08a88-894c-7171-87fa-e681ed47c735",
+  "scope": "Independent image review confirmed parent layers, runtime configuration, two Python files, sealed asset hashes and imports.",
+  "provenance": "Independent GO relayed by coordinator; this receipt is recorded by the builder.",
+  "imageEvidenceCommit": "67660d224805d27065a58e965e4cb3f8c620d54b",
+  "imageEvidencePath": "eva2/evidence/product/AU-002-AU-008-combined-image-2026-09-12.json",
+  "imageEvidenceSha256": "07917d6ccfb8d8491ed21af26c209c68f59bf737ef439f7f20b21aa54bc0c43b",
+  "deployment": "not activated; wait for voice-owner release and explicit coordinator clearance",
+  "humanAcceptance": false
+}

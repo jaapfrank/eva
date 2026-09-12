@@ -1,0 +1,50 @@
+{
+  "contract": "EvaAU002StatusResultCandidate/v1",
+  "baseCommit": "15b74ad25d32a3312a2ddb929e2db460108917b7",
+  "implementationCommit": "417d05d458aee5f8aaeee48ab7ff5c00c6643eb3",
+  "status": "candidate_not_deployed",
+  "liveConsistency": {
+    "slot": 3,
+    "coreImage": "sha256:bfb0d25abb7f4a1247d376050fdfd7b606e3a3285dcd19b9ee6831d3297b046d",
+    "workerImage": "sha256:bfb0d25abb7f4a1247d376050fdfd7b606e3a3285dcd19b9ee6831d3297b046d",
+    "helperSourceHashes": {
+      "delegated_work_owner_service.py": "934465533028e525ba75f062621d47ffcbf8e6d7eec6a1b53ef1d5edea0e1566",
+      "delegated_work_commands.py": "b2b5812f75d6d83b8bc38f15c51627a1e60919d5871188a51fbfc4df9dd44504",
+      "delegated_work_provider.py": "e0837229a16fdf169f30bfafa85ea2ff6571d78c390502a3217c5e5ce11b39f8"
+    },
+    "catalog": {
+      "actualIngressMatchesTrustedPrivateAlias": true,
+      "internalOwnerIdDiffers": true,
+      "ingressMessageSha256": "ce6643fbbe209c515e0017373322e6918a1c4cf0d69603bf3dee723606e8f466",
+      "availableHelperTools": [
+        "start_delegated_work",
+        "list_delegated_work",
+        "get_delegated_work",
+        "stop_delegated_work",
+        "resume_delegated_work"
+      ],
+      "toolCount": 27,
+      "modelCalls": 0,
+      "sentTelegramMessages": 0
+    }
+  },
+  "candidateChanges": [
+    "Render exact known summary/findings result shape as readable text; retain unknown/old text verbatim and leave durable output/hash unchanged.",
+    "Describe latest owner task state, task preview, ID and generation; explicitly distinguish running, stop requested, stopped, success and uncertainty."
+  ],
+  "tests": {
+    "command": "pytest -q tests/bootstrap/test_delegated_work_commands.py tests/api/test_telegram_canary_api.py",
+    "passed": 25,
+    "logSha256": "2dee7a8dea83965313395b50371c1bc8d100be4d4963adabc2a85eb16cb867b0"
+  },
+  "reusedLifecycleEvidence": "eva2/evidence/product/AU-002-telegram-lifecycle-2026-09-11.json",
+  "externalTelegramMessagesSent": 0,
+  "newModelCalls": 0,
+  "humanAcceptance": false,
+  "limitations": [
+    "Candidate awaits independent review and coordinated deployment; live still has old presentation.",
+    "A delayed start response may arrive after a concurrent stop response; current task status remains authoritative. No conversation-order change in this candidate.",
+    "Stop prevents result delivery and automatic resumption; does not prove provider-side cancellation."
+  ],
+  "ownerTrialPath": "eva2/design/product/AU-002-owner-trial-2026-09-12.md"
+}
