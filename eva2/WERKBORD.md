@@ -357,6 +357,26 @@ budgetten, volledig verbruik, stoppen na timeout en de echte bestands-/
 onderbrekingsketen moeten nog worden toegelaten. Geen echte modelcalls,
 bronintegratie, productrun of rangschikking door deze registratie.
 
+
+### Gecombineerde research-/voice-releasekandidaat — review open
+
+Zes runtimebestanden zijn op de exacte live-imagebron aangepast. De maker
+rapporteert16 voice-,7 ownerresearch-,4 native- en94 offlinecontroles groen.
+Deze aanpassing vraagt eigen onafhankelijke review: eerdere voice-GO geldt
+hiervoor niet automatisch. Geen image gebouwd, livewijziging of AU-004-poging3.
+
+De releasebasis sluit acht niet-live modules uit en mag nooit in de gedeelde
+broncode worden gemerged. Canonieke bronpatches en releasebewijs blijven apart.
+Deze registratie bevat alleen kandidaatverwijzingen.
+
+### CP-001 native adapters — review vraagt correctie
+
+De onafhankelijke reviewer vond dat de aparte readback alleen tekst/persoon
+bindt en verkeerde of ontbrekende bericht-/conversatie-ID's kon accepteren.
+De maker herstelt de volledige reply-identiteit en teksthash met regressies.
+Deze native kandidaat is niet geïntegreerd. De reeds afgeronde offline runner
+blijft staan; echte productvergelijking blijft open.
+
 ## Nu
 
 | Volgorde | Kaart | Resultaat | Status |
