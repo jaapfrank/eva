@@ -102,14 +102,18 @@ review heeft GO gegeven. Geen tweede proef gestart.
 [Reviewbewijs](evidence/product/TL-003-unassisted-review-2026-09-12.json).
 [Uitvoeringsbewijs](evidence/product/TL-003-unassisted-2026-09-12.json).
 
-### Zelf leren — AU-004: audit en proefplan
+### Zelf leren — AU-004: audit en proefplan opgeleverd
 
 De bestaande skill- en toolleerroute wordt beoordeeld op hergebruik. Eerst wordt
 één kleine ongeziene taak gekozen met een aantoonbaar ontbrekend vermogen. Het
 proefplan beschrijft hoe Eva via haar algemene uitvoerder een herbruikbare skill
 of tool maakt, gericht controleert en bij een tweede variant toepast.
-Deze fase omvat alleen audit en plan: nog geen modelproef, externe
-schrijfhandeling, budgetverhoging of uitrol. Geen voltooiing of acceptatie geclaimd.
+De audit en het begrensde proefplan zijn opgeleverd ter afstemming. Een
+opgeslagen taalgestuurde werkinstructie is mogelijk; een algemene uitvoerbare
+code-tool of skillloader is niet aangetoond. De voorgestelde proef gebruikt
+SRT naar WebVTT en een tweede ongeziene variant. Geen modelproef gestart;
+geen gemaakte skill of eigenaaracceptatie geclaimd.
+[Audit en proefplan](design/product/AU-004-small-skill-trial-plan-2026-09-12.md).
 
 ### Gatewaycatalogus — correctie in review
 
@@ -117,7 +121,7 @@ Een concreet opstartdefect gaat tijdelijk vooraf aan AU-004: de catalogus bevat
 53 tools, maar de standaardaanvraag geeft er slechts 50 terug. Daardoor mist
 een verse kernopbouw de verplichte bestandsleesfunctie. De bestaande kern
 blijft zijn eerder toegelaten catalogus gebruiken. De correctie haalt alle
-paginas op en is gericht getest; onafhankelijke review staat open. Nog niet
+paginas op en heeft bronreview-GO. De kandidaatimage wordt voorbereid; nog niet
 geactiveerd. AU-004 blijft beperkt tot de afgesproken audit en het proefplan.
 
 ### Kwaliteitsborging en samenhang
@@ -127,6 +131,18 @@ Drie onafhankelijke audits onderzoeken modulariteit, integratie en gereedheid
 voor concurrentievergelijking. De coördinator verwerkt concrete bevindingen
 in dit werkbord. Gebruikersproeven mogen later en blokkeren onafhankelijk
 technisch vervolgwerk niet. Algemene concurrentievoorsprong is niet bewezen.
+
+### Concrete opvolging van de kwaliteitsaudits
+
+[Architectuuraudit](reviews/architecture-whole-system-2026-09-12.md) en
+[integratieaudit](reviews/integration-coverage-2026-09-12.md) zijn opgeleverd.
+De architectuurpoort meldt 29 bevindingen; dit is geen nieuwe claim dat eerder
+geaccepteerde functies defect zijn. Eerst het lopende catalogus-/opstartherstel
+en de twee adapter-naar-bootstrap-grenzen afmaken. Daarna de voice-pakketgrens
+en gedeelde schema-/registrygrenzen gericht oppakken. Nog ontbrekend ketenbewijs:
+spraak + geheugenwijziging + helperwerk samen, en herstel van de samengestelde
+installatie. De coördinator prioriteert dit vervolgwerk; de concurrentie-audit
+loopt nog. Er is geen algemene groene integratie- of releaseclaim.
 
 ## Nu
 
