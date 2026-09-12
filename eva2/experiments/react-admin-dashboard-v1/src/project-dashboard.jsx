@@ -25,7 +25,7 @@ function Stage({ state, label }) {
 
 function PracticeTests({ tests = [], browserAccess, stale, ownerBrowserUpdate }) {
   if (!tests.length) return null;
-  const labels = { ready: 'Klaar om te testen', accepted: 'Door jou bevestigd', working: 'In ontwikkeling — nog niet testen' };
+  const labels = { awaiting_result: 'Uitgevoerd — uitslag nog open', ready: 'Klaar om te testen', accepted: 'Door jou bevestigd', working: 'In ontwikkeling — nog niet testen' };
   return <section className="practice-section" aria-label="Jouw praktijktests">
     <div className="section-title"><div><h2>Jouw praktijktests</h2><p>Geef hier in de chat het testnummer en je ervaring door. Ik werk de uitslag bij.</p></div></div>
     <div className="practice-grid">{tests.map((test) => <article className={`practice-card ${test.id === 'BR-01' ? 'access-check' : test.status}`} key={test.id}>

@@ -1,14 +1,14 @@
 # Eva 2 — uitvoerbaar werkbord
 
-Laatst bijgewerkt: 2026-09-11.
+Laatst bijgewerkt: 2026-09-12.
 
 Doel: [Eva als zelfstandig lerende digitale huisgenoot](PROJECTDOEL.md).
 Gebouwd, getest, live en door jou geaccepteerd zijn verschillende stappen.
 
-CO-004 en CO-005 technisch afgerond en live: eigen geheugenbronnen bekijken, corrigeren en gericht vergeten. GE-02 staat klaar; GE-01 blijft geaccepteerd.
+CO-004 en CO-005 technisch afgerond en live. Jaap heeft GE-02 uitgevoerd; alleen zijn expliciete uitslag ontbreekt. GE-01 blijft geaccepteerd.
 [Actueel bewijs](evidence/product/CO-004-CO-005-owner-memory-controls-2026-09-11.json).
 
-Probeer GE-02 via het projectdashboard wanneer het uitkomt. Jouw oordeel blijft apart van de afgeronde technische oplevering. AU-008 blijft gepauzeerd tot het volgende toegewezen deelgoal.
+GE-02 hoeft niet opnieuw. Alleen nog bevestigen of inzien, corrigeren en vergeten alle drie goed werkten. Geen technisch restpunt binnen deze gekozen geheugenoplevering.
 
 ### Afzonderlijk stemwerk
 

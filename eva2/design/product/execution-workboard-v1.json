@@ -1,7 +1,7 @@
 {
   "contract": "EvaExecutionWorkboard/v1",
   "schemaVersion": 1,
-  "lastUpdated": "2026-09-11",
+  "lastUpdated": "2026-09-12",
   "sequencePolicy": "done_then_one_primary_then_queued",
   "commandWorkingDirectory": "eva2",
   "inventoryPath": "docs/eva-repository-inventory.generated.json",
@@ -674,20 +674,28 @@
         },
         {
           "id": "GE-02",
-          "updatedOn": "2026-09-11",
-          "status": "ready",
+          "updatedOn": "2026-09-12",
+          "status": "awaiting_result",
           "title": "Geheugen bekijken, corrigeren en vergeten",
           "change": "Live eigenaarsbediening bij Jouw geheugenbronnen: volledige tekst bekijken, nieuwe informatie doorgeven en een verwerkte bron bewust wissen.",
           "steps": [
             "Vertel Eva via Telegram voor een proef: Voor deze geheugentest heet mijn denkbeeldige plant Muntje.",
-            "Open http://localhost:44710/internal/v1/dashboard met je eigenaarslogin. Zoek deze bron onder Jouw geheugenbronnen en klik Bekijken en aanpassen.",
+            "Open http://127.0.0.1:44711/internal/v1/dashboard. Zoek deze bron onder Jouw geheugenbronnen en klik Bekijken en aanpassen.",
             "Kies Informatie corrigeren en vul in: Voor deze geheugentest heet mijn denkbeeldige plant voortaan Basil. Wacht tot de nieuwe bron Verwerkt toont.",
             "Vraag Eva via Telegram hoe je denkbeeldige plant in de geheugentest heet; verwacht Basil.",
             "Wis de twee proefbronnen met Deze bron vergeten en de bevestigingsknop. Controleer na vernieuwen dat ze uit de bronlijst verdwenen zijn. Wis ook de bron van je extra proefvraag als je die proefbeurt wilt verwijderen."
           ],
           "expected": "De volledige bron is zichtbaar; Eva gebruikt de nieuwe naam. Na het wissen verdwijnen de geselecteerde bronnen uit de lijst. Hun blijvende geheugen is technisch afzonderlijk teruggelezen: nul feiten na wissen. Andere vermeldingen en recente of Telegramberichten kunnen informatie nog bevatten en worden niet automatisch allemaal gewist.",
-          "report": "GE-02: werkt / werkt niet, met de stap waar het eventueel misgaat.",
-          "result": "Technisch live bewezen met tijdelijke testgegevens en een onafhankelijke geheugenreadback; die testgegevens zijn daarna verwijderd. Jaaps beoordeling staat open."
+          "report": "Alleen nog bevestigen of inzien, corrigeren en vergeten alle drie goed werkten; de proef hoeft niet opnieuw.",
+          "result": "Jaap meldde Gedaan en vroeg daarna het volgende te testen. De gebruikersproef is uitgevoerd; de uitslag is nog niet expliciet bevestigd. De technische oplevering blijft afgerond.",
+          "ownerTrialPerformed": true,
+          "ownerReportSource": {
+            "threadId": "01a08a88-894c-7171-87fa-e681ed47c735",
+            "reportedText": "Gedaan",
+            "relayedBy": "coordinator",
+            "registeredOn": "2026-09-12",
+            "outcomeConfirmed": false
+          }
         }
       ]
     },
@@ -766,9 +774,9 @@
       "document": "eva2/PROJECTDOEL.md",
       "scope": "Digitale huisgenoot: zelfstandig redeneren, initiatief, onbekende vaardigheden leren, handelen, zelfverbetering en aantoonbare concurrentiewinst met open-sourcehergebruik.",
       "sessionGoal": "AU-008: één zelfstandige kosteloze bijdrage via de algemene uitvoerder.",
-      "currentWork": "CO-004 en CO-005 technisch afgerond en live: eigen geheugenbronnen bekijken, corrigeren en gericht vergeten. GE-02 staat klaar; GE-01 blijft geaccepteerd.",
+      "currentWork": "CO-004 en CO-005 technisch afgerond en live. Jaap heeft GE-02 uitgevoerd; alleen zijn expliciete uitslag ontbreekt. GE-01 blijft geaccepteerd.",
       "currentEvidence": "eva2/evidence/product/CO-004-CO-005-owner-memory-controls-2026-09-11.json",
-      "nextStep": "Probeer GE-02 via het projectdashboard wanneer het uitkomt. Jouw oordeel blijft apart van de afgeronde technische oplevering. AU-008 blijft gepauzeerd tot het volgende toegewezen deelgoal.",
+      "nextStep": "GE-02 hoeft niet opnieuw. Alleen nog bevestigen of inzien, corrigeren en vergeten alle drie goed werkten. Geen technisch restpunt binnen deze gekozen geheugenoplevering.",
       "usageClarification": {
         "date": "2026-09-07",
         "authorizedBy": "Jaap",
@@ -3786,7 +3794,7 @@
         }
       ],
       "preserveRuntime": "Core en worker bfb0d25abb7f4a1247d376050fdfd7b606e3a3285dcd19b9ee6831d3297b046d slot3 live; bestaand Hindsight CUDA-profiel en media behouden.",
-      "next": "GE-02 staat klaar voor Jaap. De gebouwde bediening is live; menselijke acceptatie blijft afzonderlijk. CO-008/GE-01 wordt niet heropend.",
+      "next": "GE-02 is uitgevoerd; alleen Jaaps expliciete uitslag ontbreekt. Geen herhaling van de volledige proef nodig. CO-004/CO-005 blijven technisch afgerond en GE-01 geaccepteerd.",
       "selectedDelivery": {
         "taskId": "01a07e5b-3ef4-7ef3-8a68-3197a780694e",
         "optionIds": [
@@ -3797,7 +3805,7 @@
           "0f16a210-24db-4ca2-854d-863ed207ebbd",
           "b7be4bc3-40f0-4f12-a8a8-fcc8a4b653d5"
         ],
-        "status": "technical_completed_owner_trial_pending",
+        "status": "technical_completed_owner_result_pending",
         "outcome": "Eigen geheugenbronnen bekijken, informatie bewust corrigeren en een aangewezen bron met afgeleid geheugen vergeten; met terugmelding en behoud van persoonsgrenzen.",
         "doneWhen": [
           "Inzage en bediening werken via eigenaarsroute voor eigen Telegram- en dashboardbronnen.",
@@ -3819,7 +3827,8 @@
         "evidenceCommit": "8e7426e510c009ef3a5f948fb977953809ebeff5",
         "reviewCommit": "4cf0efd257970425cbe9b12646630338dc5508b3",
         "integrationCommit": "8c8f011024e1feb04fea930245c7d45c49e20960",
-        "technicalCompletedAt": "2026-09-11"
+        "technicalCompletedAt": "2026-09-11",
+        "ownerTrialPerformed": true
       },
       "legacyRecoveryAssessment": {
         "needsHelpTotal": 34,
@@ -3830,6 +3839,18 @@
         "inventoryRegenerated": true,
         "inventoryPolicyErrors": 143,
         "meaning": "Werkboomsnapshot inclusief bestaande ongecommitteerde paden en gedeelde indexachterstand; geen releasepoort of claim dat de hele repository groen is. Root AGENTS.md is als documentatie geclassificeerd zodat de inventaris kan worden bijgewerkt."
+      },
+      "statusAudit20260912": {
+        "technicalRemainingItems": [],
+        "selectedOptions": [
+          "CO-004",
+          "CO-005"
+        ],
+        "scopeDecisionVerified": true,
+        "runtimeReadinessHttpStatus": 200,
+        "localOwnerMemorySourcesHttpStatus": 200,
+        "verification": "Bestaande oplevering en onafhankelijke review gecontroleerd; alleen read-only bereikbaarheid gecontroleerd, geen modelaanroepen of nieuwe geheugentests.",
+        "remaining": "Expliciete GE-02-uitslag door Jaap; coordinator vraagt die eenmaal."
       }
     },
     "pausedInitiativeExecution20260911": {
