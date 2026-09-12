@@ -27,8 +27,15 @@ function PracticeTests({ tests = [], browserAccess, stale, ownerBrowserUpdate })
   if (!tests.length) return null;
   const labels = { awaiting_result: 'Uitgevoerd — uitslag nog open', ready: 'Klaar om te testen', accepted: 'Door jou bevestigd', working: 'In ontwikkeling — nog niet testen' };
   return <section className="practice-section" aria-label="Jouw praktijktests">
-    <div className="section-title"><div><h2>Jouw praktijktests</h2><p>Geef hier in de chat het testnummer en je ervaring door. Ik werk de uitslag bij.</p></div></div>
-    <div className="practice-grid">{tests.map((test) => <article className={`practice-card ${test.id === 'BR-01' ? 'access-check' : test.status}`} key={test.id}>
+    <div className="section-title"><div><h2>Jouw praktijktests</h2><p>Technisch werk gaat door terwijl jouw beoordeling openstaat. Geef hier in de chat het testnummer en je ervaring door.</p></div></div>
+    <div className="owner-trial-summary" aria-label="Nu door jou te proberen">
+      <h3>Nu door jou te proberen</h3>
+      {stale ? <p>De bron is niet actueel. Vernieuw het overzicht voordat je een proef kiest.</p> : <ul>{tests.filter(test => test.trialLink && test.status !== 'accepted' && (test.status === 'ready' || (test.id === 'BR-01' && ownerBrowserUpdate?.normalEvaIsolatedVerified))).map(test => <li key={test.id}>
+        <a href={test.trialLink.url}><b>{test.id} · {test.title}</b></a><p>{test.expected}</p>
+      </li>)}</ul>}
+      <p>Geheugen is geaccepteerd; daarvoor hoef je niets opnieuw te testen. Hieronder staan de uitleg en eerdere uitslagen.</p>
+    </div>
+    <div className="practice-grid">{tests.map((test) => <article className={`practice-card ${test.id === 'BR-01' ? 'access-check' : test.status}`} key={test.id} id={'practice-' + test.id}>
       <span className="task-id">{test.id} · {test.updatedOn}</span><span className="task-status">{test.id === 'BR-01' ? (ownerBrowserUpdate?.normalEvaDenialVerified ? (ownerBrowserUpdate.normalEvaIsolatedVerified ? 'Technisch getest · jouw Chrome-proef open' : 'Chrome gereed voor tabdeling') : ownerBrowserUpdate?.viewerTrial === 'failed' ? 'Login gelukt · beeldproef mislukt' : stale ? 'Toegangscontrole niet actueel' : browserAccess?.state === 'login_required' ? 'Aanmelden nodig — jouw proef nog open' : 'Toegang nog niet bevestigd') : labels[test.status] || 'Status onbekend'}</span>
       <h3>{test.title}</h3><p>{test.change}</p>
       {test.id === 'BR-01' && ownerBrowserUpdate?.normalEvaDenialVerified ? <>

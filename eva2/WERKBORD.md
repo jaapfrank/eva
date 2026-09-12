@@ -5,10 +5,10 @@ Laatst bijgewerkt: 2026-09-12.
 Doel: [Eva als zelfstandig lerende digitale huisgenoot](PROJECTDOEL.md).
 Gebouwd, getest, live en door jou geaccepteerd zijn verschillende stappen.
 
-Geheugen is geaccepteerd en afgesloten. AU-008 is technisch afgerond en live; alleen jouw beoordeling van de bestaande eigen bijdrage (IN-02) staat open.
+Geheugen is geaccepteerd en afgesloten. AU-008 is technisch afgerond en live; IN-02 wacht op jouw oordeel. Overig reeds gewenst technisch werk gaat door met afzonderlijke opleveringen.
 [Actueel bewijs](evidence/product/AU-008-current-review-delivery-2026-09-12.json).
 
-Lees IN-02 op het dashboard en beoordeel nut en passendheid. Er wordt geen nieuwe bijdrage of nieuw hoofdonderdeel gestart om de administratie te vullen.
+Technisch werk aan overige reeds gewenste onderdelen gaat door. Open gebruikersproeven staan gebundeld op het dashboard; IN-02 blijft open zonder het overige werk te blokkeren.
 
 ### Afzonderlijk stemwerk
 
@@ -52,8 +52,8 @@ stoppen, hervatten, status en opgeslagen resultaat ophalen. Sinds 12 september
 zijn de laatste opdracht en het resultaat in gewone tekst leesbaar. De actuele
 status volgt de opgeslagen toestand. Het bestaande resultaat is behouden.
 Jaaps nieuwe Telegramproef en acceptatie staan open. Bij gelijktijdig stoppen
-kan het startantwoord nog later arriveren. Deze begrensde timingcorrectie wordt
-nu geïsoleerd gereproduceerd en hersteld; de huidige liveversie blijft staan.
+kan het startantwoord nog later arriveren. De begrensde timingcorrectie wacht op review en is nog niet live; de huidige
+liveversie blijft staan.
 [Proberen](design/product/AU-002-owner-trial-2026-09-12.md) ·
 [Actueel livebewijs](evidence/product/AU-002-readable-status-live-2026-09-12.json) ·
 [Eerdere levenscyclusproef](evidence/product/AU-002-telegram-lifecycle-2026-09-11.json).
@@ -78,6 +78,15 @@ Oude toegang en paginawaarnemingen zijn daarna ongeldig; hervatten vraagt nieuwe
 toegang en een verse waarneming. De correctie is beoordeeld en live.
 De persoonlijke Chromeproef en jouw acceptatie blijven open.
 [Herstelbewijs](evidence/product/chrome-inflight-recovery-2026-09-12.json).
+
+### Spraaksessie bij verbergen en opnieuw verbinden — 12 september
+
+Technisch getest en live: microfoonopname stopt bij verbergen, offline gaan,
+opnieuw verbinden en afsluiten. Begin gesprek is nodig om opnieuw te starten.
+Alleen de eigen audioruimte wordt opgeruimd; aangenomen kernwerk krijgt hierdoor
+geen stopopdracht. De fysieke luister- en schermvergrendelingsproef staat open.
+[Gebruikersproef](design/product/VOICE-owner-trial-2026-09-12.md) ·
+[Livebewijs](evidence/product/voice-client-lifecycle-2026-09-12.json).
 
 ## Nu
 

@@ -4,10 +4,22 @@ Vastgesteld door Jaap op 7 september 2026. Dit vervangt de eerdere
 projectdoelformulering; [WERKBORD.md](WERKBORD.md) is de enige uitvoerwachtrij.
 Oudere planningen en vergelijkingen blijven historische bewijsbronnen.
 
+## Eigenaarbesluit 12 september 2026 — doorwerken naast gebruikersproeven
+
+Jaap geeft expliciet opdracht: ga door met alle andere taken; rond werk af en meld
+wat hij kan testen. Technisch werk aan overige reeds gewenste onderdelen mag
+doorgaan terwijl IN-02 en andere gebruikersbeoordelingen openstaan. De eerdere
+volgorderegel is geen algemene bouwstop. Iedere oplevering blijft begrensd;
+technische afronding en eigenaaracceptatie blijven afzonderlijk. Nieuwe optionele
+functies vereisen nog steeds een echte keuze. Geheugen blijft afgesloten.
+Het dashboard bundelt actuele gebruikersproeven met link en verwacht gedrag.
+Geaccepteerde proeven worden niet opnieuw gevraagd.
+
 ## Eigenaarbesluit 11 september 2026 — onderdelen afronden en opties kiezen
 
-Jaap wil een volledig onderdeel afronden voordat nieuw werk aan het volgende
-hoofdonderdeel begint. Op 12 september heeft hij naast GE-01 ook GE-02 expliciet
+De eerdere afspraak was een volledig onderdeel afronden voordat nieuw werk aan
+het volgende hoofdonderdeel begint. Het besluit hierboven vervangt deze
+wachtrestrictie voor overige reeds gewenste technische opleveringen. Op 12 september heeft hij naast GE-01 ook GE-02 expliciet
 geaccepteerd. Het gekozen geheugenonderdeel is afgesloten; AU-008 wordt hervat. Reeds afzonderlijk opgedragen stem-, wakeword-
 en herstelwerk blijft bij de bestaande taken.
 

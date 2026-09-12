@@ -144,6 +144,15 @@ async function applyCapabilityAudit(project, board) {
   try {
     applyReviewedCapabilities(project, board, JSON.parse(await readFile(auditFile, 'utf8')));
     try { applyVoiceTurnEvidence(project, JSON.parse(await readFile(new URL('../../evidence/product/voice-natural-turn-candidate-2026-09-11.json', import.meta.url), 'utf8'))); } catch { /* Existing dated voice proof remains if this supplementary evidence is unavailable. */ }
+    const lifecycle = board.audit?.voiceClientLifecycle20260912;
+    const voice = project.capabilities.find(item => item.id === 'voice');
+    if (voice && lifecycle?.live === true) {
+      voice.works += ' ' + lifecycle.scope;
+      voice.gap = lifecycle.remaining + ' Natuurlijke Voice PE-toegang blijft afzonderlijk werk.';
+      voice.detail = voice.works + ' ' + voice.gap;
+      voice.stageNotes.live += ' Spraaksessiecorrectie 12 september technisch live; fysieke proef open.';
+      voice.evidence += ' · ' + lifecycle.evidencePath;
+    }
   } catch { project.capabilityAudit = { unavailable: true }; }
 }
 
@@ -161,6 +170,15 @@ async function runtimePort(project) {
 // No credentials, chat content, filesystem browsing or task mutation endpoint.
 export function projectServer() {
   const configure = (server) => {
+    // Serve this public trial from its single maintained document, without copying it.
+    server.middlewares.use('/owner-trials/voice', async (request, response) => {
+      response.setHeader('Cache-Control', 'no-store');
+      response.setHeader('Content-Type', 'text/plain; charset=utf-8');
+      response.setHeader('X-Content-Type-Options', 'nosniff');
+      if (request.method !== 'GET') { response.writeHead(405, {Allow:'GET'}); response.end(); return; }
+      try { response.end(await readFile(new URL('../../design/product/VOICE-owner-trial-2026-09-12.md', import.meta.url), 'utf8')); }
+      catch { response.writeHead(503); response.end('Gebruikersproef tijdelijk niet beschikbaar.'); }
+    });
     server.middlewares.use('/scope-decisions', decisionMiddleware({path:decisionsFile, localOwner:process.env.EVA_PROJECT_LOCAL_OWNER==='1', authorize:async authorization=>{
       const board=JSON.parse(await readFile(boardFile,'utf8'));
       const port=await runtimePort(board.audit.projectDashboard);
