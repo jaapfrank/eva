@@ -893,6 +893,20 @@ terugweg én eigenaarproef of expliciete overdracht; daarna alleen die
 geregistreerde werkboom en wegwerpdata opruimen met padcontrole. Er is nu
 niets verwijderd; er komt geen tweede werkbord.
 
+### Lokale streamafsluiting — live om01:49Nederlandse tijd
+
+De goedgekeurde83298332-image draait op13september01:49NL op core en
+werkworker. Beide actualimages/IDs zijn door de beheerder teruggelezen:
+healthy, nul restarts, vier geïnstalleerde bronhashes gelijk aan canonical.
+Zeven beschermde diensten bleven identiek. Verse rustige momentopname
+vóór omschakeling; core en voice ready200, configuratie gelijk en
+achtergrondwerk aan. Alleen de twee diensten vernieuwd; geen modelproef
+of databaseherstel. Reader-provenance en apart gehouden household-scope
+zijn niet mee uitgerold. Alleen vier evidencebestanden opgenomen, geen
+releasebaselinemerge. De2a5cc362-terugweg blijft beschikbaar. Lokale
+afsluitobservatie bewijst geen remote providerstilstand of quota-afrekening.
+[Livebewijs](evidence/architecture/local-stream-live-2026-09-13.json).
+
 ## Nu
 
 | Volgorde | Kaart | Resultaat | Status |

@@ -1,0 +1,83 @@
+{
+  "baseline": {
+    "source": "702dfc1bfece74db7c222b2086142a5c6e1b1202",
+    "parent": "sha256:2a5cc362fee325e4210524f200dde5de7b19ddb732642da5154d8e4d1cba441b",
+    "actual_both_services_parent": true,
+    "all260source_files_identical": true
+  },
+  "source_commit": "436ec6101cfaa300a21a11ec4773f5d8dff42750",
+  "reviewed_source": "de3031e463d47ba59499aad079827fe2af94f598",
+  "runtime_delta": [
+    "eva/adapters/model/openai_codex_provider.py",
+    "eva/adapters/model/pydantic_conversation.py",
+    "eva/adapters/postgres/conversation_journal.py",
+    "eva/application/conversation.py"
+  ],
+  "source_count": 260,
+  "source_sha256": {
+    "eva/adapters/model/openai_codex_provider.py": "df3e29a0c0f955c1a22285d9b5b0878691031a47babbd27d2dc8012d9990643d",
+    "eva/adapters/model/pydantic_conversation.py": "ddfb971fb446ec1afa0c2d9d03da83941f00ea835078a91f4d2f7961890f2063",
+    "eva/adapters/postgres/conversation_journal.py": "b939ded2e7fa70aa37c2b6026296366c80dc9d589875303cc2ca4a1641cdc89e",
+    "eva/application/conversation.py": "d7744b8d851c80000040f7801876527f46cc88f1064dafa8f1733c31c6e96f1e"
+  },
+  "all_four_files_match_reviewed_source": true,
+  "tests": {
+    "provider_budget_model": 87,
+    "direct_attempt_and_sdk_stream_pg": 15,
+    "voice_pg": 16,
+    "research_model": 33
+  },
+  "total_tests": 151,
+  "reader_provenance_included": false,
+  "household_shared_stream_included": false,
+  "model_calls": 0,
+  "build": false,
+  "live": false,
+  "image": {
+    "parent": "sha256:2a5cc362fee325e4210524f200dde5de7b19ddb732642da5154d8e4d1cba441b",
+    "candidate": "sha256:832983322ad7d71611225749d618e828d9dd4676f8a24711f09e0ac349db1fcd",
+    "configuration_identical": true,
+    "parent_layers_preserved": true,
+    "source_file_count": 260,
+    "changed_files": [
+      "eva/adapters/model/openai_codex_provider.py",
+      "eva/adapters/model/pydantic_conversation.py",
+      "eva/adapters/postgres/conversation_journal.py",
+      "eva/application/conversation.py"
+    ],
+    "reviewed_source_matches": true,
+    "source_sha256": {
+      "eva/adapters/model/openai_codex_provider.py": "df3e29a0c0f955c1a22285d9b5b0878691031a47babbd27d2dc8012d9990643d",
+      "eva/adapters/model/pydantic_conversation.py": "ddfb971fb446ec1afa0c2d9d03da83941f00ea835078a91f4d2f7961890f2063",
+      "eva/adapters/postgres/conversation_journal.py": "b939ded2e7fa70aa37c2b6026296366c80dc9d589875303cc2ca4a1641cdc89e",
+      "eva/application/conversation.py": "d7744b8d851c80000040f7801876527f46cc88f1064dafa8f1733c31c6e96f1e"
+    },
+    "rollback_parent_image_present": true,
+    "live_cutover": false,
+    "imports_ok": true
+  },
+  "activation_script_sha256": "d49dfecac1bca051b6ad928319b170e722b2f27528f4f2e43fc6f1343b651542",
+  "activation_script_changes": "Only old/new digest and unique preflight filename; existing first-write rollback guard unchanged.",
+  "activation_fault_tests": {
+    "cases": [
+      {
+        "fault": "before_override_write",
+        "exception_preserved": true,
+        "override_and_registry_restored": true,
+        "rollback_attempts": 1,
+        "rollback_exit_and_readiness_checked": true
+      },
+      {
+        "fault": "between_override_and_registry_writes",
+        "exception_preserved": true,
+        "override_and_registry_restored": true,
+        "rollback_attempts": 1,
+        "rollback_exit_and_readiness_checked": true
+      }
+    ],
+    "actual_docker_calls": 0,
+    "actual_network_calls": 0,
+    "production_writes": 0
+  },
+  "compose_preflight": "Exactly core/worker images change; protected7 and candidate.env retained; no activation."
+}
