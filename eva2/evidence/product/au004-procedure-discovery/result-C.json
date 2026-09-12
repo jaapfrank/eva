@@ -1,0 +1,334 @@
+{
+  "status": "Result correct and stored procedure reused without user-supplied procedure path; predeclared search-before-read criterion NOT met; independent result review pending.",
+  "preparation_commit": "c38aacbaeb329f57d5ad44d04ff1e071728440a9",
+  "fixture_sha256": "f3803ad0c8ae197ead899a9c61b7d74b6be08cf5f1f623d7acd64ccde1cb3078",
+  "http": {
+    "httpStatus": 200,
+    "elapsedSeconds": 39.69430741099859,
+    "errorType": null,
+    "requestCount": 1,
+    "retry": false,
+    "messageId": "dashboard:96210304-e456-4920-a073-a6d342a21425",
+    "responseSha256": "fadd92232080041e66c9ab9daf18ae65ba47ac2a7190d66aa3de31ed6715f266"
+  },
+  "preflight": {
+    "unix_time": 1789254010.8303242,
+    "images": {
+      "eva2-managed-b-slot3-core": "sha256:2a5cc362fee325e4210524f200dde5de7b19ddb732642da5154d8e4d1cba441b",
+      "eva2-managed-b-slot3-delegated-work-worker-1": "sha256:2a5cc362fee325e4210524f200dde5de7b19ddb732642da5154d8e4d1cba441b"
+    },
+    "config": {
+      "EVA_RUNTIME_RESOURCE_BUDGET_FILE": {
+        "sha256": "88595a1704c1ad751008802873831f140a87ad967d14f015e56d1d4dc46a72a9",
+        "budget": {
+          "background_reflections_per_installation_day": 40,
+          "background_reflections_per_person_day": 4,
+          "contract": "EvaInstallerBudget/v2",
+          "external_monthly_spend_cap_eur_cents": 0,
+          "max_input_tokens": 65536,
+          "max_output_tokens": 1200,
+          "memory_bytes_per_group": 20971520,
+          "memory_bytes_per_installation": 209715200,
+          "memory_bytes_per_person": 20971520,
+          "memory_bytes_per_project": 20971520,
+          "memory_records_per_group": 2000,
+          "memory_records_per_installation": 20000,
+          "memory_records_per_person": 2000,
+          "memory_records_per_project": 2000,
+          "profile_context_tokens": 800,
+          "recall_context_tokens": 2048,
+          "retention_days": 365,
+          "retrieval_nodes": 40,
+          "unknown_cost_policy": "block_autonomous_spend"
+        }
+      },
+      "EVA_MCP_AUTONOMY_MANDATE_FILE": {
+        "sha256": "969e350b8cb582c7034a12e4c431e9e421d510afcf09fb76188cfac1770f4e89",
+        "budget": null
+      }
+    },
+    "files": {
+      "procedure": {
+        "exists": true,
+        "symlink": false,
+        "sha256": "bbae3082ef113d6433ad0184fafc30ef2853e4d6b3798841ccef7ba0028016df"
+      },
+      "C": {
+        "exists": false,
+        "symlink": false
+      }
+    },
+    "access": {
+      "verified_private_owner_binding": true,
+      "private_audience_authorized": true,
+      "workspace_catalog_verified": true,
+      "tool_names": [
+        "find_workspace_files",
+        "inspect_workspace_file",
+        "list_workspace_directory",
+        "read_workspace_document",
+        "save_workspace_document"
+      ],
+      "configuration_sha256": {
+        "save_workspace_document": "a2f87385fed891cf244d4294777901bbdc8509b62304a91e39f82df730947a54",
+        "read_workspace_document": "882d133b00172a5e5d56aaab2848fab0065115da0b5ba9627d1795a506fab82a",
+        "list_workspace_directory": "6a5f2e07e585b39f3493560f233e64396858c212a56429e8f3335c9e1e4fea13",
+        "find_workspace_files": "e3d06c7ffdd05bbf41baa160db4d96f669d45083ad83f074ffd6e2057e877229",
+        "inspect_workspace_file": "ba1503a199857abd40dd043a60fbc351b3b8c4f6c55d4cfa3e80bc69a4818120"
+      }
+    },
+    "provider_rate_limit": {
+      "allowed": true,
+      "limit_reached": false,
+      "primary_window": {
+        "used_percent": 42,
+        "limit_window_seconds": 604800,
+        "reset_after_seconds": 551394,
+        "reset_at": 1789805404
+      },
+      "secondary_window": null
+    },
+    "request_sha256": "42926f75c9405825dceeda07d8f8a68987a5760e62c5f04d0c643d5679078b12"
+  },
+  "config_after_matches": true,
+  "semantic_check": {
+    "turn": "C",
+    "semantic_checks": "passed",
+    "cues": [
+      {
+        "start_ms": 8045,
+        "end_ms": 10900,
+        "lines": [
+          "Zoë zegt: “Tot straks!”",
+          "Neem café crème mee."
+        ]
+      },
+      {
+        "start_ms": 3723004,
+        "end_ms": 3725670,
+        "lines": [
+          "Klaar — zonder haast."
+        ]
+      }
+    ],
+    "file_sha256": "8211bf62d73680ee28bfd91d530762e3e75e4730ed4267d1f4b871f883316766",
+    "procedure_sha256": "bbae3082ef113d6433ad0184fafc30ef2853e4d6b3798841ccef7ba0028016df",
+    "checker": "Independent Python checker run by coordinator after Eva completed; not an Eva-executed test."
+  },
+  "trace": [
+    {
+      "step": 0,
+      "thread_id": "tool:external-tool:a7d56ceb0c37740f750423d497e46c99",
+      "prepared": {
+        "arguments": {
+          "head": 200,
+          "path": "/proof-state/au004-srt-webvtt-procedure-20260912-attempt3.md"
+        },
+        "tool_name": "eva-workspace-read-text-file",
+        "expected_proof": {},
+        "observation_arguments": {
+          "head": 200,
+          "path": "/proof-state/au004-srt-webvtt-procedure-20260912-attempt3.md"
+        },
+        "observation_tool_name": "eva-workspace-read-text-file",
+        "tool_configuration_sha256": "882d133b00172a5e5d56aaab2848fab0065115da0b5ba9627d1795a506fab82a"
+      },
+      "verified": {
+        "evidence": {
+          "source": "mcp_gateway_read",
+          "observation": {
+            "content": "# Lokale procedurekandidaat: eenvoudige SRT naar WebVTT\n\nProef: AU004-20260912-attempt3. Geen globale installatie of nieuwe bevoegdheid.\n\n## Bron en bereik\nPrimaire bron: [W3C WebVTT, Candidate Recommendation Draft van 20 mei 2026](https://www.w3.org/TR/2026/CRD-webvtt1-20260520/), met name §4.1. De onderzoeksdienst heeft deze bron daadwerkelijk gelezen. Deze instructie is mijn beperkte toepassing van de gerapporteerde bronregels, geen volledige SRT-parser of WebVTT-validator.\n\nInvoer: unieke numerieke cue-nummers, één timingregel per cue in HH:MM:SS,mmm --> HH:MM:SS,mmm en één of meer gewone, niet-lege tekstregels. Cueblokken zijn door een lege regel gescheiden. Behoud nummers, tekst, accenten, interpunctie en tekstregelgrenzen. Geen vertaling, trimmen of Unicode-normalisatie.\n\n## Bronregels\nWebVTT gebruikt UTF-8, een WEBVTT-header en een lege regel vóór de cues. Cue-identifiers zijn optioneel; hier blijven de unieke nummers staan. Cues worden met een lege regel gescheiden. Tijdstempels gebruiken een punt vóór precies drie millisecondecijfers; uren hebben minstens twee cijfers en geen 23-uursgrens, minuten en seconden liggen in 00–59. Eindtijd is strikt groter dan begintijd; begintijden zijn niet-afnemend. Overlap en gelijke begintijden mogen bij ondertitels. Markup en tekenreferenties worden geïnterpreteerd; --> mag niet letterlijk in cue-tekst voorkomen. Zie de primaire bron hierboven.\n\n## Werkwijze\n1. Controleer vóór schrijven dat het doelpad niet bestaat; stop bij een bestaand bestand.\n2. Splits in cueblokken en valideer nummer, timing en niet-lege tekst. Deze beperkte invoervorm eist precies twee uurcijfers en drie millisecondecijfers.\n3. Vergelijk tijden als milliseconden: ((uren × 60 + minuten) × 60 + seconden) × 1000 + milliseconden. Controleer bereiken, eind > begin en niet-afnemende begintijden.\n4. Zet WEBVTT en een lege regel vooraan. Behoud cue-nummers. Vervang uitsluitend de komma in elk tijdstempel door een punt; verander geen tekstkomma's. Gebruik één spatie aan weerszijden van -->.\n5. Kopieer alle tekstregels ongewijzigd. Scheid cues met een lege regel; eindig met een regeleinde. Schrijf als UTF-8, bij voorkeur met LF en zonder BOM.\n6. Lees het bestand terug en vergelijk met invoer en verwachte uitvoer. Meld afzonderlijk of controles tekstueel of met code zijn uitgevoerd.\n\n## Afwijzingsgronden en toepassingsgrenzen\nWijs ontbrekende/dubbele nummers, ongeldige of ontbrekende tijden, eind <= begin, afnemende begintijden, lege tekst en dubbelzinnige interne lege regels af. Geen automatische reparatie.\nDeze behoudende procedure wijst tekst met &, < of > af, inclusief markup, tekenreferenties en -->: escaping of interpretatie zou buiten letterlijk tekstbehoud vallen. Dat is een lokale beperking, geen algemeen verbod op deze tekens in WebVTT. Ook positioneringscodes, cue-instellingen, styling en overige SRT-uitbreidingen vallen buiten bereik. Uren met meer dan twee cijfers vallen buiten deze invoervorm, hoewel WebVTT ze toestaat. Overlap alleen signaleren, niet als algemene fout behandelen.\n\n## Controlelijst\n- Nieuw doelpad; bron en beperkte scope vastgelegd.\n- WEBVTT-header, lege scheidingsregels en afsluitend regeleinde.\n- Evenveel cues en tekstregels; nummers en tekst exact behouden.\n- Alleen timingkomma's gewijzigd; drie millisecondecijfers en geldige bereiken.\n- Eind > begin; begintijden niet-afnemend; eventuele overlap gemeld.\n- Geen niet-ondersteunde tekstsyntaxis of instellingen.\n- Teruglezing uitgevoerd; geen claim van parser-, browser- of bytevalidatie zonder uitvoering."
+          },
+          "observation_sha256": "4880bbd7e3008f895e7344ce11ece35d2529d614a87d6a03a765edc7b55acd6a"
+        },
+        "expected": {},
+        "observed": {}
+      }
+    },
+    {
+      "step": 1,
+      "thread_id": "tool:external-tool:19d5a38015962ba495be7884515a415b",
+      "prepared": {
+        "arguments": {
+          "path": "/proof-state",
+          "pattern": "au004-subtitles-C-discovery-20260913.vtt"
+        },
+        "tool_name": "eva-workspace-search-files",
+        "expected_proof": {},
+        "observation_arguments": {
+          "path": "/proof-state",
+          "pattern": "au004-subtitles-C-discovery-20260913.vtt"
+        },
+        "observation_tool_name": "eva-workspace-search-files",
+        "tool_configuration_sha256": "e3d06c7ffdd05bbf41baa160db4d96f669d45083ad83f074ffd6e2057e877229"
+      },
+      "verified": {
+        "evidence": {
+          "source": "mcp_gateway_read",
+          "observation": {
+            "content": "No matches found"
+          },
+          "observation_sha256": "b94625300fe85d72fa1f58b26520ea5357f8ccbf0813b638320d43acc09d75de"
+        },
+        "expected": {},
+        "observed": {}
+      }
+    },
+    {
+      "step": 2,
+      "thread_id": "tool:external-tool:73f500322f52f20b1716bfb6f267a447",
+      "prepared": {
+        "arguments": {
+          "path": "/proof-state/au004-subtitles-C-discovery-20260913.vtt",
+          "content": "WEBVTT\n\n1\n00:00:08.045 --> 00:00:10.900\nZoë zegt: “Tot straks!”\nNeem café crème mee.\n\n2\n01:02:03.004 --> 01:02:05.670\nKlaar — zonder haast.\n"
+        },
+        "tool_name": "eva-workspace-write-file",
+        "expected_proof": {
+          "content": "WEBVTT\n\n1\n00:00:08.045 --> 00:00:10.900\nZoë zegt: “Tot straks!”\nNeem café crème mee.\n\n2\n01:02:03.004 --> 01:02:05.670\nKlaar — zonder haast.\n"
+        },
+        "observation_arguments": {
+          "path": "/proof-state/au004-subtitles-C-discovery-20260913.vtt"
+        },
+        "observation_tool_name": "eva-workspace-read-text-file",
+        "tool_configuration_sha256": "a2f87385fed891cf244d4294777901bbdc8509b62304a91e39f82df730947a54"
+      },
+      "verified": {
+        "evidence": {
+          "source": "mcp_gateway_readback",
+          "observation_sha256": "dc72738438d9c87d44a5304046588b5fbe332216f9daccec80cbfbf063059ba5"
+        },
+        "expected": {
+          "content": "WEBVTT\n\n1\n00:00:08.045 --> 00:00:10.900\nZoë zegt: “Tot straks!”\nNeem café crème mee.\n\n2\n01:02:03.004 --> 01:02:05.670\nKlaar — zonder haast.\n"
+        },
+        "observed": {
+          "content": "WEBVTT\n\n1\n00:00:08.045 --> 00:00:10.900\nZoë zegt: “Tot straks!”\nNeem café crème mee.\n\n2\n01:02:03.004 --> 01:02:05.670\nKlaar — zonder haast.\n"
+        }
+      }
+    },
+    {
+      "step": 3,
+      "thread_id": "tool:external-tool:e3df31c4f8587ed7fcc5cd6c8990aaf8",
+      "prepared": {
+        "arguments": {
+          "head": 30,
+          "path": "/proof-state/au004-subtitles-C-discovery-20260913.vtt"
+        },
+        "tool_name": "eva-workspace-read-text-file",
+        "expected_proof": {},
+        "observation_arguments": {
+          "head": 30,
+          "path": "/proof-state/au004-subtitles-C-discovery-20260913.vtt"
+        },
+        "observation_tool_name": "eva-workspace-read-text-file",
+        "tool_configuration_sha256": "882d133b00172a5e5d56aaab2848fab0065115da0b5ba9627d1795a506fab82a"
+      },
+      "verified": {
+        "evidence": {
+          "source": "mcp_gateway_read",
+          "observation": {
+            "content": "WEBVTT\n\n1\n00:00:08.045 --> 00:00:10.900\nZoë zegt: “Tot straks!”\nNeem café crème mee.\n\n2\n01:02:03.004 --> 01:02:05.670\nKlaar — zonder haast."
+          },
+          "observation_sha256": "74991c54578aa5fad75353c2dc7e77fd3f67e4ba6238455319db6cf1aec046a9"
+        },
+        "expected": {},
+        "observed": {}
+      }
+    }
+  ],
+  "usage": {
+    "model_attempts": 5,
+    "tool_calls": 4,
+    "input_tokens": 42239,
+    "output_tokens": 473
+  },
+  "model_records": [
+    {
+      "usage": {
+        "tool_calls": 1,
+        "measurement": "measured",
+        "input_tokens": 7634,
+        "output_tokens": 74,
+        "model_attempts": 1
+      },
+      "outcome": "succeeded",
+      "message_id": "dashboard:96210304-e456-4920-a073-a6d342a21425",
+      "request_id": "487b71db-77e4-4aa0-9b3f-f102aa552bcc",
+      "principal_id": "33333333-3333-3333-8333-333333333333",
+      "conversation_id": "dashboard:44444444-4444-4444-8444-444444444444"
+    },
+    {
+      "usage": {
+        "tool_calls": 1,
+        "measurement": "measured",
+        "input_tokens": 8290,
+        "output_tokens": 67,
+        "model_attempts": 1
+      },
+      "outcome": "succeeded",
+      "message_id": "dashboard:96210304-e456-4920-a073-a6d342a21425",
+      "request_id": "c1c3ef59-5bf1-495e-95b4-65fc48d26c55",
+      "principal_id": "33333333-3333-3333-8333-333333333333",
+      "conversation_id": "dashboard:44444444-4444-4444-8444-444444444444"
+    },
+    {
+      "usage": {
+        "tool_calls": 1,
+        "measurement": "measured",
+        "input_tokens": 8514,
+        "output_tokens": 133,
+        "model_attempts": 1
+      },
+      "outcome": "succeeded",
+      "message_id": "dashboard:96210304-e456-4920-a073-a6d342a21425",
+      "request_id": "c8801c6c-afc5-4d93-8a0a-3fd155c2a0d2",
+      "principal_id": "33333333-3333-3333-8333-333333333333",
+      "conversation_id": "dashboard:44444444-4444-4444-8444-444444444444"
+    },
+    {
+      "usage": {
+        "tool_calls": 1,
+        "measurement": "measured",
+        "input_tokens": 8814,
+        "output_tokens": 72,
+        "model_attempts": 1
+      },
+      "outcome": "succeeded",
+      "message_id": "dashboard:96210304-e456-4920-a073-a6d342a21425",
+      "request_id": "b40c049d-eeac-4ba7-9b78-b41d67093491",
+      "principal_id": "33333333-3333-3333-8333-333333333333",
+      "conversation_id": "dashboard:44444444-4444-4444-8444-444444444444"
+    },
+    {
+      "usage": {
+        "tool_calls": 0,
+        "measurement": "measured",
+        "input_tokens": 8987,
+        "output_tokens": 127,
+        "model_attempts": 1
+      },
+      "outcome": "succeeded",
+      "message_id": "dashboard:96210304-e456-4920-a073-a6d342a21425",
+      "request_id": "9faccab8-ee7f-49d2-9488-e365ce4a84be",
+      "principal_id": "33333333-3333-3333-8333-333333333333",
+      "conversation_id": "dashboard:44444444-4444-4444-8444-444444444444"
+    }
+  ],
+  "procedure_unchanged": true,
+  "research_calls": 0,
+  "new_procedure_written": false,
+  "search_discovery_success": false,
+  "reuse_without_new_user_path": true,
+  "same_owner_conversation": true,
+  "blank_context_claim": false,
+  "source_of_known_path": "Unmeasured; conversation/history/memory may contain it. No claim that the read path was inferred only from this new request.",
+  "only_workspace_write": "/proof-state/au004-subtitles-C-discovery-20260913.vtt",
+  "owner_accepted": false,
+  "whole_AU004_complete": false,
+  "raw_events_sha256": "f31f64232d3f3e77c64d95d8b34d598f8effe9a24e80e2c913d420e98f7623ed",
+  "harness_sha256": {
+    "preflight.py": "5753e784726cd9ed9547988b3426f7b551f08ddd6ae5da67dbfe43ced4e9d7b0",
+    "execute_once.py": "fe31bbf5a07a7ac5e4c6a3f96c50bf2adaac579de4e75148bd91827b8a106c3f",
+    "C/runner.py": "c6821a86de4a19a41d5aa6de69d8e6042a23e7297060c301907a0a255399218c",
+    "C/readback.py": "19df3c957734e092b5ecaf14918b0608ca898551ce60fecbc3b2548666c94496"
+  }
+}

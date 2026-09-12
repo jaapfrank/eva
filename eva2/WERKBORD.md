@@ -788,6 +788,21 @@ Lokale streamafsluiting is afzonderlijk vervolgwerk, zonder nieuwe cap
 of claim over de externe provider.
 [Inspectie en grenzen](reviews/cp001-journal-admission-2026-09-13.md).
 
+### AU-004 C — correcte hergebruikuitvoer, zoekcriterium niet gehaald
+
+De ene vooraf toegestane beurt is uitgevoerd: HTTP200 in39,69seconden,
+vijf gemeten modelpogingen,42.239 input-/473 outputtokens en vier acties.
+Eva las direct de bestaande procedure, zocht daarna alleen het uitvoerpad,
+schreef C en las terug. De onafhankelijke semantiekcontrole slaagt en de
+procedurehash bleef gelijk. De reviewer geeft GO voor dit begrensde bewijs.
+Het vooraf vastgelegde zoeken vóór procedure-read is NIET gehaald;
+correct hergebruik zonder pad in de nieuwe vraag is wel aangetoond.
+Hetzelfde gesprek bleef bestaan en de exacte herkomst van het pad is
+niet gemeten. Geen retry, research, nieuwe procedure of runtimewijziging.
+De drie resultaatbestanden zijn opgenomen. Oudere A/B-oplevering blijft
+afgerond; geen gewijzigde criteria, verse-context- of volledige AU-004-acceptatie.
+[C-resultaat](evidence/product/au004-procedure-discovery/result-C.md).
+
 ## Nu
 
 | Volgorde | Kaart | Resultaat | Status |
