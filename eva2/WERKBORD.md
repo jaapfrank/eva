@@ -203,6 +203,16 @@ in uitvoering en AU-004 blijft onvoltooid.
 De AU-004-mijlpaal is niet afgerond of geaccepteerd. IN-02 en eerdere
 acceptaties blijven apart.
 
+### AU-004-reparatiekandidaat — review open, niet live
+
+De kandidaat leidt de researchlengte-instructie af van het bestaande budget
+en bewaart bekend gemeten verbruik in het bestaande RECOVERY_FAILED-event.
+De limiet blijft gelijk; promptinstructies geven geen tokengarantie.
+143 controles slagen. Eén catalogussnapshotcontrole faalt ook identiek op de
+ongewijzigde basis; de fixture is niet aangepast. Geen volledig groene suite
+geclaimd. Geen nieuw schema, extra modelpoging, variant B of uitrol. De
+eerdere onafhankelijke GO betreft uitsluitend het bewijs van de mislukte proef.
+
 ## Nu
 
 | Volgorde | Kaart | Resultaat | Status |
