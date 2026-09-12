@@ -125,6 +125,7 @@ class PostgresDelegatedWorkActions:
         def reconcile(text):
             timeline = self._timeline(turn)  # Recheck current private authority.
             stopped = []
+            other_helpers = []
             for index, receipt in starts:
                 events = timeline.events(self._thread_id(turn, index))
                 if (not events or events[-1].event_type != "DELEGATED_ACTION_COMPLETED"
@@ -145,12 +146,24 @@ class PostgresDelegatedWorkActions:
                     raise ConversationConflict("delegated reply work is no longer available")
                 if current_work["stop_requested"] or current_work["state"] == "stopped":
                     stopped.append(work_id)
+                else:
+                    other_helpers.append(work_id)
             if not stopped:
                 return text
-            return ("Je stopopdracht voor " + ", ".join(dict.fromkeys(stopped))
-                    + " is al bewaard. Het eerdere startantwoord is daarmee vervallen. "
-                    "Het resultaat van deze poging wordt niet geleverd en de taak wordt "
-                    "niet automatisch hervat.")
+            message = ("Je stopopdracht voor " + ", ".join(dict.fromkeys(stopped))
+                       + " is al bewaard. Alleen het eerdere startantwoord voor deze "
+                       "hulpopdracht(en) vervalt. Hun resultaat wordt niet geleverd "
+                       "en ze worden niet automatisch hervat.")
+            if other_helpers:
+                message += (" Andere hulpopdrachten in dit verzoek: "
+                            + ", ".join(dict.fromkeys(other_helpers))
+                            + ". Vraag hun actuele status apart op.")
+            if len(receipts) > len(starts):
+                message += (" Er waren daarnaast andere handelingen in dit verzoek. "
+                            "Hun vastgelegde terugkoppelingen blijven beschikbaar, maar "
+                            "staan niet in dit vervangende antwoord; vraag ze apart op. "
+                            "Deze melding trekt die handelingen niet in.")
+            return message
         return reconcile
 
     def execute(

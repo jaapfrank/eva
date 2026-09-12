@@ -21,7 +21,8 @@ from tests.bootstrap.test_delegated_work_commands import FakeStore, OWNER, BINDI
 
 
 @pytest.mark.parametrize("streaming", [False, True])
-def test_late_helper_start_reply_cannot_override_an_already_confirmed_stop(monkeypatch, streaming):
+@pytest.mark.parametrize("helper_count", [1, 2])
+def test_late_helper_start_reply_cannot_override_an_already_confirmed_stop(monkeypatch, streaming, helper_count):
     events = {}
     model_waiting = Event()
     release_model = Event()
@@ -39,7 +40,7 @@ def test_late_helper_start_reply_cannot_override_an_already_confirmed_stop(monke
             work = result.work
             work.state = "call_started"
             work.call_id = "helper-call"
-            self.owned_work = [work]
+            self.owned_work.insert(0, work)
             self.active_work_id = work.spec.work_id
             return result
         def request_stop(self, work_id, **values):
@@ -64,10 +65,13 @@ def test_late_helper_start_reply_cannot_override_an_already_confirmed_stop(monke
         def active_context(self, turn): return ()
         def memory_query_hints(self, turn): return ()
         def execute(self, turn, call): return provider.execute(turn, call)
+        def execute_step(self, turn, call, *, step_index): return provider.execute(turn, call, step_index=step_index)
     class Model:
         def generate(self, turn, *_args, completed_action=None, **_kwargs):
             if completed_action is None:
                 return ConversationModelResult(None, "test-model", action_call=ConversationActionCall("start-call", "start_delegated_work", {"task": "Schrijf een gezinsvoorstel"}))
+            if len(store.admitted) < helper_count:
+                return ConversationModelResult(None, "test-model", action_call=ConversationActionCall("start-call-two", "start_delegated_work", {"task": "Schrijf een tweede voorstel"}))
             model_waiting.set()
             assert release_model.wait(5)
             text = "De hulpagent is nu bezig. Ik pas je losse stopopdracht straks toe."
@@ -113,7 +117,12 @@ def test_late_helper_start_reply_cannot_override_an_already_confirmed_stop(monke
     assert "nu bezig" not in start.text
     assert final["text"] == runtime.saved["telegram:7:1"].text
     assert store.owned_work[0].state == "stopped"
-    assert len(store.admitted) == len(store.stopped) == 1
+    assert len(store.admitted) == helper_count and len(store.stopped) == 1
     replay = client.post("/internal/v1/telegram/canary/respond", json=_payload(text="Laat een hulpagent een gezinsdag bedenken"))
     assert replay.status_code == 200 and replay.json()["text"] == final["text"]
-    assert len(store.admitted) == len(store.stopped) == 1
+    assert len(store.admitted) == helper_count and len(store.stopped) == 1
+
+    if helper_count == 2:
+        other = store.owned_work[1]
+        assert other.state == "call_started" and other.stop_requested_at is None
+        assert f"Andere hulpopdrachten in dit verzoek: {other.spec.work_id}." in final["text"]

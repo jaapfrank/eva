@@ -146,3 +146,50 @@ def test_reply_guard_uses_exact_turn_receipt_and_rechecks_current_authority(monk
     forged = ConversationActionReceipt(call, {"status": "verified", "operation_result": {"work": {"work_id": "work:foreign", "state": "admitted"}}})
     with pytest.raises(ConversationConflict, match="exact action receipt"):
         actions.reply_guard(turn, (other, forged))("No forged work")
+
+
+@pytest.mark.parametrize("with_other_result", [False, True])
+def test_mixed_reply_names_only_stopped_helper_and_discloses_other_results(monkeypatch, with_other_result):
+    from eva.application.conversation import ConversationActionReceipt
+    turn = ConversationTurn.private(
+        tenant_id="tenant:test", installation_id="install:test", principal_id="owner",
+        conversation_id="chat", message_id="mixed", text="Twee helpers en een bestand",
+        occurred_at="2026-09-10T10:00:00Z",
+    )
+    events = {}
+    class Timeline:
+        def __init__(self, *_args): pass
+        def events(self, key): return tuple(events.get(key, ()))
+    class Service:
+        reads = []
+        def available_for(self, actual): return actual == turn
+        def validate_authority(self, actual): assert actual == turn
+        def execute(self, operation, actual, *, work_id, **_):
+            assert operation == "get" and actual == turn
+            self.reads.append(work_id)
+            return {"work": {"work_id": work_id, "state": "stopped" if work_id == "work:stopped" else "call_started", "stop_requested": work_id == "work:stopped"}}
+    monkeypatch.setattr(module, "PostgresOperationalTimeline", Timeline)
+    service = Service()
+    actions = module.PostgresDelegatedWorkActions(object(), service)
+    receipts = []
+    for index, work_id in enumerate(("work:stopped", "work:other")):
+        call = ConversationActionCall(f"call-{index}", "start_delegated_work", {"task": f"Voorstel {index}"})
+        receipt = ConversationActionReceipt(call, {"status": "verified", "operation_result": {"work": {"work_id": work_id, "state": "admitted"}}})
+        events[actions._thread_id(turn, index)] = [
+            SimpleNamespace(event_type="DELEGATED_ACTION_PREPARED", payload={"data": {"call_id": call.call_id, "name": call.name, "arguments": call.arguments}}),
+            SimpleNamespace(event_type="DELEGATED_ACTION_COMPLETED", payload={"data": {"output": receipt.output}}),
+        ]
+        receipts.append(receipt)
+    other_output = {"status": "verified", "content": "Een afzonderlijk behouden bestandsresultaat."}
+    if with_other_result:
+        receipts.append(ConversationActionReceipt(ConversationActionCall("file-call", "read_file", {}), other_output))
+    original = "Beide helpers zijn bezig. Onbeoordeelde modeltekst over het bestand."
+    corrected = actions.reply_guard(turn, tuple(receipts))(original)
+    assert corrected.startswith("Je stopopdracht voor work:stopped is al bewaard.")
+    assert "Andere hulpopdrachten in dit verzoek: work:other." in corrected
+    assert "vraag" in corrected.lower() and "status apart" in corrected
+    assert "beide" not in corrected.lower() and "onbeoordeelde" not in corrected.lower()
+    assert ("terugkoppelingen blijven beschikbaar" in corrected) == with_other_result
+    assert ("Deze melding trekt die handelingen niet in" in corrected) == with_other_result
+    assert service.reads == ["work:stopped", "work:other"]
+    assert other_output == {"status": "verified", "content": "Een afzonderlijk behouden bestandsresultaat."}
