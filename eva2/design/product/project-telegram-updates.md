@@ -72,3 +72,36 @@ runtime-wiring, Telegram-adapter of slotcontainer, en bij de eerstvolgende
 onderhoudsronde. Uitzetten: verwijder de helperaanroep uit de bestaande heartbeat;
 het register behouden. De Eva-runtime wordt voor deze helper niet gewijzigd of
 herstart. Een werkende helper bewijst niet dat de heartbeat al is aangesloten.
+
+## Herstel na onzekere uurupdate — 12 september 2026
+
+De update met UTC-sleutel `2026-09-12T21:00Z` blijft `uncertain`. Het originele
+register en de receipt bevatten geen providerantwoord waarmee aflevering of
+niet-aflevering is vast te stellen. Deze update wordt niet opnieuw verstuurd.
+De laatste bewezen succesvolle verzending blijft de bevestiging van20:40:11UTC.
+
+Het berichtbestand had één afsluitend regeleinde. [TDlibs officiële tekstcode](https://github.com/tdlib/td/blob/master/td/telegram/MessageEntity.cpp)
+bevat normalisatie van randwitruimte (bekeken12 september). Met de echte
+Eva-adapter en een gesimuleerd genormaliseerd providerantwoord is de mismatch
+offline gereproduceerd. Dat maakt dit een plausibele oorzaak, geen bewijs
+van de daadwerkelijke aflevering van de onzekere update.
+
+Voor toekomstige uursleutels verwijdert de helper alleen ASCII-spaties, tabs
+en regeleinden aan de randen vóór verzending. Interne tekst blijft behouden.
+De bestaande strikte privéchat-/tekstreceiptcontrole blijft leidend. De hash
+`message_sha256` blijft aan het originele bestand gebonden; `sent_message_sha256`
+legt de verzonden tekst vast. Een bestaande uursleutel blijft ongewijzigd
+terugkomen, ook voor oude onzekere records. Een gewijzigd bestand met dezelfde
+sleutel blijft geweigerd, zelfs wanneer de genormaliseerde tekst gelijk is.
+
+Nieuwe fouten bewaren uitsluitend een vaste fase, booleans en SHA-256-hashes
+van providerobservaties. Geen antwoordtekst, chat-ID, token, provider-URL of
+ruwe foutmelding. Ook een gedeeltelijke providerobservatie maakt de status
+niet automatisch succesvol; uitsluitend de bestaande adaptervalidatie doet dat.
+
+Verificatie: negen lokale registertests en drie checks met de echte adapter
+en gesimuleerde provider/wiring. Geen netwerk-/databasecalls in die drie
+checks. Daarnaast is een kopie van het werkelijke21:00-registerrecord met
+het originele berichtbestand getest: identieke onzekerheid, nul sendercalls;
+het originele register bleef read-only. Onafhankelijke review is GO voor
+deze beperkte correctie. Er is geen nieuw Telegramproefbericht verstuurd.

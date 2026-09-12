@@ -80,6 +80,42 @@ class DeliveryTests(unittest.TestCase):
         self.assertEqual(path.stat().st_mode & 0o777, 0o600)
         self.assertEqual(len(self.calls), 1)
 
+    def test_edge_whitespace_normalized_without_changing_raw_idempotency(self):
+        import hashlib
+        raw = "  Eva-update\n\n"
+        result = helper.deliver_once(self.state, KEY, raw, self.sender)
+        self.assertEqual(self.calls, [(KEY, "Eva-update")])
+        self.assertTrue(result["edge_whitespace_normalized"])
+        self.assertEqual(result["message_sha256"], hashlib.sha256(raw.encode()).hexdigest())
+        self.assertEqual(result["sent_message_sha256"], hashlib.sha256(b"Eva-update").hexdigest())
+        self.assertEqual(helper.deliver_once(self.state, KEY, raw, self.sender), result)
+        with self.assertRaises(ValueError):
+            helper.deliver_once(self.state, KEY, raw.strip(), self.sender)
+        self.assertEqual(len(self.calls), 1)
+
+    def test_legacy_uncertain_record_remains_unchanged_after_normalization_fix(self):
+        import sqlite3, hashlib
+        self.state.mkdir()
+        raw = "Eva-update\n"
+        old = {"status": "uncertain", "hour_key": KEY, "message_sha256": hashlib.sha256(raw.encode()).hexdigest()}
+        with sqlite3.connect(self.state / "delivery.sqlite3") as con:
+            con.execute("CREATE TABLE deliveries(hour_key TEXT PRIMARY KEY, message_sha256 TEXT NOT NULL, record TEXT NOT NULL)")
+            con.execute("INSERT INTO deliveries VALUES(?,?,?)", (KEY, old["message_sha256"], json.dumps(old)))
+        self.assertEqual(helper.deliver_once(self.state, KEY, raw, self.sender), old)
+        self.assertEqual(self.calls, [])
+
+    def test_diagnostics_keep_only_fixed_stages_booleans_and_hashes(self):
+        def uncertain(key, text):
+            raise helper.DeliveryUncertain({"stage": "provider_reply_received", "token": "secret",
+                "provider_observation": {"intended_private_chat": True, "exact_text": False,
+                  "text_sha256": "a" * 64, "text": "secret", "chat_id": "secret"}})
+        result = helper.deliver_once(self.state, KEY, "Eva-update", uncertain)
+        self.assertEqual(result["status"], "uncertain")
+        self.assertEqual(result["diagnostics"]["stage"], "provider_reply_received")
+        self.assertFalse(result["diagnostics"]["provider_observation"]["exact_text"])
+        self.assertNotIn("secret", json.dumps(result))
+        self.assertEqual(helper.safe_diagnostics({"stage": "secret"}), {})
+
     def test_input_validation_before_claim(self):
         for key, text in [("2026-9-12T15:00Z", "x"), (KEY, " "), (KEY, "😀" * 2049)]:
             with self.assertRaises(ValueError):

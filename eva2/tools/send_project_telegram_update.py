@@ -25,6 +25,8 @@ from eva.bootstrap.runtime import RuntimeSettings, _build_proactive_delivery
 from eva.adapters.postgres.connection import sqlalchemy_postgres_dsn
 from eva.application.free_will import ProactiveExpressionClaim
 import sqlalchemy as sa
+stage = "runtime_setup"
+observation = {}
 try:
     payload = json.load(sys.stdin)
     settings = RuntimeSettings.from_environment()
@@ -33,6 +35,30 @@ try:
         delivery = _build_proactive_delivery(settings, engine)
         if delivery is None:
             raise RuntimeError("delivery unavailable")
+        original_call = delivery._api._call
+        def observed_call(method, body, **kwargs):
+            global stage, observation
+            stage = "provider_request_started"
+            result = original_call(method, body, **kwargs)
+            stage = "provider_reply_received"
+            if isinstance(result, dict):
+                chat = result.get("chat")
+                private_match = (isinstance(chat, dict) and type(chat.get("id")) is int
+                                 and str(chat["id"]) == body.get("chat_id")
+                                 and chat.get("type") == "private")
+                message_id = result.get("message_id")
+                provider_text = result.get("text")
+                observation = {"intended_private_chat": private_match,
+                               "positive_message_id": type(message_id) is int and message_id > 0,
+                               "exact_text": provider_text == body.get("text")}
+                if isinstance(provider_text, str):
+                    observation["text_sha256"] = hashlib.sha256(provider_text.encode()).hexdigest()
+                if private_match and observation["positive_message_id"]:
+                    raw_receipt = "telegram:%s:%s" % (chat["id"], message_id)
+                    observation["provider_receipt_sha256"] = hashlib.sha256(raw_receipt.encode()).hexdigest()
+            return result
+        delivery._api._call = observed_call
+        stage = "owner_binding_ready"
         claim = ProactiveExpressionClaim(payload["key"], payload["key"], 1, 0,
                                          "owner-authorized-project-update", payload["text"], 1)
         receipt = delivery.deliver(claim)
@@ -42,13 +68,39 @@ try:
         engine.dispose()
 except Exception:
     # Exceptions can contain the bot URL, database DSN or personal identifiers.
-    print(json.dumps({"error": "delivery_failed_or_uncertain"}))
+    print(json.dumps({"error": "delivery_failed_or_uncertain", "stage": stage,
+                      "provider_observation": observation}))
     sys.exit(1)
 """
 
 
 def utcnow():
     return datetime.now(timezone.utc).isoformat()
+
+
+class DeliveryUncertain(RuntimeError):
+    def __init__(self, diagnostics):
+        super().__init__("runtime delivery failed or uncertain")
+        self.diagnostics = diagnostics
+
+
+def safe_diagnostics(value):
+    # Allowlist only fixed stages, booleans and hashes; never copy provider text/errors.
+    result = {}
+    if not isinstance(value, dict):
+        return result
+    if value.get("stage") in {"runtime_setup", "owner_binding_ready", "provider_request_started", "provider_reply_received"}:
+        result["stage"] = value["stage"]
+    observed = value.get("provider_observation")
+    if isinstance(observed, dict):
+        clean = {key: observed[key] for key in ("intended_private_chat", "positive_message_id", "exact_text")
+                 if type(observed.get(key)) is bool}
+        for key in ("text_sha256", "provider_receipt_sha256"):
+            digest = observed.get(key)
+            if isinstance(digest, str) and len(digest) == 64 and all(c in "0123456789abcdef" for c in digest):
+                clean[key] = digest
+        result["provider_observation"] = clean
+    return result
 
 
 def send_via_runtime(container, key, text):
@@ -58,7 +110,11 @@ def send_via_runtime(container, key, text):
         stdout=subprocess.PIPE, stderr=subprocess.PIPE, timeout=90, check=False,
     )
     if result.returncode:
-        raise RuntimeError("runtime delivery failed or uncertain")
+        try:
+            diagnostics = safe_diagnostics(json.loads(result.stdout))
+        except (ValueError, TypeError):
+            diagnostics = {}
+        raise DeliveryUncertain(diagnostics)
     receipt = json.loads(result.stdout)
     digest = receipt.get("provider_receipt_sha256", "")
     if (receipt.get("private_chat_and_exact_text_verified") is not True
@@ -72,7 +128,8 @@ def deliver_once(state_dir, key, text, sender):
     parsed = datetime.strptime(key, "%Y-%m-%dT%H:00Z")
     if parsed.strftime("%Y-%m-%dT%H:00Z") != key:
         raise ValueError("invalid hourly key")
-    if not text.strip() or len(text.encode("utf-16-le")) // 2 > 4096:
+    wire_text = text.strip(" \t\r\n")
+    if not wire_text.strip() or len(wire_text.encode("utf-16-le")) // 2 > 4096:
         raise ValueError("message must contain 1 to 4096 Telegram UTF-16 units")
     state_dir = Path(state_dir)
     state_dir.mkdir(mode=0o700, parents=True, exist_ok=True)
@@ -94,16 +151,21 @@ def deliver_once(state_dir, key, text, sender):
                 raise ValueError("hour key already claimed with a different message; no send")
             return json.loads(row[1])
         record = {"contract": "EvaProjectTelegramDelivery/v1", "hour_key": key,
-                  "message_sha256": digest, "status": "claimed_uncertain",
+                  "message_sha256": digest,
+                  "sent_message_sha256": hashlib.sha256(wire_text.encode("utf-8")).hexdigest(),
+                  "edge_whitespace_normalized": wire_text != text,
+                  "status": "claimed_uncertain",
                   "claimed_at": utcnow(), "automatic_retry_allowed": False}
         connection.execute("INSERT INTO deliveries VALUES (?, ?, ?)", (key, digest, json.dumps(record)))
         connection.commit()  # Durable before any provider call, also across process death.
         try:
-            result = sender(key, text)
+            result = sender(key, wire_text)
             record.update(result)
             record.update(status="delivered", delivered_at=utcnow())
-        except Exception:
+        except Exception as error:
             record.update(status="uncertain", finished_at=utcnow())
+            if isinstance(error, DeliveryUncertain):
+                record["diagnostics"] = safe_diagnostics(error.diagnostics)
         connection.execute("UPDATE deliveries SET record=? WHERE hour_key=?", (json.dumps(record), key))
         connection.commit()
         return record

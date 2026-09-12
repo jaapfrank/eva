@@ -584,6 +584,21 @@ De coördinator gaf afzonderlijk opdracht voor voorbereide response, procesherst
 replay en ACK met dezelfde sleutel en één afleveringsregistratie. Geen livecalls.
 [ACK-contractbewijs](reviews/cp001-bottie-ack-delivery-2026-09-12.md).
 
+
+### Telegram-uuruupdate — onzekere verzending, helper gecorrigeerd
+
+De21:00UTC-uursleutel blijft onzeker zonder providerreceipt; er wordt niet
+herhaald of via een nieuwe sleutel opnieuw verstuurd. De laatste bevestigde
+verzending blijft20:40:11UTC. De update eindigde met een regeleinde;
+normalisatie bij de provider is een plausibele oorzaak, geen afleveringsbewijs.
+
+De helper verwijdert voor volgende reguliere updates alleen ASCII-randwitruimte
+en bewaart veilige fase-/hashdiagnostiek. Ruwe bestandshash/deduplicatie en
+strikte adaptercontrole blijven intact.9 register- en3 echteadapter/stubchecks
+slagen; een kopie van de echte onzekere registratie blijft identiek zonder
+sendercall. Onafhankelijke review is GO. Geen nieuw Telegramproefbericht.
+[Review](reviews/project-telegram-normalization-review-2026-09-12.md).
+
 ## Nu
 
 | Volgorde | Kaart | Resultaat | Status |
