@@ -1,7 +1,7 @@
 {
   "contract": "EvaChromeInflightRecovery/v1",
   "date": "2026-09-12",
-  "status": "implemented_and_isolated_tested_not_yet_loaded_in_production",
+  "status": "implemented_isolated_tested_reviewed_and_live",
   "context": "Own Linux headless Chromium, real production worker/backend, own bridge and loopback proxy using production Handler and gateway authorization logic; fixture maps caller to old logical gateway address. No ordinary Eva core/model call in this recovery test.",
   "missingBehavior": "HTTP/Unix transport loss did not explicitly cancel a pending host browser action.",
   "changes": [
@@ -59,18 +59,25 @@
     "result": "passed"
   },
   "scope": {
-    "productionServicesRestarted": false,
+    "productionServicesRestarted": [
+      "eva-chrome-bridge.service",
+      "eva2-shared-chrome"
+    ],
     "personalGrantRestored": false,
     "ownerAcceptance": false,
     "centralWorkboardModified": false
   },
   "productionReadback": {
+    "contract": "EvaSharedChrome/v1",
     "state": "disconnected",
-    "epoch": "c376c5b6-b8ab-4a2b-9b38-8c766ce1e6e1"
+    "epoch": "c530df7d-28aa-4289-8187-dcc74e35fdc5",
+    "busy": false,
+    "connected": false,
+    "visibleIn": "Google Chrome",
+    "freshObservationRequired": true
   },
   "previousOrdinaryEvaRouteProof": "chrome-isolated-route-2026-09-12.json",
   "remaining": [
-    "Load this change in own bridge/proxy when coordinated.",
     "Personal explicitly selected Chrome extension trial and owner judgement remain open."
   ],
   "sourceSha256": {
@@ -79,5 +86,40 @@
     "recovery.test.mjs": "9644615d12e07c0ac18f8edf259cb49494a5432859a9f8538567f272a58ab524",
     "recovery-fixture.mjs": "5132a971f9f2d8ac9640653fa1e3844e964db81726e2817ae49b8679043547d6",
     "recovery-proxy-fixture.py": "73a3e2001aaea194dc357b112922244e7de50108b8a4e50ddfd2464b3efef9e4"
+  },
+  "liveActivation": {
+    "atUtc": "2026-09-12T17:27:01.559366+00:00",
+    "reviewedSourceCommit": "afabead6c97e92f6ff18056a0feab5b090a96ad1",
+    "independentReviewGo": true,
+    "before": {
+      "contract": "EvaSharedChrome/v1",
+      "state": "disconnected",
+      "epoch": "c376c5b6-b8ab-4a2b-9b38-8c766ce1e6e1",
+      "busy": false,
+      "connected": false,
+      "visibleIn": "Google Chrome",
+      "freshObservationRequired": true
+    },
+    "after": {
+      "contract": "EvaSharedChrome/v1",
+      "state": "disconnected",
+      "epoch": "c530df7d-28aa-4289-8187-dcc74e35fdc5",
+      "busy": false,
+      "connected": false,
+      "visibleIn": "Google Chrome",
+      "freshObservationRequired": true
+    },
+    "bridgeUnit": "ExecMainStartTimestamp=Sat 2026-09-12 19:26:03 CEST\nExecMainPID=1169597\nActiveState=active",
+    "proxyId": "08ec0c43aa35155b3dd70f65dcd7e814ade5e825202764fc35c3da16dc92db21",
+    "proxyStartedAt": "2026-09-12T17:26:13.936618053Z",
+    "proxyHealth": "healthy",
+    "gatewayToolCount": 7,
+    "gatewayDisconnectedSnapshotRejected": true,
+    "coreThroughGatewayDisconnectedCallRejected": true,
+    "ownerTrialPageHttpStatus": 200,
+    "personalGrantRestored": false,
+    "coreGatewayNetworkRestarted": false,
+    "privateTwoFileRollbackPrepared": true,
+    "rollbackUsed": false
   }
 }
