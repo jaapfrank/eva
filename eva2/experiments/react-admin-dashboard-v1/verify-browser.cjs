@@ -29,7 +29,11 @@ const firstMemoryPage = memoryPage([
 ], cursor);
 
 const fixtures = {
-  '/internal/v1/dashboard/initiatives': { contract: 'EvaOwnerInitiatives/v1', cards: [] },
+  '/internal/v1/dashboard/initiatives': {
+    contract: 'EvaOwnerInitiatives/v1', cards: [], checked_at: '2026-09-12T10:01:00Z',
+    latest_review: { updated_at: '2026-09-12T10:00:00Z', phase: 'admission', state: 'not_admitted',
+      reason: 'De huidige beoordeling wacht.', blocker: 'background_budget', intent_id: null },
+  },
   '/internal/v1/dashboard/browser/status': { contract: 'EvaBrowserSession/v1', state: 'stopped', revision: 0,
     owner_control: false, eva_control: false, viewer_path: null, browser_ready: false },
   '/internal/v1/dashboard/memory-sources': firstMemoryPage,
@@ -92,6 +96,25 @@ function serverFor(authorized, seen, memory = { mode: 'pages' }) {
         response.statusCode = 401;
         response.end(JSON.stringify({ detail: 'owner access required' }));
         return;
+      }
+      if (pathname === '/internal/v1/dashboard/initiatives') {
+        assert.equal(request.method, 'GET');
+        const base = fixtures[pathname];
+        const mode = memory.initiativeMode;
+        if (mode === 'denied') { response.statusCode = 403; response.end('{}'); return; }
+        if (mode === 'older') { response.end(JSON.stringify({ contract: base.contract, cards: [] })); return; }
+        if (mode === 'empty') { response.end(JSON.stringify({ ...base, latest_review: null })); return; }
+        if (mode === 'malformed') {
+          response.end(JSON.stringify({ ...base, latest_review: { ...base.latest_review, reason: { private: 'must not render' } } })); return;
+        }
+        if (mode === 'silence') {
+          response.end(JSON.stringify({ ...base, latest_review: { ...base.latest_review, state: 'silence',
+            reason: '<img src="https://external.invalid/initiative" onerror="alert(1)">', blocker: null } })); return;
+        }
+        if (mode === 'card') {
+          response.end(JSON.stringify({ ...base, cards: [{ intent_id: 'private-initiative', title: 'Eigen bijdrage',
+            status: 'done', motivation: 'Private motivatie', question: 'Private inhoud', has_artifact: true, can_stop: false }] })); return;
+        }
       }
       if (pathname.startsWith('/internal/v1/dashboard/memory-sources/')) {
         if (memory.mode === 'sourceRevoked') { response.statusCode = 404; response.end('{}'); return; }
@@ -219,6 +242,37 @@ async function main() {
       assert.ok(seen.some((row) => row.pathname === endpoint));
     }
     assert.ok(seen.every((row) => row.authorization === null));
+    const initiatives = page.getByRole('region', { name: 'Eigen initiatieven', exact: true });
+    await initiatives.getByText('Wacht op achtergrondbudget', { exact: true }).waitFor();
+    assert.equal(await initiatives.locator('article').count(), 0);
+    assert.equal(await initiatives.locator('time').first().getAttribute('datetime'), '2026-09-12T10:00:00Z');
+    await initiatives.getByText('De huidige beoordeling wacht.', { exact: true }).waitFor();
+    assert.match(await initiatives.innerText(), /Een beoordeling is nog geen bijdrage/u);
+    memory.initiativeMode = 'silence';
+    await initiatives.getByRole('button', { name: 'Vernieuwen', exact: true }).click();
+    await initiatives.getByText('Bewust geen actie', { exact: true }).waitFor();
+    await initiatives.getByText('<img src="https://external.invalid/initiative" onerror="alert(1)">', { exact: true }).waitFor();
+    assert.equal(await initiatives.locator('img').count(), 0);
+    memory.initiativeMode = 'older';
+    await initiatives.getByRole('button', { name: 'Vernieuwen', exact: true }).click();
+    await initiatives.getByText('De laatste beoordeling is via deze versie nog niet beschikbaar.', { exact: true }).waitFor();
+    memory.initiativeMode = 'empty';
+    await initiatives.getByRole('button', { name: 'Vernieuwen', exact: true }).click();
+    await initiatives.getByText('Er is nog geen opgeslagen beoordeling beschikbaar.', { exact: true }).waitFor();
+    for (const mode of ['denied', 'malformed']) {
+      memory.initiativeMode = 'card';
+      await initiatives.getByRole('button', { name: 'Vernieuwen', exact: true }).click();
+      await initiatives.getByText('Eigen bijdrage', { exact: true }).waitFor();
+      memory.initiativeMode = mode;
+      await initiatives.getByRole('button', { name: 'Vernieuwen', exact: true }).click();
+      await initiatives.getByRole('alert').waitFor();
+      assert.equal(await initiatives.locator('article').count(), 0);
+      assert.equal(await initiatives.locator('time').count(), 0);
+      assert.doesNotMatch(await initiatives.innerText(), /Private motivatie|Private inhoud|De huidige beoordeling wacht/u);
+    }
+    memory.initiativeMode = undefined;
+    await initiatives.getByRole('button', { name: 'Vernieuwen', exact: true }).click();
+    await initiatives.getByText('Wacht op achtergrondbudget', { exact: true }).waitFor();
     await page.getByRole('heading', { name: 'Jouw geheugenbronnen', exact: true }).waitFor();
     await page.getByText('Ik drink graag thee na het eten.', { exact: true }).waitFor();
     assert.equal(await page.locator('.memory-list img').count(), 0);

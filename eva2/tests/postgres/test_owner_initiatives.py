@@ -657,3 +657,86 @@ def test_context_review_resumes_model_admission_without_ha_revalidation(costless
     assert reclaimed is not None and reclaimed.event.source == "initiative-review"
     assert reviews._timeline.load(reclaimed.thread_id).phase == "will_claimed"
     assert reviews.claim_next_revalidation(now=NOW + timedelta(days=1)) is None
+
+
+@pytest.mark.parametrize("outcome", ["silence", "budget", "adopted", "refused"])
+def test_owner_sees_private_review_before_adoption(postgres_engine, outcome):
+    label = "review-view-" + outcome
+    authority, _, binding = _seed_authority(postgres_engine, label)
+    owner = _id(label, "principal")
+    tenant, installation = label, "home"
+    allow = [True]
+    def authorize():
+        if not allow[0]:
+            raise RuntimeError("mandate revoked")
+        return {}, None
+    source = PostgresSensoryEventStore(postgres_engine, tenant_id=tenant,
+        installation_id=installation, initiative_principal_id=str(owner),
+        initiative_authorizer=authorize, context_reviews_only=True)
+    control = PostgresOwnerInitiatives(postgres_engine, tenant_id=tenant,
+        installation_id=installation, owner=owner, binding=binding, authority_scope=authority)
+    assert control.page(now=NOW)["latest_review"] is None
+    assert source.schedule_context_review(now=NOW) == "scheduled"
+    assert control.page(now=NOW)["latest_review"]["state"] == "scheduled"
+    claim = source.mark_model_started(source.claim_next(now=NOW), now=NOW)
+    assert control.page(now=NOW)["latest_review"]["state"] == "working"
+    proposal = PersonalInitiativeProposal("Own idea", "Useful", "Explore") if outcome in ("adopted", "refused") else None
+    allow[0] = outcome != "refused"
+    source.complete(claim, FreeWillDecision("silence", "No further action needed", 0,
+        "eva:background-budget" if outcome == "budget" else "fixture", initiative=proposal), now=NOW)
+    page = control.page(now=NOW)
+    review = page["latest_review"]
+    assert review["state"] == {"budget": "waiting", "refused": "not_admitted"}.get(outcome, outcome)
+    assert review["updated_at"] == NOW.isoformat()
+    assert review["reason"] == "No further action needed"
+    assert review["blocker"] == {"budget": "background_budget", "refused": "initiative_mandate_unavailable"}.get(outcome)
+    assert len(page["cards"]) == (1 if outcome == "adopted" else 0)
+    if outcome == "adopted":
+        assert review["intent_id"] == page["cards"][0]["intent_id"]
+    else:
+        assert review["intent_id"] is None
+
+
+def test_private_review_is_owner_installation_scoped_current_and_hash_checked(postgres_engine):
+    from eva.adapters.postgres.operational_timeline import operational_events
+    label = "private-review-isolation"
+    authority, _, binding = _seed_authority(postgres_engine, label)
+    owner = _id(label, "principal")
+    tenant = label
+    def source(principal, installation):
+        return PostgresSensoryEventStore(postgres_engine, tenant_id=tenant,
+            installation_id=installation, initiative_principal_id=str(principal),
+            initiative_authorizer=lambda: ({}, None), context_reviews_only=True)
+    def decide(store, reason, at):
+        assert store.schedule_context_review(now=at) == "scheduled"
+        claim = store.mark_model_started(store.claim_next(now=at), now=at)
+        store.complete(claim, FreeWillDecision("silence", reason, 0, "fixture"), now=at)
+        return claim
+    own = source(owner, "home")
+    claim = decide(own, "Own private assessment", NOW)
+    decide(source(_id(label, "other"), "home"), "Other person's secret", NOW + timedelta(seconds=1))
+    decide(source(owner, "elsewhere"), "Other installation secret", NOW + timedelta(seconds=2))
+    control = PostgresOwnerInitiatives(postgres_engine, tenant_id=tenant,
+        installation_id="home", owner=owner, binding=binding, authority_scope=authority)
+    page = control.page(now=NOW + timedelta(seconds=3))
+    assert page["latest_review"]["reason"] == "Own private assessment"
+    assert "secret" not in str(page)
+    table = metadata.tables["eva_core.principal_bindings"]
+    with postgres_engine.begin() as conn:
+        conn.execute(sa.update(table).where(table.c.tenant_id == authority.tenant_id,
+            table.c.principal_binding_id == binding).values(status="revoked"))
+    with pytest.raises(RuntimeError, match="binding is not current"):
+        control.page(now=NOW)
+    with postgres_engine.begin() as conn:
+        conn.execute(sa.update(table).where(table.c.tenant_id == authority.tenant_id,
+            table.c.principal_binding_id == binding).values(status="verified"))
+        # Corruption injection only in the disposable PostgreSQL fixture.
+        conn.exec_driver_sql("ALTER TABLE eva_core.operational_events DISABLE TRIGGER USER")
+        conn.execute(sa.update(operational_events).where(
+            operational_events.c.tenant_id == own._timeline._scope_value.tenant_id,
+            operational_events.c.installation_id == own._timeline._scope_value.installation_id,
+            operational_events.c.thread_id == claim.thread_id,
+            operational_events.c.event_type == "WILL_DECIDED").values(payload_sha256=bytes(32)))
+        conn.exec_driver_sql("ALTER TABLE eva_core.operational_events ENABLE TRIGGER USER")
+    with pytest.raises(RuntimeError, match="review payload hash differs"):
+        control.page(now=NOW)
