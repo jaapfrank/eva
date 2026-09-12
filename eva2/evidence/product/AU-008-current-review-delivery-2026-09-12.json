@@ -1,0 +1,250 @@
+{
+  "contract": "EvaAU008CurrentInitiativeDelivery/v1",
+  "taskId": "AU-008",
+  "implementationCommit": "e96b2054d4d40e5c502907e24c53fc25a553bbe0",
+  "baseCommit": "f89c3dd034c9e27c953c1fbbb278781cceea3d29",
+  "scope": "Laatste gewone eigenaarbeoordeling zichtbaar, met stilte of blokkade vóór eventuele adoptie; bestaand zelfstandig gekozen resultaat teruggelezen, geen herbouw.",
+  "priorImplementationReused": true,
+  "existingResultAudit": {
+    "contract": "EvaAu008ReadOnlyCurrentAudit/v1",
+    "observed_at": "2026-09-12T16:16:03.015003+00:00",
+    "read_only": true,
+    "model_calls": 0,
+    "database_mutations": 0,
+    "restarts": 0,
+    "latest_review": {
+      "thread_id": "sensory:initiative-review:547262a5e00deb3ed2a6b3c5:497007",
+      "phase": "will_decided",
+      "status": "completed",
+      "revision": 4,
+      "updated_at": "2026-09-12T15:50:23+00:00",
+      "event_type": "WILL_DECIDED",
+      "event_time": "2026-09-12T15:50:23+00:00",
+      "checkpoint_matches": true,
+      "data": {
+        "usage": null,
+        "reason": "Het bestaande achtergrondbudget laat nu geen nieuwe beoordeling toe.",
+        "urgency": 0,
+        "provider": "eva:background-budget",
+        "entity_id": null,
+        "expression": null,
+        "disposition": "silence",
+        "shadow_mode": true,
+        "source_event_id": "initiative-review:547262a5e00deb3ed2a6b3c5:497007"
+      }
+    },
+    "current_utc_day_budget": {
+      "occurred_at": "2026-09-12T15:50:23+00:00",
+      "day": "2026-09-12",
+      "person_used": 4,
+      "person_limit": 4,
+      "installation_used": 4,
+      "installation_limit": 40,
+      "reason": "person_daily_limit_reached",
+      "admitted": false
+    },
+    "latest_intent_checkpoint": {
+      "thread_id": "intent:personal-interest:7faedfcad4bb5f3359de127314095c3ca7921d52c259f68227b35a3842dd29f5",
+      "phase": "initiative_completed",
+      "status": "completed",
+      "updated_at": "2026-09-12T00:28:17+00:00"
+    },
+    "unresolved_private_review_checkpoints": [],
+    "owner_api": {
+      "status": 200,
+      "contract": "EvaOwnerInitiatives/v1",
+      "latest_card": {
+        "intent_id": "personal-interest:7faedfcad4bb5f3359de127314095c3ca7921d52c259f68227b35a3842dd29f5",
+        "title": "API-toegang is niet hetzelfde als toestemming",
+        "motivation": "De herinnerde aanname dat API-toegang alle rechten geeft is geen bevestiging van actuele bevoegdheden. Een klein algemeen overzicht kan helpen mogelijkheden en toestemming uit elkaar te houden, zonder oude opdrachten te hervatten.",
+        "question": "Een korte private Nederlandse uitleg opstellen en als werkruimtedocument opslaan over het verschil tussen API-functionaliteit, tokenrechten en toestemming voor een concrete handeling, met één fictief voorbeeld. Geen tokens, huisgegevens of werkelijke rechten opvragen of testen.",
+        "status": "done",
+        "phase": "initiative_completed",
+        "updated_at": "2026-09-12T00:28:17+00:00",
+        "can_stop": false,
+        "has_artifact": true,
+        "feedback": null
+      },
+      "has_latest_review_field": false
+    },
+    "owner_artifact_api": {
+      "status": 200,
+      "bytes": 620,
+      "sha256": "a4a311dbd1dcbb9021cc2344ea2507609c6ec6c43103eded2975fd92d2158aa9",
+      "matches_header": true
+    },
+    "workspace_document": {
+      "host_path": "/var/lib/docker/volumes/eva2-workspace-files/_data/eva-initiatief-7faedfcad4bb5f3359de127314095c3ca7921d52c259f68227b35a3842dd29f5-api-toegang-en-toestemming.md",
+      "bytes": 866,
+      "sha256": "568e859f3f0e0d8dd09209b67e3b70e96cb57762f3fc9722851b1f32d2b1b1b1",
+      "title": "API-toegang is niet hetzelfde als toestemming",
+      "summary": "Private korte uitleg over API-functionaliteit, tokenrechten en concrete toestemming; fictief lampvoorbeeld. Geen token-, huisdata- of rechteninspectie nodig."
+    },
+    "interpretation": "Normal recurring private review cycle is running, latest assessment completed with existing daily budget refusal. Today earlier self-selected initiative completed and its actual workspace document exists. No fresh work or extra budget needed to show this existing result. User usefulness acceptance remains unproven."
+  },
+  "candidateImage": {
+    "contract": "EvaCombinedAU002AU008Image/v1",
+    "parentImage": "sha256:bfb0d25abb7f4a1247d376050fdfd7b606e3a3285dcd19b9ee6831d3297b046d",
+    "candidateImage": "sha256:4a5fa7c1116d07f6037b9a02f82ba8f6c30d703e80bbf8c84a30fbf108ca8710",
+    "helperImplementation": "30905cf101599f075759d5980bb816dd246f822c",
+    "initiativeImplementation": "e96b2054d4d40e5c502907e24c53fc25a553bbe0",
+    "parentLayersPreserved": true,
+    "runtimeConfigPreservedExceptLabels": true,
+    "imports": "imports passed",
+    "changedSourceFiles": {
+      "eva/adapters/api/dashboard_static/assets/index-Bv4zaQUs.js": {
+        "before": null,
+        "after": "02b13b469ebf8f0448f30fd3855dd4d5955465b937afcf4897d017e2d82785d6"
+      },
+      "eva/adapters/api/dashboard_static/assets/index-Ca8HuISF.js": {
+        "before": "302d7e677250a45359d7f8e2516575b86e3db25fe40e25626f3fdea39ac02937",
+        "after": null
+      },
+      "eva/adapters/api/dashboard_static/eva-dashboard-assets.json": {
+        "before": "8bcd37c8c0b3f6a96235ab299fcf33a84d24e2be632e51f3809612ce253a475d",
+        "after": "2e0db25b0e9f2494c915d268248a13640ed57cc277f859aca5b5a6f93e0357c4"
+      },
+      "eva/adapters/api/dashboard_static/index.html": {
+        "before": "f0fd73cf401bf52d677218fcd6ccd4323061ccc5a4676e7e6abd7810795cd348",
+        "after": "085ec940fecbd803a9d9045718f3e492b799664b4c1181d4bc248e061982b2d9"
+      },
+      "eva/adapters/postgres/owner_initiatives.py": {
+        "before": "4be2f792ea7fdb6ef6a562be387ff3aca37df6fb28731e22f1a2d2cbece577df",
+        "after": "cf7927a94fa6f46c8f2b3eb0a9265a12252e1b5d32796fe733da287f1282e157"
+      },
+      "eva/bootstrap/delegated_work_commands.py": {
+        "before": "b2b5812f75d6d83b8bc38f15c51627a1e60919d5871188a51fbfc4df9dd44504",
+        "after": "bbedd8a320099e7ca9465fa495b269bb2615897ecd49c4d533ebf957b556e176"
+      }
+    },
+    "deployment": "activated as documented by activation receipt",
+    "modelCalls": 0
+  },
+  "postgresTests": {
+    "passed": 6,
+    "selected": "owner_sees_private_review or private_review_is_owner or owner_can_read_result",
+    "logSha256": "f60a5d889b2fca9e63ae59dbc6cb34a6b65b448a2f14d98d769230bc388f8dea"
+  },
+  "browserTests": {
+    "contract": "EvaDashboardCandidateBrowserProof/v1",
+    "authenticated": {
+      "browserStorageEntries": 0,
+      "externalRequests": 0,
+      "pageErrors": 0,
+      "protectedEndpointsRead": [
+        "/internal/v1/dashboard/initiatives",
+        "/internal/v1/dashboard/browser/status",
+        "/internal/v1/dashboard/memory-sources",
+        "/internal/v1/dashboard/status",
+        "/internal/v1/dashboard/identity",
+        "/internal/v1/dashboard/workboard"
+      ]
+    },
+    "anonymous": {
+      "identityRead": false,
+      "statusRequestObserved": true,
+      "workboardRead": false
+    },
+    "memorySources": {
+      "fullSource": true,
+      "staleDetailRevokedWhileListAvailable": true,
+      "explicitCorrection": true,
+      "eraseConfirmationAndCancellation": true,
+      "pagination": true,
+      "literalText": true,
+      "revokedAccessClearsContent": true,
+      "negativeCases": [
+        "denied",
+        "error",
+        "malformed",
+        "invalidDate",
+        "invalidCursor",
+        "duplicateId",
+        "overlong",
+        "unknownState",
+        "empty"
+      ],
+      "lateReplyCannotRestoreRevokedContent": true,
+      "mobileWidth": 390,
+      "serverScopeOnly": true
+    },
+    "status": "passed"
+  },
+  "built": true,
+  "tested": true,
+  "live": true,
+  "ownerAccepted": false,
+  "liveReadback": {
+    "status": "passed",
+    "observedAt": "2026-09-12T16:52:54.121Z",
+    "ownerApiStatus": 200,
+    "latestReview": {
+      "updated_at": "2026-09-12T15:50:23+00:00",
+      "phase": "will_decided",
+      "state": "waiting",
+      "reason": "Het bestaande achtergrondbudget laat nu geen nieuwe beoordeling toe.",
+      "blocker": "background_budget",
+      "intent_id": null
+    },
+    "checkedAt": "2026-09-12T16:52:51+00:00",
+    "existingCard": {
+      "intentId": "personal-interest:7faedfcad4bb5f3359de127314095c3ca7921d52c259f68227b35a3842dd29f5",
+      "title": "API-toegang is niet hetzelfde als toestemming",
+      "status": "done",
+      "hasArtifact": true
+    },
+    "artifactApi": {
+      "bytes": 620,
+      "sha256": "a4a311dbd1dcbb9021cc2344ea2507609c6ec6c43103eded2975fd92d2158aa9"
+    },
+    "ui": {
+      "latestReviewVisible": true,
+      "existingResultVisible": true,
+      "pageErrors": 0,
+      "mutatingRequests": 0
+    },
+    "modelCalls": 0,
+    "ownerAccepted": false
+  },
+  "existingResultArtifact": "eva2/evidence/product/artifacts/AU-008-api-toegang-en-toestemming-2026-09-12.md",
+  "existingResultSha256": "568e859f3f0e0d8dd09209b67e3b70e96cb57762f3fc9722851b1f32d2b1b1b1",
+  "boundaries": [
+    "Geen budgetverhoging, extra modelaanroepen of geforceerde bijdrage.",
+    "Beoordeling is niet hetzelfde als een uitgevoerde bijdrage.",
+    "Geen claim van herhaald nut, gezinsacceptatie of winst op concurrenten.",
+    "Bestaande geheugenacceptatie GE-01 en GE-02 blijft behouden."
+  ],
+  "activation": {
+    "contract": "EvaCombinedCoreWorkerActivation/v1",
+    "issuedAt": "2026-09-12T16:52:05.146497+00:00",
+    "status": "activated",
+    "slot": 3,
+    "port": 44710,
+    "previousImage": "sha256:bfb0d25abb7f4a1247d376050fdfd7b606e3a3285dcd19b9ee6831d3297b046d",
+    "image": "sha256:4a5fa7c1116d07f6037b9a02f82ba8f6c30d703e80bbf8c84a30fbf108ca8710",
+    "servicesChanged": [
+      "core",
+      "delegated-work-worker"
+    ],
+    "backgroundWorkEnabled": true,
+    "composeConfigDelta": "only two service image references",
+    "environmentCommandsMountsNetworkSecurityPreserved": true,
+    "staticSecretAndBindingFileHashesPreserved": true,
+    "protectedContainersNotRestarted": [
+      "eva2-managed-b-slot3-hindsight-1",
+      "eva2-managed-b-slot3-postgres-1",
+      "eva2-managed-b-slot3-hindsight-postgres-1",
+      "eva2-owner-voice-media-1",
+      "eva2-owner-voice-livekit-1"
+    ],
+    "databaseRestore": false,
+    "healthy": true,
+    "backupPath": "/home/administrator/project/.eva2-artifacts/au002-owner-work-20260910/telegram-repair-20260911/presentation-20260912/activation-override/candidate.env.before",
+    "overridePath": "/var/lib/eva2/managed-b-slot3/core-worker.override.compose.yml",
+    "overrideSha256": "40a752dd11e2540d64d24e3fb1bedb1ed6aa24cb4102c58fd19e026ee21769db",
+    "candidateEnvironmentUnchanged": true,
+    "bootRoute": "Existing Docker unless-stopped restart policy; persisted container images and Compose config_files include this override."
+  },
+  "activationReceiptPath": "/home/administrator/project/.eva2-artifacts/au002-owner-work-20260910/telegram-repair-20260911/presentation-20260912/activation-override/receipt.json",
+  "technicalComplete": true
+}
