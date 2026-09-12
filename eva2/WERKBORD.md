@@ -728,6 +728,21 @@ nog geen image of livegang; geen volledige requestbrede budgetclaim. De
 runtimebeheerder bereidt een afzonderlijk gecontroleerde kandidaat voor.
 [Grens en bewijs](reviews/cp001-request-budget-contract-2026-09-13.md).
 
+### Telegram — reguliere uurupdate bevestigd afgeleverd
+
+De bestaande helper bevestigt uurkey2026-09-12T22:00Z als delivered:
+claim22:49:05UTC, aflevering22:49:09UTC, bedoelde privéchat en exacte tekst
+gecontroleerd. Het verzendbewijs is zonder berichtinhoud of ontvangergegevens
+vastgelegd. De vorige21:00-poging blijft uncertain en is niet herhaald.
+Laatste bevestigde aflevering bijgewerkt; geen extra test of nieuw schema.
+Volgende reguliere update niet vóór23:49:09UTC. Dit is providerbewijs,
+geen bewijs dat de eigenaar het bericht heeft gelezen of geaccepteerd.
+[Verzendbewijs](evidence/product/project-telegram-hourly-delivery-2026-09-12-22.json).
+
+De coördinator meldt bron-, image- en activatiebeoordeling GO voor de
+gecombineerde kandidaat. Werkelijke omschakeling en livebewijs volgen nog;
+de geregistreerde huidige runtime is daarom nog niet aangepast.
+
 ## Nu
 
 | Volgorde | Kaart | Resultaat | Status |

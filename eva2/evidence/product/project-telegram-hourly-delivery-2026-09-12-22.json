@@ -1,0 +1,14 @@
+{
+  "contract": "EvaProjectTelegramDelivery/v1",
+  "hour_key": "2026-09-12T22:00Z",
+  "message_sha256": "d56c4223daac8b03d034f92eeac0126b17d76e31dac3e740abbf0cdcfcb9914b",
+  "sent_message_sha256": "d56c4223daac8b03d034f92eeac0126b17d76e31dac3e740abbf0cdcfcb9914b",
+  "edge_whitespace_normalized": false,
+  "status": "delivered",
+  "claimed_at": "2026-09-12T22:49:05.787033+00:00",
+  "automatic_retry_allowed": false,
+  "provider_receipt_sha256": "f1427e9c99081eb160cdc485cdf22b5a5438c17f4bb16c83d43fcda51bd17ffc",
+  "private_chat_and_exact_text_verified": true,
+  "delivered_at": "2026-09-12T22:49:09.473183+00:00",
+  "scope": "Provider-confirmed intended private chat and exact text. No human reading/acceptance claim; prior21:00 uncertain unchanged."
+}
