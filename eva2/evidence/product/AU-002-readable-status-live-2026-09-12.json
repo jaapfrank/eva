@@ -1,0 +1,94 @@
+{
+  "contract": "EvaAU002ReadableStatusLiveEvidence/v1",
+  "implementationCommit": "30905cf101599f075759d5980bb816dd246f822c",
+  "imageEvidence": "eva2/evidence/product/AU-002-AU-008-combined-image-2026-09-12.json",
+  "imageReviewEvidence": "eva2/evidence/product/AU-002-AU-008-combined-image-review-2026-09-12.json",
+  "activation": {
+    "contract": "EvaCombinedCoreWorkerActivation/v1",
+    "issuedAt": "2026-09-12T16:52:05.146497+00:00",
+    "status": "activated",
+    "slot": 3,
+    "port": 44710,
+    "previousImage": "sha256:bfb0d25abb7f4a1247d376050fdfd7b606e3a3285dcd19b9ee6831d3297b046d",
+    "image": "sha256:4a5fa7c1116d07f6037b9a02f82ba8f6c30d703e80bbf8c84a30fbf108ca8710",
+    "servicesChanged": [
+      "core",
+      "delegated-work-worker"
+    ],
+    "backgroundWorkEnabled": true,
+    "composeConfigDelta": "only two service image references",
+    "environmentCommandsMountsNetworkSecurityPreserved": true,
+    "staticSecretAndBindingFileHashesPreserved": true,
+    "protectedContainersNotRestarted": [
+      "eva2-managed-b-slot3-hindsight-1",
+      "eva2-managed-b-slot3-postgres-1",
+      "eva2-managed-b-slot3-hindsight-postgres-1",
+      "eva2-owner-voice-media-1",
+      "eva2-owner-voice-livekit-1"
+    ],
+    "databaseRestore": false,
+    "healthy": true,
+    "backupPath": "/home/administrator/project/.eva2-artifacts/au002-owner-work-20260910/telegram-repair-20260911/presentation-20260912/activation-override/candidate.env.before",
+    "overridePath": "/var/lib/eva2/managed-b-slot3/core-worker.override.compose.yml",
+    "overrideSha256": "40a752dd11e2540d64d24e3fb1bedb1ed6aa24cb4102c58fd19e026ee21769db",
+    "candidateEnvironmentUnchanged": true,
+    "bootRoute": "Existing Docker unless-stopped restart policy; persisted container images and Compose config_files include this override."
+  },
+  "readinessObservedAfterActivation": {
+    "core": {
+      "httpStatus": 200,
+      "ready": true
+    },
+    "voiceCore": {
+      "httpStatus": 200,
+      "contract": "EvaVoiceSessionReady/v1"
+    },
+    "voiceMedia": {
+      "httpStatus": 200,
+      "ready": true
+    }
+  },
+  "helperReadOnlyChecks": [
+    {
+      "actualIngressMatchesTrustedPrivateAlias": true,
+      "internalOwnerIdDiffers": true,
+      "ingressMessageSha256": "ce6643fbbe209c515e0017373322e6918a1c4cf0d69603bf3dee723606e8f466",
+      "availableHelperTools": [
+        "start_delegated_work",
+        "list_delegated_work",
+        "get_delegated_work",
+        "stop_delegated_work",
+        "resume_delegated_work"
+      ],
+      "toolCount": 27,
+      "modelCalls": 0,
+      "sentTelegramMessages": 0
+    },
+    {
+      "statusFirstLine": "Je laatste onderzoek is klaar; je kunt het resultaat opvragen.",
+      "statusIncludesExactWorkId": true,
+      "generation": 2,
+      "state": "succeeded",
+      "storedOutputSha256": "432d650306d775910177057ce8f0420f2f71e4501a905d13d1a05c0477cfbd79",
+      "renderedOutputSha256": "47b0a36958dbd252cd62690d3b9d758b0879f753a89f5e1629087ba2061b91c0",
+      "renderedFromStoredContentExactly": true,
+      "readableInsteadOfJson": true,
+      "readOnlyServiceProbe": true,
+      "newModelCalls": 0,
+      "newTelegramMessages": 0,
+      "humanAcceptance": false
+    }
+  ],
+  "tests": {
+    "passed": 34,
+    "command": "pytest -q tests/bootstrap/test_delegated_work_commands.py tests/api/test_telegram_canary_api.py",
+    "logSha256": "4dfbb7efdd5f3c7374dda06d38b521661ef8cf360cca926398a696bedd977824",
+    "reasonForRerun": "Original temporary log lost during WSL restart; bounded suite rerun on same reviewed source to retain final raw receipt."
+  },
+  "reusedLifecycleEvidence": "eva2/evidence/product/AU-002-telegram-lifecycle-2026-09-11.json",
+  "ownerTrial": "eva2/design/product/AU-002-owner-trial-2026-09-12.md",
+  "humanAcceptance": false,
+  "newModelCalls": 0,
+  "externalTelegramMessagesSent": 0,
+  "remaining": "Owner Telegram trial/assessment; start reply can still arrive after concurrent stop, while fresh status reflects durable state."
+}
