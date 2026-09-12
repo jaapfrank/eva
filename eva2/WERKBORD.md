@@ -571,6 +571,19 @@ gerapporteerd. Het gaat om een lokale cryptografische testclient; geen bewijs
 dat Jaap iets heeft ontvangen/geaccepteerd, geen live- of crashherstelclaim.
 Providerverbruik, budgetten, productadmission en ranking blijven onbekend.
 
+
+### CP-001 lokale Bottie-ACK — contract technisch afgerond
+
+Onafhankelijke GO: brondiff/hashes, JUnit36 en vijf SQLite-ACK-snapshots
+gecontroleerd. Geldig plus identiek herhalen geeft één receipt; ongeldige
+ACK's geven nul, zonder extra providerstubcalls. De vier beoordeelde bestanden
+zijn exact geïntegreerd. Lokale cryptografische bevestiging blijft apart
+van menselijke ontvangst of liveaflevering.
+
+De coördinator gaf afzonderlijk opdracht voor voorbereide response, procesherstart,
+replay en ACK met dezelfde sleutel en één afleveringsregistratie. Geen livecalls.
+[ACK-contractbewijs](reviews/cp001-bottie-ack-delivery-2026-09-12.md).
+
 ## Nu
 
 | Volgorde | Kaart | Resultaat | Status |

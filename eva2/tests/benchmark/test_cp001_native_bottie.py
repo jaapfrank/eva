@@ -97,8 +97,51 @@ def bottie(request):
                 )
                 process.stdin.flush()
                 value = receive(timeout_seconds + 1)
-                records["http"].append({"request": body, **value})
+                records["http"].append({"path": path, "request": body, **value})
                 return value
+
+            def signed_ack(kind="valid"):
+                process.stdin.write(json.dumps({"sign_ack": kind}) + "\n")
+                process.stdin.flush()
+                return receive()["ack"]
+
+            def delivery_readback(body, request_ref):
+                with sqlite3.connect(
+                    database.as_uri() + "?mode=ro", uri=True
+                ) as reader:
+                    reader.row_factory = sqlite3.Row
+                    receipts = [
+                        dict(row)
+                        for row in reader.execute(
+                            "SELECT ack_receipt_ref, ack_receipt_sha256, request_ref, response_ref, "
+                            "response_sha256, wire_sha256, signature, receipt_json "
+                            "FROM eva_http_delivery_ack_receipts_v3 WHERE request_ref=?",
+                            (request_ref,),
+                        )
+                    ]
+                    counts = {
+                        "assistant_messages": reader.execute(
+                            "SELECT count(*) FROM messages WHERE channel='web' "
+                            "AND conversation_id=? AND role='assistant'",
+                            (body["conversation_id"],),
+                        ).fetchone()[0],
+                        "chat_out": reader.execute(
+                            "SELECT count(*) FROM timeline WHERE kind='chat_out' "
+                            "AND json_extract(meta,'$.conversationId')=?",
+                            (body["conversation_id"],),
+                        ).fetchone()[0],
+                        "prepared": reader.execute(
+                            "SELECT count(*) FROM eva_http_prepared_responses WHERE request_ref=?",
+                            (request_ref,),
+                        ).fetchone()[0],
+                    }
+                snapshot = {
+                    "request_ref": request_ref,
+                    "receipts": receipts,
+                    "counts": counts,
+                }
+                records.setdefault("ack_readbacks", []).append(snapshot)
+                return snapshot
 
             def post(path, body, *, timeout_seconds, max_response_bytes):
                 value = raw_post(path, body, timeout_seconds, max_response_bytes)
@@ -136,6 +179,8 @@ def bottie(request):
                 turn=turn,
                 post=post,
                 raw_post=raw_post,
+                signed_ack=signed_ack,
+                delivery_readback=delivery_readback,
                 readback=readback,
                 records=records,
                 database=database,
@@ -229,3 +274,40 @@ def test_bottie_wrong_real_persisted_session_reply_is_rejected(bottie):
     rejected = exchange(bottie, reader=wrong_reader)
     assert rejected["status"] == "readback_failed"
     assert rejected["verified_end_ms"] is None and rejected["usage"] is None
+
+
+def test_bottie_actual_p256_ack_deduplicates_and_rejects_wrong_key_or_hash(bottie):
+    stored = exchange(bottie)
+    assert stored["status"] == "readback_verified"
+    _, body = bottie.turn()
+    initial = bottie.records["http"][-1]
+    ref = initial["body"]["_httpDelivery"]["requestRef"]
+    calls = initial["provider_stub_calls"]
+    before = bottie.delivery_readback(body, ref)
+    assert before["receipts"] == []
+    assert before["counts"] == {"assistant_messages": 0, "chat_out": 0, "prepared": 1}
+    for kind in ("wrong-key", "changed-hash"):
+        denied = bottie.raw_post("/api/http-delivery/ack", bottie.signed_ack(kind))
+        assert denied["status"] == 400
+        assert denied["body"]["delivered"] is False
+        assert denied["body"]["acknowledged"] is False
+        assert denied["provider_stub_calls"] == calls
+        assert bottie.delivery_readback(body, ref) == before
+    ack = bottie.signed_ack()
+    delivered = bottie.raw_post("/api/http-delivery/ack", ack)
+    assert delivered["status"] == 200 and delivered["body"]["delivered"] is True
+    after = bottie.delivery_readback(body, ref)
+    assert len(after["receipts"]) == 1
+    receipt = after["receipts"][0]
+    assert receipt["ack_receipt_ref"] == delivered["body"]["ack_receipt_ref"]
+    assert native.digest(receipt["receipt_json"]) == receipt["ack_receipt_sha256"]
+    assert json.loads(receipt["receipt_json"]) == delivered["body"]["ack_receipt"]
+    assert receipt["response_sha256"] == ack["responseSha256"]
+    assert receipt["wire_sha256"] == ack["wireSha256"]
+    assert receipt["signature"] == ack["signature"]
+    assert after["counts"] == {"assistant_messages": 1, "chat_out": 1, "prepared": 1}
+    duplicate = bottie.raw_post("/api/http-delivery/ack", ack)
+    assert duplicate["status"] == 200 and duplicate["body"] == delivered["body"]
+    assert bottie.delivery_readback(body, ref) == after
+    assert duplicate["provider_stub_calls"] == calls
+    assert len([h for h in bottie.records["http"] if h["path"] == "/api/chat"]) == 1

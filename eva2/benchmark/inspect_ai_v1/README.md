@@ -328,3 +328,27 @@ in deze publieke reply. Ze blijven null/unknown; fixture-stubcalltellingen zijn
 diagnostiek, geen gemeten productmodelkosten. Geen Bottie-productiecode is gewijzigd.
 Dit contractbewijs en het eerdere EVA2/PG-bewijs vormen nog geen gelijkwaardige
 productvergelijking, geheugenkwaliteit, volledige ACK/recovery-proef of winstclaim.
+
+### Afzonderlijke lokale P-256 client-ACK-proef
+
+De eerdere opslagproeven versturen geen ACK. De aanvullende test
+`test_bottie_actual_p256_ack_deduplicates_and_rejects_wrong_key_or_hash` gebruikt
+nu de echte lokale `/api/http-delivery/ack` met het bestaande Bottie-protocol.
+De worker bewaart de echte responsebytes/writeheaders, gebruikt
+`canonicalHttpWireSha256` en `canonicalHttpClientAckPreimage` uit `src/web/httpack.js`
+en ondertekent met de P-256-fixturesleutel. Privésleutels verlaten het proces niet.
+Er is geen nieuwe ACK- of cryptografische implementatie in productcode.
+
+Vóór de geldige ACK worden een ACK met andere sleutel en een geldig ondertekende
+ACK met gewijzigde responsehash/responseRef geweigerd. De onafhankelijke SQLite-
+readback moet dan nog nul ACK-receipts en nul chat_out/assistant-registraties tonen.
+Een geldige ACK geeft één persistente receipt, één assistentbericht en één chat_out.
+Herhalen van exact die ACK geeft dezelfde receipt zonder dubbele registratie.
+De proef heeft één chatrequest; ACK-verzoeken veroorzaken geen extra modelstubcalls.
+
+Evidence bevat de echte ACK-HTTP-resultaten, scoped SQLite-snapshots, receipt-
+inhoud/hash en tellingssnapshots. De database wordt ook na workerexit bewaard.
+Dit bewijst bevestiging door de lokale cryptografische testclient, **geen menselijke
+ontvangst, Jaap-acceptatie of live-aflevering**. Volledige usage, serverbudgetten,
+herstel en productranking blijven unknown. Dezelfde testopdracht/evidence-optie
+hierboven voert ook deze vierde Bottie-contracttest uit.

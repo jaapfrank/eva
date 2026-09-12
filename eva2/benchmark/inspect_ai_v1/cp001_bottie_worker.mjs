@@ -3,7 +3,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import readline from 'node:readline';
-import { generateKeyPairSync } from 'node:crypto';
+import { generateKeyPairSync, sign } from 'node:crypto';
 
 const dataDir = fs.realpathSync(process.argv[2]);
 if (!dataDir.startsWith('/tmp/cp001-bottie-') || fs.readdirSync(dataDir).length) {
@@ -46,7 +46,10 @@ globalThis.fetch = async (input) => {
 };
 const { db } = await import('../../../src/db.js');
 const { startWeb } = await import('../../../src/web/server.js');
-const key = generateKeyPairSync('ec', { namedCurve: 'prime256v1' }).publicKey.export({ format: 'jwk' });
+const keyPair = generateKeyPairSync('ec', { namedCurve: 'prime256v1' });
+const key = keyPair.publicKey.export({ format: 'jwk' });
+const { canonicalHttpClientAckPreimage, canonicalHttpWireSha256 } = await import('../../../src/web/httpack.js');
+let lastExchange = null;
 const publicKey = { contract: 'HttpClientAckPublicKey/v3', algorithm: 'ES256', kty: 'EC', crv: 'P-256', x: key.x, y: key.y };
 const server = await startWeb();
 const base = `http://127.0.0.1:${server.address().port}`;
@@ -56,15 +59,45 @@ try {
   for await (const line of readline.createInterface({ input: process.stdin })) {
     const request = JSON.parse(line);
     if (request.stop) break;
-    if (request.path !== '/api/chat') throw new Error('only local chat fixture route allowed');
-    currentText = request.body.text;
+    if (request.sign_ack) {
+      if (!lastExchange || !['valid', 'wrong-key', 'changed-hash'].includes(request.sign_ack)) {
+        throw new Error('known ACK case and prior successful chat required');
+      }
+      const envelope = lastExchange.body._httpDelivery;
+      const ack = { contract: 'HttpClientAck/v3', requestRef: envelope.requestRef,
+        responseRef: envelope.responseRef, responseSha256: envelope.responseSha256,
+        deliveryRef: envelope.deliveryRef, challenge: envelope.challenge,
+        wireSha256: lastExchange.wireSha256, writeAttemptRef: lastExchange.writeAttemptRef,
+        writeGeneration: lastExchange.writeGeneration };
+      if (request.sign_ack === 'changed-hash') {
+        ack.responseSha256 = 'f'.repeat(64);
+        ack.responseRef = `http-response:${ack.responseSha256}`;
+      }
+      const privateKey = request.sign_ack === 'wrong-key'
+        ? generateKeyPairSync('ec', { namedCurve: 'prime256v1' }).privateKey : keyPair.privateKey;
+      const signature = sign('sha256', Buffer.from(canonicalHttpClientAckPreimage(ack), 'utf8'),
+        { key: privateKey, dsaEncoding: 'ieee-p1363' }).toString('base64url');
+      send({ ack: { ...ack, signature } });
+      continue;
+    }
+    if (!['/api/chat', '/api/http-delivery/ack'].includes(request.path)) {
+      throw new Error('only local chat and ACK fixture routes allowed');
+    }
+    if (request.path === '/api/chat') currentText = request.body.text;
     const response = await nativeFetch(base + request.path, {
       method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: 'Bearer cp001-local-contract' },
       body: JSON.stringify(request.body), signal: AbortSignal.timeout(request.timeout_ms),
     });
     const text = await response.text();
     if (Buffer.byteLength(text) > request.max_bytes) throw new Error('response byte budget exceeded');
-    send({ status: response.status, body: JSON.parse(text), provider_stub_calls: providerCalls,
+    const body = JSON.parse(text);
+    if (request.path === '/api/chat' && response.status === 200) {
+      lastExchange = { body, wireSha256: canonicalHttpWireSha256({ status: response.status,
+        contentType: response.headers.get('content-type'), bodyBytes: Buffer.from(text, 'utf8') }),
+      writeAttemptRef: response.headers.get('x-eva-http-write-attempt-ref'),
+      writeGeneration: Number(response.headers.get('x-eva-http-write-generation')) };
+    }
+    send({ status: response.status, body, provider_stub_calls: providerCalls,
       replayed: response.headers.get('idempotency-replayed'), real_model_calls: 0 });
   }
 } finally {
