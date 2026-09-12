@@ -4249,8 +4249,8 @@
       "ownerAccepted": false,
       "preparationComplete": true,
       "planPath": "eva2/design/product/AU-004-small-skill-trial-plan-2026-09-12.md",
-      "planCommit": "ebdd425babf7db034ce1a01c37117dbea3a210ff",
-      "finding": "Bestaande taalgestuurde werkinstructie en bestandsroute; geen algemene uitvoerbare-code-route of skillloader aangetoond.",
+      "planCommit": "1111176451ff15160eb2dde3c777db6b7a712635",
+      "finding": "Bestaande taalgestuurde werkinstructie, bestandsroute en native tekstasserties uit manifests. Geen algemene Python/shell-uitvoering, code-testexecutor of skillloader aangetoond.",
       "proposedOutcome": "Een begrensde SRT-naar-WebVTT-werkinstructie opslaan, controleren en bij een tweede vooraf niet getoonde variant hergebruiken.",
       "next": "Coördinator stemt het proefplan af; eerst het bestaande gateway-opstartdefect herstellen. Geen modelproef gestart."
     },

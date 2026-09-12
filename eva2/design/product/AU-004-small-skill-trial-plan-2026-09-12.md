@@ -4,9 +4,11 @@ Status: bronaudit en voorstel. Geen modelproef uitgevoerd, geen skill gemaakt of
 
 ## Auditbevinding
 
-De gewone gesprekstaak kan via `save_workspace_document`, `read_workspace_document`, `list_workspace_directory`, `find_workspace_files` en `inspect_workspace_file` duurzame eigen bestanden maken en teruglezen. `research_current_sources` kan primaire documentatie onderzoeken. TL-003 bewees deze algemene route live in één beurt; het bewijs zegt niets over procedureel leren.
+De gewone gesprekstaak kan via `save_workspace_document`, `read_workspace_document`, `list_workspace_directory`, `find_workspace_files` en `inspect_workspace_file` duurzame eigen bestanden maken en teruglezen. `research_current_options` kan primaire documentatie onderzoeken. TL-003 bewees deze algemene route live in één beurt; het bewijs zegt niets over procedureel leren.
 
 In de getrackte `eva2/src`-code is geen aparte skillloader, `create_skill`-tool of algemene Python/shell-uitvoerder gevonden. De gebundelde providers zijn AgentMail, Home Assistant, MCP Gateway en MCP Autonomy. Een geregistreerde externe connector kan aanvullende tools leveren; dit is geen bewijs dat code-uitvoering momenteel is toegelaten. Browsertoegang is in deze fase niet beschikbaar voor deze proef en wordt niet geopend om een testroute te construeren.
+
+De native routes `edit_text_file_with_focused_validation` en `improve_isolated_repository` bestaan ook, met een geconfigureerde werkmap. Hun adapters controleren beperkte tekstasserties uit manifests (zoals equals/contains/not_contains) en voeren geen willekeurige Python- of shelltests uit. Ze zijn dus geen algemene code-uitvoerder voor deze proef.
 
 De ontwerpnotitie `learning-and-person-model-v1.md` noemt de volledige gesloten leercyclus nog onvoltooid. Een Markdown-bestand met een werkwijze is daarom hoogstens een opgeslagen procedurele kandidaat: geen automatische installatie, vindbaarheid, promotie of zelfverbeteringscyclus.
 
