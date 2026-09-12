@@ -297,6 +297,23 @@ Dit bewijst de browserdeelketen, niet de complete core/helper/geheugen/spraak-
 herstartproef. De persoonlijke BR-01-proef blijft afzonderlijk open.
 [Bewijs](evidence/product/chrome-result-recovery-chain-2026-09-12.json).
 
+
+### Geheugenopslag tijdens hulpagentwerk — PostgreSQL-deelproef afgerond
+
+De echte geïsoleerde PostgreSQL-keten bewaart een eigenaarscorrectie tijdens
+wachtend hulpagentwerk. Een nieuwe databaseverbinding en geheugenworker lezen
+en verwerken de opgeslagen outbox. Eén proef slaagt. Model, semantische provider
+en helperstore zijn testdoubles; geen Hindsight- of OS-crashclaim.
+
+De tweede proef legt een concrete fout bloot: hetzelfde voice-HTTP-bericht
+na klokverloop botst met de oorspronkelijke timestamp. Die regressie is strict
+xfail en blijft open bij de spraakeigenaar; de reparatie moet zonder xfail groen
+worden. De onafhankelijke scopebeoordeling las de bron, zonder heruitvoering.
+[Proef en fout](reviews/voice-memory-postgres-integration-2026-09-12.md).
+
+De CP-001-vergelijkingsrunner is als offline kandidaat opgeleverd en staat in
+onafhankelijke review. Nog geen echte gepaarde agentrun of productrangschikking.
+
 ## Nu
 
 | Volgorde | Kaart | Resultaat | Status |
