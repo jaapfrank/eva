@@ -329,6 +329,21 @@ en Bottie-adapters met offline contracttests en preflight, zonder echte
 modelaanroepen, herstarts of gegevensresets.
 [Oplevering en bewijsgrens](reviews/cp001-offline-runner-delivery-2026-09-12.md).
 
+
+### Voice-HTTP-herhaling — reparatie beoordeeld, nog niet live
+
+De eerder falende identieke HTTP-beurt na twee seconden klokverloop slaagt nu
+in de reparatiekandidaat zonder xfail. De eerste timestamp wordt atomair in het
+bestaande journal vastgelegd; gewijzigde inhoud/identiteit, verwijderde ingress
+en ingetrokken toegang blijven geweigerd. Zestien gerichte controles slagen,
+inclusief nieuwe runtime, gelijktijdige toelating en één model-/outboxuitvoering.
+
+Onafhankelijke bronreview is GO; de reviewer heeft deze tests niet opnieuw
+gedraaid. Het eerdere foutbewijs blijft behouden. Alleen bewijs is nu centraal
+opgenomen; bronpariteit, image en livecontrole volgen bij de runtime-eigenaar.
+Geen fysieke spraak- of crashgarantie en geen eigenaaracceptatie.
+[Reparatiebewijs](evidence/product/voice-http-replay-fix-2026-09-12.json).
+
 ## Nu
 
 | Volgorde | Kaart | Resultaat | Status |
