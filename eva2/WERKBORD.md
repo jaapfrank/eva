@@ -467,6 +467,14 @@ De helper meldt een geslaagde variantA van leerproef3; onafhankelijke review
 loopt nog. VariantB is niet als uitgevoerd geregistreerd en AU-004 is niet
 afgerond of door de eigenaar geaccepteerd. De eerdere mislukkingen blijven staan.
 
+
+Het aangeleverde A-bewijs9a457bae vermeldt één HTTP200-beurt van160,339s,
+acht geverifieerde acties en een gemaakte/teruggelezen procedure, VTT en
+controlerapport. De externe Python-check slaagt; die check is niet door Eva
+uitgevoerd. Gemeten:137693 input- en3373 outputtokens over10 modelpogingen.
+Dit is aangeleverd bewijs in review, nog niet geïntegreerd of onafhankelijk
+goedgekeurd. B en ongeldige invoer zijn nog niet uitgevoerd.
+
 ## Nu
 
 | Volgorde | Kaart | Resultaat | Status |
