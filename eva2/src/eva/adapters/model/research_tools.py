@@ -99,6 +99,16 @@ class NativeResearchTool:
             raise ConversationConflict("native research requires admitted public sources")
         review = (validate_public_projection(arguments) if "public_review" in arguments
                   else {"policy": "host_constant_public_sources"})
+        return self._preparation(arguments, review)
+
+    def _configuration_sha256(self):
+        return self.research.research_configuration_sha256()
+
+    def _validate_execution_input(self, arguments):
+        if "public_review" in arguments:
+            validate_public_projection(arguments)
+
+    def _preparation(self, arguments, review):
         envelope = self.research.research_request_payload(
             question=arguments["question"], options=tuple(arguments["options"]), **self._mode(arguments))
         envelope_hash = canonical_sha256(envelope)
@@ -106,7 +116,7 @@ class NativeResearchTool:
             tool_name=self.tool_name, arguments=arguments,
             expected_proof={"provider_envelope_sha256": envelope_hash},
             observation_tool_name=self.tool_name, observation_arguments=arguments,
-            tool_configuration_sha256=self.research.research_configuration_sha256(),
+            tool_configuration_sha256=self._configuration_sha256(),
             execution_timeout_seconds=60, verification_timeout_seconds=1,
             receipt_output={"verification_scope": "research_artifact_only",
                 "provider_request_body": envelope, "provider_request_body_sha256": envelope_hash,
@@ -124,7 +134,7 @@ class NativeResearchTool:
                 or request.expected_proof != {"provider_envelope_sha256": canonical_sha256(
                     self.research.research_request_payload(question=request.arguments["question"],
                         options=tuple(request.arguments["options"]), **self._mode(request.arguments)))}
-                or request.tool_configuration_sha256 != self.research.research_configuration_sha256()):
+                or request.tool_configuration_sha256 != self._configuration_sha256()):
             raise ConversationConflict("native research configuration or request binding differs")
 
     @staticmethod
@@ -135,8 +145,7 @@ class NativeResearchTool:
 
     async def execute(self, request):
         self._check(request)
-        if "public_review" in request.arguments:
-            validate_public_projection(request.arguments)
+        self._validate_execution_input(request.arguments)
         artifact = await asyncio.to_thread(self.research.research_current_options,
             question=request.arguments["question"], title=request.arguments["title"],
             options=tuple(request.arguments["options"]),
@@ -174,3 +183,27 @@ class NativeResearchTool:
         return ToolProofObservation("verified", dict(request.expected_proof), {"observation": output,
             "artifact_sha256": dispatch.provider_ref,
             "verification_scope": "research_artifact_only", "external_state_verified": False})
+
+
+class OwnerResearchContinuationTool(NativeResearchTool):
+    """Ordinary requested research in an existing indexed conversation step.
+
+    Initiative disclosure checks stay on NativeResearchTool. The owner route
+    retains the ordinary research argument policy and does not invent a public
+    projection or grant initiative authority.
+    """
+
+    async def prepare(self, turn, call):
+        if require_initiative_context(turn) is not None or call.name not in self.action_names:
+            raise ConversationConflict("owner research continuation requires an ordinary turn")
+        arguments = self.validate_arguments(call.arguments)
+        self._validate_execution_input(arguments)
+        return self._preparation(arguments, {"policy": "ordinary_requested_research"})
+
+    def _configuration_sha256(self):
+        return canonical_sha256({"research": super()._configuration_sha256(),
+            "input_policy": "ordinary_requested_research", "contract": "owner-research-continuation-v1"})
+
+    def _validate_execution_input(self, arguments):
+        if arguments.get("public_review", "not_applicable") != "not_applicable":
+            raise ConversationConflict("owner research continuation cannot claim initiative review")

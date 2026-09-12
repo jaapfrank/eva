@@ -1,0 +1,130 @@
+{
+  "schema_version": 1,
+  "status": "adapted_combined_source_pending_independent_review",
+  "source_commit": "7b03f820cd73325348536224d75d45329b0e1505",
+  "release_base": {
+    "release_base_commit": "de815a7aec580ba66cf59d1d5f858b380c7f8e25",
+    "image": "sha256:df675dc82f38ff386fdf9cb87062e78f9ba8231f7f277472c2bd53f1a734d072",
+    "upstream_test_base": "f85ca8bd55370d77f17471782dde36966c0f93f0",
+    "source_count": 258,
+    "removed_nonimage_files": [
+      "eva/voice_service/__init__.py",
+      "eva/voice_service/lifecycle.py",
+      "eva/voice_service/streaming_input.py",
+      "eva/voice_service/agent.py",
+      "eva/voice_service/server.py",
+      "eva/voice_service/client.html",
+      "eva/voice_service/media.py",
+      "eva/adapters/api/household_voice_session.py"
+    ],
+    "central_integration": "Never merge this baseline snapshot into shared source; release evidence only"
+  },
+  "research_source_commit": "fe6b05632fa975b81eb3c5e7d8db4e8f380a7a11",
+  "voice_reviewed_source_commit": "7d2844b1ea507520bb4613947236f3a96e3270b2",
+  "adaptation": "Apply exact voice journal blob and runtime admit_voice_turn method onto df675. In original nested owner voice stream, add nonlocal turn and turn=runtime.admit_voice_turn(turn) after the fresh grant check. No shared-stream extraction or household-session router.",
+  "parity": {
+    "parent_source_count": 258,
+    "candidate_source_count": 258,
+    "changed_files": [
+      "eva/adapters/api/voice_turns.py",
+      "eva/adapters/model/pydantic_conversation.py",
+      "eva/adapters/model/research_tools.py",
+      "eva/adapters/postgres/conversation_actions.py",
+      "eva/adapters/postgres/conversation_journal.py",
+      "eva/bootstrap/runtime.py"
+    ],
+    "sha256": {
+      "eva/adapters/api/voice_turns.py": "6577fa7e943def66bc6dd2d19bc9695bf28c6fa91fa749637b355ff06058c2aa",
+      "eva/adapters/model/pydantic_conversation.py": "d79ba349ebb54ecd19914e1ffd57170fe70b22582922431ccf43e83dd570bf43",
+      "eva/adapters/model/research_tools.py": "9286d326f3e755733e41a19b9e2726760fb51dfb8aee2fac831e5e8521dc69fb",
+      "eva/adapters/postgres/conversation_actions.py": "075ebef1df94d2d709f20445c71f12d84a3ea1687616310960734acae37e5ae1",
+      "eva/adapters/postgres/conversation_journal.py": "10748b305f14648c332f114e9cf29a27154a08946c37a91bc4a651509c81cc60",
+      "eva/bootstrap/runtime.py": "0d791f357f98acee6617c087cc2086fd26b5d0976f1cb23a7100c82c596ddc1c"
+    },
+    "all_other_source_files_byte_identical": true,
+    "household_router_and_shared_stream_refactor_excluded": true
+  },
+  "explicit_test_sources": {
+    "eva2/tests/postgres/test_owner_research_continuation.py": {
+      "revision": "fe6b05632fa975b81eb3c5e7d8db4e8f380a7a11",
+      "sha256": "f111d02aca3282b9185ad6b23ca0f90b93b4354e19aec0b0cc85186877a6dbbd"
+    },
+    "eva2/tests/postgres/test_owner_initiatives.py": {
+      "revision": "fe6b05632fa975b81eb3c5e7d8db4e8f380a7a11",
+      "sha256": "b098ce0f3dd129d169a53e4fe496abbf513f335a5958b704c258b432068f6678"
+    },
+    "eva2/tests/api/test_telegram_helper_stop_race.py": {
+      "revision": "7d2844b1ea507520bb4613947236f3a96e3270b2",
+      "sha256": "75c0f39c14a90cd05ace4ba74d2c5b4d80a77f1726a787f32380cd1422094517"
+    },
+    "eva2/tests/api/test_voice_turns.py": {
+      "revision": "7d2844b1ea507520bb4613947236f3a96e3270b2",
+      "sha256": "fd9672e7abb6aea6c1d6b11b62fd2758c1daed75a78e8d202840e93510844bce"
+    },
+    "eva2/tests/postgres/test_voice_ingress_replay.py": {
+      "revision": "7d2844b1ea507520bb4613947236f3a96e3270b2",
+      "sha256": "fb16a0f3c3310e718a1391742b636450a5a282ee95e84e13b9d567b61aee1572"
+    },
+    "eva2/tests/postgres/test_voice_memory_helper_outbox.py": {
+      "revision": "7d2844b1ea507520bb4613947236f3a96e3270b2",
+      "sha256": "2795de2f4685b9be981d242c5aa9b5d8a52f2b50b01ab92a649041bb36fced27"
+    },
+    "eva2/tests/api/test_voice_memory_helper_orchestration.py": {
+      "revision": "7d2844b1ea507520bb4613947236f3a96e3270b2",
+      "sha256": "f48586cb021adcffa75121c0b4b7d1a1cc6f1b5dd373887793b8930caa6b942b"
+    }
+  },
+  "validation": {
+    "voice": "16 passed in 4.91s",
+    "research_and_legacy": "7 passed in 3.63s",
+    "native_initiative": "4 passed in 5.67s",
+    "offline_regressions": "94 passed in 9.08s",
+    "voice_pg": {
+      "container_id": "e2fea0b178eeaaa5e62ab3d8f302bba993bc3bbab92181eaa7e1b73367825eb8",
+      "postgres_image": "sha256:5d143123fdf80462d1778cd4f24b9f7ca13c87174bca19141fb194c5a1ebca59",
+      "network_mode": "none",
+      "published_ports": [],
+      "data_storage": "tmpfs",
+      "connection": "local Unix socket only",
+      "pytest_exit_code": 0,
+      "model_calls": 0,
+      "production_database_connections": 0,
+      "disposable_container_removed": true
+    },
+    "research_pg": {
+      "container_id": "b3fd301c9f76b093faf37bd01c9694ba51e0181e3a204a67fbca732a09853b0d",
+      "postgres_image": "sha256:5d143123fdf80462d1778cd4f24b9f7ca13c87174bca19141fb194c5a1ebca59",
+      "network_mode": "none",
+      "published_ports": [],
+      "data_storage": "tmpfs",
+      "connection": "local Unix socket only",
+      "pytest_exit_code": 0,
+      "model_calls": 0,
+      "production_database_connections": 0,
+      "disposable_container_removed": true
+    },
+    "native_pg": {
+      "container_id": "9ad688f8e78b3dbf151d2cc620755a0d9e1a433a0c95a0b15aa87e71bd2e6de0",
+      "postgres_image": "sha256:5d143123fdf80462d1778cd4f24b9f7ca13c87174bca19141fb194c5a1ebca59",
+      "network_mode": "none",
+      "published_ports": [],
+      "data_storage": "tmpfs",
+      "connection": "local Unix socket only",
+      "pytest_exit_code": 0,
+      "model_calls": 0,
+      "production_database_connections": 0,
+      "disposable_container_removed": true
+    }
+  },
+  "limits": [
+    "New adaptation requires independent review; original7d GO does not automatically approve this source.",
+    "No image built or activation performed.",
+    "Do not merge release-baseline snapshot into shared source; it intentionally excludes nonlive source modules. Integrate canonical source patches and release evidence separately.",
+    "Source-only exact258fileimage snapshot used for tests; generated Python caches are not runtime inputs.",
+    "Scripted model/semantic ports and isolated PostgreSQL16.13; no external model or production database calls.",
+    "No historical complete voiceHTTP payload fingerprint or exactly-once crash guarantee.",
+    "Research wiring/scripted choices are not autonomous real-model success evidence.",
+    "AU004attempt1/2failures preserved; noAttempt3."
+  ],
+  "archive": "/home/administrator/project/.eva2-artifacts/research-voice-combined-20260912"
+}

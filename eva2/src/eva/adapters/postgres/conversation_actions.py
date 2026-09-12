@@ -207,6 +207,14 @@ class PostgresConversationActions:
             for action_name in provider.action_names
         }
         self._research = research
+        self._owner_research_steps = None
+        if research is not None and all(callable(getattr(research, name, None)) for name in (
+            "research_request_payload", "research_configuration_sha256",
+        )):
+            from eva.adapters.model.research_tools import OwnerResearchContinuationTool
+            from eva.adapters.postgres.external_conversation_tools import PostgresExternalConversationTools
+            adapter = OwnerResearchContinuationTool(research, self._validated_research_arguments)
+            self._owner_research_steps = PostgresExternalConversationTools(engine, adapter, adapter)
         self._file_batch = file_batch
         self._validated_file_edit = validated_file_edit
         if (repository_improvement is None) != (repository_improvement_model is None):
@@ -266,8 +274,8 @@ class PostgresConversationActions:
     def _step_tools(self, turn: ConversationTurn):
         from eva.application.initiative_execution import require_initiative_context
         native = require_initiative_context(turn)
-        return self._external_tools + ((self._native_research,)
-            if native is not None and self._native_research is not None else ())
+        research_steps = self._native_research if native is not None else self._owner_research_steps
+        return self._external_tools + ((research_steps,) if research_steps is not None else ())
 
     def continuation_action_names(self, turn: ConversationTurn) -> tuple[str, ...]:
         allowed = set(self.available_action_names(turn))

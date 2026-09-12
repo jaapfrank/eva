@@ -1,0 +1,234 @@
+{
+  "schema_version": 1,
+  "status": "reviewed_combined_fix_live",
+  "source_commit": "7b03f820cd73325348536224d75d45329b0e1505",
+  "source_evidence_commit": "c3d309b0e638e4e33e1b2ae32709c1b710c0a720",
+  "image_evidence_commit": "6541a4bed5f81562133936d52c039d2b6ed82254",
+  "activation_script_commit": "e4802af1d05927666fb4dd74816e9881ec1947d9",
+  "independent_reviews": "Coordinator confirms timing_final_review sourceGO, IMAGEGO and corrected activation script GO including two independently repeated offline write faults.",
+  "receipt": {
+    "utc": "2026-09-12T21:07:48.830691+00:00",
+    "parent": "sha256:df675dc82f38ff386fdf9cb87062e78f9ba8231f7f277472c2bd53f1a734d072",
+    "image": "sha256:e1bb281cc772ab7a2f6ce747dce6a9ccec382ff357f5583e47882997a337217f",
+    "only_services": [
+      "core",
+      "delegated-work-worker"
+    ],
+    "protected_before": {
+      "eva2-owner-voice-media-1": {
+        "id": "6ca020c3b9c5c532a3ccdf09654ac652a62d043e7ce3c3c86180744c6b526fc4",
+        "startedAt": "2026-09-12T18:27:00.356202841Z",
+        "image": "sha256:bf2148239bf009b1924d4134ba67fcdbf1ccae64f436add5e9f77e161226922b",
+        "state": "running",
+        "health": null
+      },
+      "eva2-owner-voice-livekit-1": {
+        "id": "dbe9c8396a3bd2974dd1a40264d7ad855d5077cc14235325b058cfa2dacd17dd",
+        "startedAt": "2026-09-12T18:27:00.243742236Z",
+        "image": "sha256:770bc61bc6ec4dcccbd3e05082d8f6bdafbee4179acab7014cc97202a9e2910b",
+        "state": "running",
+        "health": null
+      },
+      "eva2-managed-b-slot3-hindsight-1": {
+        "id": "8bd5bc29a82d6040a34a1f665872b8bc71aa0a9e4ed5d2b659a31e7f3b7f0e4c",
+        "startedAt": "2026-09-12T18:27:00.406300845Z",
+        "image": "sha256:20d72ad34164bd1a67906c4d61b57a51f2b255c49ddf8cb7ac5e901ebc3b3710",
+        "state": "running",
+        "health": "healthy"
+      },
+      "eva2-managed-b-slot3-postgres-1": {
+        "id": "a6a0de657f01d6792544863237cbbb03be407f0e3fa98f0dc9d317097051cb1b",
+        "startedAt": "2026-09-12T18:27:00.379142399Z",
+        "image": "sha256:7e641ed0cf38285bebfc6151ba48243439dfe9cf3306feab4023a812466cd6c1",
+        "state": "running",
+        "health": "healthy"
+      },
+      "eva2-managed-b-slot3-hindsight-postgres-1": {
+        "id": "3e97b7da44e125e5e4f2d6d1f824025fed5c33903729db9a3ef7edb9c0aa594b",
+        "startedAt": "2026-09-12T18:27:00.284536583Z",
+        "image": "sha256:7e641ed0cf38285bebfc6151ba48243439dfe9cf3306feab4023a812466cd6c1",
+        "state": "running",
+        "health": "healthy"
+      },
+      "eva2-managed-b-slot3-model-access-lease-1": {
+        "id": "7ac6a2e5d135d8f653233caa527fd80040cecf7927b789615b5bcd6551d2aa45",
+        "startedAt": "2026-09-12T18:27:00.31427344Z",
+        "image": "sha256:455be8e6f52adcf2f16288ad76793f150684c058753de3d8d84730a7ce623f7e",
+        "state": "running",
+        "health": null
+      },
+      "eva2-managed-b-slot3-hindsight-access-lease-1": {
+        "id": "71c0e737cce5a68bc5b7c1e4f48b587d0df5b5dc3fc93d720823bba85943f176",
+        "startedAt": "2026-09-12T18:27:00.240993055Z",
+        "image": "sha256:455be8e6f52adcf2f16288ad76793f150684c058753de3d8d84730a7ce623f7e",
+        "state": "running",
+        "health": null
+      }
+    },
+    "protected_after": {
+      "eva2-owner-voice-media-1": {
+        "id": "6ca020c3b9c5c532a3ccdf09654ac652a62d043e7ce3c3c86180744c6b526fc4",
+        "startedAt": "2026-09-12T18:27:00.356202841Z",
+        "image": "sha256:bf2148239bf009b1924d4134ba67fcdbf1ccae64f436add5e9f77e161226922b",
+        "state": "running",
+        "health": null
+      },
+      "eva2-owner-voice-livekit-1": {
+        "id": "dbe9c8396a3bd2974dd1a40264d7ad855d5077cc14235325b058cfa2dacd17dd",
+        "startedAt": "2026-09-12T18:27:00.243742236Z",
+        "image": "sha256:770bc61bc6ec4dcccbd3e05082d8f6bdafbee4179acab7014cc97202a9e2910b",
+        "state": "running",
+        "health": null
+      },
+      "eva2-managed-b-slot3-hindsight-1": {
+        "id": "8bd5bc29a82d6040a34a1f665872b8bc71aa0a9e4ed5d2b659a31e7f3b7f0e4c",
+        "startedAt": "2026-09-12T18:27:00.406300845Z",
+        "image": "sha256:20d72ad34164bd1a67906c4d61b57a51f2b255c49ddf8cb7ac5e901ebc3b3710",
+        "state": "running",
+        "health": "healthy"
+      },
+      "eva2-managed-b-slot3-postgres-1": {
+        "id": "a6a0de657f01d6792544863237cbbb03be407f0e3fa98f0dc9d317097051cb1b",
+        "startedAt": "2026-09-12T18:27:00.379142399Z",
+        "image": "sha256:7e641ed0cf38285bebfc6151ba48243439dfe9cf3306feab4023a812466cd6c1",
+        "state": "running",
+        "health": "healthy"
+      },
+      "eva2-managed-b-slot3-hindsight-postgres-1": {
+        "id": "3e97b7da44e125e5e4f2d6d1f824025fed5c33903729db9a3ef7edb9c0aa594b",
+        "startedAt": "2026-09-12T18:27:00.284536583Z",
+        "image": "sha256:7e641ed0cf38285bebfc6151ba48243439dfe9cf3306feab4023a812466cd6c1",
+        "state": "running",
+        "health": "healthy"
+      },
+      "eva2-managed-b-slot3-model-access-lease-1": {
+        "id": "7ac6a2e5d135d8f653233caa527fd80040cecf7927b789615b5bcd6551d2aa45",
+        "startedAt": "2026-09-12T18:27:00.31427344Z",
+        "image": "sha256:455be8e6f52adcf2f16288ad76793f150684c058753de3d8d84730a7ce623f7e",
+        "state": "running",
+        "health": null
+      },
+      "eva2-managed-b-slot3-hindsight-access-lease-1": {
+        "id": "71c0e737cce5a68bc5b7c1e4f48b587d0df5b5dc3fc93d720823bba85943f176",
+        "startedAt": "2026-09-12T18:27:00.240993055Z",
+        "image": "sha256:455be8e6f52adcf2f16288ad76793f150684c058753de3d8d84730a7ce623f7e",
+        "state": "running",
+        "health": null
+      }
+    },
+    "services": {
+      "eva2-managed-b-slot3-core": {
+        "id": "661c25cdbce79aaf2ec154b2836c3310d0ad1a83ded0aec3b73b835ad714cc3a",
+        "startedAt": "2026-09-12T21:07:22.954418509Z",
+        "image": "sha256:e1bb281cc772ab7a2f6ce747dce6a9ccec382ff357f5583e47882997a337217f",
+        "state": "running",
+        "health": "healthy"
+      },
+      "eva2-managed-b-slot3-delegated-work-worker-1": {
+        "id": "bad3a18e16a103fa920a528c620573e3c371262e416170f4a9e76dcfd2958c2f",
+        "startedAt": "2026-09-12T21:07:34.47152596Z",
+        "image": "sha256:e1bb281cc772ab7a2f6ce747dce6a9ccec382ff357f5583e47882997a337217f",
+        "state": "running",
+        "health": "healthy"
+      }
+    },
+    "candidate_env_unchanged": true,
+    "background_work_enabled": true,
+    "readiness": {
+      "core": {
+        "status": 200,
+        "body": {
+          "database": "ready",
+          "detail": null,
+          "memory_projection": "ready",
+          "model_provider": "ready",
+          "ready": true
+        }
+      },
+      "voice": {
+        "status": 200,
+        "body": {
+          "ready": true
+        }
+      }
+    },
+    "database_restore": false,
+    "installed_source_sha256": {
+      "eva2-managed-b-slot3-core": {
+        "eva/adapters/api/voice_turns.py": "6577fa7e943def66bc6dd2d19bc9695bf28c6fa91fa749637b355ff06058c2aa",
+        "eva/adapters/model/pydantic_conversation.py": "d79ba349ebb54ecd19914e1ffd57170fe70b22582922431ccf43e83dd570bf43",
+        "eva/adapters/model/research_tools.py": "9286d326f3e755733e41a19b9e2726760fb51dfb8aee2fac831e5e8521dc69fb",
+        "eva/adapters/postgres/conversation_actions.py": "075ebef1df94d2d709f20445c71f12d84a3ea1687616310960734acae37e5ae1",
+        "eva/adapters/postgres/conversation_journal.py": "10748b305f14648c332f114e9cf29a27154a08946c37a91bc4a651509c81cc60",
+        "eva/bootstrap/runtime.py": "0d791f357f98acee6617c087cc2086fd26b5d0976f1cb23a7100c82c596ddc1c"
+      },
+      "eva2-managed-b-slot3-delegated-work-worker-1": {
+        "eva/adapters/api/voice_turns.py": "6577fa7e943def66bc6dd2d19bc9695bf28c6fa91fa749637b355ff06058c2aa",
+        "eva/adapters/model/pydantic_conversation.py": "d79ba349ebb54ecd19914e1ffd57170fe70b22582922431ccf43e83dd570bf43",
+        "eva/adapters/model/research_tools.py": "9286d326f3e755733e41a19b9e2726760fb51dfb8aee2fac831e5e8521dc69fb",
+        "eva/adapters/postgres/conversation_actions.py": "075ebef1df94d2d709f20445c71f12d84a3ea1687616310960734acae37e5ae1",
+        "eva/adapters/postgres/conversation_journal.py": "10748b305f14648c332f114e9cf29a27154a08946c37a91bc4a651509c81cc60",
+        "eva/bootstrap/runtime.py": "0d791f357f98acee6617c087cc2086fd26b5d0976f1cb23a7100c82c596ddc1c"
+      }
+    },
+    "quiescence_before": {
+      "utc": "2026-09-12T21:07:16.074102+00:00",
+      "owner_work": {
+        "owned_states": {
+          "succeeded": 2,
+          "stopped": 2,
+          "ambiguous": 1
+        },
+        "recent_15min_conversation_checkpoint_states": {}
+      },
+      "voice": {
+        "rooms": 0
+      },
+      "limitation": "Read-only snapshots; recent checkpoint window is 15 minutes, not a global request lock."
+    },
+    "model_calls": 0,
+    "au004_retry_performed": false
+  },
+  "controller_status": {
+    "active_compose_image": "sha256:e1bb281cc772ab7a2f6ce747dce6a9ccec382ff357f5583e47882997a337217f",
+    "previous_image": "sha256:df675dc82f38ff386fdf9cb87062e78f9ba8231f7f277472c2bd53f1a734d072",
+    "override_sha256_matches_registry": true,
+    "containers": {
+      "eva2-managed-b-slot3-core": {
+        "image": "sha256:e1bb281cc772ab7a2f6ce747dce6a9ccec382ff357f5583e47882997a337217f",
+        "state": "running",
+        "health": "healthy",
+        "restart_count": 0,
+        "background_work_enabled": "true",
+        "networks": [
+          "eva2-managed-b-slot3_default",
+          "eva2-workspace-connectors"
+        ]
+      },
+      "eva2-managed-b-slot3-delegated-work-worker-1": {
+        "image": "sha256:e1bb281cc772ab7a2f6ce747dce6a9ccec382ff357f5583e47882997a337217f",
+        "state": "running",
+        "health": "healthy",
+        "restart_count": 0,
+        "background_work_enabled": null,
+        "networks": [
+          "eva2-managed-b-slot3_default"
+        ]
+      }
+    }
+  },
+  "rollback_executed": false,
+  "model_probes": 0,
+  "AU004_attempt3": false,
+  "technical_scope": "Research is executable after a verified ordinary tool step; failed research guidance does not claim a stored document. Identical owner voice message replay reuses first durable admission time.",
+  "limitations": [
+    "Readiness and installed hashes prove deployment, not real-model quality or whole AU004 completion.",
+    "AU004 first and second trial failures remain recorded; no third trial in deployment.",
+    "Voice replay uses bounded message identity, not a fingerprint of all recent/active-work/work-result context. Parallel inflight duplicate may conflict; no exactly-once execution guarantee across an uncommitted provider crash.",
+    "Quiescence is a read-only snapshot, not a global request lock.",
+    "Continuation research artifacts remain in indexed tool receipts; legacy latest_research listing is unchanged.",
+    "No human acceptance is inferred.",
+    "Never merge the image-baseline snapshot into shared source. Canonical reviewed source patches and deployment evidence must be integrated separately."
+  ],
+  "archive": "/home/administrator/project/.eva2-artifacts/research-voice-combined-20260912"
+}

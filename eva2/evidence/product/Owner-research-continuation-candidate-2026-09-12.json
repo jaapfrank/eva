@@ -1,0 +1,145 @@
+{
+  "schema_version": 1,
+  "status": "candidate_pending_independent_review",
+  "source_commit": "fe6b05632fa975b81eb3c5e7d8db4e8f380a7a11",
+  "base": "f85ca8bd55370d77f17471782dde36966c0f93f0",
+  "production_parent": "sha256:df675dc82f38ff386fdf9cb87062e78f9ba8231f7f277472c2bd53f1a734d072",
+  "problem": "Ordinary research was offered for first action but missing from indexed continuation catalog after any verified external action.",
+  "reconstruction": {
+    "base": "f85ca8bd55370d77f17471782dde36966c0f93f0",
+    "initial_actions_unchanged": true,
+    "baseline_continuation": [
+      "fetch_source",
+      "save_finding"
+    ],
+    "candidate_continuation": [
+      "fetch_source",
+      "save_finding",
+      "research_current_options"
+    ],
+    "research_descriptor": {
+      "description": "Onderzoek een actuele vraag of vergelijk meerdere huidige opties via primaire webbronnen en bewaar een herbruikbaar brongebonden document. Gebruik dit wanneer actualiteit of externe broncontrole wezenlijk is.",
+      "name": "research_current_options",
+      "parameters": {
+        "additionalProperties": false,
+        "properties": {
+          "research_mode": {
+            "description": "topic voor een algemene kennisvraag; comparison voor benoemde producten of routes. Expliciete bron-URLs blijven in beide gevallen gebonden.",
+            "enum": [
+              "topic",
+              "comparison"
+            ],
+            "type": "string"
+          },
+          "public_review": {
+            "description": "Bij eigen initiatief: formuleer eerst een abstracte publieke vraag. Beoordeel namen, privélocaties, tijden, gezin, geheugenfragmenten en indirecte identificatie. Geef public_unlinked uitsluitend als de vraag noodzakelijke publieke informatie bevat zonder persoonlijke context; bij twijfel uncertain. Dit oordeel verleent geen bevoegdheden. Gewone gebruikersopdracht: not_applicable.",
+            "enum": [
+              "public_unlinked",
+              "uncertain",
+              "not_applicable"
+            ],
+            "type": "string"
+          },
+          "question": {
+            "description": "De volledige concrete onderzoeksvraag, inclusief gewenste vergelijkingscriteria en het aantal opties.",
+            "type": "string"
+          },
+          "options": {
+            "description": "Eén tot vijf onderwerpen bij topic; bij comparison concrete producten, projecten of routes die elk een eigen primaire bron vereisen.",
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 120
+            },
+            "maxItems": 5,
+            "minItems": 1
+          },
+          "title": {
+            "description": "Korte menselijke titel voor het blijvende document.",
+            "type": "string"
+          }
+        },
+        "required": [
+          "options",
+          "question",
+          "title",
+          "public_review",
+          "research_mode"
+        ],
+        "type": "object"
+      },
+      "strict": true,
+      "type": "function"
+    },
+    "historical_wire_capture": false,
+    "evidence_scope": "immutable source reconstruction using same ordinary turn and provider configuration shape",
+    "model_calls": 0,
+    "database_connections": 0
+  },
+  "change": [
+    "Reuse indexed PostgresExternalConversationTools journal and NativeResearchTool artifact mechanics for an ordinary requested-research continuation adapter.",
+    "Initial legacy research path remains; only research ports supporting bounded request payload/configuration contracts get indexed continuation offering.",
+    "Owner adapter rejects initiative context and public_unlinked claim; initiative native route keeps existing public-projection checks.",
+    "Research failures/recovery, same-slot conflicts, actor-bound receipts, cancellation checkpoints and measured usage reuse existing contracts.",
+    "Non-verified research receipts receive honest failed/uncertain guidance instead of the prior unconditional claim that a document was stored; no automatic retry."
+  ],
+  "validation": {
+    "scripted_and_actual_postgres": "7 passed in 4.97s; includes recovered failed-research final model context with no success claim/no tools/no redispatch",
+    "initiative_postgres": "4 passed in 4.93s, public-projection and interrupted-research cases",
+    "offline_regressions": "94 passed in 10.35s",
+    "postgres": {
+      "container_id": "af959476f15854e29481e60227d213c7ba303c49ba674ea4eac8b98a595c12ac",
+      "postgres_image": "sha256:5d143123fdf80462d1778cd4f24b9f7ca13c87174bca19141fb194c5a1ebca59",
+      "network_mode": "none",
+      "published_ports": [],
+      "data_storage": "tmpfs",
+      "connection": "local Unix socket only",
+      "pytest_exit_code": 0,
+      "model_calls": 0,
+      "production_database_connections": 0,
+      "disposable_container_removed": true
+    },
+    "native_postgres": {
+      "container_id": "7bbbae2fdb88e334f5aca85fb996112dafbaded7504bbd145df0aa0783b0ac8d",
+      "postgres_image": "sha256:5d143123fdf80462d1778cd4f24b9f7ca13c87174bca19141fb194c5a1ebca59",
+      "network_mode": "none",
+      "published_ports": [],
+      "data_storage": "tmpfs",
+      "connection": "local Unix socket only",
+      "pytest_exit_code": 0,
+      "model_calls": 0,
+      "production_database_connections": 0,
+      "disposable_container_removed": true
+    },
+    "checks": [
+      "scripted failed fetch -> research -> save with real Pydantic adapter catalogs and ToolReturn context",
+      "recovery preserves research result/source/usage without repeating fetch/research/save",
+      "conflicting same-slot action/provider and changed research arguments rejected",
+      "wrong-principal receipt rejected",
+      "39122/1267 budget failure event persists once and replay does not dispatch",
+      "before-step denial prevents next model/research; actual durable conversation stop blocks research dispatch",
+      "unsupported legacy research port not offered as an indexed step"
+    ],
+    "research_model_regressions": "33 passed, 89 deselected in 2.69s"
+  },
+  "scope_limits": [
+    "Scripted model choices prove wiring/context, not autonomous choice quality or successful real research.",
+    "Historical admitted events do not contain complete tool catalogs; reconstruction is not captured historical wire traffic.",
+    "No W3C special case, converter implementation, source injection or automatic fallback/retry added.",
+    "Initial legacy research artifact route is unchanged; new continuation artifacts are retained in indexed tool receipts, not legacy latest_research listing.",
+    "No aggregate usage or financial cost claim; measured research usage remains in individual artifact/failure events.",
+    "PostgreSQL tests use isolated 16.13 fixtures, no production DB access.",
+    "No image build, deployment or AU004 attempt3."
+  ],
+  "archive": "/home/administrator/project/.eva2-artifacts/owner-research-continuation-20260912",
+  "source_chain": [
+    "db6551d0dbf2488e5fb6e3531ba091d1dde59a29",
+    "fe6b05632fa975b81eb3c5e7d8db4e8f380a7a11"
+  ],
+  "runtime_changed_files": [
+    "eva2/src/eva/adapters/model/research_tools.py",
+    "eva2/src/eva/adapters/postgres/conversation_actions.py",
+    "eva2/src/eva/adapters/model/pydantic_conversation.py"
+  ]
+}

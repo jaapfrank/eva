@@ -542,7 +542,7 @@ def test_native_public_research_uses_indexed_journal_and_never_repeats_uncertain
             question=question, options=tuple(args["options"]), research_mode="topic" if general else "comparison")
         assert "public_review" not in receipt.output["provider_request_body"]
     ordinary = replace(turn, conversation_id="owner-research", message_id="owner-research")
-    assert "research_current_options" not in actions.continuation_action_names(ordinary)
+    assert "research_current_options" in actions.continuation_action_names(ordinary)
 
 
 def test_public_native_profile_rejects_free_text_even_when_labelled_public(costless_native):

@@ -419,6 +419,23 @@ met modelstub en afzonderlijke reader. Serverbudgetten, readerauthenticiteit,
 reset, volledig verbruik en herstel blijven open totdat ze zijn bewezen.
 [Oplevering, oorspronkelijk NO-GO en correctie](reviews/cp001-native-adapters-delivery-2026-09-12.md).
 
+
+### Research na toolstap en voice-herhaling — technisch afgerond en live
+
+Kern en worker draaien nu e1bb281. Beide zijn gezond; de zes geïnstalleerde
+bronhashes kloppen met de apart beoordeelde release. Kern en aangemelde
+spraakroute zijn gereed. De zeven beschermde diensten, env en achtergrondwerk
+blijven behouden. De registry en compose-override komen overeen.
+
+De canonieke research- en voicepatches zijn afzonderlijk geïntegreerd, inclusief
+de expliciete PostgreSQL-outboxregressie. De aangepaste releasebasis is nooit
+gemerged; niet-live huishoudrouter-/spraakcode blijft in de gedeelde bron staan.
+Bron-, image- en installatiebewijs zijn apart opgenomen. Geen terugrol of
+modelproef uitgevoerd. De twee AU-004-pogingen blijven mislukt en poging3
+is niet gestart. Dit sluit de technische reparaties af, niet AU-004 als geheel.
+Geen fysieke spraak-, autonome modelkwaliteit- of eigenaaracceptatieclaim.
+[Installatiebewijs](evidence/product/Research-voice-combined-live-2026-09-12.json).
+
 ## Nu
 
 | Volgorde | Kaart | Resultaat | Status |

@@ -1,0 +1,93 @@
+{
+  "schema_version": 1,
+  "status": "image_review_GO_activation_script_correction_pending_review",
+  "source_commit": "7b03f820cd73325348536224d75d45329b0e1505",
+  "source_evidence_commit": "c3d309b0e638e4e33e1b2ae32709c1b710c0a720",
+  "source_review": "GO from coordinator after independent timing_final_review",
+  "image_proof": {
+    "parent": "sha256:df675dc82f38ff386fdf9cb87062e78f9ba8231f7f277472c2bd53f1a734d072",
+    "candidate": "sha256:e1bb281cc772ab7a2f6ce747dce6a9ccec382ff357f5583e47882997a337217f",
+    "configuration_identical": true,
+    "parent_layers_preserved": true,
+    "source_file_count": 258,
+    "changed_files": [
+      "eva/adapters/api/voice_turns.py",
+      "eva/adapters/model/pydantic_conversation.py",
+      "eva/adapters/model/research_tools.py",
+      "eva/adapters/postgres/conversation_actions.py",
+      "eva/adapters/postgres/conversation_journal.py",
+      "eva/bootstrap/runtime.py"
+    ],
+    "reviewed_source_matches": true,
+    "source_sha256": {
+      "eva/adapters/api/voice_turns.py": "6577fa7e943def66bc6dd2d19bc9695bf28c6fa91fa749637b355ff06058c2aa",
+      "eva/adapters/model/pydantic_conversation.py": "d79ba349ebb54ecd19914e1ffd57170fe70b22582922431ccf43e83dd570bf43",
+      "eva/adapters/model/research_tools.py": "9286d326f3e755733e41a19b9e2726760fb51dfb8aee2fac831e5e8521dc69fb",
+      "eva/adapters/postgres/conversation_actions.py": "075ebef1df94d2d709f20445c71f12d84a3ea1687616310960734acae37e5ae1",
+      "eva/adapters/postgres/conversation_journal.py": "10748b305f14648c332f114e9cf29a27154a08946c37a91bc4a651509c81cc60",
+      "eva/bootstrap/runtime.py": "0d791f357f98acee6617c087cc2086fd26b5d0976f1cb23a7100c82c596ddc1c"
+    },
+    "rollback_parent_image_present": true,
+    "live_cutover": false
+  },
+  "image_import_proof": {
+    "image": "sha256:e1bb281cc772ab7a2f6ce747dce6a9ccec382ff357f5583e47882997a337217f",
+    "exit_code": 0,
+    "output": "reviewed imports and replay methods available",
+    "network": "none",
+    "read_only": true,
+    "model_calls": 0,
+    "database_connections": 0,
+    "container_removed": true
+  },
+  "deployment_preflight": {
+    "passed": true,
+    "only_effective_config_changes": [
+      "services.core.image",
+      "services.delegated-work-worker.image"
+    ],
+    "candidate_env_bytes_unchanged": true,
+    "background_work_enabled": true,
+    "protected_containers": 7,
+    "activation_performed": false
+  },
+  "rollback": {
+    "immutable_parent_present": true,
+    "scope": "Restore saved explicit core-worker override+registry and recreate only core/worker with no-deps; no database restore.",
+    "exception_checks": "Check rollback process exit0, both parent images/running, core+authenticated voice readiness200/true, protected7 unchanged and candidate.env unchanged; save rollback-receipt.json.",
+    "executed": false
+  },
+  "activation_script_sha256": "4936ecf6d7f8fbb0163942b85a730070f816f785cb0f126f04761bca3bfdcce1",
+  "limitations": [
+    "No image activation or production model call.",
+    "No automatic productGO or AU004attempt3.",
+    "Original voice message/context fingerprint limits remain in source evidence.",
+    "Source release baseline snapshot must never be merged blindly into shared repository.",
+    "Scripted choices and isolated tests are not autonomous model-quality evidence."
+  ],
+  "archive": "/home/administrator/project/.eva2-artifacts/research-voice-combined-20260912",
+  "image_review": "Coordinator reports independent timing_final_review IMAGEGO for e1bb; deployment script separately gated.",
+  "activation_fault_injection": {
+    "cases": [
+      {
+        "fault": "before_override_write",
+        "exception_preserved": true,
+        "override_and_registry_restored": true,
+        "rollback_attempts": 1,
+        "rollback_exit_and_readiness_checked": true
+      },
+      {
+        "fault": "between_override_and_registry_writes",
+        "exception_preserved": true,
+        "override_and_registry_restored": true,
+        "rollback_attempts": 1,
+        "rollback_exit_and_readiness_checked": true
+      }
+    ],
+    "actual_docker_calls": 0,
+    "actual_network_calls": 0,
+    "production_writes": 0
+  },
+  "activation_script_correction": "Rollback-needed flag is set before the first active configuration write, so both before-first-write and between-write exceptions restore override+registry and verify rollback status/readiness.",
+  "immutable_script_artifacts": "eva2/evidence/product/research-voice-deployment-20260912"
+}
