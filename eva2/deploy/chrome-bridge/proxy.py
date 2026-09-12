@@ -2,6 +2,8 @@
 import http.client
 import json
 import ipaddress
+import select
+import threading
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 import socket
 from pathlib import Path
@@ -63,6 +65,28 @@ def gateway_peer_allowed(peer, resolver=None):
     except (OSError, ValueError, IndexError, TypeError):
         return False
 
+def watch_forwarding(client, upstream, peer, done, authorize=None, interval=0.25):
+    """Revoke an in-flight host request when its authorized caller disappears."""
+    authorize = authorize or gateway_peer_allowed
+    while not done.wait(interval):
+        try:
+            readable, _, _ = select.select([client], [], [], 0)
+            lost = bool(readable) and client.recv(1, socket.MSG_PEEK) == b''
+            if not lost and authorize(peer):
+                continue
+        except OSError:
+            pass
+        if done.is_set():
+            return
+        # Shutdown wakes the handler's blocking read and the host's close listener.
+        # No cancellation is sent to a later request or a newly granted epoch.
+        try:
+            upstream.shutdown(socket.SHUT_RDWR)
+        except OSError:
+            pass
+        return
+
+
 class Handler(BaseHTTPRequestHandler):
     def log_message(self, *args):
         pass
@@ -106,11 +130,16 @@ class Handler(BaseHTTPRequestHandler):
             self.send_error(413)
             return
         connection = UnixConnection('localhost')
+        done = threading.Event()
+        watcher = None
         try:
             connection.request('POST', '/mcp', self.rfile.read(size), {
                 'Authorization': 'Bearer ' + TOKEN,
                 'Content-Type': 'application/json',
             })
+            watcher = threading.Thread(target=watch_forwarding, args=(
+                self.connection, connection.sock, self.client_address[0], done), daemon=True)
+            watcher.start()
             response = connection.getresponse()
             body = response.read(2_000_001)
             if len(body) > 2_000_000:
@@ -125,6 +154,9 @@ class Handler(BaseHTTPRequestHandler):
         except (OSError, ValueError, http.client.HTTPException):
             self.send_error(503)
         finally:
+            done.set()
+            if watcher is not None:
+                watcher.join(timeout=1)
             connection.close()
 
 if __name__ == '__main__':

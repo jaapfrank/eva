@@ -145,3 +145,23 @@ uit. Het herstelbewijs staat in
 Gerichte controles: `python test_proxy_peer.py`, `python test_proxy_health.py`
 en `python test_proxy_output.py`. Ze controleren adreswisseling, weigering van
 andere bronnen, onbeschikbare/ambigue DNS, socketuitval en behoud van MCP-output.
+## Lopende acties bij transportverlies en procesherstart
+
+De proxy bewaakt tijdens een aanvraag of de caller nog verbonden en volgens de
+exacte gateway-DNS-controle toegestaan is. Verlies sluit de bijbehorende Unix-
+verbinding. De host stopt dan uitsluitend de actie die bij die aanvraag en epoch
+hoort. Een afgewezen gelijktijdige aanvraag kan de lopende actie niet intrekken.
+Dit voorkomt dat een wachtende klik alsnog afgaat nadat de oproeper is verdwenen.
+
+`recovery.test.mjs` gebruikt een eigen loopbackproxy, tijdelijke Unix-socket,
+testcredential, brugproces en leeg headless Chromium-profiel. De test onderbreekt
+een werkelijk wachtende browserklik bij workerverlies, HTTP-verlies,
+gatewayadreswisseling, proxycrash en brugcrash. Na ieder geval blijft de teller
+ongewijzigd, zijn oude waarnemingen ongeldig en werkt een volgende klik pas na
+expliciete nieuwe testtoestemming en een verse snapshot. Bij brugcrash controleert
+de test ook dat het oude workerproces is geëindigd. Dit is geen persoonlijke
+extensieproef of eigenaaracceptatie en herstart geen productieservices.
+
+Uitvoeren op Linux met een bestaande testbrowser:
+`EVA_CHROME_TEST_EXECUTABLE=/pad/naar/chromium node --test recovery.test.mjs`.
+Bewijs: `../../evidence/product/chrome-inflight-recovery-2026-09-12.json`.

@@ -51,7 +51,13 @@ export async function serve(config) {
       else if(msg.method==='ping')result={};
       else if(msg.method==='tools/list')result={tools:gate.catalog()};
       else if(msg.method==='tools/call') {
-        try {result=await gate.call(msg.params?.name,msg.params?.arguments);}catch(error){result={isError:true,content:[{type:'text',text:error.message}]};}
+        const epoch=gate.epoch;
+        // Only the request that started the action can revoke it on transport loss.
+        const ownsAction=gate.mode==='eva' && !gate.pending;
+        const interrupted=()=>{if(ownsAction && gate.epoch===epoch)void gate.stop('disconnected');};
+        res.once('close',interrupted);
+        try {const call=gate.call(msg.params?.name,msg.params?.arguments);if(res.destroyed)interrupted();result=await call;}catch(error){result={isError:true,content:[{type:'text',text:error.message}]};}
+        finally {res.removeListener('close',interrupted);}
       } else throw Error('Method unavailable');
       json(res,200,{jsonrpc:'2.0',id:msg.id,result});
     }catch {json(res,400,{jsonrpc:'2.0',id:msg?.id ?? null,error:{code:-32600,message:'Invalid request'}});}

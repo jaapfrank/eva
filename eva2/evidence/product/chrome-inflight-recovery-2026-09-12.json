@@ -1,0 +1,83 @@
+{
+  "contract": "EvaChromeInflightRecovery/v1",
+  "date": "2026-09-12",
+  "status": "implemented_and_isolated_tested_not_yet_loaded_in_production",
+  "context": "Own Linux headless Chromium, real production worker/backend, own bridge and loopback proxy using production Handler and gateway authorization logic; fixture maps caller to old logical gateway address. No ordinary Eva core/model call in this recovery test.",
+  "missingBehavior": "HTTP/Unix transport loss did not explicitly cancel a pending host browser action.",
+  "changes": [
+    "Proxy watches caller EOF and exact gateway DNS authorization every 250ms while forwarding; upstream shutdown signals loss.",
+    "Host closes only the active request epoch on transport loss, terminates its worker, and invalidates the grant/observation."
+  ],
+  "scenarios": {
+    "worker_process_loss": {
+      "realPendingClick": true,
+      "noLateClickAfterRelease": true,
+      "oldGrantRejected": true,
+      "oldObservationRejectedAfterNewGrant": true,
+      "newGrantAndFreshSnapshotAllowClick": true
+    },
+    "http_caller_loss": {
+      "realPendingClick": true,
+      "noLateClickAfterRelease": true,
+      "oldGrantRejected": true,
+      "oldObservationRejectedAfterNewGrant": true,
+      "newGrantAndFreshSnapshotAllowClick": true
+    },
+    "gateway_address_change": {
+      "realPendingClick": true,
+      "noLateClickAfterRelease": true,
+      "oldGrantRejected": true,
+      "oldObservationRejectedAfterNewGrant": true,
+      "newGrantAndFreshSnapshotAllowClick": true
+    },
+    "proxy_process_crash": {
+      "realPendingClick": true,
+      "noLateClickAfterRelease": true,
+      "oldGrantRejected": true,
+      "oldObservationRejectedAfterNewGrant": true,
+      "newGrantAndFreshSnapshotAllowClick": true
+    },
+    "bridge_process_crash": {
+      "realPendingClick": true,
+      "noLateClickAfterRelease": true,
+      "oldGrantRejected": true,
+      "oldObservationRejectedAfterNewGrant": true,
+      "newGrantAndFreshSnapshotAllowClick": true
+    }
+  },
+  "additionalChecks": {
+    "concurrentRejectedCallerDoesNotCancelActiveAction": true,
+    "oldGatewayAddressReturns403AfterDnsChange": true,
+    "bridgeCrashWorkerExitConfirmed": true,
+    "bridgeRestartStartsDisconnected": true,
+    "bridgeRestartRemovesStaleOwnedUnixSocket": true
+  },
+  "validation": {
+    "nodeTests": 7,
+    "pythonProxyTests": 7,
+    "recoveryIntegrationDurationMs": 15228.977704,
+    "result": "passed"
+  },
+  "scope": {
+    "productionServicesRestarted": false,
+    "personalGrantRestored": false,
+    "ownerAcceptance": false,
+    "centralWorkboardModified": false
+  },
+  "productionReadback": {
+    "state": "disconnected",
+    "epoch": "c376c5b6-b8ab-4a2b-9b38-8c766ce1e6e1"
+  },
+  "previousOrdinaryEvaRouteProof": "chrome-isolated-route-2026-09-12.json",
+  "remaining": [
+    "Load this change in own bridge/proxy when coordinated.",
+    "Personal explicitly selected Chrome extension trial and owner judgement remain open."
+  ],
+  "sourceSha256": {
+    "server.mjs": "d742d7216d1fe46656b02cae79e910d075949f31c5d1fbdaf9628e59481c95eb",
+    "proxy.py": "76d8658d841ec9d2ca8e6a035638919fb6d776c7c1fe6e7efc4635e4a8caaaf8",
+    "recovery.test.mjs": "9644615d12e07c0ac18f8edf259cb49494a5432859a9f8538567f272a58ab524",
+    "recovery-fixture.mjs": "5132a971f9f2d8ac9640653fa1e3844e964db81726e2817ae49b8679043547d6",
+    "recovery-proxy-fixture.py": "73a3e2001aaea194dc357b112922244e7de50108b8a4e50ddfd2464b3efef9e4"
+  }
+}
