@@ -1,0 +1,66 @@
+{
+  "schema_version": 1,
+  "status": "candidate_image_ready_for_independent_review",
+  "source_commit": "cecbc88fc5ec19c08c245efb452ada5a14a95b0a",
+  "source_evidence_commit": "204637f2",
+  "image": {
+    "parent": "sha256:d2d58938ef58ce19bdfcd16aea745ae3d743cc409169db21e230c379ddc43081",
+    "candidate": "sha256:df675dc82f38ff386fdf9cb87062e78f9ba8231f7f277472c2bd53f1a734d072",
+    "configuration_identical": true,
+    "parent_layers_preserved": true,
+    "source_file_count": 258,
+    "changed_files": [
+      "eva/adapters/model/contracts.py",
+      "eva/adapters/model/pydantic_conversation.py",
+      "eva/adapters/postgres/conversation_actions.py",
+      "eva/adapters/postgres/operational_timeline.py",
+      "eva/application/orchestration.py"
+    ],
+    "reviewed_source_matches": true,
+    "source_sha256": {
+      "eva/adapters/model/contracts.py": "984f32bb39c90cc90f107ace63e00e80c077653ae7cccd3bd1397b9ea64bd288",
+      "eva/adapters/model/pydantic_conversation.py": "7fe9c86414382e83873aa133b5841f59be11d25ff065f1c02cdc7e4ca9d26ce0",
+      "eva/adapters/postgres/conversation_actions.py": "144c0012f3f4ec9b2f3e949fd7b7b20eb0923632a19aa44a5b145e2aef0ed869",
+      "eva/adapters/postgres/operational_timeline.py": "192a91439d861824bcae40c5b1c6ecb1a77a52154e0240d10fd79111b4e5473c",
+      "eva/application/orchestration.py": "7816aed9dec09edea12baa657ac4d4daa0074a3f254675a9ed2c6cdcaf499bc1"
+    },
+    "rollback_parent_image_present": true,
+    "live_cutover": false
+  },
+  "postgres_proof": {
+    "container_id": "61950f5d54b25f334e703382614a3ace436225c2fe1b5342cd14349e82b2543a",
+    "postgres_image": "sha256:5d143123fdf80462d1778cd4f24b9f7ca13c87174bca19141fb194c5a1ebca59",
+    "network_mode": "none",
+    "published_ports": [],
+    "data_storage": "tmpfs",
+    "connection": "local Unix socket only",
+    "pytest_exit_code": 0,
+    "model_calls": 0,
+    "production_database_connections": 0,
+    "disposable_container_removed": true
+  },
+  "postgres_test": "tests/postgres/test_operational_timeline.py::test_research_budget_failure_usage_survives_database_reconnect",
+  "postgres_test_result": "1 passed in 1.53s",
+  "fixture": "existing timeline_engine: explicit disposable PostgreSQL 16.13, migrations up to head and downgrade to base",
+  "preflight": {
+    "passed": true,
+    "only_effective_changes": [
+      "services.core.image",
+      "services.delegated-work-worker.image"
+    ],
+    "background_work_enabled": true,
+    "candidate_env_unchanged": true,
+    "protected_container_count": 7
+  },
+  "rollback": "Restore saved explicit core-worker override and registry, recreate core and delegated-work-worker only on immutable parent d2d589; no database restore. activate.py has automatic exception rollback; no rollback execution claimed.",
+  "limitations": [
+    "Prompt token guidance is not a guarantee; measured output cap remains 1200.",
+    "No production cutover or live model retry performed.",
+    "Isolated database regression uses repository-pinned PostgreSQL 16.13 fixture, not live PostgreSQL 18.6.",
+    "No usage aggregation or financial cost claim.",
+    "Earlier AU-004 failure preserved; held-out variant B not run.",
+    "Known unchanged tool-catalog snapshot failure remains reported in source evidence."
+  ],
+  "test_setup_corrections": "Disposable-only startup harness initially used live-image entrypoint arguments and a sole custom Unix socket incompatible with entrypoint initialization. Corrected to existing fixture PostgreSQL 16.13 and both custom/default sockets. No application change or model calls.",
+  "archive": "/home/administrator/project/.eva2-artifacts/research-budget-failure-20260912"
+}

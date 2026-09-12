@@ -253,6 +253,41 @@ def timeline_engine() -> Iterator[Engine]:
                 logging.getLogger(name).disabled = disabled
 
 
+def test_research_budget_failure_usage_survives_database_reconnect(timeline_engine: Engine) -> None:
+    from eva.application.conversation import ConversationModelUsage
+
+    scope = _scope("research-budget-usage")
+    timeline = PostgresOperationalTimeline(timeline_engine, scope)
+    admitted = timeline.create_thread(
+        thread_id="research:budget-usage", checkpoint_id="research:admitted",
+        occurred_at=NOW, data={},
+    )
+    usage = ConversationModelUsage.measured(
+        model_attempts=1, tool_calls=0, input_tokens=39122, output_tokens=1267,
+    )
+    failed = timeline.record_recovery_failure(
+        thread_id=admitted.thread_id, expected_revision=admitted.revision,
+        checkpoint_id="research:failed", operation_id=None,
+        error_text="PRIVATE_RESPONSE_AND_SECRET", occurred_at=NOW,
+        model_usage=usage,
+    )
+    timeline_engine.dispose()
+    restarted_engine = sa.create_engine(timeline_engine.url, pool_pre_ping=False)
+    try:
+        restarted = PostgresOperationalTimeline(restarted_engine, scope)
+        assert restarted.load(admitted.thread_id) == failed
+        events = restarted.events(admitted.thread_id)
+        assert [event.event_type for event in events] == ["INGRESS_COMMITTED", "RECOVERY_FAILED"]
+        payload = events[-1].payload["data"]
+        assert set(payload) == {"error_fingerprint", "retry_count", "model_usage"}
+        assert payload["model_usage"] == usage.to_wire()
+        assert "PRIVATE_RESPONSE_AND_SECRET" not in str(events)
+        # Reading persisted failure a second time must not add another usage event.
+        assert restarted.events(admitted.thread_id) == events
+    finally:
+        restarted_engine.dispose()
+
+
 def _scope(label: str) -> TimelineScope:
     return TimelineScope(
         tenant_id=uuid5(NAMESPACE_URL, f"eva-living-{label}-tenant"),
