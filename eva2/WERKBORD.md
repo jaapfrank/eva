@@ -248,6 +248,20 @@ generiek naar brononderzoek te kunnen terugvallen. Geen taakspecifieke
 WebVTT/SRT-uitzondering in de kern. Deze reparatiestap autoriseert geen derde
 proefpoging of livewijziging. De twee mislukte proeven blijven zichtbaar.
 
+### Owner-onderzoek na een toolstap — kandidaat in review
+
+De bronreconstructie toont dat onderzoek aanvankelijk beschikbaar was, maar
+na een geverifieerde toolstap uit de gewone owner-vervolgcatalogus verdween.
+De kandidaat biedt onderzoek daar via het bestaande geïndexeerde journal aan;
+de eerste legacyroute en initiatiefgrenzen blijven behouden. Er is geen
+W3C-uitzondering of automatische fallback/retry toegevoegd.
+
+Zeven owner/legacy- en vier native PostgreSQL-controles plus94 offlinecontroles
+slagen. Gescripte keuzes bewijzen alleen koppeling en context, geen autonoom
+modelgedrag. Vervolgresultaten staan in geïndexeerde receipts; de oude
+latest_research-lijst is niet uitgebreid. Review staat open: nog niet
+geïntegreerd, gebouwd als image of live gezet. Geen poging3 uitgevoerd.
+
 ## Nu
 
 | Volgorde | Kaart | Resultaat | Status |
