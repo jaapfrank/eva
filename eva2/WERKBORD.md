@@ -120,6 +120,14 @@ blijft zijn eerder toegelaten catalogus gebruiken. De correctie haalt alle
 paginas op en is gericht getest; onafhankelijke review staat open. Nog niet
 geactiveerd. AU-004 blijft beperkt tot de afgesproken audit en het proefplan.
 
+### Kwaliteitsborging en samenhang
+
+De regels staan centraal in [AGENTS.md](../AGENTS.md#kwaliteitsborging-en-samenhang--eigenaarbesluit-12-september-2026).
+Drie onafhankelijke audits onderzoeken modulariteit, integratie en gereedheid
+voor concurrentievergelijking. De coördinator verwerkt concrete bevindingen
+in dit werkbord. Gebruikersproeven mogen later en blokkeren onafhankelijk
+technisch vervolgwerk niet. Algemene concurrentievoorsprong is niet bewezen.
+
 ## Nu
 
 | Volgorde | Kaart | Resultaat | Status |

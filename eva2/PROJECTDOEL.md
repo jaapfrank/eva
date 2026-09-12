@@ -4,6 +4,14 @@ Vastgesteld door Jaap op 7 september 2026. Dit vervangt de eerdere
 projectdoelformulering; [WERKBORD.md](WERKBORD.md) is de enige uitvoerwachtrij.
 Oudere planningen en vergelijkingen blijven historische bewijsbronnen.
 
+## Kwaliteitsborging en samenhang
+
+De actuele kwaliteitsafspraken staan in [AGENTS.md — Kwaliteitsborging en
+samenhang](../AGENTS.md#kwaliteitsborging-en-samenhang--eigenaarbesluit-12-september-2026).
+Die bron is leidend; het beleid wordt hier niet gekopieerd. Gebruikersproeven
+mogen later plaatsvinden en blokkeren onafhankelijk technisch vervolgwerk niet.
+Een algemene voorsprong op concurrenten is nog niet bewezen.
+
 ## Eigenaarbesluit 12 september 2026 — doorwerken naast gebruikersproeven
 
 Jaap geeft expliciet opdracht: ga door met alle andere taken; rond werk af en meld
