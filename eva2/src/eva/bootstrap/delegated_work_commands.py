@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import json
 import re
 from collections.abc import Callable
 from datetime import datetime
@@ -76,7 +77,7 @@ class DelegatedWorkConversationCommands:
         if normalized in _RESULT:
             work = self._execute("result", turn, work_id=work_id)["work"]
             if work["result_available"]:
-                return self._reply(turn, work["result"]["output"])
+                return self._reply(turn, _readable_result(work["result"]["output"]))
             return self._reply(turn, f"Er is nog geen afgerond resultaat. De status is {work['state']}.")
     def matches(self, turn: ConversationTurn, *, principal_binding_id: UUID | None) -> bool:
         if (principal_binding_id != self._service.principal_binding_id
@@ -96,15 +97,26 @@ class DelegatedWorkConversationCommands:
                                      request_key=self._service.command_key(turn), **values)
 
     def _status(self, turn: ConversationTurn) -> GroundedReply:
-        board = self._service.board(turn)
-        if not board.cards:
+        jobs = self._execute("list", turn)["jobs"]
+        if not jobs:
             return self._reply(turn, "Er staat nog geen onderzoekstaak op je werkbord.")
-        counts = {column: sum(card.column == column for card in board.cards)
-                  for column in ("todo", "doing", "attention", "review", "done")}
-        return self._reply(turn, "Je werkbord: "
-                           f"{counts['todo']} wachtend, {counts['doing']} bezig, "
-                           f"{counts['attention']} vraagt aandacht, {counts['review']} te controleren "
-                           f"en {counts['done']} klaar.")
+        work = jobs[0]
+        labels = {
+            "admitted": "ingepland",
+            "call_started": "bezig",
+            "stopped": "gestopt; wordt alleen op jouw verzoek hervat",
+            "succeeded": "klaar; je kunt het resultaat opvragen",
+            "verified": "klaar en gecontroleerd; je kunt het resultaat opvragen",
+            "failed": "mislukt; er is geen geslaagd resultaat",
+            "ambiguous": "uitkomst onzeker; wordt niet automatisch opnieuw uitgevoerd",
+            "expired": "verlopen; wordt niet automatisch opnieuw uitgevoerd",
+        }
+        state = labels.get(work["state"], work["state"])
+        if work["stop_requested"] and work["state"] == "call_started":
+            state = "stopopdracht bewaard; het resultaat wordt niet geleverd"
+        return self._reply(turn, f"Je laatste onderzoek is {state}.\n"
+                           f"Opdracht: {work['task_preview']}\n"
+                           f"Taaknummer: {work['work_id']} (poging {work['generation']}).")
 
     def _stop(self, turn: ConversationTurn) -> GroundedReply:
         work_id = self._service.latest_work_id(turn, stoppable=True)
@@ -123,6 +135,21 @@ class DelegatedWorkConversationCommands:
                              text=text, evidence_memory_ids=(),
                              generated_at=self._service.now().strftime("%Y-%m-%dT%H:%M:%SZ"),
                              provider="eva-delegated-work-command")
+
+
+def _readable_result(output: str) -> str:
+    """Render the known tool-free output shape without hiding unknown fields."""
+    try:
+        value = json.loads(output)
+    except (ValueError, RecursionError):
+        return output
+    if (not isinstance(value, dict) or set(value) != {"summary", "findings"}
+            or not isinstance(value["summary"], str) or not value["summary"].strip()
+            or not isinstance(value["findings"], list)
+            or any(not isinstance(item, str) or not item.strip() for item in value["findings"])):
+        return output
+    findings = "\n".join(f"- {item}" for item in value["findings"])
+    return value["summary"] + ("\n\n" + findings if findings else "")
 
 
 __all__ = ["DelegatedWorkConversationCommands"]

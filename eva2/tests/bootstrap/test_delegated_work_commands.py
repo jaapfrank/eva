@@ -1,8 +1,11 @@
 from __future__ import annotations
 
+import json
 from datetime import UTC, datetime
 from types import SimpleNamespace
 from uuid import UUID
+
+import pytest
 
 from eva.adapters.postgres.operational_timeline import external_timeline_scope
 from eva.application.conversation import ConversationTurn
@@ -21,6 +24,7 @@ class FakeStore:
         )
         self.admitted: list[dict[str, object]] = []
         self.cards: list[SimpleNamespace] = []
+        self.owned_work: list[SimpleNamespace] = []
         self.active_work_id: str | None = None
         self.call_started = False
         self.stopped: list[dict[str, object]] = []
@@ -38,6 +42,12 @@ class FakeStore:
 
     def workboard(self, **_values: object) -> SimpleNamespace:
         return SimpleNamespace(cards=self.cards)
+
+    def list_owned(self, **_values: object) -> tuple[SimpleNamespace, ...]:
+        return tuple(self.owned_work)
+
+    def load(self, work_id: str, **_values: object) -> SimpleNamespace:
+        return next(work for work in self.owned_work if work.spec.work_id == work_id)
 
     def latest_stoppable_work_id(self, **_values: object) -> str | None:
         return self.active_work_id
@@ -126,16 +136,9 @@ def test_owner_can_spawn_one_sealed_replay_safe_research_task() -> None:
     ]
 
 
-def test_owner_gets_board_counts_and_can_stop_latest_work_before_call() -> None:
+def test_owner_gets_latest_task_status_and_can_stop_work_before_call() -> None:
     store = FakeStore()
-    store.cards = [
-        SimpleNamespace(column="todo"),
-        SimpleNamespace(column="doing"),
-        SimpleNamespace(column="attention"),
-        SimpleNamespace(column="review"),
-        SimpleNamespace(column="done"),
-        SimpleNamespace(column="done"),
-    ]
+    store.owned_work = [store._work()]
     store.active_work_id = "work:eva-chat:latest"
     commands = _commands(store)
 
@@ -150,8 +153,8 @@ def test_owner_gets_board_counts_and_can_stop_latest_work_before_call() -> None:
 
     assert status is not None
     assert status.text == (
-        "Je werkbord: 1 wachtend, 1 bezig, 1 vraagt aandacht, "
-        "1 te controleren en 2 klaar."
+        "Je laatste onderzoek is ingepland.\nOpdracht: Test\n"
+        "Taaknummer: work:fake (poging 1)."
     )
     assert stopped is not None
     assert stopped.text == (
@@ -310,3 +313,35 @@ def test_legacy_saved_reply_is_not_released_after_database_binding_revocation():
         runtime.respond_telegram_delegated_work(turn, telegram_user_id=42, chat_id="42")
     assert journal_access == previous_access
     assert len(saved) == len(store.admitted) == 1
+
+
+@pytest.mark.parametrize(("state", "stop_requested", "expected"), [
+    ("call_started", False, "bezig"),
+    ("call_started", True, "stopopdracht bewaard; het resultaat wordt niet geleverd"),
+    ("stopped", True, "gestopt; wordt alleen op jouw verzoek hervat"),
+    ("succeeded", False, "klaar; je kunt het resultaat opvragen"),
+    ("ambiguous", False, "uitkomst onzeker; wordt niet automatisch opnieuw uitgevoerd"),
+])
+def test_status_explains_latest_lifecycle_without_claiming_cancellation(state, stop_requested, expected):
+    store = FakeStore()
+    store.owned_work = [store._work(state=state, stop_requested_at=NOW if stop_requested else None)]
+    reply = _commands(store).handle(_turn("Hoe staat mijn onderzoek?"), principal_binding_id=BINDING)
+    assert reply.text.startswith(f"Je laatste onderzoek is {expected}.\n")
+
+
+@pytest.mark.parametrize(("output", "expected"), [
+    (json.dumps({"summary": "Een rustige gezinsdag.", "findings": ["Wandel samen.", "Kook samen."]}),
+     "Een rustige gezinsdag.\n\n- Wandel samen.\n- Kook samen."),
+    (json.dumps({"summary": "Alleen een samenvatting.", "findings": []}), "Alleen een samenvatting."),
+    ("Ouder tekstresultaat", "Ouder tekstresultaat"),
+    ('{"summary":"Kort","findings":[],"extra":"Behouden"}', '{"summary":"Kort","findings":[],"extra":"Behouden"}'),
+    ('{"summary":"Kort","findings":[42]}', '{"summary":"Kort","findings":[42]}'),
+])
+def test_result_is_readable_without_changing_or_discarding_stored_content(output, expected):
+    store = FakeStore()
+    result = SimpleNamespace(output=output, output_sha256="hash", completed_at="2026-08-26T14:00:00Z")
+    store.owned_work = [store._work(state="succeeded", result=result)]
+    reply = _commands(store).handle(_turn("Toon het resultaat van mijn onderzoek"), principal_binding_id=BINDING)
+    assert reply.text == expected
+    assert result.output == output
+    assert store.admitted == []
