@@ -24,9 +24,17 @@ async function main() {
     const finding = audit.findings.find(item => item.id === capability.id);
     assert.ok(capability.scope, 'each status must name its delivery scope');
     if (capability.id === 'memory' && payload.project.practiceTests.some(test=>test.id==='GE-02')) {
-      const accepted=payload.project.practiceTests.find(test=>test.id==='GE-02').status==='accepted';
+      const trial=payload.project.practiceTests.find(test=>test.id==='GE-02');
+      const accepted=trial.status==='accepted';
+      assert.equal(trial.status,board.audit.projectDashboard.practiceTests.find(test=>test.id==='GE-02').status);
       assert.equal(capability.accepted,accepted ? 'yes' : 'partial');
-      assert.match(capability.product.jaap.label,accepted ? /GE-02 geslaagd/ : /GE-02 open/);
+      assert.match(capability.product.jaap.label,accepted ? /GE-02 geslaagd/ : trial.status==='awaiting_result' ? /GE-02 uitgevoerd · uitslag open/ : /GE-02 open/);
+      if(trial.status==='awaiting_result') {
+        assert.equal(trial.ownerTrialPerformed,true);
+        assert.equal(trial.ownerReportSource.outcomeConfirmed,false);
+        assert.notEqual(capability.product.jaap.state,'passed');
+        for(const id of ['CO-004','CO-005']) assert.equal(capability.outcomes.find(item=>item.subtitle===id).accepted,'no');
+      }
       continue;
     }
     if (capability.id === 'initiative' && finding.latestObservation) {
@@ -81,6 +89,12 @@ async function main() {
       assert.equal(category.product.comparison.state,'unknown');
     }
     if (output) await page.screenshot({ path: path.join(output, 'eva-project-desktop.png'), fullPage: true });
+    if(payload.project.practiceTests.find(test=>test.id==='GE-02')?.status==='awaiting_result') {
+      const trialCard=page.locator('.practice-card').filter({has:page.getByRole('heading',{name:'Geheugen bekijken, corrigeren en vergeten',exact:true})});
+      assert.match(await trialCard.innerText(),/Uitgevoerd — uitslag nog open/);
+      assert.equal(await trialCard.getByRole('heading',{name:'Zo test je'}).count(),0);
+      assert.doesNotMatch(await trialCard.innerText(),/Door jou bevestigd/);
+    }
     await page.locator('.matrix-toggle').filter({hasText:'Geheugen'}).click();
     assert.equal(await page.locator('#details-memory [data-step-id="CO-008"] .step-state.done').count(),1);
     assert.match(await page.locator('#details-memory [data-step-id="CO-008"]').innerText(),/door Jaap geaccepteerd/);
@@ -149,7 +163,7 @@ async function main() {
     await page.route('**/project-state', (route) => route.fulfill({ json: { ...payload, browserAccess: { state: 'unavailable', checkedAt: payload.readAt, url: null } } }));
     if(payload.project.capabilityAudit.ownerBrowserUpdate?.normalEvaDenialVerified) {
       const chromeLink=page.getByRole('link',{name:'Open Chrome-bediening ↗',exact:true}).last();
-      await chromeLink.waitFor();assert.equal(await chromeLink.getAttribute('href'),'http://localhost:44718');
+      await chromeLink.waitFor();assert.equal(await chromeLink.getAttribute('href'),payload.project.capabilityAudit.ownerBrowserUpdate.chromeControlUrl);
     } else {
       await page.getByText('De juiste dashboardtoegang kan momenteel niet worden bevestigd. Wacht met deze proef.').waitFor({timeout: 12000});
       assert.equal(await page.locator('.owner-dashboard-link').count(), 0);
