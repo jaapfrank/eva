@@ -1,6 +1,6 @@
 {
   "date": "2026-09-10",
-  "status": "live_laptop_browser_speech_audio_proven_phone_install_pending",
+  "status": "installed_ha_owner_panel_remote_browser_proven_physical_phone_pending",
   "existingLiveKit": {
     "relayOnly": true,
     "signaling": "local-direct-test",
@@ -109,9 +109,9 @@
     "newFirewallRules": false,
     "reload": "graceful",
     "coreIngress": "preserved",
-    "haPanelInstalled": false
+    "haPanelInstalled": true
   },
-  "phoneHaPanelInstalled": false,
+  "phoneHaPanelInstalled": true,
   "physicalOwnerAcceptance": false,
   "independentSourceReview": "GO",
   "targetedTests": 9,
@@ -242,5 +242,6 @@
       "streamingInputEvidence": "voice-streaming-input-2026-09-11.json",
       "memoryAccelerationEvidence": "voice-memory-cuda-2026-09-11.json"
     }
-  ]
+  ],
+  "phoneInstallationEvidence": "voice-phone-installation-2026-09-12.json"
 }

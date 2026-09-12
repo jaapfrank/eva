@@ -1,0 +1,27 @@
+{
+  "checkedAt": "2026-09-12T16:45:23.347513+00:00",
+  "installedHashes": {
+    "__init__.py": "261cfbfa393f4b72d21e8ac5516f6e02648315565fdc23c2e9c5fc22b82b9c26",
+    "client.py": "db9948dbcd70a293d8c2bb256f59ed3a8efd53880472cacd54c440e46f99f6b4",
+    "config_flow.py": "656c3ddf6998faa8548789b81df2d4ad6b20a64dfee481f66282e5fb820ab65e",
+    "conversation.py": "4377e9f49082e7b722d7864d99b21bd4a6288bba71db11bc6c0f98f71f25fab0",
+    "manifest.json": "7b1f3a1bec024c195fa02a72a1b34b01800f60119ced6685ad01900fda4a4caa",
+    "phone-assets/livekit-client.js": "7fa17e37af5e996d8a25f15a637dcc0620215bc01b394e5d209f726afe7dc04d",
+    "phone-assets/panel.js": "d552b1e38b10d0475205bd16d600eb20eff080dbc953963704431e576ea4c3fc",
+    "phone.py": "2c88250d7e66f00e783dae870f31a5a1f853269e1b248eb116befc575fea6f32",
+    "phone_transport.py": "2bd10fc6c53551b55a5267d32bc0bfab4acf73c0c8dbf4d64d8cf4276ea85990",
+    "strings.json": "7948a9527ccbb14cbeb8491dcb59a46fdfd79a30b5b9a7706d597732ec62aadc",
+    "phone-build.json": "7955e0c885dc63dbf470c609d60a32671675ce534ecc3ad9bdf811f92899c20c"
+  },
+  "backupHashes": {
+    "__init__.py": "1533d85b995b3666c5af427abe32c7cd73625910c005e4607014fc27bb186906",
+    "client.py": "db9948dbcd70a293d8c2bb256f59ed3a8efd53880472cacd54c440e46f99f6b4",
+    "config_flow.py": "2dc1a989207cbfdc856fb61ced7c91f8a094efa10dd0f3d842d0087b217b074d",
+    "conversation.py": "4377e9f49082e7b722d7864d99b21bd4a6288bba71db11bc6c0f98f71f25fab0",
+    "manifest.json": "cce7b2324a7f10c3eef6f536a09aafa3d3ba770d8385c6b5daa675ba0fc02161",
+    "strings.json": "9dc97e8be92bd05452cfa34138413efaaf6ddc252e0d22802d8d03bb036cbc45"
+  },
+  "remoteBackup": "/config/.eva2-phone-install-20260912-i6ul2h2r/backup",
+  "allInstalledHashesMatch": true,
+  "householdClientAndConversationPreserved": true
+}

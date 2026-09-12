@@ -1,0 +1,132 @@
+{
+  "date": "2026-09-12",
+  "status": "installed-enabled-remote-browser-proven; physical-phone-owner-trial-pending",
+  "userOutcome": "The owner can open Praten met Eva in the existing Home Assistant app or HTTPS website and use the same continuous voice/chat core.",
+  "installation": {
+    "haVersion": "2026.8.1",
+    "configEntryId": "01M21R8KNJ7HCF4W3M6BP8V5JS",
+    "panelPath": "/eva-owner-voice",
+    "panelTitle": "Praten met Eva",
+    "ownerOptionEnabled": true,
+    "deploymentRoute": "Existing owner-authorized Supervisor WebSocket API, File editor ingress and Terminal & SSH; no new account or public listener.",
+    "componentDirectory": "/config/custom_components/eva2_voice",
+    "hashEvidence": "voice-phone-installed-hashes-2026-09-12.json",
+    "compositePackage": "Reviewed phone integration and generated UI/SDK, preserving the exact previously installed household client.py and conversation.py.",
+    "haCoreRestarts": 1,
+    "reason": "HA 2026.8.1 component module cache survives config-entry reload. The coordinated HA Core restart loaded the updated source.",
+    "otherServicesRestartedByThisInstallation": [],
+    "firmwareChanges": false,
+    "newFirewallRules": false,
+    "newProviderOrSubscription": false
+  },
+  "preflight": {
+    "liveKitRooms": 0,
+    "bothExistingAssistSatellites": "idle",
+    "originalFilesBackedUp": 6,
+    "independentSftpMatchesOriginalFiles": true,
+    "haCliAvailableOutsideHaCore": true,
+    "review": "review_voice_reference GO; all 11 files verified, source syntax valid, household files unchanged",
+    "phoneEntryAndTransportTestsPassed": 5
+  },
+  "remoteBrowserProof": {
+    "passed": true,
+    "actualBrowser": true,
+    "actualCore": true,
+    "actualHaOwnerWebSocket": true,
+    "existingRemoteHttpsWss": true,
+    "iceTransport": "relay",
+    "syntheticSpeechInput": true,
+    "microphoneUsed": false,
+    "physicalPhone": false,
+    "noSpeakerPlayback": true,
+    "recognizedUserText": "Zeg Alleen dat de telefoonverbinding werkt?",
+    "answer": "De telefoonverbinding werkt.",
+    "messageId": "39f12970-df7d-5d99-9f6b-cb9571c4b97f",
+    "speechEndToAudioMs": 5380,
+    "speechEndToFinalMs": 4796,
+    "audioEnergyFrames": 34,
+    "fullAudioTailCompleted": true,
+    "exactRoomCloseConfirmed": true,
+    "closedCapabilityStatus": 403,
+    "clockDefinition": "AudioBufferSource.onended to browser audio analyser energy / work_finished event; synthetic clip includes trailing silence. This short answer did not use the work acknowledgement."
+  },
+  "installedPanelUiProof": {
+    "passed": true,
+    "actualHaAuthentication": true,
+    "actualInstalledPanelComponent": true,
+    "physicalHaFrontendShell": false,
+    "testHarness": "Local browser fixture loading the installed panel/SDK; only the origin-dependent signaling host, protocol and port were normalized to the real remote HA endpoint. Synthetic silent getUserMedia and muted output; credentials held only in memory.",
+    "observedStates": [
+      "Owner login succeeded",
+      "Begin gesprek connected and typing became enabled",
+      "Submitted: Zeg alleen: het paneel werkt.",
+      "Visible response: Eva: het paneel werkt.",
+      "Gesprek beëindigen returned to ended state",
+      "Begin gesprek reconnected in the same panel",
+      "Removing and remounting the panel cleared the key/history and showed microphone off"
+    ],
+    "excludedAttempts": "Two initial signaling timeouts were caused by the fixture retaining localhost port 44720 on the remote URL. A Node URL test reproduced the error. The fixture port normalization was corrected; installed panel code did not change."
+  },
+  "liveLifecycleProof": {
+    "passed": true,
+    "wrongOwnerReadinessStatus": 401,
+    "freshLeaseAccepted": true,
+    "wrongOwnerCloseRefused": true,
+    "panelRemovedOnDisable": true,
+    "disabledPanelRefusesSessions": true,
+    "disabledSignalingStatus": 503,
+    "reopenedNewLeaseAccepted": true,
+    "oldLeaseStatusAfterReenable": 403,
+    "oldTokenOnNewLeaseStatus": 403,
+    "closedNewLeaseStatus": 403,
+    "householdEntryLoaded": true,
+    "panelEnabledAtEnd": true
+  },
+  "rollback": {
+    "remoteBackup": "/config/.eva2-phone-install-20260912-i6ul2h2r/backup",
+    "independentExistingSshRecoveryVerified": true,
+    "originalFileHashesVerified": true,
+    "rollbackExecuted": false,
+    "procedure": "Disable owner_voice_panel through the normal options flow if HA is available. Via existing SSH/SFTP verify the backup hashes, move the installed candidate to a retained failure directory and move the verified backup into the original component path; restart only HA Core and verify the previous household entry. Never restore the whole HA config or databases."
+  },
+  "postWslCrashReadback": {
+    "checkedAt": "2026-09-12T16:47:02.558879+00:00",
+    "haState": "RUNNING",
+    "householdEntryState": "loaded",
+    "ownerPanelRegistered": true,
+    "ownerReadinessStatus": 200,
+    "installedHashesVerified": 11,
+    "originalBackupFilesRetained": 6,
+    "activeVoiceRooms": 0,
+    "noBlindReinstallationOrHaRestart": true,
+    "evidenceRetentionNote": "WSL restart removed the temporary probe directory. Browser/lifecycle outcomes above are transcribed from completed tool results in this task; installed and backup hashes were fetched again from HA after the restart."
+  },
+  "runtimeAtBrowserProof": {
+    "coreImage": "sha256:bfb0d25abb7f4a1247d376050fdfd7b606e3a3285dcd19b9ee6831d3297b046d",
+    "mediaImage": "sha256:16ac10cd5a32fddd3163609f842754d46433c52534b3fea3bdc4fc3482a9913d",
+    "livekitImage": "sha256:770bc61bc6ec4dcccbd3e05082d8f6bdafbee4179acab7014cc97202a9e2910b",
+    "note": "Historical proof snapshot; coordinator may subsequently update the core/worker. This task made no Eva core, media, SFU or CUDA changes."
+  },
+  "ownerTry": [
+    "Open the existing Home Assistant app or its existing HTTPS site; select Praten met Eva.",
+    "Sign in using the existing Eva owner dashboard token and choose Begin gesprek; allow the phone microphone.",
+    "Ask a question, interrupt Eva with ordinary speech, then try ending and reopening the conversation."
+  ],
+  "remaining": [
+    "Physical phone microphone/speaker/echo and interruption latency",
+    "Phone lock-screen/background and real mobile network recovery",
+    "Owner judgement of natural Dutch pronunciation and the full experience"
+  ],
+  "physicalOwnerAcceptance": false,
+  "sources": [
+    "https://raw.githubusercontent.com/home-assistant/core/2026.8.1/homeassistant/loader.py",
+    "https://raw.githubusercontent.com/home-assistant/core/2026.8.1/homeassistant/config_entries.py",
+    "https://raw.githubusercontent.com/home-assistant/core/2026.8.1/homeassistant/components/hassio/websocket_api.py"
+  ],
+  "finalIndependentReview": {
+    "reviewer": "review_voice_reference",
+    "decision": "GO",
+    "scope": "Technical installation evidence, preserved household hashes, explicit fixture scope and post-crash readback; physical phone acceptance remains open.",
+    "documentationNitResolved": true
+  }
+}
