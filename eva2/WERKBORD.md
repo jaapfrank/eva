@@ -222,6 +222,23 @@ Deze reparatie is klaar; de eerste leerproef blijft mislukt. Variant B is niet
 gestart en de volledige AU-004-mijlpaal is niet afgerond of geaccepteerd.
 [Livebewijs](evidence/product/Research-budget-failure-live-2026-09-12.json).
 
+### AU-004 — tweede poging niet afgerond, review open
+
+Een afzonderlijk geautoriseerde tweede poging gaf HTTP200 na44,743 seconden,
+maar slechts een eerlijk geblokkeerd antwoord. De CPython-GitMCP-ophaalroute
+kon W3C-inhoud niet ophalen; de onderliggende oorzaak is niet vastgesteld.
+Er zijn geen procedure of uitvoerbestanden gemaakt. Variant B en verdere
+pogingen zijn niet gestart. Geen researchactie uitgevoerd, dus deze poging
+bewijst de live budgetreparatie niet.
+
+Ook de proefvoorbereiding bevatte een fout: dispatch ging ten onrechte door
+na een mislukte budget-envelopvergelijking. De budgethashes/limieten bleken
+achteraf gelijk; afwezigheid van output is pas achteraf gecontroleerd. Dit
+blijft zichtbaar in het bewijs. Een offline dispatchguard met vier controles
+wacht samen met het bewijs op onafhankelijke review. Nog niet geïntegreerd.
+De eerste mislukking en de afzonderlijke live reparatie blijven behouden;
+geen leerresultaat, hele AU-004-GO of eigenaaracceptatie geclaimd.
+
 ## Nu
 
 | Volgorde | Kaart | Resultaat | Status |
