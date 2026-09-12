@@ -1,0 +1,44 @@
+{
+  "contract": "EvaAU002ConcurrentStopCandidate/v1",
+  "baseCommit": "39d8bff0bab542ec928a148fc3a722a0c8a109b1",
+  "implementationCommit": "dc82d656f408635c844c16b180684fa08cd49058",
+  "status": "candidate_awaiting_independent_review",
+  "currentLiveImageObserved": "sha256:4a5fa7c1116d07f6037b9a02f82ba8f6c30d703e80bbf8c84a30fbf108ca8710",
+  "baseline": {
+    "failedCases": 2,
+    "routes": [
+      "Telegram bridge JSON",
+      "Telegram bridge NDJSON"
+    ],
+    "ordering": "Start action admitted, model final answer held, separate stop HTTP reply confirmed, then stale model answer released.",
+    "finding": "Both final reply and streaming draft contradicted the already saved stop."
+  },
+  "candidate": {
+    "passedTests": 70,
+    "command": "pytest -q tests/api/test_telegram_helper_stop_race.py tests/api/test_telegram_canary_api.py tests/application/test_conversation.py tests/postgres/test_delegated_work_actions.py tests/bootstrap/test_delegated_work_commands.py tests/application/test_voice_context.py",
+    "testEnvironment": "Existing test interpreter plus repository-pinned tiktoken==0.14.0 from local cache in isolated .testdeps; no runtime dependency changes.",
+    "behavior": "Buffer provisional helper acknowledgement text. Before returning final text, validate current owner authority and exact turn/step/action receipt, then read the exact work. Replace acknowledgement if stopped or stop requested.",
+    "preserved": [
+      "Durable stop/resume semantics",
+      "Normal non-helper streaming",
+      "Refused resume response",
+      "Exact owner and installation boundaries",
+      "Corrected reply replay without new work"
+    ],
+    "testBoundary": "Real API, LivingConversation, runtime response methods, delegated command/service and action adapter; controlled model and in-memory persistence ports. This is not a new live database or external Telegram trial."
+  },
+  "limitations": [
+    "A stop after the final consistency check/commit is outside this reproduction; no transport ordering guarantee is claimed.",
+    "Previously committed historical replies are not rewritten."
+  ],
+  "archive": "/home/administrator/project/.eva2-artifacts/au002-owner-work-20260910/telegram-repair-20260911/timing-20260912",
+  "archiveHashes": {
+    "tests-final.log": "dcf7ae1dc083de52f8c882a5341f6e0716b2ce5d2e3b1fcecdf6fe168a60ebd4",
+    "implementation.patch": "42459f44599aa1c28b6eea12620f037c98ac59bd53b4d7de451e9c10a0dda69a",
+    "baseline.log": "9c9fcbf536b158e2fac3164b98c7af2ec7af41407c1189d5647b5ee6a87f1ef9"
+  },
+  "newModelCalls": 0,
+  "externalTelegramMessagesSent": 0,
+  "ownerAcceptance": false,
+  "deployment": "not activated; independent review and coordinator cutover required"
+}
