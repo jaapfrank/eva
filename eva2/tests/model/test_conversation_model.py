@@ -2687,6 +2687,50 @@ def test_native_research_configuration_binds_model_budget_and_prompt(tmp_path, m
         model.research_configuration_sha256()
 
 
+@pytest.mark.parametrize("limit,words", [(1200, 200), (600, 100), (100, 16)])
+def test_research_instructions_follow_existing_output_limit_without_wire_token_parameter(tmp_path, limit, words):
+    model = PydanticConversationModel(auth_file=tmp_path / "unused",
+        resource_budget=_runtime_budget(max_output_tokens=limit))
+    body = model.research_request_payload(question="Lees de bron.", options=("Bron",), research_mode="topic")
+    assert f"outputgrens is {limit} tokens" in body["instructions"]
+    assert f"maximaal {words} woorden inclusief bronnen en code" in body["instructions"]
+    assert "max_output_tokens" not in body and "max_tokens" not in body
+    assert model._resource_budget.max_output_tokens == limit
+
+
+@pytest.mark.parametrize("output_tokens", [1199, 1200, 1267])
+def test_rejected_research_keeps_exact_measured_usage_without_response_content(tmp_path, monkeypatch, output_tokens):
+    auth = tmp_path / "auth.json"
+    _write_access_lease(auth)
+    model = PydanticConversationModel(auth_file=auth,
+        resource_budget=_runtime_budget(max_output_tokens=1200))
+    citation = {"type": "response.output_item.done", "item": {"type": "message", "content": [{
+        "type": "output_text", "text": "PRIVATE_RESPONSE_MARKER", "annotations": [{
+            "type": "url_citation", "title": "GitMCP", "url": "https://github.com/idosal/git-mcp"}]}]}}
+    frames = ("data: " + json.dumps(citation) + "\n\n").encode() + _budget_frames(
+        input_tokens=39122, output_tokens=output_tokens).replace(b"Binnen grens.", b"PRIVATE_RESPONSE_MARKER")
+    calls = []
+    def respond(request, **kwargs):
+        calls.append(request)
+        return BytesIO(frames)
+    monkeypatch.setattr(conversation_module.urllib.request, "urlopen", respond)
+    def research():
+        return model.research_current_options(question="Lees de primaire documentatie.", title="GitMCP",
+            options=("GitMCP — https://github.com/idosal/git-mcp",), researched_at=NOW)
+    if output_tokens > 1200:
+        with pytest.raises(ConversationModelError, match="output budget") as caught:
+            research()
+        assert caught.value.model_usage.input_tokens == 39122
+        assert caught.value.model_usage.output_tokens == 1267
+        assert "PRIVATE_RESPONSE_MARKER" not in str(caught.value)
+        assert "PRIVATE_RESPONSE_MARKER" not in json.dumps(caught.value.model_usage.to_wire())
+    else:
+        artifact = research()
+        assert artifact.usage.output_tokens == output_tokens
+        assert "PRIVATE_RESPONSE_MARKER" in artifact.content
+    assert len(calls) == 1
+
+
 def test_native_research_permits_only_one_http_attempt(tmp_path, monkeypatch):
     from urllib.error import HTTPError
     from eva.application.initiative_execution import initiative_execution

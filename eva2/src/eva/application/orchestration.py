@@ -10,6 +10,7 @@ import time
 from typing import Literal, Protocol
 
 from eva.contracts.base import JsonValue, validate_json_value
+from eva.application.conversation import ConversationModelUsage
 
 
 ToolResultStatus = Literal["verified", "timed_out", "rejected", "failed", "needs_help"]
@@ -61,6 +62,7 @@ class OperationalTimelinePort(Protocol):
         operation_id: str | None,
         error_text: str,
         occurred_at: datetime,
+        model_usage: ConversationModelUsage | None = None,
     ) -> CheckpointView: ...
 
     def events(self, thread_id: str) -> tuple[TimelineEventView, ...]: ...
@@ -383,6 +385,7 @@ class VerifiedToolOrchestrator:
         self, request: ToolRequest, state: CheckpointView, error: Exception
     ) -> VerifiedToolResult:
         error_text = f"{type(error).__name__}: {error}"
+        usage = getattr(error, "model_usage", None)
         state = await asyncio.to_thread(
             self._timeline.record_recovery_failure,
             thread_id=request.thread_id,
@@ -391,6 +394,7 @@ class VerifiedToolOrchestrator:
             operation_id=request.operation_id,
             error_text=error_text,
             occurred_at=self._clock(),
+            **({"model_usage": usage} if isinstance(usage, ConversationModelUsage) else {}),
         )
         if state.status == "needs_help":
             if self._recovery_experience is not None:

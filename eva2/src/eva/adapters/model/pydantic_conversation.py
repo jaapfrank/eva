@@ -1367,6 +1367,17 @@ class PydanticConversationModel:
         """Exact provider body; private motivation and review fields are never included."""
         if research_mode not in {"topic", "comparison"}:
             raise ValueError("research mode is invalid")
+        instructions = _CURRENT_RESEARCH_INSTRUCTIONS
+        if self._resource_budget is not None:
+            # Guidance reduces overshoot risk; only measured usage enforces the cap.
+            limit = self._resource_budget.max_output_tokens
+            words = max(1, min(450, limit // 6))
+            instructions += (
+                f" De ingestelde outputgrens is {limit} tokens. Richt daarom op maximaal "
+                f"{words} woorden inclusief bronnen en code. Geef alleen de kernregels "
+                "voor de vraag, met korte primaire bronverwijzingen; laat uitweidingen weg. "
+                "Deze beknoptheidsinstructie vervangt de gemeten budgetcontrole niet."
+            )
         return {
             "include": ["web_search_call.action.sources"],
             "input": [
@@ -1378,7 +1389,7 @@ class PydanticConversationModel:
                     "type": "message",
                 }
             ],
-            "instructions": _CURRENT_RESEARCH_INSTRUCTIONS + (
+            "instructions": instructions + (
                 " Dit is een algemene kennisvraag. Onderwerpen hoeven geen productnamen te zijn. "
                 "Onderbouw het antwoord met daadwerkelijk aangehaalde primaire bronnen; "
                 "claim geen automatische volledige dekking van alle aspecten."
@@ -2015,7 +2026,7 @@ class PydanticConversationModel:
                 usage.input_tokens, usage.output_tokens, budget.max_input_tokens,
             )
             raise ConversationModelError(
-                "conversation provider exceeded the runtime input budget"
+                "conversation provider exceeded the runtime input budget", model_usage=usage
             )
         if usage.output_tokens > budget.max_output_tokens:
             logging.getLogger(__name__).warning(
@@ -2023,7 +2034,7 @@ class PydanticConversationModel:
                 usage.input_tokens, usage.output_tokens, budget.max_output_tokens,
             )
             raise ConversationModelError(
-                "conversation provider exceeded the runtime output budget"
+                "conversation provider exceeded the runtime output budget", model_usage=usage
             )
 
     @staticmethod

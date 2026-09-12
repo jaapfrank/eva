@@ -1,0 +1,43 @@
+{
+  "status": "pending_independent_review",
+  "sourceCommit": "cecbc88fc5ec19c08c245efb452ada5a14a95b0a",
+  "failedTrialEvidence": "514ed422",
+  "runtimePaths": [
+    "eva2/src/eva/adapters/model/contracts.py",
+    "eva2/src/eva/adapters/model/pydantic_conversation.py",
+    "eva2/src/eva/adapters/postgres/conversation_actions.py",
+    "eva2/src/eva/adapters/postgres/operational_timeline.py",
+    "eva2/src/eva/application/orchestration.py"
+  ],
+  "scope": [
+    "Research instructions derive conservative word target from unchanged output token cap; guidance is not a guarantee.",
+    "Existing model error optionally carries validated numeric ConversationModelUsage without changing RuntimeError args.",
+    "Existing recovery failure event optionally records model_usage; ordinary research and generic tool orchestration both forward known usage.",
+    "No new journal/schema/response-body storage, retry, provider parameter or budget change."
+  ],
+  "tests": {
+    "passed": 143,
+    "failed": 1,
+    "failureIsIdenticalPreexistingCatalogSnapshot": true,
+    "catalogBaseline": {
+      "base_hash": "4b2ed4d6d8b444a917aee8c34ed92c13b08f72f94effed8f3ce1423ebdd9d905",
+      "candidate_hash": "4b2ed4d6d8b444a917aee8c34ed92c13b08f72f94effed8f3ce1423ebdd9d905",
+      "expected_fixture": "e96adcb879caaf9a7ef864369c15d30db1b106603e8c37056b1e55c8511b6ca0"
+    },
+    "logSha256": "3bb677e69de1a7024d6a5121934699c75cf7ab70703fc117356fb1b30883e46a",
+    "newChecks": [
+      "Output1267 over1200 refuses and carries exact39122/1267 measurement",
+      "Normal1199/1200 outputs remain accepted",
+      "Targets follow1200/600/100 token settings without max_output_tokens wire parameter",
+      "Legacy owner journal and native orchestration preserve numeric usage but no response/secret marker",
+      "Owner mismatch refused, original error re-raised, invalid usage dictionary rejected",
+      "RuntimeError zero/one/multiple args preserved",
+      "Native failure readback preserves one usage event and does not redispatch model"
+    ]
+  },
+  "baselineFixtureNotModified": true,
+  "modelCallsDuringRepair": 0,
+  "live": false,
+  "activationAuthorized": false,
+  "ownerAccepted": false
+}
