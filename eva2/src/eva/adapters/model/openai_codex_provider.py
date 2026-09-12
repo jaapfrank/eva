@@ -196,6 +196,9 @@ class _AttestedStreamingBody(httpx2.AsyncByteStream):
         self._attestor = _RawSseUsageAttestor() if attest else None
         self._retain = retain
         self._retained = False
+        self.closed_successfully = False
+        self.close_failed = False
+        self.closes_in_progress = 0
 
     async def __aiter__(self):  # type: ignore[no-untyped-def]
         total = 0
@@ -207,11 +210,11 @@ class _AttestedStreamingBody(httpx2.AsyncByteStream):
             except StopAsyncIteration:
                 break
             except TimeoutError as error:
-                await self._stream.aclose()
+                await self.aclose()
                 raise CodexProviderError("deadline") from error
             total += len(chunk)
             if total > self._maximum_bytes:
-                await self._stream.aclose()
+                await self.aclose()
                 raise CodexProviderError("response_too_large")
             if self._attestor is not None:
                 self._attestor.feed(chunk)
@@ -227,7 +230,16 @@ class _AttestedStreamingBody(httpx2.AsyncByteStream):
                 self._retained = True
 
     async def aclose(self) -> None:
-        await self._stream.aclose()
+        self.closes_in_progress += 1
+        try:
+            await self._stream.aclose()
+        except BaseException:
+            self.close_failed = True
+            raise
+        else:
+            self.closed_successfully = True
+        finally:
+            self.closes_in_progress -= 1
 
 
 class _CodexTransport(httpx2.AsyncBaseTransport):
@@ -249,6 +261,19 @@ class _CodexTransport(httpx2.AsyncBaseTransport):
         self._local_count_requests = 0
         self._attestation: RawUsageAttestation | None = None
         self._consumed = False
+        self._streams: list[_AttestedStreamingBody] = []
+        self._network_closed = False
+        self._network_close_failed = False
+        self._network_closes_in_progress = 0
+        self.provider_scope_closed = False
+
+    @property
+    def local_stream_closed(self) -> bool | None:
+        return True if (self.provider_scope_closed and self._network_closed
+                        and not self._network_close_failed and not self._network_closes_in_progress
+                        and self._streams
+                        and all(body.closed_successfully and not body.close_failed and not body.closes_in_progress
+                                for body in self._streams)) else None
 
     @property
     def model_requests(self) -> int:
@@ -315,23 +340,34 @@ class _CodexTransport(httpx2.AsyncBaseTransport):
         # ``stream=true``; status plus the strict terminal SSE attestor are the
         # authority, not an optional response header.
         attest = is_model_request and 200 <= response.status_code < 300
+        body = _AttestedStreamingBody(
+            cast(httpx2.AsyncByteStream, response.stream),
+            deadline=self._deadline,
+            maximum_bytes=self._maximum_response_bytes,
+            attest=attest,
+            retain=self._retain,
+        )
+        self._streams.append(body)
         return httpx2.Response(
             response.status_code,
             headers=response.headers,
-            stream=_AttestedStreamingBody(
-                cast(httpx2.AsyncByteStream, response.stream),
-                deadline=self._deadline,
-                maximum_bytes=self._maximum_response_bytes,
-                attest=attest,
-                retain=self._retain,
-            ),
+            stream=body,
             request=request,
             extensions=response.extensions,
             history=response.history,
         )
 
     async def aclose(self) -> None:
-        await self._network.aclose()
+        self._network_closes_in_progress += 1
+        try:
+            await self._network.aclose()
+        except BaseException:
+            self._network_close_failed = True
+            raise
+        else:
+            self._network_closed = True
+        finally:
+            self._network_closes_in_progress -= 1
 
 
 def _codex_compatible_request(request: httpx2.Request) -> httpx2.Request:
@@ -554,6 +590,11 @@ class OpenAICodexSession:
     def consume_raw_usage(self) -> RawUsageAttestation:
         return self._transport.consume_attestation()
 
+    @property
+    def local_stream_closed(self) -> bool | None:
+        """Local owned body/transport close only; never remote provider quiescence."""
+        return self._transport.local_stream_closed
+
 
 class OpenAICodexProvider:
     """Async lifecycle for exactly one bounded Pydantic model phase."""
@@ -666,6 +707,7 @@ class OpenAICodexProvider:
     ) -> None:
         sdk_client = self._sdk_client
         http_client = self._http_client
+        session = self._session
         self._session = None
         self._sdk_client = None
         self._http_client = None
@@ -673,6 +715,8 @@ class OpenAICodexProvider:
             await sdk_client.close()
         if http_client is not None and not http_client.is_closed:
             await http_client.aclose()
+        if session is not None:
+            session._transport.provider_scope_closed = True
 
 
 def _load_credentials(loader: CredentialLoader) -> tuple[str, str]:

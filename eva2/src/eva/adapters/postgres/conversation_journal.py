@@ -248,8 +248,10 @@ class PostgresConversationJournal(PostgresScopedRole):
 
     def complete_model_request(
         self, turn: ConversationTurn, request_id: str, usage: ConversationModelUsage,
-        *, outcome: str = "succeeded",
+        *, outcome: str = "succeeded", local_stream_closed: bool | None = None,
     ) -> None:
+        if local_stream_closed is not None and local_stream_closed is not True:
+            raise ValueError("local stream observation is invalid")
         if outcome not in ("succeeded", "failed"):
             raise ValueError("model request outcome is invalid")
         # Recording already admitted work must remain possible after stop.
@@ -264,6 +266,8 @@ class PostgresConversationJournal(PostgresScopedRole):
                 or admitted_identity != admission):
             raise ConversationConflict("model request admission differs")
         data = {**admission, "usage": usage.to_wire(), "outcome": outcome}
+        if local_stream_closed is True:
+            data["local_stream_closed"] = True
         if len(events) > 1:
             stored = events[1].payload.get("data", {})
             # Prior successful records had no outcome field; preserve replay.

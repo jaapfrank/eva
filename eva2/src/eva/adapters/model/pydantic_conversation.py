@@ -968,6 +968,7 @@ class PydanticConversationModel:
                         complete_current_model_request(
                             request_id, usage or ConversationModelUsage.unmeasured(),
                             outcome="failed",
+                            local_stream_closed=getattr(session, "local_stream_closed", None),
                         )
                     except Exception as journal_error:
                         # Do not retry after a failed durable write, or hide the original failure.
@@ -1032,7 +1033,10 @@ class PydanticConversationModel:
                 except (Exception, asyncio.CancelledError) as error:
                     record_failure(error)
                     raise
-                complete_current_model_request(request_id, phase[2])
+                complete_current_model_request(
+                    request_id, phase[2],
+                    local_stream_closed=getattr(session, "local_stream_closed", None),
+                )
                 if dispatched_attempts == 2:
                     usage = phase[2]
                     assert usage.input_tokens is not None

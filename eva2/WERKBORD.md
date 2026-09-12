@@ -803,6 +803,20 @@ De drie resultaatbestanden zijn opgenomen. Oudere A/B-oplevering blijft
 afgerond; geen gewijzigde criteria, verse-context- of volledige AU-004-acceptatie.
 [C-resultaat](evidence/product/au004-procedure-discovery/result-C.md).
 
+### Lokale modelstream — afsluiting als bron gebouwd en getest
+
+De reviewer geeft GO voor de interne observatie local_stream_closed. Alleen
+als alle bestaande body-/transportsluitingen en provider-exit succesvol klaar
+zijn, wordt True in het bestaande terminale pogingevent vastgelegd. Een fout,
+cancellation of lopende sluiting blijft onbekend. Geen extra, overgeslagen of
+dubbele cleanup of retry. Requestbinding, replay en oorspronkelijke fouten
+blijven behouden. De reviewer las product-/scenariocode, controleerde hashes,
+131JUnitresultaten en zes stream/PGexports. Alleen vier producthunks, één
+PG-test en de bewijsnotitie zijn geïntegreerd. Gebouwd/getest/reviewGO,
+nog niet in een image of live. Lokale afsluiting bewijst geen stilstand
+van de externe provider; geen nieuwe cap, schema-, API- of authwijziging.
+[Afsluitobservatie en grenzen](reviews/cp001-local-stream-settlement-2026-09-13.md).
+
 ## Nu
 
 | Volgorde | Kaart | Resultaat | Status |
