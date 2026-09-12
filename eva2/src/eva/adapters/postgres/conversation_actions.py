@@ -303,6 +303,28 @@ class PostgresConversationActions:
             turn, call, step_index=step_index,
         )
 
+    def reply_guard(self, turn, receipts):
+        """Delegate final consistency checks only to tools used by this turn."""
+        guards = []
+        visited = set()
+        for receipt in receipts:
+            provider = self._external_tool_by_action.get(receipt.call.name)
+            factory = getattr(provider, "reply_guard", None)
+            if not callable(factory) or id(provider) in visited:
+                continue
+            visited.add(id(provider))
+            guard = factory(turn, receipts)
+            if guard is not None:
+                guards.append(guard)
+        if not guards:
+            return None
+
+        def reconcile(text):
+            for guard in guards:
+                text = guard(text)
+            return text
+        return reconcile
+
     def memory_query_hints(self, turn: ConversationTurn) -> tuple[str, ...]:
         binding = turn.observation_binding
         if binding is None:

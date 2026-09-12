@@ -113,6 +113,59 @@ class PostgresDelegatedWorkActions:
             return ConversationActionReceipt(call, events[-1].payload["data"]["output"])
         return self.execute(turn, call, step_index=step_index)
 
+    def reply_guard(self, turn, receipts):
+        starts = tuple((index, receipt) for index, receipt in enumerate(receipts)
+                       if receipt.call.name in {"start_delegated_work", "resume_delegated_work"}
+                       and receipt.output.get("status") == "verified"
+                       and receipt.output.get("operation_result", {}).get("status")
+                       not in {"not_found", "not_resumable"})
+        if not starts:
+            return None
+
+        def reconcile(text):
+            timeline = self._timeline(turn)  # Recheck current private authority.
+            stopped = []
+            other_helpers = []
+            for index, receipt in starts:
+                events = timeline.events(self._thread_id(turn, index))
+                if (not events or events[-1].event_type != "DELEGATED_ACTION_COMPLETED"
+                        or events[-1].payload["data"]["output"] != receipt.output
+                        or events[0].payload["data"] != {
+                            "call_id": receipt.call.call_id, "name": receipt.call.name,
+                            "arguments": receipt.call.arguments}):
+                    raise ConversationConflict("delegated reply lacks its exact action receipt")
+                result = receipt.output.get("operation_result", {})
+                work = result.get("work")
+                if receipt.output.get("status") != "verified" or work is None:
+                    continue
+                work_id = work["work_id"]
+                current = self._service.execute("get", turn, work_id=work_id,
+                                                request_key=self._thread_id(turn, index))
+                current_work = current["work"]
+                if current_work is None:
+                    raise ConversationConflict("delegated reply work is no longer available")
+                if current_work["stop_requested"] or current_work["state"] == "stopped":
+                    stopped.append(work_id)
+                else:
+                    other_helpers.append(work_id)
+            if not stopped:
+                return text
+            message = ("Je stopopdracht voor " + ", ".join(dict.fromkeys(stopped))
+                       + " is al bewaard. Alleen het eerdere startantwoord voor deze "
+                       "hulpopdracht(en) vervalt. Hun resultaat wordt niet geleverd "
+                       "en ze worden niet automatisch hervat.")
+            if other_helpers:
+                message += (" Andere hulpopdrachten in dit verzoek: "
+                            + ", ".join(dict.fromkeys(other_helpers))
+                            + ". Vraag hun actuele status apart op.")
+            if len(receipts) > len(starts):
+                message += (" Er waren daarnaast andere handelingen in dit verzoek. "
+                            "Hun vastgelegde terugkoppelingen blijven beschikbaar, maar "
+                            "staan niet in dit vervangende antwoord; vraag ze apart op. "
+                            "Deze melding trekt die handelingen niet in.")
+            return message
+        return reconcile
+
     def execute(
         self, turn: ConversationTurn, call: ConversationActionCall, *, step_index: int = 0
     ) -> ConversationActionReceipt:

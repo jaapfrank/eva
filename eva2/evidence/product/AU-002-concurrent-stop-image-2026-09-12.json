@@ -1,0 +1,54 @@
+{
+  "parent": "sha256:4a5fa7c1116d07f6037b9a02f82ba8f6c30d703e80bbf8c84a30fbf108ca8710",
+  "candidate": "sha256:542597c376ef56c7a9aac49184ac7991b811f4b1c2b17e735844ce4af9719229",
+  "runtime_config_identical": true,
+  "parent_layers_preserved": true,
+  "changed_files": [
+    "eva/adapters/postgres/conversation_actions.py",
+    "eva/adapters/postgres/delegated_work_actions.py",
+    "eva/application/conversation.py"
+  ],
+  "source_file_count": 258,
+  "imports": "passed",
+  "reviewed_source": "2eb1bfdb75284187f52fdca3a82b5d1b19232401",
+  "prebuild": {
+    "parent": "sha256:4a5fa7c1116d07f6037b9a02f82ba8f6c30d703e80bbf8c84a30fbf108ca8710",
+    "source": "2eb1bfdb75284187f52fdca3a82b5d1b19232401",
+    "files": {
+      "eva/application/conversation.py": {
+        "parent_sha256": "69cf2a16a4b5e7ccfe0ad0a4b699b4c46175a7494f29cdb47f9ab0f60a1fb427",
+        "candidate_sha256": "1404e377af4e7c58386b65330cab8cf204ad70f50bdb29e3589e30cf0d61f431"
+      },
+      "eva/adapters/postgres/conversation_actions.py": {
+        "parent_sha256": "9a7de4ad4b4ed64a168566cd32eddf2d1a1a1064653ede72efba844c97fddb40",
+        "candidate_sha256": "3afc63714f7e375c41fdbfc2fae47a26aecba843813e7609a8010bb066a9735e"
+      },
+      "eva/adapters/postgres/delegated_work_actions.py": {
+        "parent_sha256": "c53b09e925109cbe2247868ba36b7f86e614d64971834cf66213440e37c3b4dd",
+        "candidate_sha256": "e02fdbe21b0edb190c7f79e80b5bf85ab02acc9dfc6c552c91926bdd7e6ac26b"
+      }
+    },
+    "review": {
+      "decision": "GO",
+      "via_task": "01a08a88-894c-7171-87fa-e681ed47c735",
+      "reviewer": "timing_final_review",
+      "scope": "exact receipt, owner, mixed turn; archived 74 checks verified"
+    }
+  },
+  "tests": {
+    "count": 74,
+    "log_sha256": "5b9e04e0a8ed50d85833746beb37a06cae1bf696f20bdb98a1daab8e89b5f50f"
+  },
+  "preflight": {
+    "result": "passed",
+    "effective_compose_changes": [
+      "core.image",
+      "delegated-work-worker.image"
+    ],
+    "background_work_enabled": true,
+    "candidate_env_unchanged": true,
+    "protected_container_count": 7
+  },
+  "activation": "pending independent image review and coordinator cutover GO",
+  "owner_acceptance": false
+}

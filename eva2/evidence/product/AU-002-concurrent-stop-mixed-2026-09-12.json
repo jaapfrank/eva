@@ -1,0 +1,18 @@
+{
+  "contract": "EvaAU002MixedTurnCandidate/v1",
+  "implementationCommit": "2eb1bfdb75284187f52fdca3a82b5d1b19232401",
+  "previousImplementation": "dc82d656f408635c844c16b180684fa08cd49058",
+  "reviewFinding": "Replacing the whole acknowledgement could silently omit unrelated tool results or another helper.",
+  "fix": "Name only stopped helper IDs; explicitly list other started helper IDs without claiming current activity; disclose other persisted feedback is available separately and those actions are not revoked. Never reuse unreviewed stale model text.",
+  "checks": {
+    "passed": 74,
+    "testLogSha256": "5b9e04e0a8ed50d85833746beb37a06cae1bf696f20bdb98a1daab8e89b5f50f",
+    "normalRoute": "JSON and NDJSON concurrent two-helper tests stop exactly one and replay the corrected response without additional admissions.",
+    "mixedResult": "Adapter guard tests one stopped helper, one unchanged helper and an independent retained file result."
+  },
+  "archiveLog": "/home/administrator/project/.eva2-artifacts/au002-owner-work-20260910/telegram-repair-20260911/timing-20260912/tests-mixed.log",
+  "status": "awaiting independent rereview",
+  "liveChanged": false,
+  "newModelCalls": 0,
+  "ownerAcceptance": false
+}
