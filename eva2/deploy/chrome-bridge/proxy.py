@@ -6,10 +6,32 @@ import socket
 from pathlib import Path
 TOKEN = Path('/run/secrets/chrome-token').read_text().strip()
 
+def rejection_reason(result):
+    """Keep useful diagnostics without logging page text or relay credentials."""
+    text = '\n'.join(item.get('text', '') for item in result.get('content', [])
+                     if isinstance(item, dict) and isinstance(item.get('text', ''), str)).lower()
+    for pattern, reason in [
+        ('no browser control', 'owner_control_or_disconnected'),
+        ('another browser action', 'concurrent_action_blocked'),
+        ('fresh chrome_snapshot required', 'stale_observation'),
+        ('worker stopped', 'worker_interrupted'),
+        ('action interrupted', 'owner_interrupted'),
+        ('not found in the current page snapshot', 'stale_element_reference'),
+        ('intercepts pointer events', 'element_obstructed'),
+        ('timeout', 'action_timeout'),
+        ('timed out', 'action_timeout'),
+        ('chrome action failed', 'worker_action_failed'),
+    ]:
+        if pattern in text:
+            return reason
+    return 'upstream_rejected'
+
 def normalize_tool_output(body):
     """Preserve MCP blocks and expose plain text to Eva's object-result adapter."""
     envelope = json.loads(body)
     result = envelope.get('result')
+    if isinstance(result, dict) and result.get('isError'):
+        print(json.dumps({'event': 'chrome_tool_rejected', 'reason': rejection_reason(result)}), flush=True)
     if isinstance(result, dict) and not result.get('isError') and 'structuredContent' not in result:
         content = result.get('content')
         if isinstance(content, list) and content and all(

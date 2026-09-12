@@ -17,7 +17,7 @@ geen extensietoken gebruikt, profiel gekopieerd of CDP-poort gepubliceerd.
 
 ## Bediening en uitvoering
 
-De lokale pagina op `http://localhost:44718` toont steeds de toestand. Jaap
+De lokale pagina op `http://127.0.0.1:44718` toont steeds de toestand. Jaap
 kijkt rechtstreeks in zijn gedeelde Chrome-tabblad, ook tijdens Eva-bediening.
 De pagina vereist geen aanmelding. Mutaties vereisen exact dezelfde lokale
 Origin en een loopbackverbinding; het interne MCP-endpoint is apart afgeschermd.
@@ -83,3 +83,46 @@ Na toekomstige activatie: herstel de exacte vorige endpointlijst en gateway-
 override tijdens de gecoördineerde core-herstart. Bewaar alle databases,
 Chrome-profielen, keuzegegevens en GPU-instellingen. De oude containerbrowser
 en haar bestaande endpoint blijven als afzonderlijke route behouden.
+
+Herstel 11 september na WSL-herstart: de gebruikersdienst start nu bij de gebruikerssessie en de eigen interne proxy heeft `unless-stopped`. De bridge begint altijd zonder tabdeling. Een achtergebleven Unix-socket wordt alleen verwijderd na een geweigerde verbinding, controle van type/eigenaar en ongewijzigde inode; een levende listener blijft behouden. De IPv4-ingang vermijdt de lokaal vastlopende localhost/IPv6-route.
+
+## Gewone Eva-route — 12 september
+
+De volledige connectorroute is beproefd met een eigen Windows Chrome met leeg
+profiel: paneel openen/sluiten, Geheugen in het projectdashboard openen/sluiten,
+een lopende klik onderbreken, gelijktijdige en latere acties blokkeren, na
+teruggeven een gewijzigde pagina opnieuw lezen en toegang na intrekken weigeren.
+De operationele Eva-events en afzonderlijke tellercontrole staan in
+`../../evidence/product/chrome-isolated-route-2026-09-12.json`.
+De precieze oorzaak van de eerdere persoonlijke extensieklikweigering is niet
+vastgesteld; die fout trad in deze geïsoleerde proeven niet opnieuw op.
+
+`proxy.py` behoudt MCP-tekstblokken en biedt ze ook als één gestructureerd
+tekstresultaat aan. Afwijzingen loggen alleen een begrensde redencategorie,
+geen paginainhoud. De actiewachttijd is 15 seconden, binnen de huidige
+20 seconden van de gewone Eva-aanroep. Overname beëindigt wachten direct.
+
+`isolated-harness.mjs PRIVATE_CONFIG_PATH` start uitsluitend een testbrowser,
+een lokale pagina op 44720 en testbediening op 44719. Met `EVA_TEST_WINDOWS=1`
+gebruikt hij Windows-node en een eigen headless Chrome via `browser-fixture.cjs`.
+Voor Linux kan `EVA_CHROME_TEST_EXECUTABLE` een geïnstalleerde testbrowser aanwijzen.
+De test gebruikt `test-mcp.sock` en verandert de productieproxyroute niet zelf.
+De gatewayproef van 12 september gebruikte tijdelijk die testsocket en herstelde
+vervolgens `/bridge/mcp.sock`; de persoonlijke bridge bleef disconnected.
+
+## Eén resterende eigenaarproef
+
+1. Open `http://127.0.0.1:44718/proef` in Google Chrome. Deel precies dat tabblad
+   via de gewone Chrome-bediening en Allow & select. Meld Gedeeld.
+2. Laat Eva Toon proeftekst en Verberg proeftekst bedienen, met telkens een
+   verse paginawaarneming. Controleer het zichtbare openen en sluiten.
+3. Laat Eva op Tel één proefklik wachten. Klik tijdens ACTIE BEZIG op Neem over.
+   Wacht op Jij hebt de bediening en klik dan Geef proefknop vrij. De teller
+   moet 0 blijven. Bewaar het bewijs dat de klik werkelijk liep bij overname.
+4. Geef expliciet terug, selecteer hetzelfde tabblad opnieuw en laat Eva de
+   vrijgegeven knop met teller 0 opnieuw lezen. Trek daarna de verbinding in
+   en controleer één geweigerde leesaanroep via Eva.
+
+De reeds bevestigde persoonlijke deelproeven van 11 september blijven bewaard.
+Deze laatste ronde en Jaaps oordeel staan nog open; automatische proeven geven
+geen eigenaaracceptatie.

@@ -6,8 +6,8 @@ import unittest
 
 source = pathlib.Path(__file__).with_name('proxy.py').read_text()
 namespace = {'json': json}
-function = next(n for n in ast.parse(source).body if isinstance(n, ast.FunctionDef) and n.name == 'normalize_tool_output')
-exec(compile(ast.Module(body=[function], type_ignores=[]), 'proxy.py', 'exec'), namespace)
+functions = [n for n in ast.parse(source).body if isinstance(n, ast.FunctionDef) and n.name in {'normalize_tool_output', 'rejection_reason'}]
+exec(compile(ast.Module(body=functions, type_ignores=[]), 'proxy.py', 'exec'), namespace)
 
 class OutputCompatibilityTests(unittest.TestCase):
     def normalize(self, result):
@@ -18,6 +18,11 @@ class OutputCompatibilityTests(unittest.TestCase):
         result = self.normalize({'content': blocks})
         self.assertEqual(result['content'], blocks)
         self.assertEqual(result['structuredContent']['text'], 'Fresh Chrome observation: nonce\n\nPage title: sample')
+
+    def test_diagnostics_do_not_return_page_content(self):
+        reason = namespace['rejection_reason']({'content': [{'type': 'text', 'text': 'Ref e12 not found in the current page snapshot. private-page-content'}]})
+        self.assertEqual(reason, 'stale_element_reference')
+        self.assertEqual(namespace['rejection_reason']({'content': [{'type': 'text', 'text': 'private-page-content'}]}), 'upstream_rejected')
 
     def test_errors_catalog_and_other_content_unchanged(self):
         for result in [{'isError': True, 'content': [{'type': 'text', 'text': 'blocked'}]}, {'content': [{'type': 'image', 'data': 'x'}]}, {'structuredContent': {'value': 1}}, {'tools': []}]:

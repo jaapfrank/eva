@@ -1,0 +1,111 @@
+{
+  "contract": "EvaChromeIsolatedRouteProof/v1",
+  "date": "2026-09-12",
+  "status": "technical_route_verified_owner_extension_trial_open",
+  "normalEvaRoute": true,
+  "context": "Separate empty-profile Windows Chrome and Linux Chromium; same production connector, gateway, ChromeGate and worker; temporary proxy test socket restored afterwards.",
+  "phases": {
+    "toggle-before": {
+      "messageId": "dashboard:1e0b0462-023c-438a-8f1d-8b7ed7b7c3d2",
+      "verifiedTools": 6,
+      "rejectedTools": 0,
+      "responseSha256": "d40e929cbb1498a33fb7f53f739368575211c39682e5edea69901cf33b4cacee"
+    },
+    "project-before": {
+      "messageId": "dashboard:2cf102dc-4150-4bfa-ba13-5e43c0099ccc",
+      "verifiedTools": 8,
+      "rejectedTools": 0,
+      "responseSha256": "fda336ae68895ecebec157f91c7f4f29366d61d2a9721f9d13159638f88cb190"
+    },
+    "windows-project": {
+      "messageId": "dashboard:b34cf538-b8da-4b57-8d35-7ed00e421075",
+      "verifiedTools": 8,
+      "rejectedTools": 0,
+      "responseSha256": "82b580065b929928803629429b25537021de4130cc749d90b35c71ac37ab2be4"
+    },
+    "windows-interrupt": {
+      "messageId": "dashboard:e72527ae-4117-4c0b-85f6-e2a0b5b933e3",
+      "verifiedTools": 4,
+      "rejectedTools": 1,
+      "responseSha256": "fef7eec9380ed6477273d26ef1e1fb1d95ed23cfd7f8950ca219133e7463e3ed"
+    },
+    "windows-return": {
+      "messageId": "dashboard:ce394836-d192-42ce-bd66-b852695c8b64",
+      "verifiedTools": 2,
+      "rejectedTools": 0,
+      "responseSha256": "3a064d9d54c656ff5df4156ac332176f6e78722e32726bc614593d2a8a277a04"
+    },
+    "windows-revoked": {
+      "messageId": "dashboard:368d18f6-ef28-476f-9481-29fb086defb1",
+      "verifiedTools": 1,
+      "rejectedTools": 1,
+      "responseSha256": "bd15940d8d4f24b7352b3936c24e2f031e1fb849d652329ca079e400603a3be9"
+    }
+  },
+  "interruption": {
+    "inFlightAtTakeover": {
+      "contract": "EvaSharedChrome/v1",
+      "state": "eva",
+      "epoch": "47f3f3d2-1d78-4ac1-8b0e-84bbf7275e9d",
+      "busy": true,
+      "connected": true,
+      "visibleIn": "Google Chrome",
+      "freshObservationRequired": true
+    },
+    "queuedReadBlocked": true,
+    "owner": {
+      "contract": "EvaSharedChrome/v1",
+      "state": "owner",
+      "epoch": "1c2607e1-0cb8-4118-8d8f-fad5ece1a8b9",
+      "busy": false,
+      "connected": false,
+      "visibleIn": "Google Chrome",
+      "freshObservationRequired": true
+    },
+    "ownerReadBlocked": true,
+    "enabledAfterStop": {
+      "count": 0,
+      "enabled": true
+    },
+    "testContext": "isolated Windows Chrome; ordinary Eva route"
+  },
+  "return": {
+    "contract": "EvaSharedChrome/v1",
+    "state": "eva",
+    "epoch": "956b9d26-f5df-4e7e-b746-20e57b96ada8",
+    "busy": false,
+    "connected": true,
+    "visibleIn": "Google Chrome",
+    "freshObservationRequired": true
+  },
+  "originalPersonalFailure": {
+    "reproduced": false,
+    "rootCauseEstablished": false,
+    "detail": "The earlier personal-extension click rejection was not reproduced on either isolated browser. No claim that its exact cause has been found."
+  },
+  "changes": [
+    "MCP multi-block text exposed as structuredContent, preserving every block.",
+    "Action wait bounded to 15 seconds, below the ordinary 20-second operation deadline.",
+    "Safe local owner trial page and bounded rejection categories without logging page contents."
+  ],
+  "ownerHistoryPreserved": "eva2/evidence/product/chrome-live-owner-trial-2026-09-11.json",
+  "ownerAcceptance": false,
+  "remaining": "One explicitly selected personal Chrome tab: visible reversible action, manual takeover during a pending click, release test button with zero clicks, explicit return with fresh snapshot, revocation.",
+  "finalReadback": {
+    "productionProxySocket": "/bridge/mcp.sock",
+    "testProxyRouteRemoved": true,
+    "personalBridgeState": "disconnected",
+    "busy": false,
+    "gatewayToolCount": 7,
+    "disconnectedSnapshotRejected": true
+  },
+  "validation": {
+    "gatewayEventReadback": true,
+    "gateAndSocketTests": 6,
+    "proxyCompatibilityAndDiagnosticsTests": 3,
+    "upstreamPendingClickTest": true,
+    "portableWindowsHarnessSmoke": true,
+    "chromeDashboardDesktopMobile": true,
+    "jointProjectVerification": "passed by memory owner after GE-02 test-only correction a4149806; no subsequent project UI change"
+  }
+}

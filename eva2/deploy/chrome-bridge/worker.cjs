@@ -13,7 +13,7 @@ const send = value => process.stdout.write(JSON.stringify(value)+'\n');
 async function main(connectBrowser) {
   // Deliberately do not inherit MCP settings, profile overrides or approval tokens.
   for (const name of Object.keys(process.env)) if (/^(PLAYWRIGHT_|PWTEST_)/.test(name)) delete process.env[name];
-  const config = await tools.resolveCLIConfigForMCP({extension:true,browser:'chrome'}, {});
+  const config = await tools.resolveCLIConfigForMCP({extension:true,browser:'chrome',timeoutAction:15000}, {});
   config.saveSession = false;
   const selected = tools.filteredTools(config).filter(tool=>allowed.has(tool.schema.name));
   const schemas = selected.map(tool=>({name:tool.schema.name.replace('browser_','chrome_'),description:tool.schema.description,inputSchema:z.toJSONSchema(tool.schema.inputSchema),annotations:{readOnlyHint:tool.schema.name==='browser_snapshot',destructiveHint:tool.schema.name!=='browser_snapshot',idempotentHint:false,openWorldHint:true}}));
