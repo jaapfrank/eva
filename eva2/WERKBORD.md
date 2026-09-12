@@ -829,6 +829,20 @@ De volledigheid van de export blijft onbekend; remote_provider_quiescent en
 server_quiescent blijven null, volledige vergelijkingstoelating blijft gesloten.
 [Rapportage en grenzen](reviews/cp001-local-settlement-cli-2026-09-13.md).
 
+### IN-002 — herstel via installatiewizard gereserveerd
+
+De coördinator wijst een afzonderlijke ontwikkelaar toe aan de bestaande
+installatiemijlpaal: een reservekopie herstellen via de wizard. Bestaande
+portable export-/restorecontracten worden eerst hergebruikt; de ontbrekende
+UI/API-route wordt geïsoleerd gebouwd en als volledige route gecontroleerd.
+Centrale werkbordmutaties blijven bij de beheerder. Geen live herstel of
+overschrijven toegestaan; de echte eigenaarproef volgt na technische
+oplevering. Status gereserveerd, niet gebouwd/getest/live/geaccepteerd.
+
+AU-004 D heeft volgens de coördinator onafhankelijke guard-GO en toestemming
+voor één proef. Startbewijs en uitkomst zijn nog niet ontvangen. De eerdere
+C-zoekgrens blijft ongehaald; A/B blijft afgerond.
+
 ## Nu
 
 | Volgorde | Kaart | Resultaat | Status |
