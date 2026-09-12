@@ -5,10 +5,10 @@ Laatst bijgewerkt: 2026-09-12.
 Doel: [Eva als zelfstandig lerende digitale huisgenoot](PROJECTDOEL.md).
 Gebouwd, getest, live en door jou geaccepteerd zijn verschillende stappen.
 
-Geheugen geaccepteerd en afgesloten. Eva’s bestaande zelfstandige bijdrage staat klaar als IN-02. De aanvullende initiatiefstatusweergave wacht op de gezamenlijke uitrol.
-[Actueel bewijs](evidence/product/GE-02-owner-acceptance-2026-09-12.json).
+Geheugen is geaccepteerd en afgesloten. AU-008 is technisch afgerond en live; alleen jouw beoordeling van de bestaande eigen bijdrage (IN-02) staat open.
+[Actueel bewijs](evidence/product/AU-008-current-review-delivery-2026-09-12.json).
 
-IN-02 beoordeelt de echte bestaande bijdrage. Er wordt geen nieuwe bijdrage geforceerd. De gecombineerde statusupdate wordt na afstemming met Home Assistant live gezet.
+Lees IN-02 op het dashboard en beoordeel nut en passendheid. Er wordt geen nieuwe bijdrage of nieuw hoofdonderdeel gestart om de administratie te vullen.
 
 ### Afzonderlijk stemwerk
 
@@ -39,20 +39,23 @@ De Fenna-stem is een luisterkandidaat, nog zonder eigenaarsoordeel.
 Probeer: “Zoek uit wat Home Assistant Cloud doet voor spraak en vertel me eerst
 kort wat je gaat uitzoeken.” [Gericht bewijs](evidence/product/voice-natural-turn-candidate-2026-09-11.json).
 
-Telefoon en natuurlijke Voice PE-toegang zijn nog niet opgeleverd.
+Het eigenaars-paneel Praten met Eva is op 12 september geïnstalleerd in de bestaande Home Assistant-app/HTTPS-route. Echte HA-aanmelding, remote browserspraak en audio, een getypte paneelvraag, beëindigen, opnieuw verbinden en uitschakelen zijn technisch bewezen. De fysieke telefoonmicrofoon, echo, schermvergrendeling en Jaaps luisteroordeel blijven apart open. Natuurlijke Voice PE-toegang is nog niet opgeleverd. Hergebruik van deze bestaande route is geen verplichte Home Assistant-architectuur.
+[Installatiebewijs](evidence/product/voice-phone-installation-2026-09-12.json).
 [Actueel voicebewijs](evidence/product/voice-livekit-integration-2026-09-10.json).
 De eerdere Voice PE-onbereikbaarheidsfout is hersteld en door Jaap bevestigd;
 [herstelbewijs](evidence/product/VOICE-REF-247-repair-2026-09-10.json).
 
 ### Afzonderlijk hulpagentwerk — AU-002
 
-Jaaps Telegramproef van 11 september om 09:40 mislukte bij het starten.
-De bestaande vertrouwde eigenaarbinding is hersteld. De interne Telegrambrug bewijst
-nu starten, een afzonderlijke stop tijdens de modelaanroep, status, expliciet hervatten
-en het opgeslagen resultaat ophalen. Er zijn geen externe Telegramtestberichten verstuurd.
-Een nieuwe proef door Jaap en zijn acceptatie staan open. De eerdere dashboardchatproef blijft behouden.
-[Telegrambrugbewijs](evidence/product/AU-002-telegram-lifecycle-2026-09-11.json) ·
-[Onafhankelijke review](reviews/AU-002-telegram-365128c1.md).
+Hulpagentwerk is technisch opgeleverd via de bestaande Telegramroute: starten,
+stoppen, hervatten, status en opgeslagen resultaat ophalen. Sinds 12 september
+zijn de laatste opdracht en het resultaat in gewone tekst leesbaar. De actuele
+status volgt de opgeslagen toestand. Het bestaande resultaat is behouden.
+Jaaps nieuwe Telegramproef en acceptatie staan open. Bij gelijktijdig stoppen
+kan het startantwoord nog later arriveren; dit is afzonderlijk vervolgwerk.
+[Proberen](design/product/AU-002-owner-trial-2026-09-12.md) ·
+[Actueel livebewijs](evidence/product/AU-002-readable-status-live-2026-09-12.json) ·
+[Eerdere levenscyclusproef](evidence/product/AU-002-telegram-lifecycle-2026-09-11.json).
 
 ### Afzonderlijk Home Assistant-wakewordwerk — WAKE-001
 
@@ -70,56 +73,30 @@ Geen privégesprekken opnemen, geen installatie en geen gebruikersacceptatie.
 
 | Volgorde | Kaart | Resultaat | Status |
 |---:|---|---|---|
-| 146 | `AU-008` — Zelf kosteloos handelen binnen eigenaarmandaat | Eva kiest uit toegestane context een nuttige bijdrage, voert passende kosteloze stappen via haar gewone taakuitvoerder uit en toont resultaat of concrete blokkade. Stilte blijft een geldige keuze. | 🟡 BEZIG |
+| 146 | `AU-008` — Zelf kosteloos handelen binnen eigenaarmandaat | Eva kiest uit toegestane context een nuttige bijdrage, voert passende kosteloze stappen via haar gewone taakuitvoerder uit en toont resultaat of concrete blokkade. Stilte blijft een geldige keuze. | 🔵 REVIEW |
 
 Klaar betekent:
 
-- Een natuurlijk gekozen initiatief levert via de gewone uitvoerder een bruikbaar resultaat op binnen het actuele kosteloze mandaat.
-- Resultaat en beperkingen staan op het dashboard; technische GO en Jaaps beoordeling blijven afzonderlijk.
+- Technisch afgerond: echte zelfgekozen bijdrage teruggelezen; laatste beoordeling zichtbaar en onafhankelijk gecontroleerd.
+- Alleen IN-02 blijft open: Jaap beoordeelt het nut en de passendheid van de bestaande bijdrage.
 
 <details>
 <summary>Technische uitvoering: bestanden en controles</summary>
 
 ### Exact werk voor `AU-008`
 
-- `docs/eva-repository-inventory.generated.json`
-- `eva2/PROJECTDOEL.md`
-- `eva2/WERKBORD.md`
-- `eva2/design/product/execution-workboard-v1.json`
-- `eva2/src/eva/adapters/api/dashboard_initiatives.py`
-- `eva2/src/eva/adapters/connectors/home_assistant.py`
-- `eva2/src/eva/adapters/model/pydantic_conversation.py`
-- `eva2/src/eva/adapters/postgres/conversation_actions.py`
-- `eva2/src/eva/adapters/postgres/conversation_journal.py`
-- `eva2/src/eva/adapters/postgres/external_conversation_tools.py`
-- `eva2/src/eva/adapters/postgres/initiative_execution.py`
+- `eva2/experiments/react-admin-dashboard-v1/src/owner-initiatives.jsx`
+- `eva2/experiments/react-admin-dashboard-v1/verify-browser.cjs`
+- `eva2/src/eva/adapters/api/dashboard_static/assets/index-Bv4zaQUs.js`
+- `eva2/src/eva/adapters/api/dashboard_static/assets/index-Ca8HuISF.js`
+- `eva2/src/eva/adapters/api/dashboard_static/eva-dashboard-assets.json`
+- `eva2/src/eva/adapters/api/dashboard_static/index.html`
 - `eva2/src/eva/adapters/postgres/owner_initiatives.py`
-- `eva2/src/eva/adapters/postgres/sensory_events.py`
-- `eva2/src/eva/application/conversation.py`
-- `eva2/src/eva/application/free_will.py`
-- `eva2/src/eva/application/initiative_execution.py`
-- `eva2/src/eva/application/personal_interests.py`
-- `eva2/src/eva/bootstrap/runtime.py`
-- `eva2/src/eva/providers/home_assistant.py`
-- `eva2/src/eva/providers/mcp_autonomy.py`
-- `eva2/tests/application/test_free_will.py`
-- `eva2/tests/application/test_personal_interests.py`
-- `eva2/tests/model/test_conversation_model.py`
-- `eva2/tests/operations/test_eva2_quiescent_cutover.py`
 - `eva2/tests/postgres/test_owner_initiatives.py`
-- `eva2/tools/eva2_quiescent_cutover.py`
-- `eva2/src/eva/adapters/model/research_tools.py`
-- `eva2/src/eva/application/research.py`
-- `eva2/src/eva/adapters/postgres/runtime_resource_usage.py`
-- `eva2/evidence/product/AU-008-private-review-live-2026-09-10.json`
-- `eva2/evidence/product/AU-008-general-research-live-2026-09-10.json`
-- `eva2/reviews/AU-008-private-review-519a03a.md`
 
 Echte controles:
 
-- `pytest -q tests/application/test_free_will.py tests/application/test_personal_interests.py tests/application/test_conversation.py tests/postgres/test_owner_initiatives.py`
-- `pytest -q tests/model/test_conversation_model.py::test_sensory_model_parses_only_bounded_own_initiative tests/model/test_conversation_model.py::test_native_context_preserves_unknown_model_cost_block_on_every_request`
-- `pytest -q tests/operations/test_eva2_quiescent_cutover.py::test_connector_autonomy_seals_the_two_additional_files_without_extra_mount`
+- `pytest -q tests/postgres/test_owner_initiatives.py::test_owner_sees_private_review_before_adoption tests/postgres/test_owner_initiatives.py::test_private_review_is_owner_installation_scoped_current_and_hash_checked tests/postgres/test_owner_initiatives.py::test_owner_can_read_result_and_stop_claimed_work_without_resurrection`
 
 </details>
 
@@ -232,7 +209,7 @@ Afgevinkt betekent alleen: de vastgelegde kaart is afgerond, niet het hele produ
   [Bewijs](evidence/product/CO-004-CO-005-owner-memory-controls-2026-09-11.json).
 - [x] `CO-005` — Bewaarde informatie bewust corrigeren of vergeten (done).
   [Bewijs](evidence/product/CO-004-CO-005-owner-memory-controls-2026-09-11.json).
-- [ ] `AU-008` — Zelf kosteloos handelen binnen eigenaarmandaat (in_progress).
+- [ ] `AU-008` — Zelf kosteloos handelen binnen eigenaarmandaat (review).
 
 </details>
 

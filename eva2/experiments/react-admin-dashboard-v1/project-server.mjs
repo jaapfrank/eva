@@ -253,7 +253,13 @@ export function projectServer() {
         project.summary = [];
         const card = (task) => ({ id: task.id, title: task.title, outcome: task.outcome,
           status: task.status, doneWhen: task.doneWhen, area: task.area,
-          ...(task.id === 'AU-008' && board.audit?.initiativeDeliveryAU008 ? { displayOutcome: project.capabilities.find(item => item.id === 'initiative')?.currentWork || board.audit.initiativeDeliveryAU008.currentWork } : {}),
+          ...(task.id === 'AU-008' && board.audit?.initiativeDeliveryAU008 ? {
+            displayOutcome: project.capabilities.find(item => item.id === 'initiative')?.currentWork || board.audit.initiativeDeliveryAU008.currentWork,
+            ...(task.status === 'review' && board.audit.initiativeDeliveryAU008.technicalComplete === true ? {
+              displayKicker:'ALLEEN JOUW BEOORDELING', displayTitle:'Eva’s eigen bijdrage ligt klaar',
+              displayStatus:'Technisch afgerond en live · IN-02 open',
+            } : {}),
+          } : {}),
           ...(task.id === 'AU-007' && board.audit?.initiativeDeliveryAU007?.ownerContextRepair ? {
             progress: {
               works: 'Een echte huiswaarneming leidde tot een eigen keuze; stoppen via de eigenaarroute werkte. De eerdere keuze herhaalde een al afgeronde opdracht.',

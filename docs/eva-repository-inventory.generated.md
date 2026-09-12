@@ -3,13 +3,13 @@
 Deze kaart is mechanisch gegenereerd. Zij staat naast de semantische runtimegraaf en
 classificeert ieder gevolgd, verwijderd of niet-genegeerd nieuw repositorypad.
 
-Schema: `EvaRepositoryInventory/v1`. Brondigest: `29c6fd6f7100ce72e018018ea752635bd48095aee2cf09f71ff3e7e77ae2aa51`.
+Schema: `EvaRepositoryInventory/v1`. Brondigest: `4a2d5ca00e28863d30dbf41a2fbd742fff6e82f162b315d5d36a0b150e045a82`.
 
 ## Samenvatting
 
 | Bestanden | Aanwezig | Tracked | Untracked | Tombstones | Policyfouten |
 | ---: | ---: | ---: | ---: | ---: | ---: |
-| 2467 | 2464 | 2336 | 128 | 3 | 143 |
+| 2512 | 2509 | 2336 | 173 | 3 | 188 |
 
 ## Policyfouten
 
@@ -29,18 +29,32 @@ Schema: `EvaRepositoryInventory/v1`. Brondigest: `29c6fd6f7100ce72e018018ea75263
 - `UNRESOLVED_DISPOSITION_ISOLATE`: `src/mind/workcompletion.js`
 - `UNRESOLVED_DISPOSITION_QUARANTINE`: `scripts/sanitize-secret-history.mjs`
 - `UNTRACKED_REPOSITORY_FILE`: `AGENTS.md`
+- `UNTRACKED_REPOSITORY_FILE`: `eva2/deploy/chrome-bridge/.playwright-mcp/page-2026-09-11T19-04-36-766Z.yml`
+- `UNTRACKED_REPOSITORY_FILE`: `eva2/deploy/chrome-bridge/.playwright-mcp/page-2026-09-11T19-04-37-658Z.yml`
 - `UNTRACKED_REPOSITORY_FILE`: `eva2/deploy/chrome-bridge/browser-fixture.cjs`
 - `UNTRACKED_REPOSITORY_FILE`: `eva2/deploy/chrome-bridge/browser.test.mjs`
 - `UNTRACKED_REPOSITORY_FILE`: `eva2/deploy/chrome-bridge/gate.mjs`
 - `UNTRACKED_REPOSITORY_FILE`: `eva2/deploy/chrome-bridge/gate.test.mjs`
+- `UNTRACKED_REPOSITORY_FILE`: `eva2/deploy/chrome-bridge/isolated-harness.mjs`
 - `UNTRACKED_REPOSITORY_FILE`: `eva2/deploy/chrome-bridge/owner.html`
 - `UNTRACKED_REPOSITORY_FILE`: `eva2/deploy/chrome-bridge/package-lock.json`
 - `UNTRACKED_REPOSITORY_FILE`: `eva2/deploy/chrome-bridge/package.json`
 - `UNTRACKED_REPOSITORY_FILE`: `eva2/deploy/chrome-bridge/process.mjs`
+- `UNTRACKED_REPOSITORY_FILE`: `eva2/deploy/chrome-bridge/proxy.compose.yml`
 - `UNTRACKED_REPOSITORY_FILE`: `eva2/deploy/chrome-bridge/proxy.py`
 - `UNTRACKED_REPOSITORY_FILE`: `eva2/deploy/chrome-bridge/README.md`
 - `UNTRACKED_REPOSITORY_FILE`: `eva2/deploy/chrome-bridge/server.mjs`
+- `UNTRACKED_REPOSITORY_FILE`: `eva2/deploy/chrome-bridge/stale-socket.mjs`
+- `UNTRACKED_REPOSITORY_FILE`: `eva2/deploy/chrome-bridge/stale-socket.test.mjs`
+- `UNTRACKED_REPOSITORY_FILE`: `eva2/deploy/chrome-bridge/test_proxy_health.py`
+- `UNTRACKED_REPOSITORY_FILE`: `eva2/deploy/chrome-bridge/test_proxy_output.py`
+- `UNTRACKED_REPOSITORY_FILE`: `eva2/deploy/chrome-bridge/test_proxy_peer.py`
+- `UNTRACKED_REPOSITORY_FILE`: `eva2/deploy/chrome-bridge/trial.html`
 - `UNTRACKED_REPOSITORY_FILE`: `eva2/deploy/chrome-bridge/worker.cjs`
+- `UNTRACKED_REPOSITORY_FILE`: `eva2/deploy/dashboard/eva2-local-owner.service`
+- `UNTRACKED_REPOSITORY_FILE`: `eva2/deploy/dashboard/local-owner.mjs`
+- `UNTRACKED_REPOSITORY_FILE`: `eva2/deploy/dashboard/README.md`
+- `UNTRACKED_REPOSITORY_FILE`: `eva2/design/product/AU-002-owner-trial-2026-09-12.md`
 - `UNTRACKED_REPOSITORY_FILE`: `eva2/evidence/living-core/fixtures/i02-workspaces/initiative-service-current/eva-quality.json`
 - `UNTRACKED_REPOSITORY_FILE`: `eva2/evidence/living-core/fixtures/i02-workspaces/initiative-service-current/notifications.md`
 - `UNTRACKED_REPOSITORY_FILE`: `eva2/evidence/living-core/fixtures/i02-workspaces/initiative-service-current/README.md`
@@ -120,6 +134,9 @@ Schema: `EvaRepositoryInventory/v1`. Brondigest: `29c6fd6f7100ce72e018018ea75263
 - `UNTRACKED_REPOSITORY_FILE`: `eva2/evidence/living-core/resident-long-run-v1-2026-08-24.json`
 - `UNTRACKED_REPOSITORY_FILE`: `eva2/evidence/living-core/signed-ab-operator-gate-2026-08-23.json`
 - `UNTRACKED_REPOSITORY_FILE`: `eva2/evidence/living-core/wyoming-local-voice-rebuild-2026-08-26.json`
+- `UNTRACKED_REPOSITORY_FILE`: `eva2/evidence/product/artifacts/AU-008-api-toegang-en-toestemming-2026-09-12.md`
+- `UNTRACKED_REPOSITORY_FILE`: `eva2/evidence/product/AU-002-AU-008-combined-image-2026-09-12.json`
+- `UNTRACKED_REPOSITORY_FILE`: `eva2/evidence/product/AU-002-AU-008-combined-image-review-2026-09-12.json`
 - `UNTRACKED_REPOSITORY_FILE`: `eva2/evidence/product/AU-002-candidate-image-2026-09-11.json`
 - `UNTRACKED_REPOSITORY_FILE`: `eva2/evidence/product/AU-002-catalog-repair-2026-09-11.json`
 - `UNTRACKED_REPOSITORY_FILE`: `eva2/evidence/product/AU-002-final-installed-2026-09-11.json`
@@ -128,34 +145,62 @@ Schema: `EvaRepositoryInventory/v1`. Brondigest: `29c6fd6f7100ce72e018018ea75263
 - `UNTRACKED_REPOSITORY_FILE`: `eva2/evidence/product/AU-002-live-imports-2026-09-11.json`
 - `UNTRACKED_REPOSITORY_FILE`: `eva2/evidence/product/AU-002-owner-lifecycle-2026-09-11.json`
 - `UNTRACKED_REPOSITORY_FILE`: `eva2/evidence/product/AU-002-provider-preparation-2026-09-11.json`
+- `UNTRACKED_REPOSITORY_FILE`: `eva2/evidence/product/AU-002-readable-status-live-2026-09-12.json`
+- `UNTRACKED_REPOSITORY_FILE`: `eva2/evidence/product/AU-002-status-result-candidate-2026-09-12.json`
+- `UNTRACKED_REPOSITORY_FILE`: `eva2/evidence/product/AU-002-status-result-review-2026-09-12.json`
 - `UNTRACKED_REPOSITORY_FILE`: `eva2/evidence/product/AU-002-telegram-lifecycle-2026-09-11.json`
+- `UNTRACKED_REPOSITORY_FILE`: `eva2/evidence/product/AU-008-current-review-delivery-2026-09-12.json`
 - `UNTRACKED_REPOSITORY_FILE`: `eva2/evidence/product/AU-008-general-research-live-2026-09-10.json`
 - `UNTRACKED_REPOSITORY_FILE`: `eva2/evidence/product/AU-008-private-review-live-2026-09-10.json`
+- `UNTRACKED_REPOSITORY_FILE`: `eva2/evidence/product/chrome-isolated-route-2026-09-12.json`
+- `UNTRACKED_REPOSITORY_FILE`: `eva2/evidence/product/chrome-live-owner-trial-2026-09-11.json`
 - `UNTRACKED_REPOSITORY_FILE`: `eva2/evidence/product/chrome-normal-route-2026-09-11.json`
+- `UNTRACKED_REPOSITORY_FILE`: `eva2/evidence/product/chrome-proxy-recovery-2026-09-12.json`
 - `UNTRACKED_REPOSITORY_FILE`: `eva2/evidence/product/chrome-shared-bridge-2026-09-11.json`
 - `UNTRACKED_REPOSITORY_FILE`: `eva2/evidence/product/CO-004-CO-005-owner-memory-controls-2026-09-11.json`
+- `UNTRACKED_REPOSITORY_FILE`: `eva2/evidence/product/GE-02-owner-acceptance-2026-09-12.json`
+- `UNTRACKED_REPOSITORY_FILE`: `eva2/evidence/product/recovery-observation-2026-09-12.json`
 - `UNTRACKED_REPOSITORY_FILE`: `eva2/evidence/product/TL-002-connector-activation-2026-09-08.json`
 - `UNTRACKED_REPOSITORY_FILE`: `eva2/evidence/product/TL-002-connector-render-2026-09-08.json`
 - `UNTRACKED_REPOSITORY_FILE`: `eva2/evidence/product/TL-002-workspace-access-2026-09-08.json`
 - `UNTRACKED_REPOSITORY_FILE`: `eva2/evidence/product/TL-002-workspace-candidate-2026-09-08.json`
 - `UNTRACKED_REPOSITORY_FILE`: `eva2/evidence/product/TL-002-workspace-prepared-2026-09-08.json`
 - `UNTRACKED_REPOSITORY_FILE`: `eva2/evidence/product/TL-002-workspace-startup-fix-2026-09-08.json`
+- `UNTRACKED_REPOSITORY_FILE`: `eva2/evidence/product/voice-phone-installation-2026-09-12.json`
+- `UNTRACKED_REPOSITORY_FILE`: `eva2/evidence/product/voice-phone-installed-hashes-2026-09-12.json`
 - `UNTRACKED_REPOSITORY_FILE`: `eva2/evidence/product/voice-work-receipt-2026-09-11.json`
+- `UNTRACKED_REPOSITORY_FILE`: `eva2/experiments/react-admin-dashboard-v1/memory-presentation.mjs`
+- `UNTRACKED_REPOSITORY_FILE`: `eva2/experiments/react-admin-dashboard-v1/memory-presentation.test.mjs`
+- `UNTRACKED_REPOSITORY_FILE`: `eva2/experiments/react-admin-dashboard-v1/project-completion.test.mjs`
+- `UNTRACKED_REPOSITORY_FILE`: `eva2/experiments/react-admin-dashboard-v1/verify-chrome-trial.cjs`
 - `UNTRACKED_REPOSITORY_FILE`: `eva2/reviews/AU-002-catalog-81d43061.md`
 - `UNTRACKED_REPOSITORY_FILE`: `eva2/reviews/AU-002-final-81d43061.md`
 - `UNTRACKED_REPOSITORY_FILE`: `eva2/reviews/AU-002-provider-64101d5d.md`
 - `UNTRACKED_REPOSITORY_FILE`: `eva2/reviews/AU-002-telegram-365128c1.md`
 - `UNTRACKED_REPOSITORY_FILE`: `eva2/reviews/AU-007-technical-closure-f99b5a2.md`
+- `UNTRACKED_REPOSITORY_FILE`: `eva2/reviews/AU-008-current-status-e96b2054.md`
 - `UNTRACKED_REPOSITORY_FILE`: `eva2/reviews/AU-008-private-review-519a03a.md`
 - `UNTRACKED_REPOSITORY_FILE`: `eva2/reviews/CO-004-CO-005-memory-controls-ae832a98.md`
 - `UNTRACKED_REPOSITORY_FILE`: `eva2/src/eva/adapters/api/dashboard_memory.py`
-- `UNTRACKED_REPOSITORY_FILE`: `eva2/src/eva/adapters/api/dashboard_static/assets/index-Ca8HuISF.js`
+- `UNTRACKED_REPOSITORY_FILE`: `eva2/src/eva/adapters/api/dashboard_static/assets/index-Bv4zaQUs.js`
 - `UNTRACKED_REPOSITORY_FILE`: `eva2/src/eva/adapters/api/dashboard_static/assets/index-DBiN8cEg.css`
 - `UNTRACKED_REPOSITORY_FILE`: `eva2/src/eva/adapters/model/research_tools.py`
 - `UNTRACKED_REPOSITORY_FILE`: `eva2/tests/api/test_owner_memory_controls.py`
 - `UNTRACKED_REPOSITORY_FILE`: `eva2/tests/bootstrap/test_owner_memory_commands.py`
 - `UNTRACKED_REPOSITORY_FILE`: `eva2/tests/postgres/test_owner_memory_delivery.py`
 - `UNTRACKED_REPOSITORY_FILE`: `eva2/tests/voice_service/test_work_receipt.py`
+- `UNTRACKED_REPOSITORY_FILE`: `eva2/tools/wakeword_capture/app.js`
+- `UNTRACKED_REPOSITORY_FILE`: `eva2/tools/wakeword_capture/browser-lifecycle-qa.cjs`
+- `UNTRACKED_REPOSITORY_FILE`: `eva2/tools/wakeword_capture/browser-qa.cjs`
+- `UNTRACKED_REPOSITORY_FILE`: `eva2/tools/wakeword_capture/capture-worklet.js`
+- `UNTRACKED_REPOSITORY_FILE`: `eva2/tools/wakeword_capture/compare_session.py`
+- `UNTRACKED_REPOSITORY_FILE`: `eva2/tools/wakeword_capture/index.html`
+- `UNTRACKED_REPOSITORY_FILE`: `eva2/tools/wakeword_capture/launcher.mjs`
+- `UNTRACKED_REPOSITORY_FILE`: `eva2/tools/wakeword_capture/README.md`
+- `UNTRACKED_REPOSITORY_FILE`: `eva2/tools/wakeword_capture/server.mjs`
+- `UNTRACKED_REPOSITORY_FILE`: `eva2/tools/wakeword_capture/server.test.mjs`
+- `UNTRACKED_REPOSITORY_FILE`: `eva2/tools/wakeword_capture/Start-opnameproef.cmd`
+- `UNTRACKED_REPOSITORY_FILE`: `eva2/tools/wakeword_capture/style.css`
 
 ## Actielijst
 
@@ -183,11 +228,11 @@ Schema: `EvaRepositoryInventory/v1`. Brondigest: `29c6fd6f7100ce72e018018ea75263
 | `design` | `documentation` | 3 |
 | `experiments` | `experimental` | 36 |
 | `transition` | `documentation` | 2 |
-| `eva2-verification` | `verification` | 936 |
-| `eva2-documentation` | `documentation` | 147 |
-| `eva2-deployment` | `deployment` | 124 |
-| `eva2-experimental` | `experimental` | 224 |
-| `eva2-verification-runtime` | `verification-runtime` | 93 |
+| `eva2-verification` | `verification` | 950 |
+| `eva2-documentation` | `documentation` | 149 |
+| `eva2-deployment` | `deployment` | 137 |
+| `eva2-experimental` | `experimental` | 228 |
+| `eva2-verification-runtime` | `verification-runtime` | 105 |
 | `eva2-runtime` | `product-runtime` | 284 |
 | `eva2-build-contract` | `repository-config` | 243 |
 | `generated-doc` | `generated` | 4 |
@@ -294,8 +339,8 @@ Schema: `EvaRepositoryInventory/v1`. Brondigest: `29c6fd6f7100ce72e018018ea75263
 | `docs/eva-agent-benchmark-v1.md` | tracked | documentation | included-tracked-noncritical | keep | 18462 |
 | `docs/eva-endbeeld-roadmap.md` | tracked | documentation | included-tracked-noncritical | keep | 16956 |
 | `docs/eva-rebuild-plan-2026-08-20.md` | tracked | documentation | included-tracked-noncritical | keep | 29009 |
-| `docs/eva-repository-inventory.generated.json` | tracked | generated | included-tracked-critical | keep | 2804741 |
-| `docs/eva-repository-inventory.generated.md` | tracked | generated | included-tracked-critical | keep | 427767 |
+| `docs/eva-repository-inventory.generated.json` | tracked | generated | included-tracked-critical | keep | 2859636 |
+| `docs/eva-repository-inventory.generated.md` | tracked | generated | included-tracked-critical | keep | 438380 |
 | `docs/eva-runtime-contract-map.generated.json` | tracked | generated | included-tracked-critical | keep | 246207 |
 | `docs/eva-runtime-contract-map.generated.md` | tracked | generated | included-tracked-critical | keep | 120103 |
 | `docs/eva-runtime-contracts.md` | tracked | documentation | included-tracked-critical | keep | 80976 |
@@ -319,14 +364,14 @@ Schema: `EvaRepositoryInventory/v1`. Brondigest: `29c6fd6f7100ce72e018018ea75263
 | `eva2/OPENBOT_VERGELIJKING.md` | tracked | documentation | included-tracked-noncritical | keep | 8258 |
 | `eva2/OPEN_SOURCE_EN_DEPENDENCYKEUZES.md` | tracked | documentation | included-tracked-noncritical | keep | 37416 |
 | `eva2/OUDE_EVA_VS_EVA2.md` | tracked | documentation | included-tracked-noncritical | keep | 5434 |
-| `eva2/PROJECTDOEL.md` | tracked | documentation | included-tracked-noncritical | keep | 16880 |
+| `eva2/PROJECTDOEL.md` | tracked | documentation | included-tracked-noncritical | keep | 16849 |
 | `eva2/PROJECTEN_EN_PLANNING.md` | tracked | documentation | included-tracked-noncritical | keep | 22657 |
 | `eva2/PROJECT_STATUS.md` | tracked | documentation | included-tracked-noncritical | keep | 61442 |
 | `eva2/README.md` | tracked | documentation | included-tracked-noncritical | keep | 11585 |
 | `eva2/TEAM_WERKWIJZE.md` | tracked | documentation | included-tracked-noncritical | keep | 9391 |
 | `eva2/TECHNISCHE_MOGELIJKHEDEN_EN_GATEN.md` | tracked | documentation | included-tracked-noncritical | keep | 20072 |
 | `eva2/TECHNISCHE_PRODUCTGATES.md` | tracked | documentation | included-tracked-noncritical | keep | 65630 |
-| `eva2/WERKBORD.md` | tracked | documentation | included-tracked-noncritical | keep | 19985 |
+| `eva2/WERKBORD.md` | tracked | documentation | included-tracked-noncritical | keep | 19248 |
 | `eva2/alembic.ini` | tracked | repository-config | included-tracked-critical | keep | 595 |
 | `eva2/benchmark/inspect_ai_v1/README.md` | tracked | experimental | included-tracked-noncritical | keep | 5729 |
 | `eva2/benchmark/inspect_ai_v1/bridge_probe.py` | tracked | experimental | included-tracked-noncritical | keep | 17418 |
@@ -348,19 +393,32 @@ Schema: `EvaRepositoryInventory/v1`. Brondigest: `29c6fd6f7100ce72e018018ea75263
 | `eva2/connectors/erp/worker.py` | tracked | product-runtime | included-tracked-critical | keep | 273 |
 | `eva2/connectors/mail/README.md` | tracked | product-runtime | included-tracked-critical | keep | 113 |
 | `eva2/connectors/mail/worker.py` | tracked | product-runtime | included-tracked-critical | keep | 274 |
-| `eva2/deploy/chrome-bridge/README.md` | untracked | deployment | blocked-untracked | keep | 5351 |
-| `eva2/deploy/chrome-bridge/browser-fixture.cjs` | untracked | deployment | blocked-untracked | keep | 483 |
+| `eva2/deploy/chrome-bridge/.playwright-mcp/page-2026-09-11T19-04-36-766Z.yml` | untracked | deployment | blocked-untracked | keep | 32203 |
+| `eva2/deploy/chrome-bridge/.playwright-mcp/page-2026-09-11T19-04-37-658Z.yml` | untracked | deployment | blocked-untracked | keep | 22282 |
+| `eva2/deploy/chrome-bridge/README.md` | untracked | deployment | blocked-untracked | keep | 9566 |
+| `eva2/deploy/chrome-bridge/browser-fixture.cjs` | untracked | deployment | blocked-untracked | keep | 623 |
 | `eva2/deploy/chrome-bridge/browser.test.mjs` | untracked | deployment | blocked-untracked | keep | 1796 |
 | `eva2/deploy/chrome-bridge/gate.mjs` | untracked | deployment | blocked-untracked | keep | 3645 |
 | `eva2/deploy/chrome-bridge/gate.test.mjs` | untracked | deployment | blocked-untracked | keep | 2631 |
+| `eva2/deploy/chrome-bridge/isolated-harness.mjs` | untracked | deployment | blocked-untracked | keep | 2997 |
 | `eva2/deploy/chrome-bridge/owner.html` | untracked | deployment | blocked-untracked | keep | 3050 |
 | `eva2/deploy/chrome-bridge/package-lock.json` | untracked | deployment | blocked-untracked | keep | 1762 |
 | `eva2/deploy/chrome-bridge/package.json` | untracked | deployment | blocked-untracked | keep | 65 |
 | `eva2/deploy/chrome-bridge/process.mjs` | untracked | deployment | blocked-untracked | keep | 2510 |
-| `eva2/deploy/chrome-bridge/proxy.py` | untracked | deployment | blocked-untracked | keep | 1829 |
-| `eva2/deploy/chrome-bridge/server.mjs` | untracked | deployment | blocked-untracked | keep | 4673 |
-| `eva2/deploy/chrome-bridge/worker.cjs` | untracked | deployment | blocked-untracked | keep | 4284 |
+| `eva2/deploy/chrome-bridge/proxy.compose.yml` | untracked | deployment | blocked-untracked | keep | 1033 |
+| `eva2/deploy/chrome-bridge/proxy.py` | untracked | deployment | blocked-untracked | keep | 5994 |
+| `eva2/deploy/chrome-bridge/server.mjs` | untracked | deployment | blocked-untracked | keep | 5028 |
+| `eva2/deploy/chrome-bridge/stale-socket.mjs` | untracked | deployment | blocked-untracked | keep | 1250 |
+| `eva2/deploy/chrome-bridge/stale-socket.test.mjs` | untracked | deployment | blocked-untracked | keep | 1456 |
+| `eva2/deploy/chrome-bridge/test_proxy_health.py` | untracked | deployment | blocked-untracked | keep | 2003 |
+| `eva2/deploy/chrome-bridge/test_proxy_output.py` | untracked | deployment | blocked-untracked | keep | 1899 |
+| `eva2/deploy/chrome-bridge/test_proxy_peer.py` | untracked | deployment | blocked-untracked | keep | 1400 |
+| `eva2/deploy/chrome-bridge/trial.html` | untracked | deployment | blocked-untracked | keep | 6425 |
+| `eva2/deploy/chrome-bridge/worker.cjs` | untracked | deployment | blocked-untracked | keep | 4304 |
+| `eva2/deploy/dashboard/README.md` | untracked | deployment | blocked-untracked | keep | 1249 |
+| `eva2/deploy/dashboard/eva2-local-owner.service` | untracked | deployment | blocked-untracked | keep | 454 |
 | `eva2/deploy/dashboard/eva2-project-dashboard.service` | tracked | deployment | included-tracked-critical | keep | 365 |
+| `eva2/deploy/dashboard/local-owner.mjs` | untracked | deployment | blocked-untracked | keep | 3486 |
 | `eva2/deploy/delegated-work/Dockerfile` | tracked | deployment | included-tracked-critical | keep | 1546 |
 | `eva2/deploy/delegated-work/Dockerfile.source-refresh` | tracked | deployment | included-tracked-critical | keep | 401 |
 | `eva2/deploy/home-assistant/README.md` | tracked | deployment | included-tracked-critical | keep | 12167 |
@@ -380,7 +438,7 @@ Schema: `EvaRepositoryInventory/v1`. Brondigest: `29c6fd6f7100ce72e018018ea75263
 | `eva2/deploy/home-assistant/native-speaker-installation.md` | tracked | deployment | included-tracked-critical | keep | 3496 |
 | `eva2/deploy/home-assistant/native-voice-ingress.md` | tracked | deployment | included-tracked-critical | keep | 6991 |
 | `eva2/deploy/home-assistant/owner-phone-ingress.conf` | tracked | deployment | included-tracked-critical | keep | 298 |
-| `eva2/deploy/home-assistant/owner-phone.md` | tracked | deployment | included-tracked-critical | keep | 3045 |
+| `eva2/deploy/home-assistant/owner-phone.md` | tracked | deployment | included-tracked-critical | keep | 4110 |
 | `eva2/deploy/home-assistant/voice-pe-interruption.yaml` | tracked | deployment | included-tracked-critical | keep | 4398 |
 | `eva2/deploy/home-assistant/voice-pe-mp3.yaml` | tracked | deployment | included-tracked-critical | keep | 443 |
 | `eva2/deploy/living-core/Dockerfile` | tracked | deployment | included-tracked-critical | keep | 3135 |
@@ -448,7 +506,7 @@ Schema: `EvaRepositoryInventory/v1`. Brondigest: `29c6fd6f7100ce72e018018ea75263
 | `eva2/deploy/voice-session/Dockerfile` | tracked | deployment | included-tracked-critical | keep | 1355 |
 | `eva2/deploy/voice-session/Dockerfile.livekit` | tracked | deployment | included-tracked-critical | keep | 647 |
 | `eva2/deploy/voice-session/Dockerfile.speaker` | tracked | deployment | included-tracked-critical | keep | 700 |
-| `eva2/deploy/voice-session/README.md` | tracked | deployment | included-tracked-critical | keep | 5443 |
+| `eva2/deploy/voice-session/README.md` | tracked | deployment | included-tracked-critical | keep | 5637 |
 | `eva2/deploy/voice-session/compose.yaml` | tracked | deployment | included-tracked-critical | keep | 1160 |
 | `eva2/deploy/voice-session/fetch_vendor.py` | tracked | deployment | included-tracked-critical | keep | 1816 |
 | `eva2/deploy/voice-session/livekit-source/go.mod` | tracked | deployment | included-tracked-critical | keep | 7279 |
@@ -463,11 +521,12 @@ Schema: `EvaRepositoryInventory/v1`. Brondigest: `29c6fd6f7100ce72e018018ea75263
 | `eva2/design/platform/platform-design-v1.json` | tracked | documentation | included-tracked-noncritical | keep | 3937 |
 | `eva2/design/platform/process-budgets-v1.json` | tracked | documentation | included-tracked-noncritical | keep | 2540 |
 | `eva2/design/platform/trust-boundaries-v1.json` | tracked | documentation | included-tracked-noncritical | keep | 5811 |
+| `eva2/design/product/AU-002-owner-trial-2026-09-12.md` | untracked | documentation | blocked-untracked | keep | 2064 |
 | `eva2/design/product/comparable-agent-benchmarks-v1.md` | tracked | documentation | included-tracked-noncritical | keep | 27919 |
 | `eva2/design/product/conversational-voice-v1.md` | tracked | documentation | included-tracked-noncritical | keep | 32037 |
 | `eva2/design/product/dashboard-v1.md` | tracked | documentation | included-tracked-noncritical | keep | 6532 |
 | `eva2/design/product/delegation-and-workboard-v1.md` | tracked | documentation | included-tracked-noncritical | keep | 11007 |
-| `eva2/design/product/execution-workboard-v1.json` | tracked | documentation | included-tracked-noncritical | keep | 396098 |
+| `eva2/design/product/execution-workboard-v1.json` | tracked | documentation | included-tracked-noncritical | keep | 402857 |
 | `eva2/design/product/home-assistant-voice-opensource-review-2026-09-09.md` | tracked | documentation | included-tracked-noncritical | keep | 5641 |
 | `eva2/design/product/installer-and-onboarding-v1.md` | tracked | documentation | included-tracked-noncritical | keep | 24837 |
 | `eva2/design/product/learning-and-person-model-v1.md` | tracked | documentation | included-tracked-noncritical | keep | 12386 |
@@ -809,6 +868,8 @@ Schema: `EvaRepositoryInventory/v1`. Brondigest: `29c6fd6f7100ce72e018018ea75263
 | `eva2/evidence/living-core/signed-ab-operator-gate-2026-08-23.json` | untracked | verification | blocked-untracked | keep | 2016 |
 | `eva2/evidence/living-core/wyoming-local-voice-rebuild-2026-08-26.json` | untracked | verification | blocked-untracked | keep | 2951 |
 | `eva2/evidence/product/AU-001-completion-2026-09-09.json` | tracked | verification | included-tracked-critical | keep | 12013 |
+| `eva2/evidence/product/AU-002-AU-008-combined-image-2026-09-12.json` | untracked | verification | blocked-untracked | keep | 1880 |
+| `eva2/evidence/product/AU-002-AU-008-combined-image-review-2026-09-12.json` | untracked | verification | blocked-untracked | keep | 848 |
 | `eva2/evidence/product/AU-002-candidate-image-2026-09-11.json` | untracked | verification | blocked-untracked | keep | 1475 |
 | `eva2/evidence/product/AU-002-catalog-repair-2026-09-11.json` | untracked | verification | blocked-untracked | keep | 816 |
 | `eva2/evidence/product/AU-002-final-installed-2026-09-11.json` | untracked | verification | blocked-untracked | keep | 2538 |
@@ -817,11 +878,15 @@ Schema: `EvaRepositoryInventory/v1`. Brondigest: `29c6fd6f7100ce72e018018ea75263
 | `eva2/evidence/product/AU-002-live-imports-2026-09-11.json` | untracked | verification | blocked-untracked | keep | 3595 |
 | `eva2/evidence/product/AU-002-owner-lifecycle-2026-09-11.json` | untracked | verification | blocked-untracked | keep | 10954 |
 | `eva2/evidence/product/AU-002-provider-preparation-2026-09-11.json` | untracked | verification | blocked-untracked | keep | 1699 |
+| `eva2/evidence/product/AU-002-readable-status-live-2026-09-12.json` | untracked | verification | blocked-untracked | keep | 3995 |
+| `eva2/evidence/product/AU-002-status-result-candidate-2026-09-12.json` | untracked | verification | blocked-untracked | keep | 2516 |
+| `eva2/evidence/product/AU-002-status-result-review-2026-09-12.json` | untracked | verification | blocked-untracked | keep | 1664 |
 | `eva2/evidence/product/AU-002-telegram-lifecycle-2026-09-11.json` | untracked | verification | blocked-untracked | keep | 16129 |
 | `eva2/evidence/product/AU-005-owner-execution-2026-09-09.json` | tracked | verification | included-tracked-critical | keep | 4902 |
 | `eva2/evidence/product/AU-005-spontaneous-followthrough-2026-09-09.json` | tracked | verification | included-tracked-critical | keep | 3119 |
 | `eva2/evidence/product/AU-007-beoordelingskaart-huisautomatisering-2026-09-10.md` | tracked | verification | included-tracked-critical | keep | 1895 |
 | `eva2/evidence/product/AU-007-private-initiative-2026-09-10.json` | tracked | verification | included-tracked-critical | keep | 12536 |
+| `eva2/evidence/product/AU-008-current-review-delivery-2026-09-12.json` | untracked | verification | blocked-untracked | keep | 11013 |
 | `eva2/evidence/product/AU-008-general-research-live-2026-09-10.json` | untracked | verification | blocked-untracked | keep | 4235 |
 | `eva2/evidence/product/AU-008-private-review-live-2026-09-10.json` | untracked | verification | blocked-untracked | keep | 5313 |
 | `eva2/evidence/product/CO-001-telegram-live-drafts-contract-2026-09-04.json` | tracked | verification | included-tracked-critical | keep | 4389 |
@@ -838,6 +903,7 @@ Schema: `EvaRepositoryInventory/v1`. Brondigest: `29c6fd6f7100ce72e018018ea75263
 | `eva2/evidence/product/EV-001-inspect-ai-bridge-probe-v2-2026-09-04.json` | tracked | verification | included-tracked-critical | keep | 3087 |
 | `eva2/evidence/product/EV-002-controlled-baseline-result-2026-09-04.json` | tracked | verification | included-tracked-critical | keep | 8114 |
 | `eva2/evidence/product/EV-003-comparative-acceptance-protocol-2026-09-08.json` | tracked | verification | included-tracked-critical | keep | 2679 |
+| `eva2/evidence/product/GE-02-owner-acceptance-2026-09-12.json` | untracked | verification | blocked-untracked | keep | 894 |
 | `eva2/evidence/product/GOV-001-execution-workboard-tests-2026-09-01.json` | tracked | verification | included-tracked-critical | keep | 1414 |
 | `eva2/evidence/product/GOV-002-status-stable-workboard-tests-2026-09-01.json` | tracked | verification | included-tracked-critical | keep | 1375 |
 | `eva2/evidence/product/GOV-003-canonical-workspace-containment-tests-2026-09-02.json` | tracked | verification | included-tracked-critical | keep | 2008 |
@@ -929,6 +995,7 @@ Schema: `EvaRepositoryInventory/v1`. Brondigest: `29c6fd6f7100ce72e018018ea75263
 | `eva2/evidence/product/VB-003-completion-2026-09-10.json` | tracked | verification | included-tracked-critical | keep | 22710 |
 | `eva2/evidence/product/VOICE-REF-247-repair-2026-09-10.json` | tracked | verification | included-tracked-critical | keep | 8836 |
 | `eva2/evidence/product/WAKE-001-offline-comparison-2026-09-11.json` | tracked | verification | included-tracked-critical | keep | 14666 |
+| `eva2/evidence/product/artifacts/AU-008-api-toegang-en-toestemming-2026-09-12.md` | untracked | verification | blocked-untracked | keep | 866 |
 | `eva2/evidence/product/astra-candidate-regression-2026-09-05.json` | tracked | verification | included-tracked-critical | keep | 6668 |
 | `eva2/evidence/product/astra-conversation-live-upgrade-2026-09-05.json` | tracked | verification | included-tracked-critical | keep | 3450 |
 | `eva2/evidence/product/astra-conversation-model-switch-2026-09-05.json` | tracked | verification | included-tracked-critical | keep | 3738 |
@@ -936,7 +1003,10 @@ Schema: `EvaRepositoryInventory/v1`. Brondigest: `29c6fd6f7100ce72e018018ea75263
 | `eva2/evidence/product/astra-copied-data-restart-2026-09-05.json` | tracked | verification | included-tracked-critical | keep | 4753 |
 | `eva2/evidence/product/astra-copied-telegram-canary-2026-09-05.json` | tracked | verification | included-tracked-critical | keep | 4737 |
 | `eva2/evidence/product/astra-hosted-tool-search-repair-2026-09-05.json` | tracked | verification | included-tracked-critical | keep | 6332 |
+| `eva2/evidence/product/chrome-isolated-route-2026-09-12.json` | untracked | verification | blocked-untracked | keep | 4339 |
+| `eva2/evidence/product/chrome-live-owner-trial-2026-09-11.json` | untracked | verification | blocked-untracked | keep | 2151 |
 | `eva2/evidence/product/chrome-normal-route-2026-09-11.json` | untracked | verification | blocked-untracked | keep | 2260 |
+| `eva2/evidence/product/chrome-proxy-recovery-2026-09-12.json` | untracked | verification | blocked-untracked | keep | 2367 |
 | `eva2/evidence/product/chrome-shared-bridge-2026-09-11.json` | untracked | verification | blocked-untracked | keep | 4244 |
 | `eva2/evidence/product/contextforge-generic-tool-durable-proof-2026-08-30.json` | tracked | verification | included-tracked-critical | keep | 2914 |
 | `eva2/evidence/product/contextforge-real-non-home-provider-candidate-2026-08-30.json` | tracked | verification | included-tracked-critical | keep | 2692 |
@@ -1046,6 +1116,7 @@ Schema: `EvaRepositoryInventory/v1`. Brondigest: `29c6fd6f7100ce72e018018ea75263
 | `eva2/evidence/product/pydantic-ai-2.37-provider-compatibility-raw-2026-09-01.json` | tracked | verification | included-tracked-critical | keep | 2865 |
 | `eva2/evidence/product/pydantic-ai-2.37-runtime-smoke-raw-2026-09-01.json` | tracked | verification | included-tracked-critical | keep | 888 |
 | `eva2/evidence/product/pydantic-native-mcp-discovery-candidate-2026-08-31.json` | tracked | verification | included-tracked-critical | keep | 8668 |
+| `eva2/evidence/product/recovery-observation-2026-09-12.json` | untracked | verification | blocked-untracked | keep | 862 |
 | `eva2/evidence/product/renovate-44.52.0-local-dry-run-2026-08-30.json` | tracked | verification | included-tracked-critical | keep | 1977 |
 | `eva2/evidence/product/situational-humour-live-ab-2026-08-31.json` | tracked | verification | included-tracked-critical | keep | 4254 |
 | `eva2/evidence/product/situational-humour-release-candidate-2026-08-31.json` | tracked | verification | included-tracked-critical | keep | 3956 |
@@ -1060,7 +1131,9 @@ Schema: `EvaRepositoryInventory/v1`. Brondigest: `29c6fd6f7100ce72e018018ea75263
 | `eva2/evidence/product/voice-memory-cuda-2026-09-11.json` | tracked | verification | included-tracked-critical | keep | 14550 |
 | `eva2/evidence/product/voice-natural-turn-candidate-2026-09-11.json` | tracked | verification | included-tracked-critical | keep | 22199 |
 | `eva2/evidence/product/voice-oss-verification-2026-09-10.json` | tracked | verification | included-tracked-critical | keep | 38470 |
-| `eva2/evidence/product/voice-phone-relay-candidate-2026-09-10.json` | tracked | verification | included-tracked-critical | keep | 9812 |
+| `eva2/evidence/product/voice-phone-installation-2026-09-12.json` | untracked | verification | blocked-untracked | keep | 7029 |
+| `eva2/evidence/product/voice-phone-installed-hashes-2026-09-12.json` | untracked | verification | blocked-untracked | keep | 1798 |
+| `eva2/evidence/product/voice-phone-relay-candidate-2026-09-10.json` | tracked | verification | included-tracked-critical | keep | 9893 |
 | `eva2/evidence/product/voice-phone-token-refresh-2026-09-10.json` | tracked | verification | included-tracked-critical | keep | 539 |
 | `eva2/evidence/product/voice-streaming-input-2026-09-11.json` | tracked | verification | included-tracked-critical | keep | 15523 |
 | `eva2/evidence/product/voice-work-receipt-2026-09-11.json` | untracked | verification | blocked-untracked | keep | 7789 |
@@ -1238,29 +1311,33 @@ Schema: `EvaRepositoryInventory/v1`. Brondigest: `29c6fd6f7100ce72e018018ea75263
 | `eva2/experiments/pydantic-realtime-v1/verify_receipt.py` | tracked | experimental | included-tracked-noncritical | keep | 3984 |
 | `eva2/experiments/react-admin-dashboard-v1/README.md` | tracked | experimental | included-tracked-noncritical | keep | 2267 |
 | `eva2/experiments/react-admin-dashboard-v1/SCOPE-DECISIONS.md` | tracked | experimental | included-tracked-noncritical | keep | 3326 |
-| `eva2/experiments/react-admin-dashboard-v1/capability-audit.json` | tracked | experimental | included-tracked-noncritical | keep | 24329 |
+| `eva2/experiments/react-admin-dashboard-v1/capability-audit.json` | tracked | experimental | included-tracked-noncritical | keep | 26343 |
 | `eva2/experiments/react-admin-dashboard-v1/index.html` | tracked | experimental | included-tracked-noncritical | keep | 293 |
+| `eva2/experiments/react-admin-dashboard-v1/memory-presentation.mjs` | untracked | experimental | blocked-untracked | keep | 3096 |
+| `eva2/experiments/react-admin-dashboard-v1/memory-presentation.test.mjs` | untracked | experimental | blocked-untracked | keep | 1479 |
 | `eva2/experiments/react-admin-dashboard-v1/morning-readback-2026-09-11.json` | tracked | experimental | included-tracked-noncritical | keep | 2461 |
 | `eva2/experiments/react-admin-dashboard-v1/package-lock.json` | tracked | experimental | included-tracked-noncritical | keep | 102709 |
 | `eva2/experiments/react-admin-dashboard-v1/package.json` | tracked | experimental | included-tracked-noncritical | keep | 432 |
 | `eva2/experiments/react-admin-dashboard-v1/process-scope-decision.mjs` | tracked | experimental | included-tracked-noncritical | keep | 559 |
-| `eva2/experiments/react-admin-dashboard-v1/project-completion.mjs` | tracked | experimental | included-tracked-noncritical | keep | 10427 |
-| `eva2/experiments/react-admin-dashboard-v1/project-server.mjs` | tracked | experimental | included-tracked-noncritical | keep | 22174 |
+| `eva2/experiments/react-admin-dashboard-v1/project-completion.mjs` | tracked | experimental | included-tracked-noncritical | keep | 10870 |
+| `eva2/experiments/react-admin-dashboard-v1/project-completion.test.mjs` | untracked | experimental | blocked-untracked | keep | 1107 |
+| `eva2/experiments/react-admin-dashboard-v1/project-server.mjs` | tracked | experimental | included-tracked-noncritical | keep | 22220 |
 | `eva2/experiments/react-admin-dashboard-v1/public/results/au007-beoordelingskaart.html` | tracked | experimental | included-tracked-noncritical | keep | 3288 |
 | `eva2/experiments/react-admin-dashboard-v1/public/results/au008-storingschecklist.html` | tracked | experimental | included-tracked-noncritical | keep | 2621 |
 | `eva2/experiments/react-admin-dashboard-v1/scope-decisions.mjs` | tracked | experimental | included-tracked-noncritical | keep | 7195 |
 | `eva2/experiments/react-admin-dashboard-v1/src/main.jsx` | tracked | experimental | included-tracked-noncritical | keep | 21824 |
 | `eva2/experiments/react-admin-dashboard-v1/src/owner-browser.css` | tracked | experimental | included-tracked-noncritical | keep | 824 |
 | `eva2/experiments/react-admin-dashboard-v1/src/owner-browser.jsx` | tracked | experimental | included-tracked-noncritical | keep | 4656 |
-| `eva2/experiments/react-admin-dashboard-v1/src/owner-initiatives.jsx` | tracked | experimental | included-tracked-noncritical | keep | 3280 |
+| `eva2/experiments/react-admin-dashboard-v1/src/owner-initiatives.jsx` | tracked | experimental | included-tracked-noncritical | keep | 5717 |
 | `eva2/experiments/react-admin-dashboard-v1/src/project-dashboard.css` | tracked | experimental | included-tracked-noncritical | keep | 25921 |
-| `eva2/experiments/react-admin-dashboard-v1/src/project-dashboard.jsx` | tracked | experimental | included-tracked-noncritical | keep | 24328 |
+| `eva2/experiments/react-admin-dashboard-v1/src/project-dashboard.jsx` | tracked | experimental | included-tracked-noncritical | keep | 24642 |
 | `eva2/experiments/react-admin-dashboard-v1/src/style.css` | tracked | experimental | included-tracked-noncritical | keep | 2887 |
-| `eva2/experiments/react-admin-dashboard-v1/verify-browser.cjs` | tracked | experimental | included-tracked-noncritical | keep | 18601 |
+| `eva2/experiments/react-admin-dashboard-v1/verify-browser.cjs` | tracked | experimental | included-tracked-noncritical | keep | 22464 |
+| `eva2/experiments/react-admin-dashboard-v1/verify-chrome-trial.cjs` | untracked | experimental | blocked-untracked | keep | 3965 |
 | `eva2/experiments/react-admin-dashboard-v1/verify-project-access.mjs` | tracked | experimental | included-tracked-noncritical | keep | 3102 |
 | `eva2/experiments/react-admin-dashboard-v1/verify-project-completion.mjs` | tracked | experimental | included-tracked-noncritical | keep | 2701 |
 | `eva2/experiments/react-admin-dashboard-v1/verify-project-evidence.mjs` | tracked | experimental | included-tracked-noncritical | keep | 5230 |
-| `eva2/experiments/react-admin-dashboard-v1/verify-project.cjs` | tracked | experimental | included-tracked-noncritical | keep | 13591 |
+| `eva2/experiments/react-admin-dashboard-v1/verify-project.cjs` | tracked | experimental | included-tracked-noncritical | keep | 15246 |
 | `eva2/experiments/react-admin-dashboard-v1/verify-scope-decisions.mjs` | tracked | experimental | included-tracked-noncritical | keep | 7982 |
 | `eva2/experiments/react-admin-dashboard-v1/vite.config.mjs` | tracked | experimental | included-tracked-noncritical | keep | 565 |
 | `eva2/experiments/tool01-replacement-acceptance-v1/README.md` | tracked | experimental | included-tracked-noncritical | keep | 2887 |
@@ -1352,6 +1429,7 @@ Schema: `EvaRepositoryInventory/v1`. Brondigest: `29c6fd6f7100ce72e018018ea75263
 | `eva2/reviews/AU-002-telegram-365128c1.md` | untracked | documentation | blocked-untracked | keep | 4633 |
 | `eva2/reviews/AU-007-private-initiative-34ed766.md` | tracked | documentation | included-tracked-noncritical | keep | 2221 |
 | `eva2/reviews/AU-007-technical-closure-f99b5a2.md` | untracked | documentation | blocked-untracked | keep | 3346 |
+| `eva2/reviews/AU-008-current-status-e96b2054.md` | untracked | documentation | blocked-untracked | keep | 3089 |
 | `eva2/reviews/AU-008-private-review-519a03a.md` | untracked | documentation | blocked-untracked | keep | 1839 |
 | `eva2/reviews/CO-001-telegram-live-drafts-proof-review-7b330a3.md` | tracked | documentation | included-tracked-noncritical | keep | 1813 |
 | `eva2/reviews/CO-002-evidence-limitations-2026-09-05.md` | tracked | documentation | included-tracked-noncritical | keep | 8913 |
@@ -1650,8 +1728,8 @@ Schema: `EvaRepositoryInventory/v1`. Brondigest: `29c6fd6f7100ce72e018018ea75263
 | `eva2/src/eva/adapters/api/dashboard_initiatives.py` | tracked | product-runtime | included-tracked-critical | keep | 3613 |
 | `eva2/src/eva/adapters/api/dashboard_memory.py` | untracked | product-runtime | blocked-untracked | keep | 4572 |
 | `eva2/src/eva/adapters/api/dashboard_static/assets/index-BNiWsXjm.js` | tombstone | product-runtime | blocked-unresolved-disposition | decision |  |
+| `eva2/src/eva/adapters/api/dashboard_static/assets/index-Bv4zaQUs.js` | untracked | product-runtime | blocked-untracked | keep | 818614 |
 | `eva2/src/eva/adapters/api/dashboard_static/assets/index-CBXVU8xE.css` | tombstone | product-runtime | blocked-unresolved-disposition | decision |  |
-| `eva2/src/eva/adapters/api/dashboard_static/assets/index-Ca8HuISF.js` | untracked | product-runtime | blocked-untracked | keep | 816598 |
 | `eva2/src/eva/adapters/api/dashboard_static/assets/index-DBiN8cEg.css` | untracked | product-runtime | blocked-untracked | keep | 28629 |
 | `eva2/src/eva/adapters/api/dashboard_static/assets/index-DEVkS50K.js` | tombstone | product-runtime | blocked-unresolved-disposition | decision |  |
 | `eva2/src/eva/adapters/api/dashboard_static/eva-dashboard-assets.json` | tracked | product-runtime | included-tracked-critical | keep | 648 |
@@ -1753,7 +1831,7 @@ Schema: `EvaRepositoryInventory/v1`. Brondigest: `29c6fd6f7100ce72e018018ea75263
 | `eva2/src/eva/adapters/postgres/mcp_connector_registry.py` | tracked | product-runtime | included-tracked-critical | keep | 16272 |
 | `eva2/src/eva/adapters/postgres/memory_outbox.py` | tracked | product-runtime | included-tracked-critical | keep | 20965 |
 | `eva2/src/eva/adapters/postgres/operational_timeline.py` | tracked | product-runtime | included-tracked-critical | keep | 33084 |
-| `eva2/src/eva/adapters/postgres/owner_initiatives.py` | tracked | product-runtime | included-tracked-critical | keep | 10279 |
+| `eva2/src/eva/adapters/postgres/owner_initiatives.py` | tracked | product-runtime | included-tracked-critical | keep | 13221 |
 | `eva2/src/eva/adapters/postgres/people_memory_overview.py` | tracked | product-runtime | included-tracked-critical | keep | 30082 |
 | `eva2/src/eva/adapters/postgres/runtime_resource_usage.py` | tracked | product-runtime | included-tracked-critical | keep | 53656 |
 | `eva2/src/eva/adapters/postgres/schema.py` | tracked | product-runtime | included-tracked-critical | keep | 12258 |
@@ -1817,7 +1895,7 @@ Schema: `EvaRepositoryInventory/v1`. Brondigest: `29c6fd6f7100ce72e018018ea75263
 | `eva2/src/eva/bootstrap/__init__.py` | tracked | product-runtime | included-tracked-critical | keep | 621 |
 | `eva2/src/eva/bootstrap/action_chain_effect_controls.py` | tracked | product-runtime | included-tracked-critical | keep | 5194 |
 | `eva2/src/eva/bootstrap/dashboard_voice.py` | tracked | product-runtime | included-tracked-critical | keep | 9637 |
-| `eva2/src/eva/bootstrap/delegated_work_commands.py` | tracked | product-runtime | included-tracked-critical | keep | 6655 |
+| `eva2/src/eva/bootstrap/delegated_work_commands.py` | tracked | product-runtime | included-tracked-critical | keep | 8064 |
 | `eva2/src/eva/bootstrap/delegated_work_owner_service.py` | tracked | product-runtime | included-tracked-critical | keep | 12170 |
 | `eva2/src/eva/bootstrap/delegated_work_provider.py` | tracked | product-runtime | included-tracked-critical | keep | 13373 |
 | `eva2/src/eva/bootstrap/delegated_work_service.py` | tracked | product-runtime | included-tracked-critical | keep | 11947 |
@@ -1972,7 +2050,7 @@ Schema: `EvaRepositoryInventory/v1`. Brondigest: `29c6fd6f7100ce72e018018ea75263
 | `eva2/tests/benchmark/test_run_preselected_agentbench_dbbench_batch.py` | tracked | verification | included-tracked-critical | keep | 5153 |
 | `eva2/tests/bootstrap/test_commerce_deployment.py` | tracked | verification | included-tracked-critical | keep | 1165 |
 | `eva2/tests/bootstrap/test_dashboard_voice_bootstrap.py` | tracked | verification | included-tracked-critical | keep | 10574 |
-| `eva2/tests/bootstrap/test_delegated_work_commands.py` | tracked | verification | included-tracked-critical | keep | 12223 |
+| `eva2/tests/bootstrap/test_delegated_work_commands.py` | tracked | verification | included-tracked-critical | keep | 15295 |
 | `eva2/tests/bootstrap/test_delegated_work_provider.py` | tracked | verification | included-tracked-critical | keep | 11328 |
 | `eva2/tests/bootstrap/test_delegated_work_service.py` | tracked | verification | included-tracked-critical | keep | 10247 |
 | `eva2/tests/bootstrap/test_durable_goals_deployment.py` | tracked | verification | included-tracked-critical | keep | 754 |
@@ -2079,7 +2157,7 @@ Schema: `EvaRepositoryInventory/v1`. Brondigest: `29c6fd6f7100ce72e018018ea75263
 | `eva2/tests/operations/test_container_vulnerability_gate.py` | tracked | verification | included-tracked-critical | keep | 2897 |
 | `eva2/tests/operations/test_contextforge_gateway_candidate.py` | tracked | verification | included-tracked-critical | keep | 3417 |
 | `eva2/tests/operations/test_core_b_preflight.py` | tracked | verification | included-tracked-critical | keep | 36496 |
-| `eva2/tests/operations/test_current_workboard.py` | tracked | verification | included-tracked-critical | keep | 12856 |
+| `eva2/tests/operations/test_current_workboard.py` | tracked | verification | included-tracked-critical | keep | 13258 |
 | `eva2/tests/operations/test_delegated_work_image.py` | tracked | verification | included-tracked-critical | keep | 2572 |
 | `eva2/tests/operations/test_dependency_update_posture.py` | tracked | verification | included-tracked-critical | keep | 5023 |
 | `eva2/tests/operations/test_discover_telegram_test_accounts.py` | tracked | verification | included-tracked-critical | keep | 1878 |
@@ -2216,7 +2294,7 @@ Schema: `EvaRepositoryInventory/v1`. Brondigest: `29c6fd6f7100ce72e018018ea75263
 | `eva2/tests/postgres/test_memory_repository.py` | tracked | verification | included-tracked-critical | keep | 18353 |
 | `eva2/tests/postgres/test_noor_4d_repository.py` | tracked | verification | included-tracked-critical | keep | 15678 |
 | `eva2/tests/postgres/test_operational_timeline.py` | tracked | verification | included-tracked-critical | keep | 154027 |
-| `eva2/tests/postgres/test_owner_initiatives.py` | tracked | verification | included-tracked-critical | keep | 41232 |
+| `eva2/tests/postgres/test_owner_initiatives.py` | tracked | verification | included-tracked-critical | keep | 46261 |
 | `eva2/tests/postgres/test_owner_memory_delivery.py` | untracked | verification | blocked-untracked | keep | 5676 |
 | `eva2/tests/postgres/test_people_memory_overview.py` | tracked | verification | included-tracked-critical | keep | 28927 |
 | `eva2/tests/postgres/test_playwright_mcp_action_chain.py` | tracked | verification | included-tracked-critical | keep | 31864 |
@@ -2276,7 +2354,7 @@ Schema: `EvaRepositoryInventory/v1`. Brondigest: `29c6fd6f7100ce72e018018ea75263
 | `eva2/tools/check_architecture.py` | tracked | verification-runtime | included-tracked-critical | keep | 18849 |
 | `eva2/tools/check_component_catalog.py` | tracked | verification-runtime | included-tracked-critical | keep | 29858 |
 | `eva2/tools/check_container_vulnerabilities.py` | tracked | verification-runtime | included-tracked-critical | keep | 5158 |
-| `eva2/tools/check_current_workboard.py` | tracked | verification-runtime | included-tracked-critical | keep | 41670 |
+| `eva2/tools/check_current_workboard.py` | tracked | verification-runtime | included-tracked-critical | keep | 43413 |
 | `eva2/tools/check_dependency_update_posture.py` | tracked | verification-runtime | included-tracked-critical | keep | 6376 |
 | `eva2/tools/check_lab36_core_live_evidence.py` | tracked | verification-runtime | included-tracked-critical | keep | 4190 |
 | `eva2/tools/check_living_b_candidate.py` | tracked | verification-runtime | included-tracked-critical | keep | 12781 |
@@ -2355,6 +2433,18 @@ Schema: `EvaRepositoryInventory/v1`. Brondigest: `29c6fd6f7100ce72e018018ea75263
 | `eva2/tools/verify_owner_voice_ingress.py` | tracked | verification-runtime | included-tracked-critical | keep | 5082 |
 | `eva2/tools/verify_postgres_password_file_contract.py` | tracked | verification-runtime | included-tracked-critical | keep | 6090 |
 | `eva2/tools/verify_source_bindings.py` | tracked | verification-runtime | included-tracked-critical | keep | 13859 |
+| `eva2/tools/wakeword_capture/README.md` | untracked | verification-runtime | blocked-untracked | keep | 4628 |
+| `eva2/tools/wakeword_capture/Start-opnameproef.cmd` | untracked | verification-runtime | blocked-untracked | keep | 49 |
+| `eva2/tools/wakeword_capture/app.js` | untracked | verification-runtime | blocked-untracked | keep | 6427 |
+| `eva2/tools/wakeword_capture/browser-lifecycle-qa.cjs` | untracked | verification-runtime | blocked-untracked | keep | 2072 |
+| `eva2/tools/wakeword_capture/browser-qa.cjs` | untracked | verification-runtime | blocked-untracked | keep | 4504 |
+| `eva2/tools/wakeword_capture/capture-worklet.js` | untracked | verification-runtime | blocked-untracked | keep | 593 |
+| `eva2/tools/wakeword_capture/compare_session.py` | untracked | verification-runtime | blocked-untracked | keep | 5310 |
+| `eva2/tools/wakeword_capture/index.html` | untracked | verification-runtime | blocked-untracked | keep | 2559 |
+| `eva2/tools/wakeword_capture/launcher.mjs` | untracked | verification-runtime | blocked-untracked | keep | 597 |
+| `eva2/tools/wakeword_capture/server.mjs` | untracked | verification-runtime | blocked-untracked | keep | 7221 |
+| `eva2/tools/wakeword_capture/server.test.mjs` | untracked | verification-runtime | blocked-untracked | keep | 2693 |
+| `eva2/tools/wakeword_capture/style.css` | untracked | verification-runtime | blocked-untracked | keep | 1584 |
 | `eva2/tools/workspace_provider_access.py` | tracked | verification-runtime | included-tracked-critical | keep | 9688 |
 | `eva2/vendor/dbos-2.30.0-eva1/0001-bounded-sync-datasource.patch` | tracked | repository-config | included-tracked-critical | keep | 10043 |
 | `eva2/vendor/dbos-2.30.0-eva1/README.md` | tracked | repository-config | included-tracked-critical | keep | 2486 |
@@ -2684,10 +2774,16 @@ Schema: `EvaRepositoryInventory/v1`. Brondigest: `29c6fd6f7100ce72e018018ea75263
 | import | `eva2/deploy/chrome-bridge/browser.test.mjs` | `eva2/deploy/chrome-bridge/gate.mjs` |
 | import | `eva2/deploy/chrome-bridge/browser.test.mjs` | `eva2/deploy/chrome-bridge/process.mjs` |
 | import | `eva2/deploy/chrome-bridge/gate.test.mjs` | `eva2/deploy/chrome-bridge/gate.mjs` |
+| import | `eva2/deploy/chrome-bridge/isolated-harness.mjs` | `eva2/deploy/chrome-bridge/server.mjs` |
 | import | `eva2/deploy/chrome-bridge/server.mjs` | `eva2/deploy/chrome-bridge/gate.mjs` |
 | import | `eva2/deploy/chrome-bridge/server.mjs` | `eva2/deploy/chrome-bridge/process.mjs` |
+| import | `eva2/deploy/chrome-bridge/server.mjs` | `eva2/deploy/chrome-bridge/stale-socket.mjs` |
+| import | `eva2/deploy/chrome-bridge/stale-socket.test.mjs` | `eva2/deploy/chrome-bridge/stale-socket.mjs` |
+| import | `eva2/experiments/react-admin-dashboard-v1/memory-presentation.test.mjs` | `eva2/experiments/react-admin-dashboard-v1/memory-presentation.mjs` |
 | import | `eva2/experiments/react-admin-dashboard-v1/process-scope-decision.mjs` | `eva2/experiments/react-admin-dashboard-v1/scope-decisions.mjs` |
+| import | `eva2/experiments/react-admin-dashboard-v1/project-completion.mjs` | `eva2/experiments/react-admin-dashboard-v1/memory-presentation.mjs` |
 | import | `eva2/experiments/react-admin-dashboard-v1/project-completion.mjs` | `eva2/experiments/react-admin-dashboard-v1/scope-decisions.mjs` |
+| import | `eva2/experiments/react-admin-dashboard-v1/project-completion.test.mjs` | `eva2/experiments/react-admin-dashboard-v1/project-completion.mjs` |
 | import | `eva2/experiments/react-admin-dashboard-v1/project-server.mjs` | `eva2/experiments/react-admin-dashboard-v1/project-completion.mjs` |
 | import | `eva2/experiments/react-admin-dashboard-v1/project-server.mjs` | `eva2/experiments/react-admin-dashboard-v1/scope-decisions.mjs` |
 | import | `eva2/experiments/react-admin-dashboard-v1/verify-project-access.mjs` | `eva2/experiments/react-admin-dashboard-v1/project-server.mjs` |
@@ -2697,6 +2793,8 @@ Schema: `EvaRepositoryInventory/v1`. Brondigest: `29c6fd6f7100ce72e018018ea75263
 | import | `eva2/experiments/react-admin-dashboard-v1/verify-scope-decisions.mjs` | `eva2/experiments/react-admin-dashboard-v1/project-completion.mjs` |
 | import | `eva2/experiments/react-admin-dashboard-v1/verify-scope-decisions.mjs` | `eva2/experiments/react-admin-dashboard-v1/scope-decisions.mjs` |
 | import | `eva2/experiments/react-admin-dashboard-v1/vite.config.mjs` | `eva2/experiments/react-admin-dashboard-v1/project-server.mjs` |
+| import | `eva2/tools/wakeword_capture/launcher.mjs` | `eva2/tools/wakeword_capture/server.mjs` |
+| import | `eva2/tools/wakeword_capture/server.test.mjs` | `eva2/tools/wakeword_capture/server.mjs` |
 | import | `scripts/eva-backup.mjs` | `src/config.js` |
 | import | `scripts/eva-backup.mjs` | `src/db.js` |
 | import | `scripts/live-canary.mjs` | `scripts/real-life-scenarios.mjs` |
@@ -3713,6 +3811,8 @@ Schema: `EvaRepositoryInventory/v1`. Brondigest: `29c6fd6f7100ce72e018018ea75263
 | package-test-glob | `package.json` | `test/workspace-generation.test.js` |
 | package-test-glob | `package.json` | `test/workspace-writer-broker-native.test.mjs` |
 | static-load | `eva2/experiments/react-admin-dashboard-v1/index.html` | `eva2/experiments/react-admin-dashboard-v1/src/main.jsx` |
+| static-load | `eva2/tools/wakeword_capture/index.html` | `eva2/tools/wakeword_capture/app.js` |
+| static-load | `eva2/tools/wakeword_capture/index.html` | `eva2/tools/wakeword_capture/style.css` |
 | static-load | `src/web/public/app.js` | `src/web/public/eva.glb` |
 | static-load | `src/web/public/index.html` | `src/web/public/app.js` |
 | static-load | `src/web/public/index.html` | `src/web/public/style.css` |

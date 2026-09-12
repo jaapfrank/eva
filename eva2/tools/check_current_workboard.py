@@ -208,6 +208,27 @@ def _task_inventory_entry(
             ["git", "cat-file", "-e", f"{implementation}:{raw}"],
             cwd=root, capture_output=True,
         )
+        if implementation_object.returncode == 0:
+            # A completed delivery's generated asset can be replaced by a later
+            # committed delivery. Preserve its original ownership and completion;
+            # an uncommitted local deletion is still never sufficient proof.
+            original = subprocess.run(["git", "rev-parse", f"{implementation}:{raw}"],
+                cwd=root, check=True, capture_output=True, text=True).stdout.strip()
+            removals = subprocess.run(["git", "log", "--diff-filter=D", "--format=%H", "HEAD", "--", raw],
+                cwd=root, check=True, capture_output=True, text=True).stdout.splitlines()
+            current = subprocess.run(["git", "cat-file", "-e", f"HEAD:{raw}"], cwd=root, capture_output=True)
+            for removal in removals if current.returncode != 0 else []:
+                parent = removal + "^"
+                prior = subprocess.run(["git", "rev-parse", f"{parent}:{raw}"], cwd=root, capture_output=True, text=True)
+                ancestor = subprocess.run(["git", "merge-base", "--is-ancestor", implementation, parent],
+                    cwd=root, capture_output=True)
+                if prior.returncode or ancestor.returncode or prior.stdout.strip() != original:
+                    continue
+                historical = json.loads(_git_text(root, parent, "docs/eva-repository-inventory.generated.json",
+                    f"{task['id']} later replacement inventory"))
+                entry = next((item for item in historical.get("files", []) if item.get("path") == raw), None)
+                if entry is not None and entry.get("present") is True and entry.get("decision") == "keep":
+                    return entry
         if (deleted != [raw] or base_object[:2] not in (["100644", "blob"], ["100755", "blob"])
                 or implementation_object.returncode == 0):
             raise RuntimeError(f"{label} is not a verified implementation deletion") from error

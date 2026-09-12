@@ -198,9 +198,9 @@
         "checkedAt": "2026-09-12",
         "userOutcomeStatus": "Eigen bijdrage teruggelezen; jouw oordeel open",
         "visibleResult": "Eva koos en voltooide zelf API-toegang is niet hetzelfde als toestemming. Het bestaande bestand is onafhankelijk teruggelezen; IN-02 bevat de volledige tekst.",
-        "remaining": "Jaaps oordeel over deze bijdrage is open. De aanvullende laatste-beoordelingsweergave is klaar voor de afgestemde gezamenlijke uitrol; nog niet live.",
-        "evidenceSummary": "Gewone cyclus12sep: bijdrage00:28:17UTC voltooid, werkelijk bestand866bytes/hashgecontroleerd. Laatste uitgelezen beoordeling15:50:23UTC wachtte op bestaand dagbudget, geen nieuwe modelaanroep.",
-        "evidencePath": "eva2/evidence/product/artifacts/AU-008-api-toegang-en-toestemming-2026-09-12.md"
+        "remaining": "Alleen Jaaps IN-02-oordeel over nut en passendheid is open. AU-008 is technisch afgerond en live; herhaald gezinsnut en brede zelfstandigheid zijn niet hiermee bewezen.",
+        "evidenceSummary": "Live API en browser12sep16:52UTC tonen laatste beoordeling met budgetwacht en bestaande afgeronde bijdrage. Geen nieuwe modelaanroepen of gegevensmutaties.",
+        "evidencePath": "eva2/evidence/product/AU-008-current-review-delivery-2026-09-12.json"
       },
       "observationHistory": [
         {

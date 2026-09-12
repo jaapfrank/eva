@@ -274,12 +274,12 @@
     }
   ],
   "summary": {
-    "files": 2467,
-    "present": 2464,
+    "files": 2512,
+    "present": 2509,
     "tracked": 2336,
-    "untracked": 128,
+    "untracked": 173,
     "tombstones": 3,
-    "policyErrors": 143
+    "policyErrors": 188
   },
   "classificationRules": [
     {
@@ -315,27 +315,27 @@
     {
       "id": "eva2-verification",
       "role": "verification",
-      "matchCount": 936
+      "matchCount": 950
     },
     {
       "id": "eva2-documentation",
       "role": "documentation",
-      "matchCount": 147
+      "matchCount": 149
     },
     {
       "id": "eva2-deployment",
       "role": "deployment",
-      "matchCount": 124
+      "matchCount": 137
     },
     {
       "id": "eva2-experimental",
       "role": "experimental",
-      "matchCount": 224
+      "matchCount": 228
     },
     {
       "id": "eva2-verification-runtime",
       "role": "verification-runtime",
-      "matchCount": 93
+      "matchCount": 105
     },
     {
       "id": "eva2-runtime",
@@ -480,6 +480,14 @@
     },
     {
       "code": "UNTRACKED_REPOSITORY_FILE",
+      "path": "eva2/deploy/chrome-bridge/.playwright-mcp/page-2026-09-11T19-04-36-766Z.yml"
+    },
+    {
+      "code": "UNTRACKED_REPOSITORY_FILE",
+      "path": "eva2/deploy/chrome-bridge/.playwright-mcp/page-2026-09-11T19-04-37-658Z.yml"
+    },
+    {
+      "code": "UNTRACKED_REPOSITORY_FILE",
       "path": "eva2/deploy/chrome-bridge/browser-fixture.cjs"
     },
     {
@@ -493,6 +501,10 @@
     {
       "code": "UNTRACKED_REPOSITORY_FILE",
       "path": "eva2/deploy/chrome-bridge/gate.test.mjs"
+    },
+    {
+      "code": "UNTRACKED_REPOSITORY_FILE",
+      "path": "eva2/deploy/chrome-bridge/isolated-harness.mjs"
     },
     {
       "code": "UNTRACKED_REPOSITORY_FILE",
@@ -512,6 +524,10 @@
     },
     {
       "code": "UNTRACKED_REPOSITORY_FILE",
+      "path": "eva2/deploy/chrome-bridge/proxy.compose.yml"
+    },
+    {
+      "code": "UNTRACKED_REPOSITORY_FILE",
       "path": "eva2/deploy/chrome-bridge/proxy.py"
     },
     {
@@ -524,7 +540,47 @@
     },
     {
       "code": "UNTRACKED_REPOSITORY_FILE",
+      "path": "eva2/deploy/chrome-bridge/stale-socket.mjs"
+    },
+    {
+      "code": "UNTRACKED_REPOSITORY_FILE",
+      "path": "eva2/deploy/chrome-bridge/stale-socket.test.mjs"
+    },
+    {
+      "code": "UNTRACKED_REPOSITORY_FILE",
+      "path": "eva2/deploy/chrome-bridge/test_proxy_health.py"
+    },
+    {
+      "code": "UNTRACKED_REPOSITORY_FILE",
+      "path": "eva2/deploy/chrome-bridge/test_proxy_output.py"
+    },
+    {
+      "code": "UNTRACKED_REPOSITORY_FILE",
+      "path": "eva2/deploy/chrome-bridge/test_proxy_peer.py"
+    },
+    {
+      "code": "UNTRACKED_REPOSITORY_FILE",
+      "path": "eva2/deploy/chrome-bridge/trial.html"
+    },
+    {
+      "code": "UNTRACKED_REPOSITORY_FILE",
       "path": "eva2/deploy/chrome-bridge/worker.cjs"
+    },
+    {
+      "code": "UNTRACKED_REPOSITORY_FILE",
+      "path": "eva2/deploy/dashboard/eva2-local-owner.service"
+    },
+    {
+      "code": "UNTRACKED_REPOSITORY_FILE",
+      "path": "eva2/deploy/dashboard/local-owner.mjs"
+    },
+    {
+      "code": "UNTRACKED_REPOSITORY_FILE",
+      "path": "eva2/deploy/dashboard/README.md"
+    },
+    {
+      "code": "UNTRACKED_REPOSITORY_FILE",
+      "path": "eva2/design/product/AU-002-owner-trial-2026-09-12.md"
     },
     {
       "code": "UNTRACKED_REPOSITORY_FILE",
@@ -844,6 +900,18 @@
     },
     {
       "code": "UNTRACKED_REPOSITORY_FILE",
+      "path": "eva2/evidence/product/artifacts/AU-008-api-toegang-en-toestemming-2026-09-12.md"
+    },
+    {
+      "code": "UNTRACKED_REPOSITORY_FILE",
+      "path": "eva2/evidence/product/AU-002-AU-008-combined-image-2026-09-12.json"
+    },
+    {
+      "code": "UNTRACKED_REPOSITORY_FILE",
+      "path": "eva2/evidence/product/AU-002-AU-008-combined-image-review-2026-09-12.json"
+    },
+    {
+      "code": "UNTRACKED_REPOSITORY_FILE",
       "path": "eva2/evidence/product/AU-002-candidate-image-2026-09-11.json"
     },
     {
@@ -876,7 +944,23 @@
     },
     {
       "code": "UNTRACKED_REPOSITORY_FILE",
+      "path": "eva2/evidence/product/AU-002-readable-status-live-2026-09-12.json"
+    },
+    {
+      "code": "UNTRACKED_REPOSITORY_FILE",
+      "path": "eva2/evidence/product/AU-002-status-result-candidate-2026-09-12.json"
+    },
+    {
+      "code": "UNTRACKED_REPOSITORY_FILE",
+      "path": "eva2/evidence/product/AU-002-status-result-review-2026-09-12.json"
+    },
+    {
+      "code": "UNTRACKED_REPOSITORY_FILE",
       "path": "eva2/evidence/product/AU-002-telegram-lifecycle-2026-09-11.json"
+    },
+    {
+      "code": "UNTRACKED_REPOSITORY_FILE",
+      "path": "eva2/evidence/product/AU-008-current-review-delivery-2026-09-12.json"
     },
     {
       "code": "UNTRACKED_REPOSITORY_FILE",
@@ -888,7 +972,19 @@
     },
     {
       "code": "UNTRACKED_REPOSITORY_FILE",
+      "path": "eva2/evidence/product/chrome-isolated-route-2026-09-12.json"
+    },
+    {
+      "code": "UNTRACKED_REPOSITORY_FILE",
+      "path": "eva2/evidence/product/chrome-live-owner-trial-2026-09-11.json"
+    },
+    {
+      "code": "UNTRACKED_REPOSITORY_FILE",
       "path": "eva2/evidence/product/chrome-normal-route-2026-09-11.json"
+    },
+    {
+      "code": "UNTRACKED_REPOSITORY_FILE",
+      "path": "eva2/evidence/product/chrome-proxy-recovery-2026-09-12.json"
     },
     {
       "code": "UNTRACKED_REPOSITORY_FILE",
@@ -897,6 +993,14 @@
     {
       "code": "UNTRACKED_REPOSITORY_FILE",
       "path": "eva2/evidence/product/CO-004-CO-005-owner-memory-controls-2026-09-11.json"
+    },
+    {
+      "code": "UNTRACKED_REPOSITORY_FILE",
+      "path": "eva2/evidence/product/GE-02-owner-acceptance-2026-09-12.json"
+    },
+    {
+      "code": "UNTRACKED_REPOSITORY_FILE",
+      "path": "eva2/evidence/product/recovery-observation-2026-09-12.json"
     },
     {
       "code": "UNTRACKED_REPOSITORY_FILE",
@@ -924,7 +1028,31 @@
     },
     {
       "code": "UNTRACKED_REPOSITORY_FILE",
+      "path": "eva2/evidence/product/voice-phone-installation-2026-09-12.json"
+    },
+    {
+      "code": "UNTRACKED_REPOSITORY_FILE",
+      "path": "eva2/evidence/product/voice-phone-installed-hashes-2026-09-12.json"
+    },
+    {
+      "code": "UNTRACKED_REPOSITORY_FILE",
       "path": "eva2/evidence/product/voice-work-receipt-2026-09-11.json"
+    },
+    {
+      "code": "UNTRACKED_REPOSITORY_FILE",
+      "path": "eva2/experiments/react-admin-dashboard-v1/memory-presentation.mjs"
+    },
+    {
+      "code": "UNTRACKED_REPOSITORY_FILE",
+      "path": "eva2/experiments/react-admin-dashboard-v1/memory-presentation.test.mjs"
+    },
+    {
+      "code": "UNTRACKED_REPOSITORY_FILE",
+      "path": "eva2/experiments/react-admin-dashboard-v1/project-completion.test.mjs"
+    },
+    {
+      "code": "UNTRACKED_REPOSITORY_FILE",
+      "path": "eva2/experiments/react-admin-dashboard-v1/verify-chrome-trial.cjs"
     },
     {
       "code": "UNTRACKED_REPOSITORY_FILE",
@@ -948,6 +1076,10 @@
     },
     {
       "code": "UNTRACKED_REPOSITORY_FILE",
+      "path": "eva2/reviews/AU-008-current-status-e96b2054.md"
+    },
+    {
+      "code": "UNTRACKED_REPOSITORY_FILE",
       "path": "eva2/reviews/AU-008-private-review-519a03a.md"
     },
     {
@@ -960,7 +1092,7 @@
     },
     {
       "code": "UNTRACKED_REPOSITORY_FILE",
-      "path": "eva2/src/eva/adapters/api/dashboard_static/assets/index-Ca8HuISF.js"
+      "path": "eva2/src/eva/adapters/api/dashboard_static/assets/index-Bv4zaQUs.js"
     },
     {
       "code": "UNTRACKED_REPOSITORY_FILE",
@@ -985,6 +1117,54 @@
     {
       "code": "UNTRACKED_REPOSITORY_FILE",
       "path": "eva2/tests/voice_service/test_work_receipt.py"
+    },
+    {
+      "code": "UNTRACKED_REPOSITORY_FILE",
+      "path": "eva2/tools/wakeword_capture/app.js"
+    },
+    {
+      "code": "UNTRACKED_REPOSITORY_FILE",
+      "path": "eva2/tools/wakeword_capture/browser-lifecycle-qa.cjs"
+    },
+    {
+      "code": "UNTRACKED_REPOSITORY_FILE",
+      "path": "eva2/tools/wakeword_capture/browser-qa.cjs"
+    },
+    {
+      "code": "UNTRACKED_REPOSITORY_FILE",
+      "path": "eva2/tools/wakeword_capture/capture-worklet.js"
+    },
+    {
+      "code": "UNTRACKED_REPOSITORY_FILE",
+      "path": "eva2/tools/wakeword_capture/compare_session.py"
+    },
+    {
+      "code": "UNTRACKED_REPOSITORY_FILE",
+      "path": "eva2/tools/wakeword_capture/index.html"
+    },
+    {
+      "code": "UNTRACKED_REPOSITORY_FILE",
+      "path": "eva2/tools/wakeword_capture/launcher.mjs"
+    },
+    {
+      "code": "UNTRACKED_REPOSITORY_FILE",
+      "path": "eva2/tools/wakeword_capture/README.md"
+    },
+    {
+      "code": "UNTRACKED_REPOSITORY_FILE",
+      "path": "eva2/tools/wakeword_capture/server.mjs"
+    },
+    {
+      "code": "UNTRACKED_REPOSITORY_FILE",
+      "path": "eva2/tools/wakeword_capture/server.test.mjs"
+    },
+    {
+      "code": "UNTRACKED_REPOSITORY_FILE",
+      "path": "eva2/tools/wakeword_capture/Start-opnameproef.cmd"
+    },
+    {
+      "code": "UNTRACKED_REPOSITORY_FILE",
+      "path": "eva2/tools/wakeword_capture/style.css"
     }
   ],
   "edges": [
@@ -1014,6 +1194,12 @@
     },
     {
       "kind": "import",
+      "from": "eva2/deploy/chrome-bridge/isolated-harness.mjs",
+      "to": "eva2/deploy/chrome-bridge/server.mjs",
+      "evidence": "./server.mjs"
+    },
+    {
+      "kind": "import",
       "from": "eva2/deploy/chrome-bridge/server.mjs",
       "to": "eva2/deploy/chrome-bridge/gate.mjs",
       "evidence": "./gate.mjs"
@@ -1026,6 +1212,24 @@
     },
     {
       "kind": "import",
+      "from": "eva2/deploy/chrome-bridge/server.mjs",
+      "to": "eva2/deploy/chrome-bridge/stale-socket.mjs",
+      "evidence": "./stale-socket.mjs"
+    },
+    {
+      "kind": "import",
+      "from": "eva2/deploy/chrome-bridge/stale-socket.test.mjs",
+      "to": "eva2/deploy/chrome-bridge/stale-socket.mjs",
+      "evidence": "./stale-socket.mjs"
+    },
+    {
+      "kind": "import",
+      "from": "eva2/experiments/react-admin-dashboard-v1/memory-presentation.test.mjs",
+      "to": "eva2/experiments/react-admin-dashboard-v1/memory-presentation.mjs",
+      "evidence": "./memory-presentation.mjs"
+    },
+    {
+      "kind": "import",
       "from": "eva2/experiments/react-admin-dashboard-v1/process-scope-decision.mjs",
       "to": "eva2/experiments/react-admin-dashboard-v1/scope-decisions.mjs",
       "evidence": "./scope-decisions.mjs"
@@ -1033,8 +1237,20 @@
     {
       "kind": "import",
       "from": "eva2/experiments/react-admin-dashboard-v1/project-completion.mjs",
+      "to": "eva2/experiments/react-admin-dashboard-v1/memory-presentation.mjs",
+      "evidence": "./memory-presentation.mjs"
+    },
+    {
+      "kind": "import",
+      "from": "eva2/experiments/react-admin-dashboard-v1/project-completion.mjs",
       "to": "eva2/experiments/react-admin-dashboard-v1/scope-decisions.mjs",
       "evidence": "./scope-decisions.mjs"
+    },
+    {
+      "kind": "import",
+      "from": "eva2/experiments/react-admin-dashboard-v1/project-completion.test.mjs",
+      "to": "eva2/experiments/react-admin-dashboard-v1/project-completion.mjs",
+      "evidence": "./project-completion.mjs"
     },
     {
       "kind": "import",
@@ -1089,6 +1305,18 @@
       "from": "eva2/experiments/react-admin-dashboard-v1/vite.config.mjs",
       "to": "eva2/experiments/react-admin-dashboard-v1/project-server.mjs",
       "evidence": "./project-server.mjs"
+    },
+    {
+      "kind": "import",
+      "from": "eva2/tools/wakeword_capture/launcher.mjs",
+      "to": "eva2/tools/wakeword_capture/server.mjs",
+      "evidence": "./server.mjs"
+    },
+    {
+      "kind": "import",
+      "from": "eva2/tools/wakeword_capture/server.test.mjs",
+      "to": "eva2/tools/wakeword_capture/server.mjs",
+      "evidence": "./server.mjs"
     },
     {
       "kind": "import",
@@ -7188,6 +7416,18 @@
     },
     {
       "kind": "static-load",
+      "from": "eva2/tools/wakeword_capture/index.html",
+      "to": "eva2/tools/wakeword_capture/app.js",
+      "evidence": "src=\"/app.js\""
+    },
+    {
+      "kind": "static-load",
+      "from": "eva2/tools/wakeword_capture/index.html",
+      "to": "eva2/tools/wakeword_capture/style.css",
+      "evidence": "href=\"/style.css\""
+    },
+    {
+      "kind": "static-load",
       "from": "src/web/public/app.js",
       "to": "src/web/public/eva.glb",
       "evidence": ".load('/eva.glb'"
@@ -10622,7 +10862,7 @@
       "path": "docs/eva-repository-inventory.generated.json",
       "gitState": "tracked",
       "present": true,
-      "bytes": 2804741,
+      "bytes": 2859636,
       "contentSha256": "32591e23fa2eb53a038d95e726ba09edd0405306f38c5283a36a2b6d3010254d",
       "hashMode": "canonical-self-reference-redacted",
       "role": "generated",
@@ -10655,7 +10895,7 @@
       "path": "docs/eva-repository-inventory.generated.md",
       "gitState": "tracked",
       "present": true,
-      "bytes": 427767,
+      "bytes": 438380,
       "contentSha256": "2f4f8486464cbb9713b749dc898f265093d0853699f1da1b4eb3dd1625c1b2d2",
       "hashMode": "canonical-self-reference-redacted",
       "role": "generated",
@@ -11414,8 +11654,8 @@
       "path": "eva2/PROJECTDOEL.md",
       "gitState": "tracked",
       "present": true,
-      "bytes": 16880,
-      "contentSha256": "d7955839256fdbd88648c84bbcfb9abf3e904603fdde08d5b132f61331d2b77b",
+      "bytes": 16849,
+      "contentSha256": "dd1931dc2a292ab5126d8ce411d7682a3dcbcf3949979d6fa831a3768b99ebbc",
       "hashMode": "exact-bytes",
       "role": "documentation",
       "roleRuleId": "eva2-documentation",
@@ -11631,8 +11871,8 @@
       "path": "eva2/WERKBORD.md",
       "gitState": "tracked",
       "present": true,
-      "bytes": 19985,
-      "contentSha256": "55eb58509e75ce1541bbcc9dc325b8b197e8aee02777129b4c0e8f08addabfc6",
+      "bytes": 19248,
+      "contentSha256": "dcf9baa12cd297e51fcb017bf8fb3cf36ae541b50f331af4f0fcc50de6a92afa",
       "hashMode": "exact-bytes",
       "role": "documentation",
       "roleRuleId": "eva2-documentation",
@@ -12392,11 +12632,81 @@
       }
     },
     {
+      "path": "eva2/deploy/chrome-bridge/.playwright-mcp/page-2026-09-11T19-04-36-766Z.yml",
+      "gitState": "untracked",
+      "present": true,
+      "bytes": 32203,
+      "contentSha256": "4bb53db6b80b5dfb4304c7f1349f17fa294ef7c040e19f96efd2b2a3408e6f35",
+      "hashMode": "exact-bytes",
+      "role": "deployment",
+      "roleRuleId": "eva2-deployment",
+      "matchingRuleIds": [
+        "eva2-deployment"
+      ],
+      "owner": "deployment",
+      "inputs": [
+        "operator, systemd or repair request"
+      ],
+      "outputs": [
+        "installed service, receipt or lifecycle transition"
+      ],
+      "state": [
+        "systemd and release state"
+      ],
+      "effects": [
+        "may install, promote, restart or recover runtime files"
+      ],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": false,
+        "runtimeCritical": true,
+        "status": "blocked-untracked"
+      }
+    },
+    {
+      "path": "eva2/deploy/chrome-bridge/.playwright-mcp/page-2026-09-11T19-04-37-658Z.yml",
+      "gitState": "untracked",
+      "present": true,
+      "bytes": 22282,
+      "contentSha256": "f054e0273ba446b6e3c1e4be15d7cce149d598e95cb187b79c083c8f017a94cb",
+      "hashMode": "exact-bytes",
+      "role": "deployment",
+      "roleRuleId": "eva2-deployment",
+      "matchingRuleIds": [
+        "eva2-deployment"
+      ],
+      "owner": "deployment",
+      "inputs": [
+        "operator, systemd or repair request"
+      ],
+      "outputs": [
+        "installed service, receipt or lifecycle transition"
+      ],
+      "state": [
+        "systemd and release state"
+      ],
+      "effects": [
+        "may install, promote, restart or recover runtime files"
+      ],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": false,
+        "runtimeCritical": true,
+        "status": "blocked-untracked"
+      }
+    },
+    {
       "path": "eva2/deploy/chrome-bridge/README.md",
       "gitState": "untracked",
       "present": true,
-      "bytes": 5351,
-      "contentSha256": "71f2c705c688eff54872c5d008dfdf5e47d3f2ba608f822ba6fcb73572ed2124",
+      "bytes": 9566,
+      "contentSha256": "20001668c75b27a5e82b31a311bfbba092861c72fec85b7e29a686bf74931cab",
       "hashMode": "exact-bytes",
       "role": "deployment",
       "roleRuleId": "eva2-deployment",
@@ -12430,8 +12740,8 @@
       "path": "eva2/deploy/chrome-bridge/browser-fixture.cjs",
       "gitState": "untracked",
       "present": true,
-      "bytes": 483,
-      "contentSha256": "2bd4ed8d25f9d371a8b932a9d20c575f754e79faed97cef692b15a42ce9131e8",
+      "bytes": 623,
+      "contentSha256": "38ae1afbb76af67c2ddf6322d08e48cf737c174c069db2a68257159cbd966518",
       "hashMode": "exact-bytes",
       "role": "deployment",
       "roleRuleId": "eva2-deployment",
@@ -12550,6 +12860,41 @@
       "present": true,
       "bytes": 2631,
       "contentSha256": "93b52d02a6becf981f91f47849834f2f225bf48c79b64700cf3dd0e511297c80",
+      "hashMode": "exact-bytes",
+      "role": "deployment",
+      "roleRuleId": "eva2-deployment",
+      "matchingRuleIds": [
+        "eva2-deployment"
+      ],
+      "owner": "deployment",
+      "inputs": [
+        "operator, systemd or repair request"
+      ],
+      "outputs": [
+        "installed service, receipt or lifecycle transition"
+      ],
+      "state": [
+        "systemd and release state"
+      ],
+      "effects": [
+        "may install, promote, restart or recover runtime files"
+      ],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": false,
+        "runtimeCritical": true,
+        "status": "blocked-untracked"
+      }
+    },
+    {
+      "path": "eva2/deploy/chrome-bridge/isolated-harness.mjs",
+      "gitState": "untracked",
+      "present": true,
+      "bytes": 2997,
+      "contentSha256": "99b967bdc00d36bf5c8699ffdf35354c7746724c8ca79c34edb35fbf4e90cca2",
       "hashMode": "exact-bytes",
       "role": "deployment",
       "roleRuleId": "eva2-deployment",
@@ -12729,11 +13074,46 @@
       }
     },
     {
+      "path": "eva2/deploy/chrome-bridge/proxy.compose.yml",
+      "gitState": "untracked",
+      "present": true,
+      "bytes": 1033,
+      "contentSha256": "b5bf5481ccde3a40f08040010bbccc4d78a75ac4442b4f270343a13bcbb2bdc5",
+      "hashMode": "exact-bytes",
+      "role": "deployment",
+      "roleRuleId": "eva2-deployment",
+      "matchingRuleIds": [
+        "eva2-deployment"
+      ],
+      "owner": "deployment",
+      "inputs": [
+        "operator, systemd or repair request"
+      ],
+      "outputs": [
+        "installed service, receipt or lifecycle transition"
+      ],
+      "state": [
+        "systemd and release state"
+      ],
+      "effects": [
+        "may install, promote, restart or recover runtime files"
+      ],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": false,
+        "runtimeCritical": true,
+        "status": "blocked-untracked"
+      }
+    },
+    {
       "path": "eva2/deploy/chrome-bridge/proxy.py",
       "gitState": "untracked",
       "present": true,
-      "bytes": 1829,
-      "contentSha256": "2e939cfa8d931bda5ce22786a675ea63bfd6bd322f65e25a02f73271a776a4b1",
+      "bytes": 5994,
+      "contentSha256": "6e65d46866617bd38a7893bc8c0e11e4b93793ea803432e60f0702f6efa483bc",
       "hashMode": "exact-bytes",
       "role": "deployment",
       "roleRuleId": "eva2-deployment",
@@ -12767,8 +13147,232 @@
       "path": "eva2/deploy/chrome-bridge/server.mjs",
       "gitState": "untracked",
       "present": true,
-      "bytes": 4673,
-      "contentSha256": "57da542deac297b535c84928b37f4c266366a573595e0dd80825541d76a170e2",
+      "bytes": 5028,
+      "contentSha256": "7824a08914104412394c86714f087bb7f6d049fc51e785cc6ca6a29badb3f834",
+      "hashMode": "exact-bytes",
+      "role": "deployment",
+      "roleRuleId": "eva2-deployment",
+      "matchingRuleIds": [
+        "eva2-deployment"
+      ],
+      "owner": "deployment",
+      "inputs": [
+        "operator, systemd or repair request"
+      ],
+      "outputs": [
+        "installed service, receipt or lifecycle transition"
+      ],
+      "state": [
+        "systemd and release state"
+      ],
+      "effects": [
+        "may install, promote, restart or recover runtime files"
+      ],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [
+        {
+          "kind": "import",
+          "from": "eva2/deploy/chrome-bridge/isolated-harness.mjs"
+        }
+      ],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": false,
+        "runtimeCritical": true,
+        "status": "blocked-untracked"
+      }
+    },
+    {
+      "path": "eva2/deploy/chrome-bridge/stale-socket.mjs",
+      "gitState": "untracked",
+      "present": true,
+      "bytes": 1250,
+      "contentSha256": "c18b17f33d23d68fe7caca3bb755d26646e62f2ab33db704f2bd0569b06ed462",
+      "hashMode": "exact-bytes",
+      "role": "deployment",
+      "roleRuleId": "eva2-deployment",
+      "matchingRuleIds": [
+        "eva2-deployment"
+      ],
+      "owner": "deployment",
+      "inputs": [
+        "operator, systemd or repair request"
+      ],
+      "outputs": [
+        "installed service, receipt or lifecycle transition"
+      ],
+      "state": [
+        "systemd and release state"
+      ],
+      "effects": [
+        "may install, promote, restart or recover runtime files"
+      ],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [
+        {
+          "kind": "import",
+          "from": "eva2/deploy/chrome-bridge/server.mjs"
+        },
+        {
+          "kind": "import",
+          "from": "eva2/deploy/chrome-bridge/stale-socket.test.mjs"
+        }
+      ],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": false,
+        "runtimeCritical": true,
+        "status": "blocked-untracked"
+      }
+    },
+    {
+      "path": "eva2/deploy/chrome-bridge/stale-socket.test.mjs",
+      "gitState": "untracked",
+      "present": true,
+      "bytes": 1456,
+      "contentSha256": "11430d5788b317a8d97b7f95863faf8a10a286c86200783ac84d8077d3fa9c37",
+      "hashMode": "exact-bytes",
+      "role": "deployment",
+      "roleRuleId": "eva2-deployment",
+      "matchingRuleIds": [
+        "eva2-deployment"
+      ],
+      "owner": "deployment",
+      "inputs": [
+        "operator, systemd or repair request"
+      ],
+      "outputs": [
+        "installed service, receipt or lifecycle transition"
+      ],
+      "state": [
+        "systemd and release state"
+      ],
+      "effects": [
+        "may install, promote, restart or recover runtime files"
+      ],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": false,
+        "runtimeCritical": true,
+        "status": "blocked-untracked"
+      }
+    },
+    {
+      "path": "eva2/deploy/chrome-bridge/test_proxy_health.py",
+      "gitState": "untracked",
+      "present": true,
+      "bytes": 2003,
+      "contentSha256": "95c11e955b45d83fcbec0153880221ea04016f88a0ea524567e4b404d9bc8116",
+      "hashMode": "exact-bytes",
+      "role": "deployment",
+      "roleRuleId": "eva2-deployment",
+      "matchingRuleIds": [
+        "eva2-deployment"
+      ],
+      "owner": "deployment",
+      "inputs": [
+        "operator, systemd or repair request"
+      ],
+      "outputs": [
+        "installed service, receipt or lifecycle transition"
+      ],
+      "state": [
+        "systemd and release state"
+      ],
+      "effects": [
+        "may install, promote, restart or recover runtime files"
+      ],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": false,
+        "runtimeCritical": true,
+        "status": "blocked-untracked"
+      }
+    },
+    {
+      "path": "eva2/deploy/chrome-bridge/test_proxy_output.py",
+      "gitState": "untracked",
+      "present": true,
+      "bytes": 1899,
+      "contentSha256": "980dd27d0004a83416badbb545a65fbf2bb745ba57a37e6dd32afe8aebd78b22",
+      "hashMode": "exact-bytes",
+      "role": "deployment",
+      "roleRuleId": "eva2-deployment",
+      "matchingRuleIds": [
+        "eva2-deployment"
+      ],
+      "owner": "deployment",
+      "inputs": [
+        "operator, systemd or repair request"
+      ],
+      "outputs": [
+        "installed service, receipt or lifecycle transition"
+      ],
+      "state": [
+        "systemd and release state"
+      ],
+      "effects": [
+        "may install, promote, restart or recover runtime files"
+      ],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": false,
+        "runtimeCritical": true,
+        "status": "blocked-untracked"
+      }
+    },
+    {
+      "path": "eva2/deploy/chrome-bridge/test_proxy_peer.py",
+      "gitState": "untracked",
+      "present": true,
+      "bytes": 1400,
+      "contentSha256": "792c98d7f4e91e4ec7ea06a958003f7e8d83765919618b3d60fe57ae12c15294",
+      "hashMode": "exact-bytes",
+      "role": "deployment",
+      "roleRuleId": "eva2-deployment",
+      "matchingRuleIds": [
+        "eva2-deployment"
+      ],
+      "owner": "deployment",
+      "inputs": [
+        "operator, systemd or repair request"
+      ],
+      "outputs": [
+        "installed service, receipt or lifecycle transition"
+      ],
+      "state": [
+        "systemd and release state"
+      ],
+      "effects": [
+        "may install, promote, restart or recover runtime files"
+      ],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": false,
+        "runtimeCritical": true,
+        "status": "blocked-untracked"
+      }
+    },
+    {
+      "path": "eva2/deploy/chrome-bridge/trial.html",
+      "gitState": "untracked",
+      "present": true,
+      "bytes": 6425,
+      "contentSha256": "105782baf231a105f2c129bef5f0a8ec162e91a95c95a71ae11691a2d7022b1a",
       "hashMode": "exact-bytes",
       "role": "deployment",
       "roleRuleId": "eva2-deployment",
@@ -12802,8 +13406,8 @@
       "path": "eva2/deploy/chrome-bridge/worker.cjs",
       "gitState": "untracked",
       "present": true,
-      "bytes": 4284,
-      "contentSha256": "94f4a4ebbd70d1ee12c0d26a81a5839de09652c5767d777b679ba5734a9e39d9",
+      "bytes": 4304,
+      "contentSha256": "70a4b798490f3692dbf357ba7a7ad154d6b7f2a9fcda9ec2a1620a5291baddcf",
       "hashMode": "exact-bytes",
       "role": "deployment",
       "roleRuleId": "eva2-deployment",
@@ -12827,6 +13431,78 @@
       "decisionReason": "active repository input or evidence",
       "consumers": [],
       "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": false,
+        "runtimeCritical": true,
+        "status": "blocked-untracked"
+      }
+    },
+    {
+      "path": "eva2/deploy/dashboard/README.md",
+      "gitState": "untracked",
+      "present": true,
+      "bytes": 1249,
+      "contentSha256": "de06d42399f6089cd9d5d038bf52fa040e0137b3bddae118e0d243435cb43cae",
+      "hashMode": "exact-bytes",
+      "role": "deployment",
+      "roleRuleId": "eva2-deployment",
+      "matchingRuleIds": [
+        "eva2-deployment"
+      ],
+      "owner": "deployment",
+      "inputs": [
+        "operator, systemd or repair request"
+      ],
+      "outputs": [
+        "installed service, receipt or lifecycle transition"
+      ],
+      "state": [
+        "systemd and release state"
+      ],
+      "effects": [
+        "may install, promote, restart or recover runtime files"
+      ],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": false,
+        "runtimeCritical": true,
+        "status": "blocked-untracked"
+      }
+    },
+    {
+      "path": "eva2/deploy/dashboard/eva2-local-owner.service",
+      "gitState": "untracked",
+      "present": true,
+      "bytes": 454,
+      "contentSha256": "874ac34fb6d561279b38c8a21a141ec2eb0dd908fad2931805d618b360d9a27b",
+      "hashMode": "exact-bytes",
+      "role": "deployment",
+      "roleRuleId": "eva2-deployment",
+      "matchingRuleIds": [
+        "eva2-deployment"
+      ],
+      "owner": "deployment",
+      "inputs": [
+        "operator, systemd or repair request"
+      ],
+      "outputs": [
+        "installed service, receipt or lifecycle transition"
+      ],
+      "state": [
+        "systemd and release state"
+      ],
+      "effects": [
+        "may install, promote, restart or recover runtime files"
+      ],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [],
+      "entrypointEvidence": [
+        "systemd-unit"
+      ],
       "release": {
         "includedInTrackedRelease": false,
         "runtimeCritical": true,
@@ -12868,6 +13544,41 @@
         "includedInTrackedRelease": true,
         "runtimeCritical": true,
         "status": "included-tracked-critical"
+      }
+    },
+    {
+      "path": "eva2/deploy/dashboard/local-owner.mjs",
+      "gitState": "untracked",
+      "present": true,
+      "bytes": 3486,
+      "contentSha256": "cd2fa0046d2215cfb68ad8b2f94ceb12dc3cf8a67c3a50585a609f64a2a54fa9",
+      "hashMode": "exact-bytes",
+      "role": "deployment",
+      "roleRuleId": "eva2-deployment",
+      "matchingRuleIds": [
+        "eva2-deployment"
+      ],
+      "owner": "deployment",
+      "inputs": [
+        "operator, systemd or repair request"
+      ],
+      "outputs": [
+        "installed service, receipt or lifecycle transition"
+      ],
+      "state": [
+        "systemd and release state"
+      ],
+      "effects": [
+        "may install, promote, restart or recover runtime files"
+      ],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": false,
+        "runtimeCritical": true,
+        "status": "blocked-untracked"
       }
     },
     {
@@ -13543,8 +14254,8 @@
       "path": "eva2/deploy/home-assistant/owner-phone.md",
       "gitState": "tracked",
       "present": true,
-      "bytes": 3045,
-      "contentSha256": "ec9ee08b7d617482cf1cb38918793f1182cf5095fd6e82226913baab9d3e2109",
+      "bytes": 4110,
+      "contentSha256": "69ac2f5f1278b51808894c4591229eda9c6a3e6fa0389b83b9398a744a42bbe1",
       "hashMode": "exact-bytes",
       "role": "deployment",
       "roleRuleId": "eva2-deployment",
@@ -15925,8 +16636,8 @@
       "path": "eva2/deploy/voice-session/README.md",
       "gitState": "tracked",
       "present": true,
-      "bytes": 5443,
-      "contentSha256": "384019bf6a77f611a5b67313692c0b5cf934f494aee19f66d434e7b30f498a33",
+      "bytes": 5637,
+      "contentSha256": "6c669515ed5d9b18e59ddc41746e4d603bd5fa7f23ceb0124c1fbc4d78e9b869",
       "hashMode": "exact-bytes",
       "role": "deployment",
       "roleRuleId": "eva2-deployment",
@@ -16411,6 +17122,37 @@
       }
     },
     {
+      "path": "eva2/design/product/AU-002-owner-trial-2026-09-12.md",
+      "gitState": "untracked",
+      "present": true,
+      "bytes": 2064,
+      "contentSha256": "7dbf1323164c6fbd3f1217c4ec097887f89366315d11e09d33f2485247167c1a",
+      "hashMode": "exact-bytes",
+      "role": "documentation",
+      "roleRuleId": "eva2-documentation",
+      "matchingRuleIds": [
+        "eva2-documentation"
+      ],
+      "owner": "documentation",
+      "inputs": [
+        "design and evidence"
+      ],
+      "outputs": [
+        "human-readable contract"
+      ],
+      "state": [],
+      "effects": [],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": false,
+        "runtimeCritical": false,
+        "status": "blocked-untracked"
+      }
+    },
+    {
       "path": "eva2/design/product/comparable-agent-benchmarks-v1.md",
       "gitState": "tracked",
       "present": true,
@@ -16538,8 +17280,8 @@
       "path": "eva2/design/product/execution-workboard-v1.json",
       "gitState": "tracked",
       "present": true,
-      "bytes": 396098,
-      "contentSha256": "6bc293e2a8b5434a9791dfd2bb02d104e019c8de76dc14aef103e14a5b45ba7c",
+      "bytes": 402857,
+      "contentSha256": "3d0911f36704f20e7f01a16e87bd78f44f934fd3644b190535276e70b6700dc1",
       "hashMode": "exact-bytes",
       "role": "documentation",
       "roleRuleId": "eva2-documentation",
@@ -28433,6 +29175,76 @@
       }
     },
     {
+      "path": "eva2/evidence/product/AU-002-AU-008-combined-image-2026-09-12.json",
+      "gitState": "untracked",
+      "present": true,
+      "bytes": 1880,
+      "contentSha256": "07917d6ccfb8d8491ed21af26c209c68f59bf737ef439f7f20b21aa54bc0c43b",
+      "hashMode": "exact-bytes",
+      "role": "verification",
+      "roleRuleId": "eva2-verification",
+      "matchingRuleIds": [
+        "eva2-verification"
+      ],
+      "owner": "verification",
+      "inputs": [
+        "production or fixture contract"
+      ],
+      "outputs": [
+        "test decision"
+      ],
+      "state": [
+        "temporary isolated test state"
+      ],
+      "effects": [
+        "may execute only inside its declared gate"
+      ],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": false,
+        "runtimeCritical": true,
+        "status": "blocked-untracked"
+      }
+    },
+    {
+      "path": "eva2/evidence/product/AU-002-AU-008-combined-image-review-2026-09-12.json",
+      "gitState": "untracked",
+      "present": true,
+      "bytes": 848,
+      "contentSha256": "594e048ae8ff0e65e56de546bd83abdad2bb5cd6e8c04c922d788e2d3697162a",
+      "hashMode": "exact-bytes",
+      "role": "verification",
+      "roleRuleId": "eva2-verification",
+      "matchingRuleIds": [
+        "eva2-verification"
+      ],
+      "owner": "verification",
+      "inputs": [
+        "production or fixture contract"
+      ],
+      "outputs": [
+        "test decision"
+      ],
+      "state": [
+        "temporary isolated test state"
+      ],
+      "effects": [
+        "may execute only inside its declared gate"
+      ],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": false,
+        "runtimeCritical": true,
+        "status": "blocked-untracked"
+      }
+    },
+    {
       "path": "eva2/evidence/product/AU-002-candidate-image-2026-09-11.json",
       "gitState": "untracked",
       "present": true,
@@ -28713,6 +29525,111 @@
       }
     },
     {
+      "path": "eva2/evidence/product/AU-002-readable-status-live-2026-09-12.json",
+      "gitState": "untracked",
+      "present": true,
+      "bytes": 3995,
+      "contentSha256": "ac7ad51cc44ec46c9ec08ac9e923c6aed976e0f7ebe40cb2c2639c443ba8fd6e",
+      "hashMode": "exact-bytes",
+      "role": "verification",
+      "roleRuleId": "eva2-verification",
+      "matchingRuleIds": [
+        "eva2-verification"
+      ],
+      "owner": "verification",
+      "inputs": [
+        "production or fixture contract"
+      ],
+      "outputs": [
+        "test decision"
+      ],
+      "state": [
+        "temporary isolated test state"
+      ],
+      "effects": [
+        "may execute only inside its declared gate"
+      ],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": false,
+        "runtimeCritical": true,
+        "status": "blocked-untracked"
+      }
+    },
+    {
+      "path": "eva2/evidence/product/AU-002-status-result-candidate-2026-09-12.json",
+      "gitState": "untracked",
+      "present": true,
+      "bytes": 2516,
+      "contentSha256": "be6cd055eddd5a23a9433e607de0524dd3b978b2c4c3fb8332e41a93c09384f1",
+      "hashMode": "exact-bytes",
+      "role": "verification",
+      "roleRuleId": "eva2-verification",
+      "matchingRuleIds": [
+        "eva2-verification"
+      ],
+      "owner": "verification",
+      "inputs": [
+        "production or fixture contract"
+      ],
+      "outputs": [
+        "test decision"
+      ],
+      "state": [
+        "temporary isolated test state"
+      ],
+      "effects": [
+        "may execute only inside its declared gate"
+      ],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": false,
+        "runtimeCritical": true,
+        "status": "blocked-untracked"
+      }
+    },
+    {
+      "path": "eva2/evidence/product/AU-002-status-result-review-2026-09-12.json",
+      "gitState": "untracked",
+      "present": true,
+      "bytes": 1664,
+      "contentSha256": "a980197b12526fe5668fcbddb8abb4241724c3ab3dd3728a756929a0ea125e1b",
+      "hashMode": "exact-bytes",
+      "role": "verification",
+      "roleRuleId": "eva2-verification",
+      "matchingRuleIds": [
+        "eva2-verification"
+      ],
+      "owner": "verification",
+      "inputs": [
+        "production or fixture contract"
+      ],
+      "outputs": [
+        "test decision"
+      ],
+      "state": [
+        "temporary isolated test state"
+      ],
+      "effects": [
+        "may execute only inside its declared gate"
+      ],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": false,
+        "runtimeCritical": true,
+        "status": "blocked-untracked"
+      }
+    },
+    {
       "path": "eva2/evidence/product/AU-002-telegram-lifecycle-2026-09-11.json",
       "gitState": "untracked",
       "present": true,
@@ -28885,6 +29802,41 @@
         "includedInTrackedRelease": true,
         "runtimeCritical": true,
         "status": "included-tracked-critical"
+      }
+    },
+    {
+      "path": "eva2/evidence/product/AU-008-current-review-delivery-2026-09-12.json",
+      "gitState": "untracked",
+      "present": true,
+      "bytes": 11013,
+      "contentSha256": "b0b3471edd1d99302c87f93089be55f7eee7803d1779f0d8f59c65de7c9fa73a",
+      "hashMode": "exact-bytes",
+      "role": "verification",
+      "roleRuleId": "eva2-verification",
+      "matchingRuleIds": [
+        "eva2-verification"
+      ],
+      "owner": "verification",
+      "inputs": [
+        "production or fixture contract"
+      ],
+      "outputs": [
+        "test decision"
+      ],
+      "state": [
+        "temporary isolated test state"
+      ],
+      "effects": [
+        "may execute only inside its declared gate"
+      ],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": false,
+        "runtimeCritical": true,
+        "status": "blocked-untracked"
       }
     },
     {
@@ -29445,6 +30397,41 @@
         "includedInTrackedRelease": true,
         "runtimeCritical": true,
         "status": "included-tracked-critical"
+      }
+    },
+    {
+      "path": "eva2/evidence/product/GE-02-owner-acceptance-2026-09-12.json",
+      "gitState": "untracked",
+      "present": true,
+      "bytes": 894,
+      "contentSha256": "71744467272cadcf664ae7823adb199976b78d8775e347c10c9ab191d5ae921e",
+      "hashMode": "exact-bytes",
+      "role": "verification",
+      "roleRuleId": "eva2-verification",
+      "matchingRuleIds": [
+        "eva2-verification"
+      ],
+      "owner": "verification",
+      "inputs": [
+        "production or fixture contract"
+      ],
+      "outputs": [
+        "test decision"
+      ],
+      "state": [
+        "temporary isolated test state"
+      ],
+      "effects": [
+        "may execute only inside its declared gate"
+      ],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": false,
+        "runtimeCritical": true,
+        "status": "blocked-untracked"
       }
     },
     {
@@ -32633,6 +33620,41 @@
       }
     },
     {
+      "path": "eva2/evidence/product/artifacts/AU-008-api-toegang-en-toestemming-2026-09-12.md",
+      "gitState": "untracked",
+      "present": true,
+      "bytes": 866,
+      "contentSha256": "568e859f3f0e0d8dd09209b67e3b70e96cb57762f3fc9722851b1f32d2b1b1b1",
+      "hashMode": "exact-bytes",
+      "role": "verification",
+      "roleRuleId": "eva2-verification",
+      "matchingRuleIds": [
+        "eva2-verification"
+      ],
+      "owner": "verification",
+      "inputs": [
+        "production or fixture contract"
+      ],
+      "outputs": [
+        "test decision"
+      ],
+      "state": [
+        "temporary isolated test state"
+      ],
+      "effects": [
+        "may execute only inside its declared gate"
+      ],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": false,
+        "runtimeCritical": true,
+        "status": "blocked-untracked"
+      }
+    },
+    {
       "path": "eva2/evidence/product/astra-candidate-regression-2026-09-05.json",
       "gitState": "tracked",
       "present": true,
@@ -32878,11 +33900,116 @@
       }
     },
     {
+      "path": "eva2/evidence/product/chrome-isolated-route-2026-09-12.json",
+      "gitState": "untracked",
+      "present": true,
+      "bytes": 4339,
+      "contentSha256": "a900ea7ba55adcf0bbc96900bb62a4acbc759932af726e17ab5b264d9e2d5b5a",
+      "hashMode": "exact-bytes",
+      "role": "verification",
+      "roleRuleId": "eva2-verification",
+      "matchingRuleIds": [
+        "eva2-verification"
+      ],
+      "owner": "verification",
+      "inputs": [
+        "production or fixture contract"
+      ],
+      "outputs": [
+        "test decision"
+      ],
+      "state": [
+        "temporary isolated test state"
+      ],
+      "effects": [
+        "may execute only inside its declared gate"
+      ],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": false,
+        "runtimeCritical": true,
+        "status": "blocked-untracked"
+      }
+    },
+    {
+      "path": "eva2/evidence/product/chrome-live-owner-trial-2026-09-11.json",
+      "gitState": "untracked",
+      "present": true,
+      "bytes": 2151,
+      "contentSha256": "d59828b2d20924836dccbb2565590a0b9ac5b2c7bf1f3e64b77e06900609a6d6",
+      "hashMode": "exact-bytes",
+      "role": "verification",
+      "roleRuleId": "eva2-verification",
+      "matchingRuleIds": [
+        "eva2-verification"
+      ],
+      "owner": "verification",
+      "inputs": [
+        "production or fixture contract"
+      ],
+      "outputs": [
+        "test decision"
+      ],
+      "state": [
+        "temporary isolated test state"
+      ],
+      "effects": [
+        "may execute only inside its declared gate"
+      ],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": false,
+        "runtimeCritical": true,
+        "status": "blocked-untracked"
+      }
+    },
+    {
       "path": "eva2/evidence/product/chrome-normal-route-2026-09-11.json",
       "gitState": "untracked",
       "present": true,
       "bytes": 2260,
       "contentSha256": "8d2818aeb9c7b2c457284c346037ee3353a181316d08fa69aff9d8d1d3434d10",
+      "hashMode": "exact-bytes",
+      "role": "verification",
+      "roleRuleId": "eva2-verification",
+      "matchingRuleIds": [
+        "eva2-verification"
+      ],
+      "owner": "verification",
+      "inputs": [
+        "production or fixture contract"
+      ],
+      "outputs": [
+        "test decision"
+      ],
+      "state": [
+        "temporary isolated test state"
+      ],
+      "effects": [
+        "may execute only inside its declared gate"
+      ],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": false,
+        "runtimeCritical": true,
+        "status": "blocked-untracked"
+      }
+    },
+    {
+      "path": "eva2/evidence/product/chrome-proxy-recovery-2026-09-12.json",
+      "gitState": "untracked",
+      "present": true,
+      "bytes": 2367,
+      "contentSha256": "b58b96a577fafe5f759124feca0e00e8344e5af55056382c3dd6a05fa7e0f3fb",
       "hashMode": "exact-bytes",
       "role": "verification",
       "roleRuleId": "eva2-verification",
@@ -36728,6 +37855,41 @@
       }
     },
     {
+      "path": "eva2/evidence/product/recovery-observation-2026-09-12.json",
+      "gitState": "untracked",
+      "present": true,
+      "bytes": 862,
+      "contentSha256": "4d8a3f4c1d64d2d0f3047b5581e32c17ece27abde148689c9f72b96f484ca3a7",
+      "hashMode": "exact-bytes",
+      "role": "verification",
+      "roleRuleId": "eva2-verification",
+      "matchingRuleIds": [
+        "eva2-verification"
+      ],
+      "owner": "verification",
+      "inputs": [
+        "production or fixture contract"
+      ],
+      "outputs": [
+        "test decision"
+      ],
+      "state": [
+        "temporary isolated test state"
+      ],
+      "effects": [
+        "may execute only inside its declared gate"
+      ],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": false,
+        "runtimeCritical": true,
+        "status": "blocked-untracked"
+      }
+    },
+    {
       "path": "eva2/evidence/product/renovate-44.52.0-local-dry-run-2026-08-30.json",
       "gitState": "tracked",
       "present": true,
@@ -37218,11 +38380,81 @@
       }
     },
     {
+      "path": "eva2/evidence/product/voice-phone-installation-2026-09-12.json",
+      "gitState": "untracked",
+      "present": true,
+      "bytes": 7029,
+      "contentSha256": "e62e932989a6bc1aa0cfea9f03cbfa8f4124faad2dc4ec3ca92381be20a9f9a2",
+      "hashMode": "exact-bytes",
+      "role": "verification",
+      "roleRuleId": "eva2-verification",
+      "matchingRuleIds": [
+        "eva2-verification"
+      ],
+      "owner": "verification",
+      "inputs": [
+        "production or fixture contract"
+      ],
+      "outputs": [
+        "test decision"
+      ],
+      "state": [
+        "temporary isolated test state"
+      ],
+      "effects": [
+        "may execute only inside its declared gate"
+      ],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": false,
+        "runtimeCritical": true,
+        "status": "blocked-untracked"
+      }
+    },
+    {
+      "path": "eva2/evidence/product/voice-phone-installed-hashes-2026-09-12.json",
+      "gitState": "untracked",
+      "present": true,
+      "bytes": 1798,
+      "contentSha256": "7211eceb89b3568003aae3e0a54f77f240ee7321a9098a6f179332df20c18c15",
+      "hashMode": "exact-bytes",
+      "role": "verification",
+      "roleRuleId": "eva2-verification",
+      "matchingRuleIds": [
+        "eva2-verification"
+      ],
+      "owner": "verification",
+      "inputs": [
+        "production or fixture contract"
+      ],
+      "outputs": [
+        "test decision"
+      ],
+      "state": [
+        "temporary isolated test state"
+      ],
+      "effects": [
+        "may execute only inside its declared gate"
+      ],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": false,
+        "runtimeCritical": true,
+        "status": "blocked-untracked"
+      }
+    },
+    {
       "path": "eva2/evidence/product/voice-phone-relay-candidate-2026-09-10.json",
       "gitState": "tracked",
       "present": true,
-      "bytes": 9812,
-      "contentSha256": "53490fd56b1a52eb530c51266e92ffeb01f8ec81641fb5b095ad1f13866f531f",
+      "bytes": 9893,
+      "contentSha256": "605f5c9a8d6ab04ea1213a8c98c616409a2f4c130c6dc880b1df20ee08b27681",
       "hashMode": "exact-bytes",
       "role": "verification",
       "roleRuleId": "eva2-verification",
@@ -43451,8 +44683,8 @@
       "path": "eva2/experiments/react-admin-dashboard-v1/capability-audit.json",
       "gitState": "tracked",
       "present": true,
-      "bytes": 24329,
-      "contentSha256": "cecc71ded7bb587851bccf8da52cc7eb90ed0e36186ecba9cac8b1daae7cfe37",
+      "bytes": 26343,
+      "contentSha256": "c0ca7951c600fabcc3956ffc0a205df2a3a4c34bd23f763a82a7a464c0021faa",
       "hashMode": "exact-bytes",
       "role": "experimental",
       "roleRuleId": "eva2-experimental",
@@ -43515,6 +44747,85 @@
         "includedInTrackedRelease": true,
         "runtimeCritical": false,
         "status": "included-tracked-noncritical"
+      }
+    },
+    {
+      "path": "eva2/experiments/react-admin-dashboard-v1/memory-presentation.mjs",
+      "gitState": "untracked",
+      "present": true,
+      "bytes": 3096,
+      "contentSha256": "0204530d6d45167685a5c1e7c8b9814d8da9fa72115c546e06071df7fadede2d",
+      "hashMode": "exact-bytes",
+      "role": "experimental",
+      "roleRuleId": "eva2-experimental",
+      "matchingRuleIds": [
+        "eva2-experimental"
+      ],
+      "owner": "experimental",
+      "inputs": [
+        "prototype request"
+      ],
+      "outputs": [
+        "prototype receipt"
+      ],
+      "state": [
+        "prototype-local state"
+      ],
+      "effects": [
+        "not authorized for production"
+      ],
+      "decision": "keep",
+      "decisionReason": "explicitly classified non-production prototype",
+      "consumers": [
+        {
+          "kind": "import",
+          "from": "eva2/experiments/react-admin-dashboard-v1/memory-presentation.test.mjs"
+        },
+        {
+          "kind": "import",
+          "from": "eva2/experiments/react-admin-dashboard-v1/project-completion.mjs"
+        }
+      ],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": false,
+        "runtimeCritical": false,
+        "status": "blocked-untracked"
+      }
+    },
+    {
+      "path": "eva2/experiments/react-admin-dashboard-v1/memory-presentation.test.mjs",
+      "gitState": "untracked",
+      "present": true,
+      "bytes": 1479,
+      "contentSha256": "98b6cd75d8a3f4d00c1701f886ed21c35cc27ceccbe67dc7294f2b94374b7ea5",
+      "hashMode": "exact-bytes",
+      "role": "experimental",
+      "roleRuleId": "eva2-experimental",
+      "matchingRuleIds": [
+        "eva2-experimental"
+      ],
+      "owner": "experimental",
+      "inputs": [
+        "prototype request"
+      ],
+      "outputs": [
+        "prototype receipt"
+      ],
+      "state": [
+        "prototype-local state"
+      ],
+      "effects": [
+        "not authorized for production"
+      ],
+      "decision": "keep",
+      "decisionReason": "explicitly classified non-production prototype",
+      "consumers": [],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": false,
+        "runtimeCritical": false,
+        "status": "blocked-untracked"
       }
     },
     {
@@ -43661,8 +44972,8 @@
       "path": "eva2/experiments/react-admin-dashboard-v1/project-completion.mjs",
       "gitState": "tracked",
       "present": true,
-      "bytes": 10427,
-      "contentSha256": "853a880a2890383ee5a4be89a7422b6159d79e1ba49b9ff35c69cf4b50809651",
+      "bytes": 10870,
+      "contentSha256": "a92eac5d7125e5b8f912e2672859fb857e3959521a8d61bb5150fafee6c4e0d6",
       "hashMode": "exact-bytes",
       "role": "experimental",
       "roleRuleId": "eva2-experimental",
@@ -43687,6 +44998,10 @@
       "consumers": [
         {
           "kind": "import",
+          "from": "eva2/experiments/react-admin-dashboard-v1/project-completion.test.mjs"
+        },
+        {
+          "kind": "import",
           "from": "eva2/experiments/react-admin-dashboard-v1/project-server.mjs"
         },
         {
@@ -43706,11 +45021,46 @@
       }
     },
     {
+      "path": "eva2/experiments/react-admin-dashboard-v1/project-completion.test.mjs",
+      "gitState": "untracked",
+      "present": true,
+      "bytes": 1107,
+      "contentSha256": "33382aa849a5807c38edaa112c89eab48989872f6dbd0ad513153c3c8c6bcc92",
+      "hashMode": "exact-bytes",
+      "role": "experimental",
+      "roleRuleId": "eva2-experimental",
+      "matchingRuleIds": [
+        "eva2-experimental"
+      ],
+      "owner": "experimental",
+      "inputs": [
+        "prototype request"
+      ],
+      "outputs": [
+        "prototype receipt"
+      ],
+      "state": [
+        "prototype-local state"
+      ],
+      "effects": [
+        "not authorized for production"
+      ],
+      "decision": "keep",
+      "decisionReason": "explicitly classified non-production prototype",
+      "consumers": [],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": false,
+        "runtimeCritical": false,
+        "status": "blocked-untracked"
+      }
+    },
+    {
       "path": "eva2/experiments/react-admin-dashboard-v1/project-server.mjs",
       "gitState": "tracked",
       "present": true,
-      "bytes": 22174,
-      "contentSha256": "5c6b6c42ea515be3c6c50f40a680c4c8206012c92c3db928e2642e40d48519cf",
+      "bytes": 22220,
+      "contentSha256": "2a2958e5756f3e9d410c5c2a50178ccec5fac8d612d4ebaf920a95920771e1c1",
       "hashMode": "exact-bytes",
       "role": "experimental",
       "roleRuleId": "eva2-experimental",
@@ -43993,8 +45343,8 @@
       "path": "eva2/experiments/react-admin-dashboard-v1/src/owner-initiatives.jsx",
       "gitState": "tracked",
       "present": true,
-      "bytes": 3280,
-      "contentSha256": "7929d24c43013ff126dede0c92c09b62181177b642c43f0f754c92616541cfa4",
+      "bytes": 5717,
+      "contentSha256": "b46c10ab3bcdeb95aa9d22a17e7bcef6e275becd8001d323c6e1a7c5a6f87f49",
       "hashMode": "exact-bytes",
       "role": "experimental",
       "roleRuleId": "eva2-experimental",
@@ -44063,8 +45413,8 @@
       "path": "eva2/experiments/react-admin-dashboard-v1/src/project-dashboard.jsx",
       "gitState": "tracked",
       "present": true,
-      "bytes": 24328,
-      "contentSha256": "53c02542c77d0d4bf0d0a30f99f883efda7dd9b4956ca92eac582d572edf1994",
+      "bytes": 24642,
+      "contentSha256": "92062747b444c58f90454bf5095d8cd30102f6534e0f17ebb1a08805385637ca",
       "hashMode": "exact-bytes",
       "role": "experimental",
       "roleRuleId": "eva2-experimental",
@@ -44133,8 +45483,8 @@
       "path": "eva2/experiments/react-admin-dashboard-v1/verify-browser.cjs",
       "gitState": "tracked",
       "present": true,
-      "bytes": 18601,
-      "contentSha256": "e402464c4441d2d8d1a919f36d6fe03e90752abd56bc134c824833d9aa9ff516",
+      "bytes": 22464,
+      "contentSha256": "79fe76d9d0e70246c1e5463af9e0c584640512317c2241b226123dca242dbf86",
       "hashMode": "exact-bytes",
       "role": "experimental",
       "roleRuleId": "eva2-experimental",
@@ -44162,6 +45512,41 @@
         "includedInTrackedRelease": true,
         "runtimeCritical": false,
         "status": "included-tracked-noncritical"
+      }
+    },
+    {
+      "path": "eva2/experiments/react-admin-dashboard-v1/verify-chrome-trial.cjs",
+      "gitState": "untracked",
+      "present": true,
+      "bytes": 3965,
+      "contentSha256": "7b7e5d8346dcfdd55f4dc802fd337f65a6a82aa95195b243ab578df1ab3688d6",
+      "hashMode": "exact-bytes",
+      "role": "experimental",
+      "roleRuleId": "eva2-experimental",
+      "matchingRuleIds": [
+        "eva2-experimental"
+      ],
+      "owner": "experimental",
+      "inputs": [
+        "prototype request"
+      ],
+      "outputs": [
+        "prototype receipt"
+      ],
+      "state": [
+        "prototype-local state"
+      ],
+      "effects": [
+        "not authorized for production"
+      ],
+      "decision": "keep",
+      "decisionReason": "explicitly classified non-production prototype",
+      "consumers": [],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": false,
+        "runtimeCritical": false,
+        "status": "blocked-untracked"
       }
     },
     {
@@ -44273,8 +45658,8 @@
       "path": "eva2/experiments/react-admin-dashboard-v1/verify-project.cjs",
       "gitState": "tracked",
       "present": true,
-      "bytes": 13591,
-      "contentSha256": "825402aca46470edcd437be19fe0f020eb6e155cbee6fcdff0493521cca593d9",
+      "bytes": 15246,
+      "contentSha256": "f1fb6ce6efcd72ac84cb71ed0aa7184ae646c75568aa13cf06a4ead8e8a2dccd",
       "hashMode": "exact-bytes",
       "role": "experimental",
       "roleRuleId": "eva2-experimental",
@@ -47346,6 +48731,37 @@
       "present": true,
       "bytes": 3346,
       "contentSha256": "5297e957846e10a2dfaec08bd3925fa4b6cbfd0891c19c09f41b698358e8a99f",
+      "hashMode": "exact-bytes",
+      "role": "documentation",
+      "roleRuleId": "eva2-documentation",
+      "matchingRuleIds": [
+        "eva2-documentation"
+      ],
+      "owner": "documentation",
+      "inputs": [
+        "design and evidence"
+      ],
+      "outputs": [
+        "human-readable contract"
+      ],
+      "state": [],
+      "effects": [],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": false,
+        "runtimeCritical": false,
+        "status": "blocked-untracked"
+      }
+    },
+    {
+      "path": "eva2/reviews/AU-008-current-status-e96b2054.md",
+      "gitState": "untracked",
+      "present": true,
+      "bytes": 3089,
+      "contentSha256": "aae404e8c1d3b4e51d3c2c2be5c5aa352186d96c432d97f96d47dafe60714622",
       "hashMode": "exact-bytes",
       "role": "documentation",
       "roleRuleId": "eva2-documentation",
@@ -57044,6 +58460,41 @@
       }
     },
     {
+      "path": "eva2/src/eva/adapters/api/dashboard_static/assets/index-Bv4zaQUs.js",
+      "gitState": "untracked",
+      "present": true,
+      "bytes": 818614,
+      "contentSha256": "02b13b469ebf8f0448f30fd3855dd4d5955465b937afcf4897d017e2d82785d6",
+      "hashMode": "exact-bytes",
+      "role": "product-runtime",
+      "roleRuleId": "eva2-runtime",
+      "matchingRuleIds": [
+        "eva2-runtime"
+      ],
+      "owner": "eva-runtime",
+      "inputs": [
+        "issued runtime input and dependencies"
+      ],
+      "outputs": [
+        "runtime result or capability"
+      ],
+      "state": [
+        "runtime-owned durable or process state"
+      ],
+      "effects": [
+        "module-specific runtime effects"
+      ],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": false,
+        "runtimeCritical": true,
+        "status": "blocked-untracked"
+      }
+    },
+    {
       "path": "eva2/src/eva/adapters/api/dashboard_static/assets/index-CBXVU8xE.css",
       "gitState": "tombstone",
       "present": false,
@@ -57076,41 +58527,6 @@
         "includedInTrackedRelease": false,
         "runtimeCritical": true,
         "status": "blocked-unresolved-disposition"
-      }
-    },
-    {
-      "path": "eva2/src/eva/adapters/api/dashboard_static/assets/index-Ca8HuISF.js",
-      "gitState": "untracked",
-      "present": true,
-      "bytes": 816598,
-      "contentSha256": "302d7e677250a45359d7f8e2516575b86e3db25fe40e25626f3fdea39ac02937",
-      "hashMode": "exact-bytes",
-      "role": "product-runtime",
-      "roleRuleId": "eva2-runtime",
-      "matchingRuleIds": [
-        "eva2-runtime"
-      ],
-      "owner": "eva-runtime",
-      "inputs": [
-        "issued runtime input and dependencies"
-      ],
-      "outputs": [
-        "runtime result or capability"
-      ],
-      "state": [
-        "runtime-owned durable or process state"
-      ],
-      "effects": [
-        "module-specific runtime effects"
-      ],
-      "decision": "keep",
-      "decisionReason": "active repository input or evidence",
-      "consumers": [],
-      "entrypointEvidence": [],
-      "release": {
-        "includedInTrackedRelease": false,
-        "runtimeCritical": true,
-        "status": "blocked-untracked"
       }
     },
     {
@@ -57188,7 +58604,7 @@
       "gitState": "tracked",
       "present": true,
       "bytes": 648,
-      "contentSha256": "8bcd37c8c0b3f6a96235ab299fcf33a84d24e2be632e51f3809612ce253a475d",
+      "contentSha256": "2e0db25b0e9f2494c915d268248a13640ed57cc277f859aca5b5a6f93e0357c4",
       "hashMode": "exact-bytes",
       "role": "product-runtime",
       "roleRuleId": "eva2-runtime",
@@ -57223,7 +58639,7 @@
       "gitState": "tracked",
       "present": true,
       "bytes": 435,
-      "contentSha256": "f0fd73cf401bf52d677218fcd6ccd4323061ccc5a4676e7e6abd7810795cd348",
+      "contentSha256": "085ec940fecbd803a9d9045718f3e492b799664b4c1181d4bc248e061982b2d9",
       "hashMode": "exact-bytes",
       "role": "product-runtime",
       "roleRuleId": "eva2-runtime",
@@ -60652,8 +62068,8 @@
       "path": "eva2/src/eva/adapters/postgres/owner_initiatives.py",
       "gitState": "tracked",
       "present": true,
-      "bytes": 10279,
-      "contentSha256": "4be2f792ea7fdb6ef6a562be387ff3aca37df6fb28731e22f1a2d2cbece577df",
+      "bytes": 13221,
+      "contentSha256": "cf7927a94fa6f46c8f2b3eb0a9265a12252e1b5d32796fe733da287f1282e157",
       "hashMode": "exact-bytes",
       "role": "product-runtime",
       "roleRuleId": "eva2-runtime",
@@ -62892,8 +64308,8 @@
       "path": "eva2/src/eva/bootstrap/delegated_work_commands.py",
       "gitState": "tracked",
       "present": true,
-      "bytes": 6655,
-      "contentSha256": "b2b5812f75d6d83b8bc38f15c51627a1e60919d5871188a51fbfc4df9dd44504",
+      "bytes": 8064,
+      "contentSha256": "bbedd8a320099e7ca9465fa495b269bb2615897ecd49c4d533ebf957b556e176",
       "hashMode": "exact-bytes",
       "role": "product-runtime",
       "roleRuleId": "eva2-runtime",
@@ -68317,8 +69733,8 @@
       "path": "eva2/tests/bootstrap/test_delegated_work_commands.py",
       "gitState": "tracked",
       "present": true,
-      "bytes": 12223,
-      "contentSha256": "40df39c43df8702fb196dbe4b1960e552095e97585f120739a0c4c1c32bd5d67",
+      "bytes": 15295,
+      "contentSha256": "ec6375d44370f7521c3b8e5e58299f71cf792f61db8e6c0d7c2bada3095b500d",
       "hashMode": "exact-bytes",
       "role": "verification",
       "roleRuleId": "eva2-verification",
@@ -72062,8 +73478,8 @@
       "path": "eva2/tests/operations/test_current_workboard.py",
       "gitState": "tracked",
       "present": true,
-      "bytes": 12856,
-      "contentSha256": "fbc22985e2ad779fbe17ce02e0244946c43422f0ecade8a1be439c94bfd3661c",
+      "bytes": 13258,
+      "contentSha256": "8f352e03ba48e823dddb1f87eb17206c598db1655c231e3abbcabb1dd710494c",
       "hashMode": "exact-bytes",
       "role": "verification",
       "roleRuleId": "eva2-verification",
@@ -76857,8 +78273,8 @@
       "path": "eva2/tests/postgres/test_owner_initiatives.py",
       "gitState": "tracked",
       "present": true,
-      "bytes": 41232,
-      "contentSha256": "9be81ed6b060ab328b2adaada74141030fc3792a2d2e6854ac4b4767ed55a03f",
+      "bytes": 46261,
+      "contentSha256": "0d126f450ff64adb9b4cfa9d318d4c992f18b4b8f1fc502d7489d9e02a9c9f53",
       "hashMode": "exact-bytes",
       "role": "verification",
       "roleRuleId": "eva2-verification",
@@ -78957,8 +80373,8 @@
       "path": "eva2/tools/check_current_workboard.py",
       "gitState": "tracked",
       "present": true,
-      "bytes": 41670,
-      "contentSha256": "ef5b9b1a6176168923dbd0ec32b167002a8389b2f1a8dc5960c61b03b51d79f5",
+      "bytes": 43413,
+      "contentSha256": "6033938d731baaec4f7cb4492aee72fdb3a7ba165646d0ae7427e9f55151a33f",
       "hashMode": "exact-bytes",
       "role": "verification-runtime",
       "roleRuleId": "eva2-verification-runtime",
@@ -81716,6 +83132,445 @@
         "includedInTrackedRelease": true,
         "runtimeCritical": true,
         "status": "included-tracked-critical"
+      }
+    },
+    {
+      "path": "eva2/tools/wakeword_capture/README.md",
+      "gitState": "untracked",
+      "present": true,
+      "bytes": 4628,
+      "contentSha256": "9ca9e01a02155549104b48a686040357ca02bc2e87312d85ef2615e37b7a9ff6",
+      "hashMode": "exact-bytes",
+      "role": "verification-runtime",
+      "roleRuleId": "eva2-verification-runtime",
+      "matchingRuleIds": [
+        "eva2-verification-runtime"
+      ],
+      "owner": "verification",
+      "inputs": [
+        "repository and test selection"
+      ],
+      "outputs": [
+        "gate or inventory result"
+      ],
+      "state": [
+        "temporary gate state"
+      ],
+      "effects": [
+        "starts bounded verification processes or writes generated evidence"
+      ],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": false,
+        "runtimeCritical": true,
+        "status": "blocked-untracked"
+      }
+    },
+    {
+      "path": "eva2/tools/wakeword_capture/Start-opnameproef.cmd",
+      "gitState": "untracked",
+      "present": true,
+      "bytes": 49,
+      "contentSha256": "067136e9fcd2e769ef8ea5a0e183b1aa388dfedf7c4034ae560b7389517fc239",
+      "hashMode": "exact-bytes",
+      "role": "verification-runtime",
+      "roleRuleId": "eva2-verification-runtime",
+      "matchingRuleIds": [
+        "eva2-verification-runtime"
+      ],
+      "owner": "verification",
+      "inputs": [
+        "repository and test selection"
+      ],
+      "outputs": [
+        "gate or inventory result"
+      ],
+      "state": [
+        "temporary gate state"
+      ],
+      "effects": [
+        "starts bounded verification processes or writes generated evidence"
+      ],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": false,
+        "runtimeCritical": true,
+        "status": "blocked-untracked"
+      }
+    },
+    {
+      "path": "eva2/tools/wakeword_capture/app.js",
+      "gitState": "untracked",
+      "present": true,
+      "bytes": 6427,
+      "contentSha256": "c2f092dca0040828ebd2e43d768d5e8b3ec246588080d4f951c83fca753d7371",
+      "hashMode": "exact-bytes",
+      "role": "verification-runtime",
+      "roleRuleId": "eva2-verification-runtime",
+      "matchingRuleIds": [
+        "eva2-verification-runtime"
+      ],
+      "owner": "verification",
+      "inputs": [
+        "repository and test selection"
+      ],
+      "outputs": [
+        "gate or inventory result"
+      ],
+      "state": [
+        "temporary gate state"
+      ],
+      "effects": [
+        "starts bounded verification processes or writes generated evidence"
+      ],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [
+        {
+          "kind": "static-load",
+          "from": "eva2/tools/wakeword_capture/index.html"
+        }
+      ],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": false,
+        "runtimeCritical": true,
+        "status": "blocked-untracked"
+      }
+    },
+    {
+      "path": "eva2/tools/wakeword_capture/browser-lifecycle-qa.cjs",
+      "gitState": "untracked",
+      "present": true,
+      "bytes": 2072,
+      "contentSha256": "7d88f4508f247f509ebcff67c6020d54d91729773e4f02e59d2c3cc94385bee6",
+      "hashMode": "exact-bytes",
+      "role": "verification-runtime",
+      "roleRuleId": "eva2-verification-runtime",
+      "matchingRuleIds": [
+        "eva2-verification-runtime"
+      ],
+      "owner": "verification",
+      "inputs": [
+        "repository and test selection"
+      ],
+      "outputs": [
+        "gate or inventory result"
+      ],
+      "state": [
+        "temporary gate state"
+      ],
+      "effects": [
+        "starts bounded verification processes or writes generated evidence"
+      ],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": false,
+        "runtimeCritical": true,
+        "status": "blocked-untracked"
+      }
+    },
+    {
+      "path": "eva2/tools/wakeword_capture/browser-qa.cjs",
+      "gitState": "untracked",
+      "present": true,
+      "bytes": 4504,
+      "contentSha256": "40a821763b873509b4379e019a2f80ef036cbeef316ad0b3efa062dc8b501ee1",
+      "hashMode": "exact-bytes",
+      "role": "verification-runtime",
+      "roleRuleId": "eva2-verification-runtime",
+      "matchingRuleIds": [
+        "eva2-verification-runtime"
+      ],
+      "owner": "verification",
+      "inputs": [
+        "repository and test selection"
+      ],
+      "outputs": [
+        "gate or inventory result"
+      ],
+      "state": [
+        "temporary gate state"
+      ],
+      "effects": [
+        "starts bounded verification processes or writes generated evidence"
+      ],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": false,
+        "runtimeCritical": true,
+        "status": "blocked-untracked"
+      }
+    },
+    {
+      "path": "eva2/tools/wakeword_capture/capture-worklet.js",
+      "gitState": "untracked",
+      "present": true,
+      "bytes": 593,
+      "contentSha256": "6b0d3c1959a215fa501e0e378016daf2d5e1d189bb5a88d0006a8b7316fc6c4d",
+      "hashMode": "exact-bytes",
+      "role": "verification-runtime",
+      "roleRuleId": "eva2-verification-runtime",
+      "matchingRuleIds": [
+        "eva2-verification-runtime"
+      ],
+      "owner": "verification",
+      "inputs": [
+        "repository and test selection"
+      ],
+      "outputs": [
+        "gate or inventory result"
+      ],
+      "state": [
+        "temporary gate state"
+      ],
+      "effects": [
+        "starts bounded verification processes or writes generated evidence"
+      ],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": false,
+        "runtimeCritical": true,
+        "status": "blocked-untracked"
+      }
+    },
+    {
+      "path": "eva2/tools/wakeword_capture/compare_session.py",
+      "gitState": "untracked",
+      "present": true,
+      "bytes": 5310,
+      "contentSha256": "a9e90b85c430e70295cb89fbbd1483f9e71fc52e79f649f8eb13634c29d83cdb",
+      "hashMode": "exact-bytes",
+      "role": "verification-runtime",
+      "roleRuleId": "eva2-verification-runtime",
+      "matchingRuleIds": [
+        "eva2-verification-runtime"
+      ],
+      "owner": "verification",
+      "inputs": [
+        "repository and test selection"
+      ],
+      "outputs": [
+        "gate or inventory result"
+      ],
+      "state": [
+        "temporary gate state"
+      ],
+      "effects": [
+        "starts bounded verification processes or writes generated evidence"
+      ],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": false,
+        "runtimeCritical": true,
+        "status": "blocked-untracked"
+      }
+    },
+    {
+      "path": "eva2/tools/wakeword_capture/index.html",
+      "gitState": "untracked",
+      "present": true,
+      "bytes": 2559,
+      "contentSha256": "a696d90b4d96694eeae54b4e2fc8c59663b2fe2e5f5e7b65e23c38c99016deb2",
+      "hashMode": "exact-bytes",
+      "role": "verification-runtime",
+      "roleRuleId": "eva2-verification-runtime",
+      "matchingRuleIds": [
+        "eva2-verification-runtime"
+      ],
+      "owner": "verification",
+      "inputs": [
+        "repository and test selection"
+      ],
+      "outputs": [
+        "gate or inventory result"
+      ],
+      "state": [
+        "temporary gate state"
+      ],
+      "effects": [
+        "starts bounded verification processes or writes generated evidence"
+      ],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": false,
+        "runtimeCritical": true,
+        "status": "blocked-untracked"
+      }
+    },
+    {
+      "path": "eva2/tools/wakeword_capture/launcher.mjs",
+      "gitState": "untracked",
+      "present": true,
+      "bytes": 597,
+      "contentSha256": "ad327e397f9a5f4c526ec671892ef0caf27fb0570b7b863cb605bef02000595c",
+      "hashMode": "exact-bytes",
+      "role": "verification-runtime",
+      "roleRuleId": "eva2-verification-runtime",
+      "matchingRuleIds": [
+        "eva2-verification-runtime"
+      ],
+      "owner": "verification",
+      "inputs": [
+        "repository and test selection"
+      ],
+      "outputs": [
+        "gate or inventory result"
+      ],
+      "state": [
+        "temporary gate state"
+      ],
+      "effects": [
+        "starts bounded verification processes or writes generated evidence"
+      ],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": false,
+        "runtimeCritical": true,
+        "status": "blocked-untracked"
+      }
+    },
+    {
+      "path": "eva2/tools/wakeword_capture/server.mjs",
+      "gitState": "untracked",
+      "present": true,
+      "bytes": 7221,
+      "contentSha256": "f156c007ce8554948f7b8eae07bafac8826873e9ead7e2ccdef999c56ad041fc",
+      "hashMode": "exact-bytes",
+      "role": "verification-runtime",
+      "roleRuleId": "eva2-verification-runtime",
+      "matchingRuleIds": [
+        "eva2-verification-runtime"
+      ],
+      "owner": "verification",
+      "inputs": [
+        "repository and test selection"
+      ],
+      "outputs": [
+        "gate or inventory result"
+      ],
+      "state": [
+        "temporary gate state"
+      ],
+      "effects": [
+        "starts bounded verification processes or writes generated evidence"
+      ],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [
+        {
+          "kind": "import",
+          "from": "eva2/tools/wakeword_capture/launcher.mjs"
+        },
+        {
+          "kind": "import",
+          "from": "eva2/tools/wakeword_capture/server.test.mjs"
+        }
+      ],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": false,
+        "runtimeCritical": true,
+        "status": "blocked-untracked"
+      }
+    },
+    {
+      "path": "eva2/tools/wakeword_capture/server.test.mjs",
+      "gitState": "untracked",
+      "present": true,
+      "bytes": 2693,
+      "contentSha256": "5c9a96ea935013a44065f8e1cae64b565f0ac43ae8380de2d72ec92f862c47eb",
+      "hashMode": "exact-bytes",
+      "role": "verification-runtime",
+      "roleRuleId": "eva2-verification-runtime",
+      "matchingRuleIds": [
+        "eva2-verification-runtime"
+      ],
+      "owner": "verification",
+      "inputs": [
+        "repository and test selection"
+      ],
+      "outputs": [
+        "gate or inventory result"
+      ],
+      "state": [
+        "temporary gate state"
+      ],
+      "effects": [
+        "starts bounded verification processes or writes generated evidence"
+      ],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": false,
+        "runtimeCritical": true,
+        "status": "blocked-untracked"
+      }
+    },
+    {
+      "path": "eva2/tools/wakeword_capture/style.css",
+      "gitState": "untracked",
+      "present": true,
+      "bytes": 1584,
+      "contentSha256": "0c68b14fb943c114af9691db8ea37ae9b510695ecdf54ff4e64943e425ca310b",
+      "hashMode": "exact-bytes",
+      "role": "verification-runtime",
+      "roleRuleId": "eva2-verification-runtime",
+      "matchingRuleIds": [
+        "eva2-verification-runtime"
+      ],
+      "owner": "verification",
+      "inputs": [
+        "repository and test selection"
+      ],
+      "outputs": [
+        "gate or inventory result"
+      ],
+      "state": [
+        "temporary gate state"
+      ],
+      "effects": [
+        "starts bounded verification processes or writes generated evidence"
+      ],
+      "decision": "keep",
+      "decisionReason": "active repository input or evidence",
+      "consumers": [
+        {
+          "kind": "static-load",
+          "from": "eva2/tools/wakeword_capture/index.html"
+        }
+      ],
+      "entrypointEvidence": [],
+      "release": {
+        "includedInTrackedRelease": false,
+        "runtimeCritical": true,
+        "status": "blocked-untracked"
       }
     },
     {
@@ -97653,5 +99508,5 @@
       }
     }
   ],
-  "sourceDigest": "29c6fd6f7100ce72e018018ea752635bd48095aee2cf09f71ff3e7e77ae2aa51"
+  "sourceDigest": "4a2d5ca00e28863d30dbf41a2fbd742fff6e82f162b315d5d36a0b150e045a82"
 }

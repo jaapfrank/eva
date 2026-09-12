@@ -212,6 +212,10 @@ def test_only_completed_bound_deletions_use_historical_inventory(tmp_path: Path)
     }}
     assert _task_inventory_entry(tmp_path, raw, task, {}) == entry
     assert _task_inventory_entry(tmp_path, raw, {**task, "status": "review"}, {}) == entry
+    # The same asset also remains evidence for a prior completed delivery that
+    # contained it, once a later committed delivery replaces it.
+    prior_task = {**task, "stateDetails": {"baseCommit": base, "implementationCommit": base}}
+    assert _task_inventory_entry(tmp_path, raw, prior_task, {}) == entry
     for status in ("in_progress", "queued"):
         with pytest.raises(RuntimeError, match="does not exist"):
             _task_inventory_entry(tmp_path, raw, {**task, "status": status}, {})

@@ -35,7 +35,7 @@
       "roadmap": [
         {
           "id": "actions",
-          "title": "Geheugen afronden",
+          "title": "Geheugen afgerond · eigen bijdrage beoordelen",
           "outcome": "Eva onthoudt relevante persoonlijke kennis uit gewone gesprekken, verwerkt wijzigingen, gebruikt tijdelijke informatie op het juiste moment en laat irrelevante herhaling buiten blijvende kennis. Bestaande gegevens en persoonsgrenzen blijven behouden.",
           "acceptance": "Gewone gesprekken tonen zelfstandig onthouden, correct bijwerken en passend terughalen; opgeslagen bewijs en menselijke acceptatie apart zichtbaar.",
           "taskIds": [
@@ -314,13 +314,13 @@
           "icon": "✧",
           "title": "Eigen initiatief",
           "subtitle": "Waarnemen en passend iets doen",
-          "built": "partial",
-          "tested": "partial",
-          "live": "partial",
+          "built": "yes",
+          "tested": "yes",
+          "live": "yes",
           "accepted": "partial",
-          "gap": "Herhaalde nuttige bijdragen en brede zelfstandige uitvoering blijven open. Verdere AU-008-ontwikkeling is na de geheugenacceptatie hervat; de actuele uitvoering en een nieuwe bijdrage vragen afzonderlijk bewijs.",
-          "detail": "AU-007 is beperkt geaccepteerd. De bestaande AU-008-implementatie en eerdere technische resultaten blijven behouden. Verdere ontwikkeling is hervat; de actuele uitvoering en eigenaarbeoordeling staan afzonderlijk.",
-          "evidence": "AU-007 afgerond en beperkt geaccepteerd · eerdere AU-008-implementatie en technische proeven behouden; verdere ontwikkeling hervat, actuele uitvoering afzonderlijk",
+          "gap": "IN-02 eigenaarsoordeel; geen concreet technisch restpunt binnen deze oplevering.",
+          "detail": "AU-008 is technisch afgerond en live. Eva’s eigen bijdrage is teruggelezen; de laatste beoordeling en eventuele budgetblokkade zijn zichtbaar. Alleen Jaaps IN-02-oordeel over nut en passendheid staat open.",
+          "evidence": "eva2/evidence/product/AU-008-current-review-delivery-2026-09-12.json · eva2/reviews/AU-008-current-status-e96b2054.md",
           "outcomes": [
             {
               "id": "initiative-private-result",
@@ -706,7 +706,7 @@
           "updatedOn": "2026-09-12",
           "status": "ready",
           "title": "Eva’s zelfgekozen bijdrage beoordelen",
-          "change": "Eva maakte uit zichzelf het onderstaande document op 12 september; het is niet opnieuw gemaakt voor deze proef.",
+          "change": "Eva koos en maakte deze bijdrage zelf. Het bestand is teruggelezen; de laatste beoordeling is nu ook live zichtbaar. Technische GO is afgerond, jouw oordeel over nut staat apart.",
           "steps": [
             "Lees de teruggelezen bijdrage hieronder.",
             "Beoordeel of dit voor jou nuttig, passend en voldoende zelfstandig is."
@@ -715,7 +715,8 @@
           "report": "IN-02: nuttig / niet nuttig, eventueel wat je anders wilt.",
           "result": "# API-toegang is niet hetzelfde als toestemming\n\nAPI-functionaliteit bepaalt welke handelingen een dienst technisch aanbiedt. Tokenrechten begrenzen welke daarvan met een bepaald toegangsbewijs technisch toegankelijk zijn; aanvullende controles kunnen gelden. Toestemming bepaalt of ik een concrete handeling voor dit doel en binnen de actuele afspraken mag uitvoeren. Technische toegang bewijst die toestemming niet.\n\nFictief voorbeeld: een API kan een lamp uitschakelen en een token kan daarvoor schrijfrechten hebben. De vraag of die lamp aanstaat geeft alleen aanleiding om de toestand te lezen, niet om de lamp uit te zetten.\n\nIk controleer doel, reikwijdte en actuele toestemming vóór uitvoering; ontbrekende toestemming vul ik niet in met technische mogelijkheden. Voor deze uitleg zijn geen tokens, huisgegevens of werkelijke rechten opgevraagd of getest.\n",
           "ownerAccepted": false,
-          "artifact": "eva2/evidence/product/artifacts/AU-008-api-toegang-en-toestemming-2026-09-12.md"
+          "artifact": "eva2/evidence/product/artifacts/AU-008-api-toegang-en-toestemming-2026-09-12.md",
+          "evidence": "eva2/evidence/product/AU-008-current-review-delivery-2026-09-12.json"
         }
       ]
     },
@@ -794,9 +795,9 @@
       "document": "eva2/PROJECTDOEL.md",
       "scope": "Digitale huisgenoot: zelfstandig redeneren, initiatief, onbekende vaardigheden leren, handelen, zelfverbetering en aantoonbare concurrentiewinst met open-sourcehergebruik.",
       "sessionGoal": "AU-008: één zelfstandige kosteloze bijdrage via de algemene uitvoerder.",
-      "currentWork": "Geheugen geaccepteerd en afgesloten. Eva’s bestaande zelfstandige bijdrage staat klaar als IN-02. De aanvullende initiatiefstatusweergave wacht op de gezamenlijke uitrol.",
-      "currentEvidence": "eva2/evidence/product/GE-02-owner-acceptance-2026-09-12.json",
-      "nextStep": "IN-02 beoordeelt de echte bestaande bijdrage. Er wordt geen nieuwe bijdrage geforceerd. De gecombineerde statusupdate wordt na afstemming met Home Assistant live gezet.",
+      "currentWork": "Geheugen is geaccepteerd en afgesloten. AU-008 is technisch afgerond en live; alleen jouw beoordeling van de bestaande eigen bijdrage (IN-02) staat open.",
+      "currentEvidence": "eva2/evidence/product/AU-008-current-review-delivery-2026-09-12.json",
+      "nextStep": "Lees IN-02 op het dashboard en beoordeel nut en passendheid. Er wordt geen nieuwe bijdrage of nieuw hoofdonderdeel gestart om de administratie te vullen.",
       "usageClarification": {
         "date": "2026-09-07",
         "authorizedBy": "Jaap",
@@ -3315,7 +3316,7 @@
       "retryPolicy": "Geen herverpakking of alternatieve uitvoerroute voor de geweigerde installatie. Onafhankelijk productwerk gaat door."
     },
     "au002Delivery": {
-      "status": "telegram_bridge_technically_verified",
+      "status": "readable_status_result_technically_live",
       "ownerRole": "architecturelead",
       "artifactArchive": "/home/administrator/project/.eva2-artifacts/au002-owner-work-20260910",
       "purpose": "Eén gewone eigenaarroute met duurzame hulpagent: starten, stoppen, hervatten en resultaat; bron-, image-, verbruik- en readbackreceipts.",
@@ -3325,14 +3326,14 @@
       "candidateImage": "sha256:2f267ed94b41ed0aeb1f60ef3597272604149a8fc82617abeecfea3f7cd6a58c",
       "result": "Technisch live bewezen via de interne Telegrambrug: starten, afzonderlijk stoppen, status, expliciet hervatten en resultaat ophalen.",
       "deploymentFinding": "Eerste omzetting en automatische terugrol liepen vast op de bestaande bestandskoppeling die na herstart onbereikbaar was gemarkeerd. Koppeling hersteld via herontdekking; vorige Eva en browser weer bereikbaar. Nieuwe omzetting gestart met actuele gegevens.",
-      "liveSlot": 4,
+      "liveSlot": 3,
       "cutoverReceipt": "cutover-after-recovery.stdout",
       "ownerFlowFinding": "Eerste gewone gesprek gaf terecht aan geen hulpagenttools te hebben: runtime-gespreksscope verschilde van opslag-UUIDs. Koppeling in eigenaarservice én worker gecorrigeerd; onafhankelijke bronreview akkoord. Eén echte databasecontrole bevestigt dat de worker de eigenaaropdracht claimt.",
       "next": "Jaap kan de hulpagent opnieuw via Telegram proberen.",
       "pausedAt": "2026-09-10T08:51:40.466401+00:00",
       "pauseReason": "Jaap splitst het grote goal op in kleinere doelen en geeft daarna opnieuw opdracht om verder te gaan.",
-      "liveImplementationCommit": "365128c160f247aa4291e36e85ba6d7ffe752134",
-      "liveImage": "sha256:563aff68d0cb4ea941a8b6c36d688e5430685654e35c955d739539ca0392cc05",
+      "liveImplementationCommit": "30905cf101599f075759d5980bb816dd246f822c",
+      "liveImage": "sha256:4a5fa7c1116d07f6037b9a02f82ba8f6c30d703e80bbf8c84a30fbf108ca8710",
       "lastActualResult": "Eerste poging gestopt tijdens modelaanroep zonder resultaat; expliciet hervatte tweede generatie succeeded, 861 tokens en 0 tools. Opgehaald resultaat exact gelijk aan opgeslagen resultaat.",
       "pendingSourceChange": null,
       "activeExecutionThread": "01a08d52-31b1-7091-be45-812c0b6e6c9f",
@@ -3341,9 +3342,9 @@
       "providerRepairCandidateImage": "sha256:1afe349621b23c3c9101147d94a144316c33201b5e4148b3ef83a9a455d04014",
       "providerEvidencePath": "eva2/evidence/product/AU-002-provider-preparation-2026-09-11.json",
       "preparationRecordedAt": "2026-09-10T22:05:47.181411+00:00",
-      "userOutcomeStatus": "Telegrambrug hersteld; jouw herproef staat open",
-      "currentWork": "Via de bestaande vertrouwde Telegrambinding zijn starten, een losse stop tijdens de modelaanroep, status, expliciet hervatten en resultaat ophalen technisch bewezen.",
-      "remaining": "Nieuwe proef door Jaap in Telegram en zijn beoordeling staan open. Resultaatweergave en antwoordvolgorde bij gelijktijdig stoppen blijven presentatieverbeteringen.",
+      "userOutcomeStatus": "Leesbare hulpagentstatus en resultaat live; jouw Telegramproef staat open",
+      "currentWork": "De laatste hulpagentopdracht en het opgeslagen resultaat zijn via de bestaande Telegramroute in gewone tekst op te vragen. De status volgt de opgeslagen toestand en claimt geen actieve worker op basis van alleen een gestarte aanroep.",
+      "remaining": "Alleen Jaaps Telegramproef en oordeel staan open voor deze oplevering. Bekende beperking: een startantwoord kan na een gelijktijdige stop arriveren; actuele status toont de opgeslagen toestand.",
       "built": true,
       "tested": true,
       "live": true,
@@ -3351,10 +3352,10 @@
       "technicalReview": "Onafhankelijke beperkte technische GO door taak 01a07e5b-3ef4-7ef3-8a68-3197a780694e; geen menselijke Telegramacceptatie.",
       "catalogRepairCommit": "81d4306166cf9c13456fe46e0911dcfbd66baee2",
       "catalogRepairImage": "sha256:54c3f886a3b1bdcb2a8be8598b02a043238b926a40a3752b7a3d4099a37d6528",
-      "evidencePath": "eva2/evidence/product/AU-002-telegram-lifecycle-2026-09-11.json",
-      "qualityFollowup": "Menselijke Telegramherproef open. Legacyresultaat toont JSONtekst en het startantwoord kan bij gelijktijdige stop later arriveren; presentatie en strikte outputlengte blijven vervolgen.",
+      "evidencePath": "eva2/evidence/product/AU-002-readable-status-live-2026-09-12.json",
+      "qualityFollowup": "Het startantwoord kan bij gelijktijdige stop later arriveren. Dit blijft zichtbaar vervolgwerk; leesbare resultaatweergave is opgeleverd.",
       "reviewPath": "eva2/reviews/AU-002-telegram-365128c1.md",
-      "completedAt": "2026-09-11T08:04:15Z",
+      "completedAt": "2026-09-12T16:52:05Z",
       "rawEvidenceArchive": "/home/administrator/project/.eva2-artifacts/au002-owner-work-20260910/delivery-20260911",
       "finalWorkboardChecks": "check_current_workboard valid: 30 execution cards, 24 milestones, AU-008 solely active; 23 workboard regression tests passed.",
       "telegramUserTrial": {
@@ -3396,7 +3397,19 @@
         "resumedGeneration": 2,
         "resumedState": "succeeded",
         "helperToolCalls": 0
-      }
+      },
+      "previousLivePresentation": {
+        "status": "telegram_bridge_technically_verified",
+        "liveImplementationCommit": "365128c160f247aa4291e36e85ba6d7ffe752134",
+        "liveImage": "sha256:563aff68d0cb4ea941a8b6c36d688e5430685654e35c955d739539ca0392cc05",
+        "evidencePath": "eva2/evidence/product/AU-002-telegram-lifecycle-2026-09-11.json",
+        "completedAt": "2026-09-11T08:04:15Z"
+      },
+      "technicalComplete": true,
+      "ownerTrialPath": "eva2/design/product/AU-002-owner-trial-2026-09-12.md",
+      "presentationChecks": "34 gerichte controles groen. Live alleen-lezencontrole bevestigt eigenaarbinding, hulpagenttools, leesbare status en exact opgeslagen resultaat; geen nieuwe modelaanroep of Telegramtestbericht.",
+      "presentationReviewPath": "eva2/evidence/product/AU-002-status-result-review-2026-09-12.json",
+      "combinedReviewPath": "eva2/evidence/product/AU-002-AU-008-combined-image-review-2026-09-12.json"
     },
     "au002PausedCard": {
       "id": "AU-002",
@@ -3530,7 +3543,7 @@
       "ownerCorrection": "Vaste oorspronkelijke hoofdcategorieën met eigen status; concrete bewezen deeluitkomsten eronder in dezelfde tabel. Hoofdomvang behouden.",
       "verification": "Desktop en 390px mobiel gecontroleerd: negen vaste hoofdcategorieën met eigen status, vijf zichtbare deeluitkomsten, bewijsdetail en menselijke acceptatie apart. Geen horizontale pagina-overloop. Bestaande aantallen afgeronde kaarten niet als percentage gebruikt."
     },
-    "parallelWorkNotes": "### Afzonderlijk stemwerk\n\nDe laptoproute met LiveKit is live op http://localhost:44716. Meld aan met het\nbestaande eigenaar-dashboardtoken en kies Begin gesprek. Jaap bevestigde op\n11 september dat fysiek onderbreken werkt en vond de verhaalinhoud leuk.\nNatuurlijke uitspraak en de vernieuwde ontvangstbevestiging wachten nog op zijn luisteroordeel.\n\nJaaps verduidelijking is leidend: echt onderzoek mag 10–30 seconden of een minuut\nduren, mits Eva meteen kort en eerlijk hoorbaar reageert. Voor duidelijke\nwerkopdrachten zegt zij nu “Ik kijk er even voor je naar” zodra de kern het\nspraakverzoek heeft ontvangen. Geen uitvoerings- of succesclaim; eenvoudige\nvragen krijgen deze standaardzin niet. De bestaande Astra-kern doet het werk.\n\nDeze begrensde verbetering is gebouwd, gericht getest, beoordeeld en live in de\nbrowser bewezen: eerste audio na 0,95 seconde, onderzoeksantwoord na 73 seconden,\nvolledige gesproken afronding ontvangen. Dit is één synthetische browserproef,\ngeen algemene snelheidsgarantie. Onderbreken van de ontvangstbevestiging laat\nhet latere resultaat intact; een tweede vraag tussendoor en expliciet stoppen\nzijn met de echte LiveKit-spraakafhandeling getest. [Ontvangstbewijs](evidence/product/voice-work-receipt-2026-09-11.json).\n\nGPU-versnelling van dezelfde geheugenrangschikker blijft live; 24 vergelijkingen\nbehielden feiten, volgorde en bronnen. De microfoon stuurt tijdens het spreken\nPCM naar de bestaande HA-herkenner; alleen definitieve tekst gaat naar de kern.\n[Geheugenversnelling en terugweg](evidence/product/voice-memory-cuda-2026-09-11.json).\n[Streaming-invoerbewijs](evidence/product/voice-streaming-input-2026-09-11.json).\nDe Fenna-stem is een luisterkandidaat, nog zonder eigenaarsoordeel.\nProbeer: “Zoek uit wat Home Assistant Cloud doet voor spraak en vertel me eerst\nkort wat je gaat uitzoeken.” [Gericht bewijs](evidence/product/voice-natural-turn-candidate-2026-09-11.json).\n\nTelefoon en natuurlijke Voice PE-toegang zijn nog niet opgeleverd.\n[Actueel voicebewijs](evidence/product/voice-livekit-integration-2026-09-10.json).\nDe eerdere Voice PE-onbereikbaarheidsfout is hersteld en door Jaap bevestigd;\n[herstelbewijs](evidence/product/VOICE-REF-247-repair-2026-09-10.json).\n\n### Afzonderlijk hulpagentwerk — AU-002\n\nJaaps Telegramproef van 11 september om 09:40 mislukte bij het starten.\nDe bestaande vertrouwde eigenaarbinding is hersteld. De interne Telegrambrug bewijst\nnu starten, een afzonderlijke stop tijdens de modelaanroep, status, expliciet hervatten\nen het opgeslagen resultaat ophalen. Er zijn geen externe Telegramtestberichten verstuurd.\nEen nieuwe proef door Jaap en zijn acceptatie staan open. De eerdere dashboardchatproef blijft behouden.\n[Telegrambrugbewijs](evidence/product/AU-002-telegram-lifecycle-2026-09-11.json) ·\n[Onafhankelijke review](reviews/AU-002-telegram-365128c1.md).\n\n### Afzonderlijk Home Assistant-wakewordwerk — WAKE-001\n\nNog geen bruikbare verbetering. Twee begrensde doortrainingskandidaten zijn\ngeëxporteerd en op identieke lokale proefdata getest, maar afgewezen: minder\nvalse treffers gaat gepaard met te veel gemiste echte oproepen. Ook kalibratie\nop aparte validatiedata levert geen geschikte drempel op. Het oorspronkelijke\nmodel en beide apparaten blijven ongewijzigd; alle rekenprocessen zijn klaar.\nVerder werk vraagt nieuwe, onafhankelijk gelabelde lokale oproepen en scripted\nniet-oproepen van Jaap, plus de actuele ESPHome-configuratie en USB-herstelroute.\nGeen privégesprekken opnemen, geen installatie en geen gebruikersacceptatie.\n[Wakewordbewijs en minimale ontbrekende input](evidence/product/WAKE-001-offline-comparison-2026-09-11.json).\n",
+    "parallelWorkNotes": "### Afzonderlijk stemwerk\n\nDe laptoproute met LiveKit is live op http://localhost:44716. Meld aan met het\nbestaande eigenaar-dashboardtoken en kies Begin gesprek. Jaap bevestigde op\n11 september dat fysiek onderbreken werkt en vond de verhaalinhoud leuk.\nNatuurlijke uitspraak en de vernieuwde ontvangstbevestiging wachten nog op zijn luisteroordeel.\n\nJaaps verduidelijking is leidend: echt onderzoek mag 10–30 seconden of een minuut\nduren, mits Eva meteen kort en eerlijk hoorbaar reageert. Voor duidelijke\nwerkopdrachten zegt zij nu “Ik kijk er even voor je naar” zodra de kern het\nspraakverzoek heeft ontvangen. Geen uitvoerings- of succesclaim; eenvoudige\nvragen krijgen deze standaardzin niet. De bestaande Astra-kern doet het werk.\n\nDeze begrensde verbetering is gebouwd, gericht getest, beoordeeld en live in de\nbrowser bewezen: eerste audio na 0,95 seconde, onderzoeksantwoord na 73 seconden,\nvolledige gesproken afronding ontvangen. Dit is één synthetische browserproef,\ngeen algemene snelheidsgarantie. Onderbreken van de ontvangstbevestiging laat\nhet latere resultaat intact; een tweede vraag tussendoor en expliciet stoppen\nzijn met de echte LiveKit-spraakafhandeling getest. [Ontvangstbewijs](evidence/product/voice-work-receipt-2026-09-11.json).\n\nGPU-versnelling van dezelfde geheugenrangschikker blijft live; 24 vergelijkingen\nbehielden feiten, volgorde en bronnen. De microfoon stuurt tijdens het spreken\nPCM naar de bestaande HA-herkenner; alleen definitieve tekst gaat naar de kern.\n[Geheugenversnelling en terugweg](evidence/product/voice-memory-cuda-2026-09-11.json).\n[Streaming-invoerbewijs](evidence/product/voice-streaming-input-2026-09-11.json).\nDe Fenna-stem is een luisterkandidaat, nog zonder eigenaarsoordeel.\nProbeer: “Zoek uit wat Home Assistant Cloud doet voor spraak en vertel me eerst\nkort wat je gaat uitzoeken.” [Gericht bewijs](evidence/product/voice-natural-turn-candidate-2026-09-11.json).\n\nHet eigenaars-paneel Praten met Eva is op 12 september geïnstalleerd in de bestaande Home Assistant-app/HTTPS-route. Echte HA-aanmelding, remote browserspraak en audio, een getypte paneelvraag, beëindigen, opnieuw verbinden en uitschakelen zijn technisch bewezen. De fysieke telefoonmicrofoon, echo, schermvergrendeling en Jaaps luisteroordeel blijven apart open. Natuurlijke Voice PE-toegang is nog niet opgeleverd. Hergebruik van deze bestaande route is geen verplichte Home Assistant-architectuur.\n[Installatiebewijs](evidence/product/voice-phone-installation-2026-09-12.json).\n[Actueel voicebewijs](evidence/product/voice-livekit-integration-2026-09-10.json).\nDe eerdere Voice PE-onbereikbaarheidsfout is hersteld en door Jaap bevestigd;\n[herstelbewijs](evidence/product/VOICE-REF-247-repair-2026-09-10.json).\n\n### Afzonderlijk hulpagentwerk — AU-002\n\nHulpagentwerk is technisch opgeleverd via de bestaande Telegramroute: starten,\nstoppen, hervatten, status en opgeslagen resultaat ophalen. Sinds 12 september\nzijn de laatste opdracht en het resultaat in gewone tekst leesbaar. De actuele\nstatus volgt de opgeslagen toestand. Het bestaande resultaat is behouden.\nJaaps nieuwe Telegramproef en acceptatie staan open. Bij gelijktijdig stoppen\nkan het startantwoord nog later arriveren; dit is afzonderlijk vervolgwerk.\n[Proberen](design/product/AU-002-owner-trial-2026-09-12.md) ·\n[Actueel livebewijs](evidence/product/AU-002-readable-status-live-2026-09-12.json) ·\n[Eerdere levenscyclusproef](evidence/product/AU-002-telegram-lifecycle-2026-09-11.json).\n\n### Afzonderlijk Home Assistant-wakewordwerk — WAKE-001\n\nNog geen bruikbare verbetering. Twee begrensde doortrainingskandidaten zijn\ngeëxporteerd en op identieke lokale proefdata getest, maar afgewezen: minder\nvalse treffers gaat gepaard met te veel gemiste echte oproepen. Ook kalibratie\nop aparte validatiedata levert geen geschikte drempel op. Het oorspronkelijke\nmodel en beide apparaten blijven ongewijzigd; alle rekenprocessen zijn klaar.\nVerder werk vraagt nieuwe, onafhankelijk gelabelde lokale oproepen en scripted\nniet-oproepen van Jaap, plus de actuele ESPHome-configuratie en USB-herstelroute.\nGeen privégesprekken opnemen, geen installatie en geen gebruikersacceptatie.\n[Wakewordbewijs en minimale ontbrekende input](evidence/product/WAKE-001-offline-comparison-2026-09-11.json).\n",
     "initiativeDeliveryAU007": {
       "status": "done_limited_card_appreciation",
       "scope": "Eva ziet via een bestaande huiswaarneming een passende kans bij toegestane persoonlijke context, kiest zelf een concrete vervolgstap en werkt één controleerbaar privaat voorstel of hulpmiddel uit. Jaap hoeft de stappen niet voor te zeggen.",
@@ -3622,12 +3635,12 @@
       "ownerAcceptanceScope": "Uitsluitend de opgeleverde beoordelingskaart: op zich wel bruikbaar. Geen algemene acceptatie van eigen initiatief."
     },
     "initiativeDeliveryAU008": {
-      "status": "candidate_ready_waiting_coordinated_cutover",
+      "status": "technical_complete_owner_review",
       "built": true,
       "tested": true,
       "live": true,
       "ownerAccepted": false,
-      "currentWork": "Eva koos en voltooide op 12 september zelf het document API-toegang is niet hetzelfde als toestemming. Het echte bestand is teruggelezen. De nieuwe weergave van de laatste beoordeling is gebouwd en gecontroleerd; de gezamenlijke uitrol wacht op afstemming met Home Assistant.",
+      "currentWork": "AU-008 is technisch afgerond en live. Eva’s eigen bijdrage is teruggelezen; de laatste beoordeling en eventuele budgetblokkade zijn zichtbaar. Alleen Jaaps IN-02-oordeel over nut en passendheid staat open.",
       "authorization": "Jaap: in eerste instantie mag ze wel gewoon alles doen wat ze wil, zolang het maar inderdaad geen geld kost. Implementatie expliciet bevestigd.",
       "boundaries": "Geen nieuwe kosten of verplichtingen; onbekend is niet gratis. Bestaand toegelaten modelgebruik blijft binnen bestaande grenzen. Privacy, personen, communicatie en stoppen blijven gelden.",
       "artifactRetention": {
@@ -3637,9 +3650,9 @@
         "cleanup": "Na eigenaarbeoordeling plus 30 dagen: canoniek bewijs behouden, overige tijdelijke kandidaatbestanden gericht verwijderen."
       },
       "inventoryNote": "Twee nieuwe runtimepaden toegevoegd onder bestaande eva-runtime classificaties met actuele inhoudshashes. Dit is een gerichte eigenaarsregistratie, geen volledige hergeneratie of release-inventarisbewijs; de bestaande generator stuit op ongeclassificeerd root-AGENTS.md.",
-      "testEvidence": "Gerichte onderzoek-, herstel-, gegevens- en bronbindingchecks geslaagd. Private periodieke beoordeling: zes claimgevallen en één admission-herstelgeval geslaagd; onafhankelijke source-GO en19liveimports gelijk aan kandidaat.",
-      "liveImage": "sha256:9d88df14a2975c6fc276d4b8ca23a1e942ba9144367cdbe2b694f3711d090f86",
-      "implementationCommit": "519a03a88c02e64d3ab8bb005d9a2168c0f9ac95",
+      "testEvidence": "6 gerichte PostgreSQLchecks, bestaande volledige browsercontrole en echte live API/browserreadback geslaagd; geen modelaanroepen of proefmutaties.",
+      "liveImage": "sha256:4a5fa7c1116d07f6037b9a02f82ba8f6c30d703e80bbf8c84a30fbf108ca8710",
+      "implementationCommit": "e96b2054d4d40e5c502907e24c53fc25a553bbe0",
       "livePort": 44710,
       "technicalProductAccepted": false,
       "remainingScope": "Eerste bruikbare bijdrage uit de normale idlecyclus teruglezen en laten beoordelen. De volgende modelbeoordeling wacht op ruimte in het bestaande achtergrondbudget; geen geforceerde opdracht of limietverruiming.",
@@ -3669,10 +3682,10 @@
         },
         "introducedCommit": "af9a049a5dcd9b739b74e10252f6688d7b90bb14"
       },
-      "technicalComplete": false,
+      "technicalComplete": true,
       "candidateSourceCommit": "e96b2054d4d40e5c502907e24c53fc25a553bbe0",
       "candidateImage": "sha256:4a5fa7c1116d07f6037b9a02f82ba8f6c30d703e80bbf8c84a30fbf108ca8710",
-      "candidateStatusDisplayLive": false,
+      "candidateStatusDisplayLive": true,
       "latestExistingResult": {
         "intentId": "personal-interest:7faedfcad4bb5f3359de127314095c3ca7921d52c259f68227b35a3842dd29f5",
         "title": "API-toegang is niet hetzelfde als toestemming",
@@ -3686,7 +3699,14 @@
         "purpose": "AU-008 statuskandidaat, gerichte proeven en teruggelezen bestaande bijdrage",
         "path": "/home/administrator/project/.eva2-artifacts/au008-status-source-20260912",
         "cleanup": "Na livebewijs en eigenaarbeoordeling plus30dagen: canoniek bewijs bewaren, tijdelijke kandidaatwerkboom gericht opruimen."
-      }
+      },
+      "evidenceCommit": "610c23671548bee536072a01ddaca1a5029f5ae9",
+      "reviewCommit": "4555ad2cd1e77c41799911a6f86908e44b86c312",
+      "evidencePath": "eva2/evidence/product/AU-008-current-review-delivery-2026-09-12.json",
+      "reviewPath": "eva2/reviews/AU-008-current-status-e96b2054.md",
+      "technicalCompletedOn": "2026-09-12",
+      "reviewedBy": "/root/au008_final_review",
+      "remaining": "IN-02 eigenaarsoordeel; geen concreet technisch restpunt binnen deze oplevering."
     },
     "au008GeneralResearch20260910": {
       "status": "live",
@@ -3984,6 +4004,32 @@
       "noNewModelCallsForStatus": true,
       "noBudgetIncrease": true,
       "sourceThreadId": "01a08a88-894c-7171-87fa-e681ed47c735"
+    },
+    "voicePhoneInstallation20260912": {
+      "built": true,
+      "tested": true,
+      "live": true,
+      "ownerAccepted": false,
+      "result": "Het eigenaars-paneel Praten met Eva is op 12 september geïnstalleerd in de bestaande Home Assistant-app/HTTPS-route. Echte HA-aanmelding, remote browserspraak en audio, een getypte paneelvraag, beëindigen, opnieuw verbinden en uitschakelen zijn technisch bewezen. De fysieke telefoonmicrofoon, echo, schermvergrendeling en Jaaps luisteroordeel blijven apart open. Natuurlijke Voice PE-toegang is nog niet opgeleverd. Hergebruik van deze bestaande route is geen verplichte Home Assistant-architectuur.",
+      "evidence": "eva2/evidence/product/voice-phone-installation-2026-09-12.json",
+      "reportedBy": "coordinator after voice-owner evidence",
+      "scope": "Technische installatie en remote browserroute; geen fysieke telefoonacceptatie."
+    },
+    "currentRuntime": {
+      "recordedAt": "2026-09-12T16:52:54Z",
+      "image": "sha256:4a5fa7c1116d07f6037b9a02f82ba8f6c30d703e80bbf8c84a30fbf108ca8710",
+      "core": "eva2-managed-b-slot3-core",
+      "worker": "eva2-managed-b-slot3-delegated-work-worker-1",
+      "parentImage": "sha256:bfb0d25abb7f4a1247d376050fdfd7b606e3a3285dcd19b9ee6831d3297b046d",
+      "sourceOverlays": {
+        "AU-008": "e96b2054d4d40e5c502907e24c53fc25a553bbe0",
+        "AU-002": "30905cf101599f075759d5980bb816dd246f822c"
+      },
+      "backgroundWorkEnabled": true,
+      "protectedDatabaseHindsightMediaContainersPreserved": true,
+      "composeOverride": "/var/lib/eva2/managed-b-slot3/core-worker.override.compose.yml",
+      "evidence": "eva2/evidence/product/AU-008-current-review-delivery-2026-09-12.json",
+      "meaning": "Actuele gecombineerde runtime; oudere geheugen- en voicebewijzen behouden hun eigen historische imagebinding."
     }
   },
   "activeTaskId": "AU-008",
@@ -5785,12 +5831,14 @@
       "area": "Eigen initiatief",
       "title": "Zelf kosteloos handelen binnen eigenaarmandaat",
       "outcome": "Eva kiest uit toegestane context een nuttige bijdrage, voert passende kosteloze stappen via haar gewone taakuitvoerder uit en toont resultaat of concrete blokkade. Stilte blijft een geldige keuze.",
-      "status": "in_progress",
+      "status": "review",
       "stateDetails": {
-        "baseCommit": null,
-        "implementationCommit": null,
-        "evidenceCommit": null,
-        "reviewEvidencePaths": [],
+        "baseCommit": "f89c3dd034c9e27c953c1fbbb278781cceea3d29",
+        "implementationCommit": "e96b2054d4d40e5c502907e24c53fc25a553bbe0",
+        "evidenceCommit": "610c23671548bee536072a01ddaca1a5029f5ae9",
+        "reviewEvidencePaths": [
+          "eva2/evidence/product/AU-008-current-review-delivery-2026-09-12.json"
+        ],
         "blockerReason": null
       },
       "ownerRole": "architecturelead",
@@ -5799,59 +5847,27 @@
         "AU-007"
       ],
       "changePaths": [
-        "docs/eva-repository-inventory.generated.json",
-        "eva2/PROJECTDOEL.md",
-        "eva2/WERKBORD.md",
-        "eva2/design/product/execution-workboard-v1.json",
-        "eva2/src/eva/adapters/api/dashboard_initiatives.py",
-        "eva2/src/eva/adapters/connectors/home_assistant.py",
-        "eva2/src/eva/adapters/model/pydantic_conversation.py",
-        "eva2/src/eva/adapters/postgres/conversation_actions.py",
-        "eva2/src/eva/adapters/postgres/conversation_journal.py",
-        "eva2/src/eva/adapters/postgres/external_conversation_tools.py",
-        "eva2/src/eva/adapters/postgres/initiative_execution.py",
+        "eva2/experiments/react-admin-dashboard-v1/src/owner-initiatives.jsx",
+        "eva2/experiments/react-admin-dashboard-v1/verify-browser.cjs",
+        "eva2/src/eva/adapters/api/dashboard_static/assets/index-Bv4zaQUs.js",
+        "eva2/src/eva/adapters/api/dashboard_static/assets/index-Ca8HuISF.js",
+        "eva2/src/eva/adapters/api/dashboard_static/eva-dashboard-assets.json",
+        "eva2/src/eva/adapters/api/dashboard_static/index.html",
         "eva2/src/eva/adapters/postgres/owner_initiatives.py",
-        "eva2/src/eva/adapters/postgres/sensory_events.py",
-        "eva2/src/eva/application/conversation.py",
-        "eva2/src/eva/application/free_will.py",
-        "eva2/src/eva/application/initiative_execution.py",
-        "eva2/src/eva/application/personal_interests.py",
-        "eva2/src/eva/bootstrap/runtime.py",
-        "eva2/src/eva/providers/home_assistant.py",
-        "eva2/src/eva/providers/mcp_autonomy.py",
-        "eva2/tests/application/test_free_will.py",
-        "eva2/tests/application/test_personal_interests.py",
-        "eva2/tests/model/test_conversation_model.py",
-        "eva2/tests/operations/test_eva2_quiescent_cutover.py",
-        "eva2/tests/postgres/test_owner_initiatives.py",
-        "eva2/tools/eva2_quiescent_cutover.py",
-        "eva2/src/eva/adapters/model/research_tools.py",
-        "eva2/src/eva/application/research.py",
-        "eva2/src/eva/adapters/postgres/runtime_resource_usage.py",
-        "eva2/evidence/product/AU-008-private-review-live-2026-09-10.json",
-        "eva2/evidence/product/AU-008-general-research-live-2026-09-10.json",
-        "eva2/reviews/AU-008-private-review-519a03a.md"
+        "eva2/tests/postgres/test_owner_initiatives.py"
       ],
       "componentIds": [
         "api-and-runtime-composition",
-        "conversation-model-adapter",
-        "core-behavior-tests",
-        "core-semantics",
         "durable-persistence",
-        "external-capability-adapters",
-        "integration-and-storage-tests",
-        "operations-and-release-tests"
+        "integration-and-storage-tests"
       ],
       "inventoryOwners": [
-        "architecture",
-        "documentation",
         "eva-runtime",
+        "experimental",
         "verification"
       ],
       "testCommands": [
-        "pytest -q tests/application/test_free_will.py tests/application/test_personal_interests.py tests/application/test_conversation.py tests/postgres/test_owner_initiatives.py",
-        "pytest -q tests/model/test_conversation_model.py::test_sensory_model_parses_only_bounded_own_initiative tests/model/test_conversation_model.py::test_native_context_preserves_unknown_model_cost_block_on_every_request",
-        "pytest -q tests/operations/test_eva2_quiescent_cutover.py::test_connector_autonomy_seals_the_two_additional_files_without_extra_mount"
+        "pytest -q tests/postgres/test_owner_initiatives.py::test_owner_sees_private_review_before_adoption tests/postgres/test_owner_initiatives.py::test_private_review_is_owner_installation_scoped_current_and_hash_checked tests/postgres/test_owner_initiatives.py::test_owner_can_read_result_and_stop_claimed_work_without_resurrection"
       ],
       "evidenceRequired": [
         "Representatieve situaties bewijzen stilte, toegelaten uitvoering en weigering bij onbekende kosten of ontbrekende bevoegdheid.",
@@ -5859,8 +5875,8 @@
         "Stop, correctie, intrekking, herstel en native herkomst worden gericht gecontroleerd."
       ],
       "doneWhen": [
-        "Een natuurlijk gekozen initiatief levert via de gewone uitvoerder een bruikbaar resultaat op binnen het actuele kosteloze mandaat.",
-        "Resultaat en beperkingen staan op het dashboard; technische GO en Jaaps beoordeling blijven afzonderlijk."
+        "Technisch afgerond: echte zelfgekozen bijdrage teruggelezen; laatste beoordeling zichtbaar en onafhankelijk gecontroleerd.",
+        "Alleen IN-02 blijft open: Jaap beoordeelt het nut en de passendheid van de bestaande bijdrage."
       ]
     }
   ],
