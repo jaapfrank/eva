@@ -183,3 +183,62 @@ exact gelockte API blijft de uitgevoerde compatibiliteitscontrole; deze raadpleg
 claimt geen upgrade of nieuwste-versiestatus. Onafhankelijke technische review
 moet deze begrensde runner beoordelen vóór integratie; model-/liveproeven vallen
 buiten deze levering.
+
+## CP-001 native adapters: alleen offline contract en voorcontrole
+
+`cp001_native.py` vertaalt dezelfde taaktekst naar bestaande productingangen:
+EVA2 `/internal/v1/turns/respond` en Bottie `/api/chat`. Er is geen nieuwe
+modelprovider, server, resetfunctie, retrylus of netwerktransport. De lage
+`exchange(..., post=..., readback=...)`-poort is uitvoerbaar met de bestaande
+HTTP-/durable-readbackfuncties als toekomstige, beoordeelde injecties. De tests
+leveren uitsluitend lokale testfuncties; geen productserver wordt aangeroepen.
+
+Native broncontracten worden read-only gehasht en bij de CLI aan Git gebonden:
+
+```bash
+/path/to/locked-venv/bin/python benchmark/inspect_ai_v1/cp001.py \
+  --native-preflight --source-commit "$(git rev-parse HEAD)" \
+  --output /duurzaam/prive/cp001-native-voorcontrole
+pytest -q tests/benchmark/test_cp001_native.py \
+  tests/benchmark/test_cp001_runner.py tests/benchmark/test_inspect_ai_ev001.py
+```
+
+Deze modus schrijft acht native Inspect-samples met de echte requestmapping,
+bronhashes en admissionblockers. Alle scores blijven unknown, budgetvelden en
+productgebruik null. Fixturetargets worden verwijderd; geen fixture-oracle
+beoordeelt native antwoorden. Er is bewust geen `--live`-schakelaar. Een
+configuratieboolean kan de ontbrekende toelating niet groen maken.
+
+Het adapterpad verifieert de antwoordidentiteit en EVA2-antwoordhash. Een
+apart ingelezen durable antwoord moet voor EVA2 verplicht dezelfde message_id,
+conversation_id, principal_id, tekst en teksthash bevatten. Ontbrekende of
+afwijkende velden falen; dit bewijst integriteit,
+geen semantische kwaliteit. Vrij geformuleerde antwoorden zijn toegestaan;
+mensen beoordelen de vooraf beschreven rubric. De EVA2-conversationreceipt
+registreert gemeten of gedeeltelijk gemeten tokens/calls afzonderlijk van
+**onbekend totaalverbruik**. Botties publieke antwoord heeft geen gekoppelde
+usage-receipt; een toegevoegd `usage`-veld wordt niet als native bewijs gebruikt.
+Geen onbekende kosten worden nul.
+
+Gelijke byte- en clientdeadlinegrenzen gaan naar de transportinjectie. Een
+overschrijding wordt geregistreerd; de injectie moet de deadline en maximale
+responsebytes tijdens I/O daadwerkelijk afdwingen. De bestaande managed-B
+`_http_json` heeft een vaste 120s-timeout en mag niet ongemerkt als deze injectie
+worden gebruikt. Geen van deze clientchecks stopt aantoonbaar achtergrondwerk
+op de productserver. Daarom zijn model-/tool-/retrylimieten, volledige usage,
+serverquiescence en disposable-profielbinding nog harde admissionblockers.
+Een time-out krijgt `timeout_execution_unknown`, geen herkansing of verlies.
+
+Taak A gebruikt bij de derde beurt een nieuw conversation-ID bij dezelfde
+synthetische identiteit. Dit reset geen geheugen. Iedere echte sample vereist
+nog een afzonderlijk schoon productprofiel; een nieuw ID bewijst dat niet.
+Taak B behoudt de sessie bij hervatting, maar identieke onderbreking na save,
+actiereceipts en onafhankelijk bestandreadback zijn nog niet native toegelaten.
+De adapter start of herstart geen dienst en leest/wist geen privégegevens.
+
+Bronnen voor de wiremapping: de bestaande managed-B-probe, EVA2 API en
+`grounded_reply_wire`, plus Botties `server.js`, `access.js`, `requestidentity.js`,
+`httpingress.js` en `llm.js`. Geen nieuwe externe dependency of upstreamversie
+gekozen. Rootreview en bewijs van de genoemde native garanties gaan vóór een
+latere echte productproef.
+

@@ -17,6 +17,7 @@ import time
 from typing import Any
 
 import bridge_probe as proof
+import cp001_native as native
 
 HERE = Path(__file__).resolve().parent
 FIXTURES = HERE / "cp001_fixtures.json"
@@ -25,7 +26,12 @@ SOURCES = {
     **proof.SOURCE_FILES,
     **{
         f"eva2/benchmark/inspect_ai_v1/{name}": HERE / name
-        for name in ("cp001.py", "cp001_fixture_worker.py", "cp001_fixtures.json")
+        for name in (
+            "cp001.py",
+            "cp001_fixture_worker.py",
+            "cp001_native.py",
+            "cp001_fixtures.json",
+        )
     },
 }
 FAULTS = ("none", "unavailable", "timeout", "failure")
@@ -272,13 +278,35 @@ def build_task(plan: dict, output: Path, fault: str):
     )
 
 
-def run(output: Path, source_commit: str, fault: str = "none") -> dict:
-    source = proof.verify_source_checkout(source_commit, SOURCES)
+def run(
+    output: Path,
+    source_commit: str,
+    fault: str = "none",
+    native_preflight: bool = False,
+) -> dict:
+    sources = dict(SOURCES)
+    if native_preflight:
+        sources.update(
+            {
+                p: native.ROOT / p
+                for paths in native.NATIVE_SOURCES.values()
+                for p in paths
+            }
+        )
+    source = proof.verify_source_checkout(source_commit, sources)
     proof._verify_runtime()
     lock = proof.verify_lock()
     plan = json.loads(FIXTURES.read_text(encoding="utf-8"))
     if plan["mode"] != "offline-fixture-only" or fault not in FAULTS:
         raise ValueError("only sealed offline fixture execution is supported")
+    if native_preflight:
+        if fault != "none":
+            raise ValueError("fault injection belongs only to fixture mode")
+        plan["mode"] = "native-preflight-only"
+        plan["budgets"] = {key: None for key in plan["budgets"]}
+        plan["hardware"] = "unknown: no product execution"
+        for task in plan["tasks"]:
+            task.pop("expected", None)
     output.mkdir(mode=0o700, parents=True, exist_ok=False)
     manifest = {
         "source": source,
@@ -292,12 +320,17 @@ def run(output: Path, source_commit: str, fault: str = "none") -> dict:
             for p in plan["participants"]
         },
     }
+    report = native.preflight() if native_preflight else None
+    if report is not None:
+        manifest["native_admission"] = report
     (output / "manifest.json").write_text(json.dumps(manifest, indent=2) + "\n")
     from inspect_ai import eval as inspect_eval
     from inspect_ai.log import list_eval_logs, read_eval_log
 
     logs = inspect_eval(
-        build_task(plan, output, fault),
+        native.build_preflight_task(schedule(plan), report)
+        if native_preflight
+        else build_task(plan, output, fault),
         model="mockllm/model",
         display="none",
         log_dir=str(output / "logs"),
@@ -314,11 +347,12 @@ def run(output: Path, source_commit: str, fault: str = "none") -> dict:
     log = read_eval_log(log_path)
     if len(log.samples or []) != 8:
         raise RuntimeError("incomplete paired schedule")
-    actual_order = sorted(
-        log.samples, key=lambda s: s.metadata["execution"]["execution_index"]
-    )
-    if [s.id for s in actual_order] != [s["id"] for s in schedule(plan)]:
-        raise RuntimeError("Inspect execution order differs from sealed schedule")
+    if not native_preflight:
+        actual_order = sorted(
+            log.samples, key=lambda s: s.metadata["execution"]["execution_index"]
+        )
+        if [s.id for s in actual_order] != [s["id"] for s in schedule(plan)]:
+            raise RuntimeError("Inspect execution order differs from sealed schedule")
     summary = {
         "log": str(log_path),
         "sha256": proof.file_sha256(log_path),
@@ -334,12 +368,23 @@ def run(output: Path, source_commit: str, fault: str = "none") -> dict:
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--dry-run", action="store_true", required=True)
+    mode = parser.add_mutually_exclusive_group(required=True)
+    mode.add_argument("--dry-run", action="store_true")
+    mode.add_argument("--native-preflight", action="store_true")
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--source-commit", required=True)
     parser.add_argument("--fault", choices=FAULTS, default="none")
     args = parser.parse_args()
-    print(json.dumps(run(args.output.resolve(), args.source_commit, args.fault)))
+    print(
+        json.dumps(
+            run(
+                args.output.resolve(),
+                args.source_commit,
+                args.fault,
+                args.native_preflight,
+            )
+        )
+    )
 
 
 if __name__ == "__main__":

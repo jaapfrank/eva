@@ -405,6 +405,20 @@ uitrolconfiguratie verschilt alleen in de kern- en workerimages; env en
 achtergrondwerk blijven behouden. Het terugrolimage is aanwezig; terugrol
 is niet uitgevoerd. Imagereview staat open: geen activatie of AU-004-poging3.
 
+
+### CP-001 native adapters — gecorrigeerde scope technisch afgerond
+
+Dezelfde reviewer sluit het oorspronkelijke NO-GO: alle vijf journalvelden
+zijn exact gebonden en ontbrekende/afwijkende waarden worden geweigerd.
+Twaalf native controles zijn onafhankelijk herhaald en de nieuwe evalhash
+is gecontroleerd. De vijf beoordeelde code-/test-/documentatiebestanden
+zijn exact geïntegreerd. Dit bewijst de offline adapter, geen liveproductrun.
+
+De eigenaar bouwt nu een offline proef met de echte ingang en PostgreSQL-journal,
+met modelstub en afzonderlijke reader. Serverbudgetten, readerauthenticiteit,
+reset, volledig verbruik en herstel blijven open totdat ze zijn bewezen.
+[Oplevering, oorspronkelijk NO-GO en correctie](reviews/cp001-native-adapters-delivery-2026-09-12.md).
+
 ## Nu
 
 | Volgorde | Kaart | Resultaat | Status |
