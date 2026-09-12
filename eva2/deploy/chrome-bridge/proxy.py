@@ -1,10 +1,11 @@
 """Internal Docker HTTP endpoint forwards only MCP to the host's Unix socket."""
 import http.client
 import json
+import ipaddress
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 import socket
 from pathlib import Path
-TOKEN = Path('/run/secrets/chrome-token').read_text().strip()
+TOKEN = None
 
 def rejection_reason(result):
     """Keep useful diagnostics without logging page text or relay credentials."""
@@ -44,15 +45,57 @@ def normalize_tool_output(body):
 class UnixConnection(http.client.HTTPConnection):
     def connect(self):
         self.sock = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
-        self.sock.settimeout(130)
+        self.sock.settimeout(self.timeout if isinstance(self.timeout, (int, float)) else 130)
         self.sock.connect('/bridge/mcp.sock')
+
+def gateway_peer_allowed(peer, resolver=None):
+    """Resolve only the named gateway on the existing Docker network; fail closed."""
+    try:
+        records = (resolver or socket.getaddrinfo)(
+            'eva2-mcp-gateway', None, socket.AF_INET, socket.SOCK_STREAM)
+        addresses = {record[4][0] for record in records}
+        if len(addresses) != 1:
+            return False
+        address = ipaddress.ip_address(next(iter(addresses)))
+        return (address.is_private and not address.is_loopback
+                and not address.is_link_local and not address.is_multicast
+                and not address.is_unspecified and str(address) == peer)
+    except (OSError, ValueError, IndexError, TypeError):
+        return False
 
 class Handler(BaseHTTPRequestHandler):
     def log_message(self, *args):
         pass
 
+    def do_GET(self):
+        if self.path != '/healthz' or self.client_address[0] != '127.0.0.1':
+            self.send_error(403)
+            return
+        connection = UnixConnection('localhost', timeout=2)
+        healthy = False
+        try:
+            request = {'jsonrpc': '2.0', 'id': 'health', 'method': 'tools/list', 'params': {}}
+            connection.request('POST', '/mcp', json.dumps(request), {
+                'Authorization': 'Bearer ' + TOKEN, 'Content-Type': 'application/json'})
+            response = connection.getresponse()
+            raw = response.read(65537)
+            value = json.loads(raw) if len(raw) <= 65536 else {}
+            tools = value.get('result', {}).get('tools', [])
+            healthy = response.status == 200 and any(
+                isinstance(tool, dict) and tool.get('name') == 'chrome_snapshot' for tool in tools)
+        except (OSError, ValueError, TypeError, AttributeError, http.client.HTTPException):
+            pass
+        finally:
+            connection.close()
+        body = json.dumps({'status': 'ok' if healthy else 'unavailable'}).encode()
+        self.send_response(200 if healthy else 503)
+        self.send_header('Content-Type', 'application/json')
+        self.send_header('Content-Length', str(len(body)))
+        self.end_headers()
+        self.wfile.write(body)
+
     def do_POST(self):
-        if self.client_address[0] != '172.30.0.2':
+        if not gateway_peer_allowed(self.client_address[0]):
             self.send_error(403)
             return
         if self.path != '/mcp':
@@ -84,4 +127,6 @@ class Handler(BaseHTTPRequestHandler):
         finally:
             connection.close()
 
-ThreadingHTTPServer(('0.0.0.0', 45164), Handler).serve_forever()
+if __name__ == '__main__':
+    TOKEN = Path('/run/secrets/chrome-token').read_text().strip()
+    ThreadingHTTPServer(('0.0.0.0', 45164), Handler).serve_forever()

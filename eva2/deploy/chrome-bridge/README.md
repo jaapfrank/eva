@@ -53,7 +53,7 @@ de gedeelde repository zodat zowel WSL als Windows dezelfde bestanden lezen.
 De host bindt MCP uitsluitend aan een Unix-socket. `proxy.py` draait als
 onbevoorrechte, alleen-lezen container zonder gepubliceerde poort of Docker-
 toegang op het bestaande interne connectornetwerk, `172.30.0.10:45164`.
-Alleen gatewaybron `172.30.0.2` wordt doorgelaten. De proxy gebruikt een eigen
+Alleen het actuele adres dat Docker-DNS op dit netwerk voor `eva2-mcp-gateway` retourneert wordt doorgelaten. De resolutie moet precies één privaat adres opleveren; ontbrekende of dubbelzinnige resolutie weigert toegang. De proxy gebruikt een eigen
 automatisch gegenereerd credentialbestand voor de Unix-socket; dit verschijnt
 niet in de UI, logs, broncode of taakgegevens.
 
@@ -126,3 +126,22 @@ vervolgens `/bridge/mcp.sock`; de persoonlijke bridge bleef disconnected.
 De reeds bevestigde persoonlijke deelproeven van 11 september blijven bewaard.
 Deze laatste ronde en Jaaps oordeel staan nog open; automatische proeven geven
 geen eigenaaracceptatie.
+## Proxyherstel na WSL-herstart — 12 september
+
+De gateway kreeg na de herstart adres 172.30.0.4, terwijl de oude proxy uitsluitend
+172.30.0.2 toeliet. De exacte service-DNS-controle voorkomt deze adresafhankelijkheid
+zonder toegang tot het hele subnet toe te staan. De eigen gezondheidscontrole
+gebruikt `http://127.0.0.1:45164/healthz`, controleert de hostsocket met tools/list
+en vraagt geen tabdeling of browseractie. De oude geërfde corecheck op poort8080
+was ongeschikt voor deze proxy.
+
+`proxy.compose.yml` legt image, bestaande netwerknaam en proxy-IP, alleen-lezen
+mounts, beperkte rechten, resourcegrenzen, herstartbeleid en de juiste healthcheck
+vast. Stel `EVA_CHROME_PRIVATE_ROOT` in op de bestaande private bridgemap; deze
+configuratie geldt uitsluitend voor de eigen proxy. Voer geen brede stackrecreate
+uit. Het herstelbewijs staat in
+`../../evidence/product/chrome-proxy-recovery-2026-09-12.json`.
+
+Gerichte controles: `python test_proxy_peer.py`, `python test_proxy_health.py`
+en `python test_proxy_output.py`. Ze controleren adreswisseling, weigering van
+andere bronnen, onbeschikbare/ambigue DNS, socketuitval en behoud van MCP-output.

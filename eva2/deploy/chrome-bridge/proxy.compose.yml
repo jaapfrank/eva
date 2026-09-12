@@ -1,0 +1,31 @@
+services:
+  shared-chrome:
+    image: sha256:bf5d7e575464ab3f40c52e87f2dc9a01752aab9172cbc8cad6145ef433d38df3
+    pull_policy: never
+    container_name: eva2-shared-chrome
+    entrypoint: [python]
+    command: [/proxy.py]
+    user: "1000:1000"
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+    pids_limit: 32
+    mem_limit: 96m
+    restart: unless-stopped
+    volumes:
+      - ${EVA_CHROME_PRIVATE_ROOT:?set the private bridge directory}/socket:/bridge:ro
+      - ./proxy.py:/proxy.py:ro
+      - ${EVA_CHROME_PRIVATE_ROOT:?set the private bridge directory}/token:/run/secrets/chrome-token:ro
+    networks:
+      connectors:
+        ipv4_address: 172.30.0.10
+    healthcheck:
+      test: [CMD, python, -c, "import json,urllib.request; assert json.load(urllib.request.urlopen('http://127.0.0.1:45164/healthz',timeout=3))['status']=='ok'"]
+      interval: 10s
+      timeout: 4s
+      start_period: 5s
+      retries: 3
+networks:
+  connectors:
+    external: true
+    name: eva2-workspace-connectors

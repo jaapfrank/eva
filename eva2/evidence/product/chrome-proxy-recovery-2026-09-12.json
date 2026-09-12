@@ -1,0 +1,68 @@
+{
+  "contract": "EvaChromeProxyRecovery/v1",
+  "date": "2026-09-12",
+  "status": "recovered",
+  "automaticStartup": {
+    "projectDashboard": "18:43:07 CEST",
+    "chromeBridge": "18:43:07 CEST",
+    "localOwnerDashboard": "18:45:12 CEST after Docker readiness",
+    "manualDashboardRestarts": 0
+  },
+  "causes": [
+    {
+      "component": "peer authorization",
+      "before": "hardcoded 172.30.0.2",
+      "actualGatewayAddress": "172.30.0.4",
+      "symptom": "gateway tools/list HTTP403",
+      "repair": "Resolve exactly one private IPv4 address for eva2-mcp-gateway on the existing Docker network; authorize only that peer; fail closed on DNS errors or ambiguity."
+    },
+    {
+      "component": "healthcheck",
+      "before": "inherited core probe on 127.0.0.1:8080/healthz",
+      "symptom": "connection refused; proxy unhealthy",
+      "repair": "Local-only 45164/healthz checks host socket and MCP catalog without a browser action."
+    }
+  ],
+  "replacement": {
+    "oldId": "8675b08d6d8202fb2602cfb041866a0c22924db911ecb81c5972899b28147a91",
+    "newId": "08ec0c43aa35155b3dd70f65dcd7e814ade5e825202764fc35c3da16dc92db21",
+    "backupName": "eva2-shared-chrome-pre-health-20260912",
+    "image": "sha256:bf5d7e575464ab3f40c52e87f2dc9a01752aab9172cbc8cad6145ef433d38df3",
+    "health": "healthy",
+    "network": "eva2-workspace-connectors",
+    "ip": "172.30.0.10",
+    "readonly": true,
+    "capDrop": [
+      "ALL"
+    ],
+    "memory": 100663296,
+    "pids": 32,
+    "restartPolicy": "unless-stopped"
+  },
+  "verification": {
+    "ownerHtmlHttpStatus": 200,
+    "ownerStatusHttpStatus": 200,
+    "projectDashboardHttpStatus": 200,
+    "chromeControlHttpStatus": 200,
+    "proxyHealth": "healthy",
+    "gatewayToolCount": 7,
+    "gatewayDisconnectedSnapshotRejected": true,
+    "coreThroughGatewayDisconnectedCallRejected": true,
+    "negativeSources": {
+      "127.0.0.1": 403,
+      "172.30.0.10": 403
+    },
+    "personalBridgeState": "disconnected",
+    "personalEpochUnchanged": "c376c5b6-b8ab-4a2b-9b38-8c766ce1e6e1",
+    "proxyUnitTests": 7,
+    "composeConfigValidated": true
+  },
+  "scope": {
+    "onlyProxyRecreated": true,
+    "coreGatewayNetworkCutover": false,
+    "personalConnectionRequested": false,
+    "ownerAcceptanceClaimed": false,
+    "oldStoppedProxyRemovedAfterHealth": true,
+    "rollbackConfigurationSavedPrivately": true
+  }
+}
