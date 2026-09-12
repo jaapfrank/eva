@@ -1989,6 +1989,8 @@ class PostgresConversationActions:
                 operation_id=self._research_operation_id(turn),
                 error_text=type(error).__name__,
                 occurred_at=datetime.now(tz=UTC).replace(microsecond=0),
+                **({"model_usage": error.model_usage}
+                   if isinstance(getattr(error, "model_usage", None), ConversationModelUsage) else {}),
             )
             if failed.status != "needs_help":
                 raise

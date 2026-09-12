@@ -15,6 +15,7 @@ from sqlalchemy.dialects import postgresql
 from sqlalchemy.engine import Engine
 
 from eva.application.episode_repository import TransactionRequired
+from eva.application.conversation import ConversationModelUsage
 from eva.contracts.base import JsonValue, validate_json_value
 from eva.contracts.canonical_json import canonical_sha256
 
@@ -321,7 +322,13 @@ class PostgresOperationalTimeline:
         operation_id: str | None,
         error_text: str,
         occurred_at: datetime,
+        model_usage: ConversationModelUsage | None = None,
     ) -> CheckpointState:
+        data: dict[str, JsonValue] = {}
+        if model_usage is not None:
+            if not isinstance(model_usage, ConversationModelUsage):
+                raise ValueError("model failure usage is invalid")
+            data["model_usage"] = model_usage.to_wire()
         fingerprint = hashlib.sha256(error_text.encode("utf-8")).hexdigest()
         current = self.load(thread_id)
         if current.revision != expected_revision:
@@ -340,7 +347,7 @@ class PostgresOperationalTimeline:
             status="needs_help" if needs_help else "failed",
             event_type=("RECOVERY_NEEDS_HELP" if needs_help else "RECOVERY_FAILED"),
             occurred_at=occurred_at,
-            data={"error_fingerprint": fingerprint, "retry_count": retry_count},
+            data={"error_fingerprint": fingerprint, "retry_count": retry_count, **data},
             operation_id=operation_id,
             retry_count=retry_count,
             last_error_fingerprint=fingerprint,
