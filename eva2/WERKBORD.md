@@ -395,6 +395,16 @@ rapporteert32 gerichte tests groen. Het oorspronkelijke NO-GO blijft zichtbaar.
 Native toegang/queryscope, serverbudgetten en herstel zijn nog niet bewezen;
 geen kandidaatbron geïntegreerd of productaanroep uitgevoerd.
 
+
+### Gecombineerd research-/voice-image gebouwd — imagereview open
+
+Kandidaat e1bb281 is gebouwd op df675. Het imagebewijs meldt258 bronbestanden,
+precies zes beoordeelde wijzigingen, behouden parentconfig/lagen en een geslaagde
+offline importcontrole zonder model- of databaseaanroep. De effectieve
+uitrolconfiguratie verschilt alleen in de kern- en workerimages; env en
+achtergrondwerk blijven behouden. Het terugrolimage is aanwezig; terugrol
+is niet uitgevoerd. Imagereview staat open: geen activatie of AU-004-poging3.
+
 ## Nu
 
 | Volgorde | Kaart | Resultaat | Status |
