@@ -1,35 +1,16 @@
-# Eva 2 — projectbord en vergelijking
+# Eva 2 — voortgang en historische vergelijking
 
-**[Open het visuele projectdashboard](http://localhost:44712).** Dat leest dezelfde
-werklijst als [WERKBORD.md](WERKBORD.md). UX-000 is als lokaal dashboard
-afgerond en onafhankelijk beoordeeld. Ook runtimeherstel RT-001 is technisch
-afgevinkt. EV-003 en UP-001 zijn af. CO-007 is technisch afgerond en live:
-Telegram bevestigde vier antwoordupdates en één eindbericht. Nu volgt CO-004,
-het scherm voor eigen geheugenbronnen; gezinsacceptatie blijft apart open.
-Dit is geen eindacceptatie van Eva. De repository staat nu in
-`/home/administrator/project/Eva2`; de oude kandidaatlocatie verwijst alleen door.
-Onderstaande lange tekst blijft achtergrond en historische controle, geen
-tweede uitvoerwachtrij.
+**[Open het actuele dashboard](http://127.0.0.1:44712/).**
+Het dashboard en [WERKBORD.md](WERKBORD.md) worden gevoed door
+[dezelfde uitvoerbron](design/product/execution-workboard-v1.json).
+Daar staan de huidige opdracht, afgeronde mogelijkheden en praktijktests.
+Deze pagina houdt geen tweede actuele takenlijst of runtimestatus bij.
 
-Laatste ontwikkel- en livecontrole: 8 september 2026. De vergelijkingstabel verderop is van 5 september.
+Gebouwd, getest, live en door Jaap geaccepteerd zijn afzonderlijke statussen.
+Een open brede ambitie maakt een opgeleverd deelresultaat niet ongedaan.
+De volledige visie staat in [PROJECTDOEL.md](PROJECTDOEL.md).
 
-## Actueel doel en afvinkbare voortgang
-
-Het aangescherpte [projectdoel](PROJECTDOEL.md) is op 7 september door Jaap
-vastgesteld: Eva als zelfstandig lerende, handelende digitale huisgenoot,
-met aantoonbare winst op OpenClaw, Hermes en Agent Zero en gericht hergebruik
-van hun sterke open-sourceoplossingen. Alle taken en afvinkstatussen staan in
-[WERKBORD.md](WERKBORD.md). Gebouwd is niet automatisch live of geaccepteerd.
-De historische volgordes hieronder bepalen niet meer wat als volgende gebeurt.
-
-Actueel op 8 september: de antwoordstream draait op slot 4 (`44711`), bron
-`979ab77b`, image `8389a992…`. 1.979 releasecontroles en 170 imagecontroles
-zijn groen; scan 0 hoog/0 kritisch. Beide databases zijn behouden. De echte
-privéclient kreeg 17 tekststukjes en las het antwoord zonder nieuwe modelcall
-terug. Telegram bevestigde daarnaast vier drafts en één duidelijk gelabeld
-ontwikkelbericht. Slot 3 blijft gestopt als terugweg. Dit is technische
-oplevering, geen verzonnen menselijke acceptatie.
-[Live bewijs](evidence/product/CO-007-live-answer-stream-2026-09-08.json).
+## Historische controle — geen actuele uitvoervolgorde
 
 Historisch op 7 september om 23:23: de runtime draaide op slot 3 (`44710`), bron
 `bbc83b32`, image `580ef508…`. Zij groepeert oude waarnemingen en controleert
@@ -72,8 +53,9 @@ uitrol. Werkelijk nuttige autonome levering en het gemeten verbruik blijven open
 Tijdelijke databasekopieën van de omschakeling zijn verwijderd; slotgegevens
 en de private Eva1-back-up zijn behouden.
 
-De volgende alinea's bewaren de eerdere ontwikkel- en uitrolstappen; hun
-toenmalige niet-livegrenzen worden opgevolgd door de actuele stand hierboven.
+De volgende alinea's bewaren eerdere ontwikkel- en uitrolstappen. Hun grenzen
+horen bij die gedateerde controles; de actuele stand staat uitsluitend in het
+werkbord en de daarin gekoppelde recente bewijsstukken.
 
 Jaap meldt op 7 september dat de gesprekken met Eva2 echt een stuk beter zijn.
 Dit is positieve menselijke feedback, nog geen volledige gezinsacceptatie.

@@ -1,11 +1,13 @@
 # Eva 2
 
-Open het **[projectdashboard](http://localhost:44712)** voor de huidige stand,
+Open het **[projectdashboard](http://127.0.0.1:44712)** voor de huidige stand,
 open taken, komende gebruikersfuncties en concurrentie-/open-sourcekeuzes.
 
 - [Dezelfde werklijst als tekst](eva2/WERKBORD.md)
 - [Het volledige projectdoel](eva2/PROJECTDOEL.md)
 - [Broncode en ontwikkelinformatie](eva2/README.md)
+- [Documentatie-ingang en onderhoud](eva2/DOCUMENTATIE_EN_ONDERHOUD.md)
+- [Componentkeuzes en gedateerd bewijs](OPEN_SOURCE_COMPONENTEN.md)
 
 Deze repository staat in `/home/administrator/project/Eva2`.
 De actieve Python-module staat in `eva2/src/`, met tests in `eva2/tests/`.

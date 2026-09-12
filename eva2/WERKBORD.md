@@ -166,8 +166,12 @@ eerdere audit met 29 bevindingen blijft een afzonderlijke historische meting.
 
 De actuele afspraak staat in [AGENTS.md](../AGENTS.md#onderhouden-opensource-en-bestaande-besluiten),
 met verwijzingen naar de bestaande opensourcekeuzes en documentatie-ingang.
-De documentatie-audit loopt; een selectie lezen betekent niet dat alle
-documentatie is beoordeeld. Er is geen tweede beleidsregister toegevoegd.
+De begrensde documentatie-audit en correcties van de primaire statusverwijzingen
+zijn afgerond. Een selectie lezen betekent niet dat alle documentatie is
+beoordeeld. Het root-README en componentenbord wijzen nu naar gedateerd bewijs.
+[Audit en exacte leesgrenzen](reviews/documentation-alignment-2026-09-12.md).
+Npm-dekking van Renovate en aantoonbare botactiviteit staan als afzonderlijk
+onderhoudsvervolg open. Geen externe bot is gestart.
 
 ### Spraak, geheugen en hulpwerk — beperkt aanvullend testbewijs
 

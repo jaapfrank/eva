@@ -1,13 +1,15 @@
 # Eva 2
 
-**[Open het projectdashboard](http://localhost:44712)** voor het visuele overzicht.
+**[Open het projectdashboard](http://127.0.0.1:44712)** voor het visuele overzicht.
 
 Volg het werk in **[WERKBORD.md](WERKBORD.md)**: wat nu gebeurt, wat klaar is
 en welke gebruikersfuncties nog ontbreken. Dit is de enige uitvoerwachtrij.
 
 Het [projectdoel](PROJECTDOEL.md) beschrijft de volledige ambitie.
-[PROJECT_STATUS.md](PROJECT_STATUS.md) bevat de laatste livecontrole en de
-historische productvergelijkingen; die bepalen niet de werkvolgorde.
+[PROJECT_STATUS.md](PROJECT_STATUS.md) bewaart historische livecontroles en
+productvergelijkingen. De actuele status en de bijbehorende gedateerde
+bewijslinks staan in het werkbord; historische controles bepalen de werkvolgorde niet.
+Gebruik [DOCUMENTATIE_EN_ONDERHOUD.md](DOCUMENTATIE_EN_ONDERHOUD.md) als documentatie-ingang.
 
 De broncode staat in `src/eva/`, tests in `tests/` en installatiecode in
 `deploy/`. Ontwerp, eerdere beoordelingen en bewijs staan respectievelijk in
@@ -19,7 +21,7 @@ voortgang te volgen.
 
 Onderstaande tekst beschrijft eerdere ontwikkelfasen. Versies, routes en
 statusclaims daarin zijn geen actuele installatie-instructies. Gebruik voor
-de huidige stand het werkbord en de gedateerde livecontrole hierboven.
+de huidige stand het werkbord en de daarin gekoppelde gedateerde bewijsstukken.
 
 Dit is de nieuwe, connectorneutrale Eva-runtime. Deze map deelt geen uitvoerbare code,
 schema-eigenaarschap, secrets of processtate met Eva 1.

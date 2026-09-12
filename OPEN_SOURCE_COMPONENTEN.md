@@ -1,6 +1,38 @@
 # Eva 2 — open-source componentenbord
 
-Bijgewerkt: 1 september 2026.
+Historische beslisstand: 1 september 2026. Statusverwijzingen bijgewerkt op 12 september 2026.
+
+## Actuele status lezen
+
+De onderstaande oude keuzes, versies en proeven blijven historisch bewijs.
+Voor huidige uitvoering geldt [WERKBORD.md](eva2/WERKBORD.md); voor hergebruik en
+onderhoud gelden [AGENTS.md](AGENTS.md#onderhouden-opensource-en-bestaande-besluiten)
+en de [bestaande dependencykeuzes](eva2/OPEN_SOURCE_EN_DEPENDENCYKEUZES.md).
+Een versie die ooit is onderzocht, is niet automatisch geïnstalleerd of de
+nieuwste beschikbare versie. Hier is geen nieuwe upstream- of CVE-controle gedaan.
+
+| Onderdeel | Gedateerde opvolging van de oude stand | Bewijs / bron |
+|---|---|---|
+| Modelkern en versie | De oude Pydantic- en SDK-versies hieronder zijn historische bindings. De huidige samengestelde kern wordt aan haar eigen bron/imagebewijs gebonden; niet aan de oude versietabel. | [Actuele kernopbouw en image, 12 sep](eva2/evidence/product/MCP-catalog-pagination-live-2026-09-12.json) |
+| Geheugen | GE-01 en GE-02 zijn geaccepteerd; dat wordt niet heropend door oudere adapterplannen. | [Eigenaaracceptatie GE-02](eva2/evidence/product/GE-02-owner-acceptance-2026-09-12.json) |
+| Voice | LiveKit en de bestaande HA-telefoonroute zijn technisch live. De oude Pipecat-eerste-keuze is geen huidige bouwopdracht. Fysieke telefoon-/luisterproeven blijven open. | [Voice-lifecyclebewijs](eva2/evidence/product/voice-client-lifecycle-2026-09-12.json) |
+| Tools en gateway | Een nieuwe GitMCP-endpoint is in één beurt gebruikt. De catalogusopbouw leest alle paginas; geen algemene onbekende-aanbiederclaim. | [TL-003](eva2/evidence/product/TL-003-unassisted-2026-09-12.json), [paginatiefix](eva2/evidence/product/MCP-catalog-pagination-live-2026-09-12.json) |
+| Hulpagenten | De route is technisch live; de oude bevroren/providerloze stand is opgevolgd. De eigenaarproef blijft open. | [AU-002 timing en livecontrole](eva2/evidence/product/AU-002-concurrent-stop-live-2026-09-12.json) |
+| Dashboard en browser | React-admin is in gebruik. Chrome-route en transportherstel zijn technisch bewezen; persoonlijke Chrome-acceptatie blijft apart. | [Dashboard-/initiatiefbewijs](eva2/evidence/product/AU-008-current-review-delivery-2026-09-12.json), [Chrome-herstel](eva2/evidence/product/chrome-inflight-recovery-2026-09-12.json) |
+| Onderhoud | Renovate-configuratie staat in de root. Npm-dekking en een aantoonbaar actieve bot zijn vervolgwerk; configuratie en oude dry-run bewijzen geen huidige botactiviteit. | [Configuratie](renovate.json), [documentatie-audit](eva2/reviews/documentation-alignment-2026-09-12.md) |
+
+`component-watch.json` is een gedateerde onderzoeksregistratie. Houd laatst
+onderzocht, geïnstalleerd, kandidaat en nieuwste beschikbaar afzonderlijk.
+Actuele onderhoudsclaims vereisen een bron en controledatum. Het bestaande
+werkbord registreert de ontbrekende npm-dekking/botcontrole; er wordt geen
+externe bot gestart vanuit deze documentatiecorrectie.
+
+## Historische beslisstand en metingen — 1 september 2026
+
+De resterende tekst bewaart de toenmalige afwegingen en uitslagen. Woorden als
+“nu”, “actueel” en “live” daarin gelden voor die oude meetdatum; recente besluiten
+en gedateerde opvolgbewijzen hierboven gaan voor. Een oude NO-GO wordt niet
+stil verwijderd en een oude groene scan is geen scan van de huidige image.
 
 Dit bord beantwoordt maar één vraag: gebruikt Eva voor ieder algemeen probleem
 de beste onderhouden bouwsteen, of onderhoudt zij onnodig eigen code?
@@ -22,7 +54,7 @@ overlappende Eva-code is verwijderd.
 
 ## Besluit per begrijpelijk onderdeel
 
-| Onderdeel | Gekozen route | Werkelijkheid nu | Besluit |
+| Onderdeel | Toen gekozen route | Werkelijkheid op 1 september | Toenmalig besluit |
 |---|---|---|---|
 | Denken, tools en modelproviders | [Pydantic AI](https://github.com/pydantic/pydantic-ai) als `pydantic-ai-slim`, met alleen de gekozen officiële provider-SDK | `slim` bevat dezelfde agentkern zonder ongebruikte provider-, CLI- en UI-extra's; Eva pint de officiële OpenAI-SDK afzonderlijk. Pydantic AI `2.36.0` is de enige eigenaar van gewone modelgesprekken, streaming en toolkeuze. De exacte minimale Distroless-image streamde via echte Codex, koos een uitgestelde tool, vervolgde uit een receipt en herstelde na fysieke `SIGKILL` tijdens een echte externe providercall; SBOM en scan zijn 0 hoog/0 kritisch | **Exacte imagepariteit groen; toestandwijzigende providerproef en A/B-livegang nog open** |
 | Werk hervatten na een crash | PostgreSQL met een onderhouden workflowmotor zodra die Eva's ambiguïteitsgrens bewaart | Stock DBOS `2.31.0` kan na een onduidelijke commit dubbel uitvoeren; de lokale rebase voegt 306 regels toe en verwijdert nul veilige workerregels | **DBOS voor deze worker `NO-GO`; Restate/Temporal/andere actuele kandidaten alleen promoveren als zij de verantwoordelijkheid aantoonbaar overnemen, onverklaarde overlap verwijderen en de crashproef winnen** |

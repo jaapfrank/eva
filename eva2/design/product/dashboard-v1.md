@@ -1,5 +1,11 @@
 # Eva Dashboard v1
 
+Dit ontwerp beschrijft Eva’s producttaken en hun PostgreSQL-projectie. Het
+ontwikkelwerkbord is een andere gegevenssoort: de enige bron daarvoor is
+[execution-workboard-v1.json](execution-workboard-v1.json), weergegeven in
+[WERKBORD.md](../../WERKBORD.md) en het projectdashboard. Dit ontwerp maakt
+geen tweede ontwikkelwachtrij of rechtstreekse productdatabasewijziging nodig.
+
 Eva krijgt een beheerd webdashboard. Het is een **control plane**, geen tweede
 agent: alle mutaties gaan via Eva's bestaande policy, append-only eventledger,
 versies en waar nodig providerreadback. De interface bevat nooit ruwe secrets.

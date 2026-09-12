@@ -2,6 +2,11 @@
 
 Bijgewerkt: 26 augustus 2026.
 
+Deze ontwerp- en statusbeschrijving is historisch. De hulpagentroute is later
+technisch live opgeleverd; zie [AU-002 livebewijs](../../evidence/product/AU-002-concurrent-stop-live-2026-09-12.json)
+en het [actuele werkbord](../../WERKBORD.md). De toenmalige providerloze/niet-live
+stand hieronder is geen huidige installatieclaim. Eigenaaracceptatie blijft apart.
+
 ## Productbelofte
 
 Eva kan straks vanuit een gesprek werk opdelen, één of meer begrensde
