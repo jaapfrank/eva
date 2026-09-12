@@ -641,6 +641,17 @@ De volgende reguliere Telegramupdate is gepland niet vóór22:41:38UTC,
 minimaal60minuten na de onzekere poging.21:00 blijft uncertain; de laatst
 bevestigde verzending blijft20:40:11UTC.
 
+### Bestaand spraaktransport — architectuurregistratie afgerond
+
+Het bestaande voice_service-pakket is als buitenste transportlaag geregistreerd,
+met interne imports en uitsluitend de bestaande Home Assistant-spraakadapter.
+Andere kern-, database- en modelimports blijven verboden. De onafhankelijke
+reviewer herhaalde24 gerichte controles en gaf GO. De zes policy-, catalogus-,
+test-, documentatie- en bewijsbestanden zijn geïntegreerd; geen runtime-,
+checker-, image- of livewijziging. De gebonden canonical meting ging27→26
+architectuur- en80→73 catalogusbevindingen; beide volledige poorten blijven open.
+[Bepaalde grens en bewijs](evidence/architecture/voice-service-boundary-2026-09-12.json).
+
 ## Nu
 
 | Volgorde | Kaart | Resultaat | Status |

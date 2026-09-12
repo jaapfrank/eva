@@ -570,6 +570,42 @@
       "blockers": [
         "Volledige eindfreeze en zevendaagse releaseproef staan open."
       ]
+    },
+    {
+      "id": "voice-media-transport",
+      "name": "Spraaktransport via LiveKit",
+      "purpose": "Beheert audio, mediasessies en HTTP-overdracht naar de Eva-kern; de kern blijft de enige redeneer- en opslagruntime.",
+      "necessity": "Hergebruikt de bestaande LiveKit Agents-media-integratie en de bestaande Home Assistant-spraakadapter; geen tweede agent- of opslaglaag.",
+      "disposition": "dependency_adapter",
+      "lifecycleStatus": "implemented",
+      "ownerPaths": [
+        "eva2/src/eva/voice_service/**"
+      ],
+      "forbiddenScope": [
+        "Geen rechtstreekse imports van bootstrap, persistence, application of modeladapters.",
+        "Kerncommunicatie verloopt via CoreClient HTTP; alleen de bestaande home_assistant_voice-transportadapter is lokaal toegestaan."
+      ],
+      "upstream": {
+        "status": "adopted",
+        "name": "LiveKit Agents",
+        "version": "1.8.0",
+        "url": "https://github.com/livekit/agents",
+        "reviewedOn": "2026-09-12"
+      },
+      "replacement": {
+        "status": "retained",
+        "target": null,
+        "reason": "Bestaande dependency en pin uit deploy/voice-session/requirements.lock; deze wijziging classificeert alleen de bron en doet geen nieuwe onderhouds- of scanclaim."
+      },
+      "verification": {
+        "testPaths": [
+          "eva2/tests/architecture/test_package_boundaries.py"
+        ],
+        "evidencePaths": []
+      },
+      "blockers": [
+        "Deze registratie bewijst geen actuele imagepariteit, hoorbare kwaliteit of eigenaaracceptatie; zie bestaande stemopleveringen."
+      ]
     }
   ]
 }

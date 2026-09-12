@@ -1,0 +1,59 @@
+{
+  "baseline": "f619df864e22622ebcd4b5f0b840b4d7f79976de",
+  "architecture_baseline": 27,
+  "architecture_candidate": 26,
+  "removed": [
+    {
+      "path": "src/eva/voice_service",
+      "code": "unexpected_package",
+      "detail": "voice_service"
+    }
+  ],
+  "added": [],
+  "runtime_changes": false,
+  "tests_passed": 24,
+  "full_architecture_gate_green": false,
+  "scope": "LiveKit permitted at package level by existing checker; no claim of restricting each LiveKit plugin. Other local/core/model/database imports remain denied.",
+  "component_catalog": {
+    "baseline": 80,
+    "candidate": 73,
+    "removed": [
+      {
+        "code": "owner_missing",
+        "path": "eva2/src/eva/voice_service/__init__.py",
+        "detail": "no primary component"
+      },
+      {
+        "code": "owner_missing",
+        "path": "eva2/src/eva/voice_service/agent.py",
+        "detail": "no primary component"
+      },
+      {
+        "code": "owner_missing",
+        "path": "eva2/src/eva/voice_service/client.html",
+        "detail": "no primary component"
+      },
+      {
+        "code": "owner_missing",
+        "path": "eva2/src/eva/voice_service/lifecycle.py",
+        "detail": "no primary component"
+      },
+      {
+        "code": "owner_missing",
+        "path": "eva2/src/eva/voice_service/media.py",
+        "detail": "no primary component"
+      },
+      {
+        "code": "owner_missing",
+        "path": "eva2/src/eva/voice_service/server.py",
+        "detail": "no primary component"
+      },
+      {
+        "code": "owner_missing",
+        "path": "eva2/src/eva/voice_service/streaming_input.py",
+        "detail": "no primary component"
+      }
+    ],
+    "added": []
+  }
+}

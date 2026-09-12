@@ -1,0 +1,7 @@
+# Bestaande spraakdienst expliciet begrensd
+
+De eerder onbekende voice_service wordt nu gecontroleerd als buitenste transportpakket met één smalle lokale adapteruitzondering voor bestaand Home Assistant-spraaktransport. De kern blijft via HTTP bereikbaar; lokale bootstrap, application, persistence en modeladapters zijn verboden. De bestaande checker en zijn beleidsformaat zijn hergebruikt, zonder runtimewijziging of nieuwe bibliotheek. LiveKit is overeenkomstig het pakketniveau van de checker als bibliotheek toegestaan; afzonderlijke LiveKit-plugins worden hiermee niet begrensd.
+
+24 gerichte architectuurtests slagen, inclusief 9 nieuwe negatieve gevallen en de werkelijke voice-importcontrole. De totale packagepoort gaat op canonical f619df86 van 27 naar 26 bestaande bevindingen. Alleen unexpected_package verdwijnt. De bestaande componentcatalogus krijgt één eigenaar voor alle 7 voicebestanden; catalogusbevindingen dalen van 80 naar 73, zonder nieuwe bevinding. Beide volledige poorten blijven rood. De catalogus registreert bestaande dependencyversie 1.8.0 uit de lockfile; geen nieuwe upstream-, beveiligings- of onderhoudsclaim.
+
+Status: beleidswijziging getest, onafhankelijke review aangevraagd. Geen imagebouw, installatie, serviceherstart of modelcalls nodig. De live mediaservice en kern blijven gelijk. Gebruikersacceptatie en de overige architectuurschuld blijven apart op het centrale bord.

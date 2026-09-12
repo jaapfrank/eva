@@ -47,3 +47,9 @@ Probeer: open een gesprek, verberg het paneel en keer terug. De microfoon hoort
 uit te blijven totdat je opnieuw Begin gesprek kiest. Bij verwijderen van het
 paneel moet opnieuw aanmelden nodig zijn. Werk dat al gestart was is geen
 stopopdracht gegeven; controleer het resultaat via het bestaande dashboard.
+
+## Architectuurgrens van de mediaservice
+
+`eva.voice_service` is een buitenste transportpakket. CoreClient spreekt met de kern via HTTP; de service importeert geen bootstrap, applicatielogica, modeladapter of PostgreSQL-opslag. De enige lokale uitzondering is de bestaande `eva.adapters.connectors.home_assistant_voice` voor STT/TTS-transport. Extern zijn aiohttp, FastAPI, HTTPX en LiveKit toegestaan; exacte bestaande pins staan in requirements.lock. De packagechecker staat LiveKit als bibliotheek toe en controleert geen afzonderlijke pluginkeuze binnen dat pakket.
+
+De bestaande packagepolicy en componentcatalogus registreren deze grens. Negatieve fixtures controleren directe, relatieve en dynamische imports die de kern of opslag proberen te bereiken, plus directe model-/databasebibliotheken. Dit is bronbeleid, geen nieuwe runtimefunctie, onderhoudsscan of bewijs van hoorbare kwaliteit.

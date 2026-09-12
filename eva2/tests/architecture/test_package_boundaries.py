@@ -5,9 +5,38 @@ import json
 import sys
 from pathlib import Path
 
+import pytest
+
 
 ROOT = Path(__file__).resolve().parents[2]
 CHECKER_PATH = ROOT / "tools/check_architecture.py"
+
+
+@pytest.mark.parametrize("statement,code,detail", [
+    ("from eva.bootstrap import runtime", "local_import_boundary", "eva.bootstrap"),
+    ("from eva.adapters.postgres import conversation_journal", "local_import_boundary", "eva.adapters.postgres"),
+    ("from eva.adapters.model import pydantic_conversation", "local_import_boundary", "eva.adapters.model"),
+    ("from eva.application import conversation", "local_import_boundary", "eva.application"),
+    ("from eva.adapters.connectors import mcp_gateway", "local_import_boundary", "eva.adapters.connectors"),
+    ("from ..bootstrap import runtime", "local_import_boundary", "eva.bootstrap"),
+    ('import importlib\nimportlib.import_module("eva.adapters.postgres")', "local_import_boundary", "eva.adapters.postgres"),
+    ("import sqlalchemy", "external_import_boundary", "sqlalchemy"),
+    ("import openai", "external_import_boundary", "openai"),
+])
+def test_voice_transport_cannot_bypass_core_http_boundary(tmp_path, statement, code, detail):
+    checker = _checker()
+    policy = json.loads((ROOT / "design/architecture/package-boundaries-v1.json").read_text())
+    _seed_policy_tree(tmp_path, policy)
+    (tmp_path / "src/eva/voice_service/bad.py").write_text(statement + "\n")
+    policy_path = tmp_path / "policy.json"
+    policy_path.write_text(json.dumps(policy))
+    assert [(v.code, v.detail) for v in checker.check(tmp_path, policy_path)] == [(code, detail)]
+
+
+def test_voice_transport_declared_imports_are_closed():
+    checker = _checker()
+    violations = checker.check(ROOT, ROOT / "design/architecture/package-boundaries-v1.json")
+    assert not [v for v in violations if "/voice_service" in v.path]
 
 
 def _checker():

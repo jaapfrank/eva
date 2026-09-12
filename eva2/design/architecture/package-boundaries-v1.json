@@ -88,6 +88,11 @@
       "allowedLocalImports": ["eva.adapters", "eva.application", "eva.contracts", "eva.providers"],
       "allowedExternalImports": ["sqlalchemy"]
     },
+    "voice_service": {
+      "path": "src/eva/voice_service",
+      "allowedLocalImports": ["eva.voice_service", "eva.adapters.connectors.home_assistant_voice"],
+      "allowedExternalImports": ["aiohttp", "fastapi", "httpx", "livekit"]
+    },
     "tools": {
       "path": "tools",
       "allowedLocalImports": ["eva"],
