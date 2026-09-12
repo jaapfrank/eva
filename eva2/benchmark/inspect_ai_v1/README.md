@@ -242,3 +242,42 @@ Bronnen voor de wiremapping: de bestaande managed-B-probe, EVA2 API en
 gekozen. Rootreview en bewijs van de genoemde native garanties gaan vóór een
 latere echte productproef.
 
+
+## Native EVA-ingress + echte PostgreSQL-journal (offline contractproef)
+
+`tests/benchmark/test_cp001_native_postgres.py` verbindt `exchange` met de echte
+FastAPI `create_app`, `PostgresHindsightMemoryRuntime.respond`, `LivingConversation`
+en `PostgresConversationJournal`. Alleen model en semantische geheugenprovider
+zijn stubs. De HTTP-response wordt niet geconstrueerd door de test. Een tweede
+SQLAlchemy-engine leest `REPLY_COMMITTED` rechtstreeks uit PostgreSQL, in een
+read-only transactie met statement-timeout en exacte tenant/installatie/message-
+querybinding. De adapter controleert daarna de payloadbinding en hash.
+
+De bestaande `people_memory_engine`-fixture verzorgt lege-DB-controle,
+PostgreSQL 16.13-versiecheck, migraties en teardown. Gebruik uitsluitend een
+nieuwe geïsoleerde database met prefix `eva2_4b_disposable_`; een productdatabase
+is niet toegestaan. De uitgevoerde proef gebruikte de behouden lokale PG16.13-
+image, `--network none`, tmpfs-data en een private Unix-socket. TestClient gebruikt
+geen HTTP-listener. De volledige runtimebootstrap en externe geheugendienst
+worden niet gestart. Het geheugen-submitpunt is een noop; daadwerkelijke
+semantische opslag/recall is geen claim van deze proef.
+
+Vanuit `eva2`, met de bestaande runtime-testomgeving en disposable DSN:
+
+```bash
+PYTHONPATH=src:. EVA2_TEST_POSTGRES_DSN='postgresql+psycopg://postgres@/eva2_4b_disposable_cp001?host=/private/socket' \
+  CP001_PG_EVIDENCE_DIR=/private/new-evidence \
+  /path/to/runtime-test-python -m pytest -q tests/benchmark/test_cp001_native_postgres.py
+```
+
+De optionele evidence-map moet vooraf bestaan; per test wordt een nieuw bestand
+exclusief aangemaakt met echte lokale HTTP-antwoorden en uit de DB gelezen
+payloads. Het testresultaat blijft pytest-evidence, geen nieuw benchmarkscorebord.
+
+Vier controles: intacte reply/usage en replay zonder tweede modelstubcall;
+weigering van hetzelfde message-ID in een andere conversatie; echte journal-
+historie in dezelfde sessie maar niet in een nieuwe sessie; en afwijzing van een
+verkeerde echte journalrij met dezelfde eigenaar én antwoordtekst. De getallen
+23/7 tokens komen uit de gecontroleerde modelstub en bewijzen alleen dat de echte
+journal die velden bewaart. Zij meten geen productmodelkosten. Bottie, model-
+kwaliteitswinst, volledige usage en native liveadmission blijven open.

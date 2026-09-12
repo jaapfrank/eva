@@ -450,6 +450,23 @@ of modellen benaderd. Kandidaat77664349/bewijs4cadbb75 wacht op onafhankelijke
 review en is nog niet geïntegreerd. Providerverbruik, productkwaliteit,
 Bottie, gelijke serverbudgetten en serverstop blijven open.
 
+
+### CP-001 echte ingang en PostgreSQL — begrensde proef afgerond
+
+Onafhankelijke review is GO: de volledige testbron, negen bronhashes, zes
+bewijshashes, JUnit36pass en vier readbacks zijn gecontroleerd. Er is geen
+nieuwe databaseproef uitgevoerd door de reviewer. Replay, sessiehistorie,
+conflict en verkeerd-rijafwijzing zijn binnen de echte API/runtime/journalketen
+bewezen. De drie beoordeelde bestanden zijn exact geïntegreerd.
+
+Model/geheugen/bootstrap blijven gecontroleerde testconstructies. Geen
+Bottie-, livebudget-, herstelkwaliteit- of algemene benchmarkgoedkeuring.
+[Contractproef](reviews/cp001-native-postgres-delivery-2026-09-12.md).
+
+De helper meldt een geslaagde variantA van leerproef3; onafhankelijke review
+loopt nog. VariantB is niet als uitgevoerd geregistreerd en AU-004 is niet
+afgerond of door de eigenaar geaccepteerd. De eerdere mislukkingen blijven staan.
+
 ## Nu
 
 | Volgorde | Kaart | Resultaat | Status |
