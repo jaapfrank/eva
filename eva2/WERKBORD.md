@@ -512,6 +512,20 @@ bericht met vooraf verzegelde ongeziene invoer. Het bewijs wacht op review
 en is nog niet geïntegreerd. Geen globale skillinstallatie, volledige
 AU-004- of eigenaaracceptatie; er worden geen verdere proeven gestart.
 
+
+### CP-001 Bottie-ingang en SQLite — kandidaat in review
+
+De echte Bottie-route, agent en SQLite-journal zijn met gecontroleerde
+providerantwoorden beproefd. Een aparte read-only Python-reader controleert
+de rij en heropent de database na workerexit. De maker rapporteert35 tests
+groen, waarvan drie nieuwe Bottieproeven. Ontbrekende ACK-publickey gaf terecht
+400 vóór modelaanroep; de benchmarkmapping accepteert die sleutel nu optioneel.
+
+De kandidaat de9fef37/bewijs2ba7abb7 wacht op review en is niet geïntegreerd.
+Er is geen echte client-ACK verstuurd: opslag/replay is geen bewezen aflevering
+aan een gebruiker. Bottie-productiecode en livegegevens zijn ongewijzigd;
+usage, serverbudgetten, herstel, kwaliteit en ranking blijven onbekend.
+
 ## Nu
 
 | Volgorde | Kaart | Resultaat | Status |
