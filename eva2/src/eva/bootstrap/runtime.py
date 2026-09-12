@@ -912,6 +912,8 @@ class PostgresHindsightMemoryRuntime:
             authority_scope=self._dashboard_authority_scope)
 
     def _initiative_authority(self):
+        from functools import partial
+        from eva.adapters.credentials.runtime_files import read_runtime_secret_file
         from eva.adapters.postgres.initiative_execution import PostgresInitiativeAuthority
         path = os.environ.get("EVA_INITIATIVE_MANDATE_FILE")
         if not path:
@@ -919,7 +921,8 @@ class PostgresHindsightMemoryRuntime:
             if not base:
                 raise RuntimeError("initiative mandate unavailable")
             path = str(Path(base).with_name("initiative-mandate.json"))
-        return PostgresInitiativeAuthority(self._owner_initiatives(), path)
+        return PostgresInitiativeAuthority(self._owner_initiatives(),
+            partial(read_runtime_secret_file, path, setting_name="EVA_INITIATIVE_MANDATE_FILE"))
 
     def execute_native_initiative(self, claim):
         from eva.application.initiative_execution import initiative_execution

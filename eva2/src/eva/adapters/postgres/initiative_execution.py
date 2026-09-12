@@ -1,6 +1,7 @@
 """Current zero-new-cost authority over the existing native work journal."""
 from __future__ import annotations
 
+from collections.abc import Callable
 from datetime import UTC, datetime
 import json
 import re
@@ -8,7 +9,6 @@ import re
 import sqlalchemy as sa
 from eva.application.schema_validation import validate_schema_value
 
-from eva.adapters.credentials.runtime_files import read_runtime_secret_file
 from eva.adapters.postgres.operational_timeline import (
     CheckpointConflict, PostgresOperationalTimeline, TimelineNotFound,
     operational_checkpoints, operational_events, transition_timeline_thread,
@@ -88,16 +88,17 @@ def execution_turn(claim):
 
 
 class PostgresInitiativeAuthority:
-    def __init__(self, owner_store, mandate_file: str):
+    def __init__(self, owner_store, read_mandate: Callable[[], str]):
+        if not callable(read_mandate):
+            raise TypeError("initiative mandate reader is required")
         self.owner = owner_store
-        self.path = mandate_file
+        self._read_mandate = read_mandate
         self.timeline = PostgresOperationalTimeline(owner_store._engine, owner_store._scope)
         self.thread = "initiative-mandate:" + str(owner_store._owner)
 
     def _read(self):
         try:
-            data = json.loads(read_runtime_secret_file(self.path,
-                setting_name="EVA_INITIATIVE_MANDATE_FILE"))
+            data = json.loads(self._read_mandate())
         except (OSError, ValueError, RuntimeError) as error:
             raise InitiativeMandateDenied("initiative mandate file unavailable") from error
         fields = {"contract", "mandate_id", "owner_principal_id", "enabled",

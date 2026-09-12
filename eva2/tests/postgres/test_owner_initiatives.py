@@ -143,7 +143,11 @@ def costless_native(postgres_engine, tmp_path, monkeypatch):
             "execute_schema": args, "observe_schema": args}]}
     path = tmp_path / "mandate.json"
     path.write_text(json.dumps(policy)); path.chmod(0o600)
-    auth = native.PostgresInitiativeAuthority(control, str(path))
+    from types import SimpleNamespace
+    from eva.bootstrap.runtime import PostgresHindsightMemoryRuntime
+    monkeypatch.setenv("EVA_INITIATIVE_MANDATE_FILE", str(path))
+    auth = PostgresHindsightMemoryRuntime._initiative_authority(
+        SimpleNamespace(_owner_initiatives=lambda: control))
     return auth, claim, store, control, source, path, policy
 
 
@@ -279,6 +283,75 @@ def test_native_dispatch_rechecks_stop_inside_admission_transaction(costless_nat
     with pytest.raises(InitiativeMandateDenied, match="before dispatch"):
         guard.authorize_request(request, phase="execute")
     assert not any(e.event_type == "INITIATIVE_DISPATCH_ADMITTED" for e in auth.timeline.events(guard.thread))
+
+
+@pytest.mark.parametrize("change", ["disabled", "missing", "unsafe", "symlink", "invalid_json"])
+def test_host_mandate_reader_is_fresh_and_bound_before_dispatch(costless_native, monkeypatch, change):
+    import json
+    from pathlib import Path
+    from types import SimpleNamespace
+    from eva.adapters.postgres.initiative_execution import InitiativeMandateDenied
+    from eva.adapters.postgres.conversation_journal import PostgresConversationJournal
+    from eva.adapters.postgres.external_conversation_tools import PostgresExternalConversationTools
+    from eva.application.conversation import ConversationActionCall, ConversationToolPreparation
+    from eva.application.initiative_execution import initiative_execution
+    from eva.bootstrap.runtime import PostgresHindsightMemoryRuntime
+
+    auth, claim, store, control, source, path, policy = costless_native
+    guard, turn = auth.bind(claim)
+    decoy = path.with_name("other-enabled-mandate.json")
+    decoy.write_text(json.dumps(policy)); decoy.chmod(0o600)
+    # The already composed reader must keep its original path, even if the
+    # process environment later names another valid, enabled mandate.
+    monkeypatch.setenv("EVA_INITIATIVE_MANDATE_FILE", str(decoy))
+    output = policy["capabilities"][0]["execute_schema"]["properties"]["path"]["const"]
+    arguments = {"path": output, "content": "must not be written"}
+
+    class Planner:
+        action_names = ("save_private_result",)
+        preparations = 0
+
+        async def prepare(self, turn, call):
+            self.preparations += 1
+            if change == "disabled":
+                path.write_text(json.dumps({**policy, "enabled": False}))
+            elif change == "missing":
+                path.unlink()
+            elif change == "unsafe":
+                path.chmod(0o644)
+            elif change == "symlink":
+                path.unlink(); path.symlink_to(decoy)
+            else:
+                path.write_text("{")
+            return ConversationToolPreparation(tool_name="private.write", arguments=call.arguments,
+                expected_proof={}, observation_tool_name="private.read", observation_arguments=call.arguments,
+                tool_configuration_sha256="a" * 64, receipt_output={})
+
+    class Provider:
+        dispatches = 0
+
+        async def execute(self, request):
+            self.dispatches += 1
+            raise AssertionError("changed mandate must prevent provider dispatch")
+
+        async def observe(self, request, dispatch):
+            raise AssertionError("no effect was admitted")
+
+    planner, provider = Planner(), Provider()
+    journal = PostgresConversationJournal(auth.owner._engine, auth.owner._scope)
+    journal.admit(turn)
+    tools = PostgresExternalConversationTools(auth.owner._engine, planner, provider)
+    with initiative_execution(guard), pytest.raises(InitiativeMandateDenied):
+        tools.execute(turn, ConversationActionCall("fresh-mandate", "save_private_result", arguments))
+    assert planner.preparations == 1 and provider.dispatches == 0
+    assert not Path(output).exists()
+    assert not any(e.event_type == "INITIATIVE_DISPATCH_ADMITTED" for e in auth.timeline.events(guard.thread))
+
+    monkeypatch.setenv("EVA_INITIATIVE_MANDATE_FILE", str(path))
+    recovered = PostgresHindsightMemoryRuntime._initiative_authority(
+        SimpleNamespace(_owner_initiatives=lambda: control))
+    with pytest.raises(InitiativeMandateDenied):
+        recovered.bind(claim)
 
 
 def test_costless_schema_enforces_patterns_and_rejects_unsupported_constraints():

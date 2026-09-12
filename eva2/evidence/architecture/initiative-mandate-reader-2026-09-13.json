@@ -1,0 +1,49 @@
+{
+  "baseline": "68a9c705ab0275838d682e7d501d9d072b08b6a1",
+  "architecture_baseline": 25,
+  "architecture_candidate": 24,
+  "removed": [
+    {
+      "path": "src/eva/adapters/postgres/initiative_execution.py",
+      "code": "local_import_boundary",
+      "detail": "eva.adapters.credentials.runtime_files"
+    }
+  ],
+  "added": [],
+  "postgres_tests_passed": 37,
+  "fresh_reader_cases": [
+    "disabled",
+    "missing",
+    "unsafe",
+    "symlink",
+    "invalid_json"
+  ],
+  "each_case": {
+    "change_after_prepare_before_dispatch": true,
+    "provider_dispatches": 0,
+    "no_output_file": true,
+    "no_initiative_dispatch_admitted": true,
+    "new_authority_also_denied": true,
+    "reader_kept_original_path_after_environment_change": true
+  },
+  "postgres": {
+    "container_id": "7c4bc51a6afcb6773e2214d7ac09761b25543ab01ea326b34ba42adad54587f2",
+    "postgres_image": "sha256:5d143123fdf80462d1778cd4f24b9f7ca13c87174bca19141fb194c5a1ebca59",
+    "network_mode": "none",
+    "published_ports": [],
+    "data_storage": "tmpfs",
+    "connection": "local Unix socket only",
+    "pytest_exit_code": 0,
+    "model_calls": 0,
+    "production_database_connections": 0,
+    "disposable_container_removed": true
+  },
+  "runtime_changes": [
+    "eva2/src/eva/adapters/postgres/initiative_execution.py",
+    "eva2/src/eva/bootstrap/runtime.py"
+  ],
+  "no_new_library": true,
+  "no_policy_or_ledger_change": true,
+  "build": false,
+  "live": false
+}

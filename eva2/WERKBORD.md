@@ -668,6 +668,19 @@ usage voor de directe gespreksroute, inclusief fouten, retry en replay;
 helpers vallen buiten die beperkte bewijsclaim.
 [Diagnose en grenzen](reviews/cp001-native-accounting-admission-2026-09-12.md).
 
+### Actueel initiatiefmandaat — bronreparatie afgerond
+
+De samenstellingslaag bindt de bestaande beveiligde bestandslezer aan één pad;
+de initiatiefadapter vraagt het mandaat bij iedere controle opnieuw op.
+Na voorbereiding maar vóór uitvoering weigeren ingetrokken, ontbrekende,
+onveilige, symlink- en ongeldige bestanden de actie, ook via een nieuwe instantie.
+De reviewer geeft GO op het bronbewijs met37 PG-controles en nul dispatches
+voor de weigercases. Alleen de drie gerichte code-/testpatches en twee
+bewijsbestanden zijn geïntegreerd; actuele voice- en researchcode behouden.
+De gebonden bronmeting25→24 is geen actuele live-imagetelling. Nog geen
+image of livegang; geen nieuwe library, bevoegdheid, ledger of databasewijziging.
+[Bronbewijs](evidence/architecture/initiative-mandate-reader-2026-09-13.json).
+
 ## Nu
 
 | Volgorde | Kaart | Resultaat | Status |
