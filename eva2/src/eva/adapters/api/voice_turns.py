@@ -75,11 +75,12 @@ def install_voice_turns(app: FastAPI, *, access: DashboardAccess,
             conversation_id, message_id(payload.message_id), payload.text, stamp,
         )
         return stream_voice_turn(runtime=runtime, payload=payload, turn=turn,
-                                 message_id=message_id, check=lambda: config.check(grant))
+                                 message_id=message_id, check=lambda: config.check(grant),
+                                 admit=runtime.admit_voice_turn)
 
 
 def stream_voice_turn(*, runtime, payload: VoiceRequest, turn: ConversationTurn,
-                      message_id, check, user_label: str = "Jaap"):
+                      message_id, check, user_label: str = "Jaap", admit=None):
     """Shared task/context stream; callers must supply a server-admitted turn."""
     try:
         recent = tuple(RecentConversationMessage(
@@ -116,9 +117,12 @@ def stream_voice_turn(*, runtime, payload: VoiceRequest, turn: ConversationTurn,
         stop=stop, event=event,
         known_results=tuple((message_id(item.message_id), item.text) for item in payload.work_results))
     def run():
+        nonlocal turn
         stage = "respond"
         try:
             check()
+            if admit is not None:
+                turn = admit(turn)
             with voice_context(context), stream_conversation_text(
                 lambda text: event({"type": "delta", "text": text})
             ):

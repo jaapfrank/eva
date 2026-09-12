@@ -21,6 +21,7 @@ def setup():
     class Runtime:
         turns = []
         stops = []
+        def admit_voice_turn(self, turn): return turn
         def respond(self, turn):
             self.turns.append(turn)
             self.context = current_voice_context()
@@ -77,3 +78,22 @@ def test_revocation_during_turn_discards_late_text_and_final():
     rows = [json.loads(line) for line in response.text.splitlines()]
     assert rows == [{"type": "error", "code": "voice_authority_changed"}]
     assert "uitlekken" not in response.text and "In orde" not in response.text
+
+
+def test_canonical_admitted_turn_reaches_stop_and_after_response():
+    from dataclasses import replace
+    from threading import Event
+    client, _, runtime = setup()
+    finished = Event()
+    stamp = "2026-09-01T01:02:03Z"
+    runtime.admit_voice_turn = lambda turn: replace(turn, occurred_at=stamp)
+    retained = []
+    def after(turn, reply):
+        retained.append((turn, reply))
+        finished.set()
+    runtime.after_response = after
+    response = client.post(PATH, headers={"Authorization": "Bearer " + TOKEN}, json=payload())
+    assert json.loads(response.text.splitlines()[-1])["type"] == "final"
+    assert finished.wait(3)
+    assert runtime.turns[-1].occurred_at == runtime.stops[-1].occurred_at == stamp
+    assert retained[0][0].occurred_at == retained[0][1].generated_at == stamp

@@ -1076,6 +1076,12 @@ class PostgresHindsightMemoryRuntime:
         if active != audience.consent_ref:
             raise ValueError("Telegram group turn consent is not active and exact")
 
+    def admit_voice_turn(self, turn: ConversationTurn) -> ConversationTurn:
+        """Resolve the first durable receive time for an owner voice message."""
+        check_cancellation()
+        self.admit_turn_audience(turn)
+        return self._journal(turn).admit_voice_ingress(turn)
+
     def respond(
         self,
         turn: ConversationTurn,

@@ -1,0 +1,56 @@
+{
+  "date": "2026-09-12",
+  "status": "source_tested_reviewed_not_live",
+  "problem": "Identical owner voice HTTP request after a two-second server clock advance regenerated occurred_at and failed durable journal admission.",
+  "original_regression_commit": "f085ca11",
+  "fix": "Explicit owner voice admission atomically persists first receipt in existing INGRESS_COMMITTED; exact scoped ingress replay uses stored timestamp, then passes unchanged strict ordinary admit. Canonical turn flows into respond, stop closure and after_response.",
+  "constraints": [
+    "Canonical UUID voice session/message and private owner audience only",
+    "No project or observation binding accepted by receive-time resolver",
+    "Changed principal/session/text and erased ingress still fail",
+    "Ordinary journal.admit timestamp equality unchanged",
+    "Existing execution lock and committed reply reuse unchanged",
+    "Fresh authentication and authority checks retained",
+    "No process cache, separate ledger, global clock freeze or client-supplied timestamp"
+  ],
+  "sources": {
+    "src/eva/adapters/api/voice_turns.py": "15d0fc77457505be22971ba50945e34c22b83c3d3587d0eab14dd6afc934ac01",
+    "src/eva/adapters/postgres/conversation_journal.py": "10748b305f14648c332f114e9cf29a27154a08946c37a91bc4a651509c81cc60",
+    "src/eva/bootstrap/runtime.py": "b1f64c40905b96745e83c032e8549915b18301b1bce8b991285c4fe192f3f87f",
+    "tests/api/test_voice_turns.py": "fd9672e7abb6aea6c1d6b11b62fd2758c1daed75a78e8d202840e93510844bce",
+    "tests/api/test_telegram_helper_stop_race.py": "75c0f39c14a90cd05ace4ba74d2c5b4d80a77f1726a787f32380cd1422094517",
+    "tests/postgres/test_voice_memory_helper_outbox.py": "2795de2f4685b9be981d242c5aa9b5d8a52f2b50b01ab92a649041bb36fced27",
+    "tests/postgres/test_voice_ingress_replay.py": "fb16a0f3c3310e718a1391742b636450a5a282ee95e84e13b9d567b61aee1572"
+  },
+  "validation": {
+    "environment": "Separate PostgreSQL 16.13, disposable DB, 256 MiB tmpfs container; controlled model/semantic ports, no production model/Hindsight calls.",
+    "command": "python -m pytest -q -p no:cacheprovider --tb=short --show-capture=no tests/postgres/test_voice_memory_helper_outbox.py tests/postgres/test_voice_ingress_replay.py tests/api/test_voice_turns.py tests/api/test_voice_memory_helper_orchestration.py tests/api/test_telegram_helper_stop_race.py",
+    "passed": 16,
+    "duration_seconds": 6.79,
+    "original_xfail_removed": true,
+    "coverage": [
+      "Unchanged original HTTP +2s replay regression now passes",
+      "New DB connection retains first ingress and committed reply",
+      "Simultaneous first admissions choose one durable timestamp/event",
+      "Changed identity/content/context rejected and ordinary timestamp conflict remains",
+      "Erased ingress cannot be repopulated by retry",
+      "Parallel HTTP request does not execute model twice",
+      "Reconstructed runtime +2s serves same committed reply without new model call",
+      "One durable memory outbox document and one MEMORY_RETAIN_QUEUED event across retry",
+      "Revoked grant still refused",
+      "Canonical timestamp reaches stop and after_response"
+    ]
+  },
+  "review": {
+    "reviewer": "/root/review_voice_reference",
+    "decision": "GO",
+    "tests_independently_rerun": false,
+    "scope": "Source plus final regression assertions reviewed; no remaining blocker."
+  },
+  "limits": [
+    "This is a bounded message-identity replay contract; recent/active_work/work_results are not durably fingerprinted as a complete HTTP payload.",
+    "Parallel in-flight duplicate may return conflict; it is not promised to wait for the first reply.",
+    "No new exactly-once provider execution claim across a crash during an uncommitted provider request.",
+    "Not deployed; no production restart, model call or cutover performed."
+  ]
+}

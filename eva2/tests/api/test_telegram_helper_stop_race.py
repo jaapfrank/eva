@@ -76,6 +76,7 @@ def helper_race_runtime(monkeypatch, helper_count=1):
             publish_conversation_text(text, tools_disabled=True, final_answer=True)
             return ConversationModelResult(text, "test-model")
     class Runtime(_Runtime):
+        admit_voice_turn = PostgresHindsightMemoryRuntime.admit_voice_turn
         respond = PostgresHindsightMemoryRuntime.respond
         respond_telegram_delegated_work = PostgresHindsightMemoryRuntime.respond_telegram_delegated_work
         def __init__(self):
@@ -86,7 +87,7 @@ def helper_race_runtime(monkeypatch, helper_count=1):
             self._conversation = LivingConversation(_Memory(), Model(), IdentityProfile("Eva", "Direct", ("Eerlijk",)), Actions())
             self.saved = {}
         def _journal(self, turn):
-            return SimpleNamespace(execution=lambda _: nullcontext(), admit=lambda _: None,
+            return SimpleNamespace(execution=lambda _: nullcontext(), admit=lambda _: None, admit_voice_ingress=lambda turn: turn,
                 committed_reply=lambda t: self.saved.get(t.message_id), recent=lambda *_a, **_k: (),
                 begin_model_request=lambda _: "request", complete_model_request=lambda *_: None,
                 model_usage=lambda _: ConversationModelUsage.unmeasured(), ensure_running=lambda _: None,

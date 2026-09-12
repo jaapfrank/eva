@@ -4,12 +4,12 @@ from __future__ import annotations
 
 from contextlib import contextmanager
 from collections.abc import Iterator
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from datetime import UTC, datetime
 import hashlib
 import re
 from typing import Any
-from uuid import uuid4
+from uuid import UUID, uuid4
 
 import sqlalchemy as sa
 
@@ -107,6 +107,41 @@ class PostgresConversationJournal(PostgresScopedRole):
                     "conversation message identity was reused with different ingress"
                 ) from None
             return self._timeline.load(thread_id)
+
+    def admit_voice_ingress(self, turn: ConversationTurn) -> ConversationTurn:
+        """Bind server-generated receive time once, using the existing ingress.
+
+        Only the owner voice adapter lacks a client event timestamp. Ordinary
+        admit remains strict; a changed actor, session or payload is not replay.
+        The insert performed by admit is the first-receipt linearization point.
+        """
+        parts = turn.message_id.split(":")
+        try:
+            valid = (len(parts) == 3 and parts[0] == "voice"
+                     and str(UUID(parts[1])) == parts[1]
+                     and str(UUID(parts[2])) == parts[2]
+                     and turn.conversation_id == f"voice:{parts[1]}"
+                     and turn.audience.kind == "private_person"
+                     and turn.project_id is None and turn.observation_binding is None)
+        except ValueError:
+            valid = False
+        if not valid:
+            raise ConversationConflict("voice ingress is not an owner session turn")
+        try:
+            self.admit(turn)
+            return turn
+        except ConversationConflict:
+            events = self._timeline.events(self._thread_id(turn))
+            if not events or events[0].event_type != "INGRESS_COMMITTED":
+                raise
+            payload = events[0].payload
+            durable = payload.get("data") if isinstance(payload, dict) else None
+            if durable != self._ingress_data(turn):
+                raise
+            admitted = replace(turn, occurred_at=events[0].occurred_at.astimezone(UTC).strftime("%Y-%m-%dT%H:%M:%SZ"))
+            # Revalidate through the unchanged ordinary contract, including time.
+            self.admit(admitted)
+            return admitted
 
     @staticmethod
     def _stop_identity(principal_id: str, conversation_id: str, message_id: str) -> dict[str, str]:
