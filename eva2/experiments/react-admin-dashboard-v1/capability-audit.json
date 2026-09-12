@@ -375,7 +375,7 @@
     {
       "id": "browser",
       "intendedOutcome": "Eva bedient één expliciet gedeeld Chrome-tabblad; de eigenaar kan lopende bediening overnemen en toegang intrekken.",
-      "visibleResult": "De gewone Eva-route opent en sluit een paneel in een aparte Windows-Chrome-proefbrowser. Overname onderbreekt een lopende klik; extra acties en toegang na intrekken worden geweigerd. Na teruggeven leest Eva de gewijzigde pagina opnieuw.",
+      "visibleResult": "De gewone Eva-route opent en sluit een paneel in een aparte Windows-Chrome-proefbrowser. Overname onderbreekt een lopende klik; extra acties en toegang na intrekken worden geweigerd. Na teruggeven leest Eva de gewijzigde pagina opnieuw. Transportverlies stopt de lopende actie; herstel vereist nieuwe toegang en een verse paginawaarneming.",
       "resultBasis": "Gewone Eva-route · aparte Windows Chrome · 12 sep",
       "gap": "Laatste eigenaarproef in jouw expliciet opnieuw geselecteerde Chrome-tabblad: zichtbare actie en overnemen tijdens een lopende klik. De exacte oorzaak van de eerdere persoonlijke klikweigering is niet vastgesteld.",
       "gapKind": "Laatste eigenaarproef open",
@@ -393,8 +393,8 @@
       },
       "stageNotes": {
         "built": "De bestaande connectorroute gebruikt dezelfde begrensde Chrome-worker en exclusieve bediening.",
-        "tested": "Echte Eva-aanroepen, aparte Windows Chrome, afzonderlijke paginawaarnemingen en tellercontrole na onderbreking.",
-        "live": "De productiegateway en Eva-route zijn beproefd met een tijdelijke eigen testsocket; de gewone gesloten route is daarna hersteld.",
+        "tested": "Echte Eva-aanroepen, aparte Windows Chrome, afzonderlijke paginawaarnemingen en tellercontrole na onderbreking. Transportherstel: 14 gerichte controles op verlies van caller, gatewayadres/DNS, worker, proxy en bridge; geen late actie na verlies en oude toegang/waarneming ongeldig.",
+        "live": "De productiegateway en Eva-route zijn beproefd met een tijdelijke eigen testsocket; de gewone gesloten route is daarna hersteld. Transportcorrectie op 12 september geactiveerd; bridge en proxy teruggelezen als niet verbonden, met verse waarneming vereist.",
         "accepted": "Persoonlijke overname, verse waarneming na teruggeven en intrekken bevestigd op 11 september. Laatste zichtbare actie en lopende onderbreking in Jaaps Chrome staan open."
       },
       "sources": [
@@ -409,6 +409,10 @@
         {
           "path": "eva2/evidence/product/chrome-isolated-route-2026-09-12.json",
           "sha256": "a900ea7ba55adcf0bbc96900bb62a4acbc759932af726e17ab5b264d9e2d5b5a"
+        },
+        {
+          "path": "eva2/evidence/product/chrome-inflight-recovery-2026-09-12.json",
+          "sha256": "3f55352562d0c1ba9bd211f05a2d88de1bb24e54868419e8e94d31eaf1080991"
         }
       ],
       "statusCorrections": {},

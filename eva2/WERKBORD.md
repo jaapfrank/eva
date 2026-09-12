@@ -70,6 +70,15 @@ niet-oproepen van Jaap, plus de actuele ESPHome-configuratie en USB-herstelroute
 Geen privégesprekken opnemen, geen installatie en geen gebruikersacceptatie.
 [Wakewordbewijs en minimale ontbrekende input](evidence/product/WAKE-001-offline-comparison-2026-09-11.json).
 
+### Afzonderlijk browsertransportherstel — 12 september
+
+Transportverlies stopt nu een lopende browseractie. Dat is voor verlies van de
+aanvrager, gatewayadres/DNS, worker, proxy en bridge gericht gecontroleerd.
+Oude toegang en paginawaarnemingen zijn daarna ongeldig; hervatten vraagt nieuwe
+toegang en een verse waarneming. De correctie is beoordeeld en live.
+De persoonlijke Chromeproef en jouw acceptatie blijven open.
+[Herstelbewijs](evidence/product/chrome-inflight-recovery-2026-09-12.json).
+
 ## Nu
 
 | Volgorde | Kaart | Resultaat | Status |
