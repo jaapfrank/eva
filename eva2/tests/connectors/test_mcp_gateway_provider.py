@@ -66,10 +66,10 @@ def _provider_catalog(*, extra: dict[str, object] | None = None) -> str:
 
 class _GatewayHandler(BaseHTTPRequestHandler):
     def do_GET(self) -> None:  # noqa: N802
-        if self.path != "/tools":
+        if self.path != "/tools?include_pagination=true&limit=50":
             self.send_error(404)
             return
-        raw = json.dumps([CATALOG_ROW]).encode()
+        raw = json.dumps({"tools": [CATALOG_ROW], "nextCursor": None}).encode()
         self.send_response(200)
         self.send_header("Content-Type", "application/json")
         self.send_header("Content-Length", str(len(raw)))

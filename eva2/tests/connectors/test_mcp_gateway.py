@@ -8,6 +8,7 @@ from uuid import uuid4
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 import json
 from threading import Thread
+from urllib.parse import parse_qs, urlsplit
 
 import pytest
 
@@ -213,10 +214,16 @@ class _GatewayHandler(BaseHTTPRequestHandler):
     wrong_id = False
 
     def do_GET(self) -> None:  # noqa: N802
-        if self.path != "/tools":
+        url = urlsplit(self.path)
+        if url.path != "/tools":
             self.send_error(404)
             return
-        self._json(self.catalog)
+        query = parse_qs(url.query)
+        start = int(query.get("cursor", ["0"])[0])
+        page = self.catalog[start:start + 50]
+        next_cursor = str(start + 50) if start + 50 < len(self.catalog) else None
+        self._json({"tools": page, "nextCursor": next_cursor}
+                   if query.get("include_pagination") == ["true"] else page)
 
     def do_POST(self) -> None:  # noqa: N802
         if self.path != "/rpc":
@@ -311,6 +318,72 @@ def test_catalog_is_hash_bound_and_must_be_reachable_mcp() -> None:
         handler.catalog[0]["visibility"] = "private"
         with pytest.raises(RuntimeError, match="sealed catalog"):
             asyncio.run(_adapter(base_url).verify_catalog())
+
+
+def test_catalog_reads_required_tool_beyond_default_first_page() -> None:
+    with _gateway() as (base_url, handler):
+        handler.catalog = [_catalog_row(f"filler-{i}") for i in range(52)] + [_catalog_row()]
+        adapter = _adapter(base_url)
+        assert asyncio.run(adapter.verify_catalog()) == {"proof-echo": _catalog_hash(_catalog_row())}
+        adapter.planner()
+
+
+@pytest.mark.parametrize("case", [
+    "missing", "changed_hash", "repeat_cursor", "empty_continuation", "invalid_cursor",
+    "missing_cursor", "late_failure", "duplicate_name", "over_limit", "legacy_list",
+])
+def test_catalog_pagination_failure_clears_prior_admission(monkeypatch, case) -> None:
+    adapter = _adapter("http://127.0.0.1:1")
+    monkeypatch.setattr(adapter, "_request_json", lambda *_args: {"tools": [_catalog_row()], "nextCursor": None})
+    asyncio.run(adapter.verify_catalog())
+    calls = []
+
+    def request(method, path, payload):
+        assert method == "GET" and payload is None
+        query = parse_qs(urlsplit(path).query)
+        assert query["include_pagination"] == ["true"]
+        calls.append(query.get("cursor"))
+        if len(calls) == 1:
+            if case == "legacy_list":
+                return [_catalog_row()]
+            if case == "missing_cursor":
+                return {"tools": [_catalog_row()]}
+            if case == "invalid_cursor":
+                return {"tools": [_catalog_row()], "nextCursor": 7}
+            if case == "empty_continuation":
+                return {"tools": [], "nextCursor": "next"}
+            return {"tools": [_catalog_row(f"filler-{i}") for i in range(50)], "nextCursor": "opaque+/=&?"}
+        assert query["cursor"] == ["opaque+/=&?"]
+        if case == "late_failure":
+            raise RuntimeError("later page unavailable")
+        if case == "repeat_cursor":
+            return {"tools": [_catalog_row()], "nextCursor": "opaque+/=&?"}
+        if case == "over_limit":
+            return {"tools": [_catalog_row(f"more-{i}") for i in range(975)], "nextCursor": None}
+        if case == "duplicate_name":
+            return {"tools": [_catalog_row(), _catalog_row("filler-0")], "nextCursor": None}
+        if case == "missing":
+            return {"tools": [_catalog_row("unrelated")], "nextCursor": None}
+        row = _catalog_row()
+        row["visibility"] = "private"
+        return {"tools": [row], "nextCursor": None}
+
+    monkeypatch.setattr(adapter, "_request_json", request)
+    with pytest.raises(RuntimeError):
+        asyncio.run(adapter.verify_catalog())
+    with pytest.raises(RuntimeError, match="verified"):
+        adapter.planner()
+    assert len(calls) <= 2
+
+
+def test_catalog_accepts_exact_1024_row_boundary(monkeypatch) -> None:
+    adapter = _adapter("http://127.0.0.1:1")
+    pages = iter([
+        {"tools": [_catalog_row(f"filler-{i}") for i in range(1023)], "nextCursor": "last"},
+        {"tools": [_catalog_row()], "nextCursor": None},
+    ])
+    monkeypatch.setattr(adapter, "_request_json", lambda *_args: next(pages))
+    assert asyncio.run(adapter.verify_catalog()) == {"proof-echo": _catalog_hash(_catalog_row())}
 
 
 def test_catalog_accepts_contextforge_wire_aliases_but_hashes_one_shape() -> None:
@@ -1009,7 +1082,7 @@ def test_v3_read_bounds_complete_structured_result_before_journal(
     calls = []
     def request_json(method, path, payload):
         if method == "GET":
-            return [_catalog_row()]
+            return {"tools": [_catalog_row()], "nextCursor": None}
         calls.append(payload)
         return {"jsonrpc": "2.0", "id": payload["id"], "result": {"structuredContent": output}}
     monkeypatch.setattr(adapter, "_request_json", request_json)

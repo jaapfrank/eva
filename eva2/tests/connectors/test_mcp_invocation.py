@@ -44,7 +44,7 @@ def _provider(monkeypatch, output=OUTPUT):
     def request_json(self, method, path, payload):
         if method == "GET":
             catalog_calls.append(path)
-            return [ROW]
+            return {"tools": [ROW], "nextCursor": None}
         calls.append(payload)
         return {"jsonrpc": "2.0", "id": payload["id"],
                 "result": {"structuredContent": output}}

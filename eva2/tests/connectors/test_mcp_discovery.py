@@ -85,7 +85,7 @@ def test_metatool_reads_writes_and_resumes_exact_registered_configuration(monkey
     def request_json(self, method, path, payload):
         if method == "GET":
             catalog_reads.append(path)
-            return ROWS
+            return {"tools": ROWS, "nextCursor": None}
         params = payload["params"]
         calls.append(params)
         args = params["arguments"]
@@ -153,7 +153,7 @@ def test_metatool_enforces_the_registered_input_schema(monkeypatch):
     calls = []
     def request_json(self, method, path, payload):
         calls.append(method)
-        return ROWS
+        return {"tools": ROWS, "nextCursor": None}
     monkeypatch.setattr(McpGatewayToolAdapter, "_request_json", request_json)
     adapter = McpDiscoveryToolAdapter(Registry())
     with pytest.raises(ConversationConflict, match="fields are invalid"):
@@ -168,7 +168,7 @@ def test_revocation_blocks_dispatch_and_new_reads_but_allows_admitted_effect_rea
     calls = []
     def request_json(self, method, path, payload):
         if method == "GET":
-            return ROWS
+            return {"tools": ROWS, "nextCursor": None}
         calls.append(payload["params"])
         return {"jsonrpc": "2.0", "id": payload["id"],
                 "result": {"structuredContent": {"value": "already changed"}}}
