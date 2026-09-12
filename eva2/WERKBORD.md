@@ -102,6 +102,15 @@ review heeft GO gegeven. Geen tweede proef gestart.
 [Reviewbewijs](evidence/product/TL-003-unassisted-review-2026-09-12.json).
 [Uitvoeringsbewijs](evidence/product/TL-003-unassisted-2026-09-12.json).
 
+### Zelf leren — AU-004: audit en proefplan
+
+De bestaande skill- en toolleerroute wordt beoordeeld op hergebruik. Eerst wordt
+één kleine ongeziene taak gekozen met een aantoonbaar ontbrekend vermogen. Het
+proefplan beschrijft hoe Eva via haar algemene uitvoerder een herbruikbare skill
+of tool maakt, gericht controleert en bij een tweede variant toepast.
+Deze fase omvat alleen audit en plan: nog geen modelproef, externe
+schrijfhandeling, budgetverhoging of uitrol. Geen voltooiing of acceptatie geclaimd.
+
 ## Nu
 
 | Volgorde | Kaart | Resultaat | Status |
