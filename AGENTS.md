@@ -156,3 +156,23 @@ De volledige releasepoort blijft voor een complete releasekandidaat. Gerichte
 deelreviews vervangen geen integratiecontrole; een dashboardcheck bewijst geen
 werkend totaalproduct. De coördinator verwerkt bevindingen als concreet werk in
 het bestaande werkbord en laat technische afronding en eigenaaracceptatie apart.
+
+## Onderhouden opensource en bestaande besluiten
+
+Bij selectie en wijziging van algemene bouwstenen geldt
+`eva2/OPEN_SOURCE_EN_DEPENDENCYKEUZES.md`: beoordeel eerst hergebruik,
+actief onderhoud, ondersteunde versies, licentie, beveiligingsmeldingen,
+compatibiliteit, exacte versiepin en geteste upgrade en terugweg.
+Onderhoudsclaims krijgen een bron en controledatum; activiteit alleen is geen
+beveiligingsgarantie. Leg de volgende onderhoudscontrole en verantwoordelijke
+vast. Gebruik bestaande update- en scanvoorzieningen; onderscheid geplande
+voorzieningen van aantoonbaar werkende controles. Eigen bouw motiveert het
+concrete gat dat een beproefde bestaande oplossing niet afdekt.
+
+Gebruik `eva2/DOCUMENTATIE_EN_ONDERHOUD.md` als documentatie-ingang. Lees bij
+een oplevering de relevante bestaande ontwerpen en besluiten, naast het actuele
+projectdoel en werkbord. Oudere planningen en vergelijkingen zijn historische
+bronnen wanneer recente eigenaarbesluiten ze vervangen. Registreer conflicten
+en herstel verwijzingen in de primaire bron; maak geen tweede werkbord.
+Claim niet dat alle documentatie is gelezen wanneer alleen een selectie is
+beoordeeld.
