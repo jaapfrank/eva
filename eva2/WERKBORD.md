@@ -52,8 +52,10 @@ stoppen, hervatten, status en opgeslagen resultaat ophalen. Sinds 12 september
 zijn de laatste opdracht en het resultaat in gewone tekst leesbaar. De actuele
 status volgt de opgeslagen toestand. Het bestaande resultaat is behouden.
 Jaaps nieuwe Telegramproef en acceptatie staan open. Bij gelijktijdig stoppen
-kan het startantwoord nog later arriveren. De begrensde timingcorrectie wacht op review en is nog niet live; de huidige
-liveversie blijft staan.
+kan het startantwoord nog later arriveren. De timingcorrectie is nu technisch afgerond en live: een stop tijdens het
+opstellen van het eindantwoord wordt vóór opslaan verrekend. Stoppen na de
+laatste controle valt buiten die garantie. Jouw Telegrambeoordeling blijft open.
+[Timingbewijs](evidence/product/AU-002-concurrent-stop-live-2026-09-12.json).
 [Proberen](design/product/AU-002-owner-trial-2026-09-12.md) ·
 [Actueel livebewijs](evidence/product/AU-002-readable-status-live-2026-09-12.json) ·
 [Eerdere levenscyclusproef](evidence/product/AU-002-telegram-lifecycle-2026-09-11.json).
