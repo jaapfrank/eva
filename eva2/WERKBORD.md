@@ -235,9 +235,18 @@ Ook de proefvoorbereiding bevatte een fout: dispatch ging ten onrechte door
 na een mislukte budget-envelopvergelijking. De budgethashes/limieten bleken
 achteraf gelijk; afwezigheid van output is pas achteraf gecontroleerd. Dit
 blijft zichtbaar in het bewijs. Een offline dispatchguard met vier controles
-wacht samen met het bewijs op onafhankelijke review. Nog niet geïntegreerd.
+is samen met het mislukkingsbewijs onafhankelijk goedgekeurd en exact
+geïntegreerd. Dit is geen AU-004-productgoedkeuring.
+[Bewijs poging 2](evidence/product/AU-004-procedure-attempt2-failure-2026-09-12.json).
 De eerste mislukking en de afzonderlijke live reparatie blijven behouden;
 geen leerresultaat, hele AU-004-GO of eigenaaracceptatie geclaimd.
+
+### AU-004 — begrensd generiek bronherstel
+
+De helper krijgt de bestaande vervolgopdracht om na een mislukte bronophaling
+generiek naar brononderzoek te kunnen terugvallen. Geen taakspecifieke
+WebVTT/SRT-uitzondering in de kern. Deze reparatiestap autoriseert geen derde
+proefpoging of livewijziging. De twee mislukte proeven blijven zichtbaar.
 
 ## Nu
 

@@ -1,0 +1,267 @@
+{
+  "schema_version": 1,
+  "trial": "AU004-20260912-attempt2",
+  "status": "failed_to_complete_source_retrieval",
+  "technical_complete": false,
+  "human_accepted": false,
+  "whole_AU004_GO": false,
+  "image": "sha256:df675dc82f38ff386fdf9cb87062e78f9ba8231f7f277472c2bd53f1a734d072",
+  "request": {
+    "httpStatus": 200,
+    "elapsedSeconds": 44.742847401999825,
+    "errorType": null,
+    "requestCount": 1,
+    "retry": false,
+    "messageId": "dashboard:4e24f06f-2c63-4505-92fb-18b984b53f0f",
+    "responseSha256": "c47d0cce04d02a396255ab1d29fb6385a631abf1189839edc6718f6d477dd156"
+  },
+  "previous_attempt_failure_preserved": {
+    "evidence": "AU-004-procedure-trial-failure-2026-09-12.json",
+    "message_id": "dashboard:2c253fa4-5c92-474a-94fc-f3e596b3c8df"
+  },
+  "fixture_seal": {
+    "sealedAt": "2026-09-12T19:40:11.491045+00:00",
+    "fixturesSha256": "97628b5a02f04096e9a5cb2122c7c98d398c23e0a6b6c13b0f95cc8a4a18eeed",
+    "inputs": {
+      "A": "0d0760d81ac84a9e7ed219761a9248a85a6193486483fbdc4bb52e2c9daaf707",
+      "B": "fb83ff65ab3c3f689439186fa37409d16e3f93463a8d02d0bddcabf2c1316b98",
+      "invalid": "84fe836eb3720facf6cf5e2060866dbe186044e5ade5293718a777c81a05ef28"
+    },
+    "semantics": "Cue start/end milliseconds, cue count and exact Unicode/text lines; invalid end-before-start rejected. No conversion implementation supplied to Eva."
+  },
+  "paths": {
+    "procedure": "/proof-state/au004-srt-webvtt-procedure-20260912-attempt2.md",
+    "A": "/proof-state/au004-subtitles-A-20260912-attempt2.vtt",
+    "A_report": "/proof-state/au004-check-A-20260912-attempt2.md",
+    "B": "/proof-state/au004-subtitles-B-20260912-attempt2.vtt",
+    "B_report": "/proof-state/au004-check-B-20260912-attempt2.md",
+    "invalid": "/proof-state/au004-invalid-20260912-attempt2.vtt"
+  },
+  "final_files": {
+    "procedure": {
+      "exists": false
+    },
+    "A": {
+      "exists": false
+    },
+    "A_report": {
+      "exists": false
+    },
+    "B": {
+      "exists": false
+    },
+    "B_report": {
+      "exists": false
+    },
+    "invalid": {
+      "exists": false
+    }
+  },
+  "event_counts": {
+    "INGRESS_COMMITTED": 1,
+    "REPLY_COMMITTED": 1,
+    "MEMORY_RETAIN_QUEUED": 2,
+    "TOOL_REQUEST_ADMITTED": 3,
+    "CONVERSATION_MODEL_ADMITTED": 4,
+    "CONVERSATION_DISPATCH_ADMITTED": 3,
+    "CONVERSATION_MODEL_RECORDED": 4,
+    "TOOL_PREPARED": 3,
+    "TOOL_EXECUTED": 3,
+    "STATE_VERIFIED": 3,
+    "MEMORY_RETAIN_ATTEMPTED": 1,
+    "MEMORY_STORAGE_RESERVED": 1,
+    "MEMORY_RETAIN_SUCCEEDED": 1,
+    "MEMORY_STORAGE_RETAINED": 1
+  },
+  "reply": "Poging AU004-20260912-attempt2 is geblokkeerd: de ophaaltool kon de opgegeven W3C-specificatie niet ophalen. De melding bewijst niet of de pagina ontbreekt of dat er een toegangsprobleem is. Ik heb de primaire bron dus niet kunnen onderzoeken en presenteer geen procedure alsof dat wel is gebeurd.\n\nDe bestandszoekactie vond geen bestaande attempt2-bestanden. Ik heb niets aangemaakt of overschreven. De conversie, controlevector en teruglezingen zijn niet uitgevoerd; er zijn ook geen codecontroles gedaan.",
+  "receipt_diagnosis": {
+    "receipt_actions": [
+      {
+        "action": "find_workspace_files",
+        "tool": "eva-workspace-search-files",
+        "arguments": {
+          "path": "/proof-state",
+          "pattern": "*20260912-attempt2*"
+        },
+        "step_index": null
+      },
+      {
+        "action": "use_connector_tool",
+        "tool": "eva-connector-34e9886d2a79dd6c7c831f8a93139bab-fetch-generic-url-content",
+        "arguments": {
+          "tool_id": "7330282c-083e-57c7-ba83-3a6f999f4cac:c8ba9786d0c674505952c3999987755b2360d7c065adf197f8e7a91ac43e3ece",
+          "arguments_json": "{\"url\":\"https://www.w3.org/TR/2026/CRD-webvtt1-20260520/\"}"
+        },
+        "step_index": 2
+      },
+      {
+        "action": "discover_connector_tools",
+        "tool": "discover_connector_tools",
+        "arguments": {
+          "connector_id": "https://gitmcp.io/python/cpython"
+        },
+        "step_index": 1
+      }
+    ],
+    "research_admission_count": 0,
+    "fetch_observation": {
+      "source": "mcp_gateway_invocation_response",
+      "observation": {
+        "text": "Content at https://www.w3.org/TR/2026/CRD-webvtt1-20260520/ could not be retrieved. The resource may not exist or may require authentication."
+      },
+      "observation_sha256": "072da813a1a76c644d102dae35ad8ddb8d729a25f7b1acbf8f53937eebef83b9",
+      "external_state_verified": false,
+      "invocation_request_sha256": "eeaabbafe710a5a77addaa86a284ef81b170f76747f0d56adacddaa3b7a93187",
+      "tool_configuration_sha256": "c8ba9786d0c674505952c3999987755b2360d7c065adf197f8e7a91ac43e3ece"
+    },
+    "usage_records": [
+      {
+        "tool_calls": 1,
+        "measurement": "measured",
+        "input_tokens": 7288,
+        "output_tokens": 66,
+        "model_attempts": 1
+      },
+      {
+        "tool_calls": 1,
+        "measurement": "measured",
+        "input_tokens": 6802,
+        "output_tokens": 81,
+        "model_attempts": 1
+      },
+      {
+        "tool_calls": 1,
+        "measurement": "measured",
+        "input_tokens": 8323,
+        "output_tokens": 140,
+        "model_attempts": 1
+      },
+      {
+        "tool_calls": 0,
+        "measurement": "measured",
+        "input_tokens": 8818,
+        "output_tokens": 203,
+        "model_attempts": 1
+      }
+    ],
+    "total_usage": {
+      "input_tokens": 31231,
+      "output_tokens": 490,
+      "model_attempts": 4,
+      "tool_calls": 3
+    },
+    "diagnosis": {
+      "observed": "Eva chose existing CPython GitMCP generic URL fetch via connector discovery; provider returned content-not-retrieved text. It did not use research_current_options.",
+      "not_just_self_report": "Same retrieval-failure text is preserved in TOOL_EXECUTED invocation_response and STATE_VERIFIED evidence, which explicitly says external_state_verified=false.",
+      "not_proven": "No HTTP status, timeout, robots rejection, authentication requirement, or missing page is exposed in these receipts. A concrete transport/access bug is not established.",
+      "model_choice_limit": "Recorded actions establish which route was selected, not the model internal reason. No claim that research was unavailable or removed.",
+      "result": "No fallback research action and no output; honest blocked final reply. No further external or model probe performed."
+    }
+  },
+  "budget": {
+    "provider_pre_dispatch": {
+      "plan_type": "pro",
+      "rate_limit": {
+        "allowed": true,
+        "limit_reached": false,
+        "primary_window": {
+          "used_percent": 25,
+          "limit_window_seconds": 604800,
+          "reset_after_seconds": 561432,
+          "reset_at": 1789805404
+        },
+        "secondary_window": null
+      },
+      "code_review_rate_limit": null,
+      "credits": {
+        "has_credits": false,
+        "unlimited": false,
+        "overage_limit_reached": false,
+        "balance": "0",
+        "approx_local_messages": [
+          0,
+          0
+        ],
+        "approx_cloud_messages": [
+          0,
+          0
+        ]
+      }
+    },
+    "normalized_config_after_dispatch": {
+      "EVA_RUNTIME_RESOURCE_BUDGET_FILE": {
+        "sha256": "88595a1704c1ad751008802873831f140a87ad967d14f015e56d1d4dc46a72a9",
+        "budget": {
+          "background_reflections_per_installation_day": 40,
+          "background_reflections_per_person_day": 4,
+          "contract": "EvaInstallerBudget/v2",
+          "external_monthly_spend_cap_eur_cents": 0,
+          "max_input_tokens": 65536,
+          "max_output_tokens": 1200,
+          "memory_bytes_per_group": 20971520,
+          "memory_bytes_per_installation": 209715200,
+          "memory_bytes_per_person": 20971520,
+          "memory_bytes_per_project": 20971520,
+          "memory_records_per_group": 2000,
+          "memory_records_per_installation": 20000,
+          "memory_records_per_person": 2000,
+          "memory_records_per_project": 2000,
+          "profile_context_tokens": 800,
+          "recall_context_tokens": 2048,
+          "retention_days": 365,
+          "retrieval_nodes": 40,
+          "unknown_cost_policy": "block_autonomous_spend"
+        }
+      },
+      "EVA_MCP_AUTONOMY_MANDATE_FILE": {
+        "sha256": "969e350b8cb582c7034a12e4c431e9e421d510afcf09fb76188cfac1770f4e89",
+        "budget": null
+      }
+    },
+    "budget_and_mandate_byte_hashes_unchanged": true,
+    "limits_raised": false,
+    "no_currency_cost_measured": true
+  },
+  "observer_sequencing_defect": {
+    "pre_dispatch_budget_equality_assertion": "failed because full runtime envelope was compared with prior extracted inner budget",
+    "dispatch_after_failed_assertion": true,
+    "pre_dispatch_provider_usage_allowed": true,
+    "after_dispatch_readonly_checks": {
+      "budget_and_mandate_byte_hashes_equal_old": true,
+      "limits_unchanged": true,
+      "all_output_paths_absent": true
+    },
+    "pre_dispatch_no_overwrite_receipt": false,
+    "eva_help_or_retry": false,
+    "coordinator_informed": true
+  },
+  "harness_repair": {
+    "offline_proof": {
+      "offline_subprocess_checks": 4,
+      "failed_preflight_dispatches": 0,
+      "successful_preflight_local_marker_dispatches": 1,
+      "existing_attempt_rejected": true,
+      "network_calls": 0,
+      "model_calls": 0,
+      "production_changes": 0
+    },
+    "used_for_this_attempt": false,
+    "no_model_or_external_calls_in_tests": true,
+    "scripts": {
+      "guarded_dispatch.py": "d0c0233b133ee548428a9807d5297d0eb8f6d5e885be95963260694911a3378e",
+      "preflight.py": "f2f8753afabec473ec94d3e0b4995e015b49d6d48d878ac57167c4fea21f2c14",
+      "test_guarded_dispatch.py": "2fb3471d6327654fc8f669d9d8761edb77f20cff34497e533b459e73db6c116a"
+    }
+  },
+  "B_and_invalid_sent": false,
+  "semantic_checker_run": false,
+  "automatic_retries": 0,
+  "limitations": [
+    "Read-only after-dispatch absent paths do not prove pre-dispatch absence.",
+    "Provider error content proves a failed retrieval response, not a specific HTTP/network/root cause.",
+    "No research action was selected; this does not live-validate the research-budget fix.",
+    "No evidence of procedure learning/reuse or arbitrary code execution.",
+    "STATE_VERIFIED means verified provider response here, not successful source retrieval."
+  ],
+  "archive": "/home/administrator/project/.eva2-artifacts/au004-procedure-trial-20260912-attempt2"
+}

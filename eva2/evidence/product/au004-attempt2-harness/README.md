@@ -1,0 +1,1 @@
+Offline harness repair, not application runtime. The recorded attempt2 did not use this repaired harness. Reproducible execution and existing attempt marker are in /home/administrator/project/.eva2-artifacts/au004-procedure-trial-20260912-attempt2. Do not dispatch another attempt without separately authorized trial scope.
