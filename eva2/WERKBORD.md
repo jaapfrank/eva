@@ -843,6 +843,26 @@ AU-004 D heeft volgens de coördinator onafhankelijke guard-GO en toestemming
 voor één proef. Startbewijs en uitkomst zijn nog niet ontvangen. De eerdere
 C-zoekgrens blijft ongehaald; A/B blijft afgerond.
 
+### Reader-provenance — geïsoleerde broncontrole afgerond
+
+De reviewer geeft GO voor de gepinde, ondertekende journaalexport. Bestaande
+DashboardAccess en actuele private eigenaarbinding blijven verplicht; één
+repeatable-read/read-only transactie bindt de requestrows. De reviewer
+controleerde de mechanische queryextractie, hashes/86JUnit en zelf de
+handtekening plus weigering van truncatie, challenge- en eigenaarwijziging.
+Zes gerichte bestanden/hunks zijn geïntegreerd. De enige productwijziging
+is extractie van de bestaande ownerquery; geen deployment, nieuwe route of
+rechten. Productiesleutelbeheer, actualiteit, live image/config en volledige
+provider-/helperdekking blijven open; image_digest is null. Geen private
+sleutel opgeslagen of privégegevens gecommit.
+[Herkomstcontrole en grenzen](reviews/cp001-reader-provenance-2026-09-13.md).
+
+IN-002 is actief toegewezen aan coordinator/timing_final_review in een
+geïsoleerde worktree, uitsluitend installer UI/API en portable-herstelgrens.
+De tools/-operatorgrens blijft achter een geïnjecteerde wizardpoort;
+herstelautoriteit blijft verplicht om vergeten data niet ongeoorloofd terug
+te halen. Geen centrale board-, runtime- of CP001-/gespreksbestanden.
+
 ## Nu
 
 | Volgorde | Kaart | Resultaat | Status |

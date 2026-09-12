@@ -202,10 +202,34 @@ def main():
         type=Path,
         help="explicit local JSON export; no hosts or credentials",
     )
+    parser.add_argument(
+        "--reader-bundle", type=Path, help="signed private snapshot bundle"
+    )
+    parser.add_argument(
+        "--reader-trust",
+        type=Path,
+        help="separately pinned reader key/context/challenge",
+    )
     args = parser.parse_args()
     try:
-        exports = json.loads(args.exports.read_text()) if args.exports else None
+        if bool(args.reader_bundle) != bool(args.reader_trust) or (
+            args.reader_bundle and args.exports
+        ):
+            raise ValueError("reader bundle and independent trust required together")
+        provenance = None
+        if args.reader_bundle:
+            from cp001_reader_receipt import verify_bundle
+
+            export, provenance = verify_bundle(
+                json.loads(args.reader_bundle.read_text()),
+                json.loads(args.reader_trust.read_text()),
+            )
+            exports = {"eva2": export}
+        else:
+            exports = json.loads(args.exports.read_text()) if args.exports else None
         report = preflight(exports)
+        if provenance is not None:
+            report["reader_provenance"] = provenance
     except (OSError, ValueError) as error:
         parser.exit(2, f"Invalid local accounting export: {type(error).__name__}\n")
     print(json.dumps(report, indent=2, allow_nan=False))

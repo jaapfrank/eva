@@ -43,6 +43,29 @@ from eva.adapters.postgres.operational_timeline import (
 from eva.contracts.canonical_json import canonical_sha256
 
 
+def require_private_owner_binding(
+    conn: sa.Connection, *, scope: TimelineScope, owner: UUID, binding: UUID, now: datetime,
+):
+    """Reuse the existing snapshot-local current owner check without row locks."""
+    bindings = metadata.tables["eva_core.principal_bindings"]
+    people = metadata.tables["eva_core.principals"]
+    authority = conn.execute(sa.select(bindings.c.principal_id, bindings.c.provider_id,
+                                       bindings.c.channel_id).join(
+        people, sa.and_(people.c.tenant_id == bindings.c.tenant_id,
+                        people.c.principal_id == bindings.c.principal_id)
+    ).where(
+        bindings.c.tenant_id == scope.tenant_id,
+        bindings.c.principal_binding_id == binding,
+        bindings.c.principal_id == owner,
+        bindings.c.status == "verified", people.c.status == "active",
+        bindings.c.retention_until > now, people.c.retention_until > now,
+        bindings.c.verified_at <= now,
+    )).one_or_none()
+    if authority is None or authority.principal_id != owner:
+        raise PeopleMemoryOverviewError("owner memory binding is not current")
+    return authority
+
+
 class PostgresOwnerMemorySources:
     """A bounded projection of existing sources, never a second memory store."""
 
@@ -77,8 +100,6 @@ class PostgresOwnerMemorySources:
         if now.tzinfo is None or now.utcoffset() != timedelta(0) or now.microsecond:
             raise ValueError("memory source time must be whole-second UTC")
         stamp = now.strftime("%Y-%m-%dT%H:%M:%SZ")
-        bindings = metadata.tables["eva_core.principal_bindings"]
-        people = metadata.tables["eva_core.principals"]
         e, c = operational_events.c, operational_checkpoints.c
         data = e.payload["data"]
         audience = data["audience"]
@@ -88,20 +109,10 @@ class PostgresOwnerMemorySources:
                 # Local dashboard authority and conversation storage have distinct
                 # namespaces on an existing installation. Never infer one from the other.
                 PostgresOperationalTimeline(self._engine, self._authority_scope)._scope(conn)
-                authority = conn.execute(sa.select(bindings.c.principal_id, bindings.c.provider_id,
-                                                   bindings.c.channel_id).join(
-                    people, sa.and_(people.c.tenant_id == bindings.c.tenant_id,
-                                    people.c.principal_id == bindings.c.principal_id)
-                ).where(
-                    bindings.c.tenant_id == self._authority_scope.tenant_id,
-                    bindings.c.principal_binding_id == self._binding,
-                    bindings.c.principal_id == self._owner,
-                    bindings.c.status == "verified", people.c.status == "active",
-                    bindings.c.retention_until > now, people.c.retention_until > now,
-                    bindings.c.verified_at <= now,
-                )).one_or_none()
-                if authority is None or authority.principal_id != self._owner:
-                    raise PeopleMemoryOverviewError("owner memory binding is not current")
+                authority = require_private_owner_binding(
+                    conn, scope=self._authority_scope, owner=self._owner,
+                    binding=self._binding, now=now,
+                )
                 alias = None if self._bindings is None else self._bindings.private_bridge_principal(
                     principal_id=str(self._owner), principal_binding_id=self._binding
                 )

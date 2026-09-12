@@ -466,3 +466,34 @@ blijven voorwaarden; de CLI blijft exit2/live_enabled false. De geïntegreerde
 `test_actual_stream_events_drive_cli_local_settlement` gebruikt echte provider-/SDK-
 closepaden met offline SSE, een echte private PG-journal en afzonderlijke CLI-processen
 voor success, failed close, onvoltooide admission, stop en stopreplay.
+
+
+### Isolated owner-reader receipt
+
+De optionele readerroute is alleen een lokale benchmarkseam, geen geïnstalleerd
+API-endpoint. `OwnerSnapshotReader` hergebruikt verplichte DashboardAccess-authenticatie,
+de bestaande actuele private ownerbindingcontrole en PostgreSQL REPEATABLE READ /
+READ ONLY. Scope en requestidentiteit zijn readerconfiguratie, geen browserfilters.
+De reader selecteert alle rijen met die requestbinding en bindt ze aan het PG-
+snapshotcursor, per-thread sequences, bronhashes, configuratiehash en optionele
+imagemetadata. Private rijen blijven in de expliciete lokale bundle; receiptmetadata
+bevat alleen hashes, aantallen en cursor. Schrijf geen echte private bundles naar Git.
+
+Verifiëren in de bestaande projectvenv, met `PYTHONPATH=eva2/src` vanuit repositoryroot:
+
+```bash
+python eva2/benchmark/inspect_ai_v1/cp001_accounting.py \
+  --reader-bundle /private/bundle.json --reader-trust /private/pinned-reader-trust.json
+```
+
+De trustfile wordt afzonderlijk door de operator gepind en bevat public_key,
+challenge, scope_sha256 en de verwachte context. Een sleutel/boolean in de bundle
+wordt niet als trustroot gebruikt. De implementatie hergebruikt EvaCanonicalJSON
+en de bestaande Ed25519-verifier; er is geen eigen cryptografisch algoritme.
+De ondertekening bindt de readerkey aan exacte snapshotinhoud en metadata, niet aan
+een automatisch betrouwbare productie-installatie. De lokale proef heeft image_digest
+null: geen live imageclaim. Een imagewaarde zou slechts aan de gepinde metadata
+zijn gebonden, geen zelfstandig imageattestaat. Geldigheid van een bestaande receipt
+betekent niet dat er intussen geen nieuw journalwerk bestaat; challenge en snapshot
+moeten door de afnemer voor het bedoelde leesmoment gepind zijn. De bestaande live-
+poort blijft false/exit2; volledige provider/helperdekking blijft unknown.
