@@ -111,6 +111,15 @@ of tool maakt, gericht controleert en bij een tweede variant toepast.
 Deze fase omvat alleen audit en plan: nog geen modelproef, externe
 schrijfhandeling, budgetverhoging of uitrol. Geen voltooiing of acceptatie geclaimd.
 
+### Gatewaycatalogus — correctie in review
+
+Een concreet opstartdefect gaat tijdelijk vooraf aan AU-004: de catalogus bevat
+53 tools, maar de standaardaanvraag geeft er slechts 50 terug. Daardoor mist
+een verse kernopbouw de verplichte bestandsleesfunctie. De bestaande kern
+blijft zijn eerder toegelaten catalogus gebruiken. De correctie haalt alle
+paginas op en is gericht getest; onafhankelijke review staat open. Nog niet
+geactiveerd. AU-004 blijft beperkt tot de afgesproken audit en het proefplan.
+
 ## Nu
 
 | Volgorde | Kaart | Resultaat | Status |
