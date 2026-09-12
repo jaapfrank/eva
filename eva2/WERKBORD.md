@@ -203,7 +203,7 @@ in uitvoering en AU-004 blijft onvoltooid.
 De AU-004-mijlpaal is niet afgerond of geaccepteerd. IN-02 en eerdere
 acceptaties blijven apart.
 
-### AU-004-reparatiekandidaat — review open, niet live
+### AU-004-reparatiekandidaat — bronreview GO, imagecontrole open
 
 De kandidaat leidt de researchlengte-instructie af van het bestaande budget
 en bewaart bekend gemeten verbruik in het bestaande RECOVERY_FAILED-event.
@@ -212,6 +212,13 @@ De limiet blijft gelijk; promptinstructies geven geen tokengarantie.
 ongewijzigde basis; de fixture is niet aangepast. Geen volledig groene suite
 geclaimd. Geen nieuw schema, extra modelpoging, variant B of uitrol. De
 eerdere onafhankelijke GO betreft uitsluitend het bewijs van de mislukte proef.
+
+De onafhankelijke bronreview van deze reparatie is GO: 41 gerichte controles
+bevestigen limietbehoud, compatibiliteit, replay en verbruiksbehoud zonder
+antwoordinhoud of secrets op te slaan. De eerdere catalogusfixturefout blijft
+als baselinebevinding zichtbaar. Een begrensde image op d2d589 en geïsoleerde
+PostgreSQL-readback worden voorbereid. Geen image-GO, live-uitrol of garantie
+op modeluitvoerlengte of volledige kostenaggregatie geclaimd.
 
 ## Nu
 
