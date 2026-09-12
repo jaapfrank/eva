@@ -427,7 +427,7 @@ hierdoor geen nieuwe status en worden niet opnieuw getest als aparte randvariant
 ### Direct journal-admissionexport bij dezelfde preflight
 
 De optionele EVA2-export kan nu `direct_journal` bevatten: `scope` met interne
-PG tenant_id/installation_id, `source_files` met de drie exacte bronhashes uit
+PG tenant_id/installation_id, `source_files` met de vier exacte bronhashes uit
 `cp001_journal_admission.SOURCES`, en `events` met onafhankelijke SQL-rijen
 (`tenant_id`, `installation_id`, `event_type`, `payload`). `request` levert de
 principal/conversation/message-binding. Alleen bestaande MODEL_ADMITTED,
@@ -449,3 +449,20 @@ onopgeloste admission toont juist concreet de ontbrekende zekerheid. Deze beperk
 bron-/rowbinding opent geen livevergelijking en claimt geen helper/geheugentotaal.
 De bestaande CLI `cp001_accounting.py --exports /private/native-exports.json`
 blijft exitcode 2 geven. Er is geen nieuwe runtimepolicy of databasemigratie.
+
+
+Dezelfde journalpreflight leest nu het optionele native terminalveld
+`local_stream_closed: true`. `observed_local_settlement` geldt uitsluitend voor de
+geëxporteerde directe pogingen: `settled` wanneer alle admissions terminal zijn en
+hun lokale sluitobservatie True is, `unfinished` bij nog open admissions, anders
+`unknown` (ook bij geen pogingen of een ontbrekende closeobservatie). Niet-booleaanse
+of False-claims in het optionele native veld zijn ongeldig. `local_stream_closed_requests`
+telt de geldige observaties. De providerbron maakt nu deel uit van de vereiste vier
+bronhashes; oudere driehash-manifests moeten opnieuw uit de juiste bron worden geëxporteerd.
+
+`remote_provider_quiescent` en `server_quiescent` blijven null, ook bij lokaal
+settled. Snapshotauthenticiteit, helper/memorydekking en gelijke actieve constraints
+blijven voorwaarden; de CLI blijft exit2/live_enabled false. De geïntegreerde
+`test_actual_stream_events_drive_cli_local_settlement` gebruikt echte provider-/SDK-
+closepaden met offline SSE, een echte private PG-journal en afzonderlijke CLI-processen
+voor success, failed close, onvoltooide admission, stop en stopreplay.

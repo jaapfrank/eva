@@ -10,6 +10,7 @@ SOURCES = (
     "eva2/src/eva/application/conversation.py",
     "eva2/src/eva/adapters/postgres/conversation_journal.py",
     "eva2/src/eva/adapters/model/pydantic_conversation.py",
+    "eva2/src/eva/adapters/model/openai_codex_provider.py",
 )
 FIELDS = ("model_attempts", "tool_calls", "input_tokens", "output_tokens")
 IDENTITY = ("principal_id", "conversation_id", "message_id")
@@ -34,6 +35,10 @@ def inspect_export(value, *, request, sources):
         "unresolved_requests": None,
         "stop_recorded": None,
         "known_direct_usage": None,
+        "observed_local_settlement": "unknown",
+        "local_stream_closed_requests": None,
+        "local_settlement_scope": "exported direct attempts only",
+        "remote_provider_quiescent": None,
         "server_quiescent": None,
         "live_enabled": False,
         "provider_attempt_limits": {
@@ -114,7 +119,12 @@ def inspect_export(value, *, request, sources):
         known = {k: 0 for k in FIELDS}
         complete = bool(admitted) and len(admitted) == len(terminal)
         measured_rows = 0
+        closed_requests = 0
         for data in terminal.values():
+            if "local_stream_closed" in data:
+                if data["local_stream_closed"] is not True:
+                    raise ValueError("local_close_observation_invalid")
+                closed_requests += 1
             if data.get("outcome", "succeeded") not in ("succeeded", "failed"):
                 raise ValueError("terminal_outcome_invalid")
             usage = data["usage"]
@@ -141,6 +151,14 @@ def inspect_export(value, *, request, sources):
             terminal_requests=len(terminal),
             unresolved_requests=len(admitted) - len(terminal),
             stop_recorded=bool(stops),
+            local_stream_closed_requests=closed_requests,
+            observed_local_settlement=(
+                "unfinished"
+                if len(admitted) != len(terminal)
+                else "settled"
+                if admitted and closed_requests == len(admitted)
+                else "unknown"
+            ),
             known_direct_usage={
                 "measurement": "measured"
                 if complete
@@ -154,6 +172,8 @@ def inspect_export(value, *, request, sources):
             result["blockers"].append("durable_limit_not_yet_recorded")
         if len(admitted) != len(terminal):
             result["blockers"].append("direct_attempts_unresolved")
+        if result["observed_local_settlement"] != "settled":
+            result["blockers"].append("local_direct_settlement_unverified")
         if not complete:
             result["blockers"].append("complete_direct_usage_unavailable")
     except (KeyError, TypeError, ValueError, AttributeError):

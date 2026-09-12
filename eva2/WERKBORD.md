@@ -817,6 +817,18 @@ nog niet in een image of live. Lokale afsluiting bewijst geen stilstand
 van de externe provider; geen nieuwe cap, schema-, API- of authwijziging.
 [Afsluitobservatie en grenzen](reviews/cp001-local-stream-settlement-2026-09-13.md).
 
+### Lokale afsluiting — bestaande CLI-rapportage afgerond
+
+De CLI leest nu het werkelijk vastgelegde afsluitveld van de geëxporteerde
+directe modelpogingen: alles terminaal en afgesloten is settled, een open
+admission is unfinished, ontbrekende/mislukte sluiting of lege invoer unknown.
+De reviewer herberekende zes echte SQLexports en controleerde hashes,
+86JUnitresultaten en afwijzing van een ongeldige stringwaarde. Vier
+benchmark-/test-/documentatiebestanden zijn geïntegreerd; geen runtimewijziging.
+De volledigheid van de export blijft onbekend; remote_provider_quiescent en
+server_quiescent blijven null, volledige vergelijkingstoelating blijft gesloten.
+[Rapportage en grenzen](reviews/cp001-local-settlement-cli-2026-09-13.md).
+
 ## Nu
 
 | Volgorde | Kaart | Resultaat | Status |
