@@ -1,0 +1,222 @@
+{
+  "status": "Correct conversion in a new owner conversation; no procedure read or search, so no procedure reuse demonstrated. Independent result review pending.",
+  "reviewed_guard_commit": "22975c52d9784ac3f3ee6093b00631df6a041293",
+  "fixture_sha256": "15df6d3aba2cb23fabe8451732e3e26119d04d32a5c81d2ba9a441d175b2dbf2",
+  "preflight": {
+    "unix_time": 1789255641.0941906,
+    "images": {
+      "eva2-managed-b-slot3-core": "sha256:2a5cc362fee325e4210524f200dde5de7b19ddb732642da5154d8e4d1cba441b",
+      "eva2-managed-b-slot3-delegated-work-worker-1": "sha256:2a5cc362fee325e4210524f200dde5de7b19ddb732642da5154d8e4d1cba441b"
+    },
+    "config": {
+      "EVA_RUNTIME_RESOURCE_BUDGET_FILE": {
+        "sha256": "88595a1704c1ad751008802873831f140a87ad967d14f015e56d1d4dc46a72a9",
+        "budget": {
+          "background_reflections_per_installation_day": 40,
+          "background_reflections_per_person_day": 4,
+          "contract": "EvaInstallerBudget/v2",
+          "external_monthly_spend_cap_eur_cents": 0,
+          "max_input_tokens": 65536,
+          "max_output_tokens": 1200,
+          "memory_bytes_per_group": 20971520,
+          "memory_bytes_per_installation": 209715200,
+          "memory_bytes_per_person": 20971520,
+          "memory_bytes_per_project": 20971520,
+          "memory_records_per_group": 2000,
+          "memory_records_per_installation": 20000,
+          "memory_records_per_person": 2000,
+          "memory_records_per_project": 2000,
+          "profile_context_tokens": 800,
+          "recall_context_tokens": 2048,
+          "retention_days": 365,
+          "retrieval_nodes": 40,
+          "unknown_cost_policy": "block_autonomous_spend"
+        }
+      },
+      "EVA_MCP_AUTONOMY_MANDATE_FILE": {
+        "sha256": "969e350b8cb582c7034a12e4c431e9e421d510afcf09fb76188cfac1770f4e89",
+        "budget": null
+      }
+    },
+    "files": {
+      "procedure": {
+        "exists": true,
+        "symlink": false,
+        "sha256": "bbae3082ef113d6433ad0184fafc30ef2853e4d6b3798841ccef7ba0028016df"
+      },
+      "D": {
+        "exists": false,
+        "symlink": false
+      }
+    },
+    "access": {
+      "verified_private_owner_binding": true,
+      "private_audience_authorized": true,
+      "workspace_catalog_verified": true,
+      "tool_names": [
+        "find_workspace_files",
+        "inspect_workspace_file",
+        "list_workspace_directory",
+        "read_workspace_document",
+        "save_workspace_document"
+      ],
+      "configuration_sha256": {
+        "save_workspace_document": "a2f87385fed891cf244d4294777901bbdc8509b62304a91e39f82df730947a54",
+        "read_workspace_document": "882d133b00172a5e5d56aaab2848fab0065115da0b5ba9627d1795a506fab82a",
+        "list_workspace_directory": "6a5f2e07e585b39f3493560f233e64396858c212a56429e8f3335c9e1e4fea13",
+        "find_workspace_files": "e3d06c7ffdd05bbf41baa160db4d96f669d45083ad83f074ffd6e2057e877229",
+        "inspect_workspace_file": "ba1503a199857abd40dd043a60fbc351b3b8c4f6c55d4cfa3e80bc69a4818120"
+      }
+    },
+    "voice_access": {
+      "new_conversation_id": "voice:fabf71c1-f41e-41e0-afdc-63bc4b227caf",
+      "existing_session_events": 0,
+      "server_private_owner_grant_verified": true,
+      "same_workspace_owner_authorized": true,
+      "policy_sha256": "b40ab43adb371d90715e4a67d306c3b8dcc740aaa62967a2854f243e383cffc4",
+      "identity_sha256": "96bec21f0eb19378e1e1c5b02fe2b875149bca402b1b72c1a08980d7ee4567fd",
+      "prior_history_not_supplied": true,
+      "person_memory_preserved": true
+    },
+    "provider_rate_limit": {
+      "allowed": true,
+      "limit_reached": false,
+      "primary_window": {
+        "used_percent": 45,
+        "limit_window_seconds": 604800,
+        "reset_after_seconds": 549764,
+        "reset_at": 1789805404
+      },
+      "secondary_window": null
+    },
+    "request_sha256": "974faa7e9437e66f656b7f0111f7d452f4297d1e8de3c7ea542740460351fa08"
+  },
+  "review_provenance": {
+    "reviewed_commit": "22975c52d9784ac3f3ee6093b00631df6a041293",
+    "review": "Independent reviewer repeated five delta checks; coordinator relayed execution GO",
+    "fixture_sha256": "15df6d3aba2cb23fabe8451732e3e26119d04d32a5c81d2ba9a441d175b2dbf2"
+  },
+  "http": {
+    "httpStatus": 200,
+    "elapsedSeconds": 19.51047597199795,
+    "errorType": null,
+    "parseError": null,
+    "terminalReplyValid": true,
+    "streamErrorCount": 0,
+    "requestCount": 1,
+    "retry": false,
+    "messageId": "voice:fabf71c1-f41e-41e0-afdc-63bc4b227caf:49eab61a-d6d3-44c4-ab9d-c91d4870c8ec",
+    "responseSha256": "62515e0f44f755aa025d50d9f54c7b5f13665ea646faf2c72fa39bebe8e90c89"
+  },
+  "semantic_check": {
+    "turn": "D",
+    "semantic_checks": "passed",
+    "cues": [
+      {
+        "start_ms": 12300,
+        "end_ms": 14950,
+        "lines": [
+          "Mila vraagt: “Gaan we?”",
+          "Ja, neem de reüniefoto mee."
+        ]
+      },
+      {
+        "start_ms": 7384005,
+        "end_ms": 7386780,
+        "lines": [
+          "Eén laatste blik."
+        ]
+      }
+    ],
+    "file_sha256": "d7031ec03598b892772cef490bc6bca80938212c385b9842d3e21e0b0f259da8",
+    "procedure_sha256": "bbae3082ef113d6433ad0184fafc30ef2853e4d6b3798841ccef7ba0028016df",
+    "checker": "Independent Python checker run by coordinator after Eva completed; not an Eva-executed test."
+  },
+  "request_matches_ingress_exactly": true,
+  "new_conversation_id": "voice:fabf71c1-f41e-41e0-afdc-63bc4b227caf",
+  "trace": [
+    {
+      "thread_id": "tool:external-tool:c68a81d5595fc11a3865d5bb70f66495",
+      "prepared": {
+        "arguments": {
+          "path": "/proof-state/au004-subtitles-D-fresh-session-20260913.vtt",
+          "content": "WEBVTT\n\n1\n00:00:12.300 --> 00:00:14.950\nMila vraagt: “Gaan we?”\nJa, neem de reüniefoto mee.\n\n2\n02:03:04.005 --> 02:03:06.780\nEén laatste blik.\n"
+        },
+        "tool_name": "eva-workspace-write-file",
+        "expected_proof": {
+          "content": "WEBVTT\n\n1\n00:00:12.300 --> 00:00:14.950\nMila vraagt: “Gaan we?”\nJa, neem de reüniefoto mee.\n\n2\n02:03:04.005 --> 02:03:06.780\nEén laatste blik.\n"
+        },
+        "observation_arguments": {
+          "path": "/proof-state/au004-subtitles-D-fresh-session-20260913.vtt"
+        },
+        "observation_tool_name": "eva-workspace-read-text-file",
+        "tool_configuration_sha256": "a2f87385fed891cf244d4294777901bbdc8509b62304a91e39f82df730947a54"
+      },
+      "verified": {
+        "evidence": {
+          "source": "mcp_gateway_readback",
+          "observation_sha256": "876b9d4911d9fe200380fc3ffee230d5b48f65505432253383f4fbf7963ac51e"
+        },
+        "expected": {
+          "content": "WEBVTT\n\n1\n00:00:12.300 --> 00:00:14.950\nMila vraagt: “Gaan we?”\nJa, neem de reüniefoto mee.\n\n2\n02:03:04.005 --> 02:03:06.780\nEén laatste blik.\n"
+        },
+        "observed": {
+          "content": "WEBVTT\n\n1\n00:00:12.300 --> 00:00:14.950\nMila vraagt: “Gaan we?”\nJa, neem de reüniefoto mee.\n\n2\n02:03:04.005 --> 02:03:06.780\nEén laatste blik.\n"
+        }
+      }
+    }
+  ],
+  "model_records": [
+    {
+      "usage": {
+        "tool_calls": 1,
+        "measurement": "measured",
+        "input_tokens": 5347,
+        "output_tokens": 138,
+        "model_attempts": 1
+      },
+      "outcome": "succeeded",
+      "message_id": "voice:fabf71c1-f41e-41e0-afdc-63bc4b227caf:49eab61a-d6d3-44c4-ab9d-c91d4870c8ec",
+      "request_id": "22ea75d7-3d42-44e8-b1f3-55e93f43d1a0",
+      "principal_id": "33333333-3333-3333-8333-333333333333",
+      "conversation_id": "voice:fabf71c1-f41e-41e0-afdc-63bc4b227caf"
+    },
+    {
+      "usage": {
+        "tool_calls": 0,
+        "measurement": "measured",
+        "input_tokens": 4699,
+        "output_tokens": 114,
+        "model_attempts": 1
+      },
+      "outcome": "succeeded",
+      "message_id": "voice:fabf71c1-f41e-41e0-afdc-63bc4b227caf:49eab61a-d6d3-44c4-ab9d-c91d4870c8ec",
+      "request_id": "04cc0ffb-7a87-460f-b3fd-a39ca9f12916",
+      "principal_id": "33333333-3333-3333-8333-333333333333",
+      "conversation_id": "voice:fabf71c1-f41e-41e0-afdc-63bc4b227caf"
+    }
+  ],
+  "usage": {
+    "model_attempts": 2,
+    "tool_calls": 1,
+    "input_tokens": 10046,
+    "output_tokens": 252
+  },
+  "procedure_sha256_unchanged": true,
+  "config_after_matches": true,
+  "procedure_search": false,
+  "procedure_read": false,
+  "procedure_reuse_demonstrated": false,
+  "new_procedure_written": false,
+  "workspace_write_readback_verified": true,
+  "person_memory_preserved": true,
+  "reply_memory_evidence_count": 5,
+  "blank_memory_claim": false,
+  "research_calls": 0,
+  "retry": false,
+  "owner_accepted": false,
+  "whole_AU004_complete": false,
+  "observer_readback_correction": "Initial text lookup reused strip() from dashboard trial; voice ingress preserves trailing newline. ID-bound read-only lookup succeeded and confirmed request text exact. No second model request.",
+  "raw_events_sha256": "4ad83a998564a976f3c427e74306c1d2f50c2a2c00a17fcfc61288d6b1240485",
+  "stream_sha256": "62515e0f44f755aa025d50d9f54c7b5f13665ea646faf2c72fa39bebe8e90c89"
+}

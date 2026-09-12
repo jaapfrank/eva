@@ -863,6 +863,20 @@ De tools/-operatorgrens blijft achter een geïnjecteerde wizardpoort;
 herstelautoriteit blijft verplicht om vergeten data niet ongeoorloofd terug
 te halen. Geen centrale board-, runtime- of CP001-/gespreksbestanden.
 
+### AU-004 D — conversie in nieuw gesprek correct, geen procedurehergebruik
+
+De onafhankelijke reviewer geeft GO voor eerlijke registratie van de ene
+D-proef. Nieuw gesprek, bestaand persoonsgeheugen behouden; één geldige
+HTTP-beurt in19,51seconden, twee gemeten modelpogingen met10.046 input-
+en252 outputtokens. Eén schrijfopdracht met gateway-readback leverde
+149bytes correcte WebVTT. Geen zoek-/leesstap naar de bestaande procedure,
+dus geen procedurehergebruik of automatisch leren aangetoond. De procedure
+bleef ongewijzigd. Verse guards en semantiek gecontroleerd. De corrigerende
+uitlezing op bericht-ID was read-only, geen tweede modelcall. Drie resultaat-
+bestanden opgenomen; A/B blijft afgerond en C behoudt zijn eigen grenzen.
+Volledige AU-004 en eigenaaracceptatie blijven open.
+[D-resultaat](evidence/product/au004-procedure-discovery/fresh-D/result.md).
+
 ## Nu
 
 | Volgorde | Kaart | Resultaat | Status |
