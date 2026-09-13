@@ -247,7 +247,7 @@
         },
         {
           "title": "Project hervatten na herstart",
-          "detail": "Activering is gepauzeerd: bij de gatewayherstart kregen vier bestaande toolregistraties onbedoeld een teamkoppeling. Dit bleef na terugzetten van de configuratie bestaan. Er is geen nieuwe registratiepoging gedaan en de provider is uit. Eerst volgt review van een gerichte reparatie van deze vier regels; geen brede databaseherstelactie."
+          "detail": "De vier onbedoelde teamkoppelingen zijn nog niet hersteld. Een opstartbeveiliging en een correctie van uitsluitend deze vier regels zijn voorbereid en geïsoleerd getest; onafhankelijke review volgt. De kern en overige diensten zijn behouden. Registratie, verzegeling en workerstart blijven gepauzeerd."
         },
         {
           "title": "Gedeeld audiotype",
@@ -5506,9 +5506,9 @@
         },
         {
           "owner": "coordinator/timing_final_review",
-          "work": "Gedeeld audiotype zonder adapterafhankelijkheid",
-          "boundary": "application/voice.py, connectors/home_assistant_voice.py, api/dashboard_voice.py and targeted dashboard voice test. Same type/re-export compatibility; no runtime or AU006 overlap.",
-          "status": "shared_audio_type_source_complete_reviewed_integrated_not_live"
+          "work": "Onafhankelijke gatewayguard en vierregelherstelreview",
+          "boundary": "Review candidate6761694e and exact pinned guard/repair evidence. No source/DB/deploy/recreate changes. Shared audio type delivery remains closed.",
+          "status": "gateway_guard_and_four_row_repair_independent_review_in_progress"
         },
         {
           "owner": "coordinator/next_tools_delivery",
@@ -7092,7 +7092,7 @@
           ],
           "privateRollback": "Original gateway configuration snapshots retained privately in existing activation stage; no DELETE or shared catalog restore.",
           "independentGo": true,
-          "retryAuthorized": true,
+          "retryAuthorized": false,
           "gatewayRecreated": true,
           "workerStarted": false,
           "coreChanged": false,
@@ -7125,14 +7125,15 @@
           "newAssignedIds": [],
           "policyRollbackPerformed": true,
           "catalogRollbackComplete": false,
-          "providerRunning": false
+          "providerRunning": false,
+          "continuationAuthorization": "Paused pending separate guard/repair GO; prior one-retry approval does not authorize continuation through this new finding."
         },
         "gatewayBootstrapIncident": {
           "status": "unintended_four_row_difference_preserved_targeted_repair_plan_pending_review",
-          "priority": "Restore exact prior tool metadata before any activation continuation.",
+          "priority": "Independent guard and exact four-row repair review before any AU006 registration, sealing or worker activation.",
           "reportedBy": "coordinator",
           "trigger": "Existing gateway startup bootstrap during approved recreation",
-          "difference": "Four existing CPython/public tool rows: teamId null changed to personal team.",
+          "difference": "Four existing public CPython tool rows retain changed team_id null to personal team and updated_at after gateway policy rollback.",
           "affectedRowCount": 4,
           "observedThrough": [
             "SQLite",
@@ -7151,14 +7152,84 @@
           "proposedRepair": {
             "ownerThread": "01a08d52-31b1-7091-be45-812c0b6e6c9f",
             "scope": "Isolated startup bootstrap guard and exact four-row compare-and-set repair plan.",
-            "status": "preparation_and_independent_review_pending",
+            "status": "source_and_evidence_candidate_prepared_tested_pending_review",
             "databaseCorrectionAuthorized": false,
             "databaseCorrectionPerformed": false,
-            "broadRestoreAllowed": false
+            "broadRestoreAllowed": false,
+            "candidateCommit": "6761694e315c7a1d541a917470497b8b0ca70872",
+            "exactCandidatePaths": [
+              "eva2/evidence/living-core/au006-bootstrap-guard-repair-review-20260913.json",
+              "eva2/evidence/living-core/au006-bootstrap-guard-repair-review-20260913.md",
+              "eva2/evidence/living-core/au006-phase1-retry-abort-20260913.json",
+              "eva2/evidence/living-core/au006-phase1-retry-abort-20260913.md",
+              "eva2/experiments/contextforge-gateway-v1/preserve-resource-assignments.patch",
+              "eva2/experiments/contextforge-gateway-v1/preserve-resource-assignments.pin.json",
+              "eva2/experiments/contextforge-gateway-v1/prove_resource_assignment_guard.py",
+              "eva2/experiments/contextforge-gateway-v1/prove_resource_assignment_repair.py",
+              "eva2/experiments/contextforge-gateway-v1/repair_resource_assignments.py"
+            ],
+            "reviewEvidencePath": "eva2/evidence/living-core/au006-bootstrap-guard-repair-review-20260913.json",
+            "reviewDocumentPath": "eva2/evidence/living-core/au006-bootstrap-guard-repair-review-20260913.md",
+            "sourceIntegrated": false,
+            "independentGo": false,
+            "reportedGuardTest": {
+              "status": "passed",
+              "resource_classes": 6,
+              "resource_rows": 30,
+              "fresh_database_admin_team_roles": true,
+              "fast_path_all_resource_columns_unchanged": true,
+              "skip_migrations_all_resource_columns_unchanged": true,
+              "invalid_mode_rejected_without_resource_change": true,
+              "legacy_null_visibility_all_resource_columns_unchanged": true,
+              "explicit_legacy_migration_available": true
+            },
+            "reportedRepairTest": {
+              "status": "passed",
+              "readonly_no_writes": true,
+              "exact_four_rows_only": true,
+              "stale_manifest_rejected": true,
+              "fourth_row_failure_rolls_back_all": true,
+              "concurrent_writer_fails_without_retry": true
+            },
+            "casScope": {
+              "rows": 4,
+              "restoreColumns": [
+                "team_id",
+                "updated_at"
+              ],
+              "allCurrentColumnsCompared": true,
+              "privateManifestSha256": "862bcfb933f4d92ee01c84126f2027221dc741fbda532aec644006787118cbd5",
+              "liveReadOnlyMatchedRows": 4,
+              "writes": 0
+            },
+            "proofLimitations": [
+              "No deployment or repair approval conveyed",
+              "No full pre-recreate SQLite snapshot; API before-image covers all bootstrap-written tool fields",
+              "Unmodified legacy collision failure not repaired; opt-in availability uses noncolliding fixtures",
+              "Other bootstrap helpers unchanged; no global database immutability claim"
+            ],
+            "independentReviewer": "coordinator/timing_final_review",
+            "guardDeploymentAuthorized": false,
+            "gatewayRecreateAuthorized": false
           },
           "liveGatewayMetadataChanged": true,
           "projectWorkerStarted": false,
-          "projectEffects": 0
+          "projectEffects": 0,
+          "evidenceCommit": "6761694e315c7a1d541a917470497b8b0ca70872",
+          "abortEvidencePaths": [
+            "eva2/evidence/living-core/au006-phase1-retry-abort-20260913.json",
+            "eva2/evidence/living-core/au006-phase1-retry-abort-20260913.md"
+          ],
+          "candidateFilesIntegrated": false,
+          "gatewayAfterRollback": {
+            "reportedHealthy": true,
+            "imageUnchanged": true,
+            "gatewayRows": 5,
+            "toolRows": 53,
+            "newGatewayDatabaseMatches": 0,
+            "fullCatalogRollback": false
+          },
+          "rootCauseEvidenceLimit": "Existing bootstrap assignment code matches observed durable changes; original recreated-container write logs unavailable."
         }
       },
       "isolatedProductExecutionProven": true,
