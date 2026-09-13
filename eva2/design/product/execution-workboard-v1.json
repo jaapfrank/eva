@@ -6636,7 +6636,8 @@
           "bootstrapOwnershipExtension": {
             "path": "eva2/src/eva/bootstrap/document_goal_worker.py",
             "authorizedBy": "coordinator",
-            "boundary": "Dedicated composition module; operations/durable_goal_worker.py only generic hooks, no architecture policy change."
+            "boundary": "Dedicated composition module; operations/durable_goal_worker.py only generic hooks, no architecture policy change.",
+            "reason": "Move two new provider imports out of operations into bootstrap; existing operation main gets small factory/selector hooks, no architecture policy changes."
           },
           "scopeLimits": [
             "Provider stack retained for coordinator cleanup after evidence review",
@@ -6659,7 +6660,8 @@
             "coreChildContainersRemoved": true,
             "productionDataAccessed": false,
             "reportedBy": "execution owner"
-          }
+          },
+          "independentReviewer": "coordinator/tl003_evidence_review"
         }
       }
     }
