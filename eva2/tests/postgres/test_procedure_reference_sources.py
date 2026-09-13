@@ -29,7 +29,7 @@ def test_source_only_restart_erasure_and_no_semantic_queue(people_memory_engine)
     assert tuple(job.document.document_id for job in first.pending()) == ('ordinary-source',)
     engine.dispose() # new database connection and new source/port instances
     reopened=store();service=ProcedureReferences(reopened,host)
-    assert service.resolve_candidates(SCOPE,(reference.document_id,),now=NOW)==(reference,)
+    assert service.resolve_candidates(SCOPE,(reference.document_id,),now=NOW)[0].reference==reference
     assert reopened.resolve_source(reference.document_id,principal_id='other',project_id=None) is None
     assert reopened.resolve_source(reference.document_id,principal_id=SCOPE.principal_id,project_id='other') is None
     reopened.erase_content(principal_sha256=hashlib.sha256(SCOPE.principal_id.encode()).hexdigest(),

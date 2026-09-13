@@ -45,7 +45,11 @@ def test_explicit_reference_resolves_candidates_without_personal_facts():
     reference=designate(service);assert isinstance(reference,ProcedureReference)
     doc=store.documents[reference.document_id]
     assert doc.trust=='model_inference_unconfirmed' and doc.audience.kind=='private_person'
-    assert service.resolve_candidates(SCOPE,(reference.document_id,),now=NOW)==(reference,)
+    reads=host.reads
+    resolved=service.resolve_candidates(SCOPE,(reference.document_id,),now=NOW)
+    assert resolved[0].reference==reference
+    assert resolved[0].untrusted_content==host.bytes.decode()
+    assert host.reads==reads+1  # reuse the validation read, no second fetch
     # Nonmatching search emits no candidate; no hidden file reads are performed.
     reads=host.reads;assert service.resolve_candidates(SCOPE,(),now=NOW)==();assert host.reads==reads
 
@@ -79,3 +83,21 @@ def test_revocation_during_read_blocks_return():
     def read(scope,path):host.allowed=False;return host.bytes
     host.read_current=read
     with pytest.raises(ProcedureReferenceRejected):service.resolve_candidates(SCOPE,(ref.document_id,),now=NOW)
+
+
+def test_oversized_verified_content_is_rejected_without_truncation():
+    from eva.application.procedure_references import MAX_RESOLVED_CONTENT_BYTES
+    host,store,service=setup()
+    content="é"*(MAX_RESOLVED_CONTENT_BYTES//2+1)
+    host.bytes=content.encode()
+    a=host.source.admission
+    a['action_arguments']['content']=content
+    a['request_arguments']['content']=content
+    a['request_expected_proof']['content']=content
+    host.source.proof['expected']['content']=content
+    host.source.proof['observed']['content']=content
+    ref=designate(service)
+    reads=host.reads
+    with pytest.raises(ProcedureReferenceRejected,match="bound exceeded"):
+        service.resolve_candidates(SCOPE,(ref.document_id,),now=NOW)
+    assert host.reads==reads+1

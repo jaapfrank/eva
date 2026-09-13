@@ -46,6 +46,15 @@ class ProcedureReference:
     retention_until: str
 
 
+MAX_RESOLVED_CONTENT_BYTES = 16384
+
+
+@dataclass(frozen=True, slots=True)
+class ResolvedProcedure:
+    reference: ProcedureReference
+    untrusted_content: str
+
+
 @dataclass(frozen=True, slots=True)
 class VerifiedSaveSource:
     """Loaded by the host receipt port, never accepted from model tool arguments."""
@@ -125,7 +134,7 @@ class ProcedureReferences:
         self._sources.record_source(document)
         return reference
 
-    def _check_current(self, scope: ProcedureScope, reference: ProcedureReference, now: str):
+    def _check_current(self, scope: ProcedureScope, reference: ProcedureReference, now: str) -> bytes:
         if (_instant(now) >= _instant(reference.retention_until)
                 or not self._host.source_active(scope, reference.source_message_id)
                 or not self._host.permits(scope, reference.path)):
@@ -140,12 +149,14 @@ class ProcedureReferences:
         # A revocation arriving during read must not yield a usable reference.
         if not self._host.source_active(scope, reference.source_message_id) or not self._host.permits(scope, reference.path):
             raise ProcedureReferenceRejected("source revoked during read")
+        return current
 
     def resolve_candidates(self, scope: ProcedureScope, candidate_ids: tuple[str, ...],
-                           *, now: str) -> tuple[ProcedureReference, ...]:
+                           *, now: str) -> tuple[ResolvedProcedure, ...]:
         if len(candidate_ids) > 8 or len(set(candidate_ids)) != len(candidate_ids):
             raise ProcedureReferenceRejected("candidate bound exceeded")
         resolved = []
+        total_bytes = 0
         for doc_id in candidate_ids:
             document = self._sources.resolve_source(doc_id, principal_id=scope.principal_id,
                                                     project_id=scope.project_id)
@@ -168,6 +179,13 @@ class ProcedureReferences:
                     raise ValueError("binding")
             except (ValueError, TypeError, KeyError) as error:
                 raise ProcedureReferenceRejected("invalid source reference") from error
-            self._check_current(scope, reference, now)
-            resolved.append(reference)
+            current = self._check_current(scope, reference, now)
+            total_bytes += len(current)
+            if total_bytes > MAX_RESOLVED_CONTENT_BYTES:
+                raise ProcedureReferenceRejected("resolved content bound exceeded")
+            try:
+                content = current.decode("utf-8", errors="strict")
+            except UnicodeDecodeError as error:
+                raise ProcedureReferenceRejected("procedure is not UTF-8 text") from error
+            resolved.append(ResolvedProcedure(reference, content))
         return tuple(resolved)

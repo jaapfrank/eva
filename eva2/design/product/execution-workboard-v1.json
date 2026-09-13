@@ -121,7 +121,7 @@
           ]
         }
       ],
-      "priorityDecision": "De procedureproef vindt een bestaande verwijzing, maar gaf de inhoud nog niet aan het model. De mislukte proef en terugrol zijn onafhankelijk gecontroleerd. De gerichte inhoudscorrectie wordt beoordeeld. De PostgreSQL-herstelproeven zijn afgerond, met releaseblokkades nog open.",
+      "priorityDecision": "De inhoudscorrectie voor opgeslagen procedures is goedgekeurd en geïntegreerd. Een nieuwe runtimekandidaat wordt voorbereid; werkelijk toepassen door Eva moet nog worden aangetoond. De mislukte vorige proef blijft behouden. De PostgreSQL-herstelproeven zijn afgerond, met releaseblokkades nog open.",
       "dashboardVerification": {
         "status": "local_browser_verified_not_full_product_acceptance",
         "priorityRevision": {
@@ -273,7 +273,7 @@
         },
         {
           "title": "Aangeleerde procedures terugvinden",
-          "detail": "Onafhankelijk bevestigd: Eva vindt en controleert een eerder opgeslagen procedureverwijzing, maar kreeg de inhoud nog niet beschikbaar vóór haar antwoord. De proef blijft mislukt; opslaan en markeren slaagden. De vorige runtime is gecontroleerd hersteld en beide bestanden blijven bewaard. De correctie die gecontroleerde inhoud beschikbaar maakt, wordt beoordeeld en staat nog niet live."
+          "detail": "De correctie is gebouwd, onafhankelijk gecontroleerd en geïntegreerd: een geldige procedureverwijzing levert nu ook de gecontroleerde inhoud, begrensd tot 16 KB. Een nieuwe runtimekandidaat wordt voorbereid. Werkelijk toepassen in een gesprek is nog niet bewezen en de correctie staat nog niet live. De vorige mislukte proef en het gecontroleerde herstel blijven vastgelegd."
         }
       ],
       "openRisks": [
@@ -5609,10 +5609,36 @@
               },
               "nextFix": {
                 "owner": "coordinator/next_tools_delivery",
-                "status": "source_candidate_under_independent_review",
+                "status": "source_complete_independently_approved_integrated_not_live",
                 "scope": "Return already verified content through existing resolve as typed untrusted content, bounded at 16 KB; no second read requirement for future candidate. R5 original failed gate unchanged.",
                 "live": false,
-                "candidateCommitReportedPrefix": "158f0341"
+                "candidateCommitReportedPrefix": "158f0341",
+                "candidateCommit": "158f0341570b2d191caf5ab58a93ea939ea40bc8",
+                "sourceIntegrated": true,
+                "exactPaths": [
+                  "eva2/reviews/procedure-reference-resolved-content-20260913.md",
+                  "eva2/src/eva/application/procedure_references.py",
+                  "eva2/src/eva/providers/procedure_reference_actions.py",
+                  "eva2/tests/application/test_procedure_references.py",
+                  "eva2/tests/postgres/test_procedure_reference_host.py",
+                  "eva2/tests/postgres/test_procedure_reference_sources.py"
+                ],
+                "independentGo": true,
+                "independentReview": {
+                  "reviewer": "procedure_host_review",
+                  "reportedBy": "coordinator",
+                  "targetedTestsPassed": 19,
+                  "realPostgresTestsPassed": 2,
+                  "scope": "Already verified UTF8 content returned in typed untrusted field;16KB bound and owner/source/hash checks"
+                },
+                "integrationVerification": "Five existing files matched exact 56ffe5a7 baseline; patch clean; all six final paths byte-equal approved candidate",
+                "modelUseProven": false,
+                "injectionResistanceProven": false,
+                "runtimePreparation": {
+                  "owner": "01a08d52-31b1-7091-be45-812c0b6e6c9f",
+                  "status": "fresh_sealed_candidate_preparation",
+                  "activationAuthorized": false
+                }
               },
               "independentReview": {
                 "reviewer": "procedure_host_review",

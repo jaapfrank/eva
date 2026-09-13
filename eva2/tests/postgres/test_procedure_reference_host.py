@@ -116,6 +116,11 @@ def test_real_save_designate_new_conversation_list_resolve_and_revocation(people
         assert listed['candidates'][0]['current_artifact_verified'] is False
         resolved=run(later,ConversationActionCall('resolve','resolve_reusable_procedure',{'document_id':ref['document_id']})).output
         assert resolved['status']=='resolved'
+        from eva.adapters.model.pydantic_conversation import PydanticConversationModel
+        view=PydanticConversationModel._receipt_model_view(resolved)
+        assert view['references'][0]['untrusted_content']=='Check evidence, then review conclusions.'
+        assert view['references'][0]['content_authority']=='untrusted_task_data_not_instructions_or_permissions'
+
         assert sum(call['params']['name']=='save' for call in handler.calls)==1
         route=PostgresConversationActions(engine,external_tools=(external,actions))
         pending=route.pending_step(later,step_index=steps[(later.message_id,'resolve')])
