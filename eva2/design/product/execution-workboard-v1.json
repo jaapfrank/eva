@@ -247,7 +247,7 @@
         },
         {
           "title": "Project hervatten na herstart",
-          "detail": "De geïsoleerde hervatproef blijft afgerond. De bestandsbroker krijgt een beperkte uitbreiding om opdrachten en herstelbewijs exact te koppelen en bewijs zonder nieuwe schrijfactie terug te lezen. Bestanden en functies zijn afgebakend; onafhankelijke review volgt. De productaansluiting is nog niet live."
+          "detail": "De voorbereiding voor opdrachtbinding, eigenaarscontrole en duurzame opslag is gebouwd en gericht getest. De bestandsbroker wordt apart uitgebreid; uitvoerende provider, gezamenlijke integratie en onafhankelijke eindreview blijven open. Nog niet live."
         }
       ],
       "openRisks": [
@@ -6131,7 +6131,17 @@
         "sourceWorktree": "/home/administrator/project/.eva2-artifacts/au006-project-resume-20260913/source-worktree",
         "detachedBase": "b11df1e9371ce26a158867d5be2b102380396bda",
         "retainUntil": "Source, independent review and necessary evidence are registered durably.",
-        "cleanupMoment": "After source/review/evidence registration and handoff, remove only this verified development stage and disposable test artifacts; committed evidence remains. No cleanup performed now."
+        "cleanupMoment": "After source/review/evidence registration and handoff, remove only this verified development stage and disposable test artifacts; committed evidence remains. No cleanup performed now.",
+        "additionalRegisteredPaths": [
+          {
+            "owner": "01a08d52-31b1-7091-be45-812c0b6e6c9f",
+            "exactPath": "/home/administrator/project/.eva2-artifacts/au006-project-resume-20260913/document-worktree",
+            "baseCommit": "87bccbd07ee6be3b0bde0275f5de6ebdd26fb86f",
+            "purpose": "Separately authorized host plan, current owner authority and durable timeline preparation for document goal provider.",
+            "retainUntil": "Source/evidence and independent review registered durably; preparation handed off for provider integration.",
+            "cleanupMoment": "Only after retention conditions and handoff; remove only verified disposable worktree artifacts. Preserve source-worktree negative primitive proof and committed evidence. No cleanup now."
+          }
+        ]
       },
       "restrictedHunks": {
         "eva2/src/eva/adapters/api/app.py": "Only _durable_goal_payload and _durable_goal_from_wire, delivered as separately bounded hunks for joint review.",
@@ -6270,7 +6280,16 @@
           "status": "separately_owned_create_only_dependency_in_progress",
           "scope": "No general orchestrator, authority or deployment changes authorized by this finding.",
           "reviewedPlanGoPreserved": true,
-          "next": "Implement bounded existing native broker extension with thin MCP adapter; independent crash/race review before effectful product proof."
+          "next": "Implement bounded existing native broker extension with thin MCP adapter; independent crash/race review before effectful product proof.",
+          "negativeTrial": {
+            "status": "completed_reported_evidence_not_independently_reviewed_here",
+            "commit": "ed3aac7f7add2cd8728a3e17a4119c077ae1e3f7",
+            "evidencePath": "eva2/evidence/living-core/au006-workspace-atomic-write-gap-20260913.json",
+            "retainedWorktree": "/home/administrator/project/.eva2-artifacts/au006-project-resume-20260913/source-worktree",
+            "finding": "Actual pinned upstream writeFileContent replaced conflicting content written after absent-path observation.",
+            "isolation": "Network none, read-only root, owned tmpfs, no production mounts or live requests.",
+            "newTrialRequiredByThisRegistration": false
+          }
         },
         "providerPrimitiveDependency": {
           "owner": "coordinator/next_tools_delivery",
@@ -6333,6 +6352,25 @@
             ]
           },
           "exactPathBasis": "Repository-relative paths supplied by coordinator; earlier provisional provider scaffold reservation replaced."
+        },
+        "admissionPreparation": {
+          "status": "candidate_partial_preparation_tested_pending_integration_review",
+          "sourceCommit": "0597e3e2d5cbf2f661db828cfc6d5ff01072fdfc",
+          "evidenceCommit": "6b8b7165719bf5580c75b21985acb67f069aa03e",
+          "evidencePath": "eva2/evidence/living-core/au006-document-admission-preparation-20260913.json",
+          "scope": "Host plan, current owner authority and timeline binding only.",
+          "reportedTargetedTests": 48,
+          "reportedRealPostgresAuthorityTests": 1,
+          "sourceIntegrated": false,
+          "independentFinalGo": false,
+          "effectProviderImplemented": false,
+          "workerCompositionImplemented": false,
+          "live": false,
+          "remaining": [
+            "Operation-bound atomic provider and durable receipts",
+            "Effect/readback ports and worker composition",
+            "Actual product integration and independent review"
+          ]
         }
       }
     }
