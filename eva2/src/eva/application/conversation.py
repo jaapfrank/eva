@@ -19,6 +19,34 @@ from eva.contracts.identity import IdentityPack
 MEMORY_SEARCH_ACTION = "search_personal_memory"
 
 
+def _bounded_reply_text(text: str, maximum_words: int) -> str:
+    """Keep the response contract usable without extending the model budget.
+
+    A partial answer is explicit and ends at a paragraph or sentence boundary.
+    Never splice a word, link or fenced code block. Authoritative action reply
+    guards still run afterwards and retain their verified result references.
+    """
+    if len(text.split()) <= maximum_words:
+        return text
+    notice = "Dit antwoord is ingekort; de toelichting is onvolledig."
+    available = maximum_words - len(notice.split())
+    prefix = ""
+    # Prefer complete paragraphs, retaining their original formatting and links.
+    boundaries = [match.start() for match in re.finditer(r"\n\s*\n", text)]
+    if not boundaries:
+        boundaries = [match.start() for match in re.finditer(r"(?<=[.!?])\s+", text)]
+    for end in boundaries:
+        candidate = text[:end].rstrip()
+        if len(candidate.split()) > available:
+            break
+        if candidate.count("```") % 2 or candidate.count("~~~") % 2:
+            continue
+        if candidate.count("[") != candidate.count("]") or candidate.count("(") != candidate.count(")"):
+            continue
+        prefix = candidate
+    return notice if not prefix else notice + "\n\n" + prefix
+
+
 class ConversationConflict(RuntimeError):
     """A replay reused a durable message identity for different content."""
 
@@ -991,8 +1019,7 @@ class LivingConversation:
         text = "" if generated.text is None else generated.text.strip()
         if not text:
             raise RuntimeError("conversation model returned an empty reply")
-        if len(text.split()) > self._identity.maximum_reply_words:
-            raise RuntimeError("conversation model exceeded the reply word limit")
+        text = _bounded_reply_text(text, self._identity.maximum_reply_words)
         if reply_guard is not None:
             text = reply_guard(text)
         return GroundedReply(

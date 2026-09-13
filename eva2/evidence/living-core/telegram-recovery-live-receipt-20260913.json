@@ -1,0 +1,134 @@
+{
+  "contract": "TelegramRecoveryLiveReceipt/v1",
+  "recorded_at": "2026-09-13T08:21:16.540204+00:00",
+  "result": "reviewed_core_and_bridge_fixes_installed_and_healthy",
+  "source_commits": {
+    "core": "aa4a0bef19dcd8ab7e68549df95232d5b99a2a37",
+    "bridge": "c133ca0dbf4e7ce6c4347a12dccd3219ebbe53c9"
+  },
+  "approved_plan_sha256": "cbf2ae2312b339ca5dd376f1fbe708dbe37cd0a10e23b66ab076047a6be4477d",
+  "approved_script_sha256": "de742a32eade56db2f9397d046baae692172044a4337a989d141f3936d3da799",
+  "core": {
+    "image": "sha256:bc6d64a3aebbb4b1502dfa7170c0b3d02eda97ac97eddfc704c90c80659864e9",
+    "core_id": "48ceaa58a114554afdab8eae1c592bc865f6278ce5243030758391ce81edbe62",
+    "source_sha256": "9573d76fc29d26426141c2a86eff3b5bbf44fad9bdd92ffd2efa55c1b2f85768",
+    "protected_services": 12,
+    "readiness": {
+      "advisory_locks": 0,
+      "other_active_queries": 0,
+      "readiness": {
+        "database": "ready",
+        "detail": null,
+        "memory_projection": "ready",
+        "model_provider": "ready",
+        "ready": true
+      }
+    },
+    "pending_requests": {
+      "recent_unfinished_model_requests": 0
+    }
+  },
+  "bridge": {
+    "source_sha256": "89a5be01e30f9e4b994b23cbdd7b7b479191ed5c78e5f83e694ffcd940c68592",
+    "process": {
+      "MainPID": "1939334",
+      "NRestarts": "0",
+      "ExecMainStartTimestamp": "Sun 2026-09-13 10:19:13 CEST",
+      "ActiveState": "active",
+      "SubState": "running"
+    },
+    "load_basis": "Exact file verified before explicit service restart; same working directory and stable new MainPID checked afterward. No process-heap byte inspection claimed."
+  },
+  "route_checks": {
+    "/healthz": {
+      "status": 200,
+      "body": {
+        "status": "alive"
+      }
+    },
+    "/readyz": {
+      "status": 200,
+      "body": {
+        "database": "ready",
+        "detail": null,
+        "memory_projection": "ready",
+        "model_provider": "ready",
+        "ready": true
+      }
+    },
+    "telegram_validation": {
+      "status": 422,
+      "response_sha256": "f104128dd367220b54fed56a471da22b8f7c0672f647c12093a49880d5b6a672",
+      "empty_invalid_payload_only": true
+    }
+  },
+  "installation_attempts": 1,
+  "rollback_needed": false,
+  "new_model_requests": 0,
+  "replayed_user_requests": 0,
+  "outgoing_telegram_messages": 0,
+  "au006_old_failed_and_completed_r2_goals_unchanged": true,
+  "post_start_failure_events": {
+    "core_conversation_stream_failure": 0,
+    "bridge_fatal_uncaught_exception": 0
+  },
+  "tests": {
+    "core_application_and_telegram_stream": 37,
+    "bridge_stream_deadline_cleanup": 22,
+    "installer_failure_cases": 4,
+    "installer_optimized_cases": 4
+  },
+  "user_visible_behavior": [
+    "Overlong model text no longer crashes the reply route; it returns an explicitly incomplete bounded answer at a complete boundary when possible.",
+    "Telegram bridge allows20s connection,120s without progress,300s total; a44s answer is covered by regression.",
+    "Timeouts/cancellation/stream errors clean up active transport without a second request; timeout does not claim server execution stopped."
+  ],
+  "limits": [
+    "No real post-install user Telegram turn observed yet; successful user-visible delivery is not inferred from health checks.",
+    "The only live API probe used an empty invalid payload and confirmed422 validation, with no model/admission.",
+    "Provisional long deltas may precede the bounded authoritative final reply.",
+    "No new complete-answer storage or retrieval route was added.",
+    "AU004 activation remains paused and its old candidate/base seals are stale after this production image change.",
+    "AU006 inherited healthcheck labels remain a separate known issue; document/provider services were preserved."
+  ],
+  "private_evidence_directory": "/home/administrator/project/.eva2-artifacts/telegram-recovery-20260913",
+  "private_file_sha256": {
+    "installation-readonly-preflight.log": "d8b74c4ea65f4831f4710f33ce96c549adb523d649c694984ba34a27eaf94e9f",
+    "core-install-log.json": "b5826f5133ef53c00cfe81990592c34696eaf3ef6c3ae431312340e3e1c7268d",
+    "bridge-regressions.log": "d4332e211f4fbbf5cff3beb0bf3aa972be2c7bfdc787f026df9951087715e37e",
+    "installation-preflight.json": "5926db3369ae364ada9078ac3146a2aa555b8ce43dcae439040cb3d2df62a5c4",
+    "bridge-restart-log.json": "b5826f5133ef53c00cfe81990592c34696eaf3ef6c3ae431312340e3e1c7268d",
+    "core-recent.private.log": "c1bf72d1e73a3133b43c8da5603cc94ebfc0ef9bc2ffd126f4bd7d7291c1c0f7",
+    "core-image.txt": "412e007f158c7c3decb37ad6cc77c0598e55d68d39cdf37182c9e28ff61e154f",
+    "installation-attempt.json": "0e9d53a46c11787d92533f8b2e6dd7f32dbf8e5c6b1e11c53ddd102c9fa71a4a",
+    "bridge-installed.json": "87f9d3661cdae77d8493d63016b9e11701291289a159f9cdc1432bcbd625d94c",
+    "bridge.candidate.js": "89a5be01e30f9e4b994b23cbdd7b7b479191ed5c78e5f83e694ffcd940c68592",
+    "test_installation.py": "feff447b1643442da85ee3b9c282dbe56825aae8541f30e7c9004d553d0a4094",
+    "core-image-proof.json": "d2ea25c96b0d293fa6997276fca23558aa6665dc42a563fc419766f9db5b0ff7",
+    "conversation.parent.py": "d7744b8d851c80000040f7801876527f46cc88f1064dafa8f1733c31c6e96f1e",
+    "au006-goals-preserved.private.json": "e39843a14196088d82ebc3c486c77ff57f11d3183b24808aa32104392d30f5fb",
+    "installation-final.json": "3995954311ba7601521d5762a65b1ab0d3e8b028e768ff8a5e9071b2e4262370",
+    "bridge-service-before.txt": "5a2da87a922a1e3e564d778d85ee4a1db782f99520be388ebb5f65175a9eaef5",
+    "core-build.log": "164f37dc440010f459566ef8db1385276983d7a3959e10df114af2bad1058b00",
+    "route-no-model-checks.json": "06188d8cc4376e592bd0360e48a373f5087d479d5da3df929c9df074f3d0c4a6",
+    "core-installed.json": "3995954311ba7601521d5762a65b1ab0d3e8b028e768ff8a5e9071b2e4262370",
+    "telegram-missing-replies-summary.json": "1f839ceee92a21fcb1f8ba48c0e54b1df37af13ca590c32c70dac4f16ef09cc7",
+    "bridge.original.js": "22d3e9b6df58561f552d77927606ad4183e33a9d031f75c1e87855cafb4dfaec",
+    "recent-events.private.json": "f1e1c982db099494002090162285b921ec91b97b25f848701c5ff520cebe5e34",
+    "installation-readonly-preflight-with-pending.log": "624552f747601bb7df3dca082aaf0175198362c91a92f7940f56f99d04ab95c5",
+    "bridge-poststart-proof.json": "c44ad23492661b301143ca71a3908449a75f29fdaa6e9c927111b8088a260fb7",
+    "eva.service.private.ndjson": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "core-regressions.log": "f259d4e9d61636828e103c5bdd699120d9c118d773f97b449930d94756ef6db9",
+    "eva2-local-owner.service.private.ndjson": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "installation-go.json": "57ad5a5cae14cdf581d598ec06980fbbb3102600391554eb876ce2c0768e53a7",
+    "bridge-after-install.private.ndjson": "f3ce81e7aab00cce3adb7ea303ae5a58ce92b8452ace25e9d0e1d59c6e3709c9",
+    "installer-tests-optimized.json": "a26947dde7bf2a1cf61954defcbe589156feae1ca2093802b888a39564674425",
+    "installer-tests.json": "a26947dde7bf2a1cf61954defcbe589156feae1ca2093802b888a39564674425",
+    "before-bridge-cutover.json": "3995954311ba7601521d5762a65b1ab0d3e8b028e768ff8a5e9071b2e4262370",
+    "installation.lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "install_reviewed.py": "de742a32eade56db2f9397d046baae692172044a4337a989d141f3936d3da799",
+    "installation-plan.json": "cbf2ae2312b339ca5dd376f1fbe708dbe37cd0a10e23b66ab076047a6be4477d",
+    "core-after-install.private.log": "9f46836b21940274e05b11bdcb644b1a6e02af27404d61cfeb551d52cb19cb8c",
+    "core-reply-fix.compose.json": "f7f93ec018ac1373172f83a51fbcd1e16c1db0f7cd7ad134721846006ed10ee4"
+  }
+}

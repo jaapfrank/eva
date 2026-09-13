@@ -1,0 +1,280 @@
+{
+  "contract": "TelegramRecoveryConcreteCandidate/v1",
+  "status": "awaiting_controlled_installation_review",
+  "causes": [
+    {
+      "type": "reply_word_limit",
+      "exact_turn_sha256": "a1114af75e40d1a79de9adc438843180625559b274a57122bbc76fcc19202942",
+      "at": "2026-09-13T07:46:24.507Z",
+      "live_source": "application/conversation.py:995",
+      "message": "Generated reply exceeded identity word limit; RuntimeError caused terminal stream error. Exact Telegram turn correlated independently."
+    },
+    {
+      "type": "bridge_absolute_timeout",
+      "inbound_at": "2026-09-13T07:47:41Z",
+      "transport_error_at": "2026-09-13T07:48:01Z",
+      "final_model_record_at": "2026-09-13T07:48:25Z",
+      "message": "20-second absolute bridge timeout expired while core later completed a 90-word response. Reply occurred_at is original turn time, not commit wall time."
+    }
+  ],
+  "source_commits": {
+    "core": "aa4a0bef19dcd8ab7e68549df95232d5b99a2a37",
+    "bridge": "c133ca0dbf4e7ce6c4347a12dccd3219ebbe53c9"
+  },
+  "image_proof": {
+    "parent_image": "sha256:2393a1d5aa0a24f9eb0f19aebbbdbf9b32efe28949015bb002e90e181459dd5c",
+    "candidate_image": "sha256:bc6d64a3aebbb4b1502dfa7170c0b3d02eda97ac97eddfc704c90c80659864e9",
+    "source_delta": {
+      "eva/application/conversation.py": {
+        "parent": "d7744b8d851c80000040f7801876527f46cc88f1064dafa8f1733c31c6e96f1e",
+        "candidate": "9573d76fc29d26426141c2a86eff3b5bbf44fad9bdd92ffd2efa55c1b2f85768"
+      }
+    },
+    "all_other_source_files_equal": true,
+    "file_count": 264,
+    "parent_layers_preserved": true
+  },
+  "installation_plan": {
+    "contract": "TelegramRecoveryInstallationPlan/v1",
+    "core_image": "sha256:bc6d64a3aebbb4b1502dfa7170c0b3d02eda97ac97eddfc704c90c80659864e9",
+    "core_parent": "sha256:2393a1d5aa0a24f9eb0f19aebbbdbf9b32efe28949015bb002e90e181459dd5c",
+    "core_activation_command": [
+      "docker",
+      "compose",
+      "--project-name",
+      "eva2-managed-b-slot3",
+      "--env-file",
+      "/var/lib/eva2/managed-b-slot3/candidate.env",
+      "-f",
+      "/home/administrator/project/.eva2-artifacts/memory-controls-image-20260911/deployment/managed-b.compose.yml",
+      "-f",
+      "/home/administrator/project/.eva2-artifacts/memory-controls-image-20260911/deployment/telegram-proactive.compose.yml",
+      "-f",
+      "/home/administrator/project/.eva2-artifacts/memory-controls-image-20260911/deployment/mcp-gateway.compose.yml",
+      "-f",
+      "/home/administrator/project/.eva2-artifacts/memory-controls-image-20260911/deployment/dashboard-voice.compose.yml",
+      "-f",
+      "/home/administrator/project/.eva2-artifacts/memory-controls-image-20260911/deployment/household-voice.compose.yml",
+      "-f",
+      "/var/lib/eva2/managed-b-slot3/core-worker.override.compose.yml",
+      "-f",
+      "/home/administrator/project/.eva2-artifacts/au006-activation-20260913/reprobe-core.override.compose.json",
+      "-f",
+      "/home/administrator/project/.eva2-artifacts/telegram-recovery-20260913/core-reply-fix.compose.json",
+      "up",
+      "-d",
+      "--no-deps",
+      "core"
+    ],
+    "core_rollback_command": [
+      "docker",
+      "compose",
+      "--project-name",
+      "eva2-managed-b-slot3",
+      "--env-file",
+      "/var/lib/eva2/managed-b-slot3/candidate.env",
+      "-f",
+      "/home/administrator/project/.eva2-artifacts/memory-controls-image-20260911/deployment/managed-b.compose.yml",
+      "-f",
+      "/home/administrator/project/.eva2-artifacts/memory-controls-image-20260911/deployment/telegram-proactive.compose.yml",
+      "-f",
+      "/home/administrator/project/.eva2-artifacts/memory-controls-image-20260911/deployment/mcp-gateway.compose.yml",
+      "-f",
+      "/home/administrator/project/.eva2-artifacts/memory-controls-image-20260911/deployment/dashboard-voice.compose.yml",
+      "-f",
+      "/home/administrator/project/.eva2-artifacts/memory-controls-image-20260911/deployment/household-voice.compose.yml",
+      "-f",
+      "/var/lib/eva2/managed-b-slot3/core-worker.override.compose.yml",
+      "-f",
+      "/home/administrator/project/.eva2-artifacts/au006-activation-20260913/reprobe-core.override.compose.json",
+      "up",
+      "-d",
+      "--no-deps",
+      "core"
+    ],
+    "core_config_sha256": {
+      "/home/administrator/project/.eva2-artifacts/memory-controls-image-20260911/deployment/managed-b.compose.yml": "33626158ade4dbd09c2ad5c58edf0ab16493521bc566b184c738298dc1495b86",
+      "/home/administrator/project/.eva2-artifacts/memory-controls-image-20260911/deployment/telegram-proactive.compose.yml": "62bee1695b8e397efe11c7eb4bc7e9cd58ca7bd08caae37c37415040fca18631",
+      "/home/administrator/project/.eva2-artifacts/memory-controls-image-20260911/deployment/mcp-gateway.compose.yml": "f6f80931f1c74fbca70e4e13eda8c23f99cf2a46bd55ce95ad37465157933342",
+      "/home/administrator/project/.eva2-artifacts/memory-controls-image-20260911/deployment/dashboard-voice.compose.yml": "8d88b1228570af15dd78b73b505ea7c3483fb4090753348dff003f0c6754a029",
+      "/home/administrator/project/.eva2-artifacts/memory-controls-image-20260911/deployment/household-voice.compose.yml": "cb09e4bddf75cffab6b5cad147353d6f9460f4e1b57167bb4a4ba06df379fdf9",
+      "/var/lib/eva2/managed-b-slot3/core-worker.override.compose.yml": "d8f985a3a7349efef465b1f531704a0611adf2eacc73101bd95b919700f9ef48",
+      "/home/administrator/project/.eva2-artifacts/au006-activation-20260913/reprobe-core.override.compose.json": "dd856544061df13bc5062787ad1e953359fb26189c833ad750141f4cf9d861ba",
+      "/var/lib/eva2/managed-b-slot3/candidate.env": "f4c7ee2f4f9e676c4d9bbed69689a5f867b60a316d90c7014761775b34fb9cb8",
+      "/home/administrator/project/.eva2-artifacts/telegram-recovery-20260913/core-reply-fix.compose.json": "f7f93ec018ac1373172f83a51fbcd1e16c1db0f7cd7ad134721846006ed10ee4"
+    },
+    "bridge_live_path": "/home/administrator/project/Bottie/src/integrations/eva2canary.js",
+    "bridge_parent_sha256": "22d3e9b6df58561f552d77927606ad4183e33a9d031f75c1e87855cafb4dfaec",
+    "bridge_candidate_sha256": "89a5be01e30f9e4b994b23cbdd7b7b479191ed5c78e5f83e694ffcd940c68592",
+    "bridge_source_commit": "c133ca0dbf4e7ce6c4347a12dccd3219ebbe53c9",
+    "bridge_restart_command": [
+      "systemctl",
+      "restart",
+      "eva.service"
+    ],
+    "bridge_unit_file_sha256": "5fc15fc3e55dc4b68d5ed8daf6847f591099aa7f26146f5fc1ae971e78340564",
+    "bridge_service_before_sha256": "5a2da87a922a1e3e564d778d85ee4a1db782f99520be388ebb5f65175a9eaef5",
+    "protected_baseline_stage": "/home/administrator/project/.eva2-artifacts/procedure-reference-runtime-r2-20260913",
+    "install_scope": "core-only image overlay and one Bottie bridge source file + explicit eva.service restart; no other services, data or settings",
+    "go_required": true,
+    "runtime_actions_performed": false
+  },
+  "plan_sha256": "cbf2ae2312b339ca5dd376f1fbe708dbe37cd0a10e23b66ab076047a6be4477d",
+  "installer_sha256": "de742a32eade56db2f9397d046baae692172044a4337a989d141f3936d3da799",
+  "tests": {
+    "core": 37,
+    "bridge": 22,
+    "installer": {
+      "cases": [
+        {
+          "case": "success",
+          "commands": [
+            [
+              "core-up"
+            ],
+            [
+              "bridge-restart"
+            ]
+          ],
+          "real_runtime_calls": 0
+        },
+        {
+          "case": "candidate_not_ready",
+          "commands": [
+            [
+              "core-up"
+            ],
+            [
+              "core-parent"
+            ]
+          ],
+          "real_runtime_calls": 0
+        },
+        {
+          "case": "bridge_restart_failure",
+          "commands": [
+            [
+              "core-up"
+            ],
+            [
+              "bridge-restart"
+            ],
+            [
+              "bridge-restart"
+            ],
+            [
+              "core-parent"
+            ]
+          ],
+          "real_runtime_calls": 0
+        },
+        {
+          "case": "rollback_failure",
+          "commands": [
+            [
+              "core-up"
+            ],
+            [
+              "core-parent"
+            ]
+          ],
+          "real_runtime_calls": 0
+        }
+      ],
+      "model_calls": 0
+    },
+    "installer_optimized": {
+      "cases": [
+        {
+          "case": "success",
+          "commands": [
+            [
+              "core-up"
+            ],
+            [
+              "bridge-restart"
+            ]
+          ],
+          "real_runtime_calls": 0
+        },
+        {
+          "case": "candidate_not_ready",
+          "commands": [
+            [
+              "core-up"
+            ],
+            [
+              "core-parent"
+            ]
+          ],
+          "real_runtime_calls": 0
+        },
+        {
+          "case": "bridge_restart_failure",
+          "commands": [
+            [
+              "core-up"
+            ],
+            [
+              "bridge-restart"
+            ],
+            [
+              "bridge-restart"
+            ],
+            [
+              "core-parent"
+            ]
+          ],
+          "real_runtime_calls": 0
+        },
+        {
+          "case": "rollback_failure",
+          "commands": [
+            [
+              "core-up"
+            ],
+            [
+              "core-parent"
+            ]
+          ],
+          "real_runtime_calls": 0
+        }
+      ],
+      "model_calls": 0
+    }
+  },
+  "private_evidence_dir": "/home/administrator/project/.eva2-artifacts/telegram-recovery-20260913",
+  "private_file_sha256": {
+    "installation-readonly-preflight.log": "d8b74c4ea65f4831f4710f33ce96c549adb523d649c694984ba34a27eaf94e9f",
+    "bridge-regressions.log": "d4332e211f4fbbf5cff3beb0bf3aa972be2c7bfdc787f026df9951087715e37e",
+    "core-recent.private.log": "c1bf72d1e73a3133b43c8da5603cc94ebfc0ef9bc2ffd126f4bd7d7291c1c0f7",
+    "core-image.txt": "412e007f158c7c3decb37ad6cc77c0598e55d68d39cdf37182c9e28ff61e154f",
+    "bridge.candidate.js": "89a5be01e30f9e4b994b23cbdd7b7b479191ed5c78e5f83e694ffcd940c68592",
+    "test_installation.py": "feff447b1643442da85ee3b9c282dbe56825aae8541f30e7c9004d553d0a4094",
+    "core-image-proof.json": "d2ea25c96b0d293fa6997276fca23558aa6665dc42a563fc419766f9db5b0ff7",
+    "conversation.parent.py": "d7744b8d851c80000040f7801876527f46cc88f1064dafa8f1733c31c6e96f1e",
+    "bridge-service-before.txt": "5a2da87a922a1e3e564d778d85ee4a1db782f99520be388ebb5f65175a9eaef5",
+    "core-build.log": "164f37dc440010f459566ef8db1385276983d7a3959e10df114af2bad1058b00",
+    "telegram-missing-replies-summary.json": "1f839ceee92a21fcb1f8ba48c0e54b1df37af13ca590c32c70dac4f16ef09cc7",
+    "bridge.original.js": "22d3e9b6df58561f552d77927606ad4183e33a9d031f75c1e87855cafb4dfaec",
+    "recent-events.private.json": "f1e1c982db099494002090162285b921ec91b97b25f848701c5ff520cebe5e34",
+    "installation-readonly-preflight-with-pending.log": "624552f747601bb7df3dca082aaf0175198362c91a92f7940f56f99d04ab95c5",
+    "eva.service.private.ndjson": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "core-regressions.log": "f259d4e9d61636828e103c5bdd699120d9c118d773f97b449930d94756ef6db9",
+    "eva2-local-owner.service.private.ndjson": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "installer-tests-optimized.json": "a26947dde7bf2a1cf61954defcbe589156feae1ca2093802b888a39564674425",
+    "installer-tests.json": "a26947dde7bf2a1cf61954defcbe589156feae1ca2093802b888a39564674425",
+    "install_reviewed.py": "de742a32eade56db2f9397d046baae692172044a4337a989d141f3936d3da799",
+    "installation-plan.json": "cbf2ae2312b339ca5dd376f1fbe708dbe37cd0a10e23b66ab076047a6be4477d",
+    "core-reply-fix.compose.json": "f7f93ec018ac1373172f83a51fbcd1e16c1db0f7cd7ad134721846006ed10ee4"
+  },
+  "live_changes": false,
+  "model_calls": 0,
+  "limits": [
+    "No installed/live recovery claim yet.",
+    "Truncated normal replies explicitly identify incomplete explanation; no new full-answer storage or retrieval promised.",
+    "Authoritative action reply guards still preserve verified results/references.",
+    "Transport timeout/cancellation is not proof that server processing stopped; late commits do not dispatch another request.",
+    "AU006 unhealthy labels arise from inherited wrong HTTP probes, not the two confirmed Telegram faults; no provider/worker change in this recovery."
+  ]
+}

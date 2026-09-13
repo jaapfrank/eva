@@ -279,3 +279,34 @@ def test_caller_cannot_supply_a_different_principal_or_audience() -> None:
     )
     assert response.status_code == 422
     assert runtime.turns == []
+
+
+def test_telegram_stream_overlong_model_reply_has_one_bounded_final():
+    from eva.application.conversation import ConversationModelResult, IdentityProfile, LivingConversation
+    from tests.application.test_conversation import _Memory
+    calls = []
+    class Model:
+        def generate(self, *args, **kwargs):
+            calls.append(1)
+            text = "Dit is de eerste volledige zin.\n\n" + "toelichting " * 170
+            publish_conversation_text(text, tools_disabled=True)
+            return ConversationModelResult(text, "fixture-model")
+    conversation = LivingConversation(_Memory(), Model(),
+        IdentityProfile("Eva", "Digitale huisgenoot.", ("Wees eerlijk.",), 160))
+    class Runtime(_Runtime):
+        def respond(self, turn, recent_messages=()):
+            self.turns.append(turn)
+            return conversation.respond(turn, recent_messages)
+    runtime = Runtime()
+    response = TestClient(create_app(runtime)).post(
+        "/internal/v1/telegram/canary/respond", headers={"accept": "application/x-ndjson"}, json=_payload())
+    rows = [json.loads(line) for line in response.iter_lines()]
+    assert calls == [1]
+    assert not any(r["contract"] == "EvaTextStreamError/v1" for r in rows)
+    finals = [r for r in rows if r["contract"] == "EvaInternalGroundedReply/v1"]
+    assert len(finals) == 1
+    assert len(finals[0]["text"].split()) <= 160
+    assert finals[0]["text"].startswith("Dit antwoord is ingekort;")
+    assert finals[0]["text"].endswith("Dit is de eerste volledige zin.")
+    assert finals[0]["message_id"] == "telegram:7:1"
+    assert runtime.after == runtime.turns

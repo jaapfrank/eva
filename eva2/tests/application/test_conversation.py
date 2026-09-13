@@ -1047,3 +1047,41 @@ def test_memory_search_call_id_cannot_be_reused_for_an_external_action():
             "tenant", "installation", "jaap", "conversation", "same-id-test",
             "Gebruik mijn voorkeur om het item te bekijken.", NOW,
         ))
+
+
+@pytest.mark.parametrize("long_text", [
+    "Een volledig eerste antwoord.\n\n" + "toelichting " * 170,
+    "Een volledig eerste antwoord. " + "toelichting " * 170,
+    "toelichting " * 161,
+    "```python\n" + "waarde " * 170 + "\n```",
+])
+def test_overlong_reply_finishes_once_with_explicit_bounded_text(long_text):
+    calls = []
+    class Model(_Model):
+        def generate(self, *args, **kwargs):
+            calls.append(1)
+            return ConversationModelResult(long_text, "fixture-model")
+    conversation = LivingConversation(_Memory(), Model(),
+        IdentityProfile("Eva", "Digitale huisgenoot.", ("Wees eerlijk.",), 160))
+    turn = ConversationTurn.private("tenant", "installation", "jaap", "telegram:jaap",
+                                    "telegram:limit", "Geef een toelichting.", NOW)
+    reply = conversation.respond(turn)
+    assert calls == [1]
+    assert reply.text.startswith("Dit antwoord is ingekort; de toelichting is onvolledig.")
+    assert len(reply.text.split()) <= 160
+    assert reply.text.count("```") % 2 == 0
+    if long_text.startswith("Een volledig"):
+        assert reply.text.endswith("Een volledig eerste antwoord.")
+    assert reply.evidence_memory_ids == ("hindsight:memory-1",)
+
+
+def test_reply_exactly_at_word_limit_keeps_text_and_reference():
+    text = "woord " * 157 + "[Bekijk het resultaat](https://example.test/resultaat)."
+    class Model(_Model):
+        def generate(self, *args, **kwargs):
+            return ConversationModelResult(text, "fixture-model")
+    conversation = LivingConversation(_Memory(), Model(),
+        IdentityProfile("Eva", "Digitale huisgenoot.", ("Wees eerlijk.",), 160))
+    reply = conversation.respond(ConversationTurn.private("tenant", "installation", "jaap",
+        "telegram:jaap", "telegram:exact", "Geef een toelichting.", NOW))
+    assert reply.text == text
