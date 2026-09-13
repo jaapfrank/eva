@@ -1,0 +1,10 @@
+{
+  "services": {
+    "document-worker": {
+      "image": "sha256:1d0a704d32255bc7630c8670d8137d6d6c2a7c76e4533f5186c8f79613205fa0"
+    },
+    "document-workspace": {
+      "image": "sha256:ba9eda41299033a19e25c483e07e973b40545b226b062da6a29ccb70482f1b5e"
+    }
+  }
+}

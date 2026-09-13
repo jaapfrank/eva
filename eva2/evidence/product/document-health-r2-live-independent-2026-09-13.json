@@ -1,0 +1,38 @@
+{
+  "state": {
+    "verified": true,
+    "candidate": true,
+    "core_image": "sha256:e66fff7d16a8cc0cc5100282c8f7d3faf95cc16269e6de9f6a4ba9b7038e8c90",
+    "unchanged_protected_containers": 11,
+    "targets": [
+      {
+        "name": "/eva2-document-workspace-au006",
+        "id": "77bced2a4c0d56bbad44031581eaf9f064f55949ae43d2af02c998ed400473b6",
+        "image": "sha256:ba9eda41299033a19e25c483e07e973b40545b226b062da6a29ccb70482f1b5e",
+        "health": "healthy"
+      },
+      {
+        "name": "/eva2-document-goal-worker-au006",
+        "id": "1329566f565d386a735e018f984b584c012a3bc7fb5e9bf6f6da02910c3915c5",
+        "image": "sha256:1d0a704d32255bc7630c8670d8137d6d6c2a7c76e4533f5186c8f79613205fa0",
+        "health": "healthy"
+      }
+    ],
+    "readiness": {
+      "advisory_locks": 0,
+      "other_active_queries": 0,
+      "readiness": {
+        "database": "ready",
+        "detail": null,
+        "memory_projection": "ready",
+        "model_provider": "ready",
+        "ready": true
+      }
+    },
+    "goal_and_artifact_preservation": true,
+    "Telegram_and_AU004_preserved": true
+  },
+  "actual_probe_bytes_match": true,
+  "live_mutations": 0,
+  "model_calls": 0
+}

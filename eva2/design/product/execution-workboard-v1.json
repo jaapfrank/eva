@@ -121,7 +121,7 @@
           ]
         }
       ],
-      "priorityDecision": "De tweede documentstatusinstallatie is volgens de uitvoerder geslaagd: beide diensten gezond en projectgegevens behouden. De onafhankelijke eindcontrole staat nog open. PR-01 blijft afgerond en live; IN-002-releasevoorwaarden blijven afzonderlijk vervolgwerk.",
+      "priorityDecision": "Afgerond en live: de juiste gezondheidscontroles van beide documentdiensten, onafhankelijk bevestigd met behoud van Eva en projectgegevens. PR-01 blijft ook afgerond. Open technisch vervolg betreft de afzonderlijke IN-002-releasevoorwaarden; deze opleveringen worden niet opnieuw gestart.",
       "dashboardVerification": {
         "status": "local_browser_verified_not_full_product_acceptance",
         "priorityRevision": {
@@ -278,8 +278,8 @@
           "linkLabel": "Lees het echte resultaat"
         },
         {
-          "title": "Betrouwbare status van documentdiensten",
-          "detail": "De uitvoerder meldt een geslaagde tweede installatie: beide documentdiensten zijn gezond met de juiste controles. Eva is niet herstart; doelen, journaal en 28 bestanden zijn volgens de eindcontrole behouden. De onafhankelijke eindcontrole loopt nog. Gezond betekent dat de dienst beschikbaar is, niet dat een opdracht voortgang maakt of klaar is."
+          "title": "Gezondheidscontroles documentdiensten afgerond",
+          "detail": "Technisch afgerond en live, onafhankelijk bevestigd: beide documentdiensten melden gezond met controles voor hun werkelijke proces en afhankelijkheden. Eva is niet herstart; doelen, journaal en 28 bestanden zijn behouden. Gezond bewijst geen opdrachtvoortgang of taaksucces. Het bestaande documentproject hoeft niet opnieuw gestart te worden."
         }
       ],
       "openRisks": [
@@ -547,6 +547,21 @@
               "gap": "Eigenaarreview open. Algemene zelflerende vaardigheden en jouw eigen Telegramroute zijn niet hiermee bewezen.",
               "evidence": "eva2/evidence/living-core/au004-r6-abc-live-pass-20260913.json",
               "detail": "A/B/C onafhankelijk geslaagd. B gebruikt een geldige eerder bewaarde R4bron; geen algemene semantische zoekgarantie."
+            },
+            {
+              "id": "document-service-health",
+              "icon": "✓",
+              "title": "Documentdiensten melden hun werkelijke gezondheid",
+              "subtitle": "Beheer · AU-006/UX-001 · begrensde correctie",
+              "built": "yes",
+              "tested": "yes",
+              "live": "yes",
+              "accepted": "no",
+              "works": "Beide documentdiensten melden gezond via passende proces-, database- en MCP-controles.",
+              "tryIt": "Bekijk de vastgelegde dienststatus; een nieuw documentproject starten is niet nodig.",
+              "gap": "Geen bewijs van taakvoortgang of algemene projectzelfstandigheid. Eigenaaracceptatie niet geclaimd.",
+              "evidence": "eva2/evidence/living-core/document-health-r2-live-20260913.json",
+              "detail": "Onafhankelijke eindcontrole bevestigt beide exacte images/probes en behoud van core, doelen, journaal en28bestanden."
             }
           ],
           "works": "Het voorbereide documentproject met twee stappen is technisch afgerond en live via één gewone vraag."
@@ -1017,9 +1032,9 @@
       "document": "eva2/PROJECTDOEL.md",
       "scope": "Digitale huisgenoot: zelfstandig redeneren, initiatief, onbekende vaardigheden leren, handelen, zelfverbetering en aantoonbare concurrentiewinst met open-sourcehergebruik.",
       "sessionGoal": "AU-008: één zelfstandige kosteloze bijdrage via de algemene uitvoerder.",
-      "currentWork": "**Afgerond en live — herbruikbare planreviewprocedure (PR-01).** Eva slaat een werkwijze op, vindt een eerdere werkwijze terug in een nieuw gesprek, ontvangt de gecontroleerde tekst en past de regels toe. De drie echte proeven zijn onafhankelijk goedgekeurd. De inhoudelijke planreview duurde 13,20 seconden. Jouw beoordeling staat open; algemene zelflerende vaardigheden zijn hiermee niet afgerond.",
-      "currentEvidence": "eva2/evidence/living-core/au004-r6-abc-live-pass-20260913.json",
-      "nextStep": "**Eerstvolgend open werk:** onafhankelijke eindcontrole van de geslaagde tweede documentstatusinstallatie. De uitvoerder meldt beide diensten gezond en doelen, journaal en 28 bestanden behouden. De technische oplevering is nog niet onafhankelijk afgesloten. [PR-01](http://localhost:44712/#practice-PR-01) blijft afgerond en live; IN-002-releasevoorwaarden blijven afzonderlijk vervolgwerk.",
+      "currentWork": "**Afgerond en live — twee begrensde opleveringen.** PR-01: Eva vindt een bewaarde planreviewprocedure terug, leest de gecontroleerde tekst en past de regels toe; jouw resultaatreview staat open. Documentstatus: beide documentdiensten gebruiken nu passende gezondheidscontroles en melden gezond. Beide opleveringen zijn onafhankelijk bevestigd. Eva, bestaande doelen, journaal en bestanden zijn behouden. Gezondheid is geen bewijs van taakvoortgang.",
+      "currentEvidence": "eva2/evidence/living-core/document-health-r2-live-20260913.json",
+      "nextStep": "**Eerstvolgend open werk:** de afzonderlijke IN-002-releasevoorwaarden rond resterende PostgreSQL-bevindingen, licenties en platformvalidatie. De documentstatuscorrectie en PR-01 zijn afgesloten en worden niet opnieuw gebouwd. [Lees PR-01](http://localhost:44712/#practice-PR-01) voor jouw beoordeling; een nieuwe projectproef is niet nodig.",
       "usageClarification": {
         "date": "2026-09-07",
         "authorizedBy": "Jaap",
@@ -4292,7 +4307,7 @@
       "protectedDatabaseHindsightMediaContainersPreserved": true,
       "composeOverride": "/var/lib/eva2/managed-b-slot3/core-worker.override.compose.yml",
       "evidence": "eva2/evidence/living-core/au004-r6-abc-live-pass-20260913.json",
-      "meaning": "Begrensde herbruikbareprocedure-route technisch afgerond en live; Telegramreparaties en bestaande workers behouden. Eigenaarreview PR-01 open; geen algemene zelfleerclaim.",
+      "meaning": "Begrensde procedureoplevering en documentgezondheidscontroles technisch afgerond en live. Telegramreparaties, bestaande doelen en bestanden behouden; geen algemene projectvoortgang- of zelfleerclaim.",
       "releaseSourceCommit": "e7194d2566e7c40aa0cfeccf9098816b907fc118",
       "canonicalSourceDiffersFromRelease": "Shared source retains held household router/shared voice stream; installed replay-only adaptation is separately reviewed on exact live-image baseline.",
       "sourceCommit": "436ec6101cfaa300a21a11ec4773f5d8dff42750",
@@ -4541,18 +4556,22 @@
       "coreImage": "sha256:e66fff7d16a8cc0cc5100282c8f7d3faf95cc16269e6de9f6a4ba9b7038e8c90",
       "workerImage": "sha256:832983322ad7d71611225749d618e828d9dd4676f8a24711f09e0ac349db1fcd",
       "documentWorker": {
-        "name": "/eva2-document-goal-worker-au006",
-        "id": "818413ea341b9f45a9e9281e2c7fddbb96b21641bd4f8479690c126386c48c33",
-        "image": "sha256:2393a1d5aa0a24f9eb0f19aebbbdbf9b32efe28949015bb002e90e181459dd5c",
-        "started_at": "2026-09-13T04:52:34.261689259Z",
-        "running": true
+        "name": "eva2-document-goal-worker-au006",
+        "id": "1329566f565d386a735e018f984b584c012a3bc7fb5e9bf6f6da02910c3915c5",
+        "image": "sha256:1d0a704d32255bc7630c8670d8137d6d6c2a7c76e4533f5186c8f79613205fa0",
+        "started_at": "2026-09-13T10:59:50.90140435Z",
+        "running": true,
+        "health": "healthy",
+        "healthEvidence": "eva2/evidence/living-core/document-health-r2-live-20260913.json"
       },
       "documentProvider": {
-        "name": "/eva2-document-workspace-au006",
-        "id": "bb4f83eded83a7f2df82045658a73d4f210e6a41c354a0a73a390dd56cecaac6",
-        "image": "sha256:0ef19e699069c3a5d3a26812c5da3d31141fcd5c3faedb14f92c9dcce1209465",
-        "started_at": "2026-09-13T04:52:13.612799665Z",
-        "running": true
+        "name": "eva2-document-workspace-au006",
+        "id": "77bced2a4c0d56bbad44031581eaf9f064f55949ae43d2af02c998ed400473b6",
+        "image": "sha256:ba9eda41299033a19e25c483e07e973b40545b226b062da6a29ccb70482f1b5e",
+        "started_at": "2026-09-13T10:59:50.89674576Z",
+        "running": true,
+        "health": "healthy",
+        "healthEvidence": "eva2/evidence/living-core/document-health-r2-live-20260913.json"
       },
       "documentCoreOverride": "/home/administrator/project/.eva2-artifacts/au006-activation-20260913/reprobe-core.override.compose.json",
       "latestIndependentRestorationReview": {
@@ -4575,13 +4594,42 @@
       },
       "latestIndependentLiveEvidence": "eva2/evidence/product/AU-004-r6-outcome-independent-review-2026-09-13.json",
       "nextParentAuthority": {
-        "evidencePath": "eva2/evidence/living-core/au004-r6-runtime-handoff-20260913.json",
-        "authoritySha256": "5955fbe1253e23f3cae1c3a7296698862d1ca9488b541be76e636ceaf40039ba",
+        "evidencePath": "eva2/evidence/living-core/document-health-r2-live-20260913.json",
+        "authoritySha256": "294e719ec1ddb376c0eb5bab9d48d93027f738c3091cb6f3ce60d7fa76524533",
         "image": "sha256:e66fff7d16a8cc0cc5100282c8f7d3faf95cc16269e6de9f6a4ba9b7038e8c90",
+        "documentWorkerImage": "sha256:1d0a704d32255bc7630c8670d8137d6d6c2a7c76e4533f5186c8f79613205fa0",
+        "documentProviderImage": "sha256:ba9eda41299033a19e25c483e07e973b40545b226b062da6a29ccb70482f1b5e",
+        "healthOverride": "eva2/deploy/living-core/document-health.compose.json",
         "procedureOptInRequired": true,
         "keepCompleteComposeAndProtectedServices": true,
-        "fallbackScope": "bc6 only as reviewed R6 rollback; not future default"
-      }
+        "olderR6ProtectedSnapshotHistorical": true,
+        "fallbackScope": "Historical R6bc6 fallback is not the default baseline for future changes"
+      },
+      "historicalDocumentServicesBeforeHealth": {
+        "worker": {
+          "name": "/eva2-document-goal-worker-au006",
+          "id": "818413ea341b9f45a9e9281e2c7fddbb96b21641bd4f8479690c126386c48c33",
+          "image": "sha256:2393a1d5aa0a24f9eb0f19aebbbdbf9b32efe28949015bb002e90e181459dd5c",
+          "started_at": "2026-09-13T04:52:34.261689259Z",
+          "running": true
+        },
+        "provider": {
+          "name": "/eva2-document-workspace-au006",
+          "id": "bb4f83eded83a7f2df82045658a73d4f210e6a41c354a0a73a390dd56cecaac6",
+          "image": "sha256:0ef19e699069c3a5d3a26812c5da3d31141fcd5c3faedb14f92c9dcce1209465",
+          "started_at": "2026-09-13T04:52:13.612799665Z",
+          "running": true
+        },
+        "authority": {
+          "evidencePath": "eva2/evidence/living-core/au004-r6-runtime-handoff-20260913.json",
+          "authoritySha256": "5955fbe1253e23f3cae1c3a7296698862d1ca9488b541be76e636ceaf40039ba",
+          "image": "sha256:e66fff7d16a8cc0cc5100282c8f7d3faf95cc16269e6de9f6a4ba9b7038e8c90",
+          "procedureOptInRequired": true,
+          "keepCompleteComposeAndProtectedServices": true,
+          "fallbackScope": "bc6 only as reviewed R6 rollback; not future default"
+        }
+      },
+      "documentHealthEvidence": "eva2/evidence/product/document-health-r2-live-independent-2026-09-13.json"
     },
     "chromeTransportRecovery20260912": {
       "status": "technically_tested_and_live",
@@ -9632,7 +9680,7 @@
     },
     "documentServiceHealthAU006UX00120260913": {
       "id": "AU006-UX001-health",
-      "status": "r2_live_success_reported_independent_final_review_pending",
+      "status": "bounded_health_correction_technically_complete_live_independently_approved",
       "ownerThread": "01a08d52-31b1-7091-be45-812c0b6e6c9f",
       "assignedBy": "coordinator",
       "outcome": "Accurate liveness/readiness for existing document worker and workspace provider",
@@ -9642,8 +9690,8 @@
       "scope": "Correct existing deployment probes; negative liveness/readiness cases; preserve completed goal, journal and artifact bytes",
       "noModelProbeRequired": true,
       "completedProjectReopened": false,
-      "sourceIntegrated": false,
-      "live": false,
+      "sourceIntegrated": true,
+      "live": true,
       "ownerAccepted": false,
       "currentParentImage": "sha256:e66fff7d16a8cc0cc5100282c8f7d3faf95cc16269e6de9f6a4ba9b7038e8c90",
       "runtimeGo": true,
@@ -9663,8 +9711,8 @@
       "installationSealReportedPrefix": "3d831",
       "installationReportedBy": "coordinator",
       "installationServices": 2,
-      "installationCompleteProven": false,
-      "healthImprovementProven": false,
+      "installationCompleteProven": true,
+      "healthImprovementProven": true,
       "coreParentPreservedRequirement": "e66fff",
       "installationAttempt": {
         "reportedBy": "coordinator",
@@ -9681,11 +9729,11 @@
         "currentRestorationIndependentlyVerified": true
       },
       "guardFix": {
-        "status": "r2_fresh_sealed_candidate_under_independent_review",
+        "status": "complete_reviewed_and_used_in_successful_r2",
         "ownerThread": "01a08d52-31b1-7091-be45-812c0b6e6c9f",
         "scope": "Canonicalize environment comparison while checking exact values and rejecting duplicate keys",
-        "sourceGo": false,
-        "newInstallationGo": false,
+        "sourceGo": true,
+        "newInstallationGo": true,
         "candidateCommit": "2bd00b1dffe4323f280161437901e4ed04baaa9b",
         "sealSha256": "fcf3677460125992f2885646d3be7a010f1efd12b5b1c4012bbb45f8f3849a74",
         "reportedGuardTestsPassed": 20,
@@ -9709,12 +9757,12 @@
         "goalsArtifactsTelegramAU004Preserved": true,
         "healthCorrectionDelivered": false
       },
-      "technicalComplete": false,
-      "independentFinalGo": false,
+      "technicalComplete": true,
+      "independentFinalGo": true,
       "r2LiveResult": {
         "reportedBy": "runtime writer",
         "resultCommit": "b87512a3f1cbec3fd1a66a584c4272124685433e",
-        "evidenceIntegrated": false,
+        "evidenceIntegrated": true,
         "workerImageReportedPrefix": "1d0a704d",
         "workerContainerId": "1329566f565d386a735e018f984b584c012a3bc7fb5e9bf6f6da02910c3915c5",
         "providerImageReportedPrefix": "ba9eda",
@@ -9731,8 +9779,40 @@
         "rollbackPerformed": false,
         "nextParentAuthoritySha256": "294e719ec1ddb376c0eb5bab9d48d93027f738c3091cb6f3ce60d7fa76524533",
         "nextParentScope": "Coree66 with new two document images and health override; prior R6 protected snapshot historical",
-        "healthDoesNotProveTaskProgress": true
-      }
+        "healthDoesNotProveTaskProgress": true,
+        "independentFinalGo": true
+      },
+      "completedOn": "2026-09-13",
+      "sourceCommits": [
+        "9e71686cce0f04595265fb0cd5a218bb6904c533",
+        "2bd00b1dffe4323f280161437901e4ed04baaa9b",
+        "b87512a3f1cbec3fd1a66a584c4272124685433e"
+      ],
+      "exactIntegratedPaths": [
+        "eva2/deploy/living-core/document-health.compose.json",
+        "eva2/deploy/living-core/document-provider-health.Dockerfile",
+        "eva2/deploy/living-core/document-provider-health.py",
+        "eva2/deploy/living-core/document-worker-health.Dockerfile",
+        "eva2/deploy/living-core/document-worker-health.py",
+        "eva2/evidence/living-core/document-service-health-candidate-20260913.json",
+        "eva2/reviews/document-service-health-candidate-20260913.md",
+        "eva2/tests/postgres/test_document_service_health.py",
+        "eva2/evidence/living-core/document-health-r2-env-guard-candidate-20260913.json",
+        "eva2/reviews/document-health-r2-env-guard-candidate-20260913.md",
+        "eva2/evidence/living-core/document-health-r2-live-20260913.json",
+        "eva2/reviews/document-health-r2-live-20260913.md"
+      ],
+      "healthDoesNotProveTaskProgress": true,
+      "independentFinalReview": {
+        "reviewer": "procedure_host_review",
+        "reportedBy": "coordinator",
+        "path": "eva2/evidence/product/document-health-r2-live-independent-2026-09-13.json",
+        "sha256": "c2e83bea0b129ec657c4739f5a40a6cdb76cabd9da49f3af7c319991425c74cf",
+        "scope": "Exact probe bytes and image contracts; both Dockerhealthy;11protected/coree66/Telegram/AU004/goals/journal/files preserved",
+        "modelCalls": 0,
+        "liveFaultInjection": false
+      },
+      "historicalBoundary": "Original failed installation and original rollback verified:false remain unchanged; independent restoration separately proven. Successful R2 closes bounded health correction."
     }
   },
   "activeTaskId": "AU-008",

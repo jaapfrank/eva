@@ -5,10 +5,10 @@ Laatst bijgewerkt: 2026-09-13.
 Doel: [Eva als zelfstandig lerende digitale huisgenoot](PROJECTDOEL.md).
 Gebouwd, getest, live en door jou geaccepteerd zijn verschillende stappen.
 
-**Afgerond en live — herbruikbare planreviewprocedure (PR-01).** Eva slaat een werkwijze op, vindt een eerdere werkwijze terug in een nieuw gesprek, ontvangt de gecontroleerde tekst en past de regels toe. De drie echte proeven zijn onafhankelijk goedgekeurd. De inhoudelijke planreview duurde 13,20 seconden. Jouw beoordeling staat open; algemene zelflerende vaardigheden zijn hiermee niet afgerond.
-[Actueel bewijs](evidence/living-core/au004-r6-abc-live-pass-20260913.json).
+**Afgerond en live — twee begrensde opleveringen.** PR-01: Eva vindt een bewaarde planreviewprocedure terug, leest de gecontroleerde tekst en past de regels toe; jouw resultaatreview staat open. Documentstatus: beide documentdiensten gebruiken nu passende gezondheidscontroles en melden gezond. Beide opleveringen zijn onafhankelijk bevestigd. Eva, bestaande doelen, journaal en bestanden zijn behouden. Gezondheid is geen bewijs van taakvoortgang.
+[Actueel bewijs](evidence/living-core/document-health-r2-live-20260913.json).
 
-**Eerstvolgend open werk:** onafhankelijke eindcontrole van de geslaagde tweede documentstatusinstallatie. De uitvoerder meldt beide diensten gezond en doelen, journaal en 28 bestanden behouden. De technische oplevering is nog niet onafhankelijk afgesloten. [PR-01](http://localhost:44712/#practice-PR-01) blijft afgerond en live; IN-002-releasevoorwaarden blijven afzonderlijk vervolgwerk.
+**Eerstvolgend open werk:** de afzonderlijke IN-002-releasevoorwaarden rond resterende PostgreSQL-bevindingen, licenties en platformvalidatie. De documentstatuscorrectie en PR-01 zijn afgesloten en worden niet opnieuw gebouwd. [Lees PR-01](http://localhost:44712/#practice-PR-01) voor jouw beoordeling; een nieuwe projectproef is niet nodig.
 
 <details>
 <summary>Historische voortgang en eerdere tussenstanden — niet de actuele opleverstatus</summary>

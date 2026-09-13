@@ -1,0 +1,140 @@
+{
+  "contract": "DocumentHealthR2GuardCorrection/v1",
+  "first_attempt": {
+    "stage": "/home/administrator/project/.eva2-artifacts/document-health-20260913",
+    "activation_failed": "Env list order comparison, values unchanged",
+    "original_rollback_receipt": {
+      "verified": false,
+      "error_type": "RuntimeError"
+    },
+    "independent_actual_restore": {
+      "original_sealed_verdict_unchanged": true,
+      "comparison": "Env canonical exact-key/value map; duplicate/malformed keys rejected; all other guard checks unchanged",
+      "state": {
+        "verified": true,
+        "candidate": false,
+        "core_image": "sha256:e66fff7d16a8cc0cc5100282c8f7d3faf95cc16269e6de9f6a4ba9b7038e8c90",
+        "unchanged_protected_containers": 11,
+        "targets": [
+          {
+            "name": "/eva2-document-workspace-au006",
+            "id": "300e51479cabea880b691f33bceef70eb2339a170ec2dc41e2fcd5ba21346e09",
+            "image": "sha256:0ef19e699069c3a5d3a26812c5da3d31141fcd5c3faedb14f92c9dcce1209465",
+            "health": "starting"
+          },
+          {
+            "name": "/eva2-document-goal-worker-au006",
+            "id": "cd71065fceab30fdb99a10d4c61e8b49e6bf9f3ee4caa9c963f31d37d59922c1",
+            "image": "sha256:2393a1d5aa0a24f9eb0f19aebbbdbf9b32efe28949015bb002e90e181459dd5c",
+            "health": "unhealthy"
+          }
+        ],
+        "readiness": {
+          "advisory_locks": 0,
+          "other_active_queries": 0,
+          "readiness": {
+            "database": "ready",
+            "detail": null,
+            "memory_projection": "ready",
+            "model_provider": "ready",
+            "ready": true
+          }
+        },
+        "goal_and_artifact_preservation": true,
+        "Telegram_and_AU004_preserved": true
+      }
+    },
+    "original_receipt_not_overwritten": true,
+    "no_model_effect_calls": true
+  },
+  "stage": "/home/administrator/project/.eva2-artifacts/document-health-r2-20260913",
+  "seal_sha256": "fcf3677460125992f2885646d3be7a010f1efd12b5b1c4012bbb45f8f3849a74",
+  "candidate_images_unchanged": {
+    "worker": {
+      "parent_image": "sha256:2393a1d5aa0a24f9eb0f19aebbbdbf9b32efe28949015bb002e90e181459dd5c",
+      "candidate_image": "sha256:1d0a704d32255bc7630c8670d8137d6d6c2a7c76e4533f5186c8f79613205fa0",
+      "probe_sha256": "5b28348909047ca0448f603a8a6d3331bb2597a62afd3c98d1d4b7cfe3b43d71",
+      "healthcheck": {
+        "Interval": 30000000000,
+        "Retries": 3,
+        "StartPeriod": 30000000000,
+        "Test": [
+          "CMD",
+          "python3",
+          "/opt/eva2-health/document-worker-health.py"
+        ],
+        "Timeout": 8000000000
+      },
+      "parent_layers_preserved": true,
+      "all_other_image_config_equal": true
+    },
+    "provider": {
+      "parent_image": "sha256:0ef19e699069c3a5d3a26812c5da3d31141fcd5c3faedb14f92c9dcce1209465",
+      "candidate_image": "sha256:ba9eda41299033a19e25c483e07e973b40545b226b062da6a29ccb70482f1b5e",
+      "probe_sha256": "6f292c24bed8b1e4e1ea266d0cf9b741bc8147aa0131502d8cd1962018780dba",
+      "healthcheck": {
+        "Interval": 30000000000,
+        "Retries": 3,
+        "StartPeriod": 30000000000,
+        "Test": [
+          "CMD",
+          "python3",
+          "/opt/eva2-health/document-provider-health.py"
+        ],
+        "Timeout": 8000000000
+      },
+      "parent_layers_preserved": true,
+      "all_other_image_config_equal": true
+    }
+  },
+  "guard_correction": "Existing R6 exact key/value map semantics, with mandatory duplicate/malformed key rejection before map construction; no set-only comparison or value relaxation. Applies to installation and rollback.",
+  "tests": {
+    "container_delta_checks": 9,
+    "rollback_receipt_checks": 3,
+    "env_install_and_rollback_checks": 8,
+    "normal_and_optimized": true,
+    "same_images_real_pg_process_tests": "2 passed18.53s from original candidate; no source/probe/image change so not repeated"
+  },
+  "fresh_guard": {
+    "verified": true,
+    "candidate": false,
+    "core_image": "sha256:e66fff7d16a8cc0cc5100282c8f7d3faf95cc16269e6de9f6a4ba9b7038e8c90",
+    "unchanged_protected_containers": 11,
+    "targets": [
+      {
+        "name": "/eva2-document-workspace-au006",
+        "id": "300e51479cabea880b691f33bceef70eb2339a170ec2dc41e2fcd5ba21346e09",
+        "image": "sha256:0ef19e699069c3a5d3a26812c5da3d31141fcd5c3faedb14f92c9dcce1209465",
+        "health": "unhealthy"
+      },
+      {
+        "name": "/eva2-document-goal-worker-au006",
+        "id": "cd71065fceab30fdb99a10d4c61e8b49e6bf9f3ee4caa9c963f31d37d59922c1",
+        "image": "sha256:2393a1d5aa0a24f9eb0f19aebbbdbf9b32efe28949015bb002e90e181459dd5c",
+        "health": "unhealthy"
+      }
+    ],
+    "readiness": {
+      "advisory_locks": 0,
+      "other_active_queries": 0,
+      "readiness": {
+        "database": "ready",
+        "detail": null,
+        "memory_projection": "ready",
+        "model_provider": "ready",
+        "ready": true
+      }
+    },
+    "goal_and_artifact_preservation": true,
+    "Telegram_and_AU004_preserved": true
+  },
+  "no_go_proof": {
+    "blocked_without_exact_GO": true,
+    "activation_attempt": false,
+    "live_changes": false
+  },
+  "guard_sha256": "1f119ed186f6a11d399d45a2e74deef9c5252ffd4a823c453c60fd76b1eb947d",
+  "test_sha256": "1a57eb5ddf427b42c3a178db6dee89d4790396249139d41c5b5cf8bd84c9a57d",
+  "installer_sha256": "7298c7fcc78dc8c38c9436756333b11dc87f80579fe0e1cbc3ea8ac6fa3a8be4",
+  "new_activation_attempted": false
+}

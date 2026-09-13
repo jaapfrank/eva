@@ -1,0 +1,98 @@
+{
+  "contract": "DocumentServiceHealthCandidate/v1",
+  "stage": "/home/administrator/project/.eva2-artifacts/document-health-20260913",
+  "seal_sha256": "3d831cbaa9845a64123fd46546ecc33dab8cce97ed71405313b19bd51be48f6e",
+  "parent_authority_sha256": "5955fbe1253e23f3cae1c3a7296698862d1ca9488b541be76e636ceaf40039ba",
+  "images": {
+    "worker": {
+      "parent_image": "sha256:2393a1d5aa0a24f9eb0f19aebbbdbf9b32efe28949015bb002e90e181459dd5c",
+      "candidate_image": "sha256:1d0a704d32255bc7630c8670d8137d6d6c2a7c76e4533f5186c8f79613205fa0",
+      "probe_sha256": "5b28348909047ca0448f603a8a6d3331bb2597a62afd3c98d1d4b7cfe3b43d71",
+      "healthcheck": {
+        "Interval": 30000000000,
+        "Retries": 3,
+        "StartPeriod": 30000000000,
+        "Test": [
+          "CMD",
+          "python3",
+          "/opt/eva2-health/document-worker-health.py"
+        ],
+        "Timeout": 8000000000
+      },
+      "parent_layers_preserved": true,
+      "all_other_image_config_equal": true
+    },
+    "provider": {
+      "parent_image": "sha256:0ef19e699069c3a5d3a26812c5da3d31141fcd5c3faedb14f92c9dcce1209465",
+      "candidate_image": "sha256:ba9eda41299033a19e25c483e07e973b40545b226b062da6a29ccb70482f1b5e",
+      "probe_sha256": "6f292c24bed8b1e4e1ea266d0cf9b741bc8147aa0131502d8cd1962018780dba",
+      "healthcheck": {
+        "Interval": 30000000000,
+        "Retries": 3,
+        "StartPeriod": 30000000000,
+        "Test": [
+          "CMD",
+          "python3",
+          "/opt/eva2-health/document-provider-health.py"
+        ],
+        "Timeout": 8000000000
+      },
+      "parent_layers_preserved": true,
+      "all_other_image_config_equal": true
+    }
+  },
+  "isolated_tests": {
+    "container_id": "a60aadb5cfea22bc8aa3fb82ab449ebbf30b8b095299e312b108b84d4dafcd4d",
+    "postgres_image": "sha256:5d143123fdf80462d1778cd4f24b9f7ca13c87174bca19141fb194c5a1ebca59",
+    "network_mode": "none",
+    "published_ports": [],
+    "data_storage": "tmpfs",
+    "connection": "local Unix socket only",
+    "pytest_exit_code": 0,
+    "model_calls": 0,
+    "production_database_connections": 0,
+    "disposable_container_removed": true
+  },
+  "guard_tests": "9 container/rollback delta checks plus3 rollbackreceipt checks, normal and optimized Python; no real mutations",
+  "fresh_runtime_guard": {
+    "verified": true,
+    "candidate": false,
+    "core_image": "sha256:e66fff7d16a8cc0cc5100282c8f7d3faf95cc16269e6de9f6a4ba9b7038e8c90",
+    "unchanged_protected_containers": 11,
+    "targets": [
+      {
+        "name": "/eva2-document-workspace-au006",
+        "id": "bb4f83eded83a7f2df82045658a73d4f210e6a41c354a0a73a390dd56cecaac6",
+        "image": "sha256:0ef19e699069c3a5d3a26812c5da3d31141fcd5c3faedb14f92c9dcce1209465",
+        "health": "unhealthy"
+      },
+      {
+        "name": "/eva2-document-goal-worker-au006",
+        "id": "818413ea341b9f45a9e9281e2c7fddbb96b21641bd4f8479690c126386c48c33",
+        "image": "sha256:2393a1d5aa0a24f9eb0f19aebbbdbf9b32efe28949015bb002e90e181459dd5c",
+        "health": "unhealthy"
+      }
+    ],
+    "readiness": {
+      "advisory_locks": 0,
+      "other_active_queries": 0,
+      "readiness": {
+        "database": "ready",
+        "detail": null,
+        "memory_projection": "ready",
+        "model_provider": "ready",
+        "ready": true
+      }
+    },
+    "goal_and_artifact_preservation": true,
+    "Telegram_and_AU004_preserved": true
+  },
+  "no_go_proof": {
+    "blocked_without_exact_GO": true,
+    "activation_attempt": false,
+    "live_changes": false
+  },
+  "install_plan_sha256": "a4ff30c8bf162467ed61505030939c037ce03c810dd2b6d74d1fac1896914f19",
+  "actual_installation": false,
+  "scope": "worker process+plan+scopedDB readiness; provider HTTP+exact MCP metadata readiness; no loopprogress/effect claim"
+}
