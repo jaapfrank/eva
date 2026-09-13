@@ -247,7 +247,7 @@
         },
         {
           "title": "Project hervatten na herstart",
-          "detail": "De gecorrigeerde registratiescripts en het plan zijn onafhankelijk goedgekeurd en geïntegreerd. De uitvoerder mag nu de exacte endpointwijziging en maximaal één registratiepoging uitvoeren na verse controles, met behoud van de opstartbeveiliging. De uitkomst is nog niet bevestigd; geen projectworker of schrijfacties."
+          "detail": "De private registratie is afgerond en onafhankelijk goedgekeurd: één gateway en twee private tools toegevoegd, bestaande registraties behouden. De provider blijft alleen-lezen. De volgende stap wordt offline voorbereid met de werkelijke registraties. De projectworker is nog niet geactiveerd; een gewone chatopdracht en jouw acceptatie blijven open."
         },
         {
           "title": "Gedeeld audiotype",
@@ -5500,15 +5500,15 @@
       "owners": [
         {
           "owner": "01a08d52-31b1-7091-be45-812c0b6e6c9f",
-          "work": "Gatewaymetadata gericht herstellen vóór AU-006-activering",
+          "work": "AU-006 kernactivering voorbereiden na afgeronde private registratie",
           "boundary": "New providers/document_goal_actions.py; bundled.py opt-in registration only; document_goal_plan.py safe full host GoalSpec/hash binding; targeted provider/PG tests and docs. Existing actual ConversationTurn/current authority/external tool port. No second planner/live/envflip.",
-          "status": "corrected_guarded_phase1_execution_authorized_result_pending"
+          "status": "private_metadata_registration_closed_phase2_offline_preparation"
         },
         {
           "owner": "coordinator/timing_final_review",
-          "work": "Herreview registratieplan met blijvende controles",
+          "work": "Private registratie onafhankelijk beoordeeld",
           "boundary": "Exact guarded registration plan and bd26e97f correction; no execution or database changes. Earlier four-row incident repair remains closed.",
-          "status": "corrected_guarded_phase1_plan_independent_go_complete"
+          "status": "guarded_phase1_result_independent_go_complete"
         },
         {
           "owner": "coordinator/next_tools_delivery",
@@ -6247,7 +6247,7 @@
         "historical": true
       },
       "connectionPlan": {
-        "status": "guarded_gateway_repair_done_pending_readback_and_new_registration_plan",
+        "status": "source_complete_private_metadata_registered_core_activation_pending",
         "ownerThread": "01a08d52-31b1-7091-be45-812c0b6e6c9f",
         "reuse": [
           "Existing owner authority",
@@ -6924,7 +6924,7 @@
           "sourceCorrectionComplete": true
         },
         "activationPreparation": {
-          "status": "corrected_guarded_registration_plan_approved_result_pending",
+          "status": "private_readonly_metadata_registered_independently_approved_phase2_pending",
           "ownerThread": "01a08d52-31b1-7091-be45-812c0b6e6c9f",
           "evidenceCommit": "bc0fd5c06d5d97853296cf2459463fac4ad577a7",
           "evidencePath": "eva2/evidence/living-core/au006-activation-preparation-20260913.json",
@@ -6955,7 +6955,7 @@
           "activationBlocked": true,
           "workerStarted": false,
           "live": false,
-          "sealerState": "Provider-image metadata now refreshed; ACTIVATION-BLOCKED.json remains enabled pending phase1 review, actual registration, catalog readback and later sealing/config review.",
+          "sealerState": "ACTIVATION-BLOCKED.json retained; sealing and phase2 require separate GO.",
           "artifactRetention": {
             "owner": "01a08d52-31b1-7091-be45-812c0b6e6c9f",
             "exactPath": "/home/administrator/project/.eva2-artifacts/au006-activation-20260913",
@@ -7334,10 +7334,12 @@
           "defaultMode": "preserve",
           "legacyMigrationEnabled": false,
           "baseOnlyRollbackValid": false,
-          "reason": "Dropping the guard can repeat null-team reassignment; future recreates and policy rollback must retain reviewed guard override."
+          "reason": "Dropping the guard can repeat null-team reassignment; future recreates and policy rollback must retain reviewed guard override.",
+          "activeEndpointPolicyOverride": "/home/administrator/project/.eva2-artifacts/au006-activation-20260913/gateway-au006-endpoint.proposed.compose.json",
+          "currentRegistrationRollbackBoundary": "Preserve mandatory guard; endpoint-policy rollback does not remove assigned gateway/tool IDs or erase receipts."
         },
         "guardedPhase1RegistrationPlan": {
-          "status": "corrected_guarded_phase1_plan_independent_go_execution_authorized",
+          "status": "private_metadata_registration_complete_independently_approved",
           "ownerThread": "01a08d52-31b1-7091-be45-812c0b6e6c9f",
           "proposalCommit": "bd716f00a873ce420c2a768a661e58abc689d604",
           "evidencePaths": [
@@ -7346,9 +7348,9 @@
           ],
           "documentsIntegrated": true,
           "authorized": true,
-          "executed": false,
+          "executed": true,
           "registrationPostLimit": 1,
-          "registrationPostsExecuted": 0,
+          "registrationPostsExecuted": 1,
           "scope": "Only exact endpoint policy addition on repaired guarded gateway baseline; read-only provider and private registration metadata.",
           "guardRetainedInCandidateAndRollback": true,
           "baseOnlyRollbackAllowed": false,
@@ -7405,8 +7407,8 @@
             "status": "corrected_independently_approved_and_integrated",
             "integrationVerification": "Eight current baselines exact, bounded patch clean, reviewed source hashes and final bytes match. Tests already independently repeated; no execution by admin."
           },
-          "executionStatus": "Assigned exact endpoint policy and maximum one registration POST after fresh checks; result pending.",
-          "successful": false,
+          "executionStatus": "One private registration completed and independently approved; metadata scope closed.",
+          "successful": true,
           "independentReview": {
             "decision": "Explicit GO for corrected guarded phase1 plan",
             "reportedBy": "coordinator",
@@ -7419,7 +7421,60 @@
             "Exact approved endpoint policy only",
             "Maximum one POST after all fresh checks"
           ],
-          "correctedSourceIntegrated": true
+          "correctedSourceIntegrated": true,
+          "result": {
+            "evidenceCommit": "63090eb50412073442331a57ba5bfe6ab3dd40ae",
+            "evidencePaths": [
+              "eva2/evidence/living-core/au006-guarded-phase1-completed-20260913.json",
+              "eva2/evidence/living-core/au006-guarded-phase1-completed-20260913.md"
+            ],
+            "evidenceIntegrated": true,
+            "independentResultGo": true,
+            "actualGatewayId": "83690bd3da2e425f8e376ebbb1e69df8",
+            "actualToolIds": [
+              "5fd5dc59aaa84e59971baf4c81aa2337",
+              "c3c967201ab74b10bc8657daa3de8927"
+            ],
+            "selectedCatalogBindings": {
+              "workspace_observe_bound": "bed762d231047773d79271af96a80b9564f8bf5141944930ed88980759ffd6d8",
+              "workspace_create_bound": "84deca1edd578079aa2896be05af70aa5f822cfe98531e60cfeffc2e4aab080e"
+            },
+            "gatewayCounts": [
+              5,
+              6
+            ],
+            "toolCounts": [
+              53,
+              55
+            ],
+            "existing53ApiToolRowsPreserved": true,
+            "existingSixResourceTablesPreservedExceptHeartbeat": true,
+            "providerReadOnly": true,
+            "providerRunning": true,
+            "newCoreConnectorAbsent": true,
+            "newRawToolsAbsentFromCore": true,
+            "protectedContainersUnchanged": 10,
+            "coreCatalogRegistryPreserved": true,
+            "journalEntries": 0,
+            "targetPathsAbsent": true,
+            "modelCalls": 0,
+            "documentEffectCalls": 0,
+            "sealerRun": false,
+            "documentWorkerStarted": false,
+            "phase2Authorized": false,
+            "fullProductLive": false,
+            "independentReview": {
+              "decision": "GO for phase1 registration result; metadata scope closed",
+              "reportedBy": "coordinator",
+              "verified": [
+                "Two new private tools and existing 53 API tool rows preserved",
+                "Six SQL resource tables preserved except gateway heartbeats",
+                "Configuration, schema, guard, exact endpoint and read-only provider",
+                "Protected core bindings and empty journal"
+              ],
+              "phase2Go": false
+            }
+          }
         }
       },
       "isolatedProductExecutionProven": true,
