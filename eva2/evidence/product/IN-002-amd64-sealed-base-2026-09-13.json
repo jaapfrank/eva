@@ -1,0 +1,107 @@
+{
+  "contract": "In002Amd64SealedBaseGuestEvidence/v1",
+  "source_reference": "6206d74b",
+  "stage": "/home/administrator/project/.eva2-artifacts/in002-platform-boundary-20260913",
+  "existing_validator": "eva2/tools/managed_b_candidate/base_image.py",
+  "existing_validator_sha256": "71f01e357090c994f6f1e07a8b5b7095b4e5d1da2a76e9b6c7c7ae7d747173c0",
+  "existing_evidence": "eva2/evidence/product/RB-001-sealed-oci-layout-empty-builders-2026-09-01.json",
+  "slot_authority": "eva2/release/oci-image-slots.json#/baseSlots/python_base",
+  "artifact_hashes": {
+    "guest-oci-execution-proof.json": "67373f98d5e3f7f9339fce966d6f4c3b6554fb78774ede61b23c4f3fbe4e0d3d",
+    "guest-console-oci.log": "a4ff1e11fcd83b5d46f25f0be9f8abc0b2693980ad2d2011ef38e0ca7ea257e3",
+    "guest-console-oci-corrected.log": "0faf116fb5863022f3c730630167dd8df63c2c666d80fb4287ce40f2fd510416",
+    "guest-command-oci-corrected.json": "0c8dfec8ac25bb290de33b0dda002d700b743089ffdc7076b0350f1b079d74a4",
+    "guest/oci-seed/probe.py": "33bee7f3826668cae4470fea1cf1037e0c5107912e81fbc68838bbfdb2db71c9",
+    "guest/oci-corrected-seed/probe.py": "8534c88262b5f3d26aa4e5f3eea57d39edf7e2dbbbf8bfdec26c5241a0abd0c3",
+    "guest/oci-corrected-seed/base_image.py": "71f01e357090c994f6f1e07a8b5b7095b4e5d1da2a76e9b6c7c7ae7d747173c0",
+    "guest/oci-corrected-seed/provision.sh": "1b08d345047a52f1015519c9b5d2a1fb4adb60538fc1c01615eceecff7af8526",
+    "guest/oci-corrected-seed/meta-data": "55bd1a9f5b2166b2870fad99330ed555dff8e95bd756e8ec0c00407f94d9e7e9",
+    "guest/oci-corrected-seed/user-data": "1582d9b831357054f1c05c25e4eacf87a4bc3d424681810fc3445b59dfacf915"
+  },
+  "result": {
+    "contract": "In002GuestOciExecution/v1",
+    "archive_sha256": "6c41fc2512fc76b1e736f98a73745c32a81c4d29e3661a007c20bbd2f52190f3",
+    "validator_receipt": {
+      "contract": "EvaPinnedBaseImageArchive/v3",
+      "archive_sha256": "6c41fc2512fc76b1e736f98a73745c32a81c4d29e3661a007c20bbd2f52190f3",
+      "archive_size": 48066048,
+      "base_image_digest": "sha256:a116514e19457bcb7af7efe9c3dd0b9b71e85b317694e7882a1c52aa15a78134",
+      "base_image_repository": "docker.io/library/python",
+      "network_used": false,
+      "oci_config_digest": "sha256:183e5ad42322fea6f731433ae7f6be7498812b31d2eaf05537ffed838dd1ba7c",
+      "oci_root_index_digest": "sha256:a116514e19457bcb7af7efe9c3dd0b9b71e85b317694e7882a1c52aa15a78134",
+      "oci_selected_manifest_digest": "sha256:356b0d18f9385f4bdcc673af60e1e64c9d1504952e4ec36ee32044c722a6bc4e",
+      "platform": "linux/amd64",
+      "status": "sealed_archive_validated",
+      "nonclaims": [
+        "This local export does not prove registry or proxy provenance, signatures, or release eligibility.",
+        "No candidate image, B configuration, container, volume, secret, or live service was opened."
+      ]
+    },
+    "image_id": "sha256:a116514e19457bcb7af7efe9c3dd0b9b71e85b317694e7882a1c52aa15a78134",
+    "architecture": "amd64",
+    "os": "linux",
+    "command": [
+      "docker",
+      "run",
+      "--rm",
+      "--pull",
+      "never",
+      "--network",
+      "none",
+      "--read-only",
+      "--cap-drop",
+      "ALL",
+      "--memory",
+      "128m",
+      "--cpus",
+      "1",
+      "sha256:a116514e19457bcb7af7efe9c3dd0b9b71e85b317694e7882a1c52aa15a78134",
+      "python",
+      "--version"
+    ],
+    "version": "Python 3.12.14",
+    "docker_server": "29.7.2",
+    "support_claim": false
+  },
+  "guest_exit": {
+    "Status": "exited",
+    "Running": false,
+    "Paused": false,
+    "Restarting": false,
+    "OOMKilled": false,
+    "Dead": false,
+    "Pid": 0,
+    "ExitCode": 0,
+    "Error": "",
+    "StartedAt": "2026-09-13T07:46:18.983015429Z",
+    "FinishedAt": "2026-09-13T07:46:55.783264111Z"
+  },
+  "isolation": {
+    "privileged": false,
+    "user": "1000:1000",
+    "binds": [
+      "/home/administrator/project/.eva2-artifacts/in002-platform-boundary-20260913/guest:/stage:rw"
+    ],
+    "ports": {},
+    "device": [
+      {
+        "PathOnHost": "/dev/kvm",
+        "PathInContainer": "/dev/kvm",
+        "CgroupPermissions": "rwm"
+      }
+    ]
+  },
+  "first_attempt": "Existing validator accepted sealed archive. Docker inspect by config blob ID failed; no Python execution then. Corrected harness uses verified immutable OCI root digest, no tags/pulls.",
+  "remaining": [
+    "Only one base slot validated and executed on new amd64 guest; not final product image, SBOM or release resolution.",
+    "Missing explicit server variant remains unresolved; signed cloud-image provenance is not silently substituted into os-release.",
+    "Both tier1 receipts and all final OCI records still required by existing PlatformLockV3."
+  ],
+  "non_claims": [
+    "No support/lock/schema update.",
+    "No production container, volume, socket or model access.",
+    "Validator receipt nonclaims describe archive validator itself; outer harness explicitly loaded and executed only the isolated base container.",
+    "No newly implemented resolver or second platform register."
+  ]
+}

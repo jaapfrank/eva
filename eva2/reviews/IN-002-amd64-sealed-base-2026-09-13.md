@@ -1,0 +1,11 @@
+# IN-002: eerste OCI-bewijs op de nieuwe amd64-gast
+
+De bestaande releaseketen bestaat uit PlatformLockV3, de base-/final-slotbeschrijving in release/oci-image-slots.json en de RB-001-materialisatie/validatie in tools/managed_b_candidate/base_image.py. De bron voor die validator is bytegelijk aan centrale6206d74b. Deze stap hergebruikt die code; er is geen nieuwe resolver, productcode of register toegevoegd.
+
+Het behouden RB-001 Python-archief heeft exact SHA256 6c41fc2512fc76b1e736f98a73745c32a81c4d29e3661a007c20bbd2f52190f3. In de eigen Ubuntu24.04.4/Docker29.7.2-gast valideert de bestaande functie de rootindex, geselecteerde linux/amd64-manifest, config en layers. Die root/manifest/config komen overeen met de bestaande python_base-slot. Daarna wordt hetzelfde archief lokaal geladen; een container op de onveranderlijke rootdigest voert met --pull never, --network none, read-only root, cap-drop ALL, 128MiB en één CPU succesvol `python --version` uit: Python3.12.14.
+
+De eerste uitvoerpoging gebruikte ten onrechte de configblob als Docker-imageadres. Dat gaf No such image. De tweede gebruikte de reeds verzegelde rootdigest; geen mutable tag of netwerkfallback. Beide logs en beide harnassen zijn apart behouden. De gast is na afloop gestopt. Dit is specifiek base-image-/enginecompatibiliteitsbewijs op de nieuwe gast, geen nieuwe releaseondersteuning. De bestaande validatorreceipt beschrijft uitsluitend zijn eigen read-only scope; de omhullende proef beschrijft expliciet de afzonderlijke geïsoleerde uitvoering.
+
+Volgende echte afhankelijkheid is nu de bestaande final-imageketen: source/dependency-authoriteit en digest-/SBOMgebonden eindimages, gevolgd door de twee tier1-validatiebewijzen. De base-slot sluit geen van de achttien final-slots stil af. Servervariantbewijs ontbreekt daarnaast: officiële cloudimage-provenance is eerder cryptografisch vastgesteld, maar is geen expliciet VARIANT_ID of in de huidige preflight toegelaten installerreceipt. Deze stap heeft die autoriteitsgrens niet gewijzigd of een label verzonnen.
+
+Bewijs staat in ../evidence/product/IN-002-amd64-sealed-base-2026-09-13.json. Geen volledige IN-002-claim, livewijziging, privébackup of vraag aan Jaap. Onafhankelijke review staat open.
