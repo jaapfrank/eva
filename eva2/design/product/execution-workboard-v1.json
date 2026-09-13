@@ -121,7 +121,7 @@
           ]
         }
       ],
-      "priorityDecision": "De kleine procedureleeroplevering is technisch afgerond: zelf onderzoeken, procedure opslaan en ongewijzigd hergebruiken. Geen nieuwe leerproeven. Parallel lopen de Bottie/SQLite-review en een afzonderlijke architectuurreparatie; brede autonomie en echte productvergelijking blijven open.",
+      "priorityDecision": "Eerst de gemelde fouten in de gewone Telegramchat onderzoeken en herstellen. Runtime-uitvoerder en onafhankelijke reviewer pakken dit samen op. AU-004-installatie is uitgesteld; core-health alleen bewijst geen werkend gesprek.",
       "dashboardVerification": {
         "status": "local_browser_verified_not_full_product_acceptance",
         "priorityRevision": {
@@ -159,6 +159,11 @@
         ]
       },
       "summary": [
+        {
+          "label": "ACTUEEL INCIDENT · TELEGRAM",
+          "value": "Foutmeldingen in gewone gesprekken",
+          "detail": "Door Jaap gemeld; onderzoek en herstel hebben voorrang. Oorzaak en geslaagde gespreksroute zijn nog niet vastgesteld."
+        },
         {
           "label": "IN UITVOERING · GEHEUGEN",
           "value": "Zelf relevant geheugen kiezen en bijwerken",
@@ -217,6 +222,10 @@
       ],
       "nextOutcomes": [
         {
+          "title": "Fouten in gewone Telegramchat onderzoeken",
+          "detail": "Jaap meldt foutmeldingen in de gewone Telegramchat. De runtime-uitvoerder en reviewer onderzoeken dit met voorrang; de oorzaak en een werkend herstel zijn nog niet vastgesteld. Een gezonde core is alleen een healthcontrole. De goedgekeurde AU-004-installatie is uitgesteld."
+        },
+        {
           "title": "Reguliere Telegramupdate afgeleverd",
           "detail": "De uurupdate van 13 september om 09:44 uur is bevestigd eenmalig afgeleverd. De bestaande planning houdt minstens één uur tussen verzendpogingen; er is niet opnieuw verzonden."
         },
@@ -262,7 +271,7 @@
         },
         {
           "title": "Aangeleerde procedures terugvinden",
-          "detail": "Het huidige herstel is onafhankelijk bevestigd: de vorige core is gereed en alle 12 beschermde diensten, instellingen en gegevens zijn intact. De oude mislukte installatie en foutieve herstelreceipt blijven bewaard. Een gerichte controlefix en een nieuwe proef worden apart beoordeeld; de procedurefunctie is nog niet live."
+          "detail": "De nieuwe begrensde installatieproef heeft concrete goedkeuring, maar is uitgesteld vanwege de gemelde Telegramfouten. De eerdere herstelcontrole blijft apart vastgelegd; zij bewijst geen werkende gewone chat. De procedurefunctie is nog niet live opgeleverd."
         }
       ],
       "openRisks": [
@@ -857,7 +866,8 @@
             "label": "Lees het einddocument"
           }
         }
-      ]
+      ],
+      "priorityBeforeTelegramIncident": "De kleine procedureleeroplevering is technisch afgerond: zelf onderzoeken, procedure opslaan en ongewijzigd hergebruiken. Geen nieuwe leerproeven. Parallel lopen de Bottie/SQLite-review en een afzonderlijke architectuurreparatie; brede autonomie en echte productvergelijking blijven open."
     },
     "pendingTechnicalReview": {
       "reason": "Historische CO-003-kandidaat van 7 september: het oorspronkelijke bewijs bevat geen commitgebonden definitieve review of livegang. Deze oude kaart wordt daarom niet alsnog afgevinkt. De gebruikersuitkomst is later opgenomen in CO-004/CO-005, live opgeleverd en door Jaap via GE-02 geaccepteerd op 12 september. Het gekozen geheugenonderdeel blijft afgesloten; deze historische registratie is geen actuele bouw- of acceptatieblokkade.",
@@ -5111,7 +5121,7 @@
             "candidateCommit": "46e85b2267dc58619de78233405401163f6c20fe",
             "decision": "GO for preparation only",
             "finding": "Existing delegated worker uses832; core and document worker use2393.",
-            "status": "current_parent_restoration_verified_guard_fix_and_new_probe_review_pending",
+            "status": "r2_concrete_go_installation_deferred_for_telegram_incident",
             "planIntegrated": false,
             "deploymentAuthorized": false,
             "correctionCommit": "295a70cef49477b36f7acd48cae1eb6de401fcf4",
@@ -5127,7 +5137,7 @@
               "scope": "Five overlays, candidate and sealed probe for separate activation review",
               "liveStarted": false,
               "activationGo": true,
-              "status": "current_parent_restored_independently_verified_feature_off",
+              "status": "approved_r2_installation_deferred_ordinary_telegram_incident",
               "evidenceCommit": "e58d256c26c9f16f42aa931fdda2a2e3a62735c2",
               "evidenceIntegrated": false,
               "candidateImageReportedPrefix": "43ddd343",
@@ -5192,7 +5202,14 @@
                   "newProbeAuthorized": false
                 }
               },
-              "nextAction": "Targeted guard fix and separate new probe review; do not rerun old activation."
+              "nextAction": "Targeted guard fix and separate new probe review; do not rerun old activation.",
+              "r2PlanDecision": {
+                "decision": "Concrete GO received",
+                "reportedBy": "coordinator",
+                "executionStatus": "Deferred due to reported ordinary Telegram incident",
+                "live": false,
+                "successClaimed": false
+              }
             }
           }
         }
@@ -5927,9 +5944,9 @@
       "owners": [
         {
           "owner": "01a08d52-31b1-7091-be45-812c0b6e6c9f",
-          "work": "Mislukte AU-004-installatie en herstelstatus onderzoeken",
+          "work": "Actuele foutmeldingen in gewone Telegramchat onderzoeken",
           "boundary": "New providers/document_goal_actions.py; bundled.py opt-in registration only; document_goal_plan.py safe full host GoalSpec/hash binding; targeted provider/PG tests and docs. Existing actual ConversationTurn/current authority/external tool port. No second planner/live/envflip.",
-          "status": "AU004_install_failed_restore_review_in_progress"
+          "status": "priority_telegram_incident_investigation"
         },
         {
           "owner": "coordinator/timing_final_review",
@@ -6647,6 +6664,14 @@
           "reportedBy": "coordinator",
           "releaseSupportGo": false,
           "fullRestoreGo": false
+        },
+        "pendingEvidenceRegistration": {
+          "candidateCommitReportedPrefix": "5d0d39dd",
+          "decision": "Limited evidence GO reported by coordinator",
+          "status": "Registration deferred until after priority Telegram incident status",
+          "evidenceIntegrated": false,
+          "runtimeChange": false,
+          "fullIN002Go": false
         }
       }
     },
@@ -8564,6 +8589,22 @@
         "reportedTestsIndependentlyRerun": false
       },
       "integrationVerification": "Four actual baselines exact, bounded patch clean, final files and hashes match reviewed source; evidence preserved unchanged."
+    },
+    "telegramConversationIncident20260913": {
+      "status": "owner_reported_errors_in_ordinary_chat_under_priority_investigation",
+      "reportedBy": "Jaap via coordinator",
+      "recordedAt": "2026-09-13T07:59:51.606419+00:00",
+      "reportedSymptom": "Error messages in ordinary Telegram conversation",
+      "cause": "Not established",
+      "priority": "Current incident before AU004 installation",
+      "owners": [
+        "01a08d52-31b1-7091-be45-812c0b6e6c9f",
+        "procedure_host_review"
+      ],
+      "coreHealthDoesNotProveConversationSuccess": true,
+      "conversationRecovered": false,
+      "newModelProbeClaimed": false,
+      "fixDeployed": false
     }
   },
   "activeTaskId": "AU-008",
