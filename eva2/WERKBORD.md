@@ -8,7 +8,7 @@ Gebouwd, getest, live en door jou geaccepteerd zijn verschillende stappen.
 **Afgerond en live — twee begrensde opleveringen.** PR-01: Eva vindt een bewaarde planreviewprocedure terug, leest de gecontroleerde tekst en past de regels toe; jouw resultaatreview staat open. Documentstatus: beide documentdiensten gebruiken nu passende gezondheidscontroles en melden gezond. Beide opleveringen zijn onafhankelijk bevestigd. Eva, bestaande doelen, journaal en bestanden zijn behouden. Gezondheid is geen bewijs van taakvoortgang.
 [Actueel bewijs](evidence/living-core/document-health-r2-live-20260913.json).
 
-**Eerstvolgende gebruikersoplevering:** eigen documentopdrachten zonder beheerderplanwissel. De complete bron inclusief behoud van bestaande projecten is goedgekeurd en geïntegreerd. Vóór provisioning van twee uitvoerplekken moet de runtimevoorbereiding alle gebruikersverzoeken en hun afronding aantoonbaar afdekken. Daarna pas catalogusbinding, concrete activeringsreview en de echte gebruikersrouteproef. Geen runtimegoedkeuring of livewijziging. PR-01, PJ-01 en de gezondheidsoplevering blijven afgesloten.
+**Eerstvolgende gebruikersoplevering:** eigen documentopdrachten zonder beheerderplanwissel. De bron is geïntegreerd. De begrensde gatewaystopproef is gecontroleerd; vóór vervanging moeten alle niet-afgeronde acties zonder leeftijdsfilter, inclusief browseracties, aan hun werkelijke eindbewijs worden gekoppeld. Een time-out of schone procesafsluiting alleen volstaat niet. Geen runtimegoedkeuring of livewijziging; PR-01, PJ-01 en gezondheidscontroles blijven afgesloten.
 
 <details>
 <summary>Historische voortgang en eerdere tussenstanden — niet de actuele opleverstatus</summary>

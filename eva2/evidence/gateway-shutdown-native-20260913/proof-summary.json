@@ -1,0 +1,100 @@
+{
+  "status": "BOUNDED_NATIVE_SHUTDOWN_EVIDENCE_NOT_RUNTIME_GO",
+  "cases": {
+    "graceful": {
+      "case": "graceful",
+      "files": {
+        "slow.txt": "2babb50cb803c902675f356e4e8110086760cdc16005cc6588fba64f8da286f2"
+      },
+      "journal_bytes": 802,
+      "journal_sha256": "1cd8002c72b5c050d844c66394b979e61101450dd50f8b5d3cefd922eaebf810",
+      "client": {
+        "keepalive": {
+          "exception": "BrokenPipeError"
+        },
+        "slow": {
+          "status": 200
+        },
+        "new": {
+          "exception": "ConnectionResetError"
+        }
+      },
+      "gateway_exit": 0,
+      "classification": "NATIVE_REQUEST_COMPLETED_ONCE_SAMPLED_NEW_CALLS_REFUSED",
+      "journal_events": [
+        "P",
+        "L",
+        "C"
+      ],
+      "evidence_directory": "/home/administrator/project/.eva2-artifacts/gateway-shutdown-proof-20260913/eva-atomic-gateway-47c610eaa7"
+    },
+    "forced-kill": {
+      "case": "forced-kill",
+      "files": {},
+      "journal_bytes": 0,
+      "journal_sha256": null,
+      "client": {
+        "slow": {
+          "exception": "RemoteDisconnected"
+        },
+        "keepalive": {
+          "exception": "RemoteDisconnected"
+        },
+        "new": {
+          "exception": "gaierror"
+        }
+      },
+      "gateway_exit": 137,
+      "classification": "DRAIN_FAILED_FORCED_KILL_BLOCK",
+      "journal_events": [],
+      "evidence_directory": "/home/administrator/project/.eva2-artifacts/gateway-shutdown-proof-20260913/forced-kill/eva-atomic-gateway-66b2259b90"
+    },
+    "client-timeout": {
+      "case": "client-timeout",
+      "files": {},
+      "journal_bytes": 0,
+      "journal_sha256": null,
+      "client": {
+        "slow": {
+          "exception": "TimeoutError"
+        },
+        "keepalive": {
+          "exception": "BrokenPipeError"
+        },
+        "new": {
+          "exception": "ConnectionRefusedError"
+        }
+      },
+      "gateway_exit": 0,
+      "classification": "NO_TERMINAL_PROVIDER_PROOF_BLOCK_EVEN_WITH_EXIT_ZERO",
+      "journal_events": [],
+      "evidence_directory": "/home/administrator/project/.eva2-artifacts/gateway-shutdown-proof-20260913/client-timeout/eva-atomic-gateway-2bd2e4dd0b"
+    }
+  },
+  "limits": [
+    "Post-signal samples do not establish an instantaneous admission fence.",
+    "Native fixture covers one provider and /rpc tools/call; existing browser and other downstream task semantics still need review.",
+    "Client timeout plus clean gateway exit is not a successful drain without terminal provider evidence.",
+    "No production mutations, models, or consumed fixture reuse."
+  ],
+  "evidence_sha256": {
+    "run_graceful.py": "f24842bb76807fbfa0a8521d16f266dcc9c7adada5796dcb8156ec054d2d5077",
+    "prepare.py": "c1a5c4e129a2141cea23730abb6006e4b6b953e61587877b4b40bbe4d08408dd",
+    "client.py": "da125cf9b6aa84000d9cb29ebd431696836adeb2eece1a89af747a3603e0137a",
+    "forced-kill/run_graceful.py": "661c2a426a0e071010571ce0a34f3ef185487f6d85ddbd465a6e366de4691a38",
+    "forced-kill/prepare.py": "9b2db6ba30cf7b726d0c2fd58dcb63c0c46cd7b79ac8bf6c5dbbbdf59b7f0271",
+    "forced-kill/client.py": "da125cf9b6aa84000d9cb29ebd431696836adeb2eece1a89af747a3603e0137a",
+    "eva-atomic-gateway-47c610eaa7/later-readback.json": "1be5c06036b2f388a65679128c2b4d7a9e47fc98e1b26817979a8c0183d920c4",
+    "eva-atomic-gateway-47c610eaa7/graceful-result.json": "aba29dcc56189cc97280c8804cf40742da32b44815f85c06312d3b12183b7e32",
+    "client-timeout/run_graceful.py": "428f7b9c42a83cb2f89d32fae4f3b04b5c0d4e4c80b43248508857e2d4b4ef81",
+    "client-timeout/prepare.py": "8508c384eb37673738056d17ff16062c885ac05dce858a2e12eb1c54c0506b08",
+    "client-timeout/client.py": "3d35dccbbf0d5cde8cd055dc2702ce4f642f390ba46717c705928ddb415b0f49",
+    "forced-kill/eva-atomic-gateway-66b2259b90/later-readback.json": "08075841fd44b5412c5edf49e3bed94f889717fee6b0d132eea5dc841342e69b",
+    "forced-kill/eva-atomic-gateway-66b2259b90/graceful-result.json": "ca6ee2a87183daf931b9ffb74ebae282eb99b89063f72653f56215eb448d7cdd",
+    "forced-kill/eva-atomic-gateway-66b2259b90/conf/client.py": "da125cf9b6aa84000d9cb29ebd431696836adeb2eece1a89af747a3603e0137a",
+    "eva-atomic-gateway-47c610eaa7/conf/client.py": "da125cf9b6aa84000d9cb29ebd431696836adeb2eece1a89af747a3603e0137a",
+    "client-timeout/eva-atomic-gateway-2bd2e4dd0b/later-readback.json": "e4fc30597cdbe19419b1bb8194c6971a18d2be19166359cdc1a7d5746dec5d8e",
+    "client-timeout/eva-atomic-gateway-2bd2e4dd0b/graceful-result.json": "2af21e4a75c9f33b56b8d8c0a6139bb81d9a03c96cb5d9ccfc8a5dabe08e19c3",
+    "client-timeout/eva-atomic-gateway-2bd2e4dd0b/conf/client.py": "3d35dccbbf0d5cde8cd055dc2702ce4f642f390ba46717c705928ddb415b0f49"
+  }
+}

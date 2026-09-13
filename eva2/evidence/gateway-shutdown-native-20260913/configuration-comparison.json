@@ -1,0 +1,23 @@
+{
+  "same_image": true,
+  "same_entrypoint": true,
+  "same_cmd": true,
+  "same_init": true,
+  "live_user": "10001:10001",
+  "fixture_user": "0:0",
+  "env_differing_keys": [
+    "EVA_CONTEXTFORGE_ADMIN_PASSWORD_FILE",
+    "EVA_CONTEXTFORGE_ENCRYPTION_SECRET_FILE",
+    "EVA_CONTEXTFORGE_JWT_SECRET_FILE",
+    "EVA_MCP_PINNING_POLICY"
+  ],
+  "patch_sha256": {
+    "app/mcpgateway/eva_mcp_pinning.py": "4f964ff65721a3ef3791bc4062d935cf1b2eb022c18e92f339e20c9442f6e462",
+    "app/mcpgateway/bootstrap_db.py": "92a5d8e88a467778e1cb715cd84e5b5214ca14d51170dbd6454432e89e04df4b",
+    "app/mcpgateway/main.py": "ce9a769b1224812fddb1a905cff4025a19411f2760e6ac2abf08d1f3ab3b01fe",
+    "app/mcpgateway/services/gateway_service.py": "85948f66712bfd164db805f9dd570e40f4d8bfe2b3734338be6746b5ec8d54b9",
+    "app/mcpgateway/services/tool_service.py": "0bf4a3cd4288f56aee1038174906165602a0c759d84faaa1210c68ad05f57431",
+    "run/eva2/start-contextforge.sh": "f3fdcd8c3e4c6c512e2bbcfdacaa620bf028803dbb1c8ed738c5e0dbd2e305d9"
+  },
+  "isolation_differences": "Private empty SQLite and secrets, unique internal network and pinned provider endpoint, fixture UID/root ownership and resource quota/mount paths differ. This is shutdown behavior evidence, not production DAC or private-owner identity proof."
+}

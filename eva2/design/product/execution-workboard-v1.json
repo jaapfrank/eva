@@ -121,7 +121,7 @@
           ]
         }
       ],
-      "priorityDecision": "De complete bron voor eigen documentopdrachten is goedgekeurd en geïntegreerd, inclusief behoud van bestaande projectroutes. De installatievoorbereiding moet nog alle actieve gebruikersverzoeken en de afronding daarvan afdekken. Nog geen runtimegoedkeuring of livewijziging. Eerdere opleveringen blijven afgesloten.",
+      "priorityDecision": "Eigen documentopdrachten zijn in bron gereed. De installatievoorbereiding heeft een begrensde gatewaystopproef doorstaan; alle lopende acties en de browserroute moeten nog aantoonbaar worden afgehandeld vóór vervanging. Geen livegoedkeuring. Eerdere opleveringen blijven afgesloten.",
       "dashboardVerification": {
         "status": "local_browser_verified_not_full_product_acceptance",
         "priorityRevision": {
@@ -229,7 +229,7 @@
         },
         {
           "title": "Reguliere Telegramupdate afgeleverd",
-          "detail": "De uurupdate van 13 september om 12:55 uur is bevestigd eenmalig afgeleverd. De volgende reguliere poging is niet eerder dan één uur na de vorige poging; er is geen extra bericht verstuurd."
+          "detail": "De uurupdate van 13 september om 14:08 uur is bevestigd eenmalig afgeleverd. De volgende reguliere poging is niet eerder dan één uur na de vorige poging; er is geen extra bericht verstuurd."
         },
         {
           "title": "Browserherstelproef afgerond",
@@ -283,7 +283,7 @@
         },
         {
           "title": "Zelf een documentproject opgeven",
-          "detail": "De broncode is gebouwd, onafhankelijk gecontroleerd en geïntegreerd. Eigen documentopdrachten kunnen naast het bestaande voorbereide project bestaan; status, resultaat en het juiste uitvoerplan blijven behouden. Voor installatie staat nog een concrete controle open op actieve gebruikersverzoeken en hun afronding. Nog niet live en nog niet met een echte modelopdracht opgeleverd."
+          "detail": "De broncode is goedgekeurd en geïntegreerd. In een afzonderlijke stopproef rondde de gateway één bestandsactie precies eenmaal af; een time-out zonder eindbewijs en geforceerd stoppen blokkeerden terecht. Vóór installatie moeten alle nog lopende acties, ook via de browserroute, aantoonbaar zijn afgehandeld. Dit is installatievoorbereiding, nog geen liveoplevering."
         }
       ],
       "openRisks": [
@@ -1038,7 +1038,7 @@
       "sessionGoal": "AU-008: één zelfstandige kosteloze bijdrage via de algemene uitvoerder.",
       "currentWork": "**Afgerond en live — twee begrensde opleveringen.** PR-01: Eva vindt een bewaarde planreviewprocedure terug, leest de gecontroleerde tekst en past de regels toe; jouw resultaatreview staat open. Documentstatus: beide documentdiensten gebruiken nu passende gezondheidscontroles en melden gezond. Beide opleveringen zijn onafhankelijk bevestigd. Eva, bestaande doelen, journaal en bestanden zijn behouden. Gezondheid is geen bewijs van taakvoortgang.",
       "currentEvidence": "eva2/evidence/living-core/document-health-r2-live-20260913.json",
-      "nextStep": "**Eerstvolgende gebruikersoplevering:** eigen documentopdrachten zonder beheerderplanwissel. De complete bron inclusief behoud van bestaande projecten is goedgekeurd en geïntegreerd. Vóór provisioning van twee uitvoerplekken moet de runtimevoorbereiding alle gebruikersverzoeken en hun afronding aantoonbaar afdekken. Daarna pas catalogusbinding, concrete activeringsreview en de echte gebruikersrouteproef. Geen runtimegoedkeuring of livewijziging. PR-01, PJ-01 en de gezondheidsoplevering blijven afgesloten.",
+      "nextStep": "**Eerstvolgende gebruikersoplevering:** eigen documentopdrachten zonder beheerderplanwissel. De bron is geïntegreerd. De begrensde gatewaystopproef is gecontroleerd; vóór vervanging moeten alle niet-afgeronde acties zonder leeftijdsfilter, inclusief browseracties, aan hun werkelijke eindbewijs worden gekoppeld. Een time-out of schone procesafsluiting alleen volstaat niet. Geen runtimegoedkeuring of livewijziging; PR-01, PJ-01 en gezondheidscontroles blijven afgesloten.",
       "usageClarification": {
         "date": "2026-09-07",
         "authorizedBy": "Jaap",
@@ -6485,18 +6485,18 @@
       "usage": "design/product/project-telegram-updates.md",
       "confirmationHour": "2026-09-12T20:00Z",
       "scheduler": "Coordinator confirmed existing heartbeat wired to exact CLI/dedup/receipt on 12 September; no second scheduler.",
-      "nextRegularUpdateNotBefore": "2026-09-13T11:55:51.874575+00:00",
+      "nextRegularUpdateNotBefore": "2026-09-13T13:08:48.021579+00:00",
       "latestHourlyAttempt": {
-        "hourKey": "2026-09-13T10:00Z",
+        "hourKey": "2026-09-13T12:00Z",
         "status": "delivered",
-        "claimedAt": "2026-09-13T10:55:51.874575+00:00",
-        "deliveredAt": "2026-09-13T10:55:55.500276+00:00",
+        "claimedAt": "2026-09-13T12:08:48.021579+00:00",
+        "deliveredAt": "2026-09-13T12:08:52.264627+00:00",
         "providerReceiptAvailable": true,
         "privateChatAndExactTextVerified": true,
         "repeated": false,
-        "evidencePath": "eva2/evidence/product/project-telegram-hourly-delivery-2026-09-13-10.json"
+        "evidencePath": "eva2/evidence/product/project-telegram-hourly-delivery-2026-09-13-12.json"
       },
-      "lastConfirmedDelivery": "2026-09-13T10:55:55.500276+00:00",
+      "lastConfirmedDelivery": "2026-09-13T12:08:52.264627+00:00",
       "helperRepair": {
         "status": "reviewed_helper_regular_delivery_confirmed",
         "scope": "Trim ASCII edge whitespace before wire; preserve raw idempotency hash and old records; retain only allowlisted stage/boolean/hash diagnostics.",
@@ -6628,6 +6628,16 @@
           "privateChatAndExactTextVerified": true,
           "repeated": false,
           "evidencePath": "eva2/evidence/product/project-telegram-hourly-delivery-2026-09-13-09.json"
+        },
+        {
+          "hourKey": "2026-09-13T10:00Z",
+          "status": "delivered",
+          "claimedAt": "2026-09-13T10:55:51.874575+00:00",
+          "deliveredAt": "2026-09-13T10:55:55.500276+00:00",
+          "providerReceiptAvailable": true,
+          "privateChatAndExactTextVerified": true,
+          "repeated": false,
+          "evidencePath": "eva2/evidence/product/project-telegram-hourly-delivery-2026-09-13-10.json"
         }
       ],
       "unsentHourNote": {
@@ -9965,14 +9975,34 @@
       },
       "runtimePreparation": {
         "ownerThread": "01a08d52-31b1-7091-be45-812c0b6e6c9f",
-        "status": "phase1_all_user_admission_and_drain_accounting_open",
+        "status": "bounded_shutdown_proof_complete_all_effect_accounting_open",
         "stages": [
           "Provision two separately authorized provider slots",
           "Bind actual catalog and seal candidate before activation"
         ],
         "runtimeGo": false,
-        "openQuestion": "Concrete protection of all-user admission and drain accounting before provider provisioning; no runtime GO",
-        "preserveBothLegacyFiles": true
+        "openQuestion": "Inventory all nonterminal actual effect admissions before and after shutdown without age filtering, including browser route; authoritative terminal proof required before replacement.",
+        "preserveBothLegacyFiles": true,
+        "gatewayShutdownEvidence": {
+          "sourceCommit": "3e081234860217682d52392c779a6be966c17a84",
+          "exactPaths": [
+            "eva2/evidence/gateway-shutdown-native-20260913/configuration-comparison.json",
+            "eva2/evidence/gateway-shutdown-native-20260913/proof-summary.json",
+            "eva2/reviews/gateway-shutdown-native-20260913.md"
+          ],
+          "evidenceIntegrated": true,
+          "independentBoundedGo": true,
+          "reviewReportedBy": "coordinator",
+          "gracefulNativeEffectCompletedExactlyOnce": true,
+          "clientTimeoutWithoutTerminalProof": "BLOCK even with gateway exit0",
+          "forcedKill": "BLOCK",
+          "instantaneousAdmissionFenceProven": false,
+          "postSignalSampleDelayMilliseconds": 700,
+          "browserShutdownProven": false,
+          "runtimeGo": false,
+          "productionChanges": false,
+          "modelCalls": 0
+        }
       },
       "exactIntegratedPaths": [
         "eva2/deploy/living-core/document-worker-health.py",
