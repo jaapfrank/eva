@@ -247,7 +247,11 @@
         },
         {
           "title": "Project hervatten na herstart",
-          "detail": "De geïsoleerde projectintegratie is technisch afgerond en onafhankelijk goedgekeurd. Nu wordt starten, status/resultaat en stoppen via een gewone gespreksopdracht toegevoegd voor hetzelfde voorbereide project. Review en een proef via die route volgen; nog niet live of gebruiksklaar verklaard."
+          "detail": "De gewone gespreksingang voor starten, status/resultaat en stoppen is gebouwd en gericht getest; onafhankelijke review volgt. Een bestaande architectuurcontrole blijft rood met dezelfde eerdere bevindingen. De geïsoleerde uitvoeringsproef blijft goedgekeurd; natuurlijke modelkeuze en livegebruik zijn nog niet bewezen."
+        },
+        {
+          "title": "Gedeeld audiotype",
+          "detail": "Een kleine codeopruiming laat beide spraakadapters hetzelfde bestaande audiotype gebruiken. Compatibiliteit is gericht getest; onafhankelijke review loopt. Geen nieuwe spraakfunctie of livewijziging."
         }
       ],
       "openRisks": [
@@ -5482,19 +5486,19 @@
           "owner": "01a08d52-31b1-7091-be45-812c0b6e6c9f",
           "work": "AU-006 normale gespreksingang",
           "boundary": "New providers/document_goal_actions.py; bundled.py opt-in registration only; document_goal_plan.py safe full host GoalSpec/hash binding; targeted provider/PG tests and docs. Existing actual ConversationTurn/current authority/external tool port. No second planner/live/envflip.",
-          "status": "bounded_normal_command_source_implementation_assigned"
+          "status": "normal_command_candidate_built_tested_review_pending"
         },
         {
           "owner": "coordinator/timing_final_review",
-          "work": "IN-002 geïsoleerde operatorpakketvalidatie",
-          "boundary": "Installer UI/API and existing portable restore boundary in isolated durable worktree; no central board, live runtime or conversation/CP001 files.",
-          "status": "bounded_package_checkpoint_approved_platform_validation_open"
+          "work": "Gedeeld audiotype zonder adapterafhankelijkheid",
+          "boundary": "application/voice.py, connectors/home_assistant_voice.py, api/dashboard_voice.py and targeted dashboard voice test. Same type/re-export compatibility; no runtime or AU006 overlap.",
+          "status": "shared_audio_type_candidate_in_independent_review"
         },
         {
           "owner": "coordinator/next_tools_delivery",
-          "work": "AU-006 geïsoleerde gatewaykoppeling",
-          "boundary": "Existing disposable gateway fixture hop and reusable callback for core product proof; no main/model/live changes. Previously reviewed MCP adapter/image source complete.",
-          "status": "reviewed_provider_gateway_work_complete_disposable_runtime_cleaned_evidence_retained",
+          "work": "Onafhankelijke review gedeeld audiotype",
+          "boundary": "Review isolated voiceAudioContract20260913 candidate; no source/board/live changes. Completed AU006 provider/gateway source and cleanup remain closed.",
+          "status": "voice_audio_type_independent_review_in_progress",
           "previousCompletedWork": {
             "work": "Renovate npm-dekking",
             "status": "configuration_complete_bot_activity_unverified",
@@ -6732,7 +6736,7 @@
           }
         },
         "normalCommandProposal": {
-          "status": "bounded_source_implementation_assigned",
+          "status": "candidate_built_tested_independent_review_pending",
           "ownerThread": "01a08d52-31b1-7091-be45-812c0b6e6c9f",
           "proposalCommit": "7e3d5df7ede4cfe67a3f0764f05dbbc02b22fd31",
           "proposalPath": "eva2/evidence/living-core/au006-normal-command-activation-scope-20260913.md",
@@ -6774,13 +6778,102 @@
             "Safely load full host GoalSpec and bind its exact hash to the plan",
             "No second planner, environment-only activation or live changes"
           ],
-          "usableBeforeReviewAndTrial": false
+          "usableBeforeReviewAndTrial": false,
+          "sourceCommit": "eb511ffda706ae64c27b58ebaa37ea32a3b9248e",
+          "evidenceCommit": "5e76b3b856d82f2e8db21cbddbf4d5f02019b9b4",
+          "evidencePath": "eva2/evidence/living-core/au006-normal-command-integration-20260913.json",
+          "activationPlanPath": "eva2/evidence/living-core/au006-normal-command-activation-plan-20260913.md",
+          "exactChangePaths": [
+            "eva2/design/architecture/living-core-v1.md",
+            "eva2/evidence/living-core/au006-normal-command-activation-plan-20260913.md",
+            "eva2/src/eva/providers/bundled.py",
+            "eva2/src/eva/providers/document_goal_actions.py",
+            "eva2/src/eva/providers/document_goal_plan.py",
+            "eva2/tests/postgres/test_document_goal_actions.py",
+            "eva2/tests/providers/test_document_goal_actions.py"
+          ],
+          "reportedChecks": {
+            "targeted_suite_passed": 79,
+            "targeted_suite_failed": 1,
+            "failure": "Repository-wide architecture gate: same 24 violations as baseline; no new violations",
+            "real_postgres_router_tests_passed": 13,
+            "architecture_delta": {
+              "baseline_commit": "7e3d5df7ede4cfe67a3f0764f05dbbc02b22fd31",
+              "baseline_count": 24,
+              "candidate_count": 24,
+              "new": [],
+              "resolved": []
+            },
+            "diff_check": "passed"
+          },
+          "reportedCoverage": [
+            "real stored ingress reload",
+            "existing private owner authority and runtime scope",
+            "existing conversation action router and verified external tool pipeline",
+            "same goal replay after restart/start/stop/completion",
+            "fresh mandate revocation between prepare and dispatch",
+            "owner status and stop after revocation",
+            "other owner, installation, project, group and synthetic initiative rejected",
+            "closed arguments and host plan drift",
+            "partial SQL admission recovery",
+            "existing conversation stop fence before goal admission",
+            "completed result boundary and exact artifact identity/content"
+          ],
+          "scopeLimits": [
+            "No model calls or proof of natural model tool selection",
+            "Final artifact projection fixture is not a native provider publication proof; existing separately reviewed AU-006 product evidence remains unchanged",
+            "No active provider/gateway/core/worker configuration changes",
+            "Stop before start reports not_started and does not create a tombstone",
+            "No arbitrary new project provisioning, new planner, multi-day claim, owner acceptance or external notification"
+          ],
+          "sourceIntegrated": false,
+          "independentGo": false,
+          "reportedCorrection": "Derived tenant mapping defect found and fixed during testing; uses same raw runtime IDs as worker with scope validation.",
+          "disposablePostgresContainerRemoved": true,
+          "modelCalls": 0
         }
       },
       "isolatedProductExecutionProven": true,
       "productExecutabilityScope": "Reviewed isolated product composition proven; current live installation has not activated this route.",
       "ownerTrialReady": false,
       "latestBoundedEvidencePath": "eva2/evidence/living-core/au006-document-product-integration-20260913.json"
+    },
+    "voiceAudioContract20260913": {
+      "status": "candidate_in_independent_review",
+      "owner": "coordinator/timing_final_review",
+      "reviewer": "coordinator/next_tools_delivery",
+      "assignedByCoordinator": "01a08a88-894c-7171-87fa-e681ed47c735",
+      "sourceCommit": "ec993acce83969650b4708a762967a6abcb16817",
+      "evidenceCommit": "560c0eceb44eeea713a03a6d478cabf5d7dd42b6",
+      "evidencePath": "eva2/reviews/voice-audio-contract-20260913.json",
+      "scope": "Share identical frozen/slots SpeechAudioChunk in neutral application.voice and preserve connector re-export compatibility; remove one sibling-adapter dependency.",
+      "exactChangePaths": [
+        "eva2/src/eva/application/voice.py",
+        "eva2/src/eva/adapters/connectors/home_assistant_voice.py",
+        "eva2/src/eva/adapters/api/dashboard_voice.py",
+        "eva2/tests/api/test_dashboard_voice.py"
+      ],
+      "reportedTests": 76,
+      "reportedArchitectureDelta": {
+        "base": "7fad7a06f6295d2c1e20f786a7db062e4f76d0b1",
+        "before": 24,
+        "after": 23,
+        "added": 0,
+        "wholeGate": "open",
+        "scope": "Same isolated committed baseline; not dirty shared worktree or live."
+      },
+      "sourceIntegrated": false,
+      "independentGo": false,
+      "live": false,
+      "newVoiceFeature": false,
+      "ownerAccepted": false,
+      "artifactRetention": {
+        "owner": "coordinator/timing_final_review",
+        "exactPath": "/home/administrator/project/.eva2-artifacts/voice-audio-contract-20260913/source-worktree",
+        "purpose": "Isolated bounded shared audio type source, targeted compatibility tests and independent review evidence.",
+        "retainUntil": "Independent review, durable exact source/evidence integration and handoff complete.",
+        "cleanupMoment": "After retention conditions, remove only verified disposable worktree artifacts; preserve committed evidence. No cleanup now."
+      }
     }
   },
   "activeTaskId": "AU-008",
