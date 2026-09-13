@@ -981,6 +981,21 @@ in living-core-v1.md vallen erbij. De acht exacte paden en hunkgrenzen
 staan in dezelfde AU-006-registratie; stage/retentie blijven gelijk.
 Nog geen bronoplevering, bewijsuitkomst of liveclaim.
 
+### IN-002 — releasevalidatie als technische afhankelijkheid vastgelegd
+
+De twee documentatie-/bewijsbestanden3df7ca55+76be4720 zijn geïntegreerd.
+De beheerder controleerde de echte platformlockhash: twee tier1-targets
+ongevalideerd/unsupported en achttien niet-uitvoerbare OCI-records.
+De gewone launcher blijft daardoor geblokkeerd; versies gelijkzetten
+alleen levert geen ondersteunde release op. De bron voor API/PG-herstel
+blijft geleverd, maar volledige IN-002 is niet klaar. Geen invoer van Jaap nodig.
+Voorgesteld eerste werk is één geïsoleerd amd64 operatorpakket met bestaande
+Python3.12.14/offlinewheels, actuele dependencies, tools/reader/schemas,
+echte hostdetectie en de ongewijzigde launcher. Nog niet uitgevoerd.
+Volledige target-/imagevalidatie blijft apart; geen supported-label,
+preflightbypass, hostupgrade of live herstel op basis van deze stap.
+[Beschikbaarheid en plan](design/product/IN-002-restore-wizard-2026-09-13.md).
+
 ## Nu
 
 | Volgorde | Kaart | Resultaat | Status |

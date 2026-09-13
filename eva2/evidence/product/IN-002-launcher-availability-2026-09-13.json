@@ -1,0 +1,85 @@
+{
+  "contract": "EvaInstallerRestoreAvailabilityEvidence/v1",
+  "source_commit": "b11db0211370baaef3a3183b4bb58a42a57d3414",
+  "checked_at": "2026-09-13",
+  "actual_preflight": {
+    "contract": "EvaInstallerPreflight/v1",
+    "read_only": true,
+    "status": "blocked",
+    "platform_lock_claim_state": "selected_for_validation",
+    "host": {
+      "operating_system": "Ubuntu 24.04.4 LTS",
+      "architecture": "amd64",
+      "python_version": "3.12.3",
+      "docker_version": "29.1.3"
+    },
+    "checks": [
+      {
+        "id": "python",
+        "state": "blocked",
+        "detail": "Deze release vereist Python 3.12.14"
+      },
+      {
+        "id": "host",
+        "state": "blocked",
+        "detail": "Deze computer is geen gekozen Eva-target"
+      },
+      {
+        "id": "container_engine",
+        "state": "blocked",
+        "detail": "Docker Engine wordt pas gecontroleerd nadat de host een gekozen Eva-target is"
+      },
+      {
+        "id": "release_support",
+        "state": "blocked",
+        "detail": "Deze release heeft dit platform nog niet als ondersteund bewezen"
+      }
+    ],
+    "next": "Er is niets ge\u00efnstalleerd of gewijzigd. Los eerst de geblokkeerde controle op.",
+    "non_claims": [
+      "Deze preflight opent geen secret, database, volume, connector of gebruikersdata.",
+      "Deze preflight downloadt niets en start of wijzigt geen Docker-container.",
+      "Een groene lokale versiecontrole is geen installatie-, connector- of gebruikersacceptatiebewijs."
+    ]
+  },
+  "platform_lock_sha256": "363599c01b730bcc100a81503e12cc9e424c6c98d9b5646a18ed46d2e213fec9",
+  "tracked_platform_locks": [
+    "eva2/release/platform-lock.json"
+  ],
+  "existing_reuse_evidence": [
+    "eva2/evidence/living-core/managed-b-amd64-offline-wheel-install-2026-08-27.json",
+    "eva2/evidence/product/RB-005-two-builder-reproducibility-2026-09-01.json",
+    "eva2/reviews/installer-and-onboarding-in00.md"
+  ],
+  "conclusion": "Normal installer restore remains unavailable. No tracked validated target lock exists. Exact version alignment alone cannot satisfy release_support. Isolated API/PG tests used a synthetic ready preflight and do not prove normal operator launch.",
+  "required_dependency": "Complete platform release validation and produce its genuine validated lock/target receipt, then run unchanged operator launcher against an isolated empty target.",
+  "mutations": "Evidence/docs only; no host upgrade, platform-lock edit, preflight bypass, deployment, private archive or secret access.",
+  "exact_lock_state": {
+    "claim_state": "selected_for_validation",
+    "tier1_targets": [
+      {
+        "operating_system": "Ubuntu Server 24.04.4 LTS",
+        "architecture": "amd64",
+        "execution_mode": "containerized",
+        "container_engine": "Docker Engine 29.7.2",
+        "target_class": "tier1_release_gate",
+        "validation_state": "unvalidated",
+        "support_status": "unsupported",
+        "validation_receipt_sha256": null
+      },
+      {
+        "operating_system": "Ubuntu Server 24.04.4 LTS",
+        "architecture": "arm64",
+        "execution_mode": "containerized",
+        "container_engine": "Docker Engine 29.7.2",
+        "target_class": "tier1_release_gate",
+        "validation_state": "unvalidated",
+        "support_status": "unsupported",
+        "validation_receipt_sha256": null
+      }
+    ],
+    "oci_count": 18,
+    "all_oci_unresolved": true
+  },
+  "validation_contract_requires": "both tier1 receipts and all resolved/validated OCI images; one local successful proof cannot mark lock validated"
+}
