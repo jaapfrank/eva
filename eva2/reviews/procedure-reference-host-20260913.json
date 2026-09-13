@@ -1,0 +1,64 @@
+{
+  "contract": "ProcedureReferenceHostEvidence/v1",
+  "base": "51be1235",
+  "files": {
+    "eva2/src/eva/adapters/postgres/memory_outbox.py": "1776c5ad1c965eb9b41b2e4c103fc81ee97d533c6f8ae482e52262e67bb40f0a",
+    "eva2/src/eva/adapters/postgres/procedure_reference_host.py": "8ccec675d7cda59c9eb6aadb5af5a55b8a4d2f60278f2b6b35884c410bb1905e",
+    "eva2/src/eva/providers/procedure_reference_actions.py": "45dace2ab48592755ebc633c5bbfc97144cda02baeae346c334cc44cf11497f8",
+    "eva2/src/eva/providers/bundled.py": "944854657616338589d8134b725ae8ba43f275d591bdd0965ba1145527e0c15c",
+    "eva2/tests/postgres/test_procedure_reference_host.py": "fdcfc564996f6833c55f301d0dd3a3bd94c3a1671651ef9546c5281edb0c8ce7",
+    "eva2/tests/providers/test_procedure_reference_actions.py": "56cdfab8ba4e015e495ececd2bb46ab589c33f03265afa7efc0f43a2ec9c7553"
+  },
+  "tests": {
+    "offline": "25 passed: application references, provider descriptors/opt-in, existing generic provider registry",
+    "integration": "1 passed: PostgreSQL 16.13, genuine journal/save admission/terminal proof, real McpOwnerAuthority, existing MCP adapter over localhost HTTP fixture",
+    "postgres": {
+      "container_id": "a726e30e7bc6de57f751cdbef27305ea5a59084dc9aa8490f548963b16e4c036",
+      "postgres_image": "sha256:5d143123fdf80462d1778cd4f24b9f7ca13c87174bca19141fb194c5a1ebca59",
+      "network_mode": "none",
+      "published_ports": [],
+      "data_storage": "tmpfs",
+      "connection": "local Unix socket only",
+      "pytest_exit_code": 0,
+      "model_calls": 0,
+      "production_database_connections": 0,
+      "disposable_container_removed": true
+    },
+    "architecture": {
+      "base": "51be1235",
+      "base_violations": 23,
+      "candidate_violations": 23,
+      "identical": true
+    }
+  },
+  "proven": [
+    "One verified workspace save can be explicitly designated via its current real turn call ID",
+    "Source lookup binds owner, tenant, installation, original ingress conversation/message and exact step/thread identity; duplicate call IDs fail closed",
+    "A new genuine conversation after engine disposal lists and resolves an existing reference; exact content readback uses existing catalog validation and MCP observe, never execute",
+    "Nine real saved references paginate as 8 plus 1 from existing source records; no secondary index",
+    "Another owner, designation from another turn, changed bytes and ambiguous receipt fail closed",
+    "Existing ingress erasure removes its candidates; stopped mandate blocks before more gateway requests",
+    "Source references remain separate from personal semantic memory and existing personal flow validation"
+  ],
+  "implementation_boundary": [
+    "Opt-in EVA_PROCEDURE_REFERENCES_ENABLED defaults false; requires existing gateway configuration and owner mandate file",
+    "Factory reuses existing bundled-provider descriptors and MCP configuration; no core prompt or after_response hook",
+    "Gateway provider configuration is reread and compared before readback; owner allowlist and current owner mandate apply",
+    "Listing returns descriptive candidates marked current_artifact_verified false; resolve checks bytes before returning a typed reference"
+  ],
+  "limitations": [
+    "HTTP fixture backend stores documents in test memory, not a production filesystem or ContextForge deployment",
+    "No model calls: appropriate/nonappropriate model selection and successful procedure execution remain unproven",
+    "No deployed image, startup activation, owner acceptance or complete AU004 claim",
+    "No semantic search ranking; bounded original-record listing only",
+    "Ambiguous call IDs are refused rather than heuristically associated with a conversation",
+    "Architecture release gate is still failing on exactly 23 pre-existing violations, not a global GO"
+  ],
+  "retention_path": "/home/administrator/project/.eva2-artifacts/procedure-reference-20260913",
+  "indexed_step_correction": {
+    "cause": "Direct provider calls omitted the normal continuation route; non-indexed provider was excluded after save/list",
+    "fix": "Indexed execute/pending interface with durable input-bound action slot in existing operational timeline; completed result hash retained, references freshly revalidated on replay",
+    "proof": "Actual PostgresConversationActions.continuation_action_names and execute_step now run all procedure calls; pending_step returns revalidated result; changed input at existing step rejects; no duplicate save",
+    "boundary": "Listing and resolve replay perform current read-only validation rather than treating old availability as current. No second reference registry."
+  }
+}

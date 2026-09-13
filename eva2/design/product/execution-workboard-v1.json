@@ -248,7 +248,7 @@
         },
         {
           "title": "Reservekopie herstellen via de wizard",
-          "detail": "De uitvoerder meldt een geslaagde proef in een echte geïsoleerde Ubuntu/Docker-omgeving, inclusief handtekeningencontrole en de gewone launcher. Onafhankelijke review loopt. De releasecontrole blokkeert herstel nog; een aangetoonde fout in OS-labelherkenning wordt apart gecorrigeerd. Geen livewijziging of afgeronde herstelclaim."
+          "detail": "De geïsoleerde omgevingsproef is uitgevoerd, maar de review vond twee historische invoerhashes die in het bewijs gecorrigeerd moeten worden. Definitieve goedkeuring staat daarom nog open. De releasecontrole blokkeert herstel nog; de OS-labelcorrectie blijft een apart werkpunt."
         },
         {
           "title": "Voorbereid documentproject afgerond",
@@ -262,7 +262,7 @@
         },
         {
           "title": "Aangeleerde procedures terugvinden",
-          "detail": "De bronverwijzingen blijven afgerond. De hostaansluiting kreeg een NO-GO omdat de gewone zoekroute nog ontbrak. De correctie en het runtimeplan liggen nu ter herbeoordeling. Deze vervolgstap is nog niet geïntegreerd of live."
+          "detail": "De bronverwijzingen en hostaansluiting zijn technisch afgerond, onafhankelijk goedgekeurd en geïntegreerd. Markeren, opvragen en opnieuw controleren werken in de echte PostgreSQL-proef via de normale toolvervolgstappen. Het uitrolplan krijgt nog een correctie in de servicelijst. Nog niet live; selectie door het echte model blijft onbewezen."
         }
       ],
       "openRisks": [
@@ -5038,24 +5038,75 @@
         },
         "integrationVerification": "Five exact scoped baselines verified; bounded patch applied cleanly; all final bytes and four source hashes match reviewed commit/evidence. No newer stage work included.",
         "hostIntegrationFollowup": {
-          "status": "host_indexed_continuation_correction_and_runtime_plan_under_rereview",
+          "status": "host_source_complete_independently_approved_integrated_not_live",
           "owner": "coordinator/next_tools_delivery",
           "scope": "Host designate/list/resolve in the same retained stage",
-          "sourceIntegrated": false,
+          "sourceIntegrated": true,
           "live": false,
-          "exactOwnership": "Pending execution-owner handoff; not included in phase1 integration.",
+          "exactOwnership": [
+            "eva2/reviews/procedure-reference-host-20260913.json",
+            "eva2/reviews/procedure-reference-host-20260913.md",
+            "eva2/src/eva/adapters/postgres/memory_outbox.py",
+            "eva2/src/eva/adapters/postgres/procedure_reference_host.py",
+            "eva2/src/eva/providers/bundled.py",
+            "eva2/src/eva/providers/procedure_reference_actions.py",
+            "eva2/tests/postgres/test_procedure_reference_host.py",
+            "eva2/tests/providers/test_procedure_reference_actions.py"
+          ],
           "reviewBlocker": {
             "decision": "NO-GO for original host candidate",
             "candidateCommit": "dfac7a3ceed5c567fb4c52624b12da758eb53d5a",
-            "finding": "Ordinary indexed continuation was missing despite a passing direct host probe.",
+            "finding": "Original direct host proof omitted ordinary indexed continuation after save/list; corrected through execute_step and pending_step.",
             "reportedBy": "coordinator",
             "correctionCommit": "61688374d7ff6cb38caf78c604365d8c8efa6330",
             "runtimePlanCommit": "46e85b2267dc58619de78233405401163f6c20fe",
-            "status": "Independent re-review pending",
+            "status": "Indexed continuation corrected and source independently approved",
             "reviewer": "procedure_host_review",
-            "independentGo": false,
-            "integrationAllowed": false,
+            "independentGo": true,
+            "integrationAllowed": true,
             "liveGo": false
+          },
+          "independentGo": true,
+          "sourceCommits": [
+            "dfac7a3ceed5c567fb4c52624b12da758eb53d5a",
+            "61688374d7ff6cb38caf78c604365d8c8efa6330"
+          ],
+          "sourcePaths": [
+            "eva2/reviews/procedure-reference-host-20260913.json",
+            "eva2/reviews/procedure-reference-host-20260913.md",
+            "eva2/src/eva/adapters/postgres/memory_outbox.py",
+            "eva2/src/eva/adapters/postgres/procedure_reference_host.py",
+            "eva2/src/eva/providers/bundled.py",
+            "eva2/src/eva/providers/procedure_reference_actions.py",
+            "eva2/tests/postgres/test_procedure_reference_host.py",
+            "eva2/tests/providers/test_procedure_reference_actions.py"
+          ],
+          "independentReview": {
+            "reportedBy": "coordinator",
+            "reviewer": "procedure_host_review",
+            "decision": "GO for exact host source only",
+            "independentPostgresTestsPassed": 2,
+            "scope": "Real PG normal execute_step/pending_step plus personal memory regression",
+            "runtimePlanGo": false,
+            "modelSelectionProven": false,
+            "live": false,
+            "generalAU004Complete": false
+          },
+          "reportedChecks": {
+            "offlinePassed": 25,
+            "integrationPassed": 1,
+            "architectureViolationsBase": 23,
+            "architectureViolationsCandidate": 23,
+            "globalArchitectureGo": false
+          },
+          "integrationVerification": "Eight exact baselines; scoped patch applies cleanly; all reviewed final bytes and six evidence hashes match. Runtime plan and newer stage work excluded.",
+          "runtimePlanReview": {
+            "candidateCommit": "46e85b2267dc58619de78233405401163f6c20fe",
+            "decision": "NO-GO pending exact service list correction",
+            "finding": "Existing delegated worker uses832; core and document worker use2393.",
+            "status": "Builder correcting plan",
+            "planIntegrated": false,
+            "deploymentAuthorized": false
           }
         }
       }
@@ -5791,9 +5842,9 @@
         },
         {
           "owner": "coordinator/next_tools_delivery",
-          "work": "Hostaansluiting voor procedureverwijzingen bouwen",
+          "work": "Procedure-uitrolplan corrigeren en IN-002-bewijs beoordelen",
           "boundary": "Bestaande phase1-bronverwijzingen zijn geïntegreerd en afgesloten. Afzonderlijk designate/list/resolve-hostwerk in dezelfde stage; nieuwe wijzigingen niet opgenomen in phase1.",
-          "status": "AU004_source_only_phase_closed_host_integration_isolated_build",
+          "status": "AU004_host_source_closed_runtime_plan_correction_IN002_review",
           "previousCompletedWork": {
             "work": "Renovate npm-dekking",
             "status": "configuration_complete_bot_activity_unverified",
@@ -6397,7 +6448,7 @@
         },
         "guestProvisioning": {
           "candidateCommit": "6fe88ace984ea6aca73d76c1e5846ac6d82367f0",
-          "status": "reported_complete_independent_review_pending",
+          "status": "evidence_binding_correction_pending",
           "reviewer": "coordinator/next_tools_delivery",
           "sourceIntegrated": false,
           "evidenceIntegrated": false,
@@ -6408,7 +6459,8 @@
           ],
           "releaseSupport": "blocked",
           "functionalGo": false,
-          "productLive": false
+          "productLive": false,
+          "reviewFinding": "Independent review found two historical input hash bindings; evidence correction in progress."
         },
         "osLabelDetectionFollowup": {
           "status": "separate_fix_in_progress",

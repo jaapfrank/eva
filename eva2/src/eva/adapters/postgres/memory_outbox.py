@@ -199,6 +199,32 @@ class PostgresMemoryOutbox(PostgresScopedRole):
             return None
         return document
 
+    def list_sources(self, *, principal_id: str, project_id: str | None,
+                     cursor: str = "") -> tuple[tuple[ConversationMemoryDocument, ...], str | None]:
+        """Page the original source records; no derived search index or fact publication."""
+        if cursor and (not cursor.startswith("memory-source:") or len(cursor) != 78
+                       or any(c not in "0123456789abcdef" for c in cursor[14:])):
+            raise ValueError("invalid source cursor")
+        e = operational_events
+        data = e.c.payload["data"]
+        with self._engine.connect() as connection:
+            self._scope(connection)
+            rows = connection.execute(sa.select(e.c.thread_id, data["document_id"].astext.label("document_id")).where(
+                e.c.tenant_id == self._scope_value.tenant_id,
+                e.c.installation_id == self._scope_value.installation_id,
+                e.c.thread_id.startswith("memory-source:"), e.c.sequence == 1,
+                data["principal_id"].astext == principal_id,
+                data["project_id"].astext == project_id,
+                sa.not_(data.has_key("content_erasure")),
+                e.c.thread_id > cursor,
+            ).order_by(e.c.thread_id).limit(9)).all()
+        documents = []
+        for row in rows[:8]:
+            document = self.resolve_source(row.document_id, principal_id=principal_id, project_id=project_id)
+            if document is not None:
+                documents.append(document)
+        return tuple(documents), (rows[7].thread_id if len(rows) > 8 else None)
+
     def _store(self, document: ConversationMemoryDocument, *, source_only: bool) -> DurableMemoryRetentionJob:
         if (
             document.tenant_id != self._tenant_id
