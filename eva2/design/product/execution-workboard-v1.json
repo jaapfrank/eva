@@ -248,7 +248,7 @@
         },
         {
           "title": "Reservekopie herstellen via de wizard",
-          "detail": "De geïsoleerde omgevingsproef is uitgevoerd, maar de review vond twee historische invoerhashes die in het bewijs gecorrigeerd moeten worden. Definitieve goedkeuring staat daarom nog open. De releasecontrole blokkeert herstel nog; de OS-labelcorrectie blijft een apart werkpunt."
+          "detail": "De bewijscorrectie voor de geïsoleerde omgevingsproef ligt ter herbeoordeling: twee historische inputs zijn gekoppeld aan de oorspronkelijke seed.iso. Definitieve goedkeuring staat nog open. De releasecontrole blokkeert herstel nog; de productfix voor OS-herkenning blijft apart."
         },
         {
           "title": "Voorbereid documentproject afgerond",
@@ -262,7 +262,7 @@
         },
         {
           "title": "Aangeleerde procedures terugvinden",
-          "detail": "De bronverwijzingen en hostaansluiting zijn technisch afgerond, onafhankelijk goedgekeurd en geïntegreerd. Markeren, opvragen en opnieuw controleren werken in de echte PostgreSQL-proef via de normale toolvervolgstappen. Het uitrolplan krijgt nog een correctie in de servicelijst. Nog niet live; selectie door het echte model blijft onbewezen."
+          "detail": "De bronverwijzingen en hostaansluiting zijn technisch afgerond. Het gecorrigeerde plan is goedgekeurd voor voorbereiding. De runtime-uitvoerder maakt nu de kandidaat en een gebonden proef klaar voor afzonderlijke activeringsreview. Er is nog niets live gestart; echte modelselectie en gebruikersacceptatie blijven open."
         }
       ],
       "openRisks": [
@@ -5102,11 +5102,25 @@
           "integrationVerification": "Eight exact baselines; scoped patch applies cleanly; all reviewed final bytes and six evidence hashes match. Runtime plan and newer stage work excluded.",
           "runtimePlanReview": {
             "candidateCommit": "46e85b2267dc58619de78233405401163f6c20fe",
-            "decision": "NO-GO pending exact service list correction",
+            "decision": "GO for preparation only",
             "finding": "Existing delegated worker uses832; core and document worker use2393.",
-            "status": "Builder correcting plan",
+            "status": "preparation_approved_candidate_and_bound_probe_pending_activation_review",
             "planIntegrated": false,
-            "deploymentAuthorized": false
+            "deploymentAuthorized": false,
+            "correctionCommit": "295a70cef49477b36f7acd48cae1eb6de401fcf4",
+            "reviewer": "procedure_host_review",
+            "reportedBy": "coordinator",
+            "preparationAuthorized": true,
+            "roleCorrection": {
+              "existingDelegatedWorker": "832",
+              "coreAndDocumentWorker": "2393"
+            },
+            "runtimePreparation": {
+              "ownerThread": "01a08d52-31b1-7091-be45-812c0b6e6c9f",
+              "scope": "Five overlays, candidate and sealed probe for separate activation review",
+              "liveStarted": false,
+              "activationGo": false
+            }
           }
         }
       }
@@ -5879,8 +5893,8 @@
       "currentTechnicalTracks": {
         "reportedBy": "coordinator",
         "activeAgentsReported": 3,
-        "AU004": "Host indexed continuation correction and runtime plan under procedure_host_review",
-        "IN002": "Guest provisioning reviewed by next_tools; OS-label detection correction built separately by timing",
+        "AU004": "Runtime candidate preparation approved; separate activation review pending",
+        "IN002": "Historical seed input evidence correction under re-review; product host detection fix separate",
         "integrationAuthorizedForTheseCandidates": false
       }
     },
@@ -6448,7 +6462,7 @@
         },
         "guestProvisioning": {
           "candidateCommit": "6fe88ace984ea6aca73d76c1e5846ac6d82367f0",
-          "status": "evidence_binding_correction_pending",
+          "status": "historical_input_binding_correction_under_rereview",
           "reviewer": "coordinator/next_tools_delivery",
           "sourceIntegrated": false,
           "evidenceIntegrated": false,
@@ -6460,7 +6474,10 @@
           "releaseSupport": "blocked",
           "functionalGo": false,
           "productLive": false,
-          "reviewFinding": "Independent review found two historical input hash bindings; evidence correction in progress."
+          "reviewFinding": "Independent review found two historical input hash bindings; evidence correction in progress.",
+          "evidenceCorrectionCommit": "7628919e35c5c475f84a11fc7119481480fabf6a",
+          "correctionReported": "Two historical inputs bound from original seed.iso",
+          "hostDetectionFixSeparate": true
         },
         "osLabelDetectionFollowup": {
           "status": "separate_fix_in_progress",
