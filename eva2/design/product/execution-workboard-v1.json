@@ -248,7 +248,7 @@
         },
         {
           "title": "Reservekopie herstellen via de wizard",
-          "detail": "Het pakket en de eerdere opstartproef blijven afgerond binnen hun scope. De nieuwe inventaris toont geen ondersteund doel in de huidige platformlock; host en cache hebben Docker 29.1.3, terwijl 29.7.2 is geselecteerd. Verkrijgbaarheid en een geïsoleerde proefomgeving worden onderzocht. Herstel via de gewone launcher is nog geblokkeerd; geen nieuwe herstelproef of livewijziging."
+          "detail": "De uitvoerder meldt een geslaagde proef in een echte geïsoleerde Ubuntu/Docker-omgeving, inclusief handtekeningencontrole en de gewone launcher. Onafhankelijke review loopt. De releasecontrole blokkeert herstel nog; een aangetoonde fout in OS-labelherkenning wordt apart gecorrigeerd. Geen livewijziging of afgeronde herstelclaim."
         },
         {
           "title": "Voorbereid documentproject afgerond",
@@ -262,7 +262,7 @@
         },
         {
           "title": "Aangeleerde procedures terugvinden",
-          "detail": "De bronverwijzingen zijn technisch afgerond, onafhankelijk goedgekeurd en geïntegreerd. Procedureopslag blijft gescheiden van persoonlijk geheugen; de gevonden overzichtsfout is opgelost. Nu wordt apart de aansluiting voor markeren, opvragen en teruglezen gebouwd. Dit is nog niet live en bewijst nog geen automatisch gebruik in gewone gesprekken."
+          "detail": "De bronverwijzingen blijven afgerond. De hostaansluiting kreeg een NO-GO omdat de gewone zoekroute nog ontbrak. De correctie en het runtimeplan liggen nu ter herbeoordeling. Deze vervolgstap is nog niet geïntegreerd of live."
         }
       ],
       "openRisks": [
@@ -5038,12 +5038,25 @@
         },
         "integrationVerification": "Five exact scoped baselines verified; bounded patch applied cleanly; all final bytes and four source hashes match reviewed commit/evidence. No newer stage work included.",
         "hostIntegrationFollowup": {
-          "status": "separate_isolated_build_in_progress",
+          "status": "host_indexed_continuation_correction_and_runtime_plan_under_rereview",
           "owner": "coordinator/next_tools_delivery",
           "scope": "Host designate/list/resolve in the same retained stage",
           "sourceIntegrated": false,
           "live": false,
-          "exactOwnership": "Pending execution-owner handoff; not included in phase1 integration."
+          "exactOwnership": "Pending execution-owner handoff; not included in phase1 integration.",
+          "reviewBlocker": {
+            "decision": "NO-GO for original host candidate",
+            "candidateCommit": "dfac7a3ceed5c567fb4c52624b12da758eb53d5a",
+            "finding": "Ordinary indexed continuation was missing despite a passing direct host probe.",
+            "reportedBy": "coordinator",
+            "correctionCommit": "61688374d7ff6cb38caf78c604365d8c8efa6330",
+            "runtimePlanCommit": "46e85b2267dc58619de78233405401163f6c20fe",
+            "status": "Independent re-review pending",
+            "reviewer": "procedure_host_review",
+            "independentGo": false,
+            "integrationAllowed": false,
+            "liveGo": false
+          }
         }
       }
     },
@@ -5811,7 +5824,14 @@
           "boundary": "tools/send_project_telegram_update.py, gerichte test/handleiding/bewijs en enige centrale boardwriter",
           "status": "administration_current_confirmed_hourly_delivery"
         }
-      ]
+      ],
+      "currentTechnicalTracks": {
+        "reportedBy": "coordinator",
+        "activeAgentsReported": 3,
+        "AU004": "Host indexed continuation correction and runtime plan under procedure_host_review",
+        "IN002": "Guest provisioning reviewed by next_tools; OS-label detection correction built separately by timing",
+        "integrationAuthorizedForTheseCandidates": false
+      }
     },
     "chromeResultRecoveryChain20260912": {
       "status": "test_only_browser_subchain_complete",
@@ -6332,7 +6352,7 @@
         "liveRestorePerformed": false
       },
       "platformValidationFollowup": {
-        "status": "availability_inventory_recorded_upstream_and_isolated_provisioning_under_investigation",
+        "status": "isolated_guest_provisioning_reported_complete_under_independent_review",
         "owner": "coordinator/timing_final_review",
         "assignedBy": "coordinator",
         "scope": "IN-002 platform validation",
@@ -6364,7 +6384,7 @@
           "freshRestorePerformed": false,
           "matchingIsolatedVmEstablished": false
         },
-        "nextStep": "Verify exact upstream availability and investigate isolated provisioning; no owner input required.",
+        "nextStep": "Independent provisioning review; separately build and review proven OS-label detection correction.",
         "productChanges": false,
         "platformSupported": false,
         "artifactRetention": {
@@ -6374,6 +6394,28 @@
           "purpose": "Platform availability evidence and bounded isolated provisioning preparation",
           "retainUntil": "Review, central evidence registration and handoff complete; coordinator decides cleanup",
           "cleanup": "No cleanup now; proposed VM resources are not claimed as provisioned."
+        },
+        "guestProvisioning": {
+          "candidateCommit": "6fe88ace984ea6aca73d76c1e5846ac6d82367f0",
+          "status": "reported_complete_independent_review_pending",
+          "reviewer": "coordinator/next_tools_delivery",
+          "sourceIntegrated": false,
+          "evidenceIntegrated": false,
+          "reportedProof": [
+            "Ubuntu and Docker signatures verified",
+            "Real isolated guest provisioned",
+            "Actual launcher exercised"
+          ],
+          "releaseSupport": "blocked",
+          "functionalGo": false,
+          "productLive": false
+        },
+        "osLabelDetectionFollowup": {
+          "status": "separate_fix_in_progress",
+          "owner": "coordinator/timing_final_review",
+          "evidenceBasis": "Reported proven OS-label recognition issue; exact fix candidate pending",
+          "sourceIntegrated": false,
+          "live": false
         }
       }
     },
