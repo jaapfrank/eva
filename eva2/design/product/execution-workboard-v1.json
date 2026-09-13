@@ -247,7 +247,7 @@
         },
         {
           "title": "Project hervatten na herstart",
-          "detail": "Opdrachtbinding, eigenaarscontrole en duurzame planopslag zijn onafhankelijk beoordeeld en geïntegreerd. De bestandsbroker ligt nu bij de reviewer. De uitvoerende provider, controle vlak vóór schrijven en de gezamenlijke praktijkproef blijven open; nog niet live."
+          "detail": "Opdrachtbinding en eigenaarscontrole zijn geïntegreerd. De native bestandsbroker heeft onafhankelijke bron-GO; een kleine clientwijziging ligt nog bij de reviewer. Daarna kunnen beide samen worden geïntegreerd. De uitvoerende projectaansluiting is nog niet live."
         }
       ],
       "openRisks": [
@@ -5474,7 +5474,7 @@
           "owner": "coordinator/next_tools_delivery",
           "work": "AU-006 bestaande bestandsbroker uitbreiden",
           "boundary": "native/workspace_writer_broker.c: parse_request_frame, open_journal(read_only), observe_request, main/v2 recovery binding; test/workspace-writer-broker-v2.test.mjs; deploy/living-core/workspace-create-only/broker-client.mjs and README.md. Preserve v1/receipt/journal formats. No MCP catalogue, host DAC or live.",
-          "status": "native_broker_candidate_in_independent_source_review",
+          "status": "native_source_go_client_delta_review_pending",
           "previousCompletedWork": {
             "work": "Renovate npm-dekking",
             "status": "configuration_complete_bot_activity_unverified",
@@ -6295,7 +6295,7 @@
           "owner": "coordinator/next_tools_delivery",
           "developerAgent": "/root/next_tools_delivery",
           "developerParentThread": "01a08a88-894c-7171-87fa-e681ed47c735",
-          "status": "candidate_in_independent_native_source_review",
+          "status": "native_source_go_client_delta_review_pending",
           "userOutcome": "Creating a new project document cannot overwrite an existing file.",
           "scope": "First reviewable combination: bounded native EVWWREQ2 request binding and observation-only lookup, one broker client, targeted tests and documentation. No MCP catalogue or live composition.",
           "ownedPaths": [
@@ -6356,14 +6356,33 @@
           "reportedTests": 31,
           "independentReviewer": "coordinator/timing_final_review",
           "sourceIntegrated": false,
-          "independentGo": false,
+          "independentGo": true,
           "artifactRetention": {
             "owner": "coordinator/next_tools_delivery",
             "exactPath": "/home/administrator/project/.eva2-artifacts/workspace-broker-v2-20260913/source-worktree",
             "purpose": "Durable native broker v2/client candidate and crash/race evidence for independent review and bounded provider integration.",
             "retainUntil": "Independent review, exact source/evidence integration and downstream provider handoff are complete.",
             "cleanupMoment": "After retention conditions, remove only verified disposable worktree artifacts. Retain committed review/evidence; no cleanup now."
-          }
+          },
+          "independentGoScope": "Native/source candidate768e72d9 only; client delta review pending, no runtime/DAC/catalogue approval.",
+          "nativeSourceReview": {
+            "decision": "GO",
+            "reportedBy": "coordinator",
+            "sourceCommit": "768e72d9e942f015affc6efe58db6300cfc0cc52",
+            "hashesVerified": 4,
+            "nativeV2TestsIndependentlyRerun": 31,
+            "additionalChecks": [
+              "Receipt fields",
+              "Truncated receipt rejection",
+              "Request binding mismatch rejection"
+            ]
+          },
+          "clientDelta": {
+            "commit": "7c31d0fce4dddb84b10e9199fde26ec6f5dcff03",
+            "status": "independent_delta_review_pending",
+            "sameNativeSourceHash": true
+          },
+          "integrationStatus": "Wait for client delta outcome, then integrate jointly."
         },
         "admissionPreparation": {
           "status": "bounded_admission_source_integrated_independent_partial_go",
