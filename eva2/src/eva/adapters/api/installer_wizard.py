@@ -2,6 +2,13 @@
 
 from __future__ import annotations
 
+from eva.application.installer_restore import InstallerRestorePort
+from eva.adapters.api.installer_restore_api import (
+    INSTALLER_RESTORE_SECTION,
+    INSTALLER_RESTORE_SCRIPT,
+    register_installer_restore_routes,
+)
+
 import hmac
 import html
 import ipaddress
@@ -245,6 +252,7 @@ button:disabled{{opacity:.45}}#soul-result{{white-space:pre-wrap}}
 {INSTALLER_PROVIDER_SECTION}
 {INSTALLER_BUDGET_SECTION}
 {INSTALLER_INSTALLATION_PLAN_SECTION}
+{INSTALLER_RESTORE_SECTION}
 <section><h2>Hoe {name} zich aan jou voorstelt</h2><p><a href="/internal/v1/identity/soul-export" download="SOUL.md">Download de huidige SOUL.md</a></p><p>Plak optioneel een kleine <code>SOUL.md</code>. Je ziet eerst het precieze voorstelverschil.</p><textarea id="soul" maxlength="8192" spellcheck="false" placeholder="# Eva&#10;&#10;## Naam&#10;Eva&#10;&#10;## Temperament&#10;warm, nieuwsgierig"></textarea><button type="button" id="soul-preview">Toon voorstel</button>{controls}<p id="soul-result" role="status"></p></section>
 </main>
 <script>window.__evaIdentityWritable={writable_json};window.__evaIdentityResume={resume_json};window.__evaProfileEnabled={profile_enabled_json};window.__evaCapabilityEnabled={capability_enabled_json};window.__evaSecretEnabled={secret_enabled_json};window.__evaProviderVerificationEnabled={provider_enabled_json};window.__evaBudgetEnabled={budget_enabled_json};</script>
@@ -258,6 +266,8 @@ button:disabled{{opacity:.45}}#soul-result{{white-space:pre-wrap}}
         + INSTALLER_PROVIDER_SCRIPT
         + "</script>\n<script>"
         + INSTALLER_BUDGET_SCRIPT
+        + "</script>\n<script>"
+        + INSTALLER_RESTORE_SCRIPT
         + "</script>\n<script>"
         + INSTALLER_INSTALLATION_PLAN_SCRIPT
         + "</script>\n<script>"
@@ -276,10 +286,13 @@ def create_installer_wizard(
     secret_store: InstallerSecretStorePort | None = None,
     provider_verifier: InstallerProviderVerifierPort | None = None,
     provider_configuration_store: InstallerProviderConfigurationPort | None = None,
-    configured_probe_factory: Callable[[str, str], InstallerProviderProbe] | None = None,
+    configured_probe_factory: (
+        Callable[[str, str], InstallerProviderProbe] | None
+    ) = None,
     secret_lifecycle: InstallerSecretLifecyclePort | None = None,
     budget_workflow: InstallerBudgetPort | None = None,
     installation_plan_builder: InstallerInstallationPlanBuilder | None = None,
+    restore_workflow: InstallerRestorePort | None = None,
 ) -> FastAPI:
     receipt = _safe_receipt(receipt)
     if identity_lifecycle is not None:
@@ -430,6 +443,12 @@ def create_installer_wizard(
         require_installer_read(request)
         _same_origin_or_absent(request)
 
+    register_installer_restore_routes(
+        app,
+        workflow=restore_workflow if receipt["status"] == "ready" else None,
+        require_write=require_installer_write,
+        security_headers=_SECURITY_HEADERS,
+    )
     register_installer_profile_routes(
         app,
         workflow=profile_workflow,
@@ -474,6 +493,7 @@ def create_installer_wizard(
         require_write=require_installer_write,
         security_headers=_SECURITY_HEADERS,
     )
+
     def build_installation_plan() -> dict[str, object]:
         if installation_plan_builder is None:
             raise RuntimeError("installer installation plan builder is unavailable")

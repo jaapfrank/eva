@@ -1,0 +1,42 @@
+{
+  "source_commit": "8c7dbb160e2b5565225fb6d49959a18d9b8cf1c0",
+  "previous_evidence": "e1375c93eba5416f15bdfec7bab402aff5a26cd8",
+  "files": {
+    "eva2/design/product/IN-002-restore-wizard-2026-09-13.md": "f19455c9cc82789481b7daff9acbd654252fecc7fd5ec92b6dfd38278ccd6629",
+    "eva2/tests/portable/installer_object_fixture.py": "0b7e91059429e3fe76675a02dcba442b89e894228f6a6f86fd4796f91f1e3346",
+    "eva2/tests/portable/test_installer_object_restore.py": "814ed9879e1dad49d2dabaf8ad6fc2790a1354c770f6afa4466ba598c948dfd4",
+    "eva2/tools/installer_portable_restore.py": "dfb2d01de52ab46818d1a647e9e352755be39da67fc27d02d658a866fccaa6a4",
+    "eva2/tools/portable_restore.py": "6bcfb683aa6e5221de9de02f3bbed5b926e807f6f94bf37fd4a401d78e0f8d55"
+  },
+  "final_combination": {
+    "passed": 24,
+    "skipped": 0,
+    "seconds": 64.72,
+    "suites": [
+      "tests/portable/test_installer_object_restore.py",
+      "tests/portable/test_installer_portable_restore.py",
+      "tests/portable/test_portable_restore_object_boundary.py",
+      "tests/portable/test_portable_restore.py",
+      "tests/api/test_installer_restore.py"
+    ]
+  },
+  "database": "dedicated disposable PostgreSQL 16.13-alpine, fresh synthetic databases; own test container removed",
+  "object_evidence": [
+    "full authenticated archive uploaded and restored through real wizard HTTP route",
+    "restored object bytes authenticated and decrypted; plaintext SHA256 and length match",
+    "connector bindings remain reauthorization_required",
+    "erasure authority revoked after preview: no target object or DB rows",
+    "authority revoked after materialization: no DB rows, private authenticated CAS and journal retained, staging and token removed, replay changes nothing"
+  ],
+  "fixes": [
+    "catalogue-derived immediate-FK insertion order; deferrable cycles checked at commit",
+    "nullable canonicalJson bound to SQL NULL"
+  ],
+  "non_claims": [
+    "No atomic CAS+PostgreSQL rollback",
+    "No deployment or live data access",
+    "No owner acceptance or full external-service computer migration"
+  ],
+  "historical_skip_resolution": "Previous object-PG skip was missing EVA2_TEST_POSTGRES_DSN; configured to dedicated empty test database, now passed",
+  "independent_review": "pending"
+}

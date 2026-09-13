@@ -935,6 +935,30 @@ live cutover vallen erbuiten. Nog niet gebouwd/getest/live/geaccepteerd;
 geen meerdaagse praktijk of volledige AU-006-claim. Eén primaire kaart
 blijft focus houden terwijl dit expliciet toegewezen werk apart voortgaat.
 
+### IN-002 — canoniek herstel via wizard technisch afgerond
+
+De beoordeelde installer/API/operator/decoderlevering en noodzakelijke
+FK-volgorde/SQLNULL-correctie zijn exact geïntegreerd. De reviewer bevestigde
+twaalf tests en vijf deltahashes; de uiteindelijke bewijsset bevat24tests
+zonder skips, inclusief een echt geauthenticeerd objectherstel via wizard
+en PostgreSQL. Constraints blijven ingeschakeld. Identiteit, canonieke
+gegevens en ontsleutelde objectbytes herstellen; connectoren vereisen opnieuw
+aanmelden. Herstelautoriteit blijft verplicht en bestaande doeldata geweigerd.
+Technisch gereed binnen het portable-contract; geen live herstel/deploy,
+volledige externe-dienstenmigratie of eigenaaracceptatie. Na een fout kan
+private CAS plus materialisatiejournaal blijven bestaan, zonder gecommitteerde
+databaserijen: geen atomaire CAS/PG-terugrolclaim. Operatoropstelling voor
+een geïsoleerde eigenaarproef blijft apart open. Veertien beoordeelde bestanden
+opgenomen, eerdere bewijsgrenzen historisch behouden.
+[Proberen na doelopstelling](design/product/IN-002-restore-wizard-2026-09-13.md).
+
+AU-006 bewaart de geïsoleerde stage
+/home/administrator/project/.eva2-artifacts/au006-project-resume-20260913
+met source-worktree en detached basisb11df1e. Eigenaar01a08d52 bewaart
+tot bron, review en bewijs duurzaam geregistreerd zijn; daarna alleen
+de gecontroleerde stage/wegwerpdata opruimen. Nu geen cleanup. Exacte
+runtime-/test-/documentatiepaden zijn bij de eigenaar opgevraagd.
+
 ## Nu
 
 | Volgorde | Kaart | Resultaat | Status |

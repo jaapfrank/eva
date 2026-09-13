@@ -1,0 +1,47 @@
+{
+  "source_commit": "dd9f0af22620159f231734d6f8111c4eb3660aab",
+  "base_commit": "9658f92317bda9c765781530b62d3503a2f6e88f",
+  "files": {
+    "eva2/design/product/IN-002-restore-wizard-2026-09-13.md": "3caf7e9ca23fbfb228d0ac0682957b5514862ecb19a50820d3cdf031bbbe4132",
+    "eva2/src/eva/adapters/api/installer_restore_api.py": "2239efe969f35fc1ef0763177a74c2d35362fd93565e9583fbee7b028610103d",
+    "eva2/src/eva/adapters/api/installer_wizard.py": "9bfe776767ded86f00a4435f905c22d83eddd80d47276acfece3b60e9c866a9b",
+    "eva2/src/eva/application/installer_restore.py": "50eb5314fe17d0d43262e2f7ef911a6c424b56ae6d51e310c91e814c8eb305e3",
+    "eva2/src/eva/bootstrap/installer_wizard_cli.py": "1d018584d0e583f5e228a232b521515d23f92dde867d205ca9d4248a711d62be",
+    "eva2/tests/api/test_installer_restore.py": "6a2582236664bb7a8a564e43c0af639a38f1376b136967b144370336e9f420ba",
+    "eva2/tests/portable/test_installer_portable_restore.py": "c9c40af15da100c2e0c961fea13c8e4cf15607ae6d73661c1befa5f3ca699e67",
+    "eva2/tools/installer_portable_restore.py": "a54adec972a29d8c684b8f81673c8fa208a7a0a8867a7513baf5cb8f33fc32ea",
+    "eva2/tools/installer_restore_wizard.py": "de46512f7fa39a505f301a3901596f1b1f50c7320c194bd0273d0dda4fd790a7",
+    "eva2/tools/portable_restore.py": "033702a77a45ff347b0c456d4a58ae178df098252c16665c0dc2356c6d7e9b24"
+  },
+  "tests": [
+    {
+      "suite": "tests/portable/test_installer_portable_restore.py",
+      "passed": 4,
+      "database": "dedicated disposable PostgreSQL 16.13-alpine, synthetic source and target; container removed",
+      "scope": "actual wizard HTTP upload/confirm, identity and memory restored, refusal of existing target, corrupt/wrong-password/revoked-authority no target rows"
+    },
+    {
+      "suite": "tests/api/test_installer_restore.py tests/api/test_installer_wizard.py tests/portable/test_portable_restore.py",
+      "passed": 31
+    },
+    {
+      "suite": "tests/portable/test_portable_restore_object_boundary.py tests/portable/test_portable_restore_authority.py",
+      "passed": 15,
+      "skipped": 1,
+      "scope": "existing object unit boundary; real object PG case skipped, not new end-to-end object wizard proof"
+    }
+  ],
+  "architecture": {
+    "violations_total": 24,
+    "violations_in_changed_files": 0,
+    "full_gate_passed": false
+  },
+  "limitations": [
+    "No live restoration or deployment",
+    "No Jaap acceptance",
+    "Canonical portable contract only; external services and installation secrets excluded",
+    "Real wizard object archive restoration not yet proven",
+    "Launcher follows existing preflight; no bypass or platform support claim"
+  ],
+  "independent_review": "pending"
+}

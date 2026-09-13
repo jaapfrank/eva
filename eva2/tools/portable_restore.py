@@ -886,7 +886,9 @@ def _bind_value(value: Any, encoding: str) -> tuple[str, Any]:
             raise PortableRestoreError("portable boolean is invalid")
         return "%s", value
     if encoding == "canonicalJson":
-        return "CAST(%s AS jsonb)", canonical_json_bytes(value).decode("utf-8")
+        return "CAST(%s AS jsonb)", (
+            None if value is None else canonical_json_bytes(value).decode("utf-8")
+        )
     if encoding == "canonicalUuidArray":
         return "CAST(%s AS uuid[])", _json_array(value, uuid_values=True)
     if encoding == "canonicalTextArray":
@@ -1142,6 +1144,20 @@ def _validate_record_sets(
     return tuple(prepared)
 
 
+def validate_portable_restore_records(
+    records_by_table: Mapping[str, Sequence[Mapping[str, Any]]],
+    *,
+    table_specs: tuple[Mapping[str, Any], ...],
+    materialized_objects: Sequence[MaterializedPortableObject] | None = None,
+    object_store_root: Path | None = None,
+) -> None:
+    """Validate restore transforms before presenting an installer confirmation."""
+    _validate_record_sets(
+        records_by_table, table_specs=table_specs,
+        materialized_objects=materialized_objects, object_store_root=object_store_root,
+    )
+
+
 def restore_column_preserving_records(
     connection: Any,
     records_by_table: Mapping[str, Sequence[Mapping[str, Any]]],
@@ -1216,4 +1232,5 @@ __all__ = [
     "decode_terminal_read_attempt",
     "restore_column_preserving_records",
     "verify_empty_restore_target",
+    "validate_portable_restore_records",
 ]

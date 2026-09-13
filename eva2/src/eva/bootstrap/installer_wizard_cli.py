@@ -9,6 +9,8 @@ from pathlib import Path
 
 import uvicorn
 
+from eva.application.installer_restore import InstallerRestorePort
+
 from eva.adapters.objects.identity_verifier import load_current_identity_pack
 from eva.adapters.connectors.installer_codex_model_probe import CodexInstallerModelProbe
 from eva.adapters.connectors.installer_configured_probe_factory import (
@@ -71,7 +73,9 @@ def _private_workspace(path: Path) -> Path:
     return path
 
 
-def run_installer_wizard(argv: list[str] | None = None) -> int:
+def run_installer_wizard(
+    argv: list[str] | None = None, *, restore_workflow: InstallerRestorePort | None = None
+) -> int:
     from eva.adapters.api.installer_wizard import (
         InstallerBootstrap,
         create_installer_wizard,
@@ -228,6 +232,7 @@ def run_installer_wizard(argv: list[str] | None = None) -> int:
         create_installer_wizard(
             receipt,
             bootstrap,
+            restore_workflow=restore_workflow,
             identity=(
                 load_current_identity_pack() if identity_lifecycle is None else None
             ),
