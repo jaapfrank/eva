@@ -218,7 +218,7 @@
       "nextOutcomes": [
         {
           "title": "Reguliere Telegramupdate afgeleverd",
-          "detail": "De uurupdate van 13 september om 07:12 uur is bevestigd afgeleverd. De bestaande planning houdt minstens één uur tussen verzendpogingen; er is geen extra bericht verstuurd."
+          "detail": "De uurupdate van 13 september om 08:24 uur is bevestigd afgeleverd. De bestaande planning houdt minstens één uur tussen verzendpogingen; er is geen extra bericht verstuurd."
         },
         {
           "title": "Browserherstelproef afgerond",
@@ -5649,18 +5649,18 @@
       "usage": "design/product/project-telegram-updates.md",
       "confirmationHour": "2026-09-12T20:00Z",
       "scheduler": "Coordinator confirmed existing heartbeat wired to exact CLI/dedup/receipt on 12 September; no second scheduler.",
-      "nextRegularUpdateNotBefore": "2026-09-13T06:12:09.742469+00:00",
+      "nextRegularUpdateNotBefore": "2026-09-13T07:24:26.899718+00:00",
       "latestHourlyAttempt": {
-        "hourKey": "2026-09-13T05:00Z",
+        "hourKey": "2026-09-13T06:00Z",
         "status": "delivered",
-        "claimedAt": "2026-09-13T05:12:09.742469+00:00",
-        "deliveredAt": "2026-09-13T05:12:13.736544+00:00",
+        "claimedAt": "2026-09-13T06:24:26.899718+00:00",
+        "deliveredAt": "2026-09-13T06:24:31.193875+00:00",
         "providerReceiptAvailable": true,
         "privateChatAndExactTextVerified": true,
         "repeated": false,
-        "evidencePath": "eva2/evidence/product/project-telegram-hourly-delivery-2026-09-13-05.json"
+        "evidencePath": "eva2/evidence/product/project-telegram-hourly-delivery-2026-09-13-06.json"
       },
-      "lastConfirmedDelivery": "2026-09-13T05:12:13.736544+00:00",
+      "lastConfirmedDelivery": "2026-09-13T06:24:31.193875+00:00",
       "helperRepair": {
         "status": "reviewed_helper_regular_delivery_confirmed",
         "scope": "Trim ASCII edge whitespace before wire; preserve raw idempotency hash and old records; retain only allowlisted stage/boolean/hash diagnostics.",
@@ -5742,6 +5742,16 @@
           "privateChatAndExactTextVerified": true,
           "repeated": false,
           "evidencePath": "eva2/evidence/product/project-telegram-hourly-delivery-2026-09-13-04.json"
+        },
+        {
+          "hourKey": "2026-09-13T05:00Z",
+          "status": "delivered",
+          "claimedAt": "2026-09-13T05:12:09.742469+00:00",
+          "deliveredAt": "2026-09-13T05:12:13.736544+00:00",
+          "providerReceiptAvailable": true,
+          "privateChatAndExactTextVerified": true,
+          "repeated": false,
+          "evidencePath": "eva2/evidence/product/project-telegram-hourly-delivery-2026-09-13-05.json"
         }
       ],
       "unsentHourNote": {
@@ -5762,9 +5772,9 @@
         },
         {
           "owner": "coordinator/timing_final_review",
-          "work": "R2-liveoplevering onafhankelijk beoordeeld",
-          "boundary": "Exact guarded registration plan and bd26e97f correction; no execution or database changes. Earlier four-row incident repair remains closed.",
-          "status": "bounded_r2_live_result_go_complete"
+          "work": "IN-002 platformvalidatie",
+          "boundary": "Platformvalidatie voor IN-002; exacte nieuwe scope en bewijs volgen. Geen installatie-/restore- of eigenaaracceptatieclaim op basis van de opdracht.",
+          "status": "IN002_platform_validation_in_progress"
         },
         {
           "owner": "coordinator/next_tools_delivery",
@@ -6320,6 +6330,16 @@
         "preflightBypassAllowed": false,
         "hostModificationPerformed": false,
         "liveRestorePerformed": false
+      },
+      "platformValidationFollowup": {
+        "status": "in_progress",
+        "owner": "coordinator/timing_final_review",
+        "assignedBy": "coordinator",
+        "scope": "IN-002 platform validation",
+        "exactSourceOwnership": "Pending coordinator/owner handoff",
+        "live": false,
+        "ownerAccepted": false,
+        "ordinaryLauncherUnblocked": false
       }
     },
     "localStreamLive20260913": {
