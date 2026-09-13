@@ -1,0 +1,40 @@
+{
+  "base_commit": "dee5b051343fb16b21532cd8a44eac9c828e25be",
+  "image": "sha256:f7d9feba8359a0d7d3fbe18703cb8c3a6bbe5e274aeccda15b83c26b6010bd00",
+  "parent": "sha256:bd31ea2dde76561fe662a551756f939e9007048956c300e54ad49a8c18ddfdc4",
+  "files": {
+    "eva2/deploy/living-core/workspace-create-only/mcp-server.mjs": "5c89b94b16d3655e05f1cec067a67b257bd1e5598e9fa51c72f094fdf7bbdebf",
+    "eva2/deploy/living-core/workspace-create-only/Dockerfile": "6e629995763ebe4ae8cb92d9e949750653eaf884ba53004a2741f26d374542f9",
+    "eva2/deploy/living-core/workspace-create-only/start-atomic-workspace.sh": "ac269b06979c8299bb44548759d3b034e27c7d18aa76c6608f40c0111566d868",
+    "eva2/deploy/living-core/workspace-create-only/README.md": "09f7cf803f0a61988a06a5d5e4c41a85c9b3fc2357c80ded3c8e5e052b2fcb95",
+    "test/workspace-atomic-mcp-proof.py": "984326a6a44028c48d1b3d83a0cb3f3e6458e300f3ca3b979f9a2ce511ad64f4"
+  },
+  "binary_sha256": "bbe155e519ddda55b2f0080e3ff490e686c89d3d6e44f3680135cc9b8e177314",
+  "native_sha256": "b0be529b85e684b4ac9c7f35e22b449771f45ae93be8b88f508960955a4c060c",
+  "proof": {
+    "passed": true,
+    "transport": "ContextForge translate HTTP -> SDK stdio -> native",
+    "gateway_registration": false,
+    "provider_binding_sha256": "3a4d02d8757e8f87579583465cf07ed3e1be3fec89ab10267ab5b14195c536e7",
+    "tests": [
+      "closed schema",
+      "binding in tool descriptions",
+      "observe absent does not create journal",
+      "created receipt",
+      "observe byte-identical and journal unchanged",
+      "invalid path and extra executable denied",
+      "changed binding denied",
+      "changed file denied",
+      "same receipt after process restart",
+      "noop is not create success",
+      "different uid denied private root"
+    ],
+    "limits": [
+      "no live mounts",
+      "no owner mandate or stop state checked",
+      "no gateway catalog registration",
+      "no crash injection in this HTTP fixture; native crash suite separate"
+    ]
+  },
+  "scope": "isolated image and MCP translate/native proof; gateway registration and host mandate integration remain open"
+}

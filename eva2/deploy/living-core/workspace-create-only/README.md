@@ -78,3 +78,33 @@ verified receipt can complete recovery. Although the native legacy protocol can
 recover on an exact execution retry, this project bridge must not use that as an
 observation fallback. Provisioning and dispatch admission must be bound to the
 same host authority and durable plan lifecycle before production use.
+
+## Isolated MCP adapter
+
+The candidate exports `workspace_create_bound` and `workspace_observe_bound`,
+with exactly operation_id, request_binding_sha256, expected_generation, path
+and content. Paths are flat relative filenames. Both operations validate the
+complete frame. Verified replies expose the binding/path/content at top level
+for gateway proof bindings, plus the validated receipt. Noop is explicitly an
+error for this create-specific document profile; it is not hidden as created.
+
+The SDK is the existing pinned base image's @modelcontextprotocol/sdk 1.30.0.
+The existing private-secret startup checks and mcpgateway.translate provide
+internal streamable HTTP port 9000; only the stdio executable was replaced.
+This candidate does not introduce another HTTP or authentication implementation.
+
+A host-owned mode0400 `/run/eva2/atomic-binding.json` pins version1,
+project_journal_identity (64hex), binary_sha256, client_sha256 and root/journal
+{dev,ino}. Startup checks these against opened no-follow FDs and actual bytes.
+The SHA256 of the exact configuration bytes appears in each tool description.
+Host registration must include that description in its actual catalog binding;
+this fixture confirms tools/list exposure, not production catalog propagation.
+The metadata proves identity matching, not fresh journal genesis. Host lifecycle
+must separately establish a new approved project journal and preserve it.
+
+Build context uses the reviewed C source compiled statically with GCC and the
+provided pinned Dockerfile. The durable artifact stage retains build script,
+binary hash and build log. The fixture uses disposable private mounts and an
+internal network, exercises translate HTTP, process restart and different-UID
+read denial. It does not register a ContextForge gateway or prove general host
+DAC, owner admission, stop-state enforcement, or production readiness.
