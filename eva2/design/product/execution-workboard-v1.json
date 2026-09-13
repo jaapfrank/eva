@@ -279,7 +279,7 @@
         },
         {
           "title": "Betrouwbare status van documentdiensten",
-          "detail": "Het herstel is onafhankelijk bevestigd: beide vorige images staan terug, Eva is gereed en de doelen, bestanden en Telegramreparaties zijn behouden. De oude verkeerde gezondheidscontroles melden opnieuw ongezond. De statuscorrectie is nog niet opgeleverd. De oorspronkelijke mislukte installatie en terugrolmelding blijven bewaard; een gerichte reparatie van de installatiecontrole wordt voorbereid."
+          "detail": "Het herstel is onafhankelijk bevestigd: beide vorige images staan terug en Eva, doelen en bestanden zijn behouden. De correctie van de installatiecontrole is nu als nieuwe kandidaat gereed; twintig gerichte controles slagen volgens de uitvoerder. De onafhankelijke beoordeling staat open. Nog geen tweede installatie en geen afgeronde statuscorrectie; de oorspronkelijke mislukte proef blijft bewaard."
         }
       ],
       "openRisks": [
@@ -1019,7 +1019,7 @@
       "sessionGoal": "AU-008: één zelfstandige kosteloze bijdrage via de algemene uitvoerder.",
       "currentWork": "**Afgerond en live — herbruikbare planreviewprocedure (PR-01).** Eva slaat een werkwijze op, vindt een eerdere werkwijze terug in een nieuw gesprek, ontvangt de gecontroleerde tekst en past de regels toe. De drie echte proeven zijn onafhankelijk goedgekeurd. De inhoudelijke planreview duurde 13,20 seconden. Jouw beoordeling staat open; algemene zelflerende vaardigheden zijn hiermee niet afgerond.",
       "currentEvidence": "eva2/evidence/living-core/au004-r6-abc-live-pass-20260913.json",
-      "nextStep": "**Eerstvolgend open werk:** de configuratievergelijking voor de documentstatusinstallatie gericht herstellen en een nieuwe installatiekandidaat laten beoordelen. Het actuele herstel is onafhankelijk bewezen; de oude verkeerde gezondheidscontroles zijn terug. De statuscorrectie is nog niet opgeleverd. [PR-01](http://localhost:44712/#practice-PR-01) blijft afgesloten; IN-002-releasevoorwaarden blijven afzonderlijk vervolgwerk.",
+      "nextStep": "**Eerstvolgend open werk:** onafhankelijke beoordeling van de nieuwe installatiecontrole voor de documentdiensten. De R2-kandidaat is gereed met twintig gerichte controles; een tweede installatie is nog niet goedgekeurd of uitgevoerd. Het actuele herstel is onafhankelijk bewezen. [PR-01](http://localhost:44712/#practice-PR-01) blijft afgesloten; IN-002-releasevoorwaarden blijven afzonderlijk vervolgwerk.",
       "usageClarification": {
         "date": "2026-09-07",
         "authorizedBy": "Jaap",
@@ -9681,11 +9681,18 @@
         "currentRestorationIndependentlyVerified": true
       },
       "guardFix": {
-        "status": "fresh_fix_and_seal_review_pending",
+        "status": "r2_fresh_sealed_candidate_under_independent_review",
         "ownerThread": "01a08d52-31b1-7091-be45-812c0b6e6c9f",
         "scope": "Canonicalize environment comparison while checking exact values and rejecting duplicate keys",
         "sourceGo": false,
-        "newInstallationGo": false
+        "newInstallationGo": false,
+        "candidateCommit": "2bd00b1dffe4323f280161437901e4ed04baaa9b",
+        "sealSha256": "fcf3677460125992f2885646d3be7a010f1efd12b5b1c4012bbb45f8f3849a74",
+        "reportedGuardTestsPassed": 20,
+        "normalAndOptimizedReported": true,
+        "sameTwoImages": true,
+        "secondInstallationPerformed": false,
+        "reportedBy": "runtime writer"
       },
       "independentRestoration": {
         "status": "verified",
