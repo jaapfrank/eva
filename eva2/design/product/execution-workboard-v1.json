@@ -259,6 +259,10 @@
         {
           "title": "Gedeeld audiotype",
           "detail": "De codeopruiming is onafhankelijk goedgekeurd en geïntegreerd: beide spraakadapters gebruiken hetzelfde bestaande audiotype met behoud van compatibiliteit. Geen nieuwe spraakfunctie of livewijziging; de volledige architectuurcontrole blijft apart open."
+        },
+        {
+          "title": "Aangeleerde procedures terugvinden",
+          "detail": "In bouw: opgeslagen documenten expliciet als herbruikbare procedure markeren en later veilig terugvinden. Eva controleert daarbij eigenaar, geldigheid en de actuele bestandsinhoud. De bestaande zoek- en verwerkingsroute wordt hergebruikt. Dit werk is nog niet live; eerdere leerproeven en geaccepteerd geheugen blijven afgesloten."
         }
       ],
       "openRisks": [
@@ -4907,6 +4911,39 @@
         "observerCorrection": "Read-only lookup by sealed message ID corrected initial newline-sensitive text lookup; not a second model call.",
         "fullAU004Accepted": false,
         "next": "Preserve independent result and missing reuse/search proof; no automatic retry or retroactive criteria change."
+      },
+      "procedureReferenceFollowup": {
+        "status": "bounded_isolated_implementation_in_progress",
+        "owner": "coordinator/next_tools_delivery",
+        "assignedBy": "01a08a88-894c-7171-87fa-e681ed47c735",
+        "userOutcome": "An explicitly reusable saved procedure can be identified as a procedure candidate for a later task, with owner, retention, mandate and current file hash checked locally.",
+        "boundedScope": "Typed ProcedureReference for explicitly marked reusable STATE_VERIFIED saves and admission owner/path/hash; separate from personal ConfirmedFact.",
+        "contractFindingsReported": [
+          "No explicit reusable marker in current contract",
+          "Semantic projection has no typed procedure reference"
+        ],
+        "reuse": [
+          "Existing outbox source route",
+          "Existing search engine as candidate selector only"
+        ],
+        "requiredLocalChecks": [
+          "Retention",
+          "Current owner mandate",
+          "Actual file hash"
+        ],
+        "exactSourceOwnership": "Pending from execution owner; no source path assignments invented by administration.",
+        "exclusions": [
+          "No automatic runtime hook",
+          "Not every document is a procedure",
+          "No duplicate registry",
+          "No changes to accepted GE memory delivery",
+          "No live probe"
+        ],
+        "built": false,
+        "tested": false,
+        "live": false,
+        "ownerAccepted": false,
+        "priorABDeliveryRemainsClosed": true
       }
     },
     "gatewayCatalogPagination20260912": {
@@ -5630,9 +5667,9 @@
         },
         {
           "owner": "coordinator/next_tools_delivery",
-          "work": "Algemeen terugvinden van aangeleerde skills onderzoeken",
-          "boundary": "Alleen bestaande algemene retrievalroute en ontbrekende koppeling onderzoeken. Geen taakspecifieke functie, tweede registry of liveproef.",
-          "status": "AU004_read_only_gap_selection",
+          "work": "Expliciete herbruikbare procedureverwijzing bouwen",
+          "boundary": "Typed ProcedureReference voor expliciet gemarkeerde STATE_VERIFIED-opslag; bestaande outboxbron en lokale retention/mandaat/hashcontrole. Exacte bronpaden volgen. Geen livehook, tweede registry of wijziging aan geaccepteerd geheugen.",
+          "status": "AU004_typed_procedure_reference_isolated_build",
           "previousCompletedWork": {
             "work": "Renovate npm-dekking",
             "status": "configuration_complete_bot_activity_unverified",
