@@ -247,7 +247,7 @@
         },
         {
           "title": "Project hervatten na herstart",
-          "detail": "De koppeling van de hosthash aan de catalogushash is hersteld, onafhankelijk goedgekeurd en geïntegreerd. Kern- en providerimage zijn beoordeeld. De nieuwe registratie, configuratie en planbinding moeten nog worden goedgekeurd vóór de worker start. Nog niet live."
+          "detail": "Kern- en providerimage zijn goedgekeurd. Het eerste activeringsplan ligt nu voor review: alleen de nieuwe provider registreren met gegevensmappen alleen-lezen, zonder worker of kernwijziging. Daarna volgen nieuwe catalogusbinding en een apart akkoord voor schrijven en gebruik. Nog niet uitgevoerd."
         },
         {
           "title": "Gedeeld audiotype",
@@ -6908,7 +6908,7 @@
           "sourceCorrectionComplete": true
         },
         "activationPreparation": {
-          "status": "core_and_provider_images_reviewed_config_sealer_registration_plan_pending",
+          "status": "core_provider_images_reviewed_phase1_registration_plan_review_pending",
           "ownerThread": "01a08d52-31b1-7091-be45-812c0b6e6c9f",
           "evidenceCommit": "bc0fd5c06d5d97853296cf2459463fac4ad577a7",
           "evidencePath": "eva2/evidence/living-core/au006-activation-preparation-20260913.json",
@@ -6939,7 +6939,7 @@
           "activationBlocked": true,
           "workerStarted": false,
           "live": false,
-          "sealerState": "Blocked by ACTIVATION-BLOCKED.json; no provider-image.json or sealed plan/configuration ready.",
+          "sealerState": "Provider-image metadata now refreshed; ACTIVATION-BLOCKED.json remains enabled pending phase1 review, actual registration, catalog readback and later sealing/config review.",
           "artifactRetention": {
             "owner": "01a08d52-31b1-7091-be45-812c0b6e6c9f",
             "exactPath": "/home/administrator/project/.eva2-artifacts/au006-activation-20260913",
@@ -6950,6 +6950,51 @@
             "privateDataPolicy": "Private host goal, journal, credentials and rollback files remain outside Git; only supplied sanitized evidence integrated."
           },
           "reviewedProviderImage": "sha256:0ef19e699069c3a5d3a26812c5da3d31141fcd5c3faedb14f92c9dcce1209465"
+        },
+        "phase1RegistrationPlan": {
+          "status": "candidate_plan_pending_independent_go",
+          "ownerThread": "01a08d52-31b1-7091-be45-812c0b6e6c9f",
+          "evidenceCommit": "fddf983b6b11954661b4f86a68b3ad23694c434b",
+          "evidencePath": "eva2/evidence/living-core/au006-phase1-registration-review-20260913.json",
+          "evidenceIntegrated": true,
+          "reviewPath": "/home/administrator/project/.eva2-artifacts/au006-activation-20260913/PHASE1-REVIEW.md",
+          "coreImage": "sha256:2393a1d5aa0a24f9eb0f19aebbbdbf9b32efe28949015bb002e90e181459dd5c",
+          "providerImage": "sha256:0ef19e699069c3a5d3a26812c5da3d31141fcd5c3faedb14f92c9dcce1209465",
+          "scope": "Only new provider profile, both data mounts read-only, no worker or published ports; later registration must keep expected core connector unadmitted.",
+          "reportedReadonlyProof": {
+            "provider_image": "sha256:0ef19e699069c3a5d3a26812c5da3d31141fcd5c3faedb14f92c9dcce1209465",
+            "phase1_readonly_mount_effect_rejected": true,
+            "workspace_entries": 0,
+            "journal_entries": 0,
+            "process_uid": 10001,
+            "network": "none",
+            "fixture_only": true,
+            "production_mounts_used": false,
+            "model_calls": 0,
+            "live_service_calls": 0,
+            "fixture_cleanup": true
+          },
+          "reportedComposeValidation": {
+            "validated": true,
+            "enabled_services": [
+              "document-workspace"
+            ],
+            "workspace_and_journal_read_only": true,
+            "worker_not_enabled": true,
+            "ports": []
+          },
+          "registrationName": "eva_connector_5fe0318bcaa91f70692b19e3a51afc40",
+          "coreConnectorIdToKeepUnadmitted": "16dc8ce3-7825-5618-a131-ab21840808ef",
+          "assignedGatewayAndToolIds": null,
+          "freshProjectJournal": "existing own new directory remains empty and never dispatched; not gen1 provider fixture",
+          "rollback": "stop only new provider; preserve actual new IDs/catalog snapshots; inactive registration may remain; no DELETE/cascade or shared catalog rollback claim",
+          "phase2": "separate actual catalog readback, sealing review, provider write-mount override, core opt-in and worker GO required",
+          "independentGo": false,
+          "phaseExecuted": false,
+          "workerStarted": false,
+          "coreChanged": false,
+          "liveDocumentWrites": 0,
+          "sealerBlockerEnabled": true
         }
       },
       "isolatedProductExecutionProven": true,
