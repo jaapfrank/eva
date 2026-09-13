@@ -283,7 +283,7 @@
         },
         {
           "title": "Zelf een documentproject opgeven",
-          "detail": "De bouwer meldt geslaagde controles voor twee afzonderlijke opdrachten, bezette uitvoerplekken, hervatten en intrekken. De volledige bestandsroute wordt nu in een wegwerpomgeving gecontroleerd met de bestaande uitvoerder. Ook de bestaande gezondheidscontrole wordt geschikt gemaakt voor de toegewezen projectplekken. Nog geen onafhankelijke goedkeuring of livewijziging; eerdere documenten en opleveringen blijven behouden."
+          "detail": "De wegwerpomgeving voor de volledige documentproef is gereed: twee bestaande bestandsuitvoerders en een tijdelijke gateway, zonder productiegegevens of gepubliceerde poorten. De bouwer gebruikt deze omgeving om de echte opslagroute te controleren. Voorbereiding heeft geen modeloproep of documentactie uitgevoerd. Nog geen oplevering of livewijziging; de eerdere voorbereide projectroute blijft behouden."
         }
       ],
       "openRisks": [
@@ -9855,13 +9855,16 @@
           "eva2/src/eva/providers/document_goals.py",
           "eva2/src/eva/bootstrap/document_goal_worker.py",
           "eva2/src/eva/adapters/postgres/durable_goals.py",
-          "eva2/deploy/living-core/document-worker-health.py"
+          "eva2/deploy/living-core/document-worker-health.py",
+          "eva2/src/eva/providers/document_task_input.py",
+          "eva2/src/eva/providers/document_task_actions.py"
         ],
         "relatedTestsAndDocs": "Owned by same builder; exact final paths supplied with candidate review",
         "reservedExistingHealthTests": [
           "eva2/tests/postgres/test_document_service_health.py"
         ],
-        "extensionReason": "Necessary for pool-scoped read-only claim readiness while retaining legacy single-plan health behavior"
+        "extensionReason": "Necessary for pool-scoped read-only claim readiness while retaining legacy single-plan health behavior",
+        "nativeEvidenceRetention": "Keep immutable fixture journals and effect/readback evidence; coordinator cleans disposable runtime only after effect proof and review. Builder consumes existing prepared environment once; no reprepare."
       },
       "runtimeGo": false,
       "sourceIntegrated": false,
@@ -9890,13 +9893,28 @@
         "fullNativeChainProven": false
       },
       "nativeChainHarness": {
-        "status": "assigned_disposable_validation",
+        "status": "prepared_for_exclusive_builder_consumption",
         "ownerThread": "01a08d52-31b1-7091-be45-812c0b6e6c9f",
         "imageReportedPrefix": "ba9eda",
         "scope": "Disposable existing native provider harness to validate complete chain and unblock builder",
         "productionChanges": false,
         "runtimeGo": false,
-        "retention": "Retain exact fixture and evidence until source review and integration; same bounded delivery"
+        "retention": "Retain exact fixture and evidence until source review and integration; same bounded delivery",
+        "reportedBy": "coordinator",
+        "stage": "/home/administrator/project/.eva2-artifacts/document-task-input-native-harness-20260913",
+        "preparedReceiptPath": "/home/administrator/project/.eva2-artifacts/document-task-input-native-harness-20260913/prepared-receipt.json",
+        "stackJsonSha256Reported": "7287ff53e29f249ec03f4d33f8ec6dba5b1732a70a0af48a7bbd9ff645131a4f",
+        "disposableProviderCount": 2,
+        "disposableGateway": true,
+        "internalNetworkReportedPrefix": "3537041f13",
+        "hostPortsPublished": false,
+        "modelCallsDuringPreparation": 0,
+        "effectCallsDuringPreparation": 0,
+        "consumer": "coordinator/next_tools_delivery",
+        "reprepareAllowed": false,
+        "cleanupOwner": "coordinator",
+        "cleanupAfter": "Completed effect proof and independent review; immutable journal evidence retained",
+        "legacyPreparedRoutePreserved": true
       }
     }
   },
