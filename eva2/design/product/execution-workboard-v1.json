@@ -247,7 +247,7 @@
         },
         {
           "title": "Project hervatten na herstart",
-          "detail": "De geïsoleerde hervatproef blijft afgerond. Bij het aansluiten blijkt dat de bestaande bestandsfunctie een bestaand bestand kan overschrijven. Eén gerichte proef en een minimaal oplossingsvoorstel werken dit gat uit; de aansluiting is nog niet veilig opgeleverd of live."
+          "detail": "De geïsoleerde hervatproef blijft afgerond. Een aparte uitvoerder bouwt nu bestandsaanmaak die bestaande bestanden niet overschrijft; de andere werkt aan de projectaansluiting en eigenaarscontrole. De bestandsfunctie krijgt eerst onafhankelijke review. Nog niet live."
         }
       ],
       "openRisks": [
@@ -5462,7 +5462,7 @@
           "owner": "01a08d52-31b1-7091-be45-812c0b6e6c9f",
           "work": "AU-006 geautoriseerde documentprovider bouwen",
           "boundary": "Approved plan34b3b8ff: two new provider files, bounded durable storage/worker composition, named tests and documentation. No app/auth/orchestrator/installer/CP001/deploy changes.",
-          "status": "document_provider_overwrite_gap_bounded_probe_and_proposal"
+          "status": "document_goal_bridge_and_authority_binding_in_progress_primitive_separate"
         },
         {
           "owner": "coordinator/timing_final_review",
@@ -5472,9 +5472,14 @@
         },
         {
           "owner": "coordinator/next_tools_delivery",
-          "work": "Renovate npm-dekking",
-          "boundary": "renovate.json en eigen reviewfixture/rapport",
-          "status": "configuration_complete_bot_activity_unverified"
+          "work": "AU-006 bestandsaanmaak zonder overschrijven",
+          "boundary": "deploy/living-core/workspace-create-only: create-file.mjs, patch-provider.py, Dockerfile, README.md plus targeted tests/evidence. Existing write_file unchanged; no runtime.",
+          "status": "create_only_primitive_implementation_assigned",
+          "previousCompletedWork": {
+            "work": "Renovate npm-dekking",
+            "status": "configuration_complete_bot_activity_unverified",
+            "boundary": "renovate.json en eigen reviewfixture/rapport"
+          }
         },
         {
           "owner": "coordinator/tl003_evidence_review",
@@ -6262,9 +6267,29 @@
           "reportedBy": "coordinator",
           "finding": "Pinned filesystem write_file overwrites on EEXIST and provides no CAS/create-only primitive.",
           "productExecutionSafe": false,
-          "status": "one_isolated_negative_trial_and_minimal_connection_proposal_in_progress",
+          "status": "separately_owned_create_only_dependency_in_progress",
           "scope": "No general orchestrator, authority or deployment changes authorized by this finding.",
-          "reviewedPlanGoPreserved": true
+          "reviewedPlanGoPreserved": true,
+          "next": "Independent review of opt-in create_file primitive before effectful document-provider product proof."
+        },
+        "providerPrimitiveDependency": {
+          "owner": "coordinator/next_tools_delivery",
+          "developerAgent": "/root/next_tools_delivery",
+          "developerParentThread": "01a08a88-894c-7171-87fa-e681ed47c735",
+          "status": "implementation_assigned",
+          "userOutcome": "Creating a new project document cannot overwrite an existing file.",
+          "scope": "Minimal opt-in create_file tool in pinned filesystem provider; existing write_file unchanged; atomic create-only/conflict semantics and existing observation.",
+          "ownedPaths": [
+            "eva2/deploy/living-core/workspace-create-only/create-file.mjs",
+            "eva2/deploy/living-core/workspace-create-only/patch-provider.py",
+            "eva2/deploy/living-core/workspace-create-only/Dockerfile",
+            "eva2/deploy/living-core/workspace-create-only/README.md"
+          ],
+          "additionalOwnedScope": "Targeted tests and evidence; exact paths to be confirmed in delivery.",
+          "independentReviewRequired": true,
+          "runtimeDeploymentAuthorized": false,
+          "effectfulProductProof": "Only after independent primitive review.",
+          "bridgeOwnerUnchanged": "01a08d52-31b1-7091-be45-812c0b6e6c9f"
         }
       }
     }
