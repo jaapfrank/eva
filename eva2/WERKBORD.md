@@ -1006,6 +1006,15 @@ levert beide beperkte hunks, gerichte parsertest en documentatie samen
 voor onafhankelijke review. Dit registreert eigendom, geen geïntegreerde
 bron of livegang.
 
+### AU-006 — kandidaat aangeleverd, onafhankelijke review loopt
+
+Bron78c79a96 en bewijs8ff5a859 zijn ontvangen met39 gerapporteerde
+controles:32 contract/API/regressie en7 echte geïsoleerde PG/HTTP/
+procesherstart-/stopproeven. Alle negen paden passen exact op de huidige
+basis; AST-controle bevestigt uitsluitend de twee toegestane appfuncties.
+Nog geen bronintegratie of onafhankelijke GO. Evidencepad is vastgelegd
+in de bestaande stage-/retentieregistratie; geen live of volledige AU-006-claim.
+
 ## Nu
 
 | Volgorde | Kaart | Resultaat | Status |
