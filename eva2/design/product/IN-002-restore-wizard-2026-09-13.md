@@ -52,3 +52,13 @@ De huidige lock (`363599c01b730bcc100a81503e12cc9e424c6c98d9b5646a18ed46d2e213fe
 **Resources:** één wegwerp-amd64 operatorcontainer met read-only bron, private tmpfs en netwerk uit; bestaande gecachte basis/wheels; voor latere end-to-end herhaling uitsluitend een afzonderlijke lege PostgreSQL 16.13-doeldatabase en synthetische archive/key/authority. Voor echte versie-exacte tier1-validatie zijn afzonderlijke Ubuntu/Docker-29.7.2-testhosts of VM's nodig, uiteindelijk zowel amd64 als arm64; hun beschikbaarheid is nog niet bewezen. Geen huidige hostupgrade, live Docker-socket in een willekeurige container, privébackup of eigenaarwachtwoord nodig.
 
 Deze eerste stap levert een concreet compatibiliteitsrapport en package op, geen supported-label. De normale herstelroute blijft dicht totdat het bestaande releasecontract eerlijk vervuld is. Dit is technisch releasewerk; het is geen blokkade die Jaap met een nieuwe keuze moet oplossen.
+
+## Operatorpackage uitgevoerd
+
+De hierboven voorgestelde eerste stap is nu uitgevoerd. Twee afzonderlijke offline installaties/bundelingen op dezelfde host leveren byte-identieke tarbestanden: `f571e9f1c8b9aa36b3044f846ab074ee6724cf9de24125558109e271f9932f96`. Het package bevat 4.740 bestanden, alle 44 huidige lockdistributies en de benodigde reader/schema/default-identitybestanden. `pip check` en imports slagen. Dit is geen onafhankelijke twee-builder-releaseclaim.
+
+Het uit de tar uitgepakte package is echt gestart via `tools.installer_restore_wizard`, met normale hostdetectie, bootstrap en HTTP-pagina; geen TestClient of ready-fixture. De Pythoncontrole slaagt op 3.12.14. De container meldt eerlijk Debian 12, geen Docker-engine en geen releaseondersteuning. De herstelroute weigert daarom met 409 en heeft geen doeldata geopend. Het package is dus technisch reproduceerbaar en opstartbaar, maar maakt de drie resterende platformblokkades niet groen.
+
+Reproduceren gebeurt met `tools/package_installer_operator.py` en de exacte sourcecommit/wheelhashes uit `evidence/product/IN-002-operator-package-2026-09-13.json`; de normale geïsoleerde start wordt gecontroleerd door `tools/verify_installer_operator_package.py`. Gebruik de gepinde basis, netwerk uit, read-only package, private tmpfs, 2 GiB geheugen en twee CPU's. Er wordt geen live Docker-socket gedeeld.
+
+Volgende aantoonbare technische stap blijft het echte tier1-operatorplatform en zijn releasevalidatie. Een verpakking met Debian-meta-informatie mag niet als Ubuntu worden voorgesteld om de preflight te laten slagen. Geen nieuwe gebruikersproef of wachtwoord van Jaap nodig voor die stap.

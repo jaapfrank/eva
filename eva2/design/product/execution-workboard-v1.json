@@ -243,11 +243,11 @@
         },
         {
           "title": "Reservekopie herstellen via de wizard",
-          "detail": "Het installatiepakket is gebouwd en ligt bij de onafhankelijke reviewer. De echte uitgepakte launcher start, maar platform-, Docker- en releasecontroles blokkeren herstel nog. De herstelpagina is nog niet klaar voor jouw proef."
+          "detail": "Het installatiepakket en de echte opstartproef zijn onafhankelijk goedgekeurd binnen hun scope. Platform-, Docker- en releasecontroles blokkeren herstel nog. De herstelpagina is nog niet klaar voor jouw proef."
         },
         {
           "title": "Project hervatten na herstart",
-          "detail": "De geïsoleerde hervatproef is afgerond. Het aansluitplan is onafhankelijk goedgekeurd; de bouwer verbindt nu de bestaande projectwerker met geautoriseerde documentopslag, duurzaam bewijs en bescherming tegen overschrijven. Deze aansluiting is nog niet live."
+          "detail": "De geïsoleerde hervatproef blijft afgerond. Bij het aansluiten blijkt dat de bestaande bestandsfunctie een bestaand bestand kan overschrijven. Eén gerichte proef en een minimaal oplossingsvoorstel werken dit gat uit; de aansluiting is nog niet veilig opgeleverd of live."
         }
       ],
       "openRisks": [
@@ -5462,13 +5462,13 @@
           "owner": "01a08d52-31b1-7091-be45-812c0b6e6c9f",
           "work": "AU-006 geautoriseerde documentprovider bouwen",
           "boundary": "Approved plan34b3b8ff: two new provider files, bounded durable storage/worker composition, named tests and documentation. No app/auth/orchestrator/installer/CP001/deploy changes.",
-          "status": "reviewed_connection_plan_implementation_in_progress"
+          "status": "document_provider_overwrite_gap_bounded_probe_and_proposal"
         },
         {
           "owner": "coordinator/timing_final_review",
           "work": "IN-002 geïsoleerde operatorpakketvalidatie",
           "boundary": "Installer UI/API and existing portable restore boundary in isolated durable worktree; no central board, live runtime or conversation/CP001 files.",
-          "status": "operator_package_candidate_in_independent_evidence_review"
+          "status": "bounded_package_checkpoint_approved_platform_validation_open"
         },
         {
           "owner": "coordinator/next_tools_delivery",
@@ -5949,7 +5949,7 @@
         "observed": "Current WSL host fails existing pinned preflight for Python/Docker/OS variant and unvalidated lock; workflow=None, restoreHTTP409.",
         "scope": "Ordinary launcher; test-client ready fixtures do not prove this route.",
         "sourceGoPreserved": "Bounded API and isolated PG/object restoration only.",
-        "next": "Independent review of submitted operator package evidence; genuine supported host/Docker/release validation remains open.",
+        "next": "Bounded package checkpoint complete; actual tier1 host/Docker validation and release receipts remain unresolved.",
         "liveIncident": false
       },
       "dependencyHandoff": {
@@ -5966,7 +5966,7 @@
         "tier1TargetsUnvalidated": 2,
         "ociRecordsUnresolved": 18,
         "operatorPackageProposal": {
-          "status": "candidate_submitted_independent_evidence_review_pending",
+          "status": "bounded_package_evidence_independently_approved",
           "scope": "Reproducible isolated amd64 operator package using existing Python3.12.14 base and offline wheels, current dependencies plus tools/reader/schemas; run real host detection and unchanged launcher to verify fail-closed response.",
           "checks": [
             "Current requirements match actual cached wheels",
@@ -5994,8 +5994,25 @@
             "releaseSupportCheck": "blocked",
             "restoreHttpStatus": 409
           },
-          "independentReview": "Pending; reported package evidence is not yet centrally approved.",
-          "ownerTrialReady": false
+          "independentReview": {
+            "decision": "GO for bounded package reproducibility and actual launcher evidence",
+            "reportedBy": "coordinator",
+            "verified": [
+              "Entire tar:4740 safe entries and manifest",
+              "Both builds have identical f571e9f1 package hash",
+              "44 locked versions and referenced hashes",
+              "Actual launcher trace, bootstrap204 and restore409"
+            ],
+            "limitations": [
+              "Both builds ran on one host, not independent release builders",
+              "No tier1 or release support claim",
+              "Owner restore route not ready"
+            ]
+          },
+          "ownerTrialReady": false,
+          "evidenceIntegrated": true,
+          "checkpointDocsIntegrated": true,
+          "sourceLocation": "Packaging scripts remain available at candidate commit5da0a219; this handoff integrates only exact checkpoint documentation and evidence."
         },
         "fullValidationBoundary": "Both tier1 receipts and all resolved validated OCI records required; a local amd64 package proof cannot mark the lock validated.",
         "ownerInputRequired": false,
@@ -6174,7 +6191,7 @@
         "implementationAuthorizationBasis": "Subsequent coordinator assignment after independent GO of plan34b3b8ff; survey itself did not authorize building."
       },
       "connectionPlan": {
-        "status": "independently_approved_implementation_in_progress",
+        "status": "implementation_gap_under_bounded_investigation",
         "ownerThread": "01a08d52-31b1-7091-be45-812c0b6e6c9f",
         "reuse": [
           "Existing owner authority",
@@ -6240,7 +6257,15 @@
           "Deployment or live activation"
         ],
         "built": false,
-        "live": false
+        "live": false,
+        "providerPrimitiveGap": {
+          "reportedBy": "coordinator",
+          "finding": "Pinned filesystem write_file overwrites on EEXIST and provides no CAS/create-only primitive.",
+          "productExecutionSafe": false,
+          "status": "one_isolated_negative_trial_and_minimal_connection_proposal_in_progress",
+          "scope": "No general orchestrator, authority or deployment changes authorized by this finding.",
+          "reviewedPlanGoPreserved": true
+        }
       }
     }
   },
