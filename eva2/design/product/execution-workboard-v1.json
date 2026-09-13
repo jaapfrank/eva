@@ -121,7 +121,7 @@
           ]
         }
       ],
-      "priorityDecision": "Afgerond en live: een bewaarde werkwijze terugvinden en toepassen; PR-01 staat klaar om te lezen. Volgend begrensd werk: de verkeerde gezondheidscontroles van twee documentdiensten herstellen met behoud van het voltooide project. De PostgreSQL-releasevoorwaarden blijven een afzonderlijk open spoor.",
+      "priorityDecision": "PR-01 is technisch afgerond en live; het resultaat staat klaar om te lezen. De gezondheidscontroles van de documentdiensten zijn als kandidaat gereed en wachten op onafhankelijke beoordeling vóór installatie. De PostgreSQL-releasevoorwaarden blijven een afzonderlijk open spoor.",
       "dashboardVerification": {
         "status": "local_browser_verified_not_full_product_acceptance",
         "priorityRevision": {
@@ -279,7 +279,7 @@
         },
         {
           "title": "Betrouwbare status van documentdiensten",
-          "detail": "De documentworker en workspaceprovider draaien, maar geërfde controles gebruiken verkeerde HTTP-adressen. De uitvoerder herstelt hun liveness/readiness-controles en controleert ook echte uitval. Het voltooide project, journaal en bestanden blijven behouden. Nog niet opgeleverd; geen nieuwe document- of modelproef nodig."
+          "detail": "De correctie is als kandidaat gereed. Componentgerichte controles en negatieve proeven met PostgreSQL, procesuitval en MCP zijn volgens de uitvoerder geslaagd. De onafhankelijke beoordeling staat open; er is nog niets geïnstalleerd. Het bestaande documentproject en PR-01 blijven afgesloten en behouden."
         }
       ],
       "openRisks": [
@@ -1019,7 +1019,7 @@
       "sessionGoal": "AU-008: één zelfstandige kosteloze bijdrage via de algemene uitvoerder.",
       "currentWork": "**Afgerond en live — herbruikbare planreviewprocedure (PR-01).** Eva slaat een werkwijze op, vindt een eerdere werkwijze terug in een nieuw gesprek, ontvangt de gecontroleerde tekst en past de regels toe. De drie echte proeven zijn onafhankelijk goedgekeurd. De inhoudelijke planreview duurde 13,20 seconden. Jouw beoordeling staat open; algemene zelflerende vaardigheden zijn hiermee niet afgerond.",
       "currentEvidence": "eva2/evidence/living-core/au004-r6-abc-live-pass-20260913.json",
-      "nextStep": "**Eerstvolgend open werk:** de foutieve gezondheidscontroles van twee documentdiensten herstellen binnen AU-006/UX-001, met echte uitvaldetectie en behoud van het voltooide project, journaal en bestanden. [PR-01 op het dashboard](http://localhost:44712/#practice-PR-01) staat klaar voor jouw resultaatreview en wordt niet opnieuw gebouwd. IN-002-beveiligings- en licentievoorwaarden blijven een afzonderlijk spoor; geheugen blijft geaccepteerd.",
+      "nextStep": "**Eerstvolgend open werk:** onafhankelijke beoordeling van kandidaat 9e71686c voor de gezondheidscontroles van twee documentdiensten; daarna alleen na concrete goedkeuring installeren en teruglezen. De kandidaat doorstond gerichte en negatieve controles, maar staat nog niet live. [PR-01](http://localhost:44712/#practice-PR-01) blijft technisch afgerond; jouw resultaatreview staat open. IN-002-releasevoorwaarden blijven afzonderlijk vervolgwerk.",
       "usageClarification": {
         "date": "2026-09-07",
         "authorizedBy": "Jaap",
@@ -9592,7 +9592,7 @@
     },
     "documentServiceHealthAU006UX00120260913": {
       "id": "AU006-UX001-health",
-      "status": "assigned_bounded_implementation",
+      "status": "candidate_ready_independent_review_pending",
       "ownerThread": "01a08d52-31b1-7091-be45-812c0b6e6c9f",
       "assignedBy": "coordinator",
       "outcome": "Accurate liveness/readiness for existing document worker and workspace provider",
@@ -9612,7 +9612,13 @@
         "Negative checks detect stopped or unavailable component",
         "Existing completed goal, journal and files preserved",
         "Independent review and concrete deployment readback complete"
-      ]
+      ],
+      "candidateCommit": "9e71686cce0f04595265fb0cd5a218bb6904c533",
+      "reportedBy": "runtime writer",
+      "reportedValidation": "Two component health probes and isolated negative PostgreSQL/process/MCP checks passed",
+      "imageDelta": "Only the two document images",
+      "modelProbes": 0,
+      "effectProbes": 0
     }
   },
   "activeTaskId": "AU-008",
