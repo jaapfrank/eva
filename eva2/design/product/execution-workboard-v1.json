@@ -247,7 +247,7 @@
         },
         {
           "title": "Project hervatten na herstart",
-          "detail": "Fase 1 liep vast op een toegangsregel van de gateway. De nieuwe provider is gestopt; er is geen registratie aangemaakt. De uitvoerder maakt een gericht correctieplan voor apart akkoord. De technische bronopleveringen blijven afgerond; de projectworker en schrijfacties zijn niet geactiveerd."
+          "detail": "De mislukte registratie is vastgelegd: één poging, provider weer gestopt, geen nieuwe registratie en bestaande tools, gatewaybindingen, kerngegevens en diensten behouden. Een plan voor één exact toegelaten endpoint ligt nu voor onafhankelijke review. Geen herhaalde poging of workerstart."
         },
         {
           "title": "Gedeeld audiotype",
@@ -6959,11 +6959,12 @@
           "artifactRetention": {
             "owner": "01a08d52-31b1-7091-be45-812c0b6e6c9f",
             "exactPath": "/home/administrator/project/.eva2-artifacts/au006-activation-20260913",
-            "reviewPath": "/home/administrator/project/.eva2-artifacts/au006-activation-20260913/REVIEW.md",
+            "reviewPath": "/home/administrator/project/.eva2-artifacts/au006-activation-20260913/PHASE1-RETRY-REVIEW.md",
             "purpose": "Reviewed core image preparation, private real-owner goal/journal/credentials and rollback material for separately gated AU006 activation.",
             "retainUntil": "Independent image/provider/configuration review and activation/rollback handoff complete; coordinator decides further retention.",
             "cleanupMoment": "Only after retention conditions and explicit exact-scope coordinator cleanup; preserve data, journals and sanitized evidence. No cleanup now.",
-            "privateDataPolicy": "Private host goal, journal, credentials and rollback files remain outside Git; only supplied sanitized evidence integrated."
+            "privateDataPolicy": "Private host goal, journal, credentials and rollback files remain outside Git; only supplied sanitized evidence integrated.",
+            "additionalRetainedScope": "Private original/proposed gateway configurations and phase1 execution snapshots under the already registered activation stage; retain for exact rollback and retry review."
           },
           "reviewedProviderImage": "sha256:0ef19e699069c3a5d3a26812c5da3d31141fcd5c3faedb14f92c9dcce1209465",
           "phase1Go": true
@@ -7046,7 +7047,56 @@
             "next": "Separate exact endpoint-policy fix plan and GO before resuming.",
             "otherRestartsAuthorized": false
           },
-          "independentGoScope": "Original bounded phase1 plan approval preserved; policy correction requires separate plan approval."
+          "independentGoScope": "Original bounded phase1 plan approval preserved; policy correction requires separate plan approval.",
+          "attemptEvidence": {
+            "commit": "87c80c28a643fc9b6eb9b2eeb47dffa638e633b8",
+            "path": "eva2/evidence/living-core/au006-phase1-attempt-and-policy-fix-20260913.json",
+            "integrated": true,
+            "status": "failed_closed_gateway_policy_502",
+            "registrationPostAttempts": 1,
+            "providerId": "39ac301278addfdfcceea35c9db376916bf75bc4898c2f52d687fb6fdee08abd",
+            "providerStopped": true,
+            "cause": "Exact new internal MCP endpoint absent from deployment-owned gateway pinning policy",
+            "reportedPreservation": {
+              "toolRows": 53,
+              "toolRowsByteHashUnchanged": true,
+              "gatewayBindings": 5,
+              "gatewayBindingHashUnchanged": true,
+              "gatewayTimestampFieldsExcluded": [
+                "updatedAt",
+                "lastSeen"
+              ],
+              "newAssignedIds": [],
+              "independentReadonlySqliteConfirmedAbsent": true,
+              "coreSqlRegistryUnchanged": true,
+              "coreCatalogUnchanged": true,
+              "existingContainersUnchanged": 11,
+              "journalEntries": 0,
+              "targetPathsAbsent": true
+            },
+            "modelCalls": 0,
+            "projectEffectCalls": 0,
+            "retryPerformed": false
+          }
+        },
+        "phase1PolicyRetryPlan": {
+          "status": "exact_policy_correction_plan_pending_independent_review",
+          "ownerThread": "01a08d52-31b1-7091-be45-812c0b6e6c9f",
+          "reviewPath": "/home/administrator/project/.eva2-artifacts/au006-activation-20260913/PHASE1-RETRY-REVIEW.md",
+          "evidenceCommit": "87c80c28a643fc9b6eb9b2eeb47dffa638e633b8",
+          "evidencePath": "eva2/evidence/living-core/au006-phase1-attempt-and-policy-fix-20260913.json",
+          "scope": "One exact managed endpoint/IP and fixed provider IP; recreate existing gateway only after separate approval. No new code/image or wider network.",
+          "reportedChecks": [
+            "Policy comparison",
+            "Resolved compose comparison"
+          ],
+          "privateRollback": "Original gateway configuration snapshots retained privately in existing activation stage; no DELETE or shared catalog restore.",
+          "independentGo": false,
+          "retryAuthorized": false,
+          "gatewayRecreated": false,
+          "workerStarted": false,
+          "coreChanged": false,
+          "phase2Go": false
         }
       },
       "isolatedProductExecutionProven": true,

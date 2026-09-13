@@ -1,0 +1,88 @@
+{
+  "contract": "EvaAU006Phase1Attempt/v1",
+  "recorded_at": "2026-09-13T03:03:25.240921+00:00",
+  "status": "failed_closed_gateway_policy_502",
+  "registration_POST_attempts": 1,
+  "provider_started_then_stopped": true,
+  "provider_id": "39ac301278addfdfcceea35c9db376916bf75bc4898c2f52d687fb6fdee08abd",
+  "provider_image": "sha256:0ef19e699069c3a5d3a26812c5da3d31141fcd5c3faedb14f92c9dcce1209465",
+  "provider_data_mounts_readonly": true,
+  "provider_stopped": true,
+  "cause": "Exact new internal MCP endpoint absent from deployment-owned gateway pinning policy",
+  "existing_gateway_count_before_after": [
+    5,
+    5
+  ],
+  "existing_tool_count_before_after": [
+    53,
+    53
+  ],
+  "tool_rows_before_sha256": "badadc24b20ee83be0d2a4d9f1fcbbd6e1093705a40f652682da8a197d5f70d1",
+  "tool_rows_after_sha256": "badadc24b20ee83be0d2a4d9f1fcbbd6e1093705a40f652682da8a197d5f70d1",
+  "gateway_binding_before_sha256": "765b373f908cc736c7270f7c19017c604c9d5ba517b1b1af96208028933cb137",
+  "gateway_binding_after_sha256": "765b373f908cc736c7270f7c19017c604c9d5ba517b1b1af96208028933cb137",
+  "ignored_gateway_fields_only": [
+    "updatedAt",
+    "lastSeen"
+  ],
+  "independent_absence": {
+    "checked_at": "2026-09-13T02:59:17.211274+00:00",
+    "read_only_sqlite_snapshot": true,
+    "matching_name_or_endpoint_rows": 0,
+    "total_gateway_rows": 5,
+    "absence_independently_confirmed": true,
+    "future_retry_authorized": false
+  },
+  "new_assigned_ids": [],
+  "sql_registry_before_after_sha256": [
+    "215f2d4907e5dac07902b865eb3fa3db39af57d8806dc3d6b495ccfb467c3cb4",
+    "215f2d4907e5dac07902b865eb3fa3db39af57d8806dc3d6b495ccfb467c3cb4"
+  ],
+  "core_catalog_before_after_sha256": [
+    "349d6ad0a26ad1471f5b0fad27b5c3a3f43d9b066afba05feec9bf94ea013a86",
+    "349d6ad0a26ad1471f5b0fad27b5c3a3f43d9b066afba05feec9bf94ea013a86"
+  ],
+  "existing_container_changes": [],
+  "existing_containers_checked": 11,
+  "journal_entries": 0,
+  "target_paths_absent": true,
+  "core_feature_off": true,
+  "worker_started": false,
+  "sealed_files_created": false,
+  "model_calls": 0,
+  "project_effect_calls": 0,
+  "delete_calls": 0,
+  "retry_authorized": false,
+  "private_evidence_files": {
+    "/home/administrator/project/.eva2-artifacts/au006-activation-20260913/phase1-execution/comparison.json": "dff781a89150f772f8fea3272d944bd96fc51d7e0eeb6d14a30c39635ecf58da",
+    "/home/administrator/project/.eva2-artifacts/au006-activation-20260913/phase1-execution/core-after.json": "4c32f6f0e29861954fb88ff508ef2d9220c72124dea67a0701ac30b56dfbec51",
+    "/home/administrator/project/.eva2-artifacts/au006-activation-20260913/phase1-execution/gateway-before.json": "29ddab7c903ea50d552616e0e4b4efbe41155767e65c62f5fa07ea77eb1b1e62",
+    "/home/administrator/project/.eva2-artifacts/au006-activation-20260913/phase1-execution/gateway-before.raw": "df986832dc75edadb5324279a91151837a305c49ebcc0bee5d8017e92f39284e",
+    "/home/administrator/project/.eva2-artifacts/au006-activation-20260913/phase1-execution/gateway-config-proposed.resolved.json": "c301f4469d3dbffa1fb42586b53ca37a38551a9c940bf610d504db9df36bcefc",
+    "/home/administrator/project/.eva2-artifacts/au006-activation-20260913/phase1-execution/core-before.json": "8551891caf480b401fbdb98a5e64c6c27a3511e8cce65160439c263e59fd8be3",
+    "/home/administrator/project/.eva2-artifacts/au006-activation-20260913/phase1-execution/gateway-attempt.log": "cf0e392c170366cc614242d1c5689e891b7f2ab29760d69bfc3b4b0702316498",
+    "/home/administrator/project/.eva2-artifacts/au006-activation-20260913/phase1-execution/core-before.raw": "61b4b5b6ecdc9efedf2186ed88d0d4b3e6053147592e5e5a95724b841297477c",
+    "/home/administrator/project/.eva2-artifacts/au006-activation-20260913/phase1-execution/gateway-after.raw": "c0d80011ce6c217bd08104b0509e8a738414dcd6509dca1f8825d82bba57cdea",
+    "/home/administrator/project/.eva2-artifacts/au006-activation-20260913/phase1-execution/provider-attempt.log": "33996bb079dc49417a3a103b67888dafdba6f9887f066afb66378e51363826b0",
+    "/home/administrator/project/.eva2-artifacts/au006-activation-20260913/phase1-execution/core-after.raw": "d8ea24314c32fee6b92f3811b2e4d4999cd315fca353e844d0b3c105f804b368",
+    "/home/administrator/project/.eva2-artifacts/au006-activation-20260913/phase1-execution/gateway-after.json": "de2c3a354cf305cc9061197529cbb65248f7a3bb20da451e8addec360ad1fc16",
+    "/home/administrator/project/.eva2-artifacts/au006-activation-20260913/phase1-execution/gateway-config-original.resolved.json": "691f2318dab4b07b1039c54b2b1730862d940eefd07485db2ac81aa706fecab6",
+    "/home/administrator/project/.eva2-artifacts/au006-activation-20260913/phase1-execution/registration.raw": "e4aff7f7b8d486b9bbb08e10c3a32e770751783250e337908b4729cf669c3b3b"
+  },
+  "next_plan": "PHASE1-RETRY-REVIEW.md",
+  "next_plan_not_executed": true,
+  "fix_scope": "One exact managed endpoint/IP + fixed provider IP; existing gateway recreate requires separate approval; no new code/image or wider network",
+  "review_files": {
+    "/home/administrator/project/.eva2-artifacts/au006-activation-20260913/phase1-attempt-result.json": "e952824539775c4701ccf4f8bc02e5e5bb9782388469d270c2f0f6ee3924c684",
+    "/home/administrator/project/.eva2-artifacts/au006-activation-20260913/phase1-independent-absence.json": "97c4e42151aac54df3f9a775d9008ef02bb331e72a7cf21fa5c864456899526d",
+    "/home/administrator/project/.eva2-artifacts/au006-activation-20260913/phase1-quiescence-check.json": "9a672d485f385cd3e99d18ddba2ee24da83a3139ef7a61c8be475981709a7694",
+    "/home/administrator/project/.eva2-artifacts/au006-activation-20260913/gateway-policy.before.json": "73efd34ac34d242cde0b6f78303d9493ebdb617f7aa28568ef2e3a4e89ebc816",
+    "/home/administrator/project/.eva2-artifacts/au006-activation-20260913/gateway-policy.proposed.json": "782bdec96d8a5d64db97177c83b689e417e68e4c074aad4e2e3b73a862e0da73",
+    "/home/administrator/project/.eva2-artifacts/au006-activation-20260913/gateway-au006-endpoint.proposed.compose.json": "c693b179b05a52c5cdf3d0a24403da6bfc53f5e522c5cdc040569a4727c95939",
+    "/home/administrator/project/.eva2-artifacts/au006-activation-20260913/provider-fixed-address.proposed.compose.json": "46fa67e18a98b739f9597743dea5ff94b1dfd79df5d53a142b68e27062fd1b42",
+    "/home/administrator/project/.eva2-artifacts/au006-activation-20260913/gateway-policy-proposal-test.json": "f7dc3610a9f53253db2aaf1616ef4732ce58baecec5b3601008459399c73f357",
+    "/home/administrator/project/.eva2-artifacts/au006-activation-20260913/gateway-policy-compose-review.json": "ee65e271cc9ae00625f8feb7a8f7a41dfe93d6106b2b03aacbdd92735eaca139",
+    "/home/administrator/project/.eva2-artifacts/au006-activation-20260913/PHASE1-RETRY-REVIEW.md": "128d181736de56c715fee40000165e84e7bdc29e789c7459cca850fd5f87fbe9",
+    "/home/administrator/project/.eva2-artifacts/au006-activation-20260913/ACTIVATION-BLOCKED.json": "aebdbc1d955ff847d7e30351e8915509c5dba45a037872abf79d1e7fe88d38d6"
+  }
+}
