@@ -1,0 +1,479 @@
+{
+  "contract": "EvaAu006R2LiveEvidence/v1",
+  "recorded_at": "2026-09-13T04:57:58.968726+00:00",
+  "approved_plan_commit": "a5c65b2156e49b4a55e1d0110ed03e94a5d1608e",
+  "outcome": "completed_and_verified",
+  "owner_acceptance": false,
+  "goal_id": "au006-document-project-20260913-r2",
+  "preview_sha256": "d453a963beae07839677653e5c4cd9e7b9aed5926094a72e3660c04d7a6a6993",
+  "sealed_sha256": {
+    "goal.json": "953a7a56e08823509bd8470eb72c4e6dbf894099e0c55bfac4f7a79631851ace",
+    "unsealed-inputs.json": "90e402c51b2282d7ced27ea79d274285a060370842cc0dbb0467197d9b94a15d",
+    "catalog.json": "e1c58728c924da8e254db4531c9ac2a13e78b4cc6af01e0103c85219efaf6d65",
+    "plan.json": "6ceb4f56f203c1f4666277831cabe1962c2193df460420c3cd17643d6b950dd1",
+    "definition.json": "a99a48e12f7492e59a4c577a5517ade855bd1e9e12bab8b7d38a7b678049ddd0",
+    "generation.json": "9be7e3da3c7b404172e8a222f175f0854be805381fa1a856aea291bd51617250"
+  },
+  "ordinary_probe": {
+    "start_requests": 1,
+    "optional_status_requests": 0,
+    "retries": 0,
+    "message_id": "dashboard:259cce07-7afc-40e3-a1d0-9e4e25af2455",
+    "elapsed_seconds": 27.716842966001423,
+    "reply_sha256": "0e267195f8923937f1b5932fe2f03a5e2bbb26fdd73f31cf98b5c8b03cb58ba7",
+    "end_content_returned_in_reply": true
+  },
+  "result": {
+    "goal_status": "completed",
+    "effect_dispatch_reservations": 2,
+    "both_step_phases": "state_verified",
+    "old_goal_unchanged": true,
+    "old_targets_absent": true,
+    "native": {
+      "journal_sha256": "e2a533e22ca8a44030cd23aacaa09bfd49a2c848b3b029fe1fcf56dade35115e",
+      "journal_bytes": 2754,
+      "records": [
+        "P",
+        "L",
+        "C",
+        "P",
+        "L",
+        "C"
+      ],
+      "checksums_verified": true,
+      "receipts": [
+        {
+          "effect": 1,
+          "before": 0,
+          "after": 1,
+          "operation_id": "efb086e72aed58e20080fe95e3bfca5a527b664150864f889677f5543806bd87",
+          "request_sha256": "c5623c2a1d9291226d182908437895e34bb9c07bf64d541f960ab577341c65e1",
+          "content_sha256": "73f72c0412bba9f87bc301af80b73c399b841eee44ee9b0ed36395a4844d4ffc",
+          "content_bytes": 396,
+          "path": "eva2-documentproject-concept-20260913-r2.md"
+        },
+        {
+          "effect": 1,
+          "before": 1,
+          "after": 2,
+          "operation_id": "657331a9f283c45a1129deaec6cfec6063380f2b6ef8718371e329eafca69e22",
+          "request_sha256": "7a28b1e097e55143d03fe894c202fde703b3a9b64b5d640a59e637154b066fcf",
+          "content_sha256": "3202f92b85f9614a60ecb968310910638712aab69684ff0330b303bf6a9ef168",
+          "content_bytes": 662,
+          "path": "eva2-documentproject-eindversie-20260913-r2.md"
+        }
+      ]
+    },
+    "private_exports": [
+      {
+        "path": "C:/Users/jaapf/.codex/visualizations/2026/09/10/01a08d52-31b1-7091-be45-812c0b6e6c9f/au006-r2/eva2-documentproject-concept-20260913-r2.md",
+        "sha256": "73f72c0412bba9f87bc301af80b73c399b841eee44ee9b0ed36395a4844d4ffc",
+        "bytes": 396,
+        "byte_verified": true
+      },
+      {
+        "path": "C:/Users/jaapf/.codex/visualizations/2026/09/10/01a08d52-31b1-7091-be45-812c0b6e6c9f/au006-r2/eva2-documentproject-eindversie-20260913-r2.md",
+        "sha256": "3202f92b85f9614a60ecb968310910638712aab69684ff0330b303bf6a9ef168",
+        "bytes": 662,
+        "byte_verified": true
+      }
+    ],
+    "delivery_accepted_semantics": "stored project delivery result, not human approval"
+  },
+  "usage": {
+    "action_names": [
+      "get_prepared_document_project",
+      "start_prepared_document_project"
+    ],
+    "model_usage": [
+      {
+        "tool_calls": 1,
+        "measurement": "measured",
+        "input_tokens": 7740,
+        "output_tokens": 49,
+        "model_attempts": 1
+      },
+      {
+        "tool_calls": 1,
+        "measurement": "measured",
+        "input_tokens": 7437,
+        "output_tokens": 43,
+        "model_attempts": 1
+      },
+      {
+        "tool_calls": 0,
+        "measurement": "measured",
+        "input_tokens": 8108,
+        "output_tokens": 267,
+        "model_attempts": 1
+      }
+    ]
+  },
+  "integrity": {
+    "protected_containers_unchanged": [
+      "/eva2-managed-b-slot3-delegated-work-worker-1",
+      "/eva2-workspace-filesystem",
+      "/eva2-owner-voice-media-1",
+      "/eva2-owner-voice-livekit-1",
+      "/eva2-managed-b-slot3-hindsight-1",
+      "/eva2-managed-b-slot3-postgres-1",
+      "/eva2-managed-b-slot3-hindsight-postgres-1",
+      "/eva2-managed-b-slot3-model-access-lease-1",
+      "/eva2-managed-b-slot3-hindsight-access-lease-1"
+    ],
+    "existing_53_tools_unchanged": true,
+    "gateway_source_sha256": {
+      "main.py": "ce9a769b1224812fddb1a905cff4025a19411f2760e6ac2abf08d1f3ab3b01fe",
+      "bootstrap_db.py": "92a5d8e88a467778e1cb715cd84e5b5214ca14d51170dbd6454432e89e04df4b"
+    },
+    "policy_preserved": true,
+    "new_raw_tools_absent": true
+  },
+  "live": [
+    {
+      "name": "/eva2-managed-b-slot3-core",
+      "id": "35a5d34ca3a958ee86c863e603813f7eb520808a4aaebc5bb1dc318cef965b2d",
+      "image": "sha256:2393a1d5aa0a24f9eb0f19aebbbdbf9b32efe28949015bb002e90e181459dd5c",
+      "started_at": "2026-09-13T04:52:24.511441607Z",
+      "running": true
+    },
+    {
+      "name": "/eva2-mcp-gateway",
+      "id": "e8e1c80268a705ccde0fd7db301752dd491f725ed03f9923f123345b54f15044",
+      "image": "sha256:daf923c247fd569df5f8c9ee418cbc259fade564f78e0a0852937139a181c4dd",
+      "started_at": "2026-09-13T04:51:30.395638251Z",
+      "running": true
+    },
+    {
+      "name": "/eva2-document-workspace-au006",
+      "id": "bb4f83eded83a7f2df82045658a73d4f210e6a41c354a0a73a390dd56cecaac6",
+      "image": "sha256:0ef19e699069c3a5d3a26812c5da3d31141fcd5c3faedb14f92c9dcce1209465",
+      "started_at": "2026-09-13T04:52:13.612799665Z",
+      "running": true
+    },
+    {
+      "name": "/eva2-document-goal-worker-au006",
+      "id": "818413ea341b9f45a9e9281e2c7fddbb96b21641bd4f8479690c126386c48c33",
+      "image": "sha256:2393a1d5aa0a24f9eb0f19aebbbdbf9b32efe28949015bb002e90e181459dd5c",
+      "started_at": "2026-09-13T04:52:34.261689259Z",
+      "running": true
+    }
+  ],
+  "execution_notes": [
+    "Preflight stopped on expected offline selected tools before any install.",
+    "Parent image cannot decode new goal schema; candidate ephemeral read-only Python verified old rejection and new absence without worker/model startup.",
+    "Root-authorized same phase1 readonly provider restart; normal gateway health restored liveness; no forced catalog write or rebinding.",
+    "Only selected reachable/updatedAt recovered; bindings and 53 existing rows matched before RPC install.",
+    "RPC install preserved all 55 API rows and six durable DB tables, excluding gateway liveness timestamps.",
+    "One unchanged empty journal reused under explicit genesis GO; old goal/project evidence preserved.",
+    "No status question necessary: ordinary reply already returned verified final content.",
+    "No rollback performed after success; candidate core and project services remain live.",
+    "Historical ACTIVATION-BLOCKED.json retained as original failed-probe evidence; this receipt records separate successful r2."
+  ],
+  "private_evidence_directory": "/home/administrator/project/.eva2-artifacts/au006-activation-20260913/r2-execution",
+  "private_evidence_sha256": {
+    "catalog-after-rpc-install.json": "200b3d0090bc0e93a8a1f3f6882a3252cfb14d14d643f199998e2fcd4ac4d3ad",
+    "liveness-provider-inspect.json": "1c9d02e5348216bab065f282dec5cdb6baa0ce5e7483f958505b7a9b46835b01",
+    "result-timelines.json": "5f6c9378da65b60918c6e297a4f97eb7039eec764f016ebf481d0b28a96c4f3d",
+    "goal-before-worker.json": "ceee3aa941a7c818196b40819f6988eca014aa8ca02af84b9fb368c1fd96ba2a",
+    "goal-genesis-read-error.log": "6aaaa336511fd7766a920d83d9c9625d4d460fc2fd5eb0b56771eb91d11ba52e",
+    "ordinary-start.json": "ed3591d9fff22feafb93ee4119b04b55155f2dab3d13828c81ead8155c2e9837",
+    "core-candidate.json": "7c7804557dca089dc8334c22065c555721995330b0ec3ab734bfcc0bd2955ba6",
+    "final-integrity.json": "f41406873019760d6716fe98e8936222706dcec93ad4e7832962e24f50b37eb7",
+    "containers-before.json": "a8a45533126812e31b4d3a7182ff995b3a5b28112ef9a018a5ae3b270f9bb952",
+    "goal-after-idle.json": "ceee3aa941a7c818196b40819f6988eca014aa8ca02af84b9fb368c1fd96ba2a",
+    "provider-writable.json": "c90e31e68c645fc37d993af44819e2bdfea71620675ee2199ad18dba6ef4b2f4",
+    "provider-readonly-metadata.json": "86172673d18948e0104aa8b17179a44979f291e6afb82cd0939e14df095d08c1",
+    "worker-after-idle.json": "1b0b11b5e38064e7501e833a90297af7562ed87c8de923c90fd529e5fc59f157",
+    "core-liveness-preflight.json": "61adc18fdfbad086ad3e96fa9082d03518726f4bda3115e3eedb2312c6f62f4f",
+    "activation-attempt.json": "d39177a3e27c598fc60e61903a160da13b380364af01a98b0d2cfeb2770164bc",
+    "result-timeline-probe.py": "784569e0dc361f12d04eb222183d5adf507fb7e7cd168f47ae5f7d7359f0b91f",
+    "liveness-provider-start.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "native-receipts-verified.json": "63d1c772d7b152b713b46f3110c396e7fb673a0a13802f7fe731ea4460f1e36b",
+    "goal-after-start.json": "e39843a14196088d82ebc3c486c77ff57f11d3183b24808aa32104392d30f5fb",
+    "catalog-before-rpc-install.json": "c2729f85fa83597214b8bdf9699a2bebebade1044a676cdda3e334f43c8dcd2b",
+    "core-final.json": "8d3430d76d5b3e6a9cd4d1973a444b4a7dc795f7df8742825f580f29ad03c25c",
+    "quiescence-after-gateway.json": "e19cb9a84ef4947952d45c0172de83d12b2a84407311ab23f7067673c7dc97d2",
+    "quiescence-at-core.json": "e19cb9a84ef4947952d45c0172de83d12b2a84407311ab23f7067673c7dc97d2",
+    "containers-final.json": "1b8c320bf0f2a0b18030d8c2d7c2e424fa74d9ef940b3cdd1bee9030049fd5c9",
+    "quiescence-final.json": "e19cb9a84ef4947952d45c0172de83d12b2a84407311ab23f7067673c7dc97d2",
+    "core-readiness-0.log": "fd100a7f974526cff92cbf7eaadb2734eb970750023cafc8ed32ffcaac3de7ce",
+    "goal-genesis-probe.py": "00d6480315d023fd7729121186fc1d5795d09b29565a3b2812fcda5ae0ea16d6",
+    "quiescence-before-gateway.json": "e19cb9a84ef4947952d45c0172de83d12b2a84407311ab23f7067673c7dc97d2",
+    "approved-plan.json": "182e92cdd79cc4dd94dd7673575906e88cd103f8fc1e32abe1be49c4bb8c4006",
+    "goal-before.json": "ceee3aa941a7c818196b40819f6988eca014aa8ca02af84b9fb368c1fd96ba2a",
+    "liveness-provider-config.json": "a191aeb3e37da7d37a5270db4f4a3b04496dfa10cfc423c417f9b26c729b4897",
+    "goal-readback.py": "bd1da19a630c1bfcf2a161b55f9ca66ee5d67718d02e2ec6f1f7723735662da2",
+    "core-before.json": "50ea7e0d052d8eae0abd94ee134d4e0b88664531296fc20799c1d23052acd459",
+    "core-ready.json": "e19cb9a84ef4947952d45c0172de83d12b2a84407311ab23f7067673c7dc97d2",
+    "ready-before-ordinary-probe.json": "e19cb9a84ef4947952d45c0172de83d12b2a84407311ab23f7067673c7dc97d2",
+    "worker-start.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "worker-idle.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "ordinary-start.raw": "d4d862ad673bd8ed2348f088ac7ee51f3e31200a024f7898abffc6887e31d907",
+    "selected-binding-preflight-error.log": "89c5294f6d79de70b5376361daa24726be47f78bb9564cb427aec785a56fc464",
+    "database-after-rpc-install.json": "eeac555cb896a31fe96f5933999dea77d885bb86b229afe24386a01cca226df8",
+    "selected-bindings-recovered.json": "ed0044c06bc2b77800dd40feeed5aaf615d2a9f878fab2679ba41dbabbbd5679",
+    "gateway-rpc-recreate.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "catalog-liveness-readback.json": "aec09de44f1cf5022aa0843cffb51cb60215d4e3ba9368b07efe98c019f46124",
+    "provider-metadata-before-core.json": "a6c26b24e4c4d846de49d93f6178719fe2a8ec384c8ee238926b6ba083cb524e",
+    "provider-write-recreate.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "core-recreate.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "catalog-before.json": "949a0ca14ef21b249a904eef3e7537b76c7cf5051d585587756fbcd5b71cfcea",
+    "ordinary-usage-summary.json": "58df9576f26ce7a251065bafd080ef814da7eb83f4bb86f3aebdf47f376d1aba",
+    "core-after-cutover.json": "0e86df3e7616e300da094d7222cb74345451e2336e3882cd59062698ec3844d5",
+    "core-readiness-1.log": "fd100a7f974526cff92cbf7eaadb2734eb970750023cafc8ed32ffcaac3de7ce",
+    "database-before.json": "86ce7cd12780978ac0834441607e5fcf3d362e182aad1f6ca2b986033baeb312",
+    "ordinary-start-attempt.json": "7e0ad4192ff569f14083a03720008a71607f74fa5ab842b5ab0d7c4b1f0e8321",
+    "catalog-final.json": "8ce23955f355ec3a6e36cfd610a98ebc968bcf90a84d1448529b75b16a5891d0",
+    "worker-start.json": "1b0b11b5e38064e7501e833a90297af7562ed87c8de923c90fd529e5fc59f157"
+  },
+  "limits": [
+    "No human acceptance inferred.",
+    "No Telegram/external delivery or browser changes.",
+    "This proves this prepared two-step document project, not arbitrary projects."
+  ],
+  "compose": {
+    "gateway_base_command": [
+      "docker",
+      "compose",
+      "--project-name",
+      "eva2-workspace-provider",
+      "--env-file",
+      "/var/lib/eva2/workspace-provider/provider.env",
+      "-f",
+      "/home/administrator/project/Eva2/eva2/deploy/living-core/workspace-provider.compose.yml",
+      "-f",
+      "/var/lib/eva2/workspace-provider/mcp-autonomy-guard-2/compose.egress-browser.json",
+      "-f",
+      "/var/lib/eva2/workspace-provider/mcp-autonomy-guard-2/pinning.compose.json",
+      "-f",
+      "/var/lib/eva2/workspace-provider/au006-bootstrap-guard/compose.preserve-resources.json",
+      "-f",
+      "/home/administrator/project/.eva2-artifacts/au006-activation-20260913/gateway-au006-endpoint.proposed.compose.json"
+    ],
+    "gateway_install_command": [
+      "docker",
+      "compose",
+      "--project-name",
+      "eva2-workspace-provider",
+      "--env-file",
+      "/var/lib/eva2/workspace-provider/provider.env",
+      "-f",
+      "/home/administrator/project/Eva2/eva2/deploy/living-core/workspace-provider.compose.yml",
+      "-f",
+      "/var/lib/eva2/workspace-provider/mcp-autonomy-guard-2/compose.egress-browser.json",
+      "-f",
+      "/var/lib/eva2/workspace-provider/mcp-autonomy-guard-2/pinning.compose.json",
+      "-f",
+      "/var/lib/eva2/workspace-provider/au006-bootstrap-guard/compose.preserve-resources.json",
+      "-f",
+      "/home/administrator/project/.eva2-artifacts/au006-activation-20260913/gateway-au006-endpoint.proposed.compose.json",
+      "-f",
+      "/home/administrator/project/.eva2-artifacts/au006-activation-20260913/rpc-owner-context.proposed.compose.json",
+      "up",
+      "-d",
+      "--no-deps",
+      "gateway"
+    ],
+    "gateway_patch_only_rollback_command": [
+      "docker",
+      "compose",
+      "--project-name",
+      "eva2-workspace-provider",
+      "--env-file",
+      "/var/lib/eva2/workspace-provider/provider.env",
+      "-f",
+      "/home/administrator/project/Eva2/eva2/deploy/living-core/workspace-provider.compose.yml",
+      "-f",
+      "/var/lib/eva2/workspace-provider/mcp-autonomy-guard-2/compose.egress-browser.json",
+      "-f",
+      "/var/lib/eva2/workspace-provider/mcp-autonomy-guard-2/pinning.compose.json",
+      "-f",
+      "/var/lib/eva2/workspace-provider/au006-bootstrap-guard/compose.preserve-resources.json",
+      "-f",
+      "/home/administrator/project/.eva2-artifacts/au006-activation-20260913/gateway-au006-endpoint.proposed.compose.json",
+      "up",
+      "-d",
+      "--no-deps",
+      "gateway"
+    ],
+    "core_install_command": [
+      "docker",
+      "compose",
+      "--project-name",
+      "eva2-managed-b-slot3",
+      "--env-file",
+      "/var/lib/eva2/managed-b-slot3/candidate.env",
+      "-f",
+      "/home/administrator/project/.eva2-artifacts/memory-controls-image-20260911/deployment/managed-b.compose.yml",
+      "-f",
+      "/home/administrator/project/.eva2-artifacts/memory-controls-image-20260911/deployment/telegram-proactive.compose.yml",
+      "-f",
+      "/home/administrator/project/.eva2-artifacts/memory-controls-image-20260911/deployment/mcp-gateway.compose.yml",
+      "-f",
+      "/home/administrator/project/.eva2-artifacts/memory-controls-image-20260911/deployment/dashboard-voice.compose.yml",
+      "-f",
+      "/home/administrator/project/.eva2-artifacts/memory-controls-image-20260911/deployment/household-voice.compose.yml",
+      "-f",
+      "/var/lib/eva2/managed-b-slot3/core-worker.override.compose.yml",
+      "-f",
+      "/home/administrator/project/.eva2-artifacts/au006-activation-20260913/reprobe-core.override.compose.json",
+      "up",
+      "-d",
+      "--no-deps",
+      "core"
+    ],
+    "core_parent_rollback_command": [
+      "docker",
+      "compose",
+      "--project-name",
+      "eva2-managed-b-slot3",
+      "--env-file",
+      "/var/lib/eva2/managed-b-slot3/candidate.env",
+      "-f",
+      "/home/administrator/project/.eva2-artifacts/memory-controls-image-20260911/deployment/managed-b.compose.yml",
+      "-f",
+      "/home/administrator/project/.eva2-artifacts/memory-controls-image-20260911/deployment/telegram-proactive.compose.yml",
+      "-f",
+      "/home/administrator/project/.eva2-artifacts/memory-controls-image-20260911/deployment/mcp-gateway.compose.yml",
+      "-f",
+      "/home/administrator/project/.eva2-artifacts/memory-controls-image-20260911/deployment/dashboard-voice.compose.yml",
+      "-f",
+      "/home/administrator/project/.eva2-artifacts/memory-controls-image-20260911/deployment/household-voice.compose.yml",
+      "-f",
+      "/var/lib/eva2/managed-b-slot3/core-worker.override.compose.yml",
+      "up",
+      "-d",
+      "--no-deps",
+      "core"
+    ],
+    "provider_start_command": [
+      "docker",
+      "compose",
+      "--project-name",
+      "eva2-au006-document",
+      "-f",
+      "/home/administrator/project/.eva2-artifacts/au006-activation-20260913/document-runtime.compose.json",
+      "-f",
+      "/home/administrator/project/.eva2-artifacts/au006-activation-20260913/provider-fixed-address.proposed.compose.json",
+      "-f",
+      "/home/administrator/project/.eva2-artifacts/au006-activation-20260913/provider-phase2-write.override.compose.json",
+      "--profile",
+      "au006-provider-registration",
+      "up",
+      "-d",
+      "--no-deps",
+      "document-workspace"
+    ],
+    "worker_start_command": [
+      "docker",
+      "compose",
+      "--project-name",
+      "eva2-au006-document",
+      "-f",
+      "/home/administrator/project/.eva2-artifacts/au006-activation-20260913/document-runtime.compose.json",
+      "-f",
+      "/home/administrator/project/.eva2-artifacts/au006-activation-20260913/provider-fixed-address.proposed.compose.json",
+      "-f",
+      "/home/administrator/project/.eva2-artifacts/au006-activation-20260913/provider-phase2-write.override.compose.json",
+      "-f",
+      "/home/administrator/project/.eva2-artifacts/au006-activation-20260913/reprobe-project.override.compose.json",
+      "--profile",
+      "au006-reviewed-project",
+      "up",
+      "-d",
+      "--no-deps",
+      "document-worker"
+    ],
+    "gateway_delta": "one readonly main.py mount; existing guard and endpoint policy preserved",
+    "core_delta": [
+      "environment",
+      "volumes",
+      "image"
+    ],
+    "worker_delta": "only private project source directory",
+    "new_endpoints_or_rights": false,
+    "runtime_commands_executed": false,
+    "live_config_hashes": {
+      "/home/administrator/project/.eva2-artifacts/memory-controls-image-20260911/deployment/telegram-proactive.compose.yml": "62bee1695b8e397efe11c7eb4bc7e9cd58ca7bd08caae37c37415040fca18631",
+      "/var/lib/eva2/workspace-provider/mcp-autonomy-guard-2/pinning.compose.json": "6440fc4dd0ff6786a41d1bc33b1fbc46aa0de1882d47df6b974cb41cc2d04824",
+      "/home/administrator/project/.eva2-artifacts/memory-controls-image-20260911/deployment/mcp-gateway.compose.yml": "f6f80931f1c74fbca70e4e13eda8c23f99cf2a46bd55ce95ad37465157933342",
+      "/home/administrator/project/Eva2/eva2/deploy/living-core/workspace-provider.compose.yml": "39db35ed968380ab91be52b414e45c1726a99920e5c62f649d04c25bc06babb6",
+      "/var/lib/eva2/managed-b-slot3/candidate.env": "f4c7ee2f4f9e676c4d9bbed69689a5f867b60a316d90c7014761775b34fb9cb8",
+      "/home/administrator/project/.eva2-artifacts/memory-controls-image-20260911/deployment/household-voice.compose.yml": "cb09e4bddf75cffab6b5cad147353d6f9460f4e1b57167bb4a4ba06df379fdf9",
+      "/home/administrator/project/.eva2-artifacts/memory-controls-image-20260911/deployment/dashboard-voice.compose.yml": "8d88b1228570af15dd78b73b505ea7c3483fb4090753348dff003f0c6754a029",
+      "/home/administrator/project/.eva2-artifacts/au006-activation-20260913/gateway-au006-endpoint.proposed.compose.json": "c693b179b05a52c5cdf3d0a24403da6bfc53f5e522c5cdc040569a4727c95939",
+      "/var/lib/eva2/workspace-provider/au006-bootstrap-guard/compose.preserve-resources.json": "e3b4b4e11d3e4d8f10f6bc7865b08efd8f4a1c6a67803aaf0549c464dffed87f",
+      "/var/lib/eva2/managed-b-slot3/core-worker.override.compose.yml": "d8f985a3a7349efef465b1f531704a0611adf2eacc73101bd95b919700f9ef48",
+      "/var/lib/eva2/workspace-provider/provider.env": "2a30a8dd3cc13c4e6ec4517074cb231ee1b0049d86efc965923b3e931abfefa9",
+      "/home/administrator/project/.eva2-artifacts/memory-controls-image-20260911/deployment/managed-b.compose.yml": "33626158ade4dbd09c2ad5c58edf0ab16493521bc566b184c738298dc1495b86",
+      "/var/lib/eva2/workspace-provider/mcp-autonomy-guard-2/compose.egress-browser.json": "c430431b94eed49f1b1d26929c0cfcabffd0cba789075e1ed1aa3b69b746d868"
+    }
+  },
+  "reviewed_file_sha256": {
+    "/home/administrator/project/.eva2-artifacts/au006-activation-20260913/rpc-owner-context.proposed.compose.json": "034ddb52b2f3b3c6747be83e42a2ce583cc1ee954609fc2daf073980bead2f45",
+    "/home/administrator/project/.eva2-artifacts/au006-activation-20260913/reprobe-core.override.compose.json": "dd856544061df13bc5062787ad1e953359fb26189c833ad750141f4cf9d861ba",
+    "/home/administrator/project/.eva2-artifacts/au006-activation-20260913/reprobe-project.override.compose.json": "213c2a274b6a2ab8917b5ce3ba724cc2a5dbfdb4f91ac37826792a5dd2860760",
+    "/home/administrator/project/.eva2-artifacts/au006-activation-20260913/prepare_reprobe_preview.py": "1ef90d5d0a03d94637ee606cf1ec9d4beeb2992d685a217bb6810c41a82e1993",
+    "/home/administrator/project/.eva2-artifacts/au006-activation-20260913/rpc-owner-context-fix/main.original.py": "c28f599738d62efd4a1fcdf4d73422cad78a3b135406f4d235c38b62caa8fca9",
+    "/home/administrator/project/.eva2-artifacts/au006-activation-20260913/rpc-owner-context-fix/main.guarded.py": "ce9a769b1224812fddb1a905cff4025a19411f2760e6ac2abf08d1f3ab3b01fe",
+    "/home/administrator/project/.eva2-artifacts/au006-activation-20260913/rpc-owner-context-fix/tool_service.py": "0bf4a3cd4288f56aee1038174906165602a0c759d84faaa1210c68ad05f57431",
+    "/home/administrator/project/.eva2-artifacts/au006-activation-20260913/document-runtime.compose.json": "bfc4f26615372bf66d13d1e2ab8afc4605c3801d01789789c7563de854e6fff5",
+    "/home/administrator/project/.eva2-artifacts/au006-activation-20260913/provider-fixed-address.proposed.compose.json": "46fa67e18a98b739f9597743dea5ff94b1dfd79df5d53a142b68e27062fd1b42",
+    "/home/administrator/project/.eva2-artifacts/au006-activation-20260913/provider-phase2-write.override.compose.json": "5ff9cbdd14da06c88b7b4da270ee0817326e123ed3bfc8ba1dad7f5757477479"
+  },
+  "post_success_rollback": {
+    "execute_only_if_requested": true,
+    "steps": [
+      [
+        "docker",
+        "stop",
+        "eva2-document-goal-worker-au006"
+      ],
+      [
+        "docker",
+        "stop",
+        "eva2-document-workspace-au006"
+      ],
+      [
+        "docker",
+        "compose",
+        "--project-name",
+        "eva2-managed-b-slot3",
+        "--env-file",
+        "/var/lib/eva2/managed-b-slot3/candidate.env",
+        "-f",
+        "/home/administrator/project/.eva2-artifacts/memory-controls-image-20260911/deployment/managed-b.compose.yml",
+        "-f",
+        "/home/administrator/project/.eva2-artifacts/memory-controls-image-20260911/deployment/telegram-proactive.compose.yml",
+        "-f",
+        "/home/administrator/project/.eva2-artifacts/memory-controls-image-20260911/deployment/mcp-gateway.compose.yml",
+        "-f",
+        "/home/administrator/project/.eva2-artifacts/memory-controls-image-20260911/deployment/dashboard-voice.compose.yml",
+        "-f",
+        "/home/administrator/project/.eva2-artifacts/memory-controls-image-20260911/deployment/household-voice.compose.yml",
+        "-f",
+        "/var/lib/eva2/managed-b-slot3/core-worker.override.compose.yml",
+        "up",
+        "-d",
+        "--no-deps",
+        "core"
+      ]
+    ],
+    "preserve": [
+      "RPC owner fix main.py mount",
+      "bootstrap preservation guard",
+      "exact endpoint policy",
+      "completed r2 goal and both artifacts",
+      "native journal",
+      "old failed goal and old sealed inputs"
+    ],
+    "never": [
+      "SQL goal reset",
+      "journal reset",
+      "retry either old operation",
+      "base-only gateway recreation"
+    ]
+  },
+  "money_cost": "unknown"
+}

@@ -1,0 +1,9 @@
+# AU-006 r2 ordinary conversation completed
+
+The approved RPC owner-context correction is installed. A single ordinary dashboard request created the prepared concept and final document, verified both, and returned the final text. The durable goal is completed with exactly two dispatch reservations. Native journal frame and receipt checksums confirm two creates, generation 0→1→2; actual files match persisted artifact bytes (396 / 662 bytes). The original rejected goal and old sealed inputs remain untouched.
+
+The expected offline-tool preflight was resolved with the separately authorized read-only provider start and normal gateway health recovery. No catalog rewrite or rebinding occurred. Parent-schema readback used the approved candidate in an ephemeral read-only Python container. RPC installation retained the bootstrap preservation guard and exact endpoint policy. All 53 existing tools and nine protected service identities/images/start times remain unchanged. Candidate core, provider and worker remain live after success.
+
+One start question, zero optional status questions, zero operator retries. The ordinary run recorded three model attempts (23,285 input / 359 output tokens) and two action admissions (start/get); monetary cost was not measured. Both source documents were copied byte-for-byte into the owner's private Codex artifact directory and the final file was queued to open. This is technical completion of the prepared project; human acceptance is not inferred.
+
+Evidence: `eva2/evidence/living-core/au006-r2-live-completed-20260913.json`. Private raw evidence and exact hashes are indexed there. The historical original-probe blocker file remains preserved; the separate r2 completion receipt records current success. No Telegram/external delivery or browser intervention.

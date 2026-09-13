@@ -1048,6 +1048,18 @@ De uitvoerder maakt eerst het minimale aansluitplan met bestaande
 ownerauthority, verified-workspace en readback. Geen extra bron of live
 wijziging in deze stap; de geslaagde begrensde proef blijft behouden.
 
+
+### Voorbereid documentproject — AU-006 deeloplevering
+
+Technisch afgerond en live: één gewone vraag leverde in 27,72 seconden twee
+documenten op. Beide native receipts en bestandsbytes zijn onafhankelijk
+gecontroleerd. De oude mislukte proef blijft bewaard.
+[Lees het einddocument](C:/Users/jaapf/.codex/visualizations/2026/09/10/01a08d52-31b1-7091-be45-812c0b6e6c9f/au006-r2/eva2-documentproject-eindversie-20260913-r2.md).
+[Livebewijs](evidence/living-core/au006-r2-live-completed-20260913.json) ·
+[Beoordelen](reviews/au006-r2-owner-handoff-20260913.md).
+Jouw PJ-01-oordeel staat open; opnieuw starten is niet nodig. Algemene
+projectplanning, meerdaagse praktijk en onbekende geldkosten zijn niet afgerond.
+
 ## Nu
 
 | Volgorde | Kaart | Resultaat | Status |
