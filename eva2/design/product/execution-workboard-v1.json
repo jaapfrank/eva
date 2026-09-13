@@ -247,7 +247,7 @@
         },
         {
           "title": "Project hervatten na herstart",
-          "detail": "De private registratie is afgerond. Het activeringsplan is onafhankelijk goedgekeurd, inclusief één startvraag en zo nodig één statusvraag. Uitvoering en controle van het resultaat volgen nu. Geslaagde activering, een bereikbaar eindresultaat en jouw acceptatie zijn nog niet bewezen."
+          "detail": "De gewone startvraag mislukte na ongeveer 34 seconden: de gateway vond de private tool niet. Geen stappen voltooid of documenten gemaakt. De vorige core is hersteld; de projectworker en provider zijn gestopt. De private registratie blijft afgerond. Een gerichte autorisatiecorrectie wordt onderzocht en beoordeeld; er is geen nieuwe modelproef of automatische herhaling toegestaan."
         },
         {
           "title": "Gedeeld audiotype",
@@ -5510,15 +5510,15 @@
       "owners": [
         {
           "owner": "01a08d52-31b1-7091-be45-812c0b6e6c9f",
-          "work": "Goedgekeurde AU-006-activering en begrensde gespreksproef",
+          "work": "Gerichte correctie van private toolautorisatie na terugrol",
           "boundary": "New providers/document_goal_actions.py; bundled.py opt-in registration only; document_goal_plan.py safe full host GoalSpec/hash binding; targeted provider/PG tests and docs. Existing actual ConversationTurn/current authority/external tool port. No second planner/live/envflip.",
-          "status": "phase2_authorized_execution_pending"
+          "status": "phase2_ordinary_route_failed_rolled_back_isolated_fix_review"
         },
         {
           "owner": "coordinator/timing_final_review",
-          "work": "AU-006-activeringsplan onafhankelijk beoordeeld",
+          "work": "Gerichte autorisatiecorrectie en negatieve controles beoordelen",
           "boundary": "Exact guarded registration plan and bd26e97f correction; no execution or database changes. Earlier four-row incident repair remains closed.",
-          "status": "phase2_plan_independent_go_complete"
+          "status": "authorization_context_fix_review_pending"
         },
         {
           "owner": "coordinator/next_tools_delivery",
@@ -6257,7 +6257,7 @@
         "historical": true
       },
       "connectionPlan": {
-        "status": "source_complete_private_metadata_registered_core_activation_pending",
+        "status": "source_complete_ordinary_route_failed_rolled_back_auth_context_fix_review",
         "ownerThread": "01a08d52-31b1-7091-be45-812c0b6e6c9f",
         "reuse": [
           "Existing owner authority",
@@ -6934,7 +6934,7 @@
           "sourceCorrectionComplete": true
         },
         "activationPreparation": {
-          "status": "phase2_plan_independently_approved_execution_pending",
+          "status": "phase2_attempt_failed_rolled_back_feature_off",
           "ownerThread": "01a08d52-31b1-7091-be45-812c0b6e6c9f",
           "evidenceCommit": "bc0fd5c06d5d97853296cf2459463fac4ad577a7",
           "evidencePath": "eva2/evidence/living-core/au006-activation-preparation-20260913.json",
@@ -7487,7 +7487,7 @@
           }
         },
         "phase2OfflinePreparation": {
-          "status": "independently_approved_execution_pending",
+          "status": "ordinary_start_failed_rolled_back_auth_context_fix_under_review",
           "ownerThread": "01a08d52-31b1-7091-be45-812c0b6e6c9f",
           "evidenceCommit": "3653516428dff529386272773e37f8ad4d42c4a8",
           "evidencePaths": [
@@ -7498,7 +7498,7 @@
           "independentReviewer": "coordinator/timing_final_review",
           "activationAuthorized": true,
           "ordinaryProbeAuthorized": true,
-          "executed": false,
+          "executed": true,
           "preview": {
             "goal_sha256": "4ff68e4d5d4c5492503dc6bbfda8af4c99fbe4e2e3072413c4f9ae775adf7fe0",
             "plan_sha256": "8cab242e7619feb02a3ce69aa3d9b383f5ac5c68622e12386c919b43da30c52b",
@@ -7520,12 +7520,13 @@
             "New bound document worker; existing delegated worker preserved"
           ],
           "gatewayGuardAndEndpointPolicyPreserved": true,
-          "runtimeChanges": 0,
-          "modelCalls": 0,
+          "runtimeChanges": null,
+          "modelCalls": null,
           "documentEffectCalls": 0,
           "remainingOutcomes": [
-            "Bounded activation execution and readback",
-            "One ordinary start question and optionally one status question",
+            "Review minimal authorization-context correction and negative authorization checks",
+            "Separate decision on any new execution or model probe",
+            "Successful ordinary conversation route",
             "Reachable private artifact",
             "Owner acceptance"
           ],
@@ -7546,6 +7547,39 @@
               "No retry on uncertain outcomes",
               "Preserve gateway guard and endpoint policy"
             ],
+            "liveSuccessProven": false,
+            "ownerAccepted": false,
+            "reachableArtifactProven": false
+          },
+          "preparationOnlyCounts": {
+            "runtimeChanges": 0,
+            "modelCalls": 0,
+            "documentEffectCalls": 0
+          },
+          "executionResult": {
+            "reportedBy": "coordinator",
+            "evidenceBasis": "Coordinator report from execution owner; execution evidence commit not yet supplied to administration.",
+            "status": "ordinary_start_failed_verified_rollback_reported",
+            "ordinaryStartQuestions": 1,
+            "durationSecondsApprox": 33.8,
+            "goalState": "needs_help",
+            "completedSteps": 0,
+            "journalEntries": 0,
+            "documentsCreated": 0,
+            "failure": "Gateway RPC private tool not found despite passing catalog check.",
+            "rollback": {
+              "verifiedByExecutionOwner": true,
+              "coreImage": "sha256:832983322ad7d71611225749d618e828d9dd4676f8a24711f09e0ac349db1fcd",
+              "documentFeatureEnabled": false,
+              "documentWorkerRunning": false,
+              "providerRunning": false,
+              "gatewayGuardPreserved": true,
+              "gatewayEndpointPolicyPreserved": true
+            },
+            "causeInvestigation": "Admin email becomes None in exact authorization context; minimal isolated correction and negative authorization review ongoing.",
+            "newModelProbeAuthorized": false,
+            "sqlStateResetAuthorized": false,
+            "automaticRetryAllowed": false,
             "liveSuccessProven": false,
             "ownerAccepted": false,
             "reachableArtifactProven": false
