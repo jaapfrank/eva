@@ -121,7 +121,7 @@
           ]
         }
       ],
-      "priorityDecision": "Het herstel na de mislukte documentstatusinstallatie is onafhankelijk bevestigd. De vorige images, Eva en projectgegevens zijn behouden; de oude onjuiste gezondheidsmeldingen zijn terug. De installatiecontrole wordt gericht gerepareerd. PR-01 blijft afgesloten.",
+      "priorityDecision": "De tweede documentstatusinstallatie is volgens de uitvoerder geslaagd: beide diensten gezond en projectgegevens behouden. De onafhankelijke eindcontrole staat nog open. PR-01 blijft afgerond en live; IN-002-releasevoorwaarden blijven afzonderlijk vervolgwerk.",
       "dashboardVerification": {
         "status": "local_browser_verified_not_full_product_acceptance",
         "priorityRevision": {
@@ -279,7 +279,7 @@
         },
         {
           "title": "Betrouwbare status van documentdiensten",
-          "detail": "Het herstel is onafhankelijk bevestigd: beide vorige images staan terug en Eva, doelen en bestanden zijn behouden. De correctie van de installatiecontrole is nu als nieuwe kandidaat gereed; twintig gerichte controles slagen volgens de uitvoerder. De onafhankelijke beoordeling staat open. Nog geen tweede installatie en geen afgeronde statuscorrectie; de oorspronkelijke mislukte proef blijft bewaard."
+          "detail": "De uitvoerder meldt een geslaagde tweede installatie: beide documentdiensten zijn gezond met de juiste controles. Eva is niet herstart; doelen, journaal en 28 bestanden zijn volgens de eindcontrole behouden. De onafhankelijke eindcontrole loopt nog. Gezond betekent dat de dienst beschikbaar is, niet dat een opdracht voortgang maakt of klaar is."
         }
       ],
       "openRisks": [
@@ -1019,7 +1019,7 @@
       "sessionGoal": "AU-008: één zelfstandige kosteloze bijdrage via de algemene uitvoerder.",
       "currentWork": "**Afgerond en live — herbruikbare planreviewprocedure (PR-01).** Eva slaat een werkwijze op, vindt een eerdere werkwijze terug in een nieuw gesprek, ontvangt de gecontroleerde tekst en past de regels toe. De drie echte proeven zijn onafhankelijk goedgekeurd. De inhoudelijke planreview duurde 13,20 seconden. Jouw beoordeling staat open; algemene zelflerende vaardigheden zijn hiermee niet afgerond.",
       "currentEvidence": "eva2/evidence/living-core/au004-r6-abc-live-pass-20260913.json",
-      "nextStep": "**Eerstvolgend open werk:** onafhankelijke beoordeling van de nieuwe installatiecontrole voor de documentdiensten. De R2-kandidaat is gereed met twintig gerichte controles; een tweede installatie is nog niet goedgekeurd of uitgevoerd. Het actuele herstel is onafhankelijk bewezen. [PR-01](http://localhost:44712/#practice-PR-01) blijft afgesloten; IN-002-releasevoorwaarden blijven afzonderlijk vervolgwerk.",
+      "nextStep": "**Eerstvolgend open werk:** onafhankelijke eindcontrole van de geslaagde tweede documentstatusinstallatie. De uitvoerder meldt beide diensten gezond en doelen, journaal en 28 bestanden behouden. De technische oplevering is nog niet onafhankelijk afgesloten. [PR-01](http://localhost:44712/#practice-PR-01) blijft afgerond en live; IN-002-releasevoorwaarden blijven afzonderlijk vervolgwerk.",
       "usageClarification": {
         "date": "2026-09-07",
         "authorizedBy": "Jaap",
@@ -9632,7 +9632,7 @@
     },
     "documentServiceHealthAU006UX00120260913": {
       "id": "AU006-UX001-health",
-      "status": "original_install_failed_current_restoration_independently_verified_fix_pending",
+      "status": "r2_live_success_reported_independent_final_review_pending",
       "ownerThread": "01a08d52-31b1-7091-be45-812c0b6e6c9f",
       "assignedBy": "coordinator",
       "outcome": "Accurate liveness/readiness for existing document worker and workspace provider",
@@ -9691,7 +9691,7 @@
         "reportedGuardTestsPassed": 20,
         "normalAndOptimizedReported": true,
         "sameTwoImages": true,
-        "secondInstallationPerformed": false,
+        "secondInstallationPerformed": true,
         "reportedBy": "runtime writer"
       },
       "independentRestoration": {
@@ -9708,6 +9708,30 @@
         "coreReady": true,
         "goalsArtifactsTelegramAU004Preserved": true,
         "healthCorrectionDelivered": false
+      },
+      "technicalComplete": false,
+      "independentFinalGo": false,
+      "r2LiveResult": {
+        "reportedBy": "runtime writer",
+        "resultCommit": "b87512a3f1cbec3fd1a66a584c4272124685433e",
+        "evidenceIntegrated": false,
+        "workerImageReportedPrefix": "1d0a704d",
+        "workerContainerId": "1329566f565d386a735e018f984b584c012a3bc7fb5e9bf6f6da02910c3915c5",
+        "providerImageReportedPrefix": "ba9eda",
+        "providerContainerId": "77bced2a4c0d56bbad44031581eaf9f064f55949ae43d2af02c998ed400473b6",
+        "bothHealthyReported": true,
+        "finalGuardPassedReported": true,
+        "coreE66NotRestartedReported": true,
+        "protectedContainersReported": 11,
+        "filesPreservedReported": 28,
+        "goalsJournalTelegramAU004PreservedReported": true,
+        "pendingModelRequestsReported": 0,
+        "modelOrDocumentEffectProbes": 0,
+        "liveFaultInjectionPerformed": false,
+        "rollbackPerformed": false,
+        "nextParentAuthoritySha256": "294e719ec1ddb376c0eb5bab9d48d93027f738c3091cb6f3ce60d7fa76524533",
+        "nextParentScope": "Coree66 with new two document images and health override; prior R6 protected snapshot historical",
+        "healthDoesNotProveTaskProgress": true
       }
     }
   },
