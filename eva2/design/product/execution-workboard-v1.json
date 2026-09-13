@@ -247,7 +247,7 @@
         },
         {
           "title": "Project hervatten na herstart",
-          "detail": "De gatewaykoppeling is volgens de uitvoerder geslaagd; het bewijs gaat nog naar review. De kern gebruikt nu de geïsoleerde testomgeving voor de gezamenlijke projectproef. De beoordeelde onderdelen blijven afgerond; livegebruik en jouw acceptatie staan open."
+          "detail": "De gatewayproef is onafhankelijk goedgekeurd en geïntegreerd. Ook de volledige geïsoleerde kernproef is volgens de uitvoerder geslaagd; de bron en het bewijs moeten nog worden overgedragen en beoordeeld. Daarom nog geen eindakkoord, livegebruik of eigenaaracceptatie."
         }
       ],
       "openRisks": [
@@ -5472,7 +5472,7 @@
           "owner": "01a08d52-31b1-7091-be45-812c0b6e6c9f",
           "work": "AU-006 geautoriseerde documentprovider bouwen",
           "boundary": "Approved plan34b3b8ff: two new provider files, bounded durable storage/worker composition, named tests and documentation. No app/auth/orchestrator/installer/CP001/deploy changes.",
-          "status": "core_product_proof_using_isolated_prepared_gateway_stack"
+          "status": "core_end_to_end_reported_passed_handoff_and_review_pending"
         },
         {
           "owner": "coordinator/timing_final_review",
@@ -5484,7 +5484,7 @@
           "owner": "coordinator/next_tools_delivery",
           "work": "AU-006 geïsoleerde gatewaykoppeling",
           "boundary": "Existing disposable gateway fixture hop and reusable callback for core product proof; no main/model/live changes. Previously reviewed MCP adapter/image source complete.",
-          "status": "gateway_hop_reported_passed_stack_retained_for_core_trial",
+          "status": "bounded_gateway_hop_reviewed_integrated_stacks_retained",
           "previousCompletedWork": {
             "work": "Renovate npm-dekking",
             "status": "configuration_complete_bot_activity_unverified",
@@ -6521,15 +6521,26 @@
           ]
         },
         "gatewayFixtureFollowup": {
-          "status": "gateway_hop_reported_passed_core_proof_stack_retained",
+          "status": "bounded_gateway_hop_source_integrated_independent_go",
           "owner": "coordinator/next_tools_delivery",
           "scope": "Existing disposable gateway fixture hop and reusable callback for core product proof.",
           "noMainOrModelOrLiveChanges": true,
           "exactAdditionalPaths": "Pending developer delivery.",
           "reportedBy": "coordinator",
           "reportedResult": "Actual existing ContextForge helpers successfully exercised gateway hop.",
-          "sourceCommit": "Pending reviewed delivery",
-          "independentReview": "Pending commit and evidence handoff; no approval inferred.",
+          "sourceCommit": "b7d61d505a9beeb7f5fae1e3470a4c15777e0fed",
+          "independentReview": {
+            "decision": "GO for bounded isolated gateway hop",
+            "reportedBy": "coordinator",
+            "verificationMode": "Read-only independent evidence review",
+            "verified": [
+              "Runner/helper/manifest hashes",
+              "Actual runtime tool and provider binding",
+              "Request hash and create/observe/restart receipts",
+              "Actual artifact and image",
+              "Internal network without published ports"
+            ]
+          },
           "preparedCoreStack": {
             "status": "core_trial_using_disposable_stack",
             "contextPath": "/home/administrator/project/.eva2-artifacts/workspace-broker-v2-20260913/core-prepared-stack.json",
@@ -6546,9 +6557,32 @@
             "exactPath": "/home/administrator/project/.eva2-artifacts/workspace-broker-v2-20260913/core-prepared-stack.json",
             "resourceName": "eva-atomic-gateway-19caccd1dd",
             "purpose": "Private prepared context and disposable internal stack shared with core owner for real gateway/provider integration proof.",
-            "retainUntil": "Core integration trial and necessary proof collection complete; coordinator confirms handoff and cleanup.",
+            "retainUntil": "Core source/evidence handoff and independent review complete; coordinator confirms proof collection and cleanup of both exact owned stacks.",
             "cleanupMoment": "Coordinator removes only the exact verified owned stack/resources after proof and handoff, then private context as appropriate. Keep sanitized committed evidence. No cleanup during active core trial.",
-            "privateContextPolicy": "Do not commit or output private stack context; sanitized evidence only."
+            "privateContextPolicy": "Do not commit or output private stack context; sanitized evidence only.",
+            "additionalRetainedStacks": [
+              {
+                "resourceName": "eva-atomic-gateway-64b53c30c5",
+                "exactPath": "/home/administrator/project/.eva2-artifacts/workspace-broker-v2-20260913/eva-atomic-gateway-64b53c30c5",
+                "manifestPath": "/home/administrator/project/.eva2-artifacts/workspace-broker-v2-20260913/eva-atomic-gateway-64b53c30c5/stack.json",
+                "purpose": "Reviewed isolated successful gateway-hop source, receipt and artifact evidence."
+              },
+              {
+                "resourceName": "eva-atomic-gateway-19caccd1dd",
+                "exactPath": "/home/administrator/project/.eva2-artifacts/workspace-broker-v2-20260913/eva-atomic-gateway-19caccd1dd",
+                "manifestPath": "/home/administrator/project/.eva2-artifacts/workspace-broker-v2-20260913/core-prepared-stack.json",
+                "purpose": "Shared isolated core trial with happy/stop provider instances."
+              }
+            ]
+          },
+          "evidencePath": "eva2/reviews/workspace-atomic-gateway-20260913.json",
+          "sourceIntegrated": true,
+          "initialFixtureFailurePreserved": "Readback was attempted before restarted provider ready; retained failure log and removed that isolated stack. Final runner uses existing initialize readiness helper. No repeated model or live calls.",
+          "integrationVerification": "Two actual baselines exact, bounded patch checked, final bytes exact; runner and actual helper hashes match.",
+          "coreEndToEnd": {
+            "status": "reported_passed_source_evidence_handoff_and_review_pending",
+            "independentFinalGo": false,
+            "live": false
           }
         }
       }

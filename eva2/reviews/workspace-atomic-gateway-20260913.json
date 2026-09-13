@@ -1,0 +1,29 @@
+{
+  "image": "sha256:f7d9feba8359a0d7d3fbe18703cb8c3a6bbe5e274aeccda15b83c26b6010bd00",
+  "gateway_image": "sha256:daf923c247fd569df5f8c9ee418cbc259fade564f78e0a0852937139a181c4dd",
+  "status": "isolated gateway hop passed",
+  "runner_sha256": "6731e6a3d0b3d532759d15c3879c56fe5ee154bd2050c21fd6fa7293bacd54a1",
+  "helper_sha256": "a8dc2a31ea327a54f70850669c0c2c3f3b40893a7bb80863df6bdeb09527d3be",
+  "success_manifest": "/home/administrator/project/.eva2-artifacts/workspace-broker-v2-20260913/eva-atomic-gateway-64b53c30c5/stack.json",
+  "success_manifest_sha256": "2b5dc4860979248841b3fa57263c43a7c611bb47fe8589bb81ce851ab0414d3c",
+  "tests": [
+    "registered actual STREAMABLEHTTP gateway",
+    "gateway runtime tool execute creates artifact",
+    "observe equals verified create receipt",
+    "changed request binding refused",
+    "observe after provider restart equals original without journal change",
+    "provider binding digest preserved in selected tool descriptions"
+  ],
+  "initial_fixture_failure": "Readback was attempted before restarted provider ready; retained failure log and removed that isolated stack. Final runner uses existing initialize readiness helper. No repeated model or live calls.",
+  "core_context_manifest": "/home/administrator/project/.eva2-artifacts/workspace-broker-v2-20260913/core-prepared-stack.json",
+  "core_context_sha256": "54759b72fc4852a51a3bbeeb3bc86b1a51ee7b86569984e795ffa2656f7d0e13",
+  "prepared_instances": 2,
+  "prepared_genesis": "both root and journal empty at handoff; no native dispatch",
+  "retention": "Unique isolated resources retained for core harness; root coordinator owns cleanup after use",
+  "limits": [
+    "No production provisioning or model calls",
+    "Gateway fixture visibility public only in isolated internal network",
+    "Owner mandate and stop checked by core, not invented by provider",
+    "No claim whole AU006 delivered"
+  ]
+}
