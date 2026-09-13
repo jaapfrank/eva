@@ -17,6 +17,56 @@ _MAX_CONTENT_BYTES = 12_000
 
 
 @dataclass(frozen=True, slots=True)
+class PreparedDocumentGoal:
+    """Host definition for one chat project; never parsed from tool arguments."""
+
+    goal: DurableGoalSpec
+    plan_sha256: str
+    conversation_project_id: str | None
+
+    @property
+    def sha256(self) -> str:
+        return canonical_sha256(self.to_payload())
+
+    def to_payload(self) -> dict:
+        return {"contract": "EvaPreparedDocumentGoal/v1", "goal": self.goal.to_payload(),
+                "plan_sha256": self.plan_sha256,
+                "conversation_project_id": self.conversation_project_id}
+
+    @classmethod
+    def from_json(cls, raw: str, plan: DocumentGoalPlan) -> PreparedDocumentGoal:
+        def unique(pairs):
+            result = {}
+            for key, value in pairs:
+                if key in result:
+                    raise DurableGoalError("prepared document goal repeats a field")
+                result[key] = value
+            return result
+
+        try:
+            if not isinstance(raw, str) or len(raw.encode()) > 65_536:
+                raise ValueError("size")
+            payload = json.loads(raw, object_pairs_hook=unique)
+            if not isinstance(payload, dict) or set(payload) != {
+                "contract", "goal", "plan_sha256", "conversation_project_id"
+            } or payload["contract"] != "EvaPreparedDocumentGoal/v1":
+                raise ValueError("shape")
+            project = payload["conversation_project_id"]
+            if project is not None and (
+                not isinstance(project, str) or not project.strip() or len(project) > 240
+            ):
+                raise ValueError("project")
+            goal = DurableGoalSpec.from_payload(payload["goal"])
+            if (payload["plan_sha256"] != plan.sha256 or goal.sha256 != plan.goal_sha256
+                    or goal.goal_id != plan.goal_id or goal.owner_id != plan.owner_principal_id
+                    or goal.followup_instruction is None or goal.pivot_instruction is not None):
+                raise ValueError("binding")
+            return cls(goal, plan.sha256, project)
+        except (ValueError, TypeError, KeyError, RecursionError) as error:
+            raise DurableGoalError("prepared document goal shape or binding differs") from error
+
+
+@dataclass(frozen=True, slots=True)
 class DocumentStep:
     operation_id: str
     request_binding_sha256: str

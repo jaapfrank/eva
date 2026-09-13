@@ -22,9 +22,8 @@ from fastapi import FastAPI, HTTPException, Request, Response, WebSocket, WebSoc
 from eva.adapters.api.dashboard_voice_client import DASHBOARD_VOICE_CLIENT_JS
 
 from eva.adapters.api.dashboard_access import DashboardAccess
-from eva.adapters.connectors.home_assistant_voice import SpeechAudioChunk
 from eva.application.conversation import ConversationTurn, GroundedReply
-from eva.application.voice import admit_final_voice_turn
+from eva.application.voice import SpeechAudioChunk, admit_final_voice_turn
 from eva.contracts.voice import VoiceSession, VoiceTurn
 
 

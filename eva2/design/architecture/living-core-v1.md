@@ -1459,3 +1459,43 @@ zonder exacte hostplanbinding wordt door deze compositie niet uitgevoerd; de
 interne route krijgt hiermee geen eigen nieuwe rechten. De nieuwe selector laadt
 alleen het expliciete goal_id en wordt niet afhankelijk van de eerste 64 andere
 wachtende doelen. Afwijking of onzekere uitvoering eindigt in een concrete blokkade.
+# Voorbereid documentproject via het gewone gesprek
+
+De opt-in `document_goal_actions`-provider registreert drie argumentloze acties:
+`start_prepared_document_project`, `get_prepared_document_project` en
+`stop_prepared_document_project`. Ze lopen door dezelfde
+`PostgresConversationActions`/`PostgresExternalConversationTools`-route als andere
+gesprekstools. De adapter herlaadt de echte opgeslagen ingress met de bestaande
+`_SourceTurnLoader`; een fictieve eigenaarbeurt is geen autorisatie.
+
+`EVA_DOCUMENT_GOAL_DEFINITION_FILE` schakelt de bijdrage in. Vereist zijn tevens
+`EVA_DOCUMENT_GOAL_PLAN_FILE`, `EVA_MCP_AUTONOMY_MANDATE_FILE` en de bestaande
+`EVA_RUNTIME_TENANT_ID`/`EVA_RUNTIME_INSTALLATION_ID`. Beide projectbestanden
+worden gelezen met de bestaande beveiligde runtimebestandslezer. De definitie
+heeft precies `contract: EvaPreparedDocumentGoal/v1`, `goal` (de volledige
+`EvaDurableGoalSpec/v2`), `plan_sha256` en `conversation_project_id` (tekst of null).
+De definitie bindt de exacte planhash en goalhash; het plan bindt eigenaar,
+installatie, toolconfiguratie, paden en inhoud. Null betekent een gesprek zonder
+project-ID, geen wildcard. Een plan met een alternatief pivotpad is niet toegelaten.
+
+Start verleent geen nieuwe rechten: het huidige eigenaarmandaat wordt bij
+voorbereiding én uitvoering gecontroleerd. Start schrijft alleen admission,
+planbinding en wakeplanning; de bestaande documentworker voert de twee stappen
+uit. Herhalen verwijst naar dezelfde goal, ook na stoppen of voltooien. Status
+en stop blijven voor die private eigenaar beschikbaar na intrekken van het
+mandaat. Stop vóór start meldt `not_started`; het maakt geen nieuwe goal aan.
+Stop van lopend werk bewaart eerdere documenten. Een al begonnen publicatie
+wordt hiermee niet teruggedraaid; de worker controleert stop vóór vervolgwerk.
+
+De conversation receipt kan `verified` zijn terwijl `result.project_status`
+nog `waiting` is. Alleen `completed` met de exact gebonden beide artifacts en
+geaccepteerde lokale aflevering geeft `final_document`. Dit leest het eerder
+geverifieerde opgeslagen resultaat; het doet geen nieuwe bestand-/netwerkcall
+en belooft geen externe notificatie of actuele bestandsintegriteit na latere
+wijzigingen buiten dit project. De eerste geverifieerde artifact is afzonderlijk
+zichtbaar. Documenttekst in een resultaat blijft data, geen opdracht of mandaat.
+
+Deze aansluiting is begrensd tot één hostvoorbereid project. Het beheerplan voor
+een echte instantie en de nog open gewone gebruikersproef staat in
+[AU-006 activatieplan](../../evidence/living-core/au006-normal-command-activation-plan-20260913.md).
+Bronoplevering activeert geen worker of provider en is geen eigenaaracceptatie.

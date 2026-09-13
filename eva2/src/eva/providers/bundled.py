@@ -11,6 +11,7 @@ from eva.providers.contracts import RuntimeProviderFactory
 from eva.providers.home_assistant import HomeAssistantProviderFactory
 from eva.providers.mcp_gateway import McpGatewayProviderFactory
 from eva.providers.mcp_autonomy import McpAutonomyProviderFactory
+from eva.providers.document_goal_actions import DocumentGoalActionsProviderFactory
 
 
 def bundled_provider_factories() -> tuple[RuntimeProviderFactory, ...]:
@@ -19,6 +20,7 @@ def bundled_provider_factories() -> tuple[RuntimeProviderFactory, ...]:
         HomeAssistantProviderFactory(),
         McpGatewayProviderFactory(),
         McpAutonomyProviderFactory(),
+        DocumentGoalActionsProviderFactory(),
     )
 
 

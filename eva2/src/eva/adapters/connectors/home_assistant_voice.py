@@ -17,6 +17,8 @@ from urllib.parse import urlsplit, urlunsplit
 import httpx2 as httpx
 from websockets.asyncio.client import connect
 
+from eva.application.voice import SpeechAudioChunk
+
 
 class VoiceMediaError(RuntimeError):
     """A sanitized media failure, without credentials, frames or transcripts."""
@@ -356,14 +358,6 @@ class HomeAssistantSpeechInput:
         if not total:
             raise VoiceMediaError("speech input is empty")
         await socket.send(bytes([handler]))
-
-
-@dataclass(frozen=True, slots=True)
-class SpeechAudioChunk:
-    """Transient encoded audio and decoder type; never stored by this adapter."""
-
-    data: bytes
-    mime_type: str
 
 
 class HomeAssistantSpeechOutput(HomeAssistantSpeechInput):

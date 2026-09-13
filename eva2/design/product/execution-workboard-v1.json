@@ -247,11 +247,11 @@
         },
         {
           "title": "Project hervatten na herstart",
-          "detail": "De gewone gespreksingang voor starten, status/resultaat en stoppen is gebouwd en gericht getest; onafhankelijke review volgt. Een bestaande architectuurcontrole blijft rood met dezelfde eerdere bevindingen. De geïsoleerde uitvoeringsproef blijft goedgekeurd; natuurlijke modelkeuze en livegebruik zijn nog niet bewezen."
+          "detail": "Ook starten, status/resultaat en stoppen via de gewone gesprekstools zijn technisch afgerond, onafhankelijk goedgekeurd en geïntegreerd voor hetzelfde voorbereide project. De geïsoleerde uitvoeringsproef blijft afgerond. Natuurlijke modelkeuze, live-installatie en jouw praktijkproef staan nog open."
         },
         {
           "title": "Gedeeld audiotype",
-          "detail": "Een kleine codeopruiming laat beide spraakadapters hetzelfde bestaande audiotype gebruiken. Compatibiliteit is gericht getest; onafhankelijke review loopt. Geen nieuwe spraakfunctie of livewijziging."
+          "detail": "De codeopruiming is onafhankelijk goedgekeurd en geïntegreerd: beide spraakadapters gebruiken hetzelfde bestaande audiotype met behoud van compatibiliteit. Geen nieuwe spraakfunctie of livewijziging; de volledige architectuurcontrole blijft apart open."
         }
       ],
       "openRisks": [
@@ -5486,19 +5486,19 @@
           "owner": "01a08d52-31b1-7091-be45-812c0b6e6c9f",
           "work": "AU-006 normale gespreksingang",
           "boundary": "New providers/document_goal_actions.py; bundled.py opt-in registration only; document_goal_plan.py safe full host GoalSpec/hash binding; targeted provider/PG tests and docs. Existing actual ConversationTurn/current authority/external tool port. No second planner/live/envflip.",
-          "status": "normal_command_candidate_built_tested_review_pending"
+          "status": "bounded_normal_command_source_complete_reviewed_not_live"
         },
         {
           "owner": "coordinator/timing_final_review",
           "work": "Gedeeld audiotype zonder adapterafhankelijkheid",
           "boundary": "application/voice.py, connectors/home_assistant_voice.py, api/dashboard_voice.py and targeted dashboard voice test. Same type/re-export compatibility; no runtime or AU006 overlap.",
-          "status": "shared_audio_type_candidate_in_independent_review"
+          "status": "shared_audio_type_source_complete_reviewed_integrated_not_live"
         },
         {
           "owner": "coordinator/next_tools_delivery",
           "work": "Onafhankelijke review gedeeld audiotype",
           "boundary": "Review isolated voiceAudioContract20260913 candidate; no source/board/live changes. Completed AU006 provider/gateway source and cleanup remain closed.",
-          "status": "voice_audio_type_independent_review_in_progress",
+          "status": "shared_audio_type_independent_review_complete",
           "previousCompletedWork": {
             "work": "Renovate npm-dekking",
             "status": "configuration_complete_bot_activity_unverified",
@@ -6231,7 +6231,7 @@
         "historical": true
       },
       "connectionPlan": {
-        "status": "isolated_product_complete_normal_command_source_in_progress",
+        "status": "bounded_product_and_normal_command_source_complete_activation_pending",
         "ownerThread": "01a08d52-31b1-7091-be45-812c0b6e6c9f",
         "reuse": [
           "Existing owner authority",
@@ -6736,7 +6736,7 @@
           }
         },
         "normalCommandProposal": {
-          "status": "candidate_built_tested_independent_review_pending",
+          "status": "bounded_normal_command_source_complete_independent_go",
           "ownerThread": "01a08d52-31b1-7091-be45-812c0b6e6c9f",
           "proposalCommit": "7e3d5df7ede4cfe67a3f0764f05dbbc02b22fd31",
           "proposalPath": "eva2/evidence/living-core/au006-normal-command-activation-scope-20260913.md",
@@ -6826,11 +6826,30 @@
             "Stop before start reports not_started and does not create a tombstone",
             "No arbitrary new project provisioning, new planner, multi-day claim, owner acceptance or external notification"
           ],
-          "sourceIntegrated": false,
-          "independentGo": false,
+          "sourceIntegrated": true,
+          "independentGo": true,
           "reportedCorrection": "Derived tenant mapping defect found and fixed during testing; uses same raw runtime IDs as worker with scope validation.",
           "disposablePostgresContainerRemoved": true,
-          "modelCalls": 0
+          "modelCalls": 0,
+          "evidenceIntegrated": true,
+          "boundedTechnicalComplete": true,
+          "independentReview": {
+            "decision": "GO for bounded prepared-project normal conversation tool route",
+            "reportedBy": "coordinator",
+            "testsIndependentlyRerun": 38,
+            "sourceHashesVerified": 7,
+            "logHashesVerified": 4,
+            "submittedChecksKeptSeparate": "13 real PostgreSQL/router tests and79 other passed; one existing whole architecture gate failure retained at24 baseline violations."
+          },
+          "integrationVerification": "All seven current source baselines exact, bounded patch checked, final source/evidence bytes match reviewed commits. No test totals combined or suites repeated for integration.",
+          "naturalModelSelectionProven": false,
+          "releaseGo": false,
+          "ownerTrialReady": false,
+          "remaining": [
+            "Separate provider/gateway/worker management and activation review",
+            "Fresh isolated natural model selection or authorized ordinary live-route proof",
+            "Owner practice and acceptance"
+          ]
         }
       },
       "isolatedProductExecutionProven": true,
@@ -6839,7 +6858,7 @@
       "latestBoundedEvidencePath": "eva2/evidence/living-core/au006-document-product-integration-20260913.json"
     },
     "voiceAudioContract20260913": {
-      "status": "candidate_in_independent_review",
+      "status": "bounded_source_complete_independent_go",
       "owner": "coordinator/timing_final_review",
       "reviewer": "coordinator/next_tools_delivery",
       "assignedByCoordinator": "01a08a88-894c-7171-87fa-e681ed47c735",
@@ -6862,8 +6881,8 @@
         "wholeGate": "open",
         "scope": "Same isolated committed baseline; not dirty shared worktree or live."
       },
-      "sourceIntegrated": false,
-      "independentGo": false,
+      "sourceIntegrated": true,
+      "independentGo": true,
       "live": false,
       "newVoiceFeature": false,
       "ownerAccepted": false,
@@ -6873,7 +6892,22 @@
         "purpose": "Isolated bounded shared audio type source, targeted compatibility tests and independent review evidence.",
         "retainUntil": "Independent review, durable exact source/evidence integration and handoff complete.",
         "cleanupMoment": "After retention conditions, remove only verified disposable worktree artifacts; preserve committed evidence. No cleanup now."
-      }
+      },
+      "evidenceIntegrated": true,
+      "technicalComplete": true,
+      "independentReview": {
+        "decision": "GO for shared audio type dependency cleanup",
+        "reportedBy": "coordinator",
+        "hashesVerified": 4,
+        "checks": [
+          "Identical dataclass AST shape and re-export compatibility",
+          "No import cycle",
+          "Only intended architecture edge removed on same24→23 committed baseline"
+        ],
+        "reportedTests": 76,
+        "reportedTestsIndependentlyRerun": false
+      },
+      "integrationVerification": "Four actual baselines exact, bounded patch clean, final files and hashes match reviewed source; evidence preserved unchanged."
     }
   },
   "activeTaskId": "AU-008",

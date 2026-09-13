@@ -283,3 +283,12 @@ def test_no_new_tts_after_interruption_or_revocation_during_reply_send(intervent
         assert len(runtime.memories) == 1
 
     asyncio.run(scenario())
+
+
+def test_speech_audio_chunk_is_shared_with_legacy_connector_import():
+    from eva.application.voice import SpeechAudioChunk as SharedChunk
+    from eva.adapters.api.dashboard_voice import SpeechAudioChunk as DashboardChunk
+
+    assert SpeechAudioChunk is SharedChunk is DashboardChunk
+    chunk = SharedChunk(b"synthetic-audio", "audio/mpeg")
+    assert (chunk.data, chunk.mime_type) == (b"synthetic-audio", "audio/mpeg")

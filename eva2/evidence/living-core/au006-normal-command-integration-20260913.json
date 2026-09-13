@@ -1,0 +1,69 @@
+{
+  "contract": "EvaDocumentGoalNormalActionsEvidence/v1",
+  "date": "2026-09-13",
+  "source_commit": "eb511ffda706ae64c27b58ebaa37ea32a3b9248e",
+  "source_base": "7e3d5df7ede4cfe67a3f0764f05dbbc02b22fd31",
+  "status": "built_and_targeted_tested_pending_independent_review",
+  "files": {
+    "eva2/design/architecture/living-core-v1.md": "431e6979b8e5997aec4244024902a216e163f1bac023bf58d94baeb3e5730f4e",
+    "eva2/evidence/living-core/au006-normal-command-activation-plan-20260913.md": "6bb0c8a49d51cfd1d80b935b71967b0126f007bb61aa1f110fec6da65a1d1010",
+    "eva2/src/eva/providers/bundled.py": "19200794218f6d2f82f52dbe6f67681c9ad8e5dca36d8337c9ca0374d0233ead",
+    "eva2/src/eva/providers/document_goal_actions.py": "c49c1eddd48ddf87f6aadca5ecd2e56ba9ad6d69509dbbf5f10a163904714ae7",
+    "eva2/src/eva/providers/document_goal_plan.py": "69438dfc39a073971e2187ed77b8fe89b5a0bb256450c1714263643a078be84c",
+    "eva2/tests/postgres/test_document_goal_actions.py": "ff01562650748cc0827c90bd4db3aff9b04e44db779e52c5f61dd0184624dbd7",
+    "eva2/tests/providers/test_document_goal_actions.py": "0ead533da2dbaa531886f2b0fbe87398d96d625135a1c4689c07dd81a68e7527"
+  },
+  "checks": {
+    "targeted_suite_passed": 79,
+    "targeted_suite_failed": 1,
+    "failure": "Repository-wide architecture gate: same 24 violations as baseline; no new violations",
+    "real_postgres_router_tests_passed": 13,
+    "architecture_delta": {
+      "baseline_commit": "7e3d5df7ede4cfe67a3f0764f05dbbc02b22fd31",
+      "baseline_count": 24,
+      "candidate_count": 24,
+      "new": [],
+      "resolved": []
+    },
+    "diff_check": "passed"
+  },
+  "postgres_isolation": {
+    "container_id": "2d58bbddcaa81de44dc6a999aee8ae5fba3fac933a9ff21477dc369b5902ab85",
+    "postgres_image": "sha256:5d143123fdf80462d1778cd4f24b9f7ca13c87174bca19141fb194c5a1ebca59",
+    "network_mode": "none",
+    "published_ports": [],
+    "data_storage": "tmpfs",
+    "connection": "local Unix socket only",
+    "pytest_exit_code": 0,
+    "model_calls": 0,
+    "production_database_connections": 0,
+    "disposable_container_removed": true
+  },
+  "logs": {
+    "/home/administrator/project/.eva2-artifacts/au006-project-resume-20260913/actions-regressions.log": "7eff141bfc63e826f6dbbb3421ec5be7a309aaef2ba8ec3b61c78f00bc99d90c",
+    "/home/administrator/project/.eva2-artifacts/au006-project-resume-20260913/actions-postgres-proof.log": "2d366a7000ebc0434f2e9693b324aab96ce018928a8b8662da7094a2ca75ad87",
+    "/home/administrator/project/.eva2-artifacts/au006-project-resume-20260913/actions-architecture-delta.json": "55711aa7fb315719d4b8d467289a64557ae4dd8d2c588176f1329e9f0f2ecaf5",
+    "/home/administrator/project/.eva2-artifacts/au006-project-resume-20260913/run_actions_pg_proof.py": "1ab29cd5dd631caf17480c42ada78c8140925da80111541c52e5dc94caa102ff"
+  },
+  "coverage": [
+    "real stored ingress reload",
+    "existing private owner authority and runtime scope",
+    "existing conversation action router and verified external tool pipeline",
+    "same goal replay after restart/start/stop/completion",
+    "fresh mandate revocation between prepare and dispatch",
+    "owner status and stop after revocation",
+    "other owner, installation, project, group and synthetic initiative rejected",
+    "closed arguments and host plan drift",
+    "partial SQL admission recovery",
+    "existing conversation stop fence before goal admission",
+    "completed result boundary and exact artifact identity/content"
+  ],
+  "limitations": [
+    "No model calls or proof of natural model tool selection",
+    "Final artifact projection fixture is not a native provider publication proof; existing separately reviewed AU-006 product evidence remains unchanged",
+    "No active provider/gateway/core/worker configuration changes",
+    "Stop before start reports not_started and does not create a tombstone",
+    "No arbitrary new project provisioning, new planner, multi-day claim, owner acceptance or external notification"
+  ],
+  "activation_plan": "eva2/evidence/living-core/au006-normal-command-activation-plan-20260913.md"
+}

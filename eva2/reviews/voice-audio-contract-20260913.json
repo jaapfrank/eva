@@ -1,0 +1,31 @@
+{
+  "scope": "One sibling-adapter dependency removed; no policy/runtime/authority changes",
+  "base": "7fad7a06f6295d2c1e20f786a7db062e4f76d0b1",
+  "source_commit": "ec993acce83969650b4708a762967a6abcb16817",
+  "files": {
+    "eva2/src/eva/adapters/api/dashboard_voice.py": "b786318f5b9f620c7b017df5a4125417b74853390c14309fb44304fc4abce66e",
+    "eva2/src/eva/adapters/connectors/home_assistant_voice.py": "5c3f2454418b9fdbc75cc2386544d617621456b009dcb62766f4ebbca0049eda",
+    "eva2/src/eva/application/voice.py": "638f15938e841d5345176f924655cbe8633cf638c06bbe63f7499cafc436a22f",
+    "eva2/tests/api/test_dashboard_voice.py": "1184c8c44f58da1f07b976e04d5adcc9d3512f1b406dd9785496d1229c48fa79"
+  },
+  "tests": {
+    "command": "PYTHONPATH=src python -m pytest -q tests/api/test_dashboard_voice.py tests/connectors/test_home_assistant_voice.py",
+    "passed": 76,
+    "seconds": 1.95
+  },
+  "architecture": {
+    "before": 24,
+    "after": 23,
+    "removed": "dashboard_voice -> connectors.home_assistant_voice",
+    "added": [],
+    "policy_unchanged": true,
+    "whole_gate": "open"
+  },
+  "compatibility": "Connector imports re-export the identical frozen slots dataclass; existing callers retain same object identity. No duplicate type or changed audio bytes. Neutral application.voice already owns voice boundary helpers.",
+  "limits": [
+    "No live deployment or model calls",
+    "Not a new voice feature or user acceptance",
+    "Independent review pending",
+    "Counts apply to isolated committed baseline, not dirty shared worktree"
+  ]
+}

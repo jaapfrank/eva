@@ -17,6 +17,14 @@ from eva.application.conversation import ConversationTurn
 from eva.contracts.voice import BargeIn, VoiceSession, VoiceTurn
 
 
+@dataclass(frozen=True, slots=True)
+class SpeechAudioChunk:
+    """Transient encoded audio shared by media adapters; never a durable record."""
+
+    data: bytes
+    mime_type: str
+
+
 def admit_final_voice_turn(
     *, session: VoiceSession, turn: VoiceTurn
 ) -> ConversationTurn:
