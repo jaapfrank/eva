@@ -5484,7 +5484,7 @@
           "owner": "coordinator/next_tools_delivery",
           "work": "AU-006 geïsoleerde gatewaykoppeling",
           "boundary": "Existing disposable gateway fixture hop and reusable callback for core product proof; no main/model/live changes. Previously reviewed MCP adapter/image source complete.",
-          "status": "bounded_gateway_hop_reviewed_integrated_stacks_retained",
+          "status": "reviewed_provider_gateway_work_complete_disposable_runtime_cleaned_evidence_retained",
           "previousCompletedWork": {
             "work": "Renovate npm-dekking",
             "status": "configuration_complete_bot_activity_unverified",
@@ -6544,14 +6544,15 @@
             ]
           },
           "preparedCoreStack": {
-            "status": "core_trial_using_disposable_stack",
+            "status": "historical_prepared_context_runtime_removed",
             "contextPath": "/home/administrator/project/.eva2-artifacts/workspace-broker-v2-20260913/core-prepared-stack.json",
             "stackName": "eva-atomic-gateway-19caccd1dd",
             "networkScope": "Unique internal disposable stack; no published ports.",
             "preparationState": "Happy-path and stop-case provider journals empty; no dispatch at preparation.",
             "reportedStateOnly": true,
             "live": false,
-            "ownerAccepted": false
+            "ownerAccepted": false,
+            "oldUrlsActive": false
           },
           "artifactRetention": {
             "owner": "coordinator/next_tools_delivery",
@@ -6559,7 +6560,7 @@
             "exactPath": "/home/administrator/project/.eva2-artifacts/workspace-broker-v2-20260913/core-prepared-stack.json",
             "resourceName": "eva-atomic-gateway-19caccd1dd",
             "purpose": "Private prepared context and disposable internal stack shared with core owner for real gateway/provider integration proof.",
-            "retainUntil": "Core source/evidence handoff and independent review complete; coordinator confirms proof collection and cleanup of both exact owned stacks.",
+            "retainUntil": "Runtime cleanup completed; retain hashed private proof files, sanitized committed evidence, source and image for review traceability and subsequent handoff. Further file/image cleanup requires exact scope and coordinator decision.",
             "cleanupMoment": "Coordinator removes only the exact verified owned stack/resources after proof and handoff, then private context as appropriate. Keep sanitized committed evidence. No cleanup during active core trial.",
             "privateContextPolicy": "Do not commit or output private stack context; sanitized evidence only.",
             "additionalRetainedStacks": [
@@ -6567,15 +6568,20 @@
                 "resourceName": "eva-atomic-gateway-64b53c30c5",
                 "exactPath": "/home/administrator/project/.eva2-artifacts/workspace-broker-v2-20260913/eva-atomic-gateway-64b53c30c5",
                 "manifestPath": "/home/administrator/project/.eva2-artifacts/workspace-broker-v2-20260913/eva-atomic-gateway-64b53c30c5/stack.json",
-                "purpose": "Reviewed isolated successful gateway-hop source, receipt and artifact evidence."
+                "purpose": "Reviewed isolated successful gateway-hop source, receipt and artifact evidence.",
+                "runtimeResourcesRemoved": true,
+                "privateEvidenceRetained": true
               },
               {
                 "resourceName": "eva-atomic-gateway-19caccd1dd",
                 "exactPath": "/home/administrator/project/.eva2-artifacts/workspace-broker-v2-20260913/eva-atomic-gateway-19caccd1dd",
                 "manifestPath": "/home/administrator/project/.eva2-artifacts/workspace-broker-v2-20260913/core-prepared-stack.json",
-                "purpose": "Shared isolated core trial with happy/stop provider instances."
+                "purpose": "Shared isolated core trial with happy/stop provider instances.",
+                "runtimeResourcesRemoved": true,
+                "privateEvidenceRetained": true
               }
-            ]
+            ],
+            "runtimeResourcesStatus": "Both exact owned stacks removed after reviewed core proof; private evidence and manifests remain retained."
           },
           "evidencePath": "eva2/reviews/workspace-atomic-gateway-20260913.json",
           "sourceIntegrated": true,
@@ -6588,6 +6594,27 @@
             "sourceCommit": "1026a819a963fd3f06319e4ae627e49cfa6d277f",
             "evidenceCommit": "a998e249ce1c285f1485324d318973a10bd55ef1",
             "goScope": "Bounded isolated two-step document product route only"
+          },
+          "cleanup": {
+            "status": "scoped_disposable_runtime_cleanup_complete_private_evidence_retained",
+            "reportedBy": "coordinator after provider owner cleanup",
+            "cleanupReceiptPath": "/home/administrator/project/.eva2-artifacts/workspace-broker-v2-20260913/cleanup-receipt.json",
+            "cleanupReceiptSha256": "545f1b86ba1f61a1b180ac6dd6bb1ddcf73bf45c9b02e3276d2cedda3e06888b",
+            "centralVerification": "Read private receipt bytes only to verify supplied SHA256; no private contents output or committed. Resource removal reported by coordinator.",
+            "removedContainers": 5,
+            "removedInternalNetworks": 2,
+            "stackNames": [
+              "eva-atomic-gateway-64b53c30c5",
+              "eva-atomic-gateway-19caccd1dd"
+            ],
+            "volumesRemoved": false,
+            "otherEndpointsChanged": false,
+            "liveImpact": false,
+            "retainedPrivateEvidenceFiles": 19,
+            "retainedEvidenceScope": "Hashed proof receipts, journals, catalog and database files remain private.",
+            "sourceRetained": true,
+            "imageRetained": true,
+            "oldCorePreparedUrlsActive": false
           }
         },
         "coreProductCandidate": {
@@ -6657,11 +6684,12 @@
           "resourceState": {
             "documentWorktreeRetained": true,
             "providerStack": "eva-atomic-gateway-19caccd1dd",
-            "providerStackRetainedFor": "Independent review and coordinator cleanup",
+            "providerStackRetainedFor": "Runtime removed after review; private evidence remains retained.",
             "postgresProofContainerRemoved": true,
             "coreChildContainersRemoved": true,
             "productionDataAccessed": false,
-            "reportedBy": "execution owner"
+            "reportedBy": "execution owner",
+            "providerStackRemoved": true
           },
           "independentReviewer": "coordinator/tl003_evidence_review",
           "evidenceIntegrated": true,
