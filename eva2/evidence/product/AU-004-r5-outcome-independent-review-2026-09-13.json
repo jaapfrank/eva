@@ -1,0 +1,31 @@
+{
+  "A": "PASS verified source",
+  "B": "FAIL metadata only R4 resolve, no document read",
+  "C": "not attempted",
+  "original_response_hashes_match": true,
+  "canonical_receipt_and_result_hash_match": true,
+  "both_files_preserved": true,
+  "recovery": {
+    "core_id": "c80e048ef27a9f57898cfb0047141c234b133dd4ee1c379d55999fb53e48898f",
+    "core_image": "sha256:bc6d64a3aebbb4b1502dfa7170c0b3d02eda97ac97eddfc704c90c80659864e9",
+    "protected_count": 12,
+    "quiescence": {
+      "advisory_locks": 0,
+      "other_active_queries": 0,
+      "readiness": {
+        "database": "ready",
+        "detail": null,
+        "memory_projection": "ready",
+        "model_provider": "ready",
+        "ready": true
+      }
+    },
+    "guards_verified": true,
+    "telegram_recovery_preserved": true,
+    "pending_requests": {
+      "recent_unfinished_model_requests": 0
+    }
+  },
+  "runtime_mutations": 0,
+  "model_calls": 0
+}

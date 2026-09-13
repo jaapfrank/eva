@@ -121,7 +121,7 @@
           ]
         }
       ],
-      "priorityDecision": "De nieuwe procedureproef vindt en controleert nu een bestaande verwijzing, maar leest de inhoud nog niet. Dat is de resterende fout. De uitvoerder heeft de vorige runtime hersteld; de onafhankelijke eindcontrole volgt. De PostgreSQL-herstelproeven zijn afgerond, met releaseblokkades nog open.",
+      "priorityDecision": "De procedureproef vindt een bestaande verwijzing, maar gaf de inhoud nog niet aan het model. De mislukte proef en terugrol zijn onafhankelijk gecontroleerd. De gerichte inhoudscorrectie wordt beoordeeld. De PostgreSQL-herstelproeven zijn afgerond, met releaseblokkades nog open.",
       "dashboardVerification": {
         "status": "local_browser_verified_not_full_product_acceptance",
         "priorityRevision": {
@@ -273,7 +273,7 @@
         },
         {
           "title": "Aangeleerde procedures terugvinden",
-          "detail": "De nieuwe proef vindt en controleert nu een eerder opgeslagen procedureverwijzing. Ze faalt nog bij het lezen: Eva las het document niet voordat ze antwoordde. Opslaan en markeren slaagden opnieuw. De derde proef is niet uitgevoerd; geen herhaling. De uitvoerder heeft de vorige runtime gecontroleerd hersteld. De onafhankelijke eindcontrole staat open; zelfstandig toepassen is nog niet afgerond."
+          "detail": "Onafhankelijk bevestigd: Eva vindt en controleert een eerder opgeslagen procedureverwijzing, maar kreeg de inhoud nog niet beschikbaar vóór haar antwoord. De proef blijft mislukt; opslaan en markeren slaagden. De vorige runtime is gecontroleerd hersteld en beide bestanden blijven bewaard. De correctie die gecontroleerde inhoud beschikbaar maakt, wordt beoordeeld en staat nog niet live."
         }
       ],
       "openRisks": [
@@ -5206,7 +5206,7 @@
             "candidateCommit": "46e85b2267dc58619de78233405401163f6c20fe",
             "decision": "GO for preparation only",
             "finding": "Existing delegated worker uses832; core and document worker use2393.",
-            "status": "r5_A_pass_B_selected_reference_but_no_content_read_writer_rollback_verified_review_pending",
+            "status": "r5_A_pass_B_metadata_only_fail_C_not_run_rollback_independently_verified",
             "planIntegrated": false,
             "deploymentAuthorized": false,
             "correctionCommit": "295a70cef49477b36f7acd48cae1eb6de401fcf4",
@@ -5559,7 +5559,7 @@
               }
             },
             "r5Candidate": {
-              "status": "A_pass_B_content_read_failed_C_not_run_writer_rollback_verified",
+              "status": "A_pass_B_content_read_failed_C_not_run_rollback_independently_verified",
               "planCommitReportedPrefix": "b076b9cf",
               "imageReportedPrefix": "62743238",
               "sealReportedPrefix": "291e3e65",
@@ -5574,8 +5574,8 @@
                   "eva2/evidence/living-core/au004-r5-a-pass-b-content-read-fail-20260913.json",
                   "eva2/reviews/au004-r5-a-pass-b-content-read-fail-20260913.md"
                 ],
-                "integrated": false,
-                "independentResultGo": false
+                "integrated": true,
+                "independentResultGo": true
               },
               "ordinaryResults": {
                 "reportedBy": "runtime writer",
@@ -5596,9 +5596,9 @@
                 }
               },
               "rollback": {
-                "status": "writer_verified_independent_review_pending",
+                "status": "independently_verified_complete",
                 "writerVerified": true,
-                "independentVerified": false,
+                "independentVerified": true,
                 "image": "sha256:bc6d64a3aebbb4b1502dfa7170c0b3d02eda97ac97eddfc704c90c80659864e9",
                 "coreId": "c80e048ef27a9f57898cfb0047141c234b133dd4ee1c379d55999fb53e48898f",
                 "protectedServices": 12,
@@ -5609,9 +5609,20 @@
               },
               "nextFix": {
                 "owner": "coordinator/next_tools_delivery",
-                "status": "in_progress",
-                "scope": "Typed bounded verified content through existing resolve route",
-                "live": false
+                "status": "source_candidate_under_independent_review",
+                "scope": "Return already verified content through existing resolve as typed untrusted content, bounded at 16 KB; no second read requirement for future candidate. R5 original failed gate unchanged.",
+                "live": false,
+                "candidateCommitReportedPrefix": "158f0341"
+              },
+              "independentReview": {
+                "reviewer": "procedure_host_review",
+                "reportedBy": "coordinator",
+                "path": "eva2/evidence/product/AU-004-r5-outcome-independent-review-2026-09-13.json",
+                "sha256": "4f519d8bd5d59a2c75b95abc770cafcdacdadf68f3b0b6389ea35f960b6dad50",
+                "scope": "A verified save/source PASS; B real R4 metadata-only resolve FAIL without document content; C not attempted; usage and current rollback verified",
+                "originalResponsesAndFilesPreserved": true,
+                "retrospectiveGateChange": false,
+                "generalReuseCompletion": false
               }
             }
           }

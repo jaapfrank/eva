@@ -1,0 +1,218 @@
+{
+  "contract": "AU004R5ActualOutcome/v1",
+  "candidate_image": "sha256:62743238be7f239affd24ce2a75423052812963ac1799ffee4f8abf079f63670",
+  "seal_sha256": "291e3e65081791eef89c3bc138e9c061533d4ba1bd46e0fef2e11e2ac21580f3",
+  "source_commit": "56ffe5a7700a69f52cf37b2b7cda633add93e50a",
+  "stage": "/home/administrator/project/.eva2-artifacts/procedure-reference-runtime-r5-20260913",
+  "cases": {
+    "A": {
+      "outcome": "PASS",
+      "request": {
+        "session_id": "b49ecdf5-9963-4bdd-b888-e465a3b77365",
+        "message_id": "e16a4f98-b26c-4811-abd9-d54409838ef8",
+        "text": "Bewaar deze herbruikbare aanpak voor korte planreviews als /proof-state/au004-planreview-procedure-20260913-r5.md: geef eerst maximaal drie concrete ontbrekende gegevens, daarna één eerstvolgende stap. Als een datum ontbreekt, noem dat vóór andere ontbrekende gegevens. Geef geen fictieve antwoorden. Markeer deze werkwijze expliciet als herbruikbaar tot 2026-10-13T00:00:00Z.",
+        "recent": [],
+        "active_work": [],
+        "work_results": []
+      },
+      "http_receipt": {
+        "httpStatus": 200,
+        "elapsedSeconds": 24.99211393600126,
+        "errorType": null,
+        "parseError": null,
+        "terminalReplyValid": true,
+        "streamErrorCount": 0,
+        "requestCount": 1,
+        "retry": false,
+        "messageId": "voice:b49ecdf5-9963-4bdd-b888-e465a3b77365:e16a4f98-b26c-4811-abd9-d54409838ef8",
+        "responseSha256": "39e86d8425186e915e887c300dea60c8083a86d37c7383c560e1cb1e6b25b445"
+      },
+      "reply": "Opgeslagen als /proof-state/au004-planreview-procedure-20260913-r5.md en de inhoud gecontroleerd. De werkwijze is expliciet gemarkeerd als herbruikbaar tot 13 oktober 2026 om 00:00 UTC.",
+      "usage": [
+        {
+          "tool_calls": 1,
+          "measurement": "measured",
+          "input_tokens": 6820,
+          "output_tokens": 152,
+          "model_attempts": 1
+        },
+        {
+          "tool_calls": 0,
+          "measurement": "measured",
+          "input_tokens": 3962,
+          "output_tokens": 59,
+          "model_attempts": 1
+        },
+        {
+          "tool_calls": 1,
+          "measurement": "measured",
+          "input_tokens": 6316,
+          "output_tokens": 130,
+          "model_attempts": 1
+        }
+      ],
+      "procedure_actions": [
+        {
+          "name": "designate_reusable_procedure",
+          "call_id": "call_y3ToyytUlulgeAO9hDedvbLB",
+          "arguments": {
+            "use_when": "Voor korte planreviews: geef eerst maximaal drie concrete ontbrekende gegevens. Noem een ontbrekende datum vóór andere ontbrekende gegevens. Geef daarna één eerstvolgende stap. Geef geen fictieve antwoorden.",
+            "document_path": "/proof-state/au004-planreview-procedure-20260913-r5.md",
+            "retention_until": "2026-10-13T00:00:00Z"
+          },
+          "message_id": "voice:b49ecdf5-9963-4bdd-b888-e465a3b77365:e16a4f98-b26c-4811-abd9-d54409838ef8",
+          "step_index": 1,
+          "principal_id": "33333333-3333-3333-8333-333333333333",
+          "conversation_id": "voice:b49ecdf5-9963-4bdd-b888-e465a3b77365"
+        }
+      ]
+    },
+    "B": {
+      "outcome": "FAIL",
+      "request": {
+        "session_id": "ed278e91-a74f-4234-9bb9-49b135b703d2",
+        "message_id": "9100b4c7-0d0e-4839-bcf4-855a8b95f981",
+        "text": "Beoordeel dit plan en zeg wat ik als eerste moet doen: we willen een buurtmiddag organiseren. De locatie is nog niet gekozen en we weten niet hoeveel mensen komen.",
+        "recent": [],
+        "active_work": [],
+        "work_results": []
+      },
+      "http_receipt": {
+        "httpStatus": 200,
+        "elapsedSeconds": 15.061896054001409,
+        "errorType": null,
+        "parseError": null,
+        "terminalReplyValid": true,
+        "streamErrorCount": 0,
+        "requestCount": 1,
+        "retry": false,
+        "messageId": "voice:ed278e91-a74f-4234-9bb9-49b135b703d2:9100b4c7-0d0e-4839-bcf4-855a8b95f981",
+        "responseSha256": "64f2b317147025e8b2a3b990869e7265f98900d2b397ac0aa54d1724b076342e"
+      },
+      "reply": "Er ontbreken nog drie belangrijke gegevens: een datum, een locatie en een schatting van het aantal deelnemers. Het idee is een goed begin, maar nog niet concreet genoeg om iets vast te leggen.\n\nMijn advies: peil eerst bij de buurt wie belangstelling heeft en welke van twee of drie mogelijke data passen. Daarmee krijg je tegelijk zicht op een geschikte datum en de groepsgrootte. Daarna kun je gericht een passende locatie zoeken, zonder meteen ergens aan vast te zitten.",
+      "usage": [
+        {
+          "tool_calls": 0,
+          "measurement": "measured",
+          "input_tokens": 2157,
+          "output_tokens": 114,
+          "model_attempts": 1
+        },
+        {
+          "tool_calls": 1,
+          "measurement": "measured",
+          "input_tokens": 5223,
+          "output_tokens": 88,
+          "model_attempts": 1
+        }
+      ],
+      "procedure_actions": [
+        {
+          "name": "resolve_reusable_procedure",
+          "call_id": "call_ofLKTov8oeRyANhkYKzQ0A4x",
+          "arguments": {
+            "document_id": "procedure-reference:0c8fdfb5b62abae383834713a83f6a4ecb6dc92731991e041b37333a52658a46"
+          },
+          "message_id": "voice:ed278e91-a74f-4234-9bb9-49b135b703d2:9100b4c7-0d0e-4839-bcf4-855a8b95f981",
+          "step_index": 0,
+          "principal_id": "33333333-3333-3333-8333-333333333333",
+          "conversation_id": "voice:ed278e91-a74f-4234-9bb9-49b135b703d2"
+        }
+      ]
+    }
+  },
+  "C": "NOT ATTEMPTED; B failed fixed gate",
+  "A_source": {
+    "content_sha256": "1f4537096361a64f0e421c9c405e4a27319c827fa2cb0c4039f1e1ca0287873d",
+    "source_document_id": "procedure-reference:dc428330e07fe6e10ff2c83d685aa8c1e6e09247f60c1a37bef08584d1a29c60",
+    "save_call_id": "call_EZFrPRdRGCzEiqqkaOkuzYst",
+    "source_reference": {
+      "content_sha256": "1f4537096361a64f0e421c9c405e4a27319c827fa2cb0c4039f1e1ca0287873d",
+      "contract": "ProcedureReference/v1",
+      "document_id": "procedure-reference:dc428330e07fe6e10ff2c83d685aa8c1e6e09247f60c1a37bef08584d1a29c60",
+      "path": "/proof-state/au004-planreview-procedure-20260913-r5.md",
+      "receipt_sha256": "771e907a8fc90082e3faa7033692cf1bc8fa943134403bb0ce70cab93cd1ee32",
+      "retention_until": "2026-10-13T00:00:00Z",
+      "source_call_id": "call_EZFrPRdRGCzEiqqkaOkuzYst",
+      "source_message_id": "voice:b49ecdf5-9963-4bdd-b888-e465a3b77365:e16a4f98-b26c-4811-abd9-d54409838ef8",
+      "tool_configuration_sha256": "a2f87385fed891cf244d4294777901bbdc8509b62304a91e39f82df730947a54",
+      "use_when": "Voor korte planreviews: geef eerst maximaal drie concrete ontbrekende gegevens. Noem een ontbrekende datum vóór andere ontbrekende gegevens. Geef daarna één eerstvolgende stap. Geef geen fictieve antwoorden."
+    },
+    "source_owner": "33333333-3333-3333-8333-333333333333",
+    "evidence_hashes": {
+      "readback": "00e56413c8ed0f89daea8d4263d58c7dd088bd588de0be91b928eabf50ac1769",
+      "canonical_receipt": "771e907a8fc90082e3faa7033692cf1bc8fa943134403bb0ce70cab93cd1ee32"
+    }
+  },
+  "B_failure": {
+    "case": "B",
+    "passed": false,
+    "reason": "Actual resolve selected retained R4 reference, but no read_workspace_document admission followed. Required document-read gate failed; response wording does not substitute for actual read.",
+    "selected_source": "procedure-reference:0c8fdfb5b62abae383834713a83f6a4ecb6dc92731991e041b37333a52658a46",
+    "source_origin": "R4 reuse, not new R5 source",
+    "response_sha256": "64f2b317147025e8b2a3b990869e7265f98900d2b397ac0aa54d1724b076342e",
+    "seal_sha256": "291e3e65081791eef89c3bc138e9c061533d4ba1bd46e0fef2e11e2ac21580f3",
+    "C": "not attempted"
+  },
+  "B_exact_result_binding": {
+    "exact_result_output": {
+      "contract": "ProcedureReferenceAction/v1",
+      "status": "resolved",
+      "references": [
+        {
+          "content_sha256": "d5787f2b1f4f75b478e05b59864d48d12c05d7bd385b857e87f0ad90bc386753",
+          "document_id": "procedure-reference:0c8fdfb5b62abae383834713a83f6a4ecb6dc92731991e041b37333a52658a46",
+          "path": "/proof-state/au004-planreview-procedure-20260913-r4.md",
+          "receipt_sha256": "ec23d56806f552c42f677ee6ea8b01a6f51f942eedc5087e6370f3cd9ef06de3",
+          "retention_until": "2026-10-13T00:00:00Z",
+          "source_call_id": "call_TDV2UbJYUxvF3nR5touAZinz",
+          "source_message_id": "voice:9d29100c-61e3-4722-b4a5-d652d82e1c38:c12ff066-8865-44ff-8aab-1e240f54c346",
+          "tool_configuration_sha256": "a2f87385fed891cf244d4294777901bbdc8509b62304a91e39f82df730947a54",
+          "use_when": "Voor korte planreviews: noem eerst maximaal drie concrete ontbrekende gegevens, met een ontbrekende datum vóór andere ontbrekende gegevens. Geef daarna één eerstvolgende stap. Geef geen fictieve antwoorden."
+        }
+      ]
+    },
+    "canonical_sha256": "4a2da32af6c90738144f021e6be9759ee2f599ada42025174ce5e7b221253fd1",
+    "matches_durable_completion": true,
+    "basis": "Reconstructed exact metadata result from retained R4 source and matched durable result SHA; no action replay. resolve code reads current content internally but result carries reference metadata and hashes only, no document body."
+  },
+  "totals": {
+    "input_tokens": 24478,
+    "output_tokens": 543,
+    "tool_calls": 3,
+    "model_attempts": 5
+  },
+  "elapsed_seconds": 40.05400999000267,
+  "money_cost": "unknown",
+  "rollback": {
+    "verified": true,
+    "expected_parent_image": "sha256:bc6d64a3aebbb4b1502dfa7170c0b3d02eda97ac97eddfc704c90c80659864e9",
+    "new_core_id_allowed": true,
+    "observed_state": {
+      "core_id": "c80e048ef27a9f57898cfb0047141c234b133dd4ee1c379d55999fb53e48898f",
+      "core_image": "sha256:bc6d64a3aebbb4b1502dfa7170c0b3d02eda97ac97eddfc704c90c80659864e9",
+      "protected_count": 12,
+      "quiescence": {
+        "advisory_locks": 0,
+        "other_active_queries": 0,
+        "readiness": {
+          "database": "ready",
+          "detail": null,
+          "memory_projection": "ready",
+          "model_provider": "ready",
+          "ready": true
+        }
+      },
+      "guards_verified": true,
+      "telegram_recovery_preserved": true,
+      "pending_requests": {
+        "recent_unfinished_model_requests": 0
+      }
+    }
+  },
+  "limits": [
+    "No raw full model request capture; preplanning delivery inferred from sealed code and real initial resolve, not claimed as recorded prompt.",
+    "Internal resolve read has no standalone TOOL_REQUEST_ADMITTED receipt. Successful metadata output hash binds sealed internal read validation. No document body returned to model.",
+    "B criterion unchanged. R4 and R5 saved sources and all original attempts remain. No subsequent C or retries."
+  ]
+}
