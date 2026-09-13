@@ -121,7 +121,7 @@
           ]
         }
       ],
-      "priorityDecision": "Eigen documentopdrachten zijn in bron gereed. De installatievoorbereiding heeft een begrensde gatewaystopproef doorstaan; alle lopende acties en de browserroute moeten nog aantoonbaar worden afgehandeld vóór vervanging. Geen livegoedkeuring. Eerdere opleveringen blijven afgesloten.",
+      "priorityDecision": "Eigen documentopdrachten zijn in bron gereed. Vóór installatie blijven volledige actieafhandeling en een concrete beperkte onderhoudsroute voor de losgekoppelde browser open. De oude proefbrowser wordt niet herstart. PR-01, PJ-01 en de gezondheidscontroles blijven afgesloten.",
       "dashboardVerification": {
         "status": "local_browser_verified_not_full_product_acceptance",
         "priorityRevision": {
@@ -233,7 +233,7 @@
         },
         {
           "title": "Browserherstelproef afgerond",
-          "detail": "Voltooide browseruitvoer blijft bewaard na intrekken, nieuw gatewayadres en procesherstel. Ook opgeslagen toolantwoorden herstellen in een afzonderlijke PG-registryproef zonder nieuwe dispatch. Onafhankelijk beoordeeld; persoonlijke Chromeproef en volledige installatieketen blijven open."
+          "detail": "De eerdere herstelproeven blijven afgerond binnen hun scope. Actuele diagnose: persoonlijke Chrome is niet verbonden en niet bezig; de twee oude proefbrowsercontainers staan uit en hun controller luistert niet. Dit is geen actieve eigenaarverbinding of acceptatie. Er is niets herstart, geen toestemming aangemaakt en geen routeadres omgewisseld."
         },
         {
           "title": "Dependencyvoorstellen uitgebreid",
@@ -283,7 +283,7 @@
         },
         {
           "title": "Zelf een documentproject opgeven",
-          "detail": "De broncode is goedgekeurd en geïntegreerd. In een afzonderlijke stopproef rondde de gateway één bestandsactie precies eenmaal af; een time-out zonder eindbewijs en geforceerd stoppen blokkeerden terecht. Vóór installatie moeten alle nog lopende acties, ook via de browserroute, aantoonbaar zijn afgehandeld. Dit is installatievoorbereiding, nog geen liveoplevering."
+          "detail": "De bron is goedgekeurd en geïntegreerd. Voor installatie worden alle niet-afgeronde acties aan eindbewijs gekoppeld. De persoonlijke browser is momenteel niet verbonden; een beperkte onderhoudsroute mag alleen die losgekoppelde bridge stoppen en herstarten zonder nieuwe toestemming. De concrete uitvoering wordt nog voorbereid; geen livegoedkeuring."
         }
       ],
       "openRisks": [
@@ -579,12 +579,13 @@
           "tested": "yes",
           "live": "yes",
           "accepted": "no",
-          "gap": "Persoonlijke Chromeproef en eigenaaracceptatie blijven open; transportherstel is afzonderlijk technisch getest en live.",
-          "detail": "Playwright MCP bedient dezelfde zichtbare Chromium met blijvend profiel. Overname sluit Eva af; teruggeven sluit eerst de eigenaarverbinding. Een gewone browseropdracht en opgeslagen resultaat zijn werkelijk teruggelezen. Deze groene stappen gelden voor de browser; algemene bediening van andere computerprogramma’s is nog niet aangetoond.",
+          "gap": "Persoonlijke Chrome is disconnected en niet bezig. Eigenaarverbinding en acceptatie blijven open; de oude proefbrowser staat uit.",
+          "detail": "Actuele diagnose13september: de persoonlijke Chrome-route45164 via44718 is disconnected, busyfalse. De twee oude VB003containers zijn exited zonder automatische herstart; controller45163 luistert niet. Een tijdelijke kopie van hun toestand meldt recovery_required, geen actuele toestemming. Beide routes hebben verschillende contracten; geen URLwissel of oudebrowserherstart. Historische herstelproeven blijven bewaard en gelden niet als huidige eigenaarverbinding.",
           "evidence": "Technische browserroute en transportherstel: eva2/evidence/product/chrome-inflight-recovery-2026-09-12.json",
           "outcomes": [],
-          "works": "Websites bedienen in dezelfde browser die jij kunt bekijken en overnemen.",
-          "tryIt": "Open Browser in het eigenaarsdashboard; neem over en geef terug."
+          "works": "Browserbediening en herstel zijn historisch getest. De persoonlijke Chrome-route is momenteel niet verbonden.",
+          "tryIt": "Open Browser in het eigenaarsdashboard; neem over en geef terug.",
+          "currentRouteEvidence": "eva2/evidence/product/browser-current-route-audit-2026-09-13.json"
         },
         {
           "id": "installation",
@@ -9975,7 +9976,7 @@
       },
       "runtimePreparation": {
         "ownerThread": "01a08d52-31b1-7091-be45-812c0b6e6c9f",
-        "status": "bounded_shutdown_proof_complete_all_effect_accounting_open",
+        "status": "all_effect_accounting_and_disconnected_browser_maintenance_seal_open",
         "stages": [
           "Provision two separately authorized provider slots",
           "Bind actual catalog and seal candidate before activation"
@@ -10002,6 +10003,15 @@
           "runtimeGo": false,
           "productionChanges": false,
           "modelCalls": 0
+        },
+        "browserMaintenanceBoundary": {
+          "status": "bounded_procedure_under_concrete_seal_preparation",
+          "reviewReportedBy": "coordinator",
+          "scope": "Only disconnected personal Chrome bridge temporary stop/restart without creating grant",
+          "legacyVB003RestartAllowed": false,
+          "currentRouteEvidence": "eva2/evidence/product/browser-current-route-audit-2026-09-13.json",
+          "runtimeGo": false,
+          "ownerGrantCreated": false
         }
       },
       "exactIntegratedPaths": [
@@ -10019,6 +10029,34 @@
         "eva2/tests/providers/test_document_task_input.py"
       ],
       "sourceIntegrationVerification": "All existing paths matched exact e622a408 baseline; bounded patch clean; all12final paths byte-equal reviewed789fb0c6; no deployment manifests or runtime mutations"
+    },
+    "browserCurrentRouteAudit20260913": {
+      "status": "read_only_current_diagnosis_integrated",
+      "sourceCommit": "4e2a1156811b2471fcfc17d7565787cd7995ac27",
+      "evidencePath": "eva2/evidence/product/browser-current-route-audit-2026-09-13.json",
+      "evidenceSha256": "94975bd959ef2cfc40f53a9cbb6363f978203e594313ac5ec5c890c1f99e13d9",
+      "legacyVB003": {
+        "containerCount": 2,
+        "state": "exited",
+        "restartPolicy": "no",
+        "controller45163Listening": false,
+        "copiedStateReadback": "recovery_required",
+        "copyReadbackIsNotLiveControllerResponse": true,
+        "grantCreated": false,
+        "restartPlanned": false
+      },
+      "personalChrome": {
+        "mcpPort": 45164,
+        "controlPort": 44718,
+        "state": "disconnected",
+        "busy": false,
+        "connected": false,
+        "ownerAcceptance": false
+      },
+      "contractsDistinct": true,
+      "urlSwapAllowed": false,
+      "runtimeMutations": false,
+      "historicalRecoveryProofPreserved": true
     }
   },
   "activeTaskId": "AU-008",
