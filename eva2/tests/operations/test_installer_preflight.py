@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 import json
+import subprocess
+from dataclasses import replace
 from pathlib import Path
 
 import pytest
@@ -10,6 +12,7 @@ from eva.operations.installer_preflight import (
     HostFacts,
     InstallerPreflightError,
     _ubuntu_pretty_name,
+    inspect_host,
     load_platform_lock,
     preflight,
 )
@@ -31,6 +34,10 @@ def _facts(**overrides: object) -> HostFacts:
         "python_version": "3.12.14",
         "docker_version": "29.7.2",
         "docker_error": None,
+        "os_id": "ubuntu",
+        "version_id": "24.04",
+        "os_version": "24.04.4 LTS (Noble Numbat)",
+        "variant_id": "server",
     }
     values.update(overrides)
     return HostFacts(**values)  # type: ignore[arg-type]
@@ -60,7 +67,7 @@ def test_selected_platform_lock_stops_before_any_installation_claim() -> None:
     ("facts", "check_id"),
     [
         (_facts(python_version="3.12.13"), "python"),
-        (_facts(operating_system="Ubuntu 24.04.4 LTS"), "host"),
+        (_facts(os_id="debian"), "host"),
         (_facts(docker_version="29.7.1"), "container_engine"),
         (
             _facts(
@@ -160,3 +167,65 @@ def test_host_metadata_uses_a_regular_system_copy_when_etc_is_a_link(
         _ubuntu_pretty_name(Path("/etc/os-release"), system_os_release_path=system)
         == "Ubuntu Server 24.04.4 LTS"
     )
+
+
+# Exact relevant os-release fields captured from the authenticated 20260209
+# Ubuntu cloudimage guest. It contains no VARIANT_ID: do not invent one.
+GUEST_METADATA = '''PRETTY_NAME="Ubuntu 24.04.4 LTS"
+NAME="Ubuntu"
+VERSION_ID="24.04"
+VERSION="24.04.4 LTS (Noble Numbat)"
+VERSION_CODENAME=noble
+ID=ubuntu
+ID_LIKE=debian
+'''
+
+
+def test_actual_guest_metadata_reports_engine_but_missing_variant(tmp_path, monkeypatch):
+    metadata = tmp_path / "os-release"
+    metadata.write_text(GUEST_METADATA)
+    monkeypatch.setattr("eva.operations.installer_preflight.host_platform.system", lambda: "Linux")
+    monkeypatch.setattr("eva.operations.installer_preflight.host_platform.machine", lambda: "x86_64")
+    calls = []
+    def run(command, **kwargs):
+        calls.append(command)
+        return subprocess.CompletedProcess(command, 0, "29.7.2\n", "")
+    facts = inspect_host(os_release_path=metadata, run=run)
+    assert facts.os_id == "ubuntu" and facts.variant_id is None
+    assert facts.os_version == "24.04.4 LTS (Noble Numbat)"
+    receipt = preflight(_lock(), replace(facts, python_version="3.12.14"))
+    checks = {item["id"]: item for item in receipt["checks"]}
+    assert checks["container_engine"]["state"] == "passed"
+    assert checks["host"]["state"] == "blocked"
+    assert "servervariant is niet bewezen" in checks["host"]["detail"]
+    assert checks["release_support"]["state"] == "blocked"
+    assert receipt["status"] == "blocked"
+    assert calls == [["docker", "version", "--format", "{{.Server.Version}}"]]
+
+
+@pytest.mark.parametrize("changes", [
+    {"os_id": "debian"}, {"version_id": "22.04"},
+    {"os_version": "24.04.3 LTS (Noble Numbat)"},
+    {"os_version": "24.04.4fake LTS"},
+    {"variant_id": "desktop"}, {"variant_id": "unknown"},
+    {"variant_id": None}, {"os_id": None},
+])
+def test_display_label_cannot_override_structured_host_evidence(changes):
+    receipt = preflight(_lock(), _facts(**changes))
+    checks = {item["id"]: item["state"] for item in receipt["checks"]}
+    assert checks["host"] == "blocked" and checks["release_support"] == "blocked"
+    assert receipt["status"] == "blocked"
+
+
+def test_server_metadata_with_generic_label_keeps_release_gate_closed():
+    receipt = preflight(_lock(), _facts(operating_system="Ubuntu 24.04.4 LTS"))
+    checks = {item["id"]: item["state"] for item in receipt["checks"]}
+    assert checks == {"python": "passed", "host": "passed", "container_engine": "passed", "release_support": "blocked"}
+
+
+def test_duplicate_metadata_does_not_supply_host_authority(tmp_path):
+    metadata = tmp_path / "os-release"
+    metadata.write_text(GUEST_METADATA + "ID=debian\nVARIANT_ID=server\n")
+    facts = inspect_host(os_release_path=metadata, run=lambda cmd, **kw: subprocess.CompletedProcess(cmd, 0, "29.7.2", ""))
+    assert facts.os_id is None
+    assert preflight(_lock(), facts)["status"] == "blocked"

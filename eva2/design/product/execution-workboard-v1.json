@@ -248,7 +248,7 @@
         },
         {
           "title": "Reservekopie herstellen via de wizard",
-          "detail": "De geïsoleerde Ubuntu/Docker-omgevingsproef is afgerond en onafhankelijk goedgekeurd. De normale launcher en pagina werken; herstel blijft met HTTP 409 geblokkeerd. De twee historische bewijsverwijzingen zijn hersteld en de gast is gestopt. OS-herkenning en releaseondersteuning blijven apart open; geen volledige hersteloplevering of eigenaaracceptatie."
+          "detail": "De geïsoleerde omgevingsproef en de detectiefix zijn technisch afgerond en onafhankelijk goedgekeurd. De fix is in de broncode opgenomen: Python en Docker 29.7.2 slagen afzonderlijk, terwijl ontbrekend servervariantbewijs en releaseondersteuning blijven blokkeren. Geen volledige hersteloplevering of livewijziging."
         },
         {
           "title": "Voorbereid documentproject afgerond",
@@ -6417,7 +6417,7 @@
         "liveRestorePerformed": false
       },
       "platformValidationFollowup": {
-        "status": "bounded_guest_proof_closed_host_detection_and_release_support_open",
+        "status": "guest_and_detection_scopes_closed_server_variant_and_release_support_open",
         "owner": "coordinator/timing_final_review",
         "assignedBy": "coordinator",
         "scope": "IN-002 platform validation",
@@ -6449,7 +6449,7 @@
           "freshRestorePerformed": false,
           "matchingIsolatedVmEstablished": false
         },
-        "nextStep": "Separate review of OS-label detection fix; release support still blocked.",
+        "nextStep": "Reliable server variant evidence and existing release support remain open; no full restore or support claim.",
         "productChanges": false,
         "platformSupported": false,
         "artifactRetention": {
@@ -6518,13 +6518,44 @@
           "integrationVerification": "Exact supplied evidence bytes retained; correction binds private provisioning-input-proof artifact, whose hash also matches existing evidence manifest. Not the sanitized Git evidence file hash."
         },
         "osLabelDetectionFollowup": {
-          "status": "separate_product_fix_under_independent_review",
+          "status": "bounded_detection_fix_complete_independently_approved_integrated_not_live",
           "owner": "coordinator/timing_final_review",
           "evidenceBasis": "Reported proven OS-label recognition issue; exact fix candidate pending",
-          "sourceIntegrated": false,
+          "sourceIntegrated": true,
           "live": false,
           "sourceCandidateCommit": "07297c18de829492c2507addc583ddc6c04aa3a8",
-          "evidenceCandidateCommit": "76e1d62b32d9d4b65b96386c8bf320a71a352c29"
+          "evidenceCandidateCommit": "76e1d62b32d9d4b65b96386c8bf320a71a352c29",
+          "independentGo": true,
+          "exactPaths": [
+            "eva2/src/eva/operations/installer_preflight.py",
+            "eva2/tests/operations/test_installer_preflight.py",
+            "eva2/evidence/product/IN-002-structured-host-detection-2026-09-13.json",
+            "eva2/reviews/IN-002-structured-host-detection-2026-09-13.md"
+          ],
+          "evidenceIntegrated": true,
+          "independentReview": {
+            "decision": "GO for exact detection source and bounded guest evidence",
+            "reportedBy": "coordinator",
+            "reviewer": "coordinator/next_tools_delivery",
+            "sourceHashesVerified": 2,
+            "artifactHashesVerified": 8,
+            "preflightAndApiTestsIndependentlyRepeated": 40,
+            "fullIN002Go": false,
+            "platformSupportGo": false,
+            "productionLive": false
+          },
+          "actualGuestDecision": {
+            "python": "passed",
+            "containerEngine": "passed",
+            "containerEngineVersion": "29.7.2",
+            "host": "blocked",
+            "hostReason": "Missing server variant proof",
+            "releaseSupport": "blocked",
+            "bootstrapStatus": 204,
+            "restoreStatus": 409,
+            "guestStopped": true
+          },
+          "integrationVerification": "Four exact baselines and final bytes checked; bounded patch clean, two source hashes match. Platform lock remains unchanged. Other stage files excluded."
         }
       }
     },

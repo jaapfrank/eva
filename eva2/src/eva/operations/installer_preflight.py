@@ -44,6 +44,10 @@ class HostFacts:
     python_version: str
     docker_version: str | None
     docker_error: str | None
+    os_id: str | None = None
+    version_id: str | None = None
+    os_version: str | None = None
+    variant_id: str | None = None
 
 
 def _regular_read(path: Path, *, label: str, maximum: int) -> bytes:
@@ -75,11 +79,11 @@ def load_platform_lock(path: Path) -> PlatformLockV3:
         raise InstallerPreflightError("platform lock is invalid") from error
 
 
-def _ubuntu_pretty_name(
+def _os_release_metadata(
     path: Path = Path("/etc/os-release"),
     *,
     system_os_release_path: Path = Path("/usr/lib/os-release"),
-) -> str | None:
+) -> dict[str, str]:
     candidates = (path,)
     # Debian/Ubuntu conventionally makes /etc/os-release a symlink.  The
     # installer still refuses links for its release inputs, but host metadata
@@ -94,13 +98,31 @@ def _ubuntu_pretty_name(
             )
         except InstallerPreflightError:
             continue
+        fields: dict[str, str] = {}
         for line in raw.decode("utf-8", errors="replace").splitlines():
-            if line.startswith("PRETTY_NAME="):
-                value = line.removeprefix("PRETTY_NAME=").strip()
-                if len(value) >= 2 and value.startswith('"') and value.endswith('"'):
-                    value = value[1:-1]
-                return value or None
-    return None
+            key, separator, value = line.partition("=")
+            if not separator or key not in {"PRETTY_NAME", "ID", "VERSION_ID", "VERSION", "VARIANT_ID"}:
+                continue
+            if key in fields:
+                return {}  # Ambiguous system metadata is not evidence.
+            value = value.strip()
+            if value.startswith(('"', "'")):
+                if len(value) < 2 or value[-1] != value[0]:
+                    return {}
+                value = value[1:-1]
+            fields[key] = value
+        return fields
+    return {}
+
+
+def _ubuntu_pretty_name(
+    path: Path = Path("/etc/os-release"),
+    *,
+    system_os_release_path: Path = Path("/usr/lib/os-release"),
+) -> str | None:
+    return _os_release_metadata(
+        path, system_os_release_path=system_os_release_path
+    ).get("PRETTY_NAME")
 
 
 def _docker_version(
@@ -131,28 +153,40 @@ def inspect_host(
 
     docker_version, docker_error = _docker_version(run)
     machine = host_platform.machine().lower()
+    metadata = _os_release_metadata(os_release_path) if host_platform.system() == "Linux" else {}
     return HostFacts(
-        operating_system=_ubuntu_pretty_name(os_release_path)
-        if host_platform.system() == "Linux"
-        else None,
+        operating_system=metadata.get("PRETTY_NAME"),
         architecture=_ARCHITECTURES.get(machine),
         python_version=".".join(map(str, sys.version_info[:3])),
         docker_version=docker_version,
         docker_error=docker_error,
+        os_id=metadata.get("ID"),
+        version_id=metadata.get("VERSION_ID"),
+        os_version=metadata.get("VERSION"),
+        variant_id=metadata.get("VARIANT_ID"),
     )
 
 
-def _target(lock: PlatformLockV3, facts: HostFacts) -> PlatformTarget | None:
-    if facts.operating_system is None or facts.architecture is None:
+def _candidate_target(lock: PlatformLockV3, facts: HostFacts) -> PlatformTarget | None:
+    # PRETTY_NAME is a display label, never evidence of the server variant.
+    point = re.fullmatch(r"([0-9]+\.[0-9]+\.[0-9]+) LTS(?: \([^\n]*\))?", facts.os_version or "")
+    if facts.os_id != "ubuntu" or point is None:
         return None
-    for candidate in lock.tier1_targets + lock.compatibility_targets:
+    version = point.group(1)
+    if facts.version_id != version.rsplit(".", 1)[0]:
+        return None
+    for candidate in lock.tier1_targets:
         if (
-            candidate.operating_system == facts.operating_system
+            candidate.operating_system == f"Ubuntu Server {version} LTS"
             and candidate.architecture == facts.architecture
             and candidate.execution_mode == "containerized"
         ):
             return candidate
     return None
+
+
+def _target(lock: PlatformLockV3, facts: HostFacts) -> PlatformTarget | None:
+    return _candidate_target(lock, facts) if facts.variant_id == "server" else None
 
 
 def preflight(lock: PlatformLockV3, facts: HostFacts) -> dict[str, object]:
@@ -172,16 +206,21 @@ def preflight(lock: PlatformLockV3, facts: HostFacts) -> dict[str, object]:
         if facts.python_version == lock.python_version
         else f"Deze release vereist Python {lock.python_version}",
     )
+    candidate = _candidate_target(lock, facts)
     target = _target(lock, facts)
     check(
         "host",
         "passed" if target is not None else "blocked",
         "Besturingssysteem en processor passen bij een gekozen Eva-target"
         if target is not None
-        else "Deze computer is geen gekozen Eva-target",
+        else (
+            "Ubuntu-versie en processor passen; servervariant is niet bewezen in de hostmetadata"
+            if candidate is not None and facts.variant_id is None
+            else "Deze computer is geen gekozen Eva-target"
+        ),
     )
     expected_engine = (
-        target.container_engine.removeprefix("Docker Engine ") if target else None
+        candidate.container_engine.removeprefix("Docker Engine ") if candidate else None
     )
     engine_ok = (
         facts.docker_version is not None and facts.docker_version == expected_engine
@@ -224,6 +263,10 @@ def preflight(lock: PlatformLockV3, facts: HostFacts) -> dict[str, object]:
             "architecture": facts.architecture,
             "python_version": facts.python_version,
             "docker_version": facts.docker_version,
+            "os_id": facts.os_id,
+            "version_id": facts.version_id,
+            "os_version": facts.os_version,
+            "variant_id": facts.variant_id,
         },
         "checks": checks,
         "next": (
