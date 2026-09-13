@@ -213,7 +213,7 @@
       "nextOutcomes": [
         {
           "title": "Reguliere Telegramupdate afgeleverd",
-          "detail": "De uurupdate van 13 september om 05:02 uur is bevestigd afgeleverd. Er is geen inhaalbericht verstuurd voor het overgeslagen uur. De bestaande planning houdt minstens één uur tussen verzendpogingen."
+          "detail": "De uurupdate van 13 september om 06:05 uur is bevestigd afgeleverd. De bestaande planning houdt minstens één uur tussen verzendpogingen; er is geen extra bericht verstuurd."
         },
         {
           "title": "Browserherstelproef afgerond",
@@ -247,7 +247,7 @@
         },
         {
           "title": "Project hervatten na herstart",
-          "detail": "De private registratie is afgerond en onafhankelijk goedgekeurd: één gateway en twee private tools toegevoegd, bestaande registraties behouden. De provider blijft alleen-lezen. De volgende stap wordt offline voorbereid met de werkelijke registraties. De projectworker is nog niet geactiveerd; een gewone chatopdracht en jouw acceptatie blijven open."
+          "detail": "De private registratie is afgerond en onafhankelijk goedgekeurd: één gateway en twee private tools toegevoegd, bestaande registraties behouden. Het activeringsplan met de werkelijke registraties ligt nu ter beoordeling. De provider blijft alleen-lezen en de projectworker staat uit. Een gewone chatopdracht, bereikbaar eindresultaat en jouw acceptatie blijven open."
         },
         {
           "title": "Gedeeld audiotype",
@@ -5413,18 +5413,18 @@
       "usage": "design/product/project-telegram-updates.md",
       "confirmationHour": "2026-09-12T20:00Z",
       "scheduler": "Coordinator confirmed existing heartbeat wired to exact CLI/dedup/receipt on 12 September; no second scheduler.",
-      "nextRegularUpdateNotBefore": "2026-09-13T04:02:03.241078+00:00",
+      "nextRegularUpdateNotBefore": "2026-09-13T05:05:35.440376+00:00",
       "latestHourlyAttempt": {
-        "hourKey": "2026-09-13T03:00Z",
+        "hourKey": "2026-09-13T04:00Z",
         "status": "delivered",
-        "claimedAt": "2026-09-13T03:02:03.241078+00:00",
-        "deliveredAt": "2026-09-13T03:02:06.265526+00:00",
+        "claimedAt": "2026-09-13T04:05:35.440376+00:00",
+        "deliveredAt": "2026-09-13T04:05:38.797531+00:00",
         "providerReceiptAvailable": true,
         "privateChatAndExactTextVerified": true,
         "repeated": false,
-        "evidencePath": "eva2/evidence/product/project-telegram-hourly-delivery-2026-09-13-03.json"
+        "evidencePath": "eva2/evidence/product/project-telegram-hourly-delivery-2026-09-13-04.json"
       },
-      "lastConfirmedDelivery": "2026-09-13T03:02:06.265526+00:00",
+      "lastConfirmedDelivery": "2026-09-13T04:05:38.797531+00:00",
       "helperRepair": {
         "status": "reviewed_helper_regular_delivery_confirmed",
         "scope": "Trim ASCII edge whitespace before wire; preserve raw idempotency hash and old records; retain only allowlisted stage/boolean/hash diagnostics.",
@@ -5486,6 +5486,16 @@
           "privateChatAndExactTextVerified": true,
           "repeated": false,
           "evidencePath": "eva2/evidence/product/project-telegram-hourly-delivery-2026-09-13-01.json"
+        },
+        {
+          "hourKey": "2026-09-13T03:00Z",
+          "status": "delivered",
+          "claimedAt": "2026-09-13T03:02:03.241078+00:00",
+          "deliveredAt": "2026-09-13T03:02:06.265526+00:00",
+          "providerReceiptAvailable": true,
+          "privateChatAndExactTextVerified": true,
+          "repeated": false,
+          "evidencePath": "eva2/evidence/product/project-telegram-hourly-delivery-2026-09-13-03.json"
         }
       ],
       "unsentHourNote": {
@@ -7475,6 +7485,51 @@
               "phase2Go": false
             }
           }
+        },
+        "phase2OfflinePreparation": {
+          "status": "prepared_under_independent_review_not_authorized",
+          "ownerThread": "01a08d52-31b1-7091-be45-812c0b6e6c9f",
+          "evidenceCommit": "3653516428dff529386272773e37f8ad4d42c4a8",
+          "evidencePaths": [
+            "eva2/evidence/living-core/au006-phase2-offline-review-20260913.json",
+            "eva2/evidence/living-core/au006-phase2-offline-review-20260913.md"
+          ],
+          "evidenceIntegrated": true,
+          "independentReviewer": "coordinator/timing_final_review",
+          "activationAuthorized": false,
+          "ordinaryProbeAuthorized": false,
+          "executed": false,
+          "preview": {
+            "goal_sha256": "4ff68e4d5d4c5492503dc6bbfda8af4c99fbe4e2e3072413c4f9ae775adf7fe0",
+            "plan_sha256": "8cab242e7619feb02a3ce69aa3d9b383f5ac5c68622e12386c919b43da30c52b",
+            "tool_configuration_sha256": "230c60856bfdb1c5c4eb4cd227323f3294d39f4533bf5510d6aca4b948f7a951",
+            "status": "offline_preview_only_not_sealed",
+            "output_sha256": {
+              "catalog.json": "e1c58728c924da8e254db4531c9ac2a13e78b4cc6af01e0103c85219efaf6d65",
+              "plan.json": "8cab242e7619feb02a3ce69aa3d9b383f5ac5c68622e12386c919b43da30c52b",
+              "definition.json": "97eb4433e0a04081d74a671f511b7f32093aa337e8ccf69627ca9855a8740532",
+              "generation.json": "eb71659d72b6a76631d3b36e725d21018d772a0b6b78b8a46557dd32909d5a9a"
+            },
+            "runtime_project_unchanged": true,
+            "journal_entries": 0,
+            "blocker_retained": true
+          },
+          "proposedChanges": [
+            "Approved core image plus two document-goal settings and read-only project mount",
+            "Only provider workspace and journal mounts writable",
+            "New bound document worker; existing delegated worker preserved"
+          ],
+          "gatewayGuardAndEndpointPolicyPreserved": true,
+          "runtimeChanges": 0,
+          "modelCalls": 0,
+          "documentEffectCalls": 0,
+          "remainingOutcomes": [
+            "Independent activation plan review",
+            "Separately authorized core and worker activation",
+            "Ordinary conversation route",
+            "Reachable private artifact",
+            "Owner acceptance"
+          ]
         }
       },
       "isolatedProductExecutionProven": true,
