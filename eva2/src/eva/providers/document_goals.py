@@ -253,7 +253,7 @@ class DocumentGoalPorts:
         raise DurableGoalError("document delivery only verifies existing local availability")
 
 
-def build_document_goal_ports(*, engine, store, goal, plan_file, tenant_id, installation_id):
+def build_document_goal_ports(*, engine, store, goal, plan_file, tenant_id, installation_id, read_bound_plan=None):
     """Explicit worker composition; configured files are host inputs only."""
     import hashlib
     import os
@@ -264,7 +264,7 @@ def build_document_goal_ports(*, engine, store, goal, plan_file, tenant_id, inst
     from eva.providers.mcp_gateway import McpGatewayProviderFactory
     from eva.providers.mcp_owner_authority import McpOwnerAuthority
 
-    read_plan = lambda: read_runtime_secret_file(plan_file, setting_name="EVA_DOCUMENT_GOAL_PLAN_FILE")
+    read_plan = read_bound_plan or (lambda: read_runtime_secret_file(plan_file, setting_name="EVA_DOCUMENT_GOAL_PLAN_FILE"))
     plan = DocumentGoalPlan.from_json(read_plan())
     settings = McpGatewayProviderFactory.load_settings()
     if settings is None:

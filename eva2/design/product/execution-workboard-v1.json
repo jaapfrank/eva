@@ -121,7 +121,7 @@
           ]
         }
       ],
-      "priorityDecision": "De nieuwe documentflow heeft beperkt bronakkoord, maar de bestaande voorbereide projectroute moet behouden blijven. De bouwer repareert het verdwijnen van status/resultaattoegang en legacyprojectafhandeling vóór overname. Er is niets live gewijzigd; PR-01, PJ-01 en gezondheidscontroles blijven afgesloten.",
+      "priorityDecision": "De complete bron voor eigen documentopdrachten is goedgekeurd en geïntegreerd, inclusief behoud van bestaande projectroutes. De installatievoorbereiding moet nog alle actieve gebruikersverzoeken en de afronding daarvan afdekken. Nog geen runtimegoedkeuring of livewijziging. Eerdere opleveringen blijven afgesloten.",
       "dashboardVerification": {
         "status": "local_browser_verified_not_full_product_acceptance",
         "priorityRevision": {
@@ -283,7 +283,7 @@
         },
         {
           "title": "Zelf een documentproject opgeven",
-          "detail": "De nieuwe opdrachtflow is technisch gecontroleerd. Een extra review vond dat deze kandidaat de bestaande status- en resultaatroute van het voorbereide project zou verbergen. Ook de worker moet bestaande doelen blijven behandelen. De bouwer repareert dat vóór overname en installatie. Bewaarde bestanden alleen zijn onvoldoende: de bestaande gebruikersroute moet bruikbaar blijven. Nog niet live."
+          "detail": "De broncode is gebouwd, onafhankelijk gecontroleerd en geïntegreerd. Eigen documentopdrachten kunnen naast het bestaande voorbereide project bestaan; status, resultaat en het juiste uitvoerplan blijven behouden. Voor installatie staat nog een concrete controle open op actieve gebruikersverzoeken en hun afronding. Nog niet live en nog niet met een echte modelopdracht opgeleverd."
         }
       ],
       "openRisks": [
@@ -1038,7 +1038,7 @@
       "sessionGoal": "AU-008: één zelfstandige kosteloze bijdrage via de algemene uitvoerder.",
       "currentWork": "**Afgerond en live — twee begrensde opleveringen.** PR-01: Eva vindt een bewaarde planreviewprocedure terug, leest de gecontroleerde tekst en past de regels toe; jouw resultaatreview staat open. Documentstatus: beide documentdiensten gebruiken nu passende gezondheidscontroles en melden gezond. Beide opleveringen zijn onafhankelijk bevestigd. Eva, bestaande doelen, journaal en bestanden zijn behouden. Gezondheid is geen bewijs van taakvoortgang.",
       "currentEvidence": "eva2/evidence/living-core/document-health-r2-live-20260913.json",
-      "nextStep": "**Eerstvolgende gebruikersoplevering:** eigen documentopdrachten zonder beheerderplanwissel. Het nieuwe pad heeft beperkt bronakkoord; vóór overname moet de kandidaat ook bestaande voorbereide projecten, hun status/resultaattoegang en workerafhandeling behouden. Die correctie gebeurt in dezelfde geïsoleerde bouw. Geen runtimegoedkeuring of livewijziging. PR-01, PJ-01 en de gezondheidsoplevering blijven afgesloten.",
+      "nextStep": "**Eerstvolgende gebruikersoplevering:** eigen documentopdrachten zonder beheerderplanwissel. De complete bron inclusief behoud van bestaande projecten is goedgekeurd en geïntegreerd. Vóór provisioning van twee uitvoerplekken moet de runtimevoorbereiding alle gebruikersverzoeken en hun afronding aantoonbaar afdekken. Daarna pas catalogusbinding, concrete activeringsreview en de echte gebruikersrouteproef. Geen runtimegoedkeuring of livewijziging. PR-01, PJ-01 en de gezondheidsoplevering blijven afgesloten.",
       "usageClarification": {
         "date": "2026-09-07",
         "authorizedBy": "Jaap",
@@ -9820,7 +9820,7 @@
     },
     "ownerDocumentProjectAU00620260913": {
       "id": "AU006-owner-document-project",
-      "status": "new_flow_source_go_legacy_compatibility_fix_required_before_integration",
+      "status": "bounded_source_complete_independently_approved_integrated_not_live",
       "assignedBy": "coordinator",
       "owner": "coordinator/next_tools_delivery",
       "runtimeOwnerThread": "01a08d52-31b1-7091-be45-812c0b6e6c9f",
@@ -9828,8 +9828,8 @@
       "existingGap": "One administrator-prepared plan and empty start arguments",
       "scope": "Two independently requested bounded document projects using existing DurableGoal/native store and host-configured provider pool; current PJ01 plan immutable",
       "generalPlanner": false,
-      "built": false,
-      "tested": false,
+      "built": true,
+      "tested": true,
       "live": false,
       "ownerAccepted": false,
       "earlierPR01PJ01RemainClosed": true,
@@ -9873,7 +9873,7 @@
         ]
       },
       "runtimeGo": false,
-      "sourceIntegrated": false,
+      "sourceIntegrated": true,
       "resourcePoolBoundary": {
         "type": "Existing host-configured document provider instances",
         "claim": "Atomic claim per goal using existing journal",
@@ -9924,38 +9924,71 @@
       },
       "sourceCommits": [
         "6d27f267c370715644a6a03b103601c1fab02195",
-        "7918ae0380a89dabe0d30695b49db15b303658f9"
+        "7918ae0380a89dabe0d30695b49db15b303658f9",
+        "789fb0c613f202c3ce71ba3f05798a221f6804dc"
       ],
       "independentSourceReview": {
-        "decision": "GO limited to new task flow; existing-route compatibility blocks complete candidate",
+        "decision": "GO for complete bounded source including legacy coexistence",
         "reportedBy": "coordinator",
-        "realPostgresTestsPassed": 20,
+        "realPostgresTestsPassed": 22,
         "proofPath": "/home/administrator/project/.eva2-artifacts/document-task-input-20260913/independent-recovery-host-postgres-proof.json",
         "proofSha256": "2a4cbe938b8db0ea386ffbc078e7f340601304f5e0ea44cf6634b8971c3c7da2",
         "logSha256": "c2e57760011dc6d1b54b4205eb9f85b95bd00f927c329e8ca1165e5babda7912",
         "nativeProofSha256Reported": "a80a0b73828615731a8cf61d20cf5f310ce7eab0fc4acea6aa6ed5bd6ed79017",
         "nativeFixtureConsumed": true,
         "nativeEvidenceRetention": "Immutable fixture hashes and journals retained; no replay or genesis reuse",
-        "runtimeGo": false
+        "runtimeGo": false,
+        "coexistenceProofs": [
+          {
+            "path": "eva2/evidence/product/AU-006-document-task-coexist-independent-2026-09-13.json",
+            "sha256": "45ba7c1e7e8a51a99d5b6b9835b6ca29d3c180ff96c7771924c9b5c0b772f4cc"
+          },
+          {
+            "path": "eva2/evidence/product/AU-006-document-task-coexist-independent-2026-09-13.log",
+            "sha256": "66ee4830dd01ef3daa8f99e3deac9206eeca6a2f8a90ab43a0f4e81adc175498"
+          }
+        ],
+        "nativeProofSha256Verified": "a80a0b73828615731a8cf61d20cf5f310ce7eab0fc4acea6aa6ed5bd6ed79017",
+        "scope": "Legacy result/status original authority, unique plan selection, duplicate-ID rejection, both health configurations, crash after claim recovery; actual model use not proven"
       },
       "legacyCompatibility": {
-        "status": "blocking_correction_in_same_source_stage",
+        "status": "source_correction_independently_approved",
         "finding": "Pool factory hides prepared project status/result tools; pool worker ignores legacy goals",
         "required": "Preserve existing PJ01 status/result access and legacy goal handling, not only stored file bytes",
         "owner": "coordinator/next_tools_delivery",
         "productionAffected": false,
-        "sourceIntegrationDeferred": true,
-        "existingLiveDeliveriesReopened": false
+        "sourceIntegrationDeferred": false,
+        "existingLiveDeliveriesReopened": false,
+        "correctionCommit": "789fb0c613f202c3ce71ba3f05798a221f6804dc",
+        "resolvedInSource": true,
+        "provenLive": false
       },
       "runtimePreparation": {
         "ownerThread": "01a08d52-31b1-7091-be45-812c0b6e6c9f",
-        "status": "two_phase_design_pending_compatible_candidate",
+        "status": "phase1_all_user_admission_and_drain_accounting_open",
         "stages": [
           "Provision two separately authorized provider slots",
           "Bind actual catalog and seal candidate before activation"
         ],
-        "runtimeGo": false
-      }
+        "runtimeGo": false,
+        "openQuestion": "Concrete protection of all-user admission and drain accounting before provider provisioning; no runtime GO",
+        "preserveBothLegacyFiles": true
+      },
+      "exactIntegratedPaths": [
+        "eva2/deploy/living-core/document-worker-health.py",
+        "eva2/reviews/document-task-input-20260913.md",
+        "eva2/src/eva/adapters/postgres/durable_goals.py",
+        "eva2/src/eva/bootstrap/document_goal_worker.py",
+        "eva2/src/eva/providers/document_goal_actions.py",
+        "eva2/src/eva/providers/document_goal_plan.py",
+        "eva2/src/eva/providers/document_goals.py",
+        "eva2/src/eva/providers/document_task_actions.py",
+        "eva2/src/eva/providers/document_task_input.py",
+        "eva2/tests/postgres/test_document_task_actions.py",
+        "eva2/tests/postgres/test_document_task_native.py",
+        "eva2/tests/providers/test_document_task_input.py"
+      ],
+      "sourceIntegrationVerification": "All existing paths matched exact e622a408 baseline; bounded patch clean; all12final paths byte-equal reviewed789fb0c6; no deployment manifests or runtime mutations"
     }
   },
   "activeTaskId": "AU-008",

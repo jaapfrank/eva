@@ -48,6 +48,30 @@ class PostgresDurableGoalStore:
         identity = {"goal_id": goal_id, "owner_id": owner_id}
         return "goal:" + hashlib.sha256(canonical_json_bytes(identity)).hexdigest()
 
+    def document_slot(self, slot_id: str) -> dict | None:
+        thread = "document-slot:" + canonical_sha256({"slot_id": slot_id})
+        events = self._timeline.events(thread)
+        if not events:
+            return None
+        if len(events) != 1 or events[0].event_type != "DOCUMENT_SLOT_CLAIMED":
+            raise DurableGoalError("document slot journal differs")
+        return dict(self._data(events[0]))
+
+    def claim_document_slot(self, slot_id: str, payload: dict, *, at: datetime) -> dict:
+        """One immutable assignment per host slot, no release/reset/reuse path."""
+        thread = "document-slot:" + canonical_sha256({"slot_id": slot_id})
+        try:
+            self._timeline.create_thread(thread_id=thread,
+                checkpoint_id=f"checkpoint:{thread}:claimed", occurred_at=at,
+                data=payload, event_type="DOCUMENT_SLOT_CLAIMED", phase="document_slot_claimed",
+                status="completed", operation_id=payload["task_id"])
+        except CheckpointConflict:
+            existing = self.document_slot(slot_id)
+            if existing is None:
+                raise DurableGoalError("document slot conflict without durable claim")
+            return existing
+        return payload
+
     def admit(self, goal: DurableGoalSpec) -> str:
         thread_id = self._thread_id(goal.goal_id, goal.owner_id)
         try:

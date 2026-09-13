@@ -88,9 +88,12 @@ class DocumentGoalPlan:
     first_content: str
     final_prefix: str
     final_suffix: str
+    second_content: str | None = None
 
     def __post_init__(self) -> None:
         for name, value in asdict(self).items():
+            if name == "second_content" and value is None:
+                continue
             if not isinstance(value, str):
                 raise DurableGoalError(f"document plan {name} must be text")
             if name.endswith("_sha256") and _HASH.fullmatch(value) is None:
@@ -102,7 +105,7 @@ class DocumentGoalPlan:
             raise DurableGoalError("document plan path is outside the flat private workspace")
         if self.first_path == self.final_path:
             raise DurableGoalError("document steps require distinct output paths")
-        for content in (self.first_content, self.final_prefix + self.first_content + self.final_suffix):
+        for content in (self.first_content, self.second_content if self.second_content is not None else self.final_prefix + self.first_content + self.final_suffix):
             if not content.strip() or len(content.encode()) > _MAX_CONTENT_BYTES:
                 raise DurableGoalError("document plan content is outside its byte limit")
 
@@ -111,7 +114,10 @@ class DocumentGoalPlan:
         return canonical_sha256(self.to_payload())
 
     def to_payload(self) -> dict[str, str]:
-        return {"contract": _CONTRACT, **asdict(self)}
+        payload = asdict(self)
+        if self.second_content is None:
+            payload.pop("second_content")
+        return {"contract": _CONTRACT if self.second_content is None else "EvaDocumentGoalPlan/v3", **payload}
 
     @classmethod
     def from_json(cls, raw: str) -> DocumentGoalPlan:
@@ -128,7 +134,12 @@ class DocumentGoalPlan:
 
         try:
             payload = json.loads(raw, object_pairs_hook=unique_fields)
-            if not isinstance(payload, dict) or payload.pop("contract", None) != _CONTRACT:
+            if not isinstance(payload, dict):
+                raise DurableGoalError("document plan contract is invalid")
+            contract = payload.pop("contract", None)
+            if (contract not in {_CONTRACT, "EvaDocumentGoalPlan/v3"}
+                    or (contract == _CONTRACT and "second_content" in payload)
+                    or (contract == "EvaDocumentGoalPlan/v3" and not isinstance(payload.get("second_content"), str))):
                 raise DurableGoalError("document plan contract is invalid")
             return cls(**payload)
         except (ValueError, TypeError) as error:
@@ -165,7 +176,7 @@ class DocumentGoalPlan:
     def final_content(self, previous: GoalArtifact) -> str:
         if previous.content != self.first_content:
             raise DurableGoalError("previous document content differs from the sealed plan")
-        return self.final_prefix + previous.content + self.final_suffix
+        return self.second_content if self.second_content is not None else self.final_prefix + previous.content + self.final_suffix
 
     def step(self, number: int, previous: GoalArtifact | None = None) -> DocumentStep:
         if type(number) is not int or number not in (1, 2):

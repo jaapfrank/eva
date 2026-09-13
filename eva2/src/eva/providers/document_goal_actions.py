@@ -195,6 +195,7 @@ class DocumentGoalActionSettings:
     mandate_file: str
     tenant_id: str
     installation_id: str
+    pool_file: str = ""
 
 
 class DocumentGoalActionsProviderFactory:
@@ -202,33 +203,49 @@ class DocumentGoalActionsProviderFactory:
 
     @staticmethod
     def load_settings():
+        pool = os.environ.get("EVA_DOCUMENT_TASK_POOL_FILE", "").strip()
         definition = os.environ.get("EVA_DOCUMENT_GOAL_DEFINITION_FILE", "").strip()
-        if not definition:
+        if not definition and not pool:
             return None
         plan = os.environ.get("EVA_DOCUMENT_GOAL_PLAN_FILE", "").strip()
         mandate = os.environ.get("EVA_MCP_AUTONOMY_MANDATE_FILE", "").strip()
         tenant = os.environ.get("EVA_RUNTIME_TENANT_ID", "").strip()
         installation = os.environ.get("EVA_RUNTIME_INSTALLATION_ID", "").strip()
-        if not all((plan, mandate, tenant, installation)):
+        if (not all((mandate, tenant, installation)) or (not pool and not plan)
+                or (pool and bool(plan) != bool(definition))):
             raise RuntimeError("prepared document actions require host plan and owner mandate")
-        return DocumentGoalActionSettings(plan, definition, mandate, tenant, installation)
+        return DocumentGoalActionSettings(plan, definition, mandate, tenant, installation, pool)
 
     @staticmethod
     def build(settings, engine):
-        authority = McpOwnerAuthority(engine, settings.mandate_file)
+        authority = McpOwnerAuthority(engine, settings.mandate_file,
+            (os.environ.get("EVA_MCP_MANAGED_ENDPOINTS_FILE") or None) if settings.pool_file else None)
         if authority.scope != external_timeline_scope(settings.tenant_id, settings.installation_id,
                                                       "document action runtime scope required"):
             raise ConversationConflict("document action runtime and owner scopes differ")
         store = PostgresDurableGoalStore(engine, tenant_id=settings.tenant_id,
                                         installation_id=settings.installation_id)
-        adapter = DocumentGoalActions(
-            store=store, authority=authority,
-            read_plan=lambda: read_runtime_secret_file(settings.plan_file, setting_name="EVA_DOCUMENT_GOAL_PLAN_FILE"),
-            read_definition=lambda: read_runtime_secret_file(settings.definition_file,
-                setting_name="EVA_DOCUMENT_GOAL_DEFINITION_FILE"),
-            load_source_turn=_SourceTurnLoader(engine, authority),
-        )
+        adapters = []
+        if settings.pool_file:
+            from eva.providers.document_task_actions import DocumentTaskActions
+            adapter = DocumentTaskActions(store=store, authority=authority,
+                read_pool=lambda: read_runtime_secret_file(settings.pool_file, setting_name="EVA_DOCUMENT_TASK_POOL_FILE"),
+                load_source_turn=_SourceTurnLoader(engine, authority))
+            adapters.append(adapter)
+        if settings.plan_file and settings.definition_file:
+            legacy_authority = McpOwnerAuthority(engine, settings.mandate_file)
+            adapter = DocumentGoalActions(
+                store=store, authority=legacy_authority,
+                read_plan=lambda: read_runtime_secret_file(settings.plan_file, setting_name="EVA_DOCUMENT_GOAL_PLAN_FILE"),
+                read_definition=lambda: read_runtime_secret_file(settings.definition_file,
+                    setting_name="EVA_DOCUMENT_GOAL_DEFINITION_FILE"),
+                load_source_turn=_SourceTurnLoader(engine, legacy_authority),
+            )
+            adapters.append(adapter)
+        if not adapters:
+            raise ConversationConflict("document actions have no host configuration")
         return ProviderContribution(provider_id="document_goal_actions",
-            conversation_tools=adapter.conversation_tools(), external_tools=(PostgresExternalConversationTools(
+            conversation_tools=tuple(tool for adapter in adapters for tool in adapter.conversation_tools()),
+            external_tools=tuple(PostgresExternalConversationTools(
                 engine, adapter, adapter, authorize_turn=adapter.authorize_turn,
-                configuration_sha256=adapter.configuration_sha256),))
+                configuration_sha256=adapter.configuration_sha256) for adapter in adapters))

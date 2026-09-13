@@ -1,0 +1,121 @@
+"""Bounded document data from a real conversation; host identity stays outside."""
+from dataclasses import asdict, dataclass
+from eva.application.conversation import ConversationConflict
+from eva.contracts.canonical_json import canonical_sha256
+
+
+@dataclass(frozen=True, slots=True)
+class DocumentTaskInput:
+    title: str
+    first_document: str
+    second_document: str
+
+    @classmethod
+    def from_arguments(cls, arguments):
+        if not isinstance(arguments, dict) or set(arguments) != {
+            "title", "first_document", "second_document"
+        }:
+            raise ConversationConflict("document task accepts only title and two texts")
+        for key, maximum in (("title", 300), ("first_document", 12000), ("second_document", 12000)):
+            value = arguments[key]
+            if not isinstance(value, str) or not value.strip():
+                raise ConversationConflict("document task text is empty")
+            try:
+                length = len(value.encode("utf-8", errors="strict"))
+            except UnicodeEncodeError as error:
+                raise ConversationConflict("document task text is not UTF-8") from error
+            if length > maximum:
+                raise ConversationConflict("document task text exceeds byte limit")
+        return cls(**arguments)
+
+    @property
+    def sha256(self):
+        return canonical_sha256({"contract": "EvaDocumentTaskInput/v1", **asdict(self)})
+
+    def bound_identity(self, turn, call_id):
+        # Caller must load and authorize this exact ingress before persisting.
+        if not isinstance(call_id, str) or not call_id.strip():
+            raise ConversationConflict("document task call identity is absent")
+        return canonical_sha256({"contract": "EvaDocumentTaskIngress/v1",
+            "tenant_id": turn.tenant_id, "installation_id": turn.installation_id,
+            "principal_id": turn.principal_id, "conversation_id": turn.conversation_id,
+            "message_id": turn.message_id, "project_id": turn.project_id,
+            "call_id": call_id})
+
+
+@dataclass(frozen=True, slots=True)
+class DocumentTaskSlot:
+    slot_id: str
+    tool_configuration_sha256: str
+
+    def __post_init__(self):
+        import re
+        if not isinstance(self.slot_id,str) or re.fullmatch(r"[a-zA-Z0-9_-]{1,64}",self.slot_id) is None:
+            raise ConversationConflict("document slot identity invalid")
+        if not isinstance(self.tool_configuration_sha256,str) or re.fullmatch(r"[0-9a-f]{64}",self.tool_configuration_sha256) is None:
+            raise ConversationConflict("document slot tool binding invalid")
+
+
+class DocumentTaskPool:
+    """Finite host-provisioned, distinct native journals; never provision from chat."""
+    def __init__(self, slots):
+        self.slots=tuple(slots)
+        if not 1 <= len(self.slots) <= 16 or len({s.slot_id for s in self.slots})!=len(self.slots) or len({s.tool_configuration_sha256 for s in self.slots})!=len(self.slots):
+            raise ConversationConflict("document pool needs distinct bounded provider instances")
+
+    @classmethod
+    def from_json(cls, raw):
+        import json
+        def unique(pairs):
+            result={}
+            for key,value in pairs:
+                if key in result:raise ConversationConflict("document pool repeats field")
+                result[key]=value
+            return result
+        try:
+            if not isinstance(raw,str) or len(raw.encode())>16384:raise ValueError("size")
+            payload=json.loads(raw,object_pairs_hook=unique)
+            if set(payload)!={"contract","slots"} or payload['contract']!='EvaDocumentTaskPool/v1':raise ValueError("shape")
+            return cls(DocumentTaskSlot(**item) for item in payload['slots'])
+        except (ValueError,TypeError,KeyError) as error:
+            raise ConversationConflict("document pool is invalid") from error
+
+    @property
+    def sha256(self):
+        return canonical_sha256({"contract":"EvaDocumentTaskPool/v1","slots":[asdict(s) for s in self.slots]})
+
+    def claim(self, store, *, task, turn, call_id, authority_sha256, tenant_id, installation_id):
+        from datetime import datetime, timedelta
+        from eva.application.durable_goals import DurableGoalSpec, GoalWakeCondition
+        from eva.providers.document_goal_plan import DocumentGoalPlan, PreparedDocumentGoal
+        task_id=task.bound_identity(turn,call_id)
+        at=datetime.fromisoformat(turn.occurred_at.replace('Z','+00:00'))
+        # Same ingress must retain payload, even if all slots are occupied.
+        for slot in self.slots:
+            old=store.document_slot(slot.slot_id)
+            if old is not None and old.get('task_id')==task_id:
+                if old.get('input_sha256')!=task.sha256 or old.get('pool_sha256')!=self.sha256:
+                    raise ConversationConflict("document task replay differs")
+                return old
+        for slot in self.slots:
+            goal_id='document-task:'+task_id
+            goal=DurableGoalSpec(goal_id,turn.principal_id,task.title,
+                'Save the first private document from the bound task input.',None,None,None,
+                turn.principal_id,GoalWakeCondition('document-task',goal_id,'ready','yes',at+timedelta(days=1)),at,
+                'Save the second private document from the same bound task input.')
+            plan=DocumentGoalPlan(goal.goal_id,goal.sha256,turn.principal_id,tenant_id,installation_id,
+                authority_sha256,slot.tool_configuration_sha256,
+                '/proof-state/'+task_id+'-first.txt','/proof-state/'+task_id+'-second.txt',
+                task.first_document,'','',task.second_document)
+            definition=PreparedDocumentGoal(goal,plan.sha256,turn.project_id)
+            payload={'task_id':task_id,'input_sha256':task.sha256,'input':asdict(task),
+                'pool_sha256':self.sha256,'slot_id':slot.slot_id,
+                'source':{'tenant_id':turn.tenant_id,'installation_id':turn.installation_id,
+                    'principal_id':turn.principal_id,'conversation_id':turn.conversation_id,
+                    'message_id':turn.message_id,'audience':{'kind':'private_person','principal_id':turn.principal_id}},
+                'plan':plan.to_payload(),'definition':definition.to_payload()}
+            actual=store.claim_document_slot(slot.slot_id,payload,at=at)
+            if actual==payload:return actual
+            if actual.get('task_id')==task_id:
+                raise ConversationConflict("document task replay binding differs")
+        raise ConversationConflict("geen vrij projectslot")

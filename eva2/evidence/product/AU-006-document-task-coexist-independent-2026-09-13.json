@@ -1,0 +1,12 @@
+{
+  "container_id": "0b644ca503db26d493dc42e373a29940788cf7979e63ce223687c93d21c4b6f4",
+  "postgres_image": "sha256:5d143123fdf80462d1778cd4f24b9f7ca13c87174bca19141fb194c5a1ebca59",
+  "network_mode": "none",
+  "published_ports": [],
+  "data_storage": "tmpfs",
+  "connection": "local Unix socket only",
+  "pytest_exit_code": 0,
+  "model_calls": 0,
+  "production_database_connections": 0,
+  "disposable_container_removed": true
+}
