@@ -213,7 +213,7 @@
       "nextOutcomes": [
         {
           "title": "Reguliere Telegramupdate afgeleverd",
-          "detail": "Ook de volgende reguliere uurupdate is bevestigd afgeleverd, op 13 september om 01:50 uur. De historische onzekere poging blijft bewaard. Updates blijven via dezelfde bestaande uurplanning lopen."
+          "detail": "De reguliere uurupdate van 13 september om 02:51 uur is bevestigd afgeleverd. Updates blijven via dezelfde bestaande uurplanning lopen, met minstens één uur tussen verzendpogingen. De historische onzekere poging blijft bewaard."
         },
         {
           "title": "Browserherstelproef afgerond",
@@ -247,7 +247,7 @@
         },
         {
           "title": "Project hervatten na herstart",
-          "detail": "Opdrachtbinding en eigenaarscontrole zijn geïntegreerd. De native bestandsbroker heeft onafhankelijke bron-GO; een kleine clientwijziging ligt nog bij de reviewer. Daarna kunnen beide samen worden geïntegreerd. De uitvoerende projectaansluiting is nog niet live."
+          "detail": "Opdrachtbinding en eigenaarscontrole zijn geïntegreerd. De native bestandsbroker is onafhankelijk goedgekeurd. De clientreview vond één fout in de foutafhandeling; die wordt gericht hersteld voordat beide samen worden geïntegreerd. Nog niet live."
         }
       ],
       "openRisks": [
@@ -5409,18 +5409,18 @@
       "usage": "design/product/project-telegram-updates.md",
       "confirmationHour": "2026-09-12T20:00Z",
       "scheduler": "Coordinator confirmed existing heartbeat wired to exact CLI/dedup/receipt on 12 September; no second scheduler.",
-      "nextRegularUpdateNotBefore": "2026-09-13T00:50:39.116981+00:00",
+      "nextRegularUpdateNotBefore": "2026-09-13T01:51:19.829056+00:00",
       "latestHourlyAttempt": {
-        "hourKey": "2026-09-12T23:00Z",
+        "hourKey": "2026-09-13T00:00Z",
         "status": "delivered",
-        "claimedAt": "2026-09-12T23:50:39.116981+00:00",
-        "deliveredAt": "2026-09-12T23:50:42.360452+00:00",
+        "claimedAt": "2026-09-13T00:51:19.829056+00:00",
+        "deliveredAt": "2026-09-13T00:51:23.526135+00:00",
         "providerReceiptAvailable": true,
         "privateChatAndExactTextVerified": true,
         "repeated": false,
-        "evidencePath": "eva2/evidence/product/project-telegram-hourly-delivery-2026-09-12-23.json"
+        "evidencePath": "eva2/evidence/product/project-telegram-hourly-delivery-2026-09-13-00.json"
       },
-      "lastConfirmedDelivery": "2026-09-12T23:50:42.360452+00:00",
+      "lastConfirmedDelivery": "2026-09-13T00:51:23.526135+00:00",
       "helperRepair": {
         "status": "reviewed_helper_regular_delivery_confirmed",
         "scope": "Trim ASCII edge whitespace before wire; preserve raw idempotency hash and old records; retain only allowlisted stage/boolean/hash diagnostics.",
@@ -5452,6 +5452,16 @@
           "privateChatAndExactTextVerified": true,
           "repeated": false,
           "evidencePath": "eva2/evidence/product/project-telegram-hourly-delivery-2026-09-12-22.json"
+        },
+        {
+          "hourKey": "2026-09-12T23:00Z",
+          "status": "delivered",
+          "claimedAt": "2026-09-12T23:50:39.116981+00:00",
+          "deliveredAt": "2026-09-12T23:50:42.360452+00:00",
+          "providerReceiptAvailable": true,
+          "privateChatAndExactTextVerified": true,
+          "repeated": false,
+          "evidencePath": "eva2/evidence/product/project-telegram-hourly-delivery-2026-09-12-23.json"
         }
       ]
     },
@@ -5474,7 +5484,7 @@
           "owner": "coordinator/next_tools_delivery",
           "work": "AU-006 bestaande bestandsbroker uitbreiden",
           "boundary": "native/workspace_writer_broker.c: parse_request_frame, open_journal(read_only), observe_request, main/v2 recovery binding; test/workspace-writer-broker-v2.test.mjs; deploy/living-core/workspace-create-only/broker-client.mjs and README.md. Preserve v1/receipt/journal formats. No MCP catalogue, host DAC or live.",
-          "status": "native_source_go_client_delta_review_pending",
+          "status": "native_source_go_client_spawn_exception_fix_in_progress",
           "previousCompletedWork": {
             "work": "Renovate npm-dekking",
             "status": "configuration_complete_bot_activity_unverified",
@@ -6295,7 +6305,7 @@
           "owner": "coordinator/next_tools_delivery",
           "developerAgent": "/root/next_tools_delivery",
           "developerParentThread": "01a08a88-894c-7171-87fa-e681ed47c735",
-          "status": "native_source_go_client_delta_review_pending",
+          "status": "native_source_go_client_delta_correction_in_progress",
           "userOutcome": "Creating a new project document cannot overwrite an existing file.",
           "scope": "First reviewable combination: bounded native EVWWREQ2 request binding and observation-only lookup, one broker client, targeted tests and documentation. No MCP catalogue or live composition.",
           "ownedPaths": [
@@ -6379,10 +6389,13 @@
           },
           "clientDelta": {
             "commit": "7c31d0fce4dddb84b10e9199fde26ec6f5dcff03",
-            "status": "independent_delta_review_pending",
-            "sameNativeSourceHash": true
+            "status": "review_blocker_targeted_fix_in_progress",
+            "sameNativeSourceHash": true,
+            "finding": "Synchronous spawnSync exception escapes typed receipt/blocked result contract.",
+            "next": "Targeted catch and regression test by developer, then delta review.",
+            "nativeSourceGoPreserved": true
           },
-          "integrationStatus": "Wait for client delta outcome, then integrate jointly."
+          "integrationStatus": "Wait for corrected client delta GO before joint integration."
         },
         "admissionPreparation": {
           "status": "bounded_admission_source_integrated_independent_partial_go",
