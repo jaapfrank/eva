@@ -7210,7 +7210,18 @@
             ],
             "independentReviewer": "coordinator/timing_final_review",
             "guardDeploymentAuthorized": false,
-            "gatewayRecreateAuthorized": false
+            "gatewayRecreateAuthorized": false,
+            "reviewCorrection": {
+              "commit": "cc732bac5c198f7cb816cfc9061ab878c293a34f",
+              "base": "6761694e315c7a1d541a917470497b8b0ca70872",
+              "status": "submitted_pending_independent_review",
+              "scope": "Explicit CAS runtime checks remain active with python -O; targeted test updated.",
+              "reportedTestsPassed": true,
+              "sourceIntegrated": false,
+              "productWrites": 0,
+              "gatewayRecreates": 0
+            },
+            "latestCandidateCommit": "cc732bac5c198f7cb816cfc9061ab878c293a34f"
           },
           "liveGatewayMetadataChanged": true,
           "projectWorkerStarted": false,
