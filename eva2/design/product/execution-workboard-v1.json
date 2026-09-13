@@ -121,7 +121,7 @@
           ]
         }
       ],
-      "priorityDecision": "Afgerond en live: een bewaarde planreviewprocedure terugvinden, lezen en toepassen. Het echte resultaat staat bij PR-01 voor jouw beoordeling. Algemene zelflerende vaardigheden blijven vervolgwerk. De eerstvolgende open technische releasevoorwaarden zijn de resterende PostgreSQL-bevindingen en licentiebeoordeling.",
+      "priorityDecision": "Afgerond en live: een bewaarde werkwijze terugvinden en toepassen; PR-01 staat klaar om te lezen. Volgend begrensd werk: de verkeerde gezondheidscontroles van twee documentdiensten herstellen met behoud van het voltooide project. De PostgreSQL-releasevoorwaarden blijven een afzonderlijk open spoor.",
       "dashboardVerification": {
         "status": "local_browser_verified_not_full_product_acceptance",
         "priorityRevision": {
@@ -276,6 +276,10 @@
           "detail": "Technisch afgerond, onafhankelijk gecontroleerd en live: opslaan, een eerdere procedure terugvinden, de volledige gecontroleerde tekst ontvangen en de regels toepassen. Een niet-passende vraag gebruikte geen procedure. Lees het echte resultaat bij PR-01; jouw beoordeling staat open. Algemene zelflerende vaardigheden blijven vervolgwerk.",
           "url": "#practice-PR-01",
           "linkLabel": "Lees het echte resultaat"
+        },
+        {
+          "title": "Betrouwbare status van documentdiensten",
+          "detail": "De documentworker en workspaceprovider draaien, maar geërfde controles gebruiken verkeerde HTTP-adressen. De uitvoerder herstelt hun liveness/readiness-controles en controleert ook echte uitval. Het voltooide project, journaal en bestanden blijven behouden. Nog niet opgeleverd; geen nieuwe document- of modelproef nodig."
         }
       ],
       "openRisks": [
@@ -1015,7 +1019,7 @@
       "sessionGoal": "AU-008: één zelfstandige kosteloze bijdrage via de algemene uitvoerder.",
       "currentWork": "**Afgerond en live — herbruikbare planreviewprocedure (PR-01).** Eva slaat een werkwijze op, vindt een eerdere werkwijze terug in een nieuw gesprek, ontvangt de gecontroleerde tekst en past de regels toe. De drie echte proeven zijn onafhankelijk goedgekeurd. De inhoudelijke planreview duurde 13,20 seconden. Jouw beoordeling staat open; algemene zelflerende vaardigheden zijn hiermee niet afgerond.",
       "currentEvidence": "eva2/evidence/living-core/au004-r6-abc-live-pass-20260913.json",
-      "nextStep": "**Eerstvolgend open werk:** jouw resultaatreview via [PR-01 op het dashboard](http://localhost:44712/#practice-PR-01), zonder de geslaagde proef opnieuw te bouwen. Technisch vervolg: resterende PostgreSQL-bevindingen en licentiebeoordeling binnen IN-002; geen productie-upgrade of releasevrijgave. Geheugen blijft geaccepteerd; overige brede ambities blijven hieronder zichtbaar.",
+      "nextStep": "**Eerstvolgend open werk:** de foutieve gezondheidscontroles van twee documentdiensten herstellen binnen AU-006/UX-001, met echte uitvaldetectie en behoud van het voltooide project, journaal en bestanden. [PR-01 op het dashboard](http://localhost:44712/#practice-PR-01) staat klaar voor jouw resultaatreview en wordt niet opnieuw gebouwd. IN-002-beveiligings- en licentievoorwaarden blijven een afzonderlijk spoor; geheugen blijft geaccepteerd.",
       "usageClarification": {
         "date": "2026-09-07",
         "authorizedBy": "Jaap",
@@ -4569,7 +4573,15 @@
         "evidence": "eva2/evidence/living-core/telegram-recovery-live-receipt-20260913.json",
         "recordedAt": "2026-09-13T08:21:16.540204+00:00"
       },
-      "latestIndependentLiveEvidence": "eva2/evidence/product/AU-004-r6-outcome-independent-review-2026-09-13.json"
+      "latestIndependentLiveEvidence": "eva2/evidence/product/AU-004-r6-outcome-independent-review-2026-09-13.json",
+      "nextParentAuthority": {
+        "evidencePath": "eva2/evidence/living-core/au004-r6-runtime-handoff-20260913.json",
+        "authoritySha256": "5955fbe1253e23f3cae1c3a7296698862d1ca9488b541be76e636ceaf40039ba",
+        "image": "sha256:e66fff7d16a8cc0cc5100282c8f7d3faf95cc16269e6de9f6a4ba9b7038e8c90",
+        "procedureOptInRequired": true,
+        "keepCompleteComposeAndProtectedServices": true,
+        "fallbackScope": "bc6 only as reviewed R6 rollback; not future default"
+      }
     },
     "chromeTransportRecovery20260912": {
       "status": "technically_tested_and_live",
@@ -5786,6 +5798,19 @@
                 "separateTestIdentity": true,
                 "ownerTelegramRouteProven": false,
                 "requestCountPerCase": 1
+              },
+              "runtimeHandoff": {
+                "commit": "e7e7fa714c70d7677665cedaba4eebd4ba43cb34",
+                "paths": [
+                  "eva2/evidence/living-core/au004-r6-runtime-handoff-20260913.json",
+                  "eva2/reviews/au004-r6-owner-handoff-20260913.md"
+                ],
+                "integrated": true,
+                "parentAuthoritySha256": "5955fbe1253e23f3cae1c3a7296698862d1ca9488b541be76e636ceaf40039ba",
+                "nextParentImage": "sha256:e66fff7d16a8cc0cc5100282c8f7d3faf95cc16269e6de9f6a4ba9b7038e8c90",
+                "procedureOptInRequired": true,
+                "allExistingGuardsRequired": true,
+                "bc6IsR6FallbackOnly": true
               }
             }
           }
@@ -9564,6 +9589,30 @@
         "retainUntil": "Independent review and administrative handoff complete; live override/rollback material retained while deployment depends on it",
         "cleanup": "No cleanup or restart by administration."
       }
+    },
+    "documentServiceHealthAU006UX00120260913": {
+      "id": "AU006-UX001-health",
+      "status": "assigned_bounded_implementation",
+      "ownerThread": "01a08d52-31b1-7091-be45-812c0b6e6c9f",
+      "assignedBy": "coordinator",
+      "outcome": "Accurate liveness/readiness for existing document worker and workspace provider",
+      "reportedProblem": "Both containers run but inherited HTTP checks probe endpoints they do not serve",
+      "workerProblem": "No HTTP server; inherited8080/healthz probe",
+      "providerProblem": "Serves9000; inherited4444/health probe",
+      "scope": "Correct existing deployment probes; negative liveness/readiness cases; preserve completed goal, journal and artifact bytes",
+      "noModelProbeRequired": true,
+      "completedProjectReopened": false,
+      "sourceIntegrated": false,
+      "live": false,
+      "ownerAccepted": false,
+      "currentParentImage": "sha256:e66fff7d16a8cc0cc5100282c8f7d3faf95cc16269e6de9f6a4ba9b7038e8c90",
+      "runtimeGo": false,
+      "doneWhen": [
+        "Component-appropriate checks report actual readiness",
+        "Negative checks detect stopped or unavailable component",
+        "Existing completed goal, journal and files preserved",
+        "Independent review and concrete deployment readback complete"
+      ]
     }
   },
   "activeTaskId": "AU-008",

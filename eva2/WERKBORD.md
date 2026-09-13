@@ -8,7 +8,7 @@ Gebouwd, getest, live en door jou geaccepteerd zijn verschillende stappen.
 **Afgerond en live — herbruikbare planreviewprocedure (PR-01).** Eva slaat een werkwijze op, vindt een eerdere werkwijze terug in een nieuw gesprek, ontvangt de gecontroleerde tekst en past de regels toe. De drie echte proeven zijn onafhankelijk goedgekeurd. De inhoudelijke planreview duurde 13,20 seconden. Jouw beoordeling staat open; algemene zelflerende vaardigheden zijn hiermee niet afgerond.
 [Actueel bewijs](evidence/living-core/au004-r6-abc-live-pass-20260913.json).
 
-**Eerstvolgend open werk:** jouw resultaatreview via [PR-01 op het dashboard](http://localhost:44712/#practice-PR-01), zonder de geslaagde proef opnieuw te bouwen. Technisch vervolg: resterende PostgreSQL-bevindingen en licentiebeoordeling binnen IN-002; geen productie-upgrade of releasevrijgave. Geheugen blijft geaccepteerd; overige brede ambities blijven hieronder zichtbaar.
+**Eerstvolgend open werk:** de foutieve gezondheidscontroles van twee documentdiensten herstellen binnen AU-006/UX-001, met echte uitvaldetectie en behoud van het voltooide project, journaal en bestanden. [PR-01 op het dashboard](http://localhost:44712/#practice-PR-01) staat klaar voor jouw resultaatreview en wordt niet opnieuw gebouwd. IN-002-beveiligings- en licentievoorwaarden blijven een afzonderlijk spoor; geheugen blijft geaccepteerd.
 
 <details>
 <summary>Historische voortgang en eerdere tussenstanden — niet de actuele opleverstatus</summary>

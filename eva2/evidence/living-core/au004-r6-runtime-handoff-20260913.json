@@ -1,0 +1,15 @@
+{
+  "contract": "AU004R6RuntimeHandoff/v1",
+  "active_image": "sha256:e66fff7d16a8cc0cc5100282c8f7d3faf95cc16269e6de9f6a4ba9b7038e8c90",
+  "fallback_image": "sha256:bc6d64a3aebbb4b1502dfa7170c0b3d02eda97ac97eddfc704c90c80659864e9",
+  "authority_file": "/home/administrator/project/.eva2-artifacts/procedure-reference-runtime-r6-20260913/next-parent-authority.private.json",
+  "authority_sha256": "5955fbe1253e23f3cae1c3a7296698862d1ca9488b541be76e636ceaf40039ba",
+  "export_path": "C:/Users/jaapf/.codex/visualizations/2026/09/10/01a08d52-31b1-7091-be45-812c0b6e6c9f/au004-r6/eva2-planreview-resultaat-r6.md",
+  "export_sha256": "069199c6d8dac5e8e1a46839b5fc1f83d098113f517417e0d17a181390680db5",
+  "dashboard_writer": "existing admin coordinator; AU-004 existing card only",
+  "proven_route": "/internal/v1/voice-session/respond with authorized separate test principal33333333-3333-3333-8333-333333333333/live-test-tenant/live-test-installation/private_person/projectNone",
+  "not_proven": "Availability of this retained procedure in Jaap Telegram principal memory; broad skill learning or owner acceptance",
+  "next_parent_requirement": "Current e66fff with procedure opt-in and all existing guards; do not silently return to bc6 after a future successful change. bc6 retained as reviewed R6 rollback only.",
+  "readonly_next_candidate": "AU-006/UX-001 document-service healthcheck correction; both running but inherited wrong endpoints yield unhealthy. IN-002 operator packaging already done; tier1validation remains open.",
+  "extra_model_or_effect_probes": 0
+}
