@@ -262,7 +262,7 @@
         },
         {
           "title": "Aangeleerde procedures terugvinden",
-          "detail": "Installatieproef mislukt; herstelcontrole loopt. Een volgordegevoelige mountcontrole wees de installatie en herstelcontrole af. De uitvoerder meldt dat de vorige core draait; de volledige herstelstatus wordt nu onafhankelijk gecontroleerd. Nog geen bevestigd herstel of aangetoonde uitval. Geen A/B/C-modelproeven of herhaling uitgevoerd."
+          "detail": "Het huidige herstel is onafhankelijk bevestigd: de vorige core is gereed en alle 12 beschermde diensten, instellingen en gegevens zijn intact. De oude mislukte installatie en foutieve herstelreceipt blijven bewaard. Een gerichte controlefix en een nieuwe proef worden apart beoordeeld; de procedurefunctie is nog niet live."
         }
       ],
       "openRisks": [
@@ -4418,7 +4418,14 @@
         "started_at": "2026-09-13T04:52:13.612799665Z",
         "running": true
       },
-      "documentCoreOverride": "/home/administrator/project/.eva2-artifacts/au006-activation-20260913/reprobe-core.override.compose.json"
+      "documentCoreOverride": "/home/administrator/project/.eva2-artifacts/au006-activation-20260913/reprobe-core.override.compose.json",
+      "latestIndependentRestorationReview": {
+        "evidencePath": "eva2/evidence/product/AU-004-current-restoration-review-2026-09-13.json",
+        "coreImage": "sha256:2393a1d5aa0a24f9eb0f19aebbbdbf9b32efe28949015bb002e90e181459dd5c",
+        "coreContainerId": "38e2495a66498099bf53735c8657eea0315aff2a26691fe02be2dad020b169e5",
+        "ready": true,
+        "scope": "Current state after failed AU004 installation; distinct from original failed rollback receipt."
+      }
     },
     "chromeTransportRecovery20260912": {
       "status": "technically_tested_and_live",
@@ -5104,7 +5111,7 @@
             "candidateCommit": "46e85b2267dc58619de78233405401163f6c20fe",
             "decision": "GO for preparation only",
             "finding": "Existing delegated worker uses832; core and document worker use2393.",
-            "status": "installation_attempt_failed_restore_review_in_progress",
+            "status": "current_parent_restoration_verified_guard_fix_and_new_probe_review_pending",
             "planIntegrated": false,
             "deploymentAuthorized": false,
             "correctionCommit": "295a70cef49477b36f7acd48cae1eb6de401fcf4",
@@ -5118,9 +5125,9 @@
             "runtimePreparation": {
               "ownerThread": "01a08d52-31b1-7091-be45-812c0b6e6c9f",
               "scope": "Five overlays, candidate and sealed probe for separate activation review",
-              "liveStarted": null,
+              "liveStarted": false,
               "activationGo": true,
-              "status": "installation_attempt_failed_parent_reported_running_restore_unverified",
+              "status": "current_parent_restored_independently_verified_feature_off",
               "evidenceCommit": "e58d256c26c9f16f42aa931fdda2a2e3a62735c2",
               "evidenceIntegrated": false,
               "candidateImageReportedPrefix": "43ddd343",
@@ -5163,15 +5170,29 @@
                 "rollbackReceiptFailure": "Same order-sensitive mount guard",
                 "parentImageReportedPrefix": "2393",
                 "parentRunningReported": true,
-                "diagnosis": "Limited read-only sorted mount contents match reported; full restoration review pending",
+                "diagnosis": "Only hostname/environment/mount ordering inspect differences; current parent readiness and all remaining guards independently confirmed.",
                 "independentReviewer": "procedure_host_review",
-                "independentRestoreVerified": false,
+                "independentRestoreVerified": true,
                 "outageProven": false,
                 "abcModelCalls": 0,
                 "retryPerformed": false,
                 "retryAuthorized": false,
-                "originalAttemptAndReceiptPreserved": true
-              }
+                "originalAttemptAndReceiptPreserved": true,
+                "currentRestorationReview": {
+                  "decision": "GO for separately observed current state",
+                  "evidencePath": "eva2/evidence/product/AU-004-current-restoration-review-2026-09-13.json",
+                  "sourceSha256": "453d476733316572fea5bfa3bc063485d56a6e4b5e3163c9357a33756615bcd5",
+                  "coreImage": "sha256:2393a1d5aa0a24f9eb0f19aebbbdbf9b32efe28949015bb002e90e181459dd5c",
+                  "coreId": "38e2495a66498099bf53735c8657eea0315aff2a26691fe02be2dad020b169e5",
+                  "ready": true,
+                  "protectedContainers": 12,
+                  "originalRollbackReceiptVerified": false,
+                  "originalRollbackReceiptPreserved": true,
+                  "modelCalls": 0,
+                  "newProbeAuthorized": false
+                }
+              },
+              "nextAction": "Targeted guard fix and separate new probe review; do not rerun old activation."
             }
           }
         }

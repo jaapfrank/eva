@@ -1,0 +1,44 @@
+{
+  "contract": "EvaProcedureCurrentRestorationReview/v1",
+  "decision": "Independent GO for current restored state only",
+  "reportedBy": "coordinator",
+  "reviewer": "procedure_host_review",
+  "sourcePath": "/home/administrator/project/.eva2-artifacts/procedure-reference-20260913/incident-readonly-review.json",
+  "sourceSha256": "453d476733316572fea5bfa3bc063485d56a6e4b5e3163c9357a33756615bcd5",
+  "observations": {
+    "parent_image": "sha256:2393a1d5aa0a24f9eb0f19aebbbdbf9b32efe28949015bb002e90e181459dd5c",
+    "core_id": "38e2495a66498099bf53735c8657eea0315aff2a26691fe02be2dad020b169e5",
+    "core_running": true,
+    "actual_config_difference_keys": [
+      "Hostname",
+      "Env"
+    ],
+    "hostconfig_difference_keys": [
+      "Mounts"
+    ],
+    "mount_values_equal_after_order_normalization": true,
+    "all_other_runtime_guards_passed": true,
+    "protected_count": 12,
+    "original_rollback_receipt_unchanged": true,
+    "live_mutations": 0,
+    "model_calls": 0
+  },
+  "readinessConfirmedByReviewer": [
+    "Database",
+    "Memory",
+    "Model"
+  ],
+  "preservedAccordingToReview": [
+    "Protected services and configuration",
+    "Bound files",
+    "Gateway",
+    "Budget",
+    "Mandate",
+    "AU006 journal",
+    "Quiescence"
+  ],
+  "originalRollbackReceiptVerified": false,
+  "separateCurrentRestorationVerified": true,
+  "featureLive": false,
+  "retryAuthorized": false
+}
