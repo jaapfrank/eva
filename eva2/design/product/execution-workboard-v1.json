@@ -247,7 +247,7 @@
         },
         {
           "title": "Project hervatten na herstart",
-          "detail": "De geïsoleerde hervatproef blijft afgerond. De bestaande bestandsbroker wordt beperkt uitgebreid voor bestandsaanmaak zonder overschrijven en controle na een onderbreking. De projectaansluiting heeft een aparte uitvoerder. Crash- en gelijktijdigheidsproeven krijgen onafhankelijke review; nog niet live."
+          "detail": "De geïsoleerde hervatproef blijft afgerond. De bestandsbroker krijgt een beperkte uitbreiding om opdrachten en herstelbewijs exact te koppelen en bewijs zonder nieuwe schrijfactie terug te lezen. Bestanden en functies zijn afgebakend; onafhankelijke review volgt. De productaansluiting is nog niet live."
         }
       ],
       "openRisks": [
@@ -5473,8 +5473,8 @@
         {
           "owner": "coordinator/next_tools_delivery",
           "work": "AU-006 bestaande bestandsbroker uitbreiden",
-          "boundary": "workspace-create-only adapter files plus bounded native/workspace_writer_broker.c extension: observe-only and version-bound operation/request identity. Exact function ownership pending. Preserve v1; no second journal, runtime or host-DAC claim.",
-          "status": "native_broker_reuse_extension_in_progress_function_handoff_pending",
+          "boundary": "native/workspace_writer_broker.c: parse_request_frame, open_journal(read_only), observe_request, main/v2 recovery binding; test/workspace-writer-broker-v2.test.mjs; deploy/living-core/workspace-create-only/broker-client.mjs and README.md. Preserve v1/receipt/journal formats. No MCP catalogue, host DAC or live.",
+          "status": "native_function_ownership_confirmed_bounded_v2_client_in_progress",
           "previousCompletedWork": {
             "work": "Renovate npm-dekking",
             "status": "configuration_complete_bot_activity_unverified",
@@ -6276,17 +6276,16 @@
           "owner": "coordinator/next_tools_delivery",
           "developerAgent": "/root/next_tools_delivery",
           "developerParentThread": "01a08a88-894c-7171-87fa-e681ed47c735",
-          "status": "existing_native_broker_extension_assigned_exact_functions_pending",
+          "status": "bounded_native_v2_and_client_implementation_in_progress",
           "userOutcome": "Creating a new project document cannot overwrite an existing file.",
-          "scope": "Reuse native/workspace_writer_broker.c journal/fsync/linkat/identity via thin MCP adapter. Limited observe-only lookup without recover_pending or publication, and version-bound operation_id/request binding in existing canonical identity. No second journal helper.",
+          "scope": "First reviewable combination: bounded native EVWWREQ2 request binding and observation-only lookup, one broker client, targeted tests and documentation. No MCP catalogue or live composition.",
           "ownedPaths": [
-            "eva2/deploy/living-core/workspace-create-only/create-file.mjs",
-            "eva2/deploy/living-core/workspace-create-only/patch-provider.py",
-            "eva2/deploy/living-core/workspace-create-only/Dockerfile",
-            "eva2/deploy/living-core/workspace-create-only/README.md",
-            "native/workspace_writer_broker.c"
+            "native/workspace_writer_broker.c",
+            "test/workspace-writer-broker-v2.test.mjs",
+            "deploy/living-core/workspace-create-only/broker-client.mjs",
+            "deploy/living-core/workspace-create-only/README.md"
           ],
-          "additionalOwnedScope": "Limited native extension as described; exact native function ownership still pending. Targeted tests and evidence; no general broker rewrite.",
+          "additionalOwnedScope": "Only the listed native function changes, client, test and README. No unused create-file/patch-provider/Dockerfile scaffolding claimed.",
           "independentReviewRequired": true,
           "runtimeDeploymentAuthorized": false,
           "effectfulProductProof": "Only after independent primitive review.",
@@ -6305,7 +6304,7 @@
               "Observation-only lookup must neither recover_pending nor publish",
               "Version-bound operation_id/request binding in existing canonical identity"
             ],
-            "exactFunctionOwnership": "Pending developer handoff; no broader native change inferred.",
+            "exactFunctionOwnership": "Confirmed via coordinator: parse_request_frame, open_journal(read_only), new observe_request, main mode/selection and v2 recovery binding.",
             "preserve": [
               "Existing v1 semantics and tests",
               "Existing filesystem write_file behavior"
@@ -6315,8 +6314,25 @@
               "Independent GO before effectful product proof"
             ],
             "liveClaim": false,
-            "nativeHostDacClaim": false
-          }
+            "nativeHostDacClaim": false,
+            "firstReviewExclusions": [
+              "MCP catalogue changes",
+              "Host DAC claims",
+              "Live deployment or activation"
+            ]
+          },
+          "nativeFunctionOwnership": {
+            "parse_request_frame": "EVWWREQ2 header plus32-byte binding; request_sha256 includes v2 bytes.",
+            "open_journal": "Add read_only mode.",
+            "observe_request": "New observation-only lookup using O_RDONLY; no create, recovery, publication or append. Pending without evidence remains uncertain.",
+            "main": "Mode selection and v2 recovery binding.",
+            "preserve": [
+              "Existing v1 behavior",
+              "Existing receipt format",
+              "Existing journal format"
+            ]
+          },
+          "exactPathBasis": "Repository-relative paths supplied by coordinator; earlier provisional provider scaffold reservation replaced."
         }
       }
     }
