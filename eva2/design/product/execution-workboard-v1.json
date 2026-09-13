@@ -247,7 +247,7 @@
         },
         {
           "title": "Project hervatten na herstart",
-          "detail": "De voorbereiding voor opdrachtbinding, eigenaarscontrole en duurzame opslag is gebouwd en gericht getest. De bestandsbroker wordt apart uitgebreid; uitvoerende provider, gezamenlijke integratie en onafhankelijke eindreview blijven open. Nog niet live."
+          "detail": "Opdrachtbinding, eigenaarscontrole en duurzame planopslag zijn onafhankelijk beoordeeld en geïntegreerd. De bestandsbroker ligt nu bij de reviewer. De uitvoerende provider, controle vlak vóór schrijven en de gezamenlijke praktijkproef blijven open; nog niet live."
         }
       ],
       "openRisks": [
@@ -5474,7 +5474,7 @@
           "owner": "coordinator/next_tools_delivery",
           "work": "AU-006 bestaande bestandsbroker uitbreiden",
           "boundary": "native/workspace_writer_broker.c: parse_request_frame, open_journal(read_only), observe_request, main/v2 recovery binding; test/workspace-writer-broker-v2.test.mjs; deploy/living-core/workspace-create-only/broker-client.mjs and README.md. Preserve v1/receipt/journal formats. No MCP catalogue, host DAC or live.",
-          "status": "native_function_ownership_confirmed_bounded_v2_client_in_progress",
+          "status": "native_broker_candidate_in_independent_source_review",
           "previousCompletedWork": {
             "work": "Renovate npm-dekking",
             "status": "configuration_complete_bot_activity_unverified",
@@ -6295,7 +6295,7 @@
           "owner": "coordinator/next_tools_delivery",
           "developerAgent": "/root/next_tools_delivery",
           "developerParentThread": "01a08a88-894c-7171-87fa-e681ed47c735",
-          "status": "bounded_native_v2_and_client_implementation_in_progress",
+          "status": "candidate_in_independent_native_source_review",
           "userOutcome": "Creating a new project document cannot overwrite an existing file.",
           "scope": "First reviewable combination: bounded native EVWWREQ2 request binding and observation-only lookup, one broker client, targeted tests and documentation. No MCP catalogue or live composition.",
           "ownedPaths": [
@@ -6351,17 +6351,29 @@
               "Existing journal format"
             ]
           },
-          "exactPathBasis": "Repository-relative paths supplied by coordinator; earlier provisional provider scaffold reservation replaced."
+          "exactPathBasis": "Repository-relative paths supplied by coordinator; earlier provisional provider scaffold reservation replaced.",
+          "candidateCommit": "768e72d9e942f015affc6efe58db6300cfc0cc52",
+          "reportedTests": 31,
+          "independentReviewer": "coordinator/timing_final_review",
+          "sourceIntegrated": false,
+          "independentGo": false,
+          "artifactRetention": {
+            "owner": "coordinator/next_tools_delivery",
+            "exactPath": "/home/administrator/project/.eva2-artifacts/workspace-broker-v2-20260913/source-worktree",
+            "purpose": "Durable native broker v2/client candidate and crash/race evidence for independent review and bounded provider integration.",
+            "retainUntil": "Independent review, exact source/evidence integration and downstream provider handoff are complete.",
+            "cleanupMoment": "After retention conditions, remove only verified disposable worktree artifacts. Retain committed review/evidence; no cleanup now."
+          }
         },
         "admissionPreparation": {
-          "status": "candidate_partial_preparation_tested_pending_integration_review",
+          "status": "bounded_admission_source_integrated_independent_partial_go",
           "sourceCommit": "0597e3e2d5cbf2f661db828cfc6d5ff01072fdfc",
           "evidenceCommit": "6b8b7165719bf5580c75b21985acb67f069aa03e",
           "evidencePath": "eva2/evidence/living-core/au006-document-admission-preparation-20260913.json",
           "scope": "Host plan, current owner authority and timeline binding only.",
           "reportedTargetedTests": 48,
           "reportedRealPostgresAuthorityTests": 1,
-          "sourceIntegrated": false,
+          "sourceIntegrated": true,
           "independentFinalGo": false,
           "effectProviderImplemented": false,
           "workerCompositionImplemented": false,
@@ -6370,6 +6382,20 @@
             "Operation-bound atomic provider and durable receipts",
             "Effect/readback ports and worker composition",
             "Actual product integration and independent review"
+          ],
+          "evidenceIntegrated": true,
+          "boundedTechnicalComplete": true,
+          "independentReview": {
+            "decision": "Partial GO: immutable plan, current authority and durable binding",
+            "reportedBy": "coordinator",
+            "checksIndependentlyRerun": 24,
+            "sourceHashesVerified": 6
+          },
+          "integrationVerification": "Six actual baselines and final reviewed source hashes match exactly; bounded patch applied cleanly. No independent tests repeated for administrative integration.",
+          "compositionLimits": [
+            "Direct pre-dispatch authorization must be wired by later composition",
+            "Stop/dispatch races remain for later composition",
+            "No effect worker or product executability claim"
           ]
         }
       }

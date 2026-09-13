@@ -1384,3 +1384,20 @@ provider → crash/herstartproef waar relevant → receipt en verse readback. De
 bouwer keurt zijn eigen stap niet goed. Daarna mag pas de volgende stap beginnen.
 Productie A blijft actief totdat B via een afgeschermd echt Telegram-kanaal en
 de volledige promotiegate is goedgekeurd.
+
+
+### AU-006 documentaansluiting: voorbereide hostbinding
+
+`providers/document_goal_plan.py` bevat het gesloten hostplan voor twee lokale
+tekstbestanden; `providers/document_goals.py` hergebruikt de actuele
+McpOwnerAuthority voor iedere uitvoerautorisatie. De bestaande goaltimeline
+bewaart het plan- en authoritydigest vóór effectvoorbereiding. Een request-owner
+wordt geen nieuwe principal of conversation-ingress. De stapbinding omvat
+plan/goal/stap/pad/inhoud/toolconfiguratie en de volledige vorige artifacthash.
+
+Dit is alleen voorbereide admission/bindingcode. Er is nog geen effectport of
+workercompositie actief: die wacht op de onafhankelijk bewezen atomaire
+providerprimitive met eigen duurzame operatie-/requestreceipt. Een gelijk
+bestaand bestand geldt niet als bewijs van een eigen write. De echte
+PostgreSQL/authorityproef bevat geen provider- of modelcalls; de overige
+contracttests bewijzen uitsluitend de gesloten plan- en bindinggrenzen.

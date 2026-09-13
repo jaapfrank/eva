@@ -142,6 +142,48 @@ class PostgresDurableGoalStore:
             ),
         )
 
+    def document_plan_binding(self, goal: DurableGoalSpec) -> tuple[str, str] | None:
+        event = self._last(self._events(goal), "GOAL_DOCUMENT_PLAN_BOUND")
+        if event is None:
+            return None
+        data = self._data(event)
+        if set(data) != {"goal_sha256", "plan_sha256", "authority_configuration_sha256"}:
+            raise DurableGoalError("document plan binding is malformed")
+        if data["goal_sha256"] != goal.sha256:
+            raise DurableGoalError("document plan goal binding differs")
+        values = (data["plan_sha256"], data["authority_configuration_sha256"])
+        for value in values:
+            if (not isinstance(value, str) or len(value) != 64
+                    or any(c not in "0123456789abcdef" for c in value)):
+                raise DurableGoalError("document plan digest is invalid")
+        return values
+
+    def bind_document_plan(
+        self, goal: DurableGoalSpec, plan_sha256: str, authority_configuration_sha256: str
+    ) -> str:
+        for value in (plan_sha256, authority_configuration_sha256):
+            if (not isinstance(value, str) or len(value) != 64
+                    or any(c not in "0123456789abcdef" for c in value)):
+                raise DurableGoalError("document plan digest is invalid")
+        if goal.followup_instruction is None:
+            raise DurableGoalError("document plan requires a two-step goal")
+        existing = self.document_plan_binding(goal)
+        if existing is not None:
+            if existing != (plan_sha256, authority_configuration_sha256):
+                raise DurableGoalError("document plan binding differs")
+            return "already_bound"
+        events = self._events(goal)
+        self._require_waiting(events)
+        if self._last(events, "GOAL_EFFECT_PREPARED") is not None:
+            raise DurableGoalError("document plan must precede effect preparation")
+        self._append(
+            goal, event_type="GOAL_DOCUMENT_PLAN_BOUND", phase="goal_document_bound",
+            status="active", occurred_at=goal.created_at, suffix="document-plan-bound",
+            data={"goal_sha256": goal.sha256, "plan_sha256": plan_sha256,
+                  "authority_configuration_sha256": authority_configuration_sha256},
+        )
+        return "bound"
+
     def waiting(
         self, *, observed_before: datetime, limit: int = 32
     ) -> tuple[DurableGoalSpec, ...]:

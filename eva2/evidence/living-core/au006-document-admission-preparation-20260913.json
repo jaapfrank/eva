@@ -1,0 +1,36 @@
+{
+  "contract": "EvaAu006DocumentAdmissionPreparation/v1",
+  "source_commit": "0597e3e2d5cbf2f661db828cfc6d5ff01072fdfc",
+  "base_commit": "87bccbd07ee6be3b0bde0275f5de6ebdd26fb86f",
+  "status": "partial_admission_preparation_tested_not_effect_provider",
+  "source_files": {
+    "eva2/src/eva/providers/document_goal_plan.py": "3b3681b248c8cd78bf6d45dd0af7f05c90860d4c092e1cfb18efdc9674de3a29",
+    "eva2/src/eva/providers/document_goals.py": "e9009f466f4f0191e7176b0ffb012b9d2f80401d265de926a0fce3ee53624ede",
+    "eva2/src/eva/adapters/postgres/durable_goals.py": "62c42ac68571b17f31513aa7898c503c73beab3ee871617f61a8cad480467d9f",
+    "eva2/tests/providers/test_document_goal_plan.py": "8f4fa21edb7e8d63766e4bdb2f9531d70e41213eedf5c5a7f5492a4d95bd3878",
+    "eva2/tests/postgres/test_document_goal_provider.py": "88d9ef3dc758a7107995740a1039111268f5787b2949383ca4b21ad6cfc09e22",
+    "eva2/design/architecture/living-core-v1.md": "d9bf3a62d9ffc9f61b8031b33826618c3548b20ecaecabdd3f0478959d1b50f5"
+  },
+  "targeted_contract_and_regression_tests": 48,
+  "real_postgres_current_owner_authority_test": 1,
+  "effect_dispatches": 0,
+  "model_calls": 0,
+  "live_mutations": 0,
+  "remaining": [
+    "Atomic provider with own operation-bound durable receipt",
+    "Effect/readback ports and worker composition",
+    "Real product provider integration and independent review"
+  ],
+  "postgres_proof": {
+    "container_id": "9ea9826d016f7b1036c18866fccacc44e83992bae6db989f799e4c829da667a0",
+    "postgres_image": "sha256:5d143123fdf80462d1778cd4f24b9f7ca13c87174bca19141fb194c5a1ebca59",
+    "network_mode": "none",
+    "published_ports": [],
+    "data_storage": "tmpfs",
+    "connection": "local Unix socket only",
+    "pytest_exit_code": 0,
+    "model_calls": 0,
+    "production_database_connections": 0,
+    "disposable_container_removed": true
+  }
+}
