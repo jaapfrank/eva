@@ -4931,7 +4931,21 @@
           "Current owner mandate",
           "Actual file hash"
         ],
-        "exactSourceOwnership": "Pending from execution owner; no source path assignments invented by administration.",
+        "exactSourceOwnership": {
+          "assignedBy": "coordinator",
+          "newModule": "eva2/src/eva/application/procedure_references.py",
+          "targetedTests": "tests/test_procedure_references.py (parent directory to be confirmed by execution owner)",
+          "evidenceAndReview": "Own evidence and review paths; exact paths pending",
+          "conditionalChange": "Small source lookup in existing memory_outbox.py with exact audience scope only if required",
+          "excludedChanges": [
+            "runtime.after_response",
+            "Hindsight",
+            "ConfirmedFact",
+            "New table",
+            "New registry"
+          ],
+          "hostPorts": "Storage and resolution ports; search returns existing source IDs only"
+        },
         "exclusions": [
           "No automatic runtime hook",
           "Not every document is a procedure",
@@ -4943,7 +4957,14 @@
         "tested": false,
         "live": false,
         "ownerAccepted": false,
-        "priorABDeliveryRemainsClosed": true
+        "priorABDeliveryRemainsClosed": true,
+        "artifactRetention": {
+          "owner": "coordinator/next_tools_delivery",
+          "exactPath": "Pending coordinator confirmation",
+          "purpose": "Isolated source, targeted tests and review evidence for typed procedure references",
+          "retainUntil": "Independent review and central integration/handoff complete",
+          "cleanup": "No cleanup until exact path and handoff conditions are confirmed"
+        }
       }
     },
     "gatewayCatalogPagination20260912": {
@@ -5668,7 +5689,7 @@
         {
           "owner": "coordinator/next_tools_delivery",
           "work": "Expliciete herbruikbare procedureverwijzing bouwen",
-          "boundary": "Typed ProcedureReference voor expliciet gemarkeerde STATE_VERIFIED-opslag; bestaande outboxbron en lokale retention/mandaat/hashcontrole. Exacte bronpaden volgen. Geen livehook, tweede registry of wijziging aan geaccepteerd geheugen.",
+          "boundary": "Nieuwe src/eva/application/procedure_references.py plus gerichte tests en eigen bewijs. Alleen indien nodig kleine audience-gebonden source-lookup in bestaande memory_outbox.py. Geen runtime.after_response, Hindsight, ConfirmedFact, nieuwe tabel of registry in fase1.",
           "status": "AU004_typed_procedure_reference_isolated_build",
           "previousCompletedWork": {
             "work": "Renovate npm-dekking",
