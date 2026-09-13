@@ -283,7 +283,7 @@
         },
         {
           "title": "Zelf een documentproject opgeven",
-          "detail": "Nieuw begrensd werk: geef in een gewoon gesprek een eigen kleine opdracht die twee lokale tekstbestanden oplevert. Eva moet een nieuw duurzaam project kunnen starten zonder beheerderplanwissel. Tweede opdrachten mogen niets overschrijven; hervatten, stoppen, eigenaarbinding, status en verbruik blijven controleerbaar. Bronbouw en onafhankelijke beoordeling komen eerst; nog niet live."
+          "detail": "Nieuw begrensd werk: geef in een gewoon gesprek een eigen kleine opdracht die twee lokale tekstbestanden oplevert, zonder beheerderplanwissel. Twee opeenvolgende opdrachten moeten apart blijven; eerdere bestanden worden niet overschreven. De bestaande uitvoerplekken worden per project toegewezen. Zijn ze bezet, dan meldt Eva dat; onbeperkte projecten worden niet beloofd. Bronbouw en beoordeling komen eerst; nog niet live."
         }
       ],
       "openRisks": [
@@ -9826,7 +9826,7 @@
       "runtimeOwnerThread": "01a08d52-31b1-7091-be45-812c0b6e6c9f",
       "outcome": "A user requests a small document project in ordinary conversation and receives two verified local text documents without an administrator swapping a prepared plan",
       "existingGap": "One administrator-prepared plan and empty start arguments",
-      "scope": "Reuse existing DurableGoal store, native document actions and journal; bounded two-document projects",
+      "scope": "Two independently requested bounded document projects using existing DurableGoal/native store and host-configured provider pool; current PJ01 plan immutable",
       "generalPlanner": false,
       "built": false,
       "tested": false,
@@ -9842,13 +9842,35 @@
         "Isolated source review followed by exact runtime review and ordinary user-route proof"
       ],
       "ownershipAndRetention": {
-        "status": "awaiting builder paths and retention handoff",
+        "status": "source_workspace_and_file_ownership_registered",
         "sourceOwner": "coordinator/next_tools_delivery",
         "centralBoardOwner": "01a07e5b-3ef4-7ef3-8a68-3197a780694e",
-        "policy": "Retain source worktree and evidence until reviewed integration and handoff; no cleanup authorized here"
+        "policy": "Retain source worktree, candidate commits and proof artifacts until independent review, exact central integration and runtime handoff are complete. No reset or cleanup during delivery.",
+        "sourceWorktree": "/home/administrator/project/.eva2-artifacts/document-task-input-20260913/source-worktree",
+        "baseCommit": "e622a40838de44eefd5f140b1a03b3b99024deda",
+        "branch": "codex/document-task-input",
+        "reservedSourcePaths": [
+          "eva2/src/eva/providers/document_goal_actions.py",
+          "eva2/src/eva/providers/document_goal_plan.py",
+          "eva2/src/eva/providers/document_goals.py",
+          "eva2/src/eva/bootstrap/document_goal_worker.py",
+          "eva2/src/eva/adapters/postgres/durable_goals.py"
+        ],
+        "relatedTestsAndDocs": "Owned by same builder; exact final paths supplied with candidate review"
       },
       "runtimeGo": false,
-      "sourceIntegrated": false
+      "sourceIntegrated": false,
+      "resourcePoolBoundary": {
+        "type": "Existing host-configured document provider instances",
+        "claim": "Atomic claim per goal using existing journal",
+        "currentPJ01PlanImmutable": true,
+        "generationZeroReuseAllowed": false,
+        "resetAllowed": false,
+        "runtimeCatalogRightsCreationAllowed": false,
+        "capacityExhaustion": "Explicit out-of-slots failure",
+        "unlimitedProjectClaim": false,
+        "runtimeProvisioning": "Later sole runtime writer after exact review"
+      }
     }
   },
   "activeTaskId": "AU-008",
