@@ -1,0 +1,7 @@
+{
+  "image": "sha256:daf923c247fd569df5f8c9ee418cbc259fade564f78e0a0852937139a181c4dd",
+  "main_original_sha256": "c28f599738d62efd4a1fcdf4d73422cad78a3b135406f4d235c38b62caa8fca9",
+  "main_candidate_sha256": "ce9a769b1224812fddb1a905cff4025a19411f2760e6ac2abf08d1f3ab3b01fe",
+  "live_tool_service_sha256": "0bf4a3cd4288f56aee1038174906165602a0c759d84faaa1210c68ad05f57431",
+  "deployed": false
+}

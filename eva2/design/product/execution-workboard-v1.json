@@ -247,7 +247,7 @@
         },
         {
           "title": "Project hervatten na herstart",
-          "detail": "De gewone startvraag mislukte na 33,82 seconden: de gateway verloor de eigenaarscontext en weigerde de private tool. Vijf modelpogingen, nul voltooide stappen en geen documenten; kosten onbekend. De vorige core is hersteld en de nieuwe worker en provider zijn gestopt. De gerichte autorisatiepatch ligt ter review en is niet uitgerold. De private registratie blijft afgerond; er volgt geen automatische herhaling."
+          "detail": "De gewone startvraag mislukte na 33,82 seconden: de gateway verloor de eigenaarscontext en weigerde de private tool. Geen documenten gemaakt; de vorige core is hersteld en de nieuwe worker en provider zijn gestopt. De gerichte autorisatiecorrectie is onafhankelijk goedgekeurd en in de broncode opgenomen. Uitrol en herstel van het mislukte project zijn nog niet toegestaan; er volgt geen automatische herhaling."
         },
         {
           "title": "Gedeeld audiotype",
@@ -5516,9 +5516,9 @@
         },
         {
           "owner": "coordinator/timing_final_review",
-          "work": "Gerichte autorisatiecorrectie en negatieve controles beoordelen",
+          "work": "RPC-eigenaarcorrectie onafhankelijk beoordeeld",
           "boundary": "Exact guarded registration plan and bd26e97f correction; no execution or database changes. Earlier four-row incident repair remains closed.",
-          "status": "authorization_context_fix_review_pending"
+          "status": "rpc_owner_context_source_evidence_independent_go_complete"
         },
         {
           "owner": "coordinator/next_tools_delivery",
@@ -7487,7 +7487,7 @@
           }
         },
         "phase2OfflinePreparation": {
-          "status": "ordinary_start_failed_rolled_back_auth_context_fix_under_review",
+          "status": "ordinary_start_failed_rolled_back_fix_source_approved_not_deployed",
           "ownerThread": "01a08d52-31b1-7091-be45-812c0b6e6c9f",
           "evidenceCommit": "3653516428dff529386272773e37f8ad4d42c4a8",
           "evidencePaths": [
@@ -7524,8 +7524,7 @@
           "modelCalls": null,
           "documentEffectCalls": 0,
           "remainingOutcomes": [
-            "Review minimal authorization-context correction and negative authorization checks",
-            "Separate decision on any new execution or model probe",
+            "Separate deployment and failed-goal recovery decision",
             "Successful ordinary conversation route",
             "Reachable private artifact",
             "Owner acceptance"
@@ -7574,9 +7573,10 @@
               "documentWorkerRunning": false,
               "providerRunning": false,
               "gatewayGuardPreserved": true,
-              "gatewayEndpointPolicyPreserved": true
+              "gatewayEndpointPolicyPreserved": true,
+              "independentReviewConfirmed": true
             },
-            "causeInvestigation": "Bound source proof reproduces loss of verified owner email in admin/null-team RPC normalization. Minimal candidate preserves email; independent review pending.",
+            "causeInvestigation": "Independent review confirmed the pinned RPC owner-email loss and isolated correction; exact patch/pin/proof sources integrated, not deployed.",
             "newModelProbeAuthorized": false,
             "sqlStateResetAuthorized": false,
             "automaticRetryAllowed": false,
@@ -7610,7 +7610,7 @@
           }
         },
         "rpcOwnerContextFix": {
-          "status": "isolated_candidate_awaiting_independent_review",
+          "status": "source_integrated_independently_approved_not_deployed",
           "candidateCommit": "b26ff4ee589b18d089490b398c2ed6db50075d56",
           "evidencePaths": [
             "eva2/evidence/living-core/au006-rpc-owner-context-fix-review-20260913.json",
@@ -7622,7 +7622,7 @@
             "eva2/experiments/contextforge-gateway-v1/preserve-rpc-owner-context.pin.json",
             "eva2/experiments/contextforge-gateway-v1/prove_rpc_owner_context.py"
           ],
-          "sourceIntegrated": false,
+          "sourceIntegrated": true,
           "deployed": false,
           "reportedProof": {
             "casesPerVersion": 15,
@@ -7633,9 +7633,25 @@
             "cancellationBindingPreserved": true,
             "onlyBehaviorChange": "Verified admin retains access to own private tool; other owner, public-only, missing/invalid identity, forged and stale authorization remain denied."
           },
-          "independentGo": false,
+          "independentGo": true,
           "goalRetryOrResetAuthorized": false,
-          "existingNeedsHelpAutomaticallyResumable": false
+          "existingNeedsHelpAutomaticallyResumable": false,
+          "independentReview": {
+            "decision": "GO for exact source and evidence only",
+            "reportedBy": "coordinator",
+            "candidateCommit": "b26ff4ee589b18d089490b398c2ed6db50075d56",
+            "verified": [
+              "Pinned verified admin email only delta",
+              "15 authorization cases across original and candidate",
+              "Own private access is the only changed authorization outcome",
+              "Cancellation owner binding and source hashes",
+              "Rollback parent feature off and protected containers preserved"
+            ],
+            "httpJwtVerifierGo": false,
+            "deploymentGo": false,
+            "goalRetryOrSqlResetGo": false
+          },
+          "integrationVerification": "Three previously absent source files copied exactly; hashes match reviewed evidence. No runtime patch application or test repetition."
         }
       },
       "isolatedProductExecutionProven": true,

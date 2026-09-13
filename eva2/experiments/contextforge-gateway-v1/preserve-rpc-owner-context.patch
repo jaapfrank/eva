@@ -1,0 +1,15 @@
+--- a/mcpgateway/main.py
++++ b/mcpgateway/main.py
+@@ -10364,9 +10364,9 @@
+     auth_user_email, auth_token_teams, auth_is_admin = get_rpc_filter_context(request, user)
+     run_owner_email = auth_user_email
+     run_owner_team_ids = [] if auth_token_teams is None else list(auth_token_teams)
+-    if auth_is_admin and auth_token_teams is None:
+-        auth_user_email = None
+-    elif auth_token_teams is None:
++    # Keep verified owner identity for the service-level private-resource check.
++    # Unrestricted admin scope does not grant another owner's private tools.
++    if not auth_is_admin and auth_token_teams is None:
+         auth_token_teams = []
+ 
+     oauth_user_email = get_user_email(user)
