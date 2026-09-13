@@ -247,7 +247,7 @@
         },
         {
           "title": "Project hervatten na herstart",
-          "detail": "De opstartbeveiliging en het herstelplan voor precies vier toolregistraties zijn onafhankelijk goedgekeurd en geïntegreerd. De uitvoerder mag nu de beveiliging plaatsen en de vier regels na verse controles herstellen en teruglezen. Het incident blijft open tot herstelbewijs; projectactivering blijft gepauzeerd."
+          "detail": "Volgens het herstelbewijs zijn de vier toolregistraties teruggezet en alle 53 toolregels weer gelijk aan voor het incident. De opstartbeveiliging is geïnstalleerd en de gateway is gezond; de eindcontrole van het herstelbewijs volgt. Nieuwe registratie en workerstart blijven uit. De beveiliging moet bij volgende herstarts behouden blijven."
         },
         {
           "title": "Gedeeld audiotype",
@@ -5502,7 +5502,7 @@
           "owner": "01a08d52-31b1-7091-be45-812c0b6e6c9f",
           "work": "Gatewaymetadata gericht herstellen vóór AU-006-activering",
           "boundary": "New providers/document_goal_actions.py; bundled.py opt-in registration only; document_goal_plan.py safe full host GoalSpec/hash binding; targeted provider/PG tests and docs. Existing actual ConversationTurn/current authority/external tool port. No second planner/live/envflip.",
-          "status": "approved_guard_install_and_four_row_repair_execution"
+          "status": "four_row_repair_executed_guarded_registration_plan_in_preparation"
         },
         {
           "owner": "coordinator/timing_final_review",
@@ -6247,7 +6247,7 @@
         "historical": true
       },
       "connectionPlan": {
-        "status": "activation_paused_targeted_gateway_metadata_repair_first",
+        "status": "guarded_gateway_repair_done_pending_readback_and_new_registration_plan",
         "ownerThread": "01a08d52-31b1-7091-be45-812c0b6e6c9f",
         "reuse": [
           "Existing owner authority",
@@ -6924,7 +6924,7 @@
           "sourceCorrectionComplete": true
         },
         "activationPreparation": {
-          "status": "guard_install_and_exact_metadata_repair_authorized_incident_still_open",
+          "status": "four_row_repair_reported_complete_new_guarded_registration_plan_pending",
           "ownerThread": "01a08d52-31b1-7091-be45-812c0b6e6c9f",
           "evidenceCommit": "bc0fd5c06d5d97853296cf2459463fac4ad577a7",
           "evidencePath": "eva2/evidence/living-core/au006-activation-preparation-20260913.json",
@@ -6964,7 +6964,7 @@
             "retainUntil": "Independent image/provider/configuration review and activation/rollback handoff complete; coordinator decides further retention.",
             "cleanupMoment": "Only after retention conditions and explicit exact-scope coordinator cleanup; preserve data, journals and sanitized evidence. No cleanup now.",
             "privateDataPolicy": "Private host goal, journal, credentials and rollback files remain outside Git; only supplied sanitized evidence integrated.",
-            "additionalRetainedScope": "Private original/proposed gateway configurations and phase1 execution snapshots under the already registered activation stage; retain for exact rollback and retry review."
+            "additionalRetainedScope": "Private repair before/after evidence and deployment guard binding retained. Future gateway recreation must preserve installed override; old base-only rollback invalid."
           },
           "reviewedProviderImage": "sha256:0ef19e699069c3a5d3a26812c5da3d31141fcd5c3faedb14f92c9dcce1209465",
           "phase1Go": true
@@ -7090,7 +7090,7 @@
             "Policy comparison",
             "Resolved compose comparison"
           ],
-          "privateRollback": "Original gateway configuration snapshots retained privately in existing activation stage; no DELETE or shared catalog restore.",
+          "privateRollback": "Original endpoint policy with newly required preserve-resources guard retained. Old base-only rollback/retry script is invalid and must not be reused unchanged.",
           "independentGo": true,
           "retryAuthorized": false,
           "gatewayRecreated": true,
@@ -7129,7 +7129,7 @@
           "continuationAuthorization": "Paused pending separate guard/repair GO; prior one-retry approval does not authorize continuation through this new finding."
         },
         "gatewayBootstrapIncident": {
-          "status": "reviewed_guard_and_exact_repair_execution_authorized_incident_unresolved",
+          "status": "four_rows_restored_reported_guard_readback_confirmed_final_repair_review_pending",
           "priority": "Independent guard and exact four-row repair review before any AU006 registration, sealing or worker activation.",
           "reportedBy": "coordinator",
           "trigger": "Existing gateway startup bootstrap during approved recreation",
@@ -7152,9 +7152,9 @@
           "proposedRepair": {
             "ownerThread": "01a08d52-31b1-7091-be45-812c0b6e6c9f",
             "scope": "Isolated startup bootstrap guard and exact four-row compare-and-set repair plan.",
-            "status": "independently_approved_source_integrated_bounded_repair_authorized",
+            "status": "bounded_guard_and_four_row_repair_executed_result_review_pending",
             "databaseCorrectionAuthorized": true,
-            "databaseCorrectionPerformed": false,
+            "databaseCorrectionPerformed": true,
             "broadRestoreAllowed": false,
             "candidateCommit": "6761694e315c7a1d541a917470497b8b0ca70872",
             "exactCandidatePaths": [
@@ -7258,9 +7258,10 @@
               "eva2/experiments/contextforge-gateway-v1/prove_resource_assignment_guard.py": "eb101155c4b4c7cf715a3af919e8b8da765ba4b86b161ff660d2dfa807339522",
               "eva2/experiments/contextforge-gateway-v1/prove_resource_assignment_repair.py": "ad4a69471c9ee8a7fe2daead8a6fff99523a08feb310f5ba20a2ecf03d857f2a",
               "eva2/experiments/contextforge-gateway-v1/repair_resource_assignments.py": "ac04bb6a7f55953bb8bffd5643a99c7d2ab4a292f82920e3fdba05ff647f625a"
-            }
+            },
+            "guardDeploymentPerformed": true
           },
-          "liveGatewayMetadataChanged": true,
+          "liveGatewayMetadataChanged": false,
           "projectWorkerStarted": false,
           "projectEffects": 0,
           "evidenceCommit": "6761694e315c7a1d541a917470497b8b0ca70872",
@@ -7277,7 +7278,50 @@
             "newGatewayDatabaseMatches": 0,
             "fullCatalogRollback": false
           },
-          "rootCauseEvidenceLimit": "Existing bootstrap assignment code matches observed durable changes; original recreated-container write logs unavailable."
+          "rootCauseEvidenceLimit": "Existing bootstrap assignment code matches observed durable changes; original recreated-container write logs unavailable.",
+          "reportedUnintendedDifferenceRestored": true,
+          "repairResult": {
+            "commit": "8666d77e609a169a16ff60f639a0714431867721",
+            "evidencePaths": [
+              "eva2/evidence/living-core/au006-four-row-repair-completed-20260913.json",
+              "eva2/evidence/living-core/au006-four-row-repair-completed-20260913.md"
+            ],
+            "evidenceIntegrated": true,
+            "reportedResult": "four_rows_restored_guard_installed",
+            "repairAttempts": 1,
+            "matchedRows": 4,
+            "writes": 4,
+            "restoreColumns": [
+              "team_id",
+              "updated_at"
+            ],
+            "all53ApiRowsEqualPreIncident": true,
+            "allSqlToolColumnsEqualExpected": true,
+            "otherResourcesPreservedExceptGatewayHeartbeatTimestamps": true,
+            "coreAndTenOtherContainersPreserved": true,
+            "independentDatabaseReview": "Awaiting coordinator readback outcome; central admin has not queried product database.",
+            "centralReadback": {
+              "deployedGuardHashVerified": true,
+              "deployedOverrideHashVerified": true,
+              "gatewayRunningHealthy": true,
+              "sameGatewayImageVerified": true,
+              "mode": "Read-only file hashing and docker inspect; no database access or mutations."
+            },
+            "gatewayId": "81fa94e10516cee30aa35e34a6458cc996eab8569c67c112bce0ff8a601c8545",
+            "gatewayImage": "sha256:daf923c247fd569df5f8c9ee418cbc259fade564f78e0a0852937139a181c4dd"
+          }
+        },
+        "gatewayDeploymentBaseline": {
+          "status": "guarded_baseline_required",
+          "composeProject": "eva2-workspace-provider",
+          "requiredOverride": "/var/lib/eva2/workspace-provider/au006-bootstrap-guard/compose.preserve-resources.json",
+          "requiredSource": "/var/lib/eva2/workspace-provider/au006-bootstrap-guard/bootstrap_db.py",
+          "guardSha256": "92a5d8e88a467778e1cb715cd84e5b5214ca14d51170dbd6454432e89e04df4b",
+          "overrideSha256": "e3b4b4e11d3e4d8f10f6bc7865b08efd8f4a1c6a67803aaf0549c464dffed87f",
+          "defaultMode": "preserve",
+          "legacyMigrationEnabled": false,
+          "baseOnlyRollbackValid": false,
+          "reason": "Dropping the guard can repeat null-team reassignment; future recreates and policy rollback must retain reviewed guard override."
         }
       },
       "isolatedProductExecutionProven": true,
