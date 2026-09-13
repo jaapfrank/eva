@@ -243,11 +243,11 @@
         },
         {
           "title": "Reservekopie herstellen via de wizard",
-          "detail": "API en geïsoleerd herstel zijn opgeleverd. De bouwer valideert nu een geïsoleerd operatorpakket als technische voorwaarde voor de normale launcher. Volledige platformvalidatie en jouw proef blijven open; geen hostupgrade of omzeilen van controles."
+          "detail": "Het installatiepakket is gebouwd en ligt bij de onafhankelijke reviewer. De echte uitgepakte launcher start, maar platform-, Docker- en releasecontroles blokkeren herstel nog. De herstelpagina is nog niet klaar voor jouw proef."
         },
         {
           "title": "Project hervatten na herstart",
-          "detail": "De geïsoleerde tweestappenproef is gebouwd, getest en goedgekeurd. De controle van de draaiende installatie bevestigt dat de productaansluiting nog ontbreekt. Hergebruik van bestaande werkmaptools en eigenaarscontrole is uitgewerkt als voorstel; de aansluiting is nog niet gebouwd of live."
+          "detail": "De geïsoleerde hervatproef is afgerond. Het aansluitplan is onafhankelijk goedgekeurd; de bouwer verbindt nu de bestaande projectwerker met geautoriseerde documentopslag, duurzaam bewijs en bescherming tegen overschrijven. Deze aansluiting is nog niet live."
         }
       ],
       "openRisks": [
@@ -5460,15 +5460,15 @@
       "owners": [
         {
           "owner": "01a08d52-31b1-7091-be45-812c0b6e6c9f",
-          "work": "AU-006 minimaal productaansluitplan",
-          "boundary": "Three durable-goal files; only _durable_goal_payload and _durable_goal_from_wire in app.py; named tests/probe plus targeted parser coverage and bounded AU-006 documentation. No route/auth, installer/portable, CP001/model or live changes.",
-          "status": "connection_plan_in_preparation_no_new_source_or_live"
+          "work": "AU-006 geautoriseerde documentprovider bouwen",
+          "boundary": "Approved plan34b3b8ff: two new provider files, bounded durable storage/worker composition, named tests and documentation. No app/auth/orchestrator/installer/CP001/deploy changes.",
+          "status": "reviewed_connection_plan_implementation_in_progress"
         },
         {
           "owner": "coordinator/timing_final_review",
           "work": "IN-002 geïsoleerde operatorpakketvalidatie",
           "boundary": "Installer UI/API and existing portable restore boundary in isolated durable worktree; no central board, live runtime or conversation/CP001 files.",
-          "status": "bounded_operator_package_prerequisite_in_progress"
+          "status": "operator_package_candidate_in_independent_evidence_review"
         },
         {
           "owner": "coordinator/next_tools_delivery",
@@ -5891,7 +5891,16 @@
         "retainUntil": "Technical delivery and independent review are complete, necessary evidence and rollback instructions are durably recorded, and the owner trial is accepted or explicitly handed off with its artifacts.",
         "cleanupMoment": "After all retainUntil conditions, remove only the registered development worktree and disposable synthetic artifacts after verifying their exact resolved paths. Retain committed sanitized evidence; no automatic cleanup now.",
         "privateDataPolicy": "No live private restore data or signing secrets in Git; any required private artifacts remain in the registered private path.",
-        "additionalPaths": "Register exact owner/purpose/path/cleanup condition in this workboard before retaining artifacts elsewhere."
+        "additionalPaths": "Register exact owner/purpose/path/cleanup condition in this workboard before retaining artifacts elsewhere.",
+        "additionalRegisteredPaths": [
+          {
+            "owner": "coordinator/timing_final_review",
+            "exactPath": "/home/administrator/project/.eva2-artifacts/in002-operator-package-20260913",
+            "purpose": "Isolated operator package, repeat-build outputs and real unpacked launcher proof for IN-002 review.",
+            "retainUntil": "Independent review and durable evidence registration; necessary artifacts handed off for further launcher validation.",
+            "cleanupMoment": "After retainUntil conditions, delete only verified disposable package stage artifacts; keep committed evidence. No cleanup now."
+          }
+        ]
       },
       "latestDevelopmentFinding": {
         "status": "corrected_and_independently_reviewed",
@@ -5940,7 +5949,7 @@
         "observed": "Current WSL host fails existing pinned preflight for Python/Docker/OS variant and unvalidated lock; workflow=None, restoreHTTP409.",
         "scope": "Ordinary launcher; test-client ready fixtures do not prove this route.",
         "sourceGoPreserved": "Bounded API and isolated PG/object restoration only.",
-        "next": "Build and validate the separately assigned isolated operator package. Full target/image validation remains open; no bypass or host upgrade.",
+        "next": "Independent review of submitted operator package evidence; genuine supported host/Docker/release validation remains open.",
         "liveIncident": false
       },
       "dependencyHandoff": {
@@ -5957,7 +5966,7 @@
         "tier1TargetsUnvalidated": 2,
         "ociRecordsUnresolved": 18,
         "operatorPackageProposal": {
-          "status": "implementation_and_validation_in_progress",
+          "status": "candidate_submitted_independent_evidence_review_pending",
           "scope": "Reproducible isolated amd64 operator package using existing Python3.12.14 base and offline wheels, current dependencies plus tools/reader/schemas; run real host detection and unchanged launcher to verify fail-closed response.",
           "checks": [
             "Current requirements match actual cached wheels",
@@ -5970,7 +5979,23 @@
           "supportedLabelAllowed": false,
           "assignedByCoordinator": "01a08a88-894c-7171-87fa-e681ed47c735",
           "technicalPrerequisiteFor": "IN-002 ordinary operator launcher",
-          "fullReleaseValidation": false
+          "fullReleaseValidation": false,
+          "candidateCommit": "5da0a2198bf3e3a2b2e005049f50ced71c875e9d",
+          "candidateEvidencePath": "eva2/evidence/product/IN-002-operator-package-2026-09-13.json",
+          "sourceIntegrated": false,
+          "reportedResult": {
+            "repeatBuilds": 2,
+            "packageSha256": "f571e9f1c8b9aa36b3044f846ab074ee6724cf9de24125558109e271f9932f96",
+            "lockedDependencies": 44,
+            "normalUnpackedLauncherStarted": true,
+            "pythonCheck": "passed",
+            "hostCheck": "blocked",
+            "dockerCheck": "blocked",
+            "releaseSupportCheck": "blocked",
+            "restoreHttpStatus": 409
+          },
+          "independentReview": "Pending; reported package evidence is not yet centrally approved.",
+          "ownerTrialReady": false
         },
         "fullValidationBoundary": "Both tier1 receipts and all resolved validated OCI records required; a local amd64 package proof cannot mark the lock validated.",
         "ownerInputRequired": false,
@@ -6136,8 +6161,8 @@
         "ownerAuthorityGap": "Internal goals route has no DashboardAccess; tenant/installation checks do not establish a fresh owner mandate.",
         "networkBoundary": "Core host binding is loopback; no external exposure claim.",
         "existingSourceGoScope": "Operator contract and isolated tests only; no product executability.",
-        "next": "Prepare minimal connection plan using existing owner authority, verified workspace tools and result readback.",
-        "additionalImplementationAuthorized": false,
+        "next": "Implement approved bounded document provider and independently review source/evidence before any separate activation.",
+        "additionalImplementationAuthorized": true,
         "liveChangesAuthorized": false,
         "evidenceCommit": "72ff39b6b5bd71883eed71f563b0e1d156a5862a",
         "evidencePath": "eva2/evidence/living-core/au006-actual-provider-composition-20260913.json",
@@ -6145,17 +6170,18 @@
         "observedImage": "sha256:832983322ad7d71611225749d618e828d9dd4676f8a24711f09e0ac349db1fcd",
         "providerProtocolStatus": "No current product service identified implementing Goal HTTP evidence/effects/deliveries with durable receipts. MCP and filesystem services expose a different protocol.",
         "adjacentDelegatedWorkerIsGoalWorker": false,
-        "reviewedTwoStepSourceInstalled": false
+        "reviewedTwoStepSourceInstalled": false,
+        "implementationAuthorizationBasis": "Subsequent coordinator assignment after independent GO of plan34b3b8ff; survey itself did not authorize building."
       },
       "connectionPlan": {
-        "status": "being_prepared",
+        "status": "independently_approved_implementation_in_progress",
         "ownerThread": "01a08d52-31b1-7091-be45-812c0b6e6c9f",
         "reuse": [
           "Existing owner authority",
           "Verified workspace tools",
           "Durable result readback"
         ],
-        "scope": "Smallest plan connecting the reviewed two-step route to existing product capabilities; no new source or live deployment in this step.",
+        "scope": "Host-bound authorized two-step local document provider using existing goal ports, verified MCP tools and durable receipts; isolated source/tests only.",
         "compositionSurvey": {
           "status": "read_only_survey_and_proposal_recorded",
           "evidencePath": "eva2/evidence/living-core/au006-actual-provider-composition-20260913.json",
@@ -6183,7 +6209,38 @@
             "limitations": "This does not prove general multi-day projects, ordinary conversation initiation or arbitrary provider exactly-once effects"
           },
           "implementationAuthorizedByThisSurvey": false
-        }
+        },
+        "planCommit": "34b3b8ff752613f25ddf005fbf6d8fd3ae80d260",
+        "planPath": "eva2/evidence/living-core/au006-document-provider-contract-plan-20260913.md",
+        "independentReview": {
+          "decision": "GO for bounded connection plan",
+          "reportedBy": "coordinator"
+        },
+        "implementationAssignedBy": "01a08a88-894c-7171-87fa-e681ed47c735",
+        "requirements": [
+          "Immutable host plan bound to exact goal and permitted workspace paths",
+          "Fresh owner authority before new effects",
+          "Durable receipts and exact previous-artifact binding",
+          "Protection against concurrent overwrite of differing existing content"
+        ],
+        "ownedPaths": [
+          "eva2/src/eva/providers/document_goal_plan.py",
+          "eva2/src/eva/providers/document_goals.py",
+          "eva2/src/eva/adapters/postgres/durable_goals.py",
+          "eva2/src/eva/operations/durable_goal_worker.py",
+          "eva2/tests/providers/test_document_goal_plan.py",
+          "eva2/tests/postgres/test_document_goal_provider.py",
+          "eva2/design/architecture/living-core-v1.md"
+        ],
+        "excludedScopes": [
+          "app.py and ingress authorization changes",
+          "McpOwnerAuthority",
+          "VerifiedToolOrchestrator",
+          "Installer and CP001",
+          "Deployment or live activation"
+        ],
+        "built": false,
+        "live": false
       }
     }
   },
