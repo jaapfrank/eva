@@ -262,7 +262,7 @@
         },
         {
           "title": "Aangeleerde procedures terugvinden",
-          "detail": "De eerste kandidaat is bij review afgekeurd: de opslag van procedureverwijzingen zou het persoonlijke geheugenoverzicht onbeschikbaar maken. De scheiding wordt gecorrigeerd en met het echte overzicht gecontroleerd. Er is niets geïntegreerd of live gezet; het geaccepteerde geheugen blijft ongewijzigd."
+          "detail": "De correctie op de afgekeurde kandidaat ligt ter herbeoordeling. Volgens de nieuwe PostgreSQL-proef blijft het persoonlijke geheugenoverzicht werken na opslag, opnieuw verbinden en wissen. De validatie is niet versoepeld. Er is nog geen goedkeuring, integratie of livewijziging; het geaccepteerde geheugen blijft ongewijzigd."
         }
       ],
       "openRisks": [
@@ -4913,7 +4913,7 @@
         "next": "Preserve independent result and missing reuse/search proof; no automatic retry or retroactive criteria change."
       },
       "procedureReferenceFollowup": {
-        "status": "candidate_review_no_go_personal_overview_regression_fix_in_progress",
+        "status": "namespace_correction_under_independent_rereview",
         "owner": "coordinator/next_tools_delivery",
         "assignedBy": "01a08a88-894c-7171-87fa-e681ed47c735",
         "userOutcome": "An explicitly reusable saved procedure can be identified as a procedure candidate for a later task, with owner, retention, mandate and current file hash checked locally.",
@@ -4973,7 +4973,7 @@
           "retainUntil": "Independent review and central integration/handoff complete",
           "cleanup": "Coordinator decides exact cleanup after retention conditions; source and evidence retained now. Reported disposable PG fixture already removed."
         },
-        "candidateCommit": "6da0329f3b74368a7db1df7f6e5baadfbeddda02",
+        "candidateCommit": "51be1235abde503ae25b4d7cb203d41dd390e2aa",
         "independentReviewer": "coordinator/timing_final_review",
         "sourceIntegrated": false,
         "independentGo": false,
@@ -4997,8 +4997,18 @@
           "liveIncident": false,
           "candidateIntegrated": false,
           "acceptedMemoryChanged": false,
-          "status": "Execution owner correcting candidate; new review required."
-        }
+          "status": "Correction submitted; independent re-review pending.",
+          "correctionCommit": "51be1235abde503ae25b4d7cb203d41dd390e2aa",
+          "reportedCorrection": "Source-only records separated from personal memory namespace; actual PostgresPeopleMemoryOverview before/after, reconnect and erasure preserved.",
+          "validatorUnchanged": true,
+          "independentCorrectionGo": false
+        },
+        "originalCandidateCommit": "6da0329f3b74368a7db1df7f6e5baadfbeddda02",
+        "correctionPaths": [
+          "eva2/reviews/procedure-reference-source-only-20260913.json",
+          "eva2/src/eva/adapters/postgres/memory_outbox.py",
+          "eva2/tests/postgres/test_procedure_reference_sources.py"
+        ]
       }
     },
     "gatewayCatalogPagination20260912": {
@@ -5722,9 +5732,9 @@
         },
         {
           "owner": "coordinator/next_tools_delivery",
-          "work": "Scheiding procedureopslag en persoonlijk overzicht corrigeren",
+          "work": "Correctie procedureopslag klaar voor herreview",
           "boundary": "Nieuwe src/eva/application/procedure_references.py plus gerichte tests en eigen bewijs. Alleen indien nodig kleine audience-gebonden source-lookup in bestaande memory_outbox.py. Geen runtime.after_response, Hindsight, ConfirmedFact, nieuwe tabel of registry in fase1.",
-          "status": "AU004_candidate_no_go_personal_overview_fix",
+          "status": "AU004_namespace_correction_under_rereview",
           "previousCompletedWork": {
             "work": "Renovate npm-dekking",
             "status": "configuration_complete_bot_activity_unverified",
