@@ -247,7 +247,7 @@
         },
         {
           "title": "Project hervatten na herstart",
-          "detail": "De gatewayproef is onafhankelijk goedgekeurd en geïntegreerd. Ook de volledige geïsoleerde kernproef is volgens de uitvoerder geslaagd; de bron en het bewijs moeten nog worden overgedragen en beoordeeld. Daarom nog geen eindakkoord, livegebruik of eigenaaracceptatie."
+          "detail": "De bron en het bewijs van de volledige geïsoleerde projectproef zijn overgedragen voor onafhankelijke review. De uitvoerder rapporteert twee stappen met herstel en een aparte stopproef via de echte gateway en bestandsbroker. De eerdere deelreviews blijven afgerond; nog geen eindakkoord of livegebruik."
         }
       ],
       "openRisks": [
@@ -5471,8 +5471,8 @@
         {
           "owner": "01a08d52-31b1-7091-be45-812c0b6e6c9f",
           "work": "AU-006 geautoriseerde documentprovider bouwen",
-          "boundary": "Approved plan34b3b8ff: two new provider files, bounded durable storage/worker composition, named tests and documentation. No app/auth/orchestrator/installer/CP001/deploy changes.",
-          "status": "core_end_to_end_reported_passed_handoff_and_review_pending"
+          "boundary": "Approved provider plan/ports, exact bootstrap/document_goal_worker.py composition, operations/durable_goal_worker.py generic hooks, named tests and living-core documentation. No app/auth policy, installer, model or live changes.",
+          "status": "core_product_candidate_handed_off_independent_review_pending"
         },
         {
           "owner": "coordinator/timing_final_review",
@@ -6272,7 +6272,8 @@
           "eva2/src/eva/operations/durable_goal_worker.py",
           "eva2/tests/providers/test_document_goal_plan.py",
           "eva2/tests/postgres/test_document_goal_provider.py",
-          "eva2/design/architecture/living-core-v1.md"
+          "eva2/design/architecture/living-core-v1.md",
+          "eva2/src/eva/bootstrap/document_goal_worker.py"
         ],
         "excludedScopes": [
           "app.py and ingress authorization changes",
@@ -6580,9 +6581,84 @@
           "initialFixtureFailurePreserved": "Readback was attempted before restarted provider ready; retained failure log and removed that isolated stack. Final runner uses existing initialize readiness helper. No repeated model or live calls.",
           "integrationVerification": "Two actual baselines exact, bounded patch checked, final bytes exact; runner and actual helper hashes match.",
           "coreEndToEnd": {
-            "status": "reported_passed_source_evidence_handoff_and_review_pending",
+            "status": "candidate_source_and_evidence_handed_off_review_pending",
             "independentFinalGo": false,
-            "live": false
+            "live": false,
+            "sourceCommit": "1026a819a963fd3f06319e4ae627e49cfa6d277f",
+            "evidenceCommit": "a998e249ce1c285f1485324d318973a10bd55ef1"
+          }
+        },
+        "coreProductCandidate": {
+          "status": "source_and_evidence_handed_off_independent_review_pending",
+          "ownerThread": "01a08d52-31b1-7091-be45-812c0b6e6c9f",
+          "sourceCommit": "1026a819a963fd3f06319e4ae627e49cfa6d277f",
+          "evidenceCommit": "a998e249ce1c285f1485324d318973a10bd55ef1",
+          "evidencePath": "eva2/evidence/living-core/au006-document-product-integration-20260913.json",
+          "preparationSourceCommit": "0597e3e2d5cbf2f661db828cfc6d5ff01072fdfc",
+          "exactChangePaths": [
+            "eva2/design/architecture/living-core-v1.md",
+            "eva2/src/eva/bootstrap/document_goal_worker.py",
+            "eva2/src/eva/operations/durable_goal_worker.py",
+            "eva2/src/eva/providers/document_goal_plan.py",
+            "eva2/src/eva/providers/document_goals.py",
+            "eva2/tests/postgres/test_document_goal_provider.py",
+            "eva2/tests/providers/test_document_goal_plan.py"
+          ],
+          "sourceIntegrated": false,
+          "independentGo": false,
+          "reportedChecks": {
+            "targeted_regressions_and_composition": 55,
+            "postgres_tests": 3,
+            "total": 58,
+            "product_cases_with_actual_gateway_translate_sdk_native_broker": 2,
+            "new_architecture_violations": 0,
+            "remaining_baseline_architecture_violations": 24
+          },
+          "reportedCases": [
+            {
+              "case": "happy",
+              "dispatches": 2,
+              "resultFiles": [
+                "/workspace/final.txt",
+                "/workspace/draft.txt",
+                "/journal/workspace-writer.journal"
+              ]
+            },
+            {
+              "case": "stop",
+              "dispatches": 1,
+              "resultFiles": [
+                "/workspace/draft.txt",
+                "/journal/workspace-writer.journal"
+              ]
+            }
+          ],
+          "bootstrapOwnershipExtension": {
+            "path": "eva2/src/eva/bootstrap/document_goal_worker.py",
+            "authorizedBy": "coordinator",
+            "boundary": "Dedicated composition module; operations/durable_goal_worker.py only generic hooks, no architecture policy change."
+          },
+          "scopeLimits": [
+            "Provider stack retained for coordinator cleanup after evidence review",
+            "Product test executes core factory and DurableGoalWorker in actual child containers; bootstrap hook composition checked separately",
+            "Test adapter audit counts dispatch attempts, native receipt and material verify effects",
+            "After TOOL_PREPARED errors block; no automatic execution retry for uncertain native receipt",
+            "Already admitted in-flight work may finish after stop; admission is not atomic authority",
+            "Delivery is verified local availability only; no human receipt/message",
+            "No ordinary conversation entrypoint, live deployment, days-long practice or full AU-006 claim",
+            "Model tokens and monetary cost remain unknown if unreported"
+          ],
+          "live": false,
+          "fullAU006Complete": false,
+          "ownerAccepted": false,
+          "resourceState": {
+            "documentWorktreeRetained": true,
+            "providerStack": "eva-atomic-gateway-19caccd1dd",
+            "providerStackRetainedFor": "Independent review and coordinator cleanup",
+            "postgresProofContainerRemoved": true,
+            "coreChildContainersRemoved": true,
+            "productionDataAccessed": false,
+            "reportedBy": "execution owner"
           }
         }
       }
