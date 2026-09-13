@@ -121,7 +121,7 @@
           ]
         }
       ],
-      "priorityDecision": "De echte procedureproef faalde bij het markeren van de geverifieerde opslag als herbruikbaar. De uitvoerder bewaart het bewijs en rolt terug; een gerichte hostfix volgt. HTTP 200 en een opgeslagen bestand gelden niet als een geslaagde gebruikersuitkomst.",
+      "priorityDecision": "De procedureproef faalde bij herbruikbaar markeren. De uitvoerder meldt gecontroleerd herstel; onafhankelijk bewijs volgt nog. De gerichte fix koppelt het bestandspad aan één geverifieerde opslagactie in dezelfde beurt. B en C zijn niet uitgevoerd.",
       "dashboardVerification": {
         "status": "local_browser_verified_not_full_product_acceptance",
         "priorityRevision": {
@@ -273,7 +273,7 @@
         },
         {
           "title": "Aangeleerde procedures terugvinden",
-          "detail": "De echte A-proef is mislukt na 35,516 seconden. Opslaan en teruglezen lukten, maar het model miste de vereiste opslagverwijzing om de procedure als herbruikbaar te markeren. Er is geen procedureverwijzing aangemaakt. B en C zijn niet uitgevoerd en A is niet herhaald. De terugrol loopt; herstel is nog niet bevestigd. Een gerichte hostfix wordt gebouwd."
+          "detail": "De A-proef blijft mislukt; B en C zijn niet uitgevoerd. De uitvoerder meldt een geverifieerde terugrol naar de core met Telegramreparaties, met alle 12 beschermde diensten en gegevens intact. De definitieve receipt en onafhankelijke controle volgen nog. De hostfix gebruikt straks het bestandspad om één geverifieerde opslagactie in dezelfde beurt te vinden; dubbelzinnigheid wordt geweigerd."
         }
       ],
       "openRisks": [
@@ -5205,7 +5205,7 @@
             "candidateCommit": "46e85b2267dc58619de78233405401163f6c20fe",
             "decision": "GO for preparation only",
             "finding": "Existing delegated worker uses832; core and document worker use2393.",
-            "status": "r3_ordinary_A_failed_required_save_reference_missing_rollback_pending",
+            "status": "r3_A_failed_writer_verified_rollback_reported_independent_review_pending",
             "planIntegrated": false,
             "deploymentAuthorized": false,
             "correctionCommit": "295a70cef49477b36f7acd48cae1eb6de401fcf4",
@@ -5300,7 +5300,7 @@
               "activationGoReason": "Previous approval bound to obsolete2393 baseline; new current-base preparation and review required."
             },
             "r3CurrentBaseActivation": {
-              "status": "ordinary_A_failed_rollback_in_progress",
+              "status": "ordinary_A_failed_writer_verified_rollback_reported",
               "planCommit": "979924ec0714077bfcc638ee172b7407128bd540",
               "sealReportedPrefix": "0c8eaf42",
               "imageReportedPrefix": "b748",
@@ -5330,14 +5330,32 @@
               },
               "rollback": {
                 "targetCoreImage": "sha256:bc6d64a3aebbb4b1502dfa7170c0b3d02eda97ac97eddfc704c90c80659864e9",
-                "status": "in_progress",
+                "status": "verified_by_writer_report_receipt_and_independent_check_pending",
                 "verified": false,
-                "receiptPending": true
+                "receiptPending": true,
+                "writerVerified": true,
+                "independentVerified": false,
+                "reportedBy": "coordinator relaying runtime writer",
+                "coreIdReportedPrefix": "a98fd845",
+                "readyReported": true,
+                "protectedServicesReported": 12,
+                "wordLimitSourceReportedPrefix": "9573",
+                "bridgeSourceReportedPrefix": "89a5be",
+                "bridgePidReported": "1939334",
+                "pendingModelRequestsReported": 0,
+                "preservedReported": [
+                  "Budget",
+                  "Mandate",
+                  "AU006 journal"
+                ]
               },
               "targetedHostFix": {
                 "owner": "coordinator/next_tools_delivery",
                 "status": "in_progress",
-                "scope": "Make required verified save reference available to designation in normal model route; exact fix pending"
+                "scope": "Use document_path instead of model-invisible source call ID; host resolves unique verified save in current turn and rejects ambiguity",
+                "ambiguousMatchesFailClosed": true,
+                "trialBPerformed": false,
+                "trialCPerformed": false
               }
             }
           }
