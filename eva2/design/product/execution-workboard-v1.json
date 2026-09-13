@@ -121,7 +121,7 @@
           ]
         }
       ],
-      "priorityDecision": "De bouw van eigen documentopdrachten wordt nu over de volledige bestaande bestandsroute gecontroleerd in een wegwerpomgeving. Eerdere gerichte controles slagen volgens de bouwer; onafhankelijke bronbeoordeling en liveproef staan nog open. PR-01, PJ-01 en de gezondheidscontroles blijven afgesloten.",
+      "priorityDecision": "De nieuwe documentflow heeft beperkt bronakkoord, maar de bestaande voorbereide projectroute moet behouden blijven. De bouwer repareert het verdwijnen van status/resultaattoegang en legacyprojectafhandeling vóór overname. Er is niets live gewijzigd; PR-01, PJ-01 en gezondheidscontroles blijven afgesloten.",
       "dashboardVerification": {
         "status": "local_browser_verified_not_full_product_acceptance",
         "priorityRevision": {
@@ -283,7 +283,7 @@
         },
         {
           "title": "Zelf een documentproject opgeven",
-          "detail": "De wegwerpomgeving voor de volledige documentproef is gereed: twee bestaande bestandsuitvoerders en een tijdelijke gateway, zonder productiegegevens of gepubliceerde poorten. De bouwer gebruikt deze omgeving om de echte opslagroute te controleren. Voorbereiding heeft geen modeloproep of documentactie uitgevoerd. Nog geen oplevering of livewijziging; de eerdere voorbereide projectroute blijft behouden."
+          "detail": "De nieuwe opdrachtflow is technisch gecontroleerd. Een extra review vond dat deze kandidaat de bestaande status- en resultaatroute van het voorbereide project zou verbergen. Ook de worker moet bestaande doelen blijven behandelen. De bouwer repareert dat vóór overname en installatie. Bewaarde bestanden alleen zijn onvoldoende: de bestaande gebruikersroute moet bruikbaar blijven. Nog niet live."
         }
       ],
       "openRisks": [
@@ -1038,7 +1038,7 @@
       "sessionGoal": "AU-008: één zelfstandige kosteloze bijdrage via de algemene uitvoerder.",
       "currentWork": "**Afgerond en live — twee begrensde opleveringen.** PR-01: Eva vindt een bewaarde planreviewprocedure terug, leest de gecontroleerde tekst en past de regels toe; jouw resultaatreview staat open. Documentstatus: beide documentdiensten gebruiken nu passende gezondheidscontroles en melden gezond. Beide opleveringen zijn onafhankelijk bevestigd. Eva, bestaande doelen, journaal en bestanden zijn behouden. Gezondheid is geen bewijs van taakvoortgang.",
       "currentEvidence": "eva2/evidence/living-core/document-health-r2-live-20260913.json",
-      "nextStep": "**Eerstvolgende gebruikersoplevering:** eigen documentopdrachten voor twee tekstbestanden, zonder beheerderplanwissel. De volledige bestaande bestandsroute wordt geïsoleerd gecontroleerd; passende gezondheidscontrole voor projectplekken hoort bij hetzelfde werk. Daarna volgen onafhankelijke bronbeoordeling en een afzonderlijk goedgekeurde liveproef. PR-01, PJ-01 en de gezondheidsoplevering blijven afgesloten.",
+      "nextStep": "**Eerstvolgende gebruikersoplevering:** eigen documentopdrachten zonder beheerderplanwissel. Het nieuwe pad heeft beperkt bronakkoord; vóór overname moet de kandidaat ook bestaande voorbereide projecten, hun status/resultaattoegang en workerafhandeling behouden. Die correctie gebeurt in dezelfde geïsoleerde bouw. Geen runtimegoedkeuring of livewijziging. PR-01, PJ-01 en de gezondheidsoplevering blijven afgesloten.",
       "usageClarification": {
         "date": "2026-09-07",
         "authorizedBy": "Jaap",
@@ -9820,7 +9820,7 @@
     },
     "ownerDocumentProjectAU00620260913": {
       "id": "AU006-owner-document-project",
-      "status": "source_implementation_native_chain_validation_in_progress",
+      "status": "new_flow_source_go_legacy_compatibility_fix_required_before_integration",
       "assignedBy": "coordinator",
       "owner": "coordinator/next_tools_delivery",
       "runtimeOwnerThread": "01a08d52-31b1-7091-be45-812c0b6e6c9f",
@@ -9864,7 +9864,13 @@
           "eva2/tests/postgres/test_document_service_health.py"
         ],
         "extensionReason": "Necessary for pool-scoped read-only claim readiness while retaining legacy single-plan health behavior",
-        "nativeEvidenceRetention": "Keep immutable fixture journals and effect/readback evidence; coordinator cleans disposable runtime only after effect proof and review. Builder consumes existing prepared environment once; no reprepare."
+        "nativeEvidenceRetention": "Keep immutable fixture journals and effect/readback evidence; coordinator cleans disposable runtime only after effect proof and review. Builder consumes existing prepared environment once; no reprepare.",
+        "reservedTestsAndDocs": [
+          "eva2/tests/postgres/test_document_task_actions.py",
+          "eva2/tests/postgres/test_document_task_native.py",
+          "eva2/tests/providers/test_document_task_input.py",
+          "eva2/reviews/document-task-input-20260913.md"
+        ]
       },
       "runtimeGo": false,
       "sourceIntegrated": false,
@@ -9915,6 +9921,40 @@
         "cleanupOwner": "coordinator",
         "cleanupAfter": "Completed effect proof and independent review; immutable journal evidence retained",
         "legacyPreparedRoutePreserved": true
+      },
+      "sourceCommits": [
+        "6d27f267c370715644a6a03b103601c1fab02195",
+        "7918ae0380a89dabe0d30695b49db15b303658f9"
+      ],
+      "independentSourceReview": {
+        "decision": "GO limited to new task flow; existing-route compatibility blocks complete candidate",
+        "reportedBy": "coordinator",
+        "realPostgresTestsPassed": 20,
+        "proofPath": "/home/administrator/project/.eva2-artifacts/document-task-input-20260913/independent-recovery-host-postgres-proof.json",
+        "proofSha256": "2a4cbe938b8db0ea386ffbc078e7f340601304f5e0ea44cf6634b8971c3c7da2",
+        "logSha256": "c2e57760011dc6d1b54b4205eb9f85b95bd00f927c329e8ca1165e5babda7912",
+        "nativeProofSha256Reported": "a80a0b73828615731a8cf61d20cf5f310ce7eab0fc4acea6aa6ed5bd6ed79017",
+        "nativeFixtureConsumed": true,
+        "nativeEvidenceRetention": "Immutable fixture hashes and journals retained; no replay or genesis reuse",
+        "runtimeGo": false
+      },
+      "legacyCompatibility": {
+        "status": "blocking_correction_in_same_source_stage",
+        "finding": "Pool factory hides prepared project status/result tools; pool worker ignores legacy goals",
+        "required": "Preserve existing PJ01 status/result access and legacy goal handling, not only stored file bytes",
+        "owner": "coordinator/next_tools_delivery",
+        "productionAffected": false,
+        "sourceIntegrationDeferred": true,
+        "existingLiveDeliveriesReopened": false
+      },
+      "runtimePreparation": {
+        "ownerThread": "01a08d52-31b1-7091-be45-812c0b6e6c9f",
+        "status": "two_phase_design_pending_compatible_candidate",
+        "stages": [
+          "Provision two separately authorized provider slots",
+          "Bind actual catalog and seal candidate before activation"
+        ],
+        "runtimeGo": false
       }
     }
   },
