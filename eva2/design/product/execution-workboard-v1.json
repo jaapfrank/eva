@@ -247,7 +247,7 @@
         },
         {
           "title": "Project hervatten na herstart",
-          "detail": "De gewone startvraag mislukte na 33,82 seconden: de gateway verloor de eigenaarscontext en weigerde de private tool. Geen documenten gemaakt; de vorige core is hersteld en de nieuwe worker en provider zijn gestopt. De gerichte autorisatiecorrectie is onafhankelijk goedgekeurd en in de broncode opgenomen. Uitrol en herstel van het mislukte project zijn nog niet toegestaan; er volgt geen automatische herhaling."
+          "detail": "De gewone startvraag mislukte door verlies van eigenaarscontext; er zijn geen documenten gemaakt en de vorige core is hersteld. De autorisatiecorrectie is goedgekeurd en in de broncode opgenomen. Het uitrolplan met één nieuwe, afzonderlijke projectproef ligt ter beoordeling. De oude mislukte proef blijft behouden. Er is nog geen uitrol of nieuwe proef uitgevoerd."
         },
         {
           "title": "Gedeeld audiotype",
@@ -5510,9 +5510,9 @@
       "owners": [
         {
           "owner": "01a08d52-31b1-7091-be45-812c0b6e6c9f",
-          "work": "Gerichte correctie van private toolautorisatie na terugrol",
+          "work": "Uitrolplan en afzonderlijke r2-projectproef voorbereiden",
           "boundary": "New providers/document_goal_actions.py; bundled.py opt-in registration only; document_goal_plan.py safe full host GoalSpec/hash binding; targeted provider/PG tests and docs. Existing actual ConversationTurn/current authority/external tool port. No second planner/live/envflip.",
-          "status": "phase2_ordinary_route_failed_rolled_back_isolated_fix_review"
+          "status": "rpc_install_r2_plan_under_review_not_authorized"
         },
         {
           "owner": "coordinator/timing_final_review",
@@ -7652,6 +7652,53 @@
             "goalRetryOrSqlResetGo": false
           },
           "integrationVerification": "Three previously absent source files copied exactly; hashes match reviewed evidence. No runtime patch application or test repetition."
+        },
+        "rpcInstallAndR2Plan": {
+          "status": "offline_plan_awaiting_independent_review",
+          "ownerThread": "01a08d52-31b1-7091-be45-812c0b6e6c9f",
+          "candidateCommit": "a5c65b2156e49b4a55e1d0110ed03e94a5d1608e",
+          "evidencePaths": [
+            "eva2/evidence/living-core/au006-rpc-install-and-r2-plan-20260913.json",
+            "eva2/evidence/living-core/au006-rpc-install-and-r2-plan-20260913.md"
+          ],
+          "evidenceIntegrated": true,
+          "sealerSourcePath": "eva2/experiments/contextforge-gateway-v1/au006-activation/seal_reprobe.py",
+          "sealerSourceIntegrated": false,
+          "authorized": false,
+          "executed": false,
+          "newGoalPreview": {
+            "goal_id": "au006-document-project-20260913-r2",
+            "goal_sha256": "953a7a56e08823509bd8470eb72c4e6dbf894099e0c55bfac4f7a79631851ace",
+            "plan_sha256": "6ceb4f56f203c1f4666277831cabe1962c2193df460420c3cd17643d6b950dd1",
+            "tool_configuration_sha256": "230c60856bfdb1c5c4eb4cd227323f3294d39f4533bf5510d6aca4b948f7a951",
+            "output_sha256": {
+              "goal.json": "953a7a56e08823509bd8470eb72c4e6dbf894099e0c55bfac4f7a79631851ace",
+              "unsealed-inputs.json": "90e402c51b2282d7ced27ea79d274285a060370842cc0dbb0467197d9b94a15d",
+              "catalog.json": "e1c58728c924da8e254db4531c9ac2a13e78b4cc6af01e0103c85219efaf6d65",
+              "plan.json": "6ceb4f56f203c1f4666277831cabe1962c2193df460420c3cd17643d6b950dd1",
+              "definition.json": "a99a48e12f7492e59a4c577a5517ade855bd1e9e12bab8b7d38a7b678049ddd0",
+              "generation.json": "9be7e3da3c7b404172e8a222f175f0854be805381fa1a856aea291bd51617250"
+            },
+            "old_operation_ids_reused": false,
+            "journal_reset": false,
+            "runtime_output_directory": "/home/administrator/project/.eva2-artifacts/au006-activation-20260913/runtime-reprobe/project",
+            "runtime_outputs_written": false,
+            "preview_sha256": "d453a963beae07839677653e5c4cd9e7b9aed5926094a72e3660c04d7a6a6993"
+          },
+          "gatewayDelta": "one readonly main.py mount; existing guard and endpoint policy preserved",
+          "existingGuardsAndEndpointPolicyPreserved": true,
+          "oldFailedGoalAndEvidencePreserved": true,
+          "newGoalPathsAndOperationIds": true,
+          "sameEmptyJournalTransitionRequiresExplicitPlanGo": true,
+          "journalReset": false,
+          "oldGoalResumeOrSqlReset": false,
+          "maximumOrdinaryStartRequests": 1,
+          "maximumOrdinaryStatusRequests": 1,
+          "reportedDefaultReadOnlySealerCheckPassed": true,
+          "runtimeMutations": 0,
+          "modelRequests": 0,
+          "successClaimed": false,
+          "ownerAccepted": false
         }
       },
       "isolatedProductExecutionProven": true,
