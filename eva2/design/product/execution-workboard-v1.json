@@ -247,7 +247,7 @@
         },
         {
           "title": "Project hervatten na herstart",
-          "detail": "Ook starten, status/resultaat en stoppen via de gewone gesprekstools zijn technisch afgerond, onafhankelijk goedgekeurd en geïntegreerd voor hetzelfde voorbereide project. De geïsoleerde uitvoeringsproef blijft afgerond. Natuurlijke modelkeuze, live-installatie en jouw praktijkproef staan nog open."
+          "detail": "De technische deelopleveringen blijven afgerond. Voor activering is een gat gevonden: de hostconfiguratiehash staat in de toolbeschrijving, maar telt niet mee in de catalogushash. Dit wordt gericht hersteld en via de echte gateway gecontroleerd. De worker blijft uit tot akkoord en nieuwe binding; nog niet live."
         },
         {
           "title": "Gedeeld audiotype",
@@ -5486,7 +5486,7 @@
           "owner": "01a08d52-31b1-7091-be45-812c0b6e6c9f",
           "work": "AU-006 normale gespreksingang",
           "boundary": "New providers/document_goal_actions.py; bundled.py opt-in registration only; document_goal_plan.py safe full host GoalSpec/hash binding; targeted provider/PG tests and docs. Existing actual ConversationTurn/current authority/external tool port. No second planner/live/envflip.",
-          "status": "bounded_normal_command_source_complete_reviewed_not_live"
+          "status": "normal_command_source_complete_worker_activation_waits_catalog_binding_go"
         },
         {
           "owner": "coordinator/timing_final_review",
@@ -5496,9 +5496,9 @@
         },
         {
           "owner": "coordinator/next_tools_delivery",
-          "work": "Onafhankelijke review gedeeld audiotype",
-          "boundary": "Review isolated voiceAudioContract20260913 candidate; no source/board/live changes. Completed AU006 provider/gateway source and cleanup remain closed.",
-          "status": "shared_audio_type_independent_review_complete",
+          "work": "AU-006 hostbinding in catalogushash herstellen",
+          "boundary": "Provider metadata in actually hashed catalog field plus real gateway readback/proof. Worker start waits for reviewed correction and rebinding.",
+          "status": "catalog_binding_activation_gap_fix_in_progress",
           "previousCompletedWork": {
             "work": "Renovate npm-dekking",
             "status": "configuration_complete_bot_activity_unverified",
@@ -6231,7 +6231,7 @@
         "historical": true
       },
       "connectionPlan": {
-        "status": "bounded_product_and_normal_command_source_complete_activation_pending",
+        "status": "source_deliveries_complete_activation_blocked_on_catalog_binding",
         "ownerThread": "01a08d52-31b1-7091-be45-812c0b6e6c9f",
         "reuse": [
           "Existing owner authority",
@@ -6534,7 +6534,8 @@
             "No host mandate integration",
             "No full DAC/lifecycle proof",
             "No production activation"
-          ]
+          ],
+          "catalogBindingQualification": "Earlier proof established description visibility, not inclusion in catalog SHA. See activationCatalogBindingGap."
         },
         "gatewayFixtureFollowup": {
           "status": "bounded_gateway_hop_source_integrated_independent_go",
@@ -6849,7 +6850,22 @@
             "Separate provider/gateway/worker management and activation review",
             "Fresh isolated natural model selection or authorized ordinary live-route proof",
             "Owner practice and acceptance"
-          ]
+          ],
+          "activationStatus": "Pending corrected provider metadata binding, independent review and rebinding."
+        },
+        "activationCatalogBindingGap": {
+          "status": "targeted_provider_fix_and_gateway_proof_in_progress",
+          "reportedBy": "coordinator read-only activation procedure",
+          "owner": "coordinator/next_tools_delivery",
+          "finding": "Host configuration digest in tool description is not included by mcp_gateway_catalog_binding. Tools/list visibility does not prove catalog SHA binding.",
+          "requiredCorrection": [
+            "Use metadata field actually hashed by existing catalog binding",
+            "Verify through actual gateway readback",
+            "Independent GO and refreshed bindings before worker start"
+          ],
+          "workerStartBlockedUntil": "Correction GO and rebinding",
+          "previousApprovals": "Earlier source/native/MCP/gateway proofs remain valid in their limited scope; no general revocation or production GO.",
+          "live": false
         }
       },
       "isolatedProductExecutionProven": true,
