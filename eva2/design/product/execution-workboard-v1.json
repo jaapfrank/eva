@@ -247,7 +247,7 @@
         },
         {
           "title": "Project hervatten na herstart",
-          "detail": "Opdrachtbinding, eigenaarscontrole en de bestandsbroker met client zijn onafhankelijk goedgekeurd en geïntegreerd. De broker kan bestaand afwijkend bestand behouden en bewijs teruglezen zonder een nieuwe schrijfactie. De uitvoerende projectaansluiting en gezamenlijke praktijkproef blijven open; nog niet live."
+          "detail": "Opdrachtbinding en bestandsbroker zijn goedgekeurd en geïntegreerd. De geïsoleerde MCP-aansluiting en Eva’s projectwerker worden nu door aparte uitvoerders verbonden. Daarna volgt de gezamenlijke proef met eigenaarscontrole, stoppen en werkelijk teruggelezen resultaten. Nog niet live."
         }
       ],
       "openRisks": [
@@ -5472,7 +5472,7 @@
           "owner": "01a08d52-31b1-7091-be45-812c0b6e6c9f",
           "work": "AU-006 geautoriseerde documentprovider bouwen",
           "boundary": "Approved plan34b3b8ff: two new provider files, bounded durable storage/worker composition, named tests and documentation. No app/auth/orchestrator/installer/CP001/deploy changes.",
-          "status": "document_goal_bridge_and_authority_binding_in_progress_primitive_separate"
+          "status": "core_provider_ports_worker_plan_integration_in_progress"
         },
         {
           "owner": "coordinator/timing_final_review",
@@ -5482,9 +5482,9 @@
         },
         {
           "owner": "coordinator/next_tools_delivery",
-          "work": "AU-006 bestaande bestandsbroker uitbreiden",
-          "boundary": "Reviewed native broker functions; test/workspace-writer-broker-v2.test.mjs and client-result.test.mjs; eva2/deploy/living-core/workspace-create-only/broker-client.mjs and README.md; exact review evidence. No host/DAC/catalogue/live claim.",
-          "status": "bounded_native_client_source_complete_integrated",
+          "work": "AU-006 geïsoleerde MCP-bestandsaansluiting",
+          "boundary": "eva2/deploy/living-core/workspace-create-only/mcp-server.mjs, Dockerfile, start-atomic-workspace.sh plus targeted MCP/DAC integration test. Reuse reviewed native/client. Isolated image only; no catalogue provisioning or live.",
+          "status": "isolated_mcp_adapter_and_image_in_progress",
           "previousCompletedWork": {
             "work": "Renovate npm-dekking",
             "status": "configuration_complete_bot_activity_unverified",
@@ -6216,7 +6216,7 @@
         "implementationAuthorizationBasis": "Subsequent coordinator assignment after independent GO of plan34b3b8ff; survey itself did not authorize building."
       },
       "connectionPlan": {
-        "status": "implementation_gap_under_bounded_investigation",
+        "status": "reviewed_primitives_integrated_core_and_mcp_composition_in_progress",
         "ownerThread": "01a08d52-31b1-7091-be45-812c0b6e6c9f",
         "reuse": [
           "Existing owner authority",
@@ -6460,6 +6460,33 @@
             "Stop/dispatch races remain for later composition",
             "No effect worker or product executability claim"
           ]
+        },
+        "mcpProviderComposition": {
+          "status": "isolated_adapter_implementation_assigned",
+          "owner": "coordinator/next_tools_delivery",
+          "assignedByCoordinator": "01a08a88-894c-7171-87fa-e681ed47c735",
+          "ownedPaths": [
+            "eva2/deploy/living-core/workspace-create-only/mcp-server.mjs",
+            "eva2/deploy/living-core/workspace-create-only/Dockerfile",
+            "eva2/deploy/living-core/workspace-create-only/start-atomic-workspace.sh"
+          ],
+          "additionalOwnedScope": "Targeted MCP and DAC integration test; exact path to be confirmed by developer.",
+          "reuse": [
+            "Independently reviewed native broker",
+            "Independently reviewed corrected broker client"
+          ],
+          "scope": "Isolated image and MCP/DAC integration only. No catalogue provisioning or live activation.",
+          "coreProviderOwner": "01a08d52-31b1-7091-be45-812c0b6e6c9f",
+          "coreProviderScope": "Core provider ports, worker composition, host plan and corresponding tests remain with existing execution owner.",
+          "productProofRequires": [
+            "Actual MCP adapter",
+            "Current owner authority and stop integration",
+            "Independent actual result readback"
+          ],
+          "built": false,
+          "live": false,
+          "catalogueProvisioningAuthorized": false,
+          "runtimeDeploymentAuthorized": false
         }
       }
     }
