@@ -247,7 +247,7 @@
         },
         {
           "title": "Project hervatten na herstart",
-          "detail": "De mislukte registratie is vastgelegd: één poging, provider weer gestopt, geen nieuwe registratie en bestaande tools, gatewaybindingen, kerngegevens en diensten behouden. Een plan voor één exact toegelaten endpoint ligt nu voor onafhankelijke review. Geen herhaalde poging of workerstart."
+          "detail": "Het gerichte endpointplan is onafhankelijk goedgekeurd. De uitvoerder past alleen de afgesproken gatewayconfiguratie aan en doet na verse controles één registratiepoging. De uitkomst moet nog worden vastgesteld; de eerdere fout blijft bewaard. Geen workerstart of schrijfacties."
         },
         {
           "title": "Gedeeld audiotype",
@@ -5502,7 +5502,7 @@
           "owner": "01a08d52-31b1-7091-be45-812c0b6e6c9f",
           "work": "AU-006 normale gespreksingang",
           "boundary": "New providers/document_goal_actions.py; bundled.py opt-in registration only; document_goal_plan.py safe full host GoalSpec/hash binding; targeted provider/PG tests and docs. Existing actual ConversationTurn/current authority/external tool port. No second planner/live/envflip.",
-          "status": "phase1_gateway_policy_failure_exact_fix_plan_pending"
+          "status": "approved_exact_gateway_policy_correction_and_one_retry_in_progress"
         },
         {
           "owner": "coordinator/timing_final_review",
@@ -6924,7 +6924,7 @@
           "sourceCorrectionComplete": true
         },
         "activationPreparation": {
-          "status": "phase1_gateway_policy_blocked_provider_stopped",
+          "status": "bounded_gateway_policy_retry_in_progress",
           "ownerThread": "01a08d52-31b1-7091-be45-812c0b6e6c9f",
           "evidenceCommit": "bc0fd5c06d5d97853296cf2459463fac4ad577a7",
           "evidencePath": "eva2/evidence/living-core/au006-activation-preparation-20260913.json",
@@ -7025,7 +7025,7 @@
             ]
           },
           "executionAssignedBy": "01a08a88-894c-7171-87fa-e681ed47c735",
-          "executionState": "Gateway registration failed on endpoint policy; new provider stopped, no registration created.",
+          "executionState": "Original failed attempt retained; independently approved exact policy correction and one retry now authorized, outcome pending.",
           "allowedActions": [
             "Start only exact approved read-only provider",
             "Private gateway registration with actual IDs and readback",
@@ -7080,7 +7080,7 @@
           }
         },
         "phase1PolicyRetryPlan": {
-          "status": "exact_policy_correction_plan_pending_independent_review",
+          "status": "bounded_retry_plan_independent_go_execution_authorized",
           "ownerThread": "01a08d52-31b1-7091-be45-812c0b6e6c9f",
           "reviewPath": "/home/administrator/project/.eva2-artifacts/au006-activation-20260913/PHASE1-RETRY-REVIEW.md",
           "evidenceCommit": "87c80c28a643fc9b6eb9b2eeb47dffa638e633b8",
@@ -7091,12 +7091,36 @@
             "Resolved compose comparison"
           ],
           "privateRollback": "Original gateway configuration snapshots retained privately in existing activation stage; no DELETE or shared catalog restore.",
-          "independentGo": false,
-          "retryAuthorized": false,
+          "independentGo": true,
+          "retryAuthorized": true,
           "gatewayRecreated": false,
           "workerStarted": false,
           "coreChanged": false,
-          "phase2Go": false
+          "phase2Go": false,
+          "independentReview": {
+            "decision": "GO for exact endpoint/fixed-IP correction and one bounded registration retry",
+            "reportedBy": "coordinator",
+            "basis": "87c80c28 and PHASE1-RETRY-REVIEW",
+            "requiredFreshChecks": [
+              "Quiescence",
+              "IP availability and exact configuration",
+              "Independent registration absence",
+              "Existing gateway readiness and tool checks before single POST"
+            ]
+          },
+          "allowedExecution": [
+            "Recreate only the existing gateway with exact reviewed correction",
+            "One registration POST after all required fresh checks"
+          ],
+          "executionStatus": "Assigned and in progress; result evidence pending.",
+          "retryCompleted": false,
+          "successful": false,
+          "excludedActions": [
+            "Sealing",
+            "Core changes",
+            "Document worker start",
+            "Phase2 or document effects"
+          ]
         }
       },
       "isolatedProductExecutionProven": true,
