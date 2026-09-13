@@ -247,7 +247,7 @@
         },
         {
           "title": "Project hervatten na herstart",
-          "detail": "Het gerichte endpointplan is onafhankelijk goedgekeurd. De uitvoerder past alleen de afgesproken gatewayconfiguratie aan en doet na verse controles één registratiepoging. De uitkomst moet nog worden vastgesteld; de eerdere fout blijft bewaard. Geen workerstart of schrijfacties."
+          "detail": "Activering is gepauzeerd: bij de gatewayherstart kregen vier bestaande toolregistraties onbedoeld een teamkoppeling. Dit bleef na terugzetten van de configuratie bestaan. Er is geen nieuwe registratiepoging gedaan en de provider is uit. Eerst volgt review van een gerichte reparatie van deze vier regels; geen brede databaseherstelactie."
         },
         {
           "title": "Gedeeld audiotype",
@@ -5500,9 +5500,9 @@
       "owners": [
         {
           "owner": "01a08d52-31b1-7091-be45-812c0b6e6c9f",
-          "work": "AU-006 normale gespreksingang",
+          "work": "Gatewaymetadata gericht herstellen vóór AU-006-activering",
           "boundary": "New providers/document_goal_actions.py; bundled.py opt-in registration only; document_goal_plan.py safe full host GoalSpec/hash binding; targeted provider/PG tests and docs. Existing actual ConversationTurn/current authority/external tool port. No second planner/live/envflip.",
-          "status": "approved_exact_gateway_policy_correction_and_one_retry_in_progress"
+          "status": "isolated_bootstrap_guard_and_exact_four_row_cas_repair_plan_pending_review"
         },
         {
           "owner": "coordinator/timing_final_review",
@@ -6247,7 +6247,7 @@
         "historical": true
       },
       "connectionPlan": {
-        "status": "source_complete_phase1_policy_correction_plan_pending",
+        "status": "activation_paused_targeted_gateway_metadata_repair_first",
         "ownerThread": "01a08d52-31b1-7091-be45-812c0b6e6c9f",
         "reuse": [
           "Existing owner authority",
@@ -6924,7 +6924,7 @@
           "sourceCorrectionComplete": true
         },
         "activationPreparation": {
-          "status": "bounded_gateway_policy_retry_in_progress",
+          "status": "paused_unintended_gateway_metadata_change_repair_review_priority",
           "ownerThread": "01a08d52-31b1-7091-be45-812c0b6e6c9f",
           "evidenceCommit": "bc0fd5c06d5d97853296cf2459463fac4ad577a7",
           "evidencePath": "eva2/evidence/living-core/au006-activation-preparation-20260913.json",
@@ -7080,7 +7080,7 @@
           }
         },
         "phase1PolicyRetryPlan": {
-          "status": "bounded_retry_plan_independent_go_execution_authorized",
+          "status": "paused_before_post_unintended_existing_tool_team_binding_change",
           "ownerThread": "01a08d52-31b1-7091-be45-812c0b6e6c9f",
           "reviewPath": "/home/administrator/project/.eva2-artifacts/au006-activation-20260913/PHASE1-RETRY-REVIEW.md",
           "evidenceCommit": "87c80c28a643fc9b6eb9b2eeb47dffa638e633b8",
@@ -7093,7 +7093,7 @@
           "privateRollback": "Original gateway configuration snapshots retained privately in existing activation stage; no DELETE or shared catalog restore.",
           "independentGo": true,
           "retryAuthorized": true,
-          "gatewayRecreated": false,
+          "gatewayRecreated": true,
           "workerStarted": false,
           "coreChanged": false,
           "phase2Go": false,
@@ -7112,7 +7112,7 @@
             "Recreate only the existing gateway with exact reviewed correction",
             "One registration POST after all required fresh checks"
           ],
-          "executionStatus": "Assigned and in progress; result evidence pending.",
+          "executionStatus": "Gateway recreated; startup bootstrap changed four existing public CPython tool rows from teamId null to personal team. Registration retry paused before POST.",
           "retryCompleted": false,
           "successful": false,
           "excludedActions": [
@@ -7120,7 +7120,45 @@
             "Core changes",
             "Document worker start",
             "Phase2 or document effects"
-          ]
+          ],
+          "retryPostAttempts": 0,
+          "newAssignedIds": [],
+          "policyRollbackPerformed": true,
+          "catalogRollbackComplete": false,
+          "providerRunning": false
+        },
+        "gatewayBootstrapIncident": {
+          "status": "unintended_four_row_difference_preserved_targeted_repair_plan_pending_review",
+          "priority": "Restore exact prior tool metadata before any activation continuation.",
+          "reportedBy": "coordinator",
+          "trigger": "Existing gateway startup bootstrap during approved recreation",
+          "difference": "Four existing CPython/public tool rows: teamId null changed to personal team.",
+          "affectedRowCount": 4,
+          "observedThrough": [
+            "SQLite",
+            "Gateway API"
+          ],
+          "persistsAfterOriginalPolicyRollback": true,
+          "fullCatalogRollbackClaim": false,
+          "providerRunning": false,
+          "retryRegistrationPosts": 0,
+          "newAssignedIds": [],
+          "reportedUnchanged": [
+            "Core catalog and authority",
+            "Ten other existing containers",
+            "Empty project journal"
+          ],
+          "proposedRepair": {
+            "ownerThread": "01a08d52-31b1-7091-be45-812c0b6e6c9f",
+            "scope": "Isolated startup bootstrap guard and exact four-row compare-and-set repair plan.",
+            "status": "preparation_and_independent_review_pending",
+            "databaseCorrectionAuthorized": false,
+            "databaseCorrectionPerformed": false,
+            "broadRestoreAllowed": false
+          },
+          "liveGatewayMetadataChanged": true,
+          "projectWorkerStarted": false,
+          "projectEffects": 0
         }
       },
       "isolatedProductExecutionProven": true,
