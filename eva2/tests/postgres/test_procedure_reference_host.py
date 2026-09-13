@@ -83,6 +83,34 @@ def test_real_save_designate_new_conversation_list_resolve_and_revocation(people
         later=replace(turn,conversation_id='second',message_id='message-two',text='Review my next document.')
         journal.admit(later)
         actions=ProcedureReferenceActions(engine,authority=McpOwnerAuthority(engine,str(path)),gateway_factory=factory,clock=lambda:NOW)
+        route=PostgresConversationActions(engine,external_tools=(external,actions))
+        before=len(handler.calls)
+        context=route.active_context(later)
+        assert any(ref['document_id'] in item for item in context)
+        procedure_context=[item for item in context if ref['document_id'] in item]
+        assert len(procedure_context)==1 and len(procedure_context[0])<=4096
+        assert 'current_artifact_verified' in procedure_context[0]
+        assert len(handler.calls)==before  # retrieval adds no model/MCP/file call
+        nonmatching=replace(later,message_id='unrelated',text='Hoeveel minuten zijn twee uur?')
+        journal.admit(nonmatching)
+        assert actions.active_context(nonmatching)==()
+        # Real conversation planning boundary, fake model and personal recall only.
+        from eva.application.conversation import LivingConversation, IdentityProfile, ConversationModelResult
+        from tests.application.test_conversation import _Memory
+        class CaptureModel:
+            contexts=[]
+            def generate(self, turn, identity, memory, recent_messages, **kwargs):
+                self.contexts.append(kwargs["self_context"])
+                return ConversationModelResult("Begrepen.", "offline-capture")
+        model=CaptureModel()
+        conversation=LivingConversation(_Memory(), model,
+            IdentityProfile("Eva", "Test", ("Wees eerlijk.",), 80), actions=route)
+        conversation.respond(later)
+        assert ref['document_id'] in "\n".join(model.contexts[-1])
+        conversation.respond(nonmatching)
+        assert ref['document_id'] not in "\n".join(model.contexts[-1])
+        assert len(model.contexts)==2  # no preliminary model selection call
+        assert len(handler.calls)==before
         listed=run(later,ConversationActionCall('list','list_reusable_procedures',{})).output
         assert listed['candidates'][0]['document_id']==ref['document_id'] and listed['next_cursor'] is None
         assert listed['candidates'][0]['current_artifact_verified'] is False
@@ -134,6 +162,7 @@ def test_real_save_designate_new_conversation_list_resolve_and_revocation(people
             operation_sha256='e'*64,erased_at=datetime.fromisoformat(NOW.replace('Z','+00:00')))
         erased=run(later,ConversationActionCall('erased','list_reusable_procedures',{})).output
         assert erased['candidates']==[]
+        assert actions.active_context(later)==()
         assert len(handler.calls)==before
         authority.stop(turn)
         with pytest.raises(ConversationConflict):run(later,ConversationActionCall('stopped','list_reusable_procedures',{}))

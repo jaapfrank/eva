@@ -121,7 +121,7 @@
           ]
         }
       ],
-      "priorityDecision": "Procedure opslaan en markeren is bewezen; zelfstandig terugvinden faalde. De uitslag en terugrol zijn onafhankelijk gecontroleerd. De gerichte verbetering wordt beoordeeld. De PostgreSQL-release blijft geblokkeerd door scanbevindingen; één vervangende kandidaat wordt onderzocht.",
+      "priorityDecision": "Procedure opslaan en markeren is bewezen. De code die mogelijke procedures vóór het plannen aanbiedt, is goedgekeurd en geïntegreerd; de runtimekandidaat wordt voorbereid. Zelfstandig hergebruik is nog niet bewezen. De PostgreSQL-vervanger heeft minder scanbevindingen, maar geen vrijgave.",
       "dashboardVerification": {
         "status": "local_browser_verified_not_full_product_acceptance",
         "priorityRevision": {
@@ -259,7 +259,7 @@
         },
         {
           "title": "Reservekopie herstellen via de wizard",
-          "detail": "De image-inventaris en actuele beveiligingsscan zijn onafhankelijk gecontroleerd. De 110 HIGH- en 18 CRITICAL-pakketbevindingen blokkeren de release; ook ontbrekende licentiegegevens blijven open. Eén onderhouden PostgreSQL 16-kandidaat wordt met dezelfde scandatabase vergeleken. Er is geen live-upgrade of volledige herstelgoedkeuring."
+          "detail": "De vervangende PostgreSQL 16.15-image meldt met dezelfde scandatabase 96 HIGH- en 16 CRITICAL-pakketbevindingen, tegenover 110 en 18. Het bewijs van vergelijking en geïsoleerd bijwerken, herstellen en terugrollen wordt onafhankelijk beoordeeld. De resterende bevindingen en ontbrekende licentiegegevens blijven open. Er is geen live-upgrade of releasevrijgave."
         },
         {
           "title": "Voorbereid documentproject afgerond",
@@ -273,7 +273,7 @@
         },
         {
           "title": "Aangeleerde procedures terugvinden",
-          "detail": "Afgerond en onafhankelijk gecontroleerd: opslaan en markeren als herbruikbare procedure, in 25,67 seconden. Zelfstandig toepassen in een nieuw gesprek faalde: Eva vroeg de procedure niet op. De vorige runtime is aantoonbaar hersteld; het geldige bestand en de procedurebron blijven bewaard. De gerichte verbetering voor terugvinden wordt beoordeeld en staat nog niet live."
+          "detail": "Opslaan en markeren als herbruikbare procedure is afgerond en onafhankelijk gecontroleerd. De gerichte verbetering biedt mogelijke procedures nu vóór het plannen aan; de broncode is goedgekeurd en geïntegreerd. Een nieuwe runtimekandidaat wordt voorbereid. Zelfstandig lezen en toepassen in een echt vervolggesprek is nog niet bewezen; deze verbetering staat nog niet live."
         }
       ],
       "openRisks": [
@@ -5511,10 +5511,27 @@
               },
               "nextFix": {
                 "owner": "coordinator/next_tools_delivery",
-                "status": "source_candidate_under_review_not_live",
-                "scope": "General retrieval and selection through existing active_context and PostgreSQL lexical use_when matching; at most eight references and 4096 context characters, pending source review",
+                "status": "source_complete_independently_approved_integrated_not_live",
+                "scope": "Bounded lexical source metadata offered through existing active_context before first planning; actual artifact resolution and reading still required",
                 "live": false,
-                "candidateCommitReportedPrefix": "56ffe5a7"
+                "candidateCommitReportedPrefix": "56ffe5a7",
+                "candidateCommit": "56ffe5a7700a69f52cf37b2b7cda633add93e50a",
+                "sourceIntegrated": true,
+                "exactPaths": [
+                  "eva2/reviews/procedure-reference-preplanning-20260913.md",
+                  "eva2/src/eva/adapters/postgres/memory_outbox.py",
+                  "eva2/src/eva/providers/procedure_reference_actions.py",
+                  "eva2/tests/postgres/test_procedure_reference_host.py"
+                ],
+                "independentGo": true,
+                "independentReview": {
+                  "reportedBy": "coordinator",
+                  "reviewer": "procedure_host_review",
+                  "realPostgresTestsPassed": 2,
+                  "unitTestsPassed": 18,
+                  "scope": "Source preplanning metadata route only; no actual autonomous reuse claim"
+                },
+                "integrationVerification": "Three existing paths matched exact cce42356 baseline; bounded patch clean; all four final paths match approved commit bytes"
               },
               "writerFinalEvidence": {
                 "commit": "da9626daa6c2ec37dc38277c352481083c4f48bc",
@@ -5534,6 +5551,11 @@
                 "scope": "A registration PASS; B autonomous selection FAIL; C not attempted; usage and current rollback verified",
                 "generalReuseCompletion": false,
                 "ownerAccepted": false
+              },
+              "nextCandidatePreparation": {
+                "owner": "01a08d52-31b1-7091-be45-812c0b6e6c9f",
+                "status": "fresh_sealed_candidate_preparation",
+                "activationAuthorized": false
               }
             }
           }
@@ -7102,6 +7124,26 @@
             "eva2/evidence/product/IN-002-postgres-vulnerability-triage-2026-09-13.json",
             "eva2/reviews/IN-002-postgres-vulnerability-triage-2026-09-13.md"
           ]
+        },
+        "postgresRemediationCandidate": {
+          "status": "isolated_candidate_evidence_pending_independent_review",
+          "reportedBy": "coordinator",
+          "candidateCommitPrefixes": [
+            "0c3e6dcb",
+            "99c68d38"
+          ],
+          "version": "PostgreSQL16.15 bookworm",
+          "highPackageFindings": 96,
+          "criticalPackageFindings": 16,
+          "previousHighPackageFindings": 110,
+          "previousCriticalPackageFindings": 18,
+          "sameScannerDatabaseReported": true,
+          "newFindingsReported": 0,
+          "isolatedUpgradeRestoreRollbackReported": true,
+          "evidenceIntegrated": false,
+          "securityReleaseGo": false,
+          "liveUpgradePerformed": false,
+          "pinChanged": false
         }
       }
     },

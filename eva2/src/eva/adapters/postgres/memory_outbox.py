@@ -199,6 +199,48 @@ class PostgresMemoryOutbox(PostgresScopedRole):
             return None
         return document
 
+    def matching_sources(self, *, principal_id: str, project_id: str | None,
+                         query: str, now: str) -> tuple[ConversationMemoryDocument, ...]:
+        """Bounded lexical candidates using PostgreSQL's existing Dutch dictionary.
+
+        Search original records only; ranking is not semantic applicability or authority.
+        """
+        if not isinstance(query, str) or not query.strip():
+            return ()
+        statement = sa.text("""
+            WITH scoped AS (
+                SELECT e.payload->'data' AS data
+                FROM eva_core.operational_events e
+                WHERE e.tenant_id=:tenant AND e.installation_id=:installation
+                  AND e.sequence=1 AND e.thread_id LIKE 'memory-source:%'
+                  AND e.payload->'data'->>'principal_id'=:principal
+                  AND (e.payload->'data'->>'project_id') IS NOT DISTINCT FROM :project
+                  AND NOT (e.payload->'data' ? 'content_erasure')
+                  AND (e.payload->'data'->>'retention_until')::timestamptz > CAST(:now AS timestamptz)
+            ), candidates AS (
+                SELECT data,
+                    tsvector_to_array(to_tsvector('dutch',
+                        (data->>'content')::jsonb->>'use_when')) AS words,
+                    tsvector_to_array(to_tsvector('dutch', :query)) AS question
+                FROM scoped
+            )
+            SELECT data->>'document_id' AS document_id,
+                (SELECT count(*) FROM unnest(words) AS word WHERE word=ANY(question)) AS matches
+            FROM candidates WHERE words && question
+            ORDER BY matches DESC, data->>'document_id' LIMIT 8
+        """)
+        with self._engine.connect() as connection:
+            self._scope(connection)
+            rows = connection.execute(statement, {"tenant": self._scope_value.tenant_id,
+                "installation": self._scope_value.installation_id, "principal": principal_id,
+                "project": project_id, "query": query[:4096], "now": now}).all()
+        documents = []
+        for row in rows:
+            doc = self.resolve_source(row.document_id, principal_id=principal_id, project_id=project_id)
+            if doc is not None:
+                documents.append(doc)
+        return tuple(documents)
+
     def list_sources(self, *, principal_id: str, project_id: str | None,
                      cursor: str = "") -> tuple[tuple[ConversationMemoryDocument, ...], str | None]:
         """Page the original source records; no derived search index or fact publication."""
