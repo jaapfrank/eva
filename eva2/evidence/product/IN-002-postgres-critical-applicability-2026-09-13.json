@@ -1,0 +1,199 @@
+{
+  "observedAt": "2026-09-13T09:51:23.051436+00:00",
+  "criticalPackageFindings": [
+    {
+      "package": "libperl5.36",
+      "installed": "5.36.0-7+deb12u3",
+      "cve": "CVE-2026-13221",
+      "scannerStatus": "affected",
+      "scannerFixedVersion": null,
+      "primarySource": "https://security-tracker.debian.org/tracker/CVE-2026-13221",
+      "assessment": "Debian bookworm table says vulnerable, but notes introduce change in Perl 5.37.10 while installed is 5.36.0. Conflict unresolved: retain finding pending source/backport analysis. Trixie listed fixed 5.40.1-6+deb13u1."
+    },
+    {
+      "package": "libperl5.36",
+      "installed": "5.36.0-7+deb12u3",
+      "cve": "CVE-2026-42496",
+      "scannerStatus": "fix_deferred",
+      "scannerFixedVersion": null,
+      "primarySource": "https://security-tracker.debian.org/tracker/CVE-2026-42496",
+      "assessment": "Bookworm postponed pending upstream regression resolution. No installed-package fixed version supplied. Upstream Archive::Tar fix referenced at 3.08; this is not a safe Debian package substitution."
+    },
+    {
+      "package": "libperl5.36",
+      "installed": "5.36.0-7+deb12u3",
+      "cve": "CVE-2026-8376",
+      "scannerStatus": "affected",
+      "scannerFixedVersion": null,
+      "primarySource": "https://security-tracker.debian.org/tracker/CVE-2026-8376",
+      "assessment": "Debian bookworm no-dsa minor issue, not a security exemption. Advisory specifically concerns 32-bit Perl builds; exact candidate Perl reports ptrsize=8 and ivsize=8. Narrow architecture applicability evidence only, raw finding retained."
+    },
+    {
+      "package": "libsqlite3-0",
+      "installed": "3.40.1-2+deb12u2",
+      "cve": "CVE-2025-7458",
+      "scannerStatus": "affected",
+      "scannerFixedVersion": null,
+      "primarySource": "https://security-tracker.debian.org/tracker/CVE-2025-7458",
+      "assessment": "Bookworm no-dsa minor issue, still vulnerable. Vulnerable code introduced SQLite 3.39.0; installed 3.40.1 is within that range. No installed-package fixed version supplied."
+    },
+    {
+      "package": "libxml2",
+      "installed": "2.9.14+dfsg-1.3~deb12u6",
+      "cve": "CVE-2026-6653",
+      "scannerStatus": "fix_deferred",
+      "scannerFixedVersion": null,
+      "primarySource": "https://security-tracker.debian.org/tracker/CVE-2026-6653",
+      "assessment": "Bookworm postponed; tracker says UAF arrives via CVE-2021-3541 backport, upstream fixed 2.11.0. Installed 2.9.14 remains unresolved. Libxml2 is in PostgreSQL runtime dependency tree; no reachability claim."
+    },
+    {
+      "package": "perl",
+      "installed": "5.36.0-7+deb12u3",
+      "cve": "CVE-2026-13221",
+      "scannerStatus": "affected",
+      "scannerFixedVersion": null,
+      "primarySource": "https://security-tracker.debian.org/tracker/CVE-2026-13221",
+      "assessment": "Debian bookworm table says vulnerable, but notes introduce change in Perl 5.37.10 while installed is 5.36.0. Conflict unresolved: retain finding pending source/backport analysis. Trixie listed fixed 5.40.1-6+deb13u1."
+    },
+    {
+      "package": "perl",
+      "installed": "5.36.0-7+deb12u3",
+      "cve": "CVE-2026-42496",
+      "scannerStatus": "fix_deferred",
+      "scannerFixedVersion": null,
+      "primarySource": "https://security-tracker.debian.org/tracker/CVE-2026-42496",
+      "assessment": "Bookworm postponed pending upstream regression resolution. No installed-package fixed version supplied. Upstream Archive::Tar fix referenced at 3.08; this is not a safe Debian package substitution."
+    },
+    {
+      "package": "perl",
+      "installed": "5.36.0-7+deb12u3",
+      "cve": "CVE-2026-8376",
+      "scannerStatus": "affected",
+      "scannerFixedVersion": null,
+      "primarySource": "https://security-tracker.debian.org/tracker/CVE-2026-8376",
+      "assessment": "Debian bookworm no-dsa minor issue, not a security exemption. Advisory specifically concerns 32-bit Perl builds; exact candidate Perl reports ptrsize=8 and ivsize=8. Narrow architecture applicability evidence only, raw finding retained."
+    },
+    {
+      "package": "perl-base",
+      "installed": "5.36.0-7+deb12u3",
+      "cve": "CVE-2026-13221",
+      "scannerStatus": "affected",
+      "scannerFixedVersion": null,
+      "primarySource": "https://security-tracker.debian.org/tracker/CVE-2026-13221",
+      "assessment": "Debian bookworm table says vulnerable, but notes introduce change in Perl 5.37.10 while installed is 5.36.0. Conflict unresolved: retain finding pending source/backport analysis. Trixie listed fixed 5.40.1-6+deb13u1."
+    },
+    {
+      "package": "perl-base",
+      "installed": "5.36.0-7+deb12u3",
+      "cve": "CVE-2026-42496",
+      "scannerStatus": "fix_deferred",
+      "scannerFixedVersion": null,
+      "primarySource": "https://security-tracker.debian.org/tracker/CVE-2026-42496",
+      "assessment": "Bookworm postponed pending upstream regression resolution. No installed-package fixed version supplied. Upstream Archive::Tar fix referenced at 3.08; this is not a safe Debian package substitution."
+    },
+    {
+      "package": "perl-base",
+      "installed": "5.36.0-7+deb12u3",
+      "cve": "CVE-2026-8376",
+      "scannerStatus": "affected",
+      "scannerFixedVersion": null,
+      "primarySource": "https://security-tracker.debian.org/tracker/CVE-2026-8376",
+      "assessment": "Debian bookworm no-dsa minor issue, not a security exemption. Advisory specifically concerns 32-bit Perl builds; exact candidate Perl reports ptrsize=8 and ivsize=8. Narrow architecture applicability evidence only, raw finding retained."
+    },
+    {
+      "package": "perl-modules-5.36",
+      "installed": "5.36.0-7+deb12u3",
+      "cve": "CVE-2026-13221",
+      "scannerStatus": "affected",
+      "scannerFixedVersion": null,
+      "primarySource": "https://security-tracker.debian.org/tracker/CVE-2026-13221",
+      "assessment": "Debian bookworm table says vulnerable, but notes introduce change in Perl 5.37.10 while installed is 5.36.0. Conflict unresolved: retain finding pending source/backport analysis. Trixie listed fixed 5.40.1-6+deb13u1."
+    },
+    {
+      "package": "perl-modules-5.36",
+      "installed": "5.36.0-7+deb12u3",
+      "cve": "CVE-2026-42496",
+      "scannerStatus": "fix_deferred",
+      "scannerFixedVersion": null,
+      "primarySource": "https://security-tracker.debian.org/tracker/CVE-2026-42496",
+      "assessment": "Bookworm postponed pending upstream regression resolution. No installed-package fixed version supplied. Upstream Archive::Tar fix referenced at 3.08; this is not a safe Debian package substitution."
+    },
+    {
+      "package": "perl-modules-5.36",
+      "installed": "5.36.0-7+deb12u3",
+      "cve": "CVE-2026-8376",
+      "scannerStatus": "affected",
+      "scannerFixedVersion": null,
+      "primarySource": "https://security-tracker.debian.org/tracker/CVE-2026-8376",
+      "assessment": "Debian bookworm no-dsa minor issue, not a security exemption. Advisory specifically concerns 32-bit Perl builds; exact candidate Perl reports ptrsize=8 and ivsize=8. Narrow architecture applicability evidence only, raw finding retained."
+    },
+    {
+      "package": "zlib1g",
+      "installed": "1:1.2.13.dfsg-1",
+      "cve": "CVE-2023-45853",
+      "scannerStatus": "will_not_fix",
+      "scannerFixedVersion": null,
+      "primarySource": "https://security-tracker.debian.org/tracker/CVE-2023-45853",
+      "assessment": "Debian ignores bookworm source zlib because vulnerable contrib/minizip is not built into these binaries. This supports a package-specific applicability distinction for zlib1g, not an image-wide exception; raw finding retained."
+    },
+    {
+      "package": "stdlib",
+      "installed": "v1.24.6",
+      "cve": "CVE-2025-68121",
+      "scannerStatus": "fixed",
+      "scannerFixedVersion": "1.24.13, 1.25.7, 1.26.0-rc.3",
+      "primarySource": "https://vuln.go.dev/ID/GO-2026-4337.json",
+      "assessment": "Official Go advisory concerns crypto/tls session resumption with mutated CA config. Fixed Go 1.24.13/1.25.7/1.26rc3. gosu contains Go1.24.6; whether affected TLS symbols are linked/reachable is not proved. Retain unresolved."
+    }
+  ],
+  "sameScanDatabaseBytesVerified": true,
+  "alternative": {
+    "tag": "16.15-trixie",
+    "digest": "sha256:f1c3376c26f2609ab9f29f71f824103fe2fcd8ee0346485cb6122a4f93df6f94",
+    "bookwormCounts": {
+      "HIGH": 96,
+      "CRITICAL": 16
+    },
+    "trixieCounts": {
+      "HIGH": 101,
+      "CRITICAL": 14
+    },
+    "decision": "Not selected: two fewer critical but five more high package findings; OS-major compatibility/restore and license comparison not proven. No OS switch."
+  },
+  "licenseUnknowns": {
+    "debianPackagesWithActualCopyrightEvidence": 22,
+    "goModulesWithVersionSpecificUpstreamLicenseEvidence": 3,
+    "aggregateArchiveSpdxNode": 1,
+    "originalDeclaredUnknownCount": 26,
+    "automaticLegalClearance": false
+  },
+  "claims": {
+    "scannerFindingsSuppressed": false,
+    "allowlistAdded": false,
+    "productionChanged": false,
+    "canonicalPinsChanged": false,
+    "securityRelease": false
+  },
+  "artifacts": {
+    "postgres-critical-triage/CVE-2023-45853.html": "a097c052654594d2ea930b53ee1928aac6dab6f9242a7fee79c2883095276a13",
+    "postgres-critical-triage/trixie-trivy-command.json": "36b0b005e3c19cc26bb30ee32295ab01eb2f98ff66baa54b039b3569604067b3",
+    "postgres-critical-triage/trixie-archive-receipt.json": "26617172472550e421797344255318d6f128449c571f97bb03603419d26e59f5",
+    "postgres-critical-triage/CVE-2026-6653.html": "e2c617f15c21210bf4b14e3dfba7349a56e335e2cc0cec5a9e5365de711389e7",
+    "postgres-critical-triage/GO-2026-4337.json": "df1a6110a54bb08c2d5c8726971cd51069a30f48deea2cace5e5cf97893def37",
+    "postgres-critical-triage/CVE-2026-13221.html": "8780b5dd3189ed5a228e1ee2fd25bbdc9e7791471f5ae2ca71aebd7694054d89",
+    "postgres-critical-triage/perl-build.txt": "0ea2080bed584b5be9c2773fa73c745ffeecd16671266a5ea848c6ac5eaf9f7f",
+    "postgres-critical-triage/trixie-trivy.json": "05d8c083a29b134dd8a5ad3ebb41b42cacefd9de2d75e5c36cb4dac243a1397d",
+    "postgres-critical-triage/moby-user-LICENSE": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+    "postgres-critical-triage/CVE-2025-7458.html": "3bd4370ccbf3ac473945013bfd2c1258653f86d379ee2f2c6e2c391c36776383",
+    "postgres-critical-triage/go-sys-LICENSE": "2d36597f7117c38b006835ae7f537487207d8ec407aa9d9980794b2030cbc067",
+    "postgres-critical-triage/trixie-index.json": "f1c3376c26f2609ab9f29f71f824103fe2fcd8ee0346485cb6122a4f93df6f94",
+    "postgres-critical-triage/CVE-2026-8376.html": "2f463007b0d0b0522958fe977a8f00b05cac33fefa6d8c32d2b56cb3e4ee867a",
+    "postgres-critical-triage/license-evidence.json": "9399188fed1b2ccf6a60c7ab9eaac59505fcbe0fe9f0f3080047659fe7ae67cb",
+    "postgres-critical-triage/trixie-trivy.stderr": "3e0f4558b792f29d0e27aa7880c645ee4307f37558075298d760ef3d64f01329",
+    "postgres-critical-triage/CVE-2026-42496.html": "5d3e1e026c88098168434628eb1579f7843805acaa69637588d40dcb2acab0da",
+    "postgres-critical-triage/trixie-pull.log": "4481172eb47819708986a360e70c42017bfda91136aa24b5451e6e8a0493d477",
+    "postgres-critical-triage/copyright-stderr.txt": "d180287b705606a575348bf3e0999c62958f90f540dcc5a18cbd23c48383f319",
+    "postgres-critical-triage/gosu-LICENSE": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+    "postgres-critical-triage/copyright-files.tar": "04d75e4bb745b4a23f01324c02a3fb945ee1209c952ec0ce18d3530640c9d735"
+  }
+}

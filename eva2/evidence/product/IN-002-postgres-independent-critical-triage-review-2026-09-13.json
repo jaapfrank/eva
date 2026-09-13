@@ -1,0 +1,22 @@
+{
+  "reviewer": "postgres_security_review",
+  "reviewedAt": "2026-09-13T09:55:03.057410+00:00",
+  "commit": "454c217db89e0887fc915e083af5687cc98d8b4a",
+  "decision": "GO bounded primary-source triage evidence only",
+  "checks": [
+    "20 artifact hashes exact",
+    "16 critical package/version/CVE tuples exact against previous raw scan",
+    "Captured Debian primary texts support all six CVE assessments, including unresolved Perl table/introduction conflict",
+    "Go official advisory range matches recorded critical fix; reachable TLS symbols remain unproven",
+    "Perl ptrsize/ivsize8 recorded; no broader architecture or exploit exemption inferred",
+    "22 copyright tar entries independently hashed including hardlinks;3 upstream module license evidence retained with initial404",
+    "Trixie raw count recomputed101HIGH14CRITICAL;same cache hashes and offline command verified; alternative not selected"
+  ],
+  "boundaries": [
+    "No suppression, legal/security/release GO",
+    "No scan or runtime repeat",
+    "Architecture output checked as retained writer evidence, not rerun",
+    "No independent network authentication/signature claim for captured source files"
+  ],
+  "nextGap": "Investigate gosu affected symbol reachability or maintained fixed-Go binary; resolve Perl source/backport conflict. Keep current findings and evaluate real distro fixes rather than interpreting postponed/no-dsa as clearance."
+}

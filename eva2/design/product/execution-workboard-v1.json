@@ -121,7 +121,7 @@
           ]
         }
       ],
-      "priorityDecision": "De procedurekandidaat wordt onafhankelijk beoordeeld vóór een echte vervolgproef. De PostgreSQL-vergelijking en geïsoleerde herstelproeven zijn afgerond en gecontroleerd; resterende beveiligingsbevindingen en licentiegegevens blokkeren de release.",
+      "priorityDecision": "De nieuwe procedureproef vindt en controleert nu een bestaande verwijzing, maar leest de inhoud nog niet. Dat is de resterende fout. De uitvoerder heeft de vorige runtime hersteld; de onafhankelijke eindcontrole volgt. De PostgreSQL-herstelproeven zijn afgerond, met releaseblokkades nog open.",
       "dashboardVerification": {
         "status": "local_browser_verified_not_full_product_acceptance",
         "priorityRevision": {
@@ -229,7 +229,7 @@
         },
         {
           "title": "Reguliere Telegramupdate afgeleverd",
-          "detail": "De uurupdate van 13 september om 10:46 uur is bevestigd eenmalig afgeleverd. De volgende reguliere poging is niet eerder dan één uur na de vorige poging; er is geen extra bericht verstuurd."
+          "detail": "De uurupdate van 13 september om 11:55 uur is bevestigd eenmalig afgeleverd. De volgende reguliere poging is niet eerder dan één uur na de vorige poging; er is geen extra bericht verstuurd."
         },
         {
           "title": "Browserherstelproef afgerond",
@@ -259,7 +259,7 @@
         },
         {
           "title": "Reservekopie herstellen via de wizard",
-          "detail": "Afgerond en onafhankelijk gecontroleerd: vergelijking van PostgreSQL 16.13 met 16.15 en geïsoleerd bijwerken, logisch herstellen en terugrollen naar de reservekopie van vóór de upgrade. De kandidaat heeft 96 HIGH- en 16 CRITICAL-pakketbevindingen tegenover 110 en 18; zestien verdwenen, geen nieuwe. Terugrollen bewaart geen later toegevoegde kandidaatdata. Resterende bevindingen en 26 ontbrekende licentievermeldingen blijven open. Geen live-upgrade of volledige installatierelease."
+          "detail": "De PostgreSQL-vergelijking en geïsoleerde herstelproeven zijn afgerond. Ook de beoordeling van de resterende kritieke bevindingen en verzamelde licentieteksten is gecontroleerd. De 96 HIGH- en 16 CRITICAL-bevindingen blijven behouden. Een alternatief met 101 HIGH en 14 CRITICAL is niet gekozen. Er is geen live-upgrade, beveiligingsvrijgave of volledige installatierelease."
         },
         {
           "title": "Voorbereid documentproject afgerond",
@@ -273,7 +273,7 @@
         },
         {
           "title": "Aangeleerde procedures terugvinden",
-          "detail": "Opslaan en markeren als herbruikbare procedure is afgerond en onafhankelijk gecontroleerd. De code die mogelijke procedures vóór het plannen aanbiedt, is goedgekeurd en geïntegreerd. De nieuwe runtimekandidaat wordt onafhankelijk beoordeeld. Zelfstandig lezen en toepassen in een echt vervolggesprek is nog niet bewezen; deze verbetering staat nog niet live."
+          "detail": "De nieuwe proef vindt en controleert nu een eerder opgeslagen procedureverwijzing. Ze faalt nog bij het lezen: Eva las het document niet voordat ze antwoordde. Opslaan en markeren slaagden opnieuw. De derde proef is niet uitgevoerd; geen herhaling. De uitvoerder heeft de vorige runtime gecontroleerd hersteld. De onafhankelijke eindcontrole staat open; zelfstandig toepassen is nog niet afgerond."
         }
       ],
       "openRisks": [
@@ -5206,7 +5206,7 @@
             "candidateCommit": "46e85b2267dc58619de78233405401163f6c20fe",
             "decision": "GO for preparation only",
             "finding": "Existing delegated worker uses832; core and document worker use2393.",
-            "status": "r4_A_registration_pass_B_selection_failed_rollback_independently_verified",
+            "status": "r5_A_pass_B_selected_reference_but_no_content_read_writer_rollback_verified_review_pending",
             "planIntegrated": false,
             "deploymentAuthorized": false,
             "correctionCommit": "295a70cef49477b36f7acd48cae1eb6de401fcf4",
@@ -5559,15 +5559,60 @@
               }
             },
             "r5Candidate": {
-              "status": "sealed_candidate_under_independent_review",
+              "status": "A_pass_B_content_read_failed_C_not_run_writer_rollback_verified",
               "planCommitReportedPrefix": "b076b9cf",
               "imageReportedPrefix": "62743238",
               "sealReportedPrefix": "291e3e65",
               "reportedBy": "coordinator",
               "activationGo": false,
-              "outcomeAvailable": false,
+              "outcomeAvailable": true,
               "liveCompletionProven": false,
-              "ownerAccepted": false
+              "ownerAccepted": false,
+              "writerFinalEvidence": {
+                "commit": "6be3644006bd8ee0dd9d275e94f2c90fa1a08610",
+                "paths": [
+                  "eva2/evidence/living-core/au004-r5-a-pass-b-content-read-fail-20260913.json",
+                  "eva2/reviews/au004-r5-a-pass-b-content-read-fail-20260913.md"
+                ],
+                "integrated": false,
+                "independentResultGo": false
+              },
+              "ordinaryResults": {
+                "reportedBy": "runtime writer",
+                "A": "PASS",
+                "B": "FAIL: selected and resolved retained R4 procedure reference, but did not read document body",
+                "selectedSourceOrigin": "R4 preserved source",
+                "resolveMetadataOnly": true,
+                "documentBodyRead": false,
+                "CPerformed": false,
+                "retryPerformed": false,
+                "usage": {
+                  "modelAttempts": 5,
+                  "inputTokens": 24478,
+                  "outputTokens": 543,
+                  "toolCalls": 3,
+                  "elapsedSeconds": 40.054,
+                  "moneyCost": "unknown"
+                }
+              },
+              "rollback": {
+                "status": "writer_verified_independent_review_pending",
+                "writerVerified": true,
+                "independentVerified": false,
+                "image": "sha256:bc6d64a3aebbb4b1502dfa7170c0b3d02eda97ac97eddfc704c90c80659864e9",
+                "coreId": "c80e048ef27a9f57898cfb0047141c234b133dd4ee1c379d55999fb53e48898f",
+                "protectedServices": 12,
+                "ready": true,
+                "telegramFixPreserved": true,
+                "au006Retained": true,
+                "pendingModelRequests": 0
+              },
+              "nextFix": {
+                "owner": "coordinator/next_tools_delivery",
+                "status": "in_progress",
+                "scope": "Typed bounded verified content through existing resolve route",
+                "live": false
+              }
             }
           }
         }
@@ -6175,18 +6220,18 @@
       "usage": "design/product/project-telegram-updates.md",
       "confirmationHour": "2026-09-12T20:00Z",
       "scheduler": "Coordinator confirmed existing heartbeat wired to exact CLI/dedup/receipt on 12 September; no second scheduler.",
-      "nextRegularUpdateNotBefore": "2026-09-13T09:46:08.843642+00:00",
+      "nextRegularUpdateNotBefore": "2026-09-13T10:54:57.380960+00:00",
       "latestHourlyAttempt": {
-        "hourKey": "2026-09-13T08:00Z",
+        "hourKey": "2026-09-13T09:00Z",
         "status": "delivered",
-        "claimedAt": "2026-09-13T08:46:08.843642+00:00",
-        "deliveredAt": "2026-09-13T08:46:12.994511+00:00",
+        "claimedAt": "2026-09-13T09:54:57.380960+00:00",
+        "deliveredAt": "2026-09-13T09:55:01.538580+00:00",
         "providerReceiptAvailable": true,
         "privateChatAndExactTextVerified": true,
         "repeated": false,
-        "evidencePath": "eva2/evidence/product/project-telegram-hourly-delivery-2026-09-13-08.json"
+        "evidencePath": "eva2/evidence/product/project-telegram-hourly-delivery-2026-09-13-09.json"
       },
-      "lastConfirmedDelivery": "2026-09-13T08:46:12.994511+00:00",
+      "lastConfirmedDelivery": "2026-09-13T09:55:01.538580+00:00",
       "helperRepair": {
         "status": "reviewed_helper_regular_delivery_confirmed",
         "scope": "Trim ASCII edge whitespace before wire; preserve raw idempotency hash and old records; retain only allowlisted stage/boolean/hash diagnostics.",
@@ -6298,6 +6343,16 @@
           "privateChatAndExactTextVerified": true,
           "repeated": false,
           "evidencePath": "eva2/evidence/product/project-telegram-hourly-delivery-2026-09-13-07.json"
+        },
+        {
+          "hourKey": "2026-09-13T08:00Z",
+          "status": "delivered",
+          "claimedAt": "2026-09-13T08:46:08.843642+00:00",
+          "deliveredAt": "2026-09-13T08:46:12.994511+00:00",
+          "providerReceiptAvailable": true,
+          "privateChatAndExactTextVerified": true,
+          "repeated": false,
+          "evidencePath": "eva2/evidence/product/project-telegram-hourly-delivery-2026-09-13-08.json"
         }
       ],
       "unsentHourNote": {
@@ -7191,6 +7246,39 @@
           "platformSupportGo": false,
           "fullInstallerGo": false,
           "productionChanged": false
+        },
+        "criticalApplicabilityTriage": {
+          "status": "bounded_primary_evidence_independently_approved",
+          "sourceCommit": "454c217db89e0887fc915e083af5687cc98d8b4a",
+          "exactPaths": [
+            "eva2/evidence/product/IN-002-postgres-critical-applicability-2026-09-13.json",
+            "eva2/reviews/IN-002-postgres-critical-applicability-2026-09-13.md",
+            "eva2/evidence/product/IN-002-postgres-independent-critical-triage-review-2026-09-13.json"
+          ],
+          "evidenceIntegrated": true,
+          "reviewer": "postgres_security_review",
+          "reviewReportedBy": "coordinator",
+          "independentReceiptSha256": "4be96fcf266718be8fc4d016bea45b50e4359e7947d2df04102977830af46ad7",
+          "artifactHashesVerified": 20,
+          "criticalFindingTuplesVerified": 16,
+          "rawFindingsPreserved": true,
+          "unknownSpdxDeclarationsPreserved": true,
+          "licenseEvidence": {
+            "debianCopyrightEntries": 22,
+            "upstreamModuleLicenses": 3,
+            "aggregateArchiveNodes": 1,
+            "legalClearance": false
+          },
+          "alternativeTrixie": {
+            "highPackageFindings": 101,
+            "criticalPackageFindings": 14,
+            "sameDatabaseVerified": true,
+            "selected": false,
+            "osCompatibilityProven": false
+          },
+          "securityReleaseGo": false,
+          "productionChanged": false,
+          "suppressionAdded": false
         }
       }
     },
