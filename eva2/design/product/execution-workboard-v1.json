@@ -262,7 +262,7 @@
         },
         {
           "title": "Aangeleerde procedures terugvinden",
-          "detail": "De eerste bronversie ligt ter onafhankelijke beoordeling. Expliciete procedureverwijzingen worden apart van persoonlijk geheugen opgeslagen; eigenaar, geldigheid en bestandsinhoud worden gecontroleerd. De aansluiting op zoeken en gewone gesprekken is nog niet gebouwd of live. Eerdere geaccepteerde opleveringen blijven afgesloten."
+          "detail": "De eerste kandidaat is bij review afgekeurd: de opslag van procedureverwijzingen zou het persoonlijke geheugenoverzicht onbeschikbaar maken. De scheiding wordt gecorrigeerd en met het echte overzicht gecontroleerd. Er is niets geïntegreerd of live gezet; het geaccepteerde geheugen blijft ongewijzigd."
         }
       ],
       "openRisks": [
@@ -4913,7 +4913,7 @@
         "next": "Preserve independent result and missing reuse/search proof; no automatic retry or retroactive criteria change."
       },
       "procedureReferenceFollowup": {
-        "status": "phase1_source_candidate_under_independent_review",
+        "status": "candidate_review_no_go_personal_overview_regression_fix_in_progress",
         "owner": "coordinator/next_tools_delivery",
         "assignedBy": "01a08a88-894c-7171-87fa-e681ed47c735",
         "userOutcome": "An explicitly reusable saved procedure can be identified as a procedure candidate for a later task, with owner, retention, mandate and current file hash checked locally.",
@@ -4986,7 +4986,19 @@
           "modelCalls": 0,
           "productionDatabaseConnections": 0
         },
-        "builtScope": "Phase1 isolated source only; tests reported, independent review pending."
+        "builtScope": "Phase1 isolated source only; tests reported, independent review pending.",
+        "reviewBlocker": {
+          "decision": "NO-GO for candidate6da0329f",
+          "reportedBy": "coordinator",
+          "candidateCommit": "6da0329f3b74368a7db1df7f6e5baadfbeddda02",
+          "finding": "Source-only record in memory-retain namespace with another initial status breaks actual personal overview flow, returning unavailable.",
+          "correctionScope": "Separate namespace/projection handling and exercise actual personal overview with PostgreSQL.",
+          "validationRelaxationAllowed": false,
+          "liveIncident": false,
+          "candidateIntegrated": false,
+          "acceptedMemoryChanged": false,
+          "status": "Execution owner correcting candidate; new review required."
+        }
       }
     },
     "gatewayCatalogPagination20260912": {
@@ -5710,9 +5722,9 @@
         },
         {
           "owner": "coordinator/next_tools_delivery",
-          "work": "Procedureverwijzing bronversie klaar voor review",
+          "work": "Scheiding procedureopslag en persoonlijk overzicht corrigeren",
           "boundary": "Nieuwe src/eva/application/procedure_references.py plus gerichte tests en eigen bewijs. Alleen indien nodig kleine audience-gebonden source-lookup in bestaande memory_outbox.py. Geen runtime.after_response, Hindsight, ConfirmedFact, nieuwe tabel of registry in fase1.",
-          "status": "AU004_phase1_source_candidate_under_review",
+          "status": "AU004_candidate_no_go_personal_overview_fix",
           "previousCompletedWork": {
             "work": "Renovate npm-dekking",
             "status": "configuration_complete_bot_activity_unverified",
