@@ -1,0 +1,325 @@
+{
+  "contract": "AU004R6ActualOutcome/v1",
+  "candidate_image": "sha256:e66fff7d16a8cc0cc5100282c8f7d3faf95cc16269e6de9f6a4ba9b7038e8c90",
+  "seal_sha256": "53757fc85858e6265d5c1f2ff174ae4bf65b09a60b2041c2ee9672059f236182",
+  "source_commit": "158f0341570b2d191caf5ab58a93ea939ea40bc8",
+  "stage": "/home/administrator/project/.eva2-artifacts/procedure-reference-runtime-r6-20260913",
+  "cases": {
+    "A": {
+      "outcome": "PASS",
+      "request": {
+        "session_id": "1a58a055-15df-4785-ace0-a1fbb135076a",
+        "message_id": "661f4a7d-b916-44c8-a6da-56e3fbe1b8b8",
+        "text": "Bewaar deze herbruikbare aanpak voor korte planreviews als /proof-state/au004-planreview-procedure-20260913-r6.md: geef eerst maximaal drie concrete ontbrekende gegevens, daarna één eerstvolgende stap. Als een datum ontbreekt, noem dat vóór andere ontbrekende gegevens. Geef geen fictieve antwoorden. Markeer deze werkwijze expliciet als herbruikbaar tot 2026-10-13T00:00:00Z.",
+        "recent": [],
+        "active_work": [],
+        "work_results": []
+      },
+      "http_receipt": {
+        "httpStatus": 200,
+        "elapsedSeconds": 28.842145258000528,
+        "errorType": null,
+        "parseError": null,
+        "terminalReplyValid": true,
+        "streamErrorCount": 0,
+        "requestCount": 1,
+        "retry": false,
+        "messageId": "voice:1a58a055-15df-4785-ace0-a1fbb135076a:661f4a7d-b916-44c8-a6da-56e3fbe1b8b8",
+        "responseSha256": "5ef76a469b3b379ca748ab5499b1a3f18962e5ab73908119dc81f348767ee02a"
+      },
+      "reply": "Opgeslagen als /proof-state/au004-planreview-procedure-20260913-r6.md en de inhoud gecontroleerd. De werkwijze is expliciet gemarkeerd als herbruikbaar tot 13 oktober 2026 om 00:00 UTC.",
+      "usage": [
+        {
+          "tool_calls": 1,
+          "measurement": "measured",
+          "input_tokens": 6833,
+          "output_tokens": 151,
+          "model_attempts": 1
+        },
+        {
+          "tool_calls": 0,
+          "measurement": "measured",
+          "input_tokens": 4080,
+          "output_tokens": 59,
+          "model_attempts": 1
+        },
+        {
+          "tool_calls": 1,
+          "measurement": "measured",
+          "input_tokens": 6457,
+          "output_tokens": 129,
+          "model_attempts": 1
+        }
+      ],
+      "procedure_actions": [
+        {
+          "name": "designate_reusable_procedure",
+          "call_id": "call_Cfx8SQ4qYV74LkHweMNxXnkc",
+          "arguments": {
+            "use_when": "Voor korte planreviews: geef eerst maximaal drie concrete ontbrekende gegevens, met een ontbrekende datum vóór andere ontbrekende gegevens. Geef daarna één eerstvolgende stap. Geef geen fictieve antwoorden.",
+            "document_path": "/proof-state/au004-planreview-procedure-20260913-r6.md",
+            "retention_until": "2026-10-13T00:00:00Z"
+          },
+          "message_id": "voice:1a58a055-15df-4785-ace0-a1fbb135076a:661f4a7d-b916-44c8-a6da-56e3fbe1b8b8",
+          "step_index": 1,
+          "principal_id": "33333333-3333-3333-8333-333333333333",
+          "conversation_id": "voice:1a58a055-15df-4785-ace0-a1fbb135076a"
+        }
+      ],
+      "readback_sha256": "3af7a5c07f8e1ab42760c8a7711bf19529955dfa3421d2b4c7be1cc7af5d77f8",
+      "review_gate": {
+        "case": "A",
+        "passed": true,
+        "response_sha256": "5ef76a469b3b379ca748ab5499b1a3f18962e5ab73908119dc81f348767ee02a",
+        "seal_sha256": "53757fc85858e6265d5c1f2ff174ae4bf65b09a60b2041c2ee9672059f236182"
+      }
+    },
+    "B": {
+      "outcome": "PASS",
+      "request": {
+        "session_id": "a813dd9d-2a4d-4eb9-8cd7-8716c30a0f9f",
+        "message_id": "d1444b70-5495-4abe-8b4b-ded65159aa57",
+        "text": "Beoordeel dit plan en zeg wat ik als eerste moet doen: we willen een buurtmiddag organiseren. De locatie is nog niet gekozen en we weten niet hoeveel mensen komen.",
+        "recent": [],
+        "active_work": [],
+        "work_results": []
+      },
+      "http_receipt": {
+        "httpStatus": 200,
+        "elapsedSeconds": 13.201141107994772,
+        "errorType": null,
+        "parseError": null,
+        "terminalReplyValid": true,
+        "streamErrorCount": 0,
+        "requestCount": 1,
+        "retry": false,
+        "messageId": "voice:a813dd9d-2a4d-4eb9-8cd7-8716c30a0f9f:d1444b70-5495-4abe-8b4b-ded65159aa57",
+        "responseSha256": "7c29d03e029a4ceb543ed8b73514d92b2df5b1f8fed35a2ec61cee0d8e4d185e"
+      },
+      "reply": "Er is nog geen datum genoemd, de locatie ontbreekt en het verwachte aantal deelnemers is onbekend. Het is dus nog een idee, geen uitvoerbaar plan.\n\nMijn eerste stap zou zijn: peil bij buurtbewoners wie belangstelling heeft en op welke van twee of drie mogelijke middagen ze kunnen. Daarmee krijg je tegelijk zicht op een geschikte datum en de groepsgrootte, zodat je daarna gericht een locatie kunt zoeken.",
+      "usage": [
+        {
+          "tool_calls": 1,
+          "measurement": "measured",
+          "input_tokens": 5379,
+          "output_tokens": 88,
+          "model_attempts": 1
+        },
+        {
+          "tool_calls": 0,
+          "measurement": "measured",
+          "input_tokens": 2357,
+          "output_tokens": 91,
+          "model_attempts": 1
+        }
+      ],
+      "procedure_actions": [
+        {
+          "name": "resolve_reusable_procedure",
+          "call_id": "call_Vzd9TeBpflg39dwNNTojZ5sZ",
+          "arguments": {
+            "document_id": "procedure-reference:0c8fdfb5b62abae383834713a83f6a4ecb6dc92731991e041b37333a52658a46"
+          },
+          "message_id": "voice:a813dd9d-2a4d-4eb9-8cd7-8716c30a0f9f:d1444b70-5495-4abe-8b4b-ded65159aa57",
+          "step_index": 0,
+          "principal_id": "33333333-3333-3333-8333-333333333333",
+          "conversation_id": "voice:a813dd9d-2a4d-4eb9-8cd7-8716c30a0f9f"
+        }
+      ],
+      "readback_sha256": "5d09fa307b035afb94e2d4823c3e0853e4aebadc4cf9053df77a3dfc64461b21",
+      "review_gate": {
+        "case": "B",
+        "passed": true,
+        "response_sha256": "7c29d03e029a4ceb543ed8b73514d92b2df5b1f8fed35a2ec61cee0d8e4d185e",
+        "seal_sha256": "53757fc85858e6265d5c1f2ff174ae4bf65b09a60b2041c2ee9672059f236182"
+      }
+    },
+    "C": {
+      "outcome": "PASS",
+      "request": {
+        "session_id": "6c8b289d-05e5-4675-a817-409ccba22287",
+        "message_id": "e0a55507-b4a7-4507-b588-5bd5fc6dd030",
+        "text": "Hoeveel minuten zijn twee uur?",
+        "recent": [],
+        "active_work": [],
+        "work_results": []
+      },
+      "http_receipt": {
+        "httpStatus": 200,
+        "elapsedSeconds": 4.567827029997716,
+        "errorType": null,
+        "parseError": null,
+        "terminalReplyValid": true,
+        "streamErrorCount": 0,
+        "requestCount": 1,
+        "retry": false,
+        "messageId": "voice:6c8b289d-05e5-4675-a817-409ccba22287:e0a55507-b4a7-4507-b588-5bd5fc6dd030",
+        "responseSha256": "4da68daa5274218aa216f7039b3e09caee06e6be18ea2f72276a732dae2a8531"
+      },
+      "reply": "Twee uur is 120 minuten.",
+      "usage": [
+        {
+          "tool_calls": 0,
+          "measurement": "measured",
+          "input_tokens": 4703,
+          "output_tokens": 12,
+          "model_attempts": 1
+        }
+      ],
+      "procedure_actions": [],
+      "readback_sha256": "3e102c6d93f605d3e62a44fad9c7f9f554edcb432eb54b9ad29dd618ffe5fe84",
+      "review_gate": {
+        "case": "C",
+        "passed": true,
+        "response_sha256": "4da68daa5274218aa216f7039b3e09caee06e6be18ea2f72276a732dae2a8531",
+        "seal_sha256": "53757fc85858e6265d5c1f2ff174ae4bf65b09a60b2041c2ee9672059f236182"
+      }
+    }
+  },
+  "A_source": {
+    "content_sha256": "d4d77846876444c17af80d95385579700a90e115cb10bb42d513fb994da3663e",
+    "source_document_id": "procedure-reference:0da4640de07bc33857f3a74ef8bdc362bf0663275e6154131028e50df92e4e78",
+    "save_call_id": "call_7NFNsUCxW6NHBHDctOwtxJkG",
+    "source_reference": {
+      "content_sha256": "d4d77846876444c17af80d95385579700a90e115cb10bb42d513fb994da3663e",
+      "contract": "ProcedureReference/v1",
+      "document_id": "procedure-reference:0da4640de07bc33857f3a74ef8bdc362bf0663275e6154131028e50df92e4e78",
+      "path": "/proof-state/au004-planreview-procedure-20260913-r6.md",
+      "receipt_sha256": "246e5b4702cb2a7c6713ce7fb00bafbdf1a98a96cf5e0f4b255b6661f09293c0",
+      "retention_until": "2026-10-13T00:00:00Z",
+      "source_call_id": "call_7NFNsUCxW6NHBHDctOwtxJkG",
+      "source_message_id": "voice:1a58a055-15df-4785-ace0-a1fbb135076a:661f4a7d-b916-44c8-a6da-56e3fbe1b8b8",
+      "tool_configuration_sha256": "a2f87385fed891cf244d4294777901bbdc8509b62304a91e39f82df730947a54",
+      "use_when": "Voor korte planreviews: geef eerst maximaal drie concrete ontbrekende gegevens, met een ontbrekende datum vóór andere ontbrekende gegevens. Geef daarna één eerstvolgende stap. Geef geen fictieve antwoorden."
+    },
+    "source_owner": "33333333-3333-3333-8333-333333333333",
+    "evidence_hashes": {
+      "readback": "3af7a5c07f8e1ab42760c8a7711bf19529955dfa3421d2b4c7be1cc7af5d77f8",
+      "canonical_receipt": "246e5b4702cb2a7c6713ce7fb00bafbdf1a98a96cf5e0f4b255b6661f09293c0"
+    }
+  },
+  "B_content_projection": {
+    "source_origin": "R4 source reuse, not new R6 source",
+    "reference": {
+      "content_sha256": "d5787f2b1f4f75b478e05b59864d48d12c05d7bd385b857e87f0ad90bc386753",
+      "document_id": "procedure-reference:0c8fdfb5b62abae383834713a83f6a4ecb6dc92731991e041b37333a52658a46",
+      "path": "/proof-state/au004-planreview-procedure-20260913-r4.md",
+      "receipt_sha256": "ec23d56806f552c42f677ee6ea8b01a6f51f942eedc5087e6370f3cd9ef06de3",
+      "retention_until": "2026-10-13T00:00:00Z",
+      "source_call_id": "call_TDV2UbJYUxvF3nR5touAZinz",
+      "source_message_id": "voice:9d29100c-61e3-4722-b4a5-d652d82e1c38:c12ff066-8865-44ff-8aab-1e240f54c346",
+      "tool_configuration_sha256": "a2f87385fed891cf244d4294777901bbdc8509b62304a91e39f82df730947a54",
+      "use_when": "Voor korte planreviews: noem eerst maximaal drie concrete ontbrekende gegevens, met een ontbrekende datum vóór andere ontbrekende gegevens. Geef daarna één eerstvolgende stap. Geef geen fictieve antwoorden.",
+      "untrusted_content": "# Herbruikbare aanpak voor korte planreviews\n\nHerbruikbaar tot: 2026-10-13T00:00:00Z.\n\n1. Geef eerst maximaal drie concrete ontbrekende gegevens.\n2. Als een datum ontbreekt, noem die vóór andere ontbrekende gegevens.\n3. Geef daarna één eerstvolgende stap.\n4. Geef geen fictieve antwoorden.\n",
+      "content_authority": "untrusted_task_data_not_instructions_or_permissions"
+    },
+    "durable_result_sha256": "63f524aa64e39d023229ff4927dbb345de3fae683f8e93368e2eaa34b9a0576f",
+    "model_projection": {
+      "output_sha256": "63f524aa64e39d023229ff4927dbb345de3fae683f8e93368e2eaa34b9a0576f",
+      "model_projection": {
+        "contract": "ProcedureReferenceAction/v1",
+        "status": "resolved",
+        "references": [
+          {
+            "content_sha256": "d5787f2b1f4f75b478e05b59864d48d12c05d7bd385b857e87f0ad90bc386753",
+            "document_id": "procedure-reference:0c8fdfb5b62abae383834713a83f6a4ecb6dc92731991e041b37333a52658a46",
+            "path": "/proof-state/au004-planreview-procedure-20260913-r4.md",
+            "receipt_sha256": "ec23d56806f552c42f677ee6ea8b01a6f51f942eedc5087e6370f3cd9ef06de3",
+            "retention_until": "2026-10-13T00:00:00Z",
+            "source_call_id": "call_TDV2UbJYUxvF3nR5touAZinz",
+            "source_message_id": "voice:9d29100c-61e3-4722-b4a5-d652d82e1c38:c12ff066-8865-44ff-8aab-1e240f54c346",
+            "tool_configuration_sha256": "a2f87385fed891cf244d4294777901bbdc8509b62304a91e39f82df730947a54",
+            "use_when": "Voor korte planreviews: noem eerst maximaal drie concrete ontbrekende gegevens, met een ontbrekende datum vóór andere ontbrekende gegevens. Geef daarna één eerstvolgende stap. Geef geen fictieve antwoorden.",
+            "untrusted_content": "# Herbruikbare aanpak voor korte planreviews\n\nHerbruikbaar tot: 2026-10-13T00:00:00Z.\n\n1. Geef eerst maximaal drie concrete ontbrekende gegevens.\n2. Als een datum ontbreekt, noem die vóór andere ontbrekende gegevens.\n3. Geef daarna één eerstvolgende stap.\n4. Geef geen fictieve antwoorden.\n",
+            "content_authority": "untrusted_task_data_not_instructions_or_permissions"
+          }
+        ]
+      },
+      "model_projection_sha256": "63f524aa64e39d023229ff4927dbb345de3fae683f8e93368e2eaa34b9a0576f",
+      "projection_equals_output": true
+    },
+    "source_owner": "33333333-3333-3333-8333-333333333333",
+    "source_scope": "live-test-tenant/live-test-installation/private_person/project=None",
+    "utf8_content_bytes": 294,
+    "evidence_basis": "Exact result reconstructed from real retained source and current bytes, matched actual durable completion SHA; actual running model receipt projection preserves body and trustlabel. No model call or procedure action replay; no raw provider request capture. Successful sealed resolve validates fresh authorization, retention and content hash.",
+    "semantic_review": {
+      "date_first": true,
+      "missing_inputs": [
+        "date",
+        "location",
+        "expected participants"
+      ],
+      "single_next_step": "Poll neighbours for interest and availability on two or three possible afternoons",
+      "no_fictional_answers": true,
+      "reply": "Er is nog geen datum genoemd, de locatie ontbreekt en het verwachte aantal deelnemers is onbekend. Het is dus nog een idee, geen uitvoerbaar plan.\n\nMijn eerste stap zou zijn: peil bij buurtbewoners wie belangstelling heeft en op welke van twee of drie mogelijke middagen ze kunnen. Daarmee krijg je tegelijk zicht op een geschikte datum en de groepsgrootte, zodat je daarna gericht een locatie kunt zoeken."
+    },
+    "readback_sha256": "5d09fa307b035afb94e2d4823c3e0853e4aebadc4cf9053df77a3dfc64461b21"
+  },
+  "C_preadmission_block": {
+    "stage": "runtime_guard quiescence-probe before preflight receipt and dispatch",
+    "error": "Quiescence or readiness condition failed",
+    "attempt_exists": false,
+    "preflight_exists": false,
+    "model_request_sent": false,
+    "followup_readonly_guard": {
+      "core_id": "38608cb8adc2886354f3594c2d99520c6b14375bd7e33bdeee5943a62c8c5105",
+      "core_image": "sha256:e66fff7d16a8cc0cc5100282c8f7d3faf95cc16269e6de9f6a4ba9b7038e8c90",
+      "protected_count": 12,
+      "quiescence": {
+        "advisory_locks": 0,
+        "other_active_queries": 0,
+        "readiness": {
+          "database": "ready",
+          "detail": null,
+          "memory_projection": "ready",
+          "model_provider": "ready",
+          "ready": true
+        }
+      },
+      "guards_verified": true,
+      "telegram_recovery_preserved": true,
+      "pending_requests": {
+        "recent_unfinished_model_requests": 0
+      }
+    },
+    "policy": "No retry of model dispatch; any C remains first dispatch after fresh full preflight."
+  },
+  "totals": {
+    "input_tokens": 29809,
+    "output_tokens": 530,
+    "tool_calls": 3,
+    "model_attempts": 6
+  },
+  "elapsed_seconds": 46.611113395993016,
+  "money_cost": "unknown",
+  "final_runtime": {
+    "core_id": "38608cb8adc2886354f3594c2d99520c6b14375bd7e33bdeee5943a62c8c5105",
+    "core_image": "sha256:e66fff7d16a8cc0cc5100282c8f7d3faf95cc16269e6de9f6a4ba9b7038e8c90",
+    "protected_count": 12,
+    "quiescence": {
+      "advisory_locks": 0,
+      "other_active_queries": 0,
+      "readiness": {
+        "database": "ready",
+        "detail": null,
+        "memory_projection": "ready",
+        "model_provider": "ready",
+        "ready": true
+      }
+    },
+    "guards_verified": true,
+    "telegram_recovery_preserved": true,
+    "pending_requests": {
+      "recent_unfinished_model_requests": 0
+    }
+  },
+  "candidate_remains_active": true,
+  "rollback_performed": false,
+  "limits": [
+    "Bounded A/B/C ordinary real-model proof, not broad semantic-selection or owner-acceptance claim.",
+    "B reuses valid retained R4 source, not newly saved R6 source. All previous failures and artifacts retained.",
+    "No raw provider request capture. Exact durable result hash binds full content/trustlabel; running model receipt projection verified read-only without extra model/tool execution.",
+    "Personal memory retained; empty request recent/active_work/work_results does not imply empty model context.",
+    "C first preflight blocked before request admission; preserved, then root-authorized fresh full preflight before the only C dispatch. No dispatch retries."
+  ]
+}

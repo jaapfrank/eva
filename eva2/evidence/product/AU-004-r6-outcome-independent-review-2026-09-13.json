@@ -1,0 +1,31 @@
+{
+  "A": "verified source PASS",
+  "B": "R4 full verified content projected, semantic review PASS",
+  "C": "120 minutes, no procedure/actions PASS",
+  "fresh_live_guard": {
+    "core_id": "38608cb8adc2886354f3594c2d99520c6b14375bd7e33bdeee5943a62c8c5105",
+    "core_image": "sha256:e66fff7d16a8cc0cc5100282c8f7d3faf95cc16269e6de9f6a4ba9b7038e8c90",
+    "protected_count": 12,
+    "quiescence": {
+      "advisory_locks": 0,
+      "other_active_queries": 0,
+      "readiness": {
+        "database": "ready",
+        "detail": null,
+        "memory_projection": "ready",
+        "model_provider": "ready",
+        "ready": true
+      }
+    },
+    "guards_verified": true,
+    "telegram_recovery_preserved": true,
+    "pending_requests": {
+      "recent_unfinished_model_requests": 0
+    }
+  },
+  "canonical_result_and_receipt_match": true,
+  "pure_running_projection_independently_equal": true,
+  "original_response_hashes_match": true,
+  "runtime_mutations": 0,
+  "model_calls": 0
+}

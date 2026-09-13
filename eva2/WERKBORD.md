@@ -5,10 +5,15 @@ Laatst bijgewerkt: 2026-09-13.
 Doel: [Eva als zelfstandig lerende digitale huisgenoot](PROJECTDOEL.md).
 Gebouwd, getest, live en door jou geaccepteerd zijn verschillende stappen.
 
-Geheugen is geaccepteerd en afgesloten. AU-008 is technisch afgerond en live; IN-02 wacht op jouw oordeel. Overig reeds gewenst technisch werk gaat door met afzonderlijke opleveringen.
-[Actueel bewijs](evidence/product/AU-008-current-review-delivery-2026-09-12.json).
+**Afgerond en live — herbruikbare planreviewprocedure (PR-01).** Eva slaat een werkwijze op, vindt een eerdere werkwijze terug in een nieuw gesprek, ontvangt de gecontroleerde tekst en past de regels toe. De drie echte proeven zijn onafhankelijk goedgekeurd. De inhoudelijke planreview duurde 13,20 seconden. Jouw beoordeling staat open; algemene zelflerende vaardigheden zijn hiermee niet afgerond.
+[Actueel bewijs](evidence/living-core/au004-r6-abc-live-pass-20260913.json).
 
-Technisch werk aan overige reeds gewenste onderdelen gaat door. Open gebruikersproeven staan gebundeld op het dashboard; IN-02 blijft open zonder het overige werk te blokkeren.
+**Eerstvolgend open werk:** jouw resultaatreview via [PR-01 op het dashboard](http://localhost:44712/#practice-PR-01), zonder de geslaagde proef opnieuw te bouwen. Technisch vervolg: resterende PostgreSQL-bevindingen en licentiebeoordeling binnen IN-002; geen productie-upgrade of releasevrijgave. Geheugen blijft geaccepteerd; overige brede ambities blijven hieronder zichtbaar.
+
+<details>
+<summary>Historische voortgang en eerdere tussenstanden — niet de actuele opleverstatus</summary>
+
+De onderstaande chronologie bewaart eerdere besluiten, mislukkingen en bewijs. Uitspraken zoals “nog geen proef”, “plan opgeleverd” of “oorzaakonderzoek loopt” beschrijven dat eerdere moment. De actuele PR-01-oplevering staat hierboven; eerdere R4/R5-mislukkingen heropenen die niet.
 
 ### Afzonderlijk stemwerk
 
@@ -1059,6 +1064,8 @@ gecontroleerd. De oude mislukte proef blijft bewaard.
 [Beoordelen](reviews/au006-r2-owner-handoff-20260913.md).
 Jouw PJ-01-oordeel staat open; opnieuw starten is niet nodig. Algemene
 projectplanning, meerdaagse praktijk en onbekende geldkosten zijn niet afgerond.
+
+</details>
 
 ## Nu
 
