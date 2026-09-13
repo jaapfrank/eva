@@ -1,0 +1,7 @@
+{
+  "image": "sha256:daf923c247fd569df5f8c9ee418cbc259fade564f78e0a0852937139a181c4dd",
+  "original_source_sha256": "90f737f08335560eb18819285d5c554e9bde7c4b28a69354efc74017e74426c2",
+  "patched_source_sha256": "92a5d8e88a467778e1cb715cd84e5b5214ca14d51170dbd6454432e89e04df4b",
+  "source_path": "/app/mcpgateway/bootstrap_db.py",
+  "deployed": false
+}

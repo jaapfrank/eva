@@ -1,0 +1,103 @@
+{
+  "status": "aborted_before_registration_policy_restored_team_assignment_persists",
+  "retry_post_count": 0,
+  "assigned_new_gateway_id": null,
+  "assigned_new_tool_ids": [],
+  "gateway_counts": [
+    5,
+    53
+  ],
+  "new_gateway_database_matches": 0,
+  "changed_existing_tools": [
+    {
+      "id": "c73f00a8659c4edd993a5c85bedae371",
+      "name": "eva-connector-34e9886d2a79dd6c7c831f8a93139bab-fetch-generic-url-content",
+      "fields": [
+        "team",
+        "updatedAt",
+        "teamId"
+      ],
+      "team_before_null": true,
+      "visibility_unchanged": true
+    },
+    {
+      "id": "12a3c8fd261c44dc80055615fab9ecef",
+      "name": "eva-connector-34e9886d2a79dd6c7c831f8a93139bab-search-cpython-code",
+      "fields": [
+        "team",
+        "updatedAt",
+        "teamId"
+      ],
+      "team_before_null": true,
+      "visibility_unchanged": true
+    },
+    {
+      "id": "48595cfd71164e769c7480ffdac7aea2",
+      "name": "eva-connector-34e9886d2a79dd6c7c831f8a93139bab-search-cpython-documentation",
+      "fields": [
+        "team",
+        "updatedAt",
+        "teamId"
+      ],
+      "team_before_null": true,
+      "visibility_unchanged": true
+    },
+    {
+      "id": "a458ea4dba764ea1949d9f0d7e1fc72b",
+      "name": "eva-connector-34e9886d2a79dd6c7c831f8a93139bab-fetch-cpython-documentation",
+      "fields": [
+        "team",
+        "updatedAt",
+        "teamId"
+      ],
+      "team_before_null": true,
+      "visibility_unchanged": true
+    }
+  ],
+  "database_team_matches_api": true,
+  "assigned_team_is_personal": true,
+  "core_binding_changes": [],
+  "unrelated_container_changes": [],
+  "unrelated_container_count": 10,
+  "gateway_policy_restored": true,
+  "gateway_image_unchanged": true,
+  "gateway_container_id": "9c65eed98475e48d3620505598afe636be1ca27d5dde02041065aea6f65cb7fb",
+  "gateway_health": "healthy",
+  "new_provider_status": "exited",
+  "journal_entries": 0,
+  "target_paths_absent": true,
+  "core_health": {
+    "status": "alive"
+  },
+  "contract": "EvaAU006Phase1RetryAbort/v1",
+  "recorded_at": "2026-09-13T03:21:34.141377+00:00",
+  "root_cause_evidence": "Existing bootstrap resource reassignment code matches durable observed null-to-personal-team changes; original recreated-container write logs unavailable",
+  "first_attempt_post_count": 1,
+  "retry_registration_authorized_to_continue": false,
+  "core_feature_off": true,
+  "worker_started": false,
+  "model_calls": 0,
+  "project_effect_calls": 0,
+  "delete_calls": 0,
+  "private_evidence_files": {
+    "/home/administrator/project/.eva2-artifacts/au006-activation-20260913/phase1-retry-execution/gateway-readiness-0.log": "ca1101d3227d17a8c430d23a7c3558ee67c49d8c84a774d74ed9134ec6b88a39",
+    "/home/administrator/project/.eva2-artifacts/au006-activation-20260913/phase1-retry-execution/gateway-before.json": "e466e9c60db7683c008ad37f298eab877e3e6646f69be834d4f62ee072914e1f",
+    "/home/administrator/project/.eva2-artifacts/au006-activation-20260913/phase1-retry-execution/gateway-after-policy-before-post.json": "19997d4b566148ef397e70ba605e768ab93b61b0a1d7d5f2b2956c5ada7ddc6f",
+    "/home/administrator/project/.eva2-artifacts/au006-activation-20260913/phase1-retry-execution/gateway-targeted-rollback-correct-project.log": "58998896254d792f0944ac7834fe283b231e2b6c4eb4d82da4fe08c0fc572bff",
+    "/home/administrator/project/.eva2-artifacts/au006-activation-20260913/phase1-retry-execution/gateway-rollback-startup.log": "a003d8a2a5648c6e9b2dcddc815c637be2e668c0e770dc9b8e0e430199f3ac6e",
+    "/home/administrator/project/.eva2-artifacts/au006-activation-20260913/phase1-retry-execution/gateway-readiness-2.log": "ca1101d3227d17a8c430d23a7c3558ee67c49d8c84a774d74ed9134ec6b88a39",
+    "/home/administrator/project/.eva2-artifacts/au006-activation-20260913/phase1-retry-execution/core-after-rollback.json": "1c1cfb53ee23631097f8388f88bc8b7f5feb2ce87cc785f3fba15a455e9a6996",
+    "/home/administrator/project/.eva2-artifacts/au006-activation-20260913/phase1-retry-execution/gateway-readiness-1.log": "ca1101d3227d17a8c430d23a7c3558ee67c49d8c84a774d74ed9134ec6b88a39",
+    "/home/administrator/project/.eva2-artifacts/au006-activation-20260913/phase1-retry-execution/gateway-targeted-rollback.log": "e71f00980cca94d7afd75ac074b64ba446afdc4e64ce66d039cc6c054470979f",
+    "/home/administrator/project/.eva2-artifacts/au006-activation-20260913/phase1-retry-execution/bootstrap_db.py": "90f737f08335560eb18819285d5c554e9bde7c4b28a69354efc74017e74426c2",
+    "/home/administrator/project/.eva2-artifacts/au006-activation-20260913/phase1-retry-execution/gateway-readiness-5.log": "ca1101d3227d17a8c430d23a7c3558ee67c49d8c84a774d74ed9134ec6b88a39",
+    "/home/administrator/project/.eva2-artifacts/au006-activation-20260913/phase1-retry-execution/gateway-readiness-3.log": "ca1101d3227d17a8c430d23a7c3558ee67c49d8c84a774d74ed9134ec6b88a39",
+    "/home/administrator/project/.eva2-artifacts/au006-activation-20260913/phase1-retry-execution/gateway-after-rollback.json": "02f704e8a92cf2a236c023c0695f02f91b2ce9b9f3a7b8b4495b4292139b853e",
+    "/home/administrator/project/.eva2-artifacts/au006-activation-20260913/phase1-retry-execution/gateway-recreate.log": "e71f00980cca94d7afd75ac074b64ba446afdc4e64ce66d039cc6c054470979f",
+    "/home/administrator/project/.eva2-artifacts/au006-activation-20260913/phase1-retry-execution/quiescence-at-gateway.json": "e19cb9a84ef4947952d45c0172de83d12b2a84407311ab23f7067673c7dc97d2",
+    "/home/administrator/project/.eva2-artifacts/au006-activation-20260913/phase1-retry-execution/gateway-recreate-correct-project.log": "58998896254d792f0944ac7834fe283b231e2b6c4eb4d82da4fe08c0fc572bff",
+    "/home/administrator/project/.eva2-artifacts/au006-activation-20260913/phase1-retry-execution/database-after-rollback.json": "f86ddaf7184f6c5a523502db30bc0140aefffeb97f892a09a53176a832498f11",
+    "/home/administrator/project/.eva2-artifacts/au006-activation-20260913/phase1-retry-execution/gateway-readiness-4.log": "ca1101d3227d17a8c430d23a7c3558ee67c49d8c84a774d74ed9134ec6b88a39"
+  },
+  "recovery_plan_sha256": "13b6f6242007c1c66d0a05784a9e7e5e6469a94e6b2d7f7684e97a0e6b262056"
+}

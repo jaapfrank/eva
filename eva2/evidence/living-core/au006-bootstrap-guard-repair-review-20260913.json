@@ -1,0 +1,89 @@
+{
+  "contract": "EvaGatewayResourceGuardRepairReview/v1",
+  "recorded_at": "2026-09-13T03:30:47.611707+00:00",
+  "deployed": false,
+  "product_database_writes": 0,
+  "registration_retry_posts": 0,
+  "guard_pin": {
+    "image": "sha256:daf923c247fd569df5f8c9ee418cbc259fade564f78e0a0852937139a181c4dd",
+    "original_source_sha256": "90f737f08335560eb18819285d5c554e9bde7c4b28a69354efc74017e74426c2",
+    "patched_source_sha256": "92a5d8e88a467778e1cb715cd84e5b5214ca14d51170dbd6454432e89e04df4b",
+    "source_path": "/app/mcpgateway/bootstrap_db.py",
+    "deployed": false
+  },
+  "guard_test": {
+    "status": "passed",
+    "resource_classes": 6,
+    "resource_rows": 30,
+    "fresh_database_admin_team_roles": true,
+    "fast_path_all_resource_columns_unchanged": true,
+    "skip_migrations_all_resource_columns_unchanged": true,
+    "invalid_mode_rejected_without_resource_change": true,
+    "legacy_null_visibility_all_resource_columns_unchanged": true,
+    "explicit_legacy_migration_available": true
+  },
+  "negative_control": {
+    "original_image_failed_preservation_as_expected": true,
+    "observed_failure": "Fast-path startup changed a resource column",
+    "fixture_variation": "Skip index4 duplicate name assignment to avoid pre-existing legacy collision failure",
+    "fixture_source_sha256": "4901efc6970c8bf32ab189b6a2abf259a816a1aa448543470f6423750fc37613",
+    "network": "none",
+    "production_mounts": false
+  },
+  "repair_test": {
+    "status": "passed",
+    "readonly_no_writes": true,
+    "exact_four_rows_only": true,
+    "stale_manifest_rejected": true,
+    "fourth_row_failure_rolls_back_all": true,
+    "concurrent_writer_fails_without_retry": true,
+    "optimized_python_manifest_rejection": true
+  },
+  "private_repair_manifest": {
+    "manifest_sha256": "862bcfb933f4d92ee01c84126f2027221dc741fbda532aec644006787118cbd5",
+    "rows": 4,
+    "restore_columns": [
+      "team_id",
+      "updated_at"
+    ],
+    "all_current_columns_in_cas": true,
+    "unchanged_sensitive_columns": [
+      "owner_email",
+      "visibility",
+      "name",
+      "original_name",
+      "custom_name",
+      "custom_name_slug",
+      "federation_source"
+    ],
+    "tools_triggers": 0,
+    "product_writes": 0,
+    "known_limit": "Pre-recreate API before-images cover all bootstrap-written tool columns; no pre-recreate full SQLite snapshot exists."
+  },
+  "live_readonly_repair_check": {
+    "mode": "read_only",
+    "matched_rows": 4,
+    "writes": 0
+  },
+  "review_files": {
+    "eva2/experiments/contextforge-gateway-v1/preserve-resource-assignments.patch": "842b3d7295c8090ef6d83e474913704357be227dcb6e6aef2387efd66b883aa7",
+    "eva2/experiments/contextforge-gateway-v1/preserve-resource-assignments.pin.json": "f9a143be355f1e18e10b854e332929b6131e16d60052cea287767701526932cc",
+    "eva2/experiments/contextforge-gateway-v1/prove_resource_assignment_guard.py": "eb101155c4b4c7cf715a3af919e8b8da765ba4b86b161ff660d2dfa807339522",
+    "eva2/experiments/contextforge-gateway-v1/repair_resource_assignments.py": "ac04bb6a7f55953bb8bffd5643a99c7d2ab4a292f82920e3fdba05ff647f625a",
+    "eva2/experiments/contextforge-gateway-v1/prove_resource_assignment_repair.py": "ad4a69471c9ee8a7fe2daead8a6fff99523a08feb310f5ba20a2ecf03d857f2a"
+  },
+  "proof_files": {
+    "/home/administrator/project/.eva2-artifacts/au006-activation-20260913/guard-fixture-test.log": "dff62c7595b5ecb7aad93002f7bdac1c7dd208f7e9c65d9e3836921e9050b71e",
+    "/home/administrator/project/.eva2-artifacts/au006-activation-20260913/guard-original-negative-control.log": "8b89e70199a00123a4321a791f12e7b13467934851a8dc059aacf46298d31fef",
+    "/home/administrator/project/.eva2-artifacts/au006-activation-20260913/guard-original-noncolliding-control.log": "cfc7031d7a54d9a7945036c7231e4bba6cdbe50c461d6445646d8dca84681303",
+    "/home/administrator/project/.eva2-artifacts/au006-activation-20260913/guard-fixture-test.json": "19c79df4abd9c607152c08c7c0a6b8cf12b741e1de5f45aec575e2081e5a8ecb",
+    "/home/administrator/project/.eva2-artifacts/au006-activation-20260913/repair-fixture-test.json": "7960b17aebc9a5cc2305f4ab4a7aa30161235d3ac8b1bfcb38fdd096c9ef3690",
+    "/home/administrator/project/.eva2-artifacts/au006-activation-20260913/repair-live-readonly-check.json": "e9cd783e150050f6433dbf4012152cdc972314196c7dd1eeac1d1bffea4902f0"
+  },
+  "limitations": [
+    "No deployment or repair approval conveyed",
+    "No full pre-recreate SQLite snapshot; API before-image covers all bootstrap-written tool fields",
+    "Unmodified legacy collision failure not repaired; opt-in availability uses noncolliding fixtures",
+    "Other bootstrap helpers unchanged; no global database immutability claim"
+  ]
+}

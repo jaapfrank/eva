@@ -247,7 +247,7 @@
         },
         {
           "title": "Project hervatten na herstart",
-          "detail": "De vier onbedoelde teamkoppelingen zijn nog niet hersteld. Een opstartbeveiliging en een correctie van uitsluitend deze vier regels zijn voorbereid en geïsoleerd getest; onafhankelijke review volgt. De kern en overige diensten zijn behouden. Registratie, verzegeling en workerstart blijven gepauzeerd."
+          "detail": "De opstartbeveiliging en het herstelplan voor precies vier toolregistraties zijn onafhankelijk goedgekeurd en geïntegreerd. De uitvoerder mag nu de beveiliging plaatsen en de vier regels na verse controles herstellen en teruglezen. Het incident blijft open tot herstelbewijs; projectactivering blijft gepauzeerd."
         },
         {
           "title": "Gedeeld audiotype",
@@ -5502,13 +5502,13 @@
           "owner": "01a08d52-31b1-7091-be45-812c0b6e6c9f",
           "work": "Gatewaymetadata gericht herstellen vóór AU-006-activering",
           "boundary": "New providers/document_goal_actions.py; bundled.py opt-in registration only; document_goal_plan.py safe full host GoalSpec/hash binding; targeted provider/PG tests and docs. Existing actual ConversationTurn/current authority/external tool port. No second planner/live/envflip.",
-          "status": "isolated_bootstrap_guard_and_exact_four_row_cas_repair_plan_pending_review"
+          "status": "approved_guard_install_and_four_row_repair_execution"
         },
         {
           "owner": "coordinator/timing_final_review",
           "work": "Onafhankelijke gatewayguard en vierregelherstelreview",
           "boundary": "Review candidate6761694e and exact pinned guard/repair evidence. No source/DB/deploy/recreate changes. Shared audio type delivery remains closed.",
-          "status": "gateway_guard_and_four_row_repair_independent_review_in_progress"
+          "status": "independent_guard_and_four_row_repair_plan_review_complete"
         },
         {
           "owner": "coordinator/next_tools_delivery",
@@ -6924,7 +6924,7 @@
           "sourceCorrectionComplete": true
         },
         "activationPreparation": {
-          "status": "paused_unintended_gateway_metadata_change_repair_review_priority",
+          "status": "guard_install_and_exact_metadata_repair_authorized_incident_still_open",
           "ownerThread": "01a08d52-31b1-7091-be45-812c0b6e6c9f",
           "evidenceCommit": "bc0fd5c06d5d97853296cf2459463fac4ad577a7",
           "evidencePath": "eva2/evidence/living-core/au006-activation-preparation-20260913.json",
@@ -7129,7 +7129,7 @@
           "continuationAuthorization": "Paused pending separate guard/repair GO; prior one-retry approval does not authorize continuation through this new finding."
         },
         "gatewayBootstrapIncident": {
-          "status": "unintended_four_row_difference_preserved_targeted_repair_plan_pending_review",
+          "status": "reviewed_guard_and_exact_repair_execution_authorized_incident_unresolved",
           "priority": "Independent guard and exact four-row repair review before any AU006 registration, sealing or worker activation.",
           "reportedBy": "coordinator",
           "trigger": "Existing gateway startup bootstrap during approved recreation",
@@ -7152,8 +7152,8 @@
           "proposedRepair": {
             "ownerThread": "01a08d52-31b1-7091-be45-812c0b6e6c9f",
             "scope": "Isolated startup bootstrap guard and exact four-row compare-and-set repair plan.",
-            "status": "source_and_evidence_candidate_prepared_tested_pending_review",
-            "databaseCorrectionAuthorized": false,
+            "status": "independently_approved_source_integrated_bounded_repair_authorized",
+            "databaseCorrectionAuthorized": true,
             "databaseCorrectionPerformed": false,
             "broadRestoreAllowed": false,
             "candidateCommit": "6761694e315c7a1d541a917470497b8b0ca70872",
@@ -7170,8 +7170,8 @@
             ],
             "reviewEvidencePath": "eva2/evidence/living-core/au006-bootstrap-guard-repair-review-20260913.json",
             "reviewDocumentPath": "eva2/evidence/living-core/au006-bootstrap-guard-repair-review-20260913.md",
-            "sourceIntegrated": false,
-            "independentGo": false,
+            "sourceIntegrated": true,
+            "independentGo": true,
             "reportedGuardTest": {
               "status": "passed",
               "resource_classes": 6,
@@ -7209,19 +7209,56 @@
               "Other bootstrap helpers unchanged; no global database immutability claim"
             ],
             "independentReviewer": "coordinator/timing_final_review",
-            "guardDeploymentAuthorized": false,
+            "guardDeploymentAuthorized": true,
             "gatewayRecreateAuthorized": false,
             "reviewCorrection": {
               "commit": "cc732bac5c198f7cb816cfc9061ab878c293a34f",
               "base": "6761694e315c7a1d541a917470497b8b0ca70872",
-              "status": "submitted_pending_independent_review",
+              "status": "independently_approved_and_integrated",
               "scope": "Explicit CAS runtime checks remain active with python -O; targeted test updated.",
               "reportedTestsPassed": true,
-              "sourceIntegrated": false,
+              "sourceIntegrated": true,
               "productWrites": 0,
               "gatewayRecreates": 0
             },
-            "latestCandidateCommit": "cc732bac5c198f7cb816cfc9061ab878c293a34f"
+            "latestCandidateCommit": "cc732bac5c198f7cb816cfc9061ab878c293a34f",
+            "evidenceIntegrated": true,
+            "independentReview": {
+              "decision": "GO for pinned guard/source and exact four-row repair plan",
+              "reportedBy": "coordinator",
+              "reviewer": "coordinator/timing_final_review",
+              "verified": [
+                "Source and image binding",
+                "Runtime checks active under optimized Python",
+                "Exact four full-row comparisons and two restore columns",
+                "Reviewed manifest binding"
+              ]
+            },
+            "integrationVerification": "Nine actual baselines exact, bounded patch clean; reviewed hashes and final file bytes match. No guard or repair script executed by administrator.",
+            "authorizationScope": [
+              "Install and verify reviewed guard",
+              "Fresh quiescence before repair",
+              "Exactly four-row CAS repair and independent readback"
+            ],
+            "executionOwner": "01a08d52-31b1-7091-be45-812c0b6e6c9f",
+            "excludedActions": [
+              "Registration retry",
+              "Sealer",
+              "Core worker",
+              "Phase2",
+              "Broad restore"
+            ],
+            "finalSourceHashes": {
+              "eva2/evidence/living-core/au006-bootstrap-guard-repair-review-20260913.json": "38822488ae39f37504f25c97325a241fa430b964dc0dea4435aaec454d77a0f3",
+              "eva2/evidence/living-core/au006-bootstrap-guard-repair-review-20260913.md": "27368e8186780d9f553fbb44d55f8028dbc3327f05c4c250fb4c933cc21a0af3",
+              "eva2/evidence/living-core/au006-phase1-retry-abort-20260913.json": "749a709b67356fb2d9e4efe6a07eecb40f1249804e12452940dde87e98701f90",
+              "eva2/evidence/living-core/au006-phase1-retry-abort-20260913.md": "13b6f6242007c1c66d0a05784a9e7e5e6469a94e6b2d7f7684e97a0e6b262056",
+              "eva2/experiments/contextforge-gateway-v1/preserve-resource-assignments.patch": "842b3d7295c8090ef6d83e474913704357be227dcb6e6aef2387efd66b883aa7",
+              "eva2/experiments/contextforge-gateway-v1/preserve-resource-assignments.pin.json": "f9a143be355f1e18e10b854e332929b6131e16d60052cea287767701526932cc",
+              "eva2/experiments/contextforge-gateway-v1/prove_resource_assignment_guard.py": "eb101155c4b4c7cf715a3af919e8b8da765ba4b86b161ff660d2dfa807339522",
+              "eva2/experiments/contextforge-gateway-v1/prove_resource_assignment_repair.py": "ad4a69471c9ee8a7fe2daead8a6fff99523a08feb310f5ba20a2ecf03d857f2a",
+              "eva2/experiments/contextforge-gateway-v1/repair_resource_assignments.py": "ac04bb6a7f55953bb8bffd5643a99c7d2ab4a292f82920e3fdba05ff647f625a"
+            }
           },
           "liveGatewayMetadataChanged": true,
           "projectWorkerStarted": false,
@@ -7231,7 +7268,7 @@
             "eva2/evidence/living-core/au006-phase1-retry-abort-20260913.json",
             "eva2/evidence/living-core/au006-phase1-retry-abort-20260913.md"
           ],
-          "candidateFilesIntegrated": false,
+          "candidateFilesIntegrated": true,
           "gatewayAfterRollback": {
             "reportedHealthy": true,
             "imageUnchanged": true,
