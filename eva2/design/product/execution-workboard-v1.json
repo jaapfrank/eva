@@ -213,7 +213,7 @@
       "nextOutcomes": [
         {
           "title": "Reguliere Telegramupdate afgeleverd",
-          "detail": "De reguliere uurupdate van 13 september om 03:52 uur is bevestigd afgeleverd. De update meldt de technisch afgeronde geïsoleerde projectintegratie; gewone gespreksingang, livegebruik en jouw praktijkproef blijven open. De bestaande uurplanning blijft gelden."
+          "detail": "De uurupdate van 13 september om 05:02 uur is bevestigd afgeleverd. Er is geen inhaalbericht verstuurd voor het overgeslagen uur. De bestaande planning houdt minstens één uur tussen verzendpogingen."
         },
         {
           "title": "Browserherstelproef afgerond",
@@ -247,7 +247,7 @@
         },
         {
           "title": "Project hervatten na herstart",
-          "detail": "Fase 1 is onafhankelijk goedgekeurd en wordt uitgevoerd: alleen de provider met gegevensmappen op alleen-lezen en private gatewayregistratie, met controles voor en na. Kern, worker en schrijfacties blijven uit. Dit is nog geen volledig live projectfunctie."
+          "detail": "Fase 1 liep vast op een toegangsregel van de gateway. De nieuwe provider is gestopt; er is geen registratie aangemaakt. De uitvoerder maakt een gericht correctieplan voor apart akkoord. De technische bronopleveringen blijven afgerond; de projectworker en schrijfacties zijn niet geactiveerd."
         },
         {
           "title": "Gedeeld audiotype",
@@ -5413,18 +5413,18 @@
       "usage": "design/product/project-telegram-updates.md",
       "confirmationHour": "2026-09-12T20:00Z",
       "scheduler": "Coordinator confirmed existing heartbeat wired to exact CLI/dedup/receipt on 12 September; no second scheduler.",
-      "nextRegularUpdateNotBefore": "2026-09-13T02:52:10.993068+00:00",
+      "nextRegularUpdateNotBefore": "2026-09-13T04:02:03.241078+00:00",
       "latestHourlyAttempt": {
-        "hourKey": "2026-09-13T01:00Z",
+        "hourKey": "2026-09-13T03:00Z",
         "status": "delivered",
-        "claimedAt": "2026-09-13T01:52:10.993068+00:00",
-        "deliveredAt": "2026-09-13T01:52:14.165850+00:00",
+        "claimedAt": "2026-09-13T03:02:03.241078+00:00",
+        "deliveredAt": "2026-09-13T03:02:06.265526+00:00",
         "providerReceiptAvailable": true,
         "privateChatAndExactTextVerified": true,
         "repeated": false,
-        "evidencePath": "eva2/evidence/product/project-telegram-hourly-delivery-2026-09-13-01.json"
+        "evidencePath": "eva2/evidence/product/project-telegram-hourly-delivery-2026-09-13-03.json"
       },
-      "lastConfirmedDelivery": "2026-09-13T01:52:14.165850+00:00",
+      "lastConfirmedDelivery": "2026-09-13T03:02:06.265526+00:00",
       "helperRepair": {
         "status": "reviewed_helper_regular_delivery_confirmed",
         "scope": "Trim ASCII edge whitespace before wire; preserve raw idempotency hash and old records; retain only allowlisted stage/boolean/hash diagnostics.",
@@ -5476,8 +5476,24 @@
           "privateChatAndExactTextVerified": true,
           "repeated": false,
           "evidencePath": "eva2/evidence/product/project-telegram-hourly-delivery-2026-09-13-00.json"
+        },
+        {
+          "hourKey": "2026-09-13T01:00Z",
+          "status": "delivered",
+          "claimedAt": "2026-09-13T01:52:10.993068+00:00",
+          "deliveredAt": "2026-09-13T01:52:14.165850+00:00",
+          "providerReceiptAvailable": true,
+          "privateChatAndExactTextVerified": true,
+          "repeated": false,
+          "evidencePath": "eva2/evidence/product/project-telegram-hourly-delivery-2026-09-13-01.json"
         }
-      ]
+      ],
+      "unsentHourNote": {
+        "hourKey": "2026-09-13T02:00Z",
+        "attempted": false,
+        "catchUpMessageSent": false,
+        "reportedBy": "coordinator"
+      }
     },
     "parallelTeamExecution20260912": {
       "decision": "Jaap vraagt onafhankelijk werk parallel voort te zetten; één primaire kaart is geen globale bouwstop. Unieke eigenaren en bestandsgrenzen; gereed werk krijgt een volgende begrensde opdracht.",
@@ -5486,7 +5502,7 @@
           "owner": "01a08d52-31b1-7091-be45-812c0b6e6c9f",
           "work": "AU-006 normale gespreksingang",
           "boundary": "New providers/document_goal_actions.py; bundled.py opt-in registration only; document_goal_plan.py safe full host GoalSpec/hash binding; targeted provider/PG tests and docs. Existing actual ConversationTurn/current authority/external tool port. No second planner/live/envflip.",
-          "status": "approved_readonly_provider_registration_phase1_executing"
+          "status": "phase1_gateway_policy_failure_exact_fix_plan_pending"
         },
         {
           "owner": "coordinator/timing_final_review",
@@ -6231,7 +6247,7 @@
         "historical": true
       },
       "connectionPlan": {
-        "status": "reviewed_source_and_images_complete_activation_config_review_pending",
+        "status": "source_complete_phase1_policy_correction_plan_pending",
         "ownerThread": "01a08d52-31b1-7091-be45-812c0b6e6c9f",
         "reuse": [
           "Existing owner authority",
@@ -6908,7 +6924,7 @@
           "sourceCorrectionComplete": true
         },
         "activationPreparation": {
-          "status": "bounded_readonly_provider_registration_phase1_in_progress",
+          "status": "phase1_gateway_policy_blocked_provider_stopped",
           "ownerThread": "01a08d52-31b1-7091-be45-812c0b6e6c9f",
           "evidenceCommit": "bc0fd5c06d5d97853296cf2459463fac4ad577a7",
           "evidencePath": "eva2/evidence/living-core/au006-activation-preparation-20260913.json",
@@ -6953,7 +6969,7 @@
           "phase1Go": true
         },
         "phase1RegistrationPlan": {
-          "status": "bounded_phase1_independent_go_execution_in_progress",
+          "status": "execution_blocked_gateway_endpoint_policy_new_provider_stopped",
           "ownerThread": "01a08d52-31b1-7091-be45-812c0b6e6c9f",
           "evidenceCommit": "fddf983b6b11954661b4f86a68b3ad23694c434b",
           "evidencePath": "eva2/evidence/living-core/au006-phase1-registration-review-20260913.json",
@@ -6991,7 +7007,7 @@
           "rollback": "Stop only new provider and retain actual IDs/evidence; no DELETE or shared-state restore.",
           "phase2": "separate actual catalog readback, sealing review, provider write-mount override, core opt-in and worker GO required",
           "independentGo": true,
-          "phaseExecuted": false,
+          "phaseExecuted": true,
           "workerStarted": false,
           "coreChanged": false,
           "liveDocumentWrites": 0,
@@ -7008,7 +7024,7 @@
             ]
           },
           "executionAssignedBy": "01a08a88-894c-7171-87fa-e681ed47c735",
-          "executionState": "In progress with fresh before/after controls; no completion inferred.",
+          "executionState": "Gateway registration failed on endpoint policy; new provider stopped, no registration created.",
           "allowedActions": [
             "Start only exact approved read-only provider",
             "Private gateway registration with actual IDs and readback",
@@ -7020,7 +7036,17 @@
             "Worker start",
             "Phase2 or document writes"
           ],
-          "fullProductLive": false
+          "fullProductLive": false,
+          "phaseCompleted": false,
+          "registrationCreated": false,
+          "newProviderRunning": false,
+          "executionFailure": {
+            "reportedBy": "coordinator",
+            "reason": "Gateway endpoint policy rejected phase1 registration; exact fix plan pending.",
+            "next": "Separate exact endpoint-policy fix plan and GO before resuming.",
+            "otherRestartsAuthorized": false
+          },
+          "independentGoScope": "Original bounded phase1 plan approval preserved; policy correction requires separate plan approval."
         }
       },
       "isolatedProductExecutionProven": true,
