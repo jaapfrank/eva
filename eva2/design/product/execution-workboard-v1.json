@@ -247,7 +247,7 @@
         },
         {
           "title": "Project hervatten na herstart",
-          "detail": "Technisch afgerond en onafhankelijk goedgekeurd: een project met twee documenten hervat na een crash zonder de eerste schrijfopdracht te herhalen; stoppen bewaart het concept en voorkomt het einddocument. Bewezen via de echte gateway en bestandsbroker in een geïsoleerde omgeving. Live-installatie en jouw proef staan nog open."
+          "detail": "Technisch afgerond en onafhankelijk goedgekeurd: het tweestappenproject hervat na een crash en respecteert stoppen. Een vervolgvoorstel beschrijft starten, status en stoppen via een gewone opdracht. Dat voorstel moet nog worden afgestemd; live-installatie en jouw proef staan open."
         }
       ],
       "openRisks": [
@@ -6730,6 +6730,41 @@
             "eva2/design/architecture/living-core-v1.md": "91fcbab007790e8809943f49d522c829fbaf00596506f73cc791a137ce5d7ed8",
             "eva2/src/eva/adapters/postgres/durable_goals.py": "62c42ac68571b17f31513aa7898c503c73beab3ee871617f61a8cad480467d9f"
           }
+        },
+        "normalCommandProposal": {
+          "status": "read_only_scope_proposal_recorded_awaiting_coordination",
+          "ownerThread": "01a08d52-31b1-7091-be45-812c0b6e6c9f",
+          "proposalCommit": "7e3d5df7ede4cfe67a3f0764f05dbbc02b22fd31",
+          "proposalPath": "eva2/evidence/living-core/au006-normal-command-activation-scope-20260913.md",
+          "documentIntegrated": true,
+          "userOutcome": "Start, inspect result and stop the same pre-agreed two-document project through the existing ordinary conversation tool route.",
+          "scope": "Opt-in provider plugin with host-bound full GoalSpec and existing plan; no arbitrary dynamic document projects.",
+          "reuse": [
+            "ProviderContribution and bundled provider factory registration",
+            "PostgresExternalConversationTools with actual private ConversationTurn",
+            "Existing goalstore, owner authority and stop controls"
+          ],
+          "proposedOwnership": [
+            "eva2/src/eva/providers/document_goal_actions.py",
+            "eva2/src/eva/providers/bundled.py (opt-in registration only)",
+            "eva2/src/eva/providers/document_goal_plan.py (full GoalSpec binding)",
+            "eva2/tests/providers/test_document_goal_actions.py",
+            "eva2/tests/postgres/test_document_goal_actions.py",
+            "eva2/design/architecture/living-core-v1.md (bounded documentation)"
+          ],
+          "ownershipStatus": "Proposal only; coordinator scope alignment pending.",
+          "sourceImplementationAuthorizedByThisHandoff": false,
+          "deploymentAuthorized": false,
+          "activationDependencies": [
+            "New managed private atomic-provider instance and durable journal, no reuse of removed fixture bindings or tokens",
+            "Restricted gateway registration and actual instance catalog fingerprints",
+            "Exact real goal definition and new unique paths/journal genesis",
+            "Separate source/image/configuration review and activation plan",
+            "Isolated ordinary tool-route proof with current private owner, stop and replay boundaries"
+          ],
+          "technicalProductProofReopened": false,
+          "live": false,
+          "ownerAccepted": false
         }
       },
       "isolatedProductExecutionProven": true,
