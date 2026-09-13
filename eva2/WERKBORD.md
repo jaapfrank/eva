@@ -996,6 +996,16 @@ Volledige target-/imagevalidatie blijft apart; geen supported-label,
 preflightbypass, hostupgrade of live herstel op basis van deze stap.
 [Beschikbaarheid en plan](design/product/IN-002-restore-wizard-2026-09-13.md).
 
+### AU-006 — noodzakelijke operatorwirehunk begrensd toegestaan
+
+Naast _durable_goal_payload mag uitsluitend _durable_goal_from_wire in
+app.py worden aangepast voor optionele niet-lege followup_instruction
+via de bestaande operatorwire. V1 en weigering van onbekende velden
+blijven behouden; geen route- of bevoegdheidswijziging. De uitvoerder
+levert beide beperkte hunks, gerichte parsertest en documentatie samen
+voor onafhankelijke review. Dit registreert eigendom, geen geïntegreerde
+bron of livegang.
+
 ## Nu
 
 | Volgorde | Kaart | Resultaat | Status |
