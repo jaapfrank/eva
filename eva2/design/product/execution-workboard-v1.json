@@ -247,7 +247,7 @@
         },
         {
           "title": "Project hervatten na herstart",
-          "detail": "De geïsoleerde hervatproef blijft afgerond. Een aparte uitvoerder bouwt nu bestandsaanmaak die bestaande bestanden niet overschrijft; de andere werkt aan de projectaansluiting en eigenaarscontrole. De bestandsfunctie krijgt eerst onafhankelijke review. Nog niet live."
+          "detail": "De geïsoleerde hervatproef blijft afgerond. De bestaande bestandsbroker wordt beperkt uitgebreid voor bestandsaanmaak zonder overschrijven en controle na een onderbreking. De projectaansluiting heeft een aparte uitvoerder. Crash- en gelijktijdigheidsproeven krijgen onafhankelijke review; nog niet live."
         }
       ],
       "openRisks": [
@@ -5472,9 +5472,9 @@
         },
         {
           "owner": "coordinator/next_tools_delivery",
-          "work": "AU-006 bestandsaanmaak zonder overschrijven",
-          "boundary": "deploy/living-core/workspace-create-only: create-file.mjs, patch-provider.py, Dockerfile, README.md plus targeted tests/evidence. Existing write_file unchanged; no runtime.",
-          "status": "create_only_primitive_implementation_assigned",
+          "work": "AU-006 bestaande bestandsbroker uitbreiden",
+          "boundary": "workspace-create-only adapter files plus bounded native/workspace_writer_broker.c extension: observe-only and version-bound operation/request identity. Exact function ownership pending. Preserve v1; no second journal, runtime or host-DAC claim.",
+          "status": "native_broker_reuse_extension_in_progress_function_handoff_pending",
           "previousCompletedWork": {
             "work": "Renovate npm-dekking",
             "status": "configuration_complete_bot_activity_unverified",
@@ -6270,26 +6270,53 @@
           "status": "separately_owned_create_only_dependency_in_progress",
           "scope": "No general orchestrator, authority or deployment changes authorized by this finding.",
           "reviewedPlanGoPreserved": true,
-          "next": "Independent review of opt-in create_file primitive before effectful document-provider product proof."
+          "next": "Implement bounded existing native broker extension with thin MCP adapter; independent crash/race review before effectful product proof."
         },
         "providerPrimitiveDependency": {
           "owner": "coordinator/next_tools_delivery",
           "developerAgent": "/root/next_tools_delivery",
           "developerParentThread": "01a08a88-894c-7171-87fa-e681ed47c735",
-          "status": "implementation_assigned",
+          "status": "existing_native_broker_extension_assigned_exact_functions_pending",
           "userOutcome": "Creating a new project document cannot overwrite an existing file.",
-          "scope": "Minimal opt-in create_file tool in pinned filesystem provider; existing write_file unchanged; atomic create-only/conflict semantics and existing observation.",
+          "scope": "Reuse native/workspace_writer_broker.c journal/fsync/linkat/identity via thin MCP adapter. Limited observe-only lookup without recover_pending or publication, and version-bound operation_id/request binding in existing canonical identity. No second journal helper.",
           "ownedPaths": [
             "eva2/deploy/living-core/workspace-create-only/create-file.mjs",
             "eva2/deploy/living-core/workspace-create-only/patch-provider.py",
             "eva2/deploy/living-core/workspace-create-only/Dockerfile",
-            "eva2/deploy/living-core/workspace-create-only/README.md"
+            "eva2/deploy/living-core/workspace-create-only/README.md",
+            "native/workspace_writer_broker.c"
           ],
-          "additionalOwnedScope": "Targeted tests and evidence; exact paths to be confirmed in delivery.",
+          "additionalOwnedScope": "Limited native extension as described; exact native function ownership still pending. Targeted tests and evidence; no general broker rewrite.",
           "independentReviewRequired": true,
           "runtimeDeploymentAuthorized": false,
           "effectfulProductProof": "Only after independent primitive review.",
-          "bridgeOwnerUnchanged": "01a08d52-31b1-7091-be45-812c0b6e6c9f"
+          "bridgeOwnerUnchanged": "01a08d52-31b1-7091-be45-812c0b6e6c9f",
+          "reuseDecision": {
+            "reportedBy": "coordinator",
+            "existingComponent": "native/workspace_writer_broker.c",
+            "existingFacilities": [
+              "journal",
+              "fsync",
+              "linkat",
+              "canonical identity"
+            ],
+            "newJournalHelperAllowed": false,
+            "nativeChangeBoundary": [
+              "Observation-only lookup must neither recover_pending nor publish",
+              "Version-bound operation_id/request binding in existing canonical identity"
+            ],
+            "exactFunctionOwnership": "Pending developer handoff; no broader native change inferred.",
+            "preserve": [
+              "Existing v1 semantics and tests",
+              "Existing filesystem write_file behavior"
+            ],
+            "requiredProof": [
+              "Crash and race evidence",
+              "Independent GO before effectful product proof"
+            ],
+            "liveClaim": false,
+            "nativeHostDacClaim": false
+          }
         }
       }
     }
