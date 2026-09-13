@@ -1,0 +1,58 @@
+{
+  "contract": "EvaAu006TwoStepResumeEvidence/v1",
+  "source_commit": "78c79a9643102e6a5bcd476bfbc05d4ee3cc850c",
+  "base_commit": "b11df1e9371ce26a158867d5be2b102380396bda",
+  "status": "built_and_targeted_tested_review_pending",
+  "source_files": {
+    "eva2/src/eva/application/durable_goals.py": "db7320fc31db350d63313d3d1bca32c841f86895dac5cc616795e97549e69f62",
+    "eva2/src/eva/adapters/postgres/durable_goals.py": "bd1df5aab70fc724d04bbbc7dbd1c87e0aaeb3b00bcc52e829af44d72db93fb6",
+    "eva2/src/eva/adapters/connectors/durable_goal_http.py": "b2c6b6f80f7df6c369b344ff81c74edef1b305629351aa6e5bd913bb538f66ad",
+    "eva2/src/eva/adapters/api/app.py": "e59f32dd5dbb4eee9bfc0baf851cf0aaaa771c9a844d946c117d939262fdfeed",
+    "eva2/tests/application/test_durable_goal_project_contract.py": "16a32daa442d11e78790b9d815f3410b91b1ac0fcca1d6947aaab22219022ddf",
+    "eva2/tests/postgres/test_durable_goal_project_resume.py": "b09da8d4c37ac281e8f8943a64cf14038c6d1c19599a30dc0ab3ffcc1c861674",
+    "eva2/tests/support/durable_goal_project_probe.py": "e3260abf7ad68a281fac3c42cc76a1bdb9b9e19fd2833363e4e1643194e05a2f",
+    "eva2/design/architecture/living-core-v1.md": "8477b1d5c89486c09c236f5244b4b2587c7d17191781068a0119c863d07cbb7d"
+  },
+  "tests": {
+    "contract_api_regression": 32,
+    "isolated_postgres_http_process_restart_and_stop": 7,
+    "total": 39
+  },
+  "postgres_proof": {
+    "container_id": "abee95a45feaea84517034af94913a8ea30ac60fc658d4e8e917d1c4a81e42c0",
+    "postgres_image": "sha256:5d143123fdf80462d1778cd4f24b9f7ca13c87174bca19141fb194c5a1ebca59",
+    "network_mode": "none",
+    "published_ports": [],
+    "data_storage": "tmpfs",
+    "connection": "local Unix socket only",
+    "pytest_exit_code": 0,
+    "model_calls": 0,
+    "production_database_connections": 0,
+    "disposable_container_removed": true
+  },
+  "app_py_scope": [
+    "_durable_goal_from_wire",
+    "_durable_goal_payload"
+  ],
+  "claims": [
+    "First artifact persists after abrupt worker process exit",
+    "Missing checkpoint recovers from durable provider receipt before dispatch",
+    "Only second step receives exact first artifact",
+    "Two effects and one final delivery in isolated crash/replay scenarios",
+    "Cancel after first checkpoint or during readback prevents subsequent dispatch",
+    "Progress and dispatch reservations readable; model tokens and money unknown"
+  ],
+  "limits": [
+    "Provider must enforce durable idempotency keys and exact readback",
+    "An already admitted in-flight action may finish after stop",
+    "Dispatch reservations are not measured token usage or exact HTTP calls",
+    "No ordinary conversation entrypoint for two-step contract",
+    "No live mutation or model calls",
+    "No days-long project or complete AU-006 claim",
+    "Independent review and owner acceptance not yet established"
+  ],
+  "logs": {
+    "contract-regression.log": "37776e49a135b065a7795a46eea03f76d70cf94578e2c45a0aeaf04f11ebc22f",
+    "postgres-proof.log": "3b8afcf54350f598785d23a8510b2d19696f4533f07a6eac358aa14c40beba7b"
+  }
+}

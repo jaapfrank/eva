@@ -1015,6 +1015,26 @@ basis; AST-controle bevestigt uitsluitend de twee toegestane appfuncties.
 Nog geen bronintegratie of onafhankelijke GO. Evidencepad is vastgelegd
 in de bestaande stage-/retentieregistratie; geen live of volledige AU-006-claim.
 
+### AU-006 — twee stappen via operator technisch als bron afgerond
+
+De onafhankelijke reviewer geeft scope-GO voor78c79a96/8ff5a859:
+acht bronhashes en twee loghashes gecontroleerd,21 contract/appchecks
+zelf herhaald; zeven echte PG/HTTP/procesproeven bekeken, niet herhaald.
+De negen beoordeelde bestanden/hunks zijn exact geïntegreerd. app.py
+wijzigt uitsluitend de twee afgesproken functies. Na procesuitval
+blijft het eerste resultaat bewaard; duurzame providerreadback voorkomt
+herhaling en alleen de ontbrekende tweede stap loopt, met één eindoplevering
+in de geïsoleerde proeven. Provider-idempotentie en exacte teruglezing zijn
+vereist. Reeds toegelaten werk kan na stop nog eindigen. Voortgang en
+dispatchreserveringen zijn zichtbaar, modeltokens/eurokosten onbekend.
+Geen gewone gesprekstoegang, livegang, meerdaagse praktijk of volledige
+AU-006/eigenaaracceptatie.
+[Gebonden bewijs](evidence/living-core/au006-two-step-project-resume-20260913.json).
+
+De IN-002-bouwer voert nu de afgesproken geïsoleerde operatorpakketvalidatie
+uit als technisch prerequisiet. Dit is geen volledige releasevalidatie
+en geeft geen lockbypass, hostupgrade of live herstel vrij.
+
 ## Nu
 
 | Volgorde | Kaart | Resultaat | Status |

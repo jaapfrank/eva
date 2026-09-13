@@ -17,6 +17,7 @@ from eva.application.durable_goals import (
     DurableGoalError,
     DurableGoalSpec,
     DurableGoalState,
+    DurableGoalWorker,
     GoalArtifact,
     GoalEvidence,
 )
@@ -76,7 +77,9 @@ class PostgresDurableGoalStore:
         spec = DurableGoalSpec.from_payload(self._data(events[0]))
         evidence_event = self._last(events, "GOAL_EVIDENCE_READ")
         pivot_event = self._last(events, "GOAL_PLAN_PIVOTED")
-        artifact_event = self._last(events, "GOAL_EFFECT_COMPLETED")
+        first_event = self._last(events, "GOAL_EFFECT_COMPLETED")
+        artifact_event = (first_event if spec.followup_instruction is None else
+                          self._last(events, "GOAL_FOLLOWUP_COMPLETED"))
         delivery_event = next(
             (
                 event
@@ -132,6 +135,11 @@ class PostgresDurableGoalStore:
             delivery_status=delivery_status,
             delivery_reason=delivery_reason,
             cancellation_reason=cancellation_reason,
+            first_artifact=(None if first_event is None else
+                GoalArtifact.from_payload(self._data(first_event).get("artifact"))),
+            effect_dispatch_reservations=sum(
+                event.event_type == "GOAL_EFFECT_DISPATCH_RESERVED" for event in events
+            ),
         )
 
     def waiting(
@@ -293,6 +301,7 @@ class PostgresDurableGoalStore:
             if self._data(existing) != data:
                 raise DurableGoalError("durable goal effect preparation differs")
             return "already_prepared"
+        self._require_waiting(events)
         self._append(
             goal,
             event_type="GOAL_EFFECT_PREPARED",
@@ -318,6 +327,7 @@ class PostgresDurableGoalStore:
             return "already_recorded"
         if self._last(events, "GOAL_EFFECT_PREPARED") is None:
             raise DurableGoalError("durable goal effect was not prepared")
+        self._require_waiting(events)
         self._append(
             goal,
             event_type="GOAL_EFFECT_COMPLETED",
@@ -329,11 +339,75 @@ class PostgresDurableGoalStore:
         )
         return "recorded"
 
+    def prepare_followup(self, goal: DurableGoalSpec) -> str:
+        events = self._events(goal)
+        self._require_waiting(events)
+        if goal.followup_instruction is None:
+            raise DurableGoalError("durable goal has no followup")
+        previous = self._required_artifact(events)
+        data = {
+            "goal_sha256": goal.sha256,
+            "previous_artifact_sha256": canonical_sha256(previous.to_payload()),
+            "selected_instruction": goal.followup_instruction,
+            "idempotency_key": DurableGoalWorker.followup_idempotency_key(goal, previous),
+        }
+        existing = self._last(events, "GOAL_FOLLOWUP_PREPARED")
+        if existing is not None:
+            if self._data(existing) != data:
+                raise DurableGoalError("durable goal followup preparation differs")
+            return "already_prepared"
+        self._append(
+            goal, event_type="GOAL_FOLLOWUP_PREPARED", phase="goal_followup_prepared",
+            status="active", occurred_at=previous.created_at,
+            suffix="followup-prepared", data=data,
+        )
+        return "prepared"
+
+    def reserve_effect_dispatch(self, goal: DurableGoalSpec, *, followup: bool) -> str:
+        events = self._events(goal)
+        self._require_waiting(events)
+        if goal.followup_instruction is None:
+            raise DurableGoalError("dispatch accounting requires a two-step goal")
+        prepared_type = "GOAL_FOLLOWUP_PREPARED" if followup else "GOAL_EFFECT_PREPARED"
+        completed_type = "GOAL_FOLLOWUP_COMPLETED" if followup else "GOAL_EFFECT_COMPLETED"
+        prepared = self._last(events, prepared_type)
+        if prepared is None or self._last(events, completed_type) is not None:
+            raise DurableGoalError("durable goal dispatch is outside prepared step")
+        number = 1 + sum(e.event_type == "GOAL_EFFECT_DISPATCH_RESERVED" for e in events)
+        self._append(
+            goal, event_type="GOAL_EFFECT_DISPATCH_RESERVED", phase="goal_effect_dispatch",
+            status="active", occurred_at=datetime.now(tz=goal.created_at.tzinfo).replace(microsecond=0),
+            suffix=f"dispatch-{number}", data={
+                "goal_sha256": goal.sha256, "step": 2 if followup else 1,
+                "idempotency_key": self._data(prepared)["idempotency_key"],
+            },
+        )
+        return "reserved"
+
+    def record_followup(self, goal: DurableGoalSpec, artifact: GoalArtifact) -> str:
+        events = self._events(goal)
+        data = {"artifact": artifact.to_payload(), "artifact_sha256": artifact.content_sha256,
+                "goal_sha256": goal.sha256}
+        existing = self._last(events, "GOAL_FOLLOWUP_COMPLETED")
+        if existing is not None:
+            if self._data(existing) != data:
+                raise DurableGoalError("durable goal followup artifact differs")
+            return "already_recorded"
+        self._require_waiting(events)
+        if self._last(events, "GOAL_FOLLOWUP_PREPARED") is None:
+            raise DurableGoalError("durable goal followup was not prepared")
+        self._append(
+            goal, event_type="GOAL_FOLLOWUP_COMPLETED", phase="goal_followup_completed",
+            status="active", occurred_at=artifact.created_at,
+            suffix="followup-completed", data=data,
+        )
+        return "recorded"
+
     def prepare_delivery(self, goal: DurableGoalSpec, artifact: GoalArtifact) -> str:
         events = self._events(goal)
         if self._last(events, "GOAL_COMPLETED") is not None:
             return "already_completed"
-        durable = self._required_artifact(events)
+        durable = self._required_artifact(events, followup=goal.followup_instruction is not None)
         if durable != artifact:
             raise DurableGoalError("durable goal delivery artifact differs")
         data = {
@@ -354,6 +428,7 @@ class PostgresDurableGoalStore:
             if self._data(existing) != data:
                 raise DurableGoalError("durable goal delivery preparation differs")
             return "already_prepared"
+        self._require_waiting(events)
         self._append(
             goal,
             event_type="GOAL_DELIVERY_PREPARED",
@@ -379,7 +454,7 @@ class PostgresDurableGoalStore:
         ):
             raise DurableGoalError("durable goal delivery reason is invalid")
         events = self._events(goal)
-        durable = self._required_artifact(events)
+        durable = self._required_artifact(events, followup=goal.followup_instruction is not None)
         if durable != artifact or self._last(events, "GOAL_DELIVERY_PREPARED") is None:
             raise DurableGoalError("durable goal delivery was not prepared")
         terminal = next(
@@ -427,7 +502,9 @@ class PostgresDurableGoalStore:
             if terminal.event_type == "GOAL_CANCELLED" and self._data(terminal) == data:
                 return "already_cancelled"
             raise DurableGoalError("terminal durable goal cannot be cancelled")
-        if self._last(events, "GOAL_EFFECT_COMPLETED") is not None:
+        if state.spec.followup_instruction is None and (
+            self._last(events, "GOAL_EFFECT_COMPLETED") is not None
+        ):
             raise DurableGoalError("completed goal effect cannot be cancelled")
         self._append(
             state.spec,
@@ -489,6 +566,10 @@ class PostgresDurableGoalStore:
     ) -> None:
         thread_id = self._thread_id(goal.goal_id, goal.owner_id)
         state = self._timeline.load(thread_id)
+        events = self._events(goal)
+        self._require_waiting(events)
+        if state.revision != len(events):
+            raise DurableGoalError("durable goal update raced another worker")
         try:
             self._timeline.transition(
                 thread_id=thread_id,
@@ -554,9 +635,10 @@ class PostgresDurableGoalStore:
         return str(value)
 
     def _required_artifact(
-        self, events: tuple[TimelineEvent, ...]
+        self, events: tuple[TimelineEvent, ...], *, followup: bool = False
     ) -> GoalArtifact:
-        event = self._last(events, "GOAL_EFFECT_COMPLETED")
+        event = self._last(events, "GOAL_FOLLOWUP_COMPLETED" if followup
+                           else "GOAL_EFFECT_COMPLETED")
         if event is None:
             raise DurableGoalError("durable goal artifact is missing")
         return GoalArtifact.from_payload(self._data(event).get("artifact"))

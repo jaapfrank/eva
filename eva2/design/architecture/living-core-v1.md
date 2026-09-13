@@ -591,6 +591,56 @@ releasebewijs totdat de gateway expliciet als beheerde sidecar is geconfigureerd
 | Proactieve Telegram-uitgang | `src/eva/adapters/connectors/telegram.py`, `src/eva/application/free_will.py` en `deploy/living-core/telegram-proactive.compose.yml` | Outbound-only sendMessage buiten PostgreSQL, providerreceipt daarna committen; een verlopen claim zonder bewijs wordt `expression_ambiguous/needs_help` en nooit automatisch opnieuw verstuurd; secretbestand en één expliciet goedgekeurd chat-ID | Contractpad groen; echte Home Assistant-gaswaarschuwing bleef na een corecrash zowel direct als na lease-expiry gesloten en eindigde zonder resend in durable menselijke hulpstatus; echte Telegram-send staat uit tot bestemming en nieuw Eva 2-secret expliciet zijn goedgekeurd |
 | Duurzame fan-outlevering | `src/eva/application/delivery.py`, `src/eva/adapters/connectors/fanout_http.py`, `src/eva/adapters/postgres/delivery.py`, gesprekmodel en `conversation_actions.py` | Eén aanvraag wordt per ontvanger voorbereid, extern aangeboden en afzonderlijk teruggelezen; iedere ontvanger heeft een deterministische idempotency-key en eigen accepted/rejected-receipt; na een ambigu verzendvenster gaat providerreadback altijd vóór een nieuwe POST | Native P03 en X01 live groen op v43: twee acceptaties plus één afwijzing bleven afzonderlijk zichtbaar, en een echte exit 137 ná sink-a-acceptatie maar vóór HTTP-antwoord hervatte zonder tweede POST |
 | Duurzame doelen | `src/eva/application/durable_goals.py`, `src/eva/adapters/postgres/durable_goals.py`, `src/eva/adapters/connectors/durable_goal_http.py`, `src/eva/operations/durable_goal_worker.py`, gesprekmodel, `conversation_actions.py` en `deploy/living-core/durable-goals.compose.yml` | Modelgekozen begrensd doel, externe wakevoorwaarde, bewijsherlezing, optionele inhoudelijke pivot, precies-één effect en levering; expliciete cancellation, deadline-blocker en delivery failure zijn aparte terminale projecties | Native A01/A02/A03/F03/F04 live groen op v49 en duurzaam teruggelezen op v50; de v50-worker verwerkt bestaande terminale checkpoints stabiel zonder herstartlus |
+
+### AU-006: twee afhankelijke stappen hervatten (13 september 2026)
+
+De begrensde uitbreiding gebruikt dezelfde `DurableGoalSpec`, PostgreSQL-timeline,
+`DurableGoalWorker` en HTTP-connector. Een v2-goal voegt één generieke
+`followup_instruction` toe. Stap 2 krijgt de volledige, duurzaam teruggelezen
+`previous_artifact` van stap 1. Alleen het eindresultaat wordt afgeleverd.
+Bestaande v1-goals behouden hun payload, hash, effectkey en statusantwoord.
+Er is geen extra scheduler, goalopslag of database-migratie.
+
+De bestaande operatorroute `/internal/v1/goals/admit` accepteert in haar
+`goal`-object een niet-lege `followup_instruction` (maximaal 2000 tekens),
+naast de bestaande wirevelden. De wirevorm heeft geen `contract`-veld; de
+opslagvorm krijgt intern `EvaDurableGoalSpec/v2`.
+Gebruik dezelfde ingestelde operatorauthenticatie en tenant/installatie/owner.
+`/internal/v1/goals/state` retourneert voor v2 `first_artifact`, `artifact`
+(alleen eindresultaat), `completed_steps`, `total_steps: 2` en `usage`.
+`usage.effect_dispatch_reservations` telt duurzame reserveringen vóór een
+werkdispatch, inclusief een mogelijke crash vóór verzending; dit is geen
+exacte HTTP-call-, token- of kostentelling. `model_tokens` en `cost` zijn `null`:
+de bestaande provider rapporteert ze niet. Bij gewoon gesprek ontbreekt nog
+de model/tooling-ingang die dit tweestappencontract kiest; die is hier niet gebouwd.
+
+`/internal/v1/goals/cancel` kan een v2-goal ook na stap 1 stoppen; het eerste
+artifact blijft leesbaar. De worker controleert de terminale toestand opnieuw
+na externe readback en vóór volgende werk- en afleveringsstappen. Een reeds
+geautoriseerde, lopende provideractie kan nog eindigen; stop draait effecten
+niet terug en is geen externe transactievergrendeling. Een eenmaal terminale
+timeline kan niet door een latere workerupdate opnieuw actief worden.
+
+Beide stappen hebben eigen stabiele idempotencykeys; die van stap 2 bindt de
+volledige vorige artifactpayload. Bij ontbrekend lokaal checkpoint leest de
+worker eerst het providerreceipt. Geen dubbele effecten of aflevering vereist
+een provider die idempotencykeys duurzaam afdwingt en eerdere receipts exact
+teruggeeft. Deze garantie volgt niet uit HTTP alleen. De provider moet de nieuwe
+`previous_artifact` daadwerkelijk als invoer verwerken; ondersteuning door een
+willekeurige bestaande provider is niet verondersteld.
+
+Gerichte proef: `tests/postgres/test_durable_goal_project_resume.py` gebruikt
+PostgreSQL 16.13 in een wegwerpcontainer, echte loopback-HTTP, duurzame
+providerreceipts en afzonderlijke workerprocessen. Abrupte procesuitgang na
+stap-1-checkpoint, na elk extern effect vóór lokale registratie en na aflevering
+vóór registratie wordt gevolgd door hervatting met nieuwe worker en HTTP-server.
+Tellingen en eindinhoud bewijzen twee afhankelijke effecten en één aflevering.
+Stop na stap 1 en tijdens readback voorkomt de volgende dispatch. Dit is een
+geïsoleerde integratieproef, geen meerdaagse praktijk, modelkeuze, livegang,
+eigenaaracceptatie of volledige AU-006-oplevering. Bron en onafhankelijke
+beoordeling worden afzonderlijk bij de centrale bewijsregistratie vastgelegd.
+
+
 | Bewezen externe toolproviders | `src/eva/adapters/connectors/home_assistant.py`, `agentmail.py`, `home_assistant_automations.py`, `home_assistant_management.py`, `src/eva/adapters/postgres/external_conversation_tools.py`, `src/eva/providers/runtime.py` en `deploy/living-core/home-assistant.compose.yml` | Iedere adapter levert catalogus, schema, uitvoering en readback aan Eva's algemene toolcontract. De compositor verwerkt alleen `ProviderContribution`; ingebouwde en expliciet toegelaten Python-entry-pointproviders gebruiken hetzelfde contract. Home Assistant en AgentMail zijn praktijkproviders, geen Eva-onderdelen | Huisreads/-effecten/-beheer en e-mailreads lopen door de generieke route. Een synthetische kalender-entry point laadde zonder compositortak. Ontbrekende of dubbele providers/tools stoppen gesloten. Veilige pakketinstallatie/pinning, apparaatmigratie en live AgentMail-read blijven praktijkproeven |
 | Geavanceerde provideropdrachten | `src/eva/adapters/connectors/home_assistant_advanced_tasks.py`, `home_assistant_admin.py`, `home_assistant_hacs.py`, `src/eva/providers/home_assistant_advanced_store.py` en `src/eva/providers/runtime.py` | Register- en HACS-inventaris, repository- en providerversiegebonden compatibiliteit, retryvast plan; aparte hashgebonden goedkeuring, prepare, officiële addcall en exacte readback voor de onderhouden bron zonder pakketinstallatie; daarna afzonderlijke versie-exacte pakketinstallatie/readback/rollback en secretvrije canary met one-use call-fence | Echte Tuya/LocalTuya-inventaris, idempotent 12-apparatenplan en live planrefresh bewezen; v40 weigerde de oude bron vóór mutatie, draaide een echt modelgesprek en las vóór/na exact dezelfde HACS-inventaris terug. De ongebruikte losse LocalTuya-connectiviteitsadapter is verwijderd; de resterende providerspecifieke route moet nog door runtime-ontdekte algemene tools worden vervangen |
 | E-mailtool | `src/eva/adapters/connectors/agentmail.py`, `src/eva/adapters/postgres/external_conversation_tools.py` en `src/eva/providers/runtime.py` | Provider-eigen lijst-/leescatalogus, begrensde AgentMail list/get, algemene duurzame uitvoering en observation-readback; geen losse kern-API | Echte AgentMail-providerread via A bevestigd; Eva2's HTTP-contract en verse PostgreSQL-herstartproef zijn groen. De live Eva2-read wacht bewust op een nieuw uitgegeven secret |

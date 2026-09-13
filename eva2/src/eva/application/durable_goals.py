@@ -88,6 +88,7 @@ class DurableGoalSpec:
     delivery_recipient: str
     wake: GoalWakeCondition
     created_at: datetime
+    followup_instruction: str | None = None
 
     def __post_init__(self) -> None:
         for value, label, maximum in (
@@ -99,6 +100,12 @@ class DurableGoalSpec:
         ):
             if not value.strip() or len(value) > maximum:
                 raise ValueError(f"goal {label} is invalid")
+        if self.followup_instruction is not None and (
+            not isinstance(self.followup_instruction, str)
+            or not self.followup_instruction.strip()
+            or len(self.followup_instruction) > 2000
+        ):
+            raise ValueError("goal followup instruction is invalid")
         pivot_fields = (
             self.pivot_instruction,
             self.suitability_field,
@@ -120,7 +127,10 @@ class DurableGoalSpec:
 
     def to_payload(self) -> dict[str, object]:
         return {
-            "contract": "EvaDurableGoalSpec/v1",
+            **({"followup_instruction": self.followup_instruction}
+               if self.followup_instruction is not None else {}),
+            "contract": ("EvaDurableGoalSpec/v2" if self.followup_instruction is not None
+                         else "EvaDurableGoalSpec/v1"),
             "created_at": self.created_at.isoformat().replace("+00:00", "Z"),
             "delivery_recipient": self.delivery_recipient,
             "description": self.description,
@@ -135,10 +145,14 @@ class DurableGoalSpec:
 
     @classmethod
     def from_payload(cls, raw: object) -> DurableGoalSpec:
-        if not isinstance(raw, dict) or raw.get("contract") != "EvaDurableGoalSpec/v1":
+        if not isinstance(raw, dict) or raw.get("contract") not in {
+            "EvaDurableGoalSpec/v1", "EvaDurableGoalSpec/v2"
+        }:
             raise DurableGoalError("durable goal is malformed")
         try:
             value = cls(
+                followup_instruction=(raw.get("followup_instruction")
+                    if raw["contract"] == "EvaDurableGoalSpec/v2" else None),
                 goal_id=str(raw["goal_id"]),
                 owner_id=str(raw["owner_id"]),
                 description=str(raw["description"]),
@@ -301,6 +315,14 @@ class DurableGoalState:
     delivery_status: Literal["accepted", "rejected"] | None = None
     delivery_reason: str | None = None
     cancellation_reason: str | None = None
+    first_artifact: GoalArtifact | None = None
+    effect_dispatch_reservations: int = 0
+
+    @property
+    def completed_steps(self) -> int:
+        if self.spec.followup_instruction is None:
+            return int(self.artifact is not None)
+        return int(self.first_artifact is not None) + int(self.artifact is not None)
 
 
 class GoalEvidencePort(Protocol):
@@ -319,6 +341,7 @@ class GoalWorkPort(Protocol):
         instruction: str,
         evidence: GoalEvidence,
         idempotency_key: str,
+        previous_artifact: GoalArtifact | None = None,
     ) -> GoalArtifact: ...
 
 
@@ -345,6 +368,9 @@ class DurableGoalStorePort(Protocol):
     def record_pivot(self, goal: DurableGoalSpec, instruction: str) -> str: ...
     def prepare_effect(self, goal: DurableGoalSpec, instruction: str) -> str: ...
     def record_effect(self, goal: DurableGoalSpec, artifact: GoalArtifact) -> str: ...
+    def prepare_followup(self, goal: DurableGoalSpec) -> str: ...
+    def record_followup(self, goal: DurableGoalSpec, artifact: GoalArtifact) -> str: ...
+    def reserve_effect_dispatch(self, goal: DurableGoalSpec, *, followup: bool) -> str: ...
     def prepare_delivery(self, goal: DurableGoalSpec, artifact: GoalArtifact) -> str: ...
     def record_delivery(
         self,
@@ -411,27 +437,64 @@ class DurableGoalWorker:
             instruction = goal.pivot_instruction
             self._store.record_pivot(goal, instruction)
         state = self._required_state(goal)
-        if state.artifact is None:
+        if state.status != "waiting":
+            return state
+        first_artifact = (state.first_artifact if goal.followup_instruction is not None
+                          else state.artifact)
+        if first_artifact is None:
             self._store.prepare_effect(goal, instruction)
             effect_key = self.effect_idempotency_key(goal)
             artifact = await self._work.readback(
                 goal=goal, idempotency_key=effect_key
             )
+            if self._required_state(goal).status != "waiting":
+                return self._required_state(goal)
             if artifact is None:
+                if goal.followup_instruction is not None:
+                    self._store.reserve_effect_dispatch(goal, followup=False)
                 artifact = await self._work.execute(
                     goal=goal,
                     instruction=instruction,
                     evidence=evidence,
                     idempotency_key=effect_key,
                 )
+            if self._required_state(goal).status != "waiting":
+                return self._required_state(goal)
             self._store.record_effect(goal, artifact)
         else:
-            artifact = state.artifact
+            artifact = first_artifact
+        if goal.followup_instruction is not None:
+            state = self._required_state(goal)
+            if state.status != "waiting":
+                return state
+            if state.artifact is None:
+                self._store.prepare_followup(goal)
+                key = self.followup_idempotency_key(goal, artifact)
+                result = await self._work.readback(goal=goal, idempotency_key=key)
+                if self._required_state(goal).status != "waiting":
+                    return self._required_state(goal)
+                if result is None:
+                    self._store.reserve_effect_dispatch(goal, followup=True)
+                    result = await self._work.execute(
+                        goal=goal, instruction=goal.followup_instruction,
+                        evidence=evidence, idempotency_key=key,
+                        previous_artifact=artifact,
+                    )
+                if self._required_state(goal).status != "waiting":
+                    return self._required_state(goal)
+                self._store.record_followup(goal, result)
+                artifact = result
+            else:
+                artifact = state.artifact
+        if self._required_state(goal).status != "waiting":
+            return self._required_state(goal)
         self._store.prepare_delivery(goal, artifact)
         key = self.delivery_idempotency_key(goal, artifact)
         delivered = await self._delivery.readback(
             recipient=goal.delivery_recipient, idempotency_key=key
         )
+        if self._required_state(goal).status != "waiting":
+            return self._required_state(goal)
         if delivered is None:
             delivered = await self._delivery.deliver(
                 recipient=goal.delivery_recipient,
@@ -439,6 +502,8 @@ class DurableGoalWorker:
                 content_sha256=artifact.content_sha256,
                 idempotency_key=key,
             )
+        if self._required_state(goal).status != "waiting":
+            return self._required_state(goal)
         self._store.record_delivery(goal, artifact, delivered[0], delivered[1])
         return self._required_state(goal)
 
@@ -453,6 +518,13 @@ class DurableGoalWorker:
         return "goal-effect:" + canonical_sha256(
             {"goal_sha256": goal.sha256, "goal_id": goal.goal_id}
         )
+
+    @staticmethod
+    def followup_idempotency_key(goal: DurableGoalSpec, artifact: GoalArtifact) -> str:
+        return "goal-followup:" + canonical_sha256({
+            "goal_sha256": goal.sha256,
+            "previous_artifact_sha256": canonical_sha256(artifact.to_payload()),
+        })
 
     @staticmethod
     def delivery_idempotency_key(

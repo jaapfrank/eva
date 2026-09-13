@@ -82,12 +82,15 @@ class HttpDurableGoalConnector:
         instruction: str,
         evidence: GoalEvidence,
         idempotency_key: str,
+        previous_artifact: GoalArtifact | None = None,
     ) -> GoalArtifact:
         raw = await asyncio.to_thread(
             self._json,
             "POST",
             "/v1/effects",
             {
+                **({"previous_artifact": previous_artifact.to_payload()}
+                   if previous_artifact is not None else {}),
                 "evidence": evidence.to_payload(),
                 "goal_id": goal.goal_id,
                 "goal_sha256": goal.sha256,

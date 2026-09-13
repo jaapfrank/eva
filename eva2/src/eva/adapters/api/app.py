@@ -527,13 +527,21 @@ def _memory_payload(memory: PresenceMemory) -> dict[str, Any]:
 
 
 def _durable_goal_from_wire(raw: object) -> DurableGoalSpec:
-    if not isinstance(raw, dict) or set(raw) != _DURABLE_GOAL_KEYS:
+    if not isinstance(raw, dict) or set(raw) not in (
+        _DURABLE_GOAL_KEYS, _DURABLE_GOAL_KEYS | {"followup_instruction"}
+    ):
         raise ValueError("durable goal request is invalid")
+    if "followup_instruction" in raw and (
+        not isinstance(raw["followup_instruction"], str)
+        or not raw["followup_instruction"].strip()
+    ):
+        raise ValueError("durable goal followup instruction is invalid")
     wake = raw.get("wake")
     if not isinstance(wake, dict) or set(wake) != _DURABLE_GOAL_WAKE_KEYS:
         raise ValueError("durable goal wake request is invalid")
     try:
         return DurableGoalSpec(
+            followup_instruction=raw.get("followup_instruction"),
             goal_id=raw["goal_id"],
             owner_id=raw["owner_id"],
             description=raw["description"],
@@ -558,7 +566,7 @@ def _durable_goal_from_wire(raw: object) -> DurableGoalSpec:
 
 
 def _durable_goal_payload(state: DurableGoalState) -> dict[str, Any]:
-    return {
+    payload = {
         "artifact": None if state.artifact is None else state.artifact.to_payload(),
         "cancellation_reason": state.cancellation_reason,
         "contract": "EvaDurableGoalState/v1",
@@ -569,6 +577,21 @@ def _durable_goal_payload(state: DurableGoalState) -> dict[str, Any]:
         "selected_instruction": state.selected_instruction,
         "status": state.status,
     }
+
+    if state.spec.followup_instruction is not None:
+        payload.update({
+            "contract": "EvaDurableGoalState/v2",
+            "first_artifact": (None if state.first_artifact is None
+                               else state.first_artifact.to_payload()),
+            "completed_steps": state.completed_steps,
+            "total_steps": 2,
+            "usage": {
+                "effect_dispatch_reservations": state.effect_dispatch_reservations,
+                "model_tokens": None,
+                "cost": None,
+            },
+        })
+    return payload
 
 
 def _bounded_string_fields(
