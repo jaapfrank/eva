@@ -121,7 +121,7 @@
           ]
         }
       ],
-      "priorityDecision": "Afgerond en live: de juiste gezondheidscontroles van beide documentdiensten, onafhankelijk bevestigd met behoud van Eva en projectgegevens. PR-01 blijft ook afgerond. Open technisch vervolg betreft de afzonderlijke IN-002-releasevoorwaarden; deze opleveringen worden niet opnieuw gestart.",
+      "priorityDecision": "Volgende gebruikersoplevering: geef Eva zelf een kleine opdracht voor twee tekstbestanden, zonder vooraf ingesteld beheerderplan. De bouwer gebruikt de bestaande project- en bestandsroute. PR-01, het voorbereide documentproject en de gezondheidscontroles blijven afgesloten; algemene projectplanning blijft buiten deze scope.",
       "dashboardVerification": {
         "status": "local_browser_verified_not_full_product_acceptance",
         "priorityRevision": {
@@ -280,6 +280,10 @@
         {
           "title": "Gezondheidscontroles documentdiensten afgerond",
           "detail": "Technisch afgerond en live, onafhankelijk bevestigd: beide documentdiensten melden gezond met controles voor hun werkelijke proces en afhankelijkheden. Eva is niet herstart; doelen, journaal en 28 bestanden zijn behouden. Gezond bewijst geen opdrachtvoortgang of taaksucces. Het bestaande documentproject hoeft niet opnieuw gestart te worden."
+        },
+        {
+          "title": "Zelf een documentproject opgeven",
+          "detail": "Nieuw begrensd werk: geef in een gewoon gesprek een eigen kleine opdracht die twee lokale tekstbestanden oplevert. Eva moet een nieuw duurzaam project kunnen starten zonder beheerderplanwissel. Tweede opdrachten mogen niets overschrijven; hervatten, stoppen, eigenaarbinding, status en verbruik blijven controleerbaar. Bronbouw en onafhankelijke beoordeling komen eerst; nog niet live."
         }
       ],
       "openRisks": [
@@ -1034,7 +1038,7 @@
       "sessionGoal": "AU-008: één zelfstandige kosteloze bijdrage via de algemene uitvoerder.",
       "currentWork": "**Afgerond en live — twee begrensde opleveringen.** PR-01: Eva vindt een bewaarde planreviewprocedure terug, leest de gecontroleerde tekst en past de regels toe; jouw resultaatreview staat open. Documentstatus: beide documentdiensten gebruiken nu passende gezondheidscontroles en melden gezond. Beide opleveringen zijn onafhankelijk bevestigd. Eva, bestaande doelen, journaal en bestanden zijn behouden. Gezondheid is geen bewijs van taakvoortgang.",
       "currentEvidence": "eva2/evidence/living-core/document-health-r2-live-20260913.json",
-      "nextStep": "**Eerstvolgend open werk:** de afzonderlijke IN-002-releasevoorwaarden rond resterende PostgreSQL-bevindingen, licenties en platformvalidatie. De documentstatuscorrectie en PR-01 zijn afgesloten en worden niet opnieuw gebouwd. [Lees PR-01](http://localhost:44712/#practice-PR-01) voor jouw beoordeling; een nieuwe projectproef is niet nodig.",
+      "nextStep": "**Eerstvolgende gebruikersoplevering:** zelf in een gewoon gesprek een kleine opdracht voor twee lokale tekstbestanden geven, zonder beheerderplanwissel. Bestaande projectopslag en native bestandsacties worden hergebruikt; bronbouw gebeurt geïsoleerd vóór review en installatie. Klaar vereist twee gecontroleerde bestanden, geen overschrijven bij een tweede opdracht, hervatten zonder duplicaten, stoppen, eigenaarbinding, status en verbruik. PR-01, PJ-01 en de gezondheidscontroles blijven afgesloten. IN-002-releasevoorwaarden blijven een afzonderlijk spoor.",
       "usageClarification": {
         "date": "2026-09-07",
         "authorizedBy": "Jaap",
@@ -9813,6 +9817,38 @@
         "liveFaultInjection": false
       },
       "historicalBoundary": "Original failed installation and original rollback verified:false remain unchanged; independent restoration separately proven. Successful R2 closes bounded health correction."
+    },
+    "ownerDocumentProjectAU00620260913": {
+      "id": "AU006-owner-document-project",
+      "status": "assigned_isolated_source_implementation",
+      "assignedBy": "coordinator",
+      "owner": "coordinator/next_tools_delivery",
+      "runtimeOwnerThread": "01a08d52-31b1-7091-be45-812c0b6e6c9f",
+      "outcome": "A user requests a small document project in ordinary conversation and receives two verified local text documents without an administrator swapping a prepared plan",
+      "existingGap": "One administrator-prepared plan and empty start arguments",
+      "scope": "Reuse existing DurableGoal store, native document actions and journal; bounded two-document projects",
+      "generalPlanner": false,
+      "built": false,
+      "tested": false,
+      "live": false,
+      "ownerAccepted": false,
+      "earlierPR01PJ01RemainClosed": true,
+      "doneWhen": [
+        "Two user-requested output files independently verified",
+        "Second project cannot overwrite earlier output",
+        "Restart resumes without duplicate effects",
+        "Stop and owner isolation remain enforced",
+        "Status and measured usage are available",
+        "Isolated source review followed by exact runtime review and ordinary user-route proof"
+      ],
+      "ownershipAndRetention": {
+        "status": "awaiting builder paths and retention handoff",
+        "sourceOwner": "coordinator/next_tools_delivery",
+        "centralBoardOwner": "01a07e5b-3ef4-7ef3-8a68-3197a780694e",
+        "policy": "Retain source worktree and evidence until reviewed integration and handoff; no cleanup authorized here"
+      },
+      "runtimeGo": false,
+      "sourceIntegrated": false
     }
   },
   "activeTaskId": "AU-008",
