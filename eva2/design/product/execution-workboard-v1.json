@@ -121,7 +121,7 @@
           ]
         }
       ],
-      "priorityDecision": "Eerst de gemelde fouten in de gewone Telegramchat onderzoeken en herstellen. Runtime-uitvoerder en onafhankelijke reviewer pakken dit samen op. AU-004-installatie is uitgesteld; core-health alleen bewijst geen werkend gesprek.",
+      "priorityDecision": "Eerst de twee bevestigde Telegramfouten herstellen: woordlimiet in de core en de vaste twintigsecondenlimiet in de bridge. De uitvoerder bouwt gerichte fixes zonder verzoekherhaling. AU-004-installatie blijft uitgesteld tot de gewone gespreksroute is hersteld.",
       "dashboardVerification": {
         "status": "local_browser_verified_not_full_product_acceptance",
         "priorityRevision": {
@@ -162,7 +162,7 @@
         {
           "label": "ACTUEEL INCIDENT · TELEGRAM",
           "value": "Foutmeldingen in gewone gesprekken",
-          "detail": "Door Jaap gemeld; onderzoek en herstel hebben voorrang. Oorzaak en geslaagde gespreksroute zijn nog niet vastgesteld."
+          "detail": "Woordlimietfout en twintigsecondenlimiet onafhankelijk bevestigd. Gerichte fixes in bouw; herstel nog niet bewezen."
         },
         {
           "label": "IN UITVOERING · GEHEUGEN",
@@ -222,8 +222,8 @@
       ],
       "nextOutcomes": [
         {
-          "title": "Fouten in gewone Telegramchat onderzoeken",
-          "detail": "Jaap meldt foutmeldingen in de gewone Telegramchat. De runtime-uitvoerder en reviewer onderzoeken dit met voorrang; de oorzaak en een werkend herstel zijn nog niet vastgesteld. Een gezonde core is alleen een healthcontrole. De goedgekeurde AU-004-installatie is uitgesteld."
+          "title": "Telegramfouten herstellen",
+          "detail": "Twee fouttypen zijn onafhankelijk bevestigd: de core liep vast op een woordlimiet; de Telegramverbinding brak een andere beurt na twintig seconden af, terwijl de core later wel antwoord opsloeg. Beide gerichte fixes zijn in bouw. Geen opstartcrash aangetoond, geen verzoekherhaling en nog geen opgelost- of liveclaim."
         },
         {
           "title": "Reguliere Telegramupdate afgeleverd",
@@ -5944,9 +5944,9 @@
       "owners": [
         {
           "owner": "01a08d52-31b1-7091-be45-812c0b6e6c9f",
-          "work": "Actuele foutmeldingen in gewone Telegramchat onderzoeken",
+          "work": "Core-woordlimiet en Telegram-streamwachttijd herstellen",
           "boundary": "New providers/document_goal_actions.py; bundled.py opt-in registration only; document_goal_plan.py safe full host GoalSpec/hash binding; targeted provider/PG tests and docs. Existing actual ConversationTurn/current authority/external tool port. No second planner/live/envflip.",
-          "status": "priority_telegram_incident_investigation"
+          "status": "telegram_two_confirmed_failures_targeted_fixes_in_build"
         },
         {
           "owner": "coordinator/timing_final_review",
@@ -8591,11 +8591,11 @@
       "integrationVerification": "Four actual baselines exact, bounded patch clean, final files and hashes match reviewed source; evidence preserved unchanged."
     },
     "telegramConversationIncident20260913": {
-      "status": "owner_reported_errors_in_ordinary_chat_under_priority_investigation",
+      "status": "independent_causes_confirmed_two_targeted_fixes_in_build",
       "reportedBy": "Jaap via coordinator",
       "recordedAt": "2026-09-13T07:59:51.606419+00:00",
       "reportedSymptom": "Error messages in ordinary Telegram conversation",
-      "cause": "Not established",
+      "cause": "Core word-limit RuntimeError and separate absolute 20-second Telegram bridge timeout",
       "priority": "Current incident before AU004 installation",
       "owners": [
         "01a08d52-31b1-7091-be45-812c0b6e6c9f",
@@ -8604,7 +8604,51 @@
       "coreHealthDoesNotProveConversationSuccess": true,
       "conversationRecovered": false,
       "newModelProbeClaimed": false,
-      "fixDeployed": false
+      "fixDeployed": false,
+      "independentDiagnosis": {
+        "reportedBy": "coordinator",
+        "confirmed": true,
+        "failureTypes": [
+          {
+            "component": "core",
+            "type": "RuntimeError",
+            "cause": "Word limit",
+            "observedWindowUtc": [
+              "07:46:10",
+              "07:46:24"
+            ]
+          },
+          {
+            "component": "Bottie Telegram bridge",
+            "type": "AbortSignal timeout",
+            "cause": "Absolute 20-second timeout",
+            "observedWindowUtc": [
+              "07:47:41",
+              "07:48:01"
+            ],
+            "coreLaterCommittedAnswer": true,
+            "laterAnswerWordCount": 90
+          }
+        ],
+        "startupCrashProven": false,
+        "privateMessageContentRecorded": false,
+        "privateMessageIdsRecorded": false
+      },
+      "fixesInProgress": [
+        {
+          "scope": "Core word-limit handling",
+          "owner": "01a08d52-31b1-7091-be45-812c0b6e6c9f",
+          "status": "in_build",
+          "deployed": false
+        },
+        {
+          "scope": "Bottie bridge streaming wait duration",
+          "owner": "01a08d52-31b1-7091-be45-812c0b6e6c9f",
+          "status": "in_build",
+          "deployed": false,
+          "requestRetryAllowed": false
+        }
+      ]
     }
   },
   "activeTaskId": "AU-008",
