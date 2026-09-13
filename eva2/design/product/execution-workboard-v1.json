@@ -247,7 +247,7 @@
         },
         {
           "title": "Project hervatten na herstart",
-          "detail": "De technische deelopleveringen blijven afgerond. Voor activering is een gat gevonden: de hostconfiguratiehash staat in de toolbeschrijving, maar telt niet mee in de catalogushash. Dit wordt gericht hersteld en via de echte gateway gecontroleerd. De worker blijft uit tot akkoord en nieuwe binding; nog niet live."
+          "detail": "De kandidaatimage van de kern is onafhankelijk goedgekeurd. De providercorrectie koppelt de hosthash nu aan een werkelijk gehasht schemaveld en ligt bij de reviewer. Nieuwe configuratiebinding en activering blijven geblokkeerd tot akkoord. De eerdere technische deelopleveringen blijven afgerond; nog niet live."
         },
         {
           "title": "Gedeeld audiotype",
@@ -6854,7 +6854,7 @@
           "activationStatus": "Pending corrected provider metadata binding, independent review and rebinding."
         },
         "activationCatalogBindingGap": {
-          "status": "targeted_provider_fix_and_gateway_proof_in_progress",
+          "status": "provider_correction_candidate_in_independent_review",
           "reportedBy": "coordinator read-only activation procedure",
           "owner": "coordinator/next_tools_delivery",
           "finding": "Host configuration digest in tool description is not included by mcp_gateway_catalog_binding. Tools/list visibility does not prove catalog SHA binding.",
@@ -6865,7 +6865,68 @@
           ],
           "workerStartBlockedUntil": "Correction GO and rebinding",
           "previousApprovals": "Earlier source/native/MCP/gateway proofs remain valid in their limited scope; no general revocation or production GO.",
-          "live": false
+          "live": false,
+          "correctionCandidate": {
+            "sourceCommit": "6eef25dbb3c87ae895913bcac08b792f0d0ec638",
+            "image": "sha256:0ef19e699069c3a5d3a26812c5da3d31141fcd5c3faedb14f92c9dcce1209465",
+            "evidencePath": "eva2/reviews/workspace-atomic-catalog-binding-20260913.json",
+            "mechanism": "Host digest in inputSchema.description, covered by existing complete input_schema binding.",
+            "reportedProof": "Two real gateway instance hashes plus controlled schema-annotation fingerprint change.",
+            "sourceIntegrated": false,
+            "independentGo": false,
+            "supersededF7ImageActivationAllowed": false,
+            "artifactRetention": {
+              "owner": "coordinator/next_tools_delivery",
+              "exactPath": "/home/administrator/project/.eva2-artifacts/workspace-broker-v2-20260913/eva-atomic-gateway-9adee638c0",
+              "purpose": "Isolated actual gateway catalog hash correction proof and private instance artifacts.",
+              "retainUntil": "Independent review and evidence handoff complete; coordinator cleanup decision.",
+              "cleanupMoment": "Remove only exact verified disposable fixture after retention conditions; preserve committed sanitized evidence. No cleanup now.",
+              "journalState": "Both proof journals now generation1; must not serve as fresh core genesis."
+            }
+          }
+        },
+        "activationPreparation": {
+          "status": "core_image_independent_go_provider_and_config_activation_blocked",
+          "ownerThread": "01a08d52-31b1-7091-be45-812c0b6e6c9f",
+          "evidenceCommit": "bc0fd5c06d5d97853296cf2459463fac4ad577a7",
+          "evidencePath": "eva2/evidence/living-core/au006-activation-preparation-20260913.json",
+          "evidenceIntegrated": true,
+          "coreCandidateImage": "sha256:2393a1d5aa0a24f9eb0f19aebbbdbf9b32efe28949015bb002e90e181459dd5c",
+          "parentImage": "sha256:832983322ad7d71611225749d618e828d9dd4676f8a24711f09e0ac349db1fcd",
+          "coreImageReview": {
+            "decision": "GO for candidate core image only",
+            "reportedBy": "coordinator",
+            "verified": [
+              "Exact10 approved source changes",
+              "260 parent to264 candidate source files",
+              "Four approved patch sets",
+              "Offline imports"
+            ],
+            "activationGo": false
+          },
+          "reportedPreparation": {
+            "candidateSourcePostgresTestsPassed": 13,
+            "liveContainersComparedUnchanged": 11,
+            "documentWrites": 0,
+            "modelCalls": 0,
+            "gatewayRegistrations": 0,
+            "journalEntries": 0,
+            "targetPathsAbsent": true,
+            "catalogPlanDefinitionGeneration": "unsealed"
+          },
+          "activationBlocked": true,
+          "workerStarted": false,
+          "live": false,
+          "sealerState": "Blocked by ACTIVATION-BLOCKED.json; no provider-image.json or sealed plan/configuration ready.",
+          "artifactRetention": {
+            "owner": "01a08d52-31b1-7091-be45-812c0b6e6c9f",
+            "exactPath": "/home/administrator/project/.eva2-artifacts/au006-activation-20260913",
+            "reviewPath": "/home/administrator/project/.eva2-artifacts/au006-activation-20260913/REVIEW.md",
+            "purpose": "Reviewed core image preparation, private real-owner goal/journal/credentials and rollback material for separately gated AU006 activation.",
+            "retainUntil": "Independent image/provider/configuration review and activation/rollback handoff complete; coordinator decides further retention.",
+            "cleanupMoment": "Only after retention conditions and explicit exact-scope coordinator cleanup; preserve data, journals and sanitized evidence. No cleanup now.",
+            "privateDataPolicy": "Private host goal, journal, credentials and rollback files remain outside Git; only supplied sanitized evidence integrated."
+          }
         }
       },
       "isolatedProductExecutionProven": true,
