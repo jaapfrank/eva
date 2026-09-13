@@ -1,0 +1,211 @@
+{
+  "contract": "In002IsolatedUbuntuOperatorProof/v1",
+  "source_commit": "9b0e9f2e68ceb3d8398a8f7ea36d878c9b80c72e",
+  "observed_at": "2026-09-13T06:48:33.842555+00:00",
+  "stage": "/home/administrator/project/.eva2-artifacts/in002-platform-boundary-20260913",
+  "artifact_hashes": {
+    "provisioning-input-proof.json": "7aca3c21ee75a79ac917981016a18e85c702c50f047033cb4cf6bb13939d55c7",
+    "guest-command.json": "132f4b28a787ce4795705a99640c344b1cf9e52db2780d12bec0091531fbc553",
+    "guest-command-unbuffered.json": "ea5f6c69157271137293d8e5d731b59235c887c3d0f5335ef4e29f519f2e63f5",
+    "guest-normal-launcher-proof.json": "77eb94ac0e19625a2a486766a7dee97ca0443e216741cb16493d850ee7cf0e20",
+    "guest-exit-proof.json": "872a3c86257916680e0b554a5a92d7be2b329ff7f4de4df628fdf5abf0648f0b",
+    "guest-console-first.log": "9eaf12029fda4b1f9de9ab9399f5b72ae5db061f53e6388f0a3253053cb16449",
+    "guest-console-diagnostic.log": "a91dc633d8caf026c6a0f085f2fde0e496564d3ce09cf3ac333e90992e77c9d8",
+    "guest-console-unbuffered.log": "64e103107d10c988ebb5e87ec8810804b91afd48bd95651be534e5d3d3a2339f",
+    "qemu-tool-versions.txt": "f9d1cab9cb22cd973b59afd9c9d7b1334c65a215d30492ed053bfbe9535c7d61",
+    "qemu-build/Dockerfile": "4133d5b8f37c9c05ec5050358c83627974a57e69fb7cdb8c343abed5026d9ca1",
+    "package-current-boundary-comparison.json": "f2070fb75d2683cb78fff0541dbe869b8c84fa3b9f404aa56dcb6bbe96daade0",
+    "guest/payload/probe-unbuffered.py": "bc4af4730eb4b9e9e81c9dd02c8bcd406d793c5f1aa56cced6dbbee6ccd49ac9",
+    "guest/payload/provision.sh": "5ac900fe30a221d9e8971f2da05c27dec40e2254d5a58d0e04043d9d6a6ef434"
+  },
+  "upstream": [
+    {
+      "name": "base.img",
+      "url": "https://cloud-images.ubuntu.com/releases/noble/release-20260209/ubuntu-24.04-server-cloudimg-amd64.img",
+      "sha256": "2f9acc20a381cde6fa678672e20a1408d2b3f346531b9026df2a935c37d2de20",
+      "bytes": 628322816
+    },
+    {
+      "name": "docker-ce-cli.deb",
+      "url": "https://download.docker.com/linux/ubuntu/dists/noble/pool/stable/amd64/docker-ce-cli_29.7.2-1~ubuntu.24.04~noble_amd64.deb",
+      "sha256": "920a5fa031f33f2dd5b56b4a9bc4c725bc9549d6007004a6610a469873ec69fe",
+      "bytes": 16984968
+    },
+    {
+      "name": "docker-ce.deb",
+      "url": "https://download.docker.com/linux/ubuntu/dists/noble/pool/stable/amd64/docker-ce_29.7.2-1~ubuntu.24.04~noble_amd64.deb",
+      "sha256": "8243f97d569a0fa33ea32417e399e9f524e7d75d3898fa9d24e0eadaa486af68",
+      "bytes": 24039440
+    }
+  ],
+  "upstream_signatures": {
+    "ubuntu_cd": "843938DF228D22F7B3742BC0D94AA3F0EFE21092",
+    "ubuntu_cloud": "D2EB44626FDDC30B513D5BB71A5D6C4C7DB87C81",
+    "docker_primary": "9DC858229FC7DD38854AE2D88D81803C0EBFCD88",
+    "docker_inrelease_signer": "D3306A018370199E527AE7997EA0A9C3F273FCD8",
+    "verification": "gpgv exit0; Ubuntu keys from existing distribution keyrings; Docker key from official HTTPS; Packages SHA256 found in signed InRelease"
+  },
+  "normal_launcher": {
+    "actual_preflight": {
+      "checks": [
+        {
+          "detail": "Python-versie klopt",
+          "id": "python",
+          "state": "passed"
+        },
+        {
+          "detail": "Deze computer is geen gekozen Eva-target",
+          "id": "host",
+          "state": "blocked"
+        },
+        {
+          "detail": "Docker Engine wordt pas gecontroleerd nadat de host een gekozen Eva-target is",
+          "id": "container_engine",
+          "state": "blocked"
+        },
+        {
+          "detail": "Deze release heeft dit platform nog niet als ondersteund bewezen",
+          "id": "release_support",
+          "state": "blocked"
+        }
+      ],
+      "contract": "EvaInstallerPreflight/v1",
+      "host": {
+        "architecture": "amd64",
+        "docker_version": "29.7.2",
+        "operating_system": "Ubuntu 24.04.4 LTS",
+        "python_version": "3.12.14"
+      },
+      "next": "Er is niets ge\u00efnstalleerd of gewijzigd. Los eerst de geblokkeerde controle op.",
+      "non_claims": [
+        "Deze preflight opent geen secret, database, volume, connector of gebruikersdata.",
+        "Deze preflight downloadt niets en start of wijzigt geen Docker-container.",
+        "Een groene lokale versiecontrole is geen installatie-, connector- of gebruikersacceptatiebewijs."
+      ],
+      "platform_lock_claim_state": "selected_for_validation",
+      "read_only": true,
+      "status": "blocked"
+    },
+    "imports": [
+      "tools.installer_restore_wizard",
+      "tools.installer_portable_restore",
+      "tools.read_eva_portable_archive",
+      "tools.portable_transport",
+      "tools.portable_restore",
+      "tools.portable_object_materializer",
+      "tools.object_keyring",
+      "eva.bootstrap.installer_wizard_cli"
+    ],
+    "locked_distributions": {
+      "alembic": "1.19.1",
+      "annotated-doc": "0.0.5",
+      "annotated-types": "0.8.0",
+      "anyio": "4.14.2",
+      "certifi": "2026.7.22",
+      "cffi": "2.1.1",
+      "charset-normalizer": "3.5.1",
+      "click": "8.4.2",
+      "cryptography": "50.0.1",
+      "fastapi": "0.141.1",
+      "genai-prices": "0.1.5",
+      "greenlet": "3.5.5",
+      "griffelib": "2.2.0",
+      "h11": "0.16.0",
+      "httpcore2": "2.12.0",
+      "httpx2": "2.12.0",
+      "idna": "3.19",
+      "jiter": "0.16.0",
+      "logfire-api": "4.41.0",
+      "mako": "1.4.1",
+      "markupsafe": "3.0.3",
+      "openai": "3.6.0",
+      "opentelemetry-api": "1.44.0",
+      "psycopg": "3.3.4",
+      "psycopg-binary": "3.3.4",
+      "pycparser": "3.0",
+      "pydantic": "2.12.5",
+      "pydantic-ai-slim": "2.37.0",
+      "pydantic-core": "2.41.5",
+      "pydantic-graph": "2.37.0",
+      "pynacl": "1.6.2",
+      "regex": "2026.9.3",
+      "requests": "2.34.2",
+      "setuptools": "84.0.0",
+      "sniffio": "1.3.1",
+      "sqlalchemy": "2.0.52",
+      "starlette": "1.6.0",
+      "tiktoken": "0.14.0",
+      "truststore": "0.10.4",
+      "typing-extensions": "4.16.0",
+      "typing-inspection": "0.4.4",
+      "urllib3": "2.7.0",
+      "uvicorn": "0.41.0",
+      "websockets": "17.0.1"
+    },
+    "normal_bootstrap_status": 204,
+    "normal_launcher_started": true,
+    "normal_page_opened": true,
+    "python": "3.12.14",
+    "required_assets": [
+      "schemas/contracts/manifest.json",
+      "schemas/portable/record-schema-manifest-v1.json",
+      "alembic.ini",
+      "release/platform-lock.json",
+      "src/eva/application/default_identity_pack.json"
+    ],
+    "restore_detail": "Herstel is niet ingesteld voor deze installatie.",
+    "restore_status": 409,
+    "support_claim": "none",
+    "synthetic_target_accessed": false
+  },
+  "isolation": {
+    "image": "sha256:a664c7040f2cc02103fb07849a8f04a55527000b9e0db745ac09943c4d4928fa",
+    "state": {
+      "Status": "exited",
+      "Running": false,
+      "Paused": false,
+      "Restarting": false,
+      "OOMKilled": false,
+      "Dead": false,
+      "Pid": 0,
+      "ExitCode": 0,
+      "Error": "",
+      "StartedAt": "2026-09-13T06:47:28.754338799Z",
+      "FinishedAt": "2026-09-13T06:47:56.985709544Z"
+    },
+    "privileged": false,
+    "binds": [
+      "/home/administrator/project/.eva2-artifacts/in002-platform-boundary-20260913/guest:/stage:rw"
+    ],
+    "ports": {},
+    "cap_drop": [
+      "ALL"
+    ],
+    "memory": 5368709120,
+    "nano_cpus": 2000000000,
+    "devices": [
+      {
+        "PathOnHost": "/dev/kvm",
+        "PathInContainer": "/dev/kvm",
+        "CgroupPermissions": "rwm"
+      }
+    ],
+    "user": "1000:1000",
+    "host_docker_server_after": "29.1.3"
+  },
+  "guest_disk_virtual_bytes": 21474836480,
+  "probe_history": [
+    "First: installed exact guest Docker and Python, launcher console-pipe deadline 20s expired.",
+    "Diagnostic replay: same guest without reinstall; stderr empty, real preflight recorded.",
+    "Final replay: test child Python -u avoids buffered console pipe; same launcher/package, bootstrap204/page open/restore409."
+  ],
+  "next_gap": "Real Ubuntu PRETTY_NAME differs from literal Server label; independent existing release_support remains blocked. No ready receipt or support change.",
+  "non_claims": [
+    "No private backup/database/model call.",
+    "No full release or arm64 platform proof.",
+    "No product runtime/lock/preflight change.",
+    "No existing host upgrade/socket/production mount; own QEMU image and stopped containers retained for review.",
+    "The selected cloud-image origin is authenticated; no invented Server edition metadata.",
+    "Probe -u is a harness change, not a claimed latency/product fix."
+  ]
+}

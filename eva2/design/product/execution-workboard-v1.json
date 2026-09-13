@@ -248,7 +248,7 @@
         },
         {
           "title": "Reservekopie herstellen via de wizard",
-          "detail": "De bewijscorrectie voor de geïsoleerde omgevingsproef ligt ter herbeoordeling: twee historische inputs zijn gekoppeld aan de oorspronkelijke seed.iso. Definitieve goedkeuring staat nog open. De releasecontrole blokkeert herstel nog; de productfix voor OS-herkenning blijft apart."
+          "detail": "De geïsoleerde Ubuntu/Docker-omgevingsproef is afgerond en onafhankelijk goedgekeurd. De normale launcher en pagina werken; herstel blijft met HTTP 409 geblokkeerd. De twee historische bewijsverwijzingen zijn hersteld en de gast is gestopt. OS-herkenning en releaseondersteuning blijven apart open; geen volledige hersteloplevering of eigenaaracceptatie."
         },
         {
           "title": "Voorbereid documentproject afgerond",
@@ -6417,7 +6417,7 @@
         "liveRestorePerformed": false
       },
       "platformValidationFollowup": {
-        "status": "isolated_guest_provisioning_reported_complete_under_independent_review",
+        "status": "bounded_guest_proof_closed_host_detection_and_release_support_open",
         "owner": "coordinator/timing_final_review",
         "assignedBy": "coordinator",
         "scope": "IN-002 platform validation",
@@ -6449,7 +6449,7 @@
           "freshRestorePerformed": false,
           "matchingIsolatedVmEstablished": false
         },
-        "nextStep": "Independent provisioning review; separately build and review proven OS-label detection correction.",
+        "nextStep": "Separate review of OS-label detection fix; release support still blocked.",
         "productChanges": false,
         "platformSupported": false,
         "artifactRetention": {
@@ -6462,29 +6462,69 @@
         },
         "guestProvisioning": {
           "candidateCommit": "6fe88ace984ea6aca73d76c1e5846ac6d82367f0",
-          "status": "historical_input_binding_correction_under_rereview",
+          "status": "bounded_guest_provisioning_proof_complete_independently_approved",
           "reviewer": "coordinator/next_tools_delivery",
           "sourceIntegrated": false,
-          "evidenceIntegrated": false,
+          "evidenceIntegrated": true,
           "reportedProof": [
             "Ubuntu and Docker signatures verified",
             "Real isolated guest provisioned",
             "Actual launcher exercised"
           ],
           "releaseSupport": "blocked",
-          "functionalGo": false,
+          "functionalGo": true,
           "productLive": false,
           "reviewFinding": "Independent review found two historical input hash bindings; evidence correction in progress.",
           "evidenceCorrectionCommit": "7628919e35c5c475f84a11fc7119481480fabf6a",
           "correctionReported": "Two historical inputs bound from original seed.iso",
-          "hostDetectionFixSeparate": true
+          "hostDetectionFixSeparate": true,
+          "functionalGoScope": "Isolated guest provisioning and normal launcher availability only; not restore, platform support or full product.",
+          "evidencePaths": [
+            "eva2/evidence/product/IN-002-isolated-ubuntu-operator-2026-09-13.json",
+            "eva2/reviews/IN-002-isolated-ubuntu-operator-2026-09-13.md",
+            "eva2/evidence/product/IN-002-historical-provisioning-inputs-2026-09-13.json"
+          ],
+          "independentReview": {
+            "decision": "GO for bounded provisioning evidence only",
+            "reviewer": "coordinator/next_tools_delivery",
+            "reportedBy": "coordinator",
+            "sourceCommits": [
+              "6fe88ace984ea6aca73d76c1e5846ac6d82367f0",
+              "7628919e35c5c475f84a11fc7119481480fabf6a"
+            ],
+            "verified": [
+              "Original 28 input proof unchanged",
+              "Two historical input bytes bound exactly to original seed ISO",
+              "Signatures and downloads",
+              "Normal launcher bootstrap204 and page, restore409",
+              "Guest stopped"
+            ],
+            "platformSupportGo": false,
+            "fullRestoreGo": false,
+            "ownerAcceptance": false
+          },
+          "actualGuest": {
+            "os": "Ubuntu 24.04.4 LTS",
+            "architecture": "amd64",
+            "python": "3.12.14",
+            "docker": "29.7.2",
+            "normalBootstrapStatus": 204,
+            "normalPageOpened": true,
+            "restoreStatus": 409,
+            "guestStopped": true,
+            "hostDockerUnchanged": "29.1.3"
+          },
+          "historicalInputCorrectionResolved": true,
+          "integrationVerification": "Exact supplied evidence bytes retained; correction binds private provisioning-input-proof artifact, whose hash also matches existing evidence manifest. Not the sanitized Git evidence file hash."
         },
         "osLabelDetectionFollowup": {
-          "status": "separate_fix_in_progress",
+          "status": "separate_product_fix_under_independent_review",
           "owner": "coordinator/timing_final_review",
           "evidenceBasis": "Reported proven OS-label recognition issue; exact fix candidate pending",
           "sourceIntegrated": false,
-          "live": false
+          "live": false,
+          "sourceCandidateCommit": "07297c18de829492c2507addc583ddc6c04aa3a8",
+          "evidenceCandidateCommit": "76e1d62b32d9d4b65b96386c8bf320a71a352c29"
         }
       }
     },

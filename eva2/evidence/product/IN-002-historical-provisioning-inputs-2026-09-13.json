@@ -1,0 +1,21 @@
+{
+  "contract": "In002HistoricalProvisioningInputs/v1",
+  "original_proof_sha256": "7aca3c21ee75a79ac917981016a18e85c702c50f047033cb4cf6bb13939d55c7",
+  "original_seed_iso_sha256": "3b3ade7a714d5b93eec355fbec79a3e8ac1a85b67221e55fd9ac119564c9ceb8",
+  "mapping": {
+    "guest/payload/meta-data": {
+      "historical_path": "guest/historical-inputs/meta-data",
+      "sha256": "d7230f08a7bebe9ddee9ac445dcb3a6ba5eafcf42671f93e58d60855dc0091e3",
+      "current_path_status": "replaced for later diagnostic boot, not the original input",
+      "extracted_from": "guest/seed.iso"
+    },
+    "guest/payload/provision.sh": {
+      "historical_path": "guest/historical-inputs/provision.sh",
+      "sha256": "6d2c184566e8bcba325ab9277c8b89350d7100d8fc01376447ba4ab9bcb332a1",
+      "current_path_status": "replaced for later diagnostic boot, not the original input",
+      "extracted_from": "guest/seed.iso"
+    }
+  },
+  "original_proof_changed": false,
+  "guest_started": false
+}
