@@ -959,6 +959,17 @@ tot bron, review en bewijs duurzaam geregistreerd zijn; daarna alleen
 de gecontroleerde stage/wegwerpdata opruimen. Nu geen cleanup. Exacte
 runtime-/test-/documentatiepaden zijn bij de eigenaar opgevraagd.
 
+### IN-002 — gewone launcher heeft nog een concrete blokkade
+
+De operatoraudit meldt dat de huidige WSL-host niet voldoet aan de bestaande
+gepinde preflight: Python/Docker/OSvariant en een niet-gevalideerde lock.
+De gewone route maakt daardoor geen workflow en weigert herstel met409.
+Ready-fixtures uit de eerdere test bewijzen deze launcher niet. De bron-GO
+voor API en geïsoleerde echte PG/objectrestore blijft geldig; de volledige
+IN-002-gebruikersroute is nog niet technisch klaar of voor Jaap testgereed.
+De bouwer onderzoekt de kleinste echte compatibiliteits-/validatiekloof,
+zonder bypass of hostupgrade. Geen live herstel of nieuwe eigenaarsvraag.
+
 ## Nu
 
 | Volgorde | Kaart | Resultaat | Status |
