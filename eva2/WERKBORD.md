@@ -1035,6 +1035,19 @@ De IN-002-bouwer voert nu de afgesproken geïsoleerde operatorpakketvalidatie
 uit als technisch prerequisiet. Dit is geen volledige releasevalidatie
 en geeft geen lockbypass, hostupgrade of live herstel vrij.
 
+### AU-006 — bronproef klaar, productcompositie ontbreekt nog
+
+De actuele compositieaudit meldt een lege EVA_DURABLE_GOAL_PROVIDER,
+geen draaiende durable-goalworker en een gestopte oude testprovider.
+In src/deploy is geen echte /v1/effects-server aanwezig. De interne
+goalsroute heeft geen DashboardAccess; tenant-/installatiecontrole is
+geen verse eigenaarsmandaatcontrole. Dit meldt geen externe blootstelling:
+core is op hostloopback gebonden. De bestaande scope-GO geldt voor
+operatorcontract en geïsoleerde proef, niet voor productuitvoerbaarheid.
+De uitvoerder maakt eerst het minimale aansluitplan met bestaande
+ownerauthority, verified-workspace en readback. Geen extra bron of live
+wijziging in deze stap; de geslaagde begrensde proef blijft behouden.
+
 ## Nu
 
 | Volgorde | Kaart | Resultaat | Status |
