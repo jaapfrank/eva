@@ -247,7 +247,7 @@
         },
         {
           "title": "Project hervatten na herstart",
-          "detail": "De gewone startvraag mislukte door verlies van eigenaarscontext; er zijn geen documenten gemaakt en de vorige core is hersteld. De autorisatiecorrectie is goedgekeurd en in de broncode opgenomen. Het uitrolplan met één nieuwe, afzonderlijke projectproef ligt ter beoordeling. De oude mislukte proef blijft behouden. Er is nog geen uitrol of nieuwe proef uitgevoerd."
+          "detail": "De eerdere startproef mislukte en blijft bewaard. De autorisatiecorrectie en het uitrolplan zijn onafhankelijk goedgekeurd. De uitvoerder mag nu de correctie installeren en één afzonderlijke r2-proef uitvoeren, met zo nodig één statusvraag. Eerst worden de actuele voorwaarden gecontroleerd. Uitvoering en resultaat zijn nog niet bevestigd; er volgt geen reset of automatische herhaling."
         },
         {
           "title": "Gedeeld audiotype",
@@ -5510,9 +5510,9 @@
       "owners": [
         {
           "owner": "01a08d52-31b1-7091-be45-812c0b6e6c9f",
-          "work": "Uitrolplan en afzonderlijke r2-projectproef voorbereiden",
+          "work": "Goedgekeurde RPC-installatie en afzonderlijke r2-proef",
           "boundary": "New providers/document_goal_actions.py; bundled.py opt-in registration only; document_goal_plan.py safe full host GoalSpec/hash binding; targeted provider/PG tests and docs. Existing actual ConversationTurn/current authority/external tool port. No second planner/live/envflip.",
-          "status": "rpc_install_r2_plan_under_review_not_authorized"
+          "status": "rpc_install_r2_plan_approved_execution_pending"
         },
         {
           "owner": "coordinator/timing_final_review",
@@ -7651,10 +7651,12 @@
             "deploymentGo": false,
             "goalRetryOrSqlResetGo": false
           },
-          "integrationVerification": "Three previously absent source files copied exactly; hashes match reviewed evidence. No runtime patch application or test repetition."
+          "integrationVerification": "Three previously absent source files copied exactly; hashes match reviewed evidence. No runtime patch application or test repetition.",
+          "deploymentPlanGo": true,
+          "deploymentPlan": "a5c65b2156e49b4a55e1d0110ed03e94a5d1608e"
         },
         "rpcInstallAndR2Plan": {
-          "status": "offline_plan_awaiting_independent_review",
+          "status": "independently_approved_execution_pending",
           "ownerThread": "01a08d52-31b1-7091-be45-812c0b6e6c9f",
           "candidateCommit": "a5c65b2156e49b4a55e1d0110ed03e94a5d1608e",
           "evidencePaths": [
@@ -7663,8 +7665,8 @@
           ],
           "evidenceIntegrated": true,
           "sealerSourcePath": "eva2/experiments/contextforge-gateway-v1/au006-activation/seal_reprobe.py",
-          "sealerSourceIntegrated": false,
-          "authorized": false,
+          "sealerSourceIntegrated": true,
+          "authorized": true,
           "executed": false,
           "newGoalPreview": {
             "goal_id": "au006-document-project-20260913-r2",
@@ -7698,7 +7700,30 @@
           "runtimeMutations": 0,
           "modelRequests": 0,
           "successClaimed": false,
-          "ownerAccepted": false
+          "ownerAccepted": false,
+          "independentReview": {
+            "decision": "GO for exact RPC installation and separate r2 trial",
+            "reportedBy": "coordinator",
+            "candidateCommit": "a5c65b2156e49b4a55e1d0110ed03e94a5d1608e",
+            "verified": [
+              "Exact preserved guards and endpoint policy",
+              "Exact mount delta",
+              "Six output hashes",
+              "Disjoint operation IDs"
+            ],
+            "freshExecutionConditions": [
+              "Old rejection confirmed before native dispatch",
+              "Journal still empty",
+              "Both old and new target paths absent",
+              "Old worker remains off"
+            ],
+            "maximumStartQuestions": 1,
+            "maximumOptionalStatusQuestions": 1,
+            "resetAllowed": false,
+            "automaticRetryAllowed": false,
+            "r2SuccessProven": false
+          },
+          "sameEmptyJournalTransitionApprovedConditionally": true
         }
       },
       "isolatedProductExecutionProven": true,
