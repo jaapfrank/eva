@@ -1,0 +1,135 @@
+{
+  "contract": "Au004OrdinaryAFailedSourceCallVisibility/v1",
+  "status": "A_failed_designation_after_verified_save",
+  "candidate_image": "sha256:b7483c4fbc24dd038f0a131480d21097413d10d5a0aed73aa911cc38ee4dd03b",
+  "seal_sha256": "0c8eaf422746906cbc3384340aeb079668bb943a3d786435b93b0578e366722b",
+  "ordinary_requests": {
+    "A": 1,
+    "B": 0,
+    "C": 0,
+    "retries": 0
+  },
+  "http": {
+    "httpStatus": 200,
+    "elapsedSeconds": 35.51625489899743,
+    "errorType": null,
+    "parseError": null,
+    "terminalReplyValid": true,
+    "streamErrorCount": 0,
+    "requestCount": 1,
+    "retry": false,
+    "messageId": "voice:930be994-693c-4989-b044-53ca9d798893:9b9e15fa-4bcb-47d3-bff3-20c9d8f69166",
+    "responseSha256": "8b183903be8556574a51b01c8bf8a0d3a21828e278b849776e494f525fa51a3d"
+  },
+  "reply": "Opgeslagen en teruggelezen op /proof-state/au004-planreview-procedure-20260913-r3.md, met alle vier de regels en de geldigheid tot 2026-10-13T00:00:00Z.\n\nDe tekst noemt de werkwijze expliciet herbruikbaar. De afzonderlijke registratie als herbruikbare werkwijze is nog niet gelukt: daarvoor ontbreekt het vereiste aanroepnummer van de opslagcontrole in het toolresultaat.",
+  "verified_save": {
+    "call_id": "call_pfii4qrBIpLaCivHtIUSULMS",
+    "step_index": 0,
+    "final_event_type": "STATE_VERIFIED",
+    "receipt_output_keys": [
+      "transport",
+      "catalog_sha256",
+      "tool_configuration_sha256"
+    ],
+    "actual_file": {
+      "exists": true,
+      "symlink": false,
+      "content_sha256": "77fd6cea1748dba012a11cfb4ddcf07e443a6eb58a99cdcedeb47b39d1c18579",
+      "content": "# Herbruikbare werkwijze voor korte planreviews\n\nHerbruikbaar tot: 2026-10-13T00:00:00Z.\n\n1. Geef eerst maximaal drie concrete ontbrekende gegevens.\n2. Als een datum ontbreekt, noem die vóór andere ontbrekende gegevens.\n3. Geef daarna één eerstvolgende stap.\n4. Geef geen fictieve antwoorden.\n"
+    }
+  },
+  "actions": [
+    {
+      "name": "read_workspace_document",
+      "call_id": "call_ekQRv1CduOYALvAD5UEfQX6c",
+      "step_index": 1
+    },
+    {
+      "name": "save_workspace_document",
+      "call_id": "call_pfii4qrBIpLaCivHtIUSULMS",
+      "step_index": 0
+    }
+  ],
+  "designation_action_count": 0,
+  "matching_source_only_record_count": 0,
+  "model_boundary": {
+    "file": "eva/adapters/model/pydantic_conversation.py",
+    "lines": [
+      811,
+      815,
+      819,
+      822
+    ],
+    "observation": "Call ID is passed as SDK correlation metadata; returned model content is only _receipt_model_view(receipt.output). No host-issued readable source_call_id field is included. Model explicitly reports it missing.",
+    "required_contract": "designate_reusable_procedure(source_call_id,use_when,retention_until); source_call_id must identify current-turn STATE_VERIFIED save, never invented or taken from the later read call."
+  },
+  "usage": {
+    "recorded": [
+      {
+        "tool_calls": 1,
+        "measurement": "measured",
+        "input_tokens": 6404,
+        "output_tokens": 157,
+        "model_attempts": 1
+      },
+      {
+        "tool_calls": 0,
+        "measurement": "measured",
+        "input_tokens": 6368,
+        "output_tokens": 210,
+        "model_attempts": 1
+      },
+      {
+        "tool_calls": 1,
+        "measurement": "measured",
+        "input_tokens": 6192,
+        "output_tokens": 117,
+        "model_attempts": 1
+      }
+    ],
+    "model_attempts": 3,
+    "input_tokens": 18964,
+    "output_tokens": 484,
+    "tool_calls": 2,
+    "money_cost": "unknown"
+  },
+  "rollback": {
+    "verified": true,
+    "expected_parent_image": "sha256:bc6d64a3aebbb4b1502dfa7170c0b3d02eda97ac97eddfc704c90c80659864e9",
+    "new_core_id_allowed": true,
+    "observed_state": {
+      "core_id": "a98fd8455e8ac81e3307d908e2bb3b8c73c073dfd77f40c5e7bf06863073784a",
+      "core_image": "sha256:bc6d64a3aebbb4b1502dfa7170c0b3d02eda97ac97eddfc704c90c80659864e9",
+      "protected_count": 12,
+      "quiescence": {
+        "advisory_locks": 0,
+        "other_active_queries": 0,
+        "readiness": {
+          "database": "ready",
+          "detail": null,
+          "memory_projection": "ready",
+          "model_provider": "ready",
+          "ready": true
+        }
+      },
+      "guards_verified": true,
+      "telegram_recovery_preserved": true,
+      "pending_requests": {
+        "recent_unfinished_model_requests": 0
+      }
+    }
+  },
+  "artifacts_and_old_attempts_preserved": true,
+  "owner_acceptance": false,
+  "private_stage": "/home/administrator/project/.eva2-artifacts/procedure-reference-runtime-r3-20260913",
+  "private_evidence_sha256": {
+    "A/http-receipt.json": "61b81d0d80c4faa589c77fa3dab19db7df6e13d5a68c7f893b004d066369aaee",
+    "A/stream-events.private.json": "10f3ebfe45d64e14a6d7da9985e1d9e85d98703efe1c844d68bee27e85a5aece",
+    "A/preflight.json": "798025ff811a5e16df28cfed6ae440ee65228105feb54c06aee2773b21a1058b",
+    "A/readback-1789288822329089502.private.json": "1f743b2f59e0c09a06ddc213d8ad97cf3b5ae0c0e188acbd0f3d0276e2abb3e5",
+    "A/response.private.raw": "8b183903be8556574a51b01c8bf8a0d3a21828e278b849776e494f525fa51a3d",
+    "A/request.json": "939b41af36498efa458ceb713dbc260f82e596aa67a75c0d28b70f6472fa4281",
+    "A/response.private.json": "c888baee015c6bbdd15a9032af23475ea7bc2a39e373fc839402e7d583fa8bbc",
+    "A/attempt.json": "9af83f5ebcd532ed1199cb918291c9e7eaffccfc51fd34d8354131036988d18d"
+  }
+}

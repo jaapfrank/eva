@@ -273,7 +273,7 @@
         },
         {
           "title": "Aangeleerde procedures terugvinden",
-          "detail": "De A-proef blijft mislukt; B en C zijn niet uitgevoerd. De uitvoerder meldt een geverifieerde terugrol naar de core met Telegramreparaties, met alle 12 beschermde diensten en gegevens intact. De definitieve receipt en onafhankelijke controle volgen nog. De hostfix gebruikt straks het bestandspad om één geverifieerde opslagactie in dezelfde beurt te vinden; dubbelzinnigheid wordt geweigerd."
+          "detail": "De A-proef blijft mislukt: het document is opgeslagen, maar niet als herbruikbare procedure gemarkeerd. Het definitieve uitvoeringsbewijs meldt een geverifieerde terugrol; onafhankelijke controle staat nog open. Gemeten: drie modelpogingen, 18.964 invoer- en 484 uitvoertokens; geldkosten onbekend. B en C zijn niet uitgevoerd. De gerichte bestandspadfix wordt apart gebouwd."
         }
       ],
       "openRisks": [
@@ -4517,9 +4517,10 @@
         "ready": true,
         "scope": "Current state after failed AU004 installation; distinct from original failed rollback receipt."
       },
-      "containerIdentityStatus": "Exact current core ID bound by final writer receipt and independent postinstall review.",
-      "coreContainerId": "48ceaa58a114554afdab8eae1c592bc865f6278ce5243030758391ce81edbe62",
-      "telegramCoreOverride": "/home/administrator/project/.eva2-artifacts/telegram-recovery-20260913/core-reply-fix.compose.json"
+      "containerIdentityStatus": "Current post-R3 rollback core ID from writer final receipt; independent current rollback check pending.",
+      "coreContainerId": "a98fd8455e8ac81e3307d908e2bb3b8c73c073dfd77f40c5e7bf06863073784a",
+      "telegramCoreOverride": "/home/administrator/project/.eva2-artifacts/telegram-recovery-20260913/core-reply-fix.compose.json",
+      "latestWriterRollbackEvidence": "eva2/evidence/living-core/au004-r3-a-failed-source-call-visibility-20260913.json"
     },
     "chromeTransportRecovery20260912": {
       "status": "technically_tested_and_live",
@@ -5326,13 +5327,45 @@
                 "trialBPerformed": false,
                 "trialCPerformed": false,
                 "sameARetried": false,
-                "goalSuccess": false
+                "goalSuccess": false,
+                "usage": {
+                  "recorded": [
+                    {
+                      "tool_calls": 1,
+                      "measurement": "measured",
+                      "input_tokens": 6404,
+                      "output_tokens": 157,
+                      "model_attempts": 1
+                    },
+                    {
+                      "tool_calls": 0,
+                      "measurement": "measured",
+                      "input_tokens": 6368,
+                      "output_tokens": 210,
+                      "model_attempts": 1
+                    },
+                    {
+                      "tool_calls": 1,
+                      "measurement": "measured",
+                      "input_tokens": 6192,
+                      "output_tokens": 117,
+                      "model_attempts": 1
+                    }
+                  ],
+                  "model_attempts": 3,
+                  "input_tokens": 18964,
+                  "output_tokens": 484,
+                  "tool_calls": 2,
+                  "money_cost": "unknown"
+                },
+                "savedArtifactRetained": true,
+                "sourceReferenceRequirement": "Designation must bind the verified SAVE in current turn; later READ cannot substitute."
               },
               "rollback": {
                 "targetCoreImage": "sha256:bc6d64a3aebbb4b1502dfa7170c0b3d02eda97ac97eddfc704c90c80659864e9",
-                "status": "verified_by_writer_report_receipt_and_independent_check_pending",
-                "verified": false,
-                "receiptPending": true,
+                "status": "writer_final_receipt_verified_independent_check_pending",
+                "verified": true,
+                "receiptPending": false,
                 "writerVerified": true,
                 "independentVerified": false,
                 "reportedBy": "coordinator relaying runtime writer",
@@ -5347,7 +5380,10 @@
                   "Budget",
                   "Mandate",
                   "AU006 journal"
-                ]
+                ],
+                "receiptPath": "eva2/evidence/living-core/au004-r3-a-failed-source-call-visibility-20260913.json",
+                "actualCoreId": "a98fd8455e8ac81e3307d908e2bb3b8c73c073dfd77f40c5e7bf06863073784a",
+                "guardsVerifiedByWriter": true
               },
               "targetedHostFix": {
                 "owner": "coordinator/next_tools_delivery",
@@ -5356,6 +5392,16 @@
                 "ambiguousMatchesFailClosed": true,
                 "trialBPerformed": false,
                 "trialCPerformed": false
+              },
+              "writerFinalEvidence": {
+                "commit": "8a1d6899792c4964bcfce020021707a7933bf684",
+                "paths": [
+                  "eva2/evidence/living-core/au004-r3-a-failed-source-call-visibility-20260913.json",
+                  "eva2/reviews/au004-r3-a-failed-source-call-visibility-20260913.md"
+                ],
+                "integrated": true,
+                "independentResultGo": false,
+                "status": "Writer evidence registered; independent check pending"
               }
             }
           }
