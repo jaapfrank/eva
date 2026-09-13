@@ -1,7 +1,7 @@
 {
   "contract": "EvaExecutionWorkboard/v1",
   "schemaVersion": 1,
-  "lastUpdated": "2026-09-12",
+  "lastUpdated": "2026-09-13",
   "sequencePolicy": "done_then_one_primary_then_queued",
   "commandWorkingDirectory": "eva2",
   "inventoryPath": "docs/eva-repository-inventory.generated.json",
@@ -247,7 +247,7 @@
         },
         {
           "title": "Project hervatten na herstart",
-          "detail": "De geïsoleerde tweestappenproef is gebouwd, getest en goedgekeurd. De productaansluiting ontbreekt nog: projectprovider, worker en passende eigenaarscontrole. Een minimaal aansluitplan wordt uitgewerkt; nog niet uitvoerbaar als gewone gebruikersfunctie."
+          "detail": "De geïsoleerde tweestappenproef is gebouwd, getest en goedgekeurd. De controle van de draaiende installatie bevestigt dat de productaansluiting nog ontbreekt. Hergebruik van bestaande werkmaptools en eigenaarscontrole is uitgewerkt als voorstel; de aansluiting is nog niet gebouwd of live."
         }
       ],
       "openRisks": [
@@ -6125,7 +6125,7 @@
       "costEur": null,
       "productExecutable": false,
       "compositionAudit": {
-        "reportedBy": "coordinator",
+        "reportedBy": "AU-006 execution owner; central registration",
         "scope": "Current live configuration and source/deploy composition; no mutation.",
         "liveDurableGoalProviderConfigured": false,
         "liveDurableGoalProviderSetting": "EVA_DURABLE_GOAL_PROVIDER is empty",
@@ -6138,7 +6138,14 @@
         "existingSourceGoScope": "Operator contract and isolated tests only; no product executability.",
         "next": "Prepare minimal connection plan using existing owner authority, verified workspace tools and result readback.",
         "additionalImplementationAuthorized": false,
-        "liveChangesAuthorized": false
+        "liveChangesAuthorized": false,
+        "evidenceCommit": "72ff39b6b5bd71883eed71f563b0e1d156a5862a",
+        "evidencePath": "eva2/evidence/living-core/au006-actual-provider-composition-20260913.json",
+        "observedAt": "2026-09-13T00:14:40.469928+00:00",
+        "observedImage": "sha256:832983322ad7d71611225749d618e828d9dd4676f8a24711f09e0ac349db1fcd",
+        "providerProtocolStatus": "No current product service identified implementing Goal HTTP evidence/effects/deliveries with durable receipts. MCP and filesystem services expose a different protocol.",
+        "adjacentDelegatedWorkerIsGoalWorker": false,
+        "reviewedTwoStepSourceInstalled": false
       },
       "connectionPlan": {
         "status": "being_prepared",
@@ -6148,7 +6155,35 @@
           "Verified workspace tools",
           "Durable result readback"
         ],
-        "scope": "Smallest plan connecting the reviewed two-step route to existing product capabilities; no new source or live deployment in this step."
+        "scope": "Smallest plan connecting the reviewed two-step route to existing product capabilities; no new source or live deployment in this step.",
+        "compositionSurvey": {
+          "status": "read_only_survey_and_proposal_recorded",
+          "evidencePath": "eva2/evidence/living-core/au006-actual-provider-composition-20260913.json",
+          "preferredReuse": "Goal port adapter composed with existing VerifiedToolOrchestrator, operational timeline and MCP effect observation, with fresh existing owner authorization",
+          "requiredBindings": [
+            "Operator-admitted immutable mapping from each step to permitted tool request/configuration, including exact prior-artifact binding for step 2",
+            "Provider-specific durable observation and idempotence semantics; arbitrary invoke operations cannot inherit filesystem guarantees",
+            "Goal cancel and fresh owner mandate rechecked before effects, recipient/output paths bound to authorized scope",
+            "Concrete evidence read and final delivery ports, composed into existing DurableGoalWorker",
+            "Explicit activation of the existing worker with reviewed source and provider composition"
+          ],
+          "proposedOperatorTrial": {
+            "status": "not executed; blocked on reviewed product adapter and activation approval",
+            "entrypoint": "existing /internal/v1/goals/admit, /state, /cancel through trusted operator access",
+            "scope": "unique authorized workspace paths and deterministic bounded data; zero model calls",
+            "steps": [
+              "Admit one v2 goal with two sealed permitted workspace operations and one final output destination",
+              "Step 1 saves a small draft and verifies its exact content/hash; persist its artifact",
+              "Terminate only the designated goal worker process after the step-1 checkpoint; do not restart shared databases or gateways",
+              "Resume the worker; step 2 writes a final artifact using the exact persisted first artifact; deliver it once to the designated result path",
+              "Read goal state and actual workspace files; compare hashes, per-operation dispatch/observation receipts and final delivery count",
+              "Repeat in a new goal with cancel after step 1; verify first file persists and no second/final artifact or new dispatch occurs"
+            ],
+            "required_result": "Two dependent effects and one verified final delivery, or stopped goal with preserved first artifact; cost unknown where unreported",
+            "limitations": "This does not prove general multi-day projects, ordinary conversation initiation or arbitrary provider exactly-once effects"
+          },
+          "implementationAuthorizedByThisSurvey": false
+        }
       }
     }
   },

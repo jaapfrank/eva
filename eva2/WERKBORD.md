@@ -1,6 +1,6 @@
 # Eva 2 — uitvoerbaar werkbord
 
-Laatst bijgewerkt: 2026-09-12.
+Laatst bijgewerkt: 2026-09-13.
 
 Doel: [Eva als zelfstandig lerende digitale huisgenoot](PROJECTDOEL.md).
 Gebouwd, getest, live en door jou geaccepteerd zijn verschillende stappen.

@@ -1,0 +1,59 @@
+{
+  "contract": "EvaAu006ActualCompositionSurvey/v1",
+  "observed_at": "2026-09-13T00:14:40.469928+00:00",
+  "canonical_commit_observed": "89782803fda3e82c07c0fbc0b2ce04f7810d95f5",
+  "mode": "read_only_docker_inspect_and_source_read",
+  "current": {
+    "core": "eva2-managed-b-slot3-core",
+    "image": "sha256:832983322ad7d71611225749d618e828d9dd4676f8a24711f09e0ac349db1fcd",
+    "host_binding": "127.0.0.1:44710",
+    "durable_goal_provider_environment": "",
+    "running_durable_goal_worker": false,
+    "legacy_goal_worker_and_test_provider": "stopped; goal-test fixture is not a product provider",
+    "running_adjacent_services": [
+      "eva2-mcp-gateway",
+      "eva2-workspace-filesystem",
+      "eva2-managed-b-slot3-delegated-work-worker-1"
+    ]
+  },
+  "findings": [
+    "No current product service identified that implements the Goal HTTP evidence/effects/deliveries protocol with durable receipts",
+    "MCP gateway and filesystem expose MCP, not Goal HTTP; their existence does not establish Goal port support",
+    "Delegated worker is a different model-backed execution path, not the Goal HTTP provider",
+    "Existing internal goal routes lack their own DashboardAccess check; runtime admission checks tenant/installation only; owner_id is not fresh owner authorization",
+    "Two-step source is not installed in current image"
+  ],
+  "minimum_missing_connection": {
+    "preferred_reuse": "Goal port adapter composed with existing VerifiedToolOrchestrator, operational timeline and MCP effect observation, with fresh existing owner authorization",
+    "required_bindings": [
+      "Operator-admitted immutable mapping from each step to permitted tool request/configuration, including exact prior-artifact binding for step 2",
+      "Provider-specific durable observation and idempotence semantics; arbitrary invoke operations cannot inherit filesystem guarantees",
+      "Goal cancel and fresh owner mandate rechecked before effects, recipient/output paths bound to authorized scope",
+      "Concrete evidence read and final delivery ports, composed into existing DurableGoalWorker",
+      "Explicit activation of the existing worker with reviewed source and provider composition"
+    ],
+    "not_sufficient": "Setting EVA_DURABLE_GOAL_PROVIDER_URL or relabeling a fixture provider",
+    "implementation_status": "proposal only; no new adapter built in this survey"
+  },
+  "proposed_synthetic_operator_trial": {
+    "status": "not executed; blocked on reviewed product adapter and activation approval",
+    "entrypoint": "existing /internal/v1/goals/admit, /state, /cancel through trusted operator access",
+    "scope": "unique authorized workspace paths and deterministic bounded data; zero model calls",
+    "steps": [
+      "Admit one v2 goal with two sealed permitted workspace operations and one final output destination",
+      "Step 1 saves a small draft and verifies its exact content/hash; persist its artifact",
+      "Terminate only the designated goal worker process after the step-1 checkpoint; do not restart shared databases or gateways",
+      "Resume the worker; step 2 writes a final artifact using the exact persisted first artifact; deliver it once to the designated result path",
+      "Read goal state and actual workspace files; compare hashes, per-operation dispatch/observation receipts and final delivery count",
+      "Repeat in a new goal with cancel after step 1; verify first file persists and no second/final artifact or new dispatch occurs"
+    ],
+    "required_result": "Two dependent effects and one verified final delivery, or stopped goal with preserved first artifact; cost unknown where unreported",
+    "limitations": "This does not prove general multi-day projects, ordinary conversation initiation or arbitrary provider exactly-once effects"
+  },
+  "mutations": {
+    "live": 0,
+    "model_calls": 0,
+    "provider_requests": 0,
+    "deployment": 0
+  }
+}
