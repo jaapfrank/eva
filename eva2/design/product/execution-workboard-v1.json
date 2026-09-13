@@ -247,7 +247,7 @@
         },
         {
           "title": "Project hervatten na herstart",
-          "detail": "De private registratie is afgerond en onafhankelijk goedgekeurd: één gateway en twee private tools toegevoegd, bestaande registraties behouden. Het activeringsplan met de werkelijke registraties ligt nu ter beoordeling. De provider blijft alleen-lezen en de projectworker staat uit. Een gewone chatopdracht, bereikbaar eindresultaat en jouw acceptatie blijven open."
+          "detail": "De private registratie is afgerond. Het activeringsplan is onafhankelijk goedgekeurd, inclusief één startvraag en zo nodig één statusvraag. Uitvoering en controle van het resultaat volgen nu. Geslaagde activering, een bereikbaar eindresultaat en jouw acceptatie zijn nog niet bewezen."
         },
         {
           "title": "Gedeeld audiotype",
@@ -5510,15 +5510,15 @@
       "owners": [
         {
           "owner": "01a08d52-31b1-7091-be45-812c0b6e6c9f",
-          "work": "AU-006 kernactivering voorbereiden na afgeronde private registratie",
+          "work": "Goedgekeurde AU-006-activering en begrensde gespreksproef",
           "boundary": "New providers/document_goal_actions.py; bundled.py opt-in registration only; document_goal_plan.py safe full host GoalSpec/hash binding; targeted provider/PG tests and docs. Existing actual ConversationTurn/current authority/external tool port. No second planner/live/envflip.",
-          "status": "private_metadata_registration_closed_phase2_offline_preparation"
+          "status": "phase2_authorized_execution_pending"
         },
         {
           "owner": "coordinator/timing_final_review",
-          "work": "Private registratie onafhankelijk beoordeeld",
+          "work": "AU-006-activeringsplan onafhankelijk beoordeeld",
           "boundary": "Exact guarded registration plan and bd26e97f correction; no execution or database changes. Earlier four-row incident repair remains closed.",
-          "status": "guarded_phase1_result_independent_go_complete"
+          "status": "phase2_plan_independent_go_complete"
         },
         {
           "owner": "coordinator/next_tools_delivery",
@@ -6934,7 +6934,7 @@
           "sourceCorrectionComplete": true
         },
         "activationPreparation": {
-          "status": "private_readonly_metadata_registered_independently_approved_phase2_pending",
+          "status": "phase2_plan_independently_approved_execution_pending",
           "ownerThread": "01a08d52-31b1-7091-be45-812c0b6e6c9f",
           "evidenceCommit": "bc0fd5c06d5d97853296cf2459463fac4ad577a7",
           "evidencePath": "eva2/evidence/living-core/au006-activation-preparation-20260913.json",
@@ -7487,7 +7487,7 @@
           }
         },
         "phase2OfflinePreparation": {
-          "status": "prepared_under_independent_review_not_authorized",
+          "status": "independently_approved_execution_pending",
           "ownerThread": "01a08d52-31b1-7091-be45-812c0b6e6c9f",
           "evidenceCommit": "3653516428dff529386272773e37f8ad4d42c4a8",
           "evidencePaths": [
@@ -7496,8 +7496,8 @@
           ],
           "evidenceIntegrated": true,
           "independentReviewer": "coordinator/timing_final_review",
-          "activationAuthorized": false,
-          "ordinaryProbeAuthorized": false,
+          "activationAuthorized": true,
+          "ordinaryProbeAuthorized": true,
           "executed": false,
           "preview": {
             "goal_sha256": "4ff68e4d5d4c5492503dc6bbfda8af4c99fbe4e2e3072413c4f9ae775adf7fe0",
@@ -7524,12 +7524,32 @@
           "modelCalls": 0,
           "documentEffectCalls": 0,
           "remainingOutcomes": [
-            "Independent activation plan review",
-            "Separately authorized core and worker activation",
-            "Ordinary conversation route",
+            "Bounded activation execution and readback",
+            "One ordinary start question and optionally one status question",
             "Reachable private artifact",
             "Owner acceptance"
-          ]
+          ],
+          "independentReview": {
+            "decision": "GO for bounded activation and ordinary conversation probe",
+            "reportedBy": "coordinator",
+            "evidenceCommit": "3653516428dff529386272773e37f8ad4d42c4a8",
+            "verified": [
+              "Four output hashes",
+              "Exact compose candidate",
+              "Exact rollback"
+            ],
+            "startQuestionLimit": 1,
+            "optionalStatusQuestionLimit": 1,
+            "executionConditions": [
+              "Fresh preflight checks",
+              "Bound sealing and output hash readback",
+              "No retry on uncertain outcomes",
+              "Preserve gateway guard and endpoint policy"
+            ],
+            "liveSuccessProven": false,
+            "ownerAccepted": false,
+            "reachableArtifactProven": false
+          }
         }
       },
       "isolatedProductExecutionProven": true,
