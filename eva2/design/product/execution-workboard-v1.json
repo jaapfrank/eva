@@ -247,7 +247,7 @@
         },
         {
           "title": "Project hervatten na herstart",
-          "detail": "Kern- en providerimage zijn goedgekeurd. Het eerste activeringsplan ligt nu voor review: alleen de nieuwe provider registreren met gegevensmappen alleen-lezen, zonder worker of kernwijziging. Daarna volgen nieuwe catalogusbinding en een apart akkoord voor schrijven en gebruik. Nog niet uitgevoerd."
+          "detail": "Fase 1 is onafhankelijk goedgekeurd en wordt uitgevoerd: alleen de provider met gegevensmappen op alleen-lezen en private gatewayregistratie, met controles voor en na. Kern, worker en schrijfacties blijven uit. Dit is nog geen volledig live projectfunctie."
         },
         {
           "title": "Gedeeld audiotype",
@@ -5486,7 +5486,7 @@
           "owner": "01a08d52-31b1-7091-be45-812c0b6e6c9f",
           "work": "AU-006 normale gespreksingang",
           "boundary": "New providers/document_goal_actions.py; bundled.py opt-in registration only; document_goal_plan.py safe full host GoalSpec/hash binding; targeted provider/PG tests and docs. Existing actual ConversationTurn/current authority/external tool port. No second planner/live/envflip.",
-          "status": "activation_config_sealer_registration_plan_review_pending"
+          "status": "approved_readonly_provider_registration_phase1_executing"
         },
         {
           "owner": "coordinator/timing_final_review",
@@ -6908,7 +6908,7 @@
           "sourceCorrectionComplete": true
         },
         "activationPreparation": {
-          "status": "core_provider_images_reviewed_phase1_registration_plan_review_pending",
+          "status": "bounded_readonly_provider_registration_phase1_in_progress",
           "ownerThread": "01a08d52-31b1-7091-be45-812c0b6e6c9f",
           "evidenceCommit": "bc0fd5c06d5d97853296cf2459463fac4ad577a7",
           "evidencePath": "eva2/evidence/living-core/au006-activation-preparation-20260913.json",
@@ -6949,10 +6949,11 @@
             "cleanupMoment": "Only after retention conditions and explicit exact-scope coordinator cleanup; preserve data, journals and sanitized evidence. No cleanup now.",
             "privateDataPolicy": "Private host goal, journal, credentials and rollback files remain outside Git; only supplied sanitized evidence integrated."
           },
-          "reviewedProviderImage": "sha256:0ef19e699069c3a5d3a26812c5da3d31141fcd5c3faedb14f92c9dcce1209465"
+          "reviewedProviderImage": "sha256:0ef19e699069c3a5d3a26812c5da3d31141fcd5c3faedb14f92c9dcce1209465",
+          "phase1Go": true
         },
         "phase1RegistrationPlan": {
-          "status": "candidate_plan_pending_independent_go",
+          "status": "bounded_phase1_independent_go_execution_in_progress",
           "ownerThread": "01a08d52-31b1-7091-be45-812c0b6e6c9f",
           "evidenceCommit": "fddf983b6b11954661b4f86a68b3ad23694c434b",
           "evidencePath": "eva2/evidence/living-core/au006-phase1-registration-review-20260913.json",
@@ -6987,14 +6988,39 @@
           "coreConnectorIdToKeepUnadmitted": "16dc8ce3-7825-5618-a131-ab21840808ef",
           "assignedGatewayAndToolIds": null,
           "freshProjectJournal": "existing own new directory remains empty and never dispatched; not gen1 provider fixture",
-          "rollback": "stop only new provider; preserve actual new IDs/catalog snapshots; inactive registration may remain; no DELETE/cascade or shared catalog rollback claim",
+          "rollback": "Stop only new provider and retain actual IDs/evidence; no DELETE or shared-state restore.",
           "phase2": "separate actual catalog readback, sealing review, provider write-mount override, core opt-in and worker GO required",
-          "independentGo": false,
+          "independentGo": true,
           "phaseExecuted": false,
           "workerStarted": false,
           "coreChanged": false,
           "liveDocumentWrites": 0,
-          "sealerBlockerEnabled": true
+          "sealerBlockerEnabled": true,
+          "independentReview": {
+            "decision": "GO for exact phase1 read-only provider and private gateway registration only",
+            "reportedBy": "coordinator",
+            "basis": "fddf983b and PHASE1-REVIEW.md",
+            "verified": [
+              "Rights and binding",
+              "Read-only workspace and journal mounts",
+              "No published ports",
+              "No SQL core admission"
+            ]
+          },
+          "executionAssignedBy": "01a08a88-894c-7171-87fa-e681ed47c735",
+          "executionState": "In progress with fresh before/after controls; no completion inferred.",
+          "allowedActions": [
+            "Start only exact approved read-only provider",
+            "Private gateway registration with actual IDs and readback",
+            "Fresh before/after checks"
+          ],
+          "excludedActions": [
+            "Sealer execution",
+            "Core changes",
+            "Worker start",
+            "Phase2 or document writes"
+          ],
+          "fullProductLive": false
         }
       },
       "isolatedProductExecutionProven": true,
