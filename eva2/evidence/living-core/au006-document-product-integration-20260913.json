@@ -1,0 +1,90 @@
+{
+  "contract": "EvaAu006DocumentProductIntegration/v1",
+  "source_commit": "1026a819a963fd3f06319e4ae627e49cfa6d277f",
+  "preparation_source_commit": "0597e3e2d5cbf2f661db828cfc6d5ff01072fdfc",
+  "base_commit": "87bccbd07ee6be3b0bde0275f5de6ebdd26fb86f",
+  "status": "targeted_tested_independent_review_pending",
+  "source_files": {
+    "eva2/src/eva/providers/document_goal_plan.py": "6d3fd3dfc4910cc9c2dafb5cf1647f3fc8258155fca681d77e003b10d272fc55",
+    "eva2/src/eva/providers/document_goals.py": "aa8f05f2a9d4f24773852e492bd6c9e7cf1a665c2a85167f2e8acbf1d39065ec",
+    "eva2/src/eva/operations/durable_goal_worker.py": "bb2107c1ad3872ed8e90ffd6fbdd57b1a34dff11d28f6e68a9a5bd1cd188e7da",
+    "eva2/src/eva/bootstrap/document_goal_worker.py": "138132395c3304da87469fc23ec62ad8bc9e5e00521ed1178348dc4150caadb4",
+    "eva2/tests/providers/test_document_goal_plan.py": "fdf8a4b532d3ac6080825ba676c84bb453b597b27c68c90fc35414a1ffa8dbe5",
+    "eva2/tests/postgres/test_document_goal_provider.py": "05b7c6a8b81c37402d2d5fc5f19b942a415f0621428ddaacace94a0f809949c4",
+    "eva2/design/architecture/living-core-v1.md": "91fcbab007790e8809943f49d522c829fbaf00596506f73cc791a137ce5d7ed8",
+    "eva2/src/eva/adapters/postgres/durable_goals.py": "62c42ac68571b17f31513aa7898c503c73beab3ee871617f61a8cad480467d9f"
+  },
+  "checks": {
+    "targeted_regressions_and_composition": 55,
+    "postgres_tests": 3,
+    "total": 58,
+    "product_cases_with_actual_gateway_translate_sdk_native_broker": 2,
+    "new_architecture_violations": 0,
+    "remaining_baseline_architecture_violations": 24
+  },
+  "postgres": {
+    "container_id": "633ce00bb8c8a96eecd60a07c531da15f57d3517bbbd1817531a9f9b44726bb2",
+    "postgres_image": "sha256:5d143123fdf80462d1778cd4f24b9f7ca13c87174bca19141fb194c5a1ebca59",
+    "network_mode": "none",
+    "published_ports": [],
+    "data_storage": "tmpfs",
+    "connection": "local Unix socket only",
+    "pytest_exit_code": 0,
+    "model_calls": 0,
+    "production_database_connections": 0,
+    "disposable_container_removed": true
+  },
+  "cases": [
+    {
+      "case": "happy",
+      "goal_sha256": "4f940176144511452a9d7547721b9a27c878bc812c9dcdbb5d3248cc004f53e9",
+      "plan_sha256": "ee74cc5c7299038350209a20f8991560c12e8ec613d06ba67e512e0c79fe97a9",
+      "provider_image": "sha256:f7d9feba8359a0d7d3fbe18703cb8c3a6bbe5e274aeccda15b83c26b6010bd00",
+      "dispatches": 2,
+      "material_sha256": {
+        "/workspace/final.txt": "2f3c46a986d2bef455574b416cec14a9209cf71fa2d9f924972b3fb8825f3ea8",
+        "/workspace/draft.txt": "d8ebcebe32be92a6691bda72b419137d29e7a4cbf264f426dcad07bdf1e33dd1",
+        "/journal/workspace-writer.journal": "1c2c24851771c21a6986c14e6a7c22eb777c34ac1c262e7ba7ba20c772234915"
+      }
+    },
+    {
+      "case": "stop",
+      "goal_sha256": "00e22fba73bb838fe5500c1153464ecaf90d1b9c4868616ce7fa588be02c3f2c",
+      "plan_sha256": "5a8ac4198b77d057376210f94f63623617a659ded258fa8a829ee2811de557c1",
+      "provider_image": "sha256:f7d9feba8359a0d7d3fbe18703cb8c3a6bbe5e274aeccda15b83c26b6010bd00",
+      "dispatches": 1,
+      "material_sha256": {
+        "/workspace/draft.txt": "d8ebcebe32be92a6691bda72b419137d29e7a4cbf264f426dcad07bdf1e33dd1",
+        "/journal/workspace-writer.journal": "e69b597b0ae3f10c7d040968d47c2cc6d56c426f40f9d67ebe992e21bbfc5ad3"
+      }
+    }
+  ],
+  "core_child": {
+    "runtime_dependency_image": "sha256:832983322ad7d71611225749d618e828d9dd4676f8a24711f09e0ac349db1fcd",
+    "candidate_source": "read-only bind at /opt/eva/src",
+    "network": "dedicated internal disposable provider network only",
+    "model_calls": 0,
+    "production_mounts": [],
+    "removed_after_exit": true
+  },
+  "gateway_image": "sha256:daf923c247fd569df5f8c9ee418cbc259fade564f78e0a0852937139a181c4dd",
+  "provider_image": "sha256:f7d9feba8359a0d7d3fbe18703cb8c3a6bbe5e274aeccda15b83c26b6010bd00",
+  "entrypoint": "python -m eva.bootstrap.document_goal_worker",
+  "legacy_entrypoint": "python -m eva.operations.durable_goal_worker remains HTTP composition",
+  "ownership_extension": "bootstrap/document_goal_worker.py approved by coordinator; no architecture policy change",
+  "scope_limits": [
+    "Provider stack retained for coordinator cleanup after evidence review",
+    "Product test executes core factory and DurableGoalWorker in actual child containers; bootstrap hook composition checked separately",
+    "Test adapter audit counts dispatch attempts, native receipt and material verify effects",
+    "After TOOL_PREPARED errors block; no automatic execution retry for uncertain native receipt",
+    "Already admitted in-flight work may finish after stop; admission is not atomic authority",
+    "Delivery is verified local availability only; no human receipt/message",
+    "No ordinary conversation entrypoint, live deployment, days-long practice or full AU-006 claim",
+    "Model tokens and monetary cost remain unknown if unreported"
+  ],
+  "logs": {
+    "document-final-regressions.log": "57e52e18828b36d144055793d476ac33b69489182b5ea47bc8b9508af904503f",
+    "product-postgres-proof.log": "a0d6043a788635da32c4b412f56300cef83e08a6a0976f2435b1433fd4986a35",
+    "product-case-results.json": "76c84f6b6872009ad85d527bba4568502399930df528405c01d0a7350862403f"
+  }
+}

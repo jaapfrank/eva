@@ -10,7 +10,7 @@ from eva.application.durable_goals import DurableGoalError, DurableGoalSpec, Goa
 from eva.contracts.canonical_json import canonical_sha256
 
 
-_CONTRACT = "EvaDocumentGoalPlan/v1"
+_CONTRACT = "EvaDocumentGoalPlan/v2"
 _HASH = re.compile(r"[0-9a-f]{64}")
 _PATH = re.compile(r"/proof-state/[A-Za-z0-9][A-Za-z0-9_.-]{0,119}\.(?:txt|md)")
 _MAX_CONTENT_BYTES = 12_000
@@ -26,6 +26,7 @@ class DocumentStep:
 
 @dataclass(frozen=True, slots=True)
 class DocumentGoalPlan:
+    goal_id: str
     goal_sha256: str
     owner_principal_id: str
     tenant_id: str
@@ -44,7 +45,7 @@ class DocumentGoalPlan:
                 raise DurableGoalError(f"document plan {name} must be text")
             if name.endswith("_sha256") and _HASH.fullmatch(value) is None:
                 raise DurableGoalError(f"document plan {name} is invalid")
-        for value in (self.owner_principal_id, self.tenant_id, self.installation_id):
+        for value in (self.goal_id, self.owner_principal_id, self.tenant_id, self.installation_id):
             if not value.strip() or len(value) > 240:
                 raise DurableGoalError("document plan identity is invalid")
         if any(_PATH.fullmatch(path) is None for path in (self.first_path, self.final_path)):
@@ -99,7 +100,8 @@ class DocumentGoalPlan:
         call existing authorize_current immediately before every new effect.
         """
         if (
-            goal.sha256 != self.goal_sha256
+            goal.goal_id != self.goal_id
+            or goal.sha256 != self.goal_sha256
             or goal.owner_id != owner_principal_id
             or goal.followup_instruction is None
             or self.owner_principal_id != owner_principal_id

@@ -11,7 +11,7 @@ from tests.postgres.test_durable_goal_store import NOW, spec, store_with_timelin
 def plan():
     goal = replace(spec(), followup_instruction="Use draft")
     return goal, DocumentGoalPlan(
-        goal.sha256, goal.owner_id, "tenant", "installation", "a" * 64, "b" * 64,
+        goal.goal_id, goal.sha256, goal.owner_id, "tenant", "installation", "a" * 64, "b" * 64,
         "/proof-state/draft.txt", "/proof-state/final.txt", "Draft", "Report: ", "\n",
     )
 
@@ -157,3 +157,25 @@ def test_step_identity_and_binding_are_stable_and_cover_previous_artifact():
     for number, artifact in ((1, previous), (2, None), (3, None), (True, None)):
         with pytest.raises(DurableGoalError):
             value.step(number, artifact)
+
+
+def test_bootstrap_selects_exact_goal_without_scanning_queue(monkeypatch, private_tmp_path):
+    from eva.bootstrap import document_goal_worker
+
+    goal, value = plan()
+    store, _ = store_with_timeline()
+    store.admit(goal)
+    path = private_tmp_path / "document-plan.json"
+    path.write_text(json.dumps(value.to_payload())); path.chmod(0o600)
+    monkeypatch.setenv("EVA_DOCUMENT_GOAL_PLAN_FILE", str(path))
+    received = {}
+
+    def loop(**hooks):
+        received.update(hooks)
+        return 7
+
+    monkeypatch.setattr(document_goal_worker, "run_loop", loop)
+    assert document_goal_worker.main() == 7
+    assert received["select_goals"](store, NOW) == (goal,)
+    assert received["failure_handler"](store, goal, RuntimeError(), NOW) == "needs_help"
+    assert received["select_goals"](store, NOW) == ()

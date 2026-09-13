@@ -27,11 +27,14 @@ def _database_dsn() -> str:
     )
 
 
-def main() -> int:
+def main(*, select_goals=None, worker_factory=None, failure_handler=None) -> int:
+    """Run the existing loop, optionally with a bootstrap-owned composition."""
+    if (select_goals is None) != (worker_factory is None):
+        raise ValueError("goal selector and worker factory must be configured together")
     database_dsn = _database_dsn()
     tenant_id = _required_environment("EVA_RUNTIME_TENANT_ID")
     installation_id = _required_environment("EVA_RUNTIME_INSTALLATION_ID")
-    connector = HttpDurableGoalConnector(
+    connector = None if worker_factory is not None else HttpDurableGoalConnector(
         provider=_required_environment("EVA_DURABLE_GOAL_PROVIDER"),
         base_url=_required_environment("EVA_DURABLE_GOAL_PROVIDER_URL"),
         allow_insecure_http=(
@@ -46,7 +49,7 @@ def main() -> int:
     store = PostgresDurableGoalStore(
         engine, tenant_id=tenant_id, installation_id=installation_id
     )
-    worker = DurableGoalWorker(store, connector, connector, connector)
+    worker = None if worker_factory is not None else DurableGoalWorker(store, connector, connector, connector)
     stop = Event()
 
     def request_stop(_signum: int, _frame: object) -> None:
@@ -57,17 +60,23 @@ def main() -> int:
     try:
         while not stop.is_set():
             observed_at = datetime.now(tz=UTC).replace(microsecond=0)
-            for goal in store.waiting(observed_before=observed_at, limit=64):
+            goals = (store.waiting(observed_before=observed_at, limit=64) if select_goals is None
+                     else select_goals(store, observed_at))
+            for goal in goals:
                 if stop.is_set():
                     break
                 try:
-                    asyncio.run(worker.on_wake(goal))
+                    current_worker = (worker if worker_factory is None else
+                                      worker_factory(engine, store, goal, tenant_id, installation_id))
+                    assert current_worker is not None
+                    asyncio.run(current_worker.on_wake(goal))
                 except Exception as error:
-                    status = store.record_worker_failure(
+                    status = (failure_handler(store, goal, error, observed_at) if failure_handler is not None
+                              else store.record_worker_failure(
                         goal,
                         f"{type(error).__name__}:{error}",
                         datetime.now(tz=UTC).replace(microsecond=0),
-                    )
+                    ))
                     print(
                         f"Durable goal {goal.goal_id} {status} after "
                         f"{type(error).__name__}",

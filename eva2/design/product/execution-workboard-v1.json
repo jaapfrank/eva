@@ -247,7 +247,7 @@
         },
         {
           "title": "Project hervatten na herstart",
-          "detail": "De bron en het bewijs van de volledige geïsoleerde projectproef zijn overgedragen voor onafhankelijke review. De uitvoerder rapporteert twee stappen met herstel en een aparte stopproef via de echte gateway en bestandsbroker. De eerdere deelreviews blijven afgerond; nog geen eindakkoord of livegebruik."
+          "detail": "Technisch afgerond en onafhankelijk goedgekeurd: een project met twee documenten hervat na een crash zonder de eerste schrijfopdracht te herhalen; stoppen bewaart het concept en voorkomt het einddocument. Bewezen via de echte gateway en bestandsbroker in een geïsoleerde omgeving. Live-installatie en jouw proef staan nog open."
         }
       ],
       "openRisks": [
@@ -5472,7 +5472,7 @@
           "owner": "01a08d52-31b1-7091-be45-812c0b6e6c9f",
           "work": "AU-006 geautoriseerde documentprovider bouwen",
           "boundary": "Approved provider plan/ports, exact bootstrap/document_goal_worker.py composition, operations/durable_goal_worker.py generic hooks, named tests and living-core documentation. No app/auth policy, installer, model or live changes.",
-          "status": "core_product_candidate_handed_off_independent_review_pending"
+          "status": "bounded_document_product_integration_complete_reviewed_not_live"
         },
         {
           "owner": "coordinator/timing_final_review",
@@ -6081,7 +6081,7 @@
       "limits": "Local closure observation only, not remote quiescence/quota or full product acceptance. Preflight snapshot was not a global request lock."
     },
     "durableProjectResumeAU00620260913": {
-      "status": "bounded_source_complete_product_composition_open",
+      "status": "bounded_product_integration_complete_not_live",
       "milestoneId": "AU-006",
       "ownerThread": "01a08d52-31b1-7091-be45-812c0b6e6c9f",
       "assignedByCoordinator": "01a08a88-894c-7171-87fa-e681ed47c735",
@@ -6180,7 +6180,7 @@
       "evidenceCommit": "8ff5a859a3108da3b3c31ce66b66f3cb981281e9",
       "evidencePath": "eva2/evidence/living-core/au006-two-step-project-resume-20260913.json",
       "technicalComplete": true,
-      "result": "First artifact survives abrupt worker exit; durable provider receipt recovers missing checkpoint before dispatch; only missing second step receives exact prior result; two effects and one final delivery in isolated scenarios.",
+      "result": "Reviewed isolated host-bound two-document project uses real gateway/native receipts to resume after crash without repeating the first write; stop preserves the draft and prevents the final write. Delivery proves local file availability only.",
       "scopeLimits": [
         "Provider must enforce durable idempotency and exact result readback",
         "Already admitted in-flight action may finish after stop",
@@ -6203,7 +6203,7 @@
         "ownerAuthorityGap": "Internal goals route has no DashboardAccess; tenant/installation checks do not establish a fresh owner mandate.",
         "networkBoundary": "Core host binding is loopback; no external exposure claim.",
         "existingSourceGoScope": "Operator contract and isolated tests only; no product executability.",
-        "next": "Implement approved bounded document provider and independently review source/evidence before any separate activation.",
+        "next": "Source composition gap now addressed and independently proven in isolation; current live configuration remains unchanged pending separate activation.",
         "additionalImplementationAuthorized": true,
         "liveChangesAuthorized": false,
         "evidenceCommit": "72ff39b6b5bd71883eed71f563b0e1d156a5862a",
@@ -6213,10 +6213,11 @@
         "providerProtocolStatus": "No current product service identified implementing Goal HTTP evidence/effects/deliveries with durable receipts. MCP and filesystem services expose a different protocol.",
         "adjacentDelegatedWorkerIsGoalWorker": false,
         "reviewedTwoStepSourceInstalled": false,
-        "implementationAuthorizationBasis": "Subsequent coordinator assignment after independent GO of plan34b3b8ff; survey itself did not authorize building."
+        "implementationAuthorizationBasis": "Subsequent coordinator assignment after independent GO of plan34b3b8ff; survey itself did not authorize building.",
+        "historical": true
       },
       "connectionPlan": {
-        "status": "reviewed_primitives_integrated_core_and_mcp_composition_in_progress",
+        "status": "bounded_product_integration_complete_activation_and_owner_trial_open",
         "ownerThread": "01a08d52-31b1-7091-be45-812c0b6e6c9f",
         "reuse": [
           "Existing owner authority",
@@ -6581,15 +6582,16 @@
           "initialFixtureFailurePreserved": "Readback was attempted before restarted provider ready; retained failure log and removed that isolated stack. Final runner uses existing initialize readiness helper. No repeated model or live calls.",
           "integrationVerification": "Two actual baselines exact, bounded patch checked, final bytes exact; runner and actual helper hashes match.",
           "coreEndToEnd": {
-            "status": "candidate_source_and_evidence_handed_off_review_pending",
-            "independentFinalGo": false,
+            "status": "bounded_product_integration_independently_approved_and_integrated",
+            "independentFinalGo": true,
             "live": false,
             "sourceCommit": "1026a819a963fd3f06319e4ae627e49cfa6d277f",
-            "evidenceCommit": "a998e249ce1c285f1485324d318973a10bd55ef1"
+            "evidenceCommit": "a998e249ce1c285f1485324d318973a10bd55ef1",
+            "goScope": "Bounded isolated two-step document product route only"
           }
         },
         "coreProductCandidate": {
-          "status": "source_and_evidence_handed_off_independent_review_pending",
+          "status": "bounded_product_integration_source_complete_independent_go",
           "ownerThread": "01a08d52-31b1-7091-be45-812c0b6e6c9f",
           "sourceCommit": "1026a819a963fd3f06319e4ae627e49cfa6d277f",
           "evidenceCommit": "a998e249ce1c285f1485324d318973a10bd55ef1",
@@ -6604,8 +6606,8 @@
             "eva2/tests/postgres/test_document_goal_provider.py",
             "eva2/tests/providers/test_document_goal_plan.py"
           ],
-          "sourceIntegrated": false,
-          "independentGo": false,
+          "sourceIntegrated": true,
+          "independentGo": true,
           "reportedChecks": {
             "targeted_regressions_and_composition": 55,
             "postgres_tests": 3,
@@ -6661,9 +6663,41 @@
             "productionDataAccessed": false,
             "reportedBy": "execution owner"
           },
-          "independentReviewer": "coordinator/tl003_evidence_review"
+          "independentReviewer": "coordinator/tl003_evidence_review",
+          "evidenceIntegrated": true,
+          "boundedTechnicalComplete": true,
+          "independentReview": {
+            "decision": "GO for bounded isolated product integration",
+            "reviewer": "coordinator/tl003_evidence_review",
+            "reportedBy": "coordinator",
+            "planCompositionTestsIndependentlyRerun": 25,
+            "sourceHashesVerified": 8,
+            "logAndCaseHashesVerified": 3,
+            "verified": [
+              "Pinned gateway/native plus core child crash recovery:two dispatches and two documents",
+              "Stop case:one dispatch and no final document",
+              "Uncertain recovery observes only and transitions to needs_help",
+              "Fresh owner authority and goal stop checks"
+            ]
+          },
+          "integrationVerification": "All seven actual source baselines match, bounded patch check passes; all eight final source hashes and exact evidence bytes match reviewed candidate. Already independently repeated tests not repeated for integration.",
+          "bootstrapProofBoundary": "Actual factory/worker ran in isolated core children; bootstrap wiring tested separately.",
+          "finalSourceHashes": {
+            "eva2/src/eva/providers/document_goal_plan.py": "6d3fd3dfc4910cc9c2dafb5cf1647f3fc8258155fca681d77e003b10d272fc55",
+            "eva2/src/eva/providers/document_goals.py": "aa8f05f2a9d4f24773852e492bd6c9e7cf1a665c2a85167f2e8acbf1d39065ec",
+            "eva2/src/eva/operations/durable_goal_worker.py": "bb2107c1ad3872ed8e90ffd6fbdd57b1a34dff11d28f6e68a9a5bd1cd188e7da",
+            "eva2/src/eva/bootstrap/document_goal_worker.py": "138132395c3304da87469fc23ec62ad8bc9e5e00521ed1178348dc4150caadb4",
+            "eva2/tests/providers/test_document_goal_plan.py": "fdf8a4b532d3ac6080825ba676c84bb453b597b27c68c90fc35414a1ffa8dbe5",
+            "eva2/tests/postgres/test_document_goal_provider.py": "05b7c6a8b81c37402d2d5fc5f19b942a415f0621428ddaacace94a0f809949c4",
+            "eva2/design/architecture/living-core-v1.md": "91fcbab007790e8809943f49d522c829fbaf00596506f73cc791a137ce5d7ed8",
+            "eva2/src/eva/adapters/postgres/durable_goals.py": "62c42ac68571b17f31513aa7898c503c73beab3ee871617f61a8cad480467d9f"
+          }
         }
-      }
+      },
+      "isolatedProductExecutionProven": true,
+      "productExecutabilityScope": "Reviewed isolated product composition proven; current live installation has not activated this route.",
+      "ownerTrialReady": false,
+      "latestBoundedEvidencePath": "eva2/evidence/living-core/au006-document-product-integration-20260913.json"
     }
   },
   "activeTaskId": "AU-008",

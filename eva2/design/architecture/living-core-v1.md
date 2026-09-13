@@ -1386,18 +1386,76 @@ Productie A blijft actief totdat B via een afgeschermd echt Telegram-kanaal en
 de volledige promotiegate is goedgekeurd.
 
 
-### AU-006 documentaansluiting: voorbereide hostbinding
+### AU-006: lokale documentaansluiting (geïsoleerd productbewijs)
 
-`providers/document_goal_plan.py` bevat het gesloten hostplan voor twee lokale
-tekstbestanden; `providers/document_goals.py` hergebruikt de actuele
-McpOwnerAuthority voor iedere uitvoerautorisatie. De bestaande goaltimeline
-bewaart het plan- en authoritydigest vóór effectvoorbereiding. Een request-owner
-wordt geen nieuwe principal of conversation-ingress. De stapbinding omvat
-plan/goal/stap/pad/inhoud/toolconfiguratie en de volledige vorige artifacthash.
+De `providers/document_goal_plan.py`-hostconfiguratie gebruikt
+`EvaDocumentGoalPlan/v2`: expliciet goal_id plus exacte goal-SHA, hosteigenaar,
+tenant/installatie, actuele authority- en toolconfiguratiehashes, twee verschillende
+platte `/proof-state/*.txt`- of `.md`-paden, eerste inhoud en begrensde finale
+prefix/suffix. Iedere tekst is maximaal 12000 UTF-8-bytes. Extra velden,
+dubbele JSON-velden, scope-/configuratieverschillen en gewijzigde plannen sluiten.
+De bestaande goaltimeline bindt plan en authority vóór de eerste effectvoorbereiding.
 
-Dit is alleen voorbereide admission/bindingcode. Er is nog geen effectport of
-workercompositie actief: die wacht op de onafhankelijk bewezen atomaire
-providerprimitive met eigen duurzame operatie-/requestreceipt. Een gelijk
-bestaand bestand geldt niet als bewijs van een eigen write. De echte
-PostgreSQL/authorityproef bevat geen provider- of modelcalls; de overige
-contracttests bewijzen uitsluitend de gesloten plan- en bindinggrenzen.
+`providers/document_goals.py` koppelt de bestaande DurableGoalWorker aan de
+bestaande McpGatewayToolAdapter en VerifiedToolOrchestrator. De versiegebonden
+stapidentiteit bindt goal/plan/stap/pad/inhoud/toolconfiguratie en de volledige
+vorige artifacthash; de native receipt bindt bovendien het gehele requestframe
+inclusief expected_generation. De host houdt één journal per project aan:
+stap 1 heeft generatie 0, stap 2 generatie 1. Het journal wordt niet gewist of
+vervangen om een mislukte proef groen te maken.
+
+Er wordt geen eigenaar uit requestvelden of een verzonnen ConversationTurn
+aangemaakt. De hosteigenaar moet ook in de bestaande gatewayallowlist staan.
+Na het wachten op de actuele catalogus volgt direct vóór adapterdispatch de
+bestaande McpOwnerAuthority-controle en de actuele goalstatuscontrole. Een eerdere
+admission is geen atomair mandaat; reeds toegelaten in-flight werk kan na stop
+eindigen. Stop en intrekking voorkomen vervolgeffecten. Reeds toegelaten receipt-
+observatie volgt de bestaande observe-only authoritygrens.
+
+Het productpad vereist `workspace_create_bound` en `workspace_observe_bound` via
+de gepinde ContextForge/translate/SDK/native-provider, met host-FD/DAC- en
+instancebeschrijvingshashbinding. `write_file` is hiervoor niet geschikt.
+Een gelijk bestand is geen eigen-writebewijs: alleen de exacte native `created`
+receipt kan de gekozen schrijfuitkomst bewijzen; `noop`/conflict/uncertain sluit.
+Na TOOL_PREPARED is recovery uitsluitend observe. Brokerfouten worden niet
+vertaald naar een nieuwe uitvoering. Alleen een lokaal nog niet voorbereide
+request kan voor het eerst worden verstuurd.
+
+De oorspronkelijke documenttekst was vastgelegd bij goalcreatie; de
+GoalArtifact.created_at is daarom die logische inhoudsdatum, niet het fysieke
+publicatietijdstip. Delivery betekent uitsluitend geverifieerde lokale
+beschikbaarheid van het einddocument; geen bericht of menselijke ontvangst.
+De bestaande goalstatus bewaart inhoud en voortgang. Dispatchreserveringen zijn
+geen token-/geldverbruik; die kosten blijven onbekend waar niet gerapporteerd.
+
+`tests/postgres/test_document_goal_provider.py` gebruikt met
+`EVA2_DOCUMENT_PRODUCT_STACK` een expliciet voorbereide wegwerpstack. De echte
+corefactory draait in een afzonderlijke container met kandidaatbron read-only,
+alleen op het eigen interne netwerk, tegen wegwerp-PostgreSQL 16.13. Een crash na
+de providerresponse maar vóór lokale effectregistratie herstelt via de native
+receipt en voert alleen stap 2 uit. De stopproef bewaart stap 1 zonder tweede write.
+Afzonderlijke negatieve tests controleren actuele authority en stop tijdens
+cataloguswachten. Dit is geen livegang, gewone gespreksingang, meerdaagse praktijk,
+menselijke acceptatie of complete AU-006-claim.
+
+
+De expliciete document-entrypoint is `python -m eva.bootstrap.document_goal_worker`.
+Die bootstrap injecteert selectie en providercompositie in de bestaande generieke
+`operations.durable_goal_worker.main`-loop. De oude entrypoint
+`python -m eva.operations.durable_goal_worker` blijft de bestaande v1/HTTP-worker;
+alleen een document-envvariabele zetten verandert dat oude pad niet.
+
+Voor de document-entrypoint zijn de bestaande veilige database-DSN-file,
+runtime tenant/installatie en MCP-gateway-URL/token-file/catalog-file/plain-HTTP-
+keuze/principal-SHA-allowlist nodig, plus `EVA_MCP_AUTONOMY_MANDATE_FILE` en
+`EVA_DOCUMENT_GOAL_PLAN_FILE`. Het MCP-catalogusbestand moet exact de beoordeelde
+create/observe-tools van de hostgebonden projectinstance bevatten. De provider
+blijft verantwoordelijk voor de private root/journal-DAC en de onveranderde
+journallevenscyclus. Dit is geen automatische provisioning of live-activatie.
+
+De operator dient vervolgens dezelfde exacte goal via de bestaande interne
+`/internal/v1/goals/admit` in, leest `/state` en kan via `/cancel` stoppen. Een goal
+zonder exacte hostplanbinding wordt door deze compositie niet uitgevoerd; de
+interne route krijgt hiermee geen eigen nieuwe rechten. De nieuwe selector laadt
+alleen het expliciete goal_id en wordt niet afhankelijk van de eerste 64 andere
+wachtende doelen. Afwijking of onzekere uitvoering eindigt in een concrete blokkade.
