@@ -121,7 +121,7 @@
           ]
         }
       ],
-      "priorityDecision": "De procedureproef faalde bij herbruikbaar markeren. De uitvoerder meldt gecontroleerd herstel; onafhankelijk bewijs volgt nog. De gerichte fix koppelt het bestandspad aan één geverifieerde opslagactie in dezelfde beurt. B en C zijn niet uitgevoerd.",
+      "priorityDecision": "De mislukte procedureproef en het huidige herstel zijn onafhankelijk bevestigd. A wordt niet als afgerond gemarkeerd. De gerichte bestandspadfix ligt ter review; parallel wordt nieuw IN-002-bewijs beoordeeld. Geen nieuwe runtimewijziging.",
       "dashboardVerification": {
         "status": "local_browser_verified_not_full_product_acceptance",
         "priorityRevision": {
@@ -259,7 +259,7 @@
         },
         {
           "title": "Reservekopie herstellen via de wizard",
-          "detail": "De bestaande validator en de geïsoleerde uitvoering van de Python-basisimage zijn onafhankelijk bewezen op de nieuwe Ubuntu/Docker-gast. Dit deelbewijs is vastgelegd. Nu wordt één definitieve image met bijbehorende software-inventaris uitgewerkt. Volledige image-, release- en platformondersteuning en herstel blijven open."
+          "detail": "Het eerdere basisimagebewijs blijft afgerond. Twee nieuwe IN-002-bewijsstukken liggen nu ter onafhankelijke beoordeling. Zij zijn nog niet geïntegreerd; volledige releaseondersteuning en herstel blijven open."
         },
         {
           "title": "Voorbereid documentproject afgerond",
@@ -273,7 +273,7 @@
         },
         {
           "title": "Aangeleerde procedures terugvinden",
-          "detail": "De A-proef blijft mislukt: het document is opgeslagen, maar niet als herbruikbare procedure gemarkeerd. Het definitieve uitvoeringsbewijs meldt een geverifieerde terugrol; onafhankelijke controle staat nog open. Gemeten: drie modelpogingen, 18.964 invoer- en 484 uitvoertokens; geldkosten onbekend. B en C zijn niet uitgevoerd. De gerichte bestandspadfix wordt apart gebouwd."
+          "detail": "De mislukte A-proef en de terugrol zijn onafhankelijk gecontroleerd. De core met Telegramreparaties is gereed; alle 12 beschermde diensten en gegevens zijn intact. A blijft mislukt, B en C zijn niet uitgevoerd. De gerichte bestandspadfix ligt nu ter review en is nog niet live."
         }
       ],
       "openRisks": [
@@ -4517,7 +4517,7 @@
         "ready": true,
         "scope": "Current state after failed AU004 installation; distinct from original failed rollback receipt."
       },
-      "containerIdentityStatus": "Current post-R3 rollback core ID from writer final receipt; independent current rollback check pending.",
+      "containerIdentityStatus": "Post-R3 rollback bc6/a98 core identity and readiness independently verified via8a1d6899 evidence.",
       "coreContainerId": "a98fd8455e8ac81e3307d908e2bb3b8c73c073dfd77f40c5e7bf06863073784a",
       "telegramCoreOverride": "/home/administrator/project/.eva2-artifacts/telegram-recovery-20260913/core-reply-fix.compose.json",
       "latestWriterRollbackEvidence": "eva2/evidence/living-core/au004-r3-a-failed-source-call-visibility-20260913.json"
@@ -5206,7 +5206,7 @@
             "candidateCommit": "46e85b2267dc58619de78233405401163f6c20fe",
             "decision": "GO for preparation only",
             "finding": "Existing delegated worker uses832; core and document worker use2393.",
-            "status": "r3_A_failed_writer_verified_rollback_reported_independent_review_pending",
+            "status": "r3_A_failure_and_current_rollback_independently_verified_path_fix_under_review",
             "planIntegrated": false,
             "deploymentAuthorized": false,
             "correctionCommit": "295a70cef49477b36f7acd48cae1eb6de401fcf4",
@@ -5301,7 +5301,7 @@
               "activationGoReason": "Previous approval bound to obsolete2393 baseline; new current-base preparation and review required."
             },
             "r3CurrentBaseActivation": {
-              "status": "ordinary_A_failed_writer_verified_rollback_reported",
+              "status": "ordinary_A_failed_current_rollback_independently_verified",
               "planCommit": "979924ec0714077bfcc638ee172b7407128bd540",
               "sealReportedPrefix": "0c8eaf42",
               "imageReportedPrefix": "b748",
@@ -5363,11 +5363,11 @@
               },
               "rollback": {
                 "targetCoreImage": "sha256:bc6d64a3aebbb4b1502dfa7170c0b3d02eda97ac97eddfc704c90c80659864e9",
-                "status": "writer_final_receipt_verified_independent_check_pending",
+                "status": "independently_verified_complete",
                 "verified": true,
                 "receiptPending": false,
                 "writerVerified": true,
-                "independentVerified": false,
+                "independentVerified": true,
                 "reportedBy": "coordinator relaying runtime writer",
                 "coreIdReportedPrefix": "a98fd845",
                 "readyReported": true,
@@ -5387,11 +5387,15 @@
               },
               "targetedHostFix": {
                 "owner": "coordinator/next_tools_delivery",
-                "status": "in_progress",
+                "status": "source_candidate_under_independent_review",
                 "scope": "Use document_path instead of model-invisible source call ID; host resolves unique verified save in current turn and rejects ambiguity",
                 "ambiguousMatchesFailClosed": true,
                 "trialBPerformed": false,
-                "trialCPerformed": false
+                "trialCPerformed": false,
+                "candidateCommit": "cce42356ef98048bb2391ddd877e8614adde7c60",
+                "sourceIntegrated": false,
+                "live": false,
+                "independentGo": false
               },
               "writerFinalEvidence": {
                 "commit": "8a1d6899792c4964bcfce020021707a7933bf684",
@@ -5400,8 +5404,26 @@
                   "eva2/reviews/au004-r3-a-failed-source-call-visibility-20260913.md"
                 ],
                 "integrated": true,
-                "independentResultGo": false,
-                "status": "Writer evidence registered; independent check pending"
+                "independentResultGo": true,
+                "status": "Independent GO for failure evidence and current rollback; no A completion",
+                "goScope": "Accuracy of failed A evidence and verified current rollback only"
+              },
+              "independentOutcomeReview": {
+                "decision": "GO for failure evidence and current rollback",
+                "reviewer": "procedure_host_review",
+                "reportedBy": "coordinator",
+                "ordinaryAOutcome": "FAIL",
+                "verified": [
+                  "Exact saved file and hash",
+                  "No designation",
+                  "B/C not executed",
+                  "Three model requests,18964 input and484 output tokens,two toolcalls",
+                  "Current bc6/a98 core ready",
+                  "Twelve protected services",
+                  "Telegram fix, mandate, budget and AU006 journal retained",
+                  "No pending requests"
+                ],
+                "ACompletion": false
               }
             }
           }
@@ -6851,12 +6873,18 @@
           "integrationVerification": "Four exact baselines and final bytes checked; bounded patch clean, two source hashes match. Platform lock remains unchanged. Other stage files excluded."
         },
         "nextReleaseEvidenceStep": {
-          "status": "one_final_image_and_sbom_chain_in_progress",
+          "status": "new_evidence_candidates_under_independent_review",
           "owner": "coordinator/timing_final_review",
           "scope": "One final image plus SBOM chain; separate pointer correction. Existing lock and support requirements retained.",
           "reportedBy": "coordinator",
           "releaseSupportGo": false,
-          "fullRestoreGo": false
+          "fullRestoreGo": false,
+          "candidateCommits": [
+            "1313759495a6c0ba881f3bec876baaf57733685f",
+            "f29eea9f9f6a13a6d868dc65c5dacdfa66de8a02"
+          ],
+          "evidenceIntegrated": false,
+          "independentGo": false
         },
         "pendingEvidenceRegistration": {
           "candidateCommitReportedPrefix": "5d0d39dd",
