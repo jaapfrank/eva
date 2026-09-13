@@ -1,0 +1,15 @@
+{
+  "base": "768e72d9e942f015affc6efe58db6300cfc0cc52",
+  "native_unchanged_sha256": "b0be529b85e684b4ac9c7f35e22b449771f45ae93be8b88f508960955a4c060c",
+  "files": {
+    "eva2/deploy/living-core/workspace-create-only/broker-client.mjs": "6b75d485c9052b8f2d3ef54f5663edc1af885747aed02dfc3feafce2c8d770d4",
+    "eva2/deploy/living-core/workspace-create-only/README.md": "ff5bb1dda0ae10d9e63e297f98d56cbdc5186f581f405a30ec362b4f68bb3d54",
+    "test/workspace-writer-broker-client-result.test.mjs": "9221bbba55555a37e158321a8c629dbd79d5df2ba97d38ddc682bf53e14d47e8"
+  },
+  "tests": {
+    "passed": 11,
+    "failed": 0,
+    "log_sha256": "161dbd0db076a6c3928990f1473a55cf269aceb5a4ab9eb4f7251d6a83ee7bb6"
+  },
+  "scope": "typed client outcomes and host lifecycle contract only; no lifecycle implementation, retry, authority, catalog or production claim"
+}

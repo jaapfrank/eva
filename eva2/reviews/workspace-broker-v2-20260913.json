@@ -1,0 +1,24 @@
+{
+  "scope": "isolated bound create-only broker and observe client, not host/DAC/MCP deployment",
+  "base": "79d94e0bcb589a26417ff1f79a4bbdc37780cb31",
+  "files": {
+    "native/workspace_writer_broker.c": "b0be529b85e684b4ac9c7f35e22b449771f45ae93be8b88f508960955a4c060c",
+    "eva2/deploy/living-core/workspace-create-only/broker-client.mjs": "c0cb37f7070463fe468b6705c047cd430f46e8cad55f5570dd36727385fa4b98",
+    "eva2/deploy/living-core/workspace-create-only/README.md": "1fb4817b93b9df283532ab289eaec273dc426b8e12daaa993c8a4477f78289b6",
+    "test/workspace-writer-broker-v2.test.mjs": "4fd3ef9d93dc4c81096cd341c7bbd9a6e2114ebc3607cf47ef1d0c2d91f33672"
+  },
+  "tests": {
+    "command": "node --test test/workspace-writer-broker-v2.test.mjs test/workspace-writer-broker-native.test.mjs",
+    "passed": 31,
+    "failed": 0,
+    "log_sha256": "2b27c91de06cc6af02b2fb2866bd8903afd7de5ead0cdde769b660d4d818681d"
+  },
+  "live_model_or_product_mount_calls": false,
+  "remaining": [
+    "host authority and exact plan binding integration",
+    "private FD DAC and lifecycle proof",
+    "catalog and effect/observe composition",
+    "production activation"
+  ],
+  "observe_limits": "P-only including post-link/pre-L uncertain; L receipt reconstructed in memory; no recover_pending, journal creation or append"
+}

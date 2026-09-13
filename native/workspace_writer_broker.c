@@ -44,6 +44,7 @@ enum {
   ROOT_DESCRIPTOR = 3,
   JOURNAL_DIRECTORY_DESCRIPTOR = 4,
   REQUEST_HEADER_BYTES = 90,
+  REQUEST_V2_HEADER_BYTES = 122,
   RECEIPT_PREFIX_BYTES = 131,
   RECEIPT_CHECKSUM_BYTES = 32,
   JOURNAL_PREFIX_BYTES = 17,
@@ -513,7 +514,12 @@ static int parse_request_frame(const uint8_t *data, size_t available,
   if (available < REQUEST_HEADER_BYTES) {
     return fail("truncated_request");
   }
-  if (memcmp(data, REQUEST_MAGIC, sizeof(REQUEST_MAGIC)) != 0) {
+  bool v2 = memcmp(data, "EVWWREQ2", 8U) == 0;
+  size_t header_bytes = v2 ? REQUEST_V2_HEADER_BYTES : REQUEST_HEADER_BYTES;
+  if (available < header_bytes) return fail("truncated_request");
+  if (v2 && all_zero(data + REQUEST_HEADER_BYTES, SHA256_BYTES))
+    return fail("invalid_request_binding");
+  if (!v2 && memcmp(data, REQUEST_MAGIC, sizeof(REQUEST_MAGIC)) != 0) {
     return fail("invalid_request_magic");
   }
   if (all_zero(data + 8U, OPERATION_ID_BYTES)) {
@@ -527,13 +533,13 @@ static int parse_request_frame(const uint8_t *data, size_t available,
   if (content_length > MAX_CONTENT_BYTES) {
     return fail("content_too_large");
   }
-  uint64_t frame_length_u64 = (uint64_t)REQUEST_HEADER_BYTES
+  uint64_t frame_length_u64 = (uint64_t)header_bytes
     + (uint64_t)target_length + content_length;
   if (frame_length_u64 > (uint64_t)SIZE_MAX || frame_length_u64 > (uint64_t)available) {
     return fail("truncated_request");
   }
   size_t frame_length = (size_t)frame_length_u64;
-  const uint8_t *target = data + REQUEST_HEADER_BYTES;
+  const uint8_t *target = data + header_bytes;
   if (validate_target(target, (size_t)target_length) < 0) {
     return -1;
   }
@@ -1367,10 +1373,12 @@ static int scan_journal(struct broker_state *state) {
   return 0;
 }
 
-static int open_journal(struct broker_state *state) {
+static int open_journal(struct broker_state *state, bool read_only) {
   int descriptor = secure_openat(
     JOURNAL_DIRECTORY_DESCRIPTOR, JOURNAL_NAME,
-    O_RDWR | O_CREAT | O_CLOEXEC | O_NOFOLLOW, (mode_t)0600
+    read_only ? (O_RDONLY | O_CLOEXEC | O_NOFOLLOW)
+              : (O_RDWR | O_CREAT | O_CLOEXEC | O_NOFOLLOW),
+    read_only ? 0 : (mode_t)0600
   );
   if (descriptor < 0) {
     if (errno == ENOSYS) {
@@ -1382,7 +1390,7 @@ static int open_journal(struct broker_state *state) {
   if (flock(descriptor, LOCK_EX | LOCK_NB) < 0) {
     return fail("broker_already_active");
   }
-  if (fsync(JOURNAL_DIRECTORY_DESCRIPTOR) < 0) {
+  if (!read_only && fsync(JOURNAL_DIRECTORY_DESCRIPTOR) < 0) {
     return fail("journal_directory_sync_failed");
   }
   if (load_journal_image(descriptor, &state->journal_image) < 0) {
@@ -1718,6 +1726,22 @@ static int process_request(struct broker_state *state, const struct request *req
   return 0;
 }
 
+/* Observation never publishes or repairs a journal. L is already durable
+ * publication evidence; derive its identical receipt without appending C. */
+static int observe_request(struct broker_state *state, const struct request *request) {
+  struct operation *operation = operation_by_id(state, request->operation_id);
+  if (operation == NULL) return fail("operation_not_found");
+  if (operation->request.frame_length != request->frame_length
+      || memcmp(operation->request.frame, request->frame, request->frame_length) != 0)
+    return fail("operation_conflict");
+  if (!operation->committed && !operation->published_recorded)
+    return fail("pending_effect_uncertain");
+  if (verify_operation_effect(operation) < 0) return -1;
+  if (!operation->committed && build_receipt(operation, &operation->receipt) < 0)
+    return -1;
+  return write_all(STDOUT_FILENO, operation->receipt.data, operation->receipt.length);
+}
+
 static void destroy_state(struct broker_state *state) {
   for (size_t index = 0; index < state->operation_count; ++index) {
     free(state->operations[index].receipt.data);
@@ -1734,7 +1758,7 @@ static void destroy_state(struct broker_state *state) {
 }
 
 int main(int argc, char **argv) {
-  (void)argv;
+  bool read_only = argc == 2 && strcmp(argv[1], "--observe") == 0;
   struct bytes input = {0};
   struct request requests[MAX_REQUESTS];
   size_t request_count = 0U;
@@ -1745,19 +1769,33 @@ int main(int argc, char **argv) {
   int result = 0;
   if (state.operations == NULL) {
     result = fail("memory_unavailable");
-  } else if (argc != 1) {
+  } else if (argc != 1 && !read_only) {
     result = fail("arguments_refused");
   } else if (verify_directory_descriptor(ROOT_DESCRIPTOR) < 0
              || verify_directory_descriptor(JOURNAL_DIRECTORY_DESCRIPTOR) < 0
              || verify_directory_separation() < 0
              || read_all_stdin(&input) < 0
              || parse_request_stream(&input, requests, &request_count) < 0
-             || open_journal(&state) < 0
-             || recover_pending(&state) < 0) {
+             || open_journal(&state, read_only) < 0) {
     result = -1;
   } else {
-    for (size_t index = 0; index < request_count; ++index) {
-      if (process_request(&state, &requests[index]) < 0) {
+    bool v2 = false;
+    for (size_t index = 0; index < request_count; ++index)
+      if (memcmp(requests[index].frame, "EVWWREQ2", 8U) == 0) v2 = true;
+    if ((read_only || v2) && (request_count != 1U || !v2)) {
+      result = fail("single_v2_request_required");
+    }
+    /* New v2 callers cannot trigger recovery for another or changed request. */
+    if (result == 0 && v2 && !read_only && state.operation_count > 0U) {
+      struct operation *last = &state.operations[state.operation_count - 1U];
+      if (!last->committed && (last->request.frame_length != requests[0].frame_length
+          || memcmp(last->request.frame, requests[0].frame, requests[0].frame_length) != 0))
+        result = fail("operation_conflict");
+    }
+    if (result == 0 && !read_only && recover_pending(&state) < 0) result = -1;
+    for (size_t index = 0; result == 0 && index < request_count; ++index) {
+      if ((read_only ? observe_request(&state, &requests[index])
+                     : process_request(&state, &requests[index])) < 0) {
         result = -1;
         break;
       }

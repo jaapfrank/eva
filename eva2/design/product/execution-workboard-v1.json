@@ -247,7 +247,7 @@
         },
         {
           "title": "Project hervatten na herstart",
-          "detail": "Opdrachtbinding en eigenaarscontrole zijn geïntegreerd. De native bestandsbroker is onafhankelijk goedgekeurd. De clientreview vond één fout in de foutafhandeling; die wordt gericht hersteld voordat beide samen worden geïntegreerd. Nog niet live."
+          "detail": "Opdrachtbinding, eigenaarscontrole en de bestandsbroker met client zijn onafhankelijk goedgekeurd en geïntegreerd. De broker kan bestaand afwijkend bestand behouden en bewijs teruglezen zonder een nieuwe schrijfactie. De uitvoerende projectaansluiting en gezamenlijke praktijkproef blijven open; nog niet live."
         }
       ],
       "openRisks": [
@@ -5483,8 +5483,8 @@
         {
           "owner": "coordinator/next_tools_delivery",
           "work": "AU-006 bestaande bestandsbroker uitbreiden",
-          "boundary": "native/workspace_writer_broker.c: parse_request_frame, open_journal(read_only), observe_request, main/v2 recovery binding; test/workspace-writer-broker-v2.test.mjs; deploy/living-core/workspace-create-only/broker-client.mjs and README.md. Preserve v1/receipt/journal formats. No MCP catalogue, host DAC or live.",
-          "status": "native_source_go_client_spawn_exception_fix_in_progress",
+          "boundary": "Reviewed native broker functions; test/workspace-writer-broker-v2.test.mjs and client-result.test.mjs; eva2/deploy/living-core/workspace-create-only/broker-client.mjs and README.md; exact review evidence. No host/DAC/catalogue/live claim.",
+          "status": "bounded_native_client_source_complete_integrated",
           "previousCompletedWork": {
             "work": "Renovate npm-dekking",
             "status": "configuration_complete_bot_activity_unverified",
@@ -6305,14 +6305,17 @@
           "owner": "coordinator/next_tools_delivery",
           "developerAgent": "/root/next_tools_delivery",
           "developerParentThread": "01a08a88-894c-7171-87fa-e681ed47c735",
-          "status": "native_source_go_client_delta_correction_in_progress",
+          "status": "bounded_native_and_client_source_integrated_independent_go",
           "userOutcome": "Creating a new project document cannot overwrite an existing file.",
           "scope": "First reviewable combination: bounded native EVWWREQ2 request binding and observation-only lookup, one broker client, targeted tests and documentation. No MCP catalogue or live composition.",
           "ownedPaths": [
+            "eva2/deploy/living-core/workspace-create-only/README.md",
+            "eva2/deploy/living-core/workspace-create-only/broker-client.mjs",
+            "eva2/reviews/workspace-broker-client-delta-20260913.json",
+            "eva2/reviews/workspace-broker-v2-20260913.json",
             "native/workspace_writer_broker.c",
-            "test/workspace-writer-broker-v2.test.mjs",
-            "deploy/living-core/workspace-create-only/broker-client.mjs",
-            "deploy/living-core/workspace-create-only/README.md"
+            "test/workspace-writer-broker-client-result.test.mjs",
+            "test/workspace-writer-broker-v2.test.mjs"
           ],
           "additionalOwnedScope": "Only the listed native function changes, client, test and README. No unused create-file/patch-provider/Dockerfile scaffolding claimed.",
           "independentReviewRequired": true,
@@ -6365,7 +6368,7 @@
           "candidateCommit": "768e72d9e942f015affc6efe58db6300cfc0cc52",
           "reportedTests": 31,
           "independentReviewer": "coordinator/timing_final_review",
-          "sourceIntegrated": false,
+          "sourceIntegrated": true,
           "independentGo": true,
           "artifactRetention": {
             "owner": "coordinator/next_tools_delivery",
@@ -6374,7 +6377,7 @@
             "retainUntil": "Independent review, exact source/evidence integration and downstream provider handoff are complete.",
             "cleanupMoment": "After retention conditions, remove only verified disposable worktree artifacts. Retain committed review/evidence; no cleanup now."
           },
-          "independentGoScope": "Native/source candidate768e72d9 only; client delta review pending, no runtime/DAC/catalogue approval.",
+          "independentGoScope": "Bounded native and client source only; no host/DAC/catalogue/product deployment approval.",
           "nativeSourceReview": {
             "decision": "GO",
             "reportedBy": "coordinator",
@@ -6389,13 +6392,41 @@
           },
           "clientDelta": {
             "commit": "7c31d0fce4dddb84b10e9199fde26ec6f5dcff03",
-            "status": "review_blocker_targeted_fix_in_progress",
+            "status": "corrected_and_independently_approved",
             "sameNativeSourceHash": true,
             "finding": "Synchronous spawnSync exception escapes typed receipt/blocked result contract.",
-            "next": "Targeted catch and regression test by developer, then delta review.",
-            "nativeSourceGoPreserved": true
+            "next": "Use reviewed typed receipt/blocked result contract in downstream provider composition.",
+            "nativeSourceGoPreserved": true,
+            "correctionCommit": "dee5b051343fb16b21532cd8a44eac9c828e25be",
+            "decision": "GO",
+            "testsIndependentlyRerun": 4,
+            "nativeSourceHashUnchanged": true
           },
-          "integrationStatus": "Wait for corrected client delta GO before joint integration."
+          "integrationStatus": "Exact reviewed native/client/test/docs/evidence integrated together.",
+          "finalSourceCommit": "dee5b051343fb16b21532cd8a44eac9c828e25be",
+          "sourceCommits": [
+            "768e72d9e942f015affc6efe58db6300cfc0cc52",
+            "7c31d0fce4dddb84b10e9199fde26ec6f5dcff03",
+            "dee5b051343fb16b21532cd8a44eac9c828e25be"
+          ],
+          "integrationVerification": "All seven actual baseline bytes match original parent, bounded patch check clean and final files exact. Historical evidence hashes verified against their checkpoint commits; final source hashes recorded separately.",
+          "finalSourceHashes": {
+            "eva2/deploy/living-core/workspace-create-only/README.md": "ff5bb1dda0ae10d9e63e297f98d56cbdc5186f581f405a30ec362b4f68bb3d54",
+            "eva2/deploy/living-core/workspace-create-only/broker-client.mjs": "b7871b54c747c5185efd5d0f4d915a8912fa843fb3fda81c1003fafadcd554ef",
+            "eva2/reviews/workspace-broker-client-delta-20260913.json": "597aaeb3e43a1d72b66865b6273f243180748e41439c80672f383827e1c74be5",
+            "eva2/reviews/workspace-broker-v2-20260913.json": "d872c7aadebb963f6d195770d3f635a0cbd16b66574bbdc96d9f2bba4c258548",
+            "native/workspace_writer_broker.c": "b0be529b85e684b4ac9c7f35e22b449771f45ae93be8b88f508960955a4c060c",
+            "test/workspace-writer-broker-client-result.test.mjs": "e01a73a747db9a38211dbad38a4eb20756d1ec492b64950db79de943bfee11ee",
+            "test/workspace-writer-broker-v2.test.mjs": "4fd3ef9d93dc4c81096cd341c7bbd9a6e2114ebc3607cf47ef1d0c2d91f33672"
+          },
+          "checkpointEvidenceScope": "workspace-broker-v2 evidence binds768e72d9; client-delta evidence binds7c31d0fc before the separately reviewed dee5b051 catch fix. These historical receipts are preserved unchanged.",
+          "remaining": [
+            "Host-owned private root/journal file descriptors and lifecycle",
+            "Immediate mandate/stop admission before dispatch",
+            "MCP catalogue/effect/observe composition",
+            "Effectful product integration proof",
+            "Separate production activation"
+          ]
         },
         "admissionPreparation": {
           "status": "bounded_admission_source_integrated_independent_partial_go",
