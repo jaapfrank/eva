@@ -121,7 +121,7 @@
           ]
         }
       ],
-      "priorityDecision": "Procedure opslaan en markeren is bewezen. De code die mogelijke procedures vóór het plannen aanbiedt, is goedgekeurd en geïntegreerd; de runtimekandidaat wordt voorbereid. Zelfstandig hergebruik is nog niet bewezen. De PostgreSQL-vervanger heeft minder scanbevindingen, maar geen vrijgave.",
+      "priorityDecision": "De procedurekandidaat wordt onafhankelijk beoordeeld vóór een echte vervolgproef. De PostgreSQL-vergelijking en geïsoleerde herstelproeven zijn afgerond en gecontroleerd; resterende beveiligingsbevindingen en licentiegegevens blokkeren de release.",
       "dashboardVerification": {
         "status": "local_browser_verified_not_full_product_acceptance",
         "priorityRevision": {
@@ -259,7 +259,7 @@
         },
         {
           "title": "Reservekopie herstellen via de wizard",
-          "detail": "De vervangende PostgreSQL 16.15-image meldt met dezelfde scandatabase 96 HIGH- en 16 CRITICAL-pakketbevindingen, tegenover 110 en 18. Het bewijs van vergelijking en geïsoleerd bijwerken, herstellen en terugrollen wordt onafhankelijk beoordeeld. De resterende bevindingen en ontbrekende licentiegegevens blijven open. Er is geen live-upgrade of releasevrijgave."
+          "detail": "Afgerond en onafhankelijk gecontroleerd: vergelijking van PostgreSQL 16.13 met 16.15 en geïsoleerd bijwerken, logisch herstellen en terugrollen naar de reservekopie van vóór de upgrade. De kandidaat heeft 96 HIGH- en 16 CRITICAL-pakketbevindingen tegenover 110 en 18; zestien verdwenen, geen nieuwe. Terugrollen bewaart geen later toegevoegde kandidaatdata. Resterende bevindingen en 26 ontbrekende licentievermeldingen blijven open. Geen live-upgrade of volledige installatierelease."
         },
         {
           "title": "Voorbereid documentproject afgerond",
@@ -273,7 +273,7 @@
         },
         {
           "title": "Aangeleerde procedures terugvinden",
-          "detail": "Opslaan en markeren als herbruikbare procedure is afgerond en onafhankelijk gecontroleerd. De gerichte verbetering biedt mogelijke procedures nu vóór het plannen aan; de broncode is goedgekeurd en geïntegreerd. Een nieuwe runtimekandidaat wordt voorbereid. Zelfstandig lezen en toepassen in een echt vervolggesprek is nog niet bewezen; deze verbetering staat nog niet live."
+          "detail": "Opslaan en markeren als herbruikbare procedure is afgerond en onafhankelijk gecontroleerd. De code die mogelijke procedures vóór het plannen aanbiedt, is goedgekeurd en geïntegreerd. De nieuwe runtimekandidaat wordt onafhankelijk beoordeeld. Zelfstandig lezen en toepassen in een echt vervolggesprek is nog niet bewezen; deze verbetering staat nog niet live."
         }
       ],
       "openRisks": [
@@ -5557,6 +5557,17 @@
                 "status": "fresh_sealed_candidate_preparation",
                 "activationAuthorized": false
               }
+            },
+            "r5Candidate": {
+              "status": "sealed_candidate_under_independent_review",
+              "planCommitReportedPrefix": "b076b9cf",
+              "imageReportedPrefix": "62743238",
+              "sealReportedPrefix": "291e3e65",
+              "reportedBy": "coordinator",
+              "activationGo": false,
+              "outcomeAvailable": false,
+              "liveCompletionProven": false,
+              "ownerAccepted": false
             }
           }
         }
@@ -7015,9 +7026,9 @@
           "integrationVerification": "Four exact baselines and final bytes checked; bounded patch clean, two source hashes match. Platform lock remains unchanged. Other stage files excluded."
         },
         "nextReleaseEvidenceStep": {
-          "status": "one_maintained_postgresql16_remediation_candidate_comparison_authorized",
+          "status": "remaining_findings_and_license_disposition_required",
           "owner": "coordinator/timing_final_review",
-          "scope": "Select one maintained immutable PostgreSQL16 candidate, compare old and new with the same current scanner database; no production upgrade",
+          "scope": "Assess remaining findings using primary upstream fixes and actual applicability; retain findings until justified disposition. Unknown licenses and whole-candidate scan authority remain open.",
           "reportedBy": "coordinator",
           "releaseSupportGo": false,
           "fullRestoreGo": false,
@@ -7126,7 +7137,7 @@
           ]
         },
         "postgresRemediationCandidate": {
-          "status": "isolated_candidate_evidence_pending_independent_review",
+          "status": "bounded_candidate_comparison_upgrade_restore_rollback_independently_approved",
           "reportedBy": "coordinator",
           "candidateCommitPrefixes": [
             "0c3e6dcb",
@@ -7140,10 +7151,46 @@
           "sameScannerDatabaseReported": true,
           "newFindingsReported": 0,
           "isolatedUpgradeRestoreRollbackReported": true,
-          "evidenceIntegrated": false,
+          "evidenceIntegrated": true,
           "securityReleaseGo": false,
           "liveUpgradePerformed": false,
-          "pinChanged": false
+          "pinChanged": false,
+          "sourceCommits": [
+            "0c3e6dcb6caf8acf4b10979c89dbfdc8e6535c60",
+            "99c68d38098aaa8d36c87773ee75f6e215b739cf"
+          ],
+          "exactPaths": [
+            "eva2/evidence/product/IN-002-postgres-remediation-candidate-2026-09-13.json",
+            "eva2/reviews/IN-002-postgres-remediation-candidate-2026-09-13.md",
+            "eva2/evidence/product/IN-002-postgres-remediation-restore-2026-09-13.json",
+            "eva2/reviews/IN-002-postgres-remediation-restore-2026-09-13.md",
+            "eva2/evidence/product/IN-002-postgres-independent-remediation-review-2026-09-13.json"
+          ],
+          "independentEvidenceGo": true,
+          "independentReview": {
+            "reviewer": "postgres_security_review",
+            "reportedBy": "coordinator",
+            "path": "eva2/evidence/product/IN-002-postgres-independent-remediation-review-2026-09-13.json",
+            "sha256": "46620b766e6de192a766a233d6d0c473036f46ffd00a297d97a41534d5f0ae1b",
+            "artifactHashesVerified": 37,
+            "cacheHashesVerified": 2,
+            "scope": "Comparison and synthetic upgrade, logical restore and pre-upgrade snapshot rollback only"
+          },
+          "sameScannerDatabaseVerified": true,
+          "removedPackageFindings": 16,
+          "newPackageFindings": 0,
+          "licenseInventoryPackages": 149,
+          "unknownDeclaredLicenses": 26,
+          "earlierFailedHarnessAttemptsRetained": 2,
+          "syntheticRows": 2,
+          "isolatedUpgradeVerified": true,
+          "logicalRestoreVerified": true,
+          "preUpgradeSnapshotRollbackVerified": true,
+          "postUpgradeWritesPreservedByRollback": false,
+          "legalGo": false,
+          "platformSupportGo": false,
+          "fullInstallerGo": false,
+          "productionChanged": false
         }
       }
     },

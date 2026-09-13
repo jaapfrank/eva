@@ -1,0 +1,11 @@
+# IN-002 PG16 candidate: isolated upgrade, restore and rollback
+
+The existing private Ubuntu guest ran PostgreSQL 16.13 and candidate 16.15 (`16.15-1.pgdg12+2`) by their exact OCI root digests. All fixture database containers had network disabled, no exposed ports and only synthetic data in private guest directories. No production volume or host Docker socket was given to the guest.
+
+The final bounded run passed three concrete checks: starting 16.15 on the cleanly stopped 16.13 data directory preserves both synthetic rows; restoring the pre-upgrade snapshot under 16.13 restores exactly those rows; loading the logical dump into a separate clean 16.15 installation gives the same rows. A candidate-only third row was deliberately written before rollback: rollback means restoring the old snapshot, not preserving post-upgrade writes. The paired JSON contains exact image versions, dump hash and result. This does not prove a production data migration, arbitrary extensions, point-in-time recovery, IN-002 wizard integration, or the complete installer contract.
+
+Two earlier harness failures are retained. The first addressed an unavailable repository-qualified name rather than the imported OCI digest. The second copied the rollback fixture without retaining file owners. The final fixture uses `cp -a` on a stopped database. Each attempt has its own immutable seed inputs/ISO and console log. Exit code alone is not treated as success: the final console contains the unique result record and completion marker, and no failure marker.
+
+The same-cache vulnerability comparison remains 96 HIGH and 16 CRITICAL findings in the candidate; there is no security-release approval. The new image license inventory contains all 149 SPDX packages, with 26 unknown declared licenses, and no legal clearance. The pinned upstream Dockerfile, image LICENSE and official PostgreSQL license/version-support pages are retained. Exact artifact hashes in the paired JSON cover these additional inputs and all three test attempts.
+
+Independent review is required before any canonical pin change. Next release work is disposition or further remediation of remaining vulnerabilities/license unknowns plus the unresolved platform/installer contracts. No production upgrade or support-label change was made.

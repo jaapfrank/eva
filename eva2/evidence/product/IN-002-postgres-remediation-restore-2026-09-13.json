@@ -1,0 +1,80 @@
+{
+  "observedAt": "2026-09-13T09:27:46.825895+00:00",
+  "result": {
+    "syntheticOnly": true,
+    "network": "none",
+    "old": "sha256:472efd9a66f2b2f1a5aeb18b28de74332e6ef88c2b93a1a5d812fb6db67a5f60",
+    "candidate": "sha256:bb3e1a57e5407e0a5280b4211980a5e537f4abd234a87014ac979849a78dd825",
+    "oldVersion": "16.13 (Debian 16.13-1.pgdg12+1)",
+    "expected": "1|EVA synthetic restore\n2|geen privegegevens",
+    "dumpSha256": "0006253ae6ad384351356a89dcee58b2b92d067fb29fca882f2a75af60cb7933",
+    "newVersion": "16.15 (Debian 16.15-1.pgdg12+2)",
+    "upgradeMatches": true,
+    "rollbackMatches": true,
+    "logicalRestoreMatches": true
+  },
+  "scope": "isolated Ubuntu guest, private daemon, synthetic PG minor-version upgrade, old snapshot rollback and logical restore; not whole installer restore or security release",
+  "priorFailures": [
+    {
+      "run": 1,
+      "result": "repository-qualified image name absent in OCI-loaded guest; no DB initialization; changed to imported digest address"
+    },
+    {
+      "run": 2,
+      "result": "rollback readiness failed; copytree did not retain file owners; next run uses cp -a preserving ownership"
+    }
+  ],
+  "licenseInventory": {
+    "packages": 149,
+    "declaredUnknown": 26,
+    "legalClearance": false
+  },
+  "claims": {
+    "productionChanged": false,
+    "canonicalPinChanged": false,
+    "platformSupportClaim": false,
+    "securityRelease": false,
+    "ownerAcceptance": false,
+    "rollbackRestoresPreUpgradeSnapshot": true,
+    "postUpgradeWritesPreservedByRollback": false
+  },
+  "artifacts": {
+    "postgres-remediation/guest-r2-console.log": "0ca6368be25c7cefe391c9060f293b0a18b5cf228d64f99465d2bce891db1d27",
+    "postgres-remediation/trivy-command.json": "28188263f310a8d4bb4e8c563b6070a16be0ec04f3afcbcfdc816f5cd487941f",
+    "postgres-remediation/guest-r3-command.json": "fe5b8f8bbeed45905cc8b172d9858536258d289c864a766d33c86df5da26ee73",
+    "postgres-remediation/guest-r2-command.json": "0ca1edd46afbdaef04633cb5ff0e1ac6f058fce1758af24af178d6d30aca5891",
+    "postgres-remediation/guest-command.json": "01828bcd199efb1c1a09f0e25795a277cf6402368c7fda47daa6183cbc793497",
+    "postgres-remediation/trivy.raw.json": "ce80bf72c400220082dc4b24c9a994718ca91a83eb9f3dd17c051fa507643ec1",
+    "postgres-remediation/guest-r3-console.log": "55d2c62850fb1701e0a6fde9f58ba8e0cae8635c6e2d7e680dbb77a6d2a71b39",
+    "postgres-remediation/image-LICENSE": "87ffd2c45e3f90cfa3407b5c40ef8333e87c3e875e4895f8b64df758198deafc",
+    "postgres-remediation/postgres-versioning.html": "54c542f45154bc0479a5b7dee2dc0516c8ce3d8f1ae764b8f7dc23cea6e7a0c1",
+    "postgres-remediation/official-images-postgres.txt": "28904168a5fcec83901521bfae423c38c6bda4abbf9bc4f8f83dc33da204fd40",
+    "postgres-remediation/sbom.spdx.json": "41dce722c63a19cede49a478f4fcaded8cc2a53c0ee7e9aa9210e8e5904cafcc",
+    "postgres-remediation/image-license-inventory.json": "be918f476c570ee0f0fd2e715df56f2a9e14c02568e9f5aadf8e850e318f460f",
+    "postgres-remediation/Dockerfile": "cf0f3f542a886f5f3562940174564f3e4d95e7240450aaa1458e663b0a59e7ec",
+    "postgres-remediation/syft.stderr.log": "2b6075aa3a71d8eb91870a5617206afa566506eb76f2c3d55995807c582743a7",
+    "postgres-remediation/guest-console.log": "57a02bb7ae844f1d6946a20db3d39a8646e53d5400cb95941524276138b5ac3e",
+    "postgres-remediation/postgres-license.html": "0b7ded1cfdf32c6e31083d009075cf8e8c65568e37ab4f2e722a183e77911fb1",
+    "postgres-remediation/archive-receipt.json": "fdf911bf334c8642eacf93de839bc8794ad5701fb2787777f377198cdf57d0e1",
+    "postgres-remediation/trivy.stderr.log": "cd68c9564ac964b7e824635941cf2fb7f5190797933987280414fcb20c827221",
+    "postgres-remediation/candidate-index.json": "bb3e1a57e5407e0a5280b4211980a5e537f4abd234a87014ac979849a78dd825",
+    "guest/remediation-seed/meta-data": "44772caab890237f03c1f567e7eaf038598ce9b997b3fc92e082e62677c5e896",
+    "guest/remediation-seed/user-data": "1582d9b831357054f1c05c25e4eacf87a4bc3d424681810fc3445b59dfacf915",
+    "guest/remediation-seed/candidate.oci.tar": "9349175aa7db5859d5c63f6547001ca6f467ab369cdad1964ac41c2b2d2701cd",
+    "guest/remediation-seed/provision.sh": "3c55d9c4499d3651babac4e586a7469b1e0757591c28af2f9129b7e9bd05f1ed",
+    "guest/remediation-seed/probe.py": "da94e85a9d7be7e5808100b2c2b7a452fec4b5d697070cbffae9914f34da829a",
+    "guest/remediation-r2-seed/meta-data": "c9ef747d05b64242db79dbbbbb4b7e26b5615521aa0c84ee6b958359b0a94d8a",
+    "guest/remediation-r2-seed/user-data": "1582d9b831357054f1c05c25e4eacf87a4bc3d424681810fc3445b59dfacf915",
+    "guest/remediation-r2-seed/candidate.oci.tar": "9349175aa7db5859d5c63f6547001ca6f467ab369cdad1964ac41c2b2d2701cd",
+    "guest/remediation-r2-seed/provision.sh": "ea8c6dee2af05e56e32c5e9838400a7c2364daf4881d2b13773da4cd72e2a8fc",
+    "guest/remediation-r2-seed/probe.py": "a86cc3a5251bd0ef7c64c3cf2e6f7a8b114b5cb90a2e6de1f6ca1cd3fefc8c8e",
+    "guest/remediation-r3-seed/meta-data": "a25438a2d231c1986eada83904b3aaea452a9ea2bfb6663652d304934a4b8a0d",
+    "guest/remediation-r3-seed/user-data": "1582d9b831357054f1c05c25e4eacf87a4bc3d424681810fc3445b59dfacf915",
+    "guest/remediation-r3-seed/candidate.oci.tar": "9349175aa7db5859d5c63f6547001ca6f467ab369cdad1964ac41c2b2d2701cd",
+    "guest/remediation-r3-seed/provision.sh": "5ed3a8b9e34c98bfbd0bce602d07a92746cd3364bda2be248d02e16d8d73bb15",
+    "guest/remediation-r3-seed/probe.py": "ce94ec3d7555e34774e1d3f39d1ba3f6df4cb0c4d3697d79fb17d7f90ee8da5b",
+    "guest/seed-remediation.iso": "4f62076b2226e7a9f1711cc883e9d75fd57e9893bdbc776ffc076d022d6c82df",
+    "guest/seed-remediation-r2.iso": "a7fddf58a5406bf4d698b47f4841fda498b4b88ae9104d4c0d171a0d732bc18b",
+    "guest/seed-remediation-r3.iso": "adc2842c61d700eef3b0aa46921762b3b78e67e539555d59f95eea24ca53cd76"
+  }
+}

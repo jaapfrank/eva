@@ -1,0 +1,27 @@
+{
+  "reviewer": "postgres_security_review",
+  "reviewedAt": "2026-09-13T09:40:28.476678+00:00",
+  "commits": [
+    "0c3e6dcb6caf8acf4b10979c89dbfdc8e6535c60",
+    "99c68d38098aaa8d36c87773ee75f6e215b739cf"
+  ],
+  "decision": "GO bounded candidate comparison and synthetic upgrade/restore/snapshot rollback evidence",
+  "checks": [
+    "37 distinct artifact hashes and two cache hashes independently exact",
+    "Comparison recomputed by package/id/severity: 110H18C to96H16C;16 removed including2GnuTLS critical;0new",
+    "Registry index digest/source annotations agree with retained official-images source; archived config matches raw scan",
+    "149 license inventory rows match SPDX and source hashes;26 unknown declared preserved",
+    "Inspected exact probe and provisioning scripts: stopped snapshot cp-a, candidate-only third row, old-snapshot rollback and separate logical restore with ON_ERROR_STOP",
+    "Final console exactly one result and completion marker, no failure marker; result matches committed evidence; both earlier failure markers retained",
+    "All three seed archive hashes match candidate archive receipt"
+  ],
+  "limits": [
+    "No independent signature verification",
+    "No scanner or VM rerun",
+    "Guest has user-mode networking; PostgreSQL fixture containers themselves use network none",
+    "Two synthetic rows only; no production migration, extension compatibility or full installer proof",
+    "Rollback restores pre-upgrade state and intentionally loses candidate-only writes",
+    "No security, legal, platform support or release approval"
+  ],
+  "nextGap": "16 CRITICAL remain, including Go stdlib in gosu and Perl/libxml2/sqlite/zlib. Assess relevant upstream fixes and actual applicability using primary evidence; keep all findings until justified disposition. Same-DB improvements alone cannot clear release; unknown licenses and whole-candidate scan authority remain open."
+}
