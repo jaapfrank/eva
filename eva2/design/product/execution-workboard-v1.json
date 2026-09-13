@@ -121,7 +121,7 @@
           ]
         }
       ],
-      "priorityDecision": "Eerst de twee bevestigde Telegramfouten herstellen: woordlimiet in de core en de vaste twintigsecondenlimiet in de bridge. De uitvoerder bouwt gerichte fixes zonder verzoekherhaling. AU-004-installatie blijft uitgesteld tot de gewone gespreksroute is hersteld.",
+      "priorityDecision": "Telegramherstel blijft de prioriteit. Beide bronfixes zijn goedgekeurd; de exacte installatie en terugweg worden nu beoordeeld. Er is geen gebruikersinput nodig om door te werken. AU-004-installatie blijft uitgesteld.",
       "dashboardVerification": {
         "status": "local_browser_verified_not_full_product_acceptance",
         "priorityRevision": {
@@ -223,7 +223,7 @@
       "nextOutcomes": [
         {
           "title": "Telegramfouten herstellen",
-          "detail": "Twee fouttypen zijn onafhankelijk bevestigd: de core liep vast op een woordlimiet; de Telegramverbinding brak een andere beurt na twintig seconden af, terwijl de core later wel antwoord opsloeg. Beide gerichte fixes zijn in bouw. Geen opstartcrash aangetoond, geen verzoekherhaling en nog geen opgelost- of liveclaim."
+          "detail": "Beide bronfixes zijn onafhankelijk goedgekeurd: de core-woordlimietfout en de vaste twintigsecondenlimiet in de Telegramverbinding. De concrete kandidaatimage, één Bottie-bestand en het installatie- en terugrolplan worden nu beoordeeld. De fixes zijn nog niet live; een werkend gesprek is nog niet bevestigd."
         },
         {
           "title": "Reguliere Telegramupdate afgeleverd",
@@ -5944,9 +5944,9 @@
       "owners": [
         {
           "owner": "01a08d52-31b1-7091-be45-812c0b6e6c9f",
-          "work": "Core-woordlimiet en Telegram-streamwachttijd herstellen",
+          "work": "Telegramherstelimage en bridge-installatie laten beoordelen",
           "boundary": "New providers/document_goal_actions.py; bundled.py opt-in registration only; document_goal_plan.py safe full host GoalSpec/hash binding; targeted provider/PG tests and docs. Existing actual ConversationTurn/current authority/external tool port. No second planner/live/envflip.",
-          "status": "telegram_two_confirmed_failures_targeted_fixes_in_build"
+          "status": "telegram_source_go_installation_review"
         },
         {
           "owner": "coordinator/timing_final_review",
@@ -8591,7 +8591,7 @@
       "integrationVerification": "Four actual baselines exact, bounded patch clean, final files and hashes match reviewed source; evidence preserved unchanged."
     },
     "telegramConversationIncident20260913": {
-      "status": "independent_causes_confirmed_two_targeted_fixes_in_build",
+      "status": "source_fixes_independently_approved_installation_package_under_review",
       "reportedBy": "Jaap via coordinator",
       "recordedAt": "2026-09-13T07:59:51.606419+00:00",
       "reportedSymptom": "Error messages in ordinary Telegram conversation",
@@ -8638,17 +8638,39 @@
         {
           "scope": "Core word-limit handling",
           "owner": "01a08d52-31b1-7091-be45-812c0b6e6c9f",
-          "status": "in_build",
-          "deployed": false
+          "status": "source_independently_approved",
+          "deployed": false,
+          "independentGo": true
         },
         {
           "scope": "Bottie bridge streaming wait duration",
           "owner": "01a08d52-31b1-7091-be45-812c0b6e6c9f",
-          "status": "in_build",
+          "status": "source_independently_approved",
           "deployed": false,
-          "requestRetryAllowed": false
+          "requestRetryAllowed": false,
+          "independentGo": true
         }
-      ]
+      ],
+      "independentSourceReview": {
+        "decision": "GO for both source fixes",
+        "reportedBy": "coordinator",
+        "coreCandidateCommitReportedPrefix": "aa4a0bef",
+        "bridgeCandidateCommitReportedPrefix": "c133ca0d",
+        "reviewedTestCountsReported": [
+          37,
+          22
+        ],
+        "sourceIntegratedByAdministration": false,
+        "live": false
+      },
+      "installationReview": {
+        "status": "independent_review_in_progress",
+        "coreImageReportedPrefix": "bc6d64a3",
+        "bridgeFilesChanged": 1,
+        "scope": "Exact core image, one Bottie bridge file, installation and rollback plan",
+        "deploymentGo": false,
+        "conversationRecovered": false
+      }
     }
   },
   "activeTaskId": "AU-008",
