@@ -262,7 +262,7 @@
         },
         {
           "title": "Aangeleerde procedures terugvinden",
-          "detail": "De bronverwijzingen en hostaansluiting zijn technisch afgerond. De runtime-kandidaat met vijf gerichte wijzigingen en drie vastgelegde proefvragen is nu voorbereid en ligt ter activeringsreview. Er is nog geen activering of modelproef uitgevoerd; live gebruik en jouw acceptatie blijven open."
+          "detail": "Herstelcontrole repareren vóór installatie. De broncode en kandidaatimage zijn goedgekeurd. Eén fout in de controle van de terugrol in activate_once.py blokkeert de installatie; de runtime-uitvoerder repareert die nu. Er is nog geen activering of modelproef uitgevoerd."
         }
       ],
       "openRisks": [
@@ -5104,7 +5104,7 @@
             "candidateCommit": "46e85b2267dc58619de78233405401163f6c20fe",
             "decision": "GO for preparation only",
             "finding": "Existing delegated worker uses832; core and document worker use2393.",
-            "status": "runtime_candidate_prepared_activation_review_pending",
+            "status": "repair_rollback_verification_before_installation",
             "planIntegrated": false,
             "deploymentAuthorized": false,
             "correctionCommit": "295a70cef49477b36f7acd48cae1eb6de401fcf4",
@@ -5120,7 +5120,7 @@
               "scope": "Five overlays, candidate and sealed probe for separate activation review",
               "liveStarted": false,
               "activationGo": false,
-              "status": "prepared_awaiting_independent_activation_review",
+              "status": "image_approved_activation_blocked_by_rollback_verification_bug",
               "evidenceCommit": "e58d256c26c9f16f42aa931fdda2a2e3a62735c2",
               "evidenceIntegrated": false,
               "candidateImageReportedPrefix": "43ddd343",
@@ -5137,6 +5137,16 @@
                 "sourceWorktree": "/home/administrator/project/.eva2-artifacts/au006-project-resume-20260913/document-worktree",
                 "sourceParentCommit": "fefcac8e7c2c1e5b3aa772dacfc67e8327ad7945",
                 "policy": "Existing owner retention applies; candidate integration waits for coordinator GO. No cleanup now."
+              },
+              "imageIndependentGo": true,
+              "activationBlocker": {
+                "finding": "Concrete rollback verification bug in activate_once.py",
+                "reportedBy": "coordinator",
+                "ownerThread": "01a08d52-31b1-7091-be45-812c0b6e6c9f",
+                "status": "Repair explicitly assigned to runtime writer",
+                "imageGoScope": "Candidate image43ddd343 only",
+                "displayStatus": "Herstelcontrole repareren vóór installatie",
+                "fixRequiredBeforeInstallation": true
               }
             }
           }
@@ -5862,9 +5872,9 @@
       "owners": [
         {
           "owner": "01a08d52-31b1-7091-be45-812c0b6e6c9f",
-          "work": "Voorbereid documentproject technisch en live opgeleverd",
+          "work": "Herstelcontrole repareren vóór AU-004-installatie",
           "boundary": "New providers/document_goal_actions.py; bundled.py opt-in registration only; document_goal_plan.py safe full host GoalSpec/hash binding; targeted provider/PG tests and docs. Existing actual ConversationTurn/current authority/external tool port. No second planner/live/envflip.",
-          "status": "bounded_prepared_project_closed_owner_acceptance_open"
+          "status": "AU004_activate_once_rollback_verification_fix"
         },
         {
           "owner": "coordinator/timing_final_review",
