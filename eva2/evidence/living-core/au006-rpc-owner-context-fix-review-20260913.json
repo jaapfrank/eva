@@ -1,0 +1,64 @@
+{
+  "contract": "EvaRpcOwnerContextFixReview/v1",
+  "deployed": false,
+  "pin": {
+    "image": "sha256:daf923c247fd569df5f8c9ee418cbc259fade564f78e0a0852937139a181c4dd",
+    "main_original_sha256": "c28f599738d62efd4a1fcdf4d73422cad78a3b135406f4d235c38b62caa8fca9",
+    "main_candidate_sha256": "ce9a769b1224812fddb1a905cff4025a19411f2760e6ac2abf08d1f3ab3b01fe",
+    "live_tool_service_sha256": "0bf4a3cd4288f56aee1038174906165602a0c759d84faaa1210c68ad05f57431",
+    "deployed": false
+  },
+  "proof": {
+    "status": "passed",
+    "cases_per_version": 15,
+    "results": {
+      "original": {
+        "admin_own_private": false,
+        "admin_other_private": false,
+        "admin_public": true,
+        "admin_team": true,
+        "anonymous_admin_private": false,
+        "public_only_owner_private": false,
+        "scoped_owner_private": true,
+        "unscoped_nonadmin_private": false,
+        "matching_team": true,
+        "other_team": false,
+        "missing_email": false,
+        "invalid_email": false,
+        "unverified_jwt": false,
+        "forged_params": false,
+        "stale_session_admin": false
+      },
+      "guarded": {
+        "admin_own_private": true,
+        "admin_other_private": false,
+        "admin_public": true,
+        "admin_team": true,
+        "anonymous_admin_private": false,
+        "public_only_owner_private": false,
+        "scoped_owner_private": true,
+        "unscoped_nonadmin_private": false,
+        "matching_team": true,
+        "other_team": false,
+        "missing_email": false,
+        "invalid_email": false,
+        "unverified_jwt": false,
+        "forged_params": false,
+        "stale_session_admin": false
+      }
+    },
+    "http_authentication_tested": false,
+    "upstream_effects": 0,
+    "actual_auth_context_used": true,
+    "cancellation_owner_binding_preserved": true,
+    "actual_rpc_handler_and_live_service_access_policy": true
+  },
+  "source_hashes": {
+    "eva2/experiments/contextforge-gateway-v1/preserve-rpc-owner-context.patch": "3d27203e6f9c13974f34321e019ff49ee43592da7574cddb3af296b78a3a899a",
+    "eva2/experiments/contextforge-gateway-v1/preserve-rpc-owner-context.pin.json": "1f07b1fda84c067d06494e315e1a15c1141f2d9afd421a4ff93a90726c95110c",
+    "eva2/experiments/contextforge-gateway-v1/prove_rpc_owner_context.py": "09f2268e9e9095f0f27c830b701265adc49310a2efaa9f9752780042c65eb2f1"
+  },
+  "proof_log_sha256": "9b0d84ef21e519b49638080e804a8b3b8fdf72d677412a57cff8918b9a844ab7",
+  "production_writes_in_fix_preparation": 0,
+  "goal_retry_or_reset_authorized": false
+}

@@ -247,7 +247,7 @@
         },
         {
           "title": "Project hervatten na herstart",
-          "detail": "De gewone startvraag mislukte na ongeveer 34 seconden: de gateway vond de private tool niet. Geen stappen voltooid of documenten gemaakt. De vorige core is hersteld; de projectworker en provider zijn gestopt. De private registratie blijft afgerond. Een gerichte autorisatiecorrectie wordt onderzocht en beoordeeld; er is geen nieuwe modelproef of automatische herhaling toegestaan."
+          "detail": "De gewone startvraag mislukte na 33,82 seconden: de gateway verloor de eigenaarscontext en weigerde de private tool. Vijf modelpogingen, nul voltooide stappen en geen documenten; kosten onbekend. De vorige core is hersteld en de nieuwe worker en provider zijn gestopt. De gerichte autorisatiepatch ligt ter review en is niet uitgerold. De private registratie blijft afgerond; er volgt geen automatische herhaling."
         },
         {
           "title": "Gedeeld audiotype",
@@ -6965,7 +6965,7 @@
           "activationBlocked": true,
           "workerStarted": false,
           "live": false,
-          "sealerState": "ACTIVATION-BLOCKED.json retained; sealing and phase2 require separate GO.",
+          "sealerState": "Phase2 seal completed with approved hashes; sealed inputs retained after failed ordinary probe. No reseal or retry authorized.",
           "artifactRetention": {
             "owner": "01a08d52-31b1-7091-be45-812c0b6e6c9f",
             "exactPath": "/home/administrator/project/.eva2-artifacts/au006-activation-20260913",
@@ -7558,10 +7558,10 @@
           },
           "executionResult": {
             "reportedBy": "coordinator",
-            "evidenceBasis": "Coordinator report from execution owner; execution evidence commit not yet supplied to administration.",
+            "evidenceBasis": "Sanitized execution-owner evidence and coordinator report; no independent result GO claimed.",
             "status": "ordinary_start_failed_verified_rollback_reported",
             "ordinaryStartQuestions": 1,
-            "durationSecondsApprox": 33.8,
+            "durationSecondsApprox": 33.81879510499857,
             "goalState": "needs_help",
             "completedSteps": 0,
             "journalEntries": 0,
@@ -7576,14 +7576,66 @@
               "gatewayGuardPreserved": true,
               "gatewayEndpointPolicyPreserved": true
             },
-            "causeInvestigation": "Admin email becomes None in exact authorization context; minimal isolated correction and negative authorization review ongoing.",
+            "causeInvestigation": "Bound source proof reproduces loss of verified owner email in admin/null-team RPC normalization. Minimal candidate preserves email; independent review pending.",
             "newModelProbeAuthorized": false,
             "sqlStateResetAuthorized": false,
             "automaticRetryAllowed": false,
             "liveSuccessProven": false,
             "ownerAccepted": false,
-            "reachableArtifactProven": false
+            "reachableArtifactProven": false,
+            "evidenceCommit": "b26ff4ee589b18d089490b398c2ed6db50075d56",
+            "evidencePaths": [
+              "eva2/evidence/living-core/au006-phase2-ordinary-probe-failed-20260913.json",
+              "eva2/evidence/living-core/au006-phase2-ordinary-probe-failed-20260913.md"
+            ],
+            "evidenceIntegrated": true,
+            "recordedAt": "2026-09-13T04:23:04.180037+00:00",
+            "ordinaryStatusQuestions": 0,
+            "effectDispatchReservations": 1,
+            "gatewayEffectRejections": 1,
+            "measuredModelAttempts": 5,
+            "measuredInputTokens": 36985,
+            "measuredOutputTokens": 292,
+            "reportedModelToolCalls": 4,
+            "admittedActions": [
+              "get_prepared_document_project",
+              "get_prepared_document_project",
+              "start_prepared_document_project"
+            ],
+            "backendTransportRequestCount": null,
+            "cost": null,
+            "sealedInputsPreserved": true,
+            "failedGoalAndReservationPreserved": true,
+            "sealedOutputHashesMatchApprovedPreview": true
           }
+        },
+        "rpcOwnerContextFix": {
+          "status": "isolated_candidate_awaiting_independent_review",
+          "candidateCommit": "b26ff4ee589b18d089490b398c2ed6db50075d56",
+          "evidencePaths": [
+            "eva2/evidence/living-core/au006-rpc-owner-context-fix-review-20260913.json",
+            "eva2/evidence/living-core/au006-rpc-owner-context-fix-review-20260913.md"
+          ],
+          "evidenceIntegrated": true,
+          "sourcePaths": [
+            "eva2/experiments/contextforge-gateway-v1/preserve-rpc-owner-context.patch",
+            "eva2/experiments/contextforge-gateway-v1/preserve-rpc-owner-context.pin.json",
+            "eva2/experiments/contextforge-gateway-v1/prove_rpc_owner_context.py"
+          ],
+          "sourceIntegrated": false,
+          "deployed": false,
+          "reportedProof": {
+            "casesPerVersion": 15,
+            "versions": 2,
+            "actualAuthContextHandlerAndServicePolicy": true,
+            "httpAuthenticationTested": false,
+            "upstreamEffects": 0,
+            "cancellationBindingPreserved": true,
+            "onlyBehaviorChange": "Verified admin retains access to own private tool; other owner, public-only, missing/invalid identity, forged and stale authorization remain denied."
+          },
+          "independentGo": false,
+          "goalRetryOrResetAuthorized": false,
+          "existingNeedsHelpAutomaticallyResumable": false
         }
       },
       "isolatedProductExecutionProven": true,
