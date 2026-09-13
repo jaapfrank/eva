@@ -1,0 +1,85 @@
+{
+  "contract": "EvaBrowserCurrentRouteAudit/v1",
+  "date": "2026-09-13",
+  "status": "read_only_diagnosis_no_runtime_change",
+  "legacyManagedBrowser": {
+    "controlUrl": "http://172.30.0.1:45163",
+    "ownerOriginInCoreAndHost": "http://localhost:44710",
+    "controlTokenMatch": true,
+    "controllerListenerPresent": false,
+    "coreClientFailureReportedByRuntimeWriter": "ConnectionRefused / BrowserSessionError",
+    "hostAndFirewallSystemUnitsInstalled": false,
+    "rootRecoveryConfigurationInstalled": false,
+    "browserContainerId": "dd3ce5f5e3949910e30da9268b0d831fe8a9f96505a1a375890971074564f8ef",
+    "mcpContainerId": "a4f8e9dedc77d50c0c150fbb9d4b855fe615f1e41f96ca235074a12486b1c49c",
+    "browserImageId": "sha256:63e8e38540462a38c70ef85497c13c412485b39979394ea95da450fca5b4efa8",
+    "mcpImageId": "sha256:e3f6a85f0fd771dd9440584bd905011f1b4ea25b115bfea8b796d17d23e7b767",
+    "browserState": "exited",
+    "mcpState": "exited",
+    "bothRestartPolicies": "no",
+    "mcpNetworkMode": "container:dd3ce5f5e3949910e30da9268b0d831fe8a9f96505a1a375890971074564f8ef",
+    "mcpEndpoint": "http://192.168.0.2:8931/mcp",
+    "mcpCdpEndpointRequiredByValidatedDriver": "http://127.0.0.1:9222",
+    "endpointBelongsToSameManagedContainerPair": true,
+    "retainedState": {"mode": "owner", "revision": 32},
+    "isolatedCopiedStateReadback": {
+      "contract": "EvaBrowserSession/v1",
+      "revision": 32,
+      "state": "recovery_required",
+      "owner_control": false,
+      "eva_control": false,
+      "browser_ready": false,
+      "mcp_ready": false,
+      "profile_preserved": true,
+      "fresh_observation_required": true,
+      "viewer_path": null
+    },
+    "readbackMethod": "Existing BrowserSessionHost against a temporary private copy of state.json; real Docker driver inspect only. No live manager, control, browser start or original state write."
+  },
+  "desiredPersonalChrome": {
+    "mcpEndpoint": "http://172.30.0.10:45164/mcp",
+    "proxyContainerId": "08ec0c43aa35155b3dd70f65dcd7e814ade5e825202764fc35c3da16dc92db21",
+    "ownerControlUrl": "http://127.0.0.1:44718",
+    "currentStatus": {
+      "contract": "EvaSharedChrome/v1",
+      "state": "disconnected",
+      "epoch": "efe8ea17-2c72-4b55-a354-fed4bccab02e",
+      "busy": false,
+      "connected": false,
+      "freshObservationRequired": true
+    },
+    "historicalRecoveryCommits": ["f71b1fea", "afabead6", "e6f4252c", "f057586f"],
+    "historicalTestsAreNotCurrentOwnerAcceptance": true
+  },
+  "authorityAndEffects": {
+    "sourceInspection": [
+      "McpOwnerAuthority validates owner, tenant, installation and current durable mandate; managed endpoints bind exact addresses.",
+      "McpAutonomy builds the ordinary durable connector/effect pipeline; the browser host controller is not the effect ledger.",
+      "Legacy session control binds exact container identities, revision and StartedAt; the stopped pair does not inherit saved owner authority.",
+      "Personal ChromeGate separately enforces explicit grant, epoch, single-use observation and busy exclusion."
+    ],
+    "writerReportedCatalog": [
+      {"gatewayId": "2ab6b7e6414b4bd39d0eeb15eb0c9bed", "endpoint": "http://192.168.0.2:8931/mcp", "enabled": true, "visibility": "public"},
+      {"gatewayId": "b2ed84b464b648089a382f9644e57cee", "endpoint": "http://172.30.0.10:45164/mcp", "enabled": true, "visibility": "public"}
+    ],
+    "writerReportedUncertainEffect": {"route": "personal Chrome 45164", "tool": "eva-connector-aea119d90d81a9ca13a0465c050152ce-chrome-snapshot", "history": ["TOOL_PREPARED", "RECOVERY_FAILED"]},
+    "writerReportsAreAttributedNotIndependentlyQueried": true,
+    "noReplayPerformed": true
+  },
+  "decisionAndPlan": [
+    "Keep old VB003 containers stopped; do not activate their recovery units for AU-006. Personal Chrome remains the desired product route.",
+    "Preserve retained profile, credentials, revision and revocation. The copied-state result is a diagnosis, not a live controller response.",
+    "Existing API correctly returns unavailable while its fixed 45163 backend is absent. No new runtime fix is needed to establish this diagnosis.",
+    "Do not substitute 45164 into BrowserSessionClient: EvaBrowserSession/v1 and EvaSharedChrome/v1 use different contracts and paths. Product status integration requires an explicit adapter decision.",
+    "Review the personal route authority, busy/epoch and uncertain-effect handling separately. All reviewed live changes remain with the designated runtime writer."
+  ],
+  "scope": {
+    "liveMutations": false,
+    "browserActions": false,
+    "personalGrantCreated": false,
+    "originalProfileOrStateModified": false,
+    "runtimeCodeChanged": false,
+    "centralBoardModified": false,
+    "ownerAcceptance": false
+  }
+}
