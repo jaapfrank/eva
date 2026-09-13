@@ -121,7 +121,7 @@
           ]
         }
       ],
-      "priorityDecision": "De mislukte procedureproef en het huidige herstel zijn onafhankelijk bevestigd. A wordt niet als afgerond gemarkeerd. De gerichte bestandspadfix ligt ter review; parallel wordt nieuw IN-002-bewijs beoordeeld. Geen nieuwe runtimewijziging.",
+      "priorityDecision": "De gerichte procedurefix is op bronniveau afgerond; de runtime-uitvoerder bereidt een nieuwe kandidaat op de herstelde core voor. Parallel zijn afgebakende IN-002-imagebewijzen vastgelegd. Eerdere mislukte proeven en resterende releasevoorwaarden blijven zichtbaar.",
       "dashboardVerification": {
         "status": "local_browser_verified_not_full_product_acceptance",
         "priorityRevision": {
@@ -229,7 +229,7 @@
         },
         {
           "title": "Reguliere Telegramupdate afgeleverd",
-          "detail": "De uurupdate van 13 september om 09:44 uur is bevestigd eenmalig afgeleverd. De bestaande planning houdt minstens één uur tussen verzendpogingen; er is niet opnieuw verzonden."
+          "detail": "De uurupdate van 13 september om 10:46 uur is bevestigd eenmalig afgeleverd. De volgende reguliere poging is niet eerder dan één uur na de vorige poging; er is geen extra bericht verstuurd."
         },
         {
           "title": "Browserherstelproef afgerond",
@@ -259,7 +259,7 @@
         },
         {
           "title": "Reservekopie herstellen via de wizard",
-          "detail": "Het eerdere basisimagebewijs blijft afgerond. Twee nieuwe IN-002-bewijsstukken liggen nu ter onafhankelijke beoordeling. Zij zijn nog niet geïntegreerd; volledige releaseondersteuning en herstel blijven open."
+          "detail": "Het beperkte PostgreSQL-imagebewijs en de software-inventaris van 149 pakketten zijn onafhankelijk goedgekeurd en vastgelegd. De geïsoleerde gast is gestopt. Licentiebeoordeling, een actuele kwetsbaarheidsscan, formele koppeling van de inventaris aan de image en volledige releaseondersteuning blijven open."
         },
         {
           "title": "Voorbereid documentproject afgerond",
@@ -273,7 +273,7 @@
         },
         {
           "title": "Aangeleerde procedures terugvinden",
-          "detail": "De mislukte A-proef en de terugrol zijn onafhankelijk gecontroleerd. De core met Telegramreparaties is gereed; alle 12 beschermde diensten en gegevens zijn intact. A blijft mislukt, B en C zijn niet uitgevoerd. De gerichte bestandspadfix ligt nu ter review en is nog niet live."
+          "detail": "De bestandspadfix is onafhankelijk goedgekeurd en geïntegreerd. De host leidt de opslagverwijzing nu af uit één geverifieerde opslagactie in dezelfde beurt. De uitvoerder bereidt een nieuwe kandidaat en proefconfiguratie voor. De eerdere A-proef blijft mislukt; er is nog geen nieuwe liveproef uitgevoerd."
         }
       ],
       "openRisks": [
@@ -5206,7 +5206,7 @@
             "candidateCommit": "46e85b2267dc58619de78233405401163f6c20fe",
             "decision": "GO for preparation only",
             "finding": "Existing delegated worker uses832; core and document worker use2393.",
-            "status": "r3_A_failure_and_current_rollback_independently_verified_path_fix_under_review",
+            "status": "path_fix_source_integrated_new_current_base_candidate_preparation",
             "planIntegrated": false,
             "deploymentAuthorized": false,
             "correctionCommit": "295a70cef49477b36f7acd48cae1eb6de401fcf4",
@@ -5387,15 +5387,31 @@
               },
               "targetedHostFix": {
                 "owner": "coordinator/next_tools_delivery",
-                "status": "source_candidate_under_independent_review",
+                "status": "source_complete_independently_approved_integrated_not_live",
                 "scope": "Use document_path instead of model-invisible source call ID; host resolves unique verified save in current turn and rejects ambiguity",
                 "ambiguousMatchesFailClosed": true,
                 "trialBPerformed": false,
                 "trialCPerformed": false,
                 "candidateCommit": "cce42356ef98048bb2391ddd877e8614adde7c60",
-                "sourceIntegrated": false,
+                "sourceIntegrated": true,
                 "live": false,
-                "independentGo": false
+                "independentGo": true,
+                "exactPaths": [
+                  "eva2/reviews/procedure-reference-host-20260913.md",
+                  "eva2/reviews/procedure-reference-path-designation-20260913.json",
+                  "eva2/src/eva/adapters/postgres/procedure_reference_host.py",
+                  "eva2/src/eva/providers/procedure_reference_actions.py",
+                  "eva2/tests/postgres/test_procedure_reference_host.py"
+                ],
+                "independentReview": {
+                  "decision": "GO for exact path designation source",
+                  "reportedBy": "coordinator",
+                  "reviewer": "procedure_host_review",
+                  "independentPostgresTestsPassed": 2,
+                  "scope": "Actual normal PG route and personal memory regression",
+                  "runtimeGo": false
+                },
+                "integrationVerification": "Five exact baseline/final files; bounded patch clean and three source hashes match. No runtime or manifests."
               },
               "writerFinalEvidence": {
                 "commit": "8a1d6899792c4964bcfce020021707a7933bf684",
@@ -5425,6 +5441,13 @@
                 ],
                 "ACompletion": false
               }
+            },
+            "nextCandidatePreparation": {
+              "owner": "01a08d52-31b1-7091-be45-812c0b6e6c9f",
+              "status": "new_candidate_and_seal_in_preparation",
+              "parentCoreImage": "sha256:bc6d64a3aebbb4b1502dfa7170c0b3d02eda97ac97eddfc704c90c80659864e9",
+              "activationAuthorized": false,
+              "ordinaryAStillFailed": true
             }
           }
         }
@@ -6032,18 +6055,18 @@
       "usage": "design/product/project-telegram-updates.md",
       "confirmationHour": "2026-09-12T20:00Z",
       "scheduler": "Coordinator confirmed existing heartbeat wired to exact CLI/dedup/receipt on 12 September; no second scheduler.",
-      "nextRegularUpdateNotBefore": "2026-09-13T08:44:01.522496+00:00",
+      "nextRegularUpdateNotBefore": "2026-09-13T09:46:08.843642+00:00",
       "latestHourlyAttempt": {
-        "hourKey": "2026-09-13T07:00Z",
+        "hourKey": "2026-09-13T08:00Z",
         "status": "delivered",
-        "claimedAt": "2026-09-13T07:44:01.522496+00:00",
-        "deliveredAt": "2026-09-13T07:44:05.868625+00:00",
+        "claimedAt": "2026-09-13T08:46:08.843642+00:00",
+        "deliveredAt": "2026-09-13T08:46:12.994511+00:00",
         "providerReceiptAvailable": true,
         "privateChatAndExactTextVerified": true,
         "repeated": false,
-        "evidencePath": "eva2/evidence/product/project-telegram-hourly-delivery-2026-09-13-07.json"
+        "evidencePath": "eva2/evidence/product/project-telegram-hourly-delivery-2026-09-13-08.json"
       },
-      "lastConfirmedDelivery": "2026-09-13T07:44:05.868625+00:00",
+      "lastConfirmedDelivery": "2026-09-13T08:46:12.994511+00:00",
       "helperRepair": {
         "status": "reviewed_helper_regular_delivery_confirmed",
         "scope": "Trim ASCII edge whitespace before wire; preserve raw idempotency hash and old records; retain only allowlisted stage/boolean/hash diagnostics.",
@@ -6145,6 +6168,16 @@
           "privateChatAndExactTextVerified": true,
           "repeated": false,
           "evidencePath": "eva2/evidence/product/project-telegram-hourly-delivery-2026-09-13-06.json"
+        },
+        {
+          "hourKey": "2026-09-13T07:00Z",
+          "status": "delivered",
+          "claimedAt": "2026-09-13T07:44:01.522496+00:00",
+          "deliveredAt": "2026-09-13T07:44:05.868625+00:00",
+          "providerReceiptAvailable": true,
+          "privateChatAndExactTextVerified": true,
+          "repeated": false,
+          "evidencePath": "eva2/evidence/product/project-telegram-hourly-delivery-2026-09-13-07.json"
         }
       ],
       "unsentHourNote": {
@@ -6873,7 +6906,7 @@
           "integrationVerification": "Four exact baselines and final bytes checked; bounded patch clean, two source hashes match. Platform lock remains unchanged. Other stage files excluded."
         },
         "nextReleaseEvidenceStep": {
-          "status": "new_evidence_candidates_under_independent_review",
+          "status": "bounded_postgres_image_inventory_proof_closed_license_and_scan_dependencies_open",
           "owner": "coordinator/timing_final_review",
           "scope": "One final image plus SBOM chain; separate pointer correction. Existing lock and support requirements retained.",
           "reportedBy": "coordinator",
@@ -6883,8 +6916,9 @@
             "1313759495a6c0ba881f3bec876baaf57733685f",
             "f29eea9f9f6a13a6d868dc65c5dacdfa66de8a02"
           ],
-          "evidenceIntegrated": false,
-          "independentGo": false
+          "evidenceIntegrated": true,
+          "independentGo": true,
+          "independentGoScope": "Bounded image execution and SPDX inventory evidence only"
         },
         "pendingEvidenceRegistration": {
           "candidateCommitReportedPrefix": "5d0d39dd",
@@ -6913,7 +6947,36 @@
           "fullIN002Go": false,
           "productionRuntimeChanged": false,
           "guestStopped": true,
-          "pointerCorrectionSeparate": true
+          "pointerCorrectionSeparate": false,
+          "pointerCorrectionIntegrated": true
+        },
+        "postgresImageSbomEvidence": {
+          "status": "bounded_evidence_complete_independently_approved",
+          "sourceCommits": [
+            "1313759495a6c0ba881f3bec876baaf57733685f",
+            "f29eea9f9f6a13a6d868dc65c5dacdfa66de8a02"
+          ],
+          "exactPaths": [
+            "eva2/evidence/product/IN-002-amd64-sealed-base-2026-09-13.json",
+            "eva2/evidence/product/IN-002-postgres-image-sbom-2026-09-13.json",
+            "eva2/reviews/IN-002-postgres-image-sbom-2026-09-13.md"
+          ],
+          "evidenceIntegrated": true,
+          "reviewer": "coordinator/next_tools_delivery",
+          "reviewReportedBy": "coordinator",
+          "artifactHashesIndependentlyVerified": 8,
+          "scope": "Exact archive/slot/run and SPDX149 packages; isolated PostgreSQL16.13 synthetic SQL roundtrip",
+          "spdxPackages": 149,
+          "unknownLicenseDeclared": 26,
+          "unknownLicenseConcluded": 127,
+          "unknownDownloadLocations": 149,
+          "guestStopped": true,
+          "formalSbomBinding": false,
+          "licenseReleaseApproved": false,
+          "currentVulnerabilityScan": false,
+          "platformSupport": false,
+          "fullRestore": false,
+          "productionRuntimeChanges": false
         }
       }
     },

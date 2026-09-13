@@ -1,0 +1,123 @@
+{
+  "contract": "In002PostgresImageSbomEvidence/v1",
+  "slot_pointer": "eva2/release/oci-image-slots.json#/finalImageSlots/5",
+  "slot_id": "postgresql",
+  "architecture": "amd64",
+  "source": "76e1d62b",
+  "existing_deployment": "eva2/deploy/living-core/stack.compose.yml#/services/postgres/image",
+  "image_digest": "sha256:472efd9a66f2b2f1a5aeb18b28de74332e6ef88c2b93a1a5d812fb6db67a5f60",
+  "archive_sha256": "94b451491cb19ffe0e0ab34a588ffee9dd62f39766dd9502da757d03ee1ce294",
+  "spdx_sha256": "763657be5aabe337ba48d687fdeb61a41a8dc9232ed1e2e35755644411c1e2a7",
+  "stage": "/home/administrator/project/.eva2-artifacts/in002-platform-boundary-20260913/postgres-slot",
+  "artifact_hashes": {
+    "archive-receipt.json": "1076f34458802a508c1458b683fbcea41c2cd5f8a087431e3fdf57c2cde8c097",
+    "sbom.spdx.json": "763657be5aabe337ba48d687fdeb61a41a8dc9232ed1e2e35755644411c1e2a7",
+    "sbom-validation.json": "c0feb47d20a51a74956f5f1eb19e4bbd38c84a080e2d214e1126995496bb8a5e",
+    "syft-command.json": "23912dc6a77bb133d4dd3d5261ddb135dd1d34bec9069a1c97f63a7b95b5bfa3",
+    "syft-stderr.log": "2b6075aa3a71d8eb91870a5617206afa566506eb76f2c3d55995807c582743a7",
+    "guest-console.log": "f76620e2a7edadff51e155eb5490b357f82697c6b06841ab46a899197de1da34",
+    "guest-command.json": "cc0b45774f56ecd684b22a5ba60bf04cdb4b6d8f6decf2ddfc03dfb4e701b622",
+    "guest-run.json": "cd41f1aa1d3664033d93c3ae3077488aab936b84cfa712b9e90584b65628e6e7"
+  },
+  "guest_probe_source_sha256": "726b490fa924739dbc7088f3af400c1276846c1932d1f806f69607fbdab2c7b0",
+  "guest_provision_source_sha256": "872f19a59108db589db77bdab83f4471a4f3e90f46dba82164b405bc07addb87",
+  "guest_run": {
+    "contract": "In002PostgresSlotRun/v1",
+    "receipt": {
+      "contract": "EvaPinnedBaseImageArchive/v3",
+      "archive_sha256": "94b451491cb19ffe0e0ab34a588ffee9dd62f39766dd9502da757d03ee1ce294",
+      "archive_size": 161049088,
+      "base_image_digest": "sha256:472efd9a66f2b2f1a5aeb18b28de74332e6ef88c2b93a1a5d812fb6db67a5f60",
+      "base_image_repository": "docker.io/library/postgres",
+      "network_used": false,
+      "oci_config_digest": "sha256:c0a399de9424c2e689fa7c7e89620b83cc37b6c7a9e19eda8883df623ccb26be",
+      "oci_root_index_digest": "sha256:472efd9a66f2b2f1a5aeb18b28de74332e6ef88c2b93a1a5d812fb6db67a5f60",
+      "oci_selected_manifest_digest": "sha256:57c55aefb81a937d21171b7c2266264b5552cb1a4f90459bbdfc417a36883a4d",
+      "platform": "linux/amd64",
+      "status": "sealed_archive_validated",
+      "nonclaims": [
+        "This local export does not prove registry or proxy provenance, signatures, or release eligibility.",
+        "No candidate image, B configuration, container, volume, secret, or live service was opened."
+      ]
+    },
+    "version": "16.13 (Debian 16.13-1.pgdg12+1)",
+    "synthetic_result": "CREATE TABLE\nINSERT 0 1\nsynthetic-only",
+    "command": [
+      "docker",
+      "run",
+      "-d",
+      "--name",
+      "in002-pg-fixture",
+      "--pull",
+      "never",
+      "--network",
+      "none",
+      "--read-only",
+      "--user",
+      "postgres",
+      "--cap-drop",
+      "ALL",
+      "--memory",
+      "256m",
+      "--cpus",
+      "1",
+      "--tmpfs",
+      "/var/lib/postgresql/data:rw,uid=999,gid=999,size=128m",
+      "--tmpfs",
+      "/var/run/postgresql:rw,uid=999,gid=999,size=16m",
+      "-e",
+      "POSTGRES_HOST_AUTH_METHOD=trust",
+      "sha256:472efd9a66f2b2f1a5aeb18b28de74332e6ef88c2b93a1a5d812fb6db67a5f60"
+    ],
+    "actual_image": "sha256:472efd9a66f2b2f1a5aeb18b28de74332e6ef88c2b93a1a5d812fb6db67a5f60",
+    "network": "none",
+    "ports": {},
+    "binds": null,
+    "tmpfs": {
+      "/var/lib/postgresql/data": "rw,uid=999,gid=999,size=128m",
+      "/var/run/postgresql": "rw,uid=999,gid=999,size=16m"
+    },
+    "docker_server": "29.7.2"
+  },
+  "sbom_validation": {
+    "sha256": "763657be5aabe337ba48d687fdeb61a41a8dc9232ed1e2e35755644411c1e2a7",
+    "packages": 149,
+    "policy": {
+      "passed": true
+    },
+    "unknown_counts": {
+      "licenseDeclared": 26,
+      "licenseConcluded": 127,
+      "downloadLocation": 149
+    }
+  },
+  "guest_exit": {
+    "Status": "exited",
+    "Running": false,
+    "Paused": false,
+    "Restarting": false,
+    "OOMKilled": false,
+    "Dead": false,
+    "Pid": 0,
+    "ExitCode": 0,
+    "Error": "",
+    "StartedAt": "2026-09-13T08:41:17.953430241Z",
+    "FinishedAt": "2026-09-13T08:42:01.342664797Z"
+  },
+  "formal_sbom_binding_status": "not_emitted_missing_image_specific_license_inventory_and_fresh_vulnerability_scan",
+  "formal_schema": "eva2/release/formats/eva-sbom-binding-v1.schema.json",
+  "scan_cache_observation": {
+    "path": "/home/administrator/project/.eva2-artifacts/trivy-db-0.74.0-private/db/metadata.json",
+    "updated_at": "2026-08-31T07:08:27.708070973Z",
+    "next_update": "2026-09-01T07:08:27.708070602Z",
+    "used": false
+  },
+  "next_step": "Obtain current authenticated scanner DB using existing cache-authority workflow and build actual image-specific license inventory; then complete existing Eva2SbomBinding/v1 with real hashes. No invented scan/license hashes.",
+  "non_claims": [
+    "Unresolved slot remains unchanged; candidate evidence does not change platform-lock support.",
+    "Existing exact stock PostgreSQL deployment image reused, not a newly built or signed final release.",
+    "SPDX schema/policy pass is not license clearance or current vulnerability clearance.",
+    "One synthetic SQL roundtrip is not migration, backup/restore or production compatibility proof.",
+    "No production mount/socket/database/model; guest and its fixture stopped."
+  ]
+}

@@ -61,13 +61,13 @@ class ProcedureReferenceActions:
     @staticmethod
     def conversation_tools():
         properties = (
-            {"source_call_id": {"type": "string"}, "use_when": {"type": "string", "maxLength": 1000},
+            {"document_path": {"type": "string", "minLength": 1, "maxLength": 4096}, "use_when": {"type": "string", "maxLength": 1000},
              "retention_until": {"type": "string"}},
             {"cursor": {"type": "string"}},
             {"document_id": {"type": "string"}},
         )
         descriptions = (
-            "Markeer alleen een zojuist geverifieerd opgeslagen document expliciet als herbruikbare werkwijze. Geen gewone notities automatisch markeren.",
+            "Markeer alleen een zojuist geverifieerd opgeslagen document expliciet als herbruikbare werkwijze. Geef document_path exact zoals bij het opslaan; de host bepaalt de interne bronidentiteit. Geen gewone notities automatisch markeren.",
             "Bekijk maximaal acht eigen opgeslagen werkwijzeverwijzingen. Kies alleen een passende kandidaat; dit is geen semantische zoekmachine.",
             "Controleer een gekozen verwijzing opnieuw tegen bron, mandaat en actuele documentinhoud. Een verwijzing geeft geen uitvoertoestemming.",
         )
@@ -123,14 +123,15 @@ class ProcedureReferenceActions:
         service = ProcedureReferences(store, host)
         scope = ProcedureScope(turn.tenant_id, turn.installation_id, turn.principal_id, turn.project_id)
         args, now = call.arguments, self.clock()
-        if call.name == _NAMES[0] and set(args) == {"source_call_id", "use_when", "retention_until"}:
-            source = host.load_save(scope, args["source_call_id"])
+        if call.name == _NAMES[0] and set(args) == {"document_path", "use_when", "retention_until"}:
+            source_call_id = host.current_save_call_id(scope, args["document_path"])
+            source = host.load_save(scope, source_call_id)
             if (source.admission["conversation_id"] != turn.conversation_id
                     or source.admission["source_message_id"] != turn.message_id):
                 raise ConversationConflict("designation requires the current turn's verified save")
             if _instant(args["retention_until"]) <= _instant(now):
                 raise ProcedureReferenceRejected("reference already expired")
-            ref = service.designate(scope, source_call_id=args["source_call_id"], use_when=args["use_when"],
+            ref = service.designate(scope, source_call_id=source_call_id, use_when=args["use_when"],
                                     now=turn.occurred_at, retention_until=args["retention_until"])
             result = {"status": "designated", "reference": asdict(ref)}
         elif call.name == _NAMES[1] and set(args) <= {"cursor"}:

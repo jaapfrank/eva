@@ -1,0 +1,9 @@
+# IN-002: PostgreSQL amd64 image, uitvoering en SPDX
+
+Het bestaande postgresql-slot (finalImageSlots/5) gebruikt in de huidige compose reeds de gepinde officiële PostgreSQL16.13-image. Die implementatie is hergebruikt: geen nieuwe Dockerfile of nieuw register. Dezelfde OCI-export is met bestaande RB-001-code gevalideerd, met bestaande Syft1.51.0 netwerkloos gescand en in de eigen Ubuntu/Docker29.7.2-gast uitgevoerd. Hashbinding staat in ../evidence/product/IN-002-postgres-image-sbom-2026-09-13.json.
+
+De gast start PostgreSQL16.13 op eigen tmpfs, zonder netwerk, bindmount of hostpoort. Een tijdelijke tabel met uitsluitend synthetic-only wordt aangemaakt, gevuld en teruggelezen. Container en gast zijn daarna gestopt. De scanner leest exact dezelfde gehashte archivebytes; bestaande SPDX-policycontrole slaagt voor149 packages.
+
+Dit is nog geen volledige formele Eva2SbomBinding/v1. Die vereist óók image-specifieke licenseInventorySha256 en vulnerabilityScanSha256. Ik heb daarvoor geen placeholders of hashes van ongerelateerde eerdere images ingevuld. De beschikbare gecontroleerde cachelocatie meldt UpdatedAt31augustus en NextUpdate1september; die is niet als actuele scan gebruikt. Een actueel geauthenticeerd cachebewijs via de bestaande workflow ontbreekt in deze stap.
+
+Licentievelden zijn expliciet onvolledig:26 packages zonder bekende licenseDeclared,127 zonder bekende licenseConcluded,149 zonder bekende downloadLocation. De syntactische SBOM-policy accepteert dat, maar er volgt geen juridische vrijgave uit. De eerstvolgende kleine stap is actuele scanner-cacheautoriteit plus daadwerkelijk PostgreSQL-specifieke licentie-inventaris, daarna pas de bestaande formele binding completeren. Geen final-slot-, platform-, restore- of eigenaaracceptatieclaim. Onafhankelijke review blijft nodig.

@@ -1,0 +1,44 @@
+{
+  "contract": "ProcedurePathDesignationCorrection/v1",
+  "base": "295a70ce",
+  "cause": "Coordinator-reported real R3A: saved document verified, but model could not designate because internal source_call_id was not exposed in ordinary tool-result data. B/C stopped, previous runtime restored by writer.",
+  "fix": "Closed designation input uses document_path that the model supplied to the preceding save. Host resolves the unique actual current-turn save admission and derives source_call_id itself. No model-supplied identity or fabricated receipt.",
+  "files": {
+    "eva2/src/eva/adapters/postgres/procedure_reference_host.py": "61f3e35ecd3f284a37299793e5eeb3f02b22b93dc3d7cd63fb6f9d37b6b14235",
+    "eva2/src/eva/providers/procedure_reference_actions.py": "3e9a13dae68b5fee9d0ec9eec52fb0600a2287fef9e1f5edbaa0b1481936a291",
+    "eva2/tests/postgres/test_procedure_reference_host.py": "07cd30471a92c4daff2ffa1165cb28a434838a82fd3271039f888eae302b4db6"
+  },
+  "tests": {
+    "offline": "25 passed in0.94s",
+    "real_pg_http": "1 passed in6.50s: normal indexed conversation route save to designate, then new conversation listing and resolve, unknown path/ambiguous path/wrong-turn rejection, changed bytes, ambiguous call-ID, erasure and mandate stop",
+    "fixture": {
+      "container_id": "e66976160e8d3d62c21bef4437108c74a66f56c8afcf2a564e494d9fa07d2f33",
+      "postgres_image": "sha256:5d143123fdf80462d1778cd4f24b9f7ca13c87174bca19141fb194c5a1ebca59",
+      "network_mode": "none",
+      "published_ports": [],
+      "data_storage": "tmpfs",
+      "connection": "local Unix socket only",
+      "pytest_exit_code": 0,
+      "model_calls": 0,
+      "production_database_connections": 0,
+      "disposable_container_removed": true
+    }
+  },
+  "model_contract": {
+    "designate_reusable_procedure": {
+      "required": [
+        "document_path",
+        "use_when",
+        "retention_until"
+      ],
+      "additionalProperties": false,
+      "source_call_id": "not accepted as model input; derived from genuine admission"
+    }
+  },
+  "limits": [
+    "No model replay or new R3 attempt dispatched",
+    "No live changes, personal-memory route or semantic-selection claim",
+    "Earlier2393 runtime proposal is historical and must not be activated without a new exact image manifest based on current runtime",
+    "Failed A evidence remains owned by runtime writer; this correction does not retroactively turn it into a pass"
+  ]
+}

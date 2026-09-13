@@ -27,6 +27,32 @@ class PostgresProcedureReferenceHost:
             raise ProcedureReferenceRejected("current ingress differs")
         PostgresConversationJournal(self.engine, self.authority.scope).ensure_running(self.turn)
 
+    def current_save_call_id(self, scope, document_path):
+        """Resolve model-known path to one actual current-turn save, never guess an ID."""
+        self.require_current()
+        e = operational_events
+        data = e.c.payload["data"]
+        with self.engine.connect() as connection:
+            self.timeline._scope(connection)
+            rows = connection.execute(sa.select(data["action_call_id"].astext.label("call_id")).where(
+                e.c.tenant_id == self.authority.scope.tenant_id,
+                e.c.installation_id == self.authority.scope.installation_id,
+                e.c.event_type == "TOOL_REQUEST_ADMITTED", e.c.sequence == 1,
+                data["principal_id"].astext == self.turn.principal_id,
+                data["conversation_id"].astext == self.turn.conversation_id,
+                data["source_message_id"].astext == self.turn.message_id,
+                data["action_arguments"]["path"].astext == document_path,
+                data["action_arguments"].has_key("content"),
+            ).limit(2)).all()
+        if len(rows) != 1 or not isinstance(rows[0].call_id, str):
+            raise ProcedureReferenceRejected("current save absent or ambiguous")
+        source = self.load_save(scope, rows[0].call_id)
+        if (source.admission["conversation_id"] != self.turn.conversation_id
+                or source.admission["source_message_id"] != self.turn.message_id
+                or source.admission["action_arguments"].get("path") != document_path):
+            raise ProcedureReferenceRejected("current save binding differs")
+        return rows[0].call_id
+
     def load_save(self, scope, call_id):
         self.require_current()
         if scope != ProcedureScope(self.turn.tenant_id, self.turn.installation_id,

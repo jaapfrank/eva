@@ -5,7 +5,7 @@
   "existing_validator": "eva2/tools/managed_b_candidate/base_image.py",
   "existing_validator_sha256": "71f01e357090c994f6f1e07a8b5b7095b4e5d1da2a76e9b6c7c7ae7d747173c0",
   "existing_evidence": "eva2/evidence/product/RB-001-sealed-oci-layout-empty-builders-2026-09-01.json",
-  "slot_authority": "eva2/release/oci-image-slots.json#/baseSlots/python_base",
+  "slot_authority": "eva2/release/oci-image-slots.json#/baseSlots/0",
   "artifact_hashes": {
     "guest-oci-execution-proof.json": "67373f98d5e3f7f9339fce966d6f4c3b6554fb78774ede61b23c4f3fbe4e0d3d",
     "guest-console-oci.log": "a4ff1e11fcd83b5d46f25f0be9f8abc0b2693980ad2d2011ef38e0ca7ea257e3",
@@ -103,5 +103,6 @@
     "No production container, volume, socket or model access.",
     "Validator receipt nonclaims describe archive validator itself; outer harness explicitly loaded and executed only the isolated base container.",
     "No newly implemented resolver or second platform register."
-  ]
+  ],
+  "slot_id": "python_base"
 }

@@ -74,8 +74,11 @@ def test_real_save_designate_new_conversation_list_resolve_and_revocation(people
             return route.execute_step(current,call,step_index=steps[key])
 
         result=run(turn,ConversationActionCall('designation','designate_reusable_procedure',
-             {'source_call_id':'save-call','use_when':'Review a document using the evidence method','retention_until':UNTIL}))
+             {'document_path':'review.md','use_when':'Review a document using the evidence method','retention_until':UNTIL}))
         ref=result.output['reference'];assert result.output['status']=='designated'
+        assert ref['source_call_id']=='save-call'  # resolved by host, never supplied by model
+        schema=next(d.input_schema for d in actions.conversation_tools() if d.name=='designate_reusable_procedure')
+        assert 'document_path' in schema['properties'] and 'source_call_id' not in schema['properties']
         engine.dispose()
         later=replace(turn,conversation_id='second',message_id='message-two',text='Review my next document.')
         journal.admit(later)
@@ -93,14 +96,14 @@ def test_real_save_designate_new_conversation_list_resolve_and_revocation(people
             route.execute_step(later,ConversationActionCall('resolve','resolve_reusable_procedure',{'document_id':'other'}),
                 step_index=steps[(later.message_id,'resolve')])
 
-        with pytest.raises(ConversationConflict):
+        with pytest.raises(ProcedureReferenceRejected):
             run(later,ConversationActionCall('late-designation','designate_reusable_procedure',
-                {'source_call_id':'save-call','use_when':'Review','retention_until':UNTIL}))
+                {'document_path':'review.md','use_when':'Review','retention_until':UNTIL}))
         for index in range(1, 9):
             external.execute(turn,ConversationActionCall(f'save-{index}','save_document',
                 {'path':f'method-{index}.md','content':f'Method {index}'}),step_index=index)
             run(turn,ConversationActionCall(f'designate-{index}','designate_reusable_procedure',
-                {'source_call_id':f'save-{index}','use_when':f'Review method {index}','retention_until':UNTIL}))
+                {'document_path':f'method-{index}.md','use_when':f'Review method {index}','retention_until':UNTIL}))
         page1=run(later,ConversationActionCall('page1','list_reusable_procedures',{})).output
         page2=run(later,ConversationActionCall('page2','list_reusable_procedures',{'cursor':page1['next_cursor']})).output
         assert len(page1['candidates'])==8 and len(page2['candidates'])==1 and page2['next_cursor'] is None
@@ -113,6 +116,14 @@ def test_real_save_designate_new_conversation_list_resolve_and_revocation(people
         with pytest.raises(ConversationConflict):
             run(ConversationTurn.private('procedure-test','home','other','other','other-message','List procedures',NOW),ConversationActionCall('other','list_reusable_procedures',{}))
         assert len(handler.calls)==before
+        with pytest.raises(ProcedureReferenceRejected,match='absent'):
+            run(turn,ConversationActionCall('unknown-path','designate_reusable_procedure',
+                {'document_path':'not-saved.md','use_when':'Review','retention_until':UNTIL}))
+        external.execute(turn,ConversationActionCall('other-save-call','save_document',
+            {'path':'review.md','content':'Check evidence, then review conclusions.'}),step_index=100)
+        with pytest.raises(ProcedureReferenceRejected,match='ambiguous'):
+            run(turn,ConversationActionCall('ambiguous-path','designate_reusable_procedure',
+                {'document_path':'review.md','use_when':'Review','retention_until':UNTIL}))
         # Real second save with a colliding call ID is not silently selected.
         external.execute(later,ConversationActionCall('save-call','save_document',
             {'path':'review.md','content':'Check evidence, then review conclusions.'}))
