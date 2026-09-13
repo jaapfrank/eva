@@ -247,7 +247,7 @@
         },
         {
           "title": "Project hervatten na herstart",
-          "detail": "Het incident is gericht hersteld en onafhankelijk gecontroleerd: alle 53 toolregels zijn weer gelijk aan voor het incident. De opstartbeveiliging blijft verplicht bij elke volgende gatewaystart. Het nieuwe registratieplan ligt bij de reviewer; er is nog geen akkoord voor registratie, verzegeling of projectworker."
+          "detail": "Het eerdere incident is hersteld. De nieuwe registratieplanreview vond controles die Python-optimalisatie kon uitschakelen. De gerichte correctie is getest en wacht op herreview. Er is geen registratiepoging gedaan; de projectworker blijft uit."
         },
         {
           "title": "Gedeeld audiotype",
@@ -5502,13 +5502,13 @@
           "owner": "01a08d52-31b1-7091-be45-812c0b6e6c9f",
           "work": "Gatewaymetadata gericht herstellen vóór AU-006-activering",
           "boundary": "New providers/document_goal_actions.py; bundled.py opt-in registration only; document_goal_plan.py safe full host GoalSpec/hash binding; targeted provider/PG tests and docs. Existing actual ConversationTurn/current authority/external tool port. No second planner/live/envflip.",
-          "status": "four_row_repair_executed_guarded_registration_plan_in_preparation"
+          "status": "optimized_registration_guard_correction_submitted_for_review"
         },
         {
           "owner": "coordinator/timing_final_review",
-          "work": "Onafhankelijke gatewayguard en vierregelherstelreview",
-          "boundary": "Review candidate6761694e and exact pinned guard/repair evidence. No source/DB/deploy/recreate changes. Shared audio type delivery remains closed.",
-          "status": "independent_guard_and_four_row_repair_plan_review_complete"
+          "work": "Herreview registratieplan met blijvende controles",
+          "boundary": "Exact guarded registration plan and bd26e97f correction; no execution or database changes. Earlier four-row incident repair remains closed.",
+          "status": "guarded_registration_optimized_checks_rereview_pending"
         },
         {
           "owner": "coordinator/next_tools_delivery",
@@ -6924,7 +6924,7 @@
           "sourceCorrectionComplete": true
         },
         "activationPreparation": {
-          "status": "incident_resolved_new_guarded_registration_plan_review_pending",
+          "status": "guarded_registration_optimized_checks_correction_under_review",
           "ownerThread": "01a08d52-31b1-7091-be45-812c0b6e6c9f",
           "evidenceCommit": "bc0fd5c06d5d97853296cf2459463fac4ad577a7",
           "evidencePath": "eva2/evidence/living-core/au006-activation-preparation-20260913.json",
@@ -7337,7 +7337,7 @@
           "reason": "Dropping the guard can repeat null-team reassignment; future recreates and policy rollback must retain reviewed guard override."
         },
         "guardedPhase1RegistrationPlan": {
-          "status": "new_guarded_plan_pending_independent_go",
+          "status": "review_blocker_corrected_candidate_pending_rereview",
           "ownerThread": "01a08d52-31b1-7091-be45-812c0b6e6c9f",
           "proposalCommit": "bd716f00a873ce420c2a768a661e58abc689d604",
           "evidencePaths": [
@@ -7371,7 +7371,40 @@
           ],
           "privateExecutionDirectory": "/home/administrator/project/.eva2-artifacts/au006-activation-20260913/phase1-guarded-registration-execution",
           "resourceRetention": "Existing au006-activation-20260913 owner and retention apply; new evidence must not overwrite earlier attempt evidence.",
-          "independentReviewer": "coordinator/timing_final_review"
+          "independentReviewer": "coordinator/timing_final_review",
+          "reviewBlocker": {
+            "decision": "NO-GO on registration prerequisites under optimized Python",
+            "reportedBy": "execution owner",
+            "finding": "assert-based activation prerequisites disappear under python -O.",
+            "correctionCommit": "bd26e97fbd21fd29222e23f0d673cc6ca7caf3aa",
+            "correctionScope": "Explicit runtime guards in four active scripts; current authority check preserved.",
+            "exactCandidatePaths": [
+              "eva2/evidence/living-core/au006-guarded-phase1-registration-plan-20260913.json",
+              "eva2/evidence/living-core/au006-optimized-registration-guards-20260913.json",
+              "eva2/evidence/living-core/au006-optimized-registration-guards-20260913.md",
+              "eva2/experiments/contextforge-gateway-v1/au006-activation/phase1_core_readonly_check.py",
+              "eva2/experiments/contextforge-gateway-v1/au006-activation/phase1_read_gateway.py",
+              "eva2/experiments/contextforge-gateway-v1/au006-activation/phase1_register_private.py",
+              "eva2/experiments/contextforge-gateway-v1/au006-activation/prove_optimized_registration.py",
+              "eva2/experiments/contextforge-gateway-v1/au006-activation/retry_quiescence.py"
+            ],
+            "evidencePaths": [
+              "eva2/evidence/living-core/au006-optimized-registration-guards-20260913.json",
+              "eva2/evidence/living-core/au006-optimized-registration-guards-20260913.md"
+            ],
+            "reportedOptimizedFakeTests": 6,
+            "reportedCases": [
+              "Wrong configuration:zero POST",
+              "Existing registration:zero POST",
+              "Revoked authority:zero POST",
+              "Success:one POST",
+              "Uncertain result:no retry"
+            ],
+            "sourceIntegrated": false,
+            "independentCorrectionGo": false,
+            "liveChanges": 0,
+            "registrationPosts": 0
+          }
         }
       },
       "isolatedProductExecutionProven": true,
