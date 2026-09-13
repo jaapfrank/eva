@@ -19,7 +19,7 @@ const clientHash=createHash('sha256').update(fs.readFileSync(new URL('./broker-c
 if(binding.version!==1||typeof binding.project_journal_identity!=='string'||!/^[a-f0-9]{64}$/.test(binding.project_journal_identity)||binding.binary_sha256!==digest||binding.client_sha256!==clientHash||!statMatches(rootFd,binding.root)||!statMatches(journalFd,binding.journal)) throw Error('host binding mismatch');
 const providerBinding=createHash('sha256').update(bindingBytes).digest('hex');
 const properties={operation_id:{type:'string',pattern:'^[0-9a-f]{64}$'},request_binding_sha256:{type:'string',pattern:'^[0-9a-f]{64}$'},expected_generation:{type:'integer',minimum:0,maximum:Number.MAX_SAFE_INTEGER},path:{type:'string',pattern:'^[A-Za-z0-9_-][A-Za-z0-9_.-]*$',maxLength:255},content:{type:'string',maxLength:1048576}};
-const inputSchema={type:'object',properties,required:Object.keys(properties),additionalProperties:false};
+const inputSchema={type:'object',description:'Provider binding SHA256 '+providerBinding,properties,required:Object.keys(properties),additionalProperties:false};
 const names=['workspace_create_bound','workspace_observe_bound'];
 const server=new Server({name:'eva-bound-workspace',version:'2.0.0'},{capabilities:{tools:{}}});
 server.setRequestHandler(ListToolsRequestSchema,async()=>({tools:names.map(name=>({name,description:(name===names[0]?'Create immutable private artifact with bound durable receipt.':'Observe existing bound receipt without recovery or publication.')+' Provider binding SHA256 '+providerBinding,inputSchema}))}));

@@ -1,0 +1,40 @@
+{
+  "status": "isolated catalog binding correction proved",
+  "image": "sha256:0ef19e699069c3a5d3a26812c5da3d31141fcd5c3faedb14f92c9dcce1209465",
+  "supersedes_image": "sha256:f7d9feba8359a0d7d3fbe18703cb8c3a6bbe5e274aeccda15b83c26b6010bd00",
+  "files": {
+    "eva2/deploy/living-core/workspace-create-only/mcp-server.mjs": "d9bc62afcd0bcb1761667a8ff1f7a12db8c14ba09f17b212f2d3974cce5d22f3",
+    "eva2/deploy/living-core/workspace-create-only/README.md": "270aa9a532ac2b2bc9bd2aa033114b960587a6b206b13e903dc0bd5bb342ffdf",
+    "test/workspace-atomic-gateway-proof.py": "39ea5a9f7b0c2f4605e084da0e1d5fc7224fd7f2b999a014895bf618d2d4f806",
+    "test/workspace-atomic-catalog-binding-proof.py": "dccd9037522870b0c70d749161a8f41b6c6ff796da1524f81605ba57c14cea13"
+  },
+  "proof_sha256": "a326930556fcba7a12ca222756a08f66714c3ddee8e6d94de8edf68625aeefe7",
+  "catalog_hashes": {
+    "workspace_create_bound": {
+      "happy": "dbf8feaf83a22dc30fa9fa52215e8e668f9d69891c7429fd2e66dc2b73edc9c5",
+      "stop": "94db5742c169b8fb89c56c8166beaf950ea51f0d5407f7419a413470ccbcd5a7",
+      "schemaDigestChangesFingerprint": true
+    },
+    "workspace_observe_bound": {
+      "happy": "0374b1232e7015ebc4b6dcef387e4d0331578b52ab11b433f48b309731a8a8d9",
+      "stop": "c9f642ac55b3b101deb380ec4ae6ac82591d291b82e2c891075794992e1758a7",
+      "schemaDigestChangesFingerprint": true
+    }
+  },
+  "function_source_sha256": "49cf34109cd84366e6bdd59333ea2e266ec117e054466e2054cc6feaf9b06159",
+  "mechanism": "inputSchema.description includes host config digest; existing binding selects complete input_schema",
+  "unchanged": [
+    "native broker",
+    "client",
+    "closed five arguments",
+    "gateway policy",
+    "host startup validation"
+  ],
+  "retained_fixture": "/home/administrator/project/.eva2-artifacts/workspace-broker-v2-20260913/eva-atomic-gateway-9adee638c0",
+  "private_token_location": "existing tokenFile in core-prepared-stack.json; never emitted",
+  "limits": [
+    "no production catalog mutation",
+    "both fixture journals now gen1 after proof; not fresh core genesis",
+    "independent review pending"
+  ]
+}

@@ -108,3 +108,17 @@ binary hash and build log. The fixture uses disposable private mounts and an
 internal network, exercises translate HTTP, process restart and different-UID
 read denial. It does not register a ContextForge gateway or prove general host
 DAC, owner admission, stop-state enforcement, or production readiness.
+
+## Catalog binding correction
+
+The old f7d9feba image exposed the digest only in the tool description. That
+field is NOT selected by mcp_gateway_catalog_binding and must not be treated as
+an activation-ready instance fingerprint. The replacement also includes the
+same genuine digest in inputSchema.description. This is a schema annotation;
+there is no additional input argument and closed argument validation is unchanged.
+The existing binding function selects the whole input_schema without policy
+changes. Two real registered fixture instances demonstrate distinct execute and
+observe hashes. Changing only this annotation in an otherwise identical selected
+row changes its hash; restoring it restores the hash. Gateway preservation and
+real create/readback were checked for both instances. Fresh activation still
+requires newly registered real IDs, freshly read catalog hashes and plan rebinding.

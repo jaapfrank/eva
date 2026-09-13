@@ -247,7 +247,7 @@
         },
         {
           "title": "Project hervatten na herstart",
-          "detail": "De kandidaatimage van de kern is onafhankelijk goedgekeurd. De providercorrectie koppelt de hosthash nu aan een werkelijk gehasht schemaveld en ligt bij de reviewer. Nieuwe configuratiebinding en activering blijven geblokkeerd tot akkoord. De eerdere technische deelopleveringen blijven afgerond; nog niet live."
+          "detail": "De koppeling van de hosthash aan de catalogushash is hersteld, onafhankelijk goedgekeurd en geïntegreerd. Kern- en providerimage zijn beoordeeld. De nieuwe registratie, configuratie en planbinding moeten nog worden goedgekeurd vóór de worker start. Nog niet live."
         },
         {
           "title": "Gedeeld audiotype",
@@ -5486,7 +5486,7 @@
           "owner": "01a08d52-31b1-7091-be45-812c0b6e6c9f",
           "work": "AU-006 normale gespreksingang",
           "boundary": "New providers/document_goal_actions.py; bundled.py opt-in registration only; document_goal_plan.py safe full host GoalSpec/hash binding; targeted provider/PG tests and docs. Existing actual ConversationTurn/current authority/external tool port. No second planner/live/envflip.",
-          "status": "normal_command_source_complete_worker_activation_waits_catalog_binding_go"
+          "status": "activation_config_sealer_registration_plan_review_pending"
         },
         {
           "owner": "coordinator/timing_final_review",
@@ -5498,7 +5498,7 @@
           "owner": "coordinator/next_tools_delivery",
           "work": "AU-006 hostbinding in catalogushash herstellen",
           "boundary": "Provider metadata in actually hashed catalog field plus real gateway readback/proof. Worker start waits for reviewed correction and rebinding.",
-          "status": "catalog_binding_activation_gap_fix_in_progress",
+          "status": "catalog_binding_correction_reviewed_integrated_not_activated",
           "previousCompletedWork": {
             "work": "Renovate npm-dekking",
             "status": "configuration_complete_bot_activity_unverified",
@@ -6231,7 +6231,7 @@
         "historical": true
       },
       "connectionPlan": {
-        "status": "source_deliveries_complete_activation_blocked_on_catalog_binding",
+        "status": "reviewed_source_and_images_complete_activation_config_review_pending",
         "ownerThread": "01a08d52-31b1-7091-be45-812c0b6e6c9f",
         "reuse": [
           "Existing owner authority",
@@ -6851,17 +6851,17 @@
             "Fresh isolated natural model selection or authorized ordinary live-route proof",
             "Owner practice and acceptance"
           ],
-          "activationStatus": "Pending corrected provider metadata binding, independent review and rebinding."
+          "activationStatus": "Reviewed provider correction integrated; new actual catalog/plan binding and configuration review pending."
         },
         "activationCatalogBindingGap": {
-          "status": "provider_correction_candidate_in_independent_review",
+          "status": "provider_source_and_image_correction_complete_activation_rebinding_pending",
           "reportedBy": "coordinator read-only activation procedure",
           "owner": "coordinator/next_tools_delivery",
           "finding": "Host configuration digest in tool description is not included by mcp_gateway_catalog_binding. Tools/list visibility does not prove catalog SHA binding.",
           "requiredCorrection": [
-            "Use metadata field actually hashed by existing catalog binding",
-            "Verify through actual gateway readback",
-            "Independent GO and refreshed bindings before worker start"
+            "Provider source/image correction independently approved and integrated",
+            "Fresh actual registration/catalog readback and plan rebinding",
+            "Separate configuration/sealer/registration plan GO before worker start"
           ],
           "workerStartBlockedUntil": "Correction GO and rebinding",
           "previousApprovals": "Earlier source/native/MCP/gateway proofs remain valid in their limited scope; no general revocation or production GO.",
@@ -6872,8 +6872,8 @@
             "evidencePath": "eva2/reviews/workspace-atomic-catalog-binding-20260913.json",
             "mechanism": "Host digest in inputSchema.description, covered by existing complete input_schema binding.",
             "reportedProof": "Two real gateway instance hashes plus controlled schema-annotation fingerprint change.",
-            "sourceIntegrated": false,
-            "independentGo": false,
+            "sourceIntegrated": true,
+            "independentGo": true,
             "supersededF7ImageActivationAllowed": false,
             "artifactRetention": {
               "owner": "coordinator/next_tools_delivery",
@@ -6882,11 +6882,33 @@
               "retainUntil": "Independent review and evidence handoff complete; coordinator cleanup decision.",
               "cleanupMoment": "Remove only exact verified disposable fixture after retention conditions; preserve committed sanitized evidence. No cleanup now.",
               "journalState": "Both proof journals now generation1; must not serve as fresh core genesis."
-            }
-          }
+            },
+            "status": "bounded_provider_correction_independent_go_integrated",
+            "evidenceIntegrated": true,
+            "exactChangePaths": [
+              "eva2/deploy/living-core/workspace-create-only/README.md",
+              "eva2/deploy/living-core/workspace-create-only/mcp-server.mjs",
+              "eva2/reviews/workspace-atomic-catalog-binding-20260913.json",
+              "test/workspace-atomic-catalog-binding-proof.py",
+              "test/workspace-atomic-gateway-proof.py"
+            ],
+            "independentReview": {
+              "decision": "GO for provider delta and isolated image proof",
+              "reportedBy": "coordinator",
+              "verified": [
+                "Source/image hashes",
+                "Two actual instance schema bindings",
+                "Controlled annotation-only hash change and restoration using existing catalog binding",
+                "Unchanged image configuration/native/client/start wrapper; server delta only"
+              ]
+            },
+            "integrationVerification": "Five current baselines exact, bounded patch clean and final bytes/hash bindings match. Historical earlier runner receipts remain bound to their earlier checkpoints.",
+            "activationGo": false
+          },
+          "sourceCorrectionComplete": true
         },
         "activationPreparation": {
-          "status": "core_image_independent_go_provider_and_config_activation_blocked",
+          "status": "core_and_provider_images_reviewed_config_sealer_registration_plan_pending",
           "ownerThread": "01a08d52-31b1-7091-be45-812c0b6e6c9f",
           "evidenceCommit": "bc0fd5c06d5d97853296cf2459463fac4ad577a7",
           "evidencePath": "eva2/evidence/living-core/au006-activation-preparation-20260913.json",
@@ -6926,7 +6948,8 @@
             "retainUntil": "Independent image/provider/configuration review and activation/rollback handoff complete; coordinator decides further retention.",
             "cleanupMoment": "Only after retention conditions and explicit exact-scope coordinator cleanup; preserve data, journals and sanitized evidence. No cleanup now.",
             "privateDataPolicy": "Private host goal, journal, credentials and rollback files remain outside Git; only supplied sanitized evidence integrated."
-          }
+          },
+          "reviewedProviderImage": "sha256:0ef19e699069c3a5d3a26812c5da3d31141fcd5c3faedb14f92c9dcce1209465"
         }
       },
       "isolatedProductExecutionProven": true,

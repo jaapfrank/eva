@@ -5,7 +5,7 @@ STAGE=pathlib.Path('/home/administrator/project/.eva2-artifacts/workspace-broker
 HELPER=ROOT/'experiments/tool01-replacement-acceptance-v2/run_physical_acceptance.py'
 spec=importlib.util.spec_from_file_location('existing_acceptance_helpers',HELPER);h=importlib.util.module_from_spec(spec);spec.loader.exec_module(h)
 assert hashlib.sha256(HELPER.read_bytes()).hexdigest()=='a8dc2a31ea327a54f70850669c0c2c3f3b40893a7bb80863df6bdeb09527d3be'
-IMAGE='sha256:f7d9feba8359a0d7d3fbe18703cb8c3a6bbe5e274aeccda15b83c26b6010bd00'
+IMAGE='sha256:0ef19e699069c3a5d3a26812c5da3d31141fcd5c3faedb14f92c9dcce1209465'
 CF='sha256:daf923c247fd569df5f8c9ee418cbc259fade564f78e0a0852937139a181c4dd'
 def main():
  nonce=secrets.token_hex(5);prefix='eva-atomic-gateway-'+nonce;stage=STAGE/prefix;stage.mkdir(mode=0o700)
