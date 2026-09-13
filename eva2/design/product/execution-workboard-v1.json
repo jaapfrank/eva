@@ -229,7 +229,7 @@
         },
         {
           "title": "Reguliere Telegramupdate afgeleverd",
-          "detail": "De uurupdate van 13 september om 11:55 uur is bevestigd eenmalig afgeleverd. De volgende reguliere poging is niet eerder dan één uur na de vorige poging; er is geen extra bericht verstuurd."
+          "detail": "De uurupdate van 13 september om 12:55 uur is bevestigd eenmalig afgeleverd. De volgende reguliere poging is niet eerder dan één uur na de vorige poging; er is geen extra bericht verstuurd."
         },
         {
           "title": "Browserherstelproef afgerond",
@@ -6433,18 +6433,18 @@
       "usage": "design/product/project-telegram-updates.md",
       "confirmationHour": "2026-09-12T20:00Z",
       "scheduler": "Coordinator confirmed existing heartbeat wired to exact CLI/dedup/receipt on 12 September; no second scheduler.",
-      "nextRegularUpdateNotBefore": "2026-09-13T10:54:57.380960+00:00",
+      "nextRegularUpdateNotBefore": "2026-09-13T11:55:51.874575+00:00",
       "latestHourlyAttempt": {
-        "hourKey": "2026-09-13T09:00Z",
+        "hourKey": "2026-09-13T10:00Z",
         "status": "delivered",
-        "claimedAt": "2026-09-13T09:54:57.380960+00:00",
-        "deliveredAt": "2026-09-13T09:55:01.538580+00:00",
+        "claimedAt": "2026-09-13T10:55:51.874575+00:00",
+        "deliveredAt": "2026-09-13T10:55:55.500276+00:00",
         "providerReceiptAvailable": true,
         "privateChatAndExactTextVerified": true,
         "repeated": false,
-        "evidencePath": "eva2/evidence/product/project-telegram-hourly-delivery-2026-09-13-09.json"
+        "evidencePath": "eva2/evidence/product/project-telegram-hourly-delivery-2026-09-13-10.json"
       },
-      "lastConfirmedDelivery": "2026-09-13T09:55:01.538580+00:00",
+      "lastConfirmedDelivery": "2026-09-13T10:55:55.500276+00:00",
       "helperRepair": {
         "status": "reviewed_helper_regular_delivery_confirmed",
         "scope": "Trim ASCII edge whitespace before wire; preserve raw idempotency hash and old records; retain only allowlisted stage/boolean/hash diagnostics.",
@@ -6566,6 +6566,16 @@
           "privateChatAndExactTextVerified": true,
           "repeated": false,
           "evidencePath": "eva2/evidence/product/project-telegram-hourly-delivery-2026-09-13-08.json"
+        },
+        {
+          "hourKey": "2026-09-13T09:00Z",
+          "status": "delivered",
+          "claimedAt": "2026-09-13T09:54:57.380960+00:00",
+          "deliveredAt": "2026-09-13T09:55:01.538580+00:00",
+          "providerReceiptAvailable": true,
+          "privateChatAndExactTextVerified": true,
+          "repeated": false,
+          "evidencePath": "eva2/evidence/product/project-telegram-hourly-delivery-2026-09-13-09.json"
         }
       ],
       "unsentHourNote": {
