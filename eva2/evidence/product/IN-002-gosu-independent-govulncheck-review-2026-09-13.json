@@ -1,0 +1,22 @@
+{
+  "reviewedAt": "2026-09-13T10:53:51.995323+00:00",
+  "reviewer": "postgres_security_review",
+  "commits": [
+    "5a387f9a",
+    "8f5b7034"
+  ],
+  "decision": "GO bounded exact-binary govulncheck evidence",
+  "delta": "Only45moduleOnly and3packageLevel counts plus matching MD correction; all prior JSON/artifact bindings unchanged",
+  "counts": {
+    "total": 48,
+    "moduleOnly": 45,
+    "packageLevel": 3,
+    "function": 0
+  },
+  "priorReviewSha256": "1d2f41fe915c9d0f96640f42debd26edd8191f9d911481fca20f076fb09be21b",
+  "limits": [
+    "No waiver/security/release GO",
+    "No additional scan or production mutation",
+    "GO-2026-4337 remains module-only; other package findings not dismissed"
+  ]
+}

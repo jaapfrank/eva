@@ -121,7 +121,7 @@
           ]
         }
       ],
-      "priorityDecision": "PR-01 blijft technisch afgerond en live. De installatie van de twee gecorrigeerde documentdiensten is onafhankelijk goedgekeurd en wordt uitgevoerd; resultaat en gegevensbehoud moeten nog worden teruggelezen. De aanvullende beveiligingsanalyse krijgt een tekstcorrectie, zonder nieuwe scan.",
+      "priorityDecision": "De installatie van de documentstatuscorrectie is mislukt op de vergelijking van configuratievolgorde. Terugrol en onafhankelijke toestandcontrole lopen; een gerichte reparatie van die vergelijking volgt. PR-01 blijft afgesloten. Er is geen bewijs van uitval van Eva.",
       "dashboardVerification": {
         "status": "local_browser_verified_not_full_product_acceptance",
         "priorityRevision": {
@@ -259,7 +259,7 @@
         },
         {
           "title": "Reservekopie herstellen via de wizard",
-          "detail": "De PostgreSQL-vergelijking en geïsoleerde herstelproeven zijn afgerond. Ook de beperkte analyse van de gosu-binary is gecontroleerd: de onderzochte crypto/tls-symbolen ontbreken. Dat bewijst geen volledige veiligheid; de oorspronkelijke bevinding blijft behouden. De kandidaat houdt 96 HIGH- en 16 CRITICAL-pakketbevindingen. Geen live-upgrade of releasevrijgave."
+          "detail": "De PostgreSQL-vergelijking en geïsoleerde herstelproeven zijn afgerond. De aanvullende gosu-analyse is onafhankelijk gecontroleerd: 45 meldingen op moduleniveau, 3 op pakketniveau en geen op functieniveau. De onderzochte TLS-melding blijft op moduleniveau aanwezig. Dit is geen veiligheidsvrijgave; de oorspronkelijke bevindingen blijven behouden. Geen live-upgrade of volledige installatierelease."
         },
         {
           "title": "Voorbereid documentproject afgerond",
@@ -279,7 +279,7 @@
         },
         {
           "title": "Betrouwbare status van documentdiensten",
-          "detail": "De onafhankelijke installatiebeoordeling is geslaagd. De uitvoerder installeert de correctie bij de twee documentdiensten. Live gezondheidsstatus en behoud van het voltooide doel, journaal en bestanden worden daarna gecontroleerd. Nog geen afgeronde installatie of bewezen statusverbetering; PR-01 en het documentresultaat blijven behouden."
+          "detail": "Beide kandidaatdiensten meldden gezond, maar de installatiecontrole wees een andere volgorde van omgevingsinstellingen af. De installatieproef is mislukt en wordt teruggedraaid; het oorspronkelijke bewijs blijft behouden. De huidige toestand wordt onafhankelijk gecontroleerd. Nog geen oplevering en geen bewezen uitval van Eva."
         }
       ],
       "openRisks": [
@@ -1019,7 +1019,7 @@
       "sessionGoal": "AU-008: één zelfstandige kosteloze bijdrage via de algemene uitvoerder.",
       "currentWork": "**Afgerond en live — herbruikbare planreviewprocedure (PR-01).** Eva slaat een werkwijze op, vindt een eerdere werkwijze terug in een nieuw gesprek, ontvangt de gecontroleerde tekst en past de regels toe. De drie echte proeven zijn onafhankelijk goedgekeurd. De inhoudelijke planreview duurde 13,20 seconden. Jouw beoordeling staat open; algemene zelflerende vaardigheden zijn hiermee niet afgerond.",
       "currentEvidence": "eva2/evidence/living-core/au004-r6-abc-live-pass-20260913.json",
-      "nextStep": "**Eerstvolgend open werk:** de goedgekeurde gezondheidscontroles bij twee documentdiensten installeren en hun live status, uitvaldetectie en gegevensbehoud controleren. Installatie is bezig; afronding is nog niet bewezen. [PR-01](http://localhost:44712/#practice-PR-01) blijft technisch afgerond en live. IN-002-releasevoorwaarden blijven afzonderlijk vervolgwerk.",
+      "nextStep": "**Eerstvolgend open werk:** de terugrol na de mislukte documentstatusinstallatie controleren en de fout in de configuratievergelijking gericht herstellen. Beide kandidaatdiensten meldden gezond, maar dat volstaat niet voor oplevering. Geen bewijs van uitval van Eva. [PR-01](http://localhost:44712/#practice-PR-01) blijft afgesloten; IN-002-releasevoorwaarden blijven afzonderlijk vervolgwerk.",
       "usageClarification": {
         "date": "2026-09-07",
         "authorizedBy": "Jaap",
@@ -7523,7 +7523,7 @@
           "productionChanged": false
         },
         "gosuGovulncheckReview": {
-          "status": "evidence_wording_correction_required",
+          "status": "bounded_exact_binary_evidence_independently_approved",
           "candidateCommitReportedPrefix": "5a387f9a",
           "reportedBy": "coordinator",
           "hashesReportedCorrect": true,
@@ -7533,8 +7533,24 @@
           "functionFindings": 0,
           "targetGO20264337Level": "module only",
           "rescanRequired": false,
-          "evidenceIntegrated": false,
-          "securityReleaseGo": false
+          "evidenceIntegrated": true,
+          "securityReleaseGo": false,
+          "sourceCommits": [
+            "5a387f9afd7b29caf2d4955bafaaf81d3dbcc4a9",
+            "8f5b703461aac2a013f9e984daaf198a17ae9afd"
+          ],
+          "exactPaths": [
+            "eva2/evidence/product/IN-002-gosu-govulncheck-2026-09-13.json",
+            "eva2/reviews/IN-002-gosu-govulncheck-2026-09-13.md",
+            "eva2/evidence/product/IN-002-gosu-independent-govulncheck-review-2026-09-13.json"
+          ],
+          "independentGo": true,
+          "reviewer": "postgres_security_review",
+          "independentReceiptSha256": "aa529e17399a7f543410501115a7bee872a038100306b8843f94086b481e0a39",
+          "correctionScope": "45 module-only and3 package-level counts; prior artifact bindings and raw output unchanged",
+          "findingWaived": false,
+          "pinChanged": false,
+          "productionChanged": false
         }
       }
     },
@@ -9606,7 +9622,7 @@
     },
     "documentServiceHealthAU006UX00120260913": {
       "id": "AU006-UX001-health",
-      "status": "installation_authorized_in_progress_result_pending",
+      "status": "installation_attempt_failed_environment_order_guard_rollback_in_progress",
       "ownerThread": "01a08d52-31b1-7091-be45-812c0b6e6c9f",
       "assignedBy": "coordinator",
       "outcome": "Accurate liveness/readiness for existing document worker and workspace provider",
@@ -9639,7 +9655,26 @@
       "installationServices": 2,
       "installationCompleteProven": false,
       "healthImprovementProven": false,
-      "coreParentPreservedRequirement": "e66fff"
+      "coreParentPreservedRequirement": "e66fff",
+      "installationAttempt": {
+        "reportedBy": "coordinator",
+        "outcome": "failed",
+        "candidateContainersHealthyReported": 2,
+        "failure": "Configuration guard rejects environment-list ordering",
+        "originalAttemptPreserved": true,
+        "sealedRollbackStatus": "in_progress",
+        "rollbackVerified": false,
+        "outageProven": false,
+        "readOnlyWriterFinding": "Environment values identical; coree66 and eleven protected containers unchanged",
+        "independentCurrentStateCheck": "pending"
+      },
+      "guardFix": {
+        "status": "requested",
+        "ownerThread": "01a08d52-31b1-7091-be45-812c0b6e6c9f",
+        "scope": "Canonicalize environment comparison while checking exact values and rejecting duplicate keys",
+        "sourceGo": false,
+        "newInstallationGo": false
+      }
     }
   },
   "activeTaskId": "AU-008",
