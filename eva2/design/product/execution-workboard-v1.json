@@ -262,7 +262,7 @@
         },
         {
           "title": "Aangeleerde procedures terugvinden",
-          "detail": "De terugrolcorrectie is onafhankelijk goedgekeurd. De runtime-uitvoerder activeert de kandidaat nu binnen het beoordeelde plan en de vastgelegde proefgrenzen. De activering is nog niet bevestigd en er is nog geen modelresultaat; dit onderdeel is nog niet als live opgeleverd."
+          "detail": "Installatieproef mislukt; herstelcontrole loopt. Een volgordegevoelige mountcontrole wees de installatie en herstelcontrole af. De uitvoerder meldt dat de vorige core draait; de volledige herstelstatus wordt nu onafhankelijk gecontroleerd. Nog geen bevestigd herstel of aangetoonde uitval. Geen A/B/C-modelproeven of herhaling uitgevoerd."
         }
       ],
       "openRisks": [
@@ -5104,7 +5104,7 @@
             "candidateCommit": "46e85b2267dc58619de78233405401163f6c20fe",
             "decision": "GO for preparation only",
             "finding": "Existing delegated worker uses832; core and document worker use2393.",
-            "status": "rollback_fix_approved_activation_in_progress",
+            "status": "installation_attempt_failed_restore_review_in_progress",
             "planIntegrated": false,
             "deploymentAuthorized": false,
             "correctionCommit": "295a70cef49477b36f7acd48cae1eb6de401fcf4",
@@ -5120,7 +5120,7 @@
               "scope": "Five overlays, candidate and sealed probe for separate activation review",
               "liveStarted": null,
               "activationGo": true,
-              "status": "activation_in_progress_under_reviewed_seal",
+              "status": "installation_attempt_failed_parent_reported_running_restore_unverified",
               "evidenceCommit": "e58d256c26c9f16f42aa931fdda2a2e3a62735c2",
               "evidenceIntegrated": false,
               "candidateImageReportedPrefix": "43ddd343",
@@ -5153,7 +5153,25 @@
               "activationCompleteProven": false,
               "modelResultAvailable": false,
               "reportSource": "coordinator",
-              "liveStartedMeaning": "Activation in progress; completed runtime switch not yet evidenced."
+              "liveStartedMeaning": "Activation in progress; completed runtime switch not yet evidenced.",
+              "installationAttempt": {
+                "reportedBy": "coordinator",
+                "outcome": "failed",
+                "failure": "Order-sensitive HostConfig.Mounts guard",
+                "rollbackCommandExitCode": 0,
+                "rollbackReceiptVerified": false,
+                "rollbackReceiptFailure": "Same order-sensitive mount guard",
+                "parentImageReportedPrefix": "2393",
+                "parentRunningReported": true,
+                "diagnosis": "Limited read-only sorted mount contents match reported; full restoration review pending",
+                "independentReviewer": "procedure_host_review",
+                "independentRestoreVerified": false,
+                "outageProven": false,
+                "abcModelCalls": 0,
+                "retryPerformed": false,
+                "retryAuthorized": false,
+                "originalAttemptAndReceiptPreserved": true
+              }
             }
           }
         }
@@ -5888,9 +5906,9 @@
       "owners": [
         {
           "owner": "01a08d52-31b1-7091-be45-812c0b6e6c9f",
-          "work": "AU-004-kandidaat activeren onder beoordeeld plan",
+          "work": "Mislukte AU-004-installatie en herstelstatus onderzoeken",
           "boundary": "New providers/document_goal_actions.py; bundled.py opt-in registration only; document_goal_plan.py safe full host GoalSpec/hash binding; targeted provider/PG tests and docs. Existing actual ConversationTurn/current authority/external tool port. No second planner/live/envflip.",
-          "status": "AU004_activation_in_progress_no_model_result"
+          "status": "AU004_install_failed_restore_review_in_progress"
         },
         {
           "owner": "coordinator/timing_final_review",
