@@ -121,7 +121,7 @@
           ]
         }
       ],
-      "priorityDecision": "De inhoudscorrectie voor opgeslagen procedures is goedgekeurd en geïntegreerd. Een nieuwe runtimekandidaat wordt voorbereid; werkelijk toepassen door Eva moet nog worden aangetoond. De mislukte vorige proef blijft behouden. De PostgreSQL-herstelproeven zijn afgerond, met releaseblokkades nog open.",
+      "priorityDecision": "De nieuwe procedurekandidaat met gecontroleerde inhoud wordt onafhankelijk beoordeeld vóór activering. De PostgreSQL-herstelproeven en beperkte analyse van de gosu-binary zijn afgerond; resterende beveiligings- en releasevoorwaarden blijven open.",
       "dashboardVerification": {
         "status": "local_browser_verified_not_full_product_acceptance",
         "priorityRevision": {
@@ -259,7 +259,7 @@
         },
         {
           "title": "Reservekopie herstellen via de wizard",
-          "detail": "De PostgreSQL-vergelijking en geïsoleerde herstelproeven zijn afgerond. Ook de beoordeling van de resterende kritieke bevindingen en verzamelde licentieteksten is gecontroleerd. De 96 HIGH- en 16 CRITICAL-bevindingen blijven behouden. Een alternatief met 101 HIGH en 14 CRITICAL is niet gekozen. Er is geen live-upgrade, beveiligingsvrijgave of volledige installatierelease."
+          "detail": "De PostgreSQL-vergelijking en geïsoleerde herstelproeven zijn afgerond. Ook de beperkte analyse van de gosu-binary is gecontroleerd: de onderzochte crypto/tls-symbolen ontbreken. Dat bewijst geen volledige veiligheid; de oorspronkelijke bevinding blijft behouden. De kandidaat houdt 96 HIGH- en 16 CRITICAL-pakketbevindingen. Geen live-upgrade of releasevrijgave."
         },
         {
           "title": "Voorbereid documentproject afgerond",
@@ -273,7 +273,7 @@
         },
         {
           "title": "Aangeleerde procedures terugvinden",
-          "detail": "De correctie is gebouwd, onafhankelijk gecontroleerd en geïntegreerd: een geldige procedureverwijzing levert nu ook de gecontroleerde inhoud, begrensd tot 16 KB. Een nieuwe runtimekandidaat wordt voorbereid. Werkelijk toepassen in een gesprek is nog niet bewezen en de correctie staat nog niet live. De vorige mislukte proef en het gecontroleerde herstel blijven vastgelegd."
+          "detail": "De inhoudscorrectie is gebouwd, onafhankelijk gecontroleerd en geïntegreerd: een geldige procedureverwijzing levert ook de gecontroleerde inhoud, begrensd tot 16 KB. De nieuwe runtimekandidaat wordt onafhankelijk beoordeeld en is nog niet geactiveerd. Werkelijk toepassen in een gesprek blijft te bewijzen; de vorige mislukte proef blijft vastgelegd."
         }
       ],
       "openRisks": [
@@ -5650,6 +5650,18 @@
                 "retrospectiveGateChange": false,
                 "generalReuseCompletion": false
               }
+            },
+            "r6Candidate": {
+              "status": "sealed_candidate_under_independent_review",
+              "planCommitReportedPrefix": "4e38cb72",
+              "imageReportedPrefix": "e66fff",
+              "sealReportedPrefix": "53757fc8",
+              "reportedBy": "coordinator",
+              "activationGo": false,
+              "activated": false,
+              "outcomeAvailable": false,
+              "liveCompletionProven": false,
+              "ownerAccepted": false
             }
           }
         }
@@ -7316,6 +7328,35 @@
           "securityReleaseGo": false,
           "productionChanged": false,
           "suppressionAdded": false
+        },
+        "gosuSymbolEvidence": {
+          "status": "bounded_symbol_evidence_independently_approved",
+          "sourceCommit": "d7f42f807345fe07936539cad71133f087964b25",
+          "exactPaths": [
+            "eva2/evidence/product/IN-002-gosu-symbol-boundary-2026-09-13.json",
+            "eva2/reviews/IN-002-gosu-symbol-boundary-2026-09-13.md",
+            "eva2/evidence/product/IN-002-gosu-independent-symbol-review-2026-09-13.json"
+          ],
+          "evidenceIntegrated": true,
+          "independentReview": {
+            "reviewer": "postgres_security_review",
+            "reportedBy": "coordinator",
+            "receiptPath": "eva2/evidence/product/IN-002-gosu-independent-symbol-review-2026-09-13.json",
+            "receiptSha256": "9173139916684f3c6181d8f1f66044b71eb81530414cf5b086df288914bad050",
+            "artifactHashesVerified": 21,
+            "binaryArchiveUpstreamBytesMatch": true,
+            "symbolCount": 2614,
+            "cryptoTlsSymbolNames": 0,
+            "mainRuntimeAnchorsPresent": true,
+            "symbolTablePresent": true,
+            "dwarfRemoved": true
+          },
+          "fullCallGraphProven": false,
+          "govulncheckPerformed": false,
+          "findingWaived": false,
+          "securityReleaseGo": false,
+          "binaryRebuilt": false,
+          "productionChanged": false
         }
       }
     },

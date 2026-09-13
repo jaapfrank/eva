@@ -1,0 +1,58 @@
+{
+  "observedAt": "2026-09-13T10:00:24.559486+00:00",
+  "image": "docker.io/library/postgres@sha256:bb3e1a57e5407e0a5280b4211980a5e537f4abd234a87014ac979849a78dd825",
+  "binary": "/usr/local/bin/gosu",
+  "binarySha256": "sha256:52c8749d0142edd234e9d6bd5237dff2d81e71f43537e2f4f66f75dd4b243dd0",
+  "upstreamLatestRelease": "1.19",
+  "releasePublishedAt": "2025-09-23T19:10:36Z",
+  "sourceCommit": "6456aaa0f3c854d199d0f037f068eb97515b7513",
+  "upstreamAssetHashMatches": true,
+  "compiler": "go1.24.6",
+  "issue": "CVE-2025-68121 / GO-2026-4337",
+  "primaryAdvisory": "https://vuln.go.dev/ID/GO-2026-4337.json",
+  "symbolInspection": {
+    "exit": 0,
+    "count": 2614,
+    "mainAndRuntimeAnchorsPresent": true,
+    "cryptoTlsSymbols": 0,
+    "interpretation": "No crypto/tls symbols in this exact unstripped binary; narrow static applicability evidence, not a full govulncheck call-graph proof."
+  },
+  "upstreamBoundary": "Latest official release and pinned upstream Dockerfile still use Go1.24.6. No maintained fixed-compiler upstream release found. Upstream explicitly declines compiler-only rebuilds for functionality not invoked by gosu. Do not substitute custom rebuild just to remove a version-based finding.",
+  "attempts": [
+    "read-only cache denied",
+    "64MiB temporary cache exhausted",
+    "512MiB temporary mount lacked execution permission",
+    "512MiB exec temporary mount succeeded, network disabled throughout"
+  ],
+  "claims": {
+    "newBinaryBuilt": false,
+    "findingWaived": false,
+    "canonicalPinsChanged": false,
+    "productionChanged": false,
+    "securityRelease": false,
+    "govulncheckExecuted": false
+  },
+  "artifacts": {
+    "gosu-remediation/symbols.txt.stderr": "9231cad5089cc597d4fd184dcbab07dd53a866ecb98d39ad712435e05410ef87",
+    "gosu-remediation/symbols-r3.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "gosu-remediation/go.mod": "0475f1708db81d718b633faf2d9dd64695037eabdc8562125060607bcb01b2ba",
+    "gosu-remediation/pinned-Dockerfile": "5a88ccf130be30a78caa7e8831862b13c0e003929d1664c0398587b9aa285c9b",
+    "gosu-remediation/build-info.txt.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "gosu-remediation/symbols-r2.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "gosu-remediation/analysis-tool-image.json": "d1d992a2f9796679adb33c68c3968ec44127b560021a4b3d4c71f1739d2bc3e7",
+    "gosu-remediation/symbols.txt": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "gosu-remediation/build-info.txt": "fa7c79df9c87e4aa76f0c6ccc4f492c2a9d60b8de18029e7665b77826c5ae18b",
+    "gosu-remediation/SECURITY.md": "ff062aaaeebef8807031491a582b5be004fed5d2f0f17ce405ae3122e69ecd9a",
+    "gosu-remediation/pinned-go.mod": "0475f1708db81d718b633faf2d9dd64695037eabdc8562125060607bcb01b2ba",
+    "gosu-remediation/Dockerfile": "0c85e41e884e4d3c243f3a29429930e4e4d5fb2a11c308b0828844006127e8f2",
+    "gosu-remediation/symbols-r4.txt": "5178bf56d45e755e1247e296c91ff83436230d7d4ff9f15c87c93e890eb35114",
+    "gosu-remediation/symbols-r4-command.json": "c0d1e449d00128d5af15822d586dc35eb04b080e830c6bf08e81b031c89a642c",
+    "gosu-remediation/pinned-govulncheck-with-excludes.sh": "be86c30c4a7d14a7f0c473396d5e4b9a7995a77dc9f0f9536b9085e45072681e",
+    "gosu-remediation/symbols-r2.stderr": "c73f1ab3d7b086e9a701a22fc78f6beccd63528464cfb8fbf950420610344402",
+    "gosu-remediation/gosu": "52c8749d0142edd234e9d6bd5237dff2d81e71f43537e2f4f66f75dd4b243dd0",
+    "gosu-remediation/symbols-r3.stderr": "f565c6434f7cde137ba9344e10e44792b9492ba8361ef06f1fe94c3697825e25",
+    "gosu-remediation/release.json": "e57e3207cf09479b6307e8d5a62b29047d3f1af0fcc25c7906c8a1d02bde2c81",
+    "gosu-remediation/symbols-r4.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "gosu-remediation/symbols-r3-command.json": "c6f5536f5d959a47c11899d074cbff01f76f625509486fd0ca58a2ab8cd060f7"
+  }
+}

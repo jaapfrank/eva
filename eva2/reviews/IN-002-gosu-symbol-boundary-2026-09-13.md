@@ -1,0 +1,13 @@
+# IN-002: exact gosu binary and upstream remediation boundary
+
+There is no newer maintained upstream gosu release with a fixed Go compiler available in the checked release channel. The latest release remains 1.19, published 23 September 2025; its pinned Dockerfile uses Go 1.24.6. The byte-exact binary from the PG16.15 Bookworm candidate matches the GitHub release asset digest `52c8749d0142edd234e9d6bd5237dff2d81e71f43537e2f4f66f75dd4b243dd0`. Source commit: `6456aaa0f3c854d199d0f037f068eb97515b7513`. This verifies correspondence to the recorded upstream asset; it is not signature verification or a claim that the project is actively releasing compiler updates.
+
+The official Go advisory for CVE-2025-68121 identifies crypto/tls session-resumption behavior and lists fixes in Go 1.24.13, 1.25.7 and 1.26rc3. The exact gosu build metadata confirms Go1.24.6. However, successful offline `go tool nm` returns 2,614 symbols including main/runtime anchors and **no crypto/tls symbols**. This is concrete static applicability evidence for this exact binary, not a general waiver, exploitability assertion or complete govulncheck call-graph report.
+
+Upstream SECURITY.md explicitly does not rebuild for compiler CVEs in functions gosu never invokes, and recommends govulncheck. The pinned upstream wrapper also has its own exclusions; it was retained for inspection, not executed or imported as project policy. No excluded-finding list was created. A custom rebuilt binary solely to make the compiler-version finding disappear would depart from the official image path without demonstrated runtime benefit, so none was produced.
+
+Three failed tool invocations are retained: read-only Go cache, insufficient temporary cache capacity, then missing execution permission on the temporary mount. The final pinned Go-tool container used a bounded 512MiB executable temporary cache, network disabled, no production mount, and completed successfully. No program inputs or exploitation were attempted.
+
+The actionable remaining boundary is independent assessment of the narrow symbol evidence and, if needed, an exact-binary govulncheck result under an explicitly pinned tool/database. The original Trivy finding remains unchanged. This is not a package/security release approval, and there is no before/after remediation claim because no replacement binary was built.
+
+Primary sources: https://github.com/tianon/gosu/releases/tag/1.19 ; https://github.com/tianon/gosu/blob/6456aaa0f3c854d199d0f037f068eb97515b7513/SECURITY.md ; https://github.com/tianon/gosu/blob/6456aaa0f3c854d199d0f037f068eb97515b7513/Dockerfile ; https://vuln.go.dev/ID/GO-2026-4337.json . Exact retained bytes and tool/image hashes are in the paired JSON and durable `gosu-remediation` stage.

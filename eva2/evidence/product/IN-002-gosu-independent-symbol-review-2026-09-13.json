@@ -1,0 +1,22 @@
+{
+  "reviewer": "postgres_security_review",
+  "reviewedAt": "2026-09-13T10:02:22.664612+00:00",
+  "commit": "d7f42f807345fe07936539cad71133f087964b25",
+  "decision": "GO bounded binary-symbol evidence",
+  "checks": [
+    "21 artifact hashes exact",
+    "Gosu bytes independently extracted from candidate OCI layers match recorded binary and upstream asset digest",
+    "2614 nm output lines,main.main/runtime.main anchors present,zero crypto/tls names",
+    "Pinned Dockerfile uses Go1.24.6 and deliberately omits -s; -w removes DWARF but symbol table remains",
+    "Build metadata Go1.24.6/amd64/CGO0/moduleversions agrees",
+    "Retained release1.19 metadata and SECURITY policy support narrow upstream-boundary claim; not signature or continuous-maintenance proof",
+    "Offline exact-tool-image nm invocation with read-only evidence and bounded temporary cache inspected"
+  ],
+  "limits": [
+    "No claim that absent symbol names establish complete call-graph or exploitability result",
+    "No govulncheck executed or findings waived",
+    "No independent live upstream latest-release query during review",
+    "No binary rebuilt, scanner rerun or production touched"
+  ],
+  "next": "If disposition is needed, use a separately pinned official exact-binary govulncheck with captured database and no upstream exclusion wrapper; retain original finding pending assessment."
+}
