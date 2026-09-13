@@ -1,0 +1,26 @@
+{
+  "reviewer": "postgres_security_review",
+  "reviewed_at": "2026-09-13T09:10:23.282121+00:00",
+  "commits": [
+    "580628e3d437240503fbc3100cf5e7fdd34cb7a7",
+    "88cec319d862e81386f0e54cbb1476acfd23372e"
+  ],
+  "decision": "GO bounded evidence registration only",
+  "checks": [
+    "12 artifact hashes plus schema, scanner builder and 2 DB cache hashes exact",
+    "Both archive copies match previous archive receipt 94b45149; raw scan config c0a399de matches archived receipt",
+    "Draft202012Validator with FormatChecker independently passes; binding bytes equal recorded binding",
+    "110 HIGH,18 CRITICAL,58 unique IDs,40 FixedVersion rows recomputed;18 critical rows exact raw projection",
+    "149 inventory rows match SPDX identifiers/names/licenses/source hash;26 declared and127 concluded unknown preserved",
+    "DB UpdatedAt07:13 and NextUpdate next day cover09:04 scan; downloaded09:03; official pinned downloader command and failure/retry preserved",
+    "ldd hash and named three library presence checked; no reachability or exploit proof inferred"
+  ],
+  "boundaries": [
+    "No rescan or runtime mutation",
+    "No security/legal/support/release GO",
+    "Historical whole-candidate cache authority remains separately unresolved",
+    "ldd text is writer evidence; no independently repeated container linkage execution",
+    "No fresh upstream candidate or fixed-version distribution availability verified in this review"
+  ],
+  "next_remediation": "Select one maintained immutable PostgreSQL16 candidate using primary upstream provenance; compare exact old/new archives with same fresh DB; assess remaining findings and unknown license metadata; then isolated upgrade/restore/rollback validation. No generic allowlisting."
+}

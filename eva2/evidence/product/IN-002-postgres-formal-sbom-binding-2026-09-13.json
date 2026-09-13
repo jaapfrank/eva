@@ -1,0 +1,88 @@
+{
+  "contract": "In002PostgresFormalSbomBindingEvidence/v1",
+  "slot": "eva2/release/oci-image-slots.json#/finalImageSlots/5",
+  "slot_id": "postgresql",
+  "scope": "amd64 image-specific proof binding; no slot promotion",
+  "stage": "/home/administrator/project/.eva2-artifacts/in002-platform-boundary-20260913/postgres-slot",
+  "artifact_hashes": {
+    "sbom-binding.json": "993efcc2cf6eb752121498c874a9bd0f895c01f27373efb918faae0fbb36bc7a",
+    "image-license-inventory.json": "fdc2056fa88d23b2541d98246b8491e922eeeab55d36e41d9340beae3bbd4b41",
+    "trivy.raw.json": "7c3842e2c31634d3c7c532afb3c5e79bd47127f6062a3c4583647be179f9dbff",
+    "trivy.stderr.log": "6e5b4c0e0fe4af5056c9e5532de34c83b6f2fdc693bd0f4d0c43c593a0c0f8ee",
+    "scan-summary.json": "3b0ba22c380b41cec816e7a1b7f7de9088fdd6db5e098da597a6c51a9302b2c8",
+    "fresh-cache-proof.json": "5ad2a57c4fd8c2f261f28414e2aaf4a04cc0c3c85a35ac99574af46f9a593bd7",
+    "db-update-command.json": "285051b9ac8b2e0ca84324af0d794a30e626493d6e81355c2f45c0cdd8b9e428",
+    "db-update.log": "c1aeb4c314f63c0722bd38c25d72dc46568b47b77cc0dbd20aa1fc6fb44cbf07",
+    "db-update-retry-command.json": "4f53122d1147f2dd1cf91f33d243dab7e268e118cc73e7e55a74622fb1641b4b",
+    "db-update-retry.log": "59f796ed7f7b4b794e2f50bf7071dd8eb577d20d797ee7a40a44abe4240b37c3",
+    "trivy-command.json": "926fdc59af4c8ea6ca7996f752417cdc098ad7ac86355f208779404ddd9fce1d",
+    "sbom.spdx.json": "763657be5aabe337ba48d687fdeb61a41a8dc9232ed1e2e35755644411c1e2a7"
+  },
+  "binding": {
+    "contract": "Eva2SbomBinding/v1",
+    "artifact": {
+      "type": "image",
+      "id": "docker.io/library/postgres@sha256:472efd9a66f2b2f1a5aeb18b28de74332e6ef88c2b93a1a5d812fb6db67a5f60",
+      "sha256": "472efd9a66f2b2f1a5aeb18b28de74332e6ef88c2b93a1a5d812fb6db67a5f60"
+    },
+    "format": "SPDX-2.3-json",
+    "documentSha256": "763657be5aabe337ba48d687fdeb61a41a8dc9232ed1e2e35755644411c1e2a7",
+    "documentNamespace": "https://anchore.com/syft/image/archive/base.oci.tar-8401ada8-82b0-4d90-9360-8dc91e1a6e49",
+    "generator": "ghcr.io/anchore/syft@sha256:678bfa565b60f747aac0f8e964fe5588a24445b8d0a480e91f6efd70020dfbb0",
+    "licenseInventorySha256": "fdc2056fa88d23b2541d98246b8491e922eeeab55d36e41d9340beae3bbd4b41",
+    "vulnerabilityScanSha256": "7c3842e2c31634d3c7c532afb3c5e79bd47127f6062a3c4583647be179f9dbff"
+  },
+  "schema": "eva2/release/formats/eva-sbom-binding-v1.schema.json",
+  "schema_sha256": "ecce6716caca56a8df252e781be92b8cb6f975d6b34af1de67fe963fd8a23a4b",
+  "schema_validation": "Draft202012Validator with FormatChecker passed",
+  "scanner_command_builder": "eva2/tools/check_container_vulnerabilities.py:trivy_command",
+  "scanner_command_builder_sha256": "e5842db69d5cee32335794266a8c082f3e611f8495465264db0558976b29dee5",
+  "scan": {
+    "counts": {
+      "HIGH": 110,
+      "CRITICAL": 18
+    },
+    "schema_valid": true,
+    "cache_unchanged": true,
+    "archive_unchanged": true,
+    "legal_clearance": false,
+    "release_clearance": false,
+    "unique_vulnerability_ids": 58,
+    "findings_with_fixed_version": 40,
+    "critical_packages": [
+      "libgnutls30",
+      "libperl5.36",
+      "libsqlite3-0",
+      "libxml2",
+      "perl",
+      "perl-base",
+      "perl-modules-5.36",
+      "stdlib",
+      "zlib1g"
+    ]
+  },
+  "db_metadata": {
+    "Version": 2,
+    "NextUpdate": "2026-09-14T07:13:14.295196898Z",
+    "UpdatedAt": "2026-09-13T07:13:14.295197098Z",
+    "DownloadedAt": "2026-09-13T09:03:30.834894475Z"
+  },
+  "license_inventory": {
+    "packages": 149,
+    "declared_unknown": 26,
+    "concluded_unknown": 127,
+    "source": "same image SPDX package fields, each row bound to SPDX SHA256",
+    "legal_clearance": false
+  },
+  "history": [
+    "Initial built-in OCI DB updater ran out of 128MiB temporary space.",
+    "Same pinned updater, same official repository, 512MiB temporary space and explicit uid1000 completed.",
+    "Existing generic scan command used exact archive with network none, skip-db-update; DB hashes unchanged after scan."
+  ],
+  "boundaries": [
+    "110 HIGH and18 CRITICAL are scanner findings, not proof of exploitability or unique CVE count.",
+    "No image/pin/support/production change; this vulnerable artifact is not release-cleared.",
+    "No independent upstream database signature claim: built-in pinned Trivy OCI downloader used official GHCR source and its content verification; resulting DB bytes hash-bound.",
+    "Historical RB006 whole-candidate validator pins an old cache authority. That authority was not overwritten or bypassed; generic existing scan builder used. Whole-candidate release gate still needs a separately reviewed authority refresh."
+  ]
+}

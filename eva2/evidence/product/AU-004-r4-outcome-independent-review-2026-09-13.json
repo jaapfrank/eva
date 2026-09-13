@@ -1,0 +1,31 @@
+{
+  "A": "verified save and path designation PASS",
+  "B": "no listing or resolve FAIL",
+  "C": "not attempted",
+  "canonical_receipt_and_source_binding": true,
+  "actual_file_preserved": true,
+  "all_original_evidence_hashes_match": true,
+  "recovery": {
+    "core_id": "a81bd0e0fa7d9db2e210f778261f668d2050954c9136b96aec2f2b764dabd50b",
+    "core_image": "sha256:bc6d64a3aebbb4b1502dfa7170c0b3d02eda97ac97eddfc704c90c80659864e9",
+    "protected_count": 12,
+    "quiescence": {
+      "advisory_locks": 0,
+      "other_active_queries": 0,
+      "readiness": {
+        "database": "ready",
+        "detail": null,
+        "memory_projection": "ready",
+        "model_provider": "ready",
+        "ready": true
+      }
+    },
+    "guards_verified": true,
+    "telegram_recovery_preserved": true,
+    "pending_requests": {
+      "recent_unfinished_model_requests": 0
+    }
+  },
+  "runtime_mutations": 0,
+  "model_calls": 0
+}

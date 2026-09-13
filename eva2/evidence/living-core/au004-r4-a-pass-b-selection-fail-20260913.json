@@ -1,0 +1,259 @@
+{
+  "contract": "Au004R4ActualABOutcome/v1",
+  "status": "A_pass_B_fail_C_not_run",
+  "candidate_image": "sha256:793c411efd49b280fdc7401e5844b6d27a8e649621816a3feae7e92e99cd50d6",
+  "source_commit": "cce42356ef98048bb2391ddd877e8614adde7c60",
+  "seal_sha256": "9d9c999658069d2581ffa129ff58fc403ffb53a8f2c27ec2a8e0a4a279e8fc02",
+  "cases": {
+    "A": {
+      "result": "pass",
+      "http": {
+        "httpStatus": 200,
+        "elapsedSeconds": 25.673154074000195,
+        "errorType": null,
+        "parseError": null,
+        "terminalReplyValid": true,
+        "streamErrorCount": 0,
+        "requestCount": 1,
+        "retry": false,
+        "messageId": "voice:9d29100c-61e3-4722-b4a5-d652d82e1c38:c12ff066-8865-44ff-8aab-1e240f54c346",
+        "responseSha256": "6e6430ad37a4fb464b58c9b16baad2b73809aef14046a867eb6d35c18cf8ce45"
+      },
+      "reply": "Opgeslagen als /proof-state/au004-planreview-procedure-20260913-r4.md en de inhoud gecontroleerd. De werkwijze is expliciet gemarkeerd als herbruikbaar tot 2026-10-13T00:00:00Z, met alle genoemde regels.",
+      "action_admissions": [
+        {
+          "event_type": "PROCEDURE_ACTION_ADMITTED",
+          "name": "designate_reusable_procedure"
+        },
+        {
+          "event_type": "TOOL_REQUEST_ADMITTED",
+          "name": "save_workspace_document"
+        }
+      ],
+      "model_usage": [
+        {
+          "tool_calls": 0,
+          "measurement": "measured",
+          "input_tokens": 3913,
+          "output_tokens": 66,
+          "model_attempts": 1
+        },
+        {
+          "tool_calls": 1,
+          "measurement": "measured",
+          "input_tokens": 6628,
+          "output_tokens": 151,
+          "model_attempts": 1
+        },
+        {
+          "tool_calls": 1,
+          "measurement": "measured",
+          "input_tokens": 6256,
+          "output_tokens": 130,
+          "model_attempts": 1
+        }
+      ],
+      "model_attempts": 3,
+      "input_tokens": 16797,
+      "output_tokens": 347,
+      "tool_calls": 2,
+      "original_readback_sha256": "1af978ec3201452c831d317257f2b23023ca0c3308cb76b778d28a7cf7b5a8cf"
+    },
+    "B": {
+      "result": "fail",
+      "http": {
+        "httpStatus": 200,
+        "elapsedSeconds": 10.020004045996757,
+        "errorType": null,
+        "parseError": null,
+        "terminalReplyValid": true,
+        "streamErrorCount": 0,
+        "requestCount": 1,
+        "retry": false,
+        "messageId": "voice:5cd6a9df-684a-4595-873e-852ede66b49e:c8fa780d-7101-459e-a559-94372736705f",
+        "responseSha256": "feec7f1c460c38a2dbd933b1ec4b9fd7f05e11b25ce4b9296002c690f24d89ea"
+      },
+      "reply": "Als eerste zou ik de belangstelling peilen bij buurtbewoners, met twee mogelijke datums en de vraag met hoeveel personen ze ongeveer willen komen. Maak duidelijk dat het nog geen definitieve aanmelding is.\n\nHet plan is een prima begin, maar nog te open om een locatie vast te leggen. Met een eerste schatting kun je gericht zoeken naar een plek die past bij het aantal mensen, jullie budget en de toegankelijkheid. Denk bij een buitenlocatie meteen aan een alternatief voor regen.",
+      "action_admissions": [],
+      "model_usage": [
+        {
+          "tool_calls": 0,
+          "measurement": "measured",
+          "input_tokens": 4814,
+          "output_tokens": 102,
+          "model_attempts": 1
+        }
+      ],
+      "model_attempts": 1,
+      "input_tokens": 4814,
+      "output_tokens": 102,
+      "tool_calls": 0,
+      "original_readback_sha256": "3007874c23870d13cb7e2b6b9d39796559d0a7b97acca56c94e935e44f323acc"
+    }
+  },
+  "C": {
+    "requests": 0,
+    "reason": "B outcome gate failed"
+  },
+  "A_verified_source": {
+    "content_sha256": "d5787f2b1f4f75b478e05b59864d48d12c05d7bd385b857e87f0ad90bc386753",
+    "source_document_id": "procedure-reference:0c8fdfb5b62abae383834713a83f6a4ecb6dc92731991e041b37333a52658a46",
+    "save_call_id": "call_TDV2UbJYUxvF3nR5touAZinz",
+    "source_reference": {
+      "content_sha256": "d5787f2b1f4f75b478e05b59864d48d12c05d7bd385b857e87f0ad90bc386753",
+      "contract": "ProcedureReference/v1",
+      "document_id": "procedure-reference:0c8fdfb5b62abae383834713a83f6a4ecb6dc92731991e041b37333a52658a46",
+      "path": "/proof-state/au004-planreview-procedure-20260913-r4.md",
+      "receipt_sha256": "ec23d56806f552c42f677ee6ea8b01a6f51f942eedc5087e6370f3cd9ef06de3",
+      "retention_until": "2026-10-13T00:00:00Z",
+      "source_call_id": "call_TDV2UbJYUxvF3nR5touAZinz",
+      "source_message_id": "voice:9d29100c-61e3-4722-b4a5-d652d82e1c38:c12ff066-8865-44ff-8aab-1e240f54c346",
+      "tool_configuration_sha256": "a2f87385fed891cf244d4294777901bbdc8509b62304a91e39f82df730947a54",
+      "use_when": "Voor korte planreviews: noem eerst maximaal drie concrete ontbrekende gegevens, met een ontbrekende datum vóór andere ontbrekende gegevens. Geef daarna één eerstvolgende stap. Geef geen fictieve antwoorden."
+    },
+    "evidence_sha256": {
+      "readback-1789290242335930821.private.json": "1af978ec3201452c831d317257f2b23023ca0c3308cb76b778d28a7cf7b5a8cf",
+      "response.private.raw": "6e6430ad37a4fb464b58c9b16baad2b73809aef14046a867eb6d35c18cf8ce45"
+    },
+    "semantic_review": "All four instructed rules, expiry and current-path derived verified save source checked."
+  },
+  "B_failure": "No listing or resolve action occurred; a generic plan answer did not follow date-first missing-inputs structure. Correct-looking advice alone would not prove procedure retrieval.",
+  "scope_limit": "A proves actual save-to-designation path. Independent autonomous procedure selection/reuse remains unproven. No broader completion or owner acceptance.",
+  "model_visibility_limit": "No claim that raw full model request tool schemas were captured; the live opt-in configuration and A route worked, while B durable trace contains no procedure calls.",
+  "total_usage": {
+    "model_attempts": 4,
+    "input_tokens": 21611,
+    "output_tokens": 449,
+    "tool_calls": 2
+  },
+  "total_elapsed_seconds": 35.69315811999695,
+  "money_cost": "unknown",
+  "retries": 0,
+  "rollback": {
+    "verified": true,
+    "expected_parent_image": "sha256:bc6d64a3aebbb4b1502dfa7170c0b3d02eda97ac97eddfc704c90c80659864e9",
+    "new_core_id_allowed": true,
+    "observed_state": {
+      "core_id": "a81bd0e0fa7d9db2e210f778261f668d2050954c9136b96aec2f2b764dabd50b",
+      "core_image": "sha256:bc6d64a3aebbb4b1502dfa7170c0b3d02eda97ac97eddfc704c90c80659864e9",
+      "protected_count": 12,
+      "quiescence": {
+        "advisory_locks": 0,
+        "other_active_queries": 0,
+        "readiness": {
+          "database": "ready",
+          "detail": null,
+          "memory_projection": "ready",
+          "model_provider": "ready",
+          "ready": true
+        }
+      },
+      "guards_verified": true,
+      "telegram_recovery_preserved": true,
+      "pending_requests": {
+        "recent_unfinished_model_requests": 0
+      }
+    }
+  },
+  "legitimate_A_source_and_file_preserved": true,
+  "previous_failed_attempts_preserved": true,
+  "private_stage": "/home/administrator/project/.eva2-artifacts/procedure-reference-runtime-r4-20260913",
+  "private_file_sha256": {
+    "A/http-receipt.json": "e81321cff4546e4242b6a8bda3cd21433a412839ede7aa4f9379bbb768ef55e3",
+    "A/stream-events.private.json": "7a7a184c1db68d102a09cb13838c72ce8a2397ffe8ed907de967b71f781562c8",
+    "A/preflight.json": "dce708e34cc8e427962c0e0d5bd32ab9ffc1d680fe8ac2828f9fefb1fff4f5d2",
+    "A/outcome-reviewed.json": "aca9d8f5e7192a40caa0d27b3012fdc196af281d732358473e5d081508378ba6",
+    "A/source-verified.json": "3758f83f7a1e47ef91db4c85d520c95860a0bb5f874ed18f0e0b821d94346565",
+    "A/response.private.raw": "6e6430ad37a4fb464b58c9b16baad2b73809aef14046a867eb6d35c18cf8ce45",
+    "A/request.json": "ddf1e9b105164f65a6559ab6bbd3ded885c281c8b3cf5a88df0c45ac44fcdffe",
+    "A/response.private.json": "61d40aba76fe7fa89d70eab80c10ee32ccb404ba410d25aed7eca849ad58971b",
+    "A/readback-1789290242335930821.private.json": "1af978ec3201452c831d317257f2b23023ca0c3308cb76b778d28a7cf7b5a8cf",
+    "A/attempt.json": "207ff0ca890b66dcb5f23d5296bd55e8d1dcc2ea7301fc649b5fc89564da8a4f",
+    "B/http-receipt.json": "4752a9c0234e55e36a4101b51cf122d390e0d5688de48ee5e8b49f314066ee24",
+    "B/stream-events.private.json": "86e04e04495293e252ca78afdc1f19b202fd3dc41750414fe4b9d6928c44b951",
+    "B/preflight.json": "ef1ced52011415cafbc79611d1d612b65664d76ddec19719f4c0798ee9860350",
+    "B/readback-1789290349409375605.private.json": "3007874c23870d13cb7e2b6b9d39796559d0a7b97acca56c94e935e44f323acc",
+    "B/response.private.raw": "feec7f1c460c38a2dbd933b1ec4b9fd7f05e11b25ce4b9296002c690f24d89ea",
+    "B/request.json": "48efd090bbf7802d6f503a623fa772f774fccf976882384dc45ac4f3c123e35f",
+    "B/response.private.json": "4027ffd9a90615890e2ae402184571c1787a7cc61f1d857fe24fd4fb7a68af70",
+    "B/attempt.json": "3aa9f475c7cce651d6239c1d04e1cd57270d486105e89b702152aa760cdc5cb5"
+  },
+  "configuration_binding": {
+    "parent_image": "sha256:bc6d64a3aebbb4b1502dfa7170c0b3d02eda97ac97eddfc704c90c80659864e9",
+    "candidate_image": "sha256:793c411efd49b280fdc7401e5844b6d27a8e649621816a3feae7e92e99cd50d6",
+    "activation_command": [
+      "docker",
+      "compose",
+      "--project-name",
+      "eva2-managed-b-slot3",
+      "--env-file",
+      "/var/lib/eva2/managed-b-slot3/candidate.env",
+      "-f",
+      "/home/administrator/project/.eva2-artifacts/memory-controls-image-20260911/deployment/managed-b.compose.yml",
+      "-f",
+      "/home/administrator/project/.eva2-artifacts/memory-controls-image-20260911/deployment/telegram-proactive.compose.yml",
+      "-f",
+      "/home/administrator/project/.eva2-artifacts/memory-controls-image-20260911/deployment/mcp-gateway.compose.yml",
+      "-f",
+      "/home/administrator/project/.eva2-artifacts/memory-controls-image-20260911/deployment/dashboard-voice.compose.yml",
+      "-f",
+      "/home/administrator/project/.eva2-artifacts/memory-controls-image-20260911/deployment/household-voice.compose.yml",
+      "-f",
+      "/var/lib/eva2/managed-b-slot3/core-worker.override.compose.yml",
+      "-f",
+      "/home/administrator/project/.eva2-artifacts/au006-activation-20260913/reprobe-core.override.compose.json",
+      "-f",
+      "/home/administrator/project/.eva2-artifacts/telegram-recovery-20260913/core-reply-fix.compose.json",
+      "-f",
+      "/home/administrator/project/.eva2-artifacts/procedure-reference-runtime-r4-20260913/core.proposed.compose.json",
+      "up",
+      "-d",
+      "--no-deps",
+      "core"
+    ],
+    "rollback_command": [
+      "docker",
+      "compose",
+      "--project-name",
+      "eva2-managed-b-slot3",
+      "--env-file",
+      "/var/lib/eva2/managed-b-slot3/candidate.env",
+      "-f",
+      "/home/administrator/project/.eva2-artifacts/memory-controls-image-20260911/deployment/managed-b.compose.yml",
+      "-f",
+      "/home/administrator/project/.eva2-artifacts/memory-controls-image-20260911/deployment/telegram-proactive.compose.yml",
+      "-f",
+      "/home/administrator/project/.eva2-artifacts/memory-controls-image-20260911/deployment/mcp-gateway.compose.yml",
+      "-f",
+      "/home/administrator/project/.eva2-artifacts/memory-controls-image-20260911/deployment/dashboard-voice.compose.yml",
+      "-f",
+      "/home/administrator/project/.eva2-artifacts/memory-controls-image-20260911/deployment/household-voice.compose.yml",
+      "-f",
+      "/var/lib/eva2/managed-b-slot3/core-worker.override.compose.yml",
+      "-f",
+      "/home/administrator/project/.eva2-artifacts/au006-activation-20260913/reprobe-core.override.compose.json",
+      "-f",
+      "/home/administrator/project/.eva2-artifacts/telegram-recovery-20260913/core-reply-fix.compose.json",
+      "up",
+      "-d",
+      "--no-deps",
+      "core"
+    ],
+    "config_files_sha256": {
+      "/home/administrator/project/.eva2-artifacts/memory-controls-image-20260911/deployment/managed-b.compose.yml": "33626158ade4dbd09c2ad5c58edf0ab16493521bc566b184c738298dc1495b86",
+      "/home/administrator/project/.eva2-artifacts/memory-controls-image-20260911/deployment/telegram-proactive.compose.yml": "62bee1695b8e397efe11c7eb4bc7e9cd58ca7bd08caae37c37415040fca18631",
+      "/home/administrator/project/.eva2-artifacts/memory-controls-image-20260911/deployment/mcp-gateway.compose.yml": "f6f80931f1c74fbca70e4e13eda8c23f99cf2a46bd55ce95ad37465157933342",
+      "/home/administrator/project/.eva2-artifacts/memory-controls-image-20260911/deployment/dashboard-voice.compose.yml": "8d88b1228570af15dd78b73b505ea7c3483fb4090753348dff003f0c6754a029",
+      "/home/administrator/project/.eva2-artifacts/memory-controls-image-20260911/deployment/household-voice.compose.yml": "cb09e4bddf75cffab6b5cad147353d6f9460f4e1b57167bb4a4ba06df379fdf9",
+      "/var/lib/eva2/managed-b-slot3/core-worker.override.compose.yml": "d8f985a3a7349efef465b1f531704a0611adf2eacc73101bd95b919700f9ef48",
+      "/home/administrator/project/.eva2-artifacts/au006-activation-20260913/reprobe-core.override.compose.json": "dd856544061df13bc5062787ad1e953359fb26189c833ad750141f4cf9d861ba",
+      "/var/lib/eva2/managed-b-slot3/candidate.env": "f4c7ee2f4f9e676c4d9bbed69689a5f867b60a316d90c7014761775b34fb9cb8",
+      "/home/administrator/project/.eva2-artifacts/telegram-recovery-20260913/core-reply-fix.compose.json": "f7f93ec018ac1373172f83a51fbcd1e16c1db0f7cd7ad134721846006ed10ee4",
+      "/home/administrator/project/.eva2-artifacts/procedure-reference-runtime-r4-20260913/core.proposed.compose.json": "80ee76b04c00e7bfb884eb6e645813e285781b82d1dc9effe0ed54ca0acebdf6"
+    },
+    "exact_delta": {
+      "core.image": "sha256:793c411efd49b280fdc7401e5844b6d27a8e649621816a3feae7e92e99cd50d6",
+      "core.environment.EVA_PROCEDURE_REFERENCES_ENABLED": "true"
+    }
+  }
+}
