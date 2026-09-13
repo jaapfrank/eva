@@ -247,7 +247,7 @@
         },
         {
           "title": "Project hervatten na herstart",
-          "detail": "Het eerdere incident is hersteld. De nieuwe registratieplanreview vond controles die Python-optimalisatie kon uitschakelen. De gerichte correctie is getest en wacht op herreview. Er is geen registratiepoging gedaan; de projectworker blijft uit."
+          "detail": "De gecorrigeerde registratiescripts en het plan zijn onafhankelijk goedgekeurd en geïntegreerd. De uitvoerder mag nu de exacte endpointwijziging en maximaal één registratiepoging uitvoeren na verse controles, met behoud van de opstartbeveiliging. De uitkomst is nog niet bevestigd; geen projectworker of schrijfacties."
         },
         {
           "title": "Gedeeld audiotype",
@@ -5502,13 +5502,13 @@
           "owner": "01a08d52-31b1-7091-be45-812c0b6e6c9f",
           "work": "Gatewaymetadata gericht herstellen vóór AU-006-activering",
           "boundary": "New providers/document_goal_actions.py; bundled.py opt-in registration only; document_goal_plan.py safe full host GoalSpec/hash binding; targeted provider/PG tests and docs. Existing actual ConversationTurn/current authority/external tool port. No second planner/live/envflip.",
-          "status": "optimized_registration_guard_correction_submitted_for_review"
+          "status": "corrected_guarded_phase1_execution_authorized_result_pending"
         },
         {
           "owner": "coordinator/timing_final_review",
           "work": "Herreview registratieplan met blijvende controles",
           "boundary": "Exact guarded registration plan and bd26e97f correction; no execution or database changes. Earlier four-row incident repair remains closed.",
-          "status": "guarded_registration_optimized_checks_rereview_pending"
+          "status": "corrected_guarded_phase1_plan_independent_go_complete"
         },
         {
           "owner": "coordinator/next_tools_delivery",
@@ -6924,7 +6924,7 @@
           "sourceCorrectionComplete": true
         },
         "activationPreparation": {
-          "status": "guarded_registration_optimized_checks_correction_under_review",
+          "status": "corrected_guarded_registration_plan_approved_result_pending",
           "ownerThread": "01a08d52-31b1-7091-be45-812c0b6e6c9f",
           "evidenceCommit": "bc0fd5c06d5d97853296cf2459463fac4ad577a7",
           "evidencePath": "eva2/evidence/living-core/au006-activation-preparation-20260913.json",
@@ -7337,7 +7337,7 @@
           "reason": "Dropping the guard can repeat null-team reassignment; future recreates and policy rollback must retain reviewed guard override."
         },
         "guardedPhase1RegistrationPlan": {
-          "status": "review_blocker_corrected_candidate_pending_rereview",
+          "status": "corrected_guarded_phase1_plan_independent_go_execution_authorized",
           "ownerThread": "01a08d52-31b1-7091-be45-812c0b6e6c9f",
           "proposalCommit": "bd716f00a873ce420c2a768a661e58abc689d604",
           "evidencePaths": [
@@ -7345,7 +7345,7 @@
             "eva2/evidence/living-core/au006-guarded-phase1-registration-plan-20260913.md"
           ],
           "documentsIntegrated": true,
-          "authorized": false,
+          "authorized": true,
           "executed": false,
           "registrationPostLimit": 1,
           "registrationPostsExecuted": 0,
@@ -7362,12 +7362,10 @@
             "Independent new-registration absence and guarded gateway readiness"
           ],
           "excludedActions": [
-            "Repeat four-row repair",
-            "Core connector admission",
             "Sealer",
-            "Core opt-in",
-            "Document worker",
-            "Phase2 or effects"
+            "Core worker",
+            "Phase2",
+            "Repeat incident repair"
           ],
           "privateExecutionDirectory": "/home/administrator/project/.eva2-artifacts/au006-activation-20260913/phase1-guarded-registration-execution",
           "resourceRetention": "Existing au006-activation-20260913 owner and retention apply; new evidence must not overwrite earlier attempt evidence.",
@@ -7400,11 +7398,28 @@
               "Success:one POST",
               "Uncertain result:no retry"
             ],
-            "sourceIntegrated": false,
-            "independentCorrectionGo": false,
+            "sourceIntegrated": true,
+            "independentCorrectionGo": true,
             "liveChanges": 0,
-            "registrationPosts": 0
-          }
+            "registrationPosts": 0,
+            "status": "corrected_independently_approved_and_integrated",
+            "integrationVerification": "Eight current baselines exact, bounded patch clean, reviewed source hashes and final bytes match. Tests already independently repeated; no execution by admin."
+          },
+          "executionStatus": "Assigned exact endpoint policy and maximum one registration POST after fresh checks; result pending.",
+          "successful": false,
+          "independentReview": {
+            "decision": "Explicit GO for corrected guarded phase1 plan",
+            "reportedBy": "coordinator",
+            "correctedSourceCommit": "bd26e97fbd21fd29222e23f0d673cc6ca7caf3aa",
+            "optimizedTestsIndependentlyRerun": 6,
+            "hashesVerified": true
+          },
+          "requiredScope": [
+            "Guard retained in every baseline, candidate and rollback",
+            "Exact approved endpoint policy only",
+            "Maximum one POST after all fresh checks"
+          ],
+          "correctedSourceIntegrated": true
         }
       },
       "isolatedProductExecutionProven": true,

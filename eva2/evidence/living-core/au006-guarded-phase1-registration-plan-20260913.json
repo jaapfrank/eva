@@ -78,11 +78,14 @@
     "/home/administrator/project/.eva2-artifacts/au006-activation-20260913/native-tools-list.json": "8519f6d90bdb76087a0629d0d3453c0a188f4094ab63ca3c87216d15291af471",
     "/home/administrator/project/.eva2-artifacts/au006-activation-20260913/host-preparation.json": "7fa40450e145700b24b100984f4693ef32b7d19cafa0bc4f816db6eb3525383e",
     "/home/administrator/project/.eva2-artifacts/au006-activation-20260913/phase1-registration-intent.json": "b7c508a0cae76b566ffc6bb4ef1689c0ddb4e0590633f247756c7fc25bc20562",
-    "/home/administrator/project/.eva2-artifacts/au006-activation-20260913/phase1_register_private.py": "c6a27c8e3dfb6388bf3515865f103f378b6c07ba27b467ddf752098d8a983b91",
-    "/home/administrator/project/.eva2-artifacts/au006-activation-20260913/phase1_core_readonly_check.py": "7abaa70968e1543ef881dde80b95bb444373523a7bf17c89ef3c99ad4cdf191c",
-    "/home/administrator/project/.eva2-artifacts/au006-activation-20260913/retry_quiescence.py": "cd7bd0be2dd7410da96ead1bbd25b0b2691f6cb2a744ccf10be28708b5863a8e"
+    "/home/administrator/project/.eva2-artifacts/au006-activation-20260913/phase1_register_private.py": "d460c42bf34d0da383273cd96d099d57a0b3bf62a88beb76cd1fafc135b47416",
+    "/home/administrator/project/.eva2-artifacts/au006-activation-20260913/phase1_core_readonly_check.py": "e9a9b217ccc19511e2e1f89d8e97d54c948665959c4004ea055b614aa970615b",
+    "/home/administrator/project/.eva2-artifacts/au006-activation-20260913/retry_quiescence.py": "e946cd966fc78e03f6ec2be26004daaad54d48ce8e07b725acaa73f01f8c4ed6",
+    "/home/administrator/project/.eva2-artifacts/au006-activation-20260913/phase1_read_gateway.py": "8b566795f0504ceb59186e381206930d17cba57b123c28b966f938ccdb31a6f5",
+    "/home/administrator/project/.eva2-artifacts/au006-activation-20260913/phase1_gateway_after.py": "143e5acafba2a262bbcee0850ee8ad8e6e13fbea0e6971ad1110f23cd08391cd"
   },
   "guarded_baseline_config_sha256": "a8ba2c22cf740ea4872ca171e6583939d429b30b97eaea452fa1699df0ea9d79",
   "guarded_candidate_config_sha256": "db735dbbdaf74bdcb5a7cee115a4f32760dd33bc5450958996a54d2e907a3399",
-  "review_document_sha256": "9d815078287837b77bc96613eed6fb9ecbe236d4a49dfb457d0dfe3fa888c946"
+  "review_document_sha256": "9d815078287837b77bc96613eed6fb9ecbe236d4a49dfb457d0dfe3fa888c946",
+  "optimization_guard_review": "au006-optimized-registration-guards-20260913.md"
 }

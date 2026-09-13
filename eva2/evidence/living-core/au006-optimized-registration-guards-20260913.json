@@ -1,0 +1,15 @@
+{
+  "contract": "EvaOptimizedRegistrationGuards/v1",
+  "live_runtime_changes": 0,
+  "live_registration_posts": 0,
+  "optimized_tests_passed": 6,
+  "proof_log_sha256": "8362d76358e651b4d6e5080677c4419e6445684e97f4a4145ea41a8ea07f8e4c",
+  "source_hashes": {
+    "eva2/experiments/contextforge-gateway-v1/au006-activation/retry_quiescence.py": "e946cd966fc78e03f6ec2be26004daaad54d48ce8e07b725acaa73f01f8c4ed6",
+    "eva2/experiments/contextforge-gateway-v1/au006-activation/phase1_core_readonly_check.py": "e9a9b217ccc19511e2e1f89d8e97d54c948665959c4004ea055b614aa970615b",
+    "eva2/experiments/contextforge-gateway-v1/au006-activation/prove_optimized_registration.py": "80a7d15f6b4760542602b25fb9de3841e2bc2b7dfec7d5532a3ce5a75ba3bc4f",
+    "eva2/experiments/contextforge-gateway-v1/au006-activation/phase1_register_private.py": "d460c42bf34d0da383273cd96d099d57a0b3bf62a88beb76cd1fafc135b47416",
+    "eva2/experiments/contextforge-gateway-v1/au006-activation/phase1_read_gateway.py": "8b566795f0504ceb59186e381206930d17cba57b123c28b966f938ccdb31a6f5"
+  },
+  "new_plan_go_required": true
+}
