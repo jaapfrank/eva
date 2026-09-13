@@ -970,6 +970,17 @@ IN-002-gebruikersroute is nog niet technisch klaar of voor Jaap testgereed.
 De bouwer onderzoekt de kleinste echte compatibiliteits-/validatiekloof,
 zonder bypass of hostupgrade. Geen live herstel of nieuwe eigenaarsvraag.
 
+### AU-006 — exacte bestandseigendom bevestigd
+
+Eigenaar01a08d52 bevestigt application/durable_goals.py,
+adapters/postgres/durable_goals.py en connectors/durable_goal_http.py.
+De coördinator staat daarnaast uitsluitend _durable_goal_payload in
+adapters/api/app.py toe als afzonderlijke hunk. Drie genoemde
+projectcontract-/PG-/procesprobetests en één beperkte AU-006-paragraaf
+in living-core-v1.md vallen erbij. De acht exacte paden en hunkgrenzen
+staan in dezelfde AU-006-registratie; stage/retentie blijven gelijk.
+Nog geen bronoplevering, bewijsuitkomst of liveclaim.
+
 ## Nu
 
 | Volgorde | Kaart | Resultaat | Status |
