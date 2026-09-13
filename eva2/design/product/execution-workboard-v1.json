@@ -262,7 +262,7 @@
         },
         {
           "title": "Aangeleerde procedures terugvinden",
-          "detail": "De bronverwijzingen en hostaansluiting zijn technisch afgerond. Het gecorrigeerde plan is goedgekeurd voor voorbereiding. De runtime-uitvoerder maakt nu de kandidaat en een gebonden proef klaar voor afzonderlijke activeringsreview. Er is nog niets live gestart; echte modelselectie en gebruikersacceptatie blijven open."
+          "detail": "De bronverwijzingen en hostaansluiting zijn technisch afgerond. De runtime-kandidaat met vijf gerichte wijzigingen en drie vastgelegde proefvragen is nu voorbereid en ligt ter activeringsreview. Er is nog geen activering of modelproef uitgevoerd; live gebruik en jouw acceptatie blijven open."
         }
       ],
       "openRisks": [
@@ -5104,7 +5104,7 @@
             "candidateCommit": "46e85b2267dc58619de78233405401163f6c20fe",
             "decision": "GO for preparation only",
             "finding": "Existing delegated worker uses832; core and document worker use2393.",
-            "status": "preparation_approved_candidate_and_bound_probe_pending_activation_review",
+            "status": "runtime_candidate_prepared_activation_review_pending",
             "planIntegrated": false,
             "deploymentAuthorized": false,
             "correctionCommit": "295a70cef49477b36f7acd48cae1eb6de401fcf4",
@@ -5119,7 +5119,25 @@
               "ownerThread": "01a08d52-31b1-7091-be45-812c0b6e6c9f",
               "scope": "Five overlays, candidate and sealed probe for separate activation review",
               "liveStarted": false,
-              "activationGo": false
+              "activationGo": false,
+              "status": "prepared_awaiting_independent_activation_review",
+              "evidenceCommit": "e58d256c26c9f16f42aa931fdda2a2e3a62735c2",
+              "evidenceIntegrated": false,
+              "candidateImageReportedPrefix": "43ddd343",
+              "parentImageReportedPrefix": "2393",
+              "sealReportedPrefix": "251fba57",
+              "overlayCount": 5,
+              "sealedRequestCount": 3,
+              "configurationScope": "Core only with guards and readback",
+              "reviewer": "procedure_host_review",
+              "modelCalls": 0,
+              "ownerAccepted": false,
+              "retention": {
+                "owner": "01a08d52-31b1-7091-be45-812c0b6e6c9f",
+                "sourceWorktree": "/home/administrator/project/.eva2-artifacts/au006-project-resume-20260913/document-worktree",
+                "sourceParentCommit": "fefcac8e7c2c1e5b3aa772dacfc67e8327ad7945",
+                "policy": "Existing owner retention applies; candidate integration waits for coordinator GO. No cleanup now."
+              }
             }
           }
         }
