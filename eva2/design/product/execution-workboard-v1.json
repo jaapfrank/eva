@@ -247,7 +247,7 @@
         },
         {
           "title": "Project hervatten na herstart",
-          "detail": "Technisch afgerond en onafhankelijk goedgekeurd: het tweestappenproject hervat na een crash en respecteert stoppen. Een vervolgvoorstel beschrijft starten, status en stoppen via een gewone opdracht. Dat voorstel moet nog worden afgestemd; live-installatie en jouw proef staan open."
+          "detail": "De geïsoleerde projectintegratie is technisch afgerond en onafhankelijk goedgekeurd. Nu wordt starten, status/resultaat en stoppen via een gewone gespreksopdracht toegevoegd voor hetzelfde voorbereide project. Review en een proef via die route volgen; nog niet live of gebruiksklaar verklaard."
         }
       ],
       "openRisks": [
@@ -5480,9 +5480,9 @@
       "owners": [
         {
           "owner": "01a08d52-31b1-7091-be45-812c0b6e6c9f",
-          "work": "AU-006 geautoriseerde documentprovider bouwen",
-          "boundary": "Approved provider plan/ports, exact bootstrap/document_goal_worker.py composition, operations/durable_goal_worker.py generic hooks, named tests and living-core documentation. No app/auth policy, installer, model or live changes.",
-          "status": "bounded_document_product_integration_complete_reviewed_not_live"
+          "work": "AU-006 normale gespreksingang",
+          "boundary": "New providers/document_goal_actions.py; bundled.py opt-in registration only; document_goal_plan.py safe full host GoalSpec/hash binding; targeted provider/PG tests and docs. Existing actual ConversationTurn/current authority/external tool port. No second planner/live/envflip.",
+          "status": "bounded_normal_command_source_implementation_assigned"
         },
         {
           "owner": "coordinator/timing_final_review",
@@ -6227,7 +6227,7 @@
         "historical": true
       },
       "connectionPlan": {
-        "status": "bounded_product_integration_complete_activation_and_owner_trial_open",
+        "status": "isolated_product_complete_normal_command_source_in_progress",
         "ownerThread": "01a08d52-31b1-7091-be45-812c0b6e6c9f",
         "reuse": [
           "Existing owner authority",
@@ -6732,7 +6732,7 @@
           }
         },
         "normalCommandProposal": {
-          "status": "read_only_scope_proposal_recorded_awaiting_coordination",
+          "status": "bounded_source_implementation_assigned",
           "ownerThread": "01a08d52-31b1-7091-be45-812c0b6e6c9f",
           "proposalCommit": "7e3d5df7ede4cfe67a3f0764f05dbbc02b22fd31",
           "proposalPath": "eva2/evidence/living-core/au006-normal-command-activation-scope-20260913.md",
@@ -6752,8 +6752,8 @@
             "eva2/tests/postgres/test_document_goal_actions.py",
             "eva2/design/architecture/living-core-v1.md (bounded documentation)"
           ],
-          "ownershipStatus": "Proposal only; coordinator scope alignment pending.",
-          "sourceImplementationAuthorizedByThisHandoff": false,
+          "ownershipStatus": "Coordinator approved exact proposed source boundary; provider/gateway/worker management remains a separate activation prerequisite.",
+          "sourceImplementationAuthorizedByThisHandoff": true,
           "deploymentAuthorized": false,
           "activationDependencies": [
             "New managed private atomic-provider instance and durable journal, no reuse of removed fixture bindings or tokens",
@@ -6764,7 +6764,17 @@
           ],
           "technicalProductProofReopened": false,
           "live": false,
-          "ownerAccepted": false
+          "ownerAccepted": false,
+          "assignedByCoordinator": "01a08a88-894c-7171-87fa-e681ed47c735",
+          "sourceImplementationAuthorizationBasis": "Subsequent explicit coordinator assignment after proposal7e3d5df7; proposal document itself was read-only.",
+          "requirements": [
+            "Use actual ConversationTurn and existing external tool port",
+            "Fresh current owner authority for caller and actions",
+            "Only start/status-result/stop for the same prepared project",
+            "Safely load full host GoalSpec and bind its exact hash to the plan",
+            "No second planner, environment-only activation or live changes"
+          ],
+          "usableBeforeReviewAndTrial": false
         }
       },
       "isolatedProductExecutionProven": true,
