@@ -1,0 +1,42 @@
+{
+  "original_sealed_rollback_receipt": {
+    "verified": false,
+    "error_type": "RuntimeError"
+  },
+  "readonly_canonicalized_actual_guard": {
+    "verified": true,
+    "candidate": false,
+    "core_image": "sha256:e66fff7d16a8cc0cc5100282c8f7d3faf95cc16269e6de9f6a4ba9b7038e8c90",
+    "unchanged_protected_containers": 11,
+    "targets": [
+      {
+        "name": "/eva2-document-workspace-au006",
+        "id": "300e51479cabea880b691f33bceef70eb2339a170ec2dc41e2fcd5ba21346e09",
+        "image": "sha256:0ef19e699069c3a5d3a26812c5da3d31141fcd5c3faedb14f92c9dcce1209465",
+        "health": "unhealthy"
+      },
+      {
+        "name": "/eva2-document-goal-worker-au006",
+        "id": "cd71065fceab30fdb99a10d4c61e8b49e6bf9f3ee4caa9c963f31d37d59922c1",
+        "image": "sha256:2393a1d5aa0a24f9eb0f19aebbbdbf9b32efe28949015bb002e90e181459dd5c",
+        "health": "unhealthy"
+      }
+    ],
+    "readiness": {
+      "advisory_locks": 0,
+      "other_active_queries": 0,
+      "readiness": {
+        "database": "ready",
+        "detail": null,
+        "memory_projection": "ready",
+        "model_provider": "ready",
+        "ready": true
+      }
+    },
+    "goal_and_artifact_preservation": true,
+    "Telegram_and_AU004_preserved": true
+  },
+  "only_added_normalization": "Env unique keys, complete exact values, ordering ignored",
+  "runtime_mutations": 0,
+  "model_calls": 0
+}

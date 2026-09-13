@@ -121,7 +121,7 @@
           ]
         }
       ],
-      "priorityDecision": "De installatie van de documentstatuscorrectie is mislukt op de vergelijking van configuratievolgorde. Terugrol en onafhankelijke toestandcontrole lopen; een gerichte reparatie van die vergelijking volgt. PR-01 blijft afgesloten. Er is geen bewijs van uitval van Eva.",
+      "priorityDecision": "Het herstel na de mislukte documentstatusinstallatie is onafhankelijk bevestigd. De vorige images, Eva en projectgegevens zijn behouden; de oude onjuiste gezondheidsmeldingen zijn terug. De installatiecontrole wordt gericht gerepareerd. PR-01 blijft afgesloten.",
       "dashboardVerification": {
         "status": "local_browser_verified_not_full_product_acceptance",
         "priorityRevision": {
@@ -279,7 +279,7 @@
         },
         {
           "title": "Betrouwbare status van documentdiensten",
-          "detail": "Beide kandidaatdiensten meldden gezond, maar de installatiecontrole wees een andere volgorde van omgevingsinstellingen af. De installatieproef is mislukt en wordt teruggedraaid; het oorspronkelijke bewijs blijft behouden. De huidige toestand wordt onafhankelijk gecontroleerd. Nog geen oplevering en geen bewezen uitval van Eva."
+          "detail": "Het herstel is onafhankelijk bevestigd: beide vorige images staan terug, Eva is gereed en de doelen, bestanden en Telegramreparaties zijn behouden. De oude verkeerde gezondheidscontroles melden opnieuw ongezond. De statuscorrectie is nog niet opgeleverd. De oorspronkelijke mislukte installatie en terugrolmelding blijven bewaard; een gerichte reparatie van de installatiecontrole wordt voorbereid."
         }
       ],
       "openRisks": [
@@ -1019,7 +1019,7 @@
       "sessionGoal": "AU-008: één zelfstandige kosteloze bijdrage via de algemene uitvoerder.",
       "currentWork": "**Afgerond en live — herbruikbare planreviewprocedure (PR-01).** Eva slaat een werkwijze op, vindt een eerdere werkwijze terug in een nieuw gesprek, ontvangt de gecontroleerde tekst en past de regels toe. De drie echte proeven zijn onafhankelijk goedgekeurd. De inhoudelijke planreview duurde 13,20 seconden. Jouw beoordeling staat open; algemene zelflerende vaardigheden zijn hiermee niet afgerond.",
       "currentEvidence": "eva2/evidence/living-core/au004-r6-abc-live-pass-20260913.json",
-      "nextStep": "**Eerstvolgend open werk:** de terugrol na de mislukte documentstatusinstallatie controleren en de fout in de configuratievergelijking gericht herstellen. Beide kandidaatdiensten meldden gezond, maar dat volstaat niet voor oplevering. Geen bewijs van uitval van Eva. [PR-01](http://localhost:44712/#practice-PR-01) blijft afgesloten; IN-002-releasevoorwaarden blijven afzonderlijk vervolgwerk.",
+      "nextStep": "**Eerstvolgend open werk:** de configuratievergelijking voor de documentstatusinstallatie gericht herstellen en een nieuwe installatiekandidaat laten beoordelen. Het actuele herstel is onafhankelijk bewezen; de oude verkeerde gezondheidscontroles zijn terug. De statuscorrectie is nog niet opgeleverd. [PR-01](http://localhost:44712/#practice-PR-01) blijft afgesloten; IN-002-releasevoorwaarden blijven afzonderlijk vervolgwerk.",
       "usageClarification": {
         "date": "2026-09-07",
         "authorizedBy": "Jaap",
@@ -9632,7 +9632,7 @@
     },
     "documentServiceHealthAU006UX00120260913": {
       "id": "AU006-UX001-health",
-      "status": "installation_attempt_failed_environment_order_guard_rollback_in_progress",
+      "status": "original_install_failed_current_restoration_independently_verified_fix_pending",
       "ownerThread": "01a08d52-31b1-7091-be45-812c0b6e6c9f",
       "assignedBy": "coordinator",
       "outcome": "Accurate liveness/readiness for existing document worker and workspace provider",
@@ -9672,18 +9672,35 @@
         "candidateContainersHealthyReported": 2,
         "failure": "Configuration guard rejects environment-list ordering",
         "originalAttemptPreserved": true,
-        "sealedRollbackStatus": "in_progress",
+        "sealedRollbackStatus": "original_receipt_failed_preserved",
         "rollbackVerified": false,
         "outageProven": false,
         "readOnlyWriterFinding": "Environment values identical; coree66 and eleven protected containers unchanged",
-        "independentCurrentStateCheck": "pending"
+        "independentCurrentStateCheck": "GO for separate current restoration",
+        "originalRollbackReceiptVerified": false,
+        "currentRestorationIndependentlyVerified": true
       },
       "guardFix": {
-        "status": "requested",
+        "status": "fresh_fix_and_seal_review_pending",
         "ownerThread": "01a08d52-31b1-7091-be45-812c0b6e6c9f",
         "scope": "Canonicalize environment comparison while checking exact values and rejecting duplicate keys",
         "sourceGo": false,
         "newInstallationGo": false
+      },
+      "independentRestoration": {
+        "status": "verified",
+        "evidencePath": "eva2/evidence/product/document-health-restoration-independent-2026-09-13.json",
+        "sha256": "137f677d39f84483dcea5e26a0838bfd7d429626259ea869e382f82f117d5850",
+        "reviewReportedBy": "coordinator",
+        "originalRollbackReceiptUnchanged": true,
+        "normalization": "Unique environment keys and exact complete values, ignoring order",
+        "oldImagesRestored": true,
+        "targetHealth": "Old inherited checks remain unhealthy",
+        "coreImagePreserved": "sha256:e66fff7d16a8cc0cc5100282c8f7d3faf95cc16269e6de9f6a4ba9b7038e8c90",
+        "protectedContainersUnchanged": 11,
+        "coreReady": true,
+        "goalsArtifactsTelegramAU004Preserved": true,
+        "healthCorrectionDelivered": false
       }
     }
   },

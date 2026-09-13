@@ -8,7 +8,7 @@ Gebouwd, getest, live en door jou geaccepteerd zijn verschillende stappen.
 **Afgerond en live — herbruikbare planreviewprocedure (PR-01).** Eva slaat een werkwijze op, vindt een eerdere werkwijze terug in een nieuw gesprek, ontvangt de gecontroleerde tekst en past de regels toe. De drie echte proeven zijn onafhankelijk goedgekeurd. De inhoudelijke planreview duurde 13,20 seconden. Jouw beoordeling staat open; algemene zelflerende vaardigheden zijn hiermee niet afgerond.
 [Actueel bewijs](evidence/living-core/au004-r6-abc-live-pass-20260913.json).
 
-**Eerstvolgend open werk:** de terugrol na de mislukte documentstatusinstallatie controleren en de fout in de configuratievergelijking gericht herstellen. Beide kandidaatdiensten meldden gezond, maar dat volstaat niet voor oplevering. Geen bewijs van uitval van Eva. [PR-01](http://localhost:44712/#practice-PR-01) blijft afgesloten; IN-002-releasevoorwaarden blijven afzonderlijk vervolgwerk.
+**Eerstvolgend open werk:** de configuratievergelijking voor de documentstatusinstallatie gericht herstellen en een nieuwe installatiekandidaat laten beoordelen. Het actuele herstel is onafhankelijk bewezen; de oude verkeerde gezondheidscontroles zijn terug. De statuscorrectie is nog niet opgeleverd. [PR-01](http://localhost:44712/#practice-PR-01) blijft afgesloten; IN-002-releasevoorwaarden blijven afzonderlijk vervolgwerk.
 
 <details>
 <summary>Historische voortgang en eerdere tussenstanden — niet de actuele opleverstatus</summary>
