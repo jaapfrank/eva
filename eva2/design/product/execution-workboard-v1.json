@@ -121,7 +121,7 @@
           ]
         }
       ],
-      "priorityDecision": "PR-01 is technisch afgerond en live; het resultaat staat klaar om te lezen. De gezondheidscontroles van de documentdiensten zijn als kandidaat gereed en wachten op onafhankelijke beoordeling vóór installatie. De PostgreSQL-releasevoorwaarden blijven een afzonderlijk open spoor.",
+      "priorityDecision": "PR-01 blijft technisch afgerond en live. De installatie van de twee gecorrigeerde documentdiensten is onafhankelijk goedgekeurd en wordt uitgevoerd; resultaat en gegevensbehoud moeten nog worden teruggelezen. De aanvullende beveiligingsanalyse krijgt een tekstcorrectie, zonder nieuwe scan.",
       "dashboardVerification": {
         "status": "local_browser_verified_not_full_product_acceptance",
         "priorityRevision": {
@@ -279,7 +279,7 @@
         },
         {
           "title": "Betrouwbare status van documentdiensten",
-          "detail": "De correctie is als kandidaat gereed. Componentgerichte controles en negatieve proeven met PostgreSQL, procesuitval en MCP zijn volgens de uitvoerder geslaagd. De onafhankelijke beoordeling staat open; er is nog niets geïnstalleerd. Het bestaande documentproject en PR-01 blijven afgesloten en behouden."
+          "detail": "De onafhankelijke installatiebeoordeling is geslaagd. De uitvoerder installeert de correctie bij de twee documentdiensten. Live gezondheidsstatus en behoud van het voltooide doel, journaal en bestanden worden daarna gecontroleerd. Nog geen afgeronde installatie of bewezen statusverbetering; PR-01 en het documentresultaat blijven behouden."
         }
       ],
       "openRisks": [
@@ -1019,7 +1019,7 @@
       "sessionGoal": "AU-008: één zelfstandige kosteloze bijdrage via de algemene uitvoerder.",
       "currentWork": "**Afgerond en live — herbruikbare planreviewprocedure (PR-01).** Eva slaat een werkwijze op, vindt een eerdere werkwijze terug in een nieuw gesprek, ontvangt de gecontroleerde tekst en past de regels toe. De drie echte proeven zijn onafhankelijk goedgekeurd. De inhoudelijke planreview duurde 13,20 seconden. Jouw beoordeling staat open; algemene zelflerende vaardigheden zijn hiermee niet afgerond.",
       "currentEvidence": "eva2/evidence/living-core/au004-r6-abc-live-pass-20260913.json",
-      "nextStep": "**Eerstvolgend open werk:** onafhankelijke beoordeling van kandidaat 9e71686c voor de gezondheidscontroles van twee documentdiensten; daarna alleen na concrete goedkeuring installeren en teruglezen. De kandidaat doorstond gerichte en negatieve controles, maar staat nog niet live. [PR-01](http://localhost:44712/#practice-PR-01) blijft technisch afgerond; jouw resultaatreview staat open. IN-002-releasevoorwaarden blijven afzonderlijk vervolgwerk.",
+      "nextStep": "**Eerstvolgend open werk:** de goedgekeurde gezondheidscontroles bij twee documentdiensten installeren en hun live status, uitvaldetectie en gegevensbehoud controleren. Installatie is bezig; afronding is nog niet bewezen. [PR-01](http://localhost:44712/#practice-PR-01) blijft technisch afgerond en live. IN-002-releasevoorwaarden blijven afzonderlijk vervolgwerk.",
       "usageClarification": {
         "date": "2026-09-07",
         "authorizedBy": "Jaap",
@@ -7521,6 +7521,20 @@
           "securityReleaseGo": false,
           "binaryRebuilt": false,
           "productionChanged": false
+        },
+        "gosuGovulncheckReview": {
+          "status": "evidence_wording_correction_required",
+          "candidateCommitReportedPrefix": "5a387f9a",
+          "reportedBy": "coordinator",
+          "hashesReportedCorrect": true,
+          "totalFindings": 48,
+          "moduleOnlyFindings": 45,
+          "packageFindings": 3,
+          "functionFindings": 0,
+          "targetGO20264337Level": "module only",
+          "rescanRequired": false,
+          "evidenceIntegrated": false,
+          "securityReleaseGo": false
         }
       }
     },
@@ -9592,7 +9606,7 @@
     },
     "documentServiceHealthAU006UX00120260913": {
       "id": "AU006-UX001-health",
-      "status": "candidate_ready_independent_review_pending",
+      "status": "installation_authorized_in_progress_result_pending",
       "ownerThread": "01a08d52-31b1-7091-be45-812c0b6e6c9f",
       "assignedBy": "coordinator",
       "outcome": "Accurate liveness/readiness for existing document worker and workspace provider",
@@ -9606,7 +9620,7 @@
       "live": false,
       "ownerAccepted": false,
       "currentParentImage": "sha256:e66fff7d16a8cc0cc5100282c8f7d3faf95cc16269e6de9f6a4ba9b7038e8c90",
-      "runtimeGo": false,
+      "runtimeGo": true,
       "doneWhen": [
         "Component-appropriate checks report actual readiness",
         "Negative checks detect stopped or unavailable component",
@@ -9618,7 +9632,14 @@
       "reportedValidation": "Two component health probes and isolated negative PostgreSQL/process/MCP checks passed",
       "imageDelta": "Only the two document images",
       "modelProbes": 0,
-      "effectProbes": 0
+      "effectProbes": 0,
+      "independentInstallationGo": true,
+      "installationSealReportedPrefix": "3d831",
+      "installationReportedBy": "coordinator",
+      "installationServices": 2,
+      "installationCompleteProven": false,
+      "healthImprovementProven": false,
+      "coreParentPreservedRequirement": "e66fff"
     }
   },
   "activeTaskId": "AU-008",
