@@ -121,7 +121,7 @@
           ]
         }
       ],
-      "priorityDecision": "De goedgekeurde r4-kandidaat wordt geactiveerd en via opeenvolgende procedureproeven beoordeeld. Er is nog geen resultaat. Parallel werkt IN-002 de actuele scan en licentie-inventaris voor dezelfde PostgreSQL-image uit.",
+      "priorityDecision": "Het expliciet bewaren van een herbruikbare procedure werkt in proef A. Zelfstandig toepassen in een nieuw gesprek faalde in B; dat concrete gat wordt nu aangepakt. De uitvoerder heeft de terugrol gecontroleerd; de onafhankelijke beoordeling loopt. IN-002 heeft scanbevindingen die de release blokkeren, geen beveiligingsvrijgave.",
       "dashboardVerification": {
         "status": "local_browser_verified_not_full_product_acceptance",
         "priorityRevision": {
@@ -259,7 +259,7 @@
         },
         {
           "title": "Reservekopie herstellen via de wizard",
-          "detail": "Het beperkte PostgreSQL-imagebewijs en de software-inventaris blijven afgerond. Voor dezelfde image worden nu een actuele, gecontroleerde kwetsbaarheidsscan en een licentie-inventaris uitgewerkt via de bestaande releaseketen. Verouderde scaninformatie geldt niet als bewijs; volledige ondersteuning en herstel blijven open."
+          "detail": "De PostgreSQL-scan meldt 110 HIGH- en 18 CRITICAL-pakketbevindingen die de release blokkeren. Het bewijs wordt onafhankelijk beoordeeld. Een geldige koppeling van de software-inventaris aan de image betekent geen beveiligingsvrijgave. Er is geen live-upgrade; verdere release- en herstelvoorwaarden blijven open."
         },
         {
           "title": "Voorbereid documentproject afgerond",
@@ -273,7 +273,7 @@
         },
         {
           "title": "Aangeleerde procedures terugvinden",
-          "detail": "De r4-kandidaat met de bestandspadfix heeft concrete goedkeuring. De runtime-uitvoerder voert de activering en de opeenvolgende A/B/C-proeven uit; elke vervolgstap hangt af van de vorige uitkomst. Er is nog geen uitslag ontvangen. Eerdere mislukte proeven blijven bewaard."
+          "detail": "R4: A slaagde in 25,67 seconden: opslaan en expliciet markeren als herbruikbare procedure werken. B faalde in een nieuw gesprek: Eva antwoordde zonder de procedure op te vragen of toe te passen. C is niet uitgevoerd; geen herhaling. De uitvoerder heeft de terugrol gecontroleerd; de geldige procedurebron en het bestand zijn behouden. De onafhankelijke beoordeling loopt. De algemene ophaal- en selectieroute wordt gericht verbeterd."
         }
       ],
       "openRisks": [
@@ -5206,7 +5206,7 @@
             "candidateCommit": "46e85b2267dc58619de78233405401163f6c20fe",
             "decision": "GO for preparation only",
             "finding": "Existing delegated worker uses832; core and document worker use2393.",
-            "status": "r4_approved_activation_and_gated_ABC_in_progress",
+            "status": "r4_A_bounded_pass_B_reuse_failed_writer_rollback_verified_independent_review_pending",
             "planIntegrated": false,
             "deploymentAuthorized": false,
             "correctionCommit": "295a70cef49477b36f7acd48cae1eb6de401fcf4",
@@ -5444,13 +5444,13 @@
             },
             "nextCandidatePreparation": {
               "owner": "01a08d52-31b1-7091-be45-812c0b6e6c9f",
-              "status": "r4_preparation_complete_concrete_go_execution_in_progress",
+              "status": "r4_outcome_received_retrieval_gap_followup_required",
               "parentCoreImage": "sha256:bc6d64a3aebbb4b1502dfa7170c0b3d02eda97ac97eddfc704c90c80659864e9",
               "activationAuthorized": false,
-              "ordinaryAStillFailed": true
+              "previousR3AStillFailed": true
             },
             "r4Activation": {
-              "status": "authorized_execution_in_progress_no_outcome_received",
+              "status": "A_pass_B_fail_C_not_run_writer_rollback_verified_review_pending",
               "planCommit": "075ba0632ccad9a91e4b3cbcd516db9422f5fc79",
               "sealReportedPrefix": "9d9c9996",
               "imageReportedPrefix": "793c411e",
@@ -5458,10 +5458,73 @@
               "executionOwner": "01a08d52-31b1-7091-be45-812c0b6e6c9f",
               "concreteGo": true,
               "scope": "Activation and gated A/B/C sequence",
-              "outcomeAvailable": false,
+              "outcomeAvailable": true,
               "liveCompletionProven": false,
               "ownerAccepted": false,
-              "previousR3FailurePreserved": true
+              "previousR3FailurePreserved": true,
+              "ordinaryResults": {
+                "reportedBy": "coordinator",
+                "A": {
+                  "outcome": "PASS within bounded save and explicit designation scope",
+                  "saveVerified": true,
+                  "documentPathDesignation": true,
+                  "typedSourceHostBindingCount": 1,
+                  "elapsedSeconds": 25.673
+                },
+                "B": {
+                  "outcome": "FAIL",
+                  "newConversation": true,
+                  "elapsedSecondsApprox": 10,
+                  "modelAttempts": 1,
+                  "toolsInvoked": 0,
+                  "listOrResolveInvoked": false,
+                  "procedureRulesApplied": false,
+                  "behavior": "Direct answer without retrieving the procedure",
+                  "elapsedSeconds": 10.02
+                },
+                "C": {
+                  "performed": false
+                },
+                "retryPerformed": false,
+                "independentFinalEvidenceGo": false,
+                "usage": {
+                  "modelAttempts": 4,
+                  "inputTokens": 21611,
+                  "outputTokens": 449,
+                  "toolCalls": 2,
+                  "elapsedSeconds": 35.693,
+                  "moneyCost": "unknown"
+                }
+              },
+              "rollback": {
+                "targetCoreImage": "sha256:bc6d64a3aebbb4b1502dfa7170c0b3d02eda97ac97eddfc704c90c80659864e9",
+                "status": "writer_verified_complete_independent_review_pending",
+                "verified": true,
+                "legitimateSourceAndFilePreserved": true,
+                "writerVerified": true,
+                "independentVerified": false,
+                "actualCoreId": "a81bd0e0fa7d9db2e210f778261f668d2050954c9136b96aec2f2b764dabd50b",
+                "readyReported": true,
+                "protectedServicesReported": 12,
+                "pendingModelRequestsReported": 0,
+                "telegramRecoveryPreserved": true
+              },
+              "nextFix": {
+                "owner": "coordinator/next_tools_delivery",
+                "status": "in_progress",
+                "scope": "General retrieval and selection through existing active_context and PostgreSQL lexical use_when matching; at most eight references and 4096 context characters, pending source review",
+                "live": false
+              },
+              "writerFinalEvidence": {
+                "commit": "da9626daa6c2ec37dc38277c352481083c4f48bc",
+                "paths": [
+                  "eva2/evidence/living-core/au004-r4-a-pass-b-selection-fail-20260913.json",
+                  "eva2/reviews/au004-r4-a-pass-b-selection-fail-20260913.md"
+                ],
+                "integrated": false,
+                "independentResultGo": false,
+                "status": "Writer final evidence received; independent review pending"
+              }
             }
           }
         }
@@ -6206,9 +6269,9 @@
       "owners": [
         {
           "owner": "01a08d52-31b1-7091-be45-812c0b6e6c9f",
-          "work": "AU-004 r4 activeren en opeenvolgende proeven uitvoeren",
+          "work": "R4 A/B-uitkomst vastleggen en gecontroleerd terugrollen",
           "boundary": "New providers/document_goal_actions.py; bundled.py opt-in registration only; document_goal_plan.py safe full host GoalSpec/hash binding; targeted provider/PG tests and docs. Existing actual ConversationTurn/current authority/external tool port. No second planner/live/envflip.",
-          "status": "AU004_r4_activation_gated_ABC_in_progress"
+          "status": "AU004_r4_A_pass_B_fail_rollback_in_progress"
         },
         {
           "owner": "coordinator/timing_final_review",
@@ -6218,9 +6281,9 @@
         },
         {
           "owner": "coordinator/next_tools_delivery",
-          "work": "Ontbrekende opslagverwijzing in gewone procedureroute herstellen",
+          "work": "Algemene procedure-ophaal- en selectieroute verbeteren",
           "boundary": "Bestaande phase1-bronverwijzingen zijn geïntegreerd en afgesloten. Afzonderlijk designate/list/resolve-hostwerk in dezelfde stage; nieuwe wijzigingen niet opgenomen in phase1.",
-          "status": "AU004_targeted_host_reference_fix_in_progress",
+          "status": "AU004_retrieval_selection_followup_in_build",
           "previousCompletedWork": {
             "work": "Renovate npm-dekking",
             "status": "configuration_complete_bot_activity_unverified",
@@ -6920,7 +6983,7 @@
           "integrationVerification": "Four exact baselines and final bytes checked; bounded patch clean, two source hashes match. Platform lock remains unchanged. Other stage files excluded."
         },
         "nextReleaseEvidenceStep": {
-          "status": "current_verified_vulnerability_cache_scan_and_image_license_inventory_in_progress",
+          "status": "postgres_scan_findings_under_review_no_security_release_go",
           "owner": "coordinator/timing_final_review",
           "scope": "Existing PostgreSQL slot; current verified vulnerability cache/scan and image-specific license inventory through existing release chain",
           "reportedBy": "coordinator",
@@ -6992,6 +7055,23 @@
           "platformSupport": false,
           "fullRestore": false,
           "productionRuntimeChanges": false
+        },
+        "postgresVulnerabilityScanReview": {
+          "status": "scan_findings_reported_evidence_review_pending",
+          "reportedBy": "coordinator",
+          "highPackageFindings": 110,
+          "criticalPackageFindings": 18,
+          "countMeaning": "Package findings, not asserted unique vulnerability count",
+          "schemaBindingValidityDoesNotGrantSecurityRelease": true,
+          "securityReleaseGo": false,
+          "evidenceIntegrated": false,
+          "liveUpgradePerformed": false,
+          "reviewer": "postgres_security_review",
+          "candidateCommitPrefixes": [
+            "580628e3",
+            "88cec319"
+          ],
+          "releaseBlockerReported": true
         }
       }
     },
