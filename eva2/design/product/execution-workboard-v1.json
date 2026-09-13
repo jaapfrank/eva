@@ -262,7 +262,7 @@
         },
         {
           "title": "Aangeleerde procedures terugvinden",
-          "detail": "De correctie op de afgekeurde kandidaat ligt ter herbeoordeling. Volgens de nieuwe PostgreSQL-proef blijft het persoonlijke geheugenoverzicht werken na opslag, opnieuw verbinden en wissen. De validatie is niet versoepeld. Er is nog geen goedkeuring, integratie of livewijziging; het geaccepteerde geheugen blijft ongewijzigd."
+          "detail": "De bronverwijzingen zijn technisch afgerond, onafhankelijk goedgekeurd en geïntegreerd. Procedureopslag blijft gescheiden van persoonlijk geheugen; de gevonden overzichtsfout is opgelost. Nu wordt apart de aansluiting voor markeren, opvragen en teruglezen gebouwd. Dit is nog niet live en bewijst nog geen automatisch gebruik in gewone gesprekken."
         }
       ],
       "openRisks": [
@@ -4913,7 +4913,7 @@
         "next": "Preserve independent result and missing reuse/search proof; no automatic retry or retroactive criteria change."
       },
       "procedureReferenceFollowup": {
-        "status": "namespace_correction_under_independent_rereview",
+        "status": "source_only_reference_phase_complete_integrated_not_live",
         "owner": "coordinator/next_tools_delivery",
         "assignedBy": "01a08a88-894c-7171-87fa-e681ed47c735",
         "userOutcome": "An explicitly reusable saved procedure can be identified as a procedure candidate for a later task, with owner, retention, mandate and current file hash checked locally.",
@@ -4959,7 +4959,7 @@
           "No live probe"
         ],
         "built": true,
-        "tested": false,
+        "tested": true,
         "live": false,
         "ownerAccepted": false,
         "priorABDeliveryRemainsClosed": true,
@@ -4975,8 +4975,8 @@
         },
         "candidateCommit": "51be1235abde503ae25b4d7cb203d41dd390e2aa",
         "independentReviewer": "coordinator/timing_final_review",
-        "sourceIntegrated": false,
-        "independentGo": false,
+        "sourceIntegrated": true,
+        "independentGo": true,
         "reportedCandidateChecks": {
           "applicationPassed": 15,
           "actualPostgresPassed": 1,
@@ -4986,7 +4986,7 @@
           "modelCalls": 0,
           "productionDatabaseConnections": 0
         },
-        "builtScope": "Phase1 isolated source only; tests reported, independent review pending.",
+        "builtScope": "Source-only typed references, durable storage and guarded resolution contracts; host/model integration not included.",
         "reviewBlocker": {
           "decision": "NO-GO for candidate6da0329f",
           "reportedBy": "coordinator",
@@ -4997,18 +4997,54 @@
           "liveIncident": false,
           "candidateIntegrated": false,
           "acceptedMemoryChanged": false,
-          "status": "Correction submitted; independent re-review pending.",
+          "status": "Corrected and independently approved; original rejection retained as history.",
           "correctionCommit": "51be1235abde503ae25b4d7cb203d41dd390e2aa",
           "reportedCorrection": "Source-only records separated from personal memory namespace; actual PostgresPeopleMemoryOverview before/after, reconnect and erasure preserved.",
           "validatorUnchanged": true,
-          "independentCorrectionGo": false
+          "independentCorrectionGo": true
         },
         "originalCandidateCommit": "6da0329f3b74368a7db1df7f6e5baadfbeddda02",
         "correctionPaths": [
           "eva2/reviews/procedure-reference-source-only-20260913.json",
           "eva2/src/eva/adapters/postgres/memory_outbox.py",
           "eva2/tests/postgres/test_procedure_reference_sources.py"
-        ]
+        ],
+        "sourceCommits": [
+          "6da0329f3b74368a7db1df7f6e5baadfbeddda02",
+          "51be1235abde503ae25b4d7cb203d41dd390e2aa"
+        ],
+        "sourcePaths": [
+          "eva2/src/eva/application/procedure_references.py",
+          "eva2/src/eva/adapters/postgres/memory_outbox.py",
+          "eva2/tests/application/test_procedure_references.py",
+          "eva2/tests/postgres/test_procedure_reference_sources.py",
+          "eva2/reviews/procedure-reference-source-only-20260913.json"
+        ],
+        "independentReview": {
+          "decision": "Joint GO for exact corrected source-only phase",
+          "reportedBy": "coordinator",
+          "reviewer": "coordinator/timing_final_review",
+          "applicationTestsIndependentlyRepeated": 15,
+          "realPostgresProofInspected": true,
+          "realPostgresProofIndependentlyRepeated": false,
+          "verified": [
+            "memory-source namespace separation",
+            "Ordinary enqueue rejects reserved IDs",
+            "Personal overview validator unchanged"
+          ],
+          "hostHookGo": false,
+          "liveGo": false,
+          "generalAU004Complete": false
+        },
+        "integrationVerification": "Five exact scoped baselines verified; bounded patch applied cleanly; all final bytes and four source hashes match reviewed commit/evidence. No newer stage work included.",
+        "hostIntegrationFollowup": {
+          "status": "separate_isolated_build_in_progress",
+          "owner": "coordinator/next_tools_delivery",
+          "scope": "Host designate/list/resolve in the same retained stage",
+          "sourceIntegrated": false,
+          "live": false,
+          "exactOwnership": "Pending execution-owner handoff; not included in phase1 integration."
+        }
       }
     },
     "gatewayCatalogPagination20260912": {
@@ -5732,9 +5768,9 @@
         },
         {
           "owner": "coordinator/next_tools_delivery",
-          "work": "Correctie procedureopslag klaar voor herreview",
-          "boundary": "Nieuwe src/eva/application/procedure_references.py plus gerichte tests en eigen bewijs. Alleen indien nodig kleine audience-gebonden source-lookup in bestaande memory_outbox.py. Geen runtime.after_response, Hindsight, ConfirmedFact, nieuwe tabel of registry in fase1.",
-          "status": "AU004_namespace_correction_under_rereview",
+          "work": "Hostaansluiting voor procedureverwijzingen bouwen",
+          "boundary": "Bestaande phase1-bronverwijzingen zijn geïntegreerd en afgesloten. Afzonderlijk designate/list/resolve-hostwerk in dezelfde stage; nieuwe wijzigingen niet opgenomen in phase1.",
+          "status": "AU004_source_only_phase_closed_host_integration_isolated_build",
           "previousCompletedWork": {
             "work": "Renovate npm-dekking",
             "status": "configuration_complete_bot_activity_unverified",

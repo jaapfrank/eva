@@ -135,7 +135,8 @@ class PostgresMemoryOutbox(PostgresScopedRole):
     @staticmethod
     def _thread_id(document_id: str) -> str:
         digest = hashlib.sha256(document_id.encode("utf-8")).hexdigest()
-        return f"memory-retain:{digest}"
+        namespace = "memory-source" if document_id.startswith("procedure-reference:") else "memory-retain"
+        return f"{namespace}:{digest}"
 
     @staticmethod
     def _now() -> datetime:
@@ -169,6 +170,36 @@ class PostgresMemoryOutbox(PostgresScopedRole):
         return conversation_memory_document_from_outbox_data(data)
 
     def enqueue(self, document: ConversationMemoryDocument) -> DurableMemoryRetentionJob:
+        if document.document_id.startswith("procedure-reference:"):
+            raise ValueError("procedure reference requires source-only storage")
+        return self._store(document, source_only=False)
+
+    def record_source(self, document: ConversationMemoryDocument) -> DurableMemoryRetentionJob:
+        """Store an explicit reference without sending it into personal semantic memory."""
+        if not document.document_id.startswith("procedure-reference:") or document.trust != "model_inference_unconfirmed":
+            raise ValueError("source-only document contract differs")
+        return self._store(document, source_only=True)
+
+    def resolve_source(self, document_id: str, *, principal_id: str,
+                       project_id: str | None) -> ConversationMemoryDocument | None:
+        if not document_id.startswith("procedure-reference:"):
+            return None
+        thread_id = self._thread_id(document_id)
+        events = self._timeline.events(thread_id)
+        if not events:
+            return None
+        state = self._timeline.load(thread_id)
+        if state.phase != "memory_source_recorded" or state.status != "completed":
+            return None
+        data = events[0].payload.get("data")
+        if not isinstance(data, dict) or "content" not in data or data.get("content_erasure"):
+            return None
+        document = self._document_from_data(data)
+        if document.principal_id != principal_id or document.project_id != project_id:
+            return None
+        return document
+
+    def _store(self, document: ConversationMemoryDocument, *, source_only: bool) -> DurableMemoryRetentionJob:
         if (
             document.tenant_id != self._tenant_id
             or document.installation_id != self._installation_id
@@ -186,8 +217,8 @@ class PostgresMemoryOutbox(PostgresScopedRole):
                 ),
                 data=data,
                 event_type="MEMORY_RETAIN_QUEUED",
-                phase="memory_queued",
-                status="active",
+                phase="memory_source_recorded" if source_only else "memory_queued",
+                status="completed" if source_only else "active",
             )
         except CheckpointConflict:
             events = self._timeline.events(thread_id)
@@ -200,6 +231,8 @@ class PostgresMemoryOutbox(PostgresScopedRole):
             if first is None or first.event_type != "MEMORY_RETAIN_QUEUED" or first_data != data:
                 raise RuntimeError("memory outbox replay differs") from None
             state = self._timeline.load(thread_id)
+        if source_only and state.phase != "memory_source_recorded":
+            raise RuntimeError("source-only replay is unavailable")
         return DurableMemoryRetentionJob(document, state)
 
     def pending(self, *, limit: int = 256) -> tuple[DurableMemoryRetentionJob, ...]:

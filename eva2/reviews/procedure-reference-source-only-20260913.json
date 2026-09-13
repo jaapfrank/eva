@@ -1,0 +1,52 @@
+{
+  "contract": "ProcedureReferenceSourceOnlyEvidence/v1",
+  "base_commit": "2f8b0616d43bf1c7c990d6d6f5a873b8217af563",
+  "files": {
+    "eva2/src/eva/application/procedure_references.py": "b766c4aab2c8ac482eed35ff7433875134e8389cca9fca533296beb502744d09",
+    "eva2/src/eva/adapters/postgres/memory_outbox.py": "04f8df52dce61d8d5992d71b1cfc37d48f6999309af6ab2625cb81733dc997e2",
+    "eva2/tests/application/test_procedure_references.py": "6d94d2b70b37af83c22540daafac9b6486ef425b92e7302c805d9c1683595e41",
+    "eva2/tests/postgres/test_procedure_reference_sources.py": "7f6f16c8e903c09f8224ef11a5abbf27722bcf002b4de47bc3d80342fdb8732b"
+  },
+  "scope": "Explicit reusable designation from host-loaded STATE_VERIFIED save admission; source-only durable record and guarded candidate resolution.",
+  "tests": {
+    "application": "15 passed",
+    "postgres": "1 passed; genuine PostgreSQL 16.13, fresh connection, owner/project isolation, existing erasure, replay rejection, source excluded from semantic pending queue while ordinary personal enqueue remains queued",
+    "postgres_fixture": {
+      "container_id": "185dd451b85312284a3946653c585004797957ae0fe9c15ac3ee4f2f298ce58f",
+      "postgres_image": "sha256:5d143123fdf80462d1778cd4f24b9f7ca13c87174bca19141fb194c5a1ebca59",
+      "network_mode": "none",
+      "published_ports": [],
+      "data_storage": "tmpfs",
+      "connection": "local Unix socket only",
+      "pytest_exit_code": 0,
+      "model_calls": 0,
+      "production_database_connections": 0,
+      "disposable_container_removed": true
+    }
+  },
+  "reuse": {
+    "storage": "Existing PostgresMemoryOutbox and operational source record, no new registry or schema",
+    "erasure": "Existing erase_content redacts source and prevents replay resurrection",
+    "personal_memory": "Completed memory_source_recorded phase is excluded from pending() and existing owner personal-source phase filter; no ConfirmedFact or Hindsight publication"
+  },
+  "trust_boundary": [
+    "Host load_save must resolve the same durable admission/proof and authority; caller supplies only source_call_id and explicit use_when, never raw proof",
+    "Expected/observed content and execution/observation paths bind to the same admission; configuration hash and owner identity checked",
+    "Reference resolves only after owner/project scope, retention, source validity, current mandate, durable receipt identity and current artifact hash checks; source/mandate checked again after read",
+    "Search supplies candidate IDs only. A valid reference is not authority to execute its content."
+  ],
+  "limitations": [
+    "Host receipt/read/mandate ports are contract-shaped doubles in this phase, not deployed production adapters",
+    "Matching/nonmatching candidate tests exercise supplied IDs, not a semantic search engine or model selection",
+    "No runtime after_response hook, model guidance, semantic indexing, live model calls or automatic procedure use",
+    "No complete AU004, deployed product, or owner acceptance claim",
+    "Postgres fixture is isolated version 16.13; not production database compatibility or full release proof"
+  ],
+  "retention_path": "/home/administrator/project/.eva2-artifacts/procedure-reference-20260913",
+  "namespace_review_correction": {
+    "cause": "memory-retain prefix includes source-only completed phases in personal flow validation, yielding unavailable",
+    "fix": "Reserved procedure-reference document IDs use memory-source namespace in the same operational storage. Ordinary enqueue rejects these IDs. Existing personal-flow validation is unchanged.",
+    "proof": "Real PostgresPeopleMemoryOverview remains no_signals before/after procedure designation; ordinary queued personal record yields processing before and after restart and procedure erasure. Existing pending/erasure/replay checks still pass.",
+    "migration": "Source-only candidate never deployed; no live data migration performed or claimed."
+  }
+}
