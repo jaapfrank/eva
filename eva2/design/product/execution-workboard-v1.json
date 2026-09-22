@@ -11565,7 +11565,19 @@
         "testsPassed": 46
       },
       "postgres18AndWriterGuard": "eva2/evidence/product/portable-recovery-integration-20260923.json",
-      "currentCompatibility": "Kernherstelbron op exacte PostgreSQL18.6-image:8proeven geslaagd. Snapshot/restore hercontroleert bekende/gedeelde databasewerkers vóór I/O:9gerichte hosttests en review geslaagd. Geen livecutover of pakketinstallatie."
+      "currentCompatibility": "Kernherstelbron op exacte PostgreSQL18.6-image:8proeven geslaagd. Snapshot/restore hercontroleert bekende/gedeelde databasewerkers vóór I/O:9gerichte hosttests en review geslaagd. Geen livecutover of pakketinstallatie.",
+      "sessionClosure": {
+        "status": "source_tested_reviewed_operator_wiring_pending",
+        "evidence": "eva2/evidence/product/restore-session-closure-20260923.json",
+        "installed": false
+      },
+      "activationRequirements": [
+        "Exact restore-id, archive, canonical/runtime identity and database cluster lineage",
+        "Fresh source/target worker inspection and fencing; configuration traffic_closed alone is insufficient",
+        "Verified coordinated Hindsight/core and document package/catalog identity",
+        "Close copied listening sessions in same root transaction as activation; preserve uncertain calls and delivery fences",
+        "Fresh restore/erasure authority before committing release; start only matching core and both workers"
+      ]
     }
   },
   "activeTaskId": "AU-008",

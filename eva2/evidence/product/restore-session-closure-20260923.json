@@ -1,0 +1,29 @@
+{
+  "status": "source_tested_reviewed_not_installed",
+  "date": "2026-09-23",
+  "outcome": "Close copied listening sessions transactionally before future restore activation; preserve history and delivery fences.",
+  "files": {
+    "src/eva/operations/restore_activation.py": "3c9807a526c6e8c54d5fc326f2db454daf3a0b8b59bb2e0504280dedff8a42c2",
+    "tests/portable/test_portable_v2_current_work.py": "107be7b9cf1189564510d1eeccdd8ab5fd6eea4e8619353c71790e14c3052a6a"
+  },
+  "tests": {
+    "sessionCommitRollback": {
+      "passed": 2,
+      "logSha256": "d0ab31dee59549d834d7d080050d9f48da5f818c939007df3d8153b8b7dd3724"
+    },
+    "existingEncryptedRoundtripWithNewFixture": {
+      "passed": 1,
+      "logSha256": "b431a4cf5967121895f0c7541194ac74693200faca0bef5f9718062a43179654"
+    },
+    "environment": "Synthetic isolated PostgreSQL16, actual core image with source overlay; no paid model/provider calls."
+  },
+  "reviewer": "document_private_identity",
+  "review": "Source GO; root transaction and exact held restore required. Existing close transitions preserve events and fences. Reviewer did not rerun tests.",
+  "limits": [
+    "Session fixtures are synthetic event records, not actual voice-device/store opening",
+    "Helper is not yet wired to operator activation; no release function or automatic startup",
+    "DB OID is only local identity; full operator release needs cluster identity and actual dependency/source checks",
+    "No production installation or owner acceptance"
+  ],
+  "next": "Call helper inside root operator activation transaction before fresh authority check and hold release, after verified coordinated restoration."
+}

@@ -136,6 +136,18 @@ def current_archive(tmp_path_factory):
         goals.admit(waiting_goal)
         waiting_state = goals.state(waiting_goal.goal_id, str(owner))
         source_work = {name: store.load(spec.work_id, owner_principal_id=owner, principal_binding_id=binding) for name, spec in specs.items()}
+        # A restore must not revive an old listening context, even before expiry.
+        from eva.adapters.postgres.operational_timeline import insert_initial_timeline_thread
+        voice_sessions = {
+            "private-return-session:" + "a"*64: "PRIVATE_RETURN_SESSION_OPENED",
+            "household-work-session:" + str(uuid4()): "HOUSEHOLD_WORK_SESSION_OPENED",
+        }
+        with source.begin() as connection:
+            for thread, event_type in voice_sessions.items():
+                insert_initial_timeline_thread(connection, scope, thread_id=thread,
+                    checkpoint_id=thread+":open", occurred_at=NOW,
+                    event_type=event_type, phase="open", status="active",
+                    deadline=NOW+timedelta(seconds=15), data={"synthetic": True})
         archive = directory / "archive"
         with source.connect() as connection:
             export_current_archive(connection, tenant_id=tenant, installation_id=installation,
@@ -144,7 +156,7 @@ def current_archive(tmp_path_factory):
         seal_portable_archive(archive, sealed, passphrase=PASSPHRASE, validator=read_current_archive)
         yield {"database":database, "archive":archive, "blob":sealed.read_bytes(), "scope":scope,
                "owner":owner, "binding":binding, "pairings":pairings, "results":results,
-               "specs":specs, "source_work":source_work, "document":document, "goal":goal, "waiting_document":waiting_document, "waiting_goal":waiting_goal, "waiting_state":waiting_state}
+               "voice_sessions":voice_sessions, "specs":specs, "source_work":source_work, "document":document, "goal":goal, "waiting_document":waiting_document, "waiting_goal":waiting_goal, "waiting_state":waiting_state}
     finally:
         for engine in engines:
             engine.dispose()
@@ -292,3 +304,39 @@ def test_archive_needs_trusted_runtime_identity(current_archive, tmp_path):
         wizard.prepare(current_archive["blob"], PASSPHRASE)
     with target.connect() as connection:
         assert connection.exec_driver_sql("SELECT count(*) FROM eva_core.installations").scalar_one() == 0
+
+
+@pytest.mark.parametrize("rollback", [False, True])
+def test_restore_activation_closes_old_voice_sessions_transactionally(current_archive, tmp_path, rollback):
+    from eva.operations.restore_activation import close_restored_voice_sessions, RestoreActivationRequired
+    from eva.adapters.postgres.operational_timeline import operational_events as events, operational_checkpoints as checkpoints
+    fixture = current_archive
+    wizard, target, _ = workflow(fixture, tmp_path)
+    result = wizard.execute(wizard.prepare(fixture["blob"], PASSPHRASE)["confirmation"])
+    threads = tuple(fixture["voice_sessions"])
+    with target.connect() as c:
+        before = c.execute(sa.select(events).order_by(events.c.event_id)).mappings().all()
+    with target.begin() as c:
+        with pytest.raises(RestoreActivationRequired):
+            close_restored_voice_sessions(c, restore_id=str(uuid4()), now=NOW+timedelta(seconds=1))
+    class AbortActivation(Exception):
+        pass
+    try:
+        with target.begin() as c:
+            assert close_restored_voice_sessions(c, restore_id=result["restore_id"], now=NOW+timedelta(seconds=1)) == 2
+            assert close_restored_voice_sessions(c, restore_id=result["restore_id"], now=NOW+timedelta(seconds=2)) == 0
+            assert c.exec_driver_sql("SELECT held FROM eva_core.restore_activation").scalar_one() is True
+            if rollback:
+                raise AbortActivation()
+    except AbortActivation:
+        assert rollback
+    with target.connect() as c:
+        after = c.execute(sa.select(events).order_by(events.c.event_id)).mappings().all()
+        retained = {row["event_id"]: row for row in after}
+        assert all(retained[row["event_id"]] == row for row in before)
+        assert len(after) == len(before) + (0 if rollback else 2)
+        states = c.execute(sa.select(checkpoints).where(checkpoints.c.thread_id.in_(threads))).mappings().all()
+        assert len(states) == 2
+        assert all(row["phase"] == ("open" if rollback else "closed") for row in states)
+        assert c.exec_driver_sql("SELECT held FROM eva_core.restore_activation").scalar_one() is True
+    wizard.close()
