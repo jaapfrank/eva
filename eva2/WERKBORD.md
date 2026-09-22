@@ -5,7 +5,7 @@ Laatst bijgewerkt: 2026-09-22.
 Doel: [Eva als zelfstandig lerende digitale huisgenoot](PROJECTDOEL.md).
 Gebouwd, getest, live en door jou geaccepteerd zijn verschillende stappen.
 
-Automatische dashboardverversing en correcte opleverstatus zijn live. Spraakmetingen tonen nog geen totale snelheidswinst; Luna blijft low. Twee producttaken bouwen verder: correcte instructies voor beschikbare achtergrondtaken en echte achtergrondonderzoekuitvoering.
+Gespreksinstructieconflict is hersteld, onafhankelijk gecontroleerd en geïnstalleerd. Achtergrondonderzoekkandidaat werkt met fixtures; echte proef bleef terecht ambiguous door ontbrekende telling van hosted webzoekacties. Tweede gerichte adapterfix loopt modelvrij; geen nieuw onderzoek totdat die oorzaak is hersteld. Spraakvertraging blijft open.
 [Actueel bewijs](evidence/product/contact-dashboard-live-2026-09-22.json).
 
 Geen verdere herhaling van afgeronde low/none-proeven. De providerfase blijft de grootste gemeten wachttijd; een volgende snelheidswijziging vraagt een concrete nieuwe hypothese. Intussen herstellen twee producttaken het aangetoonde conflict in planningsinstructies en bouwen echte achtergrondonderzoekuitvoering. Bestaande opleveringen blijven behouden.

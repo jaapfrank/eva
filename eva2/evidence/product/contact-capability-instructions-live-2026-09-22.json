@@ -1,0 +1,24 @@
+{
+  "installed": true,
+  "image": "sha256:982c31f8d5522d757476fef8932e3e38d8b17d233f508f34ca513384509ecfd2",
+  "sourceCommit": "c61373c8b964d1d326399431faf537e6ad0b39f9",
+  "ready": true,
+  "ownerWorkHTTP": 200,
+  "workResponseKeys": [
+    "contract",
+    "operation",
+    "jobs",
+    "truncated"
+  ],
+  "existingCardsPreserved": 5,
+  "allProtectedContainersUnchanged": true,
+  "directUnauthenticatedHTTP": 401,
+  "scopeOverrideHTTP": 422,
+  "liveSourceHashesMatched": true,
+  "elapsedSeconds": 12.43,
+  "rollbackAvailable": true,
+  "review": "Coordinator GO after source review and independent 21 focused effective-instruction/contact tests.",
+  "modelCalls": 0,
+  "limits": "Instruction contradiction corrected; no new speed or subjective conversation-quality claim. Known catalog-hash assertion mismatch remains separately recorded.",
+  "rollback": "/var/lib/eva2/managed-b-slot3/history/conversation-instructions-20260922/active-compose.before.json"
+}
