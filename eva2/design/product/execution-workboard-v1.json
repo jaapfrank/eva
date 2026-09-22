@@ -1028,25 +1028,23 @@
           }
         ],
         "now": {
-          "title": "Onderzoekswerk via de huishoudspeaker",
-          "detail": "De uitvoerder sluit openbare onderzoeksopdrachten aan op dezelfde taakuitvoering, met een vaste huishoudelijke sessie en behoud van privégrenzen. De privéroute via tekst en spraak is inmiddels geïnstalleerd.",
-          "state": "In uitvoering",
-          "doneWhen": "Een toegelaten openbare opdracht wordt door de bestaande taakwerker afgerond en is alleen in de juiste huishoudsessie leesbaar; privécontext en privéresultaten blijven afgeschermd. Daarna review, aansluiting van het apparaattransport en installatie."
+          "title": "Begroeting duurt nog ongeveer 5 seconden",
+          "detail": "Jaaps websiteproef faalt op snelheid. De bijbehorende spraakbeurt wachtte 3,94 seconden op eerste modeltekst; volledige modelcall 4,42 seconden, één call met 5.175 invoertokens. De coördinator onderzoekt de bestaande contactroute. De uitvoerder bouwt ondertussen het huishoudelijke onderzoeksdeel af.",
+          "state": "Probleem in onderzoek",
+          "doneWhen": "Een gerichte verbetering is getest, beoordeeld en geïnstalleerd; de eerste hoorbare reactie wordt apart gemeten. Bestaande identiteit, geheugen en achtergrondwerk blijven werken."
         },
         "next": {
-          "title": "Huishoudelijke route beoordelen en aansluiten",
-          "detail": "Eerst het serverdeel met de bestaande taakwerker testen en beoordelen. Daarna de speakeraansluiting installeren. De fysieke Voice PE-proef kan na USB-backup en activering van de beperkte netwerkregel.",
+          "title": "Snelle contactroute herstellen en meten",
+          "detail": "Eerst vaststellen waarom de contactmodelcall zoveel tijd en context vraagt. Daarna een gerichte wijziging beoordelen en installeren. Huishoudelijk onderzoek blijft parallel in uitvoering.",
           "state": "Hierna"
         },
         "ownerAction": {
-          "title": "Probeer terugmelding tijdens een gesprek",
+          "title": "Je traagheidsmelding is geregistreerd",
           "url": "http://localhost:44711/internal/v1/dashboard/conversation",
           "linkLabel": "Open het tekstgesprek",
           "steps": [
-            "Open het tekstgesprek met de knop, of open http://localhost:44716/ voor privéspraak.",
-            "Vraag: “Zoek op de achtergrond in de officiële documentatie uit wat Home Assistant Cloud voor spraak doet. Bewaar de bronnen.”",
-            "Stel ondertussen een andere vraag en laat dezelfde sessie open. Het onderzoeksresultaat hoort daar later terug te komen.",
-            "Meld of doorpraten lukte, hoe snel de ontvangst was en of het resultaat één keer met bronnen terugkwam."
+            "Je hoeft Hallo niet opnieuw te testen om de huidige vertraging te bewijzen.",
+            "Na een geïnstalleerde verbetering volgt hier de concrete herhaalproef. De volledige proef met achtergrondresultaten blijft afzonderlijk open."
           ],
           "expected": "Bij sluiten blijft toegelaten werk bestaan; opgeslagen resultaten vind je in Mijn hulpopdrachten. Een nieuwe spraaksessie speelt oude of onzeker afgeleverde resultaten niet automatisch opnieuw af. Voor de aparte Voice PE-proef: sluit de woonkamer-Voice PE per USB-datakabel aan en meld dit in de taak; het andere apparaat blijft ongewijzigd."
         },
@@ -10812,7 +10810,7 @@
           "planningEffortHours": "4–12"
         }
       ],
-      "nextAction": "Privéresultaatterugkeer via tekst en spraak is geïnstalleerd. Rond nu het huishoudelijke serverdeel op dezelfde taakuitvoering af, beoordeel en sluit daarna de speakeraansluiting aan. Voice PE-apparaatinstallatie wacht op USB-backup en de voorbereide Windows-netwerkregel. Jouw privépraktijkproef blijft apart open.",
+      "nextAction": "Onderzoek en herstel eerst de gemeten trage websitebegroeting (3,94 s tot eerste modeltekst). Huishoudelijk onderzoek loopt parallel door; privéresultaatterugkeer is geïnstalleerd, menselijke acceptatie blijft open.",
       "effortNotice": "Grove planning, lage zekerheid: 40–118 actieve ontwikkeluren plus zeven dagen gezinspraktijk en eventuele externe wachttijd. Geen deadline, creditkosten of gemeten verbruik; per begrensde wijziging aanscherpen na lezing van bestaand bewijs. Hergebruik kan dit verkorten.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Na review, installatie en registratie automatisch volgende uitvoerbare stap; geen algemene wachtstop op gebruikersproeven.",
@@ -10912,6 +10910,21 @@
       "finding": "Release-bound historical source hashes differ from current checkout; observed in packaged dashboard API check. Preserve receipts and bind the evidence to exact source revisions; do not refresh hashes as if a new product trial passed.",
       "test": "tests/api/test_dashboard_status.py::test_dashboard_live_and_tested_claims_have_exact_reopenable_evidence",
       "scope": "Existing final release gate, no expansion of current private-return feature."
+    },
+    "websiteGreetingLatency20260922": {
+      "status": "open",
+      "ownerReport": "Een reactie op Hallo via de website duurt ongeveer 5 seconden.",
+      "matchedRoute": "voice",
+      "replyRecordedAt": "2026-09-22T16:32:42Z",
+      "model": "chatgpt-codex:gpt-5.6-luna",
+      "firstContentMs": 3935,
+      "modelCompletedMs": 4423,
+      "inputTokens": 5175,
+      "outputTokens": 20,
+      "modelAttempts": 1,
+      "toolCalls": 0,
+      "evidence": "Bestaande operational_events REPLY_COMMITTED: exacte door eigenaar geciteerde antwoordtekst gematcht; geen nieuwe modelproef.",
+      "limitation": "Modeltiming is gemeten; volledige microfoon-tot-audioverdeling nog niet gemeten. Geen oorzaakclaim over iedere invoertoken."
     }
   },
   "activeTaskId": "AU-008",
