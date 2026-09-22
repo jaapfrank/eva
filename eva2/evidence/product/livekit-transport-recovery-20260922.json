@@ -1,0 +1,178 @@
+{
+  "date": "2026-09-22",
+  "status": "passed_isolated_transport_boundary",
+  "productCodeChanged": false,
+  "harness": {
+    "path": "tests/voice_service/livekit-transport-recovery.cjs",
+    "sha256": "301a95454155e15b14b1661de0084e570c70ee51d48af129d4ef083c0d97465d"
+  },
+  "assets": {
+    "sourceContainer": "eva2-owner-voice-media-1",
+    "image": "sha256:daae43c50b211955aaf75a598be16246dca8bcf530f878991e572f8e1312a53d",
+    "hashes": {
+      "livekit-client.js": "7fa17e37af5e996d8a25f15a637dcc0620215bc01b394e5d209f726afe7dc04d",
+      "client.html": "884e99eaffcbdf91921a32ecea10b04bae1d98cde39d39d02e3ef194775bd506"
+    }
+  },
+  "runtime": {
+    "livekitVersion": "1.13.6",
+    "livekitImage": "sha256:770bc61bc6ec4dcccbd3e05082d8f6bdafbee4179acab7014cc97202a9e2910b",
+    "browserImage": "sha256:18c0a9c934004fe9580cc79f1e8e6e6cde7c667348b215335e8a23fd3e509804",
+    "keeperImage": "sha256:14358309a308569c32bdc37e2e0e9694be33a9d99e68afb0f5ff33cc1f695dce"
+  },
+  "topology": "Disposable namespace keeper on an internal Docker network. SFU and Chromium share its network namespace and communicate over loopback; no published ports, production networks or credentials. SFU replacement preserves the namespace.",
+  "method": "Exact installed client HTML and SDK; only the existing media-server localAccess substitution. Synthetic session issuer signs isolated room tokens. Real Chromium getUserMedia with synthetic device creates native MediaStreamTracks, real SDK publishes to real SFU. Observation wrapper delegates unchanged to native getUserMedia. No Room events injected.",
+  "attempts": [
+    {
+      "attempt": 1,
+      "result": "harness_setup_failure_before_browser_start",
+      "cause": "Image includes full Chromium but lacks headless_shell. Corrected executablePath to the existing chromium.executablePath(); no downloads."
+    },
+    {
+      "attempt": 2,
+      "result": "harness_topology_failure_before_start_click",
+      "cause": "Network-none namespace reports navigator.onLine=false; product correctly disables Start. Separate minimal browser probes confirmed internal-network interface reports true. Corrected isolated network topology; no product assertion relaxed."
+    },
+    {
+      "attempt": 3,
+      "result": "passed",
+      "cause": "Corrected executable and internal-network namespace; same installed product assets."
+    }
+  ],
+  "assertions": [
+    "Before explicit Begin gesprek there are zero capture calls.",
+    "Explicit start creates one live native audio track and one published audio track in connected Room.",
+    "Actual isolated SFU process loss makes SDK interrupt; native track ends, Room clears and input disables.",
+    "After verified distinct SFU replacement, five seconds without user action creates no new capture or session.",
+    "Explicit Begin gesprek creates a second native track and publishes successfully; old track remains ended.",
+    "Explicit End closes both native tracks; no browser page errors."
+  ],
+  "observed": {
+    "proof": "actual-client-real-livekit-transport-recovery",
+    "initial": {
+      "calls": 1,
+      "tracks": [
+        {
+          "state": "live",
+          "kind": "audio"
+        }
+      ],
+      "textDisabled": false,
+      "startDisabled": true,
+      "state": "Eva luistert. Je kunt haar onderbreken door te praten.",
+      "connected": "connected",
+      "published": 1
+    },
+    "disconnected": {
+      "calls": 1,
+      "tracks": [
+        {
+          "state": "ended",
+          "kind": "audio"
+        }
+      ],
+      "textDisabled": true,
+      "startDisabled": false,
+      "state": "De verbinding is onderbroken. Kies Begin gesprek om weer te praten.",
+      "connected": null,
+      "published": 0
+    },
+    "recovered": {
+      "calls": 1,
+      "tracks": [
+        {
+          "state": "ended",
+          "kind": "audio"
+        }
+      ],
+      "textDisabled": true,
+      "startDisabled": false,
+      "state": "De verbinding is onderbroken. Kies Begin gesprek om weer te praten.",
+      "connected": null,
+      "published": 0
+    },
+    "restarted": {
+      "calls": 2,
+      "tracks": [
+        {
+          "state": "ended",
+          "kind": "audio"
+        },
+        {
+          "state": "live",
+          "kind": "audio"
+        }
+      ],
+      "textDisabled": false,
+      "startDisabled": true,
+      "state": "Eva luistert. Je kunt haar onderbreken door te praten.",
+      "connected": "connected",
+      "published": 1
+    },
+    "recovery": {
+      "ready": true,
+      "oldContainerId": "22a7d7c15f6b9908163ba38bdea43d4eaf65cf912141691b25a7e82e3cc0df9d",
+      "newContainerId": "01151f7d0eaf5585d39ae041ada16e2e62e2894f748d5a6e73de2680b2828cc7"
+    },
+    "clientSha256": "884e99eaffcbdf91921a32ecea10b04bae1d98cde39d39d02e3ef194775bd506",
+    "sdkSha256": "7fa17e37af5e996d8a25f15a637dcc0620215bc01b394e5d209f726afe7dc04d",
+    "requests": [
+      {
+        "method": "GET",
+        "path": "/"
+      },
+      {
+        "method": "GET",
+        "path": "/livekit-client.js"
+      },
+      {
+        "method": "GET",
+        "path": "/favicon.ico"
+      },
+      {
+        "method": "POST",
+        "path": "/session"
+      },
+      {
+        "method": "POST",
+        "path": "/session/end/isolated-recovery-1"
+      },
+      {
+        "method": "POST",
+        "path": "/session"
+      },
+      {
+        "method": "POST",
+        "path": "/session/end/isolated-recovery-2"
+      }
+    ],
+    "physicalMicrophone": false,
+    "productionCore": false,
+    "modelCalls": 0,
+    "observationAfterRecoveryMs": 5000
+  },
+  "limitations": [
+    "Five-second post-recovery observation, not an indefinite guarantee.",
+    "Synthetic audio device, not owner microphone, speaker playback or physical Voice PE.",
+    "Synthetic session issuance, not production core/authentication/session lifecycle.",
+    "No model, STT, TTS, memory, background task or combined core/browser-process recovery exercised.",
+    "No full release or owner acceptance claim."
+  ],
+  "privateExecutionDirectory": "/var/lib/eva2/livekit-recovery-20260922",
+  "recordedExecution": {
+    "execution-result.json": "6aeb704630d600059dc2b765e06b77256c51f717ee11e55b9245c9666ef8d7b4",
+    "shared/result.json": "91e66e816ce647e297538fb32a495c45d0819531de6049924edb9b9a1e97135f",
+    "asset-provenance.json": "b35b3e6681b2564f60b07de07e6b73c68667b13cd340460341329370b7060482",
+    "browser-network-preflight.json": "6efff076896fd7023da444bec8fc4e3aab8e4efd7045603bd533bde53745f37e",
+    "execution-commands.json": "e71ca5441bb5e06d6e1ed43fe8abda7e62c4aa58017ebd11bb10cc3a6ce48c2a",
+    "sfu-before.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "eva2-livekit-proof-browser-20260922.log": "fcd5f407ae9b54da1fd50285425b4759897ba6354992873460909480c49d62b6",
+    "attempt1/eva2-livekit-proof-browser-20260922.log": "f25cb646445b0651c3a76c2e57088fbe1ad8ef4928f861ab6cb47fbf00d65066",
+    "attempt2/eva2-livekit-proof-browser-20260922.log": "684e4d5588d952ade9bb1d374c26c4284c52ef91d615ac844808a0f25659c565"
+  },
+  "independentReview": {
+    "status": "GO_test_only",
+    "reviewer": "coordinator",
+    "path": "eva2/reviews/livekit-transport-recovery-20260922.md"
+  }
+}

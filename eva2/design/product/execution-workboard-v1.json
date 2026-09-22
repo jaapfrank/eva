@@ -1003,6 +1003,14 @@
         "checkedAt": "2026-09-22",
         "deliveries": [
           {
+            "title": "Spraakherstel: microfoon blijft uit",
+            "date": "22 september",
+            "state": "tested",
+            "result": "Exact geïnstalleerde webclient doorloopt echte uitval en vervanging van een geïsoleerde spraakserver. Microfoontrack stopt en start alleen opnieuw na Begin gesprek. Onafhankelijk uitgevoerd en beoordeeld.",
+            "remaining": "Synthetische microfoon; geen fysieke Voice PE-acceptatie of volledige computerherstart. Geen nieuwe productcode of installatie nodig.",
+            "source": "eva2/evidence/product/livekit-transport-recovery-20260922.json"
+          },
+          {
             "title": "Browser en taakherstel samen gecontroleerd",
             "date": "22 september",
             "state": "tested",
@@ -1068,10 +1076,10 @@
           }
         ],
         "now": {
-          "title": "Echte spraakverbinding bij herstel",
-          "detail": "Browser- en duurzaam taakherstel zijn nu in dezelfde onderbreking gecontroleerd. Nog ontbreekt het gedrag van de echte spraakverbinding bij uitval en terugkomst.",
-          "state": "Volgende ontbrekende integratiegrens",
-          "doneWhen": "Werk en gegevens blijven behouden; terugkomst schakelt de microfoon niet vanzelf in."
+          "title": "Volledige herstelkandidaat samenstellen",
+          "detail": "Browser/taakprocesherstel en echte spraakuitval zijn gericht gecontroleerd. De volledige geïsoleerde core/worker-installatie moet deze grenzen nog samen met gegevensherstel doorlopen.",
+          "state": "Integratiepoort nog open",
+          "doneWhen": "Eén complete kandidaat behoudt gegevens, taken en privacy bij installatieherstel; daarna fysieke en gezinsproeven."
         },
         "next": {
           "title": "Gesprek tijdens werk op de echte ingangen",
@@ -10858,7 +10866,7 @@
           "planningEffortHours": "4–12"
         }
       ],
-      "nextAction": "Bestaande voice/LiveKit-harnas gebruiken voor werkelijke transportuitval en herstel zonder automatische microfoonstart. Reeds geslaagde browser/procesproef niet ongewijzigd herhalen; volledige runtime- en hostherstart blijven eindpoort.",
+      "nextAction": "Bestaande installatie-/restoreharnas aansluiten op huidige samengestelde runtime en reeds vastgelegde herstelgrenzen. Geen herhaling van ongewijzigde deelproeven. Fysieke Voice PE, Telegram-verduidelijking en eindgezinsacceptatie blijven apart open.",
       "effortNotice": "Grove planning, lage zekerheid: 40–118 actieve ontwikkeluren plus zeven dagen gezinspraktijk en eventuele externe wachttijd. Geen deadline, creditkosten of gemeten verbruik; per begrensde wijziging aanscherpen na lezing van bestaand bewijs. Hergebruik kan dit verkorten.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Na review, installatie en registratie automatisch volgende uitvoerbare stap; geen algemene wachtstop op gebruikersproeven.",
@@ -11425,6 +11433,31 @@
         },
         "productSourceChanged": false
       }
+    },
+    "voiceTransportRecovery20260922": {
+      "status": "real_transport_boundary_passed",
+      "outcome": "Werkelijke LiveKit-uitval stopt de microfoon; herstel begint pas na opnieuw Begin gesprek.",
+      "scope": "Exact geïnstalleerde client en SDK, echte geïsoleerde SFU/WebRTC, synthetische native browsermicrofoon. Geen productieonderbreking, STT/TTS/modelcalls of fysieke acceptatie.",
+      "owner": "recovery_voice_boundary",
+      "reviewer": "coordinator",
+      "planningEstimate": "30–60 minuten planning; creditkosten onbekend.",
+      "doneWhen": [
+        "Browser publiceert na expliciete start echt naar geïsoleerde SFU.",
+        "Uitval van die SFU levert echt SDK-signaal op en beëindigt de microfoontrack.",
+        "Serverherstart start geen nieuwe track of sessie; expliciete start werkt weer."
+      ],
+      "ownerAccepted": false,
+      "evidence": "eva2/evidence/product/livekit-transport-recovery-20260922.json",
+      "review": "eva2/reviews/livekit-transport-recovery-20260922.md",
+      "productSourceChanged": false,
+      "installationRequired": false,
+      "result": "Werkelijke SFU-uitval stopt native synthetische microfoontrack. Na serverherstel vijf seconden geen nieuwe sessie/track; alleen expliciete Begin gesprek herstart.",
+      "attempts": {
+        "harnessSetupFailures": 2,
+        "successfulTransportTrials": 1,
+        "modelCalls": 0
+      },
+      "remaining": "Fysieke Voice PE en volledige core/worker/hostherstart met data/taakbehoud blijven open."
     }
   },
   "activeTaskId": "AU-008",
