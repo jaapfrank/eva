@@ -1,0 +1,22 @@
+{
+  "baseCommit": "e97d75384f74bd82eca35300175fa1994cbf1a2e",
+  "runtimeImage": "sha256:d0c28433861b3b51be28f3b9e63d6d506261e7b1ce0506c60add5d42d30763eb",
+  "executedProbeSha256": "e327ee4245f917fb921bcc9e801db0672cb91a983e194b55d068ff4ad9a3887a",
+  "runtimeSourceSha256": {
+    "adapters/model/pydantic_conversation.py": "6d918b8996b545edac46eda7c312a5d0e0af6367f6635224671b57d6d84126e0",
+    "adapters/model/openai_codex_provider.py": "df3e29a0c0f955c1a22285d9b5b0878691031a47babbd27d2dc8012d9990643d",
+    "bootstrap/runtime.py": "bcf636b9ccf6200543ba51252084e8fb6e38f7220de78f7df5169ddf511897b9"
+  },
+  "offlineNetwork": "none",
+  "liveNetwork": "isolated disposable Docker bridge container",
+  "runtimeMounts": "read-only",
+  "productionEdits": false,
+  "actualHttpModelRequests": 3,
+  "maximumAuthorizedRequests": 4,
+  "effectfulToolsExecuted": 0,
+  "actualSubscriptionCost": "unknown",
+  "docsSource": "https://developers.openai.com/api/docs/guides/prompt-caching",
+  "docsCheckedAt": "2026-09-22",
+  "decision": "Do not widen production projector: current Codex endpoint rejects prompt_cache_breakpoint.",
+  "runnerSha256": "b5af56da7ecf3d77a7203a3060a4849d0be5b6827c6be04e1db873bc46f8e936"
+}
