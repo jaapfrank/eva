@@ -1037,7 +1037,7 @@
         ],
         "now": {
           "title": "Bestaande documentopdrachten activeren",
-          "detail": "Het actuele pakket is getest: 39 controles geslaagd, recente spraak- en geheugenwijzigingen blijven behouden. Eén uitvoerder maakt de beperkte registratieprocedure af; de coördinator controleert pakket en terugweg.",
+          "detail": "Documentpakket: 39 tests geslaagd. Onderhoudsonderdelen: 8 stop/hersteltests en 4 browserbrugtests geslaagd, onafhankelijk beoordeeld. De volledige registratieprocedure wordt nog samengevoegd; niets hiervan is geactiveerd.",
           "state": "Pakket klaar; registratievoorbereiding loopt",
           "doneWhen": "Registratie en poolconfiguratie zijn beoordeeld en geïnstalleerd; twee documenten zijn via de gewone gesprekstaak te maken, volgen en stoppen met behoud van het bestaande project."
         },
@@ -11005,7 +11005,7 @@
       "ownerAccepted": false
     },
     "documentPoolCurrentPreflight20260922": {
-      "status": "read_only_preflight_passed",
+      "status": "current_baseline_and_maintenance_components_reviewed",
       "stage": "/var/lib/eva2/document-pool-phase1-current-20260922",
       "registryGateways": 6,
       "registryTools": 55,
@@ -11014,7 +11014,8 @@
       "registrationCalls": 0,
       "modelCalls": 0,
       "maintenanceWindowCompleted": false,
-      "remaining": "Concrete onderhoudsuitvoering/seal/review, twee registraties, actuele catalogusbindings en afzonderlijke effectfase. Geen installatie-GO."
+      "remaining": "Geteste stop/herstel- en registratietransportonderdelen samenvoegen met gateway/provideractivering, historiecontrole en terugweg. Daarna exacte totaalprocedure beoordelen; registratie en pool nog niet actief.",
+      "componentEvidence": "eva2/evidence/living-core/document-maintenance-components-20260922.json"
     },
     "standardReceipt20260922": {
       "ownerDecision": "Korte standaardontvangst zonder GPT is toegestaan; werkclaim vereist echte toelating.",

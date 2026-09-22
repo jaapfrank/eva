@@ -1,0 +1,67 @@
+{
+  "status": "reviewed_maintenance_components_not_executed",
+  "stage": "/var/lib/eva2/document-pool-phase1-current-20260922",
+  "date": "2026-09-22",
+  "files": {
+    "maintenance_executor.py": "768ce8476c9516d147fbd54334b6057a50b4c8c3ce883cb2db1b458b1239e6d2",
+    "test_maintenance_executor.py": "6185f6362341ab26a9660d90c1104368ffe3e5672ce91b4c777f3d3d2c56f76e",
+    "bridge_maintenance.py": "7fffc5709853997077d16ddf7ba56c800615d6b4b6d03af0a13d26b9e02418e9",
+    "test_bridge_maintenance.py": "a5445147c8ff60fd0f6dfd4e77a221604cac0aab14e0649fdd48a20c1b552378"
+  },
+  "executorReview": {
+    "reviewer": "root coordinator independent of author",
+    "result": "GO for component integration after log interval/stderr and restoration corrections",
+    "offlineTestsPassed": 8
+  },
+  "bridgeReview": {
+    "scope": "bridge_maintenance.py bounded primitives only",
+    "decision": "GO for component integration; not complete maintenance installation authorization",
+    "reviewed_sha256": "7fffc5709853997077d16ddf7ba56c800615d6b4b6d03af0a13d26b9e02418e9",
+    "tests": {
+      "command": "python3 -m unittest test_bridge_maintenance -v",
+      "passed": 4,
+      "runtime_mutated": false
+    },
+    "resolved_findings": [
+      "Restoration now rejects unexpected bridge children before success.",
+      "Stop checks original cgroup and descendant cgroup.procs before receipt."
+    ],
+    "verified": [
+      "Task-owned drop-in uses exclusive creation and exact-content removal.",
+      "No-kill infinity policy is read back before asynchronous graceful stop.",
+      "Stop timeout retains policy and does not force-kill or blindly restart.",
+      "Original PID, cgroup processes, listener and graceful exit predicates gate stopped receipt.",
+      "Fresh PID/epoch and idle disconnected state gate restoration; original timeout/SIGKILL/restart policy read back after removing own file."
+    ],
+    "limits": [
+      "Caller must bind exact files, current baseline and run receipts to independent reviewed seal.",
+      "No real bridge stop/start or runtime policy mutation was executed.",
+      "This GO does not cover complete gateway/provider orchestration or maintenance window evidence."
+    ]
+  },
+  "baseline": {
+    "capturedAt": "2026-09-22T18:23:05.955004+00:00",
+    "reason": "Known receipt, household work, research and private-memory releases changed four runtime containers since prior preparation. Prior snapshot retained.",
+    "registryUnchanged": true,
+    "trackedContainers": 9,
+    "hashes": {
+      "registry.private.json": "f09a2b2757aafe3cdc853dfa98d5449e54e11e360e8fec179c69a2683b0fa672",
+      "admissions.private.json": "bab132e6f046a058438b48159a121881c30cb9872e1effa0da48f148fc0d6470",
+      "delegated.private.json": "b342e001c2aa623cd69ff819866711531dd35414084dbdd8b000b741fd5a944c",
+      "containers.private.json": "ced37af3c96a07443e7dfd890ce88b128ecfdcc7a501c1f897f2b9cefefff42c",
+      "bridge.private.json": "49183e15bb6bc860c678ab09c0d313863b3edb04606a2fc2e1d6a27d1877f551"
+    },
+    "runtimeMutated": false,
+    "registrationCalls": 0
+  },
+  "runtimeMutated": false,
+  "registrationCalls": 0,
+  "completeInstallerApproved": false,
+  "next": [
+    "Compose ordered client/bridge stop, read-only provider and exact gateway policy activation",
+    "Capture after-stop admission history and registry preservation",
+    "Seal and independently review exact complete installer before once-only registration",
+    "Activate catalog-bound document pool separately; preserve legacy project"
+  ],
+  "creditCost": "unknown"
+}
