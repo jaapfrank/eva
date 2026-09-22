@@ -31,7 +31,7 @@ def result_messages(work_id: str, output: str) -> tuple[str, ...]:
     if part:
         pieces.append(''.join(part))
     return tuple(
-        f'Onderzoek afgerond · {work_id}\nDeel {index}/{len(pieces)}\n\n{piece}'
+        f'{"Documentproject afgerond" if work_id.startswith("document-task:") else "Onderzoek afgerond"} · {work_id}\nDeel {index}/{len(pieces)}\n\n{piece}'
         for index, piece in enumerate(pieces, 1)
     )
 

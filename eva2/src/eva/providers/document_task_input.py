@@ -144,7 +144,7 @@ class DocumentTaskPool:
                 return self.validate_claim(claim)
         return None
 
-    def claim(self, store, *, task, turn, call_id, authority_sha256, tenant_id, installation_id, owner_principal_id=None):
+    def claim(self, store, *, task, turn, call_id, authority_sha256, tenant_id, installation_id, owner_principal_id=None, return_binding_factory=None):
         from datetime import datetime, timedelta
         from eva.application.durable_goals import DurableGoalSpec, GoalWakeCondition
         from eva.providers.document_goal_plan import DocumentGoalPlan, PreparedDocumentGoal
@@ -177,6 +177,10 @@ class DocumentTaskPool:
                     'principal_id':turn.principal_id,'conversation_id':turn.conversation_id,
                     'message_id':turn.message_id,'audience':{'kind':'private_person','principal_id':turn.principal_id}},
                 'plan':plan.to_payload(),'definition':definition.to_payload()}
+            if return_binding_factory is not None:
+                binding = return_binding_factory()
+                if binding is not None:
+                    payload['return_binding'] = binding
             actual=store.claim_document_slot(slot_id,payload,at=at)
             if actual==payload:return actual
             if actual.get('task_id')==task_id:

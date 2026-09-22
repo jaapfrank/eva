@@ -1619,7 +1619,7 @@ def create_runtime_app() -> FastAPI:
     from eva.adapters.model.pydantic_conversation import PydanticConversationModel
     from eva.bootstrap.household_voice import load_household_voice_authority
     from eva.bootstrap.delegated_work_delivery import (
-        private_destination_loader, completion_worker, delivery_status_loader,
+        private_destination_loader, completion_worker, delivery_status_loader, document_completion_source,
     )
 
     settings = RuntimeSettings.from_environment()
@@ -1796,6 +1796,10 @@ def create_runtime_app() -> FastAPI:
         )
     if settings.delegated_work_enabled and delegated_work_actions is None:
         raise RuntimeError("delegated work requires the configured dashboard owner")
+    document_results = (document_completion_source(engine)
+                        if delegated_work_service is not None else None)
+    if delegated_work_service is not None:
+        delegated_work_service.document_completion_source = document_results
     household_work_server = None
     if settings.household_work_config_file is not None:
         if (household_voice is None or not settings.household_voice_session_enabled
@@ -2154,7 +2158,7 @@ def create_runtime_app() -> FastAPI:
             and delegated_work_service is not None and proactive_delivery is not None
             and settings.telegram_principal_bindings_file is not None):
         result_delivery = completion_worker(
-            delegated_work_store, proactive_delivery,
+            delegated_work_store, proactive_delivery, document_source=document_results,
             bindings_loader=lambda: load_principal_bindings(settings.telegram_principal_bindings_file),
         )
         # Reuse the existing durable background loop. Reserves with background

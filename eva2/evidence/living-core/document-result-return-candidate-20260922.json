@@ -1,0 +1,76 @@
+{
+  "status": "tested_reviewed_candidate_not_installed",
+  "package": {
+    "parent": "sha256:17b07a7a76016086a4ed413c64e7f9b946ab1feba17f45ec9b4422a40fa387d6",
+    "image": "sha256:2320da954ea6686e320e53b8364e811808b93c400d664fb416dacb1ac04ffa2d",
+    "files": {
+      "adapters/postgres/delegated_work_delivery.py": "6374d4e31e9488706bc56b265e732b080c71f4e89aae63c8b20e2c423ba7a63c",
+      "adapters/postgres/private_work_return.py": "dc5ec6636fb5bd129ad625a9d794f7e3ed463992cb09dc907ca207eaf33fc483",
+      "bootstrap/delegated_work_delivery.py": "d266064296d80656b5aca71a439de717b472a39383511ae10fe4216267b6f3d8",
+      "bootstrap/runtime.py": "41111a1a2f2058b309e3e2b4158a8b6fab604c6b18a7e70676eea35aba1b221b",
+      "operations/delegated_work_delivery.py": "eb66f1f500a10259fe8d421d772889cda902dc1ca745e00653ff6c8d5347a5e1",
+      "providers/document_task_actions.py": "ae2ed79720bb764153c52d272abfc4caaf6873830f66aabb7d7bc5f908320ddd",
+      "providers/document_task_input.py": "021afd1b39557c3d3ae502e1098e79741850d4cd03fe552f453d4b33c7bc806a",
+      "providers/document_completion.py": "dc5f7de7df0c4d5d8437a9e87a5c330dc4a654633e6645221e167245ba6b6631"
+    }
+  },
+  "sourceReview": "eva2/reviews/document-result-return-20260922.md",
+  "tests": {
+    "uniqueCasesReportedPassed": 56,
+    "groups": {
+      "newDocumentCompletion": 15,
+      "existingDocumentPrivateOwner": 2,
+      "delegatedDelivery": 10,
+      "privateReturn": 13,
+      "privateReturnChain": 2,
+      "operationsAndInput": 14
+    },
+    "postgres16": "Historical fixtures retain exact version160013 and separate required schemas.",
+    "postgres18": {
+      "newDocumentCasesPassed": 15,
+      "seconds": 9.48,
+      "serverVersion": 180006,
+      "packageTested": "sha256:2320da954ea6686e320e53b8364e811808b93c400d664fb416dacb1ac04ffa2d",
+      "method": "Exact test-body copy; explicit separate fixture imports assert actual180006 and empty disposable DB, then use existing migration helper. Historical PG16 fixture remains unchanged.",
+      "testSourceSha256": "722b1cbcd59c4682eac3fa4056827a6662b04b00a2f12ccb63ca24039a9825e8",
+      "fixtureSha256": "c82a4d68edbcbeac815240836343b5f666f2948aa1c869455697d7164e72ebc2"
+    },
+    "logs": {
+      "document-tests.log": {
+        "sha256": "ad9b46134a3dd352b001f1848d82a7bce135f8b0ef2d879da804c9cc0b199158",
+        "tail": "======================== short test summary info ============================\nFAILED tests/postgres/test_document_completion.py::test_new_binding_replay_and_historical_claim_never_backfills\n1 failed, 16 passed in 12.81s"
+      },
+      "historical-claim-test-corrected.log": {
+        "sha256": "66bba16cb8034f86f397ca937761e58d5bc804f4959e889ca9c27e18e7525571",
+        "tail": ".                                                                        [100%]\n1 passed in 3.00s"
+      },
+      "research-regression-tests.log": {
+        "sha256": "eabebce433355c8055151a305ecfeeb4edaa3f697b5c4d13d78f5cee86935d5f",
+        "tail": "d_result_to_bound_transport_and_restart_without_resend[False]\nERROR tests/postgres/test_private_result_return_chain.py::test_saved_result_to_bound_transport_and_restart_without_resend[True]\n10 passed, 15 errors in 3.72s"
+      },
+      "private_return-tests.log": {
+        "sha256": "8173f81194786ea765ff96837c37a2850158167bad6d6c730d3f919e6797234d",
+        "tail": ".............                                                            [100%]\n13 passed in 4.67s"
+      },
+      "return_chain-tests.log": {
+        "sha256": "435de4694ade498a59e347f0aae8158a006ced6ecff0a2b19182515437b6a814",
+        "tail": "..                                                                       [100%]\n2 passed in 3.79s"
+      },
+      "pg18-compatibility.log": {
+        "sha256": "032144e4451c861589ced1030d902382b6d6896fc09725f44afaee5f1a91d1f0",
+        "tail": "Original test SHA256 722b1cbcd59c4682eac3fa4056827a6662b04b00a2f12ccb63ca24039a9825e8\n...............                                                          [100%]\n15 passed in 9.48s"
+      }
+    }
+  },
+  "harnessCorrections": [
+    "Isolated PostgreSQL entrypoint required /tmp socket in addition to mounted /socket.",
+    "Host Python lacked packaged dependencies; switched to existing runtime image and mounted test dependencies.",
+    "PG16 and legacy module fixtures required distinct explicit disposable databases.",
+    "Historical claim test setup omitted schedule_wake; only that failed case reran after correction.",
+    "PG18 fixture initially selected imported PG16 fixture; explicit unchanged test-body copy with PG18 fixture corrected collection."
+  ],
+  "modelCalls": 0,
+  "externalMessages": 0,
+  "ownerAccepted": false,
+  "proofBoundary": "Real PostgreSQL delivery fences with synthetic terminal artifacts and fake transport. Prior native document execution evidence remains separate. No new live Telegram or physical voice trial."
+}

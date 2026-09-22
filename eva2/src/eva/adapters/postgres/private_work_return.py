@@ -22,8 +22,10 @@ def private_episode(turn):
 
 
 class PrivateWorkReturnStore:
-    def __init__(self, service):
+    def __init__(self, service, *, document_source=None):
         self.service, self.work = service, service.store
+        self.documents = (document_source if document_source is not None else
+                          getattr(service, "document_completion_source", None))
 
     def _where(self, table, thread):
         return (table.c.tenant_id == self.work.scope.tenant_id,
@@ -103,6 +105,7 @@ class PrivateWorkReturnStore:
             if operation == 'renew':
                 return {'status': 'open'}
             delivery_prefix = 'private-work-return:' + route_hash + ':'
+            document = None
             if operation == 'poll':
                 # Query the origin episode directly; the owner's twenty-card UI is
                 # not the queue and cannot starve an older, followed completion.
@@ -123,22 +126,34 @@ class PrivateWorkReturnStore:
                 row = connection.execute(query.order_by(runs.c.created_at, runs.c.work_id)
                     .limit(1).with_for_update(of=runs, skip_locked=True)).mappings().one_or_none()
                 if row is None:
-                    return {'status': 'idle', 'result': None}
-                work = self.work._validated(connection, row)
+                    document = self._next_document(connection, route, delivery_prefix,
+                        opened_at=datetime.fromisoformat(opened['opened_at']) if voice else None)
+                    if document is None:
+                        return {'status': 'idle', 'result': None}
+                else:
+                    work = self.work._validated(connection, row)
             else:
                 if not isinstance(work_id, str) or not 1 <= len(work_id) <= 240:
                     raise ValueError("return work identity invalid")
-                work = self.work._load_locked(connection, work_id)
-            if (work.spec.audience != 'private' or work.spec.owner_principal_id != route['owner']
-                    or work.spec.principal_binding_id != route['binding']
-                    or work.spec.episode_id != route['episode']
-                    or work.retention_until <= now or work.stop_requested_at is not None
-                    or work.state not in {'succeeded', 'verified'} or work.result is None):
-                raise ValueError("private result unavailable")
-            result = work.result
-            identity = canonical_sha256({'route': route, 'work_id': work.spec.work_id,
-                'generation': work.spec.generation, 'result': canonical_sha256(result.to_payload())})
-            thread = delivery_prefix + work.spec.work_id
+                if self.documents is not None and work_id.startswith('document-task:'):
+                    document = self._document(work_id, route)
+                    if document is None:
+                        raise ValueError('document return unavailable')
+                else:
+                    work = self.work._load_locked(connection, work_id)
+            if document is not None:
+                result, returned_id, generation = document, document.goal_id, 1
+            else:
+                if (work.spec.audience != 'private' or work.spec.owner_principal_id != route['owner']
+                        or work.spec.principal_binding_id != route['binding']
+                        or work.spec.episode_id != route['episode']
+                        or work.retention_until <= now or work.stop_requested_at is not None
+                        or work.state not in {'succeeded', 'verified'} or work.result is None):
+                    raise ValueError("private result unavailable")
+                result, returned_id, generation = work.result, work.spec.work_id, work.spec.generation
+            identity = canonical_sha256({'route': route, 'work_id': returned_id,
+                'generation': generation, 'result': canonical_sha256(result.to_payload())})
+            thread = delivery_prefix + returned_id
             state = self._state(connection, thread)
             if operation == 'poll':
                 if state is not None:
@@ -147,11 +162,11 @@ class PrivateWorkReturnStore:
                     thread_id=thread, checkpoint_id=thread+':claimed', occurred_at=now,
                     event_type='PRIVATE_WORK_RETURN_CLAIMED', phase='claimed', status='active',
                     deadline=now+timedelta(minutes=10), operation_id=identity,
-                    data={'route': route, 'work_id': work.spec.work_id, 'operation_id': identity})
+                    data={'route': route, 'work_id': returned_id, 'operation_id': identity})
             else:
                 if (state is None or operation_id != identity
                         or self._first(connection, thread) != {'route': route,
-                            'work_id': work.spec.work_id, 'operation_id': identity}):
+                            'work_id': returned_id, 'operation_id': identity}):
                     raise ValueError("return claim differs")
                 if state['phase'] == 'acknowledged' and operation == 'ack':
                     return {'status': 'acknowledged'}
@@ -170,8 +185,35 @@ class PrivateWorkReturnStore:
                 return {'status': 'authorized', 'operation_id': identity,
                         'output_sha256': result.output_sha256,
                         'result_sha256': canonical_sha256(result.to_payload())}
-            return {'status': 'claimed', 'result': {'work_id': work.spec.work_id,
-                'generation': work.spec.generation, 'operation_id': identity,
+            return {'status': 'claimed', 'result': {'work_id': returned_id,
+                'generation': generation, 'operation_id': identity,
                 'output': result.output, 'output_sha256': result.output_sha256,
                 'result_sha256': canonical_sha256(result.to_payload()),
                 'completed_at': result.completed_at}}
+
+    def _document(self, work_id, route):
+        result = self.documents.load(work_id)
+        if result is None:
+            return None
+        binding = result.binding
+        if (binding['channel'] != 'private_session'
+                or binding['owner_principal_id'] != route['owner']
+                or binding['principal_binding_id'] != route['binding']
+                or binding['conversation_id'] != route['conversation']
+                or binding['episode_id'] != route['episode']):
+            raise ValueError('document return belongs to another private route')
+        return result
+
+    def _next_document(self, connection, route, prefix, *, opened_at):
+        if self.documents is None:
+            return None
+        for work_id in self.documents.candidates():
+            if self._state(connection, prefix + work_id) is not None:
+                continue
+            try:
+                result = self._document(work_id, route)
+            except (ValueError, RuntimeError):
+                continue
+            if result is not None and (opened_at is None or result.created_at >= opened_at):
+                return result
+        return None

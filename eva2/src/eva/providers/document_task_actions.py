@@ -167,10 +167,12 @@ class DocumentTaskActions:
             if self.pool.dynamic_tool_configuration_sha256 is None and all(self.store.document_slot(s.slot_id) is not None for s in self.pool.slots):
                 return ToolDispatchResult(True,"document-pool-exhausted",{})
             self.authority.authorize_current(phase="execute",operation_kind="effect")
+            from eva.providers.document_completion import return_binding
             item=self.pool.claim(self.store,task=DocumentTaskInput.from_arguments(command.arguments['task']),
                 turn=turn,call_id=command.arguments['call_id'],authority_sha256=self.authority.configuration_sha256,
                 tenant_id=str(self.authority.scope.tenant_id),installation_id=str(self.authority.scope.installation_id),
-                owner_principal_id=self.authority.canonical_owner(turn))
+                owner_principal_id=self.authority.canonical_owner(turn),
+                return_binding_factory=lambda: return_binding(self.authority, turn))
         if item is None:raise ConversationConflict("document project is unavailable")
         adapter=self._adapter(item)
         return await adapter.execute(self._translate(command,adapter))

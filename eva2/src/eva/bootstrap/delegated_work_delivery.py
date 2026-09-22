@@ -30,12 +30,13 @@ def private_destination_loader(*, owner_principal_id: UUID, principal_binding_id
     return resolve
 
 
-def completion_worker(work_store, delivery, *, bindings_loader):
+def completion_worker(work_store, delivery, *, bindings_loader, document_source=None):
     from eva.adapters.postgres.delegated_work_delivery import PostgresDelegatedWorkDeliveryStore
     from eva.operations.delegated_work_delivery import DelegatedWorkDeliveryWorker
 
     return DelegatedWorkDeliveryWorker(
-        PostgresDelegatedWorkDeliveryStore(work_store, bindings_loader=bindings_loader),
+        PostgresDelegatedWorkDeliveryStore(work_store, bindings_loader=bindings_loader,
+                                           document_source=document_source),
         delivery,
     )
 
@@ -48,3 +49,31 @@ def delivery_status_loader(work_store, *, owner_principal_id: UUID,
     store = PostgresDelegatedWorkDeliveryStore(work_store, bindings_loader=bindings_loader)
     return lambda work_id: store.status(work_id, owner_principal_id=owner_principal_id,
                                        principal_binding_id=principal_binding_id)
+
+
+def document_completion_source(engine):
+    """Opt into the same host document configuration; no new task or transport."""
+    import os
+    from eva.adapters.credentials.runtime_files import read_runtime_secret_file
+    from eva.adapters.postgres.durable_goals import PostgresDurableGoalStore
+    from eva.providers.document_completion import DocumentCompletionSource
+    from eva.providers.document_goal_actions import DocumentGoalActionsProviderFactory
+    from eva.providers.private_owner_authority import configured_private_owner_resolver
+    from eva.providers.mcp_owner_authority import McpOwnerAuthority
+    from eva.providers.mcp_autonomy import _SourceTurnLoader
+    settings = DocumentGoalActionsProviderFactory.load_settings()
+    if settings is None or not settings.pool_file:
+        return None
+    resolver = configured_private_owner_resolver(engine,
+        tenant_id=settings.tenant_id, installation_id=settings.installation_id)
+    if resolver is None:
+        return None
+    authority = McpOwnerAuthority(engine, settings.mandate_file,
+        os.environ.get('EVA_MCP_MANAGED_ENDPOINTS_FILE') or None,
+        private_owner_resolver=resolver)
+    return DocumentCompletionSource(
+        store=PostgresDurableGoalStore(engine, tenant_id=settings.tenant_id,
+                                      installation_id=settings.installation_id),
+        authority=authority,
+        read_pool=lambda: read_runtime_secret_file(settings.pool_file, setting_name='EVA_DOCUMENT_TASK_POOL_FILE'),
+        load_source_turn=_SourceTurnLoader(engine, authority))
