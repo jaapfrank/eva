@@ -165,7 +165,73 @@ class DelegatedResearchSpec(DelegatedWorkSpec):
         return self
 
 
+class HouseholdWorkOrigin(_DelegatedContract):
+    """Immutable, server-admitted household origin; the sponsor is not the speaker."""
+    contract: Literal["HouseholdWorkOrigin/v1"]
+    tenant_id: Identifier
+    installation_id: Identifier
+    household_id: str = Field(pattern=r"^[A-Za-z0-9][A-Za-z0-9._-]{0,79}$")
+    actor_id: Identifier
+    satellite_id: str = Field(pattern=r"^assist_satellite\.[a-z0-9_]{1,183}$")
+    device_id: str = Field(pattern=r"^[0-9a-f]{32}$")
+    consent_operation_id: Identifier
+    household_policy_id: Identifier
+    household_policy_sha256: Sha256
+    research_policy_id: Identifier
+    research_policy_sha256: Sha256
+    session_id: Identifier
+    session_generation: Literal[1] = 1
+    conversation_id: Identifier
+    message_id: Identifier
+    received_at: Timestamp
+
+    @model_validator(mode="after")
+    def _scope(self):
+        from uuid import UUID
+        if (self.actor_id != "household-device:" + self.device_id
+                or str(UUID(self.session_id)) != self.session_id
+                or not self.conversation_id.startswith("household:" + self.household_id + ":conversation:")
+                or not self.message_id.startswith(self.conversation_id + ":request:")
+                or not self.consent_operation_id.startswith("household-consent:")):
+            raise ValueError("household work origin differs from its device/session")
+        return self
+
+    def destination(self):
+        return {key: getattr(self, key) for key in (
+            "tenant_id", "installation_id", "household_id", "actor_id", "satellite_id",
+            "device_id", "session_id", "session_generation", "conversation_id",
+            "consent_operation_id", "household_policy_sha256", "research_policy_sha256")}
+
+
+class DelegatedHouseholdResearchSpec(DelegatedResearchSpec):
+    """Explicit v3 research, never a private task relabeled by a destination."""
+    contract: Literal["DelegatedHouseholdResearchWork/v3"]
+    schema_version: Literal[3]
+    audience: Literal["household"]
+    origin: HouseholdWorkOrigin
+    destination_sha256: Sha256
+
+    @model_validator(mode="after")
+    def _household_binding(self):
+        from uuid import NAMESPACE_URL, uuid5
+        from datetime import timedelta
+        from eva.contracts.timestamps import parse_utc_timestamp
+        if (parse_utc_timestamp(self.deadline) > parse_utc_timestamp(self.created_at) + timedelta(minutes=5)
+                or self.created_at < self.origin.received_at):
+            raise ValueError("household deadline or original receipt differs")
+        expected_episode = str(uuid5(NAMESPACE_URL, "household-public-research:" +
+                                     canonical_sha256(self.origin.destination())))
+        expected_destination = canonical_sha256({"origin": self.origin.destination(),
+            "work_id": self.work_id, "generation": self.generation})
+        if (self.episode_id != expected_episode or self.destination_sha256 != expected_destination
+                or (self.generation == 1 and self.created_at != self.origin.received_at)):
+            raise ValueError("household task origin/episode/destination binding differs")
+        return self
+
+
 def load_delegated_work_spec(raw: object) -> DelegatedWorkSpec:
+    if isinstance(raw, dict) and raw.get("contract") == "DelegatedHouseholdResearchWork/v3":
+        return DelegatedHouseholdResearchSpec.model_validate(raw)
     if isinstance(raw, dict) and raw.get("contract") == "DelegatedResearchWork/v2":
         return DelegatedResearchSpec.model_validate(raw)
     return DelegatedWorkSpec.model_validate(raw)

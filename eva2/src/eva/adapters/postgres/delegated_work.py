@@ -20,7 +20,7 @@ from eva.adapters.postgres.scope import PostgresScopedRole
 from eva.contracts.canonical_json import canonical_sha256
 from eva.contracts.delegated_work import (
     DelegatedWorkResult,
-    DelegatedWorkSpec, DelegatedResearchSpec, load_delegated_work_spec,
+    DelegatedWorkSpec, DelegatedResearchSpec, DelegatedHouseholdResearchSpec, load_delegated_work_spec,
     DelegatedWorkUsage,
 )
 from eva.contracts.workboard import WorkBoard
@@ -145,12 +145,38 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
         scope: TimelineScope,
         *,
         role: Literal["eva_runtime", "eva_dbos"] = "eva_runtime",
+        household_authorizer=None,
+        household_clock=None,
     ) -> None:
         if engine.url.get_backend_name() != "postgresql":
             raise ValueError("delegated work requires PostgreSQL")
         self._engine = engine
         self._scope_value = scope
         self._role = role
+        self._household_authorizer = household_authorizer
+        self._household_clock = household_clock or (lambda: datetime.now(UTC).replace(microsecond=0))
+
+    def _authorize_household(self, spec, connection, *, require_open=False):
+        if not isinstance(spec, DelegatedHouseholdResearchSpec):
+            return
+        try:
+            if self._household_authorizer is None:
+                raise ValueError("household work is not explicitly composed")
+            self._household_authorizer(spec)
+            from eva.adapters.postgres.household_work_sessions import verify_origin
+            verify_origin(connection, self.scope, spec.origin, require_open=require_open, now=self._household_clock())
+        except (ValueError, RuntimeError, OSError) as error:
+            raise DelegatedWorkConflict("household work authority unavailable") from error
+
+    def _read_scope(self, spec, connection, household_origin=None):
+        if household_origin is None:
+            if spec.audience != "private":
+                raise DelegatedWorkNotFound("delegated work is absent")
+        else:
+            if (not isinstance(spec, DelegatedHouseholdResearchSpec)
+                    or spec.origin.destination() != household_origin.destination()):
+                raise DelegatedWorkNotFound("delegated work is absent")
+            self._authorize_household(spec, connection, require_open=True)
 
     @property
     def scope(self) -> TimelineScope:
@@ -220,6 +246,11 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
         spec_sha256 = canonical_sha256(spec_payload)
         with self._engine.begin() as connection:
             self._scope(connection)
+            self._authorize_household(spec, connection, require_open=True)
+            if isinstance(spec, DelegatedHouseholdResearchSpec) and retention_until > _parse_timestamp(spec.created_at) + timedelta(days=7):
+                raise DelegatedWorkConflict("household retention exceeds its bounded policy")
+            if isinstance(spec, DelegatedHouseholdResearchSpec) and delivery_destination is not None:
+                raise DelegatedWorkConflict("household work cannot bind a private destination")
             self._validate_owner_binding(
                 connection, owner_principal_id=owner_principal_id,
                 principal_binding_id=principal_binding_id,
@@ -237,7 +268,10 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
                     self._scope_value.installation_id,
                     f"{previous.spec.work_id}:{previous.spec.generation + 1}",
                 ))
-                if (spec.work_id != expected_id or spec.parent_task_id != previous.spec.work_id
+                if (spec.audience != previous.spec.audience
+                        or (isinstance(spec, DelegatedHouseholdResearchSpec)
+                            and spec.origin != previous.spec.origin)
+                        or spec.work_id != expected_id or spec.parent_task_id != previous.spec.work_id
                         or spec.generation != previous.spec.generation + 1
                         or spec.episode_id != previous.spec.episode_id
                         or spec.task != previous.spec.task or spec.grant != previous.spec.grant
@@ -272,10 +306,11 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
                     # The first explicit resume owns this successor. Later owner
                     # retries return it, including its original clock and release;
                     # a newer ingress never creates a parallel successor.
-                    fields = ("episode_id", "generation", "parent_task_id", "owner_principal_id",
+                    fields = ("audience", "episode_id", "generation", "parent_task_id", "owner_principal_id",
                               "principal_binding_id", "task", "grant")
                     if (any(getattr(loaded.spec, key) != getattr(spec, key) for key in fields)
-                            or getattr(loaded.spec, "research", None) != getattr(spec, "research", None)):
+                            or getattr(loaded.spec, "research", None) != getattr(spec, "research", None)
+                            or getattr(loaded.spec, "origin", None) != getattr(spec, "origin", None)):
                         raise DelegatedWorkConflict("resumed work id owns another attempt")
                     return DelegatedWorkAdmission("already_present", loaded)
                 if (
@@ -424,6 +459,7 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
                 )
                 return None
             try:
+                self._authorize_household(loaded.spec, connection)
                 self._validate_owner_binding(
                     connection,
                     owner_principal_id=UUID(loaded.spec.owner_principal_id),
@@ -509,6 +545,7 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
                 )
                 return None
             try:
+                self._authorize_household(loaded.spec, connection)
                 self._validate_owner_binding(
                     connection,
                     owner_principal_id=UUID(loaded.spec.owner_principal_id),
@@ -609,6 +646,7 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
         owner_principal_id: UUID,
         principal_binding_id: UUID,
         now: datetime,
+        household_origin=None,
     ) -> StoredDelegatedWork:
         now = _whole_second(now, label="verification time")
         with self._engine.begin() as connection:
@@ -635,6 +673,7 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
             if row is None:
                 raise DelegatedWorkNotFound("delegated work is absent")
             loaded = self._validated(connection, row)
+            self._read_scope(loaded.spec, connection, household_origin)
             if loaded.spec.owner_principal_id != str(
                 owner_principal_id
             ) or loaded.spec.principal_binding_id != str(principal_binding_id):
@@ -664,6 +703,7 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
         owner_principal_id: UUID,
         principal_binding_id: UUID,
         now: datetime,
+        household_origin=None,
     ) -> StoredDelegatedWork:
         """Stop before a call or durably request cancellation of an active call."""
 
@@ -696,6 +736,7 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
             loaded = self._load_terminal_locked(
                 connection, work_id=work_id, missing_message="delegated work is absent"
             )
+            self._read_scope(loaded.spec, connection, household_origin)
             if loaded.spec.owner_principal_id != str(
                 owner_principal_id
             ) or loaded.spec.principal_binding_id != str(principal_binding_id):
@@ -782,10 +823,24 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
             finally:
                 transaction.rollback()
 
+    def household_authority_current(self, call):
+        if not isinstance(call.spec, DelegatedHouseholdResearchSpec):
+            return True
+        try:
+            with self._engine.begin() as connection:
+                self._scope(connection)
+                self._authorize_household(call.spec, connection)
+                self._validate_owner_binding(connection, owner_principal_id=UUID(call.spec.owner_principal_id),
+                    principal_binding_id=UUID(call.spec.principal_binding_id))
+            return True
+        except DelegatedWorkConflict:
+            return False
+
     def authorize_tool_dispatch(self, call: DelegatedWorkCall) -> None:
         """Recheck durable call, owner binding and stop immediately before tool dispatch."""
         with self._engine.begin() as connection:
             self._scope(connection)
+            self._authorize_household(call.spec, connection)
             self._validate_owner_binding(connection,
                 owner_principal_id=UUID(call.spec.owner_principal_id),
                 principal_binding_id=UUID(call.spec.principal_binding_id))
@@ -859,6 +914,9 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
                     data = saved["payload"]["data"]
                     if data["owner"] != str(owner_principal_id) or data["binding"] != str(principal_binding_id):
                         raise DelegatedWorkConflict("saved stop target authority differs")
+                    if data["work_id"] is not None:
+                        saved_work = self._load_locked(connection, data["work_id"])
+                        self._read_scope(saved_work.spec, connection)
                     return data["work_id"]
             selected = connection.scalar(
                 sa.select(delegated_work_runs.c.work_id)
@@ -866,6 +924,7 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
                     delegated_work_runs.c.tenant_id == self._scope_value.tenant_id,
                     delegated_work_runs.c.installation_id
                     == self._scope_value.installation_id,
+                    delegated_work_runs.c.spec_payload["audience"].astext == "private",
                     delegated_work_runs.c.owner_principal_id == owner_principal_id,
                     delegated_work_runs.c.principal_binding_id
                     == principal_binding_id,
@@ -896,6 +955,7 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
         *,
         owner_principal_id: UUID,
         principal_binding_id: UUID,
+        household_origin=None,
     ) -> StoredDelegatedWork:
         with self._engine.connect() as connection:
             transaction = connection.begin()
@@ -907,6 +967,7 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
                     principal_binding_id=principal_binding_id,
                 )
                 loaded = self._load_locked(connection, work_id)
+                self._read_scope(loaded.spec, connection, household_origin)
                 if loaded.spec.owner_principal_id != str(
                     owner_principal_id
                 ) or loaded.spec.principal_binding_id != str(principal_binding_id):
@@ -931,6 +992,7 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
                 rows = connection.execute(sa.select(delegated_work_runs).where(
                     delegated_work_runs.c.tenant_id == self._scope_value.tenant_id,
                     delegated_work_runs.c.installation_id == self._scope_value.installation_id,
+                    delegated_work_runs.c.spec_payload["audience"].astext == "private",
                     delegated_work_runs.c.owner_principal_id == owner_principal_id,
                     delegated_work_runs.c.principal_binding_id == principal_binding_id,
                 ).order_by(delegated_work_runs.c.created_at.desc(),
@@ -964,6 +1026,7 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
                             == self._scope_value.tenant_id,
                             delegated_work_runs.c.installation_id
                             == self._scope_value.installation_id,
+                            delegated_work_runs.c.spec_payload["audience"].astext == "private",
                             delegated_work_runs.c.owner_principal_id
                             == owner_principal_id,
                         )

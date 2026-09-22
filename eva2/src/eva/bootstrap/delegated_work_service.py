@@ -278,7 +278,8 @@ async def serve_delegated_work_service(
     )
     engine = sa.create_engine(sqlalchemy_postgres_dsn(database_dsn), pool_pre_ping=True)
     try:
-        store = PostgresDelegatedWorkStore(engine, selected.scope)
+        store = PostgresDelegatedWorkStore(engine, selected.scope,
+            household_authorizer=getattr(runner, "household_authorizer", None))
         bound_runner = runner.bind_store(store) if callable(getattr(runner, "bind_store", None)) else runner
         worker = DelegatedWorkWorker(
             store,

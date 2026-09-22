@@ -29,7 +29,7 @@ def _thread_id(work_id: str) -> str:
 
 
 def _payload(spec, destination: PrivateWorkDestination) -> dict:
-    if (str(destination.owner_principal_id) != spec.owner_principal_id
+    if (spec.audience != "private" or str(destination.owner_principal_id) != spec.owner_principal_id
             or str(destination.principal_binding_id) != spec.principal_binding_id):
         raise ValueError("private destination differs from work owner")
     return {"contract": "EvaDelegatedWorkDestinationBinding/v1", "work_id": spec.work_id,
@@ -93,7 +93,7 @@ class PostgresDelegatedWorkDeliveryStore:
             self._work._validate_owner_binding(connection, owner_principal_id=owner_principal_id,
                                               principal_binding_id=principal_binding_id)
             work = self._work._load_locked(connection, work_id)
-            if (work.spec.owner_principal_id != str(owner_principal_id)
+            if (work.spec.audience != "private" or work.spec.owner_principal_id != str(owner_principal_id)
                     or work.spec.principal_binding_id != str(principal_binding_id)):
                 from eva.adapters.postgres.delegated_work import DelegatedWorkNotFound
                 raise DelegatedWorkNotFound("delegated work is absent")

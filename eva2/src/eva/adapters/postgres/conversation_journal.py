@@ -108,6 +108,26 @@ class PostgresConversationJournal(PostgresScopedRole):
                 ) from None
             return self._timeline.load(thread_id)
 
+    def admit_household_ingress(self, turn: ConversationTurn, *, validate_current) -> ConversationTurn:
+        """Canonical first receipt only for an already server-bound household turn."""
+        validate_current(turn)
+        if (turn.audience.kind != "household" or turn.project_id is not None
+                or turn.observation_binding is not None
+                or not turn.message_id.startswith(turn.conversation_id + ":request:")):
+            raise ConversationConflict("household work ingress is not server bound")
+        try:
+            self.admit(turn)
+            return turn
+        except ConversationConflict:
+            events = self._timeline.events(self._thread_id(turn))
+            if (not events or events[0].event_type != "INGRESS_COMMITTED"
+                    or events[0].payload.get("data") != self._ingress_data(turn)):
+                raise
+            admitted = replace(turn, occurred_at=events[0].occurred_at.astimezone(UTC).strftime("%Y-%m-%dT%H:%M:%SZ"))
+            validate_current(admitted)
+            self.admit(admitted)
+            return admitted
+
     def admit_voice_ingress(self, turn: ConversationTurn) -> ConversationTurn:
         """Bind server-generated receive time once, using the existing ingress.
 

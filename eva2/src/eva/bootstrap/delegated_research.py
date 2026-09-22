@@ -19,7 +19,7 @@ from eva.adapters.subagents.tool_free_child import ToolFreeChildOutcome
 from eva.application.cancellation import CancellationSignal, cancellation_scope
 from eva.application.conversation import ConversationActionCall, ConversationTurn
 from eva.contracts.canonical_json import canonical_sha256
-from eva.contracts.delegated_work import (DelegatedResearchGrant, DelegatedResearchSpec,
+from eva.contracts.delegated_work import (DelegatedResearchGrant, DelegatedResearchSpec, DelegatedHouseholdResearchSpec,
     DelegatedWorkResult, DelegatedWorkUsage, PublicResearchRequest)
 from eva.contracts.timestamps import parse_utc_timestamp
 from eva.bootstrap.delegated_work_provider import (
@@ -71,6 +71,12 @@ class DelegatedResearchProfile:
             self.configuration_sha256, research_program_hash(), ENGINE_RELEASE_SHA256,
             RESEARCH_OUTPUT_HASH)
 
+    spec_type = DelegatedResearchSpec
+    contract_name = "DelegatedResearchWork/v2"
+    schema_version = 2
+    audience = "private"
+    profile_id = RESEARCH_PROFILE
+
     def build_spec(self, *, research, **identity):
         public = PublicResearchRequest.model_validate(research)
         validate_public_projection(public.arguments())
@@ -86,13 +92,34 @@ class DelegatedResearchProfile:
             maximum_total_tokens=self.maximum_input_tokens + self.maximum_output_tokens,
             maximum_cost_usd_micros=self.maximum_cost_usd_micros, timeout_seconds=self.timeout_seconds,
             maximum_tool_calls=self.maximum_tool_calls, maximum_claims_before_call_start=2, delegation_depth=1)
-        return DelegatedResearchSpec(contract="DelegatedResearchWork/v2", schema_version=2,
-            **identity, audience="private", worker_name="onderzoeker",
-            worker_profile_id=RESEARCH_PROFILE, worker_profile_release_sha256=RESEARCH_PROFILE_HASH,
+        return self.spec_type(contract=self.contract_name, schema_version=self.schema_version,
+            **identity, audience=self.audience, worker_name="onderzoeker",
+            worker_profile_id=self.profile_id, worker_profile_release_sha256=self.release.worker_profile_release_sha256,
             model_profile_id=self.model_profile_id, model_profile_release_sha256=self.configuration_sha256,
-            worker_program_sha256=research_program_hash(), engine_release_sha256=ENGINE_RELEASE_SHA256,
+            worker_program_sha256=self.release.worker_program_sha256, engine_release_sha256=ENGINE_RELEASE_SHA256,
             output_schema_sha256=RESEARCH_OUTPUT_HASH, grant=grant.to_payload(),
             research=public.to_payload(), created_at=stamp(created), deadline=stamp(deadline))
+
+
+
+class HouseholdResearchProfile(DelegatedResearchProfile):
+    """A distinct release discriminator on the same bounded public tool runner."""
+    spec_type = DelegatedHouseholdResearchSpec
+    contract_name = "DelegatedHouseholdResearchWork/v3"
+    schema_version = 3
+    audience = "household"
+    profile_id = "worker:household-public-research:v3"
+
+    @property
+    def release(self):
+        root = Path(__file__).resolve().parents[1]
+        program = canonical_sha256({"research": research_program_hash(), "household": {
+            name: hashlib.sha256((root/name).read_bytes()).hexdigest() for name in (
+                "bootstrap/household_research_policy.py", "bootstrap/household_work.py",
+                "bootstrap/household_voice.py", "application/memory_audience.py",
+                "adapters/postgres/household_work_sessions.py")}})
+        return DelegatedWorkReleaseSelector(canonical_sha256({"profile": self.profile_id}),
+            self.configuration_sha256, program, ENGINE_RELEASE_SHA256, RESEARCH_OUTPUT_HASH)
 
 
 def build_public_research_composition(*, model_access_lease_file: Path, resource_budget):
@@ -128,10 +155,10 @@ class DelegatedResearchRunner:
         call = DelegatedWorkCall(spec.work_id, "research:" + spec.work_id, call_id, spec)
         def authorize(turn):
             signal.check()
-            if (turn.tenant_id != str(self.store.scope.tenant_id)
-                    or turn.installation_id != str(self.store.scope.installation_id)
-                    or turn.principal_id != spec.owner_principal_id
-                    or turn.audience.principal_id != spec.owner_principal_id):
+            if (turn.tenant_id != (spec.origin.tenant_id if isinstance(spec, DelegatedHouseholdResearchSpec) else str(self.store.scope.tenant_id))
+                    or turn.installation_id != (spec.origin.installation_id if isinstance(spec, DelegatedHouseholdResearchSpec) else str(self.store.scope.installation_id))
+                    or turn.principal_id != (spec.origin.actor_id if isinstance(spec, DelegatedHouseholdResearchSpec) else spec.owner_principal_id)
+                    or turn.audience.kind != ("household" if isinstance(spec, DelegatedHouseholdResearchSpec) else "private_person")):
                 raise ValueError("research turn differs from admitted owner scope")
             if self.clock() >= parse_utc_timestamp(spec.deadline):
                 raise ValueError("research deadline expired")
@@ -160,9 +187,18 @@ class DelegatedResearchRunner:
                 raise ValueError("research grant differs from the configured bounds")
             validate_public_projection(spec.research.arguments())
             # The query alone enters a separate private journal; no recalled memory.
-            turn = ConversationTurn.private(str(self.store.scope.tenant_id), str(self.store.scope.installation_id),
-                spec.owner_principal_id, "delegated-research:" + canonical_sha256(spec.work_id)[:32],
-                call_id, spec.task, spec.created_at)
+            if isinstance(spec, DelegatedHouseholdResearchSpec):
+                from eva.application.memory_audience import HouseholdConsentReference, MemoryAudience
+                origin = spec.origin
+                conversation = "household:" + origin.household_id + ":conversation:research:" + canonical_sha256(spec.work_id)
+                reference = HouseholdConsentReference(origin.actor_id, origin.household_id, origin.consent_operation_id)
+                turn = ConversationTurn(origin.tenant_id, origin.installation_id,
+                    origin.actor_id, conversation, conversation + ":" + call_id, spec.task, spec.created_at,
+                    MemoryAudience.household(principal_id=origin.actor_id, household_id=origin.household_id, consent_ref=reference))
+            else:
+                turn = ConversationTurn.private(str(self.store.scope.tenant_id), str(self.store.scope.installation_id),
+                    spec.owner_principal_id, "delegated-research:" + canonical_sha256(spec.work_id)[:32],
+                    call_id, spec.task, spec.created_at)
             arguments = spec.research.arguments()
             # Host disclosure checks above do not confer initiative authority.
             arguments["public_review"] = "not_applicable"
@@ -196,6 +232,7 @@ class DelegatedResearchRunner:
             sources = "\n".join(f"- {source['title']}: {source['url']}" for source in artifact['sources']
                 if source["url"] not in content)
             text = content + ("\n\nBronnen:\n" + sources if sources else "")
+            authorize(turn)
             result = DelegatedWorkResult(contract="DelegatedWorkResult/v1", schema_version=1,
                 work_id=spec.work_id, call_id=call_id, output=text,
                 output_sha256=hashlib.sha256(text.encode()).hexdigest(), spec_sha256=spec.sha256,
@@ -209,10 +246,25 @@ class DelegatedResearchRunner:
                 # Recover measured failure usage from the same durable journal, never replay it.
                 events = tools._timeline(turn).events(tools._thread_id(turn, "research_current_options"))
                 for event in reversed(events):
-                    raw = event.payload.get("data", {}).get("model_usage")
+                    data = event.payload.get("data", {})
+                    raw = data.get("model_usage")
+                    if not isinstance(raw, dict):
+                        # Dispatch may have finished before policy revocation blocked
+                        # observation. Retain its metering without releasing content.
+                        dispatch = data.get("dispatch", {})
+                        details = dispatch.get("details", {})
+                        artifact = details.get("research_artifact")
+                        if (isinstance(artifact, dict)
+                                and artifact.get("question") == spec.task
+                                and artifact.get("title") == spec.research.title
+                                and details.get("artifact_sha256") == canonical_sha256(artifact)
+                                and dispatch.get("provider_ref") == canonical_sha256(artifact)):
+                            raw = artifact.get("model_usage")
                     if isinstance(raw, dict):
-                        usage = self._usage(raw)
-                        break
+                        recovered = self._usage(raw)
+                        if recovered.measurement != "unmeasured":
+                            usage = recovered
+                            break
             return ToolFreeChildOutcome("cancelled" if cancellation_event is not None and cancellation_event.is_set() else "internal_error", None, usage, False,
                 hashlib.sha256((type(error).__name__ + ":" + str(error)).encode()).hexdigest())
         finally:
@@ -235,25 +287,34 @@ class DelegatedResearchRunner:
 
 class ResearchEnabledDelegatedRunner:
     """Composition only: the existing worker claims either sealed profile."""
-    def __init__(self, tool_free_runner, research, profile, *, clock=None):
+    def __init__(self, tool_free_runner, research, profile, *, clock=None, household_authority=None):
         self.tool_free_runner, self.research, self.profile = tool_free_runner, research, profile
         self.clock = clock
+        self.household_authority = household_authority
+        self.household_authorizer = None if household_authority is None else household_authority.validate_spec
 
     def bind_store(self, store):
         research_runner = DelegatedResearchRunner(store, self.research, self.profile, clock=self.clock)
+        household_runner = (None if self.household_authority is None else DelegatedResearchRunner(
+            store, self.research, self.household_authority.profile, clock=self.clock))
         tool_free = self.tool_free_runner
         class BoundRunner:
             async def run(self, spec, *, call_id, cancellation_event=None):
-                selected = research_runner if isinstance(spec, DelegatedResearchSpec) else tool_free
+                if isinstance(spec, DelegatedHouseholdResearchSpec):
+                    if household_runner is None:
+                        raise ValueError("household research is not composed")
+                    selected = household_runner
+                else:
+                    selected = research_runner if isinstance(spec, DelegatedResearchSpec) else tool_free
                 return await selected.run(spec, call_id=call_id, cancellation_event=cancellation_event)
         return BoundRunner()
 
 
-async def serve_research_enabled_work(settings, research, profile, *, once=False):
+async def serve_research_enabled_work(settings, research, profile, *, once=False, household_authority=None):
     """Opt-in composition inside the existing service loop; no separate scheduler."""
     from eva.bootstrap.delegated_work_service import (
         _open_provider_runner, _provider_release, serve_delegated_work_service)
     async with _open_provider_runner(settings.model_access_lease_file) as tool_free:
         return await serve_delegated_work_service(
-            ResearchEnabledDelegatedRunner(tool_free, research, profile),
-            release=(_provider_release(), profile.release), settings=settings.service, once=once)
+            ResearchEnabledDelegatedRunner(tool_free, research, profile, household_authority=household_authority),
+            release=(_provider_release(), profile.release) + (() if household_authority is None else (household_authority.profile.release,)), settings=settings.service, once=once)

@@ -57,7 +57,7 @@ class DelegatedWorkWorker:
         self._runner = runner
         self._worker_id = worker_id
         self._releases = release if isinstance(release, tuple) else (release,)
-        if not 1 <= len(self._releases) <= 2:
+        if not 1 <= len(self._releases) <= 3:
             raise ValueError("worker supports the tool-free and public research releases only")
         self._release_index = 0
         self._clock = clock or (lambda: datetime.now(UTC).replace(microsecond=0))
@@ -162,6 +162,10 @@ class DelegatedWorkWorker:
                 active_cancellation.set()
                 return
             if await asyncio.to_thread(self._store.stop_requested, call):
+                active_cancellation.set()
+                return
+            checker = getattr(self._store, "household_authority_current", None)
+            if checker is not None and not await asyncio.to_thread(checker, call):
                 active_cancellation.set()
                 return
             await asyncio.sleep(0.05)

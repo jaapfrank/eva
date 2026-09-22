@@ -129,7 +129,7 @@ class PrivateWorkReturnStore:
                 if not isinstance(work_id, str) or not 1 <= len(work_id) <= 240:
                     raise ValueError("return work identity invalid")
                 work = self.work._load_locked(connection, work_id)
-            if (work.spec.owner_principal_id != route['owner']
+            if (work.spec.audience != 'private' or work.spec.owner_principal_id != route['owner']
                     or work.spec.principal_binding_id != route['binding']
                     or work.spec.episode_id != route['episode']
                     or work.retention_until <= now or work.stop_requested_at is not None
