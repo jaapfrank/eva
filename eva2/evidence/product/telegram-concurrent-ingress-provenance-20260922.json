@@ -1,0 +1,33 @@
+{
+  "captured_at_utc": "2026-09-22T17:16:16.555861+00:00",
+  "runtime": {
+    "service": "eva.service",
+    "working_directory": "/home/administrator/project/Bottie",
+    "exec_start": "/usr/bin/node src/index.js",
+    "observed_pid": 56106,
+    "active_enter": "2026-09-21T12:56:28+02:00",
+    "git_head": "909bff513d7d7fd653d6a7f270d9e73facce430d",
+    "files": {
+      "src/integrations/telegram.js": {
+        "sha256": "b1000a7ffc039645e1d39124b968dc4468a185282fe046b26c298d43db59e53c",
+        "mtime_utc": "2026-08-31T00:11:23.807310+00:00"
+      },
+      "src/integrations/eva2canary.js": {
+        "sha256": "89a5be01e30f9e4b994b23cbdd7b7b479191ed5c78e5f83e694ffcd940c68592",
+        "mtime_utc": "2026-09-13T08:19:13.894608+00:00"
+      }
+    },
+    "loaded_bytes_limit": "Disk files predate process start; no per-module in-process attestation obtained."
+  },
+  "candidate": {
+    "bottie_base": "e82f71dbd7a971bc88e2b46314b183d85cd33edc",
+    "bottie_commit": "77fdfc85f945de0ece6a12e074da9cda9de2aae2",
+    "patch_sha256": "12e2eda09679c5d3d51336c119b54910d3fb8e8367922b5ecd7b956a44f8f9f7",
+    "eva2_base": "26ef4d7f994a541ed226ee5626f7581ab84d8210"
+  },
+  "external_activity": {
+    "model_calls": 0,
+    "telegram_messages": 0,
+    "live_install": false
+  }
+}

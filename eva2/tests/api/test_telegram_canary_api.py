@@ -1,6 +1,8 @@
 from __future__ import annotations
 
 from datetime import UTC, datetime
+from concurrent.futures import ThreadPoolExecutor
+from threading import Event
 import json
 
 from fastapi.testclient import TestClient
@@ -17,6 +19,37 @@ from eva.application.telegram_canary import TelegramCanaryBridge
 
 
 NOW = datetime(2026, 8, 28, 10, 0, tzinfo=UTC)
+
+
+@pytest.mark.parametrize("streaming", [False, True])
+def test_same_chat_canary_accepts_later_turn_while_first_is_running(streaming: bool) -> None:
+    entered, release = Event(), Event()
+
+    class BlockingRuntime(_Runtime):
+        def respond(self, turn, recent_messages=()):  # type: ignore[no-untyped-def]
+            if turn.message_id == "telegram:7:1":
+                entered.set()
+                assert release.wait(5), "first turn was not released"
+            return super().respond(turn, recent_messages)
+
+    runtime = BlockingRuntime()
+    client = TestClient(create_app(runtime))
+    headers = {"accept": "application/x-ndjson"} if streaming else {}
+    with ThreadPoolExecutor(max_workers=2) as executor:
+        first = executor.submit(client.post, "/internal/v1/telegram/canary/respond",
+                                json=_payload(message_id=1), headers=headers)
+        try:
+            assert entered.wait(2)
+            second = executor.submit(client.post, "/internal/v1/telegram/canary/respond",
+                                     json=_payload(message_id=2), headers=headers)
+            reply = second.result(timeout=2)
+            assert reply.status_code == 200
+            assert "telegram:7:2" in reply.text
+            assert not first.done()
+        finally:
+            release.set()
+        assert first.result(timeout=2).status_code == 200
+    assert {turn.message_id for turn in runtime.after} == {"telegram:7:1", "telegram:7:2"}
 
 
 class _Observations:

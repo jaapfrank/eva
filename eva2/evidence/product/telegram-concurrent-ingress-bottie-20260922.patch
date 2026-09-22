@@ -1,0 +1,339 @@
+diff --git a/src/integrations/telegram.js b/src/integrations/telegram.js
+index a5c98fdc..3923bcc8 100644
+--- a/src/integrations/telegram.js
++++ b/src/integrations/telegram.js
+@@ -1,3 +1,4 @@
++import { pollTelegramConcurrently } from './telegrampolling.js';
+ // Telegram: Eva's lijntje naar de telefoons van het gezin.
+ import { Bot, GrammyError, HttpError, InputFile } from 'grammy';
+ import { createHash } from 'node:crypto';
+@@ -2786,7 +2787,9 @@ ${naam}: ${ctx.message.text}`;
+ 
+   startPreparedTelegramOutbox();
+   // long polling start (loopt voor altijd; niet awaiten)
+-  bot.start(telegramPollingOptions()).catch((e) => {
++  pollTelegramConcurrently(bot, {
++    onError: (error) => logTimeline('system', `Telegram-fout: ${errMsg(error.error || error).slice(0, 200)}`),
++  }).catch((e) => {
+     logTimeline('system', `Telegram kon niet starten: ${errMsg(e).slice(0, 200)}. Klopt het token?`);
+   });
+   logTimeline('system', 'Telegram verbonden. Eva is bereikbaar op je telefoon 📱');
+diff --git a/src/integrations/telegrampolling.js b/src/integrations/telegrampolling.js
+new file mode 100644
+index 00000000..b9969ea6
+--- /dev/null
++++ b/src/integrations/telegrampolling.js
+@@ -0,0 +1,78 @@
++import { setTimeout as delay } from 'node:timers/promises';
++import { eva2TelegramPrompt } from '../telegramdialogue.js';
++
++/** Poll without acknowledging unfinished updates. All middleware still runs.
++ * Only explicitly routed Eva2 turns overlap; legacy handlers retain one lane.
++ * Telegram replays the unfinished prefix after a crash, where the existing
++ * durable archive, processing claims and outbox deduplicate it.
++ */
++export async function pollTelegramConcurrently(bot, {
++  signal,
++  concurrency = 8,
++  onError = () => {},
++  pollIntervalMs = 250,
++} = {}) {
++  if (!Number.isInteger(concurrency) || concurrency < 2 || concurrency > 32) {
++    throw new RangeError('Telegram concurrency must be between 2 and 32');
++  }
++  await bot.init();
++  await bot.api.deleteWebhook({ drop_pending_updates: false }, signal);
++  const records = new Map();
++  const running = new Set();
++  let offset = 0;
++  let legacyRunning = false;
++  const advance = () => {
++    for (const [id, record] of records) {
++      if (!record.done) break;
++      offset = id + 1;
++      records.delete(id);
++    }
++  };
++  try {
++    while (!signal?.aborted) {
++      advance();
++      let updates;
++      try {
++        updates = await bot.api.getUpdates({ offset, limit: 100, timeout: 30, allowed_updates: [] }, signal);
++      } catch (error) {
++        if (signal?.aborted) break;
++        if (error.error_code === 401 || error.error_code === 409) throw error;
++        onError(error);
++        const retrySeconds = error.parameters?.retry_after;
++        await delay(Number.isFinite(retrySeconds) ? Math.max(1, retrySeconds) * 1000 : 3000,
++          undefined, { signal });
++        continue;
++      }
++      for (const update of updates) {
++        if (update.update_id < offset || records.has(update.update_id)) continue;
++        records.set(update.update_id, { update, started: false, done: false });
++      }
++      for (const record of records.values()) {
++        if (signal?.aborted || running.size >= concurrency) break;
++        if (record.started) continue;
++        const concurrent = typeof record.update.message?.text === 'string'
++          && eva2TelegramPrompt(record.update.message.text) !== null;
++        if (!concurrent && legacyRunning) continue;
++        record.started = true;
++        if (!concurrent) legacyRunning = true;
++        const task = Promise.resolve().then(() => bot.handleUpdate(record.update))
++          .catch((error) => { onError(error); }).finally(() => {
++            record.done = true;
++            if (!concurrent) legacyRunning = false;
++            running.delete(task);
++          });
++        running.add(task);
++        // Observe a failing error reporter too, even before shutdown drains.
++        task.catch(() => {});
++      }
++      // An unfinished prefix is immediately replayed by getUpdates. Bound the
++      // replay rate while continuing to discover later updates in that window.
++      if (records.size) await delay(pollIntervalMs, undefined, { signal });
++    }
++  } catch (error) {
++    if (!signal?.aborted) throw error;
++  } finally {
++    // Stopping polling does not cancel admitted model/tool work.
++    await Promise.allSettled(running);
++  }
++}
+diff --git a/test/telegram-concurrent-ingress.test.js b/test/telegram-concurrent-ingress.test.js
+new file mode 100644
+index 00000000..0835a56f
+--- /dev/null
++++ b/test/telegram-concurrent-ingress.test.js
+@@ -0,0 +1,130 @@
++import assert from 'node:assert/strict';
++import { mkdtempSync, rmSync } from 'node:fs';
++import { tmpdir } from 'node:os';
++import path from 'node:path';
++import { registerHooks } from 'node:module';
++import test from 'node:test';
++import { setTimeout as delay } from 'node:timers/promises';
++import { Bot } from 'grammy';
++
++const dataDir = mkdtempSync(path.join(tmpdir(), 'eva-concurrent-ingress-'));
++process.env.EVA_DATA_DIR = dataDir;
++process.env.TELEGRAM_BOT_TOKEN = '123:test-only';
++process.env.TELEGRAM_ALLOWED_IDS = '7,8';
++process.env.EVA2_CANARY_URL = 'http://fixture.invalid';
++process.env.EVA_RUNTIME_DISABLE_INFERENCE = 'true';
++process.env.EVA_RUNTIME_DISABLE_WORLD_LEARNING = 'true';
++const controller = new AbortController();
++globalThis.__ingressSignal = controller.signal;
++const bot = new Bot('123:test-only', { botInfo: {
++  id: 123, is_bot: true, first_name: 'Test', username: 'TestBot',
++  can_join_groups: true, can_read_all_group_messages: false,
++  supports_inline_queries: false,
++} });
++globalThis.__ingressBot = bot;
++const moduleUrl = new URL('../src/integrations/telegram.js', import.meta.url).href;
++registerHooks({ load(url, context, nextLoad) {
++  const loaded = nextLoad(url, context);
++  if (url !== moduleUrl) return loaded;
++  let source = String(loaded.source);
++  for (const [before, after] of [
++    ['bot = new Bot(config.telegramToken);', 'bot = globalThis.__ingressBot;'],
++    ['  startPreparedTelegramOutbox();', '  // Background outbox timer excluded in this isolated ingress test.'],
++    ['pollTelegramConcurrently(bot, {', 'globalThis.__ingressPolling = pollTelegramConcurrently(bot, { signal: globalThis.__ingressSignal, pollIntervalMs: 1,'],
++  ]) {
++    assert.ok(source.includes(before), `Missing test composition seam: ${before}`);
++    source = source.replace(before, after);
++  }
++  return { ...loaded, source };
++} });
++
++test('actual polling and archived /eva2 ingress deliver a later turn before the first finishes',
++  { timeout: 10000 }, async () => {
++    let releaseFirst;
++    const firstGate = new Promise((resolve) => { releaseFirst = resolve; });
++    const bodies = [];
++    const sends = [];
++    const offsets = [];
++    let firstReleased = false;
++    let laterUpdatesArrived = false;
++    const updates = [1, 2, 3, 4].map((id) => ({ update_id: id, message: {
++      message_id: id, date: 1787486400 + id,
++      from: { id: id === 3 ? 8 : id === 4 ? 99 : 7, is_bot: false, first_name: 'Fixture' },
++      chat: { id: id === 3 ? 8 : id === 4 ? 99 : 7, type: 'private' },
++      text: id === 1 ? '/eva2 Research this carefully' : '/eva2 What is happening?',
++    } }));
++    bot.api.config.use(async (_previous, method, payload) => {
++      if (method === 'getUpdates') {
++        await delay(1);
++        offsets.push(payload.offset);
++        return { ok: true, result: updates.filter((u) => u.update_id >= payload.offset && (laterUpdatesArrived || u.update_id === 1)) };
++      }
++      if (method === 'sendMessage') {
++        sends.push(payload);
++        return { ok: true, result: { message_id: 100 + sends.length,
++          chat: { id: payload.chat_id, type: 'private' }, date: 1787486500, text: payload.text, reply_to_message: payload.reply_parameters ? { message_id: payload.reply_parameters.message_id } : undefined } };
++      }
++      if (['deleteWebhook', 'sendChatAction', 'sendMessageDraft'].includes(method)) {
++        return { ok: true, result: true };
++      }
++      throw new Error(`Unexpected Telegram API method: ${method}`);
++    });
++    const originalFetch = globalThis.fetch;
++    globalThis.fetch = async (url, options) => {
++      assert.match(url, /\/internal\/v1\/telegram\/canary\/respond$/u);
++      const body = JSON.parse(options.body);
++      bodies.push(body);
++      assert.deepEqual(body.recent_messages, []);
++      if (body.message_id === 1) await firstGate;
++      return new Response(JSON.stringify({ contract: 'EvaInternalGroundedReply/v1',
++        conversation_id: `telegram:${body.chat_id}`,
++        message_id: `telegram:${body.chat_id}:${body.message_id}`,
++        text: `Fixture response ${body.message_id}`,
++      }), { headers: { 'content-type': 'application/json' } });
++    };
++    const { startTelegram } = await import('../src/integrations/telegram.js');
++    const { db, telegramMessage } = await import('../src/db.js');
++    try {
++      await startTelegram();
++      const until = async (predicate) => {
++        const deadline = Date.now() + 4000;
++        while (!predicate()) {
++          assert.ok(Date.now() < deadline, JSON.stringify({bodies, sends, offsets: offsets.slice(0, 5), timeline: db.prepare('SELECT * FROM timeline ORDER BY id DESC LIMIT 5').all()}));
++          await delay(5);
++        }
++      };
++      await until(() => bodies.length === 1);
++      laterUpdatesArrived = true; // A later polling batch arrives while the first core call remains blocked.
++      await until(() => sends.some((s) => s.text === 'Eva2: Fixture response 2')
++        && sends.some((s) => s.text === 'Eva2: Fixture response 3'));
++      assert.equal(firstReleased, false);
++      assert.equal(sends.some((s) => s.text === 'Eva2: Fixture response 1'), false);
++      assert.deepEqual(bodies.map((b) => [b.chat_id, b.telegram_user_id, b.message_id]),
++        [['7', 7, 1], ['7', 7, 2], ['8', 8, 3]]);
++      assert.equal(telegramMessage(7, 1).processing_status, 'processing');
++      assert.equal(telegramMessage(7, 2).processing_status, 'completed');
++      assert.ok(offsets.every((offset) => offset <= 1), 'unfinished turn must remain unacknowledged');
++      await delay(20); // Multiple re-polls must not redispatch in-flight or completed updates.
++      assert.equal(bodies.length, 3);
++      firstReleased = true;
++      releaseFirst();
++      await until(() => offsets.some((offset) => offset === 5));
++      assert.equal(telegramMessage(7, 1).processing_status, 'completed');
++      await bot.handleUpdate(updates[0]);
++      await bot.handleUpdate(updates[1]);
++      assert.equal(bodies.length, 3, 'durable completed replay must not call core again');
++      for (const id of [1, 2, 3]) {
++        const delivered = sends.filter((s) => s.text === `Eva2: Fixture response ${id}`);
++        assert.equal(delivered.length, 1);
++        assert.equal(Number(delivered[0].chat_id), id === 3 ? 8 : 7);
++        assert.equal(delivered[0].reply_parameters?.message_id, id);
++      }
++    } finally {
++      releaseFirst();
++      controller.abort();
++      await globalThis.__ingressPolling;
++      globalThis.fetch = originalFetch;
++      db.close();
++      rmSync(dataDir, { recursive: true, force: true });
++    }
++  });
+diff --git a/test/telegram-concurrent-polling.test.js b/test/telegram-concurrent-polling.test.js
+new file mode 100644
+index 00000000..a2aa0d0b
+--- /dev/null
++++ b/test/telegram-concurrent-polling.test.js
+@@ -0,0 +1,93 @@
++import assert from 'node:assert/strict';
++import test from 'node:test';
++import { setTimeout as delay } from 'node:timers/promises';
++import { pollTelegramConcurrently } from '../src/integrations/telegrampolling.js';
++
++const until = async (predicate) => {
++  const deadline = Date.now() + 1000;
++  while (!predicate()) {
++    assert.ok(Date.now() < deadline, 'scheduler condition timed out');
++    await delay(1);
++  }
++};
++
++test('bounded polling keeps legacy serial, drains on stop and never acknowledges pending work', async () => {
++  const controller = new AbortController();
++  const updates = [1, 2, 3, 4, 5].map((id) => ({ update_id: id,
++    message: { text: id < 3 ? 'legacy turn' : '/eva2 any content' } }));
++  const started = [];
++  const release = new Map();
++  const offsets = [];
++  let active = 0;
++  let peak = 0;
++  const bot = {
++    init: async () => {},
++    api: {
++      deleteWebhook: async (options) => assert.equal(options.drop_pending_updates, false),
++      getUpdates: async ({ offset }) => {
++        offsets.push(offset);
++        await delay(1);
++        return updates.filter((u) => u.update_id >= offset);
++      },
++    },
++    handleUpdate: async (update) => {
++      started.push(update.update_id);
++      peak = Math.max(peak, ++active);
++      await new Promise((resolve) => release.set(update.update_id, resolve));
++      active--;
++    },
++  };
++  let ended = false;
++  const polling = pollTelegramConcurrently(bot, {
++    signal: controller.signal, concurrency: 3, pollIntervalMs: 1,
++  }).then(() => { ended = true; });
++  try {
++    await until(() => started.length === 3);
++    assert.deepEqual(started, [1, 3, 4]);
++    release.get(3)();
++    await until(() => started.includes(5));
++    assert.equal(started.includes(2), false);
++    assert.equal(peak, 3);
++    assert.ok(offsets.every((offset) => offset <= 1));
++    controller.abort();
++    await delay(5);
++    assert.equal(ended, false, 'shutdown waits for admitted work');
++    for (const finish of release.values()) finish();
++    await polling;
++    assert.equal(started.includes(2), false, 'queued legacy turn remains for replay');
++  } finally {
++    controller.abort();
++    for (const finish of release.values()) finish();
++    await polling;
++  }
++});
++
++test('handler errors release capacity and fatal polling conflicts drain admitted work', async () => {
++  const errors = [];
++  let finish;
++  let calls = 0;
++  let activeDone = false;
++  const polling = pollTelegramConcurrently({
++    init: async () => {},
++    api: {
++      deleteWebhook: async () => {},
++      getUpdates: async () => {
++        if (calls++ === 0) return [1, 2].map((id) => ({ update_id: id,
++          message: { text: '/eva2 test' } }));
++        throw Object.assign(new Error('conflicting poller'), { error_code: 409 });
++      },
++    },
++    handleUpdate: async ({ update_id: id }) => {
++      if (id === 1) throw new Error('handler failed');
++      await new Promise((resolve) => { finish = resolve; });
++      activeDone = true;
++    },
++  }, { onError: (error) => errors.push(error.message), pollIntervalMs: 1 });
++  const rejection = assert.rejects(polling, /conflicting poller/);
++  await until(() => calls === 2);
++  assert.deepEqual(errors, ['handler failed']);
++  assert.equal(activeDone, false);
++  finish();
++  await rejection;
++  assert.equal(activeDone, true);
++});
