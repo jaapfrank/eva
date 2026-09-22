@@ -1,0 +1,54 @@
+"""Execute the packaged browser transport without runtime data or model calls."""
+import subprocess
+from eva.adapters.api.dashboard_work_return_client import DASHBOARD_WORK_RETURN_CLIENT_JS
+
+
+def test_conversation_return_transport_boundaries():
+    script = DASHBOARD_WORK_RETURN_CLIENT_JS + r"""
+const assert=require('node:assert/strict');
+const {createHash}=require('node:crypto');
+const {EvaWorkReturns}=module.exports;
+const digest=async s=>createHash('sha256').update(s).digest('hex');
+const output='<img src=x onerror=alert(1)>\nBron: https://example.org';
+const result={work_id:'work-one',operation_id:'a'.repeat(64),output,
+ output_sha256:createHash('sha256').update(output).digest('hex')};
+const reply=data=>({ok:true,json:async()=>({contract:'EvaPrivateWorkReturn/v1',...data})});
+function setup(fetch){
+ const rendered=[],failures=[],timers=new Map();let id=0,visible=true,clears=0;
+ const client=new EvaWorkReturns({fetch,visible:()=>visible,render:r=>rendered.push(r),
+ clear:()=>{clears++;rendered.length=0},failed:()=>failures.push(true),digest,
+ schedule:fn=>{timers.set(++id,fn);return id},cancel:id=>timers.delete(id)});
+ return {client,rendered,failures,timers,setVisible:v=>visible=v,clears:()=>clears};
+}
+(async()=>{
+ let calls=[];
+ const a=setup(async(url,options)=>{calls.push([url,JSON.parse(options.body)]);
+  return reply(url.endsWith('/ack')?{status:'acknowledged'}:{status:'claimed',result});});
+ await a.client.poll();await a.client.poll();
+ assert.equal(a.rendered.length,1);assert.equal(a.rendered[0].output,output);
+ assert.equal(calls.filter(c=>c[0].endsWith('/ack')).length,2);
+ assert.deepEqual(calls[0][1],{}); // Browser never chooses identity or session.
+ a.client.close();assert.equal(a.rendered.length,0);await a.client.poll();assert.equal(calls.length,4);
+ await a.client.resume();assert.equal(calls.length,6);assert.equal(a.rendered.length,0); // cached page resumes, no duplicate display
+
+ let resolve;
+ const b=setup(()=>new Promise(r=>resolve=r));
+ const pending=b.client.poll();await b.client.poll(); // no overlapping poll
+ b.setVisible(false);b.client.suspend();resolve(reply({status:'claimed',result}));await pending;
+ assert.equal(b.rendered.length,0);assert.equal(b.timers.size,0);
+
+ const c=setup(async()=>reply({status:'claimed',result:{...result,output_sha256:'0'.repeat(64)}}));
+ await c.client.poll();assert.equal(c.rendered.length,0);assert.equal(c.failures.length,1);
+
+ let n=0;
+ const d=setup(async()=>{n++;return n===1?reply({status:'claimed',result}):{ok:false};});
+ await d.client.poll();assert.equal(d.rendered.length,0);assert.equal(d.failures.length,1);
+
+ const e=setup(async()=>reply({status:'idle',result:null}));
+ await e.client.poll();assert.equal(e.rendered.length,0);assert.equal(e.failures.length,0);
+ console.log('return transport boundaries passed');
+})().catch(error=>{console.error(error);process.exitCode=1});
+"""
+    result = subprocess.run(['node', '-e', script], capture_output=True, text=True, timeout=10)
+    assert result.returncode == 0, result.stderr
+    assert 'return transport boundaries passed' in result.stdout

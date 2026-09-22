@@ -1029,13 +1029,13 @@
         ],
         "now": {
           "title": "Resultaten terugbrengen tijdens een gesprek",
-          "detail": "De uitvoerder bouwt automatische resultaatterugkeer voor privégesprekken op de website en via spraak, met behoud van stoppen en persoonsgrenzen.",
+          "detail": "De uitvoerder test privéresultaatterugkeer via de bestaande spraakdienst. De coördinator sluit de echte tekstgesprekpagina aan, zodat een open beheertab geen gespreksmelding wegvangt. De reviewer werkt de huishoudelijke persoonsgrens uit; daarna volgt code-review.",
           "state": "In uitvoering",
           "doneWhen": "Resultaat komt terug in de juiste actieve privésessie; na afsluiten blijft het bewaard zonder onverwacht opnieuw te spreken. Daarna onafhankelijke review, installatie en livecontrole."
         },
         "next": {
           "title": "Controleren, installeren en samen proberen",
-          "detail": "Eerst de resultaatterugkeer beoordelen en installeren. Voice PE aansluiten zodra het apparaat per USB beschikbaar is. Daarna de volgende stap van het bestaande opleverplan.",
+          "detail": "Eerst privéresultaatterugkeer beoordelen, installeren en live controleren. Daarna dezelfde werklifecycle aansluiten voor openbare onderzoeksopdrachten via de huishoudspeaker, met behoud van privégrenzen. De fysieke Voice PE-installatie kan zodra het apparaat per USB beschikbaar is.",
           "state": "Hierna"
         },
         "ownerAction": {
@@ -10627,10 +10627,10 @@
         {
           "threadId": "01a0c915-205e-7c11-809a-674ae09e016c",
           "title": "Eva laat achtergrondonderzoek echt afmaken",
-          "files": "Onafhankelijke review van dashboard en daarna productresultaat; alleen lezen",
+          "files": "Alleen household-result-contract-20260922.md; vervolgens read-only productreview",
           "estimate": "Gerichte review per concreet resultaat; nul modelproeven; creditverbruik onbekend",
-          "state": "awaiting_delivery",
-          "currentOutcome": "Onafhankelijke livecontrole van Voice PE-server en dashboardreview afgerond. Review van nieuwe privéresultaatterugkeer volgt zodra de uitvoerder oplevert."
+          "state": "in_progress",
+          "currentOutcome": "Werkt het concrete huishoudelijke resultaatcontract uit met behoud van privégrenzen; daarna onafhankelijke review van de nieuwe resultaatterugkeer."
         }
       ],
       "coordination": "Coördinator onderhoudt dashboard, werkbord en installatie. Eén uitvoerder bouwt privéresultaatterugkeer; één reviewer controleert concrete resultaten. Taakstatus is gerapporteerd werk, geen live aanwezigheidsmeting."
@@ -10876,6 +10876,13 @@
       "activationEvidence": "eva2/evidence/product/voice-speaker-activation-20260922.json",
       "finding": "Twee ontbrekende gedeelde spraakmodules zijn geïnstalleerd; 60 gerichte tests slagen. Speakerdienst luistert en server-readiness voor beide apparaatbindings slaagt. Bestaande taken, worker en laptopspraak behouden.",
       "network": "Exacte regel voor TCP 44715 vanaf de twee apparaten voorbereid en beoordeeld; Windows-beheerderssessie nog nodig."
+    },
+    "householdResultContract20260922": {
+      "state": "designed_not_built",
+      "source": "eva2/evidence/product/household-result-contract-20260922.md",
+      "result": "Dezelfde bestaande werklifecycle gebruiken met expliciet huishoudelijk taakcontract, actuele apparaatautoriteit en resultaatbestemming in de oorspronkelijke sessie. Bestaande privéroutes blijven strikt privé.",
+      "next": "Na integratie van privéresultaatterugkeer de bestaande worker en contractdecoder begrensd uitbreiden; geen tweede werkqueue of kanaalmodel.",
+      "ownerAcceptance": "open; fysieke Voice PE-proef blijft afzonderlijk"
     }
   },
   "activeTaskId": "AU-008",
