@@ -239,12 +239,11 @@ async def serve_delegated_work_service(
     )
     engine = sa.create_engine(sqlalchemy_postgres_dsn(database_dsn), pool_pre_ping=True)
     try:
+        store = PostgresDelegatedWorkStore(engine, selected.scope)
+        bound_runner = runner.bind_store(store) if callable(getattr(runner, "bind_store", None)) else runner
         worker = DelegatedWorkWorker(
-            PostgresDelegatedWorkStore(
-                engine,
-                selected.scope,
-            ),
-            runner,
+            store,
+            bound_runner,
             worker_id=selected.worker_id,
             release=release,
             clock=clock or (lambda: datetime.now(UTC).replace(microsecond=0)),

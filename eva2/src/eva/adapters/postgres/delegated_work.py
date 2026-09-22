@@ -20,7 +20,7 @@ from eva.adapters.postgres.scope import PostgresScopedRole
 from eva.contracts.canonical_json import canonical_sha256
 from eva.contracts.delegated_work import (
     DelegatedWorkResult,
-    DelegatedWorkSpec,
+    DelegatedWorkSpec, DelegatedResearchSpec, load_delegated_work_spec,
     DelegatedWorkUsage,
 )
 from eva.contracts.workboard import WorkBoard
@@ -237,7 +237,8 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
                 if (spec.work_id != expected_id or spec.parent_task_id != previous.spec.work_id
                         or spec.generation != previous.spec.generation + 1
                         or spec.episode_id != previous.spec.episode_id
-                        or spec.task != previous.spec.task or spec.grant != previous.spec.grant):
+                        or spec.task != previous.spec.task or spec.grant != previous.spec.grant
+                        or getattr(spec, "research", None) != getattr(previous.spec, "research", None)):
                     raise DelegatedWorkConflict("resumed work differs from its bounded previous attempt")
             connection.execute(
                 sa.text("SELECT pg_advisory_xact_lock(hashtextextended(:key, 0))"),
@@ -268,7 +269,8 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
                     # a newer ingress never creates a parallel successor.
                     fields = ("episode_id", "generation", "parent_task_id", "owner_principal_id",
                               "principal_binding_id", "task", "grant")
-                    if any(getattr(loaded.spec, key) != getattr(spec, key) for key in fields):
+                    if (any(getattr(loaded.spec, key) != getattr(spec, key) for key in fields)
+                            or getattr(loaded.spec, "research", None) != getattr(spec, "research", None)):
                         raise DelegatedWorkConflict("resumed work id owns another attempt")
                     return DelegatedWorkAdmission("already_present", loaded)
                 if (
@@ -773,6 +775,23 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
             finally:
                 transaction.rollback()
 
+    def authorize_tool_dispatch(self, call: DelegatedWorkCall) -> None:
+        """Recheck durable call, owner binding and stop immediately before tool dispatch."""
+        with self._engine.begin() as connection:
+            self._scope(connection)
+            self._validate_owner_binding(connection,
+                owner_principal_id=UUID(call.spec.owner_principal_id),
+                principal_binding_id=UUID(call.spec.principal_binding_id))
+            row = connection.execute(sa.select(delegated_work_runs).where(
+                delegated_work_runs.c.tenant_id == self._scope_value.tenant_id,
+                delegated_work_runs.c.installation_id == self._scope_value.installation_id,
+                delegated_work_runs.c.work_id == call.work_id,
+            ).with_for_update()).mappings().one_or_none()
+            if (row is None or row.call_id != call.call_id or row.state != "call_started"
+                    or bytes(row.spec_sha256).hex() != call.spec.sha256
+                    or row.stop_requested_at is not None):
+                raise DelegatedWorkConflict("research call is stopped or no longer authorized")
+
     def record_stopped(
         self,
         call: DelegatedWorkCall,
@@ -1166,7 +1185,7 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
     ) -> StoredDelegatedWork:
         del connection
         try:
-            spec = DelegatedWorkSpec.model_validate(row.spec_payload)
+            spec = load_delegated_work_spec(row.spec_payload)
             if bytes(row.spec_sha256).hex() != canonical_sha256(row.spec_payload):
                 raise ValueError("spec hash differs")
             result = (
@@ -1374,14 +1393,14 @@ def _validate_usage(
             grant.maximum_completed_model_responses,
             "model response",
         ),
-        (usage.tool_calls, 0, "tool call"),
+        (usage.tool_calls, grant.maximum_tool_calls if isinstance(spec, DelegatedResearchSpec) else 0, "tool call"),
         (usage.input_tokens, grant.maximum_input_tokens, "input token"),
         (usage.output_tokens, grant.maximum_output_tokens, "output token"),
         (usage.total_tokens, grant.maximum_total_tokens, "total token"),
         (usage.cost_usd_micros, grant.maximum_cost_usd_micros, "cost"),
     )
     for actual, maximum, label in limits:
-        if actual is not None and actual > maximum:
+        if actual is not None and actual > maximum and (successful or not isinstance(spec, DelegatedResearchSpec)):
             raise DelegatedWorkConflict(f"delegated {label} budget exceeded")
 
 

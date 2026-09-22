@@ -119,6 +119,58 @@ class DelegatedWorkSpec(_DelegatedContract):
         return canonical_sha256(self.to_payload())
 
 
+class DelegatedResearchGrant(DelegatedWorkGrant):
+    """Explicit v2 authority: one existing public research tool, no ambient context."""
+
+    contract: Literal["DelegatedResearchGrant/v2"]
+    schema_version: Literal[2]
+    maximum_tool_calls: int = Field(ge=1, le=16)
+
+    @model_validator(mode="after")
+    def _first_slice_is_explicitly_isolated(self) -> DelegatedResearchGrant:
+        if (self.context_refs or self.workspace_ref is not None or self.child_network_access
+                or self.capability_ids != ["research.public_sources"]):
+            raise ValueError("research grant only permits the host public research tool")
+        if self.maximum_total_tokens < max(self.maximum_input_tokens, self.maximum_output_tokens):
+            raise ValueError("research total token budget is invalid")
+        return self
+
+
+class PublicResearchRequest(_DelegatedContract):
+    """The explicit public query; never inherit a conversation or private memory."""
+
+    contract: Literal["PublicResearchRequest/v1"]
+    question: str = Field(min_length=1, max_length=2000)
+    title: str = Field(min_length=1, max_length=200)
+    options: list[Annotated[str, StringConstraints(min_length=1, max_length=120)]] = Field(min_length=1, max_length=5)
+    research_mode: Literal["topic", "comparison"]
+    public_review: Literal["public_unlinked"]
+
+    def arguments(self) -> dict[str, object]:
+        return self.model_dump(mode="json", exclude={"contract", "schema_version"})
+
+
+class DelegatedResearchSpec(DelegatedWorkSpec):
+    """Versioned research work on the same durable lifecycle as tool-free v1."""
+
+    contract: Literal["DelegatedResearchWork/v2"]
+    schema_version: Literal[2]
+    grant: DelegatedResearchGrant
+    research: PublicResearchRequest
+
+    @model_validator(mode="after")
+    def _bind_public_question(self) -> DelegatedResearchSpec:
+        if self.task != self.research.question:
+            raise ValueError("research task must equal its admitted public question")
+        return self
+
+
+def load_delegated_work_spec(raw: object) -> DelegatedWorkSpec:
+    if isinstance(raw, dict) and raw.get("contract") == "DelegatedResearchWork/v2":
+        return DelegatedResearchSpec.model_validate(raw)
+    return DelegatedWorkSpec.model_validate(raw)
+
+
 class DelegatedWorkUsage(_DelegatedContract):
     """Portable counters with explicit completeness; unknown is never zero."""
 

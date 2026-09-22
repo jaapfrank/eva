@@ -24,6 +24,7 @@ from eva.contracts.canonical_json import canonical_json_bytes
 
 
 _OPERATIONS = {
+    "start_background_research": ("research", "research"),
     "start_delegated_work": ("start", "task"),
     "list_delegated_work": ("list", None),
     "get_delegated_work": ("get", "work_id"),
@@ -31,6 +32,7 @@ _OPERATIONS = {
     "resume_delegated_work": ("resume", "work_id"),
 }
 _DESCRIPTIONS = {
+    "research": "Start publiek bronnenonderzoek op de achtergrond. Geef uitsluitend een geanonimiseerde publieke vraag, titel en onderwerpen mee; geen privécontext, namen of geheugen. Geeft direct work_id terug. Blijf beschikbaar voor gesprek; gebruik bestaande get/stop/resume voor resultaat en bediening.",
     "start": "Besteed een concrete denk-, schrijf- of analysetaak uit aan een duurzame hulpagent. Geef alle benodigde context mee. De hulpagent heeft geen browser of tools. Geeft meteen een work_id terug; gebruik get om later het resultaat te lezen. Gebruik voor parallel hulpwerk op verzoek van de eigenaar.",
     "list": "Bekijk de duurzame hulpopdrachten van deze eigenaar, met hun work_id en actuele status.",
     "get": "Lees de actuele status, gemeten verbruik en het opgeslagen resultaat van één hulpopdracht. Gebruik het echte resultaat in je antwoord; ingepland betekent nog niet klaar.",
@@ -50,10 +52,11 @@ class PostgresDelegatedWorkActions:
 
     @property
     def action_names(self) -> tuple[str, ...]:
-        return tuple(_OPERATIONS)
+        return tuple(name for name in _OPERATIONS if name != "start_background_research"
+                     or getattr(self._service, "research_profile", None) is not None)
 
     @staticmethod
-    def conversation_tools() -> tuple[ConversationToolDescriptor, ...]:
+    def conversation_tools(*, include_research=False) -> tuple[ConversationToolDescriptor, ...]:
         return tuple(
             ConversationToolDescriptor(
                 name,
@@ -61,7 +64,18 @@ class PostgresDelegatedWorkActions:
                 {
                     "type": "object",
                     "additionalProperties": False,
-                    "properties": {} if key is None else {key: {"type": "string"}},
+                    "properties": {} if key is None else {key: ({
+                        "type": "object", "additionalProperties": False,
+                        "properties": {"contract": {"type":"string", "const":"PublicResearchRequest/v1"},
+                            "schema_version": {"type":"integer", "const":1},
+                            "question": {"type":"string", "maxLength":2000},
+                            "title": {"type":"string", "maxLength":200},
+                            "options": {"type":"array", "minItems":1, "maxItems":5,
+                                "items":{"type":"string", "maxLength":120}},
+                            "research_mode": {"type":"string", "enum":["topic","comparison"]},
+                            "public_review": {"type":"string", "const":"public_unlinked"}},
+                        "required": ["contract","schema_version","question","title","options","research_mode","public_review"]
+                    } if operation == "research" else {"type":"string"})},
                     "required": [] if key is None else [key],
                 },
                 "Rapporteer de opgeslagen status eerlijk. Bewaar work_id voor een vervolg. "
@@ -70,6 +84,7 @@ class PostgresDelegatedWorkActions:
                 "Wacht niet in een poll-lus op hulpwerk; geef de eigenaar de taak en laat het gesprek doorgaan.",
             )
             for name, (operation, key) in _OPERATIONS.items()
+            if operation != "research" or include_research
         )
 
     def available_for(self, turn: ConversationTurn) -> bool:
@@ -115,7 +130,7 @@ class PostgresDelegatedWorkActions:
 
     def reply_guard(self, turn, receipts):
         starts = tuple((index, receipt) for index, receipt in enumerate(receipts)
-                       if receipt.call.name in {"start_delegated_work", "resume_delegated_work"}
+                       if receipt.call.name in {"start_delegated_work", "start_background_research", "resume_delegated_work"}
                        and receipt.output.get("status") == "verified"
                        and receipt.output.get("operation_result", {}).get("status")
                        not in {"not_found", "not_resumable"})
@@ -170,11 +185,11 @@ class PostgresDelegatedWorkActions:
         self, turn: ConversationTurn, call: ConversationActionCall, *, step_index: int = 0
     ) -> ConversationActionReceipt:
         operation_and_key = _OPERATIONS.get(call.name)
-        if operation_and_key is None:
+        if operation_and_key is None or call.name not in self.action_names:
             raise ConversationConflict("unknown delegated action")
         operation, key = operation_and_key
         if set(call.arguments) != (set() if key is None else {key}) or (
-            key is not None and (
+            key is not None and operation != "research" and (
                 not isinstance(call.arguments[key], str)
                 or not call.arguments[key].strip()
                 or len(call.arguments[key].encode("utf-8")) > (8192 if key == "task" else 240)
@@ -182,6 +197,11 @@ class PostgresDelegatedWorkActions:
         ):
             raise ConversationConflict("delegated action arguments differ")
         timeline = self._timeline(turn)
+        if operation == "research":
+            from eva.contracts.delegated_work import PublicResearchRequest
+            from eva.adapters.model.research_tools import validate_public_projection
+            public = PublicResearchRequest.model_validate(call.arguments["research"])
+            validate_public_projection(public.arguments())
         thread_id = self._thread_id(turn, step_index)
         request = {"call_id": call.call_id, "name": call.name, "arguments": call.arguments}
         events = timeline.events(thread_id)

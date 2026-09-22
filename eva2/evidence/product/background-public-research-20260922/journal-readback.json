@@ -1,0 +1,39 @@
+{
+  "event_types": [
+    "TOOL_REQUEST_ADMITTED",
+    "TOOL_PREPARED",
+    "TOOL_EXECUTED",
+    "STATE_VERIFIED"
+  ],
+  "artifacts": [
+    {
+      "title": "HTTP HEAD response body",
+      "content": "**Regel:** Een HEAD-response mag geen content/message body bevatten: de server **MUST NOT send content**.\n\n**Exacte primaire bron:** RFC 9110 (*HTTP Semantics*), **§9.3.2 “HEAD”**. ([rfc-editor.org](https://www.rfc-editor.org/rfc/rfc9110.html?utm_source=openai))\n\n## Bronnen\n\n- [RFC 9110: HTTP Semantics](https://www.rfc-editor.org/rfc/rfc9110.html?utm_source=openai)",
+      "sources": [
+        {
+          "url": "https://www.rfc-editor.org/rfc/rfc9110.html?utm_source=openai",
+          "title": "RFC 9110: HTTP Semantics"
+        }
+      ],
+      "provider": "chatgpt-codex-web-search:gpt-5.6-luna",
+      "question": "Welke actuele officiële HTTP-specificatie bepaalt of een response op HEAD een message body mag bevatten? Geef alleen die regel en de exacte primaire sectiebron, maximaal 80 woorden.",
+      "model_usage": {
+        "tool_calls": 0,
+        "measurement": "measured",
+        "input_tokens": 8895,
+        "output_tokens": 135,
+        "model_attempts": 1
+      },
+      "researched_at": "2026-09-22T12:58:00Z",
+      "content_sha256": "d5c35e81e0df0a2f83b5205dd2ee3448ba9502f7471693fa0d73227354c1c486",
+      "source_coverage": "cited_topic_sources",
+      "verification_scope": "research_artifact_only",
+      "semantic_claims_independently_verified": false
+    }
+  ],
+  "worker_program_sha256": "1e2a655669cfa8ea4b459965c73c4ce73c99008335877d84a4c5a186630199e5",
+  "spec_sha256": "8586620f2ac36d2e1eaffd1db8a885ab02788ecc96883be57de31c00cd0ad87f",
+  "provider_raw_sse_retained": false,
+  "hosted_tool_count_proven": false,
+  "interpretation": "Saved research artifact only; usage parser always reports zero for research. No retrospective count or delegated success claimed."
+}

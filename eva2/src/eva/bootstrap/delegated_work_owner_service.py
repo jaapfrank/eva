@@ -14,6 +14,7 @@ from eva.adapters.postgres.operational_timeline import TimelineScope, external_t
 from eva.application.conversation import ConversationTurn
 from eva.bootstrap.delegated_work_provider import build_unadmitted_delegated_work_spec
 from eva.contracts.canonical_json import canonical_sha256
+from eva.contracts.delegated_work import DelegatedResearchSpec, PublicResearchRequest
 from eva.contracts.timestamps import parse_utc_timestamp
 
 
@@ -21,8 +22,10 @@ class DelegatedWorkOwnerService:
     def __init__(self, store: PostgresDelegatedWorkStore, *, owner_principal_id: UUID,
                  principal_binding_id: UUID, clock: Callable[[], datetime] | None = None,
                  conversation_scope: TimelineScope | None = None,
-                 private_bridge_principal_loader: Callable[[], str | None] | None = None):
+                 private_bridge_principal_loader: Callable[[], str | None] | None = None,
+                 research_profile=None):
         self.store = store
+        self.research_profile = research_profile
         # Runtime binds the conversation namespace separately from storage authority.
         self.conversation_scope = conversation_scope or store.scope
         self.owner_principal_id = owner_principal_id
@@ -69,9 +72,9 @@ class DelegatedWorkOwnerService:
                 "principal_binding_id": self.principal_binding_id}
 
     def execute(self, operation: str, turn: ConversationTurn, *, task: str | None = None,
-                work_id: str | None = None, request_key: str) -> dict:
+                work_id: str | None = None, request_key: str, research: dict | None = None) -> dict:
         try:
-            return self._execute(operation, turn, task=task, work_id=work_id, request_key=request_key)
+            return self._execute(operation, turn, task=task, work_id=work_id, request_key=request_key, research=research)
         except DelegatedWorkNotFound:
             return {"contract": "EvaDelegatedWorkOwnerResult/v1", "operation": operation,
                     "status": "not_found", "work": None,
@@ -82,13 +85,20 @@ class DelegatedWorkOwnerService:
                     "guidance": "De taak is nog actief of al geslaagd. Er is geen nieuwe poging ingepland."}
 
     def _execute(self, operation: str, turn: ConversationTurn, *, task: str | None,
-                 work_id: str | None, request_key: str) -> dict:
+                 work_id: str | None, request_key: str, research: dict | None = None) -> dict:
         if not self.available_for(turn):
             raise DelegatedWorkConflict("delegated work requires its private owner scope")
-        if operation not in {"start", "list", "get", "result", "stop", "resume"}:
+        if operation not in {"start", "research", "list", "get", "result", "stop", "resume"}:
             raise ValueError("delegated work operation is invalid")
         if not isinstance(request_key, str) or not 1 <= len(request_key) <= 2048:
             raise ValueError("delegated work request key is required")
+        if operation == "research":
+            if self.research_profile is None or task is not None or work_id is not None:
+                raise DelegatedWorkConflict("public background research is not composed")
+            public = PublicResearchRequest.model_validate(research)
+            task = public.question
+        elif research is not None:
+            raise ValueError("research arguments require their explicit operation")
         response = {"contract": "EvaDelegatedWorkOwnerResult/v1", "operation": operation}
         if operation == "list":
             if task is not None or work_id is not None:
@@ -96,7 +106,7 @@ class DelegatedWorkOwnerService:
             rows = self.store.list_owned(**self._owner, limit=21)
             return {**response, "jobs": [self._view(row, include_result=False) for row in rows[:20]],
                     "truncated": len(rows) > 20}
-        if operation == "start":
+        if operation in {"start", "research"}:
             if work_id is not None or not isinstance(task, str) or not task.strip():
                 raise ValueError("start requires one task")
             task = task.strip()
@@ -112,7 +122,10 @@ class DelegatedWorkOwnerService:
             })
             identity = uuid5(NAMESPACE_URL, key)
             created = parse_utc_timestamp(turn.occurred_at)
-            spec = build_unadmitted_delegated_work_spec(
+            builder = (build_unadmitted_delegated_work_spec if operation == "start"
+                       else self.research_profile.build_spec)
+            spec = builder(
+                **({"research": public.to_payload()} if operation == "research" else {}),
                 work_id="work:eva-chat:" + str(identity),
                 episode_id=str(uuid5(NAMESPACE_URL, ":".join((
                     "delegated-private-context-v1", turn.tenant_id, turn.installation_id,
@@ -142,7 +155,12 @@ class DelegatedWorkOwnerService:
             self.store.scope.installation_id,
             f"{previous.spec.work_id}:{previous.spec.generation + 1}",
         ))
-        spec = build_unadmitted_delegated_work_spec(
+        is_research = isinstance(previous.spec, DelegatedResearchSpec)
+        if is_research and self.research_profile is None:
+            raise DelegatedWorkConflict("research resume requires its configured profile")
+        builder = self.research_profile.build_spec if is_research else build_unadmitted_delegated_work_spec
+        spec = builder(
+            **({"research": previous.spec.research.to_payload()} if is_research else {}),
             work_id=next_id, episode_id=previous.spec.episode_id,
             generation=previous.spec.generation + 1, parent_task_id=previous.spec.work_id,
             owner_principal_id=str(self.owner_principal_id),
@@ -199,7 +217,7 @@ class DelegatedWorkOwnerService:
                 "error_code": work.error_code, "error_fingerprint": work.error_fingerprint,
                 "result_available": result is not None,
                 **({"result": result} if include_result else {}),
-                "scope": "private_tool_free_worker", "new_model_run_on_resume": True}
+                "scope": "private_public_research_worker" if isinstance(work.spec, DelegatedResearchSpec) else "private_tool_free_worker", "new_model_run_on_resume": True}
 
 
 __all__ = ["DelegatedWorkOwnerService"]

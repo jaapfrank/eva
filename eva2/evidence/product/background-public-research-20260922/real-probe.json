@@ -1,0 +1,38 @@
+{
+  "scope": "isolated PostgreSQL, one public research task, existing read-only lease and subscription admission",
+  "question": "Welke actuele officiële HTTP-specificatie bepaalt of een response op HEAD een message body mag bevatten? Geef alleen die regel en de exacte primaire sectiebron, maximaal 80 woorden.",
+  "real_credits": "unknown",
+  "provider_hosted_search_cap_enforced": false,
+  "limits": {
+    "provider_http_requests": 1,
+    "client_timeout_seconds": 60,
+    "maximum_result_tool_calls": 3,
+    "maximum_result_input_tokens": 65536,
+    "maximum_result_output_tokens": 1200
+  },
+  "disconnect_cancels_server_work_proven": false,
+  "foreground_event_loop_available": true,
+  "disposition": "ambiguous",
+  "seconds": 9.967,
+  "provider_requests": {
+    "sent": 1,
+    "blocked": 0
+  },
+  "state": "ambiguous",
+  "usage": {
+    "schema_version": 1,
+    "contract": "DelegatedWorkUsage/v1",
+    "measurement": "measured",
+    "completed_model_responses": 1,
+    "tool_calls": 0,
+    "input_tokens": 8895,
+    "output_tokens": 135,
+    "total_tokens": 9030,
+    "cost_usd_micros": 1941
+  },
+  "output": null,
+  "output_sha256": null,
+  "spec_sha256": "8586620f2ac36d2e1eaffd1db8a885ab02788ecc96883be57de31c00cd0ad87f",
+  "error_code": "internal_error",
+  "api_equivalent_not_actual_cost": true
+}

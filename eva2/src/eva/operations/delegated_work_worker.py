@@ -50,13 +50,16 @@ class DelegatedWorkWorker:
         runner: ChildRunner,
         *,
         worker_id: str,
-        release: DelegatedWorkReleaseSelector,
+        release: DelegatedWorkReleaseSelector | tuple[DelegatedWorkReleaseSelector, ...],
         clock: Callable[[], datetime] | None = None,
     ) -> None:
         self._store = store
         self._runner = runner
         self._worker_id = worker_id
-        self._release = release
+        self._releases = release if isinstance(release, tuple) else (release,)
+        if not 1 <= len(self._releases) <= 2:
+            raise ValueError("worker supports the tool-free and public research releases only")
+        self._release_index = 0
         self._clock = clock or (lambda: datetime.now(UTC).replace(microsecond=0))
 
     async def run_once(
@@ -67,11 +70,14 @@ class DelegatedWorkWorker:
     ) -> WorkerDisposition:
         if cancellation_event is not None and cancellation_event.is_set():
             return "idle"
-        claim = self._store.claim_next(
-            worker_id=self._worker_id,
-            release=self._release,
-            now=self._now(),
-        )
+        claim = None
+        for offset in range(len(self._releases)):
+            index = (self._release_index + offset) % len(self._releases)
+            claim = self._store.claim_next(worker_id=self._worker_id,
+                release=self._releases[index], now=self._now())
+            if claim is not None:
+                self._release_index = (index + 1) % len(self._releases)
+                break
         if claim is None:
             return "idle"
         if fault_after == "after_claim":
