@@ -340,3 +340,33 @@ def test_restore_activation_closes_old_voice_sessions_transactionally(current_ar
         assert all(row["phase"] == ("open" if rollback else "closed") for row in states)
         assert c.exec_driver_sql("SELECT held FROM eva_core.restore_activation").scalar_one() is True
     wizard.close()
+
+
+@pytest.mark.parametrize("fail_at", [1, 2, 3, None])
+def test_restore_runtime_guard_is_fresh_and_failure_rolls_back(current_archive, tmp_path, fail_at):
+    wizard, target, _ = workflow(current_archive, tmp_path)
+    calls = []
+    def guard(connection):
+        assert connection.in_transaction()
+        calls.append(connection.exec_driver_sql("SELECT count(*) FROM eva_core.installations").scalar_one())
+        if len(calls) == fail_at:
+            raise ValueError("runtime changed")
+    wizard.runtime_guard = guard
+    try:
+        if fail_at is not None:
+            with pytest.raises(ValueError, match="runtime changed"):
+                preview = wizard.prepare(current_archive["blob"], PASSPHRASE)
+                wizard.execute(preview["confirmation"])
+        else:
+            preview = wizard.prepare(current_archive["blob"], PASSPHRASE)
+            assert wizard.execute(preview["confirmation"])["target_activation"] == "closed"
+        assert len(calls) == (fail_at or 3)
+        if len(calls) == 3:
+            assert calls[:2] == [0, 0] and calls[2] > 0
+        with target.connect() as c:
+            rows = c.exec_driver_sql("SELECT count(*) FROM eva_core.installations").scalar_one()
+            holds = c.exec_driver_sql("SELECT count(*) FROM eva_core.restore_activation").scalar_one()
+            assert bool(rows) == (fail_at is None)
+            assert holds == (1 if fail_at is None else 0)
+    finally:
+        wizard.close()

@@ -58,6 +58,7 @@ class InstallerPortableRestore:
         object_store_root: Path,
         key_resolver: Any = None,
         runtime_identity: dict[str, str] | None = None,
+        runtime_guard: Callable[[Any], None] | None = None,
     ):
         # The composition root must provide an isolated, traffic-closed target.
         if (
@@ -72,6 +73,7 @@ class InstallerPortableRestore:
         self.object_store_root = object_store_root
         self.key_resolver = key_resolver
         self.runtime_identity = runtime_identity
+        self.runtime_guard = runtime_guard
         self._lock = Lock()
         self._pending: tuple[TemporaryDirectory, str, float, str] | None = None
 
@@ -202,6 +204,8 @@ class InstallerPortableRestore:
                     isolation_level="SERIALIZABLE"
                 ) as connection:
                     with connection.begin():
+                        if self.runtime_guard is not None:
+                            self.runtime_guard(connection)
                         if current:
                             verify_current_target(connection)
                         else:
@@ -230,12 +234,16 @@ class InstallerPortableRestore:
                     isolation_level="SERIALIZABLE"
                 ) as connection:
                     with connection.begin():
+                        if self.runtime_guard is not None:
+                            self.runtime_guard(connection)
                         if json.loads(manifest).get("schema_version") == 2:
                             from tools.portable_v2_restore import restore_current_archive
                             result = restore_current_archive(connection, directory,
                                 authority_reader=self.authority_reader,
                                 expected_runtime_identity=self.runtime_identity,
                                 object_store_root=self.object_store_root, key_resolver=self.key_resolver)
+                            if self.runtime_guard is not None:
+                                self.runtime_guard(connection)
                             return {**result, **summary}
                         verify_empty_restore_target(
                             connection, table_specs=CANONICAL_EXPORT_SPECS
@@ -259,6 +267,8 @@ class InstallerPortableRestore:
                             materialized_objects=materialized,
                             object_store_root=self.object_store_root,
                         )
+                        if self.runtime_guard is not None:
+                            self.runtime_guard(connection)
                 return {"status": "restored", "inserted_records": inserted, **summary}
             finally:
                 self._discard()

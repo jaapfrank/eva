@@ -11,6 +11,7 @@ from eva.bootstrap.installer_wizard_cli import run_installer_wizard
 from eva.operations.portable_restore_authority import read_private_restore_authority
 from tools.installer_portable_restore import InstallerPortableRestore
 from tools.object_keyring import FileObjectKeyResolver
+from tools.restore_runtime_guard import verify_restore_runtime
 
 
 def main(argv=None):
@@ -24,12 +25,12 @@ def main(argv=None):
     )
     if (
         set(config) not in (
-            {"dsn", "authority", "workspace", "objects", "keyring", "traffic_closed"},
-            {"dsn", "authority", "workspace", "objects", "keyring", "traffic_closed", "runtime_identity"},
+            {"dsn", "authority", "workspace", "objects", "keyring", "traffic_closed", "runtime_guard"},
+            {"dsn", "authority", "workspace", "objects", "keyring", "traffic_closed", "runtime_identity", "runtime_guard"},
         )
         or config["traffic_closed"] is not True
     ):
-        raise ValueError("restore target must be explicitly isolated from traffic")
+        raise ValueError("restore configuration requires pinned runtime_guard identities and closed traffic")
     paths = {key: Path(config[key]) for key in ("authority", "workspace", "objects")}
     if not all(path.is_absolute() for path in paths.values()):
         raise ValueError("restore target paths must be absolute")
@@ -45,6 +46,7 @@ def main(argv=None):
         object_store_root=paths["objects"],
         key_resolver=resolver,
         runtime_identity=config.get("runtime_identity"),
+        runtime_guard=partial(verify_restore_runtime, expected=config["runtime_guard"]),
     )
     try:
         return run_installer_wizard(remaining, restore_workflow=workflow)

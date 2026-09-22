@@ -1,0 +1,38 @@
+{
+  "date": "2026-09-23",
+  "status": "source_tested_reviewed_not_installed",
+  "files": {
+    "tools/restore_runtime_guard.py": "b74cf6bb4e5fc1668885cb0e257386320efb8300f0064acbf251c566b0632577",
+    "tests/operations/test_restore_runtime_guard.py": "d69951d6bfe704479e080c77b2bc047b27d614f2dbf3106be44549827f272e65",
+    "tools/installer_portable_restore.py": "3c6aba8f5e339325f60100c67ba23f9f335f841a87401c08e83df353dc920a16",
+    "tools/installer_restore_wizard.py": "1e0457c0f5f4b5ececc03cfa85a767a5498653bd6a46c3078c865ec75e3145d4",
+    "tests/portable/test_portable_v2_current_work.py": "bd99447806a17ee9d727ec20287874e930896c7db6f63454368fb95b9f09f23f",
+    "tests/portable/test_installer_portable_restore.py": "34d4e32c11cb29c1da78223b2715ec9707b42a47d9556a2fb1e15a8d38900f3e"
+  },
+  "review": {
+    "guard": "Root independently reviewed agent implementation: strict private pins, stopped state and restart=no, existing shared-DSN detection, actual target lineage. No concrete blocker within declared scope.",
+    "wizard": "document_private_identity independently reviewed root integration and tests; GO for pre/post checks inside SERIALIZABLE root transaction; no edits/tests repeated."
+  },
+  "tests": {
+    "inventoryMocks": 21,
+    "realPostgresLineage": 1,
+    "currentRestoreTransactions": 4,
+    "legacyRestoreTransaction": 1,
+    "logHashes": {
+      "runtime-guard-transaction": "19fad08a2af9ec65e8d3f36b2cd00bca0af2ed5e0c584592ddc6e3a293971633",
+      "legacy-runtime-guard": "8a31a9414fe415ea48d232bb69a907d4656e55c55ea6da31f3ff0e57ee5cb74d",
+      "runtime-guard-real-lineage": "c9bcb144c21494e85f380ae0032b056c0b060b27bbfcfada9bc048d41195af09"
+    },
+    "scope": "Real database tests use isolated PG16; transaction tests use core source overlay; lineage uses host Python in isolated PG network namespace. Docker inventory negatives use injected records, not production stops."
+  },
+  "limits": [
+    "No process mutex against another privileged operator",
+    "Detects known pinned writers and exact shared DSN mounts, not arbitrary external connections",
+    "Constructor supports isolated test composition without guard; actual operator launcher requires private guard config",
+    "Full coordinated archive and activation still missing; no release or installation",
+    "Old launcher configs must add independently pinned runtime_guard; traffic_closed alone rejected"
+  ],
+  "productionChanged": false,
+  "modelProviderCalls": 0,
+  "creditCosts": "unknown"
+}

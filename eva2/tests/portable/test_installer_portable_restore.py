@@ -186,3 +186,18 @@ def test_failed_restore_keeps_target_empty(setup, failure):
             w.prepare(blob, "wrong password" if failure == "password" else PASSPHRASE)
     assert count(engine) == 0
     assert not list(w.workspace.iterdir())
+
+
+def test_runtime_change_before_commit_rolls_back_legacy_restore(setup):
+    workflow, blob, engine, _, _ = setup
+    calls = []
+    def guard(connection):
+        calls.append(connection.execute(text("SELECT count(*) FROM eva_core.installations")).scalar_one())
+        if len(calls) == 3:
+            raise ValueError("source writer restarted")
+    workflow.runtime_guard = guard
+    preview = workflow.prepare(blob, PASSPHRASE)
+    with pytest.raises(ValueError, match="source writer restarted"):
+        workflow.execute(preview["confirmation"])
+    assert calls[:2] == [0, 0] and calls[2] > 0
+    assert count(engine) == 0
