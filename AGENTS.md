@@ -290,3 +290,14 @@ evidence. User-facing Dutch conversation, prompts and owner decisions remain
 valid; keep implementation language separate from user language. See
 [CONTRIBUTING.md](CONTRIBUTING.md). Do not start a repository-wide translation
 or change Eva's conversation language as part of ordinary feature work.
+
+## Complete delivery — owner instruction, 22 September 2026
+
+For authorized changes, successful tests and independent review are followed by
+installation, live verification, a working rollback and updated dashboard/Git
+status. Do not stop at a tested source candidate or ask for the same deployment
+permission again. Preserve existing data and unrelated services; investigate
+concrete installation blockers rather than introducing a broad new review cycle.
+Technical delivery and the owner's acceptance remain separate. Keep bounded
+goals moving while user evaluation is open, and report meaningful outcomes or
+blockers rather than seeking approval for every routine step.

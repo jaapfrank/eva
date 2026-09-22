@@ -4,7 +4,11 @@ Tekort: de bestaande werkbordkaarten zijn alleen-lezen. De gedeelde
 AU-002-eigenaarservice kan taken en resultaten al ophalen, stoppen en hervatten.
 Deze wijziging ontsluit diezelfde service in het eigenaarsoverzicht.
 
-## Proberen na installatie
+## Geïnstalleerd — proberen
+
+Geïnstalleerd op 22 september 2026. De echte lokale browser toont bestaande
+opdrachten en hun opgeslagen resultaten; openen en vernieuwen zijn gecontroleerd.
+[Installatie en bewijsgrenzen](../../evidence/product/contact-dashboard-live-2026-09-22.json).
 
 Open http://localhost:44711/internal/v1/dashboard via de bestaande lokale
 eigenaarstoegang. Hiervoor is geen handmatig dashboardtoken nodig.
@@ -36,4 +40,6 @@ vernieuwen en privéinhoud verbergen bij verloren toegang.
 De bestaande Postgres-servicetests blijven het bewijs voor duurzame opslag,
 idempotente nieuwe pogingen en eigenaarintrekking. De nieuwe runtime-wiring
 moet bij integratie dezelfde bestaande service-instance doorgeven. Geen
-installatie, echte eigenaarproef of acceptatie door deze browsertest bewezen.
+installatie, echte eigenaarproef of acceptatie door deze fixturetest bewezen.
+Het afzonderlijke installatiebewijs hierboven beschrijft de livecontrole;
+menselijke acceptatie blijft open.

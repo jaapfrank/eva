@@ -1,0 +1,155 @@
+{
+  "date": "2026-09-22",
+  "status": "installed_and_live_checked",
+  "installation": {
+    "installed": true,
+    "image": "sha256:5b5d2783cc27db738b37a407134ad9679fdfb415d68a754d710c44e5f62c79f5",
+    "sourceCommit": "00591e8a4ae507337230f5f77ee6b55baa9906b2",
+    "ready": true,
+    "ownerWorkHTTP": 200,
+    "workResponseKeys": [
+      "contract",
+      "operation",
+      "jobs",
+      "truncated"
+    ],
+    "existingCardsPreserved": 5,
+    "allProtectedContainersUnchanged": true,
+    "directUnauthenticatedHTTP": 401,
+    "scopeOverrideHTTP": 422,
+    "liveSourceHashesMatched": true,
+    "elapsedSeconds": 12.7,
+    "rollbackAvailable": true
+  },
+  "sourceHashes": {
+    "src/eva/application/conversation.py": "62583e0911cb8d49d9c2520fc6d318c33f15bea7ba6b3135c058ec3e20890dd2",
+    "src/eva/bootstrap/runtime.py": "6e10a48bf998e1ec7755a844dabb1608c8a75297699d1a19005e5af87fd288ed",
+    "src/eva/adapters/api/app.py": "64b0361f2efdcf6417bbbb9eb5a31dc244444b2accb1ca1526166cd861e8e406",
+    "src/eva/adapters/api/dashboard_work.py": "c7193575b88649f62ca94b7027f614fb260262d2f7338f6ed20e94b923499b13",
+    "src/eva/bootstrap/dashboard_work.py": "be68c6f9e42180bf9e2c8e61f8ca32255fa69e2b7a41123a7e3d36fd9dccf5b4",
+    "src/eva/adapters/api/household_voice_session.py": "db98c8d1b333f85d8cab3adc349941e79512864dfa7cb2f132d1a0aa8fc31556",
+    "src/eva/adapters/api/dashboard_static/assets/index-CfdjSWLY.js": "7cf4f0249fd31a491b7e4924133ee8a0f9414779652ec7e64d4a4aa0fa82e129",
+    "src/eva/adapters/api/dashboard_static/assets/index-ClzOWv97.css": "242aa8ff5082e08e37a1e3a8afdf3aafe5ee8effe765d71ffaaeb7509e32bb87",
+    "src/eva/adapters/api/dashboard_static/eva-dashboard-assets.json": "f66674fe1a58a92bb03ef422a59342ce06a290aac6dd7e7e35edefef6b789032",
+    "src/eva/adapters/api/dashboard_static/index.html": "daf6db222ea1eb0730069405bb66bd0367cc9c97483648eb4f7f3a12387dde5d"
+  },
+  "parentImage": "sha256:0c94dc64b1988e30001d952c7a4215d4cbf637c283d8af68ddd9da05d609b25c",
+  "settings": {
+    "contactModel": "gpt-5.6-luna",
+    "contactReasoningEffort": "low",
+    "workModel": "gpt-6-astra",
+    "householdVoiceSessionEnabled": false
+  },
+  "candidateTests": {
+    "passed": 68,
+    "scope": "Dashboard API/runtime composition, runtime settings, contact model; exact image module path asserted."
+  },
+  "review": {
+    "reviewer": "/root/learning_finish",
+    "decision": "GO for gate, image source hashes and core-only deployment; revision label corrected before installation."
+  },
+  "frontend": {
+    "sourceCommit": "65c4017998fc954227688d41043a796718da2c76",
+    "build": "Owner-mode production build, sealed manifest and fixture verification passed. Project dashboard build not replaced.",
+    "actualBrowser": "Loaded http://127.0.0.1:44711/internal/v1/dashboard without manual token; five stored jobs visible; opened an existing completed job and read its saved result; refreshed list successfully. No live resume or new work mutation through UI."
+  },
+  "voiceReady": true,
+  "liveConversationProbe": {
+    "route": "installed voice-session HTTP stream",
+    "input": "Hallo.",
+    "elapsed_ms": 6376,
+    "events": [
+      {
+        "type": "delta",
+        "at_ms": 5116
+      },
+      {
+        "type": "delta",
+        "at_ms": 5121
+      },
+      {
+        "type": "delta",
+        "at_ms": 5151
+      },
+      {
+        "type": "delta",
+        "at_ms": 5248
+      },
+      {
+        "type": "delta",
+        "at_ms": 5363
+      },
+      {
+        "type": "delta",
+        "at_ms": 5463
+      },
+      {
+        "type": "delta",
+        "at_ms": 5732
+      },
+      {
+        "type": "delta",
+        "at_ms": 5779
+      },
+      {
+        "type": "delta",
+        "at_ms": 5783
+      },
+      {
+        "type": "delta",
+        "at_ms": 5821
+      },
+      {
+        "type": "delta",
+        "at_ms": 5879
+      },
+      {
+        "type": "delta",
+        "at_ms": 5982
+      },
+      {
+        "type": "delta",
+        "at_ms": 6044
+      },
+      {
+        "type": "delta",
+        "at_ms": 6064
+      },
+      {
+        "type": "delta",
+        "at_ms": 6073
+      },
+      {
+        "type": "final",
+        "at_ms": 6373
+      }
+    ],
+    "final": {
+      "reply_chars": 52,
+      "metadata": {}
+    },
+    "physicalMicrophoneOrAudioPlayback": false,
+    "generalLatencyClaim": false,
+    "logicalRequests": 1
+  },
+  "speedConclusion": "Installation works, but live speed improvement is not demonstrated. First delta5116ms, total6376ms; prior isolated model comparison1597ms is not end-to-end evidence. Continue latency diagnosis without claiming instant speech.",
+  "rollback": {
+    "available": true,
+    "record": "/var/lib/eva2/managed-b-slot3/history/contact-dashboard-20260922",
+    "exercised": true,
+    "reason": "First verification script incorrectly expected card.id; workboard contract has no id. Automatic rollback succeeded. Corrected to compare existing card title/worker/attempt/deadline tuples and repeated installation."
+  },
+  "preservation": "Core only replaced; all previously recorded other container IDs unchanged. Existing work cards retained; no data restore/migration.",
+  "costs": {
+    "liveConversationRequests": 1,
+    "measuredModelTokens": null,
+    "creditCost": null,
+    "note": "Actual live request model timing/usage was not exposed by voice response; scoped recent metadata query returned none. No repeated model probe."
+  },
+  "ownerAccepted": false,
+  "remaining": [
+    "User experience and physical audio/Voice PE test",
+    "Reduce full-route response latency",
+    "General tool-enabled background research and complete channel parity"
+  ]
+}

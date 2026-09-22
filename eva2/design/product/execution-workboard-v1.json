@@ -121,7 +121,7 @@
           ]
         }
       ],
-      "priorityDecision": "Bereid één samenhangende installatiekandidaat voor snel gesprek en taakbediening voor. Behoud bestaande installatie tot de kandidaat passend is gecontroleerd. Daarna echte kanaalproeven; privé-identiteit en volledig Voice PE-gedrag blijven afzonderlijk open. PR-01/R6 niet opnieuw bouwen.",
+      "priorityDecision": "Meet gericht waar de5,1seconde op de echte gespreksroute ontstaat en herstel de concrete vertraging. Behoud geheugenkwaliteit en persoonsgrenzen. Geen nieuwe modelproef zonder gewijzigde oorzaak of ontbrekend meetbewijs. Gebruikersbeoordeling van geïnstalleerde dashboardbediening blijft apart open; geen bouwstop.",
       "dashboardVerification": {
         "status": "local_browser_verified_not_full_product_acceptance",
         "priorityRevision": {
@@ -181,12 +181,12 @@
           "detail": "De actuele bron staat op GitHub main en in de canonical projectmap. Oude staging is behouden; geen productbestanden verwijderd. Nieuwe taken gebruiken dezelfde gecontroleerde integratiebasis."
         },
         {
-          "title": "Sneller gesprek — gebouwd en getest, nog niet live",
-          "detail": "Optionele snelle gespreksroute geïntegreerd in de bron; 180 gerichte tests en onafhankelijke review. Begroeting in een modelproef: eerste tekst 1,60 s tegenover 4,47 s. Geen volledige audiometing of Voice PE-proef. Configuratie/installatie en echte kanaalproeven staan open."
+          "title": "Gespreksmodel geïnstalleerd — snelheid nog onvoldoende bewezen",
+          "detail": "De gedeelde kern gebruikt nu Luna-low voor eerste gesprek en Astra voor werk. De echte HTTP-spraakroute antwoordde, maar eerste tekst kwam na5,1seconde. De eerdere1,6seconde was een lossemodelproef. Snellere natuurlijke spraak blijft actief vervolgwerk; geen eigenaaracceptatie."
         },
         {
-          "title": "Taken bedienen — bron geïntegreerd, nog niet live",
-          "detail": "Bestaande hulpopdracht openen, resultaat lezen, stoppen en hervatten via dezelfde owner-service als Telegram. Code en runtimekoppeling geïntegreerd; gerichte tests, browserfixture en onafhankelijke review geslaagd. De bediening hoort bij eigenaarsdashboard http://localhost:44711; installatie van de nieuwe frontend en API staat nog open. Dit projectdashboard op44712 toont de voortgang."
+          "title": "Hulpopdrachten bedienen — geïnstalleerd en live gecontroleerd",
+          "detail": "Open http://localhost:44711/internal/v1/dashboard → Mijn hulpopdrachten. Bestaande taken en opgeslagen resultaten zijn zichtbaar; openen en vernieuwen zijn in de echte browser gecontroleerd. Stop en hervat gebruiken de bestaande geteste eigenaarservice. Geen handmatig token. Jouw beoordeling blijft open."
         },
         {
           "title": "Al technisch opgeleverd — jouw oordeel blijft open",
@@ -901,13 +901,33 @@
           ],
           "expected": "Eerst Ik kijk er even voor je naar, daarna het onderzoeksantwoord. Geen claim dat het werk al klaar is.",
           "report": "SP-06: ontvangstzin gehoord / niet gehoord; benoem je gebruikte route.",
-          "result": "Jaap meldt: het lijkt te werken, maar circa6seconden vertraging bij begroeting én eerste reactie op onderzoek. Natuurlijke snelheid niet geaccepteerd. Screenshot toont ook een herkenningsfout; oorzaak apart onbewezen. Nieuwe snel-gesprek/achtergrondmodelaanpak is nog niet geïmplementeerd.",
+          "result": "Jaap meldde circa6seconden bij begroeting en onderzoek. Op22september is het snelle contactmodel geïnstalleerd. Live HTTP-proef: eerste tekst5,1seconde, totaal6,4seconde; geen fysieke audiometing. Snelheid nog niet geaccepteerd; gerichte verbetering volgt.",
           "trialLink": {
             "url": "http://localhost:44716",
             "label": "Open bestaande laptopstemroute"
           },
           "ownerAccepted": false,
           "evidence": "eva2/evidence/product/voice-polite-work-receipt-2026-09-22.json"
+        },
+        {
+          "id": "UX-02",
+          "updatedOn": "2026-09-22",
+          "status": "ready",
+          "title": "Opgeslagen hulpopdrachten bedienen",
+          "change": "Geïnstalleerd: bestaande taken/resultaten openen, stoppen en hervatten via dezelfde eigenaarservice als Telegram.",
+          "steps": [
+            "Open http://localhost:44711/internal/v1/dashboard; geen handmatig token.",
+            "Kies onder Mijn hulpopdrachten Opdracht openen bij een bestaande opdracht en lees het opgeslagen resultaat.",
+            "Kies Werk vernieuwen en controleer dezelfde opgeslagen toestand. Stop of hervat alleen een opdracht wanneer je dat daadwerkelijk wilt; hervatten start een nieuwe poging met mogelijk modelverbruik."
+          ],
+          "expected": "Eigen opdrachten en opgeslagen resultaten zijn leesbaar; vernieuwen behoudt de opgeslagen toestand. Stop/hervat tonen de werkelijke taakstatus.",
+          "report": "UX-02: openen/resultaat/vernieuwen werkt wel of niet; vermeld eventuele fout.",
+          "trialLink": {
+            "url": "http://localhost:44711/internal/v1/dashboard",
+            "label": "Open geïnstalleerde taakbediening"
+          },
+          "ownerAccepted": false,
+          "evidence": "eva2/evidence/product/contact-dashboard-live-2026-09-22.json"
         }
       ],
       "priorityBeforeTelegramIncident": "De kleine procedureleeroplevering is technisch afgerond: zelf onderzoeken, procedure opslaan en ongewijzigd hergebruiken. Geen nieuwe leerproeven. Parallel lopen de Bottie/SQLite-review en een afzonderlijke architectuurreparatie; brede autonomie en echte productvergelijking blijven open."
@@ -994,9 +1014,9 @@
       "document": "eva2/PROJECTDOEL.md",
       "scope": "Digitale huisgenoot: zelfstandig redeneren, initiatief, onbekende vaardigheden leren, handelen, zelfverbetering en aantoonbare concurrentiewinst met open-sourcehergebruik.",
       "sessionGoal": "Snel gedeeld gesprek met passende achtergrondmodellen; één Eva over alle kanalen.",
-      "currentWork": "GitHub en lokale bron zijn gelijkgetrokken. Snelle gespreksroute en dashboardtaakbediening zijn gebouwd, getest, onafhankelijk beoordeeld en in de bron geïntegreerd. Beide zijn nog niet live. Het gemelde trage gesprek is daarom nog niet als opgelost geaccepteerd.",
-      "currentEvidence": "eva2/evidence/product/fast-contact-candidate-2026-09-22.json",
-      "nextStep": "Bereid één samenhangende installatiekandidaat voor snel gesprek en taakbediening voor. Behoud bestaande installatie tot de kandidaat passend is gecontroleerd. Daarna echte kanaalproeven; privé-identiteit en volledig Voice PE-gedrag blijven afzonderlijk open. PR-01/R6 niet opnieuw bouwen.",
+      "currentWork": "Spraak- en dashboardverbeteringen zijn geïnstalleerd en live gecontroleerd; bestaande gegevens en overige diensten behouden. Dashboardtaken openen en resultaat lezen werken in de echte browser. De werkelijke gespreksroute gaf eerste tekst na5,1seconde: snelheidsprobleem nog niet opgelost of geaccepteerd. GitHub bevat de geïnstalleerde bron.",
+      "currentEvidence": "eva2/evidence/product/contact-dashboard-live-2026-09-22.json",
+      "nextStep": "Meet gericht waar de5,1seconde op de echte gespreksroute ontstaat en herstel de concrete vertraging. Behoud geheugenkwaliteit en persoonsgrenzen. Geen nieuwe modelproef zonder gewijzigde oorzaak of ontbrekend meetbewijs. Gebruikersbeoordeling van geïnstalleerde dashboardbediening blijft apart open; geen bouwstop.",
       "usageClarification": {
         "date": "2026-09-07",
         "authorizedBy": "Jaap",
@@ -10419,12 +10439,12 @@
       "parallelWork": {
         "voice": {
           "threadId": "01a0c8a6-d360-7a82-a630-af4bfccbd57c",
-          "state": "reviewed_source_integrated_not_live",
+          "state": "installed_live_checked_owner_acceptance_open",
           "files": "conversation.py/runtime.py/model layer"
         },
         "dashboard": {
           "agent": "/root/dashboard_finish",
-          "state": "reviewed_source_integrated_not_live",
+          "state": "installed_live_checked_owner_acceptance_open",
           "commit": "85dff3fa",
           "files": "dashboard_work.py API/bootstrap,owner-work.jsx/css,main.jsx,app.py,scoped runtime wiring"
         },
@@ -10436,13 +10456,15 @@
       }
     },
     "fastContactDelivery20260922": {
-      "status": "source_integrated_not_live",
+      "status": "installed_live_checked",
       "featureCommit": "8c2f1544",
       "evidence": "eva2/evidence/product/fast-contact-candidate-2026-09-22.json",
       "tested": true,
       "reviewed": true,
-      "live": false,
-      "accepted": false
+      "live": true,
+      "accepted": false,
+      "state": "installed_live_checked",
+      "liveEvidence": "eva2/evidence/product/contact-dashboard-live-2026-09-22.json"
     },
     "languagePolicy20260922": {
       "source": "CONTRIBUTING.md",
@@ -10450,17 +10472,27 @@
       "notClaimed": "Entire repository translated, complete localization, public open-source release or project license selected."
     },
     "dashboardWorkDelivery20260922": {
-      "state": "reviewed_source_integrated_not_live",
+      "state": "installed_live_checked",
       "featureCommits": [
         "1006a672",
         "7e6791a9",
         "59110453"
       ],
       "evidence": "eva2/evidence/product/dashboard-work-integration-2026-09-22.json",
-      "live": false,
+      "live": true,
       "accepted": false,
       "ownerUrl": "http://localhost:44711",
-      "projectProgressUrl": "http://localhost:44712"
+      "projectProgressUrl": "http://localhost:44712",
+      "status": "installed_live_checked",
+      "liveEvidence": "eva2/evidence/product/contact-dashboard-live-2026-09-22.json"
+    },
+    "contactDashboardInstallation20260922": {
+      "state": "installed_live_checked_speed_open",
+      "evidence": "eva2/evidence/product/contact-dashboard-live-2026-09-22.json",
+      "image": "sha256:5b5d2783cc27db738b37a407134ad9679fdfb415d68a754d710c44e5f62c79f5",
+      "sourceCommit": "00591e8a4ae507337230f5f77ee6b55baa9906b2",
+      "goal": "Install integrated contact model and owner work dashboard; preserve data/routes and verify live behavior.",
+      "ownerAccepted": false
     }
   },
   "activeTaskId": "AU-008",

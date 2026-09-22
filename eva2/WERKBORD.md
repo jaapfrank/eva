@@ -5,10 +5,10 @@ Laatst bijgewerkt: 2026-09-22.
 Doel: [Eva als zelfstandig lerende digitale huisgenoot](PROJECTDOEL.md).
 Gebouwd, getest, live en door jou geaccepteerd zijn verschillende stappen.
 
-GitHub en lokale bron zijn gelijkgetrokken. Snelle gespreksroute en dashboardtaakbediening zijn gebouwd, getest, onafhankelijk beoordeeld en in de bron geïntegreerd. Beide zijn nog niet live. Het gemelde trage gesprek is daarom nog niet als opgelost geaccepteerd.
-[Actueel bewijs](evidence/product/fast-contact-candidate-2026-09-22.json).
+Spraak- en dashboardverbeteringen zijn geïnstalleerd en live gecontroleerd; bestaande gegevens en overige diensten behouden. Dashboardtaken openen en resultaat lezen werken in de echte browser. De werkelijke gespreksroute gaf eerste tekst na5,1seconde: snelheidsprobleem nog niet opgelost of geaccepteerd. GitHub bevat de geïnstalleerde bron.
+[Actueel bewijs](evidence/product/contact-dashboard-live-2026-09-22.json).
 
-Bereid één samenhangende installatiekandidaat voor snel gesprek en taakbediening voor. Behoud bestaande installatie tot de kandidaat passend is gecontroleerd. Daarna echte kanaalproeven; privé-identiteit en volledig Voice PE-gedrag blijven afzonderlijk open. PR-01/R6 niet opnieuw bouwen.
+Meet gericht waar de5,1seconde op de echte gespreksroute ontstaat en herstel de concrete vertraging. Behoud geheugenkwaliteit en persoonsgrenzen. Geen nieuwe modelproef zonder gewijzigde oorzaak of ontbrekend meetbewijs. Gebruikersbeoordeling van geïnstalleerde dashboardbediening blijft apart open; geen bouwstop.
 
 <details>
 <summary>Historische voortgang en eerdere tussenstanden — niet de actuele opleverstatus</summary>
