@@ -1,0 +1,45 @@
+{
+  "date": "2026-09-22",
+  "route": "installed /internal/v1/dashboard/conversation/respond",
+  "requestSubmissions": 1,
+  "elapsedSeconds": 22.568,
+  "messageId": "dashboard:16361851-a276-42db-acc2-b829ef6f6d04",
+  "reply": "Het documentproject ‘Routeproef 22 september’ is voltooid via de documentprojectfunctie. Beide documenten zijn lokaal opgeslagen en geverifieerd met exact deze inhoud:\n\nDocument 1: Vandaag eten we om zes uur.\nDocument 2: Morgen eten we om half zeven.\n\nDit zijn proefgegevens, geen echte gezinsafspraak.",
+  "physicalReadback": [
+    {
+      "relativePath": "f04d13b7983cd6a6fcb0de7b981b34094fd4ac28083a6f6675ff34257e031ef3-first.txt",
+      "bytes": 27,
+      "sha256": "973c39ceef0cb1a16ef4af1943b096927adc7a227714641b11e4800075709c00",
+      "matchesFirst": true,
+      "matchesSecond": false
+    },
+    {
+      "relativePath": "f04d13b7983cd6a6fcb0de7b981b34094fd4ac28083a6f6675ff34257e031ef3-second.txt",
+      "bytes": 29,
+      "sha256": "d8cfc1a2e56054d308fbf42bb967a29367068b692ae589efd798413bb39469e9",
+      "matchesFirst": false,
+      "matchesSecond": true
+    }
+  ],
+  "remainingUnusedSlots": 1,
+  "modelCalls": 3,
+  "inputTokens": 24019,
+  "outputTokens": 238,
+  "toolCalls": 2,
+  "externalMessages": 0,
+  "ownerAccepted": false,
+  "boundary": "Single live website owner request. Not a Telegram, physical voice, restart, or stop trial. Both providers share a workspace; two file hashes represent two files, not four.",
+  "independentReview": {
+    "reviewer": "document_maintenance",
+    "decision": "GO for one live dashboard document task",
+    "verified": [
+      "two unique files read byte-for-byte",
+      "start_document_project and get_document_project prepared",
+      "slot1 claim and completed first/followup effects",
+      "GOAL_COMPLETED status completed",
+      "three measured model calls and token totals"
+    ],
+    "newModelCalls": 0,
+    "newEffects": 0
+  }
+}
