@@ -1,0 +1,72 @@
+{
+  "scope": "isolated PostgreSQL, one public research task, existing read-only lease and subscription admission",
+  "question": "Welke actuele officiële HTTP-specificatie bepaalt of een response op HEAD een message body mag bevatten? Geef alleen die regel en de exacte primaire sectiebron, maximaal 80 woorden.",
+  "real_credits": "unknown",
+  "provider_hosted_search_cap_enforced": false,
+  "limits": {
+    "provider_http_requests": 1,
+    "client_timeout_seconds": 60,
+    "maximum_result_tool_calls": 3,
+    "maximum_result_input_tokens": 65536,
+    "maximum_result_output_tokens": 1200
+  },
+  "disconnect_cancels_server_work_proven": false,
+  "foreground_event_loop_available": true,
+  "disposition": "succeeded",
+  "seconds": 19.041,
+  "provider_requests": {
+    "sent": 1,
+    "blocked": 0
+  },
+  "source_commit": "3b5370d0",
+  "hosted_event_receipts": [
+    {
+      "event": "response.output_item.added",
+      "id": "ws_0f646e64d6f16a62016ab2817d305887d2903d54a312bd067f",
+      "status": "in_progress",
+      "type": "web_search_call"
+    },
+    {
+      "event": "response.output_item.done",
+      "id": "ws_0f646e64d6f16a62016ab2817d305887d2903d54a312bd067f",
+      "status": "completed",
+      "type": "web_search_call"
+    },
+    {
+      "event": "response.completed",
+      "id": "resp_0f646e64d6f16a62016ab28176a86c87d2b2f44536ee5e1258",
+      "status": "completed",
+      "usage": {
+        "input_tokens": 8886,
+        "input_tokens_details": {
+          "cache_write_tokens": 0,
+          "cached_tokens": 3712
+        },
+        "output_tokens": 142,
+        "output_tokens_details": {
+          "reasoning_tokens": 65
+        },
+        "total_tokens": 9028
+      },
+      "hosted_items": []
+    }
+  ],
+  "release": "DelegatedWorkReleaseSelector(worker_profile_release_sha256='4b71e8bffd1c4f68bac632d0f9c7506c494f0546c81be0b33b38dccb8fefd8d7', model_profile_release_sha256='ebf7f55dea5f513f0bfa06ed364ac97528504d488b73bb23fddff8f16445787f', worker_program_sha256='bf7471306acf3c314f4453e1f04d3e5e71b1c52f848773877bb2d27910382221', engine_release_sha256='46488210af0cf2cd1ce967494a9ea4462115b69025fc86bcb4245543dae86839', output_schema_sha256='255af268995b1e1fdacdc9f72d05e740c230d8ba668cfae825ff1e9743ffcfef')",
+  "state": "succeeded",
+  "usage": {
+    "schema_version": 1,
+    "contract": "DelegatedWorkUsage/v1",
+    "measurement": "measured",
+    "completed_model_responses": 1,
+    "tool_calls": 1,
+    "input_tokens": 8886,
+    "output_tokens": 142,
+    "total_tokens": 9028,
+    "cost_usd_micros": 1949
+  },
+  "output": "**Regel:** Een server **MUST NOT** een response-body (“content”) verzenden als antwoord op `HEAD`; de response mag dus geen message body bevatten.\n\n**Primaire bron:** RFC 9110, *HTTP Semantics*, § **9.3.2 HEAD**. ([rfc-editor.org](https://www.rfc-editor.org/rfc/rfc9110.html?utm_source=openai))\n\n## Bronnen\n\n- [RFC 9110: HTTP Semantics](https://www.rfc-editor.org/rfc/rfc9110.html?utm_source=openai)",
+  "output_sha256": "65630813afbc709a5c8a889322805be38e4a8522e320824604ba5da5e92c06f4",
+  "spec_sha256": "4ba8e0a44969926214e0f95fc9a2814a8796ac983aa7cca7c42880615db6ad74",
+  "error_code": null,
+  "api_equivalent_not_actual_cost": true
+}

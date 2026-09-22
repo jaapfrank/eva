@@ -1,0 +1,9 @@
+{
+  "external_requests": 0,
+  "delegate_calls": 1,
+  "counts": {
+    "sent": 1,
+    "blocked": 1
+  },
+  "second_request_blocked_before_transport": true
+}
