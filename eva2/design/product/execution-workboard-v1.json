@@ -1027,12 +1027,12 @@
             "source": "eva2/evidence/product/household-work-installed-20260922.json"
           },
           {
-            "title": "Telegram: tussenvragen hoeven niet meer achter eerder werk te wachten",
+            "title": "Telegram: echte wachtrijoorzaak hersteld",
             "date": "22 september",
             "state": "installed",
-            "result": "De echte /eva2-ingang verwerkt meerdere vragen naast elkaar. Gericht getest, onafhankelijk beoordeeld en geïnstalleerd. Elk antwoord blijft gekoppeld aan zijn eigen vraag.",
-            "remaining": "Echte Telegram-proef met jouw vragen staat open. Dit versnelt niet automatisch het modelantwoord en sluit wachtrijen bij overbelasting niet uit.",
-            "source": "eva2/evidence/product/telegram-concurrent-installed-20260922.json"
+            "result": "Jouw proef mislukte. Oorzaak gevonden in Telegram: te snel opnieuw ophalen gaf alleen het eerste bericht terug. Interval hersteld, vier gerichte tests geslaagd, onafhankelijk gecontroleerd en geïnstalleerd.",
+            "remaining": "Dezelfde tweevragenproef opnieuw beoordelen. Inhoudelijke modeltijd is apart; vriendelijkere gespreksinstructie nog niet live. Screenshotkoppeling: opgeslagen vraag en antwoord verwijzen beide naar onderzoek, mogelijke berichtbewerking nog onbevestigd.",
+            "source": "eva2/evidence/product/telegram-poll-throttle-installed-20260922.json"
           }
         ],
         "now": {
@@ -10825,7 +10825,7 @@
           "planningEffortHours": "4–12"
         }
       ],
-      "nextAction": "Activeer de reeds geteste documenttaakfunctie met de twee zojuist geregistreerde aanbieders; behoud huidige spraak, privékoppeling en legacyproject. Praktijkproeven blijven afzonderlijk open.",
+      "nextAction": "Installeer de beoordeelde vriendelijke gespreksinstructie; hergebruik daarna de voorbereide documentinstallatie. Telegramintervalcorrectie is live, nieuwe praktijkacceptatie en de vraag over berichtbewerking staan open.",
       "effortNotice": "Grove planning, lage zekerheid: 40–118 actieve ontwikkeluren plus zeven dagen gezinspraktijk en eventuele externe wachttijd. Geen deadline, creditkosten of gemeten verbruik; per begrensde wijziging aanscherpen na lezing van bestaand bewijs. Hergebruik kan dit verkorten.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Na review, installatie en registratie automatisch volgende uitvoerbare stap; geen algemene wachtstop op gebruikersproeven.",
@@ -11042,12 +11042,12 @@
       "ownerAccepted": false
     },
     "telegramConcurrentConversation20260922": {
-      "status": "installed_owner_overlap_trial_open",
-      "ownerReport": "Telegram /eva2 verwerkt uitgebreidere adviesvraag en tussenvraag hoe gaat het met jou stap voor stap; tussenvraag krijgt niet tussendoor antwoord.",
+      "status": "owner_trial_failed_throttle_fix_installed_retest_open",
+      "ownerReport": "Jaap heeft de geïnstalleerde Telegramproef uitgevoerd: het antwoord op Hoe gaat het met jou kwam pas na het onderzoeksantwoord. Snelle tussenvragen tijdens onderzoek voldoen dus niet. Daarnaast herhaalt Eva afstandelijke uitleg over geen lichaam/eigen dag hebben.",
       "accepted": false,
       "investigatorTaskId": "01a0c8a6-d360-7a82-a630-af4bfccbd57c",
       "outcomeRequired": "Tussenvraag wordt beantwoord terwijl eerder aangenomen werk doorloopt, zonder dubbele acties of verlies van context en persoonsgrenzen.",
-      "nextEvidence": "Gecontroleerde proef op echte Telegramingress: blokkeer eerste langdurige beurt en bewijs tweede antwoord vóór vrijgave, plus passende regressies.",
+      "nextEvidence": "Herleid de echte beurtvolgorde en wachttijd; herstel de oorzaak. Controleer daarna dat een vriendelijke inhoudelijke tussenvraag vóór onderzoeksafronding verschijnt. Parallelle ingress alleen is onvoldoende bewijs.",
       "estimatedMinutes": "60 planning, geen gemeten verbruik",
       "modelCallsAllowed": 0,
       "review": "eva2/reviews/telegram-concurrent-ingress-20260922.md",
@@ -11058,7 +11058,44 @@
         "telegramMessages": 0
       },
       "installed": true,
-      "installationEvidence": "eva2/evidence/product/telegram-concurrent-installed-20260922.json"
+      "installationEvidence": "eva2/evidence/product/telegram-concurrent-installed-20260922.json",
+      "timingFinding": {
+        "observedAt": "2026-09-22",
+        "firstResearchHandlerMs": 70317,
+        "followingSmalltalkHandlerMs": 9188,
+        "smalltalkModelMs": 2601,
+        "followingHandlersStart": "2026-09-22T19:00:22.046Z",
+        "firstResearchHandlerEnd": "2026-09-22T19:00:21.992Z",
+        "interpretation": "Volgende handlers startten pas na eerste onderzoeksafhandeling; modelvertraging alleen verklaart de wachttijd niet. Oorzaak nog in onderzoek."
+      },
+      "replyMismatchReport": "Screenshot toont onderzoeksantwoord geciteerd bij hoe gaat het. Opgeslagen invoer van het overeenkomende onderzoeksantwoord is de onderzoeksopdracht; mogelijke berichtbewerking wordt bij eigenaar nagevraagd, niet als oorzaak aangenomen.",
+      "personalityCorrection": {
+        "status": "source_only_not_installed",
+        "change": "Vriendelijke korte sociale reacties; geen ongevraagde uitleg over lichaam/gevoelens/eigen dag en geen verzonnen menselijke belevenissen.",
+        "validation": "Python syntax gecontroleerd; gedrag en onafhankelijke review nog niet bewezen. Geen betaalde modelproef gestart.",
+        "review": "Independent source review GO; no claim of live installation or model behaviour."
+      },
+      "throttleCorrection": {
+        "beforePid": "3910554",
+        "sourceCommit": "519c7f35",
+        "beforeSha256": "45a3838b95fd91aab0255afc89b3dd4d2335fc460adeb719e5f1f5124e71f4ad",
+        "installedSha256": "2c382e95e0d9d1108bedc82f6e7cf242de9c9b84b28c87948458809fd5ef63e4",
+        "pendingTelegramMessages": 0,
+        "modelCalls": 0,
+        "externalTestMessages": 0,
+        "startedAt": "2026-09-22T19:08:46.233373+00:00",
+        "afterPid": "473280",
+        "serviceActive": true,
+        "testsPassed": 4,
+        "independentReview": "Coordinator read change and independently ran four polling tests; completed before installation.",
+        "cause": "Telegram server limits repeated same-offset getUpdates within 500ms to one update; former250ms replay starved later updates.",
+        "upstreamSource": "https://github.com/tdlib/telegram-bot-api/blob/master/telegram-bot-api/Client.cpp",
+        "fix": "750ms minimum replay interval. Pending updates are not acknowledged early.",
+        "startupConnected": true,
+        "ownerAccepted": false,
+        "proofBoundary": "Providerless server-behaviour regression and live process startup, not a live owner latency measurement.",
+        "replyMismatchFinding": "Stored ingress and archived reply reference for screenshot-matching answer both point to the original research request. Message edit question remains unanswered; no cause inferred."
+      }
     },
     "researchCompletionOwnerFinding20260922": {
       "status": "instructions_installed_targeted_decision_probe_passed_quality_trial_open",

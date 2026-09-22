@@ -1,0 +1,21 @@
+{
+  "beforePid": "3910554",
+  "sourceCommit": "519c7f35",
+  "beforeSha256": "45a3838b95fd91aab0255afc89b3dd4d2335fc460adeb719e5f1f5124e71f4ad",
+  "installedSha256": "2c382e95e0d9d1108bedc82f6e7cf242de9c9b84b28c87948458809fd5ef63e4",
+  "pendingTelegramMessages": 0,
+  "modelCalls": 0,
+  "externalTestMessages": 0,
+  "startedAt": "2026-09-22T19:08:46.233373+00:00",
+  "afterPid": "473280",
+  "serviceActive": true,
+  "testsPassed": 4,
+  "independentReview": "Coordinator read change and independently ran four polling tests; completed before installation.",
+  "cause": "Telegram server limits repeated same-offset getUpdates within 500ms to one update; former250ms replay starved later updates.",
+  "upstreamSource": "https://github.com/tdlib/telegram-bot-api/blob/master/telegram-bot-api/Client.cpp",
+  "fix": "750ms minimum replay interval. Pending updates are not acknowledged early.",
+  "startupConnected": true,
+  "ownerAccepted": false,
+  "proofBoundary": "Providerless server-behaviour regression and live process startup, not a live owner latency measurement.",
+  "replyMismatchFinding": "Stored ingress and archived reply reference for screenshot-matching answer both point to the original research request. Message edit question remains unanswered; no cause inferred."
+}
