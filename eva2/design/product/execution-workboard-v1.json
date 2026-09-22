@@ -1029,7 +1029,7 @@
         ],
         "now": {
           "title": "Resultaten terugbrengen tijdens een gesprek",
-          "detail": "De tekstgesprekpagina is gebouwd en beoordeeld. Kern en taakwerker zijn als passende installatiekandidaten gecontroleerd. De review vond nog twee intrekkingsgevallen in de spraakroute; de uitvoerder herstelt en test die vóór de gezamenlijke installatie.",
+          "detail": "Privéresultaatterugkeer via tekst en spraak is gebouwd en onafhankelijk beoordeeld. De concrete installatiepakketten zijn gecontroleerd; de installatieprocedure met terugweg wordt afgerond. Het draait nog niet live. Parallel bouwt de uitvoerder openbare onderzoeksopdrachten via de huishoudspeaker op dezelfde taakuitvoering.",
           "state": "In uitvoering",
           "doneWhen": "Resultaat komt terug in de juiste actieve privésessie; na afsluiten blijft het bewaard zonder onverwacht opnieuw te spreken. Daarna onafhankelijke review, installatie en livecontrole."
         },
@@ -10619,18 +10619,18 @@
         {
           "threadId": "01a0c8a6-d360-7a82-a630-af4bfccbd57c",
           "title": "Eva sneller laten praten tijdens achtergrondwerk",
-          "files": "Privéresultaatterugkeer in bestaande kern, website en LiveKit; geen projectdashboardbestanden",
-          "estimate": "60–90 minuten gerichte implementatie en tests; nul geplande modelproeven; werkelijk creditverbruik onbekend",
+          "files": "Nieuwe geïsoleerde huishoudwerk-worktree: contract/bootstrap/PostgreSQL/worker/tests; geen live-installatie of dashboard",
+          "estimate": "90 minuten serverdeel; nul geplande modelcalls; credits onbekend",
           "state": "in_progress",
-          "currentOutcome": "Herstelt twee concrete reviewbevindingen: ingetrokken resultaten uit spraakcontext verwijderen en opnieuw controleren vlak vóór verzending. Daarna gerichte hertest en definitieve review."
+          "currentOutcome": "Privéresultaatterugkeer technisch opgeleverd. Bouwt nu het serverdeel voor openbare huishoudelijke onderzoeksopdrachten, met behoud van privégrenzen."
         },
         {
           "threadId": "01a0c915-205e-7c11-809a-674ae09e016c",
           "title": "Eva laat achtergrondonderzoek echt afmaken",
-          "files": "Read-only review private-result-return en rootclient; geen overlappende bronwijzigingen",
-          "estimate": "Gerichte review per concreet resultaat; nul modelproeven; creditverbruik onbekend",
+          "files": "Alleen /tmp/eva-install-private-result-return.py, niet uitvoeren",
+          "estimate": "15 minuten installatievoorbereiding; nul modelcalls; credits onbekend",
           "state": "in_progress",
-          "currentOutcome": "Huishoudelijk resultaatcontract opgeleverd. Beoordeelt nu de gecombineerde private kern-, gesprek- en spraakwijziging."
+          "currentOutcome": "Bronreview privéresultaatterugkeer afgerond; bereidt de concrete gepaarde installatieprocedure voor. Coördinator beoordeelt die onafhankelijk."
         }
       ],
       "coordination": "Coördinator onderhoudt dashboard, werkbord en installatie. Eén uitvoerder bouwt privéresultaatterugkeer; één reviewer controleert concrete resultaten. Taakstatus is gerapporteerd werk, geen live aanwezigheidsmeting."
@@ -10891,14 +10891,15 @@
       "ownerAcceptance": "open"
     },
     "privateResultReturnPackaging20260922": {
-      "state": "candidates_prepared_review_fix_pending",
-      "coreImage": "sha256:8a131591f52079632897e97efb90e84e45c08ea9aec088eca9af40cd2dbff1f1",
-      "workerImage": "sha256:0aff34ab5543f148b1341c161ce51dd7e6b3f527aff22b8ef57f36c3b7ffccf8",
+      "state": "source_reviewed_packaged_pending_installation",
+      "coreImage": "sha256:c556b870dc45d153721a8f47bb8341759df6345be6c4bf6d2117b9fc033f9e2d",
+      "workerImage": "sha256:8d88e5a172b1f22926eb667e4ea98ad27e600318ed3b838f7aac88d499e2465a",
       "coreWorkerReleaseEqual": true,
       "changedFilesOnlyVerified": true,
       "runtimeChanged": false,
-      "openReview": "Media cache and queued publication must revalidate revoked results; builder applies targeted correction before final review.",
-      "packagedTests": "30 passed, 1 historical release evidence-index hash mismatch across existing source versions; no full release pass claimed."
+      "openReview": "Bronreview GO. Installatieprocedure wordt afzonderlijk beoordeeld voordat bestaande services veranderen.",
+      "packagedTests": "30 passed, 1 historical release evidence-index hash mismatch across existing source versions; no full release pass claimed.",
+      "mediaImage": "sha256:61584705ace94e5b1afd0a564d0425dd0e1c2e108df92185c0d875956bd29579"
     },
     "releaseEvidenceIndex20260922": {
       "state": "open_before_final_release",
