@@ -1,0 +1,35 @@
+{
+  "checks": [
+    {
+      "id": "bounded_transient_retry",
+      "kind": "contains",
+      "target_path": "settings.toml",
+      "value": "retry_limit = 2"
+    },
+    {
+      "id": "timeout_stays_bounded",
+      "kind": "contains",
+      "target_path": "settings.toml",
+      "value": "request_timeout_seconds = 10"
+    },
+    {
+      "id": "status_avoids_absolute_success",
+      "kind": "not_contains",
+      "target_path": "notifications.md",
+      "value": "Alles is goed."
+    },
+    {
+      "id": "privacy_boundary_documented",
+      "kind": "contains",
+      "target_path": "README.md",
+      "value": "## Privacy"
+    },
+    {
+      "id": "provider_read_is_documented",
+      "kind": "contains",
+      "target_path": "README.md",
+      "value": "providerread"
+    }
+  ],
+  "contract": "EvaRepositoryQuality/v1"
+}

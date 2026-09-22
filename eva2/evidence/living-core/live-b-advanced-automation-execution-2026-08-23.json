@@ -1,0 +1,184 @@
+{
+  "contract": "EvaLivingCoreAdvancedExecutionReceipt/v1",
+  "environment": {
+    "container": "eva2-living-core-b",
+    "image_sha256": "05a0e37afd4624814de169bfed0b3fdee189d689286d1f6d4c158b906bfc65c2",
+    "slot": "isolated_b",
+    "status": "healthy"
+  },
+  "source_files": {
+    "eva2/deploy/living-core/hindsight.compose.yml": "667fc5f254fa0fc6178cf2aee882ba2587a748c4547dbb1791ed75f6dc5eb286",
+    "eva2/deploy/living-core/hindsight.env.example": "dd7bba919cc474cee99ab79b41b173e8bbe73bc59511b595778e4db67ac1c84b",
+    "eva2/design/architecture/living-core-v1.md": "8c4ed368a521f66f562dbaefe382d3dfa9bcd783e02e21b29e294170fab9ab7f",
+    "eva2/design/architecture/package-boundaries-v1.json": "2f319ddf1934b28bd0988440d3a9733e89d490e66c3a9bc7725bac1e6d4921b6",
+    "eva2/src/eva/adapters/api/app.py": "6a90a20a718b042209cb6a9694e96e7fa3886cad4b62d2ee17a1b4e09d5ef85e",
+    "eva2/src/eva/adapters/connectors/agentmail.py": "d10303bededa16547bba34f6a6c2a6bfd075de6d86dd446eac69191af7fd4a7d",
+    "eva2/src/eva/adapters/connectors/home_assistant_admin.py": "d519cd9ffd83bd1c80eca9926a33d52e18347b201a31f6845eff77dceede92d5",
+    "eva2/src/eva/adapters/connectors/home_assistant_automations.py": "13ac51ed9e1b66fb566665618019ea4d85c01bcd24a252607ea676e1dcfb960e",
+    "eva2/src/eva/adapters/connectors/home_assistant_hacs.py": "6049a53a4047f553bf168def52add29280dabe7c1ef554e3cd0e089cb52bf527",
+    "eva2/src/eva/adapters/connectors/home_assistant_localtuya.py": "bc18a8ea66a57059192c5c78f5ab2e8f7a9696ad23ba47bb58cb7e360661d8b8",
+    "eva2/src/eva/adapters/model/conversation.py": "779a52a2948c88c1eff07770474e7c2a81d6ecca8a3d47369de869a1e96f18ba",
+    "eva2/src/eva/adapters/postgres/advanced_tasks.py": "87f2ad2d6a240eec033b2152bc06ac549b255ae3b3885ce5dd24638fd04cc22b",
+    "eva2/src/eva/adapters/postgres/conversation_actions.py": "27cf2a153317a12b3c5f21cf6abdf4decc235489904cf26f397e2da4b36e18cf",
+    "eva2/src/eva/adapters/projection/hindsight.py": "c1b9476858fe505ec9fef9cc315112679d10720082d803dfabe288aba64a726a",
+    "eva2/src/eva/application/advanced_tasks.py": "82220b754dd05bc0a86593a519212a1e66391ddb56d0377b088ec0735376e32d",
+    "eva2/src/eva/application/home_automation.py": "6d2b1d7341158495b50bade911ef762b040a0640b500e9248ada9f952e129460",
+    "eva2/src/eva/application/mail.py": "6b3236ce6afb593bdf784c9e6e1f68a77fcb4058cde844dbf6f8ed69ec9e8189",
+    "eva2/src/eva/bootstrap/runtime.py": "2426529ecddb0e733d3cd96696f7561cfde511788dbcfc604c735ce66cfac985",
+    "eva2/tests/api/test_memory_api.py": "793aac86e8c076dc98f4dab7c846e4b91e83b50f1638ee247906ad5e4b4648df",
+    "eva2/tests/connectors/test_agentmail.py": "7e35e2ae64a8c9e03c831f3f5f24e4c6002f9ea4e62a989cba2d1b3674337c10",
+    "eva2/tests/connectors/test_home_assistant_localtuya.py": "229191b7591ad81f55fe32791a017f32a02a4d17b3eda03e15fe381c04f4c146",
+    "eva2/tests/postgres/test_advanced_task_store.py": "b48476f7a6a03a8202fa649309136a74769aa92a1312724228a2373483cc8cf9"
+  },
+  "automation_acceptance": {
+    "automation_id": "eva2_28b384385ded8bb993d43fa644212cb8",
+    "config_sha256": "ac49104cecbb847e2ff65438afcb6cdafc58ec9940680187e8f4794768582424",
+    "disposition": "created_verified_then_hash_bound_deleted",
+    "physical_effect": "none_impossible_test_trigger"
+  },
+  "advanced_automation_acceptance": {
+    "automation_id": "eva2_6537d1aec263ebe0c4a34552d7367ba1",
+    "config_sha256": "89143fe7d35255bef02d81613e623c7b6b38114809ebb1faa38b2d49bc01420e",
+    "disposition": "created_verified_then_hash_bound_deleted",
+    "ordered_actions": [
+      "homeassistant.turn_on light.kantoor_links",
+      "delay 30 seconds",
+      "homeassistant.turn_on switch.eva2_acceptance_dummy"
+    ],
+    "physical_effect": "none_impossible_test_trigger",
+    "reply_sha256": "5536d1b867fa6feb148ace37352597ca15c94ece6034612c0f7fc78922c85875"
+  },
+  "tuya_localtuya_live_inventory": {
+    "blockers": [
+      "localtuya_integration_not_loaded",
+      "localtuya_package_not_installed",
+      "local_device_credentials_not_collected",
+      "matter_devices_require_native_matter_review",
+      "tuya_scenes_require_explicit_rebuild"
+    ],
+    "device_count": 12,
+    "localtuya_candidates": 7,
+    "matter_review": 2,
+    "rebuild_scene": 3,
+    "repository": {
+      "available_version": "v5.2.5",
+      "can_download": true,
+      "full_name": "rospogrigio/localtuya",
+      "installed": false,
+      "repository_id": "249381778",
+      "repository_sha256": "f78b5c89927df0bce359b87ec33cb5cb30c62f8ab3ddf668069262306af928ee"
+    }
+  },
+  "durable_plan": {
+    "canonical_response_sha256_before_and_after_core_restart": "f2fad66bd4e918d8aba8e35e4bef44b87056d39c5bac3752fea03bb2d715a68f",
+    "event_count_after_two_identical_requests": 1,
+    "event_payload_sha256": "8e9c31050a5d4f7563fc3a2a9f2bfa6c34a93cf60087011d97a4d0f9b1beef2b",
+    "operation_id": "operation:live-tuya-package-20260823",
+    "plan_id": "advanced:074d31ad1263390c451289bce9a42a50b0d8d7d8fff4ed7b5e45fcfaac04caa1",
+    "plan_sha256": "bac02c5e498bd0ae79d0b1ff8bbf4d36ce53ea8801d35a79f37916f2976d0f14",
+    "responses_byte_equal": true,
+    "restart_replay_byte_equal": true,
+    "state": "blocked_preflight"
+  },
+  "durable_plan_refresh": {
+    "blocker_count": 5,
+    "device_count": 12,
+    "first_refresh_disposition": "refreshed",
+    "inventory_sha256": "b1f6195744139dab37c4c10dfe433f6a282c4942a608d07f5e201bb0698411fa",
+    "plan_event_count_after_two_direct_retries": 2,
+    "plan_event_types": [
+      "ADVANCED_PLAN_CREATED",
+      "ADVANCED_PLAN_REFRESHED"
+    ],
+    "plan_id": "advanced:b693525a70989e846b1b332cd9948cbfe7f2ffb348e7b3256508b709513eb5c7",
+    "plan_sha256": "860cc47728b972769bbb1ca8704e46fda923a6e75a166416311e0ce0fd0a258d",
+    "retry_dispositions": [
+      "already_current",
+      "already_current"
+    ]
+  },
+  "hindsight_hot_path": {
+    "bank_recall_node_budget": 40,
+    "direct_reply_turn_milliseconds": [
+      4464,
+      5231,
+      4900
+    ],
+    "reflect_in_chat_loop": false,
+    "reranker_max_candidates_low": 32,
+    "retain_blocks_chat_loop": false,
+    "sample_recall_milliseconds": [
+      1712,
+      2219,
+      1938
+    ]
+  },
+  "fail_closed_live_checks": {
+    "canary_approval_with_blockers_http": 409,
+    "install_without_durable_approval_http": 409,
+    "install_without_durable_approval_message": "advanced package approval does not exist",
+    "package_state_after_rejection": "not_installed",
+    "wrong_package_version_approval_http": 409
+  },
+  "localtuya_canary_preflight": {
+    "current_live_http": 409,
+    "current_live_reason": "LocalTuya config entry is not loaded",
+    "durable_preflight_event_count_after_rejection": 0,
+    "flow_success_boundary": "pick_entity_type followed by explicit flow abort",
+    "local_key_in_proof_or_timeline": false,
+    "package_or_device_mutation": false
+  },
+  "agentmail_read_connector": {
+    "eva1_live_provider_read": "ok",
+    "live_message_count": 1,
+    "live_message_ids_sha256": "75da3b62221cd9cd5310c2cd7446fd5504a1041a416350df697963329b0fcd3c",
+    "eva2_connector_mode": "read_only_list_and_get",
+    "eva2_b_without_new_credential_http": 409,
+    "eva1_secret_copied_or_logged": false,
+    "activation_boundary": "new Eva2 operation-scoped credential must be issued and mounted separately"
+  },
+  "advanced_command_bridge_live_check": {
+    "transport": "production_eva2_canary_adapter_to_current_live_b",
+    "prompt_kind": "natural Dutch Tuya cloud-to-local planning request",
+    "elapsed_milliseconds": 8972,
+    "reply_sha256": "0ca16cee140c88c26eef9c8029f2951526ecdcd621a5a44f11ba5a446ba1098f",
+    "durable_plan_thread_id": "advanced:45cdd4ca4a9bf35595aeb9fbe1af00b20298fe19d759c4fcd594bcbeefd03a40",
+    "durable_plan_event_sha256": "1da079a2ac4ca1867f11fbbeda2ef40dfb4eed89562165323a18beb791128ac8",
+    "live_inventory_counts": {
+      "localtuya_candidate": 7,
+      "matter_review": 2,
+      "rebuild_scene": 3
+    },
+    "physical_mutation": false
+  },
+  "telegram_bridge_live_check": {
+    "conversation_id": "telegram:live-canary-human",
+    "message_id": "telegram:live-canary-human:1787499321486",
+    "reply_sha256": "8d7b0b274c0051386316431a1f8403f81d1d7f5bd81572d720018e7f66756ca2",
+    "transport": "production_eva2_canary_adapter_to_live_b",
+    "validated_contract": "EvaInternalGroundedReply/v1"
+  },
+  "non_authorizing_followup": {
+    "message_id": "telegram:live-canary-human:1787499353358",
+    "package_installed_after_reply": false,
+    "repository_sha256_after_reply": "f78b5c89927df0bce359b87ec33cb5cb30c62f8ab3ddf668069262306af928ee",
+    "reply_sha256": "2e3e9c91c128cd34d69169b913ab04e96976402ab51b1f91bdb0408b4b7cd5ba"
+  },
+  "persona_relevance_live_check": {
+    "message_id": "telegram:live-persona-relevance:20260823021",
+    "reply_sha256": "a8d75396a0cd461ffc7ac1ee30f38ea17955277ad9df9b93cf906052350e95aa",
+    "result": "answered personal smart-home question without dragging the unrelated income project into the reply"
+  },
+  "targeted_gate": {
+    "result": "50 advanced-task, automation, LocalTuya, AgentMail, API, persistence and architecture tests passed",
+    "architecture": "178 Python files checked, zero violations",
+    "ruff": "passed"
+  },
+  "nonclaims": [
+    "No LocalTuya package was installed because the owner has not approved that live mutation.",
+    "No Tuya device, Matter device, scene, dashboard or automation reference was migrated.",
+    "No local key, device secret, token or credential value was written to an event, log or receipt.",
+    "The existing Eva1 AgentMail secret was not copied or activated in Eva2; the live provider read proves only the account and read route, while B remains fail-closed pending a newly issued credential.",
+    "The Telegram bridge check executed the real production adapter and live B endpoint but did not impersonate an inbound Telegram user update."
+  ]
+}

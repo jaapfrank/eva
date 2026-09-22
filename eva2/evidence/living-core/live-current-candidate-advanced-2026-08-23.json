@@ -1,0 +1,59 @@
+{
+  "contract": "EvaLivingCoreCurrentCandidateAdvancedReceipt/v1",
+  "recorded_at": "2026-08-23T17:35:00Z",
+  "result": "passed",
+  "environment": {
+    "image_sha256": "034ffb5b91b86b9acf350a81af13a579dd4b5dca9a6dc0d36daadb9e9e4af168",
+    "slot": "isolated_b",
+    "status": "healthy"
+  },
+  "candidate": {
+    "container_id": "b8cb375f201c27b642034b49ef245b1ab3f66dec79e3670cc596d41a1a4e36fa",
+    "health": "healthy",
+    "image_sha256": "034ffb5b91b86b9acf350a81af13a579dd4b5dca9a6dc0d36daadb9e9e4af168",
+    "read_only_root_filesystem": true,
+    "runtime_user": "65532:65532",
+    "slot": "isolated_b2_on_port_44678"
+  },
+  "source_files": {
+    "eva2/src/eva/adapters/connectors/home_assistant_admin.py": "d519cd9ffd83bd1c80eca9926a33d52e18347b201a31f6845eff77dceede92d5",
+    "eva2/src/eva/adapters/connectors/home_assistant_hacs.py": "6049a53a4047f553bf168def52add29280dabe7c1ef554e3cd0e089cb52bf527",
+    "eva2/src/eva/adapters/connectors/home_assistant_localtuya.py": "bc18a8ea66a57059192c5c78f5ab2e8f7a9696ad23ba47bb58cb7e360661d8b8",
+    "eva2/src/eva/adapters/model/conversation.py": "779a52a2948c88c1eff07770474e7c2a81d6ecca8a3d47369de869a1e96f18ba",
+    "eva2/src/eva/adapters/postgres/advanced_tasks.py": "87f2ad2d6a240eec033b2152bc06ac549b255ae3b3885ce5dd24638fd04cc22b",
+    "eva2/src/eva/application/advanced_tasks.py": "82220b754dd05bc0a86593a519212a1e66391ddb56d0377b088ec0735376e32d",
+    "eva2/src/eva/bootstrap/runtime.py": "1a4363e775b70379fd86bf740711442fbf5f56b33ecbfc974c3f524faea447eb"
+  },
+  "real_varied_conversation": {
+    "elapsed_milliseconds": 7562,
+    "message_id": "telegram:candidate-advanced-varied-20260823:1",
+    "stimulus": "Bekijk zelf al mijn huidige Tuya-apparaten en maak een veilig stappenplan om ze lokaal te laten werken. Verander nu nog niets en vertel me welke uitzonderingen je vindt.",
+    "reply": "Ik heb je huidige set bekeken: er zijn 12 Tuya-items, waarvan 7 logisch naar LocalTuya kunnen, 2 eerst via hun lokale Matter-route beoordeeld moeten worden, en 3 scènes lokaal opnieuw opgebouwd moeten worden. Nog niets is gemigreerd. De uitzonderingen zijn dus die twee Matter-apparaten en de drie Tuya-scènes; de rest is kandidaat voor lokale omzetting, maar daar ontbreekt nog de LocalTuya-laag en de lokale apparaatgegevens. Mijn veilige volgorde is: eerst LocalTuya laden, dan per kandidaat de lokale gegevens vastleggen, daarna één apparaat als proef lokaal aansluiten, en pas na bewijs de rest één voor één overzetten.",
+    "reply_sha256": "fe81eeb87c4a6489579878df29e09ade77567259fb8edc6b1dcbc8314135f3cb"
+  },
+  "live_home_assistant_plan": {
+    "blocker_count": 5,
+    "device_count": 12,
+    "inventory_sha256": "133669c4ef720c8d79f2b4e6207b32e66c42c5bdd4a39e3d203a93c3346f8d16",
+    "localtuya_candidates": 7,
+    "matter_review": 2,
+    "physical_mutation": false,
+    "plan_id": "advanced:4a34ca35eaa7c7f46367c907a5bc5c7395ca59e2ce4c0dabaa18f07ab9163a29",
+    "plan_sha256": "a07b72d71054a0500c7dbcbda239cde4dc8890e775c55c3b9493b6e26a3b2b15",
+    "rebuild_scene": 3
+  },
+  "hard_restart_replay": {
+    "conversation_event_count_before_and_after": 3,
+    "plan_event_count_before_and_after": 1,
+    "plan_projection_event_count_before_and_after": 1,
+    "post_restart_replay_milliseconds": 77,
+    "reply_byte_equal": true,
+    "second_inventory_or_plan_created": false
+  },
+  "nonclaims": [
+    "The run performed live read-only Home Assistant and HACS inventory but did not install LocalTuya or mutate a device.",
+    "The plan remains blocked until the owner separately approves a version-bound package step and later a single device canary.",
+    "No local key, Home Assistant token or device secret is present in this receipt.",
+    "This isolated candidate run did not change production A or Telegram routing."
+  ]
+}

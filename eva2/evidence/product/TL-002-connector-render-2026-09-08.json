@@ -1,0 +1,41 @@
+{
+  "taskId": "TL-002",
+  "status": "connector_render_integrated_not_live",
+  "sourceSha256": {
+    "tools/managed_b_render.py": "337c9ff3d4be508b19ffba9adbfb83082330c8a67d2f3a5cbefd32cc9c6ba9ef",
+    "tools/eva2_quiescent_cutover.py": "28369c1ab7ce3bacf2e872f8ab6594de461abde33f12b3b451d5364258226bf5",
+    "tests/operations/test_managed_b_render.py": "aacfef062e6c6d9cc9df9ee689e81df8a379eee715d750cc1166029ad9dc12b5",
+    "tests/operations/test_eva2_quiescent_cutover.py": "c6fed91ffd29d649fa59053adfecb41cff48d59e1d5df8fd2e99ce50af97a995",
+    "deploy/living-core/mcp-gateway.compose.yml": "d2016f39b5ab3fd916733dee846e4e6fe0ed6c662d46e64d4a9c23821dffdedf"
+  },
+  "tests": {
+    "passed": 114,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "junitPath": "/tmp/eva2-tl002-connector-render-tests.xml",
+    "junitSha256": "38a338d0c7d6790d06a237fb4a56033e07a11bfac3a779551f1503e804da323b"
+  },
+  "physicalRender": {
+    "baselineSha256": "692f8de6267a4f94108c851823babb3afe917e0698051181cf1a5324d2e5d56b",
+    "activatedSha256": "ed8aa9896c1fc90f6cdac46324a76013556509f5a2fb8f91f189c9134ebb148c",
+    "overlaySha256": "d2016f39b5ab3fd916733dee846e4e6fe0ed6c662d46e64d4a9c23821dffdedf",
+    "environmentSha256": "2192a9557e7dfa433103e9d6745b731ad7ac82a15949f652c0bd1fe0504b3ef9",
+    "baseManifestSha256": "f2c12cbc07a0d965ec4dc32c7f2f75b4166125c8ee5bcc294df05b834f2a92d9",
+    "deliveryOverlaySha256": "62bee1695b8e397efe11c7eb4bc7e9cd58ca7bd08caae37c37415040fca18631",
+    "status": "real_compose_delta_passed",
+    "scope": "Actual cutover render helper with private copy of current slot config and synthetic MCP values; provider admission and activation not performed",
+    "sourceEnvironmentUnchanged": true,
+    "temporaryConfigRemoved": true
+  },
+  "review": {
+    "reviewedBy": "/root/co006_review",
+    "decision": "bounded GO for renderer integration; no provider admission or live acceptance"
+  },
+  "result": "Enabled-slot preflight compares actual baseline Compose including independently enabled Telegram against the exact MCP addition. Only five environment fields, one read-only mount and the approved external network may change. Template hashes and input stability bound separately.",
+  "remaining": [
+    "Durable gateway/filesystem provisioning and resource identities.",
+    "Verified token replacement via A/B before expiry; old token retained through rollback then revoked after no active consumers.",
+    "Physical activation, restart and rollback before full TL-002 live closure."
+  ]
+}

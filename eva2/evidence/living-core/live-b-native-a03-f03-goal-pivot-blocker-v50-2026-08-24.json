@@ -1,0 +1,88 @@
+{
+  "contract": "EvaLivingCoreNativeEvidence/v1",
+  "caseIds": ["A03", "F03"],
+  "scenario": "goal-rechecks-suitability-and-stops-on-external-blocker",
+  "status": "passed_live_b",
+  "observedAt": "2026-08-24T07:31:09Z",
+  "productionAChanged": false,
+  "executionEnvironment": {
+    "image": "eva2-living-core:durable-goals-v49-20260824",
+    "image_sha256": "7df0941aaecc082168da7ec093d3c434e3c5e4586b0d0ea646f977364dc308d2",
+    "postgres_container": "eva2-postgres-b-live",
+    "provider": "isolated goal-test HTTP provider"
+  },
+  "currentCandidateReadback": {
+    "image": "eva2-living-core:durable-goals-v50-20260824",
+    "image_sha256": "a09a4a215ae6e7bee346872f6f3d877b8cb4ecacf7f5bb1cbcdc41dbbbb398eb",
+    "a03_status": "completed",
+    "a03_delivery_status": "accepted",
+    "f03_status": "needs_help",
+    "worker_status": "running",
+    "worker_restart_count": 0
+  },
+  "a03": {
+    "conversation_id": "conversation:live-b:a03-v49",
+    "message_id": "live-b-a03-071840",
+    "occurred_at": "2026-08-24T07:18:40Z",
+    "reply": "Ik wacht op goal-test voor release-a03 tot ready yes is, en lees bij het ontwaken route opnieuw. Daarna maak ik precies één ding: óf de publicatiechecklist, óf bij route blocked de veilige uitstelnotitie. Ik bied het resultaat één keer aan sink-a aan.",
+    "reply_sha256": "11ce287d8e07d8cc37a6066fd73795c6e2c92acf730ef345e7f8302508c55f99",
+    "goal_id": "durable-goal:88fa891ccf0d27f71c8cf2e2c1e60ca029505f3b",
+    "thread_id": "goal:413334d6e0faa5d366767352ca02ba34a36db36cbdf62e3b3d3eace2dbd52f51",
+    "initial_evidence": {"ready": "no", "route": "open", "revision": "1"},
+    "wake_evidence": {"ready": "yes", "route": "blocked", "revision": "2"},
+    "selected_instruction": "Maak in plaats daarvan één veilige uitstelnotitie en bied die aan sink-a aan.",
+    "effect_posts_for_operation": 1,
+    "delivery_posts_to_sink_a": 1,
+    "eventStore": [
+      [1, "GOAL_ADMITTED", "61f605e5af26ed8d03acd45f21443c08bfb71117f89af17d5670cdbf41a617f1"],
+      [2, "GOAL_WAKE_SCHEDULED", "b319f0cc188d23732acbe5eb1d9f67a0a0088b20c08251aad00118465b3a07a5"],
+      [3, "GOAL_EVIDENCE_READ", "05adbabf4bd7e2f8f04db50662596ae226dcf4c247f99c69052129198ae19873"],
+      [4, "GOAL_EVIDENCE_READ", "24d2fa5bb85afc091280992d80b318843d6acec51c1100614e8299155fb6312a"],
+      [5, "GOAL_PLAN_PIVOTED", "251c1b811bf614a2fbe36ef167435fc787d7530d31dbd738f55895480a31e4b2"],
+      [6, "GOAL_EFFECT_PREPARED", "43f4c32fec9abb5b6ead6cc588ad013e6f26525c918f15914ba759914396b1c3"],
+      [7, "GOAL_EFFECT_COMPLETED", "a1f3916248b51d00d2acb925995d01878937b71d7b9710fac61dddb1b3df69af"],
+      [8, "GOAL_DELIVERY_PREPARED", "124466a7ba1b3234bc3cd05b047976cee7f2606c340b32c4b8677e309a97a4c5"],
+      [9, "GOAL_COMPLETED", "ffd292874fff0fcfec0013e2d97f01e0490695cf5f8b8cbe5e0e8252e2c23fa3"]
+    ]
+  },
+  "f03": {
+    "conversation_id": "conversation:live-b:f03-v49",
+    "message_id": "live-b-f03-072000",
+    "occurred_at": "2026-08-24T07:20:00Z",
+    "reply": "Eva wacht op goal-test voor dependency-f03 van external-team, tot ready yes is of uiterlijk 2026-08-24T07:20:35Z. Daarna maakt zij één korte statusnotitie en biedt die aan bij sink-a. Als die vrijgave niet op tijd komt, stopt ze met precies die blokkade en doet ze geen ander werk.",
+    "reply_sha256": "074c4893ffbb3ae714796a4504b44ca7f3a6ff1758a1030d39eb313d55f12cd1",
+    "goal_id": "durable-goal:c46f197c4dc05c828498d0c3561221b3ab81ff96",
+    "thread_id": "goal:4b51a540292cb0b7318bc0bc2227053efc4350cd56357631fc5da05123284d68",
+    "evidence": {"owner": "external-team", "ready": "no", "revision": "1"},
+    "deadline_reached": true,
+    "final_status": "needs_help",
+    "blocker_owner": "goal-test:dependency-f03",
+    "reason": "goal-test:dependency-f03 did not reach ready=yes",
+    "effect_posts": 0,
+    "delivery_posts": 0,
+    "eventStore": [
+      [1, "GOAL_ADMITTED", "9be9f8a3f684b78eea4374fda7656c1a2606f631eb662eb36e73c7e2d62c68cc"],
+      [2, "GOAL_WAKE_SCHEDULED", "6591331937e44221ea4d7ce5f76ebd138eaeecc5df240db69ffc092cba72f0b4"],
+      [3, "GOAL_EVIDENCE_READ", "691e5f9f478a2c5c5f769c11220f7630989e9bb6dd7d6735a6f2cd416ec54a30"],
+      [4, "GOAL_NEEDS_HELP", "550d27b441828ad503433e708010267f3b3348b899de8f5bf540b3d990f86574"]
+    ]
+  },
+  "verification": {
+    "focused_tests_passed": 91,
+    "ruff_passed": true,
+    "core_ready": true,
+    "production_a_service": "active"
+  },
+  "source_files": {
+    "eva2/src/eva/application/durable_goals.py": "aadc98164c54935308752755fb20e6dbed91672669d9ddcd1fd49e606fa69163",
+    "eva2/src/eva/adapters/postgres/durable_goals.py": "25ab84a172aab2e8e60a0cf84cbd915242424821a22b3e7562ce834c06c9c0fc",
+    "eva2/src/eva/adapters/connectors/durable_goal_http.py": "2571987559c9a6d3469b9bafdf32d6570b5b87764b1b3656134b57b1a261b3fb",
+    "eva2/src/eva/operations/durable_goal_worker.py": "db150d1a630f732c10188664a9817badd9e1100109c884a4a5acbafc87935c40",
+    "eva2/src/eva/adapters/model/conversation.py": "61a3a32271655193536e57e5ee50c889ded97f4eb1b2858dbe0c0ba91865e6f8"
+  },
+  "nonClaims": [
+    "The provider was an isolated B HTTP process; no external team was contacted.",
+    "The live test proves evidence re-read, pivot selection and bounded blocker handling, not autonomous authority over unapproved real-world effects.",
+    "No production-A service, traffic or physical device was changed."
+  ]
+}

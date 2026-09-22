@@ -1,0 +1,114 @@
+{
+  "taskId": "TL-002",
+  "status": "deployment_failed_rolled_back",
+  "sourceCommit": "2984012aaaa860e83e6ff2a521af5607925af1ad",
+  "runtimeCodeChanged": false,
+  "candidateImageId": "sha256:a22216261a54512f1169fd3e4cfb86eb470d0eab247829ae0d337d61e2cbe545",
+  "buildReceiptSha256": "1c32a4ae5d19c47449a3833524f7386f2cd0d6d3a6fd8de719ba426eb1d42c6f",
+  "scanReceiptSha256": "aede7a5d4d8171a552ec675c22fbfcc76cacfe6010bbda51a573767c3127ea1e",
+  "scanFindings": {
+    "CRITICAL": 0,
+    "HIGH": 0
+  },
+  "installedReceiptSha256": "569b2ac4bfc7ec4d41633740425f7c50e01d5f0239b1e7a597a99b012b6c7f07",
+  "installedTests": {
+    "tests": 124,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0
+  },
+  "targetedTests": {
+    "passed": 195,
+    "junitSha256": "1daff71866521a8014fcc365a28ff2da3c467443fa257565a3117938792d7e1a"
+  },
+  "releaseAuthority": {
+    "inputs": 331,
+    "testModules": 151,
+    "supportFiles": 20,
+    "priorTestsRemoved": 0
+  },
+  "review": {
+    "reviewedBy": "/root/co006_review",
+    "decision": "GO exact source for build/full gates and separately reviewed disposable-copy invocation; no activation GO."
+  },
+  "inProgress": {
+    "followupSourceCommit": "7b6c0c279813f9f3539b95cb7afdc0fd283998f2",
+    "stage": "/tmp/eva2-tl002-startup-release.sxbx02eb",
+    "buildSession": 82260
+  },
+  "earlierAttempts": [
+    {
+      "sourceCommit": "027556939e8228c5d9b06248f497d34306f3332c",
+      "stage": "/tmp/eva2-tl002-workspace-release.lcz12s53",
+      "result": "Built,0/0scan,124installedpassed; full gate rejected runner count149 before collection. New candidate updates count to151 and corresponding assertions. Old proof not transplanted."
+    }
+  ],
+  "remaining": [
+    "Complete full gate and copied-data recovery proof.",
+    "Bind connector config and independent effect proof to this candidate.",
+    "Review concrete slot3-to4 admission, retain old credentials and workspace data through rollback.",
+    "Human acceptance."
+  ],
+  "requiredTests": {
+    "passed": 2093,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "receiptSha256": "e2d76f95bb72184788ffedcaf5b9c5e1b6bb14950654aac546c324d77591341c"
+  },
+  "copiedDataPassed": true,
+  "connectorProof": {
+    "status": "passed",
+    "stagingProviderDisabled": true,
+    "actualReadOnlyMountVerified": true,
+    "actualNetworkVerified": true,
+    "otherPersonDenied": true,
+    "groupDenied": true,
+    "ownerActionVerified": true,
+    "independentFileSha256": "7feb9df7ba38899094d639f1a72e39cf5a2edfe70702262bda45c618423bfdd3",
+    "replayReceiptUnchanged": true,
+    "fileStateUnchangedAfterRestartReplay": true,
+    "temporaryDatabaseAndCoreRemoved": true,
+    "modelCalls": 0,
+    "telegramSends": 0
+  },
+  "providerScans": {
+    "gateway": {
+      "imageId": "sha256:daf923c247fd569df5f8c9ee418cbc259fade564f78e0a0852937139a181c4dd",
+      "findings": {
+        "HIGH": 0,
+        "CRITICAL": 0
+      },
+      "reportSha256": "e0e357ff9eae67e581c8af912e173bc5fbd35632f5b498caaf0095ea19807f6b"
+    },
+    "filesystem": {
+      "imageId": "sha256:bd31ea2dde76561fe662a551756f939e9007048956c300e54ad49a8c18ddfdc4",
+      "findings": {
+        "HIGH": 0,
+        "CRITICAL": 0
+      },
+      "reportSha256": "10a0d414d8ff13a7789ea8f4b389a572ab392bfb3ac355b88436257c372a5904"
+    }
+  },
+  "admissionSha256": "80aad6ed0b7540834a547afd8986bc2f72fdebb0e5753174f3dc21264e7c40d4",
+  "rolloutFailure": {
+    "candidateSourceCommit": "2984012aaaa860e83e6ff2a521af5607925af1ad",
+    "candidateImageId": "sha256:a22216261a54512f1169fd3e4cfb86eb470d0eab247829ae0d337d61e2cbe545",
+    "cause": "McpGatewayProviderFactory.build called asyncio.run while Uvicorn app factory was already inside a running event loop.",
+    "cutoverResult": "failed",
+    "rollbackVerified": {
+      "activeSlot": 3,
+      "activeImageId": "sha256:541762487caf441a2755997a5b5a1ed31fd2cafae794dfc4f84858e862fc3f43",
+      "readyStatus": 200,
+      "bottieStatus": 200,
+      "routePort": 44710,
+      "sourceEnvironmentUnchanged": true,
+      "reserveStopped": true,
+      "reserveConfigurationRestored": true,
+      "oldConversationExactlyReplayed": true,
+      "replayModelCalls": 0,
+      "replayTelegramSends": 0
+    },
+    "coverageGap": "Previous minimal sleep-container plus synchronous direct provider factory probe did not execute the actual Uvicorn app startup path."
+  }
+}

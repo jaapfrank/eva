@@ -1,0 +1,120 @@
+{
+  "contract": "EvaLivingLocalTuyaMaintainedSourceGate/v1",
+  "captured_at": "2026-08-24T05:43:43Z",
+  "status": "passed_live_b_read_only",
+  "environment": {
+    "slot": "isolated_b",
+    "container": "eva2-living-core-b",
+    "container_id": "2abd8a2edb3f0bdb9cc6546dc2d24b7b9e0377a9cb5e9f914f8c19fc8f8167e1",
+    "image": "eva2-living-core:localtuya-provenance-v39-20260824",
+    "image_sha256": "17677653c0e5e7a1870a31bdf7b631e7c5a6a68f23fb98c6d0a1126087478d5e",
+    "health": "healthy",
+    "readiness": {
+      "database": "ready",
+      "memory_projection": "ready",
+      "model_provider": "ready",
+      "ready": true
+    },
+    "production_a_service": "eva.service",
+    "production_a_status": "active",
+    "traffic_changed": false
+  },
+  "official_upstream": {
+    "maintained_repository": "xZetsubou/hass-localtuya",
+    "release": "2026.7.0",
+    "release_url": "https://github.com/xZetsubou/hass-localtuya/releases/tag/2026.7.0",
+    "manifest_url": "https://raw.githubusercontent.com/xZetsubou/hass-localtuya/2026.7.0/custom_components/localtuya/manifest.json",
+    "hacs_manifest_url": "https://raw.githubusercontent.com/xZetsubou/hass-localtuya/2026.7.0/hacs.json",
+    "declared_domain": "localtuya",
+    "declared_minimum_home_assistant": "2025.1.0",
+    "hacs_api_source": {
+      "repository": "hacs/integration",
+      "version": "2.0.5",
+      "revision": "c0dfd8b44297c3673c21973e2539375a53687a9c",
+      "commands_verified": [
+        "hacs/repositories/list",
+        "hacs/repositories/add",
+        "hacs/repository/download"
+      ]
+    }
+  },
+  "live_inventory": {
+    "home_assistant_core": "2026.8.1",
+    "hacs_version": "2.0.5",
+    "repositories": [
+      {
+        "repository_id": "249381778",
+        "full_name": "rospogrigio/localtuya",
+        "available_version": "v5.2.5",
+        "installed": false,
+        "minimum_home_assistant_version": "2024.1.0"
+      }
+    ],
+    "maintained_repository_present": false,
+    "localtuya_candidates": 7,
+    "matter_review": 2,
+    "scenes_to_rebuild": 3
+  },
+  "durable_plan": {
+    "plan_id": "advanced:4c338be06c1a2cc8bab9a166c85eee897acd1d2fd5d6a4c0aab47a09702ff1ce",
+    "plan_sha256": "de05d4e8f51e283f2b78db13c2cc1c8294ed9134bad92c2499642923033d905b",
+    "inventory_sha256": "23132b5be5f7e68810d9c30b5016d7d55767e4e08588e100703f2a54cef9df1b",
+    "created_at": "2026-08-24T05:39:45Z",
+    "state": "blocked_preflight",
+    "blockers": [
+      "localtuya_integration_not_loaded",
+      "localtuya_maintained_repository_not_available",
+      "localtuya_package_incompatible_with_home_assistant",
+      "local_device_credentials_not_collected",
+      "matter_devices_require_native_matter_review",
+      "tuya_scenes_require_explicit_rebuild"
+    ]
+  },
+  "live_old_package_rejection": {
+    "requested_repository_id": "249381778",
+    "requested_version": "v5.2.5",
+    "http_status": 409,
+    "detail": "LocalTuya package is incompatible with this Home Assistant version",
+    "package_downloaded": false,
+    "integration_installed": false,
+    "home_assistant_mutated": false
+  },
+  "real_model_conversations": [
+    {
+      "input": "Ik wil alles van Tuya lokaal maken. Kijk wat er nu echt kan, maar verander nog niets.",
+      "reply": "Ik heb het uitgezocht: er zijn 7 Tuya-apparaten die in principe lokaal te maken zijn, 2 Matter-apparaten die eerst via hun eigen Matter-route beoordeeld moeten worden, en 3 scènes die lokaal opnieuw opgebouwd moeten worden. Nog niets is gemigreerd.\n\nWat nu echt blokkeert: LocalTuya is nog niet geladen, de onderhouden repository staat nog niet in HACS, de beschikbare versie past niet bij deze Home Assistant-versie, en de lokale apparaatgegevens ontbreken nog.",
+      "reply_sha256": "54218519d8711a03616a39f1475d5e85efb2091d1e4ec2d62a561758d54a9aab",
+      "replay_reply_sha256": "54218519d8711a03616a39f1475d5e85efb2091d1e4ec2d62a561758d54a9aab"
+    },
+    {
+      "input": "Kunnen we de Tuya-cloud uit huis halen zonder nu iets stuk te maken? Bekijk de echte situatie eerst; nog nergens aan zitten.",
+      "reply": "Ja, eerst kijken kan veilig zonder iets aan te raken. Op dit moment zou ik de Tuya-cloud nog niet uitzetten: LocalTuya staat nog niet klaar en de lokale gegevens ontbreken nog, dus nog niets is gemigreerd. Ik zie wel dat er meerdere apparaten lokaal kandidaat zijn, plus een paar Matter-apparaten en scènes die apart moeten worden nagekeken.",
+      "reply_sha256": "bee54b58a3fd5bf8655fb733e9738f7fd336cbdedd52cdac744d6e401a4f0f16"
+    }
+  ],
+  "verification": {
+    "relevant_tests": "89 passed",
+    "source_and_floor_tests": "22 passed",
+    "ruff": "passed",
+    "git_diff_check": "passed",
+    "real_hacs_inventory": true,
+    "real_home_assistant_inventory": true,
+    "real_model_path": true,
+    "real_postgresql_plan": true
+  },
+  "source_files": {
+    "eva2/design/architecture/living-core-v1.md": "5e3a05b55fc96f920fc01643dd022fadd649414406db67c5029c187deeb78460",
+    "eva2/src/eva/application/advanced_tasks.py": "44c19bbc75c2f3b8f8f83fe29095f60cc5b988c3ae196ec103252cc660252c48",
+    "eva2/src/eva/adapters/connectors/home_assistant_admin.py": "d16290174505d68cb39f059d13dbf97be5ed198e53f89943f0913e7cb0b9e736",
+    "eva2/src/eva/adapters/connectors/home_assistant_hacs.py": "50246500b145281bc6a64f0b445c3eea43c09217836a5e8543a0658c86631973",
+    "eva2/src/eva/adapters/model/conversation.py": "5a2cae839f164ed4cee9bfc99ec35acef3db67d9dd87a3e7e631f504e4760f66",
+    "eva2/tests/application/test_advanced_tasks.py": "e18f75d85e521b57a26f54586350940f7f82d2ab41a5e3c66dda68fdcd1256c7"
+  },
+  "nonclaims": [
+    "The maintained repository was not added to HACS.",
+    "No LocalTuya package was downloaded or installed.",
+    "No Tuya, Matter, scene, automation, dashboard or physical device was changed.",
+    "Release metadata is a compatibility admission input, not proof that every household device supports LocalTuya.",
+    "One exact package approval and one exact canary-device approval remain required before mutation."
+  ]
+}

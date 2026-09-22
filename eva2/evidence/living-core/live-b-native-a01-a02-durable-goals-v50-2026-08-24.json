@@ -1,0 +1,86 @@
+{
+  "contract": "EvaLivingCoreNativeEvidence/v1",
+  "caseIds": ["A01", "A02"],
+  "scenario": "durable-goal-waits-without-follow-up-and-survives-unrelated-conversation",
+  "status": "passed_live_b",
+  "observedAt": "2026-08-24T07:31:09Z",
+  "productionAChanged": false,
+  "executionEnvironment": {
+    "core_container": "eva2-living-core-b",
+    "core_container_id": "93170277680ed1b6f209fecd2a609dfbf16e219c4ab97aa5d44ddae6b5351c94",
+    "image": "eva2-living-core:durable-goals-v49-20260824",
+    "image_sha256": "7df0941aaecc082168da7ec093d3c434e3c5e4586b0d0ea646f977364dc308d2",
+    "postgres_container": "eva2-postgres-b-live",
+    "provider": "isolated goal-test HTTP provider"
+  },
+  "currentCandidateReadback": {
+    "image": "eva2-living-core:durable-goals-v50-20260824",
+    "image_sha256": "a09a4a215ae6e7bee346872f6f3d877b8cb4ecacf7f5bb1cbcdc41dbbbb398eb",
+    "core_container_id": "547a9091e164d4173a27ed037f3ed0f7a42ec5050b653c849a97eaa9f37b5959",
+    "worker_container_id": "19133f006e1db0bdfcaf0d67e703c205b00c75195d30b56430283ab81203b618",
+    "worker_status": "running",
+    "worker_restart_count": 0,
+    "goal_status": "completed",
+    "delivery_status": "accepted"
+  },
+  "a01": {
+    "conversation_id": "conversation:live-b:a01-final",
+    "message_id": "live-b-a01-final-071655",
+    "occurred_at": "2026-08-24T07:16:55Z",
+    "stimulus": "Wacht zelfstandig op goal-test. Het exacte resource-ID is release-a01-final. Ga pas verder wanneer veld ready de waarde yes heeft, uiterlijk 2026-08-24T07:26:55Z. Maak dan precies één korte Markdown-checklist met drie controlepunten en bied het resultaat één keer aan sink-b aan. Er is geen alternatief plan nodig. Ik stuur geen vervolgbericht.",
+    "reply": "Ik wacht op release-a01-final tot ready yes is. Daarna maak ik precies één korte Markdown-checklist met drie controlepunten en bied ik die eenmalig aan sink-b aan.",
+    "reply_sha256": "78ae1aedcded4210bbfde1eb3fe3df43f6cb088d0fd4ffd4da856d1ae460b7dc",
+    "goal_id": "durable-goal:1b6907b5bb1514304ce0d99685695fad9c94b017",
+    "thread_id": "goal:201cd098c6cfcc36ad77cd612ef7efb593f073a3ec0d138a5fe849f45efc39e9",
+    "waited_without_follow_up": true,
+    "unchanged_evidence_wrote_no_duplicate_event": true,
+    "provider_revision_before_wake": "1",
+    "provider_revision_at_wake": "2",
+    "effect_posts_for_operation": 1,
+    "delivery_posts_to_sink_b": 1
+  },
+  "a02": {
+    "conversation_id": "conversation:live-b:a01-final",
+    "message_id": "live-b-a02-final-071800",
+    "occurred_at": "2026-08-24T07:18:00Z",
+    "stimulus": "Tussendoor: wat is 11 keer 7?",
+    "reply": "11 keer 7 is 77.",
+    "reply_sha256": "09302215ae1932f68a4e763a1f1eff7299d0c0758161dbee78e2d7949e7a5517",
+    "goal_remained_waiting_after_interruption": true,
+    "new_goal_prompt_required_after_interruption": false
+  },
+  "eventStore": [
+    [1, "GOAL_ADMITTED", "d324e6a83d11ecbb86860edd2dd29c17e161e6be257cdba69a2d6f1a66d060ec"],
+    [2, "GOAL_WAKE_SCHEDULED", "80247d5150df1fa5f452f25c6ac801637440d39ace96ebf12874721eb0225de0"],
+    [3, "GOAL_EVIDENCE_READ", "090ba690c4ca902ed166598d9df70f6b26a6e811f9381a2d489f0eb47e6e5dcb"],
+    [4, "GOAL_EVIDENCE_READ", "5d3a4f107e7c45ff3cf02ed199c0815b3b9772aec2e7ac2f674ead635733013f"],
+    [5, "GOAL_EFFECT_PREPARED", "f73f47223a241c6a8f6d0f433995888f1cc8a4c3d7425b66a56a902720b68a5c"],
+    [6, "GOAL_EFFECT_COMPLETED", "dbb954e1ab00956c2d07a0f043f6d500855b2fe114a0ab3afd8b14d8729d60bd"],
+    [7, "GOAL_DELIVERY_PREPARED", "844d3d1a9a6d365e18d1a9bb6fc4e84d7b7acfcf45c732a2ae844a7f0438f21c"],
+    [8, "GOAL_COMPLETED", "8673669393422611c138529387ba72400cf82c1d144c2029fc777b919ab14a0a"]
+  ],
+  "replay": {
+    "byte_identical_reply": true,
+    "additional_provider_posts": 0,
+    "additional_goal_events": 0
+  },
+  "verification": {
+    "focused_tests_passed": 91,
+    "ruff_passed": true,
+    "core_ready": true,
+    "production_a_service": "active"
+  },
+  "source_files": {
+    "eva2/src/eva/application/durable_goals.py": "aadc98164c54935308752755fb20e6dbed91672669d9ddcd1fd49e606fa69163",
+    "eva2/src/eva/adapters/postgres/durable_goals.py": "25ab84a172aab2e8e60a0cf84cbd915242424821a22b3e7562ce834c06c9c0fc",
+    "eva2/src/eva/adapters/connectors/durable_goal_http.py": "2571987559c9a6d3469b9bafdf32d6570b5b87764b1b3656134b57b1a261b3fb",
+    "eva2/src/eva/adapters/model/conversation.py": "61a3a32271655193536e57e5ee50c889ded97f4eb1b2858dbe0c0ba91865e6f8",
+    "eva2/src/eva/adapters/postgres/conversation_actions.py": "73456c3a56db8df4685410329efc83a66db94fe6047f25f82a1039fcdf01df27"
+  },
+  "nonClaims": [
+    "The goal was created through the real B conversation model and executed by a separate worker against PostgreSQL and an isolated HTTP provider.",
+    "The isolated sink proves provider acceptance and exactly-once offering, not human receipt or reading.",
+    "This used direct B ingress rather than a Telegram-provider-delivered update.",
+    "No production-A service, traffic or physical device was changed."
+  ]
+}

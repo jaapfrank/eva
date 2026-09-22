@@ -78,11 +78,19 @@ class ProcedureReferenceActions:
         return "procedure-action:" + canonical_sha256(identity)
 
     def pending(self, turn, *, step_index=0):
-        self._host(turn)
+        # Every conversation probes every provider for recovery. A turn outside
+        # this mandate has no procedure action here; do not block ordinary chat
+        # or inspect another owner's journal. Execution remains authorized below.
+        slot = self._slot(turn, step_index)
+        try:
+            self.authority.authorize_turn(turn)
+        except ConversationConflict:
+            return None
         timeline = PostgresOperationalTimeline(self.engine, self.authority.scope)
-        events = timeline.events(self._slot(turn, step_index))
+        events = timeline.events(slot)
         if not events:
             return None
+        self._host(turn)
         timeline.load(events[0].thread_id)
         data = events[0].payload["data"]
         # Re-evaluate readback/authorization instead of replaying stale availability.

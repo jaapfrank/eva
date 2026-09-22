@@ -32,3 +32,24 @@ def test_owner_routes_reject_browser_scope_and_return_exact_artifact():
     artifact = client.get(url + "/test/artifact", headers=auth)
     assert artifact.text == "# Gezinsplan"
     assert artifact.headers["content-disposition"] == "attachment; filename*=UTF-8''gezin.md"
+
+
+def test_private_review_recovery_is_authenticated_and_scope_closed():
+    calls = []
+    class Runtime:
+        def dashboard_abandon_private_review(self, thread_id, revision):
+            calls.append((thread_id, revision))
+            return {"contract":"EvaPrivateReviewRecovery/v1", "disposition":"abandoned", "usage":"unknown", "replayed":False}
+    app = FastAPI()
+    install_dashboard_initiatives(app, access=DashboardAccess("t"*32), runtime=Runtime())
+    client = TestClient(app)
+    url = "/internal/v1/dashboard/initiatives/review/abandon"
+    payload = {"thread_id":"review-fixture", "expected_revision":4}
+    auth = {"authorization":"Bearer " + "t"*32}
+    assert client.post(url, json=payload).status_code == 401
+    assert client.post(url, json={**payload,"owner":"other"}, headers=auth).status_code == 422
+    assert client.post(url + "?owner=other", json=payload, headers=auth).status_code == 422
+    assert calls == []
+    reply = client.post(url, json=payload, headers=auth)
+    assert reply.status_code == 200 and reply.json()["usage"] == "unknown"
+    assert calls == [("review-fixture", 4)]

@@ -1,5 +1,10 @@
 # Eva 2 — projecten, wat af is en hoeveel werk nog resteert
 
+> Historisch overzicht, niet de actuele uitvoerplanning. Sinds 7 september
+> 2026 zijn [PROJECTDOEL.md](PROJECTDOEL.md) en [WERKBORD.md](WERKBORD.md)
+> leidend. De onderstaande ramingen en parallelle bouwstromen zijn geen nieuwe
+> toezeggingen; de actuele werklijst heeft precies één primaire uitvoerkaart.
+
 Bijgewerkt: 27 augustus 2026.
 
 ## Het eerlijke overzicht

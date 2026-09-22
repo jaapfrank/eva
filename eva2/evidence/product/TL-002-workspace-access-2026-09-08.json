@@ -1,0 +1,41 @@
+{
+  "taskId": "TL-002",
+  "status": "replacement_prepared_not_activated",
+  "sourceSha256": {
+    "tools/workspace_provider_access.py": "9ab8e4ab0bde79aeca62275b9348b3a0889d53ac2a41903d8185fa151e0f75dc",
+    "tests/operations/test_workspace_provider_access.py": "534d5214c1b96f36f866f2a986dcd74c24c9c587f2bfa279fa19b3e857361ad6"
+  },
+  "privateReceiptSha256": "0dff5052dbb94a81fedee0a920a0f3e96a740afe7f805e94b73c6b5c32e7039d",
+  "physicalPreparation": {
+    "generation": 2,
+    "tokenExpiresAt": "2026-10-08T12:51:23.427612",
+    "tokenScopes": [
+      "tools.read",
+      "tools.execute"
+    ],
+    "catalogSha256": "f5cca41bcc9fdc20a3988682251879f56997491b2030c9470d31177dacaedd17",
+    "independentContentSha256": "0d0be77fee8a63441fbc4afb77e780a42524576fad298ff8c43263dce84df71b",
+    "coreConfigurationChanged": false,
+    "previousTokenRevoked": false,
+    "previousTokenStillValid": true,
+    "tokenListingDenied": true,
+    "independentReadbackPassed": true
+  },
+  "tests": {
+    "passed": 5,
+    "failures": 0,
+    "junitPath": "/tmp/eva2-tl002-access-tests.xml",
+    "junitSha256": "796e5ab79f9ce8ee94b6361d97f6cc273bfe398ca2a6ab1d0a9b3520167ce9f1"
+  },
+  "review": {
+    "reviewedBy": "/root/co006_review",
+    "sourceDecision": "GO for generation 2 preparation only",
+    "physicalDecision": "Bounded physical prepared-GO: receipt and file bindings, permissions, byte-identical catalog, independent reads with both credentials verified. Neither Eva core has a connector mount or network."
+  },
+  "limitations": [
+    "Preparation requires previous token still valid.",
+    "Interruption immediately after gateway issuance can require gateway inspection before local metadata is complete.",
+    "No core activation, cached-token reload, expiry recovery or completed rotation proven.",
+    "Old token must remain until A/B success and no remaining consumers."
+  ]
+}

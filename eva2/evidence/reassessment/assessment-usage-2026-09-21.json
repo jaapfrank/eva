@@ -1,0 +1,38 @@
+{
+  "date": "2026-09-21",
+  "scope": "Development assessment; separate from Eva runtime",
+  "estimateBeforeWork": "One full document pass, two bounded parallel audits, targeted source/live/upstream verification and one bundled independent review; no feature build or model benchmark. Monetary/credit estimate unavailable.",
+  "goalToolSnapshot": {
+    "goal": {
+      "threadId": "01a0c537-54d0-7080-9e4c-74db537877af",
+      "objective": "Voer de door Jaap goedgekeurde volledige herbeoordeling van EVA 2 uit: lees en registreer alle projecteigen Markdown, verifieer projectclaims tegen code/tests/live routes, vergelijk actuele onderhouden alternatieven, lever één gemotiveerde modulaire basiskeuze en een begrensd meetbaar gezinsoplevergoal, werk primaire projectdocumentatie en bestaand werkbord bij, en laat de geïntegreerde uitkomst onafhankelijk controleren. Geen featurebouw of wijziging van de draaiende installatie; maximaal twee uitvoerders naast de coördinator.",
+      "status": "active",
+      "tokensUsed": 857773,
+      "timeUsedSeconds": 1093,
+      "createdAt": 1790015740,
+      "updatedAt": 1790016834
+    },
+    "remainingTokens": null,
+    "completionBudgetReport": null
+  },
+  "interpretation": "Raw goal tool counter at an intermediate checkpoint. The tool does not specify billing/cache/agent attribution; do not interpret this as charged credits, unique corpus tokens, or runtime usage. Closing review/documentation work follows this snapshot.",
+  "evaRuntimeModelCalls": 0,
+  "newCompetitorModelRuns": 0,
+  "runtimeDeployments": 0,
+  "developmentCreditCost": "unknown",
+  "newRuntimeModelCost": "no model experiment initiated; not a claim of no background runtime usage",
+  "closingCheckpoint": {
+    "tokensUsed": 972564,
+    "timeUsedSeconds": 1343,
+    "source": "get_goal tool",
+    "recordedAtEpoch": 1790017084,
+    "qualification": "Measured after independent review, before administrative closure; same raw-counter/billing limitations as intermediate snapshot."
+  },
+  "completedGoalCounter": {
+    "tokensUsed": 976204,
+    "timeUsedSeconds": 1378,
+    "status": "complete",
+    "source": "update_goal final structured result",
+    "qualification": "Raw goal counter, not billable credits or Eva runtime tokens; billing/cache/agent attribution unavailable."
+  }
+}

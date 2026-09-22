@@ -1,5 +1,14 @@
 # Eva 2 — documentatie- en onderhoudscontract
 
+> Actuele ingang, 22 september 2026: [PROJECTDOEL.md](PROJECTDOEL.md) bepaalt
+> de ambitie en [WERKBORD.md](WERKBORD.md) met zijn JSON-bron de uitvoervolgorde.
+> [HERBEOORDELING_2026-09-21.md](HERBEOORDELING_2026-09-21.md) onderbouwt de
+> historische onderzoeksvoorstellen; het is geen actieve ombouwopdracht of tweede werkbord. Oudere documenten
+> met woorden als “actief”, “bindend” of “primair” zijn ondergeschikt aan recente
+> expliciete eigenaarbesluiten. Historische bewijzen houden hun oorspronkelijke
+> scope en datum. De leesregistratie onderscheidt volledige lezing, gegenereerde
+> inventarissen en uitgesloten upstreamdocumentatie.
+
 Bijgewerkt: 25 augustus 2026.
 
 ## Doel
@@ -22,8 +31,8 @@ ook een eigen README, moduletekst of ontwerpbesluit nodig.
 | Vraag | Primaire bron | Betekenis |
 |---|---|---|
 | Wat kan Eva nu, wat is nodig voor de overgang en wat is het einddoel? | `EVA2_MOGELIJKHEDEN_EN_GATEN.md` | Leesbaar overzicht in drie duidelijk gescheiden momenten |
-| Welke hoofdprojecten zijn af, wat resteert en hoe lang duurt dat? | `PROJECTEN_EN_PLANNING.md` | Primair projectbord met gebruikersuitkomst, status, raming, praktijktijd en eindproef |
-| Waar werken we technisch nu aan? | `PROJECT_STATUS.md` | Korte actuele werkstatus en laatste checkpoint |
+| Welke gebruikersuitkomst volgt, met welke raming en eindproef? | `WERKBORD.md` en `HERBEOORDELING_2026-09-21.md` | Actuele volgorde; voorstellen uit de herbeoordeling alleen toepassen bij een aangetoond tekort; `PROJECTEN_EN_PLANNING.md` is historisch |
+| Waar werken we technisch nu aan? | `WERKBORD.md` | Enige actuele uitvoerbron; `PROJECT_STATUS.md` verwijst daarnaar |
 | Welke kleine taak is nu actief en wat komt exact daarna? | `WERKBORD.md` plus `design/product/execution-workboard-v1.json` | Menselijk bord en machineleesbare vaste volgorde met één actieve implementatietaak, eigenaar, bestanden, tests, bewijs en definitie van klaar |
 | Hoe blijft het team van begin tot eind betrokken? | `TEAM_WERKWIJZE.md` | Vaste projectrollen, vroege verificatie, gescheiden werkbomen, integratie en acceptatie |
 | Waarom bouwen we iets zelf in plaats van een dependency te gebruiken? | `OPEN_SOURCE_EN_DEPENDENCYKEUZES.md` | Dependency-first selectie, exacte pins, onderhoud/licentie, proef, update, rollback en expliciete afwijzingsreden |

@@ -1,0 +1,63 @@
+{
+  "contract": "EvaLivingBProactiveEventPrefilterReceipt/v1",
+  "recorded_at": "2026-08-23T19:56:52Z",
+  "environment": {
+    "image_sha256": "64fc8c73c26f00d5080851aebb7da3bf0314e87a24a0618c3170d4d95bda92d5"
+  },
+  "candidate": {
+    "container": "eva2-living-core-b",
+    "image": "eva2-living-core:proactive-prefilter-20260823",
+    "image_sha256": "64fc8c73c26f00d5080851aebb7da3bf0314e87a24a0618c3170d4d95bda92d5",
+    "health": "healthy",
+    "readiness": {
+      "database": "ready",
+      "memory_projection": "ready",
+      "ready": true
+    }
+  },
+  "source_sha256": {
+    "home_assistant_events": "adbe05c6ec13b1984f61d1f4dc4533602a1bf6c380f4cf0ee4678e8c0e4af967",
+    "free_will": "3c5f75f6f810a50bada625cca8e7a83a303af8465b303020dbecebfe8389ec6b",
+    "runtime": "2c90b3ba5e74abc40c87fa8fa6c1378d30f45c53971edb381668026682d015da"
+  },
+  "source_files": {
+    "eva2/src/eva/adapters/connectors/home_assistant_events.py": "adbe05c6ec13b1984f61d1f4dc4533602a1bf6c380f4cf0ee4678e8c0e4af967",
+    "eva2/src/eva/application/free_will.py": "3c5f75f6f810a50bada625cca8e7a83a303af8465b303020dbecebfe8389ec6b",
+    "eva2/src/eva/bootstrap/runtime.py": "2c90b3ba5e74abc40c87fa8fa6c1378d30f45c53971edb381668026682d015da"
+  },
+  "real_home_assistant_gate": {
+    "transport": "Home Assistant REST state write -> real Home Assistant websocket state_changed -> Eva PostgreSQL timeline",
+    "emitted_state_writes": 5,
+    "temporary_entities": [
+      "light.eva2_live_gate",
+      "binary_sensor.eva2_live_door_gate"
+    ],
+    "temporary_entities_deleted": 2,
+    "physical_devices_changed": 0,
+    "retained_transitions": 2,
+    "creation_events_retained": 0,
+    "same_state_events_retained": 0,
+    "routine_light_decision": {
+      "disposition": "silence",
+      "provider": "eva:bounded-prefilter",
+      "model_calls": 0,
+      "hindsight_calls": 0
+    },
+    "door_decision": {
+      "device_class": "door",
+      "disposition": "silence",
+      "provider": "chatgpt-codex:gpt-5.4-mini",
+      "used_bounded_context_path": true
+    }
+  },
+  "focused_gate": {
+    "passed": 11,
+    "failed": 0,
+    "ruff": "passed",
+    "diff_check": "passed"
+  },
+  "production_a": {
+    "traffic_changed": false
+  },
+  "status": "passed"
+}

@@ -1,5 +1,14 @@
 # Eva 2 — vaste teamwerkwijze
 
+> Actuele werkwijze, eigenaaropdracht 21 september 2026: één coördinator en
+> maximaal twee gelijktijdige uitvoerders, met gescheiden opdrachten en bestanden.
+> Onafhankelijke review gebeurt gebundeld binnen dezelfde bezetting. Resultaat,
+> eindvoorwaarde en verbruiksraming vooraf; werkelijk meetbaar verbruik achteraf.
+> Geen herhaalde proef zonder nieuwe oorzaak, hypothese of ontbrekend bewijs.
+> De vaste vierkoppige bezetting, oude agentnamen en werkmappen hieronder zijn
+> historische werkafspraken, geen actuele opdracht of autorisatie.
+> Zie [de herbeoordeling](HERBEOORDELING_2026-09-21.md) en [het werkbord](WERKBORD.md).
+
 Bijgewerkt: 1 september 2026.
 
 ## Waarom deze werkwijze verandert

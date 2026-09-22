@@ -948,6 +948,10 @@ class PostgresHindsightMemoryRuntime:
         return self._owner_initiatives().artifact(intent_id,
             now=datetime.now(tz=UTC).replace(microsecond=0))
 
+    def dashboard_abandon_private_review(self, thread_id, expected_revision):
+        return self._owner_initiatives().abandon_uncertain_review(
+            thread_id, expected_revision, now=datetime.now(tz=UTC).replace(microsecond=0))
+
     def dashboard_stop_initiative(self, intent_id: str):
         return self._owner_initiatives().stop(intent_id,
             now=datetime.now(tz=UTC).replace(microsecond=0))

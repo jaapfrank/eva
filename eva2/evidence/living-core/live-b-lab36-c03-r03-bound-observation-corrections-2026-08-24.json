@@ -1,0 +1,144 @@
+{
+  "contract": "EvaLivingCoreLiveEvidence/v1",
+  "scenario": "LAB-36-C03-R03-bound-observation-corrections",
+  "status": "passed_live_b",
+  "observedAt": "2026-08-24T05:04:00Z",
+  "productionAChanged": false,
+  "environment": {
+    "core_container": "eva2-living-core-b-candidate-v37",
+    "core_container_id": "efde16c8d8d9b932e7f2f98df90ee9b39e977653bdab1926aaaaf32558aee601",
+    "image": "eva2-living-core:exact-binding-score-v37-20260824",
+    "image_sha256": "41aa70e0a0f323c56e494a020f5c1236bc1c34982db09b0ad7291ca01bd73527",
+    "postgres_container": "eva2-postgres-b-live",
+    "postgres_revision": "4e_0001_operational_timeline",
+    "hindsight_container": "eva2-hindsight-multilingual-trusted-v2",
+    "model_provider": "chatgpt-codex:gpt-5.4-mini"
+  },
+  "boundary": {
+    "identity_source": "A user correction is admitted only through the closed record_observation_identity_correction action on an image-bound turn.",
+    "binding_fields": [
+      "observation_id",
+      "media_sha256",
+      "subject_region_sha256",
+      "media_type",
+      "source_ref"
+    ],
+    "semantic_partition": "Each binding digest has a separate Hindsight bank; global and other observation banks cannot supply its identity.",
+    "score_policy": "The general semantic floor remains 0.05. Only results returned by the exact isolated observation bank use the calibrated 0.02 proper-name floor."
+  },
+  "recordedCorrections": [
+    {
+      "source_message_id": "lab36-c03-photo-v33-1",
+      "input": "Nee, dat is Mark.",
+      "reply": "Begrepen, bij deze foto is het Mark.",
+      "reply_sha256": "3adfa3dc31327882c303a9fc37f9134e5007d20368ae8b5dcfcc28a89fa36985",
+      "corrected_name": "Mark",
+      "binding_sha256": "97b2bc5591bf6eb8eb5cfe64e4f313b6b1d8888244f17f550c4ebed7a74b6829",
+      "hindsight_bank_id": "eva-live-15ff50f5fe591be6a36de4099b53834b",
+      "memory_id": "hindsight:73533b5a-49cb-4ad1-b613-e40cb1b079f7",
+      "event_id": "b1b4ca1e-50f5-4107-86f6-bd6fbeb85e26",
+      "event_payload_sha256": "c981c9367095f877deb8b9acee36baeef33b42a25412e50d7dbcd9f610366194"
+    },
+    {
+      "source_message_id": "lab36-r03-photo-v33-1",
+      "input": "Dat is niet oma maar buurvrouw Marieke.",
+      "reply": "Helder — dit is buurvrouw Marieke, niet oma.",
+      "reply_sha256": "164e5e9eca79183a6de0b1a30489f2d5047ba45e44de896608a03007e707114b",
+      "corrected_name": "Marieke",
+      "binding_sha256": "6f161bbf79388eb001d21f6898c453ef3514f2d9f8c59fced968535a1f8f6936",
+      "hindsight_bank_id": "eva-live-3c5082e2bc908e1d1bfddf4e539b7d2c",
+      "memory_id": "hindsight:e2ccfe59-5ff8-4d50-b1cf-b3a57becef65",
+      "event_id": "85dc1e9c-53e6-4b8e-9579-135928446981",
+      "event_payload_sha256": "5a7aa3bcedd7e41b3822c525de2f213117546c0bcae465ed43a80cd47edb1ec4"
+    }
+  ],
+  "hiddenConversationTranscript": [
+    {
+      "message_id": "lab36-c03-hidden-v37-noproject-1",
+      "input": "Wie staat hier aan tafel?",
+      "reply": "Dat is Mark.",
+      "reply_sha256": "e3f56733a8c9644356de741bb788e5182ed065f83b02dd712a29e5301515135e",
+      "evidence_memory_ids": ["hindsight:73533b5a-49cb-4ad1-b613-e40cb1b079f7"]
+    },
+    {
+      "message_id": "lab36-r03-hidden-v37-noproject-1",
+      "input": "Wie staat hier bij het hek?",
+      "reply": "Dat is Marieke.",
+      "reply_sha256": "204e35346361dea61ccdaecab27bd160c4ea2dfbc397283225415d824643be35",
+      "evidence_memory_ids": ["hindsight:e2ccfe59-5ff8-4d50-b1cf-b3a57becef65"]
+    },
+    {
+      "message_id": "lab36-c03-recheck-v37-noproject-1",
+      "input": "En wie is dit ook alweer?",
+      "reply": "Dat is Mark, voor precies deze onderwerpregio.",
+      "reply_sha256": "6bcb6482aa29aa5d4f0907f171797649a7f1e0ee6e8e440380e275e2a398abb3",
+      "evidence_memory_ids": ["hindsight:73533b5a-49cb-4ad1-b613-e40cb1b079f7"]
+    },
+    {
+      "message_id": "lab36-r03-foreign-binding-v37-1",
+      "input": "Wie is deze persoon?",
+      "reply": "Ik kan niet betrouwbaar bepalen wie dit is op basis van deze foto alleen. Als jij de naam weet en die expliciet wilt corrigeren, kan ik die vastleggen.",
+      "reply_sha256": "6d996fa11a48115d6cd2178ffc145d109a727159faa8c6c6e243bd67d152ceef",
+      "evidence_memory_ids": [],
+      "foreign_identity_present": false
+    }
+  ],
+  "voiceBoundary": {
+    "message_id": "lab36-c03-voice-v33-1",
+    "input": "Nee, via de Voice PE.",
+    "reply": "Ah, via de Voice PE dus. Dan had ik dat verkeerd begrepen: niet “Mark op de foto”, maar een andere route om het te checken. Ik kan hier niet betrouwbaar vaststellen wie het is op basis van die foto alleen.",
+    "reply_sha256": "0dbbef23b368cf90ad1671a3e084ce528bc1b70c36765503a565d12ddf325edd",
+    "observation_binding_present": false,
+    "correction_events": 0
+  },
+  "durableLedger": {
+    "conversation:lab36-c03-hidden-v37-noproject-1": [
+      [1, "INGRESS_COMMITTED", "87fd1617e936bbca40f6ff168da1c4a235b556295fe42e75a2d4649e776f7e2d"],
+      [2, "REPLY_COMMITTED", "b79292907c15e866820d0c8b8468bda587917e69008b21b37cc59bc4330d31df"],
+      [3, "MEMORY_RETAIN_QUEUED", "94b5e65ea319be232ad29399a7e7201b4167cc7fcc629fac19e45365d82768e7"]
+    ],
+    "conversation:lab36-r03-hidden-v37-noproject-1": [
+      [1, "INGRESS_COMMITTED", "6924ff8105c73ada95be53db351fbc3acb0c09fcc16aa91e5c2c692ba92ac15c"],
+      [2, "REPLY_COMMITTED", "e9fb2ee2563e1d8a6f151da5842323b510f66996113d6b1439c36da56c40beec"],
+      [3, "MEMORY_RETAIN_QUEUED", "8aff99b43d4d528f2aad66e146253c7d16a37a11149a0da9be884e2dcd51591b"]
+    ],
+    "conversation:lab36-c03-recheck-v37-noproject-1": [
+      [1, "INGRESS_COMMITTED", "20ee9d65832a1fcc56d1f611f1d351975d8642a3a45ccb7f9c1bfc18f55e15d0"],
+      [2, "REPLY_COMMITTED", "39516c1cb8de88242e886d959aa38d78a522c6fb8c7335ed3c577ec0dad49c12"],
+      [3, "MEMORY_RETAIN_QUEUED", "4811fc915be3f9b8ab280417155dd85c08a64e3a46c4ef3303db6269c001b007"]
+    ],
+    "conversation:lab36-r03-foreign-binding-v37-1": [
+      [1, "INGRESS_COMMITTED", "8558f0ff7e803cccecd4b5f9d47ba5708b5c6a7df4cd5b7bbce04b26cddb3f1d"],
+      [2, "REPLY_COMMITTED", "16f8626cc941eb030deb5b20f362f6c3ee8b50e8af910b8b0bcfd3ead642dc4d"],
+      [3, "MEMORY_RETAIN_QUEUED", "4f295eb36b75248ececd0127504ae359d9b279a0b163666b73cbd4734bb94fe9"]
+    ]
+  },
+  "verification": {
+    "focused_tests_passed": 84,
+    "ruff": "passed",
+    "memory_outbox_completed_at_capture": 78,
+    "memory_outbox_open_at_capture": 0,
+    "memory_outbox_needs_help_at_capture": 0,
+    "core_health_sha256": "bc24b0b5a305d5afc198c725890c8fb91053be2dbd8672779de73cac19a008fa",
+    "core_ready_sha256": "0e12aa0cec70713211dfe1829911bd2ad4538e8f37dbeb1830ee79650460dcd2",
+    "production_a_service": "active",
+    "production_a_traffic_changed": false
+  },
+  "source_files": {
+    "eva2/src/eva/application/conversation.py": "35e2d97850823e34898f8b075979f9ad5b3af0b02e32a1ecc412ecec6466990a",
+    "eva2/src/eva/adapters/api/app.py": "3768dc39bf94ccdc9066b5f2e088b0863c69093c387c4b94738b749cb73fa429",
+    "eva2/src/eva/adapters/model/conversation.py": "0f2289236388a8a3e5b20488d3c1250ee3bfe12b5e8e02e6f2203adf13b14311",
+    "eva2/src/eva/adapters/postgres/conversation_actions.py": "900be74d680d91cbacee8785440b3aa6009dd4c2aa8ccf5c0d08f64cc80f9fa3",
+    "eva2/src/eva/bootstrap/runtime.py": "c99d655d2f66a4a0fc7d0325fe9ab1fae21344dcd1bf320e93674a4632a2d36d",
+    "eva2/src/eva/adapters/projection/hindsight.py": "5099e8726c1630606f9475d44e95bf799a2e28c24619344ac409ae1c9c59d0ff"
+  },
+  "excludedIterations": {
+    "accepted_as_evidence": false,
+    "reason": "v30-v36 exposed, respectively, cross-photo consolidation, asynchronous extraction acknowledgement, weak generic-name retrieval and an over-strict general score floor. Only the clean v37 hidden reads are accepted."
+  },
+  "nonClaims": [
+    "No face-recognition model inferred either name; both identities originated in explicit user corrections tied to exact media and subject-region digests.",
+    "This is a real B-model, PostgreSQL and self-hosted-Hindsight test through the internal channel-neutral turn contract, not a claim of public Telegram delivery.",
+    "No production-A code, traffic, service, memory, Telegram chat or Home Assistant state was changed."
+  ]
+}

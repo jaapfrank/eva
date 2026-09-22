@@ -40,10 +40,16 @@ function fixture(mode,phase){
  let Panel;const context=vm.createContext({document,window,navigator:{onLine:true,mediaDevices:{getUserMedia:async()=>{await pause('microphone');const track={stopped:false,stop(){this.stopped=true;}};tracks.push(track);return {getTracks:()=>[track],getAudioTracks:()=>[track]};}}},LivekitClient:{Room,Track:{Source:{Microphone:'microphone'}},RoomEvent:new Proxy({},{get:(_,k)=>k})},TextDecoder,URL,location:{origin:'https://ha',protocol:'https:'},crypto:{randomUUID:()=>String(Math.random())},fetch:async(route,options)=>{const r=await request(route.slice(1),options.headers.Authorization);return {ok:r.status===200,json:async()=>r.body};},HTMLElement:class{attachShadow(){return dom;}},customElements:{define(name,value){Panel=value;}}});
  let panel;
  if(mode==='panel'){vm.runInContext(panelSource,context);panel=new Panel();panel.hass={callWS:async q=>q.type==='cloud/webrtc/ice_servers'?(await pause('ice'),[]):request(q.path,q.owner_token,q.capability)};panel.connectedCallback();}
- else vm.runInContext(desktop,context);
+ else vm.runInContext(mode==='local'?desktop.replace('const localAccess=false;','const localAccess=true;'):desktop,context);
  const $=dom.getElementById;
  return {context,document,window,rooms,closed,requests,tracks,gate,$,panel,get sdkLoads(){return sdkLoads;},failClose(v){failedClose=v;},async login(){ $('owner-key').value='owner-secret-123456';await $('login').onsubmit({preventDefault(){}});},start(){return $('start').onclick();},stop(kind){if(kind==='hidden'){document.hidden=true;document.emit('visibilitychange');}else if(kind==='offline'){context.navigator.onLine=false;window.emit('offline');}else if(kind==='dispose'){if(panel)panel.disconnectedCallback();else window.emit('pagehide');}else $('end').onclick();},resume(){document.hidden=false;context.navigator.onLine=true;if(panel)panel.connectedCallback();window.emit('online');document.emit('visibilitychange');}};
 }
+test('local: start works without login or microphone before explicit start',async()=>{
+ const f=fixture('local');assert.equal(f.$('login').hidden,true);assert.equal(f.$('start').disabled,false);assert.equal(f.tracks.length,0);
+ await f.start();assert.equal(f.rooms.length,1);assert.equal(f.tracks.length,1);
+ f.stop('hidden');await flush();assert.ok(f.tracks[0].stopped);f.resume();assert.equal(f.rooms.length,1);
+ await f.start();assert.equal(f.rooms.length,2);f.stop('end');await flush();
+});
 for(const mode of ['desktop','panel']){
  for(const phase of ['create',...(mode==='panel'?['ice']:[]),'connect','audio','microphone','publish'])for(const reason of ['hidden','offline','dispose','end']){
   test(`${mode}: ${reason} during ${phase} cannot reactivate capture`,async()=>{

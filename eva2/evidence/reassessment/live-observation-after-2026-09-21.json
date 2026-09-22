@@ -1,0 +1,43 @@
+{
+  "date": "2026-09-21",
+  "revision": "76c31103fd87bfeb179616db66f841ab2728d07f915ea59e2304a95b8f2c08f5",
+  "active_legacy_card": "AU-008",
+  "first_planned_milestone": "GZ-001",
+  "nextOutcomes": [
+    {
+      "title": "Basiskeuze en eerstvolgend goal: GZ-001",
+      "detail": "**Herbeoordeling: gerichte vereenvoudiging aanbevolen; GZ-001 is het eerstvolgende bouwgoal.** De onderbouwing staat in HERBEOORDELING_2026-09-21.md. GZ-001 levert één gezinsketen op: gesprek, gecorrigeerd geheugen, stem tijdens werk en een gecontroleerd resultaat dat na onderbreking en de volgende dag beschikbaar blijft. Geen featurebouw of installatie in deze onderzoeksopdracht. AU-008 blijft hieronder als bestaande technische reviewkaart met open menselijk oordeel behouden; dat is geen opdracht om het initiatiefherstel opnieuw te bouwen."
+    },
+    {
+      "title": "Begrensde uitvoering, meetbaar eindpunt",
+      "detail": "Start vervolgens GZ-001A: één reproduceerbare nulmeting en exact begrensde gatenlijst (2–4 actieve agenturen). GZ-001 totaal voorlopig 14–28 actieve agenturen; bij structurele overschrijding één onderbouwd herbesluit. Bestaande geaccepteerde proeven blijven gesloten; GS-01/IN-02 blijven menselijke oordelen, geen blokkade voor onafhankelijk technisch werk."
+    }
+  ],
+  "competitors": [
+    {
+      "name": "Hermes",
+      "version": "v2026.9.21"
+    },
+    {
+      "name": "OpenClaw",
+      "version": "v2026.9.5"
+    },
+    {
+      "name": "Agent Zero",
+      "version": "v2.12"
+    }
+  ],
+  "verification": "Read-only HTTP project-state projection; no runtime deployment or product behavior proof.",
+  "practice_statuses_preserved_count": 17,
+  "validation": {
+    "workboard": "valid",
+    "executionTaskCount": 32,
+    "milestoneCount": 23,
+    "report_local_links_checked": 50,
+    "missing_report_local_links": 0,
+    "full_release_suite_run": false,
+    "reason": "Documentation and planning data only; existing schema/projection/link checks sufficient. Red architecture/catalog checks are retained findings, not repaired here."
+  },
+  "reviewStatus": "GO for assessment; no product build or acceptance",
+  "administrativeFinalization": "Review status recorded after independent approval; prior review hash binds the substantive content."
+}

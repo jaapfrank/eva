@@ -1,0 +1,90 @@
+{
+  "date": "2026-09-22",
+  "ownerReport": "Lokale test lijkt te werken; circa zes seconden wachttijd zowel na Hallo als vóór de eerste reactie op onderzoek. Ervaring niet vlot of natuurlijk.",
+  "screenshotObservation": "Transcript contains homo sristen instead of the intended Home Assistant phrase; core response interprets Home Assistant Cloud. No raw audio received; microphone recognition cause unverified.",
+  "measurements": {
+    "tts_greeting": {
+      "first_chunk_ms": 274,
+      "total_ms": 312,
+      "bytes": 21381,
+      "mime": "audio/mpeg"
+    },
+    "tts_stt_input": {
+      "first_chunk_ms": 145,
+      "total_ms": 169,
+      "bytes": 9597,
+      "mime": "audio/mpeg"
+    },
+    "core": {
+      "elapsed_ms": 4524,
+      "events": [
+        {
+          "type": "delta",
+          "at_ms": 3944
+        },
+        {
+          "type": "delta",
+          "at_ms": 3947
+        },
+        {
+          "type": "delta",
+          "at_ms": 4059
+        },
+        {
+          "type": "delta",
+          "at_ms": 4064
+        },
+        {
+          "type": "delta",
+          "at_ms": 4069
+        },
+        {
+          "type": "delta",
+          "at_ms": 4071
+        },
+        {
+          "type": "delta",
+          "at_ms": 4094
+        },
+        {
+          "type": "delta",
+          "at_ms": 4124
+        },
+        {
+          "type": "final",
+          "at_ms": 4523
+        }
+      ],
+      "final_metadata": {
+        "reply_chars": 25,
+        "reply_keys": [
+          "contract",
+          "conversation_id",
+          "evidence_memory_ids",
+          "generated_at",
+          "message_id",
+          "provider",
+          "text",
+          "text_sha256"
+        ]
+      }
+    }
+  },
+  "sttSynthetic": {
+    "recognized": "Hallo.",
+    "audio_ms": 1584,
+    "stt_total_ms": 1646,
+    "after_audio_end_ms": 23,
+    "scope": "Synthetic clean audio via existing HA provider; excludes local VAD, microphone/room acoustics and browser relay."
+  },
+  "limits": [
+    "One new synthetic greeting via existing voice core route, not a p95 or full microphone-to-speaker measure.",
+    "Core elapsed includes preparation and model; no reliable stage split obtained. Read-only scoped journal query returned no rows; no timing inference from it.",
+    "TTS 274ms first chunk is provider output, not audible browser playback. STT clean synthesized greeting excludes VAD and room acoustics.",
+    "The separately measured stages are not a synchronized end-to-end trace."
+  ],
+  "conclusion": "Current core greeting elapsed4524ms dominates these measured components; voice synthesis alone does not explain reported6s. Owner requests fast shared conversation model and background work model selection. No speed optimization deployed in this turn.",
+  "runtimeModelRequestsInitiated": 1,
+  "newPaidProviderEnabled": false,
+  "ownerAcceptedSpeed": false
+}

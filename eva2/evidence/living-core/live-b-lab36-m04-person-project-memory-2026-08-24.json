@@ -1,0 +1,124 @@
+{
+  "contract": "EvaLivingCoreLiveEvidence/v1",
+  "scenario": "LAB-36-M04-person-and-project-memory-isolation",
+  "status": "passed_live_b",
+  "observedAt": "2026-08-24T03:47:08Z",
+  "productionAChanged": false,
+  "environment": {
+    "core_container": "eva2-living-core-b",
+    "core_container_id": "38af361a8c113ef13a0655d6eb83aac15c769c033bb5e48ce28c3e9c5de73627",
+    "image": "eva2-living-core:project-memory-v24-20260824",
+    "image_sha256": "118f9aa21296de8ce8236fd1446203fbcec0ca9b2b59150438058619d2d50a01",
+    "hindsight_container": "eva2-hindsight-multilingual-trusted-v2",
+    "postgres_container": "eva2-postgres-b-live",
+    "postgres_revision": "4e_0001_operational_timeline"
+  },
+  "scopeDesign": {
+    "globalPersonMemory": "the existing installation bank plus principal tags",
+    "projectMemory": "a deterministic installation-and-project bank plus principal tags",
+    "projectRecall": "global person bank plus exactly one requested project bank",
+    "globalRecall": "global person bank only",
+    "projectMarker": "_eva_memory_project_id is host-validated even when provider source facts are truncated",
+    "legacyGlobalBankPreserved": true
+  },
+  "twoPersonsByTwoProjects": [
+    {
+      "principalId": "lab36-m04-person-a-v23",
+      "projectId": "lab36-m04-project-red-v23",
+      "expectedCanary": "koperwiek-731",
+      "recallReply": "Binnen project rood is de interne codenaam koperwiek-731.",
+      "recallReplySha256": "bad1763d8c0290db55f74013353705a1fddc6a7ffb4629dee9f9517b29ce616c",
+      "evidenceMemoryIds": ["hindsight:8799fdab-b42d-4eea-9182-e9f4625c4162"],
+      "projectBank": "eva-live-f2d0c4776173326889a51f4a4bfc7e61"
+    },
+    {
+      "principalId": "lab36-m04-person-a-v23",
+      "projectId": "lab36-m04-project-blue-v23",
+      "expectedCanary": "zeedistel-482",
+      "recallReply": "De interne naam is zeedistel-482.",
+      "recallReplySha256": "772a8e3a056283c2bfabc4aa870324d2d60fdae37dc86dae27c6988d41e9d85d",
+      "evidenceMemoryIds": ["hindsight:e277d1c1-7d8c-4cc2-9b9f-6d4032edf345"],
+      "projectBank": "eva-live-e070f6356b3f6697ab8c598d9aa7659c"
+    },
+    {
+      "principalId": "lab36-m04-person-b-v23",
+      "projectId": "lab36-m04-project-red-v23",
+      "expectedCanary": "maanveer-906",
+      "recallReply": "Intern noemden we dit project maanveer-906.",
+      "recallReplySha256": "f2278ee335793cbdbc3518767ac11e2886a0bd2bcc82466ef9704fcf0d2a53b8",
+      "evidenceMemoryIds": ["hindsight:5bff56d9-6d5e-42cb-a2bb-b47f64db223b"],
+      "projectBank": "eva-live-f2d0c4776173326889a51f4a4bfc7e61"
+    },
+    {
+      "principalId": "lab36-m04-person-b-v23",
+      "projectId": "lab36-m04-project-blue-v23",
+      "expectedCanary": "winterglas-257",
+      "recallReply": "Binnen project blauw is de interne codenaam winterglas-257.",
+      "recallReplySha256": "3d136a4ac43d62f4ecbc607226c5f1efc519b4dc1a405bc45cac0b9b0a12f37e",
+      "evidenceMemoryIds": ["hindsight:c4ab4283-12ac-4f66-aba2-a74883c43ac3"],
+      "projectBank": "eva-live-e070f6356b3f6697ab8c598d9aa7659c"
+    }
+  ],
+  "directReadback": {
+    "scopesChecked": 4,
+    "expectedFactsPerScope": 1,
+    "foreignCanariesPerScope": 0,
+    "differentScopeHashes": true,
+    "sameProjectDifferentPersonIsolated": true,
+    "samePersonDifferentProjectIsolated": true
+  },
+  "negativeControls": {
+    "personAGlobalRecallEvidenceIds": [],
+    "personAUnknownProject": "lab36-m04-project-green-v24",
+    "unknownProjectEvidenceIds": [],
+    "unknownProjectReply": "Ik kan die interne codenaam niet betrouwbaar terugvinden in deze context.",
+    "unknownProjectReplySha256": "13b17a8db40ef09bab70e901f89fd8c941cd5c1b59e28b5d50ec8933082aa544"
+  },
+  "restartAndReplay": {
+    "hardContainerReplacement": true,
+    "knownProjectReplyAfterRestart": "De besloten werknaam hier was koperwiek-731. Binnen project rood was dat de interne codenaam.",
+    "knownProjectReplyAfterRestartSha256": "6082ab6e2d688262541889032b63be33ab2e87ed96ab7c01ec9530e16d15af69",
+    "knownProjectEvidenceMemoryIds": ["hindsight:8799fdab-b42d-4eea-9182-e9f4625c4162"],
+    "exactReplayReplyByteIdentical": true,
+    "exactReplaySha256": "3d136a4ac43d62f4ecbc607226c5f1efc519b4dc1a405bc45cac0b9b0a12f37e",
+    "duplicateConversationEvents": 0,
+    "duplicateMemoryFactsObserved": 0
+  },
+  "legacyGlobalMemoryRegression": {
+    "principalId": "lab36-m02-person-v15",
+    "conversationId": "conversation:lab36:m02-legacy-after-project-partition-v24-corrected",
+    "messageId": "lab36-m02-legacy-v24-2",
+    "input": "Welke muziek past volgens mij bij geconcentreerd werken in mijn werkkamer?",
+    "reply": "Volgens mij past rustige ambient het best bij geconcentreerd werken in je werkkamer. Dat geeft een rustige achtergrond zonder te veel aandacht te vragen.\n\nJazz zou ik daar juist overslaan; dat is voor jou minder fijn als je echt in de focus wilt blijven.",
+    "replySha256": "d02b44983edee49a4d54fe88c64e04f1d1d1ebd30aa4a63d7a9bdb938713eb89",
+    "evidenceMemoryIds": ["hindsight:7814d67f-51b0-4876-aafa-11d6784137db"],
+    "sameLegacyMemoryIdAsM02": true
+  },
+  "tests": {
+    "focusedProjectMemory": "40 passed",
+    "applicationProjectionApiBootstrap": "45 passed",
+    "disposablePostgresTimeline": "13 passed",
+    "ruff": "passed"
+  },
+  "verification": {
+    "coreReady": true,
+    "memoryOutboxCompletedAtCapture": 39,
+    "memoryOutboxOpenAtCapture": 0,
+    "productionAService": "active",
+    "productionATrafficChanged": false
+  },
+  "source_files": {
+    "eva2/src/eva/application/conversation.py": "194c956d39a815126cb8a68f5ec31dfcf79160f0b8bd633778b8724453fea4ac",
+    "eva2/src/eva/application/memory.py": "116967c0769c113fa254f7e7143e531cb2e4f3b6393d6736367dd018b2ef42c1",
+    "eva2/src/eva/adapters/projection/hindsight.py": "62a0a727d57c34b70c813b344f656f2fa40a32a8e6d6c8c0c9cc284bd0fb3d17",
+    "eva2/src/eva/adapters/postgres/conversation_journal.py": "3aa104d0369889a5e31e3a4eff3a4df5e22dae6ff3f96a6f8f037180a21f0a91",
+    "eva2/src/eva/adapters/postgres/memory_outbox.py": "f49053147aa2b2b85031f841cbb814e9a7154d4fd7318893e70324ec3b5c9e32",
+    "eva2/src/eva/adapters/api/app.py": "00ff39877d91d2be47f49fa51687234db1c2fd0c68408c218f044788edac2c1a",
+    "eva2/src/eva/bootstrap/runtime.py": "9af7dfa120f7d90af0cfac9da7af9aa9491b9ab498b63dd1da7bf32751160a01"
+  },
+  "nonClaims": [
+    "These are real model, PostgreSQL and Hindsight calls through isolated B HTTP ingress, not a newly delivered Telegram provider update.",
+    "The first legacy regression probe supplied a future occurred_at value and is excluded; the recorded second probe used the correct capture time and a new message identity.",
+    "No production-A code, traffic, service, memory or Home Assistant state was changed."
+  ]
+}

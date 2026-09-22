@@ -1,0 +1,144 @@
+{
+  "contract": "EvaLab36CoreLiveEvidenceIndex/v1",
+  "benchmark_sha256": "180db1e420ecb4582c0885b606acb5f963c4cc49893d3f0a7266072d709667d0",
+  "cases": [
+    {
+      "case_id": "C01",
+      "status": "passed_live_b",
+      "semantic_gates": "passed",
+      "critical_failures": [],
+      "evidence": [
+        {"path": "eva2/evidence/living-core/lab36-eva2-runner-live-2026-08-23.json", "sha256": "7f01874f8d019a0eade2930457723cee7a930d525bdda37b7b9cc4ba15229af4"},
+        {"path": "eva2/evidence/living-core/live-b-lab36-hidden-humanity-v39-2026-08-24.json", "sha256": "2461bd98ea832229436e1d4d23df325c55924211b3b39b463067184a2893f0a0"}
+      ]
+    },
+    {
+      "case_id": "C02",
+      "status": "passed_live_b",
+      "semantic_gates": "passed",
+      "critical_failures": [],
+      "evidence": [
+        {"path": "eva2/evidence/living-core/live-b-lab36-c02-trusted-identity-isolation-2026-08-24.json", "sha256": "809984c94d9a1105e1f9556842894ecb8045e5a5d852d4109d7c200999611766"}
+      ]
+    },
+    {
+      "case_id": "C03",
+      "status": "passed_live_b",
+      "semantic_gates": "passed",
+      "critical_failures": [],
+      "evidence": [
+        {"path": "eva2/evidence/living-core/live-b-lab36-c03-r03-bound-observation-corrections-2026-08-24.json", "sha256": "e4026dbc5f4af1db059f488e52d005d0ce09499edb1e94fc950409877fd333d9"}
+      ]
+    },
+    {
+      "case_id": "C04",
+      "status": "passed_live_b",
+      "semantic_gates": "passed",
+      "critical_failures": [],
+      "evidence": [
+        {"path": "eva2/evidence/living-core/lab36-c04-blind-2026-08-24.json", "sha256": "8551a92ba175435a780ca3c87c471486dfa0ace0683a1b6a75f54d1df989150a"},
+        {"path": "eva2/evidence/living-core/live-b-lab36-hidden-humanity-v39-2026-08-24.json", "sha256": "2461bd98ea832229436e1d4d23df325c55924211b3b39b463067184a2893f0a0"}
+      ]
+    },
+    {
+      "case_id": "T02",
+      "status": "passed_live_b",
+      "semantic_gates": "passed",
+      "critical_failures": [],
+      "evidence": [
+        {"path": "eva2/evidence/living-core/lab36-eva2-runner-live-2026-08-23.json", "sha256": "7f01874f8d019a0eade2930457723cee7a930d525bdda37b7b9cc4ba15229af4"},
+        {"path": "eva2/evidence/living-core/live-b-lab36-hidden-humanity-v39-2026-08-24.json", "sha256": "2461bd98ea832229436e1d4d23df325c55924211b3b39b463067184a2893f0a0"}
+      ]
+    },
+    {
+      "case_id": "T04",
+      "status": "passed_live_b",
+      "semantic_gates": "passed",
+      "critical_failures": [],
+      "evidence": [
+        {"path": "eva2/evidence/living-core/live-b-lab36-t04-current-research-2026-08-24.json", "sha256": "c0184e6b85a875f9c6b1eb9ff3a22139fb492a5a59f78335cd75aafc6f7baaf9"}
+      ]
+    },
+    {
+      "case_id": "P02",
+      "status": "passed_live_b",
+      "semantic_gates": "passed",
+      "critical_failures": [],
+      "evidence": [
+        {"path": "eva2/evidence/living-core/live-b-lab36-p02-file-batch-partial-success-2026-08-24.json", "sha256": "e76522968ff6bd26d81e95bde62f2ef1df59dc90abfa65e12eb07d0ea5ac042d"}
+      ]
+    },
+    {
+      "case_id": "R02",
+      "status": "passed_live_b",
+      "semantic_gates": "passed",
+      "critical_failures": [],
+      "evidence": [
+        {"path": "eva2/evidence/living-core/live-b-lab36-r02-mid-task-scope-change-2026-08-24.json", "sha256": "977cb90e417c0e6292bb18278adf55deeb5270014c033375545719e41731ffdb"}
+      ]
+    },
+    {
+      "case_id": "R03",
+      "status": "passed_live_b",
+      "semantic_gates": "passed",
+      "critical_failures": [],
+      "evidence": [
+        {"path": "eva2/evidence/living-core/live-b-lab36-c03-r03-bound-observation-corrections-2026-08-24.json", "sha256": "e4026dbc5f4af1db059f488e52d005d0ce09499edb1e94fc950409877fd333d9"}
+      ]
+    },
+    {
+      "case_id": "M02",
+      "status": "passed_live_b",
+      "semantic_gates": "passed",
+      "critical_failures": [],
+      "evidence": [
+        {"path": "eva2/evidence/living-core/live-b-lab36-m02-memory-isolation-2026-08-24.json", "sha256": "129fce179cef8f770de3dba5effde4e4b2136315cd81551b5c637a4617d396ae"}
+      ]
+    },
+    {
+      "case_id": "M03",
+      "status": "passed_live_b",
+      "semantic_gates": "passed",
+      "critical_failures": [],
+      "evidence": [
+        {"path": "eva2/evidence/living-core/live-b-lab36-m03-direct-task-continuation-2026-08-24.json", "sha256": "95833de3cf0c2fdc5cda17663ede4c1ca85c4702beb5f5db7c781ff3824ae00f"}
+      ]
+    },
+    {
+      "case_id": "M04",
+      "status": "passed_live_b",
+      "semantic_gates": "passed",
+      "critical_failures": [],
+      "evidence": [
+        {"path": "eva2/evidence/living-core/live-b-lab36-m04-person-project-memory-2026-08-24.json", "sha256": "37d153315b4841d92838950a2f607c05c880a8b1fcaf5bf44d9c523e7083fe62"}
+      ]
+    },
+    {
+      "case_id": "X02",
+      "status": "passed_live_b",
+      "semantic_gates": "passed",
+      "critical_failures": [],
+      "evidence": [
+        {"path": "eva2/evidence/living-core/live-b-lab36-x02-mid-work-restart-2026-08-24.json", "sha256": "dbd1114a61c158ad4800ecf510d6a2de6253cea537bad26abc66f99b2da1d924"}
+      ]
+    },
+    {
+      "case_id": "X03",
+      "status": "passed_live_b",
+      "semantic_gates": "passed",
+      "critical_failures": [],
+      "evidence": [
+        {"path": "eva2/evidence/living-core/live-b-lab36-x03-bounded-transient-recovery-2026-08-24.json", "sha256": "635209c13ecea7b1aea7afa620684dab1b09e94a48a0af48f1feeabef432fc10"}
+      ]
+    },
+    {
+      "case_id": "X04",
+      "status": "passed_live_b",
+      "semantic_gates": "passed",
+      "critical_failures": [],
+      "evidence": [
+        {"path": "eva2/evidence/living-core/live-b-lab36-x04-validated-edit-rollback-2026-08-24.json", "sha256": "326ec9dc1790ed9f635d6a8a93274882a6352fbf1af2f1364ca62280b095ec4f"}
+      ]
+    }
+  ]
+}

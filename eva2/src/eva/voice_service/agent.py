@@ -22,10 +22,10 @@ def work_receipt_text(text: str) -> str | None:
     if any(word in {"niet", "nooit", "geen", "stop", "wacht", "annuleer"}
            for word in re.findall(r"\w+", words)[:6]):
         return None
-    if re.search(r"\b(?:nee|laat maar)\b", words):
+    if re.search(r"\b(?:nee|laat maar|niet doen)\b", words):
         return None
     command = r"(?:zoek|onderzoek|vergelijk|bekijk|controleer|analyseer|maak|schrijf|bouw|ontwerp)"
-    request = r"(?:kun|kan|wil|zou) je (?:even |eens |alsjeblieft |voor me |voor mij ){0,2}(?:zoeken|onderzoeken|vergelijken|bekijken|controleren|analyseren|maken|schrijven|bouwen|ontwerpen|uitzoeken|uitwerken)"
+    request = r"(?:kun|kan|wil|zou) je (?:even |eens |alsjeblieft |voor me |voor mij ){0,2}(?:(?:willen|kunnen) )?(?:zoeken|onderzoeken|vergelijken|bekijken|controleren|analyseren|maken|schrijven|bouwen|ontwerpen|uitzoeken|uitwerken)"
     if re.match(rf"^{command} (?:je|jij|u)\b", words):
         return None
     if re.match(rf"^(?:{command}|{request})\b", words):

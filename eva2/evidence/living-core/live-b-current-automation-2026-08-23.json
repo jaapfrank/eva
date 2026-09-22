@@ -1,0 +1,49 @@
+{
+  "contract": "EvaLivingBCurrentAutomationReceipt/v1",
+  "recorded_at": "2026-08-23T20:24:53Z",
+  "environment": {
+    "container": "eva2-living-core-b",
+    "image_sha256": "d0fdbe5bf645519b0bf2d5de5eceb09a17bc548c47e6bf37a62d4e91e6569923",
+    "slot": "isolated_b",
+    "status": "healthy"
+  },
+  "source_files": {
+    "eva2/src/eva/adapters/connectors/home_assistant_automations.py": "b5028928526f48fa90c713fa8f9f275836131ef699776b3664c5da43749066d7",
+    "eva2/src/eva/adapters/model/conversation.py": "a410e887ee0e86efe11c1fa1c4f5bf6140bf6e3dc8aa7528f9d6dd957af3b1c6",
+    "eva2/src/eva/adapters/postgres/conversation_actions.py": "76f82942613bfa50fcc3fca59323f5b949561900a3b8dedaae20178277240dc5",
+    "eva2/src/eva/application/home_automation.py": "0230cfee3206f5a26cbcea3f36e738b1588bc28d98a634d2dd0b6d70469b4a3e",
+    "eva2/src/eva/application/orchestration.py": "43d4d0b4b83f13268c0a5720cd1a377ce336de33364657749abeaebb8895d4c5"
+  },
+  "real_home_assistant_gate": {
+    "request": "Maak een tijdelijke automatisering: als Eva2 testbeweging 23 augustus aan gaat, zet dan Eva2 testschakelaar 23 augustus aan. Voer de trigger nu niet uit.",
+    "automation_id": "eva2_4dc53c8bc4b627981d411d8debe8a0fb",
+    "config_sha256": "3c30bcb94441dee8801a075230e97976f8fddc4f5722d9013d09ecc441830279",
+    "event_sequence": [
+      "TOOL_REQUEST_ADMITTED",
+      "TOOL_PREPARED",
+      "TOOL_EXECUTED",
+      "STATE_VERIFIED"
+    ],
+    "trigger": {
+      "entity_id": "binary_sensor.eva2_live_automation_trigger_20260823",
+      "to": "on",
+      "trigger": "state"
+    },
+    "action": {
+      "action": "homeassistant.turn_on",
+      "entity_id": "switch.eva2_live_automation_target_20260823"
+    },
+    "reply_sha256": "517f1bd3adddd1a5c2f57ef464c9e8aa65150afe2c648c0bae6536672586c27e",
+    "independent_readback": "verified",
+    "target_state_after_gate": "off",
+    "rollback": "hash_bound_deleted",
+    "temporary_entities_deleted": true,
+    "physical_devices_changed": 0
+  },
+  "nonclaims": [
+    "The temporary trigger was not fired.",
+    "The gate did not install LocalTuya or migrate any device.",
+    "Production A and Telegram routing were not changed."
+  ],
+  "status": "passed"
+}

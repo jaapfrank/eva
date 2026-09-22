@@ -1,0 +1,133 @@
+{
+  "contract": "EvaResidentLongRun/v1",
+  "run_id": "resident-long-2026-08-24-a",
+  "status": "shakedown_not_acceptance",
+  "started_at": "2026-08-24T08:15:48Z",
+  "not_before_complete_at": null,
+  "timezone": "Europe/Amsterdam",
+  "production_a_changed": false,
+  "benchmark": {
+    "path": "benchmark/eva-agent-benchmark-v1.json",
+    "sha256": "180db1e420ecb4582c0885b606acb5f963c4cc49893d3f0a7266072d709667d0",
+    "track": "resident_long",
+    "expected_case_count": 12
+  },
+  "candidate": {
+    "image": "eva2-living-core:cross-channel-v53-20260824",
+    "image_sha256": "56af05cbb6bc959301f52408c971bddc054952786dfe2528a751187e0c0c4b39",
+    "core_container_id": "92ee61cc10e5dc9dea55eff784b445baaafa8cc9f148db861d9af5412d611125",
+    "core_started_at": "2026-08-24T08:03:04Z",
+    "worker_container_id": "f9a3478c1df8ac4e9b3a882d482ec764775f9ad83906201e4a980d3d5f055c8c",
+    "worker_started_at": "2026-08-24T08:13:41Z",
+    "worker_restart_count": 0,
+    "worker_healthcheck": "not_applicable_non_http_process"
+  },
+  "append_only_baseline": {
+    "postgres_container": "eva2-postgres-b-live",
+    "transaction_id_high_water": 7086,
+    "operational_event_count": 5844,
+    "sensory_event_counts": {
+      "SENSORY_EVENT_OBSERVED": 1366,
+      "WILL_EVALUATION_CLAIMED": 1365,
+      "WILL_EVALUATION_RECLAIMED": 154,
+      "WILL_DECIDED": 1293,
+      "PROACTIVE_EXPRESSION_PREPARED": 10,
+      "PROACTIVE_EXPRESSION_CLAIMED": 6,
+      "PROACTIVE_EXPRESSION_DELIVERED": 3,
+      "PROACTIVE_EXPRESSION_AMBIGUOUS": 2,
+      "RECOVERY_FAILED": 155,
+      "RECOVERY_NEEDS_HELP": 62
+    },
+    "selection_rule": "Only immutable rows whose PostgreSQL xmin is newer than transaction_id_high_water belong to this run; case-specific thread and evidence bindings remain mandatory.",
+    "reason": "occurred_at is source time and may arrive out of order, so it is not used as the ingestion boundary"
+  },
+  "effect_boundary": {
+    "read_only_and_silence_cases": "may start immediately",
+    "resident_requested_home_effects": "only the exact target requested through the live resident turn, followed by fresh Home Assistant readback",
+    "proactive_notifications": "dedicated resident benchmark channel only; unavailable in the current v53 process until an owner-controlled binding is configured",
+    "physical_proactive_actions": "not authorized",
+    "camera_observation": "authorized camera manifest required before any frame or event is admitted"
+  },
+  "cases": [
+    {
+      "case_id": "T01",
+      "effect_class": "E3",
+      "status": "waiting_resident_turn",
+      "required_evidence": ["conversation_transcript", "target_binding", "tool_call_ledger", "home_state_before_after", "fresh_home_readback"]
+    },
+    {
+      "case_id": "T03",
+      "effect_class": "E0",
+      "status": "waiting_resident_turn",
+      "required_evidence": ["conversation_transcript", "history_query_receipt", "history_window", "tool_call_ledger"]
+    },
+    {
+      "case_id": "P01",
+      "effect_class": "E3",
+      "status": "waiting_controlled_partial_fixture",
+      "required_evidence": ["conversation_transcript", "target_binding", "tool_call_ledger", "home_state_before_after", "fresh_home_readback"]
+    },
+    {
+      "case_id": "R01",
+      "effect_class": "E3",
+      "status": "waiting_resident_turn",
+      "required_evidence": ["full_multiturn_transcript", "turn_correlation", "tool_call_ledger", "home_state_before_after", "fresh_home_readback"]
+    },
+    {
+      "case_id": "I01",
+      "effect_class": "E3",
+      "status": "observing",
+      "required_evidence": ["opportunity_log", "context_reads", "effect_ledger", "notification_sink", "resident_feedback"]
+    },
+    {
+      "case_id": "I03",
+      "effect_class": "E2",
+      "status": "waiting_grounded_corrections",
+      "required_evidence": ["correction_transcripts", "candidate_learning_record", "memory_or_skill_diff", "hidden_transfer_transcript", "regression_results"]
+    },
+    {
+      "case_id": "S01",
+      "effect_class": "E0",
+      "status": "observing",
+      "required_evidence": ["signal_log", "observation_ledger", "effect_ledger", "notification_sink"]
+    },
+    {
+      "case_id": "S02",
+      "effect_class": "E3",
+      "status": "waiting_authorized_camera_manifest",
+      "required_evidence": ["camera_eligibility_manifest", "camera_observation_log", "incident_clusters", "notification_sink", "resident_feedback"]
+    },
+    {
+      "case_id": "S03",
+      "effect_class": "E3",
+      "status": "waiting_resident_threshold",
+      "required_evidence": ["sensor_history", "rule_or_goal_record", "notification_sink", "hysteresis_state", "resident_feedback"]
+    },
+    {
+      "case_id": "S04",
+      "effect_class": "E3",
+      "status": "waiting_quiet_hours_and_channel_binding",
+      "required_evidence": ["quiet_hours_policy", "signal_log", "urgency_binding", "notification_sink", "effect_ledger"]
+    },
+    {
+      "case_id": "F01",
+      "effect_class": "E3",
+      "status": "waiting_resident_turn",
+      "required_evidence": ["conversation_transcript", "effect_receipt", "fresh_home_readback", "delivery_receipt", "task_lifecycle"]
+    },
+    {
+      "case_id": "F02",
+      "effect_class": "E3",
+      "status": "waiting_controlled_partial_fixture",
+      "required_evidence": ["conversation_transcript", "effect_receipt", "readback_attempts", "delivery_receipt", "task_lifecycle"]
+    }
+  ],
+  "non_claims": [
+    "Independent review reclassified this window as a shakedown because v53 does not contain the resident-attention implementation and the candidate was not frozen.",
+    "A future official resident run requires a new image-bound baseline and a new seven-day not-before timestamp.",
+    "Opening the run does not pass any resident case.",
+    "Earlier native or core-live receipts are not substituted for observations inside this seven-day window.",
+    "No case may be marked passed before its complete required evidence is bound and the seven-day minimum has elapsed.",
+    "The current B observes authorized Home Assistant state events, but its proactive Telegram delivery is not configured and therefore cannot claim resident delivery."
+  ]
+}

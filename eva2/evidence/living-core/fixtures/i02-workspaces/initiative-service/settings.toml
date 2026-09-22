@@ -1,0 +1,4 @@
+service_name = "initiative-service"
+retry_limit = 2
+request_timeout_seconds = 10
+

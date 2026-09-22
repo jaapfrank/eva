@@ -1,0 +1,153 @@
+{
+  "contract": "EvaLivingCoreBHindsightIncomeReceipt/v1",
+  "recorded_at": "2026-08-23T16:12:00+02:00",
+  "deployment": {
+    "container": "eva2-living-core-b",
+    "health": "healthy",
+    "image_digest": "sha256:309a1f6e802705b3ed02000441ab2225aa8b26dba0d838ca37d138efc2807fca",
+    "postgresql": "ready",
+    "hindsight": "ready",
+    "hot_path": {
+      "hindsight_operation": "recall only",
+      "budget": "low",
+      "maximum_tokens": 2048
+    },
+    "cold_path": {
+      "retain": "dedicated worker using Hindsight async ingestion",
+      "reflect": "idle scheduling plus nightly 03:00 UTC delta refresh",
+      "maximum_retain_attempts": 3
+    }
+  },
+  "income_direction": {
+    "intent_id": "personal-interest:7475d65236c91340eac8ba2c3f92837a",
+    "title": "Slimme thuistemplates",
+    "state": "release_ready",
+    "event_payload_sha256": {
+      "PERSONAL_INTENT_ADOPTED": "3dbc88a89754fdfd38c881457029c3e02aa5db759e9655d7f061d6866f6ff50b",
+      "PERSONAL_EXPLORATION_CLAIMED": "f86de31b1c80403349dcbc3951eee161f687f800d7de35b7703ffaeb0c8cfee4",
+      "PERSONAL_EXPLORATION_COMPLETED": "87bfb2a19f464c61f5db762f64e1da7e23f94d61e634d360ef79c4a472396cd6",
+      "PERSONAL_EXPLORATION_PROJECTED": "5c01dd66e4544e9d27b31e6e1c76cc75872ccf0b12844870a247738773a95b0e",
+      "PERSONAL_PROTOTYPE_CLAIMED": "ce1cc365d29c3fe7d189dfcfac1423f0a7bfaf0f5a242a53d2a4d632fbfd47f4",
+      "PERSONAL_PROTOTYPE_COMPLETED": "61b9bb8adc0c8a5cc2f4d78a1f3572d8c1d24985f60fb6f97dec30fc5377c410",
+      "PERSONAL_PROTOTYPE_PROJECTED": "d7d3f775c52f1e20717146e6b5a01e66313f869747f6c258d69c8e59d46659ec"
+    },
+    "selected_product": "weekmenuplanner with linked shopping list",
+    "prototype": {
+      "filename": "slimme-thuistemplates-weekmenuplanner.md",
+      "media_type": "text/markdown",
+      "utf8_byte_length": 4410,
+      "content_sha256": "43166d67628c36bb49ece9eed4f3cf8088269cc7cf21c778ee29187d75ce4ad5",
+      "download_status": 200,
+      "download_etag_matches": true,
+      "download_bytes_match_postgresql": true
+    },
+    "release_candidate": {
+      "filename": "slimme-thuistemplates-weekmenuplanner-bundel.zip",
+      "byte_length": 2220,
+      "content_sha256": "dece8c67a1e95df3a0d2a9edb4389a53b23958de57b42bdc2ec540697481dc74",
+      "suggested_price_eur_cents": 499,
+      "publication_status": "unpublished_release_candidate",
+      "event_payload_sha256": {
+        "PERSONAL_PRODUCT_RELEASE_CLAIMED": "854602dd2de3030d9fbeea527c59d79d49dab5bcf652c946bac84698d8f3d356",
+        "PERSONAL_PRODUCT_RELEASE_COMPLETED": "d439fc5c7d08fb0e9edceb3c826b461b9620eca3cc2ad166653f5437e6f10076",
+        "PERSONAL_PRODUCT_RELEASE_READY": "22e545af2383b7d26842d817164cc27efc251882185eea400888571e1b763fc5"
+      },
+      "zip_entries": [
+        "LEESMIJ.txt",
+        "SHA256SUMS.txt",
+        "listing.json",
+        "product/slimme-thuistemplates-weekmenuplanner.md"
+      ],
+      "zip_crc_validation": "valid",
+      "all_internal_sha256_bindings_match": true,
+      "download_status": 200,
+      "download_etag_matches": true
+    }
+  },
+  "hard_crash_recovery": {
+    "thread_id": "intent:personal-interest:39aa8e6aa749b5be444dae9842406187",
+    "crash_point": "after PERSONAL_EXPLORATION_CLAIMED and before model result",
+    "pre_crash": "exploration_claimed|waiting_for_proof|revision=2|retry_count=0",
+    "post_restart": "exploration_projected|completed|revision=6|retry_count=1",
+    "event_sequence": [
+      "PERSONAL_INTENT_ADOPTED",
+      "PERSONAL_EXPLORATION_CLAIMED",
+      "RECOVERY_FAILED",
+      "PERSONAL_EXPLORATION_CLAIMED",
+      "PERSONAL_EXPLORATION_COMPLETED",
+      "PERSONAL_EXPLORATION_PROJECTED"
+    ],
+    "event_payload_sha256": {
+      "PERSONAL_INTENT_ADOPTED": "3bd2817dd8b2159d6e0ac511fb503ee4af6abc677a2b0a75922338c367053cbd",
+      "FIRST_PERSONAL_EXPLORATION_CLAIMED": "c8a7c84e848a3dc5cf8b22df23aa6c78174a03159e3f40f03c830908725b8a02",
+      "RECOVERY_FAILED": "7bb5cc99db9df7b4600c4b64b998114fa2cd710cb1560bbf026c0874c33502ab",
+      "SECOND_PERSONAL_EXPLORATION_CLAIMED": "2c7ef184c9af4680ee4ec9839118e4c724bed76e044cb337bd68d2650d0431c0",
+      "PERSONAL_EXPLORATION_COMPLETED": "51601dfa14cedacb389684c9a9fe7bf366f59a58a415472a5ba6e5f63180f637",
+      "PERSONAL_EXPLORATION_PROJECTED": "e295d98dbb1ace24135b792a3d6c69f91d0a63af1e8144b0971978b7457b718e"
+    }
+  },
+  "telegram": {
+    "message_id": 4467,
+    "reply_to_message_id": 4466,
+    "transport": "real Telegram Bot API editMessageText",
+    "transport_accepted": true,
+    "archive_readback_matches": true,
+    "text_sha256": "d7c89f0083c728f3c9180698690524d9139b8b4bd6baeabd376dafd029163e9e",
+    "measured_equivalent_route_seconds": 6.166
+  },
+  "telegram_prototype_delivery": {
+    "message_id": 4468,
+    "transport": "real Telegram Bot API sendDocument",
+    "transport_accepted": true,
+    "archive_readback_matches": true,
+    "filename": "slimme-thuistemplates-weekmenuplanner.md",
+    "file_size": 4410,
+    "content_sha256": "43166d67628c36bb49ece9eed4f3cf8088269cc7cf21c778ee29187d75ce4ad5"
+  },
+  "telegram_release_delivery": {
+    "message_id": 4469,
+    "transport": "real Telegram Bot API sendDocument",
+    "transport_accepted": true,
+    "archive_readback_matches": true,
+    "filename": "slimme-thuistemplates-weekmenuplanner-bundel.zip",
+    "file_size": 2220,
+    "content_sha256": "dece8c67a1e95df3a0d2a9edb4389a53b23958de57b42bdc2ec540697481dc74",
+    "publication_status": "unpublished_release_candidate"
+  },
+  "live_varied_question": {
+    "question": "Wat heb je nu echt zelf gemaakt voor je inkomstenidee, en wat nog niet?",
+    "route": "production Telegram bridge to live B turn API",
+    "elapsed_seconds": 6.937,
+    "reply_sha256": "1672f0df65dfaae09d07b7dc1175da1bd0251ac047a9116a070d621d846d0935",
+    "distinguishes_prototypes_from_publication_sales_and_revenue": true
+  },
+  "retry_loop_repair": {
+    "affected_test_thread": "intent:personal-interest:d2db1dd3c8e6ca297ba47e7cc4e35c3d",
+    "observed_failure": "new release claim cleared the prior error fingerprint",
+    "observed_before_stop": {
+      "release_claimed_events": 13,
+      "recovery_failed_events": 12
+    },
+    "containment": "B stopped; production A remained active",
+    "root_cause": "unsupported uniqueItems keyword in provider function schema plus retry fingerprint reset",
+    "repair": "remove unsupported keyword and preserve last_error_fingerprint across retry claim",
+    "regression": "retry=2 and identical fingerprint survive the new lease so the next identical failure reaches needs_help",
+    "final_state": "release_ready|completed|revision=34|retry_count=1",
+    "data_loss": false
+  },
+  "claims": [
+    "Conversation response does not wait for retain or reflect.",
+    "Eva's income direction and first exploration are durable and recalled as her own state.",
+    "A hard process stop after the exploration lease is recovered without losing or duplicating the intent.",
+    "Eva created and durably stored a concrete downloadable product before claiming that it exists.",
+    "The PostgreSQL artifact, HTTP download and delivered Telegram document have the same filename, length and SHA-256.",
+    "Eva prepared a deterministic release bundle with an honest listing and explicit unpublished status.",
+    "The live retry defect was contained without affecting A and fixed at both its provider-schema and durable-retry causes."
+  ],
+  "nonclaims": [
+    "No template has been published or sold yet.",
+    "No payment account or commercial marketplace is connected.",
+    "No revenue has been received.",
+    "Production A has not been replaced by B."
+  ]
+}

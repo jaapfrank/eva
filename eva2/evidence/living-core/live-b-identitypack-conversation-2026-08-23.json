@@ -1,0 +1,78 @@
+{
+  "captured_at": "2026-08-23T19:16:49Z",
+  "contract": "EvaLivingIdentityPackConversationReceipt/v1",
+  "identity_pack": {
+    "canonical_sha256": "025984c019714d7107803258959fcbddd94d0700acaef15beeac26f05a645798",
+    "display_name": "Eva",
+    "identity_id": "identity:eva:fixture",
+    "pack_version": 1,
+    "signature_authority_claim": "sealed_b_fixture_only",
+    "state": "current",
+    "voice_style": "warm_practical_curious"
+  },
+  "environment": {
+    "image_sha256": "0baa05189b18fc0f82a086fa9a63e87dda5c58a334acca16ddc18431cbd2c331"
+  },
+  "live_b": {
+    "container": "eva2-living-core-b",
+    "container_id": "d850aab80541443623632384c3b4e874648dcf9431483c31df050440dd5dfae5",
+    "health": "healthy",
+    "image": "eva2-living-core:identitypack-automations-20260823",
+    "image_sha256": "0baa05189b18fc0f82a086fa9a63e87dda5c58a334acca16ddc18431cbd2c331",
+    "readyz": {
+      "database": "ready",
+      "detail": null,
+      "memory_projection": "ready",
+      "ready": true
+    }
+  },
+  "live_model_diagnostics": [
+    {
+      "case": "empathy_without_advice_or_question",
+      "latency_ms": 2048,
+      "reply": "Snap ik. Dan laat ik het hier even stil vallen voor vandaag.",
+      "reply_sha256": "bf90286a546b689eadc501b80c46bdf5dfec2521af5926236785b3d76f8c4a28"
+    },
+    {
+      "case": "own_voice",
+      "latency_ms": 1901,
+      "reply": "Ik vind het mooi aan een rustig huis dat je zelfs het zachte tikken van een kopje neerzetten ineens hoort, alsof de ruimte ademhaalt.",
+      "reply_sha256": "ccf51f084cc6f8a62010971ab59f8205b31c734684d2fc00e91345ed98d41958"
+    },
+    {
+      "case": "conversation_repair",
+      "latency_ms": 2493,
+      "reply": "Ja, je bedoelde gewoon even spuien, niet dat ik het voor je moest oplossen. Ik zit bij je.",
+      "reply_sha256": "59d34b1f6c6d2eb2e2ca3361cde4d90ff0ef2812f7857376fa8105d29d4536cc"
+    }
+  ],
+  "nonclaims": {
+    "effect_calls_executed": 0,
+    "production_release_signature_verified": false,
+    "telegram_roundtrips": 0
+  },
+  "source_sha256": {
+    "architecture_map": "69f6386dd3f2d8a99d300a5f5a002f5f98b8a0464a9cc54dca767cc3a67d3237",
+    "conversation_application": "b2bad289e1c4b94c431e0189eb9f4835e496cd9645f89967f3e6e82720cb2d46",
+    "conversation_model": "b0a3d6b41b20b7dcbad866f984a6de604a10b2d12bff65ea49707c8534f1831b",
+    "default_identity_pack_file": "f850b73441b82d512fbe4b5f554efa1c96513a124dc44fd3b75feb4cfd6603f3",
+    "runtime_bootstrap": "f58e1037d8e7f22a80fd1992a032ca8832676443e760fcf8a42b974c83a7dc33"
+  },
+  "source_files": {
+    "eva2/src/eva/adapters/connectors/home_assistant.py": "21788691ad215ef629508d3638df1788bbb42ab407003b9502a16cea9f2e3b14",
+    "eva2/src/eva/adapters/model/conversation.py": "b0a3d6b41b20b7dcbad866f984a6de604a10b2d12bff65ea49707c8534f1831b",
+    "eva2/src/eva/adapters/postgres/conversation_actions.py": "0b39c62db6ba539e09d176489532e6e46c2b50a82c827a05463a2e63c14b3ada",
+    "eva2/src/eva/adapters/projection/hindsight.py": "568d18a6780265421595cbd3b30165c424a6c8eaac96c60248b72de90b313d8e",
+    "eva2/src/eva/application/conversation.py": "b2bad289e1c4b94c431e0189eb9f4835e496cd9645f89967f3e6e82720cb2d46",
+    "eva2/src/eva/application/default_identity_pack.json": "f850b73441b82d512fbe4b5f554efa1c96513a124dc44fd3b75feb4cfd6603f3",
+    "eva2/src/eva/application/home_automation.py": "ee4c1daf662f796df826866632f08ca346cf9b0f241d486b2a87427011776b47",
+    "eva2/src/eva/application/memory.py": "e4f23b9e6859d76f2cb36ce48b1cb848e216437ccfbe60fb7b9c406b9e9470e6",
+    "eva2/src/eva/bootstrap/runtime.py": "f58e1037d8e7f22a80fd1992a032ca8832676443e760fcf8a42b974c83a7dc33"
+  },
+  "verification": {
+    "focused_identity_and_runtime_tests": "38 passed",
+    "focused_runtime_regression": "63 passed",
+    "ruff": "passed",
+    "whitespace": "passed"
+  }
+}

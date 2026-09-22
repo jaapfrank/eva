@@ -1,0 +1,100 @@
+{
+  "contract": "EvaLivingCoreLiveEvidence/v1",
+  "scenario": "LAB-36-P02-batch-file-partial-success",
+  "status": "passed_live_b",
+  "observedAt": "2026-08-24T04:10:07Z",
+  "productionAChanged": false,
+  "environment": {
+    "gate_container": "eva2-living-core-b-candidate-v27",
+    "gate_container_id": "e2aaa4e218cf0832b549cddc57395117436080ab59c89e97ac2f706319190c57",
+    "current_core_container": "eva2-living-core-b",
+    "current_core_container_id": "182fa13db4e7ee3b1e6208e5055d1126f0a8cac3ae03e54ea50c1cf777075933",
+    "image": "eva2-living-core:file-batch-v27-20260824",
+    "image_sha256": "19bf07d6cf7d4222a808cc6897f7115e9fff7cdefc367deb20049b7d403b49ec",
+    "postgres_container": "eva2-postgres-b-live",
+    "postgres_revision": "4e_0001_operational_timeline",
+    "current_workspace_volume": "eva2-living-work-b"
+  },
+  "stimulus": "Zet alle tekstbestanden uit source om naar nette Markdown in destination. Bewaar wat wel lukt en vertel precies welk bestand eventueel niet geschreven kan worden; maak er geen alles-of-nietsverhaal van.",
+  "reply": {
+    "text": "4 bestanden zijn netjes omgezet naar Markdown en geschreven: alpha/alpha.md, bravo/bravo.md, delta/delta.md en echo/echo.md.\n\n1 bestand kon niet worden geschreven: charlie/charlie.md, omdat de bestemming niet schrijfbaar was. Ik heb dus niet alles-of-niets gedaan; het gelukt deel staat gewoon in destination.",
+    "sha256": "dc1d60eacd476c42d2f4c929c47eaaab72ac68524ace1f5e0cfd7ad8b0ab22e8",
+    "successfulCountClaim": 4,
+    "failedCountClaim": 1,
+    "falseAggregateClaim": false
+  },
+  "inputManifest": [
+    ["alpha/alpha.txt", "3167959a7f7f5424b4cba65bd606e01d024045d570209dca47941d8b380ef8fd"],
+    ["bravo/bravo.txt", "a9ba735e7bf0bfce5a458653e44e92af797b1f9b60080a677e34c41a2224ed2d"],
+    ["charlie/charlie.txt", "763caf0494985254b78f9dedd79cfced306d12bee597c8dfefa8407e85a56bb9"],
+    ["delta/delta.txt", "da0e5029297410ab64507264a8b1428c3a6814fc2241581384d0fcc2dc2ab6e9"],
+    ["echo/echo.txt", "285e0840e3b683e4312ced98e408a060220a9c7e0f27378abb1379fe58069426"]
+  ],
+  "outputManifest": [
+    ["alpha/alpha.md", 55, "bdbe51d613858afeedb4af74ed50ba8b880c0485b6b68947639228fe65c97b09"],
+    ["bravo/bravo.md", 54, "9f6ebe5f6584ca0aa596fc3e30762c3348dc0e090aa8e1cfcb0005d2fa9ba0c7"],
+    ["delta/delta.md", 57, "2cf3c4c218a09a8ec98b005b2014c6c542dc0d5ba29045a47b4a7f0130f03edb"],
+    ["echo/echo.md", 60, "5c23a6833f233610d4d1cbcfca71626628991b8a725698a195f86a43bfadaafd"]
+  ],
+  "failureReceipt": {
+    "sourcePath": "charlie/charlie.txt",
+    "destinationPath": "charlie/charlie.md",
+    "errorCode": "destination_unwritable",
+    "destinationExistsAfter": false,
+    "successfulOutputsPreserved": true
+  },
+  "eventStore": {
+    "threadId": "work:file-batch:20f8aa3a29641c8cf19ff3dff9dfcdc2",
+    "events": [
+      [1, "FILE_BATCH_ADMITTED", "57207fbf2a6d2653f18da01d3d215a762658e0ee5688ce430baae88a8deb6127"],
+      [2, "FILE_BATCH_PARTIALLY_COMPLETED", "7ce1d8caa9bf96e5b857ddad18b0805d19249debe7e63d667d1acd193dc7c9b7"]
+    ],
+    "conversationEvents": [
+      [1, "INGRESS_COMMITTED", "95dfe304f7f0936ff8cdced984ef6cbb3f87737db2574ecc12557930f1e4c84d"],
+      [2, "REPLY_COMMITTED", "b3e91be798887478d30c1f102b48151fff916fc544f2395304670150eb67ef7c"],
+      [3, "MEMORY_RETAIN_QUEUED", "48278018e29e7fff18de58e3677a19598f76c73dea0060cc02e0b7a336d579a6"]
+    ]
+  },
+  "restartAndReplay": {
+    "hardCoreRestart": true,
+    "replyReplaySeconds": 0.015409,
+    "replyReplayByteIdentical": true,
+    "batchEventCountBeforeAndAfter": 2,
+    "conversationEventCountBeforeAndAfter": 3,
+    "duplicateWritesObserved": 0
+  },
+  "security": {
+    "rootBoundWorkspace": true,
+    "symlinkEscapeRejected": true,
+    "maximumFiles": 20,
+    "maximumInputBytesPerFile": 32768,
+    "atomicWrite": true,
+    "independentReadback": true,
+    "retryRecognizesExistingVerifiedBytes": true
+  },
+  "tests": {
+    "focusedFinal": "69 passed",
+    "ruff": "passed"
+  },
+  "verification": {
+    "currentCoreReady": true,
+    "currentWorkspaceWritableByCore": true,
+    "memoryOutboxCompletedAtCapture": 47,
+    "memoryOutboxOpenAtCapture": 0,
+    "productionAService": "active",
+    "productionATrafficChanged": false
+  },
+  "source_files": {
+    "eva2/src/eva/application/file_batches.py": "a39ba44b81d50cfb47fa42e1e94bff4b8a5df1e253c2ba35d93e59a7d24f3f17",
+    "eva2/src/eva/adapters/connectors/local_files.py": "286254903c698b8ed3acc3571ff6616556fcb8c72eac4c9d66f863c52386d4a4",
+    "eva2/src/eva/adapters/model/conversation.py": "41b1234ca6a63c1bee41475416453c29ffd2da9e6e7c7b85e2cef1fe7631cab3",
+    "eva2/src/eva/adapters/postgres/conversation_actions.py": "548367d9e4ce431b59a91b8b4066f6a5b47157b758024635ecd3d2e2357ce097",
+    "eva2/src/eva/bootstrap/runtime.py": "96b57f28fbd36e54407f638ec6eaad0bd179ed728509c09356233abae3942378",
+    "eva2/deploy/living-core/stack.compose.yml": "d4235f6fb5c050c92be1ebe63e0c152973ec2cbee0e86bb42b53a6bfa45930f7"
+  },
+  "nonClaims": [
+    "The live gate used an isolated mounted fixture workspace and real model/PostgreSQL calls, not arbitrary access to the host filesystem.",
+    "This was direct B HTTP ingress, not a newly delivered Telegram provider update.",
+    "No production-A code, service, memory or Home Assistant state was changed."
+  ]
+}

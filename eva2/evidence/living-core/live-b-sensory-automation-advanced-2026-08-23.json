@@ -1,0 +1,83 @@
+{
+  "contract": "EvaLivingCoreBSensoryAutomationAdvancedReceipt/v1",
+  "recorded_at": "2026-08-23T14:58:39Z",
+  "deployment": {
+    "container": "eva2-living-core-b",
+    "health": "healthy",
+    "image_sha256": "083c2bbb01aeb878199c4c204693b36999862b3986401ab93d7093fc782636e9",
+    "production_a_active_during_test": true
+  },
+  "source_sha256": {
+    "eva2/src/eva/adapters/api/app.py": "d29ca55bc682324c66a040d732701db3186f03427b6e5464a3e7fa776ab50853",
+    "eva2/src/eva/adapters/connectors/home_assistant_admin.py": "c94bda34e0c63b068f23407c7f473797382cc5eb6b03241e486c71f12e056f33",
+    "eva2/src/eva/adapters/connectors/home_assistant_automations.py": "31f6c3cc0f7b4ba06d8c74eb7d0086ebd2d9106111832c699332a879ee4dfcb3",
+    "eva2/src/eva/adapters/connectors/home_assistant_events.py": "d3755985858953ce388e8e099d3ce9ffed3820bd8db52f0a9db8240cf92fdfa7",
+    "eva2/src/eva/adapters/model/conversation.py": "060c346c61530adaf95cef849c139489b2730e1496b0bbfa549b2affc3d8b31c",
+    "eva2/src/eva/adapters/postgres/advanced_tasks.py": "04346ea23d5273f5887b83654777bbe68146f23dc69776ca5f2d62ce08b01351",
+    "eva2/src/eva/adapters/postgres/conversation_actions.py": "26d9a961401319166b6ac31826e5b511b517d7bd7cabeb30a2a27a9615fe8e32",
+    "eva2/src/eva/adapters/postgres/sensory_events.py": "c5c5a3f6c257384966ac1843b643f3bd9bc7fcfa7b05f0e198b8f2d885916c9e",
+    "eva2/src/eva/application/advanced_tasks.py": "0a6fbfc69061bbc8c6ee5c18b28ce0e2fd3295d9258fee57e5ab561cf6921aa1",
+    "eva2/src/eva/application/free_will.py": "3623048bb85b5e924ea5d581d3e6b9c6e21e30a7ca4ccd9290d4d2a67dbcd318",
+    "eva2/src/eva/bootstrap/runtime.py": "cac2ce595fdedaaff1a53f1f0e8965647d9386c774f8b2b9d51ea082e83073eb"
+  },
+  "sensory_shadow": {
+    "real_home_assistant_events": 7,
+    "completed_will_decisions": 7,
+    "dispositions": {
+      "silence": 7,
+      "respond": 0
+    },
+    "urgency_zero": 7,
+    "visible_messages_sent": 0,
+    "effects_executed": 0
+  },
+  "automation_conversation": {
+    "input": "Maak nu deze tijdelijke B-testautomatisering: zodra light.kantoor_links de onmogelijke toestand eva2_never_state krijgt, toggle light.kantoor_links. Noem haar 'Eva2 B tijdelijke automationtest'. Dit is expliciet goedgekeurd.",
+    "reply": "Gemaakt: “Eva2 B tijdelijke automationtest”. Zodra `light.kantoor_links` ooit naar `eva2_never_state` gaat, toggle ik `light.kantoor_links`. Automatisering is geverifieerd en staat klaar.",
+    "reply_sha256": "8c3c72b27c3c42c32349f86d88491ee961ce9769cb11135fbdbada904545fc5c",
+    "automation_id": "eva2_28b384385ded8bb993d43fa644212cb8",
+    "config_sha256": "ac49104cecbb847e2ff65438afcb6cdafc58ec9940680187e8f4794768582424",
+    "thread_id": "tool:home-assistant-automation:c4d0e779f224a0d482594c225bd7cb6f",
+    "event_payload_sha256": {
+      "TOOL_REQUEST_ADMITTED": "a2d18dc3727a5b90bf1dcc9dbd97b89e7ef103c23b28d2108a43b017aac18d31",
+      "TOOL_PREPARED": "968abac9a6599f4c61deb3a7135f97cae96c446653c5d62be4b37976657da10a",
+      "TOOL_EXECUTED": "7a21ced7891054a24455ac14bf202bac0fe8d52e65aa2b8a96623360b31e2a0f",
+      "STATE_VERIFIED": "85982bfc4514f91efe8565b387d37151e8721bbcd60e1ac805566c106870faf6"
+    },
+    "rollback": "deleted_after_hash_matched",
+    "independent_get_after_rollback": 404
+  },
+  "tuya_localtuya_plan": {
+    "thread_id": "advanced:b1afff04efd21bf05e0154965ede5fda281f92a3b047fc917e5db3a939791b95",
+    "event_type": "ADVANCED_PLAN_CREATED",
+    "event_payload_sha256": "11d2e9e2bf295ac781a67319331a2776a8089c6405672fe659cb294f767f7a0c",
+    "plan_sha256": "134c16e50492d9e1e5254b4e72c7ebd319fe7da9534953708f84bbeae4c6618f",
+    "inventory_sha256": "ef1f8f6739bdcb033c57b327809a437c8198ae62b37c6b9d1bcf3e899ca68e94",
+    "state": "blocked_preflight",
+    "device_count": 12,
+    "entity_count": 22,
+    "routes": {
+      "localtuya_candidate": 7,
+      "matter_review": 2,
+      "rebuild_scene": 3
+    },
+    "blockers": [
+      "localtuya_integration_not_loaded",
+      "local_device_credentials_not_collected",
+      "matter_devices_require_native_matter_review",
+      "tuya_scenes_require_explicit_rebuild"
+    ]
+  },
+  "claims": [
+    "Passive Home Assistant events are durably observed before Eva's bounded shadow decision.",
+    "A model-selected automation was created through the normal conversation path and independently read back before the visible success claim.",
+    "The temporary automation was removed only after its exact config hash matched.",
+    "The Tuya migration planner used a real read-only Home Assistant registry inventory and persisted a per-device pre-effect plan."
+  ],
+  "nonclaims": [
+    "Shadow respond decisions are not yet connected to Telegram.",
+    "No Tuya device, scene, dashboard or existing automation was changed.",
+    "No Tuya local key, IP address or protocol version was collected or written to a log.",
+    "The temporary automation did not fire and no physical state changed."
+  ]
+}

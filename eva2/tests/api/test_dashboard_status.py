@@ -14,11 +14,36 @@ from eva.application.conversation import (
     ConversationTurn,
     GroundedReply,
 )
-from eva.application.people_memory_overview import PeopleMemoryOverview
+from eva.application.people_memory_overview import PeopleMemoryOverview, MemorySourcePage
 from eva.contracts.canonical_json import canonical_sha256
 from eva.contracts.workboard import WorkBoard
 from fastapi.testclient import TestClient
 import pytest
+
+
+def test_owner_sources_endpoint_scope_validation_and_no_store():
+    class Runtime(_Runtime):
+        calls = []
+
+        def dashboard_memory_sources(self, **kwargs):
+            self.calls.append(kwargs)
+            return MemorySourcePage(())
+
+    runtime = Runtime()
+    client = TestClient(create_app(runtime, dashboard_access_token="t"*32))
+    url = "/internal/v1/dashboard/memory-sources"
+    headers = {"authorization": "Bearer " + "t"*32}
+    assert client.get(url).status_code == 401
+    for query in ("?principal_id=other", "?limit=51", "?limit=-1", "?limit=2&limit=3", "?before=other", "?tenant_id=other", "?limit=true"):
+        assert client.get(url+query, headers=headers).status_code == 422
+    assert runtime.calls == []
+    response = client.get(url+"?limit=2", headers=headers)
+    assert response.status_code == 200
+    assert response.headers["cache-control"] == "no-store"
+    assert response.json()["contract"] == "EvaOwnerMemorySources/v1"
+    assert runtime.calls == [{"limit":2,"before":None}]
+    missing = TestClient(create_app(_Runtime(), dashboard_access_token="t"*32))
+    assert missing.get(url, headers=headers).status_code == 503
 
 ROOT = Path(__file__).resolve().parents[2]
 EVIDENCE_INDEX_PATH = ROOT / "release/eva-cockpit-evidence-index-v1.json"
@@ -158,6 +183,7 @@ def test_configured_dashboard_token_gates_every_cockpit_read_route() -> None:
         "/internal/v1/dashboard/identity",
         "/internal/v1/dashboard/progress",
         "/internal/v1/dashboard/people-memory",
+        "/internal/v1/dashboard/memory-sources",
         "/internal/v1/dashboard/workboard",
     )
 
@@ -788,6 +814,7 @@ def test_dashboard_effect_stop_is_authenticated_and_honest_about_call_start() ->
     )
     assert invalid.status_code == 422
     assert invalid.json() == {"detail": "effect stop request is invalid"}
+
 
 
 def test_owner_conversation_stop_requires_auth_and_rejects_browser_scope():

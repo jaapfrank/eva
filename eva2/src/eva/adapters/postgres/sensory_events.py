@@ -100,13 +100,23 @@ class PostgresSensoryEventStore:
             connection.execute(sa.text("SELECT pg_advisory_xact_lock(hashtextextended(:key, 0))"),
                 {"key": self._decision_prefix})
             c, e = operational_checkpoints.c, operational_events.c
-            latest = connection.execute(sa.select(c.phase, c.updated_at).where(
+            latest = connection.execute(sa.select(c.phase, c.updated_at, c.thread_id).where(
                 c.tenant_id == scope.tenant_id, c.installation_id == scope.installation_id,
                 c.thread_id.startswith(self._decision_prefix)).order_by(c.updated_at.desc()).limit(1)).first()
-            # A lost decision remains unresolved, never retried as a new hourly request.
-            if latest is not None and (latest.phase != "will_decided"
-                    or now - latest.updated_at < timedelta(hours=1)):
-                return "idle"
+            # A lost decision blocks until explicitly abandoned by the owner.
+            # Preserve the original interval after abandonment: acknowledgement time
+            # is not a new model attempt and must not postpone recovery by an hour.
+            if latest is not None:
+                if latest.phase not in {"will_decided", "will_abandoned"}:
+                    return "idle"
+                reviewed_at = latest.updated_at
+                if latest.phase == "will_abandoned":
+                    reviewed_at = connection.execute(sa.select(e.occurred_at).where(
+                        e.tenant_id == scope.tenant_id, e.installation_id == scope.installation_id,
+                        e.thread_id == latest.thread_id, e.event_type == "WILL_USAGE_UNCERTAIN")
+                        .order_by(e.sequence.desc()).limit(1)).scalar_one()
+                if now - reviewed_at < timedelta(hours=1):
+                    return "idle"
             pending = connection.execute(sa.select(c.thread_id).join(operational_events, sa.and_(
                 c.tenant_id == e.tenant_id, c.installation_id == e.installation_id,
                 c.thread_id == e.thread_id)).where(

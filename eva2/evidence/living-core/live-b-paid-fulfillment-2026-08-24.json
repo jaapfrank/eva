@@ -1,0 +1,82 @@
+{
+  "contract": "EvaLivingCorePaidFulfillmentGate/v1",
+  "captured_at": "2026-08-24T00:02:20Z",
+  "scope": {
+    "candidate": "B",
+    "database": "eva2-postgres-b-live / PostgreSQL 16.13",
+    "production_a_changed": false,
+    "candidate_b_deployed_image_changed": true,
+    "gate_image": "eva2-living-core:paid-fulfillment-20260824",
+    "gate_image_id": "sha256:890078e3ab39576f899e41453bc355cffb0047544f139b8a3a7e91566be32d82"
+  },
+  "result": {
+    "status": "passed",
+    "artifact_byte_length": 2220,
+    "artifact_sha256": "dece8c67a1e95df3a0d2a9edb4389a53b23958de57b42bdc2ec540697481dc74",
+    "checkout_session_id": "cs_test_121c76cc89966e22016a8b1c",
+    "duplicate_order_disposition_after_new_store_instance": "already_recorded",
+    "fulfillment_grant_sha256": "11ad747d46f0be55a5c87491612d1de4690de1932e7f0894dbe5c6231e1a5f6c",
+    "idempotency_key_matches_durable_plan": true,
+    "plan_sha256": "121c76cc89966e22016a8b1cc06f6f2a3bdc3c21ae6750980f3da762406bf895",
+    "publication_events": [
+      "PRODUCT_PUBLICATION_PLANNED",
+      "PRODUCT_PUBLICATION_APPROVED",
+      "PRODUCT_PUBLICATION_CALL_OPENED",
+      "PRODUCT_PUBLICATION_VERIFIED"
+    ],
+    "order_events": [
+      "PAYMENT_VERIFIED",
+      "FULFILLMENT_GRANTED"
+    ],
+    "payment_link_redirect_contains_stripe_checkout_session_placeholder": true,
+    "repeat_download_bytes_and_grant_identical": true,
+    "release_sha256": "dece8c67a1e95df3a0d2a9edb4389a53b23958de57b42bdc2ec540697481dc74"
+  },
+  "proof_boundary": {
+    "provider": "loopback Stripe HTTP contract server",
+    "webhook": "real HMAC-SHA256 verification over exact raw request bytes",
+    "storage": "real append-only B PostgreSQL timeline",
+    "artifact": "existing B release candidate loaded back by exact principal, intent and SHA-256",
+    "restart_simulation": "a new PostgreSQL order-store instance admitted the repeated paid event without a second event"
+  },
+  "source_sha256": {
+    "application_commerce": "11b1ece31dfd3a80636137e24372ff1815b1bbb02d59cb98c7743bb7a522758d",
+    "stripe_publication": "e7bf3fe9cc13f33b1d14a22c9aa90b5fe837ee9d8e443003adaa795a3a073bbe",
+    "stripe_webhook": "17e9c3be2959fd6fdb2b4b18958e69238075ef5985e3191d9665c157aac64dab",
+    "postgres_commerce": "18902bc7a77078044dda8748b3aaa8a8e509ac0c20f9bc07a569395edd46d4b4",
+    "postgres_release_store": "34b29a2d5c55642a3cb8d7cae21bf50a9e749a8b2150292bf82b52335d23b26b",
+    "runtime": "d9bfa1b4d469845aeaba977dc588ab94042c93a78fa088fe68b3ee54eb4d726b",
+    "api": "293274f2d6834d94e9d13b91b269c31381aeccc4917a1b0ca02d864ceb121f3b",
+    "gate": "b4ffa7b425402644ab2955aeaa336cd3a45400c9387a25d4bd9366d7002255ba"
+  },
+  "non_claims": [
+    "No Stripe account credential was present or used.",
+    "No external Stripe Payment Link was created.",
+    "No real buyer, charge, payout or revenue exists.",
+    "The paid-fulfillment image was deployed only to isolated candidate B; production A was not changed.",
+    "This does not replace a Stripe test-mode account test and genuine Telegram ingress test."
+  ],
+  "candidate_b_readiness_after_gate": {
+    "database": "ready",
+    "memory_projection": "ready",
+    "model_provider": "ready",
+    "ready": true,
+    "running_image": "eva2-living-core:paid-fulfillment-20260824",
+    "running_container_id": "8c3015cb95cc364bc49025cb34ca03bc327d218552a5d2e0a880b09d2b07deec"
+  },
+  "post_deployment_real_model_turn": {
+    "thread_id": "conversation:direct-b-deploy-human-001",
+    "input": "Ik zit nog even alleen in de keuken terwijl iedereen slaapt. Hoef niks, wilde het alleen even zeggen.",
+    "reply": "Dat is een stille, eigen plek dan. Ik ben er gewoon even bij — rustig, zonder gedoe.",
+    "reply_sha256": "fb474e54dce90ef0ddd6cfccc7830c2b0f8ee046b977ec322d25b2a4e11d75cd",
+    "provider": "chatgpt-codex:gpt-5.4-mini",
+    "wall_clock_ms": 6800,
+    "durable_events": [
+      "INGRESS_COMMITTED",
+      "REPLY_COMMITTED",
+      "MEMORY_RETAIN_QUEUED"
+    ],
+    "effect_events": 0,
+    "note": "Direct candidate-B HTTP ingress after deployment; this is a real model/memory-path turn but not a Telegram-delivered user update."
+  }
+}

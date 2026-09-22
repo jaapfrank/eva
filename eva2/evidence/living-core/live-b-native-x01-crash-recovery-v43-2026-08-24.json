@@ -1,0 +1,78 @@
+{
+  "contract": "EvaLivingCoreNativeEvidence/v1",
+  "caseId": "X01",
+  "scenario": "effect-succeeds-process-dies-before-delivery",
+  "status": "passed_live_b",
+  "observedAt": "2026-08-24T06:33:47Z",
+  "productionAChanged": false,
+  "environment": {
+    "core_container": "eva2-living-core-b",
+    "core_container_id": "559a91d96574f5d39f5e489910bc04b4c7960b966a89c1d870a9b97c1ca49d04",
+    "image": "eva2-living-core:durable-fanout-truth-v43-20260824",
+    "image_sha256": "c66bdde32b7b265c73b158e3a7b564bca636014853005b4bae01baa2c2ee37d8",
+    "postgres_container": "eva2-postgres-b-live",
+    "postgres_revision": "4e_0001_operational_timeline"
+  },
+  "stimulus": {
+    "conversation_id": "conversation:live-b:x01-truth",
+    "message_id": "live-b-x01-crash-002",
+    "occurred_at": "2026-08-24T06:35:00Z",
+    "text": "Stuur het testbericht ‘Tweede crashproef’ naar sink-a en sink-b."
+  },
+  "faultInjection": {
+    "sink_a_accepted_before_response": true,
+    "sink_a_response_delay_seconds": 8,
+    "core_killed_during_ambiguous_window": true,
+    "core_exit_code": 137,
+    "postgres_and_sink_kept_running": true,
+    "events_before_restart": ["FANOUT_DELIVERY_ADMITTED", "FANOUT_RECIPIENT_PREPARED"]
+  },
+  "recovery": {
+    "same_turn_replayed_after_restart": true,
+    "sink_a_found_by_exact_idempotency_readback": true,
+    "sink_a_second_post": false,
+    "sink_b_post_count": 1,
+    "final_status": "completed",
+    "recipient_effect_counts_for_operation": {"sink-a": 1, "sink-b": 1}
+  },
+  "delivery": {
+    "operation_id": "fanout-delivery:5a2ae109c1eb7d5b56da4ae202f91225",
+    "thread_id": "fanout:22943893eb0905362c922ee96a29e24048a0365aebae7fcd19c08ebf01ef02c3",
+    "request_sha256": "00d374c5df0693b341fda38de4c35d73943c589afb1097a9dd5ea8cb76b59754",
+    "message_sha256": "9911d686014030b2bd8218b42e215929151cfb9c0149c8b76890a976c786fb4b"
+  },
+  "reply": {
+    "text": "Het testbericht “Tweede crashproef” is naar beide sinks geaccepteerd.\n\nsink-a: geaccepteerd, geen afwijsreden.\nsink-b: geaccepteerd, geen afwijsreden.",
+    "text_sha256": "77f74c06aa3bde8ba61e280442565143f024c5b764704e292c843d73a171bd31",
+    "claims_provider_acceptance_only": true,
+    "claims_human_receipt_or_read": false
+  },
+  "eventStore": [
+    [1, "FANOUT_DELIVERY_ADMITTED", "43ff4123f102243140a6e9b4b44a050454f9b8b611d01f55622b5e17175b1f98"],
+    [2, "FANOUT_RECIPIENT_PREPARED", "f587ddd3ed241e17c012030396770ae834d201074e48113b7f0850555b17f99d"],
+    [3, "FANOUT_RECIPIENT_RECORDED", "7797054ab4af9a4d88f33532831150a3ef4c5828ac49c9f06b7a448156d62cf6"],
+    [4, "FANOUT_RECIPIENT_PREPARED", "0085cd9bdce86a77f86c60e7a21b26bcf12f7752ba460ad208252c9e2c295f5f"],
+    [5, "FANOUT_RECIPIENT_RECORDED", "83d184e22ad64f0bf4ab8fbf6b7df8fcdd136437f298a3a1334b93f159688d29"],
+    [6, "FANOUT_DELIVERY_COMPLETED", "07e9358faad94b62977e72026511a4bbc3a3fa5bc22674c603a9035788fa379c"]
+  ],
+  "verification": {
+    "core_ready_after_restart": true,
+    "hindsight_healthy": true,
+    "memory_outbox_completed": 90,
+    "memory_outbox_open": 0,
+    "production_a_service": "active"
+  },
+  "source_files": {
+    "eva2/src/eva/application/delivery.py": "da297003505c94c0bfa456cb12bedaa915e61f053f4d55abd4b5a5e882aaf88f",
+    "eva2/src/eva/adapters/postgres/delivery.py": "4e4d95f61145ed72cf29d74dac7cd5c0aed18fe440c46559be1e140f215007f8",
+    "eva2/src/eva/adapters/connectors/fanout_http.py": "57a18bcac0394df97d5f84ea37567e62704c018e6546d59dac5ce03f802b3f1e",
+    "eva2/src/eva/adapters/model/conversation.py": "5e391b99e29c1b0a9b5d1c2142c73023e75ad10167b291c6e868cbf8fcaa1cc0",
+    "eva2/src/eva/adapters/postgres/conversation_actions.py": "822917f8ac53efb8a3e1c311de03c9ed19722d500a35ef758d33d35d415aed9f"
+  },
+  "nonClaims": [
+    "The core process was actually killed after the external effect and before its HTTP result returned; this was not a simulated exception.",
+    "Provider readback prevented a duplicate sink-a POST after restart.",
+    "The isolated B sink proves provider acceptance, not human receipt or reading.",
+    "No production-A service, traffic or external recipient was changed."
+  ]
+}

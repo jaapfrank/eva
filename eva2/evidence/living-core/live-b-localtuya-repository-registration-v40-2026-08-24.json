@@ -1,0 +1,112 @@
+{
+  "contract": "EvaLivingLocalTuyaRepositoryRegistrationGate/v1",
+  "captured_at": "2026-08-24T06:13:51Z",
+  "status": "passed_live_b_non_mutating",
+  "environment": {
+    "slot": "isolated_b",
+    "container": "eva2-living-core-b",
+    "container_id": "fcdba7d43e8e04b7a76448a4d739f248f2b7068543dd79bae876db0a9aa58afb",
+    "image": "eva2-living-core:localtuya-registration-v40-20260824",
+    "image_sha256": "8c86c8fe1b197dd2bf7bdd734ae26fa3823acaa772921734f9d68a9dde155611",
+    "health": "healthy",
+    "readiness": {
+      "database": "ready",
+      "memory_projection": "ready",
+      "model_provider": "ready",
+      "ready": true
+    },
+    "production_a_service": "eva.service",
+    "production_a_status": "active",
+    "traffic_changed": false
+  },
+  "capability": {
+    "repository_full_name": "xZetsubou/hass-localtuya",
+    "expected_version": "2026.7.0",
+    "approval_ttl_minutes": 15,
+    "approval_binds": [
+      "plan_sha256",
+      "inventory_sha256",
+      "repository_full_name",
+      "expected_version",
+      "approved_by"
+    ],
+    "durable_events": [
+      "ADVANCED_REPOSITORY_REGISTRATION_APPROVED",
+      "ADVANCED_REPOSITORY_REGISTRATION_PREPARED",
+      "ADVANCED_REPOSITORY_REGISTERED"
+    ],
+    "provider_command": "hacs/repositories/add",
+    "readback_fields": [
+      "full_name",
+      "domain",
+      "custom",
+      "can_download",
+      "available_version"
+    ],
+    "crash_recovery": "read_exact_source_before_add",
+    "package_install_included": false,
+    "device_migration_included": false
+  },
+  "live_gate": {
+    "plan_id": "advanced:58788546a0e76b95ab4a5fb7811d94bc1c6510b437e23e834182b5063eba0abf",
+    "plan_sha256_before": "502db556964414f8ffff111fff81bac6d89e12e46ccb87c89ea6f3a8cdcebcb5",
+    "rejected_repository": "rospogrigio/localtuya",
+    "rejection_http_status": 409,
+    "rejection_detail": "LocalTuya repository is not the maintained source",
+    "real_model_input": "Leg me kort uit wat de volgende veilige stap voor LocalTuya is, maar voeg niets toe en installeer niets.",
+    "real_model_reply": "De volgende veilige stap is: eerst de nog ontbrekende lokale apparaatgegevens verzamelen en per Tuya-apparaat checken of het echt geschikt is voor LocalTuya. Laat Matter-apparaten en Tuya-scenes voorlopig buiten beschouwing; die vragen eerst een aparte beoordeling of herbouw. Ik voeg niets toe en installeer niets.",
+    "real_model_reply_sha256": "f54a5b14920afaca87ec339c09ee711c53d48781b9493384cbbfcaf6161ca709",
+    "plan_sha256_after": "502db556964414f8ffff111fff81bac6d89e12e46ccb87c89ea6f3a8cdcebcb5",
+    "repositories_before": [
+      {
+        "repository_id": "249381778",
+        "full_name": "rospogrigio/localtuya",
+        "domain": "localtuya",
+        "installed": false,
+        "installed_version": null,
+        "available_version": "v5.2.5",
+        "can_download": true,
+        "minimum_home_assistant_version": "2024.1.0"
+      }
+    ],
+    "repositories_after": [
+      {
+        "repository_id": "249381778",
+        "full_name": "rospogrigio/localtuya",
+        "domain": "localtuya",
+        "installed": false,
+        "installed_version": null,
+        "available_version": "v5.2.5",
+        "can_download": true,
+        "minimum_home_assistant_version": "2024.1.0"
+      }
+    ],
+    "home_assistant_mutated": false
+  },
+  "verification": {
+    "targeted_tests": "107 passed",
+    "ruff": "passed",
+    "python_compile": "passed",
+    "real_postgresql_plan": true,
+    "real_hindsight_and_model_path": true,
+    "real_home_assistant_inventory": true,
+    "real_hacs_inventory_before_after": true,
+    "exact_registration_live_test": "awaiting_explicit_owner_instruction"
+  },
+  "source_files": {
+    "eva2/src/eva/application/advanced_tasks.py": "cbfd3374d4e1eae972d7a104b7409417403159885d77bfcfdeddad71bb304381",
+    "eva2/src/eva/adapters/connectors/home_assistant_hacs.py": "c6ea839b175f017e3875520302739df84b93bb8258eeee81f7eab551341c61cd",
+    "eva2/src/eva/adapters/postgres/advanced_tasks.py": "4cb7e5fe64aae44eb69b14cf0790ec179f828e3f49cf0b61e7fba569ba2c55f7",
+    "eva2/src/eva/adapters/postgres/conversation_actions.py": "9646fd57b6a1f3a6d9d8a7060e8e1a48336708c851516158e8aee1bcd9707860",
+    "eva2/src/eva/adapters/model/conversation.py": "f90a68948db3f43ce4f275118d7359351ee755616913b5b4a7560dcb0ae20088",
+    "eva2/src/eva/adapters/api/app.py": "e83122b446fc1bc31b78540379ab294290c24f881492eea23ad11730c050c561",
+    "eva2/src/eva/bootstrap/runtime.py": "ea5fe1dff51fb654b01e8e650314aad36aa09da577025f8b81e446f1eabf1d11",
+    "eva2/design/architecture/living-core-v1.md": "d07d0b54182b61c50a2c6be0948d7fa757acf96c5e828cdb7effb91b47abe33b"
+  },
+  "nonclaims": [
+    "The maintained repository was not added to real HACS without explicit owner instruction.",
+    "No LocalTuya package was downloaded or installed.",
+    "No Tuya, Matter, scene, automation, dashboard or physical device was changed.",
+    "The host-wide optional 4D suite was not claimed green because the host interpreter lacks dbos and PyNaCl; the changed Living Core route ran its complete 107-test gate."
+  ]
+}

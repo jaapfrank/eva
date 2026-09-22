@@ -1,0 +1,211 @@
+{
+  "date": "2026-09-21",
+  "reader": "/root",
+  "method": "Complete model-visible reads in bounded batches; truncated combined outputs reread for missing ranges. Initial hashes below refer to pre-edit corpus.",
+  "files": [
+    {
+      "path": "AGENTS.md",
+      "bytes": 8887,
+      "sha256": "8bc101a24187e7da0f25045daaeb70ee5fabf1acca20b414d2f9007e4608f45b",
+      "reading_mode": "full_content_read"
+    },
+    {
+      "path": "README.md",
+      "bytes": 1028,
+      "sha256": "ef690ef56ee5104b187c0480ee90c094dd06d7e7a7c05754f46d8bb661bc7c30",
+      "reading_mode": "full_content_read"
+    },
+    {
+      "path": "OPEN_SOURCE_COMPONENTEN.md",
+      "bytes": 21241,
+      "sha256": "8b74ccf93d7a92d105f2825448085096fd81366a729913890dfafdf34f879758",
+      "reading_mode": "full_content_read"
+    },
+    {
+      "path": "eva2/OUDE_EVA_VS_EVA2.md",
+      "bytes": 5434,
+      "sha256": "26fec3cedadc52ca92f38a0931af162c4fbc3cbdd3099742132f96c4d8a1ae00",
+      "reading_mode": "full_content_read"
+    },
+    {
+      "path": "eva2/CONCURRENTIE_EN_HERGEBRUIK.md",
+      "bytes": 21881,
+      "sha256": "1a283f52b49f2532582f679dd8f2960c38700e54f53b901cb9b9c6b3380d03c0",
+      "reading_mode": "full_content_read"
+    },
+    {
+      "path": "eva2/DOCUMENTATIE_EN_ONDERHOUD.md",
+      "bytes": 10541,
+      "sha256": "19f95c556b140c4adf70769fcf025398d6b901950467a4584a9d6e6202082b85",
+      "reading_mode": "full_content_read"
+    },
+    {
+      "path": "eva2/EVA2_MOGELIJKHEDEN_EN_GATEN.md",
+      "bytes": 8118,
+      "sha256": "fd97cfd9f24dad0f309e5751489c00a33fca40cdeadf9189a67269f7be0fb7a6",
+      "reading_mode": "full_content_read"
+    },
+    {
+      "path": "eva2/PROJECTDOEL.md",
+      "bytes": 18624,
+      "sha256": "64afceb0d61221d7d2064c5a9c2e361a59796dba98fa2fbc95e09ca1bc7e2140",
+      "reading_mode": "full_content_read"
+    },
+    {
+      "path": "eva2/TECHNISCHE_MOGELIJKHEDEN_EN_GATEN.md",
+      "bytes": 20072,
+      "sha256": "881fa7ba976bf79f2471dbb21ef1af02114f6d1596770df1d6527db4098bfb08",
+      "reading_mode": "full_content_read"
+    },
+    {
+      "path": "eva2/OPEN_SOURCE_EN_DEPENDENCYKEUZES.md",
+      "bytes": 37416,
+      "sha256": "4c5c6396bdec125aed9b7b45a2c325e36c8da7d897aafaf412b5512349f09182",
+      "reading_mode": "full_content_read"
+    },
+    {
+      "path": "eva2/TEAM_WERKWIJZE.md",
+      "bytes": 9391,
+      "sha256": "3ae1391fdd7a506accfa822b5ce8ff9c27a6fdba521885e3145b506cf2f4335f",
+      "reading_mode": "full_content_read"
+    },
+    {
+      "path": "eva2/README.md",
+      "bytes": 11778,
+      "sha256": "14ac484d1e24f95ff265a25304a41d70dfe64891e87c60c43cd8ab80222cdabc",
+      "reading_mode": "full_content_read"
+    },
+    {
+      "path": "eva2/OPENBOT_VERGELIJKING.md",
+      "bytes": 8258,
+      "sha256": "76d701f305aa445b7c31f52b1c049f96786468eba3ae0b720e3ef5f7363d0884",
+      "reading_mode": "full_content_read"
+    },
+    {
+      "path": "eva2/PROJECTEN_EN_PLANNING.md",
+      "bytes": 22657,
+      "sha256": "aa0322486d370274aa1b2c89413f6c5456527762d372409d97c52f334e63d260",
+      "reading_mode": "full_content_read"
+    },
+    {
+      "path": "eva2/TECHNISCHE_PRODUCTGATES.md",
+      "bytes": 65630,
+      "sha256": "fea3ff2f2ef7b8cce61f5db6ef4dc281e1b6b2522d7358b2830f40142aeb3254",
+      "reading_mode": "full_content_read"
+    },
+    {
+      "path": "eva2/migrations/README.md",
+      "bytes": 971,
+      "sha256": "1cbf70412cc7e03f84119100a8858bbcf8fd26d7eeb0e867da1cce1e195165ab",
+      "reading_mode": "full_content_read"
+    },
+    {
+      "path": "eva2/src/eva/adapters/model/tokenizer_data/README.md",
+      "bytes": 639,
+      "sha256": "0f3fe11ad2b6098d106040a72baf94932ff468327d9a4d65cd3efbe9bc5bebf0",
+      "reading_mode": "full_content_read"
+    },
+    {
+      "path": "eva2/connector_sdk/contracts/README.md",
+      "bytes": 218,
+      "sha256": "e0d35054a7d9c4b5904e8c1580ac7a3c2aca9544f79f9e399c43f6cd523bceee",
+      "reading_mode": "full_content_read"
+    },
+    {
+      "path": "eva2/connector_sdk/conformance/README.md",
+      "bytes": 217,
+      "sha256": "30d88ad7055705a84e9ec143f98836c94722113052bdc09bc0aae5e1ab263bc0",
+      "reading_mode": "full_content_read"
+    },
+    {
+      "path": "eva2/schemas/portable/README.md",
+      "bytes": 148,
+      "sha256": "10b7fa37bb887c87766b5b86301cb8018c30c291faab87a992ac9d0463a3cbc9",
+      "reading_mode": "full_content_read"
+    },
+    {
+      "path": "eva2/forge/README.md",
+      "bytes": 216,
+      "sha256": "8cfb29ce993d8991be061560661e04dadc547fc5598b977dc467ca2627277bbd",
+      "reading_mode": "full_content_read"
+    },
+    {
+      "path": "eva2/forge/schemas/README.md",
+      "bytes": 180,
+      "sha256": "a467c3707d450f1f952d68f3e8d7000aa801ee5734bf746ae8148bc27a343f5e",
+      "reading_mode": "full_content_read"
+    },
+    {
+      "path": "eva2/forge/quarantine/README.md",
+      "bytes": 182,
+      "sha256": "9e501a7b48778a06d627ebb644fa2e31b8cf9c6840d71e96884416630835d5f3",
+      "reading_mode": "full_content_read"
+    },
+    {
+      "path": "eva2/forge/pipeline/README.md",
+      "bytes": 151,
+      "sha256": "227b083e0090a827a3567d0dcd0852e6f857b616eec706d7120e169af6120b05",
+      "reading_mode": "full_content_read"
+    },
+    {
+      "path": "eva2/identity-proposals/eva-soul-voorstel.md",
+      "bytes": 320,
+      "sha256": "ffbe3ea0d4bd069b621427f5fe92d0f30bccdbff177a0502468550c64d170ed6",
+      "reading_mode": "full_content_read"
+    },
+    {
+      "path": "eva2/design/validation/lab-36-final-acceptance-addendum-v1.md",
+      "bytes": 10783,
+      "sha256": "e240475b836182ca96a674105d6376e332b57ab4ee595a25bf8c127333d33488",
+      "reading_mode": "full_content_read"
+    },
+    {
+      "path": "eva2/connectors/README.md",
+      "bytes": 182,
+      "sha256": "d3785607c8326029bac1743267f2528076a9a618e958a24e0f886b7c37d88db7",
+      "reading_mode": "full_content_read"
+    },
+    {
+      "path": "eva2/connectors/channel/README.md",
+      "bytes": 167,
+      "sha256": "b93874c571267e3030c03a4ca3ddee99c974e9ed5fc0263097d8f196abb267bf",
+      "reading_mode": "full_content_read"
+    },
+    {
+      "path": "eva2/connectors/erp/README.md",
+      "bytes": 112,
+      "sha256": "5b18058dfc944bb8fd23a37cd22f3e0bba3f78d2f72d57d6ac3b74484b3e8b2b",
+      "reading_mode": "full_content_read"
+    },
+    {
+      "path": "eva2/connectors/mail/README.md",
+      "bytes": 113,
+      "sha256": "d6643b279de7d66c01b8cb400b8c96392b18c2c76d52e069d8b358cfcca47d39",
+      "reading_mode": "full_content_read"
+    },
+    {
+      "path": "eva2/connectors/calendar/README.md",
+      "bytes": 132,
+      "sha256": "10937214ddae044586274af090e73b47cee03678faa471812acff0eda025b9fc",
+      "reading_mode": "full_content_read"
+    },
+    {
+      "path": "eva2/connectors/document/README.md",
+      "bytes": 136,
+      "sha256": "01e8d99bc30e75eab676505fc2786265913b0c452ecc57aa6675af27079eaf29",
+      "reading_mode": "full_content_read"
+    },
+    {
+      "path": "eva2/vendor/dbos-2.31.0-eva1/README.md",
+      "bytes": 563,
+      "sha256": "5f4dc8c14de61b4e2f40ab70581e5b80694b78098b170e191cb785db375c8180",
+      "reading_mode": "full_content_read"
+    },
+    {
+      "path": "eva2/vendor/dbos-2.30.0-eva1/README.md",
+      "bytes": 2486,
+      "sha256": "dfcd3877a3d6c2318b4f5e96f33c383c35bb84ac9015c0ef135392724ebdb096",
+      "reading_mode": "full_content_read"
+    }
+  ]
+}

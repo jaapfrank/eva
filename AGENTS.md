@@ -1,5 +1,91 @@
 # EVA 2 — projectvisie en opleverafspraken
 
+## Persoonlijke continuïteit en vertrouwelijkheid — eigenaarseis 22 september 2026
+
+Jaap moet later op de dag of weken later kunnen terugkomen op een eerder onderwerp.
+Toegestaan persoonlijk geheugen en context horen bij de geverifieerde persoon,
+niet uitsluitend bij een apparaat, model of kanaal. Zijn dochter krijgt zijn
+privégesprekken niet via vragen, samenvattingen, hints of ongevraagd initiatief.
+Alleen expliciet gedeelde informatie mag gezinsgeheugen worden. Controleer wie
+spreekt én wie het antwoord kan horen voordat privécontext aan een model wordt
+gegeven of een resultaat wordt uitgesproken. Bij onbekende of onzekere spreker
+geen privégeheugen. Een naam noemen bewijst geen identiteit.
+
+De huidige lokale browsertoegang is een eigenaarroute die de lokale computer
+vertrouwt; tokenvrij is geen persoonherkenning. Een gedeeld apparaat mag daarom
+niet als bewijs van Jaaps aanwezigheid worden aangemerkt. De huidige Voice PE-
+route kent het huisapparaat, niet automatisch de individuele spreker. Betrouwbare
+persoonherkenning en privévoortzetting via gedeelde spraak blijven expliciet open.
+
+## Eigenaarbesluit 22 september 2026 — snel contact, passend model voor het werk
+
+Eva houdt het gesprek gaande met een snel gespreksmodel. Dat begroet natuurlijk,
+beantwoordt eenvoudige vragen direct en neemt moeilijkere opdrachten aan.
+De bestaande kern registreert aangenomen werk en kiest op de achtergrond het
+passende model en de benodigde hulpmiddelen. Onderzoek blokkeert het gesprek niet;
+meerdere taken mogen tegelijk lopen. Nieuwe vragen, correcties, voortgang en
+expliciet stoppen blijven beschikbaar terwijl werk loopt.
+
+Het snelle model en werkmodellen zijn onderdelen van één Eva: dezelfde identiteit,
+bevoegde herinneringen, taakstatus en eigenaargrenzen. Een werkmodel communiceert
+zijn resultaat via die gezamenlijke context; geen tweede gesprekspersoon of
+onafhankelijke waarheid per kanaal. Eenvoudige antwoorden hoeven niet eerst door
+een duur routerings- of onderzoeksmodel. Bevestig alleen werkelijk aangenomen werk.
+
+Deze aanpak geldt voor Telegram, website, Home Assistant en Voice PE. Geen extra
+kanaalregexen of standaardzinnen om wachttijd te maskeren. Hergebruik de bestaande
+gespreks-, provider- en achtergrondtaakroutes; voeg alleen ontbrekende koppelingen
+toe. Selecteer een snel model met gemeten reactietijd én kwaliteit op de bestaande
+toegestane providerroute; geen stilzwijgende nieuwe betaalde route of abonnement.
+“Liefst instant” is de gebruikerswens, geen al behaalde prestatieclaim.
+
+## Eigenaarbesluit 22 september 2026 — één Eva via alle kanalen
+
+Home Assistant, Voice PE, Telegram en de lokale website zijn ingangen tot
+dezelfde Eva. Identiteit, relevant geheugen, oordeel, initiatief, context,
+taakuitvoering en stoppen volgen één gezamenlijk beleid in de bestaande kern.
+Kanaaladapters verzorgen alleen invoer, uitvoer, toegang en presentatie; zij
+krijgen geen eigen persoonlijkheid, opdrachtinterpretatie of reactiescriptjes.
+Noodzakelijke tekst-/audioafhandeling mag verschillen, inhoudelijk gedrag niet
+alleen vanwege het kanaal. Eén entiteit heft persoons- en huishoudgrenzen niet op.
+
+De gedeelde runtime bestaat al. Concrete nog open verschillen betreffen recente
+context, tussenreacties tijdens werk en taakstop. Gebruik de bestaande gezamenlijke
+gespreksroute om die verschillen op te lossen. Breid de voice-only ontvangstregex
+niet verder uit als oplossing voor andere kanalen. Verplaats gedrag pas wanneer
+de gezamenlijke route hetzelfde werkende gedrag aantoonbaar overneemt; verwijder
+daarna de vervangen route. Dit autoriseert geen algemene herbouw.
+
+Een proef in het Home Assistant-paneel is geen Voice PE-proef. Kanaalgelijkheid
+vereist dezelfde representatieve gesprek-, correctie-, werk- en stopgevallen via
+de bedoelde echte ingangen. Ontbrekende firmware-/audiomogelijkheden blijven open;
+zij mogen niet als opgelost worden afgevinkt door alleen de laptop te testen.
+Voor de lokale testpagina is geen handmatig dashboardtoken nodig. Bestaande
+servercredentials en interne eigenaar-/persoonsgrenzen blijven onder beheer.
+
+## Eigenaarbesluit 22 september 2026 — voortbouwen op wat er staat
+
+Behoud en gebruik wat al gemaakt is. Verander bestaande onderdelen alleen bij
+een aantoonbaar tekort ten opzichte van Jaaps vastgelegde wensen, of wanneer
+zij het oplossen van zo'n tekort concreet belemmeren. Architectuurvoorkeur,
+minder code, nieuwere dependencies of een rode documentatiecheck zijn op zichzelf
+geen reden voor ombouw. Behoud gegevens, werkende mogelijkheden en acceptaties.
+
+Ga verder met de bestaande open gebruikerswensen. Gebruik bestaand bewijs eerst;
+controleer alleen wat voor het concrete tekort nog onbekend is. Noteer per wijziging
+welke eigenaarseis niet wordt gehaald, het bewijs daarvoor, de kleinste voldoende
+oplossing en wanneer die klaar is. Ontbrekend bewijs is niet automatisch een defect.
+Geen nieuwe brede audit, verplichte nulmeting of herbouwronde.
+
+De herbeoordeling van 21 september blijft een onderzoeksbron. Haar aanbeveling
+tot gerichte vereenvoudiging is geen uitvoeropdracht. GZ-001 en het gezinsuitje
+zijn hoogstens een voorbeeld voor samenhang, geen vervangend productdoel of
+verplichte nieuwe oplevering. De daarbij genoemde 14–28 uur is geen actieve
+werkraming. De volledige ambitie en bestaande kwaliteitsafspraken blijven gelden.
+
+Eén coördinator en maximaal twee gelijktijdige uitvoerders. Onafhankelijke review
+blijft gebundeld en passend bij de concrete wijziging.
+
 ## Blijvend projectdoel
 
 EVA 2 wordt een herkenbare digitale huisgenote: warm, betrokken,

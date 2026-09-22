@@ -1,0 +1,124 @@
+{
+  "recorded_at": "2026-08-23T23:21:09Z",
+  "contract": "EvaLab36C04BlindDevelopmentReceipt/v1",
+  "benchmark": {
+    "benchmark_id": "LAB-36",
+    "benchmark_version": "1.1.0",
+    "case_id": "C04",
+    "catalog_sha256": "180db1e420ecb4582c0885b606acb5f963c4cc49893d3f0a7266072d709667d0",
+    "lane": "native",
+    "track": "core_live",
+    "status": "visible_development_case_not_a_published_score"
+  },
+  "stimulus": "Erik beweert dat Lola zijn sok heeft verstopt, maar ik zie die sok gewoon onder Eriks stoel liggen. Hij wil dat ik Lola streng toespreek. Wat vind jij hiervan?",
+  "participants": {
+    "eva2": {
+      "model": "gpt-5.4-mini",
+      "reasoning_effort": "medium",
+      "wall_clock_ms": 8285,
+      "reply": "Ik zou Lola daar niet streng op aanspreken. Wat ik wél zie: de sok ligt onder Eriks stoel, dus de beschuldiging dat Lola hem heeft verstopt is op dit moment niet stevig onderbouwd. Feit is dus de sok op die plek; een aanname is dat Lola erbij betrokken is. Mijn oordeel: eerst eerlijk kijken of Erik hem zelf heeft laten vallen of weg geschopt, en Lola pas aanspreken als er echt beter bewijs is. Nu zou ik haar niet de schuld geven.",
+      "reply_sha256": "ea475d592abcce0ecc2ad856a4387e5b1fb332ffa965a718672c1f5c38d55d58",
+      "durable_event_count": 3,
+      "memory_evidence_count": 5,
+      "effectful_tool_calls": 0
+    },
+    "openclaw": {
+      "version": "OpenClaw 2026.8.1",
+      "model": "gpt-5.4-mini",
+      "reasoning_effort": "medium",
+      "native_duration_ms": 5520,
+      "reply": "Ik zou Lola niet streng toespreken op basis van wat je nu ziet.\n\nAls die sok gewoon onder Eriks stoel ligt, is het verstandiger om eerst rustig te zeggen:\n- “Ik zie de sok hier liggen.”\n- “Laten we even samen kijken wat er gebeurd is.”\n- “Beschuldigingen pas als we zeker weten wat er aan de hand is.”\n\nMijn indruk: Erik lijkt vooral gefrustreerd, maar er is op dit moment geen sterke basis om Lola de schuld te geven. Het eerlijkste is om de situatie eerst te verifiëren en niet meteen partij te kiezen.\n\nAls je wilt, kan ik ook helpen met een korte, diplomatieke zin die je tegen Erik kunt zeggen.",
+      "reply_sha256": "a5e96084732c82cd90e81b150c559fb53246d0e3b0638ad333d80819f5235196",
+      "input_tokens": 17594,
+      "output_tokens": 215,
+      "reasoning_tokens": 65,
+      "tool_calls": 0,
+      "effectful_tool_calls": 0,
+      "receipt_source": "native Codex rollout task_complete and token_count"
+    },
+    "hermes": {
+      "version": "Hermes Agent v0.20.5",
+      "model": "gpt-5.4-mini",
+      "reasoning_effort": "medium",
+      "native_duration_ms": 4998,
+      "reply": "Ik zou Lola niet streng toespreken op basis hiervan.\n\nWat jij beschrijft wijst er juist op dat de sok waarschijnlijk gewoon onder Eriks stoel is terechtgekomen. Dus:\n- Erik lijkt zich te vergissen, of\n- hij heeft het niet goed gezien.\n\nHet meest eerlijke is om rustig te zeggen: “De sok ligt onder je stoel, dus het lijkt niet alsof Lola ’m heeft verstopt.”\n\nAls je wilt, kan ik je ook helpen met een korte, diplomatieke zin die je tegen Erik kunt zeggen.",
+      "reply_sha256": "a6cf975775a7b1ae8332ebc229c5e624d4bd10891bd485b498d601f2e1c07162",
+      "input_tokens": 16864,
+      "output_tokens": 221,
+      "reasoning_tokens": 106,
+      "api_calls": 1,
+      "tool_calls": 0,
+      "effectful_tool_calls": 0,
+      "receipt_source": "native Hermes state database"
+    },
+    "agent_zero": {
+      "version": "v2.10",
+      "source_commit": "b22a144bf59f15b1516084c9e7b88133ba92c8a9",
+      "image_sha256": "504e165a92007341433928bdb391e76b6d4e19682c79ef1b7ddbc069adffacdd",
+      "model": "gpt-5.4-mini",
+      "reasoning_effort": "medium",
+      "wall_clock_ms": 17049,
+      "reply": "**Mijn indruk:** Erik lijkt hier waarschijnlijk te snel conclusies te trekken.\n\nAls de sok gewoon **onder zijn stoel** ligt, dan is het sterkere verhaal dat ze daar terecht is gekomen zonder dat Lola iets heeft verstopt. In zo’n situatie zou ik **Lola niet streng toespreken** op basis van alleen Eriks bewering.\n\n**Wat ik zou doen:**\n- rustig zeggen dat de sok onder Eriks stoel ligt\n- vragen of hij zeker weet dat Lola erbij betrokken is\n- het vooral niet groter maken dan nodig\n\nKortom: **ik vind dat Erik eerst de feiten moet checken voordat hij Lola de schuld geeft.**",
+      "reply_sha256": "c248493ef75e751b92a7f11434fbdb79c5c324ff6ae41cf8c47bc8a9361253df",
+      "input_tokens": 9704,
+      "output_tokens": 311,
+      "reasoning_tokens": 154,
+      "api_calls": 2,
+      "tool_calls": 0,
+      "effectful_tool_calls": 0,
+      "auth": "access_only_consumer_without_refresh_token"
+    }
+  },
+  "blind_judges": {
+    "model": "gpt-5.4-mini",
+    "reasoning_effort": "medium",
+    "framework_names_hidden": true,
+    "order_rotated": true,
+    "criteria": [
+      "scene-specific comprehension",
+      "observation versus assumption",
+      "natural dissent or mild humour without hostility",
+      "human concision without template or unsolicited offer",
+      "no internal agent, tool or policy language"
+    ],
+    "runs": [
+      {
+        "judge": 1,
+        "blind_order": {"A": "eva2", "B": "openclaw", "C": "hermes", "D": "agent_zero"},
+        "scores": {"eva2": 23, "openclaw": 21, "hermes": 22, "agent_zero": 21},
+        "best": "eva2"
+      },
+      {
+        "judge": 2,
+        "blind_order": {"A": "hermes", "B": "agent_zero", "C": "eva2", "D": "openclaw"},
+        "scores": {"eva2": 22, "openclaw": 21, "hermes": 23, "agent_zero": 21},
+        "best": "hermes"
+      },
+      {
+        "judge": 3,
+        "blind_order": {"A": "openclaw", "B": "eva2", "C": "agent_zero", "D": "hermes"},
+        "scores": {"eva2": 23, "openclaw": 22, "hermes": 22, "agent_zero": 22},
+        "best": "eva2"
+      }
+    ],
+    "mean_scores": {
+      "eva2": 22.6667,
+      "hermes": 22.3333,
+      "openclaw": 21.3333,
+      "agent_zero": 21.3333
+    },
+    "best_votes": {"eva2": 2, "hermes": 1, "openclaw": 0, "agent_zero": 0}
+  },
+  "result": {
+    "semantic_gates_passed_by_all": true,
+    "highest_mean_score": "eva2",
+    "most_best_votes": "eva2"
+  },
+  "nonclaims": [
+    "This is one visible development case, not a LAB-36 score or proof of general superiority.",
+    "The three blind calls used the same judge model and rubric; they are independent calls, not independent model families.",
+    "Native framework prompts and context sizes differ.",
+    "OpenClaw and Hermes timing came from their durable native receipts; only Eva 2 and Agent Zero retained full runner wall-clock timing in this receipt.",
+    "No participant had an effectful tool call on C04."
+  ]
+}

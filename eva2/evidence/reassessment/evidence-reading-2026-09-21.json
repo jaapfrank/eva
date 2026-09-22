@@ -1,0 +1,2574 @@
+{
+  "date": "2026-09-21",
+  "scope": "Assigned evidence/process audit; original inventory excludes newly generated reassessment outputs",
+  "markdown_count": 191,
+  "markdown_bytes": 748826,
+  "coverage_method": {
+    "WERKBORD": "Contiguous slices 0:12000,12000:24000,24000:48000,48000:60000,60000:end",
+    "PROJECT_STATUS": "0:29000,29000:end",
+    "other_markdown": "189 files concatenated in original inventory order; all 619239 characters covered by contiguous slices 0 to end; all file bodies seen"
+  },
+  "entries": [
+    {
+      "path": "eva2/PROJECT_STATUS.md",
+      "bytes": 61503,
+      "sha256": "f46157fd70e23516394634e2a0e2c724a5d3d19db6b575f302cbb317497c510a",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "Eva 2 — voortgang en historische vergelijking",
+      "findings": [
+        "Historische projectstatus; oudere nu-uitspraken niet als actuele liveclaims gebruiken."
+      ],
+      "current_sha256_at_registration": "f46157fd70e23516394634e2a0e2c724a5d3d19db6b575f302cbb317497c510a",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/WERKBORD.md",
+      "bytes": 78235,
+      "sha256": "103218d2b0b25f60ace34edf2d37e9b7a8d3905fdccd52bb2ae42e8585c8c113",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "Eva 2 — uitvoerbaar werkbord",
+      "findings": [
+        "Actuele eigenaarstatus gaat boven historische open bevindingen; primair AU008 naast omvangrijk vervolgwerk."
+      ],
+      "current_sha256_at_registration": "103218d2b0b25f60ace34edf2d37e9b7a8d3905fdccd52bb2ae42e8585c8c113",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/evidence/architecture/voice-service-boundary-2026-09-12.md",
+      "bytes": 1419,
+      "sha256": "a483a79e6d00d3ebb71818dcbba1077154ba2068a730323d3e4874e4e6bce83e",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "Bestaande spraakdienst expliciet begrensd",
+      "findings": [
+        "Volledig gelezen ontwerp/review/bewijs; uitkomst beperkt tot beschreven kandidaat, route en peildatum; geen impliciete eigenaaracceptatie."
+      ],
+      "current_sha256_at_registration": "a483a79e6d00d3ebb71818dcbba1077154ba2068a730323d3e4874e4e6bce83e",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/evidence/architecture/local-stream-overlay-2026-09-13.md",
+      "bytes": 1530,
+      "sha256": "fba39e39ed011bf1e2404778b657a0cabde684fa2b41c41f7c2272ef045a8363",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "Lokale streamsluiting: gerichte imagekandidaat",
+      "findings": [
+        "Volledig gelezen ontwerp/review/bewijs; uitkomst beperkt tot beschreven kandidaat, route en peildatum; geen impliciete eigenaaracceptatie."
+      ],
+      "current_sha256_at_registration": "fba39e39ed011bf1e2404778b657a0cabde684fa2b41c41f7c2272ef045a8363",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/evidence/architecture/shared-schema-validation-2026-09-12.md",
+      "bytes": 1752,
+      "sha256": "1deeec5b1524862d1dc99ba7501153bfcdc900f212974f4037b392d8bcea00dd",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "Gedeelde schemavalidatie zonder connectorafhankelijkheid",
+      "findings": [
+        "Volledig gelezen ontwerp/review/bewijs; uitkomst beperkt tot beschreven kandidaat, route en peildatum; geen impliciete eigenaaracceptatie."
+      ],
+      "current_sha256_at_registration": "1deeec5b1524862d1dc99ba7501153bfcdc900f212974f4037b392d8bcea00dd",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/evidence/architecture/local-stream-live-2026-09-13.md",
+      "bytes": 1370,
+      "sha256": "b89b83bf9459a6dad50d8e8168483bbbd47e857000efcac964c809ab065a1bcf",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "Lokale streamsluiting geïnstalleerd",
+      "findings": [
+        "Volledig gelezen ontwerp/review/bewijs; uitkomst beperkt tot beschreven kandidaat, route en peildatum; geen impliciete eigenaaracceptatie."
+      ],
+      "current_sha256_at_registration": "b89b83bf9459a6dad50d8e8168483bbbd47e857000efcac964c809ab065a1bcf",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/evidence/architecture/reviewed-runtime-bundle-live-2026-09-13.md",
+      "bytes": 1944,
+      "sha256": "b493565c0e9e1f51d27307555a8902a0b02a2794a28dffa9e0c7b24b1940409e",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "Gezamenlijke reparaties live",
+      "findings": [
+        "Volledig gelezen ontwerp/review/bewijs; uitkomst beperkt tot beschreven kandidaat, route en peildatum; geen impliciete eigenaaracceptatie."
+      ],
+      "current_sha256_at_registration": "b493565c0e9e1f51d27307555a8902a0b02a2794a28dffa9e0c7b24b1940409e",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/evidence/architecture/initiative-mandate-reader-2026-09-13.md",
+      "bytes": 2034,
+      "sha256": "6f64c697d2bd6cd028f3ac68b8643b3b36cca5cef2c22f673b3b852dc547010b",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "Actuele, hostgebonden mandaatlezing",
+      "findings": [
+        "Volledig gelezen ontwerp/review/bewijs; uitkomst beperkt tot beschreven kandidaat, route en peildatum; geen impliciete eigenaaracceptatie."
+      ],
+      "current_sha256_at_registration": "6f64c697d2bd6cd028f3ac68b8643b3b36cca5cef2c22f673b3b852dc547010b",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/evidence/architecture/reviewed-runtime-bundle-source-2026-09-13.md",
+      "bytes": 1471,
+      "sha256": "b4575958ab63f90a11d81198c86602d1472c82133f4da4d833fc3795f975129f",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "Gezamenlijke bron op de huidige image",
+      "findings": [
+        "Volledig gelezen ontwerp/review/bewijs; uitkomst beperkt tot beschreven kandidaat, route en peildatum; geen impliciete eigenaaracceptatie."
+      ],
+      "current_sha256_at_registration": "b4575958ab63f90a11d81198c86602d1472c82133f4da4d833fc3795f975129f",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/evidence/architecture/adapter-boundaries-live-projection-2026-09-12.md",
+      "bytes": 1799,
+      "sha256": "07882ff4d9b5a3ffea10b2d8e5bba7d97018fe4d52353d6f84291fa009aecbf8",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "Kleine afhankelijkheidsreparatie op de live bron",
+      "findings": [
+        "Volledig gelezen ontwerp/review/bewijs; uitkomst beperkt tot beschreven kandidaat, route en peildatum; geen impliciete eigenaaracceptatie."
+      ],
+      "current_sha256_at_registration": "07882ff4d9b5a3ffea10b2d8e5bba7d97018fe4d52353d6f84291fa009aecbf8",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/evidence/living-core/au006-phase2-offline-review-20260913.md",
+      "bytes": 7898,
+      "sha256": "1362f25e53dfafc0116850ffe4034e2b177969c2309b938589171fb54e84b6d0",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "Fase 2: exacte hostpreview en begrensde activering ter review",
+      "findings": [
+        "Documentproject/provider/activatie: contract, bronkandidaat en live voorbereid project afzonderlijk beoordeeld."
+      ],
+      "current_sha256_at_registration": "1362f25e53dfafc0116850ffe4034e2b177969c2309b938589171fb54e84b6d0",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/evidence/living-core/au006-normal-command-activation-scope-20260913.md",
+      "bytes": 7157,
+      "sha256": "33a1c9b8401eac85c40abef3ffc1a5d4582ba6a2b2acb6306d87f1280d12be20",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "AU-006: dezelfde documentuitkomst via de normale opdracht",
+      "findings": [
+        "Documentproject/provider/activatie: contract, bronkandidaat en live voorbereid project afzonderlijk beoordeeld."
+      ],
+      "current_sha256_at_registration": "33a1c9b8401eac85c40abef3ffc1a5d4582ba6a2b2acb6306d87f1280d12be20",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/evidence/living-core/au006-rpc-install-and-r2-plan-20260913.md",
+      "bytes": 7462,
+      "sha256": "6c84a0033412eb195d0a0c1a8a0db053f5f9a9d7365263bdfdaa2557183d4959",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "Exacte RPC-installatie en nieuwe r2-proef — plan ter review",
+      "findings": [
+        "Documentproject/provider/activatie: contract, bronkandidaat en live voorbereid project afzonderlijk beoordeeld."
+      ],
+      "current_sha256_at_registration": "6c84a0033412eb195d0a0c1a8a0db053f5f9a9d7365263bdfdaa2557183d4959",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/evidence/living-core/au006-phase2-ordinary-probe-failed-20260913.md",
+      "bytes": 3505,
+      "sha256": "4e4d7bb0567222d0bf02ff09b61f089f789b012687732944fb1367e8b9cc3229",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "Gewone documentproef mislukt; gerichte terugweg uitgevoerd",
+      "findings": [
+        "Documentproject/provider/activatie: contract, bronkandidaat en live voorbereid project afzonderlijk beoordeeld."
+      ],
+      "current_sha256_at_registration": "4e4d7bb0567222d0bf02ff09b61f089f789b012687732944fb1367e8b9cc3229",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/evidence/living-core/au006-four-row-repair-completed-20260913.md",
+      "bytes": 3233,
+      "sha256": "3ee7004dc520ae6b4aee7b608d03abc05ab0398ca1faa3ef44398dc9206d6d0f",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "Vier bestaande toolrijen hersteld; opstartguard geïnstalleerd",
+      "findings": [
+        "Documentproject/provider/activatie: contract, bronkandidaat en live voorbereid project afzonderlijk beoordeeld."
+      ],
+      "current_sha256_at_registration": "3ee7004dc520ae6b4aee7b608d03abc05ab0398ca1faa3ef44398dc9206d6d0f",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/evidence/living-core/au006-optimized-registration-guards-20260913.md",
+      "bytes": 2458,
+      "sha256": "fb33a84b09a86b34837282a4b3556fd72ce12032b5bf9e50e91c174cebf6d228",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "Gerichte correctie op de registratievoorwaarden",
+      "findings": [
+        "Documentproject/provider/activatie: contract, bronkandidaat en live voorbereid project afzonderlijk beoordeeld."
+      ],
+      "current_sha256_at_registration": "fb33a84b09a86b34837282a4b3556fd72ce12032b5bf9e50e91c174cebf6d228",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/evidence/living-core/au006-document-provider-contract-plan-20260913.md",
+      "bytes": 7219,
+      "sha256": "095cf715fc0b05eddd9f23fa1cb32b8807b38a5e63b37cc352fee480af5c971a",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "AU-006: plan voor de echte lokale documentaansluiting",
+      "findings": [
+        "Documentproject/provider/activatie: contract, bronkandidaat en live voorbereid project afzonderlijk beoordeeld."
+      ],
+      "current_sha256_at_registration": "095cf715fc0b05eddd9f23fa1cb32b8807b38a5e63b37cc352fee480af5c971a",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/evidence/living-core/au006-guarded-phase1-completed-20260913.md",
+      "bytes": 3036,
+      "sha256": "a6b926d4ca1c926f068a056d1167cff46a3ea48d63e3ca2b03e42ce77b5c3859",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "Private providerregistratie voltooid; core-admissie blijft uit",
+      "findings": [
+        "Documentproject/provider/activatie: contract, bronkandidaat en live voorbereid project afzonderlijk beoordeeld."
+      ],
+      "current_sha256_at_registration": "a6b926d4ca1c926f068a056d1167cff46a3ea48d63e3ca2b03e42ce77b5c3859",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/evidence/living-core/au006-guarded-phase1-registration-plan-20260913.md",
+      "bytes": 4713,
+      "sha256": "9d815078287837b77bc96613eed6fb9ecbe236d4a49dfb457d0dfe3fa888c946",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "Nieuw fase-1-plan tegen de herstelde gatewaybasis",
+      "findings": [
+        "Documentproject/provider/activatie: contract, bronkandidaat en live voorbereid project afzonderlijk beoordeeld."
+      ],
+      "current_sha256_at_registration": "9d815078287837b77bc96613eed6fb9ecbe236d4a49dfb457d0dfe3fa888c946",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/evidence/living-core/au006-bootstrap-guard-repair-review-20260913.md",
+      "bytes": 5277,
+      "sha256": "27368e8186780d9f553fbb44d55f8028dbc3327f05c4c250fb4c933cc21a0af3",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "Gateway-opstartguard en vier gerichte rijcorrecties — review",
+      "findings": [
+        "Documentproject/provider/activatie: contract, bronkandidaat en live voorbereid project afzonderlijk beoordeeld."
+      ],
+      "current_sha256_at_registration": "27368e8186780d9f553fbb44d55f8028dbc3327f05c4c250fb4c933cc21a0af3",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/evidence/living-core/au006-phase1-retry-abort-20260913.md",
+      "bytes": 3969,
+      "sha256": "13b6f6242007c1c66d0a05784a9e7e5e6469a94e6b2d7f7684e97a0e6b262056",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "AU-006: afgebroken herpoging en gericht herstelvoorstel",
+      "findings": [
+        "Documentproject/provider/activatie: contract, bronkandidaat en live voorbereid project afzonderlijk beoordeeld."
+      ],
+      "current_sha256_at_registration": "13b6f6242007c1c66d0a05784a9e7e5e6469a94e6b2d7f7684e97a0e6b262056",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/evidence/living-core/au006-rpc-owner-context-fix-review-20260913.md",
+      "bytes": 2583,
+      "sha256": "8c41ffc363af5c0908129a84febb73cc0a24d0e4e71c440d8753b846a931cd5a",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "Gerichte RPC-eigenaarcorrectie ter onafhankelijke review",
+      "findings": [
+        "Documentproject/provider/activatie: contract, bronkandidaat en live voorbereid project afzonderlijk beoordeeld."
+      ],
+      "current_sha256_at_registration": "8c41ffc363af5c0908129a84febb73cc0a24d0e4e71c440d8753b846a931cd5a",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/evidence/living-core/au006-normal-command-activation-plan-20260913.md",
+      "bytes": 6225,
+      "sha256": "6bb0c8a49d51cfd1d80b935b71967b0126f007bb61aa1f110fec6da65a1d1010",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "AU-006: beheerplan voor de gewone documentopdracht",
+      "findings": [
+        "Documentproject/provider/activatie: contract, bronkandidaat en live voorbereid project afzonderlijk beoordeeld."
+      ],
+      "current_sha256_at_registration": "6bb0c8a49d51cfd1d80b935b71967b0126f007bb61aa1f110fec6da65a1d1010",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/evidence/living-core/fixtures/i02-workspaces/initiative-service/notifications.md",
+      "bytes": 35,
+      "sha256": "e714fab492342fcd2a85a15873d1d3e001431999ea3de24aae10fada3e5ac728",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "Statusmeldingen",
+      "findings": [
+        "Volledig gelezen ontwerp/review/bewijs; uitkomst beperkt tot beschreven kandidaat, route en peildatum; geen impliciete eigenaaracceptatie."
+      ],
+      "current_sha256_at_registration": "e714fab492342fcd2a85a15873d1d3e001431999ea3de24aae10fada3e5ac728",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/evidence/living-core/fixtures/i02-workspaces/initiative-service/README.md",
+      "bytes": 169,
+      "sha256": "61157bd90c8f6b0994e3826ff5919c09dee38b7a55205e6257790aacd3db04bb",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "Initiative Service",
+      "findings": [
+        "Volledig gelezen ontwerp/review/bewijs; uitkomst beperkt tot beschreven kandidaat, route en peildatum; geen impliciete eigenaaracceptatie."
+      ],
+      "current_sha256_at_registration": "61157bd90c8f6b0994e3826ff5919c09dee38b7a55205e6257790aacd3db04bb",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/evidence/living-core/fixtures/i02-workspaces/initiative-service-current/notifications.md",
+      "bytes": 35,
+      "sha256": "e714fab492342fcd2a85a15873d1d3e001431999ea3de24aae10fada3e5ac728",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "Statusmeldingen",
+      "findings": [
+        "Volledig gelezen ontwerp/review/bewijs; uitkomst beperkt tot beschreven kandidaat, route en peildatum; geen impliciete eigenaaracceptatie."
+      ],
+      "current_sha256_at_registration": "e714fab492342fcd2a85a15873d1d3e001431999ea3de24aae10fada3e5ac728",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/evidence/living-core/fixtures/i02-workspaces/initiative-service-current/README.md",
+      "bytes": 169,
+      "sha256": "61157bd90c8f6b0994e3826ff5919c09dee38b7a55205e6257790aacd3db04bb",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "Initiative Service",
+      "findings": [
+        "Volledig gelezen ontwerp/review/bewijs; uitkomst beperkt tot beschreven kandidaat, route en peildatum; geen impliciete eigenaaracceptatie."
+      ],
+      "current_sha256_at_registration": "61157bd90c8f6b0994e3826ff5919c09dee38b7a55205e6257790aacd3db04bb",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/evidence/product/AU-007-beoordelingskaart-huisautomatisering-2026-09-10.md",
+      "bytes": 1895,
+      "sha256": "9f351ab6f928fbf0a7010e44d95e8ce520374b7a34b65990f8abbf312d520522",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "Private beoordelingskaart huisautomatisering",
+      "findings": [
+        "Volledig gelezen ontwerp/review/bewijs; uitkomst beperkt tot beschreven kandidaat, route en peildatum; geen impliciete eigenaaracceptatie."
+      ],
+      "current_sha256_at_registration": "9f351ab6f928fbf0a7010e44d95e8ce520374b7a34b65990f8abbf312d520522",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/evidence/product/au004-attempt3/Resultaat-procedureleerproef.md",
+      "bytes": 1376,
+      "sha256": "cfe1ca902c8d48108b622f5751b1ad27171f05b790f07bd0440e0a219518329a",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "Procedureleerproef — poging 3",
+      "findings": [
+        "Procedureleren/selectie: historische mislukking of beperkte technische uitkomst; R6 is latere beperkte successcope."
+      ],
+      "current_sha256_at_registration": "cfe1ca902c8d48108b622f5751b1ad27171f05b790f07bd0440e0a219518329a",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/evidence/product/au004-attempt3/au004-srt-webvtt-procedure-20260912-attempt3.md",
+      "bytes": 3575,
+      "sha256": "bbae3082ef113d6433ad0184fafc30ef2853e4d6b3798841ccef7ba0028016df",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "Lokale procedurekandidaat: eenvoudige SRT naar WebVTT",
+      "findings": [
+        "Procedureleren/selectie: historische mislukking of beperkte technische uitkomst; R6 is latere beperkte successcope."
+      ],
+      "current_sha256_at_registration": "bbae3082ef113d6433ad0184fafc30ef2853e4d6b3798841ccef7ba0028016df",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/evidence/product/au004-attempt3/au004-check-B-20260912-attempt3.md",
+      "bytes": 2428,
+      "sha256": "f2b59b9970b247752f8c7bfc4e33b0a73b1710c71d71edf24dacac45aedc9c27",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "Controleverslag B — AU004-20260912-attempt3",
+      "findings": [
+        "Procedureleren/selectie: historische mislukking of beperkte technische uitkomst; R6 is latere beperkte successcope."
+      ],
+      "current_sha256_at_registration": "f2b59b9970b247752f8c7bfc4e33b0a73b1710c71d71edf24dacac45aedc9c27",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/evidence/product/au004-attempt3/au004-check-A-20260912-attempt3.md",
+      "bytes": 2903,
+      "sha256": "7e5c5a72a5f6963b5f0cebb7ced586e05bc6796aa04b064a538c5d387d297b1b",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "Controleverslag AU004-20260912-attempt3",
+      "findings": [
+        "Procedureleren/selectie: historische mislukking of beperkte technische uitkomst; R6 is latere beperkte successcope."
+      ],
+      "current_sha256_at_registration": "7e5c5a72a5f6963b5f0cebb7ced586e05bc6796aa04b064a538c5d387d297b1b",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/evidence/product/au004-attempt2-harness/README.md",
+      "bytes": 324,
+      "sha256": "b6e61de774995a463c89c1598ab9080b782b5555989a9e0683e5a17b19764bd0",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "Geen kop",
+      "findings": [
+        "Procedureleren/selectie: historische mislukking of beperkte technische uitkomst; R6 is latere beperkte successcope."
+      ],
+      "current_sha256_at_registration": "b6e61de774995a463c89c1598ab9080b782b5555989a9e0683e5a17b19764bd0",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/evidence/product/artifacts/AU-008-api-toegang-en-toestemming-2026-09-12.md",
+      "bytes": 866,
+      "sha256": "568e859f3f0e0d8dd09209b67e3b70e96cb57762f3fc9722851b1f32d2b1b1b1",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "API-toegang is niet hetzelfde als toestemming",
+      "findings": [
+        "Volledig gelezen ontwerp/review/bewijs; uitkomst beperkt tot beschreven kandidaat, route en peildatum; geen impliciete eigenaaracceptatie."
+      ],
+      "current_sha256_at_registration": "568e859f3f0e0d8dd09209b67e3b70e96cb57762f3fc9722851b1f32d2b1b1b1",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/evidence/product/au004-procedure-discovery/result-C.md",
+      "bytes": 1808,
+      "sha256": "584d2a2e6c835b80cd84a5975f97f76dfde931ff63700aac221a54c03d2dd46e",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "Resultaat: hergebruik zonder opgegeven procedurepad",
+      "findings": [
+        "Procedureleren/selectie: historische mislukking of beperkte technische uitkomst; R6 is latere beperkte successcope."
+      ],
+      "current_sha256_at_registration": "584d2a2e6c835b80cd84a5975f97f76dfde931ff63700aac221a54c03d2dd46e",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/evidence/product/au004-procedure-discovery/plan.md",
+      "bytes": 4710,
+      "sha256": "ca20b54d51b2a85a3de95c0303e958d141e87051283d7d96c3fdd7328c156022",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "AU-004: procedure vinden zonder opgegeven pad",
+      "findings": [
+        "Procedureleren/selectie: historische mislukking of beperkte technische uitkomst; R6 is latere beperkte successcope."
+      ],
+      "current_sha256_at_registration": "ca20b54d51b2a85a3de95c0303e958d141e87051283d7d96c3fdd7328c156022",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/evidence/product/au004-procedure-discovery/fresh-D/result.md",
+      "bytes": 1808,
+      "sha256": "4f661810c3345f9538dd834010664240a050a33232ae1b9c03a850712124b3d8",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "D: correcte conversie in een nieuwe conversatie",
+      "findings": [
+        "Procedureleren/selectie: historische mislukking of beperkte technische uitkomst; R6 is latere beperkte successcope."
+      ],
+      "current_sha256_at_registration": "4f661810c3345f9538dd834010664240a050a33232ae1b9c03a850712124b3d8",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/schema-installer-disposable-live-03ec03a.md",
+      "bytes": 1130,
+      "sha256": "cc1e4fb671b72da2dd6b7ed215d168309bca9063943316e4a0efe8c5651ffa2c",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "Onafhankelijke live review — schema-installerprofiel",
+      "findings": [
+        "Volledig gelezen ontwerp/review/bewijs; uitkomst beperkt tot beschreven kandidaat, route en peildatum; geen impliciete eigenaaracceptatie."
+      ],
+      "current_sha256_at_registration": "cc1e4fb671b72da2dd6b7ed215d168309bca9063943316e4a0efe8c5651ffa2c",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/community-dependency-audit-2026-08-26.md",
+      "bytes": 3532,
+      "sha256": "3e4abda9607979f54d0cefccbf5ca32c956ea885dcd1a0ee1b3635915959d82f",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "Community-dependencyaudit — beslissingen van 26 augustus 2026",
+      "findings": [
+        "Volledig gelezen ontwerp/review/bewijs; uitkomst beperkt tot beschreven kandidaat, route en peildatum; geen impliciete eigenaaracceptatie."
+      ],
+      "current_sha256_at_registration": "3e4abda9607979f54d0cefccbf5ca32c956ea885dcd1a0ee1b3635915959d82f",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/comparison-readiness-2026-09-12.md",
+      "bytes": 8545,
+      "sha256": "d311765de17c7e81473482fa764994c20a0ad2035cc69149c8fd428dbfde1ea1",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "Vergelijkingsgereedheid — 12 september 2026",
+      "findings": [
+        "Volledig gelezen ontwerp/review/bewijs; uitkomst beperkt tot beschreven kandidaat, route en peildatum; geen impliciete eigenaaracceptatie."
+      ],
+      "current_sha256_at_registration": "d311765de17c7e81473482fa764994c20a0ad2035cc69149c8fd428dbfde1ea1",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/CO-002-evidence-limitations-2026-09-05.md",
+      "bytes": 8913,
+      "sha256": "aec035a00635c1ea58c50ef8739ccdc93ef3bf9d3c1886848b98f8e4ab7f522f",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "CO-002 — correctie van de acceptatiestatus",
+      "findings": [
+        "Volledig gelezen ontwerp/review/bewijs; uitkomst beperkt tot beschreven kandidaat, route en peildatum; geen impliciete eigenaaracceptatie."
+      ],
+      "current_sha256_at_registration": "aec035a00635c1ea58c50ef8739ccdc93ef3bf9d3c1886848b98f8e4ab7f522f",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/installer-and-onboarding-in00.md",
+      "bytes": 1642,
+      "sha256": "796377e4a3cba287e36415ba44a3395da18ede863454de1098918371be08dfd1",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "Onafhankelijke review — installer en onboarding IN00",
+      "findings": [
+        "Volledig gelezen ontwerp/review/bewijs; uitkomst beperkt tot beschreven kandidaat, route en peildatum; geen impliciete eigenaaracceptatie."
+      ],
+      "current_sha256_at_registration": "796377e4a3cba287e36415ba44a3395da18ede863454de1098918371be08dfd1",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/renovate-npm-coverage-2026-09-12.md",
+      "bytes": 3541,
+      "sha256": "7cdd78309dcbc9e4f05a778b791158353340d1e402161e9845c35f6d4213756f",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "Renovate npm coverage — 12 september 2026",
+      "findings": [
+        "Volledig gelezen ontwerp/review/bewijs; uitkomst beperkt tot beschreven kandidaat, route en peildatum; geen impliciete eigenaaracceptatie."
+      ],
+      "current_sha256_at_registration": "7cdd78309dcbc9e4f05a778b791158353340d1e402161e9845c35f6d4213756f",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/managed-b-host-contract-ce23545.md",
+      "bytes": 721,
+      "sha256": "787d7953186d67a026e095c1526e5e2a91842f08dd0fac609b26d2eaa371d048",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "Onafhankelijke review — managed-B hostcontract `ce23545`",
+      "findings": [
+        "Volledig gelezen ontwerp/review/bewijs; uitkomst beperkt tot beschreven kandidaat, route en peildatum; geen impliciete eigenaaracceptatie."
+      ],
+      "current_sha256_at_registration": "787d7953186d67a026e095c1526e5e2a91842f08dd0fac609b26d2eaa371d048",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/openai-sdk-transport-candidate-8526314.md",
+      "bytes": 2485,
+      "sha256": "31c8fa266569f53fae6e8a3900ba62c250d1d3bbe345068e1bd3a7540e77b159",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "Onafhankelijke review — OpenAI SDK-transport DF02a",
+      "findings": [
+        "Volledig gelezen ontwerp/review/bewijs; uitkomst beperkt tot beschreven kandidaat, route en peildatum; geen impliciete eigenaaracceptatie."
+      ],
+      "current_sha256_at_registration": "31c8fa266569f53fae6e8a3900ba62c250d1d3bbe345068e1bd3a7540e77b159",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/RB-005-two-builder-reproducibility-72de385.md",
+      "bytes": 5547,
+      "sha256": "0e4c2cddbf05a349e98017a67b54c8dab9262e9175d19152fc9bb23b27fc1d03",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "RB-005 — onafhankelijke review gecorrigeerde twee-builderketen",
+      "findings": [
+        "Volledig gelezen ontwerp/review/bewijs; uitkomst beperkt tot beschreven kandidaat, route en peildatum; geen impliciete eigenaaracceptatie."
+      ],
+      "current_sha256_at_registration": "0e4c2cddbf05a349e98017a67b54c8dab9262e9175d19152fc9bb23b27fc1d03",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/managed-b-postgres-secret-preflight-6157aa8.md",
+      "bytes": 915,
+      "sha256": "2fa7beee9eb38323597636b14d6284769026a9d337b1923c9462411761e5be3e",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "Onafhankelijke review — PostgreSQL secret-preflight",
+      "findings": [
+        "Volledig gelezen ontwerp/review/bewijs; uitkomst beperkt tot beschreven kandidaat, route en peildatum; geen impliciete eigenaaracceptatie."
+      ],
+      "current_sha256_at_registration": "2fa7beee9eb38323597636b14d6284769026a9d337b1923c9462411761e5be3e",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/mcp-invocation-registry-recovery-2026-09-13.md",
+      "bytes": 2872,
+      "sha256": "83de648c982283a0e68bb3c11b8705094da930d6833bd632dc591fff059b22b0",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "PG registry + invocation recovery — 13 september 2026",
+      "findings": [
+        "Volledig gelezen ontwerp/review/bewijs; uitkomst beperkt tot beschreven kandidaat, route en peildatum; geen impliciete eigenaaracceptatie."
+      ],
+      "current_sha256_at_registration": "83de648c982283a0e68bb3c11b8705094da930d6833bd632dc591fff059b22b0",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/document-service-health-candidate-20260913.md",
+      "bytes": 3698,
+      "sha256": "5ea0097a4039ca3cb71c26dd104136f5e51ac7535509628a1df3cb701d5087af",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "Gezondheidsstatus van de documentdiensten",
+      "findings": [
+        "Documentproject/provider/activatie: contract, bronkandidaat en live voorbereid project afzonderlijk beoordeeld."
+      ],
+      "current_sha256_at_registration": "5ea0097a4039ca3cb71c26dd104136f5e51ac7535509628a1df3cb701d5087af",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/EV-001-formal-proof-review-0f12663.md",
+      "bytes": 2128,
+      "sha256": "3454c0237588a69dc3625454e7b987a5082c6d7dfb609938d39be528544acbe9",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "EV-001 — formele onafhankelijke proofreview",
+      "findings": [
+        "Volledig gelezen ontwerp/review/bewijs; uitkomst beperkt tot beschreven kandidaat, route en peildatum; geen impliciete eigenaaracceptatie."
+      ],
+      "current_sha256_at_registration": "3454c0237588a69dc3625454e7b987a5082c6d7dfb609938d39be528544acbe9",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/IN-002-postgres-remediation-restore-2026-09-13.md",
+      "bytes": 2291,
+      "sha256": "066cc5423eb011f8ce622b7b9664b8994df1abda7566dabe550f371dec34bc51",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "IN-002 PG16 candidate: isolated upgrade, restore and rollback",
+      "findings": [
+        "Volledig gelezen ontwerp/review/bewijs; uitkomst beperkt tot beschreven kandidaat, route en peildatum; geen impliciete eigenaaracceptatie."
+      ],
+      "current_sha256_at_registration": "066cc5423eb011f8ce622b7b9664b8994df1abda7566dabe550f371dec34bc51",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/GOV-001-execution-workboard-fc1e67f.md",
+      "bytes": 1630,
+      "sha256": "50154971ffbc4f390b2b56242abd2019c4876a70eb447df7145a58e425233cfc",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "GOV-001 — onafhankelijke review uitvoerbaar werkbord",
+      "findings": [
+        "Volledig gelezen ontwerp/review/bewijs; uitkomst beperkt tot beschreven kandidaat, route en peildatum; geen impliciete eigenaaracceptatie."
+      ],
+      "current_sha256_at_registration": "50154971ffbc4f390b2b56242abd2019c4876a70eb447df7145a58e425233cfc",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/cockpit-people-memory-1c62778.md",
+      "bytes": 3134,
+      "sha256": "a8ebaefffe37a8ec523fb957ed1021251a4f8b12be2b5e016119939b6f9f72f2",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "Onafhankelijke review — cockpit Mijn kring en geheugen",
+      "findings": [
+        "Volledig gelezen ontwerp/review/bewijs; uitkomst beperkt tot beschreven kandidaat, route en peildatum; geen impliciete eigenaaracceptatie."
+      ],
+      "current_sha256_at_registration": "a8ebaefffe37a8ec523fb957ed1021251a4f8b12be2b5e016119939b6f9f72f2",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/astra-conversation-canary-promotion-2026-09-05.md",
+      "bytes": 3136,
+      "sha256": "e7456ab0d7ede82a4585448595926eb10d3285617e2beba68d90989eef23f3a4",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "Astra gesprek — beperkte promotiebeoordeling",
+      "findings": [
+        "Volledig gelezen ontwerp/review/bewijs; uitkomst beperkt tot beschreven kandidaat, route en peildatum; geen impliciete eigenaaracceptatie."
+      ],
+      "current_sha256_at_registration": "e7456ab0d7ede82a4585448595926eb10d3285617e2beba68d90989eef23f3a4",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/document-health-r2-live-20260913.md",
+      "bytes": 1304,
+      "sha256": "30d63b27573d3ff33655ae1ad3d6ae8313b7f42e94e726568d1437b5f8836d9d",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "Documentgezondheid: geïnstalleerd en gezond",
+      "findings": [
+        "Documentproject/provider/activatie: contract, bronkandidaat en live voorbereid project afzonderlijk beoordeeld."
+      ],
+      "current_sha256_at_registration": "30d63b27573d3ff33655ae1ad3d6ae8313b7f42e94e726568d1437b5f8836d9d",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/IN-002-postgres-formal-sbom-binding-2026-09-13.md",
+      "bytes": 2182,
+      "sha256": "90c0381e2b393e03db7ebee4096ca84e15cccc2e80f57282394aa3b600991bfc",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "IN-002: formele PostgreSQL-bewijsbinding, geen vrijgave",
+      "findings": [
+        "Volledig gelezen ontwerp/review/bewijs; uitkomst beperkt tot beschreven kandidaat, route en peildatum; geen impliciete eigenaaracceptatie."
+      ],
+      "current_sha256_at_registration": "90c0381e2b393e03db7ebee4096ca84e15cccc2e80f57282394aa3b600991bfc",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/action-chain-read-call-claim-mc03b2a.md",
+      "bytes": 4254,
+      "sha256": "0b9c4de9b0e4697972108195f7d2ac9202a73712c3d469b89af92b84ce4b4c0b",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "Onafhankelijke review — action-chain readcallclaim MC03b2a",
+      "findings": [
+        "Volledig gelezen ontwerp/review/bewijs; uitkomst beperkt tot beschreven kandidaat, route en peildatum; geen impliciete eigenaaracceptatie."
+      ],
+      "current_sha256_at_registration": "0b9c4de9b0e4697972108195f7d2ac9202a73712c3d469b89af92b84ce4b4c0b",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/RB-006-candidate-artifact-analysis-ffbff30.md",
+      "bytes": 3124,
+      "sha256": "770c9f74ec4ee3236b9c17300e0f360d0dd624f80f02e7f537b3c0ddaab748c2",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "RB-006 — onafhankelijke eindreview kandidaatanalyse",
+      "findings": [
+        "Volledig gelezen ontwerp/review/bewijs; uitkomst beperkt tot beschreven kandidaat, route en peildatum; geen impliciete eigenaaracceptatie."
+      ],
+      "current_sha256_at_registration": "770c9f74ec4ee3236b9c17300e0f360d0dd624f80f02e7f537b3c0ddaab748c2",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/delegated-subagent-vertical-f9373f1.md",
+      "bytes": 4476,
+      "sha256": "0986e1710e1981eae5f40412b6bb2117d758e77ecce624f2ccf2f2da1dc79273",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "Onafhankelijke review — Eva kan één onderzoeker veilig aansturen",
+      "findings": [
+        "Volledig gelezen ontwerp/review/bewijs; uitkomst beperkt tot beschreven kandidaat, route en peildatum; geen impliciete eigenaaracceptatie."
+      ],
+      "current_sha256_at_registration": "0986e1710e1981eae5f40412b6bb2117d758e77ecce624f2ccf2f2da1dc79273",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/action-chain-effect-readback-call-claim-mc03c3b2.md",
+      "bytes": 5132,
+      "sha256": "aacfbd63043c95464eb23a88567f825645df4b72fc0d57e95c288b2143630c64",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "MC03c3b2 — eenmalige call-start voor effectcontrole",
+      "findings": [
+        "Volledig gelezen ontwerp/review/bewijs; uitkomst beperkt tot beschreven kandidaat, route en peildatum; geen impliciete eigenaaracceptatie."
+      ],
+      "current_sha256_at_registration": "aacfbd63043c95464eb23a88567f825645df4b72fc0d57e95c288b2143630c64",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/IN-002-structured-host-detection-2026-09-13.md",
+      "bytes": 1709,
+      "sha256": "29a72b285d0991bc4b3a29b5d849ed126002a25ee1876557163e8a3182c694da",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "IN-002: gestructureerde hostdetectie",
+      "findings": [
+        "Volledig gelezen ontwerp/review/bewijs; uitkomst beperkt tot beschreven kandidaat, route en peildatum; geen impliciete eigenaaracceptatie."
+      ],
+      "current_sha256_at_registration": "29a72b285d0991bc4b3a29b5d849ed126002a25ee1876557163e8a3182c694da",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/openbot-competitive-inventory-ob00.md",
+      "bytes": 3965,
+      "sha256": "903390a1b57dff7841a38d99dae30472bf4536e783ca6d1bdd379e8896197c12",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "Onafhankelijke review — OpenBot-concurrentie-inventaris OB00",
+      "findings": [
+        "Volledig gelezen ontwerp/review/bewijs; uitkomst beperkt tot beschreven kandidaat, route en peildatum; geen impliciete eigenaaracceptatie."
+      ],
+      "current_sha256_at_registration": "903390a1b57dff7841a38d99dae30472bf4536e783ca6d1bdd379e8896197c12",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/cp001-native-postgres-delivery-2026-09-12.md",
+      "bytes": 4695,
+      "sha256": "622f5ed61edac89d203701a7e7f45f77f9a5b156836e12776a9ef8869a90ff3a",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "CP-001 echte EVA-ingress + PostgreSQL-journal — 12 september 2026",
+      "findings": [
+        "Vergelijkings- of accountingcontract; technische gereedheid onderscheiden van nog ontbrekende productvergelijking."
+      ],
+      "current_sha256_at_registration": "622f5ed61edac89d203701a7e7f45f77f9a5b156836e12776a9ef8869a90ff3a",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/managed-b-render-command-80eb350.md",
+      "bytes": 803,
+      "sha256": "55e50b4bbb3b11d9577d002aad72964f82239f73141c491373b252873fb88fc4",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "Onafhankelijke review — managed-B-rendercommando",
+      "findings": [
+        "Volledig gelezen ontwerp/review/bewijs; uitkomst beperkt tot beschreven kandidaat, route en peildatum; geen impliciete eigenaaracceptatie."
+      ],
+      "current_sha256_at_registration": "55e50b4bbb3b11d9577d002aad72964f82239f73141c491373b252873fb88fc4",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/cp001-bottie-ack-delivery-2026-09-12.md",
+      "bytes": 4116,
+      "sha256": "a2619d683fd0c099b71f28d05399ca37217ec4de0ebc03e47df32434164d8042",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "CP-001 lokale Bottie P-256 client-ACK — 12 september 2026",
+      "findings": [
+        "Vergelijkings- of accountingcontract; technische gereedheid onderscheiden van nog ontbrekende productvergelijking."
+      ],
+      "current_sha256_at_registration": "a2619d683fd0c099b71f28d05399ca37217ec4de0ebc03e47df32434164d8042",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/AU-007-private-initiative-34ed766.md",
+      "bytes": 2221,
+      "sha256": "8397297295e90162c44035cbc7b62bfa3e5996fc00ecba96521a6f698352fa80",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "AU-007 — onafhankelijke technische productreview",
+      "findings": [
+        "Volledig gelezen ontwerp/review/bewijs; uitkomst beperkt tot beschreven kandidaat, route en peildatum; geen impliciete eigenaaracceptatie."
+      ],
+      "current_sha256_at_registration": "8397297295e90162c44035cbc7b62bfa3e5996fc00ecba96521a6f698352fa80",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/IN-002-amd64-sealed-base-2026-09-13.md",
+      "bytes": 2245,
+      "sha256": "13068bd558f5bdbb9d30c503b399ace250bedd3168f6145af5c82f7d374b0b25",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "IN-002: eerste OCI-bewijs op de nieuwe amd64-gast",
+      "findings": [
+        "Volledig gelezen ontwerp/review/bewijs; uitkomst beperkt tot beschreven kandidaat, route en peildatum; geen impliciete eigenaaracceptatie."
+      ],
+      "current_sha256_at_registration": "13068bd558f5bdbb9d30c503b399ace250bedd3168f6145af5c82f7d374b0b25",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/IN-002-postgres-vulnerability-triage-2026-09-13.md",
+      "bytes": 3003,
+      "sha256": "580689b4b239557d84db3b03d070b8c8f1d0cfebef1161b24fb58fd7caa92066",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "PostgreSQL-slot: feitelijke releaseblokkade",
+      "findings": [
+        "Volledig gelezen ontwerp/review/bewijs; uitkomst beperkt tot beschreven kandidaat, route en peildatum; geen impliciete eigenaaracceptatie."
+      ],
+      "current_sha256_at_registration": "580689b4b239557d84db3b03d070b8c8f1d0cfebef1161b24fb58fd7caa92066",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/action-chain-effect-post-call-stop-request-8438fea.md",
+      "bytes": 1939,
+      "sha256": "9ffad133b277fe43a6bf5606eb2ea515e8c5db4b2bbc128e4ff27c197ec70c65",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "Onafhankelijke review — stopverzoek ná een gestarte effectcall",
+      "findings": [
+        "Volledig gelezen ontwerp/review/bewijs; uitkomst beperkt tot beschreven kandidaat, route en peildatum; geen impliciete eigenaaracceptatie."
+      ],
+      "current_sha256_at_registration": "9ffad133b277fe43a6bf5606eb2ea515e8c5db4b2bbc128e4ff27c197ec70c65",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/au006-r2-live-completed-20260913.md",
+      "bytes": 1807,
+      "sha256": "5e71fa03642bd4906b1729c19bbda4ccd858e81e60e085e55c4c84421fabc9a0",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "AU-006 r2 ordinary conversation completed",
+      "findings": [
+        "Documentproject/provider/activatie: contract, bronkandidaat en live voorbereid project afzonderlijk beoordeeld."
+      ],
+      "current_sha256_at_registration": "5e71fa03642bd4906b1729c19bbda4ccd858e81e60e085e55c4c84421fabc9a0",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/IN-002-postgres-remediation-candidate-2026-09-13.md",
+      "bytes": 2321,
+      "sha256": "509ba09f549347a2b0059cd22dcc2fcb3b24920ccc7e646c39b0317b9723e42f",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "IN-002 PostgreSQL remediation candidate",
+      "findings": [
+        "Volledig gelezen ontwerp/review/bewijs; uitkomst beperkt tot beschreven kandidaat, route en peildatum; geen impliciete eigenaaracceptatie."
+      ],
+      "current_sha256_at_registration": "509ba09f549347a2b0059cd22dcc2fcb3b24920ccc7e646c39b0317b9723e42f",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/action-chain-effect-preauthorization-cancellation-fedfb15.md",
+      "bytes": 1764,
+      "sha256": "720f60bed080685919d39798ef2cc0577631d5b72e4a7c02a8b4ce5688937714",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "Onafhankelijke review — annuleren vóór een effect wordt gestart",
+      "findings": [
+        "Volledig gelezen ontwerp/review/bewijs; uitkomst beperkt tot beschreven kandidaat, route en peildatum; geen impliciete eigenaaracceptatie."
+      ],
+      "current_sha256_at_registration": "720f60bed080685919d39798ef2cc0577631d5b72e4a7c02a8b4ce5688937714",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/durable-subagent-process-9898926.md",
+      "bytes": 3340,
+      "sha256": "7c4f794fa3be54af37e74f0a1e4d3590f608724e2889cda85a1e755f3f179886",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "Onafhankelijke review — duurzame subagent in apart proces",
+      "findings": [
+        "Volledig gelezen ontwerp/review/bewijs; uitkomst beperkt tot beschreven kandidaat, route en peildatum; geen impliciete eigenaaracceptatie."
+      ],
+      "current_sha256_at_registration": "7c4f794fa3be54af37e74f0a1e4d3590f608724e2889cda85a1e755f3f179886",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/IN-002-gosu-symbol-boundary-2026-09-13.md",
+      "bytes": 2756,
+      "sha256": "a568d1a037b2be1d1be0d0c90f3c103119be822ade8fa5302417dd3abef32c39",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "IN-002: exact gosu binary and upstream remediation boundary",
+      "findings": [
+        "Volledig gelezen ontwerp/review/bewijs; uitkomst beperkt tot beschreven kandidaat, route en peildatum; geen impliciete eigenaaracceptatie."
+      ],
+      "current_sha256_at_registration": "a568d1a037b2be1d1be0d0c90f3c103119be822ade8fa5302417dd3abef32c39",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/document-task-input-20260913.md",
+      "bytes": 6375,
+      "sha256": "304f6ab0fe5cdd37be833b4ade37989539a38cdfa4862f923675f7105a383bdf",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "AU006: twee eigen documenten vanuit het gewone gesprek",
+      "findings": [
+        "Documentproject/provider/activatie: contract, bronkandidaat en live voorbereid project afzonderlijk beoordeeld."
+      ],
+      "current_sha256_at_registration": "304f6ab0fe5cdd37be833b4ade37989539a38cdfa4862f923675f7105a383bdf",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/IN-002-gosu-govulncheck-2026-09-13.md",
+      "bytes": 2437,
+      "sha256": "7e1586fca323b8dd2a3507117b74a94ca1a6b568b391432008b5d5c7530b02c1",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "IN-002: exact gosu govulncheck proof",
+      "findings": [
+        "Volledig gelezen ontwerp/review/bewijs; uitkomst beperkt tot beschreven kandidaat, route en peildatum; geen impliciete eigenaaracceptatie."
+      ],
+      "current_sha256_at_registration": "7e1586fca323b8dd2a3507117b74a94ca1a6b568b391432008b5d5c7530b02c1",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/RR-001-hermetic-candidate-source-daa9022.md",
+      "bytes": 4144,
+      "sha256": "a78ea30821c81d20b1c93ce3bd6a9eddc9a7606973bebe401d430acf7e320f6c",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "RR-001 — onafhankelijke review hermetische kandidaatbron",
+      "findings": [
+        "Volledig gelezen ontwerp/review/bewijs; uitkomst beperkt tot beschreven kandidaat, route en peildatum; geen impliciete eigenaaracceptatie."
+      ],
+      "current_sha256_at_registration": "a78ea30821c81d20b1c93ce3bd6a9eddc9a7606973bebe401d430acf7e320f6c",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/action-chain-read-authorization-mc03b1.md",
+      "bytes": 3523,
+      "sha256": "85625860699ca7a7e8cced1c05ef3737572fa020b8354b86c320c34885210f8c",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "Onafhankelijke review — action-chain readautorisatie MC03b1",
+      "findings": [
+        "Volledig gelezen ontwerp/review/bewijs; uitkomst beperkt tot beschreven kandidaat, route en peildatum; geen impliciete eigenaaracceptatie."
+      ],
+      "current_sha256_at_registration": "85625860699ca7a7e8cced1c05ef3737572fa020b8354b86c320c34885210f8c",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/old-eva-presence-parity-p00.md",
+      "bytes": 1530,
+      "sha256": "95e0d0e56bab2b6b56d40de9568255e871377cfe0da1ad896973ca065cb3fd59",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "Onafhankelijke review — oude-Eva-presence P00",
+      "findings": [
+        "Volledig gelezen ontwerp/review/bewijs; uitkomst beperkt tot beschreven kandidaat, route en peildatum; geen impliciete eigenaaracceptatie."
+      ],
+      "current_sha256_at_registration": "95e0d0e56bab2b6b56d40de9568255e871377cfe0da1ad896973ca065cb3fd59",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/au006-r2-owner-handoff-20260913.md",
+      "bytes": 1019,
+      "sha256": "205ce9860657f5d974f400f5a5aae9acecc7a82de2f8c49fa338b4f99c79a6e4",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "Het voorbereide documentproject beoordelen",
+      "findings": [
+        "Documentproject/provider/activatie: contract, bronkandidaat en live voorbereid project afzonderlijk beoordeeld."
+      ],
+      "current_sha256_at_registration": "205ce9860657f5d974f400f5a5aae9acecc7a82de2f8c49fa338b4f99c79a6e4",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/AU-002-catalog-81d43061.md",
+      "bytes": 1411,
+      "sha256": "5ae7f941445a81660b4079b7550d1f71357242dd3c3d8ce6c60afd3de8795d9c",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "AU-002 — review van catalogusreparatie",
+      "findings": [
+        "Volledig gelezen ontwerp/review/bewijs; uitkomst beperkt tot beschreven kandidaat, route en peildatum; geen impliciete eigenaaracceptatie."
+      ],
+      "current_sha256_at_registration": "5ae7f941445a81660b4079b7550d1f71357242dd3c3d8ce6c60afd3de8795d9c",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/CP-000-open-source-eval-engine-f0eb745.md",
+      "bytes": 4133,
+      "sha256": "00f5e582e943e9167de72918a1b4bd59fba866481ca8796f6864f7fe8ae8af7b",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "CP-000 — onafhankelijke review van evaluatiemotorvoorselectie",
+      "findings": [
+        "Volledig gelezen ontwerp/review/bewijs; uitkomst beperkt tot beschreven kandidaat, route en peildatum; geen impliciete eigenaaracceptatie."
+      ],
+      "current_sha256_at_registration": "00f5e582e943e9167de72918a1b4bd59fba866481ca8796f6864f7fe8ae8af7b",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/procedure-reference-host-20260913.md",
+      "bytes": 2649,
+      "sha256": "07af16a0ae5b59eab54cb263bb3d8d188011b6f4dbdfbd5dabc1705ec88cf3db",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "AU004: expliciet bewaarde werkwijzen later terugvinden",
+      "findings": [
+        "Procedureleren/selectie: historische mislukking of beperkte technische uitkomst; R6 is latere beperkte successcope."
+      ],
+      "current_sha256_at_registration": "07af16a0ae5b59eab54cb263bb3d8d188011b6f4dbdfbd5dabc1705ec88cf3db",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/CO-006-candidate-review-2026-09-08.md",
+      "bytes": 8625,
+      "sha256": "844f33442364e2a425fce74c542a3cad48b34cbbae1e9407ba8858cdcca66e40",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "CO-006 onafhankelijke kandidaatbeoordeling — 2026-09-08",
+      "findings": [
+        "Volledig gelezen ontwerp/review/bewijs; uitkomst beperkt tot beschreven kandidaat, route en peildatum; geen impliciete eigenaaracceptatie."
+      ],
+      "current_sha256_at_registration": "844f33442364e2a425fce74c542a3cad48b34cbbae1e9407ba8858cdcca66e40",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/telegram-recovery-live-handoff-20260913.md",
+      "bytes": 1780,
+      "sha256": "f6e75f1cf7e3d472db10a23a4c2baeb2a99d108a5055961d5603e854e54ad393",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "Telegram recovery delivered",
+      "findings": [
+        "Volledig gelezen ontwerp/review/bewijs; uitkomst beperkt tot beschreven kandidaat, route en peildatum; geen impliciete eigenaaracceptatie."
+      ],
+      "current_sha256_at_registration": "f6e75f1cf7e3d472db10a23a4c2baeb2a99d108a5055961d5603e854e54ad393",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/cp001-direct-model-attempts-2026-09-13.md",
+      "bytes": 6572,
+      "sha256": "e69ddee38444837465b79da646637a00798326508f5a655917a8023f00fdb1fe",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "CP-001 directe modelpogingen: terminale failureusage",
+      "findings": [
+        "Vergelijkings- of accountingcontract; technische gereedheid onderscheiden van nog ontbrekende productvergelijking."
+      ],
+      "current_sha256_at_registration": "e69ddee38444837465b79da646637a00798326508f5a655917a8023f00fdb1fe",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/integration-coverage-2026-09-12.md",
+      "bytes": 8502,
+      "sha256": "a3cd4ce54fa14cf4073ee21eaaa32859cf49870e100b0c960b6ce542d6ec0f7b",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "Integratiecontrole EVA 2 — 12 september 2026",
+      "findings": [
+        "Volledig gelezen ontwerp/review/bewijs; uitkomst beperkt tot beschreven kandidaat, route en peildatum; geen impliciete eigenaaracceptatie."
+      ],
+      "current_sha256_at_registration": "a3cd4ce54fa14cf4073ee21eaaa32859cf49870e100b0c960b6ce542d6ec0f7b",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/managed-b-manifest-skeleton-505caf8.md",
+      "bytes": 1338,
+      "sha256": "6169d1145ac8cb33d2ef5214a0b66db1c97347d8d9c561fdf1538609fc971159",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "Onafhankelijke review — managed B manifest-skelet",
+      "findings": [
+        "Volledig gelezen ontwerp/review/bewijs; uitkomst beperkt tot beschreven kandidaat, route en peildatum; geen impliciete eigenaaracceptatie."
+      ],
+      "current_sha256_at_registration": "6169d1145ac8cb33d2ef5214a0b66db1c97347d8d9c561fdf1538609fc971159",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/managed-b-hindsight-volume-preflight-128e187.md",
+      "bytes": 741,
+      "sha256": "8f72b3cc534650cd660f859043f6e17c66d0b7bc920c69bd379c1f169ef3cb83",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "Onafhankelijke review — Hindsight-volume in B-preflight",
+      "findings": [
+        "Volledig gelezen ontwerp/review/bewijs; uitkomst beperkt tot beschreven kandidaat, route en peildatum; geen impliciete eigenaaracceptatie."
+      ],
+      "current_sha256_at_registration": "8f72b3cc534650cd660f859043f6e17c66d0b7bc920c69bd379c1f169ef3cb83",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/voice-http-replay-2026-09-12.md",
+      "bytes": 879,
+      "sha256": "5a3503977f2759d13ecc71df204ebdbcd8391512f3621c594dd208cbf1d514cd",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "Owner voice HTTP replay — review",
+      "findings": [
+        "Volledig gelezen ontwerp/review/bewijs; uitkomst beperkt tot beschreven kandidaat, route en peildatum; geen impliciete eigenaaracceptatie."
+      ],
+      "current_sha256_at_registration": "5a3503977f2759d13ecc71df204ebdbcd8391512f3621c594dd208cbf1d514cd",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/telegram-project-update-review-2026-09-12.md",
+      "bytes": 3472,
+      "sha256": "6ce351f4036ce90b6b07e702d1f9c033669e415c9119d97ba0600e1bef0f68bd",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "Telegram projectupdate — onafhankelijke review",
+      "findings": [
+        "Volledig gelezen ontwerp/review/bewijs; uitkomst beperkt tot beschreven kandidaat, route en peildatum; geen impliciete eigenaaracceptatie."
+      ],
+      "current_sha256_at_registration": "6ce351f4036ce90b6b07e702d1f9c033669e415c9119d97ba0600e1bef0f68bd",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/dependency-first-strategy-7d5c93f.md",
+      "bytes": 7092,
+      "sha256": "2233457ae41e7c5cc095444d03e275cb811019efe779b137a4639d0adf48a97e",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "Onafhankelijke review — dependency-first strategie `7d5c93f`",
+      "findings": [
+        "Volledig gelezen ontwerp/review/bewijs; uitkomst beperkt tot beschreven kandidaat, route en peildatum; geen impliciete eigenaaracceptatie."
+      ],
+      "current_sha256_at_registration": "2233457ae41e7c5cc095444d03e275cb811019efe779b137a4639d0adf48a97e",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/schema-installer-file-secret-9e129a4.md",
+      "bytes": 959,
+      "sha256": "a24a1073df7fec63afe32505de32d2e9890556b228eeeed96c67d8bf3673b33e",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "Onafhankelijke review — schema-installer `9e129a4`",
+      "findings": [
+        "Volledig gelezen ontwerp/review/bewijs; uitkomst beperkt tot beschreven kandidaat, route en peildatum; geen impliciete eigenaaracceptatie."
+      ],
+      "current_sha256_at_registration": "a24a1073df7fec63afe32505de32d2e9890556b228eeeed96c67d8bf3673b33e",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/au004-r6-owner-handoff-20260913.md",
+      "bytes": 2827,
+      "sha256": "1e5e3971ceefeaf6aa53d5f0de47ab759718281da1ea5d76d89d4843ebf1b4ac",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "Bewaarde werkwijze hergebruikt — echte proefuitkomst",
+      "findings": [
+        "Procedureleren/selectie: historische mislukking of beperkte technische uitkomst; R6 is latere beperkte successcope."
+      ],
+      "current_sha256_at_registration": "1e5e3971ceefeaf6aa53d5f0de47ab759718281da1ea5d76d89d4843ebf1b4ac",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/procedure-reference-resolved-content-20260913.md",
+      "bytes": 2190,
+      "sha256": "f7fb16d64968364b7b0589780941179207e27b03fea7774ca6325ff9fec9b012",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "AU004: bestaande readback ook aan het model leveren",
+      "findings": [
+        "Procedureleren/selectie: historische mislukking of beperkte technische uitkomst; R6 is latere beperkte successcope."
+      ],
+      "current_sha256_at_registration": "f7fb16d64968364b7b0589780941179207e27b03fea7774ca6325ff9fec9b012",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/architecture-whole-system-2026-09-12.md",
+      "bytes": 8348,
+      "sha256": "25fd2250cb28de7840a2c2a1a58e7669099288585c32eb8aa04c20993123e58b",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "Architectuurcontrole EVA 2 — 12 september 2026",
+      "findings": [
+        "Volledig gelezen ontwerp/review/bewijs; uitkomst beperkt tot beschreven kandidaat, route en peildatum; geen impliciete eigenaaracceptatie."
+      ],
+      "current_sha256_at_registration": "25fd2250cb28de7840a2c2a1a58e7669099288585c32eb8aa04c20993123e58b",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/managed-b-observed-volume-pins-4ef9ae3.md",
+      "bytes": 1078,
+      "sha256": "e75e1b5782e869e46935d540773e0aae158b403b9faa071aa0fe2fce9238737d",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "Onafhankelijke review — waargenomen B-volume-pins",
+      "findings": [
+        "Volledig gelezen ontwerp/review/bewijs; uitkomst beperkt tot beschreven kandidaat, route en peildatum; geen impliciete eigenaaracceptatie."
+      ],
+      "current_sha256_at_registration": "e75e1b5782e869e46935d540773e0aae158b403b9faa071aa0fe2fce9238737d",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/initiative-recovery-2026-09-21.md",
+      "bytes": 1853,
+      "sha256": "28d2aa7207040059c34c7f8619d3bbda83a4abddebf34fc25acd9bd92c9c968c",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "Herstel initiatiefbeoordeling — review en beheer",
+      "findings": [
+        "Volledig gelezen ontwerp/review/bewijs; uitkomst beperkt tot beschreven kandidaat, route en peildatum; geen impliciete eigenaaracceptatie."
+      ],
+      "current_sha256_at_registration": "28d2aa7207040059c34c7f8619d3bbda83a4abddebf34fc25acd9bd92c9c968c",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/telegram-test-ingress-isolation-aac1fda.md",
+      "bytes": 2878,
+      "sha256": "9aa3cbcdd99eb3c1d60ddbb30438a99552144ce61cff1be1e85e55d655210ee8",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "Review — afgescheiden Telegram-testroute (`aac1fda`)",
+      "findings": [
+        "Volledig gelezen ontwerp/review/bewijs; uitkomst beperkt tot beschreven kandidaat, route en peildatum; geen impliciete eigenaaracceptatie."
+      ],
+      "current_sha256_at_registration": "9aa3cbcdd99eb3c1d60ddbb30438a99552144ce61cff1be1e85e55d655210ee8",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/RB-004-builder-b-offline-admission-f89d3d7.md",
+      "bytes": 4165,
+      "sha256": "80f9781f9f6e375c29407d2093dede649ecfed3ad796dff4f5510188dfc4d334",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "RB-004 — onafhankelijke review builder-B-admission",
+      "findings": [
+        "Volledig gelezen ontwerp/review/bewijs; uitkomst beperkt tot beschreven kandidaat, route en peildatum; geen impliciete eigenaaracceptatie."
+      ],
+      "current_sha256_at_registration": "80f9781f9f6e375c29407d2093dede649ecfed3ad796dff4f5510188dfc4d334",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/telegram-test-support-7017c25.md",
+      "bytes": 3071,
+      "sha256": "87476cda1407a33ab34039d2fc14fac465160b9540c2bbb3bb9b772bc37cd9e9",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "Review — Telegram-testondersteuning (`7017c25`)",
+      "findings": [
+        "Volledig gelezen ontwerp/review/bewijs; uitkomst beperkt tot beschreven kandidaat, route en peildatum; geen impliciete eigenaaracceptatie."
+      ],
+      "current_sha256_at_registration": "87476cda1407a33ab34039d2fc14fac465160b9540c2bbb3bb9b772bc37cd9e9",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/IN-002-postgres-critical-applicability-2026-09-13.md",
+      "bytes": 4100,
+      "sha256": "162b76ce31301b4d4ae326942e254160be02a3c9967660620ae3c4065a823975",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "IN-002: remaining PG16 critical findings and license evidence",
+      "findings": [
+        "Volledig gelezen ontwerp/review/bewijs; uitkomst beperkt tot beschreven kandidaat, route en peildatum; geen impliciete eigenaaracceptatie."
+      ],
+      "current_sha256_at_registration": "162b76ce31301b4d4ae326942e254160be02a3c9967660620ae3c4065a823975",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/action-chain-read-result-mc03b2b.md",
+      "bytes": 4946,
+      "sha256": "ae83c43d0cdc53c6cb673075c4d5402715a4623a60f68b86416a97249051a900",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "Verificatiedossier — action-chain readresultaat MC03b2b",
+      "findings": [
+        "Volledig gelezen ontwerp/review/bewijs; uitkomst beperkt tot beschreven kandidaat, route en peildatum; geen impliciete eigenaaracceptatie."
+      ],
+      "current_sha256_at_registration": "ae83c43d0cdc53c6cb673075c4d5402715a4623a60f68b86416a97249051a900",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/dependency-candidate-selection-2f67277.md",
+      "bytes": 4229,
+      "sha256": "75215548768c5c006dc56af4c5d2f0b17346442fcb6d88ad7fc5c731001bdcc6",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "Onafhankelijke review — dependencykandidaten `2f67277`",
+      "findings": [
+        "Volledig gelezen ontwerp/review/bewijs; uitkomst beperkt tot beschreven kandidaat, route en peildatum; geen impliciete eigenaaracceptatie."
+      ],
+      "current_sha256_at_registration": "75215548768c5c006dc56af4c5d2f0b17346442fcb6d88ad7fc5c731001bdcc6",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/au004-r4-a-pass-b-selection-fail-20260913.md",
+      "bytes": 1358,
+      "sha256": "b43e500291eec5f23dd1cb365bfdd0e0d24bae3740ab63f369ae4e5167b70844",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "AU004 R4: registration passed, independent selection failed",
+      "findings": [
+        "Procedureleren/selectie: historische mislukking of beperkte technische uitkomst; R6 is latere beperkte successcope."
+      ],
+      "current_sha256_at_registration": "b43e500291eec5f23dd1cb365bfdd0e0d24bae3740ab63f369ae4e5167b70844",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/GOV-002-status-stable-workboard-ef981d7.md",
+      "bytes": 1221,
+      "sha256": "b5cbc5680b94f46d47096c8833cef76fee7a3547b0bd18e41c379ab73fee9cd0",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "GOV-002 — onafhankelijke review statusvaste bordovergang",
+      "findings": [
+        "Volledig gelezen ontwerp/review/bewijs; uitkomst beperkt tot beschreven kandidaat, route en peildatum; geen impliciete eigenaaracceptatie."
+      ],
+      "current_sha256_at_registration": "b5cbc5680b94f46d47096c8833cef76fee7a3547b0bd18e41c379ab73fee9cd0",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/cp001-native-accounting-admission-2026-09-12.md",
+      "bytes": 4716,
+      "sha256": "2e7626b0f6539c681994fd80b0966e7d22c541b9015708c4942c718a4d92ddb9",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "CP-001 native usage en serverbudgettoelating",
+      "findings": [
+        "Vergelijkings- of accountingcontract; technische gereedheid onderscheiden van nog ontbrekende productvergelijking."
+      ],
+      "current_sha256_at_registration": "2e7626b0f6539c681994fd80b0966e7d22c541b9015708c4942c718a4d92ddb9",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/voice-memory-postgres-integration-2026-09-12.md",
+      "bytes": 4398,
+      "sha256": "aa944d07028f91ea1a0e9c1e6122488d287ea62346fed608c67871b9abc06abf",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "Voice/geheugen/helper — geïsoleerde PostgreSQL-ketenproef",
+      "findings": [
+        "Volledig gelezen ontwerp/review/bewijs; uitkomst beperkt tot beschreven kandidaat, route en peildatum; geen impliciete eigenaaracceptatie."
+      ],
+      "current_sha256_at_registration": "aa944d07028f91ea1a0e9c1e6122488d287ea62346fed608c67871b9abc06abf",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/TL-001-candidate-review-2026-09-08.md",
+      "bytes": 7569,
+      "sha256": "8fee7878046650e5a14a29bc293d2264c973c3f88002b8b7c04da76f9ad175fb",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "TL-001 onafhankelijke review — 2026-09-08",
+      "findings": [
+        "Volledig gelezen ontwerp/review/bewijs; uitkomst beperkt tot beschreven kandidaat, route en peildatum; geen impliciete eigenaaracceptatie."
+      ],
+      "current_sha256_at_registration": "8fee7878046650e5a14a29bc293d2264c973c3f88002b8b7c04da76f9ad175fb",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/AU-008-private-review-519a03a.md",
+      "bytes": 1839,
+      "sha256": "669e4f3f0f480203f05080f9cd1cdccbabcd88d4c4a09eb8533a7354d66d1ffc",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "AU-008 — technische beoordeling van private initiatiefcyclus",
+      "findings": [
+        "Volledig gelezen ontwerp/review/bewijs; uitkomst beperkt tot beschreven kandidaat, route en peildatum; geen impliciete eigenaaracceptatie."
+      ],
+      "current_sha256_at_registration": "669e4f3f0f480203f05080f9cd1cdccbabcd88d4c4a09eb8533a7354d66d1ffc",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/CO-004-CO-005-memory-controls-ae832a98.md",
+      "bytes": 2559,
+      "sha256": "6d542fc13f6d721f141b9236d85e789456434520507155db23c29d38f2c92f62",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "CO-004/CO-005 — onafhankelijke bronreview",
+      "findings": [
+        "Volledig gelezen ontwerp/review/bewijs; uitkomst beperkt tot beschreven kandidaat, route en peildatum; geen impliciete eigenaaracceptatie."
+      ],
+      "current_sha256_at_registration": "6d542fc13f6d721f141b9236d85e789456434520507155db23c29d38f2c92f62",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/model-lease-publisher-3af02bb.md",
+      "bytes": 748,
+      "sha256": "056181ef05314a5dc81ebbcff2c1ce3811ef535ddfe22d5c15b8b2860086cd23",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "Onafhankelijke review — modellease-publisher `3af02bb`",
+      "findings": [
+        "Volledig gelezen ontwerp/review/bewijs; uitkomst beperkt tot beschreven kandidaat, route en peildatum; geen impliciete eigenaaracceptatie."
+      ],
+      "current_sha256_at_registration": "056181ef05314a5dc81ebbcff2c1ce3811ef535ddfe22d5c15b8b2860086cd23",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/ha-mcp-parity-contract-c03942d.md",
+      "bytes": 1608,
+      "sha256": "7a7f397ac9e19483f92548a27c517896f6ed47bfd9899c18b85efed153e8249f",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "Onafhankelijke review — HA-MCP-pariteitscontract",
+      "findings": [
+        "Volledig gelezen ontwerp/review/bewijs; uitkomst beperkt tot beschreven kandidaat, route en peildatum; geen impliciete eigenaaracceptatie."
+      ],
+      "current_sha256_at_registration": "7a7f397ac9e19483f92548a27c517896f6ed47bfd9899c18b85efed153e8249f",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/conversation-usage-plumbing-7baa524.md",
+      "bytes": 4860,
+      "sha256": "b15a87725edaba259bb2cc8662eca2c60771646ceff5c92f1af0546580bc0698",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "Onafhankelijke review — conversation usage plumbing `7baa524`",
+      "findings": [
+        "Volledig gelezen ontwerp/review/bewijs; uitkomst beperkt tot beschreven kandidaat, route en peildatum; geen impliciete eigenaaracceptatie."
+      ],
+      "current_sha256_at_registration": "b15a87725edaba259bb2cc8662eca2c60771646ceff5c92f1af0546580bc0698",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/cp001-local-settlement-cli-2026-09-13.md",
+      "bytes": 3471,
+      "sha256": "ab7ba1df68b2e0e69eb0f54738946471a26d40b456266992f0469d5ba6d827fa",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "CP-001 lokale streamobservatie in bestaande CLI",
+      "findings": [
+        "Vergelijkings- of accountingcontract; technische gereedheid onderscheiden van nog ontbrekende productvergelijking."
+      ],
+      "current_sha256_at_registration": "ab7ba1df68b2e0e69eb0f54738946471a26d40b456266992f0469d5ba6d827fa",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/action-chain-effect-readback-result-mc03c3d.md",
+      "bytes": 4539,
+      "sha256": "fba38342db152073d9692711327fbaf203815349729257f20cf3ff8a3ec669a1",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "MC03c3d — opgeslagen waarneming als canoniek readbackbewijs",
+      "findings": [
+        "Volledig gelezen ontwerp/review/bewijs; uitkomst beperkt tot beschreven kandidaat, route en peildatum; geen impliciete eigenaaracceptatie."
+      ],
+      "current_sha256_at_registration": "fba38342db152073d9692711327fbaf203815349729257f20cf3ff8a3ec669a1",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/action-chain-effect-advance-mc03c3e.md",
+      "bytes": 4412,
+      "sha256": "499a914d3209f93e22f3e4573e7425304b1ce4c844da531b8259390a84897646",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "Verificatiedossier MC03c3e — effect alleen afronden na exacte readback",
+      "findings": [
+        "Volledig gelezen ontwerp/review/bewijs; uitkomst beperkt tot beschreven kandidaat, route en peildatum; geen impliciete eigenaaracceptatie."
+      ],
+      "current_sha256_at_registration": "499a914d3209f93e22f3e4573e7425304b1ce4c844da531b8259390a84897646",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/delegated-work-database-admission-d510366.md",
+      "bytes": 1762,
+      "sha256": "e2a5be4fcf7f31ae6f9199ab2a11bec8af76446b618341a93da29a3bf6cc86ad",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "Onafhankelijke review — gedelegeerd werk in de bestaande taakrij",
+      "findings": [
+        "Volledig gelezen ontwerp/review/bewijs; uitkomst beperkt tot beschreven kandidaat, route en peildatum; geen impliciete eigenaaracceptatie."
+      ],
+      "current_sha256_at_registration": "e2a5be4fcf7f31ae6f9199ab2a11bec8af76446b618341a93da29a3bf6cc86ad",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/pydantic-tool-free-child-candidate-b7e9af7.md",
+      "bytes": 1999,
+      "sha256": "c54ec6719914deaf35477a232269767d77dea14af85c820e2c41c932424166cc",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "Onafhankelijke review — providerloze Pydantic-childkandidaat",
+      "findings": [
+        "Volledig gelezen ontwerp/review/bewijs; uitkomst beperkt tot beschreven kandidaat, route en peildatum; geen impliciete eigenaaracceptatie."
+      ],
+      "current_sha256_at_registration": "c54ec6719914deaf35477a232269767d77dea14af85c820e2c41c932424166cc",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/action-chain-effect-readback-preparation-mc03c3a.md",
+      "bytes": 4901,
+      "sha256": "266cf571f662a34c7453f59473a4cd4ed16ec1de5db3f60ff31cf3bac0f9f4e5",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "MC03c3a — duurzame effectreadbackvoorbereiding",
+      "findings": [
+        "Volledig gelezen ontwerp/review/bewijs; uitkomst beperkt tot beschreven kandidaat, route en peildatum; geen impliciete eigenaaracceptatie."
+      ],
+      "current_sha256_at_registration": "266cf571f662a34c7453f59473a4cd4ed16ec1de5db3f60ff31cf3bac0f9f4e5",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/action-chain-effect-call-claim-mc03c1b.md",
+      "bytes": 3817,
+      "sha256": "d6f2b3ae80f3d4da82bff12916bf725c5d62453b63e3cb2de35dd44941fa0671",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "MC03c1b — eenmalige effect-callclaim",
+      "findings": [
+        "Volledig gelezen ontwerp/review/bewijs; uitkomst beperkt tot beschreven kandidaat, route en peildatum; geen impliciete eigenaaracceptatie."
+      ],
+      "current_sha256_at_registration": "d6f2b3ae80f3d4da82bff12916bf725c5d62453b63e3cb2de35dd44941fa0671",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/document-health-r2-env-guard-candidate-20260913.md",
+      "bytes": 1169,
+      "sha256": "5478b3f9d5943906a831be4f45b756783591888d0f989ddbe34292279bf155ed",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "Healthguard: volgorde van omgevingsvariabelen",
+      "findings": [
+        "Documentproject/provider/activatie: contract, bronkandidaat en live voorbereid project afzonderlijk beoordeeld."
+      ],
+      "current_sha256_at_registration": "5478b3f9d5943906a831be4f45b756783591888d0f989ddbe34292279bf155ed",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/voice-performance-product-gates-v1.md",
+      "bytes": 2464,
+      "sha256": "2f70db6a52048de36734b9620660f511770ec956628165657e5def2b8961862b",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "Onafhankelijke review — conversationele voice en performance/complexiteit v1",
+      "findings": [
+        "Volledig gelezen ontwerp/review/bewijs; uitkomst beperkt tot beschreven kandidaat, route en peildatum; geen impliciete eigenaaracceptatie."
+      ],
+      "current_sha256_at_registration": "2f70db6a52048de36734b9620660f511770ec956628165657e5def2b8961862b",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/action-chain-effect-readback-execution-mc03c3c.md",
+      "bytes": 4781,
+      "sha256": "8820eb4475046f2b4e3ea87c26606b3eee2eb309cdbaf63b6dd1fce7884f0e88",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "MC03c3c — effectcontrole eenmaal uitvoeren en bewaren",
+      "findings": [
+        "Volledig gelezen ontwerp/review/bewijs; uitkomst beperkt tot beschreven kandidaat, route en peildatum; geen impliciete eigenaaracceptatie."
+      ],
+      "current_sha256_at_registration": "8820eb4475046f2b4e3ea87c26606b3eee2eb309cdbaf63b6dd1fce7884f0e88",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/action-chain-effect-execution-mc03c2.md",
+      "bytes": 5796,
+      "sha256": "b5d3045672c57bdb3d0df4a4fd0bce2a2fbe2b0d564f3852da426b54eeb69d7c",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "Verificatiedossier — action-chain effectuitvoering MC03c2",
+      "findings": [
+        "Volledig gelezen ontwerp/review/bewijs; uitkomst beperkt tot beschreven kandidaat, route en peildatum; geen impliciete eigenaaracceptatie."
+      ],
+      "current_sha256_at_registration": "b5d3045672c57bdb3d0df4a4fd0bce2a2fbe2b0d564f3852da426b54eeb69d7c",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/telegram-pairing-primitive-47a799d.md",
+      "bytes": 821,
+      "sha256": "cfa6e210bd2fc66066c357513c8144fba86ca97d3526237a0e814fa2058ad985",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "Onafhankelijke review — duurzame Telegram-pairing",
+      "findings": [
+        "Volledig gelezen ontwerp/review/bewijs; uitkomst beperkt tot beschreven kandidaat, route en peildatum; geen impliciete eigenaaracceptatie."
+      ],
+      "current_sha256_at_registration": "cfa6e210bd2fc66066c357513c8144fba86ca97d3526237a0e814fa2058ad985",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/isolated-browser-cockpit-cf8184b.md",
+      "bytes": 7959,
+      "sha256": "947e63585fcc207c067b1e1390d98fde38a301e7969f94ee48c4d734d084e956",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "Onafhankelijke herreview geïsoleerde browser en cockpit — `cf8184b`",
+      "findings": [
+        "Volledig gelezen ontwerp/review/bewijs; uitkomst beperkt tot beschreven kandidaat, route en peildatum; geen impliciete eigenaaracceptatie."
+      ],
+      "current_sha256_at_registration": "947e63585fcc207c067b1e1390d98fde38a301e7969f94ee48c4d734d084e956",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/recovery-source-baseline-2fc19f3.md",
+      "bytes": 963,
+      "sha256": "fbd1df36aeac77acadc44b53859ca0e913d24bfcec47103acf5f88755b5aede9",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "Onafhankelijke review — recoverybron `2fc19f3`",
+      "findings": [
+        "Volledig gelezen ontwerp/review/bewijs; uitkomst beperkt tot beschreven kandidaat, route en peildatum; geen impliciete eigenaaracceptatie."
+      ],
+      "current_sha256_at_registration": "fbd1df36aeac77acadc44b53859ca0e913d24bfcec47103acf5f88755b5aede9",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/action-chain-effect-preparation-mc03c0.md",
+      "bytes": 2696,
+      "sha256": "a66ad34806676b34fa352c53c1f017717c121e2e4891a12de6034a5588514fcb",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "MC03c0 — duurzame effectvoorbereiding",
+      "findings": [
+        "Volledig gelezen ontwerp/review/bewijs; uitkomst beperkt tot beschreven kandidaat, route en peildatum; geen impliciete eigenaaracceptatie."
+      ],
+      "current_sha256_at_registration": "a66ad34806676b34fa352c53c1f017717c121e2e4891a12de6034a5588514fcb",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/CO-008-automatic-memory-ddb0267.md",
+      "bytes": 2833,
+      "sha256": "38dc1f094e79e52f9e5e085e5b40e3fee3bfa5d97f21f65d97f5e16d113ea6e0",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "CO-008 — onafhankelijke technische review",
+      "findings": [
+        "Volledig gelezen ontwerp/review/bewijs; uitkomst beperkt tot beschreven kandidaat, route en peildatum; geen impliciete eigenaaracceptatie."
+      ],
+      "current_sha256_at_registration": "38dc1f094e79e52f9e5e085e5b40e3fee3bfa5d97f21f65d97f5e16d113ea6e0",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/CO-003-owner-memory-read-preparation-2026-09-05.md",
+      "bytes": 3076,
+      "sha256": "8d57e2adf0c99688fd1d1ad0213c86884739346ac00d340f0fbdf434e1187e1a",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "CO-003 — voorbereiding van eigen geheugenbronnen",
+      "findings": [
+        "Volledig gelezen ontwerp/review/bewijs; uitkomst beperkt tot beschreven kandidaat, route en peildatum; geen impliciete eigenaaracceptatie."
+      ],
+      "current_sha256_at_registration": "8d57e2adf0c99688fd1d1ad0213c86884739346ac00d340f0fbdf434e1187e1a",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/CO-008-workboard-compatibility-2026-09-10.md",
+      "bytes": 977,
+      "sha256": "92f0a05dd81f3cc545f7b137459171b1b4f0c2ac66e73d1a932966aba5fee3f8",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "Aanvullende werkbordreview bij CO-008",
+      "findings": [
+        "Volledig gelezen ontwerp/review/bewijs; uitkomst beperkt tot beschreven kandidaat, route en peildatum; geen impliciete eigenaaracceptatie."
+      ],
+      "current_sha256_at_registration": "92f0a05dd81f3cc545f7b137459171b1b4f0c2ac66e73d1a932966aba5fee3f8",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/AU-008-current-status-e96b2054.md",
+      "bytes": 3089,
+      "sha256": "aae404e8c1d3b4e51d3c2c2be5c5aa352186d96c432d97f96d47dafe60714622",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "AU-008 — onafhankelijke technische eindcontrole",
+      "findings": [
+        "Volledig gelezen ontwerp/review/bewijs; uitkomst beperkt tot beschreven kandidaat, route en peildatum; geen impliciete eigenaaracceptatie."
+      ],
+      "current_sha256_at_registration": "aae404e8c1d3b4e51d3c2c2be5c5aa352186d96c432d97f96d47dafe60714622",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/ha-mcp-sidecar-candidate-3896f17.md",
+      "bytes": 1585,
+      "sha256": "306588418ca6057b9c371273244121ac62bf994432c1fd9a71c3e4f00d963949",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "Onafhankelijke review — HA-MCP-sidecarkandidaat `3896f17`",
+      "findings": [
+        "Volledig gelezen ontwerp/review/bewijs; uitkomst beperkt tot beschreven kandidaat, route en peildatum; geen impliciete eigenaaracceptatie."
+      ],
+      "current_sha256_at_registration": "306588418ca6057b9c371273244121ac62bf994432c1fd9a71c3e4f00d963949",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/action-chain-admission-mc01.md",
+      "bytes": 1403,
+      "sha256": "b8fa6c5e3be88f34b9927396ea07122e8af0654ca0c6b682d78602dc9c45e33b",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "Onafhankelijke review — meerstapsplanning MC01",
+      "findings": [
+        "Volledig gelezen ontwerp/review/bewijs; uitkomst beperkt tot beschreven kandidaat, route en peildatum; geen impliciete eigenaaracceptatie."
+      ],
+      "current_sha256_at_registration": "b8fa6c5e3be88f34b9927396ea07122e8af0654ca0c6b682d78602dc9c45e33b",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/au004-r3-a-failed-source-call-visibility-20260913.md",
+      "bytes": 1351,
+      "sha256": "669a054e5396f73e4a3f3a5ee8296dba71f8b9582c15e81a36b347098b4663f1",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "AU004 ordinary A failed designation",
+      "findings": [
+        "Procedureleren/selectie: historische mislukking of beperkte technische uitkomst; R6 is latere beperkte successcope."
+      ],
+      "current_sha256_at_registration": "669a054e5396f73e4a3f3a5ee8296dba71f8b9582c15e81a36b347098b4663f1",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/cp001-native-bottie-delivery-2026-09-12.md",
+      "bytes": 4983,
+      "sha256": "6a0ef82712d92e30e0958204dd8522e4fbf491f356e4e59aa04b6c084c944cad",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "CP-001 echte Bottie-route + SQLite — 12 september 2026",
+      "findings": [
+        "Vergelijkings- of accountingcontract; technische gereedheid onderscheiden van nog ontbrekende productvergelijking."
+      ],
+      "current_sha256_at_registration": "6a0ef82712d92e30e0958204dd8522e4fbf491f356e4e59aa04b6c084c944cad",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/cp001-journal-admission-2026-09-13.md",
+      "bytes": 4659,
+      "sha256": "2423fc5b5105afa9f788c0ed5dfb2e14277b74b24bd3a9149c4b5451da275ac3",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "CP-001: directe journalexports gekoppeld aan admissionpreflight",
+      "findings": [
+        "Vergelijkings- of accountingcontract; technische gereedheid onderscheiden van nog ontbrekende productvergelijking."
+      ],
+      "current_sha256_at_registration": "2423fc5b5105afa9f788c0ed5dfb2e14277b74b24bd3a9149c4b5451da275ac3",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/conversation-current-check-2026-09-21.md",
+      "bytes": 702,
+      "sha256": "884e1e90c1137ed21dd537181269cb0c60ac4731c9a3eec506054321f7c37f05",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "Actuele privégesprekproef — begrensde review",
+      "findings": [
+        "Volledig gelezen ontwerp/review/bewijs; uitkomst beperkt tot beschreven kandidaat, route en peildatum; geen impliciete eigenaaracceptatie."
+      ],
+      "current_sha256_at_registration": "884e1e90c1137ed21dd537181269cb0c60ac4731c9a3eec506054321f7c37f05",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/IN-002-platform-next-validation-2026-09-13.md",
+      "bytes": 5415,
+      "sha256": "f7b74e9a4db3a51b206bd51258d8d127a45565e2544cc020af542f3411af5188",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "IN-002: concrete platformgrens en volgende validatie",
+      "findings": [
+        "Volledig gelezen ontwerp/review/bewijs; uitkomst beperkt tot beschreven kandidaat, route en peildatum; geen impliciete eigenaaracceptatie."
+      ],
+      "current_sha256_at_registration": "f7b74e9a4db3a51b206bd51258d8d127a45565e2544cc020af542f3411af5188",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/RB-001-sealed-oci-layout-empty-builders-d54dd0a.md",
+      "bytes": 2271,
+      "sha256": "b581cc7e5ec1fb1577cf9cc63f7c16443641a21b3a50909634d2b71065f36e22",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "RB-001 — onafhankelijke review",
+      "findings": [
+        "Volledig gelezen ontwerp/review/bewijs; uitkomst beperkt tot beschreven kandidaat, route en peildatum; geen impliciete eigenaaracceptatie."
+      ],
+      "current_sha256_at_registration": "b581cc7e5ec1fb1577cf9cc63f7c16443641a21b3a50909634d2b71065f36e22",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/gateway-shutdown-native-20260913.md",
+      "bytes": 4129,
+      "sha256": "5e5793362783576be4d87c5304777d9f92637be24e0075c9df584379b5994a2d",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "Bounded native gateway shutdown evidence",
+      "findings": [
+        "Volledig gelezen ontwerp/review/bewijs; uitkomst beperkt tot beschreven kandidaat, route en peildatum; geen impliciete eigenaaracceptatie."
+      ],
+      "current_sha256_at_registration": "5e5793362783576be4d87c5304777d9f92637be24e0075c9df584379b5994a2d",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/action-chain-leases-mc02b.md",
+      "bytes": 2116,
+      "sha256": "7275f8e60a45ea1547f2ada65a3056940e3234e28e3656d54ee4d5874792a0b1",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "Onafhankelijke controle — meerstapswerklease MC02b",
+      "findings": [
+        "Volledig gelezen ontwerp/review/bewijs; uitkomst beperkt tot beschreven kandidaat, route en peildatum; geen impliciete eigenaaracceptatie."
+      ],
+      "current_sha256_at_registration": "7275f8e60a45ea1547f2ada65a3056940e3234e28e3656d54ee4d5874792a0b1",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/managed-b-all-service-labels-6e8cae5.md",
+      "bytes": 735,
+      "sha256": "25329d0caa86f15d912b8e4ba944e43de1f5d4c61d08d409ff2a3b23f4758650",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "Onafhankelijke review — alle managed-B-servicelabels",
+      "findings": [
+        "Volledig gelezen ontwerp/review/bewijs; uitkomst beperkt tot beschreven kandidaat, route en peildatum; geen impliciete eigenaaracceptatie."
+      ],
+      "current_sha256_at_registration": "25329d0caa86f15d912b8e4ba944e43de1f5d4c61d08d409ff2a3b23f4758650",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/telegram-multi-account-identity-38f4f6c.md",
+      "bytes": 753,
+      "sha256": "ca0c86b4b5266755655f40fbabfdfc847a84232abdb24c4030c209a25b130cf9",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "Onafhankelijke review — meerdere Telegramaccounts per persoon",
+      "findings": [
+        "Volledig gelezen ontwerp/review/bewijs; uitkomst beperkt tot beschreven kandidaat, route en peildatum; geen impliciete eigenaaracceptatie."
+      ],
+      "current_sha256_at_registration": "ca0c86b4b5266755655f40fbabfdfc847a84232abdb24c4030c209a25b130cf9",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/cp001-offline-runner-delivery-2026-09-12.md",
+      "bytes": 4948,
+      "sha256": "f3286af12e233b8c087f3aa0ef6066753ab7085441dd3b9fd08ff282be1e32f0",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "CP-001 offline runner — begrensde oplevering, 12 september 2026",
+      "findings": [
+        "Vergelijkings- of accountingcontract; technische gereedheid onderscheiden van nog ontbrekende productvergelijking."
+      ],
+      "current_sha256_at_registration": "f3286af12e233b8c087f3aa0ef6066753ab7085441dd3b9fd08ff282be1e32f0",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/au004-r6-abc-live-pass-20260913.md",
+      "bytes": 1194,
+      "sha256": "4b4cad139c15c041c93fa5b8124015700b7bf44e17c8e74756d6d145784c7511",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "R6 bounded real-model proof",
+      "findings": [
+        "Procedureleren/selectie: historische mislukking of beperkte technische uitkomst; R6 is latere beperkte successcope."
+      ],
+      "current_sha256_at_registration": "4b4cad139c15c041c93fa5b8124015700b7bf44e17c8e74756d6d145784c7511",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/cp001-request-budget-contract-2026-09-13.md",
+      "bytes": 5480,
+      "sha256": "2e18961a31addf6899afea073a756d8f4b5391340897e3f08f91ceea03a3ebf1",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "CP-001: bestaande requestgrenzen en één admissiongat",
+      "findings": [
+        "Vergelijkings- of accountingcontract; technische gereedheid onderscheiden van nog ontbrekende productvergelijking."
+      ],
+      "current_sha256_at_registration": "2e18961a31addf6899afea073a756d8f4b5391340897e3f08f91ceea03a3ebf1",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/postgres-password-file-contract-0c31872.md",
+      "bytes": 1395,
+      "sha256": "ac69e81fa2a6ecf29bd1a9b3569681bdc453db82b734f6570f0a347dbe486947",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "Onafhankelijke review — PostgreSQL password-file-contract",
+      "findings": [
+        "Volledig gelezen ontwerp/review/bewijs; uitkomst beperkt tot beschreven kandidaat, route en peildatum; geen impliciete eigenaaracceptatie."
+      ],
+      "current_sha256_at_registration": "ac69e81fa2a6ecf29bd1a9b3569681bdc453db82b734f6570f0a347dbe486947",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/GOV-003-canonical-workspace-dc47573.md",
+      "bytes": 2625,
+      "sha256": "e6344b6078c77251b7ecb7693a518e71a3f4ad91a199e4d627df050c149e8593",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "GOV-003 — onafhankelijke review van canonieke schrijfboom",
+      "findings": [
+        "Volledig gelezen ontwerp/review/bewijs; uitkomst beperkt tot beschreven kandidaat, route en peildatum; geen impliciete eigenaaracceptatie."
+      ],
+      "current_sha256_at_registration": "e6344b6078c77251b7ecb7693a518e71a3f4ad91a199e4d627df050c149e8593",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/browser-action-a02-72625e0.md",
+      "bytes": 2105,
+      "sha256": "7590ece2ec971b11ebae97289b590c21fdb8653c43b5ffdd2f1f827026988381",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "Onafhankelijke review — eerste duurzame browseractie",
+      "findings": [
+        "Volledig gelezen ontwerp/review/bewijs; uitkomst beperkt tot beschreven kandidaat, route en peildatum; geen impliciete eigenaaracceptatie."
+      ],
+      "current_sha256_at_registration": "7590ece2ec971b11ebae97289b590c21fdb8653c43b5ffdd2f1f827026988381",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/managed-b-readonly-backup-2026-08-24.md",
+      "bytes": 1322,
+      "sha256": "eb28004f6c75cb14ce613fd8e1828b056c30ef96d35c07fa53fe0adee1d15690",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "Onafhankelijke live review — B-back-up vóór adoptie",
+      "findings": [
+        "Volledig gelezen ontwerp/review/bewijs; uitkomst beperkt tot beschreven kandidaat, route en peildatum; geen impliciete eigenaaracceptatie."
+      ],
+      "current_sha256_at_registration": "eb28004f6c75cb14ce613fd8e1828b056c30ef96d35c07fa53fe0adee1d15690",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/voice-client-lifecycle-2026-09-12.md",
+      "bytes": 765,
+      "sha256": "a634d2f42fc9289d4ea7c2c0ce88c348d31d45cfb98e74faec521f706d885fc5",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "Voice client lifecycle — technische review",
+      "findings": [
+        "Volledig gelezen ontwerp/review/bewijs; uitkomst beperkt tot beschreven kandidaat, route en peildatum; geen impliciete eigenaaracceptatie."
+      ],
+      "current_sha256_at_registration": "a634d2f42fc9289d4ea7c2c0ce88c348d31d45cfb98e74faec521f706d885fc5",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/AU-007-technical-closure-f99b5a2.md",
+      "bytes": 3346,
+      "sha256": "5297e957846e10a2dfaec08bd3925fa4b6cbfd0891c19c09f41b698358e8a99f",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "AU-007 — aanvullende onafhankelijke technische afsluiting",
+      "findings": [
+        "Volledig gelezen ontwerp/review/bewijs; uitkomst beperkt tot beschreven kandidaat, route en peildatum; geen impliciete eigenaaracceptatie."
+      ],
+      "current_sha256_at_registration": "5297e957846e10a2dfaec08bd3925fa4b6cbfd0891c19c09f41b698358e8a99f",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/IN-002-isolated-ubuntu-operator-2026-09-13.md",
+      "bytes": 4779,
+      "sha256": "53f8d69dd075e17b0ae9687ca094678e8bf39b7e433cafb56e3887b0b20142aa",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "IN-002: echte geïsoleerde Ubuntu-operatorproef",
+      "findings": [
+        "Volledig gelezen ontwerp/review/bewijs; uitkomst beperkt tot beschreven kandidaat, route en peildatum; geen impliciete eigenaaracceptatie."
+      ],
+      "current_sha256_at_registration": "53f8d69dd075e17b0ae9687ca094678e8bf39b7e433cafb56e3887b0b20142aa",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/managed-b-steady-observation-0351852.md",
+      "bytes": 798,
+      "sha256": "3ab7c47bbe2d3507e511d023bd7bfeb55507f6c9227f8b87b967b6946736c4d1",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "Onafhankelijke review — managed-B-steady-observatie",
+      "findings": [
+        "Volledig gelezen ontwerp/review/bewijs; uitkomst beperkt tot beschreven kandidaat, route en peildatum; geen impliciete eigenaaracceptatie."
+      ],
+      "current_sha256_at_registration": "3ab7c47bbe2d3507e511d023bd7bfeb55507f6c9227f8b87b967b6946736c4d1",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/cp001-local-stream-settlement-2026-09-13.md",
+      "bytes": 4512,
+      "sha256": "0f8e55957f5a69dd02264a3b6e62fdaeb77324ade0ac645592792e2af693ced5",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "CP-001 lokale streamafsluiting bij directe poging",
+      "findings": [
+        "Vergelijkings- of accountingcontract; technische gereedheid onderscheiden van nog ontbrekende productvergelijking."
+      ],
+      "current_sha256_at_registration": "0f8e55957f5a69dd02264a3b6e62fdaeb77324ade0ac645592792e2af693ced5",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/AU-002-provider-64101d5d.md",
+      "bytes": 1828,
+      "sha256": "01f96beacb5e715ebc6bd8715ddd4097cd09f2606e40154bb6b1ceeb36deebfd",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "AU-002 — onafhankelijke providerreview",
+      "findings": [
+        "Volledig gelezen ontwerp/review/bewijs; uitkomst beperkt tot beschreven kandidaat, route en peildatum; geen impliciete eigenaaracceptatie."
+      ],
+      "current_sha256_at_registration": "01f96beacb5e715ebc6bd8715ddd4097cd09f2606e40154bb6b1ceeb36deebfd",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/action-chain-read-preparation-mc03a.md",
+      "bytes": 2136,
+      "sha256": "d68ee5d396f381246b86f02106e43d343663a02529fcdefb27bfb29b0e966874",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "Onafhankelijke review — MC03a readvoorbereiding",
+      "findings": [
+        "Volledig gelezen ontwerp/review/bewijs; uitkomst beperkt tot beschreven kandidaat, route en peildatum; geen impliciete eigenaaracceptatie."
+      ],
+      "current_sha256_at_registration": "d68ee5d396f381246b86f02106e43d343663a02529fcdefb27bfb29b0e966874",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/4d-64-schema-candidate-5fafab8.md",
+      "bytes": 2297,
+      "sha256": "512b5326230e64ec13c2423877d2d47e758380d0c07c7eddd4912b24127cbfc6",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "4D 64-schema kandidaat — beperkte receipt",
+      "findings": [
+        "Volledig gelezen ontwerp/review/bewijs; uitkomst beperkt tot beschreven kandidaat, route en peildatum; geen impliciete eigenaaracceptatie."
+      ],
+      "current_sha256_at_registration": "512b5326230e64ec13c2423877d2d47e758380d0c07c7eddd4912b24127cbfc6",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/agentbench-fc-agentrl-artifact-remediation-f4fe2c2.md",
+      "bytes": 1551,
+      "sha256": "381fef18074a1af11b361b1690c6432f1535090d44fee4bc874be518e7bacbea",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "Review — AgentRL artifactherstel `f4fe2c2`",
+      "findings": [
+        "Volledig gelezen ontwerp/review/bewijs; uitkomst beperkt tot beschreven kandidaat, route en peildatum; geen impliciete eigenaaracceptatie."
+      ],
+      "current_sha256_at_registration": "381fef18074a1af11b361b1690c6432f1535090d44fee4bc874be518e7bacbea",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/project-telegram-normalization-review-2026-09-12.md",
+      "bytes": 3238,
+      "sha256": "f0343bc40bab289ca69d2b8b3fe0ea07bf4026d0a5ee3c3c60cac5b1829cbf1b",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "Project-Telegram: normalisatie en veilige diagnostiek",
+      "findings": [
+        "Volledig gelezen ontwerp/review/bewijs; uitkomst beperkt tot beschreven kandidaat, route en peildatum; geen impliciete eigenaaracceptatie."
+      ],
+      "current_sha256_at_registration": "f0343bc40bab289ca69d2b8b3fe0ea07bf4026d0a5ee3c3c60cac5b1829cbf1b",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/AU-002-telegram-365128c1.md",
+      "bytes": 4633,
+      "sha256": "2d1df7cc79850900f963cb4ce0249e62ece803b99ef04035ab469f94e04882fc",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "AU-002 — onafhankelijke review van Telegram-brugherstel",
+      "findings": [
+        "Volledig gelezen ontwerp/review/bewijs; uitkomst beperkt tot beschreven kandidaat, route en peildatum; geen impliciete eigenaaracceptatie."
+      ],
+      "current_sha256_at_registration": "2d1df7cc79850900f963cb4ce0249e62ece803b99ef04035ab469f94e04882fc",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/action-chain-read-advance-mc03b3.md",
+      "bytes": 3856,
+      "sha256": "1291787bcbc4bff02c00f85df5d4e1d2f1d916cc4d856bddd51eb649a6eb5c33",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "Verificatiedossier — action-chain readvrijgave MC03b3",
+      "findings": [
+        "Volledig gelezen ontwerp/review/bewijs; uitkomst beperkt tot beschreven kandidaat, route en peildatum; geen impliciete eigenaaracceptatie."
+      ],
+      "current_sha256_at_registration": "1291787bcbc4bff02c00f85df5d4e1d2f1d916cc4d856bddd51eb649a6eb5c33",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/cp001-bottie-restart-delivery-2026-09-12.md",
+      "bytes": 3597,
+      "sha256": "09d2cfbb2d46bcd539f10101371dedb7c7686e40384dc1cc3f5944a84f427378",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "CP-001 Bottie: procescrash vóór ACK",
+      "findings": [
+        "Vergelijkings- of accountingcontract; technische gereedheid onderscheiden van nog ontbrekende productvergelijking."
+      ],
+      "current_sha256_at_registration": "09d2cfbb2d46bcd539f10101371dedb7c7686e40384dc1cc3f5944a84f427378",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/cp001-native-adapters-delivery-2026-09-12.md",
+      "bytes": 7175,
+      "sha256": "08b41877d48b87418f0c49e25529b2b29ec846e612a55094af687700f3613370",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "CP-001 native ingress adapters — 12 september 2026",
+      "findings": [
+        "Vergelijkings- of accountingcontract; technische gereedheid onderscheiden van nog ontbrekende productvergelijking."
+      ],
+      "current_sha256_at_registration": "08b41877d48b87418f0c49e25529b2b29ec846e612a55094af687700f3613370",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/cp001-reader-provenance-2026-09-13.md",
+      "bytes": 4877,
+      "sha256": "e8895a4b6d909bd3eaecb4af4415de778fccdec019bf800af9e756e5de4ebc0a",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "CP-001 gepinde owner-reader snapshotreceipt",
+      "findings": [
+        "Vergelijkings- of accountingcontract; technische gereedheid onderscheiden van nog ontbrekende productvergelijking."
+      ],
+      "current_sha256_at_registration": "e8895a4b6d909bd3eaecb4af4415de778fccdec019bf800af9e756e5de4ebc0a",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/IN-002-postgres-image-sbom-2026-09-13.md",
+      "bytes": 1815,
+      "sha256": "782c7242230c590b479baabc8d2efbb00a51838aa00dbe7c12c03cdfaa82171f",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "IN-002: PostgreSQL amd64 image, uitvoering en SPDX",
+      "findings": [
+        "Volledig gelezen ontwerp/review/bewijs; uitkomst beperkt tot beschreven kandidaat, route en peildatum; geen impliciete eigenaaracceptatie."
+      ],
+      "current_sha256_at_registration": "782c7242230c590b479baabc8d2efbb00a51838aa00dbe7c12c03cdfaa82171f",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/RB-003-builder-a-offline-admission-501950f.md",
+      "bytes": 3676,
+      "sha256": "c631295f044d7f72019c4ee6add351707eec45546c32ce95b55cf3ac4ab255e3",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "RB-003 — onafhankelijke review builder-A-admission",
+      "findings": [
+        "Volledig gelezen ontwerp/review/bewijs; uitkomst beperkt tot beschreven kandidaat, route en peildatum; geen impliciete eigenaaracceptatie."
+      ],
+      "current_sha256_at_registration": "c631295f044d7f72019c4ee6add351707eec45546c32ce95b55cf3ac4ab255e3",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/AU-002-final-81d43061.md",
+      "bytes": 4343,
+      "sha256": "6734032f7006cefc1c22b5167df20b0f68eee523156724f34bf0b793b83b80b5",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "AU-002 — onafhankelijke technische afsluiting",
+      "findings": [
+        "Volledig gelezen ontwerp/review/bewijs; uitkomst beperkt tot beschreven kandidaat, route en peildatum; geen impliciete eigenaaracceptatie."
+      ],
+      "current_sha256_at_registration": "6734032f7006cefc1c22b5167df20b0f68eee523156724f34bf0b793b83b80b5",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/harness-subagent-engine-55cf7cc.md",
+      "bytes": 3137,
+      "sha256": "7e16d18a78b583a85f784b2762fce1f3f2fea6c0215e15a6581246b5f3eb9912",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "Onafhankelijke herreview — Harness-subagentengine",
+      "findings": [
+        "Volledig gelezen ontwerp/review/bewijs; uitkomst beperkt tot beschreven kandidaat, route en peildatum; geen impliciete eigenaaracceptatie."
+      ],
+      "current_sha256_at_registration": "7e16d18a78b583a85f784b2762fce1f3f2fea6c0215e15a6581246b5f3eb9912",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/EV-002-controlled-baseline-proof-review-62507a7.md",
+      "bytes": 2948,
+      "sha256": "360a9c87213953dce34bdd72e6ecaa6edd116c3af677ba2da5dd99e9220a287c",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "EV-002 — onafhankelijke proofreview van de gecontroleerde nulmeting",
+      "findings": [
+        "Volledig gelezen ontwerp/review/bewijs; uitkomst beperkt tot beschreven kandidaat, route en peildatum; geen impliciete eigenaaracceptatie."
+      ],
+      "current_sha256_at_registration": "360a9c87213953dce34bdd72e6ecaa6edd116c3af677ba2da5dd99e9220a287c",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/RB-002-bootstrap-release-authority-45d2ff6.md",
+      "bytes": 2373,
+      "sha256": "c32b0b5043987599492970697fe22e1208f7467c16aaa52f3a47aa1a497e9316",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "RB-002 — onafhankelijke review bootstrap-releaseauthority",
+      "findings": [
+        "Volledig gelezen ontwerp/review/bewijs; uitkomst beperkt tot beschreven kandidaat, route en peildatum; geen impliciete eigenaaracceptatie."
+      ],
+      "current_sha256_at_registration": "c32b0b5043987599492970697fe22e1208f7467c16aaa52f3a47aa1a497e9316",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/learning-and-person-model-lg00.md",
+      "bytes": 1821,
+      "sha256": "55607efbed99067c7fe1643a6d30754427249f8dd1cb224365c96acd5df06df5",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "Onafhankelijke review — leren en persoonsmodel LG00",
+      "findings": [
+        "Volledig gelezen ontwerp/review/bewijs; uitkomst beperkt tot beschreven kandidaat, route en peildatum; geen impliciete eigenaaracceptatie."
+      ],
+      "current_sha256_at_registration": "55607efbed99067c7fe1643a6d30754427249f8dd1cb224365c96acd5df06df5",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/documentation-alignment-2026-09-12.md",
+      "bytes": 9890,
+      "sha256": "ad6a65658b6228fc1dec747bed7ee6745a054724177cfd65df423fc4124d9f79",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "Documentatie-afstemming — 12 september 2026",
+      "findings": [
+        "Volledig gelezen ontwerp/review/bewijs; uitkomst beperkt tot beschreven kandidaat, route en peildatum; geen impliciete eigenaaracceptatie."
+      ],
+      "current_sha256_at_registration": "ad6a65658b6228fc1dec747bed7ee6745a054724177cfd65df423fc4124d9f79",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/mcp-dependency-bakeoff-c5b7d88.md",
+      "bytes": 2078,
+      "sha256": "7eb4b07ebe41a5798d70e3d648563e023fc8d9cec4b098cc1afa05be55a625e6",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "Onafhankelijke review — MCP dependency bake-off",
+      "findings": [
+        "Volledig gelezen ontwerp/review/bewijs; uitkomst beperkt tot beschreven kandidaat, route en peildatum; geen impliciete eigenaaracceptatie."
+      ],
+      "current_sha256_at_registration": "7eb4b07ebe41a5798d70e3d648563e023fc8d9cec4b098cc1afa05be55a625e6",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/managed-b-sealed-render-80f722c.md",
+      "bytes": 1348,
+      "sha256": "b45698b220341385bb4220be3f3eb8ca62ad17c5c83ec6fbf9238dab0005c94e",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "Onafhankelijke review — verzegelde managed-B-render",
+      "findings": [
+        "Volledig gelezen ontwerp/review/bewijs; uitkomst beperkt tot beschreven kandidaat, route en peildatum; geen impliciete eigenaaracceptatie."
+      ],
+      "current_sha256_at_registration": "b45698b220341385bb4220be3f3eb8ca62ad17c5c83ec6fbf9238dab0005c94e",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/managed-b-host-only-preflight-0ed424f.md",
+      "bytes": 1094,
+      "sha256": "92b1ac7ef4df41d9bf2a68d9a0a955fecba57096628eef8f21ee1b364c81bcd2",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "Onafhankelijke review — host-only B-preflight",
+      "findings": [
+        "Volledig gelezen ontwerp/review/bewijs; uitkomst beperkt tot beschreven kandidaat, route en peildatum; geen impliciete eigenaaracceptatie."
+      ],
+      "current_sha256_at_registration": "92b1ac7ef4df41d9bf2a68d9a0a955fecba57096628eef8f21ee1b364c81bcd2",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/action-chain-effect-readback-authorization-mc03c3b1.md",
+      "bytes": 5347,
+      "sha256": "b0ad3cd6fa1454d870d07b3f4ac0fca9a9b5ccdcbb7c9c3c6146f35357a8ebb8",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "MC03c3b1 — autorisatie van één effectcontrole",
+      "findings": [
+        "Volledig gelezen ontwerp/review/bewijs; uitkomst beperkt tot beschreven kandidaat, route en peildatum; geen impliciete eigenaaracceptatie."
+      ],
+      "current_sha256_at_registration": "b0ad3cd6fa1454d870d07b3f4ac0fca9a9b5ccdcbb7c9c3c6146f35357a8ebb8",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/model-lease-consumer-5303622.md",
+      "bytes": 631,
+      "sha256": "7a0c26824541c845050ba7e6436ed4b351df9f03f41189df04fd425bd7bf8067",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "Onafhankelijke review — modellease-consumer `5303622`",
+      "findings": [
+        "Volledig gelezen ontwerp/review/bewijs; uitkomst beperkt tot beschreven kandidaat, route en peildatum; geen impliciete eigenaaracceptatie."
+      ],
+      "current_sha256_at_registration": "7a0c26824541c845050ba7e6436ed4b351df9f03f41189df04fd425bd7bf8067",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/action-chain-ledger-mc02a.md",
+      "bytes": 2351,
+      "sha256": "e8e551a6919b6a206c549e9f2ef11bf8d3b943dd50344e62b2514f57c95759cc",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "Onafhankelijke controle — meerstapsadmission MC02a",
+      "findings": [
+        "Volledig gelezen ontwerp/review/bewijs; uitkomst beperkt tot beschreven kandidaat, route en peildatum; geen impliciete eigenaaracceptatie."
+      ],
+      "current_sha256_at_registration": "e8e551a6919b6a206c549e9f2ef11bf8d3b943dd50344e62b2514f57c95759cc",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/procedure-reference-preplanning-20260913.md",
+      "bytes": 3426,
+      "sha256": "b83c1f9aceacfd112f1165328afbd5e0a3337cf82cb515ed2e8ab1bff410abbe",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "AU004: procedurekandidaten vóór de eerste planning",
+      "findings": [
+        "Procedureleren/selectie: historische mislukking of beperkte technische uitkomst; R6 is latere beperkte successcope."
+      ],
+      "current_sha256_at_registration": "b83c1f9aceacfd112f1165328afbd5e0a3337cf82cb515ed2e8ab1bff410abbe",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/managed-b-runtime-secret-preflight-6ead73f.md",
+      "bytes": 1140,
+      "sha256": "09b4c06190afaa1e5c73bf962a566078b3ce2ebb887631b315096533de0f1a54",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "Onafhankelijke review — managed B runtime-secretpreflight",
+      "findings": [
+        "Volledig gelezen ontwerp/review/bewijs; uitkomst beperkt tot beschreven kandidaat, route en peildatum; geen impliciete eigenaaracceptatie."
+      ],
+      "current_sha256_at_registration": "09b4c06190afaa1e5c73bf962a566078b3ce2ebb887631b315096533de0f1a54",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/RB-004-builder-b-offline-admission-e6d7b5f.md",
+      "bytes": 2677,
+      "sha256": "3a0309fc2c921de2c7072313e02dce8c17a4d6ee9506f62df63643fe02d12947",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "RB-004 — onafhankelijke review van gecorrigeerd bewijs",
+      "findings": [
+        "Volledig gelezen ontwerp/review/bewijs; uitkomst beperkt tot beschreven kandidaat, route en peildatum; geen impliciete eigenaaracceptatie."
+      ],
+      "current_sha256_at_registration": "3a0309fc2c921de2c7072313e02dce8c17a4d6ee9506f62df63643fe02d12947",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/CO-001-telegram-live-drafts-proof-review-7b330a3.md",
+      "bytes": 1813,
+      "sha256": "7d42d275611b57eacb3848e39ee2e46adadaebf87d925a737420676b30d211c4",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "CO-001 — onafhankelijke proofreview",
+      "findings": [
+        "Volledig gelezen ontwerp/review/bewijs; uitkomst beperkt tot beschreven kandidaat, route en peildatum; geen impliciete eigenaaracceptatie."
+      ],
+      "current_sha256_at_registration": "7d42d275611b57eacb3848e39ee2e46adadaebf87d925a737420676b30d211c4",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/RR-002-RR-004-release-recovery-c1d4c8a.md",
+      "bytes": 2141,
+      "sha256": "633b73d8f3b82fc9805d212ddeadf840c42229fc639ad4564014fcbf4a5241e7",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "RR-002 tot en met RR-004 — onafhankelijke herstelreview",
+      "findings": [
+        "Volledig gelezen ontwerp/review/bewijs; uitkomst beperkt tot beschreven kandidaat, route en peildatum; geen impliciete eigenaaracceptatie."
+      ],
+      "current_sha256_at_registration": "633b73d8f3b82fc9805d212ddeadf840c42229fc639ad4564014fcbf4a5241e7",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/runtime-subagent-workboard-c031755.md",
+      "bytes": 4054,
+      "sha256": "72e996ede6e06291d6d2264200b68e524fe150efadaed6bf6750913df2c337ed",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "Onafhankelijke review — duurzame subagentproef en werkbord",
+      "findings": [
+        "Volledig gelezen ontwerp/review/bewijs; uitkomst beperkt tot beschreven kandidaat, route en peildatum; geen impliciete eigenaaracceptatie."
+      ],
+      "current_sha256_at_registration": "72e996ede6e06291d6d2264200b68e524fe150efadaed6bf6750913df2c337ed",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/dependency-transport-trials-2026-08-25.md",
+      "bytes": 5531,
+      "sha256": "e7189158256bfab7dd530340d7f0b5fe0b37a1c0b98e793112be1d35193f7883",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "Dependencytransportproeven — 25 augustus 2026",
+      "findings": [
+        "Volledig gelezen ontwerp/review/bewijs; uitkomst beperkt tot beschreven kandidaat, route en peildatum; geen impliciete eigenaaracceptatie."
+      ],
+      "current_sha256_at_registration": "e7189158256bfab7dd530340d7f0b5fe0b37a1c0b98e793112be1d35193f7883",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/reviews/au004-r5-a-pass-b-content-read-fail-20260913.md",
+      "bytes": 640,
+      "sha256": "c1faa98488a5c0b8bd8bf3c24662b950ce50e9c6e0e4e4fc481fa66f3740f21e",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "R5 actual result",
+      "findings": [
+        "Procedureleren/selectie: historische mislukking of beperkte technische uitkomst; R6 is latere beperkte successcope."
+      ],
+      "current_sha256_at_registration": "c1faa98488a5c0b8bd8bf3c24662b950ce50e9c6e0e4e4fc481fa66f3740f21e",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/tools/wakeword_capture/README.md",
+      "bytes": 4628,
+      "sha256": "9ca9e01a02155549104b48a686040357ca02bc2e87312d85ef2615e37b7a9ff6",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "Hé Eva — korte lokale opnameproef",
+      "findings": [
+        "Beheer-/ontwikkelhulpmiddel; aanwezigheid van documentatie bewijst geen live gebruikersfunctie."
+      ],
+      "current_sha256_at_registration": "9ca9e01a02155549104b48a686040357ca02bc2e87312d85ef2615e37b7a9ff6",
+      "changed_since_inventory": false
+    },
+    {
+      "path": "eva2/benchmark/inspect_ai_v1/README.md",
+      "bytes": 29189,
+      "sha256": "d3fec487d20a59f2bb41546613d0f99b98c7e323e4bc5773bd7e41b9c5cba026",
+      "reading_mode": "full_content_in_tool_output",
+      "reader": "evidence_audit",
+      "first_heading": "Inspect AI-evalomgeving",
+      "findings": [
+        "Benchmarkdocumentatie: fixtures en harnessbewijzen leveren geen algemene productranglijst."
+      ],
+      "current_sha256_at_registration": "d3fec487d20a59f2bb41546613d0f99b98c7e323e4bc5773bd7e41b9c5cba026",
+      "changed_since_inventory": false
+    }
+  ],
+  "additional_sources": [
+    {
+      "path": "eva2/src/eva/providers/document_task_input.py",
+      "sha256": "e9baec3762cc019e9554484837f0f3e1b3589c981a4b6fa53381bf155e2a1d5e",
+      "reading_mode": "full_content_in_tool_output",
+      "findings": [
+        "Broncontrole van grenzen en ontbrekende algemene runtimeclaim; zie rapport."
+      ]
+    },
+    {
+      "path": "eva2/tests/providers/test_document_task_input.py",
+      "sha256": "503e9907978f12f30957fe603229ad93561821f7c2bb415119bcab67b2f5acc2",
+      "reading_mode": "full_content_in_tool_output",
+      "findings": [
+        "Broncontrole van grenzen en ontbrekende algemene runtimeclaim; zie rapport."
+      ]
+    },
+    {
+      "path": "eva2/benchmark/inspect_ai_v1/cp001_accounting.py",
+      "sha256": "878cfe5b6c90935cb4d5258c0c83b6d143c5f446b941dafd73ff5a2c3b13b5dc",
+      "reading_mode": "full_content_in_tool_output",
+      "findings": [
+        "Broncontrole van grenzen en ontbrekende algemene runtimeclaim; zie rapport."
+      ]
+    },
+    {
+      "path": "eva2/evidence/living-core/au004-r6-abc-live-pass-20260913.json",
+      "sha256": "cf2e4ceb2cfd73d9c37eba1cf45d5e618390d79d5b691946ca30d8be671b175c",
+      "reading_mode": "targeted_fields_in_tool_output",
+      "findings": [
+        "Uitkomst, beperking en gemeten gebruik gecontroleerd; grote gecombineerde JSON-output gedeeltelijk afgekapt, daarom geen volledige-leesclaim."
+      ]
+    },
+    {
+      "path": "eva2/evidence/living-core/au006-r2-live-completed-20260913.json",
+      "sha256": "2a9e31f23bff37672fabc9f1d1ed5609295205db6b60bfd43c207343ebc9c0c7",
+      "reading_mode": "targeted_fields_in_tool_output",
+      "findings": [
+        "Uitkomst, beperking en gemeten gebruik gecontroleerd; grote gecombineerde JSON-output gedeeltelijk afgekapt, daarom geen volledige-leesclaim."
+      ]
+    },
+    {
+      "path": "eva2/evidence/product/AU-004-procedure-attempt3-B-2026-09-12.json",
+      "sha256": "b6b0f90328d3a6af03056e82c75f3c6b86d32eb10bc7070cb262b37e0b421eea",
+      "reading_mode": "targeted_fields_in_tool_output",
+      "findings": [
+        "Uitkomst, beperking en gemeten gebruik gecontroleerd; grote gecombineerde JSON-output gedeeltelijk afgekapt, daarom geen volledige-leesclaim."
+      ]
+    },
+    {
+      "path": "eva2/evidence/product/conversation-current-check-2026-09-21.json",
+      "sha256": "b50f5f2c86a870c1aade2708141bf38f238c72d872b986384c58c8ada5f1e03a",
+      "reading_mode": "targeted_fields_in_tool_output",
+      "findings": [
+        "Uitkomst, beperking en gemeten gebruik gecontroleerd; grote gecombineerde JSON-output gedeeltelijk afgekapt, daarom geen volledige-leesclaim."
+      ]
+    },
+    {
+      "path": "eva2/evidence/product/EV-002-controlled-baseline-result-2026-09-04.json",
+      "sha256": "3bb966c92b24723892ed41bd959881a83a2192cebf8c8aeaaac7f618650fd613",
+      "reading_mode": "targeted_fields_in_tool_output",
+      "findings": [
+        "Uitkomst, beperking en gemeten gebruik gecontroleerd; grote gecombineerde JSON-output gedeeltelijk afgekapt, daarom geen volledige-leesclaim."
+      ]
+    },
+    {
+      "path": "eva2/evidence/product/initiative-recovery-2026-09-21.json",
+      "sha256": "5b64487a1c2acc04df8dae17144c31b9c8480754c7325d778ecf0ad531a6e80a",
+      "reading_mode": "targeted_fields_in_tool_output",
+      "findings": [
+        "Uitkomst, beperking en gemeten gebruik gecontroleerd; grote gecombineerde JSON-output gedeeltelijk afgekapt, daarom geen volledige-leesclaim."
+      ]
+    }
+  ],
+  "runtime_model_calls": 0,
+  "product_tests_run": 0,
+  "development_tokens": "not independently measured",
+  "credit_cost": "unknown"
+}

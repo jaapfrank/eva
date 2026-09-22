@@ -21,6 +21,27 @@ def test_explicit_work_receipt(text):
 
 
 @pytest.mark.parametrize("text", [
+    "Zou je willen uitzoeken wat Home Assistant Cloud doet voor spraak?",
+    "Zou je voor mij even kunnen onderzoeken welke opties er zijn?",
+    "Zou je kunnen vergelijken welke optie past?",
+])
+def test_polite_work_request_gets_receipt(text):
+    assert work_receipt_text(text) == "Ik kijk er even voor je naar."
+
+
+@pytest.mark.parametrize("text", [
+    "Zou je willen stoppen met zoeken?",
+    "Zou je voor mij even kunnen stoppen met onderzoeken?",
+    "Zou je voor mij even willen onderzoeken, nee, laat maar.",
+    "Zou je voor mij even kunnen onderzoeken? Niet doen.",
+    "Zou je kunnen uitleggen waarom de lucht blauw is?",
+    "Zou je willen weten waarom ik dit onderzoek?",
+])
+def test_polite_question_or_cancel_has_no_receipt(text):
+    assert work_receipt_text(text) is None
+
+
+@pytest.mark.parametrize("text", [
     "Zoek niet verder.", "Kun je stoppen met zoeken?", "Wat betekent ‘zoek het uit’?",
     "Waarom vergelijk je deze dingen?", "Controleer je altijd je bronnen?",
     "Kun je uitleggen waarom de lucht blauw is?", "Zoek bronnen, nee, laat maar.",
@@ -31,12 +52,13 @@ def test_simple_questions_and_cancellations_have_no_receipt(text):
 
 
 @pytest.mark.asyncio
+@pytest.mark.parametrize("work_text", ["Onderzoek dit", "Zou je willen onderzoeken welke optie past?"])
 @pytest.mark.parametrize("status,content_type,work", [
     (200, "application/x-ndjson", True), (200, "application/x-ndjson", False),
     (403, "application/x-ndjson", True), (500, "application/x-ndjson", True),
     (200, "text/html", True),
 ])
-async def test_receipt_requires_http_acceptance_and_precedes_body(monkeypatch, status, content_type, work):
+async def test_receipt_requires_http_acceptance_and_precedes_body(monkeypatch, status, content_type, work, work_text):
     release = asyncio.Event()
     requested = []
     class Body(httpx.AsyncByteStream):
@@ -48,7 +70,7 @@ async def test_receipt_requires_http_acceptance_and_precedes_body(monkeypatch, s
         return httpx.Response(status, headers={"content-type": content_type}, stream=Body())
     original = httpx.AsyncClient
     monkeypatch.setattr(httpx, "AsyncClient", lambda **kw: original(transport=httpx.MockTransport(route), **kw))
-    events = CoreClient("http://core", "test-token").events({"text": "Onderzoek dit" if work else "Hoe gaat het?"})
+    events = CoreClient("http://core", "test-token").events({"text": work_text if work else "Hoe gaat het?"})
     if status != 200 or content_type != "application/x-ndjson":
         with pytest.raises((httpx.HTTPStatusError, ValueError)):
             await anext(events)

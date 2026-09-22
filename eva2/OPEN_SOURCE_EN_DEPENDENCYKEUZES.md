@@ -1,5 +1,21 @@
 # Eva 2 — eerst hergebruiken, pas daarna zelf bouwen
 
+> Eigenaarbesluit 22 september 2026: bestaande bouwstenen blijven in gebruik
+> zolang zij aan de eigenaarseisen voldoen. Onderstaande alternatieven zijn
+> geen vervangingsopdracht; selecteer alleen opnieuw bij een concreet tekort.
+
+> Actuele herbeoordeling: [basiskeuze van 21 september 2026](HERBEOORDELING_2026-09-21.md)
+> en [upstreammomentopname](evidence/reassessment/upstream-2026-09-21.json).
+> De huidige live kern bevat Pydantic AI 2.37.0; oudere liveversies en de
+> prioriteit voor een andere stemroute hieronder zijn historische waarnemingen.
+> LiveKit blijft de aanbevolen stemtransportlaag. Nieuwe upstreamreleases zijn
+> onderzocht maar niet geïnstalleerd, gescand of als compatibel bewezen.
+> De dependency-, licentie-, versiepin-, scan- en terugwegregels blijven gelden.
+> Een aanvullende geïsoleerde proef is alleen nodig als de uitslag de keuze kan
+> veranderen. De oudere algemene verplichting hieronder om iedere kandidaat
+> eerst te installeren en te beproeven is daarmee vervangen; een bronvergelijking
+> kan voldoende zijn om een niet-passende of overbodige toevoeging af te wijzen.
+
 Bijgewerkt: 1 september 2026.
 
 ## Het eerlijke antwoord

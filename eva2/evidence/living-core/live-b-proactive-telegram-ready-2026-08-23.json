@@ -1,0 +1,47 @@
+{
+  "contract": "EvaLivingBProactiveTelegramReadyReceipt/v1",
+  "recorded_at": "2026-08-23T20:13:01Z",
+  "environment": {
+    "container_id": "3b17b3a38e07ed2b1321e6d61ac769c8b47b66bc11419441a9db04c98601fe86",
+    "image": "eva2-living-core:proactive-telegram-outbound-20260823",
+    "image_sha256": "09355e2f08768473e2d59325d94f504200ebdaa2d4722f9e4aef51c115b0f079"
+  },
+  "source_files": {
+    "eva2/src/eva/adapters/api/app.py": "df76d5cfdbbcdfef5cd25f37d8dfd4a0040dc5603b0b18c3ad1419b5df77d793",
+    "eva2/src/eva/adapters/connectors/telegram.py": "0b9b3295650f1e41fa810dae8fe86f8645f6abf74b7d82512118ec4f87683b52",
+    "eva2/src/eva/adapters/model/conversation.py": "a410e887ee0e86efe11c1fa1c4f5bf6140bf6e3dc8aa7528f9d6dd957af3b1c6",
+    "eva2/src/eva/adapters/postgres/sensory_events.py": "ffafe4dca64acdf20a602897de1c4aa339d34ca648dd8f497853c3c6dbac690a",
+    "eva2/src/eva/application/free_will.py": "a215b928e52e8999332fbcc24be82dfe856747a07050f3268e48cf02ac2c1e1b",
+    "eva2/src/eva/bootstrap/runtime.py": "db232d97e703ddbf93bd175ee41425a431503ab02c6ce1db0fbe56bd28b51fef"
+  },
+  "real_home_assistant_gate": {
+    "source": "binary_sensor.eva2_live_co_gate",
+    "device_class": "carbon_monoxide",
+    "model_disposition": "respond",
+    "model_provider": "chatgpt-codex:gpt-5.4-mini",
+    "urgency": 3,
+    "expression": "Koolmonoxidemelder garage geeft nu alarm.",
+    "outbox_claim_revision": 4,
+    "transport_receipt_channel": "test",
+    "transport_receipt_id": "live-gate:co:20260823",
+    "temporary_entity_deleted": true,
+    "physical_devices_changed": 0
+  },
+  "telegram_connector_gate": {
+    "outbound_only": true,
+    "receipt_required_before_closure": true,
+    "local_provider_contract_test": "passed",
+    "live_telegram_enabled": false,
+    "reason_not_enabled": "No explicitly approved proactive destination and new Eva 2 bot-token secret are mounted in B."
+  },
+  "focused_gate": {
+    "passed": 39,
+    "failed": 0,
+    "ruff": "passed",
+    "diff_check": "passed"
+  },
+  "production_a": {
+    "traffic_changed": false
+  },
+  "status": "passed"
+}

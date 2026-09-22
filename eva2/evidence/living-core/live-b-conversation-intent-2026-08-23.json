@@ -1,0 +1,71 @@
+{
+  "contract": "EvaLivingCoreBConversationIntentReceipt/v1",
+  "recorded_at": "2026-08-23T20:00:00+02:00",
+  "deployment": {
+    "container": "eva2-living-core-b",
+    "health": "healthy",
+    "image_digest": "sha256:9c03d16af6c209f0310544e3c42bd09c53dbb9f92afbfa86e2f03395bcce4175",
+    "postgresql": "ready",
+    "hindsight": "ready"
+  },
+  "conversation_recovery": {
+    "checkpoint_setup": "INGRESS_COMMITTED was created through PostgresConversationJournal, then the real B container was restarted before model generation",
+    "first_replay_seconds": 3.734,
+    "second_replay_seconds": 0.013,
+    "same_reply": true,
+    "text_sha256": "3fe78ce6819a6ab4a8dcc2e315e38f2791b24d484d28ff4f0b2f2dcc571f7b0c",
+    "event_counts": {
+      "INGRESS_COMMITTED": 1,
+      "MEMORY_RETAIN_QUEUED": 1,
+      "REPLY_COMMITTED": 1
+    },
+    "changed_payload_same_message_id_http_status": 409
+  },
+  "personal_intent_recovery": {
+    "crash_method": "The real HTTP turn was running when eva2-living-core-b received an immediate container stop after PERSONAL_INTENT_ADOPTED and before REPLY_COMMITTED",
+    "intent_id": "personal-interest:1757316451371113f5a5eb8e1ed4e829",
+    "intent_event_payload_sha256": "d8f7852dca19c8fc64d393c21cef6d175ffbcffd919a39e9a5bb3d5544ce1ba5",
+    "conversation_event_payload_sha256": {
+      "INGRESS_COMMITTED": "091b53c78ebeb20068e13ed620ea598ecec9e2deadd0f3c0a86ef16baad0d548",
+      "MEMORY_RETAIN_QUEUED": "800a0bf58d530b163ea96807e227c1d480c84f255abad996a0f234453c6a89e2",
+      "PERSONAL_INTENT_LINKED": "79d64f08fdf1ae5ec038a8d793421d3ea60525c80b98eba2cf245c99b0a8dc25",
+      "REPLY_COMMITTED": "aa244346c612771c2e7ba349ab6d889df8bc3570e5884aabf260562998d3c046"
+    },
+    "first_replay_seconds": 2.868,
+    "second_replay_seconds": 0.011,
+    "same_reply": true,
+    "text_sha256": "470906ea7ba08211d54227a2f9510d22838cd385ee94f8aca6794900bcaf40d3",
+    "event_counts": {
+      "INGRESS_COMMITTED": 1,
+      "MEMORY_RETAIN_QUEUED": 1,
+      "PERSONAL_INTENT_ADOPTED": 1,
+      "PERSONAL_INTENT_LINKED": 1,
+      "REPLY_COMMITTED": 1
+    }
+  },
+  "telegram": {
+    "delivery_kind": "real Telegram Bot API edit of the earlier B reply",
+    "message_id": 4465,
+    "reply_to_message_id": 4463,
+    "transport_accepted": true,
+    "archive_status": "completed",
+    "archived_text_sha256": "6ccb23b387e869b7e56421d3eb2ce37ef2363d4de3571b371c5feafc82a3c7b3",
+    "durable_interest": {
+      "intent_id": "personal-interest:efd2fe50a67b02b0edad49eb8042648a",
+      "intent_event_payload_sha256": "c927974609094a2cc2e27ad838281b97eb6555c6ef8a3f491a05ad35dcb186ca",
+      "state": "active",
+      "title": "Slim koken en thuis-hacks",
+      "next_exploration": "Welke drie goedkope avondeten-ideeën met weinig afwas kan ik het beste als vaste basis verder uitwerken voor drukke avonden?"
+    }
+  },
+  "claims": [
+    "Conversation ingress, reply and semantic-retention queueing are idempotent on the durable message identity.",
+    "Eva's model selected the personal interest through a function action; no text or intent rule matched the hobby wording.",
+    "The personal intent was committed before Eva's visible claim and was resumed after a real process stop without a second adoption."
+  ],
+  "nonclaims": [
+    "The active interest is not yet a completed background exploration.",
+    "This receipt does not prove a Home Assistant mutation or any other physical effect.",
+    "B remains an isolated canary and has not replaced production A."
+  ]
+}

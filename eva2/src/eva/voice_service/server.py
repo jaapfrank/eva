@@ -10,6 +10,7 @@ import json
 import os
 from pathlib import Path
 from uuid import uuid4
+from urllib.parse import urlsplit
 
 import httpx
 from fastapi import FastAPI, Request, HTTPException
@@ -65,6 +66,24 @@ def create_app():
             raise ValueError("voice authority unavailable") from None
 
     app = FastAPI(lifespan=lifespan)
+    def local_browser(request):
+        if config.get("local_browser_access") is not True:
+            return False
+        origin = urlsplit(config["origin"])
+        if origin.scheme != "http" or origin.hostname not in {"localhost", "127.0.0.1", "::1"}:
+            return False
+        hosts = {f"{host}:{origin.port}" for host in ("localhost", "127.0.0.1", "[::1]")}
+        if not request.client or request.client.host not in {"127.0.0.1", "::1"}:
+            return False
+        if request.headers.get("host") not in hosts:
+            return False
+        if any(name in request.headers for name in ("forwarded", "x-forwarded-for", "x-forwarded-host", "x-forwarded-proto")):
+            return False
+        if request.headers.get("sec-fetch-site", "none") not in {"none", "same-origin"}:
+            return False
+        supplied_origin = request.headers.get("origin")
+        return supplied_origin is None or supplied_origin == "http://" + request.headers["host"]
+
     def admit(request, *, mutation=False):
         raw = request.headers.get("authorization", "")
         candidate = ""
@@ -78,20 +97,25 @@ def create_app():
                     candidate = password
         except (ValueError, UnicodeError):
             pass
-        if not candidate or not secrets.compare_digest(candidate, token):
+        local = local_browser(request)
+        if not local and (not candidate or not secrets.compare_digest(candidate, token)):
             raise HTTPException(401, "Eigenaarsaanmelding vereist")
         try:
             check()
         except ValueError:
             raise HTTPException(403, "Stemtoegang is ingetrokken of verlopen.") from None
-        if mutation and request.headers.get("origin") != config["origin"]:
+        expected_origin = "http://" + request.headers["host"] if local else config["origin"]
+        if mutation and request.headers.get("origin") != expected_origin:
             raise HTTPException(403, "origin rejected")
 
     @app.get("/")
     def home(request: Request):
         # The empty sign-in page contains no owner data. Browser navigation must
         # not depend on an HTTP Basic dialog (blocked by embedded browsers).
-        return HTMLResponse(Path(__file__).with_name("client.html").read_text(),
+        html = Path(__file__).with_name("client.html").read_text()
+        if local_browser(request):
+            html = html.replace("const localAccess=false;", "const localAccess=true;")
+        return HTMLResponse(html,
                             headers={"Cache-Control": "no-store"})
 
     @app.get("/livekit-client.js")

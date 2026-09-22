@@ -1,0 +1,37 @@
+{
+  "taskId": "TL-002",
+  "status": "connector_activation_component_tested_not_live",
+  "sourceSha256": {
+    "tools/eva2_quiescent_cutover.py": "022baabb7d74050986d31fc65f1615e3b5f0e11caa0846b2813102993abeeb0c",
+    "deploy/living-core/mcp-gateway.compose.yml": "d2016f39b5ab3fd916733dee846e4e6fe0ed6c662d46e64d4a9c23821dffdedf",
+    "tests/operations/test_eva2_quiescent_cutover.py": "7eb2bafb690af485fc9efc9b04ce6716cc86b3f64f502f07ca16f35ce1c6a79a",
+    "tests/bootstrap/test_managed_b_manifest.py": "36e4e059f742bb97b5a2561e757aaeb62a231d22c74545413da98c5a532ae07a"
+  },
+  "tests": {
+    "passed": 77,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "junitPath": "/tmp/eva2-tl002-connector-activation4.xml",
+    "junitSha256": "ce6bcfe812752620cccfd04dbdd550cd5bd0e65e17dc19421070072b0c415a57"
+  },
+  "review": {
+    "reviewedBy": "/root/co006_review",
+    "decision": "bounded source GO after binding fixed URL to inspected gateway image, alias and network ID"
+  },
+  "physicalReadOnlyChecks": {
+    "disabledCurrentSlotPreflight": "passed, source3 target4, no switch",
+    "composeRenderReceipt": "/tmp/eva2-tl002-connector-render.json",
+    "composeRenderScope": "Real Compose config with synthetic MCP bindings; no container creation or credential release"
+  },
+  "repairs": [
+    "Initial code allowed URL hostname independently of internal network. Fixed URL plus actual gateway image, running state, alias and network-ID membership now required.",
+    "Initial render harness assumed false create_host_path was emitted and omitted empty ipam. Corrected assertions to actual Compose canonical representation; no manifest relaxation."
+  ],
+  "remaining": [
+    "Integrate optional activation render into sealed deployment evidence.",
+    "Provision durable standalone gateway/filesystem with slot-independent data.",
+    "Verify replacement and revocation of expiring service token, including core reload.",
+    "Physical activation/restart/rollback on reviewed candidate; full TL-002 remains open."
+  ]
+}

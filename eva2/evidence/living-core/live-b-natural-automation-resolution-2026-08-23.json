@@ -1,0 +1,60 @@
+{
+  "captured_at": "2026-08-23T19:09:57Z",
+  "contract": "EvaLivingNaturalAutomationResolutionReceipt/v1",
+  "live_b": {
+    "container": "eva2-living-core-b",
+    "container_id": "9fffc1780da3b8f19c06d4927c60023ba628af475f38c9f35492074cdae0df2d",
+    "health": "healthy",
+    "image": "eva2-living-core:natural-automations-20260823",
+    "image_sha256": "34bf22fdfed165daff83eacd66a64091bd0c12c1055366a516bab976d45c8772",
+    "readyz": {
+      "database": "ready",
+      "detail": null,
+      "memory_projection": "ready",
+      "ready": true
+    }
+  },
+  "live_model_diagnostic": {
+    "action": "create_home_assistant_state_automation",
+    "arguments": {
+      "action_entity_id": "verwarming in de overkapping",
+      "action_service": "turn_on",
+      "alias": "Verwarming in de overkapping aan als Jaap thuiskomt",
+      "trigger_entity_id": "Jaap",
+      "trigger_to": "home"
+    },
+    "effect_calls_executed": 0,
+    "latency_ms": 4665,
+    "prompt": "Maak een automatisering: als Jaap thuiskomt, zet de verwarming in de overkapping aan.",
+    "visible_text": null
+  },
+  "live_read_only_resolution": {
+    "action": {
+      "entity_id": "switch.antela_smart_plug_eu_matter_2_socket_1",
+      "friendly_name": "Heater overkapping Socket 1",
+      "state": "on"
+    },
+    "automation_config_sha256": "8cbf51bb2b1c15cb4d79c367a27dbd5736e028c70414b7ee310243fe51e418d5",
+    "catalog_reads": 1,
+    "home_assistant_writes": 0,
+    "trigger": {
+      "entity_id": "person.jaap_frank",
+      "friendly_name": "Jaap Frank",
+      "state": "home"
+    }
+  },
+  "source_sha256": {
+    "architecture_map": "377c797d127f4753f9bb7ef66a1de8654d6ee4872ed440b28b825c2fdd67028b",
+    "conversation_actions": "0b39c62db6ba539e09d176489532e6e46c2b50a82c827a05463a2e63c14b3ada",
+    "conversation_model": "a12c32526165be28e44c9c735b2e741951f7cc7b45425b1c0b35a627b67fd19f",
+    "home_assistant_connector": "21788691ad215ef629508d3638df1788bbb42ab407003b9502a16cea9f2e3b14",
+    "home_automation_builder": "ee4c1daf662f796df826866632f08ca346cf9b0f241d486b2a87427011776b47"
+  },
+  "verification": {
+    "focused_natural_automation_tests": "27 passed",
+    "focused_runtime_regression": "52 passed",
+    "production_a_service": "active",
+    "ruff": "passed",
+    "whitespace": "passed"
+  }
+}

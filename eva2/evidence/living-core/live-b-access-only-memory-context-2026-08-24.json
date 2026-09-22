@@ -1,0 +1,98 @@
+{
+  "captured_at": "2026-08-23T23:21:09Z",
+  "contract": "EvaLivingAccessOnlyMemoryContextReceipt/v1",
+  "production_a": {
+    "service": "eva.service",
+    "status": "active",
+    "traffic_changed": false
+  },
+  "credential_topology": {
+    "authority": "one external refresh-token owner",
+    "core": {
+      "consumer_sha256": "34056bab90f0942034d4afc8388e221111af531da53690efa3a622299e8bf87d",
+      "contract": "EvaModelAccessLease/v1",
+      "file_mode": "0640",
+      "mount": "read_only",
+      "refresh_token_present": false
+    },
+    "hindsight": {
+      "consumer_sha256": "fe7944c1edfdb58f35a8b25457fffb94b57dfec39862e11db9388d5e675d8ef0",
+      "file_mode": "0600",
+      "mount": "read_only",
+      "refresh_token_present": false
+    },
+    "owner_mounts_on_publishers": "read_only",
+    "consumer_outputs": "separate atomically replaced directories"
+  },
+  "live_hindsight": {
+    "container": "eva2-hindsight-memory-live",
+    "image_sha256": "aeb0831e2ec55e659d5e69baa064c1278113e523513b8f60a1f09c5cabe59b9b",
+    "persistent_volume_reused": true,
+    "health": "healthy",
+    "isolated_bank_id": "proof0824-a6a625da6d7d85cd5ca42934c1ceaa77",
+    "retain": {
+      "operation_id": "d73d0335-a50f-5258-b57d-0e9c82b36bcc",
+      "status": "completed"
+    },
+    "recall_readback": "De proefkleur voor deze test is kobaltblauw.",
+    "reflect": {
+      "operation_id": "73573a0a-9ed8-402c-8824-605863d690e3",
+      "status": "completed"
+    },
+    "style_mirror_readback": "Kort, direct en warm. Houd antwoorden compact en vermijd omhaal. Gebruik een vriendelijke, nuchtere toon zonder overdreven formaliteit. Opmaak liefst sober en functioneel; geen lange inleidingen of extra franjes. Stel alleen vragen als ze echt nodig zijn. Wees feitelijk precies en corrigeer jezelf als er nieuwe of betere informatie komt. Er is geen latere correctie of onzekerheidsvoorkeur vastgelegd."
+  },
+  "live_contextual_action": {
+    "scenario": "Ten preceding messages, then Eva offers to turn off the overkapping heater and the user replies only 'Doe maar.'",
+    "model": "gpt-5.4-mini",
+    "reasoning_effort": "medium",
+    "reply": "Gedaan, de verwarming in de overkapping staat uit.",
+    "reply_sha256": "7814b6b20b1898c37b2c39e9c86490f511014dc8de702bfe2bdc461864847d10",
+    "resolved_entity": "switch.antela_smart_plug_eu_matter_2_socket_1",
+    "resolved_friendly_name": "Heater overkapping Socket 1",
+    "provider_call": "switch.turn_off",
+    "tool_thread_id": "tool:home-assistant-light:e02415008d655fc4e12245eb1eaabfcd",
+    "durable_sequence": [
+      "TOOL_REQUEST_ADMITTED",
+      "TOOL_PREPARED",
+      "TOOL_EXECUTED",
+      "STATE_VERIFIED"
+    ],
+    "independent_readback": "off",
+    "semantic_retain_operation_id": "898bc3d6-bb6c-50d1-89b6-1d0fe69bd89f",
+    "semantic_retain_status": "completed"
+  },
+  "live_b": {
+    "container": "eva2-living-core-b",
+    "image": "eva2-living-core:context-followup-20260824",
+    "image_sha256": "a2cd6e8bb249c162d912eae06a6aec5bec7d19894020bab1f780df61de049d5f",
+    "readyz": {
+      "database": "ready",
+      "memory_projection": "ready",
+      "model_provider": "ready",
+      "ready": true
+    }
+  },
+  "verification": {
+    "focused_tests": "49 passed",
+    "ruff": "passed",
+    "real_provider_calls": [
+      "ChatGPT Codex conversation",
+      "Hindsight retain",
+      "Hindsight recall",
+      "Hindsight reflect",
+      "Home Assistant switch.turn_off",
+      "Home Assistant state readback"
+    ]
+  },
+  "source_sha256": {
+    "conversation_model": "525e3c08c5271cc13358ca82ce5fec422ce1760289c8bcd9bd3564727cfeef9a",
+    "credential_publisher": "b1f0957c68b527c401ef5b3fd50256d5dc427b952b74806ffa7e0dda6496bcbe",
+    "hindsight_adapter": "b1be0590fb34162914297a86e0a04138ab3fc9aa187826ffa740253e16f051c0",
+    "stack_compose": "bb9eb4a255ab8e09a4f96f82b440ebda12cc6ea8d9bc15c0d4fd4a66b6ba378a",
+    "preflight": "9ef9880ab9dd59415fc1fd1e58a959c1f422639568d889c720e24853a457cc31"
+  },
+  "promotion": {
+    "approved": false,
+    "status": "isolated_b_only"
+  }
+}

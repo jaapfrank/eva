@@ -1,0 +1,105 @@
+.........F                                                               [100%]
+=================================== FAILURES ===================================
+_____ test_owner_abandons_only_exact_uncertain_review_and_preserves_usage ______
+
+postgres_engine = Engine(postgresql+psycopg://postgres:***@127.0.0.1:44620/eva2_4b_disposable_initiative_recovery)
+
+    def test_owner_abandons_only_exact_uncertain_review_and_preserves_usage(postgres_engine):
+        from eva.application.free_will import AutonomousUsageUncertain
+        label = "abandon-private-review"
+        authority, _, binding = _seed_authority(postgres_engine, label)
+        owner = _id(label, "principal")
+        source = PostgresSensoryEventStore(postgres_engine, tenant_id=label,
+            installation_id="home", initiative_principal_id=str(owner),
+            initiative_authorizer=lambda: ({}, None), context_reviews_only=True)
+        control = PostgresOwnerInitiatives(postgres_engine, tenant_id=label,
+            installation_id="home", owner=owner, binding=binding, authority_scope=authority)
+        assert source.schedule_context_review(now=NOW) == "scheduled"
+        claim = source.mark_model_started(source.claim_next(now=NOW), now=NOW)
+        with pytest.raises(ValueError):
+            control.abandon_uncertain_review(claim.thread_id, claim.revision, now=NOW)
+        source.fail(claim, AutonomousUsageUncertain("lost response"), now=NOW)
+        state = source._timeline.load(claim.thread_id)
+        before = source._timeline.events(claim.thread_id)
+        assert source.schedule_context_review(now=NOW + timedelta(days=1)) == "idle"
+        with pytest.raises(ValueError):
+            control.abandon_uncertain_review(claim.thread_id, state.revision - 1, now=NOW)
+        foreign = PostgresOwnerInitiatives(postgres_engine, tenant_id=label,
+            installation_id="home", owner=_id(label, "other"), binding=binding, authority_scope=authority)
+        with pytest.raises(ValueError):
+            foreign.abandon_uncertain_review(claim.thread_id, state.revision, now=NOW)
+        bindings = metadata.tables["eva_core.principal_bindings"]
+        with postgres_engine.begin() as conn:
+            conn.execute(sa.update(bindings).where(bindings.c.tenant_id == authority.tenant_id,
+                bindings.c.principal_binding_id == binding).values(status="revoked"))
+        with pytest.raises(RuntimeError, match="binding is not current"):
+            control.abandon_uncertain_review(claim.thread_id, state.revision, now=NOW)
+        with postgres_engine.begin() as conn:
+            conn.execute(sa.update(bindings).where(bindings.c.tenant_id == authority.tenant_id,
+                bindings.c.principal_binding_id == binding).values(status="verified"))
+        assert source._timeline.events(claim.thread_id) == before
+>       result = control.abandon_uncertain_review(claim.thread_id, state.revision,
+            now=NOW + timedelta(minutes=10))
+
+tests/postgres/test_owner_initiatives.py:852: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/eva/adapters/postgres/owner_initiatives.py:163: in abandon_uncertain_review
+    transition_timeline_thread(conn, self._scope, thread_id=thread_id,
+src/eva/adapters/postgres/operational_timeline.py:670: in transition_timeline_thread
+    _require_sha256(last_error_fingerprint)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+value = b'\x1d"\xca\xfb\x9a\n#\xa0\xd9\x887\xb8\xa9\xd3\xe5\xaa\x9e\xe4,\xdfNbE\xf8\x01\xc7\x08\xff6\xee>\xe7'
+
+    def _require_sha256(value: str) -> None:
+        if len(value) != 64 or any(item not in "0123456789abcdef" for item in value):
+>           raise ValueError("error fingerprint must be lowercase SHA-256")
+E           ValueError: error fingerprint must be lowercase SHA-256
+
+src/eva/adapters/postgres/operational_timeline.py:792: ValueError
+--------------------------- Captured stderr teardown ---------------------------
+INFO  [alembic.runtime.migration] Context impl PostgresqlImpl.
+INFO  [alembic.runtime.migration] Will assume transactional DDL.
+INFO  [alembic.runtime.migration] Running downgrade 4e_0007_delegated_private -> 4e_0006_memory_outbox_erasure, Bind delegated work directly to a verified private owner context.
+INFO  [alembic.runtime.migration] Running downgrade 4e_0006_memory_outbox_erasure -> 4e_0005_conversation_erasure, Extend exact conversation erasure to the durable memory outbox.
+INFO  [alembic.runtime.migration] Running downgrade 4e_0005_conversation_erasure -> 4e_0004_delegated_work_stop, Allow exact, scope-bound redaction of raw conversation text only.
+INFO  [alembic.runtime.migration] Running downgrade 4e_0004_delegated_work_stop -> 4e_0003_delegated_work_runs, Persist an owner stop request across an active delegated model call.
+INFO  [alembic.runtime.migration] Running downgrade 4e_0003_delegated_work_runs -> 4e_0002_delegated_work, Add private durable authority for one bounded child-model run.
+INFO  [alembic.runtime.migration] Running downgrade 4e_0002_delegated_work -> 4e_0001_operational_timeline, Admit delegated work to the existing attention queue.
+INFO  [alembic.runtime.migration] Running downgrade 4e_0001_operational_timeline -> 4d_0007_projection_telemetry, Add the append-only Living Core timeline and rebuildable checkpoint cursor.
+INFO  [alembic.runtime.migration] Running downgrade 4d_0007_projection_telemetry -> 4d_0006_memory, Create the five rebuildable/discardable noncanonical tables last.
+INFO  [alembic.runtime.migration] Running downgrade 4d_0006_memory -> 4d_0005_evidence_objects, Create temporal memory authority and its scalar relationship edge.
+INFO  [alembic.runtime.migration] Running downgrade 4d_0005_evidence_objects -> 4d_0004_effect_authority, Create evidence envelopes, links and selected encrypted object refs.
+INFO  [alembic.runtime.migration] Running downgrade 4d_0004_effect_authority -> 4d_0003_core_continuity, Create read, effect, delivery and circuit-breaker authority.
+INFO  [alembic.runtime.migration] Running downgrade 4d_0003_core_continuity -> 4b_0002_episode_atomicity, Admit an empty 4B catalog and expand the final eva_core authority.
+INFO  [alembic.runtime.migration] Running downgrade 4b_0002_episode_atomicity -> 4b_0001_tenant_scope, Create the minimal episode head and immutable event log for tranche 4C.
+INFO  [alembic.runtime.migration] Running downgrade 4b_0001_tenant_scope -> 4b_0000_core_namespace, Create the tenant and installation authority anchors.
+INFO  [alembic.runtime.migration] Running downgrade 4b_0000_core_namespace -> , Create the minimal Eva namespace and fail-closed database roles.
+=========================== short test summary info ============================
+FAILED tests/postgres/test_owner_initiatives.py::test_owner_abandons_only_exact_uncertain_review_and_preserves_usage
+1 failed, 9 passed, 30 deselected in 11.69s
+
+
+AFTER FINGERPRINT FIX
+E                                                                        [100%]
+==================================== ERRORS ====================================
+_ ERROR at setup of test_owner_abandons_only_exact_uncertain_review_and_preserves_usage _
+
+>   ???
+
+/home/administrator/project/Bottie-candidates/v2/eva2/tests/postgres/conftest.py:137: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+>   ???
+E   Failed: EVA2_TEST_POSTGRES_DSN must point at an empty disposable database; schemas=[], relations=['eva_alembic_version']
+
+/home/administrator/project/Bottie-candidates/v2/eva2/tests/postgres/conftest.py:128: Failed
+=========================== short test summary info ============================
+ERROR tests/postgres/test_owner_initiatives.py::test_owner_abandons_only_exact_uncertain_review_and_preserves_usage
+37 deselected, 1 error in 2.21s
+
+
+FRESH DB AFTER FIX
+.                                                                        [100%]
+1 passed, 37 deselected in 8.40s
+

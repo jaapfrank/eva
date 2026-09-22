@@ -1,0 +1,59 @@
+{
+  "contract": "EvaLivingBProactiveExactDeliveryReceipt/v1",
+  "recorded_at": "2026-08-23T20:29:46Z",
+  "environment": {
+    "container_id": "374a0181376aa4750b2e66e768de41c88b57e347559ce920caeadf219ec0c14c",
+    "image": "eva2-living-core:proactive-exact-delivery-race-20260823",
+    "image_sha256": "1c1a053ca1546276386f9974f47f922a5eab1542a43cce56eca41744372bcd25"
+  },
+  "source_files": {
+    "eva2/src/eva/adapters/api/app.py": "df76d5cfdbbcdfef5cd25f37d8dfd4a0040dc5603b0b18c3ad1419b5df77d793",
+    "eva2/src/eva/adapters/connectors/telegram.py": "0b9b3295650f1e41fa810dae8fe86f8645f6abf74b7d82512118ec4f87683b52",
+    "eva2/src/eva/adapters/postgres/sensory_events.py": "3bc042ff9318fe068d4c4bea889eb7f655740bd2b22a4de836e67e8dea9e03c6",
+    "eva2/src/eva/application/free_will.py": "a215b928e52e8999332fbcc24be82dfe856747a07050f3268e48cf02ac2c1e1b",
+    "eva2/src/eva/bootstrap/runtime.py": "db232d97e703ddbf93bd175ee41425a431503ab02c6ce1db0fbe56bd28b51fef"
+  },
+  "real_home_assistant_crash_gate": {
+    "source": "binary_sensor.eva2_live_co_gate_race_20260823",
+    "device_class": "carbon_monoxide",
+    "first_event_at": "2026-08-23T20:27:50Z",
+    "expression": "Koolmonoxidemelding is actief.",
+    "urgency": 3,
+    "initial_claim_revision": 4,
+    "initial_retry_count": 0,
+    "container_restarted_after_claim_before_receipt": true,
+    "immediate_claim_http_status": 204,
+    "post_lease_concurrent_claim_http_statuses": [
+      204,
+      204
+    ],
+    "second_post_lease_claim_http_status": 204,
+    "terminal_event_at": "2026-08-23T20:29:27Z",
+    "terminal_event": "PROACTIVE_EXPRESSION_AMBIGUOUS",
+    "terminal_phase": "expression_ambiguous",
+    "terminal_status": "needs_help",
+    "terminal_revision": 5,
+    "terminal_retry_count": 3,
+    "ambiguous_event_count": 1,
+    "automatic_resend_count": 0,
+    "temporary_entity_deleted": true,
+    "physical_devices_changed": 0,
+    "telegram_messages_sent": 0
+  },
+  "delivery_rule": {
+    "rule": "A claimed Telegram expression without a committed provider receipt becomes ambiguous after lease expiry and is never automatically resent.",
+    "reason": "Telegram sendMessage provides no caller supplied idempotency key or authoritative delivery readback for this crash window."
+  },
+  "focused_gate": {
+    "passed": 24,
+    "failed": 0,
+    "ruff": "passed",
+    "diff_check": "passed"
+  },
+  "nonclaims": [
+    "No Telegram message was sent; outbound production credentials were not mounted in B.",
+    "The test changed no physical Home Assistant device and deleted its temporary state entity.",
+    "Production A traffic, files, secrets and configuration were not changed."
+  ],
+  "status": "passed"
+}

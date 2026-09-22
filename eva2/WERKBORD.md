@@ -1,14 +1,14 @@
 # Eva 2 — uitvoerbaar werkbord
 
-Laatst bijgewerkt: 2026-09-13.
+Laatst bijgewerkt: 2026-09-22.
 
 Doel: [Eva als zelfstandig lerende digitale huisgenoot](PROJECTDOEL.md).
 Gebouwd, getest, live en door jou geaccepteerd zijn verschillende stappen.
 
-**Afgerond en live — twee begrensde opleveringen.** PR-01: Eva vindt een bewaarde planreviewprocedure terug, leest de gecontroleerde tekst en past de regels toe; jouw resultaatreview staat open. Documentstatus: beide documentdiensten gebruiken nu passende gezondheidscontroles en melden gezond. Beide opleveringen zijn onafhankelijk bevestigd. Eva, bestaande doelen, journaal en bestanden zijn behouden. Gezondheid is geen bewijs van taakvoortgang.
-[Actueel bewijs](evidence/living-core/document-health-r2-live-20260913.json).
+**Lokale toegang werkt volgens de eerste gebruikersindruk; het gesprek is nog te traag.** Jaap meldt circa6seconden bij zowel begroeten als onderzoek. Gerichte meting: kernantwoord op Hallo4,52s, eerste tekst3,94s; eerste TTS-audiochunk0,27s. Dit is één proef, geen volledige audiometing of p95. De gewenste oplossing is een snel gespreksmodel met passend modelgebruik op de achtergrond vanuit dezelfde Eva-kern.
+[Actueel bewijs](evidence/product/voice-latency-owner-report-2026-09-22.json).
 
-**Eerstvolgende gebruikersoplevering:** eigen documentopdrachten zonder beheerderplanwissel. De bron is geïntegreerd. De begrensde gatewaystopproef is gecontroleerd; vóór vervanging moeten alle niet-afgeronde acties zonder leeftijdsfilter, inclusief browseracties, aan hun werkelijke eindbewijs worden gekoppeld. Een time-out of schone procesafsluiting alleen volstaat niet. Geen runtimegoedkeuring of livewijziging; PR-01, PJ-01 en gezondheidscontroles blijven afgesloten.
+Gebruik een snel model voor direct gesprek en eenvoudige antwoorden; laat de bestaande kern aangenomen werk vastleggen en op de achtergrond het passende werkmodel kiezen. Tijdens één of meer lopende opdrachten blijven gesprek, correctie en stop beschikbaar. Eerst bestaande provider- en taakmogelijkheden toetsen; geen extra kanaalscriptjes of aparte Eva-identiteiten. Snelheid en kwaliteit moeten vervolgens via de echte kanalen bewezen worden. Daarnaast is UX-002 de eerstvolgende korte bouwkandidaat: bestaande taken in het dashboard openen, resultaat lezen en stoppen (voorlopig 2–4 actieve agenturen inclusief gerichte controle/review). Daarna gericht AU-004-procedurehergebruik in een nieuw gesprek (4–8 uur, onzekerder); geen herhaalde proef zonder oorzaakwijziging. AU-002, browserovername, PJ-01 en IN-02 hebben al bestaande gebruikersproeven en vragen geen herbouw. Deze selectie is nog geen implementatieclaim.
 
 <details>
 <summary>Historische voortgang en eerdere tussenstanden — niet de actuele opleverstatus</summary>
@@ -1106,7 +1106,7 @@ werk blijft in ditzelfde werkbord geregistreerd.
 
 - [ ] `VB-004` — Browser na onderbreking veilig hervatten: Herstelbestanden gebouwd; systeeminstallatie automatisch geblokkeerd. Bestaande browser blijft live. Herstel na herstart nog niet uitgevoerd of bewezen.
 - [ ] `AU-005` — Passend initiatief en kansen bewijzen: Meer gewaardeerd eigen initiatief dan Bottie: humor, nieuwsgierigheid, zelfgekozen onderzoek, creatieve bijdragen en kansen. Eva begint en vervolgt zelf werk, voert binnen bestaand mandaat uit en controleert het resultaat. Gezin beoordeelt eigenheid, plezier, nut en hinder; alleen meer berichten telt niet als winst.
-- [ ] `VB-001` — Full-duplex voice leveren: Met Eva2 praten via de bestaande Telegram- of Home Assistant-aansluiting, waarbij Eva hoorbaar onderbroken kan worden en het gesprek daarna doorgaat.
+- [ ] `VB-001` — Full-duplex voice leveren: Dezelfde Eva-kern en hetzelfde gesprek-/taakgedrag via HA, Voice PE, Telegram en lokale website. Werkende onderdelen behouden; concrete verschillen in context, tussenreacties en stoppen vanuit de bestaande kern oplossen. Fysieke VoicePE-spraak/onderbreking en kanaalgelijkheid afzonderlijk aantonen.
 - [ ] `VB-002` — Passende aanwezigheid leveren: Eva zoekt spontaan contact via de beschikbare speakers en deurbel, met herkenbare identiteit en gevoel voor het moment. Gezin beoordeelt plezier, betrokkenheid en hinder; onderbreken en stop werken.
 - [ ] `UX-001` — Eigenaar-dashboard leveren: Een onderhouden adminframework toont status, mensen, geheugen, kosten en bewijs.
 - [ ] `UX-002` — Kanban bedienbaar maken: Taken zijn te starten, volgen en stoppen met bewijs per kaart.

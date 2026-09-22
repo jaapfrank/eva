@@ -1,0 +1,130 @@
+{
+  "contract": "EvaLivingCoreHindsightProvenanceAndParaphraseGate/v1",
+  "captured_at": "2026-08-24T01:05:48Z",
+  "result": {
+    "status": "passed_with_external_telegram_gate_open",
+    "production_a_changed": false,
+    "candidate_b_deployed": true,
+    "candidate_b_ready": true,
+    "real_telegram_inbound_after_deployment": false
+  },
+  "environment": {
+    "image_sha256": "703eb95567ca8e338bbc6bfcd2f0a6bea2972f4fd802c7f26f62519d6ac8a62f",
+    "hindsight_image_sha256": "aeb0831e2ec55e659d5e69baa064c1278113e523513b8f60a1f09c5cabe59b9b",
+    "postgres_revision": "4e_0001_operational_timeline"
+  },
+  "source_files": {
+    "eva2/src/eva/application/conversation.py": "c3aca392f44432bd6d986e0b07b1bedb5c347c3af83de5d2c01f9144cd74a78b",
+    "eva2/src/eva/adapters/model/conversation.py": "26059b2203a63d0fbe57cc7718d421cd2d2712b8625932f1832b470d9c931da7",
+    "eva2/src/eva/adapters/projection/hindsight.py": "eb2713bc3ff0ce284a89466752dfba4266f206034a3eedbbe97859c44b6aab61",
+    "eva2/src/eva/bootstrap/runtime.py": "0f509390bd7802afe9f045dcaa8bc8c4ef5410c8b4627a29f58c124014f95774",
+    "eva2/tools/migrate_hindsight_provenance.py": "eee9807788b92179fe81792e8a06b2b8bb159a829d0e72303afa7f4791837a80",
+    "eva2/deploy/living-core/stack.compose.yml": "2f7fa1aad2865e3ee02f9b0d0b7156b5ea81d1db0c54a5191d734ceb8f2a485f"
+  },
+  "root_causes": [
+    "The former local BAAI/bge-small-en-v1.5 embedding index missed Dutch paraphrases and later corrections.",
+    "The former retention document combined the user turn and Eva reply while assigning the whole document direct_user trust.",
+    "A whole-sentence query could bury one decisive place or object term, and synonymous household names such as overkapping and veranda were not reliably connected."
+  ],
+  "implemented_boundaries": {
+    "operational_conversation": "PostgreSQL retains the complete immutable user and assistant exchange.",
+    "direct_user_semantic_source": "Hindsight receives only the literal user utterance; assistant output is never stored with direct_user trust.",
+    "cold_path": "retain remains asynchronous and reflect remains stale-only/nightly.",
+    "hot_path": "Hindsight recall stays low-budget with 2048 final-context tokens and node budget 40.",
+    "paraphrase_retrieval": "The full query and neutral lexical anchors run in parallel; genuinely memory-dependent questions can first produce a low-reasoning, answer-free synonym plan that Hindsight must resolve to stored evidence.",
+    "hypothetical_safety": "Questions and benchmark scenarios are not extracted as user preferences unless the user explicitly asserts a fact."
+  },
+  "clean_rebuild": {
+    "source_export_operation_id": "4bd4f279-47e5-445b-bf98-baeb47949a80",
+    "source_archive_sha256": "7a91b6c88fe3db99ae97a34a35f43fcbe251d4fe83dac1173ac9037277947f13",
+    "target_container": "eva2-hindsight-multilingual-trusted-v2",
+    "hindsight_image": "sha256:aeb0831e2ec55e659d5e69baa064c1278113e523513b8f60a1f09c5cabe59b9b",
+    "embedding_provider": "openai-codex / text-embedding-3-small",
+    "documents": 96,
+    "direct_user_documents": 78,
+    "authority_documents": 18,
+    "assistant_text_retained_as_direct_user": 0,
+    "world_nodes_after_reextraction": 74,
+    "observations_after_reextraction": 37,
+    "failed_operations": 0,
+    "pending_operations": 0,
+    "hidden_question_document_nodes": {
+      "conversation:lab36:m02-hidden-20260824:exchange:lab36-m02-live-003": 0,
+      "conversation:lab36:m02-hidden-retry-20260824:exchange:lab36-m02-live-004": 0
+    }
+  },
+  "live_semantic_probes": [
+    {
+      "case": "hidden_workroom_preference",
+      "input": "Ik zit straks in de werkkamer met mijn hoofd bij één ding. Als jij me toch even nodig hebt, hoe meld je je dan?",
+      "reply": "Dan meld ik me stil en kort: één rustige tekstmelding, zonder geluid en zonder omhaal. Alleen als het echt nodig is, met meteen de kern.",
+      "reply_sha256": "d86c3006297835983fb764acfd20b4d4e02ee2282cecf2b79d8d18174679d623",
+      "evidence_memory_ids": [
+        "hindsight:db35344f-8f28-451c-820e-52b9ccc84f78"
+      ],
+      "wall_clock_ms": 8728,
+      "passed": true
+    },
+    {
+      "case": "synonym_overkapping_to_veranda",
+      "input": "Vanavond zitten we onder de overkapping. Welke kant wilde ik het daar ook alweer op hebben qua temperatuur?",
+      "reply": "Warm, niet koel. Dus meer behaaglijk en een tik warmer onder de overkapping, niet fris.",
+      "reply_sha256": "277925f84b793d845e8c7a83d5830f7cbb554a91acf7f5f79343818357598891",
+      "leading_evidence_memory_id": "hindsight:6c9f9770-e775-4dbe-abe5-29914fa2a227",
+      "wall_clock_ms": 13736,
+      "passed": true
+    },
+    {
+      "case": "different_person_event",
+      "input": "Bram loopt onrustig te zoeken. Wat was er laatst ook alweer met zijn blauwe speeltje?",
+      "reply": "Laatst had Bram zijn blauwe speeltje uiteindelijk weer teruggevonden. Daar was je toen ook echt blij mee.",
+      "reply_sha256": "449f52facec6ba48dcc8d2dc6b1899b3fe357399fcc320dfd5a193af41cc417a",
+      "wall_clock_ms": 6823,
+      "passed": true
+    },
+    {
+      "case": "general_knowledge_without_personal_memory",
+      "input": "Waarom ruikt regen op warme stenen soms zo sterk?",
+      "evidence_memory_ids": [],
+      "wall_clock_ms": 6132,
+      "passed": true
+    }
+  ],
+  "candidate_b_deployment": {
+    "container_id": "7e2fe284edbc039fb0b6f5bab4d16839f71121ae14ef59789b18c1f9625751d3",
+    "image": "eva2-living-core:memory-query-plan-v2-20260824",
+    "image_id": "sha256:703eb95567ca8e338bbc6bfcd2f0a6bea2972f4fd802c7f26f62519d6ac8a62f",
+    "port": 44674,
+    "database": "ready",
+    "memory_projection": "ready",
+    "model_provider": "ready",
+    "rollback_container": "eva2-living-core-b-rollback-pre-memory-20260824",
+    "rollback_image_id": "sha256:890078e3ab39576f899e41453bc355cffb0047544f139b8a3a7e91566be32d82"
+  },
+  "post_deployment_real_model_turn": {
+    "input": "Ik hoor de regen tegen het raam en de rest van het huis is stil. Hoef niks, wilde het alleen even delen.",
+    "reply": "Dat is een mooi stil moment. Regen tegen het raam en een slapend huis heeft iets heel rustigs.",
+    "reply_sha256": "36fd3cdd0ad251a50e8acee69ef581ced686c0bb5b39d968821538e522ac5382",
+    "wall_clock_ms": 5508,
+    "provider_path": "real candidate-B Hindsight plus chatgpt-codex model",
+    "transport": "direct candidate-B HTTP, not Telegram"
+  },
+  "verification": {
+    "pytest": "62 passed in 7.05s",
+    "ruff": "all selected files passed",
+    "source_sha256": {
+      "application_conversation": "c3aca392f44432bd6d986e0b07b1bedb5c347c3af83de5d2c01f9144cd74a78b",
+      "model_conversation": "26059b2203a63d0fbe57cc7718d421cd2d2712b8625932f1832b470d9c931da7",
+      "hindsight_projection": "eb2713bc3ff0ce284a89466752dfba4266f206034a3eedbbe97859c44b6aab61",
+      "runtime": "0f509390bd7802afe9f045dcaa8bc8c4ef5410c8b4627a29f58c124014f95774",
+      "migration_tool": "eee9807788b92179fe81792e8a06b2b8bb159a829d0e72303afa7f4791837a80",
+      "stack_compose": "2f7fa1aad2865e3ee02f9b0d0b7156b5ea81d1db0c54a5191d734ceb8f2a485f"
+    }
+  },
+  "non_claims": [
+    "No production-A code, service, traffic or memory was changed.",
+    "No new genuine Telegram inbound arrived after this B deployment; the latest user inbound remains message 4483 from 2026-08-23T19:17:49Z.",
+    "The source bank contains previous development and canary documents as well as genuine Telegram history; this gate proves provenance cleansing, not a final household-data curation.",
+    "The synonym-dependent memory turn is correct but slower than ordinary conversation and remains an optimization target."
+  ]
+}

@@ -25,6 +25,15 @@ def install_dashboard_initiatives(app, *, access, runtime):
             raise HTTPException(422, "initiative scope is server-bound")
         return JSONResponse(invoke("dashboard_initiatives"), headers={"Cache-Control": "no-store"})
 
+    @app.post("/internal/v1/dashboard/initiatives/review/abandon")
+    def abandon_review(request: Request, payload: dict):
+        access.require(request)
+        if request.query_params or set(payload) != {"thread_id", "expected_revision"}:
+            raise HTTPException(422, "invalid private review recovery request")
+        return JSONResponse(invoke("dashboard_abandon_private_review",
+            payload["thread_id"], payload["expected_revision"]),
+            headers={"Cache-Control": "no-store"})
+
     @app.post("/internal/v1/dashboard/initiatives/stop")
     def stop(request: Request, payload: dict):
         access.require(request)

@@ -7,33 +7,37 @@
   "findings": [
     {
       "id": "answer-stream",
-      "intendedOutcome": "CO-007 · antwoord opbouwen in Telegram. Jouw zichtbare streamervaring; geen nieuwe streamproef op de huidige kern.",
-      "visibleResult": "Tekststukjes en volledig eindantwoord bevestigd via Telegram.",
-      "resultBasis": "Live bewijs · 8 sep",
-      "gap": "Jouw zichtbare streamervaring; geen nieuwe streamproef op de huidige kern.",
-      "gapKind": "Gebruikersproef open",
+      "intendedOutcome": "Een gewone Telegramvraag krijgt een geleidelijk zichtbaar en volledig eindantwoord.",
+      "visibleResult": "Jaap stelde na de reparatie en hernieuwde aanmelding een nieuwe Telegramvraag en bevestigt dat streaming werkt.",
+      "resultBasis": "Eigenaaracceptatie · 21 sep",
+      "gap": "Afgerond en door Jaap geaccepteerd.",
+      "gapKind": "Afgerond",
       "states": {
         "built": "yes",
         "tested": "yes",
         "live": "yes",
-        "accepted": "no"
+        "accepted": "yes"
       },
       "stageLabels": {
         "built": "Gebouwd",
-        "tested": "8 sep",
-        "live": "8 sep bewezen",
-        "accepted": "Nog open"
+        "tested": "Reparatie getest",
+        "live": "21 sep bevestigd",
+        "accepted": "Geaccepteerd"
       },
       "stageNotes": {
         "built": "Gebouwd. Bewijs geldt uitsluitend voor CO-007 · antwoord opbouwen in Telegram. ",
         "tested": "8 sep. Bewijs geldt uitsluitend voor CO-007 · antwoord opbouwen in Telegram. ",
-        "live": "8 sep bewezen. Bewijs geldt uitsluitend voor CO-007 · antwoord opbouwen in Telegram. Live bewijs is gedateerd; een nieuwe kernversie is niet automatisch opnieuw beproefd.",
-        "accepted": "Nog open. Bewijs geldt uitsluitend voor CO-007 · antwoord opbouwen in Telegram. "
+        "live": "Codefix live; modelaanmelding hersteld; Jaap bevestigt de actuele Telegramstream.",
+        "accepted": "Jaap: Ik heb de nieuwe vraag gesteld en streaming werkt. Acceptatie betreft Antwoordstream; Gesprekken volgt afzonderlijk."
       },
       "sources": [
         {
           "path": "eva2/evidence/product/CO-007-live-answer-stream-2026-09-08.json",
           "sha256": "8ffe6f77e707fcdb4a2a99eb7d0151b24808654f11ea4912f5d4deedc61b1e31"
+        },
+        {
+          "path": "eva2/evidence/product/telegram-pending-repair-2026-09-21.json",
+          "sha256": "afbeeeeeb50f0c4e5d58cd04a19eb33a7c9ba544521cd3a436a5f3cf0ec2928f"
         }
       ],
       "statusCorrections": {},
@@ -43,9 +47,9 @@
     {
       "id": "conversation",
       "intendedOutcome": "RT-001 · gewone privégesprekken. Langdurige continuïteit, gezinskwaliteit en actuele regressieproef.",
-      "visibleResult": "Privégesprekken werken; jij meldde dat het gesprek beter loopt.",
-      "resultBasis": "Gesprekken/feedback · 7–10 sep",
-      "gap": "Langdurige continuïteit, gezinskwaliteit en actuele regressieproef.",
+      "visibleResult": "Actuele privégesprekproef geslaagd: eigen advies, correctie en samenhang in drie beurten.",
+      "resultBasis": "Live eigenaarroute · 21 september",
+      "gap": "GS-01: jouw oordeel over warmte en natuurlijkheid. Breder gezinsgebruik en langdurige continuïteit blijven open.",
       "gapKind": "Bredere ambitie",
       "states": {
         "built": "yes",
@@ -61,8 +65,8 @@
       },
       "stageNotes": {
         "built": "Gebouwd. Bewijs geldt uitsluitend voor RT-001 · gewone privégesprekken. ",
-        "tested": "Privéproef. Bewijs geldt uitsluitend voor RT-001 · gewone privégesprekken. ",
-        "live": "Bewezen. Bewijs geldt uitsluitend voor RT-001 · gewone privégesprekken. Live bewijs is gedateerd; een nieuwe kernversie is niet automatisch opnieuw beproefd.",
+        "tested": "Drie fictieve beurten op de actuele live kern; geen herstart- of gezinsproef.",
+        "live": "Eigenaar-HTTP-route op 21 september beproefd; Telegramstream vandaag afzonderlijk door Jaap geaccepteerd.",
         "accepted": "Positief, beperkt. Bewijs geldt uitsluitend voor RT-001 · gewone privégesprekken. "
       },
       "sources": [
@@ -73,6 +77,10 @@
         {
           "path": "eva2/evidence/product/CO-007-live-answer-stream-2026-09-08.json",
           "sha256": "8ffe6f77e707fcdb4a2a99eb7d0151b24808654f11ea4912f5d4deedc61b1e31"
+        },
+        {
+          "path": "eva2/evidence/product/conversation-current-check-2026-09-21.json",
+          "sha256": "b50f5f2c86a870c1aade2708141bf38f238c72d872b986384c58c8ada5f1e03a"
         }
       ],
       "statusCorrections": {},
@@ -129,9 +137,9 @@
     {
       "id": "initiative",
       "intendedOutcome": "AU-008 · acht toegelaten kosteloze taakroutes. Een echte nieuwe eigen bijdrage; onderzoek en overige taakroutes nog aansluiten.",
-      "visibleResult": "Vijf werkmaproutes en drie Home Assistant-leesroutes zijn live.",
-      "resultBasis": "Live bron d8054d4 · 10 sep 21:19",
-      "gap": "Een echte nieuwe eigen bijdrage; onderzoek en overige taakroutes nog aansluiten.",
+      "visibleResult": "Blokkade hersteld. Eva rondde vanzelf een nieuwe beoordeling af en koos stilte zonder nieuwe nuttige aanleiding. Bestaande bijdragen behouden.",
+      "resultBasis": "Normale cyclus en duurzame teruglezing · 21 september",
+      "gap": "IN-02: jouw oordeel over nut en passendheid. Breder initiatief en gezinskwaliteit blijven apart open.",
       "gapKind": "Resultaat nog open",
       "states": {
         "built": "yes",
@@ -179,6 +187,10 @@
         {
           "path": "eva2/experiments/react-admin-dashboard-v1/morning-readback-2026-09-11.json",
           "sha256": "2b279f95f8adbaf6f5d17d030c55cc0d315508dcc6d56a8b909630090acfeaa4"
+        },
+        {
+          "path": "eva2/evidence/product/initiative-recovery-2026-09-21.json",
+          "sha256": "5b64487a1c2acc04df8dae17144c31b9c8480754c7325d778ecf0ad531a6e80a"
         }
       ],
       "statusCorrections": {},

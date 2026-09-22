@@ -1,0 +1,10 @@
+{
+  "contract": "EvaRecoveryObservation/v1",
+  "observedAt": "2026-09-12T18:46:13.8651327+02:00",
+  "previousBootLast": "2026-09-12T18:36:51+02:00",
+  "newBootFirst": "2026-09-12T18:43:05+02:00",
+  "finding": "WSL system poweroff at18:36:41; forced termination after10second timeout. Trigger unknown. No recent Windows restart or Application1000/1001/1002 in checked2hourwindow.",
+  "recovery": "Docker automatic startup completed18:45:12. Four local pages HTTP200. Core worker Hindsight and Postgres healthy. No broad restart issued by coordinator.",
+  "preserved": "Reviewed candidate4a5fa7 and immutablegitobjects/retainedreceipts confirmed by helper; temporaryworkdir lost. HAphoneinstall confirmed retained by voiceowner.",
+  "next": "Reviewed core/worker cutover authorized afterfreshguards and voice rooms0; owneracceptance remains separate."
+}

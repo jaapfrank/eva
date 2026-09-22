@@ -1,0 +1,61 @@
+{
+  "contract": "EvaLivingBProactiveOutboxRecoveryReceipt/v1",
+  "recorded_at": "2026-08-23T20:06:16Z",
+  "environment": {
+    "container_id": "c315f74884e3b8b4af1087ff80a738a89c825f5ca9fd5a0a402364043326b75d",
+    "image": "eva2-living-core:proactive-outbox-20260823",
+    "image_sha256": "db93987f6b503db64ba18146fd4d81aa5e0eedf778ff4706ddd8ec9780309081"
+  },
+  "source_files": {
+    "eva2/src/eva/adapters/api/app.py": "df76d5cfdbbcdfef5cd25f37d8dfd4a0040dc5603b0b18c3ad1419b5df77d793",
+    "eva2/src/eva/adapters/model/conversation.py": "01d3ec3b41a56b87a97dd2e7361882bcc262d5b2be44c23793e784434b37e2dd",
+    "eva2/src/eva/adapters/postgres/sensory_events.py": "ffafe4dca64acdf20a602897de1c4aa339d34ca648dd8f497853c3c6dbac690a",
+    "eva2/src/eva/application/free_will.py": "4913a928c3f03ce1f7e83533466749bd3b88a8a03ec7b49085e8ab60bda7b7b5",
+    "eva2/src/eva/bootstrap/runtime.py": "2549726581c0814d29eb1ae917bdce1ce379dfefef7de094416db5294f2a63ed"
+  },
+  "real_home_assistant_smoke_gate": {
+    "source": "binary_sensor.eva2_live_smoke_gate",
+    "device_class": "smoke",
+    "model_disposition": "respond",
+    "model_provider": "chatgpt-codex:gpt-5.4-mini",
+    "urgency": 3,
+    "expression": "De rookmelder in de schuur staat aan.",
+    "outbox_claim_revision": 4,
+    "transport_receipt_channel": "test",
+    "transport_receipt_id": "live-gate:smoke:20260823",
+    "repeat_disposition": "silence",
+    "repeat_provider": "eva:proactive-cooldown",
+    "outbox_after_repeat_http_status": 204,
+    "temporary_entity_deleted": true,
+    "physical_devices_changed": 0
+  },
+  "real_restart_gate": {
+    "source": "binary_sensor.eva2_live_water_gate",
+    "device_class": "moisture",
+    "expression": "De watermelder in de kelder is actief.",
+    "initial_claim_revision": 4,
+    "initial_retry_count": 0,
+    "container_restarted_before_receipt": true,
+    "immediate_reclaim_http_status": 204,
+    "lease_expiry_event": "RECOVERY_FAILED",
+    "recovered_claim_revision": 6,
+    "recovered_retry_count": 1,
+    "expression_bytes_changed": false,
+    "terminal_event": "PROACTIVE_EXPRESSION_DELIVERED",
+    "transport_receipt_channel": "test",
+    "transport_receipt_id": "live-gate:water-recovery:20260823",
+    "temporary_entity_deleted": true,
+    "physical_devices_changed": 0
+  },
+  "focused_gate": {
+    "passed": 43,
+    "failed": 0,
+    "ruff": "passed",
+    "diff_check": "passed"
+  },
+  "nonclaims": [
+    "No Telegram message was sent; the receipt channel was the isolated live-test transport.",
+    "Production A traffic and configuration were not changed."
+  ],
+  "status": "passed"
+}

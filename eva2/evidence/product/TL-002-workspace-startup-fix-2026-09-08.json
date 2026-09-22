@@ -1,0 +1,78 @@
+{
+  "taskId": "TL-002",
+  "status": "startup_fix_build_running_not_live",
+  "sourceCommit": "7b6c0c279813f9f3539b95cb7afdc0fd283998f2",
+  "sourceSha256": {
+    "eva2/release/managed-b-release-input-authority-v1.json": "4739b6d6544ddfec0f27eba49fa0335d9414d3ae71f51fb260f316bba794ebd7",
+    "eva2/src/eva/providers/mcp_gateway.py": "7234446cc2a8a88eb1a392c35ae47340da348195868421b2110350d6debbfc92",
+    "eva2/tests/connectors/test_mcp_gateway_provider.py": "f1ac78093fe09bc5c3262a8261b6db38d778a3fbe0aad7309346c15dc3203605"
+  },
+  "failure": {
+    "candidateSourceCommit": "2984012aaaa860e83e6ff2a521af5607925af1ad",
+    "candidateImageId": "sha256:a22216261a54512f1169fd3e4cfb86eb470d0eab247829ae0d337d61e2cbe545",
+    "cause": "McpGatewayProviderFactory.build called asyncio.run while Uvicorn app factory was already inside a running event loop.",
+    "cutoverResult": "failed",
+    "rollbackVerified": {
+      "activeSlot": 3,
+      "activeImageId": "sha256:541762487caf441a2755997a5b5a1ed31fd2cafae794dfc4f84858e862fc3f43",
+      "readyStatus": 200,
+      "bottieStatus": 200,
+      "routePort": 44710,
+      "sourceEnvironmentUnchanged": true,
+      "reserveStopped": true,
+      "reserveConfigurationRestored": true,
+      "oldConversationExactlyReplayed": true,
+      "replayModelCalls": 0,
+      "replayTelegramSends": 0
+    },
+    "coverageGap": "Previous minimal sleep-container plus synchronous direct provider factory probe did not execute the actual Uvicorn app startup path."
+  },
+  "fix": "Finish eager catalog verification in a joined worker-owned event loop; propagate failure before tools are exposed. No dependency, mandate or catalog policy changed.",
+  "tests": {
+    "passed": 11,
+    "failures": 0,
+    "errors": 0,
+    "junitSha256": "af9535793ec4b25c3ecc8b06a6ceda29db1d1f333005dc89c6d99f2824b05940",
+    "scope": "Real uvicorn.Config.load inside active event loop, valid and invalid sealed catalog; remaining connector contracts."
+  },
+  "review": {
+    "reviewedBy": "/root/co006_review",
+    "decision": "Bounded source GO; new image/full gates and actual Uvicorn core startup with overlay required before another cutover."
+  },
+  "buildSession": 82260,
+  "remaining": [
+    "New exact image build, scan, installed checks and complete release gate.",
+    "Actual full Uvicorn runtime with connector overlay in copied-data environment, not only direct factory invocation.",
+    "New reviewed admission/A-B attempt and independent live readbacks.",
+    "Token replacement lifecycle and household acceptance."
+  ],
+  "currentValidation": {
+    "build": "passed",
+    "imageId": "sha256:64dd6d31f788a8ee6b1cc62b43f792cf0635df250cb1d60dbc37236819f4eb9f",
+    "coreScan": "0HIGH/CRITICAL",
+    "installedTestsPassed": 124,
+    "fullGateSession": null,
+    "fullGateStatus": "passed",
+    "actualRuntimeMcpStartup": "both_starts_passed",
+    "liveWorkspaceFunction": true,
+    "copiedDataSession": null,
+    "restartAndReplay": "passed",
+    "requiredTestsPassed": 2095
+  },
+  "live": {
+    "status": "verified_developer_private_client",
+    "slot": 4,
+    "port": 44711,
+    "cutover": "passed",
+    "priorConversationReplay": "exact_no_new_calls",
+    "homeAssistant": "inventory_passed",
+    "workspace": "save_readback_replay_passed",
+    "elapsedSeconds": 17.992,
+    "modelAttempts": 2,
+    "toolCalls": 1,
+    "inputTokens": 6668,
+    "outputTokens": 114,
+    "humanAccepted": false,
+    "privateEvidenceDirectory": "/tmp/eva2-tl002-startup-release.sxbx02eb/rollout"
+  }
+}

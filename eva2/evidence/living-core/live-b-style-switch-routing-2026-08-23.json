@@ -1,0 +1,70 @@
+{
+  "captured_at": "2026-08-23T18:58:00Z",
+  "contract": "EvaLivingStyleSwitchRoutingReceipt/v1",
+  "hindsight_style_mirror": {
+    "bank_id": "eva-live-6e6ac7b97a611515f00c582fd70aaf69",
+    "content_sha256": "e6deba24c14898dfb859b397c9018893bb8fc2a42d649cb324164a66f5ec67d9",
+    "mental_model_id": "eva-style-mirror-v1-ded1210a778ba7c1",
+    "reflected_content_utf8_bytes": 571,
+    "refreshed_at": "2026-08-23T18:55:41.340524+00:00",
+    "runtime_readback": "present",
+    "semantics": "cold-path reflect; hot-path reads only the completed compact mirror alongside recall"
+  },
+  "live_b": {
+    "container": "eva2-living-core-b",
+    "container_id": "7c8feb6d9b5939a4cea215c5adef75e9b66fa60f5b852bf31905e201d38be8c8",
+    "health": "healthy",
+    "image": "eva2-living-core:hindsight-style-switch-20260823",
+    "image_sha256": "e902083210ffddd7ca9cfb89f61106fe9649b236f14a634205a16405d75b7935",
+    "readyz": {
+      "database": "ready",
+      "memory_projection": "ready",
+      "ready": true
+    }
+  },
+  "live_model_diagnostics": {
+    "effect_calls_executed": 0,
+    "natural_presence": {
+      "latency_ms": 4657,
+      "reply_sha256": "b4c78bf81481586f6cffaa2d425341c495d7eba2a3e83f8a5cfaa9ae6157d632",
+      "result": "one short warm paragraph; no advice and no follow-up question"
+    },
+    "switch_followup": {
+      "action": "set_home_assistant_switch",
+      "arguments": {
+        "state": "on",
+        "target": "verwarming in de overkapping"
+      },
+      "result": "the live model resolved 'Doe maar' from two prior turns into the switch action; execution was intentionally not invoked by this diagnostic"
+    }
+  },
+  "production_bridge": {
+    "eva_service": "active",
+    "eva_service_main_pid": 2730596,
+    "eva2canary_js_sha256": "b4eeb5eb0589371c30324a81959b5835daba18bdc022076a8f8e4b7206b6b7ea",
+    "session_rule": "one explicit /eva2 keeps the same Telegram sender and chat on B for 30 minutes; other bot commands remain outside B",
+    "telegram_js_sha256": "9c5d33d8e4d1d1d325409e8419593d3e377539e4cf89baf0a5d01c587e9fc5c9",
+    "user_visible_followup_status": "deployed_waiting_for_next_genuine_telegram_followup"
+  },
+  "source_sha256": {
+    "application_memory": "e4f23b9e6859d76f2cb36ce48b1cb848e216437ccfbe60fb7b9c406b9e9470e6",
+    "conversation_actions": "3e76f1da2629ea7d974d656a2803d932bd598566a5db44fb743cd768203085f6",
+    "conversation_model": "3e7b41b4411922f18ddaab0cb0bdddc54df58ed6309dcfa64b03af9848542eef",
+    "hindsight_projection": "568d18a6780265421595cbd3b30165c424a6c8eaac96c60248b72de90b313d8e",
+    "home_assistant_connector": "bf9257e19a13b26934b0528bd788de837863f0565f61c256751f871a5e3f38a6"
+  },
+  "switch_readback": {
+    "effect_call_executed": false,
+    "entity_id": "switch.antela_smart_plug_eu_matter_2_socket_1",
+    "friendly_name": "Heater overkapping Socket 1",
+    "input": "verwarming in de overkapping",
+    "resolution": "unique_available_switch",
+    "state": "on"
+  },
+  "verification": {
+    "focused_eva2_python_tests": "30 passed",
+    "production_bridge_node_tests": "4 passed",
+    "ruff": "passed",
+    "whitespace": "passed"
+  }
+}

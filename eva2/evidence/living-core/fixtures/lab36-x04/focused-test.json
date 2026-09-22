@@ -1,0 +1,14 @@
+{
+  "assertions": [
+    {
+      "kind": "contains",
+      "value": "MODE=safe"
+    },
+    {
+      "kind": "not_contains",
+      "value": "MODE=turbo"
+    }
+  ],
+  "contract": "EvaFocusedTextTest/v1",
+  "target_path": "lab36-x04-final/settings.txt"
+}

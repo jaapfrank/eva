@@ -813,3 +813,55 @@ def test_private_review_is_owner_installation_scoped_current_and_hash_checked(po
         conn.exec_driver_sql("ALTER TABLE eva_core.operational_events ENABLE TRIGGER USER")
     with pytest.raises(RuntimeError, match="review payload hash differs"):
         control.page(now=NOW)
+
+
+def test_owner_abandons_only_exact_uncertain_review_and_preserves_usage(postgres_engine):
+    from eva.application.free_will import AutonomousUsageUncertain
+    label = "abandon-private-review"
+    authority, _, binding = _seed_authority(postgres_engine, label)
+    owner = _id(label, "principal")
+    source = PostgresSensoryEventStore(postgres_engine, tenant_id=label,
+        installation_id="home", initiative_principal_id=str(owner),
+        initiative_authorizer=lambda: ({}, None), context_reviews_only=True)
+    control = PostgresOwnerInitiatives(postgres_engine, tenant_id=label,
+        installation_id="home", owner=owner, binding=binding, authority_scope=authority)
+    assert source.schedule_context_review(now=NOW) == "scheduled"
+    claim = source.mark_model_started(source.claim_next(now=NOW), now=NOW)
+    with pytest.raises(ValueError):
+        control.abandon_uncertain_review(claim.thread_id, claim.revision, now=NOW)
+    source.fail(claim, AutonomousUsageUncertain("lost response"), now=NOW)
+    state = source._timeline.load(claim.thread_id)
+    before = source._timeline.events(claim.thread_id)
+    assert source.schedule_context_review(now=NOW + timedelta(days=1)) == "idle"
+    with pytest.raises(ValueError):
+        control.abandon_uncertain_review(claim.thread_id, state.revision - 1, now=NOW)
+    foreign = PostgresOwnerInitiatives(postgres_engine, tenant_id=label,
+        installation_id="home", owner=_id(label, "other"), binding=binding, authority_scope=authority)
+    with pytest.raises(ValueError):
+        foreign.abandon_uncertain_review(claim.thread_id, state.revision, now=NOW)
+    bindings = metadata.tables["eva_core.principal_bindings"]
+    with postgres_engine.begin() as conn:
+        conn.execute(sa.update(bindings).where(bindings.c.tenant_id == authority.tenant_id,
+            bindings.c.principal_binding_id == binding).values(status="revoked"))
+    with pytest.raises(RuntimeError, match="binding is not current"):
+        control.abandon_uncertain_review(claim.thread_id, state.revision, now=NOW)
+    with postgres_engine.begin() as conn:
+        conn.execute(sa.update(bindings).where(bindings.c.tenant_id == authority.tenant_id,
+            bindings.c.principal_binding_id == binding).values(status="verified"))
+    assert source._timeline.events(claim.thread_id) == before
+    result = control.abandon_uncertain_review(claim.thread_id, state.revision,
+        now=NOW + timedelta(minutes=10))
+    assert result["usage"] == "unknown" and result["replayed"] is False
+    after = source._timeline.events(claim.thread_id)
+    assert after[:-1] == before and after[-1].payload["data"]["usage"] is None
+    assert control.page(now=NOW + timedelta(minutes=10))["latest_review"]["state"] == "abandoned"
+    with pytest.raises(ValueError):
+        control.abandon_uncertain_review(claim.thread_id, state.revision, now=NOW)
+    restarted = PostgresSensoryEventStore(postgres_engine, tenant_id=label,
+        installation_id="home", initiative_principal_id=str(owner),
+        initiative_authorizer=lambda: ({}, None), context_reviews_only=True)
+    assert restarted.claim_next(now=NOW + timedelta(minutes=30)) is None
+    assert restarted.schedule_context_review(now=NOW + timedelta(minutes=59)) == "idle"
+    assert restarted.schedule_context_review(now=NOW + timedelta(hours=1)) == "scheduled"
+    fresh = restarted.claim_next(now=NOW + timedelta(hours=1))
+    assert fresh.thread_id != claim.thread_id

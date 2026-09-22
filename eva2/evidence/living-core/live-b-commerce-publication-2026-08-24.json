@@ -1,0 +1,73 @@
+{
+  "captured_at": "2026-08-23T23:42:31Z",
+  "contract": "EvaCommercePublicationDevelopmentReceipt/v1",
+  "scope": {
+    "candidate": "isolated_b_only",
+    "production_a_changed": false,
+    "external_live_account_mutated": false
+  },
+  "implementation": {
+    "provider_boundary": "stripe_payment_links",
+    "approval_ttl_minutes": 15,
+    "currency": "EUR",
+    "price_minor_units": 499,
+    "provider_call_idempotency_key": "durable publication operation_id",
+    "independent_readbacks": [
+      "Stripe account ID",
+      "Payment Link active/livemode/URL/metadata",
+      "Payment Link line-item currency/amount/quantity",
+      "expanded product release metadata"
+    ],
+    "durable_sequence": [
+      "PRODUCT_PUBLICATION_PLANNED",
+      "PRODUCT_PUBLICATION_APPROVED",
+      "PRODUCT_PUBLICATION_CALL_OPENED",
+      "PRODUCT_PUBLICATION_VERIFIED"
+    ]
+  },
+  "postgres_live_gate": {
+    "database": "eva2 B PostgreSQL 16.13",
+    "event_count": 4,
+    "plan_sha256": "1b1c69b9a8470834e48d4aa5aa2b809c32898f2e16e9b50f9146e91f3e4584c5",
+    "release_sha256": "15ad420a36279511142c8600b24772ed0917ee23e01a90eecd9d0429faf3a57c",
+    "receipt_sha256": "3f2dc89c5d04ee2276fd66b5933363d8c373eaf589bdcd2e665179168e3daecd",
+    "result": "verified"
+  },
+  "crash_recovery_gate": {
+    "crash_point": "after provider acceptance and readback, before PostgreSQL receipt commit",
+    "provider_post_calls": 2,
+    "same_idempotency_key": true,
+    "same_receipt": true,
+    "receipt_sha256": "92a55ae0b190e193f6f9d5668cfd972e27fec50bf71b8545763d0d782f8531e0",
+    "recovery_disposition": "resume_idempotent",
+    "final_event_count": 4,
+    "result": "verified"
+  },
+  "verification": {
+    "focused_tests": "34 passed",
+    "ruff": "passed",
+    "compose_yaml": "valid",
+    "current_b_readyz": {
+      "database": "ready",
+      "memory_projection": "ready",
+      "model_provider": "ready",
+      "ready": true
+    },
+    "gate_image_sha256": "1fe2f99dcc0886b7f0394b5ec08f523cd46ac0b809825480eab99d5bb17b1eac"
+  },
+  "source_sha256": {
+    "commerce_domain": "6cb2169f2f6907883ad3d6adec583b8999907dcb42b3242359e62153afe7be7a",
+    "stripe_connector": "6e65f27bb16dbd308f4b56c2971192fe19c7fc93ff5ef8f38556380708475b00",
+    "postgres_store": "f67f3a5befca3ca9f6a263eb6b9c7724d753fe37c4e105f1a60af9c780175618",
+    "http_api": "ced3748528683140908952ab38f73fa18e691418c90af460fd33a78aa7c21a88",
+    "runtime": "007805d011be362d71d1a6988c275ab7d828f0f8c53f0391218f3c3abc81b0bb",
+    "compose_override": "2265836e957596cf81f30aa9fd46f39cc64ffe6cc7df0493ee5c9dbbd32e35d7"
+  },
+  "nonclaims": [
+    "The provider in both gates was a loopback contract server, not Stripe.",
+    "No Stripe credential was available or copied from another runtime.",
+    "No Payment Link was created in a real test or live Stripe account.",
+    "Payment webhooks, paid-order proof and exactly-once digital fulfillment remain separate unfinished steps.",
+    "The new commerce image was used only for isolated gates and was not deployed over the current B or production A."
+  ]
+}

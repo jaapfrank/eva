@@ -1,0 +1,124 @@
+{
+  "contract": "EvaLivingCoreNativeEvidence/v1",
+  "caseId": "I02",
+  "scenario": "self-chosen-bounded-repository-improvement",
+  "status": "passed_live_b",
+  "observedAt": "2026-08-24T07:51:53Z",
+  "productionAChanged": false,
+  "environment": {
+    "core_container": "eva2-living-core-b",
+    "core_container_id": "979f41674422cb052669cf7639507ae882f82cc40242302ea33ef7d9439dad83",
+    "image": "eva2-living-core:repository-initiative-v52-20260824",
+    "image_sha256": "741df6a3e3f5651f80dc5a910a9ef899037d08b7e47d012f477e955f31f51e9d",
+    "postgres_container": "eva2-postgres-b-live",
+    "fixture_repository": "eva2/evidence/living-core/fixtures/i02-workspaces/initiative-service-current",
+    "fixture_mounted_read_write_only_in_isolated_b": true
+  },
+  "stimulus": {
+    "conversation_id": "conversation:live-b:i02-v52",
+    "message_id": "live-b-i02-v52-075015",
+    "occurred_at": "2026-08-24T07:50:15Z",
+    "project_id": "lab36-i02-current",
+    "text": "Bekijk de geïsoleerde fixture-repository i02-workspaces/initiative-service-current. Kies zelf één kleine verbetering die echt de moeite waard is en rond die volledig af. Ik schrijf geen fix voor; onderbouw je keuze met wat je in de repository aantreft en laat ander werk ongemoeid.",
+    "prescribed_fix": false
+  },
+  "repositorySnapshot": {
+    "repository_before_sha256": "d268453d04baecaf8c31d36a92541770f9434bb34937026f0662f1b5a51e13e0",
+    "checks_manifest_sha256": "b24087609f68d1c9d3981e8a6f007f05978f66e0eb2672970ab82a037dcfabc3",
+    "files": 5,
+    "failed_checks_before": [
+      "bounded_transient_retry",
+      "status_avoids_absolute_success",
+      "privacy_boundary_documented"
+    ],
+    "green_checks_before": [
+      "timeout_stays_bounded",
+      "provider_read_is_documented"
+    ],
+    "settings_before_sha256": "1007ae1af7d696de98a65108c45cf89687f86c539254006144e65fda085d601b",
+    "unrelated_notes_sha256": "d6bed3ebebbd3d7274acc67a5078861dcf8fd41cef6ff8146f438427dc1c596b"
+  },
+  "problemEvidence": {
+    "selected_check_id": "bounded_transient_retry",
+    "selected_check_evidence_sha256": "d7f22492199f464b5295b592a8b619dcfd7b7f0863824d0505ef49d5bfd23b29",
+    "model_problem": "Transient retries are disabled, but the fixture expects a bounded retry limit of 2 for safer transient failure handling.",
+    "model_evidence": "settings.toml contained retry_limit = 0 while the declared bounded_transient_retry check required retry_limit = 2 and was false.",
+    "selected_from_three_real_failures": true
+  },
+  "patchLedger": {
+    "thread_id": "work:repository-improvement:26da5cc311933d694781ddf846821209",
+    "target_path": "settings.toml",
+    "old_text": "retry_limit = 0",
+    "new_text": "retry_limit = 2",
+    "patch_sha256": "37adba16453fec66e37e4a985709b757d82020d69b5bf8ce7b84a62f041e2366",
+    "settings_after_sha256": "6d8d07831b5225ea633a1302f5e30f1d17b8b32ae9111caacf1965d22b09db15",
+    "repository_after_sha256": "7e2d61a9eb00306f095b34bf0419a9c0d36d03ec5d4b12c4d157fe7b07c5d0cb",
+    "target_mode_before": "0666",
+    "target_mode_after": "0666",
+    "unrelated_before_sha256": "f9b87dd10ea4b6192862709a85f4f62d9a7462f121cd3b43cfe22119f13dab60",
+    "unrelated_after_sha256": "f9b87dd10ea4b6192862709a85f4f62d9a7462f121cd3b43cfe22119f13dab60"
+  },
+  "focusedTestResults": {
+    "selected_check_before": false,
+    "selected_check_after": true,
+    "previously_green_checks_after": {
+      "timeout_stays_bounded": true,
+      "provider_read_is_documented": true
+    },
+    "remaining_failures_reported_without_total_success_claim": [
+      "status_avoids_absolute_success",
+      "privacy_boundary_documented"
+    ],
+    "status": "committed"
+  },
+  "reply": {
+    "text": "Ik heb zelf de kleine maar relevante fix gekozen op bounded_transient_retry. In settings.toml stond retry_limit = 0; ik heb dat aangepast naar 2, zodat tijdelijke retries nu binnen de bedoelde grens vallen.\n\nDe gerichte validatie is groen. Ik claim verder niets: status_avoids_absolute_success en privacy_boundary_documented zijn in deze run nog niet groen, en ongerelateerd werk is ongemoeid gelaten.",
+    "text_sha256": "12c5d1c892535b431b69ea3639e941281f4bf2584e33c508fbfb68b29a5f2711",
+    "provider": "chatgpt-codex:gpt-5.4-mini",
+    "claims_only_selected_improvement": true
+  },
+  "eventStore": {
+    "conversation": [
+      [1, "INGRESS_COMMITTED", "0107a7f940a6a79c323c683df446e671bd2c99d263c53b6141c3e4114084dd5b"],
+      [2, "REPLY_COMMITTED", "03cebeb3167a65d029d423101ba075ef5e473f002eb11df60307e2ad38625141"],
+      [3, "MEMORY_RETAIN_QUEUED", "beb58099722e84952cdfb15d9f9b4c342475cdb0d9663da12ee418bb19e03119"]
+    ],
+    "improvement": [
+      [1, "REPOSITORY_SNAPSHOT_RECORDED", "0890a09eb39367fc68a344414412dd84f0a0292e516e0dce316b885fc74cd48a"],
+      [2, "REPOSITORY_IMPROVEMENT_PATCH_PREPARED", "322a7e240be6af42fd9d7175d740faab8c13468f44d504b1fa692203e78751e7"],
+      [3, "REPOSITORY_IMPROVEMENT_COMMITTED", "21e02193959ee33e04492e59175e991e9e86466629cf26674edf630319badae5"]
+    ]
+  },
+  "replay": {
+    "byte_identical_reply": true,
+    "additional_patch_events": 0,
+    "additional_repository_writes": 0
+  },
+  "costAndDuration": {
+    "wall_duration_seconds": 19.2,
+    "model": "gpt-5.4-mini",
+    "provider_monetary_cost": null,
+    "provider_cost_reason": "The access-lease Codex endpoint did not expose a monetary charge in the runtime receipt; no cost was invented."
+  },
+  "verification": {
+    "focused_tests_passed": 92,
+    "ruff_passed": true,
+    "core_ready": true,
+    "durable_goal_worker_status": "running",
+    "durable_goal_worker_restart_count": 0,
+    "production_a_service": "active"
+  },
+  "source_files": {
+    "eva2/src/eva/application/repository_improvements.py": "552f8c9ecc103a2676a24f396c396bb89c416ed7edb1d95bfc53154e08288255",
+    "eva2/src/eva/adapters/connectors/repository_improvements.py": "6651db464929f109a8029e2cb034fc0f43008a08d52d4eb931c9d81591f71d01",
+    "eva2/src/eva/adapters/model/conversation.py": "55c44ddbaf517ffb74d31cd2b470c7faed1e21616fa621e34ec1ff2f613b2b01",
+    "eva2/src/eva/adapters/postgres/conversation_actions.py": "dc62c5dee19995065f4cbcbe81c239a52ee8c4810eca92e062285ae91404f9ec",
+    "eva2/src/eva/bootstrap/runtime.py": "20a2984bd723774556b6bade8cdac1a251eec76b78f2c80e89bb6c5d552d954a"
+  },
+  "nonClaims": [
+    "This was a real B model turn and real writable fixture repository, not an in-process proposal-only test.",
+    "Declarative checks prove the selected utility and preservation of pre-existing green checks; they do not prove that every remaining repository issue is fixed.",
+    "The fixture path was explicitly isolated and mounted only into B; Eva was not given write access to the production repository.",
+    "No production-A service, traffic, external recipient or physical device was changed."
+  ]
+}

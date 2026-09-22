@@ -1,0 +1,114 @@
+{
+  "contract": "EvaLivingCoreLab36T03GroupHistoryGate/v1",
+  "captured_at": "2026-08-24T02:33:44Z",
+  "result": {
+    "status": "passed_with_external_telegram_gate_open",
+    "canonical_lab36_t03_passed": true,
+    "real_home_assistant_recorder_read": true,
+    "durable_read_admission_and_observation": true,
+    "physical_state_changed": false,
+    "production_a_changed": false,
+    "real_telegram_inbound_after_deployment": false
+  },
+  "environment": {
+    "core_container": "eva2-living-core-b",
+    "core_container_id": "fc5ecfbb2444ae2d5836ee1aa305eee7fab59f04dc2deffad2e89197c71665ce",
+    "image": "eva2-living-core:group-history-v14-20260824",
+    "image_sha256": "a9ed0a638faf9a33907ecd9fc0496c458772c54d165f700825221da772497964",
+    "hindsight_container": "eva2-hindsight-multilingual-trusted-v2",
+    "postgres_container": "eva2-postgres-b-live",
+    "postgres_revision": "4e_0001_operational_timeline"
+  },
+  "source_files": {
+    "eva2/src/eva/adapters/connectors/home_assistant.py": "be368877bf6b65a1930a1ab77504f52a6e4ebdab501c92dbfe583017c3856cb6",
+    "eva2/src/eva/adapters/postgres/home_assistant_reads.py": "45b8ed28b35a1cf96ca174398ae5541fb1e83f3658745ff3aee2b73f28918dde",
+    "eva2/src/eva/adapters/postgres/conversation_actions.py": "b8af8df8dc96e64549be15277a4db698198a9a3faeb847d745096730808c621d",
+    "eva2/src/eva/adapters/model/conversation.py": "87b4f568e07b1ba125c9c9fabe36cc6157b34453621334027aeb779f8097d3ce",
+    "eva2/src/eva/application/conversation.py": "72e6dd000c893953bd0a2d1b7f3d9a7ca6db12fa7634ec42a7ff925f644783e0",
+    "eva2/src/eva/bootstrap/runtime.py": "60a4efcda94dd0aae8325a5830953bb1049d7553d34b8e8f16f3b8dc557e1535"
+  },
+  "implementation": {
+    "model_action": "read_home_assistant_history",
+    "provider_endpoint": "GET /api/history/period/<timestamp>",
+    "timezone_authority": "Home Assistant /api/config time_zone",
+    "group_resolution": "Natural area-light phrasing resolves to the bounded set of available matching light entities.",
+    "group_aggregation": "any_member_on_all_members_off",
+    "minimum_stable_seconds": 30,
+    "maximum_group_members": 8,
+    "maximum_returned_matches": 32,
+    "crash_semantics": "The bound read request is committed before recorder I/O. A crash before READ_OBSERVED safely repeats only the read; a completed receipt is not queried again."
+  },
+  "real_live_read": {
+    "case_id": "LAB-36/T03",
+    "input": "Hoe laat ging gisteren het licht in de overkapping uit?",
+    "occurred_at": "2026-08-24T02:31:26Z",
+    "elapsed_seconds": 9.388,
+    "reply": "Gisteren ging het licht in de overkapping om 20:30 uur uit.",
+    "reply_sha256": "cb765a7c69abb649ac2812377d5298f0a35fadbbb3a94e65ee8dea2dd5fc5b5e",
+    "provider": "chatgpt-codex:gpt-5.4-mini",
+    "thread_id": "read:home-assistant-history:ed9de99638884858cd600b60ac313ff1",
+    "entity_ids": [
+      "light.dimmable_light_1",
+      "light.home_assistant_voice_0a5035_led_ring",
+      "light.hue_flux_strip_light_1",
+      "light.hue_resonate_outdoor_wall_1",
+      "light.hue_resonate_outdoor_wall_1_2"
+    ],
+    "friendly_names": [
+      "Spotjes overkapping",
+      "Eva overkapping Voice LED Ring",
+      "Hue Flux strip overkapping",
+      "Overkapping wand achter",
+      "Overkapping midden balk"
+    ],
+    "period": "yesterday",
+    "transition_to": "off",
+    "window_start": "2026-08-23T00:00:00+02:00",
+    "window_end": "2026-08-24T00:00:00+02:00",
+    "time_zone": "Europe/Amsterdam",
+    "matches": [
+      {
+        "from": "on",
+        "to": "off",
+        "changed_at": "2026-08-23T06:31:26+02:00",
+        "stable_for_seconds": 50314
+      },
+      {
+        "from": "on",
+        "to": "off",
+        "changed_at": "2026-08-23T20:30:03+02:00",
+        "stable_for_seconds": 1053
+      }
+    ],
+    "selected_latest_transition": "2026-08-23T20:30:03+02:00",
+    "event_sequence": [
+      {
+        "sequence": 1,
+        "event_type": "READ_REQUEST_ADMITTED",
+        "payload_sha256": "c2e3d93ce66a68b42b897a2b831899820a3a6e60ff6c9290eb5b090973194cb0"
+      },
+      {
+        "sequence": 2,
+        "event_type": "READ_OBSERVED",
+        "payload_sha256": "f82da380ef32c8207c067e4c8bd8389ee5002a2837abee0fc755f5fb678eadc6"
+      }
+    ]
+  },
+  "verification": {
+    "focused_tests": "41 passed in 3.18s",
+    "disposable_postgres_read_tests": "2 passed, 7 deselected in 2.70s",
+    "ruff": "all selected files passed",
+    "core_health_sha256": "bc24b0b5a305d5afc198c725890c8fb91053be2dbd8672779de73cac19a008fa",
+    "core_ready_sha256": "0e12aa0cec70713211dfe1829911bd2ad4538e8f37dbeb1830ee79650460dcd2",
+    "hindsight_health_sha256": "c2c4c54f0f1eb7acf9a01af1a7c3782ed03385439347bee579eb468d0e8f8306",
+    "memory_outbox_completed": 17,
+    "memory_outbox_open": 0,
+    "production_a_service": "active"
+  },
+  "non_claims": [
+    "The canonical question used isolated B HTTP ingress, not a newly delivered Telegram user update.",
+    "No Home Assistant service call or physical-state mutation was made by this gate.",
+    "No production-A code, service, traffic or memory was changed.",
+    "This proves canonical T03 on the current candidate, not the complete hidden LAB-36 benchmark."
+  ]
+}

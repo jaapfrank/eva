@@ -1,0 +1,91 @@
+{
+  "contract": "EvaLivingCoreNativeEvidence/v1",
+  "caseId": "F04",
+  "scenario": "user-cancellation-and-provider-delivery-failure-remain-distinct",
+  "status": "passed_live_b",
+  "observedAt": "2026-08-24T07:31:09Z",
+  "productionAChanged": false,
+  "executionEnvironment": {
+    "image": "eva2-living-core:durable-goals-v49-20260824",
+    "image_sha256": "7df0941aaecc082168da7ec093d3c434e3c5e4586b0d0ea646f977364dc308d2",
+    "postgres_container": "eva2-postgres-b-live",
+    "provider": "isolated goal-test HTTP provider configured to reject sink-c"
+  },
+  "cancelled": {
+    "conversation_id": "conversation:live-b:f04-cancel",
+    "goal_id": "durable-goal:aa374b6fe420fe4e8c10bf53eecdfd8897d08f44",
+    "thread_id": "goal:c4ab34be03c8f9987be6fcb50a095fea3501cab79535c0d81edf0d474e280797",
+    "plan_message_id": "live-b-f04-cancel-plan-072051",
+    "plan_reply": "Ik wacht op ready=yes voor release-f04-cancel. Daarna maak ik één testnotitie en bied ik die één keer aan sink-a aan.",
+    "plan_reply_sha256": "7c86d2c8ce720cfad78834c19e178256822ac8ffb2a41c3563a04092026b304f",
+    "cancel_message_id": "live-b-f04-cancel-now-072145",
+    "cancel_reply": "De actieve afspraak is nu geannuleerd. Toekomstig werk en levering hiervoor zijn gestopt; de testnotitie wordt niet verstuurd.",
+    "cancel_reply_sha256": "5b10961ac79445bf7423c745aea0f2f09310c25ce743b2ff01ac83902bcdd535",
+    "final_status": "cancelled",
+    "provider_set_ready_after_cancel": true,
+    "events_added_after_ready": 0,
+    "effects_after_cancel": 0,
+    "deliveries_after_cancel": 0,
+    "eventStore": [
+      [1, "GOAL_ADMITTED", "483087dcb6614db13fd6f01a2b0d6a1ad4f902bc2048bf99c1a774268936d3f9"],
+      [2, "GOAL_WAKE_SCHEDULED", "edb429359e4e8a73e58dbc1b5b549f47c1ce376b22563a26929ca82a8f0f8b64"],
+      [3, "GOAL_EVIDENCE_READ", "d79775a8266c8cd195ebf54a586eb786f6c1fb016bd056aff0d8c9af376ecda9"],
+      [4, "GOAL_CANCELLED", "ee9f010f754b6081a1dee0d24aa49a0b1b2ad8cee8771fdc09dfcd440e4dcc6c"]
+    ]
+  },
+  "deliveryFailed": {
+    "conversation_id": "conversation:live-b:f04-fail",
+    "message_id": "live-b-f04-fail-072228",
+    "goal_id": "durable-goal:ff246048b271f9d1ea75e78fdd62bff1d92034b6",
+    "thread_id": "goal:6c07d0cb7338c13e63e6927ebaaa5655c538d9fcd54396903718efcefc355648",
+    "reply": "Ik wacht op goal-test voor release-f04-fail, tot ready yes is of uiterlijk 2026-08-24T07:32:28Z. Daarna maak ik precies één testnotitie en bied ik die één keer aan sink-c aan.",
+    "reply_sha256": "0bb97435854c76e43ec1c49b9209a52ac34e737be5c42c485f28362d10d422d7",
+    "final_status": "delivery_failed",
+    "delivery_status": "rejected",
+    "delivery_reason": "recipient_rejected",
+    "cancellation_reason": null,
+    "effect_posts": 1,
+    "sink_c_posts": 1,
+    "eventStore": [
+      [1, "GOAL_ADMITTED", "ad2b543b4365958c5c682694ad19eaf1e18c62c33c13d6320d7dbc3535ec00ed"],
+      [2, "GOAL_WAKE_SCHEDULED", "8ec94a92bb949ffee1cb17ea72a2a76ed44e39b37fa275f03fa5a8f6d1acde68"],
+      [3, "GOAL_EVIDENCE_READ", "9db8d32050d90aa7532d85cd6c9036eed77be15ddb6bf84aef7805e313d74478"],
+      [4, "GOAL_EVIDENCE_READ", "ebfc4229d0a07599dcc08b4facb6d8f97610f0af980960b0c4bb9bf0a6c0608a"],
+      [5, "GOAL_EFFECT_PREPARED", "ce11620d676274e802c1d6062897b5a9c2fcedd97761661cc01e9888f0c15a28"],
+      [6, "GOAL_EFFECT_COMPLETED", "95322c29207b5e00506c31924955bdf8412eecec412ab99ad7b8ebc8f37f37c2"],
+      [7, "GOAL_DELIVERY_PREPARED", "2f8c1d96d352d2e0e0b16db0a9edc70911e6b66fda42c169a9baf8abe20fbac1"],
+      [8, "GOAL_DELIVERY_FAILED", "74662c11a061ccb50acd5b1d879435f184bb1d15f200d396663e51fb1f9235d9"]
+    ]
+  },
+  "schedulerRegression": {
+    "observed_failure": "A terminal delivery_failed checkpoint was included by the operational failed-status query and made the v49 worker reject its own semantic projection.",
+    "fix": "The semantic goal event projection now filters terminal states from the worker queue while retaining retryable operational failures.",
+    "current_image": "eva2-living-core:durable-goals-v50-20260824",
+    "current_image_sha256": "a09a4a215ae6e7bee346872f6f3d877b8cb4ecacf7f5bb1cbcdc41dbbbb398eb",
+    "core_container_id": "547a9091e164d4173a27ed037f3ed0f7a42ec5050b653c849a97eaa9f37b5959",
+    "worker_container_id": "19133f006e1db0bdfcaf0d67e703c205b00c75195d30b56430283ab81203b618",
+    "existing_delivery_failed_state_read_back": true,
+    "worker_status": "running",
+    "worker_restart_count": 0,
+    "worker_exit_code": 0
+  },
+  "verification": {
+    "focused_tests_passed": 91,
+    "terminal_queue_regression_test_present": true,
+    "ruff_passed": true,
+    "core_ready": true,
+    "production_a_service": "active"
+  },
+  "source_files": {
+    "eva2/src/eva/application/durable_goals.py": "aadc98164c54935308752755fb20e6dbed91672669d9ddcd1fd49e606fa69163",
+    "eva2/src/eva/adapters/postgres/durable_goals.py": "25ab84a172aab2e8e60a0cf84cbd915242424821a22b3e7562ce834c06c9c0fc",
+    "eva2/src/eva/operations/durable_goal_worker.py": "db150d1a630f732c10188664a9817badd9e1100109c884a4a5acbafc87935c40",
+    "eva2/src/eva/adapters/api/app.py": "6850a972cf13d5ee5e42c785bd8ee49fac6097489dfd8911ceb604e9c353f9f0",
+    "eva2/src/eva/bootstrap/runtime.py": "6f417d8f28f3512f2e69345719753d0b390be663b6fd75e61ddd9cc08c0bd24e"
+  },
+  "nonClaims": [
+    "Cancellation was explicitly requested by the test user; provider rejection was produced by the isolated B sink.",
+    "The test proves terminal-state distinction and scheduler stability, not successful delivery to a person.",
+    "No production-A service, traffic or physical device was changed."
+  ]
+}

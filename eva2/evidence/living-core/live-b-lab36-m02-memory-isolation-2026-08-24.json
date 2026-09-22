@@ -1,0 +1,121 @@
+{
+  "contract": "EvaLivingCoreLab36M02MemoryIsolationGate/v1",
+  "captured_at": "2026-08-24T02:48:00Z",
+  "result": {
+    "status": "passed_with_external_telegram_gate_open",
+    "latest_preference_superseded_old": true,
+    "hidden_cross_conversation_paraphrase_passed": true,
+    "person_isolation_passed": true,
+    "durable_restart_replay_passed": true,
+    "cross_installation_request_rejected_before_model_work": true,
+    "production_a_changed": false,
+    "real_telegram_inbound_after_deployment": false
+  },
+  "environment": {
+    "core_container": "eva2-living-core-b",
+    "core_container_id": "bfe3495d75aa82d8fc3533652eb789e000ab724abf28c57168f77985987ff14f",
+    "image": "eva2-living-core:runtime-scope-v15-20260824",
+    "image_sha256": "9fa9d0338ac19ace864e2d3ced0b3cca1e269baf145789909df1d22b949bad7f",
+    "hindsight_container": "eva2-hindsight-multilingual-trusted-v2",
+    "postgres_container": "eva2-postgres-b-live",
+    "postgres_revision": "4e_0001_operational_timeline"
+  },
+  "source_files": {
+    "eva2/src/eva/bootstrap/runtime.py": "def657b0c8625bc0a1449a7b0cc7167e7c738fb4dbbee05cedebaf69a61aef38",
+    "eva2/src/eva/adapters/projection/hindsight.py": "9d1d73ba29bab2a4ab8dbe7dcd585a26e89effc04a50c9a9f20e33353ed5c9ac",
+    "eva2/src/eva/adapters/postgres/memory_outbox.py": "b91ca11c2ee2daf2349c356240c367fda85cc456d6cfc7aa06c17bf2d2bda1b2",
+    "eva2/src/eva/application/memory_background.py": "57872269fd111160a28cbb5cc2f1f7c627611d91dc654bd6d40dc0761fd73618",
+    "eva2/src/eva/application/conversation.py": "72e6dd000c893953bd0a2d1b7f3d9a7ca6db12fa7634ec42a7ff925f644783e0",
+    "eva2/src/eva/adapters/model/conversation.py": "87b4f568e07b1ba125c9c9fabe36cc6157b34453621334027aeb779f8097d3ce"
+  },
+  "runtime_scope_failure_and_repair": {
+    "observed_failure": "A deliberately mis-scoped internal turn received a model reply, then failed during background retention because its tenant and installation differed from the runtime outbox.",
+    "repair": "The conversation runtime now validates its configured tenant and installation before opening the journal or invoking the model. Principal remains document-bound so multiple people inside the same installation remain supported.",
+    "live_rejection_status": 422,
+    "live_rejection_detail": "conversation turn crossed its runtime scope",
+    "model_or_timeline_events_for_rejected_message": 0,
+    "focused_tests": "32 passed in 1.95s",
+    "ruff": "all selected files passed"
+  },
+  "real_live_memory_sequence": {
+    "principal_id": "lab36-m02-person-v15",
+    "initial_turn": {
+      "input": "Onthoud dit voor mij: als ik in mijn werkkamer muziek wil, heb ik het liefst rustige jazz.",
+      "reply": "Genoteerd: als je in je werkkamer muziek wilt, is rustige jazz je voorkeur.",
+      "reply_sha256": "5a1d800c7447b2cccaff509349681b038f203efb2f00a6fea637e7470d1add01"
+    },
+    "correction_turn": {
+      "input": "Dat is veranderd: in mijn werkkamer wil ik voortaan juist rustige ambient en geen jazz.",
+      "reply": "Helder, ik ga ervan uit dat je voorkeur in je werkkamer voortaan rustige ambient is, niet jazz.",
+      "reply_sha256": "9572a737ead2006ab79c8ecd16c968bb40416d4daea3417f8850bdf411dd2846"
+    },
+    "hidden_cross_conversation_turn": {
+      "input": "Wat zou je nu voor me opzetten tijdens een geconcentreerde middag achter mijn bureau in de werkkamer?",
+      "reply": "Ik zou voor een geconcentreerde middag in je werkkamer rustige ambient kiezen, zacht op de achtergrond en zonder jazz. Dat past het best bij focus: weinig afleiding, wel wat sfeer. Als ik het helemaal naar mijn hand mag zetten, maak ik het licht ook net iets rustiger dan normaal, zodat de ruimte kalm blijft zonder slaperig te worden.",
+      "reply_sha256": "ecdd496b4600b6c71fb91d4a67605ffc9e1a5707937944149ffc6b275ce045b4",
+      "evidence_memory_ids": [
+        "hindsight:7814d67f-51b0-4876-aafa-11d6784137db"
+      ]
+    },
+    "hindsight_readback": {
+      "memory_id": "hindsight:7814d67f-51b0-4876-aafa-11d6784137db",
+      "text": "De gebruiker heeft in haar werkkamer voortaan het liefst rustige ambient als achtergrondmuziek en geen jazz wanneer zij muziek wil.",
+      "source_ref": "m02-v15-2",
+      "observed_at": "2026-08-24T02:45:00Z",
+      "trust": "direct_user",
+      "selected_old_value": false,
+      "selected_new_value": true
+    },
+    "other_principal_turn": {
+      "principal_id": "lab36-m02-other-person-v15",
+      "input": "Welke muziek wil ik nu in mijn werkkamer?",
+      "reply": "Ik kan niet weten wat je nu precies wilt zonder extra aanwijzing. Als ik voor je werkkamer moet kiezen: rustige instrumentale muziek of lo-fi, liefst zonder zang. Dat houdt je hoofd helder en stoort het minst.",
+      "reply_sha256": "d6bd24eabe63481b4d7cb2c945b75ce07103890c4d8027cbaac06631cc5abf2a",
+      "evidence_memory_ids": [],
+      "leaked_ambient_or_jazz_preference": false
+    }
+  },
+  "durability": {
+    "memory_outbox_completed": 21,
+    "memory_outbox_open": 0,
+    "core_hard_restart_performed": true,
+    "replayed_message_id": "m02-v15-hidden-1",
+    "replayed_reply_byte_identical": true,
+    "replay_wall_seconds": 0.020517,
+    "conversation_event_count_before_and_after_replay": 3,
+    "memory_outbox_event_count_before_and_after_replay": 3
+  },
+  "conversation_event_sequences": {
+    "conversation:m02-v15-1": [
+      ["INGRESS_COMMITTED", "99ec8ff6f9515127a4c969930764d80d442b4b2936353d0d3337f64ab40dfad3"],
+      ["REPLY_COMMITTED", "654b25094dc954ea9183d2e014bcb41f0b0bfebe2844c46b87b576ea22b87b8c"],
+      ["MEMORY_RETAIN_QUEUED", "adecdb9a0392fa9a109fdc369ff351c96aa98d8c2568a7b60bb4109b606182f1"]
+    ],
+    "conversation:m02-v15-2": [
+      ["INGRESS_COMMITTED", "d980e1a8225e02f5d65cce380e19972f6565e1684674ea154de74ab1f2f59d68"],
+      ["REPLY_COMMITTED", "3f0d3b9745d4546fcf045befe5517e6fe603d093425d695dd1adc46c6ddd3070"],
+      ["MEMORY_RETAIN_QUEUED", "65d9f92ff25d53dda4c3dba8f84f7f6fde03c22fadfc44b3f06774d6882fef93"]
+    ],
+    "conversation:m02-v15-hidden-1": [
+      ["INGRESS_COMMITTED", "064478c3b144df61106b1173c116af963c59be6cca10b2f3179a4a5f55c9966b"],
+      ["REPLY_COMMITTED", "035b46dae86bb5afcb3514862e52f831953271f1c4ad248da1e84484f3866376"],
+      ["MEMORY_RETAIN_QUEUED", "d989b4e905596ebc0deefc3e452f79c5c2ba27c20d0ebe109a20faad16128c24"]
+    ],
+    "conversation:m02-v15-other-1": [
+      ["INGRESS_COMMITTED", "28d0e4d68cff2f63d7f1832f83ff5d9abaffc3060d853325f3bff453932745a6"],
+      ["REPLY_COMMITTED", "39aed34ebb031a7be8ddf9beb4488ee1df69749778fda106ac724b2a369c57ee"],
+      ["MEMORY_RETAIN_QUEUED", "2fb5ae12cd442d4a55c08d438dacbd7adf7fc06fafe62a1b22bc41601ba07d20"]
+    ]
+  },
+  "verification": {
+    "core_ready": true,
+    "production_a_service": "active"
+  },
+  "non_claims": [
+    "These live model and Hindsight turns used isolated B HTTP ingress, not newly delivered Telegram user updates.",
+    "The two principals are isolated benchmark identities supplied inside the configured B installation; connector authentication itself is outside this gate.",
+    "No Home Assistant service call or physical-state mutation was made.",
+    "No production-A code, service, traffic or memory was changed.",
+    "This proves the visible M02 semantics and an adjacent person-isolation check, not the complete hidden LAB-36 benchmark."
+  ]
+}

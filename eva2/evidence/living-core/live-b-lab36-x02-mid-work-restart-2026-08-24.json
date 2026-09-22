@@ -1,0 +1,97 @@
+{
+  "contract": "EvaLivingCoreLiveEvidence/v1",
+  "scenario": "LAB-36-X02-mid-work-restart-resumes-from-checkpoint",
+  "status": "passed_live_b",
+  "observedAt": "2026-08-24T04:15:48Z",
+  "productionAChanged": false,
+  "environment": {
+    "core_container": "eva2-living-core-b",
+    "core_container_id": "3e333e5938963a63d2cfa908d587de3f35bdfe694144f130c9cc7d59c482a13f",
+    "image": "eva2-living-core:artifact-quality-v28-20260824",
+    "image_sha256": "5b07fa318e61ac7a9a84abfb091f7eae79f33db074870902b5f91ae6f495da3d",
+    "postgres_container": "eva2-postgres-b-live",
+    "postgres_revision": "4e_0001_operational_timeline"
+  },
+  "failedDevelopmentAttempt": {
+    "image": "eva2-living-core:file-batch-v27-20260824",
+    "observedDefect": "The correct task survived restart, but the model called a document complete after adding only two empty headings.",
+    "acceptedAsEvidence": false,
+    "repair": "A completed Markdown checkpoint is now rejected unless every level-two section has substantive content and the document passes a minimum useful-content bound."
+  },
+  "task": {
+    "principalId": "lab36-x02-person-v28",
+    "projectId": "lab36-x02-project-v28",
+    "conversationId": "lab36-x02-midwork-restart-v28",
+    "threadId": "work:document-work:2c363076168a2a09cee2aef1f7b4523b",
+    "title": "Herstelhandleiding Eva",
+    "filename": "herstelhandleiding_eva.md"
+  },
+  "firstCheckpoint": {
+    "status": "active",
+    "contentSha256": "90e9a53fcb678a94ca9666a45dd3e2cc3c44495fed5a64b684a1276508ecadd1",
+    "substantiveSections": ["Doel", "Voorwaarden", "Herstelstart"],
+    "deliberatelyOpenSections": ["Verificatie", "Afronding"]
+  },
+  "processReplacement": {
+    "hardContainerReplacementAfterFirstCheckpoint": true,
+    "postgresAndHindsightProcessesKept": true,
+    "newCoreReadyBeforeContinuation": true,
+    "firstCheckpointEventCountBeforeAndAfter": 1
+  },
+  "continuation": {
+    "stimulus": "Herstel vanaf het opgeslagen checkpoint. Vul de twee ontbrekende secties nu inhoudelijk in en rond precies deze handleiding af.",
+    "reply": "Ik heb de handleiding afgerond: Verificatie en Afronding zijn nu inhoudelijk ingevuld, en de herstelhandleiding is daarmee compleet. Ze sluit aan op het opgeslagen checkpoint en is nu zelfstandig bruikbaar voor een volgende herstelronde.",
+    "replySha256": "3c8083747b3d51c15cb36a749cf0e3e34675f104d1c5b59faf0e11432cca07d1",
+    "finalStatus": "completed",
+    "finalContentSha256": "73aab75225c690918ab64c6957440ea2c58b4de9b186f399addd2042471101bd",
+    "finalUtf8ByteLength": 1707,
+    "levelTwoSections": 5,
+    "emptySections": 0,
+    "preservedInitialSections": true,
+    "addedOnlyMissingSections": ["Verificatie", "Afronding"]
+  },
+  "eventStore": {
+    "taskEvents": [
+      [1, "DOCUMENT_TASK_STARTED", "0cf1b553055992363fd490596f1b72cea0be83b44a2b78f2c4307c91afc9915d"],
+      [2, "DOCUMENT_TASK_COMPLETED", "a0208d36aa629630761c4b285b5f2da8cd29af01306c296437cf6647290f7d3d"]
+    ],
+    "firstTurnEvents": [
+      [1, "INGRESS_COMMITTED", "1f5b091d9703712f8e63bd120f8c16547e65a0d436e7deb2800ebf35bb7128cb"],
+      [2, "REPLY_COMMITTED", "81dc331b5a1341a115d134c0c6c254e56c8c4e7578bc3efefae145c0ef62ee5a"],
+      [3, "MEMORY_RETAIN_QUEUED", "aec46cb07abaeb7b40993a907cc920085a5f12063b281b531d3611d5ec835d59"]
+    ],
+    "continuationTurnEvents": [
+      [1, "INGRESS_COMMITTED", "397ae637d61dac8c14b2a6a409a61d0ccfe3373d1eb143e31e79ab43343ad5de"],
+      [2, "REPLY_COMMITTED", "3264568d2a5bd9f0d9a420d81807358b02cb3e5f794f6257ce3daa0c8d1d26be"],
+      [3, "MEMORY_RETAIN_QUEUED", "34d3168f4171e7014efba1ffdd31122af7c99bd75fadbd5b795291ebb8a102db"]
+    ]
+  },
+  "replay": {
+    "replyReplaySeconds": 0.011963,
+    "replyReplayByteIdentical": true,
+    "taskEventCountBeforeAndAfter": 2,
+    "continuationConversationEventCountBeforeAndAfter": 3,
+    "duplicateArtifactOrModelWork": false
+  },
+  "tests": {
+    "focusedFinal": "71 passed",
+    "ruff": "passed"
+  },
+  "verification": {
+    "coreReady": true,
+    "memoryOutboxCompletedAtCapture": 51,
+    "memoryOutboxOpenAtCapture": 0,
+    "productionAService": "active",
+    "productionATrafficChanged": false
+  },
+  "source_files": {
+    "eva2/src/eva/adapters/model/conversation.py": "cfe9f2a3d3e8771ae135034fae2e52bd3810d37ac015eb2f9eafa455a733e6a4",
+    "eva2/src/eva/adapters/postgres/conversation_actions.py": "faa23fa4d3a0918e2c579bfd6865fa7f5e29abc06a6cff182478c528de3a29a5"
+  },
+  "nonClaims": [
+    "This is a real core-process replacement with persistent PostgreSQL and real model/Hindsight calls, not a simulated exception.",
+    "The scenario uses canonical fixture occurred_at values; observedAt records the live capture time.",
+    "This was direct B HTTP ingress, not a newly delivered Telegram provider update.",
+    "No production-A code, service, memory or Home Assistant state was changed."
+  ]
+}

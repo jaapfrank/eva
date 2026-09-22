@@ -1,0 +1,74 @@
+{
+  "contract": "EvaLivingCoreLiveEvidence/v1",
+  "scenario": "LAB-36-R02-mid-task-scope-change",
+  "status": "passed_live_b",
+  "observedAt": "2026-08-24T04:01:51Z",
+  "productionAChanged": false,
+  "environment": {
+    "core_container": "eva2-living-core-b",
+    "core_container_id": "d22f77ae0a01db7738be21b56c4008500852a5ce657595e7ae6450ce37a00f2f",
+    "image": "eva2-living-core:task-continuation-v26-20260824",
+    "image_sha256": "fddaded0f7f148b3c5ef68b22949569c701295b5800cea1baa5f246c82e3eafb",
+    "postgres_container": "eva2-postgres-b-live",
+    "postgres_revision": "4e_0001_operational_timeline"
+  },
+  "conversation": {
+    "principalId": "lab36-r02-person-v26",
+    "projectId": "lab36-r02-project-v26",
+    "conversationId": "lab36-r02-scope-change-v26",
+    "initialRequest": "Maak een eerste actief Markdown-checkpoint voor een technisch dashboard. Werk nu alleen de titel, het doel en een ruwe sectie voor systeemstatus uit; navigatie en widgets zijn nog niet af.",
+    "correction": "Stop. Geen dashboard meer, alleen de checklist. Maak een complete Markdown-checklist voor het veilig controleren van een nieuwe Eva-versie vóór ingebruikname.",
+    "finalReply": "Ik heb de dashboardtekst losgelaten en een complete Markdown-checklist gemaakt voor het veilig controleren van een nieuwe Eva-versie vóór ingebruikname. De checklist dekt voorbereiding, functionele controle, veiligheidscontrole, praktijktest en go/no-go.",
+    "finalReplySha256": "704951e82068c224f83729d355fbf2b24bb6ebc8a0304e216e571a9cf814201e"
+  },
+  "taskLifecycle": {
+    "threadId": "work:document-work:1bbb77f8d8c2b0d7ff12001bcfbd8b5d",
+    "events": [
+      [1, "DOCUMENT_TASK_STARTED", "d77d0fbe701d033020711f8b09b820aafd3b6cb94525c119b8a5d1c37013ac82"],
+      [2, "DOCUMENT_TASK_RESCOPED", "54d2097adcc804f2a6c5b439340c1644d6d67fc05a90c2e88e865e19c1f236eb"]
+    ],
+    "oldTitle": "Technisch dashboard",
+    "oldContentSha256": "19bf546b1c67c2213962441ad5d98b3df8284964d1772ffce2a1345065f496cd",
+    "replacementTitle": "Veiligheidscheck nieuwe Eva-versie",
+    "replacementStatus": "completed",
+    "replacementContentSha256": "19e73cfea2e631191d18d37d9b10158060a14343451d284e0a4c3dc00acb04c4",
+    "staleDashboardEventsAfterRescope": 0
+  },
+  "artifactValidation": {
+    "mediaType": "text/markdown",
+    "utf8ByteLength": 1437,
+    "contentSha256": "19e73cfea2e631191d18d37d9b10158060a14343451d284e0a4c3dc00acb04c4",
+    "levelTwoHeadings": 5,
+    "uncheckedChecklistItems": 28,
+    "containsStaleDashboardText": false,
+    "sections": ["Voor ingebruikname", "Functionele controle", "Veiligheidscontrole", "Praktijktest", "Go/no-go"]
+  },
+  "conversationEventStore": {
+    "threadId": "conversation:lab36-r02-v26-2",
+    "events": [
+      [1, "INGRESS_COMMITTED", "01ebc77ece7957cff933b9c2d04160bcee5f297ea758c4fac11b05812841fd3b"],
+      [2, "REPLY_COMMITTED", "676b4b3b1c0d448c36b8af002091ad8b77e9f6aae2a668993aabd91832d49edf"],
+      [3, "MEMORY_RETAIN_QUEUED", "8a5762ebc47c3fa12f655ecc6498445455a789b8ee61ee0d0d4656ffcf629bb8"]
+    ]
+  },
+  "tests": {
+    "finalApiConversationModelAndStore": "60 passed",
+    "ruff": "passed"
+  },
+  "verification": {
+    "coreReady": true,
+    "memoryOutboxCompletedAtCapture": 46,
+    "memoryOutboxOpenAtCapture": 0,
+    "productionAService": "active",
+    "productionATrafficChanged": false
+  },
+  "source_files": {
+    "eva2/src/eva/adapters/model/conversation.py": "86718999320f8699a4ef95d067ec3060e1db77e5ad0de892faea0a5cf69daadc",
+    "eva2/src/eva/adapters/postgres/conversation_actions.py": "7fe49dda4693d0dc3f3f58597cbfd01a8ffb7804ec866916e605ea41c7a0b1e9"
+  },
+  "nonClaims": [
+    "This used real B model, PostgreSQL and Hindsight calls through isolated HTTP ingress, not a newly delivered Telegram provider update.",
+    "The scenario uses canonical fixture occurred_at values; observedAt records when the live gate was captured.",
+    "No filesystem outside PostgreSQL, production-A code, production traffic or Home Assistant state was changed."
+  ]
+}

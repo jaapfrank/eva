@@ -1,0 +1,32 @@
+{
+  "candidate": {
+    "core_container": "eva2-living-core-b",
+    "core_health_sha256": "bc24b0b5a305d5afc198c725890c8fb91053be2dbd8672779de73cac19a008fa",
+    "core_ready_sha256": "0e12aa0cec70713211dfe1829911bd2ad4538e8f37dbeb1830ee79650460dcd2",
+    "evidence_path": "eva2/evidence/living-core/live-b-native-x01-crash-recovery-v43-2026-08-24.json",
+    "evidence_sha256": "6b86ba251d1e019022f61169dead89f5b004a0c4b92b5b234fe2ac04a0c5f9e5",
+    "hindsight_container": "eva2-hindsight-multilingual-trusted-v2",
+    "hindsight_health_sha256": "57afca957f90621fe67822025e157f9455ae8d19b55e1f1df1f7214c1e619fde",
+    "hindsight_lease_publisher": "eva2-hindsight-access-lease-b",
+    "image_sha256": "c66bdde32b7b265c73b158e3a7b564bca636014853005b4bae01baa2c2ee37d8",
+    "memory_outbox_completed": 90,
+    "memory_outbox_open": 0,
+    "model_authority": "single_writer_refresh_owner_access_lease_only",
+    "model_lease_publisher": "eva2-model-access-lease-b",
+    "postgres_container": "eva2-postgres-b-live",
+    "schema_revision": "4e_0001_operational_timeline"
+  },
+  "checked_at": "2026-08-24T06:42:00Z",
+  "contract": "EvaLivingBCandidatePreflight/v1",
+  "production_a": {
+    "health_sha256": "4d6f1af0b7208e7c581ddf10a565dac81a2ddbcb4c2fbb127292ea8c03383872",
+    "service": "eva.service",
+    "status": "active"
+  },
+  "promotion": {
+    "approved": false,
+    "status": "isolated_b_candidate_only",
+    "traffic_changed": false
+  },
+  "status": "passed"
+}

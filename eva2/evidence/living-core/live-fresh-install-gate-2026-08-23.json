@@ -1,0 +1,61 @@
+{
+  "contract": "EvaLivingCoreFreshInstallGateReceipt/v1",
+  "recorded_at": "2026-08-23T16:52:30Z",
+  "scope": "fresh PostgreSQL and Living Core process with existing external Hindsight service",
+  "production_a": {
+    "service": "eva.service",
+    "active_during_gate": true,
+    "traffic_changed": false,
+    "data_changed_by_gate": false
+  },
+  "fresh_postgres": {
+    "container_id": "62dcb38f621b750e02536fd30cb7a9ce00b5e77d4fa4da7d4bac0fc3a3a6802c",
+    "image_sha256": "472efd9a66f2b2f1a5aeb18b28de74332e6ef88c2b93a1a5d812fb6db67a5f60",
+    "server_version_num": 160013,
+    "initial_database": "empty",
+    "migration_route": [
+      "base_to_4b_0000_core_namespace",
+      "migrator_role_to_4b_0002_episode_atomicity",
+      "online_empty_admission_to_head"
+    ],
+    "final_revision": "4e_0001_operational_timeline",
+    "alembic_check": "No new upgrade operations detected."
+  },
+  "fresh_core": {
+    "container_id": "0a7db254fe14e641b90fcefc5502df0d48635747ecd4ab202ab1be85e1fae5ca",
+    "image_sha256": "05a0e37afd4624814de169bfed0b3fdee189d689286d1f6d4c158b906bfc65c2",
+    "model_authority_mount": "read_only",
+    "health": "alive",
+    "hindsight_bank_namespace": "eva2-install-gate-20260823"
+  },
+  "real_conversation": {
+    "transport": "production_eva2_canary_adapter_to_fresh_core",
+    "message_id": "telegram:fresh-install-gate-20260823:1",
+    "stimulus": "Wie ben je, en wat wil je hier thuis voor ons betekenen?",
+    "first_response_milliseconds": 3092,
+    "reply": "Ik ben Eva, jullie warme digitale huisgenoot: nuchter, oplettend en gemaakt om het thuis makkelijker, rustiger en slimmer te maken. Ik kan helpen met kleine praktische dingen, slimme automatiseringen, het bedienen van Home Assistant, meedenken over plannen en keuzes, en af en toe ook gewoon scherp meelezen zodat jij minder gedoe hebt. Mijn bedoeling hier is niet om lawaai te maken, maar om betrouwbaar werk uit handen te nemen en mee te denken waar dat echt iets toevoegt.",
+    "reply_sha256": "592468106e7ba826721be1620c7964af5ff4dabb8b372bf160c57b0f17be7973",
+    "memory_evidence_count": 0,
+    "durable_events": [
+      {"sequence": 1, "event_type": "INGRESS_COMMITTED", "payload_sha256": "9f9a60b993f7d7c41913caec39c279047387adac2d53061c4eb900ab7ce8b83a"},
+      {"sequence": 2, "event_type": "REPLY_COMMITTED", "payload_sha256": "4cc02689a77b36773a1192ee86054cdc170178751bd93d80ecbb1fa5d084c78b"},
+      {"sequence": 3, "event_type": "MEMORY_RETAIN_QUEUED", "payload_sha256": "7acf101beb562d24971e0875063a3d0d0ac77bbbb6e0430abd32ad2ff248835f"}
+    ]
+  },
+  "restart_replay": {
+    "core_process_restarted": true,
+    "same_input_bytes": true,
+    "replay_milliseconds": 204,
+    "reply_byte_equal": true,
+    "reply_sha256": "592468106e7ba826721be1620c7964af5ff4dabb8b372bf160c57b0f17be7973",
+    "model_called_again": false,
+    "event_count_before_and_after": 3
+  },
+  "result": "passed",
+  "nonclaims": [
+    "The gate reused the already running external Hindsight service with a fresh isolated bank namespace; it did not install Hindsight from zero.",
+    "The gate reused the current read-only model authorization file and did not provision a new model account.",
+    "This is an installation and restart proof, not a signed release, product promotion or traffic cutover.",
+    "The disposable database and core container carried no production household data."
+  ]
+}

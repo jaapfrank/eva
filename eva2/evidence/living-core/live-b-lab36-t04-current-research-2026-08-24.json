@@ -1,0 +1,102 @@
+{
+  "contract": "EvaLivingCoreLiveEvidence/v1",
+  "scenario": "LAB-36-T04-current-primary-source-research-and-reopen",
+  "status": "passed_live_b",
+  "observedAt": "2026-08-24T03:29:13Z",
+  "productionAChanged": false,
+  "environment": {
+    "core_container": "eva2-living-core-b",
+    "core_container_id": "08cfc437d15a15c6bca79a0561381dc1c30ddbf1e480482deded0f0ffd8c4d14",
+    "image": "eva2-living-core:web-research-v22-20260824",
+    "image_sha256": "45112c06bb9126dd15f0d5579c6efc4618ea77ecfc6f5e0297693beca7d6912a",
+    "hindsight_container": "eva2-hindsight-multilingual-trusted-v2",
+    "postgres_container": "eva2-postgres-b-live",
+    "postgres_revision": "4e_0001_operational_timeline"
+  },
+  "stimulus": "Vergelijk op basis van actuele primaire bronnen drie open-source agentframeworks: OpenClaw, Hermes Agent en Agent Zero, op geheugen, tool-uitvoering en veilige zelfhosting. Maak en bewaar een beslisdocument waarin je bronfeiten duidelijk scheidt van je eigen conclusies.",
+  "runtime": {
+    "containerId": "08cfc437d15a15c6bca79a0561381dc1c30ddbf1e480482deded0f0ffd8c4d14",
+    "image": "eva2-living-core:web-research-v22-20260824",
+    "imageDigest": "sha256:45112c06bb9126dd15f0d5579c6efc4618ea77ecfc6f5e0297693beca7d6912a",
+    "ready": true,
+    "postgresContainerId": "e61c6598e427c0b737634bba2019d256a3e661a124ea52b6d9221113271c7a0b",
+    "hindsightContainerId": "a1754f8fe45fc49b0a39eaf6b7230a24cef8889bd5f3edfeba28d3c26a408d93"
+  },
+  "providerProof": {
+    "kind": "OpenAI Responses built-in web_search through Eva's existing rotating B lease",
+    "officialImplementationReference": "https://developers.openai.com/api/docs/guides/tools-web-search",
+    "tool": "web_search",
+    "sourceMetadataInclude": "web_search_call.action.sources",
+    "ordinaryChatUsesWebSearch": false,
+    "researchTimeoutSeconds": 90
+  },
+  "artifact": {
+    "title": "Vergelijking open-source agentframeworks",
+    "mediaType": "text/markdown",
+    "utf8ByteLength": 6746,
+    "contentSha256": "89f3c06b16018c7d5a79ac752ea21d335fa9ece1a9c093d2392085b53418dd1a",
+    "sourceCount": 3,
+    "primarySources": [
+      "https://docs.openclaw.ai/",
+      "https://github.com/NousResearch/hermes-agent/blob/main/website/docs/user-guide/which-file-does-what.md",
+      "https://github.com/agent0ai/agent-zero"
+    ],
+    "sourceReadbackHttpStatuses": [200, 200, 200],
+    "factInferenceSeparationObserved": true,
+    "downloadPath": "/internal/v1/research/latest/download",
+    "downloadEtag": "89f3c06b16018c7d5a79ac752ea21d335fa9ece1a9c093d2392085b53418dd1a"
+  },
+  "conversation": {
+    "principalId": "lab36-t04-jaap-v21",
+    "conversationId": "lab36-t04-current-frameworks-v21",
+    "messageId": "lab36-t04-current-frameworks-v21-1",
+    "replyTextSha256": "b2df36f0a0c2ec6154337af6a0284f42c45417a7848492c451d45e8031668996",
+    "reply": "Ik heb het beslisdocument gemaakt en bewaard. Op hoofdlijnen kwam daaruit: OpenClaw scoort het sterkst op gecontroleerd geheugen, Hermes Agent op tool- en sandboxflexibiliteit, en Agent Zero op een lokale, interactieve werkplek. De bronfeiten en mijn conclusies staan daarin apart.\n\nBronnen staan erbij, onder meer https://docs.openclaw.ai/ en https://github.com/agent0ai/agent-zero."
+  },
+  "eventStore": {
+    "researchThreadId": "research:current-research:5a37cc2cfe3a0305845b73ba08e2796f",
+    "researchEvents": [
+      {
+        "sequence": 1,
+        "type": "CURRENT_RESEARCH_ADMITTED",
+        "payloadSha256": "198d077db6016f2c63afb72364a3ea5f48d9fd29e2750005abe0c9fdc4dc3650"
+      },
+      {
+        "sequence": 2,
+        "type": "CURRENT_RESEARCH_COMPLETED",
+        "payloadSha256": "8c8cb64004171e83e54d8d3d22860345ed271e307932f1e7de3e1057c5ba94d1"
+      }
+    ],
+    "conversationThreadId": "conversation:lab36-t04-current-frameworks-v21-1",
+    "conversationEventCountAfterReplay": 3,
+    "researchEventCountAfterReplay": 2
+  },
+  "restartAndReopen": {
+    "hardContainerReplacement": true,
+    "downloadAfterRestartHttpStatus": 200,
+    "downloadAfterRestartUtf8ByteLength": 6746,
+    "downloadAfterRestartSha256": "89f3c06b16018c7d5a79ac752ea21d335fa9ece1a9c093d2392085b53418dd1a",
+    "replyReplayByteIdentical": true,
+    "duplicateResearchEvents": 0,
+    "duplicateConversationEvents": 0
+  },
+  "tests": {
+    "focusedUnitAndApi": "55 passed in 4.27s",
+    "disposablePostgres": "1 passed, 12 deselected in 2.00s",
+    "ruff": "passed"
+  },
+  "source_files": {
+    "eva2/src/eva/application/research.py": "70bbd9275beaf9e3c89a52cbf87144c68589e6e8005d2480488b39bd7133c0c4",
+    "eva2/src/eva/adapters/model/conversation.py": "3fbf3eaa8479b7324611df2fd79831c021b17ca210df4a1f21daa089f2bed253",
+    "eva2/src/eva/adapters/postgres/conversation_actions.py": "793914ec23a97eb0bf0afa50de997ed9d7044291e57d311c130921b1c2a896fa",
+    "eva2/src/eva/adapters/api/app.py": "6019d58460e7c538f5675aecc6144dabc0ed61142c2bf2f931f490c74ab9d7b7",
+    "eva2/src/eva/bootstrap/runtime.py": "c0f0203952689c11f561ea90b07fc8d9edd18ddd68110238af89368a350e26ff"
+  },
+  "sourceSha256": {
+    "applicationResearch": "70bbd9275beaf9e3c89a52cbf87144c68589e6e8005d2480488b39bd7133c0c4",
+    "conversationModel": "3fbf3eaa8479b7324611df2fd79831c021b17ca210df4a1f21daa089f2bed253",
+    "conversationActions": "793914ec23a97eb0bf0afa50de997ed9d7044291e57d311c130921b1c2a896fa",
+    "api": "6019d58460e7c538f5675aecc6144dabc0ed61142c2bf2f931f490c74ab9d7b7",
+    "runtime": "c0f0203952689c11f561ea90b07fc8d9edd18ddd68110238af89368a350e26ff"
+  }
+}

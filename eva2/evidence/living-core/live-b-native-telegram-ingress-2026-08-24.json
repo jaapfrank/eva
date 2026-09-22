@@ -1,0 +1,98 @@
+{
+  "contract": "EvaLivingCoreNativeTelegramIngressGate/v1",
+  "captured_at": "2026-08-24T03:01:14Z",
+  "result": {
+    "status": "passed_with_real_telegram_provider_gate_open",
+    "trusted_sender_and_chat_binding": true,
+    "authorized_raw_ingress_durable_before_core_call": true,
+    "unknown_principal_reaches_model": false,
+    "reply_delivery_requires_provider_receipt": true,
+    "ambiguous_delivery_is_never_blindly_replayed": true,
+    "identical_processing_failure_stops_after_three_attempts": true,
+    "production_a_changed": false,
+    "real_telegram_bot_api_used": false
+  },
+  "environment": {
+    "core_container": "eva2-living-core-b",
+    "core_container_id": "d7710b0a737425749110b6cc7283a3ccac5baebf23965a795ed10ab452c6c5ee",
+    "image": "eva2-living-core:telegram-native-v17-20260824",
+    "image_sha256": "91919f2ef2beac91cc085005e1647f1eb714b0f49f5bd588897d2a35d33f3e5d",
+    "hindsight_container": "eva2-hindsight-multilingual-trusted-v2",
+    "postgres_container": "eva2-postgres-b-live",
+    "postgres_revision": "4e_0001_operational_timeline"
+  },
+  "source_files": {
+    "eva2/src/eva/application/telegram_ingress.py": "da17506f08bc2f011c37a1559e80665dbe1c68b675989e759ac4fe34d7200d35",
+    "eva2/src/eva/adapters/connectors/telegram.py": "013f9d1e47ca5428f13cb685954474a743ed6cf6c31331eb247a219c6802a38f",
+    "eva2/src/eva/adapters/postgres/telegram_ingress.py": "4c8b395c29177d44ca4e9ffc80d179b3cfeb21c96d90dea60e109631d4a71d2e",
+    "eva2/src/eva/operations/telegram_ingress.py": "47f68cd14a79056f10a3c69326f789eccb1d374a9e0c7fc5d06c0acbe26c45c5",
+    "eva2/src/eva/bootstrap/runtime.py": "def657b0c8625bc0a1449a7b0cc7167e7c738fb4dbbee05cedebaf69a61aef38",
+    "eva2/deploy/living-core/telegram-ingress.compose.yml": "032a769d55102afc5cbc3ff904a62c0973ac27f7a8bd62dd9b549b5fe104110c",
+    "eva2/deploy/living-core/telegram-principal-bindings.example.json": "5670852b3b3a3e66f7c0862358c4448306a59a5c65dc75658d3f980c905cd92c"
+  },
+  "identity_and_privacy": {
+    "binding_contract": "EvaTelegramPrincipalBindings/v1",
+    "required_binding": "telegram_user_id + allowed_chat_id -> unique principal_id",
+    "unknown_sender_disposition": "durable rejection without raw message content or model call",
+    "authorized_sender_disposition": "raw text and source hash are durably admitted before the Living Core call",
+    "runtime_scope": "The core independently rejects a differing tenant or installation before model work."
+  },
+  "crash_semantics": {
+    "before_core_reply": "The exact provider update remains unacknowledged and the core call is idempotently retried from durable ingress.",
+    "processing_poison": "Three identical failures produce needs_help and advance the polling cursor without an infinite loop.",
+    "after_reply_before_send": "The committed reply is reconstructed from PostgreSQL, then delivery is claimed.",
+    "after_send_before_receipt_commit": "The expired delivery claim becomes needs_help; the connector never guesses acceptance and never resends.",
+    "after_receipt": "The provider message ID closes the update and advances the polling offset."
+  },
+  "live_core_contract_run": {
+    "telegram_provider": "bounded local Telegram Bot API contract server",
+    "living_core": "real isolated B HTTP endpoint",
+    "model": "chatgpt-codex:gpt-5.4-mini",
+    "hindsight": "real isolated B Hindsight",
+    "postgres": "real isolated B PostgreSQL",
+    "occurred_at": "2026-08-24T03:00:50Z",
+    "input": "Ik ben nog wakker, maar het huis is eindelijk helemaal stil.",
+    "reply": "Dat klinkt als zo’n stille, heldere nacht waarin alles eindelijk even uitademt. Fijn dat het huis stil is; dat kan bijna geruststellend voelen.\n\nIk ben er.",
+    "reply_sha256": "417ad8ec539975c21b0be6101bc5ac2b6a276eb3a7b2443f5fb622c310c96737",
+    "provider_reply_to_message_id": 1701,
+    "provider_message_id": "telegram:990017:9701",
+    "provider_send_count": 1,
+    "telegram_thread_id": "telegram-inbound:8608241701",
+    "conversation_thread_id": "conversation:telegram:990017:1701"
+  },
+  "telegram_event_sequence": [
+    ["TELEGRAM_INGRESS_ADMITTED", "c78e135bbcb3bcc6b82208f7012b7ea29c449b10e4ac1b44dd72646a6cc3c3cc"],
+    ["TELEGRAM_REPLY_PREPARED", "8aae3768a3b05dceecfaaff80359e3bccfa17db7e76e3db3c4fdf098be48885e"],
+    ["TELEGRAM_DELIVERY_CLAIMED", "392ff5035b99fa9bfb5e6c77e50b7fd20838ed1e84c264d109c193b0dd08da23"],
+    ["TELEGRAM_REPLY_DELIVERED", "17932734a6427f5635826be953bc54a90c8ae29de0112d3b9901c5591f6b0d0b"]
+  ],
+  "conversation_event_sequence": [
+    ["INGRESS_COMMITTED", "0ed452b134d0cad6eebb431f933f06d9a1d8eb3c9c585fb44b5821d4a2b8ef66"],
+    ["REPLY_COMMITTED", "7cb3e6e45c36faa107346c77eb0deafd8f19fff9be2f10d0f615eff606bda9b3"],
+    ["MEMORY_RETAIN_QUEUED", "f47a4aef294697ebcc7bf957b0f9cf160068964cb1a6667cfb695c53160eb503"]
+  ],
+  "verification": {
+    "focused_tests": "38 passed in 3.93s",
+    "telegram_unit_and_contract_tests": "6 passed in 1.55s",
+    "disposable_postgres_crash_tests": "3 passed in 1.60s",
+    "ruff": "all selected files passed",
+    "compose_config": "passed",
+    "core_health_sha256": "bc24b0b5a305d5afc198c725890c8fb91053be2dbd8672779de73cac19a008fa",
+    "core_ready_sha256": "0e12aa0cec70713211dfe1829911bd2ad4538e8f37dbeb1830ee79650460dcd2",
+    "memory_outbox_completed": 23,
+    "memory_outbox_open": 0,
+    "production_a_service": "active"
+  },
+  "deployment": {
+    "profile": "telegram-native",
+    "enabled": false,
+    "reason": "A distinct Eva 2 bot token and owner-reviewed principal-binding secret are required; sharing Eva A's long-poll token would create competing consumers.",
+    "promotion_or_traffic_change": false
+  },
+  "non_claims": [
+    "The current gate exercised the real model, Hindsight, PostgreSQL and current B image, but used a local Telegram Bot API contract server for transport.",
+    "No genuine Telegram update or Telegram provider receipt has reached the B-native connector yet.",
+    "The opt-in polling profile is implemented and compose-valid but is not running without a distinct Eva 2 token and reviewed identity bindings.",
+    "No production-A code, service, traffic, bot token or memory was changed."
+  ]
+}

@@ -4,7 +4,7 @@ import {optionalOptions} from './scope-decisions.mjs';
 const groups = {
   'answer-stream': ['Antwoordvorming en volledig antwoord via Telegram', ['CO-001', 'CO-007']],
   conversation: ['Gewone gesprekken, eigenheid en gezinscontinuïteit', ['RT-001', 'CO-007', 'UP-001', 'CP-000', 'EV-001', 'EV-002', 'EV-003', 'CP-001', 'CP-002', 'CP-003']],
-  memory: ['Zelf onthouden, bijwerken en gebruiken per persoon', ['CO-006', 'CO-008', 'CO-004', 'CO-005']],
+  memory: ['Gekozen geheugenfuncties: onthouden, bijwerken, inzien en vergeten', ['CO-006', 'CO-008', 'CO-004', 'CO-005']],
   initiative: ['Zelf kiezen, uitvoeren en gewaardeerd bijdragen', ['AU-007', 'AU-008', 'AU-005']],
   tools: ['Onbekende diensten en combinatietaken afmaken', ['TL-001', 'TL-002', 'AU-001', 'TL-003']],
   voice: ['Doorlopend gesprek op laptop, telefoon en thuis', ['VB-001', 'VB-002']],
@@ -15,7 +15,7 @@ const groups = {
 const scopeSource = 'eva2/PROJECTDOEL.md · audit.projectDashboard.capabilities';
 const requirements = {
   'answer-stream': ['Zichtbare Telegramstream door Jaap bevestigen'],
-  conversation: ['Gezinsbeoordeling van warmte en eigen oordeel', 'Langdurige gesprekscontinuïteit en persoonsgrenzen aantonen'],
+  conversation: ['Privégesprek: warmte, eigen oordeel en samenhang door Jaap beoordelen', 'Gezinsgebruik, langdurige gesprekscontinuïteit en persoonsgrenzen aantonen'],
   memory: ['Langetermijn- en gezinskwaliteit van het automatische geheugen aantonen'],
   initiative: ['Nut, timing en hinder van herhaalde bijdragen door het gezin beoordelen'],
   tools: ['Onbekende dienst zonder ontwikkelhulp aansluiten en opdracht afmaken', 'Persoonlijke aanmeldingen en bredere combinatietaken bewijzen'],
@@ -24,6 +24,7 @@ const requirements = {
   browser: ['Gewone opdracht via Eva voert een omkeerbare taak uit in het expliciet gedeelde bestaande Chrome-tabblad', 'Jaap blijft meekijken in hetzelfde Chrome-tabblad terwijl Eva bedient', 'Overnemen blokkeert nieuwe acties en stopt een reeds lopende Eva-actie', 'Alleen expliciet teruggeven hervat met een nieuwe paginawaarneming; oude acties blijven ongeldig', 'Intrekken of wegvallen van de verbinding blokkeert Eva zichtbaar', 'Jaap beoordeelt de werkende Chrome-route; acceptatie blijft afzonderlijk'],
   installation: [],
 };
+const scopeTrials = {'answer-stream-scope-0': 'TG-01', 'conversation-scope-0': 'GS-01', 'conversation-scope-1': 'GS-02'};
 const optional = new Set(Object.keys(optionalOptions));
 const stateLabel = status => ({done:'Klaar binnen kaartscope', in_progress:'In uitvoering', paused:'Gepauzeerd', blocked:'Geblokkeerd', queued:'Open', review:'In review', ready_for_review:'In review'}[status] || status || 'Open');
 
@@ -57,7 +58,13 @@ export function applyProductCompletion(project, board) {
       steps.push({id:'memory-selected-delivery',title:'Bewijs voor de gekozen geheugenoplevering afronden',required:true,complete:memoryInventory.status==='completed',status:memoryInventory.status==='completed' ? 'Afgerond' : 'Bewijsafbakening in voorbereiding',detail:memoryInventory.next,source:'audit.memoryComponentDecision20260911',criteria:[]});
     }
     for (const [index, title] of (memoryInventory?.requiredEvidenceInventory ? [] : requirements[row.id]).entries()) {
-      steps.push({id:`${row.id}-scope-${index}`, title, required:true, complete:false, status:'Nog niet bewezen', detail:row.gap, source:scopeSource, criteria:[]});
+      const id = `${row.id}-scope-${index}`;
+      const trial = project.practiceTests?.find(item => scopeTrials[id] && item.id === scopeTrials[id]);
+      const accepted = trial?.status === 'accepted' && trial.ownerAccepted === true;
+      steps.push({id, title, required:true, complete:accepted, accepted,
+        status:accepted ? 'Door Jaap geaccepteerd' : 'Nog niet bewezen',
+        detail:accepted ? trial.result : row.gap,
+        source:accepted ? trial.acceptanceEvidence : scopeSource, criteria:[]});
     }
     if (row.id === 'voice') for (const test of project.practiceTests.filter(item => item.id.startsWith('SP-'))) {
       steps.push({id:test.id,title:test.title,required:true,complete:test.status === 'accepted',accepted:test.status === 'accepted',status:test.status === 'accepted' ? 'Door Jaap geslaagd' : 'Open',detail:test.result || test.change,source:'audit.projectDashboard.practiceTests',criteria:test.steps || []});
@@ -90,6 +97,9 @@ export function applyProductCompletion(project, board) {
       jaap:{state:failed ? 'failed' : acceptedSteps.length ? 'partial_passed' : row.accepted === 'partial' ? 'partial' : 'unknown',label:failed ? (row.id === 'projects' ? 'Telegram mislukt' : row.id === 'voice' ? 'Wakeword mislukt' : 'Kijkproef mislukt') : acceptedSteps.length ? 'Deelproef geslaagd' : row.accepted === 'partial' ? 'Beperkt beoordeeld' : 'Ongetest / geen bewijs',detail:failed ? `${row.id === 'projects' ? 'Telegramproef 11 sep 09:40: hulpagent geweigerd. Dashboard-HTTP-proef blijft bewezen.' : row.id === 'browser' ? 'Kijkverbinding mislukte; losse Chrome-proef wel gelukt.' : 'Onterechte wakeword-activering nog niet opgelost; SP-01 en SP-02 blijven geaccepteerd.'}` : acceptedSteps.map(step => step.id).join(', ') || row.gap},
       comparison:{state:'unknown',label:row.id === 'conversation' ? 'Beperkt · onbekend' : 'Niet vergeleken',detail:row.id === 'conversation' ? 'EV-002: één casus, Eva en Hermes voldoen aan dezelfde drie criteria; twee deelnemers geblokkeerd. Geen representatieve rangorde. Brononderzoek UP-001 bewijst geen concurrentiewinst.' : 'Geen representatieve vergelijking met uitkomst beter, even of slechter vastgelegd. CP-001/002/003 blijven aparte werkkaarten.'},
     };
+    if (!failed && row.product.complete && row.accepted === 'yes') {
+      row.product.jaap = {state:'passed', label:'Geaccepteerd', detail:row.gap};
+    }
   }
   if (memoryAcceptance) project.capabilities.find(row => row.id === 'memory').product.jaap = memoryAcceptance;
   const feedback = board.audit?.voiceLaptopOwnerFeedback20260911;

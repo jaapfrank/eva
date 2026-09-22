@@ -1,0 +1,32 @@
+{
+  "candidate": {
+    "core_container": "eva2-living-core-b",
+    "core_health_sha256": "bc24b0b5a305d5afc198c725890c8fb91053be2dbd8672779de73cac19a008fa",
+    "core_ready_sha256": "0e12aa0cec70713211dfe1829911bd2ad4538e8f37dbeb1830ee79650460dcd2",
+    "evidence_path": "eva2/evidence/living-core/live-b-localtuya-repository-registration-v40-2026-08-24.json",
+    "evidence_sha256": "d0d563e48625c6905bb1ead45c273ffce8eb728cb412048f3e154adbb643649d",
+    "hindsight_container": "eva2-hindsight-multilingual-trusted-v2",
+    "hindsight_health_sha256": "b515c2727ddd9c06402f0613a0016ae9d92bfc560369a8af8a8737319012cbd3",
+    "hindsight_lease_publisher": "eva2-hindsight-access-lease-b",
+    "image_sha256": "8c86c8fe1b197dd2bf7bdd734ae26fa3823acaa772921734f9d68a9dde155611",
+    "memory_outbox_completed": 86,
+    "memory_outbox_open": 0,
+    "model_authority": "single_writer_refresh_owner_access_lease_only",
+    "model_lease_publisher": "eva2-model-access-lease-b",
+    "postgres_container": "eva2-postgres-b-live",
+    "schema_revision": "4e_0001_operational_timeline"
+  },
+  "checked_at": "2026-08-24T06:17:00Z",
+  "contract": "EvaLivingBCandidatePreflight/v1",
+  "production_a": {
+    "health_sha256": "6506373c77d98e07ffdba91092e1fa364c32aa745d07d4dd758db8fe83f490f4",
+    "service": "eva.service",
+    "status": "active"
+  },
+  "promotion": {
+    "approved": false,
+    "status": "isolated_b_candidate_only",
+    "traffic_changed": false
+  },
+  "status": "passed"
+}

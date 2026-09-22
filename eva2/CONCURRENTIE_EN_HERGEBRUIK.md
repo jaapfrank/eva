@@ -1,5 +1,10 @@
 # Eva 2 tegenover OpenClaw, Hermes, Agent Zero en OpenBot
 
+> Voor actuele releases en basiskeuze geldt de [herbeoordeling van
+> 21 september 2026](HERBEOORDELING_2026-09-21.md). Vergelijkingen hieronder
+> blijven historisch en bewijzen geen actuele algemene voorsprong. Het bestaande
+> EV-003-protocol blijft vereist vóór zo'n claim.
+
 Bijgewerkt: 26 augustus 2026.
 
 ## Het korte antwoord

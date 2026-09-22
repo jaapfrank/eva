@@ -1,0 +1,29 @@
+{
+  "contract": "EvaSignedABOperatorGateReceipt/v1",
+  "recorded_at": "2026-08-23T17:30:00Z",
+  "result": "passed",
+  "source_files": {
+    "eva2/src/eva/operations/ab_slots.py": "0db52fa0e07672455d50cad9206900f006a95fc9342008281ab3d0a3ded207a1",
+    "eva2/src/eva/operations/cli.py": "f2873486f8e75a2197fb8d4e2f317fa7c76c9276959cd8ee21df5fa95511b620",
+    "eva2/src/eva/operations/release_verifier.py": "0b500a713e4c551f5dc12079c65c36f8451338ec44415116d112c930c72b3d8b",
+    "eva2/tests/operations/test_ab_slots.py": "d655c86ca609025170cf83d90864b8abc27b8b38b054e8894a49d6a07411103d",
+    "eva2/tests/operations/test_operator_cli.py": "8b7a1c872d2621fb803fb9034ec89bcfc31e1f1699ef34856b04c5723591a56a",
+    "eva2/tests/operations/test_release_verifier.py": "9fbc331886425fa82cd11d51987d7810eb0eafe8c2a5d23c918068084d360f1e"
+  },
+  "gate": {
+    "command": "PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=eva2/src:eva2 PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 python3 -m pytest -q --capture=sys -p no:cacheprovider eva2/tests/operations/test_operator_cli.py eva2/tests/operations/test_ab_slots.py eva2/tests/operations/test_release_verifier.py",
+    "result": "9 passed in 4.14s"
+  },
+  "proved": [
+    "The operator CLI initializes a private canonical installation state.",
+    "A canonical release manifest is staged only after a valid Ed25519 trust-root threshold, validity interval, revocation and schema-compatibility check.",
+    "Activation leaves traffic closed and opening traffic requires a separate revision-bound command.",
+    "A tampered image digest fails signature verification and leaves the target slot empty at the original revision.",
+    "Cutover and rollback preserve one explicit database lineage."
+  ],
+  "nonclaims": [
+    "The gate uses an ephemeral test signing key and does not create a production release key.",
+    "The gate does not promote the current B candidate or change Telegram traffic.",
+    "A production activation receipt still requires independent live health and acceptance evidence."
+  ]
+}

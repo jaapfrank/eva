@@ -1,5 +1,21 @@
 # LiveKit-spraaksessie voor Eva
 
+## Actuele lokale toegang en kanaalgrens — 22 september 2026
+
+Op deze lokale installatie: open http://localhost:44716, ververs een eerder
+geopende pagina en kies **Begin gesprek**. Geen dashboardtoken kopiëren.
+De microfoon opent pas na die klik en browsertoestemming.
+`local_browser_access: true` is alleen voor directe loopbacktoegang met passende
+Host/Origin; de bestaande servercredentials, grant en intrekking blijven gelden.
+Proxy-/HA-toegang krijgt hiermee geen nieuwe rechten. De oudere tokeninstructie
+hieronder geldt alleen voor toegang zonder deze lokale instelling.
+
+Voice PE gebruikt momenteel de gewone HA-gespreksroute, die op het volledige
+antwoord wacht. De LiveKit-ontvangstzin SP-06 is daar niet opgeleverd. Het HA-paneel
+*Praten met Eva* gebruikt wel LiveKit, maar is geen Voice PE-apparaatproef.
+Gelijk gedrag via alle kanalen is een expliciete open eigenaarseis; daarvoor
+wordt de bestaande gezamenlijke kern gebruikt, geen extra kanaalscriptjes.
+
 Deze optionele dienst verzorgt uitsluitend audio en beurtwisseling. Iedere inhoudelijke beurt gaat naar dezelfde geauthenticeerde Eva-kern; geheugen, tools en eigenaarmandaat blijven daar. Home Assistant Cloud verzorgt de bestaande Nederlandse STT/TTS. Er is geen tweede taalmodel.
 
 ## Bouw en herkomst
@@ -53,3 +69,26 @@ stopopdracht gegeven; controleer het resultaat via het bestaande dashboard.
 `eva.voice_service` is een buitenste transportpakket. CoreClient spreekt met de kern via HTTP; de service importeert geen bootstrap, applicatielogica, modeladapter of PostgreSQL-opslag. De enige lokale uitzondering is de bestaande `eva.adapters.connectors.home_assistant_voice` voor STT/TTS-transport. Extern zijn aiohttp, FastAPI, HTTPX en LiveKit toegestaan; exacte bestaande pins staan in requirements.lock. De packagechecker staat LiveKit als bibliotheek toe en controleert geen afzonderlijke pluginkeuze binnen dat pakket.
 
 De bestaande packagepolicy en componentcatalogus registreren deze grens. Negatieve fixtures controleren directe, relatieve en dynamische imports die de kern of opslag proberen te bereiken, plus directe model-/databasebibliotheken. Dit is bronbeleid, geen nieuwe runtimefunctie, onderhoudsscan of bewijs van hoorbare kwaliteit.
+
+## Begrensde ontvangstcorrectie 22 september 2026
+
+De bestaande ontvangstzin ondersteunt nu ook expliciete opdrachten zoals
+“Zou je willen uitzoeken…” en “Zou je voor mij even kunnen onderzoeken…”.
+Zij volgt pas na geauthenticeerde HTTP-acceptatie. Gewone kennisvragen en
+stopverzoeken krijgen geen standaard ontvangstzin; “niet doen” onderdrukt die
+ook. Dit is beperkte formuleringherkenning, geen algemene intentieherkenner.
+
+De stemdienst is bijgewerkt; kern en LiveKit bleven draaien. Bronreview, gerichte
+regressies, kandidaatimage en live bron/readiness zijn gecontroleerd. Hoorbare
+ervaring via de eigen microfoon blijft een menselijke proef.
+
+Probeer via de bestaande laptoproute of *Praten met Eva*: “Zou je willen uitzoeken
+wat Home Assistant Cloud doet voor spraak?” Verwacht eerst “Ik kijk er even voor
+je naar”, daarna het gewone onderzoeksantwoord. De ontvangstzin claimt geen
+voltooide taak. Bestaande onderbreek- en stopfuncties blijven dezelfde.
+
+[Versieherkomst, controle en terugweg](../../evidence/product/voice-polite-work-receipt-2026-09-22.json).
+De vorige stemimage en de private runtime.env.before-receipt-20260922 zijn bewaard.
+Herstel die configuratie en recreëer uitsluitend de Compose-service media met
+project eva2-owner-voice; controleer daarna de geauthenticeerde /session/ready.
+Er is geen productieterugrol uitgelokt om een testvink te verkrijgen.

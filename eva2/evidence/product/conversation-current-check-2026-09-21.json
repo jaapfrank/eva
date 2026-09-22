@@ -1,0 +1,111 @@
+{
+  "date": "2026-09-21",
+  "scope": "Bestaande privegesprekroute: samenhang, correctie en eigen onderbouwd advies in drie fictieve beurten. Geen gezinsacceptatie of concurrentievergelijking.",
+  "status": "technical_probe_passed",
+  "criteria": [
+    "Geeft een concrete eigen keuze met reden binnen de genoemde tijd.",
+    "Verwerkt een gewijzigde tijd en afkeer in het vervolg zonder oude advies blind te herhalen.",
+    "Beantwoordt een verwijzende vervolgvraag vanuit hetzelfde gesprek zonder verzonnen uitgevoerde acties."
+  ],
+  "prompts": [
+    "Dit is een fictieve gesprekproef, geen echte gezinsinformatie. We hebben in dit scenario 45 minuten voordat we weg moeten. Iedereen is moe, de keuken is rommelig en ik wil eigenlijk nog een uitgebreid spel spelen. Wat zou jij kiezen en waarom? Geef je eigen praktische oordeel in maximaal 80 woorden. Alleen advies; niets uitvoeren of opzoeken.",
+    "In hetzelfde fictieve scenario blijkt er maar 10 minuten te zijn, en opruimen geeft nu juist ruzie. Pas je advies daarop aan. Maximaal 60 woorden; alleen advies.",
+    "Waarom past jouw laatste voorstel beter dan mijn oorspronkelijke idee? Houd het bij maximaal 50 woorden; alleen advies."
+  ],
+  "maxRequests": 3,
+  "ownerAccepted": false,
+  "modelCost": "Nog onbekend; bestaande modeltoegang, geen nieuwe betaalroute.",
+  "results": [
+    {
+      "seconds": 12.3,
+      "response": {
+        "contract": "EvaDashboardGroundedReply/v1",
+        "conversation_id": "dashboard:44444444-4444-4444-8444-444444444444",
+        "evidence_memory_ids": [
+          "hindsight:0414f5e1-6a90-4d32-a2c9-a44746e6e5ae",
+          "hindsight:3d8ae442-0b3d-4948-a1ea-e5d80107d530",
+          "hindsight:8c7ed67a-7a5c-4da0-b576-86bc16f2bb06",
+          "hindsight:521693eb-d94f-41d3-88de-bf1765f4918a",
+          "hindsight:5198480e-b6e9-4be4-b352-08a27b0a7fad",
+          "hindsight:c44603da-d32c-48ae-a261-f5528a39587c",
+          "hindsight:cec33d2d-34ab-4e61-ab92-ea51d0620f68",
+          "hindsight:2250463a-f73f-4abb-8447-b0712c5fac9c",
+          "hindsight:6b136279-3fee-4f33-9bd3-de990858002f",
+          "hindsight:fe0aa304-a365-4099-a448-a732160b027a",
+          "hindsight:41a52e31-a721-4c49-86c4-faa7bb75b3ea"
+        ],
+        "generated_at": "2026-09-21T11:17:01Z",
+        "message_id": "dashboard:1d642469-8d43-4169-9c57-aca7e8ab19d4",
+        "provider": "chatgpt-codex:gpt-6-astra",
+        "text": "Ik zou het uitgebreide spel bewaren voor een rustiger moment. Met 45 minuten, vermoeidheid en een rommelige keuken wordt dat waarschijnlijk meer haasten dan ontspannen.\n\nMijn keuze: tien minuten samen alleen het hoognodige opruimen, daarna hooguit tien minuten een simpel spelletje zonder voorbereiding. De rest houden we vrij voor spullen pakken en rustig vertrekken. Zo is er wel iets gezelligs, zonder dat ontspanning nóg een taak wordt die af moet.",
+        "text_sha256": "252d3908651eba21ca72937ff47ef16035cb77c24de3db8a7a84510928f0a30e"
+      },
+      "cleanup": {
+        "contract": "EvaDashboardConversationErasure/v1",
+        "disposition": "erased",
+        "message_sha256": "58d144162452e05683e9e887d3464b44480c36b5c930d12bb515d8acceb32087"
+      }
+    },
+    {
+      "seconds": 7.9,
+      "response": {
+        "contract": "EvaDashboardGroundedReply/v1",
+        "conversation_id": "dashboard:44444444-4444-4444-8444-444444444444",
+        "evidence_memory_ids": [
+          "hindsight:48da6c9c-586a-44ac-8c96-714ef2f42636",
+          "hindsight:088760db-a6e6-4f7d-8739-3b2b5764594a",
+          "hindsight:cc42b494-31ba-4d14-a1e2-c993f398da47",
+          "hindsight:41a52e31-a721-4c49-86c4-faa7bb75b3ea"
+        ],
+        "generated_at": "2026-09-21T11:17:14Z",
+        "message_id": "dashboard:d1c2fd65-3874-4a97-bacd-49777c42c8ec",
+        "provider": "chatgpt-codex:gpt-6-astra",
+        "text": "Dan zou ik zowel opruimen als het spel laten zitten. Met tien minuten over kies ik voor zo min mogelijk gedoe: alleen noodzakelijke spullen pakken en klaarstaan om te vertrekken. Wie klaar is, kan even rustig zitten. De keuken kan wachten; nu samen opruimen kost meer rust dan het oplevert.",
+        "text_sha256": "b0e1a2056c5fc5f125381f80baab1aa14bc367a26feb82c93c38db4690b5edb6"
+      },
+      "cleanup": {
+        "contract": "EvaDashboardConversationErasure/v1",
+        "disposition": "erased",
+        "message_sha256": "68ea0b93bc57439bff731b61c7d3ba2d25194e0c722ac1f54859ed3a6c97cb71"
+      }
+    },
+    {
+      "seconds": 8.96,
+      "response": {
+        "contract": "EvaDashboardGroundedReply/v1",
+        "conversation_id": "dashboard:44444444-4444-4444-8444-444444444444",
+        "evidence_memory_ids": [
+          "hindsight:a48cc5d3-936d-4457-80f7-1dec02cc27eb"
+        ],
+        "generated_at": "2026-09-21T11:17:22Z",
+        "message_id": "dashboard:92ce4c00-cfaa-4561-a3ba-b7267ec58f6b",
+        "provider": "chatgpt-codex:gpt-6-astra",
+        "text": "Met maar tien minuten en iedereen moe geeft een uitgebreid spel vooral tijdsdruk en kans op frustratie. Alleen noodzakelijke spullen pakken houdt het vertrek haalbaar. Opruimen overslaan voorkomt nu extra ruzie. Bewaar het spel voor een moment waarop er genoeg tijd en energie is om ervan te genieten.",
+        "text_sha256": "9ffc4007e9298004d1762fec674d7fed68872511a3b1bd80b19d91a484929e75"
+      },
+      "cleanup": {
+        "errorType": "HTTPError"
+      },
+      "cleanupRetryAfterBackground": {
+        "contract": "EvaDashboardConversationErasure/v1",
+        "disposition": "erased",
+        "message_sha256": "857aae90f295fbe2341649c52c016df9c38e8cb1eac2af6df51c9629fc44d65f"
+      }
+    }
+  ],
+  "image": "sha256:10f182bb1e03635ad4ed99f36209c365ae23857ac77b0ee7a4bafdc0e9ef9374",
+  "assessment": {
+    "ownPracticalJudgment": true,
+    "correctedConstraintUsed": true,
+    "referentialFollowupUnderstood": true,
+    "inventedCompletedActionsObserved": false
+  },
+  "limitations": [
+    "Drie fictieve beurten via de bestaande eigenaar-HTTP-route; geen nieuwe Telegram- of fysieke spraakproef.",
+    "Menselijk oordeel over warmte en natuurlijkheid blijft open.",
+    "Geen herstart, andere persoon of meerdaags gezinsgebruik in deze proef.",
+    "Drie HTTP-beurten gemeten; intern modelgebruik en geldkosten niet gemeten.",
+    "Alle drie verwijderverzoeken bevestigd; de laatste pas na een tweede verzoek na achtergrondverwerking. Geen claim van afzonderlijk gecontroleerde fysieke geheugenwissing."
+  ],
+  "sourceReview": "Onafhankelijke scope-review conversation_scope_review, 21 september."
+}

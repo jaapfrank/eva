@@ -1,0 +1,56 @@
+{
+  "checkedOn": "2026-09-21",
+  "trigger": "Owner screenshot: ordinary Telegram question produces Eva2 kon haar antwoord niet veilig afronden.",
+  "cause": "ProcedureReferenceActions.pending unconditionally required owner mandate before checking whether any procedure action existed.",
+  "change": "Out-of-scope identity gets no procedure journal access and no pending action. For in-scope empty slots no execution authorization is needed; existing actions retain current authority checks.",
+  "tests": {
+    "provider_regressions": "7 passed",
+    "postgres_host_integration": "1 passed, runtime libraries and disposable PostgreSQL16.13; includes ordinary other-person conversation, procedure readback and revocation",
+    "setup_failures": "Initial host lacked pydantic_ai; first container test setup lacked pygments. No production dependencies changed."
+  },
+  "independentReview": "telegram_pending_review: source and bounded deployment GO; no duplicate test execution",
+  "live": {
+    "installed": true,
+    "source_sha256": "8975bf76dc24ae2daa6a25a75fc2362ce82ff2e880ad0b097b373e1eb2a9d85c",
+    "image": "sha256:10f182bb1e03635ad4ed99f36209c365ae23857ac77b0ee7a4bafdc0e9ef9374",
+    "parent_image": "sha256:e66fff7d16a8cc0cc5100282c8f7d3faf95cc16269e6de9f6a4ba9b7038e8c90",
+    "core_healthy": true,
+    "protected_containers_unchanged": 266,
+    "model_authentication": "ready_after_owner_relogin",
+    "owner_acceptance": false,
+    "rollback_parent_restored_and_verified": true,
+    "guard_correction": "Docker empty DNS lists and null are normalized; all other config equality preserved"
+  },
+  "blocker": {
+    "type": "model_authentication_rejected",
+    "existing_credential_check_http": 401,
+    "existing_owner_refresh_http": 401,
+    "login_flow_started": true,
+    "owner_login_required": false,
+    "resolved": true
+  },
+  "modelCallsForVerification": 0,
+  "ownerAccepted": true,
+  "remaining": "Antwoordstream afgesloten binnen de afgesproken gebruikersproef. Gesprekken volgt afzonderlijk.",
+  "retention": {
+    "owner": "current coordinator",
+    "path": "/home/administrator/project/.eva2-artifacts/telegram-pending-repair-20260921",
+    "purpose": "Exact repair image inputs, private deployment baseline, activation and verified rollback evidence",
+    "cleanup": "After successor deployment no longer requires this rollback baseline; retain sanitized evidence in repository."
+  },
+  "authenticationRecovery": {
+    "checkedAt": "2026-09-21T10:35:52.135354+00:00",
+    "ownerReportedRelogin": true,
+    "runtimeHealthHttpStatus": 200,
+    "runtimeReadinessHttpStatus": 200,
+    "runtimeModelProvider": "ready",
+    "modelAccountHttpStatus": 200,
+    "modelCallsForCheck": 0
+  },
+  "ownerAcceptance": {
+    "reportedOn": "2026-09-21",
+    "reportedText": "Ik heb de nieuwe vraag gesteld en streaming werkt",
+    "scope": "Antwoordstream via de bestaande Telegramroute",
+    "basis": "Explicit owner report after retry; no claim of independent message-content readback."
+  }
+}

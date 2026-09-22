@@ -1,0 +1,154 @@
+{
+  "contract": "EvaLivingCoreNativeEvidence/v1",
+  "caseId": "M01",
+  "scenario": "trusted-telegram-preference-recalled-through-web",
+  "status": "passed_live_b",
+  "observedAt": "2026-08-24T08:03:41Z",
+  "productionAChanged": false,
+  "environment": {
+    "core_container": "eva2-living-core-b",
+    "core_container_id": "92ee61cc10e5dc9dea55eff784b445baaafa8cc9f148db861d9af5412d611125",
+    "image": "eva2-living-core:cross-channel-v53-20260824",
+    "image_sha256": "56af05cbb6bc959301f52408c971bddc054952786dfe2528a751187e0c0c4b39",
+    "postgres_container": "eva2-postgres-b-live",
+    "hindsight_container": "eva2-hindsight-multilingual-trusted-v2",
+    "telegram_provider": "isolated local Bot API contract endpoint",
+    "telegram_provider_container_id": "592189dc8421de8c8e35417e431869cd38200b59c39f4604ec572dfb40f155ec"
+  },
+  "trustedIdentityBinding": {
+    "contract": "EvaTelegramPrincipalBindings/v1",
+    "canonical_sha256": "7c0cc2cb478fe301126ce8463500c0ffcfadaf689d068ffb31630c652d13071d",
+    "bindings": [
+      {
+        "telegram_user_id": 910000401,
+        "allowed_chat_ids": ["910000401"],
+        "principal_id": "lab36-m01-person-a"
+      },
+      {
+        "telegram_user_id": 910000402,
+        "allowed_chat_ids": ["910000402"],
+        "principal_id": "lab36-m01-person-b"
+      }
+    ],
+    "boundary": "The native Telegram worker resolved exact sender plus allowed chat to a principal before raw ingress or core contact; the web turn supplied that same internal principal through its authenticated channel boundary."
+  },
+  "crossChannelTranscripts": {
+    "telegram_person_a": {
+      "update_id": 8608243001,
+      "message_id": 401,
+      "occurred_at": "2026-08-24T07:53:00Z",
+      "input": "Voor statusupdates heb ik het liefst één korte alinea zonder opsomming.",
+      "input_sha256": "78d485e37b1d39279a2731862854ef7e0d7917a79eec0489767a07a554c438f1",
+      "reply": "Helder, ik houd statusupdates voortaan compact in één korte alinea zonder opsomming.",
+      "provider_receipt": "telegram:910000401:990001"
+    },
+    "telegram_unrelated_person_b": {
+      "update_id": 8608243002,
+      "message_id": 402,
+      "occurred_at": "2026-08-24T07:53:01Z",
+      "input": "Voor statusupdates wil ik juist een uitgebreide genummerde lijst.",
+      "input_sha256": "4358dd8bf5980aae05b09628597e198094eba1f6a558ecf6dc40340bda123ed0",
+      "provider_receipt": "telegram:910000402:990002"
+    },
+    "web_person_a": {
+      "conversation_id": "web:lab36-m01-person-a",
+      "message_id": "web-m01-a-080100",
+      "occurred_at": "2026-08-24T08:01:00Z",
+      "input": "Ik zit nu achter de webinterface. Als je me straks een voortgangsbericht geeft, hoe wil ik dat dan ook alweer hebben?",
+      "reply": "Kort en direct: liefst één korte alinea, zonder opsomming. Bij voortgangsberichten dus gewoon even de kern, nuchter en compact.",
+      "reply_sha256": "70180394d07d889982281b5bb0bd9e5b4a00af3be6ae5e58b07245158473685c",
+      "asked_user_to_repeat_preference": false,
+      "foreign_preference_present": false
+    },
+    "hidden_web_paraphrase_person_a": {
+      "conversation_id": "web:lab36-m01-person-a-hidden",
+      "message_id": "web-m01-a-hidden-080230",
+      "occurred_at": "2026-08-24T08:02:30Z",
+      "input": "Wanneer je me hier online bijpraat over hoe het project ervoor staat, welke vorm past dan bij mij?",
+      "reply": "Ik denk dat jij het best iets korts en strak helders past: eerst in één zin de stand van zaken, dan heel concreet wat af is, wat nog schuurt, en wat de eerstvolgende stap is. Online liever geen lang verhaal; liever een compacte update met alleen de kern. Als er keuzes of risico’s zijn, noem ik die direct onderaan, zodat je meteen ziet waar het spannend wordt. Dat voelt voor mij als de vorm die jou het meest helpt: snel overzicht, weinig ruis, wel eerlijk.",
+      "reply_sha256": "15930fe71c74044dd43230a1d57019d2ef8cd66145d0364db852ac83a15747bf",
+      "uses_person_a_preference": true,
+      "foreign_preference_present": false
+    }
+  },
+  "memoryReadLedger": {
+    "recall_id": "recall:web:m01-a-isolation-0803",
+    "principal_id": "lab36-m01-person-a",
+    "scope_sha256": "d12b2524e04442c2d492e2816035c5ecec7465c63a0ec2d844e6bb44d088c5d3",
+    "selected_memory_ids": ["hindsight:ad900b4b-5862-48a7-9fef-30c9144ffa14"],
+    "selected_subjects": ["lab36-m01-person-a"],
+    "selected_text": "Gebruiker heeft voor statusupdates het liefst één korte alinea zonder opsomming.",
+    "source_event_ids": ["telegram:910000401:401"],
+    "trust": "confirmed_direct_user",
+    "foreign_person_b_memory_count": 0,
+    "foreign_text_present": false
+  },
+  "durableLedger": {
+    "telegram_person_a": [
+      [1, "TELEGRAM_INGRESS_ADMITTED", "4ebdeb777b46205b4c46752f8a71041471d09944befc33cc2d17643aff69a527"],
+      [2, "TELEGRAM_REPLY_PREPARED", "c55fafc8da9367459e659f931df6136f9c52be9b07ff32a605f6f6aa3ad1e6e0"],
+      [3, "TELEGRAM_DELIVERY_CLAIMED", "7809fa6b0d5a6249ee1fe3b851381e010bf063570495b21623d1fa6ac13a70bd"],
+      [4, "TELEGRAM_REPLY_DELIVERED", "f4435c506e14b1c15731f75147f5b94b7de5a07dcf31cf5e71d5860f10a777c2"]
+    ],
+    "telegram_person_b": [
+      [1, "TELEGRAM_INGRESS_ADMITTED", "15ce327c9ddf6dd6b1847d33465787e86c2b0de8654e4046ac7f49955048f269"],
+      [2, "TELEGRAM_REPLY_PREPARED", "1c1edda16eb0bddbb9b19d640ea09c7d65e692b39b4be72ead55ec0a50e60b52"],
+      [3, "TELEGRAM_DELIVERY_CLAIMED", "3e5950f535ccaf4448e3ce463366b87e6a54cb1b0c7ecfb60ea4fecb6f94b831"],
+      [4, "TELEGRAM_REPLY_DELIVERED", "399bc3ecb6bd088a218af4a52e05720728b61ab2dc73fefeae654ec7e965a962"]
+    ],
+    "web_person_a": [
+      [1, "INGRESS_COMMITTED", "d499418248720e7c445ce609742b0aa16a89d3ed39bade4f432ed893078c05d6"],
+      [2, "REPLY_COMMITTED", "cd3a5b4803d06ca9ac1318288c9488463bfdd3702a1a23a396b218ebb73e65a6"],
+      [3, "MEMORY_RETAIN_QUEUED", "45214f59d464c82644ff5b1094ef43fcaf464bccd5fbe61fc0f8ba3a4bd1d657"]
+    ],
+    "web_hidden_person_a": [
+      [1, "INGRESS_COMMITTED", "98d7f622fe6d5fd146739bdb33c468e6e450825636b9e497e6b9a6aa60bf8209"],
+      [2, "REPLY_COMMITTED", "b13cc1ab50e0ea5283345988b62111bb34e7936279f0e0b6f3c1d444df20ed6c"],
+      [3, "MEMORY_RETAIN_QUEUED", "3eabfbf45f9a9eacee30c535edac8176b6c13e7201563500348e33025d1b69de"]
+    ]
+  },
+  "memoryRetention": {
+    "person_a_thread": "memory-retain:d9f472337ebcecca52f79cb1307b3fd8be33f65f4f29b76e0dc7f1748dfb8cab",
+    "person_a_events": [
+      [1, "MEMORY_RETAIN_QUEUED", "aa23fea5c11e4c9fafe82628e3cd5ef7519fc77dccbb3e2e15e316a516cf8dd7"],
+      [2, "MEMORY_RETAIN_ATTEMPTED", "1aebfca2b77db5bf06e09835d4092082bdf0ace6c7e478fbea924032ab80742f"],
+      [3, "MEMORY_RETAIN_SUCCEEDED", "05bf69f98c846617b1293f1a0258fa2b8cb27d78168501137e3d0d8a59e72970"]
+    ],
+    "person_b_thread": "memory-retain:34534857cc43c9c79017d50774ae66114799e995c51088c628b89a4fb95013ad",
+    "person_b_events": [
+      [1, "MEMORY_RETAIN_QUEUED", "68f8be460eb5bcd0f8a39318364c8288c7d166a91d73a4b05466ce3e82a7c236"],
+      [2, "MEMORY_RETAIN_ATTEMPTED", "8685d07ed1be6fe891868213054df7a0d939fafad22cd8756b6b563c9c742887"],
+      [3, "MEMORY_RETAIN_SUCCEEDED", "7050094b5068fbe41cd82b8376e7c43feb9d48db0333a1f7374371a295d3780d"]
+    ]
+  },
+  "replay": {
+    "second_native_poll_disposition": "idle",
+    "telegram_send_count_before": 2,
+    "telegram_send_count_after": 2,
+    "duplicate_deliveries": 0
+  },
+  "verification": {
+    "semantic_gates_passed": 3,
+    "focused_non_postgres_tests_passed": 54,
+    "postgres_live_path_proven_by_events": true,
+    "ruff_passed": true,
+    "core_ready": true,
+    "durable_goal_worker_status": "running",
+    "durable_goal_worker_restart_count": 0,
+    "production_a_service": "active"
+  },
+  "source_files": {
+    "eva2/src/eva/application/telegram_ingress.py": "da17506f08bc2f011c37a1559e80665dbe1c68b675989e759ac4fe34d7200d35",
+    "eva2/src/eva/adapters/connectors/telegram.py": "013f9d1e47ca5428f13cb685954474a743ed6cf6c31331eb247a219c6802a38f",
+    "eva2/src/eva/adapters/postgres/telegram_ingress.py": "4c8b395c29177d44ca4e9ffc80d179b3cfeb21c96d90dea60e109631d4a71d2e",
+    "eva2/src/eva/adapters/projection/hindsight.py": "5099e8726c1630606f9475d44e95bf799a2e28c24619344ac409ae1c9c59d0ff",
+    "eva2/src/eva/application/conversation.py": "35e2d97850823e34898f8b075979f9ad5b3af0b02e32a1ecc412ecec6466990a",
+    "eva2/src/eva/operations/telegram_test_provider.py": "fe5fcede0a3658363ecd2362019b6c8e00273a920e8c8e5a47219df7b865296f"
+  },
+  "nonClaims": [
+    "This exercised the real native Telegram connector, PostgreSQL, Hindsight, model and web/core boundary against an isolated Bot API provider process; Telegram's public service did not deliver these disposable fixture updates.",
+    "The two fixture principals and preferences are disposable benchmark data, not household history.",
+    "The explicit recall ledger proves the cross-channel person binding even though the ordinary web reply did not expose internal memory IDs to its user-facing response.",
+    "No production-A service, traffic, real Telegram chat, external recipient or physical device was changed."
+  ]
+}

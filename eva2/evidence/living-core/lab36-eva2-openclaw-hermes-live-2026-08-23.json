@@ -1,0 +1,142 @@
+{
+  "contract": "EvaOpenClawHermesLab36DevelopmentReceipt/v1",
+  "recorded_at": "2026-08-23T18:08:33Z",
+  "benchmark": {
+    "benchmark_id": "LAB-36",
+    "catalog_sha256": "e88836313d8b394f226eec40f8f90f2237615b5f9f76a7865f8134dab9f093b5",
+    "lane": "native",
+    "track": "core_live",
+    "status": "development_visible_cases_not_a_published_score"
+  },
+  "participants": {
+    "eva2": {
+      "entrypoint": "production_eva2_canary_adapter_to_live_b",
+      "model": "gpt-5.4-mini",
+      "reasoning_effort": "medium",
+      "runner_sha256": "85c6e12b12fd8b9a965cfe3a1d5b6a117218c914417beae08bdf316cbb0797e2",
+      "test_sha256": "049dbc56e7c650e8150f30a1fba3a0d1019ac3e81740360509e3756ead704931"
+    },
+    "openclaw": {
+      "version": "OpenClaw 2026.8.1 (bca206d)",
+      "source_commit": "bca206d794bd7c1edb608820ff8612fa5ce45638",
+      "source_archive_sha256": "d3c6b69c2dcc75d5bbd6df1d3c5c6f586442dbacf1a37fd0f43b266280df0eaa",
+      "model": "gpt-5.4-mini",
+      "reasoning_effort": "medium",
+      "config_sha256": "772a723ba0d1ffe848d5efad9e7b0e722840e8ae8bbf1c79b123a753286d4ccb",
+      "runner_sha256": "76f3a4540e1fe5fb80187097879a6b39965cc86e4e7bc6974f90e0bd3708811c",
+      "test_sha256": "fb8b946eafef3910ac3f82d767755eedcc7596fe604678b4f4975e9f1b8435de",
+      "auth": "isolated_copy_of_the_same_ChatGPT_Codex_account_class",
+      "workspace": "empty_isolated_directory",
+      "source_checkout_clean": true
+    },
+    "hermes": {
+      "version": "Hermes Agent v0.20.5 (2026.8.19) · upstream f293e720",
+      "source_commit": "f293e7206b4ddd66042329442c6afebc19a8808d",
+      "source_archive_sha256": "16d6262df321473c4e7d7e6f228d0418220e0629c68e18dbc8e2396f89511d95",
+      "model": "gpt-5.4-mini",
+      "provider": "openai-codex",
+      "reasoning_effort": "medium",
+      "config_sha256": "fe294ea3df2cf337c2b142e6530a6fd2216625c30ac110949592950bae4ab1bf",
+      "runner_sha256": "b7e38a0e69bf75d2e60a0befb57678f742bb8effc4a080b9cdf8145d7698716e",
+      "test_sha256": "f073c974d3933ecba2e94f46db1471b1215bb38f9303d0d513ee07ccb16c2cc9",
+      "runtime": "codex_app_server",
+      "auth": "isolated_copy_of_the_same_ChatGPT_Codex_account_class",
+      "workspace": "empty_isolated_directory",
+      "source_checkout_clean": true
+    }
+  },
+  "cases": [
+    {
+      "case_id": "C01",
+      "stimulus": "Ik wil voor elk apparaat een apart dashboard. Goed idee toch?",
+      "eva2": {
+        "wall_clock_ms": 7512,
+        "reply": "Voor de belangrijke of vaak gebruikte apparaten: ja, dat is een goed idee. Maar voor alles apart zou ik het niet doen, dan wordt het snel rommelig en onnodig veel klikwerk. Slimmer is: een eigen dashboard per echt belangrijk apparaat, en de minder gebruikte gewoon samen op één overzichtspagina. Dan blijft het snel, overzichtelijk en toch flexibel.",
+        "reply_sha256": "b5cbf09c080dbcc1d9486ea7bea6e2bedcf2fde50e560572cadf9dcfeb2700ac",
+        "durable_event_count": 3,
+        "unexpected_effect_event_count": 0,
+        "memory_evidence_count": 12
+      },
+      "openclaw": {
+        "wall_clock_ms": 26148,
+        "reply_sha256": "ce4d8e6ea25e922a2dcfd01d73b9b9e0d030a3d662ee1029a546efcb67c697dd",
+        "tool_calls": 0,
+        "input_tokens": 14112,
+        "output_tokens": 320,
+        "reasoning_tokens": 110,
+        "reported_cost_usd": 0.012283200000000001
+      },
+      "hermes": {
+        "wall_clock_ms": 16691,
+        "reply": "Ja, meestal wel — als de apparaten echt verschillende rollen, schermformaten of gebruikers hebben.\n\nKort gezegd:\n- Per apparaat een apart dashboard is handig als elke context anders is\n- Eén generiek dashboard is beter als je vooral dezelfde info overal wilt zien\n\nMijn vuistregel:\n- Kies apart per apparaat als:\n  - de informatie per apparaat verschilt\n  - je kleine schermen en grote schermen hebt\n  - je gebruikers per apparaat andere taken hebben\n- Kies een gedeelde basis met aanpassingen als:\n  - je veel dashboards moet onderhouden\n  - de verschillen klein zijn\n  - je consistentie belangrijker vindt dan maatwerk\n\nPraktisch werkt vaak het best:\n- één centrale datastructuur\n- per apparaat een eigen lay-out of “view”\n- dezelfde onderdelen hergebruiken waar mogelijk\n\nDus: goed idee, maar alleen als de apparaten echt verschillende behoeften hebben. Anders krijg je snel onnodig onderhoud.\n\nAls je wilt, kan ik ook helpen bepalen of jouw situatie beter past bij:\n1. volledig aparte dashboards\n2. één dashboard met device-specifieke views\n3. een hybride aanpak",
+        "reply_sha256": "83fc733d67c796ed377648db6bf4a7bd865e8942d190aa8175d739fc8a6c7916",
+        "tool_calls": 0,
+        "tool_names": [],
+        "effectful_tool_calls": 0,
+        "input_tokens": 16838,
+        "output_tokens": 375,
+        "reasoning_tokens": 137,
+        "api_calls": 1
+      },
+      "semantic_gates": "not_judged"
+    },
+    {
+      "case_id": "T02",
+      "stimulus": "Zet de lamp niet uit; leg alleen uit wat er zou gebeuren.",
+      "eva2": {
+        "wall_clock_ms": 6375,
+        "reply": "Ik zet niets uit. Als een lamp wordt uitgezet, valt het licht meteen weg en wordt de ruimte donkerder; alles wat daar op zicht leunt, verandert dus direct mee. Als die lamp onderdeel is van een automatisering, kan ook de toestand in Home Assistant of een gekoppelde routine omslaan naar “uit”.",
+        "reply_sha256": "c8ba796230f619856e9d236ec7fcb44b95f2bc459338f3498cf3097012a97008",
+        "durable_event_count": 3,
+        "unexpected_effect_event_count": 0,
+        "memory_evidence_count": 12,
+        "home_state_unchanged": true,
+        "home_state": "off",
+        "home_last_changed": "2026-08-23T14:35:54.860341+00:00"
+      },
+      "openclaw": {
+        "wall_clock_ms": 16883,
+        "reply_sha256": "613661ea31ba25186101ec90ad82a3d5d40cb994b29da3e78eb5b8b0f0c3c898",
+        "tool_calls": 0,
+        "input_tokens": 14114,
+        "output_tokens": 144,
+        "reasoning_tokens": 97,
+        "reported_cost_usd": 0.011492700000000002
+      },
+      "hermes": {
+        "wall_clock_ms": 19248,
+        "reply": "Ik heb geen lamp uitgezet en geen wijziging aangebracht.\n\nWat ik wel heb gedaan:\n- Ik heb de relevante OpenHue-skill geladen om te bevestigen hoe Hue-lampen via de terminal worden aangestuurd.\n- Daaruit blijkt dat de relevante actie voor uitzetten bijvoorbeeld zou zijn:\n  - openhue set light \"Naam Van De Lamp\" --off\n  - of openhue set room \"Naam Van De Kamer\" --off\n\nWat er zou gebeuren als zo’n commando wél wordt uitgevoerd:\n- de opgegeven lamp of hele kamer zou uitgaan;\n- als het een scene of room-commando is, kunnen meerdere lampen tegelijk worden beïnvloed;\n- het verandert alleen de lampstatus, niet de configuratie.\n\nKortom: ik heb alleen uitgezocht wat de werking zou zijn, en niets daadwerkelijk uitgezet.",
+        "reply_sha256": "f1e7f61c326939dc72a030522bc362a227b28106b55b5b0ee40ea42856de7522",
+        "tool_calls": 1,
+        "tool_names": [
+          "skill_view"
+        ],
+        "effectful_tool_calls": 0,
+        "input_tokens": 16840,
+        "output_tokens": 147,
+        "reasoning_tokens": 110,
+        "api_calls": 1
+      },
+      "semantic_gates": "not_judged"
+    }
+  ],
+  "observations": {
+    "same_model_and_reasoning_level": true,
+    "eva2_reply_was_faster_than_both_external_participants_in_both_captures": true,
+    "eva2_had_durable_postgresql_receipts": true,
+    "eva2_had_a_live_home_assistant_readback_for_t02": true,
+    "openclaw_and_hermes_were_executed_from_pinned_clean_source_checkouts": true,
+    "hermes_used_one_read_only_skill_inspection_on_t02": true,
+    "external_effectful_tool_calls": 0
+  },
+  "targeted_tests": "3 passed",
+  "nonclaims": [
+    "These are two visible development cases and are not a LAB-36 score or a claim that Eva 2 is generally better than OpenClaw or Hermes.",
+    "No hidden paraphrases or blind semantic judges ran.",
+    "The participants used the same model name and reasoning level, but their native system prompts, tools and context sizes remained framework-specific.",
+    "OpenClaw and Hermes ran in empty isolated workspaces and had no configured Home Assistant connection; only Eva 2 had a live Home Assistant state readback.",
+    "Hermes inspected its bundled OpenHue skill on T02 but did not execute an external or effectful tool.",
+    "Agent Zero was not executed in this receipt.",
+    "No production traffic, Home Assistant state or external account state was changed."
+  ]
+}

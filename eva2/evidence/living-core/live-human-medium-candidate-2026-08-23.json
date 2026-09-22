@@ -1,0 +1,60 @@
+{
+  "contract": "EvaLivingCoreHumanConversationCandidateReceipt/v1",
+  "recorded_at": "2026-08-23T17:53:00Z",
+  "result": "passed",
+  "environment": {
+    "container_id": "35fdfea8066d8ddb2411b82c8276b4c9678b3577332d988e3e5b74a22fc0b9e8",
+    "health": "healthy",
+    "image_sha256": "dce3f3fd33a28640ff7c693d53443e602fbbe5fd898e920bee711763fd724826",
+    "reasoning_effort": "medium",
+    "read_only_root_filesystem": true,
+    "runtime_user": "65532:65532",
+    "slot": "isolated_b"
+  },
+  "source_files": {
+    "eva2/src/eva/adapters/model/conversation.py": "ed134315e873974bea43ff8b583034fba166e7fcc6af912073a4f72b79407c31",
+    "eva2/src/eva/bootstrap/runtime.py": "61d5226e7209a2fae5b8faeca10170644cf5ca66483864d8d0bd478b8e36f660",
+    "eva2/tests/bootstrap/test_runtime_settings.py": "8b153863fb42bbb5702f11509e1689074bc785285f68b3d2836130f80abaf22c",
+    "eva2/tests/model/test_conversation_model.py": "ff24b8f5f1da64161a7c24c4cdb821f1d4ef4687cb449188abe41424a2030056"
+  },
+  "real_varied_conversations": [
+    {
+      "case": "empathy_without_advice",
+      "elapsed_milliseconds": 2556,
+      "reply": "Dat is goed. Ik zit even gewoon naast je, zonder te duwen of iets op te lossen. Vandaag mag stroef zijn; jij hoeft het nu niet even recht te trekken.",
+      "reply_sha256": "f15d9a2e18808ea71a1ce3c6ee5efd82b2084512a1ebaf2bd939aad715ce20da",
+      "stimulus": "Vandaag liep alles stroef. Ik hoef geen oplossing, ik wil gewoon even dat je naast me zit."
+    },
+    {
+      "case": "self_chosen_household_improvement",
+      "elapsed_milliseconds": 7128,
+      "reply": "Ik kies voor een vaste weekmenuplanner met boodschappenlijst op één pagina. Dat past bij ons omdat het klein is, meteen rust geeft en elke week opnieuw dat gedoe van ‘wat eten we’ en ‘wat moeten we nog halen’ een stuk minder maakt.",
+      "reply_sha256": "0669a30216498c033846ffe65d4ad0eb9f3eddeceb0eb83cfe6563179f779b78",
+      "stimulus": "Kies zelf één kleine verbetering voor thuis die echt bij ons past. Geen lijstje en maak er ook geen taak voor mij van."
+    },
+    {
+      "case": "active_context_before_correction",
+      "elapsed_milliseconds": 5630,
+      "reply": "Dat klinkt als een avond die je graag zacht en overzichtelijk wilt laten verlopen. Ik hoop dat het morgen gewoon rustig voelt in huis, met genoeg ruimte om niet te hoeven haasten.",
+      "reply_sha256": "f46923d7c131e5a1bddc3d8b44c5a6fceb735c9178919b00580641db970cbcb8",
+      "stimulus": "Morgen komen ze om zeven uur eten en ik wil het dan rustig hebben in huis."
+    },
+    {
+      "case": "active_context_correction",
+      "elapsed_milliseconds": 5258,
+      "reply": "Ik had begrepen dat ze morgen om zeven uur kwamen eten en dat je het dan rustig in huis wilde hebben. Dus: een etentje, vroege tijd, en jij wilde vooral geen haast of gedoe. Zaterdag om acht uur had ik dus niet goed meegekregen.",
+      "reply_sha256": "c07993ce7fb3d2ecf62d2f7b0e3407bd32e759e96cf4fb6709a2de0256f67ee4",
+      "stimulus": "Nee, ik bedoel zaterdag om acht uur. Wat had je daarvan begrepen?"
+    }
+  ],
+  "targeted_gate": {
+    "command": "PYTHONDONTWRITEBYTECODE=1 PYTHONPATH=eva2/src:eva2 PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 python3 -m pytest -q --capture=sys -p no:cacheprovider eva2/tests/model/test_conversation_model.py eva2/tests/bootstrap/test_runtime_settings.py eva2/tests/application/test_conversation.py",
+    "result": "17 passed in 3.19s",
+    "ruff": "passed"
+  },
+  "nonclaims": [
+    "These are four different development conversations, not a hidden semantic benchmark score.",
+    "The test used the real conversation provider and durable active conversation timeline but did not send a physical Home Assistant action.",
+    "Production A and default Telegram traffic were unchanged."
+  ]
+}

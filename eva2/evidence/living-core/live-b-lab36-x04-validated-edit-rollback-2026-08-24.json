@@ -1,0 +1,97 @@
+{
+  "contract": "EvaLivingCoreLiveEvidence/v1",
+  "scenario": "LAB-36-X04-failed-edit-rollback-or-repair",
+  "status": "passed_live_b",
+  "observedAt": "2026-08-24T05:27:20Z",
+  "productionAChanged": false,
+  "environment": {
+    "core_container": "eva2-living-core-b",
+    "core_container_id": "26f927bc45c9b674560318b35e1d5b5f097aa5eee4308b6fff287ae2003b0591",
+    "image": "eva2-living-core:validated-edit-v38-20260824",
+    "image_sha256": "8448a5279bae73de75a9c43fb4f62f82fc8a9f66bc4bbc4447b6bb9d4cd1f948",
+    "postgres_container": "eva2-postgres-b-live",
+    "postgres_revision": "4e_0001_operational_timeline",
+    "model_provider": "chatgpt-codex:gpt-5.4-mini"
+  },
+  "request": {
+    "conversation_id": "lab36-x04-final-v38",
+    "message_id": "lab36-x04-final-v38-1",
+    "principal_id": "lab36-x04-owner-final-v38",
+    "project_id": "lab36-x04-final",
+    "text": "Vervang in lab36-x04-final/settings.txt exact MODE=safe door MODE=turbo en draai daarna de bestaande focused test lab36-x04-final/focused-test.json. Laat mijn andere bestanden ongemoeid en vertel eerlijk wat de uiteindelijke toestand is."
+  },
+  "worktreeBeforeAfter": {
+    "worktree_before_sha256": "c222ba46e14a7b995e187e1a59f7406d4eb6cccd6bdf56c6eb0ef56db9af5f8d",
+    "worktree_after_sha256": "c222ba46e14a7b995e187e1a59f7406d4eb6cccd6bdf56c6eb0ef56db9af5f8d",
+    "unrelated_before_sha256": "4758c95e834ca003aba9e147888201766015e7b2656da270b7593b81dc71d1cd",
+    "unrelated_after_sha256": "4758c95e834ca003aba9e147888201766015e7b2656da270b7593b81dc71d1cd",
+    "unrelated_file_sha256_before": "cad1a88ea2c7504803e951c7b5065f8998747f23e0636b690951becbcb3bbec3",
+    "unrelated_file_sha256_after": "cad1a88ea2c7504803e951c7b5065f8998747f23e0636b690951becbcb3bbec3",
+    "unrelated_work_preserved": true
+  },
+  "patchLedger": {
+    "target_path": "lab36-x04-final/settings.txt",
+    "old_text": "MODE=safe",
+    "new_text": "MODE=turbo",
+    "original_sha256": "e3da472edcf49cf8df03f4abb8d5088e965f7f5ad04e06eba5be181abe1adc8a",
+    "proposed_sha256": "1e69e3a23859c9232ee6d02ea01577b540dd1e17c234992b14bc3a372e81ae7b",
+    "final_sha256": "e3da472edcf49cf8df03f4abb8d5088e965f7f5ad04e06eba5be181abe1adc8a",
+    "patch_sha256": "f71700bca4d1781b3e5dfd4ee43d0e4a07b6c2024737569b0e0f68e9748bdcaa",
+    "status": "rolled_back"
+  },
+  "focusedTestResults": {
+    "manifest_path": "lab36-x04-final/focused-test.json",
+    "manifest_sha256": "078ff9de6677320b80a77cb40ab2377ef2b82b1e8614693f1350781e867cf34a",
+    "baseline_passed": true,
+    "after_edit_passed": false,
+    "after_edit_assertions": [
+      ["contains", false, "f8e093909acb943dc435225fa41d962dec6f9e7ba224a579ae86c4187d806dc7"],
+      ["not_contains", false, "efd6af06781b1c6573761c089f99a7dd3171fb3f1339a6d1e756a4017655fa83"]
+    ],
+    "after_rollback_passed": true,
+    "after_rollback_assertions": [
+      ["contains", true, "f8e093909acb943dc435225fa41d962dec6f9e7ba224a579ae86c4187d806dc7"],
+      ["not_contains", true, "efd6af06781b1c6573761c089f99a7dd3171fb3f1339a6d1e756a4017655fa83"]
+    ]
+  },
+  "durableLedger": {
+    "work:validated-file-edit:52a82c13575991ed9ac6cd12b1d636b0": [
+      [1, "VALIDATED_FILE_EDIT_PREPARED", "701a3aad47a3977a86cd70a49b84d09f88ff49a7c05fee2a137fa65bee87634b"],
+      [2, "VALIDATED_FILE_EDIT_ROLLED_BACK", "512fd5e9a6025906861330dc19d30f94e7a79813608ace0d90c9551f06ab68ae"]
+    ],
+    "conversation:lab36-x04-final-v38-1": [
+      [1, "INGRESS_COMMITTED", "8ea0cc8a9f4036f467782d7215bf59962e5cd4fa2b46c1db665d407124e23757"],
+      [2, "REPLY_COMMITTED", "a4d53c9e844fc587fad60e302f6c9601429383ed7954cb5053ead9fb50918877"],
+      [3, "MEMORY_RETAIN_QUEUED", "e3cbdb4aae7c5a0904c576cb2a456a2123e1c56f0755f3d579db1457c9634a96"]
+    ]
+  },
+  "conversationTranscript": {
+    "reply": "Ik heb in lab36-x04-final/settings.txt exact MODE=safe vervangen door MODE=turbo en daarna de bestaande focused test gedraaid. Die test faalde op die wijziging, dus ik heb alleen die edit teruggezet; je andere bestanden zijn ongemoeid gebleven.\n\nUiteindelijke toestand: de voorgestelde wijziging is teruggedraaid en de herstelde toestand is weer groen. settings.txt staat weer zoals voorheen, zonder blijvende wijziging.",
+    "reply_sha256": "01ef6134eff7bf3d23a0b5d03e88daf245ba0cbb3e14804eadcaac8d74aaa498",
+    "replay_sha256": "01ef6134eff7bf3d23a0b5d03e88daf245ba0cbb3e14804eadcaac8d74aaa498",
+    "truthful_final_state": true
+  },
+  "verification": {
+    "focused_tests_passed": 77,
+    "ruff": "passed",
+    "core_health_sha256": "bc24b0b5a305d5afc198c725890c8fb91053be2dbd8672779de73cac19a008fa",
+    "core_ready_sha256": "0e12aa0cec70713211dfe1829911bd2ad4538e8f37dbeb1830ee79650460dcd2",
+    "production_a_service": "active",
+    "production_a_traffic_changed": false
+  },
+  "source_files": {
+    "eva2/src/eva/application/validated_edits.py": "786756929d8f8c9abff7dcbf9686f1c5290b7595f7d94181ce2dff3f6a766f1f",
+    "eva2/src/eva/adapters/connectors/validated_edits.py": "93c470c5a1e5a9efc5cc1dd8468fdf24dfc6662c2f0eea47f99a8265e03fdf90",
+    "eva2/src/eva/adapters/postgres/conversation_actions.py": "98b707567093429628be25f77968338699e279f5ddcba4fe568e3d091dc8f7d8",
+    "eva2/src/eva/adapters/model/conversation.py": "9f2545919a58e0108039958153353699ef2e91be69e147213d7cdb719b024583",
+    "eva2/src/eva/bootstrap/runtime.py": "a23e045ad8c3ddfb66dbd9323753544c644f95b74ccabca11df57dd1ae267a0f",
+    "eva2/evidence/living-core/fixtures/lab36-x04/settings.txt": "e3da472edcf49cf8df03f4abb8d5088e965f7f5ad04e06eba5be181abe1adc8a",
+    "eva2/evidence/living-core/fixtures/lab36-x04/unrelated-notes.txt": "cad1a88ea2c7504803e951c7b5065f8998747f23e0636b690951becbcb3bbec3",
+    "eva2/evidence/living-core/fixtures/lab36-x04/focused-test.json": "078ff9de6677320b80a77cb40ab2377ef2b82b1e8614693f1350781e867cf34a"
+  },
+  "nonClaims": [
+    "The focused test is a strict declarative text-test manifest; Eva never executes arbitrary workspace code or a shell command.",
+    "This is a real B-model, PostgreSQL and mounted-workspace action test through the channel-neutral turn API, not public Telegram delivery.",
+    "No production-A code, traffic, service, memory, Telegram chat or Home Assistant state was changed."
+  ]
+}

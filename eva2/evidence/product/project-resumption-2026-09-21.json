@@ -1,0 +1,38 @@
+{
+  "checkedOn": "2026-09-21",
+  "scope": "Read-only resumption audit; no model calls, agents, deployments or user trials",
+  "sourceHead": "02299b2a71143d27c35a75116c178bb4721bcdf4",
+  "dashboardHttpStatus": 200,
+  "historicalAcceptance": [
+    "GE-01",
+    "GE-02",
+    "SP-01",
+    "SP-02"
+  ],
+  "runtimeObservation": {
+    "core": "running healthy; image prefix e66fff7d16a8",
+    "documentWorker": "exited 255; restart policy no",
+    "documentProvider": "exited 255; restart policy no",
+    "documentServicesFinishedAt": "2026-09-14T23:09:34Z"
+  },
+  "findings": [
+    "Coordinator task stopped at usage limit.",
+    "Dashboard mixed historical live proofs with current availability.",
+    "Memory GE-02 acceptance was missing from parent capability summary.",
+    "Ready document-task source has not been installed."
+  ],
+  "limits": [
+    "No cause established for document service exit.",
+    "No measurement attributing credits to unnecessary work.",
+    "Healthy core does not prove end-to-end user success.",
+    "Browser page HTTP 200 does not prove connected Chrome."
+  ],
+  "nextOutcome": "Finish existing AU-006 owner document task: ordinary request creates two readable text documents without administrator plan replacement.",
+  "doneWhen": [
+    "Actual existing document state and unresolved effects assessed before restart or replacement.",
+    "Existing reviewed source installed with preserved data and rollback.",
+    "One ordinary user route request produces both requested documents and readable result.",
+    "Relevant failure/stop behavior reuses existing evidence; rerun only when changed.",
+    "Technical completion and owner acceptance shown separately."
+  ]
+}

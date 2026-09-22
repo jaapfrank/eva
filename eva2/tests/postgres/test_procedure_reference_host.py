@@ -110,6 +110,13 @@ def test_real_save_designate_new_conversation_list_resolve_and_revocation(people
         conversation.respond(nonmatching)
         assert ref['document_id'] not in "\n".join(model.contexts[-1])
         assert len(model.contexts)==2  # no preliminary model selection call
+        # Ordinary chat must not require this optional provider's owner mandate.
+        other = replace(nonmatching, principal_id='other',
+            audience=nonmatching.audience.private_person(principal_id='other'),
+            conversation_id='other-chat', message_id='other-question')
+        conversation.respond(other)
+        assert len(model.contexts)==3
+        assert ref['document_id'] not in "\n".join(model.contexts[-1])
         assert len(handler.calls)==before
         listed=run(later,ConversationActionCall('list','list_reusable_procedures',{})).output
         assert listed['candidates'][0]['document_id']==ref['document_id'] and listed['next_cursor'] is None

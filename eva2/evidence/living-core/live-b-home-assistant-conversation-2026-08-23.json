@@ -1,0 +1,80 @@
+{
+  "contract": "EvaLivingCoreBHomeAssistantConversationReceipt/v1",
+  "recorded_at": "2026-08-23T14:29:20Z",
+  "deployment": {
+    "container": "eva2-living-core-b",
+    "health": "healthy",
+    "image_sha256": "a1a8af71e304d76a8bf645ef844075efb2041c4e5d9ad6f5f183e6d1474d0685",
+    "production_a_active_during_test": true
+  },
+  "source_sha256": {
+    "eva2/deploy/living-core/Dockerfile": "45b52183c1392917ecca180f66358f7f8ad2815e59cf4611c9d8e01e649e48ef",
+    "eva2/src/eva/adapters/api/app.py": "a09bf0d11bdf9c4a1520156847c1230b74375e6be7d3d64ae3caa94cd22f6457",
+    "eva2/src/eva/adapters/connectors/home_assistant.py": "59205b534540b46d86652ccf674bbceb0acc7fcaff334fa6000bb5ed5d7e87e0",
+    "eva2/src/eva/adapters/model/conversation.py": "fb4a6dbab01027f580cff5d180f3552318f9351fdd1098bca439daa92bdfc130",
+    "eva2/src/eva/adapters/postgres/conversation_actions.py": "e818c5b8faf3951164f7cbca18a792c579cbfec53eb25dd574eae3fab91f78e8",
+    "eva2/src/eva/application/orchestration.py": "43d4d0b4b83f13268c0a5720cd1a377ce336de33364657749abeaebb8895d4c5",
+    "eva2/src/eva/bootstrap/runtime.py": "9f754965cc98db9c08cdf2f4cab085971de1a9274a910875b882ba15d99a1310"
+  },
+  "live_conversation": {
+    "entity_id": "light.kantoor_links",
+    "initial_state": "off",
+    "turn_on": {
+      "input": "Zet kantoor links even aan.",
+      "reply": "Kantoor links staat aan.",
+      "elapsed_seconds": 7.204,
+      "independent_state_after_reply": "on",
+      "thread_id": "tool:home-assistant-light:9341cff367a0e626e97e213c565835b7",
+      "event_types": [
+        "TOOL_REQUEST_ADMITTED",
+        "TOOL_PREPARED",
+        "TOOL_EXECUTED",
+        "STATE_VERIFIED"
+      ],
+      "event_payload_sha256": [
+        "2217f943e354705233be6c7fc05040861c560997c0c46d2bc87a8369f92fece7",
+        "def61b0a5e81008eec915af9a2a41e58f98d2aee1ddbc927d86929fbd9d364a4",
+        "5cc777749a680702dfff2c61776791cbc49f4fadd73112ee95911a2e81ee74cc",
+        "8808223f0ba69eb6550e89bb89283e509b49adbc99a9d55cce96d1fa59102b0e"
+      ]
+    },
+    "turn_off": {
+      "input": "Zet kantoor links weer uit.",
+      "reply": "Kantoor links staat uit.",
+      "elapsed_seconds": 5.884,
+      "independent_state_after_reply": "off",
+      "thread_id": "tool:home-assistant-light:ec22f8478284d17587df45ad6ddac2a3",
+      "event_types": [
+        "TOOL_REQUEST_ADMITTED",
+        "TOOL_PREPARED",
+        "TOOL_EXECUTED",
+        "STATE_VERIFIED"
+      ],
+      "event_payload_sha256": [
+        "f8f691a0ba3cd742a6352cefb238140d5beac7697a0a8b85b485e69e1a75e414",
+        "359d302b6f1759f2d70c3c85ef428e199b56bedbc7c95ee34b7f6fbaf3f0bfc8",
+        "88aab2aeffb3d0d279065b7abaea77b7ee0ba1c028342c159d9756c100aa3a23",
+        "1d4ded8d2d3fa8bd5d48031bad0ea2c5d68774ffd9f383c4c94429d7968b0999"
+      ]
+    }
+  },
+  "telegram": {
+    "delivery_message_id": 4470,
+    "delivered": true
+  },
+  "defects_found_by_live_execution": [
+    "The container omitted the top-level connector_sdk package; the Dockerfile now copies it and includes /opt/eva in PYTHONPATH.",
+    "The generic bounded JSON validator rejected Home Assistant's large state catalog; light resolution now uses a byte-bounded catalog reader and validates only the selected proof surface."
+  ],
+  "claims": [
+    "A model-selected light action executed through the normal conversation route.",
+    "Visible success followed an independent Home Assistant state readback.",
+    "The test changed a real light and restored its original state.",
+    "Both operation histories are append-only and completed with retry_count zero."
+  ],
+  "nonclaims": [
+    "This receipt does not authorize locks, climate, security, or arbitrary Home Assistant services.",
+    "This receipt does not prove an operating-system crash between every individual tool checkpoint.",
+    "Production A was not replaced by B."
+  ]
+}

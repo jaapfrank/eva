@@ -1,0 +1,1612 @@
+[
+  {
+    "path": "AGENTS.md",
+    "bytes": 8887,
+    "sha256": "8bc101a24187e7da0f25045daaeb70ee5fabf1acca20b414d2f9007e4608f45b"
+  },
+  {
+    "path": "README.md",
+    "bytes": 1028,
+    "sha256": "ef690ef56ee5104b187c0480ee90c094dd06d7e7a7c05754f46d8bb661bc7c30"
+  },
+  {
+    "path": "OPEN_SOURCE_COMPONENTEN.md",
+    "bytes": 21241,
+    "sha256": "8b74ccf93d7a92d105f2825448085096fd81366a729913890dfafdf34f879758"
+  },
+  {
+    "path": "experiments/eva2-architecture-bakeoff/README-restate.md",
+    "bytes": 6670,
+    "sha256": "d0b255903a45e9fee10bd695c5be9d0aa200e4d4bdb8c4d0e3548a40afe6b7e1"
+  },
+  {
+    "path": "experiments/eva2-architecture-bakeoff/README.md",
+    "bytes": 1165,
+    "sha256": "b76e17dc36c87dec7dbc97848005271e65a99a7c9e39be74d0bc5812fdb777f0"
+  },
+  {
+    "path": "experiments/eva2-architecture-bakeoff/dbos/README.md",
+    "bytes": 1574,
+    "sha256": "2d37a5b94ce30fcdd015cce6d8fbb323324bd015936a8cb40d968f30927db8f8"
+  },
+  {
+    "path": "experiments/eva2-architecture-bakeoff/memory/README.md",
+    "bytes": 2306,
+    "sha256": "5074a251ed06b68035f39295980edc82712509089be4bdfe371d6f6e4fbe66ec"
+  },
+  {
+    "path": "docs/live-acceptance-2026-08-04.md",
+    "bytes": 5727,
+    "sha256": "ec46da15f5b10fe47d6ac976dbd61624bf3b6d60dc2f7a10142079cfe3687ab0"
+  },
+  {
+    "path": "docs/eva2-build-map-presence-evidence.md",
+    "bytes": 28882,
+    "sha256": "69d391ba4e3b3363c4d1d3cb6471c1510b68e974f5d8e61088356b6020328ed8"
+  },
+  {
+    "path": "docs/adr-0001-eva2-living-core.md",
+    "bytes": 24828,
+    "sha256": "73b53e392b8e3b65d1241bff46bb92144960a2620dbd45f3c9d3526d9f07910d"
+  },
+  {
+    "path": "docs/eva1-to-eva2-transition-manifest-2026-08-20.md",
+    "bytes": 15555,
+    "sha256": "7ea53e81e6fb3af0304cf88119abc9bf864e1a9dbf1445bfaed6dbd18d3f8d85"
+  },
+  {
+    "path": "docs/eva-runtime-map.md",
+    "bytes": 66153,
+    "sha256": "1962146dfe49d3e58648aa053aca9b4a42974218c954e2c0bc2e1d0e448077cf"
+  },
+  {
+    "path": "docs/eva-runtime-contracts.md",
+    "bytes": 80976,
+    "sha256": "55bacb4a2b9829a0d55e97f51d18fb301c04c80c9e5fc2cddf885842111cc869"
+  },
+  {
+    "path": "docs/eva2-build-map-core-contracts.md",
+    "bytes": 75350,
+    "sha256": "877a0d25b637ef0f3bbfe3286ab40b5c40d7a0e50dbc3bf4af14504426bf0d63"
+  },
+  {
+    "path": "docs/eva-endbeeld-roadmap.md",
+    "bytes": 16956,
+    "sha256": "6589772913dba03a5f5bbc55981c68c8091b270195d574595988b1285fd4db59"
+  },
+  {
+    "path": "docs/eva2-architecture-bakeoff-results-2026-08-20.md",
+    "bytes": 9422,
+    "sha256": "4908625fa48a4ba558b0322a355b8fecc344e51e07ff117a3dd0144496879eed"
+  },
+  {
+    "path": "docs/eva2-build-map-2026-08-20.md",
+    "bytes": 15170,
+    "sha256": "188731302df263427ad499102e0d2be9ca11bf5321d81959d492d4604243fd3b"
+  },
+  {
+    "path": "docs/house-entity-v1.md",
+    "bytes": 4397,
+    "sha256": "9130cc20bf70afe3af2425dbb70b2078aca4421f7198feb9fc99bcb7d8ce936d"
+  },
+  {
+    "path": "docs/incident-2026-08-13-ledger-test-import.md",
+    "bytes": 12016,
+    "sha256": "5801cb32b914feeedf21d648c1c6ff01a4f7ec6f18f2b905c3840aaef91f87fb"
+  },
+  {
+    "path": "docs/durable-work-lifecycle.md",
+    "bytes": 1652,
+    "sha256": "6af3ca9206f6712c3a4200e629d621f6e466348ac1d9efb7d66c7f9218b6f8ab"
+  },
+  {
+    "path": "docs/eva-agent-benchmark-v1.md",
+    "bytes": 18462,
+    "sha256": "101c952680d745292fae2369e1dbde6d4cd3fbf2a55a8eae91a40e065ece4213"
+  },
+  {
+    "path": "docs/eva-runtime-contract-map.generated.md",
+    "bytes": 120103,
+    "sha256": "2cbfca0097297d651205793bbfa1cdbf82a0944915b9c77a0884ee5ce3330854"
+  },
+  {
+    "path": "docs/eva-repository-inventory.generated.md",
+    "bytes": 438380,
+    "sha256": "cfa52c43c91480d07700f6e52fdcdd51816f7e42986c5eb349ade22aa7805a76"
+  },
+  {
+    "path": "docs/eva2-architecture-bakeoff-v1.md",
+    "bytes": 14481,
+    "sha256": "fa41efdc57b5adf70e7d3f2d5771704f54bd78afbd9f0abb714614f777d0f6c8"
+  },
+  {
+    "path": "docs/eva2-build-map-platform.md",
+    "bytes": 64411,
+    "sha256": "244b2f2e397d4ce11e245d573b266dee443f77b85d0bd456d7e4b9cd66fa98f1"
+  },
+  {
+    "path": "docs/eva-rebuild-plan-2026-08-20.md",
+    "bytes": 29009,
+    "sha256": "db36dca7fbbf36e2cf04db8cc53fde7feb8f280af48fe3e8d6f5d53f0f0315b1"
+  },
+  {
+    "path": "eva2/OUDE_EVA_VS_EVA2.md",
+    "bytes": 5434,
+    "sha256": "26fec3cedadc52ca92f38a0931af162c4fbc3cbdd3099742132f96c4d8a1ae00"
+  },
+  {
+    "path": "eva2/CONCURRENTIE_EN_HERGEBRUIK.md",
+    "bytes": 21881,
+    "sha256": "1a283f52b49f2532582f679dd8f2960c38700e54f53b901cb9b9c6b3380d03c0"
+  },
+  {
+    "path": "eva2/DOCUMENTATIE_EN_ONDERHOUD.md",
+    "bytes": 10541,
+    "sha256": "19f95c556b140c4adf70769fcf025398d6b901950467a4584a9d6e6202082b85"
+  },
+  {
+    "path": "eva2/PROJECT_STATUS.md",
+    "bytes": 61503,
+    "sha256": "f46157fd70e23516394634e2a0e2c724a5d3d19db6b575f302cbb317497c510a"
+  },
+  {
+    "path": "eva2/EVA2_MOGELIJKHEDEN_EN_GATEN.md",
+    "bytes": 8118,
+    "sha256": "fd97cfd9f24dad0f309e5751489c00a33fca40cdeadf9189a67269f7be0fb7a6"
+  },
+  {
+    "path": "eva2/PROJECTDOEL.md",
+    "bytes": 18624,
+    "sha256": "64afceb0d61221d7d2064c5a9c2e361a59796dba98fa2fbc95e09ca1bc7e2140"
+  },
+  {
+    "path": "eva2/TECHNISCHE_MOGELIJKHEDEN_EN_GATEN.md",
+    "bytes": 20072,
+    "sha256": "881fa7ba976bf79f2471dbb21ef1af02114f6d1596770df1d6527db4098bfb08"
+  },
+  {
+    "path": "eva2/OPEN_SOURCE_EN_DEPENDENCYKEUZES.md",
+    "bytes": 37416,
+    "sha256": "4c5c6396bdec125aed9b7b45a2c325e36c8da7d897aafaf412b5512349f09182"
+  },
+  {
+    "path": "eva2/TEAM_WERKWIJZE.md",
+    "bytes": 9391,
+    "sha256": "3ae1391fdd7a506accfa822b5ce8ff9c27a6fdba521885e3145b506cf2f4335f"
+  },
+  {
+    "path": "eva2/WERKBORD.md",
+    "bytes": 78235,
+    "sha256": "103218d2b0b25f60ace34edf2d37e9b7a8d3905fdccd52bb2ae42e8585c8c113"
+  },
+  {
+    "path": "eva2/README.md",
+    "bytes": 11778,
+    "sha256": "14ac484d1e24f95ff265a25304a41d70dfe64891e87c60c43cd8ab80222cdabc"
+  },
+  {
+    "path": "eva2/OPENBOT_VERGELIJKING.md",
+    "bytes": 8258,
+    "sha256": "76d701f305aa445b7c31f52b1c049f96786468eba3ae0b720e3ef5f7363d0884"
+  },
+  {
+    "path": "eva2/PROJECTEN_EN_PLANNING.md",
+    "bytes": 22657,
+    "sha256": "aa0322486d370274aa1b2c89413f6c5456527762d372409d97c52f334e63d260"
+  },
+  {
+    "path": "eva2/TECHNISCHE_PRODUCTGATES.md",
+    "bytes": 65630,
+    "sha256": "fea3ff2f2ef7b8cce61f5db6ef4dc281e1b6b2522d7358b2830f40142aeb3254"
+  },
+  {
+    "path": "eva2/migrations/README.md",
+    "bytes": 971,
+    "sha256": "1cbf70412cc7e03f84119100a8858bbcf8fd26d7eeb0e867da1cce1e195165ab"
+  },
+  {
+    "path": "eva2/src/eva/adapters/model/tokenizer_data/README.md",
+    "bytes": 639,
+    "sha256": "0f3fe11ad2b6098d106040a72baf94932ff468327d9a4d65cd3efbe9bc5bebf0"
+  },
+  {
+    "path": "eva2/connector_sdk/contracts/README.md",
+    "bytes": 218,
+    "sha256": "e0d35054a7d9c4b5904e8c1580ac7a3c2aca9544f79f9e399c43f6cd523bceee"
+  },
+  {
+    "path": "eva2/connector_sdk/conformance/README.md",
+    "bytes": 217,
+    "sha256": "30d88ad7055705a84e9ec143f98836c94722113052bdc09bc0aae5e1ab263bc0"
+  },
+  {
+    "path": "eva2/schemas/portable/README.md",
+    "bytes": 148,
+    "sha256": "10b7fa37bb887c87766b5b86301cb8018c30c291faab87a992ac9d0463a3cbc9"
+  },
+  {
+    "path": "eva2/forge/README.md",
+    "bytes": 216,
+    "sha256": "8cfb29ce993d8991be061560661e04dadc547fc5598b977dc467ca2627277bbd"
+  },
+  {
+    "path": "eva2/forge/schemas/README.md",
+    "bytes": 180,
+    "sha256": "a467c3707d450f1f952d68f3e8d7000aa801ee5734bf746ae8148bc27a343f5e"
+  },
+  {
+    "path": "eva2/forge/quarantine/README.md",
+    "bytes": 182,
+    "sha256": "9e501a7b48778a06d627ebb644fa2e31b8cf9c6840d71e96884416630835d5f3"
+  },
+  {
+    "path": "eva2/forge/pipeline/README.md",
+    "bytes": 151,
+    "sha256": "227b083e0090a827a3567d0dcd0852e6f857b616eec706d7120e169af6120b05"
+  },
+  {
+    "path": "eva2/deploy/chrome-bridge/README.md",
+    "bytes": 11845,
+    "sha256": "18bc4543983f86723fc565fe19d346002b3128d1e9cb035ae0c8554e06d3d2b8"
+  },
+  {
+    "path": "eva2/deploy/home-assistant/owner-phone.md",
+    "bytes": 5356,
+    "sha256": "d38fd7e997033cccd47c839ddb01ba720b142b33ea49361adf93500cf3a52e5f"
+  },
+  {
+    "path": "eva2/deploy/home-assistant/native-speaker-installation.md",
+    "bytes": 3496,
+    "sha256": "70b387d4f3760dd9981e94d030d578e19092fddb5ff0231495ccf6f97c5d5e2a"
+  },
+  {
+    "path": "eva2/deploy/home-assistant/README.md",
+    "bytes": 12167,
+    "sha256": "12623b5f5fead7dd4f628a4e9fc1d59199eaf7510a7a745d3c5af41422755316"
+  },
+  {
+    "path": "eva2/deploy/home-assistant/native-voice-ingress.md",
+    "bytes": 6991,
+    "sha256": "29cdda636bd6b48b00ef3a1d782aeff4d11d72b482dd0472fb1c7e639d74b6fc"
+  },
+  {
+    "path": "eva2/deploy/owner-browser/README.md",
+    "bytes": 11717,
+    "sha256": "d6f95bb98f680d5ebebef31544c81a5774b265799ac0dbcc60eb176daa58049a"
+  },
+  {
+    "path": "eva2/deploy/owner-browser/recovery/README.md",
+    "bytes": 6402,
+    "sha256": "24e900aaf7b5be5321e8fe229cfee8e913a48e5bed0ee922e657b2c7e71781f8"
+  },
+  {
+    "path": "eva2/deploy/mcp-autonomy/README.md",
+    "bytes": 2021,
+    "sha256": "21a1610fa55b7b4225368c35698d7f069671d37c98f33121f86a2e243f983f6e"
+  },
+  {
+    "path": "eva2/deploy/living-core/SECRET_BOUNDARY_INVENTORY.md",
+    "bytes": 3484,
+    "sha256": "a73aa128aad22cb53cd6a8a601421a62ed193571d26e3e90383560fc6276d987"
+  },
+  {
+    "path": "eva2/deploy/living-core/TELEGRAM_TEST.md",
+    "bytes": 9984,
+    "sha256": "cef5a66fcf2d365db5bbb5f9aab70c29eb8c755ff4fb9d7dd11bca5cac59f6cd"
+  },
+  {
+    "path": "eva2/deploy/living-core/HINDSIGHT_CUDA.md",
+    "bytes": 2193,
+    "sha256": "3f1926bd063ad14cac2b14d3b498cc734c0fc266430d5e73c0c1e584bb2ca679"
+  },
+  {
+    "path": "eva2/deploy/living-core/MANAGED_B_HOST_CONTRACT.md",
+    "bytes": 7608,
+    "sha256": "eb9c10df5b66bc75801b29c5727f1ee74a02ee8ae4a5ed8001cbc520c984be7f"
+  },
+  {
+    "path": "eva2/deploy/living-core/README.md",
+    "bytes": 4259,
+    "sha256": "bf688c604783f9a397a124de038ce21b33020aa284394a424d7b0dfb7b4c9856"
+  },
+  {
+    "path": "eva2/deploy/living-core/workspace-create-only/README.md",
+    "bytes": 7565,
+    "sha256": "270aa9a532ac2b2bc9bd2aa033114b960587a6b206b13e903dc0bd5bb342ffdf"
+  },
+  {
+    "path": "eva2/deploy/dashboard/README.md",
+    "bytes": 1249,
+    "sha256": "de06d42399f6089cd9d5d038bf52fa040e0137b3bddae118e0d243435cb43cae"
+  },
+  {
+    "path": "eva2/deploy/voice-session/README.md",
+    "bytes": 7713,
+    "sha256": "830b119810a69d417a40ce48a54bf3817d638893314b1d9adf6a9c391075400a"
+  },
+  {
+    "path": "eva2/deploy/voice-session/vendor/livekit-1.13.6/CHANGELOG.md",
+    "bytes": 82700,
+    "sha256": "c1749084c24b9c9a851b8f299464e223783370a9406f933a82e08cfa0e38bc2f"
+  },
+  {
+    "path": "eva2/deploy/voice-session/vendor/livekit-1.13.6/README.md",
+    "bytes": 15997,
+    "sha256": "dacd3cddbe3d9c9cb5248065eafdd7d0f8e5a7858904b96c1dbdf8117908ec10"
+  },
+  {
+    "path": "eva2/deploy/voice-session/vendor/livekit-1.13.6/.github/ISSUE_TEMPLATE/bug_report.md",
+    "bytes": 742,
+    "sha256": "4cdd31893e3069391cf88801a9679b18f9ee42504f8d9261af7f01e7f236857d"
+  },
+  {
+    "path": "eva2/deploy/voice-session/vendor/livekit-1.13.6/deploy/README.md",
+    "bytes": 241,
+    "sha256": "20eb1b074c6c91f5e4c7ed6fd64375c06b4b90ff21fc16c9f09c4f22103fcdf9"
+  },
+  {
+    "path": "eva2/deploy/voice-session/vendor/livekit-1.13.6/cmd/test-server/README.md",
+    "bytes": 13109,
+    "sha256": "b91b96a01da0877d04fc41abbd621d2a1debefcee6da558d0787e0c03ec39592"
+  },
+  {
+    "path": "eva2/identity-proposals/eva-soul-voorstel.md",
+    "bytes": 320,
+    "sha256": "ffbe3ea0d4bd069b621427f5fe92d0f30bccdbff177a0502468550c64d170ed6"
+  },
+  {
+    "path": "eva2/experiments/pydantic-realtime-v1/README.md",
+    "bytes": 856,
+    "sha256": "1a7d94c09a8cda003c3d54ce7b2f0bf98fbe79ea48a6ecce7de27c6f20e9968a"
+  },
+  {
+    "path": "eva2/experiments/openai-sdk-v1/README.md",
+    "bytes": 4231,
+    "sha256": "5a5e6966072e0525545ece78ad172b30ae01059a66af88ed2fbb470805a0bc35"
+  },
+  {
+    "path": "eva2/experiments/ha-mcp-parity-v1/README.md",
+    "bytes": 2635,
+    "sha256": "12e1da1f67db7eaa1b1fed911d0864d972acdaf16f7318fd28d8917c2221a0e8"
+  },
+  {
+    "path": "eva2/experiments/playwright-mcp-runtime-trim-v1/README.md",
+    "bytes": 1649,
+    "sha256": "83a0655039a2349acee58a5cdb8ac0d9616a8428a83053a41c82b35c03132d2c"
+  },
+  {
+    "path": "eva2/experiments/harness-subagents-v1/README.md",
+    "bytes": 3527,
+    "sha256": "c4b96168bd862fd29fcfaba8db3cb93ef15314615d3274547f2d5bffca22026e"
+  },
+  {
+    "path": "eva2/experiments/playwright-mcp-system-refresh-v1/README.md",
+    "bytes": 1355,
+    "sha256": "1b506a16790178bcdbe892d09be80792f939e5a3cee7750a3d7949ff1a4aaa90"
+  },
+  {
+    "path": "eva2/experiments/pydantic-agent-overlay-v1/README.md",
+    "bytes": 1894,
+    "sha256": "dd4aae8ab64296f0214a6f20fc648488693f9a38e78651d4c2d26099a38ccf6d"
+  },
+  {
+    "path": "eva2/experiments/tool01-replacement-acceptance-v2/README.md",
+    "bytes": 5672,
+    "sha256": "e67a9dd02aa056e1fef0adfe4a57ecb2633a758d4c0d449c9ba96e8d83f840ee"
+  },
+  {
+    "path": "eva2/experiments/pydantic-external-deferred-v1/README.md",
+    "bytes": 2241,
+    "sha256": "ee64431d84f029a0db10e402592681584790b71c0fe5c8f47af86465764578f2"
+  },
+  {
+    "path": "eva2/experiments/mcp-types-v1/README.md",
+    "bytes": 463,
+    "sha256": "4125f8cd0c7d05ce1cdc602445cef1e0b81784067f9385110827b94421397977"
+  },
+  {
+    "path": "eva2/experiments/distroless-hindsight-api-v1/README.md",
+    "bytes": 1628,
+    "sha256": "d1e91309e2ab5d5694b0a23b707a4cc25352884b7c3b467db11ede5152a903e0"
+  },
+  {
+    "path": "eva2/experiments/native-duplex-v1/speaker-wire-v1.md",
+    "bytes": 10468,
+    "sha256": "08bdc4e50a5356ab8070de50ae376f9e1cdb9622aabc0aed6992e99e484afbff"
+  },
+  {
+    "path": "eva2/experiments/native-duplex-v1/README.md",
+    "bytes": 39497,
+    "sha256": "311824c4de4d40acf93d5ec3209c9016f25ee60937d0144f02d9c90a653ba4e6"
+  },
+  {
+    "path": "eva2/experiments/contextforge-gateway-v1/README.md",
+    "bytes": 2937,
+    "sha256": "5fb08f0b8547ab23930ac5601f8744815e783f63eb0f2e6fea5d6d720f736393"
+  },
+  {
+    "path": "eva2/experiments/mcp-sdk-v1/README.md",
+    "bytes": 4540,
+    "sha256": "3025a0230caea6d25f0c29c50e5dfb0f72d071631a806d1acf6b311b2186d00f"
+  },
+  {
+    "path": "eva2/experiments/playwright-mcp-public-read-v1/README.md",
+    "bytes": 2660,
+    "sha256": "b5b1162a96a186cba35781337cb62b72d6c83f4165eab35c8768f513098c928a"
+  },
+  {
+    "path": "eva2/experiments/playwright-mcp-sidecar-v1/README.md",
+    "bytes": 3008,
+    "sha256": "3db995158c02cb2a2e694f9605aa85ef631bc9d831dbae70c28baf82c5f08741"
+  },
+  {
+    "path": "eva2/experiments/pydantic-mcp-discovery-v1/README.md",
+    "bytes": 3108,
+    "sha256": "288b891d120d24ff17c7a62df982a3e5133f2b522df46fbc80c31d770e834319"
+  },
+  {
+    "path": "eva2/experiments/filesystem-mcp-mutation-v1/README.md",
+    "bytes": 1596,
+    "sha256": "2ccbdb77178e59ba04a484d02441b2c3053aef79f7ac46358de5804573e6e8c5"
+  },
+  {
+    "path": "eva2/experiments/home-assistant-official-mcp-v1/README.md",
+    "bytes": 2910,
+    "sha256": "6be6a9a54e61261620f86f8ec497d83a623eb2f7cd9fc307281ab074077c34f7"
+  },
+  {
+    "path": "eva2/experiments/agent-browser-sidecar-v1/README.md",
+    "bytes": 702,
+    "sha256": "4cd5b653497e935c07997187d94889521cd87739181ed637618f0f6592284599"
+  },
+  {
+    "path": "eva2/experiments/ha-mcp-sidecar-v1/README.md",
+    "bytes": 5646,
+    "sha256": "be34dc8352a488014478ce33d120e1eb44930a8df32d5cb3422382249d48ec96"
+  },
+  {
+    "path": "eva2/experiments/pydantic-agent-merged-lock-v1/README.md",
+    "bytes": 1375,
+    "sha256": "3fbb2c97894d8f5670cf36f0f6c64ad0f5d78a05669f666e529185106aaa5a06"
+  },
+  {
+    "path": "eva2/experiments/managed-b-clean-graph-v1/README.md",
+    "bytes": 2840,
+    "sha256": "d083ed05d944d1e3f37b56f7d93ac6606fd951e6a813760277f771b463770821"
+  },
+  {
+    "path": "eva2/experiments/react-admin-dashboard-v1/README.md",
+    "bytes": 2267,
+    "sha256": "56cd4ae5e077d94ea9d9840c2e26d306322d7ae9056e90702733c47083d4d169"
+  },
+  {
+    "path": "eva2/experiments/react-admin-dashboard-v1/SCOPE-DECISIONS.md",
+    "bytes": 3326,
+    "sha256": "ea485f37a541150b60a3ba0abbefce6c7ffcb519aca75fd64cf5fe241ca989ed"
+  },
+  {
+    "path": "eva2/experiments/tool01-replacement-acceptance-v1/README.md",
+    "bytes": 2887,
+    "sha256": "3a8325d91d738ded40751c3c9478055bcd8e08e763484f6e8902c491473e2a19"
+  },
+  {
+    "path": "eva2/experiments/distroless-core-v1/README.md",
+    "bytes": 2563,
+    "sha256": "a5ddd62f1c90d1831cdd5bb0d29032730e91ee91a6694ab9982b7f4c82f3c612"
+  },
+  {
+    "path": "eva2/experiments/wyoming-local-voice-v1/README.md",
+    "bytes": 3672,
+    "sha256": "f5ef821aa31d29ebcd7ef11264297446c83ba0ff083ba44b9b6519015f76dac3"
+  },
+  {
+    "path": "eva2/experiments/clean-runtime-stack-v1/README.md",
+    "bytes": 955,
+    "sha256": "3cde429b20a7ae119472aac7859a159c697f0bd540585bea846426a8839b23a9"
+  },
+  {
+    "path": "eva2/evidence/architecture/voice-service-boundary-2026-09-12.md",
+    "bytes": 1419,
+    "sha256": "a483a79e6d00d3ebb71818dcbba1077154ba2068a730323d3e4874e4e6bce83e"
+  },
+  {
+    "path": "eva2/evidence/architecture/local-stream-overlay-2026-09-13.md",
+    "bytes": 1530,
+    "sha256": "fba39e39ed011bf1e2404778b657a0cabde684fa2b41c41f7c2272ef045a8363"
+  },
+  {
+    "path": "eva2/evidence/architecture/shared-schema-validation-2026-09-12.md",
+    "bytes": 1752,
+    "sha256": "1deeec5b1524862d1dc99ba7501153bfcdc900f212974f4037b392d8bcea00dd"
+  },
+  {
+    "path": "eva2/evidence/architecture/local-stream-live-2026-09-13.md",
+    "bytes": 1370,
+    "sha256": "b89b83bf9459a6dad50d8e8168483bbbd47e857000efcac964c809ab065a1bcf"
+  },
+  {
+    "path": "eva2/evidence/architecture/reviewed-runtime-bundle-live-2026-09-13.md",
+    "bytes": 1944,
+    "sha256": "b493565c0e9e1f51d27307555a8902a0b02a2794a28dffa9e0c7b24b1940409e"
+  },
+  {
+    "path": "eva2/evidence/architecture/initiative-mandate-reader-2026-09-13.md",
+    "bytes": 2034,
+    "sha256": "6f64c697d2bd6cd028f3ac68b8643b3b36cca5cef2c22f673b3b852dc547010b"
+  },
+  {
+    "path": "eva2/evidence/architecture/reviewed-runtime-bundle-source-2026-09-13.md",
+    "bytes": 1471,
+    "sha256": "b4575958ab63f90a11d81198c86602d1472c82133f4da4d833fc3795f975129f"
+  },
+  {
+    "path": "eva2/evidence/architecture/adapter-boundaries-live-projection-2026-09-12.md",
+    "bytes": 1799,
+    "sha256": "07882ff4d9b5a3ffea10b2d8e5bba7d97018fe4d52353d6f84291fa009aecbf8"
+  },
+  {
+    "path": "eva2/evidence/living-core/au006-phase2-offline-review-20260913.md",
+    "bytes": 7898,
+    "sha256": "1362f25e53dfafc0116850ffe4034e2b177969c2309b938589171fb54e84b6d0"
+  },
+  {
+    "path": "eva2/evidence/living-core/au006-normal-command-activation-scope-20260913.md",
+    "bytes": 7157,
+    "sha256": "33a1c9b8401eac85c40abef3ffc1a5d4582ba6a2b2acb6306d87f1280d12be20"
+  },
+  {
+    "path": "eva2/evidence/living-core/au006-rpc-install-and-r2-plan-20260913.md",
+    "bytes": 7462,
+    "sha256": "6c84a0033412eb195d0a0c1a8a0db053f5f9a9d7365263bdfdaa2557183d4959"
+  },
+  {
+    "path": "eva2/evidence/living-core/au006-phase2-ordinary-probe-failed-20260913.md",
+    "bytes": 3505,
+    "sha256": "4e4d7bb0567222d0bf02ff09b61f089f789b012687732944fb1367e8b9cc3229"
+  },
+  {
+    "path": "eva2/evidence/living-core/au006-four-row-repair-completed-20260913.md",
+    "bytes": 3233,
+    "sha256": "3ee7004dc520ae6b4aee7b608d03abc05ab0398ca1faa3ef44398dc9206d6d0f"
+  },
+  {
+    "path": "eva2/evidence/living-core/au006-optimized-registration-guards-20260913.md",
+    "bytes": 2458,
+    "sha256": "fb33a84b09a86b34837282a4b3556fd72ce12032b5bf9e50e91c174cebf6d228"
+  },
+  {
+    "path": "eva2/evidence/living-core/au006-document-provider-contract-plan-20260913.md",
+    "bytes": 7219,
+    "sha256": "095cf715fc0b05eddd9f23fa1cb32b8807b38a5e63b37cc352fee480af5c971a"
+  },
+  {
+    "path": "eva2/evidence/living-core/au006-guarded-phase1-completed-20260913.md",
+    "bytes": 3036,
+    "sha256": "a6b926d4ca1c926f068a056d1167cff46a3ea48d63e3ca2b03e42ce77b5c3859"
+  },
+  {
+    "path": "eva2/evidence/living-core/au006-guarded-phase1-registration-plan-20260913.md",
+    "bytes": 4713,
+    "sha256": "9d815078287837b77bc96613eed6fb9ecbe236d4a49dfb457d0dfe3fa888c946"
+  },
+  {
+    "path": "eva2/evidence/living-core/au006-bootstrap-guard-repair-review-20260913.md",
+    "bytes": 5277,
+    "sha256": "27368e8186780d9f553fbb44d55f8028dbc3327f05c4c250fb4c933cc21a0af3"
+  },
+  {
+    "path": "eva2/evidence/living-core/au006-phase1-retry-abort-20260913.md",
+    "bytes": 3969,
+    "sha256": "13b6f6242007c1c66d0a05784a9e7e5e6469a94e6b2d7f7684e97a0e6b262056"
+  },
+  {
+    "path": "eva2/evidence/living-core/au006-rpc-owner-context-fix-review-20260913.md",
+    "bytes": 2583,
+    "sha256": "8c41ffc363af5c0908129a84febb73cc0a24d0e4e71c440d8753b846a931cd5a"
+  },
+  {
+    "path": "eva2/evidence/living-core/au006-normal-command-activation-plan-20260913.md",
+    "bytes": 6225,
+    "sha256": "6bb0c8a49d51cfd1d80b935b71967b0126f007bb61aa1f110fec6da65a1d1010"
+  },
+  {
+    "path": "eva2/evidence/living-core/fixtures/i02-workspaces/initiative-service/notifications.md",
+    "bytes": 35,
+    "sha256": "e714fab492342fcd2a85a15873d1d3e001431999ea3de24aae10fada3e5ac728"
+  },
+  {
+    "path": "eva2/evidence/living-core/fixtures/i02-workspaces/initiative-service/README.md",
+    "bytes": 169,
+    "sha256": "61157bd90c8f6b0994e3826ff5919c09dee38b7a55205e6257790aacd3db04bb"
+  },
+  {
+    "path": "eva2/evidence/living-core/fixtures/i02-workspaces/initiative-service-current/notifications.md",
+    "bytes": 35,
+    "sha256": "e714fab492342fcd2a85a15873d1d3e001431999ea3de24aae10fada3e5ac728"
+  },
+  {
+    "path": "eva2/evidence/living-core/fixtures/i02-workspaces/initiative-service-current/README.md",
+    "bytes": 169,
+    "sha256": "61157bd90c8f6b0994e3826ff5919c09dee38b7a55205e6257790aacd3db04bb"
+  },
+  {
+    "path": "eva2/evidence/product/AU-007-beoordelingskaart-huisautomatisering-2026-09-10.md",
+    "bytes": 1895,
+    "sha256": "9f351ab6f928fbf0a7010e44d95e8ce520374b7a34b65990f8abbf312d520522"
+  },
+  {
+    "path": "eva2/evidence/product/au004-attempt3/Resultaat-procedureleerproef.md",
+    "bytes": 1376,
+    "sha256": "cfe1ca902c8d48108b622f5751b1ad27171f05b790f07bd0440e0a219518329a"
+  },
+  {
+    "path": "eva2/evidence/product/au004-attempt3/au004-srt-webvtt-procedure-20260912-attempt3.md",
+    "bytes": 3575,
+    "sha256": "bbae3082ef113d6433ad0184fafc30ef2853e4d6b3798841ccef7ba0028016df"
+  },
+  {
+    "path": "eva2/evidence/product/au004-attempt3/au004-check-B-20260912-attempt3.md",
+    "bytes": 2428,
+    "sha256": "f2b59b9970b247752f8c7bfc4e33b0a73b1710c71d71edf24dacac45aedc9c27"
+  },
+  {
+    "path": "eva2/evidence/product/au004-attempt3/au004-check-A-20260912-attempt3.md",
+    "bytes": 2903,
+    "sha256": "7e5c5a72a5f6963b5f0cebb7ced586e05bc6796aa04b064a538c5d387d297b1b"
+  },
+  {
+    "path": "eva2/evidence/product/au004-attempt2-harness/README.md",
+    "bytes": 324,
+    "sha256": "b6e61de774995a463c89c1598ab9080b782b5555989a9e0683e5a17b19764bd0"
+  },
+  {
+    "path": "eva2/evidence/product/artifacts/AU-008-api-toegang-en-toestemming-2026-09-12.md",
+    "bytes": 866,
+    "sha256": "568e859f3f0e0d8dd09209b67e3b70e96cb57762f3fc9722851b1f32d2b1b1b1"
+  },
+  {
+    "path": "eva2/evidence/product/au004-procedure-discovery/result-C.md",
+    "bytes": 1808,
+    "sha256": "584d2a2e6c835b80cd84a5975f97f76dfde931ff63700aac221a54c03d2dd46e"
+  },
+  {
+    "path": "eva2/evidence/product/au004-procedure-discovery/plan.md",
+    "bytes": 4710,
+    "sha256": "ca20b54d51b2a85a3de95c0303e958d141e87051283d7d96c3fdd7328c156022"
+  },
+  {
+    "path": "eva2/evidence/product/au004-procedure-discovery/fresh-D/result.md",
+    "bytes": 1808,
+    "sha256": "4f661810c3345f9538dd834010664240a050a33232ae1b9c03a850712124b3d8"
+  },
+  {
+    "path": "eva2/reviews/schema-installer-disposable-live-03ec03a.md",
+    "bytes": 1130,
+    "sha256": "cc1e4fb671b72da2dd6b7ed215d168309bca9063943316e4a0efe8c5651ffa2c"
+  },
+  {
+    "path": "eva2/reviews/community-dependency-audit-2026-08-26.md",
+    "bytes": 3532,
+    "sha256": "3e4abda9607979f54d0cefccbf5ca32c956ea885dcd1a0ee1b3635915959d82f"
+  },
+  {
+    "path": "eva2/reviews/comparison-readiness-2026-09-12.md",
+    "bytes": 8545,
+    "sha256": "d311765de17c7e81473482fa764994c20a0ad2035cc69149c8fd428dbfde1ea1"
+  },
+  {
+    "path": "eva2/reviews/CO-002-evidence-limitations-2026-09-05.md",
+    "bytes": 8913,
+    "sha256": "aec035a00635c1ea58c50ef8739ccdc93ef3bf9d3c1886848b98f8e4ab7f522f"
+  },
+  {
+    "path": "eva2/reviews/installer-and-onboarding-in00.md",
+    "bytes": 1642,
+    "sha256": "796377e4a3cba287e36415ba44a3395da18ede863454de1098918371be08dfd1"
+  },
+  {
+    "path": "eva2/reviews/renovate-npm-coverage-2026-09-12.md",
+    "bytes": 3541,
+    "sha256": "7cdd78309dcbc9e4f05a778b791158353340d1e402161e9845c35f6d4213756f"
+  },
+  {
+    "path": "eva2/reviews/managed-b-host-contract-ce23545.md",
+    "bytes": 721,
+    "sha256": "787d7953186d67a026e095c1526e5e2a91842f08dd0fac609b26d2eaa371d048"
+  },
+  {
+    "path": "eva2/reviews/openai-sdk-transport-candidate-8526314.md",
+    "bytes": 2485,
+    "sha256": "31c8fa266569f53fae6e8a3900ba62c250d1d3bbe345068e1bd3a7540e77b159"
+  },
+  {
+    "path": "eva2/reviews/RB-005-two-builder-reproducibility-72de385.md",
+    "bytes": 5547,
+    "sha256": "0e4c2cddbf05a349e98017a67b54c8dab9262e9175d19152fc9bb23b27fc1d03"
+  },
+  {
+    "path": "eva2/reviews/managed-b-postgres-secret-preflight-6157aa8.md",
+    "bytes": 915,
+    "sha256": "2fa7beee9eb38323597636b14d6284769026a9d337b1923c9462411761e5be3e"
+  },
+  {
+    "path": "eva2/reviews/mcp-invocation-registry-recovery-2026-09-13.md",
+    "bytes": 2872,
+    "sha256": "83de648c982283a0e68bb3c11b8705094da930d6833bd632dc591fff059b22b0"
+  },
+  {
+    "path": "eva2/reviews/document-service-health-candidate-20260913.md",
+    "bytes": 3698,
+    "sha256": "5ea0097a4039ca3cb71c26dd104136f5e51ac7535509628a1df3cb701d5087af"
+  },
+  {
+    "path": "eva2/reviews/EV-001-formal-proof-review-0f12663.md",
+    "bytes": 2128,
+    "sha256": "3454c0237588a69dc3625454e7b987a5082c6d7dfb609938d39be528544acbe9"
+  },
+  {
+    "path": "eva2/reviews/IN-002-postgres-remediation-restore-2026-09-13.md",
+    "bytes": 2291,
+    "sha256": "066cc5423eb011f8ce622b7b9664b8994df1abda7566dabe550f371dec34bc51"
+  },
+  {
+    "path": "eva2/reviews/GOV-001-execution-workboard-fc1e67f.md",
+    "bytes": 1630,
+    "sha256": "50154971ffbc4f390b2b56242abd2019c4876a70eb447df7145a58e425233cfc"
+  },
+  {
+    "path": "eva2/reviews/cockpit-people-memory-1c62778.md",
+    "bytes": 3134,
+    "sha256": "a8ebaefffe37a8ec523fb957ed1021251a4f8b12be2b5e016119939b6f9f72f2"
+  },
+  {
+    "path": "eva2/reviews/astra-conversation-canary-promotion-2026-09-05.md",
+    "bytes": 3136,
+    "sha256": "e7456ab0d7ede82a4585448595926eb10d3285617e2beba68d90989eef23f3a4"
+  },
+  {
+    "path": "eva2/reviews/document-health-r2-live-20260913.md",
+    "bytes": 1304,
+    "sha256": "30d63b27573d3ff33655ae1ad3d6ae8313b7f42e94e726568d1437b5f8836d9d"
+  },
+  {
+    "path": "eva2/reviews/IN-002-postgres-formal-sbom-binding-2026-09-13.md",
+    "bytes": 2182,
+    "sha256": "90c0381e2b393e03db7ebee4096ca84e15cccc2e80f57282394aa3b600991bfc"
+  },
+  {
+    "path": "eva2/reviews/action-chain-read-call-claim-mc03b2a.md",
+    "bytes": 4254,
+    "sha256": "0b9c4de9b0e4697972108195f7d2ac9202a73712c3d469b89af92b84ce4b4c0b"
+  },
+  {
+    "path": "eva2/reviews/RB-006-candidate-artifact-analysis-ffbff30.md",
+    "bytes": 3124,
+    "sha256": "770c9f74ec4ee3236b9c17300e0f360d0dd624f80f02e7f537b3c0ddaab748c2"
+  },
+  {
+    "path": "eva2/reviews/delegated-subagent-vertical-f9373f1.md",
+    "bytes": 4476,
+    "sha256": "0986e1710e1981eae5f40412b6bb2117d758e77ecce624f2ccf2f2da1dc79273"
+  },
+  {
+    "path": "eva2/reviews/action-chain-effect-readback-call-claim-mc03c3b2.md",
+    "bytes": 5132,
+    "sha256": "aacfbd63043c95464eb23a88567f825645df4b72fc0d57e95c288b2143630c64"
+  },
+  {
+    "path": "eva2/reviews/IN-002-structured-host-detection-2026-09-13.md",
+    "bytes": 1709,
+    "sha256": "29a72b285d0991bc4b3a29b5d849ed126002a25ee1876557163e8a3182c694da"
+  },
+  {
+    "path": "eva2/reviews/openbot-competitive-inventory-ob00.md",
+    "bytes": 3965,
+    "sha256": "903390a1b57dff7841a38d99dae30472bf4536e783ca6d1bdd379e8896197c12"
+  },
+  {
+    "path": "eva2/reviews/cp001-native-postgres-delivery-2026-09-12.md",
+    "bytes": 4695,
+    "sha256": "622f5ed61edac89d203701a7e7f45f77f9a5b156836e12776a9ef8869a90ff3a"
+  },
+  {
+    "path": "eva2/reviews/managed-b-render-command-80eb350.md",
+    "bytes": 803,
+    "sha256": "55e50b4bbb3b11d9577d002aad72964f82239f73141c491373b252873fb88fc4"
+  },
+  {
+    "path": "eva2/reviews/cp001-bottie-ack-delivery-2026-09-12.md",
+    "bytes": 4116,
+    "sha256": "a2619d683fd0c099b71f28d05399ca37217ec4de0ebc03e47df32434164d8042"
+  },
+  {
+    "path": "eva2/reviews/AU-007-private-initiative-34ed766.md",
+    "bytes": 2221,
+    "sha256": "8397297295e90162c44035cbc7b62bfa3e5996fc00ecba96521a6f698352fa80"
+  },
+  {
+    "path": "eva2/reviews/IN-002-amd64-sealed-base-2026-09-13.md",
+    "bytes": 2245,
+    "sha256": "13068bd558f5bdbb9d30c503b399ace250bedd3168f6145af5c82f7d374b0b25"
+  },
+  {
+    "path": "eva2/reviews/IN-002-postgres-vulnerability-triage-2026-09-13.md",
+    "bytes": 3003,
+    "sha256": "580689b4b239557d84db3b03d070b8c8f1d0cfebef1161b24fb58fd7caa92066"
+  },
+  {
+    "path": "eva2/reviews/action-chain-effect-post-call-stop-request-8438fea.md",
+    "bytes": 1939,
+    "sha256": "9ffad133b277fe43a6bf5606eb2ea515e8c5db4b2bbc128e4ff27c197ec70c65"
+  },
+  {
+    "path": "eva2/reviews/au006-r2-live-completed-20260913.md",
+    "bytes": 1807,
+    "sha256": "5e71fa03642bd4906b1729c19bbda4ccd858e81e60e085e55c4c84421fabc9a0"
+  },
+  {
+    "path": "eva2/reviews/IN-002-postgres-remediation-candidate-2026-09-13.md",
+    "bytes": 2321,
+    "sha256": "509ba09f549347a2b0059cd22dcc2fcb3b24920ccc7e646c39b0317b9723e42f"
+  },
+  {
+    "path": "eva2/reviews/action-chain-effect-preauthorization-cancellation-fedfb15.md",
+    "bytes": 1764,
+    "sha256": "720f60bed080685919d39798ef2cc0577631d5b72e4a7c02a8b4ce5688937714"
+  },
+  {
+    "path": "eva2/reviews/durable-subagent-process-9898926.md",
+    "bytes": 3340,
+    "sha256": "7c4f794fa3be54af37e74f0a1e4d3590f608724e2889cda85a1e755f3f179886"
+  },
+  {
+    "path": "eva2/reviews/IN-002-gosu-symbol-boundary-2026-09-13.md",
+    "bytes": 2756,
+    "sha256": "a568d1a037b2be1d1be0d0c90f3c103119be822ade8fa5302417dd3abef32c39"
+  },
+  {
+    "path": "eva2/reviews/document-task-input-20260913.md",
+    "bytes": 6375,
+    "sha256": "304f6ab0fe5cdd37be833b4ade37989539a38cdfa4862f923675f7105a383bdf"
+  },
+  {
+    "path": "eva2/reviews/IN-002-gosu-govulncheck-2026-09-13.md",
+    "bytes": 2437,
+    "sha256": "7e1586fca323b8dd2a3507117b74a94ca1a6b568b391432008b5d5c7530b02c1"
+  },
+  {
+    "path": "eva2/reviews/RR-001-hermetic-candidate-source-daa9022.md",
+    "bytes": 4144,
+    "sha256": "a78ea30821c81d20b1c93ce3bd6a9eddc9a7606973bebe401d430acf7e320f6c"
+  },
+  {
+    "path": "eva2/reviews/action-chain-read-authorization-mc03b1.md",
+    "bytes": 3523,
+    "sha256": "85625860699ca7a7e8cced1c05ef3737572fa020b8354b86c320c34885210f8c"
+  },
+  {
+    "path": "eva2/reviews/old-eva-presence-parity-p00.md",
+    "bytes": 1530,
+    "sha256": "95e0d0e56bab2b6b56d40de9568255e871377cfe0da1ad896973ca065cb3fd59"
+  },
+  {
+    "path": "eva2/reviews/au006-r2-owner-handoff-20260913.md",
+    "bytes": 1019,
+    "sha256": "205ce9860657f5d974f400f5a5aae9acecc7a82de2f8c49fa338b4f99c79a6e4"
+  },
+  {
+    "path": "eva2/reviews/AU-002-catalog-81d43061.md",
+    "bytes": 1411,
+    "sha256": "5ae7f941445a81660b4079b7550d1f71357242dd3c3d8ce6c60afd3de8795d9c"
+  },
+  {
+    "path": "eva2/reviews/CP-000-open-source-eval-engine-f0eb745.md",
+    "bytes": 4133,
+    "sha256": "00f5e582e943e9167de72918a1b4bd59fba866481ca8796f6864f7fe8ae8af7b"
+  },
+  {
+    "path": "eva2/reviews/procedure-reference-host-20260913.md",
+    "bytes": 2649,
+    "sha256": "07af16a0ae5b59eab54cb263bb3d8d188011b6f4dbdfbd5dabc1705ec88cf3db"
+  },
+  {
+    "path": "eva2/reviews/CO-006-candidate-review-2026-09-08.md",
+    "bytes": 8625,
+    "sha256": "844f33442364e2a425fce74c542a3cad48b34cbbae1e9407ba8858cdcca66e40"
+  },
+  {
+    "path": "eva2/reviews/telegram-recovery-live-handoff-20260913.md",
+    "bytes": 1780,
+    "sha256": "f6e75f1cf7e3d472db10a23a4c2baeb2a99d108a5055961d5603e854e54ad393"
+  },
+  {
+    "path": "eva2/reviews/cp001-direct-model-attempts-2026-09-13.md",
+    "bytes": 6572,
+    "sha256": "e69ddee38444837465b79da646637a00798326508f5a655917a8023f00fdb1fe"
+  },
+  {
+    "path": "eva2/reviews/integration-coverage-2026-09-12.md",
+    "bytes": 8502,
+    "sha256": "a3cd4ce54fa14cf4073ee21eaaa32859cf49870e100b0c960b6ce542d6ec0f7b"
+  },
+  {
+    "path": "eva2/reviews/managed-b-manifest-skeleton-505caf8.md",
+    "bytes": 1338,
+    "sha256": "6169d1145ac8cb33d2ef5214a0b66db1c97347d8d9c561fdf1538609fc971159"
+  },
+  {
+    "path": "eva2/reviews/managed-b-hindsight-volume-preflight-128e187.md",
+    "bytes": 741,
+    "sha256": "8f72b3cc534650cd660f859043f6e17c66d0b7bc920c69bd379c1f169ef3cb83"
+  },
+  {
+    "path": "eva2/reviews/voice-http-replay-2026-09-12.md",
+    "bytes": 879,
+    "sha256": "5a3503977f2759d13ecc71df204ebdbcd8391512f3621c594dd208cbf1d514cd"
+  },
+  {
+    "path": "eva2/reviews/telegram-project-update-review-2026-09-12.md",
+    "bytes": 3472,
+    "sha256": "6ce351f4036ce90b6b07e702d1f9c033669e415c9119d97ba0600e1bef0f68bd"
+  },
+  {
+    "path": "eva2/reviews/dependency-first-strategy-7d5c93f.md",
+    "bytes": 7092,
+    "sha256": "2233457ae41e7c5cc095444d03e275cb811019efe779b137a4639d0adf48a97e"
+  },
+  {
+    "path": "eva2/reviews/schema-installer-file-secret-9e129a4.md",
+    "bytes": 959,
+    "sha256": "a24a1073df7fec63afe32505de32d2e9890556b228eeeed96c67d8bf3673b33e"
+  },
+  {
+    "path": "eva2/reviews/au004-r6-owner-handoff-20260913.md",
+    "bytes": 2827,
+    "sha256": "1e5e3971ceefeaf6aa53d5f0de47ab759718281da1ea5d76d89d4843ebf1b4ac"
+  },
+  {
+    "path": "eva2/reviews/procedure-reference-resolved-content-20260913.md",
+    "bytes": 2190,
+    "sha256": "f7fb16d64968364b7b0589780941179207e27b03fea7774ca6325ff9fec9b012"
+  },
+  {
+    "path": "eva2/reviews/architecture-whole-system-2026-09-12.md",
+    "bytes": 8348,
+    "sha256": "25fd2250cb28de7840a2c2a1a58e7669099288585c32eb8aa04c20993123e58b"
+  },
+  {
+    "path": "eva2/reviews/managed-b-observed-volume-pins-4ef9ae3.md",
+    "bytes": 1078,
+    "sha256": "e75e1b5782e869e46935d540773e0aae158b403b9faa071aa0fe2fce9238737d"
+  },
+  {
+    "path": "eva2/reviews/initiative-recovery-2026-09-21.md",
+    "bytes": 1853,
+    "sha256": "28d2aa7207040059c34c7f8619d3bbda83a4abddebf34fc25acd9bd92c9c968c"
+  },
+  {
+    "path": "eva2/reviews/telegram-test-ingress-isolation-aac1fda.md",
+    "bytes": 2878,
+    "sha256": "9aa3cbcdd99eb3c1d60ddbb30438a99552144ce61cff1be1e85e55d655210ee8"
+  },
+  {
+    "path": "eva2/reviews/RB-004-builder-b-offline-admission-f89d3d7.md",
+    "bytes": 4165,
+    "sha256": "80f9781f9f6e375c29407d2093dede649ecfed3ad796dff4f5510188dfc4d334"
+  },
+  {
+    "path": "eva2/reviews/telegram-test-support-7017c25.md",
+    "bytes": 3071,
+    "sha256": "87476cda1407a33ab34039d2fc14fac465160b9540c2bbb3bb9b772bc37cd9e9"
+  },
+  {
+    "path": "eva2/reviews/IN-002-postgres-critical-applicability-2026-09-13.md",
+    "bytes": 4100,
+    "sha256": "162b76ce31301b4d4ae326942e254160be02a3c9967660620ae3c4065a823975"
+  },
+  {
+    "path": "eva2/reviews/action-chain-read-result-mc03b2b.md",
+    "bytes": 4946,
+    "sha256": "ae83c43d0cdc53c6cb673075c4d5402715a4623a60f68b86416a97249051a900"
+  },
+  {
+    "path": "eva2/reviews/dependency-candidate-selection-2f67277.md",
+    "bytes": 4229,
+    "sha256": "75215548768c5c006dc56af4c5d2f0b17346442fcb6d88ad7fc5c731001bdcc6"
+  },
+  {
+    "path": "eva2/reviews/au004-r4-a-pass-b-selection-fail-20260913.md",
+    "bytes": 1358,
+    "sha256": "b43e500291eec5f23dd1cb365bfdd0e0d24bae3740ab63f369ae4e5167b70844"
+  },
+  {
+    "path": "eva2/reviews/GOV-002-status-stable-workboard-ef981d7.md",
+    "bytes": 1221,
+    "sha256": "b5cbc5680b94f46d47096c8833cef76fee7a3547b0bd18e41c379ab73fee9cd0"
+  },
+  {
+    "path": "eva2/reviews/cp001-native-accounting-admission-2026-09-12.md",
+    "bytes": 4716,
+    "sha256": "2e7626b0f6539c681994fd80b0966e7d22c541b9015708c4942c718a4d92ddb9"
+  },
+  {
+    "path": "eva2/reviews/voice-memory-postgres-integration-2026-09-12.md",
+    "bytes": 4398,
+    "sha256": "aa944d07028f91ea1a0e9c1e6122488d287ea62346fed608c67871b9abc06abf"
+  },
+  {
+    "path": "eva2/reviews/TL-001-candidate-review-2026-09-08.md",
+    "bytes": 7569,
+    "sha256": "8fee7878046650e5a14a29bc293d2264c973c3f88002b8b7c04da76f9ad175fb"
+  },
+  {
+    "path": "eva2/reviews/AU-008-private-review-519a03a.md",
+    "bytes": 1839,
+    "sha256": "669e4f3f0f480203f05080f9cd1cdccbabcd88d4c4a09eb8533a7354d66d1ffc"
+  },
+  {
+    "path": "eva2/reviews/CO-004-CO-005-memory-controls-ae832a98.md",
+    "bytes": 2559,
+    "sha256": "6d542fc13f6d721f141b9236d85e789456434520507155db23c29d38f2c92f62"
+  },
+  {
+    "path": "eva2/reviews/model-lease-publisher-3af02bb.md",
+    "bytes": 748,
+    "sha256": "056181ef05314a5dc81ebbcff2c1ce3811ef535ddfe22d5c15b8b2860086cd23"
+  },
+  {
+    "path": "eva2/reviews/ha-mcp-parity-contract-c03942d.md",
+    "bytes": 1608,
+    "sha256": "7a7f397ac9e19483f92548a27c517896f6ed47bfd9899c18b85efed153e8249f"
+  },
+  {
+    "path": "eva2/reviews/conversation-usage-plumbing-7baa524.md",
+    "bytes": 4860,
+    "sha256": "b15a87725edaba259bb2cc8662eca2c60771646ceff5c92f1af0546580bc0698"
+  },
+  {
+    "path": "eva2/reviews/cp001-local-settlement-cli-2026-09-13.md",
+    "bytes": 3471,
+    "sha256": "ab7ba1df68b2e0e69eb0f54738946471a26d40b456266992f0469d5ba6d827fa"
+  },
+  {
+    "path": "eva2/reviews/action-chain-effect-readback-result-mc03c3d.md",
+    "bytes": 4539,
+    "sha256": "fba38342db152073d9692711327fbaf203815349729257f20cf3ff8a3ec669a1"
+  },
+  {
+    "path": "eva2/reviews/action-chain-effect-advance-mc03c3e.md",
+    "bytes": 4412,
+    "sha256": "499a914d3209f93e22f3e4573e7425304b1ce4c844da531b8259390a84897646"
+  },
+  {
+    "path": "eva2/reviews/delegated-work-database-admission-d510366.md",
+    "bytes": 1762,
+    "sha256": "e2a5be4fcf7f31ae6f9199ab2a11bec8af76446b618341a93da29a3bf6cc86ad"
+  },
+  {
+    "path": "eva2/reviews/pydantic-tool-free-child-candidate-b7e9af7.md",
+    "bytes": 1999,
+    "sha256": "c54ec6719914deaf35477a232269767d77dea14af85c820e2c41c932424166cc"
+  },
+  {
+    "path": "eva2/reviews/action-chain-effect-readback-preparation-mc03c3a.md",
+    "bytes": 4901,
+    "sha256": "266cf571f662a34c7453f59473a4cd4ed16ec1de5db3f60ff31cf3bac0f9f4e5"
+  },
+  {
+    "path": "eva2/reviews/action-chain-effect-call-claim-mc03c1b.md",
+    "bytes": 3817,
+    "sha256": "d6f2b3ae80f3d4da82bff12916bf725c5d62453b63e3cb2de35dd44941fa0671"
+  },
+  {
+    "path": "eva2/reviews/document-health-r2-env-guard-candidate-20260913.md",
+    "bytes": 1169,
+    "sha256": "5478b3f9d5943906a831be4f45b756783591888d0f989ddbe34292279bf155ed"
+  },
+  {
+    "path": "eva2/reviews/voice-performance-product-gates-v1.md",
+    "bytes": 2464,
+    "sha256": "2f70db6a52048de36734b9620660f511770ec956628165657e5def2b8961862b"
+  },
+  {
+    "path": "eva2/reviews/action-chain-effect-readback-execution-mc03c3c.md",
+    "bytes": 4781,
+    "sha256": "8820eb4475046f2b4e3ea87c26606b3eee2eb309cdbaf63b6dd1fce7884f0e88"
+  },
+  {
+    "path": "eva2/reviews/action-chain-effect-execution-mc03c2.md",
+    "bytes": 5796,
+    "sha256": "b5d3045672c57bdb3d0df4a4fd0bce2a2fbe2b0d564f3852da426b54eeb69d7c"
+  },
+  {
+    "path": "eva2/reviews/telegram-pairing-primitive-47a799d.md",
+    "bytes": 821,
+    "sha256": "cfa6e210bd2fc66066c357513c8144fba86ca97d3526237a0e814fa2058ad985"
+  },
+  {
+    "path": "eva2/reviews/isolated-browser-cockpit-cf8184b.md",
+    "bytes": 7959,
+    "sha256": "947e63585fcc207c067b1e1390d98fde38a301e7969f94ee48c4d734d084e956"
+  },
+  {
+    "path": "eva2/reviews/recovery-source-baseline-2fc19f3.md",
+    "bytes": 963,
+    "sha256": "fbd1df36aeac77acadc44b53859ca0e913d24bfcec47103acf5f88755b5aede9"
+  },
+  {
+    "path": "eva2/reviews/action-chain-effect-preparation-mc03c0.md",
+    "bytes": 2696,
+    "sha256": "a66ad34806676b34fa352c53c1f017717c121e2e4891a12de6034a5588514fcb"
+  },
+  {
+    "path": "eva2/reviews/CO-008-automatic-memory-ddb0267.md",
+    "bytes": 2833,
+    "sha256": "38dc1f094e79e52f9e5e085e5b40e3fee3bfa5d97f21f65d97f5e16d113ea6e0"
+  },
+  {
+    "path": "eva2/reviews/CO-003-owner-memory-read-preparation-2026-09-05.md",
+    "bytes": 3076,
+    "sha256": "8d57e2adf0c99688fd1d1ad0213c86884739346ac00d340f0fbdf434e1187e1a"
+  },
+  {
+    "path": "eva2/reviews/CO-008-workboard-compatibility-2026-09-10.md",
+    "bytes": 977,
+    "sha256": "92f0a05dd81f3cc545f7b137459171b1b4f0c2ac66e73d1a932966aba5fee3f8"
+  },
+  {
+    "path": "eva2/reviews/AU-008-current-status-e96b2054.md",
+    "bytes": 3089,
+    "sha256": "aae404e8c1d3b4e51d3c2c2be5c5aa352186d96c432d97f96d47dafe60714622"
+  },
+  {
+    "path": "eva2/reviews/ha-mcp-sidecar-candidate-3896f17.md",
+    "bytes": 1585,
+    "sha256": "306588418ca6057b9c371273244121ac62bf994432c1fd9a71c3e4f00d963949"
+  },
+  {
+    "path": "eva2/reviews/action-chain-admission-mc01.md",
+    "bytes": 1403,
+    "sha256": "b8fa6c5e3be88f34b9927396ea07122e8af0654ca0c6b682d78602dc9c45e33b"
+  },
+  {
+    "path": "eva2/reviews/au004-r3-a-failed-source-call-visibility-20260913.md",
+    "bytes": 1351,
+    "sha256": "669a054e5396f73e4a3f3a5ee8296dba71f8b9582c15e81a36b347098b4663f1"
+  },
+  {
+    "path": "eva2/reviews/cp001-native-bottie-delivery-2026-09-12.md",
+    "bytes": 4983,
+    "sha256": "6a0ef82712d92e30e0958204dd8522e4fbf491f356e4e59aa04b6c084c944cad"
+  },
+  {
+    "path": "eva2/reviews/cp001-journal-admission-2026-09-13.md",
+    "bytes": 4659,
+    "sha256": "2423fc5b5105afa9f788c0ed5dfb2e14277b74b24bd3a9149c4b5451da275ac3"
+  },
+  {
+    "path": "eva2/reviews/conversation-current-check-2026-09-21.md",
+    "bytes": 702,
+    "sha256": "884e1e90c1137ed21dd537181269cb0c60ac4731c9a3eec506054321f7c37f05"
+  },
+  {
+    "path": "eva2/reviews/IN-002-platform-next-validation-2026-09-13.md",
+    "bytes": 5415,
+    "sha256": "f7b74e9a4db3a51b206bd51258d8d127a45565e2544cc020af542f3411af5188"
+  },
+  {
+    "path": "eva2/reviews/RB-001-sealed-oci-layout-empty-builders-d54dd0a.md",
+    "bytes": 2271,
+    "sha256": "b581cc7e5ec1fb1577cf9cc63f7c16443641a21b3a50909634d2b71065f36e22"
+  },
+  {
+    "path": "eva2/reviews/gateway-shutdown-native-20260913.md",
+    "bytes": 4129,
+    "sha256": "5e5793362783576be4d87c5304777d9f92637be24e0075c9df584379b5994a2d"
+  },
+  {
+    "path": "eva2/reviews/action-chain-leases-mc02b.md",
+    "bytes": 2116,
+    "sha256": "7275f8e60a45ea1547f2ada65a3056940e3234e28e3656d54ee4d5874792a0b1"
+  },
+  {
+    "path": "eva2/reviews/managed-b-all-service-labels-6e8cae5.md",
+    "bytes": 735,
+    "sha256": "25329d0caa86f15d912b8e4ba944e43de1f5d4c61d08d409ff2a3b23f4758650"
+  },
+  {
+    "path": "eva2/reviews/telegram-multi-account-identity-38f4f6c.md",
+    "bytes": 753,
+    "sha256": "ca0c86b4b5266755655f40fbabfdfc847a84232abdb24c4030c209a25b130cf9"
+  },
+  {
+    "path": "eva2/reviews/cp001-offline-runner-delivery-2026-09-12.md",
+    "bytes": 4948,
+    "sha256": "f3286af12e233b8c087f3aa0ef6066753ab7085441dd3b9fd08ff282be1e32f0"
+  },
+  {
+    "path": "eva2/reviews/au004-r6-abc-live-pass-20260913.md",
+    "bytes": 1194,
+    "sha256": "4b4cad139c15c041c93fa5b8124015700b7bf44e17c8e74756d6d145784c7511"
+  },
+  {
+    "path": "eva2/reviews/cp001-request-budget-contract-2026-09-13.md",
+    "bytes": 5480,
+    "sha256": "2e18961a31addf6899afea073a756d8f4b5391340897e3f08f91ceea03a3ebf1"
+  },
+  {
+    "path": "eva2/reviews/postgres-password-file-contract-0c31872.md",
+    "bytes": 1395,
+    "sha256": "ac69e81fa2a6ecf29bd1a9b3569681bdc453db82b734f6570f0a347dbe486947"
+  },
+  {
+    "path": "eva2/reviews/GOV-003-canonical-workspace-dc47573.md",
+    "bytes": 2625,
+    "sha256": "e6344b6078c77251b7ecb7693a518e71a3f4ad91a199e4d627df050c149e8593"
+  },
+  {
+    "path": "eva2/reviews/browser-action-a02-72625e0.md",
+    "bytes": 2105,
+    "sha256": "7590ece2ec971b11ebae97289b590c21fdb8653c43b5ffdd2f1f827026988381"
+  },
+  {
+    "path": "eva2/reviews/managed-b-readonly-backup-2026-08-24.md",
+    "bytes": 1322,
+    "sha256": "eb28004f6c75cb14ce613fd8e1828b056c30ef96d35c07fa53fe0adee1d15690"
+  },
+  {
+    "path": "eva2/reviews/voice-client-lifecycle-2026-09-12.md",
+    "bytes": 765,
+    "sha256": "a634d2f42fc9289d4ea7c2c0ce88c348d31d45cfb98e74faec521f706d885fc5"
+  },
+  {
+    "path": "eva2/reviews/AU-007-technical-closure-f99b5a2.md",
+    "bytes": 3346,
+    "sha256": "5297e957846e10a2dfaec08bd3925fa4b6cbfd0891c19c09f41b698358e8a99f"
+  },
+  {
+    "path": "eva2/reviews/IN-002-isolated-ubuntu-operator-2026-09-13.md",
+    "bytes": 4779,
+    "sha256": "53f8d69dd075e17b0ae9687ca094678e8bf39b7e433cafb56e3887b0b20142aa"
+  },
+  {
+    "path": "eva2/reviews/managed-b-steady-observation-0351852.md",
+    "bytes": 798,
+    "sha256": "3ab7c47bbe2d3507e511d023bd7bfeb55507f6c9227f8b87b967b6946736c4d1"
+  },
+  {
+    "path": "eva2/reviews/cp001-local-stream-settlement-2026-09-13.md",
+    "bytes": 4512,
+    "sha256": "0f8e55957f5a69dd02264a3b6e62fdaeb77324ade0ac645592792e2af693ced5"
+  },
+  {
+    "path": "eva2/reviews/AU-002-provider-64101d5d.md",
+    "bytes": 1828,
+    "sha256": "01f96beacb5e715ebc6bd8715ddd4097cd09f2606e40154bb6b1ceeb36deebfd"
+  },
+  {
+    "path": "eva2/reviews/action-chain-read-preparation-mc03a.md",
+    "bytes": 2136,
+    "sha256": "d68ee5d396f381246b86f02106e43d343663a02529fcdefb27bfb29b0e966874"
+  },
+  {
+    "path": "eva2/reviews/4d-64-schema-candidate-5fafab8.md",
+    "bytes": 2297,
+    "sha256": "512b5326230e64ec13c2423877d2d47e758380d0c07c7eddd4912b24127cbfc6"
+  },
+  {
+    "path": "eva2/reviews/agentbench-fc-agentrl-artifact-remediation-f4fe2c2.md",
+    "bytes": 1551,
+    "sha256": "381fef18074a1af11b361b1690c6432f1535090d44fee4bc874be518e7bacbea"
+  },
+  {
+    "path": "eva2/reviews/project-telegram-normalization-review-2026-09-12.md",
+    "bytes": 3238,
+    "sha256": "f0343bc40bab289ca69d2b8b3fe0ea07bf4026d0a5ee3c3c60cac5b1829cbf1b"
+  },
+  {
+    "path": "eva2/reviews/AU-002-telegram-365128c1.md",
+    "bytes": 4633,
+    "sha256": "2d1df7cc79850900f963cb4ce0249e62ece803b99ef04035ab469f94e04882fc"
+  },
+  {
+    "path": "eva2/reviews/action-chain-read-advance-mc03b3.md",
+    "bytes": 3856,
+    "sha256": "1291787bcbc4bff02c00f85df5d4e1d2f1d916cc4d856bddd51eb649a6eb5c33"
+  },
+  {
+    "path": "eva2/reviews/cp001-bottie-restart-delivery-2026-09-12.md",
+    "bytes": 3597,
+    "sha256": "09d2cfbb2d46bcd539f10101371dedb7c7686e40384dc1cc3f5944a84f427378"
+  },
+  {
+    "path": "eva2/reviews/cp001-native-adapters-delivery-2026-09-12.md",
+    "bytes": 7175,
+    "sha256": "08b41877d48b87418f0c49e25529b2b29ec846e612a55094af687700f3613370"
+  },
+  {
+    "path": "eva2/reviews/cp001-reader-provenance-2026-09-13.md",
+    "bytes": 4877,
+    "sha256": "e8895a4b6d909bd3eaecb4af4415de778fccdec019bf800af9e756e5de4ebc0a"
+  },
+  {
+    "path": "eva2/reviews/IN-002-postgres-image-sbom-2026-09-13.md",
+    "bytes": 1815,
+    "sha256": "782c7242230c590b479baabc8d2efbb00a51838aa00dbe7c12c03cdfaa82171f"
+  },
+  {
+    "path": "eva2/reviews/RB-003-builder-a-offline-admission-501950f.md",
+    "bytes": 3676,
+    "sha256": "c631295f044d7f72019c4ee6add351707eec45546c32ce95b55cf3ac4ab255e3"
+  },
+  {
+    "path": "eva2/reviews/AU-002-final-81d43061.md",
+    "bytes": 4343,
+    "sha256": "6734032f7006cefc1c22b5167df20b0f68eee523156724f34bf0b793b83b80b5"
+  },
+  {
+    "path": "eva2/reviews/harness-subagent-engine-55cf7cc.md",
+    "bytes": 3137,
+    "sha256": "7e16d18a78b583a85f784b2762fce1f3f2fea6c0215e15a6581246b5f3eb9912"
+  },
+  {
+    "path": "eva2/reviews/EV-002-controlled-baseline-proof-review-62507a7.md",
+    "bytes": 2948,
+    "sha256": "360a9c87213953dce34bdd72e6ecaa6edd116c3af677ba2da5dd99e9220a287c"
+  },
+  {
+    "path": "eva2/reviews/RB-002-bootstrap-release-authority-45d2ff6.md",
+    "bytes": 2373,
+    "sha256": "c32b0b5043987599492970697fe22e1208f7467c16aaa52f3a47aa1a497e9316"
+  },
+  {
+    "path": "eva2/reviews/learning-and-person-model-lg00.md",
+    "bytes": 1821,
+    "sha256": "55607efbed99067c7fe1643a6d30754427249f8dd1cb224365c96acd5df06df5"
+  },
+  {
+    "path": "eva2/reviews/documentation-alignment-2026-09-12.md",
+    "bytes": 9890,
+    "sha256": "ad6a65658b6228fc1dec747bed7ee6745a054724177cfd65df423fc4124d9f79"
+  },
+  {
+    "path": "eva2/reviews/mcp-dependency-bakeoff-c5b7d88.md",
+    "bytes": 2078,
+    "sha256": "7eb4b07ebe41a5798d70e3d648563e023fc8d9cec4b098cc1afa05be55a625e6"
+  },
+  {
+    "path": "eva2/reviews/managed-b-sealed-render-80f722c.md",
+    "bytes": 1348,
+    "sha256": "b45698b220341385bb4220be3f3eb8ca62ad17c5c83ec6fbf9238dab0005c94e"
+  },
+  {
+    "path": "eva2/reviews/managed-b-host-only-preflight-0ed424f.md",
+    "bytes": 1094,
+    "sha256": "92b1ac7ef4df41d9bf2a68d9a0a955fecba57096628eef8f21ee1b364c81bcd2"
+  },
+  {
+    "path": "eva2/reviews/action-chain-effect-readback-authorization-mc03c3b1.md",
+    "bytes": 5347,
+    "sha256": "b0ad3cd6fa1454d870d07b3f4ac0fca9a9b5ccdcbb7c9c3c6146f35357a8ebb8"
+  },
+  {
+    "path": "eva2/reviews/model-lease-consumer-5303622.md",
+    "bytes": 631,
+    "sha256": "7a0c26824541c845050ba7e6436ed4b351df9f03f41189df04fd425bd7bf8067"
+  },
+  {
+    "path": "eva2/reviews/action-chain-ledger-mc02a.md",
+    "bytes": 2351,
+    "sha256": "e8e551a6919b6a206c549e9f2ef11bf8d3b943dd50344e62b2514f57c95759cc"
+  },
+  {
+    "path": "eva2/reviews/procedure-reference-preplanning-20260913.md",
+    "bytes": 3426,
+    "sha256": "b83c1f9aceacfd112f1165328afbd5e0a3337cf82cb515ed2e8ab1bff410abbe"
+  },
+  {
+    "path": "eva2/reviews/managed-b-runtime-secret-preflight-6ead73f.md",
+    "bytes": 1140,
+    "sha256": "09b4c06190afaa1e5c73bf962a566078b3ce2ebb887631b315096533de0f1a54"
+  },
+  {
+    "path": "eva2/reviews/RB-004-builder-b-offline-admission-e6d7b5f.md",
+    "bytes": 2677,
+    "sha256": "3a0309fc2c921de2c7072313e02dce8c17a4d6ee9506f62df63643fe02d12947"
+  },
+  {
+    "path": "eva2/reviews/CO-001-telegram-live-drafts-proof-review-7b330a3.md",
+    "bytes": 1813,
+    "sha256": "7d42d275611b57eacb3848e39ee2e46adadaebf87d925a737420676b30d211c4"
+  },
+  {
+    "path": "eva2/reviews/RR-002-RR-004-release-recovery-c1d4c8a.md",
+    "bytes": 2141,
+    "sha256": "633b73d8f3b82fc9805d212ddeadf840c42229fc639ad4564014fcbf4a5241e7"
+  },
+  {
+    "path": "eva2/reviews/runtime-subagent-workboard-c031755.md",
+    "bytes": 4054,
+    "sha256": "72e996ede6e06291d6d2264200b68e524fe150efadaed6bf6750913df2c337ed"
+  },
+  {
+    "path": "eva2/reviews/dependency-transport-trials-2026-08-25.md",
+    "bytes": 5531,
+    "sha256": "e7189158256bfab7dd530340d7f0b5fe0b37a1c0b98e793112be1d35193f7883"
+  },
+  {
+    "path": "eva2/reviews/au004-r5-a-pass-b-content-read-fail-20260913.md",
+    "bytes": 640,
+    "sha256": "c1faa98488a5c0b8bd8bf3c24662b950ce50e9c6e0e4e4fc481fa66f3740f21e"
+  },
+  {
+    "path": "eva2/design/architecture/living-core-v1.md",
+    "bytes": 143672,
+    "sha256": "431e6979b8e5997aec4244024902a216e163f1bac023bf58d94baeb3e5730f4e"
+  },
+  {
+    "path": "eva2/design/architecture/ecosystem-bridge-v1.md",
+    "bytes": 15849,
+    "sha256": "443a5bc1989a9cdfb667cd7dc2f04ae9758fa02d89ba1bfb4a3ec0ef703d8b8f"
+  },
+  {
+    "path": "eva2/design/validation/lab-36-final-acceptance-addendum-v1.md",
+    "bytes": 10783,
+    "sha256": "e240475b836182ca96a674105d6376e332b57ab4ee595a25bf8c127333d33488"
+  },
+  {
+    "path": "eva2/design/product/voice-session-diagnosis-2026-09-10.md",
+    "bytes": 7886,
+    "sha256": "407f1127b3b49133f749ef73c7282908599a6114ad2154e38609c9ed26db2f3e"
+  },
+  {
+    "path": "eva2/design/product/IN-002-restore-wizard-2026-09-13.md",
+    "bytes": 9763,
+    "sha256": "5cd84517b2f9cf0d33ffaad479ed99e3a3052e8981f18d9e90c921828ba64703"
+  },
+  {
+    "path": "eva2/design/product/delegation-and-workboard-v1.md",
+    "bytes": 11371,
+    "sha256": "d79410a84253de9012ab9f2931fb86d016f39db99baed150a36dd978dcc293b9"
+  },
+  {
+    "path": "eva2/design/product/tiered-memory-and-person-model-v1.md",
+    "bytes": 10759,
+    "sha256": "b7890aad7333ae2a85447de3ee705c0eda5f1706d83611cb946728b33f659318"
+  },
+  {
+    "path": "eva2/design/product/VOICE-owner-trial-2026-09-12.md",
+    "bytes": 2163,
+    "sha256": "18d716332a81383b9cab699ba6769431ec40789d7a1fad5702c806530374e2d9"
+  },
+  {
+    "path": "eva2/design/product/project-telegram-updates.md",
+    "bytes": 6432,
+    "sha256": "07d9c2042a2e8d85e3da7d21949317d4cf1779e8d2fb0e0424652f49eeec0239"
+  },
+  {
+    "path": "eva2/design/product/conversational-voice-v1.md",
+    "bytes": 32037,
+    "sha256": "a6bfe9bdbc0c65b3452d3f103b3e4ef38ed0d2ef52c776ceff0f5d1edf09601e"
+  },
+  {
+    "path": "eva2/design/product/performance-and-complexity-v1.md",
+    "bytes": 11548,
+    "sha256": "0c2977823223ff3b845eec75063c9975e5fba615eec579af5c16f97a93c293b4"
+  },
+  {
+    "path": "eva2/design/product/dashboard-v1.md",
+    "bytes": 6913,
+    "sha256": "73f19294ccd0f813c49a03bf46f620f01f7c334e9ce4223d2a4e1b2d3aa44c16"
+  },
+  {
+    "path": "eva2/design/product/native-voice-continuous-session-review-2026-09-09.md",
+    "bytes": 5849,
+    "sha256": "88e752617d60d4bc6f784f1d9dfcc35df5f10c88f42c3eaa8f488cfd647253bc"
+  },
+  {
+    "path": "eva2/design/product/installer-and-onboarding-v1.md",
+    "bytes": 24837,
+    "sha256": "4527e440507488b3e9c51bdc8764d42cbcb783f7f9d836b8fce22d8a345ae8ca"
+  },
+  {
+    "path": "eva2/design/product/learning-and-person-model-v1.md",
+    "bytes": 12386,
+    "sha256": "92f1c3222f78a15f337ea1c1e0b03a2b51e0601fe493845c324984557d655ebc"
+  },
+  {
+    "path": "eva2/design/product/AU-002-owner-trial-2026-09-12.md",
+    "bytes": 2064,
+    "sha256": "7dbf1323164c6fbd3f1217c4ec097887f89366315d11e09d33f2485247167c1a"
+  },
+  {
+    "path": "eva2/design/product/AU-004-small-skill-trial-plan-2026-09-12.md",
+    "bytes": 6280,
+    "sha256": "9ddb1e434c23ef4e1b2e40888db34199b7ec4af5114851f3a45d5baf69cbf21d"
+  },
+  {
+    "path": "eva2/design/product/comparable-agent-benchmarks-v1.md",
+    "bytes": 27919,
+    "sha256": "d59a68b4e93a6ed2a903fbca4a6de972e180a6d83b0c2a5935fc71597258f71e"
+  },
+  {
+    "path": "eva2/design/product/TL-003-python-contextmanager-result-2026-09-12.md",
+    "bytes": 2465,
+    "sha256": "8daf59ef12c00747e4406b2505d66c22f2c86e6af598ee13b440920b75f41943"
+  },
+  {
+    "path": "eva2/design/product/TL-003-unassisted-trial-2026-09-12.md",
+    "bytes": 4822,
+    "sha256": "d5812049e37b75157d40bbe426c769ab1d169268a9a5d0be7996af79107b5202"
+  },
+  {
+    "path": "eva2/design/product/owner-autonomy-mode-v1.md",
+    "bytes": 6529,
+    "sha256": "0df1bbed2eb552b00f106e54988304c0af7ed98d23d99feddda30e99f928b6b2"
+  },
+  {
+    "path": "eva2/design/product/voice-oss-selection-2026-09-10.md",
+    "bytes": 9768,
+    "sha256": "07bb3d4568adde2321b4daeadc4b698ee94993b7eabde4d6ed0f59075066ad3f"
+  },
+  {
+    "path": "eva2/design/product/home-assistant-voice-opensource-review-2026-09-09.md",
+    "bytes": 5641,
+    "sha256": "403771c1f8c825e8934f487d34ab09f3faecad2834a7e21ae3c4109a1ecc25f1"
+  },
+  {
+    "path": "eva2/design/product/voice-livekit-delivery-2026-09-10.md",
+    "bytes": 4204,
+    "sha256": "74efa52cf7cad25d156cc8e2337ef446b949d1a10c526cdc335a616ec4c954ea"
+  },
+  {
+    "path": "eva2/tools/wakeword_capture/README.md",
+    "bytes": 4628,
+    "sha256": "9ca9e01a02155549104b48a686040357ca02bc2e87312d85ef2615e37b7a9ff6"
+  },
+  {
+    "path": "eva2/benchmark/inspect_ai_v1/README.md",
+    "bytes": 29189,
+    "sha256": "d3fec487d20a59f2bb41546613d0f99b98c7e323e4bc5773bd7e41b9c5cba026"
+  },
+  {
+    "path": "eva2/connectors/README.md",
+    "bytes": 182,
+    "sha256": "d3785607c8326029bac1743267f2528076a9a618e958a24e0f886b7c37d88db7"
+  },
+  {
+    "path": "eva2/connectors/channel/README.md",
+    "bytes": 167,
+    "sha256": "b93874c571267e3030c03a4ca3ddee99c974e9ed5fc0263097d8f196abb267bf"
+  },
+  {
+    "path": "eva2/connectors/erp/README.md",
+    "bytes": 112,
+    "sha256": "5b18058dfc944bb8fd23a37cd22f3e0bba3f78d2f72d57d6ac3b74484b3e8b2b"
+  },
+  {
+    "path": "eva2/connectors/mail/README.md",
+    "bytes": 113,
+    "sha256": "d6643b279de7d66c01b8cb400b8c96392b18c2c76d52e069d8b358cfcca47d39"
+  },
+  {
+    "path": "eva2/connectors/calendar/README.md",
+    "bytes": 132,
+    "sha256": "10937214ddae044586274af090e73b47cee03678faa471812acff0eda025b9fc"
+  },
+  {
+    "path": "eva2/connectors/document/README.md",
+    "bytes": 136,
+    "sha256": "01e8d99bc30e75eab676505fc2786265913b0c452ecc57aa6675af27079eaf29"
+  },
+  {
+    "path": "eva2/vendor/dbos-2.31.0-eva1/README.md",
+    "bytes": 563,
+    "sha256": "5f4dc8c14de61b4e2f40ab70581e5b80694b78098b170e191cb785db375c8180"
+  },
+  {
+    "path": "eva2/vendor/dbos-2.30.0-eva1/README.md",
+    "bytes": 2486,
+    "sha256": "dfcd3877a3d6c2318b4f5e96f33c383c35bb84ac9015c0ef135392724ebdb096"
+  }
+]

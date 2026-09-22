@@ -1,0 +1,65 @@
+{
+  "contract": "EvaHindsightFreshInstallReceipt/v1",
+  "recorded_at": "2026-08-23T17:04:00Z",
+  "deployment": {
+    "compose_file": "eva2/deploy/living-core/hindsight.compose.yml",
+    "compose_file_sha256": "667fc5f254fa0fc6178cf2aee882ba2587a748c4547dbb1791ed75f6dc5eb286",
+    "environment_example_sha256": "dd7bba919cc474cee99ab79b41b173e8bbe73bc59511b595778e4db67ac1c84b",
+    "adapter_sha256": "c1b9476858fe505ec9fef9cc315112679d10720082d803dfabe288aba64a726a",
+    "container_id": "d7f045d8454e1013995696ccb6061061ecdf9430214f87fbfb1d8abc01448dd6",
+    "container_created_at": "2026-08-23T16:59:13.611667536Z",
+    "image_sha256": "aeb0831e2ec55e659d5e69baa064c1278113e523513b8f60a1f09c5cabe59b9b",
+    "image_version": "0.9.1",
+    "data_volume_created_at": "2026-08-23T16:59:13+02:00",
+    "data_volume_initial_state": "new_empty_named_volume",
+    "authorization_mount": "read_only",
+    "health": "healthy",
+    "recall_budget": "low",
+    "recall_max_tokens": 2048,
+    "recall_node_budget": 40,
+    "reranker_max_candidates_low": 32
+  },
+  "retain": {
+    "bank_id": "eva2-compose-install-gate-e2f9e92645a8ed677cce28ff678895ab",
+    "document_id": "conversation:compose-hindsight-gate:1",
+    "content_sha256": "79302de3fe841dbe207df3a5c05f08b1955a3227ab6eb82254b2b79c8ef4c5b9",
+    "operation_id": "76b6bad5-c307-5edd-8eb9-ac45ce22e2c0",
+    "operation_status": "completed",
+    "completion_elapsed_ms": 5135,
+    "second_async_ack_elapsed_ms": 66,
+    "second_background_completion_elapsed_ms": 4934,
+    "second_operation_id": "d98d2ad2-e045-5b67-b3a7-88328f2c7f04",
+    "second_operation_status": "completed"
+  },
+  "recall": {
+    "before_restart_elapsed_ms": 792,
+    "before_restart_fact_count": 1,
+    "after_restart_elapsed_ms": 2386,
+    "after_restart_fact_count": 1,
+    "after_restart_text": "Jaap wil dat Eva Home Assistant gebruikt, nooit beweert dat een actie is uitgevoerd zonder readback-bewijs, en kort en natuurlijk antwoordt als een betrokken huisgenoot, zonder lijstjes als een gewoon antwoord volstaat."
+  },
+  "reflect": {
+    "executed_outside_chat_path": true,
+    "elapsed_ms": 29337,
+    "text": "Jaap wil dat Eva **kort en natuurlijk** praat, als een **betrokken huisgenoot**, en **geen lijstjes** gebruikt als een gewoon antwoord genoeg is.  \n\nAls betrouwbaarheidsregel wil hij dat Eva **Home Assistant gebruikt** en **nooit zegt dat iets is uitgevoerd zonder readback-bewijs**.",
+    "text_sha256": "11d836be3a905afa1d145baa69a4a9ce0f21ff56c9db4bd923057ef84fc7dc45",
+    "mental_model_id": "eva-person-patterns-74e0c04977741155",
+    "mental_model_operation_id": "2b021e0d-6166-4c3c-8abc-e9e79ed80538",
+    "mental_model_operation_status": "completed",
+    "mental_model_retry_count": 0
+  },
+  "restart": {
+    "container_restarted": true,
+    "same_named_volume_reopened": true,
+    "health_after_restart": "healthy",
+    "retained_preference_recalled_after_restart": true
+  },
+  "result": "passed",
+  "nonclaims": [
+    "The gate created a fresh Hindsight service and empty data volume, but reused the already provisioned Codex authorization directory as a read-only mount.",
+    "The pinned image was already present locally and was not downloaded during this gate.",
+    "The local embedding backend was used; this gate does not claim GPU acceleration.",
+    "Reflect took 29.337 seconds and is proven only as a cold-path operation, never as a chat-path dependency.",
+    "The disposable instance contains synthetic gate data only and is not a production memory bank."
+  ]
+}

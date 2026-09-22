@@ -1,5 +1,45 @@
 {
   "contract": "EvaOptionalScopeDecisions/v1",
-  "decisions": {},
-  "events": []
+  "decisions": {
+    "CO-004": {
+      "decision": "included",
+      "decisionId": "0f16a210-24db-4ca2-854d-863ed207ebbd",
+      "updatedAt": "2026-09-11T10:27:34.506Z"
+    },
+    "CO-005": {
+      "decision": "included",
+      "decisionId": "b7be4bc3-40f0-4f12-a8a8-fcc8a4b653d5",
+      "updatedAt": "2026-09-11T10:27:37.881Z"
+    }
+  },
+  "events": [
+    {
+      "id": "0f16a210-24db-4ca2-854d-863ed207ebbd",
+      "optionId": "CO-004",
+      "decision": "included",
+      "previousDecision": "undecided",
+      "createdAt": "2026-09-11T10:27:34.506Z",
+      "actor": "owner",
+      "processing": {
+        "status": "done",
+        "consumer": "root-memory-coordinator",
+        "updatedAt": "2026-09-11T10:34:58.700Z",
+        "taskId": "01a07e5b-3ef4-7ef3-8a68-3197a780694e"
+      }
+    },
+    {
+      "id": "b7be4bc3-40f0-4f12-a8a8-fcc8a4b653d5",
+      "optionId": "CO-005",
+      "decision": "included",
+      "previousDecision": "undecided",
+      "createdAt": "2026-09-11T10:27:37.881Z",
+      "actor": "owner",
+      "processing": {
+        "status": "done",
+        "consumer": "root-memory-coordinator",
+        "updatedAt": "2026-09-11T10:34:59.043Z",
+        "taskId": "01a07e5b-3ef4-7ef3-8a68-3197a780694e"
+      }
+    }
+  ]
 }

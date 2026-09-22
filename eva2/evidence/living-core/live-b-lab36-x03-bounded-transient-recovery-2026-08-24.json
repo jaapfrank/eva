@@ -1,0 +1,100 @@
+{
+  "contract": "EvaLivingCoreLiveEvidence/v1",
+  "scenario": "LAB-36-X03-bounded-transient-recovery",
+  "status": "passed_live_b",
+  "observedAt": "2026-08-24T04:21:43Z",
+  "productionAChanged": false,
+  "environment": {
+    "gate_container": "eva2-living-core-b-candidate-v29",
+    "gate_container_id": "1e6fcb2cd8786614b87534fb0a00039d13f6df5b4159d7458a36651f06064a1c",
+    "current_core_container": "eva2-living-core-b",
+    "current_core_container_id": "083cba1eeb20cf6dfe4ff3eef9dd8028b460c9cde2d1a7f208b2790f952c5667",
+    "image": "eva2-living-core:bounded-retry-v29-20260824",
+    "image_sha256": "16df208d7fc1a12211d2cabb1d7f1130ac85b81c45cf9b9e86e04080eeb1dd34",
+    "postgres_container": "eva2-postgres-b-live",
+    "postgres_revision": "4e_0001_operational_timeline"
+  },
+  "retryPolicy": {
+    "maximumAttempts": 3,
+    "retryDelaySeconds": 1.0,
+    "retryableErrors": ["destination_unavailable", "destination_unwritable", "write_or_readback_failed"],
+    "permanentErrorsNotRetried": ["destination_conflict", "source_changed"],
+    "attemptCommittedBeforeNextTry": true,
+    "alreadyVerifiedOutputsAreNeverRewritten": true
+  },
+  "terminalBlockerPath": {
+    "messageId": "lab36-x03-v29-1",
+    "threadId": "work:file-batch:9069fc9eae472c33d92670955687eb6f",
+    "attemptCount": 3,
+    "successfulOutputs": 2,
+    "terminalFailure": {
+      "destinationPath": "three/three.md",
+      "errorCode": "destination_unwritable"
+    },
+    "reply": "2 bestanden zijn goed omgezet naar Markdown: one/one.md en two/two.md. Bij three/three.md liep het vast door een tijdelijke schrijffout: de bestemming was niet schrijfbaar. Ik heb niets opnieuw dubbel geschreven en meld alleen dit bewezen resultaat.",
+    "replySha256": "e728f58307d8e363b336507a30d34f3a1f9e0eb76c4be7aa424f85c5aee3c353",
+    "events": [
+      [1, "FILE_BATCH_ADMITTED", "c1e404e88c5d55aa5d569d7697a9e3b9a2aeda770ae26673b082d227a840a652"],
+      [2, "FILE_BATCH_ATTEMPT_RECORDED", "8be02cdb5db910123574484ae811d563c5461bfc6183792a1f9495d580ec8d37"],
+      [3, "FILE_BATCH_ATTEMPT_RECORDED", "618e544a3587cfa90a36b92381f3b4c0d9dd691fdbc8727e60e4ce2ada0f3029"],
+      [4, "FILE_BATCH_ATTEMPT_RECORDED", "53baad75002e05a236be8bd4fae83a8219e8f1b3c612c9ea8599621181f3adbe"],
+      [5, "FILE_BATCH_PARTIALLY_COMPLETED", "43f0ff944476e9aabaea780a6f383ba151de0fe0a0ee2a3ff40427e9b04e6afd"]
+    ]
+  },
+  "transientRecoveryPath": {
+    "messageId": "lab36-x03-v29-2",
+    "threadId": "work:file-batch:68f45fe8d3575514ab311c44604daeea",
+    "fault": "destination2/three started mode 0555 and was changed to 0777 only after the first attempt had processed its later file",
+    "restorationObserved": true,
+    "attemptCount": 2,
+    "attemptOne": {
+      "written": ["one/one.md", "two/two.md"],
+      "retryableFailure": "three/three.md"
+    },
+    "attemptTwo": {
+      "alreadyVerifiedWithoutRewrite": ["one/one.md", "two/two.md"],
+      "newlyWritten": ["three/three.md"],
+      "failures": []
+    },
+    "finalOutputs": [
+      ["one/one.md", 59, "43055259a10db706ab3e61b4e3638d3a13e328cdb4467cc8821641d7879e0944"],
+      ["three/three.md", 70, "7bb78094037af0e8cdc08d38d31763711c011f8d243d669b14c0b19351ff1408"],
+      ["two/two.md", 59, "c251244ffea1440ebd70eecc551580d849df4c479e44d11c5bc86d040fef7434"]
+    ],
+    "reply": "Klaar: 3 bestanden zijn goed omgezet naar Markdown in destination2. Eén bestand is echt geschreven, twee waren al eerder verifieerd en daarom niet dubbel geschreven. Er zijn geen mislukkingen.",
+    "replySha256": "da64c3cef167350c31152e979660fc9d0c6c672319aa06573bf27a7b8b1f9d63",
+    "events": [
+      [1, "FILE_BATCH_ADMITTED", "66dc0fa1128f2ef62ee82a733cb0b2e89869d130ea5f3a89e1027428e39c17fb"],
+      [2, "FILE_BATCH_ATTEMPT_RECORDED", "c707db838c005e167ebcbb33999261ff169ada51c8f11f612440c89af51359be"],
+      [3, "FILE_BATCH_ATTEMPT_RECORDED", "fc9175e8c414685f8b846b01f4c314432d3d3f8fb487a2db74883c4cd148a40c"],
+      [4, "FILE_BATCH_COMPLETED", "7fb9c540c4708efd184bafc69500eaa658007beb95ba4b31b35b86c07c84f5da"]
+    ]
+  },
+  "replay": {
+    "hardCurrentBReplacementAfterGate": true,
+    "replyReplaySeconds": 0.017604,
+    "replyReplayByteIdentical": true,
+    "noAdditionalAttemptOrConversationEvents": true
+  },
+  "tests": {
+    "focusedFinal": "71 passed",
+    "ruff": "passed"
+  },
+  "verification": {
+    "currentCoreReady": true,
+    "memoryOutboxCompletedAtCapture": 53,
+    "memoryOutboxOpenAtCapture": 0,
+    "productionAService": "active",
+    "productionATrafficChanged": false
+  },
+  "source_files": {
+    "eva2/src/eva/application/file_batches.py": "486f6699b168ec103f40b1325d25e1dfa25f3a97b6b274e94574edf4e426f96c",
+    "eva2/src/eva/adapters/connectors/local_files.py": "286254903c698b8ed3acc3571ff6616556fcb8c72eac4c9d66f863c52386d4a4",
+    "eva2/src/eva/adapters/postgres/conversation_actions.py": "74c8db86bfc1243f293748f7de880f20381e4983a7099a438a8e93f64b6ab705"
+  },
+  "nonClaims": [
+    "The transient fault was a real filesystem permission failure in an isolated mounted workspace, not a mocked adapter return.",
+    "The live turns used direct B HTTP ingress, not a newly delivered Telegram provider update.",
+    "No production-A code, service, memory or Home Assistant state was changed."
+  ]
+}

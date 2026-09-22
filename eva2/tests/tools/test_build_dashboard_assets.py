@@ -113,3 +113,26 @@ def test_check_rejects_symlink_in_packaged_assets(
 
     with pytest.raises(RuntimeError, match="contain a link"):
         dashboard_assets.check()
+
+
+def test_dashboard_upgrade_replaces_old_bundle_without_stale_assets(
+    tmp_path: Path, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    source, destination = _configure(monkeypatch, tmp_path)
+    dashboard_assets.materialize()
+    (source / "assets" / "app.js").rename(source / "assets" / "memory.js")
+    updated = "export default 'Jouw geheugenbronnen';\n"
+    (source / "assets" / "memory.js").write_text(updated, encoding="utf-8")
+    manifest_path = source / "asset-manifest.json"
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    manifest["index.html"]["file"] = "assets/memory.js"
+    manifest_path.write_text(json.dumps(manifest), encoding="utf-8")
+
+    dashboard_assets.materialize()
+    dashboard_assets.check()
+
+    assert not (destination / "assets" / "app.js").exists()
+    assert (destination / "assets" / "memory.js").read_text(encoding="utf-8") == updated
+    packaged = json.loads((destination / "eva-dashboard-assets.json").read_text())
+    assert "assets/memory.js" in packaged["files"]
+    assert "assets/app.js" not in packaged["files"]

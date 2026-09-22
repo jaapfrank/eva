@@ -1,0 +1,146 @@
+{
+  "contract": "EvaLivingBNaturalActionExpressionReceipt/v1",
+  "recorded_at": "2026-08-23T21:07:14Z",
+  "environment": {
+    "container": "eva2-living-core-b",
+    "container_id": "2fd13636d1d30487741dc58e764e03a038619f45fcd9112432842a744945e7cd",
+    "image": "eva2-living-core:advanced-canary-execution-20260823",
+    "image_sha256": "9496e6c472ff7fd79428669df4a37709ed407a0f1eb491ac470897841ed8aeab",
+    "slot": "isolated_b",
+    "status": "healthy"
+  },
+  "source_files": {
+    "eva2/src/eva/adapters/api/app.py": "51c5e2dd949452679f30e9105ef12580b776346cf4503d4747742fe2922a05ed",
+    "eva2/src/eva/adapters/connectors/home_assistant_localtuya.py": "01882b2e43a66774a836297d90233232521871e3c234ccb051e97545d5d919d7",
+    "eva2/src/eva/adapters/model/conversation.py": "3b798c0e7f11ae0dccd8a54da55f79809fc820924759c6941ccb40587e392bde",
+    "eva2/src/eva/adapters/postgres/advanced_tasks.py": "c09bde3abad2023dd2a2504d7e09d58fb080d15298e6c268d2b8422d62880eb3",
+    "eva2/src/eva/application/advanced_tasks.py": "781587e90ab109e346c5111dbc9f389f60b20582a35a1cef92f0243df176a1be",
+    "eva2/src/eva/bootstrap/runtime.py": "6f4f13e2f3cb11c2c207cb0ff2b2bce6d1d965775cbb1b60278f72525016e8ff",
+    "eva2/tests/api/test_memory_api.py": "22332b04f8c0fd8b35f09699791f2e77e3c0fb8b7c008b993e20c84fab368b0e",
+    "eva2/tests/application/test_advanced_tasks.py": "b3a19e416a3f3ffb07904ea0125c0be568ddd4e832e226655952422aa6b7eeb1",
+    "eva2/tests/connectors/test_home_assistant_localtuya.py": "bc577e1c6655353db00fb86db8cfa0f7639f2ee4cef50f19f16200e788cc75ea",
+    "eva2/tests/model/test_conversation_model.py": "7a1e9f361a85571fbcd188652807766bf46cc91282816f9ce763225dca52362b",
+    "eva2/tests/postgres/test_advanced_task_store.py": "321d04e0b11cdfe591edb60a9d1ac1009ba18e4d5b3c352221d44bbffd44ed65"
+  },
+  "live_failure_then_fix": {
+    "first_request": "Eva, wil je regelen dat mijn oefenventilator vanzelf aangaat zodra de proefdeur opengaat? Laat hem nu nog uit.",
+    "first_result": "The model did not select the offered automation action and incorrectly claimed that the coupling was unavailable.",
+    "cause": "The model guidance required an explicit automation request instead of recognizing a complete natural if-then intent.",
+    "fix": "The action remains model-selected, but its guidance now treats a complete natural if-then request as an automation without requiring the word automation. Verified receipts remain evidence rather than a visible response template."
+  },
+  "real_home_assistant_gate": {
+    "request": "Als ik het testraam open, mag de luchtverfrisser vanzelf aan. Hij moet nu nog uit blijven.",
+    "message_id": "live-human-action:20260823:2",
+    "automation_id": "eva2_f820adfdd83a64cb976d40c35c86b553",
+    "config_sha256": "b2dc78ea3e86a9255e9c7334034ab370be4bde3213e55420793ca21891e3fc53",
+    "event_sequence": [
+      "TOOL_REQUEST_ADMITTED",
+      "TOOL_PREPARED",
+      "TOOL_EXECUTED",
+      "STATE_VERIFIED"
+    ],
+    "trigger": {
+      "entity_id": "binary_sensor.eva2_live_window_test_20260823",
+      "to": "open",
+      "trigger": "state"
+    },
+    "action": {
+      "action": "homeassistant.turn_on",
+      "entity_id": "switch.eva2_live_air_test_20260823"
+    },
+    "reply": "Klaar: zodra je het testraam opent, schakelt de luchtverfrisser vanzelf aan. Nu blijft hij gewoon uit totdat dat raam open gaat.",
+    "reply_sha256": "f2a5a8670713521dbbb1b72fdf2e58c4c7d093b264e5f2a10a5f4a45d97584ee",
+    "independent_config_readback": "verified",
+    "target_state_after_gate": "off",
+    "rollback": "hash_bound_deleted",
+    "temporary_entities_after_cleanup": [404, 404, 404, 404],
+    "physical_devices_changed": 0
+  },
+  "real_advanced_command_gate": {
+    "request": "Ik wil minder afhankelijk zijn van de Tuya-cloud. Zoek zelf uit wat er bij mij lokaal kan en zet de veilige stappen klaar, maar raak mijn apparaten nog niet aan.",
+    "message_id": "live-advanced-intent:20260823:1",
+    "selected_action": "plan_tuya_to_localtuya_migration",
+    "plan_id": "advanced:35affa79ea4175ae613a9bdf7ff53126099e8f86c6f878148750150a7c27dc87",
+    "plan_sha256": "be5a89fc0d6b97967b4b9af8f34aaf19747962b0d591de4adbd8f8779e745412",
+    "inventory_sha256": "6557a7c5a72966e9b17b1fbd9ad584c98ca4535c371cec9484b1396a16ad5626",
+    "route_counts": {
+      "localtuya_candidate": 7,
+      "matter_review": 2,
+      "rebuild_scene": 3
+    },
+    "current_blockers": [
+      "localtuya_integration_not_loaded",
+      "localtuya_package_not_installed",
+      "localtuya_package_incompatible_with_home_assistant",
+      "local_device_credentials_not_collected",
+      "matter_devices_require_native_matter_review",
+      "tuya_scenes_require_explicit_rebuild"
+    ],
+    "reply": "Ik heb het voor je uitgezocht: 7 apparaten lijken lokaal via LocalTuya te kunnen, 2 Matter-apparaten moet ik apart via hun eigen lokale route beoordelen, en 3 scènes moeten opnieuw worden opgebouwd. LocalTuya is hier nog niet bruikbaar/compatibel en de lokale apparaatgegevens ontbreken nog, dus nog niets is gemigreerd. Het veilige stappenplan staat klaar: eerst LocalTuya beschikbaar maken, daarna de lokale gegevens verzamelen, dan pas één omkeerbare proef met één apparaat, en alleen als dat klopt de rest stuk voor stuk.",
+    "reply_sha256": "bfc03b5d3b0efef0d82dea4ee63f6c04a8e874805a08afccd5bd430598ef8e82",
+    "device_mutations": 0
+  },
+  "durable_canary_execution_boundary": {
+    "pre_call_commit": [
+      "approval_sha256",
+      "preflight_sha256",
+      "configuration_sha256",
+      "before_inventory_sha256",
+      "before_inventory",
+      "one_use_provider_call_opened"
+    ],
+    "post_call_or_restart_reconciliation": [
+      "source Tuya device and entities remain unchanged",
+      "LocalTuya integration is loaded",
+      "exactly one new LocalTuya device group exists",
+      "at least one new LocalTuya entity is independently visible",
+      "no existing Home Assistant entity disappeared"
+    ],
+    "provider_execution": {
+      "flow": "initialize options flow, bind exact device and entity forms, create once",
+      "on_crash_after_call_open": "reconcile registries; never replay the provider call",
+      "readback_poll_timeout_seconds": 10,
+      "timeout_result": "awaiting_readback without a second provider call",
+      "secret_persistence": false
+    },
+    "post_deploy_live_plan": {
+      "plan_id": "advanced:2283b5b3ffc49d03f7ed48dd1cb41f96c45f60e89af9b649d5373f8067edbd64",
+      "plan_sha256": "3bd968ff0bb7738b0c41ff66b92f3c99e09a9ba08a4bfa811d0003de997b8fe8",
+      "inventory_sha256": "e288eaee2148d983ce22ffc20de07cdaee3bbb1bb0632e3ba11e7031d520fac5",
+      "route_counts": {
+        "localtuya_candidate": 7,
+        "matter_review": 2,
+        "rebuild_scene": 3
+      },
+      "execution_routes": [
+        "prepare",
+        "execute_once",
+        "reconcile_without_replay"
+      ],
+      "mutation_gate": "blocked_before_provider_call_without_exact_approval",
+      "unapproved_prepare_result": "409 advanced canary approval does not exist",
+      "durable_event_counts_after_rejection": {
+        "ADVANCED_PLAN_CREATED": 1,
+        "ADVANCED_CANARY_PREPARED": 0,
+        "ADVANCED_CANARY_CALL_OPENED": 0
+      },
+      "home_assistant_version": "2026.8.1"
+    },
+    "targeted_tests": "38 passed plus 10 architecture tests",
+    "provider_mutations": 0
+  },
+  "quality_assertions": {
+    "action_selected_without_keyword": true,
+    "raw_entity_ids_in_visible_reply": false,
+    "robotic_trigger_condition_action_headings": false,
+    "verified_before_success_claim": true
+  },
+  "nonclaims": [
+    "The temporary trigger was not fired.",
+    "No physical device was changed.",
+    "Production A and Telegram routing were not changed.",
+    "The LocalTuya plan did not install a package or migrate a device.",
+    "This receipt proves one different natural automation formulation, not general conversational quality."
+  ],
+  "status": "passed"
+}

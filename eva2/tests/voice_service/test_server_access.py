@@ -53,6 +53,47 @@ def test_empty_landing_and_protected_owner_session(voice_config):
         assert client.get("/").status_code == 200
 
 
+def enable_local_access(voice_config):
+    import os
+    from pathlib import Path
+    Path(os.environ["EVA_VOICE_CONFIG"]).write_text(json.dumps({**voice_config, "local_browser_access": True}))
+
+
+@pytest.mark.parametrize("host", ["localhost", "127.0.0.1", "[::1]"])
+def test_local_browser_needs_no_copied_token_but_keeps_grant_and_origin(voice_config, host):
+    from pathlib import Path
+    enable_local_access(voice_config)
+    origin = f"http://{host}:44716"
+    # TestClient's transport cannot parse bracketed IPv6 URL authorities.
+    # Supply the actual Host header to exercise admission for that alias too.
+    with TestClient(server.create_app(), base_url="http://localhost:44716",
+                    headers={"Host": f"{host}:44716"}, client=("127.0.0.1", 1234)) as client:
+        page = client.get("/")
+        assert "const localAccess=true;" in page.text
+        assert "test-owner-secret" not in page.text
+        assert client.get("/session/ready").json() == {"ready": True}
+        assert client.post("/session/end").status_code == 403
+        assert client.post("/session/end", headers={"Origin": origin}).status_code == 200
+        Path(voice_config["authority_file"]).unlink()
+        assert client.get("/session/ready").status_code == 403
+
+
+@pytest.mark.parametrize("peer,host,headers", [
+    ("192.168.1.10", "localhost:44716", {}),
+    ("127.0.0.1", "evil.invalid:44716", {}),
+    ("127.0.0.1", "localhost:44717", {}),
+    ("127.0.0.1", "localhost:44716", {"Origin": "https://evil.invalid"}),
+    ("127.0.0.1", "localhost:44716", {"Sec-Fetch-Site": "cross-site"}),
+    ("127.0.0.1", "localhost:44716", {"X-Forwarded-For": "127.0.0.1"}),
+    ("127.0.0.1", "localhost:44716", {"Forwarded": "for=127.0.0.1"}),
+])
+def test_local_access_does_not_open_remote_or_cross_origin_routes(voice_config, peer, host, headers):
+    enable_local_access(voice_config)
+    with TestClient(server.create_app(), base_url="http://" + host, client=(peer, 1234)) as client:
+        assert client.get("/session/ready", headers=headers).status_code == 401
+        assert client.post("/session", headers=headers).status_code == 401
+
+
 def test_room_bound_close_and_phone_lease_expires_without_renewal(voice_config, monkeypatch):
     import time
     closed = []

@@ -1,0 +1,133 @@
+{
+  "contract": "EvaLivingCoreDurableTemporalMemoryCrashGate/v1",
+  "captured_at": "2026-08-24T01:48:00Z",
+  "result": {
+    "status": "passed_with_external_telegram_gate_open",
+    "candidate_b_ready_after_hard_crash": true,
+    "latest_memory_superseded_older_values": true,
+    "hindsight_document_read_back": true,
+    "production_a_changed": false,
+    "real_telegram_inbound_after_deployment": false
+  },
+  "environment": {
+    "core_container": "eva2-living-core-b",
+    "core_container_id": "ac71ddf97eaee86e3c3dfca3506127e01d0a6fbf8fc7eaa13281d2b6a657158a",
+    "image": "eva2-living-core:temporal-memory-v7-20260824",
+    "image_sha256": "029c4dd3f2a39176f45e53d69aa2c57e8b12c821b85b8a17ffb6511f40978fa4",
+    "hindsight_container": "eva2-hindsight-multilingual-trusted-v2",
+    "hindsight_image_sha256": "aeb0831e2ec55e659d5e69baa064c1278113e523513b8f60a1f09c5cabe59b9b",
+    "hindsight_bank_id": "eva-live-6e6ac7b97a611515f00c582fd70aaf69",
+    "postgres_container": "eva2-postgres-b-live",
+    "postgres_revision": "4e_0001_operational_timeline"
+  },
+  "source_files": {
+    "eva2/src/eva/application/conversation.py": "72e6dd000c893953bd0a2d1b7f3d9a7ca6db12fa7634ec42a7ff925f644783e0",
+    "eva2/src/eva/adapters/model/conversation.py": "5f2a1037bfe886135855c01ed879b68c00280e705c69eaf317b60d2b3f90df82",
+    "eva2/src/eva/adapters/projection/hindsight.py": "9d1d73ba29bab2a4ab8dbe7dcd585a26e89effc04a50c9a9f20e33353ed5c9ac",
+    "eva2/src/eva/application/memory_background.py": "57872269fd111160a28cbb5cc2f1f7c627611d91dc654bd6d40dc0761fd73618",
+    "eva2/src/eva/adapters/postgres/memory_outbox.py": "b91ca11c2ee2daf2349c356240c367fda85cc456d6cfc7aa06c17bf2d2bda1b2",
+    "eva2/src/eva/adapters/postgres/advanced_tasks.py": "a0c7a7a7f02bdc9f3f42f1f399569229a5ec0d3e37b9711b0307001118d3b701",
+    "eva2/src/eva/bootstrap/runtime.py": "60a4efcda94dd0aae8325a5830953bb1049d7553d34b8e8f16f3b8dc557e1535",
+    "eva2/deploy/living-core/stack.compose.yml": "9d4706b399c993acda16fbe9b09bebc89fbac9f66aced59e6db65731de1930ff",
+    "eva2/tools/check_living_b_candidate.py": "2761030346ae2866298218d4ede0ae7dfd847b191d338bf71e1bfae891bfa7e0"
+  },
+  "implemented_boundaries": {
+    "hot_path_intent": "The low-reasoning semantic planner evaluates every natural turn; a literal question-mark rule no longer decides whether Eva can understand an implicit memory reference.",
+    "temporal_authority": "A bounded Hindsight source-fact envelope restores the original authority behind an observation. The model sees retrieval rank, observed_at and trust and must select the newest reliable value when one concrete property conflicts.",
+    "durable_enqueue": "The direct user source is committed to a separate PostgreSQL outbox thread before the in-process worker is woken.",
+    "crash_rehydration": "Worker startup and its bounded idle poll load active, failed and ambiguous memory checkpoints from PostgreSQL and resubmit the deterministic Hindsight document operation.",
+    "retry_boundary": "Each provider attempt is committed before HTTP contact. Retry count is database-enforced within 0..3; attempt three becomes needs_help instead of looping forever.",
+    "provider_idempotency": "Hindsight uses update_mode replace and a UUIDv5 operation ID derived from document_id.",
+    "principal_isolation": "Advanced-task context scopes on requested_by before strict decoding, so another principal's legacy or malformed plan cannot break or leak into this conversation."
+  },
+  "hard_crash_recovery_on_current_image": {
+    "document_id": "crash-gate:durable-hindsight:20260824-11",
+    "thread_id": "memory-retain:117803a767052db0fd572007690d88266c0bf2f0b181ebd94ece65429a0501f4",
+    "fault": "With the current image stopped, a durable outbox document was inserted. Hindsight was paused, the current core started, then was hard-killed after MEMORY_RETAIN_ATTEMPTED and before provider acknowledgement. Hindsight was unpaused and the same current core container restarted.",
+    "event_sequence": [
+      {
+        "sequence": 1,
+        "event_type": "MEMORY_RETAIN_QUEUED",
+        "retry_count": 0,
+        "status": "active",
+        "payload_sha256": "d627d95af09b943404dd1f908b5ed580e0adc7c51388b4295224abdb072174f9"
+      },
+      {
+        "sequence": 2,
+        "event_type": "MEMORY_RETAIN_ATTEMPTED",
+        "retry_count": 1,
+        "status": "waiting_for_proof",
+        "payload_sha256": "c1441827fb9435acd165d17cd0b7b12bbb56c72d4ff79e3c947c5cdc9aa8a8f4"
+      },
+      {
+        "sequence": 3,
+        "event_type": "MEMORY_RETAIN_ATTEMPTED",
+        "retry_count": 2,
+        "status": "waiting_for_proof",
+        "payload_sha256": "915475739b72f0e930b28d874f9368badb93443fe1ee8f13bfb34a64b4d79894"
+      },
+      {
+        "sequence": 4,
+        "event_type": "MEMORY_RETAIN_SUCCEEDED",
+        "retry_count": 2,
+        "status": "completed",
+        "payload_sha256": "5b88fa850643ef87bc9bf072f5dadc39f4cb71274b4ce636d5f9a0167e5fdde5"
+      }
+    ],
+    "success_event_count": 1,
+    "final_ready": {
+      "database": "ready",
+      "memory_projection": "ready",
+      "model_provider": "ready",
+      "ready": true
+    }
+  },
+  "hindsight_provider_readback": {
+    "document_id": "crash-gate:durable-hindsight:20260824-11",
+    "original_text": "Gebruiker (directe bron): Voor de actuele crashproef is het codewoord leisteen.",
+    "content_hash": "5efc896f7ea641f980d24b69d9b37f172c779e9f1048c935fe11ee36f3c5bb5c",
+    "memory_unit_count": 1,
+    "world_nodes": 1,
+    "observation_nodes": 1,
+    "trust": "direct_user",
+    "assistant_text_retained_as_direct_user": false
+  },
+  "real_temporal_failure_and_repair": {
+    "first_current_image_input": "Zeg het codewoord van de actuele crashproef nog eens",
+    "contains_question_mark": false,
+    "incorrect_reply_before_temporal_repair": "Het codewoord is **graniet**.",
+    "newer_value_already_ranked_first_by_hindsight": "basalt",
+    "root_cause": "The projection marked the newer Hindsight observation as unconfirmed and omitted all observation timestamps from the model prompt, while an older raw direct-user fact remained visible.",
+    "repair": "Recall now requests at most 512 source-fact tokens, transfers authority only when the complete source set agrees, exposes observed_at/rank/trust, and explicitly resolves one property's conflicts by newest reliable observation.",
+    "same_query_after_repair": "Het codewoord is **basalt**.",
+    "same_query_after_newer_hard_crash_value": "Het codewoord is **leisteen**.",
+    "final_reply_sha256": "cdae35fe20c3075d2a27b46302249fcc9f73723273fcb755ae24bda9d2d0e948",
+    "final_evidence_memory_ids": [
+      "hindsight:b445ef12-ab3e-4757-9a3b-b6d56c5b9e05",
+      "hindsight:f83c6618-fc7c-45d3-a0db-68af08960c70",
+      "hindsight:ad1ac872-7195-40a7-ad40-e85d1da38b90",
+      "hindsight:bd3c8c8e-8f9b-4edb-b8f9-890afb0fa0e4"
+    ],
+    "provider": "chatgpt-codex:gpt-5.4-mini",
+    "passed": true
+  },
+  "other_live_failure_found_and_repaired": {
+    "observed_failure": "A real full-path B turn for a fresh benchmark principal returned HTTP 503 because active_context strictly parsed an unrelated legacy advanced-task plan before checking requested_by.",
+    "repair": "PostgresAdvancedTaskStore.latest now checks the durable requested_by field before strict plan decoding.",
+    "regression_test": "test_latest_scopes_before_parsing_another_principals_legacy_plan",
+    "post_repair_http_status": 200
+  },
+  "verification": {
+    "focused_tests": "48 passed in 7.71s",
+    "disposable_postgres_outbox_tests": "2 passed, 5 deselected in 1.77s",
+    "ruff": "all selected files passed",
+    "memory_outbox_open_at_preflight": 0,
+    "production_a_service": "active"
+  },
+  "non_claims": [
+    "The crash and semantic readback used direct isolated B ingress, not a Telegram-delivered user update.",
+    "No production-A code, service, traffic or memory was changed.",
+    "No new genuine Telegram inbound arrived after this deployment; the latest user inbound remains message 4483 from 2026-08-23T19:17:49Z.",
+    "Stripe test-mode, a new AgentMail B credential and an approved LocalTuya mutation still require their external authority or credential."
+  ]
+}

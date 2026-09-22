@@ -1,0 +1,412 @@
+{
+  "checked_at": "2026-09-21T18:42:15.799689+00:00",
+  "scope": "Public repository metadata and latest non-prerelease tag resolved to commit, not deployment approval or tested support guarantee",
+  "next_check": "2026-10-05 or before candidate build, whichever earlier",
+  "owner": "project coordinator",
+  "projects": [
+    {
+      "repo": "openclaw/openclaw",
+      "metadata": {
+        "default_branch": "main",
+        "archived": false,
+        "pushed_at": "2026-09-21T18:35:34Z",
+        "license": {
+          "key": "other",
+          "name": "Other",
+          "spdx_id": "NOASSERTION",
+          "url": null,
+          "node_id": "MDc6TGljZW5zZTA="
+        },
+        "html_url": "https://github.com/openclaw/openclaw"
+      },
+      "release": {
+        "tag_name": "v2026.9.5",
+        "published_at": "2026-09-19T01:55:23Z",
+        "target_commitish": "main",
+        "html_url": "https://github.com/openclaw/openclaw/releases/tag/v2026.9.5",
+        "prerelease": false
+      },
+      "release_commit": "ec9c1a13db8938e5a3eaa51fca2e981cde2395a9"
+    },
+    {
+      "repo": "NousResearch/hermes-agent",
+      "metadata": {
+        "default_branch": "main",
+        "archived": false,
+        "pushed_at": "2026-09-21T18:34:12Z",
+        "license": {
+          "key": "mit",
+          "name": "MIT License",
+          "spdx_id": "MIT",
+          "url": "https://api.github.com/licenses/mit",
+          "node_id": "MDc6TGljZW5zZTEz"
+        },
+        "html_url": "https://github.com/NousResearch/hermes-agent"
+      },
+      "release": {
+        "tag_name": "v2026.9.21",
+        "published_at": "2026-09-21T18:10:55Z",
+        "target_commitish": "main",
+        "html_url": "https://github.com/NousResearch/hermes-agent/releases/tag/v2026.9.21",
+        "prerelease": false
+      },
+      "release_commit": "d337b736aa1e8ebecfab043842d13e4a2d2f48a3"
+    },
+    {
+      "repo": "agent0ai/agent-zero",
+      "metadata": {
+        "default_branch": "main",
+        "archived": false,
+        "pushed_at": "2026-09-20T14:58:34Z",
+        "license": {
+          "key": "other",
+          "name": "Other",
+          "spdx_id": "NOASSERTION",
+          "url": null,
+          "node_id": "MDc6TGljZW5zZTA="
+        },
+        "html_url": "https://github.com/agent0ai/agent-zero"
+      },
+      "release": {
+        "tag_name": "v2.12",
+        "published_at": "2026-09-09T13:29:23Z",
+        "target_commitish": "main",
+        "html_url": "https://github.com/agent0ai/agent-zero/releases/tag/v2.12",
+        "prerelease": false
+      },
+      "release_commit": "b1cbd1f960a1a5c4482b324dcff4742aa67b7a51"
+    },
+    {
+      "repo": "pydantic/pydantic-ai",
+      "metadata": {
+        "default_branch": "main",
+        "archived": false,
+        "pushed_at": "2026-09-21T16:50:38Z",
+        "license": {
+          "key": "mit",
+          "name": "MIT License",
+          "spdx_id": "MIT",
+          "url": "https://api.github.com/licenses/mit",
+          "node_id": "MDc6TGljZW5zZTEz"
+        },
+        "html_url": "https://github.com/pydantic/pydantic-ai"
+      },
+      "release": {
+        "tag_name": "v2.46.0",
+        "published_at": "2026-09-19T03:51:40Z",
+        "target_commitish": "main",
+        "html_url": "https://github.com/pydantic/pydantic-ai/releases/tag/v2.46.0",
+        "prerelease": false
+      },
+      "release_commit": "c4898abb54dc25ae6f6aef208a4c0661b30a455e"
+    },
+    {
+      "repo": "livekit/agents",
+      "metadata": {
+        "default_branch": "main",
+        "archived": false,
+        "pushed_at": "2026-09-21T17:50:09Z",
+        "license": {
+          "key": "apache-2.0",
+          "name": "Apache License 2.0",
+          "spdx_id": "Apache-2.0",
+          "url": "https://api.github.com/licenses/apache-2.0",
+          "node_id": "MDc6TGljZW5zZTI="
+        },
+        "html_url": "https://github.com/livekit/agents"
+      },
+      "release": {
+        "tag_name": "livekit-agents@1.8.2",
+        "published_at": "2026-09-15T19:48:21Z",
+        "target_commitish": "main",
+        "html_url": "https://github.com/livekit/agents/releases/tag/livekit-agents%401.8.2",
+        "prerelease": false
+      },
+      "release_commit": "bb8c72255c40fdfd689248e0632825af7e2d7b32"
+    },
+    {
+      "repo": "vectorize-io/hindsight",
+      "metadata": {
+        "default_branch": "main",
+        "archived": false,
+        "pushed_at": "2026-09-21T17:44:18Z",
+        "license": {
+          "key": "mit",
+          "name": "MIT License",
+          "spdx_id": "MIT",
+          "url": "https://api.github.com/licenses/mit",
+          "node_id": "MDc6TGljZW5zZTEz"
+        },
+        "html_url": "https://github.com/vectorize-io/hindsight"
+      },
+      "release": {
+        "tag_name": "v0.10.1",
+        "published_at": "2026-09-21T15:24:30Z",
+        "target_commitish": "main",
+        "html_url": "https://github.com/vectorize-io/hindsight/releases/tag/v0.10.1",
+        "prerelease": false
+      },
+      "release_commit": "f8950b0c07d9e34c76493dba802bb309f0ce60fd"
+    },
+    {
+      "repo": "microsoft/playwright-mcp",
+      "metadata": {
+        "default_branch": "main",
+        "archived": false,
+        "pushed_at": "2026-09-18T23:35:04Z",
+        "license": {
+          "key": "apache-2.0",
+          "name": "Apache License 2.0",
+          "spdx_id": "Apache-2.0",
+          "url": "https://api.github.com/licenses/apache-2.0",
+          "node_id": "MDc6TGljZW5zZTI="
+        },
+        "html_url": "https://github.com/microsoft/playwright-mcp"
+      },
+      "release": {
+        "tag_name": "v0.0.82",
+        "published_at": "2026-09-18T23:35:04Z",
+        "target_commitish": "main",
+        "html_url": "https://github.com/microsoft/playwright-mcp/releases/tag/v0.0.82",
+        "prerelease": false
+      },
+      "release_commit": "f1257a5a67aff872f947fae274759f7d54853862"
+    },
+    {
+      "repo": "modelcontextprotocol/python-sdk",
+      "metadata": {
+        "default_branch": "main",
+        "archived": false,
+        "pushed_at": "2026-09-19T02:15:45Z",
+        "license": {
+          "key": "mit",
+          "name": "MIT License",
+          "spdx_id": "MIT",
+          "url": "https://api.github.com/licenses/mit",
+          "node_id": "MDc6TGljZW5zZTEz"
+        },
+        "html_url": "https://github.com/modelcontextprotocol/python-sdk"
+      },
+      "release": {
+        "tag_name": "v2.2.0",
+        "published_at": "2026-09-07T15:53:57Z",
+        "target_commitish": "main",
+        "html_url": "https://github.com/modelcontextprotocol/python-sdk/releases/tag/v2.2.0",
+        "prerelease": false
+      },
+      "release_commit": "9972c21aa42054fb1450c5fc614761ed11847ec6"
+    },
+    {
+      "repo": "dbos-inc/dbos-transact-py",
+      "metadata": {
+        "default_branch": "main",
+        "archived": false,
+        "pushed_at": "2026-09-19T01:14:11Z",
+        "license": {
+          "key": "mit",
+          "name": "MIT License",
+          "spdx_id": "MIT",
+          "url": "https://api.github.com/licenses/mit",
+          "node_id": "MDc6TGljZW5zZTEz"
+        },
+        "html_url": "https://github.com/dbos-inc/dbos-transact-py"
+      },
+      "release": {
+        "tag_name": "3.0.0",
+        "published_at": "2026-09-16T17:16:51Z",
+        "target_commitish": "main",
+        "html_url": "https://github.com/dbos-inc/dbos-transact-py/releases/tag/3.0.0",
+        "prerelease": false
+      },
+      "release_commit": "dd8a5f315a54c02a750f80dd15127958243ed339"
+    },
+    {
+      "repo": "temporalio/sdk-python",
+      "metadata": {
+        "default_branch": "main",
+        "archived": false,
+        "pushed_at": "2026-09-20T07:00:21Z",
+        "license": {
+          "key": "mit",
+          "name": "MIT License",
+          "spdx_id": "MIT",
+          "url": "https://api.github.com/licenses/mit",
+          "node_id": "MDc6TGljZW5zZTEz"
+        },
+        "html_url": "https://github.com/temporalio/sdk-python"
+      },
+      "release": {
+        "tag_name": "1.33.0",
+        "published_at": "2026-09-15T00:57:27Z",
+        "target_commitish": "ab52fdde33ee8ed193402625bfdba25d240a762d",
+        "html_url": "https://github.com/temporalio/sdk-python/releases/tag/1.33.0",
+        "prerelease": false
+      },
+      "release_commit": "ab52fdde33ee8ed193402625bfdba25d240a762d"
+    },
+    {
+      "repo": "pipecat-ai/pipecat",
+      "metadata": {
+        "default_branch": "main",
+        "archived": false,
+        "pushed_at": "2026-09-21T17:44:55Z",
+        "license": {
+          "key": "bsd-2-clause",
+          "name": "BSD 2-Clause \"Simplified\" License",
+          "spdx_id": "BSD-2-Clause",
+          "url": "https://api.github.com/licenses/bsd-2-clause",
+          "node_id": "MDc6TGljZW5zZTQ="
+        },
+        "html_url": "https://github.com/pipecat-ai/pipecat"
+      },
+      "release": {
+        "tag_name": "v1.11.0",
+        "published_at": "2026-09-18T04:11:21Z",
+        "target_commitish": "main",
+        "html_url": "https://github.com/pipecat-ai/pipecat/releases/tag/v1.11.0",
+        "prerelease": false
+      },
+      "release_commit": "3dede06bec0b497bddfdcf047af7495ee9d0726e"
+    },
+    {
+      "repo": "home-assistant/core",
+      "metadata": {
+        "default_branch": "dev",
+        "archived": false,
+        "pushed_at": "2026-09-21T18:08:30Z",
+        "license": {
+          "key": "apache-2.0",
+          "name": "Apache License 2.0",
+          "spdx_id": "Apache-2.0",
+          "url": "https://api.github.com/licenses/apache-2.0",
+          "node_id": "MDc6TGljZW5zZTI="
+        },
+        "html_url": "https://github.com/home-assistant/core"
+      },
+      "release": {
+        "tag_name": "2026.9.3",
+        "published_at": "2026-09-18T12:11:05Z",
+        "target_commitish": "master",
+        "html_url": "https://github.com/home-assistant/core/releases/tag/2026.9.3",
+        "prerelease": false
+      },
+      "release_commit": "6de5eb18cd4502f94af44cfff3a02250d88716ed"
+    }
+  ],
+  "advisory_sample": [
+    {
+      "repo": "openclaw/openclaw",
+      "url": "https://api.github.com/repos/openclaw/openclaw/security-advisories?per_page=5",
+      "scope": "first page only; not a complete affected-version audit",
+      "advisories": [
+        {
+          "ghsa_id": "GHSA-rx8p-qcpv-c7vr",
+          "summary": "Prometheus diagnostics could omit operator.read enforcement",
+          "severity": "medium",
+          "published_at": "2026-09-11T00:58:45Z",
+          "updated_at": "2026-09-11T00:58:45Z",
+          "html_url": "https://github.com/openclaw/openclaw/security/advisories/GHSA-rx8p-qcpv-c7vr",
+          "vulnerabilities": [
+            {
+              "package": {
+                "ecosystem": "npm",
+                "name": "@openclaw/diagnostics-prometheus"
+              },
+              "vulnerable_version_range": "< 2026.9.3",
+              "patched_versions": "2026.9.3",
+              "vulnerable_functions": []
+            }
+          ]
+        },
+        {
+          "ghsa_id": "GHSA-xvwp-wmh2-fq48",
+          "summary": "Discord asset uploads could skip sender media policy",
+          "severity": "medium",
+          "published_at": "2026-09-11T00:58:55Z",
+          "updated_at": "2026-09-11T00:58:55Z",
+          "html_url": "https://github.com/openclaw/openclaw/security/advisories/GHSA-xvwp-wmh2-fq48",
+          "vulnerabilities": [
+            {
+              "package": {
+                "ecosystem": "npm",
+                "name": "@openclaw/discord"
+              },
+              "vulnerable_version_range": "< 2026.9.3",
+              "patched_versions": "2026.9.3",
+              "vulnerable_functions": []
+            }
+          ]
+        },
+        {
+          "ghsa_id": "GHSA-5j57-84cx-r295",
+          "summary": "iOS deep-link logs could expose unattended credentials",
+          "severity": "medium",
+          "published_at": "2026-09-11T00:57:28Z",
+          "updated_at": "2026-09-11T00:57:28Z",
+          "html_url": "https://github.com/openclaw/openclaw/security/advisories/GHSA-5j57-84cx-r295",
+          "vulnerabilities": [
+            {
+              "package": {
+                "ecosystem": "other",
+                "name": "OpenClaw iOS"
+              },
+              "vulnerable_version_range": "< 2026.8.11",
+              "patched_versions": "2026.8.11",
+              "vulnerable_functions": []
+            }
+          ]
+        },
+        {
+          "ghsa_id": "GHSA-m78m-7h3q-q938",
+          "summary": "Browser relay authentication could exhaust shared pending capacity",
+          "severity": "medium",
+          "published_at": "2026-09-11T00:58:27Z",
+          "updated_at": "2026-09-11T00:58:27Z",
+          "html_url": "https://github.com/openclaw/openclaw/security/advisories/GHSA-m78m-7h3q-q938",
+          "vulnerabilities": [
+            {
+              "package": {
+                "ecosystem": "npm",
+                "name": "openclaw"
+              },
+              "vulnerable_version_range": "< 2026.8.2",
+              "patched_versions": "2026.8.2",
+              "vulnerable_functions": []
+            }
+          ]
+        },
+        {
+          "ghsa_id": "GHSA-vhpg-cq3w-v8p9",
+          "summary": "OpenAI-compatible transport could send provider credentials to the wrong endpoint",
+          "severity": "medium",
+          "published_at": "2026-09-11T00:58:47Z",
+          "updated_at": "2026-09-11T00:58:48Z",
+          "html_url": "https://github.com/openclaw/openclaw/security/advisories/GHSA-vhpg-cq3w-v8p9",
+          "vulnerabilities": [
+            {
+              "package": {
+                "ecosystem": "npm",
+                "name": "openclaw"
+              },
+              "vulnerable_version_range": "< 2026.8.1",
+              "patched_versions": "2026.8.1",
+              "vulnerable_functions": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "repo": "NousResearch/hermes-agent",
+      "url": "https://api.github.com/repos/NousResearch/hermes-agent/security-advisories?per_page=5",
+      "scope": "first page only; not a complete affected-version audit",
+      "advisories": []
+    },
+    {
+      "repo": "agent0ai/agent-zero",
+      "url": "https://api.github.com/repos/agent0ai/agent-zero/security-advisories?per_page=5",
+      "scope": "first page only; not a complete affected-version audit",
+      "advisories": []
+    }
+  ]
+}

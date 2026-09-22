@@ -1,0 +1,29 @@
+{
+  "revision": "4561fbdcd88c4b90fb9d06dace8fb051aecf6036163966065414d746a4f231b6",
+  "readAt": "2026-09-21T18:38:40.044Z",
+  "active": {
+    "id": "AU-008",
+    "title": "Zelf kosteloos handelen binnen eigenaarmandaat",
+    "outcome": "Eva kiest uit toegestane context een nuttige bijdrage, voert passende kosteloze stappen via haar gewone taakuitvoerder uit en toont resultaat of concrete blokkade. Stilte blijft een geldige keuze.",
+    "status": "review",
+    "doneWhen": [
+      "Technisch afgerond: echte zelfgekozen bijdrage teruggelezen; laatste beoordeling zichtbaar en onafhankelijk gecontroleerd.",
+      "Alleen IN-02 blijft open: Jaap beoordeelt het nut en de passendheid van de bestaande bijdrage."
+    ],
+    "area": "Eigen initiatief",
+    "displayOutcome": "Eva koos en voltooide zelf API-toegang is niet hetzelfde als toestemming. Het bestaande bestand is onafhankelijk teruggelezen; IN-02 bevat de volledige tekst. Alleen Jaaps IN-02-oordeel over nut en passendheid is open. AU-008 is technisch afgerond en live; herhaald gezinsnut en brede zelfstandigheid zijn niet hiermee bewezen.",
+    "displayKicker": "ALLEEN JOUW BEOORDELING",
+    "displayTitle": "Eva\u2019s eigen bijdrage ligt klaar",
+    "displayStatus": "Technisch afgerond en live \u00b7 IN-02 open"
+  },
+  "runtime": {
+    "state": "ready",
+    "checkedAt": "2026-09-21T18:38:40.024Z",
+    "port": 44710
+  },
+  "browserAccess": {
+    "state": "login_required",
+    "checkedAt": "2026-09-21T18:38:40.043Z",
+    "url": "http://localhost:44710/internal/v1/dashboard"
+  }
+}

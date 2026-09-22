@@ -1,0 +1,229 @@
+{
+  "date": "2026-09-21",
+  "scope": "Vastgelopen private initiatiefbeoordeling expliciet afbreken en nieuwe beoordelingen weer via bestaande grenzen toelaten.",
+  "built": true,
+  "tested": true,
+  "live": true,
+  "ownerAccepted": false,
+  "parentImage": "sha256:10f182bb1e03635ad4ed99f36209c365ae23857ac77b0ee7a4bafdc0e9ef9374",
+  "image": "sha256:0c94dc64b1988e30001d952c7a4215d4cbf637c283d8af68ddd9da05d609b25c",
+  "sourceHashes": {
+    "adapters/postgres/owner_initiatives.py": "4164100d37708fbb8afa067b9468df59ec9cab80ab68255dc102a146fb1ef225",
+    "adapters/postgres/sensory_events.py": "b06ce485e984e8a467509d370a96a2aef1598373ea04b7b387d79b3a7ff5cf52",
+    "bootstrap/runtime.py": "7fcc3e78720378f92ec81188458deef9cda3e5119478e171b6f26efd660c079f",
+    "adapters/api/dashboard_initiatives.py": "f2551a114b637b78a498fa5f430e9dd0925e0718abcae161dc4e843c4efee3b6"
+  },
+  "tests": {
+    "existingAndApiCasesPassed": 9,
+    "recoveryPostgresCasePassedAfterFix": 1,
+    "firstFailure": "BYTEA fingerprint vereist hex-string; hersteld en opnieuw getest.",
+    "setupIssues": [
+      "Ontbrekende py-module in tijdelijke testhulp toegevoegd; productie-dependencies ongewijzigd.",
+      "Tweede proef vereiste een verse disposable database; oude proefdatabase niet als leeg behandeld."
+    ],
+    "receipt": "eva2/evidence/product/initiative-recovery-tests-2026-09-21.txt"
+  },
+  "review": {
+    "reviewer": "conversation_scope_review",
+    "decision": "GO",
+    "scope": "Vier gerichte deltas, definitieve image en rollbackplan; eenmalig herstel op exact vastgelegde revision."
+  },
+  "installation": {
+    "installed": true,
+    "image": "sha256:0c94dc64b1988e30001d952c7a4215d4cbf637c283d8af68ddd9da05d609b25c",
+    "readiness": {
+      "database": "ready",
+      "detail": null,
+      "memory_projection": "ready",
+      "model_provider": "ready",
+      "ready": true
+    },
+    "configPreserved": true,
+    "otherContainersPreserved": 265,
+    "rollbackVerified": true
+  },
+  "recovery": {
+    "date": "2026-09-21T11:46:51.093231+00:00",
+    "sourceHashesVerified": true,
+    "result": {
+      "contract": "EvaPrivateReviewRecovery/v1",
+      "disposition": "abandoned",
+      "usage": "unknown",
+      "replayed": false
+    },
+    "latestReview": {
+      "updated_at": "2026-09-21T11:46:50+00:00",
+      "phase": "will_abandoned",
+      "state": "abandoned",
+      "reason": "Eigenaarherstel: oude beoordeling afgebroken; verbruik blijft onbekend.",
+      "blocker": null,
+      "intent_id": null
+    },
+    "existingInitiativesUnchanged": true
+  },
+  "naturalCycle": {
+    "completed": true,
+    "forced": false,
+    "readback": {
+      "latest_review": {
+        "updated_at": "2026-09-21T11:51:26+00:00",
+        "phase": "will_decided",
+        "state": "silence",
+        "reason": "Dit is een rustig beoordelingsmoment zonder huiswaarneming. De beschikbare context biedt geen concrete nieuwe aanleiding; verwant werk is al afgerond, gereed of gestopt. Daarom geen bericht en geen nieuw privaat werkvoorstel.",
+        "blocker": null,
+        "intent_id": null
+      },
+      "cards": 6
+    },
+    "usage": {
+      "tool_calls": 1,
+      "measurement": "measured",
+      "input_tokens": 1702,
+      "output_tokens": 87,
+      "model_attempts": 1
+    },
+    "oldAttemptRetiredSeparately": true,
+    "durableReadback": [
+      {
+        "thread_id": "sensory:initiative-review:547262a5e00deb3ed2a6b3c5:497219",
+        "phase": "will_decided",
+        "revision": 4,
+        "events": [
+          {
+            "sequence": 1,
+            "event_type": "SENSORY_EVENT_OBSERVED",
+            "payload_sha256": "6cc7a8e304fa4b81a8b4a332657c23884118da8e75647b0fc0d8ec01d6ea7d04",
+            "usage": null,
+            "data_keys": [
+              "source",
+              "payload",
+              "event_type",
+              "source_event_id"
+            ]
+          },
+          {
+            "sequence": 2,
+            "event_type": "WILL_EVALUATION_CLAIMED",
+            "payload_sha256": "5f8d3b1b3476aacdf313c4e519582f3e747ceee6905afb1924e6a528f8491228",
+            "usage": null,
+            "data_keys": [
+              "shadow_mode",
+              "source_event_id",
+              "model_dispatch_started"
+            ]
+          },
+          {
+            "sequence": 3,
+            "event_type": "WILL_MODEL_STARTED",
+            "payload_sha256": "fa5934aeee4aaeaade7657d87b1f9ba8d5064dc409a505dc14aa610bd27257f7",
+            "usage": null,
+            "data_keys": [
+              "meaning",
+              "source_event_id"
+            ]
+          },
+          {
+            "sequence": 4,
+            "event_type": "WILL_DECIDED",
+            "payload_sha256": "13b76b28c31a22ab86a8b9281d961fc1360f9fa75b28b27592068589f0d6ceca",
+            "usage": {
+              "tool_calls": 1,
+              "measurement": "measured",
+              "input_tokens": 1702,
+              "output_tokens": 87,
+              "model_attempts": 1
+            },
+            "data_keys": [
+              "usage",
+              "reason",
+              "urgency",
+              "provider",
+              "entity_id",
+              "expression",
+              "disposition",
+              "shadow_mode",
+              "source_event_id"
+            ]
+          }
+        ]
+      },
+      {
+        "thread_id": "sensory:initiative-review:547262a5e00deb3ed2a6b3c5:497040",
+        "phase": "will_abandoned",
+        "revision": 5,
+        "events": [
+          {
+            "sequence": 1,
+            "event_type": "SENSORY_EVENT_OBSERVED",
+            "payload_sha256": "5012472dfcd5d2c4b4d199819af3c811fbdbd1d02b44fd9c85665ea8a4085daa",
+            "usage": null,
+            "data_keys": [
+              "source",
+              "payload",
+              "event_type",
+              "source_event_id"
+            ]
+          },
+          {
+            "sequence": 2,
+            "event_type": "WILL_EVALUATION_CLAIMED",
+            "payload_sha256": "5dfe15e23b6992b7a3f5019b1d6f568c81da7e7d6303cf9fbccadfdc87be49ea",
+            "usage": null,
+            "data_keys": [
+              "shadow_mode",
+              "source_event_id",
+              "model_dispatch_started"
+            ]
+          },
+          {
+            "sequence": 3,
+            "event_type": "WILL_MODEL_STARTED",
+            "payload_sha256": "1619825275d9f540995582b371646af8098df919ad593c6889379c68b6936bc5",
+            "usage": null,
+            "data_keys": [
+              "meaning",
+              "source_event_id"
+            ]
+          },
+          {
+            "sequence": 4,
+            "event_type": "WILL_USAGE_UNCERTAIN",
+            "payload_sha256": "ac192dd5ee14b2d14b9edac1777ac6dd33a195f83a578a85af66796669e4b384",
+            "usage": null,
+            "data_keys": [
+              "usage",
+              "reason",
+              "source_event_id"
+            ]
+          },
+          {
+            "sequence": 5,
+            "event_type": "WILL_REVIEW_ABANDONED",
+            "payload_sha256": "d7a4a38b9712bbebcbea0b06d215f8cf02fa559d3e10f852727c4232014f2bc8",
+            "usage": null,
+            "data_keys": [
+              "usage",
+              "reason",
+              "replayed",
+              "previous_revision",
+              "owner_principal_id"
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "limits": [
+    "Onbekend modelverbruik van de oude poging blijft onbekend.",
+    "Geen oude beslissing of gebruikersopdracht opnieuw uitgevoerd.",
+    "Geen nieuwe kostenroute, bevoegdheden of model-/budgetverruiming.",
+    "Herstelde planning bewijst geen bruikbaarheid van een volgende eigen bijdrage."
+  ],
+  "artifactRetention": {
+    "path": "/home/administrator/project/.eva2-artifacts/initiative-recovery-20260921",
+    "owner": "architecturelead",
+    "purpose": "Concrete delta, installatie en terugweg. Bewaar zolang deze liveversie of haar rollback nodig is."
+  },
+  "technicalComplete": true,
+  "result": "Normale initiatiefcyclus hervat en nieuwe beslissing duurzaam afgerond. Eva koos stilte bij gebrek aan concrete nieuwe aanleiding; geen extra bericht of werkvoorstel."
+}

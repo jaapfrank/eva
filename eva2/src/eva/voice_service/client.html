@@ -13,10 +13,11 @@
 <p>Vraag Eva om een opdracht te stoppen. Alleen het gesprek beëindigen stopt de audio; werk dat al is gestart kan nog afronden.</p><div id="audio"></div>
 <script src="/livekit-client.js"></script><script>
 const $=id=>document.getElementById(id);
+const localAccess=false;
 let room=null,active=null,ownerToken="",visit=0,disposed=false;
 const messages=new Map(),jobs=new Map(),pendingCleanup=new Set();
 function row(parent,key,text,kind=''){let node=parent==='chat'?messages.get(key):jobs.get(key);if(!node){node=document.createElement('div');node.className='row '+kind;$(parent).append(node);(parent==='chat'?messages:jobs).set(key,node);}node.textContent=text;}
-function reset(text){$('state').textContent=text;$('start').disabled=disposed||document.hidden||navigator.onLine===false||!ownerToken||!!active;$('end').disabled=!active;$('text').disabled=true;$('send').disabled=true;$('audio').replaceChildren();}
+function reset(text){$('state').textContent=text;$('start').disabled=disposed||document.hidden||navigator.onLine===false||(!localAccess&&!ownerToken)||!!active;$('end').disabled=!active;$('text').disabled=true;$('send').disabled=true;$('audio').replaceChildren();}
 async function ownerRequest(path,options={},token=ownerToken){return fetch(path,{...options,headers:{...options.headers,Authorization:'Bearer '+token}});}
 async function closeConnection(connection,token){return ownerRequest('/session/end/'+encodeURIComponent(connection.room),{method:'POST',keepalive:true},token);}
 async function connectRoom(r,connection){await r.connect(connection.url,connection.token,{rtcConfig:connection.rtc_config||{}});}
@@ -35,7 +36,7 @@ function stopConversation(text='Het gesprek is beëindigd.'){
  if(old)void cleanup(old);
  reset(text);
 }
-function leave(){disposed=true;stopConversation('De microfoon staat uit.');ownerToken='';$('login').hidden=false;$('owner-key').value='';messages.clear();jobs.clear();$('chat').replaceChildren();$('work').replaceChildren();reset('De microfoon staat uit.');}
+function leave(){disposed=true;stopConversation('De microfoon staat uit.');ownerToken='';$('login').hidden=localAccess;$('owner-key').value='';messages.clear();jobs.clear();$('chat').replaceChildren();$('work').replaceChildren();reset('De microfoon staat uit.');}
 function resume(){disposed=false;if(!active)reset('De microfoon staat uit. Kies Begin gesprek om weer te praten.');for(const attempt of pendingCleanup)void cleanup(attempt);}
 function visibilityChanged(){if(document.hidden)stopConversation('De microfoon staat uit omdat de pagina verborgen is.');else resume();}
 function wentOffline(){stopConversation('De verbinding is weg. De microfoon staat uit.');}
@@ -43,6 +44,7 @@ function cameOnline(){for(const attempt of pendingCleanup)void cleanup(attempt);
 function attachLifecycle(){document.addEventListener('visibilitychange',visibilityChanged);window.addEventListener('offline',wentOffline);window.addEventListener('online',cameOnline);window.addEventListener('pagehide',leave);window.addEventListener('pageshow',resume);}
 function detachLifecycle(){document.removeEventListener('visibilitychange',visibilityChanged);window.removeEventListener('offline',wentOffline);window.removeEventListener('online',cameOnline);window.removeEventListener('pagehide',leave);window.removeEventListener('pageshow',resume);}
 attachLifecycle();
+if(localAccess){$('login').hidden=true;reset('Kies Begin gesprek. De microfoon staat uit tot je begint.');}
 $('login').onsubmit=async event=>{
  event.preventDefault();const generation=++visit,token=$('owner-key').value.trim();$('login-submit').disabled=true;$('state').textContent='Aanmelding controleren…';
  try{const response=await ownerRequest('/session/ready',{},token);if(!response.ok){const data=await response.json();throw new Error(data.detail||'Aanmelden mislukt.');}if(generation!==visit||disposed)return;ownerToken=token;$('owner-key').value='';$('login').hidden=true;reset('Aangemeld. Kies Begin gesprek om de microfoon te openen.');}
@@ -50,7 +52,7 @@ $('login').onsubmit=async event=>{
  finally{$('login-submit').disabled=false;}
 };
 $('start').onclick=async()=>{
- if(active||disposed||document.hidden||navigator.onLine===false||!ownerToken)return;
+ if(active||disposed||document.hidden||navigator.onLine===false||(!localAccess&&!ownerToken))return;
  const attempt={token:ownerToken};active=attempt;reset('Verbinding maken…');
  try{
   const response=await ownerRequest('/session',{method:'POST'},attempt.token);

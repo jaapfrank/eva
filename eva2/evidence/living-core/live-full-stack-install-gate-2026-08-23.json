@@ -1,0 +1,162 @@
+{
+  "contract": "EvaLivingCoreFullStackInstallGateReceipt/v1",
+  "recorded_at": "2026-08-23T17:18:07Z",
+  "result": "passed",
+  "scope": "fresh pinned PostgreSQL, Hindsight and Living Core Compose stack with a real model-backed turn, asynchronous semantic retention and hard-restart replay",
+  "production_a": {
+    "service": "eva.service",
+    "active_during_gate": true,
+    "traffic_changed": false,
+    "data_changed_by_gate": false
+  },
+  "candidate_b": {
+    "container": "eva2-living-core-b",
+    "health_during_gate": "healthy",
+    "traffic_changed": false,
+    "data_changed_by_gate": false
+  },
+  "source_bindings": {
+    "compose": {
+      "path": "eva2/deploy/living-core/stack.compose.yml",
+      "sha256": "495344d19df9d9076086a4258755f72949c37b21f5d9c2b57e48c433c2697e40"
+    },
+    "home_assistant_compose_overlay": {
+      "path": "eva2/deploy/living-core/home-assistant.compose.yml",
+      "sha256": "394c8bc7ef05c40279f0e7c44b31c21ea8ae0e77bc95ac3e3719e19287d9d3b0"
+    },
+    "runtime_environment_example": {
+      "path": "eva2/deploy/living-core/runtime.env.example",
+      "sha256": "5d2ec274d442c1d06a580fc4d95fcf68d685acb6e5f3c431c8cca697e58d6608"
+    },
+    "schema_installer": {
+      "path": "eva2/src/eva/operations/install_schema.py",
+      "sha256": "b70bdf288f75b6328595f46850cd5aeeed9124ec92518ef1cd3e948c196e495a"
+    },
+    "runtime_bootstrap": {
+      "path": "eva2/src/eva/bootstrap/runtime.py",
+      "sha256": "1a4363e775b70379fd86bf740711442fbf5f56b33ecbfc974c3f524faea447eb"
+    }
+  },
+  "images": {
+    "living_core": "sha256:1e8c0535a92d01b7e5a97e1c3153ab59c22406a001ff5c2ea5d654645f89b967",
+    "hindsight_0_9_1": "sha256:aeb0831e2ec55e659d5e69baa064c1278113e523513b8f60a1f09c5cabe59b9b",
+    "postgresql_16_13": "sha256:472efd9a66f2b2f1a5aeb18b28de74332e6ef88c2b93a1a5d812fb6db67a5f60"
+  },
+  "fresh_stack": {
+    "compose_project": "eva2-full-install-gate",
+    "core": {
+      "container_id": "339a0d3c81c93ea46c792d0f271f0a9df56dab69353a023aaa830c6bb83fcb2f",
+      "health": "healthy",
+      "host_port": 44677,
+      "read_only_root_filesystem": true,
+      "runtime_user": "65532:65532"
+    },
+    "hindsight": {
+      "container_id": "89507864ebb5329e0fad90dc2a34ecbc014631b9b9a5abbdcac47170e85c13a8",
+      "health": "healthy",
+      "persistent_volume": "eva2-full-install-gate-hindsight-data"
+    },
+    "postgresql": {
+      "container_id": "9c1ed1c3b019447d386889869e1c063f00a23e42c199449706e0364306329d2f",
+      "health": "healthy",
+      "persistent_volume": "eva2-full-install-gate-postgres-data"
+    },
+    "compose_config_validation": "passed"
+  },
+  "installation": {
+    "initial_database": "empty",
+    "first_unreadable_dsn_attempt": {
+      "result": "failed_closed_before_ddl",
+      "reason": "the host secret was mode 0600 and therefore intentionally unreadable by container UID 65532",
+      "database_revision_created": false
+    },
+    "successful_route": [
+      "base_to_4b_0000_core_namespace",
+      "migrator_role_to_4b_0002_episode_atomicity",
+      "online_empty_admission_or_forward_upgrade_to_head"
+    ],
+    "final_revision": "4e_0001_operational_timeline",
+    "alembic_check": "No new upgrade operations detected.",
+    "receipt": {
+      "contract": "EvaSchemaInstallationReceipt/v1",
+      "drift_check": "no_new_upgrade_operations_detected",
+      "final_revision": "4e_0001_operational_timeline",
+      "source_revision": null,
+      "status": "passed"
+    },
+    "warning": "Alembic emitted its known SQLAlchemy dependency-cycle ordering warning before completing the explicit drift check; it did not change the successful result."
+  },
+  "real_conversation": {
+    "transport": "production_eva2_canary_adapter_to_fresh_full_stack",
+    "message_id": "telegram:full-stack-install-gate-20260823:1",
+    "stimulus": "Wie ben je, wat onthoud je en hoe weet je of een huisactie echt gelukt is?",
+    "reply": "Ik ben Eva: een warme, nuchtere digitale huisgenoot die met je meedenkt en ook zelf keuzes mag maken als dat gevraagd wordt. Ik onthoud alleen wat in dit gesprek staat en, als er expliciet iets wordt vastgelegd, die blijvende afspraak; verder geen verborgen dossier. Of een huisactie echt gelukt is, weet ik alleen als er een duidelijk, controleerbaar resultaat is: iets is gedaan, zichtbaar veranderd, of jij bevestigt het. Zonder zo’n check kan ik het niet eerlijk zeker weten.",
+    "reply_sha256": "c9cc5a806e2b22e8c51d241ac2b2456c202d7896866adf6d1ec63138b13730fc",
+    "provider": "chatgpt-codex:gpt-5.4-mini",
+    "durable_events": [
+      {
+        "event_type": "INGRESS_COMMITTED",
+        "payload_sha256": "b6492c05b5f138bac86b0e9dc41946d5f89cdad7dac239abc0eb9cc31b1cab90",
+        "sequence": 1
+      },
+      {
+        "event_type": "REPLY_COMMITTED",
+        "payload_sha256": "7fdca4af3ae371d4331abb92775b5b04258dd039cccd6d37e24f2d70dc5048eb",
+        "sequence": 2
+      },
+      {
+        "event_type": "MEMORY_RETAIN_QUEUED",
+        "payload_sha256": "4d1f8622b1470c6e291230a8692493a01d3847549e9e9a02fbeed51a9437ce9b",
+        "sequence": 3
+      }
+    ]
+  },
+  "hard_restart_replay": {
+    "core_container_restarted": true,
+    "same_input_bytes": true,
+    "first_idempotent_replay_milliseconds": 52,
+    "post_restart_replay_milliseconds": 97,
+    "reply_byte_equal": true,
+    "reply_sha256": "c9cc5a806e2b22e8c51d241ac2b2456c202d7896866adf6d1ec63138b13730fc",
+    "model_called_again": false,
+    "event_count_before_and_after": 3
+  },
+  "semantic_memory": {
+    "engine": "Hindsight 0.9.1",
+    "projection_version": "hindsight-0.9.1-v1",
+    "retention_path": "conversation response committed first, then asynchronous retain",
+    "recall_milliseconds": 559,
+    "selected_count": 3,
+    "response_sha256": "f9b8d7e54cef539593469b0e56727c3207de7e41793e5b35784f12532fd5cf22",
+    "recalled_fact_ids": [
+      "hindsight:d06690c8-893d-4879-9163-9e33b44e0a43",
+      "hindsight:f656d91c-23e4-445d-9d31-3ddebd09f5c5",
+      "hindsight:a2f89925-99ff-4a73-963f-500e3d5ad778"
+    ],
+    "recalled_meaning": [
+      "Eva retained that a home action is only proven by a checkable result or explicit confirmation.",
+      "Eva retained her warm, sober housemate identity and allowed autonomy.",
+      "Eva retained her stated memory boundary."
+    ]
+  },
+  "home_assistant_installation_overlay": {
+    "compose_config_validation": "passed",
+    "live_execution_evidence": "eva2/evidence/living-core/live-b-advanced-automation-execution-2026-08-23.json",
+    "secret_transport": "read_only_file",
+    "status": "configuration_validated_separately_from_this_disposable_stack"
+  },
+  "secret_handling": {
+    "model_authority_mount": "read_only",
+    "database_dsn_mount": "read_only",
+    "postgres_password_mount": "read_only",
+    "production_contract": "the DSN file is readable only by runtime UID 65532; the PostgreSQL password file is host mode 0600",
+    "disposable_gate_deviation": "the disposable DSN file was mode 0444 because Docker Compose file-backed secrets preserve host ownership and the temporary gate did not chown the host file to UID 65532",
+    "secret_values_recorded": false
+  },
+  "nonclaims": [
+    "This gate did not provision a new model account; it reused a separately provisioned read-only Codex authorization directory.",
+    "This gate did not promote B, change Telegram routing or touch production household data.",
+    "This gate proves installation, conversation, asynchronous semantic retention and exact restart replay; it is not yet the signed A/B promotion gate.",
+    "The disposable DSN file permission was deliberately broader than the production contract and is recorded rather than presented as production secret evidence."
+  ]
+}

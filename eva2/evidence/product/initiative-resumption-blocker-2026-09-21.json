@@ -1,0 +1,16 @@
+{
+  "date": "2026-09-21",
+  "observedThrough": "GET /internal/v1/dashboard/initiatives",
+  "latestReview": {
+    "updated_at": "2026-09-14T00:25:46+00:00",
+    "phase": "will_usage_uncertain",
+    "reason": "autonomous_provider_usage_unverified",
+    "blocker": "review_needs_help"
+  },
+  "source": "eva2/src/eva/adapters/postgres/sensory_events.py:schedule_context_review",
+  "finding": "De scheduler plant geen volgende beoordeling zolang de vorige geen will_decided is. Opnieuw inloggen ruimt deze duurzame toestand niet op.",
+  "nextAction": "Onderzoek de opgeslagen poging en beschikbare verbruiksregistratie; herstel via een expliciete, controleerbare afhandeling zonder oude beslissing te herhalen of onbekend verbruik als nul te behandelen.",
+  "changedRuntime": false,
+  "newModelCalls": 0,
+  "ownerAcceptance": false
+}

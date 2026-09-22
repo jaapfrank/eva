@@ -1,0 +1,2 @@
+MODE=safe
+COLOR=blue

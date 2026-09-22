@@ -1,0 +1,63 @@
+{
+  "contract": "EvaLivingTimeNumericAutomationReceipt/v1",
+  "recorded_at": "2026-08-23T19:48:28Z",
+  "environment": {
+    "container": "eva2-living-core-b",
+    "container_id": "e7020baca12071c501a0036dfcad4a24b56cf3e6dfb4ccaee2953aadea326c63",
+    "health": "healthy",
+    "image": "eva2-living-core:time-numeric-automations-20260823",
+    "image_sha256": "5c9d6ca15635ebd8cd22c8b4de102fa85d783073eccdd20dd195931ba4ed2bad",
+    "slot": "isolated_b"
+  },
+  "time_automation": {
+    "automation_id": "eva2_1dc73271f57750c5edffb7036c581650",
+    "config_sha256": "e90a8d4997dc02d42a45c3946369773d682beb9b834f4ce7a1131a62e931c793",
+    "model_reply_sha256": "8d7a2783236d8baf17d914bdc034f3d92c9b0052e2962653b58d67f47249ba0e",
+    "stored_trigger": {
+      "at": "23:59",
+      "trigger": "time"
+    },
+    "home_assistant_create_readback": "verified",
+    "rollback": "deleted",
+    "light_state_after": "off"
+  },
+  "numeric_automation": {
+    "automation_id": "eva2_13a1404cfbcaceb31eb36fd99ace2039",
+    "config_sha256": "7e47fd89e541f2cd25663912a34c2243a2f62cae99dae1608155354a4eae4859",
+    "model_reply_sha256": "98c9baf0154c1d7c95095abfd9ac111cbcab1960471b49f373594a93e98a40b1",
+    "stored_trigger": {
+      "below": -100000,
+      "entity_id": "sensor.samsung_schuur_battery_temperature",
+      "trigger": "numeric_state"
+    },
+    "home_assistant_create_readback": "verified",
+    "rollback": "deleted",
+    "light_state_after": "off"
+  },
+  "localtuya_guard_preserved": {
+    "home_assistant_core": "2026.8.1",
+    "hacs_localtuya_available": "v5.2.5",
+    "incompatibility_blocker_active": true,
+    "package_installed": false
+  },
+  "source_files": {
+    "eva2/design/architecture/living-core-v1.md": "4805e4356f7c4905cb951508ea82f8b5d0405c08704b0d60d25ec4291a89609e",
+    "eva2/src/eva/adapters/connectors/home_assistant_admin.py": "4793824e02700e207d0b6c9e45a98401d48f4c2c9ebc7a194da54dc4216891c9",
+    "eva2/src/eva/adapters/connectors/home_assistant_automations.py": "b5028928526f48fa90c713fa8f9f275836131ef699776b3664c5da43749066d7",
+    "eva2/src/eva/adapters/model/conversation.py": "90cf487147e4177c80d295b1bd5c6a76d856d1fede52779b680a5707a0593797",
+    "eva2/src/eva/adapters/postgres/conversation_actions.py": "76f82942613bfa50fcc3fca59323f5b949561900a3b8dedaae20178277240dc5",
+    "eva2/src/eva/application/advanced_tasks.py": "6e924c63371e56214636b44bdbc4182960d4f5e427bce812f8ebf643df301824",
+    "eva2/src/eva/application/home_automation.py": "0230cfee3206f5a26cbcea3f36e738b1588bc28d98a634d2dd0b6d70469b4a3e"
+  },
+  "verification": {
+    "focused_tests": "54 passed",
+    "ruff": "passed",
+    "whitespace": "passed"
+  },
+  "nonclaims": [
+    "The two automations were temporary real Home Assistant writes and were deleted after exact readback.",
+    "Neither trigger fired and no physical device state changed.",
+    "No LocalTuya package or device was installed or migrated.",
+    "Production A and default Telegram traffic were not changed."
+  ]
+}

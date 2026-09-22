@@ -1,0 +1,70 @@
+{
+  "date": "2026-09-22",
+  "before": {
+    "eva2-owner-voice-media-1": {
+      "id": "13f53f2658882fc5581456206b8feb44ec273be1055be9b57a1136825cefaa7b",
+      "image": "sha256:8a7f0ac23effc8cec9f523b1f82e59bfc56d31ea65cc5d946d5317c20f4aaac3"
+    },
+    "eva2-owner-voice-livekit-1": {
+      "id": "dbe9c8396a3bd2974dd1a40264d7ad855d5077cc14235325b058cfa2dacd17dd",
+      "image": "sha256:770bc61bc6ec4dcccbd3e05082d8f6bdafbee4179acab7014cc97202a9e2910b"
+    },
+    "eva2-managed-b-slot3-core": {
+      "id": "3172c38dc13ee9ce86f24fa97d3dc0208e1758a7e9d648737cffd6e9cadfe187",
+      "image": "sha256:0c94dc64b1988e30001d952c7a4215d4cbf637c283d8af68ddd9da05d609b25c"
+    }
+  },
+  "after": {
+    "eva2-owner-voice-media-1": {
+      "id": "c9b6d721151178717a1b4079e058b3585dd5403842a3e6024518ee2f2b0f07a9",
+      "image": "sha256:ac71fbae545992fe90547deee26f6168de5534b7eab14b12681c97363914c7c7"
+    },
+    "eva2-owner-voice-livekit-1": {
+      "id": "dbe9c8396a3bd2974dd1a40264d7ad855d5077cc14235325b058cfa2dacd17dd",
+      "image": "sha256:770bc61bc6ec4dcccbd3e05082d8f6bdafbee4179acab7014cc97202a9e2910b"
+    },
+    "eva2-managed-b-slot3-core": {
+      "id": "3172c38dc13ee9ce86f24fa97d3dc0208e1758a7e9d648737cffd6e9cadfe187",
+      "image": "sha256:0c94dc64b1988e30001d952c7a4215d4cbf637c283d8af68ddd9da05d609b25c"
+    }
+  },
+  "candidate": {
+    "parent": "sha256:8a7f0ac23effc8cec9f523b1f82e59bfc56d31ea65cc5d946d5317c20f4aaac3",
+    "image": "sha256:ac71fbae545992fe90547deee26f6168de5534b7eab14b12681c97363914c7c7",
+    "hashes": {
+      "server.py": {
+        "before": "b4c6284544028fdce84b4ad79024a9ee52dc0129ce7c746c8f74f631efc17bb5",
+        "after": "c5d610356d3b7a24684dc9bebc8e35ad39f36f0c23544b99ef3e8b348ada5dd2"
+      },
+      "client.html": {
+        "before": "9206bec4ea3aec0eb823ff3e82e5909247447524185ba2fbbbacc2e5ba526e6b",
+        "after": "42531e282cb3a865ae98c60caf7b23983c5b349eb7b071dd99388cb9adeaf31c"
+      }
+    }
+  },
+  "roomsBefore": {
+    "rooms": 0,
+    "participants": 0
+  },
+  "no_token_readiness": true,
+  "local_browser_access": true,
+  "changed_config_keys": [
+    "local_browser_access"
+  ],
+  "rollback": "runtime.env.before-local-20260922 and media-config.json.before-local-20260922; restore both and recreate media only. Previous image retained. Automatic rollback on failed readiness; no induced production rollback.",
+  "ownerAccepted": false,
+  "tests": {
+    "source_server_access": "13 passed",
+    "candidate_local_access": "10 passed",
+    "client_lifecycle": "59 passed including token-free local start, no microphone before click, hidden/reconnect and existing HA panel"
+  },
+  "review": {
+    "reviewer": "/root/evidence_audit",
+    "decision": "GO",
+    "scope": "local opt-in access boundaries, authority preservation, browser lifecycle; live parent diff contains only reviewed server/client changes"
+  },
+  "browserVerification": "Codex in-app browser displays enabled Begin gesprek, disabled microphone/chat until start, no login/token form. No physical microphone session started.",
+  "runtimeModelCalls": 0,
+  "developmentCreditCost": "unknown",
+  "voicePE": "Separate ordinary HA complete-answer route; SP06 reception sentence not deployed there; actual hardware equality remains open."
+}

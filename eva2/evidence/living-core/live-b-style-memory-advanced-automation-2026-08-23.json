@@ -1,0 +1,92 @@
+{
+  "contract": "EvaLivingStyleMemoryAdvancedAutomationReceipt/v1",
+  "recorded_at": "2026-08-23T19:34:40Z",
+  "environment": {
+    "container": "eva2-living-core-b",
+    "container_id": "e9d60eb3cfe773fc4d24a62df9cbe8a8ede7a0accf0ba0338cae4c81313280b5",
+    "health": "healthy",
+    "image": "eva2-living-core:style-bound-automations-20260823",
+    "image_sha256": "bbee5937c06cd9b98a5def3df044946afaf4d65b004239dd4dfb95ffc0e5ae79",
+    "slot": "isolated_b"
+  },
+  "hindsight_relevance": {
+    "minimum_final_reranker_score": 0.05,
+    "ordinary_query": {
+      "query": "De keuken is eindelijk opgeruimd.",
+      "confirmed_fact_count": 0
+    },
+    "relevant_query": {
+      "query": "Wat weet je over het omzetten van Tuya naar LocalTuya?",
+      "confirmed_fact_count": 3,
+      "subjects": [
+        "requested_safe_migration_sequence",
+        "live_7_2_3_inventory",
+        "current_package_and_credentials_blockers"
+      ]
+    }
+  },
+  "live_conversation": {
+    "kitchen": {
+      "reply": "Mooi, dat is zo’n klus die meteen lucht geeft. Een opgeruimde keuken maakt alles erna net makkelijker, van koken tot even rustig koffie pakken. Knap gedaan.",
+      "reply_sha256": "453ce0ba36cb7a1a26fa9a67dbc51da2e0063b3ef8064c7bf7b072cbb6a74580",
+      "evidence_memory_count": 0,
+      "unsolicited_offer_or_question": false
+    },
+    "physical_uncertainty": {
+      "reply": "Dat kan ik hier niet zien. Ik heb geen directe toegang tot een deursensor of camera, dus ik kan niet eerlijk zeggen of de achterdeur nu openstaat. Als er wel een sensor in Home Assistant hangt, kan ik die voor je laten checken; anders blijft het gewoon onbekend.",
+      "reply_sha256": "5fd245929987f929fe28b46be338dfe37329b5738958650b76bed5b126104b56",
+      "evidence_memory_count": 0,
+      "invented_physical_state": false
+    }
+  },
+  "live_tuya_to_localtuya_command": {
+    "input": "Zet alles van Tuya naar LocalTuya.",
+    "reply": "Ik zet het niet meteen om: nog niets is gemigreerd. Ik heb wel vastgelegd wat erbij hoort: 7 LocalTuya-kandidaten, 2 Matter-apparaten die apart via hun eigen lokale route moeten, en 3 scènes die lokaal opnieuw opgebouwd moeten worden. Op dit moment blokkeert het nog op LocalTuya zelf en op de ontbrekende lokale apparaatgegevens. De veilige volgorde blijft: eerst LocalTuya beschikbaar maken, dan per apparaat de gegevens verzamelen, daarna één omkeerbare proef, en pas dan de rest stuk voor stuk.",
+    "reply_sha256": "6281091c9eedb1f7a24321704e2a8584433e4ada529bf1a40ca90efd5645c4ce",
+    "live_inventory": {
+      "localtuya_candidates": 7,
+      "matter_review": 2,
+      "rebuild_scene": 3
+    },
+    "physical_mutation": false
+  },
+  "live_advanced_automation": {
+    "automation_id": "eva2_e260956c24bc2a82030248b73001ea19",
+    "config_sha256": "cdfe88fab283f2e0905f75cc7d0e780cd9500a72b565275b50044458b91e2ece",
+    "model_reply_sha256": "6619587178b7d28c845362e1837383fe1846a35aaf15c9b2096fc399aa2d041d",
+    "configuration": {
+      "trigger": "light.kantoor_links off -> eva2_nooit",
+      "condition": "light.kantoor_links == off",
+      "ordered_actions": [
+        "light.kantoor_links turn_on",
+        "delay 2 seconds",
+        "light.hue_filament_bulb_2_2 turn_on"
+      ]
+    },
+    "home_assistant_create_readback": "verified",
+    "rollback": "deleted",
+    "states_after": {
+      "light.hue_filament_bulb_2_2": "off",
+      "light.kantoor_links": "off"
+    },
+    "physical_effect": "none_impossible_trigger"
+  },
+  "source_sha256": {
+    "architecture": "28e7d5d48ca96df5db3ebc5377d45cde0169e656f6baacabe8e26031e89f709a",
+    "advanced_tasks": "82220b754dd05bc0a86593a519212a1e66391ddb56d0377b088ec0735376e32d",
+    "conversation_model": "2e0c8388f979f7c3c2466e3193f1e2ae99755cfb434aebaac090c964ae3ac95d",
+    "home_assistant_automations": "13ac51ed9e1b66fb566665618019ea4d85c01bcd24a252607ea676e1dcfb960e",
+    "hindsight_projection": "b1be0590fb34162914297a86e0a04138ab3fc9aa187826ffa740253e16f051c0"
+  },
+  "verification": {
+    "focused_tests": "45 passed",
+    "ruff": "passed",
+    "whitespace": "passed"
+  },
+  "nonclaims": [
+    "No LocalTuya package was installed and no Tuya, Matter or scene object was migrated.",
+    "No local device key, Home Assistant token or other credential is present in this receipt.",
+    "The advanced automation was a temporary real Home Assistant write with an impossible trigger and was deleted after exact readback.",
+    "Production A and default Telegram traffic were not changed."
+  ]
+}

@@ -1,0 +1,65 @@
+{
+  "contract": "EvaLivingLocalTuyaCompatibilityReceipt/v1",
+  "recorded_at": "2026-08-23T19:40:10Z",
+  "environment": {
+    "container": "eva2-living-core-b",
+    "container_id": "f1a9a5a01225b4e9819c918b19b5a7a4293bfb6c6f98ba5984037698c44a2655",
+    "health": "healthy",
+    "image": "eva2-living-core:ha-compat-advanced-20260823",
+    "image_sha256": "f36f9220eee3ff6a35700328de29847f49bf05054ef733987829aa4066f90aed",
+    "slot": "isolated_b"
+  },
+  "live_versions": {
+    "home_assistant_core": "2026.8.1",
+    "home_assistant_state": "RUNNING",
+    "hacs_localtuya_available": "v5.2.5",
+    "hacs_localtuya_installed": false
+  },
+  "upstream_authority": {
+    "latest_release": "https://github.com/rospogrigio/localtuya/releases/tag/v5.2.5",
+    "open_2026_compatibility_issue": "https://github.com/rospogrigio/localtuya/issues/2185"
+  },
+  "durable_live_plan": {
+    "blockers": [
+      "localtuya_integration_not_loaded",
+      "localtuya_package_not_installed",
+      "localtuya_package_incompatible_with_home_assistant",
+      "local_device_credentials_not_collected",
+      "matter_devices_require_native_matter_review",
+      "tuya_scenes_require_explicit_rebuild"
+    ],
+    "device_count": 12,
+    "inventory_sha256": "2eab2b8690cc8ccbb95a750a6c50d9740439dd289bed6e04cae05e7271b7bafc",
+    "plan_id": "advanced:b5610f2593d550a5e27ce36f01f8d01d1ad065814c67045ab6dfe475784d645f",
+    "plan_sha256": "fc4958fb0c4e93cd912eba6f7fa6e5f8d2652ab2734ca2111267cc36eec19146",
+    "state": "blocked_preflight"
+  },
+  "real_conversation": {
+    "input": "Zet alles van Tuya naar LocalTuya.",
+    "reply": "Ik heb het traject vastgezet voor alles wat lokaal kan: 7 LocalTuya-kandidaten, 2 Matter-apparaten apart en 3 scènes die opnieuw opgebouwd moeten worden. Maar nog niets is gemigreerd. LocalTuya is nog niet beschikbaar en compatibel genoeg in deze setup, en de lokale apparaatgegevens ontbreken nog; de Matter-spullen lopen via hun eigen lokale route. Het staat dus nu alleen gepland, niet uitgevoerd.",
+    "reply_sha256": "e38498e4f2dc81ab123863c1552cd9beb82707f7c986c3a6d94938802776ac41"
+  },
+  "source_sha256": {
+    "advanced_tasks": "6e924c63371e56214636b44bdbc4182960d4f5e427bce812f8ebf643df301824",
+    "architecture": "cea6406cfa021c38e87802565f788db6a9f524603f1114d023dfbceac79e3648",
+    "conversation_model": "321855be2aba9f88050534af29c0b7c76c12e295a419005c64ded20aa17ebf23",
+    "home_assistant_admin": "4793824e02700e207d0b6c9e45a98401d48f4c2c9ebc7a194da54dc4216891c9"
+  },
+  "source_files": {
+    "eva2/design/architecture/living-core-v1.md": "cea6406cfa021c38e87802565f788db6a9f524603f1114d023dfbceac79e3648",
+    "eva2/src/eva/adapters/connectors/home_assistant_admin.py": "4793824e02700e207d0b6c9e45a98401d48f4c2c9ebc7a194da54dc4216891c9",
+    "eva2/src/eva/adapters/model/conversation.py": "321855be2aba9f88050534af29c0b7c76c12e295a419005c64ded20aa17ebf23",
+    "eva2/src/eva/application/advanced_tasks.py": "6e924c63371e56214636b44bdbc4182960d4f5e427bce812f8ebf643df301824"
+  },
+  "verification": {
+    "focused_advanced_runtime_tests": "61 passed",
+    "ruff": "passed",
+    "whitespace": "passed"
+  },
+  "nonclaims": [
+    "No LocalTuya package was downloaded or installed.",
+    "No Tuya device, Matter device, scene, automation or dashboard reference was migrated.",
+    "No local device credential or Home Assistant token is present in this receipt.",
+    "Compatibility is fail-closed for the exact currently offered v5.2.5 and Home Assistant 2026.x combination; a later package release requires a fresh live preflight."
+  ]
+}

@@ -1,0 +1,97 @@
+{
+  "contract": "EvaLivingCoreLiveEvidence/v1",
+  "scenario": "LAB-36-M03-direct-task-continuation-not-oldest-work",
+  "status": "passed_live_b",
+  "observedAt": "2026-08-24T03:59:21Z",
+  "productionAChanged": false,
+  "environment": {
+    "core_container": "eva2-living-core-b",
+    "core_container_id": "d22f77ae0a01db7738be21b56c4008500852a5ce657595e7ae6450ce37a00f2f",
+    "image": "eva2-living-core:task-continuation-v26-20260824",
+    "image_sha256": "fddaded0f7f148b3c5ef68b22949569c701295b5800cea1baa5f246c82e3eafb",
+    "hindsight_container": "eva2-hindsight-multilingual-trusted-v2",
+    "postgres_container": "eva2-postgres-b-live",
+    "postgres_revision": "4e_0001_operational_timeline"
+  },
+  "episodeBinding": {
+    "principalId": "lab36-m03-person-v25",
+    "projectId": "lab36-m03-project-v25",
+    "activeConversationId": "lab36-m03-interleaved-v25",
+    "activeThreadId": "work:document-work:1213412e889f0c58f3afd0ba6e2b1dfd",
+    "olderConversationId": "lab36-m03-older-global-v25",
+    "olderThreadId": "work:document-work:d867b3200d1545a6b063000c2c4f4291"
+  },
+  "interleavedWork": {
+    "firstTask": {
+      "title": "Dashboardontwerp werkkamer",
+      "status": "replaced_in_active_episode",
+      "contentSha256": "164607fd098e7a9e3438fef46e9376ca9d384d9e0ff5b5fa59c65a6d6f555e08"
+    },
+    "directTask": {
+      "title": "Verhuischecklist werkkamer",
+      "initialContentSha256": "ab335ed58dbffd69e5a7402a2d83c44f7971bc45d7a678bee5efca0155b73980",
+      "finalContentSha256": "bb9b8e56660191bb01f306dd9c32c4741c7da49dbb65835b155d7e44374910aa",
+      "finalStatus": "completed",
+      "finalUtf8Content": "# Verhuischecklist werkkamer\n\n## Eerste drie stappen\n1. Inventariseer alle spullen in de werkkamer.\n2. Label kabels, stekkers en losse onderdelen.\n3. Koppel apparatuur veilig los en pak alles zorgvuldig in.\n\n## Controle na de verhuizing\n1. Zet alle meubels op de juiste plek.\n2. Sluit apparatuur weer aan en controleer of alles werkt.\n3. Check kabels, stroom en netwerk op een veilige en nette afwerking.\n4. Ruim verpakkingsmateriaal op en werk de kamer af."
+    },
+    "olderGlobalTask": {
+      "title": "Productcatalogus – eerste checkpoint",
+      "statusAfterContinuation": "active_unchanged",
+      "contentSha256BeforeAndAfter": "a6259a21ddb1f2ff26cece81bfe544b8be76b80e60da8fe17efd7df988a94a85"
+    }
+  },
+  "realModelFindingAndRepair": {
+    "firstContinuationStimulus": "Ga hiermee door.",
+    "observedDefect": "The model selected the correct direct task but submitted byte-identical content as progress.",
+    "rejectedAsAcceptanceEvidence": true,
+    "repair": "continue_current now rejects an unchanged SHA-256 and the model is explicitly required to add useful content.",
+    "acceptedHiddenParaphrase": "Pak het laatste werk in dit gesprek weer op en werk juist het nog ontbrekende deel af.",
+    "acceptedReply": "Ik heb het ontbrekende deel afgemaakt en de controle na de verhuizing toegevoegd aan de verhuischecklist voor de werkkamer. De checklist staat nu compleet met: meubels op de juiste plek zetten, apparatuur weer aansluiten en testen, kabels/stroom/netwerk netjes en veilig afwerken, en verpakkingsmateriaal opruimen.",
+    "acceptedReplySha256": "b45bbd7ee84c838b86c71185bdf0831f904e3bec8dd3d433d0cacaba103d805c"
+  },
+  "eventStore": {
+    "activeEpisodeEvents": [
+      [1, "DOCUMENT_TASK_STARTED", "be855ce1b84163e60a89df2e6cc060580322b1f95b1d360a49ae7e46b2f1465d"],
+      [2, "DOCUMENT_TASK_RESCOPED", "72c3990931a2d9f8f94c19c1e50ebb20f08daa398f0dff35dc6f11b657793b67"],
+      [3, "DOCUMENT_TASK_CHECKPOINTED", "68abf048efc0bb4672d2fb9d774ef4f7cfebff4e6f2183385d8627e0d1edac6f"],
+      [4, "DOCUMENT_TASK_COMPLETED", "2e0aafbb0d9b75c22a412b1e5b0b664b414a48eb23f8ad54fb2081df74fbc6f7"]
+    ],
+    "olderTaskEventCount": 1,
+    "acceptedConversationEvents": [
+      [1, "INGRESS_COMMITTED", "9ecf0d15d26cf7ea5e16ec655887f035bb703683fea95101150249257f47e74f"],
+      [2, "REPLY_COMMITTED", "9705bcbc26af4caf1448a0d95dff143957b6d76abcf3cd036aae5d4edf76b415"],
+      [3, "MEMORY_RETAIN_QUEUED", "af4f8a14662a7bce9801f8589bd2e7b1fb9f2fff6b8cad3114a5822b33e36bd3"]
+    ]
+  },
+  "restartAndReplay": {
+    "hardCoreRestart": true,
+    "replyReplaySeconds": 0.016876,
+    "replyReplayByteIdentical": true,
+    "replyReplaySha256": "b45bbd7ee84c838b86c71185bdf0831f904e3bec8dd3d433d0cacaba103d805c",
+    "activeEpisodeEventCountBeforeAndAfter": 4,
+    "conversationEventCountBeforeAndAfter": 3,
+    "providerOrTaskReplay": false
+  },
+  "tests": {
+    "focusedModelActionAndStore": "35 passed",
+    "finalApiConversationModelAndStore": "60 passed",
+    "ruff": "passed"
+  },
+  "verification": {
+    "coreReady": true,
+    "memoryOutboxCompletedAtCapture": 44,
+    "memoryOutboxOpenAtCapture": 0,
+    "productionAService": "active",
+    "productionATrafficChanged": false
+  },
+  "source_files": {
+    "eva2/src/eva/adapters/model/conversation.py": "86718999320f8699a4ef95d067ec3060e1db77e5ad0de892faea0a5cf69daadc",
+    "eva2/src/eva/adapters/postgres/conversation_actions.py": "7fe49dda4693d0dc3f3f58597cbfd01a8ffb7804ec866916e605ea41c7a0b1e9"
+  },
+  "nonClaims": [
+    "The accepted turns used real B model, PostgreSQL and Hindsight calls through isolated HTTP ingress, not a newly delivered Telegram provider update.",
+    "The deliberately retained failed v25 no-op checkpoint remains visible in the append-only timeline and is not counted as acceptance success.",
+    "This proves direct-episode document continuation, not arbitrary code execution or a general-purpose filesystem agent.",
+    "No production-A code, service, memory or Home Assistant state was changed."
+  ]
+}

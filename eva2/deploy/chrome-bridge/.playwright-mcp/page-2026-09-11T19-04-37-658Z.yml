@@ -1,0 +1,274 @@
+- generic [ref=e4]:
+  - complementary [ref=e5]:
+    - link "e eva PROJECTOVERZICHT" [ref=e6] [cursor=pointer]:
+      - /url: "#"
+      - generic [ref=e7]: e
+      - generic [ref=e8]:
+        - text: eva
+        - generic [ref=e9]: PROJECTOVERZICHT
+    - navigation "Projectnavigatie" [ref=e10]:
+      - button "Overzicht" [ref=e11] [cursor=pointer]:
+        - generic [aria-hidden] [ref=e12]: ◫
+        - text: Overzicht
+      - button "Werk & volgorde" [ref=e13] [cursor=pointer]:
+        - generic [aria-hidden] [ref=e14]: ☷
+        - text: Werk & volgorde
+      - button "Concurrenten & keuzes" [ref=e15] [cursor=pointer]:
+        - generic [aria-hidden] [ref=e16]: ◇
+        - text: Concurrenten & keuzes
+    - generic [ref=e17]:
+      - text: DE AMBITIE
+      - paragraph [ref=e18]: Een warme huisgenoot die zelf leert én handelt.
+      - generic [ref=e19]: Beter dan de concurrenten.Pas als we het bewijzen.
+    - generic [ref=e20]: Eén gedeelde werklijstZelfde bron voor jou en Codex
+  - main [ref=e22]:
+    - generic [ref=e23]:
+      - generic [ref=e24]: Eva 2 / Projectoverzicht
+      - generic [ref=e25]: Bron gelezen om 21:04
+    - generic [ref=e26]:
+      - generic [ref=e27]:
+        - paragraph [ref=e28]: VAN AMBITIE NAAR DAGELIJKS GEBRUIK
+        - heading "Waar staat Eva écht?" [level=1] [ref=e29]
+        - paragraph [ref=e30]: Wat werkt, wat ontbreekt en wat je als volgende krijgt.
+      - generic [ref=e31]: In ontwikkeling
+    - group [ref=e32]:
+      - 'generic "Huidige opdracht: AU-008 · eerder geaccepteerde resultaten" [ref=e33] [cursor=pointer]'
+    - region "Mogelijkheden en open werk" [ref=e34]:
+      - generic [ref=e36]:
+        - heading "Wat werkt en wat nog mist" [level=2] [ref=e37]
+        - paragraph [ref=e38]: Status van het volledige onderdeel. Klap de rij open voor alle bestaande stappen, hun bewijs en opgeleverde resultaten.
+        - paragraph [ref=e39]: "Feitencontrole: 11-9-2026, 09:13:00. Live bewezen = uitgevoerd op de vermelde datum. Huidige bereikbaarheid is apart gecontroleerd; een latere kernversie is niet automatisch opnieuw beproefd."
+      - region "Statusmatrix, horizontaal scrollbaar" [ref=e40]:
+        - table [ref=e41]:
+          - caption [ref=e42]: Negen volledige onderdelen, vereiste deelstappen en afzonderlijke technische, persoonlijke en concurrentietests.
+          - rowgroup [ref=e43]:
+            - row [ref=e44]:
+              - columnheader "Volledig onderdeel" [ref=e45]
+              - columnheader "Klaar?" [ref=e46]
+              - columnheader "Getest" [ref=e47]
+              - columnheader "Door Jaap getest" [ref=e48]
+              - columnheader "Beter dan concurrentie onderzocht" [ref=e49]
+          - rowgroup [ref=e50]:
+            - row [ref=e51]:
+              - rowheader "Antwoordstream Antwoordvorming en volledig antwoord via Telegram 2/3 stappen · uitklappen" [ref=e52]:
+                - button "Antwoordstream" [ref=e53] [cursor=pointer]:
+                  - generic [aria-hidden] [ref=e54]: +
+                - generic [ref=e56]: Antwoordvorming en volledig antwoord via Telegram
+                - generic [ref=e57]: 2/3 stappen · uitklappen
+              - cell "NIET KLAAR" [ref=e58]:
+                - generic [ref=e59]: ✕ NIET KLAAR
+              - cell "Deelproeven geslaagd" [ref=e60]:
+                - generic "Technische deelproeven zijn bewijs voor hun eigen scope; geen volledige eindtest." [ref=e61]: ✓ Deelproeven geslaagd
+              - cell "Ongetest / geen bewijs" [ref=e62]:
+                - generic "Jouw zichtbare streamervaring; geen nieuwe streamproef op de huidige kern." [ref=e63]: — Ongetest / geen bewijs
+              - cell "Niet vergeleken" [ref=e64]:
+                - generic "Geen representatieve vergelijking met uitkomst beter, even of slechter vastgelegd. CP-001/002/003 blijven aparte werkkaarten." [ref=e65]: — Niet vergeleken
+          - rowgroup [ref=e66]:
+            - row [ref=e67]:
+              - rowheader "Gesprekken Gewone gesprekken, eigenheid en gezinscontinuïteit 7/12 stappen · uitklappen" [ref=e68]:
+                - button "Gesprekken" [ref=e69] [cursor=pointer]:
+                  - generic [aria-hidden] [ref=e70]: +
+                - generic [ref=e72]: Gewone gesprekken, eigenheid en gezinscontinuïteit
+                - generic [ref=e73]: 7/12 stappen · uitklappen
+              - cell "NIET KLAAR" [ref=e74]:
+                - generic [ref=e75]: ✕ NIET KLAAR
+              - cell "Deelproeven geslaagd" [ref=e76]:
+                - generic "Technische deelproeven zijn bewijs voor hun eigen scope; geen volledige eindtest." [ref=e77]: ✓ Deelproeven geslaagd
+              - cell "Beperkt beoordeeld" [ref=e78]:
+                - generic "Langdurige continuïteit, gezinskwaliteit en actuele regressieproef." [ref=e79]: — Beperkt beoordeeld
+              - cell "Beperkt · onbekend" [ref=e80]:
+                - 'generic "EV-002: één casus, Eva en Hermes voldoen aan dezelfde drie criteria; twee deelnemers geblokkeerd. Geen representatieve rangorde. Brononderzoek UP-001 bewijst geen concurrentiewinst." [ref=e81]': — Beperkt · onbekend
+          - rowgroup [ref=e82]:
+            - row [ref=e83]:
+              - rowheader "Geheugen Zelf onthouden, bijwerken en gebruiken per persoon 5/5 stappen · uitklappen" [ref=e84]:
+                - button "Geheugen" [active] [ref=e85] [cursor=pointer]:
+                  - generic [aria-hidden] [ref=e86]: +
+                - generic [ref=e88]: Zelf onthouden, bijwerken en gebruiken per persoon
+                - generic [ref=e89]: 5/5 stappen · uitklappen
+              - cell "KLAAR" [ref=e90]:
+                - generic [ref=e91]: ✓ KLAAR
+              - cell "Deelproeven geslaagd" [ref=e92]:
+                - generic "Technische deelproeven zijn bewijs voor hun eigen scope; geen volledige eindtest." [ref=e93]: ✓ Deelproeven geslaagd
+              - cell "GE-01 geslaagd · GE-02 open" [ref=e94]:
+                - generic "GE-01 bevestigt alleen de eerdere CO-008-geheugenproef. De nieuwe broninzage, correctie en vergeetbediening wachten op Jaaps GE-02-beoordeling." [ref=e95]: ✓ GE-01 geslaagd · GE-02 open
+              - cell "Niet vergeleken" [ref=e96]:
+                - generic "Geen representatieve vergelijking met uitkomst beter, even of slechter vastgelegd. CP-001/002/003 blijven aparte werkkaarten." [ref=e97]: — Niet vergeleken
+          - rowgroup [ref=e98]:
+            - row [ref=e99]:
+              - rowheader "Eigen initiatief Zelf kiezen, uitvoeren en gewaardeerd bijdragen 1/4 stappen · uitklappen" [ref=e100]:
+                - button "Eigen initiatief" [ref=e101] [cursor=pointer]:
+                  - generic [aria-hidden] [ref=e102]: +
+                - generic [ref=e104]: Zelf kiezen, uitvoeren en gewaardeerd bijdragen
+                - generic [ref=e105]: 1/4 stappen · uitklappen
+              - cell "NIET KLAAR" [ref=e106]:
+                - generic [ref=e107]: ✕ NIET KLAAR
+              - cell "Deelproeven geslaagd" [ref=e108]:
+                - generic "Technische deelproeven zijn bewijs voor hun eigen scope; geen volledige eindtest." [ref=e109]: ✓ Deelproeven geslaagd
+              - cell "Deelproef geslaagd" [ref=e110]:
+                - generic "AU-007" [ref=e111]: ✓ Deelproef geslaagd
+              - cell "Niet vergeleken" [ref=e112]:
+                - generic "Geen representatieve vergelijking met uitkomst beter, even of slechter vastgelegd. CP-001/002/003 blijven aparte werkkaarten." [ref=e113]: — Niet vergeleken
+          - rowgroup [ref=e114]:
+            - row [ref=e115]:
+              - rowheader "Tools & diensten Onbekende diensten en combinatietaken afmaken 4/6 stappen · uitklappen" [ref=e116]:
+                - button "Tools & diensten" [ref=e117] [cursor=pointer]:
+                  - generic [aria-hidden] [ref=e118]: +
+                - generic [ref=e120]: Onbekende diensten en combinatietaken afmaken
+                - generic [ref=e121]: 4/6 stappen · uitklappen
+              - cell "NIET KLAAR" [ref=e122]:
+                - generic [ref=e123]: ✕ NIET KLAAR
+              - cell "Deelproeven geslaagd" [ref=e124]:
+                - generic "Technische deelproeven zijn bewijs voor hun eigen scope; geen volledige eindtest." [ref=e125]: ✓ Deelproeven geslaagd
+              - cell "Ongetest / geen bewijs" [ref=e126]:
+                - generic "Nieuwe diensten zonder ontwikkelhulp; persoonlijke accounts en bredere combinatietaken." [ref=e127]: — Ongetest / geen bewijs
+              - cell "Niet vergeleken" [ref=e128]:
+                - generic "Geen representatieve vergelijking met uitkomst beter, even of slechter vastgelegd. CP-001/002/003 blijven aparte werkkaarten." [ref=e129]: — Niet vergeleken
+          - rowgroup [ref=e130]:
+            - row [ref=e131]:
+              - rowheader "Stem & aanwezigheid Doorlopend gesprek op laptop, telefoon en thuis 4/14 stappen · uitklappen" [ref=e132]:
+                - button "Stem & aanwezigheid" [ref=e133] [cursor=pointer]:
+                  - generic [aria-hidden] [ref=e134]: +
+                - generic [ref=e136]: Doorlopend gesprek op laptop, telefoon en thuis
+                - generic [ref=e137]: 4/14 stappen · uitklappen
+              - cell "NIET KLAAR" [ref=e138]:
+                - generic [ref=e139]: ✕ NIET KLAAR
+              - cell "Deelproeven geslaagd" [ref=e140]:
+                - generic "Technische deelproeven zijn bewijs voor hun eigen scope; geen volledige eindtest." [ref=e141]: ✓ Deelproeven geslaagd
+              - cell "Onderbreken geslaagd" [ref=e142]:
+                - generic "Alleen laptoponderbreken fysiek geaccepteerd. Stem en uitspraak onnatuurlijk; 3–8 seconden stilte; snelle betekenisvolle reactie en vervolg tijdens werk ontbreken. Volledige context, tijdens-werkervaring, telefoon en VoicePE niet geaccepteerd. SP-01/SP-02 blijven geaccepteerd; onterechte wakewords blijven apart open." [ref=e143]: ✓ Onderbreken geslaagd
+              - cell "Niet vergeleken" [ref=e144]:
+                - generic "Geen representatieve vergelijking met uitkomst beter, even of slechter vastgelegd. CP-001/002/003 blijven aparte werkkaarten." [ref=e145]: — Niet vergeleken
+          - rowgroup [ref=e146]:
+            - row [ref=e147]:
+              - rowheader "Zelfstandig werk Hulpwerk, leren en meerdaagse projecten 1/6 stappen · uitklappen" [ref=e148]:
+                - button "Zelfstandig werk" [ref=e149] [cursor=pointer]:
+                  - generic [aria-hidden] [ref=e150]: +
+                - generic [ref=e152]: Hulpwerk, leren en meerdaagse projecten
+                - generic [ref=e153]: 1/6 stappen · uitklappen
+              - cell "NIET KLAAR" [ref=e154]:
+                - generic [ref=e155]: ✕ NIET KLAAR
+              - cell "Deelproeven geslaagd" [ref=e156]:
+                - generic "Technische deelproeven zijn bewijs voor hun eigen scope; geen volledige eindtest." [ref=e157]: ✓ Deelproeven geslaagd
+              - cell "Telegram mislukt" [ref=e158]:
+                - 'generic "Telegramproef 11 sep 09:40: hulpagent geweigerd. Dashboard-HTTP-proef blijft bewezen." [ref=e159]': ✕ Telegram mislukt
+              - cell "Niet vergeleken" [ref=e160]:
+                - generic "Geen representatieve vergelijking met uitkomst beter, even of slechter vastgelegd. CP-001/002/003 blijven aparte werkkaarten." [ref=e161]: — Niet vergeleken
+          - rowgroup [ref=e162]:
+            - row [ref=e163]:
+              - rowheader "Browser gebruiken en overnemen Bestaande Chrome bedienen, overnemen en herstellen 1/8 stappen · uitklappen" [ref=e164]:
+                - button "Browser gebruiken en overnemen" [ref=e165] [cursor=pointer]:
+                  - generic [aria-hidden] [ref=e166]: +
+                - generic [ref=e168]: Bestaande Chrome bedienen, overnemen en herstellen
+                - generic [ref=e169]: 1/8 stappen · uitklappen
+              - cell "NIET KLAAR" [ref=e170]:
+                - generic [ref=e171]: ✕ NIET KLAAR
+              - cell "Deelproeven geslaagd" [ref=e172]:
+                - generic "Technische deelproeven zijn bewijs voor hun eigen scope; geen volledige eindtest." [ref=e173]: ✓ Deelproeven geslaagd
+              - cell "Kijkproef mislukt" [ref=e174]:
+                - generic "Kijkverbinding mislukte; losse Chrome-proef wel gelukt." [ref=e175]: ✕ Kijkproef mislukt
+              - cell "Niet vergeleken" [ref=e176]:
+                - generic "Geen representatieve vergelijking met uitkomst beter, even of slechter vastgelegd. CP-001/002/003 blijven aparte werkkaarten." [ref=e177]: — Niet vergeleken
+          - rowgroup [ref=e178]:
+            - row [ref=e179]:
+              - rowheader "Installatie & herstel Installeren, verhuizen, bijwerken en herstellen 12/23 stappen · uitklappen" [ref=e180]:
+                - button "Installatie & herstel" [ref=e181] [cursor=pointer]:
+                  - generic [aria-hidden] [ref=e182]: +
+                - generic [ref=e184]: Installeren, verhuizen, bijwerken en herstellen
+                - generic [ref=e185]: 12/23 stappen · uitklappen
+              - cell "NIET KLAAR" [ref=e186]:
+                - generic [ref=e187]: ✕ NIET KLAAR
+              - cell "Deelproeven geslaagd" [ref=e188]:
+                - generic "Technische deelproeven zijn bewijs voor hun eigen scope; geen volledige eindtest." [ref=e189]: ✓ Deelproeven geslaagd
+              - cell "Ongetest / geen bewijs" [ref=e190]:
+                - generic "Installeren/verhuizen zonder terminal, volledige computerherstart en zeven dagen praktijk." [ref=e191]: — Ongetest / geen bewijs
+              - cell "Niet vergeleken" [ref=e192]:
+                - generic "Geen representatieve vergelijking met uitkomst beter, even of slechter vastgelegd. CP-001/002/003 blijven aparte werkkaarten." [ref=e193]: — Niet vergeleken
+      - paragraph [ref=e194]: Klaar = alle vereiste stappen afgerond en alle opties beslist. De teller telt stappen, geen productpercentage. Onbesliste opties blokkeren; afgewezen opties tellen niet mee; geen bewijs betekent geen groene testclaim.
+    - region "Jouw praktijktests" [ref=e195]:
+      - generic [ref=e197]:
+        - heading "Jouw praktijktests" [level=2] [ref=e198]
+        - paragraph [ref=e199]: Geef hier in de chat het testnummer en je ervaring door. Ik werk de uitslag bij.
+      - generic [ref=e200]:
+        - article [ref=e201]:
+          - generic [ref=e202]: SP-01 · 9 september
+          - generic [ref=e203]: Door jou bevestigd
+          - heading "Verstaanbare audio" [level=3] [ref=e204]
+          - paragraph [ref=e205]: Woonkamer-speaker herstart; bestaande firmware en HA Cloud-stem behouden.
+          - paragraph [ref=e206]: "Uitslag: Jaap bevestigt FLAC, MP3 en het langere Eva2-verhaal zonder stotteren. Langdurige stabiliteit nog niet bewezen."
+        - article [ref=e207]:
+          - generic [ref=e208]: SP-02 · 9 september
+          - generic [ref=e209]: Door jou bevestigd
+          - heading "Doorpraten na het antwoord" [level=3] [ref=e210]
+          - paragraph [ref=e211]: Native Home Assistant-vervolgbeurten staan aan. Deze proef controleert praten nadat Eva klaar is.
+          - paragraph [ref=e212]: "Uitslag: Jaap bevestigt hier: SP-02: werkt. Vervolgvraag na het antwoord zonder nieuw Hey Eva geslaagd volgens eigenaar."
+        - article [ref=e213]:
+          - generic [ref=e214]: SP-03 · 9 september
+          - generic [ref=e215]: In ontwikkeling — nog niet testen
+          - heading "Onderbreken met gewone spraak" [level=3] [ref=e216]
+          - paragraph [ref=e217]: Core-uitrol en definitief installatiepakket zijn afgesloten. De firmware bevat de eigen beveiligde woonkamerverbinding.
+          - paragraph [ref=e218]: "Uitslag: Apart open volgens keuze Jaap. Geen USB-actie gevraagd; fysieke installatie en acceptatie blijven onbewezen."
+        - article [ref=e219]:
+          - generic [ref=e220]: SP-04 · 9 september
+          - generic [ref=e221]: In ontwikkeling — nog niet testen
+          - heading "Minder onterechte Hey Eva-detecties" [level=3] [ref=e222]
+          - paragraph [ref=e223]: Wakeword-model en apparaatinstellingen apart onderzoeken.
+          - paragraph [ref=e224]: "Uitslag: Laagste gevoeligheid staat al ingesteld. Jaap meldt activering door gewone gesprekken zonder Eva te noemen; nog niet opgelost."
+        - article [ref=e225]:
+          - generic [ref=e226]: BR-01 · 2026-09-10
+          - generic [ref=e227]: Chrome gereed voor tabdeling
+          - heading "Meekijken en overnemen" [level=3] [ref=e228]
+          - paragraph [ref=e229]: De browser staat in het bestaande eigenaarsdashboard.
+          - paragraph [ref=e230]: Eva heeft via de normale gespreksroute de koppeling geregistreerd en zeven tools gevonden. Een enkele paginawaarneming zonder tabdeling is geweigerd; Eva stopte zonder herhaling of nieuwe verbinding. Deel nu zelf één bestaand Chrome-tabblad voor de echte bedienings- en overnameproef.
+          - link "Open Chrome-bediening ↗" [ref=e231] [cursor=pointer]:
+            - /url: http://127.0.0.1:44718
+          - paragraph [ref=e232]: Klik Deel een bestaand tabblad en kies in Chrome Allow & select bij één gewenst bestaand tabblad. Meld daarna hier Gedeeld.
+          - generic [ref=e233]: Geen aanmelding nodig. De echte bedienings- en overnameproef en jouw beoordeling staan nog open.
+        - article [ref=e234]:
+          - generic [ref=e235]: GE-01 · 2026-09-10
+          - generic [ref=e236]: Door jou bevestigd
+          - heading "Voorkeur onthouden, wijzigen en gebruiken" [level=3] [ref=e237]
+          - paragraph [ref=e238]: Automatische geheugenroute hersteld en live gecontroleerd.
+          - paragraph [ref=e239]: "Uitslag: Dit lijkt perfect te werken. Screenshot toont eerst blauw in deuradvies en na wijziging groen in schuttingadvies."
+        - article [ref=e240]:
+          - generic [ref=e241]: IN-01 · 2026-09-10
+          - generic [ref=e242]: Door jou bevestigd
+          - heading "Eva maakt uit eigen initiatief een privaat hulpmiddel" [level=3] [ref=e243]
+          - paragraph [ref=e244]: Eva koos en maakte zelf de beoordelingskaart voor gezinsvriendelijke automatiseringen.
+          - paragraph [ref=e245]: "Uitslag: Kaart beoordeeld: “op zich wel bruikbaar”. Dit geldt alleen voor deze kaart; geen algemene acceptatie van eigen initiatief."
+        - article [ref=e246]:
+          - generic [ref=e247]: SP-LAPTOP-INTERRUPT · 11 september
+          - generic [ref=e248]: Door jou bevestigd
+          - heading "Lopende laptopspraak onderbreken" [level=3] [ref=e249]
+          - paragraph [ref=e250]: Fysieke proef door Jaap op de laptop.
+          - paragraph [ref=e251]: "Uitslag: Jaap bevestigt dat onderbreken daadwerkelijk werkt. Alleen laptoponderbreken geaccepteerd; stem, uitspraak, stiltes en vervolg tijdens werk blijven open."
+        - article [ref=e252]:
+          - generic [ref=e253]: GE-02 · 2026-09-11
+          - generic [ref=e254]: Klaar om te testen
+          - heading "Geheugen bekijken, corrigeren en vergeten" [level=3] [ref=e255]
+          - paragraph [ref=e256]: "Live eigenaarsbediening bij Jouw geheugenbronnen: volledige tekst bekijken, nieuwe informatie doorgeven en een verwerkte bron bewust wissen."
+          - heading "Zo test je" [level=4] [ref=e257]
+          - list [ref=e258]:
+            - listitem [ref=e259]: "Vertel Eva via Telegram voor een proef: Voor deze geheugentest heet mijn denkbeeldige plant Muntje."
+            - listitem [ref=e260]: Open http://localhost:44710/internal/v1/dashboard met je eigenaarslogin. Zoek deze bron onder Jouw geheugenbronnen en klik Bekijken en aanpassen.
+            - listitem [ref=e261]: "Kies Informatie corrigeren en vul in: Voor deze geheugentest heet mijn denkbeeldige plant voortaan Basil. Wacht tot de nieuwe bron Verwerkt toont."
+            - listitem [ref=e262]: Vraag Eva via Telegram hoe je denkbeeldige plant in de geheugentest heet; verwacht Basil.
+            - listitem [ref=e263]: Wis de twee proefbronnen met Deze bron vergeten en de bevestigingsknop. Controleer na vernieuwen dat ze uit de bronlijst verdwenen zijn. Wis ook de bron van je extra proefvraag als je die proefbeurt wilt verwijderen.
+          - paragraph [ref=e264]: "Geslaagd als: De volledige bron is zichtbaar; Eva gebruikt de nieuwe naam. Na het wissen verdwijnen de geselecteerde bronnen uit de lijst. Hun blijvende geheugen is technisch afzonderlijk teruggelezen: nul feiten na wissen. Andere vermeldingen en recente of Telegramberichten kunnen informatie nog bevatten en worden niet automatisch allemaal gewist."
+          - paragraph [ref=e265]: "Bericht hier: GE-02: werkt / werkt niet, met de stap waar het eventueel misgaat."
+          - paragraph [ref=e266]: "Uitslag: Technisch live bewezen met tijdelijke testgegevens en een onafhankelijke geheugenreadback; die testgegevens zijn daarna verwijderd. Jaaps beoordeling staat open."
+    - generic [ref=e267]:
+      - article [ref=e268]:
+        - paragraph [ref=e269]: INSTALLATIECONTROLE
+        - heading "Kern bereikbaar" [level=3] [ref=e270]
+        - paragraph [ref=e271]: Geconfigureerde route · poort 44710 · controle om 21:04Bereikbaar betekent niet dat Eva als product af is.
+      - article [ref=e272]:
+        - paragraph [ref=e273]: WAT NU EERLIJK OPENSTAAT
+        - list [ref=e274]:
+          - listitem [ref=e275]: Telegram heeft de live tekstupdates en het eindbericht bevestigd. Dit bewijst niet dat jij de animatie hebt gezien of de complete gesprekservaring hebt geaccepteerd.
+          - listitem [ref=e276]: Een beter gesprek is nog geen complete digitale huisgenoot.
+          - listitem [ref=e277]: Volledige stem-/hardwareacceptatie en zelfstandig werk blijven open. Home Assistant-inventarisatie is live; jouw beoordeling van het advies blijft open.
+          - listitem [ref=e278]: Er is nog geen bewezen concurrentiewinst.
+          - listitem [ref=e279]: CO-006 is live; volledige geheugengezondheid en gezinsacceptatie zijn niet bewezen. Browserherstel blijft afzonderlijk vervolgwerk.
+    - generic [ref=e280]:
+      - generic [ref=e281]: "Werklijst gewijzigd: 11-9-2026, 13:29:48 · versie 6bc293e2"
+      - generic [ref=e282]: Geen extra modelcalls voor dit dashboard

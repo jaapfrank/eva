@@ -14,7 +14,7 @@ export function applyMemoryPresentation(project, board) {
   const detail = `${priorAccepted ? 'GE-01 bevestigt alleen de eerdere CO-008-geheugenproef.' : 'GE-01 is niet als geaccepteerd vastgelegd.'} ${controlsAccepted ? 'GE-02 is afzonderlijk door Jaap geaccepteerd.' : 'De nieuwe broninzage, correctie en vergeetbediening wachten op Jaaps GE-02-beoordeling.'}`;
   row.accepted = priorAccepted && controlsAccepted ? 'yes' : priorAccepted || controlsAccepted ? 'partial' : 'no';
   row.scope = 'Automatisch geheugen en gekozen bronbediening · CO-008, CO-004, CO-005';
-  row.visibleResult = `${priorAccepted ? 'CO-008/GE-01 blijft geaccepteerd.' : 'Eerdere geheugenproef apart vastgelegd.'} ${complete ? 'CO-004 en CO-005 zijn technisch afgerond: bronnen bekijken, corrigeren en bewust vergeten.' : 'De gekozen bronbediening wordt technisch afgerond.'}`;
+  row.visibleResult = `${priorAccepted ? 'CO-008/GE-01 blijft geaccepteerd.' : 'Eerdere geheugenproef apart vastgelegd.'} ${complete ? `CO-004 en CO-005 zijn technisch afgerond${controlsAccepted ? ' en door Jaap geaccepteerd (GE-02)' : ''}: bronnen bekijken, corrigeren en bewust vergeten.` : 'De gekozen bronbediening wordt technisch afgerond.'}`;
   row.works = row.visibleResult;
   row.gapKind = controlsAccepted ? 'Afzonderlijk beoordeeld' : 'Jouw beoordeling';
   row.gap = controlsAccepted ? detail : performed ? 'GE-02 is door Jaap uitgevoerd; alleen de expliciete uitslag ontbreekt. De proef hoeft niet opnieuw.' : 'GE-02 staat klaar; Jaaps beoordeling van de nieuwe bediening is nog open. Technisch klaar betekent niet door Jaap geaccepteerd.';

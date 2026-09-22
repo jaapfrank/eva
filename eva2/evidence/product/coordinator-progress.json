@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "checkedAtUtc": "2026-09-13T12:20:27.1436653Z",
+  "dashboard": {
+    "httpStatus": 200,
+    "url": "http://127.0.0.1:44712/"
+  },
+  "dispatches": [
+    {
+      "status": "dispatched",
+      "threadId": "01a08d52-31b1-7091-be45-812c0b6e6c9f",
+      "task": "Disposable exact gateway graceful shutdown proof before phase1 cutover"
+    }
+  ],
+  "reportedBlockers": [
+    "AU006 gateway cutover admission/drain proof pending; source integrated, not live",
+    "IN002 security and support gates remain open",
+    "Wakeword needs owner recordings"
+  ],
+  "notes": [
+    "Memory acceptance preserved",
+    "Owner trials do not block independent technical work",
+    "Documentation audit is selective, three root Markdown files fully read"
+  ],
+  "lastHourlyReportAtUtc": "2026-09-13T12:08:52.264627+00:00",
+  "telegramDelivery": {
+    "status": "delivered",
+    "receipt": "/home/administrator/.local/state/eva2/project-telegram-updates/update-20260913-12.receipt.json",
+    "hourKey": "2026-09-13T12:00Z"
+  },
+  "lastHourlyAttemptAtUtc": "2026-09-13T12:08:46.9942191Z"
+}

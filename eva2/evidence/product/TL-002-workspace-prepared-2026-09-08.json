@@ -1,0 +1,55 @@
+{
+  "taskId": "TL-002",
+  "status": "standalone_prepared_core_disabled",
+  "sourceSha256": {
+    "tools/provision_workspace_provider.py": "453656c761367e74025f4733f3f70101273aed838d4ab859716d17d0918de313",
+    "tests/operations/test_provision_workspace_provider.py": "9639c5dd905662362717fae89c8d95f3da2ef4c4308f30d8aabad405e3040b52",
+    "deploy/living-core/workspace-provider.compose.yml": "39db35ed968380ab91be52b414e45c1726a99920e5c62f649d04c25bc06babb6"
+  },
+  "privateReceiptSha256": "a6b88183e2699f9c14bb42bfe95d3c6d37f6418dfe61d4a9febf26eb7414f741",
+  "preparation": {
+    "status": "standalone_prepared_core_disabled",
+    "gatewayImage": "ghcr.io/ibm/mcp-context-forge@sha256:daf923c247fd569df5f8c9ee418cbc259fade564f78e0a0852937139a181c4dd",
+    "filesystemImage": "eva2.local/workspace-filesystem@sha256:bd31ea2dde76561fe662a551756f939e9007048956c300e54ad49a8c18ddfdc4",
+    "network": "eva2-workspace-connectors",
+    "volumes": {
+      "database": "eva2-workspace-gateway-db",
+      "files": "eva2-workspace-files",
+      "filesystem-secrets": "eva2-workspace-filesystem-secrets",
+      "secrets": "eva2-workspace-secrets"
+    },
+    "restartPreserved": true,
+    "tokenListingDenied": true,
+    "independentContentSha256": "0d0be77fee8a63441fbc4afb77e780a42524576fad298ff8c43263dce84df71b",
+    "coreAccessEnabled": false
+  },
+  "admission": {
+    "status": "actual_provider_preflight_and_render_passed",
+    "render": {
+      "baselineSha256": "692f8de6267a4f94108c851823babb3afe917e0698051181cf1a5324d2e5d56b",
+      "activatedSha256": "8d14f2806cd8ea2e54ac856446805ab62fea2f8d659d42ac98c050638a8e0e5b",
+      "overlaySha256": "d2016f39b5ab3fd916733dee846e4e6fe0ed6c662d46e64d4a9c23821dffdedf",
+      "environmentSha256": "e82e6507e447ea2c41e1b11f8e5c30ec0bc8221d16fa8cacfde577cfd7e753e5",
+      "baseManifestSha256": "f2c12cbc07a0d965ec4dc32c7f2f75b4166125c8ee5bcc294df05b834f2a92d9",
+      "deliveryOverlaySha256": "62bee1695b8e397efe11c7eb4bc7e9cd58ca7bd08caae37c37415040fca18631"
+    },
+    "ownerAllowlistMatchesCurrentHA": true,
+    "coreConfigurationUnchanged": true,
+    "scope": "Read-only validation of actual prepared provider and private copied config; no core activation."
+  },
+  "admissionReceiptSha256": "51fef66b11f4c793ba822ca2d4f5dc9556d73d3fb6efb3d9b3b73acfcd328ea3",
+  "tests": {
+    "passed": 8,
+    "junitPath": "/tmp/eva2-tl002-workspace-provision-tests2.xml",
+    "junitSha256": "74f7631e12ba8881bb8e82131c958d1bdfcb74db090f03f358777dd36cab1032"
+  },
+  "review": {
+    "reviewedBy": "/root/co006_review",
+    "decision": "Bounded prepared-GO. Independent gateway read and direct file hash match; correct images, internal network, private mounts and permissions. Neither core connected."
+  },
+  "remaining": [
+    "Versioned token replacement and expiry management.",
+    "Core A/B activation, actual user route and rollback.",
+    "Human usefulness acceptance."
+  ]
+}

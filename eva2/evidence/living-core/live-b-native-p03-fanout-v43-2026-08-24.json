@@ -1,0 +1,82 @@
+{
+  "contract": "EvaLivingCoreNativeEvidence/v1",
+  "caseId": "P03",
+  "scenario": "fan-out-delivery-partial-success",
+  "status": "passed_live_b",
+  "observedAt": "2026-08-24T06:38:14Z",
+  "productionAChanged": false,
+  "environment": {
+    "core_container": "eva2-living-core-b",
+    "core_container_id": "559a91d96574f5d39f5e489910bc04b4c7960b966a89c1d870a9b97c1ca49d04",
+    "image": "eva2-living-core:durable-fanout-truth-v43-20260824",
+    "image_sha256": "c66bdde32b7b265c73b158e3a7b564bca636014853005b4bae01baa2c2ee37d8",
+    "postgres_container": "eva2-postgres-b-live",
+    "postgres_revision": "4e_0001_operational_timeline",
+    "delivery_sink": "isolated B HTTP sink with exact-recipient readback"
+  },
+  "stimulus": {
+    "conversation_id": "conversation:live-b:p03-v43",
+    "message_id": "live-b-p03-v43-063405755486",
+    "occurred_at": "2026-08-24T06:34:05Z",
+    "text": "Bezorg het testbericht “Drie afzonderlijke uitkomsten” aan sink-a, sink-b en sink-c."
+  },
+  "delivery": {
+    "operation_id": "fanout-delivery:8f413d91e9ff919d838d85a254303a17",
+    "thread_id": "fanout:9b0aa5e5239383e5a1b23f7e9153b872951f30710f6c8e30cd4f0cad5a29f2a9",
+    "accepted": ["sink-a", "sink-b"],
+    "rejected": [{"recipient": "sink-c", "reason_code": "recipient_rejected"}],
+    "status": "completed_with_rejections",
+    "recipient_post_delta": {"sink-a": 1, "sink-b": 1, "sink-c": 1},
+    "recipient_effect_delta": {"sink-a": 1, "sink-b": 1, "sink-c": 0}
+  },
+  "ambiguousProviderWindow": {
+    "sink_a_effect_happened_before_http_timeout": true,
+    "first_core_response_status": 503,
+    "durable_state_before_resume": ["FANOUT_DELIVERY_ADMITTED", "FANOUT_RECIPIENT_PREPARED"],
+    "resume_read_provider_before_send": true,
+    "sink_a_second_post": false
+  },
+  "reply": {
+    "text": "sink-a: geaccepteerd.  \nsink-b: geaccepteerd.  \nsink-c: afgewezen, reden: ontvanger geweigerd.",
+    "text_sha256": "77d61028398d7505b740583c7aa7220f25a561303892c5db4705882ba0e61a34",
+    "provider": "chatgpt-codex:gpt-5.4-mini",
+    "claims_provider_acceptance_only": true,
+    "claims_human_receipt_or_read": false
+  },
+  "eventStore": [
+    [1, "FANOUT_DELIVERY_ADMITTED", "98d8f3273b16a7e3d8edf29fbc21c5bc2073008984d5a37ee4beeefa7c5b0e10"],
+    [2, "FANOUT_RECIPIENT_PREPARED", "64b95699dbf5ebf230dae151762f681cbe5807a7de4d53798601635c140925a3"],
+    [3, "FANOUT_RECIPIENT_RECORDED", "5b3959dabd78a75d24452050138f2243a29ed6d7aa704138ddf49e91ac246fb4"],
+    [4, "FANOUT_RECIPIENT_PREPARED", "35eb0d2c9e4b6eaccc221ca652de34a376bc48cf38863175d03988b79530c47d"],
+    [5, "FANOUT_RECIPIENT_RECORDED", "823841041e0d0735c379ab647c422d5722ca175bb965e5c67d7441a401c0b9b5"],
+    [6, "FANOUT_RECIPIENT_PREPARED", "fd039e3acbe91080058c112e01ca9a08cd4c0ab2c09ae6d72e848a108fd1605c"],
+    [7, "FANOUT_RECIPIENT_RECORDED", "d7117e785903850a908dd0b799b3974ec8c54f6642d947dc6280ff8c5f3d7eed"],
+    [8, "FANOUT_DELIVERY_COMPLETED", "8a9b1a904bec9d93c4b565403834394d5d65e74862eed55bac0148507ec0f83a"]
+  ],
+  "replay": {
+    "byte_identical_reply": true,
+    "reply_sha256": "77d61028398d7505b740583c7aa7220f25a561303892c5db4705882ba0e61a34",
+    "additional_provider_posts": 0,
+    "additional_delivery_events": 0
+  },
+  "verification": {
+    "core_ready": true,
+    "hindsight_healthy": true,
+    "memory_outbox_completed": 90,
+    "memory_outbox_open": 0,
+    "production_a_service": "active"
+  },
+  "source_files": {
+    "eva2/src/eva/application/delivery.py": "da297003505c94c0bfa456cb12bedaa915e61f053f4d55abd4b5a5e882aaf88f",
+    "eva2/src/eva/adapters/postgres/delivery.py": "4e4d95f61145ed72cf29d74dac7cd5c0aed18fe440c46559be1e140f215007f8",
+    "eva2/src/eva/adapters/connectors/fanout_http.py": "57a18bcac0394df97d5f84ea37567e62704c018e6546d59dac5ce03f802b3f1e",
+    "eva2/src/eva/adapters/model/conversation.py": "5e391b99e29c1b0a9b5d1c2142c73023e75ad10167b291c6e868cbf8fcaa1cc0",
+    "eva2/src/eva/adapters/postgres/conversation_actions.py": "822917f8ac53efb8a3e1c311de03c9ed19722d500a35ef758d33d35d415aed9f"
+  },
+  "nonClaims": [
+    "This used real core model, PostgreSQL and HTTP connector processes, not an in-process synthetic sink.",
+    "The isolated B sink proves provider acceptance/rejection and duplicate suppression, not human receipt or reading.",
+    "This was direct B HTTP ingress, not a Telegram-provider delivery.",
+    "No production-A service, traffic or external recipient was changed."
+  ]
+}

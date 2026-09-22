@@ -105,6 +105,8 @@ class PostgresOwnerInitiatives:
         state, blocker, intent_id = "unknown", None, None
         if row.status in ("failed", "needs_help"):
             state, blocker = "attention", "review_needs_help"
+        elif row.phase == "will_abandoned":
+            state = "abandoned"
         elif row.phase == "will_waiting_admission":
             state, blocker = "waiting", "model_admission"
         elif row.phase == "will_decided":
@@ -126,6 +128,50 @@ class PostgresOwnerInitiatives:
             state = "working"
         return {"updated_at": row.updated_at.isoformat(), "phase": row.phase,
                 "state": state, "reason": reason, "blocker": blocker, "intent_id": intent_id}
+
+    def abandon_uncertain_review(self, thread_id, expected_revision, *, now: datetime):
+        """Owner closes a lost decision; never infer usage or replay its work."""
+        prefix = "sensory:initiative-review:" + hashlib.sha256(str(self._owner).encode()).hexdigest()[:24] + ":"
+        if (not isinstance(thread_id, str) or not thread_id.startswith(prefix)
+                or not thread_id[len(prefix):].isdigit()
+                or isinstance(expected_revision, bool) or not isinstance(expected_revision, int)
+                or expected_revision < 1):
+            raise ValueError("invalid private review recovery")
+        with self._engine.begin() as conn:
+            self._authorize(conn, now)
+            c, e = operational_checkpoints.c, operational_events.c
+            row = conn.execute(sa.select(operational_checkpoints).where(
+                c.tenant_id == self._scope.tenant_id,
+                c.installation_id == self._scope.installation_id,
+                c.thread_id == thread_id).with_for_update()).one_or_none()
+            if (row is None or row.revision != expected_revision
+                    or row.phase != "will_usage_uncertain" or row.status != "needs_help"):
+                raise ValueError("private review recovery no longer matches")
+            history = conn.execute(sa.select(operational_events).where(
+                e.tenant_id == self._scope.tenant_id,
+                e.installation_id == self._scope.installation_id,
+                e.thread_id == thread_id).order_by(e.sequence)).all()
+            allowed = {"SENSORY_EVENT_OBSERVED", "WILL_EVALUATION_CLAIMED",
+                       "WILL_EVALUATION_RECLAIMED", "WILL_MODEL_STARTED", "WILL_USAGE_UNCERTAIN"}
+            if (not history or any(event.event_type not in allowed
+                    or canonical_sha256(event.payload) != bytes(event.payload_sha256).hex()
+                    for event in history)
+                    or history[0].event_type != "SENSORY_EVENT_OBSERVED"
+                    or history[0].payload["data"].get("source") != "initiative-review"
+                    or history[-1].event_type != "WILL_USAGE_UNCERTAIN"):
+                raise ValueError("private review history is not safely abandonable")
+            transition_timeline_thread(conn, self._scope, thread_id=thread_id,
+                expected_revision=expected_revision,
+                checkpoint_id=f"{thread_id}:owner-abandoned:{expected_revision + 1}",
+                operation_id=row.operation_id, phase="will_abandoned", status="completed",
+                event_type="WILL_REVIEW_ABANDONED", occurred_at=now,
+                retry_count=row.retry_count, last_error_fingerprint=(
+                    None if row.last_error_fingerprint is None else bytes(row.last_error_fingerprint).hex()),
+                data={"reason":"Eigenaarherstel: oude beoordeling afgebroken; verbruik blijft onbekend.",
+                      "usage":None, "previous_revision":expected_revision,
+                      "replayed":False, "owner_principal_id":str(self._owner)})
+        return {"contract":"EvaPrivateReviewRecovery/v1", "disposition":"abandoned",
+                "usage":"unknown", "replayed":False}
 
     def _artifact(self, conn, thread_id):
         e = operational_events.c
