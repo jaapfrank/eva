@@ -5,10 +5,10 @@ Laatst bijgewerkt: 2026-09-22.
 Doel: [Eva als zelfstandig lerende digitale huisgenoot](PROJECTDOEL.md).
 Gebouwd, getest, live en door jou geaccepteerd zijn verschillende stappen.
 
-Spraak- en dashboardverbeteringen zijn geïnstalleerd en live gecontroleerd; bestaande gegevens en overige diensten behouden. Dashboardtaken openen en resultaat lezen werken in de echte browser. De werkelijke gespreksroute gaf eerste tekst na5,1seconde: snelheidsprobleem nog niet opgelost of geaccepteerd. GitHub bevat de geïnstalleerde bron.
+Spraak- en dashboardverbeteringen zijn geïnstalleerd en live gecontroleerd; bestaande gegevens en overige diensten behouden. Dashboardtaken openen en resultaat lezen werken in de echte browser. De werkelijke gespreksroute gaf eerste tekst na 5,1 seconde: snelheidsprobleem nog niet opgelost of geaccepteerd. GitHub bevat de geïnstalleerde bron. Twee afzonderlijke, vastgepinde projecttaken zijn gestart vanaf main 4701dd8f: Eva sneller laten praten tijdens achtergrondwerk onderzoekt en herstelt de echte gespreksvertraging; Dashboardtaken automatisch actueel houden bouwt automatisch bijwerken van taakstatus en resultaat. Coördinator beheert integratie, onafhankelijke review, installatie en dit werkbord. Beide wijzigingen zijn in uitvoering, nog niet opgeleverd.
 [Actueel bewijs](evidence/product/contact-dashboard-live-2026-09-22.json).
 
-Meet gericht waar de5,1seconde op de echte gespreksroute ontstaat en herstel de concrete vertraging. Behoud geheugenkwaliteit en persoonsgrenzen. Geen nieuwe modelproef zonder gewijzigde oorzaak of ontbrekend meetbewijs. Gebruikersbeoordeling van geïnstalleerde dashboardbediening blijft apart open; geen bouwstop.
+Meet gericht waar de 5,1 seconde op de echte gespreksroute ontstaat en herstel de concrete vertraging. Behoud geheugenkwaliteit en persoonsgrenzen. Geen nieuwe modelproef zonder gewijzigde oorzaak of ontbrekend meetbewijs. Gebruikersbeoordeling van geïnstalleerde dashboardbediening blijft apart open; geen bouwstop.
 
 <details>
 <summary>Historische voortgang en eerdere tussenstanden — niet de actuele opleverstatus</summary>

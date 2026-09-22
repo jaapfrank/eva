@@ -121,7 +121,7 @@
           ]
         }
       ],
-      "priorityDecision": "Meet gericht waar de5,1seconde op de echte gespreksroute ontstaat en herstel de concrete vertraging. Behoud geheugenkwaliteit en persoonsgrenzen. Geen nieuwe modelproef zonder gewijzigde oorzaak of ontbrekend meetbewijs. Gebruikersbeoordeling van geïnstalleerde dashboardbediening blijft apart open; geen bouwstop.",
+      "priorityDecision": "Meet gericht waar de 5,1 seconde op de echte gespreksroute ontstaat en herstel de concrete vertraging. Behoud geheugenkwaliteit en persoonsgrenzen. Geen nieuwe modelproef zonder gewijzigde oorzaak of ontbrekend meetbewijs. Gebruikersbeoordeling van geïnstalleerde dashboardbediening blijft apart open; geen bouwstop.",
       "dashboardVerification": {
         "status": "local_browser_verified_not_full_product_acceptance",
         "priorityRevision": {
@@ -176,6 +176,10 @@
         }
       ],
       "nextOutcomes": [
+        {
+          "title": "Twee zichtbare bouwtaken in uitvoering",
+          "detail": "Twee afzonderlijke, vastgepinde projecttaken zijn gestart vanaf main 4701dd8f: Eva sneller laten praten tijdens achtergrondwerk onderzoekt en herstelt de echte gespreksvertraging; Dashboardtaken automatisch actueel houden bouwt automatisch bijwerken van taakstatus en resultaat. Coördinator beheert integratie, onafhankelijke review, installatie en dit werkbord. Beide wijzigingen zijn in uitvoering, nog niet opgeleverd."
+        },
         {
           "title": "Git hersteld — gezamenlijke bron op GitHub",
           "detail": "De actuele bron staat op GitHub main en in de canonical projectmap. Oude staging is behouden; geen productbestanden verwijderd. Nieuwe taken gebruiken dezelfde gecontroleerde integratiebasis."
@@ -1014,9 +1018,9 @@
       "document": "eva2/PROJECTDOEL.md",
       "scope": "Digitale huisgenoot: zelfstandig redeneren, initiatief, onbekende vaardigheden leren, handelen, zelfverbetering en aantoonbare concurrentiewinst met open-sourcehergebruik.",
       "sessionGoal": "Snel gedeeld gesprek met passende achtergrondmodellen; één Eva over alle kanalen.",
-      "currentWork": "Spraak- en dashboardverbeteringen zijn geïnstalleerd en live gecontroleerd; bestaande gegevens en overige diensten behouden. Dashboardtaken openen en resultaat lezen werken in de echte browser. De werkelijke gespreksroute gaf eerste tekst na5,1seconde: snelheidsprobleem nog niet opgelost of geaccepteerd. GitHub bevat de geïnstalleerde bron.",
+      "currentWork": "Spraak- en dashboardverbeteringen zijn geïnstalleerd en live gecontroleerd; bestaande gegevens en overige diensten behouden. Dashboardtaken openen en resultaat lezen werken in de echte browser. De werkelijke gespreksroute gaf eerste tekst na 5,1 seconde: snelheidsprobleem nog niet opgelost of geaccepteerd. GitHub bevat de geïnstalleerde bron. Twee afzonderlijke, vastgepinde projecttaken zijn gestart vanaf main 4701dd8f: Eva sneller laten praten tijdens achtergrondwerk onderzoekt en herstelt de echte gespreksvertraging; Dashboardtaken automatisch actueel houden bouwt automatisch bijwerken van taakstatus en resultaat. Coördinator beheert integratie, onafhankelijke review, installatie en dit werkbord. Beide wijzigingen zijn in uitvoering, nog niet opgeleverd.",
       "currentEvidence": "eva2/evidence/product/contact-dashboard-live-2026-09-22.json",
-      "nextStep": "Meet gericht waar de5,1seconde op de echte gespreksroute ontstaat en herstel de concrete vertraging. Behoud geheugenkwaliteit en persoonsgrenzen. Geen nieuwe modelproef zonder gewijzigde oorzaak of ontbrekend meetbewijs. Gebruikersbeoordeling van geïnstalleerde dashboardbediening blijft apart open; geen bouwstop.",
+      "nextStep": "Meet gericht waar de 5,1 seconde op de echte gespreksroute ontstaat en herstel de concrete vertraging. Behoud geheugenkwaliteit en persoonsgrenzen. Geen nieuwe modelproef zonder gewijzigde oorzaak of ontbrekend meetbewijs. Gebruikersbeoordeling van geïnstalleerde dashboardbediening blijft apart open; geen bouwstop.",
       "usageClarification": {
         "date": "2026-09-07",
         "authorizedBy": "Jaap",
@@ -10424,7 +10428,7 @@
         "Volledige installatie/verplaatsing",
         "Algemene meerdaagse autonomie"
       ],
-      "coordination": "Voicebouwer actief in eigen werkmap vanaf65907604. dashboard_finish bouwt UX-002; learning_finish controleert bronherstel en dashboard onafhankelijk. Coördinator bezit integratie en centrale bordbron.",
+      "coordination": "Twee afzonderlijke, vastgepinde projecttaken zijn gestart vanaf main 4701dd8f: Eva sneller laten praten tijdens achtergrondwerk onderzoekt en herstelt de echte gespreksvertraging; Dashboardtaken automatisch actueel houden bouwt automatisch bijwerken van taakstatus en resultaat. Coördinator beheert integratie, onafhankelijke review, installatie en dit werkbord. Beide wijzigingen zijn in uitvoering, nog niet opgeleverd.",
       "correction": "Eerdere selectie AU-004 baseerde zich op achterhaalde C/D-uitkomsten. Latere R6 en onafhankelijke review bewijzen procedurehergebruik in nieuw gesprek. Geen herbouw of herhaalde modelproef."
     },
     "sourceSync20260922": {
@@ -10493,6 +10497,25 @@
       "sourceCommit": "00591e8a4ae507337230f5f77ee6b55baa9906b2",
       "goal": "Install integrated contact model and owner work dashboard; preserve data/routes and verify live behavior.",
       "ownerAccepted": false
+    },
+    "visibleBuildTasks20260922": {
+      "state": "in_progress",
+      "baseline": "4701dd8ffd697cbd384c41ed1f2e56775a44fc03",
+      "tasks": [
+        {
+          "threadId": "01a0c8a6-d360-7a82-a630-af4bfccbd57c",
+          "title": "Eva sneller laten praten tijdens achtergrondwerk",
+          "files": "conversation/runtime/model timing and focused tests",
+          "estimate": "60–90 minuten; maximaal twee logische modelrequests voor gerichte vóór/na-proef; creditkosten onbekend"
+        },
+        {
+          "threadId": "01a0c915-205e-7c11-809a-674ae09e016c",
+          "title": "Dashboardtaken automatisch actueel houden",
+          "files": "owner-work.jsx, related CSS, verify-owner-work.cjs, dedicated evidence",
+          "estimate": "1–2 actieve agenturen; geen modelproeven nodig; creditkosten onbekend"
+        }
+      ],
+      "coordination": "Twee afzonderlijke, vastgepinde projecttaken zijn gestart vanaf main 4701dd8f: Eva sneller laten praten tijdens achtergrondwerk onderzoekt en herstelt de echte gespreksvertraging; Dashboardtaken automatisch actueel houden bouwt automatisch bijwerken van taakstatus en resultaat. Coördinator beheert integratie, onafhankelijke review, installatie en dit werkbord. Beide wijzigingen zijn in uitvoering, nog niet opgeleverd."
     }
   },
   "activeTaskId": "AU-008",
