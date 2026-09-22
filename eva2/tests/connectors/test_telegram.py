@@ -124,6 +124,45 @@ def test_proactive_http_error_cannot_claim_success(monkeypatch):
     assert calls == ["POST"]
 
 
+def test_saved_result_rechecks_destination_on_each_delivery(monkeypatch):
+    recipient = "42"
+    delivery = TelegramProactiveDelivery(
+        bot_token="123456:test", recipient_resolver=lambda: recipient,
+    )
+    calls = []
+    def send(method, body, **kwargs):
+        calls.append(body)
+        return {"message_id": 7, "chat": {"id": 42, "type": "private"},
+                "text": body["text"]}
+    monkeypatch.setattr(delivery._api, "_call", send)
+    assert delivery.deliver_text("Onderzoek afgerond", expected_chat_id="42") == "telegram:42:7"
+    recipient = "43"
+    with pytest.raises(RuntimeError, match="saved Telegram destination"):
+        delivery.deliver_text("Privéresultaat", expected_chat_id="42")
+    assert calls == [{"chat_id": "42", "disable_notification": True,
+                      "text": "Onderzoek afgerond"}]
+
+
+@pytest.mark.parametrize("destination", ["-42", "0", "042", "４２", None])
+def test_saved_result_rejects_invalid_destination_before_network(monkeypatch, destination):
+    delivery = TelegramProactiveDelivery(bot_token="123456:test", chat_id="42")
+    monkeypatch.setattr(delivery._api, "_call", lambda *a, **k: pytest.fail("no send"))
+    with pytest.raises(ValueError):
+        delivery.deliver_text("Resultaat", expected_chat_id=destination)
+
+
+def test_saved_result_does_not_retry_ambiguous_send(monkeypatch):
+    delivery = TelegramProactiveDelivery(bot_token="123456:test", chat_id="42")
+    calls = []
+    def send(*args, **kwargs):
+        calls.append(1)
+        raise TimeoutError("acceptance unknown")
+    monkeypatch.setattr(delivery._api, "_call", send)
+    with pytest.raises(TimeoutError):
+        delivery.deliver_text("Resultaat", expected_chat_id="42")
+    assert calls == [1]
+
+
 def test_bot_api_poll_send_and_living_core_contract_are_bounded() -> None:
     captured: list[tuple[str, dict[str, object]]] = []
 

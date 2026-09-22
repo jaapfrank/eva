@@ -55,18 +55,33 @@ class TelegramProactiveDelivery:
             raise ValueError("Telegram proactive recipient must be a private user")
 
     def deliver(self, claim: ProactiveExpressionClaim) -> str:
-        if not claim.text.strip() or len(claim.text) > 4096:
+        return self._deliver_text(claim.text, silent=claim.urgency < 3)
+
+    def deliver_text(self, text: str, *, expected_chat_id: str) -> str:
+        """Deliver a saved result only to its still-current bound private recipient.
+
+        The caller owns durable claiming and ambiguous-acceptance recovery. This
+        transport makes one attempt and never substitutes a newly paired person.
+        """
+        self._validate_private_chat(expected_chat_id)
+        return self._deliver_text(text, silent=True, expected_chat_id=expected_chat_id)
+
+    def _deliver_text(self, text: str, *, silent: bool,
+                      expected_chat_id: str | None = None) -> str:
+        if not isinstance(text, str) or not text.strip() or len(text) > 4096:
             raise ValueError("Telegram proactive text is invalid")
         chat_id = self._chat_id if self._recipient_resolver is None else self._recipient_resolver()
         self._validate_private_chat(chat_id)
         if self._chat_id is not None and self._chat_id != chat_id:
             raise RuntimeError("configured Telegram recipient differs from verified owner")
+        if expected_chat_id is not None and expected_chat_id != chat_id:
+            raise RuntimeError("saved Telegram destination differs from verified owner")
         result = self._api._call(
             "sendMessage",
             {
                 "chat_id": chat_id,
-                "disable_notification": claim.urgency < 3,
-                "text": claim.text,
+                "disable_notification": silent,
+                "text": text,
             },
             timeout_seconds=self._timeout,
             maximum_response_bytes=65_536,
@@ -76,7 +91,7 @@ class TelegramProactiveDelivery:
         if (type(message_id) is not int or message_id < 1
                 or not isinstance(chat, dict) or type(chat.get("id")) is not int
                 or str(chat["id"]) != chat_id or chat.get("type") != "private"
-                or result.get("text") != claim.text):
+                or result.get("text") != text):
             raise RuntimeError("Telegram proactive receipt does not prove the intended private delivery")
         return f"telegram:{chat_id}:{message_id}"
 
