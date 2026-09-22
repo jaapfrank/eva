@@ -1044,15 +1044,15 @@
           }
         ],
         "now": {
-          "title": "Algemene connectoren werken met dezelfde privé-eigenaar",
-          "detail": "Website en privé-Telegram herkennen dezelfde eigenaar voor vier bestaande geregistreerde connectoren. Catalogi en uitvoerrechten zijn live gelijk bevonden; bestaande acties en bronnen blijven behouden.",
-          "state": "Geïnstalleerd en technisch gecontroleerd",
-          "doneWhen": "Jouw gewone taakervaring blijft afzonderlijk te beoordelen."
+          "title": "Hulpwerk over beide privékanalen gecontroleerd",
+          "detail": "Website en privé-Telegram tonen dezelfde vijf opdrachten en twee resultaten. Starten via Telegram, stoppen via website en hervatten via Telegram zijn gericht bewezen met de bestaande code.",
+          "state": "Bestaande installatie gecontroleerd · geen herbouw",
+          "doneWhen": "Dezelfde technische taakbediening is bewezen; jouw gesprekservaring blijft apart."
         },
         "next": {
-          "title": "Hulpwerk volgen en stoppen over privékanalen",
-          "detail": "Controleer bestaande hulpagentbediening en resultaattoegang op dezelfde persoonsgrenzen; hergebruik eerdere levenscyclusproeven en wijzig alleen een aangetoond gat.",
-          "state": "Volgende gerichte stap"
+          "title": "Documentprojecten geschikt maken voor herhaald gebruik",
+          "detail": "De gewone documentroute heeft nog slechts twee vaste projectplaatsen. Onderzoek hoe bestaande uitvoering en journals herbruikbaar worden zonder oude acties of gegevens te wissen.",
+          "state": "Volgende concrete beperking"
         },
         "ownerAction": {
           "title": "Kom via Telegram terug op een websitegesprek",
@@ -10834,7 +10834,7 @@
           "planningEffortHours": "4–12"
         }
       ],
-      "nextAction": "Controleer bestaande hulpagentbediening en resultaattoegang op dezelfde persoonsgrenzen; hergebruik eerdere levenscyclusproeven en wijzig alleen een aangetoond gat.",
+      "nextAction": "De gewone documentroute heeft nog slechts twee vaste projectplaatsen. Onderzoek hoe bestaande uitvoering en journals herbruikbaar worden zonder oude acties of gegevens te wissen.",
       "effortNotice": "Grove planning, lage zekerheid: 40–118 actieve ontwikkeluren plus zeven dagen gezinspraktijk en eventuele externe wachttijd. Geen deadline, creditkosten of gemeten verbruik; per begrensde wijziging aanscherpen na lezing van bestaand bewijs. Hergebruik kan dit verkorten.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Na review, installatie en registratie automatisch volgende uitvoerbare stap; geen algemene wachtstop op gebruikersproeven.",
@@ -11252,6 +11252,17 @@
         "priorObservedPercent": 50,
         "meaning": "Gedeelde accountmeter, geen taaktoerekening of creditbedrag."
       }
+    },
+    "helperPrivateChannels20260922": {
+      "status": "existing_runtime_verified_no_rebuild",
+      "outcome": "Eigen hulpwerk over website en privé-Telegram volgen, lezen, stoppen en hervatten.",
+      "evidence": "eva2/evidence/living-core/helper-private-channels-20260922.json",
+      "liveJobsCompared": 5,
+      "liveResultsCompared": 2,
+      "runtimeChanged": false,
+      "modelCalls": 0,
+      "ownerAccepted": false,
+      "remaining": "Gewone gesprekskeuze en gebruikservaring blijven afzonderlijk; technische routes hoeven niet opnieuw gebouwd."
     }
   },
   "activeTaskId": "AU-008",

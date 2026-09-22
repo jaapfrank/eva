@@ -1,0 +1,46 @@
+{
+  "sameOwnerWorkListAcrossWebsiteAndPrivateTelegram": true,
+  "listedJobs": 5,
+  "truncated": false,
+  "sameExistingResults": true,
+  "resultsAvailable": 2,
+  "databaseMutationGuard": true,
+  "modelCalls": 0,
+  "workStartedOrStopped": false,
+  "contract": "EvaPrivateHelperChannelProof/v1",
+  "date": "2026-09-22",
+  "coreImage": "sha256:409293ea7042fc958002c6c05e4a3c524a179626b8bca9ee5184ee657d150d21",
+  "runtimeSourceMatchesTestedSource": {
+    "bootstrap/delegated_work_owner_service.py": {
+      "matchesTestedSource": true,
+      "sha256": "b9f3db01cad9122850c321781158d8e4211d79de827f2b2069e043cac1330daa"
+    },
+    "adapters/postgres/delegated_work.py": {
+      "matchesTestedSource": true,
+      "sha256": "3ac0faea98d3b0090f549a7118912a6118e7dfdd699a3a62d8ae82071f5fa5f0"
+    },
+    "adapters/postgres/delegated_work_actions.py": {
+      "matchesTestedSource": true,
+      "sha256": "c80776ef7995161d897a5d54051679f05a73589c80f5d7d9f12dc897e5c9259c"
+    }
+  },
+  "lifecycleTest": {
+    "path": "tests/postgres/test_delegated_work_owner_service.py::test_trusted_private_bridge_alias_keeps_identity_and_rechecks_revocation",
+    "passed": 1,
+    "durationSeconds": 2.85,
+    "databasePrefix": "eva2_4b_disposable_",
+    "sequence": [
+      "private Telegram start",
+      "canonical website list/get",
+      "website stop",
+      "Telegram resume",
+      "website successor read and both states"
+    ],
+    "existingPrivacyAndRevocationChecksPreserved": true
+  },
+  "independentReview": "Coordinator inspected test assertions and actual installed source hashes: GO for bounded evidence.",
+  "runtimeChanged": false,
+  "ownerAccepted": false,
+  "proofBoundary": "Existing live lists/results and isolated cross-channel lifecycle; no live owner tasks stopped or restarted. Ordinary model decisions and physical channels not proven.",
+  "harnessCorrection": "SQL read-only mode cannot run required SELECT FOR SHARE; replaced with a read-query-only statement guard, without changing product code."
+}

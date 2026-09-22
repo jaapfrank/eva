@@ -323,11 +323,25 @@ def test_trusted_private_bridge_alias_keeps_identity_and_rechecks_revocation(del
     assert work.spec.owner_principal_id == str(owner)
     assert turn.principal_id == turn.audience.principal_id == "telegram:42"
     assert turn.conversation_id == "telegram:42"
-    # Each later message keeps the real bridge identity, with a distinct request.
-    stopped = service.execute("stop", replace(turn, message_id="later-stop"), work_id=work_id, request_key="stop")
+    # The canonical website identity sees and controls the same alias-started job.
+    website_turn = _turn(label, owner, 1)
+    listed = service.execute("list", website_turn, request_key="website-list")
+    assert [job["work_id"] for job in listed["jobs"]] == [work_id]
+    website_status = service.execute("get", website_turn, work_id=work_id, request_key="website-get")
+    assert website_status["work"] == receipt.output["operation_result"]["work"]
+    stopped = service.execute("stop", website_turn, work_id=work_id, request_key="website-stop")
     assert stopped["work"]["state"] == "stopped"
+    # Resuming from Telegram preserves its real ingress and creates one successor.
     resumed = service.execute("resume", replace(turn, message_id="later-resume"), work_id=work_id, request_key="resume")
     assert resumed["work"]["generation"] == 2 and resumed["work"]["parent_work_id"] == work_id
+    successor_id = resumed["work"]["work_id"]
+    assert successor_id != work_id
+    website_resumed = service.execute("get", _turn(label, owner, 2),
+        work_id=successor_id, request_key="website-resumed")
+    assert website_resumed["work"] == resumed["work"]
+    final_list = service.execute("list", _turn(label, owner, 3), request_key="website-final-list")
+    assert {job["work_id"]: job["state"] for job in final_list["jobs"]} == {
+        work_id: "stopped", successor_id: "admitted"}
     assert actions.pending(turn) == receipt
     # A binding file change removes access even to an already saved action receipt.
     current[0] = TelegramPrincipalBindings((TelegramPrincipalBinding(
