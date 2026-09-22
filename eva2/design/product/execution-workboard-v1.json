@@ -1003,12 +1003,12 @@
         "checkedAt": "2026-09-22",
         "deliveries": [
           {
-            "title": "Documentprojecten starten, volgen en stoppen",
+            "title": "Documentprojecten zonder limiet van twee plaatsen",
             "date": "22 september",
             "state": "installed",
-            "result": "Websiteopdracht leverde twee echte documenten op. Documentrechten zijn daarna gelijkgetrokken met geverifieerde privé-Telegram; bestaande teksten via die autoriteit exact teruggelezen zonder nieuw model of document.",
-            "remaining": "Gewone Telegramvraag naar bestaand project en jouw beoordeling staan open. Eén projectplaats vrij; stop/hervat niet opnieuw live beproefd.",
-            "source": "eva2/evidence/living-core/document-private-owner-installed-20260922.json"
+            "result": "Nieuwe projectwerker, kern en opslagprovider zijn geïnstalleerd. Oude projecten en bestandsbytes zijn behouden; het bestaande websiteproject is via de privé-Telegramautoriteit teruggevonden. Meer dan twee projecten, stoppen en herstart zijn in de geïsoleerde echte keten getest.",
+            "remaining": "Nieuwe projecten in gewone gesprekken door jou beoordelen. Automatische terugmelding ontbreekt nog: afgerond betekent hier gecontroleerd lokaal opgeslagen.",
+            "source": "eva2/evidence/living-core/document-repeatable-installed-20260922.json"
           },
           {
             "title": "Privégeheugen verbonden tussen website en Telegram",
@@ -1044,10 +1044,10 @@
           }
         ],
         "now": {
-          "title": "Documentprojecten zonder de limiet van twee plaatsen",
-          "detail": "Geïnstalleerd: volgende projecten krijgen eigen uitvoerhistorie. Oude projecten, bestanden en koppelingen zijn behouden; terugvinden via privé-Telegram live gecontroleerd.",
-          "state": "Geïnstalleerd · jouw gebruiksproef staat open",
-          "doneWhen": "Technische wijziging geïnstalleerd; beoordeling van nieuwe projecten in gewone gesprekken blijft apart."
+          "title": "Afgeronde documentresultaten terugbrengen",
+          "detail": "Nieuwe projecten zijn geïnstalleerd. Nog ontbrekend: de documentwerker markeert gecontroleerde lokale opslag als klaar, maar stuurt het resultaat nog niet vanzelf terug.",
+          "state": "In uitvoering · automatische terugmelding ontbreekt nog",
+          "doneWhen": "Resultaat komt bij de juiste persoon terug, met aparte opgeslagen- en bezorgstatus."
         },
         "next": {
           "title": "Afgeronde projecten terugbrengen",
@@ -11288,6 +11288,47 @@
       "nextAction": "Gebruiksproef apart open: nieuwe projecten blijven mogelijk na de eerste twee. Geen herbouw van oude projecten.",
       "providerEvidence": "eva2/evidence/living-core/document-repeatable-provider-ready-20260922.json",
       "installationEvidence": "eva2/evidence/living-core/document-repeatable-installed-20260922.json"
+    },
+    "documentResultReturn20260922": {
+      "status": "implementing_existing_return_routes",
+      "outcome": "Na afronding komt het gecontroleerde documentresultaat terug bij de juiste persoon; lokaal opgeslagen en daadwerkelijk teruggestuurd blijven afzonderlijke statussen.",
+      "finding": "DocumentGoalPorts.readback(recipient=...) retourneert accepted na bestandsverificatie. deliver() verzendt niets. DocumentGoalActions rapporteert delivery=local_availability. Bestaande automatische terugmelding in runtime geldt alleen voor delegated research.",
+      "sourcePaths": [
+        "eva2/src/eva/providers/document_goals.py",
+        "eva2/src/eva/providers/document_goal_actions.py",
+        "eva2/src/eva/bootstrap/runtime.py",
+        "eva2/src/eva/operations/delegated_work_delivery.py"
+      ],
+      "reuseFirst": "Bestaande completionloop, actuele privébinding en verzendadapter; geen tweede Telegramclient of los verzendscript. Historische afgeronde projecten niet spontaan nasturen.",
+      "estimatedEffort": "Eerst begrensde hergebruikkeuze en concrete implementatie, circa 1–3 uur planning; gemeten creditkosten onbekend. Geen betaalde modelproef of externe testberichten.",
+      "doneWhen": [
+        "Nieuwe projectopdracht bindt terugmelding aan geverifieerde persoon en oorspronkelijke ingang.",
+        "Afgerond resultaat en bezorgstatus zijn afzonderlijk; intrekken/stoppen/herkoppelen voorkomt ongeoorloofde terugmelding.",
+        "Herstart en onzekere verzending veroorzaken geen blinde dubbele berichten.",
+        "Gerichte geïsoleerde tests, onafhankelijke review, installatie met terugweg en actuele gebruiksinstructie."
+      ],
+      "installed": false,
+      "ownerAccepted": false,
+      "executor": "document_maintenance",
+      "independentDesignReview": "document_private_identity: reuse existing completion worker and private poll-authorize-ack; generic fanout requires provider readback that Telegram does not supply.",
+      "files": [
+        "src/eva/providers/document_completion.py",
+        "src/eva/providers/document_task_actions.py",
+        "src/eva/providers/document_task_input.py",
+        "src/eva/adapters/postgres/delegated_work_delivery.py",
+        "src/eva/adapters/postgres/private_work_return.py",
+        "src/eva/bootstrap/delegated_work_delivery.py",
+        "src/eva/bootstrap/runtime.py",
+        "src/eva/operations/delegated_work_delivery.py"
+      ],
+      "testScope": [
+        "Verified completion only; partial/stopped/needs_help withheld",
+        "Current owner and Telegram rebinding/revocation before every part",
+        "Original dashboard/voice route, closed or expired session withheld",
+        "Historical claims never automatically backfilled",
+        "Send/receipt uncertainty and restart never blind replay"
+      ],
+      "ownerInstructions": "eva2/design/product/document-project-owner-trial-20260922.md"
     }
   },
   "activeTaskId": "AU-008",
