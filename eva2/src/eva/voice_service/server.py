@@ -20,7 +20,7 @@ from livekit.agents import AgentSession, room_io
 from livekit.plugins import silero
 
 from eva.adapters.connectors.home_assistant_voice import HomeAssistantSpeechInput, HomeAssistantSpeechOutput
-from eva.voice_service.agent import BridgeState, CoreClient, EvaAgent
+from eva.voice_service.agent import BridgeState, CoreClient, EvaAgent, authorize_saved_return
 from eva.voice_service.media import HomeAssistantSTT, HomeAssistantTTS, home_assistant_ice_servers, streaming_speech_output
 from eva.voice_service.lifecycle import SessionLease
 
@@ -190,7 +190,15 @@ def create_app():
                         if (sessions.get(room_name) is not lease or lease._closing is not None
                                 or (room_name in heartbeats and heartbeats[room_name] <= asyncio.get_running_loop().time())):
                             return
-                        await room.local_participant.publish_data(json.dumps(value).encode(), reliable=True, topic="eva.work")
+                        if value.get("type") == "background_result_part":
+                            def current_result():
+                                check()
+                                if (sessions.get(room_name) is not lease or lease._closing is not None
+                                        or value["message_id"] in state.invalid_background_returns
+                                        or (room_name in heartbeats and heartbeats[room_name] <= asyncio.get_running_loop().time())):
+                                    raise ValueError("queued private result unavailable")
+                            await authorize_saved_return(backend, state.session_id, value, current_result)
+                        await room.local_participant.publish_data(json.dumps(value, ensure_ascii=False).encode(), reliable=True, topic="eva.work")
                     except Exception:
                         pass  # Task effects and final answers remain in the core.
                 task = asyncio.create_task(send())

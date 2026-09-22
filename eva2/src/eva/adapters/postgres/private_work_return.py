@@ -155,7 +155,8 @@ class PrivateWorkReturnStore:
                     raise ValueError("return claim differs")
                 if state['phase'] == 'acknowledged' and operation == 'ack':
                     return {'status': 'acknowledged'}
-                if state['phase'] != 'claimed' or now >= state['deadline']:
+                if (state['phase'] not in {'claimed', 'acknowledged'}
+                        or (state['phase'] == 'claimed' and now >= state['deadline'])):
                     raise ValueError("return claim unavailable or ambiguous")
                 if operation == 'ack':
                     transition_timeline_thread(connection, self.work.scope,

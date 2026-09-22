@@ -113,3 +113,47 @@ async def test_household_transport_never_falls_back_to_private_return():
     client=HouseholdCoreClient('http://unused','fixture',satellite_id='assist_satellite.test',device_id='a'*32)
     with pytest.raises(ValueError, match='household'):
         await client.work_return('poll','session')
+
+
+@pytest.mark.asyncio
+async def test_revoked_acknowledged_context_is_not_sent_in_a_later_turn():
+    backend=Backend(); state=BridgeState(backend); agent=EvaAgent(state); session=Session()
+    await agent.return_saved_work(session, RESULT, lambda:None)
+    assert state.saved_result_context
+    payloads=[]
+    async def events(payload):
+        payloads.append(payload)
+        yield {'type':'final','reply':{'text':'Vier.'}}
+    backend.events=events
+    backend.denied=True
+    class Context:
+        async def update(self,*args,**kwargs): pass
+    ctx=Context();ctx.session=session
+    await agent.eva_turn(ctx,'next','Wat is twee plus twee?')
+    assert payloads[0]['work_results']==[]
+    assert not state.saved_result_context
+    assert not any(TEXT in value for value in state.results.values())
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize('failure',['say','notify'])
+async def test_failure_before_speech_handle_discards_context_and_queued_parts(failure):
+    backend=Backend(); events=[]
+    def notify(value):
+        if failure=='notify':raise RuntimeError('transport failure')
+        events.append(value)
+    state=BridgeState(backend,notify);agent=EvaAgent(state)
+    class BrokenSession:
+        def say(self,*args,**kwargs):raise RuntimeError('speech failed')
+    with pytest.raises(RuntimeError):await agent.return_saved_work(BrokenSession(),RESULT,lambda:None)
+    assert not state.results and not state.saved_result_context
+    assert 'background:'+RESULT['operation_id'] in state.invalid_background_returns
+    if failure=='say':assert events[-1]['type']=='background_result_unavailable'
+
+
+def test_unicode_result_parts_stay_within_reliable_packet_bound():
+    import json
+    value={'type':'background_result_part','text':'\U0001f600'*2000,
+        'work_id':'w'*240,'operation_id':'a'*64,'output_sha256':'b'*64,
+        'result_sha256':'c'*64,'message_id':'background:'+'a'*64,'part':0,'total':33}
+    assert len(json.dumps(value,ensure_ascii=False).encode())<12000

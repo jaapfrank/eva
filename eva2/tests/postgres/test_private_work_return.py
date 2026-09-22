@@ -55,6 +55,7 @@ def test_late_result_preserves_bytes_claim_and_ack_without_duplicate(delegated_e
     assert service.private_return(turn, 'authorize', **identity)['output_sha256'] == saved.output_sha256
     assert service.private_return(turn, 'ack', **identity)['status'] == 'acknowledged'
     assert service.private_return(turn, 'ack', **identity)['status'] == 'acknowledged'
+    assert service.private_return(turn, 'authorize', **identity)['output_sha256'] == saved.output_sha256
     assert service.private_return(turn, 'poll')['result'] is None
     assert service.execute('result', turn, work_id=spec.work_id, request_key='read')['work']['result']['output'] == saved.output
 

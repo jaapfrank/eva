@@ -150,6 +150,9 @@ def test_private_return_lease_opens_after_media_setup(voice_config, monkeypatch)
     order = []
     elapsed = [0]
     opened = []
+    captured = []
+    published = []
+    denied = [False]
 
     class Session:
         def __init__(self, **kwargs): pass
@@ -157,9 +160,14 @@ def test_private_return_lease_opens_after_media_setup(voice_config, monkeypatch)
         async def start(self, *args, **kwargs):
             elapsed[0] += 1
             order.append('session_started')
+            captured.append(args[0].state)
         async def aclose(self): order.append('session_closed')
 
+    class Participant:
+        async def publish_data(self, data, **kwargs): published.append(data)
+
     class Room:
+        local_participant = Participant()
         remote_participants = {'owner': object()}
         def on(self, event): return lambda callback: callback
         async def connect(self, *args, **kwargs):
@@ -182,6 +190,10 @@ def test_private_return_lease_opens_after_media_setup(voice_config, monkeypatch)
             opened.append((session_id, elapsed[0]))
             order.append('return_open')
         if operation == 'close': order.append('return_close')
+        if operation == 'authorize':
+            if denied[0]: raise ValueError('result revoked')
+            return {'status':'authorized','operation_id':'a'*64,
+                    'output_sha256':'b'*64,'result_sha256':'c'*64}
         return {'status': 'idle', 'result': None}
 
     monkeypatch.setattr(server, 'AgentSession', Session)
@@ -195,6 +207,20 @@ def test_private_return_lease_opens_after_media_setup(voice_config, monkeypatch)
         assert response.status_code == 200
         assert order[:3] == ['room_connected', 'session_started', 'return_open']
         assert opened[0][1] == 17
+        event = {'type':'background_result_part','message_id':'background:'+'a'*64,
+                 'text':'\U0001f600'*2000,'part':0,'total':1,'work_id':'work:test',
+                 'operation_id':'a'*64,'output_sha256':'b'*64,'result_sha256':'c'*64}
+        async def emit(revoke):
+            import asyncio
+            captured[0].notify(event)
+            denied[0] = revoke  # Revoke after queueing, before the send task runs.
+            await asyncio.sleep(.05)
+        client.portal.call(emit, False)
+        assert len(published) == 1 and len(published[0]) < 12000
+        assert json.loads(published[0])['text'] == event['text']
+        client.portal.call(emit, True)
+        assert len(published) == 1  # No private bytes after queued authorization fails.
+
         assert client.post('/session/end/' + response.json()['room'], headers=auth).status_code == 200
         assert order.index('return_close') > order.index('session_closed')
     assert order.count('return_open') == order.count('return_close') == 1

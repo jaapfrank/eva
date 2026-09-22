@@ -11,6 +11,18 @@ import httpx
 from livekit.agents import Agent, RunContext, function_tool, llm
 from livekit.agents.types import DEFAULT_API_CONNECT_OPTIONS
 
+async def authorize_saved_return(backend, session_id, result, check):
+    """Revalidate saved bytes at each context/output boundary, including after ack."""
+    check()
+    identity = {key: result[key] for key in ("work_id", "operation_id")}
+    current = await backend.work_return("authorize", session_id, **identity)
+    check()
+    if (current.get("status") != "authorized"
+            or any(current.get(field) != result[field]
+                   for field in ("operation_id", "output_sha256", "result_sha256"))):
+        raise ValueError("saved return authority changed")
+
+
 def work_receipt_text(text: str) -> str | None:
     """Conservative receipt for an explicit work request, never its result.
 
@@ -116,6 +128,8 @@ class BridgeState:
         self.receipt_deliveries: dict[str, object] = {}
         self.receipts_offered: set[str] = set()
         self.background_returns: set[str] = set()
+        self.invalid_background_returns: set[str] = set()
+        self.saved_result_context: dict[str, dict] = {}
 
     def history(self, chat_ctx: llm.ChatContext, exclude: str) -> list[dict]:
         return [{"role": item.role, "text": item.text_content,
@@ -208,6 +222,24 @@ class EvaAgent(Agent):
                 self.state.spoken_streams.pop(message_id, None)
                 self.deliver(session, message_id, self.state.delivery_text[message_id])
 
+    def discard_saved_result(self, context_id, result):
+        key = "background:" + result["operation_id"]
+        self.state.invalid_background_returns.add(key)
+        self.state.results.pop(context_id, None)
+        self.state.saved_result_context.pop(context_id, None)
+        try:
+            self.state.notify({"type": "background_result_unavailable", "message_id": key})
+        except Exception:
+            pass  # Cleanup must still interrupt speech if the UI transport failed.
+
+    async def refresh_saved_context(self):
+        for context_id, result in list(self.state.saved_result_context.items()):
+            try:
+                await authorize_saved_return(self.state.backend, self.state.session_id,
+                                             result, lambda: None)
+            except Exception:
+                self.discard_saved_result(context_id, result)
+
     async def return_saved_work(self, session, result, check):
         """One claimed result on its original live private session; no model call."""
         import asyncio
@@ -222,40 +254,42 @@ class EvaAgent(Agent):
         if key in state.background_returns:
             return
         async def authorize():
-            check()
-            current = await state.backend.work_return("authorize", state.session_id, **identity)
-            check()
-            if (current.get("status") != "authorized"
-                    or any(current.get(field) != result[field]
-                           for field in ("operation_id", "output_sha256", "result_sha256"))):
-                raise ValueError("saved return authority changed")
+            if key in state.invalid_background_returns:
+                raise ValueError("saved result was discarded")
+            await authorize_saved_return(state.backend, state.session_id, result, check)
         await authorize()
         state.background_returns.add(key)
-        context = "Opgeslagen taak " + result["work_id"] + ":\n" + text
-        if len(context) > 16000:
-            context = context[:15000] + "\n[Verkort in gesprekscontext; vraag het volledige opgeslagen taakresultaat op.]"
-        state.results[str(uuid5(UUID(state.session_id), result["work_id"]))] = context
-        # Keep full source-bearing bytes in the UI. They are not a new turn reply.
-        chunks = [text[offset:offset+2000] for offset in range(0, len(text), 2000)]
-        for index, chunk in enumerate(chunks):
-            check()
-            state.notify({"type": "background_result_part", "message_id": key, "text": chunk,
-                          "part": index, "total": len(chunks), "work_id": result["work_id"],
-                          "output_sha256": result["output_sha256"]})
-        async def parts():
-            for offset in range(0, len(text), 1500):
-                await authorize()
-                yield text[offset:offset+1500]
-        handle = session.say(parts(), allow_interruptions=True)
-        state.deliveries[key] = handle
+        context_id = str(uuid5(UUID(state.session_id), result["work_id"]))
+        handle = None
         try:
+            context = "Opgeslagen taak " + result["work_id"] + ":\n" + text
+            if len(context) > 16000:
+                context = context[:15000] + "\n[Verkort in gesprekscontext; vraag het volledige opgeslagen taakresultaat op.]"
+            state.results[context_id] = context
+            state.saved_result_context[context_id] = {
+                field: result[field] for field in
+                ("work_id", "operation_id", "output_sha256", "result_sha256")}
+            # Full source bytes use bounded, hash-checked browser parts. Queued
+            # publication separately checks this result's current authority.
+            chunks = [text[offset:offset+2000] for offset in range(0, len(text), 2000)]
+            for index, chunk in enumerate(chunks):
+                check()
+                state.notify({"type": "background_result_part", "message_id": key, "text": chunk,
+                    "part": index, "total": len(chunks), **state.saved_result_context[context_id]})
+            async def parts():
+                for offset in range(0, len(text), 1500):
+                    await authorize()
+                    yield text[offset:offset+1500]
+            handle = session.say(parts(), allow_interruptions=True)
+            state.deliveries[key] = handle
             while not handle.done():
                 await asyncio.sleep(.5)
                 await authorize()
-            # Offered/playback status is not evidence of a human hearing it.
             await state.backend.work_return("ack", state.session_id, **identity)
         except BaseException:
-            handle.interrupt()
+            self.discard_saved_result(context_id, result)
+            if handle is not None:
+                handle.interrupt()
             raise
 
     async def poll_saved_work(self, session, check):
@@ -297,6 +331,9 @@ class EvaAgent(Agent):
         final_seen = False
         spoken_update_seen = False
         try:
+            # Connector context is not a lasting read grant. A result may have
+            # expired or been revoked since its previous playback/acknowledgement.
+            await self.refresh_saved_context()
             async for event in state.backend.events({
                 "session_id": state.session_id, "message_id": message_id, "text": text,
                 "recent": state.snapshots.pop(message_id, []), "active_work": active,

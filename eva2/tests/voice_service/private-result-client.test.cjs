@@ -10,9 +10,9 @@ const end = html.indexOf('\nasync function', html.indexOf('async function receiv
 function setup() {
   const rows = []; let active = 1;
   const context = vm.createContext({ crypto: webcrypto, TextEncoder, Uint8Array, Map,
-    current: value => value === active, row: (...args) => rows.push(args) });
+    jobs: new Map(), current: value => value === active, row: (...args) => rows.push(args) });
   vm.runInContext(html.slice(start, end), context);
-  return { rows, receive: e => context.receiveSavedResult(e, 1), close: () => { active = 2; } };
+  return { rows, receive: e => context.receiveSavedResult(e, 1), discard: e => context.discardSavedResult(e, 1), close: () => { active = 2; } };
 }
 function parts(text) {
   const hash = createHash('sha256').update(text).digest('hex');
@@ -34,4 +34,17 @@ test('incomplete, forged and closed-session results never become visible', async
     for (const e of entries) await s.receive(e);
     assert.equal(s.rows.length, 0);
   }
+});
+
+test('discard prevents queued parts and asynchronous digest from restoring a result', async () => {
+  const s = setup(), entries = parts('Resultaat '.repeat(400));
+  await s.receive(entries[0]);
+  s.discard(entries[0]);
+  for (const e of entries) await s.receive(e);
+  assert.equal(s.rows.length, 0);
+  const second = setup();
+  const pending = second.receive(parts('Complete result')[0]);
+  second.discard(parts('Complete result')[0]);
+  await pending;
+  assert.equal(second.rows.length, 0);
 });
