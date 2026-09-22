@@ -179,6 +179,10 @@ def _canonical_timestamp(value: str) -> str:
 class HindsightMemoryEngine:
     """Small HTTP adapter around a self-hosted Hindsight memory bank."""
 
+    # Recall uses request-local HTTP calls and lock-protected caches; it may
+    # overlap read-only conversation context preparation without sharing a DB session.
+    supports_parallel_context_recall = True
+
     def __init__(
         self,
         config: HindsightProjectionConfig,

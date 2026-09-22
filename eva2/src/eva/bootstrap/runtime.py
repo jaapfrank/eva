@@ -1738,6 +1738,7 @@ def create_runtime_app() -> FastAPI:
             + (() if delegated_work_actions is None else delegated_work_actions.conversation_tools())
         ),
     )
+    model.prepare_input_validation()
     stripe_publication = (
         None
         if settings.stripe_account_id is None or settings.stripe_secret_key is None

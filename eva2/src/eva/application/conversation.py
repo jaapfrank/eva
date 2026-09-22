@@ -3,7 +3,8 @@
 from __future__ import annotations
 
 from contextlib import contextmanager, nullcontext
-from contextvars import ContextVar
+from concurrent.futures import ThreadPoolExecutor
+from contextvars import ContextVar, copy_context
 from dataclasses import dataclass, field
 from datetime import datetime
 import hashlib
@@ -898,20 +899,33 @@ class LivingConversation:
                     raise ConversationConflict("conversation replay has duplicate call IDs")
                 receipts.append(recovered)
                 completed = recovered
-        available_names: tuple[str, ...] = ()
-        if self._actions is not None:
-            if completed is None:
-                action_selector = getattr(self._actions, "available_action_names", None)
-                available_names = (
-                    action_selector(turn)
-                    if callable(action_selector)
-                    else self._actions.action_names
-                )
-            else:
-                available_names = continuation_names(completed)
-        self_context = (
-            () if self._actions is None else self._actions.active_context(turn)
-        )
+        def prepare_actions() -> tuple[tuple[str, ...], tuple[str, ...]]:
+            available_names: tuple[str, ...] = ()
+            if self._actions is not None:
+                if completed is None:
+                    action_selector = getattr(self._actions, "available_action_names", None)
+                    available_names = (
+                        action_selector(turn)
+                        if callable(action_selector)
+                        else self._actions.action_names
+                    )
+                else:
+                    available_names = continuation_names(completed)
+            return available_names, (
+                () if self._actions is None else self._actions.active_context(turn)
+            )
+
+        # Recover pending effects first. Only independent preparation reads may
+        # overlap, and only for memory adapters that explicitly support it.
+        # Join both before the next authority/cancellation checkpoint or model.
+        if getattr(self._memory, "supports_parallel_context_recall", False) is True:
+            with ThreadPoolExecutor(max_workers=1, thread_name_prefix="eva-recall") as executor:
+                memory_future = executor.submit(copy_context().run, recall, turn.text, fast=True)
+                available_names, self_context = prepare_actions()
+                memory = memory_future.result()
+        else:
+            available_names, self_context = prepare_actions()
+            memory = recall(turn.text, fast=True)
         if contact_model is not None:
             self_context = (*self_context,
                 "Houd het contact natuurlijk en kort. Beantwoord eenvoudige vragen direct. "
@@ -934,7 +948,6 @@ class LivingConversation:
                 available_names = (*available_names, STOP_VOICE_WORK)
         if initiative is not None:
             self_context = (*self_context, initiative.instructions())
-        memory = recall(turn.text, fast=True)
         memory_searched = False
         seen_call_ids = {item.call.call_id for item in receipts}
         while True:

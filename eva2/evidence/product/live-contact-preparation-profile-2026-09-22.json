@@ -1,0 +1,56 @@
+{
+  "scope": "installed preparation, no model dispatch or conversation/task write",
+  "build_ms": 325,
+  "preparation_ms": 1090,
+  "measurements": [
+    {
+      "stage": "PostgresConversationActions.pending",
+      "ms": 75
+    },
+    {
+      "stage": "PostgresConversationActions.available_action_names",
+      "ms": 9
+    },
+    {
+      "stage": "PostgresConversationActions.active_context",
+      "ms": 82
+    },
+    {
+      "stage": "HindsightMemoryEngine.ensure_bank",
+      "ms": 32
+    },
+    {
+      "stage": "HindsightMemoryEngine._recall_response",
+      "ms": 545
+    },
+    {
+      "stage": "HindsightMemoryEngine.recall_for_presence",
+      "ms": 585
+    },
+    {
+      "stage": "HindsightMemoryEngine.recall_for_presence_fast",
+      "ms": 585
+    },
+    {
+      "stage": "PydanticConversationModel._instructions",
+      "ms": 0
+    },
+    {
+      "stage": "PydanticConversationModel._admit_request",
+      "ms": 300
+    },
+    {
+      "stage": "PydanticConversationModel.generate",
+      "ms": 300
+    }
+  ],
+  "envelopes": [
+    {
+      "model": "gpt-5.6-luna",
+      "tools": 35,
+      "tool_bytes": 22652,
+      "instructions_bytes": 8271,
+      "instructions_sha256": "ad15c2ebecc8220e8d734b4ccbcd24d8dd6d07155abb722a01dbcef9455c8534"
+    }
+  ]
+}

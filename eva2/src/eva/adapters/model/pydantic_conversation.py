@@ -599,6 +599,15 @@ class PydanticConversationModel:
         self._credential_lock = threading.Lock()
         self._rejected_token_sha256: str | None = None
 
+    def prepare_input_validation(self) -> None:
+        """Verify and load the local tokenizer before runtime readiness.
+
+        Keep admission checks on every request. Only the immutable vocabulary
+        initialization moves out of the first user's response path.
+        """
+        if self._resource_budget is not None:
+            _input_tokenizer()
+
     def credential_status(
         self, *, now: datetime | None = None
     ) -> ConversationCredentialStatus:
