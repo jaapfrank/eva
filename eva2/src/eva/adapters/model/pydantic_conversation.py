@@ -1918,8 +1918,13 @@ class PydanticConversationModel:
                     self._rejected_token_sha256 = None
                 try:
                     terminal_usage: list[tuple[int, int]] = []
+                    hosted_search_ids: set[str] | None = (
+                        set() if parser == self._parse_research_sse else None
+                    )
                     stream = (
-                        self._capture_terminal_usage(response, terminal_usage)
+                        self._capture_terminal_usage(
+                            response, terminal_usage, hosted_search_ids=hosted_search_ids,
+                        )
                         if self._resource_budget is not None or include_usage
                         else response
                     )
@@ -1938,7 +1943,7 @@ class PydanticConversationModel:
                         raise _ProviderUsageError(
                             "conversation provider usage is missing"
                         )
-                    tool_calls = int(
+                    tool_calls = len(hosted_search_ids) if hosted_search_ids is not None else int(
                         isinstance(parsed, tuple)
                         and len(parsed) >= 2
                         and isinstance(parsed[1], ConversationActionCall)
@@ -2086,7 +2091,20 @@ class PydanticConversationModel:
             )
 
     @staticmethod
-    def _capture_terminal_usage(response: Any, retained: list[tuple[int, int]]) -> Any:
+    def _capture_terminal_usage(
+        response: Any, retained: list[tuple[int, int]], *,
+        hosted_search_ids: set[str] | None = None,
+    ) -> Any:
+        def retain_search(item: Any) -> None:
+            if (hosted_search_ids is None or not isinstance(item, dict)
+                    or item.get("type") != "web_search_call"
+                    or item.get("status") != "completed"):
+                return
+            item_id = item.get("id")
+            if not isinstance(item_id, str) or not item_id.strip():
+                raise ConversationModelError("completed web search has no item ID")
+            hosted_search_ids.add(item_id)
+
         completed = False
         for raw in response:
             if isinstance(raw, bytes):
@@ -2111,6 +2129,15 @@ class PydanticConversationModel:
                         raise ConversationModelError(
                             "conversation provider returned data after completion"
                         )
+                if hosted_search_ids is not None and isinstance(data, dict):
+                    kind = data.get("type")
+                    if kind in {"error", "response.failed", "response.incomplete", "response.cancelled"}:
+                        raise ConversationModelError("research provider did not complete successfully")
+                    if kind == "response.output_item.done":
+                        retain_search(data.get("item"))
+                    elif kind == "response.web_search_call.completed":
+                        retain_search({"type": "web_search_call", "status": "completed",
+                                       "id": data.get("item_id")})
                 if isinstance(data, dict) and data.get("type") == "response.completed":
                     completed = True
                     completed_response = data.get("response")
@@ -2151,6 +2178,10 @@ class PydanticConversationModel:
                             "conversation provider usage is invalid"
                         )
                     retained.append((input_tokens, output_tokens))
+                    output = completed_response.get("output")
+                    if hosted_search_ids is not None and isinstance(output, list):
+                        for item in output:
+                            retain_search(item)
             yield raw
 
     def _load_auth(self) -> tuple[str, str]:
