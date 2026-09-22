@@ -1,0 +1,164 @@
+{
+  "contract": "EvaCoordinatedBrowserProcessRecoveryEvidence/v1",
+  "date": "2026-09-22",
+  "status": "isolated_coordinated_boundary_passed",
+  "integrationBase": "7ffb597fbe0b6766be2147d965b35c79a07aa532",
+  "request": "reviews/integration-coverage-2026-09-12.md regression3: coordinate browser authorization loss with durable application process loss",
+  "environment": {
+    "database": "eva2_4b_disposable_browser_recovery_20260922",
+    "postgresContainer": "eva2-household-public-test-pg",
+    "postgresVersion": 160013,
+    "candidate": "sha256:2320da954ea6686e320e53b8364e811808b93c400d664fb416dacb1ac04ffa2d",
+    "chromiumVersion": "Google Chrome for Testing 149.0.7827.55",
+    "sharedPath": "/var/lib/eva2/combined-browser-recovery-20260922/shared",
+    "schemaHead": "4e_0007_delegated_private",
+    "runtimeComposition": "Pinned core package plus separately hashed current Chrome bridge/fixtures; not a full installed runtime image."
+  },
+  "execution": {
+    "commands": {
+      "node": [
+        "node",
+        "/home/administrator/project/Eva2/eva2/deploy/chrome-bridge/combined-recovery-fixture.mjs",
+        "/var/lib/eva2/combined-browser-recovery-20260922/shared"
+      ],
+      "nodeEnvironment": {
+        "EVA_CHROME_TEST_EXECUTABLE": "/home/administrator/.cache/ms-playwright/chromium-1228/chrome-linux64/chrome"
+      },
+      "candidate": [
+        "docker",
+        "run",
+        "--rm",
+        "--name",
+        "eva2-combined-browser-proof-20260922",
+        "--network",
+        "container:eva2-household-public-test-pg",
+        "--read-only",
+        "--tmpfs",
+        "/tmp:rw,mode=1777",
+        "--user",
+        "65532:65532",
+        "-v",
+        "/home/administrator/project/Eva2/eva2:/workspace:ro",
+        "-v",
+        "/home/administrator/.local/lib/python3.12/site-packages:/testdeps:ro",
+        "-v",
+        "/usr/lib/python3/dist-packages:/hostlibs:ro",
+        "-v",
+        "/var/lib/eva2/combined-browser-recovery-20260922/shared:/integration:rw",
+        "-w",
+        "/workspace",
+        "-e",
+        "PYTHONDONTWRITEBYTECODE=1",
+        "-e",
+        "EVA_TEST_CHROME_RECOVERY_DIRECTORY=/integration",
+        "-e",
+        "EVA2_TEST_POSTGRES_DSN=postgresql+psycopg://postgres@127.0.0.1/eva2_4b_disposable_browser_recovery_20260922",
+        "--entrypoint",
+        "/usr/local/bin/python",
+        "sha256:2320da954ea6686e320e53b8364e811808b93c400d664fb416dacb1ac04ffa2d",
+        "-c",
+        "import sys; sys.path.insert(0,'/workspace'); sys.path.extend(['/testdeps','/hostlibs']); import pytest; raise SystemExit(pytest.main(['-q','-s','-p','no:cacheprovider','tests/postgres/test_combined_process_recovery.py::test_shared_browser_and_durable_process_failure_window']))"
+      ]
+    },
+    "pytestExit": 0,
+    "browserExit": 0,
+    "passed": 1,
+    "failed": 0,
+    "durationSeconds": 21.87,
+    "attempts": 1,
+    "artifacts": {
+      "test.log": {
+        "path": "/var/lib/eva2/combined-browser-recovery-20260922/test.log",
+        "sha256": "a34ed6eade9ade0d19ecc057f24d6d1dc2f9bd9adb02740d7f90f0595df3f242"
+      },
+      "browser.log": {
+        "path": "/var/lib/eva2/combined-browser-recovery-20260922/browser.log",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "execution-command.json": {
+        "path": "/var/lib/eva2/combined-browser-recovery-20260922/execution-command.json",
+        "sha256": "1cdcb7eb4d8f18cfd18c102280783f528dcf375ee6b47b6d7fcc02dd0d7e2e3e"
+      },
+      "shared/browser-pending.json": {
+        "path": "/var/lib/eva2/combined-browser-recovery-20260922/shared/browser-pending.json",
+        "sha256": "16005ec960a0aa8669ff589485eb101942784e93dfb7deb3c2d3d74b352b2101"
+      },
+      "shared/core-crashed.json": {
+        "path": "/var/lib/eva2/combined-browser-recovery-20260922/shared/core-crashed.json",
+        "sha256": "4314796706bb25a3015844378c09f58f9c1fbb02a34eb8011cade5a6490dabfd"
+      },
+      "shared/browser-authority-restored.json": {
+        "path": "/var/lib/eva2/combined-browser-recovery-20260922/shared/browser-authority-restored.json",
+        "sha256": "afcd11874c498b869e0114bc148b5417b3cf8bbe117203280b3f719f81cc0242"
+      },
+      "shared/browser-complete.json": {
+        "path": "/var/lib/eva2/combined-browser-recovery-20260922/shared/browser-complete.json",
+        "sha256": "c7ee9ae9e90b7087aea836671c5a98cac733bae2c40ba18fe9344bbf4338cee7"
+      },
+      "shared/recover.json": {
+        "path": "/var/lib/eva2/combined-browser-recovery-20260922/shared/recover.json",
+        "sha256": "54702b0d23ac243c91f4bae46ce594c8edaa8cb1ec2e3f3005e3403c213c5a6c"
+      },
+      "shared/expired.json": {
+        "path": "/var/lib/eva2/combined-browser-recovery-20260922/shared/expired.json",
+        "sha256": "a8c68a4d15d597bc690569b87380c2879ba4f4744852484160c41d20774339c6"
+      }
+    }
+  },
+  "sourceSha256": {
+    "tests/postgres/test_combined_process_recovery.py": "95e3e02e0a06e28a32f8ef256a0a9e227b3f6014bbd86ea83244ee9d7f135a39",
+    "tests/fixtures/subagents/delegated_work_service_fixture.py": "818ab3b9279576e307a9e9bf337db413fa902e35037398d4878ad06fbb0f2210",
+    "deploy/chrome-bridge/combined-recovery-fixture.mjs": "36a24e043af1f304372a4f183a5bd8f2037c1ad5fdaca4021c7d989c6698069c",
+    "deploy/chrome-bridge/recovery-fixture.mjs": "b41feae9166761edc59b3cf166c521772078ae58a96c3c9c9fdc675b99866c3f",
+    "deploy/chrome-bridge/recovery-proxy-fixture.py": "c26b0738f90cb71c1fcbbd6f1e3f8579590a09c9bd6c18dd07320b1e81c6df95",
+    "deploy/chrome-bridge/browser-fixture.cjs": "38ae1afbb76af67c2ddf6322d08e48cf737c174c069db2a68257159cbd966518",
+    "deploy/chrome-bridge/server.mjs": "d742d7216d1fe46656b02cae79e910d075949f31c5d1fbdaf9628e59481c95eb",
+    "deploy/chrome-bridge/gate.mjs": "73ed17eea9ea9fa356c1aea38675e7914d812a9e7229800aed1a3883e22343dc",
+    "deploy/chrome-bridge/process.mjs": "3ba1e5138e9ce028313fefc2658d9453b30016464a991b64b8dbda8d1ce21405",
+    "deploy/chrome-bridge/worker.cjs": "70a4b798490f3692dbf357ba7a7ad154d6b7f2a9fcda9ec2a1620a5291baddcf",
+    "deploy/chrome-bridge/proxy.py": "76d8658d841ec9d2ca8e6a035638919fb6d776c7c1fe6e7efc4635e4a8caaaf8",
+    "deploy/chrome-bridge/stale-socket.mjs": "c18b17f33d23d68fe7caca3bb755d26646e62f2ab33db704f2bd0569b06ed462",
+    "deploy/chrome-bridge/package.json": "71b8058a9e74b686d6c34312e8aefcfad878f4b884a3b7d486054467ecf7ba6d",
+    "deploy/chrome-bridge/package-lock.json": "3a761fc3558ba3004ddbeed2962131037eae0ed2d5411f2674b92ce38a26ed13"
+  },
+  "observed": {
+    "result_sha256": "8a5205aaca5400c0f88a796a7e5b35a0df56d50ea6e86645948cddf293687928",
+    "memory_sha256": "22c7ead1096176b9ce54098958da3d655a1b671d65d2593071b894c9c3dad59f",
+    "claimantPid": 18,
+    "recoveryPid": 27,
+    "lateClicks": 0,
+    "oldCallerStatus": 403,
+    "oldNonceRejected": true,
+    "freshGrant": true,
+    "durableReceiptReadThroughBrowser": true,
+    "scope": "real isolated Chromium and production bridge; logical gateway address, application services, no physical microphone or full HTTP runtime"
+  },
+  "sequence": [
+    "A fresh isolated browser/bridge/proxy is ready before application admission; no personal browser session is used.",
+    "Private owner application services admit work and persist a retained synthetic memory source. A separate controlled worker writes its successful durable result.",
+    "The separate application process claims the result. Only after that durable claim marker does the real browser start waiting on a disabled click.",
+    "The application test observes browser-busy before SIGKILL of the claimant. The browser fixture also verifies busy after process death: a shared failure window is mandatory.",
+    "Logical DNS address changes 172.30.0.2 to 172.30.0.4 through the existing proxy authorization function. Pending click is cancelled and bridge disconnects; old caller gets 403.",
+    "New logical caller cannot reuse the old observation nonce, including after a new explicit grant. Enabling the button later produces zero clicks.",
+    "Fresh worker makes no second controlled call. New application process at +6 seconds cannot repoll the still-live claimed result; after +40 seconds the original voice-return session is expired and cannot reopen.",
+    "Private owner result/list/workboard and durable memory source remain consistent; other principal is denied. Fresh browser observation reads those recovered hashes from the actual recovered receipt file."
+  ],
+  "controlledProviderCalls": 1,
+  "paidModelCalls": 0,
+  "productionMutations": false,
+  "ownerAcceptance": false,
+  "reviewCorrections": [
+    "Before execution, review found namespace collision if both module cases ran together. Coordinated case now uses its own deterministic tenant/owner/work namespace propagated into child processes. Only the coordinated case was executed; a combined two-case module run was not performed."
+  ],
+  "preservedHistoricalEvidence": "evidence/product/durable-application-process-recovery-20260922.json remains unchanged with its original tested source hash.",
+  "limitations": [
+    "Gateway address change is a logical caller/DNS fixture exercising the real proxy authorization function, not actual Docker IP or network replacement.",
+    "Application-service subprocesses and delegated worker bootstrap use candidate 2320; full HTTP core/container/host composition restart is not tested.",
+    "PostgreSQL 16.13/schema 4e0007 is the historical disposable fixture; production PG18.6 is not covered by this run. Synthetic authority seeding temporarily disables only seed-table triggers.",
+    "Retained source/outbox receipt preservation is tested, not semantic recall, real memory provider or correction quality.",
+    "Voice-return session authorization remains expired; physical audio, microphone power and real transport loss are not exercised.",
+    "The separate browser fixture uses a fresh Linux headless Chromium 149.0.7827.55. This pass demonstrates the bounded test path, not general compatibility or personal Chrome acceptance.",
+    "No general product completion, release gate or owner acceptance is implied."
+  ],
+  "remaining": "Regression 3 still needs real media transport/microphone behavior and full installed composition recovery; this extends the previous subchain with a coordinated real browser/durable-process failure window."
+}

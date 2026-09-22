@@ -1003,6 +1003,14 @@
         "checkedAt": "2026-09-22",
         "deliveries": [
           {
+            "title": "Browser en taakherstel samen gecontroleerd",
+            "date": "22 september",
+            "state": "tested",
+            "result": "Een echte wachtende browserklik overlapt met procesuitval. Oude toegang wordt geweigerd, er volgt geen late klik en na herstel blijven taakresultaat en geheugenbron gelijk. Onafhankelijk beoordeeld; één nieuwe gerichte proef geslaagd.",
+            "remaining": "Geen nieuwe functie geïnstalleerd. Echte spraaktransportuitval, volledige runtime en computerherstart blijven te controleren.",
+            "source": "eva2/evidence/product/coordinated-browser-process-recovery-20260922.json"
+          },
+          {
             "title": "Herstelcontrole: resultaat en geheugenbron blijven behouden",
             "date": "22 september",
             "state": "tested",
@@ -1060,10 +1068,10 @@
           }
         ],
         "now": {
-          "title": "Gezamenlijk herstel nog afronden",
-          "detail": "De ontbrekende procesgrens voor echte taak- en geheugenopslag is nu getest. Browserherstel en spraak moeten nog op dezelfde complete kandidaat worden verbonden.",
-          "state": "Deelcontrole klaar · integratie open",
-          "doneWhen": "Eén gezamenlijke herstelproef behoudt data en taakstatus, zonder late browseractie, dubbele uitvoering of vanzelf ingeschakelde microfoon."
+          "title": "Echte spraakverbinding bij herstel",
+          "detail": "Browser- en duurzaam taakherstel zijn nu in dezelfde onderbreking gecontroleerd. Nog ontbreekt het gedrag van de echte spraakverbinding bij uitval en terugkomst.",
+          "state": "Volgende ontbrekende integratiegrens",
+          "doneWhen": "Werk en gegevens blijven behouden; terugkomst schakelt de microfoon niet vanzelf in."
         },
         "next": {
           "title": "Gesprek tijdens werk op de echte ingangen",
@@ -10850,7 +10858,7 @@
           "planningEffortHours": "4–12"
         }
       ],
-      "nextAction": "Bestaande browserherstelharnas verbinden met het nieuwe duurzame procesbewijs op dezelfde kandidaat; geen herhaling van reeds geslaagde losse proeven. Telegram-verduidelijking en fysieke Voice PE blijven apart open.",
+      "nextAction": "Bestaande voice/LiveKit-harnas gebruiken voor werkelijke transportuitval en herstel zonder automatische microfoonstart. Reeds geslaagde browser/procesproef niet ongewijzigd herhalen; volledige runtime- en hostherstart blijven eindpoort.",
       "effortNotice": "Grove planning, lage zekerheid: 40–118 actieve ontwikkeluren plus zeven dagen gezinspraktijk en eventuele externe wachttijd. Geen deadline, creditkosten of gemeten verbruik; per begrensde wijziging aanscherpen na lezing van bestaand bewijs. Hergebruik kan dit verkorten.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Na review, installatie en registratie automatisch volgende uitvoerbare stap; geen algemene wachtstop op gebruikersproeven.",
@@ -11397,7 +11405,26 @@
       "remaining": "Gezamenlijke HTTP-core/worker/browser/gateway/spraak- en computerherstartketen nog open. Dit is opgeslagen geheugenbronbewijs, geen nieuwe semantische geheugenproef.",
       "productSourceChanged": false,
       "installationRequired": false,
-      "evidence": "eva2/evidence/product/durable-application-process-recovery-20260922.json"
+      "evidence": "eva2/evidence/product/durable-application-process-recovery-20260922.json",
+      "browserFollowup": {
+        "status": "coordinated_browser_process_proof_passed",
+        "owner": "combined_recovery",
+        "scope": "Echte geïsoleerde Chromiumklik wacht tegelijk met duurzame resultaatclaim; procesuitval, gatewayadreswijziging, nieuwe toestemming en resultaat/geheugenreadback delen barrières.",
+        "planningEstimate": "30–60 minuten planning; onbekende creditkosten, nul betaalde modelcalls gepland.",
+        "doneWhen": "Oude caller en observatie geweigerd; geen late klik of dubbele taak; vers opgehaald resultaat en geheugenbron bytegelijk.",
+        "voiceBoundary": "Echte LiveKit-transportuitval nog nodig. Een gesimuleerd disconnectevent bewijst geen causale verbinding met core-/browseruitval.",
+        "evidence": "eva2/evidence/product/coordinated-browser-process-recovery-20260922.json",
+        "review": "eva2/reviews/coordinated-browser-process-recovery-20260922.md",
+        "tests": {
+          "passed": 1,
+          "seconds": 21.87,
+          "browserExit": 0,
+          "lateClicks": 0,
+          "oldCallerStatus": 403,
+          "paidModelCalls": 0
+        },
+        "productSourceChanged": false
+      }
     }
   },
   "activeTaskId": "AU-008",

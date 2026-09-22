@@ -30,9 +30,15 @@ from tests.postgres.test_delegated_work_store import (
 )
 from eva.adapters.postgres.operational_timeline import external_timeline_scope
 
-LABEL = "combined-process-recovery"
+LABEL = os.environ.get("EVA_TEST_RECOVERY_LABEL", "combined-process-recovery")
 NOW = datetime(2026, 8, 26, 12, tzinfo=UTC)
 MEMORY = "My corrected preference is green."
+
+
+def _publish(path, value):
+    temporary = path.with_name(path.name + ".tmp")
+    temporary.write_text(json.dumps(value))
+    temporary.replace(path)
 
 
 def _context(dsn, mode):
@@ -123,21 +129,23 @@ def _child(mode, directory):
             cards = service.store.workboard(**service._owner, now=at).cards
             assert len(cards) == 1 and cards[0].column == "review"
             assert len(service.execute("list", turn, request_key="list")["jobs"]) == 1
-            (directory / (mode + ".json")).write_text(json.dumps({
+            _publish(directory / (mode + ".json"), {
                 "memory_sha256": state["memory_sha256"], "result_sha256": state["result_sha256"],
                 "state": result["state"], "card_column": cards[0].column,
                 "recovery_pid": os.getpid(), "claimant_pid": state["claimant_pid"],
-                "old_voice_session": "expired" if mode == "expired" else "open_claim_not_reoffered", "replacement_voice_result": None}))
+                "old_voice_session": "expired" if mode == "expired" else "open_claim_not_reoffered", "replacement_voice_result": None})
     finally:
         engine.dispose()
 
 
-def test_process_loss_preserves_memory_result_and_private_return_fence(delegated_engine, process_tmp_path):
-    scope, _, _ = _seed_authority(delegated_engine, LABEL)
+def _run_process_recovery(delegated_engine, process_tmp_path, *, coordinated=False):
+    label = LABEL + "-browser" if coordinated else LABEL
+    scope, _, _ = _seed_authority(delegated_engine, label)
     dsn = _dsn_secret(delegated_engine, process_tmp_path / "database-dsn")
     counter = process_tmp_path / "provider-calls"
-    environment = _process_environment(dsn_file=dsn, scope=scope, scope_label=LABEL,
+    environment = _process_environment(dsn_file=dsn, scope=scope, scope_label=label,
         count_file=counter, mode="success", now="2026-08-26T12:00:02Z")
+    environment["EVA_TEST_RECOVERY_LABEL"] = label
     # Test helpers are available without shadowing the candidate's installed Eva
     # modules with /workspace/src. Both children inherit the same packaged code.
     import eva
@@ -158,9 +166,16 @@ def test_process_loss_preserves_memory_result_and_private_return_fence(delegated
                 pytest.fail("claim process exited without durable marker")
             assert time.monotonic() < deadline, "claim barrier timed out"
             time.sleep(.05)
+        if coordinated:
+            _browser_barrier(process_tmp_path, "browser-pending.json")
+            assert claimant.poll() is None, "claimant must be alive in shared failure window"
         claimant.kill()
         claimant.communicate(timeout=10)
         assert claimant.returncode == -9
+        if coordinated:
+            _publish(process_tmp_path / "core-crashed.json", {
+                "claimant_pid": claimant.pid, "signal": "SIGKILL", "returncode": -9})
+            _browser_barrier(process_tmp_path, "browser-authority-restored.json")
     finally:
         if claimant.poll() is None:
             claimant.kill()
@@ -173,9 +188,44 @@ def test_process_loss_preserves_memory_result_and_private_return_fence(delegated
     assert earlier["old_voice_session"] == "open_claim_not_reoffered"
     assert receipt["recovery_pid"] != receipt["claimant_pid"]
     assert counter.read_text() == "provider-call\n"
+    if coordinated:
+        browser = _browser_barrier(process_tmp_path, "browser-complete.json")
+        assert browser["lateClicks"] == 0
+        assert browser["result_sha256"] == receipt["result_sha256"]
+        assert browser["memory_sha256"] == receipt["memory_sha256"]
     print(json.dumps({"proof": "durable-application-process-recovery", **receipt,
         "controlled_provider_calls": 1, "full_runtime_restart": False,
-        "browser_gateway_voice_hardware": "not exercised"}, sort_keys=True))
+        "browser_gateway_voice_hardware": (
+            "coordinated real browser and logical gateway; no physical voice" if coordinated else "not exercised")}, sort_keys=True))
+
+
+def _browser_barrier(directory, filename):
+    deadline = time.monotonic() + 45
+    while not (directory / filename).exists():
+        error = directory / "browser-failed.json"
+        assert not error.exists(), error.read_text() if error.exists() else ""
+        assert time.monotonic() < deadline, "browser barrier timed out: " + filename
+        time.sleep(.05)
+    return json.loads((directory / filename).read_text())
+
+
+def test_process_loss_preserves_memory_result_and_private_return_fence(delegated_engine, process_tmp_path):
+    _run_process_recovery(delegated_engine, process_tmp_path)
+
+
+@pytest.mark.skipif(not os.environ.get("EVA_TEST_CHROME_RECOVERY_DIRECTORY"),
+                    reason="requires explicitly coordinated isolated Chrome fixture")
+def test_shared_browser_and_durable_process_failure_window(delegated_engine):
+    directory = Path(os.environ["EVA_TEST_CHROME_RECOVERY_DIRECTORY"])
+    assert directory.is_absolute() and directory.is_dir() and not directory.is_symlink()
+    assert directory.resolve() == directory
+    assert not (directory / "database-dsn").exists(), "requires a fresh dedicated proof directory"
+    _browser_barrier(directory, "browser-ready.json")
+    try:
+        _run_process_recovery(delegated_engine, directory, coordinated=True)
+    except BaseException as error:
+        _publish(directory / "core-failed.json", {"error": repr(error)})
+        raise
 
 
 if __name__ == "__main__":
