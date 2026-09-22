@@ -1003,6 +1003,14 @@
         "checkedAt": "2026-09-23",
         "deliveries": [
           {
+            "title": "Extern geheugen uit reservekopie teruggelezen",
+            "date": "23 september",
+            "state": "tested",
+            "result": "De echte geheugendatabase is versleuteld gekopieerd en geïsoleerd teruggezet. Alle 23 brontabellen hebben dezelfde inhoud; proefkopieën zijn verwijderd. Onafhankelijk beoordeeld.",
+            "remaining": "Nog geen gezamenlijke herstelroute met de kern, providerstart of installatie. Bestaande geheugenacceptatie blijft behouden.",
+            "source": "eva2/evidence/product/hindsight-database-recovery-20260923.json"
+          },
+          {
             "title": "Herstel bewaart nu ook wachtend werk",
             "date": "23 september",
             "state": "tested",
@@ -1092,10 +1100,10 @@
           }
         ],
         "now": {
-          "title": "Documenten en geheugen bij herstel behouden",
-          "detail": "Taakgegevens blijven nu behouden achter een startblokkade. Het bijbehorende bestands- en geheugenherstel en de gecontroleerde vrijgave moeten nog worden afgemaakt.",
+          "title": "Documentbestanden veilig laten meeverhuizen",
+          "detail": "De bestaande documentbroker wordt uitgebreid met expliciete verhuizingsbinding, zodat oorspronkelijke bestanden, journalen en ontvangstbewijzen behouden blijven.",
           "state": "In uitvoering · niet geïnstalleerd",
-          "doneWhen": "Herstelde taken kunnen met hun bestanden en geheugen veilig verder zonder dubbele uitvoering."
+          "doneWhen": "Een hersteld project is leesbaar en kan alleen zijn ontbrekende stap uitvoeren, zonder oude uitvoeringsbewijzen te veranderen."
         },
         "next": {
           "title": "Herstelde installatie gecontroleerd starten",
@@ -10882,7 +10890,7 @@
           "planningEffortHours": "4–12"
         }
       ],
-      "nextAction": "Native documenten/journals en extern geheugen herstelbaar maken; daarna operatorvrijgave aan herstelde dependencies, bronfencing en pakketidentiteit binden. Zonder die vrijgave blijft het herstelde doel geblokkeerd.",
+      "nextAction": "Native documentrelocatie afmaken en testen; daarna gezamenlijk kern-, bestands- en geheugenherstel met gecontroleerde operatorvrijgave.",
       "effortNotice": "Grove planning, lage zekerheid: 40–118 actieve ontwikkeluren plus zeven dagen gezinspraktijk en eventuele externe wachttijd. Geen deadline, creditkosten of gemeten verbruik; per begrensde wijziging aanscherpen na lezing van bestaand bewijs. Hergebruik kan dit verkorten.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Na review, installatie en registratie automatisch volgende uitvoerbare stap; geen algemene wachtstop op gebruikersproeven.",
@@ -11526,7 +11534,24 @@
       "sourceCandidateReview": "eva2/reviews/portable-v2-source-20260923.md",
       "nextRequired": "Native documenten/journals en extern geheugen herstelbaar maken; daarna operatorvrijgave aan herstelde dependencies, bronfencing en pakketidentiteit binden. Zonder die vrijgave blijft het herstelde doel geblokkeerd.",
       "holdEvidence": "eva2/evidence/product/portable-v2-hold-20260923.json",
-      "holdReview": "eva2/reviews/portable-v2-hold-20260923.md"
+      "holdReview": "eva2/reviews/portable-v2-hold-20260923.md",
+      "hindsightDataProof": "eva2/evidence/product/hindsight-database-recovery-20260923.json",
+      "nativeRelocation": {
+        "status": "implementing",
+        "owner": "document_relocation",
+        "outcome": "Bestaande documentbytes/journalprefix/receipts bij andere filesystemidentiteiten behouden en na gecontroleerde vrijgave ontbrekend werk vervolgen.",
+        "files": [
+          "native/workspace_writer_broker.c",
+          "eva2/deploy/living-core/workspace-create-only/mcp-server.mjs",
+          "eva2/deploy/living-core/workspace-create-only/broker-client.mjs",
+          "eva2/deploy/living-core/workspace-create-only/project-journal.mjs",
+          "eva2/deploy/living-core/workspace-create-only/relocation.mjs",
+          "test/workspace-writer-relocation.test.mjs"
+        ],
+        "estimate": "45–90 minuten onzeker; creditkosten onbekend, geen modelprovidercalls.",
+        "doneWhen": "Echte broker verifieert kopie op andere inodes; oude receipts blijven gelijk, observe schrijft niets, ontbrekende stap maximaal eenmaal; manipulatie en onzekere publicatie weigeren.",
+        "installed": false
+      }
     }
   },
   "activeTaskId": "AU-008",

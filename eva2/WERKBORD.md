@@ -25,7 +25,7 @@ Eén dagelijkse, geïnstalleerde Eva afronden: gedeeld gesprek en stem, privéco
 | 7 | Vergelijking voorbereiden en uitvoeren | open | EV-003 taken/versies/drempels vooraf vast; Bottie en drie concurrenten eerlijk vergelijken, officiële AgentBench/GAIA/OSWorld-scorers; definitieve vergelijking op eindkandidaat. |
 | 8 | Eindkandidaat en acceptatie | open | Bevroren image/config/bewijs, complete testpoort, onafhankelijke review, veilige installatie, computerherstart en definitieve vergelijking; daarna zeven dagen gezinspraktijk en expliciete acceptatie. |
 
-**Eerstvolgende handeling:** Native documenten/journals en extern geheugen herstelbaar maken; daarna operatorvrijgave aan herstelde dependencies, bronfencing en pakketidentiteit binden. Zonder die vrijgave blijft het herstelde doel geblokkeerd.
+**Eerstvolgende handeling:** Native documentrelocatie afmaken en testen; daarna gezamenlijk kern-, bestands- en geheugenherstel met gecontroleerde operatorvrijgave.
 
 Afgeronde deelresultaten en menselijke acceptaties blijven hieronder behouden. Een open gebruikersoordeel is geen algemene bouwstop.
 

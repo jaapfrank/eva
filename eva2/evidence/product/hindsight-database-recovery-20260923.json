@@ -1,0 +1,46 @@
+{
+  "contract": "EvaHindsightDatabaseRecoveryEvidence/v1",
+  "date": "2026-09-23",
+  "status": "isolated_data_roundtrip_passed",
+  "sourceBase": "7d040438",
+  "result": {
+    "sourceImage": "sha256:7e641ed0cf38285bebfc6151ba48243439dfe9cf3306feab4023a812466cd6c1",
+    "sourceChanged": false,
+    "providerStartedOnTarget": false,
+    "paidModelCalls": 0,
+    "encryptionRuntimeImage": "sha256:2320da954ea6686e320e53b8364e811808b93c400d664fb416dacb1ac04ffa2d",
+    "status": "passed",
+    "tables": 23,
+    "rows": 22316,
+    "allTableContentEqual": true,
+    "tableDigest": "502d20076009c156d1630bca4a8848b8f5fe5db534922247f4d8d1a67da92b3b",
+    "dumpSha256": "a762cc34ac8db8e3f5db29435dc98e2483936088e92a899305a94128ffc1c70f",
+    "encryptedBytes": 2970017,
+    "network": "none",
+    "permissionsRestored": false,
+    "concurrentCoreSnapshot": false,
+    "privateCopiesAndKeyRemoved": true,
+    "targetContainerRemoved": true
+  },
+  "postgresVersion": "18.6",
+  "extensions": {
+    "vector": "0.8.6",
+    "pg_trgm": "1.6"
+  },
+  "script": "/var/lib/eva2/hindsight-restore-20260923/prove.py",
+  "scriptSha256": "c86506b9c1f35fb8a8248113dd06fd8f7d5dc86c37995c40782531346127da40",
+  "resultSha256": "c6c2df121b666cdbbee1d85532f8de4bcd5fe1b1444ecbaca552927963ee7ae3",
+  "attempts": 1,
+  "method": "One live read-only repeatable-read exported snapshot feeds pg_dump and sorted JSONB table fingerprints; existing repository portable_transport under actual core image encrypts/decrypts dump; exact source PostgreSQL image restores into a network-none target.",
+  "privacy": "No private table rows, credentials or decrypted archive retained in evidence. All proof copies and key were removed; no Hindsight API or model calls on target.",
+  "limits": [
+    "No schema definition, sequence, large-object or privileges equivalence claim",
+    "No check for extra target tables",
+    "Transport is repository source under runtime image, not solely packaged code",
+    "Core and Hindsight were not snapshotted as one coordinated installation",
+    "No provider API startup, semantic recall, new installation or owner acceptance",
+    "Successful cleanup verified; exception-resilient cleanup not proven"
+  ],
+  "review": "eva2/reviews/hindsight-database-recovery-20260923.md",
+  "creditCost": "unknown"
+}
