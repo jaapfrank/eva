@@ -1,0 +1,5 @@
+# Repair only root-private COPY metadata in the retained reviewed image.
+FROM eva2-speaker:provisioning-904da0c9
+USER 0:0
+RUN ["/usr/local/bin/python", "-c", "import os; paths=['/app/deploy','/app/deploy/home-assistant','/app/deploy/home-assistant/custom_components','/app/deploy/home-assistant/custom_components/eva2_voice']; [os.chmod(p,0o755) for p in paths]; os.chmod(paths[-1]+'/client.py',0o644)"]
+USER 65532:65532

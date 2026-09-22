@@ -1,0 +1,41 @@
+name: eva2-household-speaker
+services:
+  speaker:
+    image: sha256:1e3445797bcdc1afe350370c14d91f07ccb1bc818ea9fa1a8d1af737d9ec1aba
+    container_name: eva2-household-speaker-1
+    network_mode: host
+    user: "65532:65532"
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    restart: unless-stopped
+    command: ["/run/speaker-deploy/launch.py"]
+    tmpfs:
+      - /tmp:rw,nosuid,nodev,size=32m,uid=65532,gid=65532,mode=0700
+      - /run/eva-speaker-runtime:rw,nosuid,nodev,noexec,size=1m,uid=65532,gid=65532,mode=0700
+    volumes:
+      - type: bind
+        source: ${EVA_SPEAKER_STAGE:?prepared private stage required}/deploy
+        target: /run/speaker-deploy
+        read_only: true
+        bind: {create_host_path: false}
+      - type: bind
+        source: ${EVA_SPEAKER_STAGE:?}/config
+        target: /run/speaker-config
+        read_only: true
+        bind: {create_host_path: false}
+      - type: bind
+        source: ${EVA_SPEAKER_CORE_STATE:?current authoritative core state required}/household-voice
+        target: /run/household-voice
+        read_only: true
+        bind: {create_host_path: false}
+      - type: bind
+        source: ${EVA_SPEAKER_CORE_STATE:?}/identity
+        target: /run/identity
+        read_only: true
+        bind: {create_host_path: false}
+      - type: bind
+        source: ${EVA_SPEAKER_CORE_STATE:?}/secrets/home-assistant-token
+        target: /run/ha-token
+        read_only: true
+        bind: {create_host_path: false}

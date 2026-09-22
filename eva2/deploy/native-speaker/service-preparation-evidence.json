@@ -1,0 +1,64 @@
+{
+  "date": "2026-09-22",
+  "source_base": "c7f4804913678e6ab4931a0ed84a3c598835ab94",
+  "status": "prepared_not_activated",
+  "stage": "/var/lib/eva2/native-speaker/candidates/c7f48049-service-v4",
+  "stage_manifest_hashes_verified": true,
+  "live_activation_baseline_created": false,
+  "continuous_speaker_container_present": false,
+  "runtime_model_calls": 0,
+  "firmware_changes": false,
+  "core_worker_configuration_changes": false,
+  "owner_media_livekit_changes": false,
+  "real_windows_firewall_calls": 0,
+  "credentials_in_git_or_output": false,
+  "permission_correction": {
+    "parent": "sha256:1aab254f21a58cf97844679f2b0a0f82ea6507989badf3229796fb471193dd51",
+    "candidate": "sha256:1e3445797bcdc1afe350370c14d91f07ccb1bc818ea9fa1a8d1af737d9ec1aba",
+    "base_tag_id_verified_before_build": true,
+    "build_network": "none",
+    "parent_layers": 43,
+    "candidate_layers": 44,
+    "parent_layers_exact_prefix": true,
+    "docker_runtime_config_identical": true,
+    "app_file_content_changes": 0,
+    "effective_mode_changes": [{
+      "path": "/app/deploy/home-assistant/custom_components/eva2_voice/client.py",
+      "before": "0600", "after": "0644"
+    }],
+    "directory_chmod_was_idempotent": true,
+    "reason": "Actual UID 65532 ServiceConfig.load failed to read the packaged HA client. Earlier root-only package configuration test was insufficient. No source/dependency changes."
+  },
+  "final_stage_probe": {
+    "uid_gid": "65532:65532",
+    "network": "none",
+    "root_filesystem": "read-only",
+    "capabilities": "all dropped",
+    "new_privileges": false,
+    "result": "validated",
+    "network_calls": 0,
+    "mounts": {
+      "current_household_policy_and_token": "authoritative directory, read-only",
+      "current_identity": "authoritative directory, read-only",
+      "ha_token": "single credential file, read-only",
+      "prepared_config_and_tls": "read-only",
+      "rendered_credentials": "private UID 65532 tmpfs, mode 0700 directory and 0600 file"
+    },
+    "account_credentials_in_persistent_template": false,
+    "fixed_device_grants": 2,
+    "limitations": "No listener or actual device connection opened. Existing onnxruntime missing-utility/telemetry warnings did not prevent validation. Atomic HA-token replacement needs container recreation; the three authoritative policy/token/identity files use directory mounts."
+  },
+  "offline_tests": {
+    "activation_guards": "8 passed in 0.025s; fake Docker/Compose, no live baseline captured",
+    "network_route": "4 scenarios passed with every firewall cmdlet mocked; syntax valid; no execution policy changed",
+    "packaged_authority_rotation": "1 passed, 6 deselected in 2.44s; exact candidate image, UID 65532, network none",
+    "compose_validation": "Final staged Compose config --quiet passed",
+    "git_diff_check": "passed"
+  },
+  "review_followups_resolved": [
+    "ACTIVATION.md requires the coordinator's complete effective core configuration comparison before either generated core argv, including pending volumes/ports/command/security/network/resource edits. Capture's environment/provenance validation is explicitly not a replacement for that release check; full private rendered projection is saved.",
+    "Firewall rollback now rereads and verifies exact absence or restored enabled/disabled state.",
+    "Image ancestry and all /app file contents compared; exact parent prefix plus one permissions layer and unchanged runtime configuration verified."
+  ],
+  "remaining": "Independent final review, coordinated activation using a fresh baseline, and separately authorized per-device physical USB/full-flash recovery and firmware trials. No new general management access needed."
+}
