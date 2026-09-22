@@ -44,9 +44,8 @@ export function hasLaterTelegramRepair(delivery) {
 
 function deliveryPresentation(row, steps) {
   const completed = steps.filter(step => step.complete && !step.evidenceOnly);
-  const proven = row.built === 'yes' && row.tested === 'yes' && row.live === 'yes';
   return {
-    label: proven ? 'Bewezen basis' : completed.length ? 'Deelresultaten opgeleverd' : 'In ontwikkeling',
+    label: completed.length ? 'Deels opgeleverd' : 'In ontwikkeling',
     scope: row.scope,
     result: row.visibleResult,
     followup: row.gap,
@@ -55,6 +54,7 @@ function deliveryPresentation(row, steps) {
 }
 
 export function applyProductCompletion(project, board) {
+  project.deliveryPlan = board.audit?.deliveryPlan;
   const memoryAcceptance = applyMemoryPresentation(project, board);
   const tasks = [...board.executionTasks, ...board.milestones];
   const included = new Set();
@@ -116,6 +116,7 @@ export function applyProductCompletion(project, board) {
     const acceptedSteps = steps.filter(step => step.accepted);
     row.product = {
       delivery: deliveryPresentation(row, steps),
+      remaining: board.audit?.projectDashboard?.remainingProductWork?.[row.id] || [row.gap],
       scope, steps, decisionArchive, undecided:steps.filter(step=>step.decision==='undecided').length, ...aggregateCompletion(steps),
       tested:{state:row.tested === 'yes' ? 'partial_passed' : 'unknown',label:row.tested === 'yes' ? 'Deelproeven geslaagd' : 'Onvolledig',detail:'Technische deelproeven zijn bewijs voor hun eigen scope; geen volledige eindtest.'},
       jaap:{state:failed ? 'failed' : acceptedSteps.length ? 'partial_passed' : row.accepted === 'partial' ? 'partial' : 'unknown',label:failed ? (row.id === 'projects' ? 'Telegram mislukt' : row.id === 'voice' ? 'Wakeword mislukt' : 'Kijkproef mislukt') : acceptedSteps.length ? 'Deelproef geslaagd' : row.accepted === 'partial' ? 'Beperkt beoordeeld' : 'Ongetest / geen bewijs',detail:failed ? `${row.id === 'projects' ? 'Telegramproef 11 sep 09:40: hulpagent geweigerd. Dashboard-HTTP-proef blijft bewezen.' : row.id === 'browser' ? 'Kijkverbinding mislukte; losse Chrome-proef wel gelukt.' : 'Onterechte wakeword-activering nog niet opgelost; SP-01 en SP-02 blijven geaccepteerd.'}` : acceptedSteps.map(step => step.id).join(', ') || row.gap},

@@ -620,10 +620,20 @@ def render_human(board: dict[str, Any]) -> str:
         f"[Actueel bewijs]({board['audit']['goalRevision']['currentEvidence'].removeprefix('eva2/')}).",
         "",
         board["audit"]["goalRevision"]["nextStep"],
+        *(["", "## Doorlopend opleverdoel", "",
+           board["audit"]["deliveryPlan"]["outcome"], "",
+           "| Stap | Uitkomst | Uitvoering | Klaar wanneer |",
+           "|---:|---|---|---|",
+           *[f"| {step['number']} | {step['title']} | {step['state']} | {step['doneWhen']} |"
+             for step in board["audit"]["deliveryPlan"]["steps"]], "",
+           "**Eerstvolgende handeling:** " + board["audit"]["deliveryPlan"]["nextAction"], "",
+           "Afgeronde deelresultaten en menselijke acceptaties blijven hieronder behouden. "
+           "Een open gebruikersoordeel is geen algemene bouwstop."]
+          if board["audit"].get("deliveryPlan") else []),
         *(["", board["audit"]["parallelWorkNotes"].strip()]
           if board["audit"].get("parallelWorkNotes") else []),
         "",
-        "## Nu",
+        "## Bestaande deelkaart met open beoordeling" if board["audit"].get("deliveryPlan") else "## Nu",
         "",
         "| Volgorde | Kaart | Resultaat | Status |",
         "|---:|---|---|---|",

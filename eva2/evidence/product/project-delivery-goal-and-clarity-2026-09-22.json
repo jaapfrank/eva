@@ -1,0 +1,31 @@
+{
+  "date": "2026-09-22",
+  "scope": "One continuing delivery goal, eight steps in the existing workboard, and an honest project overview",
+  "changes": [
+    "No proven-base headline; delivered result and remaining work are side by side",
+    "Technical checks and owner acceptance remain distinct",
+    "Accepted memory and Telegram streaming retained",
+    "Current work and eight-step route derived from the same workboard",
+    "All22 existing milestones covered; historical review card retained without presenting it as current build goal"
+  ],
+  "validation": {
+    "nodeCompletionCheck": "passed",
+    "workboardTestsPassed": 23,
+    "workboardTestSeconds": 29.02,
+    "independentUIReview": "GO from existing model/voice task on dashboard and follow-up JSX plan projection",
+    "independentPlanCoverage": "All22 milestones and AU-008 reviewed by existing research task; five coverage points incorporated",
+    "projectBuild": "passed; existing bundle-size advisory only",
+    "previewBrowser": "Four columns and concrete missing work visible; accepted results retained",
+    "liveURL": "http://localhost:44712/"
+  },
+  "baselineTestCorrection": "HEAD already rendered4 balanced historical/details sections while old test required3. Test now checks balanced folds, hidden technical details, visible outcomes, eight-step visibility and complete milestone coverage.",
+  "deployment": {
+    "scope": "Project preview assets and project service only; no core, worker or voice replacement",
+    "backup": "/tmp/eva-project-before-clarity-20260922",
+    "indexSha256": "70984cc609e1072427bd8df50542143505459bbb2a8f0c8b46879462bda1de70"
+  },
+  "providerRequests": 0,
+  "wholeProductComplete": false,
+  "goalRemainsActive": true,
+  "ownerAccepted": false
+}

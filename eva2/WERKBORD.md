@@ -5,10 +5,29 @@ Laatst bijgewerkt: 2026-09-22.
 Doel: [Eva als zelfstandig lerende digitale huisgenoot](PROJECTDOEL.md).
 Gebouwd, getest, live en door jou geaccepteerd zijn verschillende stappen.
 
-Publiek achtergrondonderzoek is gebouwd, onafhankelijk gecontroleerd en geïnstalleerd in de bestaande kern en worker. Eén geïsoleerde echte proef leverde in 19 seconden een opgeslagen antwoord met primaire bron op. De vijf bestaande taken zijn behouden. Spraakvoorzieningen zijn ongewijzigd; kanaalproef en eigenaaracceptatie blijven apart open.
+Doorlopend projectgoal actief: acht stappen tot één afgeronde Eva. Nu stap1: gedeeld gesprek en stem, met behoud van bestaande snelle ontvangst. Publiek achtergrondonderzoek is al geïnstalleerd; geheugenacceptaties en eerdere opleveringen blijven staan.
 [Actueel bewijs](evidence/product/background-public-research-live-2026-09-22.json).
 
-Behouden wat snel werkte: bij onderzoek is een korte hoorbare ontvangst voldoende; het inhoudelijke antwoord hoeft niet binnen één seconde. Hergebruik de bestaande ontvangstvoorziening en onderzoek alleen concrete ontbrekende kanaalkoppelingen. Geen nieuwe low/none-proeven of algemene spraakherbouw.
+Stap 1: hergebruik de bestaande snelle ontvangst en maak doorpraten tijdens achtergrondwerk gelijk over de vier ingangen. Parallel: controleer en herstel alleen het concrete gat in persoons- en toehoordergrenzen uit stap 2. De volledige achtstappenroute blijft het actieve goal.
+
+## Doorlopend opleverdoel
+
+Eén dagelijkse, geïnstalleerde Eva afronden: gedeeld gesprek en stem, privécontinuïteit, echte taakresultaten, initiatief, leren en betrouwbaar beheer; eindigen bij de gecontroleerde eindkandidaat en expliciete gezinsacceptatie.
+
+| Stap | Uitkomst | Uitvoering | Klaar wanneer |
+|---:|---|---|---|
+| 1 | Eén gesprek en stem | actief | Begroeten, snelle ontvangst, doorpraten tijdens werk, onderbreken en stoppen via website, Telegram, HA en fysiek Voice PE; gedeelde kern, afzonderlijk bewijs per ingang. |
+| 2 | Personen en continuïteit | hierna | Later terugkomen op onderwerp en correctie bij geverifieerde persoon; geen privécontext naar dochter, onbekende spreker of onbevoegde toehoorder. |
+| 3 | Taken afmaken en terugmelden | open | Meerdere aangenomen taken volgen, gecontroleerd resultaat aan juiste persoon terugbrengen, browserovername en herstel zonder dubbele acties; bruikbare taakbediening. |
+| 4 | Initiatief en huisaanwezigheid | open | Passend initiatief met werkelijk resultaat, terecht stil blijven en bestaande huisfuncties behouden; gezin beoordeelt eigenheid, plezier en hinder. |
+| 5 | Leren en langdurig werk | open | Ongeziene vaardigheid leren en elders hergebruiken, meerdaags project na herstart hervatten; geïsoleerde eigen verbetering met gemeten winst en terugweg. |
+| 6 | Installatie en herstel | open | Installatie zonder terminal, verhuizing met identiteit/data, veilige herkoppeling, update en verliesloze terugweg werken. |
+| 7 | Vergelijking voorbereiden en uitvoeren | open | EV-003 taken/versies/drempels vooraf vast; Bottie en drie concurrenten eerlijk vergelijken, officiële AgentBench/GAIA/OSWorld-scorers; definitieve vergelijking op eindkandidaat. |
+| 8 | Eindkandidaat en acceptatie | open | Bevroren image/config/bewijs, complete testpoort, onafhankelijke review, veilige installatie, computerherstart en definitieve vergelijking; daarna zeven dagen gezinspraktijk en expliciete acceptatie. |
+
+**Eerstvolgende handeling:** Stap 1: hergebruik de bestaande snelle ontvangst en maak doorpraten tijdens achtergrondwerk gelijk over de vier ingangen. Parallel: controleer en herstel alleen het concrete gat in persoons- en toehoordergrenzen uit stap 2. De volledige achtstappenroute blijft het actieve goal.
+
+Afgeronde deelresultaten en menselijke acceptaties blijven hieronder behouden. Een open gebruikersoordeel is geen algemene bouwstop.
 
 <details>
 <summary>Historische voortgang en eerdere tussenstanden — niet de actuele opleverstatus</summary>
@@ -1067,7 +1086,7 @@ projectplanning, meerdaagse praktijk en onbekende geldkosten zijn niet afgerond.
 
 </details>
 
-## Nu
+## Bestaande deelkaart met open beoordeling
 
 | Volgorde | Kaart | Resultaat | Status |
 |---:|---|---|---|

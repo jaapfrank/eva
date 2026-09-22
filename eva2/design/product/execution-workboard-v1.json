@@ -121,7 +121,7 @@
           ]
         }
       ],
-      "priorityDecision": "Behouden wat snel werkte: bij onderzoek is een korte hoorbare ontvangst voldoende; het inhoudelijke antwoord hoeft niet binnen één seconde. Hergebruik de bestaande ontvangstvoorziening en onderzoek alleen concrete ontbrekende kanaalkoppelingen. Geen nieuwe low/none-proeven of algemene spraakherbouw.",
+      "priorityDecision": "Stap 1: hergebruik de bestaande snelle ontvangst en maak doorpraten tijdens achtergrondwerk gelijk over de vier ingangen. Parallel: controleer en herstel alleen het concrete gat in persoons- en toehoordergrenzen uit stap 2. De volledige achtstappenroute blijft het actieve goal.",
       "dashboardVerification": {
         "status": "local_browser_verified_not_full_product_acceptance",
         "priorityRevision": {
@@ -177,28 +177,36 @@
       ],
       "nextOutcomes": [
         {
-          "title": "Achtergrondonderzoek geïnstalleerd — bestaand spraakwerk behouden",
-          "detail": "Publiek achtergrondonderzoek is gebouwd, onafhankelijk gecontroleerd en geïnstalleerd in de bestaande kern en worker. Eén geïsoleerde echte proef leverde in 19 seconden een opgeslagen antwoord met primaire bron op. De vijf bestaande taken zijn behouden. Spraakvoorzieningen zijn ongewijzigd; kanaalproef en eigenaaracceptatie blijven apart open."
+          "title": "Stap 1 · Eén gesprek en stem — actief",
+          "detail": "Begroeten, snelle ontvangst, doorpraten tijdens werk, onderbreken en stoppen via website, Telegram, HA en fysiek Voice PE; gedeelde kern, afzonderlijk bewijs per ingang. Bestaande spraak en947ms ontvangst behouden; kanaalgelijkheid en begroetingsvertraging nog open."
         },
         {
-          "title": "Git hersteld — gezamenlijke bron op GitHub",
-          "detail": "De actuele bron staat op GitHub main en in de canonical projectmap. Oude staging is behouden; geen productbestanden verwijderd. Nieuwe taken gebruiken dezelfde gecontroleerde integratiebasis."
+          "title": "Stap 2 · Personen en continuïteit — hierna",
+          "detail": "Later terugkomen op onderwerp en correctie bij geverifieerde persoon; geen privécontext naar dochter, onbekende spreker of onbevoegde toehoorder. Geaccepteerd geheugen blijft afgesloten; nieuwe persoons-/publieksgrenzen en gedeelde speakerroute controleren."
         },
         {
-          "title": "Snelle ontvangst behouden — onderzoek mag langer duren",
-          "detail": "Eigenaar verduidelijkt: hmm of ik kijk ernaar is voldoende terwijl het onderzoek doorgaat. De eerdere 947 ms betrof zo’n ontvangst; geen eis voor een inhoudelijk onderzoeksantwoord binnen één seconde. Begroetingssnelheid en volledige kanaalgelijkheid blijven apart open."
+          "title": "Stap 3 · Taken afmaken en terugmelden — open",
+          "detail": "Meerdere aangenomen taken volgen, gecontroleerd resultaat aan juiste persoon terugbrengen, browserovername en herstel zonder dubbele acties; bruikbare taakbediening. Publiek onderzoek en taakbediening geïnstalleerd; automatische terugmelding, brede taken en browserherstart nog apart open."
         },
         {
-          "title": "Hulpopdrachten bedienen — geïnstalleerd en live gecontroleerd",
-          "detail": "Open http://localhost:44711/internal/v1/dashboard → Mijn hulpopdrachten. Bestaande taken en opgeslagen resultaten zijn zichtbaar; openen en vernieuwen zijn in de echte browser gecontroleerd. Stop en hervat gebruiken de bestaande geteste eigenaarservice. Geen handmatig token. Jouw beoordeling blijft open."
+          "title": "Stap 4 · Initiatief en huisaanwezigheid — open",
+          "detail": "Passend initiatief met werkelijk resultaat, terecht stil blijven en bestaande huisfuncties behouden; gezin beoordeelt eigenheid, plezier en hinder. AU-008 technisch klaar; IN-02 menselijk oordeel blijft open zonder verdere bouw te blokkeren."
         },
         {
-          "title": "Al technisch opgeleverd — jouw oordeel blijft open",
-          "detail": "Bestaande hulpagentbediening, documentproject PJ-01, initiatief IN-02 en procedurehergebruik PR-01/R6 vragen geen nieuwe bouw om opnieuw bewezen te worden. Persoonlijke browsertoegang moet eerst opnieuw verbonden zijn; zie die eigen testkaart."
+          "title": "Stap 5 · Leren en langdurig werk — open",
+          "detail": "Ongeziene vaardigheid leren en elders hergebruiken, meerdaags project na herstart hervatten; geïsoleerde eigen verbetering met gemeten winst en terugweg. Bestaand procedure- en documentbewijs hergebruiken; algemene ongeziene uitkomst niet uit beperkte proef afleiden."
         },
         {
-          "title": "Nog open — grotere productwensen",
-          "detail": "Persoonsherkenning op gedeelde speakers, volledige Voice PE-kanaalgelijkheid, algemene achtergrondtaken met tools en meerdaagse autonomie zijn niet met de huidige kandidaten af. Geaccepteerd geheugen en Telegramstreaming blijven geaccepteerd."
+          "title": "Stap 6 · Installatie en herstel — open",
+          "detail": "Installatie zonder terminal, verhuizing met identiteit/data, veilige herkoppeling, update en verliesloze terugweg werken. Bestaande deployment en herstelvoorzieningen eerst hergebruiken."
+        },
+        {
+          "title": "Stap 7 · Vergelijking voorbereiden en uitvoeren — open",
+          "detail": "EV-003 taken/versies/drempels vooraf vast; Bottie en drie concurrenten eerlijk vergelijken, officiële AgentBench/GAIA/OSWorld-scorers; definitieve vergelijking op eindkandidaat. Bestaande proeven behouden; verlies of ontbrekend bewijs niet omzetten in winst."
+        },
+        {
+          "title": "Stap 8 · Eindkandidaat en acceptatie — open",
+          "detail": "Bevroren image/config/bewijs, complete testpoort, onafhankelijke review, veilige installatie, computerherstart en definitieve vergelijking; daarna zeven dagen gezinspraktijk en expliciete acceptatie. Technische afronding en eigenaaracceptatie blijven afzonderlijk; geen onbegrensde best-mogelijke-eis."
         }
       ],
       "openRisks": [
@@ -953,7 +961,44 @@
           "ownerAction": "not_requested"
         }
       ],
-      "priorityBeforeTelegramIncident": "De kleine procedureleeroplevering is technisch afgerond: zelf onderzoeken, procedure opslaan en ongewijzigd hergebruiken. Geen nieuwe leerproeven. Parallel lopen de Bottie/SQLite-review en een afzonderlijke architectuurreparatie; brede autonomie en echte productvergelijking blijven open."
+      "priorityBeforeTelegramIncident": "De kleine procedureleeroplevering is technisch afgerond: zelf onderzoeken, procedure opslaan en ongewijzigd hergebruiken. Geen nieuwe leerproeven. Parallel lopen de Bottie/SQLite-review en een afzonderlijke architectuurreparatie; brede autonomie en echte productvergelijking blijven open.",
+      "remainingProductWork": {
+        "answer-stream": [
+          "Geen open werk binnen de geaccepteerde Telegramstreaming."
+        ],
+        "conversation": [
+          "Snelle begroeting en doorpraten tijdens werk via alle vier ingangen afmaken.",
+          "Onderwerpen later en via een andere toegestane ingang voortzetten; gezinsbeleving beoordelen."
+        ],
+        "memory": [
+          "Geen herbouw van de geaccepteerde geheugenfuncties.",
+          "Persoonsherkenning en bescherming tegen onbevoegde toehoorders op gedeelde speakers vallen onder stap2; die zijn nog niet af."
+        ],
+        "initiative": [
+          "Het bestaande resultaat kan door Jaap beoordeeld worden; daarvoor geen nieuwe bouw nodig.",
+          "Herhaald passend initiatief, huisaanwezigheid en terecht stil blijven als geheel afronden."
+        ],
+        "tools": [
+          "Ongeziene diensten, persoonlijke accounts en combinatietaken via de algemene uitvoering afmaken.",
+          "Resultaten onafhankelijk controleren en begrijpelijk terugbrengen zonder ontwikkelhulp."
+        ],
+        "voice": [
+          "Snelle ontvangst en doorpraten tijdens werk gelijk trekken op website, Telegram, HA en Voice PE.",
+          "Echte Voice PE-/telefoonproef, herstel en natuurlijke spraak afronden; laptoponderbreken blijft geaccepteerd."
+        ],
+        "projects": [
+          "Onderzoeksresultaat automatisch terugmelden aan de juiste persoon; meerdere taken afzonderlijk volgen.",
+          "Ongeziene werkwijze hergebruiken, meerdaags werk na herstart en gecontroleerde zelfverbetering afronden."
+        ],
+        "browser": [
+          "Jouw bestaande Chrome-route met zichtbaar meekijken en overnemen werkend bevestigen.",
+          "Na computerherstart herstellen met behouden gegevens, nieuwe toegang en zonder oude acties te herhalen."
+        ],
+        "installation": [
+          "Installeren en verhuizen zonder terminal, onderhouden updates en verliesloos herstel afronden.",
+          "Bevroren eindkandidaat, volledige review, computerherstart en zeven dagen gezinspraktijk afronden."
+        ]
+      }
     },
     "pendingTechnicalReview": {
       "reason": "Historische CO-003-kandidaat van 7 september: het oorspronkelijke bewijs bevat geen commitgebonden definitieve review of livegang. Deze oude kaart wordt daarom niet alsnog afgevinkt. De gebruikersuitkomst is later opgenomen in CO-004/CO-005, live opgeleverd en door Jaap via GE-02 geaccepteerd op 12 september. Het gekozen geheugenonderdeel blijft afgesloten; deze historische registratie is geen actuele bouw- of acceptatieblokkade.",
@@ -1036,10 +1081,10 @@
       "authorizedBy": "Jaap",
       "document": "eva2/PROJECTDOEL.md",
       "scope": "Digitale huisgenoot: zelfstandig redeneren, initiatief, onbekende vaardigheden leren, handelen, zelfverbetering en aantoonbare concurrentiewinst met open-sourcehergebruik.",
-      "sessionGoal": "Snel gedeeld gesprek met passende achtergrondmodellen; één Eva over alle kanalen.",
-      "currentWork": "Publiek achtergrondonderzoek is gebouwd, onafhankelijk gecontroleerd en geïnstalleerd in de bestaande kern en worker. Eén geïsoleerde echte proef leverde in 19 seconden een opgeslagen antwoord met primaire bron op. De vijf bestaande taken zijn behouden. Spraakvoorzieningen zijn ongewijzigd; kanaalproef en eigenaaracceptatie blijven apart open.",
+      "sessionGoal": "Eén dagelijkse, geïnstalleerde Eva afronden: gedeeld gesprek en stem, privécontinuïteit, echte taakresultaten, initiatief, leren en betrouwbaar beheer; eindigen bij de gecontroleerde eindkandidaat en expliciete gezinsacceptatie.",
+      "currentWork": "Doorlopend projectgoal actief: acht stappen tot één afgeronde Eva. Nu stap1: gedeeld gesprek en stem, met behoud van bestaande snelle ontvangst. Publiek achtergrondonderzoek is al geïnstalleerd; geheugenacceptaties en eerdere opleveringen blijven staan.",
       "currentEvidence": "eva2/evidence/product/background-public-research-live-2026-09-22.json",
-      "nextStep": "Behouden wat snel werkte: bij onderzoek is een korte hoorbare ontvangst voldoende; het inhoudelijke antwoord hoeft niet binnen één seconde. Hergebruik de bestaande ontvangstvoorziening en onderzoek alleen concrete ontbrekende kanaalkoppelingen. Geen nieuwe low/none-proeven of algemene spraakherbouw.",
+      "nextStep": "Stap 1: hergebruik de bestaande snelle ontvangst en maak doorpraten tijdens achtergrondwerk gelijk over de vier ingangen. Parallel: controleer en herstel alleen het concrete gat in persoons- en toehoordergrenzen uit stap 2. De volledige achtstappenroute blijft het actieve goal.",
       "usageClarification": {
         "date": "2026-09-07",
         "authorizedBy": "Jaap",
@@ -10597,6 +10642,140 @@
       "firstAudioMs": 947,
       "firstContentMs": 17482,
       "preserveVoice": true
+    },
+    "deliveryPlan": {
+      "date": "2026-09-22",
+      "authorizedBy": "Jaap",
+      "status": "active",
+      "outcome": "Eén dagelijkse, geïnstalleerde Eva afronden: gedeeld gesprek en stem, privécontinuïteit, echte taakresultaten, initiatief, leren en betrouwbaar beheer; eindigen bij de gecontroleerde eindkandidaat en expliciete gezinsacceptatie.",
+      "currentStep": 1,
+      "steps": [
+        {
+          "number": 1,
+          "title": "Eén gesprek en stem",
+          "state": "actief",
+          "existingCards": [
+            "VB-001"
+          ],
+          "doneWhen": "Begroeten, snelle ontvangst, doorpraten tijdens werk, onderbreken en stoppen via website, Telegram, HA en fysiek Voice PE; gedeelde kern, afzonderlijk bewijs per ingang.",
+          "preserve": "Bestaande spraak en947ms ontvangst behouden; kanaalgelijkheid en begroetingsvertraging nog open.",
+          "planningEffortHours": "4–12"
+        },
+        {
+          "number": 2,
+          "title": "Personen en continuïteit",
+          "state": "hierna",
+          "existingCards": [
+            "CO-008",
+            "CO-004",
+            "CO-005"
+          ],
+          "doneWhen": "Later terugkomen op onderwerp en correctie bij geverifieerde persoon; geen privécontext naar dochter, onbekende spreker of onbevoegde toehoorder.",
+          "preserve": "Geaccepteerd geheugen blijft afgesloten; nieuwe persoons-/publieksgrenzen en gedeelde speakerroute controleren.",
+          "planningEffortHours": "4–12"
+        },
+        {
+          "number": 3,
+          "title": "Taken afmaken en terugmelden",
+          "state": "open",
+          "existingCards": [
+            "AU-002",
+            "VB-004",
+            "UX-001",
+            "UX-002"
+          ],
+          "doneWhen": "Meerdere aangenomen taken volgen, gecontroleerd resultaat aan juiste persoon terugbrengen, browserovername en herstel zonder dubbele acties; bruikbare taakbediening.",
+          "preserve": "Publiek onderzoek en taakbediening geïnstalleerd; automatische terugmelding, brede taken en browserherstart nog apart open.",
+          "planningEffortHours": "6–16"
+        },
+        {
+          "number": 4,
+          "title": "Initiatief en huisaanwezigheid",
+          "state": "open",
+          "existingCards": [
+            "AU-008",
+            "AU-005",
+            "VB-002"
+          ],
+          "doneWhen": "Passend initiatief met werkelijk resultaat, terecht stil blijven en bestaande huisfuncties behouden; gezin beoordeelt eigenheid, plezier en hinder.",
+          "preserve": "AU-008 technisch klaar; IN-02 menselijk oordeel blijft open zonder verdere bouw te blokkeren.",
+          "planningEffortHours": "4–12"
+        },
+        {
+          "number": 5,
+          "title": "Leren en langdurig werk",
+          "state": "open",
+          "existingCards": [
+            "AU-004",
+            "AU-006",
+            "AU-003"
+          ],
+          "doneWhen": "Ongeziene vaardigheid leren en elders hergebruiken, meerdaags project na herstart hervatten; geïsoleerde eigen verbetering met gemeten winst en terugweg.",
+          "preserve": "Bestaand procedure- en documentbewijs hergebruiken; algemene ongeziene uitkomst niet uit beperkte proef afleiden.",
+          "planningEffortHours": "8–24"
+        },
+        {
+          "number": 6,
+          "title": "Installatie en herstel",
+          "state": "open",
+          "existingCards": [
+            "IN-001",
+            "IN-002",
+            "IN-003"
+          ],
+          "doneWhen": "Installatie zonder terminal, verhuizing met identiteit/data, veilige herkoppeling, update en verliesloze terugweg werken.",
+          "preserve": "Bestaande deployment en herstelvoorzieningen eerst hergebruiken.",
+          "planningEffortHours": "6–18"
+        },
+        {
+          "number": 7,
+          "title": "Vergelijking voorbereiden en uitvoeren",
+          "state": "open",
+          "existingCards": [
+            "CP-001",
+            "CP-002",
+            "CP-003"
+          ],
+          "doneWhen": "EV-003 taken/versies/drempels vooraf vast; Bottie en drie concurrenten eerlijk vergelijken, officiële AgentBench/GAIA/OSWorld-scorers; definitieve vergelijking op eindkandidaat.",
+          "preserve": "Bestaande proeven behouden; verlies of ontbrekend bewijs niet omzetten in winst.",
+          "planningEffortHours": "4–12"
+        },
+        {
+          "number": 8,
+          "title": "Eindkandidaat en acceptatie",
+          "state": "open",
+          "existingCards": [
+            "FN-001",
+            "RB-007",
+            "RB-008",
+            "RB-009",
+            "RB-010",
+            "FN-002",
+            "FN-003"
+          ],
+          "doneWhen": "Bevroren image/config/bewijs, complete testpoort, onafhankelijke review, veilige installatie, computerherstart en definitieve vergelijking; daarna zeven dagen gezinspraktijk en expliciete acceptatie.",
+          "preserve": "Technische afronding en eigenaaracceptatie blijven afzonderlijk; geen onbegrensde best-mogelijke-eis.",
+          "planningEffortHours": "4–12"
+        }
+      ],
+      "nextAction": "Stap 1: hergebruik de bestaande snelle ontvangst en maak doorpraten tijdens achtergrondwerk gelijk over de vier ingangen. Parallel: controleer en herstel alleen het concrete gat in persoons- en toehoordergrenzen uit stap 2. De volledige achtstappenroute blijft het actieve goal.",
+      "effortNotice": "Grove planning, lage zekerheid: 40–118 actieve ontwikkeluren plus zeven dagen gezinspraktijk en eventuele externe wachttijd. Geen deadline, creditkosten of gemeten verbruik; per begrensde wijziging aanscherpen na lezing van bestaand bewijs. Hergebruik kan dit verkorten.",
+      "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
+      "continuationRule": "Na review, installatie en registratie automatisch volgende uitvoerbare stap; geen algemene wachtstop op gebruikersproeven.",
+      "stopRules": [
+        "Geen ongewijzigde proefherhaling; eerst concrete gewijzigde oorzaak of ontbrekend bewijs.",
+        "Nieuwe scope wordt vervolgwerk tenzij eigenaar of aantoonbare afhankelijkheid anders bepaalt.",
+        "Alleen afhankelijk werk wacht op ontbrekende toegang, hardware, rechten of menselijk besluit.",
+        "Mislukte terugweg of gegevensrisico stopt de betreffende installatie; behoud bestaande versie/data.",
+        "Geen gefingeerde acceptatie, benchmarkwinst of automatische heropening van geaccepteerd werk."
+      ]
+    },
+    "dashboardClarityCorrection20260922": {
+      "ownerFeedback": "Bewezen basis zegt niet of Eva2 als vaste huisgenoot bruikbaar is; toon concrete opgeleverde resultaten en open werk.",
+      "status": "installed_project_preview",
+      "preserveAcceptedResults": true,
+      "wholeProductReady": false,
+      "evidence": "eva2/evidence/product/project-delivery-goal-and-clarity-2026-09-22.json"
     }
   },
   "activeTaskId": "AU-008",

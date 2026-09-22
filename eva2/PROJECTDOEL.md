@@ -1,5 +1,77 @@
 # Eva — digitale huisgenoot die leert en handelt
 
+## Doorlopend opleverdoel — eigenaarbesluit 22 september 2026
+
+Lever één geïnstalleerde, samenhangende Eva op die het gezin dagelijks kan
+gebruiken: dezelfde huisgenoot via website, Telegram, Home Assistant en Voice PE,
+met natuurlijke ontvangst en doorpraten, persoonsgebonden geheugen, passend
+initiatief en digitale opdrachten die werkelijk worden afgemaakt. Zij kan leren,
+langdurig werk hervatten en met behoud van gegevens worden geïnstalleerd,
+bijgewerkt en hersteld. Rond dit af met de vastgelegde vergelijking, onafhankelijke
+integratiecontrole en zeven dagen gezinspraktijk op de eindkandidaat.
+
+Dit is het blijvende actieve oplevergoal. Kleine wijzigingen zijn stappen binnen
+dit goal, geen vervangende einddoelen. Een geslaagde reparatie sluit het goal niet
+af. De coördinator gaat zelfstandig door naar de eerstvolgende uitvoerbare stap.
+De actuele fase, eerstvolgende handeling, bewijs en open gebruikersoordelen staan
+uitsluitend in [WERKBORD.md](WERKBORD.md) en zijn bestaande JSON-bron.
+
+| Stap | Op te leveren geheel | Eindvoorwaarde |
+|---|---|---|
+| 1 | Eén gesprek en stem via alle vier ingangen | Begroeten, een onderzoeksopdracht ontvangen, tussendoor praten, onderbreken en stoppen werken via de gedeelde kern. Bestaande snelle ontvangst blijft behouden; ontvangst en inhoudelijke antwoordtijd worden apart gemeten. HA-paneel en fysiek Voice PE worden afzonderlijk gecontroleerd. |
+| 2 | Personen, vertrouwelijkheid en continuïteit | Een geverifieerde persoon kan na een nieuwe sessie terugkomen op een onderwerp en correctie. Een andere of onbekende persoon krijgt geen privécontext, ook niet via initiatief of taakresultaten. Een gedeelde speaker bewijst geen persoonlijke identiteit; een werkbare verificatie-/privéroute is beschikbaar. Geaccepteerd geheugen blijft geaccepteerd. |
+| 3 | Werk werkelijk afmaken en terugbrengen | Meerdere aangenomen opdrachten blijven afzonderlijk te volgen; gesprek gaat door. Eva levert gecontroleerd resultaat en bronnen terug aan de juiste persoon. Stoppen, hervatten, verbindingsverlies en browserovername verliezen geen data en veroorzaken geen dubbele acties. Bestaande algemene toolroute wordt hergebruikt. |
+| 4 | Betrokken aanwezigheid en initiatief | Bestaande belangrijke huisfuncties blijven werken. Eva kiest passend initiatief, voert toegelaten werk uit, komt terug met resultaat en blijft waar passend stil. Nut, herkenbaarheid en hinder krijgen een afzonderlijk gezinsbeoordeling. |
+| 5 | Leren en langdurig zelfstandig werk | Een ongeziene taak wordt uit documentatie geleerd en een werkwijze bij een andere taak hergebruikt; een project hervat na onderbreking. Eén geïsoleerde eigen verbetering heeft gemeten voordeel en een werkende terugweg. Geen nieuwe kernfunctie voor iedere proefvraag. |
+| 6 | Beheerbaar opleveren | Installatie, verhuizing, update, backup en herstel behouden identiteit en gegevens. De gewone gebruiker heeft begrijpelijke bediening. Versieherkomst, terugweg en onderhoud zijn vastgelegd; de gekozen installatie- en herstelproeven slagen. |
+| 7 | Eerlijk vaststellen wat beter is | Bestaand EV-003-protocol toepassen met vooraf vastgelegde taken, versies, drempels en middelen. Bottie en de gekozen concurrenten op dezelfde taken vergelijken; vereiste officiële benchmarks met hun eigen scorers uitvoeren. Winst, verlies, ontbrekende toegang en onbekende kosten blijven zichtbaar. |
+| 8 | Eén eindkandidaat en eindbesluit | Eén bevroren versie doorloopt relevante volledige tests, wegwerpinstallatie, onafhankelijke review, veilige installatie en computerherstart. Daarna zeven dagen gezinspraktijk en expliciete eigenaaracceptatie. Open releaseblokkades zijn opgelost; resterende uitbreidingen zijn benoemd. |
+
+De taakbediening en het dashboard (UX-001/UX-002) horen bij stap 3 en worden
+doorlopend bijgehouden: status, mensen, geheugen, gemeten verbruik, bewijs en
+starten/volgen/stoppen. Stap 6 omvat installatie zonder terminal of handmatige
+configuratiebestanden, veilige herkoppeling na verhuizing en verliesloze updates.
+Stap 7 bewaart AgentBench, GAIA en OSWorld uit CP-003. De voorbereiding gebeurt
+daar; definitieve productvergelijkingen worden uitgevoerd op de bevroren
+kandidaat uit stap 8. Vroege metingen vervangen dat eindbewijs niet.
+
+### Zelfstandig van stap naar stap
+
+- Start iedere stap met het bestaande bewijs en alleen het concrete resterende
+  tekort. Leg voor de volgende begrensde wijziging bestanden, eindvoorwaarde,
+  passende controle en een verbruiks-/inspanningsraming vast. Geen nieuwe totaalaudit.
+- Eén coördinator en maximaal twee uitvoerders/reviewers. Onafhankelijk werk mag
+  parallel; unieke bestandsverantwoordelijkheid en één gezamenlijke Git-basis.
+- Na passende tests en onafhankelijke review: integreren, installeren met terugweg,
+  live controleren, werkbord bijwerken en zonder nieuwe toestemming verder.
+- Gebouwd, getest, geïnstalleerd en geaccepteerd blijven apart. Wachten op een
+  fysieke proef of eigenaarsoordeel houdt andere uitvoerbare stappen niet tegen.
+- Nieuwe ideeën komen achter de vastgelegde opleverscope. Afgeronde resultaten
+  worden alleen heropend bij een aangetoonde regressie of geraakte afhankelijkheid.
+- Geen herhaalde proef zonder veranderde oorzaak of ontbrekend bewijs. Een verlies
+  in vergelijking geeft een concrete tekortkaart; geen onbegrensde optimalisatielus.
+- Alleen afhankelijk werk wacht bij ontbrekende toegang, hardware, rechten of een
+  noodzakelijk eigenaarbesluit. Benoem precies wat ontbreekt en werk elders door.
+  Gegevensrisico of een mislukte terugweg stopt de betreffende installatie.
+
+### Wanneer het projectdoel afgerond is
+
+Technische afronding betekent dat de vaste scope van stappen 1–8 is geleverd,
+geïnstalleerd en onafhankelijk gecontroleerd, met alle vereiste technische
+acceptatiecriteria gehaald. De gezinsproef en jouw eindacceptatie worden daarna
+afzonderlijk afgevinkt. Geen algemene superioriteitsclaim zonder bewijs; een
+gemiste verplichte vergelijkingsdrempel blijft een open eindcriterium en wordt
+niet stilzwijgend afgezwakt. Een expliciet eigenaarbesluit kan de scope wijzigen.
+
+De volledige ambitie blijft bestaan, maar “alles kunnen” of “het beste mogelijke”
+is geen extra, onmeetbare releasepoort. De afgesproken eindkandidaat is het
+afmaakpunt. Verdere uitbreiding en normaal onderhoud volgen daarna als nieuw werk.
+
+Deze uitvoerroute vervangt de oude globale volgorde onderaan dit document en de
+interpretatie dat een losse reparatie of een open AU-008-gebruikersbeoordeling het
+actieve projectgoal beëindigt. Bestaande besluiten, bewijzen en acceptaties blijven
+behouden voor zover zij hiermee niet in tegenspraak zijn.
+
 ## Verduidelijking snelle ontvangst — eigenaarbesluit 22 september 2026
 
 Bij een onderzoeksopdracht is een snelle hoorbare ontvangst, bijvoorbeeld

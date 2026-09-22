@@ -170,7 +170,9 @@ def test_board_keeps_outcomes_visible_and_technical_details_collapsed() -> None:
     rendered = render_human(board)
     visible = re.sub(r"<details>.*?</details>", "", rendered, flags=re.DOTALL)
     primary = next(card for card in board["executionTasks"] if card["id"] == board["activeTaskId"])
-    assert rendered.count("<details>") == rendered.count("</details>") == 3
+    # Historical notes can have their own fold; preserve balance and visibility,
+    # not a fixed number that rejects an additional archived section.
+    assert rendered.count("<details>") == rendered.count("</details>") >= 3
     assert "<details open" not in rendered
     assert primary["outcome"] in visible
     for condition in primary["doneWhen"]:
@@ -183,6 +185,13 @@ def test_board_keeps_outcomes_visible_and_technical_details_collapsed() -> None:
         assert f"- [ ] `{milestone['id']}`" in visible
     assert "- [ ] `CO-002`" in visible
     assert "- [ ] `CO-003`" in visible
+    if board["audit"].get("deliveryPlan"):
+        plan = board["audit"]["deliveryPlan"]
+        assert plan["nextAction"] in visible
+        for step in plan["steps"]:
+            assert step["title"] in visible and step["doneWhen"] in visible
+        covered = {card for step in plan["steps"] for card in step["existingCards"]}
+        assert {item["id"] for item in board["milestones"]} <= covered
 
 
 def test_only_completed_bound_deletions_use_historical_inventory(tmp_path: Path) -> None:

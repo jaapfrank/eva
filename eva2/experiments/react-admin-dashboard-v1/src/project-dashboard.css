@@ -99,3 +99,6 @@
 .owner-trial-summary li { margin: 16px 0; }
 .owner-trial-summary p { margin: 6px 0; }
 .practice-card { scroll-margin-top: 24px; }
+
+.delivery-goal{background:#fff;border:1px solid #dce3d7;border-left:4px solid #657d5b;border-radius:12px;padding:20px 24px;margin-bottom:24px}.delivery-goal p{max-width:1000px;line-height:1.55}.delivery-goal summary{cursor:pointer;font-weight:600}.delivery-goal li{margin:12px 0}.delivery-goal li p{margin:5px 0}
+.completion-matrix>thead th:first-child,.completion-matrix>tbody>.matrix-category>th:first-child{width:20%!important}.completion-matrix>thead th:nth-child(2){width:32%!important;text-align:left}.completion-matrix>thead th:nth-child(3){width:33%!important;text-align:left}.completion-matrix>thead th:last-child{width:15%!important;text-align:left}.completion-matrix .matrix-category>td{vertical-align:top;text-align:left}.completion-matrix .remaining-work ul{padding-left:18px;margin:8px 0;line-height:1.5}.completion-matrix .remaining-work li{margin-bottom:6px}.completion-matrix .matrix-category>td>small{display:block;margin:4px 0}.completion-matrix .matrix-category>td>p{line-height:1.5}
