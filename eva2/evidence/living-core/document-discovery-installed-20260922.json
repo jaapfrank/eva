@@ -1,0 +1,27 @@
+{
+  "startedAt": "2026-09-22T19:49:30.230761+00:00",
+  "phase": "installed_healthy",
+  "sourceCommit": "058f407f",
+  "modelCalls": 0,
+  "coreImage": "sha256:9354deae1e144d2e4502e776c2314dc875a8be2b595710c1134ad662b6f7ffaf",
+  "installedAt": "2026-09-22T19:49:48.711233+00:00",
+  "existingWebsiteProjectDiscoverableThroughPrivateTelegram": true,
+  "titleAndCompletedStatusExact": true,
+  "databaseReadOnly": true,
+  "remainingSlotFree": true,
+  "externalMessages": 0,
+  "package": {
+    "parent": "sha256:308ebd85314f7d181d350635a0e620f33399f1115a82f6c34b601a2d5a66ef54",
+    "image": "sha256:9354deae1e144d2e4502e776c2314dc875a8be2b595710c1134ad662b6f7ffaf",
+    "changedFiles": {
+      "eva2/src/eva/providers/document_task_actions.py": "1a79e1903756a8d58123e0670fd7dc0dc8776eefb62d71653fe2303461385545"
+    },
+    "unchangedWorker": true
+  },
+  "sourceTestsPassed": 9,
+  "packagedTestsPassed": 1,
+  "independentReview": "document_maintenance: GO",
+  "ownerAccepted": false,
+  "proofBoundary": "Direct read-only listing through existing Telegram ingress, not a model-driven owner conversation.",
+  "rollbackCompose": "/var/lib/eva2/document-discovery-20260922/baseline.compose.private.json"
+}

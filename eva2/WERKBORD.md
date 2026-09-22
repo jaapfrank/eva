@@ -25,7 +25,7 @@ Eén dagelijkse, geïnstalleerde Eva afronden: gedeeld gesprek en stem, privéco
 | 7 | Vergelijking voorbereiden en uitvoeren | open | EV-003 taken/versies/drempels vooraf vast; Bottie en drie concurrenten eerlijk vergelijken, officiële AgentBench/GAIA/OSWorld-scorers; definitieve vergelijking op eindkandidaat. |
 | 8 | Eindkandidaat en acceptatie | open | Bevroren image/config/bewijs, complete testpoort, onafhankelijke review, veilige installatie, computerherstart en definitieve vergelijking; daarna zeven dagen gezinspraktijk en expliciete acceptatie. |
 
-**Eerstvolgende handeling:** Controleer de gewone taakvindbaarheid en resultaatbediening over kanalen zonder nieuwe projectplaats te verbruiken. Documentrechten en bestaande projectreadback zijn hersteld; vervolgstappen van het achtstappengoal blijven open.
+**Eerstvolgende handeling:** Werk resterende taakbediening en browserherstel uit stap 3 af op bestaand bewijs. Documentprojecten zijn nu privé over kanalen terug te vinden; gewone gebruikersproef blijft open en verbruikt geen nieuwe projectplaats.
 
 Afgeronde deelresultaten en menselijke acceptaties blijven hieronder behouden. Een open gebruikersoordeel is geen algemene bouwstop.
 

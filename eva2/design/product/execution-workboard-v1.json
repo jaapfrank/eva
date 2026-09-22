@@ -1044,15 +1044,15 @@
           }
         ],
         "now": {
-          "title": "Documentrechten tussen website en Telegram hersteld",
-          "detail": "Dezelfde geverifieerde eigenaar heeft toegang via beide routes. Bestaand websiteproject via Telegramautoriteit teruggelezen; onbekende personen en groepschats geweigerd.",
-          "state": "Geïnstalleerd en technisch gecontroleerd",
-          "doneWhen": "Gewone Telegramvraag vindt het bestaande project en toont de juiste tekst; jouw beoordeling blijft apart."
+          "title": "Bestaande projecten terugvinden is geïnstalleerd",
+          "detail": "Eva kan eigen projecten opzoeken met titel en status. Bestaand websiteproject via privé-Telegramautoriteit gevonden; geen nieuw document of modelcall.",
+          "state": "Technisch gecontroleerd · jouw gesprekstest open",
+          "doneWhen": "Jouw gewone vraag vindt het bestaande project en toont de juiste teksten."
         },
         "next": {
-          "title": "Projecten vanzelf terugvinden en begrijpelijk tonen",
-          "detail": "Controleer titelzoeken en resultaatbediening over kanalen; hergebruik het bestaande proefproject zonder een nieuwe projectplaats te gebruiken.",
-          "state": "Volgende begrensde controle"
+          "title": "Taakresultaten en herstel verder afronden",
+          "detail": "Ga verder met de resterende taakbediening en browserherstel uit stap 3; kanaal- en fysieke stemproeven blijven apart open.",
+          "state": "Volgende bestaande uitvoerpunten"
         },
         "ownerAction": {
           "title": "Kom via Telegram terug op een websitegesprek",
@@ -10834,7 +10834,7 @@
           "planningEffortHours": "4–12"
         }
       ],
-      "nextAction": "Controleer de gewone taakvindbaarheid en resultaatbediening over kanalen zonder nieuwe projectplaats te verbruiken. Documentrechten en bestaande projectreadback zijn hersteld; vervolgstappen van het achtstappengoal blijven open.",
+      "nextAction": "Werk resterende taakbediening en browserherstel uit stap 3 af op bestaand bewijs. Documentprojecten zijn nu privé over kanalen terug te vinden; gewone gebruikersproef blijft open en verbruikt geen nieuwe projectplaats.",
       "effortNotice": "Grove planning, lage zekerheid: 40–118 actieve ontwikkeluren plus zeven dagen gezinspraktijk en eventuele externe wachttijd. Geen deadline, creditkosten of gemeten verbruik; per begrensde wijziging aanscherpen na lezing van bestaand bewijs. Hergebruik kan dit verkorten.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Na review, installatie en registratie automatisch volgende uitvoerbare stap; geen algemene wachtstop op gebruikersproeven.",
@@ -11192,6 +11192,26 @@
       "newChangedModuleViolations": 0,
       "proof": "Alle door de architectuurcontrole gemelde bestanden waren bytegelijk aan HEAD vóór deze reparatie. De volledige architectuurpoort is niet groen.",
       "nextAction": "Los bestaande afwijkingen op bij de vastgelegde integratie-/releasecontrole; geen beleidsversoepeling als vervanging voor modulegrenzen."
+    },
+    "documentProjectDiscovery20260922": {
+      "status": "installed_read_only_verified",
+      "outcome": "Bestaande eigen documentprojecten op titel terugvinden zonder technische projectcode of nieuwe slotclaim.",
+      "files": [
+        "eva2/src/eva/providers/document_task_actions.py",
+        "eva2/tests/postgres/test_document_task_listing.py",
+        "eva2/tests/postgres/test_document_task_actions.py"
+      ],
+      "owner": "document_private_identity",
+      "estimate": "Eén kleine read-only aanvulling, gerichte tests en onafhankelijke review; nul modelcalls en geen nieuwe documenten. Creditkosten onbekend.",
+      "doneWhen": [
+        "Alleen actuele eigen privéprojecten zichtbaar met titel, goal_id en opgeslagen status",
+        "Geen slotclaim of inhoudsuitlek bij listing; ingetrokken en vreemde toegang geweigerd",
+        "Gerichte tests, onafhankelijke review en geïnstalleerde read-only controle geslaagd"
+      ],
+      "ownerAccepted": false,
+      "evidence": "eva2/evidence/living-core/document-discovery-installed-20260922.json",
+      "modelCalls": 0,
+      "remaining": "Gewone Telegramvraag naar bestaand project en eigenaaracceptatie blijven open."
     }
   },
   "activeTaskId": "AU-008",
