@@ -236,6 +236,7 @@ class RuntimeSettings:
     background_work_enabled: bool = True
     delegated_work_enabled: bool = False
     delegated_research_enabled: bool = False
+    delegated_result_delivery_enabled: bool = False
     background_tenant_id: str | None = None
     background_installation_id: str | None = None
     background_principal_id: str | None = None
@@ -276,6 +277,13 @@ class RuntimeSettings:
             raise ValueError("delegated work switch must be a boolean")
         if type(self.delegated_research_enabled) is not bool:
             raise ValueError("delegated research switch must be a boolean")
+        if type(self.delegated_result_delivery_enabled) is not bool:
+            raise ValueError("delegated result delivery switch must be a boolean")
+        if self.delegated_result_delivery_enabled and (
+            not self.delegated_work_enabled or self.telegram_bot_token is None
+            or self.telegram_principal_bindings_file is None
+        ):
+            raise ValueError("delegated result delivery requires work and its private Telegram route")
         if self.delegated_research_enabled and (
             not self.delegated_work_enabled or self.runtime_resource_budget is None
         ):
@@ -560,6 +568,7 @@ class RuntimeSettings:
             background_work_enabled=_environment_bool("EVA_BACKGROUND_WORK_ENABLED", True),
             delegated_work_enabled=_environment_bool("EVA_DELEGATED_WORK_ENABLED", False),
             delegated_research_enabled=_environment_bool("EVA_DELEGATED_RESEARCH_ENABLED", False),
+            delegated_result_delivery_enabled=_environment_bool("EVA_DELEGATED_RESULT_DELIVERY_ENABLED", False),
             background_tenant_id=background_tenant_id,
             background_installation_id=background_installation_id,
             background_principal_id=background_principal_id,
@@ -1600,7 +1609,9 @@ def _build_proactive_delivery(settings: RuntimeSettings, engine: sa.Engine) -> T
 def create_runtime_app() -> FastAPI:
     from eva.adapters.model.pydantic_conversation import PydanticConversationModel
     from eva.bootstrap.household_voice import load_household_voice_authority
-    from eva.bootstrap.delegated_work_delivery import private_destination_loader, completion_worker
+    from eva.bootstrap.delegated_work_delivery import (
+        private_destination_loader, completion_worker, delivery_status_loader,
+    )
 
     settings = RuntimeSettings.from_environment()
     engine = sa.create_engine(
@@ -1710,8 +1721,17 @@ def create_runtime_app() -> FastAPI:
                 raise RuntimeError("delegated owner differs from trusted Telegram bindings")
             delegated_work_service = DelegatedWorkOwnerService(
                 delegated_work_store,
-                delivery_destination_loader=(
+                delivery_status_loader=(
                     None if settings.telegram_principal_bindings_file is None
+                    else delivery_status_loader(
+                        delegated_work_store,
+                        owner_principal_id=dashboard_owner_principal_id,
+                        principal_binding_id=dashboard_principal_binding_id,
+                        bindings_loader=lambda: load_principal_bindings(settings.telegram_principal_bindings_file),
+                    )
+                ),
+                delivery_destination_loader=(
+                    None if not settings.delegated_result_delivery_enabled
                     else private_destination_loader(
                         owner_principal_id=dashboard_owner_principal_id,
                         principal_binding_id=dashboard_principal_binding_id,
@@ -2090,7 +2110,8 @@ def create_runtime_app() -> FastAPI:
             deliver_one_proactive_expression,
             consider_one_private_opportunity,
         )
-    if (delegated_work_service is not None and proactive_delivery is not None
+    if (settings.delegated_result_delivery_enabled
+            and delegated_work_service is not None and proactive_delivery is not None
             and settings.telegram_principal_bindings_file is not None):
         result_delivery = completion_worker(
             delegated_work_store, proactive_delivery,

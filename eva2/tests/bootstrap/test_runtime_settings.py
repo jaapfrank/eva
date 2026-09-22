@@ -23,6 +23,34 @@ def test_contact_model_is_opt_in_and_validated():
         RuntimeSettings("unused", "http://memory", conversation_contact_reasoning_effort="invalid")
 
 
+def test_result_delivery_has_a_compatible_disabled_rollback():
+    from dataclasses import replace
+    settings = RuntimeSettings("unused", "http://memory", delegated_work_enabled=True,
+        dashboard_principal_binding_id="44444444-4444-4444-4444-444444444444",
+        telegram_bot_token="123456:fixture", telegram_principal_bindings_file="/private/bindings")
+    assert settings.delegated_result_delivery_enabled is False
+    enabled = replace(settings, delegated_result_delivery_enabled=True)
+    assert enabled.delegated_work_enabled
+    assert replace(enabled, delegated_result_delivery_enabled=False) == settings
+    for changes in ({"delegated_work_enabled": False}, {"telegram_bot_token": None},
+                    {"telegram_principal_bindings_file": None}):
+        with pytest.raises(ValueError, match="result delivery requires"):
+            replace(enabled, **changes)
+    with pytest.raises(ValueError, match="switch must be a boolean"):
+        replace(settings, delegated_result_delivery_enabled="false")
+
+
+def test_result_delivery_switch_environment_is_strict(monkeypatch, private_tmp_path):
+    _minimum(monkeypatch, private_tmp_path)
+    monkeypatch.delenv("EVA_DELEGATED_RESULT_DELIVERY_ENABLED", raising=False)
+    assert RuntimeSettings.from_environment().delegated_result_delivery_enabled is False
+    monkeypatch.setenv("EVA_DELEGATED_RESULT_DELIVERY_ENABLED", "false")
+    assert RuntimeSettings.from_environment().delegated_result_delivery_enabled is False
+    monkeypatch.setenv("EVA_DELEGATED_RESULT_DELIVERY_ENABLED", "invalid")
+    with pytest.raises(RuntimeError):
+        RuntimeSettings.from_environment()
+
+
 def test_contact_model_environment(monkeypatch, private_tmp_path):
     _minimum(monkeypatch, private_tmp_path)
     monkeypatch.setenv("EVA_CONVERSATION_CONTACT_MODEL", "gpt-5.6-luna")

@@ -57,6 +57,8 @@ def test_worker_and_engine_release_bind_real_source_and_lock_bytes() -> None:
             "adapters/model/openai_codex_provider.py",
             "adapters/model/openai_endpoint.py",
             "adapters/postgres/delegated_work.py",
+            "adapters/postgres/delegated_work_delivery.py",
+            "application/delegated_work_delivery.py",
             "adapters/subagents/tool_free_child.py",
             "bootstrap/__init__.py",
             "bootstrap/delegated_work_provider.py",

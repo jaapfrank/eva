@@ -100,6 +100,8 @@ def _source_hashes() -> dict[str, str]:
         "adapters/model/openai_codex_provider.py",
         "adapters/model/openai_endpoint.py",
         "adapters/postgres/delegated_work.py",
+        "adapters/postgres/delegated_work_delivery.py",
+        "application/delegated_work_delivery.py",
         "adapters/subagents/tool_free_child.py",
         "adapters/credentials/runtime_files.py",
         "bootstrap/__init__.py",
