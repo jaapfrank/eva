@@ -1600,6 +1600,7 @@ def _build_proactive_delivery(settings: RuntimeSettings, engine: sa.Engine) -> T
 def create_runtime_app() -> FastAPI:
     from eva.adapters.model.pydantic_conversation import PydanticConversationModel
     from eva.bootstrap.household_voice import load_household_voice_authority
+    from eva.bootstrap.delegated_work_delivery import private_destination_loader, completion_worker
 
     settings = RuntimeSettings.from_environment()
     engine = sa.create_engine(
@@ -1709,6 +1710,14 @@ def create_runtime_app() -> FastAPI:
                 raise RuntimeError("delegated owner differs from trusted Telegram bindings")
             delegated_work_service = DelegatedWorkOwnerService(
                 delegated_work_store,
+                delivery_destination_loader=(
+                    None if settings.telegram_principal_bindings_file is None
+                    else private_destination_loader(
+                        owner_principal_id=dashboard_owner_principal_id,
+                        principal_binding_id=dashboard_principal_binding_id,
+                        bindings_loader=lambda: load_principal_bindings(settings.telegram_principal_bindings_file),
+                    )
+                ),
                 research_profile=delegated_research_profile,
                 owner_principal_id=dashboard_owner_principal_id,
                 principal_binding_id=dashboard_principal_binding_id,
@@ -2081,6 +2090,15 @@ def create_runtime_app() -> FastAPI:
             deliver_one_proactive_expression,
             consider_one_private_opportunity,
         )
+    if (delegated_work_service is not None and proactive_delivery is not None
+            and settings.telegram_principal_bindings_file is not None):
+        result_delivery = completion_worker(
+            delegated_work_store, proactive_delivery,
+            bindings_loader=lambda: load_principal_bindings(settings.telegram_principal_bindings_file),
+        )
+        # Reuse the existing durable background loop. Reserves with background
+        # work disabled never start it, and historical unbound tasks never send.
+        idle_tasks = (result_delivery.run_once, *idle_tasks)
     runtime = PostgresHindsightMemoryRuntime(
         engine,
         memory,

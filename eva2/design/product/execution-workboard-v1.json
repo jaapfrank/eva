@@ -10572,15 +10572,15 @@
           "files": "Read-only Voice PE provisioning, existing household continuous route and rollback; no voice-service rebuild",
           "estimate": "15–25 minuten installatieonderzoek; nul modelproeven; werkelijk creditverbruik onbekend",
           "state": "in_progress",
-          "currentOutcome": "Snelle ontvangst is al geïnstalleerd. Nu actuele apparaatconfiguratie en terugweg vaststellen om de bestaande continue route op Voice PE aan te sluiten."
+          "currentOutcome": "Beide apparaatconfiguraties teruggevonden en huidige HA-koppelingen gecontroleerd. Bestaande continue route wordt per apparaat verpakt; fysieke herstelproef nog open, geen flash uitgevoerd."
         },
         {
           "threadId": "01a0c915-205e-7c11-809a-674ae09e016c",
           "title": "Eva laat achtergrondonderzoek echt afmaken",
           "files": "application/delegated_work_delivery.py, adapters/postgres/delegated_work_delivery.py, delegated work admission and focused tests",
           "estimate": "30–45 minuten contract, opslag en gerichte controles; nul providercalls; werkelijk creditverbruik onbekend",
-          "state": "in_progress",
-          "currentOutcome": "Persoonsgrenscontrole afgerond: 54 gerichte tests geslaagd, geen codeherbouw nodig. Nu duurzame private terugmeldbestemming en bezorgregistratie voor achtergrondresultaten bouwen."
+          "state": "reviewed_not_installed",
+          "currentOutcome": "Private terugmeldbestemming en bezorgregistratie geïntegreerd; 20 nieuwe opslagtests, 129 gecombineerde controles en 2 echte PostgreSQL-ketenproeven geslaagd. Onafhankelijke compositiereview akkoord. Installatie en echte kanaalacceptatie nog open."
         }
       ],
       "coordination": "Twee actieve producttaken met afzonderlijke bestanden. Coördinator integreert de terugmeldroute in de bestaande runtime en bewaakt review/installatie. Geen nieuwe spraakbouw of herhaalde modelproef; Voice PE gebruikt waar mogelijk de bestaande continue route."
@@ -10759,7 +10759,7 @@
           "planningEffortHours": "4–12"
         }
       ],
-      "nextAction": "Stap 1: sluit de bestaande continue spraakroute aan op Voice PE zodra actuele provisioning en terugweg zijn vastgesteld. Parallel: maak de terugmelding van opgeslagen achtergrondresultaten af met een vaste private bestemming, actuele persoonscontrole en bescherming tegen dubbele bezorging.",
+      "nextAction": "Stap 1: verpak de bestaande continue spraakroute voor beide Voice PE-apparaten; fysieke herstelproef blijft open. Parallel: maak de geteste terugmeldroute zichtbaar in de taakbediening, bereid de gekoppelde core/worker-release met terugweg voor en installeer die gecontroleerd.",
       "effortNotice": "Grove planning, lage zekerheid: 40–118 actieve ontwikkeluren plus zeven dagen gezinspraktijk en eventuele externe wachttijd. Geen deadline, creditkosten of gemeten verbruik; per begrensde wijziging aanscherpen na lezing van bestaand bewijs. Hergebruik kan dit verkorten.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Na review, installatie en registratie automatisch volgende uitvoerbare stap; geen algemene wachtstop op gebruikersproeven.",
@@ -10777,6 +10777,11 @@
       "preserveAcceptedResults": true,
       "wholeProductReady": false,
       "evidence": "eva2/evidence/product/project-delivery-goal-and-clarity-2026-09-22.json"
+    },
+    "privateResultReturn20260922": {
+      "state": "integrated_tested_reviewed_not_installed",
+      "evidence": "eva2/evidence/product/private-result-return-candidate-2026-09-22.json",
+      "ownerAcceptance": false
     }
   },
   "activeTaskId": "AU-008",

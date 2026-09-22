@@ -71,3 +71,31 @@ def test_unknown_acceptance_never_retries_in_worker():
     assert worker.run_once() == 'ambiguous'
     assert sent == [1]
     assert store.calls[-1] == ('ambiguous', 'TimeoutError')
+
+
+def test_expired_claim_cannot_send_another_part():
+    store = Store('a'*7000)
+    now = [NOW]
+    sent = []
+    def send(*args, **kwargs):
+        sent.append(1)
+        now[0] = store.claim.deadline
+        return 'telegram:42:7'
+    worker = DelegatedWorkDeliveryWorker(store, SimpleNamespace(deliver_text=send), clock=lambda:now[0])
+    assert worker.run_once() == 'ambiguous'
+    assert sent == [1]
+
+
+def test_ack_failure_does_not_repeat_the_provider_effect():
+    store = Store()
+    sent = []
+    def send(*args, **kwargs):
+        sent.append(1)
+        return 'telegram:42:7'
+    def unavailable(*args, **kwargs):
+        raise ConnectionError('database receipt uncertain')
+    store.acknowledge = unavailable
+    worker = DelegatedWorkDeliveryWorker(store, SimpleNamespace(deliver_text=send), clock=lambda:NOW)
+    assert worker.run_once() == 'ambiguous'
+    assert sent == [1]
+    assert store.calls[-1] == ('ambiguous', 'ConnectionError')

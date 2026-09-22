@@ -1,0 +1,37 @@
+{
+  "date": "2026-09-22",
+  "status": "integrated_tested_reviewed_not_installed",
+  "outcome": "Persist an explicit private Telegram destination with new owner work and return saved results through the existing background loop",
+  "verification": {
+    "combinedOfflineTests": 129,
+    "combinedOfflineSeconds": 4.23,
+    "independentCombinedTests": 129,
+    "independentCombinedSeconds": 3.40,
+    "newStorageAndDestinationTests": 20,
+    "postgresReturnChainTests": 2,
+    "postgresReturnChainSeconds": 4.13,
+    "database": "Disposable PostgreSQL 16.13 in tmpfs; stopped and removed after the test",
+    "chain": "Real admission, saved result, persisted delivery claim, Telegram adapter with provider stub, acknowledgment or uncertain timeout, new store and worker after restart, exactly one send attempt and unchanged result",
+    "independentReview": "GO for connector, owner callback, worker and final bootstrap/runtime composition by task 01a0c915-205e-7c11-809a-674ae09e016c",
+    "storageReview": "Coordinator checked atomic binding, immutable specs, claims, ambiguity, expiry and authority; expiry finding repaired and tested",
+    "actualProviderRequests": 0,
+    "actualTelegramMessages": 0,
+    "actualCreditCost": "unknown"
+  },
+  "preserved": [
+    "Existing v1/v2 task specification payloads and historical results",
+    "Historical unbound tasks do not acquire an inferred destination",
+    "Complete output including sources, split only at transport limits",
+    "Current private authority checked before each part",
+    "Uncertain or partially delivered results remain stored and are not automatically resent",
+    "Reserve background_work_enabled=false does not start delivery"
+  ],
+  "remaining": [
+    "Build and verify a paired core/worker image and sealed source hashes",
+    "Verify compatible rollback preserving destination and delivery events",
+    "Install with admission fencing, existing data preservation and live source/readiness checks",
+    "Expose delivery outcome in existing owner task controls",
+    "Actual private-channel acceptance; no acceptance inferred from provider stubs",
+    "Equivalent result return on website, Home Assistant and Voice PE remains separate open work"
+  ]
+}
