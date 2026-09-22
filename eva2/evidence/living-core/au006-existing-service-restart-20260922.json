@@ -1,0 +1,86 @@
+{
+  "contract": "AU006ExistingContainerRestart/v1",
+  "observed_at": "2026-09-22T15:09:17.131297+00:00",
+  "source_base": "c7f4804913678e6ab4931a0ed84a3c598835ab94",
+  "services": [
+    {
+      "name": "eva2-document-goal-worker-au006",
+      "id": "1329566f565d386a735e018f984b584c012a3bc7fb5e9bf6f6da02910c3915c5",
+      "image": "sha256:1d0a704d32255bc7630c8670d8137d6d6c2a7c76e4533f5186c8f79613205fa0",
+      "prior_exit_code": 255,
+      "prior_finished_at": "2026-09-14T23:09:34.822546974Z",
+      "started_at": "2026-09-22T15:08:34.801662651Z",
+      "running": true,
+      "health": "healthy",
+      "health_log": [
+        {
+          "Start": "2026-09-22T17:08:40.532022934+02:00",
+          "End": "2026-09-22T17:08:43.045031519+02:00",
+          "ExitCode": 0,
+          "Output": "document worker live; plan and scoped database ready\n"
+        },
+        {
+          "Start": "2026-09-22T17:09:13.045548719+02:00",
+          "End": "2026-09-22T17:09:14.781270796+02:00",
+          "ExitCode": 0,
+          "Output": "document worker live; plan and scoped database ready\n"
+        }
+      ]
+    },
+    {
+      "name": "eva2-document-workspace-au006",
+      "id": "77bced2a4c0d56bbad44031581eaf9f064f55949ae43d2af02c998ed400473b6",
+      "image": "sha256:ba9eda41299033a19e25c483e07e973b40545b226b062da6a29ccb70482f1b5e",
+      "prior_exit_code": 255,
+      "prior_finished_at": "2026-09-14T23:09:34.823170161Z",
+      "started_at": "2026-09-22T15:08:20.185666374Z",
+      "running": true,
+      "health": "healthy",
+      "health_log": [
+        {
+          "Start": "2026-09-22T17:08:25.865568212+02:00",
+          "End": "2026-09-22T17:08:26.334690163+02:00",
+          "ExitCode": 0,
+          "Output": "document provider HTTP and native MCP metadata ready\n"
+        },
+        {
+          "Start": "2026-09-22T17:08:56.335850198+02:00",
+          "End": "2026-09-22T17:08:56.54976905+02:00",
+          "ExitCode": 0,
+          "Output": "document provider HTTP and native MCP metadata ready\n"
+        }
+      ]
+    }
+  ],
+  "same_container_ids_images_config_and_mounts": true,
+  "goal_states_equal_before_restart_and_20260913": true,
+  "goal_statuses": {
+    "old": "needs_help",
+    "new": "completed"
+  },
+  "historical_files_preserved": true,
+  "historical_file_count": 28,
+  "native_journal_sha256": "e2a533e22ca8a44030cd23aacaa09bfd49a2c848b3b029fe1fcf56dade35115e",
+  "native_journal_unchanged": true,
+  "model_calls": 0,
+  "document_effect_calls": 0,
+  "actions": [
+    "docker start eva2-document-workspace-au006",
+    "existing provider HTTP health and MCP tools/list probe",
+    "docker start eva2-document-goal-worker-au006",
+    "existing worker process, plan and read-only scoped database probe"
+  ],
+  "rollback": [
+    "docker stop eva2-document-goal-worker-au006",
+    "docker stop eva2-document-workspace-au006"
+  ],
+  "restart_policy_changed": false,
+  "restart_policy": "no",
+  "owner_acceptance": "open",
+  "limitations": [
+    "Health is not task progress or a new document project proof.",
+    "Automatic restart remains disabled; another host restart may leave these services stopped.",
+    "No physical voice or multi-day project acceptance is implied."
+  ],
+  "mount_comparison": "Order-independent comparison by destination; Docker inspect may reorder mount entries."
+}
