@@ -1,0 +1,43 @@
+{
+  "installed": true,
+  "images": {
+    "core": "sha256:b6322914191fa9fcf139c30014ffd06696ebc1e9b381e6aa289ebfaef36ada3e",
+    "worker": "sha256:d0c79cb9e2ca7d4e1fd4e667d4811e9cbf1f7c32ab3461cd753053ac64462f97"
+  },
+  "containers": {
+    "core": "4b489a03fa67e12b9a63d3cdf1c3a3c997a94945e0fa0cef05260da757e3376d",
+    "worker": "a439470507d65b40d0e9e1c355d21ba2b1ed45e9169fdba1c9d78e0ede8ff1cb"
+  },
+  "protectedServices": 16,
+  "ownerAccepted": false,
+  "physicalTrial": false,
+  "rollbackAvailable": true,
+  "sourceCommit": "2d2db8b3",
+  "status": "installed_live_authority_checked_owner_trial_open",
+  "packagedTests": {
+    "passed": 12,
+    "seconds": 7.84
+  },
+  "liveAuthority": {
+    "currentOwnerAuthorized": true,
+    "privateAliasBidirectional": true,
+    "groupConversationDenied": true,
+    "otherInstallationDenied": true,
+    "memoryReads": 0,
+    "memoryWrites": 0,
+    "modelCalls": 0
+  },
+  "householdRoute": {
+    "ready": true,
+    "sessionOpenRenewPollClose": true,
+    "modelCalls": 0
+  },
+  "scope": "Verified private website/Telegram memory aliases; no private access added to shared speakers.",
+  "rollbackStage": "/var/lib/eva2/private-memory-release-20260922",
+  "limitations": [
+    "No actual private memories read or migrated during checks",
+    "Cross-channel recall in owner conversation remains an open user trial",
+    "No speaker identification or listener authorization inferred"
+  ],
+  "sourceEvidence": "eva2/evidence/product/private-memory-alias-source-20260922.json"
+}

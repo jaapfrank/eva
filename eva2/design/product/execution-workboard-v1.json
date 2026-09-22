@@ -1003,6 +1003,14 @@
         "checkedAt": "2026-09-22",
         "deliveries": [
           {
+            "title": "Privégeheugen verbonden tussen website en Telegram",
+            "date": "22 september",
+            "state": "installed",
+            "result": "De geverifieerde eigenaar kan herinneringen uit beide privé-ingangen laten terughalen. Bronnen blijven ongewijzigd. Getest, onafhankelijk beoordeeld en geïnstalleerd; huidige persoonskoppeling live gecontroleerd.",
+            "remaining": "Echte kanaalproef en jouw beoordeling staan open. Voice PE blijft huishoudelijk; deze wijziging herkent geen spreker of toehoorders.",
+            "source": "eva2/evidence/product/private-memory-alias-installed-20260922.json"
+          },
+          {
             "title": "Vervolgonderzoek bij wezenlijk ontbrekend bewijs",
             "date": "22 september",
             "state": "installed",
@@ -1028,26 +1036,26 @@
           }
         ],
         "now": {
-          "title": "Privégeheugen tussen website en Telegram verbinden",
-          "detail": "Privékoppeling gebouwd en gericht getest: 68 bestaande geheugentests en 12 nieuwe controles geslaagd. Andere personen, groepen en gedeelde speakers krijgen hiermee geen extra toegang. Nog niet geïnstalleerd.",
-          "state": "Gebouwd, getest en beoordeeld; installatie volgt",
-          "doneWhen": "De beperkte wijziging is veilig geïnstalleerd, de actuele koppeling live gecontroleerd en een concrete kanaalproef beschikbaar; jouw acceptatie blijft apart."
+          "title": "Privékoppeling geïnstalleerd; kanaalproef beschikbaar",
+          "detail": "12 nieuwe tests slagen ook tegen het installatiepakket. Live persoonskoppeling en huishoudsessie gecontroleerd; geen bestaande herinneringen verplaatst of verwijderd.",
+          "state": "Geïnstalleerd; jouw kanaalproef staat open",
+          "doneWhen": "Je kunt een onderwerp uit de website in jouw privé-Telegram voortzetten. Technische oplevering is gedaan; jouw ervaring wordt afzonderlijk vastgelegd."
         },
         "next": {
-          "title": "Geteste privékoppeling installeren",
-          "detail": "Verpak alleen de beoordeelde wijziging op de huidige runtime, inclusief de bestaande bevoegdheidscontrole. Controleer het pakket en installeer met terugweg; behoud alle herinneringen.",
-          "state": "Eerstvolgende handeling"
+          "title": "Resterende kanaal- en apparaatafronding",
+          "detail": "Privécontinuïteit is geïnstalleerd. Telegram-doorpraten en fysieke Voice PE blijven afzonderlijke praktijkproeven; USB/apparaattoegang en de keuze voor privéspreken zijn nog nodig voor de fysieke afronding.",
+          "state": "Open praktijkbewijs; geen algemene bouwstop"
         },
         "ownerAction": {
-          "title": "Probeer een tussenvraag in Telegram",
-          "linkLabel": "Projectoverzicht",
-          "url": "http://localhost:44712/",
+          "title": "Kom via Telegram terug op een websitegesprek",
+          "linkLabel": "Open de websitegespreksroute",
+          "url": "http://localhost:44716/",
           "steps": [
-            "Open je bestaande privégesprek met Eva in Telegram.",
-            "Stuur /eva2 Zoek uit wat Home Assistant Cloud doet voor spraak, met bronnen.",
-            "Stuur direct daarna /eva2 Hoe gaat het met jou? Wacht niet op het onderzoeksantwoord."
+            "Open de websitegespreksroute en begin een gesprek als jezelf.",
+            "Vertel één onschuldig nieuw detail, bijvoorbeeld dat je voor een proef een blauwe fiets wilt. Laat Eva antwoorden.",
+            "Open daarna jouw bestaande privégesprek met Eva in Telegram en vraag: /eva2 Welke kleur fiets wilde ik voor die proef?"
           ],
-          "expected": "De tweede vraag kan een eigen antwoord krijgen terwijl het onderzoek nog loopt. Het onderzoek moet daarna ook terugkomen bij zijn oorspronkelijke bericht. Meld het als de tweede vraag toch op het eerste antwoord wacht; modelvertraging blijft mogelijk."
+          "expected": "Eva haalt het detail uit je websitegesprek terug. Geef door als dit ontbreekt of niet klopt; dit is een nieuwe kanaalproef en heropent niet de al geaccepteerde geheugenfuncties."
         },
         "maintenance": "Bij een oplevering, gewijzigde opdracht of blokkade worden resultaat, huidig werk en volgende stap samen bijgewerkt. Technisch afgerond, geïnstalleerd en door jou geaccepteerd blijven apart."
       }
@@ -10517,11 +10525,12 @@
       "currentLimits": "Lokale pagina vertrouwt eigenaarcomputer; geen sprekeridentificatie. VoicePE kent household-device, niet wie spreekt.",
       "openProof": "54 gerichte household/authority/private-result tests geslaagd; bewijs person-household-boundaries-20260922/handoff.md. Geen algemene netwerkaudit of fysieke spreker-/toehoorderherkenning bewezen. Keuze voor persoonlijke Voice PE-toegang blijft open; geheugenacceptaties blijven staan.",
       "tokenlessTestsRemain": true,
-      "status": "private_alias_source_tested_reviewed_not_installed",
+      "status": "private_alias_installed_live_authority_checked_owner_trial_open",
       "evidence": "eva2/evidence/product/private-channel-continuity-gap-20260922.json",
-      "next": "Package the reviewed alias change against the installed runtime; verify dependency imports, install with rollback, then perform cross-channel trial.",
+      "next": "Owner cross-channel continuation trial; shared speaker remains household-only pending explicit private session choice.",
       "sharedSpeakerDecision": "Asked owner: continue privately in existing Telegram (recommended) or approve person/listeners per phone session. No answer assumed as authorization for private speaker output.",
-      "implementationEvidence": "eva2/evidence/product/private-memory-alias-source-20260922.json"
+      "implementationEvidence": "eva2/evidence/product/private-memory-alias-source-20260922.json",
+      "installationEvidence": "eva2/evidence/product/private-memory-alias-installed-20260922.json"
     },
     "quickDeliveries20260922": {
       "status": "scoped_not_built",
