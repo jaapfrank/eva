@@ -121,7 +121,7 @@
           ]
         }
       ],
-      "priorityDecision": "Geen verdere herhaling van afgeronde low/none-proeven. De providerfase blijft de grootste gemeten wachttijd; een volgende snelheidswijziging vraagt een concrete nieuwe hypothese. Intussen herstellen twee producttaken het aangetoonde conflict in planningsinstructies en bouwen echte achtergrondonderzoekuitvoering. Bestaande opleveringen blijven behouden.",
+      "priorityDecision": "Behouden wat snel werkte: bij onderzoek is een korte hoorbare ontvangst voldoende; het inhoudelijke antwoord hoeft niet binnen één seconde. Hergebruik de bestaande ontvangstvoorziening en onderzoek alleen concrete ontbrekende kanaalkoppelingen. Geen nieuwe low/none-proeven of algemene spraakherbouw.",
       "dashboardVerification": {
         "status": "local_browser_verified_not_full_product_acceptance",
         "priorityRevision": {
@@ -177,16 +177,16 @@
       ],
       "nextOutcomes": [
         {
-          "title": "Gespreksfix live; achtergrondonderzoek in uitvoering",
-          "detail": "Gespreksinstructieconflict is hersteld, onafhankelijk gecontroleerd en geïnstalleerd. Achtergrondonderzoekkandidaat werkt met fixtures; echte proef bleef terecht ambiguous door ontbrekende telling van hosted webzoekacties. Tweede gerichte adapterfix loopt modelvrij; geen nieuw onderzoek totdat die oorzaak is hersteld. Spraakvertraging blijft open."
+          "title": "Achtergrondonderzoek geïnstalleerd — bestaand spraakwerk behouden",
+          "detail": "Publiek achtergrondonderzoek is gebouwd, onafhankelijk gecontroleerd en geïnstalleerd in de bestaande kern en worker. Eén geïsoleerde echte proef leverde in 19 seconden een opgeslagen antwoord met primaire bron op. De vijf bestaande taken zijn behouden. Spraakvoorzieningen zijn ongewijzigd; kanaalproef en eigenaaracceptatie blijven apart open."
         },
         {
           "title": "Git hersteld — gezamenlijke bron op GitHub",
           "detail": "De actuele bron staat op GitHub main en in de canonical projectmap. Oude staging is behouden; geen productbestanden verwijderd. Nieuwe taken gebruiken dezelfde gecontroleerde integratiebasis."
         },
         {
-          "title": "Gespreksmodel geïnstalleerd — snelheid nog onvoldoende bewezen",
-          "detail": "Luna-low blijft live voor contact, Astra voor werk. Echte begroetingen kostten5033inputtokens. Gerichte voorbereiding/none-proeven bewezen geen totale snelheidswinst (eerste tekst4,2/4,6/4,4seconden); kandidaten zijn bewaard, niet als versnelling geïnstalleerd. Geen eigenaaracceptatie."
+          "title": "Snelle ontvangst behouden — onderzoek mag langer duren",
+          "detail": "Eigenaar verduidelijkt: hmm of ik kijk ernaar is voldoende terwijl het onderzoek doorgaat. De eerdere 947 ms betrof zo’n ontvangst; geen eis voor een inhoudelijk onderzoeksantwoord binnen één seconde. Begroetingssnelheid en volledige kanaalgelijkheid blijven apart open."
         },
         {
           "title": "Hulpopdrachten bedienen — geïnstalleerd en live gecontroleerd",
@@ -1037,9 +1037,9 @@
       "document": "eva2/PROJECTDOEL.md",
       "scope": "Digitale huisgenoot: zelfstandig redeneren, initiatief, onbekende vaardigheden leren, handelen, zelfverbetering en aantoonbare concurrentiewinst met open-sourcehergebruik.",
       "sessionGoal": "Snel gedeeld gesprek met passende achtergrondmodellen; één Eva over alle kanalen.",
-      "currentWork": "Gespreksinstructieconflict is hersteld, onafhankelijk gecontroleerd en geïnstalleerd. Achtergrondonderzoekkandidaat werkt met fixtures; echte proef bleef terecht ambiguous door ontbrekende telling van hosted webzoekacties. Tweede gerichte adapterfix loopt modelvrij; geen nieuw onderzoek totdat die oorzaak is hersteld. Spraakvertraging blijft open.",
-      "currentEvidence": "eva2/evidence/product/contact-dashboard-live-2026-09-22.json",
-      "nextStep": "Geen verdere herhaling van afgeronde low/none-proeven. De providerfase blijft de grootste gemeten wachttijd; een volgende snelheidswijziging vraagt een concrete nieuwe hypothese. Intussen herstellen twee producttaken het aangetoonde conflict in planningsinstructies en bouwen echte achtergrondonderzoekuitvoering. Bestaande opleveringen blijven behouden.",
+      "currentWork": "Publiek achtergrondonderzoek is gebouwd, onafhankelijk gecontroleerd en geïnstalleerd in de bestaande kern en worker. Eén geïsoleerde echte proef leverde in 19 seconden een opgeslagen antwoord met primaire bron op. De vijf bestaande taken zijn behouden. Spraakvoorzieningen zijn ongewijzigd; kanaalproef en eigenaaracceptatie blijven apart open.",
+      "currentEvidence": "eva2/evidence/product/background-public-research-live-2026-09-22.json",
+      "nextStep": "Behouden wat snel werkte: bij onderzoek is een korte hoorbare ontvangst voldoende; het inhoudelijke antwoord hoeft niet binnen één seconde. Hergebruik de bestaande ontvangstvoorziening en onderzoek alleen concrete ontbrekende kanaalkoppelingen. Geen nieuwe low/none-proeven of algemene spraakherbouw.",
       "usageClarification": {
         "date": "2026-09-07",
         "authorizedBy": "Jaap",
@@ -10582,6 +10582,21 @@
       "image": "sha256:982c31f8d5522d757476fef8932e3e38d8b17d233f508f34ca513384509ecfd2",
       "accepted": false,
       "outcome": "De gespreksinstructie ontkent beschikbaar achtergrondwerk niet langer wanneer de toegelaten hulpmiddelen daadwerkelijk beschikbaar zijn. Rechten en bewijs voor beloften blijven ongewijzigd."
+    },
+    "backgroundPublicResearch20260922": {
+      "status": "installed_live_checked",
+      "evidence": "eva2/evidence/product/background-public-research-live-2026-09-22.json",
+      "sourceCommit": "3b5370d09c59472f1e7d458d9eec31d477343b1a",
+      "userAccepted": false,
+      "technicalScope": "Stored public research with sources using existing task lifecycle; no whole-product or channel-speed claim"
+    },
+    "fastReceiptClarification20260922": {
+      "authorizedBy": "Jaap",
+      "decision": "Behouden wat snel werkte: bij onderzoek is een korte hoorbare ontvangst voldoende; het inhoudelijke antwoord hoeft niet binnen één seconde. Hergebruik de bestaande ontvangstvoorziening en onderzoek alleen concrete ontbrekende kanaalkoppelingen. Geen nieuwe low/none-proeven of algemene spraakherbouw.",
+      "historicalEvidence": "eva2/evidence/product/voice-work-receipt-2026-09-11.json",
+      "firstAudioMs": 947,
+      "firstContentMs": 17482,
+      "preserveVoice": true
     }
   },
   "activeTaskId": "AU-008",

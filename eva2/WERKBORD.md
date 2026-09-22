@@ -5,10 +5,10 @@ Laatst bijgewerkt: 2026-09-22.
 Doel: [Eva als zelfstandig lerende digitale huisgenoot](PROJECTDOEL.md).
 Gebouwd, getest, live en door jou geaccepteerd zijn verschillende stappen.
 
-Gespreksinstructieconflict is hersteld, onafhankelijk gecontroleerd en geïnstalleerd. Achtergrondonderzoekkandidaat werkt met fixtures; echte proef bleef terecht ambiguous door ontbrekende telling van hosted webzoekacties. Tweede gerichte adapterfix loopt modelvrij; geen nieuw onderzoek totdat die oorzaak is hersteld. Spraakvertraging blijft open.
-[Actueel bewijs](evidence/product/contact-dashboard-live-2026-09-22.json).
+Publiek achtergrondonderzoek is gebouwd, onafhankelijk gecontroleerd en geïnstalleerd in de bestaande kern en worker. Eén geïsoleerde echte proef leverde in 19 seconden een opgeslagen antwoord met primaire bron op. De vijf bestaande taken zijn behouden. Spraakvoorzieningen zijn ongewijzigd; kanaalproef en eigenaaracceptatie blijven apart open.
+[Actueel bewijs](evidence/product/background-public-research-live-2026-09-22.json).
 
-Geen verdere herhaling van afgeronde low/none-proeven. De providerfase blijft de grootste gemeten wachttijd; een volgende snelheidswijziging vraagt een concrete nieuwe hypothese. Intussen herstellen twee producttaken het aangetoonde conflict in planningsinstructies en bouwen echte achtergrondonderzoekuitvoering. Bestaande opleveringen blijven behouden.
+Behouden wat snel werkte: bij onderzoek is een korte hoorbare ontvangst voldoende; het inhoudelijke antwoord hoeft niet binnen één seconde. Hergebruik de bestaande ontvangstvoorziening en onderzoek alleen concrete ontbrekende kanaalkoppelingen. Geen nieuwe low/none-proeven of algemene spraakherbouw.
 
 <details>
 <summary>Historische voortgang en eerdere tussenstanden — niet de actuele opleverstatus</summary>

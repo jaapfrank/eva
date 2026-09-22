@@ -1,0 +1,100 @@
+{
+  "date": "2026-09-22",
+  "scope": "Public source research through the existing owner-scoped background worker; existing voice unchanged",
+  "installation": {
+    "installed": true,
+    "sourceCommit": "3b5370d09c59472f1e7d458d9eec31d477343b1a",
+    "image": "sha256:c1f10ee31dd04dadc0f82c3ae2a29d0c81e0a1c505e76c42532e1a63bf33f89b",
+    "coreAndWorkerSourceMatched": true,
+    "ready": true,
+    "existingCardsPreserved": 5,
+    "existingRowsPreserved": 5,
+    "protectedContainersUnchanged": true,
+    "directUnauthenticatedHTTP": 401,
+    "scopeOverrideHTTP": 422,
+    "compatibleDisabledRollbackLiveChecked": true,
+    "deliberateProviderProbesDuringRollout": 0,
+    "concurrentRuntimeProviderRequests": "not measured",
+    "elapsedSeconds": 33.45,
+    "ownerAccepted": false,
+    "phase": "installed-verified",
+    "rollbackAttempted": false,
+    "rollbackVerified": false,
+    "observedServices": {
+      "eva2-managed-b-slot3-core": {
+        "image": "sha256:c1f10ee31dd04dadc0f82c3ae2a29d0c81e0a1c505e76c42532e1a63bf33f89b",
+        "running": true,
+        "researchEnabled": "true",
+        "id": "f29cb330d8879a6e30ab09ae4a3172188e2035ca8ffa0d4643a2541e9d845b12"
+      },
+      "eva2-managed-b-slot3-delegated-work-worker-1": {
+        "image": "sha256:c1f10ee31dd04dadc0f82c3ae2a29d0c81e0a1c505e76c42532e1a63bf33f89b",
+        "running": true,
+        "researchEnabled": "true",
+        "id": "25e9b834102279f64f37cac51faedeb8f3a2e1233d643e505cc62a6f6c0b9723"
+      }
+    }
+  },
+  "verification": {
+    "combinedOfflineTestsPassed": 74,
+    "combinedOfflineSeconds": 4.6,
+    "independentTransportReview": "GO, independent12 transport cases passed in3.61s on42b59ec",
+    "providerProbe": "eva2/evidence/product/background-public-research-20260922/probe2/real-probe.json",
+    "providerProbeSeconds": 19.041,
+    "providerRequests": 1,
+    "hostedToolCalls": 1,
+    "inputTokens": 8886,
+    "outputTokens": 142,
+    "actualCredits": "unknown",
+    "originalAmbiguousProbePreserved": true
+  },
+  "rollback": {
+    "mode": "Keep this v2-capable image and disable EVA_DELEGATED_RESEARCH_ENABLED for core and worker",
+    "liveDisabledConfigurationVerified": true,
+    "oldBinaryRollbackAfterV2AdmissionAllowed": false,
+    "privateConfigurationRecord": "/var/lib/eva2/managed-b-slot3/core-worker-active-compose.json"
+  },
+  "ownerClarification": "Fast audible acknowledgement is sufficient for research; the substantive answer has no one-second requirement. Reuse the existing fast voice receipt.",
+  "limitations": [
+    "No new physical microphone or Voice PE trial",
+    "No owner acceptance inferred",
+    "No subsecond greeting or content latency claim",
+    "One worker executes one delegated task at a time; conversation is separate",
+    "Research result is stored and available through existing task controls; automatic delivery across all channels is not proven",
+    "Provider-hosted search count checked at result admission, not an enforced remote search cap",
+    "Local cancellation does not prove remote processing or billing stopped"
+  ],
+  "try": {
+    "url": "http://localhost:44711/internal/v1/dashboard",
+    "steps": [
+      "Ask Eva to research a public question in the background.",
+      "Continue with another question while work runs.",
+      "Open Mijn hulpopdrachten to read the stored state and result."
+    ],
+    "expected": "A stored admitted research task, then source-bearing result. The real owner channel sequence still requires acceptance.",
+    "ownerAction": "not_requested"
+  },
+  "priorRolloutAttempt": {
+    "installed": false,
+    "failureType": "CalledProcessError",
+    "failure": "Command '['docker', 'inspect', 'eva2-research-proof2-db-20260922']' returned non-zero exit status 1.",
+    "phase": "rollback-verified",
+    "rollbackAttempted": true,
+    "rollbackVerified": true,
+    "observedServices": {
+      "eva2-managed-b-slot3-core": {
+        "image": "sha256:c1f10ee31dd04dadc0f82c3ae2a29d0c81e0a1c505e76c42532e1a63bf33f89b",
+        "running": true,
+        "researchEnabled": "false",
+        "id": "cdae455210223f020d6635c4542a677196da8f65e246718a71ed73b51e3de669"
+      },
+      "eva2-managed-b-slot3-delegated-work-worker-1": {
+        "image": "sha256:c1f10ee31dd04dadc0f82c3ae2a29d0c81e0a1c505e76c42532e1a63bf33f89b",
+        "running": true,
+        "researchEnabled": "false",
+        "id": "b636657e9d89f982ba8c237bbcfffc6ffe2aaa50083cef7b602548501b80fa04"
+      }
+    }
+  },
+  "installationCheckCorrection": "The disposable proof2 database was removed as intended by the isolated test but accidentally included in protected installed services. Only that documented test container was excluded; production service guards remained."
+}
