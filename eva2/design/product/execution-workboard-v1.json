@@ -121,7 +121,7 @@
           ]
         }
       ],
-      "priorityDecision": "Meet gericht waar de 5,1 seconde op de echte gespreksroute ontstaat en herstel de concrete vertraging. Behoud geheugenkwaliteit en persoonsgrenzen. Geen nieuwe modelproef zonder gewijzigde oorzaak of ontbrekend meetbewijs. Gebruikersbeoordeling van geïnstalleerde dashboardbediening blijft apart open; geen bouwstop.",
+      "priorityDecision": "Geen verdere herhaling van afgeronde low/none-proeven. De providerfase blijft de grootste gemeten wachttijd; een volgende snelheidswijziging vraagt een concrete nieuwe hypothese. Intussen herstellen twee producttaken het aangetoonde conflict in planningsinstructies en bouwen echte achtergrondonderzoekuitvoering. Bestaande opleveringen blijven behouden.",
       "dashboardVerification": {
         "status": "local_browser_verified_not_full_product_acceptance",
         "priorityRevision": {
@@ -177,8 +177,8 @@
       ],
       "nextOutcomes": [
         {
-          "title": "Twee producttaken; dashboardwerk bij coördinator",
-          "detail": "Twee producttaken: spraakagent rondt gerichte latencywijziging af (nog geen totale snelheidswinst aangetoond); tweede agent bouwt echte achtergrondtaakuitvoering met bestaande toegelaten tools en opgeslagen bronnen. Coördinator bezit dashboardcorrecties, integratie en installatie. Automatische dashboardverversing is inmiddels geïnstalleerd en live gecontroleerd."
+          "title": "Twee producttaken; spraakvertraging blijft open",
+          "detail": "Automatische dashboardverversing en correcte opleverstatus zijn live. Spraakmetingen tonen nog geen totale snelheidswinst; Luna blijft low. Twee producttaken bouwen verder: correcte instructies voor beschikbare achtergrondtaken en echte achtergrondonderzoekuitvoering."
         },
         {
           "title": "Git hersteld — gezamenlijke bron op GitHub",
@@ -186,7 +186,7 @@
         },
         {
           "title": "Gespreksmodel geïnstalleerd — snelheid nog onvoldoende bewezen",
-          "detail": "De gedeelde kern gebruikt nu Luna-low voor eerste gesprek en Astra voor werk. De echte HTTP-spraakroute antwoordde, maar eerste tekst kwam na5,1seconde. De eerdere1,6seconde was een lossemodelproef. Snellere natuurlijke spraak blijft actief vervolgwerk; geen eigenaaracceptatie."
+          "detail": "Luna-low blijft live voor contact, Astra voor werk. Echte begroetingen kostten5033inputtokens. Gerichte voorbereiding/none-proeven bewezen geen totale snelheidswinst (eerste tekst4,2/4,6/4,4seconden); kandidaten zijn bewaard, niet als versnelling geïnstalleerd. Geen eigenaaracceptatie."
         },
         {
           "title": "Hulpopdrachten bedienen — geïnstalleerd en live gecontroleerd",
@@ -1037,9 +1037,9 @@
       "document": "eva2/PROJECTDOEL.md",
       "scope": "Digitale huisgenoot: zelfstandig redeneren, initiatief, onbekende vaardigheden leren, handelen, zelfverbetering en aantoonbare concurrentiewinst met open-sourcehergebruik.",
       "sessionGoal": "Snel gedeeld gesprek met passende achtergrondmodellen; één Eva over alle kanalen.",
-      "currentWork": "Twee producttaken: spraakagent rondt gerichte latencywijziging af (nog geen totale snelheidswinst aangetoond); tweede agent bouwt echte achtergrondtaakuitvoering met bestaande toegelaten tools en opgeslagen bronnen. Coördinator bezit dashboardcorrecties, integratie en installatie. Automatische dashboardverversing is inmiddels geïnstalleerd en live gecontroleerd.",
+      "currentWork": "Automatische dashboardverversing en correcte opleverstatus zijn live. Spraakmetingen tonen nog geen totale snelheidswinst; Luna blijft low. Twee producttaken bouwen verder: correcte instructies voor beschikbare achtergrondtaken en echte achtergrondonderzoekuitvoering.",
       "currentEvidence": "eva2/evidence/product/contact-dashboard-live-2026-09-22.json",
-      "nextStep": "Meet gericht waar de 5,1 seconde op de echte gespreksroute ontstaat en herstel de concrete vertraging. Behoud geheugenkwaliteit en persoonsgrenzen. Geen nieuwe modelproef zonder gewijzigde oorzaak of ontbrekend meetbewijs. Gebruikersbeoordeling van geïnstalleerde dashboardbediening blijft apart open; geen bouwstop.",
+      "nextStep": "Geen verdere herhaling van afgeronde low/none-proeven. De providerfase blijft de grootste gemeten wachttijd; een volgende snelheidswijziging vraagt een concrete nieuwe hypothese. Intussen herstellen twee producttaken het aangetoonde conflict in planningsinstructies en bouwen echte achtergrondonderzoekuitvoering. Bestaande opleveringen blijven behouden.",
       "usageClarification": {
         "date": "2026-09-07",
         "authorizedBy": "Jaap",
@@ -10526,7 +10526,8 @@
           "title": "Eva sneller laten praten tijdens achtergrondwerk",
           "files": "conversation/runtime/model timing and focused tests",
           "estimate": "60–90 minuten; maximaal twee logische modelrequests voor gerichte vóór/na-proef; creditkosten onbekend",
-          "state": "in_progress"
+          "state": "in_progress",
+          "currentOutcome": "Herstel onjuiste instructie dat achtergrondwerk niet mogelijk is terwijl toegelaten planningtools beschikbaar zijn; geen nieuwe modelproeven."
         },
         {
           "threadId": "01a0c915-205e-7c11-809a-674ae09e016c",
@@ -10564,13 +10565,15 @@
       }
     },
     "contactReasoningNone20260922": {
-      "status": "bounded_compatibility_check_in_progress",
+      "status": "hypotheses_closed_no_total_speed_gain",
       "basis": "Official Luna API supports none; current Eva validators reject none; subscription compatibility unproven. chat-latest has no tool-search support and is not a proven direct replacement.",
       "sources": [
         "https://developers.openai.com/api/docs/models/gpt-5.6-luna",
         "https://developers.openai.com/api/docs/models/chat-latest"
       ],
-      "limit": "At most one isolated compatibility request and, only if accepted, one actual-route measurement; no model sweep or live switch without review."
+      "limit": "At most one isolated compatibility request and, only if accepted, one actual-route measurement; no model sweep or live switch without review.",
+      "evidence": "eva2/evidence/product/contact-latency-decision-2026-09-22.json",
+      "liveChanged": false
     }
   },
   "activeTaskId": "AU-008",

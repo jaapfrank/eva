@@ -5,10 +5,10 @@ Laatst bijgewerkt: 2026-09-22.
 Doel: [Eva als zelfstandig lerende digitale huisgenoot](PROJECTDOEL.md).
 Gebouwd, getest, live en door jou geaccepteerd zijn verschillende stappen.
 
-Twee producttaken: spraakagent rondt gerichte latencywijziging af (nog geen totale snelheidswinst aangetoond); tweede agent bouwt echte achtergrondtaakuitvoering met bestaande toegelaten tools en opgeslagen bronnen. Coördinator bezit dashboardcorrecties, integratie en installatie. Automatische dashboardverversing is inmiddels geïnstalleerd en live gecontroleerd.
+Automatische dashboardverversing en correcte opleverstatus zijn live. Spraakmetingen tonen nog geen totale snelheidswinst; Luna blijft low. Twee producttaken bouwen verder: correcte instructies voor beschikbare achtergrondtaken en echte achtergrondonderzoekuitvoering.
 [Actueel bewijs](evidence/product/contact-dashboard-live-2026-09-22.json).
 
-Meet gericht waar de 5,1 seconde op de echte gespreksroute ontstaat en herstel de concrete vertraging. Behoud geheugenkwaliteit en persoonsgrenzen. Geen nieuwe modelproef zonder gewijzigde oorzaak of ontbrekend meetbewijs. Gebruikersbeoordeling van geïnstalleerde dashboardbediening blijft apart open; geen bouwstop.
+Geen verdere herhaling van afgeronde low/none-proeven. De providerfase blijft de grootste gemeten wachttijd; een volgende snelheidswijziging vraagt een concrete nieuwe hypothese. Intussen herstellen twee producttaken het aangetoonde conflict in planningsinstructies en bouwen echte achtergrondonderzoekuitvoering. Bestaande opleveringen blijven behouden.
 
 <details>
 <summary>Historische voortgang en eerdere tussenstanden — niet de actuele opleverstatus</summary>

@@ -1,0 +1,41 @@
+{
+  "date": "2026-09-22",
+  "status": "hypotheses_closed_no_total_speed_gain",
+  "branch": "codex/live-contact-latency-20260922",
+  "candidateCommits": [
+    "2e0598a7f64e73add2d9a9f8b8f8a6416989677d",
+    "540c45907deaf0f9b30dbfc87183814e0c9d5459"
+  ],
+  "published": true,
+  "installed": false,
+  "reason": "Preparation and Luna none were measured, but neither established improved total response latency. Current low configuration retained.",
+  "firstRouteDeltaMs": {
+    "baselineLow": 4216,
+    "preparedLow": 4551,
+    "preparedNone": 4379
+  },
+  "fullRouteMs": {
+    "baselineLow": 4826,
+    "preparedLow": 5300,
+    "preparedNone": 5025
+  },
+  "perGreetingMeasuredInputTokens": 5033,
+  "usage": {
+    "lowPair": {
+      "attempts": 2,
+      "inputTokens": 10066,
+      "outputTokens": 40,
+      "toolCalls": 0
+    },
+    "noneHypothesis": {
+      "attempts": 2,
+      "measuredRouteInputTokens": 5033,
+      "measuredRouteOutputTokens": 15,
+      "tinyCompatibilityProbeUsage": "unknown: SDK usage property was called as a function after successful response; not repeated"
+    },
+    "actualCreditCost": "unknown"
+  },
+  "validation": "Preparation candidate:344 passed plus1 reproduced baseline catalog-hash failure; none candidate:109 focused tests passed. No claim of full release validation or speed acceptance.",
+  "decision": "Preserve evidence and candidate branch. Do not install reasoning change as an alleged speed fix. Model-free fix of confirmed scheduling-instruction conflict is a separate product task.",
+  "instant": "chat-latest is documented Instant but tool search unsupported; no direct substitution claimed. Luna none accepted on actual subscription route, but not faster in bounded measurements."
+}
