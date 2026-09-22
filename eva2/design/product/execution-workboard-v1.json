@@ -1031,7 +1031,7 @@
             "date": "22 september",
             "state": "installed",
             "result": "Jouw proef mislukte. Oorzaak gevonden in Telegram: te snel opnieuw ophalen gaf alleen het eerste bericht terug. Interval hersteld, vier gerichte tests geslaagd, onafhankelijk gecontroleerd en geïnstalleerd.",
-            "remaining": "Dezelfde tweevragenproef opnieuw beoordelen. Inhoudelijke modeltijd is apart; vriendelijkere gespreksinstructie nog niet live. Screenshotkoppeling: opgeslagen vraag en antwoord verwijzen beide naar onderzoek, mogelijke berichtbewerking nog onbevestigd.",
+            "remaining": "Dezelfde tweevragenproef opnieuw beoordelen. Vriendelijke gespreksinstructie is nu ook geïnstalleerd; natuurlijkheid en inhoudelijke reactietijd blijven te beoordelen. Screenshotkoppeling: opgeslagen vraag en antwoord verwijzen beide naar onderzoek, mogelijke berichtbewerking nog onbevestigd.",
             "source": "eva2/evidence/product/telegram-poll-throttle-installed-20260922.json"
           }
         ],
@@ -10825,7 +10825,7 @@
           "planningEffortHours": "4–12"
         }
       ],
-      "nextAction": "Installeer de beoordeelde vriendelijke gespreksinstructie; hergebruik daarna de voorbereide documentinstallatie. Telegramintervalcorrectie is live, nieuwe praktijkacceptatie en de vraag over berichtbewerking staan open.",
+      "nextAction": "Hervat de voorbereide documentinstallatie op de nieuwe runtimebasis met behoud van de vriendelijke gespreksinstructie. Telegramintervalcorrectie en vriendelijker sociaal contact zijn live; gebruikersacceptatie blijft open.",
       "effortNotice": "Grove planning, lage zekerheid: 40–118 actieve ontwikkeluren plus zeven dagen gezinspraktijk en eventuele externe wachttijd. Geen deadline, creditkosten of gemeten verbruik; per begrensde wijziging aanscherpen na lezing van bestaand bewijs. Hergebruik kan dit verkorten.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Na review, installatie en registratie automatisch volgende uitvoerbare stap; geen algemene wachtstop op gebruikersproeven.",
@@ -11070,10 +11070,11 @@
       },
       "replyMismatchReport": "Screenshot toont onderzoeksantwoord geciteerd bij hoe gaat het. Opgeslagen invoer van het overeenkomende onderzoeksantwoord is de onderzoeksopdracht; mogelijke berichtbewerking wordt bij eigenaar nagevraagd, niet als oorzaak aangenomen.",
       "personalityCorrection": {
-        "status": "source_only_not_installed",
+        "status": "installed_owner_observation_open",
         "change": "Vriendelijke korte sociale reacties; geen ongevraagde uitleg over lichaam/gevoelens/eigen dag en geen verzonnen menselijke belevenissen.",
-        "validation": "Python syntax gecontroleerd; gedrag en onafhankelijke review nog niet bewezen. Geen betaalde modelproef gestart.",
-        "review": "Independent source review GO; no claim of live installation or model behaviour."
+        "validation": "Onafhankelijke bronreview GO, syntax/import en werkelijk geïnstalleerde bestandshash gecontroleerd; runtime healthy. Geen betaalde modelproef; natuurlijkheid nog door eigenaar te beoordelen.",
+        "review": "Independent source review GO; no claim of live installation or model behaviour.",
+        "evidence": "eva2/evidence/product/warm-dialogue-installed-20260922.json"
       },
       "throttleCorrection": {
         "beforePid": "3910554",

@@ -1,0 +1,19 @@
+{
+  "parentImage": "sha256:b6322914191fa9fcf139c30014ffd06696ebc1e9b381e6aa289ebfaef36ada3e",
+  "candidateImage": "sha256:cb7bb80c3c6a8855698a15c6a242acd7db1ddda1cc73e0908cf597cd7c487dbb",
+  "changedModule": "/opt/eva/src/eva/adapters/model/pydantic_conversation.py",
+  "beforeSha256": "83dcfb72500f1480c017d9e015329f408ec19753693a2886b3b116cec566661c",
+  "afterSha256": "d2c4fe75316334fa43a47fa66429c0571e86be1e748b4d9f96feeece14baf934",
+  "sourceCommit": "758bb001",
+  "review": "Independent source review GO; exact installed-file patch",
+  "modelCalls": 0,
+  "buildCorrection": "Installed Docker legacy builder does not support COPY chmod; used host file mode and excluded unrelated context.",
+  "installedAt": "2026-09-22T19:12:13.568286+00:00",
+  "beforeContainer": "4b489a03fa67e12b9a63d3cdf1c3a3c997a94945e0fa0cef05260da757e3376d",
+  "afterContainer": "9d9c3aa5db907e2e6b58ae43b8342c5ebe6420794c1c77352ef73c4b7fa3c232",
+  "health": "healthy",
+  "gracefulExitCode": 0,
+  "rollbackCompose": "/var/lib/eva2/warm-dialogue-20260922/baseline.compose.private.json",
+  "ownerAccepted": false,
+  "proofBoundary": "Exact instruction patch, import and live health; naturalness awaits owner observation."
+}
