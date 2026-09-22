@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from eva.operations.restore_activation import require_restore_activation
+
 from dataclasses import dataclass
 from datetime import UTC, datetime, timedelta
 import json
@@ -1626,6 +1628,11 @@ def create_runtime_app() -> FastAPI:
     engine = sa.create_engine(
         sqlalchemy_postgres_dsn(settings.database_dsn), pool_pre_ping=True
     )
+    try:
+        require_restore_activation(engine)
+    except BaseException:
+        engine.dispose()
+        raise
     if (
         settings.background_tenant_id is None
         or settings.background_installation_id is None

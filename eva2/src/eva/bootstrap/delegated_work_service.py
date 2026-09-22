@@ -6,6 +6,8 @@ Task text can therefore never select a model, provider, price or worker program.
 
 from __future__ import annotations
 
+from eva.operations.restore_activation import require_restore_activation
+
 import asyncio
 import os
 import signal
@@ -31,7 +33,7 @@ from eva.adapters.postgres.operational_timeline import (
 from eva.adapters.credentials.runtime_files import read_runtime_secret_file
 from eva.operations.delegated_work_worker import ChildRunner, DelegatedWorkWorker
 
-_SCHEMA_HEAD = "4e_0008_portable_current"
+_SCHEMA_HEAD = "4e_0009_restore_hold"
 
 
 def _provider_release() -> DelegatedWorkReleaseSelector:
@@ -284,6 +286,7 @@ async def serve_delegated_work_service(
     )
     engine = sa.create_engine(sqlalchemy_postgres_dsn(database_dsn), pool_pre_ping=True)
     try:
+        require_restore_activation(engine)
         store = PostgresDelegatedWorkStore(engine, selected.scope,
             household_authorizer=getattr(runner, "household_authorizer", None))
         bound_runner = runner.bind_store(store) if callable(getattr(runner, "bind_store", None)) else runner

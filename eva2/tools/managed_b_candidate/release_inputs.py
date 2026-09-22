@@ -343,6 +343,11 @@ _EXPECTED_MIGRATIONS = (
         "4e_0007_delegated_private",
         "migrations/versions/4e_0008_portable_current.py",
     ),
+    (
+        "4e_0009_restore_hold",
+        "4e_0008_portable_current",
+        "migrations/versions/4e_0009_restore_hold.py",
+    ),
 )
 
 

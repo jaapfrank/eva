@@ -59,9 +59,6 @@ class CurrentSnapshot(PostgresPortableSnapshot):
         validate_principal_binding_evidence_scope(canonical)
         validate_portable_v1_attention_rows(canonical)
         validate_portable_v1_no_inflight_external_work(canonical)
-        for row in result["eva_core.attention_items"]:
-            if row["state"] in {"pending", "claimed"}:
-                raise ValueError("current export requires settled attention")
 
     def read_all(self):
         canonical = (self._tenant_id, self._installation_id)
@@ -105,7 +102,7 @@ def _records(spec, rows):
 def export_current_archive(connection, *, tenant_id, installation_id, runtime_identity,
                            destination: Path, created_at: str, export_sequence: int,
                            object_blob_root: Path | None = None):
-    """Export settled work; target activation remains a separate installation step."""
+    """Preserve task state; every restore creates a local, mandatory startup hold."""
     with connection.begin():
         revision = connection.exec_driver_sql("SELECT version_num FROM public.eva_alembic_version").scalar_one()
         if revision != SCHEMA_HEAD:

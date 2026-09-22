@@ -1003,6 +1003,14 @@
         "checkedAt": "2026-09-23",
         "deliveries": [
           {
+            "title": "Herstel bewaart nu ook wachtend werk",
+            "date": "23 september",
+            "state": "tested",
+            "result": "Lopend en wachtend onderzoek, onafgeleverd resultaat en wachtend documentproject blijven in de herstelproef behouden. Kern en werkers blijven geblokkeerd tot gecontroleerde vrijgave. Bronreview geslaagd.",
+            "remaining": "Nog niet geïnstalleerd. Vrijgeven en hervatten, echte documentbestanden en extern geheugen zijn nog niet af.",
+            "source": "eva2/evidence/product/portable-v2-hold-20260923.json"
+          },
+          {
             "title": "Reservekopie bewaart afgehandelde taken en afleverstatus",
             "date": "23 september",
             "state": "tested",
@@ -1084,14 +1092,14 @@
           }
         ],
         "now": {
-          "title": "Herstel ook voor lopend werk afmaken",
-          "detail": "De eerste herstelproef slaagt voor afgehandeld en gestopt werk. Nu de bestaande activatiegrens controleren en aanvullen zodat ook lopend en onafgeleverd werk veilig bewaard blijft.",
+          "title": "Documenten en geheugen bij herstel behouden",
+          "detail": "Taakgegevens blijven nu behouden achter een startblokkade. Het bijbehorende bestands- en geheugenherstel en de gecontroleerde vrijgave moeten nog worden afgemaakt.",
           "state": "In uitvoering · niet geïnstalleerd",
-          "doneWhen": "Een reservekopie verliest geen open werk en start of verstuurt niets dubbel na herstel."
+          "doneWhen": "Herstelde taken kunnen met hun bestanden en geheugen veilig verder zonder dubbele uitvoering."
         },
         "next": {
-          "title": "Documenten en extern geheugen herstellen",
-          "detail": "Daarna de bijbehorende documentbestanden/journals en externe geheugenopslag meenemen; pas het complete geheel als installatieherstel opleveren.",
+          "title": "Herstelde installatie gecontroleerd starten",
+          "detail": "Vrijgave koppelen aan herstelde gegevens, geldige bevoegdheden en bijgewerkte kern/werkers; daarna de volledige herstelproef.",
           "state": "Vereist vervolg"
         },
         "ownerAction": {
@@ -10874,7 +10882,7 @@
           "planningEffortHours": "4–12"
         }
       ],
-      "nextAction": "Bestaande activatie-/installatiegrens benutten om lopend en onafgeleverd werk verliesloos te bewaren zonder onbedoeld uitvoeren; daarna native documenten, CAS en extern geheugen als geheel herstellen.",
+      "nextAction": "Native documenten/journals en extern geheugen herstelbaar maken; daarna operatorvrijgave aan herstelde dependencies, bronfencing en pakketidentiteit binden. Zonder die vrijgave blijft het herstelde doel geblokkeerd.",
       "effortNotice": "Grove planning, lage zekerheid: 40–118 actieve ontwikkeluren plus zeven dagen gezinspraktijk en eventuele externe wachttijd. Geen deadline, creditkosten of gemeten verbruik; per begrensde wijziging aanscherpen na lezing van bestaand bewijs. Hergebruik kan dit verkorten.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Na review, installatie en registratie automatisch volgende uitvoerbare stap; geen algemene wachtstop op gebruikersproeven.",
@@ -11468,7 +11476,7 @@
       "remaining": "Fysieke Voice PE en volledige core/worker/hostherstart met data/taakbehoud blijven open."
     },
     "currentPortableRestore20260922": {
-      "status": "bounded_source_tested_full_restore_incomplete",
+      "status": "open_work_preserved_behind_hold_release_incomplete",
       "outcome": "Een reservekopie herstelt ook huidig taakwerk en terugmeldstatus zonder dubbele uitvoering.",
       "finding": "V1 gebruikt39 vaste canonieke tabellen. operational_events en delegated_work_runs ontbreken; documentclaims en terugmeldfences staan daarin. Bestaand IN-002-bewijs geldt voor oudere canonieke data/CAS, niet voor volledig huidig product.",
       "scope": "Versie2 via bestaande snapshot-, transport-, restore- en wizardroute; v1 blijft intact. Nieuw formaat bewaart huidige records, verifieert hashes/volgorde en herbouwt checkpoints.",
@@ -11481,7 +11489,7 @@
         "V1-lezen blijft werken; relevante gerichte tests en onafhankelijke review; productinstallatie pas na migratie-/releasecontrole."
       ],
       "remainingMandatory": [
-        "Ook lopende of nog onafgeleverde taken verliesloos bewaren en gecontroleerd hervatten; terminal-only v2-proef is niet het volledige hersteldoel.",
+        "Lopend en onafgeleverd werk is in de bronproef behouden achter een blokkade; gecontroleerd hervatten en vrijgeven blijven vereist.",
         "Native documentbestanden, journals en gecontroleerde verhuizingsbinding",
         "Extern semantisch geheugen: gegevens/bankherstel of aantoonbare heropbouw",
         "Normale operatorroute en volledige geïsoleerde installatie-/computerherstelproef",
@@ -11516,7 +11524,9 @@
       },
       "sourceCandidateEvidence": "eva2/evidence/product/portable-v2-source-candidate-20260923.json",
       "sourceCandidateReview": "eva2/reviews/portable-v2-source-20260923.md",
-      "nextRequired": "Bestaande activatie-/installatiegrens benutten om lopend en onafgeleverd werk verliesloos te bewaren zonder onbedoeld uitvoeren; daarna native documenten, CAS en extern geheugen als geheel herstellen."
+      "nextRequired": "Native documenten/journals en extern geheugen herstelbaar maken; daarna operatorvrijgave aan herstelde dependencies, bronfencing en pakketidentiteit binden. Zonder die vrijgave blijft het herstelde doel geblokkeerd.",
+      "holdEvidence": "eva2/evidence/product/portable-v2-hold-20260923.json",
+      "holdReview": "eva2/reviews/portable-v2-hold-20260923.md"
     }
   },
   "activeTaskId": "AU-008",

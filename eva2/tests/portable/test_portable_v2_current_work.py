@@ -27,7 +27,7 @@ from tools.portable_transport import seal_portable_archive
 from tests.portable.restore_authority_fixture import restore_authority_for_archive
 from tests.portable.test_portable_restore_full_schema import _exact_fixture_row, _synthetic_memory_command
 from tests.support.noor_4d_repository import PostgresNoor4DRepository
-from tests.postgres.test_delegated_work_store import _spec
+from tests.postgres.test_delegated_work_store import _spec, _release
 from tests.postgres.test_delegated_delivery_store import NOW, succeed
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -53,7 +53,7 @@ def current_archive(tmp_path_factory):
         engine = sa.create_engine(admin.url.set(database=name))
         engines.append(engine)
         receipt = install_schema(engine.url.render_as_string(hide_password=False), alembic_ini=ROOT / "alembic.ini")
-        assert receipt.final_revision == "4e_0008_portable_current"
+        assert receipt.final_revision == "4e_0009_restore_hold"
         return engine
 
     try:
@@ -86,7 +86,7 @@ def current_archive(tmp_path_factory):
                                                       clock=lambda:NOW+timedelta(seconds=4))
         results = {}
         specs = {}
-        for status in ("acknowledged", "ambiguous", "claimed", "stopped"):
+        for status in ("acknowledged", "ambiguous", "claimed", "stopped", "undelivered", "call_started", "admitted"):
             spec = _spec("portable-v2-"+status, scope, uuid4(), binding).model_copy(update={"owner_principal_id":str(owner)})
             turn = ConversationTurn.private(RUNTIME["tenant_id"], RUNTIME["installation_id"],
                 "telegram:42", "telegram:42", "telegram:42:"+status, "A synthetic task", "2026-08-26T12:00:00Z")
@@ -96,11 +96,19 @@ def current_archive(tmp_path_factory):
                 retention_policy_id="retention:test", retention_until=NOW+timedelta(days=365),
                 occurred_at=NOW, delivery_destination=destination)
             specs[status] = spec
+            if status == "call_started":
+                claim = store.claim_next(worker_id="interrupted-source", release=_release(spec), now=NOW+timedelta(seconds=1))
+                store.start_call(claim, now=NOW+timedelta(seconds=2))
+                continue
+            if status == "admitted":
+                continue
             if status == "stopped":
                 store.request_stop(spec.work_id, owner_principal_id=owner, principal_binding_id=binding,
                                    now=NOW+timedelta(seconds=1))
                 continue
             results[status] = succeed(store, spec)
+            if status == "undelivered":
+                continue
             claim = delivery.claim_next(now=NOW+timedelta(seconds=4))
             assert claim is not None and claim.work_id == spec.work_id
             if status == "acknowledged":
@@ -112,7 +120,7 @@ def current_archive(tmp_path_factory):
         journal = PostgresConversationJournal(source, external_timeline_scope(**RUNTIME, missing_error="missing"))
         journal.admit(doc_turn)
         goals = PostgresDurableGoalStore(source, **RUNTIME)
-        pool = DocumentTaskPool((DocumentTaskSlot("legacy", "a"*64),), "b"*64)
+        pool = DocumentTaskPool((DocumentTaskSlot("legacy", "a"*64), DocumentTaskSlot("waiting", "d"*64)), "b"*64)
         document = pool.claim(goals, task=DocumentTaskInput("Retained project", "First", "Second"),
             turn=doc_turn, call_id="create-document", authority_sha256="c"*64,
             tenant_id=tenant, installation_id=installation, owner_principal_id=str(owner))
@@ -120,6 +128,14 @@ def current_archive(tmp_path_factory):
         goal = PreparedDocumentGoal.from_json(json.dumps(document["definition"]), plan).goal
         goals.admit(goal)
         goals.cancel(goal.goal_id, str(owner), "Stopped before execution", NOW+timedelta(seconds=1))
+        waiting_document = pool.claim(goals, task=DocumentTaskInput("Waiting project", "Draft", "Later"),
+            turn=doc_turn, call_id="create-waiting-document", authority_sha256="c"*64,
+            tenant_id=tenant, installation_id=installation, owner_principal_id=str(owner))
+        waiting_plan = DocumentGoalPlan.from_json(json.dumps(waiting_document["plan"]))
+        waiting_goal = PreparedDocumentGoal.from_json(json.dumps(waiting_document["definition"]), waiting_plan).goal
+        goals.admit(waiting_goal)
+        waiting_state = goals.state(waiting_goal.goal_id, str(owner))
+        source_work = {name: store.load(spec.work_id, owner_principal_id=owner, principal_binding_id=binding) for name, spec in specs.items()}
         archive = directory / "archive"
         with source.connect() as connection:
             export_current_archive(connection, tenant_id=tenant, installation_id=installation,
@@ -128,7 +144,7 @@ def current_archive(tmp_path_factory):
         seal_portable_archive(archive, sealed, passphrase=PASSPHRASE, validator=read_current_archive)
         yield {"database":database, "archive":archive, "blob":sealed.read_bytes(), "scope":scope,
                "owner":owner, "binding":binding, "pairings":pairings, "results":results,
-               "specs":specs, "document":document, "goal":goal}
+               "specs":specs, "source_work":source_work, "document":document, "goal":goal, "waiting_document":waiting_document, "waiting_goal":waiting_goal, "waiting_state":waiting_state}
     finally:
         for engine in engines:
             engine.dispose()
@@ -148,26 +164,67 @@ def workflow(fixture, tmp_path):
     return wizard, target, authority
 
 
-def test_encrypted_roundtrip_preserves_results_stop_and_delivery_fences(current_archive, tmp_path):
+def test_encrypted_roundtrip_preserves_results_stop_and_delivery_fences(current_archive, tmp_path, monkeypatch):
     fixture = current_archive
     wizard, target, _ = workflow(fixture, tmp_path)
+    from eva.operations.restore_activation import require_restore_activation, RestoreActivationRequired
+    require_restore_activation(target)
     preview = wizard.prepare(fixture["blob"], PASSPHRASE)
     assert preview["summary"]["target_activation"] == "closed"
     result = wizard.execute(preview["confirmation"])
     assert result["rebuilt_checkpoints"] > 0
+    with pytest.raises(RestoreActivationRequired, match="verified operator activation"):
+        require_restore_activation(target)
+    # Exercise all actual process composition entrypoints against the held DB.
+    import asyncio
+    from types import SimpleNamespace
+    from eva.bootstrap import runtime, delegated_work_service
+    from eva.operations import durable_goal_worker
+    dsn = target.url.render_as_string(hide_password=False)
+    with monkeypatch.context() as patch:
+        patch.setattr(runtime.RuntimeSettings, "from_environment", lambda: SimpleNamespace(database_dsn=dsn))
+        with pytest.raises(RestoreActivationRequired):
+            runtime.create_runtime_app()
+    with monkeypatch.context() as patch:
+        patch.setattr(delegated_work_service, "read_runtime_secret_file", lambda *args, **kwargs: dsn)
+        settings = delegated_work_service.DelegatedWorkServiceSettings("/tmp/synthetic-dsn", fixture["scope"], "held-test")
+        with pytest.raises(RestoreActivationRequired):
+            asyncio.run(delegated_work_service.serve_delegated_work_service(
+                object(), release=object(), settings=settings, once=True))
+    with monkeypatch.context() as patch:
+        patch.setattr(durable_goal_worker, "_database_dsn", lambda: dsn)
+        patch.setenv("EVA_RUNTIME_TENANT_ID", RUNTIME["tenant_id"])
+        patch.setenv("EVA_RUNTIME_INSTALLATION_ID", RUNTIME["installation_id"])
+        with pytest.raises(RestoreActivationRequired):
+            durable_goal_worker.main(select_goals=lambda *args: pytest.fail("held goal selection"),
+                                     worker_factory=lambda *args: pytest.fail("held goal worker"))
+    with pytest.raises(sa.exc.ProgrammingError):
+        with target.begin() as connection:
+            connection.exec_driver_sql("SET LOCAL ROLE eva_runtime")
+            connection.exec_driver_sql("DELETE FROM eva_core.restore_activation")
     store = PostgresDelegatedWorkStore(target, fixture["scope"])
     authority = {"owner_principal_id":fixture["owner"], "principal_binding_id":fixture["binding"]}
+    for name, expected in fixture["source_work"].items():
+        assert store.load(fixture["specs"][name].work_id, **authority) == expected
     for name, expected in fixture["results"].items():
         assert store.load(fixture["specs"][name].work_id, **authority).result == expected
     assert store.load(fixture["specs"]["stopped"].work_id, **authority).state == "stopped"
     delivery = PostgresDelegatedWorkDeliveryStore(store, bindings_loader=lambda:fixture["pairings"],
                                                  clock=lambda:NOW+timedelta(seconds=6))
-    for name in fixture["results"]:
+    for name in ("acknowledged", "ambiguous", "claimed"):
         assert delivery.status(fixture["specs"][name].work_id, **authority) == "delivery_" + name
-    assert delivery.claim_next(now=NOW+timedelta(minutes=5)) is None
+    assert store.load(fixture["specs"]["admitted"].work_id, **authority).state == "admitted"
+    interrupted = store.load(fixture["specs"]["call_started"].work_id, **authority)
+    assert interrupted.state == "call_started" and interrupted.call_id is not None
+    assert interrupted.lease_owner.startswith("interrupted-source:")
+    assert interrupted.result is None
+    # The runnable and undelivered records remain intact behind the startup hold.
+    assert delivery.status(fixture["specs"]["undelivered"].work_id, **authority) == "ready"
     goals = PostgresDurableGoalStore(target, **RUNTIME)
     assert goals.document_slot(fixture["document"]["slot_id"]) == fixture["document"]
     assert goals.state(fixture["goal"].goal_id, str(fixture["owner"])).status == "cancelled"
+    assert goals.state(fixture["waiting_goal"].goal_id, str(fixture["owner"])) == fixture["waiting_state"]
+    assert goals.document_slot(fixture["waiting_document"]["slot_id"]) == fixture["waiting_document"]
     with pytest.raises(ValueError):
         wizard.prepare(fixture["blob"], PASSPHRASE)
 
@@ -179,11 +236,11 @@ def test_forgotten_archive_rejected_after_preview_without_target_rows(current_ar
     with pytest.raises(ValueError, match="not authorized"):
         wizard.execute(preview["confirmation"])
     with target.connect() as connection:
-        for table in ("eva_core.installations", "eva_core.operational_events", "eva_core.operational_checkpoints", "eva_core.delegated_work_runs"):
+        for table in ("eva_core.installations", "eva_core.operational_events", "eva_core.operational_checkpoints", "eva_core.delegated_work_runs", "eva_core.restore_activation"):
             assert connection.exec_driver_sql("SELECT COUNT(*) FROM " + table).scalar_one() == 0
 
 
-@pytest.mark.parametrize("damage", ["foreign_tenant", "unused_binding", "missing_evidence", "pending_attention", "missing_return", "missing_document_source", "missing_goal", "orphan_waiting_goal"])
+@pytest.mark.parametrize("damage", ["foreign_tenant", "unused_binding", "missing_evidence", "missing_document_source", "missing_goal"])
 def test_rehashed_invalid_current_dependencies_are_rejected(current_archive, tmp_path, damage):
     import shutil
     import hashlib
@@ -192,8 +249,6 @@ def test_rehashed_invalid_current_dependencies_are_rejected(current_archive, tmp
     shutil.copytree(current_archive["archive"], archive)
     if damage in {"foreign_tenant", "unused_binding", "missing_evidence"}:
         path = archive / "current/principal_bindings.jsonl"
-    elif damage == "pending_attention":
-        path = archive / "current/attention_items.jsonl"
     else:
         path = archive / "current/operational_events.jsonl"
     records = [json.loads(line) for line in path.read_bytes().splitlines()]
@@ -207,23 +262,10 @@ def test_rehashed_invalid_current_dependencies_are_rejected(current_archive, tmp
         records.append(extra)
     elif damage == "missing_evidence":
         records[0]["row"]["verification_evidence_id"] = str(uuid4())
-    elif damage == "pending_attention":
-        from tests.portable.test_portable_restore_full_schema import _fixture_fact_rows
-        records = [json.loads(json.dumps(next(row for row in _fixture_fact_rows().values()
-                   if row["source_table"] == "eva_core.attention_items")))]
-        records[0]["row"]["kind"] = "delegated_work"
-        records[0]["row"]["state"] = "pending"
-    elif damage == "missing_return":
-        records = [record for record in records if not record["row"]["thread_id"].startswith("delegated-delivery:")]
     elif damage == "missing_document_source":
         records = [record for record in records if record["row"]["event_type"] != "INGRESS_COMMITTED"]
     elif damage == "missing_goal":
         records = [record for record in records if not record["row"]["thread_id"].startswith("goal:")]
-    elif damage == "orphan_waiting_goal":
-        extra = json.loads(json.dumps(next(record for record in records if record["row"]["event_type"] == "GOAL_ADMITTED")))
-        extra["row"]["thread_id"] = "goal:" + "f" * 64
-        extra["primary_key"]["thread_id"] = extra["row"]["thread_id"]
-        records.append(extra)
     for record in records:
         record["row_sha256"] = hashlib.sha256(canonical_json_bytes(record["row"])).hexdigest()
     path.write_bytes(b"".join(canonical_json_bytes(record) + b"\n" for record in records))
@@ -236,11 +278,8 @@ def test_rehashed_invalid_current_dependencies_are_rejected(current_archive, tmp
         "foreign_tenant": "identity tenant differs",
         "unused_binding": "dependency closure is not exact",
         "missing_evidence": "verification evidence is not in the same installation",
-        "pending_attention": "settled attention",
-        "missing_return": "unreturned Telegram result",
         "missing_document_source": "source ingress dependency missing",
-        "missing_goal": "terminal, admitted document work",
-        "orphan_waiting_goal": "all durable goals to be terminal",
+        "missing_goal": "matching admitted document work",
     }
     with pytest.raises(ValueError, match=expected[damage]):
         read_current_archive(archive)

@@ -1,0 +1,117 @@
+{
+  "contract": "EvaRestoreHoldEvidence/v1",
+  "date": "2026-09-23",
+  "status": "source_tested_reviewed_not_installed",
+  "sourceBase": "d3a747e9",
+  "sourceOverlay": true,
+  "postgres": "16.13",
+  "sourceHashes": {
+    "eva2/src/eva/adapters/postgres/current_catalog.py": "e920ad751655945eca554743a6ff83d2f644d654d023e6cc3a4bf8c2b85b6859",
+    "eva2/src/eva/bootstrap/delegated_work_service.py": "a6ff6c4c3d2bfc78a74bd218509ce7a7bbcf736eeff0795111705e1566c49dcb",
+    "eva2/src/eva/bootstrap/runtime.py": "4762562ae35a51092068e74f508b9d015bb28d228c9fcb7812623432ad2d5bc1",
+    "eva2/src/eva/operations/durable_goal_worker.py": "7f9c248e08c01206a55cb7d67c22bf6f96089b9821f8300ca5d6181a1ef7d917",
+    "eva2/src/eva/operations/install_schema.py": "decebe24b11fb634a6ef9c91167e1355e7abcea8491000617e23f23d58802fa1",
+    "eva2/tests/bootstrap/test_delegated_work_service.py": "dc44a7a9a1cfccd20d99f2573d9a31a8d52b28e58887be8c410c9777f72c97bf",
+    "eva2/tests/operations/test_install_schema.py": "e3a94df2b13260efe8375fb80b2d1cd306c0a81304b8bc62c3a0991cd6ec9fdc",
+    "eva2/tests/portable/test_portable_v2_current_work.py": "b8aa1f6b550e412889a669ce5580ac4a1abcd84622c31e66dfd85c07b894073a",
+    "eva2/tools/managed_b_candidate/release_inputs.py": "23ba5168ec132e17ed031dd9eb7c233a700f361e845518a530e47c8a285d8e72",
+    "eva2/tools/portable_v2_export.py": "f5fcceffae37c5b5f51ce87751831d1abd0fccb18f4832194bd784607a26811e",
+    "eva2/tools/portable_v2_profile.py": "8ac85e1f88c247f594973b119c451a7503163749c91718d2eaad60f55a017d90",
+    "eva2/tools/portable_v2_restore.py": "5986b71f2f2085bd7e21efe9cc7c14d57dbdee2fc0dac001b40a0f76e847cf53",
+    "eva2/tools/portable_v2_validation.py": "6201d0c7628ed37745853140a1f8db9c76d23db6b9aacc7d734c1acb4354350f",
+    "eva2/migrations/versions/4e_0009_restore_hold.py": "23efe84e217c7aaf285240655b383c8be7ffd691fdf5e98536dcf836439bc1ff",
+    "eva2/src/eva/operations/restore_activation.py": "5e0c6125e6806ecb11335d6c5eb208ab5b6acc242468e91c65039dde79f2b136"
+  },
+  "proof": [
+    "Encrypted archive restores exact StoredDelegatedWork values for acknowledged, ambiguous, claimed, stopped, admitted, call_started and undelivered work",
+    "Real runtime-scoped waiting and cancelled document goals and slot claims retained",
+    "Same restore transaction writes a new local database hold; fresh external restore revocation leaves records and hold absent",
+    "Actual core, research and durable-goal composition entrypoints refuse held database before work starts",
+    "Runtime database role cannot remove restore hold",
+    "Legacy v1 wizard remains compatible on schema9"
+  ],
+  "limits": [
+    "Source overlay, not installed core or worker packages; old binaries do not respect the hold",
+    "No operator release implementation or automatic replay; this is preserve-and-hold only",
+    "No actual native document/CAS materialization failure proof or Hindsight restore",
+    "No controlled resumption, source-worker fencing, private session reactivation, full installation or owner acceptance",
+    "Legacy v1 subarchive keeps its existing external-work restrictions"
+  ],
+  "attempts": [
+    {
+      "name": "transactional-hold",
+      "note": "Schema metadata missing new table; corrected before retry.",
+      "summary": "2 errors in 3.71s",
+      "log": "/var/lib/eva2/portable-v2-20260922/transactional-hold.log",
+      "sha256": "6edd4681cfb442c91e7c67058941b461eba0c8de6fd70be690437696373ab2f5"
+    },
+    {
+      "name": "hold-catalog",
+      "note": "Constraint names differed from migration; aligned names.",
+      "summary": "2 errors in 3.58s",
+      "log": "/var/lib/eva2/portable-v2-20260922/hold-catalog.log",
+      "sha256": "261883e5d57e026341fe04e0eb799f1846e98974de6345c05c200d6da8296d25"
+    },
+    {
+      "name": "hold-constraints",
+      "note": "2 passed: hold and transactional revocation.",
+      "summary": "2 passed in 10.99s",
+      "log": "/var/lib/eva2/portable-v2-20260922/hold-constraints.log",
+      "sha256": "9799b5553d460e5e649db85dd4ac71b81c92056f014a1f5e563c7278d77b0b88"
+    },
+    {
+      "name": "open-work-held",
+      "note": "Fixture left admitted work before succeed helper; worker correctly claimed it and rejected mismatched result. Reordered fixture.",
+      "summary": "8 errors in 4.36s",
+      "log": "/var/lib/eva2/portable-v2-20260922/open-work-held.log",
+      "sha256": "6c5fccce0ec413f6fce8cbc4e8993aee2059f799cd2c15d1bd0cd2cc113dce9f"
+    },
+    {
+      "name": "open-work-order",
+      "note": "7 passed,1 assertion mismatch: undelivered status is ready, not pending. Corrected assertion.",
+      "summary": "1 failed, 7 passed in 12.93s",
+      "log": "/var/lib/eva2/portable-v2-20260922/open-work-order.log",
+      "sha256": "a09b86f7c8ef7189d0bceeeb89c3ba7a36cd62b2898fc15cfdbbc781d314a2ab"
+    },
+    {
+      "name": "waiting-doc-preserved",
+      "note": "Added actual waiting document; roundtrip passed.",
+      "summary": "1 passed in 7.90s",
+      "log": "/var/lib/eva2/portable-v2-20260922/waiting-doc-preserved.log",
+      "sha256": "af16903adc462d049ae837d35e881bb5672f1b8649c0dbc1c333add24bd7a61b"
+    },
+    {
+      "name": "runtime-hold-entrypoints",
+      "note": "All three actual composition entrypoints block; roundtrip passed.",
+      "summary": "1 passed in 8.30s",
+      "log": "/var/lib/eva2/portable-v2-20260922/runtime-hold-entrypoints.log",
+      "sha256": "a106d1cf6476e0356556caccababd5be8d5774404d677dbf6aceca8f285acfb2"
+    },
+    {
+      "name": "held-open-final",
+      "note": "23 selected v2/schema/composition cases passed.",
+      "summary": "23 passed in 14.56s",
+      "log": "/var/lib/eva2/portable-v2-20260922/held-open-final.log",
+      "sha256": "3ec05322b585df518d9a3edb9743c8a79131452ea1b5c39b177f170599288468"
+    },
+    {
+      "name": "v1-new-head",
+      "note": "Legacy wizard cases passed on new schema.",
+      "summary": "4 passed in 18.68s",
+      "log": "/var/lib/eva2/portable-v2-20260922/v1-new-head.log",
+      "sha256": "c28752ccec201d02d91857c019eedf5883d83b02529c54f257035458f4d934fe"
+    },
+    {
+      "name": "exact-work-state",
+      "note": "Strengthened post-review equality assertions compare complete source/restored work including exact call IDs and leases; passed.",
+      "summary": "1 passed in 7.82s",
+      "log": "/var/lib/eva2/portable-v2-20260922/exact-work-state.log",
+      "sha256": "b222278dc07605104e20dabfc55cd3a5040df9ff54cd334f60da66842754864d"
+    }
+  ],
+  "review": "eva2/reviews/portable-v2-hold-20260923.md",
+  "uniqueSelectedCases": 27,
+  "productionChanged": false,
+  "paidProviderCalls": 0,
+  "creditCost": "unknown"
+}

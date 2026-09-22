@@ -232,6 +232,26 @@ sa.Index(
     delegated_work_runs.c.updated_at,
 )
 
+# Restore control is local to the empty target, never portable execution authority.
+restore_activation = sa.Table(
+    "restore_activation", metadata,
+    sa.Column("singleton", sa.Boolean(), primary_key=True, server_default=sa.text("true")),
+    sa.Column("restore_id", postgresql.UUID(as_uuid=True), nullable=False),
+    sa.Column("archive_sha256", sa.Text(), nullable=False),
+    sa.Column("tenant_id", postgresql.UUID(as_uuid=True), nullable=False),
+    sa.Column("installation_id", postgresql.UUID(as_uuid=True), nullable=False),
+    sa.Column("runtime_tenant_id", sa.Text(), nullable=False),
+    sa.Column("runtime_installation_id", sa.Text(), nullable=False),
+    sa.Column("target_database_oid", postgresql.OID(), nullable=False),
+    sa.Column("held", sa.Boolean(), nullable=False, server_default=sa.text("true")),
+    sa.Column("release_authority_sha256", sa.Text()),
+    sa.CheckConstraint("singleton", name="restore_activation_singleton_check"),
+    sa.CheckConstraint("archive_sha256 ~ '^[a-f0-9]{64}$'", name="restore_activation_archive_sha256_check"),
+    sa.CheckConstraint("(held AND release_authority_sha256 IS NULL) OR "
+        "(NOT held AND release_authority_sha256 IS NOT NULL AND release_authority_sha256 ~ '^[a-f0-9]{64}$')", name="restore_activation_check"),
+    schema="eva_core",
+)
+
 del _attention, _kind_constraints, _table
 
 

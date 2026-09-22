@@ -16,7 +16,7 @@ from eva.application.portable_archive import canonical_json_bytes
 from tools.postgres_portable_export import CANONICAL_EXPORT_SPECS
 
 CONTRACT = "EvaPortableArchive/v2"
-SCHEMA_HEAD = "4e_0008_portable_current"
+SCHEMA_HEAD = "4e_0009_restore_hold"
 EXTERNAL_REQUIREMENTS = (
     "native_document_artifacts_and_journals_require_separate_verified_relocation",
     "hindsight_semantic_banks_require_separate_verified_restore_or_rebuild",
@@ -73,6 +73,7 @@ PROFILE = {
     "current_specs": CURRENT_SPECS,
     "attention_spec": ATTENTION_SPEC,
     "dependency_specs": DEPENDENCY_SPECS,
+    "activation_policy": "transactional_database_hold_before_runtime_start",
     "checkpoint_policy": "rebuild_from_validated_events_in_restore_transaction",
     "external_requirements": EXTERNAL_REQUIREMENTS,
 }

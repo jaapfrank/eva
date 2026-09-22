@@ -77,7 +77,7 @@ def validate_identity_extension(records, base_identity, *, tenant_id):
 
 
 def validate_current_records(records, *, tenant_id, installation_id, runtime_identity, created_at):
-    snapshot_at = datetime.fromisoformat(created_at.replace("Z", "+00:00"))
+    datetime.fromisoformat(created_at.replace("Z", "+00:00"))
     scopes = timeline_scopes(tenant_id, installation_id, runtime_identity)
     principals = {row["row"]["principal_id"] for row in records["eva_core.principals"]}
     bindings = {row["row"]["principal_binding_id"]: row["row"]["principal_id"]
@@ -103,32 +103,10 @@ def validate_current_records(records, *, tenant_id, installation_id, runtime_ide
         events_by_key.setdefault(key, []).append(event)
         if event.event_type == "DOCUMENT_SLOT_CLAIMED":
             document_claims.append(event)
-    def require_return_fence(work_id, owner, binding, *, telegram=False, route=None):
-        if telegram:
-            thread = "delegated-delivery:" + canonical_sha256({"work_id": work_id})
-            state = last.get((tenant_id, installation_id, thread))
-            if state is None or state.phase not in {"delivery_claimed", "delivery_acknowledged", "delivery_ambiguous"}:
-                raise ValueError("current archive contains an unreturned Telegram result")
-            return
-        for key, state in last.items():
-            if key[:2] != (tenant_id, installation_id) or not key[2].startswith("private-work-return:"):
-                continue
-            data = events_by_key[key][0].payload["data"]
-            bound = data.get("route", {})
-            expected_thread = "private-work-return:" + canonical_sha256(bound) + ":" + work_id
-            if (key[2] == expected_thread and data.get("work_id") == work_id
-                    and bound.get("owner") == owner and bound.get("binding") == binding
-                    and (route is None or bound == route)
-                    and state.phase in {"claimed", "acknowledged"}):
-                return
-        raise ValueError("current archive contains an unreturned private result")
-
     for record in records["eva_core.attention_items"]:
         raw = decode_column_preserving_record(record, table=ATTENTION_SPEC["table"], table_specs=ALL_SPECS)
         if (raw["tenant_id"], raw["installation_id"]) != (tenant_id, installation_id):
             raise ValueError("attention installation differs")
-        if raw["state"] in {"pending", "claimed"}:
-            raise ValueError("current archive requires settled attention")
     for event in document_claims:
         import json
         from eva.providers.document_goal_plan import DocumentGoalPlan, PreparedDocumentGoal
@@ -156,18 +134,12 @@ def validate_current_records(records, *, tenant_id, installation_id, runtime_ide
         goal_key = (str(source_scope.tenant_id), str(source_scope.installation_id), goal_thread)
         goal_events = events_by_key.get(goal_key)
         if (not goal_events or goal_events[0].event_type != "GOAL_ADMITTED"
-                or goal_events[0].payload["data"] != definition.goal.to_payload()
-                or last[goal_key].phase not in {"goal_completed", "goal_cancelled", "goal_needs_help", "goal_delivery_failed"}):
-            raise ValueError("current archive requires terminal, admitted document work")
+                or goal_events[0].payload["data"] != definition.goal.to_payload()):
+            raise ValueError("current archive requires matching admitted document work")
         binding = data.get("return_binding")
         if binding is not None and (binding["owner_principal_id"] != plan.owner_principal_id
                 or bindings.get(binding["principal_binding_id"]) != plan.owner_principal_id):
             raise ValueError("document private return owner dependency missing")
-        if binding is not None and last[goal_key].phase == "goal_completed":
-            route = {"owner": binding["owner_principal_id"], "binding": binding["principal_binding_id"],
-                     "conversation": binding["conversation_id"], "episode": binding["episode_id"]}
-            require_return_fence(plan.goal_id, plan.owner_principal_id, binding["principal_binding_id"],
-                telegram=binding["channel"] == "telegram_private", route=route)
     for record in records["eva_core.delegated_work_runs"]:
         raw = record["row"]
         if (raw["tenant_id"], raw["installation_id"]) != (tenant_id, installation_id):
@@ -179,16 +151,4 @@ def validate_current_records(records, *, tenant_id, installation_id, runtime_ide
         # bindings, output digest, usage, stop state and private-context contracts.
         PostgresDelegatedWorkStore._validated(None, None,
             SimpleNamespace(**typed_row(record, CURRENT_SPECS[1])))
-        if raw["state"] in {"admitted", "call_started"} or raw["lease_owner"] is not None:
-            raise ValueError("archive requires settled delegated execution")
-        if raw["state"] in {"succeeded", "verified"} and raw["spec_payload"]["audience"] == "private":
-            destination_thread = "delegated-destination:" + canonical_sha256({"work_id": raw["work_id"]})
-            telegram = (tenant_id, installation_id, destination_thread) in last
-            require_return_fence(raw["work_id"], raw["owner_principal_id"], raw["principal_binding_id"], telegram=telegram)
-    for key, state in last.items():
-        if key[2].startswith("goal:") and state.phase not in {"goal_completed", "goal_cancelled", "goal_needs_help", "goal_delivery_failed"}:
-            raise ValueError("current archive requires all durable goals to be terminal")
-        if (key[2].startswith("private-return-session:") and state.phase == "open"
-                and state.deadline is not None and state.deadline > snapshot_at):
-            raise ValueError("current archive requires closed or expired voice sessions")
     return last

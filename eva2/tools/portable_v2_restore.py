@@ -30,6 +30,8 @@ def verify_current_target(connection):
     verify_empty_restore_target(connection, table_specs=ALL_SPECS)
     if connection.exec_driver_sql("SELECT COUNT(*) FROM eva_core.operational_checkpoints").scalar_one():
         raise ValueError("current restore checkpoint target is not empty")
+    if connection.exec_driver_sql("SELECT COUNT(*) FROM eva_core.restore_activation").scalar_one():
+        raise ValueError("restore target already has local activation state")
     from tools.portable_v2_profile import SCHEMA_HEAD
     if connection.exec_driver_sql("SELECT version_num FROM public.eva_alembic_version").scalar_one() != SCHEMA_HEAD:
         raise ValueError("current restore target schema differs")
@@ -67,11 +69,15 @@ def restore_current_archive(connection, directory: Path, *, authority_reader,
             values["last_error_fingerprint"] = (None if state.last_error_fingerprint is None
                                                 else bytes.fromhex(state.last_error_fingerprint))
             connection.execute(operational_checkpoints.insert().values(**values))
+        from eva.operations.restore_activation import hold_restored_database
+        restore_id = hold_restored_database(connection, archive_sha256=archive["archive_sha256"],
+            tenant_id=manifest["source_tenant_id"], installation_id=manifest["source_installation_id"],
+            runtime_identity=manifest["runtime_identity"])
         # Forgetting authorization is read freshly after all materialization and
         # inserts, still inside the rollback-capable caller transaction.
         authorize_portable_restore(archive_manifest_raw=raw,
                                    restore_authority_raw=authority_reader())
-    return {"status": "restored", "inserted_records": inserted,
+    return {"status": "restored", "restore_id": restore_id, "inserted_records": inserted,
             "rebuilt_checkpoints": len(archive["projections"]),
             "target_activation": "closed", "object_store_disposition": "private_inactive_preserved",
             "external_requirements": manifest["external_requirements"],

@@ -54,8 +54,9 @@ _KNOWN_FORWARD_REVISIONS = {
     "4e_0006_memory_outbox_erasure",
     "4e_0007_delegated_private",
     "4e_0008_portable_current",
+    "4e_0009_restore_hold",
 }
-_HEAD_REVISION = "4e_0008_portable_current"
+_HEAD_REVISION = "4e_0009_restore_hold"
 
 
 @dataclass(frozen=True, slots=True)
