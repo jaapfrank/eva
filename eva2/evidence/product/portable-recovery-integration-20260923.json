@@ -1,0 +1,43 @@
+{
+  "contract": "EvaPortableRecoveryIntegrationEvidence/v1",
+  "date": "2026-09-23",
+  "sourceBase": "a048853c",
+  "status": "tested_not_installed",
+  "postgres18": {
+    "image": "sha256:7e641ed0cf38285bebfc6151ba48243439dfe9cf3306feab4023a812466cd6c1",
+    "network": "none",
+    "sourceOverlay": true,
+    "productionChanged": false,
+    "serverVersionNum": "180006",
+    "exitCode": 0,
+    "logSha256": "d4e5404beac2eefe1c11895ac1bea03909158d13d7b3e0835f21721d9ce862fd",
+    "summary": "8 passed in 14.18s",
+    "targetRemoved": true
+  },
+  "postgres18Limits": [
+    "Source-overlay tests, not packaged or installed candidate",
+    "First attempt saw temporary init-server readiness; final probe uses TCP readiness and asserts server_version_num=180006 before tests",
+    "Copied runner docstring still says PG16; explicit container/image/version assertion above is authoritative"
+  ],
+  "writerBoundary": {
+    "files": {
+      "tools/eva2_quiescent_cutover.py": "cdc8edc1303a5a6b88eea76d51e70dec6fc6751355fc77cbfab3be964ba1a2d9",
+      "tests/operations/test_eva2_quiescent_cutover.py": "277aaa8ada0f6cde4a108129ac33fff3778745915001d2a6aead055943e2d20c"
+    },
+    "command": "PYTHONPATH=src python3 -m pytest -q -p no:cacheprovider tests/operations/test_eva2_quiescent_cutover.py::test_database_copy_rechecks_all_writers_before_io tests/operations/test_eva2_quiescent_cutover.py::test_database_copy_guard_accepts_stopped_shared_workers",
+    "environment": "WSL host Python3.12, operator environment",
+    "toolOutputChunk": "651894",
+    "result": "9 passed in 0.22s",
+    "firstAttempt": "Runtime-image test collection failed because libsqlite3.so.0 is not present; no tests or product operations ran. Reran in the actual host operator environment.",
+    "liveReadOnlyFinding": "Installed standalone document worker shares exact database-DSN source and destination with the active core, so existing shared-consumer detector includes it.",
+    "claim": "Snapshot and restore recheck known and shared database consumers before database I/O.",
+    "limits": [
+      "No actual cutover or source shutdown executed",
+      "Recheck is not a dynamic pause or atomic startup mutex",
+      "Existing explicit stop, source fencing and before/after attestations remain required",
+      "Does not detect non-Docker writers or the same database accessed through a different credential mount"
+    ]
+  },
+  "productionChanged": false,
+  "review": "eva2/reviews/portable-recovery-integration-20260923.md"
+}

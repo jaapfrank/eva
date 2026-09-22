@@ -1445,9 +1445,17 @@ class SystemBackend:
         finally:
             os.close(descriptor)
 
+    def _require_stopped_database_writers(self, slot: SlotSpec) -> None:
+        # Recheck at the operation boundary, not just during initial preflight.
+        # This also catches a separately managed document worker sharing the DSN.
+        if any(self._is_running(name) for name in
+               (slot.core, slot.delegated_worker, slot.hindsight)):
+            raise QuiescentCutoverError("database operation requires stopped writers")
+        if _shared_database_consumers(retained_core=slot.core, inspected=self._inspect_all()):
+            raise QuiescentCutoverError("database operation has an active shared database consumer")
+
     def snapshot(self, slot: SlotSpec, workspace: Path, label: str) -> DatabaseSnapshot:
-        if self._is_running(slot.core) or self._is_running(slot.hindsight):
-            raise QuiescentCutoverError("database snapshot requires stopped writers")
+        self._require_stopped_database_writers(slot)
         operational_before = self._attest(slot.operational_postgres, "eva2")
         memory_before = self._attest(slot.memory_postgres, "hindsight")
         operational_dump = workspace / f"{label}-operational.dump"
@@ -1525,8 +1533,7 @@ class SystemBackend:
             )
 
     def restore(self, slot: SlotSpec, snapshot: DatabaseSnapshot) -> None:
-        if self._is_running(slot.core) or self._is_running(slot.hindsight):
-            raise QuiescentCutoverError("database restore requires stopped writers")
+        self._require_stopped_database_writers(slot)
         self._recreate_database(slot.operational_postgres, "eva2")
         self._run(
             [

@@ -1014,7 +1014,7 @@
             "title": "Herstel bewaart nu ook wachtend werk",
             "date": "23 september",
             "state": "tested",
-            "result": "Lopend en wachtend onderzoek, onafgeleverd resultaat en wachtend documentproject blijven in de herstelproef behouden. Kern en werkers blijven geblokkeerd tot gecontroleerde vrijgave. Bronreview geslaagd.",
+            "result": "Lopend en wachtend onderzoek, onafgeleverd resultaat en wachtend documentproject blijven in de herstelproef behouden, nu ook getest op jouw PostgreSQL18.6-versie. Kern en werkers blijven geblokkeerd tot gecontroleerde vrijgave. Bronreview geslaagd.",
             "remaining": "Nog niet geïnstalleerd. Vrijgeven en hervatten, echte documentbestanden en extern geheugen zijn nog niet af.",
             "source": "eva2/evidence/product/portable-v2-hold-20260923.json"
           },
@@ -11546,12 +11546,15 @@
           "eva2/deploy/living-core/workspace-create-only/broker-client.mjs",
           "eva2/deploy/living-core/workspace-create-only/project-journal.mjs",
           "eva2/deploy/living-core/workspace-create-only/relocation.mjs",
-          "test/workspace-writer-relocation.test.mjs"
+          "test/workspace-writer-relocation.test.mjs",
+          "eva2/deploy/living-core/workspace-create-only/Dockerfile"
         ],
         "estimate": "45–90 minuten onzeker; creditkosten onbekend, geen modelprovidercalls.",
         "doneWhen": "Echte broker verifieert kopie op andere inodes; oude receipts blijven gelijk, observe schrijft niets, ontbrekende stap maximaal eenmaal; manipulatie en onzekere publicatie weigeren.",
         "installed": false
-      }
+      },
+      "postgres18AndWriterGuard": "eva2/evidence/product/portable-recovery-integration-20260923.json",
+      "currentCompatibility": "Kernherstelbron op exacte PostgreSQL18.6-image:8proeven geslaagd. Snapshot/restore hercontroleert bekende/gedeelde databasewerkers vóór I/O:9gerichte hosttests en review geslaagd. Geen livecutover of pakketinstallatie."
     }
   },
   "activeTaskId": "AU-008",

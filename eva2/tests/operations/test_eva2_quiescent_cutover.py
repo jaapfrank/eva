@@ -1572,3 +1572,36 @@ def test_new_voice_readiness_failure_rolls_back_before_ingress(monkeypatch, tmp_
     assert backend.calls[-8:] == ["stop:4", "snapshot:4:automatic-rollback", "restore:3:reverse",
                                  "start:3", "verify:3", "route:44710", "activate-delivery:3", "start-eva1:3"]
     assert sum(url.endswith("/voice-session/ready") for url in checks) == 1
+
+
+@pytest.mark.parametrize("operation", ["snapshot", "restore"])
+@pytest.mark.parametrize("active", ["core", "delegated", "memory", "document"])
+def test_database_copy_rechecks_all_writers_before_io(monkeypatch, tmp_path, operation, active):
+    slot = _slot(3)
+    backend = SystemBackend()
+    names = {"core": slot.core, "delegated": slot.delegated_worker,
+             "memory": slot.hindsight, "document": "separate-document-worker"}
+    monkeypatch.setattr(backend, "_is_running", lambda name: name == names[active])
+    monkeypatch.setattr(backend, "_inspect_all", lambda: [
+        _container(slot.core, source="/private/source-dsn", running=False),
+        _container(names["document"], source="/private/source-dsn", running=active == "document"),
+    ])
+    monkeypatch.setattr(backend, "_attest", lambda *args: pytest.fail("snapshot read began with a writer running"))
+    monkeypatch.setattr(backend, "_recreate_database", lambda *args: pytest.fail("target changed with a writer running"))
+    with pytest.raises(QuiescentCutoverError, match="stopped writers|active shared database consumer"):
+        if operation == "snapshot":
+            backend.snapshot(slot, tmp_path, "test")
+        else:
+            backend.restore(slot, None)
+
+
+def test_database_copy_guard_accepts_stopped_shared_workers(monkeypatch):
+    slot = _slot(3)
+    backend = SystemBackend()
+    monkeypatch.setattr(backend, "_is_running", lambda name: False)
+    monkeypatch.setattr(backend, "_inspect_all", lambda: [
+        _container(slot.core, source="/private/source-dsn", running=False),
+        _container("separate-document-worker", source="/private/source-dsn", running=False),
+        _container("other-installation-worker", source="/private/other-dsn", running=True),
+    ])
+    backend._require_stopped_database_writers(slot)
