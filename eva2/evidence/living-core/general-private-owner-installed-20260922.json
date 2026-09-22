@@ -1,0 +1,33 @@
+{
+  "startedAt": "2026-09-22T20:05:39.494028+00:00",
+  "phase": "installed_healthy",
+  "sourceCommit": "fad87db7a6a4c6c695f608f7dff3851f48e46d95",
+  "modelCalls": 0,
+  "coreImage": "sha256:409293ea7042fc958002c6c05e4a3c524a179626b8bca9ee5184ee657d150d21",
+  "installedAt": "2026-09-22T20:05:56.744778+00:00",
+  "sameRegisteredCatalogsAcrossPrivateChannels": true,
+  "registeredConnectors": 4,
+  "sameExecutionBindings": true,
+  "databaseReadOnly": true,
+  "externalToolCalls": 0,
+  "externalMessages": 0,
+  "package": {
+    "parent": "sha256:d2e828030ee742c91c51ff4ce64c5582cfdecdc7138ed76bbcdd65ba7527e0b9",
+    "image": "sha256:409293ea7042fc958002c6c05e4a3c524a179626b8bca9ee5184ee657d150d21",
+    "files": {
+      "providers/mcp_autonomy.py": "4b37b3d22cf5de311dbcfea85be2f7073d2fbb3bc654d3679c4fc014e8924730",
+      "adapters/postgres/mcp_connector_registry.py": "d5f89a0e332e3589f9af99135c7633627a5a31f3309b89400a0439311901c464"
+    }
+  },
+  "tests": {
+    "initialPassed": 31,
+    "initialHarnessFailures": 2,
+    "correctedHarnessCasesPassed": 2,
+    "totalSelectedPassed": 33,
+    "notes": "Old mock constructor adapted to resolver kwargs; SQLite library mounted only into test container."
+  },
+  "independentReview": "document_maintenance GO",
+  "ownerAccepted": false,
+  "proofBoundary": "Registered general MCP route and live readonly catalog/binding equivalence; no end-to-end owner conversation or claim for every provider.",
+  "rollbackCompose": "/var/lib/eva2/general-private-owner-20260922/baseline.compose.private.json"
+}

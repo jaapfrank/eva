@@ -1044,15 +1044,15 @@
           }
         ],
         "now": {
-          "title": "Persoonlijke Chrome-bediening bereikbaar vanuit Eva",
-          "detail": "De browserkaart opent nu de bestaande persoonlijke Chrome-bediening. Geen oude containerstatus of misleidende telefoonlink. Interface geïnstalleerd en geserveerde bestanden gecontroleerd.",
-          "state": "Geïnstalleerd · persoonlijke browserproef open",
-          "doneWhen": "Deel op Eva’s computer een tabblad via Open Chrome-bediening en beoordeel zichtbaar werken en overnemen."
+          "title": "Algemene connectoren werken met dezelfde privé-eigenaar",
+          "detail": "Website en privé-Telegram herkennen dezelfde eigenaar voor vier bestaande geregistreerde connectoren. Catalogi en uitvoerrechten zijn live gelijk bevonden; bestaande acties en bronnen blijven behouden.",
+          "state": "Geïnstalleerd en technisch gecontroleerd",
+          "doneWhen": "Jouw gewone taakervaring blijft afzonderlijk te beoordelen."
         },
         "next": {
-          "title": "Dezelfde taaktoegang via de privékanalen",
-          "detail": "Controleer of de algemene toolroute net als documentprojecten dezelfde geverifieerde eigenaar herkent; wijzig alleen bij een aangetoond tekort.",
-          "state": "Volgende gerichte controle"
+          "title": "Hulpwerk volgen en stoppen over privékanalen",
+          "detail": "Controleer bestaande hulpagentbediening en resultaattoegang op dezelfde persoonsgrenzen; hergebruik eerdere levenscyclusproeven en wijzig alleen een aangetoond gat.",
+          "state": "Volgende gerichte stap"
         },
         "ownerAction": {
           "title": "Kom via Telegram terug op een websitegesprek",
@@ -10834,7 +10834,7 @@
           "planningEffortHours": "4–12"
         }
       ],
-      "nextAction": "Controleer of de algemene toolroute net als documentprojecten dezelfde geverifieerde eigenaar herkent; wijzig alleen bij een aangetoond tekort.",
+      "nextAction": "Controleer bestaande hulpagentbediening en resultaattoegang op dezelfde persoonsgrenzen; hergebruik eerdere levenscyclusproeven en wijzig alleen een aangetoond gat.",
       "effortNotice": "Grove planning, lage zekerheid: 40–118 actieve ontwikkeluren plus zeven dagen gezinspraktijk en eventuele externe wachttijd. Geen deadline, creditkosten of gemeten verbruik; per begrensde wijziging aanscherpen na lezing van bestaand bewijs. Hergebruik kan dit verkorten.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Na review, installatie en registratie automatisch volgende uitvoerbare stap; geen algemene wachtstop op gebruikersproeven.",
@@ -11229,6 +11229,29 @@
       "evidence": "eva2/evidence/product/personal-chrome-controls-installed-20260922.json",
       "modelCalls": 0,
       "remaining": "Echte persoonlijke tabdeling/overname en eigenaaracceptatie blijven open; bestaande geïsoleerde herstelproeven niet herhaald."
+    },
+    "generalPrivateOwner20260922": {
+      "status": "installed_live_catalogs_verified",
+      "outcome": "Dezelfde geverifieerde eigenaar gebruikt bestaande algemene tools via website en privé-Telegram.",
+      "finding": "Read-only livecontrole: website toegestaan, privé-Telegram geweigerd omdat algemene MCP-route de bestaande gedeelde eigenaarresolver niet gebruikt.",
+      "scope": "Hergebruik bestaande persoonscontrole, behoud origineel bronbericht en connectorrechten; geen groeps- of speakerrechten.",
+      "estimate": "Eén gerichte wijziging, private-owner regressies, onafhankelijke review en beperkte installatie; nul modelcalls, onbekende ontwikkelcredits.",
+      "owner": "document_private_identity",
+      "doneWhen": [
+        "Beide geverifieerde privékanalen zien dezelfde eigen connectoren",
+        "Andere persoon, groepsgesprek, andere installatie en ingetrokken koppeling geweigerd",
+        "Oorspronkelijke actiebron en replaybinding blijven behouden",
+        "Gerichte tests, review en metadata-only livecontrole geslaagd"
+      ],
+      "ownerAccepted": false,
+      "evidence": "eva2/evidence/living-core/general-private-owner-installed-20260922.json",
+      "modelCalls": 0,
+      "remaining": "Gewone gebruikerservaring blijft open; overige providerfamilies vallen niet automatisch onder dit bewijs.",
+      "accountUsageObservation": {
+        "weeklyUsedPercent": 51,
+        "priorObservedPercent": 50,
+        "meaning": "Gedeelde accountmeter, geen taaktoerekening of creditbedrag."
+      }
     }
   },
   "activeTaskId": "AU-008",
