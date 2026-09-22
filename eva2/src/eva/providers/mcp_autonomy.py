@@ -132,10 +132,16 @@ class McpAutonomyProviderFactory:
         # No mandate file means no import, no authority object, and no meta tools.
         from eva.providers.mcp_owner_authority import McpOwnerAuthority
 
-        authority = McpOwnerAuthority(engine, settings.mandate_file, settings.managed_endpoints_file)
+        from eva.providers.private_owner_authority import configured_private_owner_resolver
+
+        authority = McpOwnerAuthority(engine, settings.mandate_file, settings.managed_endpoints_file,
+            private_owner_resolver=configured_private_owner_resolver(
+                engine, tenant_id=_value("EVA_RUNTIME_TENANT_ID"),
+                installation_id=_value("EVA_RUNTIME_INSTALLATION_ID")))
         registry = PostgresMcpConnectorRegistry(engine, authority.scope,
             authority.owner_principal_id, settings.gateway,
-            authority.authorize_turn, authority.authorize_current)
+            authority.authorize_turn, authority.authorize_current,
+            canonical_owner=authority.canonical_owner)
         registration = McpRegistrationToolAdapter(
             ContextForgeRegistrationClient(settings.registration), registry, authority,
             authority.owner_key, _SourceTurnLoader(engine, authority))

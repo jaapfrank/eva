@@ -74,13 +74,18 @@ class Authority:
     owner_key = "tenant:installation:owner"
     configuration_sha256 = "a" * 64
 
-    def __init__(self, *args):
+    def __init__(self, *args, private_owner_resolver=None):
+        assert private_owner_resolver is None
         self.seen = []
 
     def authorize_turn(self, turn):
         if turn.principal_id != self.owner_principal_id or turn.audience.kind != "private_person":
             raise ConversationConflict("not private owner")
         self.seen.append(turn)
+
+    def canonical_owner(self, turn):
+        self.authorize_turn(turn)
+        return self.owner_principal_id
 
     def authorize_current(self, *, phase, operation_kind):
         pass
@@ -158,7 +163,8 @@ def test_factory_reuses_two_durable_ports_without_registration_io(monkeypatch):
     monkeypatch.setitem(sys.modules, "eva.providers.mcp_owner_authority",
         SimpleNamespace(McpOwnerAuthority=Authority))
     records = []
-    def registry(*args):
+    def registry(*args, canonical_owner):
+        assert callable(canonical_owner)
         records.append(args)
         return SimpleNamespace()
     monkeypatch.setattr(module, "PostgresMcpConnectorRegistry", registry)

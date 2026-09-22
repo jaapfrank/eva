@@ -58,6 +58,7 @@ class PostgresMcpConnectorRegistry:
         gateway_config: McpGatewayConfig,
         authorize_turn: Callable[[ConversationTurn], object],
         authorize_current: Callable[..., object],
+        *, canonical_owner: Callable[[ConversationTurn], str] | None = None,
     ) -> None:
         if not isinstance(owner_principal_id, str) or not owner_principal_id.strip():
             raise ValueError("MCP registry owner is required")
@@ -67,6 +68,7 @@ class PostgresMcpConnectorRegistry:
             raise ValueError("MCP registry authorization callbacks are required")
         self._scope = scope
         self._owner = owner_principal_id
+        self._canonical_owner = canonical_owner
         self._config = gateway_config
         self._authorize_turn = authorize_turn
         self._authorize_current = authorize_current
@@ -118,6 +120,9 @@ class PostgresMcpConnectorRegistry:
             "conversation_id": turn.conversation_id,
             "source_message_id": turn.message_id,
         }
+        if turn.principal_id != self._owner:
+            # Host-admitted canonical ownership is separate from immutable ingress.
+            registration["source"]["canonical_owner_principal_id"] = self._owner
         hashes = {spec.configuration_sha256 for spec in specs}
         for _ in range(8):
             state, records = self._snapshot()
@@ -203,8 +208,10 @@ class PostgresMcpConnectorRegistry:
         raise ConversationConflict("MCP registry changed concurrently; retry revocation")
 
     def _require_owner(self, turn: ConversationTurn) -> None:
-        if (turn.principal_id != self._owner or turn.audience.kind != "private_person"
-                or turn.audience.principal_id != self._owner
+        owner = (turn.principal_id if self._canonical_owner is None
+                 else self._canonical_owner(turn))
+        if (owner != self._owner or turn.audience.kind != "private_person"
+                or turn.audience.principal_id != turn.principal_id
                 or external_timeline_scope(
                     turn.tenant_id, turn.installation_id,
                     missing_error="MCP registry scope is required",
@@ -306,7 +313,8 @@ class PostgresMcpConnectorRegistry:
                                 if k not in {"registration_sha256", "source"}}
                     if (connector_id in records
                             or canonical_sha256(identity) != record["registration_sha256"]
-                            or record["source"]["principal_id"] != self._owner):
+                            or (record["source"]["principal_id"] != self._owner
+                                and record["source"].get("canonical_owner_principal_id") != self._owner)):
                         raise ConversationConflict("MCP registry immutable registration is invalid")
                     records[connector_id] = {**record, "revoked": False}
                 elif data.get("action") == "revoked":
