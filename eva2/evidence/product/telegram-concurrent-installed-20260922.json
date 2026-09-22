@@ -1,0 +1,25 @@
+{
+  "sourceCommit": "77fdfc85f945de0ece6a12e074da9cda9de2aae2",
+  "beforePid": "56106",
+  "beforeHash": "b1000a7ffc039645e1d39124b968dc4468a185282fe046b26c298d43db59e53c",
+  "startedAt": "2026-09-22T17:20:32.767825+00:00",
+  "rollbackFile": "/home/administrator/project/.eva2-artifacts/telegram-concurrent-install-20260922/telegram.js.before",
+  "externalProbeMessages": 0,
+  "status": "installed_process_active",
+  "afterPid": "3910554",
+  "afterHashes": {
+    "src/integrations/telegram.js": "0e333f146c0b981de925e0e1d09a4edb8d2c7f3afaee303077099ed90ce4df62",
+    "src/integrations/telegrampolling.js": "45a3838b95fd91aab0255afc89b3dd4d2335fc460adeb719e5f1f5124e71f4ad"
+  },
+  "installedAt": "2026-09-22T17:20:35.958170+00:00",
+  "ownerAccepted": false,
+  "liveConversationTrial": false,
+  "startupCheck": {
+    "processActive": true,
+    "startupObserved": true,
+    "pollingStartErrorObserved": false,
+    "uncaughtErrorObserved": false,
+    "telegramConnectedTimelineCount": 1
+  },
+  "proofBoundary": "Installed reviewed source and healthy process startup; no synthetic Telegram messages sent. Real owner overlap trial remains open."
+}

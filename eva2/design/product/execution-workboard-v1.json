@@ -1003,6 +1003,14 @@
         "checkedAt": "2026-09-22",
         "deliveries": [
           {
+            "title": "Telegram: tussenvragen hoeven niet meer achter eerder werk te wachten",
+            "date": "22 september",
+            "state": "installed",
+            "result": "De echte /eva2-ingang verwerkt meerdere vragen naast elkaar. Gericht getest, onafhankelijk beoordeeld en geïnstalleerd. Elk antwoord blijft gekoppeld aan zijn eigen vraag.",
+            "remaining": "Echte Telegram-proef met jouw vragen staat open. Dit versnelt niet automatisch het modelantwoord en sluit wachtrijen bij overbelasting niet uit.",
+            "source": "eva2/evidence/product/telegram-concurrent-installed-20260922.json"
+          },
+          {
             "title": "Korte ontvangst zonder GPT-wachttijd",
             "date": "22 september",
             "state": "installed",
@@ -1017,37 +1025,29 @@
             "result": "Een achtergrondresultaat kan terugkomen op de echte tekstgesprekpagina en in de oorspronkelijke actieve privéspraaksessie. De routes zijn geïnstalleerd en gecontroleerd.",
             "remaining": "Jouw volledige proef met een nieuwe onderzoeksopdracht en werkelijk horen blijft open. De huishoudspeaker volgt apart.",
             "source": "eva2/evidence/product/private-result-return-installed-20260922.json"
-          },
-          {
-            "title": "Voice PE: server geïnstalleerd",
-            "date": "22 september",
-            "state": "installed",
-            "result": "De speakerdienst draait en de Eva-kern is aangesloten.",
-            "remaining": "Het apparaat zelf en de netwerktoegang moeten nog worden aangesloten en getest.",
-            "source": "eva2/evidence/product/voice-speaker-activation-20260922.json"
           }
         ],
         "now": {
-          "title": "Bestaande Telegram-correctie afronden",
-          "detail": "De correctie is gebouwd en onafhankelijk beoordeeld: een tussenvraag kan door terwijl een eerdere vraag loopt. Nog niet geïnstalleerd. De twee bouwtaken hebben een stopinstructie gekregen om ontwikkelverbruik te beperken; de coördinator rondt bestaand werk één voor één af.",
-          "state": "Broncode getest en beoordeeld — installatie open",
-          "doneWhen": "Ontvangst is hoorbaar zonder GPT-wachttijd en een tussenvraag wordt vóór voltooiing van het eerdere werk beantwoord. Na tests, review en installatie volgt een concrete herhaalproef."
+          "title": "Telegram geïnstalleerd; huishoudintegratie ligt klaar",
+          "detail": "De correctie voor tussenvragen staat live. De twee bouwtaken zijn niet opnieuw gestart. De coördinator beoordeelt hierna de al gebouwde aansluiting van huishoudspraak op achtergrondwerk.",
+          "state": "Telegram live — praktijkproef open",
+          "doneWhen": "Telegram-proef afzonderlijk bevestigd; bestaande huishoudintegratie beoordeeld en geïnstalleerd met terugweg."
         },
         "next": {
-          "title": "Telegram veilig installeren en live controleren",
-          "detail": "Behoud de bestaande installatie en deadlinecorrectie, controleer lopend werk en installeer alleen de beoordeelde Telegramwijziging met terugweg. Daarna volgt de klaarliggende huishoudintegratie. Onderzoeksvolledigheid blijft een afzonderlijk open tekort.",
+          "title": "Bestaande huishoudintegratie beoordelen",
+          "detail": "Controleer de klaarliggende wijziging en bestaande tests voor gedeelde spraaksessies en taakresultaten. Daarna veilig installeren. Het tekort in onderzoeksvolledigheid blijft open.",
           "state": "Hierna"
         },
         "ownerAction": {
-          "title": "Probeer de korte ontvangst op de spraakpagina",
-          "url": "http://localhost:44716/",
-          "linkLabel": "Open Praten met Eva",
+          "title": "Probeer een tussenvraag in Telegram",
+          "linkLabel": "Projectoverzicht",
+          "url": "http://localhost:44712/",
           "steps": [
-            "Ververs de pagina en begin een nieuw spraakgesprek.",
-            "Zeg “Hallo”. Eva hoort eerst kort “Een momentje” te zeggen terwijl het echte antwoord wordt gemaakt.",
-            "Onderbreek gerust en stel een andere vraag. Meld of de ontvangst snel hoorbaar is en onderbreken blijft werken."
+            "Open je bestaande privégesprek met Eva in Telegram.",
+            "Stuur /eva2 Zoek uit wat Home Assistant Cloud doet voor spraak, met bronnen.",
+            "Stuur direct daarna /eva2 Hoe gaat het met jou? Wacht niet op het onderzoeksantwoord."
           ],
-          "expected": "Dit test alleen de nieuwe ontvangst op de website. Het wachten op tussenvragen in Telegram en de onvolledige onderzoeksafronding zijn nog niet opgelost; die hoef je niet opnieuw te bewijzen."
+          "expected": "De tweede vraag kan een eigen antwoord krijgen terwijl het onderzoek nog loopt. Het onderzoek moet daarna ook terugkomen bij zijn oorspronkelijke bericht. Meld het als de tweede vraag toch op het eerste antwoord wacht; modelvertraging blijft mogelijk."
         },
         "maintenance": "Bij een oplevering, gewijzigde opdracht of blokkade worden resultaat, huidig werk en volgende stap samen bijgewerkt. Technisch afgerond, geïnstalleerd en door jou geaccepteerd blijven apart."
       }
@@ -10811,7 +10811,7 @@
           "planningEffortHours": "4–12"
         }
       ],
-      "nextAction": "Behoud de bestaande installatie en deadlinecorrectie, controleer lopend werk en installeer alleen de beoordeelde Telegramwijziging met terugweg. Daarna volgt de klaarliggende huishoudintegratie. Onderzoeksvolledigheid blijft een afzonderlijk open tekort.",
+      "nextAction": "Controleer de klaarliggende wijziging en bestaande tests voor gedeelde spraaksessies en taakresultaten. Daarna veilig installeren. Het tekort in onderzoeksvolledigheid blijft open.",
       "effortNotice": "Grove planning, lage zekerheid: 40–118 actieve ontwikkeluren plus zeven dagen gezinspraktijk en eventuele externe wachttijd. Geen deadline, creditkosten of gemeten verbruik; per begrensde wijziging aanscherpen na lezing van bestaand bewijs. Hergebruik kan dit verkorten.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Na review, installatie en registratie automatisch volgende uitvoerbare stap; geen algemene wachtstop op gebruikersproeven.",
@@ -10997,7 +10997,7 @@
       "ownerAccepted": false
     },
     "telegramConcurrentConversation20260922": {
-      "status": "source_reviewed_installation_pending",
+      "status": "installed_owner_overlap_trial_open",
       "ownerReport": "Telegram /eva2 verwerkt uitgebreidere adviesvraag en tussenvraag hoe gaat het met jou stap voor stap; tussenvraag krijgt niet tussendoor antwoord.",
       "accepted": false,
       "investigatorTaskId": "01a0c8a6-d360-7a82-a630-af4bfccbd57c",
@@ -11012,7 +11012,8 @@
         "modelCalls": 0,
         "telegramMessages": 0
       },
-      "installed": false
+      "installed": true,
+      "installationEvidence": "eva2/evidence/product/telegram-concurrent-installed-20260922.json"
     },
     "researchCompletionOwnerFinding20260922": {
       "status": "owner_quality_trial_failed",
