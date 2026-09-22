@@ -1,0 +1,28 @@
+{
+  "date": "2026-09-22",
+  "sourceCommit": "70d55423",
+  "outcome": "Delivered conversation basis stays visible alongside broader ambitions; superseded Telegram trial no longer labels the current technical delivery failed.",
+  "review": "Independent source GO from voice task 01a0c8a6-d360-7a82-a630-af4bfccbd57c; current dated repair chronology checked, no owner acceptance inferred.",
+  "tests": [
+    "verify-project-completion.mjs passed including retained aggregation/acceptance and technical repair chronology",
+    "Vite project build passed",
+    "Candidate and live browser: delivered conversation result visible, all-or-nothing NIET KLAAR absent, Oordeel na herstel open visible, accepted memory retained"
+  ],
+  "live": true,
+  "url": "http://localhost:44712/",
+  "service": "eva2-project-dashboard.service only",
+  "rollback": "Source versions before70d55423 and project assets at /tmp/eva-project-before-scope-fix-20260922; rebuild/restart project preview only.",
+  "limits": "Delivery label is scoped historical proof, not a new whole-product acceptance or current availability check. Same-day future trial chronology needs timestamp precision.",
+  "manifest": {
+    "index.html": {
+      "file": "assets/index-B2bAIpga.js",
+      "name": "index",
+      "src": "index.html",
+      "isEntry": true,
+      "css": [
+        "assets/index-ClzOWv97.css"
+      ]
+    }
+  },
+  "modelCalls": 0
+}

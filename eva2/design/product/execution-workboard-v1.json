@@ -10557,7 +10557,20 @@
     },
     "ownerCorrectionProductAgents20260922": {
       "decision": "Dashboardonderhoud telt niet als tweede productbouwtaak. Tweede uitvoerder naar echte achtergrondtooluitvoering; coördinator herstelt statusmatrix.",
-      "preserve": "Afgeronde opleveringen blijven afgerond; bredere ambities apart tonen zonder acceptatie te verzinnen."
+      "preserve": "Afgeronde opleveringen blijven afgerond; bredere ambities apart tonen zonder acceptatie te verzinnen.",
+      "matrixCorrection": {
+        "state": "installed_live_checked",
+        "evidence": "eva2/evidence/product/delivery-status-continuity-2026-09-22.json"
+      }
+    },
+    "contactReasoningNone20260922": {
+      "status": "bounded_compatibility_check_in_progress",
+      "basis": "Official Luna API supports none; current Eva validators reject none; subscription compatibility unproven. chat-latest has no tool-search support and is not a proven direct replacement.",
+      "sources": [
+        "https://developers.openai.com/api/docs/models/gpt-5.6-luna",
+        "https://developers.openai.com/api/docs/models/chat-latest"
+      ],
+      "limit": "At most one isolated compatibility request and, only if accepted, one actual-route measurement; no model sweep or live switch without review."
     }
   },
   "activeTaskId": "AU-008",
