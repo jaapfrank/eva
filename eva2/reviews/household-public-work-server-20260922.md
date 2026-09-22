@@ -86,3 +86,27 @@ context; keep speech interruption separate from task stop. Actual authenticated
 HTTP transport, media chunk/cancellation behavior and registered physical-device
 trials remain unverified by this server slice. Runtime installation, live checks,
 rollback and owner acceptance remain separate statuses.
+
+## Independent HTTP follow-up review
+
+Decision: **GO for HTTP delta `0c537ec8` against `5cb887b0`**, reviewed on
+22 September 2026. Read all six changed files; no blocking findings for subsequent
+composition. Existing device/voice admission precedes work access, and the
+explicit server rechecks current research authority, device and token. Closed
+request fields and the operation matrix reject private identity, destination
+substitution, irrelevant fields and query parameters.
+
+`control_turn()` preserves session binding without admitting fictitious user
+messages. Claims and authorization still verify the saved task's original
+ingress. With no composed server the readiness flag is false and authenticated
+operations return 503. There is no runtime or media activation in this delta.
+
+The coordinator reports 7 passed, 15 deselected in 5.11 seconds. The two new
+PostgreSQL HTTP cases cover empty/populated polling and authorization/acknowledgement
+without ingress growth, other sessions/devices, revocation and closed sessions;
+existing stream/default-off tests cover the retained boundary. The reviewer read
+these tests and did not redundantly rerun this small green selection.
+
+Audience-based provider selection, media lifecycle/chunk authorization, cached
+result privacy, paired core/worker installation and physical-device trials remain
+open. This API source GO is not a claim of an integrated or installed feature.
