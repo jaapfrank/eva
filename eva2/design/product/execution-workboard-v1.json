@@ -1003,6 +1003,14 @@
         "checkedAt": "2026-09-22",
         "deliveries": [
           {
+            "title": "Herstelcontrole: resultaat en geheugenbron blijven behouden",
+            "date": "22 september",
+            "state": "tested",
+            "result": "Eén gerichte procesuitvalproef op de verpakte kern slaagt en is onafhankelijk beoordeeld. Resultaat en opgeslagen geheugenbron blijven intact; geen dubbele uitvoering of blinde heraanbieding.",
+            "remaining": "Alleen testcode toegevoegd; geen nieuwe functie geïnstalleerd. Gezamenlijke browser-, spraak- en computerherstartproef blijft open.",
+            "source": "eva2/reviews/combined-process-recovery-20260922.md"
+          },
+          {
             "title": "Nieuwe documentresultaten automatisch terugbrengen",
             "date": "22 september",
             "state": "installed",
@@ -1052,10 +1060,10 @@
           }
         ],
         "now": {
-          "title": "Werk en geheugen behouden bij herstel",
-          "detail": "Bestaande browserherstelproef uitbreiden met duurzame taak- en geheugenopslag op dezelfde geïsoleerde kandidaat. Telegram-koppeling en fysieke Voice PE-proef blijven apart open.",
-          "state": "Gerichte integratieproef in voorbereiding",
-          "doneWhen": "Herstart verliest geen taakresultaat of geheugen en veroorzaakt geen late browseractie of dubbele uitvoering."
+          "title": "Gezamenlijk herstel nog afronden",
+          "detail": "De ontbrekende procesgrens voor echte taak- en geheugenopslag is nu getest. Browserherstel en spraak moeten nog op dezelfde complete kandidaat worden verbonden.",
+          "state": "Deelcontrole klaar · integratie open",
+          "doneWhen": "Eén gezamenlijke herstelproef behoudt data en taakstatus, zonder late browseractie, dubbele uitvoering of vanzelf ingeschakelde microfoon."
         },
         "next": {
           "title": "Gesprek tijdens werk op de echte ingangen",
@@ -10842,7 +10850,7 @@
           "planningEffortHours": "4–12"
         }
       ],
-      "nextAction": "Geïsoleerde gezamenlijke herstelproef uitvoeren en onafhankelijk beoordelen. Telegram-berichtkoppeling wacht op verduidelijking; fysieke Voice PE-route wacht op apparaattoegang/proef.",
+      "nextAction": "Bestaande browserherstelharnas verbinden met het nieuwe duurzame procesbewijs op dezelfde kandidaat; geen herhaling van reeds geslaagde losse proeven. Telegram-verduidelijking en fysieke Voice PE blijven apart open.",
       "effortNotice": "Grove planning, lage zekerheid: 40–118 actieve ontwikkeluren plus zeven dagen gezinspraktijk en eventuele externe wachttijd. Geen deadline, creditkosten of gemeten verbruik; per begrensde wijziging aanscherpen na lezing van bestaand bewijs. Hergebruik kan dit verkorten.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Na review, installatie en registratie automatisch volgende uitvoerbare stap; geen algemene wachtstop op gebruikersproeven.",
@@ -11358,7 +11366,7 @@
       "evidence": "eva2/evidence/living-core/document-result-return-installed-20260922.json"
     },
     "combinedRecovery20260922": {
-      "status": "implementation_preparation",
+      "status": "bounded_process_proof_passed_full_chain_open",
       "outcome": "Herstel van browserwerk en duurzame taak/geheugenstatus op dezelfde geïsoleerde kandidaat, zonder late klik of dubbel resultaat.",
       "gap": "Bestaande browserherstelproef bewaart een synthetisch websitebestand; bestaand voice/geheugenbewijs vervangt de hulpagentstore. De combinatie met echte duurzame taakopslag is nog niet bewezen.",
       "existingEvidence": [
@@ -11375,7 +11383,21 @@
         "Bestaande browserherstelcontrole blijft behouden; ontbrekende proces/audio/hostgrenzen expliciet.",
         "Onafhankelijke review en bronbewijs; geen geïnstalleerde productfix claimen voor alleen testcode."
       ],
-      "ownerAccepted": false
+      "ownerAccepted": false,
+      "review": "eva2/reviews/combined-process-recovery-20260922.md",
+      "tests": {
+        "passed": 1,
+        "seconds": 18.72,
+        "image": "sha256:2320da954ea6686e320e53b8364e811808b93c400d664fb416dacb1ac04ffa2d",
+        "postgresVersion": "16.13",
+        "paidModelCalls": 0,
+        "controlledProviderCalls": 1
+      },
+      "result": "Echte procesuitval na resultaatclaim: taakresultaat en retained geheugenbron blijven behouden; geen tweede uitvoering of blinde heraanbieding, vreemde persoon geweigerd.",
+      "remaining": "Gezamenlijke HTTP-core/worker/browser/gateway/spraak- en computerherstartketen nog open. Dit is opgeslagen geheugenbronbewijs, geen nieuwe semantische geheugenproef.",
+      "productSourceChanged": false,
+      "installationRequired": false,
+      "evidence": "eva2/evidence/product/durable-application-process-recovery-20260922.json"
     }
   },
   "activeTaskId": "AU-008",

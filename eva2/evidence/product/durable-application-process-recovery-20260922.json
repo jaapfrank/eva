@@ -1,0 +1,103 @@
+{
+  "contract": "EvaDurableApplicationProcessRecoveryEvidence/v1",
+  "date": "2026-09-22",
+  "status": "bounded_isolated_process_proof_passed",
+  "request": "reviews/integration-coverage-2026-09-12.md regression 3: missing durable application process boundary",
+  "candidate": {
+    "image": "sha256:2320da954ea6686e320e53b8364e811808b93c400d664fb416dacb1ac04ffa2d",
+    "sourceBase": "e117978e8eccd2a95e7bc2e1220a60503f5e467f",
+    "checkedAt": "2026-09-22T21:25:57.871192+00:00",
+    "scope": "Isolated process recovery proof; no production mutations.",
+    "sourceBaseMeaning": "Checkout at test preparation, not the image build provenance; image digest is the actual tested package."
+  },
+  "database": {
+    "container": "eva2-household-public-test-pg",
+    "database": "eva2_4b_disposable_combined_recovery_20260922",
+    "version": 160013,
+    "schemaHead": "4e_0007_delegated_private",
+    "productionDatabaseTouched": false
+  },
+  "test": {
+    "path": "tests/postgres/test_combined_process_recovery.py",
+    "sha256": "fc773c1afd8fcc5b0cc22090cc2921c4f33505cf393b30dc85c480fa2148f647",
+    "passed": 1,
+    "failed": 0,
+    "durationSeconds": 18.72,
+    "attempts": 1,
+    "logPath": "/var/lib/eva2/combined-recovery-20260922/test.log",
+    "logSha256": "dd6a3a40494c193b1cda57bb02cfb5d876d178efea45eb6135ce2c1f1a1eb8fa",
+    "executionCommandRecord": "/var/lib/eva2/combined-recovery-20260922/execution-command.json",
+    "executionCommandSha256": "bcb13a41e90bd371106a7715599fceb21d45f659fa27b1417ee98dc58785c0db",
+    "executionCommandRecordedAfterExecution": true,
+    "executionArgv": [
+      "docker",
+      "run",
+      "--rm",
+      "--name",
+      "eva2-combined-recovery-test-20260922",
+      "--network",
+      "container:eva2-household-public-test-pg",
+      "--read-only",
+      "--tmpfs",
+      "/tmp:rw,mode=1777",
+      "--user",
+      "65532:65532",
+      "-v",
+      "/home/administrator/project/Eva2/eva2:/workspace:ro",
+      "-v",
+      "/home/administrator/.local/lib/python3.12/site-packages:/testdeps:ro",
+      "-v",
+      "/usr/lib/python3/dist-packages:/hostlibs:ro",
+      "-w",
+      "/workspace",
+      "-e",
+      "PYTHONDONTWRITEBYTECODE=1",
+      "-e",
+      "EVA2_TEST_POSTGRES_DSN=postgresql+psycopg://postgres@127.0.0.1/eva2_4b_disposable_combined_recovery_20260922",
+      "--entrypoint",
+      "/usr/local/bin/python",
+      "sha256:2320da954ea6686e320e53b8364e811808b93c400d664fb416dacb1ac04ffa2d",
+      "-c",
+      "import sys; sys.path.insert(0,'/workspace'); sys.path.extend(['/testdeps','/hostlibs']); import pytest; raise SystemExit(pytest.main(['-q','-s','-p','no:cacheprovider','tests/postgres/test_combined_process_recovery.py']))"
+    ]
+  },
+  "observed": {
+    "browser_gateway_voice_hardware": "not exercised",
+    "card_column": "review",
+    "claimant_pid": 12,
+    "controlled_provider_calls": 1,
+    "full_runtime_restart": false,
+    "memory_sha256": "22c7ead1096176b9ce54098958da3d655a1b671d65d2593071b894c9c3dad59f",
+    "old_voice_session": "expired",
+    "proof": "durable-application-process-recovery",
+    "recovery_pid": 21,
+    "replacement_voice_result": null,
+    "result_sha256": "8a5205aaca5400c0f88a796a7e5b35a0df56d50ea6e86645948cddf293687928",
+    "state": "succeeded"
+  },
+  "chain": [
+    "A separate application-service process admits work through the private owner service and commits a retained synthetic memory source and controlled receipt.",
+    "The existing separate delegated worker runs the controlled FunctionModel once and persists its result in PostgreSQL.",
+    "A separate application-service process claims that result through the originating voice return route. After the durable marker, SIGKILL occurs before acknowledgement.",
+    "A new worker process finds no runnable completed work; the controlled provider call counter remains exactly one.",
+    "A fresh application-service process at +6 seconds polls the still-valid original session and obtains no duplicate result. A different principal cannot read the task.",
+    "Another fresh application-service process at +40 seconds confirms the original voice-return session expired and cannot reopen. Explicit replacement sessions receive no old result.",
+    "Owner result readback, owner task list and workboard remain consistent; result and retained memory-source hashes are unchanged."
+  ],
+  "limitations": [
+    "Application-service processes use the same packaged candidate; this is not a restart of full HTTP core/worker containers, a host restart or the entire installed composition.",
+    "PostgreSQL16.13 is the exact historical fixture version. Production uses PostgreSQL18.6; this run does not prove that version.",
+    "The existing fixture seeds synthetic authority with temporarily disabled seed-table triggers. It does not test production pairing or identity enrollment.",
+    "Memory preservation covers the durable source/outbox and retained receipt. No semantic memory backend, recall quality or correction logic was exercised.",
+    "Expired voice return authority is tested, not physical microphone power or frontend automatic capture.",
+    "Browser/grant/nonce, gateway IP change and late-click behavior were not rerun or coordinated with these process boundaries; existing browser evidence remains a separate subchain.",
+    "Worker death before/after provider-call fence is covered by existing separate tests and not newly combined here.",
+    "No production installation, external message, paid model call, owner acceptance or full product completion is claimed."
+  ],
+  "remaining": "Full regression3 still requires coordinated gateway/Chrome/core/worker/media recovery on a complete candidate; this closes only the durable process-loss boundary.",
+  "existingEvidenceNotRepeated": [
+    "evidence/product/chrome-result-recovery-chain-2026-09-12.json",
+    "tests/postgres/test_delegated_work_store.py"
+  ],
+  "review": "Coordinator performed bounded source review and executed candidate test; final review/workboard integration remains coordinator-owned."
+}
