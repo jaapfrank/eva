@@ -1,0 +1,42 @@
+{
+  "status": "tested_reviewed_integration_candidate",
+  "sourceBase": "26ec1b2e5812aebed421bc26f441d43cd0e4f3c7",
+  "sourceHashes": {
+    "eva2/src/eva/application/conversation.py": "62583e0911cb8d49d9c2520fc6d318c33f15bea7ba6b3135c058ec3e20890dd2",
+    "eva2/src/eva/bootstrap/runtime.py": "5f1a16ab3fd40404ce28f24bce8a30afc2b4fa9e797e6b3f734e6dce8ef79d38",
+    "eva2/tests/application/test_contact_model.py": "5cbc543b2f8e12e4b2ada7cfcc8c2e9c7cc71e6293a5f97268a1165441de9486",
+    "eva2/tests/bootstrap/test_runtime_settings.py": "0e5c43f5e51814dbdee56eb4e64bf7f77cefd6488eddfb694b2af9fe9d48acf0",
+    "eva2/tests/postgres/test_delegated_work_owner_service.py": "f929fbf8a935705773b34764f5857c42ba5a21ffe5e4248dc855be19c8f8555a"
+  },
+  "tests": {
+    "passed": 180,
+    "failed": 0,
+    "skipped": 0,
+    "durationSeconds": 16.47,
+    "receipt": "fast-contact-tests-2026-09-22.xml",
+    "postgres": "16.13 isolated disposable database",
+    "runtimeImage": "sha256:0c94dc64b1988e30001d952c7a4215d4cbf637c283d8af68ddd9da05d609b25c"
+  },
+  "review": {
+    "reviewer": "/root/contact_review",
+    "decision": "no blocking findings; final correction test and handoff checked",
+    "method": "code and evidence inspection; no repeated tests or model calls"
+  },
+  "providerUsage": {
+    "modelAttempts": 6,
+    "inputTokens": 7616,
+    "outputTokens": 102,
+    "toolCalls": 0,
+    "subscriptionCostEur": null,
+    "codingAgentTokens": null
+  },
+  "liveInstalled": false,
+  "ownerAccepted": false,
+  "nonclaims": [
+    "end-to-end latency or p95",
+    "physical Voice PE parity",
+    "natural task selection or correction interpretation",
+    "general tool-enabled background research",
+    "new speaker authentication"
+  ]
+}

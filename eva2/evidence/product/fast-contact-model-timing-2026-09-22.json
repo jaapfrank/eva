@@ -1,0 +1,121 @@
+{
+  "scope": "six model-only calls; synthetic context and admission receipt; no actions executed",
+  "p95": null,
+  "subscription_cost_eur": null,
+  "rows": [
+    {
+      "case": "greeting",
+      "model": "gpt-6-astra",
+      "effort": "medium",
+      "wall_ms": 4970,
+      "timing": {
+        "completed_ms": 4969,
+        "first_content_ms": 4472
+      },
+      "usage": {
+        "input_tokens": 1412,
+        "measurement": "measured",
+        "model_attempts": 1,
+        "output_tokens": 8,
+        "tool_calls": 0
+      },
+      "text": "Hoi Jaap.",
+      "action": null
+    },
+    {
+      "case": "greeting",
+      "model": "gpt-5.6-luna",
+      "effort": "low",
+      "wall_ms": 1975,
+      "timing": {
+        "completed_ms": 1974,
+        "first_content_ms": 1597
+      },
+      "usage": {
+        "input_tokens": 1414,
+        "measurement": "measured",
+        "model_attempts": 1,
+        "output_tokens": 15,
+        "tool_calls": 0
+      },
+      "text": "Hallo Jaap. Fijn je weer te spreken.",
+      "action": null
+    },
+    {
+      "case": "simple",
+      "model": "gpt-6-astra",
+      "effort": "medium",
+      "wall_ms": 2407,
+      "timing": {
+        "completed_ms": 2406,
+        "first_content_ms": 2183
+      },
+      "usage": {
+        "input_tokens": 1418,
+        "measurement": "measured",
+        "model_attempts": 1,
+        "output_tokens": 6,
+        "tool_calls": 0
+      },
+      "text": "Vier.",
+      "action": null
+    },
+    {
+      "case": "simple",
+      "model": "gpt-5.6-luna",
+      "effort": "low",
+      "wall_ms": 1485,
+      "timing": {
+        "completed_ms": 1484,
+        "first_content_ms": 1193
+      },
+      "usage": {
+        "input_tokens": 1420,
+        "measurement": "measured",
+        "model_attempts": 1,
+        "output_tokens": 6,
+        "tool_calls": 0
+      },
+      "text": "Vier.",
+      "action": null
+    },
+    {
+      "case": "accepted_work",
+      "model": "gpt-6-astra",
+      "effort": "medium",
+      "wall_ms": 3882,
+      "timing": {
+        "completed_ms": 3880,
+        "first_content_ms": 2719
+      },
+      "usage": {
+        "input_tokens": 976,
+        "measurement": "measured",
+        "model_attempts": 1,
+        "output_tokens": 40,
+        "tool_calls": 0
+      },
+      "text": "Ik heb de korte opzet voor een buurtfeest als achtergrondtaak gestart. De taak is aangenomen, nog niet afgerond. Taaknummer: `work:probe`.",
+      "action": null
+    },
+    {
+      "case": "accepted_work",
+      "model": "gpt-5.6-luna",
+      "effort": "low",
+      "wall_ms": 2037,
+      "timing": {
+        "completed_ms": 2035,
+        "first_content_ms": 1484
+      },
+      "usage": {
+        "input_tokens": 976,
+        "measurement": "measured",
+        "model_attempts": 1,
+        "output_tokens": 27,
+        "tool_calls": 0
+      },
+      "text": "Ik zet op de achtergrond een korte opzet voor het buurtfeest klaar. Work_id: `work:probe`",
+      "action": null
+    }
+  ]
+}

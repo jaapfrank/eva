@@ -230,6 +230,8 @@ class RuntimeSettings:
     conversation_model: str = "gpt-5.4-mini"
     conversation_maximum_requests: int = 32
     conversation_reasoning_effort: str = "medium"
+    conversation_contact_model: str | None = None
+    conversation_contact_reasoning_effort: str = "low"
     runtime_resource_budget: RuntimeResourceBudget | None = None
     background_work_enabled: bool = True
     delegated_work_enabled: bool = False
@@ -262,6 +264,10 @@ class RuntimeSettings:
     durable_goal_recipients: tuple[str, ...] = ()
 
     def __post_init__(self) -> None:
+        if self.conversation_contact_model is not None and not self.conversation_contact_model.strip():
+            raise ValueError("conversation contact model must be nonempty")
+        if self.conversation_contact_reasoning_effort not in {"low", "medium", "high"}:
+            raise ValueError("conversation contact reasoning effort is invalid")
         if type(self.background_work_enabled) is not bool:
             raise ValueError("background work switch must be a boolean")
         if type(self.delegated_work_enabled) is not bool:
@@ -533,6 +539,10 @@ class RuntimeSettings:
             conversation_auth_file=conversation_auth_file,
             conversation_model=conversation_model,
             conversation_reasoning_effort=conversation_reasoning_effort,
+            conversation_contact_model=_environment_optional("EVA_CONVERSATION_CONTACT_MODEL"),
+            conversation_contact_reasoning_effort=_environment_value(
+                "EVA_CONVERSATION_CONTACT_REASONING_EFFORT", "low"
+            ),
             conversation_maximum_requests=_environment_int(
                 "EVA_CONVERSATION_MAXIMUM_REQUESTS", 32, "Eva conversation request limit is invalid",
             ),
@@ -1780,7 +1790,20 @@ def create_runtime_app() -> FastAPI:
             + (() if delegated_work_actions is None else (delegated_work_actions,))
         ),
     )
-    conversation = LivingConversation(memory, model, identity, conversation_actions)
+    contact_model = (None if settings.conversation_contact_model is None else
+        PydanticConversationModel(
+            auth_file=Path(settings.conversation_auth_file),
+            model=settings.conversation_contact_model,
+            reasoning_effort=settings.conversation_contact_reasoning_effort,
+            resource_budget=settings.runtime_resource_budget,
+            conversation_tools=(
+                (() if provider_bundle is None else provider_bundle.conversation_tools)
+                + (() if delegated_work_actions is None else delegated_work_actions.conversation_tools())
+            ),
+        ))
+    conversation = LivingConversation(
+        memory, model, identity, conversation_actions, contact_model=contact_model,
+    )
     sensory_store = (
         None
         if settings.background_tenant_id is None

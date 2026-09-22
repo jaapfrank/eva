@@ -19,6 +19,84 @@ from tests.postgres.test_delegated_work_store import (
 NOW = datetime(2026, 8, 26, 12, 0, tzinfo=UTC)
 
 
+def test_contact_turns_continue_during_durable_call_and_stop_only_target(delegated_engine: Engine):
+    from concurrent.futures import ThreadPoolExecutor
+    from threading import Event
+    from eva.adapters.postgres.delegated_work_actions import PostgresDelegatedWorkActions
+    from eva.application.conversation import ConversationActionCall, LivingConversation
+    from tests.application.test_contact_model import IDENTITY, Model
+    from tests.application.test_conversation import _Memory
+
+    label = "contact-durable"
+    scope, _, binding = _seed_authority(delegated_engine, label)
+    owner = _id(label, "principal")
+    store = PostgresDelegatedWorkStore(delegated_engine, scope)
+    at = [NOW]
+    service = DelegatedWorkOwnerService(store, owner_principal_id=owner,
+                                       principal_binding_id=binding, clock=lambda: at[0])
+    # Minimal composition of the real action adapter's existing conversation port.
+    class Actions(PostgresDelegatedWorkActions):
+        def active_context(self, turn):
+            return ()
+        def available_action_names(self, turn):
+            return self.action_names if self.available_for(turn) else ()
+        def continuation_action_names(self, turn):
+            return self.available_action_names(turn)
+        def execute_step(self, turn, call, *, step_index):
+            return self.execute(turn, call, step_index=step_index)
+
+    ids = []
+    def choose(t, k):
+        receipt = k["completed_action"]
+        if receipt is not None:
+            if receipt.call.name == "stop_delegated_work":
+                return ConversationActionCall(t.message_id + ":replacement", "start_delegated_work",
+                                              {"task": "Schrijf in plaats daarvan een buurtpicknickopzet"})
+            result = receipt.output["operation_result"]
+            if receipt.call.name == "start_delegated_work":
+                assert k["available_actions"] == ()  # no polling this accepted task
+                ids.append(result["work"]["work_id"])
+            return "De taakstatus is opgeslagen."
+        if t.text == "schrijf":
+            return ConversationActionCall(t.message_id, "start_delegated_work", {"task": "Schrijf een buurtfeestopzet"})
+        if t.text == "stop":
+            return ConversationActionCall(t.message_id, "stop_delegated_work", {"work_id": ids[0]})
+        return "Vier."
+
+    contact = Model(choose)
+    work = Model(lambda t, k: pytest.fail("durable work must not execute in foreground"))
+    conversation = LivingConversation(_Memory(), work, IDENTITY, Actions(delegated_engine, service),
+                                      contact_model=contact)
+    conversation.respond(_turn(label, owner, 0, "schrijf"))
+    first = store.load(ids[0], owner_principal_id=owner, principal_binding_id=binding)
+    entered, release = Event(), Event()
+    def worker():
+        claim = store.claim_next(worker_id="worker:contact", release=_release(first.spec), now=NOW + timedelta(seconds=1))
+        assert claim.work_id == ids[0]
+        call = store.start_call(claim, now=NOW + timedelta(seconds=2))
+        entered.set()
+        assert release.wait(15)
+        return store.record_stopped(call, usage=_usage(), now=NOW + timedelta(seconds=8))
+    with ThreadPoolExecutor(max_workers=2) as executor:
+        running = executor.submit(worker)
+        try:
+            assert entered.wait(5)
+            at[0] = NOW + timedelta(seconds=3)
+            conversation.respond(_turn(label, owner, 3, "schrijf"))
+            reply = executor.submit(conversation.respond, _turn(label, owner, 4, "2+2")).result(timeout=5)
+            assert reply.text == "Vier." and not running.done()
+            at[0] = NOW + timedelta(seconds=5)
+            conversation.respond(_turn(label, owner, 5, "stop"))
+            saved = store.load(ids[0], owner_principal_id=owner, principal_binding_id=binding)
+            assert saved.stop_requested_at is not None
+            assert store.load(ids[1], owner_principal_id=owner, principal_binding_id=binding).state == "admitted"
+            assert len(ids) == 3  # correction admitted after stopping only the first task
+            assert store.load(ids[2], owner_principal_id=owner, principal_binding_id=binding).state == "admitted"
+        finally:
+            release.set()
+        assert running.result().state == "stopped"
+
+
 def _turn(label: str, owner, step: int, text="eigenaaropdracht") -> ConversationTurn:
     return ConversationTurn.private(
         tenant_id="tenant:" + label, installation_id="installation:" + label,

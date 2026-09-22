@@ -15,6 +15,23 @@ from eva.contracts.canonical_json import canonical_json_bytes
 from eva.contracts.runtime_budget import RuntimeResourceBudget
 
 
+def test_contact_model_is_opt_in_and_validated():
+    assert RuntimeSettings("unused", "http://memory").conversation_contact_model is None
+    with pytest.raises(ValueError, match="contact model"):
+        RuntimeSettings("unused", "http://memory", conversation_contact_model=" ")
+    with pytest.raises(ValueError, match="contact reasoning"):
+        RuntimeSettings("unused", "http://memory", conversation_contact_reasoning_effort="invalid")
+
+
+def test_contact_model_environment(monkeypatch, private_tmp_path):
+    _minimum(monkeypatch, private_tmp_path)
+    monkeypatch.setenv("EVA_CONVERSATION_CONTACT_MODEL", "gpt-5.6-luna")
+    monkeypatch.setenv("EVA_CONVERSATION_CONTACT_REASONING_EFFORT", "low")
+    settings = RuntimeSettings.from_environment()
+    assert settings.conversation_contact_model == "gpt-5.6-luna"
+    assert settings.conversation_contact_reasoning_effort == "low"
+
+
 def _write_runtime_budget(
     path: Path,
     *,

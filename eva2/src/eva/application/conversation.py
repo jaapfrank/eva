@@ -758,12 +758,14 @@ class LivingConversation:
         actions: ConversationActionPort | None = None,
         *,
         before_step: Callable[[ConversationTurn, ConversationModelUsage], None] | None = None,
+        contact_model: ConversationModelPort | None = None,
     ) -> None:
         self._memory = memory
         self._model = model
         self._identity = identity
         self._actions = actions
         self._before_step = before_step
+        self._contact_model = contact_model
 
     def respond(
         self,
@@ -779,6 +781,9 @@ class LivingConversation:
             else getattr(self._actions, "memory_query_hints", None)
         )
         memory_query_hints = hint_loader(turn) if callable(hint_loader) else ()
+        from eva.application.initiative_execution import require_initiative_context
+        initiative = require_initiative_context(turn)
+        contact_model = self._contact_model if initiative is None else None
 
         def recall(query_text: str, *, fast: bool = False) -> PresenceMemory:
             grounded_query = query_text
@@ -866,6 +871,12 @@ class LivingConversation:
                 before_step(turn, usage)
 
         def continuation_names(receipt: ConversationActionReceipt) -> tuple[str, ...]:
+            if (contact_model is not None and receipt.call.name in {
+                "start_delegated_work", "resume_delegated_work",
+            }):
+                # Durable admission is the end of this foreground request, not
+                # an invitation to poll the worker until its result is ready.
+                return ()
             selector = getattr(self._actions, "continuation_action_names", None)
             if receipt.output.get("status") != "verified" or not callable(selector):
                 return ()
@@ -901,6 +912,19 @@ class LivingConversation:
         self_context = (
             () if self._actions is None else self._actions.active_context(turn)
         )
+        if contact_model is not None:
+            self_context = (*self_context,
+                "Houd het contact natuurlijk en kort. Beantwoord eenvoudige vragen direct. "
+                "Gebruik voor langere denk-, schrijf- of analysetaken start_delegated_work "
+                "als die tool beschikbaar is en de taak zonder browser of externe tools kan. "
+                "Deze hulpagent kan geen actuele bronnen raadplegen of handelingen uitvoeren. "
+                "Neem zulk werk alleen met de daarvoor aangeboden echte tools aan. "
+                "Bevestig achtergrondwerk pas na de opgeslagen toelating; noem het work_id. "
+                "Wacht daarna niet op voltooiing en poll niet: laat de gebruiker doorpraten. "
+                "Een nieuwe opdracht stopt eerder werk niet. Gebruik bij een expliciete stop "
+                "of onverenigbare correctie de aangeboden stoptool voor het juiste work_id; "
+                "vraag bij een onduidelijk doel welke taak bedoeld wordt. Deel bij delegatie "
+                "alleen context die voor deze persoon en dit publiek is toegestaan.")
         from eva.application.voice_context import current_voice_context, STOP_VOICE_WORK, SPEAK_AND_CONTINUE
         voice = current_voice_context()
         if voice is not None:
@@ -908,8 +932,6 @@ class LivingConversation:
             available_names = (*available_names, SPEAK_AND_CONTINUE)
             if voice.active_work:
                 available_names = (*available_names, STOP_VOICE_WORK)
-        from eva.application.initiative_execution import require_initiative_context
-        initiative = require_initiative_context(turn)
         if initiative is not None:
             self_context = (*self_context, initiative.instructions())
         memory = recall(turn.text, fast=True)
@@ -918,7 +940,20 @@ class LivingConversation:
         while True:
             checkpoint()
             history = {"prior_actions": tuple(receipts[:-1])} if len(receipts) > 1 else {}
-            individual_requests = getattr(self._model, "journals_provider_requests", False) is True
+            # Routing uses actual receipts, never channel names or greeting regexes.
+            # Acknowledging durable work and searching memory stay on the contact
+            # model. Tool execution / spoken continuation use the existing work model.
+            contact_receipts = {
+                MEMORY_SEARCH_ACTION, STOP_VOICE_WORK,
+                "start_delegated_work", "list_delegated_work", "get_delegated_work",
+                "stop_delegated_work", "resume_delegated_work",
+            }
+            model = (contact_model
+                     if contact_model is not None
+                     and (completed is None or completed.call.name in contact_receipts)
+                     and all(item.call.name in contact_receipts for item in receipts)
+                     else self._model)
+            individual_requests = getattr(model, "journals_provider_requests", False) is True
             request_id = (None if model_journal is None or individual_requests
                           else model_journal.begin_model_request(turn))
             guard_factory = getattr(self._actions, "reply_guard", None)
@@ -931,7 +966,7 @@ class LivingConversation:
                 stream_conversation_text(lambda _delta: None)
                 if reply_guard is not None else nullcontext()
             ):
-                generated = self._model.generate(
+                generated = model.generate(
                     turn,
                     self._identity,
                     memory,
