@@ -33,3 +33,36 @@ De bestaande worker verwerkt één opdracht tegelijk; het gesprek staat daar los
 [Installatie van private terugmelding](../../evidence/product/private-result-return-live-2026-09-22.json).
 Die terugmelding geldt voor nieuwe opdrachten vanuit de gekoppelde privéchat;
 historische opdrachten krijgen geen achteraf geraden bestemming.
+
+
+## Uitbreiding naar tekstgesprek en privéspraak
+
+**Status 22 september: gebouwd en onafhankelijk beoordeeld; installatie nog
+in voorbereiding.** Gebruik onderstaande nieuwe proef pas wanneer het
+projectdashboard deze uitbreiding als geïnstalleerd vermeldt. De bovenstaande
+Telegramroute is al geïnstalleerd.
+
+- **Tekst:** open [Praat met Eva](http://localhost:44711/internal/v1/dashboard/conversation).
+  Stel de openbare onderzoeksvraag uit stap 1. Stel daarna bijvoorbeeld
+  “Kun je ondertussen met me doorpraten?”. Laat dit gesprek zichtbaar open.
+  Verwacht het latere resultaat met bronnen als een apart bericht in hetzelfde
+  gesprek, zonder dat je het beheeroverzicht hoeft te openen.
+- **Spraak:** open [Praten met Eva](http://localhost:44716/), begin een gesprek
+  en spreek dezelfde vraag uit. Praat ondertussen verder. Het resultaat hoort
+  in diezelfde actieve privésessie terug te komen, hoorbaar en leesbaar.
+  Onderbreken stopt de spraak; het is niet hetzelfde als de onderzoeksopdracht stoppen.
+- **Bewaren:** sluit je de sessie voordat het werk klaar is, dan blijft het
+  toegelaten werk bestaan. Open later [Mijn hulpopdrachten](http://localhost:44711/internal/v1/dashboard)
+  om het opgeslagen resultaat te lezen. Een nieuwe spraaksessie speelt een
+  eerder of onzeker afgeleverd resultaat niet automatisch opnieuw af.
+
+Noteer of doorpraten lukte, hoe snel de eerste ontvangst kwam, waar het
+uiteindelijke resultaat verscheen en of bronnen leesbaar bleven. Meld een
+ontbrekend of dubbel resultaat als zodanig; verversen geldt niet als een
+nieuwe onderzoeksopdracht. Een technische ontvangstbevestiging bewijst niet
+dat jij het audioresultaat gehoord hebt.
+
+Deze twee privéproeven bewijzen geen fysieke Voice PE-werking of persoonlijke
+sprekerherkenning. Het HA-eigenaarspaneel gebruikt privéspraak; de gedeelde
+huishoudspeaker heeft een afzonderlijke autoriteitsgrens en blijft apart op
+het werkbord staan. Eerdere geaccepteerde geheugenproeven blijven geaccepteerd.
