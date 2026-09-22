@@ -11,6 +11,7 @@ from tests.support.scripted_pydantic_conversation import ScriptedPhase, Scripted
 @pytest.mark.parametrize("available, can_start_work", [
     (("create_bounded_durable_goal",), True),
     (("start_delegated_work",), True),
+    (("start_background_research",), True),
     (("resume_delegated_work",), True),
     ((), False),
     (("get_delegated_work",), False),
@@ -21,7 +22,7 @@ def test_effective_instructions_follow_authorized_work_tools(tmp_path, available
     scripted = ScriptedPydanticConversation((ScriptedPhase.text("Ik houd me aan de beschikbare mogelijkheden."),))
     model = PydanticConversationModel(auth_file=tmp_path / "absent-auth.json",
         model_backend=scripted.model,
-        conversation_tools=PostgresDelegatedWorkActions.conversation_tools())
+        conversation_tools=PostgresDelegatedWorkActions.conversation_tools(include_research=True))
     receipt = (ConversationActionReceipt(
         ConversationActionCall("memory-1", "search_personal_memory", {"query_text": "afspraak"}),
         {"facts": []}) if after_memory else None)

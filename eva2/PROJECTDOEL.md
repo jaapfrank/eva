@@ -1,5 +1,19 @@
 # Eva — digitale huisgenoot die leert en handelt
 
+## Verduidelijking snelle ontvangst — eigenaarbesluit 22 september 2026
+
+Bij een onderzoeksopdracht is een snelle hoorbare ontvangst, bijvoorbeeld
+“hmm” of “ik kijk ernaar”, voldoende. Het inhoudelijke onderzoeksantwoord hoeft
+niet binnen één seconde te komen. Tijdens het werk moet het gesprek kunnen
+doorgaan. Behoud en hergebruik de bestaande snelle ontvangstvoorziening als
+uitgangspunt voor de gezamenlijke kanalen; bouw de spraakvoorzieningen hiervoor
+niet opnieuw. Een ontvangst bevestigt horen, niet bewezen uitvoering of voltooiing.
+Meet ontvangstvertraging en tijd tot onderzoeksresultaat afzonderlijk. De eerdere
+947 ms bewijst één ontvangstproef, geen algemene model- of kanaalsnelheid.
+Deze verduidelijking vervangt een interpretatie waarin iedere korte ontvangst
+door een inhoudelijk modelantwoord moet worden vervangen. De wens voor snelle
+begroetingen en eenvoudige gesprekken blijft bestaan.
+
 ## Persoonlijke continuïteit en vertrouwelijkheid — eigenaarseis 22 september 2026
 
 Jaap moet later op de dag of weken later kunnen terugkomen op een eerder onderwerp.

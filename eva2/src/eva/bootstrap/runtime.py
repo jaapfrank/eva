@@ -235,6 +235,7 @@ class RuntimeSettings:
     runtime_resource_budget: RuntimeResourceBudget | None = None
     background_work_enabled: bool = True
     delegated_work_enabled: bool = False
+    delegated_research_enabled: bool = False
     background_tenant_id: str | None = None
     background_installation_id: str | None = None
     background_principal_id: str | None = None
@@ -273,6 +274,12 @@ class RuntimeSettings:
             raise ValueError("background work switch must be a boolean")
         if type(self.delegated_work_enabled) is not bool:
             raise ValueError("delegated work switch must be a boolean")
+        if type(self.delegated_research_enabled) is not bool:
+            raise ValueError("delegated research switch must be a boolean")
+        if self.delegated_research_enabled and (
+            not self.delegated_work_enabled or self.runtime_resource_budget is None
+        ):
+            raise ValueError("delegated research requires delegated work and its runtime budget")
         if type(self.household_voice_session_enabled) is not bool:
             raise ValueError("household voice session switch must be a boolean")
         if self.delegated_work_enabled and self.dashboard_principal_binding_id is None:
@@ -552,6 +559,7 @@ class RuntimeSettings:
             runtime_resource_budget=runtime_resource_budget,
             background_work_enabled=_environment_bool("EVA_BACKGROUND_WORK_ENABLED", True),
             delegated_work_enabled=_environment_bool("EVA_DELEGATED_WORK_ENABLED", False),
+            delegated_research_enabled=_environment_bool("EVA_DELEGATED_RESEARCH_ENABLED", False),
             background_tenant_id=background_tenant_id,
             background_installation_id=background_installation_id,
             background_principal_id=background_principal_id,
@@ -1666,6 +1674,13 @@ def create_runtime_app() -> FastAPI:
     delegated_work_commands = None
     delegated_work_actions = None
     delegated_work_service = None
+    delegated_research_profile = None
+    if settings.delegated_research_enabled:
+        from eva.bootstrap.delegated_research import build_public_research_composition
+        _, delegated_research_profile = build_public_research_composition(
+            model_access_lease_file=Path(settings.conversation_auth_file),
+            resource_budget=settings.runtime_resource_budget,
+        )
     dashboard_effect_controller = None
     dashboard_owner_principal_id = None
     dashboard_principal_binding_id = None
@@ -1694,6 +1709,7 @@ def create_runtime_app() -> FastAPI:
                 raise RuntimeError("delegated owner differs from trusted Telegram bindings")
             delegated_work_service = DelegatedWorkOwnerService(
                 delegated_work_store,
+                research_profile=delegated_research_profile,
                 owner_principal_id=dashboard_owner_principal_id,
                 principal_binding_id=dashboard_principal_binding_id,
                 conversation_scope=external_timeline_scope(
@@ -1735,7 +1751,8 @@ def create_runtime_app() -> FastAPI:
         resource_budget=settings.runtime_resource_budget,
         conversation_tools=(
             (() if provider_bundle is None else provider_bundle.conversation_tools)
-            + (() if delegated_work_actions is None else delegated_work_actions.conversation_tools())
+            + (() if delegated_work_actions is None else delegated_work_actions.conversation_tools(
+                include_research=delegated_research_profile is not None))
         ),
     )
     stripe_publication = (
@@ -1816,7 +1833,8 @@ def create_runtime_app() -> FastAPI:
             resource_budget=settings.runtime_resource_budget,
             conversation_tools=(
                 (() if provider_bundle is None else provider_bundle.conversation_tools)
-                + (() if delegated_work_actions is None else delegated_work_actions.conversation_tools())
+                + (() if delegated_work_actions is None else delegated_work_actions.conversation_tools(
+                    include_research=delegated_research_profile is not None))
             ),
         ))
     conversation = LivingConversation(

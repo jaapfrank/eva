@@ -871,9 +871,10 @@ class LivingConversation:
                 before_step(turn, usage)
 
         def continuation_names(receipt: ConversationActionReceipt) -> tuple[str, ...]:
-            if (contact_model is not None and receipt.call.name in {
-                "start_delegated_work", "resume_delegated_work",
-            }):
+            if receipt.call.name == "start_background_research" or (
+                contact_model is not None
+                and receipt.call.name in {"start_delegated_work", "resume_delegated_work"}
+            ):
                 # Durable admission is the end of this foreground request, not
                 # an invitation to poll the worker until its result is ready.
                 return ()
@@ -925,6 +926,13 @@ class LivingConversation:
                 "of onverenigbare correctie de aangeboden stoptool voor het juiste work_id; "
                 "vraag bij een onduidelijk doel welke taak bedoeld wordt. Deel bij delegatie "
                 "alleen context die voor deze persoon en dit publiek is toegestaan.")
+        if "start_background_research" in available_names:
+            self_context = (*self_context,
+                "Gebruik start_background_research voor een expliciete opdracht om publieke "
+                "bronnen te onderzoeken terwijl het gesprek doorgaat. Stuur alleen de publieke "
+                "onderzoeksvraag; geen privégegevens of opgehaalde herinneringen. Bevestig pas "
+                "na opgeslagen toelating en wacht niet op het eindresultaat. De bestaande "
+                "taakbediening kan de juiste opdracht volgen, stoppen en hervatten.")
         from eva.application.voice_context import current_voice_context, STOP_VOICE_WORK, SPEAK_AND_CONTINUE
         voice = current_voice_context()
         if voice is not None:
@@ -945,7 +953,7 @@ class LivingConversation:
             # model. Tool execution / spoken continuation use the existing work model.
             contact_receipts = {
                 MEMORY_SEARCH_ACTION, STOP_VOICE_WORK,
-                "start_delegated_work", "list_delegated_work", "get_delegated_work",
+                "start_delegated_work", "start_background_research", "list_delegated_work", "get_delegated_work",
                 "stop_delegated_work", "resume_delegated_work",
             }
             model = (contact_model
