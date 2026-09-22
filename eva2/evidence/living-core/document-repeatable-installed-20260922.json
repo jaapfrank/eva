@@ -1,0 +1,79 @@
+{
+  "status": "installed_readonly_live_verified_owner_trial_open",
+  "sourceCommit": "cb498e60",
+  "verifiedAt": "2026-09-22T20:49:47.460414+00:00",
+  "services": {
+    "eva2-managed-b-slot3-core": {
+      "image": "sha256:17b07a7a76016086a4ed413c64e7f9b946ab1feba17f45ec9b4422a40fa387d6",
+      "healthy": true,
+      "restart": "unless-stopped"
+    },
+    "eva2-document-goal-worker-au006": {
+      "image": "sha256:8e620f3df65d3b9631f87c10c2db620357046228a5b1219ef4d8c34d66a1d013",
+      "healthy": true,
+      "restart": "unless-stopped"
+    },
+    "eva2-mcp-gateway": {
+      "image": "sha256:daf923c247fd569df5f8c9ee418cbc259fade564f78e0a0852937139a181c4dd",
+      "healthy": true,
+      "restart": "unless-stopped"
+    },
+    "eva2-document-projects-20260922": {
+      "image": "sha256:81188c414ce5b20eb59f545f9651da5501576dcfbdd9edc3abd125d455f1cb6d",
+      "healthy": true,
+      "restart": "unless-stopped"
+    }
+  },
+  "liveChecks": {
+    "core": {
+      "loadedConfigurationHashes": {
+        "EVA_MCP_GATEWAY_CATALOG_FILE": "b6c7c02529193c361dbd68899b9791ec8f80b0b38adfd9af429af466a5cfa992",
+        "EVA_MCP_MANAGED_ENDPOINTS_FILE": "5d2aa4d82b54b441f5d72ccdda74e2fcc39b86ba1229b3bf57dd140dc766a2d2",
+        "EVA_DOCUMENT_TASK_POOL_FILE": "aea5d3d981274e68e3cc0809ac23b363de3653be21ebeb6673c76784d1f9d935"
+      }
+    },
+    "worker": {
+      "loadedConfigurationHashes": {
+        "EVA_MCP_GATEWAY_CATALOG_FILE": "2e6b5121c6e1838f0dfb78b8ed06c692519a7dc6f6ee35f9b7b67b2b7964b1e7",
+        "EVA_MCP_MANAGED_ENDPOINTS_FILE": "5d2aa4d82b54b441f5d72ccdda74e2fcc39b86ba1229b3bf57dd140dc766a2d2",
+        "EVA_DOCUMENT_TASK_POOL_FILE": "aea5d3d981274e68e3cc0809ac23b363de3653be21ebeb6673c76784d1f9d935"
+      }
+    },
+    "listing": {
+      "existingWebsiteProjectDiscoverableThroughPrivateTelegram": true,
+      "titleAndCompletedStatusExact": true,
+      "databaseReadOnly": true,
+      "remainingSlotFree": true,
+      "modelCalls": 0,
+      "externalMessages": 0
+    }
+  },
+  "gateway": {
+    "registryPreserved": true,
+    "gatewayHealthy": true,
+    "registered": true,
+    "providerBindingSha256": "7806105cafea88fe267cf52427d7ba37e0bf91204d066aeba323753800996cc7"
+  },
+  "legacyProvidersAndJournalBytesUnchanged": true,
+  "legacyArtifactBytesUnchanged": true,
+  "candidateEvidence": "eva2/evidence/living-core/document-repeatable-candidate-20260922.json",
+  "independentReview": "eva2/reviews/document-repeatable-candidate-20260922.md",
+  "configurationReview": {
+    "approved": true,
+    "summarySha256": "4b2ee45027a560e08aa5495e9b791cc10ce3c42f93bcc99a31af279ca02bb4d3",
+    "planSha256": "e2e3887a7ec2cd7488af10b41c8737d51975de18efdfabc933f51e7fed85d93d",
+    "scope": "Exact consumer image and three read-only mount-source replacement; preserve legacy catalog/pool claims and use registered dynamic provider; admission-aware rollback plan. Configuration review only, no activation or live verification.",
+    "reviewer": "independent document_private_identity agent"
+  },
+  "dynamicConfigurationSha256": "240b34eb8f1308ff8b3f0a1e4d428c94339deecd2a61206c7b0e69f1da9a5063",
+  "rollback": "Before new core admission: restore captured core/worker parent configurations. After admission: inspect and reconcile dynamic claims and effects first; retain all journals/provider bindings. Do not blindly run old workers over new claims.",
+  "ownerTrial": {
+    "route": "Website Praten met Eva or private Telegram /eva2",
+    "instruction": "Vraag Eva een documentproject te maken met twee korte teksten, vraag daarna welke documentprojecten er zijn en open het genoemde resultaat. Nieuwe projecten horen ook na de eerste twee mogelijk te blijven.",
+    "expected": "Elk project heeft een eigen status en bestanden; bestaande projecten blijven zichtbaar.",
+    "accepted": false
+  },
+  "proofBoundary": "More than two projects and recovery were executed in the isolated real-provider chain. Production checks verify installed images/configuration, provider registration/health and old project discovery/bytes; no new production document was created during this installation.",
+  "modelCalls": 0,
+  "externalMessages": 0
+}

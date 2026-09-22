@@ -1045,13 +1045,13 @@
         ],
         "now": {
           "title": "Documentprojecten zonder de limiet van twee plaatsen",
-          "detail": "Ketenproef en onafhankelijke review geslaagd. Nieuwe opslagprovider draait gezond; koppeling aan gateway, kern en documentwerker volgt. Oude projecten blijven ongewijzigd beschikbaar.",
-          "state": "Getest · installatie deels voorbereid, nog niet beschikbaar",
-          "doneWhen": "Meer dan twee projecten, veilige herstart en behoud van oude resultaten zijn getest en geïnstalleerd."
+          "detail": "Geïnstalleerd: volgende projecten krijgen eigen uitvoerhistorie. Oude projecten, bestanden en koppelingen zijn behouden; terugvinden via privé-Telegram live gecontroleerd.",
+          "state": "Geïnstalleerd · jouw gebruiksproef staat open",
+          "doneWhen": "Technische wijziging geïnstalleerd; beoordeling van nieuwe projecten in gewone gesprekken blijft apart."
         },
         "next": {
-          "title": "Documentprojecten geschikt maken voor herhaald gebruik",
-          "detail": "De gewone documentroute heeft nog slechts twee vaste projectplaatsen. Onderzoek hoe bestaande uitvoering en journals herbruikbaar worden zonder oude acties of gegevens te wissen.",
+          "title": "Afgeronde projecten terugbrengen",
+          "detail": "Controleer de bestaande terugmelding: resultaat vanzelf bij de juiste persoon en eenvoudig terug te vinden.",
           "state": "Volgende concrete beperking"
         },
         "ownerAction": {
@@ -10834,7 +10834,7 @@
           "planningEffortHours": "4–12"
         }
       ],
-      "nextAction": "De gewone documentroute heeft nog slechts twee vaste projectplaatsen. Onderzoek hoe bestaande uitvoering en journals herbruikbaar worden zonder oude acties of gegevens te wissen.",
+      "nextAction": "Controleer bij de bestaande documentuitvoering of een afgerond project vanzelf met vindbaar resultaat bij de juiste persoon terugkomt; sluit het concrete ontbrekende deel af. Telegram-tussenvragen en de fysieke Voice PE-proef blijven afzonderlijk open.",
       "effortNotice": "Grove planning, lage zekerheid: 40–118 actieve ontwikkeluren plus zeven dagen gezinspraktijk en eventuele externe wachttijd. Geen deadline, creditkosten of gemeten verbruik; per begrensde wijziging aanscherpen na lezing van bestaand bewijs. Hergebruik kan dit verkorten.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Na review, installatie en registratie automatisch volgende uitvoerbare stap; geen algemene wachtstop op gebruikersproeven.",
@@ -11265,7 +11265,7 @@
       "remaining": "Gewone gesprekskeuze en gebruikservaring blijven afzonderlijk; technische routes hoeven niet opnieuw gebouwd."
     },
     "repeatableDocumentProjects20260922": {
-      "status": "provider_ready_registration_pending",
+      "status": "installed_readonly_live_verified_owner_trial_open",
       "outcome": "Nieuwe documentprojecten blijven mogelijk na de eerste twee, met dezelfde opslag, privacy en veilige hervatting.",
       "scope": "Bestaande native broker ongewijzigd; aparte projectjournals binnen gepinde hostroot. Poolv2 met hergebruik oudeclaims en één nieuwe gedeelde provider. Begrensde/pagineerbare lijst, bestaande worker blijft uitvoerder.",
       "owners": {
@@ -11283,10 +11283,11 @@
       ],
       "ownerAccepted": false,
       "evidence": "eva2/evidence/living-core/document-repeatable-candidate-20260922.json",
-      "installed": false,
+      "installed": true,
       "modelCalls": 0,
-      "nextAction": "Nieuwe gezonde provider bij gateway registreren; werkende oude providers behouden. Daarna kern en documentwerker gezamenlijk naar poolv2 omschakelen met terugweg.",
-      "providerEvidence": "eva2/evidence/living-core/document-repeatable-provider-ready-20260922.json"
+      "nextAction": "Gebruiksproef apart open: nieuwe projecten blijven mogelijk na de eerste twee. Geen herbouw van oude projecten.",
+      "providerEvidence": "eva2/evidence/living-core/document-repeatable-provider-ready-20260922.json",
+      "installationEvidence": "eva2/evidence/living-core/document-repeatable-installed-20260922.json"
     }
   },
   "activeTaskId": "AU-008",
