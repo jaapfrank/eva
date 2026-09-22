@@ -73,5 +73,22 @@
     "Device-specific USB identity and complete flash backup",
     "Firmware installation and physical wakeword/audio/interruption/work-continuity trial",
     "Owner acceptance"
-  ]
+  ],
+  "independentLiveReview": {
+    "date": "2026-09-22",
+    "reviewerTask": "01a0c915-205e-7c11-809a-674ae09e016c",
+    "result": "GO server installation",
+    "verified": [
+      "healthy core125230 with household flag enabled",
+      "speaker1e344 listening, UID65532, readonly, capabilities dropped, no-new-privileges",
+      "five readonly mounts and private tmpfs",
+      "active installation record matches core",
+      "delegated worker and owner-media/SFU preserved"
+    ],
+    "notVerified": [
+      "physical Voice PE audio",
+      "Windows firewall activation",
+      "new model trial"
+    ]
+  }
 }
