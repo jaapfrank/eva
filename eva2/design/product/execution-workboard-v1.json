@@ -1,7 +1,7 @@
 {
   "contract": "EvaExecutionWorkboard/v1",
   "schemaVersion": 1,
-  "lastUpdated": "2026-09-22",
+  "lastUpdated": "2026-09-23",
   "sequencePolicy": "done_then_one_primary_then_queued",
   "commandWorkingDirectory": "eva2",
   "inventoryPath": "docs/eva-repository-inventory.generated.json",
@@ -1000,7 +1000,7 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-09-22",
+        "checkedAt": "2026-09-23",
         "deliveries": [
           {
             "title": "Spraakherstel: microfoon blijft uit",
@@ -1015,7 +1015,7 @@
             "date": "22 september",
             "state": "tested",
             "result": "Een echte wachtende browserklik overlapt met procesuitval. Oude toegang wordt geweigerd, er volgt geen late klik en na herstel blijven taakresultaat en geheugenbron gelijk. Onafhankelijk beoordeeld; één nieuwe gerichte proef geslaagd.",
-            "remaining": "Geen nieuwe functie geïnstalleerd. Echte spraaktransportuitval, volledige runtime en computerherstart blijven te controleren.",
+            "remaining": "Geen nieuwe functie geïnstalleerd. Spraaktransport is inmiddels afzonderlijk gecontroleerd; volledige runtime en computerherstart blijven open.",
             "source": "eva2/evidence/product/coordinated-browser-process-recovery-20260922.json"
           },
           {
@@ -1023,7 +1023,7 @@
             "date": "22 september",
             "state": "tested",
             "result": "Eén gerichte procesuitvalproef op de verpakte kern slaagt en is onafhankelijk beoordeeld. Resultaat en opgeslagen geheugenbron blijven intact; geen dubbele uitvoering of blinde heraanbieding.",
-            "remaining": "Alleen testcode toegevoegd; geen nieuwe functie geïnstalleerd. Gezamenlijke browser-, spraak- en computerherstartproef blijft open.",
+            "remaining": "Alleen testcode toegevoegd; geen nieuwe functie geïnstalleerd. Browser-/procesherstel en spraaktransport zijn inmiddels afzonderlijk gecontroleerd; volledige runtime en computerherstart blijven open.",
             "source": "eva2/reviews/combined-process-recovery-20260922.md"
           },
           {
@@ -1077,7 +1077,7 @@
         ],
         "now": {
           "title": "Reservekopie uitbreiden voor huidig taakwerk",
-          "detail": "De oudere archiefselectie mist huidige taken, documentclaims en terugmeldstatus. Een nieuwe compatibele archiefversie wordt gebouwd via de bestaande herstelroute.",
+          "detail": "V2-code is in aanbouw. Review vond risico op opnieuw starten of versturen na herstel; controles daarop worden afgemaakt. Daarna volgt de geïsoleerde herstelproef. De draaiende Eva is ongewijzigd.",
           "state": "In uitvoering · nog niet geïnstalleerd",
           "doneWhen": "Taakresultaat, stopstatus en verzendbevestiging komen ongewijzigd terug uit een echte reservekopie."
         },
@@ -11491,7 +11491,20 @@
           "Actuele externe vergeten-data-generatie en exacte buitenste archiefhash verplicht"
         ]
       },
-      "formatDecision": "V2-buitenarchief met ongewijzigd gevalideerd v1-subarchief en aanvullende huidige records; gedeelde snapshot, transport en atomaire restore hergebruiken."
+      "formatDecision": "V2-buitenarchief met ongewijzigd gevalideerd v1-subarchief en aanvullende huidige records; gedeelde snapshot, transport en atomaire restore hergebruiken.",
+      "progressReview20260923": {
+        "status": "implementation_incomplete_review_findings_open",
+        "built": "V2-profiel, export, reader, herstelmodule en additieve migratie zijn geschreven; wizardkoppeling en gerichte proeven ontbreken nog.",
+        "openFindings": [
+          "Documentclaims moeten aansluiten op terminale doelen; wachtend werk mag na herstel niet onbedoeld starten.",
+          "Aanvullende taaknotificaties moeten geldige scope en afgehandelde status hebben.",
+          "Voltooide privéresultaten vereisen bestaande afleverstatus zodat herstel geen herverzending veroorzaakt.",
+          "Database-rollback verwijdert gematerialiseerde versleutelde bestanden niet: afzonderlijke private herstelopslag en expliciete fout-/quarantaineafhandeling nodig."
+        ],
+        "testStatus": "Nog geen v2-roundtrip uitgevoerd.",
+        "productionChanged": false,
+        "reviewer": "document_private_identity"
+      }
     }
   },
   "activeTaskId": "AU-008",
