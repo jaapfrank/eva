@@ -534,3 +534,83 @@ def test_exact_followed_work_remains_accessible_after_twenty_new_tasks(
     ]
     assert x.service.poll(x.turn)["work_id"] == work_id
     assert x.research.calls == 1
+
+
+def test_http_control_polling_never_creates_user_ingress(delegated_engine):
+    import sqlalchemy as sa
+    from fastapi import FastAPI
+    from fastapi.testclient import TestClient
+    from eva.adapters.api.household_work import install_household_work
+    from eva.adapters.postgres.operational_timeline import operational_events
+    x = setup(delegated_engine, "hh-http-control")
+    app = FastAPI()
+    install_household_work(app, admit=lambda request, payload: None, server=x.server)
+    client = TestClient(app)
+    prefix = "/internal/v1/ha-voice/session/work/"
+    headers = {"Authorization": "Bearer test-token"}
+    device = {"satellite_id": SAT, "device_id": DEVICE}
+    def count():
+        with delegated_engine.begin() as c:
+            x.server.store._scope(c)
+            return c.scalar(sa.select(sa.func.count()).select_from(operational_events).where(
+                operational_events.c.tenant_id == x.server.store.scope.tenant_id,
+                operational_events.c.event_type == "INGRESS_COMMITTED"))
+    def post(op, data):
+        return client.post(prefix + op, headers=headers, json=data)
+    before = count()
+    opened = post("open", device)
+    assert opened.status_code == 200
+    empty = {**device, "session_id": opened.json()["session_id"]}
+    for _ in range(3):
+        assert post("poll", empty).json()["state"] == "idle"
+    assert count() == before
+    data = {**device, "session_id": x.service.binding["session_id"]}
+    assert post("poll", data).json()["state"] == "idle"
+    work_id = start(x)
+    assert asyncio.run(x.worker.run_once()) == "succeeded"
+    before = count()
+    assert post("poll", empty).json()["state"] == "idle"
+    claim = post("poll", data).json()["result"]
+    assert claim["work_id"] == work_id and "https://" in claim["result"]
+    identity = {**data, "work_id": work_id, "result_sha256": claim["result_sha256"]}
+    assert post("authorize", identity).json()["state"] == "authorize"
+    assert post("ack", {**identity, "disposition": "completed"}).status_code == 200
+    assert post("poll", data).json()["state"] == "idle"
+    assert count() == before
+    assert post("close", data).json()["state"] == "closed"
+    assert post("close", data).json()["state"] == "closed"
+    assert post("renew", data).status_code == 403
+    assert post("poll", data).status_code == 403
+    assert count() == before
+
+
+def test_http_rejects_scope_spoofing_and_revoked_result(delegated_engine):
+    from fastapi import FastAPI
+    from fastapi.testclient import TestClient
+    from eva.adapters.api.household_work import install_household_work
+    x = setup(delegated_engine, "hh-http-authority")
+    app = FastAPI()
+    install_household_work(app, admit=lambda request, payload: None, server=x.server)
+    client = TestClient(app)
+    prefix = "/internal/v1/ha-voice/session/work/"
+    headers = {"Authorization": "Bearer test-token"}
+    device = {"satellite_id": SAT, "device_id": DEVICE}
+    data = {**device, "session_id": x.service.binding["session_id"]}
+    def post(op, body): return client.post(prefix + op, headers=headers, json=body)
+    for key in ("principal_id", "audience", "conversation_id", "origin"):
+        assert post("poll", {**data, key: "private-owner"}).status_code == 422
+    assert post("open", data).status_code == 422
+    assert post("poll", device).status_code == 422
+    assert post("poll", {**data, "work_id": "chosen"}).status_code == 422
+    assert post("authorize", data).status_code == 422
+    assert post("unknown", data).status_code == 422
+    assert client.post(prefix+"poll?principal_id=owner", headers=headers, json=data).status_code == 422
+    assert post("poll", {**data, "satellite_id": "assist_satellite.office", "device_id": "b"*32}).status_code == 403
+    assert client.post(prefix+"poll", headers={"Authorization": "Bearer wrong"}, json=data).status_code == 403
+    work_id = start(x)
+    assert asyncio.run(x.worker.run_once()) == "succeeded"
+    claim = post("poll", data).json()["result"]
+    x.policies[0] = x.policies[0].model_copy(update={"state": "disabled"})
+    result = post("authorize", {**data, "work_id": work_id, "result_sha256": claim["result_sha256"]})
+    assert result.status_code == 403
+    assert claim["result"] not in result.text

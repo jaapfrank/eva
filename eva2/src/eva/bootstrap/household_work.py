@@ -101,7 +101,7 @@ class HouseholdWorkService:
             raise ValueError("household session binding changed")
         self.store.validate_admission_authority(**self._owner)
 
-    def turn(self, request_id, text):
+    def _make_turn(self, request_id, text):
         self.current()
         if str(UUID(request_id)) != request_id:
             raise ValueError("household request identifier invalid")
@@ -123,9 +123,18 @@ class HouseholdWorkService:
                 consent_ref=ref,
             ),
         )
+        return turn
+
+    def turn(self, request_id, text):
+        turn = self._make_turn(request_id, text)
         return PostgresConversationJournal(
             self.store._engine, self.store.scope
         ).admit_household_ingress(turn, validate_current=self.validate_authority)
+
+    def control_turn(self):
+        """Bound transport context, not a user message or a new ingress event."""
+        return self._make_turn(str(uuid5(NAMESPACE_URL,
+            "household-work-control:" + self.binding["session_id"])), "Werkresultaat")
 
     def available_for(self, turn):
         b = self.binding

@@ -106,3 +106,27 @@ replay it. Deployment, rollback/live checks and real registered-device trials
 (contract cases 11–12) belong to the coordinator's next integration stage. Actual
 speech cancellation/chunk behavior and transport spoofing tests remain open; the
 server tests do not substitute for them.
+
+## HTTP boundary candidate (coordinator follow-up)
+
+The optional household voice installer now exposes a device-authenticated
+`/internal/v1/ha-voice/session/work/{operation}` boundary for open, renew, close,
+poll, authorize and acknowledgement. No runtime composition or media activation
+was added. Without an explicitly supplied server, the feature reports disabled
+and responds 503 after the existing device authentication. Private identity,
+client-selected destinations and irrelevant operation fields are rejected.
+
+`control_turn()` constructs bound transport context without writing user ingress;
+real user turns retain the existing durable admission. Source-level tests against
+real disposable PostgreSQL prove repeated polls on an empty and populated session
+do not increase ingress count, other sessions receive no result, revocation blocks
+authorization, claims are offered once and closed sessions cannot renew or poll.
+Existing household stream, stop namespace and revocation checks remain green.
+
+Validation: 7 passed, 15 deselected, 5.11 seconds, using
+`tests/postgres/test_household_public_work.py` and
+`tests/api/test_household_voice_session.py` with the selection
+`http_ or end_to_end_retry or household_stream or household_denies or revocation_discards or transport_stays`.
+No live model calls, production changes or physical audio trial. Independent
+review of this HTTP delta, per-audience shared action composition, media lifecycle
+and paired deployment remain open.

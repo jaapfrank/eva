@@ -17,7 +17,7 @@ class HouseholdSessionRequest(VoiceRequest, HouseholdDevice):
     pass
 
 
-def install_household_voice_session(app: FastAPI, *, runtime, authority):
+def install_household_voice_session(app: FastAPI, *, runtime, authority, work_server=None):
     policy = authority.policy
     responder = NativeHouseholdResponder(runtime=runtime, tenant_id=policy.tenant_id,
         installation_id=policy.installation_id, household_id=policy.household_id,
@@ -33,10 +33,14 @@ def install_household_voice_session(app: FastAPI, *, runtime, authority):
         except (ValueError, RuntimeError, OSError):
             raise HTTPException(403, "Household voice authority unavailable") from None
 
+    from eva.adapters.api.household_work import install_household_work
+    install_household_work(app, admit=admit, server=work_server)
+
     @app.post("/internal/v1/ha-voice/session/ready")
     def ready(request: Request, payload: HouseholdDevice):
         admit(request, payload)
-        return {"contract": "EvaHouseholdVoiceSessionReady/v1"}
+        return {"contract": "EvaHouseholdVoiceSessionReady/v1",
+                "household_work_returns": work_server is not None}
 
     @app.post("/internal/v1/ha-voice/session/respond")
     def respond(request: Request, payload: HouseholdSessionRequest):

@@ -89,3 +89,12 @@ def test_revocation_discards_stream_and_retention_and_cross_bound_reply():
     result = client.post(PATH+"/respond", headers=HEADERS, json=data)
     assert "Private" not in result.text and "voice_turn_failed" in result.text
     assert runtime.retained == []
+
+
+def test_household_work_transport_stays_disabled_without_explicit_composition():
+    client, runtime, authority = setup()
+    assert client.post(PATH + "/ready", headers=HEADERS, json=DEVICE).json()["household_work_returns"] is False
+    assert client.post(PATH + "/work/open", headers=HEADERS, json=DEVICE).status_code == 503
+    assert client.post(PATH + "/work/open", json=DEVICE).status_code == 401
+    assert client.post(PATH + "/work/open", headers=HEADERS, json={**DEVICE, "device_id": "b"*32}).status_code == 403
+    assert runtime.turns == []
