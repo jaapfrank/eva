@@ -10572,7 +10572,7 @@
           "files": "Read-only Voice PE provisioning, existing household continuous route and rollback; no voice-service rebuild",
           "estimate": "15–25 minuten installatieonderzoek; nul modelproeven; werkelijk creditverbruik onbekend",
           "state": "in_progress",
-          "currentOutcome": "Beide apparaatpakketten onafhankelijk goedgekeurd; bestaande speakerdienst wordt voor installatie voorbereid. Fysieke USB-identificatie, volledige flashbackup en herstelproef nog open; niets geflasht."
+          "currentOutcome": "Voice PE-servicevoorbereiding geïntegreerd en onafhankelijk goedgekeurd; coördinator bereidt serverinstallatie voor. Uitvoerder onderzoekt parallel de huidige documentpoolinstallatie. Apparaatfirmware nog ongewijzigd."
         },
         {
           "threadId": "01a0c915-205e-7c11-809a-674ae09e016c",
@@ -10580,7 +10580,7 @@
           "files": "AU-006 bestaande documentdiensten: herstelonderzoek en bewijs; geen nieuwe projecten of kernwijzigingen",
           "estimate": "20 minuten gericht herstel; nul modelproeven; werkelijk creditverbruik onbekend",
           "state": "in_progress",
-          "currentOutcome": "Private Telegram-terugmelding en webstatus geïnstalleerd; documentdiensten hersteld met gegevensbehoud en automatisch herstartbeleid. Nu onafhankelijke review van de Voice PE-installatievoorbereiding."
+          "currentOutcome": "Documentherstel en automatisch herstartbeleid opgeleverd. Nu onafhankelijke review van Voice PE-serveractivering en de voorbereide documentcoreimage."
         }
       ],
       "coordination": "Twee actieve producttaken met afzonderlijke bestanden. Coördinator integreert de terugmeldroute in de bestaande runtime en bewaakt review/installatie. Geen nieuwe spraakbouw of herhaalde modelproef; Voice PE gebruikt waar mogelijk de bestaande continue route."
@@ -10802,6 +10802,26 @@
       "rollback": "Herstel beide beleidswaarden en de private overlay naar no; behoud containers en gegevens.",
       "evidence": "eva2/evidence/living-core/document-restart-policy-live-20260922.json",
       "remaining": "Echte hostherstart en herstel van wachtend project bij tijdelijk onbereikbare provider nog controleren."
+    },
+    "ownerDocumentPreparation20260922": {
+      "state": "image_prepared_independently_reviewed",
+      "outcome": "Bestaande beoordeelde documentopdrachten op de huidige installatie voorbereiden zonder recente functies te verliezen.",
+      "scope": "Zeven eerder beoordeelde modules op huidig coreimage; bestaande documentworkerkandidaat hergebruiken; nog geen livevervanging.",
+      "estimate": "20–30 minuten voorbereiding en hash/importcontrole, geen modelcalls; creditkosten onbekend",
+      "doneWhen": "Exacte bron- en imagedelta, onveranderde gedelegeerde werkrelease en documentworkerherkomst vastgelegd voor onafhankelijke review. Daarna bestaande poolregistratie voorbereiden.",
+      "finding": "Alle zeven mainmodules zijn identiek aan eerder beoordeelde kandidaat; livecore heeft nog exact de eerdere parentversies. Oude complete coreimage niet hergebruiken.",
+      "evidence": "eva2/evidence/living-core/document-task-image-preparation-20260922.json"
+    },
+    "voiceSpeakerService20260922": {
+      "state": "source_integrated_reviewed_installation_preparing",
+      "sourceCommit": "e3995dc41e3f03ecb930f44d8b20378dafa4055d",
+      "evidence": "eva2/deploy/native-speaker/service-preparation-evidence.json",
+      "image": "sha256:1e3445797bcdc1afe350370c14d91f07ccb1bc818ea9fa1a8d1af737d9ec1aba",
+      "scope": "Bestaande speakerdienst activeren met huidige coreimage en alleen householdflag; geen firmwarewijziging.",
+      "estimate": "20–30 minuten serverinstallatie en controle; geen modelproeven; creditkosten onbekend",
+      "doneWhen": "Onafhankelijk beoordeelde actuele configuratiedelta en terugweg; beide householdreadinesschecks slagen en speakerdienst luistert onder UID65532; overige diensten en data behouden. Fysieke proef apart.",
+      "ownerAccepted": false,
+      "hardware": "USB-identificatie, volledige flashbackup, herstel en fysieke audio nog open"
     }
   },
   "activeTaskId": "AU-008",

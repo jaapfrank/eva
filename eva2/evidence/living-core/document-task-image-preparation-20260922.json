@@ -1,0 +1,33 @@
+{
+  "candidate": "sha256:67e1e99713479431db13c48a90961ca9df9c0ac13ad8621678310c21764fa27b",
+  "parent": "sha256:980afa510aab4ab75260acba8d8597780548f30999aa925150e528b59bb8414a",
+  "exactChangedFiles": [
+    "eva/adapters/postgres/durable_goals.py",
+    "eva/bootstrap/document_goal_worker.py",
+    "eva/providers/document_goal_actions.py",
+    "eva/providers/document_goal_plan.py",
+    "eva/providers/document_goals.py",
+    "eva/providers/document_task_actions.py",
+    "eva/providers/document_task_input.py"
+  ],
+  "sourceMatchesReviewed": true,
+  "allOtherSourceFilesPreserved": true,
+  "delegatedWorkSourceSealUnchanged": true,
+  "runtimeUserImportsPassed": true,
+  "imageConfigExceptLabelsPreserved": true,
+  "parentLayersPreserved": true,
+  "liveChanged": false,
+  "modelCalls": 0,
+  "firstBuildFailure": "Legacy Docker builder does not support COPY --chmod; existing mode0644 source files copied with plain COPY. No source or dependency change.",
+  "date": "2026-09-22",
+  "status": "prepared_independently_reviewed_not_installed",
+  "reviewedSourceCommit": "789fb0c613f202c3ce71ba3f05798a221f6804dc",
+  "priorReview": "eva2/reviews/document-task-input-20260913.md",
+  "remaining": [
+    "Current provider pool registration and authority binding",
+    "Compatible worker and core configuration",
+    "Independent runtime review, installation and actual ordinary conversation proof"
+  ],
+  "credits": "unknown",
+  "independentReview": "GO task01a0c915: seven staged source hashes match789fb0c6 and main; entire image Config preserved except provenance label;135parentlayers preserved plus7COPYlayers."
+}
