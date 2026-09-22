@@ -57,11 +57,10 @@ class _SourceTurnLoader:
         # The ingress journal predates audience storage. The real-turn planner
         # authorizes this private audience before sealing the durable request;
         # replay retains that attestation rather than inferring it from names.
-        if (source["principal_id"] != self._authority.owner_principal_id
-                or external_timeline_scope(source["tenant_id"], source["installation_id"],
+        if (external_timeline_scope(source["tenant_id"], source["installation_id"],
                     "connector source scope is required") != self._authority.scope
                 or source["audience"] != {"kind": "private_person",
-                                          "principal_id": self._authority.owner_principal_id}):
+                                          "principal_id": source["principal_id"]}):
             raise ConversationConflict("connector source is not a private owner ingress")
         thread_id = "conversation:" + source["message_id"]
         try:

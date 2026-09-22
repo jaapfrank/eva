@@ -218,8 +218,12 @@ class DocumentGoalActionsProviderFactory:
 
     @staticmethod
     def build(settings, engine):
+        from eva.providers.private_owner_authority import configured_private_owner_resolver
+        resolver = configured_private_owner_resolver(
+            engine, tenant_id=settings.tenant_id, installation_id=settings.installation_id)
         authority = McpOwnerAuthority(engine, settings.mandate_file,
-            (os.environ.get("EVA_MCP_MANAGED_ENDPOINTS_FILE") or None) if settings.pool_file else None)
+            (os.environ.get("EVA_MCP_MANAGED_ENDPOINTS_FILE") or None) if settings.pool_file else None,
+            private_owner_resolver=resolver)
         if authority.scope != external_timeline_scope(settings.tenant_id, settings.installation_id,
                                                       "document action runtime scope required"):
             raise ConversationConflict("document action runtime and owner scopes differ")
@@ -233,7 +237,8 @@ class DocumentGoalActionsProviderFactory:
                 load_source_turn=_SourceTurnLoader(engine, authority))
             adapters.append(adapter)
         if settings.plan_file and settings.definition_file:
-            legacy_authority = McpOwnerAuthority(engine, settings.mandate_file)
+            legacy_authority = McpOwnerAuthority(engine, settings.mandate_file,
+                private_owner_resolver=resolver)
             adapter = DocumentGoalActions(
                 store=store, authority=legacy_authority,
                 read_plan=lambda: read_runtime_secret_file(settings.plan_file, setting_name="EVA_DOCUMENT_GOAL_PLAN_FILE"),

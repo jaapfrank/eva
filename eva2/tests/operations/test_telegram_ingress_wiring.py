@@ -5,13 +5,14 @@ from eva.application.telegram_ingress import (
     TelegramPrincipalBindings,
 )
 from eva.bootstrap import telegram_ingress
+from eva.adapters.credentials import telegram_bindings
 
 
 def test_v2_binding_file_carries_exact_database_binding(
     monkeypatch,
 ) -> None:  # type: ignore[no-untyped-def]
     monkeypatch.setattr(
-        telegram_ingress,
+        telegram_bindings,
         "read_runtime_secret_file",
         lambda path, *, setting_name: (
             '{"bindings":[{"allowed_chat_ids":["101"],'

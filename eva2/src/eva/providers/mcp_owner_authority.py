@@ -41,7 +41,8 @@ _POLICY = (
 
 class McpOwnerAuthority:
     def __init__(self, engine: Engine, mandate_file: str,
-                 managed_endpoints_file: str | None = None) -> None:
+                 managed_endpoints_file: str | None = None, *, private_owner_resolver=None) -> None:
+        self._private_owner_resolver = private_owner_resolver
         self._path = mandate_file
         self._managed_endpoints_file = managed_endpoints_file
         self._mandate = self._read()
@@ -150,13 +151,19 @@ class McpOwnerAuthority:
             return state
         raise ConversationConflict("connector mandate changed concurrently")
 
-    def authorize_turn(self, turn: ConversationTurn) -> None:
-        if (turn.principal_id != self.owner_principal_id
+    def canonical_owner(self, turn: ConversationTurn) -> str:
+        principal = (turn.principal_id if self._private_owner_resolver is None
+                     else self._private_owner_resolver(turn))
+        if (principal != self.owner_principal_id
                 or turn.audience.kind != "private_person"
-                or turn.audience.principal_id != self.owner_principal_id
+                or turn.audience.principal_id != turn.principal_id
                 or external_timeline_scope(turn.tenant_id, turn.installation_id,
                                            "connector scope is required") != self.scope):
             raise ConversationConflict("connector mandate belongs to another owner or installation")
+        return self.owner_principal_id
+
+    def authorize_turn(self, turn: ConversationTurn) -> None:
+        self.canonical_owner(turn)
 
     def authorize_current(self, *, phase: str, operation_kind: str) -> None:
         if phase not in {"execute", "observe"} or operation_kind not in {"read", "effect", "invoke"}:

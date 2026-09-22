@@ -84,10 +84,11 @@ class DocumentTaskPool:
     def sha256(self):
         return canonical_sha256({"contract":"EvaDocumentTaskPool/v1","slots":[asdict(s) for s in self.slots]})
 
-    def claim(self, store, *, task, turn, call_id, authority_sha256, tenant_id, installation_id):
+    def claim(self, store, *, task, turn, call_id, authority_sha256, tenant_id, installation_id, owner_principal_id=None):
         from datetime import datetime, timedelta
         from eva.application.durable_goals import DurableGoalSpec, GoalWakeCondition
         from eva.providers.document_goal_plan import DocumentGoalPlan, PreparedDocumentGoal
+        owner = turn.principal_id if owner_principal_id is None else owner_principal_id
         task_id=task.bound_identity(turn,call_id)
         at=datetime.fromisoformat(turn.occurred_at.replace('Z','+00:00'))
         # Same ingress must retain payload, even if all slots are occupied.
@@ -99,11 +100,11 @@ class DocumentTaskPool:
                 return old
         for slot in self.slots:
             goal_id='document-task:'+task_id
-            goal=DurableGoalSpec(goal_id,turn.principal_id,task.title,
+            goal=DurableGoalSpec(goal_id,owner,task.title,
                 'Save the first private document from the bound task input.',None,None,None,
-                turn.principal_id,GoalWakeCondition('document-task',goal_id,'ready','yes',at+timedelta(days=1)),at,
+                owner,GoalWakeCondition('document-task',goal_id,'ready','yes',at+timedelta(days=1)),at,
                 'Save the second private document from the same bound task input.')
-            plan=DocumentGoalPlan(goal.goal_id,goal.sha256,turn.principal_id,tenant_id,installation_id,
+            plan=DocumentGoalPlan(goal.goal_id,goal.sha256,owner,tenant_id,installation_id,
                 authority_sha256,slot.tool_configuration_sha256,
                 '/proof-state/'+task_id+'-first.txt','/proof-state/'+task_id+'-second.txt',
                 task.first_document,'','',task.second_document)

@@ -86,7 +86,7 @@ class DocumentTaskActions:
                 self.authority.authorize_turn(original)
                 if original.project_id!=item['definition']['conversation_project_id']:
                     raise ConversationConflict("document source project changed")
-                if (goal['owner_id']!=turn.principal_id or item['definition']['conversation_project_id']!=turn.project_id
+                if (goal['owner_id']!=self.authority.canonical_owner(turn) or item['definition']['conversation_project_id']!=turn.project_id
                     or item['pool_sha256']!=self.pool.sha256):raise ConversationConflict("document project scope differs")
                 if command.tool_name==_NAMES[0] and item['input_sha256']!=DocumentTaskInput.from_arguments(command.arguments['task']).sha256:
                     raise ConversationConflict("document task replay differs")
@@ -113,7 +113,8 @@ class DocumentTaskActions:
             self.authority.authorize_current(phase="execute",operation_kind="effect")
             item=self.pool.claim(self.store,task=DocumentTaskInput.from_arguments(command.arguments['task']),
                 turn=turn,call_id=command.arguments['call_id'],authority_sha256=self.authority.configuration_sha256,
-                tenant_id=str(self.authority.scope.tenant_id),installation_id=str(self.authority.scope.installation_id))
+                tenant_id=str(self.authority.scope.tenant_id),installation_id=str(self.authority.scope.installation_id),
+                owner_principal_id=self.authority.canonical_owner(turn))
         if item is None:raise ConversationConflict("document project is unavailable")
         adapter=self._adapter(item)
         return await adapter.execute(self._translate(command,adapter))

@@ -59,8 +59,11 @@ def main() -> int:
         from eva.providers.mcp_owner_authority import McpOwnerAuthority
         from eva.providers.mcp_autonomy import _SourceTurnLoader
         from eva.adapters.postgres.conversation_journal import PostgresConversationJournal
+        from eva.providers.private_owner_authority import configured_private_owner_resolver
         authority=McpOwnerAuthority(engine,required_environment("EVA_MCP_AUTONOMY_MANDATE_FILE"),
-            os.environ.get("EVA_MCP_MANAGED_ENDPOINTS_FILE") or None)
+            os.environ.get("EVA_MCP_MANAGED_ENDPOINTS_FILE") or None,
+            private_owner_resolver=configured_private_owner_resolver(
+                engine, tenant_id=tenant_id, installation_id=installation_id))
         matches=[c for c in pool_claims(store) if c['plan']['goal_id']==goal.goal_id] if pool_file else []
         legacy=legacy_plan()
         is_legacy=legacy is not None and legacy.goal_id==goal.goal_id and legacy.owner_principal_id==goal.owner_id
