@@ -1003,11 +1003,19 @@
         "checkedAt": "2026-09-22",
         "deliveries": [
           {
+            "title": "Nieuwe documentresultaten automatisch terugbrengen",
+            "date": "22 september",
+            "state": "installed",
+            "result": "Getest, onafhankelijk beoordeeld en geïnstalleerd. Nieuwe opdrachten gebruiken de bestaande privé-terugmelding voor Telegram of de oorspronkelijke actieve websitesessie. Kern gezond, bronbestanden gecontroleerd; documentwerker en providers ongewijzigd.",
+            "remaining": "Echte gebruiksproef staat open. Oude projecten blijven opvraagbaar en worden niet achteraf verstuurd. Dit herstelt niet automatisch de gemelde Telegram-antwoordkoppeling.",
+            "source": "eva2/evidence/living-core/document-result-return-installed-20260922.json"
+          },
+          {
             "title": "Documentprojecten zonder limiet van twee plaatsen",
             "date": "22 september",
             "state": "installed",
             "result": "Nieuwe projectwerker, kern en opslagprovider zijn geïnstalleerd. Oude projecten en bestandsbytes zijn behouden; het bestaande websiteproject is via de privé-Telegramautoriteit teruggevonden. Meer dan twee projecten, stoppen en herstart zijn in de geïsoleerde echte keten getest.",
-            "remaining": "Nieuwe projecten in gewone gesprekken door jou beoordelen. Automatische terugmelding ontbreekt nog: afgerond betekent hier gecontroleerd lokaal opgeslagen.",
+            "remaining": "Nieuwe projecten in gewone gesprekken door jou beoordelen. Automatische terugmelding is afzonderlijk opgeleverd; bestaande projecten worden niet achteraf spontaan verstuurd.",
             "source": "eva2/evidence/living-core/document-repeatable-installed-20260922.json"
           },
           {
@@ -1044,15 +1052,15 @@
           }
         ],
         "now": {
-          "title": "Afgeronde documentresultaten terugbrengen",
-          "detail": "Nieuwe projecten zijn geïnstalleerd. Nog ontbrekend: de documentwerker markeert gecontroleerde lokale opslag als klaar, maar stuurt het resultaat nog niet vanzelf terug.",
-          "state": "In uitvoering · automatische terugmelding ontbreekt nog",
-          "doneWhen": "Resultaat komt bij de juiste persoon terug, met aparte opgeslagen- en bezorgstatus."
+          "title": "Telegram: juiste antwoord bij de juiste vraag",
+          "detail": "Jouw screenshot toont onderzoek als antwoord op hoe gaat het. Eerdere opgeslagen berichtverwijzingen wezen naar onderzoek; de oorzaak van dit verschil is nog niet vastgesteld. De gebruikersproef is niet geslaagd.",
+          "state": "Open fout · oorzaak niet bewezen",
+          "doneWhen": "Onderzoek blijft gekoppeld aan de oorspronkelijke opdracht; een tussenvraag krijgt zijn eigen antwoord terwijl onderzoek doorloopt."
         },
         "next": {
-          "title": "Afgeronde projecten terugbrengen",
-          "detail": "Controleer de bestaande terugmelding: resultaat vanzelf bij de juiste persoon en eenvoudig terug te vinden.",
-          "state": "Volgende concrete beperking"
+          "title": "Gesprek tijdens werk op de echte ingangen",
+          "detail": "Na herstel Telegram dezelfde combinatie op website en fysieke Voice PE beoordelen. Bestaande resultaten en geheugenacceptatie behouden.",
+          "state": "Nog te beoordelen"
         },
         "ownerAction": {
           "title": "Kom via Telegram terug op een websitegesprek",
@@ -10834,7 +10842,7 @@
           "planningEffortHours": "4–12"
         }
       ],
-      "nextAction": "Controleer bij de bestaande documentuitvoering of een afgerond project vanzelf met vindbaar resultaat bij de juiste persoon terugkomt; sluit het concrete ontbrekende deel af. Telegram-tussenvragen en de fysieke Voice PE-proef blijven afzonderlijk open.",
+      "nextAction": "Telegram: gemelde verkeerde antwoordkoppeling verklaren en corrigeren; daarna eigen antwoord op tussenvraag tijdens onderzoek aantonen. Documentterugmelding is geïnstalleerd, gebruikersproef blijft open.",
       "effortNotice": "Grove planning, lage zekerheid: 40–118 actieve ontwikkeluren plus zeven dagen gezinspraktijk en eventuele externe wachttijd. Geen deadline, creditkosten of gemeten verbruik; per begrensde wijziging aanscherpen na lezing van bestaand bewijs. Hergebruik kan dit verkorten.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Na review, installatie en registratie automatisch volgende uitvoerbare stap; geen algemene wachtstop op gebruikersproeven.",
@@ -11290,7 +11298,7 @@
       "installationEvidence": "eva2/evidence/living-core/document-repeatable-installed-20260922.json"
     },
     "documentResultReturn20260922": {
-      "status": "implementing_existing_return_routes",
+      "status": "installed_owner_trial_open",
       "outcome": "Na afronding komt het gecontroleerde documentresultaat terug bij de juiste persoon; lokaal opgeslagen en daadwerkelijk teruggestuurd blijven afzonderlijke statussen.",
       "finding": "DocumentGoalPorts.readback(recipient=...) retourneert accepted na bestandsverificatie. deliver() verzendt niets. DocumentGoalActions rapporteert delivery=local_availability. Bestaande automatische terugmelding in runtime geldt alleen voor delegated research.",
       "sourcePaths": [
@@ -11307,7 +11315,7 @@
         "Herstart en onzekere verzending veroorzaken geen blinde dubbele berichten.",
         "Gerichte geïsoleerde tests, onafhankelijke review, installatie met terugweg en actuele gebruiksinstructie."
       ],
-      "installed": false,
+      "installed": true,
       "ownerAccepted": false,
       "executor": "document_maintenance",
       "independentDesignReview": "document_private_identity: reuse existing completion worker and private poll-authorize-ack; generic fanout requires provider readback that Telegram does not supply.",
@@ -11328,7 +11336,17 @@
         "Historical claims never automatically backfilled",
         "Send/receipt uncertainty and restart never blind replay"
       ],
-      "ownerInstructions": "eva2/design/product/document-project-owner-trial-20260922.md"
+      "ownerInstructions": "eva2/design/product/document-project-owner-trial-20260922.md",
+      "review": "eva2/reviews/document-result-return-20260922.md",
+      "candidateImage": "sha256:2320da954ea6686e320e53b8364e811808b93c400d664fb416dacb1ac04ffa2d",
+      "deploymentScope": "Alleen kern: bestaande documentworker/parser is onafhankelijk compatibel bevonden; geen workerherstart nodig.",
+      "testProgress": {
+        "selectedUniquePassed": 56,
+        "additionalPostgres18DocumentCasesPassed": 15,
+        "scope": "Synthetic stored artifacts and fake transport; no new production document or external Telegram test message.",
+        "harnessFailures": "Recorded in candidate evidence; corrected fixture and isolated database setup, not hidden as product passes."
+      },
+      "evidence": "eva2/evidence/living-core/document-result-return-installed-20260922.json"
     }
   },
   "activeTaskId": "AU-008",

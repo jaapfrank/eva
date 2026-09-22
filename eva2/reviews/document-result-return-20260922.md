@@ -51,3 +51,15 @@ SHA-256 d462ee1f2f1a32ba6ed6ed3bbe3f3bee775d691ff0856a67413575b8956092b4.
 - New admission binding generation and delivery composition run in core. No changed worker-side interface or document effect is required.
 
 This is compatibility source evidence, not a new live document execution. No service was restarted or mutated during review.
+
+## Packaged candidate and deployment review
+
+The coordinator's explicit PostgreSQL 18.6 compatibility log reports **15 passed in 9.48s**. The reviewed fixture requires a named disposable database and an empty application schema, checks server version 180006, and changes only the fixture imports in an otherwise exact test-body copy. This is explicitly PG18 compatibility evidence; it does not relabel historical PG16 fixtures. The author separately reports 56 unique PG16/unit cases passed; this reviewer did not execute them.
+
+Final reviewed test SHA-256: 722b1cbcd59c4682eac3fa4056827a6662b04b00a2f12ccb63ca24039a9825e8. The historical-admission fixture now schedules its wake as real admission does; a negative artifact-binding case was added. The eight product source hashes above remain unchanged.
+
+**Deployment GO for core only:** candidate 2320da954ea6686e320e53b8364e811808b93c400d664fb416dacb1ac04ffa2d is built directly on installed parent 17b07a7a76016086a4ed413c64e7f9b946ab1feba17f45ec9b4422a40fa387d6. All eight packaged files match reviewed current source. The private compose comparison changes only /services/core/image. The coordinator must compare current core identity/configuration, drain gracefully, recreate core only without dependencies, then verify health, installed hashes and runtime composition. Historical claims lack return bindings and must not generate old messages.
+
+Keep the existing document worker, gateway and document providers unchanged. Retain the parent image for rollback; reconcile pending or uncertain return claims before rollback instead of clearing or replaying their records. The additional claim field remains readable by the parent/worker.
+
+The exact candidate-compose and package hashes, evidence hashes and execution boundaries are recorded in the private installation/install-review.json under /var/lib/eva2/document-return-20260922. This approval authorizes the reviewed deployment delta; it does not claim installation or owner acceptance.

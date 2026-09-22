@@ -1,0 +1,33 @@
+{
+  "checkedAt": "2026-09-22T21:18:09.406479+00:00",
+  "image": "sha256:2320da954ea6686e320e53b8364e811808b93c400d664fb416dacb1ac04ffa2d",
+  "containerId": "75250afbdb7d4b52ffde2244842100e593a0dbfb2be39829627ebde4dedf86ed",
+  "health": "healthy",
+  "sourceHashes": {
+    "providers/document_completion.py": "dc5f7de7df0c4d5d8437a9e87a5c330dc4a654633e6645221e167245ba6b6631",
+    "providers/document_task_actions.py": "ae2ed79720bb764153c52d272abfc4caaf6873830f66aabb7d7bc5f908320ddd",
+    "providers/document_task_input.py": "021afd1b39557c3d3ae502e1098e79741850d4cd03fe552f453d4b33c7bc806a",
+    "adapters/postgres/delegated_work_delivery.py": "6374d4e31e9488706bc56b265e732b080c71f4e89aae63c8b20e2c423ba7a63c",
+    "adapters/postgres/private_work_return.py": "dc5ec6636fb5bd129ad625a9d794f7e3ed463992cb09dc907ca207eaf33fc483",
+    "bootstrap/delegated_work_delivery.py": "d266064296d80656b5aca71a439de717b472a39383511ae10fe4216267b6f3d8",
+    "bootstrap/runtime.py": "41111a1a2f2058b309e3e2b4158a8b6fab604c6b18a7e70676eea35aba1b221b",
+    "operations/delegated_work_delivery.py": "eb66f1f500a10259fe8d421d772889cda902dc1ca745e00653ff6c8d5347a5e1"
+  },
+  "otherServicesUnchanged": true,
+  "ownerAccepted": false,
+  "sourceCommit": "f2871215",
+  "tests": {
+    "selectedUniquePassed": 56,
+    "additionalPostgres18DocumentCasesPassed": 15
+  },
+  "limitations": [
+    "No new production document task or external Telegram message was generated.",
+    "Real owner trial remains open."
+  ],
+  "compositionCheck": {
+    "sourceConfigured": true,
+    "historicalClaimNotBackfilled": true,
+    "candidateCount": 0,
+    "readOnly": true
+  }
+}

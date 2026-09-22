@@ -25,10 +25,9 @@ providerketen getest. De nieuwe installatie en het terugvinden van het bestaande
 project zijn live gecontroleerd; nieuwe projecten in jouw gewone gesprek blijven
 een gebruikersproef. Dit bewijst nog geen algemene meerdaagse projectplanning.
 
-**Wat nog ontbreekt:** een afgerond document wordt nog niet automatisch naar je
-teruggestuurd. “Afgerond” betekent hier gecontroleerd opgeslagen. Gebruik de
-statusvraag hierboven om de tekst op te halen; automatische terugmelding is nu
-in ontwikkeling. Eerdere geheugen- en documentacceptaties blijven behouden.
+**Nieuw geïnstalleerd:** nieuwe documentopdrachten binden de terugmelding aan jouw oorspronkelijke privé-ingang. Laat de websitesessie open, of geef de opdracht via jouw privé-Telegramgesprek met `/eva2` ervoor. Wacht na de ontvangstbevestiging op het gecontroleerde documentresultaat zonder een statusvraag te stellen. Dat automatische terugkomen moet jij nog beoordelen; de technische proeven gebruiken geïsoleerde gegevens en neptransport.
+
+Oudere projecten zonder terugmeldbinding worden niet spontaan alsnog verstuurd. Gebruik daarvoor de statusvraag. Op een gesloten websitesessie wordt geen privéresultaat afgeleverd; Voice PE krijgt hierdoor geen privétoegang. Eerdere geheugen- en documentacceptaties blijven behouden.
 
 ## Het bestaande proefproject via Telegram terugvragen
 
