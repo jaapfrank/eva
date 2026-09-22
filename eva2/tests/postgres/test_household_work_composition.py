@@ -130,3 +130,16 @@ def test_explicit_composition_reloads_parent_authority_and_rejects_scope(delegat
     x.policies[0] = x.policies[0].model_copy(update={"state": "revoked"})
     with pytest.raises(ValueError, match="authority changed"):
         authority.validate_current()
+
+
+def test_household_server_rejects_missing_sponsor_before_advertising_readiness(delegated_engine):
+    from uuid import uuid4
+    from eva.bootstrap.household_work import HouseholdWorkServer
+    x = setup(delegated_engine, "hh-startup-sponsor")
+    # A valid voice/research policy is insufficient when its referenced sponsor
+    # binding is absent from the task storage namespace. No grants are seeded.
+    original = x.server.authority.policy
+    x.server.authority.policy = original.model_copy(update={"principal_binding_id": uuid4()})
+    x.server.authority.validate_current = lambda: None
+    with pytest.raises(RuntimeError, match="owner binding is not current"):
+        HouseholdWorkServer(delegated_engine, x.server.store.scope, x.server.authority)

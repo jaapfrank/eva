@@ -52,6 +52,12 @@ class HouseholdWorkServer:
             household_authorizer=authority.validate_spec,
             household_clock=authority.clock,
         )
+        # Readiness must prove the sponsor exists in this storage scope; valid
+        # voice consent alone cannot authorize durable work in another scope.
+        self.store.validate_admission_authority(
+            owner_principal_id=authority.policy.owner_principal_id,
+            principal_binding_id=authority.policy.principal_binding_id,
+        )
         self.sessions = HouseholdWorkSessions(self.store, authority)
 
     def authenticate(self, token, satellite_id, device_id):

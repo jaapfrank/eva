@@ -1028,14 +1028,14 @@
           }
         ],
         "now": {
-          "title": "Huishoudkoppeling: installatie teruggedraaid",
-          "detail": "De live controle kon geen huishoudsessie openen: de vereiste eigenaarregistratie ontbreekt in de huishoudcontext. De vorige kern, taakwerker en speaker zijn hersteld. Telegram en privéspraak behouden hun eerdere opleveringen.",
-          "state": "Integratieprobleem — vorige installatie actief",
+          "title": "Huishoudkoppeling: oorzaak vastgesteld",
+          "detail": "De tests gebruikten een vooraf gevulde eigenaarregistratie die niet overeenkomt met de echte opslagindeling. Een nieuwe opstartcontrole voorkomt een onterechte gereedheidsmelding; vijf tests slagen en de controle is onafhankelijk beoordeeld. De vorige installatie blijft actief.",
+          "state": "Gerichte integratiereparatie — nog niet live",
           "doneWhen": "Telegram-proef afzonderlijk bevestigd; bestaande huishoudintegratie beoordeeld en geïnstalleerd met terugweg."
         },
         "next": {
-          "title": "Ontbrekende installatievoorwaarde herstellen",
-          "detail": "Controleer de bestaande geverifieerde eigenaarbinding en richt de noodzakelijke huishoudregistratie expliciet in, zonder privégegevens of rechten over te nemen. Controleer daarna de echte sessieroute voordat activering wordt geclaimd.",
+          "title": "Bestaande taakopslag aan huishoudgesprek koppelen",
+          "detail": "Behoud de bestaande geverifieerde eigenaar en taakopslag. Maak de koppeling met de afzonderlijke huishoudgespreksherkomst expliciet en toets deze met verschillende opslagcontexten; geen tweede eigenaar of gekopieerde privérechten. Daarna opnieuw verpakken en activeren.",
           "state": "Hierna"
         },
         "ownerAction": {
@@ -10811,7 +10811,7 @@
           "planningEffortHours": "4–12"
         }
       ],
-      "nextAction": "Controleer de bestaande geverifieerde eigenaarbinding en richt de noodzakelijke huishoudregistratie expliciet in, zonder privégegevens of rechten over te nemen. Controleer daarna de echte sessieroute voordat activering wordt geclaimd.",
+      "nextAction": "Behoud de bestaande geverifieerde eigenaar en taakopslag. Maak de koppeling met de afzonderlijke huishoudgespreksherkomst expliciet en toets deze met verschillende opslagcontexten; geen tweede eigenaar of gekopieerde privérechten. Daarna opnieuw verpakken en activeren.",
       "effortNotice": "Grove planning, lage zekerheid: 40–118 actieve ontwikkeluren plus zeven dagen gezinspraktijk en eventuele externe wachttijd. Geen deadline, creditkosten of gemeten verbruik; per begrensde wijziging aanscherpen na lezing van bestaand bewijs. Hergebruik kan dit verkorten.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Na review, installatie en registratie automatisch volgende uitvoerbare stap; geen algemene wachtstop op gebruikersproeven.",
@@ -10970,7 +10970,15 @@
       },
       "compositionInstalled": false,
       "packagingEvidence": "eva2/evidence/product/household-work-packaging-20260922.json",
-      "activationEvidence": "eva2/evidence/product/household-work-activation-attempt-20260922.json"
+      "activationEvidence": "eva2/evidence/product/household-work-activation-attempt-20260922.json",
+      "startupGuard": {
+        "built": true,
+        "testsPassed": 5,
+        "testSeconds": 3.57,
+        "independentReview": "GO, task 01a0c915-205e-7c11-809a-674ae09e016c, turn 01a0ca35-471a-7150-92ab-477f192b6813; two diffs only, no repeated tests",
+        "installed": false
+      },
+      "diagnosis": "Tests seeded sponsor records with disabled triggers in the conversation-derived namespace. Production has one canonical tenant/principal/binding in task storage. Do not fabricate a second verified identity to match the fixture; explicitly connect existing task authority/storage and household conversation provenance."
     },
     "documentPoolCurrentPreflight20260922": {
       "status": "read_only_preflight_passed",
