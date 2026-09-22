@@ -46,6 +46,17 @@ function setup(fetch){
 
  const e=setup(async()=>reply({status:'idle',result:null}));
  await e.client.poll();assert.equal(e.rendered.length,0);assert.equal(e.failures.length,0);
+ // Browser Window timers reject an EvaWorkReturns receiver. Exercise defaults,
+ // not just the injected test scheduler used by the other lifecycle cases.
+ const previousSet=globalThis.setTimeout, previousClear=globalThis.clearTimeout;
+ let timerCalls=0;
+ try {
+  globalThis.setTimeout=function(){assert.equal(this,globalThis);timerCalls++;return 99};
+  globalThis.clearTimeout=function(){assert.equal(this,globalThis);timerCalls++};
+  const browserDefaults=new EvaWorkReturns({fetch:async()=>reply({status:'idle',result:null}),
+   visible:()=>true,render:()=>{},clear:()=>{},failed:()=>assert.fail('timer binding'),digest});
+  await browserDefaults.poll();browserDefaults.close();assert.ok(timerCalls>=4);
+ } finally {globalThis.setTimeout=previousSet;globalThis.clearTimeout=previousClear;}
  console.log('return transport boundaries passed');
 })().catch(error=>{console.error(error);process.exitCode=1});
 """
