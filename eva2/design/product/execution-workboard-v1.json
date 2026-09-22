@@ -1076,15 +1076,15 @@
           }
         ],
         "now": {
-          "title": "Volledige herstelkandidaat samenstellen",
-          "detail": "Browser/taakprocesherstel en echte spraakuitval zijn gericht gecontroleerd. De volledige geïsoleerde core/worker-installatie moet deze grenzen nog samen met gegevensherstel doorlopen.",
-          "state": "Integratiepoort nog open",
-          "doneWhen": "Eén complete kandidaat behoudt gegevens, taken en privacy bij installatieherstel; daarna fysieke en gezinsproeven."
+          "title": "Reservekopie uitbreiden voor huidig taakwerk",
+          "detail": "De oudere archiefselectie mist huidige taken, documentclaims en terugmeldstatus. Een nieuwe compatibele archiefversie wordt gebouwd via de bestaande herstelroute.",
+          "state": "In uitvoering · nog niet geïnstalleerd",
+          "doneWhen": "Taakresultaat, stopstatus en verzendbevestiging komen ongewijzigd terug uit een echte reservekopie."
         },
         "next": {
-          "title": "Gesprek tijdens werk op de echte ingangen",
-          "detail": "Continue Voice PE-route op het apparaat activeren met gecontroleerde terugweg; fysieke toegang en proef zijn nog nodig. Geen herbouw van de al aanwezige ontvangstfunctie.",
-          "state": "Nog te beoordelen"
+          "title": "Documenten en extern geheugen herstellen",
+          "detail": "Daarna de bijbehorende documentbestanden/journals en externe geheugenopslag meenemen; pas het complete geheel als installatieherstel opleveren.",
+          "state": "Vereist vervolg"
         },
         "ownerAction": {
           "title": "Kom via Telegram terug op een websitegesprek",
@@ -10866,7 +10866,7 @@
           "planningEffortHours": "4–12"
         }
       ],
-      "nextAction": "Bestaande installatie-/restoreharnas aansluiten op huidige samengestelde runtime en reeds vastgelegde herstelgrenzen. Geen herhaling van ongewijzigde deelproeven. Fysieke Voice PE, Telegram-verduidelijking en eindgezinsacceptatie blijven apart open.",
+      "nextAction": "Portable-v2 voor huidige duurzame taakgegevens bouwen, geïsoleerd roundtrip testen en onafhankelijk reviewen; daarna externe document-/geheugenherstelgrenzen. Geen volledigheidsclaim voor alleen de canonieke v1-reservekopie.",
       "effortNotice": "Grove planning, lage zekerheid: 40–118 actieve ontwikkeluren plus zeven dagen gezinspraktijk en eventuele externe wachttijd. Geen deadline, creditkosten of gemeten verbruik; per begrensde wijziging aanscherpen na lezing van bestaand bewijs. Hergebruik kan dit verkorten.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Na review, installatie en registratie automatisch volgende uitvoerbare stap; geen algemene wachtstop op gebruikersproeven.",
@@ -11458,6 +11458,40 @@
         "modelCalls": 0
       },
       "remaining": "Fysieke Voice PE en volledige core/worker/hostherstart met data/taakbehoud blijven open."
+    },
+    "currentPortableRestore20260922": {
+      "status": "implementing_versioned_v2_task_state",
+      "outcome": "Een reservekopie herstelt ook huidig taakwerk en terugmeldstatus zonder dubbele uitvoering.",
+      "finding": "V1 gebruikt39 vaste canonieke tabellen. operational_events en delegated_work_runs ontbreken; documentclaims en terugmeldfences staan daarin. Bestaand IN-002-bewijs geldt voor oudere canonieke data/CAS, niet voor volledig huidig product.",
+      "scope": "Versie2 via bestaande snapshot-, transport-, restore- en wizardroute; v1 blijft intact. Nieuw formaat bewaart huidige records, verifieert hashes/volgorde en herbouwt checkpoints.",
+      "owner": "restore_current_gap",
+      "independentReviewer": "document_private_identity",
+      "planningEstimate": "90–180 minuten planning; kosten onbekend, geen betaalde modelcalls.",
+      "doneWhen": [
+        "Werkelijke geïsoleerde bron→versleuteld archief→lege doel-database houdt voltooid resultaat opvraagbaar en gestopt werk gestopt.",
+        "Verzendclaims, bevestiging en onzekerheid worden niet gewist of blind opnieuw verzonden; persoon/grenzen en vergeten-data-autorisatie blijven behouden.",
+        "V1-lezen blijft werken; relevante gerichte tests en onafhankelijke review; productinstallatie pas na migratie-/releasecontrole."
+      ],
+      "remainingMandatory": [
+        "Native documentbestanden, journals en gecontroleerde verhuizingsbinding",
+        "Extern semantisch geheugen: gegevens/bankherstel of aantoonbare heropbouw",
+        "Normale operatorroute en volledige geïsoleerde installatie-/computerherstelproef",
+        "Eigenaarproef en uiteindelijke gezinsacceptatie"
+      ],
+      "installed": false,
+      "ownerAccepted": false,
+      "independentDesignReview": {
+        "reviewer": "document_private_identity",
+        "status": "bounded_direction_with_required_guards",
+        "requirements": [
+          "Hostgeautoriseerde canonical en external runtime scopes behouden; echte documentconstructor gebruiken",
+          "Alle benodigde bron/principal/binding/terugmeldgebeurtenissen behouden",
+          "Checkpointrebuild in dezelfde hersteltransactie",
+          "Geen hervatte uitvoering of verzending zonder actuele autorisatie",
+          "Actuele externe vergeten-data-generatie en exacte buitenste archiefhash verplicht"
+        ]
+      },
+      "formatDecision": "V2-buitenarchief met ongewijzigd gevalideerd v1-subarchief en aanvullende huidige records; gedeelde snapshot, transport en atomaire restore hergebruiken."
     }
   },
   "activeTaskId": "AU-008",
