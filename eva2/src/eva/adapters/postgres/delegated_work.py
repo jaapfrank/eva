@@ -24,6 +24,8 @@ from eva.contracts.delegated_work import (
     DelegatedWorkUsage,
 )
 from eva.contracts.workboard import WorkBoard
+from eva.application.delegated_work_delivery import PrivateWorkDestination
+from eva.adapters.postgres.delegated_work_delivery import record_admission_destination
 
 principal_bindings = metadata.tables["eva_core.principal_bindings"]
 principals = metadata.tables["eva_core.principals"]
@@ -185,6 +187,7 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
         retention_until: datetime,
         occurred_at: datetime,
         resumes_work_id: str | None = None,
+        delivery_destination: PrivateWorkDestination | None = None,
     ) -> DelegatedWorkAdmission:
         # These three values are trusted operator-display labels, not task text.
         # The local cockpit remains unauthenticated until its own product gate.
@@ -263,6 +266,8 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
             )
             if existing is not None:
                 loaded = self._validated(connection, existing)
+                record_admission_destination(connection, self.scope, spec=loaded.spec,
+                    destination=delivery_destination, occurred_at=occurred_at, existing=True)
                 if previous is not None:
                     # The first explicit resume owns this successor. Later owner
                     # retries return it, including its original clock and release;
@@ -343,6 +348,8 @@ class PostgresDelegatedWorkStore(PostgresScopedRole):
                 .one()
             )
             loaded = self._validated(connection, row)
+            record_admission_destination(connection, self.scope, spec=spec,
+                destination=delivery_destination, occurred_at=occurred_at, existing=False)
         return DelegatedWorkAdmission("inserted", loaded)
 
     def claim_next(
