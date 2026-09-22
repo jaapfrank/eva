@@ -186,6 +186,10 @@ def create_app():
             def notify(value):
                 async def send():
                     try:
+                        check()
+                        if (sessions.get(room_name) is not lease or lease._closing is not None
+                                or (room_name in heartbeats and heartbeats[room_name] <= asyncio.get_running_loop().time())):
+                            return
                         await room.local_participant.publish_data(json.dumps(value).encode(), reliable=True, topic="eva.work")
                     except Exception:
                         pass  # Task effects and final answers remain in the core.
@@ -210,6 +214,11 @@ def create_app():
             def user_state_changed(event):
                 notify({"type": "user_voice_state", "state": event.new_state})
             async def delete_room():
+                try:
+                    if backend.private_work_returns:
+                        await backend.work_return("close", state.session_id)
+                except Exception:
+                    pass  # Core lease expiry also closes the return authority.
                 async with api.LiveKitAPI(config["livekit_url"], api_key=key, api_secret=secret) as control:
                     try:
                         await control.room.delete_room(api.DeleteRoomRequest(room=room_name))
@@ -221,6 +230,7 @@ def create_app():
                 heartbeats.pop(room_name, None)
             lease = SessionLease(session, room, forget, delete_room)
             sessions[room_name] = lease
+            agent = EvaAgent(state)
             try:
                 async with asyncio.timeout(20):
                     options = rtc.RoomOptions()
@@ -228,9 +238,13 @@ def create_app():
                         options.rtc_config = rtc.RtcConfiguration(ice_transport_type=rtc.IceTransportType.TRANSPORT_RELAY,
                             ice_servers=[rtc.IceServer(urls=row["urls"], username=row.get("username", ""), password=row.get("credential", "")) for row in ice_servers])
                     await room.connect(config["livekit_url"], credential("eva", agent=True), options=options)
-                    await session.start(EvaAgent(state), room=room, room_options=room_io.RoomOptions(
+                    await session.start(agent, room=room, room_options=room_io.RoomOptions(
                         participant_identity="owner", close_on_disconnect=True,
                         audio_input=room_io.AudioInputOptions(), video_input=False))
+                    # The browser has not received its room credential yet. Open
+                    # the core return lease only after potentially slow media setup.
+                    if backend.private_work_returns:
+                        await backend.work_return("open", state.session_id)
             except BaseException:
                 await lease.close()
                 raise
@@ -243,14 +257,32 @@ def create_app():
                     asyncio.create_task(lease.close())
             if request.url.path == "/session/leased":
                 heartbeats[room_name] = asyncio.get_running_loop().time() + 10
+            def check_session():
+                check()
+                if (sessions.get(room_name) is not lease or lease._closing is not None
+                        or (room_name in heartbeats and heartbeats[room_name] <= asyncio.get_running_loop().time())):
+                    raise ValueError("private voice session closed")
+            async def returns():
+                try:
+                    await agent.poll_saved_work(session, check_session)
+                except asyncio.CancelledError:
+                    raise
+                except Exception:
+                    await lease.close()  # Fail closed; no retry of uncertain speech.
+            if backend.private_work_returns:
+                lease.timers.add(asyncio.create_task(returns()))
             async def watch():
+                renewed = 0
                 started = asyncio.get_running_loop().time()
                 while True:
                     await asyncio.sleep(1)
                     elapsed = asyncio.get_running_loop().time() - started
                     try:
-                        check()
-                    except ValueError:
+                        check_session()
+                        if backend.private_work_returns and elapsed - renewed >= 5:
+                            await backend.work_return("renew", state.session_id)
+                            renewed = elapsed
+                    except Exception:
                         await lease.close()
                         return
                     if (room_name in heartbeats and heartbeats[room_name] <= asyncio.get_running_loop().time()):

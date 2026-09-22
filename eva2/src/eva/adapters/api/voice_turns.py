@@ -45,6 +45,12 @@ class VoiceRequest(BaseModel):
     active_work: list[ActiveWork] = Field(default_factory=list, max_length=8)
     work_results: list[WorkResult] = Field(default_factory=list, max_length=4)
 
+class PrivateReturnRequest(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+    session_id: UUID
+    work_id: str | None = Field(default=None, min_length=1, max_length=240)
+    operation_id: str | None = Field(default=None, pattern=r"^[0-9a-f]{64}$")
+
 def install_voice_turns(app: FastAPI, *, access: DashboardAccess,
                         runtime, config: DashboardVoice | None) -> None:
     def admit(request: Request):
@@ -58,10 +64,32 @@ def install_voice_turns(app: FastAPI, *, access: DashboardAccess,
         except ValueError:
             raise HTTPException(403, "voice authority unavailable") from None
 
+    @app.post("/internal/v1/voice-session/work/{operation}")
+    def work_return(request: Request, operation: str, payload: PrivateReturnRequest):
+        grant = admit(request)
+        if operation not in {"open", "close", "renew", "poll", "authorize", "ack"}:
+            raise HTTPException(422, "invalid private return operation")
+        basic = operation in {"open", "close", "renew", "poll"}
+        if (request.query_params
+                or (basic and (payload.work_id is not None or payload.operation_id is not None))
+                or (not basic and (payload.work_id is None or payload.operation_id is None))):
+            raise HTTPException(422, "invalid private return identity")
+        turn = ConversationTurn.private(grant.tenant_id, grant.installation_id,
+            grant.principal_id, f"voice:{payload.session_id}", f"return:{payload.session_id}",
+            "Werkresultaat", datetime.now(UTC).strftime("%Y-%m-%dT%H:%M:%SZ"))
+        try:
+            result = runtime.private_work_return(turn, operation,
+                work_id=payload.work_id, operation_id=payload.operation_id)
+            config.check(grant)
+        except (ValueError, RuntimeError, OSError):
+            raise HTTPException(403, "private return unavailable") from None
+        return {"contract": "EvaPrivateWorkReturn/v1", **result}
+
     @app.get("/internal/v1/voice-session/ready")
     def ready(request: Request):
         admit(request)
-        return {"contract": "EvaVoiceSessionReady/v1"}
+        return {"contract": "EvaVoiceSessionReady/v1",
+                "private_work_returns": getattr(runtime, "_delegated_work_owner_service", None) is not None}
 
     @app.post("/internal/v1/voice-session/respond")
     def respond(request: Request, payload: VoiceRequest):

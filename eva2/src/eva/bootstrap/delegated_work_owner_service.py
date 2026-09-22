@@ -191,6 +191,10 @@ class DelegatedWorkOwnerService:
                              or previous.usage.completed_model_responses != 1))),
                 "guidance": "Een nieuwe begrensde poging; de eerdere call en het eerdere verbruik blijven bewaard."}
 
+    def private_return(self, turn, operation, **kwargs):
+        from eva.adapters.postgres.private_work_return import PrivateWorkReturnStore
+        return PrivateWorkReturnStore(self).execute(turn, operation, **kwargs)
+
     def _delivery_arguments(self, turn: ConversationTurn) -> dict:
         if self._delivery_destination_loader is None:
             return {}

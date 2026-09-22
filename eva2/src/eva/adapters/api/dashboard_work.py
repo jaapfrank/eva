@@ -17,6 +17,24 @@ def install_dashboard_work(app, *, access, runtime):
         status = 404 if result.get("status") == "not_found" else 200
         return JSONResponse(result, status_code=status, headers={"Cache-Control": "no-store"})
 
+    @app.post("/internal/v1/dashboard/work/return/{operation}")
+    def work_return(request: Request, operation: str, payload: dict):
+        access.require(request)
+        import re
+        if (request.query_params or operation not in {"poll", "ack"}
+                or (operation == "poll" and payload != {})
+                or (operation == "ack" and (set(payload) != {"work_id", "operation_id"}
+                    or not isinstance(payload["work_id"], str)
+                    or not 1 <= len(payload["work_id"]) <= 240
+                    or not isinstance(payload["operation_id"], str)
+                    or re.fullmatch(r"[0-9a-f]{64}", payload["operation_id"]) is None))):
+            raise HTTPException(422, "invalid private return request")
+        try:
+            result = runtime.dashboard_delegated_work("return_"+operation, **payload)
+        except Exception:
+            raise HTTPException(403, "private return unavailable") from None
+        return JSONResponse(result, headers={"Cache-Control": "no-store"})
+
     @app.get("/internal/v1/dashboard/work")
     def jobs(request: Request):
         access.require(request)

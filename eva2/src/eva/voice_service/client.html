@@ -18,6 +18,21 @@ let room=null,active=null,ownerToken="",visit=0,disposed=false;
 const messages=new Map(),jobs=new Map(),pendingCleanup=new Set();
 function row(parent,key,text,kind=''){let node=parent==='chat'?messages.get(key):jobs.get(key);if(!node){node=document.createElement('div');node.className='row '+kind;$(parent).append(node);(parent==='chat'?messages:jobs).set(key,node);}node.textContent=text;}
 function reset(text){$('state').textContent=text;$('start').disabled=disposed||document.hidden||navigator.onLine===false||(!localAccess&&!ownerToken)||!!active;$('end').disabled=!active;$('text').disabled=true;$('send').disabled=true;$('audio').replaceChildren();}
+const savedResultParts=new Map();
+async function receiveSavedResult(e,attempt){
+ if(!current(attempt)||typeof e.message_id!=='string'||!/^background:[a-f0-9]{64}$/.test(e.message_id)||!Number.isInteger(e.part)||!Number.isInteger(e.total)||e.total<1||e.total>33||e.part<0||e.part>=e.total||typeof e.text!=='string'||new TextEncoder().encode(e.text).length>8000||!/^[a-f0-9]{64}$/.test(e.output_sha256))return;
+ const id=attempt+':'+e.message_id;
+ let entry=savedResultParts.get(id);
+ if(!entry){if(savedResultParts.size>=8)savedResultParts.delete(savedResultParts.keys().next().value);entry={total:e.total,hash:e.output_sha256,parts:new Map()};savedResultParts.set(id,entry);}
+ if(entry.total!==e.total||entry.hash!==e.output_sha256||(entry.parts.has(e.part)&&entry.parts.get(e.part)!==e.text)){savedResultParts.delete(id);return;}
+ entry.parts.set(e.part,e.text);
+ if(entry.parts.size!==entry.total)return;
+ const text=Array.from({length:entry.total},(_,i)=>entry.parts.get(i)).join('');savedResultParts.delete(id);
+ const bytes=new TextEncoder().encode(text);if(bytes.length>65536)return;
+ const digest=await crypto.subtle.digest('SHA-256',bytes);
+ const hash=Array.from(new Uint8Array(digest),v=>v.toString(16).padStart(2,'0')).join('');
+ if(current(attempt)&&hash===entry.hash)row('work',e.message_id,text);
+}
 async function ownerRequest(path,options={},token=ownerToken){return fetch(path,{...options,headers:{...options.headers,Authorization:'Bearer '+token}});}
 async function closeConnection(connection,token){return ownerRequest('/session/end/'+encodeURIComponent(connection.room),{method:'POST',keepalive:true},token);}
 async function connectRoom(r,connection){await r.connect(connection.url,connection.token,{rtcConfig:connection.rtc_config||{}});}
@@ -65,7 +80,7 @@ $('start').onclick=async()=>{
   r.on(LivekitClient.RoomEvent.TranscriptionReceived,(segments,p)=>{if(current(attempt))for(const seg of segments)row('chat',seg.id,(p?.identity==='eva'?'Eva: ':'Jij: ')+seg.text,p?.identity==='owner'?'user':'');});
   r.on(LivekitClient.RoomEvent.DataReceived,(payload,p,kind,topic)=>{
    if(!current(attempt)||topic!=='eva.work'||p?.identity!=='eva')return;
-   try{const e=JSON.parse(new TextDecoder().decode(payload));if(e.type==='voice_state')$('state').textContent=({listening:'Eva luistert.',thinking:'Eva denkt na.',speaking:'Eva spreekt. Je kunt haar onderbreken.'})[e.state]||'Verbinding maken…';if(e.type==='work_started')row('work',e.message_id,'Bezig: '+e.text);if(e.type==='work_finished')row('work',e.message_id,e.text);if(e.type==='task_stop_requested')row('work',e.message_id,'Stopverzoek opgeslagen. Een begonnen stap kan nog afronden.');if(e.type==='work_failed')row('work',e.message_id,'Het resultaat kon niet worden bevestigd.');}catch(_){}
+   try{const e=JSON.parse(new TextDecoder().decode(payload));if(e.type==='voice_state')$('state').textContent=({listening:'Eva luistert.',thinking:'Eva denkt na.',speaking:'Eva spreekt. Je kunt haar onderbreken.'})[e.state]||'Verbinding maken…';if(e.type==='work_started')row('work',e.message_id,'Bezig: '+e.text);if(e.type==='work_finished')row('work',e.message_id,e.text);if(e.type==='background_result_part')void receiveSavedResult(e,attempt).catch(()=>{});if(e.type==='task_stop_requested')row('work',e.message_id,'Stopverzoek opgeslagen. Een begonnen stap kan nog afronden.');if(e.type==='work_failed')row('work',e.message_id,'Het resultaat kon niet worden bevestigd.');}catch(_){}
   });
   const interrupted=()=>{if(current(attempt))stopConversation('De verbinding is onderbroken. Kies Begin gesprek om weer te praten.');};
   r.on(LivekitClient.RoomEvent.Reconnecting,interrupted);r.on(LivekitClient.RoomEvent.SignalReconnecting,interrupted);

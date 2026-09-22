@@ -97,3 +97,28 @@ def test_canonical_admitted_turn_reaches_stop_and_after_response():
     assert finished.wait(3)
     assert runtime.turns[-1].occurred_at == runtime.stops[-1].occurred_at == stamp
     assert retained[0][0].occurred_at == retained[0][1].generated_at == stamp
+
+
+def test_private_return_http_binds_owner_session_and_rechecks_after_read():
+    client, config, runtime = setup()
+    calls = []
+    def read(turn, operation, **identity):
+        calls.append((turn, operation, identity))
+        return {'status': 'idle', 'result': None}
+    runtime.private_work_return = read
+    session = str(uuid4()); path = '/internal/v1/voice-session/work/poll'
+    headers = {'Authorization': 'Bearer '+TOKEN}
+    assert client.post(path, json={'session_id': session}).status_code == 401
+    response = client.post(path, headers=headers, json={'session_id': session})
+    assert response.json() == {'contract': 'EvaPrivateWorkReturn/v1', 'status': 'idle', 'result': None}
+    turn = calls[-1][0]
+    assert turn.principal_id == 'person:owner' and turn.audience.kind == 'private_person'
+    assert turn.conversation_id == 'voice:'+session
+    assert client.post(path, headers=headers, json={'session_id': session, 'audience': 'household'}).status_code == 422
+    assert client.post(path, headers=headers, json={'session_id': session, 'work_results': []}).status_code == 422
+    def revoke(*args, **kwargs):
+        config.valid = False
+        return {'status': 'claimed', 'result': {'output': 'PRIVATE MUST NOT APPEAR'}}
+    runtime.private_work_return = revoke
+    denied = client.post(path, headers=headers, json={'session_id': session})
+    assert denied.status_code == 403 and 'PRIVATE' not in denied.text

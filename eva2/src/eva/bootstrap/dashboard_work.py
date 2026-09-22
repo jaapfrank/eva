@@ -7,11 +7,11 @@ from eva.application.conversation import ConversationTurn
 
 def dashboard_delegated_work(service, *, tenant_id, installation_id,
                              owner_principal_id, principal_binding_id,
-                             operation, work_id=None):
+                             operation, work_id=None, operation_id=None):
     if (service is None or tenant_id is None or installation_id is None
             or owner_principal_id is None or principal_binding_id is None):
         raise RuntimeError("owner work unavailable")
-    if operation not in {"list", "get", "result", "stop", "resume"}:
+    if operation not in {"list", "get", "result", "stop", "resume", "return_poll", "return_ack"}:
         raise ValueError("invalid dashboard work operation")
     # Same fixed principal and conversation namespace as Runtime.dashboard_turn.
     # No model call: this is a button invoking the existing owner service.
@@ -21,6 +21,10 @@ def dashboard_delegated_work(service, *, tenant_id, installation_id,
         "Werkbediening", datetime.now(UTC).replace(microsecond=0).strftime("%Y-%m-%dT%H:%M:%SZ"),
     )
     service.validate_authority(turn)
-    result = service.execute(operation, turn, work_id=work_id, request_key=turn.message_id)
+    if operation.startswith("return_"):
+        result = {"contract": "EvaPrivateWorkReturn/v1", **service.private_return(
+            turn, operation.removeprefix("return_"), work_id=work_id, operation_id=operation_id)}
+    else:
+        result = service.execute(operation, turn, work_id=work_id, request_key=turn.message_id)
     service.validate_authority(turn)
     return result

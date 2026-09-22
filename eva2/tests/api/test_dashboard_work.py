@@ -46,3 +46,23 @@ def test_access_denial_and_failure_expose_no_detail():
     install_dashboard_work(app, access=DashboardAccess(), runtime=Runtime())
     response = TestClient(app).get("/internal/v1/dashboard/work")
     assert response.status_code == 503 and "private diagnostic" not in response.text
+
+
+def test_private_return_controls_reject_scope_and_preserve_claim_identity():
+    from fastapi import FastAPI
+    from fastapi.testclient import TestClient
+    from eva.adapters.api.dashboard_access import DashboardAccess
+    from eva.adapters.api.dashboard_work import install_dashboard_work
+    calls = []
+    class Runtime:
+        def dashboard_delegated_work(self, operation, **identity):
+            calls.append((operation, identity))
+            return {'contract': 'EvaPrivateWorkReturn/v1', 'status': 'acknowledged'}
+    app = FastAPI(); install_dashboard_work(app, access=DashboardAccess('x'*40), runtime=Runtime())
+    client = TestClient(app); path='/internal/v1/dashboard/work/return/'
+    headers={'Authorization':'Bearer '+'x'*40}
+    assert client.post(path+'poll', json={}).status_code == 401
+    assert client.post(path+'poll', headers=headers, json={'owner':'other'}).status_code == 422
+    identity={'work_id':'work:1', 'operation_id':'a'*64}
+    assert client.post(path+'ack', headers=headers, json=identity).status_code == 200
+    assert calls == [('return_ack', identity)]

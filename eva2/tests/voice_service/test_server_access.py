@@ -144,3 +144,57 @@ def test_relay_failure_does_not_create_a_room_or_leak_credentials(voice_config,m
         response=client.post("/session",headers={"Authorization":"Bearer test-owner-secret","Origin":voice_config["origin"]})
         assert response.status_code==503
         assert "provider-private-token" not in response.text
+
+
+def test_private_return_lease_opens_after_media_setup(voice_config, monkeypatch):
+    order = []
+    elapsed = [0]
+    opened = []
+
+    class Session:
+        def __init__(self, **kwargs): pass
+        def on(self, event): return lambda callback: callback
+        async def start(self, *args, **kwargs):
+            elapsed[0] += 1
+            order.append('session_started')
+        async def aclose(self): order.append('session_closed')
+
+    class Room:
+        remote_participants = {'owner': object()}
+        def on(self, event): return lambda callback: callback
+        async def connect(self, *args, **kwargs):
+            elapsed[0] += 16
+            order.append('room_connected')
+        async def disconnect(self): order.append('room_disconnected')
+
+    class Control:
+        def __init__(self, *args, **kwargs): self.room = self
+        async def __aenter__(self): return self
+        async def __aexit__(self, *args): pass
+        async def delete_room(self, request): order.append('room_deleted')
+
+    async def ready(self):
+        self.private_work_returns = True
+        return True
+
+    async def work_return(self, operation, session_id, **identity):
+        if operation == 'open':
+            opened.append((session_id, elapsed[0]))
+            order.append('return_open')
+        if operation == 'close': order.append('return_close')
+        return {'status': 'idle', 'result': None}
+
+    monkeypatch.setattr(server, 'AgentSession', Session)
+    monkeypatch.setattr(server.rtc, 'Room', Room)
+    monkeypatch.setattr(server.api, 'LiveKitAPI', Control)
+    monkeypatch.setattr(server.CoreClient, 'ready', ready)
+    monkeypatch.setattr(server.CoreClient, 'work_return', work_return)
+    auth = {'Authorization': 'Bearer test-owner-secret', 'Origin': voice_config['origin']}
+    with TestClient(server.create_app()) as client:
+        response = client.post('/session', headers=auth)
+        assert response.status_code == 200
+        assert order[:3] == ['room_connected', 'session_started', 'return_open']
+        assert opened[0][1] == 17
+        assert client.post('/session/end/' + response.json()['room'], headers=auth).status_code == 200
+        assert order.index('return_close') > order.index('session_closed')
+    assert order.count('return_open') == order.count('return_close') == 1

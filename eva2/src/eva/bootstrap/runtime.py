@@ -840,7 +840,8 @@ class PostgresHindsightMemoryRuntime:
             hindsight_state=hindsight_state,
         )
 
-    def dashboard_delegated_work(self, operation: str, work_id: str | None = None) -> dict:
+    def dashboard_delegated_work(self, operation: str, work_id: str | None = None,
+                                 operation_id: str | None = None) -> dict:
         from eva.bootstrap.dashboard_work import dashboard_delegated_work
         return dashboard_delegated_work(
             self._delegated_work_owner_service,
@@ -848,8 +849,14 @@ class PostgresHindsightMemoryRuntime:
             installation_id=self._runtime_installation_id,
             owner_principal_id=self._dashboard_owner_principal_id,
             principal_binding_id=self._dashboard_principal_binding_id,
-            operation=operation, work_id=work_id,
+            operation=operation, work_id=work_id, operation_id=operation_id,
         )
+
+    def private_work_return(self, turn, operation, **kwargs):
+        service = self._delegated_work_owner_service
+        if service is None:
+            raise ValueError("private work return unavailable")
+        return service.private_return(turn, operation, **kwargs)
 
     def dashboard_workboard(self) -> WorkBoard:
         """Return only the board bound to this configured local operator."""

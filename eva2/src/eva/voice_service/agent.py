@@ -35,15 +35,29 @@ def work_receipt_text(text: str) -> str | None:
 class CoreClient:
     def __init__(self, url: str, token: str):
         self.url, self.token = url.rstrip("/"), token
+        self.private_work_returns = False
 
     async def ready(self) -> bool:
         async with httpx.AsyncClient(timeout=10, trust_env=False) as client:
             response = await client.get(self.url + "/internal/v1/voice-session/ready",
                 headers={"Authorization": "Bearer " + self.token})
-            return response.status_code == 200 and response.json().get("contract") == "EvaVoiceSessionReady/v1"
+            valid = response.status_code == 200 and response.json().get("contract") == "EvaVoiceSessionReady/v1"
+            self.private_work_returns = valid and response.json().get("private_work_returns") is True
+            return valid
 
     def request(self, payload):
         return "/internal/v1/voice-session/respond", payload
+
+    async def work_return(self, operation, session_id, **identity):
+        async with httpx.AsyncClient(timeout=10, trust_env=False) as client:
+            response = await client.post(self.url + "/internal/v1/voice-session/work/" + operation,
+                headers={"Authorization": "Bearer " + self.token},
+                json={"session_id": session_id, **identity})
+            response.raise_for_status()
+            data = response.json()
+            if data.get("contract") != "EvaPrivateWorkReturn/v1":
+                raise ValueError("private return contract differs")
+            return data
 
     async def events(self, payload: dict) -> AsyncIterator[dict]:
         path, body = self.request(payload)
@@ -77,6 +91,9 @@ class HouseholdCoreClient(CoreClient):
                 headers={"Authorization": "Bearer " + self.token}, json=self._device)
             return response.status_code == 200 and response.json().get("contract") == "EvaHouseholdVoiceSessionReady/v1"
 
+    async def work_return(self, *args, **kwargs):
+        raise ValueError("household devices cannot read private work returns")
+
     def request(self, payload):
         if {"satellite_id", "device_id", "principal_id", "audience"} & payload.keys():
             raise ValueError("Voice content cannot select authority")
@@ -98,6 +115,7 @@ class BridgeState:
         self.spoken_streams: dict[str, object] = {}
         self.receipt_deliveries: dict[str, object] = {}
         self.receipts_offered: set[str] = set()
+        self.background_returns: set[str] = set()
 
     def history(self, chat_ctx: llm.ChatContext, exclude: str) -> list[dict]:
         return [{"role": item.role, "text": item.text_content,
@@ -179,6 +197,8 @@ class EvaAgent(Agent):
         # Native interruption cancels queued handles too. Restore only a result
         # with no played text in its own handle, never the tail of a spoken reply.
         for message_id, handle in list(self.state.deliveries.items()):
+            if message_id in self.state.background_returns:
+                continue  # Durable return claims are never automatically replayed.
             if message_id in self.state.active and message_id in self.state.spoken_streams:
                 continue
             if (handle.interrupted and handle.done()
@@ -187,6 +207,75 @@ class EvaAgent(Agent):
                     and message_id not in self.state.suppressed):
                 self.state.spoken_streams.pop(message_id, None)
                 self.deliver(session, message_id, self.state.delivery_text[message_id])
+
+    async def return_saved_work(self, session, result, check):
+        """One claimed result on its original live private session; no model call."""
+        import asyncio
+        import hashlib
+        state = self.state
+        text = result["output"]
+        if (not isinstance(text, str) or not text.strip() or len(text.encode()) > 65536
+                or hashlib.sha256(text.encode()).hexdigest() != result["output_sha256"]):
+            raise ValueError("saved return bytes differ")
+        identity = {key: result[key] for key in ("work_id", "operation_id")}
+        key = "background:" + result["operation_id"]
+        if key in state.background_returns:
+            return
+        async def authorize():
+            check()
+            current = await state.backend.work_return("authorize", state.session_id, **identity)
+            check()
+            if (current.get("status") != "authorized"
+                    or any(current.get(field) != result[field]
+                           for field in ("operation_id", "output_sha256", "result_sha256"))):
+                raise ValueError("saved return authority changed")
+        await authorize()
+        state.background_returns.add(key)
+        context = "Opgeslagen taak " + result["work_id"] + ":\n" + text
+        if len(context) > 16000:
+            context = context[:15000] + "\n[Verkort in gesprekscontext; vraag het volledige opgeslagen taakresultaat op.]"
+        state.results[str(uuid5(UUID(state.session_id), result["work_id"]))] = context
+        # Keep full source-bearing bytes in the UI. They are not a new turn reply.
+        chunks = [text[offset:offset+2000] for offset in range(0, len(text), 2000)]
+        for index, chunk in enumerate(chunks):
+            check()
+            state.notify({"type": "background_result_part", "message_id": key, "text": chunk,
+                          "part": index, "total": len(chunks), "work_id": result["work_id"],
+                          "output_sha256": result["output_sha256"]})
+        async def parts():
+            for offset in range(0, len(text), 1500):
+                await authorize()
+                yield text[offset:offset+1500]
+        handle = session.say(parts(), allow_interruptions=True)
+        state.deliveries[key] = handle
+        try:
+            while not handle.done():
+                await asyncio.sleep(.5)
+                await authorize()
+            # Offered/playback status is not evidence of a human hearing it.
+            await state.backend.work_return("ack", state.session_id, **identity)
+        except BaseException:
+            handle.interrupt()
+            raise
+
+    async def poll_saved_work(self, session, check):
+        import asyncio
+        while True:
+            check()
+            response = await self.state.backend.work_return("poll", self.state.session_id)
+            check()
+            result = response.get("result")
+            if result is not None:
+                try:
+                    await self.return_saved_work(session, result, check)
+                except asyncio.CancelledError:
+                    raise
+                except Exception:
+                    # Work stop/retention can revoke a result without closing the
+                    # conversation. A failed session renewal still fails closed.
+                    check()
+                    await self.state.backend.work_return("renew", self.state.session_id)
+            await asyncio.sleep(2)
 
     async def on_user_turn_completed(self, turn_ctx, new_message):
         self.replay_unheard(self.session)
