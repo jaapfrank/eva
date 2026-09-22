@@ -1029,7 +1029,7 @@
         ],
         "now": {
           "title": "Resultaten terugbrengen tijdens een gesprek",
-          "detail": "De uitvoerder test privéresultaatterugkeer via de bestaande spraakdienst. De coördinator sluit de echte tekstgesprekpagina aan, zodat een open beheertab geen gespreksmelding wegvangt. De reviewer werkt de huishoudelijke persoonsgrens uit; daarna volgt code-review.",
+          "detail": "De tekstgesprekpagina is aangesloten, getest en onafhankelijk beoordeeld; nog niet geïnstalleerd. De uitvoerder rondt de kern- en spraaktests af. De reviewer controleert nu het gecombineerde resultaat voor één samenhangende installatie.",
           "state": "In uitvoering",
           "doneWhen": "Resultaat komt terug in de juiste actieve privésessie; na afsluiten blijft het bewaard zonder onverwacht opnieuw te spreken. Daarna onafhankelijke review, installatie en livecontrole."
         },
@@ -10627,10 +10627,10 @@
         {
           "threadId": "01a0c915-205e-7c11-809a-674ae09e016c",
           "title": "Eva laat achtergrondonderzoek echt afmaken",
-          "files": "Alleen household-result-contract-20260922.md; vervolgens read-only productreview",
+          "files": "Read-only review private-result-return en rootclient; geen overlappende bronwijzigingen",
           "estimate": "Gerichte review per concreet resultaat; nul modelproeven; creditverbruik onbekend",
           "state": "in_progress",
-          "currentOutcome": "Werkt het concrete huishoudelijke resultaatcontract uit met behoud van privégrenzen; daarna onafhankelijke review van de nieuwe resultaatterugkeer."
+          "currentOutcome": "Huishoudelijk resultaatcontract opgeleverd. Beoordeelt nu de gecombineerde private kern-, gesprek- en spraakwijziging."
         }
       ],
       "coordination": "Coördinator onderhoudt dashboard, werkbord en installatie. Eén uitvoerder bouwt privéresultaatterugkeer; één reviewer controleert concrete resultaten. Taakstatus is gerapporteerd werk, geen live aanwezigheidsmeting."
@@ -10883,6 +10883,12 @@
       "result": "Dezelfde bestaande werklifecycle gebruiken met expliciet huishoudelijk taakcontract, actuele apparaatautoriteit en resultaatbestemming in de oorspronkelijke sessie. Bestaande privéroutes blijven strikt privé.",
       "next": "Na integratie van privéresultaatterugkeer de bestaande worker en contractdecoder begrensd uitbreiden; geen tweede werkqueue of kanaalmodel.",
       "ownerAcceptance": "open; fysieke Voice PE-proef blijft afzonderlijk"
+    },
+    "conversationResultClient20260922": {
+      "state": "built_tested_reviewed_pending_paired_installation",
+      "source": "eva2/evidence/product/conversation-result-client-20260922.json",
+      "commit": "13533b97",
+      "ownerAcceptance": "open"
     }
   },
   "activeTaskId": "AU-008",
