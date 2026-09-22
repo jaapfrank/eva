@@ -10,10 +10,15 @@ export async function pollTelegramConcurrently(bot, {
   signal,
   concurrency = 8,
   onError = () => {},
-  pollIntervalMs = 250,
+  pollIntervalMs = 750,
 } = {}) {
   if (!Number.isInteger(concurrency) || concurrency < 2 || concurrency > 32) {
     throw new RangeError('Telegram concurrency must be between 2 and 32');
+  }
+  // Telegram limits repeated same-offset polls within 500 ms to one update.
+  // Keep the unfinished prefix replayable without starving later messages.
+  if (!Number.isFinite(pollIntervalMs) || pollIntervalMs < 750) {
+    throw new RangeError('Telegram replay polling interval must be at least 750 ms');
   }
   await bot.init();
   await bot.api.deleteWebhook({ drop_pending_updates: false }, signal);

@@ -4,7 +4,7 @@ import { setTimeout as delay } from 'node:timers/promises';
 import { pollTelegramConcurrently } from '../src/integrations/telegrampolling.js';
 
 const until = async (predicate) => {
-  const deadline = Date.now() + 1000;
+  const deadline = Date.now() + 3000;
   while (!predicate()) {
     assert.ok(Date.now() < deadline, 'scheduler condition timed out');
     await delay(1);
@@ -39,7 +39,7 @@ test('bounded polling keeps legacy serial, drains on stop and never acknowledges
   };
   let ended = false;
   const polling = pollTelegramConcurrently(bot, {
-    signal: controller.signal, concurrency: 3, pollIntervalMs: 1,
+    signal: controller.signal, concurrency: 3, pollIntervalMs: 750,
   }).then(() => { ended = true; });
   try {
     await until(() => started.length === 3);
@@ -82,7 +82,7 @@ test('handler errors release capacity and fatal polling conflicts drain admitted
       await new Promise((resolve) => { finish = resolve; });
       activeDone = true;
     },
-  }, { onError: (error) => errors.push(error.message), pollIntervalMs: 1 });
+  }, { onError: (error) => errors.push(error.message), pollIntervalMs: 750 });
   const rejection = assert.rejects(polling, /conflicting poller/);
   await until(() => calls === 2);
   assert.deepEqual(errors, ['handler failed']);
@@ -90,4 +90,53 @@ test('handler errors release capacity and fatal polling conflicts drain admitted
   finish();
   await rejection;
   assert.equal(activeDone, true);
+});
+
+
+test('same-offset Telegram throttling does not hide later messages behind running work', async () => {
+  const controller = new AbortController();
+  const started = [];
+  let releaseFirst;
+  const firstPending = new Promise((resolve) => { releaseFirst = resolve; });
+  const updates = [1, 2].map((id) => ({ update_id: id,
+    message: { text: '/eva2 test' } }));
+  let previousOffset = null;
+  let previousStarted = -Infinity;
+  let polls = 0;
+  const polling = pollTelegramConcurrently({
+    init: async () => {},
+    api: {
+      deleteWebhook: async () => {},
+      getUpdates: async ({ offset, limit }) => {
+        const now = performance.now();
+        // Mirrors Telegram Client::process_get_updates_query.
+        if (offset === previousOffset && now < previousStarted + 500) limit = 1;
+        previousOffset = offset;
+        previousStarted = now;
+        const available = polls++ === 0 ? updates.slice(0, 1) : updates;
+        return available.filter((update) => update.update_id >= offset).slice(0, limit);
+      },
+    },
+    handleUpdate: async ({ update_id: id }) => {
+      started.push(id);
+      if (id === 1) await firstPending;
+    },
+  }, { signal: controller.signal });
+  try {
+    await until(() => started.includes(2));
+    assert.deepEqual(started, [1, 2]);
+    assert.equal(previousOffset, 0, 'pending first update remains unacknowledged');
+  } finally {
+    controller.abort();
+    releaseFirst();
+    await polling;
+  }
+});
+
+test('unsafe or invalid replay intervals fail before touching Telegram', async () => {
+  for (const pollIntervalMs of [0, 250, 499, 500, 749, NaN, Infinity, '750']) {
+    await assert.rejects(pollTelegramConcurrently({
+      init: async () => assert.fail('invalid configuration must not start polling'),
+    }, { pollIntervalMs }), /interval must be at least 750/);
+  }
 });
