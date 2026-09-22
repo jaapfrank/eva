@@ -53,7 +53,8 @@ export default function OwnerWork() {
     let selected = null, currentDetail = null, revision = 0, timer;
     const controller = new AbortController();
     const fingerprint = work => JSON.stringify([work.work_id, work.state,
-      work.generation, work.stop_requested, work.result_available]);
+      work.generation, work.stop_requested, work.result_available,
+      work.delivery?.state, work.delivery?.description]);
     function clearPrivate() {
       selected = null; currentDetail = null; pending = null;
       setPage(null); setDetail(null); setNotice('');
@@ -156,6 +157,7 @@ export default function OwnerWork() {
     {page && !page.jobs.length && <p>Nog geen hulpopdracht beschikbaar.</p>}
     <div className="board">{page?.jobs.map(job => <article className="card" key={job.work_id}>
       <h3>{job.task_preview}</h3><p>{labels[job.state]} · poging {job.generation}</p>
+      {typeof job.delivery?.description === 'string' && <p>{job.delivery.description}</p>}
       {job.stop_requested && <p>Stopverzoek opgeslagen</p>}
       <button onClick={() => act('get', job.work_id)}>Opdracht openen</button>
     </article>)}</div>
@@ -163,6 +165,7 @@ export default function OwnerWork() {
     {detail && <article aria-label="Geopende hulpopdracht" className="card">
       <h3>Opdracht</h3><p style={{ whiteSpace: 'pre-wrap' }}>{detail.task}</p>
       <p>{labels[detail.state]} · poging {detail.generation}</p>
+      {typeof detail.delivery?.description === 'string' && <p>{detail.delivery.description}</p>}
       {['admitted', 'call_started'].includes(detail.state) && !detail.stop_requested
         && <button disabled={busy} onClick={() => act('stop', detail.work_id)}>Stop deze hulpopdracht</button>}
       {resumable.has(detail.state) && <>

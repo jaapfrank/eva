@@ -1,0 +1,77 @@
+{
+  "date": "2026-09-22",
+  "installation": {
+    "installed": true,
+    "sourceCommit": "fc3425ae9459e3cece42e155770f455f1dcd1c6f",
+    "image": "sha256:ff1d1258d7955847757443628cd3232b262b1d3d3885f3ae4a44ae25f520ae6d",
+    "coreAndWorkerSourceMatched": true,
+    "ready": true,
+    "existingCardsPreserved": 5,
+    "existingRowsPreserved": 5,
+    "protectedContainersUnchanged": true,
+    "directUnauthenticatedHTTP": 401,
+    "scopeOverrideHTTP": 422,
+    "compatibleDisabledRollbackLiveChecked": true,
+    "deliberateProviderProbesDuringRollout": 0,
+    "concurrentRuntimeProviderRequests": "not measured",
+    "elapsedSeconds": 56.94,
+    "ownerAccepted": false,
+    "phase": "installed-verified",
+    "rollbackAttempted": false,
+    "rollbackVerified": false,
+    "observedServices": {
+      "eva2-managed-b-slot3-core": {
+        "image": "sha256:ff1d1258d7955847757443628cd3232b262b1d3d3885f3ae4a44ae25f520ae6d",
+        "running": true,
+        "resultDeliveryEnabled": "true",
+        "id": "e6f1079c35e0104cf081362b70774bf386bf6ef9c5bbd56a24354a581250036f"
+      },
+      "eva2-managed-b-slot3-delegated-work-worker-1": {
+        "image": "sha256:ff1d1258d7955847757443628cd3232b262b1d3d3885f3ae4a44ae25f520ae6d",
+        "running": true,
+        "resultDeliveryEnabled": "false",
+        "id": "274a30e473895c606b463d029702e7a45ed71199c056e569d529cf46eca9bf27"
+      }
+    }
+  },
+  "scope": "Automatic result return for newly bound private Telegram tasks; no historical backfill",
+  "sourceEvidence": "eva2/evidence/product/private-result-return-candidate-2026-09-22.json",
+  "statusReadback": {
+    "http": 200,
+    "jobs": 5,
+    "deliveryStates": [
+      "blocked",
+      "blocked",
+      "blocked",
+      "blocked",
+      "blocked"
+    ]
+  },
+  "historicalStatus": "Existing seven-day result retention has elapsed; current delivery checks report blocked, preserve saved rows, and never send them.",
+  "review": "Independent GO for storage integration, status, composition, send switch and installer; UI text/fingerprint delta reviewed separately.",
+  "releaseChecks": {
+    "sourceSealTest": "passed after adding two new modules to expected list",
+    "settingsTests": 56,
+    "providerFixtureCases": 4,
+    "providerFixtureSeconds": 5.83,
+    "fixtureCorrection": "Original five-second two-request anti-hang guard expired during measured 6.063-second cold SDK/schema processing in the pinned image. Reviewed guard is 20 seconds; all result, request, grant, usage and cancellation assertions unchanged. No product deadline changed."
+  },
+  "ownerWebDisplay": {
+    "sourceBuiltAndReviewed": true,
+    "installed": false
+  },
+  "rollback": {
+    "mode": "Keep the paired image and set EVA_DELEGATED_RESULT_DELIVERY_ENABLED=false on core; research remains enabled, saved destinations and send fences retained.",
+    "compatibleDisabledModeLiveVerified": true,
+    "activeRecord": "/var/lib/eva2/managed-b-slot3/core-worker-active-compose.json"
+  },
+  "deliberateModelRequests": 0,
+  "deliberateTelegramMessages": 0,
+  "actualCredits": "unknown",
+  "ownerAccepted": false,
+  "remaining": [
+    "Install owner-web status text bundle",
+    "Real private Telegram acceptance",
+    "Equivalent result return on website, Home Assistant and Voice PE"
+  ]
+}
