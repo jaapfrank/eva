@@ -1,0 +1,45 @@
+{
+  "installed": true,
+  "images": {
+    "core": "sha256:eccb9bdf141b99558c7988e14a6ed691b719d1f774fc6e74395b255070f861cb",
+    "worker": "sha256:d31c6936433fb6b5b8c98f5505aeb2399c161f5095ad05ba417798aacc64aad8"
+  },
+  "containers": {
+    "core": "6adf2523fe4fd8e5a26d5842cdee03109796136e3fba16be5c5a6d0c23f85805",
+    "worker": "b9b7e14ea503a9658411d99619092f047e4807535747f8fcefdb21ea0e8c3469"
+  },
+  "protectedServices": 16,
+  "ownerAccepted": false,
+  "physicalTrial": false,
+  "rollbackAvailable": true,
+  "sourceCommit": "bfcdd80b",
+  "liveHouseholdSession": {
+    "ready": true,
+    "sessionOpenRenewPollClose": true,
+    "modelCalls": 0
+  },
+  "pairedVerification": {
+    "core": {
+      "configuration": "3698a162fd59687241669920364a61dc614aba9d3c261ec1f6cf88cdd010852f",
+      "researchProgram": "adefc7eb70d223a0165018eb03aa08e77e5bc2e29523899810d9e9337255c890",
+      "toolFreeProgram": "7b2982d94d9054ae46731a2be2548760773fd41bba9731f48f47906baf1692eb",
+      "sourceSha256": "83dcfb72500f1480c017d9e015329f408ec19753693a2886b3b116cec566661c"
+    },
+    "worker": {
+      "configuration": "3698a162fd59687241669920364a61dc614aba9d3c261ec1f6cf88cdd010852f",
+      "researchProgram": "adefc7eb70d223a0165018eb03aa08e77e5bc2e29523899810d9e9337255c890",
+      "toolFreeProgram": "7b2982d94d9054ae46731a2be2548760773fd41bba9731f48f47906baf1692eb",
+      "sourceSha256": "83dcfb72500f1480c017d9e015329f408ec19753693a2886b3b116cec566661c"
+    }
+  },
+  "behaviorEvidence": "eva2/evidence/product/research-completion-probe-20260922.json",
+  "qualityTrialAccepted": false,
+  "actualWebResearchExecutedInProbe": false,
+  "modelProbeUsage": {
+    "attempts": 1,
+    "inputTokens": 1994,
+    "outputTokens": 370,
+    "executedTools": 0,
+    "creditCost": null
+  }
+}

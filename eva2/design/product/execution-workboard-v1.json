@@ -1003,6 +1003,14 @@
         "checkedAt": "2026-09-22",
         "deliveries": [
           {
+            "title": "Vervolgonderzoek bij wezenlijk ontbrekend bewijs",
+            "date": "22 september",
+            "state": "installed",
+            "result": "Eva heeft aangescherpte onderzoeks- en afrondingsinstructies. In één modelproef koos zij gericht vervolgonderzoek naar alle drie ontbrekende controles, zonder al een eindadvies te geven.",
+            "remaining": "De proef voerde het vervolgonderzoek niet uit. Kwaliteit van een volledig nieuw onderzoek en jouw acceptatie blijven open.",
+            "source": "eva2/evidence/product/research-completion-installed-20260922.json"
+          },
+          {
             "title": "Huishoudspraak aangesloten op bestaande taakwerker",
             "date": "22 september",
             "state": "installed",
@@ -1017,25 +1025,17 @@
             "result": "De echte /eva2-ingang verwerkt meerdere vragen naast elkaar. Gericht getest, onafhankelijk beoordeeld en geïnstalleerd. Elk antwoord blijft gekoppeld aan zijn eigen vraag.",
             "remaining": "Echte Telegram-proef met jouw vragen staat open. Dit versnelt niet automatisch het modelantwoord en sluit wachtrijen bij overbelasting niet uit.",
             "source": "eva2/evidence/product/telegram-concurrent-installed-20260922.json"
-          },
-          {
-            "title": "Korte ontvangst zonder GPT-wachttijd",
-            "date": "22 september",
-            "state": "installed",
-            "result": "De privéspraakpagina zegt na ontvangst “Een momentje” terwijl de antwoordcall loopt. Die zin gaat niet terug het modelgeheugen in.",
-            "remaining": "Jouw hoorbare praktijkproef staat open; het inhoudelijke antwoord is nog niet sneller bewezen. De huishoudspeaker volgt met zijn eigen installatie.",
-            "source": "eva2/evidence/product/received-input-installed-20260922.json"
           }
         ],
         "now": {
-          "title": "Huishoudkoppeling live; onderzoeksafronding volgt",
-          "detail": "Kern, bestaande taakwerker en speaker draaien de beoordeelde versie. De echte sessieroute is gecontroleerd; overige diensten zijn behouden. Fysieke Voice PE-bediening en hoorbare taakafronding blijven nog te proberen.",
-          "state": "Geïnstalleerd — fysieke proef open",
+          "title": "Onderzoeksinstructies live; kwaliteit nog te beoordelen",
+          "detail": "De beoordeelde wijziging draait in kern en taakwerker. De bestaande huishoudsessieroute blijft werken. De proef bewijst de keuze voor vervolgonderzoek, niet de kwaliteit van ieder advies.",
+          "state": "Geïnstalleerd — volledige onderzoeksproef open",
           "doneWhen": "Telegram-proef afzonderlijk bevestigd; bestaande huishoudintegratie beoordeeld en geïnstalleerd met terugweg."
         },
         "next": {
-          "title": "Onderzoek inhoudelijk afmaken",
-          "detail": "Herstel het aangetoonde tekort waarbij Eva essentiële controles nog aan de gebruiker overlaat. Gebruik de bestaande onderzoeksvervolgroute en begrens de wijziging; geen nieuwe algemene onderzoeksinfrastructuur.",
+          "title": "Gesprekscontinuïteit en persoonsgrenzen afronden",
+          "detail": "Controleer de resterende koppeling tussen geverifieerde personen en gesprekken via de verschillende ingangen. Behoud geaccepteerd geheugen; gedeelde speakers blijven zonder persoonsverificatie huishoudelijk. De fysieke Voice PE-proef blijft afzonderlijk open.",
           "state": "Hierna"
         },
         "ownerAction": {
@@ -10811,7 +10811,7 @@
           "planningEffortHours": "4–12"
         }
       ],
-      "nextAction": "Herstel het aangetoonde tekort waarbij Eva essentiële controles nog aan de gebruiker overlaat. Gebruik de bestaande onderzoeksvervolgroute en begrens de wijziging; geen nieuwe algemene onderzoeksinfrastructuur.",
+      "nextAction": "Controleer de resterende koppeling tussen geverifieerde personen en gesprekken via de verschillende ingangen. Behoud geaccepteerd geheugen; gedeelde speakers blijven zonder persoonsverificatie huishoudelijk. De fysieke Voice PE-proef blijft afzonderlijk open.",
       "effortNotice": "Grove planning, lage zekerheid: 40–118 actieve ontwikkeluren plus zeven dagen gezinspraktijk en eventuele externe wachttijd. Geen deadline, creditkosten of gemeten verbruik; per begrensde wijziging aanscherpen na lezing van bestaand bewijs. Hergebruik kan dit verkorten.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Na review, installatie en registratie automatisch volgende uitvoerbare stap; geen algemene wachtstop op gebruikersproeven.",
@@ -11044,7 +11044,7 @@
       "installationEvidence": "eva2/evidence/product/telegram-concurrent-installed-20260922.json"
     },
     "researchCompletionOwnerFinding20260922": {
-      "status": "owner_quality_trial_failed",
+      "status": "instructions_installed_targeted_decision_probe_passed_quality_trial_open",
       "accepted": false,
       "ownerReport": "Een gedegen advies moet belangrijke ontbrekende gegevens verder onderzoeken; kon ik niet verifiëren zonder voldoende poging is geen goede afronding.",
       "artifactTitle": "Gedegen actuele analyse van XRP",
@@ -11062,7 +11062,8 @@
         "eva2/src/eva/adapters/model/research_tools.py"
       ],
       "remaining": "Controleer daadwerkelijke onderzoeksdekking en het gebruik van bestaande vervolgstappen. Belangrijke ontbrekende gegevens gericht onderzoeken of concrete geprobeerde bronnen/toegangsbelemmering vastleggen; geen verificatie verzinnen.",
-      "extraModelCalls": 0
+      "extraModelCalls": 0,
+      "installationEvidence": "eva2/evidence/product/research-completion-installed-20260922.json"
     },
     "developmentBudget20260922": {
       "weeklyUsedPercentObserved": 40,
