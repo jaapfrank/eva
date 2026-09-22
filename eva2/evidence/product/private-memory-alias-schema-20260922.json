@@ -1,0 +1,23 @@
+{
+  "checkedAt": "2026-09-22T18:09:54.496058+00:00",
+  "serviceImage": "sha256:20d72ad34164bd1a67906c4d61b57a51f2b255c49ddf8cb7ac5e901ebc3b3710",
+  "source": "installed Hindsight GET /openapi.json, RecallRequest.properties.tags_match",
+  "schema": {
+    "type": "string",
+    "enum": [
+      "any",
+      "all",
+      "any_strict",
+      "all_strict",
+      "exact"
+    ],
+    "title": "Tags Match",
+    "description": "How to match tags: 'any' (OR, includes untagged), 'all' (AND, includes untagged), 'any_strict' (OR, excludes untagged), 'all_strict' (AND, excludes untagged), 'exact' (set-equality on the full scope, excludes untagged). With 'exact' and no tags (or []), the empty global scope is selected and only untagged memories match.",
+    "default": "any"
+  },
+  "supported": true,
+  "memoryReads": 0,
+  "memoryWrites": 0,
+  "modelCalls": 0,
+  "limitation": "Schema compatibility only; not a cross-channel product acceptance test."
+}

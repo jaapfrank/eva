@@ -1665,6 +1665,20 @@ def create_runtime_app() -> FastAPI:
     household_voice = load_household_voice_authority(
         settings, runtime_identity=identity_pack, identity_loader=current_identity_pack,
     )
+    from eva.adapters.postgres.private_memory_aliases import PostgresPrivateMemoryAliases
+
+    private_memory_aliases = None
+    if (settings.dashboard_principal_binding_id is not None
+            and settings.telegram_principal_bindings_file is not None):
+        private_memory_aliases = PostgresPrivateMemoryAliases(
+            engine, tenant_id=settings.background_tenant_id,
+            installation_id=settings.background_installation_id,
+            owner=UUID(settings.background_principal_id),
+            binding=UUID(settings.dashboard_principal_binding_id),
+            authority_scope=TimelineScope(UUID(settings.dashboard_tenant_id),
+                                          UUID(settings.dashboard_installation_id)),
+            bindings_loader=lambda: load_principal_bindings(settings.telegram_principal_bindings_file),
+        )
     memory = HindsightMemoryEngine(
         HindsightProjectionConfig(
             settings.hindsight_url,
@@ -1675,6 +1689,7 @@ def create_runtime_app() -> FastAPI:
         ),
         active_group_consent_resolver=group_consent,
         active_household_consent_resolver=household_voice,
+        private_alias_resolver=private_memory_aliases,
     )
     dashboard_voice = build_dashboard_voice(
         settings, runtime_identity=identity_pack, identity_loader=current_identity_pack,

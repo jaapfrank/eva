@@ -26,7 +26,7 @@ import urllib.request
 from uuid import NAMESPACE_URL, uuid5
 from dataclasses import dataclass, replace
 from datetime import datetime, timezone
-from typing import Any, Literal, Protocol
+from typing import Any, Callable, Literal, Protocol
 
 from eva.application.memory import (
     ConversationMemoryDocument,
@@ -185,7 +185,9 @@ class HindsightMemoryEngine:
         *,
         active_group_consent_resolver: ActiveGroupConsentResolver | None = None,
         active_household_consent_resolver: ActiveHouseholdConsentResolver | None = None,
+        private_alias_resolver: Callable[[RecallCurrentFacts], tuple[str, ...]] | None = None,
     ) -> None:
+        self._private_alias_resolver = private_alias_resolver
         self._config = config
         self._base_url = config.base_url.rstrip("/")
         self._known_banks: set[str] = set()
@@ -316,6 +318,16 @@ class HindsightMemoryEngine:
         ])
         return f"{audience}:{request}"
 
+    def _private_recall_principals(self, query: RecallCurrentFacts) -> tuple[str, ...]:
+        """Resolve current private aliases; failed authority never widens recall."""
+        if query.audience.kind != "private_person" or self._private_alias_resolver is None:
+            return (query.principal_id,)
+        try:
+            aliases = self._private_alias_resolver(query)
+        except Exception:
+            return (query.principal_id,)
+        return tuple(sorted({query.principal_id, *aliases}))
+
     def recall_for_presence_fast(self, query: RecallCurrentFacts) -> PresenceMemory:
         """Supply relevant memory before answering, including the first turn.
 
@@ -327,13 +339,16 @@ class HindsightMemoryEngine:
         if (not query.subject_ids or query.principal_id not in query.subject_ids
                 or "observation_binding_sha256" in query.scope):
             return self.recall_for_presence(query)
-        key = self._fast_presence_key(query)
+        principals = self._private_recall_principals(query)
+        key = self._fast_presence_key(query) + ":" + canonical_sha256(list(principals))
         with self._cache_lock:
             cached = self._fast_presence_cache.get(key)
             if cached is not None and time.monotonic() - cached[0] <= 30:
                 return cached[1]
             generation = self._fast_presence_generation
         memory = self.recall_for_presence(query)
+        if principals != self._private_recall_principals(query):
+            return self._empty_presence(query)
         with self._cache_lock:
             if generation == self._fast_presence_generation:
                 self._fast_presence_cache[key] = (time.monotonic(), memory)
@@ -417,7 +432,7 @@ class HindsightMemoryEngine:
     def _recall_response(
         self,
         bank_id: str,
-        person_tag: str,
+        person_tag: str | tuple[str, ...],
         query: RecallCurrentFacts,
         query_text: str,
         memory_project_id: str | None,
@@ -433,8 +448,8 @@ class HindsightMemoryEngine:
                 "budget": self._config.recall_budget,
                 "max_tokens": self._config.recall_max_tokens,
                 "query_timestamp": query.requested_valid_at,
-                "tags": [person_tag],
-                "tags_match": "all_strict",
+                "tags": list(person_tag) if isinstance(person_tag, tuple) else [person_tag],
+                "tags_match": "any_strict" if isinstance(person_tag, tuple) else "all_strict",
                 "include": {
                     "entities": None,
                     "chunks": None,
@@ -944,6 +959,11 @@ class HindsightMemoryEngine:
                 document.tenant_id, document.installation_id,
                 document.principal_id, document.audience.audience_id,
             ]) + ":"
+            # Linked private identities may have cached the same source under
+            # either actor. Retention is infrequent; invalidate the bounded cache
+            # rather than retaining a second, potentially stale authority map.
+            if self._private_alias_resolver is not None and document.audience.kind == "private_person":
+                self._fast_presence_cache.clear()
             for key in tuple(self._fast_presence_cache):
                 if key.startswith(audience_key):
                     self._fast_presence_cache.pop(key, None)
@@ -1048,6 +1068,7 @@ class HindsightMemoryEngine:
             raise HindsightMemoryScopeError(
                 "memory recall must include the admitted principal"
             )
+        private_principals = self._private_recall_principals(query)
         group_recall = query.audience.kind == "telegram_group"
         household_recall = query.audience.kind == "household"
         if household_recall:
@@ -1075,7 +1096,9 @@ class HindsightMemoryEngine:
             audience_tag = self._group_tag(query.audience.group_chat_id)
         else:
             self._require_private_recall_audience(query)
-            audience_tag = self._person_tag(query.principal_id)
+            audience_tag = (tuple(self._person_tag(p) for p in private_principals)
+                            if len(private_principals) > 1
+                            else self._person_tag(query.principal_id))
         observation_binding_sha256 = query.scope.get("observation_binding_sha256")
         if observation_binding_sha256 is not None and (
             not isinstance(observation_binding_sha256, str)
@@ -1321,10 +1344,17 @@ class HindsightMemoryEngine:
                     continue
             elif metadata.get("audience_kind") not in {None, "private_person"}:
                 raise HindsightMemoryScopeError("Hindsight returned shared memory for a private audience")
-            elif subject_id not in query.subject_ids:
+            elif subject_id not in {*query.subject_ids, *private_principals}:
                 raise HindsightMemoryScopeError(
                     "Hindsight returned memory for another subject"
                 )
+            if not group_recall and not household_recall and len(private_principals) > 1:
+                # Original identities and exact private Telegram provenance stay intact.
+                if (metadata.get("principal_id") not in private_principals
+                        or metadata.get("audience_id") not in {None, f"person:{subject_id}"}
+                        or (subject_id.startswith("telegram:")
+                            and metadata.get("conversation_id") != subject_id)):
+                    raise HindsightMemoryScopeError("private alias source authority differs")
             privacy_class = metadata.get("privacy_class", "internal")
             returned_project_id = metadata.get(
                 "project_id", raw.get("_eva_memory_project_id")
@@ -1448,7 +1478,7 @@ class HindsightMemoryEngine:
             scope_sha256=canonical_sha256(query.scope),
             created_at=query.requested_valid_at,
         )
-        return PresenceMemory(
+        memory = PresenceMemory(
             recall=recall,
             confirmed_facts=tuple(confirmed),
             style_mirror=(
@@ -1457,6 +1487,10 @@ class HindsightMemoryEngine:
                 else self._recall_style_mirror(global_bank_id, query.principal_id)
             ),
         )
+
+        if private_principals != self._private_recall_principals(query):
+            return self._empty_presence(query)
+        return memory
 
     @staticmethod
     def _require_private_recall_audience(query: RecallCurrentFacts) -> None:

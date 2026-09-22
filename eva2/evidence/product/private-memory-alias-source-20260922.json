@@ -1,0 +1,39 @@
+{
+  "status": "source_tested_reviewed_not_installed",
+  "date": "2026-09-22",
+  "outcome": "Verified private website/Telegram owner aliases share recall; original stored sources remain unchanged. Shared audiences excluded.",
+  "files": {
+    "src/eva/adapters/projection/hindsight.py": "78250eb268ab3317a2cd3327cbe7502900adc1585443a5ad59fdbb18e3e11d27",
+    "src/eva/adapters/postgres/private_memory_aliases.py": "e6995542f4fe7554459b373b28a4545c50cc567aee8f0fc3a5bcafd1c8002f20",
+    "src/eva/bootstrap/runtime.py": "ab842fe5401e3f6133f8b47e06dbd67649ad9eebbc1fe0c1eea319e1a6ae95f8",
+    "tests/projection/test_private_memory_aliases.py": "6d68cd26ab2377486cc4ff90ead7ac14a41b348aaeb1c2f94268ef3366304ecb",
+    "tests/postgres/test_private_memory_alias_authority.py": "b86cf03474306bb2ba79cbaa47755812f6349cbede528b21eef18358f14d9c46"
+  },
+  "tests": {
+    "existingHindsightPassed": 68,
+    "newProjectionPassed": 10,
+    "newPostgresPassed": 2,
+    "qualification": "Results from targeted runs; initial runner-prefix and fixture errors corrected. No full release gate claimed."
+  },
+  "review": {
+    "reviewer": "root coordinator, independent of implementing subagent",
+    "result": "GO for bounded candidate packaging",
+    "checked": [
+      "Current database owner and binding; exact private Telegram conversation",
+      "Fresh trusted binding loading; no household/group aliasing",
+      "One recall with any_strict; source identity preserved",
+      "Revocation recheck and cache invalidation",
+      "Installed dependency mismatch identified and isolated for packaging"
+    ]
+  },
+  "schemaEvidence": "eva2/evidence/product/private-memory-alias-schema-20260922.json",
+  "live": false,
+  "ownerAccepted": false,
+  "remaining": [
+    "Package against current live runtime, including reused owner validator",
+    "Run candidate import and targeted tests",
+    "Safe installation with rollback and live authority checks",
+    "Actual cross-channel user trial"
+  ],
+  "developmentCreditCost": "unknown; no additional Eva model calls in implementation/tests"
+}
