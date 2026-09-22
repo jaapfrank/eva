@@ -57,8 +57,29 @@
     "fixtureCorrection": "Original five-second two-request anti-hang guard expired during measured 6.063-second cold SDK/schema processing in the pinned image. Reviewed guard is 20 seconds; all result, request, grant, usage and cancellation assertions unchanged. No product deadline changed."
   },
   "ownerWebDisplay": {
+    "installed": true,
+    "sourceCommit": "c7f4804913678e6ab4931a0ed84a3c598835ab94",
+    "pythonSourceCommit": "fc3425ae9459e3cece42e155770f455f1dcd1c6f",
+    "image": "sha256:980afa510aab4ab75260acba8d8597780548f30999aa925150e528b59bb8414a",
+    "assetsVerified": 3,
+    "workerUnchanged": true,
+    "observedCore": {
+      "Id": "feb8369bc1e111ad8868dcd77b369217278a21f1077bfae2f8ff9e1539875ce2",
+      "Image": "sha256:980afa510aab4ab75260acba8d8597780548f30999aa925150e528b59bb8414a"
+    },
     "sourceBuiltAndReviewed": true,
-    "installed": false
+    "browserVerified": {
+      "taskList": true,
+      "openedTaskDeliveryDescription": true,
+      "savedResultReadable": true,
+      "newTaskSubmitted": false
+    },
+    "firstAttempt": {
+      "installed": false,
+      "cause": "Asset verifier followed trailing-slash redirect away from authenticated owner proxy; HTTP 401",
+      "rollbackVerified": true,
+      "correction": "Verify exact /internal/v1/dashboard URL without trailing slash"
+    }
   },
   "rollback": {
     "mode": "Keep the paired image and set EVA_DELEGATED_RESULT_DELIVERY_ENABLED=false on core; research remains enabled, saved destinations and send fences retained.",
@@ -70,7 +91,6 @@
   "actualCredits": "unknown",
   "ownerAccepted": false,
   "remaining": [
-    "Install owner-web status text bundle",
     "Real private Telegram acceptance",
     "Equivalent result return on website, Home Assistant and Voice PE"
   ]

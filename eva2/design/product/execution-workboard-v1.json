@@ -10572,15 +10572,15 @@
           "files": "Read-only Voice PE provisioning, existing household continuous route and rollback; no voice-service rebuild",
           "estimate": "15–25 minuten installatieonderzoek; nul modelproeven; werkelijk creditverbruik onbekend",
           "state": "in_progress",
-          "currentOutcome": "Woonkamerpakket hergebruikt; eigen overkappingfirmware en herstelpakket gebouwd; bijgewerkt speakerimage met bestaande snelle ontvangst getest. Onafhankelijke pakketreview loopt; fysieke USB-identificatie en herstelproef nog open, niets geflasht."
+          "currentOutcome": "Beide apparaatpakketten onafhankelijk goedgekeurd; bestaande speakerdienst wordt voor installatie voorbereid. Fysieke USB-identificatie, volledige flashbackup en herstelproef nog open; niets geflasht."
         },
         {
           "threadId": "01a0c915-205e-7c11-809a-674ae09e016c",
           "title": "Eva laat achtergrondonderzoek echt afmaken",
-          "files": "application/delegated_work_delivery.py, adapters/postgres/delegated_work_delivery.py, delegated work admission and focused tests",
-          "estimate": "30–45 minuten contract, opslag en gerichte controles; nul providercalls; werkelijk creditverbruik onbekend",
-          "state": "installed_owner_acceptance_open",
-          "currentOutcome": "Automatische private Telegram-terugmelding en status zijn geïnstalleerd; bestaande taken en werkende terugweg gecontroleerd. Eigenaarproef open. Webstatusweergave gebouwd/beoordeeld, assetinstallatie volgt."
+          "files": "AU-006 bestaande documentdiensten: herstelonderzoek en bewijs; geen nieuwe projecten of kernwijzigingen",
+          "estimate": "20 minuten gericht herstel; nul modelproeven; werkelijk creditverbruik onbekend",
+          "state": "in_progress",
+          "currentOutcome": "Private Telegram-terugmelding en webstatus geïnstalleerd en gecontroleerd; echte Telegram-eigenaarproef open. Nu herstel van bestaande documentdiensten na WSL-herstart, met behoud van projecten en gegevens."
         }
       ],
       "coordination": "Twee actieve producttaken met afzonderlijke bestanden. Coördinator integreert de terugmeldroute in de bestaande runtime en bewaakt review/installatie. Geen nieuwe spraakbouw of herhaalde modelproef; Voice PE gebruikt waar mogelijk de bestaande continue route."
@@ -10686,7 +10686,7 @@
             "UX-002"
           ],
           "doneWhen": "Meerdere aangenomen taken volgen, gecontroleerd resultaat aan juiste persoon terugbrengen, browserovername en herstel zonder dubbele acties; bruikbare taakbediening.",
-          "preserve": "Publiek onderzoek en taakbediening geïnstalleerd; automatische terugmelding, brede taken en browserherstart nog apart open.",
+          "preserve": "Publiek onderzoek, taakbediening en private Telegram-terugmelding geïnstalleerd; echte kanaalproef, overige kanalen, brede taken en browserherstart nog open.",
           "planningEffortHours": "6–16"
         },
         {
@@ -10759,7 +10759,7 @@
           "planningEffortHours": "4–12"
         }
       ],
-      "nextAction": "Rond de assetinstallatie van de bestaande taakweergave af. Voice PE-pakketten zijn voorbereid: controleer review en USB-identificatie/herstel vóór apparaatinstallatie. Automatische private Telegram-terugmelding is geïnstalleerd; overige kanalen en eigenaaracceptatie blijven open.",
+      "nextAction": "Bereid activering van bestaande Voice PE-speakerdienst voor; apparaatinstallatie wacht op USB-identificatie en herstelbewijs. Herstel parallel de bestaande AU-006 documentdiensten na WSL-herstart. Private Telegram-terugmelding en webstatus zijn geïnstalleerd; overige kanalen en echte eigenaarproef blijven open.",
       "effortNotice": "Grove planning, lage zekerheid: 40–118 actieve ontwikkeluren plus zeven dagen gezinspraktijk en eventuele externe wachttijd. Geen deadline, creditkosten of gemeten verbruik; per begrensde wijziging aanscherpen na lezing van bestaand bewijs. Hergebruik kan dit verkorten.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Na review, installatie en registratie automatisch volgende uitvoerbare stap; geen algemene wachtstop op gebruikersproeven.",
