@@ -1,0 +1,8 @@
+{
+  "external_requests": 0,
+  "simulated_opens": 1,
+  "timeout_seconds": 0.05,
+  "elapsed_seconds": 0.265,
+  "returned_successfully_after_deadline": true,
+  "response_closed": true
+}

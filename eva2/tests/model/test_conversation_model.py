@@ -2484,7 +2484,7 @@ def test_builtin_research_retains_provider_context_usage_without_changing_chat_b
     def respond(request, **kwargs):
         requests.append(request)
         return BytesIO(frames)
-    monkeypatch.setattr(conversation_module.urllib.request, "urlopen", respond)
+    monkeypatch.setattr(conversation_module, "open_research_response", respond)
     def research():
         return model.research_current_options(question="Lees de officiële documentatie.",
             title="GitMCP", options=("GitMCP — https://github.com/idosal/git-mcp",), researched_at=NOW)
@@ -2713,7 +2713,7 @@ def test_rejected_research_keeps_exact_measured_usage_without_response_content(t
     def respond(request, **kwargs):
         calls.append(request)
         return BytesIO(frames)
-    monkeypatch.setattr(conversation_module.urllib.request, "urlopen", respond)
+    monkeypatch.setattr(conversation_module, "open_research_response", respond)
     def research():
         return model.research_current_options(question="Lees de primaire documentatie.", title="GitMCP",
             options=("GitMCP — https://github.com/idosal/git-mcp",), researched_at=NOW)
@@ -2738,10 +2738,12 @@ def test_native_research_permits_only_one_http_attempt(tmp_path, monkeypatch):
     calls = []
     monkeypatch.setattr(model, "_load_auth", lambda: (str(len(calls)), "account"))
     monkeypatch.setattr(model, "_jwt_expiry", lambda token: None)
-    def failed(request, timeout):
+    def failed(request, *, deadline, maximum_bytes):
+        from time import monotonic
+        timeout = deadline - monotonic()
         calls.append({"body": json.loads(request.data), "timeout": timeout})
         raise HTTPError(request.full_url, 401, "expired", {}, BytesIO(b"expired"))
-    monkeypatch.setattr(conversation_module.urllib.request, "urlopen", failed)
+    monkeypatch.setattr(conversation_module, "open_research_response", failed)
     with initiative_execution(object()), pytest.raises(ConversationModelError):
         model.research_current_options(question="Read public documentation", title="Docs",
             options=("https://playwright.dev/docs/intro",), researched_at=NOW)

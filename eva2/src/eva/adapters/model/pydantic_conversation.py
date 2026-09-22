@@ -61,6 +61,7 @@ from eva.application.conversation import (
     complete_current_model_request,
 )
 from eva.application.cancellation import check_cancellation, run_cancellable
+from eva.adapters.model.research_transport import open_research_response
 from eva.application.memory import PresenceMemory
 from eva.application.free_will import PersonalInitiativeProposal, AutonomousAdmissionBlocker, AutonomousUsageUncertain, FreeWillDecision
 from eva.application.resident_attention import ResidentAttentionDecision
@@ -1867,6 +1868,10 @@ class PydanticConversationModel:
             raise ConversationModelError("provider-managed research input scope is invalid")
         self._admit_request(body, autonomous=autonomous)
         last_auth: tuple[str, str] | None = None
+        research_deadline = (
+            monotonic() + (timeout_seconds or self._timeout_seconds)
+            if provider_managed_research_input else None
+        )
         attempts = 1 if provider_managed_research_input and _native_research_context() else 2
         for attempt in range(attempts):
             auth = self._load_auth()
@@ -1894,8 +1899,12 @@ class PydanticConversationModel:
             )
             try:
                 started_at = monotonic()
-                response = urllib.request.urlopen(
-                    request, timeout=timeout_seconds or self._timeout_seconds
+                response = (
+                    open_research_response(request, deadline=research_deadline,
+                                           maximum_bytes=_MAX_STREAM_BYTES)
+                    if research_deadline is not None else urllib.request.urlopen(
+                        request, timeout=timeout_seconds or self._timeout_seconds
+                    )
                 )
             except urllib.error.HTTPError as error:
                 if error.code in {401, 403} and attempt == 0:
@@ -1937,6 +1946,10 @@ class PydanticConversationModel:
                         if include_timing
                         else parser(stream)
                     )
+                    if research_deadline is not None:
+                        check_cancellation()
+                        if monotonic() >= research_deadline:
+                            raise ConversationModelError("research provider deadline expired")
                     if self._resource_budget is None and not include_usage:
                         return parsed
                     if len(terminal_usage) != 1:

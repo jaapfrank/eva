@@ -1,7 +1,6 @@
 """Native research through the existing indexed tool journal and model adapter."""
 from __future__ import annotations
 
-import asyncio
 from datetime import UTC, datetime
 import hashlib
 import ipaddress
@@ -10,6 +9,7 @@ import unicodedata
 from urllib.parse import unquote, urlsplit
 
 from eva.application.conversation import ConversationConflict, ConversationToolPreparation
+from eva.application.cancellation import run_cancellable, run_in_cancellation_thread
 from eva.application.initiative_execution import require_initiative_context
 from eva.application.orchestration import ToolDispatchResult, ToolProofObservation
 from eva.contracts.canonical_json import canonical_sha256
@@ -146,10 +146,11 @@ class NativeResearchTool:
     async def execute(self, request):
         self._check(request)
         self._validate_execution_input(request.arguments)
-        artifact = await asyncio.to_thread(self.research.research_current_options,
-            question=request.arguments["question"], title=request.arguments["title"],
-            options=tuple(request.arguments["options"]),
-            researched_at=datetime.now(UTC).strftime("%Y-%m-%dT%H:%M:%SZ"), **self._mode(request.arguments))
+        artifact = await run_cancellable(lambda: run_in_cancellation_thread(
+            lambda: self.research.research_current_options(
+                question=request.arguments["question"], title=request.arguments["title"],
+                options=tuple(request.arguments["options"]),
+                researched_at=datetime.now(UTC).strftime("%Y-%m-%dT%H:%M:%SZ"), **self._mode(request.arguments))))
         output = {"title": artifact.title, "question": artifact.question,
             "content": artifact.content, "content_sha256": artifact.content_sha256,
             "provider": artifact.provider, "researched_at": artifact.researched_at,
