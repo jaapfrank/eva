@@ -42,6 +42,7 @@ def research_program_hash():
             "bootstrap/delegated_research.py", "bootstrap/delegated_work_owner_service.py",
             "adapters/postgres/delegated_work_actions.py", "application/research.py",
             "adapters/model/research_tools.py", "adapters/model/pydantic_conversation.py",
+            "adapters/model/research_transport.py",
             "adapters/postgres/external_conversation_tools.py",
             "adapters/postgres/conversation_actions.py", "adapters/postgres/conversation_journal.py",
             "application/cancellation.py", "application/orchestration.py")}})
