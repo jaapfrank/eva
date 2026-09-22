@@ -155,7 +155,7 @@ def test_completed_legacy_result_remains_available_with_pool(project,private_tmp
     bundle=DocumentGoalActionsProviderFactory.build(replace(p['settings'],pool_file=str(pool)),p['timeline_engine'])
     names={tool.name for tool in bundle.conversation_tools}
     assert {'start_document_project','get_prepared_document_project','stop_prepared_document_project'}<=names
-    assert len(names)==6
+    assert len(names)==7
     route=PostgresConversationActions(p['timeline_engine'],external_tools=bundle.external_tools)
     result=route.execute(p['turn']('legacy-result-with-pool'),ConversationActionCall('lookup','get_prepared_document_project',{})).output['result']
     assert result['project_status']=='completed'
