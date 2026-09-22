@@ -544,7 +544,7 @@ _FREE_WILL_TOOL: dict[str, Any] = _tool(
 _CODEX_SUBSCRIPTION_ENDPOINT = "https://chatgpt.com/backend-api/codex/responses"
 
 
-_CURRENT_RESEARCH_INSTRUCTIONS = "Je bent Eva en maakt een zelfstandig bruikbaar Nederlandstalig onderzoeksdocument in Markdown. Zoek actuele informatie op het web. Onderzoek exact de opgegeven onderwerpen; vergelijk ze wanneer de vraag daarom vraagt. Verzin geen alternatieven bij één onderwerp. Open eerst de expliciet opgegeven primaire URLs. Lees alleen de passages die de concrete vraag beantwoorden; zoek gericht verder uitsluitend als zo'n antwoord daar ontbreekt. Geen brede marktverkenning of achtergrondonderzoek buiten de vraag. Gebruik voor ieder onderwerp minstens één primaire bron: officiële productdocumentatie, de maker, een overheid, een register of oorspronkelijk onderzoek; gebruik geen vergelijkingssite als bewijs voor een primaire claim. Benoem expliciet welke uitspraken bronfeiten zijn en welke jouw gevolgtrekking of advies zijn. Neem concrete criteria, beperkingen en een korte conclusie op. Alle actuele claims krijgen zichtbare inline bronverwijzingen. Verzin geen ontbrekende feiten. Maximaal 450 woorden."
+_CURRENT_RESEARCH_INSTRUCTIONS = "Je bent Eva en maakt een zelfstandig bruikbaar Nederlandstalig onderzoeksdocument in Markdown. Zoek actuele informatie op het web. Onderzoek exact de opgegeven onderwerpen; vergelijk ze wanneer de vraag daarom vraagt. Verzin geen alternatieven bij één onderwerp. Open eerst de expliciet opgegeven primaire URLs. Lees alleen de passages die de concrete vraag beantwoorden; zoek gericht verder uitsluitend als zo'n antwoord daar ontbreekt. Geen brede marktverkenning of achtergrondonderzoek buiten de vraag. Gebruik voor ieder onderwerp minstens één primaire bron: officiële productdocumentatie, de maker, een overheid, een register of oorspronkelijk onderzoek; gebruik geen vergelijkingssite als bewijs voor een primaire claim. Benoem expliciet welke uitspraken bronfeiten zijn en welke jouw gevolgtrekking of advies zijn. Neem concrete criteria, beperkingen en een korte conclusie op. Controleer eerst de ontbrekende gegevens die jouw conclusie wezenlijk kunnen veranderen. Ontbreekt een antwoord in de eerste bron, probeer dan gericht een andere passende primaire bron binnen het beschikbare budget. Schuif die controles niet als huiswerk of als onuitgevoerde voorwaarde door naar de gebruiker. Blijft een essentieel gegeven ontbreken, benoem welke bronnen of toegangspogingen geen antwoord opleverden en wat daardoor nog niet geconcludeerd kan worden. Onvoldoende onderzocht is niet hetzelfde als aangetoond ongunstig. Alle actuele claims krijgen zichtbare inline bronverwijzingen. Verzin geen ontbrekende feiten. Maximaal 450 woorden."
 
 
 class PydanticConversationModel:
@@ -2558,7 +2558,15 @@ class PydanticConversationModel:
                     "duurzaam opgeslagen Markdown-document en de geciteerde bronnen. "
                     "Dit bewijst alleen het onderzoeksdocument, niet dat de oorspronkelijke "
                     "opdracht al af is. Als daarin nog werk resteert, voer dat nu uit met "
-                    "de aangeboden vervolgtools binnen hetzelfde mandaat. Geef pas als "
+                    "de aangeboden vervolgtools binnen hetzelfde mandaat. Een wezenlijke "
+                    "onbeantwoorde vraag of een voorwaarde als 'eerst controleren' is "
+                    "resterend werk: onderzoek die gericht verder als daarvoor een "
+                    "toegestane tool beschikbaar is. Geef die controle niet terug aan de "
+                    "gebruiker. Herhaal geen identieke zoekpoging zonder nieuwe bron of "
+                    "hypothese. Stop bij voldoende onderbouwing, een werkelijk bereikte "
+                    "budgetgrens of een concrete toegangs- of bronbeperking na beschreven "
+                    "pogingen; vermeld dan welk deel onaf is. Trek geen negatieve conclusie "
+                    "uitsluitend omdat jouw onderzoek nog gegevens mist. Geef pas als "
                     "de opdracht af is kort de belangrijkste uitkomst en noem dat het document is "
                     "bewaard. Laat minstens één zichtbare klikbare bronverwijzing uit de "
                     "receipt staan; verzin of wijzig geen URL. Noem geen interne receipt, "
