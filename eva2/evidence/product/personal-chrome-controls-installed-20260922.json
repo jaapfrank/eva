@@ -1,0 +1,30 @@
+{
+  "startedAt": "2026-09-22T19:57:54.688912+00:00",
+  "phase": "installed_healthy",
+  "sourceCommit": "5d6a654707b71689c76e7a3d029e761af5156a41",
+  "modelCalls": 0,
+  "coreImage": "sha256:d2e828030ee742c91c51ff4ce64c5582cfdecdc7138ed76bbcdd65ba7527e0b9",
+  "installedAt": "2026-09-22T19:58:12.537193+00:00",
+  "allServedAssetsMatchManifest": true,
+  "assetCount": 3,
+  "personalChromeControlPresent": true,
+  "browserGrantCreated": false,
+  "package": {
+    "parent": "sha256:9354deae1e144d2e4502e776c2314dc875a8be2b595710c1134ad662b6f7ffaf",
+    "image": "sha256:d2e828030ee742c91c51ff4ce64c5582cfdecdc7138ed76bbcdd65ba7527e0b9",
+    "assetManifestSha256": "77ef1bd78a2448984444eae776952034145a2ceb4016dff8dead49b8629357bb",
+    "runtimePythonUnchanged": true
+  },
+  "browserProof": {
+    "localTopLevelLink": true,
+    "remoteLoopbackLinkAbsent": true,
+    "legacyBrowserRequests": 0,
+    "iframeCount": 0,
+    "browserControlActions": 0,
+    "status": "passed"
+  },
+  "independentReview": "Coordinator reviewed builder patch and browser assertions: GO",
+  "ownerAccepted": false,
+  "proofBoundary": "Browser entry and served assets verified; no personal tab grant, action or new recovery trial. Existing recovery evidence retained.",
+  "rollbackCompose": "/var/lib/eva2/personal-chrome-control-20260922/baseline.compose.private.json"
+}
