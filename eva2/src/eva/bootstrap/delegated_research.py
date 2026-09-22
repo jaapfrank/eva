@@ -94,6 +94,26 @@ class DelegatedResearchProfile:
             research=public.to_payload(), created_at=stamp(created), deadline=stamp(deadline))
 
 
+def build_public_research_composition(*, model_access_lease_file: Path, resource_budget):
+    """Shared core/worker factory; inspect current authority without provider traffic."""
+    from eva.adapters.model.pydantic_conversation import PydanticConversationModel
+    from eva.contracts.runtime_budget import RuntimeResourceBudget
+    from eva.bootstrap.delegated_work_provider import (
+        MODEL_NAME, MODEL_ENDPOINT, validate_delegated_model_access_lease)
+    if not isinstance(resource_budget, RuntimeResourceBudget):
+        raise TypeError("public research requires the installed runtime resource budget")
+    if not model_access_lease_file.is_absolute():
+        raise ValueError("public research lease must use an absolute path")
+    validate_delegated_model_access_lease(model_access_lease_file)
+    research = PydanticConversationModel(auth_file=model_access_lease_file,
+        model=MODEL_NAME, endpoint=MODEL_ENDPOINT, reasoning_effort="low",
+        timeout_seconds=60, research_timeout_seconds=60, resource_budget=resource_budget)
+    profile = DelegatedResearchProfile(MODEL_PROFILE_ID, research.research_configuration_sha256(),
+        maximum_input_tokens=resource_budget.max_input_tokens,
+        maximum_output_tokens=resource_budget.max_output_tokens, maximum_tool_calls=3)
+    return research, profile
+
+
 class DelegatedResearchRunner:
     """One admitted read-only research action; no model planner or second scheduler."""
     def __init__(self, store, research, profile: DelegatedResearchProfile, *, clock=None):

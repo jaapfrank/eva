@@ -170,3 +170,39 @@ Next: independent source review, counter fix, minimal wiring, integrated model-f
 checks, separately authorized changed-hypothesis real probe, then coordinator
 installation/live check/rollback. No complete product, general autonomy, parallel
 research execution, owner acceptance or present live availability is claimed.
+
+
+## Opt-in worker composition addendum
+
+Shared `build_public_research_composition(*, model_access_lease_file: Path,
+resource_budget: RuntimeResourceBudget)` now returns `(research, profile)` with
+identical source/configuration fingerprints for core and worker. It validates the
+existing shared lease and uses Luna low, the same subscription endpoint, unchanged
+budget and max-three result-admission limit. It never requests the provider.
+
+Existing worker main/--check opt in only with exact
+`EVA_DELEGATED_RESEARCH_ENABLED=true` (default `false`; other strings rejected).
+Enabled settings require the existing `EVA_RUNTIME_RESOURCE_BUDGET_FILE`,
+`EVA_RUNTIME_TENANT_ID`, `EVA_RUNTIME_INSTALLATION_ID`. The private-file reader and
+RuntimeResourceBudget.from_bytes enforce the configured scope. No RuntimeSettings
+or core-app import. Storage remains in the existing separately configured worker
+scope. --check validates research composition along with existing lease/dependency
+and schema checks. Default continues the tool-free runner while retaining v2 read
+support; no process/network loop is added.
+
+Ten new provider-free composition tests plus the 22 existing contract/provider/
+service tests passed: **32 passed in 3.76 s**. Checks include strict opt-in,
+missing budget refusal, source-identical core/worker profiles, exact live-compatible
+budget bounds, other-scope denial, enabled composition routing and --check without
+provider traffic. No further real request.
+
+Independent review identified a concrete **activation blocker**: the existing
+synchronous urllib research reader runs inside nested to_thread / asyncio.run.
+Its 60-second socket timeout is not a proven total SSE deadline. Cancelling the
+outer await may still wait for the underlying thread, keeping the shared worker
+busy. The earlier real request completed in 9.967 seconds, but it does not prove
+bounded handling of a continuously slow stream. Stop prevents new steps but
+reader quiescence requires a targeted existing-transport correction by the model
+adapter owner. Do not activate or call the provider again until that correction
+and appropriate model-free stalled-stream/stop evidence pass. No orphan-thread
+workaround or timeout success claim is part of this candidate.

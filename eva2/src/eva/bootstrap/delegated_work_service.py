@@ -126,8 +126,18 @@ class OpenAIDelegatedWorkSettings:
 
     service: DelegatedWorkServiceSettings
     model_access_lease_file: Path
+    research_enabled: bool = False
+    research_budget_file: Path | None = None
+    research_tenant_id: str | None = None
+    research_installation_id: str | None = None
 
     def __post_init__(self) -> None:
+        if type(self.research_enabled) is not bool:
+            raise ValueError("research switch must be a boolean")
+        if self.research_enabled and (self.research_budget_file is None
+                or not self.research_budget_file.is_absolute()
+                or not self.research_tenant_id or not self.research_installation_id):
+            raise ValueError("research requires an absolute budget file and runtime scope")
         if not self.model_access_lease_file.is_absolute():
             raise ValueError("delegated model lease file must be absolute")
 
@@ -147,10 +157,39 @@ class OpenAIDelegatedWorkSettings:
         lease = values.get("EVA_MODEL_ACCESS_LEASE_FILE", "").strip()
         if not lease:
             raise RuntimeError("EVA_MODEL_ACCESS_LEASE_FILE is required")
+        enabled = values.get("EVA_DELEGATED_RESEARCH_ENABLED", "false")
+        if enabled not in {"true", "false"}:
+            raise RuntimeError("EVA_DELEGATED_RESEARCH_ENABLED must be true or false")
+        research = {}
+        if enabled == "true":
+            names = ("EVA_RUNTIME_RESOURCE_BUDGET_FILE", "EVA_RUNTIME_TENANT_ID", "EVA_RUNTIME_INSTALLATION_ID")
+            if any(not values.get(name, "").strip() for name in names):
+                raise RuntimeError("research budget file and runtime scope are required")
+            research = dict(research_enabled=True,
+                research_budget_file=Path(values[names[0]].strip()),
+                research_tenant_id=values[names[1]].strip(),
+                research_installation_id=values[names[2]].strip())
         return cls(
+            **research,
             service=DelegatedWorkServiceSettings.from_environment(values),
             model_access_lease_file=Path(lease),
         )
+
+
+def _research_composition(settings: OpenAIDelegatedWorkSettings):
+    """Read only the same installed budget, bound to this worker's runtime scope."""
+    from eva.adapters.credentials.runtime_files import read_private_runtime_file_bytes
+    from eva.contracts.runtime_budget import RuntimeResourceBudget
+    from eva.bootstrap.delegated_research import build_public_research_composition
+    if not settings.research_enabled:
+        raise RuntimeError("public research is not enabled")
+    budget = RuntimeResourceBudget.from_bytes(
+        read_private_runtime_file_bytes(str(settings.research_budget_file),
+            setting_name="EVA_RUNTIME_RESOURCE_BUDGET_FILE"),
+        expected_tenant_id=settings.research_tenant_id,
+        expected_installation_id=settings.research_installation_id)
+    return build_public_research_composition(model_access_lease_file=settings.model_access_lease_file,
+        resource_budget=budget)
 
 
 class DelegatedWorkService:
@@ -264,6 +303,11 @@ async def serve_openai_delegated_work(
 ) -> Literal["stopped", "completed"]:
     """Run one worker loop; each admitted task opens its own provider session."""
 
+    if settings.research_enabled:
+        from eva.bootstrap.delegated_research import serve_research_enabled_work
+        research, profile = _research_composition(settings)
+        return await serve_research_enabled_work(settings, research, profile, once=once)
+
     async with _open_provider_runner(settings.model_access_lease_file) as runner:
         return await serve_delegated_work_service(
             runner,
@@ -286,6 +330,8 @@ def check_openai_delegated_work(
     selected = settings or OpenAIDelegatedWorkSettings.from_environment()
     verify_delegated_provider_dependencies()
     validate_delegated_model_access_lease(selected.model_access_lease_file)
+    if selected.research_enabled:
+        _research_composition(selected)
     database_dsn = read_runtime_secret_file(
         selected.service.database_dsn_file,
         setting_name="EVA_DATABASE_DSN_FILE",
