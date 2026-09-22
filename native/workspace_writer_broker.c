@@ -159,6 +159,9 @@ struct broker_state {
   struct operation *operations;
   size_t operation_count;
   struct bytes journal_image;
+  struct bytes relocation;
+  uint64_t relocation_prefix;
+  bool relocation_applied;
 };
 
 struct parent_target {
@@ -1296,12 +1299,168 @@ static int load_journal_image(int descriptor, struct bytes *image) {
   return 0;
 }
 
+/* Host-only physical identity overlay. The original journal remains the sole
+ * operation parser and state machine. FD 5 is supplied by the trusted launcher,
+ * never by a request. This format is not a signature or conversational authority.
+ * Header: magic, immutable prefix length/hash, new root/child identities, count.
+ * Entries: operation id, old/new parent, old/new prior, old/new published, flags.
+ * The old identities are retained so an overlay cannot silently become a new
+ * history. Repeated relocation requires a separately designed authority chain. */
+enum { RELOCATION_HEADER_BYTES = 124, RELOCATION_ENTRY_BYTES = 510 };
+
+static int load_relocation(struct broker_state *state) {
+  struct stat before, after;
+  int flags = fcntl(5, F_GETFL);
+  if (flags < 0 || (flags & O_ACCMODE) != O_RDONLY
+      || fstat(5, &before) < 0 || !S_ISREG(before.st_mode)
+      || before.st_uid != geteuid() || before.st_nlink != 1
+      || (before.st_mode & 07777) != 0400
+      || before.st_size < RELOCATION_HEADER_BYTES + SHA256_BYTES
+      || before.st_size > RELOCATION_HEADER_BYTES
+        + MAX_OPERATIONS * RELOCATION_ENTRY_BYTES + SHA256_BYTES)
+    return fail("relocation_authority_refused");
+  state->relocation.length = (size_t)before.st_size;
+  state->relocation.data = malloc(state->relocation.length);
+  if (state->relocation.data == NULL) return fail("memory_unavailable");
+  size_t offset = 0;
+  while (offset < state->relocation.length) {
+    ssize_t got = pread(5, state->relocation.data + offset,
+                        state->relocation.length - offset, (off_t)offset);
+    if (got < 0 && errno == EINTR) continue;
+    if (got <= 0) return fail("relocation_authority_refused");
+    offset += (size_t)got;
+  }
+  if (fstat(5, &after) < 0 || !exact_stat(&before, &after))
+    return fail("relocation_authority_refused");
+  const uint8_t *data = state->relocation.data;
+  uint32_t count = get_u32(data + 120U);
+  uint8_t hash[SHA256_BYTES];
+  sha256_bytes(data, state->relocation.length - SHA256_BYTES, hash);
+  if (memcmp(data, "EVWWREL1", 8U) != 0 || count > MAX_OPERATIONS
+      || state->relocation.length != RELOCATION_HEADER_BYTES
+        + (size_t)count * RELOCATION_ENTRY_BYTES + SHA256_BYTES
+      || memcmp(hash, data + state->relocation.length - SHA256_BYTES, SHA256_BYTES) != 0)
+    return fail("relocation_authority_refused");
+  state->relocation_prefix = get_u64(data + 8U);
+  if (state->relocation_prefix > state->journal_image.length)
+    return fail("relocation_prefix_mismatch");
+  sha256_bytes(state->journal_image.data, (size_t)state->relocation_prefix, hash);
+  if (memcmp(hash, data + 16U, SHA256_BYTES) != 0)
+    return fail("relocation_prefix_mismatch");
+  struct directory_identity expected, actual;
+  for (size_t i = 0; i < 2; ++i) {
+    if (decode_parent_identity(data + 48U + 36U * i, &expected) < 0
+        || read_directory_identity(i == 0 ? ROOT_DESCRIPTOR : JOURNAL_DIRECTORY_DESCRIPTOR, &actual) < 0
+        || !same_parent_identity(&expected, &actual)
+        || actual.user != (uint32_t)geteuid()
+        || (actual.mode & 07777U) != 0700U)
+      return fail("relocation_directory_mismatch");
+  }
+  return 0;
+}
+
+static int apply_relocation(struct broker_state *state) {
+  const uint8_t *data = state->relocation.data;
+  if (get_u32(data + 120U) != state->operation_count)
+    return fail("relocation_history_mismatch");
+  for (size_t i = 0; i < state->operation_count; ++i) {
+    struct operation *operation = &state->operations[i];
+    const uint8_t *entry = data + RELOCATION_HEADER_BYTES + i * RELOCATION_ENTRY_BYTES;
+    uint8_t old[101];
+    if (memcmp(entry, operation->request.operation_id, OPERATION_ID_BYTES) != 0
+        || entry[508] != (uint8_t)operation->published_recorded
+        || entry[509] != (uint8_t)operation->committed)
+      return fail("relocation_history_mismatch");
+    encode_parent_identity(old, &operation->parent);
+    if (memcmp(old, entry + 32U, 36U) != 0) return fail("relocation_history_mismatch");
+    if (memcmp(entry + 48U, entry + 84U, 20U) != 0)
+      return fail("relocation_parent_mismatch");
+    encode_prior(old, &operation->prior);
+    if (memcmp(old, entry + 104U, 101U) != 0) return fail("relocation_history_mismatch");
+    encode_prior(old, &operation->published);
+    if (memcmp(old, entry + 306U, 101U) != 0) return fail("relocation_history_mismatch");
+    if (decode_parent_identity(entry + 68U, &operation->parent) < 0
+        || decode_prior(entry + 205U, &operation->prior) < 0
+        || decode_prior(entry + 407U, &operation->published) < 0) return -1;
+    /* Changes to kind/content/permissions are not a physical relocation. */
+    const size_t positions[] = {104U, 306U};
+    for (size_t j = 0; j < 2; ++j) {
+      const uint8_t *source = entry + positions[j], *destination = source + 101U;
+      if (source[0] != destination[0]
+          || memcmp(source + 17U, destination + 17U, 28U) != 0
+          || memcmp(source + 69U, destination + 69U, SHA256_BYTES) != 0)
+        return fail("relocation_material_mismatch");
+    }
+  }
+  state->relocation_applied = true;
+  return 0;
+}
+
+static int relocation_snapshot(struct broker_state *state) {
+  size_t length = RELOCATION_HEADER_BYTES + state->operation_count * RELOCATION_ENTRY_BYTES + SHA256_BYTES;
+  uint8_t *data = calloc(1, length);
+  if (data == NULL) return fail("memory_unavailable");
+  memcpy(data, "EVWWREL1", 8U);
+  put_u64(data + 8U, state->journal_image.length);
+  sha256_bytes(state->journal_image.data, state->journal_image.length, data + 16U);
+  struct directory_identity root, journal;
+  int result = read_directory_identity(ROOT_DESCRIPTOR, &root);
+  if (result == 0) result = read_directory_identity(JOURNAL_DIRECTORY_DESCRIPTOR, &journal);
+  if (result == 0 && (root.user != (uint32_t)geteuid() || journal.user != (uint32_t)geteuid()
+      || (root.mode & 07777U) != 0700U || (journal.mode & 07777U) != 0700U))
+    result = fail("relocation_directory_mismatch");
+  if (result == 0) {
+    encode_parent_identity(data + 48U, &root);
+    encode_parent_identity(data + 84U, &journal);
+    put_u32(data + 120U, (uint32_t)state->operation_count);
+  }
+  for (size_t i = 0; result == 0 && i < state->operation_count; ++i) {
+    struct operation *operation = &state->operations[i];
+    uint8_t *entry = data + RELOCATION_HEADER_BYTES + i * RELOCATION_ENTRY_BYTES;
+    memcpy(entry, operation->request.operation_id, OPERATION_ID_BYTES);
+    encode_parent_identity(entry + 32U, &operation->parent);
+    encode_prior(entry + 104U, &operation->prior);
+    encode_prior(entry + 306U, &operation->published);
+    entry[508] = (uint8_t)operation->published_recorded;
+    entry[509] = (uint8_t)operation->committed;
+    struct parent_target target = {.parent_descriptor = -1};
+    struct directory_identity parent;
+    struct observation current;
+    result = resolve_parent(&operation->request, &target);
+    if (result == 0) result = read_directory_identity(target.parent_descriptor, &parent);
+    if (result == 0) result = assert_parent_binding(&target, &parent);
+    if (result == 0) result = observe_target(&target, &operation->request, &current);
+    if (result == 0 && (parent.mode != operation->parent.mode
+        || parent.links != operation->parent.links || parent.user != operation->parent.user
+        || parent.group != operation->parent.group)) result = fail("relocation_parent_mismatch");
+    if (result == 0) {
+      encode_parent_identity(entry + 68U, &parent);
+      if (!operation->published_recorded && operation->effect == EFFECT_CREATED) {
+        if (current.present) result = fail("pending_effect_uncertain");
+      } else if (!exact_published_target(&current, &operation->request)) {
+        result = fail("relocation_material_mismatch");
+      } else {
+        encode_prior(entry + (operation->effect == EFFECT_NOOP ? 205U : 407U), &current.state);
+      }
+    }
+    close_parent(&target);
+  }
+  if (result == 0) {
+    sha256_bytes(data, length - SHA256_BYTES, data + length - SHA256_BYTES);
+    result = write_all(STDOUT_FILENO, data, length);
+  }
+  free(data);
+  return result;
+}
+
 static int scan_journal(struct broker_state *state) {
   const uint8_t *data = state->journal_image.data;
   size_t length = state->journal_image.length;
   size_t offset = 0U;
   struct operation *pending = NULL;
   while (offset < length) {
+    if (state->relocation.data != NULL && !state->relocation_applied
+        && offset == state->relocation_prefix && apply_relocation(state) < 0) return -1;
     size_t remaining = length - offset;
     if (remaining < JOURNAL_PREFIX_BYTES) {
       return fail("journal_incomplete_record");
@@ -1368,17 +1527,21 @@ static int scan_journal(struct broker_state *state) {
       return fail("journal_record_type_refused");
     }
     offset += record_length;
+    if (state->relocation.data != NULL && !state->relocation_applied
+        && offset > state->relocation_prefix) return fail("relocation_prefix_boundary");
     state->journal_end = (uint64_t)offset;
   }
+  if (state->relocation.data != NULL && !state->relocation_applied)
+    return apply_relocation(state);
   return 0;
 }
 
-static int open_journal(struct broker_state *state, bool read_only) {
+static int open_journal(struct broker_state *state, bool read_only, bool relocated) {
   int descriptor = secure_openat(
     JOURNAL_DIRECTORY_DESCRIPTOR, JOURNAL_NAME,
     read_only ? (O_RDONLY | O_CLOEXEC | O_NOFOLLOW)
-              : (O_RDWR | O_CREAT | O_CLOEXEC | O_NOFOLLOW),
-    read_only ? 0 : (mode_t)0600
+              : (O_RDWR | (relocated ? 0 : O_CREAT) | O_CLOEXEC | O_NOFOLLOW),
+    read_only || relocated ? 0 : (mode_t)0600
   );
   if (descriptor < 0) {
     if (errno == ENOSYS) {
@@ -1390,7 +1553,7 @@ static int open_journal(struct broker_state *state, bool read_only) {
   if (flock(descriptor, LOCK_EX | LOCK_NB) < 0) {
     return fail("broker_already_active");
   }
-  if (!read_only && fsync(JOURNAL_DIRECTORY_DESCRIPTOR) < 0) {
+  if (!read_only && !relocated && fsync(JOURNAL_DIRECTORY_DESCRIPTOR) < 0) {
     return fail("journal_directory_sync_failed");
   }
   if (load_journal_image(descriptor, &state->journal_image) < 0) {
@@ -1401,6 +1564,7 @@ static int open_journal(struct broker_state *state, bool read_only) {
     return -1;
   }
   state->journal_end = (uint64_t)state->journal_image.length;
+  if (relocated && load_relocation(state) < 0) return -1;
   return scan_journal(state);
 }
 
@@ -1748,6 +1912,7 @@ static void destroy_state(struct broker_state *state) {
     state->operations[index].receipt.data = NULL;
   }
   free(state->journal_image.data);
+  free(state->relocation.data);
   state->journal_image.data = NULL;
   free(state->operations);
   state->operations = NULL;
@@ -1758,7 +1923,11 @@ static void destroy_state(struct broker_state *state) {
 }
 
 int main(int argc, char **argv) {
-  bool read_only = argc == 2 && strcmp(argv[1], "--observe") == 0;
+  bool snapshot = argc == 2 && strcmp(argv[1], "--relocation-snapshot") == 0;
+  bool relocated = argc == 2 && (strcmp(argv[1], "--relocated") == 0
+    || strcmp(argv[1], "--observe-relocated") == 0);
+  bool read_only = snapshot || (argc == 2 && (strcmp(argv[1], "--observe") == 0
+    || strcmp(argv[1], "--observe-relocated") == 0));
   struct bytes input = {0};
   struct request requests[MAX_REQUESTS];
   size_t request_count = 0U;
@@ -1769,15 +1938,17 @@ int main(int argc, char **argv) {
   int result = 0;
   if (state.operations == NULL) {
     result = fail("memory_unavailable");
-  } else if (argc != 1 && !read_only) {
+  } else if (argc != 1 && !read_only && !relocated) {
     result = fail("arguments_refused");
   } else if (verify_directory_descriptor(ROOT_DESCRIPTOR) < 0
              || verify_directory_descriptor(JOURNAL_DIRECTORY_DESCRIPTOR) < 0
              || verify_directory_separation() < 0
              || read_all_stdin(&input) < 0
              || parse_request_stream(&input, requests, &request_count) < 0
-             || open_journal(&state, read_only) < 0) {
+             || open_journal(&state, read_only, relocated) < 0) {
     result = -1;
+  } else if (snapshot) {
+    result = request_count == 0U ? relocation_snapshot(&state) : fail("arguments_refused");
   } else {
     bool v2 = false;
     for (size_t index = 0; index < request_count; ++index)

@@ -30,12 +30,15 @@ export function brokerResult(result, frame) {
  try { return {status:'receipt',receipt:parseReceipt(result.stdout,frame)}; }
  catch { return {status:'blocked',code:'invalid_receipt'}; }
 }
-export function runBrokerResult({executable,rootFd,journalFd,request,observe=false}) {
+export function runBrokerResult({executable,rootFd,journalFd,request,observe=false,relocationFd=null}) {
  let frame;
  try { frame=requestFrame(request); }
  catch { return {status:'blocked',code:'invalid_request'}; }
  try {
-  const result=spawnSync(executable,observe?['--observe']:[],{input:frame,stdio:['pipe','pipe','pipe',rootFd,journalFd],env:{PATH:'/usr/bin:/bin',LANG:'C'},timeout:10000,maxBuffer:2097152});
+  const args=relocationFd===null?(observe?['--observe']:[]):[observe?'--observe-relocated':'--relocated'];
+  const descriptors=['pipe','pipe','pipe',rootFd,journalFd];
+  if(relocationFd!==null) descriptors.push(relocationFd);
+  const result=spawnSync(executable,args,{input:frame,stdio:descriptors,env:{PATH:'/usr/bin:/bin',LANG:'C'},timeout:10000,maxBuffer:2097152});
   return brokerResult(result,frame);
  } catch {
   return {status:'blocked',code:'execution_uncertain'};

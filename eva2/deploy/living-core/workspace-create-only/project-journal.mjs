@@ -10,7 +10,7 @@ function privateDirectory(fd) {
 }
 
 // The caller owns the returned descriptor. No request supplies a filesystem root.
-export function resolveProjectJournal(rootFd, artifactPath, {observe = false} = {}) {
+export function resolveProjectJournal(rootFd, artifactPath, {observe = false, relocation = null} = {}) {
   const match = /^([a-f0-9]{64})-[A-Za-z0-9_-][A-Za-z0-9_.-]*$/.exec(artifactPath);
   if (!match || artifactPath.length > 255) throw Error('project_path_invalid');
   const key = match[1];
@@ -18,7 +18,7 @@ export function resolveProjectJournal(rootFd, artifactPath, {observe = false} = 
   const parentPath = `/proc/self/fd/${rootFd}`;
   const childPath = `${parentPath}/${key}`;
   let created = false;
-  if (!observe) {
+  if (!observe && !relocation) {
     try { fs.mkdirSync(childPath, {mode: 0o700}); created = true; }
     catch (error) { if (error.code !== 'EEXIST') throw error; }
   }
@@ -43,8 +43,14 @@ export function resolveProjectJournal(rootFd, artifactPath, {observe = false} = 
     try {
       const stat = fs.fstatSync(markerFd);
       if (!stat.isFile() || stat.uid !== process.getuid() || (stat.mode & 0o777) !== 0o400 || stat.nlink !== 1 || stat.size > 2048) throw Error('journal_identity_invalid');
-      const actual = JSON.parse(fs.readFileSync(markerFd, 'utf8'));
-      if (JSON.stringify(actual) !== JSON.stringify(expected)) throw Error('journal_identity_mismatch');
+      const bytes = fs.readFileSync(markerFd);
+      const actual = JSON.parse(bytes);
+      if (relocation) {
+        if (created || !bytes.equals(Buffer.from(relocation.marker_base64, 'base64'))
+            || JSON.stringify(relocation.root) !== JSON.stringify(identity(root))
+            || JSON.stringify(relocation.child) !== JSON.stringify(identity(child))
+            || actual.project_key !== key) throw Error('journal_relocation_mismatch');
+      } else if (JSON.stringify(actual) !== JSON.stringify(expected)) throw Error('journal_identity_mismatch');
     } finally { fs.closeSync(markerFd); }
     const named = fs.openSync(childPath, directoryFlags);
     try { const stat = privateDirectory(named); if (stat.dev !== child.dev || stat.ino !== child.ino) throw Error('journal_directory_rebound'); }

@@ -1,0 +1,36 @@
+{
+  "date": "2026-09-23",
+  "status": "source_tested_reviewed_not_installed",
+  "files": {
+    "native/workspace_writer_broker.c": "548de453e301f9382ddaebc88c1905f626be5b04a886a4593fb113afea5ba459",
+    "eva2/deploy/living-core/workspace-create-only/relocation.mjs": "450833a5eb7d22d0dcd3fe82596fe3011f8022f326720f356ae778853faeb1a1",
+    "eva2/deploy/living-core/workspace-create-only/mcp-server.mjs": "913b63d664e42a56e57b5b74b3cc6b2c68b8f4f30e0172bb9bb2f07b2461d707",
+    "eva2/deploy/living-core/workspace-create-only/broker-client.mjs": "6074a9fc18df7ca13f9749ca0f8e5f9c915501db362dac4f4e4282118b1645fe",
+    "eva2/deploy/living-core/workspace-create-only/project-journal.mjs": "3db61f03cf46b7a54b40e1e46340d29cc10353e0b7f2ff81283a204b4fc3cd97",
+    "eva2/deploy/living-core/workspace-create-only/Dockerfile": "8243aa385b245452ac3bde203591d98b5f782d02f0a500c7554cb30dd0657e55",
+    "test/workspace-writer-relocation.test.mjs": "9e160060db8bcf03bdb3bf76bb7356bcd93bb2a7afb5c1b67380481e386c1735"
+  },
+  "tests": {
+    "command": "node --test test/workspace-writer-relocation.test.mjs test/workspace-writer-broker-native.test.mjs test/workspace-writer-broker-v2.test.mjs test/workspace-writer-broker-client-result.test.mjs test/workspace-project-journal.test.mjs",
+    "passed": 46,
+    "failed": 0,
+    "logSha256": "7d3ed2a113aefbbbcae72a7892d05c0d2eb8c4e04aaa4faae2d1ced882dfa19d"
+  },
+  "reviewer": "document_private_identity",
+  "review": "eva2/reviews/native-document-relocation-20260923.md",
+  "scope": [
+    "Original v2 provider to one relocated v3 host binding",
+    "Preserve original journal prefix, operation identities and receipts",
+    "Reject uncertain P-only publication with existing effect",
+    "Host-owned immutable physical relocation authority; no personal authorization supplied by helper"
+  ],
+  "limitations": [
+    "No v1 or repeated relocation",
+    "Observe proof is bytes and timestamps plus code review, not syscall tracing",
+    "No real gateway catalog identity or private core route proof",
+    "No coordinated archive verification or restore hold release",
+    "Not installed; no owner acceptance"
+  ],
+  "modelProviderCalls": 0,
+  "creditCosts": "unknown"
+}

@@ -158,3 +158,34 @@ Focused proof: `node --test test/workspace-project-journal.test.mjs
 `test/workspace-atomic-mcp-proof.py` accepts `EVA_ATOMIC_PROOF_IMAGE` and
 `EVA_ATOMIC_PROOF_JOURNAL_MODE=per_path_prefix_v1` to exercise the same disposable
 HTTP/SDK proof with version 2. Without that mode, it retains the legacy proof.
+
+### Offline relocation candidate (host binding version 3)
+
+Status: source tested and reviewed, not installed as a complete restore route.
+Only an original version-2 provider can move once; version 1, version 3 input
+and mixed original/relocated histories are refused.
+
+Keep the original host binding, project markers, complete journals and artifact
+bytes. Stop writers and verify the copied bytes against the trusted export
+package before preparation. On private copied directories, call
+`prepareRelocation({executable, rootFd, journalFd, originalBindingBytes,
+logicalCatalogIdentity, projectKeys})` from `relocation.mjs`. It returns
+`bindingBytes` and per-project `snapshots` without authorizing activation.
+
+The host must approve these exact bytes, independently verify the retained
+logical gateway/catalog identity, and bind the package and snapshot hashes to
+restore activation. Mount the approved binding read-only at
+`/run/eva2/atomic-binding.json` and snapshots read-only at
+`/run/eva2/relocations/<projectkey>.relocation`; files are mode 0400 and owned
+by the provider UID. Artifact/journal directories require mode 0700.
+The original binding remains embedded; current physical executable/module
+hashes are checked separately. Neither the project key nor catalog metadata
+grants person authorization.
+
+The native broker applies a physical identity overlay to the exact original
+journal prefix, preserving operation IDs and receipt bytes. New suffix work
+uses existing recovery. A prepared-only record with an existing effect remains
+uncertain and is refused, even when content matches. Observing never repairs it.
+Do not start restored workers until coordinated restore activation and source
+fencing are implemented and verified. See the source proof and review dated
+20260923; packaged provider and whole-product recovery remain separate gates.

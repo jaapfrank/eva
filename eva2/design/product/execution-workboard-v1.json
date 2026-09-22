@@ -1003,6 +1003,14 @@
         "checkedAt": "2026-09-23",
         "deliveries": [
           {
+            "title": "Documentverhuizing behoudt bestanden en eerdere resultaten",
+            "date": "23 september",
+            "state": "tested",
+            "result": "De bronproef verhuist documenten naar andere bestandsidentiteiten met behoud van journal en eerdere receipts. Ontbrekend werk wordt eenmaal uitgevoerd; 46 gerichte tests geslaagd en onafhankelijke bronreview afgerond.",
+            "remaining": "Nog niet geïnstalleerd. Verpakte providerroute, echte cataloguskoppeling en gecontroleerd gezamenlijk herstel moeten nog slagen.",
+            "source": "eva2/evidence/product/native-document-relocation-20260923.json"
+          },
+          {
             "title": "Extern geheugen uit reservekopie teruggelezen",
             "date": "23 september",
             "state": "tested",
@@ -1100,9 +1108,9 @@
           }
         ],
         "now": {
-          "title": "Documentbestanden veilig laten meeverhuizen",
-          "detail": "De bestaande documentbroker wordt uitgebreid met expliciete verhuizingsbinding, zodat oorspronkelijke bestanden, journalen en ontvangstbewijzen behouden blijven.",
-          "state": "In uitvoering · niet geïnstalleerd",
+          "title": "Documentverhuizing via de verpakte provider controleren",
+          "detail": "Broncode, 46 gerichte tests en onafhankelijke review zijn afgerond. Nu volgt de geïsoleerde HTTP/SDK-proef met gekopieerde documenten; geen wijziging aan de bestaande installatie.",
+          "state": "Verpakte proef in uitvoering · niet geïnstalleerd",
           "doneWhen": "Een hersteld project is leesbaar en kan alleen zijn ontbrekende stap uitvoeren, zonder oude uitvoeringsbewijzen te veranderen."
         },
         "next": {
@@ -11537,7 +11545,7 @@
       "holdReview": "eva2/reviews/portable-v2-hold-20260923.md",
       "hindsightDataProof": "eva2/evidence/product/hindsight-database-recovery-20260923.json",
       "nativeRelocation": {
-        "status": "implementing",
+        "status": "source_tested_reviewed_packaged_proof_pending",
         "owner": "document_relocation",
         "outcome": "Bestaande documentbytes/journalprefix/receipts bij andere filesystemidentiteiten behouden en na gecontroleerde vrijgave ontbrekend werk vervolgen.",
         "files": [
@@ -11551,7 +11559,10 @@
         ],
         "estimate": "45–90 minuten onzeker; creditkosten onbekend, geen modelprovidercalls.",
         "doneWhen": "Echte broker verifieert kopie op andere inodes; oude receipts blijven gelijk, observe schrijft niets, ontbrekende stap maximaal eenmaal; manipulatie en onzekere publicatie weigeren.",
-        "installed": false
+        "installed": false,
+        "evidence": "eva2/evidence/product/native-document-relocation-20260923.json",
+        "review": "eva2/reviews/native-document-relocation-20260923.md",
+        "testsPassed": 46
       },
       "postgres18AndWriterGuard": "eva2/evidence/product/portable-recovery-integration-20260923.json",
       "currentCompatibility": "Kernherstelbron op exacte PostgreSQL18.6-image:8proeven geslaagd. Snapshot/restore hercontroleert bekende/gedeelde databasewerkers vóór I/O:9gerichte hosttests en review geslaagd. Geen livecutover of pakketinstallatie."
