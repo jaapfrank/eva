@@ -1168,7 +1168,7 @@ class PydanticConversationModel:
         while True:
             instructions = self._instructions(
                 identity, memory, selected_recent,
-                available_actions=() if offer_tools else available_actions,
+                available_actions=available_actions,
                 completed_action=completed_action, self_context=self_context,
             )
             if completed_action is not None and available_actions:
@@ -2560,13 +2560,17 @@ class PydanticConversationModel:
                     "De persoonlijke interesse uit de action receipt is werkelijk en "
                     "duurzaam vastgelegd. Baseer je antwoord op precies die receipt."
                 )
-        if not available_actions and (
-            completed_action is None
-            or completed_action.call.name == MEMORY_SEARCH_ACTION
-        ):
+        if completed_action is None or completed_action.call.name == MEMORY_SEARCH_ACTION:
+            # This is capability guidance, not a second tool catalog. Only the
+            # caller's authorized subset can start or resume future work.
+            if not set(available_actions).intersection({
+                _DURABLE_GOAL_ACTION, "start_delegated_work", "resume_delegated_work",
+            }):
+                action_guidance_parts.append(
+                    "Deze gespreksroute kan geen toekomstig werk inplannen."
+                )
             action_guidance_parts.append(
-                "Deze gespreksroute kan geen toekomstig werk inplannen. Beloof geen "
-                "tijdstip of latere terugkoppeling zonder zichtbaar bewijs."
+                "Beloof geen tijdstip of latere terugkoppeling zonder zichtbaar bewijs."
             )
         action_guidance = " ".join(action_guidance_parts)
         return (

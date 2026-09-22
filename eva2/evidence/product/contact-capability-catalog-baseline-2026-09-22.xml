@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="1" skipped="0" tests="1" time="3.845" timestamp="2026-09-22T12:58:58.582860+00:00" hostname="bd2b9d143f14"><testcase classname="tests.model.test_conversation_model" name="test_action_tool_catalog_remains_canonically_byte_equal" time="0.008"><failure message="AssertionError: assert '4b2ed4d6d8b4...1423ebdd9d905' == 'e96adcb879ca...e55c8511b6ca0'&#10;  &#10;  - e96adcb879caaf9a7ef864369c15d30db1b106603e8c37056b1e55c8511b6ca0&#10;  + 4b2ed4d6d8b444a917aee8c34ed92c13b08f72f94effed8f3ce1423ebdd9d905">tests/model/test_conversation_model.py:131: in test_action_tool_catalog_remains_canonically_byte_equal
+    assert canonical_sha256(conversation_module._ACTION_TOOLS) == (
+E   AssertionError: assert '4b2ed4d6d8b4...1423ebdd9d905' == 'e96adcb879ca...e55c8511b6ca0'
+E     
+E     - e96adcb879caaf9a7ef864369c15d30db1b106603e8c37056b1e55c8511b6ca0
+E     + 4b2ed4d6d8b444a917aee8c34ed92c13b08f72f94effed8f3ce1423ebdd9d905</failure></testcase></testsuite></testsuites>
