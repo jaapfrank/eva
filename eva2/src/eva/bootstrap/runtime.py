@@ -607,6 +607,7 @@ class PostgresHindsightMemoryRuntime:
         delegated_work_store: PostgresDelegatedWorkStore | None = None,
         telegram_principal_bindings: TelegramPrincipalBindings | None = None,
         delegated_work_commands: DelegatedWorkConversationCommands | None = None,
+        delegated_work_owner_service: DelegatedWorkOwnerService | None = None,
         dashboard_effect_controller: DashboardActionChainEffectController | None = None,
         dashboard_owner_principal_id: UUID | None = None,
         dashboard_principal_binding_id: UUID | None = None,
@@ -651,6 +652,7 @@ class PostgresHindsightMemoryRuntime:
         self._delegated_work_store = delegated_work_store
         self._telegram_principal_bindings = telegram_principal_bindings
         self._delegated_work_commands = delegated_work_commands
+        self._delegated_work_owner_service = delegated_work_owner_service
         self._dashboard_effect_controller = dashboard_effect_controller
         self._dashboard_owner_principal_id = dashboard_owner_principal_id
         self._dashboard_principal_binding_id = dashboard_principal_binding_id
@@ -815,6 +817,17 @@ class PostgresHindsightMemoryRuntime:
         return self._people_memory_overview.snapshot(
             now=datetime.now(tz=UTC).replace(microsecond=0),
             hindsight_state=hindsight_state,
+        )
+
+    def dashboard_delegated_work(self, operation: str, work_id: str | None = None) -> dict:
+        from eva.bootstrap.dashboard_work import dashboard_delegated_work
+        return dashboard_delegated_work(
+            self._delegated_work_owner_service,
+            tenant_id=self._runtime_tenant_id,
+            installation_id=self._runtime_installation_id,
+            owner_principal_id=self._dashboard_owner_principal_id,
+            principal_binding_id=self._dashboard_principal_binding_id,
+            operation=operation, work_id=work_id,
         )
 
     def dashboard_workboard(self) -> WorkBoard:
@@ -1648,6 +1661,7 @@ def create_runtime_app() -> FastAPI:
     delegated_work_store = None
     delegated_work_commands = None
     delegated_work_actions = None
+    delegated_work_service = None
     dashboard_effect_controller = None
     dashboard_owner_principal_id = None
     dashboard_principal_binding_id = None
@@ -2080,6 +2094,7 @@ def create_runtime_app() -> FastAPI:
         delegated_work_store=delegated_work_store,
         telegram_principal_bindings=telegram_principal_bindings,
         delegated_work_commands=delegated_work_commands,
+        delegated_work_owner_service=delegated_work_service,
         dashboard_effect_controller=dashboard_effect_controller,
         dashboard_owner_principal_id=dashboard_owner_principal_id,
         dashboard_principal_binding_id=dashboard_principal_binding_id,
