@@ -1,0 +1,31 @@
+{
+  "installed": false,
+  "firstAttempt": "Existing private worker scope differs from household scope; automatic rollback completed.",
+  "secondAttempt": "Separate instance of same worker passed check and started healthy; actual household session open returned 403. Rolled back.",
+  "verifiedCause": "Household storage scope has zero matching active owner principals and zero matching verified owner bindings. Session open requires those records.",
+  "rollback": {
+    "services": {
+      "core": {
+        "originalImage": true,
+        "running": true,
+        "health": "healthy"
+      },
+      "worker": {
+        "originalImage": true,
+        "running": true,
+        "health": "healthy"
+      },
+      "speaker": {
+        "originalImage": true,
+        "running": true,
+        "health": null
+      }
+    },
+    "householdOwnerBindingCounts": "0|0",
+    "installed": false
+  },
+  "modelCalls": 0,
+  "privateDataGrantsAdded": false,
+  "newHouseholdWorkerRemoved": true,
+  "next": "Validate the existing owner binding and define the explicit installation prerequisite for household task sponsorship; preserve personal/household data separation. Recheck real session opening before claiming activation."
+}

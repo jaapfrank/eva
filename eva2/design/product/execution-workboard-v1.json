@@ -1028,14 +1028,14 @@
           }
         ],
         "now": {
-          "title": "Huishoudspraak: installatiepakketten gecontroleerd",
-          "detail": "Kern, taakwerker en speaker zijn verpakt. De kern en taakwerker hebben dezelfde uitvoercode; zeven gerichte tests slagen ook tegen het verpakte kernimage. De nieuwe huishoudkoppeling is nog niet geactiveerd.",
-          "state": "Pakketten klaar — activering open",
+          "title": "Huishoudkoppeling: installatie teruggedraaid",
+          "detail": "De live controle kon geen huishoudsessie openen: de vereiste eigenaarregistratie ontbreekt in de huishoudcontext. De vorige kern, taakwerker en speaker zijn hersteld. Telegram en privéspraak behouden hun eerdere opleveringen.",
+          "state": "Integratieprobleem — vorige installatie actief",
           "doneWhen": "Telegram-proef afzonderlijk bevestigd; bestaande huishoudintegratie beoordeeld en geïnstalleerd met terugweg."
         },
         "next": {
-          "title": "Huishoudkoppeling veilig activeren",
-          "detail": "Leg de expliciete huishoudconfiguratie vast binnen de bestaande toestemming en resourcegrenzen. Controleer lopende sessies en taken, installeer de drie passende versies met terugweg en controleer de live route.",
+          "title": "Ontbrekende installatievoorwaarde herstellen",
+          "detail": "Controleer de bestaande geverifieerde eigenaarbinding en richt de noodzakelijke huishoudregistratie expliciet in, zonder privégegevens of rechten over te nemen. Controleer daarna de echte sessieroute voordat activering wordt geclaimd.",
           "state": "Hierna"
         },
         "ownerAction": {
@@ -10811,7 +10811,7 @@
           "planningEffortHours": "4–12"
         }
       ],
-      "nextAction": "Leg de expliciete huishoudconfiguratie vast binnen de bestaande toestemming en resourcegrenzen. Controleer lopende sessies en taken, installeer de drie passende versies met terugweg en controleer de live route.",
+      "nextAction": "Controleer de bestaande geverifieerde eigenaarbinding en richt de noodzakelijke huishoudregistratie expliciet in, zonder privégegevens of rechten over te nemen. Controleer daarna de echte sessieroute voordat activering wordt geclaimd.",
       "effortNotice": "Grove planning, lage zekerheid: 40–118 actieve ontwikkeluren plus zeven dagen gezinspraktijk en eventuele externe wachttijd. Geen deadline, creditkosten of gemeten verbruik; per begrensde wijziging aanscherpen na lezing van bestaand bewijs. Hergebruik kan dit verkorten.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Na review, installatie en registratie automatisch volgende uitvoerbare stap; geen algemene wachtstop op gebruikersproeven.",
@@ -10936,7 +10936,7 @@
       }
     },
     "householdPublicWorkServer20260922": {
-      "status": "packages_verified_activation_pending",
+      "status": "activation_failed_rolled_back_missing_household_owner_binding",
       "sourceCommit": "77640ad8b7cf6579d5a16b27ae2e8fab428e8db4",
       "integratedCommit": "5cb887b0",
       "httpCommit": "0c537ec8",
@@ -10969,7 +10969,8 @@
         "modelCalls": 0
       },
       "compositionInstalled": false,
-      "packagingEvidence": "eva2/evidence/product/household-work-packaging-20260922.json"
+      "packagingEvidence": "eva2/evidence/product/household-work-packaging-20260922.json",
+      "activationEvidence": "eva2/evidence/product/household-work-activation-attempt-20260922.json"
     },
     "documentPoolCurrentPreflight20260922": {
       "status": "read_only_preflight_passed",
