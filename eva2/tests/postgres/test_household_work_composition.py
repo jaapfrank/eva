@@ -60,14 +60,17 @@ def test_unadmitted_or_closed_household_turn_cannot_select_provider(delegated_en
         scoped.execute(x.turn, ConversationActionCall("closed", "start_background_research", {"research": PUBLIC}))
 
 
-def test_http_real_ingress_reaches_shared_provider_and_original_result_session(delegated_engine):
+@pytest.mark.parametrize("separate_scope", [False, True])
+def test_http_real_ingress_reaches_shared_provider_and_original_result_session(delegated_engine, separate_scope):
     import json
     from fastapi import FastAPI
     from fastapi.testclient import TestClient
     from eva.adapters.api.household_voice_session import install_household_voice_session
     from eva.application.conversation import GroundedReply
     from tests.postgres.test_household_public_work import SAT, DEVICE
-    x = setup(delegated_engine, "hh-http-composed")
+    x = setup(delegated_engine, "hh-http-composed-"+str(separate_scope),
+              conversation_label="hh-separate-conversation" if separate_scope else None)
+    assert (x.server.store.scope != x.server.conversation_scope) is separate_scope
     scoped = ScopedDelegatedWorkActions(PrivateActions(), x.server)
     work_ids=[]; admitted=[]
     class Runtime:
@@ -100,6 +103,8 @@ def test_explicit_composition_reloads_parent_authority_and_rejects_scope(delegat
     x = setup(delegated_engine, "hh-config")
     parent = x.server.authority
     config = {"contract": "HouseholdWorkConfiguration/v1", "schema_version": 1,
+        "task_tenant_id": str(x.server.store.scope.tenant_id),
+        "task_installation_id": str(x.server.store.scope.installation_id),
         **{name: "/run/eva/"+name for name in composition.HouseholdWorkConfiguration.model_fields
            if name.endswith("_file")}}
     parent.voice._path = config["voice_policy_file"]

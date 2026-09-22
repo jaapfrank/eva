@@ -47,26 +47,36 @@ def verify_origin(connection, scope, origin, *, require_open, now=None):
     from eva.adapters.postgres.operational_timeline import external_timeline_scope
     from eva.contracts.timestamps import parse_utc_timestamp
 
-    if (
-        external_timeline_scope(
-            origin.tenant_id, origin.installation_id, "household scope missing"
-        )
-        != scope
-    ):
-        raise ValueError("household origin storage scope differs")
     first = first_session(connection, scope, origin.session_id)
-    ingress = (
-        connection.execute(
-            sa.select(events).where(
-                events.c.tenant_id == scope.tenant_id,
-                events.c.installation_id == scope.installation_id,
-                events.c.thread_id == "conversation:" + origin.message_id,
-                events.c.sequence == 1,
-            )
-        )
-        .mappings()
-        .one_or_none()
+    if first["binding"] != origin.destination():
+        raise ValueError("household origin differs from its server session")
+    conversation_scope = external_timeline_scope(
+        origin.tenant_id, origin.installation_id, "household scope missing"
     )
+    # The session and sponsor live in task storage; the admitted conversation
+    # lives in its own namespace. Read only the already-bound origin and restore
+    # the caller's task scope before any subsequent work operation.
+    def select_scope(value):
+        for name, identifier in (("eva.tenant_id", value.tenant_id),
+                                 ("eva.installation_id", value.installation_id)):
+            connection.execute(sa.text("SELECT set_config(:name, :value, true)"),
+                               {"name": name, "value": str(identifier)})
+    try:
+        select_scope(conversation_scope)
+        ingress = (
+            connection.execute(
+                sa.select(events).where(
+                    events.c.tenant_id == conversation_scope.tenant_id,
+                    events.c.installation_id == conversation_scope.installation_id,
+                    events.c.thread_id == "conversation:" + origin.message_id,
+                    events.c.sequence == 1,
+                )
+            )
+            .mappings()
+            .one_or_none()
+        )
+    finally:
+        select_scope(scope)
     if (
         ingress is None
         or ingress["event_type"] != "INGRESS_COMMITTED"

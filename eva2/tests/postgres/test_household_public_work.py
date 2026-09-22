@@ -41,7 +41,7 @@ SAT = "assist_satellite.kitchen"
 DEVICE = "a" * 32
 
 
-def setup(engine, label):
+def setup(engine, label, *, conversation_label=None):
     scope, episode, binding = _seed_authority(engine, label)
     clock = [NOW]
     voice = HouseholdVoicePolicy.model_validate_json(
@@ -52,8 +52,8 @@ def setup(engine, label):
                 policy_id="voice:" + label,
                 policy_version=1,
                 state="enabled",
-                tenant_id="tenant:" + label,
-                installation_id="installation:" + label,
+                tenant_id="tenant:" + (conversation_label or label),
+                installation_id="installation:" + (conversation_label or label),
                 owner_principal_id=str(_id(label, "principal")),
                 principal_binding_id=str(binding),
                 identity_sha256="b" * 64,

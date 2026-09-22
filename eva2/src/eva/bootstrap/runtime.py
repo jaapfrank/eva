@@ -1789,8 +1789,9 @@ def create_runtime_app() -> FastAPI:
         from eva.bootstrap.household_work_composition import load_household_work_authority
         from eva.bootstrap.household_work import HouseholdWorkServer
         from eva.adapters.postgres.scoped_delegated_work_actions import ScopedDelegatedWorkActions
-        scope = external_timeline_scope(settings.background_tenant_id or "",
-            settings.background_installation_id or "", "household work scope required")
+        if delegated_work_actions is None:
+            raise ValueError("household work requires the existing owner task store")
+        scope = delegated_work_store.scope
         work_authority = load_household_work_authority(settings.household_work_config_file,
             scope=scope, profile=delegated_research_profile,
             model_lease_file=Path(settings.conversation_auth_file), voice_authority=household_voice)

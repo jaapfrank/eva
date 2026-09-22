@@ -46,6 +46,8 @@ Enabling requires an absolute path to a private operator-owned JSON artifact:
 {
   "contract": "HouseholdWorkConfiguration/v1",
   "schema_version": 1,
+  "task_tenant_id": "<existing verified task tenant UUID>",
+  "task_installation_id": "<existing task installation UUID>",
   "research_policy_file": "/run/eva/household-research.json",
   "voice_policy_file": "/run/eva/household-voice.json",
   "voice_token_file": "/run/eva/household-token",
@@ -62,8 +64,11 @@ household voice session and public research switches. The worker requires its
 existing research switch. File references are fixed at startup; referenced
 policy, budget, identity and lease authority are rechecked during use. Changing
 composition paths requires a restart. No new provider or spending route exists.
-The composed storage scope must equal the voice policy's external timeline scope;
-the worker's configured storage scope must match it as well.
+The configured task scope must match the existing verified owner task store in
+both core and worker. It is distinct from the voice policy's conversation
+namespace. Household sessions and work remain in task storage; admitted speech
+is verified in its conversation namespace. The existing task worker serves both
+audiences; no second owner registration or separate worker is required.
 
 The coordinator must build paired core/worker source releases and the native
 speaker runtime that imports the shared agent. Retain the installed receipt

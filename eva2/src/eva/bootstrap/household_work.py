@@ -36,15 +36,10 @@ class HouseholdWorkServer:
         if not isinstance(authority.profile, HouseholdResearchProfile):
             raise ValueError("household work requires its distinct worker release")
         authority.validate_current()
-        if (
-            external_timeline_scope(
-                authority.policy.tenant_id,
-                authority.policy.installation_id,
-                "household scope required",
-            )
-            != scope
-        ):
-            raise ValueError("household policy and storage scope differ")
+        self.conversation_scope = external_timeline_scope(
+            authority.policy.tenant_id, authority.policy.installation_id,
+            "household conversation scope required",
+        )
         self.authority = authority
         self.store = PostgresDelegatedWorkStore(
             engine,
@@ -134,7 +129,7 @@ class HouseholdWorkService:
     def turn(self, request_id, text):
         turn = self._make_turn(request_id, text)
         return PostgresConversationJournal(
-            self.store._engine, self.store.scope
+            self.store._engine, self.server.conversation_scope
         ).admit_household_ingress(turn, validate_current=self.validate_authority)
 
     def control_turn(self):
@@ -209,7 +204,7 @@ class HouseholdWorkService:
         if not isinstance(request_key, str) or not 1 <= len(request_key) <= 2048:
             raise ValueError("household action key required")
         turn = PostgresConversationJournal(
-            self.store._engine, self.store.scope
+            self.store._engine, self.server.conversation_scope
         ).admit_household_ingress(turn, validate_current=self.validate_authority)
         origin = self.origin(turn)
         created = parse_utc_timestamp(turn.occurred_at)

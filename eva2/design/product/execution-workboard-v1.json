@@ -1028,14 +1028,14 @@
           }
         ],
         "now": {
-          "title": "Huishoudkoppeling: oorzaak vastgesteld",
-          "detail": "De tests gebruikten een vooraf gevulde eigenaarregistratie die niet overeenkomt met de echte opslagindeling. Een nieuwe opstartcontrole voorkomt een onterechte gereedheidsmelding; vijf tests slagen en de controle is onafhankelijk beoordeeld. De vorige installatie blijft actief.",
-          "state": "Gerichte integratiereparatie — nog niet live",
+          "title": "Huishoudspraak gekoppeld aan bestaande taakopslag",
+          "detail": "De herstelcode gebruikt de bestaande eigenaar en taakwerker. Gespreksherkomst blijft apart gecontroleerd. De proef met verschillende opslagcontexten en bestaande huishoudcontroles slagen: 27 tests. Onafhankelijke review is akkoord; de herstelcode is nog niet geïnstalleerd.",
+          "state": "Herstelcode getest en beoordeeld",
           "doneWhen": "Telegram-proef afzonderlijk bevestigd; bestaande huishoudintegratie beoordeeld en geïnstalleerd met terugweg."
         },
         "next": {
-          "title": "Bestaande taakopslag aan huishoudgesprek koppelen",
-          "detail": "Behoud de bestaande geverifieerde eigenaar en taakopslag. Maak de koppeling met de afzonderlijke huishoudgespreksherkomst expliciet en toets deze met verschillende opslagcontexten; geen tweede eigenaar of gekopieerde privérechten. Daarna opnieuw verpakken en activeren.",
+          "title": "Herstelcode verpakken en live sessie controleren",
+          "detail": "Vervang de afgewezen pakketten door de beoordeelde herstelversie. Behoud één bestaande taakwerker. Controleer met de echte eigenaarbinding of een huishoudsessie kan openen, vernieuwen en sluiten, voordat de koppeling live wordt gemeld.",
           "state": "Hierna"
         },
         "ownerAction": {
@@ -10811,7 +10811,7 @@
           "planningEffortHours": "4–12"
         }
       ],
-      "nextAction": "Behoud de bestaande geverifieerde eigenaar en taakopslag. Maak de koppeling met de afzonderlijke huishoudgespreksherkomst expliciet en toets deze met verschillende opslagcontexten; geen tweede eigenaar of gekopieerde privérechten. Daarna opnieuw verpakken en activeren.",
+      "nextAction": "Vervang de afgewezen pakketten door de beoordeelde herstelversie. Behoud één bestaande taakwerker. Controleer met de echte eigenaarbinding of een huishoudsessie kan openen, vernieuwen en sluiten, voordat de koppeling live wordt gemeld.",
       "effortNotice": "Grove planning, lage zekerheid: 40–118 actieve ontwikkeluren plus zeven dagen gezinspraktijk en eventuele externe wachttijd. Geen deadline, creditkosten of gemeten verbruik; per begrensde wijziging aanscherpen na lezing van bestaand bewijs. Hergebruik kan dit verkorten.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Na review, installatie en registratie automatisch volgende uitvoerbare stap; geen algemene wachtstop op gebruikersproeven.",
@@ -10936,7 +10936,7 @@
       }
     },
     "householdPublicWorkServer20260922": {
-      "status": "activation_failed_rolled_back_missing_household_owner_binding",
+      "status": "shared_task_storage_fix_reviewed_packaging_pending",
       "sourceCommit": "77640ad8b7cf6579d5a16b27ae2e8fab428e8db4",
       "integratedCommit": "5cb887b0",
       "httpCommit": "0c537ec8",
@@ -10978,7 +10978,15 @@
         "independentReview": "GO, task 01a0c915-205e-7c11-809a-674ae09e016c, turn 01a0ca35-471a-7150-92ab-477f192b6813; two diffs only, no repeated tests",
         "installed": false
       },
-      "diagnosis": "Tests seeded sponsor records with disabled triggers in the conversation-derived namespace. Production has one canonical tenant/principal/binding in task storage. Do not fabricate a second verified identity to match the fixture; explicitly connect existing task authority/storage and household conversation provenance."
+      "diagnosis": "Tests seeded sponsor records with disabled triggers in the conversation-derived namespace. Production has one canonical tenant/principal/binding in task storage. Do not fabricate a second verified identity to match the fixture; explicitly connect existing task authority/storage and household conversation provenance.",
+      "scopeFix": {
+        "compositionTests": 6,
+        "existingHouseholdAndWorkerTests": 21,
+        "independentReview": "GO from task 01a0c915-205e-7c11-809a-674ae09e016c; read-only review of session origin, scope restoration and private boundaries",
+        "newOwnerRecords": 0,
+        "extraWorkerRequired": false,
+        "installed": false
+      }
     },
     "documentPoolCurrentPreflight20260922": {
       "status": "read_only_preflight_passed",

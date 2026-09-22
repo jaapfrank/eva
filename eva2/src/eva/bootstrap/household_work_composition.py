@@ -3,12 +3,12 @@ from dataclasses import asdict
 from datetime import UTC, datetime
 from pathlib import Path
 from typing import Literal
+from uuid import UUID
 from eva.contracts.base import Version1Contract
 from eva.contracts.runtime_budget import RuntimeResourceBudget
 from eva.adapters.credentials.runtime_files import read_private_runtime_file_bytes
 from eva.adapters.objects.identity_verifier import load_current_identity_pack
 from eva.application.identity_verifier import load_identity_pack_trust_binding
-from eva.adapters.postgres.operational_timeline import external_timeline_scope
 from eva.bootstrap.household_voice import HouseholdVoiceAuthority, _read_policy
 from eva.bootstrap.household_research_policy import HouseholdResearchAuthority, read_household_research_policy
 from eva.bootstrap.delegated_research import HouseholdResearchProfile
@@ -17,6 +17,8 @@ from eva.bootstrap.delegated_work_provider import validate_delegated_model_acces
 
 class HouseholdWorkConfiguration(Version1Contract):
     contract: Literal["HouseholdWorkConfiguration/v1"]
+    task_tenant_id: UUID
+    task_installation_id: UUID
     research_policy_file: str
     voice_policy_file: str
     voice_token_file: str
@@ -48,8 +50,7 @@ def load_household_work_authority(path, *, scope, profile, model_lease_file, voi
             or Path(voice_authority._token_path) != Path(config.voice_token_file)):
         raise ValueError("household work differs from the current voice authority")
     voice_authority.validate_current()
-    if external_timeline_scope(voice_policy.tenant_id, voice_policy.installation_id,
-                              "household work scope required") != scope:
+    if scope is None or (config.task_tenant_id, config.task_installation_id) != (scope.tenant_id, scope.installation_id):
         raise ValueError("household work composition scope differs")
     def budget():
         return RuntimeResourceBudget.from_bytes(read_private_runtime_file_bytes(
