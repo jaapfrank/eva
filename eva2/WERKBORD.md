@@ -5,7 +5,7 @@ Laatst bijgewerkt: 2026-09-22.
 Doel: [Eva als zelfstandig lerende digitale huisgenoot](PROJECTDOEL.md).
 Gebouwd, getest, live en door jou geaccepteerd zijn verschillende stappen.
 
-De huidige spraak- en dashboardbediening is live; de gemelde spraakvertraging is nog niet opgelost. Spraaktaak onderzoekt en herstelt de echte gespreksvertraging. Automatische verversing van dashboardtaken is gebouwd, onafhankelijk gecontroleerd en geïntegreerd; installatie voorbereid en wacht alleen tot de spraakmeting niet meer door een core-herstart wordt verstoord. Geen herhaling van eerdere gebruikersproeven gevraagd.
+Twee producttaken: spraakagent rondt gerichte latencywijziging af (nog geen totale snelheidswinst aangetoond); tweede agent bouwt echte achtergrondtaakuitvoering met bestaande toegelaten tools en opgeslagen bronnen. Coördinator bezit dashboardcorrecties, integratie en installatie. Automatische dashboardverversing is inmiddels geïnstalleerd en live gecontroleerd.
 [Actueel bewijs](evidence/product/contact-dashboard-live-2026-09-22.json).
 
 Meet gericht waar de 5,1 seconde op de echte gespreksroute ontstaat en herstel de concrete vertraging. Behoud geheugenkwaliteit en persoonsgrenzen. Geen nieuwe modelproef zonder gewijzigde oorzaak of ontbrekend meetbewijs. Gebruikersbeoordeling van geïnstalleerde dashboardbediening blijft apart open; geen bouwstop.

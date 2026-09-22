@@ -4,12 +4,33 @@
   "integratedCommit": "48c926b8",
   "verification": "Existing browser fixture rerun independently on integrated source: passed, 27 requests, maximum concurrency 1; automatic result, selection, denial and visibility cases passed.",
   "modelCalls": 0,
-  "installed": false,
+  "installed": true,
   "assets": {
     "eva-dashboard-assets.json": "429b42d54f101cf316313f1a66ad33ef3924fdfca8488cae812b0b0c626ca0ac",
     "index.html": "d936dd63f695867abc00942798d22837848b5cb16297c5ffcec6a6d294257fa1",
     "assets/index-ClzOWv97.css": "242aa8ff5082e08e37a1e3a8afdf3aafe5ee8effe765d71ffaaeb7509e32bb87",
     "assets/index-BrDG4GHe.js": "01b685fcb22d3804ff9bf33ebdaeddf55aefc47949477a94540acc294546a59e"
   },
-  "rollout": "Awaiting voice before/after probe completion; avoid disrupting measurements. Then core-only image replacement with saved rollback."
+  "rollout": "Core-only installation complete; existing five cards and other services preserved. Automatic state transitions were fixture-tested; live authenticated reads and exact asset hashes verified. No real new research task started.",
+  "liveVerification": {
+    "installed": true,
+    "image": "sha256:4cee901d962fcdf4d86533bef6f1a93d6d006832ec4e877c89211478209634c3",
+    "sourceCommit": "7dc92fad153b69ff76dd4b9e3e8b6e9f9ab81f6f",
+    "ready": true,
+    "ownerWorkHTTP": 200,
+    "workResponseKeys": [
+      "contract",
+      "operation",
+      "jobs",
+      "truncated"
+    ],
+    "existingCardsPreserved": 5,
+    "allProtectedContainersUnchanged": true,
+    "directUnauthenticatedHTTP": 401,
+    "scopeOverrideHTTP": 422,
+    "liveSourceHashesMatched": true,
+    "elapsedSeconds": 11.91,
+    "rollbackAvailable": true
+  },
+  "rollback": "/var/lib/eva2/managed-b-slot3/history/owner-work-refresh-20260922/active-compose.before.json"
 }
