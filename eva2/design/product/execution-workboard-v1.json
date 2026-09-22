@@ -1006,9 +1006,9 @@
             "title": "Documentprojecten starten, volgen en stoppen",
             "date": "22 september",
             "state": "installed",
-            "result": "Eén gewone websiteopdracht heeft twee documenten lokaal opgeslagen; bestanden onafhankelijk teruggelezen en inhoud exact gecontroleerd. Volledige beurt 22,6 seconden.",
-            "remaining": "Telegram-documentrechten nog controleren/herstellen; stop/hervat zijn niet opnieuw live beproefd. Eén vrije projectplaats; jouw beoordeling staat open.",
-            "source": "eva2/evidence/living-core/document-owner-route-live-20260922.json"
+            "result": "Websiteopdracht leverde twee echte documenten op. Documentrechten zijn daarna gelijkgetrokken met geverifieerde privé-Telegram; bestaande teksten via die autoriteit exact teruggelezen zonder nieuw model of document.",
+            "remaining": "Gewone Telegramvraag naar bestaand project en jouw beoordeling staan open. Eén projectplaats vrij; stop/hervat niet opnieuw live beproefd.",
+            "source": "eva2/evidence/living-core/document-private-owner-installed-20260922.json"
           },
           {
             "title": "Privégeheugen verbonden tussen website en Telegram",
@@ -1044,15 +1044,15 @@
           }
         ],
         "now": {
-          "title": "Documentopdracht via website werkelijk uitgevoerd",
-          "detail": "Twee gevraagde teksten zijn opgeslagen en exact teruggelezen. Dit bewijst één gewone websiteopdracht; Telegramdocumenten en jouw beoordeling blijven apart open.",
-          "state": "Live technisch bewezen, niet door jou geaccepteerd",
-          "doneWhen": "Dezelfde geverifieerde eigenaar kan de documentfunctie via toegestane kanalen gebruiken, zonder rechten voor andere personen."
+          "title": "Documentrechten tussen website en Telegram hersteld",
+          "detail": "Dezelfde geverifieerde eigenaar heeft toegang via beide routes. Bestaand websiteproject via Telegramautoriteit teruggelezen; onbekende personen en groepschats geweigerd.",
+          "state": "Geïnstalleerd en technisch gecontroleerd",
+          "doneWhen": "Gewone Telegramvraag vindt het bestaande project en toont de juiste tekst; jouw beoordeling blijft apart."
         },
         "next": {
-          "title": "Documentrechten over website en Telegram gelijk trekken",
-          "detail": "Hergebruik de bestaande geverifieerde persoonskoppeling. Controleer toegang en terughalen zonder extra document of nieuwe modelproef.",
-          "state": "Volgende concrete reparatie"
+          "title": "Projecten vanzelf terugvinden en begrijpelijk tonen",
+          "detail": "Controleer titelzoeken en resultaatbediening over kanalen; hergebruik het bestaande proefproject zonder een nieuwe projectplaats te gebruiken.",
+          "state": "Volgende begrensde controle"
         },
         "ownerAction": {
           "title": "Kom via Telegram terug op een websitegesprek",
@@ -10834,7 +10834,7 @@
           "planningEffortHours": "4–12"
         }
       ],
-      "nextAction": "Controleer en herstel de eigenaaridentiteit voor documentacties via Telegram met hergebruik van bestaande geverifieerde bindingen. Website-documenttaak heeft twee echte bestanden opgeleverd; één projectplaats blijft vrij.",
+      "nextAction": "Controleer de gewone taakvindbaarheid en resultaatbediening over kanalen zonder nieuwe projectplaats te verbruiken. Documentrechten en bestaande projectreadback zijn hersteld; vervolgstappen van het achtstappengoal blijven open.",
       "effortNotice": "Grove planning, lage zekerheid: 40–118 actieve ontwikkeluren plus zeven dagen gezinspraktijk en eventuele externe wachttijd. Geen deadline, creditkosten of gemeten verbruik; per begrensde wijziging aanscherpen na lezing van bestaand bewijs. Hergebruik kan dit verkorten.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Na review, installatie en registratie automatisch volgende uitvoerbare stap; geen algemene wachtstop op gebruikersproeven.",
@@ -10886,7 +10886,7 @@
       "doneWhen": "Exacte bron- en imagedelta, onveranderde gedelegeerde werkrelease en documentworkerherkomst vastgelegd voor onafhankelijke review. Daarna bestaande poolregistratie voorbereiden.",
       "finding": "Exact zeven documentmodules toegevoegd; overige Pythonbron behouden. Catalogi en bestaand project behouden. Live kerncompositie en daadwerkelijke workerhealth slagen.",
       "evidence": "eva2/evidence/living-core/document-pool-installed-20260922.json",
-      "nextAction": "Herstel het concrete kanaalverschil in documentmandaat voor de geverifieerde Telegram-eigenaar; behoud persoonsgrenzen. Websiteproef technisch geslaagd, één vrije plaats."
+      "nextAction": "Documentrechten zijn gelijkgetrokken voor website en geverifieerde privé-Telegram. Gewone Telegramvraag naar bestaand project blijft gebruikersproef."
     },
     "voiceSpeakerService20260922": {
       "state": "server_installed_hardware_and_network_pending",
@@ -11168,6 +11168,30 @@
       "externalMessages": 0,
       "ownerAccepted": false,
       "boundary": "Single live website owner request. Not a Telegram, physical voice, restart, or stop trial. Both providers share a workspace; two file hashes represent two files, not four."
+    },
+    "documentPrivateOwnerIdentity20260922": {
+      "status": "installed_live_authority_and_readback_verified",
+      "outcome": "Dezelfde geverifieerde eigenaar kan documentprojecten via website en privé-Telegram maken, volgen en stoppen.",
+      "scope": "Gedeelde actuele eigenaarresolver en documentactie/worker-wiring; oorspronkelijke ingress, projectidentiteiten en native journals blijven behouden. Geen toegang voor groepen, speakers of andere personen.",
+      "estimate": "Eén begrensde bronwijziging met gerichte bestaande en nieuwe tests, één onafhankelijke review en installatie; geen nieuwe betaalde modelproef. Creditkosten niet vooraf bekend.",
+      "doneWhen": [
+        "Actuele private Telegrambinding en DB-eigenaarbinding verlenen alleen dezelfde eigenaar toegang",
+        "Websiteproject via Telegram terugleesbaar; nieuwe Telegramprojecten krijgen canonical eigenaar en oorspronkelijke bron",
+        "Andere persoon, groepsgesprek, andere installatie en ingetrokken binding geweigerd",
+        "Worker gebruikt dezelfde persoonscontrole; bestaande projecten blijven leesbaar",
+        "Gerichte tests, onafhankelijke review, veilige installatie en metadata-only livecheck geslaagd"
+      ],
+      "remaining": "Gewone Telegrampraktijkvraag en eigenaaracceptatie open; geen nieuwe projectplaats nodig.",
+      "evidence": "eva2/evidence/living-core/document-private-owner-installed-20260922.json",
+      "modelCalls": 0,
+      "installed": true
+    },
+    "architectureReleaseDebt20260922": {
+      "status": "open_release_gate",
+      "violations": 30,
+      "newChangedModuleViolations": 0,
+      "proof": "Alle door de architectuurcontrole gemelde bestanden waren bytegelijk aan HEAD vóór deze reparatie. De volledige architectuurpoort is niet groen.",
+      "nextAction": "Los bestaande afwijkingen op bij de vastgelegde integratie-/releasecontrole; geen beleidsversoepeling als vervanging voor modulegrenzen."
     }
   },
   "activeTaskId": "AU-008",

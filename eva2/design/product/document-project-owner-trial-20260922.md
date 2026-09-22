@@ -3,7 +3,7 @@
 Geïnstalleerd op 22 september 2026. De kern en documentwerker zijn technisch
 gecontroleerd. Een technische opdracht via de gewone eigenaarroute heeft beide documenten opgeslagen; jouw beoordeling staat open.
 
-Open de website op http://localhost:44716/ en stuur als nieuw bericht aan Eva (de Telegram-documentrechten zijn nog niet bewezen):
+Open de website op http://localhost:44716/ en stuur als nieuw bericht aan Eva (documentrechten via privé-Telegram zijn inmiddels ook technisch gecontroleerd):
 
 > Maak een documentproject met de titel Avondplanning proef. Bewaar eerst deze tekst: Vandaag eten we om zes uur. Voeg daarna deze afronding toe: Morgen eten we om half zeven.
 
@@ -22,3 +22,14 @@ Er is nu één vrije plaats voor een nieuw project; de technische proef gebruikt
 gestopte plaats wordt niet automatisch opnieuw gebruikt. Dit bewijst nog geen
 onbeperkte of willekeurige meerdaagse projectplanning. Eerdere geheugen- en
 documentacceptaties blijven behouden.
+
+## Het bestaande proefproject via Telegram terugvragen
+
+Je hoeft geen nieuw document te maken. Stuur in jouw bestaande privégesprek:
+
+> /eva2 Zoek mijn bestaande documentproject Routeproef 22 september en laat beide opgeslagen teksten lezen. Maak geen nieuw project.
+
+Verwacht: “Vandaag eten we om zes uur.” en “Morgen eten we om half zeven.”
+De toegangscontrole en beide opgeslagen teksten zijn technisch gecontroleerd;
+de gewone Telegramvraag en automatische vindbaarheid worden hiermee beoordeeld.
+Als Eva het project niet vindt, meld dat; maak geen vervangend project.

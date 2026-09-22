@@ -1,0 +1,50 @@
+{
+  "startedAt": "2026-09-22T19:38:54.350446+00:00",
+  "phase": "installed_healthy",
+  "sourceCommit": "e688882f",
+  "modelCalls": 0,
+  "coreImage": "sha256:308ebd85314f7d181d350635a0e620f33399f1115a82f6c34b601a2d5a66ef54",
+  "workerImage": "sha256:ed704325209089bf69a71042ec48f6ddacdc47725e6653d86d8c2f59e34998e4",
+  "installedAt": "2026-09-22T19:39:21.800114+00:00",
+  "liveAuthority": {
+    "core": {
+      "websiteOwnerAllowed": true,
+      "verifiedPrivateTelegramOwnerAllowed": true,
+      "otherPersonDenied": true,
+      "groupConversationDenied": true,
+      "otherInstallationDenied": true,
+      "documentPorts": 2,
+      "modelCalls": 0,
+      "effects": 0
+    },
+    "worker": {
+      "websiteOwnerAllowed": true,
+      "verifiedPrivateTelegramOwnerAllowed": true,
+      "otherPersonDenied": true,
+      "groupConversationDenied": true,
+      "otherInstallationDenied": true,
+      "documentPorts": 0,
+      "modelCalls": 0,
+      "effects": 0
+    }
+  },
+  "liveProjectReadback": {
+    "existingWebsiteProjectReadThroughVerifiedTelegramSource": true,
+    "originalSourcePreserved": true,
+    "status": "completed",
+    "bothContentsExact": true,
+    "databaseReadOnly": true,
+    "newSlotsConsumed": 0,
+    "modelCalls": 0,
+    "externalMessages": 0
+  },
+  "packagedTestsPassed": 11,
+  "sourceReview": "eva2/reviews/document-private-owner-20260922.md",
+  "deploymentReview": "Independent exact compose/image delta GO by document_maintenance",
+  "ownerAccepted": false,
+  "newSlotsConsumed": 0,
+  "remainingUnusedSlots": 1,
+  "externalMessages": 0,
+  "proofBoundary": "Real installed authority and existing project readback through a stored verified Telegram ingress, using read-only database transactions; not a newly sent natural-language Telegram turn.",
+  "rollback": "Preserve claims and original ingress; do not reset slots or journals. Restore matching baseline core/worker only after checking new Telegram-origin tasks."
+}
