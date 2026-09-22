@@ -7,10 +7,10 @@ const { chromium } = require(process.env.EVA_DASHBOARD_PLAYWRIGHT_PACKAGE);
 const dist = path.resolve(__dirname, 'dist');
 const base = '/internal/v1/dashboard';
 const work = (id, state, generation = 1) => ({ work_id: id, state, generation,
-  stop_requested: state === 'stopped', task: 'Onderzoek de tuin', task_preview: 'Onderzoek de tuin',
+  stop_requested: false, task: 'Onderzoek de tuin', task_preview: 'Onderzoek de tuin',
   result_available: state === 'succeeded', result: state === 'succeeded'
     ? { output: '<img src="https://external.invalid/leak"> Bewaard tuinadvies' } : null });
-let jobs = [work('work:active', 'admitted'), work('work:finished', 'succeeded')];
+let jobs = [work('work:active', 'admitted'), work('work:finished', 'succeeded'), work('work:running', 'call_started')];
 let denied = false;
 const mutations = [];
 const fixtures = {
@@ -39,7 +39,11 @@ const server = http.createServer(async (req, res) => {
     const data = JSON.parse(body);
     assert.deepEqual(Object.keys(data), ['work_id']);
     let selected = jobs.find(job => job.work_id === data.work_id);
-    if (operation === 'stop') { selected.state = 'stopped'; selected.stop_requested = true; mutations.push(operation); }
+    if (operation === 'stop') {
+      if (selected.state === 'call_started') selected.stop_requested = true;
+      else selected.state = 'stopped';
+      mutations.push(operation);
+    }
     if (operation === 'resume') {
       selected = work('work:resumed', 'admitted', 2); jobs.unshift(selected); mutations.push(operation);
     }
@@ -67,7 +71,7 @@ const server = http.createServer(async (req, res) => {
     assert.equal(await area.locator('img').count(), 0);
     await area.getByRole('button', { name: 'Opdracht openen' }).first().click();
     await area.getByRole('button', { name: 'Stop deze hulpopdracht' }).click();
-    await area.getByText('Stopverzoek opgeslagen. Een lopende berekening kan nog aflopen; het resultaat wordt niet geleverd.', { exact: true }).waitFor();
+    await area.getByText('Gestopt voordat een modelcall begon.', { exact: true }).waitFor();
     assert.equal(jobs[0].state, 'stopped');
     await area.getByRole('button', { name: 'Hervatten met nieuwe poging' }).click();
     await area.getByText('Nieuwe poging ingepland. De vorige poging blijft bewaard.', { exact: true }).waitFor();
@@ -75,6 +79,12 @@ const server = http.createServer(async (req, res) => {
     await area.getByRole('button', { name: 'Werk vernieuwen' }).click();
     await area.getByText('Ingepland · poging 2', { exact: true }).waitFor();
     assert.equal(await area.getByRole('article', { name: 'Geopende hulpopdracht' }).count(), 0);
+    await area.getByRole('button', { name: 'Opdracht openen' }).nth(3).click();
+    await area.getByRole('button', { name: 'Stop deze hulpopdracht' }).click();
+    await area.getByText('Stopverzoek opgeslagen. Een lopende berekening kan nog aflopen; het resultaat wordt niet geleverd.', { exact: true }).waitFor();
+    assert.equal(jobs[3].state, 'call_started');
+    assert.equal(jobs[3].stop_requested, true);
+    assert.equal(await area.getByRole('button', { name: 'Hervatten met nieuwe poging' }).count(), 0);
     await area.getByRole('button', { name: 'Opdracht openen' }).nth(2).click();
     await area.getByText('<img src="https://external.invalid/leak"> Bewaard tuinadvies', { exact: true }).waitFor();
     denied = true;
@@ -82,10 +92,10 @@ const server = http.createServer(async (req, res) => {
     await area.getByRole('alert').waitFor();
     assert.equal(await area.getByText('<img src="https://external.invalid/leak"> Bewaard tuinadvies', { exact: true }).count(), 0);
     assert.equal((await area.innerText()).includes('MUST NOT APPEAR'), false);
-    assert.deepEqual(mutations, ['stop', 'resume']);
+    assert.deepEqual(mutations, ['stop', 'resume', 'stop']);
     assert.deepEqual(errors, []); assert.deepEqual(external, []);
     console.log(JSON.stringify({ status: 'passed', open: true, literalResult: true,
-      durableFixtureStop: true, resumeNewAttempt: true, refresh: true, deniedClearsPrivateContent: true,
+      durableFixtureStop: true, activeCallStopRequest: true, resumeNewAttempt: true, refresh: true, deniedClearsPrivateContent: true,
       realRuntimeOrOwnerAcceptance: false }));
   } finally { await browser.close(); server.close(); }
 })().catch(error => { console.error(error); server.close(); process.exitCode = 1; });

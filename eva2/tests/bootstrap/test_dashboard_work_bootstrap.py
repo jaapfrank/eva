@@ -54,7 +54,6 @@ def test_http_runtime_and_existing_service_share_saved_stop_and_private_result()
         def request_stop(self, work_id, **values):
             row = self.load(work_id)
             row.state = "stopped"
-            row.stop_requested_at = NOW
             return row
 
     store = Store()

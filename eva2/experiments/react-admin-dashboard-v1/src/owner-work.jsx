@@ -74,10 +74,10 @@ export default function OwnerWork() {
       setDetail(data.work);
       if (operation === 'stop') setNotice(data.work.stop_requested
         ? 'Stopverzoek opgeslagen. Een lopende berekening kan nog aflopen; het resultaat wordt niet geleverd.'
-        : 'Deze taak was al afgerond.');
+        : data.work.state === 'stopped' ? 'Gestopt voordat een modelcall begon.' : 'Deze taak was al afgerond.');
       if (operation === 'resume') setNotice(data.status === 'not_resumable'
         ? 'Geen nieuwe poging ingepland: de taak is nog actief of al geslaagd.'
-        : `${data.created ? 'Nieuwe poging ingepland.' : 'Bestaande vervolg poging geopend.'} De vorige poging blijft bewaard.`);
+        : `${data.created ? 'Nieuwe poging ingepland.' : 'Bestaande vervolgpoging geopend.'} De vorige poging blijft bewaard.`);
     } catch (e) {
       if (sequence.current !== id) return;
       setPage(null); setDetail(null); setError(e.message);
