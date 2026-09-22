@@ -43,3 +43,17 @@ secret and performs no live mutation. The packaged static route, CSP tests and
 removal of the old presentation are now part of the source candidate.
 Promotion still requires the normal immutable image build, scan and managed
 A/B cycle.
+
+## Personal Chrome entry
+
+The Browser card opens the existing personal Chrome controls at
+`http://127.0.0.1:44718` in a new tab. It offers that link only when the dashboard
+hostname is `localhost`, `127.0.0.1` or `[::1]`, and explains that it must be used
+on Eva's Chrome computer. Remote dashboard visitors receive local-computer
+instructions instead of a loopback link to their own device.
+
+The card does not fetch browser status or send control requests. Sharing a tab,
+taking over and reconnecting use the existing bridge page and explicit extension
+selection. The backend's legacy browser routes remain unchanged. To run only
+the synthetic entry-point checks, set `EVA_DASHBOARD_BROWSER_ONLY=1` alongside
+the two browser-test paths above; no live bridge or tab sharing is used.

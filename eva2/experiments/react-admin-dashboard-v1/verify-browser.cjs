@@ -29,13 +29,14 @@ const firstMemoryPage = memoryPage([
 ], cursor);
 
 const fixtures = {
+  '/internal/v1/dashboard/work': {
+    contract: 'EvaDelegatedWorkOwnerResult/v1', operation: 'list', jobs: [], truncated: false,
+  },
   '/internal/v1/dashboard/initiatives': {
     contract: 'EvaOwnerInitiatives/v1', cards: [], checked_at: '2026-09-12T10:01:00Z',
     latest_review: { updated_at: '2026-09-12T10:00:00Z', phase: 'admission', state: 'not_admitted',
       reason: 'De huidige beoordeling wacht.', blocker: 'background_budget', intent_id: null },
   },
-  '/internal/v1/dashboard/browser/status': { contract: 'EvaBrowserSession/v1', state: 'stopped', revision: 0,
-    owner_control: false, eva_control: false, viewer_path: null, browser_ready: false },
   '/internal/v1/dashboard/memory-sources': firstMemoryPage,
   '/internal/v1/dashboard/status': {
     contract: 'EvaDashboardStatus/v1', read_only: true,
@@ -223,11 +224,42 @@ async function main() {
     });
     page.on('pageerror', (error) => errors.push(String(error)));
     page.on('console', (message) => {
-      if (message.type() === 'error') consoleErrors.push(message.text());
+      if (message.type() === 'error') consoleErrors.push(`${message.text()} ${message.location().url}`);
     });
     page.setDefaultTimeout(10_000);
     await page.goto(origin, { waitUntil: 'domcontentloaded', timeout: 10_000 });
     await page.getByText('Echte taak').waitFor({ timeout: 10_000 });
+    const personalChrome = page.getByRole('region', { name: 'Persoonlijke Chrome', exact: true });
+    const chromeLink = personalChrome.getByRole('link', { name: 'Open Chrome-bediening', exact: true });
+    assert.equal(await chromeLink.getAttribute('href'), 'http://127.0.0.1:44718');
+    assert.equal(await chromeLink.getAttribute('target'), '_blank');
+    assert.equal(await chromeLink.getAttribute('rel'), 'noopener noreferrer');
+    assert.equal(await personalChrome.locator('iframe').count(), 0);
+    assert.equal(await personalChrome.locator('button').count(), 0);
+    assert.match(await personalChrome.innerText(), /op deze computer[\s\S]*opnieuw expliciet/u);
+    assert.equal(seen.some(row => row.pathname.startsWith('/internal/v1/dashboard/browser')), false);
+    const remotePage = await browser.newPage();
+    await remotePage.route('http://eva-remote.invalid/**', async route => {
+      const url = new URL(route.request().url());
+      const response = await remotePage.request.get(origin + url.pathname + url.search);
+      await route.fulfill({ response });
+    });
+    await remotePage.goto('http://eva-remote.invalid', { waitUntil: 'domcontentloaded' });
+    const remoteChrome = remotePage.getByRole('region', { name: 'Persoonlijke Chrome', exact: true });
+    await remoteChrome.waitFor();
+    assert.equal(await remoteChrome.locator('a').count(), 0);
+    assert.match(await remoteChrome.innerText(), /Op een telefoon, via Home Assistant/u);
+    assert.match(await remoteChrome.innerText(), /niet naar Eva/u);
+    await remotePage.close();
+    if (process.env.EVA_DASHBOARD_BROWSER_ONLY === '1') {
+      assert.deepEqual(external, []);
+      assert.deepEqual(errors, []);
+      assert.deepEqual(consoleErrors, []);
+      console.log(JSON.stringify({ contract: 'EvaPersonalChromeEntryProof/v1',
+        localTopLevelLink: true, remoteLoopbackLinkAbsent: true,
+        legacyBrowserRequests: 0, iframeCount: 0, browserControlActions: 0, status: 'passed' }));
+      return;
+    }
     assert.match(
       await page.locator('body').innerText(),
       /Eva[\s\S]*Werkbord[\s\S]*Echte taak/u,
