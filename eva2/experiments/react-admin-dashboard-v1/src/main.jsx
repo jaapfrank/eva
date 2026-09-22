@@ -11,6 +11,7 @@ import {
 import './style.css';
 import OwnerInitiatives from './owner-initiatives.jsx';
 import OwnerBrowser from './owner-browser.jsx';
+import OwnerWork from './owner-work.jsx';
 import ProjectDashboard, { ProjectLayout, projectProvider } from './project-dashboard.jsx';
 
 const STATUS = '/internal/v1/dashboard/status';
@@ -364,6 +365,7 @@ function Dashboard() {
     </header>
     <OwnerInitiatives />
     <OwnerBrowser />
+    <OwnerWork />
     <MemorySources />
     <section>
       <h2>Werkbord</h2>

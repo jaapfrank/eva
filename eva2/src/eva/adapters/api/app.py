@@ -20,6 +20,7 @@ from eva.adapters.api.dashboard_conversation import (
     grounded_reply_wire,
 )
 from eva.adapters.api.dashboard_initiatives import install_dashboard_initiatives
+from eva.adapters.api.dashboard_work import install_dashboard_work
 from eva.adapters.api.dashboard_memory import install_dashboard_memory
 from eva.adapters.api.browser_session import BrowserSession, install_browser_session_routes
 from eva.adapters.api.dashboard_access import DashboardAccess
@@ -643,6 +644,7 @@ def create_app(
     dashboard_access = DashboardAccess(dashboard_access_token)
     install_browser_session_routes(app, access=dashboard_access, session=browser_session)
     install_dashboard_initiatives(app, access=dashboard_access, runtime=runtime)
+    install_dashboard_work(app, access=dashboard_access, runtime=runtime)
     install_dashboard_memory(app, access=dashboard_access, runtime=runtime)
     install_dashboard_voice(app, access=dashboard_access, runtime=runtime, config=dashboard_voice)
     from eva.adapters.api.voice_turns import install_voice_turns
