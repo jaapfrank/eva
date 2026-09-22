@@ -1029,7 +1029,7 @@
         ],
         "now": {
           "title": "Resultaten terugbrengen tijdens een gesprek",
-          "detail": "De tekstgesprekpagina is aangesloten, getest en onafhankelijk beoordeeld; nog niet geïnstalleerd. De uitvoerder rondt de kern- en spraaktests af. De reviewer controleert nu het gecombineerde resultaat voor één samenhangende installatie.",
+          "detail": "De tekstgesprekpagina is gebouwd en beoordeeld. Kern en taakwerker zijn als passende installatiekandidaten gecontroleerd. De review vond nog twee intrekkingsgevallen in de spraakroute; de uitvoerder herstelt en test die vóór de gezamenlijke installatie.",
           "state": "In uitvoering",
           "doneWhen": "Resultaat komt terug in de juiste actieve privésessie; na afsluiten blijft het bewaard zonder onverwacht opnieuw te spreken. Daarna onafhankelijke review, installatie en livecontrole."
         },
@@ -10622,7 +10622,7 @@
           "files": "Privéresultaatterugkeer in bestaande kern, website en LiveKit; geen projectdashboardbestanden",
           "estimate": "60–90 minuten gerichte implementatie en tests; nul geplande modelproeven; werkelijk creditverbruik onbekend",
           "state": "in_progress",
-          "currentOutcome": "Speakerdienst op server geïnstalleerd. Uitvoerder werkt aan de ontbrekende automatische resultaatterugkeer via website en spraak; fysieke Voice PE-installatie wacht op USB en netwerkregel."
+          "currentOutcome": "Herstelt twee concrete reviewbevindingen: ingetrokken resultaten uit spraakcontext verwijderen en opnieuw controleren vlak vóór verzending. Daarna gerichte hertest en definitieve review."
         },
         {
           "threadId": "01a0c915-205e-7c11-809a-674ae09e016c",
@@ -10889,6 +10889,23 @@
       "source": "eva2/evidence/product/conversation-result-client-20260922.json",
       "commit": "13533b97",
       "ownerAcceptance": "open"
+    },
+    "privateResultReturnPackaging20260922": {
+      "state": "candidates_prepared_review_fix_pending",
+      "coreImage": "sha256:8a131591f52079632897e97efb90e84e45c08ea9aec088eca9af40cd2dbff1f1",
+      "workerImage": "sha256:0aff34ab5543f148b1341c161ce51dd7e6b3f527aff22b8ef57f36c3b7ffccf8",
+      "coreWorkerReleaseEqual": true,
+      "changedFilesOnlyVerified": true,
+      "runtimeChanged": false,
+      "openReview": "Media cache and queued publication must revalidate revoked results; builder applies targeted correction before final review.",
+      "packagedTests": "30 passed, 1 historical release evidence-index hash mismatch across existing source versions; no full release pass claimed."
+    },
+    "releaseEvidenceIndex20260922": {
+      "state": "open_before_final_release",
+      "source": "release/eva-cockpit-evidence-index-v1.json",
+      "finding": "Release-bound historical source hashes differ from current checkout; observed in packaged dashboard API check. Preserve receipts and bind the evidence to exact source revisions; do not refresh hashes as if a new product trial passed.",
+      "test": "tests/api/test_dashboard_status.py::test_dashboard_live_and_tested_claims_have_exact_reopenable_evidence",
+      "scope": "Existing final release gate, no expansion of current private-return feature."
     }
   },
   "activeTaskId": "AU-008",

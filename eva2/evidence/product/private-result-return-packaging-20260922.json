@@ -1,0 +1,110 @@
+{
+  "date": "2026-09-22",
+  "state": "prepared_not_installed",
+  "images": {
+    "sourceCommit": "b5ee1b5135ef8bdc56442757ab765591fb6d2e3d",
+    "roles": {
+      "core": {
+        "container": "eva2-managed-b-slot3-core",
+        "parent": "sha256:125230457196f6ffba9f84caf5ea3aff9680b1934c6307789424fadfb8e1ed8d",
+        "candidate": "sha256:8a131591f52079632897e97efb90e84e45c08ea9aec088eca9af40cd2dbff1f1",
+        "files": {
+          "eva/adapters/api/dashboard_work.py": "53be8adaff46e374687f693ec25a989b11626d74da83c1725505c3c0c1568f5a",
+          "eva/adapters/api/voice_turns.py": "14db0c4ddeb768916cfe54411407898228eae34ff9f53a1b76b846edcfc8b8f5",
+          "eva/bootstrap/dashboard_work.py": "b27c8aa426eb8d6e57a050e7ebf36714294cfb91d75bfbf6e494c841d03f437a",
+          "eva/bootstrap/delegated_work_owner_service.py": "b9f3db01cad9122850c321781158d8e4211d79de827f2b2069e043cac1330daa",
+          "eva/bootstrap/runtime.py": "bcf636b9ccf6200543ba51252084e8fb6e38f7220de78f7df5169ddf511897b9",
+          "eva/adapters/postgres/private_work_return.py": "cf4d749d49889484d15bd4a21d1a155cb5ce71a0fd1e0af0d1ceaeef7f7abd9e",
+          "eva/adapters/api/dashboard_conversation.py": "5018b4689c42d0ae1e2e70059623fbe4293be868705df97bcf443e0851db7675",
+          "eva/adapters/api/dashboard_work_return_client.py": "a5bc179234a23bf8d6865246650a5681baf3934b8753630e039e334ecd6267b0"
+        },
+        "configUnchanged": true,
+        "parentLayersPreserved": true
+      },
+      "worker": {
+        "container": "eva2-managed-b-slot3-delegated-work-worker-1",
+        "parent": "sha256:ff1d1258d7955847757443628cd3232b262b1d3d3885f3ae4a44ae25f520ae6d",
+        "candidate": "sha256:0aff34ab5543f148b1341c161ce51dd7e6b3f527aff22b8ef57f36c3b7ffccf8",
+        "files": {
+          "eva/bootstrap/delegated_work_owner_service.py": "b9f3db01cad9122850c321781158d8e4211d79de827f2b2069e043cac1330daa",
+          "eva/adapters/postgres/private_work_return.py": "cf4d749d49889484d15bd4a21d1a155cb5ce71a0fd1e0af0d1ceaeef7f7abd9e"
+        },
+        "configUnchanged": true,
+        "parentLayersPreserved": true
+      },
+      "media": {
+        "container": "eva2-owner-voice-media-1",
+        "parent": "sha256:ac71fbae545992fe90547deee26f6168de5534b7eab14b12681c97363914c7c7",
+        "candidate": "sha256:9fbff54068ac79f2029607407609ebf6b0dfcbab9bc70b90ef7d5aa8f3327f7c",
+        "files": {
+          "eva/voice_service/agent.py": "b0da2e7d61e1dfbded9bf27b9b67944ce5a212110874d95d2986760dbf148a08",
+          "eva/voice_service/server.py": "a030cb668b8910360c8f3c85b2d891b15d6a6a0186348dede70287409cd67e19",
+          "eva/voice_service/client.html": "7de6a4a075df82968adf5ae728ee770b23d1d0e9c0c79b52283e72da68cae047"
+        },
+        "configUnchanged": true,
+        "parentLayersPreserved": true
+      }
+    },
+    "installed": false
+  },
+  "verification": {
+    "core": {
+      "exactSourceDelta": [
+        "eva/adapters/api/dashboard_conversation.py",
+        "eva/adapters/api/dashboard_work.py",
+        "eva/adapters/api/dashboard_work_return_client.py",
+        "eva/adapters/api/voice_turns.py",
+        "eva/adapters/postgres/private_work_return.py",
+        "eva/bootstrap/dashboard_work.py",
+        "eva/bootstrap/delegated_work_owner_service.py",
+        "eva/bootstrap/runtime.py"
+      ],
+      "allOtherSourcePreserved": true,
+      "runtimeUIDReadable": true,
+      "release": {
+        "toolFree": "6c104502b0344308720571995a88eeed397e2ec763cc88da3eda9558dd7ebbf8",
+        "research": "ca870a82b1e3c961a0cd77264de012e97a5a216eab7bea05dc5ca56b6382765d"
+      }
+    },
+    "worker": {
+      "exactSourceDelta": [
+        "eva/adapters/postgres/private_work_return.py",
+        "eva/bootstrap/delegated_work_owner_service.py"
+      ],
+      "allOtherSourcePreserved": true,
+      "runtimeUIDReadable": true,
+      "release": {
+        "toolFree": "6c104502b0344308720571995a88eeed397e2ec763cc88da3eda9558dd7ebbf8",
+        "research": "ca870a82b1e3c961a0cd77264de012e97a5a216eab7bea05dc5ca56b6382765d"
+      }
+    },
+    "media": {
+      "exactSourceDelta": [
+        "eva/voice_service/agent.py",
+        "eva/voice_service/client.html",
+        "eva/voice_service/server.py"
+      ],
+      "allOtherSourcePreserved": true,
+      "runtimeUIDReadable": true
+    },
+    "pairedReleaseEqual": true,
+    "installed": false,
+    "mediaReviewFixPending": true
+  },
+  "packagedCoreTests": {
+    "image": "sha256:8a131591f52079632897e97efb90e84e45c08ea9aec088eca9af40cd2dbff1f1",
+    "passed": 30,
+    "failed": 1,
+    "failure": "tests/api/test_dashboard_status.py::test_dashboard_live_and_tested_claims_have_exact_reopenable_evidence",
+    "cause": "Historical release/eva-cockpit-evidence-index-v1.json source hashes differ from current checkout, across cockpit/installer/runtime-subagents/dependency claims. Not rewritten as new proof.",
+    "meaning": "Runtime API behavior checks passed; this is not a full release pass. Existing historical evidence index requires version-bound repair before final release."
+  },
+  "remaining": [
+    "Targeted media revocation correction and tests",
+    "Independent final combined review",
+    "Fresh quiescent runtime baseline and reviewed installer",
+    "Safe core/worker/media installation and live route check"
+  ],
+  "modelCalls": 0,
+  "scope": "Exact deltas on currently installed parent images; no dependencies or running services replaced."
+}
