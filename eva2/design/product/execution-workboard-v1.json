@@ -1036,15 +1036,15 @@
           }
         ],
         "now": {
-          "title": "Bestaande documentopdrachten activeren",
-          "detail": "Documentpakket: 39 tests geslaagd. Onderhoudsonderdelen: 8 stop/hersteltests en 4 browserbrugtests geslaagd, onafhankelijk beoordeeld. De volledige registratieprocedure wordt nog samengevoegd; niets hiervan is geactiveerd.",
-          "state": "Pakket klaar; registratievoorbereiding loopt",
-          "doneWhen": "Registratie en poolconfiguratie zijn beoordeeld en geïnstalleerd; twee documenten zijn via de gewone gesprekstaak te maken, volgen en stoppen met behoud van het bestaande project."
+          "title": "Documentopdrachten aansluiten op geregistreerde diensten",
+          "detail": "Beide documentdiensten zijn geregistreerd; 55 bestaande tools en 6 bestaande aanbieders bleven behouden. Alle oorspronkelijke diensten zijn hersteld. De nieuwe documentopdrachten zijn nog niet ingeschakeld.",
+          "state": "Registratie afgerond; functieactivering volgt",
+          "doneWhen": "Twee voorbereide projectplekken zijn aangesloten op de gewone gesprekstaak; maken, volgen en stoppen werken met behoud van het bestaande project."
         },
         "next": {
-          "title": "Registratie beoordelen en gecontroleerd activeren",
-          "detail": "Controleer de concrete stop-/herstelprocedure en registerbehoud; registreer de twee voorbereide aanbieders eenmaal. Activeer daarna pas de catalogusgebonden documentpool.",
-          "state": "Na technische review"
+          "title": "Geteste documentpool activeren",
+          "detail": "Gebruik de werkelijk ontdekte catalogusbindings, behoud beide bestaande catalogi en het eerdere documentproject, en schakel daarna de twee voorbereide projectplekken in. Geen claim van onbeperkte projecten.",
+          "state": "Eerstvolgende technische stap"
         },
         "ownerAction": {
           "title": "Kom via Telegram terug op een websitegesprek",
@@ -10825,7 +10825,7 @@
           "planningEffortHours": "4–12"
         }
       ],
-      "nextAction": "Maak de bestaande documenttaakregistratie veilig uitvoerbaar op de huidige runtime; behoud afgeronde kanaalwijzigingen en wacht niet op open gebruikersproeven. Fysieke Voice PE vereist nog USB/apparaattoegang.",
+      "nextAction": "Activeer de reeds geteste documenttaakfunctie met de twee zojuist geregistreerde aanbieders; behoud huidige spraak, privékoppeling en legacyproject. Praktijkproeven blijven afzonderlijk open.",
       "effortNotice": "Grove planning, lage zekerheid: 40–118 actieve ontwikkeluren plus zeven dagen gezinspraktijk en eventuele externe wachttijd. Geen deadline, creditkosten of gemeten verbruik; per begrensde wijziging aanscherpen na lezing van bestaand bewijs. Hergebruik kan dit verkorten.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Na review, installatie en registratie automatisch volgende uitvoerbare stap; geen algemene wachtstop op gebruikersproeven.",
@@ -10877,7 +10877,7 @@
       "doneWhen": "Exacte bron- en imagedelta, onveranderde gedelegeerde werkrelease en documentworkerherkomst vastgelegd voor onafhankelijke review. Daarna bestaande poolregistratie voorbereiden.",
       "finding": "Zeven eerder beoordeelde modules op actuele core b632; alle andere Pythonbron behouden, inclusief de geïnstalleerde privékoppeling. 39 pakkettests geslaagd.",
       "evidence": "eva2/evidence/living-core/document-current-package-20260922.json",
-      "nextAction": "Voltooi en beoordeel de concrete onderhoudsregistratie vóór poolactivering; geen oude coreimage installeren."
+      "nextAction": "Bind de twee echte registraties aan bestaande catalogi/mandaat en activeer de geteste documentpool; behoud het bestaande project."
     },
     "voiceSpeakerService20260922": {
       "state": "server_installed_hardware_and_network_pending",
@@ -11005,17 +11005,19 @@
       "ownerAccepted": false
     },
     "documentPoolCurrentPreflight20260922": {
-      "status": "current_baseline_and_maintenance_components_reviewed",
+      "status": "readonly_registered_clients_restored_effects_pending",
       "stage": "/var/lib/eva2/document-pool-phase1-current-20260922",
       "registryGateways": 6,
       "registryTools": 55,
       "delegatedRows": 5,
-      "runtimeMutated": false,
-      "registrationCalls": 0,
+      "runtimeMutated": true,
+      "registrationCalls": 2,
       "modelCalls": 0,
-      "maintenanceWindowCompleted": false,
-      "remaining": "Geteste stop/herstel- en registratietransportonderdelen samenvoegen met gateway/provideractivering, historiecontrole en terugweg. Daarna exacte totaalprocedure beoordelen; registratie en pool nog niet actief.",
-      "componentEvidence": "eva2/evidence/living-core/document-maintenance-components-20260922.json"
+      "maintenanceWindowCompleted": true,
+      "remaining": "Werkelijke catalogusbindings toevoegen met behoud van bestaande catalogi en legacyproject; twee voorbereide slots daarna afzonderlijk activeren en gewone gesprekstaak proberen.",
+      "componentEvidence": "eva2/evidence/living-core/document-maintenance-components-20260922.json",
+      "attemptEvidence": "eva2/evidence/living-core/document-registration-attempt1-20260922.json",
+      "evidence": "eva2/evidence/living-core/document-registration-installed-20260922.json"
     },
     "standardReceipt20260922": {
       "ownerDecision": "Korte standaardontvangst zonder GPT is toegestaan; werkclaim vereist echte toelating.",

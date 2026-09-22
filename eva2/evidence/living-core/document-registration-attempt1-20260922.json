@@ -1,0 +1,24 @@
+{
+  "status": "pre_registration_attempt_failed_original_services_restored",
+  "stage": "/var/lib/eva2/document-pool-phase1-current-20260922/execution-attempt-1",
+  "failure": {
+    "type": "Blocked",
+    "message": "maintenance command failed; private output suppressed",
+    "gatewayChanged": false
+  },
+  "registrationIntents": 0,
+  "registryUnchanged": true,
+  "originalContainerIdentitiesPreserved": 9,
+  "originalServicesRunning": true,
+  "websiteReady": true,
+  "bridgeOriginalStopPolicyRestored": true,
+  "temporaryUnregisteredReadonlyContainersRemoved": 2,
+  "volumesRemoved": 0,
+  "changedCausesBeforeRetry": [
+    "Wait for both provider healthchecks before detailed validation",
+    "Use actual configured LAN speaker address for readiness"
+  ],
+  "qualification": "Original validation stderr was suppressed; provider verifier later passed unchanged. Missing startup wait is supported by sequence, not retained original error text.",
+  "modelCalls": 0,
+  "ownerAccepted": false
+}

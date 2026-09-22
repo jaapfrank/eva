@@ -1,0 +1,53 @@
+{
+  "status": "readonly_providers_registered_clients_restored_effects_disabled",
+  "date": "2026-09-22",
+  "stage": "/var/lib/eva2/document-pool-phase1-current-20260922",
+  "completed": {
+    "phase": "readonly-registration",
+    "effectsEnabled": false,
+    "existingRegistryPreserved": true,
+    "clientsRestored": true
+  },
+  "reviewSealSha256": "507ad5f5c48e9d2949797663314454db74845d5a30cf2183565b72900bde49ec",
+  "tests": {
+    "executorAndWindowPassed": 17,
+    "unchangedBridgePassed": 4
+  },
+  "registryBefore": {
+    "gateways": 6,
+    "tools": 55,
+    "resources": 0,
+    "prompts": 0,
+    "servers": 0,
+    "server_tool_association": 0,
+    "server_resource_association": 0,
+    "server_prompt_association": 0,
+    "tool_plugin_bindings": 0,
+    "server_interfaces": 0
+  },
+  "registryAfter": {
+    "gateways": 8,
+    "tools": 59,
+    "resources": 0,
+    "prompts": 0,
+    "servers": 0,
+    "server_tool_association": 0,
+    "server_resource_association": 0,
+    "server_prompt_association": 0,
+    "tool_plugin_bindings": 0,
+    "server_interfaces": 0
+  },
+  "newGateways": 2,
+  "newTools": 4,
+  "existingRegistryRowsPreserved": true,
+  "existingClientsRestoredSameIds": 8,
+  "gatewayHealthy": true,
+  "coreAndWorkersHealthy": true,
+  "websiteReady": true,
+  "bridgeRestored": true,
+  "modelCalls": 0,
+  "effectsEnabled": false,
+  "ownerAccepted": false,
+  "firstAttempt": "eva2/evidence/living-core/document-registration-attempt1-20260922.json",
+  "next": "Bind actual discovered tool catalogs into existing core/worker catalogs and managed endpoint authority, activate reviewed pool while preserving legacy project. Two finite slots; no unlimited-project claim."
+}
