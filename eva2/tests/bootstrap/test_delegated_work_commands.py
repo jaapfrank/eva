@@ -137,6 +137,40 @@ def test_owner_can_spawn_one_sealed_replay_safe_research_task() -> None:
     ]
 
 
+def test_owner_admission_passes_current_destination_in_same_store_call():
+    from eva.bootstrap.delegated_work_owner_service import DelegatedWorkOwnerService
+    store = FakeStore()
+    destination = object()
+    received = []
+    def resolve(turn):
+        received.append(turn)
+        return destination
+    service = DelegatedWorkOwnerService(
+        store, owner_principal_id=OWNER, principal_binding_id=BINDING,
+        delivery_destination_loader=resolve,
+    )
+    turn = _turn("Onderzoek dit")
+    service.execute("start", turn, task="Onderzoek dit", request_key="return-route")
+    assert received == [turn]
+    assert len(store.admitted) == 1
+    assert store.admitted[0]["delivery_destination"] is destination
+    assert len(store.validated) == 2  # Initial composition and current admission.
+
+
+def test_owner_destination_failure_does_not_admit_unreturnable_work():
+    from eva.bootstrap.delegated_work_owner_service import DelegatedWorkOwnerService
+    store = FakeStore()
+    def revoked(turn):
+        raise RuntimeError("owner route revoked")
+    service = DelegatedWorkOwnerService(
+        store, owner_principal_id=OWNER, principal_binding_id=BINDING,
+        delivery_destination_loader=revoked,
+    )
+    with pytest.raises(RuntimeError, match="owner route revoked"):
+        service.execute("start", _turn("Onderzoek dit"), task="Onderzoek dit", request_key="return-route")
+    assert store.admitted == []
+
+
 def test_owner_gets_latest_task_status_and_can_stop_work_before_call() -> None:
     store = FakeStore()
     store.owned_work = [store._work()]

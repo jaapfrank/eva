@@ -4,6 +4,10 @@ from __future__ import annotations
 from collections.abc import Callable
 from datetime import UTC, datetime, timedelta
 from uuid import NAMESPACE_URL, UUID, uuid5
+from typing import TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from eva.application.delegated_work_delivery import PrivateWorkDestination
 
 from eva.adapters.postgres.delegated_work import (
     DelegatedWorkConflict, DelegatedWorkNotFound, DelegatedWorkNotResumable,
@@ -23,6 +27,7 @@ class DelegatedWorkOwnerService:
                  principal_binding_id: UUID, clock: Callable[[], datetime] | None = None,
                  conversation_scope: TimelineScope | None = None,
                  private_bridge_principal_loader: Callable[[], str | None] | None = None,
+                 delivery_destination_loader: Callable[[ConversationTurn], PrivateWorkDestination | None] | None = None,
                  research_profile=None):
         self.store = store
         self.research_profile = research_profile
@@ -31,6 +36,7 @@ class DelegatedWorkOwnerService:
         self.owner_principal_id = owner_principal_id
         self.principal_binding_id = principal_binding_id
         self._private_bridge_principal_loader = private_bridge_principal_loader
+        self._delivery_destination_loader = delivery_destination_loader
         self._clock = clock or (lambda: datetime.now(UTC).replace(microsecond=0))
         store.validate_admission_authority(owner_principal_id=owner_principal_id,
                                            principal_binding_id=principal_binding_id)
@@ -140,6 +146,7 @@ class DelegatedWorkOwnerService:
                 summary="Een afgeschermde onderzoeker werkt aan de gegeven opdracht.",
                 worker_role="Onderzoek", retention_policy_id="retention:delegated-work:v1",
                 retention_until=created + timedelta(days=7), occurred_at=created,
+                **self._delivery_arguments(turn),
             )
             return {**response, "created": admission.disposition == "inserted", "work": self._view(admission.work)}
         if task is not None or not isinstance(work_id, str) or not work_id:
@@ -172,6 +179,7 @@ class DelegatedWorkOwnerService:
             worker_role=previous.worker_role, retention_policy_id=previous.retention_policy_id,
             retention_until=max(previous.retention_until, created + timedelta(days=7)),
             occurred_at=created, resumes_work_id=previous.spec.work_id,
+            **self._delivery_arguments(turn),
         )
         return {**response, "created": admission.disposition == "inserted",
                 "previous": self._view(previous), "work": self._view(admission.work),
@@ -180,6 +188,14 @@ class DelegatedWorkOwnerService:
                         and (previous.usage is None or previous.usage.measurement != "measured"
                              or previous.usage.completed_model_responses != 1))),
                 "guidance": "Een nieuwe begrensde poging; de eerdere call en het eerdere verbruik blijven bewaard."}
+
+    def _delivery_arguments(self, turn: ConversationTurn) -> dict:
+        if self._delivery_destination_loader is None:
+            return {}
+        # Admission stores this alongside the task in one transaction. A failed
+        # authority lookup must not silently admit work without its return route.
+        self.validate_authority(turn)
+        return {"delivery_destination": self._delivery_destination_loader(turn)}
 
     def latest_work_id(self, turn: ConversationTurn, *, stoppable=False) -> str | None:
         if not self.available_for(turn):
