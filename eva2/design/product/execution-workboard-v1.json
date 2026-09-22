@@ -452,13 +452,13 @@
               "subtitle": "Zelfstandig werk · AU-006 · begrensde oplevering",
               "built": "yes",
               "tested": "yes",
-              "live": "no",
+              "live": "yes",
               "accepted": "no",
               "works": "Eén gewone vraag maakt het concept en einddocument; beide bestanden zijn gecontroleerd.",
               "tryIt": "Lees het bestaande einddocument bij PJ-01; opnieuw starten is niet nodig.",
-              "gap": "Huidige beschikbaarheid herstellen binnen AU-006. Bestaand resultaat en eerder technisch bewijs blijven behouden; eigenaaracceptatie afzonderlijk.",
+              "gap": "Echte computerherstart, herstel bij tijdelijk onbereikbare provider en eigenaarbeoordeling blijven open.",
               "evidence": "eva2/evidence/living-core/au006-r2-live-completed-20260913.json",
-              "detail": "Onafhankelijke live-GO: twee native receipts0→1→2, bestandsbytes en lokale kopie identiek. Oude mislukte proef behouden. Actuele controle 21 september: beide documentdiensten exited sinds 14 september; dit is historisch installatiebewijs, geen huidige beschikbaarheid."
+              "detail": "Op 22 september zijn de bestaande diensten hersteld en healthy; beide projectstatussen, alle 28 bestanden en het journaal zijn onafhankelijk gecontroleerd en behouden. Automatisch herstartbeleid is geïnstalleerd zonder de containers opnieuw te starten. Dit bewijst geen nieuw documentproject."
             },
             {
               "id": "reusable-procedure",
@@ -482,16 +482,16 @@
               "subtitle": "Beheer · AU-006/UX-001 · begrensde correctie",
               "built": "yes",
               "tested": "yes",
-              "live": "no",
+              "live": "yes",
               "accepted": "no",
               "works": "Beide documentdiensten melden gezond via passende proces-, database- en MCP-controles.",
               "tryIt": "Bekijk de vastgelegde dienststatus; een nieuw documentproject starten is niet nodig.",
-              "gap": "Huidige beschikbaarheid herstellen binnen AU-006. Bestaand resultaat en eerder technisch bewijs blijven behouden; eigenaaracceptatie afzonderlijk.",
-              "evidence": "eva2/evidence/living-core/document-health-r2-live-20260913.json",
-              "detail": "Onafhankelijke eindcontrole bevestigt beide exacte images/probes en behoud van core, doelen, journaal en28bestanden. Actuele controle 21 september: beide documentdiensten exited sinds 14 september; dit is historisch installatiebewijs, geen huidige beschikbaarheid."
+              "gap": "Echte computerherstart, herstel bij tijdelijk onbereikbare provider en eigenaarbeoordeling blijven open.",
+              "evidence": "eva2/evidence/living-core/document-restart-policy-live-20260922.json",
+              "detail": "Op 22 september zijn de bestaande diensten hersteld en healthy; beide projectstatussen, alle 28 bestanden en het journaal zijn onafhankelijk gecontroleerd en behouden. Automatisch herstartbeleid is geïnstalleerd zonder de containers opnieuw te starten. Dit bewijst geen nieuw documentproject."
             }
           ],
-          "works": "Een voorbereid tweestapsproject en procedurehergebruik zijn eerder bewezen. De documentdiensten staan bij controle op 21 september uit; eigen documentopdrachten zijn nog niet geïnstalleerd."
+          "works": "Het voorbereide tweestapsproject blijft behouden. Beide documentdiensten draaien weer; automatisch herstartbeleid is geïnstalleerd. Eigen documentopdrachten zijn nog niet geïnstalleerd."
         },
         {
           "id": "browser",
@@ -10580,7 +10580,7 @@
           "files": "AU-006 bestaande documentdiensten: herstelonderzoek en bewijs; geen nieuwe projecten of kernwijzigingen",
           "estimate": "20 minuten gericht herstel; nul modelproeven; werkelijk creditverbruik onbekend",
           "state": "in_progress",
-          "currentOutcome": "Private Telegram-terugmelding en webstatus geïnstalleerd en gecontroleerd; echte Telegram-eigenaarproef open. Nu herstel van bestaande documentdiensten na WSL-herstart, met behoud van projecten en gegevens."
+          "currentOutcome": "Private Telegram-terugmelding en webstatus geïnstalleerd; documentdiensten hersteld met gegevensbehoud en automatisch herstartbeleid. Nu onafhankelijke review van de Voice PE-installatievoorbereiding."
         }
       ],
       "coordination": "Twee actieve producttaken met afzonderlijke bestanden. Coördinator integreert de terugmeldroute in de bestaande runtime en bewaakt review/installatie. Geen nieuwe spraakbouw of herhaalde modelproef; Voice PE gebruikt waar mogelijk de bestaande continue route."
@@ -10759,7 +10759,7 @@
           "planningEffortHours": "4–12"
         }
       ],
-      "nextAction": "Bereid activering van bestaande Voice PE-speakerdienst voor; apparaatinstallatie wacht op USB-identificatie en herstelbewijs. Herstel parallel de bestaande AU-006 documentdiensten na WSL-herstart. Private Telegram-terugmelding en webstatus zijn geïnstalleerd; overige kanalen en echte eigenaarproef blijven open.",
+      "nextAction": "Rond de onafhankelijke beoordeling van de Voice PE-servicevoorbereiding af; apparaatinstallatie wacht op USB-identificatie en herstelbewijs. Documentdiensten zijn hersteld. Daarna bestaande gewone documentopdrachten installeren; overige terugmeldkanalen en eigenaarproeven blijven open.",
       "effortNotice": "Grove planning, lage zekerheid: 40–118 actieve ontwikkeluren plus zeven dagen gezinspraktijk en eventuele externe wachttijd. Geen deadline, creditkosten of gemeten verbruik; per begrensde wijziging aanscherpen na lezing van bestaand bewijs. Hergebruik kan dit verkorten.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Na review, installatie en registratie automatisch volgende uitvoerbare stap; geen algemene wachtstop op gebruikersproeven.",
@@ -10782,6 +10782,26 @@
       "state": "installed_verified_owner_acceptance_open",
       "evidence": "eva2/evidence/product/private-result-return-live-2026-09-22.json",
       "ownerAcceptance": false
+    },
+    "documentServiceRecovery20260922": {
+      "state": "installed_verified",
+      "evidence": "eva2/evidence/living-core/au006-existing-service-restart-20260922.json",
+      "independentReview": "eva2/reviews/au006-existing-service-restart-20260922.md",
+      "ownerAccepted": false,
+      "remaining": "Diensten hersteld en automatisch herstartbeleid geïnstalleerd; echte herstartproef en algemene projectcontinuïteit blijven open."
+    },
+    "documentRestartPolicy20260922": {
+      "state": "installed_verified",
+      "outcome": "Bestaande documentdiensten komen na Docker/hostherstart terug; expliciet stoppen blijft behouden.",
+      "scope": "Alleen restartpolicy van twee bestaande containers en dezelfde Compose-healthoverlay; geen recreate of nieuwe taken.",
+      "files": [
+        "eva2/deploy/living-core/document-health.compose.json"
+      ],
+      "doneWhen": "Onafhankelijke review; effectieve Composeconfig en livebeleid unless-stopped, dezelfde IDs/starttijden/config/data en gezonde diensten. Werkelijke hostherstart blijft eindkandidaatproef.",
+      "estimate": "15–25 minuten; 0 modelproeven; creditverbruik onbekend",
+      "rollback": "Herstel beide beleidswaarden en de private overlay naar no; behoud containers en gegevens.",
+      "evidence": "eva2/evidence/living-core/document-restart-policy-live-20260922.json",
+      "remaining": "Echte hostherstart en herstel van wachtend project bij tijdelijk onbereikbare provider nog controleren."
     }
   },
   "activeTaskId": "AU-008",

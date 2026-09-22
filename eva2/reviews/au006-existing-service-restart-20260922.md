@@ -1,6 +1,6 @@
 # AU-006 existing service recovery — 22 September 2026
 
-The existing document provider and document goal worker are running and healthy again. This recovery starts the two existing containers; it does not install new images or admit a document project. Independent coordinator review and workboard integration remain pending.
+The existing document provider and document goal worker are running and healthy again. This recovery starts the two existing containers; it does not install new images or admit a document project. The coordinator independently verified the live container IDs, images, running/healthy states, unchanged Config/HostConfig/mounts, all 28 artifact hashes, both full stored goal states against the historical snapshot, and the journal hash. Workboard integration records recovery separately from new project completion.
 
 ## Cause and authority
 

@@ -1,0 +1,30 @@
+{
+  "installed": true,
+  "restartPolicy": "unless-stopped",
+  "containerIDs": [
+    "77bced2a4c0d56bbad44031581eaf9f064f55949ae43d2af02c998ed400473b6",
+    "1329566f565d386a735e018f984b584c012a3bc7fb5e9bf6f6da02910c3915c5"
+  ],
+  "containerRestarted": false,
+  "composeDeltaOnlyRestartPolicy": true,
+  "imagesConfigMountsPreserved": true,
+  "healthy": true,
+  "hostRestartTested": false,
+  "modelCalls": 0,
+  "rollback": "Restore saved overlay and docker update --restart no on both existing IDs; do not recreate.",
+  "date": "2026-09-22",
+  "independentReview": "GO by task 01a0c915-205e-7c11-809a-674ae09e016c after rollback and baseline corrections",
+  "installerSha256": "ea5af1be979fa84f4836095ba445ff620354416809379e16c06eb1dc0a8515fe",
+  "firstAttempt": {
+    "mutationPerformed": false,
+    "error": "KeyError: document-workspace",
+    "cause": "Compose config omitted inactive service profiles",
+    "correction": "Resolve full configuration with --profile *; no up/recreate command"
+  },
+  "ownerAccepted": false,
+  "remaining": [
+    "Actual host restart on final candidate",
+    "Waiting-project recovery when document provider is unavailable during startup"
+  ],
+  "credits": "unknown"
+}

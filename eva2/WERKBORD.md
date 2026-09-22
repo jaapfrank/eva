@@ -25,7 +25,7 @@ Eén dagelijkse, geïnstalleerde Eva afronden: gedeeld gesprek en stem, privéco
 | 7 | Vergelijking voorbereiden en uitvoeren | open | EV-003 taken/versies/drempels vooraf vast; Bottie en drie concurrenten eerlijk vergelijken, officiële AgentBench/GAIA/OSWorld-scorers; definitieve vergelijking op eindkandidaat. |
 | 8 | Eindkandidaat en acceptatie | open | Bevroren image/config/bewijs, complete testpoort, onafhankelijke review, veilige installatie, computerherstart en definitieve vergelijking; daarna zeven dagen gezinspraktijk en expliciete acceptatie. |
 
-**Eerstvolgende handeling:** Bereid activering van bestaande Voice PE-speakerdienst voor; apparaatinstallatie wacht op USB-identificatie en herstelbewijs. Herstel parallel de bestaande AU-006 documentdiensten na WSL-herstart. Private Telegram-terugmelding en webstatus zijn geïnstalleerd; overige kanalen en echte eigenaarproef blijven open.
+**Eerstvolgende handeling:** Rond de onafhankelijke beoordeling van de Voice PE-servicevoorbereiding af; apparaatinstallatie wacht op USB-identificatie en herstelbewijs. Documentdiensten zijn hersteld. Daarna bestaande gewone documentopdrachten installeren; overige terugmeldkanalen en eigenaarproeven blijven open.
 
 Afgeronde deelresultaten en menselijke acceptaties blijven hieronder behouden. Een open gebruikersoordeel is geen algemene bouwstop.
 
