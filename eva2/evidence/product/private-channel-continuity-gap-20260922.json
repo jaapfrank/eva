@@ -1,0 +1,19 @@
+{
+  "sourceCommit": "36da71ec",
+  "runtimeReadOnlyCheck": {
+    "trustedPrivateBridgeExists": true,
+    "dashboardPrincipalEqualsTelegram": false,
+    "memoryPersonTagsEqual": false,
+    "privateMemoriesRead": false
+  },
+  "sourceEvidence": [
+    "src/eva/application/telegram_canary.py:principal_id",
+    "src/eva/bootstrap/runtime.py:dashboard_turn",
+    "src/eva/bootstrap/runtime.py:HindsightMemoryEngine composition",
+    "src/eva/adapters/projection/hindsight.py:recall_for_presence"
+  ],
+  "finding": "Private task controls have a trusted bridge, but ordinary website and Telegram recall select different person tags. No trusted alias resolver is composed for conversation recall. This can prevent cross-channel continuity; it is not proof of a private-data leak.",
+  "preserved": "No memory read, modified, migrated or deleted; accepted memory behavior remains accepted.",
+  "next": "Use current verified owner binding for narrowly scoped private memory aliases; retain original source identities and revalidate alias authority before cache/model access. Shared/unknown speakers and groups must never receive that alias scope.",
+  "modelCalls": 0
+}

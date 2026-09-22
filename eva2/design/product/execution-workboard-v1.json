@@ -1028,14 +1028,14 @@
           }
         ],
         "now": {
-          "title": "Onderzoeksinstructies live; kwaliteit nog te beoordelen",
-          "detail": "De beoordeelde wijziging draait in kern en taakwerker. De bestaande huishoudsessieroute blijft werken. De proef bewijst de keuze voor vervolgonderzoek, niet de kwaliteit van ieder advies.",
-          "state": "Geïnstalleerd — volledige onderzoeksproef open",
+          "title": "Privégeheugen tussen website en Telegram verbinden",
+          "detail": "Een alleen-lezen controle toont verschillende persoonslabels voor dezelfde gekoppelde eigenaar. Taakbediening kent de koppeling al, gespreksgeheugen nog niet. Bestaand geheugen en acceptaties blijven behouden.",
+          "state": "Concreet continuïteitsgat vastgesteld",
           "doneWhen": "Telegram-proef afzonderlijk bevestigd; bestaande huishoudintegratie beoordeeld en geïnstalleerd met terugweg."
         },
         "next": {
-          "title": "Gesprekscontinuïteit en persoonsgrenzen afronden",
-          "detail": "Controleer de resterende koppeling tussen geverifieerde personen en gesprekken via de verschillende ingangen. Behoud geaccepteerd geheugen; gedeelde speakers blijven zonder persoonsverificatie huishoudelijk. De fysieke Voice PE-proef blijft afzonderlijk open.",
+          "title": "Geverifieerde geheugenkoppeling herstellen",
+          "detail": "Gebruik uitsluitend de bestaande geverifieerde persoonskoppeling voor privéherinneringen over website en Telegram. Bewaar oorspronkelijke bronnen; toets andere persoon, groep, gedeelde speaker en ingetrokken koppeling. Geen privétoegang op basis van alleen een naam of apparaat.",
           "state": "Hierna"
         },
         "ownerAction": {
@@ -10516,7 +10516,11 @@
       "requirement": "Onderwerp dagen/weken later hervatten als dezelfde geverifieerde persoon; privégesprekken niet aan dochter of anderen prijsgeven, ook niet via initiatief of hints.",
       "currentLimits": "Lokale pagina vertrouwt eigenaarcomputer; geen sprekeridentificatie. VoicePE kent household-device, niet wie spreekt.",
       "openProof": "54 gerichte household/authority/private-result tests geslaagd; bewijs person-household-boundaries-20260922/handoff.md. Geen algemene netwerkaudit of fysieke spreker-/toehoorderherkenning bewezen. Keuze voor persoonlijke Voice PE-toegang blijft open; geheugenacceptaties blijven staan.",
-      "tokenlessTestsRemain": true
+      "tokenlessTestsRemain": true,
+      "status": "verified_private_channel_memory_mapping_gap",
+      "evidence": "eva2/evidence/product/private-channel-continuity-gap-20260922.json",
+      "next": "Repair verified private-channel memory aliasing, including current binding checks and cache revocation; preserve stored sources and household isolation.",
+      "sharedSpeakerDecision": "Asked owner: continue privately in existing Telegram (recommended) or approve person/listeners per phone session. No answer assumed as authorization for private speaker output."
     },
     "quickDeliveries20260922": {
       "status": "scoped_not_built",
@@ -10811,7 +10815,7 @@
           "planningEffortHours": "4–12"
         }
       ],
-      "nextAction": "Controleer de resterende koppeling tussen geverifieerde personen en gesprekken via de verschillende ingangen. Behoud geaccepteerd geheugen; gedeelde speakers blijven zonder persoonsverificatie huishoudelijk. De fysieke Voice PE-proef blijft afzonderlijk open.",
+      "nextAction": "Gebruik uitsluitend de bestaande geverifieerde persoonskoppeling voor privéherinneringen over website en Telegram. Bewaar oorspronkelijke bronnen; toets andere persoon, groep, gedeelde speaker en ingetrokken koppeling. Geen privétoegang op basis van alleen een naam of apparaat.",
       "effortNotice": "Grove planning, lage zekerheid: 40–118 actieve ontwikkeluren plus zeven dagen gezinspraktijk en eventuele externe wachttijd. Geen deadline, creditkosten of gemeten verbruik; per begrensde wijziging aanscherpen na lezing van bestaand bewijs. Hergebruik kan dit verkorten.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Na review, installatie en registratie automatisch volgende uitvoerbare stap; geen algemene wachtstop op gebruikersproeven.",
@@ -10880,10 +10884,10 @@
       "network": "Exacte regel voor TCP 44715 vanaf de twee apparaten voorbereid en beoordeeld; Windows-beheerderssessie nog nodig."
     },
     "householdResultContract20260922": {
-      "state": "designed_not_built",
-      "source": "eva2/evidence/product/household-result-contract-20260922.md",
+      "state": "built_reviewed_installed_physical_trial_open",
+      "source": "eva2/evidence/product/household-work-installed-20260922.json",
       "result": "Dezelfde bestaande werklifecycle gebruiken met expliciet huishoudelijk taakcontract, actuele apparaatautoriteit en resultaatbestemming in de oorspronkelijke sessie. Bestaande privéroutes blijven strikt privé.",
-      "next": "Na integratie van privéresultaatterugkeer de bestaande worker en contractdecoder begrensd uitbreiden; geen tweede werkqueue of kanaalmodel.",
+      "next": "Physical Voice PE task/interrupt/result trial remains open. Same existing worker and verified task storage are in use; no second queue.",
       "ownerAcceptance": "open; fysieke Voice PE-proef blijft afzonderlijk"
     },
     "conversationResultClient20260922": {
