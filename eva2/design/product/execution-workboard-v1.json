@@ -1003,6 +1003,14 @@
         "checkedAt": "2026-09-22",
         "deliveries": [
           {
+            "title": "Documentprojecten starten, volgen en stoppen",
+            "date": "22 september",
+            "state": "installed",
+            "result": "Documentfunctie aangesloten op de gewone kern; bestaande projecten, geheugen en nieuwe gespreksinstructie behouden. Documentwerker en beide nieuwe aanbieders zijn gezond.",
+            "remaining": "Nieuwe gewone gesprekstaak nog proberen; twee eindige projectplaatsen. Zie design/product/document-project-owner-trial-20260922.md voor exacte opdracht en verwacht resultaat.",
+            "source": "eva2/evidence/living-core/document-pool-installed-20260922.json"
+          },
+          {
             "title": "Privégeheugen verbonden tussen website en Telegram",
             "date": "22 september",
             "state": "installed",
@@ -1036,15 +1044,15 @@
           }
         ],
         "now": {
-          "title": "Documentopdrachten aansluiten op geregistreerde diensten",
-          "detail": "Beide documentdiensten zijn geregistreerd; 55 bestaande tools en 6 bestaande aanbieders bleven behouden. Alle oorspronkelijke diensten zijn hersteld. De nieuwe documentopdrachten zijn nog niet ingeschakeld.",
-          "state": "Registratie afgerond; functieactivering volgt",
-          "doneWhen": "Twee voorbereide projectplekken zijn aangesloten op de gewone gesprekstaak; maken, volgen en stoppen werken met behoud van het bestaande project."
+          "title": "Documentfunctie geïnstalleerd; praktijkproef open",
+          "detail": "Starten, volgen en stoppen zijn aangesloten. Technische configuratie en draaiende documentwerker gecontroleerd. Nog geen nieuw document via jouw gewone gesprek bewezen.",
+          "state": "Geïnstalleerd, niet door jou geaccepteerd",
+          "doneWhen": "Een nieuwe gewone gesprekstaak levert de gevraagde opgeslagen tekst op; het bestaande project blijft behouden."
         },
         "next": {
-          "title": "Geteste documentpool activeren",
-          "detail": "Gebruik de werkelijk ontdekte catalogusbindings, behoud beide bestaande catalogi en het eerdere documentproject, en schakel daarna de twee voorbereide projectplekken in. Geen claim van onbeperkte projecten.",
-          "state": "Eerstvolgende technische stap"
+          "title": "Gewone taakroute en resultaatbediening controleren",
+          "detail": "Gebruik de bestaande kern en taakbediening; controleer alleen ontbrekend bewijs voor een nieuw document, volgen en resultaat lezen. Geen herbouw of herhaling van geaccepteerd geheugen.",
+          "state": "Volgende begrensde controle"
         },
         "ownerAction": {
           "title": "Kom via Telegram terug op een websitegesprek",
@@ -9938,7 +9946,7 @@
     },
     "ownerDocumentProjectAU00620260913": {
       "id": "AU006-owner-document-project",
-      "status": "bounded_source_complete_independently_approved_integrated_not_live",
+      "status": "installed_owner_project_trial_open",
       "assignedBy": "coordinator",
       "owner": "coordinator/next_tools_delivery",
       "runtimeOwnerThread": "01a08d52-31b1-7091-be45-812c0b6e6c9f",
@@ -9948,7 +9956,7 @@
       "generalPlanner": false,
       "built": true,
       "tested": true,
-      "live": false,
+      "live": true,
       "ownerAccepted": false,
       "earlierPR01PJ01RemainClosed": true,
       "doneWhen": [
@@ -10135,7 +10143,8 @@
         "eva2/tests/postgres/test_document_task_native.py",
         "eva2/tests/providers/test_document_task_input.py"
       ],
-      "sourceIntegrationVerification": "All existing paths matched exact e622a408 baseline; bounded patch clean; all12final paths byte-equal reviewed789fb0c6; no deployment manifests or runtime mutations"
+      "sourceIntegrationVerification": "All existing paths matched exact e622a408 baseline; bounded patch clean; all12final paths byte-equal reviewed789fb0c6; no deployment manifests or runtime mutations",
+      "installationEvidence": "eva2/evidence/living-core/document-pool-installed-20260922.json"
     },
     "browserCurrentRouteAudit20260913": {
       "status": "read_only_current_diagnosis_integrated",
@@ -10825,7 +10834,7 @@
           "planningEffortHours": "4–12"
         }
       ],
-      "nextAction": "Hervat de voorbereide documentinstallatie op de nieuwe runtimebasis met behoud van de vriendelijke gespreksinstructie. Telegramintervalcorrectie en vriendelijker sociaal contact zijn live; gebruikersacceptatie blijft open.",
+      "nextAction": "Controleer de gewone documenttaakroute en leesbare resultaatbediening op de geïnstalleerde pool; praktijkproef staat in design/product/document-project-owner-trial-20260922.md. Telegram en geheugenproeven blijven afzonderlijk open.",
       "effortNotice": "Grove planning, lage zekerheid: 40–118 actieve ontwikkeluren plus zeven dagen gezinspraktijk en eventuele externe wachttijd. Geen deadline, creditkosten of gemeten verbruik; per begrensde wijziging aanscherpen na lezing van bestaand bewijs. Hergebruik kan dit verkorten.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Na review, installatie en registratie automatisch volgende uitvoerbare stap; geen algemene wachtstop op gebruikersproeven.",
@@ -10870,14 +10879,14 @@
       "remaining": "Echte hostherstart en herstel van wachtend project bij tijdelijk onbereikbare provider nog controleren."
     },
     "ownerDocumentPreparation20260922": {
-      "state": "current_runtime_package_tested_registration_pending",
+      "state": "installed_new_owner_project_trial_open",
       "outcome": "Bestaande beoordeelde documentopdrachten op de huidige installatie voorbereiden zonder recente functies te verliezen.",
-      "scope": "Zeven eerder beoordeelde modules op huidig coreimage; bestaande documentworkerkandidaat hergebruiken; nog geen livevervanging.",
+      "scope": "Zeven eerder beoordeelde modules op actuele kern met behoud van privékoppeling en warme gespreksinstructie; documentpool live.",
       "estimate": "20–30 minuten voorbereiding en hash/importcontrole, geen modelcalls; creditkosten onbekend",
       "doneWhen": "Exacte bron- en imagedelta, onveranderde gedelegeerde werkrelease en documentworkerherkomst vastgelegd voor onafhankelijke review. Daarna bestaande poolregistratie voorbereiden.",
-      "finding": "Zeven eerder beoordeelde modules op actuele core b632; alle andere Pythonbron behouden, inclusief de geïnstalleerde privékoppeling. 39 pakkettests geslaagd.",
-      "evidence": "eva2/evidence/living-core/document-current-package-20260922.json",
-      "nextAction": "Bind de twee echte registraties aan bestaande catalogi/mandaat en activeer de geteste documentpool; behoud het bestaande project."
+      "finding": "Exact zeven documentmodules toegevoegd; overige Pythonbron behouden. Catalogi en bestaand project behouden. Live kerncompositie en daadwerkelijke workerhealth slagen.",
+      "evidence": "eva2/evidence/living-core/document-pool-installed-20260922.json",
+      "nextAction": "Nieuwe documentopdracht via gewone eigenaarroute beoordelen; twee eindige projectplaatsen, geen onbeperkte planner."
     },
     "voiceSpeakerService20260922": {
       "state": "server_installed_hardware_and_network_pending",
@@ -11005,19 +11014,20 @@
       "ownerAccepted": false
     },
     "documentPoolCurrentPreflight20260922": {
-      "status": "readonly_registered_clients_restored_effects_pending",
+      "status": "effects_enabled_worker_and_core_healthy",
       "stage": "/var/lib/eva2/document-pool-phase1-current-20260922",
-      "registryGateways": 6,
-      "registryTools": 55,
+      "registryGateways": 8,
+      "registryTools": 59,
       "delegatedRows": 5,
       "runtimeMutated": true,
       "registrationCalls": 2,
       "modelCalls": 0,
       "maintenanceWindowCompleted": true,
-      "remaining": "Werkelijke catalogusbindings toevoegen met behoud van bestaande catalogi en legacyproject; twee voorbereide slots daarna afzonderlijk activeren en gewone gesprekstaak proberen.",
+      "remaining": "Echte nieuwe gesprekstaak en eigenaaracceptatie staan open; bestaande acceptaties blijven behouden.",
       "componentEvidence": "eva2/evidence/living-core/document-maintenance-components-20260922.json",
       "attemptEvidence": "eva2/evidence/living-core/document-registration-attempt1-20260922.json",
-      "evidence": "eva2/evidence/living-core/document-registration-installed-20260922.json"
+      "evidence": "eva2/evidence/living-core/document-registration-installed-20260922.json",
+      "activationEvidence": "eva2/evidence/living-core/document-pool-installed-20260922.json"
     },
     "standardReceipt20260922": {
       "ownerDecision": "Korte standaardontvangst zonder GPT is toegestaan; werkclaim vereist echte toelating.",

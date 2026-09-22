@@ -1,0 +1,45 @@
+{
+  "startedAt": "2026-09-22T19:18:12.301626+00:00",
+  "phase": "installed_healthy",
+  "modelCalls": 0,
+  "configurationHashes": {
+    "core-EVA_MCP_GATEWAY_CATALOG_FILE.before.json": "349d6ad0a26ad1471f5b0fad27b5c3a3f43d9b066afba05feec9bf94ea013a86",
+    "core-EVA_DOCUMENT_GOAL_PLAN_FILE.before.json": "6ceb4f56f203c1f4666277831cabe1962c2193df460420c3cd17643d6b950dd1",
+    "core-EVA_MCP_MANAGED_ENDPOINTS_FILE.before.json": "c5373563c8512625f5ab390dedbf4903e59fb481a7e81ebae5c7917fd242c2ba",
+    "core-catalog.json": "da4ac0c369012f9f59b833b87cc0e56bf07935a168ed26d2c23060f0253292dc",
+    "worker-managed.json": "8eea90d143ac26abba673be531c68868cac4ce7c29f2938f57e5a0a347bf8298",
+    "worker-EVA_MCP_GATEWAY_CATALOG_FILE.before.json": "e1c58728c924da8e254db4531c9ac2a13e78b4cc6af01e0103c85219efaf6d65",
+    "worker-EVA_DOCUMENT_GOAL_PLAN_FILE.before.json": "6ceb4f56f203c1f4666277831cabe1962c2193df460420c3cd17643d6b950dd1",
+    "core-managed.json": "8eea90d143ac26abba673be531c68868cac4ce7c29f2938f57e5a0a347bf8298",
+    "core-EVA_DOCUMENT_GOAL_DEFINITION_FILE.before.json": "a99a48e12f7492e59a4c577a5517ade855bd1e9e12bab8b7d38a7b678049ddd0",
+    "worker-catalog.json": "7e73f8f0de4110a0b7cc3341d63d2d765f3ef14b5ef047db5383e35d723fc773",
+    "worker-EVA_MCP_MANAGED_ENDPOINTS_FILE.before.json": "c5373563c8512625f5ab390dedbf4903e59fb481a7e81ebae5c7917fd242c2ba",
+    "pool.json": "a77d41b2ce61e5d6d3a011bed62382ebdf86f7cbe360d8e52b8643b723e705f4"
+  },
+  "coreImage": "sha256:86acc8d454c8965404db397241f3bda0ca61a0b241cde401772a102eba81ed35",
+  "workerImage": "sha256:e07ae155c4f72087b6b186443e4594a33c0ae7b831f21fd062e25c246b1b389a",
+  "installedAt": "2026-09-22T19:18:53.981512+00:00",
+  "sourceCommit": "789fb0c613f202c3ce71ba3f05798a221f6804dc",
+  "currentParentSource": "00dab68e",
+  "independentReview": "compose-independent-review.json and activation-independent-review.json in private installation stage",
+  "installerFailureCasesPassed": 4,
+  "liveComposition": {
+    "ordinaryDocumentActionsAvailable": true,
+    "legacyActionsRetained": true,
+    "poolSlots": 2,
+    "currentCatalogBindingsValid": true,
+    "memoryWrites": 0,
+    "modelCalls": 0
+  },
+  "actualWorkerHealthPassed": true,
+  "preserved": [
+    "private memory alias",
+    "warm social dialogue",
+    "existing legacy document project",
+    "original catalog tools and managed endpoints"
+  ],
+  "ownerAccepted": false,
+  "newLiveProjectExecuted": false,
+  "boundary": "Two finite non-recycled project slots, not an unlimited general planner. Prior source/native tests remain attributed evidence; no new live document was generated during installation.",
+  "rollback": "Before admission: baseline compose files after graceful verified stops. After admission: preserve database claims and journals; reconcile before rollback, never reset slots."
+}
