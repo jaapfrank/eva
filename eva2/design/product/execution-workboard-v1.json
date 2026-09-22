@@ -1044,10 +1044,10 @@
           }
         ],
         "now": {
-          "title": "Hulpwerk over beide privékanalen gecontroleerd",
-          "detail": "Website en privé-Telegram tonen dezelfde vijf opdrachten en twee resultaten. Starten via Telegram, stoppen via website en hervatten via Telegram zijn gericht bewezen met de bestaande code.",
-          "state": "Bestaande installatie gecontroleerd · geen herbouw",
-          "doneWhen": "Dezelfde technische taakbediening is bewezen; jouw gesprekservaring blijft apart."
+          "title": "Documentprojecten zonder de limiet van twee plaatsen",
+          "detail": "Geïsoleerde ketenproef geslaagd: één oud en drie nieuwe projecten, stoppen en herstart. Installatievoorbereiding loopt; de bestaande installatie is nog ongewijzigd.",
+          "state": "Getest · installatie in voorbereiding",
+          "doneWhen": "Meer dan twee projecten, veilige herstart en behoud van oude resultaten zijn getest en geïnstalleerd."
         },
         "next": {
           "title": "Documentprojecten geschikt maken voor herhaald gebruik",
@@ -11263,6 +11263,29 @@
       "modelCalls": 0,
       "ownerAccepted": false,
       "remaining": "Gewone gesprekskeuze en gebruikservaring blijven afzonderlijk; technische routes hoeven niet opnieuw gebouwd."
+    },
+    "repeatableDocumentProjects20260922": {
+      "status": "tested_installation_preparation",
+      "outcome": "Nieuwe documentprojecten blijven mogelijk na de eerste twee, met dezelfde opslag, privacy en veilige hervatting.",
+      "scope": "Bestaande native broker ongewijzigd; aparte projectjournals binnen gepinde hostroot. Poolv2 met hergebruik oudeclaims en één nieuwe gedeelde provider. Begrensde/pagineerbare lijst, bestaande worker blijft uitvoerder.",
+      "owners": {
+        "core": "document_private_identity",
+        "nativeAdapter": "document_maintenance",
+        "coordinationAndInstallation": "root"
+      },
+      "estimate": "Eén samenhangende core/native wijziging, gerichte bestaande ketenproeven en onafhankelijke review. Geen modelcalls; creditkosten onbekend.",
+      "doneWhen": [
+        "Meer dan twee projecten onafhankelijk uitvoeren en teruglezen",
+        "Oude vaste projecten en journals blijven leesbaar en bruikbaar",
+        "Herstart, replay en gelijktijdige claims behouden unieke taken en bestanden",
+        "Observe maakt geen projectjournal of bestand aan; onzekere of vervangen journal wordt niet stilzwijgend hergebruikt",
+        "Nieuwe versie getest, beoordeeld, veilig geïnstalleerd met terugweg en live gecontroleerd"
+      ],
+      "ownerAccepted": false,
+      "evidence": "eva2/evidence/living-core/document-repeatable-candidate-20260922.json",
+      "installed": false,
+      "modelCalls": 0,
+      "nextAction": "Nieuwe dynamische provider begrensd registreren en gateway/core/worker samen bijwerken met behoud van oude projecten en terugweg."
     }
   },
   "activeTaskId": "AU-008",

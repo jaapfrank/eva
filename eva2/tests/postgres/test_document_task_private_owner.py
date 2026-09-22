@@ -16,10 +16,11 @@ from tests.postgres.test_delegated_work_store import _seed_authority, _id
 from tests.postgres.test_people_memory_overview import NOW
 
 
-def test_private_owner_start_status_stop_and_current_revocation(project, private_tmp_path, monkeypatch):
+@pytest.mark.parametrize("dynamic", [False, True])
+def test_private_owner_start_status_stop_and_current_revocation(project, private_tmp_path, monkeypatch, dynamic):
     p = project
     engine = p["timeline_engine"]
-    label = "document-private-owner"
+    label = "document-private-owner-" + str(dynamic)
     scope, _, binding = _seed_authority(engine, label)
     owner = str(_id(label, "principal"))
     alias = "telegram:101"
@@ -37,6 +38,10 @@ def test_private_owner_start_status_stop_and_current_revocation(project, private
     pool.write_text(json.dumps({"contract": "EvaDocumentTaskPool/v1", "slots": [
         {"slot_id": "private-one", "tool_configuration_sha256": "a" * 64},
         {"slot_id": "private-two", "tool_configuration_sha256": "b" * 64}]}))
+    if dynamic:
+        payload = json.loads(pool.read_text())
+        payload.update(contract="EvaDocumentTaskPool/v2", dynamic_tool_configuration_sha256="c" * 64)
+        pool.write_text(json.dumps(payload))
     pool.chmod(0o600)
     settings = replace(p["settings"], mandate_file=str(mandate_path), pool_file=str(pool),
                        plan_file="", definition_file="")
@@ -55,7 +60,9 @@ def test_private_owner_start_status_stop_and_current_revocation(project, private
     assert call("telegram-stop", "stop_document_project", {"goal_id": website_id})["result"]["project_status"] == "cancelled"
     created = call("telegram-start", "start_document_project", args)
     assert call("telegram-start", "start_document_project", args) == created
-    claim = p["store"].document_slot("private-two")
+    claim = (next(claim for _, claim in p["store"].document_claims()
+                  if claim["source"]["message_id"] == "telegram-start")
+             if dynamic else p["store"].document_slot("private-two"))
     assert claim["definition"]["goal"]["owner_id"] == owner
     assert claim["plan"]["owner_principal_id"] == owner
     assert claim["source"]["principal_id"] == alias
@@ -110,4 +117,4 @@ def test_private_owner_start_status_stop_and_current_revocation(project, private
             asyncio.run(operation)
     with pytest.raises(RuntimeError, match="not current"):
         callbacks["worker_factory"](engine, p["store"], pending[0], settings.tenant_id, settings.installation_id)
-    assert p["store"].document_slot("private-two") == claim
+    assert p["store"].document_slot(claim["slot_id"]) == claim

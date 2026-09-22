@@ -15,6 +15,7 @@ from tests.postgres.test_operational_timeline import timeline_engine
 
 
 def test_ordinary_tasks_native_restart_stop_and_no_overwrite(timeline_engine,private_tmp_path):
+    repeatable=os.environ.get('EVA2_DOCUMENT_REPEATABLE_PROOF')=='1'
     stack=json.loads(Path(os.environ['EVA2_DOCUMENT_PRODUCT_STACK']).read_text())
     assert stack['names']['network'].startswith('eva-atomic-gateway-')
     def docker(*args):
@@ -43,7 +44,7 @@ def test_ordinary_tasks_native_restart_stop_and_no_overwrite(timeline_engine,pri
         path=private_tmp_path/name;path.write_text(content);path.chmod(0o600);return path
     catalogfile=private('catalog',catalog)
     poolfile=private('pool',json.dumps({'contract':'EvaDocumentTaskPool/v1','slots':[
-        {'slot_id':label,'tool_configuration_sha256':spec.configuration_sha256} for label,spec in zip(('happy','stop'),specs)]}))
+        {'slot_id':label,'tool_configuration_sha256':spec.configuration_sha256} for label,spec in zip(('happy',) if repeatable else ('happy','stop'),specs)]}))
     mandate={'contract':'OwnerConnectorMandate/v1','mandate_id':'task-native','tenant_id':'task-native',
         'installation_id':'isolated','owner_principal_id':'owner','issued_at':'2020-01-01T00:00:00Z',
         'authorization_source':'isolated test','enabled':True,'public_https':False,'local_networks':[]}
@@ -62,11 +63,16 @@ def test_ordinary_tasks_native_restart_stop_and_no_overwrite(timeline_engine,pri
     task={'title':'Gezinsdag','first_document':'Beste familie, zondag om 12 uur samen lunchen. Neem niets mee.',
         'second_document':'Zondag 12u lunch bij ons? Je hoeft niets mee te nemen.'}
     first=call('one','start_document_project',task)
+    if repeatable:
+        pool=json.loads(poolfile.read_text());pool.update(contract='EvaDocumentTaskPool/v2',dynamic_tool_configuration_sha256=specs[1].configuration_sha256)
+        poolfile.write_text(json.dumps(pool))
     second=call('two','start_document_project',{**task,'title':'Tweede uitnodiging','first_document':'Beste buren, zaterdag koffie.',
         'second_document':'Zaterdag koffie bij ons?'})
     assert first['goal_id']!=second['goal_id']
+    more=[call('extra-'+str(i),'start_document_project',{**task,'title':'Extra '+str(i)}) for i in range(2)] if repeatable else []
+    assert len({x['goal_id'] for x in [first,second,*more]})==2+len(more)
     def material(instance):
-        code="import json,hashlib;from pathlib import Path;print(json.dumps({str(p):hashlib.sha256(p.read_bytes()).hexdigest() for root in ['/workspace','/journal'] for p in Path(root).iterdir() if p.is_file()}))"
+        code="import json,hashlib;from pathlib import Path;print(json.dumps({str(p):hashlib.sha256(p.read_bytes()).hexdigest() for root in ['/workspace','/journal'] for p in Path(root).rglob('*') if p.is_file()}))"
         return json.loads(docker('exec',instance['provider'],'python3','-c',code))
     assert all(material(stack['instances'][label])=={} for label in ('happy','stop'))
     env={'EVA_MCP_GATEWAY_URL':gateway,'EVA_MCP_GATEWAY_TOKEN_FILE':stack['tokenFile'],
@@ -103,7 +109,7 @@ print(state.status)
             '--mount',f"type=bind,src={stack['tokenFile']},dst={stack['tokenFile']},readonly",
             '-e','PYTHONPATH=/opt/eva/src','-e','PYTHONDONTWRITEBYTECODE=1']
         for key,value in env.items():args+=['-e',key+'='+value]
-        args+=['--entrypoint','/usr/local/bin/python','sha256:832983322ad7d71611225749d618e828d9dd4676f8a24711f09e0ac349db1fcd',
+        args+=['--entrypoint','/usr/local/bin/python',os.environ.get('EVA2_DOCUMENT_CORE_IMAGE','sha256:832983322ad7d71611225749d618e828d9dd4676f8a24711f09e0ac349db1fcd'),
             '-c',child,timeline_engine.url.render_as_string(hide_password=False),goal,mode]
         result=subprocess.run(['sudo','-n','docker',*args],capture_output=True,text=True,timeout=90)
         assert result.returncode==(71 if mode=='crash' else 0),result.stdout+result.stderr
@@ -124,3 +130,21 @@ print(state.status)
     run(second['goal_id'],'normal')
     assert material(stack['instances']['stop'])==second_before
     assert material(stack['instances']['happy'])==after
+
+    if repeatable:
+        docker('restart',stack['instances']['stop']['provider'])
+        import time
+        for _ in range(45):
+            info=json.loads(docker('inspect',stack['instances']['stop']['provider']))[0]
+            if info['State'].get('Health',{}).get('Status')=='healthy':break
+            time.sleep(1)
+        else:raise AssertionError('isolated provider did not recover')
+        for index,item in enumerate(more):
+            run(item['goal_id'],'normal')
+            result=call('extra-status-'+str(index),'get_document_project',{'goal_id':item['goal_id']})
+            assert result['project_status']=='completed'
+            assert result['first_document']['content']==task['first_document']
+            assert result['final_document']['content']==task['second_document']
+        assert material(stack['instances']['happy'])==after
+        listed=call('all-projects','list_document_projects',{})
+        assert {p['goal_id'] for p in listed['projects']}=={p['goal_id'] for p in [first,second,*more]}

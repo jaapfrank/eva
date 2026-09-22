@@ -15,14 +15,7 @@ def main() -> int:
     plan_file = os.environ.get("EVA_DOCUMENT_GOAL_PLAN_FILE", "").strip() if pool_file else required_environment("EVA_DOCUMENT_GOAL_PLAN_FILE")
     def pool_claims(store):
         pool=DocumentTaskPool.from_json(read_runtime_secret_file(pool_file, setting_name="EVA_DOCUMENT_TASK_POOL_FILE"))
-        claims=[]
-        for slot in pool.slots:
-            claim=store.document_slot(slot.slot_id)
-            if claim is not None:
-                if claim['pool_sha256']!=pool.sha256:
-                    raise RuntimeError("document pool binding changed")
-                claims.append(claim)
-        return claims
+        return [claim for _, claim in pool.claims(store)]
 
 
     def legacy_plan():
@@ -64,16 +57,23 @@ def main() -> int:
             os.environ.get("EVA_MCP_MANAGED_ENDPOINTS_FILE") or None,
             private_owner_resolver=configured_private_owner_resolver(
                 engine, tenant_id=tenant_id, installation_id=installation_id))
-        matches=[c for c in pool_claims(store) if c['plan']['goal_id']==goal.goal_id] if pool_file else []
+        def task_claim():
+            if not pool_file or not goal.goal_id.startswith("document-task:"):
+                return None
+            pool = DocumentTaskPool.from_json(read_runtime_secret_file(
+                pool_file, setting_name="EVA_DOCUMENT_TASK_POOL_FILE"))
+            return pool.find(store, goal.goal_id.removeprefix("document-task:"))
+        selected_claim = task_claim()
+        matches = [] if selected_claim is None else [selected_claim]
         legacy=legacy_plan()
         is_legacy=legacy is not None and legacy.goal_id==goal.goal_id and legacy.owner_principal_id==goal.owner_id
         if len(matches)>1 or (matches and is_legacy) or (not matches and not is_legacy):
             raise RuntimeError("document goal has no unique host plan")
         use_pool=bool(matches)
         def read_bound_plan():
-            matches=[c for c in pool_claims(store) if c['plan']['goal_id']==goal.goal_id]
-            if len(matches)!=1:raise RuntimeError("document task plan is unavailable")
-            claim=matches[0]
+            claim = task_claim()
+            if claim is None:
+                raise RuntimeError("document task plan is unavailable")
             turn=_SourceTurnLoader(engine,authority)(claim['source'])
             authority.authorize_turn(turn)
             PostgresConversationJournal(engine,authority.scope).ensure_running(turn)

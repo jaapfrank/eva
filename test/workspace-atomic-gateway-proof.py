@@ -1,13 +1,14 @@
 """Retained, uniquely named isolated gateway fixture; no models or live resources."""
 import hashlib,importlib.util,json,os,pathlib,secrets,subprocess,time,yaml,sys,shutil
 ROOT=pathlib.Path('/home/administrator/project/Eva2/eva2')
-STAGE=pathlib.Path('/home/administrator/project/.eva2-artifacts/workspace-broker-v2-20260913')
+STAGE=pathlib.Path(os.environ.get('EVA_ATOMIC_PROOF_STAGE','/home/administrator/project/.eva2-artifacts/workspace-broker-v2-20260913'))
 HELPER=ROOT/'experiments/tool01-replacement-acceptance-v2/run_physical_acceptance.py'
 spec=importlib.util.spec_from_file_location('existing_acceptance_helpers',HELPER);h=importlib.util.module_from_spec(spec);spec.loader.exec_module(h)
 assert hashlib.sha256(HELPER.read_bytes()).hexdigest()=='a8dc2a31ea327a54f70850669c0c2c3f3b40893a7bb80863df6bdeb09527d3be'
-IMAGE='sha256:0ef19e699069c3a5d3a26812c5da3d31141fcd5c3faedb14f92c9dcce1209465'
+IMAGE=os.environ.get('EVA_ATOMIC_PROOF_IMAGE','sha256:0ef19e699069c3a5d3a26812c5da3d31141fcd5c3faedb14f92c9dcce1209465')
 CF='sha256:daf923c247fd569df5f8c9ee418cbc259fade564f78e0a0852937139a181c4dd'
 def main():
+ STAGE.mkdir(parents=True,exist_ok=True,mode=0o700)
  nonce=secrets.token_hex(5);prefix='eva-atomic-gateway-'+nonce;stage=STAGE/prefix;stage.mkdir(mode=0o700)
  paths={k:stage/k for k in ['work','journal','conf','database']}
  for p in paths.values():p.mkdir(mode=0o700)
@@ -44,7 +45,11 @@ def main():
   for key in ['contextforge-jwt','contextforge-encryption','contextforge-admin-password']:shutil.copy2(conf/key,second['conf']/key)
   mounts2=['--mount',f'type=bind,src={second["work"]},dst=/workspace','--mount',f'type=bind,src={second["journal"]},dst=/journal','--mount',f'type=bind,src={second["conf"]},dst=/run/eva2,readonly']
   stats=json.loads(h._docker('run','--rm','--network','none','--read-only','--user',user,*mounts2,'--entrypoint','node',IMAGE,'-e',"const fs=require('fs');const st=p=>{let s=fs.statSync(p);return {dev:s.dev,ino:s.ino}};console.log(JSON.stringify({root:st('/workspace'),journal:st('/journal')}))"))
-  info2={**info,**stats,'project_journal_identity':secrets.token_hex(32)};binding2=json.dumps(info2,sort_keys=True).encode();(second['conf']/'atomic-binding.json').write_bytes(binding2);(second['conf']/'atomic-binding.json').chmod(0o400)
+  info2={**info,**stats,'project_journal_identity':secrets.token_hex(32)}
+  if os.environ.get('EVA_ATOMIC_REPEATABLE_PROOF')=='1':
+   resolver_hash=h._docker('run','--rm','--network','none','--read-only','--entrypoint','node',IMAGE,'-e',"const fs=require('fs'),c=require('crypto');console.log(c.createHash('sha256').update(fs.readFileSync('/opt/eva2/atomic/project-journal.mjs')).digest('hex'))")
+   info2.update(version=2,journal_mode='per_path_prefix_v1',resolver_sha256=resolver_hash)
+  binding2=json.dumps(info2,sort_keys=True).encode();(second['conf']/'atomic-binding.json').write_bytes(binding2);(second['conf']/'atomic-binding.json').chmod(0o400)
   provider2=prefix+'-provider-stop';args2=base+['--name',provider2,*mounts2]
   for k,v in env.items():args2+=['--env',k+'='+v]
   h._docker(*args2,IMAGE);h._wait_filesystem_mcp(provider2)

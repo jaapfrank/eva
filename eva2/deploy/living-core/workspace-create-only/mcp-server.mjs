@@ -4,6 +4,7 @@ import {Server} from '/opt/eva2/filesystem-mcp/node_modules/@modelcontextprotoco
 import {StdioServerTransport} from '/opt/eva2/filesystem-mcp/node_modules/@modelcontextprotocol/sdk/dist/esm/server/stdio.js';
 import {CallToolRequestSchema,ListToolsRequestSchema} from '/opt/eva2/filesystem-mcp/node_modules/@modelcontextprotocol/sdk/dist/esm/types.js';
 import {runBrokerResult,requestFrame} from './broker-client.mjs';
+import {resolveProjectJournal} from './project-journal.mjs';
 const executable='/opt/eva2/atomic/workspace-writer-broker';
 const digest=createHash('sha256').update(fs.readFileSync(executable)).digest('hex');
 if(digest!==fs.readFileSync(executable+'.sha256','utf8').trim()) throw Error('binary binding mismatch');
@@ -16,7 +17,9 @@ const bindingBytes=fs.readFileSync(bindingFd);fs.closeSync(bindingFd);
 const binding=JSON.parse(bindingBytes.toString('utf8'));
 const statMatches=(fd,expected)=>{const st=fs.fstatSync(fd);return st.dev===expected.dev&&st.ino===expected.ino;};
 const clientHash=createHash('sha256').update(fs.readFileSync(new URL('./broker-client.mjs',import.meta.url))).digest('hex');
-if(binding.version!==1||typeof binding.project_journal_identity!=='string'||!/^[a-f0-9]{64}$/.test(binding.project_journal_identity)||binding.binary_sha256!==digest||binding.client_sha256!==clientHash||!statMatches(rootFd,binding.root)||!statMatches(journalFd,binding.journal)) throw Error('host binding mismatch');
+const resolverHash=createHash('sha256').update(fs.readFileSync(new URL('./project-journal.mjs',import.meta.url))).digest('hex');
+const dynamicJournal=binding.version===2&&binding.journal_mode==='per_path_prefix_v1'&&binding.resolver_sha256===resolverHash;
+if((binding.version!==1&&!dynamicJournal)||typeof binding.project_journal_identity!=='string'||!/^[a-f0-9]{64}$/.test(binding.project_journal_identity)||binding.binary_sha256!==digest||binding.client_sha256!==clientHash||!statMatches(rootFd,binding.root)||!statMatches(journalFd,binding.journal)) throw Error('host binding mismatch');
 const providerBinding=createHash('sha256').update(bindingBytes).digest('hex');
 const properties={operation_id:{type:'string',pattern:'^[0-9a-f]{64}$'},request_binding_sha256:{type:'string',pattern:'^[0-9a-f]{64}$'},expected_generation:{type:'integer',minimum:0,maximum:Number.MAX_SAFE_INTEGER},path:{type:'string',pattern:'^[A-Za-z0-9_-][A-Za-z0-9_.-]*$',maxLength:255},content:{type:'string',maxLength:1048576}};
 const inputSchema={type:'object',description:'Provider binding SHA256 '+providerBinding,properties,required:Object.keys(properties),additionalProperties:false};
@@ -29,7 +32,10 @@ server.setRequestHandler(CallToolRequestSchema,async({params})=>{
  try {
   if(!names.includes(params.name)||!args||Object.keys(args).length!==5||Object.keys(args).some(k=>!Object.hasOwn(properties,k))||typeof args.path!=='string'||!/^[A-Za-z0-9_-][A-Za-z0-9_.-]*$/.test(args.path)||args.path.length>255) throw Error('invalid');
   requestFrame(args);
-  result=runBrokerResult({executable,rootFd,journalFd,request:args,observe:params.name===names[1]});
+  const observe=params.name===names[1];
+  const selectedFd=dynamicJournal?resolveProjectJournal(journalFd,args.path,{observe}):journalFd;
+  try {result=runBrokerResult({executable,rootFd,journalFd:selectedFd,request:args,observe});}
+  finally {if(dynamicJournal) fs.closeSync(selectedFd);}
  } catch {result={status:'blocked',code:'invalid_request'};}
  const verified=result.status==='receipt';
  const data=verified?{...result,...result.receipt,content:args.content}:result;

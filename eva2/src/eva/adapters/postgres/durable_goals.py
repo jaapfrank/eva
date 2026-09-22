@@ -12,6 +12,7 @@ from eva.adapters.postgres.operational_timeline import (
     external_timeline_scope,
     PostgresOperationalTimeline,
     TimelineEvent,
+    operational_events,
 )
 from eva.application.durable_goals import (
     DurableGoalError,
@@ -48,14 +49,39 @@ class PostgresDurableGoalStore:
         identity = {"goal_id": goal_id, "owner_id": owner_id}
         return "goal:" + hashlib.sha256(canonical_json_bytes(identity)).hexdigest()
 
-    def document_slot(self, slot_id: str) -> dict | None:
-        thread = "document-slot:" + canonical_sha256({"slot_id": slot_id})
+    def _document_claim(self, thread: str) -> dict | None:
         events = self._timeline.events(thread)
         if not events:
             return None
         if len(events) != 1 or events[0].event_type != "DOCUMENT_SLOT_CLAIMED":
             raise DurableGoalError("document slot journal differs")
-        return dict(self._data(events[0]))
+        claim = dict(self._data(events[0]))
+        expected = "document-slot:" + canonical_sha256({"slot_id": claim.get("slot_id")})
+        if expected != thread or events[0].operation_id != claim.get("task_id"):
+            raise DurableGoalError("document claim identity differs")
+        return claim
+
+    def document_slot(self, slot_id: str) -> dict | None:
+        return self._document_claim("document-slot:" + canonical_sha256({"slot_id": slot_id}))
+
+    def document_claims(self, *, after: str = "", limit: int = 100) -> tuple[tuple[str, dict], ...]:
+        """Keyset-page immutable claims within this store's installation scope."""
+        import re
+        if (not isinstance(after, str) or (after and re.fullmatch(r"document-slot:[0-9a-f]{64}", after) is None)
+                or type(limit) is not int or not 1 <= limit <= 100):
+            raise DurableGoalError("document claim page is invalid")
+        timeline = self._timeline
+        table = operational_events
+        query = sa.select(table.c.thread_id).where(
+            table.c.tenant_id == timeline._scope_value.tenant_id,
+            table.c.installation_id == timeline._scope_value.installation_id,
+            table.c.event_type == "DOCUMENT_SLOT_CLAIMED", table.c.sequence == 1,
+            table.c.thread_id > after,
+        ).order_by(table.c.thread_id).limit(limit)
+        with timeline._engine.begin() as connection:
+            timeline._scope(connection)
+            threads = tuple(connection.execute(query).scalars())
+        return tuple((thread, self._document_claim(thread)) for thread in threads)
 
     def claim_document_slot(self, slot_id: str, payload: dict, *, at: datetime) -> dict:
         """One immutable assignment per host slot, no release/reset/reuse path."""

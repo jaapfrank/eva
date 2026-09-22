@@ -57,9 +57,14 @@ class DocumentTaskSlot:
 
 
 class DocumentTaskPool:
-    """Finite host-provisioned, distinct native journals; never provision from chat."""
-    def __init__(self, slots):
+    """Host-pinned legacy slots and optional task-isolated shared provider."""
+    def __init__(self, slots, dynamic_tool_configuration_sha256=None):
         self.slots=tuple(slots)
+        self.dynamic_tool_configuration_sha256 = dynamic_tool_configuration_sha256
+        if dynamic_tool_configuration_sha256 is not None:
+            DocumentTaskSlot("dynamic", dynamic_tool_configuration_sha256)
+            if dynamic_tool_configuration_sha256 in {slot.tool_configuration_sha256 for slot in self.slots}:
+                raise ConversationConflict("dynamic provider must be separately pinned")
         if not 1 <= len(self.slots) <= 16 or len({s.slot_id for s in self.slots})!=len(self.slots) or len({s.tool_configuration_sha256 for s in self.slots})!=len(self.slots):
             raise ConversationConflict("document pool needs distinct bounded provider instances")
 
@@ -75,14 +80,69 @@ class DocumentTaskPool:
         try:
             if not isinstance(raw,str) or len(raw.encode())>16384:raise ValueError("size")
             payload=json.loads(raw,object_pairs_hook=unique)
-            if set(payload)!={"contract","slots"} or payload['contract']!='EvaDocumentTaskPool/v1':raise ValueError("shape")
-            return cls(DocumentTaskSlot(**item) for item in payload['slots'])
+            if not isinstance(payload, dict):
+                raise ValueError("shape")
+            if payload.get("contract") == "EvaDocumentTaskPool/v1" and set(payload) == {"contract", "slots"}:
+                return cls(DocumentTaskSlot(**item) for item in payload["slots"])
+            if (payload.get("contract") == "EvaDocumentTaskPool/v2"
+                    and set(payload) == {"contract", "slots", "dynamic_tool_configuration_sha256"}
+                    and isinstance(payload["dynamic_tool_configuration_sha256"], str)):
+                return cls((DocumentTaskSlot(**item) for item in payload["slots"]),
+                    payload["dynamic_tool_configuration_sha256"])
+            raise ValueError("shape")
         except (ValueError,TypeError,KeyError) as error:
             raise ConversationConflict("document pool is invalid") from error
 
     @property
-    def sha256(self):
+    def legacy_sha256(self):
         return canonical_sha256({"contract":"EvaDocumentTaskPool/v1","slots":[asdict(s) for s in self.slots]})
+
+    @property
+    def sha256(self):
+        if self.dynamic_tool_configuration_sha256 is None:
+            return self.legacy_sha256
+        return canonical_sha256({"contract": "EvaDocumentTaskPool/v2",
+            "slots": [asdict(s) for s in self.slots],
+            "dynamic_tool_configuration_sha256": self.dynamic_tool_configuration_sha256})
+
+    def validate_claim(self, claim):
+        import re
+        task_id = claim.get("task_id")
+        if not isinstance(task_id, str) or re.fullmatch(r"[0-9a-f]{64}", task_id) is None:
+            raise ConversationConflict("document claim task identity differs")
+        legacy = next((s for s in self.slots if s.slot_id == claim.get("slot_id")), None)
+        if legacy is not None:
+            expected_pool, expected_tool = self.legacy_sha256, legacy.tool_configuration_sha256
+        elif self.dynamic_tool_configuration_sha256 is not None and claim.get("slot_id") == "task:" + task_id:
+            expected_pool, expected_tool = self.sha256, self.dynamic_tool_configuration_sha256
+        else:
+            raise ConversationConflict("document claim provider is unavailable")
+        if (claim.get("pool_sha256") != expected_pool
+                or claim["plan"]["tool_configuration_sha256"] != expected_tool
+                or claim["plan"]["goal_id"] != "document-task:" + task_id):
+            raise ConversationConflict("document claim host binding differs")
+        return claim
+
+    def claims(self, store, *, after=""):
+        while True:
+            page = store.document_claims(after=after)
+            if not page:
+                return
+            for cursor, claim in page:
+                if claim["slot_id"] in {s.slot_id for s in self.slots} or claim["slot_id"].startswith("task:"):
+                    yield cursor, self.validate_claim(claim)
+            after = page[-1][0]
+
+    def find(self, store, task_id):
+        for slot in self.slots:
+            claim = store.document_slot(slot.slot_id)
+            if claim is not None and claim.get("task_id") == task_id:
+                return self.validate_claim(claim)
+        if self.dynamic_tool_configuration_sha256 is not None:
+            claim = store.document_slot("task:" + task_id)
+            if claim is not None:
+                return self.validate_claim(claim)
+        return None
 
     def claim(self, store, *, task, turn, call_id, authority_sha256, tenant_id, installation_id, owner_principal_id=None):
         from datetime import datetime, timedelta
@@ -91,31 +151,33 @@ class DocumentTaskPool:
         owner = turn.principal_id if owner_principal_id is None else owner_principal_id
         task_id=task.bound_identity(turn,call_id)
         at=datetime.fromisoformat(turn.occurred_at.replace('Z','+00:00'))
-        # Same ingress must retain payload, even if all slots are occupied.
-        for slot in self.slots:
-            old=store.document_slot(slot.slot_id)
-            if old is not None and old.get('task_id')==task_id:
-                if old.get('input_sha256')!=task.sha256 or old.get('pool_sha256')!=self.sha256:
-                    raise ConversationConflict("document task replay differs")
-                return old
-        for slot in self.slots:
+        old = self.find(store, task_id)
+        if old is not None:
+            if old.get("input_sha256") != task.sha256:
+                raise ConversationConflict("document task replay differs")
+            return old
+        if self.dynamic_tool_configuration_sha256 is None:
+            candidates = [(slot.slot_id, slot.tool_configuration_sha256, self.legacy_sha256) for slot in self.slots]
+        else:
+            candidates = [("task:" + task_id, self.dynamic_tool_configuration_sha256, self.sha256)]
+        for slot_id, tool_sha256, pool_sha256 in candidates:
             goal_id='document-task:'+task_id
             goal=DurableGoalSpec(goal_id,owner,task.title,
                 'Save the first private document from the bound task input.',None,None,None,
                 owner,GoalWakeCondition('document-task',goal_id,'ready','yes',at+timedelta(days=1)),at,
                 'Save the second private document from the same bound task input.')
             plan=DocumentGoalPlan(goal.goal_id,goal.sha256,owner,tenant_id,installation_id,
-                authority_sha256,slot.tool_configuration_sha256,
+                authority_sha256,tool_sha256,
                 '/proof-state/'+task_id+'-first.txt','/proof-state/'+task_id+'-second.txt',
                 task.first_document,'','',task.second_document)
             definition=PreparedDocumentGoal(goal,plan.sha256,turn.project_id)
             payload={'task_id':task_id,'input_sha256':task.sha256,'input':asdict(task),
-                'pool_sha256':self.sha256,'slot_id':slot.slot_id,
+                'pool_sha256':pool_sha256,'slot_id':slot_id,
                 'source':{'tenant_id':turn.tenant_id,'installation_id':turn.installation_id,
                     'principal_id':turn.principal_id,'conversation_id':turn.conversation_id,
                     'message_id':turn.message_id,'audience':{'kind':'private_person','principal_id':turn.principal_id}},
                 'plan':plan.to_payload(),'definition':definition.to_payload()}
-            actual=store.claim_document_slot(slot.slot_id,payload,at=at)
+            actual=store.claim_document_slot(slot_id,payload,at=at)
             if actual==payload:return actual
             if actual.get('task_id')==task_id:
                 raise ConversationConflict("document task replay binding differs")

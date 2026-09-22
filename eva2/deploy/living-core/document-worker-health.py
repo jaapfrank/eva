@@ -38,12 +38,8 @@ def check():
             installation_id=required_environment("EVA_RUNTIME_INSTALLATION_ID"))
         plans = []
         if pool_file:
-            for slot in pool.slots:
-                claim=store.document_slot(slot.slot_id)
-                if claim is not None:
-                    if claim['pool_sha256']!=pool.sha256:
-                        raise RuntimeError("configured pool differs")
-                    plans.append(DocumentGoalPlan.from_json(json.dumps(claim['plan'])))
+            for _, claim in pool.claims(store):
+                plans.append(DocumentGoalPlan.from_json(json.dumps(claim['plan'])))
         if plan is not None:
             plans.append(plan)
         for current in plans:

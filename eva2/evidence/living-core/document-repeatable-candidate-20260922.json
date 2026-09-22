@@ -1,0 +1,76 @@
+{
+  "status": "tested_not_installed",
+  "date": "2026-09-22",
+  "outcome": "Repeated document projects beyond two fixed slots, preserving legacy projects.",
+  "sourceSha256": {
+    "eva2/src/eva/providers/document_task_input.py": "19df63c8f12ddce138961cbce4b92f9d14bdb8298270232ed20f729dbd7244c2",
+    "eva2/src/eva/providers/document_task_actions.py": "6cf614b7ba4dad130d099cfa4ce8fe749f7088ce0865f7efc1ff2becda2689a8",
+    "eva2/src/eva/adapters/postgres/durable_goals.py": "b353dc249180958a318c0ae115ab6b83fe3075398c57b2b66439fa1ca74d9ea5",
+    "eva2/src/eva/bootstrap/document_goal_worker.py": "e7805f7803e731e7fdc6051d707d0ac54234a8bc24e4994da5fd96348ead3ac9",
+    "eva2/deploy/living-core/document-worker-health.py": "89012fea977f4d7e43a217b57747cde9de9a61c22fe3f9b70cf8ebbe6cb040af",
+    "eva2/deploy/living-core/workspace-create-only/mcp-server.mjs": "330705d412464eadd3e76f1f08007be08fb16741eb9763c5750e8a8bccdbf532",
+    "eva2/deploy/living-core/workspace-create-only/project-journal.mjs": "43afa5d3bb56b2034315a772440aa04891e2f135f2c74672f709f7a48621e883",
+    "test/workspace-atomic-gateway-proof.py": "5db5dca7e143a4e17ec02a651cd4e72431902c9ca1b33384a3b454364b5b2104",
+    "eva2/tests/postgres/test_document_task_native.py": "b1bbe43b72549ae1f23916a4abd82af10014871e88baca474d675b107fdfc42b"
+  },
+  "packages": {
+    "native": {
+      "parent": "sha256:ba9eda41299033a19e25c483e07e973b40545b226b062da6a29ccb70482f1b5e",
+      "image": "sha256:81188c414ce5b20eb59f545f9651da5501576dcfbdd9edc3abd125d455f1cb6d",
+      "files": {
+        "mcp-server.mjs": "330705d412464eadd3e76f1f08007be08fb16741eb9763c5750e8a8bccdbf532",
+        "project-journal.mjs": "43afa5d3bb56b2034315a772440aa04891e2f135f2c74672f709f7a48621e883"
+      }
+    },
+    "core": {
+      "parent": "sha256:409293ea7042fc958002c6c05e4a3c524a179626b8bca9ee5184ee657d150d21",
+      "image": "sha256:17b07a7a76016086a4ed413c64e7f9b946ab1feba17f45ec9b4422a40fa387d6",
+      "files": {
+        "providers/document_task_input.py": "19df63c8f12ddce138961cbce4b92f9d14bdb8298270232ed20f729dbd7244c2",
+        "adapters/postgres/durable_goals.py": "b353dc249180958a318c0ae115ab6b83fe3075398c57b2b66439fa1ca74d9ea5",
+        "bootstrap/document_goal_worker.py": "e7805f7803e731e7fdc6051d707d0ac54234a8bc24e4994da5fd96348ead3ac9",
+        "providers/document_task_actions.py": "6cf614b7ba4dad130d099cfa4ce8fe749f7088ce0865f7efc1ff2becda2689a8"
+      }
+    },
+    "worker": {
+      "parent": "sha256:ed704325209089bf69a71042ec48f6ddacdc47725e6653d86d8c2f59e34998e4",
+      "image": "sha256:8e620f3df65d3b9631f87c10c2db620357046228a5b1219ef4d8c34d66a1d013",
+      "files": {
+        "providers/document_task_input.py": "19df63c8f12ddce138961cbce4b92f9d14bdb8298270232ed20f729dbd7244c2",
+        "adapters/postgres/durable_goals.py": "b353dc249180958a318c0ae115ab6b83fe3075398c57b2b66439fa1ca74d9ea5",
+        "bootstrap/document_goal_worker.py": "e7805f7803e731e7fdc6051d707d0ac54234a8bc24e4994da5fd96348ead3ac9",
+        "document-worker-health.py": "89012fea977f4d7e43a217b57747cde9de9a61c22fe3f9b70cf8ebbe6cb040af"
+      }
+    }
+  },
+  "integration": {
+    "result": "...                                                                      [100%]\n3 passed in 44.48s",
+    "logSha256": "99d6e39fcb4b37a73a0212bb19371ff1b0f8c2501068e90e9cb25a2243c6572d",
+    "scope": "Isolated real PostgreSQL, ContextForge gateway and native provider: legacy v1 project plus three dynamic v2 projects, interrupted execution, restart, stop and readonly worker health.",
+    "productionProjectCreated": false,
+    "packagingBoundary": "Native provider runs candidate image; core integration worker uses source bind mount. Service-health tests use candidate worker image. This is not proof of a deployed core/worker release."
+  },
+  "priorFocusedChecks": {
+    "nativeTestsPassed": 12,
+    "corePackagedTestsPassed": 18,
+    "packagedHarnessFailures": 2,
+    "harnessResolution": "Two service-health cases required a real host socket and Docker. Both subsequently passed in the three-test native integration run; no product workaround.",
+    "httpMcpProof": "Passed with per_path_prefix_v1 using candidate native image."
+  },
+  "modelCalls": 0,
+  "externalTelegramMessages": 0,
+  "ownerAccepted": false,
+  "installationRemaining": [
+    "Register one new narrowly pinned dynamic provider; preserve all legacy providers and registrations.",
+    "Drain active foreground requests before action configuration hash changes.",
+    "Cut over gateway policy, shared pool v2 configuration, core and document worker coherently with captured rollback.",
+    "Verify deployed hashes, health and unchanged legacy project artifacts."
+  ],
+  "limitations": [
+    "Worker selection and health still scan historical claims.",
+    "Incomplete project-journal initialization fails closed and requires deliberate reconciliation.",
+    "Directory inode identity must be preserved or deliberately rebound during restore.",
+    "Human conversation choice and owner acceptance remain unproven.",
+    "Stopped dynamic files were compared before restart; they were not compared again after the two additional completions. Legacy files were rechecked."
+  ]
+}

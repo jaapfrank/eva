@@ -122,3 +122,39 @@ observe hashes. Changing only this annotation in an otherwise identical selected
 row changes its hash; restoring it restores the hash. Gateway preservation and
 real create/readback were checked for both instances. Fresh activation still
 requires newly registered real IDs, freshly read catalog hashes and plan rebinding.
+
+
+### Dynamic project journals (explicit host binding version 2)
+
+Version 1 retains its fixed journal and unchanged five-argument tools. Version 2
+requires `journal_mode: "per_path_prefix_v1"` and `resolver_sha256` for the exact
+`project-journal.mjs` bytes, alongside every existing binding field. `journal`
+now pins the private journal **root**. Tool names and provider-binding schema
+annotation remain unchanged; the changed host binding changes the catalog hash.
+
+The host supplies an artifact path `<64 lowercase hex project key>-<artifact name>`.
+The prefix selects a child journal; the full path remains bound by the existing
+EVWWREQ2 request and receipt. The key conveys no authority: existing owner and
+project authorization must run before dispatch. No caller supplies a root or FD.
+
+The resolver uses the held root descriptor through Linux `/proc/self/fd`, rejects
+symlinks, and requires root and child directories owned by the provider UID with
+mode 0700 and the same device. A read-only 0400 identity marker binds the project
+key and root/child device and inode. This metadata is not an effect receipt log;
+the unchanged broker remains the only effect journal. Execute synchronizes the
+verified binding before passing its child descriptor to the broker. Observe never
+creates, synchronizes, repairs, or adopts incomplete initialization.
+
+An interrupted mkdir/marker publication can leave a child without a valid marker.
+That project fails closed and needs deliberate host-side reconciliation; automatic
+retry must not adopt or delete it. A different child inode with a copied marker
+also fails closed. Existing valid identities survive process restart. The trusted
+host/provider UID controls the private root; this does not isolate mutually
+untrusted processes with that same UID or replace person authorization. Preserve
+directory inodes during restore, or deliberately rebind through host maintenance.
+
+Focused proof: `node --test test/workspace-project-journal.test.mjs
+ test/workspace-writer-broker-v2.test.mjs` (run as one command). The existing
+`test/workspace-atomic-mcp-proof.py` accepts `EVA_ATOMIC_PROOF_IMAGE` and
+`EVA_ATOMIC_PROOF_JOURNAL_MODE=per_path_prefix_v1` to exercise the same disposable
+HTTP/SDK proof with version 2. Without that mode, it retains the legacy proof.
