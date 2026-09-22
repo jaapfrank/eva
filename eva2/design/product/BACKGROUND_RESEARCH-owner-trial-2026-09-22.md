@@ -37,10 +37,9 @@ historische opdrachten krijgen geen achteraf geraden bestemming.
 
 ## Uitbreiding naar tekstgesprek en privéspraak
 
-**Status 22 september: gebouwd en onafhankelijk beoordeeld; installatie nog
-in voorbereiding.** Gebruik onderstaande nieuwe proef pas wanneer het
-projectdashboard deze uitbreiding als geïnstalleerd vermeldt. De bovenstaande
-Telegramroute is al geïnstalleerd.
+**Status 22 september: geïnstalleerd en de live routes gecontroleerd; jouw
+praktijkproef staat open.** Je kunt onderstaande privéproeven nu uitvoeren.
+De bovenstaande Telegramroute blijft geïnstalleerd.
 
 - **Tekst:** open [Praat met Eva](http://localhost:44711/internal/v1/dashboard/conversation).
   Stel de openbare onderzoeksvraag uit stap 1. Stel daarna bijvoorbeeld
@@ -66,3 +65,5 @@ Deze twee privéproeven bewijzen geen fysieke Voice PE-werking of persoonlijke
 sprekerherkenning. Het HA-eigenaarspaneel gebruikt privéspraak; de gedeelde
 huishoudspeaker heeft een afzonderlijke autoriteitsgrens en blijft apart op
 het werkbord staan. Eerdere geaccepteerde geheugenproeven blijven geaccepteerd.
+
+[Installatiebewijs voor tekst en privéspraak](../../evidence/product/private-result-return-installed-20260922.json).

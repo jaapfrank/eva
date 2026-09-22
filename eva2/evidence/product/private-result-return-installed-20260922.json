@@ -1,0 +1,51 @@
+{
+  "date": "2026-09-22",
+  "state": "installed_live_routes_checked_owner_trial_open",
+  "sourceCommits": [
+    "b5ee1b51",
+    "300b440c",
+    "5bfbdbd6",
+    "13533b97",
+    "20ff4bcf",
+    "4c49648e"
+  ],
+  "coreImage": "sha256:d0c28433861b3b51be28f3b9e63d6d506261e7b1ce0506c60add5d42d30763eb",
+  "coreId": "ab75c6db62eb08d2c29c83e3725fd99618f727079511a4dfea0fe14267fe26a7",
+  "workerImage": "sha256:8d88e5a172b1f22926eb667e4ea98ad27e600318ed3b838f7aac88d499e2465a",
+  "mediaImage": "sha256:61584705ace94e5b1afd0a564d0425dd0e1c2e108df92185c0d875956bd29579",
+  "preservation": {
+    "historicalRows": 5,
+    "workerMediaAndProtectedUnchangedDuringCoreFix": true,
+    "fullConfigMountsNetworksPreserved": true
+  },
+  "liveChecks": {
+    "coreAndWorker": "healthy",
+    "mediaCorePrivateWorkReturns": "ready, capability true",
+    "textConversation": "new client served; initial and repeated timer error-free; cockpit/back navigation checked",
+    "privateReturnAPI": "authenticated local owner request returned valid idle/no result consumed",
+    "newModelCalls": 0,
+    "browserAfterHistoryNavigation": "No console errors after initial load, repeated timer interval and cockpit/back navigation; no new research submitted."
+  },
+  "review": {
+    "source": "Independent GO for private feature, revocation fixes and browser timer patch",
+    "installation": "Independent review of both installers; full three-image live configuration independently verified",
+    "ownerAcceptance": "open",
+    "finalCoreLiveCheck": "Independent GO: current core image/client hash/full config/active record verified; unchanged worker and media confirmed. Browser evidence checked by coordinator."
+  },
+  "failuresRetained": {
+    "pairedInstaller": "After installing the correct images, validation rejected ordering-only media HostConfig.Binds; automatic rollback conservatively refused unadopted media. Independent full configuration/source/rows review verified the installed state; record finalized without another restart. Original failed receipt preserved.",
+    "browser": "Actual browser exposed unbound native timer Illegal invocation not covered by injected Node timers. One-line wrapper fix, specific regression test, reviewed core-only install and actual browser check completed.",
+    "historicalReleaseGate": "Historical evidence-index hash mismatch remains separately open; no full product release pass claimed."
+  },
+  "rollback": {
+    "pairedBaseline": "/var/lib/eva2/private-result-return-20260922/installation-20260922T162305.821815Z",
+    "coreBrowserPatchBaseline": "/var/lib/eva2/private-result-return-20260922/browser-timer-fix",
+    "rule": "Use reviewed predecessor images with current task accounting and graceful shutdown; retain all rows/results/claims. Do not replay installation scripts or stale baselines blindly."
+  },
+  "limits": [
+    "No new actual research/provider run in this installation check",
+    "No physical Voice PE audio or household-result claim",
+    "Owner trial and whole-family acceptance remain open"
+  ],
+  "trial": "eva2/design/product/BACKGROUND_RESEARCH-owner-trial-2026-09-22.md"
+}

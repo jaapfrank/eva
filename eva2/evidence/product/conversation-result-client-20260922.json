@@ -1,5 +1,5 @@
 {
-  "status": "built_tested_reviewed_pending_paired_installation",
+  "status": "installed_live_routes_checked_owner_trial_open",
   "date": "2026-09-22",
   "outcome": "Automatically render verified saved task results in the actual owner conversation page; the owner management page does not consume delivery claims.",
   "files": [
@@ -12,19 +12,17 @@
   ],
   "independentReview": {
     "task": "01a0c915-205e-7c11-809a-674ae09e016c",
-    "result": "GO for client and embedding; backend/route joint review and paired installation still required",
+    "result": "Combined source, installers and installed core reviewed; owner acceptance open",
     "resolved": [
       "BFCache resume",
       "cancel existing poll timer before a new poll"
     ]
   },
   "modelCalls": 0,
-  "runtimeChanged": false,
+  "runtimeChanged": true,
   "remaining": [
-    "Integrate reviewed private-return backend and media changes",
-    "Build and verify exact current-parent images",
-    "Independent combined review and safe paired installation",
-    "Actual route check and separate owner trial"
+    "Actual owner research and speech trial; whole-product acceptance remains open"
   ],
-  "scope": "Text transport only; no new model, queue, task or spoken playback claim."
+  "scope": "Text transport only; no new model, queue, task or spoken playback claim.",
+  "installationEvidence": "eva2/evidence/product/private-result-return-installed-20260922.json"
 }

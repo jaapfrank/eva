@@ -1003,6 +1003,14 @@
         "checkedAt": "2026-09-22",
         "deliveries": [
           {
+            "title": "Resultaten terug in tekst en privéspraak",
+            "date": "22 september",
+            "state": "installed",
+            "result": "Een achtergrondresultaat kan terugkomen op de echte tekstgesprekpagina en in de oorspronkelijke actieve privéspraaksessie. De routes zijn geïnstalleerd en gecontroleerd.",
+            "remaining": "Jouw volledige proef met een nieuwe onderzoeksopdracht en werkelijk horen blijft open. De huishoudspeaker volgt apart.",
+            "source": "eva2/evidence/product/private-result-return-installed-20260922.json"
+          },
+          {
             "title": "Voice PE: server geïnstalleerd",
             "date": "22 september",
             "state": "installed",
@@ -1017,35 +1025,30 @@
             "result": "Automatische terugmelding voor nieuwe privéopdrachten is geïnstalleerd. Opgeslagen resultaten blijven leesbaar.",
             "remaining": "Jouw proef met een nieuwe Telegramopdracht staat nog open.",
             "source": "eva2/evidence/product/private-result-return-live-2026-09-22.json"
-          },
-          {
-            "title": "Bestaande documentdiensten hersteld",
-            "date": "22 september",
-            "state": "installed",
-            "result": "De bestaande diensten draaien weer, met behoud van opgeslagen werk en automatisch herstartbeleid.",
-            "remaining": "Volledige computerherstart nog niet beproefd; uitbreiding voor nieuwe documenttaken nog niet geïnstalleerd.",
-            "source": "eva2/evidence/living-core/document-restart-policy-live-20260922.json"
           }
         ],
         "now": {
-          "title": "Resultaten terugbrengen tijdens een gesprek",
-          "detail": "Privéresultaatterugkeer via tekst en spraak is gebouwd en onafhankelijk beoordeeld. De concrete installatiepakketten zijn gecontroleerd; de installatieprocedure met terugweg wordt afgerond. Het draait nog niet live. Parallel bouwt de uitvoerder openbare onderzoeksopdrachten via de huishoudspeaker op dezelfde taakuitvoering.",
+          "title": "Onderzoekswerk via de huishoudspeaker",
+          "detail": "De uitvoerder sluit openbare onderzoeksopdrachten aan op dezelfde taakuitvoering, met een vaste huishoudelijke sessie en behoud van privégrenzen. De privéroute via tekst en spraak is inmiddels geïnstalleerd.",
           "state": "In uitvoering",
-          "doneWhen": "Resultaat komt terug in de juiste actieve privésessie; na afsluiten blijft het bewaard zonder onverwacht opnieuw te spreken. Daarna onafhankelijke review, installatie en livecontrole."
+          "doneWhen": "Een toegelaten openbare opdracht wordt door de bestaande taakwerker afgerond en is alleen in de juiste huishoudsessie leesbaar; privécontext en privéresultaten blijven afgeschermd. Daarna review, aansluiting van het apparaattransport en installatie."
         },
         "next": {
-          "title": "Controleren, installeren en samen proberen",
-          "detail": "Eerst privéresultaatterugkeer beoordelen, installeren en live controleren. Daarna dezelfde werklifecycle aansluiten voor openbare onderzoeksopdrachten via de huishoudspeaker, met behoud van privégrenzen. De fysieke Voice PE-installatie kan zodra het apparaat per USB beschikbaar is.",
+          "title": "Huishoudelijke route beoordelen en aansluiten",
+          "detail": "Eerst het serverdeel met de bestaande taakwerker testen en beoordelen. Daarna de speakeraansluiting installeren. De fysieke Voice PE-proef kan na USB-backup en activering van de beperkte netwerkregel.",
           "state": "Hierna"
         },
         "ownerAction": {
-          "title": "Sluit de woonkamer-Voice PE aan",
+          "title": "Probeer terugmelding tijdens een gesprek",
+          "url": "http://localhost:44711/internal/v1/dashboard/conversation",
+          "linkLabel": "Open het tekstgesprek",
           "steps": [
-            "Sluit de woonkamer-Voice PE met een USB-datakabel op deze computer aan.",
-            "Laat het andere Voice PE-apparaat zoals het is.",
-            "Meld in deze taak: “Voice PE is aangesloten”. Ik controleer het apparaat, maak eerst een volledige reservekopie en regel de installatie."
+            "Open het tekstgesprek met de knop, of open http://localhost:44716/ voor privéspraak.",
+            "Vraag: “Zoek op de achtergrond in de officiële documentatie uit wat Home Assistant Cloud voor spraak doet. Bewaar de bronnen.”",
+            "Stel ondertussen een andere vraag en laat dezelfde sessie open. Het onderzoeksresultaat hoort daar later terug te komen.",
+            "Meld of doorpraten lukte, hoe snel de ontvangst was en of het resultaat één keer met bronnen terugkwam."
           ],
-          "expected": "Daarna kunnen we het echte apparaat testen. De server is al geïnstalleerd; de apparaatproef is nog niet uitgevoerd. Ook de beperkte Windows-netwerkregel moet nog worden geactiveerd."
+          "expected": "Bij sluiten blijft toegelaten werk bestaan; opgeslagen resultaten vind je in Mijn hulpopdrachten. Een nieuwe spraaksessie speelt oude of onzeker afgeleverde resultaten niet automatisch opnieuw af. Voor de aparte Voice PE-proef: sluit de woonkamer-Voice PE per USB-datakabel aan en meld dit in de taak; het andere apparaat blijft ongewijzigd."
         },
         "maintenance": "Bij een oplevering, gewijzigde opdracht of blokkade worden resultaat, huidig werk en volgende stap samen bijgewerkt. Technisch afgerond, geïnstalleerd en door jou geaccepteerd blijven apart."
       }
@@ -10627,10 +10630,10 @@
         {
           "threadId": "01a0c915-205e-7c11-809a-674ae09e016c",
           "title": "Eva laat achtergrondonderzoek echt afmaken",
-          "files": "Alleen /tmp/eva-install-private-result-return.py, niet uitvoeren",
+          "files": "Volgende read-only huishoudreview zodra de uitvoerder oplevert",
           "estimate": "15 minuten installatievoorbereiding; nul modelcalls; credits onbekend",
-          "state": "in_progress",
-          "currentOutcome": "Bronreview privéresultaatterugkeer afgerond; bereidt de concrete gepaarde installatieprocedure voor. Coördinator beoordeelt die onafhankelijk."
+          "state": "awaiting_delivery",
+          "currentOutcome": "Onafhankelijke controle van de geïnstalleerde privéresultaatterugkeer afgerond. Beschikbaar voor de volgende concrete huishoudelijke oplevering."
         }
       ],
       "coordination": "Coördinator onderhoudt dashboard, werkbord en installatie. Eén uitvoerder bouwt privéresultaatterugkeer; één reviewer controleert concrete resultaten. Taakstatus is gerapporteerd werk, geen live aanwezigheidsmeting."
@@ -10809,7 +10812,7 @@
           "planningEffortHours": "4–12"
         }
       ],
-      "nextAction": "Werk de automatische resultaatterugkeer via website en spraak af; laat deze onafhankelijk beoordelen, installeer en controleer de echte route. De speakerdienst is onafhankelijk live gecontroleerd. Voice PE-apparaatinstallatie wacht op USB-backup en de voorbereide Windows-netwerkregel. Documentpoolactivering volgt afzonderlijk op de actuele installatie.",
+      "nextAction": "Privéresultaatterugkeer via tekst en spraak is geïnstalleerd. Rond nu het huishoudelijke serverdeel op dezelfde taakuitvoering af, beoordeel en sluit daarna de speakeraansluiting aan. Voice PE-apparaatinstallatie wacht op USB-backup en de voorbereide Windows-netwerkregel. Jouw privépraktijkproef blijft apart open.",
       "effortNotice": "Grove planning, lage zekerheid: 40–118 actieve ontwikkeluren plus zeven dagen gezinspraktijk en eventuele externe wachttijd. Geen deadline, creditkosten of gemeten verbruik; per begrensde wijziging aanscherpen na lezing van bestaand bewijs. Hergebruik kan dit verkorten.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Na review, installatie en registratie automatisch volgende uitvoerbare stap; geen algemene wachtstop op gebruikersproeven.",
@@ -10885,21 +10888,23 @@
       "ownerAcceptance": "open; fysieke Voice PE-proef blijft afzonderlijk"
     },
     "conversationResultClient20260922": {
-      "state": "built_tested_reviewed_pending_paired_installation",
+      "state": "installed_live_checked_owner_trial_open",
       "source": "eva2/evidence/product/conversation-result-client-20260922.json",
       "commit": "13533b97",
-      "ownerAcceptance": "open"
+      "ownerAcceptance": "open",
+      "installationEvidence": "eva2/evidence/product/private-result-return-installed-20260922.json"
     },
     "privateResultReturnPackaging20260922": {
-      "state": "source_reviewed_packaged_pending_installation",
-      "coreImage": "sha256:c556b870dc45d153721a8f47bb8341759df6345be6c4bf6d2117b9fc033f9e2d",
+      "state": "installed_live_routes_checked_owner_trial_open",
+      "coreImage": "sha256:d0c28433861b3b51be28f3b9e63d6d506261e7b1ce0506c60add5d42d30763eb",
       "workerImage": "sha256:8d88e5a172b1f22926eb667e4ea98ad27e600318ed3b838f7aac88d499e2465a",
       "coreWorkerReleaseEqual": true,
       "changedFilesOnlyVerified": true,
-      "runtimeChanged": false,
-      "openReview": "Bronreview GO. Installatieprocedure wordt afzonderlijk beoordeeld voordat bestaande services veranderen.",
+      "runtimeChanged": true,
+      "openReview": "Technische bron-/installatiereview afgerond; eigenaarproef afzonderlijk open.",
       "packagedTests": "30 passed, 1 historical release evidence-index hash mismatch across existing source versions; no full release pass claimed.",
-      "mediaImage": "sha256:61584705ace94e5b1afd0a564d0425dd0e1c2e108df92185c0d875956bd29579"
+      "mediaImage": "sha256:61584705ace94e5b1afd0a564d0425dd0e1c2e108df92185c0d875956bd29579",
+      "installationEvidence": "eva2/evidence/product/private-result-return-installed-20260922.json"
     },
     "releaseEvidenceIndex20260922": {
       "state": "open_before_final_release",
