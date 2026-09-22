@@ -1,0 +1,161 @@
+{
+  "scope": "one real ASGI voice-session turn; no physical audio; fresh process",
+  "elapsed_ms": 5025,
+  "events": [
+    {
+      "type": "delta",
+      "at_ms": 4379
+    },
+    {
+      "type": "delta",
+      "at_ms": 4384
+    },
+    {
+      "type": "delta",
+      "at_ms": 4409
+    },
+    {
+      "type": "delta",
+      "at_ms": 4411
+    },
+    {
+      "type": "delta",
+      "at_ms": 4424
+    },
+    {
+      "type": "delta",
+      "at_ms": 4448
+    },
+    {
+      "type": "delta",
+      "at_ms": 4472
+    },
+    {
+      "type": "delta",
+      "at_ms": 4543
+    },
+    {
+      "type": "delta",
+      "at_ms": 4569
+    },
+    {
+      "type": "delta",
+      "at_ms": 4574
+    },
+    {
+      "type": "delta",
+      "at_ms": 4580
+    },
+    {
+      "type": "final",
+      "at_ms": 5024
+    }
+  ],
+  "measurements": [
+    {
+      "stage": "PostgresHindsightMemoryRuntime.admit_voice_turn",
+      "ms": 8
+    },
+    {
+      "stage": "PostgresConversationActions.pending",
+      "ms": 60
+    },
+    {
+      "stage": "PostgresConversationActions.available_action_names",
+      "ms": 12
+    },
+    {
+      "stage": "HindsightMemoryEngine.ensure_bank",
+      "ms": 30
+    },
+    {
+      "stage": "PostgresConversationActions.active_context",
+      "ms": 125
+    },
+    {
+      "stage": "HindsightMemoryEngine._recall_response",
+      "ms": 569
+    },
+    {
+      "stage": "HindsightMemoryEngine.recall_for_presence",
+      "ms": 607
+    },
+    {
+      "stage": "HindsightMemoryEngine.recall_for_presence_fast",
+      "ms": 607
+    },
+    {
+      "stage": "PydanticConversationModel._instructions",
+      "ms": 0
+    },
+    {
+      "stage": "PydanticConversationModel._admit_request",
+      "ms": 11
+    },
+    {
+      "stage": "PydanticConversationModel._admit_request",
+      "ms": 10
+    },
+    {
+      "stage": "PydanticConversationModel._run_pydantic_phase",
+      "ms": 4103
+    },
+    {
+      "stage": "PydanticConversationModel.generate",
+      "ms": 4115
+    },
+    {
+      "stage": "PostgresHindsightMemoryRuntime.respond",
+      "ms": 4995
+    }
+  ],
+  "outputs": [
+    {
+      "memory_count": 1,
+      "memory_sha256": "6f2373307e3601aa1645ce2b6dd299190315bbded9060553ee7907511fbc546b"
+    },
+    {
+      "local_bpe_estimates_not_provider_breakdown": {
+        "instruction_sections": {
+          "general_instructions": 657,
+          "Vaste principes:": 58,
+          "Actief procedureel IdentityPack:": 225,
+          "Duurzame stijlspiegel:": 148,
+          "Relevante herinneringen:": 44,
+          "Jouw duurzame eigen toestand:": 620,
+          "Recente gesprekstijdlijn:": 23
+        },
+        "instructions_total": 1775,
+        "tools_json": 4902,
+        "prompt": 2,
+        "tool_count": 38
+      },
+      "instructions_sha256": "ad15c2ebecc8220e8d734b4ccbcd24d8dd6d07155abb722a01dbcef9455c8534"
+    },
+    {
+      "wire_request": {
+        "model": "gpt-5.6-luna",
+        "reasoning": {
+          "effort": "none",
+          "summary": "auto"
+        },
+        "tools": 39
+      }
+    },
+    {
+      "provider": "chatgpt-codex:gpt-5.6-luna",
+      "usage": {
+        "input_tokens": 5033,
+        "measurement": "measured",
+        "model_attempts": 1,
+        "output_tokens": 15,
+        "tool_calls": 0
+      },
+      "timing": {
+        "completed_ms": 4048,
+        "first_content_ms": 3543
+      },
+      "action": null
+    }
+  ]
+}

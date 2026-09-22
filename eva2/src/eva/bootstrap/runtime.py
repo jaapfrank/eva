@@ -267,8 +267,12 @@ class RuntimeSettings:
     def __post_init__(self) -> None:
         if self.conversation_contact_model is not None and not self.conversation_contact_model.strip():
             raise ValueError("conversation contact model must be nonempty")
-        if self.conversation_contact_reasoning_effort not in {"low", "medium", "high"}:
+        if self.conversation_reasoning_effort not in {"low", "medium", "high"}:
+            raise ValueError("conversation reasoning effort is invalid")
+        if self.conversation_contact_reasoning_effort not in {"none", "low", "medium", "high"}:
             raise ValueError("conversation contact reasoning effort is invalid")
+        if self.conversation_contact_reasoning_effort == "none" and self.conversation_contact_model != "gpt-5.6-luna":
+            raise ValueError("contact reasoning none requires gpt-5.6-luna")
         if type(self.background_work_enabled) is not bool:
             raise ValueError("background work switch must be a boolean")
         if type(self.delegated_work_enabled) is not bool:

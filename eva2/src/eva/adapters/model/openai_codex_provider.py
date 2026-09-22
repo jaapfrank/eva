@@ -73,7 +73,7 @@ class OpenAICodexProviderSettings:
     endpoint: str
     model_name: str
     timeout_seconds: float = 30.0
-    reasoning_effort: Literal["low", "medium", "high"] = "medium"
+    reasoning_effort: Literal["none", "low", "medium", "high"] = "medium"
     maximum_request_bytes: int = 8 * 1024 * 1024
     maximum_response_bytes: int = 8 * 1024 * 1024
 
@@ -86,8 +86,10 @@ class OpenAICodexProviderSettings:
             raise ValueError("Codex model name is invalid")
         if not 1 <= self.timeout_seconds <= 120:
             raise ValueError("Codex phase timeout must be 1..120 seconds")
-        if self.reasoning_effort not in {"low", "medium", "high"}:
+        if self.reasoning_effort not in {"none", "low", "medium", "high"}:
             raise ValueError("Codex reasoning effort is invalid")
+        if self.reasoning_effort == "none" and self.model_name != "gpt-5.6-luna":
+            raise ValueError("Codex reasoning none requires gpt-5.6-luna")
         for value in (self.maximum_request_bytes, self.maximum_response_bytes):
             if not 4_096 <= value <= 8 * 1024 * 1024:
                 raise ValueError("Codex byte limit is invalid")

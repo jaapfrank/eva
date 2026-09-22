@@ -1,0 +1,31 @@
+{
+  "hypothesis": "subscription Luna accepts reasoning none",
+  "started_at": "2026-09-22T12:49:31.770959+00:00",
+  "requests": [
+    {
+      "model": "gpt-5.6-luna",
+      "reasoning": {
+        "effort": "none",
+        "summary": "auto"
+      },
+      "instructions": "Je bent Eva. Begroet de gebruiker in één korte Nederlandse zin, onder 64 tokens.",
+      "input": [
+        {
+          "content": "Hallo",
+          "role": "user",
+          "type": "message"
+        }
+      ],
+      "tools": [],
+      "store": false,
+      "stream": true
+    }
+  ],
+  "tools": 0,
+  "private_memory": false,
+  "output_limit": "instruction requests under 64 tokens; transport has no supported server output cap",
+  "http_status": 200,
+  "accepted": false,
+  "exception_type": "TypeError",
+  "elapsed_ms": 4408
+}
