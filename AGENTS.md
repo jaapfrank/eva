@@ -1,5 +1,24 @@
 # EVA 2 — projectvisie en opleverafspraken
 
+## Gezamenlijke Git-basis — eigenaaropdracht 22 september 2026
+
+De coördinator beheert één actuele integratiebasis op GitHub. Nieuwe bouwtaken
+starten vanaf de expliciet gecontroleerde integratiecommit; controleer vóór
+dispatch dat eva2/src, tests, locks en actuele eigenaarafspraken aanwezig zijn.
+Een werkmap kopiëren is alleen herstel bij een aangetoond ontbrekend checkpoint.
+Normaal gebruikt ieder onderdeel een branch vanaf dezelfde basis en levert het
+een begrensde commit terug. Alleen de coördinator integreert gedeelde bestanden.
+Na passende tests en onafhankelijke controle worden bronwijzigingen naar GitHub
+gepubliceerd. Een broncheckpoint is geen runtime-release of eigenaaracceptatie.
+Niet-gecommitte werk blijft niet ongemerkt de enige actuele productbron.
+Bij onderbroken staging eerst index en werkelijke bestanden bewaren; geen
+automatische verwijderingen, reset of force-push. Gebruik voor deze WSL-repository
+Git binnen WSL, zodat Windows- en Linux-pad/regelafhandeling niet door elkaar lopen.
+Open taken melden basiscommit en bestandsverantwoordelijkheid op het bestaande
+werkbord. Voice bezit conversation.py/runtime.py; dashboard levert zijn wiring
+als apart integratiefragment. Review blijft gebundeld binnen de afgesproken bezetting.
+
+
 ## Persoonlijke continuïteit en vertrouwelijkheid — eigenaarseis 22 september 2026
 
 Jaap moet later op de dag of weken later kunnen terugkomen op een eerder onderwerp.

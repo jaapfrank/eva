@@ -984,7 +984,7 @@
       "sessionGoal": "Snel gedeeld gesprek met passende achtergrondmodellen; één Eva over alle kanalen.",
       "currentWork": "**Lokale toegang werkt volgens de eerste gebruikersindruk; het gesprek is nog te traag.** Jaap meldt circa6seconden bij zowel begroeten als onderzoek. Gerichte meting: kernantwoord op Hallo4,52s, eerste tekst3,94s; eerste TTS-audiochunk0,27s. Dit is één proef, geen volledige audiometing of p95. De gewenste oplossing is een snel gespreksmodel met passend modelgebruik op de achtergrond vanuit dezelfde Eva-kern.",
       "currentEvidence": "eva2/evidence/product/voice-latency-owner-report-2026-09-22.json",
-      "nextStep": "Gebruik een snel model voor direct gesprek en eenvoudige antwoorden; laat de bestaande kern aangenomen werk vastleggen en op de achtergrond het passende werkmodel kiezen. Tijdens één of meer lopende opdrachten blijven gesprek, correctie en stop beschikbaar. Eerst bestaande provider- en taakmogelijkheden toetsen; geen extra kanaalscriptjes of aparte Eva-identiteiten. Snelheid en kwaliteit moeten vervolgens via de echte kanalen bewezen worden. Daarnaast is UX-002 de eerstvolgende korte bouwkandidaat: bestaande taken in het dashboard openen, resultaat lezen en stoppen (voorlopig 2–4 actieve agenturen inclusief gerichte controle/review). Daarna gericht AU-004-procedurehergebruik in een nieuw gesprek (4–8 uur, onzekerder); geen herhaalde proef zonder oorzaakwijziging. AU-002, browserovername, PJ-01 en IN-02 hebben al bestaande gebruikersproeven en vragen geen herbouw. Deze selectie is nog geen implementatieclaim.",
+      "nextStep": "Gebruik een snel model voor direct gesprek en eenvoudige antwoorden; laat de bestaande kern aangenomen werk vastleggen en op de achtergrond het passende werkmodel kiezen. Tijdens één of meer lopende opdrachten blijven gesprek, correctie en stop beschikbaar. Eerst bestaande provider- en taakmogelijkheden toetsen; geen extra kanaalscriptjes of aparte Eva-identiteiten. Snelheid en kwaliteit moeten vervolgens via de echte kanalen bewezen worden. Daarnaast is UX-002 de eerstvolgende korte bouwkandidaat: bestaande taken in het dashboard openen, resultaat lezen en stoppen (voorlopig 2–4 actieve agenturen inclusief gerichte controle/review). AU-002, browserovername, PJ-01 en IN-02 hebben al bestaande gebruikersproeven en vragen geen herbouw. Dashboardbediening wordt gebouwd. PR-01/R6 procedurehergebruik was al technisch opgeleverd; nieuwe bouw daarvoor vervalt.",
       "usageClarification": {
         "date": "2026-09-07",
         "authorizedBy": "Jaap",
@@ -10377,21 +10377,14 @@
           "estimate": "2–4 actieve agenturen, voorlopige raming inclusief gerichte tests en review; geen geldkostenraming.",
           "done": "Eigenaar ziet juiste opgeslagen toestand/resultaat, stop bereikt dezelfde bestaande taak, refresh behoudt toestand; andermans taken ontoegankelijk. Starten/algemene projectbediening apart tenzij bestaande route direct herbruikbaar blijkt.",
           "stop": "Bij ontbrekend gedeeld taakcontract eerst afstemmen met voicebouwer; geen tweede taakuitvoerder bouwen."
-        },
-        {
-          "id": "AU-004",
-          "outcome": "Opgeslagen werkwijze in een nieuw gesprek terugvinden en bij een andere opdracht hergebruiken.",
-          "evidence": "Bestaande C/D-proeven in WERKBORD: juiste uitvoer maar zoekcriterium respectievelijk procedurehergebruik niet gehaald.",
-          "estimate": "4–8 actieve agenturen, voorlopig en onzekerder dan UX-002.",
-          "done": "Eén nieuwe variant gebruikt aantoonbaar dezelfde gevonden procedure, controleert resultaat en vereist geen procedurepad van gebruiker.",
-          "stop": "Geen nieuwe modelproef voordat concrete oorzaak en gerichte wijziging vaststaan; geen taakspecifieke converter in kern."
         }
       ],
       "readyForOwnerTrial": [
         "AU-002 bestaande Telegram-hulpagentbediening",
         "VB-003 browserovername en transportherstel",
         "AU-006 PJ-01 bestaande documentprojectresultaten",
-        "AU-008 IN-02 bestaande initiatiefbijdrage"
+        "AU-008 IN-02 bestaande initiatiefbijdrage",
+        "PR-01/R6 procedurehergebruik in nieuw gesprek: technisch opgeleverd; menselijke acceptatie open"
       ],
       "notQuick": [
         "Stemidentificatie en private continuiteit via gedeelde speaker",
@@ -10399,7 +10392,16 @@
         "Volledige installatie/verplaatsing",
         "Algemene meerdaagse autonomie"
       ],
-      "coordination": "Snel gesprek/achtergrondwerk blijft afzonderlijk aangevraagde bouwtaak; geen werkende agent geclaimd zolang alleen clientThreadId bekend is. UX-002 is eerstvolgende onafhankelijke bouwkandidaat. Technisch gereed, live en eigenaaracceptatie apart."
+      "coordination": "Voicebouwer actief in eigen werkmap vanaf65907604. dashboard_finish bouwt UX-002; learning_finish controleert bronherstel en dashboard onafhankelijk. Coördinator bezit integratie en centrale bordbron.",
+      "correction": "Eerdere selectie AU-004 baseerde zich op achterhaalde C/D-uitkomsten. Latere R6 en onafhankelijke review bewijzen procedurehergebruik in nieuw gesprek. Geen herbouw of herhaalde modelproef."
+    },
+    "sourceSync20260922": {
+      "status": "reviewed_source_candidate_publication_pending",
+      "candidateCommit": "5346cab207143e0e352e8d9bb62a9aa8faedfe23",
+      "preservedIndexBranch": "codex/preserved-index-20260922",
+      "findings": "GitHub main stond op6augustus; lokale HEAD13september met aanvullend werk.391stageddeletes bestonden fysiek nog. Oude index.lock11september. Kandidatentree2853blobs byte-exact gecontroleerd, geen bestanden verloren.",
+      "review": "/root/learning_finish GO voor bronbehoud; credentialscan nieuwe historie wordt afzonderlijk afgehandeld.",
+      "nonclaims": "Geen nieuwe runtime-installatie, volledige releasepoort of eigenaaracceptatie. GitHubpublicatie nog niet geclaimd."
     }
   },
   "activeTaskId": "AU-008",
