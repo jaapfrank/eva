@@ -32,6 +32,17 @@ def test_contact_model_environment(monkeypatch, private_tmp_path):
     assert settings.conversation_contact_reasoning_effort == "low"
 
 
+def test_unreleased_household_session_requires_explicit_configuration(monkeypatch, private_tmp_path):
+    _minimum(monkeypatch, private_tmp_path)
+    monkeypatch.delenv("EVA_HOUSEHOLD_VOICE_SESSION_ENABLED", raising=False)
+    assert RuntimeSettings.from_environment().household_voice_session_enabled is False
+    monkeypatch.setenv("EVA_HOUSEHOLD_VOICE_SESSION_ENABLED", "true")
+    assert RuntimeSettings.from_environment().household_voice_session_enabled is True
+    monkeypatch.setenv("EVA_HOUSEHOLD_VOICE_SESSION_ENABLED", "invalid")
+    with pytest.raises(RuntimeError):
+        RuntimeSettings.from_environment()
+
+
 def _write_runtime_budget(
     path: Path,
     *,

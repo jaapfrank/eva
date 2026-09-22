@@ -245,6 +245,7 @@ class RuntimeSettings:
     dashboard_voice_policy_file: str | None = None
     household_voice_policy_file: str | None = None
     household_voice_token_file: str | None = None
+    household_voice_session_enabled: bool = False
     portable_restore_authority_file: str | None = None
     cold_path_idle_seconds: float = 300.0
     personal_interest_lease_seconds: int = 90
@@ -272,6 +273,8 @@ class RuntimeSettings:
             raise ValueError("background work switch must be a boolean")
         if type(self.delegated_work_enabled) is not bool:
             raise ValueError("delegated work switch must be a boolean")
+        if type(self.household_voice_session_enabled) is not bool:
+            raise ValueError("household voice session switch must be a boolean")
         if self.delegated_work_enabled and self.dashboard_principal_binding_id is None:
             raise ValueError("delegated work requires a configured owner binding")
         if type(self.conversation_maximum_requests) is not int or self.conversation_maximum_requests < 1:
@@ -559,6 +562,7 @@ class RuntimeSettings:
             dashboard_voice_policy_file=_environment_optional("EVA_DASHBOARD_VOICE_POLICY_FILE"),
             household_voice_policy_file=_environment_optional("EVA_HOUSEHOLD_VOICE_POLICY_FILE"),
             household_voice_token_file=_environment_optional("EVA_HOUSEHOLD_VOICE_TOKEN_FILE"),
+            household_voice_session_enabled=_environment_bool("EVA_HOUSEHOLD_VOICE_SESSION_ENABLED", False),
             portable_restore_authority_file=portable_restore_authority_file,
             cold_path_idle_seconds=cold_path_idle_seconds,
             personal_interest_lease_seconds=personal_interest_lease_seconds,
@@ -2116,7 +2120,7 @@ def create_runtime_app() -> FastAPI:
         dashboard_voice=dashboard_voice,
         browser_session=browser_session_from_environment(),
     )
-    if household_voice is not None:
+    if household_voice is not None and settings.household_voice_session_enabled:
         from eva.adapters.api.household_voice_session import install_household_voice_session
         install_household_voice_session(app, runtime=runtime, authority=household_voice)
     return app
