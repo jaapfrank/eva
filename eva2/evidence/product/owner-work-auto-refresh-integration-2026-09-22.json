@@ -1,0 +1,15 @@
+{
+  "review": "Coordinator independent source review: GO; serial fetches, stale selection and superseded authority failures reviewed.",
+  "sourceCommit": "508c999633112e2b6c934366c96b1a3c502041e8",
+  "integratedCommit": "48c926b8",
+  "verification": "Existing browser fixture rerun independently on integrated source: passed, 27 requests, maximum concurrency 1; automatic result, selection, denial and visibility cases passed.",
+  "modelCalls": 0,
+  "installed": false,
+  "assets": {
+    "eva-dashboard-assets.json": "429b42d54f101cf316313f1a66ad33ef3924fdfca8488cae812b0b0c626ca0ac",
+    "index.html": "d936dd63f695867abc00942798d22837848b5cb16297c5ffcec6a6d294257fa1",
+    "assets/index-ClzOWv97.css": "242aa8ff5082e08e37a1e3a8afdf3aafe5ee8effe765d71ffaaeb7509e32bb87",
+    "assets/index-BrDG4GHe.js": "01b685fcb22d3804ff9bf33ebdaeddf55aefc47949477a94540acc294546a59e"
+  },
+  "rollout": "Awaiting voice before/after probe completion; avoid disrupting measurements. Then core-only image replacement with saved rollback."
+}

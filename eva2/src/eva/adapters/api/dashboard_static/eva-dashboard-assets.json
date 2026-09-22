@@ -2,16 +2,16 @@
   "contract": "EvaDashboardAssets/v1",
   "entry": "index.html",
   "files": {
-    "assets/index-CfdjSWLY.js": {
-      "sha256": "7cf4f0249fd31a491b7e4924133ee8a0f9414779652ec7e64d4a4aa0fa82e129",
-      "size": 823413
+    "assets/index-BrDG4GHe.js": {
+      "sha256": "01b685fcb22d3804ff9bf33ebdaeddf55aefc47949477a94540acc294546a59e",
+      "size": 824263
     },
     "assets/index-ClzOWv97.css": {
       "sha256": "242aa8ff5082e08e37a1e3a8afdf3aafe5ee8effe765d71ffaaeb7509e32bb87",
       "size": 28896
     },
     "index.html": {
-      "sha256": "daf6db222ea1eb0730069405bb66bd0367cc9c97483648eb4f7f3a12387dde5d",
+      "sha256": "d936dd63f695867abc00942798d22837848b5cb16297c5ffcec6a6d294257fa1",
       "size": 435
     }
   },
