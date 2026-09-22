@@ -25,7 +25,7 @@ Eén dagelijkse, geïnstalleerde Eva afronden: gedeeld gesprek en stem, privéco
 | 7 | Vergelijking voorbereiden en uitvoeren | open | EV-003 taken/versies/drempels vooraf vast; Bottie en drie concurrenten eerlijk vergelijken, officiële AgentBench/GAIA/OSWorld-scorers; definitieve vergelijking op eindkandidaat. |
 | 8 | Eindkandidaat en acceptatie | open | Bevroren image/config/bewijs, complete testpoort, onafhankelijke review, veilige installatie, computerherstart en definitieve vergelijking; daarna zeven dagen gezinspraktijk en expliciete acceptatie. |
 
-**Eerstvolgende handeling:** Vervang de afgewezen pakketten door de beoordeelde herstelversie. Behoud één bestaande taakwerker. Controleer met de echte eigenaarbinding of een huishoudsessie kan openen, vernieuwen en sluiten, voordat de koppeling live wordt gemeld.
+**Eerstvolgende handeling:** Herstel het aangetoonde tekort waarbij Eva essentiële controles nog aan de gebruiker overlaat. Gebruik de bestaande onderzoeksvervolgroute en begrens de wijziging; geen nieuwe algemene onderzoeksinfrastructuur.
 
 Afgeronde deelresultaten en menselijke acceptaties blijven hieronder behouden. Een open gebruikersoordeel is geen algemene bouwstop.
 

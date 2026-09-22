@@ -1,0 +1,38 @@
+{
+  "installed": true,
+  "images": {
+    "core": "sha256:a270e1f3e2517585c04cf64f3c652cfdd7a6a5d4f820046fefa59579bbe6437a",
+    "worker": "sha256:54c09a474a5a2735290db7f77612d4c1b991d7869feae38274eb3d01910cbae3",
+    "speaker": "sha256:8ce4502ac3ac6589d56705a0f1bd3247af6fef51bed48d3adfb110c76a77fdb1"
+  },
+  "containers": {
+    "core": "b9f558a839e1c092ed3a38811b2e5fabfea84e7b1fabbf0adc327a879cbe0378",
+    "worker": "3e96a9af42388af19472fcdefc7c1d0938f5bbf9d410d77b05daf6787f0597f9",
+    "speaker": "cc1a22fae0aace6434d35f28e6f9167881ce0ccbb8288264323d69cb17371b16"
+  },
+  "protectedServices": 15,
+  "ownerAccepted": false,
+  "physicalTrial": false,
+  "rollbackAvailable": true,
+  "sourceCommit": "cdb212d6",
+  "liveRoute": {
+    "ready": true,
+    "sessionOpenRenewPollClose": true,
+    "modelCalls": 0
+  },
+  "pairedVerification": {
+    "core": {
+      "research": "235fbcd016987629a2ff1152e0688431cbb7f448a28afc65496aa0ecbbd71a5a",
+      "toolFree": "7b2982d94d9054ae46731a2be2548760773fd41bba9731f48f47906baf1692eb"
+    },
+    "worker": {
+      "research": "235fbcd016987629a2ff1152e0688431cbb7f448a28afc65496aa0ecbbd71a5a",
+      "toolFree": "7b2982d94d9054ae46731a2be2548760773fd41bba9731f48f47906baf1692eb"
+    }
+  },
+  "modelCalls": 0,
+  "newOwnerRecords": 0,
+  "extraWorkerCreated": false,
+  "earlierFailedAttempts": "eva2/evidence/product/household-work-activation-attempt-20260922.json",
+  "limits": "Physical speaker and end-to-end spoken task completion still require a real device trial."
+}

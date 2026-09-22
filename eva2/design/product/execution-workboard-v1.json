@@ -1003,6 +1003,14 @@
         "checkedAt": "2026-09-22",
         "deliveries": [
           {
+            "title": "Huishoudspraak aangesloten op bestaande taakwerker",
+            "date": "22 september",
+            "state": "installed",
+            "result": "De herstelversie is geïnstalleerd. Een echte huishoudsessie kan openen, vernieuwen, resultaten opvragen en sluiten. Dezelfde taakwerker verwerkt privé- en huishoudwerk met afzonderlijke grenzen.",
+            "remaining": "Fysieke Voice PE-proef met spreken tijdens onderzoek en hoorbare terugkomst staat open. De live sessiecontrole gebruikte geen model en bewijst die gezinsproef niet.",
+            "source": "eva2/evidence/product/household-work-installed-20260922.json"
+          },
+          {
             "title": "Telegram: tussenvragen hoeven niet meer achter eerder werk te wachten",
             "date": "22 september",
             "state": "installed",
@@ -1017,25 +1025,17 @@
             "result": "De privéspraakpagina zegt na ontvangst “Een momentje” terwijl de antwoordcall loopt. Die zin gaat niet terug het modelgeheugen in.",
             "remaining": "Jouw hoorbare praktijkproef staat open; het inhoudelijke antwoord is nog niet sneller bewezen. De huishoudspeaker volgt met zijn eigen installatie.",
             "source": "eva2/evidence/product/received-input-installed-20260922.json"
-          },
-          {
-            "title": "Resultaten terug in tekst en privéspraak",
-            "date": "22 september",
-            "state": "installed",
-            "result": "Een achtergrondresultaat kan terugkomen op de echte tekstgesprekpagina en in de oorspronkelijke actieve privéspraaksessie. De routes zijn geïnstalleerd en gecontroleerd.",
-            "remaining": "Jouw volledige proef met een nieuwe onderzoeksopdracht en werkelijk horen blijft open. De huishoudspeaker volgt apart.",
-            "source": "eva2/evidence/product/private-result-return-installed-20260922.json"
           }
         ],
         "now": {
-          "title": "Huishoudspraak gekoppeld aan bestaande taakopslag",
-          "detail": "De herstelcode gebruikt de bestaande eigenaar en taakwerker. Gespreksherkomst blijft apart gecontroleerd. De proef met verschillende opslagcontexten en bestaande huishoudcontroles slagen: 27 tests. Onafhankelijke review is akkoord; de herstelcode is nog niet geïnstalleerd.",
-          "state": "Herstelcode getest en beoordeeld",
+          "title": "Huishoudkoppeling live; onderzoeksafronding volgt",
+          "detail": "Kern, bestaande taakwerker en speaker draaien de beoordeelde versie. De echte sessieroute is gecontroleerd; overige diensten zijn behouden. Fysieke Voice PE-bediening en hoorbare taakafronding blijven nog te proberen.",
+          "state": "Geïnstalleerd — fysieke proef open",
           "doneWhen": "Telegram-proef afzonderlijk bevestigd; bestaande huishoudintegratie beoordeeld en geïnstalleerd met terugweg."
         },
         "next": {
-          "title": "Herstelcode verpakken en live sessie controleren",
-          "detail": "Vervang de afgewezen pakketten door de beoordeelde herstelversie. Behoud één bestaande taakwerker. Controleer met de echte eigenaarbinding of een huishoudsessie kan openen, vernieuwen en sluiten, voordat de koppeling live wordt gemeld.",
+          "title": "Onderzoek inhoudelijk afmaken",
+          "detail": "Herstel het aangetoonde tekort waarbij Eva essentiële controles nog aan de gebruiker overlaat. Gebruik de bestaande onderzoeksvervolgroute en begrens de wijziging; geen nieuwe algemene onderzoeksinfrastructuur.",
           "state": "Hierna"
         },
         "ownerAction": {
@@ -10811,7 +10811,7 @@
           "planningEffortHours": "4–12"
         }
       ],
-      "nextAction": "Vervang de afgewezen pakketten door de beoordeelde herstelversie. Behoud één bestaande taakwerker. Controleer met de echte eigenaarbinding of een huishoudsessie kan openen, vernieuwen en sluiten, voordat de koppeling live wordt gemeld.",
+      "nextAction": "Herstel het aangetoonde tekort waarbij Eva essentiële controles nog aan de gebruiker overlaat. Gebruik de bestaande onderzoeksvervolgroute en begrens de wijziging; geen nieuwe algemene onderzoeksinfrastructuur.",
       "effortNotice": "Grove planning, lage zekerheid: 40–118 actieve ontwikkeluren plus zeven dagen gezinspraktijk en eventuele externe wachttijd. Geen deadline, creditkosten of gemeten verbruik; per begrensde wijziging aanscherpen na lezing van bestaand bewijs. Hergebruik kan dit verkorten.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Na review, installatie en registratie automatisch volgende uitvoerbare stap; geen algemene wachtstop op gebruikersproeven.",
@@ -10936,7 +10936,7 @@
       }
     },
     "householdPublicWorkServer20260922": {
-      "status": "shared_task_storage_fix_reviewed_packaging_pending",
+      "status": "installed_live_session_verified_physical_trial_open",
       "sourceCommit": "77640ad8b7cf6579d5a16b27ae2e8fab428e8db4",
       "integratedCommit": "5cb887b0",
       "httpCommit": "0c537ec8",
@@ -10968,7 +10968,7 @@
         "media": 4,
         "modelCalls": 0
       },
-      "compositionInstalled": false,
+      "compositionInstalled": true,
       "packagingEvidence": "eva2/evidence/product/household-work-packaging-20260922.json",
       "activationEvidence": "eva2/evidence/product/household-work-activation-attempt-20260922.json",
       "startupGuard": {
@@ -10986,7 +10986,9 @@
         "newOwnerRecords": 0,
         "extraWorkerRequired": false,
         "installed": false
-      }
+      },
+      "installationEvidence": "eva2/evidence/product/household-work-installed-20260922.json",
+      "ownerAccepted": false
     },
     "documentPoolCurrentPreflight20260922": {
       "status": "read_only_preflight_passed",
