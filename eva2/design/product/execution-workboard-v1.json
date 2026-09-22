@@ -121,7 +121,7 @@
           ]
         }
       ],
-      "priorityDecision": "Gebruik een snel model voor direct gesprek en eenvoudige antwoorden; laat de bestaande kern aangenomen werk vastleggen en op de achtergrond het passende werkmodel kiezen. Tijdens één of meer lopende opdrachten blijven gesprek, correctie en stop beschikbaar. Eerst bestaande provider- en taakmogelijkheden toetsen; geen extra kanaalscriptjes of aparte Eva-identiteiten. Snelheid en kwaliteit moeten vervolgens via de echte kanalen bewezen worden.",
+      "priorityDecision": "Bereid één samenhangende installatiekandidaat voor snel gesprek en taakbediening voor. Behoud bestaande installatie tot de kandidaat passend is gecontroleerd. Daarna echte kanaalproeven; privé-identiteit en volledig Voice PE-gedrag blijven afzonderlijk open. PR-01/R6 niet opnieuw bouwen.",
       "dashboardVerification": {
         "status": "local_browser_verified_not_full_product_acceptance",
         "priorityRevision": {
@@ -177,12 +177,24 @@
       ],
       "nextOutcomes": [
         {
-          "title": "Geconstateerd: gesprek nog niet natuurlijk snel",
-          "detail": "**Lokale toegang werkt volgens de eerste gebruikersindruk; het gesprek is nog te traag.** Jaap meldt circa6seconden bij zowel begroeten als onderzoek. Gerichte meting: kernantwoord op Hallo4,52s, eerste tekst3,94s; eerste TTS-audiochunk0,27s. Dit is één proef, geen volledige audiometing of p95. De gewenste oplossing is een snel gespreksmodel met passend modelgebruik op de achtergrond vanuit dezelfde Eva-kern."
+          "title": "Git hersteld — gezamenlijke bron op GitHub",
+          "detail": "De actuele bron staat op GitHub main en in de canonical projectmap. Oude staging is behouden; geen productbestanden verwijderd. Nieuwe taken gebruiken dezelfde gecontroleerde integratiebasis."
         },
         {
-          "title": "Snel contact en achtergrondwerk vanuit één Eva",
-          "detail": "Gebruik een snel model voor direct gesprek en eenvoudige antwoorden; laat de bestaande kern aangenomen werk vastleggen en op de achtergrond het passende werkmodel kiezen. Tijdens één of meer lopende opdrachten blijven gesprek, correctie en stop beschikbaar. Eerst bestaande provider- en taakmogelijkheden toetsen; geen extra kanaalscriptjes of aparte Eva-identiteiten. Snelheid en kwaliteit moeten vervolgens via de echte kanalen bewezen worden."
+          "title": "Sneller gesprek — gebouwd en getest, nog niet live",
+          "detail": "Optionele snelle gespreksroute geïntegreerd in de bron; 180 gerichte tests en onafhankelijke review. Begroeting in een modelproef: eerste tekst 1,60 s tegenover 4,47 s. Geen volledige audiometing of Voice PE-proef. Configuratie/installatie en echte kanaalproeven staan open."
+        },
+        {
+          "title": "Taken bedienen — bron geïntegreerd, nog niet live",
+          "detail": "Bestaande hulpopdracht openen, resultaat lezen, stoppen en hervatten via dezelfde owner-service als Telegram. Code en runtimekoppeling geïntegreerd; gerichte tests, browserfixture en onafhankelijke review geslaagd. De bediening hoort bij eigenaarsdashboard http://localhost:44711; installatie van de nieuwe frontend en API staat nog open. Dit projectdashboard op44712 toont de voortgang."
+        },
+        {
+          "title": "Al technisch opgeleverd — jouw oordeel blijft open",
+          "detail": "Bestaande hulpagentbediening, documentproject PJ-01, initiatief IN-02 en procedurehergebruik PR-01/R6 vragen geen nieuwe bouw om opnieuw bewezen te worden. Persoonlijke browsertoegang moet eerst opnieuw verbonden zijn; zie die eigen testkaart."
+        },
+        {
+          "title": "Nog open — grotere productwensen",
+          "detail": "Persoonsherkenning op gedeelde speakers, volledige Voice PE-kanaalgelijkheid, algemene achtergrondtaken met tools en meerdaagse autonomie zijn niet met de huidige kandidaten af. Geaccepteerd geheugen en Telegramstreaming blijven geaccepteerd."
         }
       ],
       "openRisks": [
@@ -982,9 +994,9 @@
       "document": "eva2/PROJECTDOEL.md",
       "scope": "Digitale huisgenoot: zelfstandig redeneren, initiatief, onbekende vaardigheden leren, handelen, zelfverbetering en aantoonbare concurrentiewinst met open-sourcehergebruik.",
       "sessionGoal": "Snel gedeeld gesprek met passende achtergrondmodellen; één Eva over alle kanalen.",
-      "currentWork": "**Lokale toegang werkt volgens de eerste gebruikersindruk; het gesprek is nog te traag.** Jaap meldt circa6seconden bij zowel begroeten als onderzoek. Gerichte meting: kernantwoord op Hallo4,52s, eerste tekst3,94s; eerste TTS-audiochunk0,27s. Dit is één proef, geen volledige audiometing of p95. De gewenste oplossing is een snel gespreksmodel met passend modelgebruik op de achtergrond vanuit dezelfde Eva-kern. Git-basis hersteld: actuele bron staat op GitHubmain en in de schone lokale projectmap. Dashboardtaakbediening is kandidaat in review; niet live.",
-      "currentEvidence": "eva2/evidence/product/voice-latency-owner-report-2026-09-22.json",
-      "nextStep": "Gebruik een snel model voor direct gesprek en eenvoudige antwoorden; laat de bestaande kern aangenomen werk vastleggen en op de achtergrond het passende werkmodel kiezen. Tijdens één of meer lopende opdrachten blijven gesprek, correctie en stop beschikbaar. Eerst bestaande provider- en taakmogelijkheden toetsen; geen extra kanaalscriptjes of aparte Eva-identiteiten. Snelheid en kwaliteit moeten vervolgens via de echte kanalen bewezen worden. Daarnaast is UX-002 de eerstvolgende korte bouwkandidaat: bestaande taken in het dashboard openen, resultaat lezen en stoppen (voorlopig 2–4 actieve agenturen inclusief gerichte controle/review). AU-002, browserovername, PJ-01 en IN-02 hebben al bestaande gebruikersproeven en vragen geen herbouw. Dashboardbediening wordt gebouwd. PR-01/R6 procedurehergebruik was al technisch opgeleverd; nieuwe bouw daarvoor vervalt.",
+      "currentWork": "GitHub en lokale bron zijn gelijkgetrokken. Snelle gespreksroute en dashboardtaakbediening zijn gebouwd, getest, onafhankelijk beoordeeld en in de bron geïntegreerd. Beide zijn nog niet live. Het gemelde trage gesprek is daarom nog niet als opgelost geaccepteerd.",
+      "currentEvidence": "eva2/evidence/product/fast-contact-candidate-2026-09-22.json",
+      "nextStep": "Bereid één samenhangende installatiekandidaat voor snel gesprek en taakbediening voor. Behoud bestaande installatie tot de kandidaat passend is gecontroleerd. Daarna echte kanaalproeven; privé-identiteit en volledig Voice PE-gedrag blijven afzonderlijk open. PR-01/R6 niet opnieuw bouwen.",
       "usageClarification": {
         "date": "2026-09-07",
         "authorizedBy": "Jaap",
@@ -10407,21 +10419,48 @@
       "parallelWork": {
         "voice": {
           "threadId": "01a0c8a6-d360-7a82-a630-af4bfccbd57c",
-          "state": "candidate_building",
+          "state": "reviewed_source_integrated_not_live",
           "files": "conversation.py/runtime.py/model layer"
         },
         "dashboard": {
           "agent": "/root/dashboard_finish",
-          "state": "candidate_in_review_runtime_wiring_in_progress",
+          "state": "reviewed_source_integrated_not_live",
           "commit": "85dff3fa",
           "files": "dashboard_work.py API/bootstrap,owner-work.jsx/css,main.jsx,app.py,scoped runtime wiring"
         },
         "review": {
           "agent": "/root/learning_finish",
-          "state": "source_sync_GO_dashboard_review_active",
+          "state": "source_sync_and_dashboard_GO",
           "files": "No production edits"
         }
       }
+    },
+    "fastContactDelivery20260922": {
+      "status": "source_integrated_not_live",
+      "featureCommit": "8c2f1544",
+      "evidence": "eva2/evidence/product/fast-contact-candidate-2026-09-22.json",
+      "tested": true,
+      "reviewed": true,
+      "live": false,
+      "accepted": false
+    },
+    "languagePolicy20260922": {
+      "source": "CONTRIBUTING.md",
+      "implemented": "English root README and contributor entry; English for new technical identifiers/comments/docs; Dutch owner decisions and user-facing language preserved.",
+      "notClaimed": "Entire repository translated, complete localization, public open-source release or project license selected."
+    },
+    "dashboardWorkDelivery20260922": {
+      "state": "reviewed_source_integrated_not_live",
+      "featureCommits": [
+        "1006a672",
+        "7e6791a9",
+        "59110453"
+      ],
+      "evidence": "eva2/evidence/product/dashboard-work-integration-2026-09-22.json",
+      "live": false,
+      "accepted": false,
+      "ownerUrl": "http://localhost:44711",
+      "projectProgressUrl": "http://localhost:44712"
     }
   },
   "activeTaskId": "AU-008",

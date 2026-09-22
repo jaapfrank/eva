@@ -1,20 +1,28 @@
 # Eva 2
 
-Open het **[projectdashboard](http://127.0.0.1:44712)** voor de huidige stand,
-open taken, komende gebruikersfuncties en concurrentie-/open-sourcekeuzes.
+Eva 2 is a digital housemate project focused on conversation, personal memory,
+voice interaction and completing useful tasks. It is under active development;
+implemented, tested, deployed and accepted by the owner are separate states.
 
-- [Dezelfde werklijst als tekst](eva2/WERKBORD.md)
-- [Het volledige projectdoel](eva2/PROJECTDOEL.md)
-- [Broncode en ontwikkelinformatie](eva2/README.md)
-- [Documentatie-ingang en onderhoud](eva2/DOCUMENTATIE_EN_ONDERHOUD.md)
-- [Componentkeuzes en gedateerd bewijs](OPEN_SOURCE_COMPONENTEN.md)
+- [Local project dashboard](http://127.0.0.1:44712) — available on the configured development machine
+- [Current workboard](eva2/WERKBORD.md) — Dutch owner-facing progress and evidence
+- [Project vision](eva2/PROJECTDOEL.md) — Dutch owner decisions
+- [Development guide](CONTRIBUTING.md)
+- [Component documentation](eva2/README.md)
+- [Documentation index](eva2/DOCUMENTATIE_EN_ONDERHOUD.md)
+- [Existing component choices](OPEN_SOURCE_COMPONENTEN.md)
 
-Deze repository staat in `/home/administrator/project/Eva2`.
-De actieve Python-module staat in `eva2/src/`, met tests in `eva2/tests/`.
-De oudere gedeelde repositoryonderdelen buiten `eva2/` zijn nog niet volledig
-uitgesplitst; ze zijn geen tweede actieve Eva-installatie.
-Eva1 blijft afzonderlijk in `/home/administrator/project/Bottie`.
+The active Python application is in `eva2/src/`, with tests in `eva2/tests/`.
+Older shared components outside `eva2/` have not all been separated from the
+legacy project. Their presence does not indicate a second active Eva 2 runtime.
 
-De oude kandidaatlocatie is alleen een compatibiliteitslink. Er is één actieve
-werkmap. Historische controlebestanden gelden niet automatisch als actuele
-productstatus; het dashboard leest de gezamenlijke werklijst opnieuw in.
+The current development checkout is `/home/administrator/project/Eva2`;
+the separate legacy installation is `/home/administrator/project/Bottie`.
+New work starts from the current integration commit on `main`. Historical
+evidence applies to its recorded version and scope, not automatically to today.
+
+Code identifiers and technical interfaces are predominantly English. Existing
+documentation and user-facing text are mixed English and Dutch. New technical
+code and developer documentation use English; conversation and interface
+language remain user-facing choices. The repository has not yet been prepared
+as a complete public open-source release.

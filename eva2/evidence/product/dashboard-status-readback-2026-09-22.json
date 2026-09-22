@@ -1,0 +1,15 @@
+{
+  "date": "2026-09-22",
+  "endpoint": "http://127.0.0.1:44712/project-state",
+  "nextOutcomesMatchSource": true,
+  "priorityMatchesSource": true,
+  "existingCapabilityStatusesUnchanged": true,
+  "currentOutcomes": [
+    "Git hersteld — gezamenlijke bron op GitHub",
+    "Sneller gesprek — gebouwd en getest, nog niet live",
+    "Taken bedienen — bron geïntegreerd, nog niet live",
+    "Al technisch opgeleverd — jouw oordeel blijft open",
+    "Nog open — grotere productwensen"
+  ],
+  "scope": "Live data projection; no new browser layout or live feature installation claimed."
+}

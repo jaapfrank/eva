@@ -281,3 +281,12 @@ bronnen wanneer recente eigenaarbesluiten ze vervangen. Registreer conflicten
 en herstel verwijzingen in de primaire bron; maak geen tweede werkbord.
 Claim niet dat alle documentatie is gelezen wanneer alleen een selectie is
 beoordeeld.
+
+## Implementation language — 22 September 2026
+
+Use English for new code identifiers, comments, docstrings, test descriptions and
+developer documentation. Preserve existing API/schema contracts and historical
+evidence. User-facing Dutch conversation, prompts and owner decisions remain
+valid; keep implementation language separate from user language. See
+[CONTRIBUTING.md](CONTRIBUTING.md). Do not start a repository-wide translation
+or change Eva's conversation language as part of ordinary feature work.

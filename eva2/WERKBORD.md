@@ -5,10 +5,10 @@ Laatst bijgewerkt: 2026-09-22.
 Doel: [Eva als zelfstandig lerende digitale huisgenoot](PROJECTDOEL.md).
 Gebouwd, getest, live en door jou geaccepteerd zijn verschillende stappen.
 
-**Lokale toegang werkt volgens de eerste gebruikersindruk; het gesprek is nog te traag.** Jaap meldt circa6seconden bij zowel begroeten als onderzoek. Gerichte meting: kernantwoord op Hallo4,52s, eerste tekst3,94s; eerste TTS-audiochunk0,27s. Dit is één proef, geen volledige audiometing of p95. De gewenste oplossing is een snel gespreksmodel met passend modelgebruik op de achtergrond vanuit dezelfde Eva-kern. Git-basis hersteld: actuele bron staat op GitHubmain en in de schone lokale projectmap. Dashboardtaakbediening is kandidaat in review; niet live.
-[Actueel bewijs](evidence/product/voice-latency-owner-report-2026-09-22.json).
+GitHub en lokale bron zijn gelijkgetrokken. Snelle gespreksroute en dashboardtaakbediening zijn gebouwd, getest, onafhankelijk beoordeeld en in de bron geïntegreerd. Beide zijn nog niet live. Het gemelde trage gesprek is daarom nog niet als opgelost geaccepteerd.
+[Actueel bewijs](evidence/product/fast-contact-candidate-2026-09-22.json).
 
-Gebruik een snel model voor direct gesprek en eenvoudige antwoorden; laat de bestaande kern aangenomen werk vastleggen en op de achtergrond het passende werkmodel kiezen. Tijdens één of meer lopende opdrachten blijven gesprek, correctie en stop beschikbaar. Eerst bestaande provider- en taakmogelijkheden toetsen; geen extra kanaalscriptjes of aparte Eva-identiteiten. Snelheid en kwaliteit moeten vervolgens via de echte kanalen bewezen worden. Daarnaast is UX-002 de eerstvolgende korte bouwkandidaat: bestaande taken in het dashboard openen, resultaat lezen en stoppen (voorlopig 2–4 actieve agenturen inclusief gerichte controle/review). AU-002, browserovername, PJ-01 en IN-02 hebben al bestaande gebruikersproeven en vragen geen herbouw. Dashboardbediening wordt gebouwd. PR-01/R6 procedurehergebruik was al technisch opgeleverd; nieuwe bouw daarvoor vervalt.
+Bereid één samenhangende installatiekandidaat voor snel gesprek en taakbediening voor. Behoud bestaande installatie tot de kandidaat passend is gecontroleerd. Daarna echte kanaalproeven; privé-identiteit en volledig Voice PE-gedrag blijven afzonderlijk open. PR-01/R6 niet opnieuw bouwen.
 
 <details>
 <summary>Historische voortgang en eerdere tussenstanden — niet de actuele opleverstatus</summary>
