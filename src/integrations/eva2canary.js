@@ -66,13 +66,58 @@ function telegramCanaryIdentity({ chatId, fromId }) {
   return Object.freeze({ chat: String(chat), sender });
 }
 
-async function readCanaryStream(response, onDraft) {
+function canaryDeadlines({ connectTimeoutMs, idleTimeoutMs, timeoutMs, signal }) {
+  for (const value of [connectTimeoutMs, idleTimeoutMs, timeoutMs]) {
+    if (!Number.isSafeInteger(value) || value < 1 || value > 300_000) {
+      throw new Error('Eva2 heeft een ongeldige transporttijdslimiet');
+    }
+  }
+  const controller = new AbortController();
+  let connectTimer; let idleTimer;
+  const abort = (phase) => controller.abort(Object.assign(
+    new Error(`Eva2: wachttijd voor ${phase} verstreken; de verwerking kan nog lopen. Er is geen tweede verzoek verstuurd.`),
+    { code: 'EVA2_TRANSPORT_TIMEOUT', phase },
+  ));
+  const totalTimer = setTimeout(() => abort('totale verwerking'), timeoutMs);
+  connectTimer = setTimeout(() => abort('verbinding'), connectTimeoutMs);
+  const cancelled = () => controller.abort(signal.reason || new Error('Eva2-verzoek onderbroken'));
+  signal?.addEventListener('abort', cancelled, { once: true });
+  if (signal?.aborted) cancelled();
+  const touch = () => {
+    clearTimeout(idleTimer);
+    idleTimer = setTimeout(() => abort('voortgang'), idleTimeoutMs);
+  };
+  const wait = (pending) => new Promise((resolve, reject) => {
+    const cleanup = () => controller.signal.removeEventListener('abort', stopped);
+    const stopped = () => { cleanup(); reject(controller.signal.reason); };
+    if (controller.signal.aborted) stopped();
+    else controller.signal.addEventListener('abort', stopped, { once: true });
+    // Observe late completion/rejection too; never forward it after a deadline.
+    Promise.resolve(pending).then(
+      (value) => { cleanup(); resolve(value); },
+      (error) => { cleanup(); reject(error); },
+    );
+  });
+  return {
+    signal: controller.signal, wait, touch,
+    cancel(reason) { controller.abort(reason); },
+    connected() { clearTimeout(connectTimer); touch(); },
+    close() {
+      clearTimeout(connectTimer); clearTimeout(idleTimer); clearTimeout(totalTimer);
+      signal?.removeEventListener('abort', cancelled);
+    },
+  };
+}
+
+async function readCanaryStream(response, onDraft, deadline) {
   const reader = response.body?.getReader?.();
   if (!reader) throw new Error('Eva B-canary gaf geen leesbare tekststream');
   const decoder = new TextDecoder();
-  let buffered = ''; let cumulative = ''; let final = null;
+  let buffered = ''; let cumulative = ''; let final = null; let completed = false;
+  try {
   while (true) {
-    const { value, done } = await reader.read();
+    const { value, done } = await deadline.wait(reader.read());
+    if (value?.length) deadline.touch();
     buffered += decoder.decode(value || new Uint8Array(), { stream: !done });
     const lines = buffered.split('\n'); buffered = lines.pop() || '';
     for (const line of lines) {
@@ -80,16 +125,22 @@ async function readCanaryStream(response, onDraft) {
       const item = JSON.parse(line);
       if (item?.contract === 'EvaTextDelta/v1' && typeof item.text === 'string') {
         cumulative += item.text;
-        if (cumulative) await onDraft(cumulative);
+        if (cumulative) await deadline.wait(onDraft(cumulative));
       } else if (item?.contract === 'EvaInternalGroundedReply/v1') final = item;
       else if (item?.contract === 'EvaTextStreamError/v1') {
         throw new Error('Eva2 kon haar antwoord niet veilig afronden');
       } else throw new Error('Eva2 gaf een onbekend tekststreambericht');
     }
-    if (done) break;
+    if (done) { completed = true; break; }
   }
   if (buffered.trim()) throw new Error('Eva B-canary tekststream eindigde onvolledig');
   return final;
+  } finally {
+    if (!completed) {
+      try { Promise.resolve(reader.cancel?.()).catch(() => {}); } catch { /* keep original failure */ }
+    }
+    try { reader.releaseLock?.(); } catch { /* preserve the original outcome */ }
+  }
 }
 
 export async function askEva2Canary({
@@ -101,7 +152,10 @@ export async function askEva2Canary({
   telegramDate,
   fetchImpl = fetch,
   onDraft = null,
-  timeoutMs = 20_000,
+  timeoutMs = 300_000,
+  connectTimeoutMs = 20_000,
+  idleTimeoutMs = 120_000,
+  signal = null,
 }) {
   const prompt = eva2CanaryPrompt(text);
   if (prompt === null) return null;
@@ -122,27 +176,28 @@ export async function askEva2Canary({
     tenant_id: 'live-test-tenant',
     text: prompt,
   });
+  const deadline = canaryDeadlines({ connectTimeoutMs, idleTimeoutMs, timeoutMs, signal });
   let response;
-  for (let attempt = 0; attempt < 2; attempt += 1) {
-    response = await fetchImpl(url, {
+  try {
+    // One request only: an uncertain or late result must never dispatch twice.
+    if (deadline.signal.aborted) throw deadline.signal.reason;
+    response = await deadline.wait(fetchImpl(url, {
       method: 'POST',
       headers: {
         Accept: streaming ? 'application/x-ndjson' : 'application/json',
         'Content-Type': 'application/json',
       },
       body,
-      signal: AbortSignal.timeout(timeoutMs),
-    });
-    if (response.status !== 503 || attempt > 0) break;
-    try { await response.arrayBuffer?.(); } catch { /* discard the bounded error */ }
-  }
+      signal: deadline.signal,
+    }));
+    deadline.connected();
   if (!response) throw new Error('Eva B-canary gaf geen antwoord');
   if (!response.ok) {
     throw new Error(`Eva B-canary antwoordde met HTTP ${response.status}`);
   }
   const streamed = streaming && response.headers?.get?.('content-type')
     ?.includes('application/x-ndjson');
-  const payload = streamed ? await readCanaryStream(response, onDraft) : await response.json();
+  const payload = streamed ? await readCanaryStream(response, onDraft, deadline) : await deadline.wait(response.json());
   if (payload?.contract !== 'EvaInternalGroundedReply/v1'
     || typeof payload.text !== 'string' || !payload.text.trim()
     || payload.conversation_id !== `telegram:${chatId}`
@@ -150,4 +205,11 @@ export async function askEva2Canary({
     throw new Error('Eva B-canary gaf geen geldig gesprekantwoord');
   }
   return Object.freeze({ ...payload, text: payload.text.trim(), fromId: String(fromId) });
+  } catch (error) {
+    deadline.cancel(error);
+    if (response?.body && !response.body.locked) {
+      try { Promise.resolve(response.body.cancel?.()).catch(() => {}); } catch { /* original error wins */ }
+    }
+    throw error;
+  } finally { deadline.close(); }
 }
