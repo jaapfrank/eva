@@ -1109,7 +1109,7 @@
         ],
         "now": {
           "title": "Gezamenlijke herstelroute en gecontroleerde vrijgave verbinden",
-          "detail": "Pakketinhoud, versleuteling en afzonderlijke hersteltoestemming zijn getest. De privé-kernproef loopt; gezamenlijk verzamelen, terugzetten en vrijgeven zijn nog niet aangesloten.",
+          "detail": "Pakket, hersteltoestemming, gatewaykopie en terugzetting met juiste eigenaar/rechten zijn getest. De privé-kernproef loopt; gezamenlijke controller en vrijgave zijn nog niet aangesloten.",
           "state": "Integratie open · niet geïnstalleerd",
           "doneWhen": "Een hersteld project is leesbaar en kan alleen zijn ontbrekende stap uitvoeren, zonder oude uitvoeringsbewijzen te veranderen."
         },
@@ -11589,6 +11589,11 @@
       "installationPackage": {
         "status": "content_envelope_tested_reviewed_controller_pending",
         "evidence": "eva2/evidence/product/installation-recovery-package-20260923.json",
+        "installed": false
+      },
+      "componentMaterialization": {
+        "status": "source_tested_reviewed_controller_pending",
+        "evidence": "eva2/evidence/product/installation-recovery-materialization-20260923.json",
         "installed": false
       }
     }

@@ -99,3 +99,23 @@ Deze controle volgt op inhoudsvalidatie en verleent geen runtimevrijgave.
 De bestaande wizard accepteert dit nieuwe pakket nog niet als complete
 installatieherstelroute; controller, materialisatie en activatie moeten eerst
 samen worden aangesloten en getest.
+
+### Verzamelen en inactief terugzetten
+
+`installation_gateway_snapshot.snapshot_gateway_database` gebruikt de SQLite
+backup-API, controleert logische bron-/doelinhoud en roept de vertrouwde
+quiescentiecontrole vóór en na aan. Het vervangt geen writerstop. Publicatie
+weigert een bestaand doel, ook als dat tijdens de kopie verschijnt.
+
+`materialize_installation_package(package_root, destination, owners=...)`
+maakt uitsluitend een nieuwe inactieve directory. De operator levert voor
+`core`, `memory`, `gateway`, `documents` en `config` elk één `{uid,gid}`;
+deze eigenaar komt nooit uit het archief. Root kan de bestaande provider-UID
+10001 behouden; een onbevoegd proces mag geen andere eigenaar kiezen. Alle
+bestandsbytes, rolrechten en eigenaren worden vóór no-replace-publicatie
+gecontroleerd. Dit start geen provider en geeft de DB-hold niet vrij.
+
+Na succesvolle publicatie met een daaropvolgende fsync-fout kan de geldige
+doelkopie bestaan ondanks een foutmelding. De controller moet die toestand
+controleren en bewaren; een blinde nieuwe kopie of overschrijving is onjuist.
+De gezamenlijke controller en opname in de gewone wizard blijven open.

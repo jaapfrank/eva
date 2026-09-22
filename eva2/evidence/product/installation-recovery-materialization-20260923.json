@@ -1,0 +1,40 @@
+{
+  "date": "2026-09-23",
+  "status": "source_tested_reviewed_not_installed",
+  "files": {
+    "tools/installation_gateway_snapshot.py": "7ed1719d7fc0c76431cd87e6209c546ad3b1395c8de327b5551d6704bdec7274",
+    "tests/operations/test_installation_gateway_snapshot.py": "7c14abf5e31138e71d679f01766cf77ff8ebee381026d9475246493d9d34226a",
+    "tools/installation_recovery_materializer.py": "ce5b640c9d0aea547b62c1efd88f2b3d496c36fad4c171c2cf85b4d14fadaaeb",
+    "tests/portable/test_installation_recovery_materializer.py": "49d659298203e15e39a11b8fe00aa1af5f35c0e92846628e857df03131cc4cd8"
+  },
+  "gatewaySnapshot": {
+    "testsPassed": 7,
+    "toolOutputChunk": "04e2ee",
+    "reviewer": "document_private_identity (independent of root author)",
+    "result": "SQLite backup captures committed WAL; source/snapshot logical digests match; fresh operator checks before/after; exclusive publication and private0600 result.",
+    "limits": "Synthetic SQLite fixture; verify_quiescence is trusted callback, not implemented whole-product fencing. No actual gateway database copied in this test."
+  },
+  "materializer": {
+    "testsPassed": 12,
+    "rootUid10001TestPassed": 1,
+    "reviewer": "root coordinator (independent of agent author)",
+    "review": "Source and tests independently read, including FDvalidation correction. Real root test provisioned documents/config/gateway UID:GID10001:10001 and checked bytes,0400/0600 files and0700 directories.",
+    "logs": {
+      "initial": "1174119c65ced1d585c9247e038a72cc716804d3fbad0cddf687f14af8657261",
+      "correctedSuite": "affd438328fbde9c67889ee2e32cd90ac33c30ed4d80c1e75fa0c45528db872b",
+      "rootProviderUid": "8c855080d0a5755b01cb4704610b285064b0e18240afe11897299ec5b1afe34d"
+    },
+    "failedAttempt": "9pass3fail: Path normalized /proc/self/fd/N/. to final symlink rejected by NOFOLLOW. Fixed by existing validator on held directoryFD, no link checks relaxed. Targeted suite rerun12pass1rootonlyskip, skippedcase separately passed as root.",
+    "environment": "Isolated PG16 core fixture; host root UID test in PG network namespace using existing retained operator dependencies; external component payloads synthetic."
+  },
+  "limits": [
+    "These helpers are not yet assembled into complete installation controller",
+    "Materializer returns inactive copy only; no DB import/nativeprepare/providerstart/holdrelease",
+    "One trusted owner per component; no ownership inferred from archive",
+    "After publication succeeds but directory fsync fails, valid inactive destination may remain despite exception; inspect/reconcile, never blindly overwrite",
+    "Legacy-v1 providers, repeated relocation and complete dependency coverage remain open"
+  ],
+  "modelProviderCalls": 0,
+  "creditCosts": "unknown",
+  "productionChanged": false
+}
