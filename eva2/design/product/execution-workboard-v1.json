@@ -1003,6 +1003,14 @@
         "checkedAt": "2026-09-22",
         "deliveries": [
           {
+            "title": "Korte ontvangst zonder GPT-wachttijd",
+            "date": "22 september",
+            "state": "installed",
+            "result": "De privéspraakpagina zegt na ontvangst “Een momentje” terwijl de antwoordcall loopt. Die zin gaat niet terug het modelgeheugen in.",
+            "remaining": "Jouw hoorbare praktijkproef staat open; het inhoudelijke antwoord is nog niet sneller bewezen. De huishoudspeaker volgt met zijn eigen installatie.",
+            "source": "eva2/evidence/product/received-input-installed-20260922.json"
+          },
+          {
             "title": "Resultaten terug in tekst en privéspraak",
             "date": "22 september",
             "state": "installed",
@@ -1017,36 +1025,29 @@
             "result": "De speakerdienst draait en de Eva-kern is aangesloten.",
             "remaining": "Het apparaat zelf en de netwerktoegang moeten nog worden aangesloten en getest.",
             "source": "eva2/evidence/product/voice-speaker-activation-20260922.json"
-          },
-          {
-            "title": "Onderzoeksresultaat terug in Telegram",
-            "date": "22 september",
-            "state": "installed",
-            "result": "Automatische terugmelding voor nieuwe privéopdrachten is geïnstalleerd. Opgeslagen resultaten blijven leesbaar.",
-            "remaining": "Jouw proef met een nieuwe Telegramopdracht staat nog open.",
-            "source": "eva2/evidence/product/private-result-return-live-2026-09-22.json"
           }
         ],
         "now": {
-          "title": "Begroeting duurt nog ongeveer 5 seconden",
-          "detail": "De begroeting wachtte 3,94 seconden op eerste modeltekst. Eén uitvoerder onderzoekt cachehergebruik zonder contextverlies. Het huishoudelijke serverdeel én de HTTP-koppeling zijn getest en onafhankelijk beoordeeld. De andere uitvoerder sluit nu de mediasessie en dezelfde taakprovider aan; dit kanaalpad is nog niet geïnstalleerd.",
-          "state": "Probleem in onderzoek",
-          "doneWhen": "Een gerichte verbetering is getest, beoordeeld en geïnstalleerd; de eerste hoorbare reactie wordt apart gemeten. Bestaande identiteit, geheugen en achtergrondwerk blijven werken."
+          "title": "Tussendoor praten en snelle ontvangst herstellen",
+          "detail": "De standaardontvangst is live op de privéspraakpagina. Eén uitvoerder herstelt het wachten op tussenvragen in de echte /eva2-Telegramroute; de andere sluit huishoudelijke mediasessies aan. Daarnaast is Jaaps onderzoeksvoorbeeld afgewezen op inhoudelijke volledigheid: essentiële controles bleven open.",
+          "state": "In uitvoering — praktijkproblemen open",
+          "doneWhen": "Ontvangst is hoorbaar zonder GPT-wachttijd en een tussenvraag wordt vóór voltooiing van het eerdere werk beantwoord. Na tests, review en installatie volgt een concrete herhaalproef."
         },
         "next": {
-          "title": "Snelle contactroute herstellen en meten",
-          "detail": "Beoordeel de gemeten cachinguitkomst. Sluit daarna de huishoudelijke mediasessie en dezelfde taakprovider aan; toets en installeer het complete kanaalpad. De documentpool heeft een geslaagde actuele voorcontrole, maar nog geen registraties of activatie.",
+          "title": "Tussenvragen en volledige taakafronding herstellen",
+          "detail": "Test en installeer de correctie op de echte Telegramingang. Sluit de huishoudelijke mediasessie aan. Onderzoek daarna waarom Eva belangrijke controles open liet in het uitgebreide advies, met behoud van bestaande vervolgmogelijkheden.",
           "state": "Hierna"
         },
         "ownerAction": {
-          "title": "Je traagheidsmelding is geregistreerd",
-          "url": "http://localhost:44711/internal/v1/dashboard/conversation",
-          "linkLabel": "Open het tekstgesprek",
+          "title": "Probeer de korte ontvangst op de spraakpagina",
+          "url": "http://localhost:44716/",
+          "linkLabel": "Open Praten met Eva",
           "steps": [
-            "Je hoeft Hallo niet opnieuw te testen om de huidige vertraging te bewijzen.",
-            "Na een geïnstalleerde verbetering volgt hier de concrete herhaalproef. De volledige proef met achtergrondresultaten blijft afzonderlijk open."
+            "Ververs de pagina en begin een nieuw spraakgesprek.",
+            "Zeg “Hallo”. Eva hoort eerst kort “Een momentje” te zeggen terwijl het echte antwoord wordt gemaakt.",
+            "Onderbreek gerust en stel een andere vraag. Meld of de ontvangst snel hoorbaar is en onderbreken blijft werken."
           ],
-          "expected": "Bij sluiten blijft toegelaten werk bestaan; opgeslagen resultaten vind je in Mijn hulpopdrachten. Een nieuwe spraaksessie speelt oude of onzeker afgeleverde resultaten niet automatisch opnieuw af. Voor de aparte Voice PE-proef: sluit de woonkamer-Voice PE per USB-datakabel aan en meld dit in de taak; het andere apparaat blijft ongewijzigd."
+          "expected": "Dit test alleen de nieuwe ontvangst op de website. Het wachten op tussenvragen in Telegram en de onvolledige onderzoeksafronding zijn nog niet opgelost; die hoef je niet opnieuw te bewijzen."
         },
         "maintenance": "Bij een oplevering, gewijzigde opdracht of blokkade worden resultaat, huidig werk en volgende stap samen bijgewerkt. Technisch afgerond, geïnstalleerd en door jou geaccepteerd blijven apart."
       }
@@ -10810,7 +10811,7 @@
           "planningEffortHours": "4–12"
         }
       ],
-      "nextAction": "Onderzoek en herstel eerst de gemeten trage websitebegroeting (3,94 s tot eerste modeltekst). Huishoudelijk onderzoek loopt parallel door; privéresultaatterugkeer is geïnstalleerd, menselijke acceptatie blijft open.",
+      "nextAction": "De standaardontvangst is geïnstalleerd op de privéspraakpagina. Herstel parallel de echte /eva2-Telegramroute zodat een tussenvraag niet achter eerder werk wacht; sluit huishoudelijke mediasessies aan op dezelfde taakuitvoering. Werk de inhoudelijke onderzoeksafronding verder uit op basis van Jaaps afgewezen adviesvoorbeeld. Kanaalbewijs en eigenaaracceptatie blijven apart.",
       "effortNotice": "Grove planning, lage zekerheid: 40–118 actieve ontwikkeluren plus zeven dagen gezinspraktijk en eventuele externe wachttijd. Geen deadline, creditkosten of gemeten verbruik; per begrensde wijziging aanscherpen na lezing van bestaand bewijs. Hergebruik kan dit verkorten.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Na review, installatie en registratie automatisch volgende uitvoerbare stap; geen algemene wachtstop op gebruikersproeven.",
@@ -10926,11 +10927,12 @@
       "evidence": "Bestaande operational_events REPLY_COMMITTED: exacte door eigenaar geciteerde antwoordtekst gematcht; geen nieuwe modelproef.",
       "limitation": "Modeltiming is gemeten; volledige microfoon-tot-audioverdeling nog niet gemeten. Geen oorzaakclaim over iedere invoertoken.",
       "nextExperiment": {
-        "status": "in_progress",
+        "status": "closed_not_supported_on_current_provider_route",
         "hypothesis": "Scheid de stabiele instructieprefix van veranderlijke context zonder inhoud, tools, identiteit of privacygrenzen weg te laten; onderzoek werkelijke cachehergebruik en reactietijd.",
         "limit": "Eerst offline inspectie; maximaal vier modelcalls indien nodig voor ondersteunde vergelijking. Geen installatie zonder gemeten voordeel.",
         "previousRejectedHypotheses": "Voorbereiding en reasoning none gaven in eerdere proef geen totale snelheidswinst; niet herhalen.",
-        "evidence": "eva2/evidence/product/contact-latency-decision-2026-09-22.json"
+        "evidence": "eva2/evidence/product/prompt-cache-handoff-20260922.md",
+        "outcome": "De expliciete cachegrens wordt door de huidige Codexroute met HTTP400 afgewezen. Geen productiewijziging. Bestaand impliciet cachehergebruik is gemeten in een gecontroleerde context; dit bewijst geen snellere websitebegroeting."
       }
     },
     "householdPublicWorkServer20260922": {
@@ -10971,6 +10973,59 @@
       "modelCalls": 0,
       "maintenanceWindowCompleted": false,
       "remaining": "Concrete onderhoudsuitvoering/seal/review, twee registraties, actuele catalogusbindings en afzonderlijke effectfase. Geen installatie-GO."
+    },
+    "standardReceipt20260922": {
+      "ownerDecision": "Korte standaardontvangst zonder GPT is toegestaan; werkclaim vereist echte toelating.",
+      "sourceCommit": "c76b905e",
+      "status": "installed_private_website_voice",
+      "installed": true,
+      "text": "Een momentje.",
+      "modelCalls": 0,
+      "packagedTestsPassed": 28,
+      "sttEngine": "stt.home_assistant_cloud",
+      "ttsEngine": "tts.home_assistant_cloud",
+      "localSilenceDetectionSeconds": 0.45,
+      "ttsSingleProbe": {
+        "firstAudioBytesMs": 432,
+        "completedMs": 461,
+        "audioBytes": 11733,
+        "ttsCalls": 1,
+        "modelCalls": 0,
+        "physicalPlaybackMeasured": false
+      },
+      "evidence": "eva2/evidence/product/received-input-installed-20260922.json",
+      "ownerAccepted": false
+    },
+    "telegramConcurrentConversation20260922": {
+      "status": "owner_trial_failed_investigation_in_progress",
+      "ownerReport": "Telegram /eva2 verwerkt uitgebreidere adviesvraag en tussenvraag hoe gaat het met jou stap voor stap; tussenvraag krijgt niet tussendoor antwoord.",
+      "accepted": false,
+      "investigatorTaskId": "01a0c8a6-d360-7a82-a630-af4bfccbd57c",
+      "outcomeRequired": "Tussenvraag wordt beantwoord terwijl eerder aangenomen werk doorloopt, zonder dubbele acties of verlies van context en persoonsgrenzen.",
+      "nextEvidence": "Gecontroleerde proef op echte Telegramingress: blokkeer eerste langdurige beurt en bewijs tweede antwoord vóór vrijgave, plus passende regressies.",
+      "estimatedMinutes": "60 planning, geen gemeten verbruik",
+      "modelCallsAllowed": 0
+    },
+    "researchCompletionOwnerFinding20260922": {
+      "status": "owner_quality_trial_failed",
+      "accepted": false,
+      "ownerReport": "Een gedegen advies moet belangrijke ontbrekende gegevens verder onderzoeken; kon ik niet verifiëren zonder voldoende poging is geen goede afronding.",
+      "artifactTitle": "Gedegen actuele analyse van XRP",
+      "artifactRecordedAt": "2026-09-22T17:01:28Z",
+      "existingMeasuredUsage": {
+        "modelAttempts": 1,
+        "toolCalls": 3,
+        "inputTokens": 21881,
+        "outputTokens": 819
+      },
+      "finding": "Het opgeslagen document noemt actuele gebruiksgroei, netto-aanbod en orderboekdiepte als nog uit te voeren controles. De vervolgreactie gaf toch al een koop-/niet-koopoordeel. De receipt bewijst alleen het onderzoeksdocument, niet volledige vraagafhandeling.",
+      "sourcePaths": [
+        "eva2/src/eva/adapters/model/pydantic_conversation.py",
+        "eva2/src/eva/adapters/postgres/conversation_actions.py",
+        "eva2/src/eva/adapters/model/research_tools.py"
+      ],
+      "remaining": "Controleer daadwerkelijke onderzoeksdekking en het gebruik van bestaande vervolgstappen. Belangrijke ontbrekende gegevens gericht onderzoeken of concrete geprobeerde bronnen/toegangsbelemmering vastleggen; geen verificatie verzinnen.",
+      "extraModelCalls": 0
     }
   },
   "activeTaskId": "AU-008",

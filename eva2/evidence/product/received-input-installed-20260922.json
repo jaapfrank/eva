@@ -1,0 +1,33 @@
+{
+  "installed": true,
+  "container": "6ec6f0ddcfda81c3e632905b0f3bb63e8547bc7be7c6db9890822979c4e63ef7",
+  "image": "sha256:daae43c50b211955aaf75a598be16246dca8bcf530f878991e572f8e1312a53d",
+  "parent": "sha256:61584705ace94e5b1afd0a564d0425dd0e1c2e108df92185c0d875956bd29579",
+  "ready": true,
+  "protectedServices": 8,
+  "rollbackAvailable": true,
+  "sourceCommit": "c76b905e2a98b03fe5f9444b08dffe23ba47bb96",
+  "text": "Een momentje.",
+  "scope": "Private website voice media; HouseholdCoreClient uses the same source, separate running speaker image not updated by this installation.",
+  "reviewerTaskId": "01a0c915-205e-7c11-809a-674ae09e016c",
+  "installerSha256": "a90ca68c138551bb641d883d60c8c5507064cf67ef56267177db0aa13fc57adf",
+  "packagedTests": {
+    "passed": 28,
+    "seconds": 2.85
+  },
+  "modelCalls": 0,
+  "ttsProbe": {
+    "engine": "tts.home_assistant_cloud",
+    "firstAudioBytesMs": 432,
+    "completedMs": 461,
+    "calls": 1,
+    "physicalPlaybackMeasured": false
+  },
+  "sttEngine": "stt.home_assistant_cloud",
+  "ownerAccepted": false,
+  "limitations": [
+    "No claim that GPT answers are faster",
+    "No physical speaker or human-heard latency measurement",
+    "Telegram concurrent conversation remains open"
+  ]
+}
