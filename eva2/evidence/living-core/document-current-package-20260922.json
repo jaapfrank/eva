@@ -1,0 +1,46 @@
+{
+  "image": "sha256:285164b4029631d292b11d82159f050055b98ae6b7bf1ce76556e661a5536209",
+  "parent": "sha256:b6322914191fa9fcf139c30014ffd06696ebc1e9b381e6aa289ebfaef36ada3e",
+  "source": "789fb0c613f202c3ce71ba3f05798a221f6804dc",
+  "currentParentSource": "cf7b78bd",
+  "hashes": {
+    "adapters/postgres/durable_goals.py": "fdd3afcb0da4617526af9baac3098552cebd5507c6588b7457809dcd5485992a",
+    "bootstrap/document_goal_worker.py": "8faca4d834091a27d516908c119ea0b69a4b6dd5ad1455332114cff377e3e26e",
+    "providers/document_goal_actions.py": "ea74b309d1d599d6b7c0daec8952efa27cce9c4434903a3609da02e7d4377ad4",
+    "providers/document_goal_plan.py": "e0e4bb9dad17eec92da010b3afb341b54602a0db37508929105facbc27a75ac0",
+    "providers/document_goals.py": "f000aae4f310c39771195dce1122d3a877ca5045cbd07978e9bbeac5c69667b8",
+    "providers/document_task_actions.py": "9de351ecdd3d94120163417f51c24b374d2c54d6302606120753a943561e721a",
+    "providers/document_task_input.py": "e9baec3762cc019e9554484837f0f3e1b3589c981a4b6fa53381bf155e2a1d5e"
+  },
+  "importsPassed": true,
+  "installed": false,
+  "modelCalls": 0,
+  "exactChangedFiles": [
+    "adapters/postgres/durable_goals.py",
+    "bootstrap/document_goal_worker.py",
+    "providers/document_goal_actions.py",
+    "providers/document_goal_plan.py",
+    "providers/document_goals.py",
+    "providers/document_task_actions.py",
+    "providers/document_task_input.py"
+  ],
+  "allOtherPythonSourcesPreserved": true,
+  "privateMemorySourcePreserved": true,
+  "status": "current_runtime_package_tested_not_installed",
+  "packagedTests": {
+    "passed": 39,
+    "seconds": 3.61,
+    "scope": [
+      "document task input",
+      "document goal plan",
+      "PostgreSQL document task actions"
+    ],
+    "nativeEffectFixtureReplayed": false
+  },
+  "remaining": [
+    "Concrete gateway registration maintenance and independent review",
+    "Catalog-bound pool activation with preserved legacy project",
+    "Ordinary conversation and user trial"
+  ],
+  "creditCost": "unknown"
+}

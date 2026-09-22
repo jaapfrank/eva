@@ -1036,15 +1036,15 @@
           }
         ],
         "now": {
-          "title": "Privékoppeling geïnstalleerd; kanaalproef beschikbaar",
-          "detail": "12 nieuwe tests slagen ook tegen het installatiepakket. Live persoonskoppeling en huishoudsessie gecontroleerd; geen bestaande herinneringen verplaatst of verwijderd.",
-          "state": "Geïnstalleerd; jouw kanaalproef staat open",
-          "doneWhen": "Je kunt een onderwerp uit de website in jouw privé-Telegram voortzetten. Technische oplevering is gedaan; jouw ervaring wordt afzonderlijk vastgelegd."
+          "title": "Bestaande documentopdrachten activeren",
+          "detail": "Het actuele pakket is getest: 39 controles geslaagd, recente spraak- en geheugenwijzigingen blijven behouden. Eén uitvoerder maakt de beperkte registratieprocedure af; de coördinator controleert pakket en terugweg.",
+          "state": "Pakket klaar; registratievoorbereiding loopt",
+          "doneWhen": "Registratie en poolconfiguratie zijn beoordeeld en geïnstalleerd; twee documenten zijn via de gewone gesprekstaak te maken, volgen en stoppen met behoud van het bestaande project."
         },
         "next": {
-          "title": "Resterende kanaal- en apparaatafronding",
-          "detail": "Privécontinuïteit is geïnstalleerd. Telegram-doorpraten en fysieke Voice PE blijven afzonderlijke praktijkproeven; USB/apparaattoegang en de keuze voor privéspreken zijn nog nodig voor de fysieke afronding.",
-          "state": "Open praktijkbewijs; geen algemene bouwstop"
+          "title": "Registratie beoordelen en gecontroleerd activeren",
+          "detail": "Controleer de concrete stop-/herstelprocedure en registerbehoud; registreer de twee voorbereide aanbieders eenmaal. Activeer daarna pas de catalogusgebonden documentpool.",
+          "state": "Na technische review"
         },
         "ownerAction": {
           "title": "Kom via Telegram terug op een websitegesprek",
@@ -10825,7 +10825,7 @@
           "planningEffortHours": "4–12"
         }
       ],
-      "nextAction": "Gebruik uitsluitend de bestaande geverifieerde persoonskoppeling voor privéherinneringen over website en Telegram. Bewaar oorspronkelijke bronnen; toets andere persoon, groep, gedeelde speaker en ingetrokken koppeling. Geen privétoegang op basis van alleen een naam of apparaat.",
+      "nextAction": "Maak de bestaande documenttaakregistratie veilig uitvoerbaar op de huidige runtime; behoud afgeronde kanaalwijzigingen en wacht niet op open gebruikersproeven. Fysieke Voice PE vereist nog USB/apparaattoegang.",
       "effortNotice": "Grove planning, lage zekerheid: 40–118 actieve ontwikkeluren plus zeven dagen gezinspraktijk en eventuele externe wachttijd. Geen deadline, creditkosten of gemeten verbruik; per begrensde wijziging aanscherpen na lezing van bestaand bewijs. Hergebruik kan dit verkorten.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Na review, installatie en registratie automatisch volgende uitvoerbare stap; geen algemene wachtstop op gebruikersproeven.",
@@ -10870,14 +10870,14 @@
       "remaining": "Echte hostherstart en herstel van wachtend project bij tijdelijk onbereikbare provider nog controleren."
     },
     "ownerDocumentPreparation20260922": {
-      "state": "reviewed_document_delta_requires_current_voice_parent",
+      "state": "current_runtime_package_tested_registration_pending",
       "outcome": "Bestaande beoordeelde documentopdrachten op de huidige installatie voorbereiden zonder recente functies te verliezen.",
       "scope": "Zeven eerder beoordeelde modules op huidig coreimage; bestaande documentworkerkandidaat hergebruiken; nog geen livevervanging.",
       "estimate": "20–30 minuten voorbereiding en hash/importcontrole, geen modelcalls; creditkosten onbekend",
       "doneWhen": "Exacte bron- en imagedelta, onveranderde gedelegeerde werkrelease en documentworkerherkomst vastgelegd voor onafhankelijke review. Daarna bestaande poolregistratie voorbereiden.",
-      "finding": "Alle zeven mainmodules zijn identiek aan eerder beoordeelde kandidaat; livecore heeft nog exact de eerdere parentversies. Oude complete coreimage niet hergebruiken.",
-      "evidence": "eva2/evidence/living-core/document-task-image-preparation-20260922.json",
-      "nextAction": "Behoud dezelfde7modules maar neem actuele125230core alsparent vóór installatie; oorspronkelijke67e1image mist nieuw geïnstalleerdevoicealign."
+      "finding": "Zeven eerder beoordeelde modules op actuele core b632; alle andere Pythonbron behouden, inclusief de geïnstalleerde privékoppeling. 39 pakkettests geslaagd.",
+      "evidence": "eva2/evidence/living-core/document-current-package-20260922.json",
+      "nextAction": "Voltooi en beoordeel de concrete onderhoudsregistratie vóór poolactivering; geen oude coreimage installeren."
     },
     "voiceSpeakerService20260922": {
       "state": "server_installed_hardware_and_network_pending",
