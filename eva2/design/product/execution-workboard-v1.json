@@ -1052,10 +1052,10 @@
           }
         ],
         "now": {
-          "title": "Telegram: juiste antwoord bij de juiste vraag",
-          "detail": "Jouw screenshot toont onderzoek als antwoord op hoe gaat het. Eerdere opgeslagen berichtverwijzingen wezen naar onderzoek; de oorzaak van dit verschil is nog niet vastgesteld. De gebruikersproef is niet geslaagd. Onafhankelijke controle: snelle ontvangst is al aanwezig op de continue huishoudspraakserver; fysieke apparaatroute nog niet bewezen.",
-          "state": "Open fout · oorzaak niet bewezen",
-          "doneWhen": "Onderzoek blijft gekoppeld aan de oorspronkelijke opdracht; een tussenvraag krijgt zijn eigen antwoord terwijl onderzoek doorloopt."
+          "title": "Werk en geheugen behouden bij herstel",
+          "detail": "Bestaande browserherstelproef uitbreiden met duurzame taak- en geheugenopslag op dezelfde geïsoleerde kandidaat. Telegram-koppeling en fysieke Voice PE-proef blijven apart open.",
+          "state": "Gerichte integratieproef in voorbereiding",
+          "doneWhen": "Herstart verliest geen taakresultaat of geheugen en veroorzaakt geen late browseractie of dubbele uitvoering."
         },
         "next": {
           "title": "Gesprek tijdens werk op de echte ingangen",
@@ -10842,7 +10842,7 @@
           "planningEffortHours": "4–12"
         }
       ],
-      "nextAction": "Telegram: gemelde verkeerde antwoordkoppeling verklaren en corrigeren; daarna eigen antwoord op tussenvraag tijdens onderzoek aantonen. Documentterugmelding is geïnstalleerd, gebruikersproef blijft open.",
+      "nextAction": "Geïsoleerde gezamenlijke herstelproef uitvoeren en onafhankelijk beoordelen. Telegram-berichtkoppeling wacht op verduidelijking; fysieke Voice PE-route wacht op apparaattoegang/proef.",
       "effortNotice": "Grove planning, lage zekerheid: 40–118 actieve ontwikkeluren plus zeven dagen gezinspraktijk en eventuele externe wachttijd. Geen deadline, creditkosten of gemeten verbruik; per begrensde wijziging aanscherpen na lezing van bestaand bewijs. Hergebruik kan dit verkorten.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Na review, installatie en registratie automatisch volgende uitvoerbare stap; geen algemene wachtstop op gebruikersproeven.",
@@ -11356,6 +11356,26 @@
         "harnessFailures": "Recorded in candidate evidence; corrected fixture and isolated database setup, not hidden as product passes."
       },
       "evidence": "eva2/evidence/living-core/document-result-return-installed-20260922.json"
+    },
+    "combinedRecovery20260922": {
+      "status": "implementation_preparation",
+      "outcome": "Herstel van browserwerk en duurzame taak/geheugenstatus op dezelfde geïsoleerde kandidaat, zonder late klik of dubbel resultaat.",
+      "gap": "Bestaande browserherstelproef bewaart een synthetisch websitebestand; bestaand voice/geheugenbewijs vervangt de hulpagentstore. De combinatie met echte duurzame taakopslag is nog niet bewezen.",
+      "existingEvidence": [
+        "eva2/evidence/product/chrome-result-recovery-chain-2026-09-12.json",
+        "eva2/reviews/integration-coverage-2026-09-12.md",
+        "eva2/tests/postgres/test_voice_memory_helper_outbox.py"
+      ],
+      "scope": "Bestaande herstelharnassen combineren met echte geïsoleerde opslag. Geen productieherstart, persoonlijke browsertoegang of betaalde modelcalls.",
+      "owner": "combined_recovery",
+      "reviewer": "coordinator",
+      "planningEstimate": "45–90 minuten planning; werkelijk verbruik en credits onbekend.",
+      "doneWhen": [
+        "Reproduceerbare proef bindt bron en kandidaat, met echte duurzame taak- en geheugenopslag.",
+        "Bestaande browserherstelcontrole blijft behouden; ontbrekende proces/audio/hostgrenzen expliciet.",
+        "Onafhankelijke review en bronbewijs; geen geïnstalleerde productfix claimen voor alleen testcode."
+      ],
+      "ownerAccepted": false
     }
   },
   "activeTaskId": "AU-008",
