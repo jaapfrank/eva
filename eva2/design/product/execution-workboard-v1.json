@@ -1006,9 +1006,9 @@
             "title": "Documentverhuizing behoudt bestanden en eerdere resultaten",
             "date": "23 september",
             "state": "tested",
-            "result": "De bronproef verhuist documenten naar andere bestandsidentiteiten met behoud van journal en eerdere receipts. Ontbrekend werk wordt eenmaal uitgevoerd; 46 gerichte tests geslaagd en onafhankelijke bronreview afgerond.",
-            "remaining": "Nog niet geïnstalleerd. Verpakte providerroute, echte cataloguskoppeling en gecontroleerd gezamenlijk herstel moeten nog slagen.",
-            "source": "eva2/evidence/product/native-document-relocation-20260923.json"
+            "result": "Bron- en verpakte HTTP-proeven geslaagd en onafhankelijk beoordeeld: eerdere resultaten blijven gelijk, lezen verandert niets, de ontbrekende stap wordt eenmaal uitgevoerd en herstart herhaalt die niet.",
+            "remaining": "Nog niet geïnstalleerd. De geregistreerde gatewayroute, privé-kernroute en gezamenlijke herstelvrijgave moeten nog slagen.",
+            "source": "eva2/evidence/product/native-document-relocation-packaged-20260923.json"
           },
           {
             "title": "Extern geheugen uit reservekopie teruggelezen",
@@ -1108,9 +1108,9 @@
           }
         ],
         "now": {
-          "title": "Documentverhuizing via de verpakte provider controleren",
-          "detail": "Broncode, 46 gerichte tests en onafhankelijke review zijn afgerond. Nu volgt de geïsoleerde HTTP/SDK-proef met gekopieerde documenten; geen wijziging aan de bestaande installatie.",
-          "state": "Verpakte proef in uitvoering · niet geïnstalleerd",
+          "title": "Documentherstel via bestaande toolregistraties verbinden",
+          "detail": "De verpakte documentprovider heeft de verhuisproef doorstaan. Nu controleert een geïsoleerde gatewayproef behoud van bestaande toolidentiteiten en uitvoering na herstel.",
+          "state": "Gatewayproef in uitvoering · niet geïnstalleerd",
           "doneWhen": "Een hersteld project is leesbaar en kan alleen zijn ontbrekende stap uitvoeren, zonder oude uitvoeringsbewijzen te veranderen."
         },
         "next": {
@@ -11545,7 +11545,7 @@
       "holdReview": "eva2/reviews/portable-v2-hold-20260923.md",
       "hindsightDataProof": "eva2/evidence/product/hindsight-database-recovery-20260923.json",
       "nativeRelocation": {
-        "status": "source_tested_reviewed_packaged_proof_pending",
+        "status": "packaged_mcp_tested_reviewed_gateway_integration_pending",
         "owner": "document_relocation",
         "outcome": "Bestaande documentbytes/journalprefix/receipts bij andere filesystemidentiteiten behouden en na gecontroleerde vrijgave ontbrekend werk vervolgen.",
         "files": [
@@ -11562,7 +11562,9 @@
         "installed": false,
         "evidence": "eva2/evidence/product/native-document-relocation-20260923.json",
         "review": "eva2/reviews/native-document-relocation-20260923.md",
-        "testsPassed": 46
+        "testsPassed": 46,
+        "packagedEvidence": "eva2/evidence/product/native-document-relocation-packaged-20260923.json",
+        "candidateImage": "sha256:bf0cbf788561643bb25688cc0d1e6d99e13f6b7c7c8f4f4533f55b7969582179"
       },
       "postgres18AndWriterGuard": "eva2/evidence/product/portable-recovery-integration-20260923.json",
       "currentCompatibility": "Kernherstelbron op exacte PostgreSQL18.6-image:8proeven geslaagd. Snapshot/restore hercontroleert bekende/gedeelde databasewerkers vóór I/O:9gerichte hosttests en review geslaagd. Geen livecutover of pakketinstallatie.",

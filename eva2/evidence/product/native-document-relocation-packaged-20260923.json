@@ -1,0 +1,62 @@
+{
+  "passed": true,
+  "transport": "ContextForge translate HTTP -> SDK stdio -> native",
+  "sourceImage": "sha256:81188c414ce5b20eb59f545f9651da5501576dcfbdd9edc3abd125d455f1cb6d",
+  "targetImage": "sha256:bf0cbf788561643bb25688cc0d1e6d99e13f6b7c7c8f4f4533f55b7969582179",
+  "targetTag": "eva2-relocation-proof:238098dfe0",
+  "baseImage": "sha256:bd31ea2dde76561fe662a551756f939e9007048956c300e54ad49a8c18ddfdc4",
+  "buildOutputSha256": "f8aeb75249fe3e0747d31bc9112ded08a678c80b567b3029d6f75c75be1eb18d",
+  "temporaryBuildBaseReference": "local tag pinned to the inspected base image ID; product Dockerfile unchanged",
+  "sourceHashes": {
+    "Dockerfile": "68deadce7713ab1bf58ba938c9194efce97d33a804c6ce0a7893796ea9490acb",
+    "broker-client.mjs": "6074a9fc18df7ca13f9749ca0f8e5f9c915501db362dac4f4e4282118b1645fe",
+    "project-journal.mjs": "3db61f03cf46b7a54b40e1e46340d29cc10353e0b7f2ff81283a204b4fc3cd97",
+    "relocation.mjs": "450833a5eb7d22d0dcd3fe82596fe3011f8022f326720f356ae778853faeb1a1",
+    "mcp-server.mjs": "913b63d664e42a56e57b5b74b3cc6b2c68b8f4f30e0172bb9bb2f07b2461d707",
+    "start-atomic-workspace.sh": "ac269b06979c8299bb44548759d3b034e27c7d18aa76c6608f40c0111566d868",
+    "native/workspace_writer_broker.c": "548de453e301f9382ddaebc88c1905f626be5b04a886a4593fb113afea5ba459"
+  },
+  "nativeBinarySha256": "fde978a6e371b0964ae906860f7f19456f1a6ddd92db84be10febe0d6f300010",
+  "testSha256": "9f66b355bd8a6b5e5734997f502b57993f53de9995fbc4e232e8ca5999ba4516",
+  "sourceCommit": "31def52392fc7a338d98d2477354fce1bd559354",
+  "logicalProviderBindingSha256": "9b965b932fa2fb1c7b407acf75c8578396c0199b3ff1934d816f605686c3e5e9",
+  "relocationBindingSha256": "e6978ec1d6a60de82bc926dc1f58b57bd1431f54fccb82498bb738f13370f24c",
+  "directMcpCatalogSha256": "20a58bec3290179fd48da82acb57627510964878b5a9dd3a31cc18786029211a",
+  "journalPrefixSha256": {
+    "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa": "d366c16c46087ec506965b56580e16bb5c383ec9cb8be17c694280dea24b71e5",
+    "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb": "e1f9a1877564ca1206e39ca1ea549f700879f87a6a78de8a7882e35dee56ed56"
+  },
+  "tests": [
+    "completed and waiting projects copied to different directory/file inodes",
+    "source provider stopped before exact-byte copy",
+    "offline preparation on readonly mounts",
+    "full original direct MCP tool schemas and descriptions preserved",
+    "all old receipts identical through ordinary HTTP observe",
+    "observe succeeds on readonly workspace/journal with zero metadata/content changes",
+    "missing second step executes once with original request and generation",
+    "restart and replay leave all material/journals unchanged",
+    "old prefixes retained while only waiting journal appends",
+    "wrong authority refuses without writes"
+  ],
+  "limits": [
+    "synthetic isolated fixtures only",
+    "no gateway registration or private core route",
+    "no owner mandate, person binding or restore-release integration",
+    "no live installation",
+    "OS owner and P-only crash negatives are in the native suite",
+    "Build preparation partly precedes finally; failed preparation cleanup not generally proven"
+  ],
+  "fixtureContainersRemoved": true,
+  "candidateImageRetained": true,
+  "date": "2026-09-23",
+  "installed": false,
+  "ownerAccepted": false,
+  "originalResultSha256": "8a6045acf4e65b48f15cf64fdb819c6522f0bcfb8433c0f49ce0e862b0705d53",
+  "review": {
+    "reviewer": "document_private_identity",
+    "result": "GO bounded packaged MCP proof; no live GO",
+    "testsRepeated": false,
+    "cleanup": "Successful-run cleanup independently inspected; not a general failure-path guarantee",
+    "runtimeUser": "Fixture overrides user to host UID:GID; production UID10001 not proven"
+  }
+}
