@@ -25,19 +25,22 @@ function Stage({ state, label }) {
 
 function PracticeTests({ tests = [], browserAccess, stale, ownerBrowserUpdate }) {
   if (!tests.length) return null;
-  const labels = { awaiting_result: 'Uitgevoerd — uitslag nog open', ready: 'Klaar om te testen', accepted: 'Door jou bevestigd', working: 'In ontwikkeling — nog niet testen' };
+  const labels = { awaiting_result: 'Uitgevoerd — uitslag nog open', ready: 'Technisch beschikbaar', accepted: 'Door jou bevestigd', working: 'In ontwikkeling — nog niet testen' };
+  const requested = tests.filter(test => test.ownerAction === 'requested' && test.trialLink && test.status === 'ready');
   return <section className="practice-section" aria-label="Jouw praktijktests">
-    <div className="section-title"><div><h2>Jouw praktijktests</h2><p>Technisch werk gaat door terwijl jouw beoordeling openstaat. Geef hier in de chat het testnummer en je ervaring door.</p></div></div>
-    <div className="owner-trial-summary" aria-label="Nu door jou te proberen">
-      <h3>Nu door jou te proberen</h3>
-      {stale ? <p>De bron is niet actueel. Vernieuw het overzicht voordat je een proef kiest.</p> : <ul>{tests.filter(test => test.trialLink && test.status !== 'accepted' && (test.status === 'ready' || (test.id === 'BR-01' && ownerBrowserUpdate?.normalEvaIsolatedVerified))).map(test => <li key={test.id}>
-        <a href={test.trialLink.url}><b>{test.id} · {test.title}</b></a><p>{test.expected}</p>
-      </li>)}</ul>}
-      <p>Geheugen is geaccepteerd; daarvoor hoef je niets opnieuw te testen. Hieronder staan de uitleg en eerdere uitslagen.</p>
+    <div className="section-title"><div><h2>Praktijkervaring en resultaten</h2><p>Eerdere proeven blijven bewaard. Alleen een expliciete nieuwe proefvraag verschijnt als actie; technisch beschikbaar betekent niet dat je opnieuw moet testen.</p></div></div>
+    <div className="owner-trial-summary" aria-label="Actuele proefvragen">
+      <h3>Actuele proefvragen</h3>
+      {stale ? <p>De bron is niet actueel. Vernieuw het overzicht voordat je een proef kiest.</p> : requested.length ? <ul>{requested.map(test => <li key={test.id}>
+        <a href={test.trialLink.url}><b>{test.id} · {test.title}</b></a><p>{test.requestReason || test.expected}</p>
+      </li>)}</ul>
+      : <p>Je hoeft nu geen eerdere proeven te herhalen. We werken verder aan de gemelde verbeterpunten.</p>}
     </div>
+    <details className="practice-history"><summary>Eerdere proeven, resultaten en bewaarde instructies ({tests.length})</summary>
     <div className="practice-grid">{tests.map((test) => <article className={`practice-card ${test.id === 'BR-01' ? 'access-check' : test.status}`} key={test.id} id={'practice-' + test.id}>
       <span className="task-id">{test.id} · {test.updatedOn}</span><span className="task-status">{test.id === 'BR-01' ? (ownerBrowserUpdate?.normalEvaDenialVerified ? (ownerBrowserUpdate.normalEvaIsolatedVerified ? 'Technisch getest · jouw Chrome-proef open' : 'Chrome gereed voor tabdeling') : ownerBrowserUpdate?.viewerTrial === 'failed' ? 'Login gelukt · beeldproef mislukt' : stale ? 'Toegangscontrole niet actueel' : browserAccess?.state === 'login_required' ? 'Aanmelden nodig — jouw proef nog open' : 'Toegang nog niet bevestigd') : labels[test.status] || 'Status onbekend'}</span>
       <h3>{test.title}</h3><p>{test.change}</p>
+      {test.trialLink && !test.trialLink.url.startsWith('#') && test.id !== 'BR-01' && <a href={test.trialLink.url}>{test.trialLink.label || 'Open bewaard resultaat of proefroute'}</a>}
       {test.id === 'BR-01' && ownerBrowserUpdate?.normalEvaDenialVerified ? <>
         <p>{ownerBrowserUpdate.bridgeProgress}</p>
         <a className="owner-dashboard-link" href={ownerBrowserUpdate.chromeControlUrl} target="_blank" rel="noreferrer">Open Chrome-bediening ↗</a>
@@ -47,8 +50,9 @@ function PracticeTests({ tests = [], browserAccess, stale, ownerBrowserUpdate })
         {ownerBrowserUpdate?.viewerTrial === 'failed' ? <><p>Jouw aanmelding is gelukt. Na overnemen bleef het beeld zwart met een WebSocket-fout; na teruggeven verdween het beeld. De eerdere technische proef bewijst geen werkende huidige kijkverbinding.</p><p><b>Gewenste route:</b> jouw bestaande Google Chrome en een door jou beschikbaar gesteld tabblad, met zichtbaar werken en overnemen. Die koppeling is nog niet geleverd.</p><p>De losse proef met de officiële Playwright-extensie in jouw Chrome is geslaagd, inclusief opnieuw verbinden na tabselectie. De koppeling met Eva en exclusieve overname zijn nog niet bewezen.</p>{ownerBrowserUpdate.bridgeProgress && <p>{ownerBrowserUpdate.bridgeProgress}</p>}</> : <p>De eerdere technische browserproef is geslaagd. Dat bevestigt nog niet dat jij nu kunt meekijken of overnemen.</p>}
         {!stale && browserAccess?.state === 'login_required' ? <><a className="owner-dashboard-link" href={browserAccess.url} target="_blank" rel="noreferrer">Open eigenaarsdashboard ↗</a>{!ownerBrowserUpdate?.loginAccepted && <p>Meld je aan als <b>eva-owner</b> met het privé lokaal overgedragen wachtwoord.</p>}</> : <p>De juiste dashboardtoegang kan momenteel niet worden bevestigd. Wacht met deze proef.</p>}
         <small>Bereikbaarheid gecontroleerd om {browserAccess?.checkedAt ? time(browserAccess.checkedAt) : '—'}. Dit controleert geen beeldverbinding of gebruikersacceptatie.</small>
-      </> : <>{test.status === 'ready' && <><h4>Zo test je</h4><ol>{test.steps.map((step) => <li key={step}>{step}</li>)}</ol><p><b>Geslaagd als:</b> {test.expected}</p><p><b>Bericht hier:</b> {test.report}</p></>}{test.result && <p className="practice-result"><b>Uitslag:</b> {test.result}</p>}</>}
+      </> : <>{test.status === 'ready' && <details><summary>{test.ownerAction === 'requested' ? 'Instructies voor deze proefvraag' : 'Bewaarde proefinstructies — geen nieuwe testvraag'}</summary><ol>{test.steps.map((step) => <li key={step}>{step}</li>)}</ol><p><b>Verwacht resultaat:</b> {test.expected}</p></details>}{test.result && <p className="practice-result"><b>Uitslag:</b> {test.result}</p>}</>}
     </article>)}</div>
+    </details>
   </section>;
 }
 

@@ -625,7 +625,8 @@
           },
           "ownerAccepted": false,
           "sourceTask": "CO-002",
-          "evidence": "eva2/evidence/product/conversation-current-check-2026-09-21.json"
+          "evidence": "eva2/evidence/product/conversation-current-check-2026-09-21.json",
+          "ownerAction": "not_requested"
         },
         {
           "id": "SP-01",
@@ -633,7 +634,8 @@
           "status": "accepted",
           "title": "Verstaanbare audio",
           "change": "Woonkamer-speaker herstart; bestaande firmware en HA Cloud-stem behouden.",
-          "result": "Jaap bevestigt FLAC, MP3 en het langere Eva2-verhaal zonder stotteren. Langdurige stabiliteit nog niet bewezen."
+          "result": "Jaap bevestigt FLAC, MP3 en het langere Eva2-verhaal zonder stotteren. Langdurige stabiliteit nog niet bewezen.",
+          "ownerAction": "not_requested"
         },
         {
           "id": "SP-02",
@@ -648,7 +650,8 @@
           ],
           "expected": "Eva hoort de vervolgvraag zonder nieuw wakeword en antwoordt appel, met verstaanbare audio.",
           "report": "SP-02: werkt / werkt niet, met wat je hoorde en wanneer je sprak.",
-          "result": "Jaap bevestigt hier: SP-02: werkt. Vervolgvraag na het antwoord zonder nieuw Hey Eva geslaagd volgens eigenaar."
+          "result": "Jaap bevestigt hier: SP-02: werkt. Vervolgvraag na het antwoord zonder nieuw Hey Eva geslaagd volgens eigenaar.",
+          "ownerAction": "not_requested"
         },
         {
           "id": "SP-03",
@@ -656,7 +659,8 @@
           "status": "working",
           "title": "Onderbreken met gewone spraak",
           "change": "Core-uitrol en definitief installatiepakket zijn afgesloten. De firmware bevat de eigen beveiligde woonkamerverbinding.",
-          "result": "Apart open volgens keuze Jaap. Geen USB-actie gevraagd; fysieke installatie en acceptatie blijven onbewezen."
+          "result": "Apart open volgens keuze Jaap. Geen USB-actie gevraagd; fysieke installatie en acceptatie blijven onbewezen.",
+          "ownerAction": "not_requested"
         },
         {
           "id": "SP-04",
@@ -664,7 +668,8 @@
           "status": "working",
           "title": "Minder onterechte Hey Eva-detecties",
           "change": "Wakeword-model en apparaatinstellingen apart onderzoeken.",
-          "result": "Laagste gevoeligheid staat al ingesteld. Jaap meldt activering door gewone gesprekken zonder Eva te noemen; nog niet opgelost."
+          "result": "Laagste gevoeligheid staat al ingesteld. Jaap meldt activering door gewone gesprekken zonder Eva te noemen; nog niet opgelost.",
+          "ownerAction": "not_requested"
         },
         {
           "id": "BR-01",
@@ -683,7 +688,8 @@
           "trialLink": {
             "url": "http://127.0.0.1:44718/proef",
             "label": "Open Chrome-proefpagina"
-          }
+          },
+          "ownerAction": "not_requested"
         },
         {
           "id": "GE-01",
@@ -698,7 +704,8 @@
           ],
           "expected": "Eva gebruikt de nieuwe voorkeur.",
           "report": "Geaccepteerd door Jaap.",
-          "result": "Dit lijkt perfect te werken. Screenshot toont eerst blauw in deuradvies en na wijziging groen in schuttingadvies."
+          "result": "Dit lijkt perfect te werken. Screenshot toont eerst blauw in deuradvies en na wijziging groen in schuttingadvies.",
+          "ownerAction": "not_requested"
         },
         {
           "id": "IN-01",
@@ -712,7 +719,8 @@
           "expected": "Een volledig leesbaar document met vier afwegingen, beslisregels en drie duidelijk fictieve voorbeelden.",
           "report": "IN-01: nuttig / niet nuttig, eventueel met wat je anders zou willen.",
           "result": "Afgerond en door Jaap beperkt geaccepteerd: op zich wel bruikbaar. Geen algemene initiatiefacceptatie.",
-          "ownerFeedback": "Op zich wel bruikbaar; uitsluitend de opgeleverde beoordelingskaart, geen algemene initiatiefacceptatie."
+          "ownerFeedback": "Op zich wel bruikbaar; uitsluitend de opgeleverde beoordelingskaart, geen algemene initiatiefacceptatie.",
+          "ownerAction": "not_requested"
         },
         {
           "id": "SP-LAPTOP-INTERRUPT",
@@ -720,7 +728,8 @@
           "status": "accepted",
           "title": "Lopende laptopspraak onderbreken",
           "change": "Fysieke proef door Jaap op de laptop.",
-          "result": "Jaap bevestigt dat onderbreken daadwerkelijk werkt. Alleen laptoponderbreken geaccepteerd; stem, uitspraak, stiltes en vervolg tijdens werk blijven open."
+          "result": "Jaap bevestigt dat onderbreken daadwerkelijk werkt. Alleen laptoponderbreken geaccepteerd; stem, uitspraak, stiltes en vervolg tijdens werk blijven open.",
+          "ownerAction": "not_requested"
         },
         {
           "id": "GE-02",
@@ -749,7 +758,8 @@
             "acceptanceQuestion": "Werkten inzien, corrigeren en vergeten alle drie goed? Dan kan ik jouw uitslag vastleggen en het geheugenonderdeel afsluiten"
           },
           "ownerAccepted": true,
-          "acceptanceEvidence": "eva2/evidence/product/GE-02-owner-acceptance-2026-09-12.json"
+          "acceptanceEvidence": "eva2/evidence/product/GE-02-owner-acceptance-2026-09-12.json",
+          "ownerAction": "not_requested"
         },
         {
           "id": "IN-02",
@@ -770,7 +780,8 @@
           "trialLink": {
             "url": "#practice-IN-02",
             "label": "Lees de bijdrage"
-          }
+          },
+          "ownerAction": "not_requested"
         },
         {
           "id": "HP-01",
@@ -788,7 +799,8 @@
             "url": "#practice-HP-01",
             "label": "Bekijk de Telegramvragen"
           },
-          "ownerAccepted": false
+          "ownerAccepted": false,
+          "ownerAction": "not_requested"
         },
         {
           "id": "SP-05",
@@ -805,7 +817,8 @@
             "url": "/owner-trials/voice",
             "label": "Open de volledige stemproef"
           },
-          "ownerAccepted": false
+          "ownerAccepted": false,
+          "ownerAction": "not_requested"
         },
         {
           "id": "TL-03",
@@ -822,7 +835,8 @@
             "url": "/results/tl003-contextmanager",
             "label": "Lees Eva’s uitleg"
           },
-          "ownerAccepted": false
+          "ownerAccepted": false,
+          "ownerAction": "not_requested"
         },
         {
           "id": "PJ-01",
@@ -844,7 +858,8 @@
           "trialLink": {
             "url": "#practice-PJ-01",
             "label": "Lees het einddocument"
-          }
+          },
+          "ownerAction": "not_requested"
         },
         {
           "id": "TG-01",
@@ -867,7 +882,8 @@
           },
           "result": "Jaap heeft opnieuw ingelogd, een nieuwe vraag gesteld en bevestigt: streaming werkt.",
           "ownerFeedback": "Ik heb de nieuwe vraag gesteld en streaming werkt",
-          "acceptanceEvidence": "eva2/evidence/product/telegram-pending-repair-2026-09-21.json"
+          "acceptanceEvidence": "eva2/evidence/product/telegram-pending-repair-2026-09-21.json",
+          "ownerAction": "not_requested"
         },
         {
           "id": "PR-01",
@@ -890,12 +906,13 @@
             "label": "Lees de toegepaste werkwijze"
           },
           "localArtifactPath": "C:/Users/jaapf/.codex/visualizations/2026/09/10/01a08d52-31b1-7091-be45-812c0b6e6c9f/au004-r6/eva2-planreview-resultaat-r6.md",
-          "artifactSha256": "069199c6d8dac5e8e1a46839b5fc1f83d098113f517417e0d17a181390680db5"
+          "artifactSha256": "069199c6d8dac5e8e1a46839b5fc1f83d098113f517417e0d17a181390680db5",
+          "ownerAction": "not_requested"
         },
         {
           "id": "SP-06",
           "updatedOn": "2026-09-22",
-          "status": "ready",
+          "status": "working",
           "title": "Ontvangst bij een beleefde onderzoeksopdracht",
           "change": "De bestaande korte ontvangstzin ondersteunt nu ook willen/kunnen vóór het onderzoekswerkwoord.",
           "steps": [
@@ -905,13 +922,14 @@
           ],
           "expected": "Eerst Ik kijk er even voor je naar, daarna het onderzoeksantwoord. Geen claim dat het werk al klaar is.",
           "report": "SP-06: ontvangstzin gehoord / niet gehoord; benoem je gebruikte route.",
-          "result": "Jaap meldde circa6seconden bij begroeting en onderzoek. Op22september is het snelle contactmodel geïnstalleerd. Live HTTP-proef: eerste tekst5,1seconde, totaal6,4seconde; geen fysieke audiometing. Snelheid nog niet geaccepteerd; gerichte verbetering volgt.",
+          "result": "Jaap meldt dat het lijkt te werken, maar bij begroeting én onderzoeksopdracht ongeveer 6 seconden vertraagt. Die proef is uitgevoerd; de vertraging is een actief bouwpunt. Live HTTP-meting op 22 september: 5,1 seconden tot eerste tekst. Geen herhaling gevraagd voordat een verbetering is opgeleverd.",
           "trialLink": {
             "url": "http://localhost:44716",
             "label": "Open bestaande laptopstemroute"
           },
           "ownerAccepted": false,
-          "evidence": "eva2/evidence/product/voice-polite-work-receipt-2026-09-22.json"
+          "evidence": "eva2/evidence/product/voice-polite-work-receipt-2026-09-22.json",
+          "ownerAction": "not_requested"
         },
         {
           "id": "UX-02",
@@ -931,7 +949,8 @@
             "label": "Open geïnstalleerde taakbediening"
           },
           "ownerAccepted": false,
-          "evidence": "eva2/evidence/product/contact-dashboard-live-2026-09-22.json"
+          "evidence": "eva2/evidence/product/contact-dashboard-live-2026-09-22.json",
+          "ownerAction": "not_requested"
         }
       ],
       "priorityBeforeTelegramIncident": "De kleine procedureleeroplevering is technisch afgerond: zelf onderzoeken, procedure opslaan en ongewijzigd hergebruiken. Geen nieuwe leerproeven. Parallel lopen de Bottie/SQLite-review en een afzonderlijke architectuurreparatie; brede autonomie en echte productvergelijking blijven open."
@@ -10516,6 +10535,14 @@
         }
       ],
       "coordination": "Twee afzonderlijke, vastgepinde projecttaken zijn gestart vanaf main 4701dd8f: Eva sneller laten praten tijdens achtergrondwerk onderzoekt en herstelt de echte gespreksvertraging; Dashboardtaken automatisch actueel houden bouwt automatisch bijwerken van taakstatus en resultaat. Coördinator beheert integratie, onafhankelijke review, installatie en dit werkbord. Beide wijzigingen zijn in uitvoering, nog niet opgeleverd."
+    },
+    "practiceListCorrection20260922": {
+      "ownerFeedback": "Veel van de getoonde proeven is al gedaan.",
+      "decision": "Technisch beschikbare of historisch uitgevoerde proeven zijn geen automatische eigenaaropdracht. Alleen ownerAction=requested met een concrete reden verschijnt als actuele proefvraag. Bestaande resultaten en bevestigingen blijven behouden; geen onbekende acceptaties verzonnen.",
+      "currentAction": "Geen herhaling gevraagd; spraakvertraging en automatisch bijgewerkte dashboardtaken zijn in uitvoering.",
+      "review": "GO: independent source review by Dashboardtaken automatisch actueel houden; conditional instruction label clarified after nonblocking suggestion.",
+      "live": true,
+      "evidence": "eva2/evidence/product/practice-list-correction-2026-09-22.json"
     }
   },
   "activeTaskId": "AU-008",

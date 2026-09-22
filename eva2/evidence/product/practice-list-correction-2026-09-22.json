@@ -1,0 +1,30 @@
+{
+  "date": "2026-09-22",
+  "outcome": "Earlier practice results no longer become automatic requests to repeat tests.",
+  "review": "GO: independent source review by Dashboardtaken automatisch actueel houden; conditional instruction label clarified after nonblocking suggestion.",
+  "checks": [
+    "Vite project build passed",
+    "Workboard validator passed: 32 execution tasks, 22 milestones",
+    "All 19 cards retained, ownerAccepted and accepted states unchanged",
+    "Prior result text retained except SP-06 updated to explicit owner latency feedback",
+    "Candidate browser: history expands, initiative result and memory acceptance retained, TL-03 result link present",
+    "Live browser localhost:44712: no repeat request, collapsed 19-card history, old invitation heading absent"
+  ],
+  "live": true,
+  "url": "http://localhost:44712/",
+  "rollback": "Previous complete project build at /tmp/eva-project-preview-before-trial-fix-20260922; restore assets and index to experiments/react-admin-dashboard-v1/dist/project. No runtime service or data changed.",
+  "sourceSha256": "774d8f0d8ca6cb6e69d7e16032dea5997ee10ac452f42488bdcbc3acae062d60",
+  "liveManifest": {
+    "index.html": {
+      "file": "assets/index-7X9ZFcjH.js",
+      "name": "index",
+      "src": "index.html",
+      "isEntry": true,
+      "css": [
+        "assets/index-ClzOWv97.css"
+      ]
+    }
+  },
+  "modelCalls": 0,
+  "limitations": "No blanket owner acceptance inferred; historic unresolved findings remain recorded. This is a dashboard presentation correction, not a new product acceptance trial."
+}
