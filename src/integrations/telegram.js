@@ -1,3 +1,4 @@
+import { pollTelegramConcurrently } from './telegrampolling.js';
 // Telegram: Eva's lijntje naar de telefoons van het gezin.
 import { Bot, GrammyError, HttpError, InputFile } from 'grammy';
 import { createHash } from 'node:crypto';
@@ -2786,7 +2787,9 @@ ${naam}: ${ctx.message.text}`;
 
   startPreparedTelegramOutbox();
   // long polling start (loopt voor altijd; niet awaiten)
-  bot.start(telegramPollingOptions()).catch((e) => {
+  pollTelegramConcurrently(bot, {
+    onError: (error) => logTimeline('system', `Telegram-fout: ${errMsg(error.error || error).slice(0, 200)}`),
+  }).catch((e) => {
     logTimeline('system', `Telegram kon niet starten: ${errMsg(e).slice(0, 200)}. Klopt het token?`);
   });
   logTimeline('system', 'Telegram verbonden. Eva is bereikbaar op je telefoon 📱');
