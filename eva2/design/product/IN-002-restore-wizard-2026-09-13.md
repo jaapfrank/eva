@@ -66,3 +66,36 @@ Het uit de tar uitgepakte package is echt gestart via `tools.installer_restore_w
 Reproduceren gebeurt met `tools/package_installer_operator.py` en de exacte sourcecommit/wheelhashes uit `evidence/product/IN-002-operator-package-2026-09-13.json`; de normale geïsoleerde start wordt gecontroleerd door `tools/verify_installer_operator_package.py`. Gebruik de gepinde basis, netwerk uit, read-only package, private tmpfs, 2 GiB geheugen en twee CPU's. Er wordt geen live Docker-socket gedeeld.
 
 Volgende aantoonbare technische stap blijft het echte tier1-operatorplatform en zijn releasevalidatie. Een verpakking met Debian-meta-informatie mag niet als Ubuntu worden voorgesteld om de preflight te laten slagen. Geen nieuwe gebruikersproef of wachtwoord van Jaap nodig voor die stap.
+
+## Gezamenlijk herstelpakket — bronwerk 23 september 2026
+
+De installatie-envelope `EvaInstallationRecovery/v1` bindt het ongewijzigde
+`core/`-archief (portable v2), `memory/hindsight.dump`,
+`gateway/contextforge.sqlite` en expliciet benoemde bestanden onder
+`documents/` en `config/`. De inhoudsreader controleert de gesloten inventaris,
+hashes en kernidentiteit. Broncomponentnamen en imagehashes zijn inventaris;
+zij bewijzen geen stilgezette processen of volledige afhankelijkheidsdekking.
+De controller moet nog alle in de kern gebruikte providers en documenten
+verbinden met de verzamelde bestanden en het gezamenlijke snapshotmoment.
+
+Het bestaande versleutelde transport blijft leidend. Dat transport maakt
+uitgepakte bestanden 0600; de rollen in het pakket beschrijven dat bepaalde
+markers, bindings en configuraties later 0400 moeten worden. De pakketreader
+voert die materialisatie niet uit. De native verhuizing vereist momenteel
+behoud van numerieke UID/GID; de actieve provider gebruikt 10001:10001.
+Legacy-v1-providers en opnieuw verhuizen blijven afzonderlijke open grenzen.
+
+Bestaande gatewaycredentials vereisen de afzonderlijk geprovisioneerde
+encryptiesleutel; JWT- en toegangssleutelreferenties blijven eveneens apart.
+Een kopie van de gatewaydatabase moet met de SQLite-backupfunctie gemaakt
+worden terwijl de gateway stilstaat, zodat WAL-inhoud niet verloren gaat.
+Geen geheime sleutel wordt door een label in het pakket vervangen.
+
+`authorize_installation_recovery` vereist exacte toestemming voor zowel het
+buitenmanifest als het binnenste kernmanifest uit dezelfde vers gelezen
+externe herstelautoriteit. Alleen de buitenkant of alleen de kern toestaan
+is onvoldoende. Een nieuwe vergetingsgeneratie trekt oude toelatingen in.
+Deze controle volgt op inhoudsvalidatie en verleent geen runtimevrijgave.
+De bestaande wizard accepteert dit nieuwe pakket nog niet als complete
+installatieherstelroute; controller, materialisatie en activatie moeten eerst
+samen worden aangesloten en getest.

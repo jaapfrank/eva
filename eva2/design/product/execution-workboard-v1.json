@@ -1109,7 +1109,7 @@
         ],
         "now": {
           "title": "Gezamenlijke herstelroute en gecontroleerde vrijgave verbinden",
-          "detail": "Documentverhuizing werkt ook via bestaande gatewayregistraties. De wizardcontrole op processen en database is getest en beoordeeld. Nu moeten kern, geheugen, documenten en privétoegang samen herstellen.",
+          "detail": "Pakketinhoud, versleuteling en afzonderlijke hersteltoestemming zijn getest. De privé-kernproef loopt; gezamenlijk verzamelen, terugzetten en vrijgeven zijn nog niet aangesloten.",
           "state": "Integratie open · niet geïnstalleerd",
           "doneWhen": "Een hersteld project is leesbaar en kan alleen zijn ontbrekende stap uitvoeren, zonder oude uitvoeringsbewijzen te veranderen."
         },
@@ -11505,11 +11505,11 @@
         "V1-lezen blijft werken; relevante gerichte tests en onafhankelijke review; productinstallatie pas na migratie-/releasecontrole."
       ],
       "remainingMandatory": [
-        "Lopend en onafgeleverd werk is in de bronproef behouden achter een blokkade; gecontroleerd hervatten en vrijgeven blijven vereist.",
-        "Native documentbestanden, journals en gecontroleerde verhuizingsbinding",
-        "Extern semantisch geheugen: gegevens/bankherstel of aantoonbare heropbouw",
-        "Normale operatorroute en volledige geïsoleerde installatie-/computerherstelproef",
-        "Eigenaarproef en uiteindelijke gezinsacceptatie"
+        "Gecoördineerd pakket verzamelen met volledige afhankelijkheden en controle van bronprocessen",
+        "Native documentmateriaal rolgebonden terugzetten; legacy-v1/herhaalde verhuizing nog niet ondersteund",
+        "Core, Hindsight en gateway samen terugzetten met afzonderlijk geprovisioneerde sleutels",
+        "Privé-kernroute na herstel bewijzen en bron/target gecontroleerd vrijgeven",
+        "Normale operatorroute, volledige geïsoleerde installatie-/computerherstelproef en eigenaaracceptatie"
       ],
       "installed": false,
       "ownerAccepted": false,
@@ -11585,6 +11585,11 @@
         "status": "source_tested_reviewed_not_installed",
         "evidence": "eva2/evidence/product/restore-runtime-guard-20260923.json",
         "operatorConfigChanged": true
+      },
+      "installationPackage": {
+        "status": "content_envelope_tested_reviewed_controller_pending",
+        "evidence": "eva2/evidence/product/installation-recovery-package-20260923.json",
+        "installed": false
       }
     }
   },

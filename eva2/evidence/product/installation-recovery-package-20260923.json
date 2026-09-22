@@ -1,0 +1,44 @@
+{
+  "date": "2026-09-23",
+  "status": "content_envelope_tested_reviewed_not_installed",
+  "files": {
+    "tools/installation_recovery_package.py": "13553eb672e29e9e79424d139ea36f179c65cfbf38271107943c99dff0c0a50a",
+    "tests/portable/test_installation_recovery_package.py": "06e9581913aa4fbe8f37700e3d934789b677b028670cbb9a66e4e8121a137178",
+    "src/eva/operations/portable_restore_authority.py": "45edf6acfb66dda2ef6107eed2b832a6b7a3e49507ea004e0d7f497481ae6edc",
+    "tests/portable/test_installation_recovery_authority.py": "52c00e7b6b40f7fa459121fa6fd3fb4c13d34596c03455828ac9fcb56ac6c0db"
+  },
+  "tests": {
+    "packageCasesPassed": 19,
+    "packageLogSha256": "b6fe1755f18055a969786e81808f172d0e648a528f55c45f86e6a973a7626153",
+    "authorityCasesIncludingExistingPassed": 21,
+    "authorityOutputChunk": "5a8c43",
+    "expandedEncryptedDualAuthorityRoundtripPassed": 1,
+    "expandedRoundtripLogSha256": "c5740e62af13ab416d1d2179d87c15daa7af0bddc2655a364b057a3073bde777",
+    "failedAttempt": {
+      "logSha256": "509edf4a6e10f1dec4c418a554b5e60fea3becd6b14a7d21142d2849c867b986",
+      "cause": "New test fixture concatenated randomly ordered authority UUIDs; existing sorted-unique check correctly refused. Only fixture sorted, production checks unchanged.",
+      "rerunScope": "Only changed roundtrip case"
+    }
+  },
+  "review": {
+    "package": "Root independently reviewed agent source and tests; bounded GO for content validation, not dependency completeness or snapshot consistency.",
+    "authority": "document_private_identity independently reviewed root whitelist/dual authority code and tests; GO exact outer+inner permission against same external generation."
+  },
+  "environment": "Core-v2 fixture from isolated PostgreSQL16 and existing portable AES transport; external dump/SQLite/document payloads are synthetic.",
+  "liveReadOnlyInventory": {
+    "gatewayUser": "10001:10001",
+    "documentProviderUser": "10001:10001",
+    "gatewayDataVolume": "eva2-workspace-gateway-db",
+    "productionChanged": false
+  },
+  "limits": [
+    "Package file roles record intended permissions only; decrypt transport normalizes files0600, materializer still required",
+    "Source inventory is not proof of full dependency coverage or stopped processes",
+    "No external database import or private core restore proven by these tests",
+    "Legacy-v1 providers and repeated native relocation remain unsupported",
+    "Controller must capture coordinated snapshot, restore gateway keys separately, verify all dependencies and explicitly release held runtime",
+    "Existing operator wizard does not yet accept installation envelope as completed restore flow"
+  ],
+  "modelProviderCalls": 0,
+  "creditCosts": "unknown"
+}

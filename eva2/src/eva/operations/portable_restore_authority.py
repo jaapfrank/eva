@@ -485,7 +485,8 @@ def authorize_portable_restore(
     archive = _canonical_object(archive_manifest_raw, label="archive manifest")
     if (
         (archive.get("contract"), archive.get("schema_version"))
-        not in {("EvaPortableArchive/v1", 1), ("EvaPortableArchive/v2", 2)}
+        not in {("EvaPortableArchive/v1", 1), ("EvaPortableArchive/v2", 2),
+                ("EvaInstallationRecovery/v1", 1)}
     ):
         raise PortableRestoreAuthorityError("archive manifest contract is invalid")
     archive_id = _uuid(archive.get("archive_id"), label="archive ID")
@@ -521,7 +522,38 @@ def authorize_portable_restore(
     )
 
 
+def authorize_installation_recovery(*, package_manifest_raw: bytes,
+                                    core_manifest_raw: bytes,
+                                    restore_authority_raw: bytes):
+    """Authorize both exact manifests against one current external generation.
+
+    Call after package/content validation, with freshly read private authority.
+    This checks permission and manifest binding, not file integrity, quiescence
+    or runtime activation. An authorized outer package never blesses its core.
+    """
+    package = _canonical_object(package_manifest_raw, label="installation package")
+    core = _canonical_object(core_manifest_raw, label="core manifest")
+    if ((package.get("contract"), package.get("schema_version")) != ("EvaInstallationRecovery/v1", 1)
+            or (core.get("contract"), core.get("schema_version")) != ("EvaPortableArchive/v2", 2)):
+        raise PortableRestoreAuthorityError("installation recovery contract differs")
+    digest = hashlib.sha256(core_manifest_raw).hexdigest()
+    files = package.get("files")
+    entry = files.get("core/archive.json") if isinstance(files, dict) else None
+    if (package.get("core_archive_sha256") != digest or not isinstance(entry, dict)
+            or entry.get("sha256") != digest):
+        raise PortableRestoreAuthorityError("installation package core binding differs")
+    for field in ("source_installation_id", "source_tenant_id", "runtime_identity", "created_at"):
+        if field not in core or field not in package or core[field] != package[field]:
+            raise PortableRestoreAuthorityError("installation package core identity differs")
+    outer = authorize_portable_restore(archive_manifest_raw=package_manifest_raw,
+                                      restore_authority_raw=restore_authority_raw)
+    inner = authorize_portable_restore(archive_manifest_raw=core_manifest_raw,
+                                      restore_authority_raw=restore_authority_raw)
+    return outer, inner
+
+
 __all__ = [
+    "authorize_installation_recovery",
     "PrivateRestoreAuthorityStore",
     "PortableRestoreAuthorization",
     "PortableRestoreAuthorityAdvanceReceipt",
