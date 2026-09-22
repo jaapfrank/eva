@@ -1,0 +1,36 @@
+{
+  "date": "2026-09-22",
+  "outcome": "Canonical checkout and GitHub main synchronized; current source preserved; staging repaired without deleting product files.",
+  "sourceCommit": "26ec1b2e5812aebed421bc26f441d43cd0e4f3c7",
+  "previousRemoteMain": "72315fe9862e401b5430d56f7cb245c7bc2cc260",
+  "remote": "https://github.com/jaapfrank/eva",
+  "remoteReadback": "26ec1b2e5812aebed421bc26f441d43cd0e4f3c7 refs/heads/main",
+  "localBranch": "main",
+  "localStatusAfterSync": "clean",
+  "preservedIndexCommit": "4d65dd657bd4d51c2da6ea2e0549d4af8ada5bf9",
+  "preservedIndexBranch": "codex/preserved-index-20260922",
+  "filesVerified": 2853,
+  "stagedDeletionsPreserved": 391,
+  "independentReviewer": "/root/learning_finish",
+  "review": "GO for exact source preservation, publication-path check, reviewed scanner findings and Git workflow documentation.",
+  "secretScan": {
+    "tool": "gitleaks8.30.1",
+    "binaryChecksum": "verified against official release checksum",
+    "range": "origin/main at72315fe9 through5346cab2",
+    "commits": 1724,
+    "findings": 924,
+    "rule": "generic-api-key",
+    "uniqueReviewedFingerprints": 192,
+    "classification": "All reviewed as false positives: synthetic fixture digests/identifiers, explicitly public test keys, type/format metadata, resource/container names and synthetic redaction/contract tests. No global scanner exclusions added.",
+    "limits": "Pattern scan plus human-agent review; not a general guarantee of absence of every possible secret."
+  },
+  "validation": [
+    "Independent blob comparison: all current included files exact; no deleted product paths.",
+    "Existing workboard validator valid:32executionTasks22milestones.",
+    "Fast-forward push succeeded; remote main readback matched; local checkout main clean."
+  ],
+  "runtimeChanged": false,
+  "ownerAcceptanceClaimed": false,
+  "costs": "No Eva model calls for source reconciliation; development credit cost unmeasured.",
+  "followUp": "Feature branches return scoped commits for integration; tested/reviewed source and live installation remain separate."
+}

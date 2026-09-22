@@ -982,7 +982,7 @@
       "document": "eva2/PROJECTDOEL.md",
       "scope": "Digitale huisgenoot: zelfstandig redeneren, initiatief, onbekende vaardigheden leren, handelen, zelfverbetering en aantoonbare concurrentiewinst met open-sourcehergebruik.",
       "sessionGoal": "Snel gedeeld gesprek met passende achtergrondmodellen; één Eva over alle kanalen.",
-      "currentWork": "**Lokale toegang werkt volgens de eerste gebruikersindruk; het gesprek is nog te traag.** Jaap meldt circa6seconden bij zowel begroeten als onderzoek. Gerichte meting: kernantwoord op Hallo4,52s, eerste tekst3,94s; eerste TTS-audiochunk0,27s. Dit is één proef, geen volledige audiometing of p95. De gewenste oplossing is een snel gespreksmodel met passend modelgebruik op de achtergrond vanuit dezelfde Eva-kern.",
+      "currentWork": "**Lokale toegang werkt volgens de eerste gebruikersindruk; het gesprek is nog te traag.** Jaap meldt circa6seconden bij zowel begroeten als onderzoek. Gerichte meting: kernantwoord op Hallo4,52s, eerste tekst3,94s; eerste TTS-audiochunk0,27s. Dit is één proef, geen volledige audiometing of p95. De gewenste oplossing is een snel gespreksmodel met passend modelgebruik op de achtergrond vanuit dezelfde Eva-kern. Git-basis hersteld: actuele bron staat op GitHubmain en in de schone lokale projectmap. Dashboardtaakbediening is kandidaat in review; niet live.",
       "currentEvidence": "eva2/evidence/product/voice-latency-owner-report-2026-09-22.json",
       "nextStep": "Gebruik een snel model voor direct gesprek en eenvoudige antwoorden; laat de bestaande kern aangenomen werk vastleggen en op de achtergrond het passende werkmodel kiezen. Tijdens één of meer lopende opdrachten blijven gesprek, correctie en stop beschikbaar. Eerst bestaande provider- en taakmogelijkheden toetsen; geen extra kanaalscriptjes of aparte Eva-identiteiten. Snelheid en kwaliteit moeten vervolgens via de echte kanalen bewezen worden. Daarnaast is UX-002 de eerstvolgende korte bouwkandidaat: bestaande taken in het dashboard openen, resultaat lezen en stoppen (voorlopig 2–4 actieve agenturen inclusief gerichte controle/review). AU-002, browserovername, PJ-01 en IN-02 hebben al bestaande gebruikersproeven en vragen geen herbouw. Dashboardbediening wordt gebouwd. PR-01/R6 procedurehergebruik was al technisch opgeleverd; nieuwe bouw daarvoor vervalt.",
       "usageClarification": {
@@ -10396,12 +10396,32 @@
       "correction": "Eerdere selectie AU-004 baseerde zich op achterhaalde C/D-uitkomsten. Latere R6 en onafhankelijke review bewijzen procedurehergebruik in nieuw gesprek. Geen herbouw of herhaalde modelproef."
     },
     "sourceSync20260922": {
-      "status": "reviewed_source_candidate_publication_pending",
+      "status": "published_and_verified",
       "candidateCommit": "5346cab207143e0e352e8d9bb62a9aa8faedfe23",
       "preservedIndexBranch": "codex/preserved-index-20260922",
       "findings": "GitHub main stond op6augustus; lokale HEAD13september met aanvullend werk.391stageddeletes bestonden fysiek nog. Oude index.lock11september. Kandidatentree2853blobs byte-exact gecontroleerd, geen bestanden verloren.",
-      "review": "/root/learning_finish GO voor bronbehoud; credentialscan nieuwe historie wordt afzonderlijk afgehandeld.",
-      "nonclaims": "Geen nieuwe runtime-installatie, volledige releasepoort of eigenaaracceptatie. GitHubpublicatie nog niet geclaimd."
+      "review": "GO for exact source preservation, publication-path check, reviewed scanner findings and Git workflow documentation.",
+      "nonclaims": "Geen nieuwe runtime-installatie, volledige releasepoort of eigenaaracceptatie. GitHubmain en lokale main gelijkgetrokken en gecontroleerd.",
+      "publishedCommit": "26ec1b2e5812aebed421bc26f441d43cd0e4f3c7",
+      "evidence": "eva2/evidence/product/source-sync-2026-09-22.json",
+      "parallelWork": {
+        "voice": {
+          "threadId": "01a0c8a6-d360-7a82-a630-af4bfccbd57c",
+          "state": "candidate_building",
+          "files": "conversation.py/runtime.py/model layer"
+        },
+        "dashboard": {
+          "agent": "/root/dashboard_finish",
+          "state": "candidate_in_review_runtime_wiring_in_progress",
+          "commit": "85dff3fa",
+          "files": "dashboard_work.py API/bootstrap,owner-work.jsx/css,main.jsx,app.py,scoped runtime wiring"
+        },
+        "review": {
+          "agent": "/root/learning_finish",
+          "state": "source_sync_GO_dashboard_review_active",
+          "files": "No production edits"
+        }
+      }
     }
   },
   "activeTaskId": "AU-008",
