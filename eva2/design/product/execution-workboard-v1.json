@@ -1028,14 +1028,14 @@
           }
         ],
         "now": {
-          "title": "Huishoudspraak: aansluiting beoordeeld",
-          "detail": "De bestaande aansluiting op achtergrondtaken is geïntegreerd en onafhankelijk beoordeeld. Elf gerichte reviewtests slagen. De kern, taakwerker en speakerdienst moeten nog als passende versies worden geïnstalleerd. Telegramcorrectie blijft live.",
-          "state": "Gebouwd en beoordeeld — installatie open",
+          "title": "Huishoudspraak: installatiepakketten gecontroleerd",
+          "detail": "Kern, taakwerker en speaker zijn verpakt. De kern en taakwerker hebben dezelfde uitvoercode; zeven gerichte tests slagen ook tegen het verpakte kernimage. De nieuwe huishoudkoppeling is nog niet geactiveerd.",
+          "state": "Pakketten klaar — activering open",
           "doneWhen": "Telegram-proef afzonderlijk bevestigd; bestaande huishoudintegratie beoordeeld en geïnstalleerd met terugweg."
         },
         "next": {
-          "title": "Huishoudspraak en taakwerker samen installeren",
-          "detail": "Maak passende runtimeversies van de beoordeelde broncode, controleer huidige expliciete huishoudrechten en behoud vorige images/configuratie als terugweg. Activeer de bestaande aansluiting; fysieke Voice PE-proef en eigenaaracceptatie blijven apart.",
+          "title": "Huishoudkoppeling veilig activeren",
+          "detail": "Leg de expliciete huishoudconfiguratie vast binnen de bestaande toestemming en resourcegrenzen. Controleer lopende sessies en taken, installeer de drie passende versies met terugweg en controleer de live route.",
           "state": "Hierna"
         },
         "ownerAction": {
@@ -10811,7 +10811,7 @@
           "planningEffortHours": "4–12"
         }
       ],
-      "nextAction": "Maak passende runtimeversies van de beoordeelde broncode, controleer huidige expliciete huishoudrechten en behoud vorige images/configuratie als terugweg. Activeer de bestaande aansluiting; fysieke Voice PE-proef en eigenaaracceptatie blijven apart.",
+      "nextAction": "Leg de expliciete huishoudconfiguratie vast binnen de bestaande toestemming en resourcegrenzen. Controleer lopende sessies en taken, installeer de drie passende versies met terugweg en controleer de live route.",
       "effortNotice": "Grove planning, lage zekerheid: 40–118 actieve ontwikkeluren plus zeven dagen gezinspraktijk en eventuele externe wachttijd. Geen deadline, creditkosten of gemeten verbruik; per begrensde wijziging aanscherpen na lezing van bestaand bewijs. Hergebruik kan dit verkorten.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Na review, installatie en registratie automatisch volgende uitvoerbare stap; geen algemene wachtstop op gebruikersproeven.",
@@ -10936,7 +10936,7 @@
       }
     },
     "householdPublicWorkServer20260922": {
-      "status": "composition_reviewed_installation_pending",
+      "status": "packages_verified_activation_pending",
       "sourceCommit": "77640ad8b7cf6579d5a16b27ae2e8fab428e8db4",
       "integratedCommit": "5cb887b0",
       "httpCommit": "0c537ec8",
@@ -10968,7 +10968,8 @@
         "media": 4,
         "modelCalls": 0
       },
-      "compositionInstalled": false
+      "compositionInstalled": false,
+      "packagingEvidence": "eva2/evidence/product/household-work-packaging-20260922.json"
     },
     "documentPoolCurrentPreflight20260922": {
       "status": "read_only_preflight_passed",

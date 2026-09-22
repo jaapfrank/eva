@@ -1,0 +1,94 @@
+{
+  "sourceCommit": "62b2cd55",
+  "images": {
+    "core": {
+      "image": "sha256:6d22dc45bc9e9f270b1257da21cd7afa564f771fbc0cc8bbcdced0cb7283b1cb",
+      "parent": "sha256:d0c28433861b3b51be28f3b9e63d6d506261e7b1ce0506c60add5d42d30763eb",
+      "sourceHashes": {
+        "/opt/eva/src/eva/adapters/api/household_voice_session.py": "02e572465705870d43ccbc68eb2797f8ba60533e8aa066a9978874317041a121",
+        "/opt/eva/src/eva/adapters/api/household_work.py": "5662dd65ae27bfedf915133560895743fb16dad7ba8ee4d124fc09de76b33968",
+        "/opt/eva/src/eva/adapters/postgres/conversation_actions.py": "51f0f7bf4b59a9bd2e3f90c7953a9f82d6dec3572de8b180979a09cefff7871d",
+        "/opt/eva/src/eva/adapters/postgres/conversation_journal.py": "18ac17bfb16ea5478bae060370d6945e07f88c53e4c76895f1cbcee0f3b535b8",
+        "/opt/eva/src/eva/adapters/postgres/delegated_work.py": "3ac0faea98d3b0090f549a7118912a6118e7dfdd699a3a62d8ae82071f5fa5f0",
+        "/opt/eva/src/eva/adapters/postgres/delegated_work_delivery.py": "458a3a4e2f0d135eb8c03f8af01d24a57be66ba33e457eeef14abf37e40565bf",
+        "/opt/eva/src/eva/adapters/postgres/household_work_sessions.py": "2b078a19c0246232fd63ad38f33133c7a4cbac3d3f3aeb643c382c5f7a02d42d",
+        "/opt/eva/src/eva/adapters/postgres/private_work_return.py": "1557d7c2c01a338117a1749b9dbaa6911709af65a6c17a024523b850cd4ea82d",
+        "/opt/eva/src/eva/adapters/postgres/scoped_delegated_work_actions.py": "2ea943b85a4265990aa2e548039c5387c1dce5f79ec2f44e0a77a43d77231984",
+        "/opt/eva/src/eva/bootstrap/delegated_research.py": "f570f3505297224d4e8c7237d7d834fd39d0aaba7a8e180ac70bf242883a07d6",
+        "/opt/eva/src/eva/bootstrap/delegated_work_service.py": "bd587c48a484b23ebd1caf5e8adde951bececaa613d4f6b9a62ee548a5230af4",
+        "/opt/eva/src/eva/bootstrap/household_research_policy.py": "72d586fbbe8db72fb326185c9c634a320e54b852c9bcb4c0f2991a905bae84ad",
+        "/opt/eva/src/eva/bootstrap/household_work.py": "c9bd4df6e0276f096b57bb61826cd1eecd5aa6bd81d7164574fe8ead75831f3f",
+        "/opt/eva/src/eva/bootstrap/household_work_composition.py": "3c3c058618f458756409e431ef0576dbcf0e6b64af91a84fb99fbb0c8ce929fa",
+        "/opt/eva/src/eva/bootstrap/runtime.py": "61bfedd57edc27bfeb28ef0ae29b536df628f731033d226e371fac08735d3c94",
+        "/opt/eva/src/eva/contracts/delegated_work.py": "08ccc14b9fe7ba0f3b752e2a1ef399497088625cc7868d286653c1d8ff0e408b",
+        "/opt/eva/src/eva/operations/delegated_work_worker.py": "07b8291609e6ceee87b968c078f815ae83efd14e06db553d10e4debaf836be81"
+      },
+      "sourceCommit": "62b2cd55",
+      "installed": false
+    },
+    "worker": {
+      "image": "sha256:c8a8025563e9ed0abfe1482e1a6fa7196fe37b89639093433124696e938b534c",
+      "parent": "sha256:8d88e5a172b1f22926eb667e4ea98ad27e600318ed3b838f7aac88d499e2465a",
+      "sourceHashes": {
+        "/opt/eva/src/eva/adapters/api/household_voice_session.py": "02e572465705870d43ccbc68eb2797f8ba60533e8aa066a9978874317041a121",
+        "/opt/eva/src/eva/adapters/api/household_work.py": "5662dd65ae27bfedf915133560895743fb16dad7ba8ee4d124fc09de76b33968",
+        "/opt/eva/src/eva/adapters/postgres/conversation_actions.py": "51f0f7bf4b59a9bd2e3f90c7953a9f82d6dec3572de8b180979a09cefff7871d",
+        "/opt/eva/src/eva/adapters/postgres/conversation_journal.py": "18ac17bfb16ea5478bae060370d6945e07f88c53e4c76895f1cbcee0f3b535b8",
+        "/opt/eva/src/eva/adapters/postgres/delegated_work.py": "3ac0faea98d3b0090f549a7118912a6118e7dfdd699a3a62d8ae82071f5fa5f0",
+        "/opt/eva/src/eva/adapters/postgres/delegated_work_delivery.py": "458a3a4e2f0d135eb8c03f8af01d24a57be66ba33e457eeef14abf37e40565bf",
+        "/opt/eva/src/eva/adapters/postgres/household_work_sessions.py": "2b078a19c0246232fd63ad38f33133c7a4cbac3d3f3aeb643c382c5f7a02d42d",
+        "/opt/eva/src/eva/adapters/postgres/private_work_return.py": "1557d7c2c01a338117a1749b9dbaa6911709af65a6c17a024523b850cd4ea82d",
+        "/opt/eva/src/eva/adapters/postgres/scoped_delegated_work_actions.py": "2ea943b85a4265990aa2e548039c5387c1dce5f79ec2f44e0a77a43d77231984",
+        "/opt/eva/src/eva/bootstrap/delegated_research.py": "f570f3505297224d4e8c7237d7d834fd39d0aaba7a8e180ac70bf242883a07d6",
+        "/opt/eva/src/eva/bootstrap/delegated_work_service.py": "bd587c48a484b23ebd1caf5e8adde951bececaa613d4f6b9a62ee548a5230af4",
+        "/opt/eva/src/eva/bootstrap/household_research_policy.py": "72d586fbbe8db72fb326185c9c634a320e54b852c9bcb4c0f2991a905bae84ad",
+        "/opt/eva/src/eva/bootstrap/household_work.py": "c9bd4df6e0276f096b57bb61826cd1eecd5aa6bd81d7164574fe8ead75831f3f",
+        "/opt/eva/src/eva/bootstrap/household_work_composition.py": "3c3c058618f458756409e431ef0576dbcf0e6b64af91a84fb99fbb0c8ce929fa",
+        "/opt/eva/src/eva/bootstrap/runtime.py": "61bfedd57edc27bfeb28ef0ae29b536df628f731033d226e371fac08735d3c94",
+        "/opt/eva/src/eva/contracts/delegated_work.py": "08ccc14b9fe7ba0f3b752e2a1ef399497088625cc7868d286653c1d8ff0e408b",
+        "/opt/eva/src/eva/operations/delegated_work_worker.py": "07b8291609e6ceee87b968c078f815ae83efd14e06db553d10e4debaf836be81"
+      },
+      "sourceCommit": "62b2cd55",
+      "installed": false
+    },
+    "speaker": {
+      "image": "sha256:8ce4502ac3ac6589d56705a0f1bd3247af6fef51bed48d3adfb110c76a77fdb1",
+      "parent": "sha256:1e3445797bcdc1afe350370c14d91f07ccb1bc818ea9fa1a8d1af737d9ec1aba",
+      "sourceHashes": {
+        "/app/eva/voice_service/agent.py": "49851f076c7fb84f7328746cb2d0c19f2b8e81b9349d18b902d1601e42c08f84",
+        "/app/eva/application/conversation_receipt.py": "a834e6491e77657eff16e4f3d5355ef55a0680f37399754d1a3722c44e8c9dc6",
+        "/app/speaker/speaker_livekit_session.py": "fe0aabae006e3c8cf248947c6917915acc97f81bf1f49b4f416a96ddd6b83d24"
+      },
+      "sourceCommit": "62b2cd55",
+      "installed": false
+    }
+  },
+  "verification": {
+    "core": {
+      "returncode": 0,
+      "output": "{\"researchProgram\": \"235fbcd016987629a2ff1152e0688431cbb7f448a28afc65496aa0ecbbd71a5a\", \"toolFreeProgram\": \"7b2982d94d9054ae46731a2be2548760773fd41bba9731f48f47906baf1692eb\", \"verifiedFiles\": 17}\n",
+      "error": ""
+    },
+    "worker": {
+      "returncode": 0,
+      "output": "{\"researchProgram\": \"235fbcd016987629a2ff1152e0688431cbb7f448a28afc65496aa0ecbbd71a5a\", \"toolFreeProgram\": \"7b2982d94d9054ae46731a2be2548760773fd41bba9731f48f47906baf1692eb\", \"verifiedFiles\": 17}\n",
+      "error": ""
+    },
+    "speaker": {
+      "returncode": 0,
+      "output": "{\"verifiedFiles\": 3, \"imports\": true}\n",
+      "error": ""
+    }
+  },
+  "packagedCoreTests": {
+    "passed": 7,
+    "durationSeconds": 4.56,
+    "sourceTreeOnPythonPath": false,
+    "disposablePostgres": true
+  },
+  "installed": false,
+  "modelCalls": 0,
+  "voicePolicyCurrentlyValid": true,
+  "voiceDeviceCount": 2,
+  "next": "Prepare explicit current household configuration and paired deployment. Preserve prior runtime images/configuration; no live activation yet."
+}
