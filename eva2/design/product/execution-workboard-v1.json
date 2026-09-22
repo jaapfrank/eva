@@ -1028,14 +1028,14 @@
           }
         ],
         "now": {
-          "title": "Tussendoor praten en snelle ontvangst herstellen",
-          "detail": "De standaardontvangst is live op de privéspraakpagina. Eén uitvoerder herstelt het wachten op tussenvragen in de echte /eva2-Telegramroute; de andere sluit huishoudelijke mediasessies aan. Daarnaast is Jaaps onderzoeksvoorbeeld afgewezen op inhoudelijke volledigheid: essentiële controles bleven open.",
-          "state": "In uitvoering — praktijkproblemen open",
+          "title": "Bestaande Telegram-correctie afronden",
+          "detail": "De correctie is gebouwd en onafhankelijk beoordeeld: een tussenvraag kan door terwijl een eerdere vraag loopt. Nog niet geïnstalleerd. De twee bouwtaken hebben een stopinstructie gekregen om ontwikkelverbruik te beperken; de coördinator rondt bestaand werk één voor één af.",
+          "state": "Broncode getest en beoordeeld — installatie open",
           "doneWhen": "Ontvangst is hoorbaar zonder GPT-wachttijd en een tussenvraag wordt vóór voltooiing van het eerdere werk beantwoord. Na tests, review en installatie volgt een concrete herhaalproef."
         },
         "next": {
-          "title": "Tussenvragen en volledige taakafronding herstellen",
-          "detail": "Test en installeer de correctie op de echte Telegramingang. Sluit de huishoudelijke mediasessie aan. Onderzoek daarna waarom Eva belangrijke controles open liet in het uitgebreide advies, met behoud van bestaande vervolgmogelijkheden.",
+          "title": "Telegram veilig installeren en live controleren",
+          "detail": "Behoud de bestaande installatie en deadlinecorrectie, controleer lopend werk en installeer alleen de beoordeelde Telegramwijziging met terugweg. Daarna volgt de klaarliggende huishoudintegratie. Onderzoeksvolledigheid blijft een afzonderlijk open tekort.",
           "state": "Hierna"
         },
         "ownerAction": {
@@ -10811,7 +10811,7 @@
           "planningEffortHours": "4–12"
         }
       ],
-      "nextAction": "De standaardontvangst is geïnstalleerd op de privéspraakpagina. Herstel parallel de echte /eva2-Telegramroute zodat een tussenvraag niet achter eerder werk wacht; sluit huishoudelijke mediasessies aan op dezelfde taakuitvoering. Werk de inhoudelijke onderzoeksafronding verder uit op basis van Jaaps afgewezen adviesvoorbeeld. Kanaalbewijs en eigenaaracceptatie blijven apart.",
+      "nextAction": "Behoud de bestaande installatie en deadlinecorrectie, controleer lopend werk en installeer alleen de beoordeelde Telegramwijziging met terugweg. Daarna volgt de klaarliggende huishoudintegratie. Onderzoeksvolledigheid blijft een afzonderlijk open tekort.",
       "effortNotice": "Grove planning, lage zekerheid: 40–118 actieve ontwikkeluren plus zeven dagen gezinspraktijk en eventuele externe wachttijd. Geen deadline, creditkosten of gemeten verbruik; per begrensde wijziging aanscherpen na lezing van bestaand bewijs. Hergebruik kan dit verkorten.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Na review, installatie en registratie automatisch volgende uitvoerbare stap; geen algemene wachtstop op gebruikersproeven.",
@@ -10997,14 +10997,22 @@
       "ownerAccepted": false
     },
     "telegramConcurrentConversation20260922": {
-      "status": "owner_trial_failed_investigation_in_progress",
+      "status": "source_reviewed_installation_pending",
       "ownerReport": "Telegram /eva2 verwerkt uitgebreidere adviesvraag en tussenvraag hoe gaat het met jou stap voor stap; tussenvraag krijgt niet tussendoor antwoord.",
       "accepted": false,
       "investigatorTaskId": "01a0c8a6-d360-7a82-a630-af4bfccbd57c",
       "outcomeRequired": "Tussenvraag wordt beantwoord terwijl eerder aangenomen werk doorloopt, zonder dubbele acties of verlies van context en persoonsgrenzen.",
       "nextEvidence": "Gecontroleerde proef op echte Telegramingress: blokkeer eerste langdurige beurt en bewijs tweede antwoord vóór vrijgave, plus passende regressies.",
       "estimatedMinutes": "60 planning, geen gemeten verbruik",
-      "modelCallsAllowed": 0
+      "modelCallsAllowed": 0,
+      "review": "eva2/reviews/telegram-concurrent-ingress-20260922.md",
+      "sourceCommit": "77fdfc85f945de0ece6a12e074da9cda9de2aae2",
+      "independentTests": {
+        "passed": 3,
+        "modelCalls": 0,
+        "telegramMessages": 0
+      },
+      "installed": false
     },
     "researchCompletionOwnerFinding20260922": {
       "status": "owner_quality_trial_failed",
@@ -11026,6 +11034,13 @@
       ],
       "remaining": "Controleer daadwerkelijke onderzoeksdekking en het gebruik van bestaande vervolgstappen. Belangrijke ontbrekende gegevens gericht onderzoeken of concrete geprobeerde bronnen/toegangsbelemmering vastleggen; geen verificatie verzinnen.",
       "extraModelCalls": 0
+    },
+    "developmentBudget20260922": {
+      "weeklyUsedPercentObserved": 40,
+      "dailyDeltaVerified": false,
+      "perTaskQuotaAttribution": "unavailable",
+      "execution": "Two executor tasks were instructed to stop new work; coordinator reviews existing output serially. No new model probes in this review.",
+      "goalComplete": false
     }
   },
   "activeTaskId": "AU-008",
