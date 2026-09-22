@@ -31,13 +31,16 @@ class Backend:
 
 
 class Session:
-    def __init__(self): self.spoken = []; self.handles = []
+    def __init__(self): self.spoken = []; self.handles = []; self.chat_history = []; self.options = []
     def say(self, source, **kwargs):
+        self.options.append(kwargs)
         handle = SimpleNamespace(interrupted=False, chat_items=[])
         async def play():
             if isinstance(source, str): self.spoken.append(source)
             else:
-                async for part in source: self.spoken.append(part)
+                async for part in source:
+                    self.spoken.append(part)
+                    if kwargs.get('add_to_chat_ctx', True): self.chat_history.append(part)
         task = asyncio.create_task(play())
         handle.done = task.done
         def interrupt(): handle.interrupted = True; task.cancel()
@@ -120,6 +123,8 @@ async def test_revoked_acknowledged_context_is_not_sent_in_a_later_turn():
     backend=Backend(); state=BridgeState(backend); agent=EvaAgent(state); session=Session()
     await agent.return_saved_work(session, RESULT, lambda:None)
     assert state.saved_result_context
+    assert session.options[-1]['add_to_chat_ctx'] is False
+    assert not session.chat_history  # SDK history cannot reintroduce revoked bytes as recent.
     payloads=[]
     async def events(payload):
         payloads.append(payload)

@@ -280,7 +280,9 @@ class EvaAgent(Agent):
                 for offset in range(0, len(text), 1500):
                     await authorize()
                     yield text[offset:offset+1500]
-            handle = session.say(parts(), allow_interruptions=True)
+            # Saved result context has its own current read grant. Do not also
+            # retain these bytes in LiveKit history, which feeds payload.recent.
+            handle = session.say(parts(), allow_interruptions=True, add_to_chat_ctx=False)
             state.deliveries[key] = handle
             while not handle.done():
                 await asyncio.sleep(.5)
