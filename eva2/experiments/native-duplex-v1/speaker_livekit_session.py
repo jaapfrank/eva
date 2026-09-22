@@ -47,13 +47,24 @@ class LiveKitHouseholdSpeakerSession:
                 sink.clear_buffer()
         channel.control_observer = local_control
         source = None
+        work_open = False
+        return_closed = False
         tasks = set()
         closed = asyncio.Event()
         session.on("close", lambda event: closed.set())
 
+        def current_session():
+            self.check()
+            if return_closed or muted or closed.is_set():
+                raise ValueError("household media session closed")
+
         async def watch_authority():
+            renewed = asyncio.get_running_loop().time()
             while True:
-                self.check()
+                current_session()
+                if work_open and asyncio.get_running_loop().time() - renewed >= 5:
+                    await backend.work_return("renew", state.session_id)
+                    renewed = asyncio.get_running_loop().time()
                 await asyncio.sleep(1)
         try:
             tasks.add(asyncio.create_task(watch_authority()))
@@ -62,9 +73,16 @@ class LiveKitHouseholdSpeakerSession:
             done, _ = await asyncio.wait(tasks, return_when=asyncio.FIRST_COMPLETED)
             for task in done: await task
             tasks.remove(wake)
+            if backend.work_returns:
+                opened = await backend.work_return("open", state.session_id)
+                state.session_id = opened["session_id"]
+                work_open = True
             source = SpeakerAudioInput(await channel.begin_capture())
             session.input.audio = source
-            await session.start(EvaAgent(state))
+            agent = EvaAgent(state)
+            await session.start(agent)
+            if work_open:
+                tasks.add(asyncio.create_task(agent.poll_saved_work(session, current_session)))
             ending = asyncio.create_task(closed.wait())
             tasks.add(ending)
             while True:
@@ -94,6 +112,7 @@ class LiveKitHouseholdSpeakerSession:
             if not muted: raise
         finally:
             # Stop physical audio before potentially slower session/tool cleanup.
+            return_closed = True
             sink.closed = True
             sink.clear_buffer()
             channel.start_close()
@@ -106,3 +125,8 @@ class LiveKitHouseholdSpeakerSession:
                 finally:
                     await channel.close()
                     await asyncio.gather(*tasks, return_exceptions=True)
+                    if work_open:
+                        try:
+                            await backend.work_return("close", state.session_id)
+                        except Exception:
+                            pass  # Core lease expires; closing media never cancels work.

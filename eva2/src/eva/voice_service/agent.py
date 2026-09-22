@@ -3,6 +3,7 @@ from __future__ import annotations
 
 from datetime import UTC, datetime
 import json
+import re
 from typing import AsyncIterator, Callable
 from uuid import UUID, uuid4, uuid5
 
@@ -28,6 +29,10 @@ class CoreClient:
         self.url, self.token = url.rstrip("/"), token
         self.private_work_returns = False
 
+    @property
+    def work_returns(self):
+        return self.private_work_returns
+
     async def ready(self) -> bool:
         async with httpx.AsyncClient(timeout=10, trust_env=False) as client:
             response = await client.get(self.url + "/internal/v1/voice-session/ready",
@@ -40,6 +45,7 @@ class CoreClient:
         return "/internal/v1/voice-session/respond", payload
 
     async def work_return(self, operation, session_id, **identity):
+        identity.pop("disposition", None)  # Private protocol acknowledges offering only.
         async with httpx.AsyncClient(timeout=10, trust_env=False) as client:
             response = await client.post(self.url + "/internal/v1/voice-session/work/" + operation,
                 headers={"Authorization": "Bearer " + self.token},
@@ -73,19 +79,100 @@ class HouseholdCoreClient(CoreClient):
             raise ValueError("Invalid provisioned household device")
         super().__init__(url, token)
         self._device = {"satellite_id": satellite_id, "device_id": device_id}
+        self.household_work_returns = False
+        self._work_session = None
+        self._work_claims = {}
+
+    @property
+    def work_returns(self):
+        return self.household_work_returns
 
     async def ready(self):
         async with httpx.AsyncClient(timeout=10, trust_env=False) as client:
             response = await client.post(self.url + "/internal/v1/ha-voice/session/ready",
                 headers={"Authorization": "Bearer " + self.token}, json=self._device)
-            return response.status_code == 200 and response.json().get("contract") == "EvaHouseholdVoiceSessionReady/v1"
+            valid = response.status_code == 200 and response.json().get("contract") == "EvaHouseholdVoiceSessionReady/v1"
+            self.household_work_returns = valid and response.json().get("household_work_returns") is True
+            return valid
 
-    async def work_return(self, *args, **kwargs):
-        raise ValueError("household devices cannot read private work returns")
+    async def work_return(self, operation, session_id, **identity):
+        """Translate transport envelopes only; never use the private return API."""
+        if not self.household_work_returns:
+            raise ValueError("household work returns are not enabled")
+        if operation not in {"open", "renew", "close", "poll", "authorize", "ack"}:
+            raise ValueError("unknown household return operation")
+        if operation == "open":
+            if self._work_session is not None:
+                raise ValueError("household session already opened")
+            body = dict(self._device)
+        else:
+            if session_id != self._work_session:
+                raise ValueError("household work session differs")
+            body = {**self._device, "session_id": session_id}
+        claim = None
+        if operation in {"authorize", "ack"}:
+            claim = self._work_claims.get(identity.get("operation_id"))
+            if claim is None or identity.get("work_id") != claim["work_id"]:
+                raise ValueError("household result was not claimed here")
+            body.update(work_id=claim["work_id"], result_sha256=claim["result_sha256"])
+            if operation == "ack":
+                body["disposition"] = identity.get("disposition", "offered")
+        elif identity:
+            raise ValueError("unexpected household return identity")
+        async with httpx.AsyncClient(timeout=10, trust_env=False) as client:
+            response = await client.post(self.url + "/internal/v1/ha-voice/session/work/" + operation,
+                headers={"Authorization": "Bearer " + self.token}, json=body)
+            response.raise_for_status()
+            data = response.json()
+        if data.get("contract") != "EvaHouseholdWorkReturn/v1":
+            raise ValueError("household return contract differs")
+        if operation == "open":
+            assigned = data.get("session_id")
+            if data.get("state") != "open" or not isinstance(assigned, str) or str(UUID(assigned)) != assigned:
+                raise ValueError("household core did not issue a session")
+            self._work_session = assigned
+            return {"session_id": assigned}
+        if operation in {"close", "renew"}:
+            if data.get("state") != ("closed" if operation == "close" else "open") or data.get("session_id") != session_id:
+                raise ValueError("household session response differs")
+            if operation == "close":
+                self._work_claims.clear()
+            return data
+        if operation == "poll":
+            result = data.get("result")
+            if result is None:
+                if data.get("state") != "idle":
+                    raise ValueError("household result state differs")
+                return {"result": None}
+            fields = {"work_id", "generation", "result_sha256", "origin_message_id", "session_generation", "destination_sha256", "result"}
+            if (data.get("state") != "claimed" or not isinstance(result, dict) or set(result) != fields
+                    or not isinstance(result["work_id"], str) or not 1 <= len(result["work_id"]) <= 240
+                    or type(result["generation"]) is not int or result["generation"] < 1
+                    or type(result["session_generation"]) is not int or result["session_generation"] != 1
+                    or not isinstance(result["origin_message_id"], str) or not result["origin_message_id"]
+                    or not isinstance(result["result"], str)
+                    or not isinstance(result["result_sha256"], str) or not re.fullmatch(r"[0-9a-f]{64}", result["result_sha256"])
+                    or not isinstance(result["destination_sha256"], str) or not re.fullmatch(r"[0-9a-f]{64}", result["destination_sha256"])):
+                raise ValueError("household result identity differs")
+            binding = {k: v for k, v in result.items() if k != "result"}
+            operation_id = binding["destination_sha256"]
+            if operation_id in self._work_claims:
+                raise ValueError("household result claim repeated")
+            self._work_claims[operation_id] = binding
+            return {"result": {"work_id": binding["work_id"], "operation_id": operation_id,
+                "output": result["result"], "output_sha256": binding["result_sha256"],
+                "result_sha256": binding["result_sha256"]}}
+        if data.get("state") != operation or data.get("result") != claim:
+            raise ValueError("household result authority changed")
+        return {"status": "authorized" if operation == "authorize" else "acknowledged",
+            "operation_id": claim["destination_sha256"], "output_sha256": claim["result_sha256"],
+            "result_sha256": claim["result_sha256"]}
 
     def request(self, payload):
         if {"satellite_id", "device_id", "principal_id", "audience"} & payload.keys():
             raise ValueError("Voice content cannot select authority")
+        if self.household_work_returns and payload.get("session_id") != self._work_session:
+            raise ValueError("household input requires its core-issued session")
         return "/internal/v1/ha-voice/session/respond", {**payload, **self._device}
 
 class BridgeState:
@@ -218,7 +305,7 @@ class EvaAgent(Agent):
                 self.discard_saved_result(context_id, result)
 
     async def return_saved_work(self, session, result, check):
-        """One claimed result on its original live private session; no model call."""
+        """One claimed result on its original authorized live session; no model call."""
         import asyncio
         import hashlib
         state = self.state
@@ -261,14 +348,24 @@ class EvaAgent(Agent):
             # retain these bytes in LiveKit history, which feeds payload.recent.
             handle = session.say(parts(), allow_interruptions=True, add_to_chat_ctx=False)
             state.deliveries[key] = handle
+            household = getattr(state.backend, "household_work_returns", False)
+            if household:
+                await state.backend.work_return("ack", state.session_id, **identity, disposition="offered")
             while not handle.done():
                 await asyncio.sleep(.5)
                 await authorize()
-            await state.backend.work_return("ack", state.session_id, **identity)
+            await state.backend.work_return("ack", state.session_id, **identity,
+                **({"disposition": "interrupted" if handle.interrupted else "completed"} if household else {}))
         except BaseException:
             self.discard_saved_result(context_id, result)
             if handle is not None:
                 handle.interrupt()
+            if getattr(state.backend, "household_work_returns", False):
+                try:
+                    await state.backend.work_return("ack", state.session_id, **identity,
+                        disposition="interrupted" if handle is not None else "ambiguous")
+                except Exception:
+                    pass  # Revoked/closed authority cannot acknowledge; never replay.
             raise
 
     async def poll_saved_work(self, session, check):

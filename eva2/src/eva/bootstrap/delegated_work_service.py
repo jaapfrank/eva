@@ -130,8 +130,12 @@ class OpenAIDelegatedWorkSettings:
     research_budget_file: Path | None = None
     research_tenant_id: str | None = None
     research_installation_id: str | None = None
+    household_work_config_file: Path | None = None
 
     def __post_init__(self) -> None:
+        if self.household_work_config_file is not None and (
+                not self.household_work_config_file.is_absolute() or not self.research_enabled):
+            raise ValueError("household work requires public research and an absolute configuration file")
         if type(self.research_enabled) is not bool:
             raise ValueError("research switch must be a boolean")
         if self.research_enabled and (self.research_budget_file is None
@@ -171,6 +175,8 @@ class OpenAIDelegatedWorkSettings:
                 research_installation_id=values[names[2]].strip())
         return cls(
             **research,
+            household_work_config_file=(Path(values["EVA_HOUSEHOLD_WORK_CONFIG_FILE"])
+                if values.get("EVA_HOUSEHOLD_WORK_CONFIG_FILE") else None),
             service=DelegatedWorkServiceSettings.from_environment(values),
             model_access_lease_file=Path(lease),
         )
@@ -307,7 +313,14 @@ async def serve_openai_delegated_work(
     if settings.research_enabled:
         from eva.bootstrap.delegated_research import serve_research_enabled_work
         research, profile = _research_composition(settings)
-        return await serve_research_enabled_work(settings, research, profile, once=once)
+        authority = None
+        if settings.household_work_config_file is not None:
+            from eva.bootstrap.household_work_composition import load_household_work_authority
+            authority = load_household_work_authority(settings.household_work_config_file,
+                scope=settings.service.scope, profile=profile,
+                model_lease_file=settings.model_access_lease_file)
+        return await serve_research_enabled_work(settings, research, profile, once=once,
+                                                household_authority=authority)
 
     async with _open_provider_runner(settings.model_access_lease_file) as runner:
         return await serve_delegated_work_service(
@@ -332,7 +345,12 @@ def check_openai_delegated_work(
     verify_delegated_provider_dependencies()
     validate_delegated_model_access_lease(selected.model_access_lease_file)
     if selected.research_enabled:
-        _research_composition(selected)
+        _, profile = _research_composition(selected)
+        if selected.household_work_config_file is not None:
+            from eva.bootstrap.household_work_composition import load_household_work_authority
+            load_household_work_authority(selected.household_work_config_file,
+                scope=selected.service.scope, profile=profile,
+                model_lease_file=selected.model_access_lease_file)
     database_dsn = read_runtime_secret_file(
         selected.service.database_dsn_file,
         setting_name="EVA_DATABASE_DSN_FILE",

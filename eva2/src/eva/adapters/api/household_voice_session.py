@@ -45,16 +45,25 @@ def install_household_voice_session(app: FastAPI, *, runtime, authority, work_se
     @app.post("/internal/v1/ha-voice/session/respond")
     def respond(request: Request, payload: HouseholdSessionRequest):
         admit(request, payload)
+        service = None
         try:
-            turn = responder.make_turn(NativeRequest(request_id=payload.message_id.hex,
-                satellite_id=payload.satellite_id, device_id=payload.device_id,
-                conversation_id="livekit:"+str(payload.session_id), text=payload.text, language="nl"))
+            if work_server is None:
+                turn = responder.make_turn(NativeRequest(request_id=payload.message_id.hex,
+                    satellite_id=payload.satellite_id, device_id=payload.device_id,
+                    conversation_id="livekit:"+str(payload.session_id), text=payload.text, language="nl"))
+            else:
+                service = work_server.session(token=request.headers["Authorization"].removeprefix("Bearer "),
+                    satellite_id=payload.satellite_id, device_id=payload.device_id,
+                    session_id=str(payload.session_id))
+                turn = service.turn(str(payload.message_id), payload.text)
         except (ValueError, RuntimeError, OSError):
             raise HTTPException(403, "Household voice scope unavailable") from None
         def message_id(value):
-            return turn.conversation_id + ":request:" + value.hex
+            return turn.conversation_id + ":request:" + (str(value) if service is not None else value.hex)
         def check():
             authority.validate_current()
+            if service is not None:
+                service.validate_authority(turn)
             runtime.admit_turn_audience(turn)
         return stream_voice_turn(runtime=runtime, payload=payload, turn=turn,
                                  message_id=message_id, check=check, user_label="Spreker")

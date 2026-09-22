@@ -117,7 +117,9 @@ class HouseholdResearchProfile(DelegatedResearchProfile):
             name: hashlib.sha256((root/name).read_bytes()).hexdigest() for name in (
                 "bootstrap/household_research_policy.py", "bootstrap/household_work.py",
                 "bootstrap/household_voice.py", "application/memory_audience.py",
-                "adapters/postgres/household_work_sessions.py")}})
+                "adapters/postgres/household_work_sessions.py",
+                "bootstrap/household_work_composition.py",
+                "adapters/postgres/scoped_delegated_work_actions.py")}})
         return DelegatedWorkReleaseSelector(canonical_sha256({"profile": self.profile_id}),
             self.configuration_sha256, program, ENGINE_RELEASE_SHA256, RESEARCH_OUTPUT_HASH)
 

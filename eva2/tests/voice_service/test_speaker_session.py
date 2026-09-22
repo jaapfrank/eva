@@ -13,12 +13,24 @@ from speaker_livekit_session import LiveKitHouseholdSpeakerSession
 
 @pytest.mark.asyncio
 @pytest.mark.parametrize("ending", ["mute", "revoke"])
-async def test_same_livekit_session_survives_local_stop_and_mute_closes(tls_pair, monkeypatch, ending):
+@pytest.mark.parametrize("work_enabled", [False, True])
+async def test_same_livekit_session_survives_local_stop_and_mute_closes(tls_pair, monkeypatch, ending, work_enabled):
+    from uuid import uuid4
+    assigned = str(uuid4())
+    operations = []
     admitted=[]
     async def ready(self):
         admitted.append(self._device)
+        self.household_work_returns = work_enabled
         return True
+    async def work_return(self, operation, session_id, **identity):
+        operations.append(operation)
+        if operation == "open": return {"session_id": assigned}
+        assert session_id == assigned
+        if operation == "poll": return {"result": None}
+        return {}
     monkeypatch.setattr(HouseholdCoreClient,"ready",ready)
+    monkeypatch.setattr(HouseholdCoreClient,"work_return",work_return)
     class Candidate(LiveKitHouseholdSpeakerSession):
         def make_session(self):
             self.actual_session=AgentSession(aec_warmup_duration=0)
@@ -52,6 +64,7 @@ async def test_same_livekit_session_survives_local_stop_and_mute_closes(tls_pair
                     if session.current_agent is not None: break
                 except RuntimeError: pass
                 await asyncio.sleep(.01)
+            if work_enabled: assert session.current_agent.state.session_id == assigned
             first=session.say("Audio",audio=audio(),allow_interruptions=True)
             assert await asyncio.wait_for(peer.answers.get(),2)==1
             peer.stop_gate=asyncio.Event()
@@ -78,6 +91,11 @@ async def test_same_livekit_session_survives_local_stop_and_mute_closes(tls_pair
             await asyncio.wait_for(device,3)
             await wait_released(endpoint)
     assert admitted==[{"satellite_id":binding.satellite_id,"device_id":binding.device_id}]
+    if work_enabled:
+        assert operations[0] == "open" and operations[-1] == "close"
+        assert "poll" in operations
+    else:
+        assert operations == []
     failures=endpoint.diagnostics()["recentFailures"]
     if ending=="mute": assert failures==[]
     else: assert failures and failures[-1]["type"]=="ValueError"

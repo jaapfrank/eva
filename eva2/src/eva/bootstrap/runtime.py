@@ -248,6 +248,7 @@ class RuntimeSettings:
     household_voice_policy_file: str | None = None
     household_voice_token_file: str | None = None
     household_voice_session_enabled: bool = False
+    household_work_config_file: str | None = None
     portable_restore_authority_file: str | None = None
     cold_path_idle_seconds: float = 300.0
     personal_interest_lease_seconds: int = 90
@@ -580,6 +581,7 @@ class RuntimeSettings:
             household_voice_policy_file=_environment_optional("EVA_HOUSEHOLD_VOICE_POLICY_FILE"),
             household_voice_token_file=_environment_optional("EVA_HOUSEHOLD_VOICE_TOKEN_FILE"),
             household_voice_session_enabled=_environment_bool("EVA_HOUSEHOLD_VOICE_SESSION_ENABLED", False),
+            household_work_config_file=_environment_optional("EVA_HOUSEHOLD_WORK_CONFIG_FILE"),
             portable_restore_authority_file=portable_restore_authority_file,
             cold_path_idle_seconds=cold_path_idle_seconds,
             personal_interest_lease_seconds=personal_interest_lease_seconds,
@@ -1779,6 +1781,21 @@ def create_runtime_app() -> FastAPI:
         )
     if settings.delegated_work_enabled and delegated_work_actions is None:
         raise RuntimeError("delegated work requires the configured dashboard owner")
+    household_work_server = None
+    if settings.household_work_config_file is not None:
+        if (household_voice is None or not settings.household_voice_session_enabled
+                or delegated_research_profile is None):
+            raise ValueError("household work requires existing voice sessions and public research")
+        from eva.bootstrap.household_work_composition import load_household_work_authority
+        from eva.bootstrap.household_work import HouseholdWorkServer
+        from eva.adapters.postgres.scoped_delegated_work_actions import ScopedDelegatedWorkActions
+        scope = external_timeline_scope(settings.background_tenant_id or "",
+            settings.background_installation_id or "", "household work scope required")
+        work_authority = load_household_work_authority(settings.household_work_config_file,
+            scope=scope, profile=delegated_research_profile,
+            model_lease_file=Path(settings.conversation_auth_file), voice_authority=household_voice)
+        household_work_server = HouseholdWorkServer(engine, scope, work_authority)
+        delegated_work_actions = ScopedDelegatedWorkActions(delegated_work_actions, household_work_server)
     provider_bundle = build_external_provider_bundle(settings.external_provider, engine)
     model = PydanticConversationModel(
         auth_file=Path(settings.conversation_auth_file),
@@ -2186,7 +2203,8 @@ def create_runtime_app() -> FastAPI:
     )
     if household_voice is not None and settings.household_voice_session_enabled:
         from eva.adapters.api.household_voice_session import install_household_voice_session
-        install_household_voice_session(app, runtime=runtime, authority=household_voice)
+        install_household_voice_session(app, runtime=runtime, authority=household_voice,
+                                        work_server=household_work_server)
     return app
 
 
