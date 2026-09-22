@@ -118,8 +118,12 @@ zijn resultaat via die gezamenlijke context; geen tweede gesprekspersoon of
 onafhankelijke waarheid per kanaal. Eenvoudige antwoorden hoeven niet eerst door
 een duur routerings- of onderzoeksmodel. Bevestig alleen werkelijk aangenomen werk.
 
-Deze aanpak geldt voor Telegram, website, Home Assistant en Voice PE. Geen extra
-kanaalregexen of standaardzinnen om wachttijd te maskeren. Hergebruik de bestaande
+Deze aanpak geldt voor Telegram, website, Home Assistant en Voice PE. Aanvullend
+eigenaarbesluit: een korte standaardontvangst zoals “Hmm” of “Een momentje” mag
+direct, zonder GPT-call, terwijl de echte antwoordcall loopt. Dit bevestigt alleen
+ontvangst; “Ik ga ermee bezig” vereist werkelijk aangenomen werk. Houd deze
+presentatie buiten modelgeschiedenis en geheugen. Gebruik geen kanaalregex om de
+opdracht inhoudelijk te interpreteren. Hergebruik de bestaande
 gespreks-, provider- en achtergrondtaakroutes; voeg alleen ontbrekende koppelingen
 toe. Selecteer een snel model met gemeten reactietijd én kwaliteit op de bestaande
 toegestane providerroute; geen stilzwijgende nieuwe betaalde route of abonnement.

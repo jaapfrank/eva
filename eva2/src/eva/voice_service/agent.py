@@ -3,13 +3,13 @@ from __future__ import annotations
 
 from datetime import UTC, datetime
 import json
-import re
 from typing import AsyncIterator, Callable
 from uuid import UUID, uuid4, uuid5
 
 import httpx
 from livekit.agents import Agent, RunContext, function_tool, llm
 from livekit.agents.types import DEFAULT_API_CONNECT_OPTIONS
+from eva.application.conversation_receipt import RECEIVED_INPUT_TEXT
 
 async def authorize_saved_return(backend, session_id, result, check):
     """Revalidate saved bytes at each context/output boundary, including after ack."""
@@ -22,27 +22,6 @@ async def authorize_saved_return(backend, session_id, result, check):
                    for field in ("operation_id", "output_sha256", "result_sha256"))):
         raise ValueError("saved return authority changed")
 
-
-def work_receipt_text(text: str) -> str | None:
-    """Conservative receipt for an explicit work request, never its result.
-
-    This is connector feedback after authenticated HTTP acceptance, not a
-    task classifier or execution decision. Questions and ambiguous phrasing
-    keep the ordinary model path without a canned acknowledgement.
-    """
-    words = " ".join(text.casefold().split())
-    if any(word in {"niet", "nooit", "geen", "stop", "wacht", "annuleer"}
-           for word in re.findall(r"\w+", words)[:6]):
-        return None
-    if re.search(r"\b(?:nee|laat maar|niet doen)\b", words):
-        return None
-    command = r"(?:zoek|onderzoek|vergelijk|bekijk|controleer|analyseer|maak|schrijf|bouw|ontwerp)"
-    request = r"(?:kun|kan|wil|zou) je (?:even |eens |alsjeblieft |voor me |voor mij ){0,2}(?:(?:willen|kunnen) )?(?:zoeken|onderzoeken|vergelijken|bekijken|controleren|analyseren|maken|schrijven|bouwen|ontwerpen|uitzoeken|uitwerken)"
-    if re.match(rf"^{command} (?:je|jij|u)\b", words):
-        return None
-    if re.match(rf"^(?:{command}|{request})\b", words):
-        return "Ik kijk er even voor je naar."
-    return None
 
 class CoreClient:
     def __init__(self, url: str, token: str):
@@ -79,9 +58,7 @@ class CoreClient:
                 response.raise_for_status()
                 if not response.headers.get("content-type", "").startswith("application/x-ndjson"):
                     raise ValueError("voice core returned another response format")
-                receipt = work_receipt_text(payload["text"])
-                if receipt is not None:
-                    yield {"type": "request_acknowledged", "text": receipt}
+                yield {"type": "request_acknowledged", "text": RECEIVED_INPUT_TEXT}
                 async for line in response.aiter_lines():
                     if len(line) > 131072:
                         raise ValueError("voice response exceeds bound")
@@ -350,7 +327,7 @@ class EvaAgent(Agent):
                         # it must not suppress the eventual background result.
                         try:
                             state.receipt_deliveries[message_id] = ctx.session.say(
-                                event["text"], allow_interruptions=True)
+                                event["text"], allow_interruptions=True, add_to_chat_ctx=False)
                             state.notify({**event, "message_id": message_id})
                         except RuntimeError:
                             state.notify({"type": "voice_delivery_failed", "message_id": message_id})
