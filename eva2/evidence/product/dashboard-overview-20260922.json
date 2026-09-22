@@ -1,0 +1,22 @@
+{
+  "date": "2026-09-22",
+  "status": "installed_reviewed",
+  "url": "http://localhost:44712/",
+  "source": "design/product/execution-workboard-v1.json",
+  "checks": {
+    "projectBuild": "passed",
+    "workboardValidation": "passed",
+    "independentReview": "no functional blockers; outdated live-check wording corrected",
+    "desktopVisual": "inspected",
+    "mobile390": "9 cards, 2 scoped complete; document width375 <= viewport390",
+    "evidenceDisclosure": "opens existing matrix",
+    "roadmapNavigation": "opens existing eight-step route",
+    "deliveryEvidencePaths": "all three exist"
+  },
+  "limits": [
+    "No family acceptance inferred",
+    "Connection-warning behavior retained, not fault-injected in this UI check",
+    "Dashboard is not an end-to-end Eva product test"
+  ],
+  "maintenance": "Update deliveryOverview together with existing execution order on delivery, reassignment or blocker; see DOCUMENTATIE_EN_ONDERHOUD.md"
+}

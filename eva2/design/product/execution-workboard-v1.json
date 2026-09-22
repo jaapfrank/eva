@@ -998,6 +998,56 @@
           "Installeren en verhuizen zonder terminal, onderhouden updates en verliesloos herstel afronden.",
           "Bevroren eindkandidaat, volledige review, computerherstart en zeven dagen gezinspraktijk afronden."
         ]
+      },
+      "deliveryOverview": {
+        "checkedAt": "2026-09-22",
+        "deliveries": [
+          {
+            "title": "Voice PE: server geïnstalleerd",
+            "date": "22 september",
+            "state": "installed",
+            "result": "De speakerdienst draait en de Eva-kern is aangesloten.",
+            "remaining": "Het apparaat zelf en de netwerktoegang moeten nog worden aangesloten en getest.",
+            "source": "eva2/evidence/product/voice-speaker-activation-20260922.json"
+          },
+          {
+            "title": "Onderzoeksresultaat terug in Telegram",
+            "date": "22 september",
+            "state": "installed",
+            "result": "Automatische terugmelding voor nieuwe privéopdrachten is geïnstalleerd. Opgeslagen resultaten blijven leesbaar.",
+            "remaining": "Jouw proef met een nieuwe Telegramopdracht staat nog open.",
+            "source": "eva2/evidence/product/private-result-return-live-2026-09-22.json"
+          },
+          {
+            "title": "Bestaande documentdiensten hersteld",
+            "date": "22 september",
+            "state": "installed",
+            "result": "De bestaande diensten draaien weer, met behoud van opgeslagen werk en automatisch herstartbeleid.",
+            "remaining": "Volledige computerherstart nog niet beproefd; uitbreiding voor nieuwe documenttaken nog niet geïnstalleerd.",
+            "source": "eva2/evidence/living-core/document-restart-policy-live-20260922.json"
+          }
+        ],
+        "now": {
+          "title": "Resultaten terugbrengen tijdens een gesprek",
+          "detail": "De uitvoerder bouwt automatische resultaatterugkeer voor privégesprekken op de website en via spraak, met behoud van stoppen en persoonsgrenzen.",
+          "state": "In uitvoering",
+          "doneWhen": "Resultaat komt terug in de juiste actieve privésessie; na afsluiten blijft het bewaard zonder onverwacht opnieuw te spreken. Daarna onafhankelijke review, installatie en livecontrole."
+        },
+        "next": {
+          "title": "Controleren, installeren en samen proberen",
+          "detail": "Eerst de resultaatterugkeer beoordelen en installeren. Voice PE aansluiten zodra het apparaat per USB beschikbaar is. Daarna de volgende stap van het bestaande opleverplan.",
+          "state": "Hierna"
+        },
+        "ownerAction": {
+          "title": "Sluit de woonkamer-Voice PE aan",
+          "steps": [
+            "Sluit de woonkamer-Voice PE met een USB-datakabel op deze computer aan.",
+            "Laat het andere Voice PE-apparaat zoals het is.",
+            "Meld in deze taak: “Voice PE is aangesloten”. Ik controleer het apparaat, maak eerst een volledige reservekopie en regel de installatie."
+          ],
+          "expected": "Daarna kunnen we het echte apparaat testen. De server is al geïnstalleerd; de apparaatproef is nog niet uitgevoerd. Ook de beperkte Windows-netwerkregel moet nog worden geactiveerd."
+        },
+        "maintenance": "Bij een oplevering, gewijzigde opdracht of blokkade worden resultaat, huidig werk en volgende stap samen bijgewerkt. Technisch afgerond, geïnstalleerd en door jou geaccepteerd blijven apart."
       }
     },
     "pendingTechnicalReview": {
@@ -10569,21 +10619,21 @@
         {
           "threadId": "01a0c8a6-d360-7a82-a630-af4bfccbd57c",
           "title": "Eva sneller laten praten tijdens achtergrondwerk",
-          "files": "Read-only Voice PE provisioning, existing household continuous route and rollback; no voice-service rebuild",
-          "estimate": "15–25 minuten installatieonderzoek; nul modelproeven; werkelijk creditverbruik onbekend",
+          "files": "Privéresultaatterugkeer in bestaande kern, website en LiveKit; geen projectdashboardbestanden",
+          "estimate": "60–90 minuten gerichte implementatie en tests; nul geplande modelproeven; werkelijk creditverbruik onbekend",
           "state": "in_progress",
-          "currentOutcome": "Voice PE-servicevoorbereiding geïntegreerd en onafhankelijk goedgekeurd; coördinator bereidt serverinstallatie voor. Uitvoerder onderzoekt parallel de huidige documentpoolinstallatie. Apparaatfirmware nog ongewijzigd."
+          "currentOutcome": "Speakerdienst op server geïnstalleerd. Uitvoerder werkt aan de ontbrekende automatische resultaatterugkeer via website en spraak; fysieke Voice PE-installatie wacht op USB en netwerkregel."
         },
         {
           "threadId": "01a0c915-205e-7c11-809a-674ae09e016c",
           "title": "Eva laat achtergrondonderzoek echt afmaken",
-          "files": "AU-006 bestaande documentdiensten: herstelonderzoek en bewijs; geen nieuwe projecten of kernwijzigingen",
-          "estimate": "20 minuten gericht herstel; nul modelproeven; werkelijk creditverbruik onbekend",
-          "state": "in_progress",
-          "currentOutcome": "Documentherstel en automatisch herstartbeleid opgeleverd. Nu onafhankelijke review van Voice PE-serveractivering en de voorbereide documentcoreimage."
+          "files": "Onafhankelijke review van dashboard en daarna productresultaat; alleen lezen",
+          "estimate": "Gerichte review per concreet resultaat; nul modelproeven; creditverbruik onbekend",
+          "state": "awaiting_delivery",
+          "currentOutcome": "Onafhankelijke livecontrole van Voice PE-server en dashboardreview afgerond. Review van nieuwe privéresultaatterugkeer volgt zodra de uitvoerder oplevert."
         }
       ],
-      "coordination": "Twee actieve producttaken met afzonderlijke bestanden. Coördinator integreert de terugmeldroute in de bestaande runtime en bewaakt review/installatie. Geen nieuwe spraakbouw of herhaalde modelproef; Voice PE gebruikt waar mogelijk de bestaande continue route."
+      "coordination": "Coördinator onderhoudt dashboard, werkbord en installatie. Eén uitvoerder bouwt privéresultaatterugkeer; één reviewer controleert concrete resultaten. Taakstatus is gerapporteerd werk, geen live aanwezigheidsmeting."
     },
     "practiceListCorrection20260922": {
       "ownerFeedback": "Veel van de getoonde proeven is al gedaan.",
@@ -10759,7 +10809,7 @@
           "planningEffortHours": "4–12"
         }
       ],
-      "nextAction": "Rond de onafhankelijke beoordeling van de Voice PE-servicevoorbereiding af; apparaatinstallatie wacht op USB-identificatie en herstelbewijs. Documentdiensten zijn hersteld. Daarna bestaande gewone documentopdrachten installeren; overige terugmeldkanalen en eigenaarproeven blijven open.",
+      "nextAction": "Werk de automatische resultaatterugkeer via website en spraak af; laat deze onafhankelijk beoordelen, installeer en controleer de echte route. De speakerdienst is onafhankelijk live gecontroleerd. Voice PE-apparaatinstallatie wacht op USB-backup en de voorbereide Windows-netwerkregel. Documentpoolactivering volgt afzonderlijk op de actuele installatie.",
       "effortNotice": "Grove planning, lage zekerheid: 40–118 actieve ontwikkeluren plus zeven dagen gezinspraktijk en eventuele externe wachttijd. Geen deadline, creditkosten of gemeten verbruik; per begrensde wijziging aanscherpen na lezing van bestaand bewijs. Hergebruik kan dit verkorten.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Na review, installatie en registratie automatisch volgende uitvoerbare stap; geen algemene wachtstop op gebruikersproeven.",
@@ -10804,16 +10854,17 @@
       "remaining": "Echte hostherstart en herstel van wachtend project bij tijdelijk onbereikbare provider nog controleren."
     },
     "ownerDocumentPreparation20260922": {
-      "state": "image_prepared_independently_reviewed",
+      "state": "reviewed_document_delta_requires_current_voice_parent",
       "outcome": "Bestaande beoordeelde documentopdrachten op de huidige installatie voorbereiden zonder recente functies te verliezen.",
       "scope": "Zeven eerder beoordeelde modules op huidig coreimage; bestaande documentworkerkandidaat hergebruiken; nog geen livevervanging.",
       "estimate": "20–30 minuten voorbereiding en hash/importcontrole, geen modelcalls; creditkosten onbekend",
       "doneWhen": "Exacte bron- en imagedelta, onveranderde gedelegeerde werkrelease en documentworkerherkomst vastgelegd voor onafhankelijke review. Daarna bestaande poolregistratie voorbereiden.",
       "finding": "Alle zeven mainmodules zijn identiek aan eerder beoordeelde kandidaat; livecore heeft nog exact de eerdere parentversies. Oude complete coreimage niet hergebruiken.",
-      "evidence": "eva2/evidence/living-core/document-task-image-preparation-20260922.json"
+      "evidence": "eva2/evidence/living-core/document-task-image-preparation-20260922.json",
+      "nextAction": "Behoud dezelfde7modules maar neem actuele125230core alsparent vóór installatie; oorspronkelijke67e1image mist nieuw geïnstalleerdevoicealign."
     },
     "voiceSpeakerService20260922": {
-      "state": "source_integrated_reviewed_installation_preparing",
+      "state": "server_installed_hardware_and_network_pending",
       "sourceCommit": "e3995dc41e3f03ecb930f44d8b20378dafa4055d",
       "evidence": "eva2/deploy/native-speaker/service-preparation-evidence.json",
       "image": "sha256:1e3445797bcdc1afe350370c14d91f07ccb1bc818ea9fa1a8d1af737d9ec1aba",
@@ -10821,7 +10872,10 @@
       "estimate": "20–30 minuten serverinstallatie en controle; geen modelproeven; creditkosten onbekend",
       "doneWhen": "Onafhankelijk beoordeelde actuele configuratiedelta en terugweg; beide householdreadinesschecks slagen en speakerdienst luistert onder UID65532; overige diensten en data behouden. Fysieke proef apart.",
       "ownerAccepted": false,
-      "hardware": "USB-identificatie, volledige flashbackup, herstel en fysieke audio nog open"
+      "hardware": "USB-identificatie, volledige flashbackup, herstel en fysieke audio nog open",
+      "activationEvidence": "eva2/evidence/product/voice-speaker-activation-20260922.json",
+      "finding": "Twee ontbrekende gedeelde spraakmodules zijn geïnstalleerd; 60 gerichte tests slagen. Speakerdienst luistert en server-readiness voor beide apparaatbindings slaagt. Bestaande taken, worker en laptopspraak behouden.",
+      "network": "Exacte regel voor TCP 44715 vanaf de twee apparaten voorbereid en beoordeeld; Windows-beheerderssessie nog nodig."
     }
   },
   "activeTaskId": "AU-008",

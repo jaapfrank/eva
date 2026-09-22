@@ -154,3 +154,22 @@ verdwenen autoriteit blijft wijzen.
 Tot DG01-DG06 groen zijn, is de documentatie uitgebreid maar niet volledig
 machine-afgedwongen. Dat onderscheid blijft zichtbaar; een lange lijst is op
 zichzelf geen bewijs dat hij actueel of compleet is.
+
+
+## Dashboard actueel houden — eigenaarbesluit 22 september 2026
+
+Bij iedere oplevering, gewijzigde opdracht of blokkade werkt de coördinator
+`audit.projectDashboard.deliveryOverview` in het bestaande
+`design/product/execution-workboard-v1.json` bij: laatste concrete opleveringen
+met bewijsbron en open grenzen, huidige opdracht, eerstvolgende stap en
+precies benodigde eigenaarshandeling. Werk ook de bestaande uitvoervolgorde
+bij en genereer WERKBORD.md opnieuw. Dit is de presentatie van hetzelfde
+werkbord, geen tweede planning. Componentafronding wordt uit de bestaande
+vereiste stappen afgeleid; installatie is geen eigenaaracceptatie.
+
+Controleer vóór oplevering `/project-state` en de zichtbare pagina op 44712.
+De bronwijzigingsdatum en het ophaaltijdstip hebben verschillende betekenissen.
+Vijfsecondenverversing controleert niet zelfstandig of ontwikkelwerk klaar is.
+Bij verbindingsverlies verschijnt een waarschuwing boven de laatst gelezen
+informatie. Nieuwe bewijsclaims vereisen een bestaande bron; reeds geaccepteerde
+proeven worden zonder concrete aanleiding niet opnieuw aan Jaap gevraagd.

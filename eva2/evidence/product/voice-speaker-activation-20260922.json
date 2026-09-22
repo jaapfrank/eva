@@ -1,0 +1,77 @@
+{
+  "installed": false,
+  "firmwareChanged": false,
+  "firewallChanged": false,
+  "modelCalls": 0,
+  "ownerAccepted": false,
+  "failureType": "RuntimeError",
+  "rollbackVerified": false,
+  "rollbackErrors": [
+    "core:AssertionError"
+  ],
+  "subsequentRecovery": {
+    "rollbackVerified": true,
+    "coreId": "0a11b913e20ad46d4706b19e6af11d31719bc7bc2c11691f54684e07a1539c05",
+    "coreImage": "sha256:980afa510aab4ab75260acba8d8597780548f30999aa925150e528b59bb8414a",
+    "householdFlag": false,
+    "completeConfigAndHostConfigPreserved": true,
+    "normalizedHostConfigMountOrdering": true,
+    "historicalRowsAndJobsPreserved": 5,
+    "protectedVoiceContainersPreserved": true,
+    "primaryFailure": "Installed household_voice_session imports stream_voice_turn absent from installed voice_turns; reproduced offline without network.",
+    "nextAction": "Align the existing reviewed shared voice module before any new activation."
+  },
+  "sourceCorrection": {
+    "candidate": "sha256:125230457196f6ffba9f84caf5ea3aff9680b1934c6307789424fadfb8e1ed8d",
+    "parent": "sha256:980afa510aab4ab75260acba8d8597780548f30999aa925150e528b59bb8414a",
+    "exactChangedFiles": [
+      "eva/adapters/api/voice_turns.py",
+      "eva/bootstrap/native_voice.py"
+    ],
+    "sourceSha256": {
+      "eva/adapters/api/voice_turns.py": "15d0fc77457505be22971ba50945e34c22b83c3d3587d0eab14dd6afc934ac01",
+      "eva/bootstrap/native_voice.py": "88055d7cbdb7dd1ff1a459af5b6ae572c39c65701ec5f81c5bdefb4407323b33"
+    },
+    "allOtherPackagedFilesPreserved": true,
+    "delegatedSourceSealUnchanged": true,
+    "testsPassed": 60,
+    "testSeconds": 3.44,
+    "uid": "65532:65532",
+    "network": "none",
+    "liveChanged": false
+  },
+  "earlierOneModuleProbe": {
+    "passed": 32,
+    "failed": 2,
+    "cause": "Missing NativeHouseholdResponder.make_turn in installed module; existing companion extraction included in two-module candidate."
+  },
+  "status": "server_installed_hardware_and_network_pending",
+  "sourceCorrectionInstallation": {
+    "installed": true,
+    "modelCalls": 0,
+    "image": "sha256:125230457196f6ffba9f84caf5ea3aff9680b1934c6307789424fadfb8e1ed8d",
+    "coreId": "2197fa59e662428928796de7a0d0f15effd8e68a53432315b80c1d54b38034aa",
+    "rowsPreserved": 5,
+    "workerAndProtectedContainersUnchanged": true
+  },
+  "serverInstallation": {
+    "installed": true,
+    "firmwareChanged": false,
+    "firewallChanged": false,
+    "modelCalls": 0,
+    "ownerAccepted": false,
+    "coreImage": "sha256:125230457196f6ffba9f84caf5ea3aff9680b1934c6307789424fadfb8e1ed8d",
+    "coreId": "b8a5f0b6994e770415c081936b75f69516a197f2762de7c55078aaaca981125b",
+    "speakerImage": "sha256:1e3445797bcdc1afe350370c14d91f07ccb1bc818ea9fa1a8d1af737d9ec1aba",
+    "workerUnchanged": true,
+    "existingJobsPreserved": true,
+    "householdReadinessDevices": 2,
+    "serverListening": true
+  },
+  "remaining": [
+    "Windows scoped firewall rule requires elevated management session",
+    "Device-specific USB identity and complete flash backup",
+    "Firmware installation and physical wakeword/audio/interruption/work-continuity trial",
+    "Owner acceptance"
+  ]
+}
