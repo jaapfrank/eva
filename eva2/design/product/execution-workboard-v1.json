@@ -1053,13 +1053,13 @@
         ],
         "now": {
           "title": "Telegram: juiste antwoord bij de juiste vraag",
-          "detail": "Jouw screenshot toont onderzoek als antwoord op hoe gaat het. Eerdere opgeslagen berichtverwijzingen wezen naar onderzoek; de oorzaak van dit verschil is nog niet vastgesteld. De gebruikersproef is niet geslaagd.",
+          "detail": "Jouw screenshot toont onderzoek als antwoord op hoe gaat het. Eerdere opgeslagen berichtverwijzingen wezen naar onderzoek; de oorzaak van dit verschil is nog niet vastgesteld. De gebruikersproef is niet geslaagd. Onafhankelijke controle: snelle ontvangst is al aanwezig op de continue huishoudspraakserver; fysieke apparaatroute nog niet bewezen.",
           "state": "Open fout · oorzaak niet bewezen",
           "doneWhen": "Onderzoek blijft gekoppeld aan de oorspronkelijke opdracht; een tussenvraag krijgt zijn eigen antwoord terwijl onderzoek doorloopt."
         },
         "next": {
           "title": "Gesprek tijdens werk op de echte ingangen",
-          "detail": "Na herstel Telegram dezelfde combinatie op website en fysieke Voice PE beoordelen. Bestaande resultaten en geheugenacceptatie behouden.",
+          "detail": "Continue Voice PE-route op het apparaat activeren met gecontroleerde terugweg; fysieke toegang en proef zijn nog nodig. Geen herbouw van de al aanwezige ontvangstfunctie.",
           "state": "Nog te beoordelen"
         },
         "ownerAction": {
@@ -10971,15 +10971,13 @@
       "sourceCommit": "77640ad8b7cf6579d5a16b27ae2e8fab428e8db4",
       "integratedCommit": "5cb887b0",
       "httpCommit": "0c537ec8",
-      "installed": false,
-      "enabled": false,
+      "installed": true,
+      "enabled": true,
       "evidence": "eva2/evidence/product/household-public-work-server-20260922.md",
       "review": "eva2/reviews/household-public-work-server-20260922.md",
       "remaining": [
-        "Samenstellen gedeelde actieprovider met selectie op geautoriseerd publiek",
-        "Mediasessie openen/vernieuwen/sluiten en resultaattransport aansluiten",
-        "Actuele expliciete policy en paired core/worker/media installatie met terugweg",
-        "Fysieke Voice PE-proef en eigenaaracceptatie"
+        "Fysieke Voice PE-proef: spreken tijdens onderzoek, onderbreken en hoorbare terugkomst",
+        "Eigenaaracceptatie"
       ],
       "modelCalls": 0,
       "httpReviewCommit": "2b3e42c9",
@@ -11007,7 +11005,8 @@
         "testsPassed": 5,
         "testSeconds": 3.57,
         "independentReview": "GO, task 01a0c915-205e-7c11-809a-674ae09e016c, turn 01a0ca35-471a-7150-92ab-477f192b6813; two diffs only, no repeated tests",
-        "installed": false
+        "installed": false,
+        "statusScope": "Historical guard candidate snapshot; current complete installation is recorded in installationEvidence, not inferred from this subcandidate."
       },
       "diagnosis": "Tests seeded sponsor records with disabled triggers in the conversation-derived namespace. Production has one canonical tenant/principal/binding in task storage. Do not fabricate a second verified identity to match the fixture; explicitly connect existing task authority/storage and household conversation provenance.",
       "scopeFix": {
@@ -11016,10 +11015,15 @@
         "independentReview": "GO from task 01a0c915-205e-7c11-809a-674ae09e016c; read-only review of session origin, scope restoration and private boundaries",
         "newOwnerRecords": 0,
         "extraWorkerRequired": false,
-        "installed": false
+        "installed": true
       },
       "installationEvidence": "eva2/evidence/product/household-work-installed-20260922.json",
-      "ownerAccepted": false
+      "ownerAccepted": false,
+      "currentStateReconciled": {
+        "date": "2026-09-22",
+        "basis": "Existing household-work-installed evidence plus current healthy core/research worker and running speaker; core household session flag true. No new physical or model trial.",
+        "historicalFailedAttemptsRetained": true
+      }
     },
     "documentPoolCurrentPreflight20260922": {
       "status": "effects_enabled_worker_and_core_healthy",
@@ -11057,7 +11061,12 @@
         "physicalPlaybackMeasured": false
       },
       "evidence": "eva2/evidence/product/received-input-installed-20260922.json",
-      "ownerAccepted": false
+      "ownerAccepted": false,
+      "householdContinuousServer": {
+        "status": "present_in_running_speaker_physical_trial_open",
+        "evidence": "eva2/evidence/product/household-receipt-current-check-20260922.json",
+        "needsNewReceiptImplementation": false
+      }
     },
     "telegramConcurrentConversation20260922": {
       "status": "owner_trial_failed_throttle_fix_installed_retest_open",

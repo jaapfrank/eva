@@ -1,0 +1,26 @@
+{
+  "date": "2026-09-22",
+  "question": "Is model-free receipt missing from the household voice server?",
+  "reviewer": "household_receipt_gap",
+  "result": "No new receipt implementation is needed for continuous household voice. The active speaker already includes the shared receipt.",
+  "observedSpeakerImage": "sha256:8ce4502ac3ac6589d56705a0f1bd3247af6fef51bed48d3adfb110c76a77fdb1",
+  "observedAgentSha256": "49851f076c7fb84f7328746cb2d0c19f2b8e81b9349d18b902d1601e42c08f84",
+  "receiptText": "Een momentje.",
+  "mechanism": "HouseholdCoreClient inherits CoreClient.events; shared EvaAgent speaks the received-input event independently of the eventual model response.",
+  "remainingGap": "The native HA ConversationEntity awaits the complete JSON response. Physical continuous speech requires the separately prepared continuous device firmware, verified recovery, activation and real trial.",
+  "sourceEvidence": [
+    "eva2/evidence/product/household-work-installed-20260922.json",
+    "eva2/deploy/native-speaker/provisioning-readback-2026-09-22.md",
+    "eva2/deploy/native-speaker/ACTIVATION.md"
+  ],
+  "limits": [
+    "Read-only source/runtime composition evidence, not physical audible latency.",
+    "No claim of current physical device firmware readback in this check.",
+    "Ordinary HA pipeline and continuous speaker route are different transports; server readiness does not prove physical route activation."
+  ],
+  "modelCalls": 0,
+  "externalMessages": 0,
+  "testsRepeated": 0,
+  "productSourceChanges": 0,
+  "ownerAccepted": false
+}
