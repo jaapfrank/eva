@@ -1029,13 +1029,13 @@
         ],
         "now": {
           "title": "Begroeting duurt nog ongeveer 5 seconden",
-          "detail": "Jaaps websiteproef faalt op snelheid. De bijbehorende spraakbeurt wachtte 3,94 seconden op eerste modeltekst; volledige modelcall 4,42 seconden, één call met 5.175 invoertokens. De coördinator onderzoekt de bestaande contactroute. De uitvoerder bouwt ondertussen het huishoudelijke onderzoeksdeel af.",
+          "detail": "De begroeting wachtte 3,94 seconden op eerste modeltekst. Eén uitvoerder onderzoekt cachehergebruik zonder contextverlies. Het huishoudelijke serverdeel én de HTTP-koppeling zijn getest en onafhankelijk beoordeeld. De andere uitvoerder sluit nu de mediasessie en dezelfde taakprovider aan; dit kanaalpad is nog niet geïnstalleerd.",
           "state": "Probleem in onderzoek",
           "doneWhen": "Een gerichte verbetering is getest, beoordeeld en geïnstalleerd; de eerste hoorbare reactie wordt apart gemeten. Bestaande identiteit, geheugen en achtergrondwerk blijven werken."
         },
         "next": {
           "title": "Snelle contactroute herstellen en meten",
-          "detail": "Eerst vaststellen waarom de contactmodelcall zoveel tijd en context vraagt. Daarna een gerichte wijziging beoordelen en installeren. Huishoudelijk onderzoek blijft parallel in uitvoering.",
+          "detail": "Beoordeel de gemeten cachinguitkomst. Sluit daarna de huishoudelijke mediasessie en dezelfde taakprovider aan; toets en installeer het complete kanaalpad. De documentpool heeft een geslaagde actuele voorcontrole, maar nog geen registraties of activatie.",
           "state": "Hierna"
         },
         "ownerAction": {
@@ -10924,7 +10924,53 @@
       "modelAttempts": 1,
       "toolCalls": 0,
       "evidence": "Bestaande operational_events REPLY_COMMITTED: exacte door eigenaar geciteerde antwoordtekst gematcht; geen nieuwe modelproef.",
-      "limitation": "Modeltiming is gemeten; volledige microfoon-tot-audioverdeling nog niet gemeten. Geen oorzaakclaim over iedere invoertoken."
+      "limitation": "Modeltiming is gemeten; volledige microfoon-tot-audioverdeling nog niet gemeten. Geen oorzaakclaim over iedere invoertoken.",
+      "nextExperiment": {
+        "status": "in_progress",
+        "hypothesis": "Scheid de stabiele instructieprefix van veranderlijke context zonder inhoud, tools, identiteit of privacygrenzen weg te laten; onderzoek werkelijke cachehergebruik en reactietijd.",
+        "limit": "Eerst offline inspectie; maximaal vier modelcalls indien nodig voor ondersteunde vergelijking. Geen installatie zonder gemeten voordeel.",
+        "previousRejectedHypotheses": "Voorbereiding en reasoning none gaven in eerdere proef geen totale snelheidswinst; niet herhalen.",
+        "evidence": "eva2/evidence/product/contact-latency-decision-2026-09-22.json"
+      }
+    },
+    "householdPublicWorkServer20260922": {
+      "status": "source_and_http_reviewed_integration_in_progress",
+      "sourceCommit": "77640ad8b7cf6579d5a16b27ae2e8fab428e8db4",
+      "integratedCommit": "5cb887b0",
+      "httpCommit": "0c537ec8",
+      "installed": false,
+      "enabled": false,
+      "evidence": "eva2/evidence/product/household-public-work-server-20260922.md",
+      "review": "eva2/reviews/household-public-work-server-20260922.md",
+      "remaining": [
+        "Samenstellen gedeelde actieprovider met selectie op geautoriseerd publiek",
+        "Mediasessie openen/vernieuwen/sluiten en resultaattransport aansluiten",
+        "Actuele expliciete policy en paired core/worker/media installatie met terugweg",
+        "Fysieke Voice PE-proef en eigenaaracceptatie"
+      ],
+      "modelCalls": 0,
+      "httpReviewCommit": "2b3e42c9",
+      "activeIntegration": {
+        "taskId": "01a0c915-205e-7c11-809a-674ae09e016c",
+        "worktree": "/home/administrator/project/eva2-household-work-integration",
+        "base": "b07152067c440f138ac559ede8c5852404b1fd22",
+        "ownership": "Runtime composition, audience-scoped action selection, household API/voice media lifecycle and relevant tests. No deployment or board edits.",
+        "estimatedMinutes": "60–90 planning, not measured usage",
+        "modelCallsAllowed": 0,
+        "endCondition": "Complete default-off household research code path; offline tests and separate review before paired install."
+      }
+    },
+    "documentPoolCurrentPreflight20260922": {
+      "status": "read_only_preflight_passed",
+      "stage": "/var/lib/eva2/document-pool-phase1-current-20260922",
+      "registryGateways": 6,
+      "registryTools": 55,
+      "delegatedRows": 5,
+      "runtimeMutated": false,
+      "registrationCalls": 0,
+      "modelCalls": 0,
+      "maintenanceWindowCompleted": false,
+      "remaining": "Concrete onderhoudsuitvoering/seal/review, twee registraties, actuele catalogusbindings en afzonderlijke effectfase. Geen installatie-GO."
     }
   },
   "activeTaskId": "AU-008",

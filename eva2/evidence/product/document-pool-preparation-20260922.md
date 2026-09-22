@@ -52,3 +52,22 @@ Legacy mount blijft `/home/administrator/project/.eva2-artifacts/au006-activatio
 - Private oude stage: `.eva2-artifacts/document-task-runtime-20260913/phase1-sealed-r1/{read_all_admissions_v2.py,read_registry.py,read_bridge.py,inventory_guard.py,reconcile_existing.py,registration_common.py,register_once.py,verify_providers.py}`.
 
 Nog open: verse coherent sealed baseline na andere activaties; expliciete sluiting/beoordeling van Chrome-history en het gehele onderhoudsvenster; twee echte registraties; daarvan afgeleide catalogus/poolbindings; afzonderlijke gereviewde effect-phase configuratie. De bronimplementatie en bewaarde worker hoeven hiervoor niet opnieuw gebouwd te worden zolang hun exacte bewezen image-identiteiten en configuratievoorwaarden gelden.
+
+## Actuele vervolgcontrole na de privéspraakinstallatie
+
+De nieuwe private stage `/var/lib/eva2/document-pool-phase1-current-20260922`
+hergebruikt de registratie- en rollbacklogica met een verse baseline. De
+read-only `phase1_preflight.py` slaagt: zes bestaande gateways, 55 tools, vijf
+afzonderlijk gecontroleerde terminale gedelegeerde taken, ongewijzigde native
+bestanden en vrije nieuwe slotadressen. Het volledige onderhoudsvenster is
+hiermee nog niet uitgevoerd. Er zijn geen registraties, servicewissels of
+modelcalls uitgevoerd. De historische onzekere Chrome-uitkomst blijft bewaard.
+
+De zeven eerder beoordeelde documentmodules zijn tevens opnieuw verpakt boven
+de daadwerkelijk geïnstalleerde core `sha256:d0c28433861b3b51be28f3b9e63d6d506261e7b1ce0506c60add5d42d30763eb`.
+Kandidaat: `sha256:8b83127eca41f9aa468a189f252132956709fc047339f79f4d0ac724872b53a8`,
+private stage `/var/lib/eva2/document-task-current-core-20260922`. De configuratie,
+parentlagen, overige bronbestanden en delegated research/tool-free seals zijn
+behouden; runtime-UID-imports slagen. Dit vervangt de oudere documentkandidaten
+als voorbereiding, niet de draaiende installatie. Onderhoudsinstaller,
+onafhankelijke review, registratie en effectfase blijven open.
