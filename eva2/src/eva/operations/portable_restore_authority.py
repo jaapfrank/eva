@@ -484,8 +484,8 @@ def authorize_portable_restore(
 
     archive = _canonical_object(archive_manifest_raw, label="archive manifest")
     if (
-        archive.get("contract") != "EvaPortableArchive/v1"
-        or archive.get("schema_version") != 1
+        (archive.get("contract"), archive.get("schema_version"))
+        not in {("EvaPortableArchive/v1", 1), ("EvaPortableArchive/v2", 2)}
     ):
         raise PortableRestoreAuthorityError("archive manifest contract is invalid")
     archive_id = _uuid(archive.get("archive_id"), label="archive ID")

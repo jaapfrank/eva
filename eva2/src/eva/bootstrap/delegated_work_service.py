@@ -31,7 +31,7 @@ from eva.adapters.postgres.operational_timeline import (
 from eva.adapters.credentials.runtime_files import read_runtime_secret_file
 from eva.operations.delegated_work_worker import ChildRunner, DelegatedWorkWorker
 
-_SCHEMA_HEAD = "4e_0007_delegated_private"
+_SCHEMA_HEAD = "4e_0008_portable_current"
 
 
 def _provider_release() -> DelegatedWorkReleaseSelector:

@@ -57,6 +57,7 @@ class InstallerPortableRestore:
         workspace: Path,
         object_store_root: Path,
         key_resolver: Any = None,
+        runtime_identity: dict[str, str] | None = None,
     ):
         # The composition root must provide an isolated, traffic-closed target.
         if (
@@ -70,6 +71,7 @@ class InstallerPortableRestore:
         self.workspace = workspace
         self.object_store_root = object_store_root
         self.key_resolver = key_resolver
+        self.runtime_identity = runtime_identity
         self._lock = Lock()
         self._pending: tuple[TemporaryDirectory, str, float, str] | None = None
 
@@ -82,8 +84,44 @@ class InstallerPortableRestore:
             self._pending[0].cleanup()
             self._pending = None
 
+    @staticmethod
+    def _validate_archive(directory: Path):
+        from tools.read_eva_portable_archive import _root_descriptor, _read_regular, _load_canonical_object
+        with _root_descriptor(directory) as descriptor:
+            header = _load_canonical_object(_read_regular(descriptor, "archive.json"), label="archive manifest")
+        if header.get("contract") == "EvaPortableArchive/v2":
+            from tools.portable_v2_reader import read_current_archive
+            return read_current_archive(directory)
+        return validate_and_derive(directory)
+
+    @staticmethod
+    def _object_source(directory: Path, manifest: bytes) -> Path:
+        return directory / "canonical" / "objects" if json.loads(manifest).get("schema_version") == 2 else directory / "objects"
+
     def _read(self, directory: Path) -> tuple[dict, bytes, dict]:
-        outputs, proof = validate_and_derive(directory)
+        validated = self._validate_archive(directory)
+        if isinstance(validated, dict):
+            from tools.portable_v2_profile import ALL_SPECS
+            current = validated["manifest"]
+            if self.runtime_identity is None or current["runtime_identity"] != self.runtime_identity:
+                raise ValueError("current archive needs matching trusted runtime configuration")
+            raw = validated["manifest_raw"]
+            authorize_portable_restore(archive_manifest_raw=raw, restore_authority_raw=self.authority_reader())
+            records = validated["records"]
+            summary = {"archive_sha256": validated["archive_sha256"],
+                "installation": current["source_installation_id"], "records": sum(map(len, records.values())),
+                "reauthorization_required": [str(row["row"].get("provider_id", row["row"].get("connector_id", "connector")))
+                    for row in records["eva_core.connector_bindings"]],
+                "notice": "Huidig werk wordt behouden. Externe geheugenbanken, documentbestanden en providers moeten afzonderlijk worden hersteld voordat Eva wordt gestart.",
+                "target_activation": "closed", "external_requirements": current["external_requirements"],
+                "object_recovery_notice": "Bij een mislukte herstelpoging kunnen versleutelde bestanden in de afgeschermde doelopslag achterblijven. Deze blijven ongeactiveerd en worden niet automatisch verwijderd."}
+            if records["eva_evidence.object_refs"]:
+                if self.key_resolver is None:
+                    raise ValueError("separately provisioned object keyring is required")
+                verify_portable_object_candidates(object_root=directory / "canonical" / "objects",
+                    records_by_table=records, key_resolver=self.key_resolver)
+            return records, raw, summary
+        outputs, proof = validated
         manifest = (directory / "archive.json").read_bytes()
         authorize_portable_restore(
             archive_manifest_raw=manifest, restore_authority_raw=self.authority_reader()
@@ -137,21 +175,26 @@ class InstallerPortableRestore:
                     source,
                     directory,
                     passphrase=passphrase,
-                    validator=validate_and_derive,
+                    validator=self._validate_archive,
                 )
-                records, _, summary = self._read(directory)
+                records, manifest, summary = self._read(directory)
+                current = json.loads(manifest).get("schema_version") == 2
+                if current:
+                    from tools.portable_v2_profile import ALL_SPECS
+                    from tools.portable_v2_restore import verify_current_target
+                specs = ALL_SPECS if current else CANONICAL_EXPORT_SPECS
                 checked_objects = ()
                 preview_objects = root / "preview-objects"
                 if records.get("eva_evidence.object_refs"):
                     checked_objects = materialize_verified_portable_objects(
-                        source_object_root=directory / "objects",
+                        source_object_root=self._object_source(directory, manifest),
                         target_object_root=preview_objects,
                         records_by_table=records,
                         key_resolver=self.key_resolver,
                     )
                 validate_portable_restore_records(
                     records,
-                    table_specs=CANONICAL_EXPORT_SPECS,
+                    table_specs=specs,
                     materialized_objects=checked_objects,
                     object_store_root=preview_objects,
                 )
@@ -159,9 +202,10 @@ class InstallerPortableRestore:
                     isolation_level="SERIALIZABLE"
                 ) as connection:
                     with connection.begin():
-                        verify_empty_restore_target(
-                            connection, table_specs=CANONICAL_EXPORT_SPECS
-                        )
+                        if current:
+                            verify_current_target(connection)
+                        else:
+                            verify_empty_restore_target(connection, table_specs=CANONICAL_EXPORT_SPECS)
                 token = secrets.token_urlsafe(32)
                 digest = str(summary["archive_sha256"])
                 self._pending = (staging, token, monotonic() + 600, digest)
@@ -186,6 +230,13 @@ class InstallerPortableRestore:
                     isolation_level="SERIALIZABLE"
                 ) as connection:
                     with connection.begin():
+                        if json.loads(manifest).get("schema_version") == 2:
+                            from tools.portable_v2_restore import restore_current_archive
+                            result = restore_current_archive(connection, directory,
+                                authority_reader=self.authority_reader,
+                                expected_runtime_identity=self.runtime_identity,
+                                object_store_root=self.object_store_root, key_resolver=self.key_resolver)
+                            return {**result, **summary}
                         verify_empty_restore_target(
                             connection, table_specs=CANONICAL_EXPORT_SPECS
                         )

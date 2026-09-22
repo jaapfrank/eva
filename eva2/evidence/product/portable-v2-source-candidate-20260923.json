@@ -1,0 +1,96 @@
+{
+  "contract": "EvaCurrentPortableRestoreEvidence/v1",
+  "date": "2026-09-23",
+  "status": "bounded_source_candidate_tested_not_installed",
+  "sourceBase": "a2a83857",
+  "sourceHashes": {
+    "eva2/src/eva/bootstrap/delegated_work_service.py": "70a207fc054cccbff8e861a6ec195013b0b28567cc5ff9e775c05b2900ffae8e",
+    "eva2/src/eva/operations/install_schema.py": "4ab64465d1c3ec570cd302daefe00dfa5113e82e4f02999f5f7a0bc75d92104d",
+    "eva2/src/eva/operations/portable_restore_authority.py": "d550f8afc4cffd620d84454f3a39f5dc9762b5907895db9c1e7d192ea17eb08e",
+    "eva2/tests/bootstrap/test_delegated_work_service.py": "f19afc7987ce5dec2a43dab4cb40273ba97823394c3ed9eaca32a2787f4cd168",
+    "eva2/tests/operations/test_install_schema.py": "15b0238c96dd2e731bcde814523d1c4db062140886678149bd8e80f6a8925670",
+    "eva2/tools/installer_portable_restore.py": "35124d88e33020c4786674ab9941b31a99d1f7842847596264d1f1265592b5b2",
+    "eva2/tools/installer_restore_wizard.py": "9cfbfd29b7cafd6ad969ed4dfb16c30c267e01f15704381dc91a00203b6562ce",
+    "eva2/tools/managed_b_candidate/release_inputs.py": "dff76396a9e489a7824106857d542fea0e0b72949dd424c9f377e56d28b58e21",
+    "eva2/tools/postgres_portable_export.py": "c49b08236d07bd21203ad91c8c647d902c9058ec140b0f0bc138a1d116067dd7",
+    "eva2/migrations/versions/4e_0008_portable_current.py": "a2d0e36af12c022fa1b9853de0af646f7d9613d117fef3c10bfb3253d5c9a1f1",
+    "eva2/tests/portable/test_portable_v2_current_work.py": "0f4d976188bab5fd7162ee736ee4cc12d201d3d9dedfccff435dc3e303851032",
+    "eva2/tools/portable_v2_export.py": "7f78ec7d54d63eb215ec668814dd3a7c0125a52ad6d11ab40fa58eb507e0668e",
+    "eva2/tools/portable_v2_profile.py": "53847d8585e52995f2b7c96277e65420d7afbf791c5d99ca2310cfdc3b613568",
+    "eva2/tools/portable_v2_reader.py": "4a707455aac6126ee956ec68b552df0943970ebef29bfd32b413e2d331dd30ad",
+    "eva2/tools/portable_v2_restore.py": "456e86e99ab3afaff8f8b98d23e801761112bc687429561f3477b6b95e2ec0fe",
+    "eva2/tools/portable_v2_validation.py": "f8cbbea4d1b922eae57f0f6f98b9fa03fb77891af511f5a23526af84af0ec150"
+  },
+  "environment": {
+    "postgres": "16.13",
+    "runtimeImage": "sha256:2320da954ea6686e320e53b8364e811808b93c400d664fb416dacb1ac04ffa2d",
+    "sourceOverlay": true,
+    "packagedCandidate": false,
+    "productionChanged": false
+  },
+  "attempts": [
+    {
+      "label": "first-v2",
+      "result": "Failed: frozen v1 rejected current-only identity dependency; separated supplement from exact v1 closure.",
+      "log": "/var/lib/eva2/portable-v2-20260922/first-v2.log",
+      "sha256": "253d1f3bfa56d397e91ee8715827f57ebb4e5740ff328ec6090fadb39a952b1b",
+      "summary": "2 errors in 4.53s"
+    },
+    {
+      "label": "identity-closure-v2",
+      "result": "Export passed; test harness selected host cryptography ahead of packaged library. Corrected import precedence.",
+      "log": "/var/lib/eva2/portable-v2-20260922/identity-closure-v2.log",
+      "sha256": "33a6fb37bfe12d6bd7c3577babbca3975fd05b02c86224a92b325cff497e6144",
+      "summary": "2 errors in 5.20s"
+    },
+    {
+      "label": "runtime-deps-v2",
+      "result": "Initial encrypted roundtrip and revocation passed.",
+      "log": "/var/lib/eva2/portable-v2-20260922/runtime-deps-v2.log",
+      "sha256": "1393d66db44f556d869819b1bc809dd32f74bbc615bb4efee18a3e91b948403b",
+      "summary": "2 passed in 10.38s"
+    },
+    {
+      "label": "guarded-v2",
+      "result": "14 passed; pending-attention negative fixture had no row and failed before exercising product.",
+      "log": "/var/lib/eva2/portable-v2-20260922/guarded-v2.log",
+      "sha256": "39a4e6c58025120ab051cd9d142f424903bdda9dc7df26efae738a9f56c2f381",
+      "summary": "1 failed, 14 passed in 30.60s"
+    },
+    {
+      "label": "negative-causes-v2",
+      "result": "Fixed attention fixture; all eight semantic rejection cases pass with expected specific causes.",
+      "log": "/var/lib/eva2/portable-v2-20260922/negative-causes-v2.log",
+      "sha256": "c3a797c1b31c359c39567b475de40f69941afc818b1ed85e922f7bc674f5764b",
+      "summary": "8 passed in 7.46s"
+    },
+    {
+      "label": "schema-wiring",
+      "result": "15 schema head and worker composition cases passed.",
+      "log": "/var/lib/eva2/portable-v2-20260922/schema-wiring.log",
+      "sha256": "3f6e739ac9040972704a0fb35862b2b64d0cffabeffa2aa93a93a609c36a51f9",
+      "summary": "15 passed in 1.65s"
+    }
+  ],
+  "result": {
+    "uniquePassingCases": 30,
+    "covered": [
+      "Encrypted current-work archive to fresh PostgreSQL target",
+      "Three completed research results with acknowledged, ambiguous and claimed delivery fences retained; no replay",
+      "Stopped research remains stopped; real runtime-scoped cancelled document claim and goal retained",
+      "Revocation after preview refuses restore without target database rows",
+      "Trusted runtime identity, tenant/dependency closure, binding evidence, source ingress, pending attention, missing delivery fences and orphan unfinished goal rejected",
+      "Legacy v1 wizard compatibility",
+      "Explicit new schema head and worker composition tests"
+    ],
+    "notProven": [
+      "Running/waiting work and completed-but-undelivered results: this candidate refuses export; full preservation still required",
+      "Completed document readback through normal tool",
+      "CAS copy/rollback with actual object refs",
+      "Native document artifacts and journals relocation",
+      "External Hindsight bank restore or rebuild",
+      "PostgreSQL18 compatibility, packaged installer and ordinary operator full restore",
+      "Live migration, installation, physical hardware or owner acceptance"
+    ]
+  }
+}

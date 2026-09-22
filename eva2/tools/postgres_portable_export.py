@@ -432,10 +432,14 @@ class PostgresPortableSnapshot:
                     f"{table} row count changed inside the fixed snapshot"
                 )
             result[table] = rows
+        self.validate_rows(result)
+        return result
+
+    def validate_rows(self, result: Mapping[str, Sequence[Mapping[str, Any]]]) -> None:
+        """Validate the selected profile; v1 retains its frozen checks."""
         validate_principal_binding_evidence_scope(result)
         validate_portable_v1_attention_rows(result)
         validate_portable_v1_no_inflight_external_work(result)
-        return result
 
     def build_record_sets(self) -> tuple[RecordSetBytes, ...]:
         raw_sets = self.read_all()

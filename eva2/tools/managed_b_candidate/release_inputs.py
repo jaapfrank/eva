@@ -338,6 +338,11 @@ _EXPECTED_MIGRATIONS = (
         "4e_0006_memory_outbox_erasure",
         "migrations/versions/4e_0007_delegated_work_private_context.py",
     ),
+    (
+        "4e_0008_portable_current",
+        "4e_0007_delegated_private",
+        "migrations/versions/4e_0008_portable_current.py",
+    ),
 )
 
 

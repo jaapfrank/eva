@@ -1003,6 +1003,14 @@
         "checkedAt": "2026-09-23",
         "deliveries": [
           {
+            "title": "Reservekopie bewaart afgehandelde taken en afleverstatus",
+            "date": "23 september",
+            "state": "tested",
+            "result": "Versleutelde reservekopie naar een lege proefdatabase herstelt resultaten, stopstatus en afleverstatus. Gerichte controles en onafhankelijke bronreview geslaagd.",
+            "remaining": "Nog niet geïnstalleerd of volledig: lopende taken, onafgeleverde resultaten, echte documentbestanden en extern geheugen moeten ook behouden blijven.",
+            "source": "eva2/evidence/product/portable-v2-source-candidate-20260923.json"
+          },
+          {
             "title": "Spraakherstel: microfoon blijft uit",
             "date": "22 september",
             "state": "tested",
@@ -1076,10 +1084,10 @@
           }
         ],
         "now": {
-          "title": "Reservekopie uitbreiden voor huidig taakwerk",
-          "detail": "V2-code is in aanbouw. Review vond risico op opnieuw starten of versturen na herstel; controles daarop worden afgemaakt. Daarna volgt de geïsoleerde herstelproef. De draaiende Eva is ongewijzigd.",
-          "state": "In uitvoering · nog niet geïnstalleerd",
-          "doneWhen": "Taakresultaat, stopstatus en verzendbevestiging komen ongewijzigd terug uit een echte reservekopie."
+          "title": "Herstel ook voor lopend werk afmaken",
+          "detail": "De eerste herstelproef slaagt voor afgehandeld en gestopt werk. Nu de bestaande activatiegrens controleren en aanvullen zodat ook lopend en onafgeleverd werk veilig bewaard blijft.",
+          "state": "In uitvoering · niet geïnstalleerd",
+          "doneWhen": "Een reservekopie verliest geen open werk en start of verstuurt niets dubbel na herstel."
         },
         "next": {
           "title": "Documenten en extern geheugen herstellen",
@@ -10866,7 +10874,7 @@
           "planningEffortHours": "4–12"
         }
       ],
-      "nextAction": "Portable-v2 voor huidige duurzame taakgegevens bouwen, geïsoleerd roundtrip testen en onafhankelijk reviewen; daarna externe document-/geheugenherstelgrenzen. Geen volledigheidsclaim voor alleen de canonieke v1-reservekopie.",
+      "nextAction": "Bestaande activatie-/installatiegrens benutten om lopend en onafgeleverd werk verliesloos te bewaren zonder onbedoeld uitvoeren; daarna native documenten, CAS en extern geheugen als geheel herstellen.",
       "effortNotice": "Grove planning, lage zekerheid: 40–118 actieve ontwikkeluren plus zeven dagen gezinspraktijk en eventuele externe wachttijd. Geen deadline, creditkosten of gemeten verbruik; per begrensde wijziging aanscherpen na lezing van bestaand bewijs. Hergebruik kan dit verkorten.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Na review, installatie en registratie automatisch volgende uitvoerbare stap; geen algemene wachtstop op gebruikersproeven.",
@@ -11460,11 +11468,11 @@
       "remaining": "Fysieke Voice PE en volledige core/worker/hostherstart met data/taakbehoud blijven open."
     },
     "currentPortableRestore20260922": {
-      "status": "implementing_versioned_v2_task_state",
+      "status": "bounded_source_tested_full_restore_incomplete",
       "outcome": "Een reservekopie herstelt ook huidig taakwerk en terugmeldstatus zonder dubbele uitvoering.",
       "finding": "V1 gebruikt39 vaste canonieke tabellen. operational_events en delegated_work_runs ontbreken; documentclaims en terugmeldfences staan daarin. Bestaand IN-002-bewijs geldt voor oudere canonieke data/CAS, niet voor volledig huidig product.",
       "scope": "Versie2 via bestaande snapshot-, transport-, restore- en wizardroute; v1 blijft intact. Nieuw formaat bewaart huidige records, verifieert hashes/volgorde en herbouwt checkpoints.",
-      "owner": "restore_current_gap",
+      "owner": "root",
       "independentReviewer": "document_private_identity",
       "planningEstimate": "90–180 minuten planning; kosten onbekend, geen betaalde modelcalls.",
       "doneWhen": [
@@ -11473,6 +11481,7 @@
         "V1-lezen blijft werken; relevante gerichte tests en onafhankelijke review; productinstallatie pas na migratie-/releasecontrole."
       ],
       "remainingMandatory": [
+        "Ook lopende of nog onafgeleverde taken verliesloos bewaren en gecontroleerd hervatten; terminal-only v2-proef is niet het volledige hersteldoel.",
         "Native documentbestanden, journals en gecontroleerde verhuizingsbinding",
         "Extern semantisch geheugen: gegevens/bankherstel of aantoonbare heropbouw",
         "Normale operatorroute en volledige geïsoleerde installatie-/computerherstelproef",
@@ -11493,18 +11502,21 @@
       },
       "formatDecision": "V2-buitenarchief met ongewijzigd gevalideerd v1-subarchief en aanvullende huidige records; gedeelde snapshot, transport en atomaire restore hergebruiken.",
       "progressReview20260923": {
-        "status": "implementation_incomplete_review_findings_open",
+        "status": "listed_findings_fixed_bounded_source_go",
         "built": "V2-profiel, export, reader, herstelmodule en additieve migratie zijn geschreven; wizardkoppeling en gerichte proeven ontbreken nog.",
-        "openFindings": [
-          "Documentclaims moeten aansluiten op terminale doelen; wachtend werk mag na herstel niet onbedoeld starten.",
-          "Aanvullende taaknotificaties moeten geldige scope en afgehandelde status hebben.",
-          "Voltooide privéresultaten vereisen bestaande afleverstatus zodat herstel geen herverzending veroorzaakt.",
-          "Database-rollback verwijdert gematerialiseerde versleutelde bestanden niet: afzonderlijke private herstelopslag en expliciete fout-/quarantaineafhandeling nodig."
-        ],
-        "testStatus": "Nog geen v2-roundtrip uitgevoerd.",
+        "openFindings": [],
+        "testStatus": "30 unieke gerichte cases geslaagd over vastgelegde runs; bronoverlay PostgreSQL16. Geen pakket/livebewijs.",
         "productionChanged": false,
         "reviewer": "document_private_identity"
-      }
+      },
+      "operatorBoundary20260923": {
+        "finding": "De live kernimage bevat geen tools/installer_portable_restore.py; de herstelwizard gebruikt een aparte operatorlauncher.",
+        "required": "Vertrouwde runtime-identiteit in launcher aansluiten en aparte operatorroute toetsen; een kerninstallatie bewijst geen werkende herstelwizard.",
+        "source": "eva2/tools/installer_restore_wizard.py"
+      },
+      "sourceCandidateEvidence": "eva2/evidence/product/portable-v2-source-candidate-20260923.json",
+      "sourceCandidateReview": "eva2/reviews/portable-v2-source-20260923.md",
+      "nextRequired": "Bestaande activatie-/installatiegrens benutten om lopend en onafgeleverd werk verliesloos te bewaren zonder onbedoeld uitvoeren; daarna native documenten, CAS en extern geheugen als geheel herstellen."
     }
   },
   "activeTaskId": "AU-008",

@@ -23,8 +23,10 @@ def main(argv=None):
         )
     )
     if (
-        set(config)
-        != {"dsn", "authority", "workspace", "objects", "keyring", "traffic_closed"}
+        set(config) not in (
+            {"dsn", "authority", "workspace", "objects", "keyring", "traffic_closed"},
+            {"dsn", "authority", "workspace", "objects", "keyring", "traffic_closed", "runtime_identity"},
+        )
         or config["traffic_closed"] is not True
     ):
         raise ValueError("restore target must be explicitly isolated from traffic")
@@ -42,6 +44,7 @@ def main(argv=None):
         workspace=paths["workspace"],
         object_store_root=paths["objects"],
         key_resolver=resolver,
+        runtime_identity=config.get("runtime_identity"),
     )
     try:
         return run_installer_wizard(remaining, restore_workflow=workflow)
