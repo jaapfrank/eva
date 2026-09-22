@@ -1,6 +1,6 @@
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
-import {aggregateCompletion, applyProductCompletion} from './project-completion.mjs';
+import {aggregateCompletion, applyProductCompletion, hasLaterTelegramRepair} from './project-completion.mjs';
 import {applyReviewedCapabilities, acceptedMemoryDelivery} from './project-server.mjs';
 const board=JSON.parse(readFileSync(process.env.EVA_PROJECT_BOARD_FILE || new URL('../../design/product/execution-workboard-v1.json',import.meta.url)));
 const audit=JSON.parse(readFileSync(new URL('./capability-audit.json',import.meta.url)));
@@ -10,12 +10,19 @@ project.acceptedDelivery=acceptedMemoryDelivery(board);
 applyProductCompletion(project,board);
 assert.deepEqual(project.completionSource.unmappedTaskIds,[],'every current workboard task is represented');
 assert.equal(project.capabilities.length,9);
-assert.ok(project.capabilities.every(row=>!row.product.complete),'full component scope remains open');
+assert.equal(project.capabilities.find(row=>row.id==='conversation').product.complete,false,'broader conversation ambition remains open');
+assert.equal(project.capabilities.find(row=>row.id==='conversation').product.delivery.label,'Bewezen basis','open comparison work does not revoke the delivered conversation basis');
 const memory=project.capabilities.find(row=>row.id==='memory');
 assert.equal(memory.product.steps.find(step=>step.id==='CO-008').accepted,true);
 assert.equal(memory.product.steps.find(step=>step.id==='CO-004').required,true);
 const work=project.capabilities.find(row=>row.id==='projects');
-assert.equal(work.product.jaap.state,'failed');
+assert.equal(work.product.jaap.state,'unknown','technical repair does not invent owner acceptance');
+assert.equal(work.product.jaap.label,'Oordeel na herstel open');
+assert.equal(board.audit.au002Delivery.telegramUserTrial.status,'failed','historical failed trial is retained');
+assert.equal(hasLaterTelegramRepair(board.audit.au002Delivery),true);
+assert.equal(hasLaterTelegramRepair({...board.audit.au002Delivery,live:false}),false);
+assert.equal(hasLaterTelegramRepair({...board.audit.au002Delivery,completedAt:'2026-09-10'}),false);
+assert.equal(hasLaterTelegramRepair({...board.audit.au002Delivery,telegramBridgeProbe:{passed:false}}),false);
 assert.equal(work.product.steps.find(step=>step.id==='AU-002').complete,true,'limited HTTP proof preserved');
 const voice=project.capabilities.find(row=>row.id==='voice');
 for(const id of ['SP-01','SP-02'])assert.equal(voice.product.steps.find(step=>step.id===id).accepted,true);
@@ -27,7 +34,7 @@ const updatedBoard=structuredClone(board);
 updatedBoard.milestones.find(task=>task.id==='AU-006').status='paused';
 applyProductCompletion(project,updatedBoard);
 assert.equal(project.capabilities.find(row=>row.id==='projects').product.steps.find(step=>step.id==='AU-006').status,'Gepauzeerd');
-console.log('Full scope aggregation, all workboard tasks, paused updates, optional exclusions, failed Telegram and retained acceptance: passed');
+console.log('Scope aggregation preserved; delivered conversation basis retained; later technical Telegram repair distinguished from owner acceptance: passed');
 
 if(board.audit.voiceLaptopOwnerFeedback20260911?.laptopInterruptionAccepted){
  assert.equal(voice.product.steps.find(step=>step.id==='SP-LAPTOP-INTERRUPT').accepted,true);

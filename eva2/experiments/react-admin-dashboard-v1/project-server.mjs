@@ -1,7 +1,7 @@
 import { readFile, stat } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 import { fileURLToPath } from 'node:url';
-import { applyProductCompletion } from './project-completion.mjs';
+import { applyProductCompletion, hasLaterTelegramRepair } from './project-completion.mjs';
 import { readDecisions, decisionMiddleware, optionalOptions, authorizeOwner } from './scope-decisions.mjs';
 
 const boardFile = process.env.EVA_PROJECT_BOARD_FILE || fileURLToPath(new URL('../../design/product/execution-workboard-v1.json', import.meta.url));
@@ -103,8 +103,12 @@ export function applyReviewedCapabilities(project, board, audit) {
       row.visibleResult = delegatedWork.currentWork || delegatedWork.pendingSourceChange || delegatedWork.result || row.visibleResult;
       row.works = row.visibleResult;
       row.gap = delegatedWork.remaining || delegatedWork.next || row.gap;
-      row.historyNote = `Eerdere proef: ${finding.visibleResult}`;
-      row.scope = 'AU-002 · toolvrije hulpagent via dashboardchat; Telegram apart';
+      row.historyNote = hasLaterTelegramRepair(delegatedWork)
+        ? `Historie: de eigenaarproef van ${delegatedWork.telegramUserTrial.date} mislukte. Latere technische reparatie: ${delegatedWork.evidencePath}. De oude fout is bewaard; eigenaaracceptatie is niet verondersteld.`
+        : `Eerdere proef: ${finding.visibleResult}`;
+      row.scope = hasLaterTelegramRepair(delegatedWork)
+        ? 'AU-002 · hulpagent via Telegrambrug; technisch bewezen, eigenaaroordeel open'
+        : 'AU-002 · hulpagent; bewijs geldt voor de vermelde gebruikersroute';
       row.detail = [row.visibleResult, delegatedWork.lastActualResult, row.gap].filter(Boolean).join(' ');
       row.intendedOutcome = row.detail;
       row.gapKind = delegatedWork.live === true ? 'Gebruikersbeoordeling en vervolg' : 'Gebruikersroute nog open';

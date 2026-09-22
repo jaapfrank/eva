@@ -33,6 +33,27 @@ export function aggregateCompletion(steps) {
   return { complete: required.length > 0 && required.every(step => step.complete), done: required.filter(step => step.complete).length, total: required.length };
 }
 
+// A later technical repair changes the current technical diagnosis, never owner acceptance.
+export function hasLaterTelegramRepair(delivery) {
+  return delivery?.technicalComplete === true && delivery.live === true
+    && delivery.telegramBridgeProbe?.passed === true
+    && Boolean(delivery.evidencePath && delivery.reviewPath)
+    && Number.isFinite(Date.parse(delivery.completedAt))
+    && Date.parse(delivery.completedAt) > Date.parse(delivery.telegramUserTrial?.date);
+}
+
+function deliveryPresentation(row, steps) {
+  const completed = steps.filter(step => step.complete && !step.evidenceOnly);
+  const proven = row.built === 'yes' && row.tested === 'yes' && row.live === 'yes';
+  return {
+    label: proven ? 'Bewezen basis' : completed.length ? 'Deelresultaten opgeleverd' : 'In ontwikkeling',
+    scope: row.scope,
+    result: row.visibleResult,
+    followup: row.gap,
+    completedSteps: completed.map(step => step.id),
+  };
+}
+
 export function applyProductCompletion(project, board) {
   const memoryAcceptance = applyMemoryPresentation(project, board);
   const tasks = [...board.executionTasks, ...board.milestones];
@@ -46,7 +67,7 @@ export function applyProductCompletion(project, board) {
       const outcome = row.outcomes?.find(item => item.subtitle?.includes(id));
       const accepted = outcome?.accepted === 'yes';
       return { id, title:task.title, required:!optional.has(id), complete:task.status === 'done', status:stateLabel(task.status || 'queued'), detail:task.outcome, criteria:task.doneWhen || [], accepted, source:'execution-workboard-v1.json',
-        ...(id === 'AU-002' ? { title:'Hulpagent via dashboardchat bedienen', detail:`${row.visibleResult} ${row.gap}` } : {}),
+        ...(id === 'AU-002' ? { title:'Hulpagent starten, volgen, stoppen en hervatten', detail:`${row.visibleResult} ${row.gap}` } : {}),
         ...(id === 'AU-008' ? { detail:`${row.visibleResult} ${row.gap}`,
           ...(task.status === 'review' && board.audit?.initiativeDeliveryAU008?.technicalComplete === true
             ? {complete:true,status:'Technisch afgerond · jouw beoordeling open'} : {}) } : {}),
@@ -87,16 +108,23 @@ export function applyProductCompletion(project, board) {
       if (decision === 'excluded') { decisionArchive.push(step); return false; }
       return true;
     });
-    const failed = row.id === 'projects' && (board.audit?.au002Delivery?.telegramUserTrial?.status === 'failed' || /Telegram.*mislukt|Telegramproef|geweigerd/i.test(`${row.userOutcomeStatus} ${row.visibleResult}`))
+    const delegatedWork = board.audit?.au002Delivery;
+    const repairedTelegram = row.id === 'projects' && hasLaterTelegramRepair(delegatedWork);
+    const failed = row.id === 'projects' && delegatedWork?.telegramUserTrial?.status === 'failed' && !repairedTelegram
       || row.id === 'browser' && project.capabilityAudit?.ownerBrowserUpdate?.viewerTrial === 'failed'
       || row.id === 'voice' && project.practiceTests.some(test => test.id === 'SP-04' && /niet opgelost/.test(test.result || ''));
     const acceptedSteps = steps.filter(step => step.accepted);
     row.product = {
+      delivery: deliveryPresentation(row, steps),
       scope, steps, decisionArchive, undecided:steps.filter(step=>step.decision==='undecided').length, ...aggregateCompletion(steps),
       tested:{state:row.tested === 'yes' ? 'partial_passed' : 'unknown',label:row.tested === 'yes' ? 'Deelproeven geslaagd' : 'Onvolledig',detail:'Technische deelproeven zijn bewijs voor hun eigen scope; geen volledige eindtest.'},
       jaap:{state:failed ? 'failed' : acceptedSteps.length ? 'partial_passed' : row.accepted === 'partial' ? 'partial' : 'unknown',label:failed ? (row.id === 'projects' ? 'Telegram mislukt' : row.id === 'voice' ? 'Wakeword mislukt' : 'Kijkproef mislukt') : acceptedSteps.length ? 'Deelproef geslaagd' : row.accepted === 'partial' ? 'Beperkt beoordeeld' : 'Ongetest / geen bewijs',detail:failed ? `${row.id === 'projects' ? 'Telegramproef 11 sep 09:40: hulpagent geweigerd. Dashboard-HTTP-proef blijft bewezen.' : row.id === 'browser' ? 'Kijkverbinding mislukte; losse Chrome-proef wel gelukt.' : 'Onterechte wakeword-activering nog niet opgelost; SP-01 en SP-02 blijven geaccepteerd.'}` : acceptedSteps.map(step => step.id).join(', ') || row.gap},
       comparison:{state:'unknown',label:row.id === 'conversation' ? 'Beperkt · onbekend' : 'Niet vergeleken',detail:row.id === 'conversation' ? 'EV-002: één casus, Eva en Hermes voldoen aan dezelfde drie criteria; twee deelnemers geblokkeerd. Geen representatieve rangorde. Brononderzoek UP-001 bewijst geen concurrentiewinst.' : 'Geen representatieve vergelijking met uitkomst beter, even of slechter vastgelegd. CP-001/002/003 blijven aparte werkkaarten.'},
     };
+    if (repairedTelegram && delegatedWork.ownerAccepted !== true) {
+      row.product.jaap = {state:'unknown', label:'Oordeel na herstel open',
+        detail:`De eigenaarproef van ${delegatedWork.telegramUserTrial.date} mislukte. Daarna is de Telegrambrug technisch hersteld en beproefd (${delegatedWork.completedAt}); dit is geen nieuwe geslaagde eigenaarproef. ${delegatedWork.remaining}`};
+    }
     if (!failed && row.product.complete && row.accepted === 'yes') {
       row.product.jaap = {state:'passed', label:'Geaccepteerd', detail:row.gap};
     }
