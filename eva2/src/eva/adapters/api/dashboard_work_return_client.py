@@ -4,7 +4,7 @@ DASHBOARD_WORK_RETURN_CLIENT_JS = r"""
 (() => {
   'use strict';
   class EvaWorkReturns {
-    constructor({fetch, visible, render, clear, failed, digest, recovered=()=>{}, schedule=setTimeout, cancel=clearTimeout}) {
+    constructor({fetch, visible, render, clear, failed, digest, recovered=()=>{}, schedule=(callback,delay)=>setTimeout(callback,delay), cancel=timer=>clearTimeout(timer)}) {
       Object.assign(this,{fetch,visible,render,clear,failed,digest,recovered,schedule,cancel});
       this.running=false; this.closed=false; this.generation=0; this.seen=new Set();
     }
