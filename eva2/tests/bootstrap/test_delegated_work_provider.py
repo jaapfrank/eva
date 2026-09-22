@@ -273,4 +273,7 @@ def test_each_child_gets_a_fresh_shared_provider_with_grant_and_cancellation(
         assert all(request["store"] is False for request in requests)
         assert all(request["stream"] is True for request in requests)
 
-    asyncio.run(asyncio.wait_for(run(), timeout=5))
+    # This two-request integration guard detects hangs, not product latency.
+    # Cold SDK/schema initialization alone exceeded five seconds in the pinned
+    # container; keep all request, grant, cancellation and result assertions.
+    asyncio.run(asyncio.wait_for(run(), timeout=20))
