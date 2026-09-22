@@ -12,6 +12,9 @@ const work = (id, state, generation = 1) => ({ work_id: id, state, generation,
     ? { output: '<img src="https://external.invalid/leak"> Bewaard tuinadvies' } : null });
 let jobs = [work('work:active', 'admitted'), work('work:finished', 'succeeded'), work('work:running', 'call_started')];
 let denied = false;
+const calls = [];
+let heldId = null, releaseHeld, heldStarted;
+let active = 0, maximumActive = 0;
 const mutations = [];
 const fixtures = {
   '/status': { contract: 'EvaDashboardStatus/v1', read_only: true, runtime: { ready: true, state: 'ready' } },
@@ -31,6 +34,9 @@ const server = http.createServer(async (req, res) => {
   const route = url.pathname.slice(base.length);
   const json = data => { res.setHeader('content-type', 'application/json'); res.end(JSON.stringify(data)); };
   if (route === '/work' || route.startsWith('/work/')) {
+    active++; maximumActive = Math.max(maximumActive, active);
+    res.once('finish', () => active--);
+    calls.push(route);
     if (denied) { res.statusCode = 403; return json({ private: 'MUST NOT APPEAR' }); }
     const operation = route === '/work' ? 'list' : route.split('/')[2];
     const reply = { contract: 'EvaDelegatedWorkOwnerResult/v1', operation };
@@ -47,7 +53,13 @@ const server = http.createServer(async (req, res) => {
     if (operation === 'resume') {
       selected = work('work:resumed', 'admitted', 2); jobs.unshift(selected); mutations.push(operation);
     }
-    return json({ ...reply, work: selected, created: operation === 'resume' });
+    const snapshot = JSON.parse(JSON.stringify(selected));
+    if (operation === 'get' && data.work_id === heldId) {
+      heldStarted();
+      await new Promise(resolve => { releaseHeld = resolve; });
+    }
+    if (denied) { res.statusCode = 403; return json({ private: 'MUST NOT APPEAR' }); }
+    return json({ ...reply, work: snapshot, created: operation === 'resume' });
   }
   if (fixtures[route]) return json(fixtures[route]);
   const file = route.startsWith('/assets/') ? path.join(dist, route) : path.join(dist, 'index.html');
@@ -61,6 +73,7 @@ const server = http.createServer(async (req, res) => {
   try {
     const page = await browser.newPage();
     page.setDefaultTimeout(10000);
+    await page.clock.install();
     const errors = [], external = [];
     page.on('pageerror', error => errors.push(error.message));
     page.on('request', req => { if (!req.url().startsWith('http://127.0.0.1:')) external.push(req.url()); });
@@ -77,8 +90,8 @@ const server = http.createServer(async (req, res) => {
     await area.getByText('Nieuwe poging ingepland. De vorige poging blijft bewaard.', { exact: true }).waitFor();
     assert.equal(jobs[0].generation, 2);
     await area.getByRole('button', { name: 'Werk vernieuwen' }).click();
-    await area.getByText('Ingepland · poging 2', { exact: true }).waitFor();
-    assert.equal(await area.getByRole('article', { name: 'Geopende hulpopdracht' }).count(), 0);
+    await area.getByRole('article', { name: 'Geopende hulpopdracht' }).getByText('Ingepland · poging 2', { exact: true }).waitFor();
+    assert.equal(await area.getByRole('article', { name: 'Geopende hulpopdracht' }).count(), 1);
     await area.getByRole('button', { name: 'Opdracht openen' }).nth(3).click();
     await area.getByRole('button', { name: 'Stop deze hulpopdracht' }).click();
     await area.getByText('Stopverzoek opgeslagen. Een lopende berekening kan nog aflopen; het resultaat wordt niet geleverd.', { exact: true }).waitFor();
@@ -87,15 +100,102 @@ const server = http.createServer(async (req, res) => {
     assert.equal(await area.getByRole('button', { name: 'Hervatten met nieuwe poging' }).count(), 0);
     await area.getByRole('button', { name: 'Opdracht openen' }).nth(2).click();
     await area.getByText('<img src="https://external.invalid/leak"> Bewaard tuinadvies', { exact: true }).waitFor();
+    const opened = area.getByRole('article', { name: 'Geopende hulpopdracht' });
+    await area.getByRole('button', { name: 'Opdracht openen' }).first().click();
+    await opened.getByText('Ingepland · poging 2', { exact: true }).waitFor();
+    const getCount = () => calls.filter(route => route === '/work/get').length;
+    const unchangedGets = getCount();
+    let response = page.waitForResponse(res => res.url().endsWith('/work'));
+    await page.clock.fastForward(5001); await response;
+    await page.waitForTimeout(50);
+    assert.equal(getCount(), unchangedGets);
+    jobs[0].state = 'call_started';
+    await page.clock.fastForward(5001);
+    await opened.getByText('Bezig · poging 2', { exact: true }).waitFor();
+    Object.assign(jobs[0], work('work:resumed', 'succeeded', 2));
+    await page.clock.fastForward(5001);
+    await opened.getByText('Resultaat klaar · poging 2', { exact: true }).waitFor();
+    await opened.getByText('<img src="https://external.invalid/leak"> Bewaard tuinadvies', { exact: true }).waitFor();
+    const finishedGets = getCount();
+    response = page.waitForResponse(res => res.url().endsWith('/work'));
+    await page.clock.fastForward(5001); await response;
+    await page.waitForTimeout(50);
+    assert.equal(getCount(), finishedGets);
+    // Hold the old selection response while the owner chooses a newer task.
+    heldId = 'work:finished';
+    const started = new Promise(resolve => { heldStarted = resolve; });
+    await area.getByRole('button', { name: 'Opdracht openen' }).nth(2).click();
+    await started;
+    await area.getByRole('button', { name: 'Opdracht openen' }).first().click();
+    await page.clock.fastForward(15001);
+    assert.equal(maximumActive, 1);
+    releaseHeld(); heldId = null;
+    await opened.getByText('Resultaat klaar · poging 2', { exact: true }).waitFor();
+    assert.equal(await opened.getByText('Resultaat klaar · poging 1', { exact: true }).count(), 0);
+    // Exercise document visibility independently of headless window activation.
+    await page.evaluate(() => {
+      Object.defineProperty(document, 'hidden', { configurable: true, value: true });
+      document.dispatchEvent(new Event('visibilitychange'));
+    });
+    const hiddenCalls = calls.length;
+    await page.clock.fastForward(20001);
+    await page.waitForTimeout(50);
+    assert.equal(calls.length, hiddenCalls);
+    response = page.waitForResponse(res => res.url().endsWith('/work'));
+    await page.evaluate(() => {
+      Object.defineProperty(document, 'hidden', { configurable: true, value: false });
+      document.dispatchEvent(new Event('visibilitychange'));
+    });
+    await response; await page.waitForTimeout(50);
     denied = true;
-    await area.getByRole('button', { name: 'Werk vernieuwen' }).click();
+    await page.clock.fastForward(5001);
     await area.getByRole('alert').waitFor();
     assert.equal(await area.getByText('<img src="https://external.invalid/leak"> Bewaard tuinadvies', { exact: true }).count(), 0);
     assert.equal((await area.innerText()).includes('MUST NOT APPEAR'), false);
+    const deniedCalls = calls.length;
+    await page.clock.fastForward(20001);
+    await page.waitForTimeout(50);
+    assert.equal(calls.length, deniedCalls);
+    assert.equal(await opened.count(), 0);
+    assert.equal(maximumActive, 1);
+    denied = false;
+    await area.getByRole('button', { name: 'Werk vernieuwen' }).click();
+    await area.getByRole('button', { name: 'Opdracht openen' }).first().waitFor();
+    // A denied superseded request must also clear the pending newer selection.
+    heldId = 'work:finished';
+    const deniedStarted = new Promise(resolve => { heldStarted = resolve; });
+    await area.getByRole('button', { name: 'Opdracht openen' }).nth(2).click();
+    await deniedStarted;
+    await area.getByRole('button', { name: 'Opdracht openen' }).first().click();
+    denied = true; releaseHeld(); heldId = null;
+    await area.getByRole('alert').waitFor();
+    assert.equal(await opened.count(), 0);
+    const staleDeniedCalls = calls.length;
+    await page.clock.fastForward(10001); await page.waitForTimeout(50);
+    assert.equal(calls.length, staleDeniedCalls);
+    denied = false;
+    await area.getByRole('button', { name: 'Werk vernieuwen' }).click();
+    await area.getByRole('button', { name: 'Opdracht openen' }).first().waitFor();
+    heldId = 'work:finished';
+    const unmountStarted = new Promise(resolve => { heldStarted = resolve; });
+    await area.getByRole('button', { name: 'Opdracht openen' }).nth(2).click();
+    await unmountStarted;
+    const aborted = page.waitForEvent('requestfailed', req => req.url().endsWith('/work/get'));
+    // Switching away from the dashboard unmounts OwnerWork.
+    await page.evaluate(() => { window.location.hash = '#/workboard'; });
+    await area.waitFor({ state: 'detached' });
+    await aborted;
+    releaseHeld(); heldId = null;
+    const unmountedCalls = calls.length;
+    await page.clock.fastForward(20001); await page.waitForTimeout(50);
+    assert.equal(calls.length, unmountedCalls);
     assert.deepEqual(mutations, ['stop', 'resume', 'stop']);
     assert.deepEqual(errors, []); assert.deepEqual(external, []);
     console.log(JSON.stringify({ status: 'passed', open: true, literalResult: true,
-      durableFixtureStop: true, activeCallStopRequest: true, resumeNewAttempt: true, refresh: true, deniedClearsPrivateContent: true,
+      durableFixtureStop: true, activeCallStopRequest: true, resumeNewAttempt: true, refreshPreservesSelection: true, automaticCompletion: true, unchangedResultNotRefetched: true,
+      rapidSelectionIgnoresStaleResponse: true, maximumActiveRequests: maximumActive, hiddenPausesPolling: true,
+      deniedClearsPrivateContentAndStopsPolling: true, supersededDenialClearsPrivateContent: true,
+      unmountStopsPollingAndAbortsRequest: true, fixtureRequests: calls.length,
       realRuntimeOrOwnerAcceptance: false }));
   } finally { await browser.close(); server.close(); }
 })().catch(error => { console.error(error); server.close(); process.exitCode = 1; });

@@ -47,45 +47,108 @@ export default function OwnerWork() {
   const [busy, setBusy] = React.useState(false);
   const [error, setError] = React.useState('');
   const [notice, setNotice] = React.useState('');
-  const sequence = React.useRef(0);
-  const refresh = React.useCallback(async (signal) => {
-    const id = ++sequence.current;
-    setPage(null); setDetail(null); setBusy(true); setError('');
-    try {
-      const data = await request('list', undefined, signal);
-      if (sequence.current === id) setPage(data);
-    } catch (e) { if (sequence.current === id && e.name !== 'AbortError') setError(e.message); }
-    finally { if (sequence.current === id) setBusy(false); }
-  }, []);
+  const commands = React.useRef(() => {});
   React.useEffect(() => {
+    let mounted = true, running = false, halted = false, pending = null;
+    let selected = null, currentDetail = null, revision = 0, timer;
     const controller = new AbortController();
-    refresh(controller.signal);
-    return () => { ++sequence.current; controller.abort(); };
-  }, [refresh]);
-  async function act(operation, workId) {
-    const id = ++sequence.current;
-    setBusy(true); setError(''); setNotice(''); setDetail(null);
-    try {
-      const data = await request(operation, workId);
-      // Reload after mutations: the list is never updated optimistically.
-      const updated = ['stop', 'resume'].includes(operation) ? await request('list') : null;
-      if (sequence.current !== id) return;
-      if (updated) setPage(updated);
-      setDetail(data.work);
-      if (operation === 'stop') setNotice(data.work.stop_requested
-        ? 'Stopverzoek opgeslagen. Een lopende berekening kan nog aflopen; het resultaat wordt niet geleverd.'
-        : data.work.state === 'stopped' ? 'Gestopt voordat een modelcall begon.' : 'Deze taak was al afgerond.');
-      if (operation === 'resume') setNotice(data.status === 'not_resumable'
-        ? 'Geen nieuwe poging ingepland: de taak is nog actief of al geslaagd.'
-        : `${data.created ? 'Nieuwe poging ingepland.' : 'Bestaande vervolgpoging geopend.'} De vorige poging blijft bewaard.`);
-    } catch (e) {
-      if (sequence.current !== id) return;
-      setPage(null); setDetail(null); setError(e.message);
-    } finally { if (sequence.current === id) setBusy(false); }
-  }
+    const fingerprint = work => JSON.stringify([work.work_id, work.state,
+      work.generation, work.stop_requested, work.result_available]);
+    function clearPrivate() {
+      selected = null; currentDetail = null; pending = null;
+      setPage(null); setDetail(null); setNotice('');
+    }
+    function schedule() {
+      clearTimeout(timer);
+      if (mounted && !halted && !document.hidden) {
+        timer = setTimeout(() => enqueue('list'), 5000);
+      }
+    }
+    async function drain() {
+      if (running || !pending || !mounted) return;
+      running = true;
+      clearTimeout(timer);
+      while (pending && mounted) {
+        const { operation, workId, version, foreground } = pending;
+        pending = null;
+        if (foreground) setBusy(true);
+        setError('');
+        try {
+          const data = await request(operation, workId, controller.signal);
+          if (!mounted) return;
+          // Even superseded requests must enforce access failures in catch.
+          if (version !== revision) continue;
+          if (operation === 'list') {
+            setPage(data);
+            const job = data.jobs.find(item => item.work_id === selected);
+            if (selected && (!currentDetail || (job
+              ? fingerprint(job) !== fingerprint(currentDetail)
+              : ['admitted', 'call_started'].includes(currentDetail.state)))) {
+              const result = await request('get', selected, controller.signal);
+              if (!mounted) return;
+              if (version !== revision) continue;
+              currentDetail = result.work;
+              setDetail(currentDetail);
+            }
+          } else {
+            currentDetail = data.work;
+            selected = data.work.work_id;
+            setDetail(currentDetail);
+            if (operation === 'stop') setNotice(data.work.stop_requested
+              ? 'Stopverzoek opgeslagen. Een lopende berekening kan nog aflopen; het resultaat wordt niet geleverd.'
+              : data.work.state === 'stopped' ? 'Gestopt voordat een modelcall begon.' : 'Deze taak was al afgerond.');
+            if (operation === 'resume') setNotice(data.status === 'not_resumable'
+              ? 'Geen nieuwe poging ingepland: de taak is nog actief of al geslaagd.'
+              : `${data.created ? 'Nieuwe poging ingepland.' : 'Bestaande vervolgpoging geopend.'} De vorige poging blijft bewaard.`);
+            // Read back mutations without optimistic list changes.
+            if (operation === 'stop' || operation === 'resume') {
+              pending = { operation: 'list', version: revision, foreground: true };
+            }
+          }
+        } catch (e) {
+          if (!mounted) return;
+          // Fail closed for all failures, including malformed or out-of-scope data.
+          halted = true;
+          ++revision;
+          clearPrivate();
+          setError(e.message);
+        }
+      }
+      running = false;
+      if (mounted) { setBusy(false); schedule(); }
+    }
+    function enqueue(operation, workId, foreground = false) {
+      if (!mounted || (!foreground && (halted || running))) return;
+      if (foreground) {
+        halted = false;
+        ++revision;
+        if (operation !== 'list') {
+          selected = workId; currentDetail = null;
+          setDetail(null); setNotice('');
+        }
+      }
+      pending = { operation, workId, version: revision, foreground };
+      void drain();
+    }
+    function visibilityChanged() {
+      clearTimeout(timer);
+      if (!document.hidden) enqueue('list');
+    }
+    commands.current = enqueue;
+    document.addEventListener('visibilitychange', visibilityChanged);
+    if (!document.hidden) enqueue('list', undefined, true);
+    return () => {
+      mounted = false;
+      clearTimeout(timer);
+      controller.abort();
+      document.removeEventListener('visibilitychange', visibilityChanged);
+    };
+  }, []);
+  const refresh = () => commands.current('list', undefined, true);
+  const act = (operation, workId) => commands.current(operation, workId, true);
   return <section aria-label="Mijn hulpopdrachten">
     <h2>Mijn hulpopdrachten</h2>
-    <p>Opdrachten aan Eva's onderzoeker, met hun opgeslagen status en resultaat.</p>
+    <p>Opdrachten aan Eva's onderzoeker, met hun opgeslagen status en resultaat. Dit overzicht wordt automatisch bijgewerkt zolang dit tabblad zichtbaar is.</p>
     <button disabled={busy} onClick={() => refresh()}>Werk vernieuwen</button>
     {error && <p role="alert">{error}</p>}
     {notice && <p role="status">{notice}</p>}
@@ -94,7 +157,7 @@ export default function OwnerWork() {
     <div className="board">{page?.jobs.map(job => <article className="card" key={job.work_id}>
       <h3>{job.task_preview}</h3><p>{labels[job.state]} · poging {job.generation}</p>
       {job.stop_requested && <p>Stopverzoek opgeslagen</p>}
-      <button disabled={busy} onClick={() => act('get', job.work_id)}>Opdracht openen</button>
+      <button onClick={() => act('get', job.work_id)}>Opdracht openen</button>
     </article>)}</div>
     {page?.truncated && <p>De twintig meest recente opdrachten worden getoond.</p>}
     {detail && <article aria-label="Geopende hulpopdracht" className="card">
