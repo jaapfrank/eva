@@ -1045,8 +1045,8 @@
         ],
         "now": {
           "title": "Documentprojecten zonder de limiet van twee plaatsen",
-          "detail": "Geïsoleerde ketenproef geslaagd: één oud en drie nieuwe projecten, stoppen en herstart. Installatievoorbereiding loopt; de bestaande installatie is nog ongewijzigd.",
-          "state": "Getest · installatie in voorbereiding",
+          "detail": "Ketenproef en onafhankelijke review geslaagd. Nieuwe opslagprovider draait gezond; koppeling aan gateway, kern en documentwerker volgt. Oude projecten blijven ongewijzigd beschikbaar.",
+          "state": "Getest · installatie deels voorbereid, nog niet beschikbaar",
           "doneWhen": "Meer dan twee projecten, veilige herstart en behoud van oude resultaten zijn getest en geïnstalleerd."
         },
         "next": {
@@ -11265,7 +11265,7 @@
       "remaining": "Gewone gesprekskeuze en gebruikservaring blijven afzonderlijk; technische routes hoeven niet opnieuw gebouwd."
     },
     "repeatableDocumentProjects20260922": {
-      "status": "tested_installation_preparation",
+      "status": "provider_ready_registration_pending",
       "outcome": "Nieuwe documentprojecten blijven mogelijk na de eerste twee, met dezelfde opslag, privacy en veilige hervatting.",
       "scope": "Bestaande native broker ongewijzigd; aparte projectjournals binnen gepinde hostroot. Poolv2 met hergebruik oudeclaims en één nieuwe gedeelde provider. Begrensde/pagineerbare lijst, bestaande worker blijft uitvoerder.",
       "owners": {
@@ -11285,7 +11285,8 @@
       "evidence": "eva2/evidence/living-core/document-repeatable-candidate-20260922.json",
       "installed": false,
       "modelCalls": 0,
-      "nextAction": "Nieuwe dynamische provider begrensd registreren en gateway/core/worker samen bijwerken met behoud van oude projecten en terugweg."
+      "nextAction": "Nieuwe gezonde provider bij gateway registreren; werkende oude providers behouden. Daarna kern en documentwerker gezamenlijk naar poolv2 omschakelen met terugweg.",
+      "providerEvidence": "eva2/evidence/living-core/document-repeatable-provider-ready-20260922.json"
     }
   },
   "activeTaskId": "AU-008",

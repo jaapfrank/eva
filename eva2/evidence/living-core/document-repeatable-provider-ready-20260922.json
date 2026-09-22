@@ -1,0 +1,31 @@
+{
+  "status": "provider_ready_registration_pending",
+  "sourceCommit": "cb498e60",
+  "provider": {
+    "started": true,
+    "healthy": true,
+    "containerId": "47fa934218d88ff3fe8ecab8b359f738738da8ceb205a7116c9520893aec3959",
+    "image": "sha256:81188c414ce5b20eb59f545f9651da5501576dcfbdd9edc3abd125d455f1cb6d",
+    "journalEmpty": true,
+    "registered": false,
+    "oldProvidersUnchanged": true
+  },
+  "gatewayCandidate": {
+    "basis": "Previously rendered installed compose, reconciled against live image, specified environment, all mount sources/types/read-only flags and network names.",
+    "mutation": "One exact managed endpoint appended; other compose fields unchanged.",
+    "candidateSha256": "75dab775e56bf624340cffd0ebd320ef450f524fb1b3546df743bb0090ac4fda",
+    "configValid": true,
+    "installed": false
+  },
+  "independentGatewayReview": "GO: candidate differs only by exact new managed endpoint; baseline image, environment, mounts, command, user, networks, health, limits and security flags match runtime snapshot. Check assigned network IPs after recreate.",
+  "startupFailureResolved": "First new provider startup exited2: generated secret files ended with LF. Removed only trailing LF, preserving ownership, modes, inodes and binding. Same container then started healthy. Existing services unchanged.",
+  "remaining": [
+    "Gracefully drain active requests and close admissions for gateway maintenance.",
+    "Register and verify private owner/catalog binding while preserving existing registry rows.",
+    "Build pool v2 from actual registered tool hashes; keep legacy slots unchanged.",
+    "Review and activate core/worker configuration coherently with rollback and live verification."
+  ],
+  "modelCalls": 0,
+  "ownerAccepted": false,
+  "featureInstalled": false
+}
