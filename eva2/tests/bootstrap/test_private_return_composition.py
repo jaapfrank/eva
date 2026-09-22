@@ -46,3 +46,23 @@ def test_destination_loader_rejects_non_private_or_noncanonical_envelope(convers
         principal_binding_id=BINDING, bindings_loader=bindings)
     with pytest.raises(ValueError):
         resolve(turn(conversation))
+
+
+def test_status_loader_only_reads_with_the_fixed_owner_authority(monkeypatch):
+    from eva.bootstrap.delegated_work_delivery import delivery_status_loader
+    from eva.adapters.postgres import delegated_work_delivery as module
+    calls=[]
+    work_store=object()
+    fresh=bindings
+    class Store:
+        def __init__(self, actual, *, bindings_loader):
+            assert actual is work_store and bindings_loader is fresh
+        def status(self, work_id, **authority):
+            calls.append((work_id,authority))
+            return "delivery_ambiguous"
+    monkeypatch.setattr(module,"PostgresDelegatedWorkDeliveryStore",Store)
+    load=delivery_status_loader(work_store,owner_principal_id=OWNER,
+                               principal_binding_id=BINDING,bindings_loader=fresh)
+    assert calls==[]
+    assert load("work:original")=="delivery_ambiguous"
+    assert calls==[("work:original",dict(owner_principal_id=OWNER,principal_binding_id=BINDING))]

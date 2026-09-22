@@ -28,6 +28,7 @@ class DelegatedWorkOwnerService:
                  conversation_scope: TimelineScope | None = None,
                  private_bridge_principal_loader: Callable[[], str | None] | None = None,
                  delivery_destination_loader: Callable[[ConversationTurn], PrivateWorkDestination | None] | None = None,
+                 delivery_status_loader: Callable[[str], str] | None = None,
                  research_profile=None):
         self.store = store
         self.research_profile = research_profile
@@ -37,6 +38,7 @@ class DelegatedWorkOwnerService:
         self.principal_binding_id = principal_binding_id
         self._private_bridge_principal_loader = private_bridge_principal_loader
         self._delivery_destination_loader = delivery_destination_loader
+        self._delivery_status_loader = delivery_status_loader
         self._clock = clock or (lambda: datetime.now(UTC).replace(microsecond=0))
         store.validate_admission_authority(owner_principal_id=owner_principal_id,
                                            principal_binding_id=principal_binding_id)
@@ -217,8 +219,30 @@ class DelegatedWorkOwnerService:
         return ":".join((turn.tenant_id, turn.installation_id, turn.principal_id,
                          turn.conversation_id, turn.message_id))
 
-    @staticmethod
-    def _view(work: StoredDelegatedWork, *, include_result=True) -> dict:
+    def _delivery_view(self, work_id: str) -> dict:
+        descriptions = {
+            "unbound": "Geen automatische terugmelding gekoppeld.",
+            "awaiting_result": "Automatische terugmelding wacht op een afgerond resultaat.",
+            "ready": "Automatische terugmelding staat klaar; bezorging is nog niet bevestigd.",
+            "delivery_claimed": "Automatische terugmelding is gestart; bezorging is nog niet bevestigd.",
+            "delivery_acknowledged": "Automatische terugmelding is afgeleverd in je gekoppelde privéchat.",
+            "delivery_ambiguous": "Bezorging van de automatische terugmelding is onzeker; ik stuur niet automatisch opnieuw. Je kunt het resultaat hier opvragen.",
+            "unknown": "De status van de automatische terugmelding is onbekend.",
+            "blocked": "Automatische terugmelding is niet beschikbaar of niet te verifiëren. Je kunt een beschikbaar resultaat hier opvragen.",
+        }
+        state = "unknown"
+        if self._delivery_status_loader is not None:
+            try:
+                candidate = self._delivery_status_loader(work_id)
+                if isinstance(candidate, str) and candidate in descriptions:
+                    state = candidate
+            except Exception:
+                # Delivery authority failure must not hide a separately admitted
+                # owner result or reveal destination/credential exception details.
+                state = "blocked"
+        return {"state": state, "description": descriptions[state]}
+
+    def _view(self, work: StoredDelegatedWork, *, include_result=True) -> dict:
         result = None
         if work.result is not None and work.state in {"succeeded", "verified"}:
             result = {"output": work.result.output, "output_sha256": work.result.output_sha256,
@@ -232,6 +256,7 @@ class DelegatedWorkOwnerService:
                 "usage": None if work.usage is None else work.usage.to_payload(),
                 "error_code": work.error_code, "error_fingerprint": work.error_fingerprint,
                 "result_available": result is not None,
+                "delivery": self._delivery_view(work.spec.work_id),
                 **({"result": result} if include_result else {}),
                 "scope": "private_public_research_worker" if isinstance(work.spec, DelegatedResearchSpec) else "private_tool_free_worker", "new_model_run_on_resume": True}
 

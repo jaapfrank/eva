@@ -38,3 +38,13 @@ def completion_worker(work_store, delivery, *, bindings_loader):
         PostgresDelegatedWorkDeliveryStore(work_store, bindings_loader=bindings_loader),
         delivery,
     )
+
+
+def delivery_status_loader(work_store, *, owner_principal_id: UUID,
+                           principal_binding_id: UUID, bindings_loader):
+    """Read delivery status independently of the switch that permits new sends."""
+    from eva.adapters.postgres.delegated_work_delivery import PostgresDelegatedWorkDeliveryStore
+
+    store = PostgresDelegatedWorkDeliveryStore(work_store, bindings_loader=bindings_loader)
+    return lambda work_id: store.status(work_id, owner_principal_id=owner_principal_id,
+                                       principal_binding_id=principal_binding_id)

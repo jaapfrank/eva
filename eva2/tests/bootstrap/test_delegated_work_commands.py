@@ -189,7 +189,8 @@ def test_owner_gets_latest_task_status_and_can_stop_work_before_call() -> None:
     assert status is not None
     assert status.text == (
         "Je laatste onderzoek is ingepland.\nOpdracht: Test\n"
-        "Taaknummer: work:fake (poging 1)."
+        "Taaknummer: work:fake (poging 1).\n"
+        "De status van de automatische terugmelding is onbekend."
     )
     assert stopped is not None
     assert stopped.text == (
@@ -378,7 +379,7 @@ def test_result_is_readable_without_changing_or_discarding_stored_content(output
     result = SimpleNamespace(output=output, output_sha256="hash", completed_at="2026-08-26T14:00:00Z")
     store.owned_work = [store._work(state="succeeded", result=result)]
     reply = _commands(store).handle(_turn("Toon het resultaat van mijn onderzoek"), principal_binding_id=BINDING)
-    assert reply.text == expected
+    assert reply.text == expected + "\n\nDe status van de automatische terugmelding is onbekend."
     assert result.output == output
     assert store.admitted == []
 
@@ -398,3 +399,51 @@ def test_status_does_not_infer_live_worker_activity_from_persisted_call(lease_ex
         assert "stopopdracht bewaard; het resultaat wordt niet geleverd" in reply.text
     else:
         assert "gestart; er is nog geen bevestigde uitkomst" in reply.text
+
+
+@pytest.mark.parametrize("state,phrase", [
+    ("delivery_acknowledged", "afgeleverd in je gekoppelde privéchat"),
+    ("delivery_ambiguous", "onzeker; ik stuur niet automatisch opnieuw"),
+    ("unbound", "Geen automatische terugmelding gekoppeld"),
+])
+def test_shared_owner_view_and_telegram_show_delivery_separately_from_result(state,phrase):
+    from eva.bootstrap.delegated_work_owner_service import DelegatedWorkOwnerService
+    store = FakeStore()
+    result = SimpleNamespace(output="Het opgeslagen resultaat met bron.",output_sha256="hash",
+                             completed_at="2026-08-26T14:00:00Z")
+    store.owned_work=[store._work(state="succeeded",result=result)]
+    calls=[]
+    def load(work_id):
+        calls.append(work_id)
+        return state
+    service=DelegatedWorkOwnerService(store,owner_principal_id=OWNER,principal_binding_id=BINDING,
+                                     clock=lambda:NOW,delivery_status_loader=load)
+    turn=_turn("Hoe staat mijn onderzoek?")
+    view=service.execute("get",turn,work_id="work:fake",request_key="get")["work"]
+    assert view["state"]=="succeeded" and view["result_available"]
+    assert view["result"]["output"]==result.output
+    assert view["delivery"]["state"]==state and phrase in view["delivery"]["description"]
+    commands=DelegatedWorkConversationCommands(service=service)
+    for question in ("Hoe staat mijn onderzoek?", "Toon mijn onderzoeken", "Toon het resultaat van mijn onderzoek"):
+        reply=commands.handle(_turn(question),principal_binding_id=BINDING)
+        assert phrase in reply.text
+        if "resultaat" in question:
+            assert reply.text.startswith(result.output+"\n\n")
+    assert set(calls)=={"work:fake"} and store.admitted==[]
+
+
+@pytest.mark.parametrize("unavailable", ["raises", "unknown_value", "invalid_type"])
+def test_delivery_lookup_failure_does_not_hide_valid_result_or_leak_details(unavailable):
+    from eva.bootstrap.delegated_work_owner_service import DelegatedWorkOwnerService
+    store=FakeStore()
+    result=SimpleNamespace(output="A valid saved result",output_sha256="hash",completed_at="2026-08-26T14:00:00Z")
+    store.owned_work=[store._work(state="succeeded",result=result)]
+    def load(work_id):
+        if unavailable=="raises": raise ValueError("private-chat:secret credential expired")
+        return "private-chat:secret" if unavailable=="unknown_value" else {"secret":"route"}
+    service=DelegatedWorkOwnerService(store,owner_principal_id=OWNER,principal_binding_id=BINDING,
+                                     clock=lambda:NOW,delivery_status_loader=load)
+    work=service.execute("result",_turn("result"),work_id="work:fake",request_key="result")["work"]
+    assert work["result"]["output"]==result.output and work["result_available"]
+    assert work["delivery"]["state"]==("blocked" if unavailable=="raises" else "unknown")
+    assert "secret" not in json.dumps(work) and "credential" not in json.dumps(work)

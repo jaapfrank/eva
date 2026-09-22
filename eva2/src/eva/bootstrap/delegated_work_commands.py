@@ -67,7 +67,7 @@ class DelegatedWorkConversationCommands:
         if normalized in _LIST:
             jobs = self._execute("list", turn)["jobs"]
             return self._reply(turn, "\n".join(
-                f"{job['work_id']}: {job['state']} — {job['task_preview']}" for job in jobs
+                f"{job['work_id']}: {job['state']} — {job['task_preview']}\n{job['delivery']['description']}" for job in jobs
             ) or "Er staat nog geen onderzoekstaak op je werkbord.")
         if normalized in _STOP:
             return self._stop(turn)
@@ -77,8 +77,10 @@ class DelegatedWorkConversationCommands:
         if normalized in _RESULT:
             work = self._execute("result", turn, work_id=work_id)["work"]
             if work["result_available"]:
-                return self._reply(turn, _readable_result(work["result"]["output"]))
-            return self._reply(turn, f"Er is nog geen afgerond resultaat. De status is {work['state']}.")
+                return self._reply(turn, _readable_result(work["result"]["output"])
+                                   + "\n\n" + work["delivery"]["description"])
+            return self._reply(turn, f"Er is nog geen afgerond resultaat. De status is {work['state']}.\n"
+                               + work["delivery"]["description"])
     def matches(self, turn: ConversationTurn, *, principal_binding_id: UUID | None) -> bool:
         if (principal_binding_id != self._service.principal_binding_id
                 or not self._service.available_for(turn)):
@@ -117,7 +119,8 @@ class DelegatedWorkConversationCommands:
             state = "stopopdracht bewaard; het resultaat wordt niet geleverd"
         return self._reply(turn, f"Je laatste onderzoek is {state}.\n"
                            f"Opdracht: {work['task_preview']}\n"
-                           f"Taaknummer: {work['work_id']} (poging {work['generation']}).")
+                           f"Taaknummer: {work['work_id']} (poging {work['generation']}).\n"
+                           + work["delivery"]["description"])
 
     def _stop(self, turn: ConversationTurn) -> GroundedReply:
         work_id = self._service.latest_work_id(turn, stoppable=True)
