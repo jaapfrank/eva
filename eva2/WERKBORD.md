@@ -10,6 +10,12 @@ Doorlopend projectgoal actief: acht stappen tot één afgeronde Eva. Nu stap1: g
 
 Stap 1: hergebruik de bestaande snelle ontvangst en maak doorpraten tijdens achtergrondwerk gelijk over de vier ingangen. Parallel: controleer en herstel alleen het concrete gat in persoons- en toehoordergrenzen uit stap 2. De volledige achtstappenroute blijft het actieve goal.
 
+## Actuele dashboardafspraak
+
+Het compacte projectoverzicht staat live op http://localhost:44712/: vier korte kaarten en negen uitklapbare statusregels. Bouw en negen bestaande statuscontroles geslaagd, onafhankelijk review GO; live smalle en desktopweergave gecontroleerd. Dit is uitsluitend een dashboardoplevering. Spraakwerk is de volgende bouwtaak, nog niet hervat bij deze registratie. [Bewijs](evidence/product/dashboard-compact-rows-20260923.json).
+
+De coördinator werkt de bestaande JSON-werkkaart bij bij taakstart, taakwissel, blokkade en oplevering, vóór de bijbehorende voortgangsmelding. Alleen een inhoudelijke controle vernieuwt `deliveryOverview.reviewedAt`; pollen doet dit niet. Bij afronding zonder actieve uitvoering vermeldt de kaart dat expliciet. Acceptaties blijven behouden.
+
 ## Doorlopend opleverdoel
 
 Eén dagelijkse, geïnstalleerde Eva afronden: gedeeld gesprek en stem, privécontinuïteit, echte taakresultaten, initiatief, leren en betrouwbaar beheer; eindigen bij de gecontroleerde eindkandidaat en expliciete gezinsacceptatie.

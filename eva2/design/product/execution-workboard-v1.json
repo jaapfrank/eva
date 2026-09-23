@@ -1000,8 +1000,16 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-09-23T13:12:41.062969+00:00",
+        "checkedAt": "2026-09-23T13:19:46.332515+00:00",
         "deliveries": [
+          {
+            "title": "Projectoverzicht ingekort",
+            "date": "23 september",
+            "state": "installed",
+            "result": "Vier korte kaarten en negen uitklapbare statusregels. Huidige werkinhoud gecorrigeerd; verbinding wordt niet meer als inhoudelijke actualiteit gepresenteerd.",
+            "remaining": "Voortgang vereist inhoudelijk bijwerken door de coördinator. Een uur zonder controle geeft een waarschuwing. Dit levert geen nieuwe Eva-functie op.",
+            "source": "eva2/evidence/product/dashboard-compact-rows-20260923.json"
+          },
           {
             "title": "Website: doorpraten terwijl een taak echt loopt",
             "date": "23 september",
@@ -1244,10 +1252,10 @@
           }
         ],
         "now": {
-          "title": "Snelle ontvangst en dezelfde ervaring via alle kanalen",
-          "state": "Website-doorpraten bewezen · snelheid en andere kanalen open",
-          "detail": "Een echte tussenvraag is beantwoord tijdens een draaiende taak. De blokkade door een geheugenrecord zonder herkomst is hersteld; de wachttijd blijft onvoldoende.",
-          "doneWhen": "Snel natuurlijk contact en doorpraten aantonen via website, Telegram, Home Assistant en fysiek Voice PE."
+          "title": "Spraakroute: ontvangst en taakresultaat",
+          "state": "Volgende bouwtaak · nog niet hervat",
+          "detail": "Dashboardwijziging afgerond. Hierna hervat de coördinator de controle van de bestaande spraakkoppelingen; er wordt nu geen actieve spraakbouw of extra uitvoerder geclaimd.",
+          "doneWhen": "Snelle hoorbare ontvangst en taakresultaat via de bestaande gezamenlijke route; fysieke Voice PE-acceptatie blijft afzonderlijk."
         },
         "next": {
           "title": "Ontvangst en terugmelding via de spraakroute",
@@ -1264,7 +1272,7 @@
           "expected": "De fout wordt bij de echte wakewordovergang geregistreerd. Bij mislukking zet ik de bevestigde werkende firmware terug; geen herhaling van alle spraakproeven gevraagd."
         },
         "maintenance": "De coördinator werkt dit bord bij bij start, gewijzigd resultaat, blokkade en installatie. reviewedAt is een expliciete inhoudelijke controle; automatisch verversen verandert die niet. Na één uur vraagt het bord om hercontrole. Bestaande acceptaties worden niet afgeleid uit recente activiteit.",
-        "reviewedAt": "2026-09-23T13:12:41.062969+00:00"
+        "reviewedAt": "2026-09-23T13:19:46.332515+00:00"
       }
     },
     "pendingTechnicalReview": {

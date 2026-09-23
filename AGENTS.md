@@ -301,3 +301,7 @@ concrete installation blockers rather than introducing a broad new review cycle.
 Technical delivery and the owner's acceptance remain separate. Keep bounded
 goals moving while user evaluation is open, and report meaningful outcomes or
 blockers rather than seeking approval for every routine step.
+
+## Project dashboard updates — 23 September 2026
+
+Update the existing execution-workboard-v1.json deliveryOverview when starting or switching work, encountering a blocker, and completing a delivery, before reporting that transition. Record the actual current assignment; queued work must not appear actively running. Refresh reviewedAt only after checking the represented progress, never from polling or file modification time. Preserve acceptance and distinguish dashboard changes from Eva functionality. Keep the current summary in WERKBORD.md aligned; do not add another workboard.

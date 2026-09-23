@@ -127,3 +127,22 @@
 .control-room .product-tile > details > summary { padding:4px 0!important; font-size:12px; }
 .control-room .owner-next-action ol { padding-left:20px; font-size:14px; line-height:1.5; }
 .control-room .component-count { font-size:14px; margin:0 0 16px; }
+
+/* Owner summary: bounded cards and readable rows, no nested walls of text. */
+.control-room .component-list{border:1px solid #dce3df;border-radius:12px;overflow:hidden;background:white}
+.control-room .component-row{border-bottom:1px solid #e3e8e5;border-left:4px solid #bd851b}
+.control-room .component-row:last-child{border-bottom:0}
+.control-room .component-row.complete{border-left-color:#34845a}
+.control-room .component-row>summary{display:grid;grid-template-columns:26px minmax(130px,1fr) 190px minmax(230px,2fr) 16px;align-items:center;gap:12px;padding:13px 16px;cursor:pointer;list-style:none;font-size:14px}
+.control-room .component-state{font-size:12px;color:#825b11}
+.control-room .complete .component-state{color:#277548}
+.control-room .component-description{font-size:13px;line-height:1.4;color:#475b50}
+.control-room .component-detail{padding:0 24px 14px 54px;font-size:14px;line-height:1.5}
+.control-room .board-lane{padding:14px}
+.control-room .board-lane h2{margin-bottom:8px}
+.control-room .board-lane h3{font-size:16px}
+.control-room .board-lane details{margin-top:8px}
+.control-room .overview-section-title{margin-bottom:8px}
+.control-room .component-count{margin-bottom:10px}
+@media(max-width:1050px){.control-room .component-row>summary{grid-template-columns:24px 1fr 170px 16px}.control-room .component-description{grid-column:2/4;grid-row:2}.control-room .component-row>summary>span:last-child{grid-column:4;grid-row:1}}
+@media(max-width:600px){.control-room .component-row>summary{grid-template-columns:22px 1fr 16px}.control-room .component-state{grid-column:2;grid-row:2}.control-room .component-description{grid-column:2;grid-row:3}.control-room .component-row>summary>span:last-child{grid-column:3}.control-room .component-detail{padding-left:20px}}
