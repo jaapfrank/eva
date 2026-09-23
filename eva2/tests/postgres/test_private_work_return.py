@@ -49,6 +49,7 @@ def test_late_result_preserves_bytes_claim_and_ack_without_duplicate(delegated_e
     results = [r['result'] for r in replies if r.get('result')]
     assert len(results) == 1
     result = results[0]
+    assert result['title'] == service.store.load(spec.work_id, **service._owner).title
     assert result['output'] == saved.output
     assert result['output_sha256'] == saved.output_sha256
     identity = {k: result[k] for k in ('work_id', 'operation_id')}

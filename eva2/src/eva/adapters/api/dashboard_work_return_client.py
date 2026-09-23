@@ -3,6 +3,10 @@
 DASHBOARD_WORK_RETURN_CLIENT_JS = r"""
 (() => {
   'use strict';
+  function workReturnHeading(result) {
+    const title=typeof result.title==='string'?result.title.trim().slice(0,240):'';
+    return title?'Afgerond: '+title:'Je achtergrondopdracht is afgerond';
+  }
   class EvaWorkReturns {
     constructor({fetch, visible, render, clear, failed, digest, recovered=()=>{}, schedule=(callback,delay)=>setTimeout(callback,delay), cancel=timer=>clearTimeout(timer)}) {
       Object.assign(this,{fetch,visible,render,clear,failed,digest,recovered,schedule,cancel});
@@ -56,7 +60,7 @@ DASHBOARD_WORK_RETURN_CLIENT_JS = r"""
       }
     }
   }
-  if(typeof module!=='undefined') module.exports={EvaWorkReturns};
+  if(typeof module!=='undefined') module.exports={EvaWorkReturns,workReturnHeading};
   if(typeof document==='undefined') return;
   const chat=document.getElementById('chat');
   if(!chat) return;
@@ -69,7 +73,7 @@ DASHBOARD_WORK_RETURN_CLIENT_JS = r"""
     render:result=>{
       warning.textContent='';
       const node=document.createElement('div'); node.className='message eva';
-      const title=document.createElement('strong');title.textContent='Je achtergrondopdracht is afgerond';
+      const title=document.createElement('strong');title.textContent=workReturnHeading(result);
       const body=document.createElement('div');body.textContent=result.output;
       const link=document.createElement('a');link.href='/internal/v1/dashboard';link.textContent='Opgeslagen opdrachten bekijken';
       node.append(title,body,link);chat.append(node);nodes.push(node);

@@ -1003,6 +1003,14 @@
         "checkedAt": "2026-09-23",
         "deliveries": [
           {
+            "title": "Achtergrondresultaten tonen bijbehorende opdracht",
+            "date": "23 september",
+            "state": "installed",
+            "result": "De website vermeldt de opgeslagen opdrachttitel bij ieder automatisch teruggekomen resultaat. Browsercontrole en vier gerichte databasegevallen op het installatie-image geslaagd; onafhankelijk beoordeeld en geïnstalleerd.",
+            "remaining": "Jouw gebruiksbeoordeling staat open. Dit is geen reparatieclaim voor het eerdere Telegramscreenshot.",
+            "source": "eva2/evidence/product/work-result-title-installed-20260923.json"
+          },
+          {
             "title": "Documentverhuizing behoudt bestanden en eerdere resultaten",
             "date": "23 september",
             "state": "tested",
@@ -1108,15 +1116,15 @@
           }
         ],
         "now": {
-          "title": "Doorpraten tijdens werk en juiste antwoordkoppeling",
-          "detail": "Actuele Telegramadapter slaagt in overlapproef: tussenvraag eerst, eigen antwoordverwijzingen behouden. Laatste opgeslagen eigenaarsproef was vóór de geïnstalleerde pollingcorrectie; nieuwe praktijkbevestiging ontbreekt. Screenshotafwijking blijft onverklaard. Geen herbouw van de werkende adapter.",
-          "state": "Praktijkfout open · oorzaak nog niet vastgesteld",
-          "doneWhen": "Een tussenvraag krijgt haar eigen antwoord terwijl onderzoek doorloopt; het onderzoeksresultaat blijft aan de oorspronkelijke opdracht gekoppeld. Technische proef en Jaaps acceptatie blijven apart."
+          "title": "Doorlopend gesprek op fysieke Voice PE aansluiten",
+          "detail": "Bestaande vraag-en-antwoordroute blijft werken. Server en firmware voor doorpraten tijdens werk zijn voorbereid; op het apparaat is nog niets veranderd. USB-apparaattoegang is gevraagd voor installatie.",
+          "state": "Server draait · apparaat nog niet aangepast",
+          "doneWhen": "De fysieke speaker laat na de eerste oproep doorpraten, onderbreken en een tussenvraag tijdens werk toe; werking en gezinsbeoordeling worden apart vastgelegd."
         },
         "next": {
-          "title": "Herstelde installatie gecontroleerd starten",
-          "detail": "Vrijgave koppelen aan herstelde gegevens, geldige bevoegdheden en bijgewerkte kern/werkers; daarna de volledige herstelproef.",
-          "state": "Vereist vervolg"
+          "title": "Resterende functionele opleveringen afmaken",
+          "detail": "Bestaande implementaties gebruiken voor kanaalgelijkheid en meerdere taken. Geen verdere verhuis- of algemene herstelbouw voordat de functies gereed zijn.",
+          "state": "Uitvoervolgorde: functies eerst"
         },
         "ownerAction": {
           "title": "Kom via Telegram terug op een websitegesprek",
@@ -10898,7 +10906,7 @@
           "planningEffortHours": "4–12"
         }
       ],
-      "nextAction": "Stap 1: overige functionele kanaaltekorten afmaken vanuit bestaande code; fysieke Voice PE-route en gedeelde gespreksbediening. Telegramcorrectie blijft geïnstalleerd; nieuwe praktijkbevestiging en screenshotverklaring staan apart open en blokkeren onafhankelijk werk niet.",
+      "nextAction": "Resultaattitels geïnstalleerd. Volgende: fysieke Voice PE koppelen aan bestaande continue route zodra apparaattoegang beschikbaar is; overige functionele kanaaltekorten onafhankelijk vervolgen.",
       "effortNotice": "Grove planning, lage zekerheid: 40–118 actieve ontwikkeluren plus zeven dagen gezinspraktijk en eventuele externe wachttijd. Geen deadline, creditkosten of gemeten verbruik; per begrensde wijziging aanscherpen na lezing van bestaand bewijs. Hergebruik kan dit verkorten.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Na review, installatie en registratie automatisch volgende uitvoerbare stap; geen algemene wachtstop op gebruikersproeven.",

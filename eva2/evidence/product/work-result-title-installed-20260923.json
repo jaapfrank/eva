@@ -1,0 +1,22 @@
+{
+  "installed": true,
+  "checkedAt": "2026-09-23T08:05:46.498309+00:00",
+  "image": "sha256:12dfc3baf7da682989fd10ad79608ac70d795f0808e490440667aa00ef53194a",
+  "healthy": true,
+  "sourceHashes": {
+    "adapters/postgres/private_work_return.py": "0a4026d4f1d3aa3be2ed5e1f13db1665ed1db3b2e8ab3d95d3d521884885fa03",
+    "providers/document_completion.py": "d8487bd7475fe186aa9e46335779494cc614762699a6d81edf61019af8dcdc5c",
+    "adapters/api/dashboard_work_return_client.py": "175752a48343176e045b049d70ec9c4fb010929b4364977ad704850841dfbc9e"
+  },
+  "otherServicesUnchanged": true,
+  "tests": {
+    "browserPassed": 1,
+    "packagedPostgresPassed": 4
+  },
+  "ownerAccepted": false,
+  "modelCalls": 0,
+  "externalTestMessages": 0,
+  "rollbackImage": "sha256:2320da954ea6686e320e53b8364e811808b93c400d664fb416dacb1ac04ffa2d",
+  "review": "Root independently reviewed product diff; document_private_identity reviewed image-only installation delta.",
+  "limitations": "No new owner task was created; real owner use remains open. Presentation metadata does not resolve the unexplained historical Telegram screenshot."
+}

@@ -178,6 +178,7 @@ def test_original_session_only_document_return_and_ack(completion, channel):
     assert c['delivery'].claim_next(now=c['at'][0]) is None
     result=c['service'].private_return(turn,'poll')['result']
     assert result['work_id']==item['plan']['goal_id']
+    assert result['title']=='Private documents'
     identity={k:result[k] for k in ['work_id','operation_id']}
     assert c['service'].private_return(turn,'authorize',**identity)['output_sha256']==result['output_sha256']
     assert c['service'].private_return(turn,'ack',**identity)['status']=='acknowledged'

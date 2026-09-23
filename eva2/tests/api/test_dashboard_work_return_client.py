@@ -7,7 +7,7 @@ def test_conversation_return_transport_boundaries():
     script = DASHBOARD_WORK_RETURN_CLIENT_JS + r"""
 const assert=require('node:assert/strict');
 const {createHash}=require('node:crypto');
-const {EvaWorkReturns}=module.exports;
+const {EvaWorkReturns,workReturnHeading}=module.exports;
 const digest=async s=>createHash('sha256').update(s).digest('hex');
 const output='<img src=x onerror=alert(1)>\nBron: https://example.org';
 const result={work_id:'work-one',operation_id:'a'.repeat(64),output,
@@ -30,6 +30,29 @@ function setup(fetch){
  assert.deepEqual(calls[0][1],{}); // Browser never chooses identity or session.
  a.client.close();assert.equal(a.rendered.length,0);await a.client.poll();assert.equal(calls.length,4);
  await a.client.resume();assert.equal(calls.length,6);assert.equal(a.rendered.length,0); // cached page resumes, no duplicate display
+
+ const secondOutput='Independent second result';
+ const titled=[
+  {...result,title:'Home Assistant spraak'},
+  {work_id:'work-two',operation_id:'b'.repeat(64),title:'<img src=x onerror=alert(1)>',
+   output:secondOutput,output_sha256:await digest(secondOutput)}
+ ];
+ let nextResult=0;const acknowledgements=[];
+ const two=setup(async(url,options)=>{
+  if(url.endsWith('/ack')) {acknowledgements.push(JSON.parse(options.body));return reply({status:'acknowledged'});}
+  return reply({status:'claimed',result:titled[nextResult++]});
+ });
+ await two.client.poll();await two.client.poll();
+ assert.deepEqual(two.rendered.map(r=>[r.work_id,workReturnHeading(r),r.output]),[
+  ['work-one','Afgerond: Home Assistant spraak',output],
+  ['work-two','Afgerond: <img src=x onerror=alert(1)>',secondOutput]
+ ]);
+ assert.deepEqual(acknowledgements,titled.map(r=>({work_id:r.work_id,operation_id:r.operation_id})));
+ assert.equal(workReturnHeading(result),'Je achtergrondopdracht is afgerond');
+ assert.equal(workReturnHeading({...result,title:{unsafe:true}}),'Je achtergrondopdracht is afgerond');
+ assert.equal(workReturnHeading({...result,title:'  '}),'Je achtergrondopdracht is afgerond');
+ assert.equal(workReturnHeading({...result,title:'x'.repeat(500)}).length,'Afgerond: '.length+240);
+ two.client.close();
 
  let resolve;
  const b=setup(()=>new Promise(r=>resolve=r));

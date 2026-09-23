@@ -49,6 +49,7 @@ class DocumentCompletion:
     output: str
     created_at: datetime
     completed_at: str
+    title: str = ""
 
     def to_payload(self):
         return self.artifact_payload
@@ -115,4 +116,4 @@ class DocumentCompletionSource:
         output = (state.spec.description + '\n\n' + plan.first_path + '\n' + first.content
                   + '\n\n' + plan.final_path + '\n' + final.content)
         return DocumentCompletion(goal_id, adapter.definition.sha256, claim['return_binding'],
-            payload, output, state.spec.created_at, completed_at)
+            payload, output, state.spec.created_at, completed_at, title=state.spec.description)

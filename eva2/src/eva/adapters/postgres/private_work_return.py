@@ -187,6 +187,7 @@ class PrivateWorkReturnStore:
                         'result_sha256': canonical_sha256(result.to_payload())}
             return {'status': 'claimed', 'result': {'work_id': returned_id,
                 'generation': generation, 'operation_id': identity,
+                'title': document.title if document is not None else work.title,
                 'output': result.output, 'output_sha256': result.output_sha256,
                 'result_sha256': canonical_sha256(result.to_payload()),
                 'completed_at': result.completed_at}}
