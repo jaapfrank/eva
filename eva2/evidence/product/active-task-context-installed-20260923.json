@@ -1,0 +1,44 @@
+{
+  "checkedAt": "2026-09-23T12:45:14.220183+00:00",
+  "sourceCommit": "2f158d9d",
+  "installedImage": "eva2-active-task-context:20260923",
+  "change": "Existing scoped active-context hook includes up to eight authorized active work ids, titles and states; actual stop still requires the existing tool.",
+  "tests": {
+    "packagedFocused": 7,
+    "result": "passed",
+    "independentReview": "compact_contact_catalog GO; coordinator reviewed tests"
+  },
+  "live": {
+    "core": "healthy",
+    "worker": "healthy",
+    "installedSourceBytes": "match",
+    "rollback": "Prior compose baseline saved; active pointer updated"
+  },
+  "comparison": {
+    "scenario": "Stop het onderzoek naar warmtepompen maar laat dat naar zonnepanelen doorgaan.",
+    "fixtures": "Two synthetic household work items, same model/tools/identity/options; no actual action execution",
+    "before": {
+      "modelCalls": 2,
+      "seconds": 10.701,
+      "inputTokens": 3687,
+      "outputTokens": 137,
+      "selection": "correct"
+    },
+    "after": {
+      "modelCalls": 1,
+      "seconds": 7.706,
+      "inputTokens": 1990,
+      "outputTokens": 74,
+      "selection": "correct"
+    },
+    "externalMessages": 0,
+    "actualActionsExecuted": 0
+  },
+  "limitations": [
+    "Single isolated pair, not a general latency benchmark.",
+    "Seven-second model response still does not meet natural contact expectation.",
+    "No physical Voice PE or full channel acceptance.",
+    "Context is bounded and marks incomplete listings; existing list tool remains available."
+  ],
+  "next": "Reduce foreground response latency without losing shared personality, authorized memory or task execution."
+}

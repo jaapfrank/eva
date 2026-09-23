@@ -1000,8 +1000,16 @@
         ]
       },
       "deliveryOverview": {
-        "checkedAt": "2026-09-23T12:41:52.862854+00:00",
+        "checkedAt": "2026-09-23T12:45:14.220183+00:00",
         "deliveries": [
+          {
+            "title": "Lopende taak direct selecteren zonder extra modelronde",
+            "date": "23 september",
+            "state": "installed",
+            "result": "Eva koos in dezelfde geïsoleerde taakkeuzeproef direct de juiste taak: één modelaanroep in 7,7 seconden, eerder twee in 10,7 seconden. Kern en werker zijn gezond.",
+            "remaining": "Nog te traag voor natuurlijk contact. Eén geïsoleerde vergelijking; geen fysieke Voice PE-acceptatie en geen echte taak gestopt.",
+            "source": "eva2/evidence/product/active-task-context-installed-20260923.json"
+          },
           {
             "title": "Open werk direct zichtbaar in het projectoverzicht",
             "date": "23 september",
@@ -1212,15 +1220,15 @@
           }
         ],
         "now": {
-          "title": "Extra modelronde bij taakselectie weghalen",
-          "state": "Gebouwd en getest · installatie staat klaar als volgende handeling",
-          "detail": "De juiste taak werd geselecteerd in twee modelrondes (10,7 seconden). Het meegeven van bestaande taakcontext is gebouwd en onafhankelijk beoordeeld, maar nog niet geïnstalleerd.",
-          "doneWhen": "Geïnstalleerd en één proef met de gewijzigde context gemeten; geen snelheidswinst claimen vooraf."
+          "title": "Sneller natuurlijk contact",
+          "state": "Open · volgende bouwstap",
+          "detail": "De extra taakkeuzeronde is verwijderd. Het contactmodel zelf blijft traag: de laatste geïsoleerde keuze duurde 7,7 seconden. De huidige route gebruikt gpt-5.6-luna met lage redeneerinspanning.",
+          "doneWhen": "Snelle inhoudelijke begroeting en passende ontvangst gemeten via de bestaande route, zonder gesprek of achtergrondwerk te blokkeren."
         },
         "next": {
-          "title": "Gesprek tijdens achtergrondwerk afronden",
-          "state": "Resterend werk in stap 1",
-          "detail": "Snelle ontvangst en tussenvragen via de echte ingangen aantonen. De fysieke Voice PE-proef blijft afzonderlijk open."
+          "title": "Gesprek tijdens werk via de echte ingangen",
+          "state": "Kanaalproeven nog open",
+          "detail": "Begroeten, een tussenvraag beantwoorden en gericht stoppen tijdens onderzoek via website, Telegram, Home Assistant en fysiek Voice PE."
         },
         "ownerAction": {
           "title": "Voice PE: beschikbaarheid doorgeven",
@@ -1232,7 +1240,7 @@
           "expected": "De fout wordt bij de echte wakewordovergang geregistreerd. Bij mislukking zet ik de bevestigde werkende firmware terug; geen herhaling van alle spraakproeven gevraagd."
         },
         "maintenance": "De coördinator werkt dit bord bij bij start, gewijzigd resultaat, blokkade en installatie. reviewedAt is een expliciete inhoudelijke controle; automatisch verversen verandert die niet. Na één uur vraagt het bord om hercontrole. Bestaande acceptaties worden niet afgeleid uit recente activiteit.",
-        "reviewedAt": "2026-09-23T12:41:52.862854+00:00"
+        "reviewedAt": "2026-09-23T12:45:14.220183+00:00"
       }
     },
     "pendingTechnicalReview": {
@@ -11001,7 +11009,7 @@
           "planningEffortHours": "4–12"
         }
       ],
-      "nextAction": "Geteste taakcontext installeren en één gewijzigde modelproef meten. Snelle ontvangst en echte kanaalproeven blijven open.",
+      "nextAction": "Contactvertraging verminderen op de bestaande providerroute; geen identieke herhaling van de afgeronde taakkeuzeproef. Echte kanaalproeven blijven open.",
       "effortNotice": "Grove planning, lage zekerheid: 40–118 actieve ontwikkeluren plus zeven dagen gezinspraktijk en eventuele externe wachttijd. Geen deadline, creditkosten of gemeten verbruik; per begrensde wijziging aanscherpen na lezing van bestaand bewijs. Hergebruik kan dit verkorten.",
       "completionRule": "Alle verplichte technische criteria gehaald op één geïnstalleerde kandidaat; definitieve vergelijkingen en zeven dagen praktijk plus expliciete eigenaaracceptatie. Een deeloplevering sluit dit goal niet.",
       "continuationRule": "Na review, installatie en registratie automatisch volgende uitvoerbare stap; geen algemene wachtstop op gebruikersproeven.",

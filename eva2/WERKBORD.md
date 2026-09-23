@@ -25,7 +25,9 @@ Eén dagelijkse, geïnstalleerde Eva afronden: gedeeld gesprek en stem, privéco
 | 7 | Vergelijking voorbereiden en uitvoeren | open | EV-003 taken/versies/drempels vooraf vast; Bottie en drie concurrenten eerlijk vergelijken, officiële AgentBench/GAIA/OSWorld-scorers; definitieve vergelijking op eindkandidaat. |
 | 8 | Eindkandidaat en acceptatie | open | Bevroren image/config/bewijs, complete testpoort, onafhankelijke review, veilige installatie, computerherstart en definitieve vergelijking; daarna zeven dagen gezinspraktijk en expliciete acceptatie. |
 
-**Eerstvolgende handeling:** de geteste en onafhankelijk beoordeelde taakcontext installeren en één gewijzigde modelproef uitvoeren. De eerdere natuurlijke taakselectie koos correct in twee modelrondes (10,7 seconden); de optimalisatie is nog niet geïnstalleerd. Fysieke Voice PE-acceptatie blijft open.
+**Eerstvolgende handeling:** contactvertraging verminderen op de bestaande providerroute. De extra modelronde voor taakkeuze is geïnstalleerd en vervallen; de resterende 7,7 seconden zijn nog te traag. Echte kanaal- en fysieke Voice PE-acceptatie blijven open.
+
+**Actieve taakcontext geïnstalleerd (23 september):** alleen toegankelijke actieve taakidentiteiten worden via de bestaande contextkoppeling meegegeven. Zeven verpakte tests geslaagd, onafhankelijke review GO, kern/werker gezond en geïnstalleerde bestanden gecontroleerd; terugweg vastgelegd. Dezelfde geïsoleerde taakkeuze: correct in één modelaanroep/7,706 s/1.990 invoertokens tegenover twee/10,701 s/3.687. Geen echte acties of berichten; geen algemene snelheidsclaim. [Bewijs](evidence/product/active-task-context-installed-20260923.json).
 
 **Projectoverzicht bijgewerkt (23 september):** scope en eerste open punt staan direct per onderdeel in beeld, net als jouw instructies. De oude actieve proefkaart is vervangen door de werkelijke stand. Negen bestaande status-/versheidscontroles en bouw geslaagd, onafhankelijke review GO; live desktop en smalle pagina bekeken. Dit is een dashboardoplevering, geen nieuwe Eva-functionaliteit. [Bewijs](evidence/product/dashboard-readable-status-20260923.json).
 
