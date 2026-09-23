@@ -68,9 +68,11 @@ class ScopedDelegatedWorkActions:
         return actions.active_context(turn)
 
     def pending(self, turn, *, step_index=0):
-        if not self.available_for(turn):
+        try:
+            actions = self._select(turn)
+        except (ValueError, RuntimeError, OSError):
             return None
-        return self._select(turn).pending(turn, step_index=step_index)
+        return actions.pending(turn, step_index=step_index)
 
     def execute(self, turn, call, *, step_index=0):
         return self._select(turn).execute(turn, call, step_index=step_index)

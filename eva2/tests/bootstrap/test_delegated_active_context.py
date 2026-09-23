@@ -91,3 +91,38 @@ def test_truncated_listing_without_active_rows_does_not_claim_no_work():
     service = Service([], truncated=True)
     context = PostgresDelegatedWorkActions(None, service).active_context(NS(message_id="message:test"))
     assert context and '"limited":true' in context[0]
+
+
+def test_metadata_hook_avoids_full_task_delivery_views():
+    class MetadataService(Service):
+        def active_work_metadata(self, turn):
+            return {"jobs": [{"work_id": "work:active", "title": "Active",
+                              "state": "admitted", "stop_requested": False}],
+                    "truncated": False}
+
+        def execute(self, *args, **kwargs):
+            pytest.fail("full task view should not be loaded for context")
+
+    context = PostgresDelegatedWorkActions(None, MetadataService()).active_context(
+        NS(message_id="message:metadata"))
+    assert 'work:active' in context[0]
+
+
+def test_pending_selects_scope_once_and_preserves_step(monkeypatch):
+    scoped = ScopedDelegatedWorkActions(None, None)
+    selections = []
+    pending = []
+    provider = NS(pending=lambda turn, **kwargs: pending.append((turn, kwargs)) or "receipt")
+    monkeypatch.setattr(scoped, "_select", lambda turn: selections.append(turn) or provider)
+    turn = NS()
+    assert scoped.pending(turn, step_index=3) == "receipt"
+    assert selections == [turn]
+    assert pending == [(turn, {"step_index": 3})]
+
+
+def test_pending_denied_scope_does_not_read_provider(monkeypatch):
+    scoped = ScopedDelegatedWorkActions(None, None)
+    def denied(turn):
+        raise ConversationConflict("unavailable")
+    monkeypatch.setattr(scoped, "_select", denied)
+    assert scoped.pending(NS()) is None

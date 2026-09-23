@@ -103,8 +103,10 @@ class PostgresDelegatedWorkActions:
         """Supply bounded current task identities without another model tool roundtrip."""
         if not self.available_for(turn):
             return ()
-        listing = self._service.execute("list", turn, request_key="active-context:" +
-            hashlib.sha256(turn.message_id.encode("utf-8")).hexdigest())
+        metadata = getattr(self._service, "active_work_metadata", None)
+        listing = (metadata(turn) if callable(metadata) else
+                   self._service.execute("list", turn, request_key="active-context:" +
+                       hashlib.sha256(turn.message_id.encode("utf-8")).hexdigest()))
         active = [job for job in listing.get("jobs", ())
                   if job.get("state") in {"admitted", "call_started"}
                   and not job.get("stop_requested", False)]

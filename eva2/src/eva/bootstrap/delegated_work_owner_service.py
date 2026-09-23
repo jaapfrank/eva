@@ -225,6 +225,18 @@ class DelegatedWorkOwnerService:
                              or previous.usage.completed_model_responses != 1))),
                 "guidance": "Een nieuwe begrensde poging; de eerdere call en het eerdere verbruik blijven bewaard."}
 
+    def active_work_metadata(self, turn: ConversationTurn) -> dict:
+        """Project authorized task metadata without per-task delivery lookups."""
+        if not self.available_for(turn):
+            raise DelegatedWorkConflict("delegated work requires its private owner scope")
+        # As with the normal list operation, the store revalidates the current
+        # owner binding and restricts results to private work in this scope.
+        rows = self.store.list_owned(**self._owner, limit=21)
+        return {"jobs": [{"work_id": work.spec.work_id, "title": work.title,
+                          "state": work.state,
+                          "stop_requested": work.stop_requested_at is not None}
+                         for work in rows[:20]], "truncated": len(rows) > 20}
+
     def private_return(self, turn, operation, **kwargs):
         from eva.adapters.postgres.private_work_return import PrivateWorkReturnStore
         return PrivateWorkReturnStore(self).execute(turn, operation, **kwargs)
